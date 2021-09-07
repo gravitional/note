@@ -418,6 +418,16 @@ ssh -T git@gitee.com
 + `git remote remove paul` ; 删除失效的远程仓库
 + `git remote set-url origin` ; 修改远程仓库`origin`对应的地址
 
+```bash
+git remote set-url [--push] <远程仓库名> <newurl> [<oldurl>]
+git remote set-url --add [--push] <远程仓库名> <newurl>
+git remote set-url --delete [--push] <远程仓库名> <url>
+```
+
++ `--add` ;    添加地址，而不是修改
++ `--delete` ; 删除所有匹配的地址
++ `--push` ;   操作`push`地址而不是`fetch` URLs
+
 ### 设置多个远程
 
 [git 本地仓库同时推送到多个远程仓库](https://blog.csdn.net/fox9916/article/details/79386169)
