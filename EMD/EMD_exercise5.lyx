@@ -1,0 +1,2110 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usetheme{Madrid} % 设置主题
+\usecolortheme{default} % 颜色方案
+\setbeamertemplate{background}{\includegraphics[height=\paperheight]{b2.png}} %设置背景图片
+%\usefonttheme[onlymath]{serif} %设置数学字体为斜体
+\setbeamercovered{transparent}
+%%++++++++++++++++++++++++++++++++
+\usepackage{fontspec}
+\usepackage[slantfont, boldfont]{xeCJK}% 没有这个会无法实现中文断行
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{siunitx} %国际单位制的包
+\DeclareSIPrePower\quartic{4}%单位的四次方
+\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{bm,bbm} %\bm 让参数变成粗体, \bbm Computer Modern fonts 的黑板体
+\usepackage{tikz} % 画图库
+\usetikzlibrary{calc} %计算功能
+%%++++++++++++++++++++++++++++++++++++
+\usepackage{simplewick} 
+% a simple means of drawing Wick contractions above and below expressions. 
+\usepackage{makeidx} 
+% Standard package for creating indexes
+\usepackage{multirow}
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+% % 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+%%++++++++++++++++++++++++++++++++++++++++
+\usepackage{eso-pic} %用来在每个页面的固定位置加上图片
+\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
+%\definecolor{ocre}{RGB}{243,102,25} ％xcolor 基于 color, 提供与驱动程序无关的轻松访问 off color tints, shades, tones, 和任意颜色的混合 ，可以通过名称指定颜色
+%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+%% \usepackage{axodraw2}
+\usepackage{enumerate} %向enumerate环境添加了一个可选参数，该参数确定counter的样式。
+%\usepackage{enumitem}
+%提供基本列表环境的布局控制: enumerate, itemize and description。 它同时取代了 enumerate和 mdwlist
+%%++++++++++++++++++++ 
+\usepackage{listings}
+% 在LaTex中添加代码高亮
+\usepackage{framed}
+% 在对象周围添加方框，阴影等等，允许跨页
+% 定义阴影的颜色
+\definecolor{shadecolor}{rgb}{0.9412,1,1}
+%定义代码高亮的各种颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{〈style name〉}{〈key=value list〉}
+%stores the key=value list
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%++++++++++++++++++++++++++++++++++++++
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,aspectratio=141
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+电动力学习题
+\end_layout
+
+\begin_layout Author
+yangmy@ihep.ac.cn
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tea = Import["/home/tom/note/others/b22.jpg"]; teb = Lighter[ Blur[SetAlphaChanne
+l[ ImageResize[ ImageCollage[{tea, tea, tea}, Method -> "Rows"], {720, 500}],
+ 0.22], 100], .0] Export["/home/tom/note/others/b2.png", teb]
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+第五章
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+frame{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Plain Layout
+
+2,3,6,7,10,11,12,13
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+达朗贝尔方程
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+用
+\begin_inset Formula $c$
+\end_inset
+
+表示真空中的光速，场方程为
+\begin_inset Formula 
+\begin{align*}
+ & {\color{brown}\nabla\cdot\sbf E=\rho/\varepsilon_{0}}\quad\nabla\times\sbf E=-\partial_{t}\sbf B\\
+ & \nabla\cdot\sbf B=0,\quad{\color{blue}\nabla\times\sbf B=\mu_{0}\sbf J+\frac{1}{c^{2}}\partial_{t}\sbf E}
+\end{align*}
+
+\end_inset
+
+引入标势、矢势，以及洛伦兹规范：
+\begin_inset Formula 
+\begin{align*}
+ & \sbf E=-\nabla\varphi-\partial_{t}\sbf A,\quad\sbf B=\nabla\times\sbf A\\
+ & \frac{1}{c}\partial_{t}\frac{1}{c}\varphi+\nabla\cdot\sbf A=0
+\end{align*}
+
+\end_inset
+
+代入得到：
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\times\nabla\times\sbf A=\mu_{0}\sbf J-\frac{1}{c^{2}}\left(\partial_{t}\nabla\varphi+\partial_{t}^{2}\sbf A\right){\color{blue}\Rightarrow-\nabla^{2}\sbf A=-\frac{1}{c^{2}}\partial_{t}^{2}\sbf A+\mu_{0}\sbf J}\\
+ & \nabla\cdot\left(-\nabla\varphi-\partial_{t}\sbf A\right)=\rho/\varepsilon_{0}{\color{brown}\Rightarrow-\nabla^{2}\varphi+\frac{1}{c^{2}}\partial_{t}^{2}\varphi=\rho/\varepsilon_{0}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+达朗贝尔方程
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+所以
+\begin_inset Formula $\sbf A$
+\end_inset
+
+和
+\begin_inset Formula $\varphi$
+\end_inset
+
+满足达朗贝尔方程：
+\begin_inset Formula 
+\[
+\frac{1}{c^{2}}\partial_{t}^{2}\sbf A-\nabla^{2}\sbf A=\mu_{0}\sbf J,\quad\frac{1}{c^{2}}\partial_{t}^{2}\varphi-\nabla^{2}\varphi=\frac{\rho}{\varepsilon_{0}}.
+\]
+
+\end_inset
+
+达朗贝尔方程的特解为推迟势：
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=\frac{\mu_{0}}{4\pi}\int_{V}\frac{\sbf J\left(t-\frac{r}{c},\sbf x^{\prime}\right)}{r}\dif V^{\prime},\quad\varphi\left(t,\sbf x\right)=\frac{1}{4\pi\varepsilon_{0}}\int_{V}\frac{\rho\left(t-\frac{r}{c},\sbf x^{\prime}\right)}{r}\dif V^{\prime}
+\]
+
+\end_inset
+
+电流产生矢势波动，电荷产生标势波动。辐射源在
+\begin_inset Formula $t-\frac{r}{c}$
+\end_inset
+
+时刻发出扰动，在
+\begin_inset Formula $t$
+\end_inset
+
+时刻达到观察点。
+\end_layout
+
+\begin_layout Frame
+此特解满足洛伦兹规范
+\begin_inset Formula 
+\[
+\frac{1}{c}\partial_{t}\frac{1}{c}\varphi+\nabla\cdot\sbf A=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+单色波
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\begin{align*}
+ & \sbf J\left(t^{\prime},\sbf x^{\prime}\right)=\sbf J\left(\sbf x^{\prime}\right)e^{-i\omega t^{\prime}},\quad\rho\left(t^{\prime},\sbf x^{\prime}\right)=\rho\left(\sbf x^{\prime}\right)e^{-i\omega t^{\prime}}.\\
+ & \partial_{t^{\prime}}\rho+\nabla^{\prime}\cdot\sbf J=0\Rightarrow{\color{blue}\nabla^{\prime}\cdot\sbf J-i\omega\rho=0}
+\end{align*}
+
+\end_inset
+
+电流分布
+\begin_inset Formula $\sbf J$
+\end_inset
+
+给定，电荷分布
+\begin_inset Formula $\rho$
+\end_inset
+
+也就给定。矢势就可以完全确定电磁场。
+\begin_inset Formula 
+\[
+{\color{blue}\frac{1}{c}\partial_{t}\frac{1}{c}\varphi+\nabla\cdot\sbf A=0}\Rightarrow\frac{i\omega}{c^{2}}\varphi=\nabla\cdot\sbf A
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=\frac{\mu_{0}}{4\pi}\int_{V}\frac{\sbf J\left(\sbf x^{\prime}\right)e^{-i\omega\left(t-\frac{r}{c}\right)}}{r}\dif V^{\prime},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+e^{-i\omega\left(t-\frac{r}{c}\right)}=e^{-i\left(\omega t-kr\right)},\quad\omega=ck
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf B=\nabla\times\sbf A,\quad\nabla\times\sbf B=\frac{-i\omega}{c^{2}}\sbf E
+\]
+
+\end_inset
+
+只要知道了电流分布函数
+\begin_inset Formula $\sbf J\left(\sbf x^{\prime}\right)$
+\end_inset
+
+，就可以计算电磁辐射，包括天线辐射。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+洛伦兹变换
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+相对于参考系
+\begin_inset Formula $\left(ct,x\right)$
+\end_inset
+
+，
+\begin_inset Formula $\left(ct^{\prime},x^{\prime}\right)$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿
+\begin_inset Formula $x$
+\end_inset
+
+方向运动：
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right),\quad\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & \gamma\beta\\
+\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\gamma=\frac{1}{\sqrt{1-\beta^{2}}}=\frac{1}{\sqrt{1-\left(v/c\right)^{2}}}\ge1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+协变形式
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+如果引入相对论协变记号：
+\begin_inset Formula 
+\begin{align*}
+ & \partial_{\mu}=\left(\frac{1}{c}\frac{\partial}{\partial t},\frac{\partial}{\partial x},\frac{\partial}{\partial y},\frac{\partial}{\partial z}\right),\quad A^{\mu}=\left(\varphi/c,\sbf A\right),\quad J^{\mu}=\left(\rho c,\sbf J\right)\\
+ & \partial^{2}=\partial_{\mu}\partial^{\mu}=\partial_{t}^{2}-\nabla^{2},\quad\partial_{\mu}J^{\mu}=c\partial_{t}\rho+\nabla\cdot\sbf J=0.
+\end{align*}
+
+\end_inset
+
+即达朗贝尔方程的协变形式：
+\begin_inset Formula 
+\[
+\partial^{2}A^{\mu}=-\mu_{0}J^{\mu}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\text{电荷守恒：}\partial_{\mu}J^{\mu}=0,\quad\text{洛伦兹规范：}\partial_{\mu}A^{\mu}=\frac{1}{c^{2}}\partial_{t}\varphi+\nabla\cdot\sbf A=0.
+\]
+
+\end_inset
+
+单个带电粒子的李纳–维谢尔势：
+\begin_inset Formula 
+\[
+A^{\mu}\left(x\right)=\frac{\mu_{0}}{4\pi}\frac{qU^{\mu}}{U^{\mu}r_{\mu}/c},\quad U^{\mu}=\gamma\left(c,\vec{v}\right),\quad r^{\mu}=\left(r,\vec{r}\right),r^{\mu}\text{为类光矢量}
+\]
+
+\end_inset
+
+使用
+\begin_inset Formula $J^{\mu}=\rho U^{\mu}$
+\end_inset
+
+，得到有限区域的四维势：
+\begin_inset Formula 
+\[
+A^{\mu}\left(x\right)=\frac{\mu_{0}}{4\pi}\int_{V}\frac{\rho cJ^{\mu}\left(t-\frac{r}{c}\right)}{J^{\mu}r_{\mu}}\dif V^{\prime}\quad\vec{r}=\vec{x}-\vec{x}^{\prime}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+辐射的多级展开
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+设场点距离远远大于源点距离：
+\begin_inset Formula 
+\[
+r=\sqrt{R^{2}+x^{\prime2}-2\sbf R\cdot\sbf x^{\prime}}=R\sqrt{1-2\sbf e_{r}\cdot\frac{\sbf x^{\prime}}{R}+\left(\frac{x^{\prime}}{R}\right)^{2}}\approx R-\sbf e_{R}\cdot\sbf x^{\prime}
+\]
+
+\end_inset
+
+对矢势进行多级展开：
+\begin_inset Formula 
+\begin{align*}
+\sbf A\left(\sbf x\right) & =\frac{\mu_{0}}{4\pi}\int_{V}\frac{\sbf J\left(\sbf x^{\prime}\right)e^{ikr}}{r}\dif V^{\prime}=\frac{\mu_{0}}{4\pi}\int_{V}\frac{\sbf J\left(\sbf x^{\prime}\right)e^{ik\left(R-\sbf e_{R}\cdot\sbf x^{\prime}\right)}}{r}\dif V^{\prime}\\
+ & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\int_{V}\sbf J\left(\sbf x^{\prime}\right)\sum_{n=0}^{\infty}\frac{1}{n!}\left(-ik\sbf e_{R}\cdot\sbf x^{\prime}\right)^{n}\dif V^{\prime}\\
+ & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\int_{V}\sbf J\left(\sbf x^{\prime}\right)\left(1-i\sbf k_{R}\cdot\sbf x^{\prime}\right)\dif V^{\prime},\quad\sbf k_{R}=k\sbf e_{R}
+\end{align*}
+
+\end_inset
+
+第一项为电偶极辐射，第二项包括磁偶极和电四级辐射，剩下的为高级矩的辐射。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+电偶极辐射
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+近似点源的辐射区近似：
+\begin_inset Formula $x^{\prime}\ll r$
+\end_inset
+
+，且
+\begin_inset Formula $\sbf k_{R}\cdot\sbf x^{\prime}\ll1$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\sbf p=\int_{V}\sbf J\left(\sbf x^{\prime}\right)\dif V^{\prime}=\oint_{\ell}I\dif\sbf l
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf A & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}{\color{blue}\dot{\sbf p}},\\
+\sbf B & =\nabla\times\sbf A=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}i\sbf k_{R}\times\dot{\sbf p}=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\frac{\ddot{\sbf p}}{\omega}\times\sbf k_{R}\\
+\sbf E & =c\sbf B\times\sbf e_{R}=\frac{\mu_{0}c}{4\pi}\frac{e^{ikR}}{R}\left(\frac{\ddot{\sbf p}}{\omega}\times\sbf k_{R}\right)\times\sbf e_{R},\quad\abs{\sbf E}=c\abs{\sbf B}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+磁偶极辐射
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf m=\frac{1}{2}\int_{V}\sbf x^{\prime}\times\sbf J\left(\sbf x^{\prime}\right)\dif V^{\prime}=\frac{1}{2}\oint_{\ell}\sbf x^{\prime}\times I\dif\sbf l
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf A & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\left({\color{blue}-\sbf m\times\nabla}\right)=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}i\sbf k_{R}\times\sbf m\\
+\sbf B & =\nabla\times\sbf A=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}i\sbf k_{R}\times\left(i\sbf k_{R}\times\sbf m\right)\\
+\sbf E & =c\sbf B\times\sbf e_{R}=-\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\left(\frac{\ddot{\sbf m}}{\omega}\times\sbf k_{R}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+电四极辐射
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+电四极矩的无迹化定义，以及多极矩展开：
+\begin_inset Formula 
+\begin{align*}
+\mathscr{D}_{ij} & =\int_{V}\left(3x_{i}^{\prime}x_{j}^{\prime}-\delta_{ij}r^{\prime2}\right)\rho\left(\sbf x^{\prime}\right)\dif V^{\prime},\quad\text{此处人为引入}3\\
+e^{\sbf x\cdot\nabla} & =1+\sbf x\cdot\nabla+\frac{1}{2!}\left(\sbf x\cdot\nabla_{x}\right)\left(\sbf y\cdot\nabla_{y}\right)+\cdots
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf A & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}{\color{blue}\frac{-1}{2}\nabla\cdot\frac{\dot{\mathscr{D}}}{3}}=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\frac{1}{6c}\ddot{\sbf D}\\
+\sbf B & =\nabla\times A=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\frac{1}{6c}i\sbf k_{R}\times\ddot{\sbf D}\\
+\sbf E & =c\sbf B\times\sbf e_{R}=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\frac{1}{6}\left(i\sbf k_{R}\times\ddot{\sbf D}\right)\times\sbf e_{R}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf D=\sbf e_{R}\cdot\mathscr{D}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+多级辐射
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+总结：
+\size largest
+
+\begin_inset Formula 
+\[
+\sbf A=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}\cdots
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dot{\sbf p},\quad-\sbf m\times\nabla,\quad\frac{-1}{6}\nabla\cdot\dot{\mathscr{D}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+电磁波的衍射
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+惠更斯原理：经典光学把波前的每一点，看成发射子波的次级光源，向前传播的光波是所有子波的叠加。
+\begin_inset Formula 
+\begin{align*}
+\text{场强的任意直角分量满足：} & \left(\nabla^{2}+k^{2}\right)\phi\left(x\right)=0\\
+\text{格林函数满足：} & \left(\nabla^{2}+k^{2}\right)G\left(\sbf x,\sbf x^{\prime}\right)=-4\pi\delta\left(\sbf x-\sbf x^{\prime}\right)
+\end{align*}
+
+\end_inset
+
+基尔霍夫公式：
+\begin_inset Formula 
+\[
+\phi\left(\sbf x\right)=\frac{-1}{4\pi}\oint_{S}\frac{e^{ikr}}{r}\sbf e_{n}\cdot\left[\nabla^{\prime}\phi\left(\sbf x^{\prime}\right)+\sbf e_{r}\left(ik-\frac{1}{r}\right)\phi\left(\sbf x^{\prime}\right)\right]\dif S^{\prime}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\sbf e_{n}$
+\end_inset
+
+从边界指向内部。
+\end_layout
+
+\begin_layout Frame
+当平面波
+\begin_inset Formula $\left(\sbf k_{1},\phi_{0}\right)$
+\end_inset
+
+从平板上的小孔通过时，简化为：
+\begin_inset Formula 
+\[
+\phi\left(\sbf x\right)=\frac{-1}{4\pi}\frac{e^{ikR}}{R}i\phi_{0}\oint_{S}e^{i\left(\sbf k_{1}-\sbf k_{2}\right)\cdot\sbf x^{\prime}}\left(\cos\theta_{1}+\cos\theta_{2}\right)\dif S^{\prime}
+\]
+
+\end_inset
+
+积分遍及小孔面积
+\begin_inset Formula $S_{0}$
+\end_inset
+
+，
+\begin_inset Formula $R$
+\end_inset
+
+是小孔中心到场点
+\begin_inset Formula $\sbf x$
+\end_inset
+
+的距离，
+\begin_inset Formula $\sbf k_{2}=k_{2}\sbf e_{R}$
+\end_inset
+
+为衍射波矢。
+\begin_inset Formula $\theta_{1},\theta_{2}$
+\end_inset
+
+为
+\begin_inset Formula $\sbf k_{1},\sbf k_{2}$
+\end_inset
+
+与小孔法向的夹角，
+\begin_inset Formula $\left(\cos\theta_{1}+\cos\theta_{2}\right)$
+\end_inset
+
+称为倾斜因子。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+能量动量张量
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+真空中电磁波的各种密度：能量，动量，动量流，能流，
+\begin_inset Formula 
+\begin{align*}
+w & =\frac{1}{2}\left(\sbf E\cdot\sbf D+\sbf H\cdot\sbf B\right)=\frac{1}{2}\left(\varepsilon_{0}E^{2}+\frac{1}{\mu_{0}}B^{2}\right)=\varepsilon_{0}E^{2}=B_{2}/\mu_{0}\\
+\sbf g & =\varepsilon_{0}\mu_{0}\sbf E\times\sbf H=\sbf S/c^{2}=\frac{w}{c}\sbf e_{k},\\
+\mathscr{T} & =-\left(\varepsilon_{0}\sbf E\sbf E+\frac{1}{\mu_{0}}\sbf B\sbf B\right)+Iw=w\sbf e_{k}\sbf e_{k}\\
+\sbf S= & \sbf E\times\sbf H=wc\sbf e_{k},\quad\abs{\sbf E}=c\abs{\sbf B}
+\end{align*}
+
+\end_inset
+
+电磁场的能动量张量：
+\begin_inset Formula 
+\[
+T^{\mu\nu}=\frac{w}{c}\left[\begin{array}{cc}
+1 & \sbf e_{k}\\
+\sbf e_{k} & c\sbf e_{k}\sbf e_{k}
+\end{array}\right],\quad\mu,\nu=0,1,2,3
+\]
+
+\end_inset
+
+电磁波对宏观物体表面的辐射压力为：
+\begin_inset Formula $\sbf f_{s}=-\sbf e_{n}\cdot\mathscr{T}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Frame
+平面波对导体或者黑体的辐射压强：
+\begin_inset Formula $P\left(\cos\theta\right)=\overline{w}\cos^{2}\theta,\quad\overline{P}=\frac{\overline{w}}{3}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.2
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tea[z_, k_] := {2 E0*Cos[dk*z - d
+\backslash
+[Omega]*t] Cos[k*z - 
+\backslash
+[Omega]*t], 2 E0*Cos[dk*z - d
+\backslash
+[Omega]*t], -2 E0* Cos[dk*z - d
+\backslash
+[Omega]*t]} /.
+ {E0 -> 1, t -> 1, dk -> 1, 
+\backslash
+[Omega] -> 1000, d
+\backslash
+[Omega] -> 1}; teb = GraphicsRow[{ Plot[Evaluate@tea[z, 10], {z, 0, 2 
+\backslash
+[Pi]}], Plot[Evaluate@tea[z, 20], {z, 0, 2 
+\backslash
+[Pi]}], Plot[Evaluate@tea[z, 30], {z, 0, 2 
+\backslash
+[Pi]}] }, ImageSize -> {480, 150} ]; Export["/home/tom/note/others/baoLuoMian.pdf
+", teb]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+证明在线性各向同行均匀非导电介质中，若
+\begin_inset Formula $\rho=0$
+\end_inset
+
+，
+\begin_inset Formula $\sbf J=0$
+\end_inset
+
+，则
+\begin_inset Formula $\sbf E$
+\end_inset
+
+和
+\begin_inset Formula $\sbf B$
+\end_inset
+
+可完全由矢势
+\begin_inset Formula $\sbf A$
+\end_inset
+
+决定。若取
+\begin_inset Formula $\varphi=0$
+\end_inset
+
+，这时
+\begin_inset Formula $\sbf A$
+\end_inset
+
+满足哪两个方程？
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\color blue
+证：
+\color inherit
+单色波，线性，各向同性，均匀介质，
+\begin_inset Formula $\sbf D=\varepsilon\sbf E$
+\end_inset
+
+，
+\begin_inset Formula $\sbf B=\mu\sbf H$
+\end_inset
+
+。若
+\begin_inset Formula $\rho=0$
+\end_inset
+
+，
+\begin_inset Formula $\sbf J=0$
+\end_inset
+
+，场方程为
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\sbf E=0,\quad\nabla\times\sbf E=-\partial_{t}\sbf B\\
+ & \nabla\cdot\sbf B=0,\quad\nabla\times\sbf B=\mu\varepsilon\partial_{t}\sbf E
+\end{align*}
+
+\end_inset
+
+代入
+\begin_inset Formula $\sbf B=\nabla\times\sbf A$
+\end_inset
+
+，
+\begin_inset Formula $\sbf E=-\nabla\varphi-\partial_{t}\sbf A$
+\end_inset
+
+，并选择洛伦兹规范
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf A+\mu\varepsilon\partial_{t}\varphi=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\times\nabla\times\sbf A=-\mu\varepsilon\left(\partial_{t}\nabla\varphi+\partial_{t}^{2}\sbf A\right)\\
+\Rightarrow & \nabla\left(\nabla\cdot\sbf A\right)-\nabla^{2}\sbf A=-\mu\varepsilon\left(\partial_{t}\nabla\varphi+\partial_{t}^{2}\sbf A\right)\\
+\Rightarrow & -\mu\varepsilon\nabla\left(\partial_{t}\varphi\right)-\nabla^{2}\sbf A=-\mu\varepsilon\left(\partial_{t}\nabla\varphi+\partial_{t}^{2}\sbf A\right)\\
+\Rightarrow & \partial_{t}^{2}\sbf A=\frac{1}{\mu\varepsilon}\nabla^{2}\sbf A
+\end{align*}
+
+\end_inset
+
+得到
+\begin_inset Formula $\sbf A$
+\end_inset
+
+和
+\begin_inset Formula $\varphi$
+\end_inset
+
+均满足齐次波动方程：
+\begin_inset Formula 
+\[
+\partial_{t}^{2}\sbf A=\frac{1}{\mu\varepsilon}\nabla^{2}\sbf A,\quad\partial_{t}^{2}\varphi=\frac{1}{\mu\varepsilon}\nabla^{2}\varphi.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+将角频率为
+\begin_inset Formula $\omega$
+\end_inset
+
+的单色波
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=A\left(\sbf x\right)e^{-i\omega t},\quad\varphi\left(t,\sbf x\right)=\varphi\left(\sbf x\right)e^{-i\omega t}
+\]
+
+\end_inset
+
+代入洛伦兹规范
+\begin_inset Formula $\nabla\cdot\sbf A+\mu\varepsilon\partial_{t}\varphi=0$
+\end_inset
+
+，并求梯度：
+\begin_inset Formula 
+\[
+\nabla\varphi=\frac{1}{-i\omega}\frac{-1}{\mu\varepsilon}\nabla\left(\nabla\cdot\sbf A\right)=\frac{1}{i\omega\mu\varepsilon}\nabla\left(\nabla\cdot\sbf A\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf B=\nabla\times\sbf A,\quad\sbf E=-\nabla\varphi-\partial_{t}\sbf A=i\omega\sbf A+\frac{i}{\omega\mu\varepsilon}\nabla\left(\nabla\cdot\sbf A\right)
+\]
+
+\end_inset
+
+若取
+\begin_inset Formula $\varphi=0$
+\end_inset
+
+，洛伦兹规范变成
+\begin_inset Formula $\nabla\cdot A=0$
+\end_inset
+
+，则
+\begin_inset Formula $\sbf A$
+\end_inset
+
+的方程：
+\begin_inset Formula 
+\[
+\partial_{t}^{2}\sbf A=\frac{1}{\mu\varepsilon}\nabla^{2}\sbf A,\quad\nabla\cdot\sbf A=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+证明沿
+\begin_inset Formula $z$
+\end_inset
+
+轴方向传播的平面电磁波可用矢势
+\begin_inset Formula $\sbf A\left(\omega\tau\right)=\sbf A\left[\omega\left(t-\frac{z}{c}\right)\right]$
+\end_inset
+
+表示，其中
+\begin_inset Formula $\tau=t-z/c$
+\end_inset
+
+，
+\begin_inset Formula $\sbf A$
+\end_inset
+
+垂直于
+\begin_inset Formula $z$
+\end_inset
+
+轴方向。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+证：
+\color inherit
+取洛伦兹规范，
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf A+\frac{1}{c^{2}}\partial_{t}\varphi=0
+\]
+
+\end_inset
+
+齐次达朗贝尔方程的平面波解为：
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=A_{0}e^{-i\left(\omega t-\sbf k\cdot\sbf x\right)},\quad\varphi\left(t,\sbf x\right)=\varphi_{0}e^{-\left(\omega t-\sbf k\cdot\sbf x\right)}
+\]
+
+\end_inset
+
+取
+\begin_inset Formula $\nabla\cdot\sbf A=0$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+i\sbf k\cdot\sbf A-\frac{i\omega}{c^{2}}\varphi=0,\quad\varphi=0
+\]
+
+\end_inset
+
+而波矢量
+\begin_inset Formula $\sbf k=k\sbf e_{z}$
+\end_inset
+
+，所以矢势为
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=\sbf A_{0}e^{-\left(i\omega t-kz\right)}=\sbf A\left(\omega,t-\frac{z}{c}\right)=\sbf A\left(\omega,\tau\right)
+\]
+
+\end_inset
+
+此平面波的电磁场为：
+\begin_inset Formula 
+\[
+\sbf B=\nabla\times\sbf A=i\sbf k\times\sbf A\left(\omega,\tau\right),\quad\sbf E=-\partial_{t}\sbf A=i\omega\sbf A\left(\omega,\tau\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.6
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+两个质量、电荷都相同的粒子相向而行发生碰撞，证明电偶极辐射和磁偶极辐射都不会发生。
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+证：
+\color inherit
+系统的总动量为零，
+\begin_inset Formula 
+\[
+m\sbf v_{1}+m\sbf v_{2}=0
+\]
+
+\end_inset
+
+且它们能够相撞。选取合适的惯性参考系，能够使两粒子的运动速度和位置矢量等值反向，即
+\begin_inset Formula $\sbf v_{1}=-v_{2}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf x_{1}=-x_{2}$
+\end_inset
+
+。又因为两粒子的电荷量
+\begin_inset Formula $q$
+\end_inset
+
+相等，这系统的电偶极矩和磁偶极矩都为零：
+\begin_inset Formula 
+\[
+\sbf p=\sum_{i}q\sbf x_{i}=0,\quad\sbf m=\sum_{i}\frac{1}{2}q\left(\sbf x_{i}\times\sbf v_{i}\right)=0
+\]
+
+\end_inset
+
+因此不会发生电偶极和磁偶极辐射。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.7
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+设有一球对称的电荷分布，以频率
+\begin_inset Formula $\omega$
+\end_inset
+
+沿径向作简谐振动，求辐射场，并对结果给以物理解释。
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+解：
+\color inherit
+电荷球对称分布，所以电荷密度
+\begin_inset Formula $\rho=\rho\left(r^{\prime}\right)$
+\end_inset
+
+。设在平衡状态下，球内任某点源的位置矢量为
+\begin_inset Formula 
+\[
+\sbf r^{\prime}=\sbf r_{0}^{\prime}e^{-i\omega t^{\prime}}
+\]
+
+\end_inset
+
+其速度为
+\begin_inset Formula 
+\[
+\sbf v^{\prime}=-i\omega\sbf r^{\prime},
+\]
+
+\end_inset
+
+于是球内的电流密度为，
+\begin_inset Formula 
+\[
+\sbf J\left(t^{\prime},\sbf x^{\prime}\right)=\rho\left(r^{\prime}\right)\sbf v^{\prime}=-i\omega\sbf r_{0}^{\prime}\rho\left(r^{\prime}\right)e^{-i\omega t^{\prime}}
+\]
+
+\end_inset
+
+推迟势为：
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=\frac{\mu_{0}}{4\pi}\int_{V}\frac{\sbf J\left(t-r/c,\sbf x^{\prime}\right)}{r}\dif V^{\prime}=0
+\]
+
+\end_inset
+
+球体中两对称点的
+\begin_inset Formula $\rho\left(r^{\prime}\right)$
+\end_inset
+
+相等，而
+\begin_inset Formula $\sbf r^{\prime}$
+\end_inset
+
+等值反向，所以
+\begin_inset Formula $\sbf J\left(t^{\prime},\sbf x^{\prime}\right)$
+\end_inset
+
+在球上的积分为零，即不会发生辐射。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+半径为
+\begin_inset Formula $R_{0}$
+\end_inset
+
+的均匀永磁体小球，磁化强度为
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+，球以恒定角速度
+\begin_inset Formula $\omega$
+\end_inset
+
+绕通过球心而垂直于
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+的轴旋转，设
+\begin_inset Formula $R_{0}\omega\ll c$
+\end_inset
+
+，求辐射场和能流。
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+提示：
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+以角速度
+\begin_inset Formula $\omega$
+\end_inset
+
+转动，可分解为相位差为
+\begin_inset Formula $\pi/2$
+\end_inset
+
+的互相垂直的线振动（参阅第四章习题5）；直角坐标系与球坐标系基矢的变换关系为
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf e_{x}\\
+\sbf e_{y}\\
+\sbf e_{z}
+\end{array}\right)=\left(\begin{array}{ccc}
+\sin\theta\cos\phi & \cos\theta\cos\phi & -\sin\phi\\
+\sin\theta\sin\phi & \cos\theta\sin\phi & \cos\phi\\
+\cos\theta & -\sin\theta & 0
+\end{array}\right)\left(\begin{array}{c}
+\sbf e_{R}\\
+\sbf e_{\theta}\\
+\sbf e_{\phi}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\color inherit
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf e_{R}\\
+\sbf e_{\theta}\\
+\sbf e_{\phi}
+\end{array}\right)=\left(\begin{array}{ccc}
+\sin\theta\cos\phi & \sin\theta\sin\phi & \cos\theta\\
+\cos\theta\cos\phi & \cos\theta\sin\phi & -\sin\theta\\
+-\sin\phi & \cos\phi & 0
+\end{array}\right)\left(\begin{array}{c}
+\sbf e_{x}\\
+\sbf e_{y}\\
+\sbf e_{z}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \sbf g_{i}=\Lambda_{ij}\sbf f_{j},\quad\sbf f_{i}=\left(\Lambda^{-1}\right)_{ij}\sbf g_{j}\\
+ & \tps\Lambda\Lambda=I\Rightarrow\Lambda^{-1}=\tps\Lambda
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\size small
+\begin_inset Formula 
+\[
+\sbf m=\sbf e_{x}m_{0}\cos\omega t+\sbf e_{y}m_{0}\sin\omega t
+\]
+
+\end_inset
+
+并写成复数形式，
+\begin_inset Formula 
+\begin{align*}
+\sbf m & ={\color{blue}\frac{4\pi R_{0}^{3}M_{0}}{3}}\left(\sbf e_{x}+i\sbf e_{y}\right)e^{-i\omega t}={\color{blue}m_{0}}\left(\sbf e_{x}+i\sbf e_{y}\right)e^{-i\omega t}\\
+\sbf m & =m_{0}e^{-i\left(\omega t-\phi\right)}\left(\sin\theta\sbf e_{R}+\cos\theta\sbf e_{\theta}+i\sbf e_{\phi}\right),\quad\sbf{\ddot{m}}=-\omega^{2}\sbf m
+\end{align*}
+
+\end_inset
+
+其中使用了，
+\begin_inset Formula 
+\begin{align*}
+\sbf e_{x} & =\sin\theta\cos\phi\sbf e_{R}+\cos\theta\cos\phi\sbf e_{\theta}-\sin\phi\sbf e_{\phi},\\
+\sbf e_{y} & =\sin\theta\sin\phi\sbf e_{R}+\cos\theta\sin\phi\sbf e_{\theta}+\cos\phi\sbf e_{\phi},\quad\underset{\rightarrow}{\left(R,\theta,\phi\right)}
+\end{align*}
+
+\end_inset
+
+辐射场和平均辐射能流密度为
+\begin_inset Formula 
+\begin{align*}
+\sbf B & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}i\sbf k_{R}\times\left(-\sbf{m}\times i\sbf k_{R}\right)=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR-\phi\right)}}{R}\frac{{\color{blue}m_{0}}\omega^{2}}{c^{2}}\left(\sbf e_{\theta}\cos\theta+i\sbf e_{\phi}\right)\\
+\sbf E & =c\sbf B\times\sbf e_{R}=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR-\phi\right)}}{R}\frac{{\color{blue}m_{0}}\omega^{2}}{c}\left(-\sbf e_{\phi}\cos\theta+i\sbf e_{\theta}\right)\\
+\overline{S} & =\frac{c}{2\mu_{0}}\left(\sbf B^{*}.\sbf B\right)\sbf e_{R}=\frac{\mu_{0}}{32\pi^{2}}\frac{1}{R^{2}}\frac{{\color{blue}m_{0}^{2}}\omega^{4}}{c^{3}}\left[1+\cos^{2}\theta\right]\sbf e_{R}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+带电粒子
+\begin_inset Formula $e$
+\end_inset
+
+作半径为
+\begin_inset Formula $a$
+\end_inset
+
+的非相对论性周期运动，回旋频率为
+\begin_inset Formula $\omega$
+\end_inset
+
+。求远处的辐射电磁场和辐射能流。
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+解：
+\color inherit
+设粒子运动平面为
+\begin_inset Formula $xy$
+\end_inset
+
+平面。
+\begin_inset Formula 
+\[
+\sbf p=ea\sbf e_{r}=ea\left(\sbf e_{x}\cos\omega t+\sbf e_{y}\sin\omega t\right)
+\]
+
+\end_inset
+
+写成复数形式：
+\begin_inset Formula 
+\begin{align*}
+ & \sbf p=ea\left(\sbf e_{x}+i\sbf e_{y}\right)e^{-i\omega t},\quad\dot{\sbf p}=-i\omega\sbf p,\quad\ddot{p}=-\omega^{2}\sbf p\\
+ & \sbf p=eae^{-i\left(\omega t-\phi\right)}\left(\sin\theta\sbf e_{R}+\cos\theta\sbf e_{\theta}+i\sbf e_{\phi}\right),
+\end{align*}
+
+\end_inset
+
+其中使用了坐标基矢变换：
+\begin_inset Formula 
+\begin{align*}
+\sbf e_{x} & =\sin\theta\cos\phi\sbf e_{R}+\cos\theta\cos\phi\sbf e_{\theta}-\sin\phi\sbf e_{\phi},\\
+\sbf e_{y} & =\sin\theta\sin\phi\sbf e_{R}+\cos\theta\sin\phi\sbf e_{\theta}+\cos\phi\sbf e_{\phi},\quad\underset{\rightarrow}{\left(R,\theta,\phi\right)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\sbf p=eae^{-i\left(\omega t-\phi\right)}\left(\sin\theta\sbf e_{R}+\cos\theta\sbf e_{\theta}+i\sbf e_{\phi}\right)\quad\underset{\rightarrow}{\left(R,\theta,\phi\right)}
+\]
+
+\end_inset
+
+相应的辐射场和平均辐射能流密度为，
+\begin_inset Formula 
+\begin{align*}
+\sbf B & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}i\sbf k_{R}\times\dot{\sbf p}=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR-\phi\right)}}{R}\frac{ea\omega^{2}}{c}\left(\cos\theta\sbf e_{\phi}-i\sbf e_{\theta}\right)\\
+\sbf E & =c\sbf B\times\sbf e_{R}=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR-\phi\right)}}{R}ea\omega^{2}\left(\cos\theta\sbf e_{\theta}+i\sbf e_{\phi}\right)\\
+\overline{\sbf S} & =\frac{1}{2}\left(c\sbf B^{*}\cdot\frac{1}{\mu_{0}}\sbf B\right)\sbf e_{R}=\frac{\mu_{0}\omega^{4}e^{2}a^{2}}{32\pi^{2}cR^{2}}\left(1+\cos^{2}\theta\right)\sbf e_{R}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.12
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+设有一电矩振幅为
+\begin_inset Formula $\sbf p_{0}$
+\end_inset
+
+，频率为
+\begin_inset Formula $\omega$
+\end_inset
+
+的电偶极子距理想导体平面为
+\begin_inset Formula $a/2$
+\end_inset
+
+处，
+\begin_inset Formula $\sbf p_{0}$
+\end_inset
+
+平行于导体平面，设
+\begin_inset Formula $a\ll\lambda$
+\end_inset
+
+，求在
+\begin_inset Formula $R\gg\lambda$
+\end_inset
+
+处电磁场及辐射能流。
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+解：
+\color inherit
+由于
+\begin_inset Formula $a\ll\lambda$
+\end_inset
+
+，导体表面的场可以当成似稳场。从电像法可以知道，镜像为
+\begin_inset Formula 
+\[
+\sbf p^{\prime}=-\sbf p=-p_{0}e^{-i\omega t}\sbf e_{x},\quad\text{位于}\,z=-a/2
+\]
+
+\end_inset
+
+辐射区的磁场是
+\begin_inset Formula $\sbf p$
+\end_inset
+
+和
+\begin_inset Formula $\sbf p^{\prime}$
+\end_inset
+
+的磁场之叠加。令
+\begin_inset Formula $r_{1}$
+\end_inset
+
+和
+\begin_inset Formula $r_{2}$
+\end_inset
+
+分别是
+\begin_inset Formula $\sbf p$
+\end_inset
+
+和
+\begin_inset Formula $\sbf p^{\prime}$
+\end_inset
+
+到场点的距离，当
+\begin_inset Formula $r_{1},r_{2}\gg x^{\prime}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+r_{1}\approx R-\frac{a}{2}\cos\theta,\quad r_{2}\approx R+\frac{a}{2}\cos\theta,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf B_{p} & =\frac{\mu_{0}}{4\pi}\frac{e^{ikr_{1}}}{r_{1}}i\sbf k_{r_{1}}\times\dot{\sbf p}\approx\frac{\mu_{0}}{4\pi}\frac{e^{ik\left(R-\frac{1}{2}a\cos\theta\right)}}{Rc}\ddot{\sbf p}\times\sbf e_{R}\\
+\sbf B_{p^{\prime}} & =\frac{\mu_{0}}{4\pi}\frac{e^{ikr_{2}}}{r_{2}}i\sbf k_{r_{2}}\times\dot{\sbf p^{\prime}}\approx\frac{\mu_{0}}{4\pi}\frac{e^{ik\left(R+\frac{1}{2}a\cos\theta\right)}}{Rc}\ddot{\sbf p^{\prime}}\times\sbf e_{R}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.12
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+其中
+\begin_inset Formula 
+\[
+\ddot{\sbf p}=-\omega^{2}\sbf p=-\omega^{2}p_{0}e^{-i\omega t}\sbf e_{x},\quad\ddot{\sbf p^{\prime}}=-\omega^{2}\sbf p^{\prime}=\omega^{2}p_{0}e^{-i\omega t}\sbf e_{x}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+e^{\pm\frac{ika}{2}\cos\theta}\approx1\pm\frac{ika}{2}\cos\theta,\quad ka\ll1
+\]
+
+\end_inset
+
+所以总的磁场为：
+\begin_inset Formula 
+\[
+-\omega^{2}p_{0}e^{-\frac{ika}{2}\cos\theta}+\omega^{2}p_{0}e^{+\frac{ika}{2}\cos\theta}\approx\omega^{2}p_{0}ika\cos\theta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf B & =\sbf B_{p}+\sbf B_{p^{\prime}}=\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{Rc}\left(\omega^{2}p_{0}ika\cos\theta\right)\sbf e_{x}\times\sbf e_{R}\\
+ & =\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR\right)}}{R}\frac{-i\omega^{3}}{c^{2}}ap_{0}\cos\theta\left(\cos\theta\cos\phi\sbf e_{\phi}+\sin\phi\sbf e_{\theta}\right)
+\end{align*}
+
+\end_inset
+
+其中使用了：
+\begin_inset Formula 
+\[
+\sbf e_{x}=\sin\theta\cos\phi\sbf e_{R}+\cos\theta\cos\phi\sbf e_{\theta}-\sin\phi\sbf e_{\phi},\quad\underset{\rightarrow}{\left(R,\theta,\phi\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.12
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf B & =\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR\right)}}{R}\frac{-i\omega^{3}ap_{0}}{c^{2}}\cos\theta\left(\cos\theta\cos\phi\sbf e_{\phi}+\sin\phi\sbf e_{\theta}\right)\\
+\sbf E & =c\sbf B\times\sbf e_{R}=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR\right)}}{R}\frac{-i\omega^{3}ap_{0}}{c}\cos\theta\left(\cos\theta\cos\phi\sbf e_{\theta}-\sin\phi\sbf e_{\phi}\right)
+\end{align*}
+
+\end_inset
+
+波的偏振状态随
+\begin_inset Formula $\theta$
+\end_inset
+
+和
+\begin_inset Formula $\phi$
+\end_inset
+
+的不同而改变。平均辐射能流密度为，
+\begin_inset Formula 
+\[
+\overline{\sbf S}=\frac{c}{2\mu_{0}}\left(\sbf B^{*}\cdot\sbf B\right)\sbf e_{R}=\frac{\mu_{0}}{32\pi^{2}}\frac{1}{R^{2}}\frac{\omega^{6}}{c^{3}}a^{2}p_{0}^{2}\cos^{2}\theta\left(\cos^{2}\theta\cos^{2}\phi-\sin\phi^{2}\right)\sbf e_{R}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+设有线偏振平面波
+\begin_inset Formula $\sbf E=\sbf E_{0}e^{-i\left(\omega t-kx\right)}$
+\end_inset
+
+照射到一个绝缘介质球上，
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+在
+\begin_inset Formula $z$
+\end_inset
+
+方向。引起介质球极化，极化矢量
+\begin_inset Formula $\sbf P$
+\end_inset
+
+是随着时间变化的，因而产生辐射。设平面波的波长
+\begin_inset Formula $2\pi/k$
+\end_inset
+
+ 远大于球半径
+\begin_inset Formula $R_{0}$
+\end_inset
+
+，求介质球所产生的辐射场和能流。
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+解：
+\color inherit
+
+\begin_inset Formula 
+\[
+\sbf A\left(t,\sbf x\right)=e^{-i\omega t}\frac{\mu_{0}}{4\pi}\int_{V}\frac{\sbf J\left(\sbf x^{\prime}\right)e^{ikr}}{r}\dif V^{\prime}
+\]
+
+\end_inset
+
+当波长
+\begin_inset Formula $\lambda=2\pi/k\gg R_{0}$
+\end_inset
+
+，也就是
+\begin_inset Formula $kr\ll1$
+\end_inset
+
+，
+\begin_inset Formula $e^{ikr}\approx1$
+\end_inset
+
+，把小球附近的场当作似稳场，按照静电场边值问题的方法求解，课本P51，(3.21)
+\begin_inset Formula 
+\[
+\varphi_{1}=\frac{-3\varepsilon_{0}}{\varepsilon+2\varepsilon_{0}}E_{0}R\cos\theta,\quad\varphi_{2}=-E_{0}R\cos\theta+\frac{\varepsilon-\varepsilon_{0}}{\varepsilon+2\varepsilon_{0}}\frac{E_{0}R_{0}^{3}}{R^{2}}\cos\theta.
+\]
+
+\end_inset
+
+介质球内的极化强度：
+\begin_inset Formula 
+\begin{align*}
+\sbf D_{1} & =\varepsilon\sbf E_{1}=\varepsilon_{0}\sbf E_{1}+\sbf P\Rightarrow\sbf P=\left(\varepsilon-\varepsilon_{0}\right)\sbf E_{1}\\
+\sbf P_{0} & =-\left(\varepsilon-\varepsilon_{0}\right)\nabla\varphi_{1}=\frac{3\varepsilon_{0}\left(\varepsilon-\varepsilon_{0}\right)}{\varepsilon+2\varepsilon_{0}}E_{0}\sbf e_{z}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+5.13
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf P_{0}=-\left(\varepsilon-\varepsilon_{0}\right)\nabla\varphi_{1}=\frac{3\varepsilon_{0}\left(\varepsilon-\varepsilon_{0}\right)}{\varepsilon+2\varepsilon_{0}}E_{0}\sbf e_{z}
+\]
+
+\end_inset
+
+介质球的总电偶极矩，
+\begin_inset Formula 
+\[
+\sbf p=\frac{4\pi R_{0}^{3}}{3}\sbf P_{0}e^{-i\omega t}={\color{blue}\frac{4\pi R_{0}^{3}\varepsilon_{0}\left(\varepsilon-\varepsilon_{0}\right)}{\varepsilon+2\varepsilon_{0}}E_{0}}\sbf e_{z}e^{-i\omega t}={\color{blue}p_{0}}\sbf e_{z}e^{-i\omega t}.
+\]
+
+\end_inset
+
+所以辐射场和平均辐射能流密度为：
+\begin_inset Formula 
+\begin{align*}
+\sbf B & =\frac{\mu_{0}}{4\pi}\frac{e^{ikR}}{R}i\sbf k_{R}\times\dot{\sbf p}=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR\right)}}{R}\frac{-\omega^{2}}{c}p_{0}\sin\theta\sbf e_{\phi}\\
+\sbf E & =c\sbf B\times\sbf e_{R}=\frac{\mu_{0}}{4\pi}\frac{e^{-i\left(\omega t-kR\right)}}{R}\left(-\omega^{2}\right)p_{0}\sin\theta\sbf e_{\theta}\\
+\overline{\sbf S} & =\frac{1}{2}\left(c\sbf B^{*}\cdot\frac{1}{\mu_{0}}\sbf B\right)\sbf e_{R}=\frac{\omega^{4}p_{0}^{2}}{32\pi^{2}cR^{2}}\sin^{2}\theta\sbf e_{R}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf e_{z}=\cos\theta\sbf e_{R}-\sin\theta\sbf e_{\theta},\quad\underset{\rightarrow}{\left(R,\theta,\phi\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

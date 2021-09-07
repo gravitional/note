@@ -1,0 +1,32 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}
+	\begin{feynman}
+		%% fig h
+		\vertex (i1) at (0,0);
+		\vertex[right =1cm  of i1] (i2);
+		\vertex[right =2cm  of i1, dot,anchor=center] (i3){};
+		\vertex[right =3cm  of i1] (i4);
+		\vertex[right =4cm  of i1] (i5);
+		\vertex[above =-1.4cm  of i3] (i6);
+		\node[above =0.5cm  of i5] {$i$};
+		% 对各个顶点连线
+		\diagram*{
+			{ [edge= fermion]
+					(i1) --  (i3)--(i5),
+				},
+			% 介子连线
+			% { [edge= charged scalar]
+			% (h3) --[half left ](h6)--[half left](h3),
+			% }
+		};
+		\draw  (i3) edge [anti charged scalar,loop, min distance=3.5cm] (i3);
+	\end{feynman}
+\end{tikzpicture}
+
+
+\end{document}

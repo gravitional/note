@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# 设置格式化相关的部分
+nameis="name is :"
+# 定义一个打印的函数,并且加上颜色输出
+function echo2() {
+	delimiter1="-------------------------------------------------------"
+	delimiter2="-------------------------------------------------------"
+	echo -e "${delimiter1}\n\033[1;44m\033[1;37m$*\033[0;0m\n${delimiter2}"
+}
+# 打印当前目录
+echo2 "current directory is $(pwd)  "
+# tex主文档的默认文件名是 main.tex
+tex_usual="main.tex"
+echo2 "tex_usual" $nameis $tex_usual
+# 当前tex文件列表
+tex_here=$(find . -mindepth 1 -maxdepth 1 -type f -iname '*.tex' -print0 | xargs --null echo)
+echo2 "tex_here $nameis $tex_here"
+
+# 如果有命令行参数，优先使用
+result=$(echo $tex_here | grep -iP "main.tex")
+if [[ $* != "" ]]; then
+	tex_here=$*
+	echo2 "We just compile the, $tex_here"
+	# 如果无命令行参数, 判断当前文件列表中是否包含 main.tex
+elif [[ $result != "" ]]; then
+	tex_here=$tex_usual
+	echo2 "We just compile the, $tex_here"
+elif [[ $tex_here == "" ]]; then
+	echo2 "I can not see any tex file here, check the file names or whatever. "
+else
+	echo2 "because there isn't a tex file named 'main.tex', so we just compile the, $tex_here"
+fi
+# 开始循环，对每一个tex文件编译，并寻找错误
+# 可增加输出文件夹选项 -auxdir=temp -outdir=temp
+# 还有 -shell-escape 选项
+# 把下面这行加入到 ~/.latexmkrc，指定 pdf 查看程序
+# $pdf_previewer = 'evince %O %S';
+# -silent 选项可以抑制输出
+for t in $tex_here; do
+	# 打印正在处理的tex 文件名字
+	echo2 "the tex processed is $t"
+	tBase=$(basename -s '.tex' $t)
+	# 用latexmk 逐个编译 *.tex
+	latexmk -silent -xelatex -pv -view=pdf -bibtex -cd -recorder -file-line-error -interaction=nonstopmode -synctex=1 $tBase
+	## 输出错误记录
+	echo2 'echo message'
+	# 输出警告
+	grep -m 10 -Pi -n --color -B 0 -A 8 "\[\d+\]" "$tBase.log"
+	# 输出各种形式的错误
+	echo2 'echo errors 1'
+	grep -Pi -m 15 -n --color -B 1 -A 6 -e "! LaTeX Error:" "$tBase.log"
+	echo2 'echo errors 2'
+	grep -Pi -m 15 -n --color -B 1 -A 6 -e "\? x" "$tBase.log"
+	echo2 'echo errors 3'
+	grep -Pi -m 15 -n --color -B 0 -A 6 -e "\.tex:\d+:" "$tBase.log"
+	#echo2 'echo errors 4'
+	#grep -Pi -m 15 -n --color -B 0 -A 6 -e "! Package tikz Error:" "${t}.log"
+	# 给出错误的具体位置 l.123
+	echo2 'the error line postion'
+	grep -Pi -m 15 -n --color -B 1 -A 1 "l\.\d+" "$tBase.log"
+done

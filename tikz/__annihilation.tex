@@ -1,0 +1,38 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary {scopes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}
+	\begin{feynman}[ultra thick]
+		%% fig a
+		\vertex (a1) at (0,0){$e^{-}$};
+		\vertex[above right =-1cm and 3cm of a1] (a2);
+        \vertex[above right =0cm and 6cm of a1] (a3){$\gamma$};
+		%%%%%%%%%
+		\vertex[above right =-4cm and 0cm of a1] (b1){$e^{+}$};
+		\vertex[above right =1cm and 3cm of b1] (b2);
+		\vertex[above right =0cm and 6cm of b1] (b3){$\gamma$};
+		%%%%%%%%%
+		\vertex[above right =-6cm and -1cm of a1] (o1);
+		\node[above right =0cm and 0cm of o1,rotate=90,scale=1] {Space};
+		\node[above right =-0.5 cm and 0cm of o1,rotate=0,scale=1] {Time};
+		% 对各个顶点连线
+		\diagram*{
+            { [edge= fermion]
+            (a1) --(a2)--[edge label'=\(e^{-}\)] (b2)--(b1),
+            },
+            % 光子连线
+		{ [edge= photon]
+		(a2) -- (a3),(b2) -- (b3),
+		}
+		};
+		\draw[arrows = {-Stealth[length=10pt, inset=5pt]}] (o1) -- ++(2,0);
+		\draw[arrows = {-Stealth[length=10pt, inset=5pt]}] (o1) -- ++(0,2);
+	\end{feynman}
+\end{tikzpicture}
+
+\end{document}

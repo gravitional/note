@@ -1,0 +1,232 @@
+%% LyX 2.3.5-1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,UTF8]{ctexbook}
+\usepackage[T1]{fontenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{amsmath}
+\usepackage{esint}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% 如果没有这一句命令，XeTeX会出错，原因参见
+% http://bbs.ctex.org/viewthread.php?tid=60547
+% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic} 
+\usepackage{xcolor}
+% Required for specifying colors by name 
+\definecolor{ocre}{RGB}{243,102,25} 
+\usepackage{enumerate} 
+
+\usepackage{amsfonts} 
+\usepackage{hep} 
+\usepackage{bm} 
+\usepackage{graphicx,graphics,color} 
+\usepackage{simplewick} 
+\usepackage{latexsym} 
+\usepackage{amssymb} 
+\usepackage{makeidx} 
+\usepackage{amsmath} 
+\usepackage{multirow} 
+\usepackage{slashed} 
+%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+%% \usepackage{axodraw2} 
+%%++++++++++++++++++++ 
+\DeclareMathOperator{\trace}{tr} 
+\DeclareMathOperator{\Real}{Re} 
+\DeclareMathOperator{\Imag}{Im} 
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+
+\makeatother
+
+\begin{document}
+\title{gauge-theory}
+\author{Young}
+\maketitle
+
+\chapter{非阿贝尔规范对称性}
+
+\section{平行移动算子}
+
+在定域规范变换下，要使不同时空点上的场之间有物理意义的联系，{\color{red}{需要将一个时空点上的场移动到另一个点，然后进行比较}}（如加减，标量积等操作。）这时，必须引入一个引子来补偿不同时空点上，规范变换之间的差异。这种移动操作可以通过引入{\color{red}{平行移动算子}}来实现。
+
+自由的Dirac 场（电子场）的拉氏量：$\mathcal{L}_{0}\left(x\right)=\bar{\psi}\left(x\right)\left(i\gamma^{\mu}\partial_{\mu}-m\right)\psi\left(x\right)$
+
+整体对称性：$\psi\left(x\right)\to e^{i\alpha}\psi\left(x\right),\quad\bar{\psi}\left(x\right)\to\bar{\psi}\left(x\right)e^{-i\alpha}$
+
+局域对称性中的$\alpha$依赖于坐标$x$。
+
+从 x 移动到y的平行移动算子$U\left(y,x\right)$满足性质：
+
+\[
+U\left(y,x\right)\to e^{i\,\alpha\left(y\right)}U\left(y,x\right)e^{-i\,\alpha\left(x\right)}
+\]
+
+普通导数：$n^{\mu}\partial_{\mu}\psi\left(x\right)=\lim_{\varepsilon\to0}\frac{1}{\varepsilon}\left(\psi\left(x+n\epsilon\right)-\psi\left(x\right)\right)$
+
+由于涉及到两个不同时空点上场的差。所以定域规范变换在两个时空点上是不同的，所以直接相减没有很好的定义。
+
+协变导数：$n^{\mu}D_{\mu}\psi\left(x\right)=\lim_{\varepsilon\to0}\frac{1}{\varepsilon}\left(\psi\left(x+n\epsilon\right)-U\left(x+n\varepsilon,x\right)\psi\left(x\right)\right)$
+
+相当于移动到一起再相减。将无穷小平行移动算子在单位元附近作展开
+
+\[
+U\left(x+n\varepsilon,x\right)=1-i\varepsilon en^{\mu}A_{\mu}\left(x\right)+O\left(\varepsilon^{2}\right)
+\]
+
+含义：变化量正比于移动距离$\varepsilon n$，比例系数为$A_{\mu}\left(x\right)$。
+
+\[
+D_{\mu}\psi\left(x\right)=\partial_{\mu}\psi\left(x\right)+ieA_{\mu}\left(x\right)\psi\left(x\right)=\left(\partial_{\mu}+ieA_{\mu}\left(x\right)\right)\psi\left(x\right)
+\]
+
+这实际上给出了电磁场的几何含义：
+
+定域的$U\left(1\right)$对称性自然引入了$U\left(1\right)$规范场，它是一种联络场。
+
+\subsection{有限平移算子}
+
+如果将无穷小平行移动沿某条路径$\mathcal{C}$从$x$到$y$连续作用，则会生成一个有限的平行移动算子$U\left(y,x;\mathcal{C}\right)$:
+
+\begin{align*}
+U\left(x+\Delta x,x\right) & =1-ie\Delta x^{\mu}A_{\mu}\left(x\right)+O\left(\Delta x^{2}\right)\\
+ & \approx\exp\left[-ie\int_{x}^{x+\Delta x}\dif y^{\mu}A_{\mu}\left(y\right)\right]
+\end{align*}
+
+\begin{align*}
+U\left(y,x;\mathcal{C}\right) & =U\left(y,y-\Delta x\right)U\left(y-\Delta x,y-2\Delta x\right)\cdots U\left(x+\Delta x,x\right)\\
+ & \equiv\mathcal{P}\exp\left[-ie\int_{x,\mathcal{C}}^{y}\dif z^{\mu}A_{\mu}\left(z\right)\right]
+\end{align*}
+
+有限的平行移动算子$U\left(y,x;\mathcal{C}\right)$是和路径$\mathcal{C}$有关的，且满足如下关系：
+
+\begin{align*}
+U\left(y,x;\mathcal{C}\right)U\left(x,y;\mathcal{C}\right) & =1\\
+U\left(y,x;\mathcal{C}\right)^{-1}=U\left(x,y;\mathcal{C}\right) & =U^{\dagger}\left(y,x;\mathcal{C}\right)
+\end{align*}
+
+非定域规范不变算子（Wilson line）：$\bar{\psi}\left(y\right)\Gamma U\left(y,x;\mathcal{C}\right)\psi\left(x\right)$
+
+规范场强是规范不变的：
+
+\begin{align*}
+U\left(x,x;\mathcal{C}\right) & =U\left(x,y;\mathcal{C}_{1}\right)U\left(y,x;\mathcal{C}_{2}\right)\cdots U\left(x+\Delta x,x\right)\\
+ & \equiv\mathcal{P}\exp\left[-ie\oint_{\mathcal{C}}\dif z^{\mu}A_{\mu}\left(z\right)\right]=\exp\left[-ie\iint_{\partial\mathcal{C}}\dif\sigma^{\mu\nu}F_{\mu\nu}\right]
+\end{align*}
+
+规范场强：
+
+\[
+F_{\mu\nu}\left(x\right)=\partial_{\mu}A_{\nu}\left(x\right)-\partial_{\nu}A_{\mu}\left(x\right)
+\]
+是规范不变的。
+
+\section{非阿贝尔规范对称性–Yang–Mills 理论}
+
+假设两种费米子场$\psi_{1}\left(x\right)$and $\psi_{1}\left(x\right)$，它们的质量相同，则它们的自由拉氏量可以写作
+\[
+\mathcal{L}_{0}=\bar{\psi}_{1}\left(i\gamma^{\mu}\partial-m\right)\psi_{1}+\bar{\psi}_{2}\left(i\gamma^{\mu}\partial-m\right)\psi_{2}\equiv\bar{\psi}\left(i\gamma^{\mu}\partial-m\right)\psi
+\]
+\begin{align*}
+\psi\left(x\right) & =\left(\begin{array}{c}
+\psi_{1}\left(x\right)\\
+\psi_{2}\left(x\right)
+\end{array}\right)
+\end{align*}
+
+$\mathcal{L}_{0}$在整体的$SU\left(2\right)$变换下不变：
+\[
+\begin{array}{ccc}
+\psi\left(x\right)\to V\psi\left(x\right) & \bar{\psi}\left(x\right)\to\bar{\psi}\left(x\right)V^{\dagger}\\
+V,V^{\dagger}\in SU\left(2\right), & VV^{\dagger}=V^{\dagger}V=1 & \det V=1
+\end{array}
+\]
+这个体系就有整体的$SU\left(2\right)$对称性。
+
+$SU\left(2\right)$群：二维复空间的幺正幺模矩阵群，三个生成元$t^{a},a=1,2,3$
+\[
+\left[t^{a},t^{b}\right]=i\varepsilon^{abc}t^{c},\qquad V=e^{i\theta^{a}t^{a}}\in SU\left(2\right)
+\]
+
+对于$n$维表示，生成元可以表示成$n\times n$的矩阵，我们经常用$T^{a}$来表示，以与基础表示矩阵$t^{a}$区分，相应的$SU\left(2\right)$的变换矩阵为
+\[
+V_{n\times n}=\exp[i\theta^{a}T^{a}]
+\]
+
+
+\subsection{SU(N)定域规范对称性}
+
+如果仿照QED的情形，我们将上述整体非阿贝尔变换定域化，即令群参数$\theta^{a}$是时空的函数，
+
+\[
+V\left(x\right)\in SU\left(2\right),\qquad V\left(x\right)=\exp^{i\theta^{a}\left(x\right)t^{a}}
+\]
+
+$\mathcal{L}_{0}\left(x\right)$在这种定域变换下，不再是不变的（偏导数也作用于$V\left(x\right)$）
+
+\begin{align*}
+\mathcal{L}_{0}\left(x\right) & \to\bar{\psi}\left(x\right)V^{\dagger}\left(x\right)\left(i\gamma^{\mu}\partial_{\mu}\right)V\left(x\right)\psi\left(x\right)-m\bar{\psi}\left(x\right)\psi\left(x\right)\\
+ & \bar{\psi}\left(x\right)\left(i\gamma^{\mu}\partial_{\mu}-m\right)\psi\left(x\right)+i\bar{\psi}\left(x\right)\gamma^{\mu}V^{\dagger}\left(x\right)\left(\partial_{\mu}V\left(x\right)\right)\psi\left(x\right)\\
+ & \mathcal{L}_{0}\left(x\right)++i\bar{\psi}\left(x\right)\gamma^{\mu}V^{\dagger}\left(x\right)\left(\partial_{\mu}V\left(x\right)\right)\psi\left(x\right)
+\end{align*}
+
+平行移动算子，从$x$移动到$y$的平行移动算子$U\left(y,x\right)$满足性质：
+
+\[
+U\left(y,x\right)\to V\left(y\right)U\left(y,x\right)v^{\dagger}\left(x\right),V\left(x\right)=e^{i\theta^{a}\left(x\right)t^{a}}
+\]
+
+无穷小平行移动算子：在单位元附近作无穷小展开
+\begin{align*}
+U\left(x+n\varepsilon,x\right) & =I+i\varepsilon gn^{\mu}A_{\mu}\left(x\right)+O\left(\varepsilon\right)\\
+ & =I+i\varepsilon gn^{\mu}A_{\mu}^{a}\left(x\right)t^{a}+O\left(\varepsilon^{2}\right)
+\end{align*}
+
+协变导数：
+\begin{align*}
+n^{\mu}D_{\mu}\psi\left(x\right) & =\lim_{\varepsilon\to0}\frac{1}{\varepsilon}\left[\psi\left(x+n\varepsilon\right)-U\left(x+n\varepsilon,x\right)\psi\left(x\right)\right]\\
+ & =\lim_{\varepsilon\to0}\frac{1}{\varepsilon}\left[\psi\left(x\right)+\varepsilon n^{\mu}\partial_{\mu}\psi\left(x\right)-\psi\left(x\right)-ig\varepsilon n^{\mu}A_{\mu}^{a}\left(x\right)t^{a}\psi\left(x\right)\right]\\
+ & =n^{\mu}\left(\partial_{\mu}-igA_{\mu}^{a}\left(x\right)t^{a}\right)\psi\left(x\right)
+\end{align*}
+\[
+D_{\mu}=\partial_{\mu}-igA_{\mu}\left(x\right)=\partial_{\mu}-igA_{\mu}^{a}\left(x\right)t^{a}
+\]
+$g$:规范耦合常数
+
+$A_{\mu}\left(x\right)=A_{\mu}^{a}\left(x\right)t^{a}$称为规范场，它是一种联络场。
+
+$A_{\mu}\left(x\right)$的规范变换性质：
+\begin{align*}
+\left.\begin{array}{c}
+U\left(y,x\right)\to V\left(y\right)U\left(y,x\right)v^{\dagger}\left(x\right)\\
+U\left(x+n\varepsilon,x\right)=I+i\varepsilon gn^{\mu}A_{\mu}\left(x\right)+O\left(\varepsilon^{2}\right)
+\end{array}\right\}  & \to\\
+I+ig\varepsilon n^{\mu}A_{\mu}\left(x\right)\to & I+ig\varepsilon n^{\mu}\left(V\left(x\right)A_{\mu}\left(x\right)V^{\dagger}\left(x\right)+\frac{i}{g}V\left(x\right)\partial_{\mu}V^{\mu}\left(x\right)\right)
+\end{align*}
+$A_{\mu}\left(x\right)$的规范变换性质（重要）：
+\[
+A_{\mu}\left(x\right)\to V\left(x\right)A_{\mu}\left(x\right)V^{\dagger}\left(x\right)+\frac{i}{g}V\left(x\right)\partial_{\mu}V^{\dagger}\left(x\right)
+\]
+即$A_{\mu}\left(x\right)$不是规范协变的，而$D_{\mu}\psi\left(x\right)$是规范协变的
+\[
+D_{\mu}\left(x\right)\psi\left(x\right)\to V\left(x\right)D_{\mu}\left(x\right)\psi\left(x\right)
+\]
+
+进一步地有
+\begin{align*}
+D_{\mu}\psi\left(x\right) & \to V\left(x\right)D_{\mu}\left(x\right)\psi\left(x\right)=V\left(x\right)D_{\mu}\left(x\right)\left(v^{\dagger}\left(x\right)V\left(x\right)\right)\psi\left(x\right)\\
+ & =V(x)D_{\mu}(x)V^{\dagger}(x)V(x)\psi(x)
+\end{align*}
+\[
+D_{\mu}(x)\to V(x)D_{\mu}(x)V^{\dagger}(x)
+\]
+
+end of file
+
+end of file
+\begin{thebibliography}{1}
+\bibitem{ref61}ref61
+\end{thebibliography}
+
+\end{document}

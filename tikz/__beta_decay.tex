@@ -1,0 +1,49 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary {scopes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}[thick]
+	\begin{feynman}
+		%% fig a
+		\vertex (a1) at (0,0){$d$};
+		\vertex[above right =0cm and 5cm of a1] (a2);
+		\vertex[above right =2cm and 4cm of a2] (a3){$d$};
+		%%%%%%%%%
+		\vertex[above right =-1cm and 0cm of a1] (b1){$u$};
+		\vertex[above right =0cm and 5cm of b1] (b2);
+		\vertex[above right =2cm and 4cm of b2] (b3){$u$};
+		%%%%%%%%%
+		\vertex[above right =-2cm and 0cm of a1] (c1){$u$};
+		\vertex[above right =0cm and 5cm of c1] (c2);
+		\vertex[above right =2cm and 4cm of c2] (c3){$d$};
+		%%%
+		\vertex[above right =-2cm and 3cm of c2] (d1);
+		\vertex[above right =2cm and 4cm of d1] (d2){$e^{+}$};
+		\vertex[above right =-2cm and 4cm of d1] (d3){$\nu$};
+		\node[left =0.5 of b1,rotate=90,scale=1.5] {proton};
+		\node[right =0.5 of b3,rotate=90,scale=1.5] {neutron};
+		%%%
+		\vertex[above right =-5cm and -1cm of a1] (o1);
+		\node[above right =0cm and 0cm of o1,rotate=90,scale=1] {Space};
+		\node[above right =-0.5 cm and 0cm of o1,rotate=0,scale=1] {Time};
+		% 对各个顶点连线
+		\diagram*{
+		{ [edge=plain]
+		(a1) --  (a2)--[arrows = {-Stealth[length=10pt, inset=5pt]}] (a3),
+		(b1)-- (b2)--[arrows = {-Stealth[length=10pt, inset=5pt]}](b3),
+		(c1)-- (c2)--[arrows = {-Stealth[length=10pt, inset=5pt]}](c3),
+		(d1)--[arrows = {-Stealth[length=10pt, inset=5pt]}](d2),
+		(d1)--[arrows = {-Stealth[length=10pt, inset=5pt]}](d3)
+		},
+		(c2) -- [boson,edge label=\(W^{+}\)](d1);
+		};
+		\draw[arrows = {-Stealth[length=10pt, inset=5pt]}] (o1) -- ++(2,0);
+		\draw[arrows = {-Stealth[length=10pt, inset=5pt]}] (o1) -- ++(0,2);
+	\end{feynman}
+\end{tikzpicture}
+
+\end{document}

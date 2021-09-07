@@ -1,0 +1,6126 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usetheme{Madrid} % 设置主题
+\usecolortheme{default} % 颜色方案
+\setbeamertemplate{background}{\includegraphics[height=\paperheight]{b2.png}} %设置背景图片
+%\usefonttheme[onlymath]{serif} %设置数学字体为斜体
+\setbeamercovered{transparent}
+%%++++++++++++++++++++++++++++++++
+\usepackage{fontspec}
+\usepackage[slantfont,boldfont]{xeCJK}% 没有这个会无法实现中文断行
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{siunitx} %国际单位制的包
+\DeclareSIPrePower\quartic{4}%单位的四次方
+\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{bm,bbm} %\bm 让参数变成粗体, \bbm Computer Modern fonts 的黑板体
+\usepackage{tikz} % 画图库
+\usetikzlibrary{calc} %计算功能
+%\usepackage{simplewick} 
+% a simple means of drawing Wick contractions above and below expressions. 
+\usepackage{makeidx} 
+% Standard package for creating indexes
+\usepackage{multirow}
+%Create tabular cells spanning multiple rows
+%%++++++++++++++++++++++++++++++++++++++++
+\usepackage{eso-pic} %用来在每个页面的固定位置加上图片
+\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
+%\definecolor{ocre}{RGB}{243,102,25} ％xcolor 基于 color, 提供与驱动程序无关的轻松访问 off color tints, shades, tones, 和任意颜色的混合 ，可以通过名称指定颜色
+%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+%% \usepackage{axodraw2}
+\usepackage{enumerate} %向enumerate环境添加了一个可选参数，该参数确定counter的样式。
+%\usepackage{enumitem}
+%提供基本列表环境的布局控制: enumerate, itemize and description。 它同时取代了 enumerate和 mdwlist
+%%++++++++++++++++++++ 
+\usepackage{listings}
+% 在LaTex中添加代码高亮
+\usepackage{framed}
+% 在对象周围添加方框，阴影等等，允许跨页
+% 定义阴影的颜色
+\definecolor{shadecolor}{rgb}{0.9412,1,1}
+%定义代码高亮的各种颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{〈style name〉}{〈key=value list〉}
+%stores the key=value list
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%++++++++++++++++++++++++++++++++++++++
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}} % 手动定义一个垂直的微分符号
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+%%++++++++++++++++++++++++++++++++++++
+% % 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,aspectratio=141
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+电动力学习题
+\end_layout
+
+\begin_layout Author
+yangmy@ihep.ac.cn
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tea = Import["/home/tom/note/others/b22.jpg"]; teb = Lighter[ Blur[SetAlphaChanne
+l[ ImageResize[ ImageCollage[{tea, tea, tea}, Method -> "Rows"], {720, 500}],
+ 0.22], 100], .0] Export["/home/tom/note/others/b2.png", teb]
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+第六章
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+frame{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Plain Layout
+
+4,5,7,8,10,
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+12,15,16,19,
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+20,22,23,26
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+相对性原理
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+爱因斯坦于1905年创立了狭义相对论，它的两个基本假设是：
+\end_layout
+
+\begin_layout Enumerate
+相对性原理——物理定律在所有惯性系中具有相同的形式；
+\end_layout
+
+\begin_layout Enumerate
+光速不变原理——真空中的光速在任意惯性系的任何方向都等于常量
+\begin_inset Formula $c$
+\end_inset
+
+，与光源的运动无关。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+间隔不变原理：在不同的惯性系中，两事件的时空间隔不变：
+\begin_inset Formula 
+\[
+s^{2}=s^{\prime,2}
+\]
+
+\end_inset
+
+即，
+\begin_inset Formula 
+\begin{align*}
+ & \left(ct_{2}-ct_{1}\right)^{2}-\left(x_{2}-x_{1}\right)^{2}-\left(y_{2}-y_{1}\right)^{2}-\left(z_{2}-z_{1}\right)^{2}\\
+= & \left(ct_{2}^{\prime}-ct_{1}^{\prime}\right)^{2}-\left(x_{2}^{\prime}-x_{1}^{\prime}\right)^{2}-\left(y_{2}^{\prime}-y_{1}^{\prime}\right)^{2}-\left(z_{2}^{\prime}-z_{1}^{\prime}\right)^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+洛伦兹变换
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+设惯性系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿着惯性系
+\begin_inset Formula $\Sigma$
+\end_inset
+
+的
+\begin_inset Formula $x$
+\end_inset
+
+轴正方向运动，
+\begin_inset Formula $t=t^{\prime}=0$
+\end_inset
+
+时刻两原点重合，相应的坐标变换为：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right),\quad\left(\begin{array}{c}
+y^{\prime}\\
+z^{\prime}
+\end{array}\right)=\left(\begin{array}{c}
+y\\
+z
+\end{array}\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\gamma^{2}\left(1-\beta^{2}\right)=1,\quad\beta=v/c
+\]
+
+\end_inset
+
+一般情况下，
+\begin_inset Formula $\gamma$
+\end_inset
+
+依赖于速度
+\begin_inset Formula $\sbf v$
+\end_inset
+
+的模。当
+\begin_inset Formula $v\ll c$
+\end_inset
+
+，过渡到伽利略变换。
+\end_layout
+
+\begin_layout Standard
+洛伦兹变换的逆矩阵，只需要将参数
+\begin_inset Formula $v$
+\end_inset
+
+替换成
+\begin_inset Formula $-v$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & +\gamma\beta\\
++\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+洛伦兹变换的特点：
+\end_layout
+
+\begin_layout Enumerate
+自然界相互作用的传播速度不能大于
+\begin_inset Formula $c=\qty{2.99792458e8}{m/s}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+类时间隔：
+\begin_inset Formula $s^{2}>0$
+\end_inset
+
+，类光间隔：
+\begin_inset Formula $s^{2}=0$
+\end_inset
+
+，类空间隔：
+\begin_inset Formula $s^{2}<0$
+\end_inset
+
+，在洛伦兹变换下保号。因果性是绝对的。
+\end_layout
+
+\begin_layout Enumerate
+钟慢尺缩，同时的相对性。
+\end_layout
+
+\begin_layout Enumerate
+类似于三维转动，不同方向上的洛伦兹变换不对易，
+\begin_inset Formula $\Lambda_{x}\Lambda_{y}\neq\Lambda_{y}\Lambda_{x}$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+速度变换公式
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+t^{\prime}\\
+x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta_{v}\\
+-\gamma\beta_{v} & \gamma
+\end{array}\right)\left(\begin{array}{c}
+t\\
+x
+\end{array}\right),\quad\left(\begin{array}{c}
+y^{\prime}\\
+z^{\prime}
+\end{array}\right)=\left(\begin{array}{c}
+y\\
+z
+\end{array}\right)
+\]
+
+\end_inset
+
+从坐标变换可以导出速度变换。设粒子的运动速度
+\begin_inset Formula $\sbf u$
+\end_inset
+
+也沿着
+\begin_inset Formula $x$
+\end_inset
+
+方向，由
+\begin_inset Formula $\sbf u=\dif\sbf x/\dif t$
+\end_inset
+
+得：
+\begin_inset Formula 
+\begin{align*}
+u_{x}^{\prime} & =\frac{u_{x}-v}{1-vu_{x}/c^{2}}=\gamma_{uv}\left(u_{x}-v\right)\\
+u_{y}^{\prime} & =\frac{\sqrt{1-v^{2}/c^{2}}}{1-vu_{x}/c^{2}}u_{y}=\frac{\gamma_{uv}}{\gamma_{v}}u_{y}\\
+u_{z}^{\prime} & =\frac{\sqrt{1-v^{2}/c^{2}}}{1-vu_{x}/c^{2}}u_{z}=\frac{\gamma_{uv}}{\gamma_{v}}u_{z}
+\end{align*}
+
+\end_inset
+
+其中：
+\begin_inset Formula 
+\[
+\gamma_{uv}=\frac{1}{1-\beta_{u}\beta_{v}},\quad\gamma_{v}=\frac{1}{\sqrt{1-\beta_{v}^{2}}}
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $v\ll c$
+\end_inset
+
+时，过渡到经典的速度叠加公式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+四维形式
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+根据相对性原理，定义四维时空的内积为
+\begin_inset Formula $x\cdot y=g_{\mu\nu}x^{\mu}y^{\nu}=x^{0}y^{0}-x^{1}y^{1}-x^{2}y^{2}-x^{3}y^{3}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+其中引入了 
+\noun on
+Minkowski
+\noun default
+ 度规，
+\begin_inset Formula 
+\[
+g^{\mu\nu}=g_{\mu\nu}=\left(\begin{array}{cccc}
+1\\
+ & -1\\
+ &  & -1\\
+ &  &  & -1
+\end{array}\right),\quad\left\{ \mu,\nu\right\} =\left\{ =0,1,2,3\right\} .
+\]
+
+\end_inset
+
+四维矢量的指标有上下之分，
+\begin_inset Formula $x^{\mu}=g^{\mu\nu}x_{\nu}$
+\end_inset
+
+。即指标改变位置时，
+\begin_inset Formula $0$
+\end_inset
+
+分量不变，
+\begin_inset Formula $1,2,3$
+\end_inset
+
+分量出负号，。
+\end_layout
+
+\begin_layout Standard
+爱因斯坦求和约定：上下位置的相同指标要求和，简称收缩。收缩的指标只能一上一下。
+\end_layout
+
+\begin_layout Standard
+而方程中净余的相同指标，上下位置要一致。例如
+\begin_inset Formula $\partial_{\mu}F^{\mu\nu}=-\mu_{0}J^{\nu}$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)=\underset{{\color{brown}\Lambda_{\mu}^{\phantom{\mu}\nu}}}{{\color{brown}\left(\begin{array}{cc}
+\gamma & -\gamma v\\
+-\gamma v & \gamma
+\end{array}\right)}}\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right),\quad\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right)={\color{blue}\underset{{\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}}{\left(\begin{array}{cc}
+\gamma & \gamma v\\
+\gamma v & \gamma
+\end{array}\right)}}\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+按照约定，可将旧坐标
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+到新坐标
+\begin_inset Formula $x^{\prime\mu}$
+\end_inset
+
+的变换关系写成
+\begin_inset Formula $x^{\mu}={\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}x^{\prime,\nu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+由于这里的
+\begin_inset Formula ${\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}$
+\end_inset
+
+是
+\begin_inset Formula ${\color{brown}\Lambda_{\mu}^{\phantom{\mu}\nu}}$
+\end_inset
+
+的逆矩阵，将
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+称为逆变矢量。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+协变逆变
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+{\color{brown}\Lambda_{\mu}^{\phantom{\mu}\nu}}={\color{brown}\left(\begin{array}{cc}
+\gamma & -\gamma v\\
+-\gamma v & \gamma
+\end{array}\right)},\quad{\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}={\color{blue}\left(\begin{array}{cc}
+\gamma & \gamma v\\
+\gamma v & \gamma
+\end{array}\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula ${\color{brown}\Lambda_{\mu}^{\phantom{\mu}\nu}}$
+\end_inset
+
+与
+\begin_inset Formula ${\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}$
+\end_inset
+
+的差别仅在于空间部分的负号。定义：
+\end_layout
+
+\begin_layout Itemize
+指标在上的矢量叫做逆变矢量：
+\begin_inset Formula $x^{\mu}=\left(x^{0},\sbf x\right)$
+\end_inset
+
+。按逆矩阵变换，
+\begin_inset Formula $x^{\mu}={\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}x^{\prime,\nu}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+由链式法则，与
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+刚好相反，
+\begin_inset Formula $\partial_{\mu}={\color{brown}\Lambda_{\mu}^{\phantom{\mu}\nu}}\partial_{\nu}^{\prime}$
+\end_inset
+
+，其中
+\begin_inset Formula $\partial_{\mu}=\left(\frac{\partial}{c\partial t},\nabla\right)$
+\end_inset
+
+称为协变矢量。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{\mu}=\left(x^{0},-\sbf x\right)$
+\end_inset
+
+为协变矢量，
+\begin_inset Formula $x_{\mu}={\color{brown}\Lambda_{\mu}^{\phantom{\mu}\nu}}x_{\nu}^{\prime}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+偏导数
+\begin_inset Formula $\partial^{\mu}=\left(\frac{\partial}{c\partial t},-\nabla\right)$
+\end_inset
+
+为逆变矢量，
+\begin_inset Formula $\partial^{\mu}={\color{blue}\Lambda_{\phantom{\mu}\nu}^{\mu}}\partial^{\prime,\nu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+总结：
+\end_layout
+
+\begin_layout Itemize
+通常的四矢量，
+\begin_inset Formula $x^{\mu}=\left(x^{0},-\sbf x\right)$
+\end_inset
+
+，
+\begin_inset Formula $x_{\mu}=\left(x^{0},\sbf x\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+偏导数四矢量例外，
+\begin_inset Formula $\partial^{\mu}=\left(\frac{\partial}{c\partial t},-\nabla\right)$
+\end_inset
+
+，
+\begin_inset Formula $\partial_{\mu}=\left(\frac{\partial}{c\partial t},\nabla\right)$
+\end_inset
+
+。由于
+\begin_inset Formula $\partial^{\mu}$
+\end_inset
+
+与
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+的量纲相反，这很合理。
+\end_layout
+
+\begin_layout Standard
+例如：
+\begin_inset Formula 
+\begin{align*}
+ & x^{\mu}y_{\mu}=x^{0}y^{0}-\sbf x\cdot\sbf y,\quad p^{2}=\left(E/c\right)^{2}-\sbf p^{2}\\
+ & \partial_{\mu}x^{\mu}=\frac{\partial}{\partial t}t+\nabla\cdot\sbf x=4,\quad\partial_{\mu}J^{\mu}=\frac{\partial}{\partial t}\rho+\nabla\cdot\sbf J
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+物理量的分类
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+设
+\begin_inset Formula $\Lambda$
+\end_inset
+
+为洛伦兹变换的矩阵，从
+\begin_inset Formula $\Sigma$
+\end_inset
+
+参考系变换到
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+参考系。各阶张量的变换形式为：
+\begin_inset Formula 
+\begin{align*}
+\text{标量：}\quad & s^{\prime}=s\\
+\text{四维矢量：}\quad & V^{\prime,\mu}=\Lambda_{\phantom{\mu}\nu}^{\mu}V^{\nu}\\
+\text{四\text{维张量}：}\quad & T^{\prime,\mu\nu}=\Lambda_{\phantom{\mu}\alpha}^{\mu}\Lambda_{\phantom{\mu}\beta}^{\nu}T^{\alpha\beta}
+\end{align*}
+
+\end_inset
+
+由于洛伦兹变换保持四维时空的度规不变：
+\begin_inset Formula 
+\begin{align*}
+{\color{red}g^{\mu\nu}} & =\Lambda_{\phantom{\mu}\alpha}^{\mu}\Lambda_{\phantom{\mu}\beta}^{\nu}\;{\color{red}g^{\alpha\beta}}\\
+A^{\mu}B_{\mu}={\color{blue}A_{\mu}}\;{\color{brown}B_{\nu}}\;{\color{red}g^{\mu\nu}} & ={\color{blue}A_{\mu}}{\color{brown}B_{\nu}}\;{\color{blue}\Lambda_{\phantom{\mu}\alpha}^{\mu}}{\color{brown}\Lambda_{\phantom{\mu}\beta}^{\nu}}\;{\color{red}g^{\alpha\beta}}
+\end{align*}
+
+\end_inset
+
+所以两四维矢量的内积
+\begin_inset Formula $A^{\mu}B_{\mu}$
+\end_inset
+
+是洛伦兹变换下的不变量。
+\end_layout
+
+\begin_layout Standard
+类似地，可以使用更高阶的张量构造矢量或者标量，只需对指标进行收缩即可。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+波动场的变换
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+若不依赖于时空坐标，即常矢量的变换形式为：
+\begin_inset Formula 
+\begin{align*}
+\text{标量：}\quad & s^{\prime}=s\\
+\text{四维矢量：}\quad & V^{\prime,\mu}=\Lambda_{\phantom{\mu}\nu}^{\mu}V^{\nu}\\
+\text{四\text{维张量}：}\quad & T^{\prime,\mu\nu}=\Lambda_{\phantom{\mu}\alpha}^{\mu}\Lambda_{\phantom{\mu}\beta}^{\nu}T^{\alpha\beta}
+\end{align*}
+
+\end_inset
+
+物理学中使用的场一般还依赖于时空坐标，除了场的分量的变换，还要考虑坐标的变换。
+\end_layout
+
+\begin_layout Standard
+四维坐标本身是矢量：
+\begin_inset Formula $x^{\prime,\mu}=\Lambda_{\phantom{\mu}\nu}^{\mu}x^{\nu}$
+\end_inset
+
+，设
+\begin_inset Formula $L$
+\end_inset
+
+是
+\begin_inset Formula $\Lambda$
+\end_inset
+
+的逆矩阵，
+\begin_inset Formula $x^{\mu}={\color{blue}L_{\phantom{\mu}\nu}^{\mu}x^{\prime,\nu}}$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+\text{标量：}\quad & s\left(x^{\rho}\right)\rightarrow s\left({\color{blue}L_{\phantom{\mu}\sigma}^{\rho}x^{\prime\sigma}}\right)\\
+\text{四维矢量：}\quad & V^{\mu}\left(x^{\rho}\right)\rightarrow\Lambda_{\phantom{\mu}\nu}^{\mu}V^{\nu}\left({\color{blue}L_{\phantom{\mu}\sigma}^{\rho}x^{\prime\sigma}}\right)\\
+\text{四\text{维张量}：}\quad & T^{\mu\nu}\left(x^{\rho}\right)\to\Lambda_{\phantom{\mu}\alpha}^{\mu}\Lambda_{\phantom{\mu}\beta}^{\nu}T^{\alpha\beta}\left({\color{blue}L_{\phantom{\mu}\sigma}^{\rho}x^{\prime\sigma}}\right)
+\end{align*}
+
+\end_inset
+
+这样就将场的时空依赖转换到新坐标系下。注意场分量和坐标的变换矩阵不同，它们互逆。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+电动力学的协变形式
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tea[z_, k_] := {2 E0*Cos[dk*z - d
+\backslash
+[Omega]*t] Cos[k*z - 
+\backslash
+[Omega]*t], 2 E0*Cos[dk*z - d
+\backslash
+[Omega]*t], -2 E0* Cos[dk*z - d
+\backslash
+[Omega]*t]} /.
+ {E0 -> 1, t -> 1, dk -> 1, 
+\backslash
+[Omega] -> 1000, d
+\backslash
+[Omega] -> 1}; teb = GraphicsRow[{ Plot[Evaluate@tea[z, 10], {z, 0, 2 
+\backslash
+[Pi]}], Plot[Evaluate@tea[z, 20], {z, 0, 2 
+\backslash
+[Pi]}], Plot[Evaluate@tea[z, 30], {z, 0, 2 
+\backslash
+[Pi]}] }, ImageSize -> {480, 150} ]; Export["/home/tom/note/others/baoLuoMian.pdf
+", teb]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+电动力学物理量及算符的四维形式如下，考虑量纲可以较容易地导出它们的形式。
+\begin_inset Formula 
+\begin{align*}
+\text{四维偏导：}\quad & \partial_{\mu}=\left(\frac{\partial}{c\partial t},\nabla\right)\\
+\text{四维电流密度：}\quad & U^{\mu}=\gamma\left(c,\sbf v\right),\quad J^{\mu}=qU^{\mu}=\left(\rho c,\sbf J\right),\\
+\text{四维势：}\quad & A^{\mu}=\left(\varphi/c,\sbf A\right)\\
+\text{电磁场强张量：}\quad & F^{\mu\nu}=\partial^{\mu}A^{\nu}-\partial^{\nu}A^{\mu}
+\end{align*}
+
+\end_inset
+
+代入四矢势的定义
+\begin_inset Formula $\sbf B=\nabla\times\sbf A,\quad\sbf E=-\nabla\varphi-\frac{\partial}{\partial t}\sbf A$
+\end_inset
+
+，得：
+\size small
+
+\begin_inset Formula 
+\[
+F^{\mu\nu}=\left(\begin{array}{cccc}
+0 & -E_{1}/c & -E_{2}/c & -E_{3}/c\\
+E_{1}/c & 0 & -B_{3} & B_{2}\\
+E_{2}/c & B_{3} & 0 & -B_{1}\\
+E_{3}/c & -B_{2} & B_{1} & 0
+\end{array}\right),\quad F_{\mu\nu}=\left(\begin{array}{cccc}
+0 & E_{1}/c & E_{2}/c & E_{3}/c\\
+-E_{1}/c & 0 & -B_{3} & B_{2}\\
+-E_{2}/c & B_{3} & 0 & -B_{1}\\
+-E_{3}/c & -B_{2} & B_{1} & 0
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\size default
+
+\begin_inset Formula $F^{\mu\nu}$
+\end_inset
+
+是反对称张量，对角线上元素为零。其他元素为，
+\begin_inset Formula 
+\begin{align*}
+F^{i0} & =\sbf E,\quad i,j=1,2,3\\
+F^{ij} & =-\varepsilon^{ijk}B^{k}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+协变方程
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+电动力学方程的四维形式非常简洁。代入它们的定义，
+\begin_inset Formula 
+\begin{align*}
+ & F^{\mu\nu}=-F^{\nu\mu},\quad F^{i0}=\sbf E,\quad F^{ij}=-\varepsilon^{ijk}B^{k},\quad\left\{ i,j,k\right\} =1,2,3\\
+ & A^{\mu}=\left(\varphi/c,\sbf A\right),\quad J^{\mu}=\left(\rho c,\sbf J\right),\quad T^{\mu\nu}=T^{\nu\mu}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+电荷守恒定律：
+\begin_inset Formula $\partial_{\mu}J^{\mu}=0$
+\end_inset
+
+，洛伦兹规范：
+\begin_inset Formula $\partial_{\mu}A^{\mu}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+达朗贝尔方程：
+\begin_inset Formula $\partial_{\nu}\partial^{\nu}A^{\mu}=\mu_{0}J^{\mu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+麦克斯韦方程：
+\begin_inset Formula $\partial_{\mu}F^{\mu\nu}=\mu_{0}J^{\nu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+麦克斯韦方程：
+\begin_inset Formula $\partial_{\mu}F_{\nu\alpha}+\partial_{\nu}F_{\alpha\mu}+\partial_{\alpha}F_{\mu\nu}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+能量动量张量：
+\begin_inset Formula $T^{\mu\nu}=\frac{1}{\mu_{0}}\left(F^{\mu\alpha}F_{\alpha}^{\phantom{\alpha}\nu}+\frac{1}{4}g^{\mu\nu}F_{\alpha\beta}F^{\alpha\beta}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+洛伦兹力密度：
+\begin_inset Formula $f^{\mu}=\frac{1}{\gamma}F^{\mu\nu}J_{\nu}=\left(\frac{1}{c}\sbf E\cdot\sbf J,q\sbf E+q\sbf v\times\sbf B\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+能量动量守恒：
+\begin_inset Formula $f^{\nu}=\partial_{\mu}T^{\mu\nu}$
+\end_inset
+
+，力密度
+\begin_inset Formula $f^{\nu}=F^{\nu}/V\sim\gamma F^{\nu}/V_{0}$
+\end_inset
+
+ 是四矢量。
+\end_layout
+
+\begin_layout Standard
+可以构造两个不变量：
+\begin_inset Formula $\frac{1}{2}F_{\mu\nu}F^{\mu\nu}=B^{2}-E^{2}/c^{2}$
+\end_inset
+
+，
+\begin_inset Formula $\varepsilon^{\mu\nu\rho\sigma}F_{\mu\nu}F_{\rho\sigma}/8=\sbf B\cdot\sbf E$
+\end_inset
+
+。真空中的平面电磁波在任意惯性系中都满足
+\begin_inset Formula $\abs*{\sbf E}=\abs*{\sbf B}c$
+\end_inset
+
+，
+\begin_inset Formula $\sbf B\perp\sbf E$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+能动量张量
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+F
+\backslash
+[Mu]
+\backslash
+[Nu] = ( { {0, -Subscript[Ei, 1], -Subscript[Ei, 2], -Subscript[Ei, 3]},
+ {Subscript[Ei, 1], 0, -Subscript[B, 3], Subscript[B, 2]}, {Subscript[Ei,
+ 2], Subscript[B, 3], 0, -Subscript[B, 1]}, {Subscript[Ei, 3], -Subscript[B,
+ 2], Subscript[B, 1], 0} } ); g
+\backslash
+[Mu]
+\backslash
+[Nu] = {{1, 0, 0, 0}, {0, -1, 0, 0}, {0, 0, -1, 0}, {0, 0, 0, -1}}; F
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ g
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ F
+\backslash
+[Mu]
+\backslash
+[Nu] + 1/2 g
+\backslash
+[Mu]
+\backslash
+[Nu]* Tr[F
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ g
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ F
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ g
+\backslash
+[Mu]
+\backslash
+[Nu]] // Simplify // TableForm; g
+\backslash
+[Mu]
+\backslash
+[Nu]* Tr[F
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ g
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ F
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ g
+\backslash
+[Mu]
+\backslash
+[Nu]] // Simplify // TableForm; Tr[F
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ g
+\backslash
+[Mu]
+\backslash
+[Nu] .
+ F
+\backslash
+[Mu]
+\backslash
+[Nu]] // Simplify // TableForm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T^{\mu\nu}=\frac{1}{\mu_{0}}\left(F^{\mu\alpha}F_{\alpha}^{\phantom{\alpha}\nu}+\frac{1}{4}g^{\mu\nu}F_{\alpha\beta}F^{\alpha\beta}\right)
+\]
+
+\end_inset
+
+
+\size small
+
+\begin_inset Formula 
+\[
+T^{\mu\nu}=\frac{1}{\mu_{0}}\left(\begin{array}{cccc}
+\mu_{0}w & g_{1}c & g_{2}c & g_{3}c\\
+S_{1}/c & \mu_{0}w-E_{1}^{2}/c^{2}-B_{1}^{2} & -\left(B_{1}B_{2}+E_{1}E_{2}/c^{2}\right) & -\left(B_{1}B_{3}+E_{1}E_{3}/c^{2}\right)\\
+S_{2}/c & -\left(B_{1}B_{2}+E_{1}E_{2}/c^{2}\right) & \mu_{0}w-E_{2}^{2}/c^{2}-B_{2}^{2} & -\left(B_{2}B_{3}+E_{2}E_{3}/c^{2}\right)\\
+S_{3}/c & -\left(B_{1}B_{3}+E_{1}E_{3}/c^{2}\right) & -\left(B_{2}B_{3}+E_{2}E_{3}/c^{2}\right) & \mu_{0}w-E_{3}^{2}/c^{2}-B_{3}^{2}
+\end{array}\right)
+\]
+
+\end_inset
+
+能动量张量为无迹张量（求和时考虑度规），
+\size default
+
+\begin_inset Formula 
+\[
+T_{\phantom{\mu}\mu}^{\mu}=\mu_{0}w-\left(3\mu_{0}w-\sbf E^{2}-\sbf B^{2}\right)=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w & =\frac{1}{2}\left(\sbf E\cdot\sbf D+\sbf H\cdot\sbf B\right)=\frac{1}{2}\left(\varepsilon_{0}E^{2}+\frac{1}{\mu_{0}}B^{2}\right)=\varepsilon_{0}E^{2}=B_{2}/\mu_{0}\\
+\sbf g & =\varepsilon_{0}\mu_{0}\sbf E\times\sbf H=\sbf S/c^{2}=\frac{w}{c}\sbf e_{k},\\
+\sbf S & =\sbf E\times\sbf H=wc\sbf e_{k},\quad\abs{\sbf E}=c\abs{\sbf B}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+电磁场的变换
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+设惯性系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系
+\begin_inset Formula $x$
+\end_inset
+
+轴的正方向运动，四维势的变换为，
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\varphi^{\prime}/c\\
+A^{1,\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\varphi/c\\
+A^{1,}
+\end{array}\right),\quad\left(\begin{array}{c}
+A^{2,\prime}\\
+A^{3,\prime}
+\end{array}\right)=\left(\begin{array}{c}
+A^{2,}\\
+A^{3,}
+\end{array}\right)
+\]
+
+\end_inset
+
+电磁场张量的变换为
+\begin_inset Formula $F_{\mu\nu}^{\prime}=\Lambda_{\mu}^{\phantom{\mu}\rho}\Lambda_{\nu}^{\phantom{\mu}\sigma}F_{\rho\sigma}$
+\end_inset
+
+。由此导出电磁场分量的变换，
+\begin_inset Formula 
+\begin{align*}
+ & \sbf E_{\ssl}^{\prime}=\sbf E_{\ssl},\quad\sbf B_{\ssl}^{\prime}=\sbf B_{\ssl},\quad\text{与运动方向平行的分量}\\
+ & \sbf E_{\perp}^{\prime}=\gamma\left(\sbf E_{\perp}+\sbf v\times\sbf B_{\perp}\right),\quad\sbf B_{\perp}^{\prime}=\gamma\left(\sbf B_{\perp}-\frac{\sbf v}{c^{2}}\times\sbf E_{\perp}\right).
+\end{align*}
+
+\end_inset
+
+垂直运动方向的变换形式上可以写成：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf E_{\perp}^{\prime}/c\\
+\sbf B_{\perp}^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & \gamma\sbf\beta\times\\
+-\gamma\sbf\beta\times & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\sbf E_{\perp}/c\\
+\sbf B_{\perp}
+\end{array}\right)
+\]
+
+\end_inset
+
+若电磁场依赖于坐标，还要考虑坐标的变换：
+\begin_inset Formula 
+\[
+x^{\rho}\rightarrow L_{\phantom{\mu}\sigma}^{\rho}x^{\prime\sigma},\quad L.\Lambda=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+多普勒效应
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+设惯性系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系
+\begin_inset Formula $x$
+\end_inset
+
+轴的正方向运动。电磁波的相位是洛伦兹标量，
+\begin_inset Formula 
+\[
+\phi=k^{\mu}x_{\mu},\quad k^{\mu}=\left(w/c,\sbf k\right),\quad k_{x}=k\cos\theta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\omega^{\prime}/c\\
+k^{1,\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\omega/c\\
+k^{1,}
+\end{array}\right),\quad\left(\begin{array}{c}
+k^{2,\prime}\\
+k^{3,\prime}
+\end{array}\right)=\left(\begin{array}{c}
+k^{2,}\\
+k^{3,}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\omega=\frac{\omega^{\prime}}{\gamma\left(1-\beta\cos\theta\right)},\quad\tan\theta=\frac{\sin\theta^{\prime}}{\gamma\left(\cos\theta^{\prime}+\beta\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\omega,\theta$
+\end_inset
+
+是
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中光的频率，以及与运动方向
+\begin_inset Formula $v$
+\end_inset
+
+的夹角。
+\begin_inset Formula $\omega^{\prime},\theta^{\prime}$
+\end_inset
+
+是相对光源静止系中的频率与夹角，
+\begin_inset Formula $\omega^{\prime}$
+\end_inset
+
+即光源的固有频率。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.4
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+一辆以速度
+\begin_inset Formula $v$
+\end_inset
+
+运动的列车上的观察者，在经过某一高达建筑物时，看见其避雷针上跳起一脉冲电火花，电光迅速传播，先后照亮了铁路沿线上的两铁塔。求列车上观察者看到的两铁塔被电光照亮的
+时刻差。设建筑物及两铁塔都在一直线上，与列车前进方向一致。铁塔到建筑物的地面距离已知都是
+\begin_inset Formula $\ell_{0}$
+\end_inset
+
+。
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset Formula $\text{塔}-----\text{高达}-----\text{塔}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+解：洛伦兹变换是线性的，变换矩阵依赖于速度
+\begin_inset Formula $v$
+\end_inset
+
+，但不依赖于坐标：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+c\Delta t^{\prime}\\
+\Delta x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+c\Delta t\\
+\Delta x
+\end{array}\right)
+\]
+
+\end_inset
+
+由光速不变，光同时到达两边的铁塔，两铁塔之间的距离是
+\begin_inset Formula $2\ell_{0}$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+c\Delta t^{\prime}\\
+\Delta x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+0\\
+2\ell_{0}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c\Delta t^{\prime}=\gamma2\ell_{0}\left(1-\beta\right)\Rightarrow\Delta t^{\prime}=\gamma\frac{-2\beta\ell_{0}}{c}=\frac{-\gamma2v\ell_{0}}{c^{2}}
+\]
+
+\end_inset
+
+说明光先到达后面的塔。在不同的参考系中，“同时”是相对的。
+\bar under
+
+\begin_inset CommandInset href
+LatexCommand href
+name "同时的相对性"
+target "https://wx3.sinaimg.cn/mw1024/c4587b00gy1gs1t3t65r8g20k007ddjp.gif"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tef[u_, 
+\backslash
+[Beta]_, t_] := ParametricPlot[{ {-3 - 
+\backslash
+[Beta]*t, 20 t0}, {3 - 
+\backslash
+[Beta]*t, 20 t0}, {(u + 
+\backslash
+[Beta])/(1 + 
+\backslash
+[Beta]*u) t0, .3}, {(-u + 
+\backslash
+[Beta])/(1 - 
+\backslash
+[Beta]*u) t0, .7} }, {t0, 0, t}, PlotRange -> {{-5, 5}, {0, 1}}, PlotLabel
+ -> Style["
+\backslash
+[Beta]=" <> ToString[
+\backslash
+[Beta]], Red], ImageSize -> Large]; tea = Table[ Labeled[{ tef[1, 0, t],
+ tef[1, 0.5, t] } // TableForm, "u=c,boost ->->->"], {t, 0.1, 3, 0.1} ]; Export["/h
+ome/tom/test/exe6_motion.gif", tea, AnimationRepetitions -> Infinity ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+有一光源S与接受器R相对静止，距离为
+\begin_inset Formula $\ell_{0}$
+\end_inset
+
+。S–R装置浸在均匀无限的液体介质（静止折射率
+\begin_inset Formula $n$
+\end_inset
+
+）中。试对下列三种情况计算光源发出信号到接收器接到讯号所经历的时间。
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\color blue
+液体介质相对于S–R装置静止。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+液体沿着S–R连线方向以速度
+\begin_inset Formula $v$
+\end_inset
+
+流动。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+液体垂直于S–R连线方向以速度
+\begin_inset Formula $v$
+\end_inset
+
+流动。
+\end_layout
+
+\begin_layout Standard
+解：液体静止时，
+\begin_inset Formula 
+\[
+\Delta t=\frac{\ell_{0}}{u_{x}}=\frac{\ell_{0}}{c/n}.
+\]
+
+\end_inset
+
+
+\color blue
+水平方向：
+\color inherit
+液体沿着S–R连线方向运动，在液体静止的参考系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中光速
+\begin_inset Formula $u_{x}^{\prime}=c/n$
+\end_inset
+
+，
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中光速及讯号传播时间用逆变换求出：
+\begin_inset Formula 
+\begin{align*}
+u_{x} & =\frac{u_{x}^{\prime}+v}{1+vu_{x}^{\prime}/c^{2}}=c\frac{1+n\beta}{n+\beta}\approx\frac{c}{n}\left[1+\beta\frac{n^{2}-1}{n}\right]+O\left(\beta^{2}\right)\\
+\Delta t & =\frac{\ell_{0}}{u_{x}}=\frac{\ell_{0}\left(nc+v\right)}{c\left(c+nv\right)}\approx\frac{l_{0}}{c/n}\left[1-\beta\frac{n^{2}-1}{n}\right]+O\left(\beta^{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Series[c (1 + n*
+\backslash
+[Beta])/(n + 
+\backslash
+[Beta]), {
+\backslash
+[Beta], 0, 2}] // Simplify Series[(Subscript[l, 0]/c)/((1 + n*
+\backslash
+[Beta])/( n + 
+\backslash
+[Beta])), {
+\backslash
+[Beta], 0, 2}] // Simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+讨论垂直方向：
+\color inherit
+如果在旧坐标系
+\begin_inset Formula $u_{x}=0$
+\end_inset
+
+，作
+\begin_inset Formula $v_{x}$
+\end_inset
+
+ boost 之后的速度，
+\begin_inset Formula 
+\[
+u_{x}^{\prime}=\frac{u_{x}-v_{x}}{1-v_{x}u_{x}/c}=-v_{x}
+\]
+
+\end_inset
+
+我们假设实验室系中，光在
+\begin_inset Formula $y$
+\end_inset
+
+轴方向速度为零。由于液体介质沿
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系的
+\begin_inset Formula $y$
+\end_inset
+
+轴正方向流动，我们作
+\begin_inset Formula $v_{y}$
+\end_inset
+
+ boost 来到液体静止系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+，光在
+\begin_inset Formula $y$
+\end_inset
+
+方向上的速度为
+\begin_inset Formula $-v$
+\end_inset
+
+，总光速为
+\begin_inset Formula $u^{\prime}=c/n$
+\end_inset
+
+，所以光在
+\begin_inset Formula $x$
+\end_inset
+
+方向速度为，
+\begin_inset Formula 
+\[
+u_{x}^{\prime}=\sqrt{\left(\frac{c}{n}\right)^{2}-v^{2}}
+\]
+
+\end_inset
+
+因此传播需要的时间为
+\begin_inset Formula 
+\[
+\Delta t^{\prime}=\frac{\ell_{0}}{u_{x}^{\prime}}=\frac{n\ell_{0}}{\sqrt{c^{2}-\left(nv\right)^{2}}}
+\]
+
+\end_inset
+
+再沿
+\begin_inset Formula $y$
+\end_inset
+
+方向作
+\begin_inset Formula $-v$
+\end_inset
+
+ boost 回到实验室系。
+\begin_inset Formula $y$
+\end_inset
+
+方向boost不影响
+\begin_inset Formula $x$
+\end_inset
+
+方向的运动，
+\begin_inset Formula $\Delta x=\Delta x^{\prime}$
+\end_inset
+
+。只需要考虑钟慢效应：
+\begin_inset Formula 
+\[
+\Delta t=\Delta t^{\prime}/\gamma=\frac{\ell_{0}}{c/n}\frac{\sqrt{1-\beta^{2}}}{\sqrt{1-\left(n\beta\right)^{2}}}\approx\frac{\ell_{0}}{c/n}\left[1+\frac{\beta^{2}\left(n^{2}-1\right)}{2}\right]+O\left(\beta^{3}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Series[n*Subscript[l, 0]/c*Sqrt[1 - 
+\backslash
+[Beta]^2]/Sqrt[ 1 - (n*
+\backslash
+[Beta])^2], {
+\backslash
+[Beta], 0, 2}] // Simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.7
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+一把直尺相对于
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系静止，直尺与
+\begin_inset Formula $x$
+\end_inset
+
+轴交角
+\begin_inset Formula $\theta$
+\end_inset
+
+。今有一观察者以速度
+\begin_inset Formula $\sbf v$
+\end_inset
+
+沿
+\begin_inset Formula $x$
+\end_inset
+
+轴运动，他看到直尺与
+\begin_inset Formula $x$
+\end_inset
+
+轴交角
+\begin_inset Formula $\theta^{\prime}$
+\end_inset
+
+有何变化？
+\end_layout
+
+\begin_layout Frame
+解：在直尺静止系中，
+\begin_inset Formula 
+\[
+\tan\theta=\frac{\Delta y}{\Delta x}
+\]
+
+\end_inset
+
+在运动的观察者看来，尺子的长度分量为
+\begin_inset Formula 
+\[
+\Delta x^{\prime}=\Delta x/\gamma,\quad\Delta y^{\prime}=\Delta y
+\]
+
+\end_inset
+
+因此有
+\begin_inset Formula 
+\[
+\tan\theta^{\prime}=\frac{\Delta y^{\prime}}{\Delta x^{\prime}}=\gamma\tan\theta
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta\ll1$
+\end_inset
+
+时有，
+\begin_inset Formula 
+\[
+\theta^{\prime}=\theta+\frac{1}{4}\beta^{2}\sin2\theta+\frac{1}{16}\beta^{4}\sin2\theta\left(\cos2\theta+2\right)+O\left(\beta^{6}\right)
+\]
+
+\end_inset
+
+
+\bar under
+
+\begin_inset CommandInset href
+LatexCommand href
+name "直尺夹角"
+target "https://wx2.sinaimg.cn/mw1024/c4587b00gy1gs31hup5gqg20f707zdng.gif"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Assuming[0 < 
+\backslash
+[Theta] < 
+\backslash
+[Pi]/2, Series[ArcTan[1 /Sqrt[1 - 
+\backslash
+[Beta]^2] Tan[
+\backslash
+[Theta]]], {
+\backslash
+[Beta], 0, 5}] // Simplify // TrigReduce ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+teh[x_, 
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_] := {Tan[
+\backslash
+[Theta]] x, 
+\backslash
+[Gamma]* Tan[
+\backslash
+[Theta]] x} /.
+ {
+\backslash
+[Gamma] -> Sqrt[1 - 
+\backslash
+[Beta]^2]^-1}; tea = Table[ Plot[Evaluate[teh[x, 
+\backslash
+[Pi]/6, 
+\backslash
+[Beta]]], {x, 0, 1}, PlotRange -> {{0, 1}, {0, 1}}, PlotLegends -> {"Static",
+ "Boost"}], {
+\backslash
+[Beta], 0.01, 1, .02}]; Export["/home/tom/test/exer6_rule.gif", tea, AnimationRepet
+itions -> Infinity]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+两个惯性系
+\begin_inset Formula $\Sigma$
+\end_inset
+
+和
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中各放置若干时钟，同一惯性系中的各时钟同步。
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+相对于
+\begin_inset Formula $\Sigma$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿
+\begin_inset Formula $x$
+\end_inset
+
+轴方向运动。设两系原点相遇时，
+\begin_inset Formula $t_{0}=t_{0}^{\prime}=0$
+\end_inset
+
+。问处于
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中某点
+\begin_inset Formula $\left(x,y,z\right)$
+\end_inset
+
+处的时钟与
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中何处的时钟相遇时，指示的时刻相同？读数是多少？
+\end_layout
+
+\begin_layout Frame
+解：沿
+\begin_inset Formula $x$
+\end_inset
+
+方向的坐标变换为，
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct^{\prime}\\
+x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+ct\\
+x
+\end{array}\right)
+\]
+
+\end_inset
+
+两坐标系时间相等即，
+\begin_inset Formula 
+\[
+ct^{\prime}=\gamma\left(ct-\beta x\right)=ct
+\]
+
+\end_inset
+
+化简得到，
+\begin_inset Formula 
+\[
+x=\frac{\gamma-1}{\gamma\beta}ct>0
+\]
+
+\end_inset
+
+也就是
+\begin_inset Formula 
+\begin{align*}
+ & x^{\prime}=\frac{1-\gamma}{\gamma\beta}ct,\quad t^{\prime}=t\\
+ & x^{\prime}=-x,\quad t^{\prime}=t=\frac{\gamma\beta x}{\gamma-1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+一平面镜以速度
+\begin_inset Formula $v$
+\end_inset
+
+自左向右运动。一束频率为
+\begin_inset Formula $\omega_{0}$
+\end_inset
+
+，与水平成
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+夹角的平面光波自右向左入射到镜面上，求反射光波的频率
+\begin_inset Formula $\omega$
+\end_inset
+
+及反射角
+\begin_inset Formula $\theta$
+\end_inset
+
+。垂直入射情况如何？
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+解：
+\color inherit
+设镜子沿着
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系的
+\begin_inset Formula $x$
+\end_inset
+
+轴正方向以速度
+\begin_inset Formula $v$
+\end_inset
+
+运动。镜面垂直于运动方向，在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中，观察到入射波为
+\begin_inset Formula $\omega_{0},\theta_{0}$
+\end_inset
+
+，反射波为
+\begin_inset Formula $\omega,\theta$
+\end_inset
+
+。 boost 到镜子的静止系中，观察到入射波为
+\begin_inset Formula $\omega_{0}^{\prime},\theta_{0}^{\prime}$
+\end_inset
+
+。反射波为
+\begin_inset Formula $\omega^{\prime},\theta_{r}^{\prime}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Frame
+由反射定律，
+\begin_inset Formula $\theta_{r}^{\prime}=\theta_{0}^{\prime}$
+\end_inset
+
+，所以入射波矢
+\begin_inset Formula $\sbf k_{0}^{\prime}$
+\end_inset
+
+和反射波矢
+\begin_inset Formula $\sbf k_{r}^{\prime}$
+\end_inset
+
+的
+\begin_inset Formula $x$
+\end_inset
+
+分量分别为
+\begin_inset Formula $k_{0x}^{\prime}=-\frac{\omega_{0}^{\prime}}{c}\cos\theta_{0}^{\prime}$
+\end_inset
+
+，
+\begin_inset Formula $k_{rx}^{\prime}=\frac{\omega^{\prime}}{c}\cos\theta_{0}^{\prime}$
+\end_inset
+
+。静止系中的反射可以用
+\begin_inset Formula $\diag\left(1,-1\right)$
+\end_inset
+
+描述。建立方程为：
+\begin_inset Formula 
+\begin{align*}
+\left(\begin{array}{c}
+\omega/c\\
+k_{rx}
+\end{array}\right) & =\left(\begin{array}{cc}
+\gamma & +\gamma\beta\\
++\gamma\beta & \gamma
+\end{array}\right){\color{blue}\left(\begin{array}{cc}
+1 & 0\\
+0 & -1
+\end{array}\right)}\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\omega_{0}/c\\
+-k_{0x}
+\end{array}\right)\\
+\Rightarrow\left(\begin{array}{c}
+\omega/c\\
+k_{rx}
+\end{array}\right) & =\left(\begin{array}{cc}
+\gamma^{2}\left(1+\beta^{2}\right) & -2\gamma^{2}\beta\\
+2\gamma^{2}\beta & -\gamma^{2}\left(1+\beta^{2}\right)
+\end{array}\right)\left(\begin{array}{c}
+\omega_{0}/c\\
+-k_{0x}
+\end{array}\right)
+\end{align*}
+
+\end_inset
+
+即：
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+( { {
+\backslash
+[Gamma], 
+\backslash
+[Gamma]*
+\backslash
+[Beta]}, {
+\backslash
+[Gamma]*
+\backslash
+[Beta], 
+\backslash
+[Gamma]} } ) .
+ ( { {1, 0}, {0, -1} } ) .
+ ( { {
+\backslash
+[Gamma], -
+\backslash
+[Gamma]*
+\backslash
+[Beta]}, {-
+\backslash
+[Gamma]*
+\backslash
+[Beta], 
+\backslash
+[Gamma]} } ) // TableForm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\omega/c & =\gamma^{2}\left(1+\beta^{2}\right)\omega_{0}/c+2\gamma^{2}\beta k_{0x}\\
+k_{rx} & =2\gamma^{2}\beta\omega_{0}/c+\gamma^{2}\left(1+\beta^{2}\right)k_{0x}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+代入
+\begin_inset Formula $k_{rx}=\omega/c\cos\theta$
+\end_inset
+
+，
+\begin_inset Formula $k_{0x}=\omega_{0}/c\cos\theta_{0}$
+\end_inset
+
+得：
+\begin_inset Formula 
+\begin{align*}
+\omega & =\omega_{0}\gamma^{2}\left(1+\beta^{2}\right)+2\omega_{0}\gamma^{2}\beta\cos\theta_{0}\\
+\omega\cos\theta & =2\omega_{0}\gamma^{2}\beta+\omega_{0}\gamma^{2}\left(1+\beta^{2}\right)\cos\theta_{0}
+\end{align*}
+
+\end_inset
+
+即：
+\begin_inset Formula 
+\begin{align*}
+\omega & =\gamma^{2}\omega_{0}\left(1+\beta^{2}+2\beta\cos\theta_{0}\right)\\
+\cos\theta & =\frac{2\beta+\left(1+\beta^{2}\right)\cos\theta_{0}}{1+\beta^{2}+2\beta\cos\theta_{0}}\\
+\tan\theta & =\frac{\sin\theta_{0}}{\gamma^{2}\left[2\beta+\left(1+\beta^{2}\right)\cos\theta_{0}\right]}\\
+\theta & =\theta_{0}-2\beta\sin\theta_{0}+\beta^{2}\sin2\theta_{0}+O\left(\beta^{3}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Series[(2 
+\backslash
+[Beta] + (1 + 
+\backslash
+[Beta]^2) Cos[Subscript[
+\backslash
+[Theta], 0]])/( 1 + 
+\backslash
+[Beta]^2 + 2 
+\backslash
+[Beta]*Cos[Subscript[
+\backslash
+[Theta], 0]]), {
+\backslash
+[Beta], 0, 2}] // Simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Series[((1 - 
+\backslash
+[Beta]^2) Sin[Subscript[
+\backslash
+[Theta], 0]])/(2 
+\backslash
+[Beta] + (1 + 
+\backslash
+[Beta]^2) Cos[Subscript[
+\backslash
+[Theta], 0]]), {
+\backslash
+[Beta], 0, 2}] // Simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Assuming[
+\backslash
+[Pi]/2 > Subscript[
+\backslash
+[Theta], 0] > 0, Simplify[Series[ ArcTan[((1 - 
+\backslash
+[Beta]^2) Sin[Subscript[
+\backslash
+[Theta], 0]])/(2 
+\backslash
+[Beta] + (1 + 
+\backslash
+[Beta]^2) Cos[Subscript[
+\backslash
+[Theta], 0]])], {
+\backslash
+[Beta], 0, 2}]]]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+垂直入射对应
+\begin_inset Formula $\theta_{0}=0$
+\end_inset
+
+，代入得到
+\begin_inset Formula $\theta=0$
+\end_inset
+
+，
+\begin_inset Formula $\omega=\omega_{0}\frac{\left(1+\beta\right)^{2}}{1-\beta^{2}}=\omega_{0}\frac{1+\beta}{1-\beta}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Frame
+
+\bar under
+\begin_inset CommandInset href
+LatexCommand href
+name "随着 beta 的变化"
+target "https://wx3.sinaimg.cn/mw690/c4587b00gy1gs322o8roqg20eo07j423.gif"
+literal "false"
+
+\end_inset
+
+
+\bar default
+，
+\bar under
+
+\begin_inset CommandInset href
+LatexCommand href
+name "随着入射角的变化"
+target "https://wx3.sinaimg.cn/mw690/c4587b00gy1gs322rnf6mg20eo07j44b.gif"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+tep[x_, 
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_] := {Tan[-
+\backslash
+[Theta]] x, Sin[
+\backslash
+[Theta]]/(
+\backslash
+[Gamma]^2 (2 
+\backslash
+[Beta] + (1 + 
+\backslash
+[Beta]^2) 
+\backslash
+ Cos[
+\backslash
+[Theta]])) x} /.
+ {
+\backslash
+[Gamma] -> Sqrt[1 - 
+\backslash
+[Beta]^2]^-1}; tea = Table[Plot[Evaluate[tep[x, 
+\backslash
+[Pi]/3, 
+\backslash
+[Beta]]], {x, 0, 1}, PlotRange -> {{0, 1}, {-1, 1}}, PlotLegends -> {"in",
+ "out"}], {
+\backslash
+[Beta], 0.01, 1, 1/30}]; Export["/home/tom/test/exer6_fanshe.gif", tea, AnimationR
+epetitions -> Infinity]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+tep[x_, 
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_] := {Tan[-
+\backslash
+[Theta]] x, Sin[
+\backslash
+[Theta]]/(
+\backslash
+[Gamma]^2 (2 
+\backslash
+[Beta] + (1 + 
+\backslash
+[Beta]^2) 
+\backslash
+ Cos[
+\backslash
+[Theta]])) x} /.
+ {
+\backslash
+[Gamma] -> Sqrt[1 - 
+\backslash
+[Beta]^2]^-1}; tea = Table[Plot[Evaluate[tep[x, 
+\backslash
+[Theta], .2]], {x, 0, 1}, PlotRange -> {{0, 1}, {-1, 1}}, PlotLegends ->
+ {"in", "out"}], {
+\backslash
+[Theta], 
+\backslash
+[Pi]/2.1, 0.01 
+\backslash
+[Pi], -0.01*
+\backslash
+[Pi]}]; Export["/home/tom/test/exer6_fanshe2.gif", tea, AnimationRepetitions
+ -> Infinity]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.12
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+电偶极子
+\begin_inset Formula $\sbf p_{0}$
+\end_inset
+
+以速度
+\begin_inset Formula $\sbf v$
+\end_inset
+
+作匀速运动，求它产生的电磁势和场
+\begin_inset Formula $\varphi$
+\end_inset
+
+，
+\begin_inset Formula $\sbf A$
+\end_inset
+
+，
+\begin_inset Formula $\sbf E$
+\end_inset
+
+，
+\begin_inset Formula $\sbf B$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+解：在
+\begin_inset Formula $\sbf p_{0}$
+\end_inset
+
+静止的参考系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中，仅观察到它的标势
+\begin_inset Formula $\varphi^{\prime}$
+\end_inset
+
+，或电场
+\begin_inset Formula $\sbf E^{\prime}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+\varphi^{\prime} & =\frac{\sbf p_{0}\cdot\sbf R^{\prime}}{4\pi\varepsilon_{0}R^{\prime3}},\quad\sbf A^{\prime}=0,\\
+\sbf E^{\prime} & =\frac{1}{4\pi\varepsilon_{0}}\left[\frac{3\left(\sbf p_{0}\cdot\sbf R^{\prime}\right)\sbf R^{\prime}}{R^{\prime5}}-\frac{\sbf p_{0}}{R^{\prime3}}\right],\quad\sbf B^{\prime}=0.
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $R^{\prime}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf R^{\prime}$
+\end_inset
+
+分别是
+\begin_inset Formula $\sbf p_{0}$
+\end_inset
+
+到场点的距离与矢径：
+\begin_inset Formula 
+\[
+R^{\prime}=\sqrt{x^{\prime2}+y^{\prime2}+z^{\prime2}},\quad\sbf R^{\prime}=x^{\prime}\sbf e_{x}+y^{\prime}\sbf e_{y}+z^{\prime}\sbf e_{z}.
+\]
+
+\end_inset
+
+设
+\begin_inset Formula $\sbf p_{0}$
+\end_inset
+
+沿
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系的
+\begin_inset Formula $x$
+\end_inset
+
+轴运动，由四维势变换
+\begin_inset Formula $A_{\mu}=a_{\nu\mu}A_{\nu}^{\prime}$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\varphi/c\\
+A_{\ssl}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & +\gamma\beta\\
++\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\varphi^{\prime}/c\\
+A_{\ssl}^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+得
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中的电磁势为
+\begin_inset Formula 
+\[
+A_{\ssl}=\gamma\beta\varphi^{\prime}/c,\quad\varphi=\gamma\varphi^{\prime},\quad A_{\perp}=0.
+\]
+
+\end_inset
+
+下标
+\begin_inset Formula $\ssl$
+\end_inset
+
+表示与运动方向平行的分量，
+\begin_inset Formula $\perp$
+\end_inset
+
+表示垂直分量。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.12
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+由
+\begin_inset Formula $F_{\mu\nu}^{\prime}=\Lambda_{\mu}^{\phantom{\mu}\rho}\Lambda_{\nu}^{\phantom{\mu}\sigma}F_{\rho\sigma}$
+\end_inset
+
+的变换关系可得电磁场的变换关系，这里使用逆变换。与运动方向平行的分量，其变换为：
+\begin_inset Formula 
+\[
+\sbf E_{\ssl}^{\prime}=\sbf E_{\ssl},\quad\sbf B_{\ssl}^{\prime}=\sbf B_{\ssl},
+\]
+
+\end_inset
+
+垂直分量的变换为：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf E_{\perp}/c\\
+\sbf B_{\perp}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\sbf\beta\times\\
++\gamma\sbf\beta\times & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\sbf E_{\perp}^{\prime}/c\\
+\sbf B_{\perp}^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $\sbf B=0$
+\end_inset
+
+，
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系观察到的电磁场为，
+\begin_inset Formula 
+\begin{align*}
+ & \sbf E_{\ssl}=\sbf E_{\ssl}^{\prime},\quad\sbf B_{\ssl}=0\\
+ & \sbf E_{\perp}=\gamma\sbf E_{\perp}^{\prime},\quad\sbf B_{\perp}=\gamma\left(\frac{\sbf v}{c^{2}}\times\sbf E_{\perp}^{\prime}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.12
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+此外还需考虑场点的变换。设
+\begin_inset Formula $t=0$
+\end_inset
+
+两坐标系原点重合，在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中，源点和场点的
+\begin_inset Formula $\Delta t=0$
+\end_inset
+
+，代入坐标变换：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+c\Delta t^{\prime}\\
+\Delta x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+c\Delta t\\
+\Delta x
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+R^{\prime}=\sqrt{\gamma^{2}x^{2}+y^{2}+z^{2}},\quad\sbf R^{\prime}=\gamma x\sbf e_{x}+y\sbf e_{y}+z\sbf e_{z}.
+\]
+
+\end_inset
+
+单位矢量
+\begin_inset Formula $\sbf e_{x}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf e_{y}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf e_{z}$
+\end_inset
+
+在洛伦兹boost下不变。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+设在参考系
+\begin_inset Formula $\Sigma$
+\end_inset
+
+内
+\begin_inset Formula $\sbf E\perp\sbf B$
+\end_inset
+
+，
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系沿
+\begin_inset Formula $\sbf E\times\sbf B$
+\end_inset
+
+的方向运动。问
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系应以什么样的速度相对于
+\begin_inset Formula $\Sigma$
+\end_inset
+
+运动才能使其中只有电场或只有磁场？
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+解：
+\color inherit
+令
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系沿
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系的
+\begin_inset Formula $x$
+\end_inset
+
+轴正向运动，则在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中
+\begin_inset Formula 
+\[
+E_{x}=E_{z}=0,\quad\sbf E=E_{y}\sbf e_{y};\quad B_{x}=B_{y}=0,\quad\sbf B=B_{z}\sbf e_{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+而电磁场的变换关系为
+\begin_inset Formula 
+\begin{align*}
+ & \sbf E_{\ssl}^{\prime}=\sbf E_{\ssl},\quad\sbf B_{\ssl}^{\prime}=\sbf B_{\ssl},\quad\text{与运动方向平行的分量}\\
+ & \sbf E_{\perp}^{\prime}=\gamma\left(\sbf E_{\perp}+\sbf v\times\sbf B_{\perp}\right),\quad\sbf B_{\perp}^{\prime}=\gamma\left(\sbf B_{\perp}-\frac{\sbf v}{c^{2}}\times\sbf E_{\perp}\right).
+\end{align*}
+
+\end_inset
+
+得到
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中
+\begin_inset Formula 
+\begin{align*}
+ & E_{x}^{\prime}=B_{x}^{\prime}=0\\
+ & E_{y}^{\prime}=\gamma\left(E_{y}-vB_{z}\right)=\gamma\left(\abs{\sbf E}-v\abs{\sbf B}\right)\\
+ & B_{z}^{\prime}=\gamma\left(B_{z}-\frac{v}{c^{2}}E_{y}\right)=\gamma\left(\abs{\sbf B}-\frac{v}{c^{2}}\abs{\sbf E}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+若在
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中只观察到电场
+\begin_inset Formula $\sbf E^{\prime}$
+\end_inset
+
+，磁场
+\begin_inset Formula $\sbf B^{\prime}=0$
+\end_inset
+
+，上面的变换关系得：
+\begin_inset Formula 
+\[
+v=\frac{c^{2}\abs{\sbf B}}{\abs{\sbf E}},\quad\text{i.e.}\quad\sbf v=\frac{c^{2}}{E^{2}}\sbf E\times\sbf B
+\]
+
+\end_inset
+
+且
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中应满足
+\begin_inset Formula $\abs{\sbf E}>c\abs{\sbf B}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Frame
+若在
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中只观察到磁场
+\begin_inset Formula $\sbf B^{\prime}$
+\end_inset
+
+，电场
+\begin_inset Formula $\sbf E^{\prime}=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\sbf v=\frac{1}{B^{2}}\sbf E\times\sbf B
+\]
+
+\end_inset
+
+且
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中应满足
+\begin_inset Formula $\abs{\sbf E}<c\abs{\sbf B}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.15
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+有一沿
+\begin_inset Formula $z$
+\end_inset
+
+轴方向螺旋进动的静磁场
+\begin_inset Formula $\sbf B=B_{0}\left(\cos k_{m}z\sbf e_{x}+\sin k_{m}z\sbf e_{y}\right)$
+\end_inset
+
+，其中
+\begin_inset Formula $k_{m}=2\pi/\lambda_{m}$
+\end_inset
+
+，
+\begin_inset Formula $\lambda_{m}$
+\end_inset
+
+为磁场周期长度。现有一沿
+\begin_inset Formula $z$
+\end_inset
+
+轴以速度
+\begin_inset Formula $v=\beta c$
+\end_inset
+
+运动的惯性系，求在该惯性系中观察到的电磁场。证明当
+\begin_inset Formula $\beta\simeq1$
+\end_inset
+
+时该电磁场类似于一列频率为
+\begin_inset Formula $\gamma\cdot\beta ck_{m}$
+\end_inset
+
+的圆偏振电磁波。
+\begin_inset Formula $\left(x,y,z\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+解：在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中
+\begin_inset Formula $\sbf B_{\ssl}=\sbf B_{z}=0$
+\end_inset
+
+，且
+\begin_inset Formula $\sbf E=0$
+\end_inset
+
+，所以在运动参考系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中观察到的电磁场为
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf E_{\perp}^{\prime}/c\\
+\sbf B_{\perp}^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & +\gamma\sbf\beta\times\\
+-\gamma\sbf\beta\times & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\sbf E_{\perp}/c\\
+\sbf B_{\perp}
+\end{array}\right),\quad E_{\ssl}^{\prime}=0,\quad B_{\ssl}^{\prime}=0.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf E_{\perp}^{\prime} & =\gamma\sbf v\times\sbf B_{\perp}=\gamma\beta cB_{0}\left(\cos k_{m}z\sbf e_{y}-\sin k_{m}z\sbf e_{x}\right),\\
+\sbf B_{\perp}^{\prime} & =\gamma\sbf B_{\perp}=\gamma B_{0}\left(\cos k_{m}z\sbf e_{x}+\sin k_{m}z\sbf e_{y}\right).
+\end{align*}
+
+\end_inset
+
+利用指数映射
+\begin_inset Formula $\cos x\to\re\left[e^{ix}\right],\sin x\to\re\left[-ie^{ix}\right]$
+\end_inset
+
+，可以将
+\begin_inset Formula $\sbf E$
+\end_inset
+
+，
+\begin_inset Formula $\sbf B$
+\end_inset
+
+写成复数的形式，
+\begin_inset Formula 
+\[
+\sbf E^{\prime}=\gamma\beta cB_{0}\left(i\sbf e_{x}+\sbf e_{y}\right)e^{ik_{m}^{\prime}z^{\prime}},\quad\sbf B_{\perp}^{\prime}=\frac{-\sbf e_{z}}{\beta c}\times\sbf E_{\perp}^{\prime}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.15
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+k = 10; amp = 1; tea = Show[ Join[Table[ z2 = z1 + 0.4; ParametricPlot3D[{-(z
+ - z1) Sin[k*z2]/(z2 - z1), (z - z1)* Cos[k*z2]/(z2 - z1), z}, {z, z1, z2},
+ PlotStyle -> Green ], {z1, {0, 0.5, 1, 1.5, 2.5, 3.5, 4.5}} ], { ParametricPlot3D[am
+p*{-Sin[k*z], Cos[k*z], z}, {z, 0, 5}, PlotStyle -> {Blue, Opacity[.2]} ],
+ ParametricPlot3D[{0, 0, z}, {z, 0, 5}, PlotStyle -> {Red, Opacity[.8]}]
+ } ], PlotRange -> Full, Axes -> False, Boxed -> False, ImageSize -> {100,
+ 200} ] Export["/home/tom/note/EMD/exer6_cichang.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中磁场不随时间变化，
+\begin_inset Formula $k^{\mu}=\left(0,k_{m}\right)$
+\end_inset
+
+，
+\begin_inset Formula $k^{\mu}k_{\mu}=-k_{m}^{2}<0$
+\end_inset
+
+。物理的光子总满足
+\begin_inset Formula $k^{\mu}k_{\mu}=0$
+\end_inset
+
+，说明问题中的电磁场不代表真实的光子。代入波矢的变换关系，
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\omega^{\prime}/c\\
+k_{m}^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\omega/c\\
+k_{m}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+k^{\prime\mu}=\left(-\gamma\beta k_{m},\gamma k_{m}\right)
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta\approx1$
+\end_inset
+
+时，
+\begin_inset Formula $k^{\prime\mu}\approx\left(-\gamma k_{m},\gamma k_{m}\right)$
+\end_inset
+
+，
+\begin_inset Formula $\omega^{\prime}=-c\gamma k_{m}$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+e^{ik^{\prime\mu}x_{\mu}^{\prime}}\to e^{-i\gamma k_{m}\left(ct+z\right)}.
+\]
+
+\end_inset
+
+它相当于一列频率为
+\begin_inset Formula $\omega^{\prime}=c\gamma k_{m}$
+\end_inset
+
+，沿着负
+\begin_inset Formula $z$
+\end_inset
+
+轴方向传播的圆偏振波。
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(5,-1)$) {
+\backslash
+includegraphics[scale=.7]{exer6_cichang}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+\begin_inset CommandInset href
+LatexCommand href
+name "旋进的磁场"
+target "https://wx3.sinaimg.cn/mw1024/c4587b00gy1gs2p8dqc3yg20ci0ciwmu.gif"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+origin = 0; k = 8; 
+\backslash
+[CapitalDelta]z = 0.4; 
+\backslash
+[Phi] = 
+\backslash
+[Pi]/2; viewd = 8; tea = Table[ Show[Join[ Table[(*磁场线部分*) ParametricPlot3D[{-(z
+ - z1) Sin[ k*(z1 + 
+\backslash
+[CapitalDelta]z)]/
+\backslash
+[CapitalDelta]z, (z - z1)* Cos[k*(z1 + 
+\backslash
+[CapitalDelta]z)]/
+\backslash
+[CapitalDelta]z, z1 + 
+\backslash
+[CapitalDelta]z}, {z, z1, z1 + 
+\backslash
+[CapitalDelta]z}, PlotStyle -> Green], {z1, 0 + origin, 4.5 + origin, 1}
+ ], {ParametricPlot3D[{-Sin[k*z], Cos[k*z], z}, {z, 0 + origin, 5 + origin},
+ PlotStyle -> {Blue, Opacity[.2]}], ParametricPlot3D[{0, 0, z}, {z, 0 + origin,
+ 5 + origin}, PlotStyle -> {Red, Opacity[.8]}]}(*螺旋线*) ], PlotRange -> Full,
+ Axes -> False, Boxed -> False, ImageSize -> Medium, ViewVector -> viewd
+ {Cos[-
+\backslash
+[Phi]], Sin[-
+\backslash
+[Phi]], 1.5} ] , {
+\backslash
+[Phi], 0, 2 
+\backslash
+[Pi], 
+\backslash
+[Pi]/24} ]; Export["/home/tom/test/exer6_luoxuan.gif", tea, AnimationRepetitions
+ -> Infinity]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.16
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+有一无限长均匀带电直线，在其静止参考系中线电荷密度为
+\begin_inset Formula $\lambda$
+\end_inset
+
+。该线电荷以速度
+\begin_inset Formula $v=\beta c$
+\end_inset
+
+沿纵向均匀移动。在与直线相距为
+\begin_inset Formula $d$
+\end_inset
+
+的地方有一以同样速度平行于直线运行的点电荷
+\begin_inset Formula $q$
+\end_inset
+
+。分别用下列两种方法求出作用在电荷上的力：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\color blue
+在带电静止系中确定力，然后用四维力变换公式。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+直接计算线电荷和线电流作用在运动电荷上的电磁力。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+答案：
+\begin_inset Formula $\sbf F=\frac{\lambda q}{2\pi\varepsilon_{0}d\gamma}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+解：设带电直线沿着
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系的
+\begin_inset Formula $x$
+\end_inset
+
+轴正向。在直线静止系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中，只有静电场：
+\begin_inset Formula 
+\[
+\sbf E_{\ssl}^{\prime}=0,\quad\sbf E_{\perp}^{\prime}=\frac{\lambda}{2\pi\varepsilon_{0}d}\sbf e_{r},\quad\sbf B^{\prime}=0
+\]
+
+\end_inset
+
+电荷受到的力为
+\begin_inset Formula 
+\[
+\sbf F^{\prime}=q\sbf E^{\prime}=\frac{\lambda q}{2\pi\varepsilon_{0}d}\sbf e_{r}.
+\]
+
+\end_inset
+
+力的方向与
+\begin_inset Formula $\sbf v$
+\end_inset
+
+垂直。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中点电荷对应的
+\begin_inset Formula $\gamma_{v^{\prime}}=1$
+\end_inset
+
+，写出
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中四维力的形式，
+\begin_inset Formula 
+\[
+K^{\prime,\mu}=\gamma_{v^{\prime}}\left(\sbf F^{\prime}\cdot\sbf v^{\prime}/c,\sbf F^{\prime}\right)=\left(0,\frac{\lambda q}{2\pi\varepsilon_{0}d}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.16
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+而在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系中，
+\begin_inset Formula $\gamma_{v}=1/\sqrt{1-\beta^{2}}$
+\end_inset
+
+，对应的四维力是
+\begin_inset Formula 
+\[
+K^{\mu}=\gamma_{v}\left(\sbf F\cdot\sbf v/c,\sbf F\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+在洛伦兹boost下，垂直方向的分量不变：
+\begin_inset Formula 
+\[
+\gamma_{v}\sbf F=\gamma_{v^{\prime}}\sbf F^{\prime}\Rightarrow\sbf F={\color{blue}\frac{1}{\gamma}\frac{\lambda q}{2\pi\varepsilon_{0}d}\sbf e_{r}}.
+\]
+
+\end_inset
+
+如果在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+使用洛伦兹力公式
+\begin_inset Formula $q\sbf E+q\sbf v\times\sbf B$
+\end_inset
+
+求解问题。首先用逆变换得到
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系的电磁场，
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf E_{\perp}/c\\
+\sbf B_{\perp}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\sbf\beta\times\\
++\gamma\sbf\beta\times & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\sbf E_{\perp}^{\prime}/c\\
+0
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf E_{\perp}=\gamma E_{\perp}^{\prime}\sbf e_{r},\quad\sbf B_{\perp}=\gamma\beta/cE_{\perp}^{\prime}\sbf e_{\phi}
+\]
+
+\end_inset
+
+代入，得到和上面相同的结果：
+\begin_inset Formula 
+\[
+\sbf F=q\sbf E+q\sbf v\times\sbf B=\gamma\left[1-\beta^{2}\right]qE_{\perp}^{\prime}\sbf e_{r}={\color{blue}\frac{1}{\gamma}\frac{\lambda q}{2\pi\varepsilon_{0}d}\sbf e_{r}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\color blue
+设
+\begin_inset Formula $E$
+\end_inset
+
+和
+\begin_inset Formula $\sbf p$
+\end_inset
+
+是粒子体系在实验室参考系
+\begin_inset Formula $\Sigma$
+\end_inset
+
+中的总能量和总动量（
+\begin_inset Formula $\sbf p$
+\end_inset
+
+与
+\begin_inset Formula $x$
+\end_inset
+
+轴方向夹角为
+\begin_inset Formula $\theta$
+\end_inset
+
+）。证明在另一参考系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+（相对于
+\begin_inset Formula $\Sigma$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿
+\begin_inset Formula $x$
+\end_inset
+
+轴方向运动）中的粒子体系总能量和总动量满足：
+\begin_inset Formula 
+\begin{align*}
+ & p_{x}^{\prime}=\gamma\left(p_{x}-\beta E/c\right),\quad E^{\prime}=\gamma\left(E-c\beta p_{x}\right)\\
+ & \tan\theta^{\prime}=\frac{\sin\theta}{\gamma\left(\cos\theta-\beta E/cp\right)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+某光源发出的光束在两个惯性系中与
+\begin_inset Formula $x$
+\end_inset
+
+轴的夹角分别为
+\begin_inset Formula $\theta$
+\end_inset
+
+和
+\begin_inset Formula $\theta^{\prime}$
+\end_inset
+
+，证明：
+\begin_inset Formula 
+\[
+\cos\theta^{\prime}=\frac{\cos\theta-\beta}{1-\beta\cos\theta},\quad\sin\theta^{\prime}=\frac{\sin\theta}{\gamma\left(1-\beta\cos\theta\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+考虑在
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系内立体角为
+\begin_inset Formula $\dif\Omega=\dif\cos\theta\dif\phi$
+\end_inset
+
+的光束，证明当变换到另一惯性系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+时。立体角变为
+\begin_inset Formula 
+\[
+\dif\Omega^{\prime}=\frac{\dif\Omega}{\gamma^{2}\left(1-\beta\cos\theta\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+解：
+\begin_inset Formula $p^{\mu}=mU^{\mu}=\gamma m\left(c,\sbf v\right)$
+\end_inset
+
+构成四矢量：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+E^{\prime}/c\\
+p_{x}^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+E/c\\
+p_{x}
+\end{array}\right)
+\]
+
+\end_inset
+
+选择适当的坐标系，使得
+\begin_inset Formula $p_{y}=p\sin\theta$
+\end_inset
+
+，
+\begin_inset Formula $p_{x}=p\cos\theta$
+\end_inset
+
+，
+\begin_inset Formula $p_{z}=0$
+\end_inset
+
+，得到：
+\begin_inset Formula 
+\[
+\tan\theta^{\prime}=\frac{p_{x}^{\prime}}{p_{y}^{\prime}}=\frac{p_{y}}{\gamma\left(p_{x}-\beta E/c\right)}=\frac{\sin\theta}{\gamma\left(\cos\theta-\beta E/cp\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+对于光源发出的光束，考虑它的四维波矢量
+\begin_inset Formula $k^{\mu}=\left(\omega/c,\sbf k\right)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\omega^{\prime}/c\\
+k_{x}^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\omega/c\\
+k_{x}
+\end{array}\right)
+\]
+
+\end_inset
+
+考虑到
+\begin_inset Formula $\omega^{\prime}/c\cos\theta^{\prime}=k_{x}^{\prime}$
+\end_inset
+
+，
+\begin_inset Formula $\omega/c\cos\theta=k_{x}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\cos\theta^{\prime}=\frac{k_{x}^{\prime}}{\omega^{\prime}/c}=\frac{\gamma}{\gamma}\frac{-\beta\omega/c+k_{x}}{\omega/c-\beta k_{x}}=\frac{\cos\theta-\beta}{1-\beta\cos\theta}.
+\]
+
+\end_inset
+
+类似可以得到：
+\begin_inset Formula 
+\[
+\sin\theta^{\prime}=\frac{k_{y}^{\prime}}{\omega^{\prime}/c}=\frac{k_{y}}{\gamma\left(\omega/c-\beta k_{x}\right)}=\frac{\sin\theta}{\gamma\left(1-\beta\cos\theta\right)}
+\]
+
+\end_inset
+
+不同坐标系中的光速相同，
+\begin_inset Formula $c^{2}=u_{x}^{2}+u_{y}^{2}$
+\end_inset
+
+，也可以由速度叠加公式得到上述结果。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系内立体角为
+\begin_inset Formula $\dif\Omega=\dif\cos\theta\dif\phi$
+\end_inset
+
+的光束，boost 到另一惯性系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+时，立体角的变换：注意这里和通常的坐标系不同，
+\begin_inset Formula $\sbf p$
+\end_inset
+
+与
+\begin_inset Formula $x$
+\end_inset
+
+轴方向夹角为
+\begin_inset Formula $\theta$
+\end_inset
+
+，而不是与
+\begin_inset Formula $z$
+\end_inset
+
+轴的夹角。
+\begin_inset Formula $x$
+\end_inset
+
+方向进行boost，
+\begin_inset Formula $y,z$
+\end_inset
+
+方向不变。
+\begin_inset Formula 
+\[
+\phi^{\prime}=\arctan\frac{z^{\prime}}{y^{\prime}}=\arctan\frac{z}{y}=\phi,\quad\cos\theta^{\prime}=\frac{\cos\theta-\beta}{1-\beta\cos\theta}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-\left|\frac{\dif\cos\theta^{\prime}\dif\phi^{\prime}}{\dif\cos\theta\dif\phi}\right|=-\left|\begin{array}{cc}
+\frac{\partial\phi^{\prime}}{\partial\phi} & \frac{\partial\phi^{\prime}}{\partial\cos\theta}\\
+\frac{\partial\cos\theta^{\prime}}{\partial\phi} & \frac{\partial\cos\theta^{\prime}}{\partial\cos\theta}
+\end{array}\right|=\frac{1-\beta^{2}}{\left(1-\beta\cos\theta\right)^{2}}
+\]
+
+\end_inset
+
+所以
+\begin_inset Formula 
+\[
+\dif\Omega^{\prime}=\frac{1}{\gamma^{2}\left(1-\beta\cos\theta\right)^{2}}\dif\Omega,\quad\dif\Omega=\frac{1}{\gamma^{2}\left(1+\beta\cos\theta\right)^{2}}\dif\Omega^{\prime}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+tea = Det[D[{
+\backslash
+[Phi], (x - 
+\backslash
+[Beta])/(1 - 
+\backslash
+[Beta] x)}, {{
+\backslash
+[Phi], x}}]] // Simplify; tea /.
+ {
+\backslash
+[Gamma] -> 1/Sqrt[1 - 
+\backslash
+[Beta]^2]} // Simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+如果考虑的分布不是光束，而是静止系统，例如电荷密度：
+\begin_inset Formula $x$
+\end_inset
+
+方向发生运动收缩，
+\begin_inset Formula $x^{\prime}=\gamma x$
+\end_inset
+
+，
+\begin_inset Formula $y,z$
+\end_inset
+
+方向不变。
+\begin_inset Formula 
+\[
+\phi^{\prime}=\phi,\quad\cos\theta^{\prime}=\frac{x^{\prime}}{\sqrt{x^{\prime,2}+y^{\prime,2}+z^{\prime,2}}}=\frac{\gamma\cos\theta}{\sqrt{1+\gamma^{2}\beta^{2}\cos^{2}\theta}},\quad\gamma^{2}-1=\gamma^{2}\beta^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sin\theta^{\prime}=\frac{\sin\theta}{\gamma\sqrt{1-\beta^{2}\sin^{2}\theta}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-\left|\begin{array}{cc}
+\frac{\partial\phi^{\prime}}{\partial\phi} & \frac{\partial\phi^{\prime}}{\partial\cos\theta}\\
+\frac{\partial\cos\theta^{\prime}}{\partial\phi} & \frac{\partial\cos\theta^{\prime}}{\partial\cos\theta}
+\end{array}\right|=\frac{\gamma}{\left(\left(\gamma^{2}-1\right)\cos^{2}\theta+1\right)^{3/2}}=\frac{\gamma}{\left(1+\beta^{2}\gamma^{2}\cos^{2}\theta\right)^{3/2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dif\Omega^{\prime}=\frac{\gamma}{\left(1+\beta^{2}\gamma^{2}\cos^{2}\theta\right)^{3/2}}\dif\Omega,\quad\dif\Omega=\frac{1}{\gamma\left(1-\beta^{2}\cos^{2}\theta\right)^{3/2}}\dif\Omega^{\prime}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Det[D[{
+\backslash
+[Phi], (
+\backslash
+[Gamma] x)/Sqrt[ 1 + (
+\backslash
+[Gamma]^2 - 1) x^2]}, {{
+\backslash
+[Phi], x}}]] // Simplify; 
+\backslash
+[Gamma]/(1 + x^2 (-1 + 
+\backslash
+[Gamma]^2))^( 3/2) /.
+ {
+\backslash
+[Gamma] -> 1/Sqrt[1 - 
+\backslash
+[Beta]^2]} // Simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(0,+3.5)$) {两种情况下，体系分布的变换:左边为光束分布，右
+边为静止分布};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(-3.2,+0)$) {
+\backslash
+includegraphics[scale=.7]{exer6_angle1}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(+3.2,0)$) {
+\backslash
+includegraphics[scale=.7]{exer6_angle2}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+teh[
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_] := {1, 1/(
+\backslash
+[Gamma]^2 (1 + 
+\backslash
+[Beta]*Cos[
+\backslash
+[Theta]])^2)} /.
+ {
+\backslash
+[Gamma] -> 1/Sqrt[1 - 
+\backslash
+[Beta]^2]}; tea = PolarPlot[Evaluate[teh[
+\backslash
+[Theta], .5]], {
+\backslash
+[Theta], 0, 2 
+\backslash
+[Pi]}, PlotLabels -> {"Static", "Boost"}]; Export["/home/tom/note/EMD/exer6_angl
+e1.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+teh[
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_] := {1, 
+\backslash
+[Gamma]^-1 (1 - 
+\backslash
+[Beta]^2 Cos[
+\backslash
+ 
+\backslash
+[Theta]]^2)^(-3/2)} /.
+ {
+\backslash
+[Gamma] -> Sqrt[1 - 
+\backslash
+[Beta]^2]^-1}; tea = PolarPlot[Evaluate[teh[
+\backslash
+[Theta], .8]], {
+\backslash
+[Theta], 0, 2 
+\backslash
+[Pi]}, PlotLabels -> {"Static", "Boost"}]; Export["/home/tom/note/EMD/exer6_angl
+e2.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.20
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+考虑一个质量为
+\begin_inset Formula $m_{1}$
+\end_inset
+
+，能量为
+\begin_inset Formula $E_{1}$
+\end_inset
+
+的粒子射向另一质量为
+\begin_inset Formula $m_{2}$
+\end_inset
+
+的静止粒子的体系。通常在高能物理中，选择动量中心参考系有许多方便之处，在该参考系中，总动量为零。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+求动量中心相对于实验室系的速度
+\begin_inset Formula $\beta_{c}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+求动量中心参考系中每个粒子的动量、能量及总能量；
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+已知电子静止质量
+\begin_inset Formula $m_{e}c^{2}=\qty{0.511}{\MeV}$
+\end_inset
+
+。北京正负电子对撞机（BEPC）的设计能量为
+\begin_inset Formula $2\times\qty{2.2}{\GeV}$
+\end_inset
+
+（
+\begin_inset Formula $\qty{1}{\GeV}=\qty{e3}{\MeV}$
+\end_inset
+
+）。估计一下若用单束电子入射于静止靶，要用多大能量才能达到与对撞机相同的相对运动能量？
+\end_layout
+
+\begin_layout Standard
+解：粒子的四动量满足
+\begin_inset Formula $E^{2}-p^{2}c^{2}=m^{2}c^{4}$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+E=\gamma mc^{2},\quad\sbf p=\gamma m\sbf v,\quad\sbf v=c^{2}\sbf p/E
+\]
+
+\end_inset
+
+将两个粒子的四动量相加，
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+E_{1}/c\\
+p_{1}
+\end{array}\right]+\left[\begin{array}{c}
+m_{2}c\\
+0
+\end{array}\right]=\left[\begin{array}{c}
+E_{1}/c+m_{2}c\\
+p_{1}
+\end{array}\right]
+\]
+
+\end_inset
+
+所以系统整体的速度是，
+\begin_inset Formula 
+\[
+\beta c=c^{2}\frac{p_{1}}{E_{1}+m_{2}c^{2}}=\frac{c\sqrt{E_{1}^{2}-m_{1}^{2}c^{4}}}{E_{1}+m_{2}c^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.20
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+设总动量的方向沿着
+\begin_inset Formula $\sbf e_{x}$
+\end_inset
+
+轴。boost 到动量中心系后，粒子
+\begin_inset Formula $2$
+\end_inset
+
+速度为
+\begin_inset Formula $-\beta c$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\beta=v/c=\frac{\sqrt{E_{1}^{2}-m_{1}^{2}c^{4}}}{E_{1}+m_{2}c^{2}},
+\]
+
+\end_inset
+
+所以对应的动量为：
+\begin_inset Formula 
+\begin{align*}
+\sbf p_{2}^{\prime} & =-\gamma m_{2}\sbf v=-m_{2}\frac{1}{\sqrt{1-\beta^{2}}}\beta c=\frac{m_{2}\sqrt{\left(E_{1}^{2}-c^{4}m_{1}^{2}\right)}}{\sqrt{m_{1}^{2}c^{2}+m_{2}^{2}c^{2}+2E_{1}m_{2}}}\\
+ & =\frac{-m_{2}\sqrt{\left(E_{1}^{2}-c^{4}m_{1}^{2}\right)}}{mc}\sbf e_{x},\quad\text{令}\;mc=\sqrt{m_{1}^{2}c^{2}+m_{2}^{2}c^{2}+2E_{1}m_{2}}\\
+\sbf p_{1}^{\prime} & =-\sbf p_{2}.
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & E_{1}^{\prime}=\sqrt{p_{1}^{\prime}c^{2}+m_{1}^{2}c^{4}}=\frac{m_{1}^{2}c^{2}+E_{1}m_{2}}{m}\\
+ & E_{2}^{\prime}=\sqrt{p_{2}^{\prime}c^{2}+m_{2}^{2}c^{4}}=\frac{m_{2}^{2}c^{2}+E_{1}m_{2}}{m}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.20
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+相比于电子的静止质量
+\begin_inset Formula $\qty{0.511}{\MeV}$
+\end_inset
+
+，对撞束流的能量很高，因此可以忽略静止质量。根据前面求解的关系，打靶系能量
+\begin_inset Formula $E_{1}$
+\end_inset
+
+与质心系能量
+\begin_inset Formula $E_{1}^{\prime2}$
+\end_inset
+
+的关系为：
+\begin_inset Formula 
+\begin{align*}
+E_{1}^{\prime2} & =\frac{\left(m_{1}^{2}c^{2}+E_{1}m_{2}\right)c^{2}}{m_{1}^{2}c^{2}+m_{2}^{2}c^{2}+2E_{1}m_{2}}\approx\frac{E_{1}m_{2}c^{2}}{2}\\
+E_{1} & \approx\frac{2E_{1}^{\prime2}}{m_{2}c^{2}}
+\end{align*}
+
+\end_inset
+
+代入
+\begin_inset Formula $m_{2}c^{2}=\qty{0.511}{\MeV}$
+\end_inset
+
+，以及
+\begin_inset Formula $E_{1}^{\prime}=\qty{2.2}{\GeV}$
+\end_inset
+
+，得：
+\begin_inset Formula 
+\[
+E_{1}\approx\qty{18943.2}{\GeV}
+\]
+
+\end_inset
+
+即需要约
+\begin_inset Formula $\qty{1.9e4}{\GeV}$
+\end_inset
+
+才能达到与对撞机相同的相对运动能量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+试确定粒子在互相垂直的均匀电场
+\begin_inset Formula $E\sbf e_{x}$
+\end_inset
+
+和磁场
+\begin_inset Formula $B\sbf e_{y}$
+\end_inset
+
+（
+\begin_inset Formula $E>cB$
+\end_inset
+
+）内的运动规律，设粒子初速度为零。
+\end_layout
+
+\begin_layout Standard
+解：
+\begin_inset Formula 
+\begin{align*}
+\frac{\dif\sbf p}{\dif t} & =q\sbf E+q\sbf v\times\sbf B,\quad\frac{\dif E}{\dif t}=qEv_{x}\\
+\frac{\dif}{\dif t}c\left[\begin{array}{c}
+\gamma\beta_{x}\\
+\gamma\beta_{y}\\
+\gamma\beta_{z}
+\end{array}\right] & =\frac{q}{m}\left[\begin{array}{c}
+E-Bv_{z}\\
+0\\
+v_{x}B
+\end{array}\right]=c\xi\left[\begin{array}{c}
+1-\alpha\beta_{z}\\
+0\\
+\alpha\beta_{x}
+\end{array}\right]\\
+\frac{\dif}{\dif t}\gamma & =\xi\beta_{x},\quad\gamma=1/\sqrt{1-v^{2}/c^{2}}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha=\frac{Bc}{E}$
+\end_inset
+
+，
+\begin_inset Formula $\xi=\frac{qE}{mc}$
+\end_inset
+
+，即：
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\dif}{\dif t}\gamma\beta_{x}=\xi\left(1-\alpha\beta_{z}\right),\quad\frac{\dif}{\dif t}\gamma\beta_{z}=\xi\alpha\beta_{x}\\
+ & \frac{\dif}{\dif t}\gamma\beta_{y}=0,\quad\frac{\dif}{\dif t}\gamma=\xi\beta_{x},
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula $y$
+\end_inset
+
+方向方程为：
+\begin_inset Formula $\dif\left(\gamma\beta_{y}\right)=0\dif t$
+\end_inset
+
+。两边同时积分，考虑到初始时刻
+\begin_inset Formula $\beta_{y}=0$
+\end_inset
+
+，得到
+\begin_inset Formula $\gamma\beta_{y}=0$
+\end_inset
+
+。而
+\begin_inset Formula $\gamma\neq0$
+\end_inset
+
+，所以
+\begin_inset Formula $\beta_{y}\equiv0$
+\end_inset
+
+。方程化简为：
+\begin_inset Formula 
+\begin{align*}
+ & \left(\gamma\beta_{x}\right)^{\prime}=\xi\left(1-\alpha\beta_{z}\right),\quad\left(\gamma\beta_{z}\right)^{\prime}=\alpha\xi\beta_{x},\\
+ & {\color{blue}\gamma^{\prime}=\xi\beta_{x}},\quad\alpha=\frac{Bc}{E}\text{，}\xi=\frac{qE}{mc}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\prime$
+\end_inset
+
+表示对时间求导。尽量消去方程两边的变量：
+\begin_inset Formula 
+\begin{align*}
+ & \left\{ \gamma\left[\xi-\left(\gamma\beta_{x}\right)^{\prime}\right]\right\} ^{\prime}=\alpha\xi\left(\gamma\beta_{z}\right)^{\prime},\quad\left[\gamma\left(\gamma\beta_{z}\right)^{\prime}\right]^{\prime}=\alpha\xi\left(\gamma\beta_{x}\right)^{\prime},\\
+ & \left\{ \gamma\left[\xi-\left(\gamma\beta_{x}\right)^{\prime}\right]\right\} ^{\prime}=\alpha\xi\alpha\xi\beta_{x},\quad\left[\gamma\left(\gamma\beta_{z}\right)^{\prime}\right]^{\prime}=\alpha\xi^{2}\left(1-\alpha\beta_{z}\right)
+\end{align*}
+
+\end_inset
+
+进一步化简为：
+\begin_inset Formula 
+\[
+\left\{ \gamma\left[\xi-\left(\gamma\frac{\gamma^{\prime}}{\xi}\right)^{\prime}\right]\right\} ^{\prime}=\alpha^{2}\xi\gamma^{\prime},\quad\left[\gamma\left(\gamma\beta_{z}\right)^{\prime}\right]^{\prime}=\alpha\xi^{2}\left(1-\alpha\beta_{z}\right)
+\]
+
+\end_inset
+
+求解左边关于
+\begin_inset Formula $\gamma$
+\end_inset
+
+的常微分方程，可得到
+\begin_inset Formula $\gamma$
+\end_inset
+
+，
+\begin_inset Formula $\beta_{x}$
+\end_inset
+
+，继而解出
+\begin_inset Formula $\beta_{z}$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\{ \gamma\left[\xi-\left(\gamma\frac{\gamma^{\prime}}{\xi}\right)^{\prime}\right]\right\} ^{\prime}=\alpha^{2}\xi\gamma^{\prime},\quad\left[\gamma\left(\gamma\beta_{z}\right)^{\prime}\right]^{\prime}=\alpha\xi^{2}\left(1-\alpha\beta_{z}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\gamma$
+\end_inset
+
+的一般形式为：
+\begin_inset Formula 
+\begin{align*}
+t+c_{3}= & \pm\frac{\left(\alpha^{2}-1\right)\xi\sqrt{\gamma^{2}\left(1-\alpha^{2}\right)\xi^{2}+2\gamma c_{1}+c_{2}}}{\left(1-\alpha^{2}\right)^{2}\xi^{3}}\\
+ & \pm\frac{\sqrt{1-\alpha^{2}}c_{1}\tanh^{-1}\left(\frac{\gamma\left(1-\alpha^{2}\right)\xi^{2}+c_{1}}{\sqrt{1-\alpha^{2}}\xi\sqrt{\gamma^{2}\left(1-\alpha^{2}\right)\xi^{2}+2\gamma c_{1}+c_{2}}}\right)}{\left(1-\alpha^{2}\right)^{2}\xi^{3}}
+\end{align*}
+
+\end_inset
+
+尝试取
+\begin_inset Formula $c_{1}=c_{3}=0$
+\end_inset
+
+，
+\begin_inset Formula $c_{2}=\xi^{2}\left(\alpha^{2}-1\right)$
+\end_inset
+
+得：
+\begin_inset Formula 
+\[
+t=\frac{\sqrt{\gamma^{2}-1}}{\xi\sqrt{1-\alpha^{2}}},\quad\beta_{x}=\frac{\left(1-\alpha^{2}\right)\xi t}{\sqrt{1+\left(1-\alpha^{2}\right)\xi^{2}t^{2}}},\quad\beta_{z}=\alpha
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha<1$
+\end_inset
+
+。
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+DSolve[{ (
+\backslash
+[Alpha] 
+\backslash
+[Xi])^2 
+\backslash
+[Gamma]'[t] - 
+\backslash
+[Gamma]'[ t] (
+\backslash
+[Xi]^2 - 4 
+\backslash
+[Gamma][t]*Derivative[2][
+\backslash
+[Gamma]][t]) + (
+\backslash
+[Gamma]'[ t])^3 + 
+\backslash
+[Gamma][t]^2*Derivative[3][
+\backslash
+[Gamma]][t] == 0 }, 
+\backslash
+[Gamma][t], t, Assumptions -> {
+\backslash
+[Alpha] > 0, 
+\backslash
+[Xi] > 0, t >= 0} ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+也可以直接进行
+\bar under
+
+\begin_inset CommandInset href
+LatexCommand href
+name "数值模拟"
+target "https://weibo.com/3294132992/Kngrq5gfm"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+通过数值实验可以知道，
+\begin_inset Formula $\xi=\frac{qE}{mc}$
+\end_inset
+
+影响粒子运动速度的快慢，但对粒子的轨迹模式影响较小。
+\end_layout
+
+\begin_layout Standard
+而
+\begin_inset Formula $\alpha=\frac{Bc}{E}$
+\end_inset
+
+决定了粒子运动轨迹的模式：
+\end_layout
+
+\begin_layout Standard
+当
+\begin_inset Formula $\alpha>1$
+\end_inset
+
+时，粒子作类似摆线的运动；
+\end_layout
+
+\begin_layout Standard
+当
+\begin_inset Formula $\alpha<1$
+\end_inset
+
+时，粒子最终趋近于匀速直线运动。
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 4cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(0,-2)$) {
+\backslash
+includegraphics[scale=.6]{exer6_baixian}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+[Xi] = 1.2; 
+\backslash
+[Alpha] = 1.5; t0 = 13;
+\end_layout
+
+\begin_layout Plain Layout
+tea = NDSolve[{ D[
+\backslash
+[Gamma][t]*
+\backslash
+[Beta]x[t], t] == 
+\backslash
+[Xi] (1 - 
+\backslash
+[Alpha]*
+\backslash
+[Beta]z[t]), D[
+\backslash
+[Gamma][t]*
+\backslash
+[Beta]z[t], t] == 
+\backslash
+[Alpha]*
+\backslash
+[Xi]*
+\backslash
+[Beta]x[t], 
+\backslash
+[Gamma]'[t] == 
+\backslash
+[Xi]*
+\backslash
+[Beta]x[t], 
+\backslash
+[Beta]x[0] == 0, 
+\backslash
+[Beta]z[0] == 0, 
+\backslash
+[Gamma][0] == 1 }, {
+\backslash
+[Beta]x[t], 
+\backslash
+[Beta]z[t], 
+\backslash
+[Gamma][t]}, {t, 0, t0} ]; tef = Animate[ ParametricPlot[ Evaluate[{
+\backslash
+[Beta]x[t], 
+\backslash
+[Beta]z[t]} /.
+ First[tea]], {t, 0, tu}, PlotRange -> {{-1, 1}, {0, 1}}, AxesLabel -> {"VX",
+ "VZ"}, PlotLabel -> "
+\backslash
+[Xi]=1.2; 
+\backslash
+[Alpha]=1.5; 
+\backslash
+[CapitalDelta]t=10;", PlotStyle -> {Orange, Thick} ], {tu, .01, t0} ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+[Xi] = 1.2; 
+\backslash
+[Alpha] = 1.5; t0 = 35; tea = NDSolve[{ D[
+\backslash
+[Gamma][t]*x'[t], t] == 
+\backslash
+[Xi] (1 - 
+\backslash
+[Alpha]*z'[t]), D[
+\backslash
+[Gamma][t]*z'[t], t] == 
+\backslash
+[Alpha]*
+\backslash
+[Xi]*x'[t], 
+\backslash
+[Gamma]'[t] == 
+\backslash
+[Xi]*x'[t], x'[0] == 0, z'[0] == 0, 
+\backslash
+[Gamma][0] == 1, x[0] == 0, z[0] == 0 }, {x[t], z[t], 
+\backslash
+[Gamma][t]}, {t, 0, t0} ]; Animate[ ParametricPlot[ Evaluate[{x[t], z[t]}
+ /.
+ First[tea]], {t, 0, tu}, PlotRange -> {{-.5, 3}, {0, 25}}, PlotStyle ->
+ {Orange, Thick}, AxesLabel -> {"X", "Z"}, AspectRatio -> 3/1 ], {tu, 0.01,
+ t0} ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22*
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+利用洛伦兹变换，试确定粒子在互相垂直的均匀电场
+\begin_inset Formula $E\sbf e_{x}$
+\end_inset
+
+和磁场
+\begin_inset Formula $B\sbf e_{y}$
+\end_inset
+
+（
+\begin_inset Formula $E>cB$
+\end_inset
+
+）内的运动规律，设粒子初速度为
+\begin_inset Formula $u=c^{2}B/E$
+\end_inset
+
+，沿
+\begin_inset Formula $z$
+\end_inset
+
+轴正方向。
+\end_layout
+
+\begin_layout Frame
+解：
+\begin_inset Formula $cB<E$
+\end_inset
+
+，即粒子的初速度
+\begin_inset Formula $u=c^{2}B/E<c$
+\end_inset
+
+，沿
+\begin_inset Formula $z$
+\end_inset
+
+轴作速度为
+\begin_inset Formula $u$
+\end_inset
+
+的boost，
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\sbf E_{\perp}^{\prime}/c\\
+\sbf B_{\perp}^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma_{u} & \gamma_{u}\sbf\beta\times\\
+-\gamma\sbf\beta\times & \gamma_{u}
+\end{array}\right)\left(\begin{array}{c}
+\sbf E_{\perp}/c\\
+\sbf B_{\perp}
+\end{array}\right)
+\]
+
+\end_inset
+
+现处于粒子的静止系中，
+\begin_inset Formula 
+\begin{align*}
+ & \sbf B_{\perp}^{\prime}=-\gamma\frac{1}{E}EB\sbf e_{y}+\gamma B\sbf e_{y}=0\\
+ & \sbf E_{\perp}^{\prime}=\gamma_{u}E\sbf e_{x}-\gamma_{u}uB\sbf e_{x}=\gamma_{u}\left(E-uB\right)\sbf e_{x}=E/\gamma_{u}\sbf e_{x}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\gamma_{u}=1/\sqrt{1-u^{2}/c^{2}}$
+\end_inset
+
+，
+\begin_inset Formula $B=Eu/c^{2}$
+\end_inset
+
+。在
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中，粒子只在
+\begin_inset Formula $x^{\prime}$
+\end_inset
+
+方向受电场力，
+\begin_inset Formula $y^{\prime},z^{\prime}$
+\end_inset
+
+方向保持静止。
+\begin_inset Formula 
+\[
+\frac{\dif p_{x}}{\dif t^{\prime}}=qE_{x}^{\prime}\Rightarrow\frac{\dif}{\dif t^{\prime}}\frac{mv^{\prime}}{\sqrt{1-v^{\prime2}/c^{2}}}=q\frac{E}{\gamma_{u}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula $v^{\prime}\left(t\right)$
+\end_inset
+
+是
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+系中粒子的速度，
+\begin_inset Formula $m$
+\end_inset
+
+是粒子的静止质量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22*
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+稍作整理，
+\begin_inset Formula 
+\[
+\dif\frac{v^{\prime}}{\sqrt{c^{2}-v^{\prime2}}}=\frac{q}{mc}\frac{E}{\gamma_{u}}\dif t^{\prime}
+\]
+
+\end_inset
+
+两边同时积分，代入初始条件，
+\begin_inset Formula $t^{\prime}=0,v_{0}^{\prime}=0$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\frac{v^{\prime}}{\sqrt{c^{2}-v^{\prime2}}}=\frac{q}{mc}\frac{E}{\gamma_{u}}t^{\prime},\quad\text{令}\;a=\frac{q}{mc}\frac{E}{\gamma_{u}}
+\]
+
+\end_inset
+
+为了得到
+\begin_inset Formula $x^{\prime}\left(t^{\prime}\right)$
+\end_inset
+
+，对
+\begin_inset Formula $v^{\prime}\left(t^{\prime}\right)$
+\end_inset
+
+进行积分，初始坐标为
+\begin_inset Formula $x^{\prime}=0$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+x^{\prime}\left(t^{\prime}\right)=\int_{0}^{t^{\prime}}\frac{act}{\sqrt{1+a^{2}t^{2}}}\dif t=\frac{c}{a}\left(\sqrt{1+a^{2}t^{\prime2}}-1\right)
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+x^{\prime}\left(t\right)=\frac{mc^{2}}{q}\frac{\gamma_{u}}{E}\left[\sqrt{1+\left(\frac{q}{mc}\frac{E}{\gamma_{u}}t^{\prime}\right)^{2}}-1\right],\quad y^{\prime}=0,\quad z^{\prime}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22*
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+x^{\prime}\left(t\right)=\frac{mc^{2}}{q}\frac{\gamma_{u}}{E}\left[\sqrt{1+\left(\frac{q}{mc}\frac{E}{\gamma_{u}}t^{\prime}\right)^{2}}-1\right],\quad y^{\prime}=0,\quad z^{\prime}=0.
+\]
+
+\end_inset
+
+设
+\begin_inset Formula $t=0$
+\end_inset
+
+时刻，粒子位于
+\begin_inset Formula $\Sigma$
+\end_inset
+
+系原点。进行
+\begin_inset Formula $z$
+\end_inset
+
+轴的逆boost，
+\begin_inset Formula $z$
+\end_inset
+
+轴boost 不影响
+\begin_inset Formula $x,y$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct\\
+z
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & +\gamma\beta\\
++\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+ct^{\prime}\\
+z^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x\left(t\right)=\frac{mc^{2}}{qE}\gamma_{u}\left[\sqrt{1+\left(\frac{q}{mc}\frac{E}{\gamma_{u}^{2}}t\right)^{2}}-1\right],\quad y=0,\quad z=ut
+\]
+
+\end_inset
+
+即轨迹是
+\begin_inset Formula $x-z$
+\end_inset
+
+平面的抛射线，这是因为
+\begin_inset Formula $\sbf E\perp\sbf B$
+\end_inset
+
+且
+\begin_inset Formula $E>cB$
+\end_inset
+
+，粒子受到的电力大于磁力。
+\begin_inset Formula 
+\[
+x\left(t\right)\stackrel{\beta\to0,t\to0}{\approx}\alpha t^{2}\left[\frac{1}{2}-\frac{3}{4}\beta^{2}+\frac{3}{16}\beta^{4}\right]+O\left(t^{4},\beta^{6}\right),\quad\alpha=\frac{qE}{m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Series[ 
+\backslash
+[Gamma]* c/
+\backslash
+[Xi] (Sqrt[1 + (
+\backslash
+[Xi]/
+\backslash
+[Gamma]^2*t)^2] - 1) /.
+ {
+\backslash
+[Gamma] -> 1/Sqrt[1 - 
+\backslash
+[Beta]^2]}, {
+\backslash
+[Beta], 0, 4}, {t, 0, 3} ] // Together
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.22*
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(0,3)$) {相对论轨迹 v.s.
+ 经典理论轨迹：};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(0,-1)$) {
+\backslash
+includegraphics[scale=.8]{exer6_trajectory}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+\begin_inset CommandInset href
+LatexCommand href
+name "运动轨迹"
+target "https://wx3.sinaimg.cn/mw1024/c4587b00ly1gs32bwinbpg20hk0b678x.gif"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+c = 1; a = 1; u = 0.5; 
+\backslash
+[Gamma]u = 1/Sqrt[1 - u^2]; tea = ParametricPlot[ { {u*t, c/a (Sqrt[1 +
+ (a/
+\backslash
+[Gamma]u*t)^2] - 1)}, {u*t, 1/2 a c t^2} }, {t, 0, 1}, AxesLabel -> {"z",
+ "x"}, PlotLabels -> {"Relativistic", "Classic"}, ImageSize -> {400, 320}
+ ] Export["C:
+\backslash
+
+\backslash
+Users
+\backslash
+
+\backslash
+qingz
+\backslash
+
+\backslash
+note
+\backslash
+
+\backslash
+EMD
+\backslash
+
+\backslash
+exer6_trajectory.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+c = 1; a = 1; u = 0.5; 
+\backslash
+[Gamma]u = Sqrt[1 - u^2]^-1; tea = Table[ ParametricPlot[{{u*t, c/a (Sqrt[1
+ + (a/
+\backslash
+[Gamma]u*t)^2] - 1)}, {u*t, 1/2 a c t^2}}, {t, 0, t0}, PlotRange -> {{0,
+ 0.5}, {0, 0.52}}, AxesLabel -> {"z", "x"}, PlotLegends -> {"Relativistic",
+ "Classic"}, ImageSize -> {400, 320}], {t0, 0.01, 1, 1/30}]; Export["/home/tom/te
+st/exer6_paoshe.gif", tea, AnimationRepetitions -> Infinity]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.23
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\color blue
+已知
+\begin_inset Formula $t=0$
+\end_inset
+
+时点电荷
+\begin_inset Formula $q_{1}$
+\end_inset
+
+位于
+\begin_inset Formula $\left(0,0,0\right)$
+\end_inset
+
+，
+\begin_inset Formula $q_{2}$
+\end_inset
+
+静止于
+\begin_inset Formula $y$
+\end_inset
+
+轴
+\begin_inset Formula $\left(0,y_{0},0\right)$
+\end_inset
+
+上，
+\begin_inset Formula $q_{1}$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿
+\begin_inset Formula $x$
+\end_inset
+
+轴匀速运动，试分别求出
+\begin_inset Formula $q_{1}$
+\end_inset
+
+，
+\begin_inset Formula $q_{2}$
+\end_inset
+
+各自所受的力。如何解释两力不是等值反向？
+\end_layout
+
+\begin_layout Frame
+解：在
+\begin_inset Formula $t=0$
+\end_inset
+
+时刻，静止电荷
+\begin_inset Formula $q_{2}$
+\end_inset
+
+对
+\begin_inset Formula $q_{1}$
+\end_inset
+
+的作用力为：
+\begin_inset Formula 
+\[
+\sbf F_{2\to1}=q_{1}\sbf E_{2}={\color{blue}-\frac{q_{1}q_{2}}{4\pi\varepsilon_{0}y_{0}^{2}}\sbf e_{y}}
+\]
+
+\end_inset
+
+作
+\begin_inset Formula $x$
+\end_inset
+
+轴boost，运动电荷
+\begin_inset Formula $q_{1}$
+\end_inset
+
+在自身静止系
+\begin_inset Formula $\Sigma^{\prime}$
+\end_inset
+
+中，在
+\begin_inset Formula $q_{2}$
+\end_inset
+
+处产生的电磁场为：
+\begin_inset Formula 
+\[
+\sbf E_{1}^{\prime}=\frac{q_{1}}{4\pi\varepsilon_{0}y_{0}^{\prime2}}\sbf e_{y},\quad\sbf B_{1}^{\prime}=0
+\]
+
+\end_inset
+
+再作
+\begin_inset Formula $x$
+\end_inset
+
+轴逆boost，注意到
+\begin_inset Formula $y_{0}^{\prime}=y_{0}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+ & E_{1y}=\gamma E_{1y}^{\prime}=\gamma\frac{q_{1}}{4\pi\varepsilon_{0}y_{0}^{2}},\quad E_{1x}=B_{1x}=0,\quad B_{y}=0,\\
+ & B_{1z}=\gamma\frac{v}{c^{2}}E_{1y}^{\prime}=\gamma\frac{v}{c^{2}}\frac{q_{1}}{4\pi\varepsilon_{0}y_{0}^{2}},\quad E_{1z}=0.
+\end{align*}
+
+\end_inset
+
+由于
+\begin_inset Formula $q_{2}$
+\end_inset
+
+静止，只受到电场的作用力：
+\begin_inset Formula 
+\[
+\sbf F_{1\to2}=q_{2}E_{1y}\sbf e_{y}={\color{blue}\gamma\frac{q_{1}q_{2}}{4\pi\varepsilon_{0}y_{0}^{2}}\sbf e_{y}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.23
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\begin{align*}
+ & \sbf F_{2\to1}={\color{blue}-\frac{q_{1}q_{2}}{4\pi\varepsilon_{0}y_{0}^{2}}\sbf e_{y}}\\
+ & \sbf F_{1\to2}={\color{blue}\gamma\frac{q_{1}q_{2}}{4\pi\varepsilon_{0}y_{0}^{2}}\sbf e_{y}}
+\end{align*}
+
+\end_inset
+
+牛顿第三定律仅在
+\begin_inset Formula $v\ll c$
+\end_inset
+
+条件下才成立，在高速运动情形，
+\begin_inset Formula $\gamma\neq1$
+\end_inset
+
+，因此
+\begin_inset Formula $\sbf F_{12}\neq-\sbf F_{21}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Frame
+也可从另一角度：对粒子
+\begin_inset Formula $2$
+\end_inset
+
+使用相对论力学方程，
+\begin_inset Formula 
+\[
+\sbf F=m\frac{\dif}{\dif t}\gamma\sbf v,\quad\sbf F\cdot\sbf v=mc^{2}\frac{\dif}{\dif t}\gamma
+\]
+
+\end_inset
+
+
+\begin_inset Formula $t=0$
+\end_inset
+
+时，
+\begin_inset Formula $v_{y}=0$
+\end_inset
+
+，
+\begin_inset Formula $\sbf F\cdot\sbf v=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}\gamma=0,\quad F_{y}=\gamma m\frac{\dif}{\dif t}v_{y}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.26
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+动量为
+\begin_inset Formula $\hbar\sbf k$
+\end_inset
+
+，能量为
+\begin_inset Formula $\hbar\omega$
+\end_inset
+
+的光子撞在静止的电子上，散射到与入射方向夹角为
+\begin_inset Formula $\theta$
+\end_inset
+
+的方向上。证明散射光子的频率变化为
+\begin_inset Formula 
+\[
+\omega-\omega^{\prime}=\frac{2\hbar}{m_{0}c^{2}}\omega\omega^{\prime}\sin^{2}\frac{\theta}{2}
+\]
+
+\end_inset
+
+亦即散射光波长
+\begin_inset Formula 
+\[
+\lambda^{\prime}=\lambda+\frac{4\pi\hbar}{m_{0}c}\sin^{2}\frac{\theta}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\lambda$
+\end_inset
+
+为散射前光子波长
+\begin_inset Formula $2\pi/k$
+\end_inset
+
+，
+\begin_inset Formula $m_{0}$
+\end_inset
+
+为电子的静止质量。
+\end_layout
+
+\begin_layout Standard
+解：列出四动量的守恒方程，
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\sqrt{p^{\prime,2}+m^{2}c^{4}}/c\\
+p^{\prime}\cos\alpha\\
+p^{\prime}\sin\alpha
+\end{array}\right]+\left[\begin{array}{c}
+\hbar k^{\prime}\\
+\hbar k^{\prime}\cos\theta\\
+-\hbar k^{\prime}\sin\theta
+\end{array}\right]=\left[\begin{array}{c}
+mc\\
+0\\
+0
+\end{array}\right]+\left[\begin{array}{c}
+\hbar k\\
+\hbar k\\
+0
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+6.26
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+得到方程组：
+\begin_inset Formula 
+\begin{align*}
+\sqrt{p^{\prime,2}+m^{2}c^{4}}+\hbar ck^{\prime} & =mc^{2}+\hbar ck\\
+p^{\prime,2} & =\left(k^{\prime}\sin\theta\right)^{2}+\left(k-k^{\prime}\cos\theta\right)^{2}
+\end{align*}
+
+\end_inset
+
+求解方程得到：
+\begin_inset Formula 
+\[
+k^{\prime}=\frac{k}{1+\frac{\hbar k}{mc}\left(1-\cos\theta\right)},\quad\omega^{\prime}=\frac{\omega}{1+\frac{\hbar\omega}{mc^{2}}\left(1-\cos\theta\right)}
+\]
+
+\end_inset
+
+所以有
+\begin_inset Formula 
+\[
+\omega-\omega^{\prime}=\frac{2\hbar}{mc^{2}}\omega\omega^{\prime}\sin^{2}\frac{\theta}{2}
+\]
+
+\end_inset
+
+散射光波长变化为
+\begin_inset Formula 
+\[
+\lambda^{\prime}=\lambda+\frac{4\pi\hbar}{mc}\sin^{2}\frac{\theta}{2}
+\]
+
+\end_inset
+
+1922–1923年，Arthur Holly Compton 研究此现象，并给出了正确的解释，后获得 1927 年诺贝尔物理学奖。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Solve[{ (p
+\backslash
+[Prime]^2 + m^2) == (m + k - k
+\backslash
+[Prime])^2, p
+\backslash
+[Prime]^2 == ( k
+\backslash
+[Prime])^2 (1 - C
+\backslash
+[Theta]^2) + ( k - k
+\backslash
+[Prime]*C
+\backslash
+[Theta])^2, 0 <= C
+\backslash
+[Theta] <= 1, m > 0, p
+\backslash
+[Prime] > 0 }, {k
+\backslash
+[Prime], p
+\backslash
+[Prime]}, Reals ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+teh[
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_] := {{Cos[
+\backslash
+[Theta]], Sin[
+\backslash
+[Theta]]}, {Cos[
+\backslash
+[Theta]]/
+\backslash
+[Gamma], Sin[
+\backslash
+[Theta]]}} /.
+ {
+\backslash
+[Gamma] -> 1/Sqrt[1 - 
+\backslash
+[Beta]^2]}; tea = Table[ParametricPlot[ Evaluate[teh[
+\backslash
+[Theta], 
+\backslash
+[Beta]]], {
+\backslash
+[Theta], 0, 2 
+\backslash
+[Pi]}, PlotLegends -> {"Classic", "Relavistic"}], {
+\backslash
+[Beta], .01, 1, 1/30}]; Export["/home/tom/test/exer6_gamma.gif", tea, AnimationRep
+etitions -> Infinity]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+teh[
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_, u_, t_] := {u t {Cos[
+\backslash
+[Theta]], Sin[
+\backslash
+[Theta]]}, 
+\backslash
+[Gamma] t {(u*Cos[
+\backslash
+[Theta]] - 
+\backslash
+[Beta])/(1 - u*
+\backslash
+[Beta]*Cos[
+\backslash
+[Theta]]), (u*Sin[
+\backslash
+[Theta]] 
+\backslash
+[Gamma]^-1)/(1 - u*
+\backslash
+[Beta]*Cos[
+\backslash
+[Theta]])}} /.
+ {
+\backslash
+[Gamma] -> Sqrt[1 - 
+\backslash
+[Beta]^2]^-1}; Animate[ ParametricPlot[ Evaluate[teh[
+\backslash
+[Theta], .3, .6, t]], {
+\backslash
+[Theta], 0, 
+\backslash
+[Pi]}, PlotRange -> {{-5, 5}, {-3, 3}}, PlotLegends -> {"Static", "boost"}],
+ {t, 0, 5}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+teq[
+\backslash
+[Theta]_, 
+\backslash
+[Beta]_, u_, t_] := {u* t {Cos[
+\backslash
+[Theta]], Sin[
+\backslash
+[Theta]]}, {-
+\backslash
+[Gamma]*
+\backslash
+[Beta]* t + 
+\backslash
+[Gamma] u t Cos[
+\backslash
+[Theta]], u t Sin[
+\backslash
+[Theta]]}} /.
+ {
+\backslash
+[Gamma] -> Sqrt[1 - 
+\backslash
+[Beta]^2]^-1}; Animate[ ParametricPlot[ Evaluate[teq[
+\backslash
+[Theta], .3, .6, t]], {
+\backslash
+[Theta], 0, 
+\backslash
+[Pi]}, PlotRange -> {{-5, 5}, {-3, 3}}, PlotLegends -> {"Static", "boost"}],
+ {t, 0, 5}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
