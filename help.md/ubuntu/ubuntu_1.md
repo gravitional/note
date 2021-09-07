@@ -88,6 +88,7 @@ pip install --user powerline-status
 + `xdg-open`: 可以设置别名为`open`, 使用默认的程序打开文件或者`url`.
 + `lsusb`: 用于显示系统中的`USB`总线和连接到它们的设备信息的工具. 
 + `lspci`: 用于显示系统中的`PCI`总线和连接到它们的设备的信息的工具. Peripheral Component Interconnect, 外围组件互连标准. `pcie`--express:高速串行总线.
++ `ssh remote-sys 'ls * > dirlist.txt'` ; 远程连接到`remote-sys`, 并执行`ls * > dirlist.txt` 命令.
 
 ***
 `echo`输出的时候,可以考虑改变颜色增加辨认度

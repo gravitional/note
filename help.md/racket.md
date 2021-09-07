@@ -509,3 +509,23 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 在这种情况下, 缩进有助于突出这个错误. 
 在其他情况下, 缩进可能是正常的, 而开放的小括号没有匹配的封闭小括号, `racket`和`DrRacket`都使用源头的缩进来提示可能缺少小括号的地方. 
+
+### 标识符
+
+`Racket` 的标识符语法是非常自由的. 除了特殊字符
+
+```racket
+( ) [ ] { } " , ' ` ; # | \
+```
+
+除了构成数字常数的字符序列外, 几乎任何非空白字符的序列都可以作为`id`. 
+例如, `substring` 就是一个标识符. 另外, `string-append`和`a+b`是标识符, 而不是算术表达式. 这里还有几个例子. 
+
+```racket
++
+integer?
+pass/fail
+Hfuhruhurr&Uumellmahaye
+john-jacob-jingleheimer-schmidt
+a-b-c+1-2-3
+```
