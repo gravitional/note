@@ -196,7 +196,9 @@ than from [Yahoo](http://search.yahoo.com/ "Yahoo Search") or
     这是一个代码区块. 
 ```
 
-## 代码区块 详细
+$$  \iint _a^b \frac a b $$
+
+### 代码区块 详细
 
 [original context] []
 
@@ -245,7 +247,7 @@ end tell
 
 一个代码区块会一直持续到没有缩进的那一行(或是文件结尾). 
 
-在代码区块里面,  `&` ,  `<` 和 `>` 会自动转成 HTML 实体, 这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码, 只需要复制贴上, 再加上缩进就可以了, 剩下的 Markdown 都会帮你处理, 例如：
+在代码区块里面,  `&` ,  `<` 和 `>` 会自动转成 `HTML` 实体, 这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码, 只需要复制贴上, 再加上缩进就可以了, 剩下的 Markdown 都会帮你处理, 例如：
 
 ```html
     <div class="footer">

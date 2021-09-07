@@ -36,6 +36,10 @@ HTML提供了定义标题, 段落, 表格等等内容的元素. 与此类似, `S
 `SVG`是一个庞大的规范, 本教程主要涵盖基础内容. 掌握了这些内容之后, 你就有能力使用[元素参考](https://developer.mozilla.org/en-US/docs/Web/SVG/Element)
 和[接口参考](https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model), 学习其他你需要知道的内容. 
 
+### 贝塞尔曲线 Bezier curve
+
+[贝塞尔曲线](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial/Paths#bezier_curves)
+
 ## 入门
 
 ### 简单示例

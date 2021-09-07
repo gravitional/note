@@ -165,9 +165,10 @@ Symmetrize[{{a, b}, {c, d}}, Antisymmetric[{1, 2}]]
 内积:`Dot`
 
 对于两个一般的张量 $T[i_1,i_2,\cdots ,i_n]$ and $U[j_1,j_2,\cdots,j_m]$, 应用`Dot[T,U]`将得到张量
-$$
+
+```math
 \sum_k T[i_1,i_2,\cdots ,i_{n-1},k] * U[k,j_2,\cdots,j_m].
-$$
+```
 
 当然, 这要求$T$的最后一个指标$i_n$和$U$的第一个指标$j_1$相等, `Dot`运算始终可以理解为缩并这两个指标. 
 结果是一个$m+n-2$阶张量. 
@@ -651,60 +652,63 @@ Out[10]= -(1/x)
 
 这里是一个更妙的例子, 其中包括分支线：
 
-$$
+```math
 In[13]:= Integrate[1/(1 + a Sin[x]), x]
 Out[13]= (2 ArcTan[(a + Tan[x/2])/Sqrt[1 - a^2]])/Sqrt[1 - a^2]
-$$
+```
 
 端点处的极限值相减得$0$：
 
-$$
+```math
 In[14]:= \lim[Out[13], x \to 2 \pi] - \lim[Out[13], x \to 0] \\
 Out[14]= 0
-$$
+```
 
 然而该定积分的正确结果依赖于$a$. 假定保证了函数的收敛：
 
-$$
+```math
 In[15]:= \int[1/(1 + a \sin[x]), \{x, 0, 2 \pi\}, Assumptions \to -1 < a < 1] \\
 Out[15]= (2 \pi)/\sqrt{1 - a^2}
-$$
+```
 
-$$
+```math
 \text{Integrate}[\text{function}(x),\{x,-1,1\},\text{PrincipalValue}\to \text{True}]
-$$
+```
 
 定积分的柯西主值
 
 这是 $1/x$ 的不定积分：
 
-$$
+```math
 \int \frac{1}{x} \, dx
 \log (x)
-$$
+```
 
 $-1$和$+2$处的极限值相减产生一个包含$i\,\pi$的奇怪结果：
 
 Riemann 意义下的定积分是发散的：
 Out[38]= `Integrate::idiv: 1/x 的积分在 {-1,2} 上不收敛`.
-$$
+
+```math
 \int_{-1}^2 \frac{1}{x} \, dx
-$$
+```
 
 而柯西主值意义下该积分是有限的：
-$$
+
+```math
 \text{Integrate}\left[\frac{1}{x},\{x,-1,2\},\text{PrincipalValue}\to \text{True}\right] \\
 \log (2)
-$$
+```
 
 即使定积分收敛, 积分路径上奇点的存在也会导致结果随参数变化而不连续.
 有时能使用包含如`Sign`函数的单个公式归纳结果.
 
 此处 `If` 给出积分收敛的条件：
-$$
+
+```math
 \int_0^{\infty } \frac{\sin (a x)}{x} \, dx \\
 \text{ConditionalExpression}\left[\frac{\pi  a}{2 \sqrt{a^2}},\Im(a)\leq 0\right]
-$$
+```
 
 结果关于 $a$ 是不连续的. 不连续的原因是 $x=\infty$ 是 $sin(x)$ 的本性奇点
 
@@ -1062,12 +1066,14 @@ Timing[f = Fourier[RandomReal[1, 2^16]];]
 ***
 Array
 
-$$\text{Array}\left[f,\left\{n_1,n_2,\text{Null}\right\},\left(
+```math
+\text{Array}\left[f,\left\{n_1,n_2,\text{Null}\right\},\left(
 \begin{array}{cc}
 a_1 & b_1 \\
 a_2 & b_2 \\
 \end{array}
-\right)\right]$$
+\right)\right]
+```
 
 ***
 `控制大表达式的显示`:  tutorial/ControllingTheDisplayOfLargeExpressions

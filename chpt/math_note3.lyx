@@ -584,6 +584,303 @@ K=\frac{\abs{y^{\prime\prime}x^{\prime}-x^{\prime\prime}y^{\prime}}}{\left(1+y^{
 \end_layout
 
 \begin_layout Section
+贝塞尔曲线 Bezier
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "贝塞尔曲线"
+target "https://zhuanlan.zhihu.com/p/344934774"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+例如三阶贝塞尔曲线，需要给出三个控制点：
+\begin_inset Formula $P_{0}$
+\end_inset
+
+，
+\begin_inset Formula $P_{1}$
+\end_inset
+
+，
+\begin_inset Formula $P_{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+三个点可以产生两条连线
+\begin_inset Formula $P_{01}$
+\end_inset
+
+，
+\begin_inset Formula $P_{12}$
+\end_inset
+
+。在
+\begin_inset Formula $P_{01}$
+\end_inset
+
+，
+\begin_inset Formula $P_{12}$
+\end_inset
+
+两条线上分别取两个点
+\begin_inset Formula $Q_{0}$
+\end_inset
+
+，
+\begin_inset Formula $Q_{1}$
+\end_inset
+
+，满足
+\begin_inset Formula 
+\[
+\frac{\abs*{P_{0}Q_{0}}}{\abs*{P_{0}P_{1}}}=\frac{\abs*{P_{1}Q_{1}}}{\abs*{P_{1}P_{2}}}
+\]
+
+\end_inset
+
+也就是这两个点的位置在两条线上是等比例的。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $Q_{0}$
+\end_inset
+
+，
+\begin_inset Formula $Q_{1}$
+\end_inset
+
+两个点又可以产生一条连线
+\begin_inset Formula $Q_{01}$
+\end_inset
+
+，这条连线上又可以取一个点
+\begin_inset Formula $R$
+\end_inset
+
+，令
+\begin_inset Formula $R$
+\end_inset
+
+点同样是等比例点，即现在三个点的位置满足
+\begin_inset Formula 
+\[
+\frac{\abs*{P_{0}Q_{0}}}{\abs*{P_{0}P_{1}}}=\frac{\abs*{P_{1}Q_{1}}}{\abs*{P_{1}P_{2}}}=\frac{\abs*{Q_{0}R}}{\abs*{Q_{0}Q_{1}}}
+\]
+
+\end_inset
+
+所有满足上述条件的
+\begin_inset Formula $R$
+\end_inset
+
+点构成的曲线即为贝塞尔曲线。
+\end_layout
+
+\begin_layout Enumerate
+一般
+\begin_inset Formula $n$
+\end_inset
+
+个点也可以定义贝塞尔曲线，只要仿照上面循环定义即可，一直到数量减少到一个点。所有这样的点即可构成
+\begin_inset Formula $n$
+\end_inset
+
+阶贝塞尔曲线。
+\end_layout
+
+\begin_layout Standard
+贝塞尔曲线的 Bernstein 形式：
+\begin_inset Formula 
+\[
+\sbf b^{n}\left(t\right)=\sbf b_{0}^{n}\left(t\right)=\sum_{i=0}^{n}\sbf b_{i}B_{i}^{n}\left(t\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\sbf b^{n}\left(t\right)$
+\end_inset
+
+是自由度为
+\begin_inset Formula $n$
+\end_inset
+
+的 多项式矢量，
+\begin_inset Formula $\sbf b_{j}$
+\end_inset
+
+是
+\begin_inset Formula $\mathbbm R^{N}$
+\end_inset
+
+中的矢量，称为 Bezier 控制点，
+\begin_inset Formula $B_{j}^{n}\left(t\right)$
+\end_inset
+
+是自由度为
+\begin_inset Formula $n$
+\end_inset
+
+的 Bernstein 多项式（Polynomial）。给定一组基函数，给定一组控制点，即可确定贝塞尔曲线的参数方程。
+\begin_inset Formula 
+\[
+B_{i}^{n}\left(t\right)=\left(\begin{array}{c}
+n\\
+i
+\end{array}\right)t^{i}\left(1-t\right)^{n-i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+分段贝塞尔曲线
+\end_layout
+
+\begin_layout Standard
+虽然贝塞尔曲线的阶数可以很高，但是如果曲线的阶数过高，调整控制点对曲线的影响就比较小，调整起来相当麻烦。所以我们常常使用分段的贝塞尔曲线，保证每一小段不会太复杂
+。
+\end_layout
+
+\begin_layout Standard
+分段带来的唯一问题是，曲线在段与段的交界处，如何保证平滑？所谓平滑，其实就是一阶导数连续，也就是左右导数的极限相同。对两侧的贝塞尔曲线求导，分别代入
+ 
+\begin_inset Formula $t=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $t=1$
+\end_inset
+
+ （即分段贝塞尔曲线的起始点和终止点），让二者相等。此时发现，若两段贝塞尔曲线的连接点为
+\begin_inset Formula $a_{n}$
+\end_inset
+
+，当两侧控制点
+\begin_inset Formula $a_{n-1}$
+\end_inset
+
+，
+\begin_inset Formula $b_{1}$
+\end_inset
+
+与
+\begin_inset Formula $a_{n}$
+\end_inset
+
+共线，且
+\begin_inset Formula $\left(a_{n-1},a_{n}\right)$
+\end_inset
+
+的长度等于
+\begin_inset Formula $\left(b_{0},b_{1}\right)$
+\end_inset
+
+时，满足曲线平滑性质。也就是连接点两侧的控制点共线且等臂长。
+\end_layout
+
+\begin_layout Subsection
+B样条曲线
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "深入理解B样条曲线"
+target "https://zhuanlan.zhihu.com/p/144042470"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "B-样条曲线"
+target "https://www.jianshu.com/p/49aff913104c"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "B样条算法(B-spline)"
+target "https://zhuanlan.zhihu.com/p/260724041"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+计算机中绘制曲线，通过贝塞尔曲线已经满足了我们大部分需求，但是其存在某些缺点，比如移动某一个控制点会导致整个曲线发生变化，即无法局部控制曲线的走向。所以
+ B 样条曲线(B-Spline)为了解决贝塞尔曲线的缺陷应运而生。B 样条曲线比贝塞尔曲线的设计要复杂许多，我们先通过他们的公式大致比较一下贝塞尔曲线与
+ B 样条曲线的区别：
+\begin_inset Formula 
+\[
+\sbf p^{n}\left(t\right)=\sum_{i=0}^{n-1}\sbf p_{i}B_{i,d}\left(t\right),\quad t_{\text{min}}\le t\le t_{\text{max}},\quad2\le d\le n.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\sbf p^{n}\left(t\right)$
+\end_inset
+
+表示曲线上的点坐标向量。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $n$
+\end_inset
+
+为控制点
+\begin_inset Formula $\sbf p_{i}$
+\end_inset
+
+的总数。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $B_{i,d}\left(t\right)$
+\end_inset
+
+为一组多项式基函数，它们是一组权重因子，反映控制点对最终曲线坐标的影响。
+\end_layout
+
+\begin_layout Enumerate
+B样条曲线的基函数，最高幂次为
+\begin_inset Formula $n-1$
+\end_inset
+
+。相比于贝塞尔曲线，B样条曲线的多项式幂次更加自由。
+\end_layout
+
+\begin_layout Enumerate
+贝塞尔曲线参数的取值为固定的
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+，而 B 样条曲线是在最大和最小节点值之间。
+\end_layout
+
+\begin_layout Section
 散度旋度
 \end_layout
 
