@@ -1,0 +1,362 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+% 如果没有这一句命令，XeTeX会出错，原因参见
+% http://bbs.ctex.org/viewthread.php?tid=60547
+% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic} 
+\usepackage{xcolor}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{amsfonts} 
+\usepackage{latexsym} 
+% Required for specifying colors by name 
+\definecolor{ocre}{RGB}{243,102,25} 
+\usepackage{enumerate} 
+
+\usepackage{hepunits} % hep units
+\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{bm} 
+\usepackage{graphicx,graphics,color} 
+\usepackage{simplewick} 
+\usepackage{makeidx} 
+\usepackage{multirow}
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+%% \usepackage{axodraw2} 
+%%++++++++++++++++++++ 
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\res}{Res}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\newcommand{\cola}[1]{{\color{blue}{#1}}}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+散射截面和 LSZ 公式
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Section
+in state && out state
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathcal{P}=\abs{\langle\phi_{1}\phi_{2}|\phi_{A}\phi_{B}\rangle}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\ket{\phi_{A}\phi_{B}}$
+\end_inset
+
+ is a state of two wave-packets constructed in the far past 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\bra{\phi_{1}\phi_{2}}$
+\end_inset
+
+ is a state of several wave packets (one for each final-state particle)
+ constructed in the far future.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\ket{\phi_{A}\phi_{B}}$
+\end_inset
+
+ an be described as a linear superposition of in states.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+|\phi_{A}\phi_{B}\rangle=\int\frac{d^{3}\vec{k}_{A}}{(2\pi)^{3}}\int\frac{d^{3}\overset{\rightharpoonup}{k}_{B}}{(2\pi)^{3}}*\frac{\phi_{A}\phi_{B}\overset{\rightharpoonup}{k}_{A}\overset{\rightharpoonup}{k}_{B}\exp\left(-i\overset{\rightharpoonup}{b}\cdot\overset{\rightharpoonup}{k}_{B}\right)}{\sqrt{2*2e_{A}e_{B}}}|\overset{\rightharpoonup}{k}_{A}\overset{\rightharpoonup}{k}_{B}\rangle_{\text{in}}
+\]
+
+\end_inset
+
+where, 
+\begin_inset Formula $|\phi_{A}\phi_{B}\rangle_{\text{in}}$
+\end_inset
+
+被定义为具有确定初始动量的入态
+\end_layout
+
+\begin_layout Standard
+我们把real实验中的散射概率和具有确定动量的渐近态间的一组理想转移振幅联系起来
+\begin_inset Formula 
+\[
+_{\text{out}}\langle\boldsymbol{p_{1}p_{2}}\cdots|\boldsymbol{k_{A}k_{B}}\rangle_{\text{in}}
+\]
+
+\end_inset
+
+为了计算 in 态和 out 态之间的重叠，我们注意到这两种态的定义可以通过时间平移联系起来
+\begin_inset Formula 
+\begin{align*}
+_{\text{out}}\langle\boldsymbol{p_{1}p_{2}}\cdots|\boldsymbol{k_{A}k_{B}}\rangle_{\text{in}} & =\lim_{T\to\infty}\langle\underbrace{\boldsymbol{p_{1}p_{2}}\cdots}_{T}|\underbrace{\boldsymbol{k_{A}k_{B}}}_{-T}\rangle\\
+ & =\lim_{T\to\infty}\bra{\boldsymbol{p_{1}p_{2}}\cdots}\ket{\boldsymbol{k_{A}k_{B}}}
+\end{align*}
+
+\end_inset
+
+在最后一行中，态定义在任意参考时间。因此，in 态和 out 态通过一系列幺正算符的极限连接起来。这个取极限的幺正算符称为
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵：
+\begin_inset Formula 
+\[
+_{\text{out}}\langle\boldsymbol{p_{1}p_{2}}\cdots|\boldsymbol{k_{A}k_{B}}\rangle_{\text{in}}\equiv\bra{\boldsymbol{p_{1}p_{2}}\cdots}S\ket{\boldsymbol{k_{A}k_{B}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+演化的约定：
+\begin_inset Formula 
+\begin{align*}
+\hat{Q}(t) & =\hat{Q}(0)\exp\left(i\hat{H}t\right)\exp\left(-i\hat{H}t\right)\\
+\bra{\phi(t)} & =\bra{\phi(0)}\exp\left(i\hat{H}t\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+散射截面
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S=1+iT
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+费曼规则
+\end_layout
+
+\begin_layout Standard
+由LSZ公式
+\begin_inset Formula 
+\begin{align*}
+\bra{p_{3}\cdots p_{n}}S\ket{p_{1}p_{2}} & =\left(i\int d\dif^{4}x_{1}e^{-ip_{1}x_{1}}(\square_{1}+m^{2})\right)\cdots\left(i\int d\dif^{4}x_{n}e^{ip_{1}x_{n}}(\square_{n}+m^{2})\right)\\
+ & \times\bra{\Omega}T\left\{ \phi(x_{1})\phi(x_{2})\phi(x_{3})\cdots\phi(x_{n})\right\} \ket{\Omega}
+\end{align*}
+
+\end_inset
+
+初态对应指数因子上的
+\begin_inset Formula $-i$
+\end_inset
+
+，末态对应指数因子上的
+\begin_inset Formula $+i$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+LSZ 公式告诉我们，可以通过构造投影算符，物理态对应的pole的留数，就是散射矩阵元。做一个分部积分，
+\begin_inset Formula $i(\square_{1}+m^{2})=-i(p_{1}^{2}-m^{2})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+然后在计算散射矩阵元的时候，有一个external 粒子，就有一个
+\begin_inset Formula $\dif^{4}x_{1}e^{\pm ip_{1}x_{1}}$
+\end_inset
+
+积分，散射矩阵元只对应跟外线有联系的费曼图。场之间的收缩对应一个传播子，每个内线有一个
+\begin_inset Formula $\int\frac{\dif^{4}p}{(2\pi)^{4}}$
+\end_inset
+
+积分。但是
+\begin_inset Formula $\dif^{4}x_{1}e^{\pm ip_{1}x_{1}}$
+\end_inset
+
+积分最后会成为
+\begin_inset Formula $\delta(\sum p_{i})$
+\end_inset
+
+函数，每个跟外线有连接的顶点会产生一个
+\begin_inset Formula $\delta(\sum p_{i})$
+\end_inset
+
+函数，也就是每个顶点会对应一个能量守恒，这样内线传播子的积分
+\begin_inset Formula $\int\frac{\dif^{4}p}{(2\pi)^{4}}\delta(\sum p_{i})$
+\end_inset
+
+不会是每个都独立的。提取出一个 overall 的动量守恒，如果有
+\begin_inset Formula $n$
+\end_inset
+
+个顶点，会有
+\begin_inset Formula $n-1$
+\end_inset
+
+个
+\begin_inset Formula $\delta$
+\end_inset
+
+函数，用来消除内线传播子动量的自由度，比如
+\begin_inset Formula $e^{+}e^{-}\to\gamma\gamma$
+\end_inset
+
+，由两个顶点，一条内线，所以内线自由度为零，所有内线的
+\begin_inset Formula $\int\frac{\dif^{4}p}{(2\pi)^{4}}$
+\end_inset
+
+积分都被
+\begin_inset Formula $\delta(\sum p_{i})$
+\end_inset
+
+函数去掉。只有圈图才会剩余有类似于
+\begin_inset Formula $\int\frac{\dif^{4}k}{(2\pi)^{4}}$
+\end_inset
+
+的内线动量积分。
+\end_layout
+
+\begin_layout Standard
+所以费曼图的顶点就是场拿掉之后剩下的系数，因为场的威克收缩变成了传播子，剩下的当然就是顶点。但是有的时候，相互作用项中含有
+\begin_inset Formula $\partial_{\mu}$
+\end_inset
+
+，要先做一个分部积分，即
+\begin_inset Formula $\partial_{\mu}e^{\pm ip_{1}x_{1}}=\pm ip_{\mu}$
+\end_inset
+
+，再将场进行威克收缩，这样顶点会出现带有特定动量
+\begin_inset Formula $\pm ip_{\mu}$
+\end_inset
+
+的系数。根据上面LSZ公式的约定，负进正出。
+\end_layout
+
+\begin_layout Standard
+end of file
+\end_layout
+
+\begin_layout Standard
+end of file
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xxxxx
+\end_layout
+
+\end_body
+\end_document

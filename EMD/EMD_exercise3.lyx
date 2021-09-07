@@ -1,0 +1,3131 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usetheme{Madrid} % 设置主题
+\usecolortheme{default} % 颜色方案
+\setbeamertemplate{background}{\includegraphics[height=\paperheight]{b2.png}} %设置背景图片
+%\usefonttheme[onlymath]{serif} %设置数学字体为斜体
+\setbeamercovered{transparent}
+%%++++++++++++++++++++++++++++++++
+\usepackage{fontspec}
+\usepackage[slantfont, boldfont]{xeCJK}% 没有这个会无法实现中文断行
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{hepunits} % hep units
+\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{bm,bbm} %\bm 让参数变成粗体, \bbm Computer Modern fonts 的黑板体
+\usepackage{tikz} % 画图库
+\usetikzlibrary{calc} %计算功能
+%%++++++++++++++++++++++++++++++++++++
+\usepackage{simplewick} 
+% a simple means of drawing Wick contractions above and below expressions. 
+\usepackage{makeidx} 
+% Standard package for creating indexes
+\usepackage{multirow}
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+% % 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+%%++++++++++++++++++++++++++++++++++++++++
+\usepackage{eso-pic} %用来在每个页面的固定位置加上图片
+\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
+%\definecolor{ocre}{RGB}{243,102,25} ％xcolor 基于 color, 提供与驱动程序无关的轻松访问 off color tints, shades, tones, 和任意颜色的混合 ，可以通过名称指定颜色
+%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+%% \usepackage{axodraw2}
+\usepackage{enumerate} %向enumerate环境添加了一个可选参数，该参数确定counter的样式。
+%\usepackage{enumitem}
+%提供基本列表环境的布局控制: enumerate, itemize and description。 它同时取代了 enumerate和 mdwlist
+%%++++++++++++++++++++ 
+\usepackage{listings}
+% 在LaTex中添加代码高亮
+\usepackage{framed}
+% 在对象周围添加方框，阴影等等，允许跨页
+% 定义阴影的颜色
+\definecolor{shadecolor}{rgb}{0.9412,1,1}
+%定义代码高亮的各种颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{〈style name〉}{〈key=value list〉}
+%stores the key=value list
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%++++++++++++++++++++++++++++++++++++++
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}} % 手动定义一个垂直的微分符号
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+%%%+++++++++++++++++++++++++++++++
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,aspectratio=141
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+电动力学习题
+\end_layout
+
+\begin_layout Author
+yangmy@ihep.ac.cn
+\end_layout
+
+\begin_layout Section
+第三章
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+frame{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Plain Layout
+
+1,5,6,8,9,10,11,13
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Review
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+麦克斯韦方程组：
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sbf{D} & =\rho_{f}, & \nabla\times\sbf{E} & =-\frac{\partial\sbf{B}}{\partial t},\quad\text{法拉第电磁感应定律}\\
+\nabla\cdot\sbf{B} & =0, & \nabla\times\sbf{H} & =\sbf{J}_{f}+\frac{\partial\sbf{D}}{\partial t},\quad\text{安培环路定律}
+\end{align*}
+
+\end_inset
+
+电流连续性方程：
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf{J}_{f}+\partial_{t}\rho_{f}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Review
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\varphi\left(r,\theta\right) & =\sum_{n=0}^{\infty}a_{n}r^{n}P_{n}\left(\cos\theta\right)+\frac{b_{n}}{r^{n+1}}P_{n}\left(\cos\theta\right)\\
+ & =a_{0}+\frac{b_{0}}{r}+a_{1}r\cos\theta+\frac{b_{1}}{r^{2}}\cos\theta+a_{2}r^{2}\frac{3\cos^{2}\theta-1}{2}+\cdots\\
+ & =\text{常数}+\text{点电荷}+\text{匀强电场}+\text{电偶极子}+\text{电四极矩}+\cdots
+\end{align*}
+
+\end_inset
+
+常数势，给定导体带电总量
+\begin_inset Formula $Q$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\oint_{S}\left.-\frac{\partial\varphi}{\partial r}\right|_{R}\dif S=\frac{Q}{\varepsilon_{0}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & {\color{blue}\int_{0}^{2\pi}\int_{0}^{\pi}R^{2}\sin\theta\dif\varphi\dif\theta}\sum_{n=0}^{\infty}\left[na_{n}R^{n-1}P_{n}\left(\cos\theta\right)+\frac{-\left(n+1\right)b_{n}}{R^{n+2}}P_{n}\left(\cos\theta\right)\right]=-\frac{q}{\varepsilon_{0}}\\
+ & \stackrel{x=\cos\theta}{\implies}\quad2\pi\int_{-1}^{+1}\dif x\sum_{n=0}^{\infty}\left[na_{n}R^{n-1}P_{n}\left(x\right)+\frac{-\left(n+1\right)b_{n}}{R^{n+2}}P_{n}\left(x\right)\right]=-\frac{q}{\varepsilon_{0}R^{2}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Review
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+2\pi\int_{-1}^{+1}\dif x\sum_{n=0}^{\infty}\left[na_{n}R^{n-1}P_{n}\left(x\right)+\frac{-\left(n+1\right)b_{n}}{R^{n+2}}P_{n}\left(x\right)\right]=-\frac{q}{\varepsilon_{0}R^{2}}
+\]
+
+\end_inset
+
+由勒让德函数的正交性：
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}\dif xP_{k}\left(x\right){\color{blue}P_{l}\left(x\right)}=\delta\left(k-l\right)\frac{2}{2l+1}
+\]
+
+\end_inset
+
+只有
+\begin_inset Formula $b_{0}$
+\end_inset
+
+项有贡献：
+\begin_inset Formula 
+\[
+2\pi\int_{-1}^{+1}\dif x\frac{-b_{0}}{R^{2}}=4\pi\frac{-b_{0}}{R^{2}}=-\frac{q}{\varepsilon_{0}R^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{0}=\frac{q}{4\pi\varepsilon_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+试用
+\begin_inset Formula $\sbf{A}$
+\end_inset
+
+表示一个沿
+\begin_inset Formula $z$
+\end_inset
+
+方向的均匀恒定磁场
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+，写出
+\begin_inset Formula $\sbf{A}$
+\end_inset
+
+的两种不同表示式，证明二者之差是无旋场。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+
+\begin_inset Formula 
+\[
+\sbf{B}=B\sbf{e}_{z}=\nabla\times\sbf{A}=\left[\begin{array}{ccc}
+\sbf{e}_{x} & \sbf{e}_{y} & \sbf{e}_{z}\\
+\partial_{x} & \partial_{y} & \partial_{z}\\
+A_{x} & A_{y} & A_{z}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+0 & =+\left(\partial_{y}A_{z}-\partial_{z}A_{y}\right)\\
+0 & =-\left(\partial_{x}A_{z}-\partial_{z}A_{x}\right)\\
+B & =+\left(\partial_{x}A_{y}-\partial_{y}A_{x}\right)
+\end{align*}
+
+\end_inset
+
+可以看成是
+\begin_inset Formula $6$
+\end_inset
+
+个变量组成的线性方程。随便取两个解为：
+\begin_inset Formula 
+\begin{align*}
+A_{x} & =-yB,\text{ 其余分量为}0\\
+A_{y}^{\prime} & =xB.\text{ 其余分量为}0
+\end{align*}
+
+\end_inset
+
+两者之差的旋度：
+\begin_inset Formula 
+\[
+\nabla\times\left(-yB\sbf{e}_{x}-xB\sbf{e}_{y}\right)=-\partial_{y}\left(-By\right)-\partial_{x}\left(Bx\right)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+某空间区域内有轴对称磁场，在柱坐标原点附近已知
+\begin_inset Formula $B_{z}\approx B_{0}-C\left(z^{2}-r^{2}/2\right)$
+\end_inset
+
+，其中
+\begin_inset Formula $B_{0}$
+\end_inset
+
+为常量，求该处的
+\begin_inset Formula $B_{r}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+取柱坐标系
+\begin_inset Formula $\left(r,\phi,z\right)$
+\end_inset
+
+。轴对称磁场，也就是与
+\begin_inset Formula $\phi$
+\end_inset
+
+无关，
+\begin_inset Formula $B_{\phi}=\text{Const}.$
+\end_inset
+
+ 给出了
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+的分量，和
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+相关的方程是：
+\begin_inset Formula 
+\[
+\nabla\times\sbf{B}=\mu_{0}\sbf{J},\quad\nabla\cdot\sbf{B}=0.
+\]
+
+\end_inset
+
+由于
+\begin_inset Formula $\sbf{J}$
+\end_inset
+
+未知，我们考虑第二个方程。在柱坐标系中有
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf{A}=\frac{1}{r}\partial_{r}\left(r\sbf{A}_{r}\right)+\frac{1}{r}\partial_{\phi}\sbf{A}_{\phi}+\partial_{z}\sbf{A}_{z}.
+\]
+
+\end_inset
+
+代入原点附近的磁场为：
+\begin_inset Formula 
+\begin{align*}
+\partial_{r}\left(rB_{r}\right) & =2Czr\\
+rB_{r} & =Czr^{2}+D\left(\phi,z\right)\\
+B_{r} & =Czr+\frac{D\left(\phi,z\right)}{r}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $D\left(\phi,z\right)$
+\end_inset
+
+为一任意函数。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B_{r}=Czr+\frac{D\left(\phi,z\right)}{r}
+\]
+
+\end_inset
+
+由于是原点附近，也就是
+\begin_inset Formula $r\to0$
+\end_inset
+
+的磁场，如果要求
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+有限，可以考虑令
+\begin_inset Formula $D\left(\phi,z\right)=0$
+\end_inset
+
+。也就是
+\begin_inset Formula 
+\[
+B_{r}\approx Czr,\quad B_{z}\approx B_{0}-C\left(z^{2}-r^{2}/2\right)
+\]
+
+\end_inset
+
+由
+\begin_inset Formula $\sbf{H}=\sbf{B}/\mu_{0}$
+\end_inset
+
+，容易验证：
+\begin_inset Formula 
+\[
+\nabla\times\sbf{H}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+课本P81 例2 结果：
+\begin_inset Formula 
+\[
+B_{\rho}=\frac{3\mu_{0}I\rho z}{4a^{3}},\quad B_{z}=\frac{\mu_{0}I}{2a}\left[1-\frac{3}{2a^{2}}\left(z^{2}-\rho^{2}/2\right)\right]
+\]
+
+\end_inset
+
+可以发现如若选取
+\begin_inset Formula 
+\[
+B_{0}=\frac{\mu_{0}I}{2a},\quad C=\frac{3\mu_{0}I}{4a^{3}}
+\]
+
+\end_inset
+
+两结果相同。也就是说，题目中的表达式描述的是圆电流圈在其中心附近的磁场。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.5
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+A = Integrate[ Cos[
+\backslash
+[Phi]
+\backslash
+[Prime]]/(
+\backslash
+[Sqrt](r^2 + a^2 - 2 r*a*Sin[
+\backslash
+[Theta]]*Cos[
+\backslash
+[Phi]
+\backslash
+[Prime]])), {
+\backslash
+[Phi]
+\backslash
+[Prime], 0, 2 
+\backslash
+[Pi]}, Assumptions -> {r > a > 0, 0 <= 
+\backslash
+[Theta] <= 
+\backslash
+[Pi]}]; B = Curl[{0, 0, A}, {r, 
+\backslash
+[Theta], 
+\backslash
+[Phi]}, "Spherical"]; BCart = TransformedField["Spherical" -> "Cartesian",
+ B, {r, 
+\backslash
+[Theta], 
+\backslash
+[Phi]} -> {x, y, z}] /.
+ a -> 1; edge = 3; Print[tea = StreamPlot[ Evaluate[BCart[[{1, 3}]] /.
+ y -> 0], {x, -edge, edge}, {z, -edge, edge}, ImageSize -> {200, 200}]];
+ Export["/home/tom/note/others/zaiLiuXianQuan1.pdf", tea] edge = 1.2; Print[tea
+ = StreamPlot[ Evaluate[BCart[[{1, 2}]] /.
+ z -> 0.1], {x, -edge, edge}, {y, -edge, edge}, ImageSize -> {200, 200}]];
+ Export["/home/tom/note/others/zaiLiuXianQuan2.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] {
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[anchor=center] at ($(current page.center)+(0,3)$) {位于$x-y$平面上原点处载流线圈的磁力线：$y-
+z$视图，以及$x-y$视图。};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[anchor=center] at ($(current page.center)$) {
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[scale=1]{zaiLiuXianQuan1},
+\backslash
+qquad
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[scale=1]{zaiLiuXianQuan2}};
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.6
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+r1 = 1; r2 = .2; tea = ParametricPlot3D[{{r1*Cos[t] (3 + r2*Cos[u]), r1*Sin[t]
+ (3 + r2*Cos[u]), 1 + r1*r2*Sin[u]}, {r1*Cos[t] (3 + r2*Cos[u]), r1*Sin[t]
+ (3 + r2*Cos[u]), -1 + r1*r2*Sin[u]}}, {t, 0, 2 Pi}, {u, 0, 2 Pi}, MaxRecursion
+ -> 8, PlotPoints -> 80, PlotStyle -> White, Mesh -> None, Boxed -> False,
+ Method -> {"ShrinkWrap" -> True}, ViewPoint -> {0, -2, 1}, ImageSize ->
+ {150, 150}]; teb = ParametricPlot3D[{{0, 0, t/2}, , {1.5 t, 0, 1}, {1.5 t,
+ 0, t/2}}, {t, 0, 2}, PlotLabels -> Placed[{"L-z", "
+\backslash
+[Rho]", "r"}, {Scaled[.3], Scaled[.5], Scaled[1]}], PlotStyle -> {Orange,
+ Thick}]; Print[ tec = Show[tea, teb]]; Export["/home/tom/note/others/shuangXian
+Quan.pdf", tec]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+两个半径为
+\begin_inset Formula $a$
+\end_inset
+
+的同轴圆形线圈，位于
+\begin_inset Formula $z=\pm L$
+\end_inset
+
+面上。每个线圈上载有同方向的电流
+\begin_inset Formula $I$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+求轴线上的磁感应强度。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+若要在中心区域产生非常均匀的磁场，
+\begin_inset Formula $L$
+\end_inset
+
+和
+\begin_inset Formula $a$
+\end_inset
+
+要满足何种关系？提示：用条件
+\begin_inset Formula $\partial_{z}^{2}B_{z}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+使用柱坐标系
+\begin_inset Formula $\left(\rho,\phi,z\right)$
+\end_inset
+
+，正交基为
+\begin_inset Formula ${\color{blue}\left(\sbf{e}_{\rho},\sbf{e}_{\phi},\sbf{e}_{z}\right)}$
+\end_inset
+
+，令原点和线圈圆心同轴。毕奥–萨伐尔定律为：
+\begin_inset Formula 
+\[
+\sbf{B}\left(\sbf{x}\right)=\frac{\mu_{0}}{4\pi}\int_{V}\sbf{J}\dif V^{\prime}\times\frac{\sbf{r}}{r^{3}},\quad\sbf{B}\left(\sbf{x}\right)=\frac{\mu_{0}}{4\pi}\int_{V}\sbf{I}\dif l^{\prime}\times\frac{\sbf{r}}{r^{3}}.
+\]
+
+\end_inset
+
+以
+\begin_inset Formula $Z=+L$
+\end_inset
+
+处的线圈为例，在本题目中，
+\begin_inset Formula $\dif l^{\prime}=Ia\dif\phi$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{r}=\left(z-L\right)\sbf{e}_{z}-a\sbf{e}_{\rho}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+\sbf{B}\left(\sbf{x}\right) & =\frac{\mu_{0}Ia}{4\pi}\int_{0}^{2\pi}\dif\phi\,\sbf{e}_{\phi}\times\frac{\left(-a\sbf{e}_{\rho}+\left(z-L\right)\sbf{e}_{z}\right)}{r^{3}}\\
+ & =\frac{\mu_{0}Ia}{4\pi}\int_{0}^{2\pi}\dif\phi\,\frac{\left(a\sbf{e}_{z}+\left(z-L\right)\sbf{e}_{\rho}\right)}{r^{3}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(5.5,-2.5)$) {
+\backslash
+includegraphics[scale=.8]{shuangXianQuan}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.6
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+从对称性容易看出，正比于
+\begin_inset Formula $\sbf{e}_{\rho}$
+\end_inset
+
+的部分积分结果为零。
+\begin_inset Formula 
+\begin{align*}
+\sbf{r} & =\left(z-L\right)\sbf{e}_{z}-a\sbf{e}_{\rho},\\
+\sbf{B}\left(\sbf{x}\right) & =\frac{\mu_{0}Ia}{4\pi}\int_{0}^{2\pi}\dif\phi\,\frac{\left(a\sbf{e}_{z}+{\color{blue}\left(z-L\right)\sbf{e}_{\rho}}\right)}{r^{3}}\\
+ & =\frac{\mu_{0}Ia^{2}}{4\pi}\int_{0}^{2\pi}\frac{\dif\phi}{r^{3}}\sbf{e}_{z}\\
+ & =\frac{\mu_{0}Ia^{2}}{4\pi}\int_{0}^{2\pi}\frac{\dif\phi}{\left[\left(z-L\right)^{2}+a^{2}\right]^{3/2}}\sbf{e}_{z}\\
+ & =\frac{\mu_{0}Ia^{2}}{2}\frac{1}{\left[\left(z-L\right)^{2}+a^{2}\right]^{3/2}}\sbf{e}_{z}
+\end{align*}
+
+\end_inset
+
+位于
+\begin_inset Formula $z=-L$
+\end_inset
+
+处的线圈同理，最后的结果为：
+\begin_inset Formula 
+\[
+\sbf{B}\left(\sbf{x}\right)=\frac{\mu_{0}Ia^{2}}{2}\left\{ \frac{1}{\left[\left(z-L\right)^{2}+a^{2}\right]^{3/2}}+\frac{1}{\left[\left(z+L\right)^{2}+a^{2}\right]^{3/2}}\right\} \sbf{e}_{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(5.5,-1.8)$) {
+\backslash
+includegraphics[scale=.8]{shuangXianQuan}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.6
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sbf{B}\left(\sbf{x}\right)=\frac{\mu_{0}Ia^{2}}{2}\left\{ \frac{1}{\left[\left(z-L\right)^{2}+a^{2}\right]^{3/2}}+\frac{1}{\left[\left(z+L\right)^{2}+a^{2}\right]^{3/2}}\right\} \sbf{e}_{z}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $B_{z}$
+\end_inset
+
+对
+\begin_inset Formula $z$
+\end_inset
+
+的一阶导数为：
+\begin_inset Formula 
+\[
+\frac{3\left(z-L\right)}{\left(a^{2}+\left(z-L\right)^{2}\right)^{5/2}}-\frac{3\left(z+L\right)}{\left(a^{2}+\left(z+L\right)^{2}\right)^{5/2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $@z=0,B_{z}^{\prime}=0$
+\end_inset
+
+，
+\size small
+
+\begin_inset Formula 
+\begin{align*}
+B_{z}^{\prime\prime}\left(z\right) & =\frac{15(L-z)^{2}}{\left(a^{2}+(L-z)^{2}\right)^{7/2}}-\frac{3}{\left(a^{2}+(L-z)^{2}\right)^{5/2}}-\frac{3}{\left(a^{2}+(L+z)^{2}\right)^{5/2}}+\frac{15(L+z)^{2}}{\left(a^{2}+(L+z)^{2}\right)^{7/2}}\\
+B_{z}^{\prime\prime}\left(0\right) & =\frac{30L^{2}}{\left(a^{2}+L^{2}\right)^{7/2}}-\frac{6}{\left(a^{2}+L^{2}\right)^{5/2}}
+\end{align*}
+
+\end_inset
+
+
+\size default
+令
+\begin_inset Formula $B_{z}^{\prime\prime}\left(0\right)=0$
+\end_inset
+
+，得到
+\color blue
+
+\begin_inset Formula $a=2L$
+\end_inset
+
+
+\color inherit
+，此即为均匀场条件。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.6
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*2个线圈依次放置叠加出的磁场，距离和半径相等*)
+\end_layout
+
+\begin_layout Plain Layout
+A = Integrate[ Cos[
+\backslash
+[Phi]
+\backslash
+[Prime]]/(
+\backslash
+[Sqrt](r^2 + a^2 - 2 r*a*Sin[
+\backslash
+[Theta]]*Cos[
+\backslash
+[Phi]
+\backslash
+[Prime]])), {
+\backslash
+[Phi]
+\backslash
+[Prime], 0, 2 
+\backslash
+[Pi]}, Assumptions -> {r > a > 0, 0 <= 
+\backslash
+[Theta] <= 
+\backslash
+[Pi]}]; B = Curl[{0, 0, A}, {r, 
+\backslash
+[Theta], 
+\backslash
+[Phi]}, "Spherical"]; BCart1 = TransformedField["Spherical" -> "Cartesian",
+ B, {r, 
+\backslash
+[Theta], 
+\backslash
+[Phi]} -> {x, y, z}] /.
+ a -> 1; BCart = (BCart1 /.
+ z -> z - .5) + (BCart1 /.
+ z -> z + .5); edge = 1.7; Print[tea = StreamPlot[ Evaluate[BCart[[{1, 3}]]
+ /.
+ y -> 0], {x, -edge, edge}, {z, -edge, edge}, ImageSize -> {200, 200}]];
+ Export["/home/tom/note/others/zaiLiuXianQuanYunQiang.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*多个线圈依次放置叠加出的磁场*)
+\end_layout
+
+\begin_layout Plain Layout
+A = Integrate[ Cos[
+\backslash
+[Phi]
+\backslash
+[Prime]]/(
+\backslash
+[Sqrt](r^2 + a^2 - 2 r*a*Sin[
+\backslash
+[Theta]]*Cos[
+\backslash
+[Phi]
+\backslash
+[Prime]])), {
+\backslash
+[Phi]
+\backslash
+[Prime], 0, 2 
+\backslash
+[Pi]}, Assumptions -> {r > a > 0, 0 <= 
+\backslash
+[Theta] <= 
+\backslash
+[Pi]}]; B = Curl[{0, 0, A}, {r, 
+\backslash
+[Theta], 
+\backslash
+[Phi]}, "Spherical"]; BCart1 = TransformedField["Spherical" -> "Cartesian",
+ B, {r, 
+\backslash
+[Theta], 
+\backslash
+[Phi]} -> {x, y, z}] /.
+ a -> 1; BCart = Total[Table[(BCart1 /.
+ z -> z + i), {i, -4, 4, .5}], {1}]; edge = 1.3; edgez = 5; Print[tea = StreamPlot
+[ Evaluate[BCart[[{1, 3}]] /.
+ y -> 0], {x, -edge, edge}, {z, -edgez, edgez}, ImageSize -> {200, 200}]];
+ Export["/home/tom/note/others/luoXianGuan.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] {
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[anchor=center] at ($(current page.center)+(0,3)$) {左边是满足$a=2L$的两个线圈叠加产生的局域匀强
+磁场。右边是等距放置的9个线圈的总磁场};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[anchor=center] at ($(current page.center)$) {
+\backslash
+includegraphics[scale=1]{zaiLiuXianQuanYunQiang} 
+\backslash
+quad 
+\backslash
+includegraphics[scale=1]{luoXianGuan}};
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+假设存在磁单极子，其磁荷为
+\begin_inset Formula $Q_{m}$
+\end_inset
+
+，它的磁场强度为
+\begin_inset Formula 
+\[
+\sbf{H}=\frac{Q_{m}}{4\pi\mu_{0}}\frac{\sbf{r}}{r^{3}},\quad H_{r}=\frac{Q_{m}}{4\pi\mu_{0}}\frac{1}{r^{2}}
+\]
+
+\end_inset
+
+给出它的矢势的一个可能表达式，并讨论它的奇异性。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\size small
+\color inherit
+
+\begin_inset Formula 
+\begin{align*}
+\mu_{0}\sbf{H}=\nabla\times\sbf{A} & =\frac{1}{r\sin\theta}\left[\partial_{\theta}\left(\sin\theta A_{\phi}-\partial_{\phi}A_{\theta}\right)\right]\sbf{e}_{r}+\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_{\phi}A_{r}-\partial_{r}\left(rA_{\phi}\right)\right]\sbf{e}_{\theta}\\
+ & +\frac{1}{r}\left[\partial_{r}\left(rA_{\theta}\right)-\partial_{\theta}A_{r}\right]\sbf{e}_{\phi}
+\end{align*}
+
+\end_inset
+
+
+\size default
+以及库伦规范
+\begin_inset Formula $\nabla\cdot\sbf{A}=0$
+\end_inset
+
+。
+\size small
+
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{r^{2}}\partial_{r}\left(r^{2}A_{r}\right)+\frac{1}{r\sin\theta}\partial_{\theta}\left(\sin\theta A_{\theta}\right)+\frac{1}{r\sin\theta}\partial_{\phi}A_{\phi} & =0\\
+\frac{1}{r\sin\theta}\left[\partial_{\theta}\left(\sin\theta A_{\phi}-\partial_{\phi}A_{\theta}\right)\right] & =\frac{Q_{m}}{4\pi}\frac{1}{r^{2}}\\
+\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_{\phi}A_{r}-\partial_{r}\left(rA_{\phi}\right)\right] & =0\\
+\frac{1}{r}\left[\partial_{r}\left(rA_{\theta}\right)-\partial_{\theta}A_{r}\right] & =0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\size small
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{r\sin\theta}\partial_{\theta}\left(\sin\theta A_{\theta}\right)+\frac{1}{r\sin\theta}\partial_{\phi}A_{\phi} & =0\\
+\frac{1}{r\sin\theta}\left[\partial_{\theta}\left(\sin\theta A_{\phi}-\partial_{\phi}A_{\theta}\right)\right] & =\frac{Q_{m}}{4\pi}\frac{1}{r^{2}}\\
+\partial_{r}\left(rA_{\phi}\right) & =0\\
+\partial_{r}\left(rA_{\theta}\right) & =0
+\end{align*}
+
+\end_inset
+
+
+\size default
+如果假设
+\begin_inset Formula $A_{\phi}=0$
+\end_inset
+
+，则化简为：
+\size small
+
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}\partial_{\theta}\left(\sin\theta A_{\theta}\right)} & {\color{blue}=0} &  & {\color{blue}A_{\theta}=\frac{1}{\sin\theta r}u\left(\phi\right)}\\
+{\color{brown}-\partial_{\theta}\partial_{\phi}A_{\theta}} & {\color{brown}=\frac{Q_{m}}{4\pi}\frac{\sin\theta}{r}}\Rightarrow &  & {\color{brown}\partial_{\theta}\frac{1}{\sin\theta}\partial_{\phi}u\left(\phi\right)=\frac{Q_{m}}{4\pi}\sin\theta}\\
+{\color{blue}\partial_{r}\left(rA_{\theta}\right)} & {\color{blue}=0} &  & -\frac{\cos\theta}{\sin\theta^{2}}u^{\prime}\left(\phi\right)=\frac{Q_{m}}{4\pi}\sin\theta
+\end{align*}
+
+\end_inset
+
+
+\size default
+其中
+\begin_inset Formula $u\left(\phi\right)$
+\end_inset
+
+只依赖于
+\begin_inset Formula $\phi$
+\end_inset
+
+。最后得到，
+\begin_inset Formula 
+\[
+u^{\prime}\left(\phi\right)=-\frac{Q_{m}}{4\pi}\frac{\sin^{3}\theta}{\cos\theta}
+\]
+
+\end_inset
+
+这个方程显然和假设矛盾。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+如果假设
+\begin_inset Formula $A_{\theta}=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}\partial_{\phi}A_{\phi}} & {\color{blue}=0} &  & {\color{blue}A_{\phi}=\frac{1}{r}u\left(\theta\right)}\\
+{\color{brown}\partial_{\theta}\left(\sin\theta A_{\phi}\right)} & {\color{brown}=\frac{Q_{m}}{4\pi}\frac{\sin\theta}{r}}\Rightarrow &  & {\color{brown}\frac{1}{r}\sin\theta\,u^{\prime}\left(\theta\right)+\frac{1}{r}\cos\theta\,u\left(\theta\right)=\frac{Q_{m}}{4\pi}\frac{\sin\theta}{r}}\\
+{\color{blue}\partial_{r}\left(rA_{\phi}\right)} & {\color{blue}=0} &  & u^{\prime}\left(\theta\right)+\left(\cot\theta\right)u\left(\theta\right)=\frac{Q_{m}}{4\pi}
+\end{align*}
+
+\end_inset
+
+作变量代换，
+\begin_inset Formula $x=\cot\theta,\left(\cot\theta\right)^{\prime}=-1-\left(\cot\theta\right)^{2}$
+\end_inset
+
+，方程变为：
+\begin_inset Formula 
+\[
+-u^{\prime}\left(x\right)\left(1+x^{2}\right)+xu\left(x\right)-\frac{Q_{m}}{4\pi}=0
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+DSolve[u'[
+\backslash
+[Theta]] + Cos[
+\backslash
+[Theta]]/Sin[
+\backslash
+[Theta]] u[
+\backslash
+[Theta]] == A, u[
+\backslash
+[Theta]], 
+\backslash
+[Theta], Assumptions -> {r >= 0, 0 <= 
+\backslash
+[Theta] <= 2 
+\backslash
+[Pi]}]
+\end_layout
+
+\end_inset
+
+容易发现方程的一个特解为：
+\begin_inset Formula 
+\[
+u=-\frac{Q_{m}}{4\pi}x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+通解为
+\begin_inset Formula 
+\[
+u=\frac{1}{\sqrt{1+x^{2}}}
+\]
+
+\end_inset
+
+解的一般形式为：
+\begin_inset Formula 
+\[
+u\left(x\right)=\frac{Q_{m}}{4\pi}\left(\frac{c^{\prime}}{\sqrt{1+x^{2}}}-x\right)
+\]
+
+\end_inset
+
+回到原先的变量：
+\begin_inset Formula 
+\begin{align*}
+u\left(\theta\right) & =\frac{Q_{m}}{4\pi}\left(c^{\prime}\csc\theta-\cot\theta\right)\\
+ & =\frac{Q_{m}}{4\pi}\frac{c-\cos\theta}{\sin\theta}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+也可以使用斯托克斯公式：
+\begin_inset Formula 
+\[
+\oint_{L}\sbf{A}\cdot\dif\sbf{l}=\iint_{S}\sbf{B}\cdot\dif\sbf{S}.
+\]
+
+\end_inset
+
+体系具有球对称性，
+\begin_inset Formula $\sbf{A}$
+\end_inset
+
+的环路积分中只有
+\begin_inset Formula $A_{\phi}$
+\end_inset
+
+有贡献，且
+\begin_inset Formula $A_{\phi}$
+\end_inset
+
+不依赖于
+\begin_inset Formula $\phi$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+\int_{0}^{2\pi}\dif\phi\,A_{\phi}R\sin\theta & =\frac{Q_{m}}{4\pi}\int_{0}^{\theta}\int_{0}^{2\pi}\frac{1}{R^{2}}R^{2}\sin\theta\dif\phi\dif\theta\\
+2\pi A_{\phi}R\sin\theta & =\frac{Q_{m}}{4\pi}2\pi\left(1-\cos\theta\right)
+\end{align*}
+
+\end_inset
+
+由此得到矢势的相容表达式为：
+\begin_inset Formula 
+\[
+\sbf{A}=A_{\phi}\sbf{e}_{\phi}=\frac{Q_{m}}{4\pi r}\frac{1-\cos\theta}{\sin\theta}\sbf{e}_{\phi}=\frac{Q_{m}}{4\pi r}\tan\frac{\theta}{2}\sbf{e}_{\phi}.
+\]
+
+\end_inset
+
+在
+\begin_inset Formula $r=0$
+\end_inset
+
+以及
+\begin_inset Formula $\theta=\pi$
+\end_inset
+
+处是奇异的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(5.0,2.5)$) {
+\backslash
+includegraphics[scale=.8]{ciHe}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.9
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+将一磁导率为
+\begin_inset Formula $\mu$
+\end_inset
+
+，半径为
+\begin_inset Formula $R_{0}$
+\end_inset
+
+的球体，放入均匀磁场
+\begin_inset Formula $\sbf{H}_{0}$
+\end_inset
+
+内，求总磁感应强度
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+和诱导磁矩
+\begin_inset Formula $\sbf{m}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color black
+以球心为原点，建立球坐标系。
+\color inherit
+因球内外均无传导电流，可以引入磁标势
+\begin_inset Formula $\varphi$
+\end_inset
+
+，使
+\begin_inset Formula $\sbf{H}=-\nabla\varphi$
+\end_inset
+
+。球内
+\begin_inset Formula $\sbf{B}_{1}=\mu\sbf{H}_{1}=\mu_{0}\left(\sbf{H}_{1}+\sbf{M}_{1}\right)$
+\end_inset
+
+，球外
+\begin_inset Formula $\sbf{M}_{2}=0$
+\end_inset
+
+。磁标势满足的微分方程为：
+\begin_inset Formula 
+\[
+\nabla\cdot\left(-\nabla\varphi\right)=-\nabla\sbf{M}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \text{球内}:\quad\rho_{m1}=-\mu_{0}\nabla\cdot\sbf{M}_{1}=\frac{\mu_{0}-\mu}{\mu}\nabla\cdot\sbf{B}_{1}=0\\
+ & \text{球外}:\quad\rho_{m2}=-\mu_{0}\nabla\cdot\sbf{M}_{2}=0
+\end{align*}
+
+\end_inset
+
+总结定解条件为：
+\begin_inset Formula 
+\begin{align*}
+ & \nabla^{2}\varphi_{1}=0,\left(R<R_{0}\right),\quad\nabla^{2}\varphi_{2}=0,\left(R>R_{0}\right)\\
+ & R=0,\quad\varphi_{1}\text{有限};\quad R\to\infty,\quad\varphi_{2}\to-H_{0}R\cos\theta\\
+ & \varphi_{1}\left(R_{0}\right)=\varphi_{2}\left(R_{0}\right),\quad\left.\mu\frac{\partial\varphi_{1}}{\partial R}\right|_{R_{0}}=\left.\mu_{0}\frac{\partial\varphi_{2}}{\partial R}\right|_{R_{0}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.9
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+球内外的解分别为，
+\size small
+
+\begin_inset Formula 
+\begin{align*}
+ & \varphi_{1}=\sum_{n=0}^{\infty}a_{n}R^{n}P_{n}\left(\cos\theta\right),\quad\left(R=0,\varphi_{1}\text{有限}\right)\\
+ & \varphi_{2}=-H_{0}R{\color{blue}P_{1}\left(\cos\theta\right)}+\sum_{n=0}^{\infty}\frac{b_{n}}{R^{n+1}}P_{n}\left(\cos\theta\right),\quad\left(R\to\infty,\varphi_{2}\to-H_{0}R\cos\theta\right)
+\end{align*}
+
+\end_inset
+
+对于
+\begin_inset Formula $n\neq1$
+\end_inset
+
+有：
+\begin_inset Formula 
+\begin{align*}
+ & a_{n}R_{0}^{n}=\frac{b_{n}}{R_{0}^{n+1}},\quad\mu\,na_{n}R_{0}^{n-1}=\mu_{0}\frac{-\left(n+1\right)b_{n}}{R_{0}^{n+2}}\\
+\Rightarrow & a_{n}R_{0}^{2n+1}=b_{n},\quad a_{n}R_{0}^{2n+1}=\frac{-\left(n+1\right)}{n}\frac{\mu_{0}}{\mu}b_{n}
+\end{align*}
+
+\end_inset
+
+所以简化到：
+\begin_inset Formula 
+\[
+\varphi_{1}=a_{1}RP_{1}\left(\cos\theta\right),\quad\varphi_{2}=-H_{0}R{\color{blue}P_{1}\left(\cos\theta\right)}+\frac{b_{1}}{R^{2}}P_{1}\left(\cos\theta\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a_{1}R_{0}=-H_{0}R_{0}+\frac{b_{1}}{R_{0}^{2}},\quad a_{1}=\frac{\mu_{0}}{\mu}\left(-H_{0}+\frac{-2b_{1}}{R_{0}^{3}}\right)
+\]
+
+\end_inset
+
+求解方程组得到：
+\begin_inset Formula 
+\[
+a_{1}=\frac{-3\mu_{0}}{\mu+2\mu_{0}}H_{0},\quad b_{1}=\frac{\mu-\mu_{0}}{\mu+2\mu_{0}}H_{0}R_{0}^{3}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.9
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+所以
+\begin_inset Formula 
+\begin{align*}
+ & \varphi_{1}=\frac{-3\mu_{0}}{\mu+2\mu_{0}}\sbf{H}_{0}\cdot\sbf{R}\\
+ & \varphi_{2}=-\sbf{H}_{0}\cdot\sbf{R}+\frac{\mu-\mu_{0}}{\mu+2\mu_{0}}\frac{R_{0}^{3}\sbf{H}_{0}\cdot\sbf{R}}{R^{3}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+B_{1} & =-\mu\nabla\varphi_{1}=\frac{3\mu\mu_{0}}{\mu+2\mu_{0}}\sbf{H}_{0}=\mu_{0}\sbf{H}_{0}+\frac{2\left(\mu-\mu_{0}\right)}{\mu+2\mu_{0}}\sbf{H}_{0}\\
+B_{2} & =-\mu_{0}\nabla\varphi_{1}=\mu_{0}\sbf{H}_{0}+\frac{\left(\mu-\mu_{0}\right)\mu_{0}R_{0}^{3}}{\mu+2\mu_{0}}\sbf{H}_{0}\cdot\left[\frac{3\sbf{R}\sbf{R}}{R^{5}}-\frac{\sbf{I}}{R^{3}}\right]
+\end{align*}
+
+\end_inset
+
+球内外的
+\begin_inset Formula $B$
+\end_inset
+
+都是原磁场和磁化电流产生场的叠加。由
+\begin_inset Formula $\varphi_{1},\varphi_{2}$
+\end_inset
+
+的表达式容易看出，介质球面磁化电流形成的磁矩为：
+\begin_inset Formula 
+\[
+\sbf{m}=4\pi\frac{\left(\mu-\mu_{0}\right)R_{0}^{3}}{\mu+2\mu_{0}}\sbf{H}_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+有一个内外半径分别为
+\begin_inset Formula $R_{1}$
+\end_inset
+
+和
+\begin_inset Formula $R_{2}$
+\end_inset
+
+的空心球，位于均匀外磁场
+\begin_inset Formula $\sbf{H}_{0}$
+\end_inset
+
+内，球的磁导率为
+\begin_inset Formula $\mu$
+\end_inset
+
+，求空腔内的磁场
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+，讨论
+\begin_inset Formula $\mu\gg\mu_{0}$
+\end_inset
+
+时的磁屏蔽作用。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+以球心为坐标原点，令外场为
+\begin_inset Formula $\sbf{H}_{0}=H_{0}\sbf{e}_{z}$
+\end_inset
+
+。空间中没有传导电流，引入磁标势求解。
+\begin_inset Formula $\nabla\cdot\left(-\nabla\varphi\right)=-\nabla\cdot\sbf{M}$
+\end_inset
+
+，均匀磁化的介质没有体电荷，空间各处
+\begin_inset Formula $\rho_{m}=0$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+ & R=0,\quad\varphi_{1}=\varphi_{2},\quad\mu_{0}\frac{\partial\varphi_{1}}{\partial R}=\mu\frac{\partial\varphi_{2}}{\partial R}\\
+ & R=R_{2},\quad\varphi_{2}=\varphi_{3},\quad\mu\frac{\partial\varphi_{2}}{\partial R}=\mu_{0}\frac{\partial\varphi_{3}}{\partial R}
+\end{align*}
+
+\end_inset
+
+考虑渐进行为，写出磁标势方程的通解为：
+\begin_inset Formula 
+\begin{align*}
+\varphi_{1} & =\sum_{n=0}^{\infty}a_{n}R^{n}P_{n}\left(\cos\theta\right),\quad\left(R<R_{1}\right)\\
+\varphi_{2} & =\sum_{n=0}^{\infty}\left(b_{n}R^{n}+\frac{c_{n}}{R^{n+1}}\right)P_{n}\left(\cos\theta\right),\quad\left(R_{1}<R<R_{2}\right)\\
+\varphi_{3} & =-H_{0}R\cos\theta+\sum_{n=0}^{\infty}\frac{d_{n}}{R^{n+1}}P_{n}\left(\cos\theta\right),\quad\left(R>R_{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+应用边界条件得到待定系数的方程组：
+\begin_inset Formula 
+\begin{align*}
+a_{1}R_{1} & =b_{1}R_{1}+\frac{c_{1}}{R_{1}^{2}},\quad\mu_{0}a_{1}=\mu\left(b_{1}-\frac{2c_{1}}{R_{1}^{3}}\right)\\
+b_{1}R_{2}+\frac{c_{1}}{R_{2}^{2}} & =\frac{d_{1}}{R_{2}^{2}}-H_{0}R_{2},\quad\mu\left(b_{1}-\frac{2c_{1}}{R_{2}^{3}}\right)=\mu_{0}\left(-\frac{2d_{1}}{R_{2}^{3}}-H_{0}\right)
+\end{align*}
+
+\end_inset
+
+其他系数为零。求解系数得到
+\begin_inset Formula 
+\[
+a_{1}=-H_{0}/\left\{ 2\frac{\left(\mu-\mu_{0}\right)^{2}}{9\mu\mu_{0}}\left[\frac{\left(\mu+2\mu_{0}\right)\left(2\mu+\mu_{0}\right)}{2\left(\mu-\mu_{0}\right)^{2}}-\left(\frac{R_{1}}{R_{2}}\right)^{3}\right]\right\} 
+\]
+
+\end_inset
+
+所以空腔内的标势和磁场为
+\begin_inset Formula 
+\[
+\varphi_{1}=a_{1}R\cos\theta,\quad\sbf{B}_{1}=-\mu_{0}\nabla\varphi_{1}=-\mu_{0}a_{1}\sbf{e}_{z}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\sbf{B}_{1}$
+\end_inset
+
+是与外场
+\begin_inset Formula $B_{0}=\mu_{0}\sbf{H}_{0}$
+\end_inset
+
+方向相同的均匀场，但比外场弱。对于给定的比值
+\begin_inset Formula $R_{1}/R_{2}$
+\end_inset
+
+，介质的磁导率
+\begin_inset Formula $\mu$
+\end_inset
+
+越大，
+\begin_inset Formula $\sbf{B}_{1}$
+\end_inset
+
+越弱，球壳对外部磁场的屏蔽作用越明显。当
+\begin_inset Formula $\mu\gg\mu_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{B}_{1}\to0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.10
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tef[
+\backslash
+[Mu]_, R_] := 1/((2 (
+\backslash
+[Mu] - 1)^2)/( 9 
+\backslash
+[Mu]) (((
+\backslash
+[Mu] + 2) (2 
+\backslash
+[Mu] + 1))/(2 (
+\backslash
+[Mu] - 1)^2) - R^3)) tea = Plot[ Evaluate[Table[tef[
+\backslash
+[Mu], R], {R, 0.1, 0.9, 0.1}]], {
+\backslash
+[Mu], 1, 50}, PlotLabels -> Array[R, 9, {0.1, 0.9}], AxesOrigin -> {1, 0},
+ AxesLabel -> {"
+\backslash
+[Mu]/
+\backslash
+!
+\backslash
+(
+\backslash
+*SubscriptBox[
+\backslash
+(
+\backslash
+[Mu]
+\backslash
+), 
+\backslash
+(0
+\backslash
+)]
+\backslash
+)", "
+\backslash
+!
+\backslash
+(
+\backslash
+*SubscriptBox[
+\backslash
+(B
+\backslash
+), 
+\backslash
+(1
+\backslash
+)]
+\backslash
+)"}, ImageSize -> {300, 160} ]; Print@tea; Export["/home/tom/note/others/ciPingB
+i.pdf", tea]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[remember picture, overlay] 
+\backslash
+node[anchor=center] at ($(current page.center)+(0,0)$) {
+\backslash
+includegraphics[scale=1.5]{ciPingBi}};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+设理想铁磁体的磁化规律为
+\begin_inset Formula $\sbf{B}=\mu\sbf{H}+\mu_{0}\sbf{M_{0}}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{M}_{0}$
+\end_inset
+
+是与
+\begin_inset Formula $\sbf{H}$
+\end_inset
+
+无关的常量。今将一个理想铁磁体做成的均匀磁化球进入磁导率为
+\begin_inset Formula $\mu^{\prime}$
+\end_inset
+
+的无限介质中，求磁感应强度和磁化电流分布。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+铁磁体球内
+\begin_inset Formula 
+\[
+\mu_{0}\sbf{M}_{1}=\sbf{B}_{1}-\mu_{0}\sbf{H}_{1}=\frac{\mu-\mu_{0}}{\mu}\sbf{B}_{1}-\frac{\mu_{0}^{2}}{\mu}\sbf{M}_{0},
+\]
+
+\end_inset
+
+外部介质中
+\begin_inset Formula 
+\[
+\mu_{0}\sbf{M}_{2}=\frac{\mu^{\prime}-\mu_{0}}{\mu^{\prime}}\sbf{B}_{2}.
+\]
+
+\end_inset
+
+由
+\begin_inset Formula $\nabla\cdot\sbf{B}=0$
+\end_inset
+
+。所以空间内没有磁荷分布。设球体的半径为
+\begin_inset Formula $R_{0}$
+\end_inset
+
+，并令
+\begin_inset Formula $\sbf{M}_{0}=M_{0}\sbf{e}_{z}$
+\end_inset
+
+，于是有
+\begin_inset Formula $z$
+\end_inset
+
+轴对称性，边界条件为
+\begin_inset Formula 
+\begin{align*}
+ & R=0,\quad\varphi_{1}\text{有限};\quad R\to\infty,\quad\varphi_{2}\to0\\
+ & R=R_{0},\quad\varphi_{1}=\varphi_{2},\quad-\mu^{\prime}\frac{\partial\varphi_{2}}{\partial R}=-\mu\frac{\partial\varphi_{1}}{\partial R}+\mu_{0}M_{0}\cos\theta
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+考虑渐进行为，写出磁标势方程的通解为：
+\begin_inset Formula 
+\begin{align*}
+\varphi_{1} & =\sum_{n=0}^{\infty}a_{n}R^{n}P_{n}\left(\cos\theta\right),\quad\left(R<R_{0}\right)\\
+\varphi_{2} & =\sum_{n=0}^{\infty}\frac{b_{n}}{R^{n+1}}P_{n}\left(\cos\theta\right),\quad\left(R>R_{0}\right)
+\end{align*}
+
+\end_inset
+
+应用边界条件得到待定系数的方程组：
+\begin_inset Formula 
+\begin{align*}
+a_{1}R_{1} & =b_{1}R_{1}+\frac{c_{1}}{R_{1}^{2}},\quad\mu_{0}a_{1}=\mu\left(b_{1}-\frac{2c_{1}}{R_{1}^{3}}\right)\\
+b_{1}R_{2}+\frac{c_{1}}{R_{2}^{2}} & =\frac{d_{1}}{R_{2}^{2}}-H_{0}R_{2},\quad\mu\left(b_{1}-\frac{2c_{1}}{R_{2}^{3}}\right)=\mu_{0}\left(-\frac{2d_{1}}{R_{2}^{3}}-H_{0}\right)
+\end{align*}
+
+\end_inset
+
+其他系数为零。求解系数得到
+\begin_inset Formula 
+\begin{align*}
+\varphi_{1} & =\frac{\mu_{0}}{2\mu^{\prime}+\mu}\sbf{M}_{0}\cdot\sbf{R}\\
+\varphi_{2} & =\frac{\mu_{0}R_{0}^{3}}{\left(2\mu^{\prime}+\mu\right)R^{3}}\sbf{M}_{0}\cdot\sbf{R}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+由
+\begin_inset Formula $\sbf{B}=\mu\sbf{H}+\mu_{0}\sbf{M_{0}}$
+\end_inset
+
+得到：
+\begin_inset Formula 
+\begin{align*}
+\sbf{B}_{1} & =\mu\left(-\nabla\varphi_{1}\right)+\mu_{0}\sbf{M}_{0}=\frac{2\mu^{\prime}\mu_{0}}{2\mu^{\prime}+\mu}\sbf{M}_{0}\\
+\sbf{B}_{2} & =\mu^{\prime}\left(-\nabla\varphi_{1}\right)=\frac{\mu^{\prime}\mu_{0}R_{0}^{3}}{2\mu^{\prime}+\mu}\left[\frac{3\left(\sbf{M}_{0}\cdot\sbf{R}\right)\sbf{R}}{R^{5}}-\frac{\sbf{M}_{0}}{R^{3}}\right]
+\end{align*}
+
+\end_inset
+
+球内为均匀场，球外是磁偶极场。
+\begin_inset Formula $\sbf{B}_{1}=\mu_{0}\left(\sbf{H}_{1}+\sbf{M}_{1}\right)$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{B}_{1}=\mu\sbf{H}_{1}+\mu_{0}\sbf{M_{0}}$
+\end_inset
+
+，所以
+\begin_inset Formula 
+\[
+\sbf{M}_{1}=\frac{\mu-\mu_{0}}{\mu\mu_{0}}\sbf{B}_{1}+\frac{\mu_{0}}{\mu}\sbf{M}_{0},\quad\sbf{M}_{2}=\frac{\sbf{B}_{2}}{\mu_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+所以球面的磁化电流分布为
+\begin_inset Formula 
+\[
+\sbf{\alpha}_{M}=\left.\sbf{e}_{R}\times\left[\frac{\sbf{B}_{2}}{\mu_{0}}-\frac{\mu-\mu_{0}}{\mu\mu_{0}}\sbf{B}_{1}-\frac{\mu_{0}}{\mu}\sbf{M}_{0}\right]\right|_{R=R_{0}}=\frac{\left(\mu_{0}+3\mu^{\prime}\right)}{\mu+2\mu^{\prime}}M_{0}\sin\theta\sbf{e}_{\phi}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf{e}_{z}=\cos{\theta}\sbf{e}_{R}-\sin\theta\sbf{e}_{\theta},\quad\sbf{e}_{R}\times\sbf{e}_{\theta}=\sbf{e}_{\phi}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+有一个均匀带电的薄导体壳，半径为
+\begin_inset Formula $R_{0}$
+\end_inset
+
+，总电荷量为
+\begin_inset Formula $q$
+\end_inset
+
+，今使球壳绕自身某一直径以角速度
+\begin_inset Formula $\sbf{\omega}$
+\end_inset
+
+转动，求球内外的磁场
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+以球心为坐标原点，转轴为
+\begin_inset Formula $z$
+\end_inset
+
+轴。
+\begin_inset Formula $\left(\sbf{e}_{R},\sbf{e}_{\phi},\sbf{e}_{z}\right)$
+\end_inset
+
+，
+\begin_inset Formula $\left(\sbf{e}_{R},\sbf{e}_{\theta},\sbf{e}_{\phi}\right)$
+\end_inset
+
+分别组成右手螺旋。电流
+\begin_inset Formula $\sbf{I}=nes\sbf{v}$
+\end_inset
+
+。球壳电荷面密度为
+\begin_inset Formula $\sigma_{f}=q/4\pi R_{0}^{2}$
+\end_inset
+
+，球壳自转形成的面电流密度为：
+\begin_inset Formula 
+\[
+\sbf{\alpha}_{f}=\frac{q}{4\pi R_{0}^{2}}\omega\sbf{e}_{z}\times R_{0}\sbf{e}_{R}=\frac{q\omega}{4\pi R_{0}}\sin\theta\sbf{e}_{\phi}.
+\]
+
+\end_inset
+
+球壳内外均无传导电流分布，引入磁标势满足
+\begin_inset Formula $\nabla\varphi^{2}=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+ & R=0,\varphi_{1}\text{有限；}\quad R\to\infty,\varphi_{2}\to0\\
+ & R=R_{0},\quad B_{2R}=B_{1R},\quad\sbf{e}_{R}\times\left(\sbf{H}_{2}-\sbf{H}_{1}\right)=\sbf{\alpha}_{f}\\
+\text{即}\quad & \frac{\partial\varphi_{2}}{\partial R}=\frac{\partial\varphi_{1}}{\partial R},\quad-\frac{1}{R}\frac{\partial\varphi_{2}}{\partial\theta}+\frac{1}{R}\frac{\partial\varphi_{2}}{\partial\theta}=\frac{q\omega}{4\pi R_{0}}\sin\theta
+\end{align*}
+
+\end_inset
+
+上式使用了：
+\begin_inset Formula 
+\[
+\nabla\varphi=\sbf{e}_{R}\partial_{R}\varphi+\sbf{e}_{\theta}\frac{1}{R}\partial_{\theta}\varphi+\sbf{e}_{\phi}\frac{1}{R\sin\theta}\partial_{\phi}\varphi
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\sbf{H}_{2},\sbf{H}_{1}$
+\end_inset
+
+默认都沿
+\begin_inset Formula $\sbf{e}_{\theta}$
+\end_inset
+
+方向，运算结果的正负决定
+\begin_inset Formula $\sbf{H}_{2},\sbf{H}_{1}$
+\end_inset
+
+的实际方向。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \varphi_{1}=\sum_{n=0}^{\infty}a_{n}R^{n}P_{n}\left(\cos\theta\right),\quad\left(R<R_{0}\right)\\
+ & \varphi_{2}=\sum_{n=0}^{\infty}\frac{b_{n}}{R^{n+1}}P_{n}\left(\cos\theta\right),\quad\left(R>R_{0}\right)
+\end{align*}
+
+\end_inset
+
+对于
+\begin_inset Formula $n\neq1$
+\end_inset
+
+有：
+\begin_inset Formula 
+\begin{align*}
+ & na_{n}R_{0}^{n-1}=\frac{-\left(n+1\right)b_{n}}{R^{n+2}},n\in\left[0,\infty\right]\quad-\frac{1}{R_{0}}a_{n}R^{n}+\frac{1}{R_{0}}\frac{b_{n}}{R^{n+1}}=0,\quad n\in\left[1,\infty\right]\\
+\Rightarrow & \frac{n}{-\left(n+1\right)}a_{n}R^{2n+1}=b_{n},\quad a_{n}R^{2n+1}=b_{n}
+\end{align*}
+
+\end_inset
+
+所以简化到：
+\begin_inset Formula 
+\[
+\varphi_{1}=a_{1}RP_{1}\left(\cos\theta\right),\quad\varphi_{2}=\frac{b_{1}}{R^{2}}P_{1}\left(\cos\theta\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{-2}a_{1}R_{0}^{2}=b_{1},\quad a_{1}R_{0}^{3}=b_{1}+\frac{q\omega}{4\pi R_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\size small
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\size small
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+求解方程组得到：
+\begin_inset Formula 
+\[
+\varphi_{1}=\frac{-q\omega}{6\pi R_{0}}R\cos\theta,\quad\varphi_{2}=\frac{m}{4\pi R^{2}}\cos\theta=\frac{\sbf{m}\cdot\sbf{R}}{4\pi R^{3}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf B_{1}=\mu_{0}\left(-\nabla\varphi_{1}\right)=\frac{\mu_{0}q\omega}{6\pi R_{0}}\sbf e_{z},\quad\sbf B_{2}=\mu_{0}\left(-\nabla\varphi_{2}\right)=\frac{\mu_{0}q\omega}{4\pi R_{0}}\left[\frac{3\left(\sbf m\cdot\sbf R\right)\sbf R}{R^{5}}-\frac{\sbf m}{R^{3}}\right]
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula 
+\[
+\sbf{m}=\frac{q\omega R_{0}^{2}}{3}\sbf{e}_{z}=\frac{1}{2}\int_{S}\left(R_{0}\sbf{e}_{R}\times\sbf{\alpha}_{f}\right)\dif S.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\size small
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\size small
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\size small
+3.13
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+积分测度的匹配是：
+\begin_inset Formula 
+\[
+\sbf{m}=\frac{1}{2}\oint_{L}\sbf{x}^{\prime}\times I\dif\sbf{l}\Rightarrow\frac{1}{2}\int_{S}\sbf{x}^{\prime}\times\sbf{\alpha}\dif S\Rightarrow\frac{1}{2}\int_{V}\sbf{x}^{\prime}\times\sbf{J}\dif V
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $\sbf{\alpha}_{f}=\frac{q\omega}{4\pi R_{0}}\sin\theta\sbf{e}_{\phi}$
+\end_inset
+
+,
+\begin_inset Formula 
+\begin{align*}
+\sbf{m} & =\frac{1}{2}\int_{0}^{2\pi}\dif\phi\int_{0}^{\pi}\dif\theta R_{0}^{2}\sin\theta\left[R_{0}\sbf{e}_{R}\times{\color{blue}\frac{q\omega}{4\pi R_{0}}\sin\theta\sbf{e}_{\phi}}\right]\\
+ & =-\int_{0}^{2\pi}\dif\phi\int_{0}^{\pi}\dif\theta\sin^{2}\theta{\color{blue}\sbf{e}_{\theta}},\quad{\color{blue}\sbf{e}_{\theta}}=-\sin\theta{\color{blue}\sbf{e}}_{z}+\cos\theta{\color{blue}\sbf{e}}_{\rho}\\
+ & =\frac{q\omega R_{0}^{2}}{8\pi}\int_{0}^{2\pi}\dif\phi{\color{cyan}\int_{0}^{\pi}\dif\theta\sin^{3}\theta}{\color{blue}{\color{blue}\sbf{e}}_{z}}=\frac{q\omega R_{0}^{2}}{8\pi}2\pi{\color{cyan}\frac{4}{3}}{\color{blue}{\color{blue}\sbf{e}}_{z}}=\frac{q\omega R_{0}^{2}}{3}{\color{blue}{\color{blue}\sbf{e}}_{z}}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.14
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+电荷按体均匀分布的刚性小球，总电荷量为
+\begin_inset Formula $q$
+\end_inset
+
+，半径为
+\begin_inset Formula $R_{0}$
+\end_inset
+
+，它以角速度
+\begin_inset Formula $\omega$
+\end_inset
+
+绕自身某一直径转动，求：
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+它的磁矩；
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+它的磁矩与自转角动量之比。设小球质量
+\begin_inset Formula $m_{0}$
+\end_inset
+
+是均匀分布的。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+小球的电荷密度与质量密度分别为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\rho_{e}=\frac{3q}{4\pi R_{0}^{3}},\quad\rho_{m}=\frac{3m_{0}}{4\pi R_{0}^{3}}
+\]
+
+\end_inset
+
+选取坐标系使转动轴为
+\begin_inset Formula $z$
+\end_inset
+
+轴，则球内任一点的转动速度为
+\begin_inset Formula $\sbf{v}=\omega\sbf{e}_{z}\times\sbf{r}=\omega r\sin\theta\sbf{e}_{\phi}$
+\end_inset
+
+，球内的电流密度和动量密度分别为，
+\begin_inset Formula 
+\[
+\sbf{J}=\rho_{e}\sbf{v}=\rho_{e}\omega r\sin\theta\sbf{e}_{\phi},\quad\sbf{p}=\rho_{m}\omega r\sin\theta\sbf{e}_{\phi},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sbf{m} & =\frac{1}{2}\int_{V}\sbf{x}^{\prime}\times\sbf{J}\dif V=\frac{1}{2}\int_{0}^{R_{0}}\int_{0}^{\pi}\int_{0}^{2\pi}r^{2}\sin\theta\dif r\dif\theta\dif\phi\,r{\color{blue}\sbf{e}_{r}}\times\rho_{e}\omega r\sin\theta{\color{blue}\sbf{e}_{\phi}}\\
+ & =-\rho_{e}\omega\frac{1}{2}\int_{0}^{R_{0}}\int_{0}^{\pi}\int_{0}^{2\pi}r^{2}\sin^{2}\theta\dif r\dif\theta\dif\phi\,r^{2}{\color{blue}\sbf{e}_{\theta}},\quad{\color{blue}\sbf{e}_{\theta}}=-\sin\theta{\color{blue}\sbf{e}}_{z}+\cos\theta{\color{blue}\sbf{e}}_{\rho}\\
+ & =\rho_{e}\omega\frac{1}{2}\frac{R_{0}^{5}}{5}2\pi\frac{4}{3}{\color{blue}\sbf{e}}_{z}=\frac{q\omega R_{0}^{2}}{5}{\color{blue}\sbf{e}}_{z}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.14
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sbf{m}=\frac{q\omega R_{0}^{2}}{5}{\color{blue}\sbf{e}}_{z}.
+\]
+
+\end_inset
+
+类似地，作代换
+\begin_inset Formula $\sbf{J}\to\sbf{p}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{\rho_{e}}\to\sbf{\rho_{m}}$
+\end_inset
+
+，考虑到角动量定义中没有
+\begin_inset Formula $1/2$
+\end_inset
+
+，所以
+\begin_inset Formula 
+\[
+\sbf{L}=\frac{2m_{0}\omega R_{0}^{2}}{5}{\color{blue}\sbf{e}}_{z},
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\sbf{m}/\sbf{L}=q/2m_{0}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf{\mu}=g\frac{q}{2m}\hat{\sbf{S}},\quad g\text{称为朗德因子,电子的朗德因子为}2.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mu_{u}=\frac{2}{3}\frac{e}{2m_{u}}\frac{\hbar}{c},\quad\mu_{d}=-\frac{1}{3}\frac{e}{2m_{d}}\frac{\hbar}{c},\quad\mu_{s}=-\frac{1}{3}\frac{e}{2m_{s}}\frac{\hbar}{c}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.17
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\color blue
+有一理想迈斯纳态的超导球，其半径为
+\begin_inset Formula $a$
+\end_inset
+
+，距球心为
+\begin_inset Formula $d$
+\end_inset
+
+（
+\begin_inset Formula $d>a$
+\end_inset
+
+）处有一沿直径方向的磁偶极子
+\begin_inset Formula $\sbf{m}$
+\end_inset
+
+。证明：
+\begin_inset Formula $\sbf{m}$
+\end_inset
+
+的镜像为
+\begin_inset Formula $\sbf{m}^{\prime}=-\left(a/d\right)^{3}\sbf{m}$
+\end_inset
+
+，位置在球内
+\begin_inset Formula $z=a^{2}/d$
+\end_inset
+
+处。
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+解：
+\color inherit
+超导球内
+\begin_inset Formula $\sbf{B}=0$
+\end_inset
+
+，磁场只存在于求外空间。令磁矩
+\begin_inset Formula $\sbf{m}=m\sbf{e}_{z}$
+\end_inset
+
+，问题具有
+\begin_inset Formula $z$
+\end_inset
+
+轴对称性。假设镜像位于
+\begin_inset Formula $z=b$
+\end_inset
+
+，镜像的电磁矩位
+\begin_inset Formula $\sbf{m}^{\prime}=m^{\prime}\sbf{e}_{z}$
+\end_inset
+
+。则球外任一点的磁感应强度为：
+\begin_inset Formula 
+\[
+\sbf{B}=\frac{\mu_{0}}{4\pi}\left[\frac{3\left(\sbf{m}\cdot\sbf{r}\right)\sbf{r}-r^{2}\sbf{m}}{r^{5}}+\frac{3\left(\sbf{m}^{\prime}\cdot\sbf{r}^{\prime}\right)\sbf{r}^{\prime}-r^{\prime2}\sbf{m}^{\prime}}{r^{\prime5}}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf{r}$
+\end_inset
+
+是
+\begin_inset Formula $\sbf{m}$
+\end_inset
+
+到场点的矢径，
+\begin_inset Formula $\sbf{r}^{\prime}$
+\end_inset
+
+是
+\begin_inset Formula $\sbf{m}^{\prime}$
+\end_inset
+
+到场点的矢径：
+\begin_inset Formula 
+\begin{align*}
+\sbf{r} & =r\sbf{e}_{r}=\left(R^{2}+d^{2}-2Rd\cos\theta\right)^{1/2}\sbf{e}_{r}\\
+\sbf{r}^{\prime} & =r^{\prime}\sbf{e}_{r}^{\prime}=\left(R^{2}+b^{2}-2Rb\cos\theta\right)^{1/2}\sbf{e}_{r}^{\prime}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $R$
+\end_inset
+
+是从球心到场点的距离，
+\begin_inset Formula $\theta$
+\end_inset
+
+是直径方向的单位矢量
+\begin_inset Formula $\sbf{e}_{R}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf{e}_{z}$
+\end_inset
+
+的夹角。球面上
+\begin_inset Formula $\sbf{B}$
+\end_inset
+
+的法向分量
+\begin_inset Formula $B_{R}=\sbf{B}\cdot\sbf{e}_{R}=0$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+B_{R}=\frac{3\left(\sbf{m}\cdot\sbf{r}\right)\left(\sbf{r}\cdot\sbf{e}_{R}\right)-r^{2}\left(\sbf{m}\cdot\sbf{e}_{R}\right)}{r^{5}}+\frac{3\left(\sbf{m}^{\prime}\cdot\sbf{r}^{\prime}\right)\left(r^{\prime}\cdot\sbf{e}_{R}\right)-r^{\prime2}\left(\sbf{m}^{\prime}\cdot\sbf{e}_{R}\right)}{r^{\prime5}}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+3.17
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\size small
+在球内上任一点，记
+\begin_inset Formula $\sbf{r}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf{m}$
+\end_inset
+
+的夹角为
+\begin_inset Formula $\alpha$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{r}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf{e}_{R}$
+\end_inset
+
+的夹角为
+\begin_inset Formula $\beta$
+\end_inset
+
+；
+\begin_inset Formula $\sbf{r}^{\prime}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf{m}^{\prime}$
+\end_inset
+
+的夹角为
+\begin_inset Formula $\alpha^{\prime}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf{r}^{\prime}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf{e}_{R}$
+\end_inset
+
+的夹角为
+\begin_inset Formula $\beta^{\prime}$
+\end_inset
+
+，则：
+\begin_inset Formula 
+\begin{equation}
+\frac{m\left(3\cos\alpha\cos\beta-\cos\theta\right)}{r^{3}}+\frac{m^{\prime}\left(3\cos\alpha^{\prime}\cos\beta^{\prime}-\cos\theta\right)}{r^{\prime3}}=0\label{eq:69.3}
+\end{equation}
+
+\end_inset
+
+上式在整个球面上成立需满足
+\begin_inset Formula 
+\begin{align*}
+3\cos\alpha\cos\beta-\cos\theta & =3\cos\alpha^{\prime}\cos\beta^{\prime}-\cos\theta\\
+\text{即}\quad\cos\alpha\cos\beta & =\cos\alpha^{\prime}\cos\beta^{\prime}
+\end{align*}
+
+\end_inset
+
+Again，相似三角形。在
+\begin_inset Formula $R=a$
+\end_inset
+
+处，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:69.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出
+\begin_inset Formula 
+\[
+\frac{m}{\left(a^{2}+d^{2}-2ad\cos\theta\right)^{3/2}}=\frac{-m^{\prime}}{\left(a^{2}+b^{2}-2ab\cos\theta\right)^{3/2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+m^{2/3}\left(a^{2}+b^{2}-2ab\cos\theta\right)=m^{\prime2/3}\left(a^{2}+d^{2}-2ad\cos\theta\right)
+\]
+
+\end_inset
+
+由此解出
+\begin_inset Formula 
+\[
+\frac{b}{a}=\frac{a}{d}\quad\frac{m^{\prime}}{m}=-\left(\frac{a}{d}\right)^{3}
+\]
+
+\end_inset
+
+负号表示镜像
+\begin_inset Formula $\sbf{m}^{\prime}$
+\end_inset
+
+沿
+\begin_inset Formula $-\sbf{e}_{z}$
+\end_inset
+
+方向，即
+\begin_inset Formula $\sbf{m}^{\prime}=-\left(a/d\right)^{3}\sbf{m}$
+\end_inset
+
+。对比之前点电荷对球壳的镜像：
+\begin_inset Formula 
+\[
+\frac{b}{a}=\frac{a}{d},\quad\frac{q^{\prime}}{q}=-\left(\frac{a}{d}\right)^{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

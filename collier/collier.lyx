@@ -1,0 +1,5508 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+% 如果没有这一句命令，XeTeX会出错，原因参见
+% http://bbs.ctex.org/viewthread.php?tid=60547
+% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic} 
+\usepackage{xcolor} % Required for specifying colors by name 
+\definecolor{ocre}{RGB}{243,102,25} 
+\usepackage{enumerate} 
+
+\usepackage{amsfonts} 
+\usepackage{hep} 
+\usepackage{bm} 
+\usepackage{graphicx,graphics,color} 
+\usepackage{simplewick} 
+\usepackage{latexsym} 
+\usepackage{amssymb} 
+\usepackage{makeidx} 
+\usepackage{amsmath} 
+\usepackage{multirow} 
+\usepackage{slashed} 
+%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+%% \usepackage{axodraw2} 
+%%++++++++++++++++++++ 
+\DeclareMathOperator{\trace}{tr} 
+\DeclareMathOperator{\Real}{Re} 
+\DeclareMathOperator{\Imag}{Im} 
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\end_preamble
+\options UTF8
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+title
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Standard
+COLLIER is a fortran 单圈--标量和张量的数值积分程序库。 
+\end_layout
+
+\begin_layout Standard
+这些积分出现在微扰的相对论性量子场论中。 
+\end_layout
+
+\begin_layout Standard
+它具有以下features：
+\end_layout
+
+\begin_layout Enumerate
+多粒子复杂度 scalar and tensor integrals 
+\end_layout
+
+\begin_layout Enumerate
+ultraviolet divergences 的维数正规化
+\end_layout
+
+\begin_layout Enumerate
+soft infrared divergences 的维数正规化（对于非阿贝尔场，也支持 mass regularization）
+\end_layout
+
+\begin_layout Enumerate
+对于共线质量奇点的维数正规化或者质量正规化 
+\end_layout
+
+\begin_layout Enumerate
+对于不稳定粒子，complex 内线质量完全支持（外动量和virtualities认作是实数）
+\end_layout
+
+\begin_layout Enumerate
+数值危险区域（小 Gram 或者其他运动学行列式），使用专用的展开处理。
+\end_layout
+
+\begin_layout Enumerate
+所有基本模块都有两种平行的实现方式，可以用作内部交叉检验
+\end_layout
+
+\begin_layout Enumerate
+缓存系统--用来加速计算 
+\backslash
+end{itemize}
+\end_layout
+
+\begin_layout Standard
+代码提供了量子场论中任意张量和标量积分的数值结果。 
+\end_layout
+
+\begin_layout Enumerate
+对于张量积分，不管协变分解中的系数还是张量元本身都将给出。 
+\end_layout
+
+\begin_layout Enumerate
+COLLIER 支持 complex 质量，在计算不稳定粒子时会需要。 
+\end_layout
+
+\begin_layout Enumerate
+采用维数正规化处理紫外和红外奇点。 
+\end_layout
+
+\begin_layout Enumerate
+对于 soft 和 共线奇点，有可选用的质量正规化方案。
+\end_layout
+
+\begin_layout Chapter
+COLLIER doc
+\end_layout
+
+\begin_layout Section
+Convention
+\end_layout
+
+\begin_layout Standard
+一致性地使用 Refs.
+ [50, 59] 中的约定。约化张量积分的方法在 Refs.
+ [43, 50] 中有描述， 已经实现4--点函数的结果可以在Ref.
+ [59]中找到。 标量1-，2-，3-点 函数的结果基于Refs.
+ [45, 52]
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $D$
+\end_inset
+
+维空间中，单圈
+\begin_inset Formula $N$
+\end_inset
+
+点张量积分的一般形式为：
+\begin_inset Formula 
+\begin{equation}
+T^{N,\mu_{1},\cdots,\mu_{P}}(p_{1},\cdots,p_{N-1},m_{0},\cdots,m_{N-1})=\frac{(2\pi\mu)^{4-D}}{i\pi^{2}}\int\dif^{D}q\frac{q^{\mu_{1}}\cdots q^{\mu_{P}}}{N_{0}N_{1}\cdots N_{N-1}}\label{eq:1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中分母因子 
+\begin_inset Formula $N_{k}=(q+p_{k})^{2}-m_{k}^{2}+i\epsilon$
+\end_inset
+
+, 
+\begin_inset Formula $k=0,\cdots,N-1,p_{0}=0$
+\end_inset
+
+,其中
+\begin_inset Formula $i\varepsilon$
+\end_inset
+
+是无穷小的虚部。
+\end_layout
+
+\begin_layout Standard
+对于
+\begin_inset Formula $P=0$
+\end_inset
+
+，即分子上是
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1"
+
+\end_inset
+
+定义了
+\begin_inset Formula $N$
+\end_inset
+
+-点标量积分
+\begin_inset Formula $T_{0}^{N}$
+\end_inset
+
+。 
+\end_layout
+
+\begin_layout Standard
+按照Ref.[52]，我们令
+\begin_inset Formula $T^{1}=A,T^{2}=B,T^{3}=C,T^{4}=D,T^{5}=E,T^{6}=F,\text{and }T^{7}=G$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+为了能够简洁的写出张量分解。 
+\end_layout
+
+\begin_layout Standard
+我们使用大括号来表示对所有洛伦兹指标进行对称化操作。比如： 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\{p\cdots p\}_{i_{1}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}} & =p_{i_{1}}^{\mu_{1}}\cdots p_{i_{P}}^{\mu_{P}}\{gp\}_{i_{1}}^{\mu\nu\rho}=g^{\mu\nu}p_{i_{1}}^{\rho}+g^{\nu\rho}p_{i_{1}}^{\mu}+g^{\mu\rho}p_{i_{1}}^{\nu}\\
+{gg}^{\mu\nu\rho\sigma} & =g^{\mu\nu}g^{\rho\sigma}+g^{\mu\sigma}g^{\nu\rho}+g^{\mu\rho}g^{\nu\sigma}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+这种分解是可以递归进行的。
+\begin_inset Formula 
+\begin{align}
+\{p\cdots p\}_{i_{1}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}} & =p_{i_{1}}^{\mu_{1}}\cdots p_{i_{P}}^{\mu_{P}}\\
+\{\underbrace{g\cdots g}p\cdots p\}_{i_{2n+1}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}} & =\frac{1}{n}\sum\limits _{\substack{k,l=1\\
+k<l
+}
+}^{P}g^{\mu_{k}\mu_{l}}\{\underbrace{g\cdots g}p\cdots p\}_{i_{2n+1}\cdots i_{P}}^{\mu_{1}\cdots\mu_{k-1}\mu_{k+1}\cdots\mu_{l-1}\mu_{l+1}\cdots\mu_{P}}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们把一般的张量积分约化到洛伦兹协变的结构，as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+T^{N,\mu1,\cdots,\mu P} & =\sum_{n=0}^{\left[p/2\right]}\sum_{i_{2n+1},\cdots,i_{p}=1}^{N-1}\left\{ \underbrace{g\cdots g}_{n}p\cdots p\right\} _{i_{2n+1}\cdots i_{P}}^{\mu1\cdots\mu P}T_{\underbrace{0\cdots0}_{2n}i_{2n+1\cdots i_{p}}}^{N}\\
+ & =\sum_{i_{1},\cdots,i_{p}=1}^{N-1}p_{i_{1}}^{\mu_{1}}\cdots p_{i_{P}}^{\mu_{P}}T_{i_{1}\cdots i_{P}}^{N}+\sum_{i_{3},\cdots,i_{p}=1}^{N-1}\left\{ gp\cdots p\right\} _{i_{3}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}}T_{00i_{3}\cdots i_{P}}^{N}\\
+ & +\sum_{i_{5},\cdots,i_{p}=1}^{N-1}\left\{ ggp\cdots p\right\} _{i_{5}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}}T_{0000i_{5}\cdots i_{P}}^{N}+\cdots\\
+ & +\begin{cases}
+\sum_{i_{P}=1}^{N-1}\left\{ g\cdots gp\right\} _{i_{P}}^{\mu_{1}\cdots\mu_{P}}T_{\underbrace{0\cdots0}i_{P}}^{N}, & \text{for }P\text{ odd,}\\
+\left\{ g\cdots g\right\} ^{\mu_{1}\cdots\mu_{P}}T_{\underbrace{0\cdots0}_{P}}^{N}, & \text{for }P\text{ even}
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $P/2$
+\end_inset
+
+是小于等于
+\begin_inset Formula $P/2$
+\end_inset
+
+的最大整数。对于洛伦兹协变结构的每一个度规张量，对应的系数携带一个
+\begin_inset Formula $00$
+\end_inset
+
+指标，对于每一个动量
+\begin_inset Formula $p_{i_{r}}$
+\end_inset
+
+，系数携带一个指标
+\begin_inset Formula $i_{r}$
+\end_inset
+
+。通过定义，张量系数
+\begin_inset Formula $T_{i_{1}\cdots i_{P}}^{N}$
+\end_inset
+
+对于指标
+\begin_inset Formula $i_{1},\cdots,i_{P}$
+\end_inset
+
+ 是完全对称的。
+\end_layout
+
+\begin_layout Standard
+UV-- or IR--singular 积分利用维数正规化来表示，其中
+\begin_inset Formula $D=4-2\epsilon$
+\end_inset
+
+，as, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+T^{N} & =\tilde{T}_{\mathrm{fin}}^{N}+a^{\mathrm{UV}}(\Delta_{\mathrm{UV}}+\ln\frac{\mu_{\mathrm{UV}}^{2}}{Q^{2}})+a_{2}^{\mathrm{IR}}(\Delta_{\mathrm{IR}}^{(2)}\,\\
+ & \,+\Delta_{\mathrm{IR}}^{(1)}\ln\frac{\mu_{\mathrm{IR}}^{2}}{Q^{2}}+\frac{1}{2}\ln^{2}\frac{\mu_{\mathrm{IR}}^{2}}{Q^{2}})+\tilde{a}_{1}^{\mathrm{IR}}(\Delta_{\mathrm{IR}}^{(1)}+\ln\frac{\mu_{\mathrm{IR}}^{2}}{Q^{2}})\\
+ & =T_{\mathrm{fin}}^{N}(\mu_{\mathrm{UV}}^{2},\mu_{\mathrm{IR}}^{2})+a^{\mathrm{UV}}\Delta_{\mathrm{UV}}+a_{2}^{\mathrm{IR}}(\Delta_{\mathrm{IR}}^{(2)}+\Delta_{\mathrm{IR}}^{(1)}\ln\mu_{\mathrm{IR}}^{2})+a_{1}^{\mathrm{IR}}\Delta_{\mathrm{IR}}^{(1)}]\label{eq:8}
+\end{align}
+
+\end_inset
+
+ 其中
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\Delta_{UV}=\frac{c\left(\epsilon_{UV}\right)}{\epsilon_{UV}}, & \,\, & c\left(\epsilon\right)=\Gamma\left(1+\epsilon\right)\left(4\pi\right)^{\epsilon}\\
+\Delta_{IR}^{(2)}=\frac{c\left(\epsilon_{IR}\right)}{\epsilon_{IR}^{2}}, & \,\, & \Delta_{IR}^{(1)}=\frac{c\left(\epsilon_{IR}\right)}{\epsilon_{IR}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们让所有的UV和IR极点清晰的展示出来，包括对应的质量能标
+\begin_inset Formula $\mu_{UV}$
+\end_inset
+
+和
+\begin_inset Formula $\mu_{IR}$
+\end_inset
+
+。我们进一步提取出因子
+\begin_inset Formula $c\left(\epsilon\right)=\Gamma\left(1+\epsilon\right)\left(4\pi\right)^{\epsilon}=1+\mathcal{O\left(\epsilon\right)}$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+并把它吸收到
+\begin_inset Formula $\Delta_{UV}$
+\end_inset
+
+,
+\begin_inset Formula $\Delta_{IR}^{(2)},\Delta_{IR}^{(1)}$
+\end_inset
+
+的定义里。为了避免在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8"
+
+\end_inset
+
+中第一个方程的对数里出现有量纲的量，我们分离出一个辅助的能标
+\begin_inset Formula $Q$
+\end_inset
+
+，它隐式地由进入各个圈图的质量和动量决定。
+\end_layout
+
+\begin_layout Standard
+COLLIER的输出对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8"
+
+\end_inset
+
+的最后一行，包括正比于
+\begin_inset Formula $a^{UV},a_{2}^{IR},a_{1}^{IR}$
+\end_inset
+
+的项。参量
+\begin_inset Formula $\mu_{UV}^{2},\mu_{IR}^{2},\Delta_{UV},\Delta_{IR}^{(2)},\text{and},\Delta_{IR}^{(1)}$
+\end_inset
+
+可以由用户自由选取，但不会影响UV-和IR-极限下有限的量。
+\end_layout
+
+\begin_layout Standard
+注意我们区分IR和UV起源的奇点，默认
+\begin_inset Formula $a^{UV},a_{2}^{IR},a_{1}^{IR}$
+\end_inset
+
+被设置为
+\begin_inset Formula $0$
+\end_inset
+
+，输出就是
+\begin_inset Formula $T_{fin}^{N}\text{\left(\mu_{UV}^{2},\mu_{IR}^{2}\right)}$
+\end_inset
+
+。将
+\begin_inset Formula $\text{\Delta\text{'s}}$
+\end_inset
+
+设置成不同于
+\begin_inset Formula $0$
+\end_inset
+
+的数，可以数值的模拟极点
+\begin_inset Formula $\epsilon$
+\end_inset
+
+的影响。
+\end_layout
+
+\begin_layout Standard
+默认IR-和UV-奇点在维数正规化中计算。共线奇点也可以通过质量正规化。为了达到这个目的，相应的质量，下文称为
+\begin_inset Formula $\overline{m_{i}}$
+\end_inset
+
+，必须在初始化中被声明为
+\begin_inset Formula $small$
+\end_inset
+
+，此外，在后续子程序调用的时候，各质量参数必须和在初始化文件中是精确相同的（但不必要很小）。
+\emph on
+小质量
+\emph default
+在标量和张量函数中被当作无穷小量对待，其有限值只在质量-奇点的对数项中保留。
+\end_layout
+
+\begin_layout Standard
+阿贝尔类型的软奇点，i.e.
+ 当
+\begin_inset Formula $a_{2}^{IR}=0$
+\end_inset
+
+，和共线奇点，通过质量
+\begin_inset Formula $\overline{m_{i}}$
+\end_inset
+
+被正规化。当参数
+\begin_inset Formula $\Delta_{IR}^{(1)}$
+\end_inset
+
+被设置为
+\begin_inset Formula $0$
+\end_inset
+
+之后，参数
+\begin_inset Formula $\mu_{IR}$
+\end_inset
+
+可以看作是无穷小的光子或胶子质量。
+\end_layout
+
+\begin_layout Standard
+变动参数
+\begin_inset Formula $\mu_{UV}^{2},\mu_{IR}^{2},\Delta_{UV},\Delta_{IR}^{(2)},\text{and},\Delta_{IR}^{(1)}$
+\end_inset
+
+的值可以检查奇点的相消情况。此外，给
+\begin_inset Formula $\Delta_{UV},\Delta_{IR}^{(2)},\text{and},\Delta_{IR}^{(1)}$
+\end_inset
+
+选择适合的值，可以允许用户在不同的约定中转换，考虑到提取前置因子
+\begin_inset Formula $c\left(\epsilon\right)$
+\end_inset
+
+的不同方式。例如,在
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref61"
+literal "true"
+
+\end_inset
+
+中，相关的
+\begin_inset Formula $\epsilon$
+\end_inset
+
+因子是
+\begin_inset Formula $\pi^{\epsilon}$
+\end_inset
+
+，其中
+\begin_inset Formula $r_{\Gamma}=\Gamma^{2}\left(1-\epsilon\right)\Gamma\left(1+\epsilon\right)/\Gamma\left(1-2\epsilon\right)$
+\end_inset
+
+，而本文
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1"
+
+\end_inset
+
+中的约定为
+\begin_inset Formula $\left(2\pi\right)^{2\epsilon}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+因此我们必须如下替换我们的
+\begin_inset Formula $c\left(\epsilon\right)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\frac{c\left(\epsilon\right)}{r_{\Gamma}\left(4\pi\right)^{\epsilon}}=\frac{\Gamma\left(1+\epsilon\right)}{r_{\Gamma}}=\frac{\Gamma\left(1-2\epsilon\right)}{\Gamma^{2}\left(1-\epsilon\right)}=1+\epsilon^{2}\frac{\pi^{2}}{6}+\mathcal{O}\left(\epsilon^{3}\right)
+\]
+
+\end_inset
+
+为了得到
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref61"
+literal "true"
+
+\end_inset
+
+中约定下的奇点积分。这等价于作替换
+\begin_inset Formula $\Delta_{IR}^{\left(2\right)}\rightarrow\Delta_{IR}^{\left(2\right)}+\pi^{2}/6$
+\end_inset
+
+，同时保持我们计算中的
+\begin_inset Formula $\Delta_{UV}\text{and}\Delta_{IR}^{\left(1\right)}$
+\end_inset
+
+不变。在此变换之后，我们的参数
+\begin_inset Formula $\Delta_{UV},\Delta_{IR}^{(2)},\text{and},\Delta_{IR}^{(1)}$
+\end_inset
+
+就分别对应于文献
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref61"
+literal "true"
+
+\end_inset
+
+中的极点
+\begin_inset Formula $1/\epsilon,1/\epsilon^{2},\text{and}1/\epsilon$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+总结
+\end_layout
+
+\begin_layout Standard
+对于单圈
+\begin_inset Formula $N$
+\end_inset
+
+点张量积分：
+\begin_inset Formula 
+\[
+T^{N,\mu_{1},\cdots,\mu_{P}}(p_{1},\cdots,p_{N-1},m_{0},\cdots,m_{N-1})=\frac{(2\pi\mu)^{4-D}}{i\pi^{2}}\int\dif^{D}q\frac{q^{\mu_{1}}\cdots q^{\mu_{P}}}{N_{0}N_{1}\cdots N_{N-1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+点的数目是
+\begin_inset Formula $N$
+\end_inset
+
+，那么引入的外动量数目是
+\begin_inset Formula $N-1$
+\end_inset
+
+，最后张量指标的数目也是
+\begin_inset Formula $N-1$
+\end_inset
+
+。依照惯例，把分子上不含积分动量的积分称为标量积分
+\begin_inset Formula $A,B,C\cdots,G$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+一个张量积分可以约化成 coefficients and 张量结构的形式。coefficients就是一些含有不同外动量参数的标量积分
+\begin_inset Formula $A,B,C\cdots,G$
+\end_inset
+
+，张量结构由外动量的对称化和度规张量组成。张量结构中外动量的对称性，可以从积分表达式中看出来。
+\end_layout
+
+\begin_layout Section
+introduction
+\end_layout
+
+\begin_layout Standard
+multi-leg one-loop amplitudes 振幅求值的巨大进步，来自于两方面：
+\end_layout
+
+\begin_layout Enumerate
+传统费曼图方法的系统改进 
+\end_layout
+
+\begin_layout Enumerate
+基于推广的幺正性关系的新理论技术
+\end_layout
+
+\begin_layout Standard
+在第二种方法中，单圈振幅被直接表示成标量积分的组合。 这种向固定标量积分基的直接约化，会引发相空间特定区域的数值问题。 一般可以通过采用四次精度的数值计算克服。
+\end_layout
+
+\begin_layout Standard
+相反，费曼图方法，包括最近的递归方法依赖于张量积分。 此方法允许分解方法自适应于相空间的不同区域，在相当大的程度上， 通过最优选择避免数值不稳定性。
+ COLLIER 库提供了计算标量和张量积分的全面工具。 在两种互补的方法中都能应用。
+\end_layout
+
+\begin_layout Standard
+将张量积分约化到一小族基本积分的方法，可以追溯到 Brown and Feynman, Melrose, and Passarino and Veltman。
+ 又经过了数十年的发展，文献[43, 50] 展示的完整方法，是COLLIER代码的基础。 作为张量分解基础的标量积分首次由t' Hooft and
+ Veltman 进行了系统研究。 已经存在数个计算单圈标量和张量积分的库，比如：
+\end_layout
+
+\begin_layout Itemize
+FF，LoopTools， 
+\end_layout
+
+\begin_layout Itemize
+QCDLoop，OneLoop， 
+\end_layout
+
+\begin_layout Itemize
+GoLem95C，PJFRY，Package-X
+\end_layout
+
+\begin_layout Standard
+这里介绍的COLLIER库，提供完全的张量积分集合，处理带有复数质量的过程， 并且没有先验的粒子数限制。
+\end_layout
+
+\begin_layout Standard
+COLLIER 已在用于多个前沿课题的计算。
+\end_layout
+
+\begin_layout Standard
+文章结构：
+\end_layout
+
+\begin_layout Itemize
+Section 2： COLLIER相关约定 
+\end_layout
+
+\begin_layout Itemize
+Section 3：计算张量积分的方法轮廓 
+\end_layout
+
+\begin_layout Itemize
+Section 4：COLLIER 库的内部结构
+\end_layout
+
+\begin_layout Itemize
+Section 5： 用法
+\end_layout
+
+\begin_layout Itemize
+Section 6：总结 
+\end_layout
+
+\begin_layout Itemize
+Appendix A：定义 单圈积分的 运动学输入细节
+\end_layout
+
+\begin_layout Section
+实现方法
+\end_layout
+
+\begin_layout Subsection
+张量系数的计算
+\end_layout
+
+\begin_layout Standard
+计算张量积分的方法依赖于它的传播子数目
+\begin_inset Formula $N$
+\end_inset
+
+。对于
+\begin_inset Formula $N=1,2$
+\end_inset
+
+，我们使用显式的数值稳定表达式
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref37,ref50"
+literal "true"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+对于
+\begin_inset Formula $N=3,4$
+\end_inset
+
+，所有张量积分被数值约化到基本的标量积分，通过使用文献
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref45,ref52,ref59"
+literal "true"
+
+\end_inset
+
+给出的解析表达式。默认情况下，约化使用的是标准的 
+\noun on
+Paassarino-Veltman
+\noun default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref37"
+literal "true"
+
+\end_inset
+
+约化。在相空间不稳定殿，其 
+\noun on
+Gram
+\noun default
+ 行列式变得很小，
+\noun on
+Paassarino-Veltman
+\noun default
+ 约化变得不稳定。这在些点上，我们使用专用的递归展开方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref50"
+literal "true"
+
+\end_inset
+
+。所有这些方法都在COLLIER中得到实现，并且对于展开参数可以到任意阶。为了决定一个特定相空间点的约化方法，以下步骤被采用：
+\end_layout
+
+\begin_layout Enumerate
+默认是 
+\noun on
+Passarino-Veltman
+\noun default
+ ，它的可靠性通过一个给标量积分预先分配的精度来估计，然后估计约化时的误差传递。如果积分最高rank
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+的最终的误差结果
+\begin_inset Formula $\Delta T^{N}\left(\hat{P}\right)$
+\end_inset
+
+，小于一个预定义的精度标签
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+（required precision），结果被保留并传递给用户。
+\end_layout
+
+\begin_layout Enumerate
+若步骤1没有提供足够的精度，一般意味着张量积分包括外动量的小 
+\noun on
+Gram
+\noun default
+ 行列式。COLLIER 切换到专用展开。为决定到哪一阶是足够的，一个先验的误差估计式
+\begin_inset Formula $\Delta T_{\text{prelim}}^{N}\left(P\right)$
+\end_inset
+
+，对于系数
+\begin_inset Formula $T_{i1,\cdots iP}^{N}$
+\end_inset
+
+被构建，对于不同方法的最高rank
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+。误差估计基于展开的期望精度评定，和所需标量积分的简化的误差传递。
+\begin_inset Formula $\Delta T_{\text{prelim}}^{N}\left(P\right)$
+\end_inset
+
+最小的展开方法被采用。在展开式的实际计算中，评估的是更加现实的精度
+\begin_inset Formula $\Delta T^{N}\left(P\right)$
+\end_inset
+
+，通过分析最后一次迭代的修正。如果预定义的精度标签
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+达到，结果被保存并返回给用户。否则在达到一个预定义的展开深度时，展开停止，或者从一次迭代到下一次，精度没有增加。
+\end_layout
+
+\begin_layout Enumerate
+如果步骤2没有提供所需精度。将对其他方法进行重复，这些方法对于足够小的
+\begin_inset Formula $\Delta T_{\text{prelim}}^{N}\left(P\right)$
+\end_inset
+
+，将能够保证收敛。如果经过这些重复任一个，达到预定义精度，结果被保留并返回给用户。
+\end_layout
+
+\begin_layout Enumerate
+如果
+\noun on
+ Paassarino-Veltman 
+\noun default
+和其他展开方法都不能达到目标精度，具有最小误差估计的
+\begin_inset Formula $\Delta T^{N}\left(P\right)$
+\end_inset
+
+的方法，其结果将被返回给用户。
+\end_layout
+
+\begin_layout Standard
+通过这种方法，对于几乎所有相空间的点，都能得到稳定的结果。保证了可靠的 
+\noun on
+Monte Carlo 积分。
+\end_layout
+
+\begin_layout Standard
+对于
+\begin_inset Formula $N=5,6$
+\end_inset
+
+，张量积分被约化到具有更低rank和
+\begin_inset Formula $N$
+\end_inset
+
+的积分，遵循
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref50,ref43"
+literal "true"
+
+\end_inset
+
+，i.e.
+ 不涉及到 
+\noun on
+Gram 行列式的逆。对于
+\begin_inset Formula $N\geq7$
+\end_inset
+
+，
+\noun default
+文献
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref50"
+literal "true"
+
+\end_inset
+
+Section 7中
+\begin_inset Formula $6$
+\end_inset
+
+–点张量积分约化的修改版被应用（见
+\begin_inset Formula $\left(7.10\right)$
+\end_inset
+
+之后的文字）。
+\end_layout
+
+\begin_layout Subsection
+全张量的计算
+\end_layout
+
+\begin_layout Standard
+目前为止，文中描述的方法是用洛伦兹不变的项进行约化，得到的系数为
+\begin_inset Formula $T_{i1,\cdots,iP}^{N}$
+\end_inset
+
+。新一代的NLO生成器比如 
+\noun on
+OPENLOOPS
+\noun default
+, 
+\noun on
+RECOLA，
+\noun default
+需要全张量
+\begin_inset Formula $T^{N,\mu1,\cdots,\mu P}$
+\end_inset
+
+的分量。为了达到这个目的，COLLIER 中实现了一套高效的算法，来从
+\begin_inset Formula $T_{i1,\cdots,iP}^{N}$
+\end_inset
+
+构建
+\begin_inset Formula $T^{N,\mu1,\cdots,\mu P}$
+\end_inset
+
+。它递归地计算4中那些单举动量构造的张量结构。张量结构的非零分量包括度规矩阵递归地得到，通过添加成对相等的洛伦兹指标，到带有更少度规的张量上，考虑到指标组合因子
+和度规张量引起的符号。相关的组合系数在COLLIER 初始化的时候计算并列表。
+\end_layout
+
+\begin_layout Standard
+洛伦兹不变的系数
+\begin_inset Formula $T_{i1,\cdots,iP}^{N}$
+\end_inset
+
+和
+\begin_inset Formula $T^{N,\mu1,\cdots,\mu P}$
+\end_inset
+
+被列在fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:1"
+
+\end_inset
+
+中.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pasted10.png
+	scale 48
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+COLLIER 约化链：对于
+\begin_inset Formula $N\geq6$
+\end_inset
+
+，约化可以在张量层次进行
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\noun on
+对于
+\begin_inset Formula $N\leq4$
+\end_inset
+
+，
+\noun default
+不变系数的数目小于张量分量的数目
+\noun on
+，
+\noun default
+这也是 Passarino-Veltman 约化方法的前提。另一方面，对于
+\begin_inset Formula $N\geq5$
+\end_inset
+
+，情况发生反转。实际上，
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ref50"
+literal "true"
+
+\end_inset
+
+中
+\begin_inset Formula $(7.7)$
+\end_inset
+
+中对于
+\begin_inset Formula $N\geq6$
+\end_inset
+
+所展现的方法，约化是用全张量的项推导的。若要得到张量系数，需要进行对陈化操作，得到的系数也不是唯一的，由于张量结构具有的冗余性。所以，对于
+\begin_inset Formula $N\text{\geq6}$
+\end_inset
+
+的张量
+\begin_inset Formula $T^{N,\mu1,\cdots,\mu P}$
+\end_inset
+
+的约化，COLLIER 直接在张量层次实现，而不用依赖于协变分解。
+\end_layout
+
+\begin_layout Standard
+而当
+\begin_inset Formula $N\leq5$
+\end_inset
+
+，迭代在coefficient 的层次 exclusively 进行，
+\begin_inset Formula $T^{N,\mu1,\cdots,\mu P}$
+\end_inset
+
+随后才构建，由各自的 coefficients 
+\begin_inset Formula $T_{i1,\cdots,iP}^{N}$
+\end_inset
+
+ ，对于
+\begin_inset Formula $N\text{\geq6}$
+\end_inset
+
+，约化也可以在tensors层次完成。意思是，若要计算一个
+\begin_inset Formula $N\text{\geq6}$
+\end_inset
+
+的张量积分，可以选取一个
+\begin_inset Formula $5<N_{\text{tenred}}\leq N$
+\end_inset
+
+的
+\begin_inset Formula $N_{\text{tenred}}$
+\end_inset
+
+，对于
+\begin_inset Formula $N<N_{tenred}$
+\end_inset
+
+，进行coefficients 层次的递归运算，对于
+\begin_inset Formula $N\text{\geq}N_{tenred}$
+\end_inset
+
+，在tensor 水平进行计算。从 coefficients 到 tensor 的转变可以发生在
+\begin_inset Formula $N_{\text{tenred }}-1$
+\end_inset
+
+。可能的约化链示于图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+库的结构
+\end_layout
+
+\begin_layout Standard
+COLLIER 的结构在图2中图形化的展示出来。库的核心由模块 COLI 和 DD 组成。它们是标量积分
+\begin_inset Formula $T_{0}^{N}$
+\end_inset
+
+和洛伦兹不变系数
+\begin_inset Formula $T_{i_{1}\cdots i_{P}}^{N}$
+\end_inset
+
+的两种独立的实现，利用前文描述的方案。模块 
+\emph on
+tensors
+\emph default
+ 提供了从
+\begin_inset Formula $T_{i_{1}\cdots i_{P}}^{N}$
+\end_inset
+
+构建
+\begin_inset Formula $T^{N,\mu_{1}\cdots\mu_{P}}$
+\end_inset
+
+的路径，同时也包括
+\begin_inset Formula $N\geq6$
+\end_inset
+
+的时候
+\begin_inset Formula $N$
+\end_inset
+
+点积分，张量层次的直接约化。用户通过COLLIER的全局界面和COLI，DD,and tensors 的常规流程交互。它提供了路径，去设置或提取
+ COLI 和 DD 的参数，还有计算张量系数
+\begin_inset Formula $T_{i_{1}\cdots i_{P}}^{N}$
+\end_inset
+
+和张量元
+\begin_inset Formula $T^{N,\mu_{1}\cdots\mu_{P}}$
+\end_inset
+
+的路径。用户可以选择使用那个分支–COLI或DD。也可以用两个分支计算每个积分，来做结果的交叉检验。
+\end_layout
+
+\begin_layout Standard
+在计算一个典型的单圈矩阵元时，一个张量积分会被调用好几次，并输入相同的运动学参数：另一方面，在计算
+\begin_inset Formula $P\geq2$
+\end_inset
+
+的
+\begin_inset Formula $N$
+\end_inset
+
+点积分时，会引起对更低阶
+\begin_inset Formula $N\prime$
+\end_inset
+
+积分的递归调用。在约化树中，对于
+\begin_inset Formula $N\prime\leq N-2$
+\end_inset
+
+阶的积分，有不同的抵达路径。为了避免对同一个积分进行重复运算，COLLIER 的子库连接到了一个Global的cache系统，其工作原理如下：
+\end_layout
+
+\begin_layout Standard
+参数
+\begin_inset Formula $N_{\text{ext}}$
+\end_inset
+
+计数外部程序的积分调用次数，在约化过程中，内部调用被一个二进制标识符
+\begin_inset Formula $id$
+\end_inset
+
+记录。对于每一个索引对
+\begin_inset Formula $\left(N_{\text{ext,}}id\right)$
+\end_inset
+
+分配一个指针。对于第一个相空间点的计算，相应函数的参数被比较，具有相同参数的索引对
+\begin_inset Formula $\left(N_{\text{ext,}}id\right)$
+\end_inset
+
+被指向cache中的相同地址。第一次计算的结果被写入cache，后续相空间点的计算可以读取这些结果，如果指向相同的地址。使用external cache
+ 系统是可选择的，在一个 Monte Carlo 积分中，对张量积分的调用，需要相空间所有点的次序是exactly相同的，在初始化之后（初始化标志着矩阵元计算的
+开始，对于各个相空间点）。此外，对于每个事件，第一次和最后一次调用积分的内部参数必须保持不变。
+\end_layout
+
+\begin_layout Section
+库的使用
+\end_layout
+
+\begin_layout Subsection
+安装
+\end_layout
+
+\begin_layout Standard
+下载包 COLLIER-
+\begin_inset Formula $v$
+\end_inset
+
+.tar.gz 
+\begin_inset CommandInset href
+LatexCommand href
+name "collier homepage"
+target "http://collier.hepforge.org"
+literal "false"
+
+\end_inset
+
+。其中
+\begin_inset Formula $v$
+\end_inset
+
+是库的版本。还应该安装CMAKE创建系统。由于COLLIER是一个单机的 Fortran95 代码，无需额外的库。
+\end_layout
+
+\begin_layout Standard
+gunzip and untar COLLIER-v.tar.gz 将会解压到 ./COLLIER-
+\begin_inset Formula $v$
+\end_inset
+
+ 文件夹，包含以下文件和文件夹
+\end_layout
+
+\begin_layout Enumerate
+Cmakelists.txt ：cmake makefile 用来产生COLLIER 库。
+\end_layout
+
+\begin_layout Enumerate
+src：COLLIER 源代码库，包含COLLIER的主要代码和子库的主要代码。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+COLI：包含COLI分支的文件
+\end_layout
+
+\begin_layout Itemize
+DDlib：包含DD分支的文件
+\end_layout
+
+\begin_layout Itemize
+tensors：包含构建张量和直接张量约化的文件
+\end_layout
+
+\begin_layout Itemize
+Aux：包含辅助文件。
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+build：build 文件夹，CMAKE 存放所有创建用必须文件的地方，比如对象文件。
+\end_layout
+
+\begin_layout Enumerate
+modules：空文件夹，for fortran 模块文件。
+\end_layout
+
+\begin_layout Enumerate
+demos：展示COLLIER 用法的示例文件夹。
+\end_layout
+
+\begin_layout Enumerate
+COPYING：版权信息文件。
+\end_layout
+
+\begin_layout Standard
+使用以下命令创建COLLIER库：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cd build
+\end_layout
+
+\begin_layout Plain Layout
+
+cmake 
+\end_layout
+
+\begin_layout Plain Layout
+
+make
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+默认cmake会建立一个动态库。如果需要静态库，在 COLLIER-v 文件夹中，使用以下选项
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cmake -Dstatic=ON ..
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果不指定编译器，cmake会自动寻找安装的fortran编译器，选择合适的。使用特定的编译器比如 ifort，可以用以下选项
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cmake -DCMAKE_Fortran_COMPILER=ifort ..
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可以给出编译器的全路径。
+\end_layout
+
+\begin_layout Standard
+makefile创建以后，make命令就会产生动态库 libCOLLIER.so 或者静态库 libCOLLIER.a 在COLLIER-v 文件夹中，可以用来链接
+到用户程序。
+\end_layout
+
+\begin_layout Standard
+若要创建demos 文件夹内示例程序的可执行文件，在文件夹COLLIER-v/build 内使用
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+make demo
+\end_layout
+
+\begin_layout Plain Layout
+
+make democache
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+所有使用make 命令创建的文件可以用 
+\begin_inset Quotes eld
+\end_inset
+
+make clean
+\begin_inset Quotes erd
+\end_inset
+
+来丢弃，在 COLLIER-v/build 中来运行。
+\end_layout
+
+\begin_layout Standard
+也可以删除 COLLIER-v/build 中的所有文件。
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sample programs
+\end_layout
+
+\begin_layout Standard
+在COLLIER-v/build 文件夹中使用以下命令创建两个示例程序
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+make demo
+\end_layout
+
+\begin_layout Plain Layout
+
+make democache
+\end_layout
+
+\end_inset
+
+可以在COLLIER-v/demo 文件夹使用以下命令运行
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+./demo
+\end_layout
+
+\begin_layout Plain Layout
+
+./democache
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+程序 demo 专门用来计算single张量积分。
+\end_layout
+
+\begin_layout Standard
+在运行过程中，会询问用户在
+\begin_inset Formula $N$
+\end_inset
+
+点-积分中选择一个例子来计算。计算结果被写入 demo_Npoint_exampleX.dat 中，它指向 demo.f90 中的段落，其中给出了计算各个积分的源代
+码，接着一小段程序，用来给COLLIER输出化，对于所有示例程序都差不多。其中包含了很多被注释的行，去掉感叹号就会起作用，其中展示了很多COLLIER的glob
+al参数，可以修改使用。
+\end_layout
+
+\begin_layout Standard
+程序decmocache 展示了cache 的用法。对于1000个相空间点，8个张量积分被计算了数次。这个玩具 monte carlo 在四种子集中相继执行:
+ 先用 COLI，用或不用缓存，再用DD，用或不用缓存。源代码存储在文件 democache.f90 中。
+\end_layout
+
+\begin_layout Subsection
+概括使用说明
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:概括使用说明"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了在FORTRAN程序中使用 COLLIER， COLLIER-
+\begin_inset Formula $\nu$
+\end_inset
+
+/modules 中的对应模块 必须被载入：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+use COLLIER
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+COLLIER-
+\begin_inset Formula $\nu$
+\end_inset
+
+中的
+\emph on
+library libCOLLIER.so
+\emph default
+ or 
+\emph on
+libCOLLIER.a
+\emph default
+ 必须提供给
+\noun on
+linker
+\noun default
+。这样程序才有权访问COLLIER的公共函数和子程序。所有的子程序都带有后缀
+\begin_inset Quotes erd
+\end_inset
+
+_cll
+\begin_inset Quotes erd
+\end_inset
+
+。为了避免冲突，也为了增加可读性。
+\end_layout
+
+\begin_layout Standard
+在使用COLLIER之前，必须进行初始化,Calling
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine Init_cll(Nmax,rin,folder_name,noreset)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer Nmax :maximal # of loop propagators
+\end_layout
+
+\begin_layout Plain Layout
+
+integer, optional rin :maximal rank of loop integrals
+\end_layout
+
+\begin_layout Plain Layout
+
+character, optional folder_name : name of folder for output
+\end_layout
+
+\begin_layout Plain Layout
+
+logical, optional noreset : no new output folder and files
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Nmax
+\family default
+ 是强制性的，另外两个参数 
+\family typewriter
+rin
+\family default
+,
+\family typewriter
+folder_name
+\family default
+, and 
+\family typewriter
+noreset
+\family default
+ 是可选的。利用Nmax指定所需计算张量圈积分
+\begin_inset Formula $T^{N,P}$
+\end_inset
+
+的最大传播子数目。(
+\begin_inset Formula $N<N_{max}$
+\end_inset
+
+)，可选参数 rin 制定了 最高阶 
+\begin_inset Formula $P_{max}(p\le P_{max})$
+\end_inset
+
+。如果参数 rin 被忽略，那么默认将rin设置为 Nmax，对于可重整化理论足够。Nmax and rin 决定了COLLIER 内部产生的表格的大小。
+\end_layout
+
+\begin_layout Standard
+folder_name 参数指定特定名称的输出文件夹。缺省值是 'output_cll'。也可以传递给 init_cll 一个空字符串foldername=''
+,这样会阻止创建输出文件夹，除了初始化信息和重要错误会被写入到标准输出通道 stdout_cll=6.
+\end_layout
+
+\begin_layout Standard
+在后续的调用和计算中，如果 noreset 被设置为 .true.， 那么输出文件夹不会被重新创建，但是文件会被覆盖。在第一次call init_cll
+ 的时候，flag noreset 会被忽略。
+\end_layout
+
+\begin_layout Standard
+call init_cll 会将所有内部参数设置为 Table.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Table-2:-lists"
+
+\end_inset
+
+ 中的值。在后续的调用中，如果 noreset设置为.true.，那么自行设定的参数值不会被重置为这里的初始化值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pasted2.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Table 2: lists of COLLIER parameters
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Table-2:-lists"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在初始化之后，很多参数可以被设置得不同，满足用户需要。为实现这个功能，COLLIER 提供了subroutine SetX_cll 对每个参数
+ X，subroutines SwitchOnY_cll, SwithchY_cll，对于每个 flag Y。To read out the current
+ value of parameter X， a subroutine getX_cll is available.
+ 这些参数可以被用户修改，subroutine 在 section5.4 进了详细描述。
+\end_layout
+
+\begin_layout Standard
+在初始化之后和可能潜在的重新定义之后，COLLIER 就可以计算张量积分了。
+\end_layout
+
+\begin_layout Standard
+通用subroutine TN_cll 计算洛伦兹协变分解中的张量系数 
+\begin_inset Formula $T_{i1,\cdots,iP}^{N}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+TNten_cll 返回张量元 
+\begin_inset Formula $T^{N,\mu1\cdots\mu p}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+此外也提供可选的特定 subroutine A_cll, B_cll,...,
+\backslash
+G_cll, and Aten_cll, Bten_cll,..., Gten_cll for the 1-,2-,...,7-point 积分，同样也有
+ A0_cll, B0_cll, ..., D0_cll 对于标量积分。
+\end_layout
+
+\begin_layout Standard
+两点函数的动量导数，通常需要用来计算重整化常数，可以使用通用subroutine DB_cll 计算到任意阶。对于最低阶，可以使用特定 subroutine,
+ DB0_cll, DB1_cll, DB00_cll, and DB11_cll。更多介绍张量积分计算 subroutine 的信息在 section5.3
+ 中给出。
+\end_layout
+
+\begin_layout Standard
+COLLIER 的一个典型应用是在一个 NLO Monte Carlo 生成器中，提供单圈张量积分。在这种情况下，主程序对 MC 事件进行一个循环，对于每个事件
+，主程序调用COLLIER计算一组张量积分来得出矩阵元。在这种情形下中，the subroutine
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitEvent_cll(cacheNr)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer, optional cacheNr: number of cacher
+\end_layout
+
+\end_inset
+
+应该在每次计算张量积分之前被调用。这个调用将初始化error flag and accuracy flag of COLLIER，这些flag可以在积分计算完成
+后，读取用来得到计算status 的 整体信息。如果使用了 cache system，call of InitEvent_cll 将是必须的，以用来初始化每次
+ MC 事件的 cache。如果使用了 multiple caches，那么各自的 cache number 
+\family typewriter
+cacheNr 
+\family default
+需要传递给 
+\family typewriter
+InitEvent_cll
+\family default
+, 作为一个可选参数。更多关于使用缓存的信息，可以在 section5.5 中找到。
+\end_layout
+
+\begin_layout Standard
+为了帮助用户熟悉COLLIER的使用，两个示例程序demo和democache一并包含在发行版中。在 section 5.7 中可以找到描述。
+\end_layout
+
+\begin_layout Subsection
+张量积分的计算
+\end_layout
+
+\begin_layout Standard
+对于张量积分，COLLIER提供了subroutine，传递洛伦兹协变分解系数
+\begin_inset Formula $T_{i1,\cdots,ip}^{N}$
+\end_inset
+
+，和张量元
+\begin_inset Formula $T^{N,\mu_{1},\cdots,\mu_{P}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+T^{N,\mu_{1},\cdots,\mu_{P}}(p_{1},\cdots,p_{N-1},m_{0},\cdots,m_{N-1})=\frac{(2\pi\mu)^{4-D}}{i\pi^{2}}\int\dif^{D}q\frac{q^{\mu_{1}}\cdots q^{\mu_{P}}}{N_{0}N_{1}\cdots N_{N-1}}\label{eq:1-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+积分中的外部变量共
+\begin_inset Formula $N-1$
+\end_inset
+
+个，分子上的带指标被积动量共有
+\begin_inset Formula $p$
+\end_inset
+
+个。所以出来的洛伦兹结构中，也是有
+\begin_inset Formula $p$
+\end_inset
+
+个指标，
+\end_layout
+
+\begin_layout Standard
+构成这
+\begin_inset Formula $p$
+\end_inset
+
+个指标的材料为，度规张量和
+\begin_inset Formula $N-1$
+\end_inset
+
+个外动量，从中挑选出
+\begin_inset Formula $p$
+\end_inset
+
+个，所以外动量的循环指标是
+\begin_inset Formula $1\sim N-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+其中分母因子 
+\begin_inset Formula $N_{k}=(q+p_{k})^{2}-m_{k}^{2}+i\epsilon$
+\end_inset
+
+, 
+\begin_inset Formula $k=0,\cdots,N-1,p_{0}=0$
+\end_inset
+
+,其中
+\begin_inset Formula $i\varepsilon$
+\end_inset
+
+是无穷小的虚部。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+T^{N,\mu1,\cdots,\mu P} & =\sum_{i_{1},\cdots,i_{p}=1}^{N-1}p_{i_{1}}^{\mu_{1}}\cdots p_{i_{P}}^{\mu_{P}}T_{i_{1}\cdots i_{P}}^{N}+\sum_{i_{3},\cdots,i_{p}=1}^{N-1}\left\{ gp\cdots p\right\} _{i_{3}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}}T_{00i_{3}\cdots i_{P}}^{N}\\
+ & +\sum_{i_{5},\cdots,i_{p}=1}^{N-1}\left\{ ggp\cdots p\right\} _{i_{5}\cdots i_{P}}^{\mu_{1}\cdots\mu_{P}}T_{0000i_{5}\cdots i_{P}}^{N}+\cdots
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+张量系数
+\begin_inset Formula $T_{i1,\cdots,ip}^{N}$
+\end_inset
+
+表示成一个N–维数组，type double complex， 并按照如下的约定：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+TN\left(n_{0},n_{1},\cdots,n_{N-1}\right)=T_{\underbrace{0\cdots0}_{2n0}\underbrace{1\cdots1}_{n1}\underbrace{2\cdots2}_{n2}\underbrace{N-1\cdots N-1}_{nN-1}}^{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+利用这种方法，所有张量系数，
+\begin_inset Formula $T_{i1\cdots iP}^{N}$
+\end_inset
+
+，其中
+\begin_inset Formula $P=0,\cdots\hat{P}$
+\end_inset
+
+, up to a given rank 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+, 可以储存进同一个数组中
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\text{\text{double complex }TN}(0:[\hat{P}/2],\underbrace{0:\hat{P},\cdots,0:\hat{P}}_{N-1})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+注意到相同的系数
+\begin_inset Formula $T_{i1\cdots ip}^{N}$
+\end_inset
+
+，通过一个指标的置换
+\begin_inset Formula $\left\{ i1,\cdots,iP\right\} $
+\end_inset
+
+相互关联，在 
+\family typewriter
+TN 
+\family default
+中也被表示成同一个 entry。作为例子，张量系数
+\begin_inset Formula $D_{i1..iP}$
+\end_inset
+
+和数组 
+\family typewriter
+D 
+\family default
+的对应关系，展现在 Table.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:table-3"
+
+\end_inset
+
+ 中。这是
+\begin_inset Formula $4$
+\end_inset
+
+点函数到阶数
+\begin_inset Formula $4$
+\end_inset
+
+的情形。
+\end_layout
+
+\begin_layout Standard
+圈积分
+\begin_inset Formula $D$
+\end_inset
+
+有
+\begin_inset Formula $4$
+\end_inset
+
+个传播子，
+\begin_inset Formula $3$
+\end_inset
+
+个外动量，所以允许的最高阶指标数目为
+\begin_inset Formula $4$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+左边一列的下标中的数字，指的是传播子中外动量的序号，在结果中出现。重复的表示重复出现。
+\end_layout
+
+\begin_layout Standard
+右边一列的四个位置，相当于四个传播子，其中的数字，是每个外动量，在最终结果中出现的次数。
+\end_layout
+
+\begin_layout Standard
+它们是一一对应的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pasted3.png
+	scale 52
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+table 3 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:table-3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可选的，N-点积分的张量系数up to rank 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+，可以通过一维数组得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{double complex TN1}\left(\eta_{c}\left(N,\hat{P}\right)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $\eta_{c}\left(N,\hat{P}\right)$
+\end_inset
+
+是张量系数
+\begin_inset Formula $T_{i1\cdots iP}^{N}$
+\end_inset
+
+的总数目，其中
+\begin_inset Formula $i1\leq i2\leq\cdots\leq iP\text{ and }P\leq\hat{P}$
+\end_inset
+
+。对于
+\begin_inset Formula $N=1,\cdots,7$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{P}=0,\cdots6$
+\end_inset
+
+,
+\begin_inset Formula $\eta_{c}\left(N,\hat{P}\right)$
+\end_inset
+
+的具体数值在 table.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:table-1"
+
+\end_inset
+
+ 中给出。张量系数在数组 
+\family typewriter
+TN1 
+\family default
+中按照 升序排列，从
+\begin_inset Formula $P=0$
+\end_inset
+
+到
+\begin_inset Formula $P=\hat{P}$
+\end_inset
+
+。相同rank的系数
+\begin_inset Formula $T_{i1\cdot iP}^{N}$
+\end_inset
+
+和
+\begin_inset Formula $T_{j1\cdots jP}^{N}$
+\end_inset
+
+按照他们的第一个相异的指标
+\begin_inset Formula $i_{k},j_{k}$
+\end_inset
+
+进行排列。对于
+\begin_inset Formula $4$
+\end_inset
+
+点函数至rank
+\begin_inset Formula $4$
+\end_inset
+
+，排序表见于
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:table-3"
+
+\end_inset
+
+。由于 FORTRAN 数组只支持到
+\begin_inset Formula $7$
+\end_inset
+
+维，所以，对于
+\begin_inset Formula $N\ge8$
+\end_inset
+
+的
+\begin_inset Formula $N$
+\end_inset
+
+点积分，只能表示成一维数组的格式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pasted6.png
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+table 1 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:table-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+全张量积分
+\begin_inset Formula $T^{N,\mu_{1},\cdots,\mu_{P}}$
+\end_inset
+
+通过 type double complex 的 
+\begin_inset Formula $4$
+\end_inset
+
+-维数组表示，并按照以下约定
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{TNten}\left(n_{0},n_{1},n_{2},n_{3}\right)=T^{N,\overbrace{0\cdots0}^{n_{0}}\overbrace{1\cdots1}^{n_{1}}\overbrace{2\cdots2}^{n_{2}}\overbrace{3\cdots3}^{n_{3}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+按照这种方法，所有张量元
+\begin_inset Formula $T^{N,\mu_{1},\cdots,\mu_{P}}$
+\end_inset
+
+，其中
+\begin_inset Formula $P=0,\ldots,\hat{P}$
+\end_inset
+
+至一给定rank 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+，被存储在相同的数组中
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{double complex TNten}\left(0:\hat{P},0:\hat{P},0:\hat{P},0:\hat{P}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+注意，全同的张量元
+\begin_inset Formula $T^{N,\mu_{1},\cdots,\mu_{P}}$
+\end_inset
+
+，通过一个指标的置换
+\begin_inset Formula $\text{被\left\{  \mu_{1},\ldots,\mu_{p}\right\}  }$
+\end_inset
+
+彼此联系的，在数组 TNten 中用同一个 entry 表示。张量元
+\begin_inset Formula $T^{N,\mu_{1},\cdots,\mu_{P}}$
+\end_inset
+
+和数组 TNten 间的对应，在table
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:table-4"
+
+\end_inset
+
+中展示，至 rank 
+\begin_inset Formula $\hat{P}=3$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pasted8.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+table 4
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:table-4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+洛伦兹协变分解
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1-1"
+
+\end_inset
+
+中的系数
+\begin_inset Formula $T_{i1\cdot iP}^{N}$
+\end_inset
+
+，来自于张量积分
+\begin_inset Formula $T^{N,P}$
+\end_inset
+
+，其中
+\begin_inset Formula $N=1,\cdots,7$
+\end_inset
+
+可以通过下列 subroutine 分别计算：A_cll,...,G_cll.
+ subroutine N_cll(N_cll=A_cll,...,G_cll) 的参数结构如下给出：
+\end_layout
+
+\begin_layout Standard
+subroutine N_cll(TN,TNuv ,MomInv,mass2,R,TNerr)
+\end_layout
+
+\begin_layout Standard
+double complex(0:R/2,
+\begin_inset Formula $\underbrace{0:R,\ldots,0:R}_{N-1}$
+\end_inset
+
+) TN : 
+\begin_inset Formula $T_{i_{1},\ldots,i_{P}}^{N,P}$
+\end_inset
+
+with 
+\begin_inset Formula $P\le R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+double complex(0:R/2,
+\begin_inset Formula $\underbrace{0:R,\ldots,0:R}_{N-1}$
+\end_inset
+
+) TNuv : 
+\begin_inset Formula $T_{i_{1},\ldots,i_{P}}^{N,P\,\text{UV}}$
+\end_inset
+
+with 
+\begin_inset Formula $P\le R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+double complex(1:
+\begin_inset Formula $n_{\mathcal{P}}$
+\end_inset
+
+) MomInv : momentum invariants
+\end_layout
+
+\begin_layout Standard
+double complex(0:
+\begin_inset Formula $N-1$
+\end_inset
+
+) mass2 : squared masses
+\end_layout
+
+\begin_layout Standard
+integer R : maximal rank
+\end_layout
+
+\begin_layout Standard
+double precision(0:R) optional TNerr : error estimates
+\end_layout
+
+\begin_layout Standard
+一共有
+\begin_inset Formula $n_{\mathcal{P}}=\left(\begin{array}{c}
+N\\
+2
+\end{array}\right)=\frac{N(N-1)}{2}=\frac{\left(N-1\right)\left(N-2\right)}{2}+\frac{2(N-1)}{2}$
+\end_inset
+
+个动量组成的不变量
+\begin_inset Formula $\mathcal{P}_{N}$
+\end_inset
+
+，用符号 MomInv 表示，按照如下顺序排列：头
+\begin_inset Formula $N$
+\end_inset
+
+个对应
+\begin_inset Formula $N$
+\end_inset
+
+个 incoming 动量
+\begin_inset Formula $k_{i}$
+\end_inset
+
+，后面
+\begin_inset Formula $N$
+\end_inset
+
+个是毗连动量的和的平方
+\begin_inset Formula $\left(k_{i}+k_{i+1}\right)^{2}$
+\end_inset
+
+，如此等等。如果用 off-set（偏移）动量
+\begin_inset Formula $p_{i}=k_{1}+\ldots+k_{i}$
+\end_inset
+
+（在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1-1"
+
+\end_inset
+
+中的传播子中出现）来写的话，将会是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\mathcal{P}_{2k} & =\left(p_{1}-p_{0}\right)^{2},\left(p_{2}-p_{1}\right)^{2},\ldots,\left(p_{2k-1}-p_{2k-2}\right)^{2},\left(p_{0}-p_{2k-1}\right)^{2}\nonumber \\
+ & \left(p_{2}-p_{0}\right)^{2},\left(p_{3}-p_{1}\right)^{2},\ldots,\left(p_{0}-p_{2k-2}\right)^{2},\left(p_{1}-p_{2k-1}\right)^{2},\nonumber \\
+ & \ldots\nonumber \\
+ & \left(p_{k-1}-p_{0}\right)^{2},\left(p_{k}-p_{1}\right)^{2},\ldots,\left(p_{k-3}-p_{2k-2}\right)^{2},\left(p_{k-2}-p_{2k-1}\right)^{2},\nonumber \\
+ & \left(p_{k}-p_{0}\right)^{2},\left(p_{k+1}-p_{1}\right)^{2},\ldots,\left(p_{2k-2}-p_{k-2}\right)^{2},\left(p_{2k-1}-p_{k-1}\right)^{2},\label{eq:12}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\mathcal{P}_{2k+1} & =\left\{ \left(p_{1}-p_{0}\right)^{2},\left(p_{2}-p_{1}\right)^{2},\ldots,\left(p_{2k}-p_{2k-1}\right)^{2},\left(p_{0}-p_{2k}\right)^{2}\right\} \nonumber \\
+ & \left(p_{2}-p_{0}\right)^{2},\left(p_{3}-p_{1}\right)^{2},\ldots,\left(p_{0}-p_{2k-1}\right)^{2},\left(p_{1}-p_{2k}\right)^{2},\nonumber \\
+ & \ldots\nonumber \\
+ & \left(p_{k}-p_{0}\right)^{2},\left(p_{k+1}-p_{1}\right)^{2},\ldots,\left(p_{k-2}-p_{2k-1}\right)^{2},\left(p_{k-1}-p_{2k}\right)^{2},\label{eq:13}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+注意
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:12"
+
+\end_inset
+
+中的前
+\begin_inset Formula $k-1$
+\end_inset
+
+行每行有
+\begin_inset Formula $N=2$
+\end_inset
+
+个元素，第k行只有
+\begin_inset Formula $k=N/2$
+\end_inset
+
+个元素。而
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:13"
+
+\end_inset
+
+中 k 行中每行都有
+\begin_inset Formula $N=2k+1$
+\end_inset
+
+个元素。
+\end_layout
+
+\begin_layout Standard
+由于存在一个overall的动量守恒，
+\begin_inset Formula $N$
+\end_inset
+
+个incoming 
+\begin_inset Formula $ki$
+\end_inset
+
+,但是独立的偏移量 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+只有
+\begin_inset Formula $N-1$
+\end_inset
+
+个。
+\end_layout
+
+\begin_layout Standard
+可以想象一个圆周，圆周上等距离的画着
+\begin_inset Formula $N$
+\end_inset
+
+个点，相当于两点之间连线，然后开始转动，要求两端的点不能重复。如果连线是一条直径，那么只有一半是不重复的。但是只有当圆周上的点是
+\begin_inset Formula $2k$
+\end_inset
+
+的时候，才可能实现这种情况。
+\end_layout
+
+\begin_layout Standard
+对于
+\begin_inset Formula $N=2,\ldots,7$
+\end_inset
+
+，不变动量
+\begin_inset Formula $\text{\mathcal{P}}_{N}$
+\end_inset
+
+的集合列在 Appendix A 中。它们必须以 type double complex 提供给 subroutine N_cll。或者是长度为
+ 
+\begin_inset Formula $n_{\mathcal{P}}$
+\end_inset
+
+的数组，或者是
+\begin_inset Formula $n_{\mathcal{P}}$
+\end_inset
+
+个single 参数。值得注意的是，尽管变量类型是 double complex, 现版本的 COLLIER 还不支持动量不变量有虚部的情况。从长远看更重要的是
+，保证动量不变量的组合（对应单个外线粒子的质量平方）采用它们的精确数值，以避免任何偏差，比如对这些动量平方进行数值计算时。此外，在 IR-divergent
+ 积分中，程序内部将会比较动量和质量参数来决定采用的解析表达式。显然，在单点积分 A_cll中，参数 MomInv 将会省略。
+\end_layout
+
+\begin_layout Standard
+squared masses 集合
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathcal{M}_{N}=\left\{ m_{0}^{2},m_{1}^{2},\ldots,m_{N-1}^{2}\right\} \label{eq:14}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+进入到圈传播子中，在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1-1"
+
+\end_inset
+
+给出，由
+\begin_inset Formula $N$
+\end_inset
+
+个 type double complex 的参数表示，记作 mass2。这些参数可以有不为零（负的）虚部，应当传递给 N_ cll，格式为单个数组或者独立的参
+数，取决于 动量不变量 MomInv 采用的格式。
+\end_layout
+
+\begin_layout Standard
+integer 参数 R 表示张量积分的最高 rank 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+。因此它定义了输出数组 TN and TNuv 的size（type complex）。像之前描述的，它们可以是 N-维数组，
+\begin_inset Formula $(0:[\hat{P}/2],\left(0:P\right),\ldots\left(0:P\right)$
+\end_inset
+
+。也可以是一维数组，长度为
+\begin_inset Formula $n_{c}\left(N,\hat{P}\right)$
+\end_inset
+
+。由 COLLIER 在初始化过程中表格化，可以由以下函数获取
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function GetNc_cll(N,R) result(nc)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer N,R,nc:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+integer N,R,nc:
+\begin_inset Formula $N,\hat{P},n_{c}(N,\hat{P})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+最后，可以给出额外的输出数组TNerr ，添加
+\begin_inset Formula $\left(0:\hat{P}\right)$
+\end_inset
+
+个 type double precision 的 entries 到参数列表。如果存在的话，这个数组的成员传递了张量系数
+\begin_inset Formula $T_{i1\cdot iP}^{N}$
+\end_inset
+
+的决定误差，其中所有的
+\begin_inset Formula $i_{k}\neq0$
+\end_inset
+
+，对于相应的 rank 
+\begin_inset Formula $P$
+\end_inset
+
+。误差估计 
+\begin_inset Formula $\Delta T^{N}\left(P\right)$
+\end_inset
+
+大概由以下方法决定：迭代计算中的误差传递，和展开式中忽略的高阶项（见 section 3.1）。返回的误差值不应该被理解为精确且可靠的，而应该被当成低层不确定性的
+数量级估计。
+\end_layout
+
+\begin_layout Standard
+代替单独的 subroutine A_cll,..., G_cll, 也可以用通用 subroutine 计算任意 N的张量系数
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine TN_cll(TN,TNuv,MomInv,mass2,Nn,R,TNerr)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+generic TN_cll 的参数根特定的 A_cll,..., G_cll 的不同仅在于 additional integer Nn,
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+integer Nn: # of loop propagators (=N)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+定义了圈图中传播子的数目。在 TN_cll 的情况下，momentum invariants 
+\series bold
+MomInv
+\series default
+, squared masses 
+\series bold
+mass2
+\series default
+，coefficients 
+\series bold
+TN
+\series default
+, 
+\series bold
+TNuv
+\series default
+ 只能按照一维数组的方式处理，长度分别为
+\begin_inset Formula $n_{\mathcal{P}},N,\text{and }n_{c}\left(N,\hat{P}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+张量元
+\begin_inset Formula $T^{N,\mu_{1},\cdots,\mu_{P}}$
+\end_inset
+
+with 
+\begin_inset Formula $N=1,\cdots,7$
+\end_inset
+
+可以通过各自的 subroutine Aten_cll, ..., Gten_cll 进行计算。这些 subroutine Nten_cll 的参数结构如下
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine
+\end_layout
+
+\begin_layout Plain Layout
+
+	Nten_cll(TNten, TNtenuv, MomVec, MomInv, mass2, R, Tntenerr)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+除了 MomInv 和 mass2，跟 N_cll 中的用法一致。这里还必须提供 
+\begin_inset Formula $N-1$
+\end_inset
+
+个 四矢量 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+，就是出现在的传播子中的那些。用符号 MomVec 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+double complex MomVec(...)
+\end_layout
+
+\end_inset
+
+momentum components
+\end_layout
+
+\begin_layout Standard
+可以用 
+\begin_inset Formula $N-1$
+\end_inset
+
+个数组表示，每个数组
+\begin_inset Formula $\left(0:3\right)$
+\end_inset
+
+，也可以用 单个数组，维数为
+\begin_inset Formula $\left(0:3,N-1\right)$
+\end_inset
+
+。注意 MomVec, MomInv, mass2 的参数形式应该一样，或者是单个数组，或者是一堆参数。和 MomInv 一样，type double
+ complex （尽管在现版本的COLLIER 中不支持虚部)。对于单点积分 A_cll，MomVec参数应该省略。
+\end_layout
+
+\begin_layout Standard
+整数 
+\begin_inset Formula $R$
+\end_inset
+
+ 代表 张量积分的最高阶 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+，决定了输出数组 TNten and TNtenuv 的大小(type complex)。如同之前描述的，它们可以是
+\begin_inset Formula $4$
+\end_inset
+
+-维数组
+\begin_inset Formula $\left(0:\hat{P},0:\hat{P},0:\hat{P},0:\hat{P}\right)$
+\end_inset
+
+，或者一维数组，长度为
+\begin_inset Formula $n_{t}\left(P\right)$
+\end_inset
+
+。
+\begin_inset Formula $n_{t}\left(P\right)$
+\end_inset
+
+在 COLLIER 初始化的时候决定，可以用以下函数获得
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function GetNt_cll(R) result(nt)
+\end_layout
+
+\end_inset
+
+ integer R,nt :
+\begin_inset Formula $\hat{P},n_{t}(\hat{P})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+同样可以获得误差估计，通过在参数列表中提供可选的 output array TNtenerr 。它的 entries 
+\begin_inset Formula $\left(0:\hat{P}\right)$
+\end_inset
+
+of type precision 提供了，张量元对应 rank 绝对误差的幅值，如同在 subroutine N_cll 中。
+\end_layout
+
+\begin_layout Standard
+除了使用独立的 Aten_cll,..., Gten_cll ，还可以用 generic subroutine 计算张量元到任意
+\begin_inset Formula $N$
+\end_inset
+
+(原则上)
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine
+\end_layout
+
+\begin_layout Plain Layout
+
+	TNten_cll(TNten,TNtenuv,MomVec,MomInv,mass2,Nn,R,TNtenerr).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+TNten_cll 跟 Aten_cll,...,Gten_cll 不同之处在于，多了一个 integer Nn 参数，用来指定圈图传播子的数目。
+\end_layout
+
+\begin_layout Standard
+如果使用 TNten_cll，那么 MomVec,MomInv,mass2 只能是单个数组的形式，长度为
+\begin_inset Formula $\left(0:3,1:N-1,\right),\left(1:n_{\mathcal{P}}\right)\text{and, }\left(0:N-1\right)$
+\end_inset
+
+，而不能是参数集合。但是输出中的Tnten TNtenuv 用户仍然可以选择使用
+\begin_inset Formula $\left(0:\hat{P},0:\hat{P},0:\hat{P},0:\hat{P}\right)$
+\end_inset
+
+，或者
+\begin_inset Formula $\left(1:n_{t}\left(P\right)\right)$
+\end_inset
+
+的形式。
+\end_layout
+
+\begin_layout Standard
+显然，不管是系数 subroutine A_cll,..,G_cll，TN_cll，还是张量元subroutine Aten_cll,...,Gten_cll,or
+ TNten_cll 的调用，都在各自的输出中，给出了相应标量积分的结果。如果用户只对标量 
+\begin_inset Formula $1$
+\end_inset
+
+–,...,
+\begin_inset Formula $4$
+\end_inset
+
+–点主积分感兴趣，可以选择限制 rank:
+\begin_inset Formula $R=0$
+\end_inset
+
+(i.e.
+\begin_inset Formula $\hat{P}=0$
+\end_inset
+
+)，或者使用可选的 routines N0_cll=A0_cll,..,D0_cll：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine N0_cll(TN0,MomInv,mass2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+double complex TN0: 
+\begin_inset Formula $T_{0}^{N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+这些 routines 提供了 标量积分的结果，输出为单个变量 TN0 of type complex，而输入 MomInv and mass2
+ 可以在通常的用法中作选择。注意 routines A0_cll,...,D0_cll 没有连接到 cache system，并且如果
+\begin_inset Formula $3$
+\end_inset
+
+–点函数的 Gram 行列式 和 
+\begin_inset Formula $4$
+\end_inset
+
+–点函数的 Cayley 行列式为零，可能会 fail。
+\end_layout
+
+\begin_layout Standard
+最后， COLLIER 也提供 routines, 来计算
+\begin_inset Formula $2$
+\end_inset
+
+–点系数的动量导数，在对外线粒子做波函数重整化的时候会用到。需要用到的 subroutine 是 DB_cll, 参数结构是
+\begin_inset Formula $ $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine DB_cll(DB,DBuv,MomInv,mass2,R,DBerr)
+\end_layout
+
+\begin_layout Plain Layout
+
+double complex DB(...)
+\end_layout
+
+\begin_layout Plain Layout
+
+double comple DBuv(...)
+\end_layout
+
+\begin_layout Plain Layout
+
+double complex DBerr(...)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+导数
+\begin_inset Formula $B_{i_{1}\cdots i_{\hat{P}}}^{\prime}\left(p_{1}^{2}\right)\equiv\partial B_{i_{1}\cdots i_{\hat{P}}}\left(p_{1}^{2}\right)/\partial p_{1}^{2}$
+\end_inset
+
+，的结果通过数组 DB and DBuv 返回。输入和输出参数的约定和 B_cll 完全类似。函数 
+\begin_inset Formula $B_{0}^{\prime},B_{1}^{\prime},B_{00}^{\prime},\text{and}B_{11}^{\prime}$
+\end_inset
+
+可以用以下subroutines 得到，作为单个 double complex variables.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine DB0_cll(DB0,MomInv,mass2)
+\end_layout
+
+\begin_layout Plain Layout
+
+douoble complex DB0,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine DB1_cll(DB0,MomInv,mass2)
+\end_layout
+
+\begin_layout Plain Layout
+
+douoble complex DB1,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine DB00_cll(DB0,MomInv,mass2)
+\end_layout
+
+\begin_layout Plain Layout
+
+douoble complex DB00,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine DB11_cll(DB0,MomInv,mass2)
+\end_layout
+
+\begin_layout Plain Layout
+
+douoble complex DB011,
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于导数
+\begin_inset Formula $B_{i_{1}\cdots i_{\hat{P}}}^{\prime}\left(p_{1}^{2}\right)$
+\end_inset
+
+没有被cached, 所以 calls of the subroutine DB_cll, DB0_cll, DB1_cll, DB00_cl,
+ and DB11_cll 与 COLLIER 的缓存系统不相干。
+\end_layout
+
+\begin_layout Subsection
+设置和获取参数
+\end_layout
+
+\begin_layout Standard
+张量积分的结果不仅依赖于质量和动量参数的确切值，还依赖于 regularization parameters， as well as on technical
+ parameters 决定约化方案的选择，和展开方法的迭代次数。最后的两组参数，对于一组确定的积分调用，通常是固定的。在 COLLIER初始化期间，它们被初始
+化成默认值，在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Table-2:-lists"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中给出，并可以在稍后修改。稍后我们会给出这些参数的细节，以及使用 subroutine 改变或读取它们的值。
+\end_layout
+
+\begin_layout Standard
+首先，我们注意到，COLLIER 的版本可以通过下面的 calling 获取：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetVersionNumber_cll(version)
+\end_layout
+
+\begin_layout Plain Layout
+
+character(len=5) version
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+正规化参数
+\end_layout
+
+\begin_layout Standard
+COLLIER 使用维数正规化来处理 UV 发散。因此UV发散积分的结果依赖于
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的正规子
+\begin_inset Formula $\Delta_{UV}$
+\end_inset
+
+,和维数正规化能标
+\begin_inset Formula $\mu_{UV}$
+\end_inset
+
+，更精确地说，依赖于组合
+\begin_inset Formula $\Delta_{UV}+\ln\left(\mu_{UV}^{2}/Q^{2}\right)$
+\end_inset
+
+，其中 
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+是张量积分中出现的一些能标。在微扰理论的固定阶，物理的
+\begin_inset Formula $S$
+\end_inset
+
+-矩阵不依赖于
+\begin_inset Formula $\Delta_{UV}$
+\end_inset
+
+and
+\begin_inset Formula $\mu_{UV}$
+\end_inset
+
+。在COLLIER中，
+\begin_inset Formula $\Delta_{UV}$
+\end_inset
+
+and
+\begin_inset Formula $\mu_{UV}^{2}$
+\end_inset
+
+被视为 type double precision 的数值参数，默认值为
+\begin_inset Formula $\Delta_{UV}=0$
+\end_inset
+
+and
+\begin_inset Formula $\mu_{UV}^{2}=1$
+\end_inset
+
+，其数值可以通过以下 subroutines 修改
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetDeltaUV_cll(delta)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision delta,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine SetMuUV2_cll(mu2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision mu2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+一方面，通过 varying 这些参数，用户数值地可以验证 
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的UV有限性。另一方面，在重整化方案如 MS or 
+\begin_inset Formula $\overline{MS}$
+\end_inset
+
+，维数重整化标度
+\begin_inset Formula $\mu_{UV}$
+\end_inset
+
+等同于 跑动耦合 
+\begin_inset Formula $g\left(\mu_{ren}\right)$
+\end_inset
+
+的重整化标度
+\begin_inset Formula $\mu_{\text{ren}}$
+\end_inset
+
+。在这种情况下，它具有了物理诠释，并且对 
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元有影响。
+\begin_inset Formula $\Delta_{UV}$
+\end_inset
+
+and
+\begin_inset Formula $\mu_{UV}^{2}$
+\end_inset
+
+值可以通过 subroutines 得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetDeltaUV_cll(delta)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision delta,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GetMuUV2_cll(mu2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision mu2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+默认行为是。IR 发散也通过维数正规化。因此IR-发散的积分，其结果依赖于 
+\begin_inset Formula $\Delta_{IR}^{\left(1\right)}$
+\end_inset
+
+and 
+\begin_inset Formula $\Delta_{IR}^{\left(2\right)}$
+\end_inset
+
+defined in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，and scale of dimensional regularization, 
+\begin_inset Formula $\mu_{IR}$
+\end_inset
+
+。在微扰理论的固定阶，IR-finite 的物理量不依赖于 
+\begin_inset Formula $\Delta_{IR}^{\left(1\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta_{IR}^{\left(2\right)}$
+\end_inset
+
+and 
+\begin_inset Formula $\mu_{IR}$
+\end_inset
+
+，一旦 virtual and real 修正被组合。在COLLIER中， 
+\begin_inset Formula $\Delta_{IR}^{\left(1\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta_{IR}^{\left(2\right)}$
+\end_inset
+
+and 
+\begin_inset Formula $\mu_{IR}^{2}$
+\end_inset
+
+用 type double precision 的数值参数来表示，默认值为
+\begin_inset Formula $\Delta_{IR}^{\left(1\right)}=\Delta_{IR}^{\left(2\right)}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu_{IR}^{2}=1$
+\end_inset
+
+，可以通过以下 subroutines 修改
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetDeltaIR_cll(delta1,delta2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision delta1,delta2
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine SetMuIR2_cll(mu2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision mu2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+注意，特别地，
+\begin_inset Formula $\Delta_{IR}^{\left(1\right)}$
+\end_inset
+
+and 
+\begin_inset Formula $\Delta_{IR}^{\left(2\right)}$
+\end_inset
+
+可以被独立地改变。对
+\begin_inset Formula $\Delta_{IR}^{\left(1\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta_{IR}^{\left(2\right)}$
+\end_inset
+
+and 
+\begin_inset Formula $\mu_{IR}^{2}$
+\end_inset
+
+的variation 可以对
+\noun on
+可观测量
+\noun default
+的IR有限性进行数值检验。现有的值可以通过以下 calling 获取
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetDeltaIR_cll(delta1,delta2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision delta1,delta2,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GetMuIR2_cll(mu2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision mu2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+collinear 发散也可以通过引入一列质量正规子来正规化，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathcal{R}_{n_{reg}}=\left\{ \overline{m}_{1}^{2},\overline{m}_{2}^{2},\ldots,\overline{m}_{n_{\text{reg}}}^{2}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了使用此功能，用户可以这样设置
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMinf2_cll(nminf,minf2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double complex minf2(nminf)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer nminf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中 integer 变量 nminf 代表 不同正规子质量的数目 
+\begin_inset Formula $n_{\text{reg}}$
+\end_inset
+
+，数组 minf2 包含了 
+\begin_inset Formula $\overline{m}_{i}^{2}$
+\end_inset
+
+的平方值， of type double complex。可选择地，正规子质量可以相继被添加，通过 calling the subroutine
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine AddMinf2_cll(m2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double complex m2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+它让
+\begin_inset Formula $n_{\text{reg}}$
+\end_inset
+
+增加
+\begin_inset Formula $1$
+\end_inset
+
+，然后添加 double complex value m2 到列表 
+\begin_inset Formula $\mathcal{R}_{n_{\text{reg}}}$
+\end_inset
+
+中。当一个张量积分被调用，它的参数（质量平方和动量不变量）被数值地与
+\begin_inset Formula $\mathcal{R}_{n_{\text{reg}}}$
+\end_inset
+
+的元素进行比较。相同的entries 被当成无穷小 throughout the calculation，它们的数值（并不需要很小）are only
+ kept in otherwise singular logarithms。 在 calls of all subroutines，small
+ masses 具有exactly 相同的值是很重要的。mass regulators 的数目 
+\begin_inset Formula $n_{\text{reg}}$
+\end_inset
+
+and list of squared values can be read out with
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetNminf_cll(nminf)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GetMinf2_cll(minf2)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer nminf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+finally， the subroutine
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine ClearMinf2_cll
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+允许清除列表 
+\begin_inset Formula $\mathcal{R}_{n_{\text{reg}}}$
+\end_inset
+
+and 重置 
+\begin_inset Formula $n_{\text{reg}}$
+\end_inset
+
+to zero.
+\end_layout
+
+\begin_layout Subsubsection
+技术参数
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:技术参数"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+COLLIER 可以在三种不同模式下运行，通过
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMode_cll(mode)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer mode
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中 integer argument mode=1,2,3。 For mode=1(默认值)， 使用 COLI branch ， for mode=2,
+ the DD branch is used, for mode=3, the integrals 在两种模式下都计算。在最后一种情形下，COLLIER会返回两
+种结果中更好的那个。误差估计（如果在调用中指定可选参数的话）则根据两个分支的具体情况，并返回大的 那一个。COLI and DD 之间大于一定阈值的差别，将会被
+存储的文件 CheckOut.cll 中。mode 的值可以被获取
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetMode_cll(mode)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer mode
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算中设定的精度目标 
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+可以通过下列calling设定
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetReqAcc_cll(acc)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision acc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+参数 acc of type double precision。为了达到精度目标，COLLIER 会选择合适的 scheme，如果必要的话会作多种选择，展开到足
+够的阶。因此，
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+的选择决定了结果的precision和运行时间，最好权衡一下。默认值是
+\begin_inset Formula $\eta_{\text{req}=10^{-8}}$
+\end_inset
+
+，并且 library 对此设定进行了优化。
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+的当前值可以如下获得：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetReqAcc_cll(acc)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision acc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+至于实际结果满足精度
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+的程度取决于问题的复杂度。作为第二道精度门槛，一个关键精度
+\begin_inset Formula $\eta_{\text{crit}}$
+\end_inset
+
+，应该比
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+要大，可以如下设定
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetCritAcc_cll(acc)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision acc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+参数 acc of type double precision。关键精度并不影响实际计算，它只是一个记账策略：如果计算的积分序列中有一个在某相空间点的不确定度达
+到
+\begin_inset Formula $\eta_{\text{crit}}$
+\end_inset
+
+，就升起一个 accuracy flag 来指示一个警告。用户可以查询这个flag，然后决定如何继续（比如放弃这个相空间点，或者改用不同的方法等等）。而且，关键
+的积分可以被监视。如果这个选项启用，它们的参数和结果会被自动写入到输出文件里。更多关于 accuracy flag and 监视关键积分的信息在
+ section 5.6 给出。关键精度被初始化为 
+\begin_inset Formula $\eta_{\text{crit}}=10^{-1}$
+\end_inset
+
+；它的值可以如下设定
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetCritAcc_cll(acc)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision acc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+最后，第三个精度参数
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+，应该比
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+大，管理COLI 和DD结果的比较。
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+的默认值应该是
+\begin_inset Formula $\eta_{\text{check}}=10^{-4}$
+\end_inset
+
+；它可以如下修改：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetCheckAcc_cll(acc)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GetCheckAcc_cll(acc)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision acc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For mode=3，如果COLI和DD的结果差距超过
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+，将会被记录到 file CheckOut.cll 中。mode=1 and mode=2的时候，
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+参数无关。
+\end_layout
+
+\begin_layout Standard
+除了分别使用subroutines 设置，还可以用一个subroutine 同时设置
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+，
+\begin_inset Formula $\eta_{\text{crit}}$
+\end_inset
+
+，
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetAccurary_cll(acc0,acc1,acc2)
+\end_layout
+
+\begin_layout Plain Layout
+
+double precision acc0,acc1,acc2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+double precision arguments acc0,acc1,acc2 分别代表
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+，
+\begin_inset Formula $\eta_{\text{crit}}$
+\end_inset
+
+，
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+一个更重要的技术参数是，在迭代计算中，张量积分的最高rank 
+\begin_inset Formula $\hat{P}^{\text{max}}$
+\end_inset
+
+，它也定义了展开方法的 cut-off order。可以如下进行设定
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetRitmax_cll(ritmax)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer ritmax
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中 ritmax 可以大于等于
+\begin_inset Formula $7$
+\end_inset
+
+。 ritmax 的值可以通过以下的方式获取
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetRitmax_cll(ritmx)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果对于
+\begin_inset Formula $4$
+\end_inset
+
+–点函数，
+\begin_inset Formula $\hat{P}^{\text{max}}\ge7$
+\end_inset
+
+作为最高rank，那么在内部，对于
+\begin_inset Formula $3$
+\end_inset
+
+–点和
+\begin_inset Formula $2$
+\end_inset
+
+–函数，自动设置为
+\begin_inset Formula $\hat{P}^{\text{max}}+2$
+\end_inset
+
+and 
+\begin_inset Formula $\hat{P}^{\text{max}}+4$
+\end_inset
+
+。所以如果
+\begin_inset Formula $N\le4$
+\end_inset
+
+，
+\begin_inset Formula $\hat{P}^{\text{max}}$
+\end_inset
+
+的值将会影响计算精度和时间（from external and internal calls），library 为默认值
+\begin_inset Formula $\hat{P}^{\text{max}}=14$
+\end_inset
+
+特地进行了优化。注意，为了能够计算
+\begin_inset Formula $N=N_{\text{max}}$
+\end_inset
+
+and 
+\begin_inset Formula $P=P_{\text{max}}$
+\end_inset
+
+的所有张量积分
+\begin_inset Formula $T^{N,P}$
+\end_inset
+
+（
+\begin_inset Formula $N_{\text{max}},P_{\text{max}}$
+\end_inset
+
+的值在初始化call of Init_cll 中被指定），
+\begin_inset Formula $\hat{P}^{\text{max}}$
+\end_inset
+
+的值不能小于
+\begin_inset Formula $P_{\text{max}}+4-N_{\text{max}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如同在 section 3 中解释的，对于
+\begin_inset Formula $N\ge6$
+\end_inset
+
+，约化方法既用
+\begin_inset Formula $T_{i_{1},\ldots i_{P}}^{N}$
+\end_inset
+
+ 实现，也用
+\begin_inset Formula $T^{N,\mu_{1}\cdots\mu_{P}}$
+\end_inset
+
+实现了。所以
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+当
+\begin_inset Formula $N\ge6$
+\end_inset
+
+时，
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+对于一个通常的
+\begin_inset Formula $T^{N,\mu_{1}\cdots\mu_{P}}$
+\end_inset
+
+的计算分为3步：首先，对于
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $5\le\bar{N}=N_{\text{tenred}}-1\le6$
+\end_inset
+
+，系数
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $T_{i_{1},\ldots i_{P_{\bar{N}}}}^{\bar{N}}$
+\end_inset
+
+递归的从
+\begin_inset Formula $2$
+\end_inset
+
+–点系数开始计算。然后用
+\begin_inset Formula $T_{i_{1},\ldots i_{P_{\bar{N}}}}^{\bar{N}}$
+\end_inset
+
+构建
+\begin_inset Formula $T^{\bar{N},\mu_{1}\cdots\mu_{P_{\bar{N}}}}$
+\end_inset
+
+。最后，张量
+\begin_inset Formula $T^{N,\mu_{1}\cdots\mu_{P}}$
+\end_inset
+
+递归地计算自
+\begin_inset Formula $T^{\bar{N},\mu_{1}\cdots\mu_{P_{\bar{N}}}}$
+\end_inset
+
+，见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figure1-reduction-chains"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。阈值
+\begin_inset Formula $N_{\text{tenred}}$
+\end_inset
+
+-从何处开始张量约化，可以如下设定和获取
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetTenRed_cll(Ntenred)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GetTenRed_cll(Ntenred)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer Ntenred
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pasted9.png
+	scale 48
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+figure1 reduction chains
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figure1-reduction-chains"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中参数 Ntenred 代表参数
+\begin_inset Formula $N_{\text{tenred}}$
+\end_inset
+
+，subroutine
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOnTenRed_cll
+\end_layout
+
+\end_inset
+
+等价于 SetTenRed_cll(Ntenred) 并令 Ntenred=6，opts for the maximal level of tensor
+ reduction，而 subroutine
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOffTenRed_cll
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+则将它完全关闭。默认设定是maximal tensor reduction 
+\begin_inset Formula $N_{\text{tenred}}=6$
+\end_inset
+
+，考虑到run time 因素。
+\end_layout
+
+\begin_layout Subsection
+使用缓存系统
+\end_layout
+
+\begin_layout Standard
+COLLIER 安排有 Cache 系统，避免重复计算相同的积分，以此来加快运算速度。它可以运行在 local 或者 global mode：在local
+ mode，仅仅在单个 subroutine call 的过程中（Section 5.3），积分被存储。cache 系统探测在约化过程中，通过不同路径到达的相同积
+分，然后避免它们的重复计算。在 Global 中，不同的 subroutine call 也被连接起来。local mode 总是在工作的，而
+ global mode 需要被显式指定。为了这个目的，也许需要创建
+\begin_inset Formula $n_{\text{cache}}$
+\end_inset
+
+个单独的 cache，来储存系数或者张量的结果。可以实现如下
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitCacheSystem_cll(ncache,Nmax)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer ncache, Nmax
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中参数 ncache and Nmax 分别代表，缓存的总数目
+\begin_inset Formula $n_{\text{cache}}$
+\end_inset
+
+以及计算
+\begin_inset Formula $N$
+\end_inset
+
+– point 积分被cached 的数目up to
+\begin_inset Formula $N=N_{\text{cache}}^{\text{max}}$
+\end_inset
+
+。为了启用 global mode，必须在每个计算每个相空间点之前，用 call of InitEvent(cacheNr) 把这个队列的 integral
+ calls 分配到第 cacheNr 缓存。我们强调，对于每一个相空间点，integral calls 必须按照相同的顺序，并且在同一个相空间点，
+ global parameters(like 
+\begin_inset Formula $\text{\ensuremath{\mu_{\text{UV}}^{2}}}$
+\end_inset
+
+，mode of COLLIER 等等)不能被 reset，因为积分是依靠在用户调用序列中的次序来identified。注意对 cacheNr
+ 的数目没有限制，需要的内存被动态分配，during the first phase-space points。取决于所解决的问题，cache
+ in global mode 可能会引起 hig use of memory resources。
+\end_layout
+
+\begin_layout Standard
+除了在一开始固定缓存总数
+\begin_inset Formula $n_{\text{cache}}$
+\end_inset
+
+，还能在后续添加缓存，通过 calling of subroutine
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine AddNewCache_cll(cache_no,Nmax)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer cache_no,Nmax
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+新的cache，被初始化为最多储存 Nmax–点积分的结果作为输入，分配的缓存数目通过output 参数 cache_no返回。如果之前没有初始化cache
+ system，call of AddNewCache_cll 相当于 call of InitCacheSystem(ncahce=1,Nmax)。
+\end_layout
+
+\begin_layout Standard
+The threshold 
+\begin_inset Formula $N_{\text{cache}}\le N_{\text{cache}}^{\text{max}}$
+\end_inset
+
+up to which 积分被cached，可以被单独调整，for each cache。使用如下subroutine
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetCacheLevel_cll(cache_no,Nmax)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer cache_no,Nmax
+\end_layout
+
+\end_inset
+
+注意第cache_no个缓存的level 
+\begin_inset Formula $N_{\text{cache}}^{\text{max}}$
+\end_inset
+
+，只能在这个缓存的第一个相空间点被计算之前改变。（i.e.
+ 在InitEvent_cll 被首次计算之前，with the argument cache_no）
+\end_layout
+
+\begin_layout Standard
+可以使用subroutine
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOffCacheSystem_cll
+\end_layout
+
+\end_inset
+
+暂时关闭global cache 系统。如果需要临时在integral calls序列中加入额外的call，这个选项将会很有用
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOnCacheSystem_cll
+\end_layout
+
+\end_inset
+
+将global 缓存再次打开，将在它被中断的地方重新开始工作。
+\end_layout
+
+\begin_layout Standard
+也可以之关闭一个特定的cache calling
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOffCache_cll(cache_no)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer cache_no
+\end_layout
+
+\end_inset
+
+在这种情况下，使用
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOnCache_cll(cache_no)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer cache_no
+\end_layout
+
+\end_inset
+
+再次打开。cache 在被暂停的地方重新开始，或者，如果在暂停期间 subroutine InitEvent 被调用，从缓存cache_no积分列表中的第一个开
+始。
+\end_layout
+
+\begin_layout Subsection
+错误处理和输出文件
+\end_layout
+
+\begin_layout Standard
+内部错误或者精度不够，在COLLIER中有两种处理方法：一方面，可以在运行过程中，设置和读取 flags for errors and accurary；另一方
+面，对应的错误信息，和出错的积分calls，将会被记录在输出文件中。
+\end_layout
+
+\begin_layout Standard
+error flag 
+\begin_inset Formula $\sigma_{\text{err}}$
+\end_inset
+
+获取calling
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetErrFlag_cll(errflag)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer errflag
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+integer errflag 的值从
+\begin_inset Formula $\sigma_{\text{err}}=0$
+\end_inset
+
+（无错误）到
+\begin_inset Formula $\sigma_{\text{err}}=-10$
+\end_inset
+
+（fatal errors）。
+\begin_inset Formula $\sigma_{\text{err}}$
+\end_inset
+
+保存它的值，直到被重写为更小的负数，表明遇到更加严重的错误。如此，errflag指出了它遇到的最严重的错误。当call of InitEvent_cll
+ 之后，对于新相空间点的计算，它自动被重置为
+\begin_inset Formula $\sigma_{\text{err}}=0$
+\end_inset
+
+，也可以在任意时间重置
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitErrFlag_cll
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果
+\begin_inset Formula $\sigma_{\text{err}}$
+\end_inset
+
+的值小于一个门槛
+\begin_inset Formula $\sigma_{\text{stop}}$
+\end_inset
+
+，程序的执行将会自动停止。默认值是
+\begin_inset Formula $\sigma_{\text{stop}}=-8$
+\end_inset
+
+，以使得对于相空间点的特定错误计算不会停止，而在所有相空间点出现共性错误时，停止计算。可以给
+\begin_inset Formula $\sigma_{\text{stop}}$
+\end_inset
+
+设置不同的值，或者获取它的值，通过给 subroutine 提供 integer argument stopflag
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetErrStop_cll(stopflag),
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GetErrStop_cll(stopflag)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer stopflag
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可以通过调用
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOffErrStop_cll()
+\end_layout
+
+\end_inset
+
+避免程序停止。
+\end_layout
+
+\begin_layout Standard
+精度flag 
+\begin_inset Formula $\sigma_{\text{acc}}$
+\end_inset
+
+的工作方式类似。它反映了结果的精度，可以作为 integer argument accflag 被获取
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetAccFlag_cll(accflag)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer accflag
+\end_layout
+
+\end_inset
+
+初始化为
+\begin_inset Formula $\sigma_{\text{acc}}=0$
+\end_inset
+
+，如果没有达到
+\begin_inset Formula $\eta_{\text{req}}$
+\end_inset
+
+，就降为
+\begin_inset Formula $\sigma_{\text{acc}}=-1$
+\end_inset
+
+，如果没有达到
+\begin_inset Formula $\eta_{\text{crit}}$
+\end_inset
+
+，就降为
+\begin_inset Formula $\sigma_{\text{acc}}=-2$
+\end_inset
+
+（这些参数的细节见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:技术参数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。想在error flag的情形一样，
+\begin_inset Formula $\sigma_{\text{acc}}$
+\end_inset
+
+会被更加小的负值覆盖，来表明计算中最差的精度（从
+\begin_inset Formula $\sigma_{\text{acc}}$
+\end_inset
+
+被初始化之后）。call of InitEvent_cll for a new phase-space point 将会自动初始化
+\begin_inset Formula $\sigma_{\text{acc}}=0$
+\end_inset
+
+，也可以用
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitAccFlag_cll
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在初始化COLLIER的时候，用户可以选择 errors and accurary 的 messages 返回的方式。默认地，COLLIER 把它们存储在
+ 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+./output_cll/
+\end_layout
+
+\end_inset
+
+下的独立文件中。像在section
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:概括使用说明"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中描述的，用户可以自定义输出路径，通过添加相应的字符串，作为subroutine Init_cll 的第二个可选参数。如果传入一个空字符串，那么相当于不创建输出
+文件夹。这个预定义的设置可以在随后修改，通过
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SwitchOffFileOutput_cll,
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine SwitchOnFileOutput_cll,
+\end_layout
+
+\end_inset
+
+或者创建新的输出文件夹
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetOutputFolder_cll(fname)
+\end_layout
+
+\begin_layout Plain Layout
+
+character(len=*) fname.
+\end_layout
+
+\end_inset
+
+输出文件夹的名字是 fname，可以被获取
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GetOutputFolder_cll(fname)
+\end_layout
+
+\begin_layout Plain Layout
+
+character(len=*) fname
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Error messages 被导出至 files ErrOut.coli, ErrOut.dd, and ErrOut.cll 取决于err 来自于
+ COLI,DD,or global接口 (or module tensors)。在初始化COLLIER的时候，这些文件被创建，一个free output
+ channel（number
+\begin_inset Formula $>$
+\end_inset
+
+100）被分配给它们。Output channel 可以被用户手动分配，通过
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SeterroutCOLI_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine SeterroutDD_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine Seterrout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outchan
+\end_layout
+
+\end_inset
+
+channel number outchan 是integer 参数。尤其是，可以通过选择 outchan=6，将 error 重定向到标准channel。注意
+，如果文件输出被关闭，通过 subroutine SwitchOffFileOutput_cll， standard channel 并不会被关闭，而且，重定向
+到标准channel（terminal或者一个专用文件）的COLLIER输出会继续传递。当前选择的输出 channel 可以如下获取
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine GeterroutCOLL_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine GeterroutDD_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine Geterrout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outchan.
+\end_layout
+
+\end_inset
+
+为了避免输出文件体积过大，默认的error messages 展示数目为
+\begin_inset Formula $100$
+\end_inset
+
+。可以通过如下更改
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMaxErrOutCOLI_cll(nout)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine SetMaxErrOutDD_cll(nout)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine SetMaxErrOut_cll(nout)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer nout
+\end_layout
+
+\end_inset
+
+指定对应的 integer 数目 nout 即可 。默认error 等的counters在 每次 COLLIER 重新初始化之后被重置，如果不希望重置的话，可以
+将 noreset=.true.传递给 Init_cll，这些 counters 也可以手动重置
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitErrCntCOLI_cll
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine InitErrCntDD_cll
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine InitErrCnt_cll
+\end_layout
+
+\end_inset
+
+error 输出可以被 dis- and enabled by calling
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetErrOutLev_cll(outlev)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outlev
+\end_layout
+
+\end_inset
+
+其中 outlve=0 或者 outlev=1。如果 COLLIER 初始化的时候被传递了空数组作为输出文件夹的名字，那么 error 输出默认被关闭，其他情况
+都是被打开的。
+\end_layout
+
+\begin_layout Standard
+额外信息和与errors无关的状态信息被记录在 log-file InfOut.cll，在初始化COLLIER时指定的目录中。同时也会有一个free
+ output channel(number 
+\begin_inset Formula $>100$
+\end_inset
+
+)自动产生，并且可以被用户修改，通过传递integer outchan to
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine Setninfout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outchan
+\end_layout
+
+\end_inset
+
+同样允许设置为标准channel outchan=6。获得现在的channel可以用
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine Getinfout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outchan
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+默认output上限是
+\begin_inset Formula $n_{\text{inf}}^{max}=1000$
+\end_inset
+
+，但是用户也可以修改
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMaxInfOut_cll(nout)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer nout
+\end_layout
+
+\end_inset
+
+默认情形下，
+\begin_inset Formula $n_{\text{inf}}^{max}$
+\end_inset
+
+以及其他的counter均会在COLLIER重新初始化期间被重置，除非设置了 noreset=.true.，作为 Init_cll 的额外参数。informativ
+e 输出的程度可以被控制
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetInfOutLev_cll(outlev)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outlev
+\end_layout
+
+\end_inset
+
+其中的 integer argument outlev=0,1,2。用空数组作为输出文件夹时，隐含了 outlev=0(不输出)，其他情况输出被设置为
+ outle=2（最大输出）。在后一种情况，任何内部参数的改变，都会被记录在输出文件中，可能会导致文件体积很大。比如有些参数（UV 标度 
+\begin_inset Formula $\mu_{\text{UV}}^{2}$
+\end_inset
+
+）被重复修改的时候（例如对于每个相空间点）。因此，也提供了折中的输出层次 outlev=1，它只追踪那些特别的活动，发生的频率较低。
+\end_layout
+
+\begin_layout Standard
+当COLLIER 的模式被首次切换到 mode=3 的时候， CheckOut.cll 在通常的输出文件夹中创建。同样有相应的 channel
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine Setncheckout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine Getncheckout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outchan
+\end_layout
+
+\end_inset
+
+在 mode=3，积分同时用library中的COLI和DD branch计算，文件 CheckOut.cll 收集这些积分的 input and
+ results ，如果相对偏差大于 
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+（见Section
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:技术参数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。
+\begin_inset Formula $2$
+\end_inset
+
+–点函数的导数也会被比较和保存，如果偏差大于 
+\begin_inset Formula $\eta_{\text{check}}$
+\end_inset
+
+。输出数目被限制到 
+\begin_inset Formula $n_{\text{check}}^{\text{N,max}}$
+\end_inset
+
+个问题积分和 
+\begin_inset Formula $n_{\text{check}}^{\text{B\ensuremath{\prime},max}}$
+\end_inset
+
+个问题导数。对于每个
+\begin_inset Formula $N$
+\end_inset
+
+，可以单独修改
+\begin_inset Formula $n_{\text{check}}^{\text{N,max}}$
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMaxCheck_cll(npoints,N)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer npoints,N
+\end_layout
+
+\end_inset
+
+npoints and N代表 
+\begin_inset Formula $n_{\text{check}}^{\text{N,max}}$
+\end_inset
+
+和
+\begin_inset Formula $N$
+\end_inset
+
+。对于 
+\begin_inset Formula $n_{\text{check}}^{\text{B\ensuremath{\prime},max}}$
+\end_inset
+
+也是类似的
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMaxCheckDB_cll(npoints)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer npoints
+\end_layout
+
+\end_inset
+
+也可以一次性设定
+\begin_inset Formula $n_{\text{check}}^{\text{1,max}},\cdots,n_{\text{check}}^{\text{N,max}}$
+\end_inset
+
+,通过传递integer array
+\begin_inset Formula $\left\{ n_{\text{check}}^{\text{1,max}},\cdots,n_{\text{check}}^{\text{N,max}}\right\} $
+\end_inset
+
+作为单个参数npointarray给
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine SetMaxCheck_cll(npointarray)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer npointarray(Nmax)
+\end_layout
+
+\end_inset
+
+注意
+\begin_inset Formula $N_{\text{max}}$
+\end_inset
+
+的值从上次COLLIER重新初始化时，call of Init_cll 之后就是固定的（见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:概括使用说明"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。初始值是
+\begin_inset Formula $n_{\text{check}}^{\text{1,max}}=\cdots=n_{\text{check}}^{\text{N,max}}=n_{\text{check}}^{\text{B\ensuremath{\prime},max}}=50$
+\end_inset
+
+。call of Init_cll 导致limits和counters的重新初始化，除非 noreset=.true.。更进一步的，注意 counters
+ for output messages in Checkout.cll 可以被手动重置为
+\begin_inset Formula $0$
+\end_inset
+
+，通过
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitCheckCnt_cll
+\end_layout
+
+\end_inset
+
+对于
+\begin_inset Formula $N$
+\end_inset
+
+—点积分，and
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitCheckCntDB_cll
+\end_layout
+
+\end_inset
+
+对于
+\begin_inset Formula $2$
+\end_inset
+
+–导数。
+\end_layout
+
+\begin_layout Standard
+此外，用户也可以要求关于积分更详细的信息，for which 估计精度没有达到门槛
+\begin_inset Formula $\eta_{\text{crit}}$
+\end_inset
+
+（见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:技术参数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）这个feature必须显式开启
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+call InitMonitoring_cll
+\end_layout
+
+\end_inset
+
+激活之后，input and outputs for integrals 没有达到指定精度的，将会被记录到 CritPointsOut.cll。同样分配有
+ channel number
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine Setncritpointsout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutine Getncritpointsout_cll(outchan)
+\end_layout
+
+\begin_layout Plain Layout
+
+integer outchan
+\end_layout
+
+\end_inset
+
+输出被限制为头
+\begin_inset Formula $n_{\text{crit}}^{\text{N,max}}=50$
+\end_inset
+
+个有问题的
+\begin_inset Formula $N$
+\end_inset
+
+–点积分和头
+\begin_inset Formula $n_{\text{crit}}^{\text{B\ensuremath{\prime},max}}=50$
+\end_inset
+
+个导数.这些limits都可以更改
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutien SetMaxCritPoints_cll(npoints,N),
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutien SetMaxCritPoints_cll(npointarray),
+\end_layout
+
+\begin_layout Plain Layout
+
+subroutien SetMaxCritPointsDB_cll(npoints),
+\end_layout
+
+\begin_layout Plain Layout
+
+integer npoints,N
+\end_layout
+
+\begin_layout Plain Layout
+
+integer npointarray(Nmax)
+\end_layout
+
+\end_inset
+
+工作方式和 subroutine SetMaxCheck_cll and SetMaxCheckDB_cll 是完全相似的。初始化或者后续初始化of
+ COLLIER 不会改变
+\begin_inset Formula $n_{\text{crit}}^{\text{N,max}},n_{\text{crit}}^{\text{B\ensuremath{\prime},max}}$
+\end_inset
+
+和对应的counters。但是，call of InitMonitoring_cll 将重置
+\begin_inset Formula $n_{\text{crit}}^{\text{1,max}}=\cdots=n_{\text{crit}}^{\text{N,max}}=n_{\text{crit}}^{\text{B\ensuremath{\prime},max}}=50$
+\end_inset
+
+，相应的counters也将重置为
+\begin_inset Formula $0$
+\end_inset
+
+。若想只重置conunters,可以calling
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+subroutine InitPointsCnt_cll.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+示例程序
+\end_layout
+
+\begin_layout Standard
+在文件夹 diretory COLLIER-
+\begin_inset Formula $v$
+\end_inset
+
+/build 中执行命令
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+make demo
+\end_layout
+
+\begin_layout Plain Layout
+
+make democache
+\end_layout
+
+\end_inset
+
+会产生两个示例程序，可以通过下面的命令执行
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+./demo
+\end_layout
+
+\begin_layout Plain Layout
+
+./democache
+\end_layout
+
+\end_inset
+
+in the folder COLLIER-
+\begin_inset Formula $v$
+\end_inset
+
+/demos
+\end_layout
+
+\begin_layout Standard
+程序 demo 专门用来计算单个张量积分。在运行过程中，用户会被要求指定 mode，并在众多
+\begin_inset Formula $N$
+\end_inset
+
+–点积分的例子中选择一个偏爱的进行计算。计算结果写入到文件 demo_Npoint_exampleX.dat 中，引导用户查找到 demo.90 中各个积分的计算程
+序。在许多例子中，展示了同一个积分的各种调用，展示了如何与subroutine 传递参数的不同方式。例子中使用的变量定义在文件demo.f90的一开始。其中包含了
+很多注释，通过移除前面的感叹号，可以激活它们，以此来改变COLLIER的各种全局参数。
+\end_layout
+
+\begin_layout Standard
+程序 democache 展示了缓存的使用。对1000个相空间的点集，计算了一系列共8个张量积分，并重复几次。这个玩具 Monte Carlo
+ 在四种配置下分别计算：使用COLI 分支，with or without cache,然后使用 DD 分支，with and without
+ cache。源代码放在 democache.f90 中。
+\end_layout
+
+\begin_layout Section
+总结
+\end_layout
+
+\begin_layout Standard
+fortran-based library COLLIER 数值计算单圈标量或张量积分，并且对粒子的multiplicities 没有先天的限制。COLLIER
+的特别在于：对相空间的delicate区域，用专用技术自动优化数值稳定性，支持不稳定粒子的complex质量，对于红外发散，可以选择使用维数或质量正规化。此外，
+COLLIER支持检查结果的正确性和数值稳定性，由于它使用了两种独立的积分libraries，COLI and DD。
+\end_layout
+
+\begin_layout Standard
+COLLIER 可以用在传统的费曼图方法和现代的幺正性方法中。The library 已经是essential building block的代表，在自动化单圈
+振幅generator，如 OPENLOOPS and RECOLA，也将被更多其他生成器所使用。
+\end_layout
+
+\begin_layout Section
+附录A.
+ 动量不变量的集合，对于
+\begin_inset Formula $N=1,...,7$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $N$
+\end_inset
+
+–点张量积分依赖于动量不变量
+\begin_inset Formula $\mathcal{P}_{N}$
+\end_inset
+
+的完整集合，
+\begin_inset Formula $\mathcal{P}_{N}$
+\end_inset
+
+由
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式中传播子中的动量
+\begin_inset Formula $p_{i}$
+\end_inset
+
+组成。我们对集合
+\begin_inset Formula $\mathcal{P}_{N}$
+\end_inset
+
+中元素次序的约定在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中给出。为了方便，我们
+\begin_inset Formula $N=2,\cdots,7$
+\end_inset
+
+的
+\begin_inset Formula $\mathcal{P}_{N}$
+\end_inset
+
+清楚地列在这里:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathcal{P}_{2}=\left\{ p_{1}^{2}\right\} ,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{P}_{3}=\left\{ p_{1}^{2},(p_{2}-p_{1})^{2},p_{2}^{2}\right\} ,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{P}_{4}=\left\{ p_{1}^{2},(p_{2}-p_{1})^{2},(p_{3}-p_{2})^{2},p_{3}^{2},p_{2}^{2},(p_{3}-p_{1})^{2}\right\} ,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\mathcal{P}_{5}= & \{p_{1}^{2},(p_{2}-p_{1})^{2},(p_{3}-p_{2})^{2},(p_{4}-p_{3})^{2},p_{4}^{2},\\
+ & p_{2}^{2},(p_{3}-p_{1})^{2},(p_{4}-p_{2})^{2},p_{3}^{2},(p_{1}-p_{4})^{2}\},
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\mathcal{P}_{6}= & \{p_{1}^{2},(p_{2}-p_{1})^{2},(p_{3}-p_{2})^{2},(p_{4}-p_{3})^{2},(p_{5}-p_{4})^{2},p_{5}^{2},\\
+ & p_{2}^{2},(p_{3}-p_{1})^{2},(p_{4}-p_{2})^{2},(p_{5}-p_{3})^{2},p_{4}^{2},(p_{1}-p_{5})^{2},\\
+ & p_{3}^{2},(p_{4}-p_{1})^{2},(p_{5}-p_{2})^{2}\},
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\mathcal{P}_{7}= & \{p_{1}^{2},(p_{2}-p_{1})^{2},(p_{3}-p_{2})^{2},(p_{4}-p_{3})^{2},(p_{5}-p_{4})^{2},(p_{6}-p_{5})^{2},p_{6}^{2},\\
+ & p_{2}^{2},(p_{3}-p_{1})^{2},(p_{4}-p_{2})^{2},(p_{5}-p_{3})^{2},(p_{6}-p_{4})^{2},p_{5}^{2},(p_{1}-p_{6})^{2},\\
+ & p_{3}^{2},(p_{4}-p_{1})^{2},(p_{5}-p_{2})^{2},(p_{6}-p_{3})^{2},p_{4}^{2},(p_{1}-p_{5})^{2},(p_{2}-p_{6})^{2}\}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+end of file
+\end_layout
+
+\begin_layout Standard
+end of file
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+ref61
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref37"
+literal "true"
+
+\end_inset
+
+ref37
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref50"
+literal "true"
+
+\end_inset
+
+ref50
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref45"
+literal "true"
+
+\end_inset
+
+ref45
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref52"
+literal "true"
+
+\end_inset
+
+ref52
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref59"
+literal "true"
+
+\end_inset
+
+ref59
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref43"
+literal "true"
+
+\end_inset
+
+ref43
+\end_layout
+
+\end_body
+\end_document

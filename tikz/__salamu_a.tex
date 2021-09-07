@@ -1,0 +1,30 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}
+	\begin{feynman}
+		%% fig a
+		\vertex (a1) at (0,0);
+		\vertex[right =1cm  of a1] (a2);
+		\vertex[right =2cm  of a1] (a3);
+		\vertex[right =3cm  of a1] (a4);
+		\vertex[right =4cm  of a1] (a5);
+		\vertex[above =1cm of a3,crossed dot] (a6){};
+		\node[above =1.5cm  of a5] {$a$};
+		% 对各个顶点连线
+		\diagram*{
+		{ [edge=anti fermion]
+		(a1) --[momentum'={\scriptsize \(p-k\)}]  (a5),
+		},
+		% 介子连线
+		{ [edge= charged scalar]
+		(a2) --[quarter left, momentum={\scriptsize \(k\)}](a6)--[quarter left,momentum={\scriptsize \(k+q\)}](a4),
+		}
+		};
+	\end{feynman}
+\end{tikzpicture}
+
+\end{document}

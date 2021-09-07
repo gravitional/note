@@ -1,0 +1,31 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}
+	\begin{feynman}
+		%% fig j
+		\vertex (j1) at (0,0);
+		\vertex[right =1cm  of j1] (j2);
+		\vertex[right =2cm  of j1] (j3);
+		\vertex[right =3cm  of j1] (j4);
+		\vertex[right =4cm  of j1] (j5);
+		\vertex[above =1.4 cm  of j3,crossed dot,anchor=center] (j6){};
+		\node[above =1.9 cm  of j5] {$j$};
+		% 对各个顶点连线
+		\diagram*{
+			{ [edge= fermion]
+					(j1) --  (j3)--(j5),
+				},
+			%介子连线
+			{ [edge= charged scalar]
+			(j3) --[half left](j6)--[half left](j3),
+			}
+		};
+	\end{feynman}
+\end{tikzpicture}
+
+
+\end{document}
