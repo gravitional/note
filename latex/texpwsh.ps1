@@ -20,7 +20,7 @@ if ($(Get-ExecutionPolicy) -ne 'Unrestricted') {
 ++++++++++++++++++++++++++++++
 PowerShell 的默认脚本执行策略不是 'Unrestricted', 这样可以防止执行互联网上的恶意脚本。
 但是也没法执行自己编写的脚本。请按下 Win+X, 打开 PowerShell管理员 或者 Windows 终端管理员, 执行:
-Set-ExecutionPolicy 'UnRestricted'
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 允许本地脚本执行.
 -----------------------------------------
 '@    
