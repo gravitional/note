@@ -960,6 +960,7 @@ Tango Light
  
 使用VPN造成的 WSL2 启动 crash
 
+[failing to startup with code 4294967295](https://github.com/microsoft/WSL/issues/5092#:~:text=Solve%20%22process%20exited%20with%20code%204294967295%22%20%2C%20run,complete%20the%20reset.%20Does%20not%20resolve%20the%20issue.)
 [关于使用WSL2出现'参考的对象类型不支持尝试的操作'的解决方法](https://zhuanlan.zhihu.com/p/151392411)
 
 长期解决的方案(推荐),下载此软件：[http://www.proxifier.com/tmp/Test20200228/NoLsp.exe](http://www.proxifier.com/tmp/Test20200228/NoLsp.exe)
@@ -977,7 +978,7 @@ NoLsp.exe C:\windows\system32\wsl.exe
 ***
 产生原因和解决方法分析：
 
-代理软件和`wsl2`的`sock`端口冲突,使用`netsh winsock reset`重置修复.`Proxifer` 开发人员解释如下：
+代理软件和`wsl2`的`sock`端口冲突,使用`netsh winsock reset`重置修复. `Proxifer` 开发人员解释如下：
 
 如果`Winsock LSP DLL`被加载到其进程中,则`wsl.exe`将显示此错误.
 最简单的解决方案是对`wsl.exe`使用`WSCSetApplicationCategory WinAPI`调用来防止这种情况.
