@@ -579,11 +579,13 @@ cuetag.sh file.cue track01.mp3 track02.mp3 track03.mp3 track04.mp3
 
 对于有损格式, `mp3splt-gtk` 或 `mp3splt` 可用于直接切割`mp3`文件以避免重编码带来的音质下降. 
 
-### ncm to mp3
+### netease 网易云音乐转码 ncm to mp3
 
 网易云音乐格式转换
-
+[anonymous5l/ncmdumpPublic](https://github.com/anonymous5l/ncmdump)
 [ncmdump-gui](https://github.com/anonymous5l/ncmdump-gui)
+
+命令行下使用, 先安装依赖库 `sudo apt install libtag1-dev`,  `make` 编译即可.
 
 ### pydub 模块
 
