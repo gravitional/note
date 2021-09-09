@@ -1957,6 +1957,12 @@ export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030
 export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
 ```
 
+#### netease 网易云音乐转码
+
+[anonymous5l/ncmdumpPublic](https://github.com/anonymous5l/ncmdump)
+
+安装依赖库 `sudo apt install libtag1-dev`,  `make` 编译即可.
+
 ### gnome 蓝牙传送文件
 
 `bluetooth-sendto`; 用于通过蓝牙传输文件的GTK应用程序
