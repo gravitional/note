@@ -1,6 +1,25 @@
 #!/usr/bin/env pwsh
 # 编译目录中的 .tex 文件
-
+if ($(Get-ExecutionPolicy) -ne 'Unrestricted') {
+    @'
+++++++++++++++++++++++++++++++
+PowerShell 的默认脚本执行策略不是 'Unrestricted', 这样可以防止执行互联网上的恶意脚本。
+但是也没法执行自己编写的脚本。请按下 Win+X, 打开 PowerShell管理员 或者 Windows 终端管理员, 执行:
+Set-ExecutionPolicy -Scope CurrentUser,Process Unrestricted
+允许本地脚本执行.
+-----------------------------------------
+'@    
+}
+if ( -not $( latexmk -v)) {
+    @'
+    ++++++++++++++++++++++++++++++
+       此脚本主要使用 TeXLive 自带的 latexmk 自动化工具, 没有检测到 latexmk 工具,
+       请安装最新版 TeXLive 或者 检查环境变量的配置.
+       TeX Live: http://tug.org/texlive/
+       TeXLive 镜像: https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/
+    -----------------------------------------
+'@
+}
 if ( -not $(Test-Path ~\.latexmkrc)) {
     @'
 ++++++++++++++++++++++++++++++
@@ -13,17 +32,6 @@ Adobe Reader 可能会加文件锁，造成 LaTeX 没法动态更新PDF.
 建议使用SumatraPDF:  https://www.sumatrapdfreader.org/download-free-pdf-viewer
 -----------------------------------------
 '@
-}
-
-if ($(Get-ExecutionPolicy) -ne 'Unrestricted') {
-    @'
-++++++++++++++++++++++++++++++
-PowerShell 的默认脚本执行策略不是 'Unrestricted', 这样可以防止执行互联网上的恶意脚本。
-但是也没法执行自己编写的脚本。请按下 Win+X, 打开 PowerShell管理员 或者 Windows 终端管理员, 执行:
-Set-ExecutionPolicy -Scope CurrentUser,Process Unrestricted
-允许本地脚本执行.
------------------------------------------
-'@    
 }
 
 # 设置格式化相关的部分
