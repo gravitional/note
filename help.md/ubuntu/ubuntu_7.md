@@ -361,7 +361,7 @@ $ ls Documents
 `zip` 程序既是压缩工具,也是一个打包工具. 它读取和写入 `.zip` 文件, `Windows` 用户比较熟悉这种文件格式.
 然而,在 Linux 中 `gzip` 是主要的压缩程序, `bzip2`则排第二.
 
-在 `zip` 命令的基本用法为：
+在 `zip` 命令的基本用法为: 
 
 ```bash
 zip options zipfile file...
@@ -499,25 +499,20 @@ $ unzip -p ls-etc.zip | less
 
 ### 同步文件和目录
 
-维护系统备份的常见策略是保持一个或多个目录与另一个本地系统(通常是某种可移动的存储设备) ,
-或者远端系统中的目录(或多个目录)同步.
-
-例如我们有一个在开发中的网站, 需要经常将它的本地备份与远端网络服务器保持同步.
-在类 Unix 系统的世界里,能完成此任务且备受人们喜爱的工具是 `rsync`.
+维护系统备份的常见策略是保持一个或多个目录与另一个本地系统(通常是某种可移动的存储设备), 或者远端系统中的目录(或多个目录)同步.
+例如我们有一个在开发中的网站, 需要经常将它的本地备份与远端网络服务器保持同步. 在类 `Unix` 系统的世界里,能完成此任务且备受人们喜爱的工具是 `rsync`.
 
 这个程序能同步本地与远端的目录,通过使用 `rsync` 远端更新协议,此协议允许 `rsync` 快速地检测两个目录的差异,执行最小量的复制来达到目录间的同步.
-比起其它种类的复制程序, 这就使得`rsync` 命令非常快速和高效.
-
-唤醒`rsync`：
+比起其它种类的复制程序, 这就使得`rsync` 命令非常快速和高效.唤醒`rsync`: 
 
 ```bash
-$ rsync options 源 目标
+rsync 选项 src dest
 ```
 
-这里 `源` 和 `目标` 是下列选项之一:
+这里 `src` 和 `dest` 是下列选项之一:
 
-+ 一个本地文件或目录一个远端文件或目录,以 `[user@]host:path` 的形式存在
-+ 一个远端 `rsync` 服务器,由 `rsync://[user@]host[:port]/path` 指定
++ 本地文件或目录一个远端文件或目录,以 `[user@]host:path` 的形式存在
++ 远端 `rsync` 服务器,由 `rsync://[user@]host[:port]/path` 指定
 
 注意 `源` 和 `目标` 两者之一必须是本地文件,`rsync` 不支持远端到远端的复制.
 
@@ -533,9 +528,8 @@ $ rm -rf foo/*
 $ rsync -av playground foo
 ```
 
-我们使用了`-a` 选项(`递归`和`保护文件属性`)和 `-v` 选项(冗余输出), 以把`playground` 目录的内容同步到 `foo` 目录.
-当这个命令执行的时候, 我们将会看到一系列的文件和目录被复制.
-在最后,我们将看到一条像这样的总结信息:
+我们使用了`-a` 选项(`递归`和`保护文件属性`)和 `-v` 选项(冗余输出), 从而同步`playground` 目录的内容到 `foo` 目录.
+当这个命令执行的时候, 我们将会看到一系列的文件和目录被复制.在最后,我们将看到一条像这样的总结信息:
 
 ```bash
 sent 135759 bytes received 57870 bytes 387258.00 bytes/sec
@@ -592,10 +586,9 @@ alias backup='sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/backu
 
 现在我们只需要连接外部驱动器,然后运行 `backup` 命令来完成工作.
 
-### 在网络间使用 `rsync` 命令
+### 在网络间使用 rsync 命令
 
 `rsync` 程序的真正好处之一,是它可以被用来在网络间复制文件.毕竟,`rsync` 中的`r`象征着`remote`.
-
 远程复制可以通过两种方法完成.
 
 ***
@@ -619,7 +612,7 @@ $ sudo rsync -av --delete --rsh=ssh /etc /home /usr/local remote-sys:/backup
 `rsync` 可以被配置为一个 守护进程,监听即将到来的同步请求.
 这样做通常是为了方便一个远程系统的镜像.
 
-例如,Red Hat 软件中心为它的Fedora 发行版,维护着一个巨大的开发中软件包的仓库.
+例如, `Red Hat` 软件中心为它的 `Fedora` 发行版,维护着一个巨大的开发中软件包的仓库.
 对于软件测试人员, 在发行周期的测试阶段,镜像这些软件集合是非常有帮助的.
 因为仓库中的这些文件会频繁地 (通常每天不止一次)改动,定期同步本地镜像更加合理, 而不是大量地拷贝软件仓库.
 
@@ -636,9 +629,451 @@ $ rsync -av -delete rsync://rsync.gtlib.gatech.edu/fedora-linux-core/development
 
 拓展阅读
 
-在这里讨论的所有命令的手册文档都相当清楚明白,并且包含了有用的例子.
-另外, GNU 版本的 `tar` 命令有一个不错的在线文档.
-可以在链接处找到:[http://www.gnu.org/software/tar/manual/index.html](http://www.gnu.org/software/tar/manual/index.html)
+在这里讨论的所有命令的手册文档都相当清楚明白,并且包含了有用的例子. 
+另外, `GNU` 版本的 `tar` 命令有一个不错的[在线文档](http://www.gnu.org/software/tar/manual/index.html).
+
+### rsync 帮助页面
+
+#### 说明
+
+        rsync [选项...] 源... [目标]
+
++ 通过远程 shell 访问. 
+
+         推送: rsync [选项...] [用户@]主机:源... [目标]
+         收取: rsync [选项...] 源... [用户@]主机:目标
+
++ 通过 `rsync` 守护程序访问. 
+
+        推送: rsync [选项...] [用户@]主机::源... [目标]
+                    rsync [选项...] rsync://[用户@]主机[:PORT]/源... [目标]
+        收取: rsync [选项...] 源... [用户@]主机::目标
+                    rsync [选项...] 源... rsync://[用户@]主机[:PORT]/目标
+
+只有一个 `SRC` 参数而没有 `DEST` 参数的用法将列出源文件而不是复制. 
+
+#### 描述
+
+`Rsync` 是一个快速的, 非常通用的文件复制工具.  它可以在本地复制, 通过任何远程 `shell` 同步到/从另一个主机. 
+或者从远程`rsync`守护进程复制.   它提供了大量的选项, 允许非常灵活地指定要复制的文件集.  
+它因`delta-transfer`算法而闻名, 它只发送源文件和目的地文件之间的差异, 来减少网络数据的使用量. 
+`Rsync` 被广泛用于备份和镜像, 并可作为进阶的复制命令用于日常. 
+
+`Rsync` 使用 `quick check` 算法(默认情况下)寻找需要传输的文件, 该算法寻找在体积或最后修改时间上有变化的文件. 
+当快速检查表明文件的数据不需要更新时, 指定追踪的其他文件属性若有变化(根据选项), 会直接应用到目的地文件上.
+
+`rsync`的一些附加功能是:
+
++ 支持复制`links`, `devices`, `owners`, `groups`和`permissions`
++ 类似于`GNU tar` 的`exclude`和`exclude-from`选项
++ `CVS exclude` 模式, 忽略和 `CVS` 相同的文件
++ 可以使用任何透明的远程 `shell`, 包括 `ssh` 或 `rsh`
++ 不需要`超级用户`权限
++ 文件传输的管道化, 以减少延迟
++ 支持匿名或需要认证的`rsync`守护程序(非常适合做镜像)
+
+#### general
+
+`Rsync`可以复制文件到远程主机, 或从远程主机复制文件, 或在当前主机上复制文件(它不支持在两个远程主机之间复制文件). 
+
+有两种不同的方式让`rsync`连接远程系统: 使用远程`shell`程序作为传输方式(如 `ssh` 或 `rsh`), 或通过`TCP`直连`rsync`守护进程.  
+当源文件或目标文件的路径含有一个冒号(`:`)的分隔符时, 就会使用远程`shell`传输.  
+当源文件或目标文件路径包含双冒号(`::`), 或指定`rsync:// URL`时, 直连`rsync`守护进程. 
+参见 `USING RSYNC-DAEMON FEATURES VIA A REMOTE-SHELL CONNECTION`一节, 了解后一条规则的例外情况).
+
++ 作为特殊情况, 如果指定了单一的源参数而没有目的地, 文件将以类似于 `ls -l` 的输出格式列出. 
++ 正如预期的那样, 如果源路径和目标路径都没有指定一个远程主机, 那么复制就发生在本地(也见 `--list-only`选项). 
++ `Rsync` 将本地端称为 `客户端`, 将远程端称为 `服务器`.  不要把 `服务器` 和 `rsync守护进程`混淆起来
+守护进程总是一个`服务器`, 但`服务器`既可以是`守护进程`也可以是远程`shell`生成的`进程`. 
+
+#### 安装设置
+
+参见 `README` 文件中的安装说明. 
+你可以通过使用 `-e` 选项或设置 `RSYNC_RSH` 环境变量来指定你喜欢的任何远程 `shell`. 
+注意`rsync`必须同时安装在源机器和目的机器上. 
+
+#### 使用方法
+
+使用`rsync`的方式与使用`rcp`相同. 你需要指定一个源和一个目的地, 其中一个可能是远程的. 也许用一些例子来解释最好. 
+
+```bash
+rsync -t *.c foo:src/
+```
+
+这将把所有与模式 `*.c` 匹配的文件从当前目录转移到机器`foo`上的目录`src`. 
+如果文件已经存在于远程系统中, 那么将使用`rsync`远程更新协议, 只发送数据的差异.  
+请注意, 通配符(`*.c`)的展开是由`shell`控制的, 发生在运行`rsync`, 而不是由`rsync`本身处理(与所有其他`posix`风格的程序完全一样). 
+
+```bash
+rsync -avz foo:src/bar /data/tmp
+```
+
+以上递归地将`foo`机器上`src/bar`目录下的所有文件传输到本地机器上的`/data/tmp/bar`目录. 
+文件是以 `归档`模式传输的, 这就确保了`符号链接`, `设备`, `属性`, `权限`, `所有权`等在传输过程中被保留下来.  此外, 压缩被用来减少传输的数据部分的大小. 
+
+```bash
+rsync -avz foo:src/bar/ /data/tmp
+```
+
+源文件上的尾部`/`会改变这一行为, 阻止在`目的地`创建额外的目录级别.  你可以把源文件上的尾部`/`看作是 `复制这个目录的内容`, 而不是 "按名称复制目录", 
+但在这两种情况下, `包裹目录`的属性都被转移到目的地的`包裹目录`中. 换句话说, 下面两个命令以同样的方式复制文件, 包括对`/dest/foo`的属性设置. 
+
+```bash
+rsync -av /src/foo /dest
+rsync -av /src/foo/ /dest/foo
+```
+
+还要注意的是, 主机和`module`引用, 不需要尾部的`/`来指定复制默认目录的内容.  例如, 以下都将远程目录的内容复制到`/dest`. 
+
+```bash
+rsync -av host: /dest
+rsync -av host::module /dest
+```
+
++ 你也可以在纯本地模式下使用`rsync`, 即源文件和目标文件的名称中都没有`:`. 在这种情况下, 它就像增强的拷贝命令. 
++ 最后, 你可以通过省略`module`名称来列出某个`rsync`守护进程中所有可用的`模块`. 
+
+```bash
+rsync somehost.mydomain.com::
+```
+
+更多细节请看下面的章节. 
+
+#### 举例说明
+
+下面是一些我如何使用`rsync`的例子:
+
++ 为了备份我妻子的`home`目录, 其中包括许多`MS Word`文件和邮件文件夹, 我建立一个`cron` 任务, 它执行 :
+
+```bash
+rsync -Cavz . arvidsjaur:backup
+# -C:cvs 忽略规则, a : 归档模式, -v: 增加详细程度, -z: 传输过程中压缩
+```
+
+每天晚上它通过`PPP`连接到我机器`arvidsjaur`上的一个备份目录 .
+
++ 为了同步我的`samba`源文件树, 我使用下面的`Makefile` targets:
+
+```bash
+get:
+    rsync -avuzb --exclude '*~' samba:samba/ . 
+    # -u, --update ; 跳过接收方较新的文件, -b, --backup ; 进行备份
+put:
+    rsync -Cavuzb . samba:samba/
+sync: get put
+```
+
+它将与连接另一端的`CVS`目录同步. 然后我在远程机器上进行`CVS`操作, 这节省了很多时间, 因为远程`CVS`协议不是很有效. 
+
++ 在我的 `旧` 和 `新` ftp 站点之间镜像目录:
+
+```bash
+rsync -az -e ssh --delete ~ftp/pub/samba nimbus:"~ftp/pub/tridge"
+# --delete: 删除源中不存在的文件. -e: 指定要使用的远程 shell
+```
+
+每隔几个小时它从`cron`启动. 
+
+#### 高级用法
+
+从远程主机请求多个文件的语法, 是通过指定额外的远程主机参数来完成的, 样式与第一个相同, 但可以省略主机名.  例如, 以下这些都可以
+
+```bash
+rsync -av host:file1 :file2 host:file{3,4} /dest/
+rsync -av host::modname/file{1,2} host::modname/file3 /dest/
+rsync -av host::modname/file1 ::modname/file{3,4}
+```
+
+旧版本的`rsync`要求在`SRC`中使用带引号的空格, 比如这些例子:
+
+```bash
+rsync -av host:'dir1/file1 dir2/file2' /dest
+rsync host::'modname/dir1/file1 modname/dir2/file2' /dest
+```
+
+这种分词法在最新的`rsync`中仍然有效(默认情况下), 但不像第一种方法那样容易使用. 
+
+如果你需要传输一个含有空格的文件名, 你可以指定 `--protect-args` (`-s`) 选项, 或者你需要以远程`shell`能够理解的方式来转义空格.  比如说
+
+```bash
+rsync -av host:'file\ name\ with\ spaces' /dest
+```
+
+#### 连接到一个rsync守护进程
+
+也可以使用`rsync`而不使用远程`shell`作为传输工具.  在这种情况下, 你将直接连接到一个远程`rsync`守护进程, 通常使用`TCP 873`端口.  
+(这显然需要在远程系统上运行守护进程, 所以请参考下面的`STARTING AN RSYNC DAEMON TO ACCEPT CONNECTIONS`一节来了解这方面的信息). 
+
+以这种方式使用`rsync`, 与在远程`shell`使用`rsync`是一样的, 除了:
+
++ 使用双冒号`::` 而不是单冒号来分隔主机名和路径, 或者使用`rsync:// URL`. 
++ `路径` 的第一个词实际上是`模块`的名字. 
++ 当你连接时, 远程守护进程可能会打印当天的信息. 
++ 如果您在远程守护进程中没有指定路径名称, 那么将显示守护进程中的可访问路径列表. 
++ 如果你没有指定本地目标, 那么将打印指定的远程文件列表. 
++ 你不能使用`--rsh` (`-e`) 选项. 
+
+拷贝远程模块 `src` 中所有文件的例子. 
+
+```bash
+rsync -av host::src /dest
+```
+
+远程守护程序上的某些模块可能需要认证. 如果是这样, 你在连接时将会收到一个密码提示. 
+您可以通过设置环境变量 `RSYNC_PASSWORD` 为密码来省略密码提示.或使用`--password-file`选项来避免密码提示. 
+这在编写`rsync`脚本时可能很有用. 
+
+警告: 在某些系统中, 环境变量对所有用户都是可见的. 在这些系统中, 建议使用`--password-file`. 
+
++ 你可以通过设置环境变量`RSYNC_PROXY`指向你的网络代理的`主机名:端口`对来建立连接.  注意, 你的网络代理的配置必须支持代理连接到`873`端口. 
++ 你也可以通过设置环境变量`RSYNC_CONNECT_PROG`为你想运行的命令, 使用程序作为代理来建立连接, 以代替`socket`直连. 
+这个字符串可以包含转义字符 `%H` 来表示在`rsync`命令中指定的主机名(所以如果你需要在字符串中使用单个`%`, 就使用`%%`).  比如说
+
+```bash
+export RSYNC_CONNECT_PROG='ssh proxyhost nc %H 873'
+rsync -av targethost1::module/src/ /dest/
+rsync -av rsync:://targethost2/module/src/ /dest/
+```
+
+以上命令使用`ssh`在`proxyhost`上运行`nc`(`netcat`), `nc`将所有数据转发到目标主机(`%H`)上的`873`端口(`rsync`守护程序). 
+
+#### 通过远程shell连接使用rsync-daemon功能
+
+有时使用`rsync`守护进程的各种功能(如命名模块)而不允许任何新的`socket`连接到系统中是很有用的(除了允许远程`shell` 访问). 
+`Rsync`支持使用远程`shell`连接到主机, 然后生成一次性的 `daemon`服务器, 并期望在远程用户的家目录中读取其配置文件. 
+
+如果你想加密一个`守护进程式`的传输数据, 但由于`守护进程`是由远程用户重新启动的, 你可能无法使用`chroot` 或改变守护进程的`UID`等功能,.  
+(对于另一种加密`守护进程`的方法, 考虑使用`ssh`隧道将`本地端口`连接到`远程主机`. 并在`远程主机`上配置普通的`rsync`守护进程, 只允许`rsync`连接到 `localhost`). 
+
+从用户的角度来看, 通过`远程shell`连接进行的`守护进程`传输, 使用的命令行语法与普通 `rsync-daemon传输`几乎相同, 
+唯一的例外是你需要用选项 `--rsh=COMMAND` 明确地设置远程`shell`程序.  (在环境中设置`RSYNC_RSH`不会开启这个功能).  比如说
+
+```bash
+rsync -av --rsh=ssh host::module /dest
+```
+
+如果你需要指定不同的`远程shell`用户, 请在`host`前面使用`user@`前缀来指定`rsync-user`(对于需要使用用户认证的`模块`).  
+这意味着你必须在指定`远程shell`时给`ssh`提供`-l user`选项, 例如下面的例子, 其中使用`--rsh`选项的缩写`-e`
+
+```bash
+rsync -av -e "ssh -l ssh-user" rsync-user@host::module /dest
+```
+
+`ssh-user` 将在`ssh`级别使用；`rsync-user`将用于登录 `模块`. 
+
+#### 启动rsync守护进程以接受连接
+
+为了连接到`rsync`守护进程, 远程系统需要有一个已经运行的守护进程
+(或者它需要配置像`inetd`这样的东西来生成`rsync`守护进程, 以便为特定端口上传入的连接 spawn `rsync`守护进程).
+
+关于如何启动处理 incoming `socket`连接的守护进程的完整信息, 请参见`rsyncd.conf(5)`手册页 -- 它是守护进程的配置文件, 
+它包含如何运行守护进程的全部细节(包括`独立的`和`inetd`的配置). 
+
+如果你使用其中远程`shell`传输工具进行传输, 就不需要手动启动`rsync`守护进程. 
+
+#### 排序的传输顺序
+
+`Rsync`总是将指定的文件名排序到它的内部传输列表.  这可以处理同名目录内容的合并, 使其容易删除重复的文件名. 
+当文件的传输顺序与命令行上给出的顺序不同时, 可能会使某人感到困惑. 
+
+如果你需要一个特定的文件先于其他文件传输, 可以使用独立的`rsync`调用, 也可以考虑使用`--delay-updates`.
+这不会影响排序的传输顺序, 但会使最后的`文件更新`阶段更快发生). 
+
+#### 选项总结
+
+这里是`rsync`中可用选项的简短总结. 请参考下面的详细说明以获得完整的描述. 
+
++ `-v, --verbose` ;  增加详细程度.
+  + `--info=FLAGS` ; 详细的, 较多信息的 verbosity.
+  + `--debug=FLAGS`; 详细的, debug verbosity.
+  + `--msgs2stderr` ; 用于调试的特殊输出处理
++ `--q, --quiet` ; 抑制非错误信息
+  + `--no-motd` ; 抑制守护进程模式的`MOTD`(见注意事项). 
++ `-c, --checksum` ;  根据校验和跳过, 而不是根据`mod-time`和`size`. 
++ `-a, --archive` ; 归档模式；等于`-rlptgoD`(没有`-H`,`-A`,`-X`)
+  + `--no-OPTION` 关掉一个隐含的`OPTION`(例如: `--no-D`)
+
+`-r`; 递归. `-l`; 符号连接. `-p`; 保留权限. `-t`; 保留修改时间. `-go`; 组和所有者. `-D`; 设备文件和特殊文件.
+
++ `-r, --recursive` ; 递归到目录中去.
++ `-R, --relative` ; 使用相对路径名
+  + `--no-implied-dirs` ; 不发送带有`--relative`的隐含目录. 
++ `-b, --backup`; 进行备份 (见 `--suffix` & `--backup-dir`). 
+  + `--backup-dir=DIR` ; 在`DIR`的基础上进行备份, 使其成为层次结构. 
+  + `--suffix=SUFFIX` ; 备份后缀. (默认`~` without `--backup-dir`). 
++ `-u, --update` ; 跳过`接收方`较新的文件
+  + `--inplace` ; 就地更新目标文件
+  + `--append` ; 将数据附加到较短的文件上
+  + `--append-verify` ; --append w/old data in file checksum.
+
++ `-d, --dirs` ; 传输目录, 不进行递归.
++ `-l, --links` ; 将`符号链接`复制为`符号链接`
++ `-L, --copy-links` ; 将符号链接转换成指向的`文件`/`目录`
+  + `--copy-unsafe-links` ; 只有 `不安全` 的符号链接转换成文件. 
+  + `--safe-links` ; 忽略指向树外的`符号链接`
+  + `--munge-links` ; 对符号链接进行整合, 使其更加安全. 
++ `-k, --copy-dirlinks` ; 将指向`dir`的符号链接转化为`dir`.
++ `-K, --keep-dirlinks` ; 将`接收方`的符号链接`dir`视为真实的`dir`. 
++ `-H, --hard-links` ; 保留硬链接
++ `-p, --perms` ; 保留权限
++ `-E, --executability` ; 保留可执行性
+  + `--chmod=CHMOD` 影响文件和/或目录权限
++ ` -A, --acls` ; 保留 `ACLs` (暗示 `-p`)
++ `-X, --xattrs` ; 保留扩展属性
++ `-o, --owner` ; 保留所有者(仅超级用户). 
++ `-g, --group` ;  保留组
+  + `--devices` ; 保留设备文件(仅超级用户)
+  + `--specials` ; 保留特殊文件
++ `-D` ; 与`--devices --specials`相同
++ `-t, --times` ; 保留修改时间
++ `-O, --omit-dir-times` ; 从 `--times` 中省略目录.
++ `-J, --omit-link-times` ; 从`--times`中省略符号链接
+  + `--super` ; 接收方尝试超级用户活动
+  + `--fake-super` 使用`xattrs`存储/恢复特权属性
++ `-S, --sparse` ; 将`null`序列转换成`稀疏块`
+  + `--preallocate` ; 在写入前分配目标文件
++ `-n, --dry-run` ; 执行试运行, 不做任何修改
+
++ `--W, --whole-file` ; 完整复制文件(不采用`delta-xfer`算法). 
+  + `--checksum-choice=STR` ; 选择校验算法
++ `-x, --one-file-system` ; 不跨越文件系统的边界
++ `-B, --block-size=SIZE` ; 强制采用固定的校验块大小
+
++ `-e, --rsh=COMMAND` ; 指定要使用的远程 `shell`
+  + `--rsync-path=PROGRAM` ; 指定要在远程机器上运行的`rsync`
+  + `--existing` ; 跳过在接收器上创建新文件
+  + `--ignore-existing` ; 跳过更新接收方存在的文件
+  + `--remove-source-files` ; 发送方删除同步过的文件(非目录)
+  + `--del` ; 是 `--delete-during` 的别名
+  + `--delete` ; 删除目的地目录中不相干的文件
+  + `--delete-before` ; 接收方在发送前删除, 而不是在发送过程中删除. 
+  + `--delete-during` ; 接收者在传输过程中删除文件
+  + `--delete-delay` ; 在传输过程中找出删除, 在传输后删除
+  + `--delete-after` ; 接收者在转移后删除, 而不是在转移过程中. 
+  + `--delete-excluded` ; 从目的地目录中删除被排除的文件
+  + `--ignore-missing-args` ; 忽略丢失的源参数, 不报错
+  + `--delete-missing-args` ; 从目的地删除缺失的源文件`args`
+  + `--ignore-errors` ; 即使有`I/O`错误, 也删除. 
+  + `--force` ; 强制删除目录, 即使不是空的. 
+  + `--max-delete=NUM` ; 不删除超过`NUM`的文件
+  + `--max-size=SIZE` ; 不传输任何大于`SIZE`的文件
+  + `--min-size=SIZE` ; 不传输任何小于`SIZE`的文件
+  + `--partial` ; 保留部分传输的文件
+  + `--partial-dir=DIR` ; 将部分传输的文件放入`DIR`中
+  + `--delay-updates` ; 最后再把所有更新的文件放到地方
+
++ `--m, --prune-empty-dirs` ; 从文件列表中删去空目录链
+  + `--numeric-ids` ; 不按`用户`/`组`名映射`uid`/`gid`值. 
+  + `--usermap=STRING` ; 自定义用户名映射
+  + `--groupmap=STRING` ; 自定义组名映射
+  + `--chown=USER:GROUP` ; 简单的用户名/组名映射
+  + `--timeout=SECONDS` ; 设置`I/O`超时, 单位为`秒`
+  + `--contimeout=SECONDS` ; 设置守护程序连接超时, 单位为`秒`
++ `--I, --ignore-times` ; 不跳过大小和时间相符的文件
+  + `--size-only` ; 跳过大小一致的文件
++ `-@, --modify-window=NUM` ;  设置`mod-time`比较的准确性
++ `-T, --temp-dir=DIR` 在目录DIR中创建临时文件
++ `-y, --fuzzy` ; 在没有目标文件的情况下为`basis`找到类似的文件
+  + `--compare-dest=DIR` ; also compare received files relative to `DIR`.
+  + `--copy-dest=DIR` ; ... and include copies of unchanged files
+  + `--link-dest=DIR` ; 当未改变时, 硬链接到`DIR`中的文件
+
++ `-z, --compress` ; 在传输过程中压缩文件数据
+  + `--compress-level=NUM` ; 明确设置压缩级别
+  + `--skip-compress=LIST` ; 跳过压缩后缀为`LIST`的文件
++ `--C, --cvs-exclude` ; 以`CVS`的方式自动忽略文件
++ `-f, --filter=RULE` ; 添加一个文件过滤规则.
++ `-F` ; 与 `--filter='dir-merge /.rsync-filter'`相同
+  + `repeated`: `--filter='- .rsync-filter'`.
+  + `--exclude=PATTERN` ; 排除匹配`PATTERN`的文件
+  + `--exclude-from=FILE` ; 从`FILE`读取排除模式
+  + `--include=PATTERN` ; 不排除匹配`PATTERN`的文件
+  + `--include-from=FILE` ; 从`FILE`中读取包含模式
+  + `--files-from=FILE` ; 从`FILE`中读取源文件名的列表
+
++ `-0, --from0` ; 所有的`*from/filter`文件都以`0`为界. 
++ `-s, --protect-args` ; 不按空格分词；只有通配符. 
++ `--address=ADDRESS` ; 绑定出站`socket`的地址给守护进程. 
+  + `--port=PORT` ; 指定双冒号的备用端口号
+  + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
+  + `--blocking-io` ; 对远程`shell`使用阻塞式`I/O`
+  + `--outbuf=N|L|B` ; 设置输出缓冲为`无`, `行`或`块`. 
+  + `--stats` ; 提供一些文件传输的统计信息.
+
++ `--8, --8-bit-output` ; 在输出中不对高位字符进行转义. 
++ `-h,--human-readable` ; 以人类可读的格式输出数字
+  + `--progress` ; 显示传输过程中的进度
++ `-P` ; 与 `--partial --progress` 相同
++ `-i, --itemize-changes`; 输出所有更新的变化摘要
++ `-M, --remote-option=OPTION` ; 只向远端发送`OPTION`
+  + `--out-format=FORMAT` ; 使用指定的`FORMAT`输出更新信息
+  + `--log-file=FILE` ; 在`FILE`中记录我们正在做的事情
+  + `--log-file-format=FMT` ; 使用指定的`FMT`记录更新信息
+  + `--password-file=FILE` ; 从`FILE`读取 daemon-access 的访问密码
+  + `--list-only` ; 列出文件而不是复制它们
+  + `--bwlimit=RATE` ; 限制 socket `I/O`带宽
+  + `--stop-at=y-m-dTh:m` ; 在`year-month-dayThour:minute`停止`rsync`
+  + `--time-limit=MINS` ; 在`MINS`分钟后停止`rsync`的运行
+  + `--write-batch=FILE` ; 将批量更新写入`FILE`中
+  + `--only-write-batch=FILE` ; 类似`--write-batch` 但不更新`dest`
+  + `--read-batch=FILE` ; 从`FILE`中读取一个批处理的更新
+  + `--protocol=NUM` ; 强制使用一个较早的协议版本
+  + `--iconv=CONVERT_SPEC` ; 要求转换文件名的字符集
+  + `--checksum-seed=NUM` ; 设置`块`/`文件`checksum seed(高级). 
+  + `--noatime` ; 打开源文件时不改变`atime`
+
++ `--4, --ipv4` ; 偏好`IPv4`
++ `-6, --ipv6` ; 偏好`IPv6`
++ `--version` ;  打印版本号
++ `(-h) --help` 显示此帮助(关于`-h`的注释见下文). 
+
+` `也可以作为一个守护进程运行, 在这种情况下, 可以接受以下选项. 
+
++ `--daemon` ; 作为`rsync`守护进程运行
+  + `--address=ADDRESS` ; 绑定到指定地址
+  + `--bwlimit=RATE` ; 限制 socket `I/O` 带宽
+  + `--config=FILE` ; 指定备用的`rsyncd.conf `文件
++ `--M, --dparam=OVERRIDE` ; 覆盖全局守护进程配置参数
+  + `--no-detach` ; 不从parent中分离出来
+  + `--port=PORT` ; 在备用端口号上监听
+  + `--log-file=FILE` ; 覆盖 `日志文件` 设置
+  + `--log-file-format=FMT` ; 覆盖 `日志格式` 的设置
+  + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
+
++ `-v, --verbose` ; 增加 verbosity
++ `-4, --ipv4` ; 优先选择`IPv4`
++ `-6, --ipv6` ; 偏好`IPv6`
++ `-h, --help` ; 显示此帮助(如果在 `--daemon` 之后使用). 
+
+#### 选项
+
+`Rsync`接受长(双破折号+字)和短(单破折号+字母)选项.  可用选项的完整列表在下面描述.  
+如果`选项`可以用多种方式指定, 则选择应该用`逗号`隔开.   有些选项只有`长选项`, 没有`短选项`.  
+
+如果选项需要参数, 则参数说明只列在长选项后面, 尽管也必须为短选项指定.  当指定一个参数时, 你可以使用 `--option=param` 的形式, 或者用空格代替`=`.  
+该参数可能需要以某种方式加`引号`, 以避免被`shell`命令行解析掉.   
+请记住文件名的领头`~`会被你的`shell`替换掉, 所以`--option=~/foo`不会把`tilde`改成你的家目录(要想跳转到家目录的话, 请去掉`=`). 
+
+`--help` 打印一个简短的帮助页面, 描述`rsync`中可用的选项并退出.  为了向后兼容旧版本的`rsync`, 如果你使用`-h`选项而不使用任何其他参数, 也会输出帮助. 
+
++ `--delete`;
+
+这告诉`rsync`从接收端删除不相干的文件(那些不在发送端上的文件), 但只针对被同步的目录.  
+你必须要求`rsync`发送整个目录(例如 `dir`或 `dir/`), 而不是用目录内容的通配符(例如 `dir/*`), 
+因为通配符会被`shell`展开, 因此`rsync`会得到一个传输单个文件的请求, 而不是文件的父目录. 
+
+被排除在传输之外的文件也不会被删除, 除非你使用 `--delete-excluded` 选项或将规则标记为只在发送方匹配(见`FILTER RULES`部分的`include/exclude modifiers`). 
+
+在`rsync 2.6.7`之前, 除非启用 `--recursive`, 否则该选项没有任何作用.  
+从`2.6.7`开始, 当启用`--dirs` (`-d`)时, 删除也会发生, 但只对内容被复制的目录被复制的目录. 
+如果使用不当, 这个选项可能会很危险!  首先尝试使用 `--dry-run` 选项(`-n`)进行运行, 看看哪些文件将被删除. 
+
+如果发送方检测到任何`I/O`错误, 那么将自动禁止删除目的地的任何文件. 这是为了防止发送方的临时文件系统故障(如`NFS`错误)导致目的地的文件被大量删除. 
+ 你可以用`--ignore-errors`选项来覆盖这一点. 
+
+`--delete`选项可以和`--delete-WHEN`选项以及`--delete-excluded`选项结合使用, 不会发生冲突.  
+然而, 如果没有指定`--delete-WHEN`选项, 当使用`rsync 3.0.0`或更新的版本时, `rsync`将选择`--delete-during`算法, 
+而使用较早版本的`rsync`时, 将选择`--delete-before`算法.  
 
 ## 第二十章:正则表达式
 
@@ -1180,7 +1615,7 @@ $ sed -n '/SUSE/p' distros.txt
 [me@linuxbox ~]$ sed 's/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/' distros.txt
 ```
 
-哇!这个命令看起来很丑陋. 但是它起作用了. 仅用一步,我们就更改了文件中的日期格式.  它也是一个例子：有时候我们会开玩笑地把正则表达式称为是"只写"的. 
+哇!这个命令看起来很丑陋. 但是它起作用了. 仅用一步,我们就更改了文件中的日期格式.  它也是一个例子: 有时候我们会开玩笑地把正则表达式称为是"只写"的. 
 我们能写正则表达式,但是有时候我们不能读它们. 在我们恐惧地忍不住要逃离此命令之前,让我们看一下 怎样来构建它. 
 
 因为日期是 `MM/DD/YYYY` 格式,并且出现在文本行的末尾,我们可以使用这样的表达式:
