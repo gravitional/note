@@ -1,0 +1,117 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{scopes}
+\usepackage{tikz-feynman} % texdoc tikz-feynman 
+\begin{document}
+
+\tikzset{
+pics/figChpt/.style n args={4}{
+		code={
+				\begin{feynman}
+					\vertex (x1) at (0,0);
+					\vertex[right =1cm  of x1] (x2);
+					\vertex[right =2.5cm  of x1] (x3);
+					\vertex[right =4cm  of x1] (x4);
+					\vertex[right =5cm  of x1] (x5);
+					\node[below  right = 2pt ] at (x1) {#2};
+					\node[below  = 2pt ] at (x3) {#3};
+					\node[below  left= 2pt ] at (x5) {#2};
+					\node[above = 1.35cm ] at (x3) {#4};
+					% 图形的名称
+					\node[above right =1.2 and 4.2 of x1] {#1};
+					% 对各个顶点连线
+					\diagram*{
+					%费米子箭头连线
+					{ [edge= fermion]
+							(x1) --(x2)--(x4) --(x5),
+						},
+					% 介子连线
+					{ [edge= charged scalar]
+					(x2) --[half left,](x4),
+					}
+					};
+				\end{feynman}
+			}
+	},
+pics/figQrkQch/.style n args={4}{
+		code={
+		%% 子图 a
+		\coordinate (a1) at (0,0){}; %左端点
+		\coordinate[right =5  of a1] (a2); %右端点
+		\coordinate[right =2.2  of a1] (a3); % 泡泡起点
+		\coordinate[right =2.8  of a1] (a4); % 泡泡终点
+		\coordinate[above =-0.5  of a1] (a1d);
+		\coordinate[above =-1.0  of a1] (a1dd);
+		\coordinate[above =-0.5  of a2] (a2d);
+		\coordinate[above =-1.0  of a2] (a2dd);
+		\coordinate[above =-0.5  of a3] (a3d);
+		\coordinate[above =-0.5  of a4] (a4d);
+		% 图形的名称
+		\node[above right =0.7 and 4.2 of a1] {#1};
+		% 标注夸克名称
+		\node[above right =0.5pt and 1pt of a1] {#2};
+		\node[above right =0.5pt and 1pt of a1d] {#3};
+		\node[above right =0.5pt and 1pt of a1dd] {#4};
+		% 连接顶点, 传播子
+		{	[every edge/.style=/tikzfeynman/fermion]
+		\path (a1) edge (a3);	\path (a4) edge (a2);
+		\path (a1d) edge (a3d);	\path (a4d) edge (a2d);
+		\path (a1dd) edge (a2dd);
+		}
+		\path (a3) edge[controls=+(25:3) and +(155:3), /tikzfeynman/fermion] (a4);
+		\path (a3d) edge[controls=+(25:6) and +(155:6), /tikzfeynman/fermion] (a4d);
+		}
+},
+pics/figQrkSeaA/.style n args={5}{
+		code={
+				\begin{feynman}
+					%% 子图 b
+					\vertex (b1) at (0,0); %入射位置1
+					\vertex[right =1  of b1] (b2);
+					\vertex[above =-0.5  of b2] (b2d);
+					\vertex[above =-0.5  of b2d] (b2dd);
+					\vertex[right =4  of b1] (b3);
+					\vertex[right =5  of b1] (b4); %出射位置1
+					\vertex[above =-0.5 of b1] (b5); % 入射位置2
+					\vertex[right =5  of b5] (b6);
+					\vertex[above =-1 of b1] (b7); % 入射位置3
+					\vertex[right =5  of b7] (b8);
+					\vertex[above right =0.4 and 1.5  of b1] (b9);
+					\vertex[above right =0.4 and 3.5  of b1] (b10);
+					% 图形的名称
+					\node[above right =0.7 and 4.2 of b1] {#1};
+					% 标注夸克名称
+					\node[above right =0.5pt and 1pt of b1] {#2};
+					\node[above right =0.5pt and 1pt of b5] {#3};
+					\node[above right =0.5pt and 1pt of b7] {#4};
+					%% 中间的夸克名称
+					\node[above right =1.37 and 2.26 of b1] {#2};
+					\node[above right =-1pt  and 2.26 of b1] {#5};
+					% 对各个顶点连线
+					\diagram*{
+					%普通连线
+					{ [edge= plain]
+							(b3)--(b4),
+							(b1)--(b2),
+							(b5)--(b2d),
+							(b7)--(b2dd)
+						},
+					%费米子箭头连线
+					{ [edge= fermion]
+					(b5)--(b6),(b7)--(b8),
+					(b2) --[half left,looseness=1.5](b3),
+					(b9) --[half right,looseness=0.9](b10) --[half right,looseness=0.9](b9)
+					}
+					};
+				\end{feynman}
+			}
+	}
+}
+
+\begin{tikzpicture}
+	\path (0,0) pic { figQrkQch = {$(a)$}{$u$}{$d$}{$u$} } ;
+	\path (6,0) pic { figQrkQch = {$(b)$}{$d$}{$u$}{$u$} } ;
+\end{tikzpicture}
+
+\end{document}

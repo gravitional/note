@@ -145,9 +145,23 @@ arc [start angle=0, end angle=30, radius=3mm] -- cycle;
 \end{tikzpicture}
 ```
 
-### 作用域
+### 作用域 scope
 
-p42, scope,
+参考p42, scope.   类似于其他程序中的局部变量. 在导言区添加`\usetikzlibrary {scopes}`.
+
+例如在`tikzpicture`环境中使用`tikz-feynman`包的`feynman`环境定义的`fermion` edge style.
+
+```latex
+\begin{tikzpicture}
+{[every edge/.style={controls=+(27:3) and +(153:3), /tikzfeynman/fermion}]
+\path (0,0) edge (0,1);
+}  % 末尾无需分号
+\end{tikzpicture}
+```
+
+`every edge/.style`是`tikzpicture`环境中的`handle`.
+
+***
 可以给选项设置作用范围, 如果想让整个环境都生效, 可以把选项传递给`\tikz`命令或者`{tikzpicture}`环境. 
 如果希望定义一个局部环境, 可以使用`{scope}`环境. 例如:
 
@@ -455,6 +469,24 @@ p168 The Let Operation
 
 ### node 指定
 
+`tikz-feynman`包中的顶点相当于`node`, `node`的特点是需要添加文字(可以为空白--`{}`), 也就是类似下面这种. 在`node`周围会留下空白, 其实是`node`占据的空间.
+
+```latex
+\node[above right =0.7 and 4.2 of a1] {text}
+```
+
+参考 p229, 17.2.2 Predefined Shapes.
+如果不想画出`node`, 只是给坐标分配名称, 例如`(x)`, 并希望传播子可以直接连接`(x)`.  可以使用`coordinate`.
+它的效果类似于使用了`(x.center)`, 不会把路径断开成几段. 可以完整的连接起来, 或者给包围的区域上色.
+
+类似于
+
+```latex
+\coordinate[right =2.2  of a1] (a3); % 泡泡起点
+```
+
+这样后面不需要有`{text}`. 
+
 p224 基本语法：
 
 ```latex
@@ -688,7 +720,7 @@ seagull/.pic={
 838 To Path Library
 page 841 75.4 Loops
 
-可以使用 `To`来绘制直线, 也可以用来绘制曲线. 
++ 可以使用 `To`来绘制直线, 也可以用来绘制曲线. 
 
 ```latex
 \path ... to[<options>] <nodes> <coordinate or cycle> ...;
@@ -707,7 +739,7 @@ page 841 75.4 Loops
 在给定出射和入射角度之后, `/tikz/looseness=<number>`选项中的`<number>`调控`control points`与初始点以及与终点的距离. 
 还可以用 `/tikz/min distance=<distance>`, `/tikz/out min distance=<distance>` 控制最小距离, 避免计算无解. 
 
-使用 `loop`选项来绘制圈图曲线, 例如
++ 使用 `loop`选项来绘制圈图曲线, 例如
 
 ```latex
 \begin{tikzpicture}
@@ -721,7 +753,23 @@ page 841 75.4 Loops
 如果想精确控制圈图的形状, 可以手动添加控制点, 例如：
 
 ```latex
-\draw (a3) to [controls=+(45:1.5) and +(135:1.5)] (a3); % 使用(角度:距离)的方式指定控制点的坐标.
+\draw (a3) to [controls=+(45:1.5) and +(135:1.5)] (a3); 
+```
+
+上面使用`+(角度:距离)`的方式指定控制点的坐标, `and`左右的坐标采用相对坐标的形式, 分别相对于路径的`起点`和`终点`.
+
+参考 page 33, 可以使用`to`的简称, 即`..`语法以 `曲线` 方式延伸路径:
+
+```latex
+.. controls <控制点1> and <控制点2> .. <终点>
+```
+
+你可以省略`and <控制点2>`, 这将导致使用`控制点1`两次.
+
+如果要使用`tikz-feynan`定义的线型, 使用下面的`edge`, 并使用`tikz-feynan`定义的全称, 例如:
+
+```latex
+\draw (a3) edge [controls=+(30:3) and +(150:3), /tikzfeynman/fermion] (a4);
 ```
 
 ### edge
@@ -749,8 +797,8 @@ page 841 75.4 Loops
 这对`to`操作来说是不必要的, 因为这个坐标已经是主路径的一部分.
 
 `\tikztostart`是`edge`操作之前的路径上的最后一个坐标, 就像对`node`或`to`操作一样. 
-然而, 这条规则有一个例外：如果`edge`操作的前面是`node`操作, 那么这个刚刚声明的节点就是起始坐标.
-而不是像通常情况下那样, 是这个节点所处的坐标——一个微妙的区别. 在这方面, `edge`与`node`和`to`都不同. 
+然而, 这条规则有一个例外：如果`edge`操作的前面是`node`操作, 那么这个刚刚声明的`node`就是起始坐标.
+而不是像通常情况下那样, 是这个节点所处的坐标--一个微妙的区别. 在这方面, `edge`与`node`和`to`都不同. 
 
 如果一行有多个`edge`操作, 那么所有这些操作的起始坐标都是一样的, 但是目标坐标不同, 它们是主路径的一部分. 
 因此, 起始坐标就是第一个`edge`操作之前的坐标. 这一点与`node`类似, `edge`操作也不会修改当前路径. 
