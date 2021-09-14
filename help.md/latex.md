@@ -240,9 +240,42 @@ Email bug reports to <xetex@tug.org>.
 Invoke-Expression $("lualatex" + " " + "-halt-on-error " + "-output-directory=temp -shell-escape -interaction=nonstopmode " + "test.tikz.tex" ) > ./null
 ```
 
+### 查看文档使用的所有文件
+
+[All the files used by this document](https://texfaq.org/FAQ-filesused#:~:text=The%20simplest%20solution%20is%20the%20LaTeX%20%5B%26listfiles%26%5D%20command.,as%20a%20check-list%20in%20case%20that%20problems%20arise.)
+
+当你和别人分享一个文件时, 最好是安排双方都有相同的辅助文件. 
+你的联系人显然需要相同的文件集( 例如, 如果你使用`url`包, 她也必须有`url`). 
+但是, 假设你的`shinynew`是稳定版本,但她的是不稳定的开发版; 在你们都意识到发生了什么之前, 这种情况可能会非常混乱. 
+
+最简单的解决方案是`LaTeX \listfiles` 命令. 它将在日志文件中列出所使用的`文件`和它们的`版本号`. 
+如果你把这个列表提取出来并与你的文件一起传送, 它可以作为一个检查列表, 以防出现问题. 
+
+请注意, `\listfiles`只记录由 `标准LaTeX`机制( `\documentclass`、`\usepackage`、`\include`、`\includegraphics`等)输入的东西. 
+`\input`命令, 经`LaTeX`修改后, 用`LaTeX`的语法表示为：
+
+```latex
+input\mymacros}
+```
+
+它记录`mymacros.tex`文件的细节, 但如果你用`TeX`的原始语法来使用` \input`: 
+
+```latex
+\input mymacros
+```
+
+`mymacros.tex`不会被记录, 所以也不会被 `\listfiles` 列出--你绕过了记录其使用的机制. 
+
+[snapshot](https://ctan.org/pkg/snapshot)包帮助`LaTeX`文档的作者获取该文档的外部依赖列表, 其结果可以嵌入文档的顶部. 
+该包的预期用途是创建文档的存档副本, 但它也适用于文档交换的情况. 
+
+`bundledoc`系统使用`snapshot`来产生文档所需依赖的归档( 例如, `tar.gz`或`zip`); 它带有用于`TeX Live-Unix`和`MiKTeX`的配置文件. 当你发送文件的第一份副本时, 它显然很有用. 
+
+`mkjobtexmf`可以通过`TeX`的`-recorder`选项, 或者使用(Unix)`strace`命令来监视`TeX`的工作, 找到 `job`中使用的文件. 
+这样找到的文件被复制( 或链接)到一个目录, 然后可以保存起来用于传输或归档. 
+
 ## 中文西文数学字体
 
-***
 [LaTeX数学公式的默认字体是什么](https://www.zhihu.com/question/30058577/answer/46612848).
 `LaTeX` 默认的文章类中的字体是 `Computer Modern Math`(`LaTeX`), `Latin Modern Math`(`XeTeX`). 字体文件的位置可以用`kpsewhich`查看. 在安装`TeXLive`的时候会自动安装.
 如果没有安装的话,[GUST](http://www.gust.org.pl/projects/e-foundry/lm-math)可以下载`Latin Modern Math`字体,以及其他字体.
@@ -354,7 +387,7 @@ Compare with $\mathcal{X}$ and $\Theta$.
 [Latex导入文件/input和/include方式](https://blog.csdn.net/OOFFrankDura/article/details/89644373)
 
 `\input`命令可以改为`include`,
-区别在于,`input`可以放在导言区和正文区,包含的内容不另起一页；
+区别在于,`input`可以放在导言区和正文区,包含的内容不另起一页; 
 而`include`只能放在正文区,包含的内容另起一页. 
 
 另外`CJK`中还有`CJKinput`和`CJKinclude`命令. 
@@ -405,8 +438,8 @@ texdoc texbytopic
 + `nargs`:可选,一个从`0`到`9`的整数. 指定命令接受的参数个数,包括可选参数. 忽略这个参数相当于设定为`0`,
 意味着命令不接受参数. 如果重定义命令,新命令可以和旧命令的参数数目可以不一样. 
 + `optargdefault`:可选. 如果这个参数存在,`\cmd`的第一个参数将是可选参数(可以是空字符串). 如果这个参数不存在,`\cmd`不使用可选参数. 也就是说,如果用`\cmd[optval]{...}`调用,`#1`将会被设置成`optval`; 如果用`\cmd{...}`调用,`#1`将会被设置成`optargdefault`. 两种情况下,必选参数都从`#2`开始. 
-忽略`[optargdefault]`与使用`[]`是不同的,前一种情况, `#1`被设置为`optargdefault`；后一种情况,`#1`被设置为空字符串. 
-+ `defn`: 需要；每次遇到`\cmd`就用`defn`替换. 参数`#1`,`#2`被替换成你提供的值. `Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`. 
+忽略`[optargdefault]`与使用`[]`是不同的,前一种情况, `#1`被设置为`optargdefault`; 后一种情况,`#1`被设置为空字符串. 
++ `defn`: 需要; 每次遇到`\cmd`就用`defn`替换. 参数`#1`,`#2`被替换成你提供的值. `Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`. 
 一个简单的定义新命令的例子:`\newcommand{\RS}{Robin Smith}`,文中的每个`\RS`会被`Robin Smith`替换. 
 重定义命令是类似的`\renewcommand{\qedsymbol}{{\small QED}}`.
 用`\newcommand`重定义命令,或者用`\renewcommand`定义新命令,都会报错. 
@@ -587,7 +620,7 @@ And this is the best squash, \verb+literally!+
 
 这两个包的区别在于可选参数给出的形式不同. 参数名称和必选参数是相同的. 
 
-插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置. `figure` 和 `table` 环境可以自动完成这样的任务；这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例. 
+插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置. `figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例. 
 
 ```latex
 \begin{figure}[htbp]
@@ -598,7 +631,7 @@ And this is the best squash, \verb+literally!+
 \end{figure}
 ```
 
-`htbp` 选项用来指定插图的理想位置,这几个字母分别代表 `here`, `top`, `bottom`, `float page`,也就是就这里, 页顶, 页尾, 浮动页(专门放浮动体的单独页面或分栏). `\centering` 用来使插图居中；`\caption` 命令设置插图标题,`LaTeX` 会自动给浮动体的标题加上编号. 注意 `\label` 应该放在标题命令之后. 
+`htbp` 选项用来指定插图的理想位置,这几个字母分别代表 `here`, `top`, `bottom`, `float page`,也就是就这里, 页顶, 页尾, 浮动页(专门放浮动体的单独页面或分栏). `\centering` 用来使插图居中; `\caption` 命令设置插图标题,`LaTeX` 会自动给浮动体的标题加上编号. 注意 `\label` 应该放在标题命令之后. 
 
 如果你想了解 `LaTeX` 的浮动体策略算法细节,你可以参考我博客中关于[浮动体的系列文章](https://liam.page/series/#LaTeX-%E4%B8%AD%E7%9A%84%E6%B5%AE%E5%8A%A8%E4%BD%93)
 如果你困惑于"为什么图表会乱跑"或者"怎样让图表不乱跑",请看[我的回答](https://www.zhihu.com/question/25082703/answer/30038248). 
@@ -823,7 +856,7 @@ split
 ```
 
 `split`环境是一种特殊的从属形式,仅在其他方程环境内部使用.  但是它不能在`multline`中使用. 
-`split`仅支持一个对齐(`＆`)列； 如果需要更多,应使用`aligned`或`alignedat`. 
+`split`仅支持一个对齐(`＆`)列;  如果需要更多,应使用`aligned`或`alignedat`. 
 `split`结构的宽度是full line width
 
 ```latex
@@ -870,7 +903,7 @@ split
 
 内容被以文本模式处理
 (请参见[`Modes`](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Modes)),
-因此`LaTeX`会中断换行以形成段落.但是它不会包含多个段落；为此,请使用`minipage`环境(请参见`minipage`).
+因此`LaTeX`会中断换行以形成段落.但是它不会包含多个段落; 为此,请使用`minipage`环境(请参见`minipage`).
 
 `\parbox`的选项(除了内容)与`minipage`的选项相同.为方便起见,此处提供了选项的摘要,但完整说明请参见[minipage](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#minipage).
 
@@ -1103,7 +1136,7 @@ bar\cite{baz}
 \citation{baz}
 ```
 
-在这里,`\relax` 表示休息一会儿,什么也不做；`\citation` 则是由 `tex` 文件中的 `\cite` 命令写入 `aux` 文件的标记. 
+在这里,`\relax` 表示休息一会儿,什么也不做; `\citation` 则是由 `tex` 文件中的 `\cite` 命令写入 `aux` 文件的标记. 
 它说明了:用户需要标记为 `baz` 的参考文献信息. 
 当 BibTeX 读入 `aux` 文件的时候,它就会记录下所有 `\citation` 命令中的内容(即文献标记——`label`),这样就知道了用户需要哪些参考文献信息. 
 
@@ -1141,7 +1174,7 @@ bar\cite{baz}
 
 tex 文件中的 `\bibliographystyle` 指定了用户期待的参考文献列表格式文件,并将其写入 `aux` 文件备用,通过 `\bibstyle` 标记. 
 与此同时,`\bibliography` 命令则用 `\bibdata` 在 `aux` 文件中记录了参考文献数据库的名字(不含扩展名). 
-`在这里,unsrt` 是 `unsort` 的缩写,它对应着 `unsrt.bst` 文件,是大多数 TeX发行版自带的标准格式文件之一；
+`在这里,unsrt` 是 `unsort` 的缩写,它对应着 `unsrt.bst` 文件,是大多数 TeX发行版自带的标准格式文件之一; 
 `foobar` 则对应着 `foobar.bib` 文件,该文件是用户自己编写或生成的参考文献数据库. 
 
 ***
@@ -1350,24 +1383,24 @@ In numerical mode,the results are different.
 ***
 调用`\usepackage[options]{natbib}`的选项
 
-+ `round` (默认)圆括号；
-+ `square` 用于方括号；
++ `round` (默认)圆括号; 
++ `square` 用于方括号; 
 + `curly` 花括号;
 + `angle` 用于尖括号;
-+ `semicolon` (默认)使用分号分隔多个引用；
-+ `colon` 与`semicolon`相同,这是一个较早的术语错误；
-+ `comma` 使用逗号作为分隔符；
-+ `authoryear` (默认)作者年份( author–year)引文；
-+ `numbers` 数字引用；
++ `semicolon` (默认)使用分号分隔多个引用; 
++ `colon` 与`semicolon`相同,这是一个较早的术语错误; 
++ `comma` 使用逗号作为分隔符; 
++ `authoryear` (默认)作者年份( author–year)引文; 
++ `numbers` 数字引用; 
 + `super` 用于上标数字引用,类似`Nature`中的. 
-+ `sort` 将多个引文按其在参考文献列表中出现的顺序排序；
-+ `sort&compress` 类似`sort`,但如果可能的话,还会压缩多个数字引用(如`3-6,15`)；
-+ `compress` 压缩而不排序,因此压缩仅在给定的引用按照数字升序时生效；
-+ `longnamesfirst` 使任何参考文献的第一个引用都等同于已加星标的变体(完整作者列表),而随后的引用均是普通引用(缩写列表)；
-+ `sectionbib` 重新定义`\ thebibliography`来引用`\ section *`而不是`\ chapter *`;仅对带有`\ chapter`命令的类有效； 与`chapterbib`软件包一起使用；
-+ `nonamebreak` 将所有作者的名字放在同一行中,导致`hbox`过多,但有助于解决一些`hyperref`问题；
-+ `merge` 允许在`citation key`前面加上`*`前缀,并将此类引文的引用与先前引文的引用合并；
-+ `elide` 合并参考文献后,去掉重复的共同要素,例如作者或年份；
++ `sort` 将多个引文按其在参考文献列表中出现的顺序排序; 
++ `sort&compress` 类似`sort`,但如果可能的话,还会压缩多个数字引用(如`3-6,15`); 
++ `compress` 压缩而不排序,因此压缩仅在给定的引用按照数字升序时生效; 
++ `longnamesfirst` 使任何参考文献的第一个引用都等同于已加星标的变体(完整作者列表),而随后的引用均是普通引用(缩写列表); 
++ `sectionbib` 重新定义`\ thebibliography`来引用`\ section *`而不是`\ chapter *`;仅对带有`\ chapter`命令的类有效;  与`chapterbib`软件包一起使用; 
++ `nonamebreak` 将所有作者的名字放在同一行中,导致`hbox`过多,但有助于解决一些`hyperref`问题; 
++ `merge` 允许在`citation key`前面加上`*`前缀,并将此类引文的引用与先前引文的引用合并; 
++ `elide` 合并参考文献后,去掉重复的共同要素,例如作者或年份; 
 + `mcite`识别(并忽略)合并语法
 
 #### lyx中使用 bib tex
@@ -1445,7 +1478,7 @@ In numerical mode,the results are different.
 这几个都是同一类环境,区别在于
 
 1. 示例环境(`example`), 练习(`exercise`)与例题(`problem`)章节自动编号
-2. 注意(note),练习(exercise)环境有提醒引导符；
+2. 注意(note),练习(exercise)环境有提醒引导符; 
 3. 结论(conclusion)等环境都是普通段落环境,引导词加粗. 
 
 ## example 例子
@@ -1555,11 +1588,11 @@ f(n) = \begin{cases} n/2 &\mbox{if } n \equiv 0 \\
 为了命名一致性,有一个`matrix`环境,没有定界符.
 
 对于`array`环境,这并不是完全多余的.`matrix`环境都`array`环境的水平间距更经济.
-另外,与阵列环境不同,您不必为任何`matrix`环境提供`column specifications`；
+另外,与阵列环境不同,您不必为任何`matrix`环境提供`column specifications`; 
 默认情况下,您最多可以有`10`个居中的列. (如果需要以一列或其他特殊格式左对齐或右对齐,则必须诉诸`array`.)
 
 为了产生适用于文本的小矩阵,需要有一个`smallmatrix`环境,它比普通矩阵更适合于单个文本行.
-必须提供定界符；没有`p`,`b`,`B`,`v`,`V`版本的`smallmatrix`.
+必须提供定界符; 没有`p`,`b`,`B`,`v`,`V`版本的`smallmatrix`.
 上面的例子可以这些生成
 
 ```latex
@@ -1813,7 +1846,7 @@ Synopsis:
 
 产生编号项目清单的环境. 
 标签编号的格式取决于此环境的嵌套级别. 见下文.
-默认的顶级编号是``1.``,``2.``等.每个枚举列表环境必须至少包含一个项目； 
+默认的顶级编号是``1.``,``2.``等.每个枚举列表环境必须至少包含一个项目;  
 缺少将导致` LaTeX`错误`Something's wrong--perhaps a missing \item`..
 
 此示例给出了1908年奥运会马拉松比赛的前两名. 作为顶级列表,标签将显示为` 1.`和` 2.`.
@@ -1872,7 +1905,7 @@ Synopsis:
 ```
 
 产生一个无序的列表,有时称为项目符号列表. 
-环境必须至少有一个` \item`； 没有导致` LaTeX`错误`Something's wrong--perhaps a missing \item`.
+环境必须至少有一个` \item`;  没有导致` LaTeX`错误`Something's wrong--perhaps a missing \item`.
 
 这给出了两个项目列表.
 
@@ -2218,7 +2251,7 @@ $a \sslash b$
 
 + $\mathcal{L}$ 常用来表示损失函数
 + $\mathcal{D}$ 表示样本集
-+ $\mathcal{N}$ 常用来表示高斯分布；
++ $\mathcal{N}$ 常用来表示高斯分布; 
 
 [为阿拉伯数字和小写字母实现类似 \mathbb 的效果 ](https://liam.page/2017/01/08/arabic-numbers-or-lowercase-letters-in-blackboard-bold-doublestroke-font/)
 
@@ -2308,7 +2341,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 
 警告:以下讨论假定软件包`amsmath`已加载.通常, `\ mathrm`应用于`符号`,而 `\ text`应用于文本. :)
 
-但是,最好对代表函数的罗马字母簇使用运算符:命令`\lcm`和`\gcd`已预定义； 对于`ord`,没有预定义的命令,但是把下列定义放入导言区就足够了
+但是,最好对代表函数的罗马字母簇使用运算符:命令`\lcm`和`\gcd`已预定义;  对于`ord`,没有预定义的命令,但是把下列定义放入导言区就足够了
 
 ```latex
 \DeclareMathOperator{\ord}{ord}
@@ -2319,7 +2352,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 例如,`\mathrm`的参数中的空格将被忽略.
 此外,`\text`跟周围环境的字体有关:在定理的陈述中它将以斜体显示.
 
-应特别注意诸如`m/s`之类的单位；
+应特别注意诸如`m/s`之类的单位; 
 最好不要`手工`制作它们,而要使用`siunitx`之类的程序包,它可以处理所有的细节,同时又非常灵活.
 
 #### 求迹 Trace
@@ -2367,10 +2400,10 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 
 `\mathop` is considered to be a single variable sized math symbol for purposes of placing limits below (subscripts) and above (superscripts)  in display math style
 
-数学符号的标准,首先是定义在 ISO 31-11 当中；而后这个标准被 ISO 80000-2:2009 取代. 
+数学符号的标准,首先是定义在 ISO 31-11 当中; 而后这个标准被 ISO 80000-2:2009 取代. 
 因此,此篇讨论的内容,都是基于 ISO 80000-2:2009 的.  在 ISO 80000-2:2009 中,微分算子被描述为
 
-+ 直立的拉丁字母 `d`；
++ 直立的拉丁字母 `d`; 
 + 一个右边没有间距的操作符. 
 
 对于直立的拉丁字母 `d`,我们可以使用 `\mathrm{d}` 达成效果. 
@@ -2402,7 +2435,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 ```
 
 在这个定义中,拉丁字母 d 本身的特点得到了保留(比如基线是正常的). 
-此外,在 \mathrm{d} 的左边,插入了一个空白的 `\mathop{}`；其左边的空白保留,而右边与 `\mathrm{d}` 之间的距离,则由 `\!` 抑制. 这样就达成了我们的目标.  
+此外,在 \mathrm{d} 的左边,插入了一个空白的 `\mathop{}`; 其左边的空白保留,而右边与 `\mathrm{d}` 之间的距离,则由 `\!` 抑制. 这样就达成了我们的目标.  
 
 数学公式环境中,本来就没有距离,所以`\mathrm{d}`什么都没有,就代表右侧没有距离,
 左边的`\!`是用来把`\mathrm{d}`往左移动的,就是离左边稍微近一点,因为插入了一个空白的数学符号. 
@@ -2536,7 +2569,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 \subsection{The classes \texorpdfstring{$\mathcal{L}(\gamma)$}{Lg}}
 ```
 
-在第二个参数位置中你写下一个最佳的近似即可； 毕竟,书签只是参考文档的指南.
+在第二个参数位置中你写下一个最佳的近似即可;  毕竟,书签只是参考文档的指南.
 
 ### 数学符号
 
@@ -2642,9 +2675,7 @@ URL链接
 
 ## 画费曼图
 
-画费曼图有许多包:
-
-现在了解到的有
+画费曼图有许多包, 现在了解到的有:
 
 [ GkAntonius:feynman ](https://github.com/GkAntonius/feynman):Sharp-looking Feynman diagrams in python 
 [ JP-Ellis /tikz-feynman ](https://github.com/JP-Ellis/tikz-feynman):Feynman Diagrams with TikZ 
@@ -2812,3 +2843,64 @@ URL链接
 ```
 
 如果你想把行距搞得和 `Word` 很像, 需要改变每个字号下的`单倍行距`大小. 参考[LaTeX 设置的行距与 Word 的行距如何对应？](https://www.zhihu.com/question/62327906/answer/197899935)
+
+### 添加水印或者背景图片 eso-pic 
+
+添加 watermark
+
+如果是 `beamer`, 可以直接使用`beamer`预留的宏, 类似于
+
+```latex
+\setbeamertemplate{background}{\includegraphics[height=\paperheight]{b2.png}} %设置背景图片
+```
+
+如果是文章类, 可以使用 [eso-pic](https://www.ctan.org/pkg/eso-pic).
+
++ `eso-pic`; 在每一页上添加图片命令( 或背景). 
+该软件包为`LaTeX`的`shipout routine`添加一个或多个用户命令, 可用于将`命令的输出`置于固定位置. `grid`选项可以用来寻找正确的位置. 
+
+具体的用法可以参考包文件中附带的例子, `eso-*.tex`. 例如 `eso-ex1.tex`
+
+```latex
+\documentclass[a4paper]{article}
+\usepackage{eso-pic,calc}
+\listfiles
+\makeatletter
+\AddToShipoutPicture{%
+  \begingroup %下面的命令画一个 frame
+    \setlength{\@tempdima}{15mm}%
+    \setlength{\@tempdimb}{\paperwidth-2\@tempdima}%
+    \setlength{\@tempdimc}{\paperheight-2\@tempdima}%
+    \thicklines%
+    \put(\LenToUnit{\@tempdima},\LenToUnit{\@tempdima}){%
+      \framebox(\LenToUnit{\@tempdimb},\LenToUnit{\@tempdimc}){}}%
+  \endgroup
+}
+\makeatother
+\begin{document}
+  \section*{第一页}
+    此页以及接下来的页, 带有离页边 15~mm 的 frame.\newpage
+  \section*{第二页}
+      \AddToShipoutPicture*{\put(100,100){\circle{40}}}
+      带*号命令的作用 : 只有这一页在左下角有圆圈
+      \AddToShipoutPictureBG*{\AtTextCenter{\put(-110,300){\color{red}\circle{40} }}}
+      末尾的 BG 表示插入到背景, AddToShipoutPictureFG 表示插入到前景, 
+      AtTextCenter 命令 表示插入锚点在页面中间.  \newpage
+    \section*{Last page}
+\end{document}
+```
+
+### 添加水印 tikz pgfpages
+
+page 28; 1.3 Utility Packages
+page 1013; 91 Page Management
+
+也可以考虑`tikz`中的`pgfpages`包.
+`pgfpages`软件包用于将几个页面组合成一个单一的页面. 它提供了用于将几个 `虚拟页` 组合成`物理页`的命令. 
+其原理是, 每当`TeX`准备好将一个页面`shipout`的时候, `pgfpages`就会中断这种输出, 而把要输出的页面存储在一个特殊的`盒子`里. 
+当以这种方式积累了足够多的 `虚拟页面`时, 它们就会被按比例缩小并排列在 `物理页面`上. 然后真正输出. 
+
+这种机制允许你直接在`LaTeX`内部创建"一页两面"的文档版本, 而不需要使用任何外部程序. 
+然而, `pgfpages`的作用远不止这些. 你可以用它来在页面上添加`标识`和`水印`, 在一页上最多打印`16`面, 为页面添加边框, 等等. 
+
+
