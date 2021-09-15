@@ -17,13 +17,13 @@
 我希望从 "什么是TikZ？"这个问题开始. 基本上, 它只是定义了一些`TEX`命令来绘制图形. 
 例如, 代码`\tikz \draw (0pt,0pt) --(20pt,6pt);` 产生线条. 代码`\tikz \fill[orange] (1ex,1ex) circle (1ex);`产生小橙子.
 在某种意义上, 当你使用`TikZ`的时候, 你对你的图形进行了 "编程", 就像你在使用TEX时对你的文档进行了 "编程 "一样. 
-这也解释了`TikZ`的名字：`TikZ`是 `gnu's Not Unix` 传统的一个递归缩写, 即 `TikZ ist kein Zeichenprogramm`, 
+这也解释了`TikZ`的名字: `TikZ`是 `gnu's Not Unix` 传统的一个递归缩写, 即 `TikZ ist kein Zeichenprogramm`, 
 意思是 "TikZ不是一个绘图程序", 提醒读者不要抱有错误的期待. 
 
 有了`TikZ`, 你可以为你的图形获得 "TEX-approach to typesetting" 的所有优点. 
 快速创建简单的图形, 精确的定位, 使用宏, 通常是卓越的排版. 同时你也
 
-你也继承了所有的缺点：学习曲线陡峭, 没有 WYSIWYG, 小的改变需要长时间的重新编译. 而且代码并不真正 "显示 "事物的样子. 
+你也继承了所有的缺点: 学习曲线陡峭, 没有 WYSIWYG, 小的改变需要长时间的重新编译. 而且代码并不真正 "显示 "事物的样子. 
 
 现在我们知道了`TikZ`是什么, 那么 `pgf` 呢？
 如前所述, `TikZ`最初是作为一个实现TEX图形宏的项目, 它既可以用于`pdfLaTeX`, 也可以用于经典的(基于`PostScript`)的`LaTeX`. 
@@ -277,9 +277,9 @@ page 43. 路径变形选项.
 \end{tikzpicture}
 ```
 
-这类选项有：
+这类选项有: 
 
-`x=<value>`, `y=<value>`, `z=<value>`. 例如：
+`x=<value>`, `y=<value>`, `z=<value>`. 例如: 
 
 ```latex
 \draw[x=2cm,color=red] (0,0.1) -- +(1,0);
@@ -297,7 +297,7 @@ page 43. 路径变形选项.
 
 + `rotate=<degree>`: 旋转特定角度. 以及`rotate around`:绕指定的点旋转. 
 + `scale=<factor>`: 放大或者缩小指定的倍数. 以及`xscale`, `yscale`. `xscale=-1`表示翻转. 
-+ `xslant=<factor>`, `yslant=<factor>`：倾斜
++ `xslant=<factor>`, `yslant=<factor>`: 倾斜
 + `cm`: 指定任意的变换矩阵. 
 
 详细可以参考 page 373: 25 Transformations
@@ -305,7 +305,7 @@ page 43. 路径变形选项.
 ### 循环
 
 `latex`本身有循环的命令, `pstricks`具有`\multido`命令. `tikz`也引入了自己的循环命令`\foreach`, 它定义在`\pgffor`中, `\tikz`会自动`\include`这个命令. 
-语法是`\foreach \x in {1,2,3} {$x =\x $,}`. 循环区域用列表指定,  要循环的指令也放在一个`{}`中. 如果不用`{}`包裹, 就把下一个`;`之前的命令当作循环指令. 例如下面的语句绘制一个坐标系：
+语法是`\foreach \x in {1,2,3} {$x =\x $,}`. 循环区域用列表指定,  要循环的指令也放在一个`{}`中. 如果不用`{}`包裹, 就把下一个`;`之前的命令当作循环指令. 例如下面的语句绘制一个坐标系: 
 
 ```latex
 \begin{tikzpicture}[scale=3]
@@ -325,13 +325,13 @@ page 43. 路径变形选项.
 \foreach \x in {-1,-0.5,1} \draw[xshift=\x cm] (0pt,-1pt) -- (0pt,1pt);
 ```
 
-`\foreach`也可以使用`c`式的范围指定：`{a,...,b}`, 必须使用无量纲的实数.  `{1,3,...,11}`则可以指定步长. 两种语法可以混合, 例如:
+`\foreach`也可以使用`c`式的范围指定: `{a,...,b}`, 必须使用无量纲的实数.  `{1,3,...,11}`则可以指定步长. 两种语法可以混合, 例如:
 
 ```latex
 \tikz \foreach \x in {1,3,...,11} \draw (\x,0) circle (0.4cm);
 ```
 
-循环可以嵌套：
+循环可以嵌套: 
 
 ```latex
 \begin{tikzpicture}
@@ -344,7 +344,7 @@ page 43. 路径变形选项.
 \end{tikzpicture}
 ```
 
-为了方便, 还有一种`key/value`型的循环语法：`foreach \key/\value in {1/a,2/b,3/c}`, `key/value`用`/`分隔开. 在每一次循环中, `\key`和`\value`的值将一一对应. 
+为了方便, 还有一种`key/value`型的循环语法: `foreach \key/\value in {1/a,2/b,3/c}`, `key/value`用`/`分隔开. 在每一次循环中, `\key`和`\value`的值将一一对应. 
 如果循环域中, 某一项只给出了`key`, 会默认`value`等于`key`.
 
 ### 添加文字
@@ -355,7 +355,7 @@ page 43. 路径变形选项.
 + 可以使用类似于`anchor=north`指定`\node`的哪一个锚点放在前面给定的坐标上. 也可以使用`below=1pt`直接指定`\node`的相对偏移. 
 + 如果担心图形上的其他元素干扰了`node`的辨识度, 可以给`node`加上`[fill=white]`选项, 绘制一个白色的背景. 
 + 如果把`\node`放在`--`后面, 默认会将`\node`的位置放在这条线段的中点. 可以使用`pos=`选项控制具体的位置, 也可以使用`near start`, `near end`等等指定大概位置. 
-+ 还可以使用`[above, sloped]`选项, 使曲线上方的`\node`贴合曲线斜率. 例如：
++ 还可以使用`[above, sloped]`选项, 使曲线上方的`\node`贴合曲线斜率. 例如: 
 
 ```latex
 \begin{tikzpicture}
@@ -438,7 +438,7 @@ pic [draw=green!50!black, fill=green!20, angle radius=9mm,"$\alpha$"] {angle = A
 
 ## tikz 设计原则
 
-page 124, `TikZ` 遵循以下基本设计原则：
+page 124, `TikZ` 遵循以下基本设计原则: 
 
 1. 用于指定`points`的特殊语法. 
 2. 指定`path`的特殊语法. 
@@ -469,7 +469,7 @@ page 124, `TikZ` 遵循以下基本设计原则：
 上面例子中,选项 `rounded corners` 的作用范围受到花括号的限制,并且颜色选项 red 没有起到作用,这是因为 `\draw` 的默认颜色是 `draw=black`,颜色 `black` 把 `red` 覆盖了. 
 还要注意开启 scope 的符号组合`{[...]`要放在坐标点之后, `--`之前. 
 
-除了`\tikzpicture`环境, 可以使用简洁的`\tikz{path1;path2}`命令, 例如：
+除了`\tikzpicture`环境, 可以使用简洁的`\tikz{path1;path2}`命令, 例如: 
 
 ```latex
 \tikz[baseline]{
@@ -487,7 +487,7 @@ page 148
 page 136, Specifying Coordinates
 page 148,TikZ Library calc, 可以计算坐标值. 
 
-坐标总是放在圆括号内, 一般的语法是 `([<options>]<coordinate specification>)`. 有两种指定坐标的方法：
+坐标总是放在圆括号内, 一般的语法是 `([<options>]<coordinate specification>)`. 有两种指定坐标的方法: 
 
 明确指定坐标系统和参数, 使用`xxx cs:`这种语法
 
@@ -574,7 +574,7 @@ p168 The Let Operation
 173 Graphic Parameters: Line Width, Line Cap, and Line Join
 
 `/tikz/dash pattern=<dash pattern>`
-`/tikz/dashed` ： 指定虚线模式的简写
+`/tikz/dashed` :  指定虚线模式的简写
 Shorthand for setting a dashed dash pattern.
 
 ### 指定 node 节点的形状
@@ -615,14 +615,14 @@ p646 Arbitrary Markings 添加任意装饰
 Decoration markings
 
 `marking`可以被认为是"小图片", 或更准确地说是放置的`some scope contents`, 放置在路径的某个位置"上". 
-假设`marking`为简单的十字.  可以用以下代码产生：
+假设`marking`为简单的十字.  可以用以下代码产生: 
 
 ```latex
 \draw (-2pt,-2pt) -- (2pt,2pt);
 \draw (2pt,-2pt) -- (-2pt,2pt);
 ```
 
-如果我们将此代码用作路径上`2cm`处的`marking`, 则会发生以下情况：
+如果我们将此代码用作路径上`2cm`处的`marking`, 则会发生以下情况: 
 `pgf`先确定沿路径`2cm`的位置.  然后将坐标系平移到此处并旋转它, 使`x`轴正向与路径相切.  然后创建一个保护用的`scope`, 在内部执行上述代码--最后路径上出现一个叉叉. 
 
 `marking`允许在路径上放置一个或多个装饰. 除了后面讲的少数情况, `decoration`摧毁路径输入, 也就是说, 计算完成, 作完装饰之后, 路径就消失了. 一般需要`postaction`来添加装饰. 
@@ -647,7 +647,7 @@ Decoration markings
 
 ### Pics:复用图形组件
 
-p263, `pic`是`picture`的简称. 通过预先定义的图片名字, 可以在指定的地方复用图形. 例如先定义一个海鸥的形状：
+p263, `pic`是`picture`的简称. 通过预先定义的图片名字, 可以在指定的地方复用图形. 例如先定义一个海鸥的形状: 
 
 ```latex
 \tikzset{
@@ -658,7 +658,7 @@ seagull/.pic={
 }
 ```
 
-使用`\tikzset`定义的是全局的, 整个文档都可以调用. 然后调用它：
+使用`\tikzset`定义的是全局的, 整个文档都可以调用. 然后调用它: 
 
 ```latex
 \tikz \fill [fill=blue!20]
@@ -676,7 +676,7 @@ seagull/.pic={
 1. 定义一个路径前缀为`/tikz/pics`的`key`, 
 2. 将`/tikz/pics/code`设置为`pic`的`code`. 
  
-这可以使用`.style` handler 实现：
+这可以使用`.style` handler 实现: 
 
 ```latex
 \tikzset{
@@ -706,7 +706,7 @@ seagull/.pic={
 + 当您的图片类型需要设置`foreground`或`background`代码时. 
 + 如果给`key`提供了复杂的参数
 
-例如：
+例如: 
 
 ```latex
 \tikzset{
@@ -759,7 +759,7 @@ page 841 75.4 Loops
 ```
 
 `loop`选项只接受一个参数, 即初始点, 终点位置和初始点相同, 然后把`looseness`设置为`8`, `min distance`设置为`5mm`.
-如果想精确控制圈图的形状, 可以手动添加控制点, 例如：
+如果想精确控制圈图的形状, 可以手动添加控制点, 例如: 
 
 ```latex
 \draw (a3) to [controls=+(45:1.5) and +(135:1.5)] (a3); 
@@ -806,7 +806,7 @@ page 841 75.4 Loops
 这对`to`操作来说是不必要的, 因为这个坐标已经是主路径的一部分.
 
 `\tikztostart`是`edge`操作之前的路径上的最后一个坐标, 就像对`node`或`to`操作一样. 
-然而, 这条规则有一个例外：如果`edge`操作的前面是`node`操作, 那么这个刚刚声明的`node`就是起始坐标.
+然而, 这条规则有一个例外: 如果`edge`操作的前面是`node`操作, 那么这个刚刚声明的`node`就是起始坐标.
 而不是像通常情况下那样, 是这个节点所处的坐标--一个微妙的区别. 在这方面, `edge`与`node`和`to`都不同. 
 
 如果一行有多个`edge`操作, 那么所有这些操作的起始坐标都是一样的, 但是目标坐标不同, 它们是主路径的一部分. 
@@ -860,7 +860,7 @@ page 841 75.4 Loops
 
 这样后面不需要有`{text}`. 
 
-p224 基本语法：
+p224 基本语法: 
 
 ```latex
 \path ... node <foreach statements>  [<options>] (<name>) at (<coordinate>) : <animation attribute>
@@ -886,8 +886,8 @@ p224 基本语法：
 
 如果在`<options>`内部显式设置了此选项(或通过`every circle`样式间接设置), 则`<coordinate>`将用作圆的中心而不是当前点.  在一个封闭范围内给某个值设置`at`无效. 
 
-page 785,72 Shape Library：可以指定`node`的形状, 有预定义的各种形状. 
-page 563, Part V Libraries： 从这里开始是各种库, 有预定义的各种命令. 
+page 785,72 Shape Library: 可以指定`node`的形状, 有预定义的各种形状. 
+page 563, Part V Libraries:  从这里开始是各种库, 有预定义的各种命令. 
 
 ### node位置的相对指定
 
@@ -1063,14 +1063,14 @@ page 260; 17.13 Referencing Nodes Outside the Current Picture
 
 page 353: 23 Transparency
 
-常用透明度选项：
+常用透明度选项: 
 
 ```latex
 /tikz/draw opacity=<value>
 /tikz/fill opacity=<value>
 ```
 
-`<value>`除了数字取值$[0,1]$之外, 还可以下列预设：
+`<value>`除了数字取值$[0,1]$之外, 还可以下列预设: 
 
 ```latex
 /tikz/transparent
@@ -1093,15 +1093,14 @@ p416 ; 27 Introduction to Algorithmic Graph Drawing
 此外, 你可以添加一些 `提示`, 比如 `这个节点应该在中心附近` 或 `这条边很重要`. 
 你并不指定节点和边的确切位置, 这是留给图形绘制算法的事情(graph drawing algorithm). 该算法将你对图形的描述作为输入, 然后决定节点应该放在页面何处. 
 
-自然，画图是一门（黑色的）艺术。确切地说，没有 `完美`的方法来绘制图形。
+自然, 画图是一门(黑色的)艺术. 确切地说, 没有 `完美`的方法来绘制图形. 
 
-与纯粹用`TEX`实现的`pgf`和`TikZ`的其他部分不同，图形绘制算法太过复杂，无法直接用`TEX`实现。
-与`pgf`和`TikZ`的其他部分不同的是，图形绘制算法过于复杂，无法直接在`TEX`中实现。
-相反，编程语言`Lua`被用于 图形绘制库所使用的编程语言--这种编程语言已被集成到最近的`TEX`版本中。这意味着: 
+与纯粹用`TEX`实现的`pgf`和`TikZ`的其他部分不同, 图形绘制算法太过复杂, 无法直接用`TEX`实现. 
+与`pgf`和`TikZ`的其他部分不同的是, 图形绘制算法过于复杂, 无法直接在`TEX`中实现. 
+相反, 编程语言`Lua`被用于 图形绘制库所使用的编程语言--这种编程语言已被集成到最近的`TEX`版本中. 这意味着: 
 
-+ 作为图形绘制引擎的用户，你可以在你的文档中以通常的方式运行`TEX`，而不需要调用`外部程序`.
-+ 非常容易为`Tikz`实现新的会图算法，因为可以使用`Lua`，而不需要`TeX`的编程知识。
-
++ 作为图形绘制引擎的用户, 你可以在你的文档中以通常的方式运行`TEX`, 而不需要调用`外部程序`.
++ 非常容易为`Tikz`实现新的会图算法, 因为可以使用`Lua`, 而不需要`TeX`的编程知识. 
 
 ## key 管理
 
@@ -1109,7 +1108,7 @@ p416 ; 27 Introduction to Algorithmic Graph Drawing
 
 p975. `key` 就是`tikz`中的各种关键字, 它们是通过包`pgfkeys`管理的. `\usepackage{pgfkeys}`. 
 
-`key`的例子：`/tikz/coordinate system/x`, 或者只用写`/x`. 这种写法类似于`Unix`上的文件路径. 可以使用绝对路径, 也可以使用相对路径. `tikz`的`key`名称经常包含空格. 
+`key`的例子: `/tikz/coordinate system/x`, 或者只用写`/x`. 这种写法类似于`Unix`上的文件路径. 可以使用绝对路径, 也可以使用相对路径. `tikz`的`key`名称经常包含空格. 
 调用`key`使用`\pgfkeys`命令. `pgfkeys`接受`key=value`形式的参数. 例如:
 
 ```latex
@@ -1158,7 +1157,7 @@ p975. `key` 就是`tikz`中的各种关键字, 它们是通过包`pgfkeys`管理
 p975, `key`的组织方式类似`Unix`. `/a/b.../x`中, 前面的`/a/b.../`是`路径`, 后面的`x`是`名称`.
 `pgfkeys`包中有一些内部命令, 如`\pgfkeyssetvalue`, `\pgfkeyslet`等等. 但是通常用户不需要直接调用这些命令.
 
-简要提一下`\def`, `\let`,`\edef`三个命令：[What is the difference between \let and \def](https://tex.stackexchange.com/questions/258/what-is-the-difference-between-let-and-def)
+简要提一下`\def`, `\let`,`\edef`三个命令: [What is the difference between \let and \def](https://tex.stackexchange.com/questions/258/what-is-the-difference-between-let-and-def)
 `\let`相当于直接赋值, 右边的式子计算之后赋给左边. `\def`命令相当于mma中的`SetDelay`即`:=`, 会在被调用时重新计算. 
 `\edef`是`expand def`的缩写, 也就是赋值之前右边的式子会被展开. 
 
@@ -1168,7 +1167,7 @@ p975, `key`的组织方式类似`Unix`. `/a/b.../x`中, 前面的`/a/b.../`是`�
 p984, 常用的 `key handler`:
 
 + `<key>/.cd`: 设置默认路径为`key`.
-+ `<key>/.is family`：当使用`key`时, 当前路径被设置为`key`,效果同`<key>/.cd`.
++ `<key>/.is family`: 当使用`key`时, 当前路径被设置为`key`,效果同`<key>/.cd`.
 + `<key>/.default=<值>` :设置`key`的默认值. 例如`\pgfkeys{/width/.default=1cm}`
 + `<key>/.value required`: 表明必须赋值. 
 + `<key>/.value forbidden`: 表明禁止赋值. 
@@ -1176,11 +1175,11 @@ p984, 常用的 `key handler`:
 + `<key>/.code 2 args=<代码>`:表示有两个参数`{#1}{#2}`, 如果第二个未给出, 将会是空字符. 如果传入`first`, 第一个参数将是`f`, 第二个将是`irst`, 所以需要用`{}`包裹起来. 
 + `<key>/.code n args={<m>}{<代码>}`:传入`m`个参数`{#1}{#2}{#3}...`, `m`为`0~9`, 不能多也不能少, 空格也可以作为参数. 
 + `<key>/.code args={<参数模式>}{<代码>}`:可以指定任意的参数模式, 比如`(#1/#2)`,调用对应的写成`(first/second)`, 空格将被去掉. 
-+ `<key>/.add code={<前缀代码>}{<后缀代码>}`：将代码添加到已经存在的`key`.
++ `<key>/.add code={<前缀代码>}{<后缀代码>}`: 将代码添加到已经存在的`key`.
 + `<key>/.prefix code=<前缀代码>`: 类似`.add code`, 但只添加前缀. 
 + `<key>/.append code=<后缀代码>`: 类似`.add code`, 但只添加后缀. 
 
-其中 `.code 2 args`和`.code args`的区别见下面的例子：
+其中 `.code 2 args`和`.code args`的区别见下面的例子: 
 
 ```latex
 \pgfkeys{/page size/.code 2 args={\paperheight=#2\paperwidth=#1}}

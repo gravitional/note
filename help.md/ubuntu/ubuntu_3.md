@@ -57,7 +57,8 @@ $ file /bin/sh
 
 众所周知,`Debian`的默认`/bin/sh`是 `dash`(`Debian Almquist shell`),这是一个纯粹`POSIX shell`兼容的实现,基本上你要的`bash`和`ksh`里的那些高级特性它都没有.
 
-"如果你在一个`#!/bin/sh`脚本中用到了非`POSIX shell`的东西,说明你的脚本写得是错的,不关我们发行版的事情."Debian开发者们在把默认的`/bin/sh`换成`dash`,导致一些脚本出错时这样宣称道.
+"如果你在一个`#!/bin/sh`脚本中用到了非`POSIX shell`的东西,说明你的脚本写得是错的,不关我们发行版的事情."
+Debian开发者们在把默认的`/bin/sh`换成`dash`,导致一些脚本出错时这样宣称道.
 
 当然,我们应该继续假装与`POSIX shell`标准保持兼容是一件重要的事情,即使现在大家都已经用上了更高级的shell.
 
