@@ -422,7 +422,6 @@ PS C:\test> $c
 #### 交换变量的值
 
 要交换两个变量的值, 传统的程序语言至少需要三步, 并且还需定义一个中间临时变量. 
-
 在powershell中, 交换两个变量的值, 这个功能变得非常简单. 
 
 ```powershell
@@ -455,8 +454,8 @@ PS C:\test> ls variable:value*
 
 #### 验证变量是否存在
 
-验证一个变量是否存在, 仍然可以像验证文件系统那样, 
-使用cmdlet `Test-Path`. 为什么？因为变量存在变量驱动器中. 
+验证一个变量是否存在, 仍然可以像验证文件系统那样, 使用cmdlet `Test-Path`. 
+为什么？因为变量存在变量驱动器中. 
 
 ```powershell
 PS C:\test> Test-Path variable:value1

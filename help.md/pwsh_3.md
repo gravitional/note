@@ -339,3 +339,7 @@ function Test-WriteError
 
 在一个`event action`(事件动作)中, `$args` 变量包含代表正在处理的事件参数的对象. 这个变量只在事件注册命令的`Action`块中被填充. 
 这个变量的值也可以在`Get-Event`返回的`PSEventArgs`对象的`SourceArgs`属性中找到. 
+
+## 函数
+
+[Chapter 9 - Functions](https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/09-functions?view=powershell-7.1#parameters)

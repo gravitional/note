@@ -1,5 +1,10 @@
 #!/usr/bin/env pwsh
 # 编译目录中的 .tex 文件
+
+param(
+    [string] $texPath,
+    [string]$texEngine = "xelatex" )
+# 剩下的参数会被传递给$args
 if ($(Get-ExecutionPolicy) -ne 'Unrestricted') {
     @'
 ++++++++++++++++++++++++++++++
@@ -54,8 +59,8 @@ $tex_here = (Get-ChildItem -path . *.tex)
 echo2 "tex_here $nameis,$tex_here"
 
 # 如果有命令行参数，优先使用
-if ($args) {
-    $tex_here = $(Get-ChildItem $args)
+if ($texPath) {
+    $tex_here = $(Get-ChildItem $texPath)
     echo2 "We just compile the, ", $tex_here
 }
 # 如果无命令行参数, 判断当前文件列表中是否包含 main.tex
@@ -80,7 +85,7 @@ foreach ($t in $tex_here) {
     # 打印正在处理的tex 文件名字
     echo2 "the tex processed is $t"
     # 用latexmk 逐个编译 *.tex
-    latexmk -silent -xelatex -pv -view=pdf -bibtex -cd -recorder -file-line-error -interaction=nonstopmode -synctex=1  ($t.BaseName)
+    latexmk -silent "-$TexEngine" -pv -view=pdf -bibtex -cd -recorder -file-line-error -interaction=nonstopmode -synctex=1  ($t.BaseName)
     ## 输出错误记录
     echo2 'echo message'
     $logFile = $t.BaseName + ".log"
