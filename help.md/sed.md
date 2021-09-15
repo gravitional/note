@@ -1,42 +1,132 @@
 # sed
 
-[sed教程][]
+[sed教程](https://www.cnblogs.com/along21/p/10366886.html)
+[sed命令](https://man.linuxde.net/sed)
 
-[sed教程]: https://www.cnblogs.com/along21/p/10366886.html
+`sed` 是一种流编辑器, 它一次处理一行内容. 要用来自动编辑一个或多个文件, 简化对文件的反复操作
+处理时, 把当前处理的行存储在临时缓冲区中, 称为`模式空间`(patternspace ), 接着用 `sed` 命令处理缓冲区中的内容, 处理完成后, 把缓冲区的内容送往屏幕. 
 
-[sed命令][]
-
-[sed命令]: https://man.linuxde.net/sed
-
-`sed` 是一种流编辑器, 它一次处理一行内容. 
-处理时, 把当前处理的行存储在临时缓冲区中, 称为“模式空间”(patternspace ), 接着用 `sed` 命令处理缓冲区中的内容, 
-处理完成后, 把缓冲区的内容送往屏幕. 
-
-然后读入下行, 执行下一个循环. 如果没有使诸如 `D` 的特殊命令, 那么会在两个循环之间清空模式空间, 但不会清空保留空间. 
+然后读入下行, 执行下一个循环. 如果没有使诸如 `D` 的特殊命令, 那么会在两个循环之间清空`模式空间`, 但不会清空`保留空间`. 
 这样不断重复, 直到文件末尾. 文件内容并没有改变, 除非你使用重定向存储输出或`-i`. 
 
-功能：主要用来自动编辑一个或多个文件, 简化对文件的反复操作
+## 用法示例
+
+### 替换中文标点
+
+```bash
+sed -i \
+-e 's#“#\"#g'  \
+-e 's#”#\"#g' \
+-e 's#：#: #g' \
+-e 's#，#, #g' \
+-e 's#。#. #g' \
+-e 's#、#, #g' \
+-e 's#（#(#g' \
+-e 's#）#)#g' \
+test.txt 
+```
+
+### 技巧
+
+`n`: 用下一个输入覆盖当前模式空间, 相当于启动下一个循环, 会先打印覆盖之前模式空间的内容
+`N`: 用下一个输入追加当前模式空间, 不会打印当前模式空间的内容
+
+显示偶数行
+`seq 9 |sed -n 'n;p'`
+
+显示奇数行
+`seq 9 |sed 'n;d'`
+
+倒序显示
+`seq 9 |sed  '1!G;h;$!d'`
+
+显示最后一行
+`seq 9| sed 'N;D'`
+
+每行之间加空行
+`seq 9 | sed 'G'`
+
+把每行内容替换成空行
+`seq 9 | sed "g"`
+ 
+确保每一行下面都有一个空行
+`seq 9 | sed '/^$/d;G'`
+
+### 打印99乘法表
+
+```bash
+seq 9 | sed 'H;g' | awk -v RS='' '{
+    for(i=1;i<=NF;i++)
+    {# 如果不到这一行
+        printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")
+    }
+    }'
+```
+
+RS: Records Separator, 记录分隔符
+NR: Number of Records, 记录的序号
+
+***
+倒序输出文本
+
+```bash
+cat num.txt
+One
+Two
+Three
+sed '1!G;h;$!d' num.txt
+Three
+Two
+One
+```
+
+### 提取ip地址
+
+先观察原始信息, 利用`ip monitor address dev enp0s31f6` 监视 IP变化
+
+ip monitor address dev enp0s31f6
+
+```bash
+dev_name="enp0s31f6" #设备名称
+dev_addr=$(ip monitor address dev $dev_name)  #监视ip变化
+echo $dev_addr |\
+grep -Po "${dev_name}[ ]+inet[ ]+[ \w\d\./]+brd" | `#用grep 提取出address一行`\
+sed "s/${dev_name} \{1,\}inet//g" | sed "s/brd//g"
+```
+
+```bash
+dev_name="enp0s31f6" #设备名称
+ip monitor address dev $dev_name | while read line
+do
+echo $line |\
+grep -Po "${dev_name}[ ]+inet[ ]+[ \w\d\./]+brd" | `#用grep 提取出address一行`\
+sed "s/${dev_name} \{1,\}inet//g" | sed "s/brd//g"
+done
+```
 
 ## 命令格式
 
-+ `sed [options] '[地址定界] command' file(s)`
-+ `sed [options] -f scriptfile file(s)`
++ `sed [options] '[地址定界] 命令' 要修改的文件(s)`
++ `sed [options] -f 脚本文件 要修改的文件(s)`
 
-## 常用选项
+### 常用选项
 
-`-h`或`--help`：显示帮助；
-`-V`或`--version`：显示版本信息
++ `-h`或`--help`：显示帮助；
++ `-V`或`--version`：显示版本信息
 
-`-e <script>`或`--expression=<script>`：以`script`来处理输入的文本文件；多点编辑, 对每行处理时, 可以有多个Script
-`-f<src_script>`或`--file=<src_script>`：以选项中指定的`script`文件来处理输入的文本文件；
-`-n`或`--quiet`或`--silent`：不输出模式空间内容到屏幕, 即不自动打印, 只打印匹配到的行
-`-r`: 支持扩展的正则表达式
-`-i`：直接将处理的结果写入文件
-`-i.bak`：在将处理的结果写入文件之前备份一份
++ `-e <script>`或`--expression=<script>`：以`script`来处理输入的文本文件; 多点编辑--对每行处理时, 可以有多个`脚本`
++ `-f<src_script>`或`--file=<src_script>`：以选项中指定的`script`文件来处理输入的文本文件;
+如果不指定`-e, --expression, -f, --file`选项, 则会把第一个非选项参数当成`sed`脚本执行，把其他参数当成输入文件的名称. 
+如果没有输入文件名，则使用标准输入.
 
-## 地址定界
++ `-n`或`--quiet`或`--silent`：不输出模式空间内容到屏幕, 即不自动打印, 只打印匹配到的行
++ `-r`: 支持扩展的正则表达式
++ `-i`：直接将处理的结果写入文件
++ `-i.bak`：在将处理的结果写入文件之前备份一份
 
-+ 不给地址：对全文进行处理
+### 地址定界
+
++ 不提供地址：则对全文进行处理
 
 单地址：
 
@@ -52,10 +142,10 @@
 
 步进
 
-+ `sed -n '1~2p'  只打印奇数行`(`1~2` 从第1行, 一次加2行)
++ `sed -n '1~2p'  只打印奇数行`(`1~2` 从第`1`行, 一次加`2`行)
 + `sed -n '2~2p'  只打印偶数行`
 
-## 编辑命令command
+### 编辑命令
 
 + `d`：删除模式空间匹配的行, 并立即启用下一轮循环
 + `p`：打印当前模式空间内容, 追加到默认输出之后
@@ -76,7 +166,7 @@
 + `\U`：把`replacement`字母转换成大写, 直到`\L`或`\E`出现. 
 + `\E`：停止以`\L`或`\U`开始的大小写转换
 
-## 常用选项options演示
+### 常用选项演示
 
 + `cat demo`
 
@@ -114,7 +204,7 @@ cat demo.bak
 + `sed -n "2,/DD/p" demo` : 打印第`2`行和`/DD/`之间的行
 + `sed "1~2s/[aA]/E/g" demo` : 将奇数行的`a`或`A`全部替换为`E`
 
-### 编辑命令command演示
+### 编辑命令演示
 
 `cat demo`
 
@@ -144,7 +234,6 @@ cat -A demo3
 
 ### sed高级编辑命令
 
-***
 格式
 
 + `h`：把模式空间中的内容覆盖至保持空间中
@@ -158,94 +247,30 @@ cat -A demo3
 + `D`：删除当前模式空间开端至`\n`的内容(不再定向到标准输出,也就是第一行), 放弃之后的命令, 但是对剩余模式空间重新执行`sed`
 + `!` 表示后面的命令对所有没有被选定的行发生作用. 
 
-### 案例
-
-***
-打印99乘法表
-
-```bash
-seq 9 | sed 'H;g' | awk -v RS='' '{
-    for(i=1;i<=NF;i++)
-    {# 如果不到这一行
-        printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")
-    }
-    }'
-```
-
-RS: Records Separator, 记录分隔符
-NR: Number of Records, 记录的序号
-
-***
-倒序输出文本
-
-```bash
-cat num.txt
-One
-Two
-Three
-sed '1!G;h;$!d' num.txt
-Three
-Two
-One
-```
-
-## 总结模式空间与保持空间关系
+### 总结模式空间与保持空间关系
 
 模式空间`g`,`G`;`n`,`N`
 保持空间`h`,`H`
 
-保持空间是模式空间一个临时存放数据的缓冲区, 协助模式空间进行数据处理
-
-### 演示
-
-`n`: 用下一个输入覆盖当前模式空间, 相当于启动下一个循环, 会先打印覆盖之前模式空间的内容
-`N`: 用下一个输入追加当前模式空间, 不会打印当前模式空间的内容
-
-***
-显示偶数行
-`seq 9 |sed -n 'n;p'`
-
-***
-显示奇数行
-`seq 9 |sed 'n;d'`
-
-***
-倒序显示
-`seq 9 |sed  '1!G;h;$!d'`
-
-***
-显示最后一行
-`seq 9| sed 'N;D'`
-
-***
-每行之间加空行
-`seq 9 | sed 'G'`
-
-***
-把每行内容替换成空行
-`seq 9 | sed "g"`
- 
- ***
-确保每一行下面都有一个空行
-`seq 9 | sed '/^$/d;G'`
+`保持空间`是`模式空间`一个临时存放数据的缓冲区, 协助`模式空间`进行数据处理
 
 ## 命令
 
-+ `h` 拷贝模板块的内容到内存中的缓冲区. 
-+ `H` 追加模板块的内容到内存中的缓冲区. 
-+ `g` 获得内存缓冲区的内容, 并替代当前模板块中的文本. 
-+ `G` 获得内存缓冲区的内容, 并追加到当前模板块文本的后面. 
-+ `l` 列表不能打印字符的清单. 
-+ `n` 读取下一个输入行, 用下一个命令处理新的行而不是用第一个命令. 
-+ `N` 追加下一个输入行到模板块后面并在二者间嵌入一个新行, 改变当前行号码. 
-+ `P` (大写) 打印模板块的第一行. 
-+ `q` 退出`Sed`. 
-+ `b lable` 分支到脚本中带有标记的地方, 如果分支不存在则分支到脚本的末尾. 
-+ `r file` 从`file`中读行. 
-+ `t label` `if`分支, 从最后一行开始, 条件一旦满足或者`T`, `t`命令, 将导致分支到带有标号的命令处, 或者到脚本的末尾. 
-+ `T label` 错误分支, 从最后一行开始, 一旦发生错误或者`T`, `t`命令, 将导致分支到带有标号的命令处, 或者到脚本的末尾. 
-+ `w file` 写并追加模板块到`file`末尾. 
-+ `W file` 写并追加模板块的第一行到`file`末尾. 
++ `h` ; 拷贝模板块的内容到内存中的缓冲区. 
++ `H` ; 追加模板块的内容到内存中的缓冲区. 
++ `g` ; 获得内存缓冲区的内容, 并替代当前模板块中的文本. 
++ `G` ; 获得内存缓冲区的内容, 并追加到当前模板块文本的后面. 
++ `l` ; 列表不能打印字符的清单. 
++ `n` ; 读取下一个输入行, 用下一个命令处理新的行而不是用第一个命令. 
++ `N` ; 追加下一个输入行到模板块后面并在二者间嵌入一个新行, 改变当前行号码. 
++ `P` ; (大写) 打印模板块的第一行. 
++ `q` ; 退出`Sed`. 
++ `b lable` ; 分支到脚本中带有标记的地方, 如果分支不存在则分支到脚本的末尾. 
++ `r file` ; 从`file`中读行. 
++ `t label` ; `if`分支, 从最后一行开始, 条件一旦满足或者`T`, `t`命令, 将导致分支到带有标号的命令处, 或者到脚本的末尾. 
++ `T label` ; 错误分支, 从最后一行开始, 一旦发生错误或者`T`, `t`命令, 将导致分支到带有标号的命令处, 或者到脚本的末尾. 
++ `w file` ; 写并追加模板块到`file`末尾. 
++ `W file` ; 写并追加模板块的第一行到`file`末尾. 
 
 + `=` 打印当前行号码. 
 + `#` 把注释扩展到下一个换行符以前. 
@@ -506,30 +531,4 @@ sed -n '2~2p' test.txt  #偶数行
 grep -A 1 SCC URFILE
 sed -n '/SCC/{n;p}' URFILE
 awk '/SCC/{getline; print}' URFILE
-```
-
-### 用法实例
-
-### ip地址
-
-先观察原始信息, 利用`ip monitor address dev enp0s31f6` 监视 IP变化
-
-ip monitor address dev enp0s31f6
-
-```bash
-dev_name="enp0s31f6" #设备名称
-dev_addr=$(ip monitor address dev $dev_name)  #监视ip变化
-echo $dev_addr |\
-grep -Po "${dev_name}[ ]+inet[ ]+[ \w\d\./]+brd" | `#用grep 提取出address一行`\
-sed "s/${dev_name} \{1,\}inet//g" | sed "s/brd//g"
-```
-
-```bash
-dev_name="enp0s31f6" #设备名称
-ip monitor address dev $dev_name | while read line
-do
-echo $line |\
-grep -Po "${dev_name}[ ]+inet[ ]+[ \w\d\./]+brd" | `#用grep 提取出address一行`\
-sed "s/${dev_name} \{1,\}inet//g" | sed "s/brd//g"
-done
 ```
