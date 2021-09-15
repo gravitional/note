@@ -721,7 +721,7 @@ seagull/.pic={
 
 + `<key>/.code n args={<m>}{<代码>}`:传入`m`个参数`{#1}{#2}{#3}...`, `m`为`0~9`, 不能多也不能少, 空格也可以作为参数. 
 
-## 算法绘图
+## 19 Specifying Graphs
 
 page 269; 19 Specifying Graphs
 
@@ -730,6 +730,172 @@ page 269; 19 Specifying Graphs
 ```latex
 \usetikzlibrary {graphs}
 \tikz \graph { a -> {b, c} -> d };
+```
+
+图的结点是正常的`TikZ`节点, `edge`也是节点之间普通的连线. `graphs`库中没有任何东西是你不能用普通的 `\node`和`edge`命令来做的. 
+它的主要优势是只需指定哪些节点和边是存在的. 在画布为节点上寻找 "好位置 "的问题留给了`图形绘制算法`. 
+算法在本手册的第四部分描述, 这些算法不是`graphs`库的一部分; 
+
+事实上, 这些算法也可以优化`edge`和`node`命令创建的图形, 而不需要调用`graphs`库.
+例如可以 load `layered` 图形绘制库, 使用`\tikz[layered layout,...`, 然后使用`LuaTeX`编译, 同样可以得到较好的排版.
+
+### 节点链
+
+画`graph`的基本方法是写出一个节点链,
+
+```latex
+\usetikzlibrary {graphs}
+\tikz [every node/.style = draw]
+\graph {   foo -> bar -> blub;a -> b -> c;};
+```
+
+节点文字和`->`交替排列, `->`算符用来产生箭头. 多条链之间用分号`;`或逗号`,`分隔. 
+节点名称默认等于其中的文字. 可以显式更改这种设定. 通过`as` key, 或者在节点后面加上slash`/`.
+
+```latex
+\usetikzlibrary {graphs}
+\tikz \graph {
+x1/$x_1$ -> x2 [as=$x_2$, red] -> x34/{$x_3,x_4$};
+x1 -> [bend left] x34;
+};
+```
+
+要使用特殊符号当作节点的名字,如`,`或虚线, 需要用引号`"`包裹. 例如
+
+```latex
+\usetikzlibrary {graphs}
+\tikz \graph {
+"$x_1$" -> "$x_2$"[red] -> "$x_3,x_4$";
+"$x_1$" ->[bend left] "$x_3,x_4$";
+};
+```
+
+### chain 组
+
+可以把多条`chain`放在一个`{}`中, 形成一个 chain group. 这样可以实现同时连接多个node. 
+前一个`node`或者`group`的`exit points`将连接到后一个`node`or `group`的`entry points`.
+
+```latex
+\usetikzlibrary {graphs}
+\tikz \graph {
+a -> { b -> c, d -> e} -> f};
+```
+
+树形图可以通过添加`tree layout`来使图形更加美观. 同时需要在导言区加上
+
+```latex
+\usetikzlibrary {graphdrawing}
+\usegdlibrary {trees}
+```
+
+### Edge标签和风格
+
+可以给`->`connector 提供选项, 来定制风格.
+
+```bash
+\usetikzlibrary {graphs}
+\tikz \graph {
+  a ->[red] b --[thick] {c, d};
+};
+```
+
+使用`quotes`语法, see Section 17.10.4, 可以方便的添加标签:
+
+```latex
+\usetikzlibrary {graphs,quotes}
+\tikz \graph {
+a ->[red, "foo"] b --[thick, "bar"] {c, d};
+};
+```
+
+如果想给不同的`edge`指定不同的标签, 可以去掉给`--`提供的选项, 转而给`node`提供选项.
+用`>`来表示进入`node`的`edge`, 用`<`表示从`node`出射的`edge`.
+
+```latex
+\usetikzlibrary {graphs,quotes}
+\tikz \graph {
+a [< red] -> b -- {c [> blue], d [> "bar"']};
+};
+```
+
+`"bar"'`后面的单引号`'`表示翻转标签`bar`的位置到下面. 使用这种语法可以创建带有特殊标签的树图.
+
+```latex
+\usetikzlibrary {graphs,quotes}
+\tikz 
+  \graph [edge quotes={fill=white,inner sep=1pt},
+    grow down, branch right, nodes={circle,draw}] {
+    "" -> h [>"9"] -> { c [>"4"] -> { a [>"2"], e [>"0"] },j [>"7"]}
+};
+```
+
+### node 集合
+
+当你在`graph`命令中写下`节点`文本时, 默认会创建一个新的节点, 除非这个节点已在同一个图形命令创建过. 
+特别是, 如果节点已经在`graph`的范围外声明过, 则会创建一个同名的新节点. 这并不总是理想的行为. 
+你可能希望使用已经定义好的节点画新的`graph`, 而不是在`graph`内部重新定义. 
+为此, 只需在节点名称周围加上圆括号`()`. 这将导致创建对已经存在的节点的`引用`. 
+
+```latex
+\usetikzlibrary {graphs}
+\tikz {
+  \node (a) at (0,0) {A};
+  \node (b) at (1,0) {B};
+  \node (c) at (2,0) {C};
+}
+\graph { (a) -> (b) -> (c) };
+```
+
+你甚至可以更进一步. 一群节点可以通过添加选项`set=<node set name>`来标记为属于一个`节点集`. 
+然后, 在`graph`命令中, 你可以通过在`节点集`名称的周围加上括号`()`, 来引用这些节点.
+
+```latex
+\usetikzlibrary {graphs,shapes.geometric}
+\tikz [new set=my nodes] {
+\node [set=my nodes, circle, draw] at (1,1) {A};
+\node [set=my nodes, rectangle, draw] at (1.5,0) {B};
+\node [set=my nodes, diamond, draw] at (1,-1) {C};
+\node (d)[star, draw] at (3,0) {D};
+\graph { X -> (my nodes) -> (d) };
+}
+```
+
+### Graph 宏
+
+由于图形中经常存在重复使用的部分, 为了便于指定这样的图形, 你可以定义`图形宏`. 
+一旦定义了`图形宏`, 你就可以使用图形的名称来复制它.
+
+```latex
+\usetikzlibrary {graphs.standard}
+\tikz \graph { subgraph C_n [n=5, clockwise] -> mid };
+```
+
+`graphs.standard`库定义了许多这样的图, 
+包括`n`个节点上的 complete bipartite graph `Kn,m`, 具有shores sized `n`和`m`, `n`个节点上的循环`Cn`, `n`个节点上的路径`Pn`,
+以及`n`个节点上的独立集合`In`. 
+
+### Graph表达式和颜色类
+
+当使用`graph`命令构建图时, 它递归构建的, 将较小的图拼成较大的图.
+在这个递归的拼合过程中, 图的节点会被`隐含`地着色 (概念上), 你也可以显式地为单个节点指定颜色, 甚至可以在指定(specify)图形时改变颜色. 
+所有具有相同颜色的节点形成一个所谓的`颜色类`(color class). 
+
+`颜色类`的强大之处在于, 特殊的`连接运算符`(connector operator)允许你在具有特定颜色的节点之间添加边. 
+例如, 在组的开头添加`clique=red`会使所有的节点被标记为(概念上)`红色`, 这些节点将会被连接成一个`clique`. 
+同样地,  `complete bipartite={red}{green}`将在所有`red`节点和所有`green`节点之间增加边. 
+
+更高级的`connector`, 比如`蝴蝶 connector`, 允许你以一种花哨的方式在`颜色类`之间添加边. 
+
+```latex
+\usetikzlibrary {graphs}
+\tikz [x=8mm, y=6mm, circle]
+\graph [nodes={fill=blue!70}, empty nodes, n=8] {
+subgraph I_n [name=A] --[butterfly={level=4}]
+subgraph I_n [name=B] --[butterfly={level=2}]
+subgraph I_n [name=C] --[butterfly]
+subgraph I_n [name=D] --
+subgraph I_n [name=E]
+};
 ```
 
 ## 绘制曲线
