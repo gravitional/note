@@ -2,6 +2,7 @@
 
 [sed教程](https://www.cnblogs.com/along21/p/10366886.html)
 [sed命令](https://man.linuxde.net/sed)
+[sed, a stream editor](https://www.gnu.org/software/sed/manual/html_node/index.html#SEC_Contents)
 
 `sed` 是一种流编辑器, 它一次处理一行内容. 要用来自动编辑一个或多个文件, 简化对文件的反复操作
 处理时, 把当前处理的行存储在临时缓冲区中, 称为`模式空间`(patternspace ), 接着用 `sed` 命令处理缓冲区中的内容, 处理完成后, 把缓冲区的内容送往屏幕.
@@ -15,7 +16,9 @@
 
 ```bash
 # 如果只想打印，不想实际更改，就去掉 -i 选项
-sed -i -n -e 's#“#\"#gp'  -e 's#”#\"#gp' -e 's#：#: #gp' -e 's#，#, #gp' -e 's#。#. #gp' -e 's#、#, #gp' -e 's#（#(#gp' -e 's#）#)#gp' test.txt 
+sed -i -n -e 's#\“#\"#gp'  -e 's#\”#\"#gp' -e 's#\：#: #gp' -e 's#\，#, #gp' -e 's#\。#. #gp' -e 's#\、#\, #gp' -e 's#（#\(#gp' -e 's#）#\)#gp' tikz.md  
+
+sed -i -n -e 's#；#\; #gp'  tikz.md
 ```
 
 ### 技巧
@@ -338,7 +341,7 @@ skskskSKSKSK
 
 #### 定界符
 
-以上命令中字符 `/` 在sed中作为定界符使用, 也可以使用任意的定界符:
+以上命令中字符 `/` 在`sed`中作为定界符使用, 也可以使用任意的定界符:
 
 ```bash
 sed 's:test:TEXT:g'
