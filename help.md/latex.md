@@ -276,6 +276,7 @@ input\mymacros}
 
 ## 中文西文数学字体
 
+[在 LaTeX 中使用中文](https://jdhao.github.io/2018/03/29/latex-chinese.zh/)
 [LaTeX数学公式的默认字体是什么](https://www.zhihu.com/question/30058577/answer/46612848).
 `LaTeX` 默认的文章类中的字体是 `Computer Modern Math`(`LaTeX`), `Latin Modern Math`(`XeTeX`). 字体文件的位置可以用`kpsewhich`查看. 在安装`TeXLive`的时候会自动安装.
 如果没有安装的话,[GUST](http://www.gust.org.pl/projects/e-foundry/lm-math)可以下载`Latin Modern Math`字体,以及其他字体.
