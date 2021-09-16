@@ -1,5 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+texPath=$1;
+
+if [[ $2 != "" ]]; then
+	texEngine=$2
+else
+	texEngine="xelatex"
+fi
 # 设置格式化相关的部分
 nameis="name is :"
 # 定义一个打印的函数,并且加上颜色输出
@@ -11,25 +18,25 @@ function echo2() {
 # 打印当前目录
 echo2 "current directory is $(pwd)  "
 # tex主文档的默认文件名是 main.tex
-tex_usual="main.tex"
-echo2 "tex_usual" $nameis $tex_usual
+texUsual="main.tex"
+echo2 "texUsual" $nameis $texUsual
 # 当前tex文件列表
-tex_here=$(find . -mindepth 1 -maxdepth 1 -type f -iname '*.tex' -print0 | xargs --null echo)
-echo2 "tex_here $nameis $tex_here"
+texHere=$(find . -mindepth 1 -maxdepth 1 -type f -iname '*.tex' -print0 | xargs --null echo)
+echo2 "tex here $nameis $texHere"
 
 # 如果有命令行参数，优先使用
-result=$(echo $tex_here | grep -iP "main.tex")
-if [[ $* != "" ]]; then
-	tex_here=$*
-	echo2 "We just compile the, $tex_here"
+result=$(echo $texHere | grep -iP "main.tex")
+if [[ $texPath != "" ]]; then
+	texHere=$texPath
+	echo2 "We just compile the, $texHere"
 	# 如果无命令行参数, 判断当前文件列表中是否包含 main.tex
 elif [[ $result != "" ]]; then
-	tex_here=$tex_usual
-	echo2 "We just compile the, $tex_here"
-elif [[ $tex_here == "" ]]; then
+	texHere=$texUsual
+	echo2 "We just compile the, $texHere"
+elif [[ $texHere == "" ]]; then
 	echo2 "I can not see any tex file here, check the file names or whatever. "
 else
-	echo2 "because there isn't a tex file named 'main.tex', so we just compile the, $tex_here"
+	echo2 "because there isn't a tex file named 'main.tex', so we just compile the, $texHere"
 fi
 # 开始循环，对每一个tex文件编译，并寻找错误
 # 可增加输出文件夹选项 -auxdir=temp -outdir=temp
@@ -37,12 +44,12 @@ fi
 # 把下面这行加入到 ~/.latexmkrc，指定 pdf 查看程序
 # $pdf_previewer = 'evince %O %S';
 # -silent 选项可以抑制输出
-for t in $tex_here; do
+for t in $texHere; do
 	# 打印正在处理的tex 文件名字
 	echo2 "the tex processed is $t"
 	tBase=$(basename -s '.tex' $t)
 	# 用latexmk 逐个编译 *.tex
-	latexmk -silent -xelatex -pv -view=pdf -bibtex -cd -recorder -file-line-error -interaction=nonstopmode -synctex=1 $tBase
+	latexmk -silent -$texEngine -pv -view=pdf -bibtex -cd -recorder -file-line-error -interaction=nonstopmode -synctex=1 $tBase
 	## 输出错误记录
 	echo2 'echo message'
 	# 输出警告

@@ -1,7 +1,7 @@
 #!/bin/bash
 # program to output a axo script which can draw one loop diagrams
 
-tex_name="tex_loop_sh"
+tex_name="__tex_loop_sh"
 
 fig_size=(350 350)
 background=false
