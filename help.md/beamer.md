@@ -734,10 +734,10 @@ Beamer 里面定义了一个区块环境, 可以用于显示重要的内容.
 其中主题名有如下这些选择: 
 
 + 无导航栏 ; `default, boxes, Bergen, Pittsburgh 和 Rochester. 
-带顶栏 Antibes, Darmstadt, Frankfurt, JuanLesPins, Montpellier 和 Singapore. 
-带底栏 Boadilla 和 Madrid. 
-带顶栏底栏 AnnArbor, Berlin, CambridgeUS, Copenhagen, Dresden, Ilmenau, Luebeck, Malmoe, Szeged 和 Warsaw. 
-带侧栏 Berkeley, Goettingen, Hannover, Marburg 和 PaloAlto. 
++ 带顶栏 Antibes, Darmstadt, Frankfurt, JuanLesPins, Montpellier 和 Singapore. 
++ 带底栏 Boadilla 和 Madrid. 
++ 带顶栏底栏 AnnArbor, Berlin, CambridgeUS, Copenhagen, Dresden, Ilmenau, Luebeck, Malmoe, Szeged 和 Warsaw. 
++ 带侧栏 Berkeley, Goettingen, Hannover, Marburg 和 PaloAlto. 
 
 #### 细分主题
 
@@ -769,7 +769,7 @@ shadow, tree, smoothtree
 `颜色主题`设定演示文稿的各部分各结构各元素的配色, 可以用`\usecolortheme{主题名}` 来选择, 其中主题名有这些选择: 
 
 + 基本颜色 ; `default`, `sidebartab`, `structure`
-+ 完整颜色 ; `albatross(信天翁)`, beaver(海狸), beetle(甲壳虫), crane(鹤), dove(鸽子), fly(苍蝇), seagull(海鸥), wolverine(狼獾)
++ 完整颜色 ; `albatross(信天翁)`, `beaver`(海狸), `beetle`(甲壳虫), `crane`(鹤), `dove`(鸽子), `fly`(苍蝇), `seagull`(海鸥), `wolverine`(狼獾)
 + 内部颜色 ; `lily(百合)`, `orchid(兰花)`, `rose(玫瑰)` 
 + 外部颜色 ; `dolphin(海豚)`, `seahorse(海马)`, `whale(鲸鱼)`
 
