@@ -2,13 +2,16 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usepackage{tikz-feynman}
+
 \begin{document}
 
-\begin{tikzpicture}[baseline,scale=.5]
-    % 参考线\draw[step=.5cm,gray,very thin] (0,0) grid (5,-5);
-    \begin{feynman}
+\begin{tikzpicture}[baseline,scale=0.5]
+	% 参考线\draw[step=.5cm,gray,very thin] (0,0) grid (5,-5);
+	\begin{feynman}
 		%% fig a
-		\vertex (a1) at (0,0);
+		% 第一排
+		\vertex (row1) at (0,0);
+		\vertex[right =0  of row1] (a1);
 		\vertex[right =1  of a1] (a2);
 		\vertex[right =2  of a1] (a3);
 		\vertex[right =3  of a1] (a4);
@@ -16,28 +19,30 @@
 		\vertex[above =1 of a3,crossed dot] (a6){};
 		\node[above =1.5  of a5] {$a$};
 		%% fig b
-		\vertex[above right =1 and 5 of a1] (b1);
+		\vertex[above right =1 and 5 of row1] (b1);
 		\vertex[right =1  of b1] (b2);
 		\vertex[right =2  of b1,crossed dot,anchor=center] (b3){};
 		\vertex[right =3  of b1] (b4);
-        \vertex[right =4  of b1] (b5);
+		\vertex[right =4  of b1] (b5);
 		\node[above =0.5 of b5] {$b$};
 		%% fig c
-		\vertex[above right =1 and 10 of a1] (c1);
+		\vertex[above right =1 and 10 of row1] (c1);
 		\vertex[right =1  of c1] (c2);
 		\vertex[right =2  of c1,square dot,anchor=center] (c3){};
 		\vertex[right =3  of c1] (c4);
 		\vertex[right =4  of c1] (c5);
 		\node[above =0.5 of c5] {$c$};
 		%% fig d
-		\vertex[above right =1cm and 15cm of a1] (d1);
+		\vertex[above right =1cm and 15cm of row1] (d1);
 		\vertex[right =1cm  of d1] (d2);
 		\vertex[right =2cm  of d1] (d3);
 		\vertex[right =3cm  of d1,crossed dot,anchor=center] (d4){};
 		\vertex[right =4cm  of d1] (d5);
 		\node[above =0.5 cm  of d5] {$d$};
+		% 第二排
+		\vertex[below right =1.7 cm and 0 cm of row1] (row2);
 		%% fig e
-		\vertex[below right =1.7 cm and 0 cm of a1] (e1);
+		\vertex[ right =0 cm of row2] (e1);
 		\vertex[right =1cm  of e1,crossed dot,anchor=center] (e2){};
 		\vertex[right =2cm  of e1] (e3);
 		\vertex[right =3cm  of e1] (e4);
@@ -62,81 +67,212 @@
 		\vertex[right =1cm  of h1] (h2);
 		\vertex[right =2cm  of h1, crossed dot,anchor=center] (h3){};
 		\vertex[right =3cm  of h1] (h4);
-        \vertex[right =4cm  of h1] (h5);
-        \vertex[above =-1.4cm  of h3] (h6);
+		\vertex[right =4cm  of h1] (h5);
+		\vertex[above =-1.4cm  of h3] (h6);
 		\node[above =0.5cm  of h5] {$h$};
+		%% 第三排 row3
+		\vertex[below right =2.5 cm and 0 cm of e1] (row3);
 		%% fig i
-		\vertex[below right =2.5 cm and 0 cm of e1] (i1);
+		\vertex[below right =1.4 cm and 0 cm of row3] (i1);
 		\vertex[right =1cm  of i1] (i2);
-		\vertex[right =2cm  of i1,  dot,anchor=center] (i3){};
+		\vertex[right =2cm  of i1] (i3);
 		\vertex[right =3cm  of i1] (i4);
-        \vertex[right =4cm  of i1] (i5);
-        \vertex[above =-1.4cm  of i3] (i6);
-		\node[above =0.5 cm  of i5] {$i$};
+		\vertex[right =4cm  of i1] (i5);
+		\vertex[above =1.4 cm  of i3, crossed dot,anchor=center] (i6){};
+		\node[above =1.8 cm  of i5] {$i$};
 		%% fig j
-		\vertex[below right =1.4 cm and 5 cm of i1] (j1);
+		\vertex[below right =0 cm and 5 cm of row3] (j1);
 		\vertex[right =1cm  of j1] (j2);
-		\vertex[right =2cm  of j1] (j3);
+		\vertex[right =2cm  of j1,  dot,anchor=center] (j3){};
 		\vertex[right =3cm  of j1] (j4);
 		\vertex[right =4cm  of j1] (j5);
-		\vertex[above =1.4 cm  of j3, crossed dot,anchor=center] (j6){};
-		\node[above =1.8 cm  of j5] {$j$};
+		\vertex[above =-1.4cm  of j3] (j6);
+		\node[above =0.5 cm  of j5] {$j$};
 		%% fig k
-		\vertex[below right =0 cm and 10 cm of i1] (k1);
+		\vertex[below right =0 cm and 10 cm of row3] (k1);
 		\vertex[right =1cm  of k1] (k2);
 		\vertex[right =2cm  of k1, square  dot,anchor=center] (k3){};
 		\vertex[right =3cm  of k1] (k4);
-        \vertex[right =4cm  of k1] (k5);
-        \vertex[above =-1.4cm  of k3] (k6);
+		\vertex[right =4cm  of k1] (k5);
+		\vertex[above =-1.4cm  of k3] (k6);
 		\node[above =0.4 cm  of k5] {$k$};
 		%% fig l
-		\vertex[below right =1.4 cm and 15 cm of i1] (l1);
+		\vertex[below right =1.4 cm and 15 cm of row3] (l1);
 		\vertex[right =1cm  of l1] (l2);
 		\vertex[right =2cm  of l1,shape=rectangle, minimum size=0.1cm,draw,anchor=center] (l3){};
 		\vertex[right =3cm  of l1] (l4);
 		\vertex[right =4cm  of l1] (l5);
 		\vertex[above =1.4cm  of l3, crossed dot, anchor=center] (l6){};
 		\node[above =1.9  cm  of l5] {$l$};
-        % 对各个顶点连线
+		% 第四排
+		\vertex[below right =4.2 cm and 0 cm of row3] (row4);
+		% fig m
+		\vertex[right =0  of row4] (m1);
+		\vertex[right =1  of m1] (m2);
+		\vertex[above =2pt  of m2] (m2d);
+		\vertex[right =2  of m1] (m3);
+		\vertex[right =3  of m1] (m4);
+		\vertex[above =2pt  of m4] (m4d);
+		\vertex[right =4  of m1] (m5);
+		\vertex[above =1 of m3,crossed dot] (m6){};
+		\node[above =1.5  of m5] {$m$};
+		%% fig n
+		\vertex[above right =1 and 5 of row4] (n1);
+		\vertex[right =1  of n1] (n2);
+		\vertex[above =-2pt  of n2] (n2d);
+		\vertex[right =2  of n1,crossed dot,anchor=center] (n3){};
+		\vertex[right =3  of n1] (n4);
+		\vertex[above =-2pt  of n4] (n4d);
+		\vertex[right =4  of n1] (n5);
+		\node[above =0.5 of n5] {$n$};
+		%% fig o
+		\vertex[above right =1 and 10 of row4] (o1);
+		\vertex[right =1  of o1] (o2);
+		\vertex[above =-2pt  of o2] (o2d);
+		\vertex[right =2  of o1,square dot,anchor=center] (o3){};
+		\vertex[right =3  of o1] (o4);
+		\vertex[above =-2pt  of o4] (o4d);
+		\vertex[right =4  of o1] (o5);
+		\node[above =0.5 of o5] {$o$};
+		%% fig p
+		\vertex[above right =1cm and 15cm of row4] (p1);
+		\vertex[right =1  of p1] (p2);
+		\vertex[below =2pt  of p2] (p2d);
+		\vertex[right =2  of p1,square dot,anchor=center] (p3){};
+		\vertex[below =2pt  of p3] (p3d);
+		\vertex[right =3  of p1] (p4);
+		\vertex[right =4  of p1] (p5);
+		\node[above =0.5 of p5] {$p$};
+		% 第五排
+		\vertex[below right =2 cm and 0 cm of row4] (row5);
+		%% fig q
+		\vertex[right =0cm of row5] (q1);
+		\vertex[right =1cm  of q1] (q2);
+		\vertex[right =2  of q1,square dot,anchor=center] (q3){};
+		\vertex[below =2pt  of q3] (q3d);
+		\vertex[right =3  of q1] (q4);
+		\vertex[below =2pt  of q4] (q4d);
+		\vertex[right =4cm  of q1] (q5);
+		\node[above =0.5 cm  of q5] {$q$};
+		%% fig r
+		\vertex[above right =0 cm and 5cm of row5] (r1);
+		\vertex[right =1cm  of r1] (r2);
+		\vertex[below =2pt  of r2] (r2d);
+		\vertex[right =2cm  of r1] (r3);
+		\vertex[right =3cm  of r1,crossed dot,anchor=center] (r4){};
+		\vertex[below =2pt  of r4] (r4d);
+		\vertex[right =4cm  of r1] (r5);
+		\node[above =0.5 cm  of r5] {$r$};
+		%% fig s
+		\vertex[right =10 cm of row5] (s1);
+		\vertex[right =1cm  of s1,crossed dot,anchor=center] (s2){};
+		\vertex[below =2pt  of s2] (s2d);
+		\vertex[right =2cm  of s1] (s3);
+		\vertex[right =3cm  of s1] (s4);
+		\vertex[below =2pt  of s4] (s4d);
+		\vertex[right =4cm  of s1] (s5);
+		\node[above =0.5cm of s5] {$s$};
+		%% fig t
+		\vertex[below right =0 cm and 15 cm of row5] (t1);
+		\vertex[right =1cm  of t1, dot,anchor=center] (t2){};
+		\vertex[below =2pt  of t2] (t2d);
+		\vertex[right =2cm  of t1] (t3);
+		\vertex[right =3cm  of t1] (t4);
+		\vertex[below =2pt  of t4] (t4d);
+		\vertex[right =4cm  of t1] (t5);
+		\node[above =0.5cm  of t5] {$t$};
+		% 第六排
+		\vertex[below right =2.2 cm and 0 cm of row5] (row6);
+		%% fig u
+		\vertex[right =0 cm of row6] (u1);
+		\vertex[right =1cm  of u1] (u2);
+		\vertex[below =2pt  of u2] (u2d);
+		\vertex[right =2cm  of u1] (u3);
+		\vertex[right =3cm  of u1, dot,anchor=center] (u4){};
+		\vertex[below =2pt  of u4] (u4d);
+		\vertex[right =4cm  of u1] (u5);
+		\node[above =0.5cm  of u5] {$u$};
+		% 对各个顶点连线
 		\diagram*{
 		{ [edge= fermion]
-				(a1) --  (a5),
-				(b2) --(b3)-- (b4),
+				(a1) --  (a5),(m1) --(m5),
+				%
+				(b2) --(b3)-- (b4),(n2) --(n3)-- (n4),
+				%
 				(c2) --  (c3)--  (c4),
-				(d2) --  (d4),
-				(e2) --  (e4),
+				(o2) --  (o3)--  (o4),(p2) -- (p3)--  (p4),(p2) --  (p3)--  (p4),(q2) --  (q3)--  (q4),
+				%
+				(d2) --  (d4),(r2) --  (r4),
+				%
+				(e2) --  (e4), (s2) --  (s4),
+				%
 				(f2) --  (f4),
+				(t2) --  (t4),
+				%
 				(g2) --  (g4),
+				(u2) --  (u4),
+				%
 				(h1) --  (h3)--(h5),
 				(i1) --  (i3)--(i5),
 				(j1) --  (j3)--(j5),
 				(k1) --  (k3)--(k5),
 				(l1) --  (l3)--(l5),
-		    },
-		{ [edge=plain]
-				(b1) --  (b2), (b4)-- (b5),
+			},
+		{ [edge=plain]% 普通的连线
+				(b1) --  (b2), (b4)-- (b5), (n1) --  (n2), (n4)-- (n5),
+				%
 				(c1) --  (c2), (c4)-- (c5),
+				(o1) --  (o2), (o4)-- (o5),(p1) --  (p2), (p4)-- (p5),(q1) -- (q2), (q4)-- (q5),
+				%
 				(d1) --  (d2), (d4)-- (d5),
+				(p1) --  (p2), (p4)-- (p5),
+				(r1) --  (r2), (r4)-- (r5),
+				%
 				(e1) --  (e2), (e4)-- (e5),
+				(s1) --  (s2), (s4)-- (s5),
+				%
 				(f1) --  (f2), (f4)-- (f5),
+				(t1) --  (t2), (t4)-- (t5),
+				%
 				(g1) --  (g2), (g4)-- (g5),
-            },
-            % 介子连线
-        { [edge= charged scalar]
-        (a2) --[quarter left](a6)--[quarter left](a4), 
-        (b2) --[half right ](b4),
-        (c2) --[half right](c4),
-        (d2) --[half right](d4),
-        (e2) --[half right](e4),
-        (f2) --[half right](f4),
-        (g2) --[half right](g4),
-        (h3) --[half left ](h6)--[half left](h3),
-        (i3) --[half left](i6)--[half left](i3),
-        (j3) --[half left](j6)--[half left](j3),
-        (k3) --[half left](k6)--[half left](k3),
-        (l3) --[half left](l6)--[half left](l3),
+				(u1) --  (u2), (u4)-- (u5),
+			},
+		{[edge={plain,semithick}]
+				% 十重态的双线
+				(m2d)--(m4d),(n2d)--(n4d),(o2d)--(o4d),
+				(p2d)--(p3d),(q3d)--(q4d),
+				(r2d)--(r4d),(s2d)--(s4d),(t2d)--(t4d),(u2d)--(u4d),
+			},
+		% 介子连线
+		{ [edge= charged scalar]
+		(a2) --[quarter left](a6)--[quarter left](a4),
+		(m2) --[quarter left](m6)--[quarter left](m4),
+		%
+		(b2) --[half right ](b4),
+		(n2) --[half right ](n4),
+		%
+		(c2) --[half right](c4),
+		(o2) --[half right](o4), (p2) --[half right](p4), (q2) --[half right](q4),
+		%
+		(d2) --[half right](d4),
+		(r2) --[half right](r4),
+		%
+		(e2) --[half right](e4),
+		(s2) --[half right](s4),
+		%
+		(f2) --[half right](f4),
+		(t2) --[half right](t4),
+		%
+		(g2) --[half right](g4),
+		(u2) --[half right](u4),
+		%
+		(h3) --[half left ](h6)--[half left](h3),
+		(i3) --[half left](i6)--[half left](i3),
+		(j3) --[half left](j6)--[half left](j3),
+		(k3) --[half left](k6)--[half left](k3),
+		(l3) --[half left](l6)--[half left](l3),
 		}
-        };
+		};
 	\end{feynman}
 \end{tikzpicture}
 
