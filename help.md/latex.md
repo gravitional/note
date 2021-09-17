@@ -37,9 +37,9 @@ OPTIONS
 ### 简单的规则
 
 1. 空格:`Latex` 中空格不起作用. 
-1. 换行:用控制命令``\\``,或``\newline``.
-1. 分段:用控制命令``\par`` 或空出一行. 
-1. 换页:用控制命令``\newpage``或``\clearpage``
+1. 换行:用控制命令`\\`,或`\newline`.
+1. 分段:用控制命令`\par` 或空出一行. 
+1. 换页:用控制命令`\newpage`或`\clearpage`
 1. 特殊控制字符: `#`,`$`, `%`, `&`, `-` ,`{}`, `^`, `~`
 
 ### 报错示例-1
@@ -1788,7 +1788,7 @@ These are different from `accents` in `normal text` (see `Accents`).
 用控制命令`\newpage`或`\clearpage`
 
 + `\newpage`:  The `\newpage` 结束当前页.
-+ `\clearpage`:The `\clearpage` 结束当前页面,并且强迫排版到目前为止`input`中的图和表格浮动题.
++ `\clearpage`:The `\clearpage` 结束当前页面,并且强迫排版到目前为止`input`中的`图`和`表格`的浮动体(float).
 
 ### 连字符
 
@@ -2034,6 +2034,7 @@ http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Accents
 
 ### latex 字体设置
 
+[ctex宏包的文档](https://mirrors.hit.edu.cn/CTAN/language/chinese/ctex/ctex.pdf)
 [LaTeX 特殊符号与数学字体](https://blog.csdn.net/lanchunhui/article/details/54633576)
 [latex 字体设置](https://www.jianshu.com/p/68da21a1501a)
 
@@ -2114,7 +2115,8 @@ http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Accents
 接下来介绍如何在 LaTeX 中引入更多的系统字体.
 
 加载更多英文字体使用的命令为 `fontspec` 宏包的 `\newfontfamily<命令>[(可选项)]{<字体名>}`.
-`xeCJK` 宏包(`ctex`宏包或文档类[包括我们这里的 `ctexart `文档]会自动调用)中对应的命令为 `\setCJKfamilyfont{<中文字体族>}[<可选项>]{字体名}`.下面是一个使用示例:
+`xeCJK` 宏包,`ctex`宏包或文档类, 包括我们这里的 `ctexart `文档. 会自动调用.
+对应的命令为 `\setCJKfamilyfont{<中文字体族>}[<可选项>]{字体名}`.下面是一个使用示例:
 
 ```latex
 \setCJKfamilyfont{hwhp}{华文琥珀}

@@ -598,17 +598,29 @@ center, north west, west, north, base, north east, east
 
 整理自: [Beamer演示学习笔记](https://bbs.pku.edu.cn/attach/cb/40/cb401e254626b3f9/beamerlog-1112.pdf)
 
-在每张幻灯片中, 可以添加标题和副标题, 例如: 
+中文文档
+
+如果要使用中文，可以用 `ctex` 宏包，例如：
+
+```latex
+\documentclass{beamer}
+\usepacakge[UTF8]{ctex}
+\begin{document}
+\begin{frame}
+你好 Beamer！
+\end{frame}
+\end{document}
+```
+
+对于中文文档，建议用 `UTF8` 编码，然后用 `xelatex` 程序编译。另外，可以在载入 ctex 宏包时加上 `noindent` 选项以取消段落的缩进。
+
+在每张幻灯片中, 可以添加`标题`和`副标题`, 例如: 
 
 ```latex
 \begin{frame}{幻灯片标题}{我是一个副标题}
 Hello Beamer!
 \end{frame}
-```
-
-或者也可以分开来写, 如下: 
-
-```latex
+% 或者也可以分开来写, 如下: 
 \begin{frame}
 \frametitle{幻灯片标题}
 \framesubtitle{我是一个副标题}
@@ -616,8 +628,8 @@ Hello Beamer!
 \end{frame}
 ```
 
-在 `Beamer` 的每张幻灯片中, 正文内容(不包括幻灯片标题)默认都是竖直居中的. 
-也许你就喜欢正文竖直居上, 只要在文档类中加上 t 选项就可以了, 如下: 
+在 `Beamer` 的每张幻灯片中, 正文内容(不包括幻灯片标题)默认都是`竖直居中`的. 
+也许你就喜欢正文竖直居上, 只要在文档类中加上`t` 选项就可以了, 如下: 
 
 ```latex
 \documentclass[t]{beamer}
