@@ -148,10 +148,15 @@ Beamer-Template/-Color/-Font some beamer element
 
 ## 创建覆盖 9
 
+page 80
+
 ### 递增指定
 
-`+-` 会被替换成一个变量`beamerpauses`的值, 它在每张`frame`上重置为`1`, 每个`overlay specification` 使它增加`1`. 这样可以方便的实现递增 uncover 效果. 
-另外, `alert` 表示强调
++ `+-` 会被替换成一个计数器(latex counter)`beamerpauses`的值, 它在每张`frame`上重置为`1`, 每个`overlay specification` 使它增加`1`. 
+这样可以方便的实现递增 `uncover` 效果. 
++ 后面的`-`表示从此帧起, 例如`<1->`表示从第一帧开始.  
++ `alert` 表示强调
++ `|` 用来分隔不同的指定.
 
 ```latex
 \begin{itemize}
@@ -163,10 +168,22 @@ Beamer-Template/-Color/-Font some beamer element
 ```
 
 例如第一个 `<+-| alert@+>` 被替换成 `<1-| alert@1>`
-由于`itemize`支持设置默认 overlay specification, 所以也可以这么写
+由于`itemize`支持设置默认 `overlay` specification, 所以也可以这么写
 
 ```latex
 \begin{itemize}[<+-| alert@+>]
+\item Apple
+\item Peach
+\item Plum
+\item Orange
+\end{itemize}
+```
+
+任何一个`+`号的出现都可以在圆括号中跟上一个偏移量。这个偏移量将被添加到`beamerpauses` 的值。
+因此，如果`beamerpauses`是`2`，那么`<+(1)->`扩展为`<3->`，`<+(-1)-+>`扩展为`<1-2>`. 比如说
+
+```latex
+\begin{itemize}[<+(1)->]
 \item Apple
 \item Peach
 \item Plum
