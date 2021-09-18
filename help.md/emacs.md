@@ -23,14 +23,14 @@ sudo apt-get install emacs
 
 [Emacs快捷键](https://www.cnblogs.com/suzhou/p/3638975.html).
 
-我们约定常用快捷键表示: `C`==`Ctrl`, `M`==`Meta`==`Alt`.  `Del` == `Backspace`. 
+我们约定常用快捷键表示: `C`=`Ctrl`, `M`=`Meta`=`Alt`.  `Del` = `Backspace`. 
 `C`的操作大部分跟单个字符有关, `M`的操作大部分跟单词/句子有关.
 
 + 命令集扩展, EXTENDING THE COMMAND SET
 
 `Emacs` 的命令就像天上的星星, 数也数不清. 把它们都对应到 `CONTROL` 和 `META` 的单发组合键上显然是不可能的. 
 `Emacs` 用扩展(eXtend)命令来解决这个问题, 用过`VSCode`的同学一定不陌生. 
-扩展命令有两种风格：
+扩展命令有两种风格: 
 
 + `C-x` ; 字符扩展.   `C-x` 之后输入单个字符或者组合键. 
 + `M-x` ; 命令名扩展. `M-x` 之后输入一长串命令名. 
@@ -51,6 +51,7 @@ sudo apt-get install emacs
 + `C-x k` ; 关闭当前缓冲区 
 + `C-z` ; 挂起 `emacs `
 + `C-x C-c` ; 关闭 `emacs `
++ `C-l`; 移动到屏幕中间.
 
 重要快捷键(Important) 
 
@@ -80,9 +81,9 @@ sudo apt-get install emacs
 
 ### 编辑(Editint) 
 
-+ `M-n` ; 重复执行后一个命令n次 
-+ `C-u` ; 重复执行后一个命令4次 
-+ `C-u n` ; 重复执行后一个命令n次 
++ `M-n` ; 重复执行后一个命令`n`次 
++ `C-u` ; 重复执行后一个命令`4`次 
++ `C-u n` ; 重复执行后一个命令`n`次 
 + `C-d` ; 删除(delete)后一个字符 
 + `M-d` ; 删除后一个单词 
 + `Del` ; 删除前一个字符
@@ -139,8 +140,8 @@ sudo apt-get install emacs
 + `M-%` ; 询问并替换(query replace) 
   + `Space` 或 `y` 替换当前匹配 
   + `Del` 或 `n` 不要替换当前匹配 
-  + `.` 仅仅替换当前匹配并退出(替换) 
-  + `,`  替换并暂停(按`Space`或`y`继续) 
+  + `.` ; 仅仅替换当前匹配并退出(替换) 
+  + `,` ; 替换并暂停(按`Space`或`y`继续) 
   + `!`;  替换以下所有匹配 
   + `^` ; 回到上一个匹配位置 
   + `RETURN` 或 `q` 退出替换 

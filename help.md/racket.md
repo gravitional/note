@@ -7,7 +7,7 @@
 
 + `DSL` ; `domain-specific languages`
 
-与`C#`或`UML`这样的通用语言不同, 领域专用语言（`DSL`）被设计用来表达特定问题空间或`domain`的语句.
+与`C#`或`UML`这样的通用语言不同, 领域专用语言(`DSL`)被设计用来表达特定问题空间或`domain`的语句.
 
 知名的`DS`L包括`正则表达式`和`SQL`. 
 每种`DSL`在描述对文本字符串或数据库的操作时都比通用语言好得多, 但在描述其自身范围之外的想法时却差得多. 
@@ -20,8 +20,8 @@
 + 电子元件的接线图. 
 + 一个机场的传送带和行李处理设备的网络. 
 
-当你设计`DSL`时, 你为领域中的每个重要概念定义一个`domain class`, 如网页、灯、或机场登记台. 
-然后定义`domain relationships`, 如超链接、电线或传送带, 将这些概念联系在一起. 
+当你设计`DSL`时, 你为领域中的每个重要概念定义一个`domain class`, 如网页, 灯, 或机场登记台. 
+然后定义`domain relationships`, 如超链接, 电线或传送带, 将这些概念联系在一起. 
 
 `DSL`的用户创建`models`. 模型是`DSL`的实例. 
 例如, 它们描述一个特定的网站, 或者一个特定设备的线路, 或者一个特定机场的行李处理系统. 
@@ -73,7 +73,7 @@
 
 要绘制图片, 我们必须首先加载一些图片函数. 这些函数是创建幻灯片演示的库的一部分. 将以下内容复制到定义区, 也就是`DrRacket`的顶部文本区. 
 
-```racket
+```lisp
 #lang slideshow
 ```
 
@@ -82,7 +82,7 @@
 
 现在可以在`>`后面输入表达式进行计算. 例如
 
-```racket
+```lisp
 5
 "art gallery"
 (circle 10)
@@ -90,7 +90,7 @@
 
 函数调用采用 `(函数 参数)`的形式. 也就是`S-表达式`. symbol-expression. 再举个例子, 复合两个图形:
 
-```racket
+```lisp
 (hc-append (circle 10) (rectangle 10 20))
 ```
 
@@ -98,7 +98,7 @@
 
 用下面的语法进行`定义`:
 
-```racket
+```lisp
 #lang slideshow
 (define c (circle 10))
 (define r (rectangle 10 20))
@@ -106,7 +106,7 @@
 
 然后可以直接使用`r c`在交互区调用定义. 函数定义类似, 括号中是函数名称和参数.
 
-```racket
+```lisp
 (define (square n)
   ; A semi-colon starts a line comment.
   ; The expression below is the function body.
@@ -115,7 +115,7 @@
 
 `define`也可以创建局部变量, 即局部绑定.
 
-```racket
+```lisp
 (define (four p)
   (define two-p (hc-append p p))
   (vc-append two-p two-p))
@@ -125,7 +125,7 @@
 更一般地,  `Racketeers`使用`let`或`let*`形式进行局部绑定, 
 `let`的优点是它可以在任何表达式的位置使用, 而且, 它可以一次绑定许多标识符, 而不要求为每个标识符单独定义, 
 
-```racket
+```lisp
 (define (checker p1 p2)
   (let ([p12 (hc-append p1 p2)]
         [p21 (hc-append p2 p1)])
@@ -134,7 +134,7 @@
 
 `let`同时绑定多个标识符, 所以这些绑定不能相互引用, 与此相反, `let*`允许后来的绑定引用之前的绑定.
 
-```racket
+```lisp
 (define (checkerboard p)
   (let* ([rp (colorize p "red")]
          [bp (colorize p "black")]
@@ -148,7 +148,7 @@
 
 除了将`circle`作为一个函数来调用, 尝试将`circle`作为一个表达式来计算.
 
-```racket
+```lisp
 > circle
 #<procedure:circle>
 ```
@@ -158,7 +158,7 @@
 
 这个例子表明, `函数`是`values`, 就像`数字`和`图片`一样(即使它们的打印方式不那么好), 既然函数是值, 你可以定义一个函数, 它接受函数作为参数, 
 
-```racket
+```lisp
 (define (series mk)
   (hc-append 4 (mk 5) (mk 10) (mk 20)))
   (series circle)
@@ -168,14 +168,14 @@
 当调用一个接受函数参数的函数时, 往往在其他地方不需要这个作为参数的函数, 
 如果要通过`define`来写下这个函数, 那就很麻烦了. 另一种方法是使用`lambda`, 它可以创建一个匿名函数, 
 
-```racket
+```lisp
 > (series (lambda (size) (checkerboard (square size))))
 ```
 
 `lambda` 后面的括号内的名称是函数的参数, 参数名称后面的表达式是函数体, 使用 `lambda` 一词而不是 `function` 或 `procedure` 是 `Racket` 历史和文化的一部分, 
 函数的`define`定义形式, 实际上是简单使用`lambda`作为值的快捷方式. 例如, `series`的定义可以写成
 
-```racket
+```lisp
 (define series
     (lambda (mk)
         (hc-append 4 (mk 5) (mk 10) (mk 20))))
@@ -190,7 +190,7 @@
 
 在下面的`rgb-series`函数中, `mk`在每个`lambda`形式中指向的都是`rgb-series`的参数, 因为那是文本范围内的绑定, 
 
-```racket
+```lisp
 (define (rgb-series mk)
   (vc-append
    (series (lambda (sz) (colorize (mk sz) "red")))
@@ -202,7 +202,7 @@
 
 下面是另一个例子, `rgb-maker` 接受一个函数并返回一个新的函数, 这个函数会记住并使用原来的函数, 
 
-```racket
+```lisp
 (define (rgb-maker mk)
   (lambda (sz)
     (vc-append (colorize (mk sz) "red")
@@ -221,7 +221,7 @@
 
 列表函数接受任意数量的参数并返回一个包含给定值的列表, 
 
-```racket
+```lisp
 > (list "red" "green" "blue")
 > (list (circle 10) (square 10))
 ```
@@ -229,9 +229,9 @@
 正如你所看到的, 列表打印的时候前面会加上单引号. 由于小括号既用于表达式, 如`(circle 10)`, 也用于打印结果, 如`("红""绿""蓝")`, 
 可能造成混淆, 所以加上引号便于区别. 为了帮助强调这一区别, 在文档和`DrRacket`中, 结果中的括号是用蓝色打印的, 与表达式括号不同, 
 
-如果你有一个列表, 你可能想对每个元素做一些事情, `map`函数接收一个列表和一个函数, 然后它把函数应用于列表中每个元素；它返回一个新的列表, 以组合函数的结果, 
+如果你有一个列表, 你可能想对每个元素做一些事情, `map`函数接收一个列表和一个函数, 然后它把函数应用于列表中每个元素; 它返回一个新的列表, 以组合函数的结果, 
 
-```racket
+```lisp
 (define (rainbow p)
   (map (lambda (color)
          (colorize p color))
@@ -244,18 +244,18 @@
 和`map`一样, 它接受一个函数和一个列表, 但是给`apply`的函数应该一次接受所有的参数, 而不是单独使用每个参数.
 `apply`函数对于接受任意数量参数的函数特别有用, 例如`vc-append`, 
 
-```racket
+```lisp
 (apply vc-append (rainbow (square 5)))
 ```
 
-注意, `(vc-append (rainbow (square 5)))` 是不行的, 因为`vc-append`不想要列表作为参数；
+注意, `(vc-append (rainbow (square 5)))` 是不行的, 因为`vc-append`不想要列表作为参数; 
 它想要一个图片作为参数, 而且它愿意接受任何数量的图片, `appl`y函数在需要许多参数的函数, 和作为单个值的参数的列表之间架起了一座桥梁.
 
 ### 模块
 
 由于你的程序在`定义窗口`中的开头是
 
-```racket
+```lisp
 #lang slideshow
 ```
 
@@ -264,7 +264,7 @@
 
 要导入其他库, 请使用`require`形式, 例如, 库`pict/flash`提供了一个`filled-flash`的功能.
 
-```racket
+```lisp
 (require pict/flash)
 > (filled-flash 40 30)
 ```
@@ -280,13 +280,13 @@
 
 + 有些模块是相对于其他模块存在的, 不一定属于任何特定的`collection`或`package`, 例如, 在`DrRacke`t中, 如果你把到目前为止的定义保存在 `quick.rkt` 文件中(`Ctrl+s`), 并添加一行
 
-```racket
+```lisp
 (provide rainbow square)
 ```
 
 然后你可以在`DrRacket`中打开一个新的标签或窗口, 在与 `quick.rkt` 相同的目录中输入新程序 `use.rkt`, 
 
-```racket
+```lisp
 #lang racket
 (require "quick.rkt")
 (rainbow (square 5))
@@ -302,7 +302,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 这里有另一个库可以尝试. 
 
-```racket
+```lisp
 (require slideshow/code)
 > (code (circle 10))
 ```
@@ -311,12 +311,12 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 换句话说, `code`不是一个函数, 而是一个用于创建图片的新句法形式, `syntactic form` ; 
 `(circle 10)`的位置上不是一个表达式, 而是由`code`的句法形式操纵的, 
 
-这有助于解释我们在上一节中说`racket`提供`require`和函数调用语法的意思, 库并不局限于输出值, 如`函数`；它们也可以定义新的语法形式, 
-从这个意义上说, `Racket`根本就不是一种语言；它更像是一个关于如何构造语言的想法, 这样你就可以扩展它或者创造全新的语言, 
+这有助于解释我们在上一节中说`racket`提供`require`和函数调用语法的意思, 库并不局限于输出值, 如`函数`; 它们也可以定义新的语法形式, 
+从这个意义上说, `Racket`根本就不是一种语言; 它更像是一个关于如何构造语言的想法, 这样你就可以扩展它或者创造全新的语言, 
 
 引入新的语法形式的一种方法是通过`define-syntax `与`syntax-rules`, 
 
-```racket
+```lisp
 (define-syntax pict+code
   (syntax-rules ()
     [(pict+code expr)
@@ -326,15 +326,15 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 >(pict+code (circle 10))
 ```
 
-这种定义是一个`macro`--宏, `(pict+code expr)`部分是宏要使用的`pattern`；
+这种定义是一个`macro`--宏, `(pict+code expr)`部分是宏要使用的`pattern`; 
 程序中该`模式`的`实例`, 被对应模板中的实例所取代, 也就是会换成`(hc-append 10 expr (code expr))`, 
 在这里, `(pict+code (circle 10))`会匹配模式, `(circle 10)`匹配`expr`, 所以它被替换为`(hc-append 10 (circle 10) (code (circle 10)))`, 
 
-当然, 这种句法扩展是双向的：发明一种新的语言可以使你更容易说出你想要的东西, 但对其他人来说却更难理解, 
+当然, 这种句法扩展是双向的: 发明一种新的语言可以使你更容易说出你想要的东西, 但对其他人来说却更难理解, 
 碰巧的是, `Racket`的开发者们在不断地发表包括`Racket`代码的讲座和论文, 对于从事这些产品的人来说, 了解`code`是值得的.
 
 事实上, 你可能想看看[这个文件的来源](https://docs.racket-lang.org/quick/quick.scrbl), 
-你会看到它是以`#lang`开头的, 但除此之外看起来并不像`Racket`；尽管如此, 我们还是通过将其源码作为`Racket`程序运行来构建这份文档, 
+你会看到它是以`#lang`开头的, 但除此之外看起来并不像`Racket`; 尽管如此, 我们还是通过将其源码作为`Racket`程序运行来构建这份文档, 
 我们必须使用比`syntax-rules` 更多的东西来扩展`Racket`的语法, 以便编写文档, 但`Racket`的语法扩展可以让你走得更远, 
 
 ### 面向对象
@@ -345,7 +345,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 `类`系统本身是由`racket/class`库实现的, 而`racket/gui/base`库提供了 `GUI` 和`绘图类`, 按照惯例, 这些类的名字以`%`结尾, 
 
-```racket
+```lisp
 (require racket/class
          racket/gui/base)
 (define f (new frame% [label "My Art"]
@@ -356,12 +356,12 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 ```
 
 `new`形式创建了`类`的`实例`, 其中的初始化参数如`label`和`width`是通过名称提供的, 
-`send`形式调用对象的方法, 如`show`, 参数在方法名后面；本例中的参数`#t`是布尔常数 `true`.
+`send`形式调用对象的方法, 如`show`, 参数在方法名后面; 本例中的参数`#t`是布尔常数 `true`.
 
 用`slideshow`生成的图片`封装`了一个函数, 该函数使用图形工具箱的绘图命令将图片渲染到一个绘图环境中, 例如一个框架中的画布, `anvas` in a `frame`.
 `slideshow`中的`make-pict-drawer`函数暴露了图片的绘制函数, 我们可以在`canvas-painting`回调(`callback`)中使用`make-pict-drawer`来将图片绘制到`canvas`中, 
 
-```racket
+```lisp
 (define (add-drawing p)
   (let ([drawer (make-pict-drawer p)])
     (new canvas% [parent f]
@@ -377,7 +377,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 ### Where to Go From Here
 
-对`Racket`的介绍有意避开了许多介绍和区分于`Lisp, Scheme`的传统方式：
+对`Racket`的介绍有意避开了许多介绍和区分于`Lisp, Scheme`的传统方式: 
 `前缀算术符号`, `symbols`, `quoting`和`quasiquoting lists`, `eval`, `first-class continuations`, 
 以及所有语法实际上只是一个伪装的`lambda`的想法, 
 虽然这些都是`Racket`的一部分, 但它们并不是`Racket`日常编程的主要成分, 
@@ -392,7 +392,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 如果想开始深入了解完整的`Racket`语言和工具, 请继续阅读[The Racket Guide](https://docs.racket-lang.org/guide/index.html).
 
-## racket guide
+### racket guide
 
 要将程序打包成可执行文件, 你有几个选择. 
 
@@ -402,7 +402,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 关于脚本文件的更多信息, 请参见[脚本](https://docs.racket-lang.org/guide/scripts.html). 
 
- ```racket
+ ```lisp
  #! /usr/bin/env racket
  ```
 
@@ -411,18 +411,18 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 `racket`可以模仿传统的Lisp环境, 但我们强烈建议不要使用`Load`或者在模块外编写程序.
 在模块外编写定义会导致糟糕的错误信息, 糟糕的性能, 以及尴尬的脚本来组合和运行程序. 
-这些问题并不是`racket`所特有的；它们是传统`top-level`环境的基本限制, 
+这些问题并不是`racket`所特有的; 它们是传统`top-level`环境的基本限制, 
 在历史上, `Scheme`和`Lisp`的实现都是用特别的命令行标志, 编译器指令和构建工具来对抗这些限制. 
 
 `模块`系统的设计是为了避免这些问题. 所以脚本请从`#lang`开始, 从长远来看, 你会对`Racket`更加满意. 
 
-### Simple Values
+## Simple Values
 
 `Racket`值包括`数字`, `布尔值`, `字符串`和`字节字符串`. 在`DrRacket`和文档示例中(当你阅读彩色文档时), 值表达式显示为`绿色`. 
 
 数字以常规方式书写, 包括分数和虚数. 
 
-```racket
+```lisp
 1       3.14
 1/2     6.02e+23
 1+2i    9999999999999999999999
@@ -434,7 +434,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 一个程序模块为
 
-```racket
+```lisp
 #lang ‹langname› ‹topform›*
 ```
 
@@ -448,13 +448,13 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 一个定义的形式是
 
-```racket
+```lisp
 ( define <id>  <expr> )
 ```
 
 将 `id` 与 `expr` 的结果绑定, 而
 
-```racket
+```lisp
 ( define ( <id>  <id>*  ) <expr> )
 ```
 
@@ -468,7 +468,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 在这种情况下, 当函数被调用时, 只有最后一个表达式的值被返回. 
 其他的表达式只是为了某些副作用而被评估, 例如`打印`. 
 
-```racket
+```lisp
 (define (bake flavor)
   (printf "preheating oven...\n")
   (string-append flavor " pie"))
@@ -479,7 +479,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 `Racket`程序员喜欢避免产生副作用, 所以一个定义通常只有一个表达式在其主体中. 
 不过, 理解定义主体中允许有多个表达式是很重要的, 因为它解释了为什么下面的`nobake`函数没有在其结果中包含参数. 
 
-```racket
+```lisp
 (define (nobake flavor)
   string-append flavor "jello")
  
@@ -502,7 +502,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 重新缩进不仅可以使代码更容易阅读, 还可以给你额外的反馈, 使你的括号与你的意图相匹配. 
 例如, 如果你在一个函数的最后一个参数后漏掉了一个闭合小括号, 自动缩进就会在第一个参数下开始下一行, 而不是在`define`关键字下. 
 
-```racket
+```lisp
     (define (halfbake flavor
                       (string-append flavor " creme brulee"))
 ```
@@ -512,16 +512,16 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 ### 标识符
 
-`Racket` 的标识符语法是非常自由的. 除了特殊字符
+标识符可以绑定到一段程序上. `Racket` 的标识符语法是非常自由的. 除了特殊字符
 
-```racket
+```lisp
 ( ) [ ] { } " , ' ` ; # | \
 ```
 
 除了构成数字常数的字符序列外, 几乎任何非空白字符的序列都可以作为`id`. 
 例如, `substring` 就是一个标识符. 另外, `string-append`和`a+b`是标识符, 而不是算术表达式. 这里还有几个例子. 
 
-```racket
+```lisp
 +
 integer?
 pass/fail
@@ -529,3 +529,267 @@ Hfuhruhurr&Uumellmahaye
 john-jacob-jingleheimer-schmidt
 a-b-c+1-2-3
 ```
+
+## Lists, Iteration, and Recursion
+
+### pairs,列表和 Racket语法
+
+`cons`函数实际上接受任何`成对值`, 第二个参数可以不是`列表`. 
+当第二个参数不是`empty`, 并且本身不是由`cons`产生的, 其结果会以特殊的方式打印出来. 
+用`cons`连接的两个值被打印在小括号`()`之间, 但中间有一个`点`(即一个由`空白`包围的`句号`). 
+
+```lisp
+> (cons 1 2)
+'(1 . 2)
+> (cons "banana" "split")
+'("banana" . "split")
+```
+
+因此, 由 `cons` 产生的值并不总是列表.一般来说, `cons`的结果是一个`pair`. 
+`cons?`函数更传统的名称是`pair?`, 从现在开始我们将使用这个传统名称. 
+
+对于非列表`对`来说, `rest`这个名字也没有什么意义; `first`和`rest`更传统的名字分别是`car`和`cdr`. 
+当然, 传统的名字也没啥含义. 只要记住 `a` 在 `d` 之前, 而`cdr`的发音是 `could-er`. 例子:
+
+```lisp
+> (car (cons 1 2))
+1
+> (cdr (cons 1 2))
+2
+> (pair? empty)
+#f
+> (pair? (cons 1 2))
+#t
+> (pair? (list 1 2 3))
+#t
+```
+
+`Racket`的`pair`数据类型, 及其与列表的关系基本上是历史原因, 还有用于打印的`点`符号, 和滑稽的名字`car`和`cdr`. 
+然而, `pair`已经深深地融入了`Racket`的文化, 规范和实现中, 所以它们在语言中仍然存在. 
+
+如果犯错误, 你很有可能得到非列表`pair`, 比如不小心把`cons`的参数颠倒了: 
+
+```lisp
+> (cons (list 2 3) 1)
+'((2 3) . 1)
+> (cons 1 (list 2 3))
+'(1 2 3)
+```
+
+有时, 会刻意使用`非列表对`. 例如, `make-hash`函数接收`pair`的列表, 其中每个`pair`的`car`是一个`key`, `cdr`是一个任意值. 
+
+唯一会让`Racket`新手更加困惑的是 `pair`的打印约定, 如果其中第二个元素是`pair`, 但不是`list`时:
+
+```lisp
+> (cons 0 (cons 1 2))
+'(0 1 . 2)
+```
+
+一般来说, 打印`pair`的规则如下: 使用`dot`符号, 除非`点`的后面紧跟着`开放的小括号`. 在这种情况下, 删除`点`, `开放括号`和匹配的`封闭括号`. 
+因此, `'(0 . (1 . 2))` 变成 `'(0 1 . 2)`, 而 `'(1 . (2 . (3 . ())))`成为 `'(1 2 3)`. 
+
+### 使用quote引用Pairs和Symbols
+
+`列表`在打印时前面有一个引号`'`, 但如果`列表`的某个元素本身就是`列表`, 那么`内部`的列表就不会伴随引号`'`. 
+
+```lisp
+> (list (list 1) (list 2 3) (list 4))
+'((1) (2 3) (4))
+```
+
+特别是对于`嵌套`的列表, `quote`形式可以让你把`列表`写成`表达式`, 基本上与`列表`的打印方式相同. 
+
+```lisp
+> (quote ("red" "green" "blue"))
+'("red" "green" "blue")
+> (quote ((1) (2 3) (4)))
+'((1) (2 3) (4))
+> (quote ())
+'()
+```
+
+`quote`形式也适用于`点`符号, 无论`quoted`形式是否遵循`点`-`括号`抵消规则:
+
+```lisp
+> (quote (1 . 2))
+'(1 . 2)
+> (quote (0 . (1 . 2)))
+'(0 1 . 2)
+```
+
+当然, 任何种类的列表都可以被嵌套. 
+
+```lisp
+> (list (list 1 2 3) 5 (list "a" "b" "c"))
+'((1 2 3) 5 ("a" "b" "c"))
+> (quote ((1 2 3) 5 ("a" "b" "c")))
+'((1 2 3) 5 ("a" "b" "c"))
+```
+
+如果你用`quote`包裹`标识符`, 那么你得到的输出看起来像`标识符`, 但有一个`'`前缀. 
+
+```lisp
+> (quote jane-doe)
+'jane-doe
+```
+
+打印出来像带引号的`标识符`的`值`是一个`符号`(`symbol`). 就像`括号内的输出`不应该与`表达式`相混淆一样, 打印出来的`符号`也不应该与`标识符`相混淆.
+特别是, 符号`(引号map)`与`map`标识符, 或与`map`绑定的预定义函数没有任何关系, 只是`符号`和`标识符`碰巧是由相同的字母组成的. 
+
+事实上, `符号`的内在价值无非是它的`字符内容`. 在这个意义上, `符号`和`字符串`几乎是一回事, 主要区别在于它们的打印方式. 
+函数`symbol->string`和`string->symbol`可以在它们之间进行转换. 举例说明: 
+
+```lisp
+> map
+#<procedure:map>
+> (quote map)
+'map
+> (symbol? (quote map))
+#t
+> (symbol? map)
+#f
+> (procedure? map)
+#t
+> (string->symbol "map")
+'map
+> (symbol->string (quote map))
+"map"
+```
+
+与列表的`quote`自动应用于`嵌套列表`的方式类似, `quote`应用到`标识符`组成的`括号序列`上时, 会自动应用于每个`标识符`, 以创建`符号`的列表. 
+
+```lisp
+> (car (quote (road map)))
+'road
+> (symbol? (car (quote (road map))))
+#t
+```
+
+当`符号`位于用`'`打印的`列表`内时, `符号`前面的`'`将被省略, 因为`'`已经在起到效果.
+
+```lisp
+> (quote (road map))
+'(road map)
+```
+
+`quote`形式对`数字`或`字符串`等字面表达式没有影响. 
+
+```lisp
+> (quote 42)
+42
+> (quote "on the record")
+"on the record"
+```
+
+### 使用quote的缩写'
+
+正如你可能猜到的那样, 你可以通过在某个`形式`前面加上`'`来简略地使用`quote`.
+
+```lisp
+> '(1 2 3)
+'(1 2 3)
+> 'road
+'road
+> '((1 2 3) road ("a" "b" "c"))
+'((1 2 3) road ("a" "b" "c"))
+```
+
+在文档中, 表达式内的 `'` 与它后面的`形式`一起被打印成绿色, 因为这个组合是一个常量表达式. 
+在`DrRacket`中, 只有`'`被染成绿色. `DrRacket`的做法更准确, 因为`quote`的含义可以根据表达式的上下文而变化. 
+但在文档中, 我们通常认为`标准绑定` are in scope, 因此我们将`引用形式`涂成绿色, 以增加清晰度. 
+
+`'`以相当直白的方式扩展为一个引用形式. 你可以看到, 如果你在一个有`'`的形式前面再加一个`'`. 
+
+```lisp
+> (car ''road)
+'quote
+> (car '(quote road))
+'quote
+```
+
+`'`的缩写在`输出`和`输入`中都有效. 在打印输出时, `REPL`的 printer 将符号`'quote` 识别为双元素列表的首个元素, 在这种情况下, 它使用`'`来打印输出. 
+
+```lisp
+> (quote (quote road))
+''road
+> '(quote road)
+''road
+> ''road
+''road
+```
+
+### Lists和Racket语法
+
+现在你知道了关于`paris`和`lists`的真相, 也看到了`quote`, 你已经准备好了理解, 我们简化`Racket`真实语法的主要方式. 
+
+`Racket`的语法不是直接用`字符流`(character streams)来定义的. 相反, 语法是由两层决定的: 
+
++ `reader` layer, 它将字符的序列转化为`lists`, `symbols`和其他`常量`; 以及
++ `expander` layer, 它处理`列表`, `符号`和其他`常量`, 将它们解析为一个`表达式`. 相当于`Mathematica`的`InputForm`??
+
+`printing`和`reading`的规则是一起的. 
+例如, `列表`是用`小括号`打印的, 读取一对`小括号`会产生`列表`. 
+同样地, 非列表`pair`用`点`符号打印, 输入中若含有的`点`, 就反过来用`点`符号的规则解析成`pair`. 
+
+表达式的`读取层`的一个结果是, 你可以在非`quoted`形式的表达式中, 使用`点`符号. 
+
+```lisp
+> (+ 1 . (2))
+3
+```
+
+可以这样做是因为`(+ 1 . (2))` 只是`(+ 1 2)`的另一种写法. 在实践中使用`点`符号来写应用表达式不是好主意; 这只是`Racket`语法定义方式的一个结果. 
+
+通常情况下, 读者只允许在括号内的序列中使用`.`, 并且需要在序列的最后一个元素之前使用. 
+然而, 一对`.`也可以出现在括号序列的单个元素周围两边, 只要该元素不是`第一个`或`最后一个`. 
+这样的一对`.`将触发了`reader`转换, 将`.`之间的元素移到列表的前面. 这种转换实现了一种通用的中缀(`infix`)记号. 
+
+```lisp
+> (1 . < . 2)
+#t
+> '(1 . < . 2)
+'(< 1 2)
+```
+
+这种`双点符号`是非传统的, 它与`非列表对`的`点`符号基本上没有关系. `Racket`程序员很少使用`infix`约定--主要用于不对称的二进制运算符, 如`<`和`is-a?`.
+
+## 内置的数据类型
+
+上一章介绍了`Racket`的一些内置数据类型: `数字`, `布尔值`, `字符串`, `列表`和`过程`.
+本节将对简单形式的内置数据类型进行更全面的介绍. 
+
+### Booleans
+
+`Racket`有两个特别的`常量`来表示`布尔值`. `#t`表示真, `#f`表示假. 大写的`#T`和`#F`被解析为相同的值, 但小写的形式更受欢迎. 
+
+`boolean?` procedure 可以识别这两个布尔值常量. 在`if`, `cond`, `and`, `or`等表达式的测试结果中, 除了`#f`以外的任何值都算作真. 
+例子: 
+
+> (= 2 (+ 1 1))
+
+```lisp
+#t
+> (boolean? #t)
+#t
+> (boolean? #f)
+#t
+> (boolean? "no")
+#f
+> (if "no" 1 0)
+1
+```
+
+### 数字
+
+`Racket`数字可以是`精确`的, 也可以是`不精确`(inexact)的. 
+
+精确的数字可以是: 
+
++ 任意大或小的`整数`, 如`5`, `9999999999999999`, 或`-17`. 
++ 有理数, 两个任意大或小的`整数`精确比值, 如`1/2`, `999999999999/2`, 或`-3/4`; 或
++ 具有精确`实部`和`虚部`的`复数`(其中虚部不为零), 如`1+2i`或`1/2+3/4i`. 
+
+不精确的数是可以是: 
+
++ 数字的`IEEE`浮点表示, 例如`2.0`或`3.14e+87`, 其中`IEEE`的无穷数和非数被写成`+inf.0`, `-inf.0`和`+nan.0`(或`-nan.0`); 或
++ 复数, 其实部和虚部都是`IEEE`的浮点表示, 如`2.0+3.0i`或`-inf.0+nan.0i`; 作为一种特殊情况, 不精确复数可以有精确的`零实部`和不精确的`虚部`. 
