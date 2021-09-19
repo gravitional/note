@@ -890,4 +890,66 @@ abs: contract violation
 3602879701896397/36028797018963968
 ```
 
-### 字符
+### 字符Characters
+
+`Racket`字符对应于`Unicode`标量值. 
+粗略的说, `标量值`是一个无符号的整数, 可以表示成`21`位`bit`, 它对应自然语言的`字符`, 或字符的某个`部分`. 
+从技术上讲, `标量值`是比`Unicode`标准中的`字符` 更简单的概念, 但它作为近似说法, 在许多方面都很方便. 
+例如, 任何带`accent`的罗马字母都可以表示为`标量值`, 任何常见的`中文字符`也是如此. 
+
+尽管每个`Racket`字符对应一个整数, 但`字符`数据类型与`数字`是分开的. 
+`char->integer`和`integer->char`程序可以在`scalar-value`的数字和对应的字符之间进行转换. 
+
+可打印的字符通常打印为`#/`, 后面是代表的字符. 
+不可打印的字符通常以`#u`的形式打印, 后面是标量值的十六进制数字. 
+有几个字符按特殊方式打印的; 例如, `空格`和`换行`字符分别打印为`#\space`和`#\newline`. 
+例子. 
+
+```lisp
+> (integer->char 65)
+#\A
+> (char->integer #\A)
+65
+> #\λ
+#\λ
+> #\u03BB
+#\λ
+> (integer->char 17)
+#\u0011
+> (char->integer #\space)
+32
+```
+
+相较于打印字符结果的`字符常数`语法, `display` procedure 直接将`字符`写入当前的`输出端口`(见输入和输出). 
+例子. 
+
+```lisp
+> #\A
+#\A
+> (display #\A)
+A
+```
+
+`Racket`提供了一些关于字符的`分类`和`转换`程序. 
+但要注意的是, 一些`Unicode`字符的转换只有在字符串中, 才会像人类所期望的那样进行(例如, upcasing `ß` 或 downcasing `Σ`). 例子. 
+
+```lisp
+> (char-alphabetic? #\A)
+> (char-numeric? #\0)
+> (char-whitespace? #\newline)
+> (char-downcase #\A)
+> (char-upcase #\ß)
+```
+
+procedure `char=?` 比较两个或多个字符, `char-ci=?` 比较字符时忽略大小写. 
+`eqv?` 和 `equal?` 过程在字符上的行为, 与 `char=?` 相同; 当你想更具体地声明被比较的值是`字符`时, 使用`char=?`
+例子. 
+
+```lisp
+> (char=? #\a #\A)
+#f
+> (char-ci=? #\a #\A)
+#t
+> (eqv? #\a #\A)
+#f
+```
