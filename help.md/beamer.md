@@ -119,7 +119,7 @@ Beamer-Template/-Color/-Font some beamer element
 + 使用块环境, 例如 `block`, `theorem`, `proof`, `example` 等. 
 + 优先使用`enumerations` and `itemize` 而不是纯文本环境. 
 + 在定义几件事时使用`description`. 
-+ 请勿使用超过两个级别的`“subitemizing.”`. `beamer`支持三个级别, 但您不应使用三层. 通常, 您甚至都不应该使用第二个. 请改用优质的图形. 
++ 请勿使用超过两个级别的`"subitemizing."`. `beamer`支持三个级别, 但您不应使用三层. 通常, 您甚至都不应该使用第二个. 请改用优质的图形. 
 + 不要创建无尽的逐项`itemize`或`enumerate`列表. 
 + 不要逐段显示列表. 
 + 强调是创建结构的重要组成部分. 使用`\alert`突出显示重要的内容. 适用对象可以是一个单词或整个句子. 但是, 不要过度使用突出显示, 因为这会抵消效果. 如 `\alert{prime number}`
@@ -179,8 +179,8 @@ page 80
 \end{itemize}
 ```
 
-任何一个`+`号的出现都可以在圆括号中跟上一个偏移量。这个偏移量将被添加到`beamerpauses` 的值。
-因此，如果`beamerpauses`是`2`，那么`<+(1)->`扩展为`<3->`，`<+(-1)-+>`扩展为`<1-2>`. 比如说
+任何一个`+`号的出现都可以在圆括号中跟上一个偏移量. 这个偏移量将被添加到`beamerpauses` 的值. 
+因此, 如果`beamerpauses`是`2`, 那么`<+(1)->`扩展为`<3->`, `<+(-1)-+>`扩展为`<1-2>`. 比如说
 
 ```latex
 \begin{itemize}[<+(1)->]
@@ -617,7 +617,7 @@ center, north west, west, north, base, north east, east
 
 中文文档
 
-如果要使用中文，可以用 `ctex` 宏包，例如：
+如果要使用中文, 可以用 `ctex` 宏包, 例如: 
 
 ```latex
 \documentclass{beamer}
@@ -629,7 +629,7 @@ center, north west, west, north, base, north east, east
 \end{document}
 ```
 
-对于中文文档，建议用 `UTF8` 编码，然后用 `xelatex` 程序编译。另外，可以在载入 ctex 宏包时加上 `noindent` 选项以取消段落的缩进。
+对于中文文档, 建议用 `UTF8` 编码, 然后用 `xelatex` 程序编译. 另外, 可以在载入 ctex 宏包时加上 `noindent` 选项以取消段落的缩进. 
 
 在每张幻灯片中, 可以添加`标题`和`副标题`, 例如: 
 
