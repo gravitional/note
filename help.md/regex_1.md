@@ -1,14 +1,12 @@
 # learn.regex.1.md
 
-For myself and for you
-
 ## 前言
 
 Regular Expression 久仰大名, 以前也一直有过类似的需求, 然而之前或者用其他工具实现了, 或者暴力解决了 😅
 
 不过辣个咸鱼没点理想呢？加上 [notepad++](https://www.runoob.com/regexp/regexp-tutorial.html) 事件, 坚定了我学习Vim的决心, 学 Vim 当然也要学习 `regex` 了, 当然 `regex` 的应用远远不止在 Vim 当中. 
 
-此笔记参考了：[runoob-tutorial](https://www.jianshu.com/p/1adced676d79) , 版权归原作者所有
+此笔记参考了：[runoob-tutorial](https://www.jianshu.com/p/1adced676d79), 版权归原作者所有
 
 出于行文简洁的考虑, 摘抄的内容不会全部一一声明,   但我会把链接都放上来, 各位谅解 🤝
 
@@ -605,4 +603,4 @@ result: Is is,of of,up up
 | `\nml` | `如果 n 为八进制数字 (0-3), 且 m 和 l 均为八进制数字 (0-7), 则匹配八进制转义值 nml. ` |
 | `\un` | `匹配 n, 其中 n 是一个用四个十六进制数字表示的 Unicode 字符. 例如,  \u00A9 匹配版权符号 (?). ` |
 
-详情参见 [runoob syntax][]
+详情参见 [runoob syntax]((https://www.jianshu.com/p/1adced676d79))

@@ -1,19 +1,13 @@
 # learn.regex.2.md
 
-*For myself and for you*
-
 ## 前言
 
-Regular Expression 久仰大名, 以前也一直有过类似的需求, 然而之前或者用其他工具实现了, 或者暴力解决了 😅
+`Regular Expression` 久仰大名, 以前也一直有过类似的需求, 然而之前或者用其他工具实现了, 或者暴力解决了 😅
+不过辣个咸鱼没点理想呢？加上 [notepad++](https://www.jianshu.com/p/1adced676d79) 事件, 坚定了我学习`Vim`的决心.
+学 `Vim` 当然也要学习 `regex` 了, 当然 `regex` 的应用远远不止在 `Vim` 当中. 
 
-不过辣个咸鱼没点理想呢？加上 [notepad++][] 事件, 坚定了我学习Vim的决心, 学 Vim 当然也要学习 regex 了, 当然 regex 的应用远远不止在 Vim 当中. 
-
-此笔记参考了：[runoob-tutorial][] , 版权归原作者所有
-
+此笔记参考了：[runoob-tutorial](https://www.runoob.com/w3cnote/regular-expression-30-minutes-tutorial.html#mission) , 版权归原作者所有.
 出于行文简洁的考虑, 摘抄的内容不会全部一一声明,   但我会把链接都放上来, 各位谅解 🤝
-
-[runoob-tutorial]: https://www.runoob.com/w3cnote/regular-expression-30-minutes-tutorial.html#mission
-[notepad++]: https://www.jianshu.com/p/1adced676d79
 
 这个 **part2** 主要是更加详细的解说一下**regex**的用法. 
 
@@ -446,14 +440,12 @@ Who kept all of his cash in a bucket.
 
 这个模式与任何元音字符匹配, 但只能表示一个字符. 用`连字号`可以表示一个字符的范围, 如：
 
-```regex
-[a-z] : 匹配所有的小写字母
-[A-Z] : 匹配所有的大写字母
-[a-zA-Z] : 匹配所有的字母
-[0-9] : 匹配所有的数字
-[0-9\.\-] : 匹配所有的数字, 句号和减号
-[ \f\r\t\n] : 匹配所有的白字符
-```
++ ``[a-z]` ; 匹配所有的小写字母
++ `[A-Z] ; 匹配所有的大写字母
++ `[a-zA-Z] ; 匹配所有的字母
++ `[0-9] ; 匹配所有的数字
++ `[0-9\.\-] ; 匹配所有的数字, 句号和减号
++ `[ \f\r\t\n] ; 匹配所有的白字符
 
 同样的, 这些也只表示**一个字符**, 这一点**非常重要的**. 
 如果要匹配一个由一个小写字母和一位数字组成的字符串, 比如`z2`, `t6`或`g7`, 但不是`ab2`, `r2d3` 或`b52`的话, 用这个模式：
