@@ -44,7 +44,7 @@ $ open .
 ***
 `archey`
 
-这是一个查看当前`mac`概览的插件, 可以用`brew`安装. 好处就是, 查看自己`ip`的时候不用输入`ifconfig`然后一行一行去看, 看`mac`的`关于本机`不用再去点菜单栏了. 
+这是一个查看当前`mac`概览的插件, 可以用`brew`安装. 好处就是, 查看自己`ip`的时候不用输入`ifconfig`然后一行一行去看, 看`mac`的`关于本机`不用再去点菜单栏了.
 
 `brew install archey`
 
@@ -106,16 +106,16 @@ brew tap laishulu/cask-fonts
 brew install font-sarasa-nerd
 ```
 
-如果是安装本地字体文件, 参考[nstalling fonts from terminal](https://apple.stackexchange.com/questions/240381/installing-fonts-from-terminal-instead-of-font-book), 
+如果是安装本地字体文件, 参考[nstalling fonts from terminal](https://apple.stackexchange.com/questions/240381/installing-fonts-from-terminal-instead-of-font-book),
 直接复制到对应的文件夹, `/Library/Fonts` (系统公用) or `~/Library/Fonts` (当前用户使用).
 
 ### XeLaTeX 使用系统字体
 
 [修复 MacTeX 2015 无法按字体文件名调](https://liam.page/2015/07/11/mactex-2015-system-font/)
 
-`XeLaTeX` 通过字体文件名调用字体需要 `kpathsea` 库的协助. 默认情况下, `kpathsea` 会搜索 `MacTeX` 自己的目录树(TEXMF). 
-如果希望 `kpathsea` 搜索系统字体目录的话, 还需要配置 `OSFONTDIR` 这个环境变量. 
-在 `MacTeX 2014` 中, 这个变量是默认配置好了的. 但是在 `MacTeX 2015` 中, 不知为何, 这个变量没有预先配置. 因此, 需要用户自行配置. 
+`XeLaTeX` 通过字体文件名调用字体需要 `kpathsea` 库的协助. 默认情况下, `kpathsea` 会搜索 `MacTeX` 自己的目录树(TEXMF).
+如果希望 `kpathsea` 搜索系统字体目录的话, 还需要配置 `OSFONTDIR` 这个环境变量.
+在 `MacTeX 2014` 中, 这个变量是默认配置好了的. 但是在 `MacTeX 2015` 中, 不知为何, 这个变量没有预先配置. 因此, 需要用户自行配置.
 
 具体的配置方法如下：
 编辑文件`/usr/local/texlive/2015/texmf.cnf`, 在文件末尾加上一行：`OSFONTDIR = /Library/Fonts//:~/Library/Fonts//`
@@ -128,7 +128,7 @@ brew install font-sarasa-nerd
 ## mac 快捷键设置
 
 [在 Mac 上使用全局键盘快捷键](https://support.apple.com/zh-cn/guide/mac-help/mchlp2262/10.15/mac/10.15)
-您只能为现有菜单命令创建键盘快捷键. 您不能为通用任务定义键盘快捷键, 例如：打开一个 `App` 或在 `App` 之间切换. 
+您只能为现有菜单命令创建键盘快捷键. 您不能为通用任务定义键盘快捷键, 例如：打开一个 `App` 或在 `App` 之间切换.
 
 妙控键盘的控制键顺序是 `contrl`,`option`,`command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改：
 
@@ -157,19 +157,19 @@ mathematica
 清除所有输出的快捷键: `Delete All Output`--`^+L`
 
 ***
-`终端` or `iterm2` 中大部分常用的快捷键,移动,清屏等等与`linux` 相同, 是在`readline`库中约定的. 
+`终端` or `iterm2` 中大部分常用的快捷键,移动,清屏等等与`linux` 相同, 是在`readline`库中约定的.
 [Bash 行操作](https://wangdoc.com/bash/readline.html)
 
 ***
 Finder中显示隐藏文件`Cmd+Shift+.`
 
-`mac` 中询问窗口, 焦点的移动方式仍然是按下`tab`, 但是取消操作需要按下`space`,不管在什么情况下, `enter`都是确定. 
+`mac` 中询问窗口, 焦点的移动方式仍然是按下`tab`, 但是取消操作需要按下`space`,不管在什么情况下, `enter`都是确定.
 
 ## homebrew 软件安装
 
 `brew Shellenv`:
-Print export statements. 在shell中运行时, 将Homebrew 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`. 
-变量`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`和`HOMEBREW_REPOSITORY`也被导出以避免多次查询. 
+Print export statements. 在shell中运行时, 将Homebrew 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`.
+变量`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`和`HOMEBREW_REPOSITORY`也被导出以避免多次查询.
 考虑将该命令的输出添加配置文件中(例如`~/.profile, ~/.bash_profile, or ~/.zprofile`), 例如：`eval "$(/opt/homebrew/bin/brew shellenv)"`
 
 ***
@@ -212,11 +212,11 @@ fi
 为什么 ARM 版 Mac 要使用 `/opt `路径？
 
 根据《文件系统层次结构标准》(Filesystem Hierarchy Standard, 主要为 Linux 系统制定, 但对具有共同 UNIX 基因的 macOS 也有参考价值)：
-`/usr/local` 目录用于系统管理员在本地安装软件. 系统软件更新时, 该目录应免于被覆盖. 
-`/opt` 目录留作附加应用程序(add-on application)软件包的安装. 安装在该目录下的软件包必须将其静态文件放置在单独的 `/opt/<package>` 或` /opt/<provider>` 路径下. 
-历史上, `/usr/local` 主要用于放置在本地编译并另行安装的程序, 避免和` /usr `下的系统自带版本冲突；而 `/opt` 则用于安装非系统自带的, 第三方预先编译并发行的独立软件包. 
-显然, 在如今的 macOS 使用场景下, 用户很少会需要自行编译软件包, `/usr/local` 和 `/opt` 的区分一定程度上已经成为名义上的了. 
-Homebrew 启用 `/opt` 作为 ARM 版的安装路径, 可能更多是出于确保与 X86 版相互区隔的考虑. 
+`/usr/local` 目录用于系统管理员在本地安装软件. 系统软件更新时, 该目录应免于被覆盖.
+`/opt` 目录留作附加应用程序(add-on application)软件包的安装. 安装在该目录下的软件包必须将其静态文件放置在单独的 `/opt/<package>` 或` /opt/<provider>` 路径下.
+历史上, `/usr/local` 主要用于放置在本地编译并另行安装的程序, 避免和` /usr `下的系统自带版本冲突；而 `/opt` 则用于安装非系统自带的, 第三方预先编译并发行的独立软件包.
+显然, 在如今的 macOS 使用场景下, 用户很少会需要自行编译软件包, `/usr/local` 和 `/opt` 的区分一定程度上已经成为名义上的了.
+Homebrew 启用 `/opt` 作为 ARM 版的安装路径, 可能更多是出于确保与 X86 版相互区隔的考虑.
 
 ***
 `Homebrew` 是一款`Mac OS`平台下的软件包管理工具,拥有安装, 卸载, 更新, 查看, 搜索等很多实用的功能.`Homebrew` 的两个术语:
@@ -249,7 +249,7 @@ Homebrew 启用 `/opt` 作为 ARM 版的安装路径, 可能更多是出于确�
 
 ### 常用软件的安装
 
-使用`brew info zsh-completions`, 可以查看安装完需要进行的操作,比如配置路径等. `gnu`的软件会多一个`g`开头. 
+使用`brew info zsh-completions`, 可以查看安装完需要进行的操作,比如配置路径等. `gnu`的软件会多一个`g`开头.
 
 ```bash
 brew install  gettext libunistring libidn2 openssl wget # 前面的是依赖
@@ -343,8 +343,8 @@ arch命令的另一个用途是运行通用二进制文件的选定体系结构.
 
 ## zsh 配置
 
-*** 
-`zsh-syntax-highlighting`,语法高亮 
+***
+`zsh-syntax-highlighting`,语法高亮
 
 [最漂亮( iTerm2+oh-my-zsh配色)](https://www.jianshu.com/p/246b844f4449)
 [zsh-syntax-highlighting/INSTALL.md](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
@@ -480,7 +480,7 @@ $ bash --noediting
 大多数情况下, 你执行 `ls --color`  就可以了, 它会用彩色来区分不同的文件类型．
 你可以添加 `alias ls='ls --color=auto'`  到你的 `~/.zshrc` . `auto`这个值可以确保你将`ls`的输出重定向到一个文件时不会产生问题．
 
-如果你想要详细了解这个功能, 可以阅读`coreutils`文档里面的相应章节： 
+如果你想要详细了解这个功能, 可以阅读`coreutils`文档里面的相应章节：
 [GNU Coreutils: General output formatting](http://www.gnu.org/software/coreutils/manual/html_node/General-output-formatting.html#General-output-formatting),
 [GNU Coreutils: dircolors invocation](http://www.gnu.org/software/coreutils/manual/html_node/dircolors-invocation.html#dircolors-invocation). (注意配置文件的详细说明其实在 `dircolors --print-database`  这个命令的输出里面)．
 
@@ -523,7 +523,7 @@ defaults write com.apple.dock springboard-blur-radius -int 100;
 killall Dock
 ```
 
-命令中有一个数字 `100` ,它代表的背景模糊的程度,你可以在 `0~255`的范围内选择. 
+命令中有一个数字 `100` ,它代表的背景模糊的程度,你可以在 `0~255`的范围内选择.
 
 ***
 修改截图属性
@@ -620,7 +620,7 @@ brew cu
 你可以先通过刚才安装的 Homebrew 安装一个我们需要的 `mas` ,即在终端输入:
 
 ```bash
-brew install mas 
+brew install mas
 ```
 
 然后,可以在终端中搜索需要的软件,或者直接输入关键字段加上应用的识别码进行安装:
@@ -799,7 +799,7 @@ Started erase on disk2
 ```bash
 # 首先取消usb硬盘的挂载
 diskutil unmountDisk /dev/disk6
-# bs是读写快的大小, 太小会增大io, 降低效率, 一般1M~2M即可. 
+# bs是读写快的大小, 太小会增大io, 降低效率, 一般1M~2M即可.
 sudo dd if=/Users/tom/software/manjaro-kde-20.2.1-210103-linux59.iso of=/dev/disk6 bs=2M
 ```
 
@@ -922,7 +922,7 @@ $ sudo mount -t ntfs -o rw,auto,nobrowse /dev/disk3s1 ~/ntfs-volume
 `brew Release 3.0.7`更新之后, 去除了对`/bottles`这级路径的拼接, 目前需要自己修改`HOMEBREW_BOTTLE_DOMAIN`的地址:
 
    HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles/bottles
-   
+
 等待后续完成迁移即可.
 
 也可以先切换成`ustc`的源:

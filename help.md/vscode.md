@@ -1,6 +1,6 @@
 # learn.vscode.md
 
-如果没有特别说明, `C` for `Ctrl`, `A` for `Alt`, `S` for `Shift`. 
+如果没有特别说明, `C` for `Ctrl`, `A` for `Alt`, `S` for `Shift`.
 
 ## 常用设置
 
@@ -9,7 +9,7 @@
 ***
 字体
 `ctrl+shfit+P` 打开命令面板, 输入`settings`, 查找到`Open Setting (UI)`
-然后在设置面板查找`editor.fontFamily`这一项. 
+然后在设置面板查找`editor.fontFamily`这一项.
 在`Editor: Font Family`下面设置字体, 注意有`用户设置`和`工作区设置`, 也就是可以对特定文件夹设置特定的字体.
 工作区设置会覆盖用户设置.
 
@@ -35,7 +35,7 @@
 
 ## 各种常用命令
 
-toggle tab key moves focus: 用 tab 控制焦点切换, 会影响终端补全. 
+toggle tab key moves focus: 用 tab 控制焦点切换, 会影响终端补全.
 
 ## gitlens blame 显示
 
@@ -94,9 +94,9 @@ Since it's very common to work with the entire text in a line we provide a set o
 ***
 批量重命名
 
-It's easy to rename a symbol such as a function name or variable name.  
-press `F2`  
-this will occur across all files in a project.  
+It's easy to rename a symbol such as a function name or variable name.
+press `F2`
+this will occur across all files in a project.
 You can also see refactoring in the right-click context menu.
 
 ***
@@ -153,7 +153,7 @@ Try it by selecting `Emmet: Expand Abbreviation` from the `Edit` menu with the c
 ***
 JavaScript类型检查
 
-Sometimes type checking your JavaScript code can help you spot mistakes you might have not caught otherwise.  
+Sometimes type checking your JavaScript code can help you spot mistakes you might have not caught otherwise.
 You can run the TypeScript type checker against your existing JavaScript code by simply adding a `// @ts-check` comment to the top of your file.
 
 ```JavaScript
@@ -163,22 +163,22 @@ let easy = true;
 easy = 42;
 ```
 
-Tip:  
-You can also enable the checks workspace or application wide by adding `"javascript.implicitProjectConfig.checkJs"`: true  
-to your workspace or user settings  
-and explicitly ignoring files or lines using `// @ts-nocheck` and `// @ts-ignore`.  
+Tip:
+You can also enable the checks workspace or application wide by adding `"javascript.implicitProjectConfig.checkJs"`: true
+to your workspace or user settings
+and explicitly ignoring files or lines using `// @ts-nocheck` and `// @ts-ignore`.
 Check out the docs on JavaScript in VS Code to learn more.
 
 ***
 其他
 
-Open the Integrated Terminal by pressing `C+`,  
+Open the Integrated Terminal by pressing `C+`,
 then see what's possible by reviewing the [terminal documentation][]
 
-Work with version control by pressing `C+S+G G`.  
+Work with version control by pressing `C+S+G G`.
 Understand how to stage, commit, change branches, and view diffs and more by reviewing the [version control documentation][]
 
-Browse thousands of extensions in our integrated gallery by pressing `C+S+X`.  
+Browse thousands of extensions in our integrated gallery by pressing `C+S+X`.
  The [documentation][] will show you how to see the most popular extensions, disable installed ones and more.
 
 [terminal documentation]: https://code.visualstudio.com/docs/editor/integrated-terminal
@@ -831,7 +831,7 @@ Here is configuration to use ES6.
 }
 ```
 
-`Lint` : 在计算机科学中, `lint` 是一种工具程序的名称, 它用来标记源代码中, 某些可疑的, 不具结构性(可能造成`bug`)的段落. 它是一种静态进程分析工具, 最早适用于`C`语言, 在`UNIX`平台上开发出来. 后来它成为通用术语, 可用于描述在任何一种电脑编程语言中, 用来标记源代码中有疑义段落的工具. 
+`Lint` : 在计算机科学中, `lint` 是一种工具程序的名称, 它用来标记源代码中, 某些可疑的, 不具结构性(可能造成`bug`)的段落. 它是一种静态进程分析工具, 最早适用于`C`语言, 在`UNIX`平台上开发出来. 后来它成为通用术语, 可用于描述在任何一种电脑编程语言中, 用来标记源代码中有疑义段落的工具.
 
 [ESLint extension]: [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 

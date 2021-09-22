@@ -68,8 +68,8 @@ for /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-p
 for /f [<parsingkeywords>] {%%|%}<variable> in ('<command>') do <command> [<commandlinepptions>]
 ```
 
-`for`的迭代和文件分析: 
- 使用文件分析处理命令输出, 字符串和文件内容. 使用迭代变量定义要检查的内容或字符串,并使用各种 `parsingkeywords` 选项进一步修改分析. 
+`for`的迭代和文件分析:
+ 使用文件分析处理命令输出, 字符串和文件内容. 使用迭代变量定义要检查的内容或字符串,并使用各种 `parsingkeywords` 选项进一步修改分析.
  使用 `parsingkeywords` 标记选项可指定哪些标记应作为迭代变量传递. 请注意,当不使用令牌选项时, `/f` 将仅检查第一个令牌.
 
 文件分析包括读取输出, 字符串或文件内容,然后将其分解为单独的文本行,并将每一行分析为零个或多个标记. 然后,将调用 for 循环,并将迭代变量值设置为标记. 默认情况下, /f 从每个文件的每一行传递第一个空格分隔标记. 将跳过空白行.
@@ -82,9 +82,9 @@ for /f [<parsingkeywords>] {%%|%}<variable> in ('<command>') do <command> [<comm
 `dism /online /norestart /add-package:"C:\Windows\servicing\Packages\%%i"`
 
 ***
-`dism` 
+`dism`
 
-Deployment Image Servicing and Management (部署映像服务和管理,DISM)工具是用于修改 Windows 映像的命令行工具. 
+Deployment Image Servicing and Management (部署映像服务和管理,DISM)工具是用于修改 Windows 映像的命令行工具.
 您可以使用DISM直接从命令提示符下启用或禁用Windows功能,或通过将应答文件应用于图像.
 
 `/Online` 指定操作在当前正在运行的操作系统上执行.
@@ -99,13 +99,13 @@ Deployment Image Servicing and Management (部署映像服务和管理,DISM)工�
 执行下面的命令,就能看到自己的原始产品密钥.
 
 ```powershell
-wmic path softwarelicensingservice get OA3xOriginalProductKey 
+wmic path softwarelicensingservice get OA3xOriginalProductKey
 ```
 
 ***
 注册表 查看
 
-即便没有`原始产品密钥`,还有一个`备份产品密钥`,需要在注册表中查看.`Win+R` 运行 `Regedit` 打开注册表编辑器找到: 
+即便没有`原始产品密钥`,还有一个`备份产品密钥`,需要在注册表中查看.`Win+R` 运行 `Regedit` 打开注册表编辑器找到:
 
 `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform`
 右侧的 `BackupProductKeyDefault` 值就是你的`备份产品密钥`
@@ -206,7 +206,7 @@ Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward # 设置�
 
 Set-Alias edit vim #默认编辑器
 Set-Alias gh Get-Help # 查看命令帮助
-Set-Alias ll Get-ChildItem  
+Set-Alias ll Get-ChildItem
 Set-Alias open Start-Process #打开的别名
 
 # 常用函数
@@ -215,7 +215,7 @@ function .. { Set-Location .. }
 function ... { Set-Location ../.. }
 function .... { Set-Location ../../.. }
 # pwsh 6.2增加了对`-`和`+`作为路径参数值的支持. pwsh 维护了可以用`-`和`+`访问的最后20个位置的历史
-# git 常用命令 
+# git 常用命令
 function gcam  {  param ( [string]$message )
 git commit -a -m  $message
 }
@@ -240,7 +240,7 @@ function gkw { gitk --all --branches $args }
 
 [如何从Windows命令行打开回收站](https://qastack.cn/superuser/395015/how-to-open-the-recycle-bin-from-the-windows-command-line)
 
-打开回收站: 
+打开回收站:
 在命令行上,键入
 
 ```powershell
@@ -262,19 +262,19 @@ shell:recyclebinfolder
 ***
 安装
 
-在 `PowerShell` 管理员 中输入下面内容,保证允许本地脚本的执行: 
+在 `PowerShell` 管理员 中输入下面内容,保证允许本地脚本的执行:
 
 ```powershell
 set-executionpolicy remotesigned -scope currentuser
 ```
 
-然后执行下面的命令安装 `Scoop`: 
+然后执行下面的命令安装 `Scoop`:
 
 ```powershell
 iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 ```
 
-静待脚本执行完成就可以了,安装成功后,让我们尝试一下: 
+静待脚本执行完成就可以了,安装成功后,让我们尝试一下:
 
 ```powershell
 scoop help
@@ -285,7 +285,7 @@ scoop help
 
 从上面的命令中,我们可以发现 `Scoop` 命令的语法是`scoop + 动作 + 对象`的语法.其中`对象`是可省略的.
 
-最常用的几个基础动作有这些: 
+最常用的几个基础动作有这些:
 命令     动作
 
 + `search`     搜索软件名
@@ -296,7 +296,7 @@ scoop help
 + `info`     查看软件详情
 + `home`     打开软件主页
 
-举几个栗子,比如: 
+举几个栗子,比如:
 
 我们想要搜索一下有没有 `Firefox` 浏览器: `scoop search firefox`
 我们想要安装 `aria2` 下载器: `scoop install aria2 `
@@ -308,12 +308,12 @@ scoop help
 `Scoop` 把软件安装在哪儿？
 
 这就是 `Scoop` 设计最为精致的地方所在了,也是我推荐 `Scoop` 超过 Chocolatey 等更知名的 Windows 软件包管理器的原因.
-`Scoop` 和 Homebrew 对软件包安装位置有着相同的处理哲学: `下载, 安装在用户文件夹下`.具体来讲: 
+`Scoop` 和 Homebrew 对软件包安装位置有着相同的处理哲学: `下载, 安装在用户文件夹下`.具体来讲:
 
 `Scoop` 在你的用户根目录(一般是 `C:\Users\用户名`)下创建了一个名为 `scoop` 的文件夹,并默认将软件下载安装到这个文件夹下
 `Scoop` 将软件安装到一个相对隔离的环境下(Each program you install is isolated and independent),从而保证环境的统一和路径不被污染
 
-可以看到,`scoop` 文件夹下的 apps 存放有安装的所有应用.值得一提的是: `scoop` 是通过 shim 来软链接一些应用,这样的设计让应用之间不会互相干扰,十分方便. 
+可以看到,`scoop` 文件夹下的 apps 存放有安装的所有应用.值得一提的是: `scoop` 是通过 shim 来软链接一些应用,这样的设计让应用之间不会互相干扰,十分方便.
 
 ### aria2 安装配置
 
@@ -329,13 +329,13 @@ scoop help
 可以`ctrl+D`收藏这个页面,方便下次使用.
 
 + 参考[Aria2 & YAAW 使用说明](http://aria2c.com/usage.html), 编辑`~\.aria2\aria2.conf`文件, 即名称为`aria2.conf `的文本文件.
-在我的电脑上,`~`指的是`C:\Users\qingz`. `qingz`是我账户的名字, 完整路径就是`C:\Users\qingz\.aria2\aria2.conf`. 
+在我的电脑上,`~`指的是`C:\Users\qingz`. `qingz`是我账户的名字, 完整路径就是`C:\Users\qingz\.aria2\aria2.conf`.
 这是`aria2`寻找配置文件的默认路径. 只需配置一次,以后启动时它会自动读取配置.
-+ 配置主要参考[Aria2 新手入门](https://zhuanlan.zhihu.com/p/37021947),我自用的轻微修改版也放在下面. 先修改重要的几行,能正常打开网页版界面即可.  
++ 配置主要参考[Aria2 新手入门](https://zhuanlan.zhihu.com/p/37021947),我自用的轻微修改版也放在下面. 先修改重要的几行,能正常打开网页版界面即可.
 其他配置可以用到再修改, `# `开头的行是注释,可以随便修改. 同样, 要让修改后的配置生效, 记得删掉前面的`#`.
 
 + 在`aria2`的文件夹,按住`shift+右键`, 点击`在此处打开powershell`窗口, 粘贴这个命令`New-Item -Path . -Name "aria2.session" -ItemType "file"`,
-将会新建一个`aria2.session`文件, 它用来记录下载状态. 再输入`Resolve-Path .\aria2.session`, 会得到它的绝对路径. 
+将会新建一个`aria2.session`文件, 它用来记录下载状态. 再输入`Resolve-Path .\aria2.session`, 会得到它的绝对路径.
 把这个路径粘贴到`input-file=`, `save-session=`这两行配置的等号右边.
 + 默认下载目录: 改成你自己经常用的下载目录,如`D:\Downloads`. 请使用绝对路径, 路径前后不要加引号, 加引号`aria2`会报错.
 + 开启一些`BT`设置,配置文件有详细说明:
@@ -347,7 +347,7 @@ enable-peer-exchange=true
 ```
 
 + 添加 `BT rackers`, 可以改善种子下载速度. `BT rackers`可以在[全网热门 BT Tracker 列表](https://github.com/XIU2/TrackersListCollection)获取.
-浏览器按`ctrl+f`搜索`Aria2 format`, 点击展开, 复制`BEST Tracker list:https://trackerslist.com/best_aria2.txt`里面的内容, 
+浏览器按`ctrl+f`搜索`Aria2 format`, 点击展开, 复制`BEST Tracker list:https://trackerslist.com/best_aria2.txt`里面的内容,
 粘贴到`bt-tracker=`后面. 不过也可以先不管这一步,后面在图形界面修改更方便.
 
 + 在`aria2`的文件夹,按住`shift+右键`, 点击`在此处打开powershell`窗口, 输入`.\aria2c.exe`即可运行`aria2`程序.
@@ -363,13 +363,13 @@ enable-peer-exchange=true
 
 ```powershell
 $mypath='你的路径'; # 这里修改成你的 aria2 的文件夹.
-echo "查看现在的路径`n---------`n";$target='User';$path=[Environment]::GetEnvironmentVariable('Path', $target); $path -split ';' 
-echo "查看修改后的路径`n---------`n";$newPath=$path+';'+$mypath;$newPath -split ';' 
+echo "查看现在的路径`n---------`n";$target='User';$path=[Environment]::GetEnvironmentVariable('Path', $target); $path -split ';'
+echo "查看修改后的路径`n---------`n";$newPath=$path+';'+$mypath;$newPath -split ';'
 # 先不要运行下面的命令,检查上面的命令确保无误之后再运行下面这行, 修改之后,可以再用第二行命令查看修改效果
 [Environment]::SetEnvironmentVariable("Path",$newPath,$target)
 ```
 
-+ 最后回到浏览器, 查看或者再次打开之前的`index.html`文件,一切顺利的话,会看到左边`Aria2状态:已连接`.  
++ 最后回到浏览器, 查看或者再次打开之前的`index.html`文件,一切顺利的话,会看到左边`Aria2状态:已连接`.
 + 如果刚才没有设置好`BT-Tracker`的话,现在可以在`Aria2设置`--`BitTorrent设置`--`BT服务器设置`中修改.其他设置类似.
 
 我使用的配置如下:
@@ -493,16 +493,16 @@ bt-seed-unverified=true
 
 `wsl`目录: 在资源管理器输入:`\\wsl$`
 
-安装适用于 `Linux` 的 `Windows` 子系统 (`WSL`) 时有两个选项: 
+安装适用于 `Linux` 的 `Windows` 子系统 (`WSL`) 时有两个选项:
 
 ***
-简化安装 (预览版) : `wsl --install`. 要使用 `wsl --install` 简化安装命令,必须先完成以下操作: 
+简化安装 (预览版) : `wsl --install`. 要使用 `wsl --install` 简化安装命令,必须先完成以下操作:
 
 + 加入 Windows 预览体验计划
 + 安装 Windows 10 的预览版(OS 版本 20262 或更高版本).
 + 使用管理员特权打开命令行窗口
 
-满足这些要求后,可通过以下方式安装 `WSL`: 
+满足这些要求后,可通过以下方式安装 `WSL`:
 
 在管理员模式下打开命令行,并输入以下命令: `wsl.exe --install`
 重启计算机
@@ -512,14 +512,14 @@ bt-seed-unverified=true
 
 祝贺你！现已成功安装并设置了与 Windows 操作系统完全集成的 `Linux` 分发！
 
-`--install` 命令执行以下操作: 
+`--install` 命令执行以下操作:
 
 + 启用可选的 WSL 和虚拟机平台组件
 + 下载并安装最新 Linux 内核
 + 将 WSL 2 设置为默认值
 + 下载并安装 Linux 分发版(可能需要重启)
 
-默认情况下,安装的 `Linux` 分发版为 `Ubuntu`. 可以使用 `wsl --install -d <Distribution Name>` 进行更改. 
+默认情况下,安装的 `Linux` 分发版为 `Ubuntu`. 可以使用 `wsl --install -d <Distribution Name>` 进行更改.
 (将 `<Distribution Name>` 替换为所需分发版的名称.)初始安装后,可以使用 `wsl --install -d <Distribution Name>` 命令将其他 Linux 分发版添加到计算机.
 
 若要查看可用 `Linux` 分发版的列表,请输入 `wsl --list --online`.
@@ -529,7 +529,7 @@ bt-seed-unverified=true
 
 1. 先启用`适用于 Linux 的 Windows 子系统`可选功能,然后才能在 `Windows` 上安装 `Linux` 分发.
 
-以管理员身份打开 PowerShell 并运行: 
+以管理员身份打开 PowerShell 并运行:
 
 ```powershell
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
@@ -544,14 +544,14 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 对于 ARM64 系统: 版本 2004 或更高版本,采用 内部版本 19041 或更高版本.
 低于 18362 的版本不支持 WSL 2. 使用 Windows Update 助手更新 Windows 版本.
 
-若要检查 Windows 版本及内部版本号,选择 `Windows 徽标键 + R`,然后键入`winver`,选择`确定`. (或者在 `Windows` 命令提示符下输入 `ver` 命令). 
+若要检查 Windows 版本及内部版本号,选择 `Windows 徽标键 + R`,然后键入`winver`,选择`确定`. (或者在 `Windows` 命令提示符下输入 `ver` 命令).
 更新到"设置"菜单中的最新 Windows 版本.
 
 3. 启用虚拟机功能
 
 安装 WSL 2 之前,必须启用`虚拟机平台`可选功能.
 
-以管理员身份打开 PowerShell 并运行: 
+以管理员身份打开 PowerShell 并运行:
 
 ```powershell
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
@@ -561,7 +561,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 
 4. 下载 Linux 内核更新包
 
-下载最新包: 
+下载最新包:
 [适用于 x64 计算机的 WSL2 Linux 内核更新包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
 备注
@@ -571,7 +571,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 
 5. 将 WSL 2 设置为默认版本
 
-打开 PowerShell,然后在安装新的 Linux 发行版时运行以下命令,将 `WSL 2` 设置为默认版本: 
+打开 PowerShell,然后在安装新的 Linux 发行版时运行以下命令,将 `WSL 2` 设置为默认版本:
 
 ```powershell
 wsl --set-default-version 2
@@ -582,10 +582,10 @@ wsl --set-default-version 2
 从 WSL 1 更新到 WSL 2 可能需要几分钟才能完成,具体取决于目标分发版的大小.
  如果从 Windows 10 周年更新或创意者更新运行 WSL 1 的旧(历史)安装,可能会遇到更新错误. 按照这些说明卸载并删除任何旧分发.
 
-如果 `wsl --set-default-version` 结果为无效命令,请输入 `wsl --help`. 
+如果 `wsl --set-default-version` 结果为无效命令,请输入 `wsl --help`.
 如果 `--set-default-version` 未列出,则表示你的 OS 不支持它,你需要更新到版本 `1903`(内部版本 18362)或更高版本.
 
-运行命令后如果看到此消息: `WSL 2 requires an update to its kernel component. For information please visit https://aka.ms/wsl2kernel`. 
+运行命令后如果看到此消息: `WSL 2 requires an update to its kernel component. For information please visit https://aka.ms/wsl2kernel`.
 仍需要安装 MSI Linux 内核更新包.
 
 6. 安装所选的 `Linux` 分发
@@ -596,8 +596,8 @@ wsl --set-default-version 2
 
 7. 安装 Windows 终端(可选)
 
-Windows 终端可启用多个选项卡(在多个 `Linux` 命令行, Windows 命令提示符, PowerShell 和 Azure CLI 等之间快速切换), 
-创建键绑定(用于打开或关闭选项卡, 复制粘贴等的快捷方式键), 使用搜索功能,以及使用自定义主题(配色方案, 字体样式和大小, 背景图像/模糊/透明度). 
+Windows 终端可启用多个选项卡(在多个 `Linux` 命令行, Windows 命令提示符, PowerShell 和 Azure CLI 等之间快速切换),
+创建键绑定(用于打开或关闭选项卡, 复制粘贴等的快捷方式键), 使用搜索功能,以及使用自定义主题(配色方案, 字体样式和大小, 背景图像/模糊/透明度).
 
 8. 将分发版版本设置为 WSL 1 或 WSL 2
 
@@ -607,7 +607,7 @@ Windows 终端可启用多个选项卡(在多个 `Linux` 命令行, Windows 命�
 wsl --list --verbose
 ```
 
-若要将分发版设置为受某一 WSL 版本支持,请运行: 
+若要将分发版设置为受某一 WSL 版本支持,请运行:
 
 ```powershell
 wsl --set-version <distribution name> <versionNumber>
@@ -617,7 +617,7 @@ wsl --set-version Ubuntu20.04 2 # 把 ubuntu 20.04 设置为 wsl2
 请确保将 `<distribution name>` 替换为你的分发版的实际名称,并将 `<versionNumber>` 替换为数字`1`或`2`.
  可以随时更改回 WSL 1,方法是运行与上面相同的命令,但将`2`替换为`1`.
 
-此外,如果要使 WSL 2 成为你的默认体系结构,可以通过此命令执行该操作: 
+此外,如果要使 WSL 2 成为你的默认体系结构,可以通过此命令执行该操作:
 
 ```powershell
 wsl --set-default-version 2
@@ -696,7 +696,7 @@ Git Bash
 
 ***
 `terminal` 自带的配色方案
-`Windows` 终端将这些配色方案包含在 `defaults.json` 文件中,可按住 `alt` 并选择设置按钮来访问该文件. 
+`Windows` 终端将这些配色方案包含在 `defaults.json` 文件中,可按住 `alt` 并选择设置按钮来访问该文件.
 如果要在一个命令行配置文件中设置配色方案,请添加 `colorScheme` 属性,并将配色方案的 `name` 作为值.
 
 ```json
@@ -722,16 +722,16 @@ Tango Light
 
 [Cascadia Code](https://docs.microsoft.com/zh-cn/windows/terminal/cascadia-code)
 
-`Cascadia Code` 是 `Microsoft` 提供的一种新的等宽字体,可为命令行应用程序和文本编辑器提供全新的体验. 
+`Cascadia Code` 是 `Microsoft` 提供的一种新的等宽字体,可为命令行应用程序和文本编辑器提供全新的体验.
 `Cascadia Code` 是与 `Windows` 终端一起开发的. 建议将此字体与终端应用程序和文本编辑器(如 `Visual Studio` 和 `Visual Studio Code`)一起使用.
 
 ***
 [Windows 终端提示与技巧](https://docs.microsoft.com/zh-cn/windows/terminal/tips-and-tricks)
 
-可以通过按住 `ctrl` 和滚动来缩放 `Windows` 终端的文本窗口. 缩放后,终端会话将保持新的缩放效果. 
+可以通过按住 `ctrl` 和滚动来缩放 `Windows` 终端的文本窗口. 缩放后,终端会话将保持新的缩放效果.
 如果要更改字体大小,可参阅配置文件设置页面.
 
-可以通过按住 `ctrl+shift `和滚动来调整背景的不透明度. 调整后,终端会话将保持新的不透明度. 
+可以通过按住 `ctrl+shift `和滚动来调整背景的不透明度. 调整后,终端会话将保持新的不透明度.
 如果要更改配置文件的 `acrylic` 不透明度,可参阅配置文件设置页面.
 
 ### 可执行文件设置
@@ -748,7 +748,7 @@ Tango Light
 ***
 源
 
-这会存储源自配置文件的配置文件生成器的名称. 
+这会存储源自配置文件的配置文件生成器的名称.
 此字段没有可发现的值. 有关动态配置文件的其他信息,请访问动态配置文件页.
 属性名称:  `source`
 必要性:  可选
@@ -764,7 +764,7 @@ Tango Light
 默认值:  `"%USERPROFILE%"`
 
 备注
-在为已安装的 WSL 分发设置打开时的起始目录时,应使用以下格式: `"startingDirectory": "//wsl$/"`,并用分发的名称进行替换. 
+在为已安装的 WSL 分发设置打开时的起始目录时,应使用以下格式: `"startingDirectory": "//wsl$/"`,并用分发的名称进行替换.
 例如,`"startingDirectory": "//wsl$/Ubuntu-20.04"`.
 
 ### 下拉列表设置
@@ -772,8 +772,8 @@ Tango Light
 ***
 名称
 
-这是将在下拉菜单中显示的配置文件的名称. 此值还用作在启动时传递给 shell 的"标题". 
-某些 shell(如 bash)可能会选择忽略此初始值,而其他 shell(Command Prompt, PowerShell)可能会在应用程序的生存期内使用此值. 
+这是将在下拉菜单中显示的配置文件的名称. 此值还用作在启动时传递给 shell 的"标题".
+某些 shell(如 bash)可能会选择忽略此初始值,而其他 shell(Command Prompt, PowerShell)可能会在应用程序的生存期内使用此值.
 可以使用 tabTitle 替代此"标题"行为.
 属性名称:  `name`
 必要性:  必需
@@ -790,7 +790,7 @@ Tango Light
 ***
 隐藏下拉列表中的某个配置文件
 
-如果 `hidden` 设置为 `true`,则配置文件将不会显示在配置文件列表中. 
+如果 `hidden` 设置为 `true`,则配置文件将不会显示在配置文件列表中.
 这可用于隐藏默认配置文件和动态生成的配置文件,同时并将它们保留在设置文件中. 若要详细了解动态配置文件,请访问动态配置文件页.
 属性名称:  `hidden`
 必要性:  可选
@@ -803,7 +803,7 @@ Tango Light
 ***
 字体
 
-这是配置文件中使用的字体名称. 如果找不到或无效,终端将尝试回退到 `Consolas`. 
+这是配置文件中使用的字体名称. 如果找不到或无效,终端将尝试回退到 `Consolas`.
 若要了解默认字体 (`Cascadia Mono`) 的其他变体,请访问 `Cascadia Code` 页.
 属性名称:  `fontFace`
 必要性:  可选
@@ -948,8 +948,8 @@ Tango Light
 
 ### 退出时配置文件的关闭方式
 
-这将设置配置文件如何响应终止或启动失败. 
-当键入 `exit` 或进程正常退出时,`"graceful"` 将关闭配置文件. `"always"` 将始终关闭配置文件,而 `"never"` 将永远不会关闭配置文件. 
+这将设置配置文件如何响应终止或启动失败.
+当键入 `exit` 或进程正常退出时,`"graceful"` 将关闭配置文件. `"always"` 将始终关闭配置文件,而 `"never"` 将永远不会关闭配置文件.
 `true` 和 `false` 分别被接受为 `"graceful"` 和 `"never"` 的同义词.
 属性名称:  `closeOnExit`
 必要性:  可选
@@ -957,7 +957,7 @@ Tango Light
 默认值:  `"graceful"`
 
 ### WSL2 参考的对象类型不支持尝试的操作
- 
+
 使用VPN造成的 WSL2 启动 crash
 
 [failing to startup with code 4294967295](https://github.com/microsoft/WSL/issues/5092#:~:text=Solve%20%22process%20exited%20with%20code%204294967295%22%20%2C%20run,complete%20the%20reset.%20Does%20not%20resolve%20the%20issue.)

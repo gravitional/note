@@ -13,7 +13,7 @@
 
 **fortran 不区分大小写**
 
-任何Fortran程序都必须包括 `end` 作为最后一个语句. 
+任何Fortran程序都必须包括 `end` 作为最后一个语句.
 因此, 最简单的Fortran程序如下所示：
 
 ```fortran
@@ -34,8 +34,8 @@ write(*,*) "Hello, world"
 end
 ```
 
-为清楚起见, 现在通常使用 `program` 语句来启动程序并为其命名. 
-然后,  `end` 语句可以引用此名称以明确它所引用的内容, 并让编译器检查代码的正确性. 
+为清楚起见, 现在通常使用 `program` 语句来启动程序并为其命名.
+然后,  `end` 语句可以引用此名称以明确它所引用的内容, 并让编译器检查代码的正确性.
 
 此外, 所有 `Fortran` 程序都应包含一个 `implicit none` 语句. 因此, 最小的Fortran程序实际应该如下所示：
 
@@ -46,8 +46,8 @@ program hello
 end program hello
 ```
 
-下一个步骤是如何查看`hello world`程序的结果. 
-本节介绍如何在类似`Linux`的环境中实现这一点. 
+下一个步骤是如何查看`hello world`程序的结果.
+本节介绍如何在类似`Linux`的环境中实现这一点.
 
 然后转到命令行并导航到保存源文件的目录, 然后键入以下命令：
 
@@ -61,7 +61,7 @@ gfortran -o hello hello.f90
 ./hello
 ```
 
-您应该在shell终端上看到以下行. 
+您应该在shell终端上看到以下行.
 
 ```fortran
 Hello world!
@@ -69,7 +69,7 @@ Hello world!
 
 ### 二次方程
 
-今天Fortran主要用于数值计算. 
+今天Fortran主要用于数值计算.
 这个非常简单的例子说明了求解二次方程的基本程序结构：
 
 ```fortran
@@ -113,18 +113,18 @@ end program quadratic
 
 ### 句法
 
-+ `WRITE(unit num, format num)` 在新行中输出括号后面的数据. 
-+ `READ(unit num, format num)` 输入括号后面的变量. 
-+ `OPEN(unit num, FILE=file)` 打开一个文件.  (打开文件有更多选项, 但它们对`I/O`并不重要. 
++ `WRITE(unit num, format num)` 在新行中输出括号后面的数据.
++ `READ(unit num, format num)` 输入括号后面的变量.
++ `OPEN(unit num, FILE=file)` 打开一个文件.  (打开文件有更多选项, 但它们对`I/O`并不重要.
 + `CLOSE(unit num)` 关闭文件
 
 ### 传递命令行参数
 
-在支持命令行参数的地方, 可以通过`get_command_argument`内在函数读入它们(在`Fortran 2003`标准中引入). 
+在支持命令行参数的地方, 可以通过`get_command_argument`内在函数读入它们(在`Fortran 2003`标准中引入).
 
-`command_argument_count`内在提供了一种了解命令行提供的参数数量的方法. 
+`command_argument_count`内在提供了一种了解命令行提供的参数数量的方法.
 
-所有命令行参数都以字符串形式读入, 因此必须对数字数据进行内部类型转换. 
+所有命令行参数都以字符串形式读入, 因此必须对数字数据进行内部类型转换.
 例如, 这个简单的代码汇总了命令行提供的两个数字：
 
 ```fortran
@@ -154,9 +154,9 @@ WRITE(*,*)numsum              !write out value
 END PROGRAM
 ```
 
-`get_command_argument`的`number`参数有用地介于`0`和`command_argument_count`的结果之间. 如果值为`0`则提供命令名称(如果支持). 
+`get_command_argument`的`number`参数有用地介于`0`和`command_argument_count`的结果之间. 如果值为`0`则提供命令名称(如果支持).
 
-许多编译器还提供非标准内在函数(例如 `getarg` )来访问命令行参数. 由于这些是非标准的, 因此应参考相应的编译器文档. 
+许多编译器还提供非标准内在函数(例如 `getarg` )来访问命令行参数. 由于这些是非标准的, 因此应参考相应的编译器文档.
 
 `get_command_argument` 使用可以使用`length`和`status`参数扩展到上面的示例之外. 例如, 用
 
@@ -166,9 +166,9 @@ integer stat
 call get_command_argument(number=1, value=arg, status=stat)
 ```
 
-如果第一个参数存在且长度大于`5`, 则`stat`的值将为`-1` . 如果检索参数存在其他困难, 则`stat`的值将为某个正数(并且`arg`将完全由空白组成). 否则其值将为`0` . 
+如果第一个参数存在且长度大于`5`, 则`stat`的值将为`-1` . 如果检索参数存在其他困难, 则`stat`的值将为某个正数(并且`arg`将完全由空白组成). 否则其值将为`0` .
 
-`length`参数可以与延迟长度字符变量组合, 例如在以下示例中. 
+`length`参数可以与延迟长度字符变量组合, 例如在以下示例中.
 
 ```fortran
 character(:), allocatable :: arg
@@ -201,8 +201,8 @@ end program addNumbers
 
 ### 令牌(Tokens)
 
-令牌是基本字符集中的字符. 令牌可以是一个关键字, 标识符, 常量, 字符串文字或符号. 
-它对程序语句作出标记. 
+令牌是基本字符集中的字符. 令牌可以是一个关键字, 标识符, 常量, 字符串文字或符号.
+它对程序语句作出标记.
 
 ## 选择结构
 
@@ -266,7 +266,7 @@ end if
 
 `.and.` `.or.` `.not.`
 
-### 简单的if结构  
+### 简单的if结构
 
 ```fortran
 print *, 'enter a positive number'
@@ -281,7 +281,7 @@ print *,'It is a positive number'
 
 ### 检测是否为0
 
-整数变量是精确的, 但浮点数是不精确的. 通过一个小量来比较. 
+整数变量是精确的, 但浮点数是不精确的. 通过一个小量来比较.
 
 ```fortran
 if (abs(x) < .000001) then
@@ -331,7 +331,7 @@ FORTRAN会把小数部分丢掉. 为了告诉fortran我们使用浮点数算法,
 y=x/3.0
 ```
 
-real number 的存在, 告诉fortran使用实型算法计算右边的式子. 
+real number 的存在, 告诉fortran使用实型算法计算右边的式子.
 
 例如以下程序：
 
@@ -352,7 +352,7 @@ end program check
 
 ### DO 循环
 
-除非我们能重复执行程序, 不然也许计算器更好用. 
+除非我们能重复执行程序, 不然也许计算器更好用.
 
 ```fortran
 program loop
@@ -378,21 +378,21 @@ END DO outter
 + `do` and `end do`之间所有statement 被执行
 + 每次执行过后, 循环变量增加`1`
 + 等到执行完毕, 即`i`增加到`20`, 继续后面的程序
-+ 步长缺省为`1`, 也可以为负数, 如`do i = 5,-5,-2` 
++ 步长缺省为`1`, 也可以为负数, 如`do i = 5,-5,-2`
 
 **Exercise 3.4**
 
-Using a do loop to generate integer values of `x` between `-10` and `10` in steps of `1`, 
+Using a do loop to generate integer values of `x` between `-10` and `10` in steps of `1`,
 write a program that constructs a table of values of
 
 ```fortran
 y=1.0/x
 ```
 
-What happened when `x` had the value zero? 
+What happened when `x` had the value zero?
 Use an if, end if to test for the condition that gives the
-incorrect value, 
-and print out an appropriate message. 
+incorrect value,
+and print out an appropriate message.
 Compare your result with divbyzero.f95.
 
 Division by zero is one of the commonest reasons for a program to fail.
@@ -438,7 +438,7 @@ program increment
     end program increment
 ```
 
-+ 注意我们在循环外设置了`x`的初始值. 
++ 注意我们在循环外设置了`x`的初始值.
 + 需要给`x`设置初始值, 否则`x`的值可能为随机数
 
 ## 文献和精度
@@ -459,7 +459,7 @@ end program readdata
 ```
 
 `open`语句把文件'mydata.txt'和输入设备号`10`连接起来. (也可以是任意正整数)
-在`read`中把`10`作为第一个参数. 
+在`read`中把`10`作为第一个参数.
 
 在文件中, 格式为每行一个数字输入
 
@@ -504,21 +504,21 @@ end program extended
 产生以下输出:
 `1.01734306196`
 
-我们常常用类似的方法制定精度. 
+我们常常用类似的方法制定精度.
 
 ```fortran
 integer, parameter :: ikind=selected_real_kind(p=15)
 ```
 
-15位数字精度, 这种指定与机器的架构无关, 然后用这个参数去指定变量. 
+15位数字精度, 这种指定与机器的架构无关, 然后用这个参数去指定变量.
 
 ```fortran
 real (kind=ikind) :: sum,x
 ```
 
-用`PRINT`输出时有一个问题是, 无法控制数字的位数, 这可以用输出格式化部分的知识解决. 
+用`PRINT`输出时有一个问题是, 无法控制数字的位数, 这可以用输出格式化部分的知识解决.
 
-`parameters` 声明之后一般不再改变. 
+`parameters` 声明之后一般不再改变.
 
 下面示例了如何使用拓展精度的常数：
 
@@ -545,12 +545,12 @@ print *, val
 end program extendedconstants
 ```
 
-上面的例子, 展示了程序的数据类型很容易出错. 
-一个系统的方法避免这种错误是, 设计检测程序, 用已知类型的数据去检测. 
+上面的例子, 展示了程序的数据类型很容易出错.
+一个系统的方法避免这种错误是, 设计检测程序, 用已知类型的数据去检测.
 
 ### 幅度限制
 
-对数字取值的上限也有限制. 
+对数字取值的上限也有限制.
 
 |Value of p |Decimal places | Range |
 |--- |--- |--- |
@@ -563,7 +563,7 @@ end program extendedconstants
 如级数展开：
 $$
   \sum_{x=1}^{x=10} \frac{1}{x^6}
-$$  
+$$
 可以通过级数求和过程中, 贡献的增长情况来判断. 若本次贡献已经很小, 就可以退出了, 例如：
 
 ```fortran
@@ -588,8 +588,8 @@ end do
 end program whileloop
 ```
 
-现实世界中, 我们要根据实际测量精度来选择数据精度. 
-比如, 如果测量精度在正负$1% $的话, 就没必要取 $15$个数字精度了. 
+现实世界中, 我们要根据实际测量精度来选择数据精度.
+比如, 如果测量精度在正负$1% $的话, 就没必要取 $15$个数字精度了.
 
 在`do`循环中使用`counter`并不是必须的. 如下所示：
 
@@ -602,14 +602,14 @@ if (number <= smallnumber) exit
 end do
 ```
 
-但是这会面临死循环的风险. 
+但是这会面临死循环的风险.
 
 ## 数组和格式化I/O
 
 ### 数组
 
-处理大量数据的时候, 可以使用数组. 
-为了告诉 FORTRAN 我们要使用数组, 我们需要给出它的大小. 
+处理大量数据的时候, 可以使用数组.
+为了告诉 FORTRAN 我们要使用数组, 我们需要给出它的大小.
 
 ```fortran
 real, dimension(100) ::x
@@ -619,8 +619,8 @@ x(1) = 3
 x(66) = 4
 ```
 
-这个代码片段给数组`x`分配了`100`个内存位置. 
-如上分别访问了数组的第`1`和`66`个元素. 
+这个代码片段给数组`x`分配了`100`个内存位置.
+如上分别访问了数组的第`1`和`66`个元素.
 
 数组示例程序：
 
@@ -643,7 +643,7 @@ print *,x
 end program av2
 ```
 
-`print*, x` 将会打印出数组的所有内容. 
+`print*, x` 将会打印出数组的所有内容.
 
 下面展示了, 如何让程序具有良好的拓展性：
 
@@ -669,9 +669,9 @@ print *,x
 end program av3
 ```
 
-这样的代码易于维护, 可以每次动态地分配内存. 
+这样的代码易于维护, 可以每次动态地分配内存.
 
-下面的程序展示了, 如何使用未知长度的数组. 
+下面的程序展示了, 如何使用未知长度的数组.
 
 ```fortran
 program alloc
@@ -703,11 +703,11 @@ deallocate(vector)
 end program alloc
 ```
 
-其中加标注的行, 展示了如何告诉编译器, 数组矢量--allocatable, 可以在运行的时候再决定 size. 
+其中加标注的行, 展示了如何告诉编译器, 数组矢量--allocatable, 可以在运行的时候再决定 size.
 
 ### 矢量化运算
 
-数组允许矢量化运算. 
+数组允许矢量化运算.
 
 ```fortran
 program ramagic
@@ -733,7 +733,7 @@ end program ramagic
 Integer, dimension(5,5) :: a
 ```
 
-建立一个具有`25`个整型位置的空间. 
+建立一个具有`25`个整型位置的空间.
 
 ```fortran
 program twodra
@@ -783,7 +783,7 @@ real(kind=ikind),dimension(4) :: computed
 !fill up the arrays with something
 do i = 1,4
 nums(i) = i * 10
-computed(i) = cos(0.1*i) 
+computed(i) = cos(0.1*i)
 x(i)= computed(i)
 end do
 print *,'nums - integer'
@@ -798,16 +798,16 @@ write(*,3) computed
 end program format
 ```
 
-可见, `write` and `format` 是成对使用的.  
+可见, `write` and `format` 是成对使用的.
 
 ```fortran
 write(output device,label) variable(s)
 label format(specification)
 ```
 
-例子中我们使用的是`*`作为输出设备--也就是屏幕. 
+例子中我们使用的是`*`作为输出设备--也就是屏幕.
 
-格式声明可以在程序的任意地方, 但是一般放在相关`write`的下面. 
+格式声明可以在程序的任意地方, 但是一般放在相关`write`的下面.
 
 格式指定的细节如下：
 
@@ -826,13 +826,13 @@ label format(specification)
 + 右对齐
 + `m`是整数部分的空间, 和小数点
 + 如果实际所需小于`m`, 用空格填充
-+ `n`是每行数字的个数. 如果忽略, 每行一个. 
++ `n`是每行数字的个数. 如果忽略, 每行一个.
 + `d`是小数部分预留空间, 用`0`补充
-+ 如果`m`设置的太小, fortran 会输出`***`. 
++ 如果`m`设置的太小, fortran 会输出`***`.
 
 规则：$m>=$整数部分+小书部分+1个小数点+一个符号(若是负数)
 
-总之, 得把`m`设置的宽一些. 
+总之, 得把`m`设置的宽一些.
 
 #### 指数指定
 
@@ -840,9 +840,9 @@ label format(specification)
 
 + `real` 型输出的可选指定
 + `d`是小数的位数
-+ `m`是总宽度, 包括符号, 字符`E`, 和它的符号, 小数点, 和小数的位置. 
++ `m`是总宽度, 包括符号, 字符`E`, 和它的符号, 小数点, 和小数的位置.
 `m`应该设置的宽一些
-+ `n`是每行数字的个数. 如果忽略, 每行一个. 
++ `n`是每行数字的个数. 如果忽略, 每行一个.
 
 例子：
 
@@ -951,7 +951,7 @@ write(*,1) 'a*b*c',a * b * c
 end program output
 ```
 
-这个程序建立一些数组, 并输出它们, 其中有很多重复的部分, 如果可以重用代码, 将会很棒. 
+这个程序建立一些数组, 并输出它们, 其中有很多重复的部分, 如果可以重用代码, 将会很棒.
 答案就是使用 `subroutines`
 
 ```fortran
@@ -983,17 +983,17 @@ if (answer /= 'y') stop
 end subroutine prompt
 ```
 
-查看代码, 每次我们type `call prompt()`, 程序就跳转到 `subroutine prompt()`, 然后执行找到的每一行程序, 直到遇到`end subroutine prompt`, 
-然后返回主程序, 继续从刚刚离开的地方开始执行. 
+查看代码, 每次我们type `call prompt()`, 程序就跳转到 `subroutine prompt()`, 然后执行找到的每一行程序, 直到遇到`end subroutine prompt`,
+然后返回主程序, 继续从刚刚离开的地方开始执行.
 
-执行 prompting 的代码都在一个地方. 如果我们想要修改的话, 只需要修改这一处. 
-这使得程序更容易维护. 
+执行 prompting 的代码都在一个地方. 如果我们想要修改的话, 只需要修改这一处.
+这使得程序更容易维护.
 
 ### 子套路的参数
 
-我们看到 subroutines 在执行重复代码的时候很有用. 
+我们看到 subroutines 在执行重复代码的时候很有用.
 
-subroutine 可以看成是一个单独的程序, 需要时就调用, 它跟主程序是独立的--它不知道主程序的变量. 主程序也不知道 `subroutines` 中的变量, 所以变量名可以重复. 
+subroutine 可以看成是一个单独的程序, 需要时就调用, 它跟主程序是独立的--它不知道主程序的变量. 主程序也不知道 `subroutines` 中的变量, 所以变量名可以重复.
 
 可以通过参数的方法在主程序和 `subroutines` 之间传递变量.
 
@@ -1031,22 +1031,22 @@ end subroutine volume
 ```
 
 当程序到达`call volume(rad1,vol1)`
-它跳转到`subroutine volume(rad,vol)`, `rad1 and vol1`的值被传递给子套路. 
+它跳转到`subroutine volume(rad,vol)`, `rad1 and vol1`的值被传递给子套路.
 
-子套路将会计算体积, 到达`end subroutine volume`这一行时, `volume`的值被返回给主程序. 
+子套路将会计算体积, 到达`end subroutine volume`这一行时, `volume`的值被返回给主程序.
 
 注意：
 
 + 一个程序中可以有好几个子套路, 每个从事一项专门的任务
 + 除了被用作参数的变量, 主程序和子套路中的变量名可以重复
 + 在子套路中容易忘记声明变量, 请总是使用`implicit none`来避免忘记
-+ 子套路中的所有变量必须提前声明. 
-+ 参数的顺序很重要. 子套路不知道变量在主程序中的名字, 所以变量的位置和类型都很重要. 主从程序中的变量类型应该一致. 
++ 子套路中的所有变量必须提前声明.
++ 参数的顺序很重要. 子套路不知道变量在主程序中的名字, 所以变量的位置和类型都很重要. 主从程序中的变量类型应该一致.
 + 如果子套路的参数是一个数组, 在子套路中也必须声明为一个数组
 
 ### 用户自定义函数
 
-我们已经接触过FORTRAN 的内置函数, 比如： `abs`,`cos`,`sqrt`. 
+我们已经接触过FORTRAN 的内置函数, 比如： `abs`,`cos`,`sqrt`.
 我们也可以自定义函数, 就像子程序那样
 
 ```fortran
@@ -1085,10 +1085,10 @@ rads=(degrees*pi/180.0_ikind)
 end function rads
 ```
 
-自定义的函数`rads`, 可以像` sqrt`, `cos`, and `abs`等内置函数一样使用. 
+自定义的函数`rads`, 可以像` sqrt`, `cos`, and `abs`等内置函数一样使用.
 
-当到达`write(*,10) 'sin = ',sin(rads(deg))`这一行时, 
-程序跳转到`function rads(degrees)`, `degrees`的值被传递给自定义程序, 
+当到达`write(*,10) 'sin = ',sin(rads(deg))`这一行时,
+程序跳转到`function rads(degrees)`, `degrees`的值被传递给自定义程序,
 
 程序进行一些计算, 然后将计算的值返回给主程序, 体现在如下一行
 
@@ -1096,10 +1096,10 @@ end function rads
 rads=(degrees*pi/180.0_ikind)
 ```
 
-注意, 它返回的并不是参数列表中的变量(as does a subroutine), 而是把值赋予自有变量`rads`. 
+注意, 它返回的并不是参数列表中的变量(as does a subroutine), 而是把值赋予自有变量`rads`.
 
 + 函数`rads`把`degrees`转换成`radians`
-+ 我们必须在主程序和 funtion 中, 都声明 function 的 数据类型. 
++ 我们必须在主程序和 funtion 中, 都声明 function 的 数据类型.
 + 函数返回一个值. 这个值被赋予函数的名称, 好像函数名是个变量一样`rads=(degrees*pi/180.0_ikind)`
 
 ## 高级主题
@@ -1109,7 +1109,7 @@ rads=(degrees*pi/180.0_ikind)
 FORTRAN provides a number of intrinsic functions that are useful for working with arrays. Among
 these are some which are specifically aimed at working with matrices and vectors.
 
-FORTRAN 提供了一系列内置函数, 用来处理数组. 其中有一些专门用来处理矩阵和矢量. 
+FORTRAN 提供了一系列内置函数, 用来处理数组. 其中有一些专门用来处理矩阵和矢量.
 
 | | | |
 |---|---|---|
@@ -1123,9 +1123,9 @@ FORTRAN 提供了一系列内置函数, 用来处理数组. 其中有一些专�
 程序`matrixmul.f95`, 演示了这些函数的用法. 此外, 它还包括两个有用的子套路, 用来处理矩阵/数组操作：
 
 `fill_array`用来填充数组元素；
-`outputra` 把数组的元素打印到屏幕. 
+`outputra` 把数组的元素打印到屏幕.
 
-这个程序也是一个动态分配内存的例子. 
+这个程序也是一个动态分配内存的例子.
 
 ```fortran
 program matrixmul
@@ -1194,16 +1194,16 @@ program matrixmul
 
 ### 流程图
 
-现实中的程序一般会比较庞大, 所以 underlying 的逻辑一般会比较复杂. 
+现实中的程序一般会比较庞大, 所以 underlying 的逻辑一般会比较复杂.
 
-所以, 不管是设计程序, 还是维护程序, 使用流程图都很有帮助. 
+所以, 不管是设计程序, 还是维护程序, 使用流程图都很有帮助.
 
 ## De‐bugging 建议
 
 ***
 是否有舍入误差？
 
-不要用整数进行浮点数运算. 确保你的精度是一致且足够的. 确保赋值左右的精度和类型一样. 
+不要用整数进行浮点数运算. 确保你的精度是一致且足够的. 确保赋值左右的精度和类型一样.
 
 ***
 
@@ -1216,7 +1216,7 @@ program matrixmul
 
 ### 明智的预防措施和节约时间的建议
 
-不要检验浮点数是否相等. 例如`if (x == 1) then...`是不合理的. 
+不要检验浮点数是否相等. 例如`if (x == 1) then...`是不合理的.
 
 你应该使用绝对值比较, Example:
 
@@ -1231,9 +1231,9 @@ if
 if (((x.AND.y).OR.z > 10).OR.(.NOT. xx < 0)) then ...
 ```
 
-你写的时候可能是理解的, 但是如果出问题, 调试将会很困难. 
+你写的时候可能是理解的, 但是如果出问题, 调试将会很困难.
 
-+ 不要试图一次完成一个很复杂的程序. 每次完成一小部分, 然后让每一部分正常工作. 
++ 不要试图一次完成一个很复杂的程序. 每次完成一小部分, 然后让每一部分正常工作.
 + 在所有程序和子程序开头使用`implicit none`
 + 如果程序需要用户输入, 可以先用文件输入模拟, 这样可以节约开发时间
 + 在做除法的时候, 总是进行除以`0`的检验
@@ -1259,4 +1259,4 @@ x = x + 1
     end if
 ```
 
-注意我们如何打印特定变量的值, 如果有必要, `stop`程序. 
+注意我们如何打印特定变量的值, 如果有必要, `stop`程序.

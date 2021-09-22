@@ -262,7 +262,7 @@ enum Season
 }
 ```
 
-默认情况下, 与枚举成员的相关的常数是`int`类型；它们从零开始, 并按照定义文本顺序增加一. 
+默认情况下, 与枚举成员的相关的常数是`int`类型；它们从零开始, 并按照定义文本顺序增加一.
 您可以显式指定任何其他整数类型作为枚举类型的基础类型. 您还可以显式指定关联的常数值, 例如：
 
 ```C#
@@ -301,16 +301,16 @@ System.Environment
 
 [about_Automatic_Variables](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_automatic_variables)
 
-+ 简短说明; Automatic_Variables 是存储 `PowerShell` 的状态信息的变量.  这些变量由 `PowerShell` 创建和维护. 
-+ 长说明 ; 从概念上讲, 这些变量被视为只读.  即使它们 `可以` 写入, 但为了向后兼容 , `不应写入` 它们. 
++ 简短说明; Automatic_Variables 是存储 `PowerShell` 的状态信息的变量.  这些变量由 `PowerShell` 创建和维护.
++ 长说明 ; 从概念上讲, 这些变量被视为只读.  即使它们 `可以` 写入, 但为了向后兼容 , `不应写入` 它们.
 
 下面是 PowerShell 中的自动变量列表：
 
-+ `$$` ; 包含会话收到的最后一行中的最后一个令牌. 
-+ `$?`; 包含最后一个命令的执行状态.  如果最后一个命令成功, 它包含 `True`; 如果失败, 它包含 `False`. 
++ `$$` ; 包含会话收到的最后一行中的最后一个令牌.
++ `$?`; 包含最后一个命令的执行状态.  如果最后一个命令成功, 它包含 `True`; 如果失败, 它包含 `False`.
 
-对于在管道中各个阶段运行的 cmdlet 和高级函数(例如在`process `和`end `块中), 
-在任意位置调用`this.WriteError()` or `$PSCmdlet.WriteError()` 将设置`$?`为`False`,  
+对于在管道中各个阶段运行的 cmdlet 和高级函数(例如在`process `和`end `块中),
+在任意位置调用`this.WriteError()` or `$PSCmdlet.WriteError()` 将设置`$?`为`False`,
 `this.ThrowTerminatingError()`和`$PSCmdlet.ThrowTerminatingError()` 类似.
 
 `Write-Error` 在执行后总是立即将`$?`设置为 `False`, 但对于调用它的函数, 它不会将`$?`设置为`False`：
@@ -328,17 +328,17 @@ function Test-WriteError
 对于本机命令 (二进制可执行程序) , 当`$LASTEXITCODE`为 `0`时, `$?`被设置为 `True`, 如果`$LASTEXITCODE` 为其他任意值, 则设置为`False`.
 
 > 备注：
->在 `PowerShell 7`之前, 包含在括号内的语句`(...)`, 子表达式语法`$(...)`或数组表达式`@(...)`总是将`$?`重置为`True`, 因此`(Write-Error)`显示`$?`为`True`. 这一点在 `PowerShell 7` 中有所改变, `$?` 将总是反映表达式中运行的最后一条命令的实际结果. 
+>在 `PowerShell 7`之前, 包含在括号内的语句`(...)`, 子表达式语法`$(...)`或数组表达式`@(...)`总是将`$?`重置为`True`, 因此`(Write-Error)`显示`$?`为`True`. 这一点在 `PowerShell 7` 中有所改变, `$?` 将总是反映表达式中运行的最后一条命令的实际结果.
 
 ***
 
-+ `$^`; 包含会话收到的最后一行中的第一个token(令牌). 
++ `$^`; 包含会话收到的最后一行中的第一个token(令牌).
 + `$_`; 与`$PSItem`相同. 包含管道对象中的当前对象. 你可以使用这个变量, 对管道中的每个对象, 或选定的对象执行动作.
-+ `$args`; 包含一个数组, 传递未声明的参数值给函数, 脚本或脚本块. 
-当你创建一个函数时, 你可以通过使用`param`关键字来声明参数, 或者在函数名称后面的括号中添加一个逗号分隔的参数列表. 
++ `$args`; 包含一个数组, 传递未声明的参数值给函数, 脚本或脚本块.
+当你创建一个函数时, 你可以通过使用`param`关键字来声明参数, 或者在函数名称后面的括号中添加一个逗号分隔的参数列表.
 
-在一个`event action`(事件动作)中, `$args` 变量包含代表正在处理的事件参数的对象. 这个变量只在事件注册命令的`Action`块中被填充. 
-这个变量的值也可以在`Get-Event`返回的`PSEventArgs`对象的`SourceArgs`属性中找到. 
+在一个`event action`(事件动作)中, `$args` 变量包含代表正在处理的事件参数的对象. 这个变量只在事件注册命令的`Action`块中被填充.
+这个变量的值也可以在`Get-Event`返回的`PSEventArgs`对象的`SourceArgs`属性中找到.
 
 ## 函数
 

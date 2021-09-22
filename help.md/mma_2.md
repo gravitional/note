@@ -5,14 +5,14 @@
 + Wolfram 系统文件的结构: tutorial/WolframSystemFileOrganization
 
 + `前端令牌`--`guide/FrontEndTokens` :
-Wolfram语言允许通过发送适当的前端令牌, 从内核以脚本的方式执行任何前端命令. 如`保存`,`打开`文件等等.  
-除了所有标准菜单命令, 还包括默认前端菜单配置无法直接访问的`tokens`. 
+Wolfram语言允许通过发送适当的前端令牌, 从内核以脚本的方式执行任何前端命令. 如`保存`,`打开`文件等等.
+除了所有标准菜单命令, 还包括默认前端菜单配置无法直接访问的`tokens`.
 
 + `模块` tutorial/HowModulesWork
-Wolfram 语言中模块的基本工作方式非常简单. 
-任何模块每一次使用时, 就产生一个新符号去代表它的每一个局部变量. 
-新符号的名字被唯一地给定, 它不能跟任何其它名字冲突. 命名的方法是在给定的局部变量后加 `$`, 并给出唯一的序号. 
-从全局变量 `$ModuleNumber` 的值可以找到序列号. 该变量计算 `Module` 的任何形式所使用的总次数. 
+Wolfram 语言中模块的基本工作方式非常简单.
+任何模块每一次使用时, 就产生一个新符号去代表它的每一个局部变量.
+新符号的名字被唯一地给定, 它不能跟任何其它名字冲突. 命名的方法是在给定的局部变量后加 `$`, 并给出唯一的序号.
+从全局变量 `$ModuleNumber` 的值可以找到序列号. 该变量计算 `Module` 的任何形式所使用的总次数.
 `Module` 中产生形如 `x$nnn` 的符号去代表每个局部变量.
 
 ### 文件导出导入
@@ -22,16 +22,16 @@ tutorial/FilesStreamsAndExternalOperations
 
 管理文件系统的函数非常多. 常用的是:
 
-+ `Put,Get`: 处理 `Mathemtica` 语言输入的 `.wl`, `.m` 格式. 
++ `Put,Get`: 处理 `Mathemtica` 语言输入的 `.wl`, `.m` 格式.
   + `Put[exp1,exp2,..."filename"]`; 把一系列表达式`expi`写入到`"filename"`文件中.
-  + `Put`在创建文件时默认使用字符编码 `PrintableASCII`.添加选项`CharacterEncoding->编码`来指定一个不同的编码.  
+  + `Put`在创建文件时默认使用字符编码 `PrintableASCII`.添加选项`CharacterEncoding->编码`来指定一个不同的编码.
 
-+ `Export,Import`: 处理非常多的外部格式, 具有大量选项. 默认编码是`ASCII`. 
++ `Export,Import`: 处理非常多的外部格式, 具有大量选项. 默认编码是`ASCII`.
   + `Export["dest.ext",expr]`; 将数据导出到`dest.ext`文件中, 根据文件的后缀名转换成相应的格式.
   + `Export[dest,expr,"format"]`; 显式指定保存的格式.
 
 + `ReadString, WriteString` ; 将表达式转换成字符串, 再写入文件. 或者将文件以字符串的形式读入.
-+ `ImportString`, `ExportString`; 从字符串中读取数据, 或者将表达式转换成数据. 
++ `ImportString`, `ExportString`; 从字符串中读取数据, 或者将表达式转换成数据.
 + `BinaryRead,BinaryRead`; 读写二进制数据
 
 ### 字符串导出导入
@@ -61,8 +61,8 @@ ExportString[{1, "text", 2, 3},
  ]
  ```
 
-`wolframscripts` 结合`shell` 使用时, 传递参数最好用字符串, 不会改变结构. 
-在 `mma` 脚本内部, 使用 `ToString` 和 `ToExpression` 进行转化, 为了保险, 可以增加`InputForm`选项. 
+`wolframscripts` 结合`shell` 使用时, 传递参数最好用字符串, 不会改变结构.
+在 `mma` 脚本内部, 使用 `ToString` 和 `ToExpression` 进行转化, 为了保险, 可以增加`InputForm`选项.
 
 ***
 命令行输出的时候, 可以用
@@ -75,7 +75,7 @@ ExportString[RandomReal[10, {4, 3}], "Table"]
 
 ### 变量局部化
 
-`Block` 居域化变量, 但不创建新变量; `Module` 创建新变量. 
+`Block` 居域化变量, 但不创建新变量; `Module` 创建新变量.
 
 ```mathematica
 x = 7;
@@ -83,20 +83,20 @@ Block[{x}, Print[x]]
 Module[{x}, Print[x]]
 ```
 
-`Block`和`Moudle`的区别可以查看`tutorial/BlocksComparedWithModules`, 
-`Module`是`lexical scoping`, 而`Block`是`dynamic scoping`, `Module`把程序文本中出现的变量替换成局部变量, 而`Block`则把计算过程中出现的变量替换成局部变量. 
-也就是`Block`是在执行历史中进行替换. `Block`在交互计算的时候, 更常用, 因为这时候更关注计算历史. 
+`Block`和`Moudle`的区别可以查看`tutorial/BlocksComparedWithModules`,
+`Module`是`lexical scoping`, 而`Block`是`dynamic scoping`, `Module`把程序文本中出现的变量替换成局部变量, 而`Block`则把计算过程中出现的变量替换成局部变量.
+也就是`Block`是在执行历史中进行替换. `Block`在交互计算的时候, 更常用, 因为这时候更关注计算历史.
 
 ***
-`表达式的层次`: `Level` `Map` `Scan` 等的区别: 
+`表达式的层次`: `Level` `Map` `Scan` 等的区别:
 
-它们都可以使用标准的层次指定, `Scan` 和 `Map`效果一样, 但是`Scan`不会返回结果(不会建立一个新的表达式). 
+它们都可以使用标准的层次指定, `Scan` 和 `Map`效果一样, 但是`Scan`不会返回结果(不会建立一个新的表达式).
 `Scan` 可以用过程化的控制：`Return`, `Throw`, `Catch`
 
-可以使用 `Shallow`函数来浏览表达式的结构, 
+可以使用 `Shallow`函数来浏览表达式的结构,
 
 ```mathematica
-Shallow[First[fig`origin[["merge", "normal", "gm_charge"]]] // 
+Shallow[First[fig`origin[["merge", "normal", "gm_charge"]]] //
   InputForm,
  {8, 10}
  ]
@@ -118,12 +118,12 @@ out: ft[y, n]
 
 + 求数列公式有个函数`FindSequenceFunction`
 
-+ `Messages`:  tutorial/Messages 
++ `Messages`:  tutorial/Messages
 
 消息系统可以用来输出错误和警告：`tutorial/Messages`
 常用函数有：`Message`, `Messages`, `Information`
 
-+ `$MessageList` : 当前输入行计算产生的消息列表. 
++ `$MessageList` : 当前输入行计算产生的消息列表.
 + `Check[expr,failexpr]`:  如果计算成功, 返回`expr`, 如果计算期间产生消息(一般是因为错误), 就返回`failexpr`
 
 + `全局信息` tutorial/GlobalSystemInformation
@@ -157,7 +157,7 @@ Symmetrize[{{a, b}, {c, d}}, Antisymmetric[{1, 2}]]
 ```
 
 `TensorSymmetry` : 给出张量在 `slots` 的置换下的对称性.
-`Symmetric[All]`表示对所有指标对称, `Symmetric[{}]`表示没有对称性. 
+`Symmetric[All]`表示对所有指标对称, `Symmetric[{}]`表示没有对称性.
 
 ***
 张量运算
@@ -170,8 +170,8 @@ Symmetrize[{{a, b}, {c, d}}, Antisymmetric[{1, 2}]]
 \sum_k T[i_1,i_2,\cdots ,i_{n-1},k] * U[k,j_2,\cdots,j_m].
 ```
 
-当然, 这要求$T$的最后一个指标$i_n$和$U$的第一个指标$j_1$相等, `Dot`运算始终可以理解为缩并这两个指标. 
-结果是一个$m+n-2$阶张量. 
+当然, 这要求$T$的最后一个指标$i_n$和$U$的第一个指标$j_1$相等, `Dot`运算始终可以理解为缩并这两个指标.
+结果是一个$m+n-2$阶张量.
 
 张量缩并:`TensorContract`
 
@@ -211,21 +211,21 @@ MonomialList[(x + 1)^5, x, Modulus -> 2]
 
 参考[stackexchange](https://mathematica.stackexchange.com/questions/159014/calculate-representations-of-sun-generators||calculate-representations-of-sun-generators), 计算`SU(3)`群的生成元在`d`维的表示.
 
-实际上, 结构常数的思想不是先规定好它们的取值, 再找到合适的基.  
-这个过程是反过来的：通常先规定基满足一些良好的性质, 再根据这些基计算结构常数. 
-一般是要求这些矩阵是稀疏矩阵, 并且对于某种内积正交. 
+实际上, 结构常数的思想不是先规定好它们的取值, 再找到合适的基.
+这个过程是反过来的：通常先规定基满足一些良好的性质, 再根据这些基计算结构常数.
+一般是要求这些矩阵是稀疏矩阵, 并且对于某种内积正交.
 
-在 Mathematica 中, 可以通过 `SparseArray` 设置稀疏矩阵.  
-下面的代码构造了`SU(3)`生成元的3–维基, 它们对于 `Frobenius` 内积是正交的.  当然, 该方法可以推广到任意维度. 
+在 Mathematica 中, 可以通过 `SparseArray` 设置稀疏矩阵.
+下面的代码构造了`SU(3)`生成元的3–维基, 它们对于 `Frobenius` 内积是正交的.  当然, 该方法可以推广到任意维度.
 
 ```bash
-n=3; 
+n=3;
 a=1/Sqrt[2] Flatten[Table[
-SparseArray[{{i,j}->I,{j,i}->I},{n,n}],{i,1,n},{j,i+1,n}],1]; 
+SparseArray[{{i,j}->I,{j,i}->I},{n,n}],{i,1,n},{j,i+1,n}],1];
 b=1/Sqrt[2] Flatten[Table[
-SparseArray[{{i,j}->-1,{j,i}->1},{n,n}],{i,1,n},{j,i+1,n}],1]; 
-c=DiagonalMatrix@*SparseArray/@Orthogonalize[Table[SparseArray[{{i}->I,{i+1}->-I},{n}],{i,1,n-1}]]; 
-basis=Join[a,b,c]; 
+SparseArray[{{i,j}->-1,{j,i}->1},{n,n}],{i,1,n},{j,i+1,n}],1];
+c=DiagonalMatrix@*SparseArray/@Orthogonalize[Table[SparseArray[{{i}->I,{i+1}->-I},{n}],{i,1,n-1}]];
+basis=Join[a,b,c];
 MatrixForm/@basis
 ```
 
@@ -242,18 +242,18 @@ guide/FlowControl
 
 普通的流程控制可以使用`Return[expr]`, 复杂的可以使用`Throw`,`Catch`
 
-由于`Return`一般在控制结构比如`If`中使用, `Return`会退出`If`, 以及`If`外面那层函数, 但对于嵌套函数的情形, 只退出最内的一层函数. 
+由于`Return`一般在控制结构比如`If`中使用, `Return`会退出`If`, 以及`If`外面那层函数, 但对于嵌套函数的情形, 只退出最内的一层函数.
 
 语句组：
 `CompoundExpression[exp1,exp2,...]`
-例如:`Print[x]; Print[y]`, 按顺序执行. 
+例如:`Print[x]; Print[y]`, 按顺序执行.
 
-返回值可以由`Return[expr]`控制, 但是需要有一个外层函数结构. 
+返回值可以由`Return[expr]`控制, 但是需要有一个外层函数结构.
 
 ***
-也可以使用`Throw`,`Catch`控制过程. 
-他们是成对使用的, `Throw[value,tag]`负责跳出过程, 返回当前`value`, 对应的`Catch`可以接住`value`, 
-可以用`tag`指定`Throw` and `Catch`如何匹配. 
+也可以使用`Throw`,`Catch`控制过程.
+他们是成对使用的, `Throw[value,tag]`负责跳出过程, 返回当前`value`, 对应的`Catch`可以接住`value`,
+可以用`tag`指定`Throw` and `Catch`如何匹配.
 如:
 
 ```mathematica
@@ -313,7 +313,7 @@ Legended[
 ***
 盒子 Boxes
 
-像Wolfram语言中的所有其他内容一样, 笔记本最终是符号表达式.  `mma` 的高维结构是用 "Box" 来实现的. 
+像Wolfram语言中的所有其他内容一样, 笔记本最终是符号表达式.  `mma` 的高维结构是用 "Box" 来实现的.
 
 参考：
 
@@ -323,28 +323,28 @@ tutorial/RepresentingTextualFormsByBoxes
 ***
 `Box` 转换与自定义
 
-`Box`有自己的语法, 可以查看一个显示的表达式对应的`Box`表达式, 也可以对后者再次排版. 
+`Box`有自己的语法, 可以查看一个显示的表达式对应的`Box`表达式, 也可以对后者再次排版.
 也就是说笔记本中显示的二维格式,与 low-level 的 `Box` 之间, 可以进行转换, 基本的转换有：
 
-+ `DisplayForm[expr]`:将`expr`中的 `low-level` 框符表示成显式的二维格式. 
-+ `ToBoxes[expr,form]`: 给出对应于特定`form`的`Box`. 
++ `DisplayForm[expr]`:将`expr`中的 `low-level` 框符表示成显式的二维格式.
++ `ToBoxes[expr,form]`: 给出对应于特定`form`的`Box`.
 
 `ToBoxes` 会计算`expr`, 而`MakeBoxes`不计算`expr`
 
 ***
 `Box` 自定义输出格式
 
-一般很少需要修改这些规则. 
-主要原因是 `Wolfram` 语言已经为许多`operators`的输入和输出建立了内置规则, 而该`operators`本身并未为其分配特定的含义. 
-也就是预置了很多可以用, 但没有数学规则, 只有排版规则的`operators`. 
+一般很少需要修改这些规则.
+主要原因是 `Wolfram` 语言已经为许多`operators`的输入和输出建立了内置规则, 而该`operators`本身并未为其分配特定的含义.
+也就是预置了很多可以用, 但没有数学规则, 只有排版规则的`operators`.
 
 可以用来自定义输出的函数有：
 `MakeBoxes`: 底层版本
 `Format`: 上层版本
 
 `mma` 在输出计算结果的时候, 会使用`MakeBoxes`从表达式构建二维结构(`Box`).
-`MakeBoxes`是Wolfram系统会话(`sessions`)中用于将表达式转换为`boxes`的`low-level`函数. 
-所以可以通过定义表达式的`MakeBoxes`上值来自定义输出. 
+`MakeBoxes`是Wolfram系统会话(`sessions`)中用于将表达式转换为`boxes`的`low-level`函数.
+所以可以通过定义表达式的`MakeBoxes`上值来自定义输出.
 
 另一方面, `MakeBoxes`也会使用通过`Format`添加的排版规则：
 
@@ -352,8 +352,8 @@ tutorial/RepresentingTextualFormsByBoxes
 利用`MakeBoxes` 自定义输出格式:
 
 ```mathematica
-gplus /: MakeBoxes[gplus[x_, y_, n_], StandardForm] :=  RowBox[{MakeBoxes[x, StandardForm], 
-SubscriptBox["\[CirclePlus]", MakeBoxes[n, StandardForm]], 
+gplus /: MakeBoxes[gplus[x_, y_, n_], StandardForm] :=  RowBox[{MakeBoxes[x, StandardForm],
+SubscriptBox["\[CirclePlus]", MakeBoxes[n, StandardForm]],
 MakeBoxes[y, StandardForm]}]
 gplus[a, b, m + n]
 ```
@@ -362,29 +362,29 @@ gplus[a, b, m + n]
 利用`Format`自定义输出格式:
 
 `Format[f[...]]:=rhs` 定义`f`的输出格式像是`rhs`.
-`Format[expr,form]`:对特定`form`如`StandardForm`指定自定义格式. 
+`Format[expr,form]`:对特定`form`如`StandardForm`指定自定义格式.
 
 ```mathematica
 Format[f[x_, y_, z__]] := f[x, ...]
 ```
 
-`Format`的下值将被优先使用, 然后才使用跟`MakeBoxes`相关的上值. 
-`MakeBoxes`可以理解成是`Format`的底层版本. 
-不过一个重要的区别是`MakeBoxes`不会计算它的参数, 所以你可以只定义排版规则, 而不必担心这些表达式将会被如何计算. 
+`Format`的下值将被优先使用, 然后才使用跟`MakeBoxes`相关的上值.
+`MakeBoxes`可以理解成是`Format`的底层版本.
+不过一个重要的区别是`MakeBoxes`不会计算它的参数, 所以你可以只定义排版规则, 而不必担心这些表达式将会被如何计算.
 
-此外, `Format`会自动在计算结果上再次调用`Format`, 而`MakeBoxes`不会. 
-所以你需要在需要排版的子表达式上,手动再次调用`MakeBoxes`. 
+此外, `Format`会自动在计算结果上再次调用`Format`, 而`MakeBoxes`不会.
+所以你需要在需要排版的子表达式上,手动再次调用`MakeBoxes`.
 
-当排版的时候, 
+当排版的时候,
 
-`RawBoxes[boxes]`直接插入`boxes`到已有的`Box`结构中, 不检查错误, 由前端直接渲染. 
+`RawBoxes[boxes]`直接插入`boxes`到已有的`Box`结构中, 不检查错误, 由前端直接渲染.
 
 ***
 辅助信息: `TagBox`
 
-在不同排版格式之间转换的时候, 参数信息可能会丢失. 
-此时可以使用`TagBox`,`TagBox`提供了一种在 Wolfram 语言`input`和`output`中存储隐藏信息的方法. 
-`TagBox[bbb,tag]`构建的`Box`和`bbb`一样, 但可以包含额外信息`tag`. 一般是函数的头部. 
+在不同排版格式之间转换的时候, 参数信息可能会丢失.
+此时可以使用`TagBox`,`TagBox`提供了一种在 Wolfram 语言`input`和`output`中存储隐藏信息的方法.
+`TagBox[bbb,tag]`构建的`Box`和`bbb`一样, 但可以包含额外信息`tag`. 一般是函数的头部.
 
 比如：
 
@@ -393,7 +393,7 @@ ToBoxes[InverseFunction[f], StandardForm]
 out: TagBox[SuperscriptBox["f",   RowBox[{"(", RowBox[{"-", "1"}], ")"}]], InverseFunction,  Editable -> False]
 ```
 
-此外, `InterpretationBox`提供了一种在Wolfram语言`output`中存储隐藏信息的方法. 
+此外, `InterpretationBox`提供了一种在Wolfram语言`output`中存储隐藏信息的方法.
 
 `InterpretationBox[boxes,expr]`
 是一个底层`box`构建, 显示和`boxes`一样, 但如果在输入中, 被理解成`expr`
@@ -414,29 +414,29 @@ tutorial/RepresentingTextualFormsByBoxes
 字符串表示--框符
 `\[name]`
 
-最核心的概念是, 一切皆是表达式, 对于内核来说, 它接受的全部是类 `LISP` 的表达式 语言. 
-就类似于纯字符界面的交互方式, 只有 `LISP` 表达式, 在这个层次上, 考虑的是输入的编码问题. 
-往上, 包括图形, 二维化表示等等, 这个层面上, 出现 框符 的概念, 
-二维化框符的显示, 带来了一批处理显示相关的表达式, 它们是`mma`的排版层. 
-框符不仅有 `LISP` 表示, 而且有字符串表示. 
+最核心的概念是, 一切皆是表达式, 对于内核来说, 它接受的全部是类 `LISP` 的表达式 语言.
+就类似于纯字符界面的交互方式, 只有 `LISP` 表达式, 在这个层次上, 考虑的是输入的编码问题.
+往上, 包括图形, 二维化表示等等, 这个层面上, 出现 框符 的概念,
+二维化框符的显示, 带来了一批处理显示相关的表达式, 它们是`mma`的排版层.
+框符不仅有 `LISP` 表示, 而且有字符串表示.
 
 ***
 `框符的字符串表示` tutorial/StringRepresentationOfBoxes
 
-区分原始框符和其代表的表达式. 
+区分原始框符和其代表的表达式.
 
 + `\(input\)`  原始框符(即仅仅是一个二维化结构式)
 + `\!\(input\)`  框符的意义(二维化结构式的数学意义)
 
-如果将一个 `StandardForm` 单元的内容复制到另一个如文本编辑器的程序中, 
-Wolfram 系统将在必要时生成一个 `\!\(...\)` 形式. 
-这样做是为了当讲这个格式的内容重新复制回 Wolfram 系统中时, 该 `StandardForm` 单元的原始内容会自动再次生成. 
+如果将一个 `StandardForm` 单元的内容复制到另一个如文本编辑器的程序中,
+Wolfram 系统将在必要时生成一个 `\!\(...\)` 形式.
+这样做是为了当讲这个格式的内容重新复制回 Wolfram 系统中时, 该 `StandardForm` 单元的原始内容会自动再次生成.
 如果没有 `\!`, 则仅得到对应于这些内容的原始框符.
 
 在选项的默认设置下, 贴入 Wolfram 系统笔记本中的 `\!\(...\)` 格式自动显示成二维格式.
 
 ***
-字符串中嵌入二维框件结构. 
+字符串中嵌入二维框件结构.
 
 + `"\(input\)"`  一个原始字符串
 + `"\!\(input\)"`  含有框符的字符串
@@ -455,7 +455,7 @@ Wolfram 系统将在必要时生成一个 `\!\(...\)` 形式.
 + `\*input`  构建来自 input 的框符
 
 ***
-控制输入被解释的方式. 
+控制输入被解释的方式.
 
 + `\!\(input\)`  解释当前形式中的输入
 + `` \!\(form\`input\) ``  使用指定形式解释输入
@@ -467,7 +467,7 @@ tutorial/RepresentingTextualFormsByBoxes
 
 tutorial/FormattedOutput
 
-Wolfram 语言中的所有文本和图形格式最终是用框符的嵌套集合来表示的. 
+Wolfram 语言中的所有文本和图形格式最终是用框符的嵌套集合来表示的.
 通常这些框符中的元素对应于要放在二维相对位置处的对象.
 
 这里是对应于表达式 `a+b` 的框符：
@@ -487,12 +487,12 @@ Out[2]//DisplayForm=  a+b
 `DisplayForm[boxes]` 表明 `boxes` 被显示的格式
 
 ***
-一些基本的框符类型. 
+一些基本的框符类型.
 
 + `"text"`  原样的文本
 + `RowBox[{a,b,...}]`  一行框符或字符串 a,b,...
-+ `GridBox[{{a1,b1,...},{a2,b2,...},...}]`   一个框符网 
-+ `SubscriptBox[a,b]`  下标 
++ `GridBox[{{a1,b1,...},{a2,b2,...},...}]`   一个框符网
++ `SubscriptBox[a,b]`  下标
 + `SuperscriptBox[a,b]`  上标
 + `SubsuperscriptBox[a,b,c]`  上下标
 + `UnderscriptBox[a,b]`  底标
@@ -503,13 +503,13 @@ Out[2]//DisplayForm=  a+b
 + `RadicalBox[a,b]`  `b` 次方根 `Power[a, (b)^-1]`
 
 ***
-修改框符的外观. 
+修改框符的外观.
 
 + `StyleBox[boxes,options]`  按指定选项的设置显示 `boxes`
 + `StyleBox[boxes,"style"]`  按指定样式显示 `boxes`
 
 ***
-控制框符的解释. 
+控制框符的解释.
 
 + `FormBox[boxes,form]`  用与指定格式有关的规则解释 `boxes`
 + `InterpretationBox[boxes,expr]`  将 `boxes` 当作表达式 `expr` 的表示形式
@@ -526,7 +526,7 @@ Out[2]//DisplayForm=  a+b
 ***
 `无内置定义的算符`tutorial/OperatorsWithoutBuiltInMeanings
 
-有几百个记号没有内部(`built-in`)定义, 也就是没有和函数绑定. 
+有几百个记号没有内部(`built-in`)定义, 也就是没有和函数绑定.
 可以用来构建自己的记号. 如：
 
 ```mathematica
@@ -788,7 +788,7 @@ Background -> {None, None, {{1, 1} -> Pink, {3, 4} -> Red}}]
 由于`mma`是`m[m,m,m,..]`的形式, 其中`m=Head[Sequence]`, (可以无穷无尽地套娃)
 所以除了函数作用到**一堆参数列表**上, 还有反向操作, 就是**一堆函数**作用到一个参数上, 相应的函数为:
 
-`Through[p[f,g][args]]`: `f,g`被组织在结构`p[]`中, `p`可以是列表, 也可以是`Plus`, 等等. 
+`Through[p[f,g][args]]`: `f,g`被组织在结构`p[]`中, `p`可以是列表, 也可以是`Plus`, 等等.
 
 还有专门用来对头部作用的函数:`Operate`:`Operate[p,f[x,y]]`给出`p[f][x,y]`
 
@@ -807,9 +807,9 @@ Thread
 
 神器 `Thread`, 线程
 
-Thread可以理解成, 自动对参数进行同样的处理, 
-如果是一元算符, 则直接轮流作用一遍. 
-如果是多元算符, 首先把参数列表对齐, 就是把参数中出现的单个元素扩充到和其他的一样长. 
+Thread可以理解成, 自动对参数进行同样的处理,
+如果是一元算符, 则直接轮流作用一遍.
+如果是多元算符, 首先把参数列表对齐, 就是把参数中出现的单个元素扩充到和其他的一样长.
 
 还有神奇的自动过滤选项,
 
@@ -906,7 +906,7 @@ tutorial/Introduction-Patterns
 v = ToExpression["x" <> ToString[#]] & /@ Range[5]
 
 ***
-`曲线拟合` 
+`曲线拟合`
 tutorial/CurveFitting
 ref/MapThread
 
@@ -966,7 +966,7 @@ Out[1]= a
 ***
 `符号张量`: guide/SymbolicTensors
 
-张量是线性计算的基本工具, 它把向量和矩阵推广到更高的阶数. 
+张量是线性计算的基本工具, 它把向量和矩阵推广到更高的阶数.
 Mathematica 9 引入强大的方法来以代数方法操作任意阶数的对称张量. 它同时处理以分量数组给出的张量和特定张量域的成员给出的符号张量.
 
 ***
@@ -1017,7 +1017,7 @@ Collect[expr,x]
 `Simplify` 中的选项 `Assumptions` 可以使用诸如 `Assumptions -> {m > 0, \[Mu] > 0, Di > 0}]` 的规则列表
 
 ***
-`列表`: 
+`列表`:
 tutorial/ListsOverview
 tutorial/CollectingObjectsTogether
 
@@ -1127,12 +1127,12 @@ Show[%, Frame -> True]
 对 `Axes` 等图形选项, Wolfram 语言的前端会自动画出用户需要的坐标轴等对象. 这些对象由选项值表示, 而非被确定的图形基元列表表示. 然而, 用户会需要要找到代表这些对象的图形基元列表. 函数 `FullGraphics` 给出不使用任何选项的情况下, 生成图形的完整的图形基元列表.
 
 ***
-`UpSetDelayed` 
+`UpSetDelayed`
 `:=`
 `=`
 `^:=`
 
-`Delayed` and 不带 `Delayed` 的最重要区别就是, 定义时计算, 还是调用的时候计算. 
+`Delayed` and 不带 `Delayed` 的最重要区别就是, 定义时计算, 还是调用的时候计算.
 也就是不带 `Delayed` 容易受到全局变量的影响, 带 `Delayed` 更加接近函数式编程
 
 ***
@@ -1198,15 +1198,15 @@ Out[4]= {0.409393, 0.730688}
 ***
 `调试不完全数组`
 
-如果一个数组, 用Dimension 测试的结果是不完全数组, 
-如何找出是哪里的结构不完全呢. 
-可以把数组中的每一项都替换成$1$再显示, 这样可以比较方便的看出来. 
+如果一个数组, 用Dimension 测试的结果是不完全数组,
+如何找出是哪里的结构不完全呢.
+可以把数组中的每一项都替换成$1$再显示, 这样可以比较方便的看出来.
 
 ***
 `transpose 参数确定方法`
 
 写下数组的维数, 比如`{6, 8, 3}`
-在下面标出 转置后想得到的数组维数目次序, 
+在下面标出 转置后想得到的数组维数目次序,
 比如`{3, 1, 2}`,
 
 则transpose参数设置即是`{3, 1, 2}`
@@ -1324,7 +1324,7 @@ Wolfram 语言提供了一种简洁的方式来用字符串表示框符. 在将�
 + `\(input\)` 原始框符
 + `\!\(input\)` 框符的意义
 
-如果将一个 StandardForm 单元的内容复制到另一个如文本编辑器的程序中, 
+如果将一个 StandardForm 单元的内容复制到另一个如文本编辑器的程序中,
 Wolfram 系统将在必要时生成一个`\!\(...\)`形式. 这样做是为了当讲这个格式的内容重新复制回 Wolfram 系统中时, 该 StandardForm 单元的原始内容会自动再次生成.
 如果没有 `\!`, 则仅得到对应于这些内容的原始框符.
 
@@ -1392,7 +1392,7 @@ Wolfram 语言内核--实际执行计算的部分,  既可以和前端一样运�
 ***
 `使用命令行界面`
 
-在某些情况, 您不需要使用笔记本前端, 而需要更直接的与 Wolfram 语言内核交互, 
+在某些情况, 您不需要使用笔记本前端, 而需要更直接的与 Wolfram 语言内核交互,
 为此, 您可以使用基于文本的界面, 您键入键盘的文本会直接进入内核.
 值得注意的是, 虽然文本界面可以使用 Wolfram 语言内核的大部分功能, 但是不具备图形功能和与 Wolfram 语言前端动态交互的能力.
 
@@ -1435,7 +1435,7 @@ Wolfram 语言内核--实际执行计算的部分,  既可以和前端一样运�
 通常情况下, 当 Wolfram 语言内核运行于基于文本的界面时, 它会提供其他工具, 例如命令行编辑器或命令行历史, 这些在前面章节已讨论过.
 为了操作这些工具, 内核使用特殊的底层指令控制你使用的字符终端或终端仿真器.
 
-在某些情况下, 你可能想阻止内核这样做, 
+在某些情况下, 你可能想阻止内核这样做,
 比如你的终端不支持某些命令行编辑器需要的底层指令, 或比如你需要非交互式地运行内核作为更大型命令的一部分.
 
 要在原始模式上运行 Wolfram 语言内核, 使用 `-rawterm` 命令行开关.
@@ -1453,7 +1453,7 @@ In[1]:=
 终止内核: `Quit[]`
 
 在输入提示符下输入 `Quit[]` 退出 Wolfram 系统.
-您也可以敲入`Ctrl+D` 或 `Ctrl+Z` 退出 Wolfram 系统, 
+您也可以敲入`Ctrl+D` 或 `Ctrl+Z` 退出 Wolfram 系统,
 如果输入行为空, `Ctrl+D` 将终止 Wolfram 系统.
 
 `Ctrl+D`, `Ctrl+Z` 或`Quit[]` 退出 Wolfram 系统
@@ -1526,7 +1526,7 @@ NotebookEvaluate: 计算 `notebook`  中所有可计算单元
 消息, 输出及运算中产生的其他信息将会被放置在调用 `NotebookEvaluate` 的单元的输出中, 而不是指定笔记本的输出. 笔记本中现有的输出单元不会被更新或删除.
 
 `NotebookEvaluate[notebook,InsertResults->True]` 处理运算中产生的信息和输出的方式与处理shift-enter运算的方式一样.
-消息, 输出及运算中产生的其他信息将与输出一起放置在笔记本中, 
+消息, 输出及运算中产生的其他信息将与输出一起放置在笔记本中,
 会取代现有输出或其他相关单元.
 
 当 `NotebookEvaluate[notebook, InsertResults->True]` 用于一个未打开的文件上时, Wolfram 系统将打开文件, 完全计算它, 保存并且关闭该文件.
@@ -1542,7 +1542,7 @@ NotebookEvaluate: 计算 `notebook`  中所有可计算单元
 ***
 `对话`: tutorial/Dialogs
 
-在标准交互式进程中, 可以用 `Wolfram` 语言命令 `Dialog` 去建立一个**子进程**或者**对话.** 在进行计算的过程中, 可以用对话与 `Wolfram` 语言相互作用. 
+在标准交互式进程中, 可以用 `Wolfram` 语言命令 `Dialog` 去建立一个**子进程**或者**对话.** 在进行计算的过程中, 可以用对话与 `Wolfram` 语言相互作用.
 像 "计算的跟踪" 中提到的一样, `TraceDialog` 在一个表达式计算的过程中的指定点自动调用 `Dialog`. 另外, 在计算过程中要中断 `Wolfram` 语言时, 一般用对话检查它的状态.
 
 ***
@@ -1557,13 +1557,13 @@ NotebookEvaluate: 计算 `notebook`  中所有可计算单元
 
 tutorial/OperatorInputForms.  具有内置定义的运算符. 下面是常用算符的优先级, 同一优先级的放到一组:
 
-大部分算符序列从右边往左边依次结合, 再作用到参数上. 
+大部分算符序列从右边往左边依次结合, 再作用到参数上.
 
 ```mathematica
 f@g@h@x==f[g[h[x]]]
 ```
 
-也有一些从左边开始结合, 例如: 
+也有一些从左边开始结合, 例如:
 
 ```mathematica
 exp1[exp2],   (e[e])[e]
@@ -1618,7 +1618,7 @@ exp1/;exp2,    (e/;e)/;e
 ***
 `Sqrt[exp]`,Sqrt, 右结合
 ***
-`exp1.exp2.exp3`,Dot, 
+`exp1.exp2.exp3`,Dot,
 ***
 `-exp`,Times[-1,exp]
 `+exp`,exp
@@ -1658,7 +1658,7 @@ exp1/;exp2,    (e/;e)/;e
 ***
 `exp1~~exp2~~exp3`, StringExpression, 字符串表达式
 ***
-`exp1/;exp2`, Condition, 条件, 左结合, 
+`exp1/;exp2`, Condition, 条件, 左结合,
 ***
 `exp1->exp2`,Rule,规则, 右结合
 `exp1->exp2`, Rule, 右结合
@@ -1726,19 +1726,19 @@ exp1/;exp2,    (e/;e)/;e
 ParallelTools/tutorial/Overview
 ParallelTools/tutorial/ConcurrencyManagingParallelProcesses
 
-`Parallelize`是偏底层的函数, `ParallelTable`,`ParallelMap`是偏上层的函数. 
-`Parallelize`默认选项`DistributedContexts:>$Context`,它分配当前`context`中所有符号的定义, 但不分配`packages`中符号的定义. 
+`Parallelize`是偏底层的函数, `ParallelTable`,`ParallelMap`是偏上层的函数.
+`Parallelize`默认选项`DistributedContexts:>$Context`,它分配当前`context`中所有符号的定义, 但不分配`packages`中符号的定义.
 
-大多数并行函数, 如`ParallelTable`的默认选项是`DistributedContexts:>$DistributedContexts`,而`$DistributedContexts`的初始值是`$Context`. 
+大多数并行函数, 如`ParallelTable`的默认选项是`DistributedContexts:>$DistributedContexts`,而`$DistributedContexts`的初始值是`$Context`.
 同样不会默认分配`packages`中的符号
 
-使用`DistributeDefinitions[s1,s2] `或者`` DistributeDefinitions["context`"] ` `, 将`s1,s2`的定义, 或者某个上下文分配到所有并行计算中, 
+使用`DistributeDefinitions[s1,s2] `或者`` DistributeDefinitions["context`"] ` `, 将`s1,s2`的定义, 或者某个上下文分配到所有并行计算中,
 包括`ownvalues`, `downvalues`, `upvalues`,以及其他类型的`values`. `DistributeDefinitions`会递归的运行,  `s1,s2`依赖的符号也会被分配.
 
 `DistributeDefinitions[expr]`会分配`expr`中所有符号的定义.
 
 ***
-`ParallelNeeds`可以在所有从核加载`packages`, 新开的从核也会自动加载. 
+`ParallelNeeds`可以在所有从核加载`packages`, 新开的从核也会自动加载.
 
 在主核加载:`Needs["ComputerArithmetic`"]`
 在所有从核加载: `ParallelNeeds["ComputerArithmetic`"]`
@@ -1786,12 +1786,12 @@ Needs["Parallel`Developer`"]
 ***
 与Parallelize的比较
 
-"Parallel Evaluation" 中介绍了Parallel mapping, tables, and inner product .  这些函数在`method`选项的控制下, 将任务分为若干个子问题.  
-本节中的功能为每个子问题生成一个计算.  此划分等效于设置`Method->"FinestGrained"`. 
+"Parallel Evaluation" 中介绍了Parallel mapping, tables, and inner product .  这些函数在`method`选项的控制下, 将任务分为若干个子问题.
+本节中的功能为每个子问题生成一个计算.  此划分等效于设置`Method->"FinestGrained"`.
 
-如果所有子问题花费相同的时间, 则诸如`ParallelMap[]`和`ParallelTable[]`之类的功能会更快.  
-但是, 如果子问题的计算时间不同, 并且不容易预先估计, 则最好使用本节中所述的`WaitAll [... ParallelSubmit [] ...]`或等效的`Method->"FinestGrained"`.  
-如果生成的进程数大于远程内核数, 则此方法将执行自动负载平衡, 一旦完成前一个作业, 便将作业分配给内核, 使所有内核始终保持忙碌状态. 
+如果所有子问题花费相同的时间, 则诸如`ParallelMap[]`和`ParallelTable[]`之类的功能会更快.
+但是, 如果子问题的计算时间不同, 并且不容易预先估计, 则最好使用本节中所述的`WaitAll [... ParallelSubmit [] ...]`或等效的`Method->"FinestGrained"`.
+如果生成的进程数大于远程内核数, 则此方法将执行自动负载平衡, 一旦完成前一个作业, 便将作业分配给内核, 使所有内核始终保持忙碌状态.
 
 ### 推送定义到远程
 
@@ -1800,7 +1800,7 @@ Needs["Parallel`Developer`"]
 ***
 同步
 
-一个简单的实现`deadlock`的例子. 
+一个简单的实现`deadlock`的例子.
 
 ```mathematica
 Parallelize[
@@ -1828,8 +1828,8 @@ Parallelize[
 [Mathematica 激活指南](https://tiebamma.github.io/InstallTutorial/)
 [free Wolfram Engine](https://mathematica.stackexchange.com/questions/198839/how-to-add-a-front-end-to-the-free-wolfram-engine)
 
-2019 年 5 月, Wolfram 推出了免费的 Wolfram Engine for Developers. 此软件实质上是一个没有笔记本界面, 也没有本地自带帮助的 Mathematica. 
-但是, 它是免费的！并且, 虽然没有自带笔记本, 但你可以用 `Jupyter` 笔记本. 
+2019 年 5 月, Wolfram 推出了免费的 Wolfram Engine for Developers. 此软件实质上是一个没有笔记本界面, 也没有本地自带帮助的 Mathematica.
+但是, 它是免费的！并且, 虽然没有自带笔记本, 但你可以用 `Jupyter` 笔记本.
 
 ***
 Windows 平台:
@@ -1889,22 +1889,22 @@ Style[SliceVectorPlot3D[{y, -x, z},   "CenterPlanes", {x, -2, 2}, {y, -2, 2}, {z
 
 ## 调整3D图形的视角
 
-`ViewPoint->{x,y,z}`给出视图点相对于包含物体的三维盒子中心的位置. 
+`ViewPoint->{x,y,z}`给出视图点相对于包含物体的三维盒子中心的位置.
 
-`ViewPoint`是在一个特殊的归一化坐标系中给出的, 在这个坐标系中, 封装盒最长边的长度为$1$, 封装盒的中心坐标为`{0,0,0}`. 
+`ViewPoint`是在一个特殊的归一化坐标系中给出的, 在这个坐标系中, 封装盒最长边的长度为$1$, 封装盒的中心坐标为`{0,0,0}`.
 
-`mathematica`使用的是右手坐标系, 
+`mathematica`使用的是右手坐标系,
 
 + `{0,-2,0}`: 正面, 在`y`轴负半轴, `Front`
 + `{0,2,0}`: 背面, 在`y`轴正半轴, `Back`
 + `{-2,0,0}`: 左面, `x`负半轴, `Left`
 + `{2,0,0}`: 右面, `x`正半轴, `Right`
 + `{0,0,2}`: 上方视角, `Above`
-+ 
++
 + `{0,-2,2}`: 前上
 + `{0,-2,-2}`: 前下
 + `{-2,-2,0}`: 左下边角, `{Left,Front}`
-+ `{2,-2,0}`: 右下边角, 
++ `{2,-2,0}`: 右下边角,
 
 + `{0,0,Infinity}`: 从正上方看,平面视图.
 + `{0, -Infinity, 0}`: 从正前方看,平面视图.
@@ -1924,17 +1924,17 @@ Style[SliceVectorPlot3D[{y, -x, z},   "CenterPlanes", {x, -2, 2}, {y, -2, 2}, {z
 实际上建立了由块 $m_{ij}$ 组成的单个矩阵.
 
 本来的矩阵, 实际上有`4`个指标`ijkl`
-`{{1,3},{2,4}}` 的意思是, 把第一个和第三个指标放在一起, 把第二个和第四个指标放在一起. 
+`{{1,3},{2,4}}` 的意思是, 把第一个和第三个指标放在一起, 把第二个和第四个指标放在一起.
 
-也就是说 Flatten 实际上是 矩阵索引 重新划分函数. 
-对于一个矩阵, 有`n`个索引(指标)(`a1,a2,...,an`). 
+也就是说 Flatten 实际上是 矩阵索引 重新划分函数.
+对于一个矩阵, 有`n`个索引(指标)(`a1,a2,...,an`).
 总的元素个数是 `a1* a2*...*an`
-可以重新组合这些指标, 例如把`a1, a2` 并入一个指标中, 
+可以重新组合这些指标, 例如把`a1, a2` 并入一个指标中,
 指标的取值范围变成`1,2,...,a_1*a_2`
 
-类似的, 矩阵的各种指标可以随意交换, 
-`a1* a2* a3* a4` to `a3* a2* a1* a4`, 这就是广义转置的过程. 
-广义转置再加上重新划分(指标的重新组合), 这就是Flatten的作用. 
+类似的, 矩阵的各种指标可以随意交换,
+`a1* a2* a3* a4` to `a3* a2* a1* a4`, 这就是广义转置的过程.
+广义转置再加上重新划分(指标的重新组合), 这就是Flatten的作用.
 
 类似的操作还有
 
@@ -1946,7 +1946,7 @@ Style[SliceVectorPlot3D[{y, -x, z},   "CenterPlanes", {x, -2, 2}, {y, -2, 2}, {z
 ArrayFlatten[ {
   {m11,m12,...},
   {m21,m22,...},
-  ...  
+  ...
   }]
 ```
 
@@ -1971,8 +1971,8 @@ Out[1]= {{a,b,c},{d,e,f}}
 + 指定类型用`x_ h`语法, or `Blank[h]`
 + `x_:v`   如果没有提供, 默认值是`v`
 + `x_ h:v` 头部是`h`, 默认值是`v`
-+ `x_.`  一个表达式, 带有内置的默认值, 内置默认值用`Default`设置, `Default[f,i]` 设定第`i`个默认值. 
-+ `p|PatternSequence[]`  可选模式`p`, 不带默认值,`PatternSequence[]` 表示长度为零的模式. 
++ `x_.`  一个表达式, 带有内置的默认值, 内置默认值用`Default`设置, `Default[f,i]` 设定第`i`个默认值.
++ `p|PatternSequence[]`  可选模式`p`, 不带默认值,`PatternSequence[]` 表示长度为零的模式.
 
 一个位置参数的比较完整的形式是：`name:_head`
 
@@ -1999,7 +1999,7 @@ x:_h:v
 + `s:_`：模式记号为`s`.
 + `s:_h`:模式记号为`s`, 模式的头部为`h`.
 + `s : _ : v`: 模式记号为`s`, 默认值为`v`.
-+ `s : _.` : 模式记号为`s`,模式的默认值取函数此位置的全局默认值. 
++ `s : _.` : 模式记号为`s`,模式的默认值取函数此位置的全局默认值.
 + `s : _h : v`:模式记号为`s`, 模式的头部为`h`,默认值为`v`.
 + 下面是对应的缩写
 + `s_`
@@ -2015,13 +2015,13 @@ x:_h:v
 + `OptionValue`(选项值)
 
 `key-value` 键值对类型的参数, 在 `mma` 中, 通过`选项`--`Option`实现.
-在定义函数的时候, 通过 `OptionsPattern[]` 来匹配或表示. 它表示`0`个或任意个具有名字的可选参数. 
+在定义函数的时候, 通过 `OptionsPattern[]` 来匹配或表示. 它表示`0`个或任意个具有名字的可选参数.
 
-+ `OptionsPattern`匹配由`->`或`:>`指定的的任何替换规则序列, 或规则的嵌套列表. 
-+ 在`OptionsPattern [{spec1,spec2, ...}]`中, `speci`可以是函数头部`fi`, 或显式的规则`opti->vali`.  Head `fi`也将当成规则列表处理, 使用`Options[fi]`获得规则列表. 
-+ `OptionsPattern[]`使用`nearest enclosing function`的默认选项. 
-+ 使用`OptionsPattern[{}]`表示不包含默认选项. 
-  
++ `OptionsPattern`匹配由`->`或`:>`指定的的任何替换规则序列, 或规则的嵌套列表.
++ 在`OptionsPattern [{spec1,spec2, ...}]`中, `speci`可以是函数头部`fi`, 或显式的规则`opti->vali`.  Head `fi`也将当成规则列表处理, 使用`Options[fi]`获得规则列表.
++ `OptionsPattern[]`使用`nearest enclosing function`的默认选项.
++ 使用`OptionsPattern[{}]`表示不包含默认选项.
+
 使用`OptionValue[f, {Frame, PlotPoints}]`获取选项的`value`
 
 使用`FilterRules[rules,patt] `挑选规则列表, 例如：
@@ -2045,11 +2045,11 @@ ref: tutorial/Attributes
 
 ref: tutorial/OptionalAndDefaultArguments
 
-有些函数, 比如`Plus`, 具有`Flat`性质, 在模式匹配中可以匹配任意多的数目的参数, 因为`Plus[1,2,3]=Plus[1,Plus[2,3]]`. 但是它不能匹配单个`a`. 
+有些函数, 比如`Plus`, 具有`Flat`性质, 在模式匹配中可以匹配任意多的数目的参数, 因为`Plus[1,2,3]=Plus[1,Plus[2,3]]`. 但是它不能匹配单个`a`.
 
-这时候可以使用`x_+y_.`这样的写法, 对应的函数是`x+Optional[y_]`, 就可以匹配到`a+0`了, 由于`Plus`具有全局默认参数,`0`. 
+这时候可以使用`x_+y_.`这样的写法, 对应的函数是`x+Optional[y_]`, 就可以匹配到`a+0`了, 由于`Plus`具有全局默认参数,`0`.
 
-使用`x_.`可以匹配那些在数学上相等, 但是在结构上不相等的式子. `x_.`会自动选取外层函数的全局默认值. 
+使用`x_.`可以匹配那些在数学上相等, 但是在结构上不相等的式子. `x_.`会自动选取外层函数的全局默认值.
 
 ```mathematica
 {g[a^2], g[a + b]} /. g[x_^n_] -> p[x, n]
@@ -2067,23 +2067,23 @@ ref: tutorial/OptionalAndDefaultArguments
 
 tutorial/TransformationRulesAndDefinitions#16933
 
-当您在 Wolfram  中给定一连串的定义时, 有些定义可能比其他定义更普适. 
-Wolfram  遵循的原则是, 尽量把更一般的定义放在更具体的定义之后. 
+当您在 Wolfram  中给定一连串的定义时, 有些定义可能比其他定义更普适.
+Wolfram  遵循的原则是, 尽量把更一般的定义放在更具体的定义之后.
 这意味着先应用特殊规则, 再应用一般规则.
 
-这种行为对 `Making Definitions for Functions` 中给出的阶乘函数的例子至关重要. 
-无论您输入的顺序如何, Wolfram 系统总是将特殊情况 `f[1]` 的规则放在一般情况 `f[n_]` 的规则之前. 
-这意味着, 当 Wolfram  寻找 `f[n]`形式的表达式的值时, 它会首先尝试特殊情况 `f[1]`, 只有当它不适用时, 才会尝试一般情况 `f[n_]` . 
-因此, 当你要求`f[5]`时, `Wolfram` 系统将继续使用一般规则, 直到结束条件`f[1]`适用. 
+这种行为对 `Making Definitions for Functions` 中给出的阶乘函数的例子至关重要.
+无论您输入的顺序如何, Wolfram 系统总是将特殊情况 `f[1]` 的规则放在一般情况 `f[n_]` 的规则之前.
+这意味着, 当 Wolfram  寻找 `f[n]`形式的表达式的值时, 它会首先尝试特殊情况 `f[1]`, 只有当它不适用时, 才会尝试一般情况 `f[n_]` .
+因此, 当你要求`f[5]`时, `Wolfram` 系统将继续使用一般规则, 直到结束条件`f[1]`适用.
 
->Wolfram系统试图把具体的定义放在一般的定义之前. 
+>Wolfram系统试图把具体的定义放在一般的定义之前.
 
-在上面使用的阶乘函数的例子中, 很明显能看出哪个规则更通用. 然而, 通常情况下, 无法判断你给出的规则在普适性方面的顺序. 
+在上面使用的阶乘函数的例子中, 很明显能看出哪个规则更通用. 然而, 通常情况下, 无法判断你给出的规则在普适性方面的顺序.
 在这种情况下, Wolfram 系统会按照您提供的顺序来使用这些规则. 例如:
 
 ```mathematica
-log[x_ y_] := log[x] + log[y]. 
-log[x_^n_] := n log[x] . 
+log[x_ y_] := log[x] + log[y].
+log[x_^n_] := n log[x] .
 log[2 x_] := log[x] + log2
 ?log
 定义存储的顺序是:
@@ -2092,15 +2092,15 @@ log[x_ y_] := log[x] + log[y],
 log[x_^n_] := n log[x]
 ```
 
-您应该意识到, 没有一般的方法可以判断规则的顺序, 例如当两条规则都包含复杂的`/;`条件. 
+您应该意识到, 没有一般的方法可以判断规则的顺序, 例如当两条规则都包含复杂的`/;`条件.
 而且有可能规则本质上就没有确定的顺序. 这时候 Wolfram 将按照您提供的顺序存储规则.
 
 ### 函数缓存
 
 tutorial/TransformationRulesAndDefinitions#16933
 
-当你使用 `:=` 来定义一个函数时, 每次你要求该函数的值时都会重新计算. 在某些类型的计算中, 您可能会多次要求获得相同的函数值. 
-在这种情况下, 你可以通过让` Wolfram Language` 记忆它找到的所有函数值来节省时间. 这里有一个定义函数的 `习语`, 可以做到这一点. 
+当你使用 `:=` 来定义一个函数时, 每次你要求该函数的值时都会重新计算. 在某些类型的计算中, 您可能会多次要求获得相同的函数值.
+在这种情况下, 你可以通过让` Wolfram Language` 记忆它找到的所有函数值来节省时间. 这里有一个定义函数的 `习语`, 可以做到这一点.
 
 `f[x_]:=f[x]=rhs` ; 定义一个函数, 记住已经求解过的值. 例如:
 
@@ -2111,7 +2111,7 @@ In[2]:= f[0] = f[1] = 1
 f[8]
 ```
 
-你可以看到`f[x_]:=f[x]=f[x-1]+f[x-2]`的定义是如何工作的. 函数`f[x_]`被定义为 "程序" `f[x]=f[x-1]+f[x-2]`. 
+你可以看到`f[x_]:=f[x]=f[x-1]+f[x-2]`的定义是如何工作的. 函数`f[x_]`被定义为 "程序" `f[x]=f[x-1]+f[x-2]`.
 当你要求得到函数f的值时, `程序` 就被执行. 程序首先计算`f[x-1]+f[x-2]`的值, 然后将结果保存为`f[x]`.
 
 当你在Wolfram语言中实现数学递归关系时, 使用这种方法通常效果不错. 当你需要反复应用递归关系来计算`f(10)`, 你会多次重复计算`f(5)`等.
@@ -2122,52 +2122,52 @@ f[8]
 
 ## 计算控制,Evaluation
 
-Wolfram Language 所执行的基本操作是`计算`. 每当您输入一个表达式时, Wolfram 语言就会对该表达式进行`计算`, 然后返回结果. 
-Wolfram 语言的`计算`是通过应用一连串的定义来进行的. 这些定义可以是你明确输入的定义, 也可以是Wolfram语言中内置的定义. 
+Wolfram Language 所执行的基本操作是`计算`. 每当您输入一个表达式时, Wolfram 语言就会对该表达式进行`计算`, 然后返回结果.
+Wolfram 语言的`计算`是通过应用一连串的定义来进行的. 这些定义可以是你明确输入的定义, 也可以是Wolfram语言中内置的定义.
 
-因此, 举例来说, Wolfram语言使用内置的整数加法程序来`计算`表达式`6+7`. 
-同样地, Wolfram语言使用内置的`化简`程序来`计算`代数表达式`x-3x+1`. 如果你做了`x=5` 的定义, 那么`Wolfram`语言会使用这个定义将`x-3x+1`简化为`-9`. 
+因此, 举例来说, Wolfram语言使用内置的整数加法程序来`计算`表达式`6+7`.
+同样地, Wolfram语言使用内置的`化简`程序来`计算`代数表达式`x-3x+1`. 如果你做了`x=5` 的定义, 那么`Wolfram`语言会使用这个定义将`x-3x+1`简化为`-9`.
 
-Wolfram语言中最核心的两个概念可能是`表达式`和`计算`. `表达式`讨论了Wolfram语言所处理的所有不同种类的对象是如何用表达式来统一表示的. 
-本教程介绍了很多例子, 描述了Wolfram语言如何将众多操作, 以统一的方式看成是`Evaluation`. 
+Wolfram语言中最核心的两个概念可能是`表达式`和`计算`. `表达式`讨论了Wolfram语言所处理的所有不同种类的对象是如何用表达式来统一表示的.
+本教程介绍了很多例子, 描述了Wolfram语言如何将众多操作, 以统一的方式看成是`Evaluation`.
 
 Wolfram语言是一个`infinite evaluation`系统. 当你输入一个表达式时, Wolfram语言会不断地使用它所知道的定义, 一直到没有定义可以使用.
-下面是一个递归定义, 其中阶乘函数是以自身为单位定义的. 
+下面是一个递归定义, 其中阶乘函数是以自身为单位定义的.
 
 ```mathematica
 fac[1] = 1; fac[n_] := n fac[n - 1]
 ```
 
-如果你要求`fac[10]`, Wolfram Language将持续应用你给的定义, 直到它得到的结果不再改变. 
+如果你要求`fac[10]`, Wolfram Language将持续应用你给的定义, 直到它得到的结果不再改变.
 
 ```mathematica
 fac[10]
 3628800
 ```
 
-当 Wolfram Language 使用了它所知道的所有定义后, 它就会给出它所得到的任何表达式作为结果. 
-有时, 结果可能是一个对象, 如一个数字. 但通常情况下, 结果是一个表达式, 其中一些对象是以符号形式表示的. 
-Wolfram语言使用其内置的定义来简化求和, 但不知道`f[3]`的定义, 所以将其留在符号形式中. 
+当 Wolfram Language 使用了它所知道的所有定义后, 它就会给出它所得到的任何表达式作为结果.
+有时, 结果可能是一个对象, 如一个数字. 但通常情况下, 结果是一个表达式, 其中一些对象是以符号形式表示的.
+Wolfram语言使用其内置的定义来简化求和, 但不知道`f[3]`的定义, 所以将其留在符号形式中.
 
 ```mathematica
 f[3] + 4 f[3] + 1
 1 + 5 f[3]
 ```
 
-Wolfram语言遵循的原则是: 持续应用定义, 直到它得到的结果不再改变. 这意味着, 如果你把 Wolfram 语言的输出作为输入, 你将再次得到相同的结果. 
-(在`Controlling Infinite Evaluation`中讨论了一些微妙的情况, 稍有不同). 
+Wolfram语言遵循的原则是: 持续应用定义, 直到它得到的结果不再改变. 这意味着, 如果你把 Wolfram 语言的输出作为输入, 你将再次得到相同的结果.
+(在`Controlling Infinite Evaluation`中讨论了一些微妙的情况, 稍有不同).
 
-在任何时候, Wolfram Language 只能使用它当时知道的那些定义. 
-然而, 如果你以后添加了更多的定义, Wolfram Language 将能够使用这些定义. 在这种情况下, 你从 Wolfram Language 得到的结果可能会改变. 
+在任何时候, Wolfram Language 只能使用它当时知道的那些定义.
+然而, 如果你以后添加了更多的定义, Wolfram Language 将能够使用这些定义. 在这种情况下, 你从 Wolfram Language 得到的结果可能会改变.
 
-下面是函数 `f` 的新定义. 
+下面是函数 `f` 的新定义.
 
 ```mathematica
 f[x_] = x^2
 x^2
 ```
 
-有了新的定义, 你得到的结果可能会改变. 
+有了新的定义, 你得到的结果可能会改变.
 
 ```mathematica
 1 + 5 f[3]
@@ -2176,8 +2176,8 @@ x^2
 
 `Evaluation`最简单的例子是使用定义, 如`f[x_]=x^2`, 它将一个表达式直接转化为另一个表达式.
 
-但`Evaluation`也用于执行 Wolfram 程序. 因此, 例如, 如果你有一个由Wolfram语言表达式序列组成的程序, 其中一些可能表示`条件`和`循环`, 这个程序的执行相当于对这些表达式进行`计算`. 
-计算过程可能涉及多次`Evaluation`一个特定的表达式, 例如在一个循环中. 
+但`Evaluation`也用于执行 Wolfram 程序. 因此, 例如, 如果你有一个由Wolfram语言表达式序列组成的程序, 其中一些可能表示`条件`和`循环`, 这个程序的执行相当于对这些表达式进行`计算`.
+计算过程可能涉及多次`Evaluation`一个特定的表达式, 例如在一个循环中.
 
 ```mathematica
 Do[Print[zzz], {3}]
@@ -2216,8 +2216,8 @@ zzzz
 内部`Replace`有效
 
 ***
-`Evaluate`可以强行计算带有`HoldAll`, `HoldFirst`,`HoldRest`属性的参数, 
-`Unevaluated`保持表达式不计算, 然后外层函数计算这个raw形式. 
+`Evaluate`可以强行计算带有`HoldAll`, `HoldFirst`,`HoldRest`属性的参数,
+`Unevaluated`保持表达式不计算, 然后外层函数计算这个raw形式.
 
 ***
 `HoldPattern[expr]`
@@ -2239,7 +2239,7 @@ zzzz
 
 + `HoldFirst`：保持第一个参数不计算
 + `HoldRest`：不计算第一个参数之外的参数. `RuleDelayed`具有`HoldRest` 以及`SequenceHold`属性.
-+ `HoldAll`：通过设置函数的临时属性, 保持所有参数不计算. 但是展平 `Sequence`, 使用`upvalue`. 
++ `HoldAll`：通过设置函数的临时属性, 保持所有参数不计算. 但是展平 `Sequence`, 使用`upvalue`.
 参数被临时的`Unevaluated`包裹, 但是在传递给结构体的时候, 这个临时的 wrapper 会被去掉.
 
 + `HoldAllComplete`: 不得以任何方式修改或查看函数的所有参数. 不展开`Sequence`, 不移除`Unevaluated`, 不使用`UpValue`, 内部`Evaluate`无效
@@ -2247,19 +2247,19 @@ zzzz
 
 ### Unevaluated
 
-尽管`Set`具有`HoldFirst`属性, `SetDelayed, UpSetDelayed`具有`HoldAll`属性.  
-但是在`Set`将接收到的参数转换成`Definition`的时候, 参数默认情况下仍然会被计算, 所以最终出现在定义里面的参数, 是已经被计算过的形式. 
-例如在下面的定义中, 还是会先计算`g[x]`的值: 
+尽管`Set`具有`HoldFirst`属性, `SetDelayed, UpSetDelayed`具有`HoldAll`属性.
+但是在`Set`将接收到的参数转换成`Definition`的时候, 参数默认情况下仍然会被计算, 所以最终出现在定义里面的参数, 是已经被计算过的形式.
+例如在下面的定义中, 还是会先计算`g[x]`的值:
 
 ```mathematica
 g[x]=2; f[g[x]]:=0
 ??f
 ```
 
-最后`f`的定义是`f[2]=0`, 而不是`f[g[x]]=0`. 
+最后`f`的定义是`f[2]=0`, 而不是`f[g[x]]=0`.
 这样的好处是, 可以放心将`g[x]`用作复杂表达式的接口, 定义`f`的时候, 会自动替换成复杂的表达式. 可以方便输入.
 
-同时使用`HoldAll`属性和`Unevaluated`才能保证, 参数被传递的整个过程中, 始终不进行计算. 
+同时使用`HoldAll`属性和`Unevaluated`才能保证, 参数被传递的整个过程中, 始终不进行计算.
 比如想实现`f[g[x]]=0`这种定义, 需要使用
 
 ```
@@ -2268,16 +2268,16 @@ g[x]=2; f[Unevaluated[g[x]]]:=0
 ??f
 ```
 
-+ `Unevaluated[expr]`; 表示当`expr`作为一个函数的参数出现时, 它的未运算的原始形式. 
++ `Unevaluated[expr]`; 表示当`expr`作为一个函数的参数出现时, 它的未运算的原始形式.
 `f[Unevaluated[expr]]`通过临时设置属性, 使 `f` 保持其参数不运算, 然后再计算 `f[expr]`, 其中`expr`保持接受时的形式. 例如:
 
-将一个未运算的表达式送入`Length`. 
+将一个未运算的表达式送入`Length`.
 
 ```mathematica
 Length[Unevaluated[5 + 6 + 7 + 8]]
 ```
 
-+ 使用`HoldAll`和`Unevaluated`来抑制符号的运算, 不管它们在哪里出现. 
++ 使用`HoldAll`和`Unevaluated`来抑制符号的运算, 不管它们在哪里出现.
 
 ```mathematica
 SetAttributes[symbolLength, HoldAll];
@@ -2287,7 +2287,7 @@ xyzzy = 42;
 symbolLength[xyzzy]
 ```
 
-+ `Unevaluated`只在它出现的地方起作用；它不会被传播. 
++ `Unevaluated`只在它出现的地方起作用；它不会被传播.
 
 ```mathematica
 f[x_] := g[x]
@@ -2314,27 +2314,27 @@ tutorial/EvaluationOfExpressions#13759; Interrupts and Aborts
 
 `Interrupt[]` ; 中断一个计算
 `Abort[]`;  放弃一个计算
-`CheckAbort[expr,failexpr]` ; 计算`expr`并返回结果, 如果发生中止, 则返回`failexpr`. 
-`AbortProtect[expr]` ; 计算`expr`, 掩盖`Abor`的影响, 直到运算完成. 
+`CheckAbort[expr,failexpr]` ; 计算`expr`并返回结果, 如果发生中止, 则返回`failexpr`.
+`AbortProtect[expr]` ; 计算`expr`, 掩盖`Abor`的影响, 直到运算完成.
 
-函数`Abort[]`的效果与先`Interrupt`, 再在中断菜单中选择`放弃`选项的效果相同. 
-你可以使用`Abort[]`来实现程序中的 "紧急停止". 
+函数`Abort[]`的效果与先`Interrupt`, 再在中断菜单中选择`放弃`选项的效果相同.
+你可以使用`Abort[]`来实现程序中的 "紧急停止".
 然而大部分情况, 你应该尽量使用像`Return`和`Throw`这样的函数, 它们的行为更加容易控制.
 
-例子: `Abort`终止计算, 所以只有第一个`Print`被执行. 
+例子: `Abort`终止计算, 所以只有第一个`Print`被执行.
 
 ```mathematica
 Print[a]; Abort[]; Print[b]
 a
 ```
 
-如果你在运算 Wolfram  表达式的任何时候中止, Wolfram Language 通常会放弃对整个表达式的运算, 并返回值 `$Aborted`. 
+如果你在运算 Wolfram  表达式的任何时候中止, Wolfram Language 通常会放弃对整个表达式的运算, 并返回值 `$Aborted`.
 
-然而, 你可以使用函数`CheckAbort`来 "捕获 "中止. 
-如果在`CheckAbort[expr,failexpr]`中运算`expr`时发生中止, 那么`CheckAbort`返回`failexpr`, 但`Abort`不会进一步向外层传播. 
-像`Dialog`这样的函数以这种方式使用`CheckAbort`来控制中止的效果. 
+然而, 你可以使用函数`CheckAbort`来 "捕获 "中止.
+如果在`CheckAbort[expr,failexpr]`中运算`expr`时发生中止, 那么`CheckAbort`返回`failexpr`, 但`Abort`不会进一步向外层传播.
+像`Dialog`这样的函数以这种方式使用`CheckAbort`来控制中止的效果.
 
-当你在 Wolfram  中构建复杂的程序时, 有时你可能想保证程序中的某个特定部分的代码不能被中止, 
+当你在 Wolfram  中构建复杂的程序时, 有时你可能想保证程序中的某个特定部分的代码不能被中止,
 无论是交互式的还是通过调用 `Abort`. 函数 `AbortProtect` 允许你运算一个表达式, 将任何`Abort`暂存到表达式运算完成之后.  例如:
 
 ```mathematica
@@ -2349,23 +2349,23 @@ $Aborted
 AbortProtect[Abort[]; CheckAbort[Print[a], x]]; Print[b]
 ```
 
-即使在 `AbortProtect` 内部, `CheckAbort` 也能看到产生的 `aborts`, 并返回合适的`failexpr`. 
-除非`failexpr`也包含`Abort[]`, 否则`aborts`将被`CheckAbort`吸收. 
+即使在 `AbortProtect` 内部, `CheckAbort` 也能看到产生的 `aborts`, 并返回合适的`failexpr`.
+除非`failexpr`也包含`Abort[]`, 否则`aborts`将被`CheckAbort`吸收.
 
 #### Catch,Throw
 
-`Catch[expr]` ; 运算`expr`直到遇到`Throw[value]`, 然后返回值. 
-`Catch[expr,form]` 运算`expr`直到遇到`Throw[value,tag]`, 其中`form`与`tag`匹配. 
-`Catch[expr,form,f]` 返回`f[value,tag]`而不是`value`. 
+`Catch[expr]` ; 运算`expr`直到遇到`Throw[value]`, 然后返回值.
+`Catch[expr,form]` 运算`expr`直到遇到`Throw[value,tag]`, 其中`form`与`tag`匹配.
+`Catch[expr,form,f]` 返回`f[value,tag]`而不是`value`.
 
-例子: 当遇到`Throw`时, 运算停止, `i`的当前值被返回作为最靠近的 `Catch`的值. 
+例子: 当遇到`Throw`时, 运算停止, `i`的当前值被返回作为最靠近的 `Catch`的值.
 
 ```mathematica
-Catch[Do[Print[i]; If[i > 3, Throw[i]], {i, 10}]] . 
+Catch[Do[Print[i]; If[i > 3, Throw[i]], {i, 10}]] .
 ```
 
-`Throw` 和 `Catch` 提供了一种灵活的方式来控制 Wolfram  的运算过程. 
-其基本思想是, 每当遇到 `Throw` 时, 正在进行的运算就会停止, `Wolfram`  会立即返回到最近的 `Catch`包裹. 
+`Throw` 和 `Catch` 提供了一种灵活的方式来控制 Wolfram  的运算过程.
+其基本思想是, 每当遇到 `Throw` 时, 正在进行的运算就会停止, `Wolfram`  会立即返回到最近的 `Catch`包裹.
 
 对于`Map`也会得到相同的结果, 尽管`Map`本来会返回一个列表, 但是`Throw`会中断列表的形成.
 
@@ -2373,20 +2373,20 @@ Catch[Do[Print[i]; If[i > 3, Throw[i]], {i, 10}]] .
 Catch[Map[(Print[#]; If[# < 6, Throw[#]]) &, {7, 6, 5, 4}]]
 ```
 
-你可以使用`Throw`和`Catch`来控制函数式编程结构的流向, 例如, 允许这些结构的运算持续进行, 直到满足某些条件后停止. 
-请注意, 如果你使用`Throw`来停止运算, 那么你得到的结果, 其结构可能与完整运算得到的结构不同. 
+你可以使用`Throw`和`Catch`来控制函数式编程结构的流向, 例如, 允许这些结构的运算持续进行, 直到满足某些条件后停止.
+请注意, 如果你使用`Throw`来停止运算, 那么你得到的结果, 其结构可能与完整运算得到的结构不同.
 
-`Throw`和`Catch`的操作是 Global 的：不管`Throw`是如何产生的, 也不管在哪里产生的, 它总是会停止求值, 并返回到包裹一的`Catch`. 
-例子: `Throw`停止对`f`的计算, 导致`Catch`只返回`a`, 而不含有`f` 
+`Throw`和`Catch`的操作是 Global 的：不管`Throw`是如何产生的, 也不管在哪里产生的, 它总是会停止求值, 并返回到包裹一的`Catch`.
+例子: `Throw`停止对`f`的计算, 导致`Catch`只返回`a`, 而不含有`f`
 
 ```mathematica
 Catch[f[Throw[a]]]
 ```
 
-在小型程序中, 使用`Throw[value]`和`Catch[expr]`的最简单形式通常就足够了. 
-但如果你写的程序比较大, 包含很多独立的部分, 通常使用`Throw[value,tag]`和`Catch[expr,form]`会好很多. 
+在小型程序中, 使用`Throw[value]`和`Catch[expr]`的最简单形式通常就足够了.
+但如果你写的程序比较大, 包含很多独立的部分, 通常使用`Throw[value,tag]`和`Catch[expr,form]`会好很多.
 
-通过让表达式`tag`和`form` local 在程序的某特定部分, 你可以保证`Throw`和`Catch`也只在那个部分生效. 
+通过让表达式`tag`和`form` local 在程序的某特定部分, 你可以保证`Throw`和`Catch`也只在那个部分生效.
 
 ```
 Catch[f[Catch[Throw[x, a], a]], b] . (*被内层捕捉*)
@@ -2394,14 +2394,14 @@ Catch[f[Catch[Throw[x, b], a]], b] . (*被外层捕捉*)
 Catch[Throw[x, a], a | b] (* 可以使用模式 *)
 ```
 
-你出现在`Throw`中的标签不必是常量, 它可以是任何表达式. 
+你出现在`Throw`中的标签不必是常量, 它可以是任何表达式.
 
 ```mathematica
 Catch[Do[Catch[Throw[i^2, i], n_ /; n < 4], {i, 10}], _]
 ```
 
-当使用`Catch[expr,form]`和`Throw[value,tag]`时, `Catch`返回的值只是`Throw`中表达式的值. 
-而使用`Catch[expr,form,f]`,返回的值是`f[value,tag]`. 
+当使用`Catch[expr,form]`和`Throw[value,tag]`时, `Catch`返回的值只是`Throw`中表达式的值.
+而使用`Catch[expr,form,f]`,返回的值是`f[value,tag]`.
 
 ```mathematica
 Catch[Throw[x, a], a, f] (* 这里f被应用于Throw中的值和tag.*)
@@ -2420,8 +2420,8 @@ Catch[x, a, f] (*如果没有Throw, 就不会被使用f  *)
 
 + `sym:obj` 或者 `Pattern[sym,obj]`; 表示模式对象`obj`, 被分配名称`sym`.
 例如`type:1|2`表示名为`type`的模式, 取值为`1`或者`2`.
-  + 名称`sym`必须是一个符号. 
-  + 对象`obj`可以是任何模式对象. 
+  + 名称`sym`必须是一个符号.
+  + 对象`obj`可以是任何模式对象.
   + 当被用于替换规则时, 在右边出现的任何`sym`, 都替换以左边匹配到的表达式.
   + 操作符`:`的优先级相对较低. 因此表达式`x:_+_`被解释为`x:(_+_)`, 而不是`(x:_)+_`.
   + 形式`s_`等同于`s:_`. 同样, `s_h` 等同于 `s:_h`; `s__`等同于`s:__`, 以此类推.
@@ -2430,17 +2430,17 @@ Catch[x, a, f] (*如果没有Throw, 就不会被使用f  *)
 表达式 `F[a,b,c...]`
 
 + `_, Blank[]`, 有且只有一个的表达式序列.
-+ `Blank[h]`, 表示头部为`h`的模式,  
++ `Blank[h]`, 表示头部为`h`的模式,
 + `_h` 中`h`本身不能再包含模式对象.
 + `__, BlankSequence[]`, 一个或多个表达式序列
-+ `f[x_, x_]` 表示函数中两个相同的自变量, `f[x_,y_]`表示函数中任意两个变量, 可以相同, 也可以不同. 
++ `f[x_, x_]` 表示函数中两个相同的自变量, `f[x_,y_]`表示函数中任意两个变量, 可以相同, 也可以不同.
 
 ```mathematica
 s : _ | __ // FullForm
 Pattern[s,Alternatives[Blank[],BlankSequence[]]]
 ```
 
-头部也可以是表达式, 
+头部也可以是表达式,
 所以`_`也就是`Blank[]`可以指带`f[a,b,c...][x,y,z...]`
 
 ```mathematica
@@ -2457,8 +2457,8 @@ Wolfram 语言中提供了对模式进行限制的一般方法, 通过在模式�
 
 `Condition`:条件替换
 
-+ `patt/;test` ; 是一个模式, 只有在`test`的计算结果为`True`时才进行匹配. 
-+ `lhs:>rhs/;test` ; 表示一个规则, 只有在`test`的计算结果为`True`时才使用. 
++ `patt/;test` ; 是一个模式, 只有在`test`的计算结果为`True`时才进行匹配.
++ `lhs:>rhs/;test` ; 表示一个规则, 只有在`test`的计算结果为`True`时才使用.
 + `lhs:=rhs/;test` ; 表示一个定义, 只有在`test`产生`True` 时才会使用.
 
 + `test`中使用的所有模式变量也必须出现在`patt`中
@@ -2468,9 +2468,9 @@ Wolfram 语言中提供了对模式进行限制的一般方法, 通过在模式�
 
 + `PatternTest[p,test]`: 是一个模式对象, 代表任何与`p`相匹配的表达式, 并且要满足在`p`上应用`test`给出`True`.
 
-+ `test[pval]`不是`True`的任何其他结果, 就表示失败. 
++ `test[pval]`不是`True`的任何其他结果, 就表示失败.
 + 操作符 `?` 的优先级更高. 因此 `_^_?t` 是`_^(_?t)`, 而不是`(_^_)?t`.
-+ 在 `__?test` 这样的形式中, 当应用测试时, 由 `__` 匹配的序列中的每个元素必须都产生 `True`. 
++ 在 `__?test` 这样的形式中, 当应用测试时, 由 `__` 匹配的序列中的每个元素必须都产生 `True`.
 + `PatternTest`有属性`HoldRest`, 也就是不 Evaluate `test`
 
 ```mathematica
@@ -2491,7 +2491,7 @@ NumericQ[Sin[Sqrt[2]]]
 `expr..` 重复一次或多次的模式或表达式
 `expr...` 重复零次或多次的模式或表达式
 
-`规则与模式`: 
+`规则与模式`:
 guide/RulesAndPatterns
 guide/Patterns
 
@@ -2511,22 +2511,22 @@ MatchQ[{2, 1}, {OrderlessPatternSequence[1, 2]}]
 + `ReplacePart`
 + `Dispatch[{lhs1->rhs1,lhs2->rhs2}]`: 不影响替换结果, 但可以加速替换.
 
-`mma`中的表达式都可以表示成树. 不同的函数具体的操作流程不同. 
+`mma`中的表达式都可以表示成树. 不同的函数具体的操作流程不同.
 
-+ `ReplaceAll` 检查表达式的每一项, 尝试使用给出的所有规则, 然后继续遍历下一项. 
-+ 使用`第一个`匹配的规则, 对作用过的项, 不再使用后续的替换规则, 也不再检查它的子项. 
-+ 对给出的替换规则, 只进行一次上面的遍历过程. 
++ `ReplaceAll` 检查表达式的每一项, 尝试使用给出的所有规则, 然后继续遍历下一项.
++ 使用`第一个`匹配的规则, 对作用过的项, 不再使用后续的替换规则, 也不再检查它的子项.
++ 对给出的替换规则, 只进行一次上面的遍历过程.
 + 如果没有规则适用, 则返回原来的表达式.
 + `ReplaceAll[rules][expr]` 等价于 `ReplaceAll[expr,rules]`.
 
 解释的更详细点就是：
 
-+ 在树的根部--第`0`层, 也就是从整个表达式开始是否有规则可以使用. 
-+ 然后去往第一层的第一个... 尝试每个规则, 如果可以替换就替换, 然后第二个, 遍历完就深入到下一层等等. 
-+ 对于某个子表达式, `ReplaceAll`使用可用的第一个规则, 然后跳过这个子集, 不再尝试更多的规则. 
++ 在树的根部--第`0`层, 也就是从整个表达式开始是否有规则可以使用.
++ 然后去往第一层的第一个... 尝试每个规则, 如果可以替换就替换, 然后第二个, 遍历完就深入到下一层等等.
++ 对于某个子表达式, `ReplaceAll`使用可用的第一个规则, 然后跳过这个子集, 不再尝试更多的规则.
 也就是`ReplaceAll`替换它可以替换的最大子表达式, 然后继续下一项.
-+ `ReplaceAll` 仅对一个表达式应用特定规则列表一次. 
-如果替换规则没有嵌套, 应该可以保证完全替换. 否则应该使用`ReplaceRepeated`. 
++ `ReplaceAll` 仅对一个表达式应用特定规则列表一次.
+如果替换规则没有嵌套, 应该可以保证完全替换. 否则应该使用`ReplaceRepeated`.
 
 ```mathematica
 {x, x^2} /. {x^2 -> 2, x -> 1} (* 结果是 {1,2}, 使用 x^2 -> 2 的规则 *)
@@ -2534,7 +2534,7 @@ MatchQ[{2, 1}, {OrderlessPatternSequence[1, 2]}]
 {x, x^2, y} /. {x^2 -> y, x -> 3, y -> 1}  (* 结果是 {3, y, 1}, 只应用一次规则列表*)
 ```
 
-+ `ReplaceRepeated`重复应用`ReplaceAll`,  直到表达式不再变化为止. 
++ `ReplaceRepeated`重复应用`ReplaceAll`,  直到表达式不再变化为止.
 + `Replace` with level spec `All` 将会尝试替换每个子表达式 exactly 一次.
 + `ReplacePart`: 替换某些位置上的子表达式.
 
@@ -2542,7 +2542,7 @@ MatchQ[{2, 1}, {OrderlessPatternSequence[1, 2]}]
 
 `字符串处理`: `字符串模式` tutorial/WorkingWithStringPatterns
 
-StringExpression objects can be used in many string manipulation functions, including StringReplace, StringCases, StringSplit, and StringMatchQ. 
+StringExpression objects can be used in many string manipulation functions, including StringReplace, StringCases, StringSplit, and StringMatchQ.
 
 `MatchQ`不能识别`StringExpression`, 即字符串表达式. 需要用`StringMatchQ`才可以识别. 例如:
 
@@ -2558,7 +2558,7 @@ StringMatchQ["adbasdd", __ ~~ "dd"]
 比较字符串时忽略大小写, 这个功能在`StringMatchQ`的选项中：
 `StringMatchQ["acggtATTCaagc", __ ~~ "aT" ~~ __, IgnoreCase -> True]`
 
-在字符串匹配中, `x_`只匹配单个字符, `characters`,`StringExpression[pattern...]`可以用来表示模式序列, 有各种各样对应正则表达式功能的函数. 
+在字符串匹配中, `x_`只匹配单个字符, `characters`,`StringExpression[pattern...]`可以用来表示模式序列, 有各种各样对应正则表达式功能的函数.
 
 比如
 
@@ -2566,8 +2566,8 @@ StringMatchQ["adbasdd", __ ~~ "dd"]
 + `EndOfString`   字符串结尾
 + `StartOfLine`   行的开始
 + `EndOfLine`   行的结束
-+ `WordBoundary`   boundary between word characters and others 
-+ `Except[WordBoundary]`   anywhere except a word boundary 
++ `WordBoundary`   boundary between word characters and others
++ `Except[WordBoundary]`   anywhere except a word boundary
 
 ***
 
@@ -2585,21 +2585,21 @@ StringMatchQ["adbasdd", __ ~~ "dd"]
 ```mathematica
 Cases[{e1,e2,...},pattern]
 ```
- 
-+ `Cases`的第一个参数不需要有Head`List`. 
-+ 当在一个关联上使用时, `Cases` 根据它们的`Value`挑出元素. 
-+ `Cases[expr,pattern:>rhs]` 只在找到模式时计算`rhs`. 
-+ `Cases[pattern][list]` 相当于 `Cases[list,pattern]`. 
-+ `Cases` 使用标准的层次指定. 
+
++ `Cases`的第一个参数不需要有Head`List`.
++ 当在一个关联上使用时, `Cases` 根据它们的`Value`挑出元素.
++ `Cases[expr,pattern:>rhs]` 只在找到模式时计算`rhs`.
++ `Cases[pattern][list]` 相当于 `Cases[list,pattern]`.
++ `Cases` 使用标准的层次指定.
   + `n`; `1`到`n`层
   + `Infinity` ; 第`1`层到最后一层
   + `{n}` ; 只包含第`n`层
-  + `{n1,n2}` ;  `n1`层到`n2`层. 
-+ `Cases`的默认`levelspec`是`{1}`. 
+  + `{n1,n2}` ;  `n1`层到`n2`层.
++ `Cases`的默认`levelspec`是`{1}`.
   + 正的层`n`包含`expr`中所有需要`n`个指标指定的子表达式.
-  + 负数层`-n`包括`expr`中所有深度为`n`的部分. 
-  + `-1`层由数字, 符号和其他没有子部分的对象组成. 
-  + `0`层对应于整个表达式. 
+  + 负数层`-n`包括`expr`中所有深度为`n`的部分.
+  + `-1`层由数字, 符号和其他没有子部分的对象组成.
+  + `0`层对应于整个表达式.
 + 通过选项设置`Heads->True`, `Cases`会查看表达式的头部和头部的子项.
 + `Cases`以`depth`优先的方式遍历`expr`的各个部分, 先访问叶子再访问根部.
 

@@ -1,6 +1,6 @@
 # learn.git.md
 
-reference: [廖雪峰git教程](https://www.liaoxuefeng.com/wiki/896043488029600) 
+reference: [廖雪峰git教程](https://www.liaoxuefeng.com/wiki/896043488029600)
 and [git-scm-book](https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-Git-%E5%88%AB%E5%90%8D)
 
 ## SSH配置
@@ -107,7 +107,7 @@ Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
 
 ### 修改最后一次注释
 
-如果你只想修改最后一次注释(就是最新的一次提交), 
+如果你只想修改最后一次注释(就是最新的一次提交),
 
 `git commit --amend`
 
@@ -175,7 +175,7 @@ test line9.
 ——对比两个文件, 其中`a`改动前, `b`是改动后, 以`git`的`diff`格式显示；
 
 `index 629d9c8..3d98a7f 100644`
-——两个版本的`git`哈希值, `index`区域(`add`之后)的`629d9c8`对象和工作区域的`3d98a7f`对象, 
+——两个版本的`git`哈希值, `index`区域(`add`之后)的`629d9c8`对象和工作区域的`3d98a7f`对象,
 `100`表示普通文件, `644`表示权限控制；
 
 `--- a/test.txt`
@@ -187,7 +187,7 @@ test line9.
 test line4.  test line5.  test line6.
 ```
 
-`——@@`表示文件变动描述合并显示的开始和结束, 一般在变动前后多显示3行, 
+`——@@`表示文件变动描述合并显示的开始和结束, 一般在变动前后多显示3行,
 其中`-+`表示变动前后, 逗号前是起始行位置, 逗号后为从起始行往后几行.
 合起来就是变动前后都是从第`4`行开始, 变动前文件往后数`8`行对应变动后文件往后数`9`行.
 变动内容 `+`表示增加了这一行, `-`表示删除了这一行, 没符号表示此行没有变动.
@@ -229,32 +229,32 @@ use as:
 
 ### the details
 
-+ `git diff [<options>] <blob> <blob>` ; 这种形式是为了查看两个`blob`对象的原始内容之间的差异. 
-+ `git diff [<options>] [--] [<path>…​]`; 这个形式是用来查看你相对于`index`(下次提交的暂存区)所做的修改. 
-换句话说, 这些差异是你可以告诉`Git`进一步添加到索引中的, 但还没有实际添加. 你可以通过使用`git-add`对这些修改进行添加. 
++ `git diff [<options>] <blob> <blob>` ; 这种形式是为了查看两个`blob`对象的原始内容之间的差异.
++ `git diff [<options>] [--] [<path>…​]`; 这个形式是用来查看你相对于`index`(下次提交的暂存区)所做的修改.
+换句话说, 这些差异是你可以告诉`Git`进一步添加到索引中的, 但还没有实际添加. 你可以通过使用`git-add`对这些修改进行添加.
 
-+ `git diff [<options>] --no-index [--] <path> <path>` ; 这种形式是为了比较文件系统上给定的两个路径. 
-当在一个由Git控制的工作树中运行该命令, 并且至少有一个路径指向该工作树之外时, 可以省略`--no-index`选项. 或在`Git`控制的工作树之外运行该命令. 
++ `git diff [<options>] --no-index [--] <path> <path>` ; 这种形式是为了比较文件系统上给定的两个路径.
+当在一个由Git控制的工作树中运行该命令, 并且至少有一个路径指向该工作树之外时, 可以省略`--no-index`选项. 或在`Git`控制的工作树之外运行该命令.
 
-+ `git diff [<options>] --cached [<commit>] [--] [<path>…​]`; 这种形式是用来查看你为下一次`commit`所做的相对于`<commit>`的修改. 
-通常情况下, 你希望与最新的提交进行比较, 所以如果你没有给出`<commit>`, 它默认为`HEAD`. 
++ `git diff [<options>] --cached [<commit>] [--] [<path>…​]`; 这种形式是用来查看你为下一次`commit`所做的相对于`<commit>`的修改.
+通常情况下, 你希望与最新的提交进行比较, 所以如果你没有给出`<commit>`, 它默认为`HEAD`.
 如果`HEAD`不存在(例如未出生的分支), 并且没有给出`<commit>`, 它将显示所有已提交的修改. `--staged`是`--cached`的同义词.
 
-+ `git diff [<options>] <commit> [--] [<path>…​]`;  这种形式是用来查看你的工作区中相对于命名为`<commit>`的修改. 
-你可以用`HEAD`与最新的提交进行比较, 或者用`branch name`与不同分支的`tip`进行比较. 
++ `git diff [<options>] <commit> [--] [<path>…​]`;  这种形式是用来查看你的工作区中相对于命名为`<commit>`的修改.
+你可以用`HEAD`与最新的提交进行比较, 或者用`branch name`与不同分支的`tip`进行比较.
 
-+ `git diff [<options>] <commit> <commit> [--] [<path>…​]` ; 用来查看两个任意的`<commit>`之间的变化. 
++ `git diff [<options>] <commit> <commit> [--] [<path>…​]` ; 用来查看两个任意的`<commit>`之间的变化.
 + `git diff [<options>] <commit>..<commit> [--] [<path>…​]`; 上一条的同义形式. 如果省略了一边的`<commit>`, 将使用`HEAD`.
 + `git diff [<options>] <commit>...<commit> [--] [<path>…​]` ; 这种形式是用来查看
   + 当前分支上的修改
-  + 包含并直到第二个 `<commit>` 
+  + 包含并直到第二个 `<commit>`
   + 起点是两个`<commit>`的共同祖先.
   `git diff A...B`等同于`git diff $(git merge-base A B) B`. 你可以省略`<commit>`中的任何一个, 相当于使用`HEAD`.
-  
+
 注意：
 
-+ 为了防止你做一些奇怪的事情(exotic), 提醒一下, 上述描述中的所有`<commit>`, 除了最后两种使用`..`的形式, 也可以是任何`<tree>`. 
-+ 关于`<commit>`更完整的拼写方式, 请参见`gitrevisions`中的 `SPECIFYING REVISIONS`部分. 
++ 为了防止你做一些奇怪的事情(exotic), 提醒一下, 上述描述中的所有`<commit>`, 除了最后两种使用`..`的形式, 也可以是任何`<tree>`.
++ 关于`<commit>`更完整的拼写方式, 请参见`gitrevisions`中的 `SPECIFYING REVISIONS`部分.
 然而, `diff`是关于比较两个 `端点`, 而不是 `范围`, 范围符号(`<commit>...<commit>`和`<commit>...<commit>`)
 并不能按照`gitrevisions`中 `SPECIFYING RANGES`的定义理解.
 
@@ -262,25 +262,25 @@ use as:
 
 `git log` ; 穿梭时光前, 用`git log`可以查看提交历史, 以便确定要回退到哪个版本
 
-+ `-<number>,-n <number>,--max-count=<number>`; 限制输出的提交数量. 
-+ `--skip=<number>`; 在开始显示提交输出之前, 跳过提交的数量. 
-+ `--since=<date>, --after=<date>`; 显示比特定日期更近的提交. 
-+ `--until=<date>, --before=<date>`; 显示比特定日期更早的提交. 
++ `-<number>,-n <number>,--max-count=<number>`; 限制输出的提交数量.
++ `--skip=<number>`; 在开始显示提交输出之前, 跳过提交的数量.
++ `--since=<date>, --after=<date>`; 显示比特定日期更近的提交.
++ `--until=<date>, --before=<date>`; 显示比特定日期更早的提交.
 
-+ `--author=<pattern>, --committer=<pattern>`; 
++ `--author=<pattern>, --committer=<pattern>`;
 将提交文件的输出限制在, `作者`/`提交`人标题行符合指定模式(正则表达式)的提交文件.
-如果有多个 `--author=<pattern>`, 则会选择那些作者与任意模式相匹配的提交(多个` --committer=<pattern>` 的情况也是如此). 
+如果有多个 `--author=<pattern>`, 则会选择那些作者与任意模式相匹配的提交(多个` --committer=<pattern>` 的情况也是如此).
 
-+ `--grep-reflog=<pattern>`; 
-将提交结果限制在有符合指定模式(正则表达式)的reflog条目的提交. 
-如果有多个 `--grep-reflog`, 则会选择那些 `reflog` 信息符合任何模式的提交. 除非使用 `--walk-reflogs`, 否则使用此选项是错误的. 
++ `--grep-reflog=<pattern>`;
+将提交结果限制在有符合指定模式(正则表达式)的reflog条目的提交.
+如果有多个 `--grep-reflog`, 则会选择那些 `reflog` 信息符合任何模式的提交. 除非使用 `--walk-reflogs`, 否则使用此选项是错误的.
 
-+ `--grep=<pattern>`; 
-将提交结果限制在, 日志信息与指定模式(正则表达式)相匹配. 
-如果有多个 `--grep=<pattern>`, 则选择信息与任何指定模式相匹配的提交(另外参见 `--all-match`). 
++ `--grep=<pattern>`;
+将提交结果限制在, 日志信息与指定模式(正则表达式)相匹配.
+如果有多个 `--grep=<pattern>`, 则选择信息与任何指定模式相匹配的提交(另外参见 `--all-match`).
 当`--show-notes`生效时, 笔记中的信息会被匹配, 就像它是日志信息的一部分.
 
-+ `--all-match`; 将提交的输出限制在与所有给定的 `--grep` 匹配的内容上, 而不是至少匹配一个的内容. 
++ `--all-match`; 将提交的输出限制在与所有给定的 `--grep` 匹配的内容上, 而不是至少匹配一个的内容.
 + `--invert-grep`; 将提交的内容限制在与 `--grep=<pattern>` 指定的模式不匹配的日志信息中.
 + `-i,--regexp-ignore-case`; 匹配限制模式的正则表达式, 不考虑字母大小写.
 + `--basic-regexp`; 将限制模式视为基本正则表达式；这是默认的.
@@ -289,7 +289,7 @@ use as:
 
 [git查看本地+远程所有分支的全部提交以及关系](https://blog.csdn.net/wq6ylg08/article/details/89052225)
 
-当我们深入学习Git后, 我们不仅在本地仓库有超多的分支, 
+当我们深入学习Git后, 我们不仅在本地仓库有超多的分支,
 还在远程仓库有超多的分支, 如果我们只使用`git log`和`gitk`命令, 我们会发现这两个命令只能显示当前所处分支的全部提交记录, 并不能查看本地+远程所有分支的全部提交记录.
 
 解决方案是我们采用git log和gitk命令的升级版
@@ -309,22 +309,22 @@ use as:
 ### git reset
 
 ***
-`git reset --hard <commit>` or 别名 `grhh <commit>` 
+`git reset --hard <commit>` or 别名 `grhh <commit>`
 
 `--hard` 会清空`working tree`和`index`的改动.
 彻底回退版本, 连本地文件都会被回退到上个版本的内容
 
 ***
-`git reset --soft xxxx` or 别名 `grh --soft <commit>` 
+`git reset --soft xxxx` or 别名 `grh --soft <commit>`
 
 保留`working tree`和`index`, 并合并到`index`中.
 只回退`commit`, 如果你想再次提交直接`git commit`即可.
 
-`reset --soft` 会在重置 `HEAD` 和 `branch` 时, 保留`working tree`和`index`中的内容, 
+`reset --soft` 会在重置 `HEAD` 和 `branch` 时, 保留`working tree`和`index`中的内容,
 并把重置 `HEAD` 所带来的新的差异放进`index`.
 
 ***
-`reset 不加参数(--mixed)` or 别名 `grh <commit>` 
+`reset 不加参数(--mixed)` or 别名 `grh <commit>`
 
 清空`index`,`mix`到`working tree`中
 
@@ -598,7 +598,7 @@ git rebase --ontomaster 76cada^
 ```
 
 第一个命令： 切换到feature分支；
-第二个命令：合并master分支上`f`文件到`feature`分支上, 
+第二个命令：合并master分支上`f`文件到`feature`分支上,
 将`master`分支上 `f` 文件追加补丁到`feature`分支上的`f`文件.
 你可以接受或者拒绝补丁内容.
 
@@ -642,7 +642,7 @@ git checkout feature f.txt
 
 `git fetch` 命令会将数据拉取到你的本地仓库——它并不会自动合并或修改你当前的工作. 当准备好时你必须手动将其合并入你的工作
 
-现在 `Paul` 的 `master` 分支可以在本地通过 `pb/master` 访问到——你可以将它合并到自己的某个分支中, 
+现在 `Paul` 的 `master` 分支可以在本地通过 `pb/master` 访问到——你可以将它合并到自己的某个分支中,
 
 + 删除远程分支
 
@@ -699,7 +699,7 @@ Branch serverfix set up to track remote branch serverfix from origin.
 
 syntax:  `branch --unset-upstream [<branchname>]`
 
-删除`<branchname>`的上游信息. 如果没有指定分支, 则默认为当前分支. 
+删除`<branchname>`的上游信息. 如果没有指定分支, 则默认为当前分支.
 
 ### checkout -- track
 
@@ -738,7 +738,7 @@ git checkout -b sf origin/serverfix
 
 ### branch -u 跟踪上游
 
-如果你已经有一个本地分支, 并想让它跟踪你刚拉下来的远程分支, 或者想改变你所追踪的上游分支, 
+如果你已经有一个本地分支, 并想让它跟踪你刚拉下来的远程分支, 或者想改变你所追踪的上游分支,
 你可以在任何时候使用 `git branch` 的`-u`或`-set-upstream-to`选项来明确设置.
 
 ```bash
@@ -762,15 +762,15 @@ git push -u origin master
 加上了`-u`参数, `Git`不但会把本地的`master`分支内容推送的远程新的`master`分支, 还会把本地的`master`分支和远程的`master`分支关联起来, 在以后的推送或者拉取时就可以简化命令
 此后, 每次本地提交后, 就可以使用命令`git push origin master`推送最新修改
 
-只有当你有所克隆服务器的写入权限, 并且之前没有人推送过时, 这条命令才能生效. 
-当你和其他人在同一时间克隆, 他们先推送到上游然后你再推送到上游, 你的推送就会毫无疑问地被拒绝. 
+只有当你有所克隆服务器的写入权限, 并且之前没有人推送过时, 这条命令才能生效.
+当你和其他人在同一时间克隆, 他们先推送到上游然后你再推送到上游, 你的推送就会毫无疑问地被拒绝.
 你必须先将他们的工作拉取下来并将其合并进你的工作后才能推送
 
 syntex:
 
 `git push [-u | --set-upstream] [<repository> [<refspec>… ]]`
 
-对于每一个最新的或成功推送的分支, 添加上游(跟踪)引用. 
+对于每一个最新的或成功推送的分支, 添加上游(跟踪)引用.
 被无参数的 `git-pull`和其他命令使用. 更多信息, 请参阅 `git-config[1]` 中的 `branch.<name>.merge`.
 
 ### push 详细语法
@@ -938,7 +938,7 @@ git remote prune origin
 [仓库体积过大, 如何减小？ ](https://gitee.com/help/articles/4232#article-header2)
 [Git清理删除历史提交文件](https://www.jianshu.com/p/7ace3767986a)
 
-常见的`Git`清理方式有两种, 一种是使用`BFG`工具, 
+常见的`Git`清理方式有两种, 一种是使用`BFG`工具,
 另外一种是使用`git filter-branch`手动处理.
 
 注意：无论使用哪种方式, 都涉及破坏性操作, 使用时应严格谨慎.在开始操作之前, 请使用`--mirror`参数克隆备份你的`Git`仓库.
@@ -969,15 +969,15 @@ git rev-list --objects --all | grep -E "$(git verify-pack -v .git/objects/pack/*
 
 命令说明:
 
-+ `git-rev-list` ; 列出可以从给定的`提交`中通过`父链接`到达的`提交`, 但不包括可以通过前缀`^`到达的提交. 
++ `git-rev-list` ; 列出可以从给定的`提交`中通过`父链接`到达的`提交`, 但不包括可以通过前缀`^`到达的提交.
 默认情况下, 输出结果按反时间顺序排列.
-  + `--objects`;  打印列出的提交所引用的任何对象的`ID`. `--objects foo ^bar`的意思是："如果我已经有了提交对象`bar`, 但没有`foo`, 请把我需要下载的所有对象`ID`发给我". 
+  + `--objects`;  打印列出的提交所引用的任何对象的`ID`. `--objects foo ^bar`的意思是："如果我已经有了提交对象`bar`, 但没有`foo`, 请把我需要下载的所有对象`ID`发给我".
   + `--all` ; 假设 `refs/`中的所有 `refs`, 连同 `HEAD` 都被当作`<commit>`, 列在命令行中.
 
 ***
 
 + `git verify-pack -v *.idx`：查看压缩包内容.
-  `git verify-pack` 读取给出的`idx`文件指定的, 用`git pack-objects`命令创建的`Git`打包档案, 并验证`idx`文件和相应的打包文件. 
+  `git verify-pack` 读取给出的`idx`文件指定的, 用`git pack-objects`命令创建的`Git`打包档案, 并验证`idx`文件和相应的打包文件.
   + 当指定选项`-v` 时, 对没有`deltified`的对象, 使用的格式是:
 
     SHA-1, 类型, 体积, packfile中的体积, packfile中的偏移量
@@ -1003,7 +1003,7 @@ git filter-branch [--setup <command>] [--subdirectory-filter <directory>]
 ```
 
 + `git-filter-branch`; 重写分支, 通过一个`filter`来重写历史提交, 这个`filter`针对指定的所有分支(`rev-list`)运行.
-+ `--index-filter`：过滤`Git`仓库的`index`, 该过滤命令作用于`git rm -rf --cached --ignore-unmatch  <dir/filename>`. 
++ `--index-filter`：过滤`Git`仓库的`index`, 该过滤命令作用于`git rm -rf --cached --ignore-unmatch  <dir/filename>`.
 它不会`checkout`到`working directory`, 只修改`index`的文件, 速度快.
 + `--cached`会删除`index`中的文件
 + `--ignore-unmatch`：如果没匹配到文件, 不会报错, 会继续执行命令
@@ -1016,18 +1016,18 @@ git filter-branch [--setup <command>] [--subdirectory-filter <directory>]
 
 注意：`git rm` 这一行命令使用双引号`"git rm -rf --cached --ignore-unmatch <dir/filename>"`
 
-默认会警告：`git-filter-branch`有大量的问题, 会产生错误的历史记录重写.  
-在继续进行之前按`Ctrl-C`中止, 然后使用另一个替代的过滤工具, 如 `git filter-repo` (https://github.com/newren/git-filter-repo/)来代替.  
+默认会警告：`git-filter-branch`有大量的问题, 会产生错误的历史记录重写.
+在继续进行之前按`Ctrl-C`中止, 然后使用另一个替代的过滤工具, 如 `git filter-repo` (https://github.com/newren/git-filter-repo/)来代替.
 参见 `filter-branch` 手册页了解更多细节；要消除这个警告. 设置 `FILTER_BRANCH_SQUELCH_WARNING=1`.
 
 ### 删除缓存
 
-你的历史中将不再包含对那个文件的引用. 
-不过, 你的`引用日志`和你在 `.git/refs/original` 通过 `filter-branch` 选项添加的新引用中还存有对这个文件的引用, 
+你的历史中将不再包含对那个文件的引用.
+不过, 你的`引用日志`和你在 `.git/refs/original` 通过 `filter-branch` 选项添加的新引用中还存有对这个文件的引用,
 所以你必须移除它们然后重新打包数据库. 在重新打包前需要移除任何包含指向那些旧提交的指针的文件.
 
-移除本地仓库中指向旧`commit`的剩余`refs`: 
-`git for-each-ref` 会打印仓库中匹配`refs/original`的所有`refs`, 并使用`delete`作为前缀, 
+移除本地仓库中指向旧`commit`的剩余`refs`:
+`git for-each-ref` 会打印仓库中匹配`refs/original`的所有`refs`, 并使用`delete`作为前缀,
 此命令通过管道传送到 `git update-ref` 命令, 该命令会移除所有指向旧`commit`的引用.
 
 ```bash
@@ -1036,15 +1036,15 @@ rm -Rf .git/refs/original ;rm -Rf .git/logs/ ; git gc
 git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
 ```
 
-以下命令会使`reflog`到期, 因为它依然包含着对旧`commit`的引用. 使用 `--expire=now` 参数, 确保它在目前为止到期了. 如果没有该参数, 只会移除超过`90`天的`reflog`. 
+以下命令会使`reflog`到期, 因为它依然包含着对旧`commit`的引用. 使用 `--expire=now` 参数, 确保它在目前为止到期了. 如果没有该参数, 只会移除超过`90`天的`reflog`.
 
 ```bash
 git reflog expire --expire=now --all
 ```
 
-现在本地仓库依然包含着所有旧`commit`的对象, 但已经没有引用指向它们了, 这些对象需要被删除掉. 
-此时可以使用 `git gc` 命令, `Git`的垃圾回收器会删除这些没有引用指向的对象. 
-`git-gc`使用 `--prune` 参数来清理特定时期的对象, 默认情况下为`2`周, 指定`now`将删除所有这些对象而没有时期限制. 
+现在本地仓库依然包含着所有旧`commit`的对象, 但已经没有引用指向它们了, 这些对象需要被删除掉.
+此时可以使用 `git gc` 命令, `Git`的垃圾回收器会删除这些没有引用指向的对象.
+`git-gc`使用 `--prune` 参数来清理特定时期的对象, 默认情况下为`2`周, 指定`now`将删除所有这些对象而没有时期限制.
 
 ```bash
 git gc --prune=now
@@ -1056,7 +1056,7 @@ git gc --prune=now
 git count-objects -v
 ```
 
-可以从 `size` 的值看出, 这个大文件还在你的松散对象中, 并没有消失；但是它不会在推送或接下来的克隆中出现, 这才是最重要的. 
+可以从 `size` 的值看出, 这个大文件还在你的松散对象中, 并没有消失；但是它不会在推送或接下来的克隆中出现, 这才是最重要的.
 如果真的想要删除它, 可以通过有 `--expire` 选项的 `git prune` 命令来完全地移除那个对象：
 
 ```bash
@@ -1105,15 +1105,15 @@ git push --tags --force
 ```
 
 + `git push --mirror`
- 
-不用一个一个`ref`的指定, 直接推送所有`refs/`下的所有 `ref` 到远程仓库, 也就是`镜像`. 
+
+不用一个一个`ref`的指定, 直接推送所有`refs/`下的所有 `ref` 到远程仓库, 也就是`镜像`.
 包括但不限于 `refs/heads/`, `refs/remotes/` 和 `refs/tags/`.
 新创建的本地 `refs` 将被推送到远程端, 本地更新的 `refs` 将被强制更新到远程端, 而删除的 `refs` 将从远程端删除.
 如果配置选项 `remote.<remote>.mirror` 被设置, 这将是默认行为.
 
 ### 更新其他的clone
 
-在过滤存储库, 并重写提交历史后, 将更改强制推送到远程服务器之后. 
+在过滤存储库, 并重写提交历史后, 将更改强制推送到远程服务器之后.
 现在要更新该存储库的每一份`clone`, 仅靠常用的`pull`是无法做到这一点的.
 
 从远程服务器获取存储库, 再使用 `git reset` 将`HEAD`移动到 `origin/master`.
@@ -1170,7 +1170,7 @@ Force overwriting the backup with -f
 解决冲突就是把`Git`合并失败的文件手动编辑为我们希望的内容, 再提交.用 `git log --graph` 命令可以看到分支合并图.
 
 冲突的位置`git`会提醒并作标记, 需要手动修改, 然后提交.
-注意, `git` 只会标出冲突的位置, 并不能帮你解决冲突, 也不能判断你是否正确解决了冲突, 
+注意, `git` 只会标出冲突的位置, 并不能帮你解决冲突, 也不能判断你是否正确解决了冲突,
 所以下一次的提交, 就会被视为冲突已经解决的提交--无论你的修改是否正确.当然由于可以恢复, 这也算不了什么问题.
 
 也可以
@@ -1196,7 +1196,7 @@ git-stash
 可以使用`git stash list`列出存储的修改, 可以使用`git stash show`进行检查, 还可以使用`git stash apply`恢复(可能应用到其他commit).
 不带任何参数调用`git stash`等效于`git stash push`.默认情况下, 一个 stash 显示为`WIP on branchname ...`, 但是在创建存储项时, 可以在命令行上提供更具描述性的消息.
 
-您创建的最新`stash`存储在`refs/stash`中.在此引用的`reflog`中可以找到较旧的`stashes`, 
+您创建的最新`stash`存储在`refs/stash`中.在此引用的`reflog`中可以找到较旧的`stashes`,
 并且可以使用通常的`reflog`语法进行调用.(例如`stash@{0}`是最近创建的stash, `stash@{1}`是之前创建的stash,`stash@{2.hours.ago}`也可以).
 还可以通过仅指定`stash index`来引用存储(例如, 整数`n`等于`stash@{n}`).
 
@@ -1209,7 +1209,7 @@ git-stash
 
 ### 真正的合并
 
-除了`fast-forward merge`之外, 要合并的分支必须有一个共同的父节点.在进行真正的合并操作时, 将会提交一个合并的版本, 
+除了`fast-forward merge`之外, 要合并的分支必须有一个共同的父节点.在进行真正的合并操作时, 将会提交一个合并的版本,
 协调所有要合并的分支中的更改, 并且将`HEAD`, `index`, and `working tree` 更新为该版本.
 只要修改不重叠, 工作树中可以有修改, 合并操作将保留这些修改.
 
@@ -1218,7 +1218,7 @@ git-stash
 + `HEAD`指针保持不变.
 + `MERGE_HEAD` 引用被设置为指向要合并进来的另一个分支头.
 + 对于不矛盾的合并文件, 将会在`index`中和工作树中都更新.
-+ 对于冲突的文件/路径, `index`将记录三个版本：`stage 1`存储共同祖先的版本, `stage 2`存储` HEAD`的修改, 
++ 对于冲突的文件/路径, `index`将记录三个版本：`stage 1`存储共同祖先的版本, `stage 2`存储` HEAD`的修改,
 `stage 3`存储`MERGE_HEAD`的修改(可以使用`git ls-files -u`检查这些`stage`).工作区中包含合并的结果:即使用熟悉的冲突标记` <<< === >>>`进行三方合并的结果.
 + 不进行其他更改.特别是, 在开始合并之前进行的本地修改将保持不变, 指向它们的`index`条目也保持不变, 即匹配`HEAD`.
 
@@ -1259,7 +1259,7 @@ Git makes conflict resolution easy.
 
 ***
 `recursive`: 使用三方合并算法, 只能处理两个`head`的情况. 当有一个以上的共同祖先可用于三方合并时, 它将创建一个共同祖先的合并树, 并将其用作三方合并的参考树.
-据纪录, 在`Linux 2.6`内核开发历史中, 这样做能减少合并冲突, 以及合并错误. 此外, 还可以检测和处理涉及重命名的合并, 但是当前还无法使用检测到的副本. 
+据纪录, 在`Linux 2.6`内核开发历史中, 这样做能减少合并冲突, 以及合并错误. 此外, 还可以检测和处理涉及重命名的合并, 但是当前还无法使用检测到的副本.
 这是`pulling`或`merging`分支时的默认合并策略.`recursive`策略可以采用以下选项：
 
 + `ours`: 将冲突通过采用`ours`的版本解决.与另一棵树不冲突的变化也会反映在合并结果中.对于二进制文件, 全部内容都将来自我们这边.
@@ -1314,8 +1314,8 @@ Git makes conflict resolution easy.
 ## 分支管理策略
 
 `Git`分支十分强大, 在团队开发中应该充分应用.
-合并 **临时分支**到 **feature分支** 后(并删除 **临时分支** ), 
-如果加上了 `--no-ff` 参数就可以用普通模式合并, 合并后的 **log** 有分支, 能看出来曾经做过合并, 
+合并 **临时分支**到 **feature分支** 后(并删除 **临时分支** ),
+如果加上了 `--no-ff` 参数就可以用普通模式合并, 合并后的 **log** 有分支, 能看出来曾经做过合并,
 而默认的 `fast forward` 合并就看不出来曾经做过合并.
 
 ## git tag
@@ -1486,9 +1486,9 @@ reference: [scm tutorial](https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-
 
 我自己理解的变基就是：
 
-1. 先寻找一个命令参数中提到的 **提交** 使用的共同 **父节点**, 
-2. 计算所有在 **父节点** 之后各次 **提交** 进行的所有更改, 然后按照 `git rebase` 命令的安排, 
-    把它们依次播放/运用/apply, 
+1. 先寻找一个命令参数中提到的 **提交** 使用的共同 **父节点**,
+2. 计算所有在 **父节点** 之后各次 **提交** 进行的所有更改, 然后按照 `git rebase` 命令的安排,
+    把它们依次播放/运用/apply,
 3. 然后重新生成各次提交, 新生成的提交就按照我们希望的那样排列了
 
 ### scm-book 例子 1
@@ -1514,8 +1514,8 @@ git rebase --onto master server client
 ```
 
 以上命令的意思是：
-“取出 `client` 分支, 
-找出处于 `client` 分支和 `server`  分支的共同祖先之后的修改, 
+“取出 `client` 分支,
+找出处于 `client` 分支和 `server`  分支的共同祖先之后的修改,
 然后把它们在 `master` 分支上重放一遍”.
 这理解起来有一点复杂, 不过效果非常酷.
 
@@ -1579,12 +1579,12 @@ dbg
 添加忽略之后, 已经提交到版本库中的文件是无法忽略的.
 只能clone到本地, 删除后, 再进行忽略.
 
-`.gitignore`只能忽略那些原来没有被track的文件, 
+`.gitignore`只能忽略那些原来没有被track的文件,
 如果某些文件已经被纳入了版本管理中, 则修改`.gitignore`是无效的.
 
 正确的做法是在每个clone下来的仓库中手动设置不要检查特定文件的更改情况.
 `git update-index --assume-unchanged PATH` 在PATH处输入要忽略的文件.
-另外 git 还提供了另一种 `exclude` 的方式来做同样的事情, 
+另外 git 还提供了另一种 `exclude` 的方式来做同样的事情,
 不同的是 `.gitignore` 这个文件本身会提交到版本库中去, 用来保存的是公共的需要排除的文件.
 而 `.git/info/exclude` 这里设置的则是你自己本地需要排除的文件, 它不会影响到其他人, 也不会提交到版本库中去
 
@@ -1675,7 +1675,7 @@ test content
 
 `tree`, 解决了git中储存文件名的问题, 并且允许你把一组文件存在一起.
 
-git 存储文件的方式类似于`Unix`系统, 但是有点简化.所有的内容被存储为`tree`and`blob`, `tree`对应UNIX 文件夹, 
+git 存储文件的方式类似于`Unix`系统, 但是有点简化.所有的内容被存储为`tree`and`blob`, `tree`对应UNIX 文件夹,
 `blob`对应`inodes`or `file contents`
 
 一个`tree`包含一个或多个条目, 每一个条目是一个`SHA-1 hash`of a blob or `subtree`with its associated mode, type, and filename. 比如, 项目中最新的一个tree看起来大概像：
@@ -1708,7 +1708,7 @@ git 通常用 `staging` area ( `index`)中的state创建`tree`, 然后写入一�
 
 先创建一个`index`with a single entry--the first version of your `test.txt file`, 使用管道命令`git update-index`, 使用这个命令, 手动添加earlier version of the `test.txt`to a new staging area.
 
-你需要用`--add` option, 因为这个文件在your staging area中还不存在, 
+你需要用`--add` option, 因为这个文件在your staging area中还不存在,
 还有`--cacheinfo`, because the file you're adding isn't in your directory but is in your database.
 
 Then, you specify the `mode`, `SHA-1`, and `filename`:
@@ -1762,8 +1762,8 @@ $ echo 'first commit' | git commit-tree d8329f
 fdf4fc3344e67ab068f836878b6c4951e3b15f3d
 ```
 
-由于创建时间和作者数据不同, 你会得到不同的哈希值. 
-在本章的后面, 用你自己的`checksums`替换提交和标签的哈希值. 现在你可以用 `git cat-file` 来查看你的新提交对象了. 
+由于创建时间和作者数据不同, 你会得到不同的哈希值.
+在本章的后面, 用你自己的`checksums`替换提交和标签的哈希值. 现在你可以用 `git cat-file` 来查看你的新提交对象了.
 
 ```git
 git cat-file -p fdf4fc3
@@ -1774,12 +1774,12 @@ committer Scott Chacon <schacon@gmail.com> 1243040974 -0700
 first commit
 ```
 
-提交对象的格式很简单: 
-它指定了当时项目快照的顶层树. 
-父级提交(如果有的话)；作者/提交人信息(使用您的用户名和电子邮件配置以及一个时间戳). 
-一个空行, 然后是提交信息. 
+提交对象的格式很简单:
+它指定了当时项目快照的顶层树.
+父级提交(如果有的话)；作者/提交人信息(使用您的用户名和电子邮件配置以及一个时间戳).
+一个空行, 然后是提交信息.
 
-接下来, 你要提交另外两个对象, 每个对象都引用在它之前的提交. 
+接下来, 你要提交另外两个对象, 每个对象都引用在它之前的提交.
 
 ```bash
 echo 'second commit' | git commit-tree 0155eb -p fdf4fc3
@@ -1788,7 +1788,7 @@ echo 'third commit'  | git commit-tree 3c4e9c -p cac0cab
 1a410efbd13591db07496601ebc7a059dd55cfe9
 ```
 
-这三个提交对象分别指向你创建的三个快照树中的一个. 
+这三个提交对象分别指向你创建的三个快照树中的一个.
 奇怪的是, 你现在有了一个真正的 `Git` 历史, 如果你使用上次提交的 `SHA-1` , 就可以用 `git log` 命令查看：
 
 ```bash
@@ -1799,10 +1799,10 @@ Date:   Fri May 22 18:15:24 2009 -0700
 ...
 ```
 
-真了不起. 你刚刚完成了建立 `Git` 历史的底层操作, 而没有使用任何前端命令. 
+真了不起. 你刚刚完成了建立 `Git` 历史的底层操作, 而没有使用任何前端命令.
 这就是`Git`在运行`git add`和 `git commit` 命令时所做的事情--它为发生变化的文件存储`blob`, 更新索引, 写出树, 写入提交对象, 引用顶层树, 以及最邻近的前一个提交.
 
-这三个主要的Git对象--`blob`, `树`和`提交`--最初是作为单独的文件存储在你的`.git/objects`目录下. 下面是示例目录中的所有对象, 并注释了它们的存储内容. 
+这三个主要的Git对象--`blob`, `树`和`提交`--最初是作为单独的文件存储在你的`.git/objects`目录下. 下面是示例目录中的所有对象, 并注释了它们的存储内容.
 
 ```git
 $ find .git/objects -type f
@@ -1834,7 +1834,7 @@ HEAD:README, :README, master:./README
 `Refspec` 的格式是一个可选的 `+` 号, 接着是 `<src>:<dst>` 的格式, 这里 `<src>` 是远端上的引用格式, `<dst>` 是将要记录在本地的引用格式.
 
 可选的 `+` 号告诉 `Git` 在即使不能"Fast Forward"的情况下, 也去强制更新它.
-缺省情况下 `refspec` 会被 `git remote add` 命令所自动生成, 
+缺省情况下 `refspec` 会被 `git remote add` 命令所自动生成,
 `Git` 会获取远端上 `refs/heads/` 下面的所有引用, 并将它写入到本地的 `refs/remotes/origin/`. 所以, 如果远端上有一个 `master` 分支, 你在本地可以通过下面这种方式来访问它的历史记录：
 
 ```bash
@@ -1877,16 +1877,16 @@ $ git log refs/remotes/origin/master
 `Git` 将模式视为`shell`模式, 适合由带有 `FNM_PATHNAME` 标志的 `fnmatch(3)` 解析. 模式中的通配符不会匹配路径名中的`/`.
 例如, `Documentation/*.html`匹配 `Documentation/git.html`, 但不匹配 `Documentation/ppc/ppc.html` 或 `tools/perf/Documentation/perf.html`.
 
-在与全路径名匹配的模式中, 两个连续的星号`**`可能有特殊含义. 
+在与全路径名匹配的模式中, 两个连续的星号`**`可能有特殊含义.
 
 + `**/`这种形式表示在所有目录中进行匹配.
-例如, `**/foo`匹配任何地方的文件或目录`foo`, 与模式`foo`相同. 
-`**/foo/bar`匹配任何地方的, 直接在`foo`目录下的`bar`, 无论`bar`是文件还是目录. 
+例如, `**/foo`匹配任何地方的文件或目录`foo`, 与模式`foo`相同.
+`**/foo/bar`匹配任何地方的, 直接在`foo`目录下的`bar`, 无论`bar`是文件还是目录.
 
 + 斜线后面的`**`, 也就是`/**`匹配目录下的所有内容.
-例如, `abc/**`匹配`abc`目录下的所有文件, 相对于`.gitignore`文件的位置, 不限制深度. 
+例如, `abc/**`匹配`abc`目录下的所有文件, 相对于`.gitignore`文件的位置, 不限制深度.
 
-+ `/**/`这种形式匹配零个或多个目录. 例如, `a/**/b`匹配 `a/b`, `a/x/b`, `a/x/y/b` 等等. 
++ `/**/`这种形式匹配零个或多个目录. 例如, `a/**/b`匹配 `a/b`, `a/x/b`, `a/x/y/b` 等等.
 
 + 其他连续的星号被认为是无效的.
 + `Glob` 魔法和 `原文`魔法 不兼容.
@@ -1894,16 +1894,16 @@ $ git log refs/remotes/origin/master
 #### attr
 
 `attr`后面是一个以空格分隔的`属性要求`的列表. 所有这些要求都必须按顺序满足, 才匹配某个路径.
-这是在通常的`non-magic`路径模式匹配之外的. 见`gitattributes[5]`. 
+这是在通常的`non-magic`路径模式匹配之外的. 见`gitattributes[5]`.
 
 对路径的每个属性要求是下列形式之一:
 
-+ `ATTR`; 要求属性`ATTR`被设置. 
-+ `-ATTR`要求属性`ATTR`不被设置. 
-+ `ATTR=VALUE`要求将属性`ATTR`设置为字符串`VALUE`. 
-+ `!ATTR`要求属性`ATTR`是未指定的. 
++ `ATTR`; 要求属性`ATTR`被设置.
++ `-ATTR`要求属性`ATTR`不被设置.
++ `ATTR=VALUE`要求将属性`ATTR`设置为字符串`VALUE`.
++ `!ATTR`要求属性`ATTR`是未指定的.
 
-请注意, 当与树对象匹配时, 属性仍然是从`working tree`中获得, 而不是从给定的树对象中获得. 
+请注意, 当与树对象匹配时, 属性仍然是从`working tree`中获得, 而不是从给定的树对象中获得.
 
 + exclude 排除指定的路径, 也可以使用`!` or `^`
 
@@ -1913,9 +1913,9 @@ $ git log refs/remotes/origin/master
 
 Git 使用`zlib`压缩文件的内容.
 
-Git 最初向磁盘中存储对象时所使用的格式被称为`松散(loose)`对象格式. 
-但是, Git 会时不时地将多个这些对象打包成一个称为`包文件(packfile)`的二进制文件, 以节省空间和提高效率. 
-当版本库中有太多的松散对象, 或者你手动执行 `git gc` 命令, 或者你向远程服务器执行推送时, `Git` 都会这样做. 
+Git 最初向磁盘中存储对象时所使用的格式被称为`松散(loose)`对象格式.
+但是, Git 会时不时地将多个这些对象打包成一个称为`包文件(packfile)`的二进制文件, 以节省空间和提高效率.
+当版本库中有太多的松散对象, 或者你手动执行 `git gc` 命令, 或者你向远程服务器执行推送时, `Git` 都会这样做.
 要看到打包过程, 你可以手动执行 `git gc` 命令让 `Git` 对对象进行打包：
 
 ```bash
@@ -1931,10 +1931,10 @@ $ find .git/objects -type f
 .git/objects/pack/pack-978e03944f5c581011e6998cd0e9e30000905586.pack
 ```
 
-它们分别是包文件和一个索引. 
+它们分别是包文件和一个索引.
 包文件包含了刚才从文件系统中移除的所有对象的内容.
-索引文件包含了包文件的偏移信息, 我们通过索引文件就可以快速定位任意一个指定对象. 
-有意思的是运行`gc`命令前磁盘上的对象大小约为`15K`, 而这个新生成的包文件大小仅有`7K`. 
+索引文件包含了包文件的偏移信息, 我们通过索引文件就可以快速定位任意一个指定对象.
+有意思的是运行`gc`命令前磁盘上的对象大小约为`15K`, 而这个新生成的包文件大小仅有`7K`.
 通过打包对象减少了一半的磁盘占用空间.
 
 Git 是如何做到这点的？ Git 打包对象时, 会查找命名及大小相近的文件, 并只保存文件不同版本之间的差异内容.
@@ -1952,8 +1952,8 @@ git verify-pack -v .git/objects/pack/pack-978e03944f5c581011e6998cd0e9e300009055
 b042a... blob   22054 5799 1463
 ```
 
-`033b4` 这个数据对象引用了数据对象 `b042a`. 
-命令输出内容的第三列显示的是各个对象在包文件中的大小, 可以看到 `b042a` 占用了 `22K` 空间, 而 `033b4` 仅占用 `9` 字节. 
+`033b4` 这个数据对象引用了数据对象 `b042a`.
+命令输出内容的第三列显示的是各个对象在包文件中的大小, 可以看到 `b042a` 占用了 `22K` 空间, 而 `033b4` 仅占用 `9` 字节.
 同样有趣的地方在于, 第二个版本完整保存了文件内容, 而原始的版本反而是以差异方式保存的——这是因为大部分情况下需要快速访问文件的最新版本.
 
 最妙之处是你可以随时重新打包. `Git` 时常会自动对仓库进行重新打包以节省空间.当然你也可以随时手动执行 `git gc` 命令来这么做.
@@ -1971,7 +1971,7 @@ The full SHA-1 object name (40-byte hexadecimal string), or a leading substring 
 ***
 `<describeOutput>`, e.g. `v1.7.4.2-679-g3bee7fb`
 
-Output from git describe; 
+Output from git describe;
 i.e. a closest tag,  optionally followed by a dash and a number of commits,  followed by a dash, a g, and an abbreviated object name.
 
 ### refname
@@ -1979,7 +1979,7 @@ i.e. a closest tag,  optionally followed by a dash and a number of commits,  fol
 `<refname>`, e.g. `master`, `heads/master`, `refs/heads/master`
 
 A symbolic `ref` name. E.g.  `master` typically means the commit object referenced by `refs/heads/master`.
-If you happen to have both `heads/master` and `tags/master`,you can explicitly say heads/master to tell Git which one you mean. 
+If you happen to have both `heads/master` and `tags/master`,you can explicitly say heads/master to tell Git which one you mean.
 
 ### @
 
@@ -1990,17 +1990,17 @@ If you happen to have both `heads/master` and `tags/master`,you can explicitly s
 ***
 `<refname>@{<date>}`, e.g. `master@{yesterday}`, `HEAD@{5 minutes ago}`
 
-A ref followed by the suffix `@` with a 日期包围在大括号中 (e.g.  `{yesterday}`, `{1 month 2 weeks 3 days 1 hour 1 second ago}` or `{1979-02-26 18:30:00}`) specifies the value of the ref at a prior point in time. 
+A ref followed by the suffix `@` with a 日期包围在大括号中 (e.g.  `{yesterday}`, `{1 month 2 weeks 3 days 1 hour 1 second ago}` or `{1979-02-26 18:30:00}`) specifies the value of the ref at a prior point in time.
 
-这个后缀只能用在 `ref name` 后面.它会寻找给定时间内的状态, 比如上星期, 
+这个后缀只能用在 `ref name` 后面.它会寻找给定时间内的状态, 比如上星期,
 如果你想寻找时间段内的, 用`--since` and `--until`.
 
 ***
 `<refname>@{<n>}, e.g. master@{1}`
 
-A `ref` followed by the suffix `@` with an 大括号中的顺序(e.g.  `{1}`, `{15}`) specifies the `n-th` prior value of that `ref`. 
+A `ref` followed by the suffix `@` with an 大括号中的顺序(e.g.  `{1}`, `{15}`) specifies the `n-th` prior value of that `ref`.
 
-For example `master@{1}` is the immediate prior value of `master` while `master@{5}` is the 5th prior value of master. 
+For example `master@{1}` is the immediate prior value of `master` while `master@{5}` is the 5th prior value of master.
 
 This suffix may only be used immediately following a ref name and the ref must have an existing log (`$GIT_DIR/logs/<refname>`).
 
@@ -2018,12 +2018,12 @@ The construct `@{-<n>}` means the `<n>th branch/commit` checked out before the c
 `<branchname>@{upstream}`, e.g. `master@{upstream}`, `@{u}`
 `<branchname>@{push}`, e.g. `master@{push}`, `@{push}`
 
-上游分支, 推送分支, 
+上游分支, 推送分支,
 
 Here’s an example to make it more clear:
 
 ```git
-$ git config push.default current # 配置默认 
+$ git config push.default current # 配置默认
 $ git config remote.pushdefault myfork #默认远程push 分支
 $ git checkout -b mybranch origin/master #创建并切换到新分支 mybranch, 上游是`origin/master`
 
@@ -2049,21 +2049,21 @@ As a special rule,` <rev>^0` 指向自身, 可以用`tag`(tag object)指向提�
 ***
 `<rev>~<n>`, e.g. `master~3`
 
-A suffix `~<n>` to a revision parameter 之的是第`n`个首位父节点, 
-I.e.  `<rev>~3`等价于`<rev>^^^`, 等价于 `<rev>^1^1^1`. 
+A suffix `~<n>` to a revision parameter 之的是第`n`个首位父节点,
+I.e.  `<rev>~3`等价于`<rev>^^^`, 等价于 `<rev>^1^1^1`.
 
 参见下面的图示
 
 ***
 `<rev>^{<type>}`, e.g. `v0.99.8^{commit}`
-       
-A suffix `^` followed by 大括号中的类型名 means dereference the object at `<rev>`  recursively until an object of type `<type>` is found or the object cannot be dereferenced anymore (in which case, barf). 
 
-For example, if `<rev>` is a commit-ish, `<rev>^{commit}` describes the corresponding commit object. 
-Similarly, if `<rev>` is a tree-ish, `<rev>^{tree}` describes the corresponding tree object.  
+A suffix `^` followed by 大括号中的类型名 means dereference the object at `<rev>`  recursively until an object of type `<type>` is found or the object cannot be dereferenced anymore (in which case, barf).
+
+For example, if `<rev>` is a commit-ish, `<rev>^{commit}` describes the corresponding commit object.
+Similarly, if `<rev>` is a tree-ish, `<rev>^{tree}` describes the corresponding tree object.
 `<rev>^0` is a short-hand for `<rev>^{commit}`.
 
-`rev^{object}` can be used to make sure `rev` names an object that exists, 
+`rev^{object}` can be used to make sure `rev` names an object that exists,
 
 without requiring `rev` to be a tag, and without dereferencing rev;  because a tag is already an object, it does not have to be dereferenced even once to get to an object.
 
@@ -2085,28 +2085,28 @@ without requiring `rev` to be a tag, and without dereferencing rev;  because a t
 
 引用一个commit, 它的提交信息匹配特性的正则表达式. 正则表达式可以匹配commit message的任意部分.
 
-匹配某些字符开头, 用`:/^foo`, 序列`/!`有特殊含义, `:/!-foo` 反相匹配, `:/!!foo`匹配`!foo`本身, 
+匹配某些字符开头, 用`:/^foo`, 序列`/!`有特殊含义, `:/!-foo` 反相匹配, `:/!!foo`匹配`!foo`本身,
 
 Any other sequence beginning with :`/!`  is reserved for now.
 
 ***
 `<rev>:<path>`, e.g. `HEAD:README`, `:README`, `master:./README`
 
-给出tree-ish object `<rev>`下的`path`对应的文件( blob or tree), 
+给出tree-ish object `<rev>`下的`path`对应的文件( blob or tree),
 
-`:path` (`:`前面没有指定`rev`) 表示的是`index`中的内容,  A path starting with `./` or `../` is relative to the current working directory. 
+`:path` (`:`前面没有指定`rev`) 表示的是`index`中的内容,  A path starting with `./` or `../` is relative to the current working directory.
 
 给出的路径会被转换成相对于 working tree的根目录, 对于引用跟当前working tree 有相同目录结构的commit or tree是很有用的.
 
 ***
 `:<n>:<path>`, e.g. `:0:README`, `:README`
 
-冒号后面的数字可以取`0` to `3`, 引用相应`index`中的`blob` object, 缺省数字的话相当于`0`, 
+冒号后面的数字可以取`0` to `3`, 引用相应`index`中的`blob` object, 缺省数字的话相当于`0`,
 在`merge`的时候, `stage 1`(也就是index)指代common ancestor, stage 2是目标分支(一般是当前分支)
 `stage 3`是被合并过来的分支
 
 ***
-这里有一个图示, by Jon Loeliger. 
+这里有一个图示, by Jon Loeliger.
 
 nodes B and C 是 A 的父节点, 父亲的顺序从左到右.
 
@@ -2138,7 +2138,7 @@ J = F^2  = B^3^2   = A^^3^2
 
 ## 比较二进制文件
 
-你可以使用 `Git 属性`来有效地比较两个二进制文件. 
+你可以使用 `Git 属性`来有效地比较两个二进制文件.
 秘诀在于, 告诉 Git 怎么把你的二进制文件转化为文本格式, 从而能够使用普通的 diff 方式进行对比.
 
 比如：对 Microsoft Word 文档进行版本控制. 大家都知道, Microsoft Word 几乎是世上最难缠的编辑器, 尽管如此, 大家还是在用它. 如果想对 Word 文档进行版本控制, 你可以把文件加入到 Git 库中, 每次修改后提交即可.
@@ -2148,12 +2148,12 @@ J = F^2  = B^3^2   = A^^3^2
 *.docx diff=word
 ```
 
-这告诉 Git 当你尝试查看包含变更的比较结果时, 所有匹配 `.docx` 模式的文件都应该使用`word`过滤器. 
-`word`过滤器是什么？ 我们现在就来设置它. 
+这告诉 Git 当你尝试查看包含变更的比较结果时, 所有匹配 `.docx` 模式的文件都应该使用`word`过滤器.
+`word`过滤器是什么？ 我们现在就来设置它.
 我们会对 Git 进行配置, 令其能够借助 `docx2txt` 程序将 Word 文档转为可读文本文件, 这样不同的文件间就能够正确比较了.
 
 首先, 你需要安装 `docx2txt`；
-它可以从 [https://sourceforge.net/projects/docx2txt](https://sourceforge.net/projects/docx2txt) 下载. 按照 `INSTALL` 文件的说明, 把它放到你的可执行路径下. 
+它可以从 [https://sourceforge.net/projects/docx2txt](https://sourceforge.net/projects/docx2txt) 下载. 按照 `INSTALL` 文件的说明, 把它放到你的可执行路径下.
 接下来, 你还需要写一个脚本把输出结果包装成 `Git` 支持的格式. 在你的可执行路径下创建一个叫 `docx2txt` 文件, 添加这些内容：
 
 ```bash
@@ -2165,11 +2165,11 @@ docx2txt.pl "$1" -
 
 `$ git config diff.word.textconv docx2txt`
 
-现在如果在两个快照之间进行比较, Git 就会对那些以 .docx 结尾的文件应用`word`过滤器, 即 `docx2txt`. 
+现在如果在两个快照之间进行比较, Git 就会对那些以 .docx 结尾的文件应用`word`过滤器, 即 `docx2txt`.
 这样你的 Word 文件就能被高效地转换成文本文件并进行比较了.
 
-你还能用这个方法比较图像文件. 
-其中一个办法是, 在比较时对图像文件运用一个过滤器, 提炼出 `EXIF` 信息——这是在大部分图像格式中都有记录的一种元数据. 
+你还能用这个方法比较图像文件.
+其中一个办法是, 在比较时对图像文件运用一个过滤器, 提炼出 `EXIF` 信息——这是在大部分图像格式中都有记录的一种元数据.
 如果你下载并安装了 `exiftool` 程序, 可以利用它将图像转换为关于元数据的文本信息, 这样比较时至少能以文本的形式显示发生过的变动： 将以下内容放到你的 `.gitattributes` 文件中：
 
 `*.png diff=exif`

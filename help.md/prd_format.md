@@ -1,7 +1,7 @@
 # aps 格式
 
-如果安装了`TeXLive`发行版, 不管`Linux`,`Windows`,`Mac`, 直接在命令行运行`texdoc apsguide4`查看`aps`期刊的`Author Guide`, 
-或者运行`texdoc -l revtex`进行更详细的选择. 
+如果安装了`TeXLive`发行版, 不管`Linux`,`Windows`,`Mac`, 直接在命令行运行`texdoc apsguide4`查看`aps`期刊的`Author Guide`,
+或者运行`texdoc -l revtex`进行更详细的选择.
 
 ## 三种格式
 
@@ -11,8 +11,8 @@
 + `preprint`: 预印本格式, 加大行距, 便于修改.
 + `twocolumn`: 双栏样式.
 
-+ `REVTEX 4.2` 设计成自动切换单双栏,只需在设置中更改选项.  
-+ `preprint` 做三件事：增加字号到`12 pt`, 增加行距,改变格式到单栏. 
++ `REVTEX 4.2` 设计成自动切换单双栏,只需在设置中更改选项.
++ `preprint` 做三件事：增加字号到`12 pt`, 增加行距,改变格式到单栏.
 + 手稿提交到 APS 时,应该使用 letter size paper.
 
 ## FRONT MATTER 前置段落
@@ -79,25 +79,25 @@ Authors, affiliations, and collaborations
 
 ### 参考文献和脚标
 
-建议使用 `BibTEX` 准备参考文献. 
+建议使用 `BibTEX` 准备参考文献.
 
 如果用 `BibTEX` 的话, `APS Author Guide for REVTEX 4.2`建议你把`.bib`编译生成的 `.bbl`  文件直接`included`到 `.tex`主文件中.参见`IV.REFERENCES AND FOOTNOTES`.
 在`revtex 4.2`中,`BibTEX`风格被修改成:`杂志-文章名`
 不管用不用`BibTEX`,应该满足以下条件:
 
 1. 使用 `\cite` and `\bibitem` 宏创建和引用 参考文献,
-2. `revtex4.2`提供一种新的语法,组合多个引用到一个条目中,或者在参考文献前或后放入额外文字. 
+2. `revtex4.2`提供一种新的语法,组合多个引用到一个条目中,或者在参考文献前或后放入额外文字.
 脚注用 `\footnote` 宏指定, `revtex4.2`把脚注放在 `bibliography` 中.需要运行 `BibTEX` 让 `footnotes` 出现
 3. 不要用自定义的 `\footnotemark` 或者 `\footnotetex`
-4. 参考文献风格应该满足 `Physical Review Style Guide`,若使用 `BibTEX` 则能自动保证. 
+4. 参考文献风格应该满足 `Physical Review Style Guide`,若使用 `BibTEX` 则能自动保证.
 5. `eprint`标识符应该使用`\eprint`宏引入,如果有`eprint`域,`BibTEX` 会自动处理好.
 
-关于`REVTEX4.2`的`APS BibTEX`样式的新功能, 请参见`REVTEX 4.2 Author's Guide`. 
-包括支持引用数据集,使用`DOI`代替页码的期刊. 和使用`year`和`issue`而不是`volume`来唯一地标识文章的期刊. 
+关于`REVTEX4.2`的`APS BibTEX`样式的新功能, 请参见`REVTEX 4.2 Author's Guide`.
+包括支持引用数据集,使用`DOI`代替页码的期刊. 和使用`year`和`issue`而不是`volume`来唯一地标识文章的期刊.
 
 ### bibtex 用法
 
-`bibtex` 一般附在 Latex 发行版如`TeXLive`中,用于辅助制作参考文献. 
+`bibtex` 一般附在 Latex 发行版如`TeXLive`中,用于辅助制作参考文献.
 
 + 使用`bibtex`, 需要你先准备一个`.bib`文件, 它是参考文献条目的集合.
 + 还有一个控制参考文献格式的文件---`.bst` (bibtex style file). 它控制如何把`.bib`转换成 `latex` 标准的 `\bibitem` 格式,可以修改成适应不同的杂志.
@@ -110,11 +110,11 @@ Authors, affiliations, and collaborations
 
 `revtex4.2`包含`5`种基本的格式：
 
-+ `apsrev4-2.bst` (APS journals using a numeric citation style, i.e., all but RMP), 
++ `apsrev4-2.bst` (APS journals using a numeric citation style, i.e., all but RMP),
 + `apsrmp4-2.bst` (author/year style citations for RMP),
 + `aipauth4-2.bst` (AIP journal using an author/year citation style),
-+ `aipnum4-2.bst` (AIP journals using a numeric citation style) 
-+ `aapmrev4-2.bst` for AAPM journals. 
++ `aipnum4-2.bst` (AIP journals using a numeric citation style)
++ `aapmrev4-2.bst` for AAPM journals.
 
 通过使用`latex2e` 标准的 `\bibliographystyle` 宏指定另外的 `.bst` 可以覆盖这个选择.
 但是命令需要出现在导言区,  在 `\begin{document}` 行之前,这跟标准的 `latex2e`语法不同.(不知道现在是否更改)
@@ -147,22 +147,22 @@ bibtex 的 `.bib` 文件中将包含如下格式的条目:
 ***
 `RevTeX4.2` 提供的格式还允许 `URL` 和 `e-print` 标识符. 除了`author` 域,还有`collaboration` 域.
 
-在草稿中创建参考文献时,请使用 `\bibliography{bib文件,不需要后缀名}` 宏. `<bib files>` 是一串用逗号分隔开的参考文献库列表, 即`.bib`文件列表. 
+在草稿中创建参考文献时,请使用 `\bibliography{bib文件,不需要后缀名}` 宏. `<bib files>` 是一串用逗号分隔开的参考文献库列表, 即`.bib`文件列表.
 `\bibliography`宏应该被放在参考文献要出现的地方, 一般是正文的后面.
 
 假设`.tex`源文件叫做`abc`, 编译的时候不用加上后缀名`.tex`.
 
-+ 运行第一遍`pdflatex abc`时, `\cite` 宏引用的 `key` 会被写入 `abc.aux` 中. 
++ 运行第一遍`pdflatex abc`时, `\cite` 宏引用的 `key` 会被写入 `abc.aux` 中.
 + 接着运行 `bibtex abc`,就会产生 `latex` 需要的 `\bibitem` 条目,保存在 `abc.bbl` 文件中.
 + 接下来运行两次`pdflatex abc`,`pdflatex` 会重复调用`abc.bbl` 文件,直到参考文献都顺利显示.
 
 总结就是需要编译四次, `xelatex`同理:
 
 ```bash
-pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc; 
+pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 ```
 
-使用`revtex style`文件产生的 `\bibitem` 看起来很复杂. 
+使用`revtex style`文件产生的 `\bibitem` 看起来很复杂.
 这是因为 style 增加了 `\bibinfo`, `\bibnamefont`, `\eprint`, and `\url` 等宏, 用于指定额外的格式化和标签.
 
 `\bibinfo` 宏基本上啥也不干,只是用来标记从`bib` 文件得到的信息.
@@ -247,7 +247,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 }
 ```
 
-将产生格式化的参考文献. 
+将产生格式化的参考文献.
 
     “J. A. Haigh, N. J. Lambert, S. Sharma, Y. Blanter, G. E. W. Bauer, and A. J. Ramsay, Data from Figures in “Selection rules for cavity-enhanced     Brillouin light scattering from mag-netostatic modes” [Data set], 10.5281/zenodo.1284434(2018), Zenodo.”
 
@@ -255,16 +255,16 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 ### Journal references with only DOIs
 
-一些杂志转而使用`volume`和`DOI`来标识文章, 不再分配页码或文章标识符. 
+一些杂志转而使用`volume`和`DOI`来标识文章, 不再分配页码或文章标识符.
 
-对于`Phys. Rev. journals`使用的 `apsrev.bst` BibTEX 样式文件. 
-如果`bib`文件中的条目的`pages`字段缺失, 但存在`DOI`, `DOI`将会被明确显示并链接在格式化的`reference`中. 
+对于`Phys. Rev. journals`使用的 `apsrev.bst` BibTEX 样式文件.
+如果`bib`文件中的条目的`pages`字段缺失, 但存在`DOI`, `DOI`将会被明确显示并链接在格式化的`reference`中.
 
 ### Journals that use the year and issue for unique citations
 
 年份-期号
 
-用于`Phys. Rev. journals`的`apsrev.bst`样式, 现在支持四种使用`year`代替`volume`的期刊, 这些期刊需要一个明确的`issue`来确定地引用一篇论文. 
+用于`Phys. Rev. journals`的`apsrev.bst`样式, 现在支持四种使用`year`代替`volume`的期刊, 这些期刊需要一个明确的`issue`来确定地引用一篇论文.
 
 + J. High Energy Phys.
 + J. Cosmol. Astropart. Phys.
@@ -295,10 +295,10 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
     "S. Cotogno, T. van Daal, and P. J. Mulders, Positivity bounds on gluon TMDs for hadrons of spin ≤ 1, J. High Energy Phys. 2017 (11), 185."
 
-### Multiple references in a single bibliography entry 
+### Multiple references in a single bibliography entry
 
-若使用 `BibTEX`, `REVTEX 4.2`允许在单个`bibliography`条目中包含多个 `reference`. 这可以通过使用在 `\cite` 命令中使用带星号(`*`) 的参数实现. 
-并需要一个兼容的 `natbib` 版本和 `REVTEX 4.2` 自带的 `bst` 文件. 
+若使用 `BibTEX`, `REVTEX 4.2`允许在单个`bibliography`条目中包含多个 `reference`. 这可以通过使用在 `\cite` 命令中使用带星号(`*`) 的参数实现.
+并需要一个兼容的 `natbib` 版本和 `REVTEX 4.2` 自带的 `bst` 文件.
 
 为了把多个 `ref` 包括进一个 `\bibitem`,在 `\cite`命令中的第二,三个`citation keys`前面加上星号,例如：
 
@@ -353,7 +353,7 @@ BODY OF THE PAPER
 
 ### 附录
 
-附录应该通过 `\appendix` 指定,其后的 `\section`命令创建附录. 
+附录应该通过 `\appendix` 指定,其后的 `\section`命令创建附录.
 如果只有一个附录,也可以用 `\appendix*`
 
 ### 致谢
@@ -364,7 +364,7 @@ Acknowledgments
 
 ### 计数器 Counters
 
-不要自创计数器,也不要更改标准的计数器. 
+不要自创计数器,也不要更改标准的计数器.
 实在想用,可以用 `\tag`命令(需要 `amsmath` class option),`\tag` 可能会跟`hyperref` package 冲突.
 
 ### 字体
@@ -433,9 +433,9 @@ Rules produced with `\rule` are not allowed.
 
 ## 图片 Figure
 
-### 插入图片 
+### 插入图片
 
-`LATEX2e` 中两个主要的用来插入图片的包 `graphics` and `graphicx`. 两者都提供了一个叫做`\includegraphics`的宏. 
+`LATEX2e` 中两个主要的用来插入图片的包 `graphics` and `graphicx`. 两者都提供了一个叫做`\includegraphics`的宏.
 它们的区别主要在于如何将参数传递给`includegraphics`, 控制图形的位置, 例如缩放和旋转, 建议使用`graphicx`.
 
 图片应该被放置在 `figure` 环境中,以便于加上 `caption` 和放置到合适的位置.
@@ -443,7 +443,7 @@ Rules produced with `\rule` are not allowed.
 如果需要在文中引用图片,应该使用 `\label`, 比如把 `\label` 加入到 `\caption` 的参数里. 跨页面的图形应该用`\figure*`环境.
 
 不要直接使用 `picture` 环境.
-但是当然可以`include`一个使用`picture`环境制作的封装的`Encapsulated PostScript`图. 
+但是当然可以`include`一个使用`picture`环境制作的封装的`Encapsulated PostScript`图.
 
 ### 图片放置
 
@@ -487,7 +487,7 @@ The proper markup is
 ### Doubled rules and table formatting
 
 `REVTEX 4.2` 提供了`ruledtabular`环境,它会在表格四周自动放置`scotch rules`(双线).
-并将`tabular`环境格式化成`table`浮动题的全宽度, 并改善列间间距. 
+并将`tabular`环境格式化成`table`浮动题的全宽度, 并改善列间间距.
 (And formats all enclosed tabular environments to the full width of the tables  and improves intercolumn spacing.)
 
 你可以尽量多用它.例如:
@@ -552,7 +552,7 @@ The proper markup is
 
 ### PACS codes
 
-`PACS`代码过时了. `showpacs`选项没有任何作用, 但它的存在是为了在`REVTEX 4.2`下仍然可以处理旧的文件. 
+`PACS`代码过时了. `showpacs`选项没有任何作用, 但它的存在是为了在`REVTEX 4.2`下仍然可以处理旧的文件.
 
 ### 关键词
 

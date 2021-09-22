@@ -7,10 +7,10 @@
 + 使用`CoordinateChartData`查看某种坐标的数据, 如查看球坐标的度规:
 
 ```mathematica
-CoordinateChartData["Spherical", "Metric", {r, \[Theta], \[CurlyPhi]}] 
+CoordinateChartData["Spherical", "Metric", {r, \[Theta], \[CurlyPhi]}]
 ```
 
-+ 使用`CoordinateTransformData`查看坐标变换的数据, 例如新旧坐标间的映射矩阵, 以及新旧正交基之间的变换矩阵. 
++ 使用`CoordinateTransformData`查看坐标变换的数据, 例如新旧坐标间的映射矩阵, 以及新旧正交基之间的变换矩阵.
 
 ```mathematica
 CoordinateTransformData[ "Spherical" -> "Cartesian", "Mapping", {r, \[Theta], \[CurlyPhi]}]
@@ -42,7 +42,7 @@ guide/ImageFilteringAndNeighborhoodProcessing
 
 ### ColorData
 
-mathematica 有一些默认的颜色集合, 可以通过 `ColorData` 调用, 可以用整数指定索引, 例如`ColorData[63]`. 
+mathematica 有一些默认的颜色集合, 可以通过 `ColorData` 调用, 可以用整数指定索引, 例如`ColorData[63]`.
 在`LineLegend`这样的函数中, 如果在颜色参数的位置给一个整数, 会自动调用`ColorData[..]`.
 
 ## 群论
@@ -54,14 +54,14 @@ mathematica 有一些默认的颜色集合, 可以通过 `ColorData` 调用, 可
 置换可以表示成置换列表的形式, 即对`{1,2,3,..}`的重排结果.
 也可以表示成不相连循环的形式, 即类似`{123}{45}{78}`, 每一组内部独立进行轮换.
 
-+ `Permute[expr,perm]` ; 根据置换 `perm` 对 `expr`元素的位置进行排列. 
-+ `Permute[expr,gr]` ; 返回 `expr` 在置换群`gr`的元素作用下形式. 
++ `Permute[expr,perm]` ; 根据置换 `perm` 对 `expr`元素的位置进行排列.
++ `Permute[expr,gr]` ; 返回 `expr` 在置换群`gr`的元素作用下形式.
 
-+ `Permute`适用于任何非原子表达式, 对表达式的第一层进行操作. 
-+ `permute`对表达式的元素进行重新排序, 但不改变其长度. 
++ `Permute`适用于任何非原子表达式, 对表达式的第一层进行操作.
++ `permute`对表达式的元素进行重新排序, 但不改变其长度.
 + 置换`perm`可以用不相连的轮换形式给出, 或者以置换列表的形式给出.
 + 当`perm`以循环形式给出时 `Cycles[cyc1,cyc2,...]}]`, 轮换 `{p1,p2}`以循环的方式移动`expr`的元素, 使`expr[[pi]`被移动到位置`p(i+1)`.
-+ 当`perm` 以置换列表的形式给出, 其结果等同于使用 `Permute[expr, PermutationCycles[perm] ]`. 
++ 当`perm` 以置换列表的形式给出, 其结果等同于使用 `Permute[expr, PermutationCycles[perm] ]`.
 + 置换群 `gr` 可以由生成元指定, 头部为 `PermutationGroup`, 或者用名称指定, 头部为 `SymmetricGroup`, `AlternatingGroup`, ...
 
 ```mathematica
@@ -76,7 +76,7 @@ Permute[{a, b, c, d, e}, Cycles[{{1, 3, 2}}]]
 + 循环`{p1, p2, ..., pn}` 代表把`pi`映射到`p(i+1)`. 最后一个点`pn`被映射到`p1`.
 + 不包括在任何循环中的点被认为映射到它们自己.
 + 循环必须是不相交的, 也就是说, 它们必须没有公共点, 参数必须都是正整数.
-+ 循环对象被自动正规化, 通过丢弃空循环和单一循环, 旋转每个循环使最小的点先出现. 并按第一个点对多个循环排序. 
++ 循环对象被自动正规化, 通过丢弃空循环和单一循环, 旋转每个循环使最小的点先出现. 并按第一个点对多个循环排序.
 + `Cycles[{}]`代表恒等置换.
 
 #### 置换形式的转换
@@ -96,7 +96,7 @@ Cycles[{{1, 2, 5}, {4, 6, 8, 9}}]
 ```
 
 + `PermutationList[perm]` ; 给出置换`perm` 的置换列表形式.
- 
+
 + `PermutationList[perm,len]`; 返回一个长度为 `len` 的置换列表.
 + 置换`perm`的输入形式可以是置换列表, 也可以是不相连的循环.
 + `PermutationList` 也可以作用到 `SparseArray` 对象上.
@@ -108,9 +108,9 @@ PermutationList[Cycles[{{3, 2}, {1, 6, 7}}]]
 
 #### 生成置换组合
 
-`Permutations[list]`; 生成 `list` 中元素的所有可能的排列组合的列表. 
-`Permutations[list,n]` ; 给出所有最多包含 `n` 个元素的排列组合. 
-`Permutations[list,{n}]` ; 给出所有正好包含 `n` 个元素的排列组合. 
+`Permutations[list]`; 生成 `list` 中元素的所有可能的排列组合的列表.
+`Permutations[list,n]` ; 给出所有最多包含 `n` 个元素的排列组合.
+`Permutations[list,{n}]` ; 给出所有正好包含 `n` 个元素的排列组合.
 `Signature[list]`; 给出置换的`signature`, 这个置换能把列表中的元素恢复成标准顺序.
 
 ### 置换的运算
@@ -162,7 +162,7 @@ CurrentValue[InputNotebook[], WindowSize] = {400, 300}
 
 #### 通过内核移动笔记本
 
-在任何打开的笔记本中, 前端总是保持当前的选择, 这个选择由一个单元中的文本区域组成, 或者是由这个单元组成. 
+在任何打开的笔记本中, 前端总是保持当前的选择, 这个选择由一个单元中的文本区域组成, 或者是由这个单元组成.
 通常这个选择在屏幕上是由一个高亮度形式表明. 这个选择也可以在文本的两个字符之间, 或者在两个单元之间, 这时它在屏幕上由两个竖直或水平的插入杠来表明.
 
 #### 查找笔记本的内容
@@ -196,7 +196,7 @@ NotebookFind[nb,"cell",Previous]
 
 调用 `CreateWindow[]` 时, 屏幕上出现一个空笔记本.
 
-执行 `SetSelectedNotebook` 和 `NotebookOpen` 等指令时, 就是让 Wolfram 语言改变所看到的窗口. 
+执行 `SetSelectedNotebook` 和 `NotebookOpen` 等指令时, 就是让 Wolfram 语言改变所看到的窗口.
 在`NotebookOpen` 和 `CreateWindow` 中使用选项设置 `Visible->False` 可以处理笔记本, 但不将它显示在屏幕上.
 
 #### 通过内核操作前端
@@ -250,11 +250,11 @@ FrontEndExecute[{FrontEndToken[FrontEnd`InputNotebook[], "SaveRenameSpecial", "T
 
 ### 前段令牌和命令的对应关系
 
-`FrontEndToken[]`命令的帮助页面提到, `前段令牌`和`菜单项`或`键盘快捷键`之间的映射在`前端文本资源`中定义. 
+`FrontEndToken[]`命令的帮助页面提到, `前段令牌`和`菜单项`或`键盘快捷键`之间的映射在`前端文本资源`中定义.
 在笔记本中输入`$InstallationDirectory // SystemOpen` 命令打开安装目录. 例如`/usr/local/Wolfram/Mathematica/12.2/`
 再依次打开`../SystemFiles/FrontEnd/TextResources`, 这个目录就是`前端文本资源`.
 
-其中`CommonFrontEndInit.tr`文件定义了笔记本页面菜单栏功能的函数实现. 例如与保存相关的功能定义如下: 
+其中`CommonFrontEndInit.tr`文件定义了笔记本页面菜单栏功能的函数实现. 例如与保存相关的功能定义如下:
 
 ```mathematica
 AddFileBrowserFilterPacket["Save", {
@@ -282,8 +282,8 @@ AddFileBrowserFilterPacket["Save", {
 保存成包文件`.wl`格式的命令为
 
 ```mathematica
-Item[FEPrivate`FrontEndResource["CommonFrontEndInitDialogs", "WLLabel"], 
-FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Package"}]]&, 
+Item[FEPrivate`FrontEndResource["CommonFrontEndInitDialogs", "WLLabel"],
+FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Package"}]]&,
 "wl", "*.wl", MacintoshFileTypes->{"TEXT"}, OptionsNotebook -> "ExportPackage.nb"]
 ```
 
@@ -295,8 +295,8 @@ FrontEndExecute[FrontEndToken[FrontEnd`EvaluationNotebook[], "Save", {
     }]]
 ```
 
-其中`` FrontEnd`EvaluationNotebook[] `` 是当前运行的笔记本. 
-`StringTrim[NotebookFileName[], ".nb" ~~ EndOfString] <> ".wl"`替换当前笔记本路径的拓展名为`.wl`. 
+其中`` FrontEnd`EvaluationNotebook[] `` 是当前运行的笔记本.
+`StringTrim[NotebookFileName[], ".nb" ~~ EndOfString] <> ".wl"`替换当前笔记本路径的拓展名为`.wl`.
 `"Package"`指定保存格式为`.wl`格式.
 
 根据[programmatically saveas](https://mathematica.stackexchange.com/questions/6982/is-there-a-way-to-programmatically-do-a-save-as-on-an-init-nb-file-to-save-it)上老哥的说法, 使用下面两条命令效果也一样.
@@ -310,8 +310,8 @@ FrontEndTokenExecute[FrontEnd`InputNotebook[],"SaveRename", {"/../test.wl", "Pac
 此外老哥还提到:
 
 + 这相当于手动执行`文件>另存为...`选择`Mathematica软件包(*.m)`, 保存笔记本的`初始化单元`. 而其他单元被保存为`(*注释*)`, 后者在脚本中调用的时候不会执行.
-+ 如果您不提供文件路径, 文件将被保存在`$HomeDirectory`中, 这通常不是您想要的地方. 
-+ 如果文件不能被保存, 不会发出警告信息. 
++ 如果您不提供文件路径, 文件将被保存在`$HomeDirectory`中, 这通常不是您想要的地方.
++ 如果文件不能被保存, 不会发出警告信息.
 
 ## FeynCalc
 
@@ -319,8 +319,8 @@ FrontEndTokenExecute[FrontEnd`InputNotebook[],"SaveRename", {"/../test.wl", "Pac
 
 [FeynArts in FeynCalc](https://github.com/FeynCalc/feyncalc/wiki/FeynArts)
 
-如果你使用自动安装程序安装`FeynCalc`的稳定版或开发版, 你会被问到是否应该下载和修补最新版本的`FeynArts`. 因此, 不需要额外的步骤. 
-然而, 你可能会想更新你的`FeynArts`版本而不重新安装`FeynCalc`. 在这种情况下, 请遵循以下步骤. 
+如果你使用自动安装程序安装`FeynCalc`的稳定版或开发版, 你会被问到是否应该下载和修补最新版本的`FeynArts`. 因此, 不需要额外的步骤.
+然而, 你可能会想更新你的`FeynArts`版本而不重新安装`FeynCalc`. 在这种情况下, 请遵循以下步骤.
 
 下载最新版本的`FeynArts`, 并将`tarball`解压到
 
@@ -333,8 +333,8 @@ Print[$FeynArtsDirectory]
 
 ```mathematica
 $LoadFeynArts = True;
-<<FeynCalc`; 
+<<FeynCalc`;
 ```
 
 将出现一个对话框, 询问您是否要对`FeynArts`打补丁. 点击确定, 等到修补过程结束.
-重启`Mathematica`内核, 并尝试运行一些示例代码(点击`FeynCalc`加载时出现的横幅上的示例链接). 确保一切都能正确运行, 没有任何警告和错误. 
+重启`Mathematica`内核, 并尝试运行一些示例代码(点击`FeynCalc`加载时出现的横幅上的示例链接). 确保一切都能正确运行, 没有任何警告和错误.

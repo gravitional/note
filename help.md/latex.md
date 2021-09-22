@@ -13,11 +13,11 @@ SYNOPSIS
 
 DESCRIPTION
 
-对于给定的名字(可以多个),试图寻找合适的TeX文档. 或者,执行某些动作并退出. 
+对于给定的名字(可以多个),试图寻找合适的TeX文档. 或者,执行某些动作并退出.
 
 Actions:
 
-`-h`, `--help` 打印帮助信息. 
+`-h`, `--help` 打印帮助信息.
 `-V`, `--version`打印版本号
 `-f`, `--files` 打印使用的配置文件
 `--just-view file` 展示文件,给出绝对路径(不搜索)
@@ -25,8 +25,8 @@ Actions:
 OPTIONS
 
 + `-w`, `--view` 使用查看模式,打开文档阅读器(默认)
-+ `-m`, `--mixed` 使用混合模式(查看或者列表) 
-+ `-l`, `--list` 使用列表模式:列出搜索结果. 
++ `-m`, `--mixed` 使用混合模式(查看或者列表)
++ `-l`, `--list` 使用列表模式:列出搜索结果.
 + `-s`, `--showall` 展示所有模式,包括"坏"的结果
 + `-i`, `--interact` 使用交互菜单(默认)
 + `-I`, `--nointeract`使用plain列表,不需要交互
@@ -36,9 +36,9 @@ OPTIONS
 
 ### 简单的规则
 
-1. 空格:`Latex` 中空格不起作用. 
+1. 空格:`Latex` 中空格不起作用.
 1. 换行:用控制命令`\\`,或`\newline`.
-1. 分段:用控制命令`\par` 或空出一行. 
+1. 分段:用控制命令`\par` 或空出一行.
 1. 换页:用控制命令`\newpage`或`\clearpage`
 1. 特殊控制字符: `#`,`$`, `%`, `&`, `-` ,`{}`, `^`, `~`
 
@@ -94,7 +94,7 @@ for ($i = 0; $i -le $length; $i++) {
 
 ref-2: [LaTeX 如何进行 debug](https://www.zhihu.com/question/28698141/answer/41774879)
 
-我们故意构建一段错误的代码看看. 
+我们故意构建一段错误的代码看看.
 
 ```latex
 \documentclass{minimal}
@@ -117,24 +117,24 @@ l.3 \usepackage
 No pages of output.
 ```
 
-`LaTeX` 的错误提示分成四个部分,以这个报错为例. 
+`LaTeX` 的错误提示分成四个部分,以这个报错为例.
 
 以叹号开头的行说明出错原因,示例中提示:
 
 `LaTeX Error: Can be used only in preamble`
 
-中间段落是`LATEX`给出的提示建议. 
+中间段落是`LATEX`给出的提示建议.
 
-以字母`l`开头的那一行给出出错的具体位置. 
-可以看到代码在 `\usepackage` 之后截断分为两行,这说明问题出在截断处. 
-这里是第三行的 `\usepackage` 出错了. 以问号开头的行,表示 `LaTeX` 正在等待用户输入. 这里可以输入 `x` 停止编译,直接按回车忽略该错误,甚至输入 `s` 直接忽略后续一切错误. 
+以字母`l`开头的那一行给出出错的具体位置.
+可以看到代码在 `\usepackage` 之后截断分为两行,这说明问题出在截断处.
+这里是第三行的 `\usepackage` 出错了. 以问号开头的行,表示 `LaTeX` 正在等待用户输入. 这里可以输入 `x` 停止编译,直接按回车忽略该错误,甚至输入 `s` 直接忽略后续一切错误.
 
 这里表示"第三行的 `\usepackage` 只能放在导言区,不能放在正文部分",
-于是你只需要根据提示调整一下 `\usepackage` 的位置就好了. 
+于是你只需要根据提示调整一下 `\usepackage` 的位置就好了.
 
-实际使用中遇到的错误多种多样,一些错误的分析和修复可能不这么简单. 
+实际使用中遇到的错误多种多样,一些错误的分析和修复可能不这么简单.
 刘海洋 的《LaTeX 入门》中有名为「从错误中救赎」的章节,
-专门讲解 `LaTeX` 的排错,对 `LaTeX` 的不同报错进行了详细地叙述. 
+专门讲解 `LaTeX` 的排错,对 `LaTeX` 的不同报错进行了详细地叙述.
 
 ### 清理latex 辅助文件powershell
 
@@ -150,8 +150,8 @@ remove-item -Path ($tepath+'*.aux',$tepath+'*.lof',$tepath+'*.log',$tepath+'*.lo
 
 [如何加速 LaTeX 编译](https://zhuanlan.zhihu.com/p/55043560)
 
-不同的编译模式也有细微的影响. 
-经过测试,使用批处理模式(`batchmode`)速度要优于默认的模式(不加参数)和其他一些模式(比如 `nonstopmode` 和 `scrollmode`),这是因为批处理模式在编译和执行阶段是静默的,不输出任何信息,因此要快上一些. 
+不同的编译模式也有细微的影响.
+经过测试,使用批处理模式(`batchmode`)速度要优于默认的模式(不加参数)和其他一些模式(比如 `nonstopmode` 和 `scrollmode`),这是因为批处理模式在编译和执行阶段是静默的,不输出任何信息,因此要快上一些.
 
 ### 清理辅助文件
 
@@ -166,7 +166,7 @@ temp_a=$(find . -mindepth 1 -maxdepth 1 -type f   \( -not -name  "*.pdf" \)  \( 
 
 清理除了`dvi`,`postscript`和`pdf`以外的,所有由`latex`和`bibtex`或`biber`生成的可重新生成的文件.
 这些文件是`log`文件,`aux`文件,`latexmk`创建的关于源文件信息的`database`文件以及在`@generated_exts`配置变量中指定的扩展名的文件的组合.
-     
+
 另外,将删除`$ clean_ext`和`@generation_exts`配置变量指定的文件.
 
 此清理不是`regular make`.如果要先清理然后再进行`make`,请参阅`-gg`选项.
@@ -194,7 +194,7 @@ Usage: xetex [OPTION]... [TEXNAME[.tex]] [COMMANDS]
 在`TEXNAME`上运行`XeTeX`,通常创建`TEXNAME.pdf`.
 读取`TEXNAME`后,所有剩余的` COMMANDS`都将作为` XeTeX`input 处理.
 
-如果`TEXNAME`的第一行是`%&FMT`,而`FMT`是现有的`.fmt`文件,将使用它. 
+如果`TEXNAME`的第一行是`%&FMT`,而`FMT`是现有的`.fmt`文件,将使用它.
 否则使用`NAME.fmt`,其中`NAME`是程序调用名称,最常见的是`xetex`.
 
 (**note:** `.FMT` : `Format File Tex`)
@@ -244,35 +244,35 @@ Invoke-Expression $("lualatex" + " " + "-halt-on-error " + "-output-directory=te
 
 [All the files used by this document](https://texfaq.org/FAQ-filesused#:~:text=The%20simplest%20solution%20is%20the%20LaTeX%20%5B%26listfiles%26%5D%20command.,as%20a%20check-list%20in%20case%20that%20problems%20arise.)
 
-当你和别人分享一个文件时, 最好是安排双方都有相同的辅助文件. 
-你的联系人显然需要相同的文件集( 例如, 如果你使用`url`包, 她也必须有`url`). 
-但是, 假设你的`shinynew`是稳定版本,但她的是不稳定的开发版; 在你们都意识到发生了什么之前, 这种情况可能会非常混乱. 
+当你和别人分享一个文件时, 最好是安排双方都有相同的辅助文件.
+你的联系人显然需要相同的文件集( 例如, 如果你使用`url`包, 她也必须有`url`).
+但是, 假设你的`shinynew`是稳定版本,但她的是不稳定的开发版; 在你们都意识到发生了什么之前, 这种情况可能会非常混乱.
 
-最简单的解决方案是`LaTeX \listfiles` 命令. 它将在日志文件中列出所使用的`文件`和它们的`版本号`. 
-如果你把这个列表提取出来并与你的文件一起传送, 它可以作为一个检查列表, 以防出现问题. 
+最简单的解决方案是`LaTeX \listfiles` 命令. 它将在日志文件中列出所使用的`文件`和它们的`版本号`.
+如果你把这个列表提取出来并与你的文件一起传送, 它可以作为一个检查列表, 以防出现问题.
 
-请注意, `\listfiles`只记录由 `标准LaTeX`机制( `\documentclass`、`\usepackage`、`\include`、`\includegraphics`等)输入的东西. 
+请注意, `\listfiles`只记录由 `标准LaTeX`机制( `\documentclass`、`\usepackage`、`\include`、`\includegraphics`等)输入的东西.
 `\input`命令, 经`LaTeX`修改后, 用`LaTeX`的语法表示为：
 
 ```latex
 input\mymacros}
 ```
 
-它记录`mymacros.tex`文件的细节, 但如果你用`TeX`的原始语法来使用` \input`: 
+它记录`mymacros.tex`文件的细节, 但如果你用`TeX`的原始语法来使用` \input`:
 
 ```latex
 \input mymacros
 ```
 
-`mymacros.tex`不会被记录, 所以也不会被 `\listfiles` 列出--你绕过了记录其使用的机制. 
+`mymacros.tex`不会被记录, 所以也不会被 `\listfiles` 列出--你绕过了记录其使用的机制.
 
-[snapshot](https://ctan.org/pkg/snapshot)包帮助`LaTeX`文档的作者获取该文档的外部依赖列表, 其结果可以嵌入文档的顶部. 
-该包的预期用途是创建文档的存档副本, 但它也适用于文档交换的情况. 
+[snapshot](https://ctan.org/pkg/snapshot)包帮助`LaTeX`文档的作者获取该文档的外部依赖列表, 其结果可以嵌入文档的顶部.
+该包的预期用途是创建文档的存档副本, 但它也适用于文档交换的情况.
 
-`bundledoc`系统使用`snapshot`来产生文档所需依赖的归档( 例如, `tar.gz`或`zip`); 它带有用于`TeX Live-Unix`和`MiKTeX`的配置文件. 当你发送文件的第一份副本时, 它显然很有用. 
+`bundledoc`系统使用`snapshot`来产生文档所需依赖的归档( 例如, `tar.gz`或`zip`); 它带有用于`TeX Live-Unix`和`MiKTeX`的配置文件. 当你发送文件的第一份副本时, 它显然很有用.
 
-`mkjobtexmf`可以通过`TeX`的`-recorder`选项, 或者使用(Unix)`strace`命令来监视`TeX`的工作, 找到 `job`中使用的文件. 
-这样找到的文件被复制( 或链接)到一个目录, 然后可以保存起来用于传输或归档. 
+`mkjobtexmf`可以通过`TeX`的`-recorder`选项, 或者使用(Unix)`strace`命令来监视`TeX`的工作, 找到 `job`中使用的文件.
+这样找到的文件被复制( 或链接)到一个目录, 然后可以保存起来用于传输或归档.
 
 ## 中文西文数学字体
 
@@ -303,7 +303,7 @@ kpsewhich latinmodern-math.otf
 \setboldmathrm{⟨font name⟩}[⟨font features⟩]
 ```
 
-但有一个问题,`\boldsymbol`是`AMS`系列包中的`amsbsy`定义的宏,可以产生粗体数学符号. 
+但有一个问题,`\boldsymbol`是`AMS`系列包中的`amsbsy`定义的宏,可以产生粗体数学符号.
 如果用`fontspec`设置数学字体为`latinmodern-math.otf`字体时,没有粗体效果,而是变成直立体,原因不明.可以通过使用`unicode-math`包解决,见下文.
 
 对中文字体的选择可以通过[xeCJK](https://www.ctan.org/pkg/xecjk)完成:
@@ -333,13 +333,13 @@ Hello $a+b=c$
 \end{document}
 ```
 
-载入`unicode-math`包,并使用`\boldsymbol`时会报错:[Error:Extended mathchar used as mathchar](https://tex.stackexchange.com/questions/431013/error-extended-mathchar-used-as-mathchar-when-using-bm),解决方案是不使用`\bm`,`\boldsymbol`命令,而使用`\symbf`,`\symcal`等命令. 
+载入`unicode-math`包,并使用`\boldsymbol`时会报错:[Error:Extended mathchar used as mathchar](https://tex.stackexchange.com/questions/431013/error-extended-mathchar-used-as-mathchar-when-using-bm),解决方案是不使用`\bm`,`\boldsymbol`命令,而使用`\symbf`,`\symcal`等命令.
 见[Theunicode-mathpackage](https://mirrors.bfsu.edu.cn/CTAN/macros/unicodetex/latex/unicode-math/unicode-math.pdf).
 `unicode-math`引入了一些新的命令,例如:
 
 ```latex
-\symbb, \symbbit, \symcal, \symscr, \symfrak, \symsfup, \symsfit, 
-\symbfsf, \symbfup, \symbfit, \symbfcal, \symbfscr, \symbffrak, \symbfsfup, \symbfsfit 
+\symbb, \symbbit, \symcal, \symscr, \symfrak, \symsfup, \symsfit,
+\symbfsf, \symbfup, \symbfit, \symbfcal, \symbfscr, \symbffrak, \symbfsfup, \symbfsfit
 ```
 
 用来表示单个粗体数学符号,跟粗体普通文字是不同的,粗体普通文字使用`latex`中通常的`\mathbb, \mathbbit, \mathcal`等命令. 例子是:
@@ -365,7 +365,7 @@ Compare with $\mathcal{X}$ and $\Theta$.
 `fontenc`指定字体编码(确定使用哪种字体),而不是输入编码.
 
 `TeX`的默认字体编码(`OT1`)为`7`位,并使用具有`128`个字形的字体,因此不包括带重音符号的字符作为单个字形. 因此,通过在现有的`o`字形上添加一个重音来制作字母`ö`.
-`T1`字体编码是一种8位编码,并使用具有`256`个字形的字体. 因此,`ö`是字体中的实际单个字形. 
+`T1`字体编码是一种8位编码,并使用具有`256`个字形的字体. 因此,`ö`是字体中的实际单个字形.
 许多较早的字体也为它们设计了`T1`变体,并且许多较新的字体仅在`T1`中可用. 我认为`Computer Modern`字体最初是`OT1`,而`Latin Modern`是T1.
 
 如果您不使用`\usepackage[T1]{fontenc}`,
@@ -388,10 +388,10 @@ Compare with $\mathcal{X}$ and $\Theta$.
 [Latex导入文件/input和/include方式](https://blog.csdn.net/OOFFrankDura/article/details/89644373)
 
 `\input`命令可以改为`include`,
-区别在于,`input`可以放在导言区和正文区,包含的内容不另起一页; 
-而`include`只能放在正文区,包含的内容另起一页. 
+区别在于,`input`可以放在导言区和正文区,包含的内容不另起一页;
+而`include`只能放在正文区,包含的内容另起一页.
 
-另外`CJK`中还有`CJKinput`和`CJKinclude`命令. 
+另外`CJK`中还有`CJKinput`和`CJKinclude`命令.
 
 ### texdoc
 
@@ -430,20 +430,20 @@ texdoc texbytopic
 ```
 
 定义或重定义一个命令. See also the discussion of `\DeclareRobustCommand` in Class and package commands.
-这两个命令的`*`号形式要求参数中不包含多段文字. (用 `plain TeX` 术语说,不能为`\long` ). 
+这两个命令的`*`号形式要求参数中不包含多段文字. (用 `plain TeX` 术语说,不能为`\long` ).
 
 参数说明:
 
-+ `cmd`:必选,命令名称. 用`\`开头. 且不能以`\end`开头,对于`\newcommand`,命令不能定义过. 
-对于`\renewcommand`,命令必须已经定义过. 
++ `cmd`:必选,命令名称. 用`\`开头. 且不能以`\end`开头,对于`\newcommand`,命令不能定义过.
+对于`\renewcommand`,命令必须已经定义过.
 + `nargs`:可选,一个从`0`到`9`的整数. 指定命令接受的参数个数,包括可选参数. 忽略这个参数相当于设定为`0`,
-意味着命令不接受参数. 如果重定义命令,新命令可以和旧命令的参数数目可以不一样. 
-+ `optargdefault`:可选. 如果这个参数存在,`\cmd`的第一个参数将是可选参数(可以是空字符串). 如果这个参数不存在,`\cmd`不使用可选参数. 也就是说,如果用`\cmd[optval]{...}`调用,`#1`将会被设置成`optval`; 如果用`\cmd{...}`调用,`#1`将会被设置成`optargdefault`. 两种情况下,必选参数都从`#2`开始. 
-忽略`[optargdefault]`与使用`[]`是不同的,前一种情况, `#1`被设置为`optargdefault`; 后一种情况,`#1`被设置为空字符串. 
-+ `defn`: 需要; 每次遇到`\cmd`就用`defn`替换. 参数`#1`,`#2`被替换成你提供的值. `Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`. 
-一个简单的定义新命令的例子:`\newcommand{\RS}{Robin Smith}`,文中的每个`\RS`会被`Robin Smith`替换. 
+意味着命令不接受参数. 如果重定义命令,新命令可以和旧命令的参数数目可以不一样.
++ `optargdefault`:可选. 如果这个参数存在,`\cmd`的第一个参数将是可选参数(可以是空字符串). 如果这个参数不存在,`\cmd`不使用可选参数. 也就是说,如果用`\cmd[optval]{...}`调用,`#1`将会被设置成`optval`; 如果用`\cmd{...}`调用,`#1`将会被设置成`optargdefault`. 两种情况下,必选参数都从`#2`开始.
+忽略`[optargdefault]`与使用`[]`是不同的,前一种情况, `#1`被设置为`optargdefault`; 后一种情况,`#1`被设置为空字符串.
++ `defn`: 需要; 每次遇到`\cmd`就用`defn`替换. 参数`#1`,`#2`被替换成你提供的值. `Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`.
+一个简单的定义新命令的例子:`\newcommand{\RS}{Robin Smith}`,文中的每个`\RS`会被`Robin Smith`替换.
 重定义命令是类似的`\renewcommand{\qedsymbol}{{\small QED}}`.
-用`\newcommand`重定义命令,或者用`\renewcommand`定义新命令,都会报错. 
+用`\newcommand`重定义命令,或者用`\renewcommand`定义新命令,都会报错.
 
 Here the first command definition has no arguments, and the second has one required argument.
 
@@ -452,8 +452,8 @@ Here the first command definition has no arguments, and the second has one requi
 \newcommand{\defref}[1]{Definition~\ref{#1}}
 ```
 
-使用第一个命令时,建议用`\student{}`(以便于和后面有空格区分开). 
-第二个命令有一个变量,`\defref{def:basis}`将会展开成`Definition~\ref{def:basis}`,最终展开成类似于`Definition~3.14`. 
+使用第一个命令时,建议用`\student{}`(以便于和后面有空格区分开).
+第二个命令有一个变量,`\defref{def:basis}`将会展开成`Definition~\ref{def:basis}`,最终展开成类似于`Definition~3.14`.
 
 类似地,两个必选参数:`\newcommand{\nbym}[2]{$#1 \times #2$}`,调用时使用`\nbym{2}{k}`.
 
@@ -471,8 +471,8 @@ I employ \lawyers[Howe]{Dewey}{Cheatem}.
 输出是`I employ Dewey, Cheatem, and Howe`.
 `\lawyers{Dewey}{Cheatem}`将给出`I employ Dewey, Cheatem, and company`
 
-`defn` 周围的大括号并不会定义一个组,也就是说,它并不会限制指令的生效范围. 
-比如,使用`\newcommand{\shipname}[1]{\it #1}`, 
+`defn` 周围的大括号并不会定义一个组,也就是说,它并不会限制指令的生效范围.
+比如,使用`\newcommand{\shipname}[1]{\it #1}`,
 
 ```latex
 The \shipname{Monitor} met the \shipname{Merrimac}.
@@ -495,14 +495,14 @@ The \shipname{Monitor} met the \shipname{Merrimac}.
 you can write :
 
 ```latex
-\RequirePackage{atbegshi}      
+\RequirePackage{atbegshi}
 \documentclass ....
 ```
 
 and not
 
 ```latex
-\usepackage{atbegshi}      
+\usepackage{atbegshi}
 \documentclass ...
 ```
 
@@ -510,7 +510,7 @@ and not
 
 [23.1 Reserved characters](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005c_007e)
 
-LaTeX为特殊目的预留了以下字符.  例如,百分号％用于注释.  它们被称为保留字符或特殊字符. 
+LaTeX为特殊目的预留了以下字符.  例如,百分号％用于注释.  它们被称为保留字符或特殊字符.
 
 `# $ % & { } _ ~ ^ \ `
 
@@ -582,16 +582,16 @@ And this is the best squash, \verb+literally!+
 
 [What do \makeatletter and \makeatother do?](https://tex.stackexchange.com/questions/8351/what-do-makeatletter-and-makeatother-do)
 
-`TeX` 中的所有字符都分配有`Category Code `类别代码, 简称`catcode`. 总共有`16`种`Catcode`,有些仅包含一个字符,例如`\`(通常为 `catcode 0`,`{`, `catcode 1`等). 
+`TeX` 中的所有字符都分配有`Category Code `类别代码, 简称`catcode`. 总共有`16`种`Catcode`,有些仅包含一个字符,例如`\`(通常为 `catcode 0`,`{`, `catcode 1`等).
 正常字符为`catcode 11`, 此类别通常包含所有字母字符.  `@`符号的`catcode`为`12`,这意味着它不会被视为普通字母.
 这样做的结果是,`@`通常不能在用户文档文件中用作多字符宏名称的一部分. (宏名称中也禁止使用所有其他 non-letter 字符:例如,`\foo123`和`\foo?!`不是有效的宏名称.)
 
 但是,在`LaTeX`类和程序包文件中,`@`被视为普通字母(`catcode 11`),这使程序包编写者可以在宏名中包含`@`.
-这样做的好处是, 此类宏名称会自动避免普通用户的更改:普通用户那里`@`不是普通字母,没法用作宏名称, 所以不会来覆盖或更改包内部的宏. 
+这样做的好处是, 此类宏名称会自动避免普通用户的更改:普通用户那里`@`不是普通字母,没法用作宏名称, 所以不会来覆盖或更改包内部的宏.
 
 但是,有时在用户文档中必须访问程序包内部的宏. 因此,
 
-+ `\makeatletter` 将`@`的`catcode`从`12`更改为`11`, 也就是改成普通字母, 可以用作命令, 
++ `\makeatletter` 将`@`的`catcode`从`12`更改为`11`, 也就是改成普通字母, 可以用作命令,
 + `\makeatother `将`@`的`catcode`从`11`更改为`12`, 不能用作命令.
 
 实际上,如果需要修改名称中包含`@`符号的程序包内部宏,则需要用以下命令将修改内容括起来:
@@ -608,7 +608,7 @@ And this is the best squash, \verb+literally!+
 
 [quotation, quote环境](https://blog.csdn.net/ProgramChangesWorld/article/details/51762789)
 
-使用`quote`,`quotation`环境. 
+使用`quote`,`quotation`环境.
 
 ## 浮动体 图形
 
@@ -619,9 +619,9 @@ And this is the best squash, \verb+literally!+
 `graphics` : The `standard` graphics package.
 `graphicx` :The `extended` or `enhanced`  graphics package
 
-这两个包的区别在于可选参数给出的形式不同. 参数名称和必选参数是相同的. 
+这两个包的区别在于可选参数给出的形式不同. 参数名称和必选参数是相同的.
 
-插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置. `figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例. 
+插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置. `figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例.
 
 ```latex
 \begin{figure}[htbp]
@@ -632,10 +632,10 @@ And this is the best squash, \verb+literally!+
 \end{figure}
 ```
 
-`htbp` 选项用来指定插图的理想位置,这几个字母分别代表 `here`, `top`, `bottom`, `float page`,也就是就这里, 页顶, 页尾, 浮动页(专门放浮动体的单独页面或分栏). `\centering` 用来使插图居中; `\caption` 命令设置插图标题,`LaTeX` 会自动给浮动体的标题加上编号. 注意 `\label` 应该放在标题命令之后. 
+`htbp` 选项用来指定插图的理想位置,这几个字母分别代表 `here`, `top`, `bottom`, `float page`,也就是就这里, 页顶, 页尾, 浮动页(专门放浮动体的单独页面或分栏). `\centering` 用来使插图居中; `\caption` 命令设置插图标题,`LaTeX` 会自动给浮动体的标题加上编号. 注意 `\label` 应该放在标题命令之后.
 
 如果你想了解 `LaTeX` 的浮动体策略算法细节,你可以参考我博客中关于[浮动体的系列文章](https://liam.page/series/#LaTeX-%E4%B8%AD%E7%9A%84%E6%B5%AE%E5%8A%A8%E4%BD%93)
-如果你困惑于"为什么图表会乱跑"或者"怎样让图表不乱跑",请看[我的回答](https://www.zhihu.com/question/25082703/answer/30038248). 
+如果你困惑于"为什么图表会乱跑"或者"怎样让图表不乱跑",请看[我的回答](https://www.zhihu.com/question/25082703/answer/30038248).
 
 ### 表格
 
@@ -703,9 +703,9 @@ And this is the best squash, \verb+literally!+
 ***
 同类型还有`\rotatebox`, `\rotatebox[旋转原点]{旋转角度}{框内容}`.
 
-其中原点指定为`c`, `l`, `r`, `b`, `t`或者使用它们的组合, 逆时针的旋转角度按度数表示. 
-从`LYX 2.2`开始,  一旦你安装了`GraphicBoxes`模块, 选择`Insert.CustomInsets.Rotatebox`, 
-在你想要旋转框出现的地方选择`Insert.Origin`来添加一个`Origin`选项.  在`Origin`盒子中输入`=c`, 在`Angle`盒子中输入`30`, 在`Angle`盒子后面输入文字. 
+其中原点指定为`c`, `l`, `r`, `b`, `t`或者使用它们的组合, 逆时针的旋转角度按度数表示.
+从`LYX 2.2`开始,  一旦你安装了`GraphicBoxes`模块, 选择`Insert.CustomInsets.Rotatebox`,
+在你想要旋转框出现的地方选择`Insert.Origin`来添加一个`Origin`选项.  在`Origin`盒子中输入`=c`, 在`Angle`盒子中输入`30`, 在`Angle`盒子后面输入文字.
 
 ### resizebox
 
@@ -720,20 +720,20 @@ Synopses:
 \resizebox*{horizontal length}{vertical length}{material}
 ```
 
-给定一个大小(例如`3`厘米),请转换`material`使其达到该大小.  如果水平长度或垂直长度是一个感叹号`!` 就进行等比缩放. 
+给定一个大小(例如`3`厘米),请转换`material`使其达到该大小.  如果水平长度或垂直长度是一个感叹号`!` 就进行等比缩放.
 
-此示例使图形的宽度为半英寸,并按相同的比例垂直缩放图形,以防止图形变形. 
+此示例使图形的宽度为半英寸,并按相同的比例垂直缩放图形,以防止图形变形.
 
 ```bash
 \ resizebox {0.5in} {!} {\ includegraphics {lion}}
 ```
 
-未加星标形式 `\resizebox` 取垂直长度为`box`的高度,而带星标形式 `\resizebox*` 取其`height+depth`.  
+未加星标形式 `\resizebox` 取垂直长度为`box`的高度,而带星标形式 `\resizebox*` 取其`height+depth`.
 例如,使用 `\resizebox*{!}{0.25in}{\parbox{1in}{使此框同时具有高度和深度. }}`
-使文本的高度+深度达到四分之一英寸. 
+使文本的高度+深度达到四分之一英寸.
 
-您可以使用 `\depth`,`\height`,`\totalheight`和 `\width`来引用框的原始大小.  
-因此,使用 `\resizebox{2in}{\height}{Two inch}`将文本设置为两英寸宽,但保留原始高度. 
+您可以使用 `\depth`,`\height`,`\totalheight`和 `\width`来引用框的原始大小.
+因此,使用 `\resizebox{2in}{\height}{Two inch}`将文本设置为两英寸宽,但保留原始高度.
 
 ***
 8.23 tabular
@@ -742,7 +742,7 @@ Synopses:
 
 `\tabcolsep`
 
-长度是列之间间隔的一半.  默认值为`6pt`.  用 `\setlength`更改它. 
+长度是列之间间隔的一半.  默认值为`6pt`.  用 `\setlength`更改它.
 
 ### LaTeX对齐
 
@@ -757,7 +757,7 @@ Synopses:
 \end{group}
 ```
 
-它使材料在其范围内(`scope`)居中.  它最常在诸如图形之类的环境中或在`parbox`中使用. 
+它使材料在其范围内(`scope`)居中.  它最常在诸如图形之类的环境中或在`parbox`中使用.
 常用来使插图居中:
 
 ```latex
@@ -768,8 +768,8 @@ Synopses:
 \end{figure}
 ```
 
-`\centering `的作用范围到`\end{figure}`为止. 与`center`环境不同,`\centering`命令不会在文本上方和下方添加垂直空间.  
-这就是上面示例中的优势--没有多余的空间. 
+`\centering `的作用范围到`\end{figure}`为止. 与`center`环境不同,`\centering`命令不会在文本上方和下方添加垂直空间.
+这就是上面示例中的优势--没有多余的空间.
 
 ***
 单行文本对齐
@@ -814,13 +814,13 @@ LaTeX公式对齐
 \documentclass[a4paper,fleqn]{article}
 ```
 
-这对整篇文章都有效. 
+这对整篇文章都有效.
 
 对某一行公式进行左对齐
 
 ```latex
 \begin{flalign}
-  your equation (1)  
+  your equation (1)
 \end{flalign}
 ```
 
@@ -837,11 +837,11 @@ and more text here.
 对某几行公式
 
 ```latex
-\begin{flalign}  
-\begin{split}  
-your equation (1)  
-your equation (2)  
-\end{split}&  
+\begin{flalign}
+\begin{split}
+your equation (1)
+your equation (2)
+\end{split}&
 \end{flalign}
 ```
 
@@ -851,13 +851,13 @@ ams 数学环境包括:
 
 ```latex
 equation     equation*    align          align*
-gather          gather*         alignat      alignat* 
+gather          gather*         alignat      alignat*
 multline      multline*     flalign        flalign*
 split
 ```
 
-`split`环境是一种特殊的从属形式,仅在其他方程环境内部使用.  但是它不能在`multline`中使用. 
-`split`仅支持一个对齐(`＆`)列;  如果需要更多,应使用`aligned`或`alignedat`. 
+`split`环境是一种特殊的从属形式,仅在其他方程环境内部使用.  但是它不能在`multline`中使用.
+`split`仅支持一个对齐(`＆`)列;  如果需要更多,应使用`aligned`或`alignedat`.
 `split`结构的宽度是full line width
 
 ```latex
@@ -872,7 +872,7 @@ split
 
 ### 其它对齐方法
 
-左对齐, 居中对齐, 右对齐的环境分别为`flushleft`, `center`和`flushright`. 
+左对齐, 居中对齐, 右对齐的环境分别为`flushleft`, `center`和`flushright`.
 也可以使用命令`\raggedright`, `\centering`和`\raggedleft`使以后的文本按指定方式对齐.
 
 加载`amsmath`宏包后,使用选项`fleqn`(就是声明加载宏包时使用`\usepackage[fleqn]{amsmath}`)
@@ -932,7 +932,7 @@ split
  % 注意,代码中不能含有中文,否则为无法编译.
 \usepackage[utf8]{inputenc}
 %\usepackage[T1]{fontenc}
-% The package allows the user to select font encodings, 
+% The package allows the user to select font encodings,
 % and for each encoding provides an interface to 'font-encoding-specific' commands for each font
 \usepackage{listings}
 % 在LaTex中添加代码高亮
@@ -945,21 +945,21 @@ split
 %\lstdefinestyle{〈style name〉}{〈key=value list〉}
 %stores the key=value list
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
+    backgroundcolor=\color{backcolour},
     commentstyle=\color{codegreen},
     keywordstyle=\color{magenta},
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{codepurple},
     basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
     showstringspaces=false,
-    showtabs=false,                  
+    showtabs=false,
     tabsize=2
 }
 
@@ -980,7 +980,7 @@ int main(){
 
 ```latex
 \begin{framed}
- \begin{lstlisting}  % 或者 \lstinputlisting{...} 
+ \begin{lstlisting}  % 或者 \lstinputlisting{...}
  \end{lstlisting}
  \end{framed}
 ```
@@ -1072,11 +1072,11 @@ What does --shell-escape do?
 多&情况下flalign和align环境是如何对齐的:
 [对齐@CSDN](https://blog.csdn.net/yanxiangtianji/article/details/54767265)
 
-根据 `&`(假设`n`个)一行被分为`n+1`列. 从左向右将列两个分为一组,第一组紧靠页左侧,最后一组紧靠页左侧,其余组均匀散布在整个行中. 当公式比较短时,中间可能会有几段空白. 
+根据 `&`(假设`n`个)一行被分为`n+1`列. 从左向右将列两个分为一组,第一组紧靠页左侧,最后一组紧靠页左侧,其余组均匀散布在整个行中. 当公式比较短时,中间可能会有几段空白.
 需要注意的是:
-每一组内部也是有对齐结构的!它们在所在位置上向中间对齐的,即第一列向右对齐,第二列向左对齐. 
-所谓紧靠页左/右是在进行了组内对齐调整之后,最长的一块紧靠上去. 也就是说对于长度不一两行,较短的那一行是靠不上去的. 
-如果总共有奇数个列,及最后一组只有一个列,则它右对齐到页右侧,即所有行的最后一列的右侧都靠在页右侧. 
+每一组内部也是有对齐结构的!它们在所在位置上向中间对齐的,即第一列向右对齐,第二列向左对齐.
+所谓紧靠页左/右是在进行了组内对齐调整之后,最长的一块紧靠上去. 也就是说对于长度不一两行,较短的那一行是靠不上去的.
+如果总共有奇数个列,及最后一组只有一个列,则它右对齐到页右侧,即所有行的最后一列的右侧都靠在页右侧.
 
 ### 反向搜索设置 SumatraPDF
 
@@ -1093,26 +1093,26 @@ What does --shell-escape do?
 ***
 bst 和 bib 格式简介
 
-`BibTeX` 涉及到两种特有的辅助的文件格式: `bst` 和 `bib` . 
+`BibTeX` 涉及到两种特有的辅助的文件格式: `bst` 和 `bib` .
 
-`bst` 是 (B)ibliography (ST)yle 的缩写. 顾名思义,和 `sty` 文件是 `style` 的缩写一样,`bst` 文件控制着参考文献列表的格式. 
-在这里说的"格式",主要指参考文献列表中的编号, 排序规则, 对人名的处理(是否缩写), 月份的处理(是否缩写), 期刊名称的缩写等. 
+`bst` 是 (B)ibliography (ST)yle 的缩写. 顾名思义,和 `sty` 文件是 `style` 的缩写一样,`bst` 文件控制着参考文献列表的格式.
+在这里说的"格式",主要指参考文献列表中的编号, 排序规则, 对人名的处理(是否缩写), 月份的处理(是否缩写), 期刊名称的缩写等.
 
-`bib` 是 `BibTeX` 定义的"参考文献数据库". 
-通常,我们会按照 `BibTeX` 规定的格式,向 bib 文件写入多条文献信息. 
+`bib` 是 `BibTeX` 定义的"参考文献数据库".
+通常,我们会按照 `BibTeX` 规定的格式,向 bib 文件写入多条文献信息.
 在实际使用时,我们就可以根据 bib 文件中定义的文献标记(label),
-从数据库中调取文献信息,继而排版成参考文献列表. 
-值得注意的是,bib 是一个数据库,其中的内容并不一定等于 LaTeX 排版参考文献列表时的内容. 也就是说,如果 bib 数据库中有 10 条文献信息,并不一定说 LaTeX 排版出来的 PDF 文件中,参考文献列表里也一定有 10 条. 
-实际排版出来的参考文献列表中有多少条文献,实际是哪几条,具体由文中使用的 `\cite` 命令(以及 `\nocite` 命令)指定. 如果没有使用 `\cite` 命令调取文献信息,那么即使在 `bib` 文件中定义了文献信息,也不会展现在参考文献列表中. 
-很多人对此误解甚深,于是经常有人问道"为什么我在 bib 文件里写的文献,不出现在参考文献中"之类的问题. 
+从数据库中调取文献信息,继而排版成参考文献列表.
+值得注意的是,bib 是一个数据库,其中的内容并不一定等于 LaTeX 排版参考文献列表时的内容. 也就是说,如果 bib 数据库中有 10 条文献信息,并不一定说 LaTeX 排版出来的 PDF 文件中,参考文献列表里也一定有 10 条.
+实际排版出来的参考文献列表中有多少条文献,实际是哪几条,具体由文中使用的 `\cite` 命令(以及 `\nocite` 命令)指定. 如果没有使用 `\cite` 命令调取文献信息,那么即使在 `bib` 文件中定义了文献信息,也不会展现在参考文献列表中.
+很多人对此误解甚深,于是经常有人问道"为什么我在 bib 文件里写的文献,不出现在参考文献中"之类的问题.
 
 ***
 BibTeX 的工作流程
 
-介绍中提到,BibTeX 是一个参考文献格式化工具. 
-这个定义,给 BibTeX 的用处做了良好的界定:BibTeX 不是用来排版参考文献的,更不是个排版工具,它只是根据需要,按照( `bst` 文件规定的)某种格式,将( `bib` 文件中包含的)参考文献信息,格式化 为 LaTeX 能够使用的列表信息. 
+介绍中提到,BibTeX 是一个参考文献格式化工具.
+这个定义,给 BibTeX 的用处做了良好的界定:BibTeX 不是用来排版参考文献的,更不是个排版工具,它只是根据需要,按照( `bst` 文件规定的)某种格式,将( `bib` 文件中包含的)参考文献信息,格式化 为 LaTeX 能够使用的列表信息.
 
-清楚了 `BibTeX` 需要做的事情(用软件工程的话说,就是清楚了 `BibTeX` 的 `API` ),我们就可以理清 `BibTeX` 的工作流程. 
+清楚了 `BibTeX` 需要做的事情(用软件工程的话说,就是清楚了 `BibTeX` 的 `API` ),我们就可以理清 `BibTeX` 的工作流程.
 
 ***
 知道需要哪些参考文献信息
@@ -1137,16 +1137,16 @@ bar\cite{baz}
 \citation{baz}
 ```
 
-在这里,`\relax` 表示休息一会儿,什么也不做; `\citation` 则是由 `tex` 文件中的 `\cite` 命令写入 `aux` 文件的标记. 
-它说明了:用户需要标记为 `baz` 的参考文献信息. 
-当 BibTeX 读入 `aux` 文件的时候,它就会记录下所有 `\citation` 命令中的内容(即文献标记——`label`),这样就知道了用户需要哪些参考文献信息. 
+在这里,`\relax` 表示休息一会儿,什么也不做; `\citation` 则是由 `tex` 文件中的 `\cite` 命令写入 `aux` 文件的标记.
+它说明了:用户需要标记为 `baz` 的参考文献信息.
+当 BibTeX 读入 `aux` 文件的时候,它就会记录下所有 `\citation` 命令中的内容(即文献标记——`label`),这样就知道了用户需要哪些参考文献信息.
 
 ***
 了解文献列表格式以及读取文献数据库
 
-当 BibTeX 清楚了用户需要哪些文献信息,接下来自然应该搞清楚用户想要什么样的格式. 
-而知道了格式之后,就可以从数据库中抽取所需的文献信息,按照格式准备数据. 
-为了讲清楚这个步骤,我们对上述 LaTeX 代码做些许的修改. 
+当 BibTeX 清楚了用户需要哪些文献信息,接下来自然应该搞清楚用户想要什么样的格式.
+而知道了格式之后,就可以从数据库中抽取所需的文献信息,按照格式准备数据.
+为了讲清楚这个步骤,我们对上述 LaTeX 代码做些许的修改.
 
 ```latex
 \documentclass{article}
@@ -1168,15 +1168,15 @@ bar\cite{baz}
 
 简单的对比,不难发现:
 
-`foo.tex` 中新增的 `\bibliographystyle{unsrt}` 与 `aux` 文件中的 `\bibstyle{unsrt}` 相对应. 
-`foo.tex` 中新增的 `\bibliography{foobar}` 与 `aux` 文件中的 `\bibdata{foobar}` 相对应. 
+`foo.tex` 中新增的 `\bibliographystyle{unsrt}` 与 `aux` 文件中的 `\bibstyle{unsrt}` 相对应.
+`foo.tex` 中新增的 `\bibliography{foobar}` 与 `aux` 文件中的 `\bibdata{foobar}` 相对应.
 
-根据命令的名字,我们很容易猜测各个命令的作用. 
+根据命令的名字,我们很容易猜测各个命令的作用.
 
-tex 文件中的 `\bibliographystyle` 指定了用户期待的参考文献列表格式文件,并将其写入 `aux` 文件备用,通过 `\bibstyle` 标记. 
-与此同时,`\bibliography` 命令则用 `\bibdata` 在 `aux` 文件中记录了参考文献数据库的名字(不含扩展名). 
-`在这里,unsrt` 是 `unsort` 的缩写,它对应着 `unsrt.bst` 文件,是大多数 TeX发行版自带的标准格式文件之一; 
-`foobar` 则对应着 `foobar.bib` 文件,该文件是用户自己编写或生成的参考文献数据库. 
+tex 文件中的 `\bibliographystyle` 指定了用户期待的参考文献列表格式文件,并将其写入 `aux` 文件备用,通过 `\bibstyle` 标记.
+与此同时,`\bibliography` 命令则用 `\bibdata` 在 `aux` 文件中记录了参考文献数据库的名字(不含扩展名).
+`在这里,unsrt` 是 `unsort` 的缩写,它对应着 `unsrt.bst` 文件,是大多数 TeX发行版自带的标准格式文件之一;
+`foobar` 则对应着 `foobar.bib` 文件,该文件是用户自己编写或生成的参考文献数据库.
 
 ***
 实际操作看看
@@ -1200,7 +1200,7 @@ latex foo.tex   # .tex 可以省略
 bibtex foo.aux  # .aux 可以省略
 ```
 
-我们会发现, `BibTeX` 生成了两个文件:`foo.bbl` 和 `foo.blg`. 
+我们会发现, `BibTeX` 生成了两个文件:`foo.bbl` 和 `foo.blg`.
 其中 `foo.bbl` 的内容如下:
 
 ```latex
@@ -1214,9 +1214,9 @@ The King.
 \end{thebibliography}
 ```
 
-显然,这就是一个标准的 `LaTeX` 环境. 对 `LaTeX` 参考文献排版稍有了解的读者可能知道 `thebibliography` 环境正是 `LaTeX` 中手工编排参考文献时使用的环境. 
-因此,`foo.bbl` 就是 `BibTeX` 格式化输出的结果,`LaTeX` 只需要将该文件的内容读入,就能在相应的位置输出格式化之后的参考文献列表了. 
-接下来,我们看看 `foo.blg` 的内容. `blg` 实际是 `BibTeX Log` 的缩写,亦即这是一个日志文件. 
+显然,这就是一个标准的 `LaTeX` 环境. 对 `LaTeX` 参考文献排版稍有了解的读者可能知道 `thebibliography` 环境正是 `LaTeX` 中手工编排参考文献时使用的环境.
+因此,`foo.bbl` 就是 `BibTeX` 格式化输出的结果,`LaTeX` 只需要将该文件的内容读入,就能在相应的位置输出格式化之后的参考文献列表了.
+接下来,我们看看 `foo.blg` 的内容. `blg` 实际是 `BibTeX Log` 的缩写,亦即这是一个日志文件.
 
 ```bibtex
 This is BibTeX, Version 0.99d (TeX Live 2015)
@@ -1228,9 +1228,9 @@ You've used 1 entry,
 ...
 ```
 
-我们看到,BibTeX 打出的日志文件中,记录了读入 `aux/bst/bib` 文件的情况. 特别地,记录了所需的参考文献条目(entry)的数量(此处为 1). 
-日志中值得注意的地方是在提到 bib 文件时,使用了 `#1` 的标记. 既然存在 `#1`,那么合理推测也可以存在`#2`. 
-也就是说,BibTeX 可能支持两个或更多的 `bib` 数据库共同工作. 具体如何实现,请读者自己阅读相关资料(手册或 Google 检索)后实验. 
+我们看到,BibTeX 打出的日志文件中,记录了读入 `aux/bst/bib` 文件的情况. 特别地,记录了所需的参考文献条目(entry)的数量(此处为 1).
+日志中值得注意的地方是在提到 bib 文件时,使用了 `#1` 的标记. 既然存在 `#1`,那么合理推测也可以存在`#2`.
+也就是说,BibTeX 可能支持两个或更多的 `bib` 数据库共同工作. 具体如何实现,请读者自己阅读相关资料(手册或 Google 检索)后实验.
 紧接着,我们再执行一次 `LaTeX` :
 
 ```bash
@@ -1247,29 +1247,29 @@ latex foo.tex
 \bibcite{baz}{1}
 ```
 
-相比上一次的 `foo.aux`,在读入 BibTeX 之后,LaTeX 向 `aux` 文件写入了更多的信息. 
-这里 `\bibcite{baz}{1}` 将 `baz` 这一参考文献标记(label)与参考文献编号(数字 `1`)绑定起来了. 
-接下来,我们看看 dvi 文件的内容:`foo.pdf`不难发现,由于读入了 `foo.bbl` 文件,参考文献列表已经正确展现出来了. 
-然而,正文中依然有一个问号.  实际上,LaTeX 需要 `aux` 文件中的 `\bibcite` 命令,将参考文献标记与参考文献编号关联起来,从而在 tex文件中的 `\cite` 命令位置填上正确的参考文献编号. 
-我们注意到,在我们第二次执行 `LaTeX` 命令编译之前,`foo.aux` 文件中是没有这些信息的,直到编译完成,这些信息才被正确写入. 因此,第二次执行 `LaTeX` 命令时,`LaTeX` 还不能填入正确的文献编号,于是就写入了一个问号作为占位符. 
- 解决这个问题的办法也很简单——此时 `aux` 文件中已经有了需要的信息,再编译一遍就好了. 
+相比上一次的 `foo.aux`,在读入 BibTeX 之后,LaTeX 向 `aux` 文件写入了更多的信息.
+这里 `\bibcite{baz}{1}` 将 `baz` 这一参考文献标记(label)与参考文献编号(数字 `1`)绑定起来了.
+接下来,我们看看 dvi 文件的内容:`foo.pdf`不难发现,由于读入了 `foo.bbl` 文件,参考文献列表已经正确展现出来了.
+然而,正文中依然有一个问号.  实际上,LaTeX 需要 `aux` 文件中的 `\bibcite` 命令,将参考文献标记与参考文献编号关联起来,从而在 tex文件中的 `\cite` 命令位置填上正确的参考文献编号.
+我们注意到,在我们第二次执行 `LaTeX` 命令编译之前,`foo.aux` 文件中是没有这些信息的,直到编译完成,这些信息才被正确写入. 因此,第二次执行 `LaTeX` 命令时,`LaTeX` 还不能填入正确的文献编号,于是就写入了一个问号作为占位符.
+ 解决这个问题的办法也很简单——此时 `aux` 文件中已经有了需要的信息,再编译一遍就好了.
 
 ```latex
 latex foo.tex
 ```
 
-如果没有意外,此时的 `foo.dvi` 文件应该看起来一切正常了. 
+如果没有意外,此时的 `foo.dvi` 文件应该看起来一切正常了.
 
 ***
 小结
 
-`BibTeX` 是一个参考文献格式化工具,它会根据需要,按照(bst 文件规定的)某种式,将(bib 文件中包含的)参考文献信息,格式化 为 LaTeX 能够使用的列表信息. 
+`BibTeX` 是一个参考文献格式化工具,它会根据需要,按照(bst 文件规定的)某种式,将(bib 文件中包含的)参考文献信息,格式化 为 LaTeX 能够使用的列表信息.
 
-+ 正确使用 BibTeX 处理参考文献,需要先用 `(Xe/PDF)LaTeX` 编译 `tex` 文件,生成 `aux` 辅助文件. 
-+ 执行 `BibTeX` 将读入 `aux` 文件,搞清楚用户需要哪些文献. 
-+ 紧接着,BibTeX 根据 `aux` 文件中的内容,找到正确的 `bst` 和 `bib` 文件,并将参考文献信息格式化为 `LaTeX` 的 `thebibliography` 环境,作为 `bbl` 文件输出. 
-+ 第二次执行 `(Xe/PDF)LaTeX` 将会读入新生成的 `bbl` 文件,同时更新 `aux` 文件. 此时,参考文献列表将会正常展示,但是正文中的引用标记显示为问号. 
-+ 第三次执行 `(Xe/PDF)LaTeX` 将会读入 `bbl 文件和更新过后的 `aux` 文件. 此时,参考文献相关内容都正常显示. 
++ 正确使用 BibTeX 处理参考文献,需要先用 `(Xe/PDF)LaTeX` 编译 `tex` 文件,生成 `aux` 辅助文件.
++ 执行 `BibTeX` 将读入 `aux` 文件,搞清楚用户需要哪些文献.
++ 紧接着,BibTeX 根据 `aux` 文件中的内容,找到正确的 `bst` 和 `bib` 文件,并将参考文献信息格式化为 `LaTeX` 的 `thebibliography` 环境,作为 `bbl` 文件输出.
++ 第二次执行 `(Xe/PDF)LaTeX` 将会读入新生成的 `bbl` 文件,同时更新 `aux` 文件. 此时,参考文献列表将会正常展示,但是正文中的引用标记显示为问号.
++ 第三次执行 `(Xe/PDF)LaTeX` 将会读入 `bbl 文件和更新过后的 `aux` 文件. 此时,参考文献相关内容都正常显示.
 
 因此,总的来说,想要正确使用 `BibTeX` 协同 `LaTeX` 处理参考文献,需要编译四次:
 
@@ -1283,44 +1283,44 @@ bibtex foo.aux
 ### bibtex 常见问题
 
 ***
-我希望将一条文献展示在参考文献列表中,但不想在正文中用 `\cite` 命令引用,怎么办? 
+我希望将一条文献展示在参考文献列表中,但不想在正文中用 `\cite` 命令引用,怎么办?
 
-首先,确保这条文献已经写入了 `bib` 文件. 
-其次,可以在 `\bibliography` 命令之前,用 `\nocite{label}`提示 `BibTeX` 调取这条文献. 
-我有很多条文献,都存在这样的情况. 每条文献逐一 `\nocite` 太繁琐了,有没有懒人适用的办法? 
-有的. `\nocite{*}`. 
-
-***
-每次都要编译四次,我感觉懒癌又要发作了,有没有办法治疗? 
-
-有的. 可以尝试 `LaTeXmk`, `TeXify` 之类的自动化工具. 
+首先,确保这条文献已经写入了 `bib` 文件.
+其次,可以在 `\bibliography` 命令之前,用 `\nocite{label}`提示 `BibTeX` 调取这条文献.
+我有很多条文献,都存在这样的情况. 每条文献逐一 `\nocite` 太繁琐了,有没有懒人适用的办法?
+有的. `\nocite{*}`.
 
 ***
-我对默认提供的 `bst` 文件的格式效果不满意,哪里能找到更多的 `bst` ? 
+每次都要编译四次,我感觉懒癌又要发作了,有没有办法治疗?
 
-现代 TeX 发行版都提供了多种 `bst` 可供选择,每个 `bst` 文件的格式, 适用范围, 使用条件都不一样,需要仔细甄别. 
-具体可以去安装目录下搜索试试. 
+有的. 可以尝试 `LaTeXmk`, `TeXify` 之类的自动化工具.
 
 ***
-有没有遵循国家标准的 `bst`? 
+我对默认提供的 `bst` 文件的格式效果不满意,哪里能找到更多的 `bst` ?
+
+现代 TeX 发行版都提供了多种 `bst` 可供选择,每个 `bst` 文件的格式, 适用范围, 使用条件都不一样,需要仔细甄别.
+具体可以去安装目录下搜索试试.
+
+***
+有没有遵循国家标准的 `bst`?
 
 有的
 
 ***
-我找到的 bst,效果都不满意,怎么办? 
+我找到的 bst,效果都不满意,怎么办?
 
-你可以在命令行执行 `latex makebst`,制作一个符合自己要求的 `bst` 文件. 
-你需要回答大约 100 个关于参考文献列表效果的问题. 
-
-***
-`bib` 文件怎么生成? 
-
-你可以手写,或者用 `JabRef` 之类的文献工具生成. 具体请自行 Google 检索,篇幅所限就不展开了. 
+你可以在命令行执行 `latex makebst`,制作一个符合自己要求的 `bst` 文件.
+你需要回答大约 100 个关于参考文献列表效果的问题.
 
 ***
-我听说还有一个名为 `biblatex` 的工具,能介绍一下吗? 
+`bib` 文件怎么生成?
 
-`biblatex` 与 `BibTeX` 是不同的工具,超出了本文的范围. 
+你可以手写,或者用 `JabRef` 之类的文献工具生成. 具体请自行 Google 检索,篇幅所限就不展开了.
+
+***
+我听说还有一个名为 `biblatex` 的工具,能介绍一下吗?
+
+`biblatex` 与 `BibTeX` 是不同的工具,超出了本文的范围.
 
 ### 其他的参考文献包
 
@@ -1328,22 +1328,22 @@ bibtex foo.aux
 
 [cite – Improved citation handling in LaTeX](https://www.ctan.org/pkg/cite)
 
-`cite`支持压缩,排序的数字引用列表,还处理各种标点符号和其他表示形式的问题,包括对断点的全面管理.  
-该软件包与`hyperref`和`backref`兼容. 
+`cite`支持压缩,排序的数字引用列表,还处理各种标点符号和其他表示形式的问题,包括对断点的全面管理.
+该软件包与`hyperref`和`backref`兼容.
 
 支持给出多种`cite`格式:
 `[?,Einstein,4–6,6–9]`
 `[5a–5c] or [T1–T4])`
 `information;12`
 
-`cite` and `natbib` 不能同时使用. 
+`cite` and `natbib` 不能同时使用.
 
 #### natbib
 
 [natbib – Flexible bibliography support ](https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/)
 
-natbib软件包是LATEX的扩展,允许作者年份(author–year)的引用形式,也支持数字引用. 
-可以方便的切换. 
+natbib软件包是LATEX的扩展,允许作者年份(author–year)的引用形式,也支持数字引用.
+可以方便的切换.
 
 首先导入包,`\usepackage[sectionbib,square]{natbib}`
 natbib 提供了三种新的格式,
@@ -1357,9 +1357,9 @@ natbib 提供了三种新的格式,
 `bibliographystyle{plainnat}`
 
 natbib 特别定义了 `citet` (cite textual) and `citep`(cite parenthetical).
-以及 `\citet*` and `\citep*` 可以打印出作者全名. 
-这些命令都可以接受一到两个参数,在引用前后输出额外文字. 
-可以同时引用多个参考文献. 
+以及 `\citet*` and `\citep*` 可以打印出作者全名.
+这些命令都可以接受一到两个参数,在引用前后输出额外文字.
+可以同时引用多个参考文献.
 
 ```latex
 \citet{jon90,jam91} --> Jones et al.  (1990); James et al.  (1991)
@@ -1368,7 +1368,7 @@ natbib 特别定义了 `citet` (cite textual) and `citep`(cite parenthetical).
 \citep{jon90a,jon90b} --> (Jones et al., 1990a,b)
 ```
 
-These examples are for author–year citation mode.  
+These examples are for author–year citation mode.
 In numerical mode,the results are different.
 
 ```latex
@@ -1384,24 +1384,24 @@ In numerical mode,the results are different.
 ***
 调用`\usepackage[options]{natbib}`的选项
 
-+ `round` (默认)圆括号; 
-+ `square` 用于方括号; 
++ `round` (默认)圆括号;
++ `square` 用于方括号;
 + `curly` 花括号;
 + `angle` 用于尖括号;
-+ `semicolon` (默认)使用分号分隔多个引用; 
-+ `colon` 与`semicolon`相同,这是一个较早的术语错误; 
-+ `comma` 使用逗号作为分隔符; 
-+ `authoryear` (默认)作者年份( author–year)引文; 
-+ `numbers` 数字引用; 
-+ `super` 用于上标数字引用,类似`Nature`中的. 
-+ `sort` 将多个引文按其在参考文献列表中出现的顺序排序; 
-+ `sort&compress` 类似`sort`,但如果可能的话,还会压缩多个数字引用(如`3-6,15`); 
-+ `compress` 压缩而不排序,因此压缩仅在给定的引用按照数字升序时生效; 
-+ `longnamesfirst` 使任何参考文献的第一个引用都等同于已加星标的变体(完整作者列表),而随后的引用均是普通引用(缩写列表); 
-+ `sectionbib` 重新定义`\ thebibliography`来引用`\ section *`而不是`\ chapter *`;仅对带有`\ chapter`命令的类有效;  与`chapterbib`软件包一起使用; 
-+ `nonamebreak` 将所有作者的名字放在同一行中,导致`hbox`过多,但有助于解决一些`hyperref`问题; 
-+ `merge` 允许在`citation key`前面加上`*`前缀,并将此类引文的引用与先前引文的引用合并; 
-+ `elide` 合并参考文献后,去掉重复的共同要素,例如作者或年份; 
++ `semicolon` (默认)使用分号分隔多个引用;
++ `colon` 与`semicolon`相同,这是一个较早的术语错误;
++ `comma` 使用逗号作为分隔符;
++ `authoryear` (默认)作者年份( author–year)引文;
++ `numbers` 数字引用;
++ `super` 用于上标数字引用,类似`Nature`中的.
++ `sort` 将多个引文按其在参考文献列表中出现的顺序排序;
++ `sort&compress` 类似`sort`,但如果可能的话,还会压缩多个数字引用(如`3-6,15`);
++ `compress` 压缩而不排序,因此压缩仅在给定的引用按照数字升序时生效;
++ `longnamesfirst` 使任何参考文献的第一个引用都等同于已加星标的变体(完整作者列表),而随后的引用均是普通引用(缩写列表);
++ `sectionbib` 重新定义`\ thebibliography`来引用`\ section *`而不是`\ chapter *`;仅对带有`\ chapter`命令的类有效;  与`chapterbib`软件包一起使用;
++ `nonamebreak` 将所有作者的名字放在同一行中,导致`hbox`过多,但有助于解决一些`hyperref`问题;
++ `merge` 允许在`citation key`前面加上`*`前缀,并将此类引文的引用与先前引文的引用合并;
++ `elide` 合并参考文献后,去掉重复的共同要素,例如作者或年份;
 + `mcite`识别(并忽略)合并语法
 
 #### lyx中使用 bib tex
@@ -1479,8 +1479,8 @@ In numerical mode,the results are different.
 这几个都是同一类环境,区别在于
 
 1. 示例环境(`example`), 练习(`exercise`)与例题(`problem`)章节自动编号
-2. 注意(note),练习(exercise)环境有提醒引导符; 
-3. 结论(conclusion)等环境都是普通段落环境,引导词加粗. 
+2. 注意(note),练习(exercise)环境有提醒引导符;
+3. 结论(conclusion)等环境都是普通段落环境,引导词加粗.
 
 ## example 例子
 
@@ -1589,7 +1589,7 @@ f(n) = \begin{cases} n/2 &\mbox{if } n \equiv 0 \\
 为了命名一致性,有一个`matrix`环境,没有定界符.
 
 对于`array`环境,这并不是完全多余的.`matrix`环境都`array`环境的水平间距更经济.
-另外,与阵列环境不同,您不必为任何`matrix`环境提供`column specifications`; 
+另外,与阵列环境不同,您不必为任何`matrix`环境提供`column specifications`;
 默认情况下,您最多可以有`10`个居中的列. (如果需要以一列或其他特殊格式左对齐或右对齐,则必须诉诸`array`.)
 
 为了产生适用于文本的小矩阵,需要有一个`smallmatrix`环境,它比普通矩阵更适合于单个文本行.
@@ -1619,12 +1619,12 @@ main, second, third
 ***
 xcolor 使用
 
-需求:`xcolor`默认颜色只有`19`种,使用时可以在`option`中加入另外3张颜色表来极大扩充颜色库. 
+需求:`xcolor`默认颜色只有`19`种,使用时可以在`option`中加入另外3张颜色表来极大扩充颜色库.
 
 宏包:`\usepackage{xcolor}`
 选项:`dvipsnames, svgnames, x11names`
 使用:`\usepackage[dvipsnames, svgnames, x11names]{xcolor}`
-注意:`xcolor`宏包一般要放在最前面!否则那3张颜色表容易加不进来. 
+注意:`xcolor`宏包一般要放在最前面!否则那3张颜色表容易加不进来.
 
 使用:
 
@@ -1658,8 +1658,8 @@ $(\lambda)=(\lambda_1,\lambda_2,\cdots \lambda_m)$
 
 [ytableau – Many-featured Young tableaux and Young diagrams](https://www.ctan.org/pkg/ytableau)
 
-该软件包提供了一些绘制 Young tableaux 和 Young diagrams 的功能,扩展了 `young` 和 `youngtab` 软件包,但提供了更多功能. 
-倾斜和彩色表格很容易, and pgfkeys-enabled options are provided both at package load and configurably. 
+该软件包提供了一些绘制 Young tableaux 和 Young diagrams 的功能,扩展了 `young` 和 `youngtab` 软件包,但提供了更多功能.
+倾斜和彩色表格很容易, and pgfkeys-enabled options are provided both at package load and configurably.
 
 ```latex
 \begin{equation}\begin{aligned}
@@ -1702,8 +1702,8 @@ c
 ```latex
 \ytableausetup{mathmode, boxsize=2.5em}
 \begin{ytableau}
-n & n+1 & n+2 \\ 
-n-1 & n  \\ 
+n & n+1 & n+2 \\
+n-1 & n  \\
 n-2 \\
 n-3 %% last line needn't the \\
 \end{ytableau}
@@ -1726,7 +1726,7 @@ n-3 %% last line needn't the \\
 [氢化脱苄苯甲醇-上下标](https://www.jianshu.com/p/229cbbac9446)
 
 我们会发现, 在行内公式中, 所有的符号和上下标都以行内的大小为准, 尽量不去突出一行的高度, 而在行间公式中, 各种巨算符可以尽情舒展, 变成了平常我们见到的样子.
-如果想在行内公式中也使用行间公式款的上下标的话, 可以在对应的命令前面加上`\displaystyle`, 即显示模式, 就可以变成我们想要的样子了, 但是这种方法会产生一些不良行距. 
+如果想在行内公式中也使用行间公式款的上下标的话, 可以在对应的命令前面加上`\displaystyle`, 即显示模式, 就可以变成我们想要的样子了, 但是这种方法会产生一些不良行距.
 而另一种方法是比较推荐使用的: `\limits`, 顾名思义, 这个命令可以把上下标变成我们常见的"极限"形式的上下标, 也就是显示在算符的上下, 而不是右边. 而与它对应的命令是`\nolimits`, 也就是把上下标显示在算符的右侧而不是上下. 下面通过一个例子来比较这几种的显示效果
 
 ```latex
@@ -1778,9 +1778,9 @@ These are different from `accents` in `normal text` (see `Accents`).
 
 ## 简单的规则
 
-1. 空格:Latex 中空格不起作用. 
+1. 空格:Latex 中空格不起作用.
 1. 换行:用控制命令`\\\`,或`\newline`.
-1. 分段:用控制命令`\par` 或空出一行. 
+1. 分段:用控制命令`\par` 或空出一行.
 1. 特殊控制字符: #,$, %, &, - ,{, }, ^, ~
 
 ### 换页
@@ -1794,15 +1794,15 @@ These are different from `accents` in `normal text` (see `Accents`).
 
 连字符(`Hyphens`), 连接号(`En-dashes`), 破折号(`Em-dashes`)及减号(`Minus signs`)
 
-+ 连字符 `-` 通常用来连接复合词,比如 `daughter-in-law`. 
-+ 连接号 `--` 通常用来表示范围,比如 `see pages 5--7`. 如果真的希望连续输入两个连字符,使用 `{-}{-}`. 
++ 连字符 `-` 通常用来连接复合词,比如 `daughter-in-law`.
++ 连接号 `--` 通常用来表示范围,比如 `see pages 5--7`. 如果真的希望连续输入两个连字符,使用 `{-}{-}`.
 + 破折号 `---` 是一个正规的标点符号,用来表示转折或者承上启下. 要注意的是,破折号与其前后的单词之间不应该存在空格,例如 `A specter is haunting Europe---the specter of Communism.`
 + 排版中的减号应该比连字符要长,因此用来表示减号或者负号时,请严格使用数学模式 $-5$ 而不要使用文字模式 `-5`
 
 ### 计数器 Counters
 
 所有的` LaTeX`自动编号都有一个`counter`与之关联.
-`counter`的名称通常与与数字关联的`environment`或`command`的名称相同,只是`counter`的名称没有反斜杠` \`. 
+`counter`的名称通常与与数字关联的`environment`或`command`的名称相同,只是`counter`的名称没有反斜杠` \`.
 因此,与` \chapter`命令相关联的是` chapter`counter,该counter跟踪` chapter`编号.
 
 以下是在` LaTeX`的标准文档类中用于控制编号的`counter`列表.
@@ -1845,9 +1845,9 @@ Synopsis:
 \end{enumerate}
 ```
 
-产生编号项目清单的环境. 
+产生编号项目清单的环境.
 标签编号的格式取决于此环境的嵌套级别. 见下文.
-默认的顶级编号是``1.``,``2.``等.每个枚举列表环境必须至少包含一个项目;  
+默认的顶级编号是``1.``,``2.``等.每个枚举列表环境必须至少包含一个项目;
 缺少将导致` LaTeX`错误`Something's wrong--perhaps a missing \item`..
 
 此示例给出了1908年奥运会马拉松比赛的前两名. 作为顶级列表,标签将显示为` 1.`和` 2.`.
@@ -1859,14 +1859,14 @@ Synopsis:
 \end{enumerate}
 ```
 
-用`\ item`命令开始列表项(请参阅`\ item`). 
+用`\ item`命令开始列表项(请参阅`\ item`).
 如果您给`\item`提供可选参数,通过在其后加上方括号,例如`\item[Interstitial label]`,
 则下一项将继续中断的序列(请参见`\item`).
 
 也就是说,您将获得诸如` 1`,`Interstitial label`,` 2`之类的标签. `\item`之后是可选文本,其中可能包含多个段落.
 
 `Enumerations`可以嵌套在其他`enumerate`环境中,也可以嵌套在任何`paragraph-making`环境中,
-例如` itemize`(请参阅` itemize`),深度最多为四个级别. 
+例如` itemize`(请参阅` itemize`),深度最多为四个级别.
 下面给出了` LaTeX`对每个嵌套层提供的默认格式,其中` 1`是顶层,即最外层.
 
 + arabic number followed by a period: `1.`, `2.`, ...
@@ -1876,10 +1876,10 @@ Synopsis:
 
 The enumerate environment uses the counters `\enumi` through `\enumiv` (see `Counters`).
 
-对于其他主要的LaTeX标签列表环境,请参阅`description`和`itemize`. 
+对于其他主要的LaTeX标签列表环境,请参阅`description`和`itemize`.
 有关列表`layout parameters`(包括默认值)的信息,以及有关自定义列表布局的信息,请参见`list`.  软件包`enumitem`可用于自定义列表.
 
-要更改标签的格式,对命令`\labelenumi`使用`\renewcommand`(请参阅`\newcommand`和`\renewcommand`). 
+要更改标签的格式,对命令`\labelenumi`使用`\renewcommand`(请参阅`\newcommand`和`\renewcommand`).
 例如,下面使第一级列表以大写字母标记,并以`boldface`显示,并且没有尾随句点.
 
 ```latex
@@ -1905,7 +1905,7 @@ Synopsis:
 \end{itemize}
 ```
 
-产生一个无序的列表,有时称为项目符号列表. 
+产生一个无序的列表,有时称为项目符号列表.
 环境必须至少有一个` \item`;  没有导致` LaTeX`错误`Something's wrong--perhaps a missing \item`.
 
 这给出了两个项目列表.
@@ -1940,11 +1940,11 @@ Synopsis:
 \renewcommand{\labelitemi}{$\diamond$}
 ```
 
-`enclosing`环境的左边距与`itemize`列表的左边距之间的距离由参数`\leftmargini`到`\leftmarginvi`确定. 
+`enclosing`环境的左边距与`itemize`列表的左边距之间的距离由参数`\leftmargini`到`\leftmarginvi`确定.
 (请注意在命令名称的末尾使用小写罗马数字的约定,以表示嵌套级别.)
 默认值为:`1`级`2.5em`(两列模式下`2em`),`2`级`2.2em`,`3`级`1.87em`和`4`级`1.7em`,较小的值表示嵌套深度更深的级.
 
-对于其他带有LaTeX标签的主要列表环境,请参见`description`和`enumerate`. 
+对于其他带有LaTeX标签的主要列表环境,请参见`description`和`enumerate`.
 有关列表布局参数(包括默认值)的信息,以及有关自定义列表布局的信息,请参见`list`. 软件包`enumitem`对于自定义列表很有用.
 
 本示例极大地减少了最外面的`itemized`列表的边距空间.
@@ -2215,7 +2215,7 @@ $a \sslash b$
 \end{document}
 ```
 
-另一方面, 这个符号将与简单的斜线有很大的不同, 所以用标准的斜线来重新定义它可能会更好. 不过, 你必须在`unicode-math`完成工作后再进行重新定义. 
+另一方面, 这个符号将与简单的斜线有很大的不同, 所以用标准的斜线来重新定义它可能会更好. 不过, 你必须在`unicode-math`完成工作后再进行重新定义.
 
 ```latex
 \documentclass[a4paper,11pt]{article}
@@ -2254,7 +2254,7 @@ $a \sslash b$
 
 + $\mathcal{L}$ 常用来表示损失函数
 + $\mathcal{D}$ 表示样本集
-+ $\mathcal{N}$ 常用来表示高斯分布; 
++ $\mathcal{N}$ 常用来表示高斯分布;
 
 [为阿拉伯数字和小写字母实现类似 \mathbb 的效果 ](https://liam.page/2017/01/08/arabic-numbers-or-lowercase-letters-in-blackboard-bold-doublestroke-font/)
 
@@ -2275,7 +2275,7 @@ $a \sslash b$
 
 以下分别是`4`种字体形式:
 
-1-4 行分别是:`默认`,`\mathsf`, `\mathtt`, `\mathit`. 
+1-4 行分别是:`默认`,`\mathsf`, `\mathtt`, `\mathit`.
 
 ```latex
 \[
@@ -2295,8 +2295,8 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 
 拥有小写字母的数字花体字体当然也是存在的——比如`MathTime Pro 2`的`\mathcal`就支持小写,
 需要付钱.  把一些正文字体借用于数学公式中是可能
-把一些正文字体借用于数学公式中是可能的. 不过不推荐. 
-如果是为了区分不同的变量,可以考虑用`black letter`风格的`\mathfrak`. 
+把一些正文字体借用于数学公式中是可能的. 不过不推荐.
+如果是为了区分不同的变量,可以考虑用`black letter`风格的`\mathfrak`.
 
 推荐两个查找任意符号的LaTeX指令的方法
 
@@ -2355,7 +2355,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 例如,`\mathrm`的参数中的空格将被忽略.
 此外,`\text`跟周围环境的字体有关:在定理的陈述中它将以斜体显示.
 
-应特别注意诸如`m/s`之类的单位; 
+应特别注意诸如`m/s`之类的单位;
 最好不要`手工`制作它们,而要使用`siunitx`之类的程序包,它可以处理所有的细节,同时又非常灵活.
 
 #### 求迹 Trace
@@ -2385,7 +2385,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 它会提供三个命令变体,提供正确的水平对齐的单行铅垂线:
 
 在正文中,使用带星号的版本,`\abs*{\frac{22}{7}}`,竖线的高度会匹配参数的高度
-而`\abs{\frac{22}{7}}`会保留默认高度. 
+而`\abs{\frac{22}{7}}`会保留默认高度.
 `\abs[size command]{\frac{22}{7}}`会给出指定的高度,比如`\Bigg`
 
 ### 微分符号
@@ -2403,13 +2403,13 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 
 `\mathop` is considered to be a single variable sized math symbol for purposes of placing limits below (subscripts) and above (superscripts)  in display math style
 
-数学符号的标准,首先是定义在 ISO 31-11 当中; 而后这个标准被 ISO 80000-2:2009 取代. 
+数学符号的标准,首先是定义在 ISO 31-11 当中; 而后这个标准被 ISO 80000-2:2009 取代.
 因此,此篇讨论的内容,都是基于 ISO 80000-2:2009 的.  在 ISO 80000-2:2009 中,微分算子被描述为
 
-+ 直立的拉丁字母 `d`; 
-+ 一个右边没有间距的操作符. 
++ 直立的拉丁字母 `d`;
++ 一个右边没有间距的操作符.
 
-对于直立的拉丁字母 `d`,我们可以使用 `\mathrm{d}` 达成效果. 
+对于直立的拉丁字母 `d`,我们可以使用 `\mathrm{d}` 达成效果.
 而若要微分算子的左边有间距,而右边没有,这个问题就值得思考了.  最简单的办法,是将微分算子做如下实现
 
 ```latex
@@ -2419,29 +2419,29 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 看起来,这样是没有问题的. 但是,在某些情况下,就会出现尴尬的问题. 比如
 
 ```latex
-关于 $x$ 的微分 $\dif x$ 是指的思考的问题. 
+关于 $x$ 的微分 $\dif x$ 是指的思考的问题.
 ```
 
-因为在 `\dif` 的定义中,`\mathrm{d}` 之前有不可省略的铅空 `\,`. 
+因为在 `\dif` 的定义中,`\mathrm{d}` 之前有不可省略的铅空 `\,`.
 于是,这份代码中 `\dif x` 与前后正文之间的距离就不一致了. 为了解决这个问题,更有经验的人可能会选择这样定义
 
 ```bash
 \newcommand*{\dif}{\mathop{\mathrm{d}}\!}
 ```
 
-这份代码,试图利用 `\mathop`,只在必要的时候于左边插入空白,修复了上面的问题. 
-不过,这样一来也带来了一些副作用——在 `\mathop` 的作用下,`\mathrm{d}` 的基线发生了改变,不再与正常的数学变量保持在同一个基线上. 这也是不好的.  
+这份代码,试图利用 `\mathop`,只在必要的时候于左边插入空白,修复了上面的问题.
+不过,这样一来也带来了一些副作用——在 `\mathop` 的作用下,`\mathrm{d}` 的基线发生了改变,不再与正常的数学变量保持在同一个基线上. 这也是不好的.
 最终解决问题,应该对微分算子有这样的定义
 
 ```latex
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}}
 ```
 
-在这个定义中,拉丁字母 d 本身的特点得到了保留(比如基线是正常的). 
-此外,在 \mathrm{d} 的左边,插入了一个空白的 `\mathop{}`; 其左边的空白保留,而右边与 `\mathrm{d}` 之间的距离,则由 `\!` 抑制. 这样就达成了我们的目标.  
+在这个定义中,拉丁字母 d 本身的特点得到了保留(比如基线是正常的).
+此外,在 \mathrm{d} 的左边,插入了一个空白的 `\mathop{}`; 其左边的空白保留,而右边与 `\mathrm{d}` 之间的距离,则由 `\!` 抑制. 这样就达成了我们的目标.
 
 数学公式环境中,本来就没有距离,所以`\mathrm{d}`什么都没有,就代表右侧没有距离,
-左边的`\!`是用来把`\mathrm{d}`往左移动的,就是离左边稍微近一点,因为插入了一个空白的数学符号. 
+左边的`\!`是用来把`\mathrm{d}`往左移动的,就是离左边稍微近一点,因为插入了一个空白的数学符号.
 
 测试如下:
 
@@ -2493,7 +2493,7 @@ $\int \mathop{}\mathrm{d} x $\\
 + 加粗 `\textbf{文字}`
 + 斜体 `\emph{文字}`
 + 下划线 `\underline{文字}`
-+ 删除线 
++ 删除线
 删除线需要调用package:
 `\usepackage{ulem}`
 而后是:
@@ -2516,7 +2516,7 @@ $\int \mathop{}\mathrm{d} x $\\
 
 第二种方法
 
-我们可以使用`subarray`环境来实现多行上下标,且可以自己选择对齐方式. 
+我们可以使用`subarray`环境来实现多行上下标,且可以自己选择对齐方式.
 
 ```latex
 \begin{gather}
@@ -2564,7 +2564,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)      removing `math shift' on input line 1938.
 ```
 
-`PDF`书签与目录是不同的. 
+`PDF`书签与目录是不同的.
 书签不是由`TeX`排版的:它们只是字符串,因此不允许使用数学或一般的格式说明.
 避免警告的最简单方法是使用`\texorpdfstring`:
 
@@ -2580,7 +2580,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 连字符(Hyphens), 连接号(En-dashes), 破折号(Em-dashes), 减号(Minus signs)
 
-连字符为`-`, 连接号为`--`, 破折号为`---`, 减号为`$-$`. 
+连字符为`-`, 连接号为`--`, 破折号为`---`, 减号为`$-$`.
 
 u+2014*2
 
@@ -2649,12 +2649,12 @@ URL链接
 
 ### 国际单位制
 
-`latex`中使用单位, 现在最好使用[siunitx](https://www.ctan.org/pkg/siunitx), 它是`LaTeX 3 `项目中的包. 
-`hepunits`会调用`physics`和`SIunits`, 这两个包会与`siunitx`冲突, 所以不要调用这些宏包. 
+`latex`中使用单位, 现在最好使用[siunitx](https://www.ctan.org/pkg/siunitx), 它是`LaTeX 3 `项目中的包.
+`hepunits`会调用`physics`和`SIunits`, 这两个包会与`siunitx`冲突, 所以不要调用这些宏包.
 
 `siunitx`的说明文档中有具体的用法例子：
-`3.3Units` 章节列举了常用的命令, `3.6Unit abbreviations` 中有大量单位的缩写, 但是注意很多单位的定义只在`\unit{}`环境内才生效. 
-另外`siunitx`有第二版和第三版, 使用`texdoc siunitx`查看本地对应版本的文档, 两个版本的命令名称不同, 根据具体情况使用. 
+`3.3Units` 章节列举了常用的命令, `3.6Unit abbreviations` 中有大量单位的缩写, 但是注意很多单位的定义只在`\unit{}`环境内才生效.
+另外`siunitx`有第二版和第三版, 使用`texdoc siunitx`查看本地对应版本的文档, 两个版本的命令名称不同, 根据具体情况使用.
 
 例如我本地安装的是第二版, 对应的命令为
 
@@ -2663,7 +2663,7 @@ URL链接
 \ang{1;2;3} % 角度：1度2分3秒
 \si{\henry\tothe{5}}  %一般的指数可以用 \tothe 输入
 \si{\raiseto{4.5}\radian} % 或者用 \raiseto
-\si{\kilogram\of{metal}} %一般的限定符可以使用 \of 
+\si{\kilogram\of{metal}} %一般的限定符可以使用 \of
 ```
 
 相应的第三版命令是
@@ -2671,7 +2671,7 @@ URL链接
 ```latex
 \qty[mode=text]{1.23}{J.mol^{-1}.K^{-1}}
 \ang{1;2;3}
-\unit{\henry\tothe{5}} 
+\unit{\henry\tothe{5}}
 \unit{\raiseto{4.5}\radian}
 \unit{\kilogram\of{metal}}
 ```
@@ -2680,8 +2680,8 @@ URL链接
 
 画费曼图有许多包, 现在了解到的有:
 
-[ GkAntonius:feynman ](https://github.com/GkAntonius/feynman):Sharp-looking Feynman diagrams in python 
-[ JP-Ellis /tikz-feynman ](https://github.com/JP-Ellis/tikz-feynman):Feynman Diagrams with TikZ 
+[ GkAntonius:feynman ](https://github.com/GkAntonius/feynman):Sharp-looking Feynman diagrams in python
+[ JP-Ellis /tikz-feynman ](https://github.com/JP-Ellis/tikz-feynman):Feynman Diagrams with TikZ
 [Asymptote: The Vector Graphics Language](https://asymptote.sourceforge.io/): 其中有个叫做`feynman`的模组
 
 ## 页面设置
@@ -2690,7 +2690,7 @@ URL链接
 首先,这一切,都需要我们使用宏包geometry. 因此,首先,我们需要在导言区中写上`\usepackage{geometry}`.
 [geometry](https://www.ctan.org/pkg/geometry)
 
-该软件包提供了一个轻松灵活的用户界面来自定义页面布局,实现了自动居中和自动平衡机制,因此用户只需给出最少的页面布局描述即可. 
+该软件包提供了一个轻松灵活的用户界面来自定义页面布局,实现了自动居中和自动平衡机制,因此用户只需给出最少的页面布局描述即可.
 例如,如果您想将每个边距设置为`2cm`,而没有标题空间,则只需要`\usepackage[margin=2cm,nohead]{geometry}`.
 
 ### 页面大小设置
@@ -2713,13 +2713,13 @@ URL链接
 
 ```latex
 \geometry{left=2cm}
-``` 
+```
 
-此外,我们如果需要将版心居中,竖直居中的参数名为`vcentering,` 水平居中的参数名为`hcentering`, 水平, 竖直均居中的参数名为`centering`. 
+此外,我们如果需要将版心居中,竖直居中的参数名为`vcentering,` 水平居中的参数名为`hcentering`, 水平, 竖直均居中的参数名为`centering`.
 例如让版心水平居中,可以在导言区中写
 
 ```latex
-\geometry{hcentering} 
+\geometry{hcentering}
 ```
 
 此外,还可以设置版心的大小.版心的长为`textheight`, 宽为`textwidth`. 我们如果要设置版心长为`20cm`,可以在导言区中写
@@ -2748,13 +2748,13 @@ URL链接
 这里注意一点,如果我们同时使用了`geometry`和`fancyhdr`宏包,那么一定要把`\usepackage{fancyhdr}`及相应的页眉, 页脚设置写在`\usepackage{geometry}`的前面,否则会出现奇怪的错误.
 `fancyhdr`宏包的说明文档中也有各个页眉页脚位置的图示.[fancyhdr](https://www.ctan.org/pkg/fancyhdr)
 
-`fancyhdr`将页面的页眉, 页脚各分为左, 中, 右三个部分,其对应的指令名为`\lhead{}`,` \chead{}`, `\rhead{}`, `\lfoot{}`, `\lhead{},` `\rhead{}`. 
+`fancyhdr`将页面的页眉, 页脚各分为左, 中, 右三个部分,其对应的指令名为`\lhead{}`,` \chead{}`, `\rhead{}`, `\lfoot{}`, `\lhead{},` `\rhead{}`.
 括号中填写的内容将在对应的地方出现. 比如想在页眉正中出现`学习指南`,我们只需在导言区加上`\chead{学习指南} `.
 现在版本的`fancyhdr`已经不建议使用这种风格的命令了,而是使用类似`\fancyhead[L]{xx}`这样的命令代替.
 
 + 如果想使用页码,可以用`\thepage`来实现. 它存储当前页面的页码.比如想在页尾右侧写上当前页码,则在导言区中加上`\rfoot{\thepage} `.
 + 此外,顺便提一句,如果要在正文中使用`\maketitle`,那么那一页的页面格式会自动变回原来的页面格式.需要在`\maketitle`后加上一句`\thispagestyle{fancy}`.
-+ 同时,页眉也被默认设置了含有页眉线.页眉线, 页脚线的指令名分别为`\headrulewidth`和`\footrulewidth`. 其粗细可分别用`\renewcommand`来设置, 
++ 同时,页眉也被默认设置了含有页眉线.页眉线, 页脚线的指令名分别为`\headrulewidth`和`\footrulewidth`. 其粗细可分别用`\renewcommand`来设置,
 例如想取消页眉线,就在导言区加上`\renewcommand\headrulewidth{0pt} `
 + 如果要在正文中使用`\maketitle`,那么那一页的页面格式会自动变回原来的页面格式.需要在`\maketitle`后加上一句`\thispagestyle{fancy}`.
 
@@ -2780,10 +2780,10 @@ URL链接
 
 [LaTeX系列笔记(5)-行距](https://zhuanlan.zhihu.com/p/138408387)
 
-首先, 行距就是相邻两行文字之间的距离. 行距的调节一般使用倍数, 比如两倍行距. 
-而`单倍行距`又根据字体, 字号, 软件的不同而改变(不同软件中有不同的定义, 没有一个通用的值). 
+首先, 行距就是相邻两行文字之间的距离. 行距的调节一般使用倍数, 比如两倍行距.
+而`单倍行距`又根据字体, 字号, 软件的不同而改变(不同软件中有不同的定义, 没有一个通用的值).
 
-在 LaTeX 里面也有这些概念, 在你定义字号的时候, `单倍行距`也随之确定. 更改时, 我们更改的是`单倍行距`的倍数. 
+在 LaTeX 里面也有这些概念, 在你定义字号的时候, `单倍行距`也随之确定. 更改时, 我们更改的是`单倍行距`的倍数.
 比如在 LaTeX 中 `10` 号字(无论字体), 对应的单倍行距是 `12` 磅. 修改行距倍数的方法有两个：
 
 ***
@@ -2793,7 +2793,7 @@ URL链接
 \linespread{2.0}
 ```
 
-使用了这个命令以后, 从此之后的行距都变成`2.0`倍了. 
+使用了这个命令以后, 从此之后的行距都变成`2.0`倍了.
 
 如果只想对一小部分做更改, 可以用大括号把这一段括起来, 如
 
@@ -2802,15 +2802,15 @@ URL链接
 \linespread{2.0} \selectfont
 % 两倍行距的文字
 }
-% 一倍行距的文字, 
-% 这样就不会对括号外的部分进行改变, 字体, 字号类命令也可以这么用. 
+% 一倍行距的文字,
+% 这样就不会对括号外的部分进行改变, 字体, 字号类命令也可以这么用.
 ```
 
-出现在正文的 `\linespread`, 需使用 `\selectfont` 刷新行距信息后才生效. 因为 `\document` 包含 `\normalsize` 包含 `\@setfontsize` 包含 `\selectfont`, 
+出现在正文的 `\linespread`, 需使用 `\selectfont` 刷新行距信息后才生效. 因为 `\document` 包含 `\normalsize` 包含 `\@setfontsize` 包含 `\selectfont`,
 相当于 `\begin{document}` 处总是会执行一个 `\selectfont`, 所以在导言区使用的 `\linespread` 看起来自动生效了. ---慕子
 
 ***
-使用 `setspace` 宏包. 
+使用 `setspace` 宏包.
 
 ```latex
 \usepackage{setspace}
@@ -2823,7 +2823,7 @@ URL链接
 ```
 
 被 `spacing` 环境框住的地方行距就会改变. `spacing` 还有一些奇怪的功能：
-如果想让`行距 = 2倍字体高度`, 并且你的字号正好是 `10/11/12 pt` 之一的话, 就可以使用 `\doublespace` 命令(这个命令容易使人误以为是两倍行距). 
+如果想让`行距 = 2倍字体高度`, 并且你的字号正好是 `10/11/12 pt` 之一的话, 就可以使用 `\doublespace` 命令(这个命令容易使人误以为是两倍行距).
 
 上面两个办法的效果差不多, `\linespread` 背后的实现更复杂一些, 本质上是把`行距倍数`传递给 `\baselinestretch`, 所以实际上你也可以调用
 
@@ -2834,20 +2834,20 @@ URL链接
 如果想直接改行距的大小, 也是可以做到的, 但是也不推荐. 因为只要你换一下字号, 行距的大小也会随之改变, 效果不持久. 改法是
 
 ```latex
-\setlength{\baselineskip}{20pt}    % 改变行距. 不推荐, 因为字号一改就得重新定义. 
+\setlength{\baselineskip}{20pt}    % 改变行距. 不推荐, 因为字号一改就得重新定义.
 ```
 
-这里的 `20 pt` 表示 `20 磅`.  `pt` 是 `LaTeX` 里的长度单位. 
+这里的 `20 pt` 表示 `20 磅`.  `pt` 是 `LaTeX` 里的长度单位.
 
-如果想直接改`单位行距`的大小, 也是可以做到的, 因为同样理由, 也不推荐. 
+如果想直接改`单位行距`的大小, 也是可以做到的, 因为同样理由, 也不推荐.
 
 ```latex
-\setlength{\normalbaselineskip}{20pt}    % 改变“单倍行距”. 不推荐, 因为字号一改就得重新定义. 
+\setlength{\normalbaselineskip}{20pt}    % 改变“单倍行距”. 不推荐, 因为字号一改就得重新定义.
 ```
 
 如果你想把行距搞得和 `Word` 很像, 需要改变每个字号下的`单倍行距`大小. 参考[LaTeX 设置的行距与 Word 的行距如何对应？](https://www.zhihu.com/question/62327906/answer/197899935)
 
-### 添加水印或者背景图片 eso-pic 
+### 添加水印或者背景图片 eso-pic
 
 添加 watermark
 
@@ -2859,8 +2859,8 @@ URL链接
 
 如果是文章类, 可以使用 [eso-pic](https://www.ctan.org/pkg/eso-pic).
 
-+ `eso-pic`; 在每一页上添加图片命令( 或背景). 
-该软件包为`LaTeX`的`shipout routine`添加一个或多个用户命令, 可用于将`命令的输出`置于固定位置. `grid`选项可以用来寻找正确的位置. 
++ `eso-pic`; 在每一页上添加图片命令( 或背景).
+该软件包为`LaTeX`的`shipout routine`添加一个或多个用户命令, 可用于将`命令的输出`置于固定位置. `grid`选项可以用来寻找正确的位置.
 
 具体的用法可以参考包文件中附带的例子, `eso-*.tex`. 例如 `eso-ex1.tex`
 
@@ -2887,7 +2887,7 @@ URL链接
       \AddToShipoutPicture*{\put(100,100){\circle{40}}}
       带*号命令的作用 : 只有这一页在左下角有圆圈
       \AddToShipoutPictureBG*{\AtTextCenter{\put(-110,300){\color{red}\circle{40} }}}
-      末尾的 BG 表示插入到背景, AddToShipoutPictureFG 表示插入到前景, 
+      末尾的 BG 表示插入到背景, AddToShipoutPictureFG 表示插入到前景,
       AtTextCenter 命令 表示插入锚点在页面中间.  \newpage
     \section*{Last page}
 \end{document}
@@ -2899,9 +2899,9 @@ page 28; 1.3 Utility Packages
 page 1013; 91 Page Management
 
 也可以考虑`tikz`中的`pgfpages`包.
-`pgfpages`软件包用于将几个页面组合成一个单一的页面. 它提供了用于将几个 `虚拟页` 组合成`物理页`的命令. 
-其原理是, 每当`TeX`准备好将一个页面`shipout`的时候, `pgfpages`就会中断这种输出, 而把要输出的页面存储在一个特殊的`盒子`里. 
-当以这种方式积累了足够多的 `虚拟页面`时, 它们就会被按比例缩小并排列在 `物理页面`上. 然后真正输出. 
+`pgfpages`软件包用于将几个页面组合成一个单一的页面. 它提供了用于将几个 `虚拟页` 组合成`物理页`的命令.
+其原理是, 每当`TeX`准备好将一个页面`shipout`的时候, `pgfpages`就会中断这种输出, 而把要输出的页面存储在一个特殊的`盒子`里.
+当以这种方式积累了足够多的 `虚拟页面`时, 它们就会被按比例缩小并排列在 `物理页面`上. 然后真正输出.
 
-这种机制允许你直接在`LaTeX`内部创建"一页两面"的文档版本, 而不需要使用任何外部程序. 
-然而, `pgfpages`的作用远不止这些. 你可以用它来在页面上添加`标识`和`水印`, 在一页上最多打印`16`面, 为页面添加边框, 等等. 
+这种机制允许你直接在`LaTeX`内部创建"一页两面"的文档版本, 而不需要使用任何外部程序.
+然而, `pgfpages`的作用远不止这些. 你可以用它来在页面上添加`标识`和`水印`, 在一页上最多打印`16`面, 为页面添加边框, 等等.

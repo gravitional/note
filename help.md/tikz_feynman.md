@@ -1,12 +1,10 @@
 # tikz_feynman
 
-文档原地址：[tikz-feynman][], 版权归原作者所有, 转载请注明
+文档原地址：[tikz-feynman](https://ctan.org/pkg/tikz-feynman), 版权归原作者所有, 转载请注明
 
 `TikZ-Feynman` provides a new way to draw Feynman diagrams in `LATEX` that does not rely on external programs and uses a clear extensible syntax.
 If you use `TikZ-Feynman` in an academic setting, please cite:
 `J. Ellis, ‘TikZ-Feynman: Feynmandiagrams with TikZ’, (2016), arXiv: 1601.05437 [hep-ph]`
-
-[tikz-feynman]: https://ctan.org/pkg/tikz-feynman
 
 ## Tutorial --教程
 

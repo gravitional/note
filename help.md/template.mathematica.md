@@ -1,12 +1,11 @@
+# template.mathematica
+
 ## ColorData
 
->`ColorData["scheme"][par]` 或 `ColorData["scheme",par]` 给出指定颜色方案中对应于参数值 `par` 的 `RGBColor` 对象.
-
->`ColorData["scheme"]` 给出一个 ColorDataFunction 对象. 
-
->默认情况下, 颜色梯度有一个范围从0到1的单一参数. 
-
->`ColorData["collection"]` 给出名称集合中的颜色方案列表. 
++ `ColorData["scheme"][par]` 或 `ColorData["scheme",par]` 给出指定颜色方案中对应于参数值 `par` 的 `RGBColor` 对象.
++ `ColorData["scheme"]` 给出一个 ColorDataFunction 对象.
++ 默认情况下, 颜色梯度有一个范围从0到1的单一参数.
++ `ColorData["collection"]` 给出名称集合中的颜色方案列表.
 
 ### 获得集合的列表：
 
@@ -25,7 +24,7 @@ ColorData["Named"]
 ### 梯度是一个连续颜色函数, 它适用于 ColorFunction：
 
 ```mathematica
-DensityPlot[y + Sin[x^2 + 3 y], {x, -3, 3}, {y, -3, 3}, 
+DensityPlot[y + Sin[x^2 + 3 y], {x, -3, 3}, {y, -3, 3},
 ColorFunction -> ColorData["SunsetColors"]]
 ```
 
@@ -58,7 +57,7 @@ Grid[(*start grid *)
     datalist,
     (*end the data to display*)
     (*start prepend names vertical*)
-    name`vertical 
+    name`vertical
     (*end prepend names vertical *)
     }
    ],
@@ -80,14 +79,14 @@ Grid[(*start grid *)
 设置指定项的背景：
 
 ```mathematica
-Grid[Table[x, {4}, {7}], 
+Grid[Table[x, {4}, {7}],
  Background -> {None, None, {{1, 1} -> Pink, {3, 4} -> Red}}]
 ```
 
 设置网格区域的背景：
 
 ```mathematica
-Grid[Table[x, {4}, {7}], 
+Grid[Table[x, {4}, {7}],
  Background -> {None, None, {{1, 1} -> Pink, {3, 4} -> Red}}]
 ```
 

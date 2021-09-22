@@ -1,6 +1,6 @@
 # FeynCalc
 
-恢复被 `FeynCalc` 更改默认输出格式: 
+恢复被 `FeynCalc` 更改默认输出格式:
 
 ```mathematica
 SetOptions[EvaluationNotebook[],  CommonDefaultFormatTypes -> {"Output" -> StandardForm}]

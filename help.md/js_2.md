@@ -2,7 +2,7 @@
 
 ## 面向对象编程
 
-`JavaScript`的所有数据都可以看成对象, 那是不是我们已经在使用`面向对象`编程了呢? 
+`JavaScript`的所有数据都可以看成对象, 那是不是我们已经在使用`面向对象`编程了呢?
 当然不是. 如果我们只使用 `Number`, `Array`, `string` 以及基本的 `{...}` 定义的对象, 还无法发挥出面向对象编程的威力.
 
 `JavaScript`的面向对象编程和大多数其他语言如 `Java`, `C#` 的面向对象编程都不太一样.
@@ -16,7 +16,7 @@
 
 不过, 在`JavaScript`中, 这个概念需要改一改. `JavaScript`不区分`类`和`实例`的概念, 而是通过`原型`(`prototype`)来实现面向对象编程.
 
-`原型`是指当我们想要创建 `xiaoming` 这个具体的学生时, 我们并没有一个 `Student` 类型可用. 那怎么办? 
+`原型`是指当我们想要创建 `xiaoming` 这个具体的学生时, 我们并没有一个 `Student` 类型可用. 那怎么办?
 如果恰好有这么一个现成的对象:
 
 ```js
@@ -160,7 +160,7 @@ function Student(name) {
 }
 ```
 
-你会问, 咦, 这不是个普通函数吗? 
+你会问, 咦, 这不是个普通函数吗?
 这确实是个普通函数, 但是在`JavaScript`中, 可以用关键字`new`来调用这个函数, 并返回对象:
 
 ```js
@@ -169,7 +169,7 @@ xiaoming.name; // '小明'
 xiaoming.hello(); // Hello, 小明!
 ```
 
-注意, 如果不写`new`, 这就是一个普通函数, 它返回`undefined`. 
+注意, 如果不写`new`, 这就是一个普通函数, 它返回`undefined`.
 但是, 如果写了`new`, 它就变成了一个构造函数, 它绑定的`this`指向新创建的对象, 并默认返回`this`, 也就是说, 不需要在最后写`return this;`.
 
 新创建的`xiaoming`的`原型链`是:
@@ -199,7 +199,7 @@ xiaoming instanceof Student; // true
 
 ![protos](https://static.liaoxuefeng.com/files/attachments/1024698721053600/l)
 
-红色箭头是`原型链`. 注意, `Student.prototype`框框指向的对象就是 `xiaoming`, `xiaohong` 的`原型对象`, 
+红色箭头是`原型链`. 注意, `Student.prototype`框框指向的对象就是 `xiaoming`, `xiaohong` 的`原型对象`,
 这个`原型对象`自己还有个属性`constructor`, 指向`Student`函数本身.
 
 另外, `函数 Student`恰好有个属性`prototype`指向`xiaoming`, `xiaohong` 的原型对象, `但是xiaoming`, `xiaohong` 这些`对象`可没有`prototype`这个属性, 不过可以用`__proto__`这个非标准用法来查看.
@@ -240,12 +240,12 @@ Student.prototype.hello = function () {
 
 #### 忘记写new怎么办
 
-如果一个函数被定义为用于创建对象的`构造函数`, 但是调用时忘记了写`new`怎么办? 
+如果一个函数被定义为用于创建对象的`构造函数`, 但是调用时忘记了写`new`怎么办?
 
-在`strict`模式下, `this.name = name`将报错, 因为 `this` 绑定为 `undefined`, 
+在`strict`模式下, `this.name = name`将报错, 因为 `this` 绑定为 `undefined`,
 在非 `strict` 模式下, `this.name = name` 不报错, 因为`this`绑定为 `window`, 于是无意间创建了全局变量 `name`, 并且返回 `undefined`, 这个结果更糟糕.
 
-所以, 调用`构造函数`千万不要忘记写`new.` 为了区分普通函数和`构造函数`, 按照约定, `构造函数`首字母应当大写, 而普通函数首字母应当小写, 
+所以, 调用`构造函数`千万不要忘记写`new.` 为了区分普通函数和`构造函数`, 按照约定, `构造函数`首字母应当大写, 而普通函数首字母应当小写,
 这样, 一些语法检查工具如`jslint`将可以帮你检测到漏写的`new.`
 
 最后, 我们还可以编写一个`createStudent()`函数, 在内部封装所有的`new`操作. 一个常用的编程模式像这样:
@@ -272,12 +272,12 @@ var xiaoming = createStudent({
 xiaoming.grade; // 1
 ```
 
-如果创建的对象有很多属性, 我们只需要传递需要的某些属性, 剩下的属性可以用`默认值`. 
+如果创建的对象有很多属性, 我们只需要传递需要的某些属性, 剩下的属性可以用`默认值`.
 由于参数是一个`Object`, 我们无需记忆参数的顺序. 如果恰好从`JSON`拿到了一个对象, 就可以直接创建出`xiaoming`.
 
 #### 练习
 
-请利用构造函数定义`Cat`, 并让所有的`Cat`对象有`name`属性, 并共享方法`say()`, 返回字符串`'Hello, xxx!'`: 
+请利用构造函数定义`Cat`, 并让所有的`Cat`对象有`name`属性, 并共享方法`say()`, 返回字符串`'Hello, xxx!'`:
 
 ```js
 'use strict';
@@ -388,7 +388,7 @@ p1.__proto__ === Parent.prototype; // true
 这样一来`实例`就能很容易的访问到构造函数`prototype`上的`方法`和`属性`了.
 
 我们之前说过`__proto__`属性是`对象`(包括函数)独有的.
-那么`Parent.prototype`也是对象, 它有`隐式原型`么, 又指向谁? 
+那么`Parent.prototype`也是对象, 它有`隐式原型`么, 又指向谁?
 
 ```js
 Parent.prototype.__proto__ === Object.prototype; //true
@@ -508,7 +508,7 @@ function PrimaryStudent(props) {
 PrimaryStudent.prototype = Student.prototype;
 ```
 
-是不行的!如果这样的话,  `PrimaryStudent` 和 `Student` 共享一个原型对象, 那还定义 `PrimaryStudent` 干啥? 
+是不行的!如果这样的话,  `PrimaryStudent` 和 `Student` 共享一个原型对象, 那还定义 `PrimaryStudent` 干啥?
 
 我们可以借助`中间对象`来实现正确的`原型链`, 这个中间对象的`原型`要指向`Student.prototype`.
 为了实现这一点, 参考`道爷`(就是发明`JSON`的那个道格拉斯)的代码, `中间对象`可以用`空函数F`来实现:
@@ -605,13 +605,13 @@ PrimaryStudent.prototype.getGrade = function () {
 ### class继承
 
 在上面的章节中我们看到了`JavaScript`的对象模型是基于`原型`实现的.
-特点是简单, 缺点是理解起来比传统的类－实例模型要困难, 最大的缺点是继承的实现需要编写大量代码, 并且需要正确实现原型链. 
+特点是简单, 缺点是理解起来比传统的类－实例模型要困难, 最大的缺点是继承的实现需要编写大量代码, 并且需要正确实现原型链.
 
-有没有更简单的写法? 有! 
+有没有更简单的写法? 有!
 
-新的关键字`class`从`ES6`开始正式被引入到`JavaScript`中. `class`的目的就是让定义类更简单. 
+新的关键字`class`从`ES6`开始正式被引入到`JavaScript`中. `class`的目的就是让定义类更简单.
 
-我们先回顾用函数实现`Student`的方法: 
+我们先回顾用函数实现`Student`的方法:
 
 ```js
 function Student(name) {
@@ -623,7 +623,7 @@ Student.prototype.hello = function () {
 }
 ```
 
-如果用新的`class`关键字来编写`Student`, 可以这样写: 
+如果用新的`class`关键字来编写`Student`, 可以这样写:
 
 ```js
 class Student {
@@ -637,9 +637,9 @@ class Student {
 ```
 
 比较一下就可以发现, `class`的定义包含了构造函数`constructor`和定义在原型对象上的函数`hello()`.
-(注意没有`function`关键字), 这样就避免了`Student.prototype.hello = function () {...}`这样分散的代码. 
+(注意没有`function`关键字), 这样就避免了`Student.prototype.hello = function () {...}`这样分散的代码.
 
-最后, 创建一个`Student`对象代码和前面章节完全一样: 
+最后, 创建一个`Student`对象代码和前面章节完全一样:
 
 ```js
 var xiaoming = new Student('小明');
@@ -648,8 +648,8 @@ xiaoming.hello();
 
 #### class继承
 
-用`class`定义对象的另一个巨大的好处是继承更方便了. 想一想我们从`Student`派生一个`PrimaryStudent`需要编写的代码量. 
-现在, 原型`继承`的中间对象, 原型对象的`构造函数`等等都不需要考虑了, 直接通过`extends`来实现: 
+用`class`定义对象的另一个巨大的好处是继承更方便了. 想一想我们从`Student`派生一个`PrimaryStudent`需要编写的代码量.
+现在, 原型`继承`的中间对象, 原型对象的`构造函数`等等都不需要考虑了, 直接通过`extends`来实现:
 
 ```js
 class PrimaryStudent extends Student {
@@ -663,23 +663,23 @@ class PrimaryStudent extends Student {
 }
 ```
 
-注意`PrimaryStudent`的定义也是`class`关键字实现的, 而`extends`则表示原型链对象来自`Student`. 
-子类的构造函数可能会与父类不太相同, 例如, `PrimaryStudent`需要`name`和`grade`两个参数, 
-并且需要通过`super(name)`来调用父类的构造函数, 否则父类的`name`属性无法正常初始化. 
+注意`PrimaryStudent`的定义也是`class`关键字实现的, 而`extends`则表示原型链对象来自`Student`.
+子类的构造函数可能会与父类不太相同, 例如, `PrimaryStudent`需要`name`和`grade`两个参数,
+并且需要通过`super(name)`来调用父类的构造函数, 否则父类的`name`属性无法正常初始化.
 
-`PrimaryStudent`已经自动获得了父类`Student`的`hello`方法, 我们又在子类中定义了新的`myGrade`方法. 
+`PrimaryStudent`已经自动获得了父类`Student`的`hello`方法, 我们又在子类中定义了新的`myGrade`方法.
 
-`ES6`引入的`class`和原有的`JavaScript`原型继承有什么区别呢? 
-实际上它们没有任何区别, `class`的作用就是让`JavaScript`引擎去实现原来需要我们自己编写的原型链代码. 
-简而言之, 用`class`的好处就是极大地简化了原型链代码. 
+`ES6`引入的`class`和原有的`JavaScript`原型继承有什么区别呢?
+实际上它们没有任何区别, `class`的作用就是让`JavaScript`引擎去实现原来需要我们自己编写的原型链代码.
+简而言之, 用`class`的好处就是极大地简化了原型链代码.
 
-你一定会问, `class` 这么好用, 能不能现在就用上? 
-现在用还早了点, 因为不是所有的主流浏览器都支持`ES6`的`class`. 
-如果一定要现在就用上, 就需要一个工具把`class`代码转换为传统的`prototype`代码, 可以试试`Babel`这个工具. 
+你一定会问, `class` 这么好用, 能不能现在就用上?
+现在用还早了点, 因为不是所有的主流浏览器都支持`ES6`的`class`.
+如果一定要现在就用上, 就需要一个工具把`class`代码转换为传统的`prototype`代码, 可以试试`Babel`这个工具.
 
 #### 练习
 
-请利用`class`重新定义`Cat`, 并让它从已有的`Animal`继承, 然后新增一个方法`say()`, 返回字符串`'Hello, xxx!'`: 
+请利用`class`重新定义`Cat`, 并让它从已有的`Animal`继承, 然后新增一个方法`say()`, 返回字符串`'Hello, xxx!'`:
 
 ```js
 'use strict';
@@ -693,7 +693,7 @@ class Cat ???
 var kitty = new Cat('Kitty');
 var doraemon = new Cat('哆啦A梦');
 if ((new Cat('x') instanceof Animal)
-    && kitty 
+    && kitty
     && kitty.name === 'Kitty'
     && kitty.say
     && typeof kitty.say === 'function'
@@ -721,14 +721,14 @@ if ((new Cat('x') instanceof Animal)
 于是在2009年, Ryan正式推出了基于`JavaScript`语言和`V8`引擎的开源`Web`服务器项目, 命名为`Node.js`.
 虽然名字很土, 但是, `Node` 第一次把`JavaScript`带入到后端服务器开发, 加上世界上已经有无数的`JavaScript`开发人员, 所以`Node`一下子就火了起来.
 
-在`Node`上运行的`JavaScript`相比其他后端开发语言有何优势? 
+在`Node`上运行的`JavaScript`相比其他后端开发语言有何优势?
 最大的优势是借助`JavaScript`天生的事件驱动机制加`V8`高性能引擎, 使编写高性能`Web`服务轻而易举.
 其次, `JavaScript`语言本身是完善的函数式语言,
 在前端开发时, 开发人员往往写得比较随意, 让人感觉`JavaScript`就是个`玩具语言`.
 
 但是, 在`Node`环境下, 通过模块化的`JavaScript`代码, 加上函数式编程, 并且无需考虑浏览器兼容性问题, 直接使用最新的`ECMAScript 6`标准, 可以完全满足工程上的需求.
 
->我还听说过`io.js`, 这又是什么鬼? 
+>我还听说过`io.js`, 这又是什么鬼?
 
 因为`Node.js`是开源项目, 虽然由社区推动, 但幕后一直由`Joyent`公司资助. 由于一群开发者对`Joyent`公司的策略不满, 于2014年从`Node.js`项目fork出了`io.js`项目, 决定单独发展, 但两者实际上是兼容的.
 分家后没多久, `Joyent`公司表示要和解, 于是, `io.js`项目又决定回归`Node.js`.

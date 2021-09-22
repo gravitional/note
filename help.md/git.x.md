@@ -126,7 +126,7 @@ $ git config --global merge.tool vimdiff
 Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
 ```
 
-在 `PowerShell 5` 以上, 使用包管理器来安装 `posh-git`. 
+在 `PowerShell 5` 以上, 使用包管理器来安装 `posh-git`.
 `Posh-Git` 将 `Git`状态信息添加到提示, 并为 `Git` 命令, 参数, 远程和分支名称添加 `tab` 自动补全.  `Oh-My-Posh` 为 `PowerShell` 提示符提供主题功能
 
 ```powershell
@@ -138,10 +138,10 @@ Install-Module oh-my-posh -Scope CurrentUser # 安装 oh-my-posh 插件
 如果使用的是 PowerShell Core, 请安装 `PSReadline` ：
 
 ```powershell
-Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck #PSReadline 允许在 PowerShell 中自定义命令行编辑环境. 
+Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck #PSReadline 允许在 PowerShell 中自定义命令行编辑环境.
 ```
 
-如果你想为所有的用户安装 `posh-git`, 请使用`-Scope AllUsers`并在管理员权限启动的 `PowerShell` 控制台中执行.  
+如果你想为所有的用户安装 `posh-git`, 请使用`-Scope AllUsers`并在管理员权限启动的 `PowerShell` 控制台中执行.
 如果第二条命令执行失败并出现类似 `Module 'PowerShellGet' was not installed by using Install-Module` 这样的错误,  那么你需要先运行另一条命令：
 
 ```powershell
@@ -151,8 +151,8 @@ Install-Module PowerShellGet -Force -SkipPublisherCheck
 之后你可以再试一遍. 出现这个错误的原因是 `Windows PowerShell `搭载的模块是以不同的发布证书签名的.
 
 ***
-要使这些操作生效, 即在你的提示符中包含 Git 信息, 需要导入 `Posh-Git` 模块.  
-要让 `PowerShell` 在每次启动时都导入 `Posh-Git`, 请执行 `Add-PoshGitToProfile` 命令,  它会在你的 `$profile` 脚本中添加导入语句. 
+要使这些操作生效, 即在你的提示符中包含 Git 信息, 需要导入 `Posh-Git` 模块.
+要让 `PowerShell` 在每次启动时都导入 `Posh-Git`, 请执行 `Add-PoshGitToProfile` 命令,  它会在你的 `$profile` 脚本中添加导入语句.
 此脚本会在每次打开新的 `PowerShell` 终端时执行.  注意, `$profile` 脚本可能有多个 . 例如, 其中一个是控制台的, 另一个则属于 `ISE`.
 
 ```powershell
@@ -168,7 +168,7 @@ Import-Module oh-my-posh
 Set-Theme Paradox
 ```
 
-现在, 每个新实例启动时都会导入 `Posh-Git` 和 `Oh-My-Posh`, 然后从 `Oh-My-Posh` 设置 `Paradox` 主题.  `Oh-My-Posh` 附带了若干内置主题. 
+现在, 每个新实例启动时都会导入 `Posh-Git` 和 `Oh-My-Posh`, 然后从 `Oh-My-Posh` 设置 `Paradox` 主题.  `Oh-My-Posh` 附带了若干内置主题.
 
 You need to close all powershell instances and then run
 
@@ -180,7 +180,7 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 
 #### 设置字体
 
-首先从 github 上安装 `Cascadia Code PL`字体, 然后从`Windows 终端`下拉菜单中选择`设置`(`Ctrl+, `)来打开 `settings.json` 文件中的配置文件设置. 
+首先从 github 上安装 `Cascadia Code PL`字体, 然后从`Windows 终端`下拉菜单中选择`设置`(`Ctrl+, `)来打开 `settings.json` 文件中的配置文件设置.
 找到 Windows PowerShell 配置文件, 添加`"fontFace": "Cascadia Code PL"`到配置中, 添加完的配置文件 `settings.json` 应如下所示：
 
 ```json
@@ -194,28 +194,28 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 },
 ```
 
-或者添加到所有终端的默认配置`"defaults"`中, 
+或者添加到所有终端的默认配置`"defaults"`中,
 
 ```json
 "profiles":
 {
 "defaults":
 {
-"fontFace": "Cascadia Code PL", 
+"fontFace": "Cascadia Code PL",
 其他内容
 }
 }
 ```
 
-添加到上面的位置, 注意如果不是列表中最后一个, 要加逗号. 这样就将 `Cascadia Code PL` 指定为字体.  
-这样就会显示很好看的 `Cascadia Code Powerline` 字形.  在编辑器中选择`保存`后, 终端应会即刻显示出变化. 
+添加到上面的位置, 注意如果不是列表中最后一个, 要加逗号. 这样就将 `Cascadia Code PL` 指定为字体.
+这样就会显示很好看的 `Cascadia Code Powerline` 字形.  在编辑器中选择`保存`后, 终端应会即刻显示出变化.
 
 ### 服务器上的 Git
 
-如果需要搭建本地`Git` 服务器, 可以参考 [4.8 服务器上的 Git - GitLab](https://git-scm.com/book/zh/v2/) . 
+如果需要搭建本地`Git` 服务器, 可以参考 [4.8 服务器上的 Git - GitLab](https://git-scm.com/book/zh/v2/) .
 
-虽然 `GitWeb` 相当简单.  但如果你正在寻找一个更现代, 功能更全的 Git 服务器, 这里有几个开源的解决方案可供你选择安装.  
-因为 `GitLab` 是其中最出名的一个, 我们将它作为示例并讨论它的安装和使用.  这比 `GitWeb` 要复杂的多并且需要更多的维护, 但它的确是一个功能更全的选择. 
+虽然 `GitWeb` 相当简单.  但如果你正在寻找一个更现代, 功能更全的 Git 服务器, 这里有几个开源的解决方案可供你选择安装.
+因为 `GitLab` 是其中最出名的一个, 我们将它作为示例并讨论它的安装和使用.  这比 `GitWeb` 要复杂的多并且需要更多的维护, 但它的确是一个功能更全的选择.
 
 ## 还原文件
 
@@ -228,19 +228,19 @@ git restore [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>…�
 git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [<pathspec>…​]
 ```
 
-使用恢复源中的某些内容还原工作树中的指定路径. 
-如果跟踪了一条路径, 但该路径在恢复源中不存在, 则会将其删除以匹配该源. 
+使用恢复源中的某些内容还原工作树中的指定路径.
+如果跟踪了一条路径, 但该路径在恢复源中不存在, 则会将其删除以匹配该源.
 
-该命令还可用于通过`--staged`还原索引中的内容, 或通过`--staged --worktree`还原工作树和索引. 
+该命令还可用于通过`--staged`还原索引中的内容, 或通过`--staged --worktree`还原工作树和索引.
 
 ```git
 -s <tree>
 --source=<tree>
 ```
 
-使用给定`tree`中的内容还原工作树文件.  可以通过与之关联的`commit`, `branch`或`tag`来指定`source tree`. 
-如果未指定, 则`working tree`的默认还原源为`index`, 而 `index`的默认还原源为`HEAD`. 
-当同时指定了`--staged`和`--worktree`时, 则必须指定`--source`. 
+使用给定`tree`中的内容还原工作树文件.  可以通过与之关联的`commit`, `branch`或`tag`来指定`source tree`.
+如果未指定, 则`working tree`的默认还原源为`index`, 而 `index`的默认还原源为`HEAD`.
+当同时指定了`--staged`和`--worktree`时, 则必须指定`--source`.
 
 ```git
 -W
@@ -752,13 +752,13 @@ commit-id 为要删除的 `commit` 的前一次`commit`号
 ***
 `--depth <depth>`:
 
-创建一个浅表克隆, 其历史记录将被截断为指定的提交数. 暗示使用了`--single-branch`, 除非给出`--no-single-branc`来获取所有分支的tip附近的历史记录.  
-如果要浅层克隆`--no-single-branc`, 则还要传递`--shallow-submodules`. 
+创建一个浅表克隆, 其历史记录将被截断为指定的提交数. 暗示使用了`--single-branch`, 除非给出`--no-single-branc`来获取所有分支的tip附近的历史记录.
+如果要浅层克隆`--no-single-branc`, 则还要传递`--shallow-submodules`.
 
 ***
 `-C <path>`:
-将`git`的起始目录设置成`<paht>`.  给定多个`-C`选项时,  后面每个不是绝对路径的指定, 将和前面的连接起来. 
-如果`<path>`存在但为空, 例如`-C`, 则当前工作目录保持不变. 
+将`git`的起始目录设置成`<paht>`.  给定多个`-C`选项时,  后面每个不是绝对路径的指定, 将和前面的连接起来.
+如果`<path>`存在但为空, 例如`-C`, 则当前工作目录保持不变.
 
 ### short
 
@@ -802,12 +802,12 @@ commit-id 为要删除的 `commit` 的前一次`commit`号
 选项：
 
 + `-D`: 与 `--delete --force`相同.
-+ `-d, --delete` ;删除分支. 该分支必须完全被合并到上游, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游, or in `HEAD`. 
-+ `-f, --force`: 将 `<branchname>` 重置为 `<startpoint>`, 即使 `<branchname>` 已经存在.  如果没有 `-f`, `git branch` 将拒绝更改现有分支. 
-结合`-d`(或`--delete`), 允许删除分支, 而不管其合并状态如何. 
++ `-d, --delete` ;删除分支. 该分支必须完全被合并到上游, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游, or in `HEAD`.
++ `-f, --force`: 将 `<branchname>` 重置为 `<startpoint>`, 即使 `<branchname>` 已经存在.  如果没有 `-f`, `git branch` 将拒绝更改现有分支.
+结合`-d`(或`--delete`), 允许删除分支, 而不管其合并状态如何.
 结合`-m`(或`--move`), 即使新分支名称已经存在, 也允许重命名分支, 同样适用于`-c`(或`--copy`).
 + `-m` `-M`：对分支进行重命名, 并且把`reflog`出现的分支名字一并更改. 如果新分支已经存在, 使用`-M`强迫重命名
-+ `-r`,` --remotes`列出或删除(与 `-d` 一起使用)远程跟踪分支. 
++ `-r`,` --remotes`列出或删除(与 `-d` 一起使用)远程跟踪分支.
 
 ### add
 

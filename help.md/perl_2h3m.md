@@ -1213,7 +1213,7 @@ open(my $fh, "<", $f) || die "Couldn't open <".$f."> for reading because: ".$!;
 
 请注意,在打开调用的参数周围需要括号`()`.
 
-要从文件句柄读取一行文本,请使用`readline`内置函数. 
+要从文件句柄读取一行文本,请使用`readline`内置函数.
 `readline`返回一整行文本,并在其末尾保留换行符(文件的最后一行可能除外),如果到达文件末尾,则为`undef`.
 
 ```perl
@@ -1308,7 +1308,7 @@ print "what" unless -e "/usr/bin/perl";
 
 ## 正则表达式
 
-正则表达式在`Perl`之外的许多语言和工具中都有. 
+正则表达式在`Perl`之外的许多语言和工具中都有.
 `Perl`的核心正则表达式语法与其他地方基本相同,但是`Perl`的完整正则表达式功能极其复杂且难以理解.
 我能给您的最好建议是,尽可能避免这种复杂性.
 
@@ -1452,7 +1452,7 @@ print zombify("i want brains"); # "r wrnt brrrns"
 
 ### 包
 
-`package`是可以在其中声明`subroutine`的命令空间. 您声明的任何子例程都隐式声明在当前包内. 
+`package`是可以在其中声明`subroutine`的命令空间. 您声明的任何子例程都隐式声明在当前包内.
 在执行开始时,您位于`main`包中,但是您可以使用`package`内置函数来切换程序包：
 
 ```perl
@@ -1839,7 +1839,7 @@ pupate(); # "bloop bloop"
 
 1. 创建使用`Exporter`的模块时,默认情况下切勿使用`@EXPORT`导出子例程.始终使用户`longhand`的调用子例程或使用`import()`明确地调用(例如`use Caterpillar ("crawl")`),这是在`Caterpillar.pm`中寻找`crawl()`的强大线索).
 2. 当`use`含有`Exporter`的模块时,请始终明确给出要导入的子例程.如果您不想`import()`任何子例程并希望`longhand`的引用它们,则必须提供一个明确的空列表: `use Caterpillar ()`.
- 
+
 ## 杂记
 
 + 核心模块`Data::Dumper`可用于将任意标量输出到屏幕.这是必不可少的调试工具.

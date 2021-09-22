@@ -10,7 +10,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 卸载 Rust
 
-在任何时候如果您想卸载 Rust, 您可以运行 `rustup self uninstall`. 
+在任何时候如果您想卸载 Rust, 您可以运行 `rustup self uninstall`.
 
 ## docs
 

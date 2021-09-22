@@ -1,6 +1,6 @@
 # 系统管理的示例脚本
 
-[系统管理的示例脚本](https://docs.microsoft.com/zh-cn/powershell/scripting/samples/sample-scripts-for-administration?view=powershell-7.1), 可以快速get到pwsh的风格. 
+[系统管理的示例脚本](https://docs.microsoft.com/zh-cn/powershell/scripting/samples/sample-scripts-for-administration?view=powershell-7.1), 可以快速get到pwsh的风格.
 
 ## 使用对象
 
@@ -14,23 +14,23 @@ Get-Process | Get-Member | Out-Host -Paging
 
 备注:
 
-+ `MemberType` 的允许值有 `AliasProperty`, `CodeProperty`, `Property`, ..., `MemberSet` 以及 `All`. 
-一个进程有 `60` 多个属性.  对于任何已知的对象, Windows PowerShell 通常仅显示少许属性, 这是因为显示所有属性会导致产生无法管理的信息量. 
-+ Windows PowerShell 通过使用存储在以 `.format.ps1xml` 结尾的 `XML` 文件中的信息来决定某种类型的对象的显示方式. 
-进程对象(即 `.NET System.Diagnostics.Process` 对象)的格式设置数据存储在 `DotNetTypes.format.ps1xml` 中. 
++ `MemberType` 的允许值有 `AliasProperty`, `CodeProperty`, `Property`, ..., `MemberSet` 以及 `All`.
+一个进程有 `60` 多个属性.  对于任何已知的对象, Windows PowerShell 通常仅显示少许属性, 这是因为显示所有属性会导致产生无法管理的信息量.
++ Windows PowerShell 通过使用存储在以 `.format.ps1xml` 结尾的 `XML` 文件中的信息来决定某种类型的对象的显示方式.
+进程对象(即 `.NET System.Diagnostics.Process` 对象)的格式设置数据存储在 `DotNetTypes.format.ps1xml` 中.
 
 ### 选择对象部件 (Select-Object)
 
-可以使用 `Select-Object` cmdlet 创建新的自定义 `PowerShell` 对象(可以指定需要属性). 键入下面的命令以创建仅包括 `Win32_LogicalDisk WMI` 类的 `Name` 和 `FreeSpace` 属性的新对象: 
+可以使用 `Select-Object` cmdlet 创建新的自定义 `PowerShell` 对象(可以指定需要属性). 键入下面的命令以创建仅包括 `Win32_LogicalDisk WMI` 类的 `Name` 和 `FreeSpace` 属性的新对象:
 
 ```powershell
 Get-CimInstance -Class Win32_LogicalDisk | Select-Object -Property Name,FreeSpace
 ```
 
-可以使用 `Select-Object` 创建计算属性.  这样即可以以十亿字节为单位显示 `FreeSpace`, 而非以字节为单位. 
+可以使用 `Select-Object` 创建计算属性.  这样即可以以十亿字节为单位显示 `FreeSpace`, 而非以字节为单位.
 
 ```powershell
-Get-CimInstance -Class Win32_LogicalDisk | 
+Get-CimInstance -Class Win32_LogicalDisk |
     Select-Object -Property Name, @{
         label='FreeSpace';expression={($_.FreeSpace/1GB).ToString('F2')}
     }
@@ -67,7 +67,7 @@ $PSVersionTable.PSVersion
 ### 语法表 sytax diagrams
 
 ```powershell
-<command-name> -<Required Parameter Name> <Required Parameter Value> # 命令名,必选键值对 
+<command-name> -<Required Parameter Name> <Required Parameter Value> # 命令名,必选键值对
 [-<Optional Parameter Name> <Optional Parameter Value>] # 可选的键值对
 [-<Optional Switch Parameters>] # 可选的开关
 [-<Optional Parameter Name>] <Required Parameter Value> # 可匿名的键值对
@@ -89,7 +89,7 @@ $PSVersionTable.PSVersion
 ***
 语法表中的符号
 
-+ 连字符`-`(hyphen)-表明接着的是一个参数的名字.如: 
++ 连字符`-`(hyphen)-表明接着的是一个参数的名字.如:
 
 ```powershell
 New-Alias -Name
@@ -97,7 +97,7 @@ New-Alias -Name
 
 + 尖括号`<>`: 表示一个占位符,需要把其中的数据类型换成具体的用户输入.
 
-+ 中括号`[]`: 表示一个可选项.表示参数键值都可以省略,或者参数值可以省略.如: 
++ 中括号`[]`: 表示一个可选项.表示参数键值都可以省略,或者参数值可以省略.如:
 
 ```powershell
 New-Alias [-Description <string>]
@@ -114,7 +114,7 @@ Get-Process -Name Explorer, Winlogon, Services
 
 在语法示例中,`[]`也用于命名和强制转换为`.NET Framework`类型.这种时候,`[]`的意思不是一个元素可以省略.
 
-+ 大括号`{}`:表明一个`枚举`,列出一个参数所有可能的选项,其中的值用`|`分隔,`|`是`exclusive OR`的意思,表示只能有一个.如: 
++ 大括号`{}`:表明一个`枚举`,列出一个参数所有可能的选项,其中的值用`|`分隔,`|`是`exclusive OR`的意思,表示只能有一个.如:
 
 ```powershell
 New-Alias -Option {None | ReadOnly | Constant | Private | AllScope}
@@ -124,32 +124,32 @@ New-Alias -Option {None | ReadOnly | Constant | Private | AllScope}
 
 [about_Automatic_Variables](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables)
 
-+ `$HOME`; 包含用户的主目录的完整路径. 这个变量相当于Windows环境变量`$env:homedrive`,`$env:homepath`, 通常是`C:\Users\<UserName>`. 
++ `$HOME`; 包含用户的主目录的完整路径. 这个变量相当于Windows环境变量`$env:homedrive`,`$env:homepath`, 通常是`C:\Users\<UserName>`.
 + `$Host`; 包含一个对象, 代表`PowerShell`的当前`host`应用. 你可以用这个变量在命令中代表当前的主机, 显示或改变主机的属性.
 比如`$Host.version`或`$Host.CurrentCulture`, 或者`$host.ui.rawui.setbackgroundcolor("Red")`.
 
 #### 使用枚举器
 
-`$input`, `$foreach`, 和 `$switch` 变量都是枚举器, 用于遍历包含它们的代码块所处理的值. 
-枚举器包含属性和方法, 你可以用来推进或重置迭代, 或检索迭代值. 直接操作枚举器并不被认为是最佳做法. 
+`$input`, `$foreach`, 和 `$switch` 变量都是枚举器, 用于遍历包含它们的代码块所处理的值.
+枚举器包含属性和方法, 你可以用来推进或重置迭代, 或检索迭代值. 直接操作枚举器并不被认为是最佳做法.
 
 + 在循环内, 应首选流控制关键字`break`和`continue`.
 + 在接受管道输入的函数中, 最佳做法是给`ValueFromPipeline`或`ValueFromPipelineByPropertyName`属性指定参数.
 
-欲了解更多信息, 请参阅 about_Functions_Advanced_Parameters. 
+欲了解更多信息, 请参阅 about_Functions_Advanced_Parameters.
 
 + `MoveNext`; `MoveNext`方法将枚举器推进到集合的下一个元素. 如果枚举器成功前进, `MoveNext`返回`True`；如果枚举器已经超过了集合的末端, 则返回`False`.
-`MoveNext`返回的布尔值被发送到输出流. 你可以通过将其类型转换为`[void]`或将其输送到`Out-Null`来抑制该输出. 
+`MoveNext`返回的布尔值被发送到输出流. 你可以通过将其类型转换为`[void]`或将其输送到`Out-Null`来抑制该输出.
 
 ```powershell
 $input.MoveNext() | Out-Null
 [void]$input.MoveNext()
 ```
 
-+ `Reset`; `Reset`方法将枚举器设置到它的初始位置, 也就是在集合的第一个元素`之前`. 
-+ `Current` ; `Current`属性获得集合或者管道中的当前元素, 即枚举器的当前位置. 
++ `Reset`; `Reset`方法将枚举器设置到它的初始位置, 也就是在集合的第一个元素`之前`.
++ `Current` ; `Current`属性获得集合或者管道中的当前元素, 即枚举器的当前位置.
 
-在调用`MoveNext`之前, `Current`属性会持续返回相同的结果. 
+在调用`MoveNext`之前, `Current`属性会持续返回相同的结果.
 
 ## 一些概念
 
@@ -190,7 +190,7 @@ cd $originpath
 无法加载文件 E:MyScript.ps1,因为在此系统中禁止执行脚本...
 ```
 
-只有管理员才有权限更改这个策略.非管理员会报错. 
+只有管理员才有权限更改这个策略.非管理员会报错.
 
 ```powershell
 Get-ExecutionPolicy #查看脚本执行策略, 默认为Restricted
@@ -309,7 +309,7 @@ Write-Output "test output" | Get-Member
 ## 日常应用
 
 + 输出分页: `Get-Help Get-Help | Out-Host -Paging`
-+ `Get-ChildItem -Filter`: 指定一个过滤器来限定路径参数. 目前只有`FileSystem`provider 支持. 过滤器字符串被传递给`.NET` API以列举文件, API只支持`*`和`?`通配符. 
++ `Get-ChildItem -Filter`: 指定一个过滤器来限定路径参数. 目前只有`FileSystem`provider 支持. 过滤器字符串被传递给`.NET` API以列举文件, API只支持`*`和`?`通配符.
 
 ### 解压缩
 
@@ -319,22 +319,22 @@ Write-Output "test output" | Get-Member
 $array = dir; foreach ($i in $array) { unzip $i -d $i.basename  }
 ```
 
-当然, 也可以使用`pwsh`自带的`Expand-Archive`命令. 默认情况下, `Expand-Archive`在当前位置创建一个与`ZIP`文件同名的文件夹. 
+当然, 也可以使用`pwsh`自带的`Expand-Archive`命令. 默认情况下, `Expand-Archive`在当前位置创建一个与`ZIP`文件同名的文件夹.
 
 ```powershell
 Expand-Archive -DestinationPath
 ```
 
-该参数允许你指定一个不同的文件夹的路径. 如果目标文件夹不存在, 则会被创建. 
+该参数允许你指定一个不同的文件夹的路径. 如果目标文件夹不存在, 则会被创建.
 
 ### 查看文件大小并指定单位
 
 [select-object](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.utility/select-object)
 
-这个例子演示了使用`Select-Object`来为你的输入添加计算属性. 向Property参数传递一个`ScriptBlock`, 使`Select-Object`对传递的每个对象计算表达式, 并将结果添加到输出中. 
-在`ScriptBlock`中, 你可以使用`$_`变量来引用管道中的当前对象. 
+这个例子演示了使用`Select-Object`来为你的输入添加计算属性. 向Property参数传递一个`ScriptBlock`, 使`Select-Object`对传递的每个对象计算表达式, 并将结果添加到输出中.
+在`ScriptBlock`中, 你可以使用`$_`变量来引用管道中的当前对象.
 
-默认情况下, `Select-Object`将使用`ScriptBlock`字符串作为属性的名称. 使用`Hashtable`, 可以自定义属性的名字, 和计算内容. 可以为每个对象添加多个计算属性. 
+默认情况下, `Select-Object`将使用`ScriptBlock`字符串作为属性的名称. 使用`Hashtable`, 可以自定义属性的名字, 和计算内容. 可以为每个对象添加多个计算属性.
 
 ```powershell
 # 创建一个名为 $_.StartTime.DayOfWeek 的计算属性
@@ -342,7 +342,7 @@ Get-Process | Select-Object -Property ProcessName,{$_.StartTime.DayOfWeek}
 ```
 
 下面添加一个自定义属性来计算你传入的每个`FileInfo`对象的大小, 以`Million Bytes`为单位.  使用管道变量, 将每个文件的长度除以`1MB`
-你也可以把键的名字缩短为`l`和`e`, 或者用`Name`代替`Label`. 
+你也可以把键的名字缩短为`l`和`e`, 或者用`Name`代替`Label`.
 
 ```powershell
 $unit="MB";$size = @{label="Size($unit)";expression={$_.length/"1$unit"}}
@@ -366,7 +366,7 @@ function lsh{
 [about_CommonParameters](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_commonparameters)
 
 ```powershell
-function psdu { 
+function psdu {
     param ([switch] $total, [switch] $inclueFile, [string] $path = '.', [string] $unit) # 使用 total 开关可以指定求总空间占用
     if ($args) { $path = $args }
     function selectUnit {
@@ -375,23 +375,23 @@ function psdu {
         elseif ($args -gt '1TB' ) { $selUnit = 'TB' }
         elseif ($args -gt '1GB' ) { $selUnit = 'GB' }
         elseif ($args -gt '1MB' ) { $selUnit = 'MB' }
-        elseif ($args -gt '1KB' ) { $selUnit = 'KB' } 
-        else { $selUnit = 's' } 
+        elseif ($args -gt '1KB' ) { $selUnit = 'KB' }
+        else { $selUnit = 's' }
         return $selUnit
     }
     # 执行文件体积统计任务
     if ($total ) {
         # 如果只统计总量
-        $totalSize = (Get-ChildItem -Path $path -Force -Recurse -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum 
+        $totalSize = (Get-ChildItem -Path $path -Force -Recurse -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
         $selUnit = selectUnit($totalSize)
         write-host -fore green ("{0,8:N2} {1,-2} {2} {3,-20}" -f ($totalSize / "1$selUnit"), $selUnit, ' -- ', ( Resolve-Path $path))
     }
     # 用循环处理子项目, 如果 $inclueFile=True, 除了统计文件夹, 还统计文件
     elseif ($inclueFile) {
-        $colItems = (Get-ChildItem $path | Sort-Object) 
+        $colItems = (Get-ChildItem $path | Sort-Object)
     }
     else {
-        $colItems = (Get-ChildItem $path | Where-Object { $_.PSIsContainer -eq $True } | Sort-Object) 
+        $colItems = (Get-ChildItem $path | Where-Object { $_.PSIsContainer -eq $True } | Sort-Object)
     }
     foreach ($i in $colItems) {
         $subFolderItems = (Get-ChildItem $i.FullName -recurse | Measure-Object -Sum { $_.Length } ) # 计算求和
@@ -404,11 +404,11 @@ function psdu {
 
 参数说明:
 
-+ `Get-ChildItem -Force`: 允许 `cmdlet` 获得用户一般不能访问的项目, 如隐藏文件或系统文件. 
-强制参数并不覆盖安全限制. 不同`providers`的实现方式不同. 欲了解更多信息, 请参见 about_Providers. 
-+ `-Recurse`: 获取指定位置, 位置的所有子项中的项目. 
-+ `-ErrorAction`: 这是一个通用参数. 确定 `cmdlet` 如何响应命令中的非终止错误.  此参数仅在命令生成非终止错误时有效,  例如来自 `Write-Error` 的错误. 
-+ `-ErrorAction:SilentlyContinue`: 禁止显示错误消息并继续执行命令. 
++ `Get-ChildItem -Force`: 允许 `cmdlet` 获得用户一般不能访问的项目, 如隐藏文件或系统文件.
+强制参数并不覆盖安全限制. 不同`providers`的实现方式不同. 欲了解更多信息, 请参见 about_Providers.
++ `-Recurse`: 获取指定位置, 位置的所有子项中的项目.
++ `-ErrorAction`: 这是一个通用参数. 确定 `cmdlet` 如何响应命令中的非终止错误.  此参数仅在命令生成非终止错误时有效,  例如来自 `Write-Error` 的错误.
++ `-ErrorAction:SilentlyContinue`: 禁止显示错误消息并继续执行命令.
 
 ***
 
@@ -416,15 +416,15 @@ function psdu {
 
 ***
 
-+ `Measure-Object`: 计算对象的数字属性, 以及字符串对象中的字符, 词和行, 如文本文件. 
-+ `-Sum`: 表示该cmdlet显示指定属性的值的总和. 其他例如: 
++ `Measure-Object`: 计算对象的数字属性, 以及字符串对象中的字符, 词和行, 如文本文件.
++ `-Sum`: 表示该cmdlet显示指定属性的值的总和. 其他例如:
 
 ```powershell
 Get-ChildItem | Measure-Object -Property length -Minimum -Maximum -Sum -Average
 ```
 
-从`PowerShell 6`开始, `Measure-Object`支持`ScriptBlock`属性. 
-下面的例子演示了如何使用`ScriptBlock`属性来确定一个目录中所有文件的大小, 单位是`MegaBytes`. 
+从`PowerShell 6`开始, `Measure-Object`支持`ScriptBlock`属性.
+下面的例子演示了如何使用`ScriptBlock`属性来确定一个目录中所有文件的大小, 单位是`MegaBytes`.
 
 ```powershell
 Get-ChildItem | Measure-Object -Sum {$_.Length/1MB}
@@ -432,7 +432,7 @@ Get-ChildItem | Measure-Object -Sum {$_.Length/1MB}
 
 ### about_Numeric_Literals
 
-有两种数字字元: 整数和实数. 两者都可以有类型和乘数的后缀. 
+有两种数字字元: 整数和实数. 两者都可以有类型和乘数的后缀.
 
 [about_Numeric_Literals](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_numeric_literals)
 
@@ -455,7 +455,7 @@ PS> 0x12Lpb
 
 ### Get-ChildItem
 
-默认情况下, `Get-ChildItem` 列出项目的模式(Attributes), `LastWriteTime`, 文件大小(Length)和`Name`. `Mode`属性中的字母含义为: 
+默认情况下, `Get-ChildItem` 列出项目的模式(Attributes), `LastWriteTime`, 文件大小(Length)和`Name`. `Mode`属性中的字母含义为:
 
 + `l` ; 链接, link
 + `d` ; 目录, directory
@@ -482,12 +482,12 @@ Get-ChildItem -Path C:\Test\*.txt -Recurse -Force
 Get-ChildItem -Path C:\Test\Logs\* -Exclude A*
 ```
 
-`Get-ChildItem` 使用`Path`参数来指定目录`C:\Test\Logs`. 排除参数使用星号`*`通配符指定任何以`A`或`a`开头的文件或目录被排除在输出之外. 
+`Get-ChildItem` 使用`Path`参数来指定目录`C:\Test\Logs`. 排除参数使用星号`*`通配符指定任何以`A`或`a`开头的文件或目录被排除在输出之外.
 当使用排除参数时, 路径参数中的尾部星号`*`是可选的. 例如, `-Path C:\Test\Logs`或`-Path C:\Test\Logs\*`.
 
 + 如果在`Path`参数中没有包含尾部的星号`*`, 就会显示`Path`目录的内容. 与排除参数值相符的文件名或子目录名不显示
 + 如果在`Path`参数中包含尾部的星号`*`, 则命令会递归`Path`的子目录. 与排除参数值相符的文件名或子目录名不显示
-+ 如果在命令中加入`Recurse`参数, 无论`Path`参数中是否包含尾部星号`*`, 递归输出都是一样的. 
++ 如果在命令中加入`Recurse`参数, 无论`Path`参数中是否包含尾部星号`*`, 递归输出都是一样的.
 
 ### 批量重命名
 
@@ -502,11 +502,11 @@ Get-ChildItem *.txt
 Get-ChildItem *.txt | Rename-Item -NewName { $_.Name -replace '.txt', '.log' }
 ```
 
-`Get-ChildItem` 获取当前文件夹中所有以`.txt`文件为扩展名的文件, 然后将它们输送到`Rename-Item`. 
-`NewName`的值是一个脚本块, 在提交给`NewName`参数的值之前运行. 
+`Get-ChildItem` 获取当前文件夹中所有以`.txt`文件为扩展名的文件, 然后将它们输送到`Rename-Item`.
+`NewName`的值是一个脚本块, 在提交给`NewName`参数的值之前运行.
 
-在脚本块中, `$_`自动变量代表每个文件对象, 因为它通过管道来到命令中. 
-该脚本块使用`-replace`操作符将每个文件的扩展名替换为`.log`. 注意, 使用`-replace`操作符进行匹配是不分大小写的. 
+在脚本块中, `$_`自动变量代表每个文件对象, 因为它通过管道来到命令中.
+该脚本块使用`-replace`操作符将每个文件的扩展名替换为`.log`. 注意, 使用`-replace`操作符进行匹配是不分大小写的.
 
 ### 查看驱动器
 
@@ -531,7 +531,7 @@ Copy-Item
 
 ```powershell
 # 先查看原始文件
-dir *.pdf 
+dir *.pdf
 # 重命名
 dir *.pdf | foreach { Rename-Item $_ -NewName ($_.BaseName+"_123.pdf")  }
 ```
@@ -550,7 +550,7 @@ dir *.nb | foreach { Rename-Item $_ -NewName ($_.Name -replace "rencon2", "renco
 
 ```powershell
 # 测试变量
-Test-Path variable:value1 
+Test-Path variable:value1
 # 测试路径
 Test-Path -Path "C:\Documents and Settings\DavidC"
 # 测试配置文件的路径
@@ -565,32 +565,32 @@ Test-Path -Path $profile -PathType leaf #True
 Test-Path -Path "HKLM:\Software\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell"
 Test-Path -Path "HKLM:\Software\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell\ExecutionPolicy"
 # 测试文件是否比某个日期新
-Test-Path $pshome\pwsh.exe -NewerThan "July 13, 2009" 
+Test-Path $pshome\pwsh.exe -NewerThan "July 13, 2009"
 # 测试空白路径
 Test-Path ' ' # 总是 False
 Test-Path '' # 总是 False
 ```
 
 ***
-参数说明: 
+参数说明:
 
-+ `-Path`; 指定一个要测试的路径. 允许使用通配符. 如果路径包括空格, 请用引号括起来. 
++ `-Path`; 指定一个要测试的路径. 允许使用通配符. 如果路径包括空格, 请用引号括起来.
 + `-Exclude`; 检查除指定类型外是否还有文件
-+ `-Filter` ; 指定 provider 语法的过滤器. 这个参数的值限制`Path`参数. 过滤器的语法, 包括通配符的使用, 取决于provider. 
++ `-Filter` ; 指定 provider 语法的过滤器. 这个参数的值限制`Path`参数. 过滤器的语法, 包括通配符的使用, 取决于provider.
 `-Filter` 比其他参数更高效, 因为provider 在检索对象时已经应用了限制. 而不是检索完所有对象后, 再交给PowerShell过滤.
 
 ```powershell
 Test-Path (Get-location) -Filter *.bib
 ```
 
-+ `-IsValid`; 测试路径的语法, 不管路径的元素是否真实存在. 如果路径的语法有效, 则返回`$True`, 如果无效, 则返回`$False`. 
-+ `-NewerThan`; 指定一个时间为`DateTime`对象. 
-+ `-OlderThan`; 将时间指定为`DateTime`对象. 
++ `-IsValid`; 测试路径的语法, 不管路径的元素是否真实存在. 如果路径的语法有效, 则返回`$True`, 如果无效, 则返回`$False`.
++ `-NewerThan`; 指定一个时间为`DateTime`对象.
++ `-OlderThan`; 将时间指定为`DateTime`对象.
 + `-PathType`; 指定路径中末尾元素的类型. 如果元素是指定的类型, 则返回`$True`, 如果不是, 返回`$False`. 这个参数的可接受值是,
 
-+ `Container` ; 一个包含其他元素的元素, 如目录或注册表键. 
-+ `Leaf` ; 一个不包含其他元素的元素, 比如一个文件. 
-+ `Any`; 容器或叶子. 
++ `Container` ; 一个包含其他元素的元素, 如目录或注册表键.
++ `Leaf` ; 一个不包含其他元素的元素, 比如一个文件.
++ `Any`; 容器或叶子.
 
 ### 格式化磁盘
 
@@ -599,32 +599,32 @@ Test-Path (Get-location) -Filter *.bib
 
 #### diskpart格式化U盘
 
-格式化 U 盘或磁盘的另一种方式便是使用 `diskpart` 命令行工具. 
+格式化 U 盘或磁盘的另一种方式便是使用 `diskpart` 命令行工具.
 `diskpart` 命令可集成于 `Windows PE` 中方便管理员操作, 也可以写到 MDT 的部署脚本当中进行使用；
-使用 `diskpart` 格式化的 U 盘还可以直接将 Windows Vista 至 Windows 10 的 ISO 解压上去用于 U 盘启动引导系统, 免去了用其它工具制作 Windows 10 安装 U 盘的麻烦. 
+使用 `diskpart` 格式化的 U 盘还可以直接将 Windows Vista 至 Windows 10 的 ISO 解压上去用于 U 盘启动引导系统, 免去了用其它工具制作 Windows 10 安装 U 盘的麻烦.
 
-1. 使用 `Windows+X` 快捷键打开`命令提示符(管理员)`工具: 
-1. 执行 `diskpart` 命令进行交互环境: 
-1. 执行 `list disk` 命令查看当前 PC 连接的磁盘: 
-1. 使用 `select` 命令选中你的 U 盘, 在我们的演示环境中 U 盘是磁盘 1, 所以使用 `select disk 1` 命令将它选中: 
-1. 执行 `clean` 命令清空 `U` 盘: 
-1. 使用如下命令创建一个新的主分区并标记为活动分区: 
+1. 使用 `Windows+X` 快捷键打开`命令提示符(管理员)`工具:
+1. 执行 `diskpart` 命令进行交互环境:
+1. 执行 `list disk` 命令查看当前 PC 连接的磁盘:
+1. 使用 `select` 命令选中你的 U 盘, 在我们的演示环境中 U 盘是磁盘 1, 所以使用 `select disk 1` 命令将它选中:
+1. 执行 `clean` 命令清空 `U` 盘:
+1. 使用如下命令创建一个新的主分区并标记为活动分区:
 
 ```diskpart
 create partition primary
 active
 ```
 
-之所以标记为活动分区, 是为了方便将 `Windows` 系统 `ISO` 映像放上去当启用 `U` 盘来用. 
+之所以标记为活动分区, 是为了方便将 `Windows` 系统 `ISO` 映像放上去当启用 `U` 盘来用.
 
-1. 使用如下命令对 U 盘进行快速格式化: 
+1. 使用如下命令对 U 盘进行快速格式化:
 
 ```diskpart
 format fs=ntfs label="卷标" quick
 ```
 
-1. 如果你要将 `U` 盘格式化为 `FAT` 或 `exFAT` 格式, 只需替换 `fs=` 后面的 `ntfs` 即可, 最后的 `quick` 表示执行快速格式化. 
-2. 格式化完成之后, 使用 `assign` 命令自动为 U 盘分配一个盘符即可使用了. 
+1. 如果你要将 `U` 盘格式化为 `FAT` 或 `exFAT` 格式, 只需替换 `fs=` 后面的 `ntfs` 即可, 最后的 `quick` 表示执行快速格式化.
+2. 格式化完成之后, 使用 `assign` 命令自动为 U 盘分配一个盘符即可使用了.
 
 #### PowerShell格式化磁盘
 
@@ -632,25 +632,25 @@ format fs=ntfs label="卷标" quick
 
 普通磁盘和动态磁盘: [Basic and Dynamic Disks](https://docs.microsoft.com/en-us/windows/win32/fileio/basic-and-dynamic-disks)
 
-+ 使用 `Windows+X` 快捷键打开`命令提示符(管理员)`工具: 
-+ 执行 `Get-Disk` 可以查看到连接到当前 `Windows`电脑的所有物理磁盘`和 `U` 盘. 
-+ 执行如入命令清理驱动器: 
++ 使用 `Windows+X` 快捷键打开`命令提示符(管理员)`工具:
++ 执行 `Get-Disk` 可以查看到连接到当前 `Windows`电脑的所有物理磁盘`和 `U` 盘.
++ 执行如入命令清理驱动器:
 
 ```powershell
 Get-Disk 4 | Clear-Disk -RemoveData
 ```
 
-执行上述命令时, 请确保要清理和格式化的磁盘编号填写正确, 否则清除了错误的驱动器会导致数据丢失. 
+执行上述命令时, 请确保要清理和格式化的磁盘编号填写正确, 否则清除了错误的驱动器会导致数据丢失.
 
-+ 执行如下命令以使用 `NTFS` 文件系统来创建新分区, 并为磁盘分配名称: 
++ 执行如下命令以使用 `NTFS` 文件系统来创建新分区, 并为磁盘分配名称:
 
 ```powershell
 New-Partition -DiskNumber 4 -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel Udisk
 ```
 
-上述命令中, 要格式化的驱动器磁盘号 `-DiskNumber` 为` 4`, 要分配的磁盘名称也就是磁盘卷标 `-NewFileSystemLabel` 为 `Udisk`, 请按你自己的情况更改. 
+上述命令中, 要格式化的驱动器磁盘号 `-DiskNumber` 为` 4`, 要分配的磁盘名称也就是磁盘卷标 `-NewFileSystemLabel` 为 `Udisk`, 请按你自己的情况更改.
 
-+ 执行如下 PowerShell 命令为格式化好的磁盘分配一个驱动器号: 
++ 执行如下 PowerShell 命令为格式化好的磁盘分配一个驱动器号:
 
 ```powershell
 Get-Partition -DiskNumber 4 | Set-Partition -NewDriveLetter G
@@ -660,7 +660,7 @@ Get-Partition -DiskNumber 4 | Set-Partition -NewDriveLetter G
 
 [更改计算机状态](https://docs.microsoft.com/zh-cn/powershell/scripting/samples/changing-computer-state)
 
-定义函数: 
+定义函数:
 
 ```powershell
 Function Lock-WorkStation {
@@ -674,19 +674,19 @@ $LockWorkStation::LockWorkStation() | Out-Null
 }
 ```
 
-使用标准可用工具直接锁定计算机的唯一方法是调用 `user32.dll` 中的 `LockWorkstation()` 函数: 
+使用标准可用工具直接锁定计算机的唯一方法是调用 `user32.dll` 中的 `LockWorkstation()` 函数:
 
 ```powershell
 rundll32.exe user32.dll,LockWorkStation
 ```
 
-你还可以使用具 `shutdown.exe` 工具及其 `logoff` 选项: 
+你还可以使用具 `shutdown.exe` 工具及其 `logoff` 选项:
 
 ```powershell
 shutdown.exe -l
 ```
 
-另一种方法是使用 `WMI` . `Win32_OperatingSystem` 类具有 `Shutdown` 方法. 调用具有 0 标志的方法将启动注销: 
+另一种方法是使用 `WMI` . `Win32_OperatingSystem` 类具有 `Shutdown` 方法. 调用具有 0 标志的方法将启动注销:
 
 ```powershell
 Get-CimInstance -Classname Win32_OperatingSystem | Invoke-CimMethod -MethodName Shutdown
@@ -695,15 +695,15 @@ Get-CimInstance -Classname Win32_OperatingSystem | Invoke-CimMethod -MethodName 
 #### powershell重启计算机
 
 关闭和重启计算机通常是相同类型的任务. 关闭计算机的工具通常也可以重启计算机,反之亦然.
-你可以从 `tsshutdn.exe /?` 或 `shutdown.exe /?` 获取详细的使用信息. 也可以直接从 `PowerShell` 执行关闭和重启操作. 
+你可以从 `tsshutdn.exe /?` 或 `shutdown.exe /?` 获取详细的使用信息. 也可以直接从 `PowerShell` 执行关闭和重启操作.
 
-+ 要关闭计算机,请使用 
++ 要关闭计算机,请使用
 
 ```powershell
 Stop-Computer
 ```
 
-+ 要重启操作系统,请使用 
++ 要重启操作系统,请使用
 
 ```powershell
 Restart-Computer
@@ -719,7 +719,7 @@ Restart-Computer -Force
 
 [Win10自带PowerShell命令校验Hash值](https://www.windows10.pro/windows-powershell-get-filehash-algorithm-md5-sha1-format-list/)
 
-+ 校验文件`Hash`值的命令格式如下: 
++ 校验文件`Hash`值的命令格式如下:
 
 ```powershell
 Get-FileHash 文件路径 -Algorithm hash-type | Format-List
@@ -728,13 +728,13 @@ Get-FileHash 文件路径 -Algorithm hash-type | Format-List
 如果需要校验的文件路径比较复杂,例如路径中包含空格, 括号等特殊符号,则需要在路径前后加上英文双引号.
 
 pwsh 命令可以校验的`Hash`值类型包括: `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MACTripleDES`, `MD5`, `RIPEMD160`,暂不支持校验`CRC32`值.
-如果想要校验它的`SHA1`值,则运行如下命令: 
+如果想要校验它的`SHA1`值,则运行如下命令:
 
 ```powershell
 Get-FileHash C:\Windows\notepad.exe -Algorithm SHA1| Format-List
 ```
 
-如果想要校验`SHA256`值,则不需要带`-Algorithm`参数即可,命令如下: 
+如果想要校验`SHA256`值,则不需要带`-Algorithm`参数即可,命令如下:
 
 ```powershell
 Get-FileHash C:\Windows\notepad.exe | Format-List
@@ -742,10 +742,10 @@ Get-FileHash C:\Windows\notepad.exe | Format-List
 
 ### 暂停脚本Start-Sleep
 
-`Start-Sleep`使`shell`, 脚本, 或运行空间的活动挂起指定的时间. 
-可以在脚本使用此命令来等待一个操作的结束, 或者在循环中等待一段指定时间后继续迭代. 
+`Start-Sleep`使`shell`, 脚本, 或运行空间的活动挂起指定的时间.
+可以在脚本使用此命令来等待一个操作的结束, 或者在循环中等待一段指定时间后继续迭代.
 
-+ 暂停Windows PowerShell 10秒: 
++ 暂停Windows PowerShell 10秒:
 
 ```powershell
 Start-Sleep –s 10
@@ -761,9 +761,9 @@ Start-Sleep –m 10000
 
 + `tart-Sleep [-seconds] <int> [<CommonParameters>]`
 + `Start-Sleep -milliseconds <int> [<CommonParameters>]`
-+ `-seconds <int>`;指定睡眠源需要睡眠的秒数. 你可以忽略此参数名称(`-Seconds`), 你也可以使用此参数缩写`-s`. 
++ `-seconds <int>`;指定睡眠源需要睡眠的秒数. 你可以忽略此参数名称(`-Seconds`), 你也可以使用此参数缩写`-s`.
 + `-milliseconds <int>`; 指定睡眠源需要睡眠的毫秒数. 此参数缩写`-m`.
-+ `<公共参数>`; 此命令支持公共参数:` -Verbose`, `-Debug`, `-ErrorAction`, `-ErrorVariable`, and `-OutVariable`. 
++ `<公共参数>`; 此命令支持公共参数:` -Verbose`, `-Debug`, `-ErrorAction`, `-ErrorVariable`, and `-OutVariable`.
 + 输入类型`Int32`; 如果需要为该命令提供多个参数, 请使用逗号进行分隔. 例如, `<parameter-name> <value1>, <value2>`.
 更多信息, 输入, `get-help about_commonparameters`.
 + 你可以使用`Start-Sleep`内建别名`sleep`. 需要更多信息, 查看`About_Alias`.
@@ -777,7 +777,7 @@ while ($i -le 1000)
     Clear-Host
     Write-Host "`n`n ++++++++++++ `n`n"
     dir data*
-    Start-Sleep -Seconds 10 
+    Start-Sleep -Seconds 10
     $i++
 }
 ```
@@ -793,7 +793,7 @@ fc-list :lang=zh-cn
 将命令行作为整体执行
 
 在`Powershell`中,`&`操作符不但可以执行一条单独的命令,还可以执行`命令行`. 最方便的方式就是将你的命令行放在一个语句块中,作为整体.
-在之前的文章中说过,调用操作符只能执行一条命令,但是借助语句块(`{}`)的这把利器,可以让调用操作符执行,多条`Powershell`命令,例如: 
+在之前的文章中说过,调用操作符只能执行一条命令,但是借助语句块(`{}`)的这把利器,可以让调用操作符执行,多条`Powershell`命令,例如:
 
 ```powershell
 & {$files=ls;Write-Host "文件数: " $files.Count }
@@ -803,7 +803,7 @@ fc-list :lang=zh-cn
 ***
 执行表达式
 
-另外还有一条Powershell cmdlet,`Invoke-Expression`,这条命令的逻辑就是将一条字符串传递给调用操作符.例如: 
+另外还有一条Powershell cmdlet,`Invoke-Expression`,这条命令的逻辑就是将一条字符串传递给调用操作符.例如:
 
 ```powershell
 Invoke-Expression 'Get-Process | Where-Object { $_.Name -like "e*"}'
@@ -821,23 +821,23 @@ Invoke-Expression 'Get-Process | Where-Object { $_.Name -like "e*"}'
 [Find and kill processes that lock a file or directory](https://dandraka.com/2019/08/13/find-and-kill-processes-that-lock-a-file-or-directory/)
 [Handle ](https://docs.microsoft.com/en-us/sysinternals/downloads/handle)
 
-有没有想过哪个程序打开了一个特定的文件或目录? 现在你可以找到了. `Handle`是一个显示系统中任何进程的`open handles`信息的工具. 
-你可以用它来查看打开文件的程序, 或者查看一个程序的所有句柄的对象类型和名称. 
+有没有想过哪个程序打开了一个特定的文件或目录? 现在你可以找到了. `Handle`是一个显示系统中任何进程的`open handles`信息的工具.
+你可以用它来查看打开文件的程序, 或者查看一个程序的所有句柄的对象类型和名称.
 
-你也可以在`Sysinternals`获得这个程序的GUI版本, 即[Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer). 
+你也可以在`Sysinternals`获得这个程序的GUI版本, 即[Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer).
 
-下载解压之后, 你可以通过输入 `handle` 来运行`Handle`. 你必须有管理权限才能运行`Handle`. 
+下载解压之后, 你可以通过输入 `handle` 来运行`Handle`. 你必须有管理权限才能运行`Handle`.
 
 [Handle locked files](https://octopus.com/blog/how-to-handle-locked-files);
 当`Handle.exe`第一次运行时, 你会被提示接受最终用户许可协议(End User License Agreement).
-你可以在调用`Handle.exe`前运行以下命令, 自动接受许可协议. 
+你可以在调用`Handle.exe`前运行以下命令, 自动接受许可协议.
 
 ```powershell
 & reg.exe ADD "HKCU\Software\Sysinternals\Handle" /v EulaAccepted /t REG_DWORD /d 1 /f
 ```
 
-`Handle`将搜索`open file reference`, 所以如果你不指定任何命令行参数, 它将列出系统中所有引用打开文件的句柄的值和文件的名称. 
-它的参数可以修改默认行为. 
+`Handle`将搜索`open file reference`, 所以如果你不指定任何命令行参数, 它将列出系统中所有引用打开文件的句柄的值和文件的名称.
+它的参数可以修改默认行为.
 
 ```powershell
 usage: handle [[-a] [-u] | [-c <handle> [-l] [-y]] | [-s]] [-p <processname>|<pid>> [name]
@@ -845,17 +845,17 @@ usage: handle [[-a] [-u] | [-c <handle> [-l] [-y]] | [-s]] [-p <processname>|<pi
 
 参数说明
 
-+ `-a` ; Dump所有类型的句柄信息, 而不仅仅是那些指向文件的信息. 其他类型包括端口, 注册表键, `synchronization primitives`, 线程和进程. 
-+ `-c` ; 关闭指定的句柄(解释为十六进制数字). 你必须通过其`PID`来指定进程. 警告：关闭句柄可能导致应用程序或系统不稳定. 
-+ `-l` ;  Dump `pagefile-backed`部分的大小. 
-+ `-y` ; 不提示关闭句柄的确认. 
-+ `-s` ; 打印每一种打开的句柄的数量. 
-+ `-u` ; 在搜索句柄时显示拥有者的用户名. 
-+ `-p` ; 不检查系统中的所有句柄, 这个参数将Handle的扫描范围缩小到那些以名称以`process`开始的进程. 
-例如`handle -p exp`将转储所有以 `exp` 开头的进程的开放文件, 其中包括资源管理器. 
-+ `name` ; 这个参数的存在是为了让你可以指示Handle搜索对具有特定名称的对象的引用. 
++ `-a` ; Dump所有类型的句柄信息, 而不仅仅是那些指向文件的信息. 其他类型包括端口, 注册表键, `synchronization primitives`, 线程和进程.
++ `-c` ; 关闭指定的句柄(解释为十六进制数字). 你必须通过其`PID`来指定进程. 警告：关闭句柄可能导致应用程序或系统不稳定.
++ `-l` ;  Dump `pagefile-backed`部分的大小.
++ `-y` ; 不提示关闭句柄的确认.
++ `-s` ; 打印每一种打开的句柄的数量.
++ `-u` ; 在搜索句柄时显示拥有者的用户名.
++ `-p` ; 不检查系统中的所有句柄, 这个参数将Handle的扫描范围缩小到那些以名称以`process`开始的进程.
+例如`handle -p exp`将转储所有以 `exp` 开头的进程的开放文件, 其中包括资源管理器.
++ `name` ; 这个参数的存在是为了让你可以指示Handle搜索对具有特定名称的对象的引用.
 
-例如, 如果你想知道哪个进程(如果有的话)打开了 `c:\windows\system32` 打开, 你可以输入. 
+例如, 如果你想知道哪个进程(如果有的话)打开了 `c:\windows\system32` 打开, 你可以输入.
 
 ```powershell
 handle windows/system
@@ -865,11 +865,11 @@ handle windows/system
 
 #### 处理程序输出
 
-当不在搜索模式时(通过指定一个名称片段作为参数来启用), `Handle` 将其输出分成若干部分, 用于打印每个进程的句柄信息. 
-虚线被用作分隔符, 在虚线下面, 你将看到进程名称和它的`进程ID`(PID). 
-在进程名称下面列出了`句柄值`(十六进制), 句柄所关联的对象的类型, 以及对象的名称(如果它有的话). 
+当不在搜索模式时(通过指定一个名称片段作为参数来启用), `Handle` 将其输出分成若干部分, 用于打印每个进程的句柄信息.
+虚线被用作分隔符, 在虚线下面, 你将看到进程名称和它的`进程ID`(PID).
+在进程名称下面列出了`句柄值`(十六进制), 句柄所关联的对象的类型, 以及对象的名称(如果它有的话).
 
-当处于搜索模式时, `handle`将`进程名称`和`ID`列在左边, 匹配到的对象名称列在右边. 
+当处于搜索模式时, `handle`将`进程名称`和`ID`列在左边, 匹配到的对象名称列在右边.
 
 ```powershell
 # Source: DotJim blog (http://dandraka.com)
@@ -882,7 +882,7 @@ $url = "https://download.sysinternals.com/files/Handle.zip"
 # === 从microsoft下载 handle.exe, 存放到临时文件夹, 并解压  ===
 $tempDir = [System.IO.Path]::GetTempPath()
 $handlePath = [System.IO.Path]::Combine($tempDir, "handle64.exe")
-if (-not (Test-Path $handlePath)) {    
+if (-not (Test-Path $handlePath)) {
     $output = [System.IO.Path]::Combine($tempDir, "handle.zip")
     Invoke-WebRequest -Uri $url -OutFile $output
     Expand-Archive -LiteralPath $output -DestinationPath $tempDir
@@ -900,7 +900,7 @@ if ($handleOutput -match "no matching handles found") {
 $pidList = New-Object System.Collections.ArrayList
 $lines = $handleOutput | Split-String -RemoveEmptyStrings -separator "`n"
 foreach($line in $lines) {
-  # handle 输出格式: 
+  # handle 输出格式:
   # chrome.exe         pid: 11392  type: File           5BC: C:\Windows\Fonts\timesbd.ttf
   # 使用正则表达式匹配进程名称: (.*)\b(?:.*)(?:pid: )(\d*)
   $matches = $null
@@ -909,14 +909,14 @@ foreach($line in $lines) {
   if ($matches.Count -eq 0) { continue }
   $pidName = $matches[1]
   $pidStr = $matches[2]
-  if ($pidList -notcontains $pidStr) { 
+  if ($pidList -notcontains $pidStr) {
     Write-Host "将会停止进程: $pidStr $pidName"
     $pidList.Add($pidStr) | Out-Null
   }
 }
 # === 停止进程 ===
 foreach($pidStr in $pidList) {
-    $pidInt = [int]::Parse($pidStr)    
+    $pidInt = [int]::Parse($pidStr)
     Stop-Process -Id $pidInt -Force
     Write-Host "停止进程 $pidInt"
 }

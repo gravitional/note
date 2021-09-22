@@ -1,6 +1,6 @@
 # mathematica.md
 
-+ 参数序列比较短的时候可以直接用`List[...]`, 
++ 参数序列比较短的时候可以直接用`List[...]`,
 + 参数比较长, 但不是巨大规模时, 用关联收集参数.
 + 参数规模非常大时, 列表可以节省空间, 关联可以提高查找效率.
 
@@ -190,12 +190,12 @@ ColorData["SiennaTones"][0.7]
 
 ## Wolframscripts
 
-总的来说, 
+总的来说,
 
-windows: 建立后缀名为`.wl`的文件, 然后按正常的方法去写`mma`笔记本, 
+windows: 建立后缀名为`.wl`的文件, 然后按正常的方法去写`mma`笔记本,
 运行的时候用`wolframscript.exe`
-用`-print all` 指定输出所有没被`;` 抑制输出的表达式. 
-用`para1 para2 ...` 传递参数. 
+用`-print all` 指定输出所有没被`;` 抑制输出的表达式.
+用`para1 para2 ...` 传递参数.
 
 参数用下面的变量调用
 
@@ -208,8 +208,8 @@ wolframscript.exe -print all -file .\test.wl para1 para2
 ```
 
 ***
-`unix`: 通过加上`#!/usr/bin/env wolframscript -print all`, 
-运行的时候, 不用输入`wolframscript`, 
+`unix`: 通过加上`#!/usr/bin/env wolframscript -print all`,
+运行的时候, 不用输入`wolframscript`,
 传递参数的方法不变
 
 ```bash
@@ -221,11 +221,11 @@ wolframscript.exe -print all -file .\test.wl para1 para2
 `guide/SystemInformation` : mma 系统信息
 `guide/WolframSystemSetup`: 更一般的系统设置
 
-`$InputFileName`: 脚本的绝对路径. 
+`$InputFileName`: 脚本的绝对路径.
 `$Notebooks`：如果是用前端运行的, 则为`True`.
 `$BatchInput`: 输入是否来自批处理
 `$BatchOutput`:如果在命令行中输出, 则为`True`.
-`$CommandLine`: 唤醒环境变量所使用的命令行, 
+`$CommandLine`: 唤醒环境变量所使用的命令行,
 `$ProcessID`:进程ID
 `$ParentProcessID`:
 `$Username`: 用户的登陆名
@@ -449,32 +449,32 @@ Print /@ RandomVariate[
 [什么是标准输入, 标准输出(stdin, stdout)](https://blog.csdn.net/sinat_17700695/article/details/91491472)
 
 ***
-要弄清什么是标准输入输出. 首先需要弄懂什么是IO. 
+要弄清什么是标准输入输出. 首先需要弄懂什么是IO.
 
-`IO` 的 `I` 是 `Input` 的意思, `O` 是 `output` 的意思. 
-意味着输入和输出. 
+`IO` 的 `I` 是 `Input` 的意思, `O` 是 `output` 的意思.
+意味着输入和输出.
 
 更确切的含义是：
 
 + `I`：从外部设备输入到内存
 + `O`：从内存输出到外部设备
 
-而标准输入和标准输出是干什么的？它们是用于 `IO` 的. 
+而标准输入和标准输出是干什么的？它们是用于 `IO` 的.
 那么它们属于 `IO` 的哪个部分？
 内存？还是外部设备？
 
-答案显然是外部设备(逻辑上的外部设备, 为什么？接着看). 
+答案显然是外部设备(逻辑上的外部设备, 为什么？接着看).
 
 ***
 更具体的含义？
 
-在 linux 操作系统中, 外部设备用什么表示？是用文件. 
+在 linux 操作系统中, 外部设备用什么表示？是用文件.
 linux 中一切设备皆是文件！
-因此标准输入和输出更具体的含义是文件. 
+因此标准输入和输出更具体的含义是文件.
 
 它们是哪两个文件？
-它们是 `/dev/stdin` 这个文件和 `/dev/stdout` 这个文件. 
-也就是说所谓的标准输入和标准输出其实就是两个 linux 下的文件. 
+它们是 `/dev/stdin` 这个文件和 `/dev/stdout` 这个文件.
+也就是说所谓的标准输入和标准输出其实就是两个 linux 下的文件.
 
 ***
 linux 的文件类型有：
@@ -491,20 +491,20 @@ linux 的文件类型有：
 
 那么所谓的从标准输入读是什么意思？
 逻辑上来看：
-就是打开 `/dev/stdin` 这个文件, 然后把这个文件里的内容读进来. 
+就是打开 `/dev/stdin` 这个文件, 然后把这个文件里的内容读进来.
 输出到标准输出是什么意思？
 逻辑上来看：
-就是打开 `/dev/stdout` 这个文件, 然后把内容输出到这个文件里去. 
+就是打开 `/dev/stdout` 这个文件, 然后把内容输出到这个文件里去.
 
-为什么是从逻辑上来看？因为它们不是设备文件,所以它们不代表一个设备. 
+为什么是从逻辑上来看？因为它们不是设备文件,所以它们不代表一个设备.
 linux里一切皆是文件, 设备是文件, 但是文件不一定是设备！
 
 ***
 那它们是什么文件？他们是`链接文件`. (可以用` ls -l /dev` 来查看 `l` 开头的就是链接文件. )
 
-什么是链接文件？**文件内容是另一个文件的地址的文件称为链接文件**. 
+什么是链接文件？**文件内容是另一个文件的地址的文件称为链接文件**.
 
-因此, 打开, 读或者写 `/dev/stdin` 和` /dev/stdout` 实际上是打开, 读或者写这两个文件中存放的地址对应的设备文件. 
+因此, 打开, 读或者写 `/dev/stdin` 和` /dev/stdout` 实际上是打开, 读或者写这两个文件中存放的地址对应的设备文件.
 
 ### WolframScript
 
@@ -826,10 +826,10 @@ Configured:WOLFRAMSCRIPT_KERNELPATH=/Applications/Mathematica.app/MacOS/WolframK
 guide/FileOperations, 比较全的文件系统操作的函数列表
 tutorial/FilesStreamsAndExternalOperations#12068
 
-不要直接使用字符串函数操作文件名/文件路径, 这样的到的路径依赖于操作系统, 应该使用 Mathematica 提供的文件系统接口. 
+不要直接使用字符串函数操作文件名/文件路径, 这样的到的路径依赖于操作系统, 应该使用 Mathematica 提供的文件系统接口.
 
 + `$OperatingSystem`; 给出正在运行的操作系统的名称.
-+ `$PathnameSeparator` ; 字符串,在构建路径名的时候使用. 
++ `$PathnameSeparator` ; 字符串,在构建路径名的时候使用.
 `Windows`的默认值时`"\\"`, 其他系统是`"/"`. 在`Windows`中, 像`FileNameSplit`这样的函数默认同时允许`\` 和 `/`.
 
 + 文件名使用惯例.
@@ -841,8 +841,8 @@ tutorial/FilesStreamsAndExternalOperations#12068
   + `name.tm` ;  WSTP 模版文件
   + `name.ml` ;  WSTP 流文件
 
-+ `$Path`; 默认的目录列表, 用于搜索输入文件的相关目录. 一般来说, 全局变量 `$Path` 被定义为一个字符串的列表, 每个字符串代表一个目录. 
-每次你要求打开文件时, `Wolfram` 就暂时将这些目录中的依次变成你的当前工作目录, 然后从该目录中尝试找到你要求的文件. 
++ `$Path`; 默认的目录列表, 用于搜索输入文件的相关目录. 一般来说, 全局变量 `$Path` 被定义为一个字符串的列表, 每个字符串代表一个目录.
+每次你要求打开文件时, `Wolfram` 就暂时将这些目录中的依次变成你的当前工作目录, 然后从该目录中尝试找到你要求的文件.
 
 在`$Path`的典型设置中, 当前目录`.`和你的主目录`~`被列在第一位.
 
@@ -851,9 +851,9 @@ tutorial/FilesStreamsAndExternalOperations#12068
 
 + `ParentDirectory["dir",n]` ;  给出路径的父目录, `n`代表上升`n`此, 只能作用于目录, 且要求目录真实存在.
 
-+ `$InitialDirectory` ;  是 `Wolfram` 系统启动时的初始目录. 
++ `$InitialDirectory` ;  是 `Wolfram` 系统启动时的初始目录.
 + `$HomeDirectory` ;  你的主目录, 如果被定义过的话
-+ `$BaseDirectory` ;  是 `Wolfram` 系统要加载的全系统文件的基本目录. 
++ `$BaseDirectory` ;  是 `Wolfram` 系统要加载的全系统文件的基本目录.
 + `$UserBaseDirectory` ;  用于 `Wolfram` 系统加载的用户特定文件的基本目录
 + `$InstallationDirectory` ;  你的 `Wolfram` 系统安装的最高级别目录
 
@@ -867,24 +867,24 @@ tutorial/FilesStreamsAndExternalOperations#12068
 
 + `NotebookOpen["name"]`;  打开已经存在的笔记本`"name"`, 返回笔记本对象. `"name"`可以是绝对路径.
 + `NotebookOpen["name",options]`; 使用指定的选项打开笔记本.
-  + `NotebookOpen[File["path"]]`和`NotebookOpen[URL["url"]]`也被支持. 
-  + `NotebookOpen`通常会导致一个新的笔记本窗口在你的屏幕上被打开. 
-  + 如果`NotebookOpen`打开指定的文件失败, 则返回`$Failed`. 
+  + `NotebookOpen[File["path"]]`和`NotebookOpen[URL["url"]]`也被支持.
+  + `NotebookOpen`通常会导致一个新的笔记本窗口在你的屏幕上被打开.
+  + 如果`NotebookOpen`打开指定的文件失败, 则返回`$Failed`.
   + 若给出相对路径, `NotebookOpen`搜索由前端的全局选项`NotebookPath`指定的目录
-  + 若使用选项 `Visible->False` 设置, `NotebookOpen` 将打开带有此选项的笔记本,它永远不会显示在屏幕上. 
-  + `NotebookOpen` 将当前`selection`初始化设置在笔记本的第一行单元之前. 
+  + 若使用选项 `Visible->False` 设置, `NotebookOpen` 将打开带有此选项的笔记本,它永远不会显示在屏幕上.
+  + `NotebookOpen` 将当前`selection`初始化设置在笔记本的第一行单元之前.
 
 + `NotebookSave[notebook]`; 保存特定笔记本的当前版本.
-  + `notebook`必须是一个`NotebookObject`. 
-  + `NotebookSave[notebook]` 将笔记本保存在一个文件中, 文件名由笔记本对象 `notebook` 给出. 
-  + `NotebookSave` 写入对应的 `Wolfram` 语言表达式, 以及 Wolfram 语言注释, 以便于前端再次读入笔记本. 
-  + `NotebookSave[notebook, "file"]`, 如果`"file"`存在, 则不加警告地覆盖它. 
-  + `NotebookSave[notebook,File["file"]]`也被支持. 
-  + 如果给定选项 `Interactive->True`, 前端将提示用户为笔记本选择一个文件名. 
+  + `notebook`必须是一个`NotebookObject`.
+  + `NotebookSave[notebook]` 将笔记本保存在一个文件中, 文件名由笔记本对象 `notebook` 给出.
+  + `NotebookSave` 写入对应的 `Wolfram` 语言表达式, 以及 Wolfram 语言注释, 以便于前端再次读入笔记本.
+  + `NotebookSave[notebook, "file"]`, 如果`"file"`存在, 则不加警告地覆盖它.
+  + `NotebookSave[notebook,File["file"]]`也被支持.
+  + 如果给定选项 `Interactive->True`, 前端将提示用户为笔记本选择一个文件名.
 
-+ `NotebookClose[notebook]`; 关闭指定的笔记本对象. 
-+ `NotebookClose[] `; 关闭当前在运行的笔记本. 
-  + `NotebookClose`将使笔记本从你的屏幕上消失, 并将使所有引用该笔记本的笔记本对象失效. 
++ `NotebookClose[notebook]`; 关闭指定的笔记本对象.
++ `NotebookClose[] `; 关闭当前在运行的笔记本.
+  + `NotebookClose`将使笔记本从你的屏幕上消失, 并将使所有引用该笔记本的笔记本对象失效.
   + 如果给定了选项设置`Interactive->True`, 前端将提示用户是否关闭笔记本而不保存.
 
 ### 操作文件和目录
@@ -894,14 +894,14 @@ Manipulating Files and Directories
 
 + `ExpandFileName["name"] `; 将`"name"`文件展开成当前系统规范的绝对路径, 给出相对于你当前目录的名称.
 + 它展开通常的目录指定, 如`.`和 `..`.
-+ 它只是对文件名进行操作；它并不实际搜索指定的文件. 
-+ 它支持 `ExpandFileName[File["name"]]`, 以及`ExpandFileName[URL["file:///path"]]`, 后者将基于文件的`URL`转换为绝对文件名. 
++ 它只是对文件名进行操作；它并不实际搜索指定的文件.
++ 它支持 `ExpandFileName[File["name"]]`, 以及`ExpandFileName[URL["file:///path"]]`, 后者将基于文件的`URL`转换为绝对文件名.
 
 + `AbsoluteFileName["name"]`; 给出`"name"`文件的绝对路径. 与`ExpandFileName`的区别是, 它会进入文件系统, 检查文件是否真实存在.
-+ 同样相对于你当前目录的名称, 可以处理目录指定, 如`.`, `..`和 `~`. 
-+ 它也支持 `AbsoluteFileName[File["name"]]`. 
++ 同样相对于你当前目录的名称, 可以处理目录指定, 如`.`, `..`和 `~`.
++ 它也支持 `AbsoluteFileName[File["name"]]`.
 
-+ `FileNameTake["name"]` ; 从`"name"`的完整路径中提取出最后的文件名. 
++ `FileNameTake["name"]` ; 从`"name"`的完整路径中提取出最后的文件名.
 + `FileBaseName["file"]`; 给出文件的 basename, 也就是不包括拓展名.
 + `FileExtension["file"] ` ; 给出文件的拓展名.
 + `FileNameDepth["name"] `; 给出文件路径的深度, 文件不必真实存在.
@@ -912,7 +912,7 @@ Manipulating Files and Directories
 + `FileExistsQ["name"] ` ; 检查文件, 目录等等是否存在.
 + `ContextToFileName["context"] ` ; 给出 Mathematica 上下文规范对应的文件名.
 
-#### 目录操作 
+#### 目录操作
 
 + `DirectoryQ` ; 测试名称是否对应于实际的目录
 + `ParentDirectory["dir"]` ; 给出父目录
@@ -923,46 +923,46 @@ Manipulating Files and Directories
 + `FindFile[name] `; 找到指定名称的文件, `Get[name]` 和相关函数使用此函数寻找文件.
 
 + `FindFile[name]` 在 `$Path` 给出的目录中依次`name`, 返回文件的绝对路径.
-+ 如果 `FindFile` 无法找到具有指定名称的文件, 它将返回 `$Failed`. 
-+ 在 `FindFile[name]`中, 名称可以用 `/` 路径分隔符来指定 (或者在 Windows 中用 `\\`). 它也可以用`` ` ``上下文分隔符来指定. 
++ 如果 `FindFile` 无法找到具有指定名称的文件, 它将返回 `$Failed`.
++ 在 `FindFile[name]`中, 名称可以用 `/` 路径分隔符来指定 (或者在 Windows 中用 `\\`). 它也可以用`` ` ``上下文分隔符来指定.
 + 对于`` name` ``这样的名字, `FindFile` 会搜索 `name.mx` 和 `name.m` 的文件.
-+ 如果 `FindFile` 解析到一个目录, 它将在该目录中搜索名为 `Kernel/init.m` 或 `init.m` 的文件. 
-+ 如果`FindFile`解析为 `name.mx` 形式的对象, 该对象对应于一个目录, 它将搜索一个名称为`name.mx/$SystemID/name.mx`的文件. 
-+ `Get`, `Needs`, `OpenRead`, `Install` 和其他函数使用 `FindFile` 来寻找要读取的文件. 
++ 如果 `FindFile` 解析到一个目录, 它将在该目录中搜索名为 `Kernel/init.m` 或 `init.m` 的文件.
++ 如果`FindFile`解析为 `name.mx` 形式的对象, 该对象对应于一个目录, 它将搜索一个名称为`name.mx/$SystemID/name.mx`的文件.
++ `Get`, `Needs`, `OpenRead`, `Install` 和其他函数使用 `FindFile` 来寻找要读取的文件.
 + `FindFile[File["file"]]`的语法也支持.
 
 #### 列出文件
 
 + `FileNames[]`; 列出当前目录中的所有文件
 
-+ 文件名可以是字面字符串,` StringExpression`字符串模式, `RegularExpression`对象, 或`缩略字符串`. 
-+ 在缩略字符串模式中, `*`代表零个或多个字符的序列. `@`代表非大写字母的一个或多个字符的序列. 
-+ `FileNames[All]`, `FileNames["*"]`或`FileNames[__]`等同于`FileNames[]`. 
++ 文件名可以是字面字符串,` StringExpression`字符串模式, `RegularExpression`对象, 或`缩略字符串`.
++ 在缩略字符串模式中, `*`代表零个或多个字符的序列. `@`代表非大写字母的一个或多个字符的序列.
++ `FileNames[All]`, `FileNames["*"]`或`FileNames[__]`等同于`FileNames[]`.
 + 在缩略字符串模式中, `Verbatim["s"]`指定字符串 `"s "` 应与`*`和`@`进行字面匹配, 而不是当作通配符.
-+ `FileNames[form,dirs,Infinity]` 在`dirs`的所有子目录中寻找文件. 
-+ `FileNames` 返回的文件列表按照函数 `Sort` 产生的顺序进行排序. 
++ `FileNames[form,dirs,Infinity]` 在`dirs`的所有子目录中寻找文件.
++ `FileNames` 返回的文件列表按照函数 `Sort` 产生的顺序进行排序.
 + `FileNames[forms,dirs,{n}]`只包括正好在第`n`层出现的目录.
-+ 除了文件名之外, 匹配模式还可以使用`相对`或`绝对`目录规范. 
++ 除了文件名之外, 匹配模式还可以使用`相对`或`绝对`目录规范.
 + 设置选项`IgnoreCase>True`使`FileNames`忽略文件名大小写的区别.
 + 在默认设置`IgnoreCase>Automatic`下, `FileNames`在`Windows`系统下忽略文件名大小写, 其他系统不忽略.
-+ `File["dir"]`可以用来指定一个要搜索的字面目录名. 
++ `File["dir"]`可以用来指定一个要搜索的字面目录名.
 
 #### 工作目录设置
 
-+ `SetDirectory["dir"]`; 将当前工作目录设置为 `dir`. 
-  + `SetDirectory`设置当前工作目录, 然后返回其全名. 
-  + `SetDirectory` 将当前工作目录压入`DirectoryStack[]`给出的目录栈中. 
-  + 如果给出相对路径, `SetDirectory` 设置相对于当前工作目录的目录. 
-  + `SetDirectory[]`等同于`SetDirectory[$HomeDirectory]`. 
-  + `SetDirectory[File["dir"]]`也被支持. 
++ `SetDirectory["dir"]`; 将当前工作目录设置为 `dir`.
+  + `SetDirectory`设置当前工作目录, 然后返回其全名.
+  + `SetDirectory` 将当前工作目录压入`DirectoryStack[]`给出的目录栈中.
+  + 如果给出相对路径, `SetDirectory` 设置相对于当前工作目录的目录.
+  + `SetDirectory[]`等同于`SetDirectory[$HomeDirectory]`.
+  + `SetDirectory[File["dir"]]`也被支持.
 
-+ `ResetDirectory[]`; 将当前工作目录重置为之前的值. 
-  + 对`ResetDirectory`的连续调用会恢复越来越早的工作目录. 
-  + `ResetDirectory`使用`DirectoryStack[]`给出的目录栈. 
-  + `ResetDirectory`从目录栈中删除最后一个元素, 并使倒数第二的元素成为当前元素. 
++ `ResetDirectory[]`; 将当前工作目录重置为之前的值.
+  + 对`ResetDirectory`的连续调用会恢复越来越早的工作目录.
+  + `ResetDirectory`使用`DirectoryStack[]`给出的目录栈.
+  + `ResetDirectory`从目录栈中删除最后一个元素, 并使倒数第二的元素成为当前元素.
 
 + `DirectoryStack[]`; 给出当前使用的目录序列/目录栈. 其中的目录用绝对路径给出.
-每次调用`SetDirectory`会在目录栈中压入一个元素；每次调用`ResetDirectory`会弹出一个元素. 
+每次调用`SetDirectory`会在目录栈中压入一个元素；每次调用`ResetDirectory`会弹出一个元素.
 
 ### 读取文本数据
 
@@ -1019,7 +1019,7 @@ Wolfram 语言中的流.
 在流对象中使用一个唯一数的原因是可能同时会有几个流与同一个文件或外部程序相联系.
 例如, 可以在不同的地方使用同一个外部程序, 每一次都与不同的流相关联.
 
-然而, 打开一个流后, 当仅有一个对象和这个流相关联时, 
+然而, 打开一个流后, 当仅有一个对象和这个流相关联时,
 仍可以用一个简单的文件名或外部程序名取指代这个流.
 
 打开一个输出到文件 tmp 的流：
@@ -1205,7 +1205,7 @@ x  + y  z
 不需要分行时应设置`PageWidth->Infinity`.
 通常, 设定与输出设备相符的 `PageWidth` .
 在许多系统中, 运行一个程序去找到这个页宽值.
-用 `SetOptions` 可以给出设置 `PageWidth` 的默认规则, 
+用 `SetOptions` 可以给出设置 `PageWidth` 的默认规则,
 例如, `PageWidth:><<"!devicewidth"`, 这就可以自动运行外部程序找出选项值.
 
 打开一个流, 指定页宽为`20`个字符：
@@ -1233,7 +1233,7 @@ During evaluation of In[20]:=
 ```
 
 `CharacterEncoding` 选项为一个字符串指定代码, 该代码将在送到 `Write` 或 `WriteString` 给出的流中任意包含这个特殊字符的字符串中使用.
-在需要改动国际字符集, 或者需要某一输出设备接收不能处理的字符时, 
+在需要改动国际字符集, 或者需要某一输出设备接收不能处理的字符时,
 常常使用 `CharacterEncoding` .
 
 ***
@@ -1285,16 +1285,16 @@ Out[22]= "tmp"
 
 [深入理解流, 什么是流](https://blog.csdn.net/qq_25221835/article/details/80776100)
 
-流是个抽象的概念, 是对输入输出设备的抽象, 
-`Java` 程序中, 对于数据的输入/输出操作都是以"流"的方式进行. 
-设备可以是文件, 网络, 内存等. 
+流是个抽象的概念, 是对输入输出设备的抽象,
+`Java` 程序中, 对于数据的输入/输出操作都是以"流"的方式进行.
+设备可以是文件, 网络, 内存等.
 
-流具有方向性, 至于是输入流还是输出流则是一个相对的概念, 一般以程序为参考, 如果数据的流向是程序至设备, 我们成为输出流, 反之我们称为输入流. 
+流具有方向性, 至于是输入流还是输出流则是一个相对的概念, 一般以程序为参考, 如果数据的流向是程序至设备, 我们成为输出流, 反之我们称为输入流.
 
-可以将流想象成一个"水流管道", 水流就在这管道中形成了, 自然就出现了方向的概念. 
+可以将流想象成一个"水流管道", 水流就在这管道中形成了, 自然就出现了方向的概念.
 
-当程序需要从某个数据源读入数据的时候, 就会开启一个输入流, 数据源可以是文件, 内存或网络等等. 
-相反地, 需要写出数据到某个数据源目的地的时候, 也会开启一个输出流, 这个数据源目的地也可以是文件, 内存或网络等等. 
+当程序需要从某个数据源读入数据的时候, 就会开启一个输入流, 数据源可以是文件, 内存或网络等等.
+相反地, 需要写出数据到某个数据源目的地的时候, 也会开启一个输出流, 这个数据源目的地也可以是文件, 内存或网络等等.
 
 流有哪些分类？
 
@@ -1306,44 +1306,44 @@ Out[22]= "tmp"
 
 `1.` 和 `2.` 都比较好理解, 对于根据功能分类的, 可以这么理解：
 
-节点流：节点流从一个特定的数据源读写数据. 
+节点流：节点流从一个特定的数据源读写数据.
 
-即节点流是直接操作文件, 网络等的流, 例如 `FileInputStream` 和 `FileOutputStream` , 他们直接从文件中读取或往文件中写入字节流. 
+即节点流是直接操作文件, 网络等的流, 例如 `FileInputStream` 和 `FileOutputStream` , 他们直接从文件中读取或往文件中写入字节流.
 
 ***
-处理流：“连接”在已存在的流(节点流或处理流)之上通过对数据的处理为程序提供更为强大的读写功能. 
+处理流：“连接”在已存在的流(节点流或处理流)之上通过对数据的处理为程序提供更为强大的读写功能.
 
-过滤流是使用一个已经存在的输入流或输出流连接创建的, 过滤流就是对节点流进行一系列的包装. 
-例如 `BufferedInputStream` 和 `BufferedOutputStream` , 使用已经存在的节点流来构造, 提供带缓冲的读写, 提高了读写的效率, 以及 `DataInputStream` 和 `DataOutputStream` , 使用已经存在的节点流来构造, 提供了读写Java中的基本数据类型的功能. 
-他们都属于过滤流. 
+过滤流是使用一个已经存在的输入流或输出流连接创建的, 过滤流就是对节点流进行一系列的包装.
+例如 `BufferedInputStream` 和 `BufferedOutputStream` , 使用已经存在的节点流来构造, 提供带缓冲的读写, 提高了读写的效率, 以及 `DataInputStream` 和 `DataOutputStream` , 使用已经存在的节点流来构造, 提供了读写Java中的基本数据类型的功能.
+他们都属于过滤流.
 
 ### 常见流类介绍
 
-节点流类型常见的有：对文件操作的字符流有`FileReader/FileWriter`, 字节流有`FileInputStream/FileOutputStream`. 
+节点流类型常见的有：对文件操作的字符流有`FileReader/FileWriter`, 字节流有`FileInputStream/FileOutputStream`.
 
-处理流类型常见的有：缓冲流：缓冲流要“套接”在相应的节点流之上, 对读写的数据提供了缓冲的功能, 提高了读写效率, 同事增加了一些新的方法. 
+处理流类型常见的有：缓冲流：缓冲流要“套接”在相应的节点流之上, 对读写的数据提供了缓冲的功能, 提高了读写效率, 同事增加了一些新的方法.
 
-字节缓冲流有`BufferedInputStream`/`BufferedOutputStream`, 字符缓冲流有`BufferedReader`/`BufferedWriter`, 
-字符缓冲流分别提供了读取和写入一行的方法`ReadLine`和`NewLine`方法. 
+字节缓冲流有`BufferedInputStream`/`BufferedOutputStream`, 字符缓冲流有`BufferedReader`/`BufferedWriter`,
+字符缓冲流分别提供了读取和写入一行的方法`ReadLine`和`NewLine`方法.
 
-对于输出的缓冲流, 写出的数据, 会先写入到内存中, 再使用`flush`方法将内存中的数据刷到硬盘. 
-所以, 在使用字符缓冲流的时候, 一定要先`flush`, 然后再`close`, 避免数据丢失. 
+对于输出的缓冲流, 写出的数据, 会先写入到内存中, 再使用`flush`方法将内存中的数据刷到硬盘.
+所以, 在使用字符缓冲流的时候, 一定要先`flush`, 然后再`close`, 避免数据丢失.
 
 ***
-转换流：用于字节数据到字符数据之间的转换. 
+转换流：用于字节数据到字符数据之间的转换.
 
-仅有字符流`InputStreamReader`/`OutputStreamWriter`. 
-其中, `InputStreamReader`需要与 `InputStream`“套接”, `OutputStreamWriter`需要与`OutputStream`“套接”. 
+仅有字符流`InputStreamReader`/`OutputStreamWriter`.
+其中, `InputStreamReader`需要与 `InputStream`“套接”, `OutputStreamWriter`需要与`OutputStream`“套接”.
 
-数据流：提供了读写Java中的基本数据类型的功能. 
+数据流：提供了读写Java中的基本数据类型的功能.
 
-`DataInputStream`和`DataOutputStream`分别继承自`InputStream`和`OutputStream`, 需要“套接”在`InputStream`和`OutputStream`类型的节点流之上. 
+`DataInputStream`和`DataOutputStream`分别继承自`InputStream`和`OutputStream`, 需要“套接”在`InputStream`和`OutputStream`类型的节点流之上.
 
-对象流：用于直接将对象写入写出. 
+对象流：用于直接将对象写入写出.
 
-流类有`ObjectInputStream`和`ObjectOutputStream`, 
-本身这两个方法没什么, 但是其要写出的对象有要求, 
-该对象必须实现`Serializable`接口, 来声明其是可以序列化的. 否则, 不能用对象流读写. 
+流类有`ObjectInputStream`和`ObjectOutputStream`,
+本身这两个方法没什么, 但是其要写出的对象有要求,
+该对象必须实现`Serializable`接口, 来声明其是可以序列化的. 否则, 不能用对象流读写.
 
 还有一个关键字比较重要,  `transient` , 由于修饰实现了`Serializable`接口的类内的属性, 被该修饰符修饰的属性, 在以对象流的方式输出的时候, 该字段会被忽略.
 
@@ -1351,19 +1351,19 @@ Out[22]= "tmp"
 
 tutorial/FormattedOutput
 
-自从版本3以来, Wolfram 语言提供了对任意数学排版和布局的有力支持. 
-基于所谓的框符语言(box language), 它允许笔记本自身作为 Wolfram 语言的表达式. 
+自从版本3以来, Wolfram 语言提供了对任意数学排版和布局的有力支持.
+基于所谓的框符语言(box language), 它允许笔记本自身作为 Wolfram 语言的表达式.
 
 尽管这种框符语言非常强大, 在实际操作时却很难被用户直接使用.
-从版本6, 出现了框符语言的高层界面, 免去了直接使用框符, 却仍保持排版和布局的强大功能. 
-这个新层的函数被称为`框符生成器`, 但用户不必意识到框符语言. 
+从版本6, 出现了框符语言的高层界面, 免去了直接使用框符, 却仍保持排版和布局的强大功能.
+这个新层的函数被称为`框符生成器`, 但用户不必意识到框符语言.
 
-我们首先了解一下与显示大量表达式相关的框符生成器, 
+我们首先了解一下与显示大量表达式相关的框符生成器,
 然后再介绍几种超出了简单数学排版的方式, 这些方式能用于生成漂亮的格式化输出.
 
 ### 样式化输出(Styling Output)
 
-Wolfram 系统前端支持文字处理器中出现的所有惯用样式机制, 然而, 在生成的结果中自动访问这些样式机制曾经非常困难. 
+Wolfram 系统前端支持文字处理器中出现的所有惯用样式机制, 然而, 在生成的结果中自动访问这些样式机制曾经非常困难.
 
 为了解决这个问题, 创建了函数 `Style`. 无论何时对一个 `Style` 表达式进行计算, 其输出结果将以给定的样式特征显示 .
 
@@ -1381,23 +1381,23 @@ In[1]:= Table[If[PrimeQ[i], Style[i, Bold], Style[i, Gray]],{i,1,100}]
 | `格式 -> 字体颜色 -> 灰色` | `FontColor->Gray` | `Gray` |
 | `格式 -> 字体效果 -> 粗体` | `FontWeight->Bold` | `Bold` |
 | `格式 -> 字体效果 -> 斜体` | `FontSlant->Italic` | `Italic` |
-| `格式 -> 背景颜色 -> 黄色` | `Background->Yellow` |  
+| `格式 -> 背景颜色 -> 黄色` | `Background->Yellow` |
 | `格式 -> 字体`  | `FontFamily->"Times"` |  |
 | `格式 -> 样式 -> Subsection` | `"Subsection"` |   |
 
-`Style` 可以被任意嵌套, 在有冲突时最内层具有最高的优先权. 
+`Style` 可以被任意嵌套, 在有冲突时最内层具有最高的优先权.
 这里用 `Style` 封装整个列表从而对列表中的所有元素应用一种新的字体.
 
 ```mathematica
 In[2]:= Style[%, FontFamily->"Helvetica"]
 ```
 
-要求一段输出的样式与文本一样也是很常见的. 将代码所用的字体用于文本可能会看上去非常奇怪. 
+要求一段输出的样式与文本一样也是很常见的. 将代码所用的字体用于文本可能会看上去非常奇怪.
 为此, 有一个函数`Text`能够使其参数将永远以文本字体呈现.
 
 ### 网格布局(Grid Layout)
 
-在 Wolfram 语言中, 这种布局的基本函数是 `Grid`. `Grid` 的布局功能很灵活, 能够任意调整对齐方式, 框架元素(frame elements), 以及跨度元素(spanning element)等. 
+在 Wolfram 语言中, 这种布局的基本函数是 `Grid`. `Grid` 的布局功能很灵活, 能够任意调整对齐方式, 框架元素(frame elements), 以及跨度元素(spanning element)等.
 
 再次观察将质数和合数进行不同显示的 Style 例子.
 
@@ -1405,7 +1405,7 @@ In[2]:= Style[%, FontFamily->"Helvetica"]
 In[4]:= ptable=Table[If[PrimeQ[i], Style[i, Bold], Style[i, Gray]],{i,1,100}];
 ```
 
-要将此放入一个 `Grid` 中, 首先使用 `Partition` 将这个含有`100`个元素的列表转换成一个`10*10`数组. 
+要将此放入一个 `Grid` 中, 首先使用 `Partition` 将这个含有`100`个元素的列表转换成一个`10*10`数组.
 也可以给 `Grid` 一个参差不齐的的阵列(列表中的元素为长度不一的列表)
 
 ```mathematica
@@ -1431,16 +1431,16 @@ AllowScriptLevelChange->True
 ```
 
 如何水平列出一列事物呢?
-那种情况下, 你要问的主要的问题是, 是否要得到的显示像一行数字或文本一样换行, 
-还是要所有元素保持在一行. 
+那种情况下, 你要问的主要的问题是, 是否要得到的显示像一行数字或文本一样换行,
+还是要所有元素保持在一行.
 在后一种情况, 可以将 Grid 应用于1*n 的阵列.
 
 ```mathematica
 In[8]:= Grid[{Range[15]!}]
 ```
 
-但注意到在这个例子中, 整个网格收缩, 以便它与现有窗口的宽度适合. 
-因此网格中有的元素自身能够进行多行换行. 
+但注意到在这个例子中, 整个网格收缩, 以便它与现有窗口的宽度适合.
+因此网格中有的元素自身能够进行多行换行.
 这是由于 Grid 的默认 `ItemSize` 选项. 如果想要允许一个网格的元素具有自然宽度, 要将 `ItemSize` 设置为 `Full`.
 
 ```mathematica
@@ -1450,7 +1450,7 @@ Out[9]= 1 2 6 24 120 720 5040 40320 362880 3628800 39916800 479001600 6227020800
 
 当然, 这时整个网格过宽而不能在一行中被容纳(除非将这个窗口设置的很宽), 因此网格中有的元素无法被看到. 这把我们带到另一种横向布局函数： `Row` .
 
-给定元素的列表, `Row` 将使整体结果按自然方式自动换行, 就像一个文本行或数学行一样. 
+给定元素的列表, `Row` 将使整体结果按自然方式自动换行, 就像一个文本行或数学行一样.
 
 ```mathematica
 In[10]:= Row[Range[15]!]
@@ -1468,8 +1468,8 @@ Out[11]= 1,2,6,24,120,720,5040,40320,362880,3628800,39916800,479001600,622702080
 
 ### 将输出用作输入
 
-这是一个很好的机会来指出 `Style`, `Grid` 及其它框符生成器在输出中是持久的. 
-如果所取的一段输出中的某些格式是由 ``Style`` 或者 `Grid` 创建并作为输入被再次使用, 则 ``Style`` 或 `Grid` 表达式将在输入表达式中出现. 
+这是一个很好的机会来指出 `Style`, `Grid` 及其它框符生成器在输出中是持久的.
+如果所取的一段输出中的某些格式是由 ``Style`` 或者 `Grid` 创建并作为输入被再次使用, 则 ``Style`` 或 `Grid` 表达式将在输入表达式中出现.
 
 将这个具有许多嵌入样式的 `Grid` 命令的输出用作某个输入表达式.
 
@@ -1478,14 +1478,14 @@ In[12]:= Grid[Partition[Take[ptable,16],4], Alignment -> Right, Frame -> True, B
 Out[12]= ...
 
 In[13]:= (Out[12]+5)^3//Expand
-Out[13]= 
+Out[13]=
 ```
 
-请注意这仍然是一个网格, 仍是蓝色的, 其元素仍然像以前一样为粗体或灰色. 
-还要注意, 表达式中有 `Grid` 和 `Style` 起到了干预效果, 否则会给一个矩阵添加一个标量, 并将结果进行乘幂. 
+请注意这仍然是一个网格, 仍是蓝色的, 其元素仍然像以前一样为粗体或灰色.
+还要注意, 表达式中有 `Grid` 和 `Style` 起到了干预效果, 否则会给一个矩阵添加一个标量, 并将结果进行乘幂.
 
-这种区分是非常重要的, 因为往往希望不要将这些复合结构以某种方式自动解释. 
-但是若想摆脱这些封装并获得你的数据, 这也是很容易做到的.  
+这种区分是非常重要的, 因为往往希望不要将这些复合结构以某种方式自动解释.
+但是若想摆脱这些封装并获得你的数据, 这也是很容易做到的.
 
 ```mathematica
 In[15]:= % //. {Grid[a_,___]:>a,Style[a_,___]:>a}
@@ -1494,8 +1494,8 @@ Out[15]= {{216,343,512,729},{1000,1331,1728,2197},{2744,3375,4096,4913},{5832,68
 
 ### 特殊网格条目(Special Grid Entries)
 
-为了让二维布局更灵活,  `Grid` 接受 `SpanFromLeft` 等一些特殊符号作为条目. 
-条目 `SpanFromLeft` 表明, 紧靠左边的网格条目既占用自己的空间也占用跨越字符的空间. 
+为了让二维布局更灵活,  `Grid` 接受 `SpanFromLeft` 等一些特殊符号作为条目.
+条目 `SpanFromLeft` 表明, 紧靠左边的网格条目既占用自己的空间也占用跨越字符的空间.
 
 类似的还有 `SpanFromAbove` 和 `SpanFromBoth`. 详细信息请参见 "Mathematica 中的网格, 行和列" 一节.
 
@@ -1508,13 +1508,13 @@ In[16]:= Grid[{
 Out[16]=...
 ```
 
-这种方法可以用来创建复杂的跨度设置. 用键盘进行下列输入需要很长的时间. 
-幸运的是, 您可以在 `插入->表格/矩阵` 子菜单中使用 合并 和 分开 交互地创建此表. 
+这种方法可以用来创建复杂的跨度设置. 用键盘进行下列输入需要很长的时间.
+幸运的是, 您可以在 `插入->表格/矩阵` 子菜单中使用 合并 和 分开 交互地创建此表.
 
 用 `InputForm` 如何进行键盘输入.
 
-我们已经看到了如何作为一个整体或针对个别列或行, 在网格中进行对齐方式和背景的设置. 
-我们还没有看到的是如何针对单个元素对设置进行覆盖. 
+我们已经看到了如何作为一个整体或针对个别列或行, 在网格中进行对齐方式和背景的设置.
+我们还没有看到的是如何针对单个元素对设置进行覆盖.
 
 假设您希望您的整个网格中除一些特殊元素外都有相同的背景, 一个方便的方法将每一个这种元素封装在 `Item` 中, 然后指定 `Item` 的选项, 覆盖 `Grid` 中相应的选项.
 
@@ -1523,22 +1523,22 @@ In[18]:= Grid[Partition[Table[If[PrimeQ[i],Item[i, Background -> LightYellow],i]
 Out[18]=...
 ```
 
-也可以通过 `Style` 来覆盖该选项, 但 `Item` 的目的是使覆盖的方式知道 `Grid` 的二维布局. 
+也可以通过 `Style` 来覆盖该选项, 但 `Item` 的目的是使覆盖的方式知道 `Grid` 的二维布局.
 注意到在前面的输出中, 一旦两个黄色单元彼此相邻, 则两者之间没有蓝色空格, 这只能通过 `Item` 实现.
 
-不仅仅是 `Background` , 对于 `Item` 的所有选项均是如此. 
+不仅仅是 `Background` , 对于 `Item` 的所有选项均是如此.
 现在来看 `Frame` 选项, 如果只想在某些特定元素周围加框架, 而其它部位不加, 您很可能认为必须在这些元素自己的 `Grid` 中进行 `Frame->True` 的设置来完成.
-(在下一小节中我们将学习一种更简单的方法来给任意一个表达式加框架.) 
+(在下一小节中我们将学习一种更简单的方法来给任意一个表达式加框架.)
 
 ```mathematica
 In[19]:= Grid[Partition[Table[If[PrimeQ[i],Grid[{{i}},Frame->True],i],{i,1,100}],10]]
 Out[19]=...
 ```
 
-但请注意相邻框架元素不分享它们的边界. 
-相比之下, 下面使用 `Item` , 有足够的信息画出不必要的框架元素. 
+但请注意相邻框架元素不分享它们的边界.
+相比之下, 下面使用 `Item` , 有足够的信息画出不必要的框架元素.
 
-注意现在`2`和`11`的框架交于一点, 以及`2`和`3`的框架如何共享一个像素的线, 而这又完全与`13`和`23`的左边框对齐. 这就是 `Item` 的强大功能.  
+注意现在`2`和`11`的框架交于一点, 以及`2`和`3`的框架如何共享一个像素的线, 而这又完全与`13`和`23`的左边框对齐. 这就是 `Item` 的强大功能.
 
 ```mathematica
 In[20]:= Grid[Partition[Table[If[PrimeQ[i],Item[i, Frame -> True],i],{i,1,100}],10]]
@@ -1547,13 +1547,13 @@ Out[20]=...
 
 ### 框架和标签
 
-为一个表达式添加框架或标签可以通过 `Grid` 完成, 但添加框架在概念上比一般的二维布局简单得多, 所以有相应更简单的方法来达到这个目的. 
-例如 `Framed` 是一个简单的函数, 用于在任意表达式周围绘制一个框架, 这样做可以将注意力吸引到表达式的各个部分.  
+为一个表达式添加框架或标签可以通过 `Grid` 完成, 但添加框架在概念上比一般的二维布局简单得多, 所以有相应更简单的方法来达到这个目的.
+例如 `Framed` 是一个简单的函数, 用于在任意表达式周围绘制一个框架, 这样做可以将注意力吸引到表达式的各个部分.
 
 ```mathematica
 In[21]:= Table[If[PrimeQ[i],Framed[i, Background -> LightYellow],i],{i,1,100}]
 Out[21]=...
-``` 
+```
 
 `Labeled` 也是这样的一个函数, 它允许在给定表达式周围的任意一处加标签. 此处我们给上一小节的 `Grid` 例子加上图例. (`Spacer` 是为留空格设计的函数.)
 
@@ -1562,24 +1562,24 @@ In[22]:= Labeled[
 Grid[Partition[ptable,10], Alignment -> Right, Frame -> True],
 Text[Row[{Style["\[Bullet] Prime",Bold], Style["\[Bullet] Composite",Gray]},Spacer[15]]]]
 Out[22]=
-``` 
+```
 
-`Panel` 是另一个构建框架的函数, 它使用底层操作系统的面板框架. 
+`Panel` 是另一个构建框架的函数, 它使用底层操作系统的面板框架.
 这不同于 `Frame`, 因为不同的操作系统可能会使用阴影, 圆角或用于面板框架的花哨的图形设计元素.
 
 ```mathematica
 In[23]:= Panel[Labeled[
  Grid[Partition[ptable, 10], Alignment -> Right, Frame -> True],
- Text[Row[{Style["\[Bullet] Prime", Bold], 
+ Text[Row[{Style["\[Bullet] Prime", Bold],
     Style["\[Bullet] Composite", Gray]}, Spacer[15]]]]]
 Out[23]=
-``` 
+```
 
 注意 `Panel` 对于字体类和字体尺寸也有自己的定义, 因此 `Grid` 的内容改变字体类和尺寸, `Text` 也改变字体尺寸.
-(尽管如此 `Text` 关于字体类有自己的定义, 且保持 Wolfram 语言中的文本字体.) 
+(尽管如此 `Text` 关于字体类有自己的定义, 且保持 Wolfram 语言中的文本字体.)
 在关于 `BaseStyle` 选项的小节中, 我们将对此进行较深入地探讨.
 
-最后应该指出的是, `Panel` 自身有一个可选的第二个参数, 用于指定一个或多个标签, 它会自动在面板以外定位, 还有一个可选的第三个参数, 用于给出该位置的细节. 
+最后应该指出的是, `Panel` 自身有一个可选的第二个参数, 用于指定一个或多个标签, 它会自动在面板以外定位, 还有一个可选的第三个参数, 用于给出该位置的细节.
 详见 Panel 的参考资料.
 
 ```mathematica
@@ -1594,15 +1594,15 @@ Out[25]=
 
 ### 其它注释
 
-到目前为止所提到的注释都有一个非常明确的可视组件. 还有一些注释在用户需要它们之前实际上是不可见的. 
-例如 Tooltip 不改变其第一个参数的显示, 只有当您将鼠标指针在显示部分移动时, 第二个参数才作为一个提示条(tooltips)出现. 
+到目前为止所提到的注释都有一个非常明确的可视组件. 还有一些注释在用户需要它们之前实际上是不可见的.
+例如 Tooltip 不改变其第一个参数的显示, 只有当您将鼠标指针在显示部分移动时, 第二个参数才作为一个提示条(tooltips)出现.
 
 ```mathematica
 In[26]:= Table[Tooltip[i,Divisors[i]],{i,1,100}]
 Out[26]=
 ```
 
-`Mouseover` 也属于这类函数, 但不是在提示中显示结果, 它使用的屏幕区域与后来鼠标指针在上移动的区域相同. 
+`Mouseover` 也属于这类函数, 但不是在提示中显示结果, 它使用的屏幕区域与后来鼠标指针在上移动的区域相同.
 如果这两个显示的大小不同, 那么效果会不和谐, 因此使用大小相近的显示, 或者使用 `Mouseover` 中的 ImageSize 选项给两个中较大的显示留出空间, 无论正在显示哪一个.
 
 ```mathematica
@@ -1615,13 +1615,13 @@ Out[27]=
 
 ```mathematica
 In[28]:= Table[StatusArea[i,Divisors[i]],{i,1,100}]
-Out[28]= 
+Out[28]=
 ```
 
 ```mathematica
 In[29]:= Table[PopupWindow[i,Divisors[i]],{i,1,100}]
 Out[29]=
-``` 
+```
 
 最后, 您可以通过成对使用 `Annotation` 和 `MouseAnnotation` 为一个注释指定一个任意位置.
 
@@ -1631,20 +1631,20 @@ Dynamic[MouseAnnotation[]]
 Out[30]=
 ```
 
-当使用的注释仅仅通过在屏幕的一个区域移动鼠标指针而触发时, 考虑用户是很重要. 
+当使用的注释仅仅通过在屏幕的一个区域移动鼠标指针而触发时, 考虑用户是很重要.
 移动鼠标不应该引发长时间的计算或很多的视觉混乱. 但是谨慎的使用注释可以给用户带来很大的帮助.
 
-最后, 请注意所有这些注释在图形中也同样适用. 因此, 你可以提供提示条(tooltips)或鼠标悬停(mouseovers)协助用户了解您所创建的复杂图形. 
+最后, 请注意所有这些注释在图形中也同样适用. 因此, 你可以提供提示条(tooltips)或鼠标悬停(mouseovers)协助用户了解您所创建的复杂图形.
 其实, 连 `ListPlot` 或者 `DensityPlot` 这样的可视化函数也支持 `Tooltip`. 详细情况请参见参考资料.
 
 ```mathematica
 In[32]:= Graphics[{LightBlue,EdgeForm[Gray],Tooltip[CountryData[#,"SchematicPolygon"],#]&/@CountryData[]}, ImageSize->Full]
-Out[32]= 
+Out[32]=
 ```
 
 ### 默认样式
 
-正如我们在"框架和标签"小节中所看到的, 对 `Panel` 等的创建实际上类似于 `Style`, 因为它们设置了一个能使一组默认样式应用于其内容的环境. 
+正如我们在"框架和标签"小节中所看到的, 对 `Panel` 等的创建实际上类似于 `Style`, 因为它们设置了一个能使一组默认样式应用于其内容的环境.
 
 这可以通过明确的 `Style` 命令进行覆盖, 也可以被 `Panel` 自身通过 `BaseStyle` 选项覆盖. `BaseStyle` 可以被设置为一种样式, 或者是一列样式指令, 正如在 `Style` 中的用法一样, 并且这些指令成为该 `Panel` 范围内的默认环境.
 
@@ -1657,19 +1657,19 @@ In[34]:= Panel[Range[10], BaseStyle -> {"StandardForm"}]
 Out[34]= {1,2,3,4,5,6,7,8,9,10}
 ```
 
-事实上, 几乎所用的框符生成器都有一个 `BaseStyle` 选项. 例如这里是一个默认字体颜色为蓝色的网格, 注意灰色的元素保持灰色, 因为内部的 `Style` 封装胜过外围 `Grid` 的 `BaseStyle`. 
+事实上, 几乎所用的框符生成器都有一个 `BaseStyle` 选项. 例如这里是一个默认字体颜色为蓝色的网格, 注意灰色的元素保持灰色, 因为内部的 `Style` 封装胜过外围 `Grid` 的 `BaseStyle`.
 (这是选项可继承性的主要特征之一, 它超出了本文的讨论范围.)
 
 ```mathematica
 In[35]:= Grid[Partition[ptable, 10], BaseStyle -> {FontColor -> Blue}]
 Out[35]=
-``` 
+```
 
 ### 默认选项
 
 假设您有一个表达式, 多次出现同一框符生成器, 如一个 `Framed` 或 `Panel`, 您想将它们全部改变, 使之含有相同的选项集合. 在函数每一次出现时都添加相同的选项集可能会非常繁琐,  幸好这里有一个更简单的方法.
 
-`DefaultOptions` 是 `Style` 的一个选项, 当被设置成形如 `head->{opt->val,...}` 的一列元素时, 该选项会用所给选项设置一个环境, 作为给定框符生成头部的默认环境. 
+`DefaultOptions` 是 `Style` 的一个选项, 当被设置成形如 `head->{opt->val,...}` 的一列元素时, 该选项会用所给选项设置一个环境, 作为给定框符生成头部的默认环境.
 
 在整个 `Style` 的封装内这些选项都是激活状态, 但只针对于相关联的框符发生器.
 
@@ -1706,9 +1706,9 @@ Out[38]=
 In[39]:= {Subscript[a,b],Superscript[a,b],Underscript[a,b],Overscript[a,b], Subsuperscript[a,b,c], Underoverscript[a,b,c]}
 ```
 
-我们将不对此进行详细, 但我们会指出, 这些结构在内核中没有任何内置的数学意义. 
+我们将不对此进行详细, 但我们会指出, 这些结构在内核中没有任何内置的数学意义.
 
-例如, `Superscript[a,b]` 不会被解释为 `Power[a,b]`, 尽管两者的显示相同. 
+例如, `Superscript[a,b]` 不会被解释为 `Power[a,b]`, 尽管两者的显示相同.
 因此, 您可以在格式化输出时将这些作为结构元素使用, 而不必担心它们的意义会影响您的显示.
 
 ```mathematica
@@ -1717,7 +1717,7 @@ In[40]:= Table[Row[{i,Row[Superscript @@@ FactorInteger[i],"*"]},"=="],{i,100}]
 
 ### 使用框符语言(Box Language)
 
-最后一点说明是, 对于已经很熟悉框符语言的用户可能偶尔会发现, 这些框符生成器在您构建自己的底层框符时会产生阻碍, 
+最后一点说明是, 对于已经很熟悉框符语言的用户可能偶尔会发现, 这些框符生成器在您构建自己的底层框符时会产生阻碍,
 然而, 通过一个简单的漏洞, 您可以将有效的框符直接显示在输出中：`RawBoxes`.
 
 ```mathematica
@@ -1729,7 +1729,7 @@ Out[41]= {a,b,Subscript[c, d],e}
 
 ### TextString
 
-`TextString[expr]`; 将`expr`转换成人类可读的字符串表示. 
+`TextString[expr]`; 将`expr`转换成人类可读的字符串表示.
 `TextString[expr]` 还支持一些特殊功能, 例如`TextString[Now]`格式化现在的时间.
 
 ## package 包
@@ -1751,14 +1751,14 @@ EndPackage[]    结束包, 把Package`放到上下文搜索路径中
 
 ***
 
-+ 查看变量 `$Packages` :提供与当前 `Wolfram` 系统会话中已加载的所有软件包相对应的上下文列表. 
++ 查看变量 `$Packages` :提供与当前 `Wolfram` 系统会话中已加载的所有软件包相对应的上下文列表.
 + `` Needs ["context`"] ``:如果指定的上下文尚未在 `$Packages` 中, 则加载适当的文件. 它会自动调用`Get[]`
 
 ***
 `mma` 的环境变量一共有两部分, 分别叫做`$ContextPath` and `$Context`. 分别是当前上下文列表, 以及当前上下文.
 参见: ref/\$ContextPath,  ref/\$Context:
 
-`$ContextPath`类似 `Linux` 的 `$PATH`环境变量. `$Context`类似于`Linux`的当前工作目录. 
+`$ContextPath`类似 `Linux` 的 `$PATH`环境变量. `$Context`类似于`Linux`的当前工作目录.
 搜索函数以及变量名称的时候, 先搜索`$ContextPath`中的, 再搜索`$Context`中的. 这和建立包的顺序也是一样的.
 `$ContextPath`中的路径按照出现顺序搜索, 前面的会覆盖后面的.
 
@@ -1766,42 +1766,42 @@ EndPackage[]    结束包, 把Package`放到上下文搜索路径中
 `BeginPackage[]` and `Begin[]` 都要配合相应的`EndPackage[]` and `End[]` 使用, 它们的效果不同：
 
 + ``BeginPackage["abc`"] `` 默认会同时设置 `$Context` and `$ContextPath`, 让会话中只剩下`` abc` `` and `` System` ``两个上下文.
-当然, 它也有`` BeginPackage["context`",{"need1`","need2`",... ``这种语法. 
-+ 而`` Begin["abc`"] `` 不会更改 `$ContextPath`, 它只更改`$Context` 为 `` "abc`" ``. 
-+ 此外, 调用`` EndPackage[] `` (不需要参数) 结束包时, 会将这个包, 比如`` "abc`" ``添加到`$ContextPath`的前面. 
-而`` End[] `` 不会更改`$ContextPath`. 
+当然, 它也有`` BeginPackage["context`",{"need1`","need2`",... ``这种语法.
++ 而`` Begin["abc`"] `` 不会更改 `$ContextPath`, 它只更改`$Context` 为 `` "abc`" ``.
++ 此外, 调用`` EndPackage[] `` (不需要参数) 结束包时, 会将这个包, 比如`` "abc`" ``添加到`$ContextPath`的前面.
+而`` End[] `` 不会更改`$ContextPath`.
 
 ### 包的调用
 
 ref: tutorial/ModularityAndTheNamingOfThings#3434
 
-当您创建或使用 `Wolfram Language` 包时, 您经常希望以独立于系统的方式来引用文件. 你可以使用上下文来做到这一点. 
+当您创建或使用 `Wolfram Language` 包时, 您经常希望以独立于系统的方式来引用文件. 你可以使用上下文来做到这一点.
 
-在每个计算机系统上都有一个文件系统, 与 Wolfram Language 上下文对应的规则. 
-当你使用上下文引用一个文件时, Wolfram Language 自动将上下文名称转换为你所在计算机系统的文件名称. 
+在每个计算机系统上都有一个文件系统, 与 Wolfram Language 上下文对应的规则.
+当你使用上下文引用一个文件时, Wolfram Language 自动将上下文名称转换为你所在计算机系统的文件名称.
 
 ```mathematica
  <<context` 读入对应于指定上下文的文件
 ```
 
-`Wolfram Language` 的设置是, ``<<name` `` 会自动尝试加载适当版本的文件. 它将首先尝试加载为您的特定计算机系统优化的 `name.mx` 文件. 
+`Wolfram Language` 的设置是, ``<<name` `` 会自动尝试加载适当版本的文件. 它将首先尝试加载为您的特定计算机系统优化的 `name.mx` 文件.
 如果没有找到这样的文件, 那么它将尝试加载一个包含普通 `Wolfram Language` 语法的` name.m` 文件, 这种格式独立于各种计算机系统.
 
-如果名称是一个目录, 那么 `Wolfram Language` 将尝试加载该目录下的初始化文件 `init.m`. `init.m` 文件的目的是为设置包含许多独立文件的 `Wolfram Language` 包提供一种方便的方法. 
-其目的是让你只需给出`` <<name` ``命令, 然后加载`init.m`来初始化整个软件包, 读取任何必要的其他文件. 
+如果名称是一个目录, 那么 `Wolfram Language` 将尝试加载该目录下的初始化文件 `init.m`. `init.m` 文件的目的是为设置包含许多独立文件的 `Wolfram Language` 包提供一种方便的方法.
+其目的是让你只需给出`` <<name` ``命令, 然后加载`init.m`来初始化整个软件包, 读取任何必要的其他文件.
 
 ### init.m
 
-Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Language` 内核或前端启动时都要运行. 
+Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Language` 内核或前端启动时都要运行.
 
-`init.m` 文件的可能位置包括如下. 
+`init.m` 文件的可能位置包括如下.
 
 + `$BaseDirectory/Kernel` :内核初始化代码, 适用于所有用户
 + `$UserBaseDirectory/Kernel`: 内核初始化代码, 用于当前登录的用户
 + `$BaseDirectory/FrontEnd`: 所有用户的前端初始化代码
 + `$UserBaseDirectory/FrontEnd`:  前端初始化代码, 适用于当前登录的用户
 
-`Wolfram`系统`基础目录`的典型子目录. 
+`Wolfram`系统`基础目录`的典型子目录.
 
 + `Applications`;  Wolfram Language应用程序包
 + `Autoload`; 启动时自动加载的软件包
@@ -1810,28 +1810,28 @@ Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Languag
 + `Licensing`; 许可证管理文件
 + `SystemFiles`;  一般系统文件
 
-通过对内核`$Path`变量的默认设置, 只需使用`` <<name` ``命令, 就可以从Wolfram System会话中加载附加组件. 
-加载 `init.m` 文件时, 可以再调用其他必要的文件或软件包. 
+通过对内核`$Path`变量的默认设置, 只需使用`` <<name` ``命令, 就可以从Wolfram System会话中加载附加组件.
+加载 `init.m` 文件时, 可以再调用其他必要的文件或软件包.
 
-通过将附加组件放在 `$BaseDirectory` 或 `$UserBaseDirectory` 的 `Autoload` 子目录下, 你可以让 Wolfram System 在你启动内核或前端时自动加载附加组件. 
+通过将附加组件放在 `$BaseDirectory` 或 `$UserBaseDirectory` 的 `Autoload` 子目录下, 你可以让 Wolfram System 在你启动内核或前端时自动加载附加组件.
 
-+ `Kernel/init.m`; 一个初始化文件, 由内核加载. 
-+ `FrontEnd/init.m`; 一个由前端加载的初始化文件. 
++ `Kernel/init.m`; 一个初始化文件, 由内核加载.
++ `FrontEnd/init.m`; 一个由前端加载的初始化文件.
 + `Documentation/`; 前端要找到的帮助文档
 
 ### $Path
 
-`$Path` 给出了寻找外部文件时要搜索目录的默认列表. 
+`$Path` 给出了寻找外部文件时要搜索目录的默认列表.
 
-+ 目录和文件名的结构在不同的计算机系统中可能有所不同. 
-+ `$Path`既用于`Get`调用的文件, 也用于`Install`调用的外部程序. 
-+ `$Path` 的设置可以通过特定的函数中指定`Path`选项来更改. 
-+ 目录名是由字符串指定的. 被检测的完整文件名是`FileNameJoin[{directory,name}]的形式`. 
-+ 在大多数计算机系统中, 以下特殊字符可以在目录名中使用.  
-  + `.` ; 当前目录 
-  + `...` ; 层次结构中的上一级目录 
-  + `~` ; 用户的主目录 
-+ `$Path` 可以包含嵌套的子列表. 
++ 目录和文件名的结构在不同的计算机系统中可能有所不同.
++ `$Path`既用于`Get`调用的文件, 也用于`Install`调用的外部程序.
++ `$Path` 的设置可以通过特定的函数中指定`Path`选项来更改.
++ 目录名是由字符串指定的. 被检测的完整文件名是`FileNameJoin[{directory,name}]的形式`.
++ 在大多数计算机系统中, 以下特殊字符可以在目录名中使用.
+  + `.` ; 当前目录
+  + `...` ; 层次结构中的上一级目录
+  + `~` ; 用户的主目录
++ `$Path` 可以包含嵌套的子列表.
 
 ## 关联 Associations
 
@@ -1859,15 +1859,15 @@ out: {x,y}
 
 ### 关联的子集
 
-关联可以使用`assoc["key"]`的方法提取值, 也就是像函数一样. 
-当关联为多层嵌套的时候, 可以用`assoc["key1", "key2"]`这样的语法直接提取深层次关联的值. 
-这种方法适用于提取单个关联元素. 
+关联可以使用`assoc["key"]`的方法提取值, 也就是像函数一样.
+当关联为多层嵌套的时候, 可以用`assoc["key1", "key2"]`这样的语法直接提取深层次关联的值.
+这种方法适用于提取单个关联元素.
 
 ***
 关联也可以也可以用`Part`函数, 通过`key`访问`value`, 即
 
-+ 用`assoc[[ Key["key"] ]]`语法提取值, `"key"`为字符串时, 可以直接用`assoc[[ "key" ]]`. 
-+ 返回子集用`assoc[[ {"key1","key2"} ]]`, 结果是一个子关联, 
++ 用`assoc[[ Key["key"] ]]`语法提取值, `"key"`为字符串时, 可以直接用`assoc[[ "key" ]]`.
++ 返回子集用`assoc[[ {"key1","key2"} ]]`, 结果是一个子关联,
 
 ```bash
 <|"a" -> 5, "b" -> 6, 2 -> b, 1 -> a|>[[1 ;; 3]]
@@ -1876,7 +1876,7 @@ out:<|"a" -> 5, "b" -> 6, 2 -> b|>
 
 ***
 
-但是`Association`也可以使用位置访问, 如下面的例子. 但是结果对于不同的参数形式, 将会不同. 
+但是`Association`也可以使用位置访问, 如下面的例子. 但是结果对于不同的参数形式, 将会不同.
 
 ```mathematica
 temp = <|a -> 1, b -> 2, c->3|>;
@@ -1892,7 +1892,7 @@ out: <|a -> 1, b -> 2, c -> 3|>
 
 ### 关联的匹配
 
-使用`KeyValuePattern[{p1,p2,p3}]`确保匹配到每个模式`p1,p2,p3`, 与实际出现的顺序无关. 
+使用`KeyValuePattern[{p1,p2,p3}]`确保匹配到每个模式`p1,p2,p3`, 与实际出现的顺序无关.
 
 ```mathematica
 MatchQ[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{b -> 2}]]
@@ -1909,7 +1909,7 @@ Out[1]= <|f[a] -> 1, f[b] -> 2, f[c] -> 3|>
 
 ### 修改关联元素,AssociateTo,Append
 
-这两个命令都可以修改关联的值, 但是有区别. 
+这两个命令都可以修改关联的值, 但是有区别.
 
 `AssociateTo`不能用来修改显式关联, 也就是必须先把关联绑定到一个变量上, 再用`AssociateTo`去修改. 如果直接修改, 会报错:
 
@@ -1935,69 +1935,69 @@ Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 ### 匹配关联子集,KeyValuePattern
 
 + `KeyValuePattern[{patt1,...}]` ; 是一个模式对象, 表示一个关联, 或规则列表, 它能匹配到每个 `patti`的元素, 也就是包含的关系.
-+ 匹配 `patti` 的元素可以在关联或规则列表中以任何顺序出现. 
-+ `patti` 按照它们出现的顺序进行匹配. 
++ 匹配 `patti` 的元素可以在关联或规则列表中以任何顺序出现.
++ `patti` 按照它们出现的顺序进行匹配.
 + 如果只有一个模式`patt`, `KeyValuePattern[patt]`等同于`KeyValuePattern[{patt}]`.
-+ `KeyValuePattern[{}]` 匹配任何关联或规则的列表. 
++ `KeyValuePattern[{}]` 匹配任何关联或规则的列表.
 
 ## Dataset 数据集
 
-`Dataset[data] `: 表示一个基于列表和关联的层次结构的数据集. 
+`Dataset[data] `: 表示一个基于列表和关联的层次结构的数据集.
 
-+ 数据集不仅可以表示完整的矩形多维数据阵列, 还可以表示任意的树形结构, 对应于具有任意层次结构的数据. 
-+ 根据它所包含的数据, 数据集对象通常显示为一个表格或网格元素. 
-+ 像`Map`, `Select`等函数可以直接应用于数据集, 方法是`Map[f,dataset]`, `Select[dataset,crit]`等. 
-+ 数据集对象中的子集可以通过`dataset[[parts]]`获得. 
++ 数据集不仅可以表示完整的矩形多维数据阵列, 还可以表示任意的树形结构, 对应于具有任意层次结构的数据.
++ 根据它所包含的数据, 数据集对象通常显示为一个表格或网格元素.
++ 像`Map`, `Select`等函数可以直接应用于数据集, 方法是`Map[f,dataset]`, `Select[dataset,crit]`等.
++ 数据集对象中的子集可以通过`dataset[[parts]]`获得.
 + 数据集对象也可以通过编写`dataset[query]`来使用专门的查询语法进行查询.
 
 ### JoinAcross 与 SQL
 
 [连接查询](https://www.liaoxuefeng.com/wiki/1177760294764384/1179610888796448)
 
-`JoinAcross` 有效地实现了类似 `SQL JOIN`的方法, 将两个表`ai`和 `bj`中的行通过`spec`指定的列连接起来. 
+`JoinAcross` 有效地实现了类似 `SQL JOIN`的方法, 将两个表`ai`和 `bj`中的行通过`spec`指定的列连接起来.
 
 有`RIGHT OUTER JOIN`, 就有`LEFT OUTER JOIN`, 以及`FULL OUTER JOIN`. 它们的区别是：
 
 + `INNER JOIN`只返回同时存在于两张表的行数据, 由于`students`表的`class_id`包含`1`, `2`, `3`, `classes` 表的`id`包含`1`, `2`, `3`, `4`.
-所以, `INNER JOIN`根据条件`s.class_id = c.id`返回的结果集仅包含`1`, `2`, `3`. 
-+ `RIGHT OUTER JOIN` 返回右表都存在的行. 如果某一行仅在右表存在, 那么结果集就会以`NULL`填充剩下的字段. 
+所以, `INNER JOIN`根据条件`s.class_id = c.id`返回的结果集仅包含`1`, `2`, `3`.
++ `RIGHT OUTER JOIN` 返回右表都存在的行. 如果某一行仅在右表存在, 那么结果集就会以`NULL`填充剩下的字段.
 + `LEFT OUTER JOIN` 则返回左表都存在的行. 如果我们给`students`表增加一行, 并添加`class_id=5`, 由于`classes`表并不存在`id=5`的行, 所以, `LEFT OUTER JOIN`的结果会增加一行, 对应的`class_name`是`NULL`.
 + 最后, 我们使用`FULL OUTER JOIN`, 它会把两张表的所有记录全部选择出来, 并且, 自动把对方不存在的列填充为`NULL`.
 
 ### 数据集结构
 
-虽然列表和关联的任意嵌套是可能的, 但二维(表格)形式是最常用的. 
+虽然列表和关联的任意嵌套是可能的, 但二维(表格)形式是最常用的.
 
 + 列表的列表; 没有指定行名称和列名称的表格
 + 关联的列表; 带有列名称的表格
 
-+ 数据集按行优先, row--wise, 的方式解释嵌套的列表和关联, 因此第1层(最外层)的数据被解释为表格的行, 而第2层被解释为列. 
-+ 有名行和有名列分别对应于第`1`和第`2`层的关联, 其键是字符串, 被当成名称. 无名的行和列对应于这些级别的列表. 
++ 数据集按行优先, row--wise, 的方式解释嵌套的列表和关联, 因此第1层(最外层)的数据被解释为表格的行, 而第2层被解释为列.
++ 有名行和有名列分别对应于第`1`和第`2`层的关联, 其键是字符串, 被当成名称. 无名的行和列对应于这些级别的列表.
 + 一个数据集的行和列可以通过`Transpose[dataset]`来交换.
 
 `Dataset`具有很多选项, 详见帮助页面 `Dataset Options`.
 
-+ 当您将鼠标悬停在元素上时, 可以在数据集底部读取元素的位置. 
++ 当您将鼠标悬停在元素上时, 可以在数据集底部读取元素的位置.
 + `MaxItems` 的设置可以如下给出：
   + `m`; 显示 `m` 行
   + `m1,m2,..mn`; 在数据集级别 `i` 显示`mi` 项
-  + `Automatic`; 显示默认的项目数. 
+  + `Automatic`; 显示默认的项目数.
 
-+ 在 `HiddenItems` 列表中, 后面的设置会覆盖前面的设置. 
-+ `ItemDisplayFunction` 和 `HeaderDisplayFunction` 可以单独设置一个纯函数, 应用到项目上生产显示. 这些函数采用三个参数：项目`value`, 项目`position`和包含项目的`dataset`. 
-+ 在 `ItemStyle` 和 `HeaderStyle` 设置中的某些位置, 显式规则可能会被解释为 `i->spec`. 如果要使用`style`选项, 请使用 `Directive` 包装规则. 
-+ 在 `Alignment`, `HeaderAlignment`, `ItemSize` 和 `HeaderSize` 等可能是列表值的选项中, 如果可能, 顶层列表被解释为单个选项值, 否则解释为对数据集不同`Level`的依次设置. 
-+ 如果规则的左侧不是`列表`, 则该设置将应用于任何位置, 只要它包含了左侧作为键或索引. 
-+ 若纯函数`f` 返回设置, 则`f`可以用来设定值. 该设置由 `f[item,position,dataset]` 给出. 
++ 在 `HiddenItems` 列表中, 后面的设置会覆盖前面的设置.
++ `ItemDisplayFunction` 和 `HeaderDisplayFunction` 可以单独设置一个纯函数, 应用到项目上生产显示. 这些函数采用三个参数：项目`value`, 项目`position`和包含项目的`dataset`.
++ 在 `ItemStyle` 和 `HeaderStyle` 设置中的某些位置, 显式规则可能会被解释为 `i->spec`. 如果要使用`style`选项, 请使用 `Directive` 包装规则.
++ 在 `Alignment`, `HeaderAlignment`, `ItemSize` 和 `HeaderSize` 等可能是列表值的选项中, 如果可能, 顶层列表被解释为单个选项值, 否则解释为对数据集不同`Level`的依次设置.
++ 如果规则的左侧不是`列表`, 则该设置将应用于任何位置, 只要它包含了左侧作为键或索引.
++ 若纯函数`f` 返回设置, 则`f`可以用来设定值. 该设置由 `f[item,position,dataset]` 给出.
 
 ### 切片操作
 
-`dataset[[part]]`或`Part[dataset,part]`的语法可以用来提取数据集的部分. 可以从`Part`的所有通常规范提取数据集的切片. 
-与`Part`的普通行为不同, 如果一个数据集的指定子部分不存在, 那么在结果中的那个地方就会产生`Missing["PartAbsent",...]`. 
+`dataset[[part]]`或`Part[dataset,part]`的语法可以用来提取数据集的部分. 可以从`Part`的所有通常规范提取数据集的切片.
+与`Part`的普通行为不同, 如果一个数据集的指定子部分不存在, 那么在结果中的那个地方就会产生`Missing["PartAbsent",...]`.
 
-下面的部分操作常用于从表格数据集中提取行. 
+下面的部分操作常用于从表格数据集中提取行.
 
-+ `dataset[["name"]]` ; 提取一个已命名的行(如果适用). 
++ `dataset[["name"]]` ; 提取一个已命名的行(如果适用).
 + `dataset[[{"name1",...}]` ;提取一组命名的行
 + `dataset[[1]]` ; 提取第一行
 + `dataset[[n]]` ; 提取第`n`行
@@ -2005,9 +2005,9 @@ Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 + `dataset[[m;;n]]` ; 提取`m`到`n`行
 + `dataset[[{n1,n2,...}]`提取一组有编号的行
 
-以下部分操作常用于从表格式数据集中提取列. 
+以下部分操作常用于从表格式数据集中提取列.
 
-+ `dataset[[All, "name"]]` ;  提取一个已命名的列(如果适用). 
++ `dataset[[All, "name"]]` ;  提取一个已命名的列(如果适用).
 + `dataset[[All,{"name1",...}]` ; 提取一组命名的列
 + `dataset[[All,1]]` ;  提取第一列
 + `dataset[[All,n]]` 提取第`n ; `个列
@@ -2017,11 +2017,11 @@ Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 
 和`Part`一样, 行和列的操作也可以结合起来. 一些例子包括
 
-+ `dataset[[n,m]]`; 取出位于第`n`行和第`m`列的单元. 
++ `dataset[[n,m]]`; 取出位于第`n`行和第`m`列的单元.
 + `dataset[[n, "colname"]]`; 提取`n`行中命名的列的值
-+ `dataset[["rowname", "colname"]]`; 提取指定行和列的单元格. 
++ `dataset[["rowname", "colname"]]`; 提取指定行和列的单元格.
 
-以下操作可用于移除行和列的标签, 有效地将关联变成列表. 
+以下操作可用于移除行和列的标签, 有效地将关联变成列表.
 
 + `dataset[[Values]]` ; 删除行的标签
 + `dataset[[All,Values]]` ; 从列中移除标签
@@ -2029,46 +2029,46 @@ Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 
 ### 数据集查询
 
-查询语法`dataset[op1,op2, ...]`可以认为是`Part`语法的扩展, 即按照层次连续应用函数. 
-允许在数据上使用聚合和转换, 以及获取数据的子集. 
+查询语法`dataset[op1,op2, ...]`可以认为是`Part`语法的扩展, 即按照层次连续应用函数.
+允许在数据上使用聚合和转换, 以及获取数据的子集.
 因为是`Part`语法的扩展, 所以在切片的时候, 键是`Key["xxx"]`的形式, 而不是单纯一个键的名字`"aaa"`.
 
-一些常见的查询形式包括: 
+一些常见的查询形式包括:
 
-+ `dataset[f]`; 将`f`应用于整个表. 
++ `dataset[f]`; 将`f`应用于整个表.
 + `dataset[f, All]` ; 同样是`f`应用于整个表, 事实上, 不使用这种写法.
 参见下方, `dataset[All,{All->f}]` 才是将`f`函数应用到每一列. 也没有 `dataset[All,All->f]`这种语法, 因为这样`Mathematica`会以为`All`是一个选项.
 
 + `dataset[All,f]` 将`f`应用于表中的每一行.
-+ `dataset[All,All,f]` ; 将`f`应用于表中的每个单元格. 
-+ `dataset[f,n]` ; 提取第`n`列, 然后对其应用`f`. 
-+ `dataset[f, "name"]` ; 提取命名列, 然后对其应用`f`. 
-+ `dataset[n,f]` ; 提取第`n`行, 然后将`f`应用到它. 
-+ `dataset["name",f]` ; 提取命名行, 然后对其应用`f`. 
-+ `dataset[{n->f}]` ;  将`f`函数`Map`到仅第`n`行. 
-+ `dataset[All,{n->f}]` ; 将`f`函数`Map`到仅第`n`列. 
++ `dataset[All,All,f]` ; 将`f`应用于表中的每个单元格.
++ `dataset[f,n]` ; 提取第`n`列, 然后对其应用`f`.
++ `dataset[f, "name"]` ; 提取命名列, 然后对其应用`f`.
++ `dataset[n,f]` ; 提取第`n`行, 然后将`f`应用到它.
++ `dataset["name",f]` ; 提取命名行, 然后对其应用`f`.
++ `dataset[{n->f}]` ;  将`f`函数`Map`到仅第`n`行.
++ `dataset[All,{n->f}]` ; 将`f`函数`Map`到仅第`n`列.
 
-一些更具体的查询形式包括. 
+一些更具体的查询形式包括.
 
 + `dataset[Counts, "name"]` ; 给出命名列中不同数值的计数
 + `dataset[Count[value], "name"]` ; 给出指定列中数值的出现次数
-+ `dataset[CountDistinct, "name"]` ; 计算指定列中的不同值的数量. 
-+ `dataset[MinMax, "name"]` ;  给出指定列中的最小和最大值. 
-+ `dataset[Mean, "name"]` ; 给出指定列的平均值. 
++ `dataset[CountDistinct, "name"]` ; 计算指定列中的不同值的数量.
++ `dataset[MinMax, "name"]` ;  给出指定列中的最小和最大值.
++ `dataset[Mean, "name"]` ; 给出指定列的平均值.
 + `dataset[Total, "name"]` ; 给出指定列的总价值
 + `dataset[Select[h]]` ; 提取那些满足条件h的记录
 + `dataset[Select[h]/*Length]` ; 计算满足条件`h`的行的数量
-+ `dataset[Select[h], "name"]` ;  选择行, 然后从结果中提取指定的列. 
++ `dataset[Select[h], "name"]` ;  选择行, 然后从结果中提取指定的列.
 + `dataset[Select[h]/*f, "name"]` ; 选择行, 提取指定的列, 然后对其应用`f`.
-+ `dataset[TakeLargestBy["name",n]]` ; 给出命名的列中最大的`n`行记录. 
++ `dataset[TakeLargestBy["name",n]]` ; 给出命名的列中最大的`n`行记录.
 + `dataset[TakeLargest[n], "name"]` ; 给出命名列中最大的`n`个值
 
 ### 下降和上升查询运算符
 
 Descending and Ascending Query Operators
 
-在表达式 `dataset[op1,op2, ...]` 中, 查询操作符`opi`被有效地应用于依次深入的数据层, 但是任何给定的操作符都可以在 `深入`数据或 `浮出`数据的时候应用. 
-构成数据集查询的运算符分为以下几大类, 分别具有`ascending`和`Descending`行为. 
+在表达式 `dataset[op1,op2, ...]` 中, 查询操作符`opi`被有效地应用于依次深入的数据层, 但是任何给定的操作符都可以在 `深入`数据或 `浮出`数据的时候应用.
+构成数据集查询的运算符分为以下几大类, 分别具有`ascending`和`Descending`行为.
 
 + `All,i,i;;j, "key",...` ; `Descending`; `part`运算符
 + `Select[f],SortBy[f],...` ; `Descending` ; `filtering`运算符
@@ -2076,68 +2076,68 @@ Descending and Ascending Query Operators
 + `Query[...],... ` ; `ascending` ; `subquery`运算符
 + `Function[...],f`; `ascending` ; 任意函数
 
-+ `descending`运算符被应用于原始数据集的相应部分, 然后再应用后续运算符到更深的层次上. 
-+ `下降`运算符的特点是, 当应用在某一层次时, 不会改变更深层次的数据结构. 这就保证了后续运算符遇到的子表达式的结构, 与原始数据集的相应层次是相同的. 
-+ 最简单的`下降`运算符是`All`, 它选择了某一层次的所有部分, 因此使该层次的数据结构没有变化. `All`可以安全地被替换成任何其他的`下降`运算符, 从而产生另一个有效的查询. 
-+ 当所有后续的`上升`和`下降`运算符被应用到更深的层次后, 才应用`上升`运算符. `下降`运算符对应于原始数据的层次, 而`上升`运算符对应于结果的层次. 
-+ 与`下降`运算符不同, `上升`运算符不一定保留它们所操作数据的结构. 除非一个运算符被特别确认为是`descending`, 否则它被假定为`ascending`. 
++ `descending`运算符被应用于原始数据集的相应部分, 然后再应用后续运算符到更深的层次上.
++ `下降`运算符的特点是, 当应用在某一层次时, 不会改变更深层次的数据结构. 这就保证了后续运算符遇到的子表达式的结构, 与原始数据集的相应层次是相同的.
++ 最简单的`下降`运算符是`All`, 它选择了某一层次的所有部分, 因此使该层次的数据结构没有变化. `All`可以安全地被替换成任何其他的`下降`运算符, 从而产生另一个有效的查询.
++ 当所有后续的`上升`和`下降`运算符被应用到更深的层次后, 才应用`上升`运算符. `下降`运算符对应于原始数据的层次, 而`上升`运算符对应于结果的层次.
++ 与`下降`运算符不同, `上升`运算符不一定保留它们所操作数据的结构. 除非一个运算符被特别确认为是`descending`, 否则它被假定为`ascending`.
 
 #### 子集运算符
 
-`descending` part 操作符指定了在应用任何后续操作符到更深层次之前, 要在一个层次上取哪些元素. 
+`descending` part 操作符指定了在应用任何后续操作符到更深层次之前, 要在一个层次上取哪些元素.
 
 + `All` ;`对列表或关联的每个部分应用后续运算符
 + `i;;j` ; 抽取`i`到`j`部分并对每个部分应用后续操作符
 + `i` ; 只取第`i`部分, 并对其应用后续操作符
-+ `"key",Key[key]` ; 在一个关联中取`key`的值, 并对其应用后续运算符. 
-+ `Values` ; 取关联中的值, 并对每个值应用后续运算符. 
++ `"key",Key[key]` ; 在一个关联中取`key`的值, 并对其应用后续运算符.
++ `Values` ; 取关联中的值, 并对每个值应用后续运算符.
 + `{part1,part2,...}` ; 取给定的部分并对每个部分应用后续运算符
 
 #### 筛选运算符
 
-`descending` filtering 运算符指定了在将后续运算符应用到更深层次之前, 如何在一个层次上重新排列或过滤元素. 
+`descending` filtering 运算符指定了在将后续运算符应用到更深层次之前, 如何在一个层次上重新排列或过滤元素.
 
 + `Select[test]` ; 只取列表或关联中满足`test`的部分, 作用在关联时, 按`Value`选择.
 + `SelectFirst[test] ` ; 取出满足`test`的第一个部分.
-+ `KeySelect[test] ` ; 选取关联中那些键值满足`test`的部分. 
-+ `TakeLargestBy[f,n],TakeSmallestBy[f,n]` ;  取出使`f[elem]`为最大或最小的`n`个元素, 按照排序顺序. 
-+ `MaximalBy[crit],MinimalBy[crit]` ; 取出能够使`crit`最大或最小的元素. 
++ `KeySelect[test] ` ; 选取关联中那些键值满足`test`的部分.
++ `TakeLargestBy[f,n],TakeSmallestBy[f,n]` ;  取出使`f[elem]`为最大或最小的`n`个元素, 按照排序顺序.
++ `MaximalBy[crit],MinimalBy[crit]` ; 取出能够使`crit`最大或最小的元素.
 + `SortBy[crit] ` ; 按照`crit`的顺序对部分进行排序
-+ `KeySortBy[crit]` ; 根据键对关联中的项目进行排序, 按照`crit`的顺序. 
++ `KeySortBy[crit]` ; 根据键对关联中的项目进行排序, 按照`crit`的顺序.
 + `DeleteDuplicatesBy[crit]` ; 根据`crit`提取不重复的项目.
-+ `DeleteMissing ` ; 删除`Head`为`Missing`的元素. 
++ `DeleteMissing ` ; 删除`Head`为`Missing`的元素.
 
-语法 `op1/*op2`可以用来将两个或更多的过滤操作符结合成一个操作符, 但仍在一个层次上操作. 
+语法 `op1/*op2`可以用来将两个或更多的过滤操作符结合成一个操作符, 但仍在一个层次上操作.
 
 #### 聚合运算符
 
-`ascending` aggregation 运算符将后续运算符应用到更深层次的结果合并或汇总. 
+`ascending` aggregation 运算符将后续运算符应用到更深层次的结果合并或汇总.
 
 + `Total` ; 是结果中所有数量的总和
 + `Min, Max` ; 给出结果中的最小, 最大数量
 + `Mean,Median,Quantile,...`给出结果的统计摘要, Quantile: 分位数
-+ `Histogram,ListPlot,... `对结果进行可视化计算. 
-+ `Merge[f]` ; 使用函数`f`合并结果中具有相同键的关联子项.  
++ `Histogram,ListPlot,... `对结果进行可视化计算.
++ `Merge[f]` ; 使用函数`f`合并结果中具有相同键的关联子项.
 + `Catenate[{list1,list2}]` ; 将列表或关联的元素串联起来, 对于关联, 取出`Values`, 参数可以是列表和关联的混合.
 + `Join[list1,list2,n]`; 连接具有相同头部的列表或任意表达式, 在`n`层. 参数的头部必须相同.
 + `Counts` ; 给出关联, 统计结果中的值的次数
-+ `CountsBy[crit]` ;  给出关联, 根据`crit`来计算数值的出现次数. 
-+ `CountDistinct` 给出结果中不同元素的个数. 
-+ `CountDistinctBy[crit]` ; 根据`crit`给出结果中不同元素的个数. 
-+ `TakeLargest[n],TakeSmallest[n]` ; 取最大或最小的`n`个元素. 
++ `CountsBy[crit]` ;  给出关联, 根据`crit`来计算数值的出现次数.
++ `CountDistinct` 给出结果中不同元素的个数.
++ `CountDistinctBy[crit]` ; 根据`crit`给出结果中不同元素的个数.
++ `TakeLargest[n],TakeSmallest[n]` ; 取最大或最小的`n`个元素.
 
-语法 `op1/*op2`可以用来将两个或更多的聚合运算符组合成一个运算符, 但仍在一个层次上操作. 
+语法 `op1/*op2`可以用来将两个或更多的聚合运算符组合成一个运算符, 但仍在一个层次上操作.
 
 #### 子查询运算符 Query
 
-`ascending subquery` 运算符, 在后续运算符应用到更深的层次之后, 才执行子查询. 
+`ascending subquery` 运算符, 在后续运算符应用到更深的层次之后, 才执行子查询.
 
 + `Query[...]` ;  对结果进行子查询
 + `{op1,op2,...}` ; 对结果一次性应用多个运算符, 产生一个列表
 + `<|key1->op1, key2->op2,...|>` ; 对结果同时应用多个运算符, 产生与给定`key`相关的关联.
-+ `{key1->op1,key2->op2,...}` ; 对结果中的特定部分应用不同的运算符. 
++ `{key1->op1,key2->op2,...}` ; 对结果中的特定部分应用不同的运算符.
 
-+ 当一个或多个`descending`运算符与一个或多个`ascending`运算符组成时(如`desc/*asc`), 先应用`descending`部分, 然后应用后续运算符到更深的层次, 最后, 再应用`ascending`算符到该层的结果. 
++ 当一个或多个`descending`运算符与一个或多个`ascending`运算符组成时(如`desc/*asc`), 先应用`descending`部分, 然后应用后续运算符到更深的层次, 最后, 再应用`ascending`算符到该层的结果.
 
 在`Query`表达式被应用之前, `mathematica`将它 "编译"为普通 `Wolfram Language` 函数及算符的组合. 要看一个`Query`表达式的编译形式, 请使用`Normal`:
 
@@ -2169,7 +2169,7 @@ data = {
 Query[All, {"a" -> f, "b" -> g, "c" -> h}] @ data
 ```
 
-+ 通过指定计算每一列的运算符来构建一个新的表格. 
++ 通过指定计算每一列的运算符来构建一个新的表格.
 
 ```mathematica
 Query[All, "c" /* <|"ctotal" -> Total, "clength" -> Length|>] @ data
@@ -2189,11 +2189,11 @@ Query[MaximalBy[Length[#c] &]] @ data
 
 ### Query
 
-`Query` 是 `Part`的一种推广, 它们具有相似的语法. 
-对于规则的嵌套矩阵, 从最外层的括号数起, 如果元素`a`外面嵌套有`n`个括号, 那么提取元素`a`, 需要`n`个指标组成的序列. 
+`Query` 是 `Part`的一种推广, 它们具有相似的语法.
+对于规则的嵌套矩阵, 从最外层的括号数起, 如果元素`a`外面嵌套有`n`个括号, 那么提取元素`a`, 需要`n`个指标组成的序列.
 对于关联, 给出裸的指标获取`Value`, 给出括号包裹的指标`{1}`获取子关联.
 
-`Query[op1,op2,...]`是 `Dataset` 的查询语法, 可以对`Dataset`对象作用, 也可以对由列表和关联组成的任意嵌套表达式作用. 
+`Query[op1,op2,...]`是 `Dataset` 的查询语法, 可以对`Dataset`对象作用, 也可以对由列表和关联组成的任意嵌套表达式作用.
 
 例如：
 
@@ -2201,48 +2201,48 @@ Query[MaximalBy[Length[#c] &]] @ data
 Query["b", Total] @ <|"a" -> {1, 2}, "b" -> {3, 4}|>
 ```
 
-+ 算符`[op1,op2,...]`是这样作用于后面的数据集的：`op1`作用于数据整体, `op2`作用于数据第一层等等. 但同时还要考虑算符的结构性质. 
++ 算符`[op1,op2,...]`是这样作用于后面的数据集的：`op1`作用于数据整体, `op2`作用于数据第一层等等. 但同时还要考虑算符的结构性质.
 + `下降`算符在深入数据更深层次的时候依次作用, 如果`op1`, `op2`均为下降算符, `op2`作用于`op1`产生的结果的下一层次.
 + `上升`算符在浮出数据时候才作用. 深入数据维度的时候会消耗`下降`算符, 等到`下降`算符用尽, 则会开始向数据集的浅层上浮,
-这个时候才应用`上升`算符, 即使在算符序列中`上升`算符的次序在前面. 
+这个时候才应用`上升`算符, 即使在算符序列中`上升`算符的次序在前面.
 例如`Query[...,asc,dsc,...]` : 即使上升算符`asc`在前, 也先保持这一层数据不变, 应用后面的下降算符`dsc...`
 在返回的过程中, 对`dsc`这一层的所有数据再应用`asc`.
 + 可以使用`@*`以及`/*`构造复合算符. 例如`f@*g@*h`, `h`先作用到数据上. `/*`的情况刚好相反, `f/*g/*h`中`f`最先作用.
 复合算符作用在数据的同一层上, 同时遵守`上升下降`规则.
 + 普通的函数都被当成`上升算符`. `上升算符`的特点其实就是可能会改变数据的结构, 例如让这层数据坍缩到一点, 如`Total`, `Count`算符等等.
 
-+ 其中 `op1,op2,....`依次连续作用到更深的层次上. 但是任何给定的算符都可以在`下降`到`expr`或者`上升`到`expr`的时候被应用. 
++ 其中 `op1,op2,....`依次连续作用到更深的层次上. 但是任何给定的算符都可以在`下降`到`expr`或者`上升`到`expr`的时候被应用.
 Mathematica 采用的是树状数据结构. 下降和上升都是相对于这种数据结构而言的.
-+ 一般来说, 部分指定和过滤运算符是`下降`运算符. 聚合运算符, 子查询运算符和任意函数是`上升`运算符. 
++ 一般来说, 部分指定和过滤运算符是`下降`运算符. 聚合运算符, 子查询运算符和任意函数是`上升`运算符.
 + `Query[][expr]`返回`expr`, 即空算符返回所有.
 + 特殊的`下降`运算符`GroupBy[spec]`将在它出现的层次上引入一个新的关联, 可以从现有的查询中插入或删除, 而不影响其他运算符的行为. 也就是不进行上升或者下降.
-+ `GroupBy["string"]`的语法可以作为`GroupBy[Key["string"]]`的同义词来使用. 同样的语法也可用于`SortBy`, `CountsBy`, `MaximalBy`, `MinimalBy`和`DeleteDuplicatesBy`. 
- 
++ `GroupBy["string"]`的语法可以作为`GroupBy[Key["string"]]`的同义词来使用. 同样的语法也可用于`SortBy`, `CountsBy`, `MaximalBy`, `MinimalBy`和`DeleteDuplicatesBy`.
+
 #### 特殊运算符
 
-特殊的降序运算符: `GroupBy[spec]`, 将在它出现的层次上引入一个新的关联, 可以从现有的查询中插入或删除, 而不影响后续运算符. 
-在`Mathematica`中, 关联被视为单层结构. 
+特殊的降序运算符: `GroupBy[spec]`, 将在它出现的层次上引入一个新的关联, 可以从现有的查询中插入或删除, 而不影响后续运算符.
+在`Mathematica`中, 关联被视为单层结构.
 
 #### 语法捷径
 
-诸如`CountsBy`, `GroupBy`和`TakeLargestBy`这样的函数通常将另一个函数作为其参数之一. 
-在处理数据集中的关联时, 通常会使用这种 `by`函数来查询表中某一列的值. 
-为了方便起见, 数据集查询允许在这种情况下用`"字符串"`来表示`Key["字符串"]`的语法. 
+诸如`CountsBy`, `GroupBy`和`TakeLargestBy`这样的函数通常将另一个函数作为其参数之一.
+在处理数据集中的关联时, 通常会使用这种 `by`函数来查询表中某一列的值.
+为了方便起见, 数据集查询允许在这种情况下用`"字符串"`来表示`Key["字符串"]`的语法.
 
-例如, 查询运算符`GroupBy["string"]`在执行前会自动改写为`GroupBy[Key["string"]]`. 
-类似地, `GroupBy[dataset, "string"]`表达式被改写为`GroupBy[dataset,Key["string"]]`. 
+例如, 查询运算符`GroupBy["string"]`在执行前会自动改写为`GroupBy[Key["string"]]`.
+类似地, `GroupBy[dataset, "string"]`表达式被改写为`GroupBy[dataset,Key["string"]]`.
 
 #### 查询行为
 
-+ 只要可能, 会使用类型推导来确定一个查询是否会成功. 被推断为失败的操作将导致返回一个`Failure`对象而不执行查询. 
-+ 默认情况下, 如果在查询过程中产生了任何消息, 查询将被终止, 并返回一个包含消息的`Failure`对象. 
-+ 当查询返回结构化数据(例如列表或关联, 或这些数据的嵌套组合)时, 结果将以另一个`Dataset`对象的形式给出. 
-否则, 结果将以普通Wolfram语言表达式的形式给出. 
-+ 关于`Dataset`查询的特殊行为的更多信息, 请参见`Query`的功能页面. 
++ 只要可能, 会使用类型推导来确定一个查询是否会成功. 被推断为失败的操作将导致返回一个`Failure`对象而不执行查询.
++ 默认情况下, 如果在查询过程中产生了任何消息, 查询将被终止, 并返回一个包含消息的`Failure`对象.
++ 当查询返回结构化数据(例如列表或关联, 或这些数据的嵌套组合)时, 结果将以另一个`Dataset`对象的形式给出.
+否则, 结果将以普通Wolfram语言表达式的形式给出.
++ 关于`Dataset`查询的特殊行为的更多信息, 请参见`Query`的功能页面.
 
 ### 导出数据集
 
-`Normal`可以用来将任何数据集对象转换为其底层数据, 通常是列表和关联的组合. 
+`Normal`可以用来将任何数据集对象转换为其底层数据, 通常是列表和关联的组合.
 
 数据集对象可以通过`Export["file.ext",dataset]` 或 `ExportString[dataset, "fmt"]`来导出,  支持以下格式：
 
@@ -2252,4 +2252,4 @@ Mathematica 采用的是树状数据结构. 下降和上升都是相对于这种
 + `"Package"`: 人类可读的 Wolfram 语言表达式
 + `"MX"`: 打包的二进制协议
 
-+ `SemanticImport` 可用于将文件导入为数据集对象. 
++ `SemanticImport` 可用于将文件导入为数据集对象.
