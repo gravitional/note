@@ -14,13 +14,13 @@
 ***
 `pbcopy`, 与之对应的是`pbpaste`
 
-把命令行的输出直接复制到粘贴板：
+把命令行的输出直接复制到粘贴板: 
 
 ```bash
 $ sort -u | pbcopy
 ```
 
-把粘贴板内容直接存入一个文件：
+把粘贴板内容直接存入一个文件: 
 
 ```bash
 $ pbpaste > out.txt
@@ -99,7 +99,7 @@ Yuppy SC Regular
 
 [Sarasa Mono SC](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
 
-MacOS 用户可以直接通过cask安装：
+MacOS 用户可以直接通过cask安装: 
 
 ```bash
 brew tap laishulu/cask-fonts
@@ -117,8 +117,8 @@ brew install font-sarasa-nerd
 如果希望 `kpathsea` 搜索系统字体目录的话, 还需要配置 `OSFONTDIR` 这个环境变量.
 在 `MacTeX 2014` 中, 这个变量是默认配置好了的. 但是在 `MacTeX 2015` 中, 不知为何, 这个变量没有预先配置. 因此, 需要用户自行配置.
 
-具体的配置方法如下：
-编辑文件`/usr/local/texlive/2015/texmf.cnf`, 在文件末尾加上一行：`OSFONTDIR = /Library/Fonts//:~/Library/Fonts//`
+具体的配置方法如下: 
+编辑文件`/usr/local/texlive/2015/texmf.cnf`, 在文件末尾加上一行: `OSFONTDIR = /Library/Fonts//:~/Library/Fonts//`
 保存文件
 
 `macTex`的字体文件在`/usr/local/texlive/2020/texmf-dist/fonts`, 使用`fontspec`和`xetex`时, 可能不会自动搜索`TeXLive` tree, 参考
@@ -128,9 +128,9 @@ brew install font-sarasa-nerd
 ## mac 快捷键设置
 
 [在 Mac 上使用全局键盘快捷键](https://support.apple.com/zh-cn/guide/mac-help/mchlp2262/10.15/mac/10.15)
-您只能为现有菜单命令创建键盘快捷键. 您不能为通用任务定义键盘快捷键, 例如：打开一个 `App` 或在 `App` 之间切换.
+您只能为现有菜单命令创建键盘快捷键. 您不能为通用任务定义键盘快捷键, 例如: 打开一个 `App` 或在 `App` 之间切换.
 
-妙控键盘的控制键顺序是 `contrl`,`option`,`command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改：
+妙控键盘的控制键顺序是 `contrl`,`option`,`command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改: 
 
 + 切换输入为`opt+space`
 + `spotlight`的快捷键为`opt+s`
@@ -170,7 +170,7 @@ Finder中显示隐藏文件`Cmd+Shift+.`
 `brew Shellenv`:
 Print export statements. 在shell中运行时, 将Homebrew 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`.
 变量`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`和`HOMEBREW_REPOSITORY`也被导出以避免多次查询.
-考虑将该命令的输出添加配置文件中(例如`~/.profile, ~/.bash_profile, or ~/.zprofile`), 例如：`eval "$(/opt/homebrew/bin/brew shellenv)"`
+考虑将该命令的输出添加配置文件中(例如`~/.profile, ~/.bash_profile, or ~/.zprofile`), 例如: `eval "$(/opt/homebrew/bin/brew shellenv)"`
 
 ***
 uninstall/卸载brew: 运行  `git` 仓库中的`uninstall.sh`脚本即可, 但是其中有一个`raw github` 地址, 需要更改一下.
@@ -184,7 +184,7 @@ zsh problem: compinit:503: no such file or directory: /usr/local/share/zsh/site-
 进入`/usr/local/share/zsh/site-functions/`, `rm _brew _brew_cask`即可.
 
 ***
-brew 命令补全：在`.zshrc`文件附上
+brew 命令补全: 在`.zshrc`文件附上
 
 ```bash
 if type brew &>/dev/null; then
@@ -196,7 +196,7 @@ fi
 
 其中`/share/zsh-completions`是插件`zsh-completions`补全函数的位置.
 
-### tuna
+### brew,tuna
 
 建议按照[Homebrew / Linuxbrew 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/)中的教程安装
 以及 [Homebrew-bottles 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew-bottles/)
@@ -205,23 +205,23 @@ fi
 
 如果没有使用过`homebrew/cask/sublime-text`下面的软件, 可能没有`/opt/homebrew/Library/Taps/homebrew/homebrew-cask`这个目录, 随便安装一个`cask`软件, 再设置即可.
 
-### sspai
+### brew,sspai
 
 [在 M1 芯片 Mac 上使用 Homebrew](https://sspai.com/post/63935)
 
 为什么 ARM 版 Mac 要使用 `/opt `路径？
 
-根据《文件系统层次结构标准》(Filesystem Hierarchy Standard, 主要为 Linux 系统制定, 但对具有共同 UNIX 基因的 macOS 也有参考价值)：
+根据《文件系统层次结构标准》(Filesystem Hierarchy Standard, 主要为 Linux 系统制定, 但对具有共同 UNIX 基因的 macOS 也有参考价值): 
 `/usr/local` 目录用于系统管理员在本地安装软件. 系统软件更新时, 该目录应免于被覆盖.
 `/opt` 目录留作附加应用程序(add-on application)软件包的安装. 安装在该目录下的软件包必须将其静态文件放置在单独的 `/opt/<package>` 或` /opt/<provider>` 路径下.
-历史上, `/usr/local` 主要用于放置在本地编译并另行安装的程序, 避免和` /usr `下的系统自带版本冲突；而 `/opt` 则用于安装非系统自带的, 第三方预先编译并发行的独立软件包.
+历史上, `/usr/local` 主要用于放置在本地编译并另行安装的程序, 避免和` /usr `下的系统自带版本冲突;而 `/opt` 则用于安装非系统自带的, 第三方预先编译并发行的独立软件包.
 显然, 在如今的 macOS 使用场景下, 用户很少会需要自行编译软件包, `/usr/local` 和 `/opt` 的区分一定程度上已经成为名义上的了.
 Homebrew 启用 `/opt` 作为 ARM 版的安装路径, 可能更多是出于确保与 X86 版相互区隔的考虑.
 
 ***
 `Homebrew` 是一款`Mac OS`平台下的软件包管理工具,拥有安装, 卸载, 更新, 查看, 搜索等很多实用的功能.`Homebrew` 的两个术语:
 
-`Formulae` :软件包,包括了这个软件的依赖, 源码位置及编译方法等；
+`Formulae` :软件包,包括了这个软件的依赖, 源码位置及编译方法等;
 `Casks`:已经编译好的应用包,如图形界面程序等. 现在的版本中,`brew cask install` 已经过时了,建议使用`brew install [--cask]`.
 
 ***
@@ -462,13 +462,13 @@ $ bash --noediting
 ***
 其他快捷键
 
-`Ctrl+j`：等同于回车键(LINEFEED).
-`Ctrl+m`：等同于回车键(CARRIAGE RETURN).
-`Ctrl+o`：等同于回车键, 并展示操作历史的下一个命令.
-`Ctrl+v`：将下一个输入的特殊字符变成字面量, 比如回车变成`^M`.
-`Ctrl+[`：等同于 `ESC`.
-`Alt+.`：插入上一个命令的最后一个词.
-`Alt+_`：等同于`Alt+.`.
+`Ctrl+j`: 等同于回车键(LINEFEED).
+`Ctrl+m`: 等同于回车键(CARRIAGE RETURN).
+`Ctrl+o`: 等同于回车键, 并展示操作历史的下一个命令.
+`Ctrl+v`: 将下一个输入的特殊字符变成字面量, 比如回车变成`^M`.
+`Ctrl+[`: 等同于 `ESC`.
+`Alt+.`: 插入上一个命令的最后一个词.
+`Alt+_`: 等同于`Alt+.`.
 上面的`Alt+.`快捷键, 对于很长的文件路径, 有时会非常方便.因为 Unix 命令的最后一个参数通常是文件路径.
 
 ### 颜色配置
@@ -480,7 +480,7 @@ $ bash --noediting
 大多数情况下, 你执行 `ls --color`  就可以了, 它会用彩色来区分不同的文件类型．
 你可以添加 `alias ls='ls --color=auto'`  到你的 `~/.zshrc` . `auto`这个值可以确保你将`ls`的输出重定向到一个文件时不会产生问题．
 
-如果你想要详细了解这个功能, 可以阅读`coreutils`文档里面的相应章节：
+如果你想要详细了解这个功能, 可以阅读`coreutils`文档里面的相应章节: 
 [GNU Coreutils: General output formatting](http://www.gnu.org/software/coreutils/manual/html_node/General-output-formatting.html#General-output-formatting),
 [GNU Coreutils: dircolors invocation](http://www.gnu.org/software/coreutils/manual/html_node/dircolors-invocation.html#dircolors-invocation). (注意配置文件的详细说明其实在 `dircolors --print-database`  这个命令的输出里面)．
 
@@ -504,7 +504,7 @@ TinkerTool 是一款专注于管理系统设置的免费应用.
 ***
 配置 `Launchpad`
 
-可以通过终端对Launchpad排列方式进行修改,复制以下代码至终端即可:
+可以通过终端对 `Launchpad` 排列方式进行修改,复制以下代码至终端即可:
 
 ```bash
 defaults write com.apple.dock springboard-columns -int 8;
@@ -605,35 +605,104 @@ caffeinate -t 3600
 brew cask install App
 ```
 
-将 App 替换为你需要安装的软件的名字即可.
-但是使用前,需要你在电脑中安装 Homebrew Cask ,具体可以参考《再谈 Homebrew Cask 在 macOS 上安装应用的轻松感》.
-大多数通过 Cask 安装的软件都自带更新选项,如果没有该选项,用户依旧可以通过终端进行更新,
+将 `App` 替换为你需要安装的软件的名字即可.
+但是使用前,需要你在电脑中安装 `Homebrew Cask` ,具体可以参考`再谈 Homebrew Cask 在 macOS 上安装应用的轻松感`.
+大多数通过 `Cask` 安装的软件都自带更新选项,如果没有该选项,用户依旧可以通过终端进行更新,
 在终端中输入`brew tap buo/cask-upgrade`,然后再输入下段命令即可更新全部应用:
 
 ```bash
 brew cu
 ```
 
-### 批量更新macOS软件
+### mas,批量更新macOS软件
 
-如果你希望安装 MAS 上的应用,也可以绕过原生的商店应用,直接采用终端进行安装.
-你可以先通过刚才安装的 Homebrew 安装一个我们需要的 `mas` ,即在终端输入:
+[终端上的 Mac App Store mas](https://sspai.com/post/40382)
+[mas-cli/mas](https://github.com/mas-cli/mas)
+
+如果你希望安装 `Mac App Store` 上的应用,也可以绕过原生的商店应用,直接采用终端进行安装.
+你可以先通过刚才安装的 `Homebrew` 安装一个我们需要的 `mas` ,即在终端输入:
 
 ```bash
 brew install mas
 ```
 
-然后,可以在终端中搜索需要的软件,或者直接输入关键字段加上应用的识别码进行安装:
+#### 查询与安装应用
+
+Mac App Store 中每一个应用都有自己的应用识别码(Product Identifier),这可以在每个应用的链接中看到.
+`mas` 就是根据 `Product Identifier `安装与更新应用,也提供了查询应用 `ID` 的命令.
+
+由 `1Password` 的链接可知其识别码为 `443987910` 
+
+   https://itunes.apple.com/cn/app/1password/id443987910?mt=12
+
+除了查看链接,有以下 `x` 种方法获取应用的识别码: 
+
++ 用命令 `mas search` 关键词 查询应用.比如在终端中执行 `mas search xcode`;
++ 用命令 `mas list` 查询已安装应用及其识别码.
 
 ```bash
-mas install AppID
+mas search Xcode & mas list
 ```
 
-一键更新所有的 `Store` 应用:
+安装应用只需知道此应用的识别码就可以安装具体软件.比如安装 `Bear`,流程如下: 
+第一步: 由命令 `mas search bear` 得知应用 `Bear` 的识别码为 `1091189122`;
+第二步: 使用命令 `mas install 1091189122` 安装.
+
+>注意: 
+>应用必须在商店登陆账号的已购列表中,因为命令行无法完成`购买`这个操作;
+>对于新上架的应用,可能无法查询到其`识别码`.因为 `mas` 的查询列表在缓存文件中,目前尚不清楚其列表更新周期,
+但若由其他途径(如`应用链接`)>得知新上架`应用识别码`,仍可正常安装.
+
+我们不仅可以使用命令行安装单个应用,还可以批量安装应用,只需在应用识别码之间加上空格: 
+
+```bash
+mas install 甲应用识别码 乙应用识别码 丙应用识别码
+```
+
+#### 更新应用
+
+如果要更新所有 `Mac App Store` 应用,只需终端执行一句命令: 
 
 ```bash
 mas upgrade
 ```
+
+如果更新特定应用,需要使用命令 `mas outdated` 先查询待更新列表以获取应用识别码,再更新一个或几个应用: 
+
+```bash
+mas upgrade 甲应用识别码
+mas upgrade 甲应用识别码 乙应用识别码 丙应用识别码
+```
+
+但要注意, `mas` 无法用于系统更新,即只能更新显示在 `Mac App Store` 中的应用.
+但可以使用命令 `softwareupdate -l` 获取系统更新列表,然后使用 `sudo softwareupdate -iRa` 进行更新. `-R`表示重启.
+
+#### 切换 MacAppStore 账号
+
+这是多区账号拥有者的福音,我们终于可以更方便地下载和更新其他区的应用了.
+如果忘记了当前帐号,使用命令 `mas account` 查询.可用命令 `mas signout` 退出当前帐号,并按如下命令登陆新的账号: 
+
+```bash
+mas signin Apple ID "密码" # 如: mas signin mas@example.com "mypassword"
+```
+
+也可以设置命令别名以得到更爽快的体验,在隐藏文件 `.bashrc` 中添加以下内容: 其路径为 `~/.bashrc`,同时按 `shift + command + .` 可显示隐藏文件.
+
+```bash
+alias masus='mas signout && mas signin myusappleid "mypassword"'
+alias mascn='mas signout && mas signin mycnappleid "mypassword"'
+alias mas?='mas account'
+```
+
+需重新打开终端以载入设置,那么在终端中执行 `masus` 即可切换到美区帐号,`mascn` 即切到中区, `mas?` 可查询目前登陆帐号.
+但如果开启了双重认证,可能遇到错误信息: 
+
+   Error: Sign in failed: The operation couldn' t be completed. (mas.MASError error 1.)
+
+关闭双重认证则一切正常,但并不建议这样做,可以考虑关闭非重要帐号的双重认证,但 iOS 10.3 或 macOS Sierra 10.12.4 及更高版本中创建的某些帐户,无法关闭双重认证.
+`mas` 团队正在着手处理开启双重认证无法登陆的问题,可去[督促一番](https://github.com/mas-cli/mas/issues/56).
+
+在问题解决之前该怎么办: 在 Mac App Store 中登陆帐号,然后重新打开终端(`Terminal`)即可.
 
 ## vs code 调整
 
