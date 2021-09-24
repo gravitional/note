@@ -1019,8 +1019,8 @@ sudo grub-probe --target=fs_uuid /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi
 ***
 [Arch Wiki 上的示例](https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%90%AF%E5%8A%A8%E8%8F%9C%E5%8D%95%E6%9D%A1%E7%9B%AE%E7%A4%BA%E4%BE%8B)
 
-这个模式寻找 Windows 的启动加载器的位置, 然后当用户选择了相应的菜单条目的时候, 通过链式载入的方法在 GRUB 之后加载它. 
-这里主要的任务是找到 EFI 系统分区然后从上面运行启动加载器. 注意： 这个启动项仅在 UEFI 模式下才起作用, 而且 Windows 和 UEFI 的位数必须相同. 
+这个模式寻找 `Windows` 的启动加载器的位置, 然后当用户选择了相应的菜单条目的时候, 通过链式载入的方法在 `GRUB` 之后加载它. 
+这里主要的任务是找到 EFI 系统分区然后从上面运行启动加载器. 注意： 这个启动项仅在 `UEFI` 模式下才起作用, 而且 `Windows` 和 `UEFI` 的位数必须相同. 
 
 ```bash
 if [ "${grub_platform}" == "efi" ]; then
@@ -1052,13 +1052,13 @@ fi
 --hint-bios=hd0,gpt1 --hint-efi=hd0,gpt1 --hint-baremetal=ahci0,gpt1
 ```
 
-这两个命令都是假设 `Windows` 使用的 `ESP` 是挂载在`$esp`上的. 当然,  `Windows` 的 EFI 文件路径可能有变,因为这就是 `Windows` .... 
+这两个命令都是假设 `Windows` 使用的 `ESP` 是挂载在`$esp`上的. 当然,  `Windows` 的 `EFI` 文件路径可能有变,因为这就是 `Windows` .... 
 
 ### 我使用的 grub 自定义
 
 [Writing your own configuration file](https://www.gnu.org/software/grub/manual/grub/grub.html#search)
 
-编辑 `/etc/default/grub`
++ 编辑 `/etc/default/grub`
 
 ```grub
 GRUB_DEFAULT=0 #设置默认为第一个
@@ -1066,7 +1066,7 @@ GRUB_TIMEOUT=10 #设置等待时间
 GRUB_TIMEOUT_STYLE=menu # 强制显示启动菜单
 ```
 
-编辑 `/etc/grub.d/40_custom`, 添加 `windows`启动项, 
++ 编辑 `/etc/grub.d/40_custom`, 添加 `windows`启动项, 
 
 ```bash
 if [ "${grub_platform}" == "efi" ]; then
@@ -1097,21 +1097,15 @@ boot
 
 [nomodeset, quiet and splash](https://askubuntu.com/questions/716957/what-do-the-nomodeset-quiet-and-splash-kernel-parameters-mean)
 
-`nomodeset`
-
-最新的内核已将`video mode setting`移入内核. So all the programming of the hardware specific clock rates and registers on the video card 发生在内核中, 
++ `nomodeset` ; 最新的内核已将`video mode setting`移入内核. 
+So all the programming of the hardware specific clock rates and registers on the video card 发生在内核中, 
 而不是`X`服务器启动后的`X`驱动中. 如此, 可以在开机时展示高分辨率`splash/boot`画面, 并实现平滑过渡, 不用闪烁一下子. 
 然而有些显卡无法正常工作, 并且最终会出现黑屏. 添加`nomodeset`参数指示内核在加载`X`之前不加载显卡驱动程序, 而改用`BIOS`模式. 
 
-***
-`quiet splash`
-
-`splash`(由`/boot/grub/grub.cfg`设置)导致显示启动画面. 同时, 您希望启动过程安静一些, 否则所有类型的消息都会覆盖启动屏幕. 
++ `quiet splash`; `splash`(由`/boot/grub/grub.cfg`设置)导致显示启动画面. 同时, 您希望启动过程安静一些, 否则所有类型的消息都会覆盖启动屏幕. 
 尽管在`GRUB`中指定了这些参数, 但它们是影响内核或其模块加载的内核参数, 而不是改变`GRUB`行为的参数. 来自`GRUB_CMDLINE_LINUX_DEFAULT`的重要部分是`CMDLINE_LINUX`
 
-***
-`acpi`, `noapic` and `nolapic`:
-通常不需要这些参数, 除非你的`BIOS`很古老, 不支持这些标准. 
++ `acpi`, `noapic` and `nolapic`;通常不需要这些参数, 除非你的`BIOS`很古老, 不支持这些标准. 
 
 `ACPI`(Advanced Configuration and Power Interface)是用于处理电源管理的标准. 
 较早的系统可能不完全支持`ACPI`, 因此有时它有助于向内核提示不使用它. `acpi=off`
