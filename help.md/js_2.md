@@ -706,94 +706,633 @@ if ((new Cat('x') instanceof Animal)
 }
 ```
 
-## node.js
+## 浏览器
 
-有个叫`Ryan Dahl`的歪果仁, 他的工作是用`C/C++`写高性能`Web`服务. 对于高性能, `异步IO`, `事件驱动`是基本原则,
-但是用`C/C++`写就太痛苦了. 于是这位仁兄开始设想用高级语言开发`Web`服务.
-他评估了很多种高级语言, 发现很多语言虽然同时提供了`同步IO`和`异步IO`, 但是开发人员一旦用了`同步IO`,
-他们就再也懒得写`异步IO`了, 所以, 最终, Ryan瞄向了`JavaScript`.
+不同的浏览器对 `JavaScript` 支持的差异主要是,有些`API`的接口不一样,比如 `AJAX`,`File` 接口.对于 `ES6` 标准,不同的浏览器对各个特性支持也不一样.
+在编写 `JavaScript` 的时候,就要充分考虑到浏览器的差异,尽量让同一份 `JavaScript` 代码能运行在不同的浏览器中.
 
-因为`JavaScript`是单线程执行, 根本不能进行`同步IO`操作, 所以, `JavaScript`的这一"缺陷"导致了它只能使用`异步IO`.
+### 浏览器对象
 
-选定了开发语言, 还要有`运行时引擎`. 这位仁兄曾考虑过自己写一个, 不过明智地放弃了, 因为`V8`就是开源的`JavaScript`引擎.
-让`Google`投资去优化V8, 咱只负责改造一下拿来用, 还不用付钱, 这个买卖很划算.
+`JavaScript`可以获取浏览器提供的很多对象,并进行操作.
 
-于是在2009年, Ryan正式推出了基于`JavaScript`语言和`V8`引擎的开源`Web`服务器项目, 命名为`Node.js`.
-虽然名字很土, 但是, `Node` 第一次把`JavaScript`带入到后端服务器开发, 加上世界上已经有无数的`JavaScript`开发人员, 所以`Node`一下子就火了起来.
+#### window
 
-在`Node`上运行的`JavaScript`相比其他后端开发语言有何优势?
-最大的优势是借助`JavaScript`天生的事件驱动机制加`V8`高性能引擎, 使编写高性能`Web`服务轻而易举.
-其次, `JavaScript`语言本身是完善的函数式语言,
-在前端开发时, 开发人员往往写得比较随意, 让人感觉`JavaScript`就是个`玩具语言`.
+`window`对象不但充当`全局作用域`,而且表示`浏览器窗口`.
 
-但是, 在`Node`环境下, 通过模块化的`JavaScript`代码, 加上函数式编程, 并且无需考虑浏览器兼容性问题, 直接使用最新的`ECMAScript 6`标准, 可以完全满足工程上的需求.
+`window`对象有`innerWidth`和`innerHeight`属性,可以获取浏览器窗口的`内部宽度`和`高度`. 
+`内部宽高`是指除去`菜单栏`,`工具栏`,`边框`等占位元素后,用于显示网页的净宽高.
+兼容性: `IE<=8`不支持.
 
->我还听说过`io.js`, 这又是什么鬼?
+```js
+// 可以调整浏览器窗口大小试试:
+console.log('window inner size: ' + window.innerWidth + ' x ' + window.innerHeight);
+```
 
-因为`Node.js`是开源项目, 虽然由社区推动, 但幕后一直由`Joyent`公司资助. 由于一群开发者对`Joyent`公司的策略不满, 于2014年从`Node.js`项目fork出了`io.js`项目, 决定单独发展, 但两者实际上是兼容的.
-分家后没多久, `Joyent`公司表示要和解, 于是, `io.js`项目又决定回归`Node.js`.
+对应的,还有一个`outerWidth`和`outerHeight`属性,可以获取浏览器窗口的整个宽高.
 
-具体做法是将来`io.js`将首先添加新的特性, 如果大家测试用得爽, 就把新特性加入`Node.js`.
-`io.js`是"尝鲜版", 而`Node.js`是线上稳定版, 相当于 `Fedora Linux` 和 `RHEL` 的关系.
+#### navigator
 
-### 安装Node.js和npm
+`navigator` 对象表示浏览器的信息,最常用的属性包括: 
 
-由于`Node.js`平台是在后端运行`JavaScript`代码, 所以, 必须首先在本机安装`Node`环境.
++ `navigator.appName` ;  浏览器名称;
++ `navigator.appVersion` ;  浏览器版本;
++ `navigator.language` ;  浏览器设置的语言;
++ `navigator.platform` ;  操作系统类型;
++ `navigator.userAgent` ;  浏览器设定的User-Agent字符串.
 
-`ubuntu` 使用`sudo apt install nodejs`安装. `windows`到官网下载安装包.
-安装完成后, 输入`node -v`, 如果安装正常, 你应该看到类似`v10.19.0`这样的输出.
-
-#### npm
-
-`npm`是什么东东? `npm` 其实是`Node.js`的包管理工具(`node package manager`).
-
-为啥我们需要一个包管理工具呢? 因为我们在`Node.js`上开发时, 会用到很多别人写的`JavaScript`模块.
-大家都把自己开发的模块打包后放到`npm`官网上, 如果要使用, 直接通过`npm`安装就可以直接用, 不用管代码存在哪, 应该从哪下载.
-更重要的是, `npm`自动处理模块之间的依赖关系.
-
-同样,  ubuntu 使用 `sudo apt install npm` 安装, 在终端输入`npm -v`, 应该看到类似`6.14.4`的输出.
-
-### 第一个Node程序
-
-在前面的所有章节中, 我们编写的`JavaScript`代码都是在浏览器中运行的, 因此, 我们可以直接在浏览器中敲代码, 然后直接运行.
-
-从本章开始, 我们编写的`JavaScript`代码将不能在浏览器环境中执行了, 而是在`Node`环境中执行.
-因此, `JavaScript`代码将直接在你的计算机上以命令行的方式运行,
-所以, 我们要先选择一个文本编辑器来编写`JavaScript` 代码, 并且把它保存到本地硬盘的某个目录, 才能够执行.
-
-请注意, **绝对不能用Word和写字板**. Word和写字板保存的不是纯文本文件.
-记事本以UTF-8格式保存文件时, 会自作聪明地在文件开始的地方加上几个特殊字符(`UTF-8 BOM`),
-结果经常会导致程序运行出现莫名其妙的错误.
-
-可以使用`VSCode`也可以用来编写`JavaScript`代码, 注意用`UTF-8`格式保存. 输入以下代码:
+例如: 
 
 ```js
 'use strict';
-console.log('Hello, world.');
+console.log('appName = ' + navigator.appName);
+console.log('appVersion = ' + navigator.appVersion);
+console.log('language = ' + navigator.language);
+console.log('platform = ' + navigator.platform);
+console.log('userAgent = ' + navigator.userAgent);
 ```
 
-第一行总是写上`'use strict'`;是因为我们总是以严格模式运行`JavaScript`代码, 避免各种潜在陷阱.
-在命令行中输入以下命令来运行这个程序:
+请注意, `navigator` 的信息可以很容易地被用户修改,所以`JavaScript`读取的值不一定是正确的.很多初学者为了针对不同浏览器编写不同的代码,喜欢用`if`判断浏览器版本,例如: 
 
 ```js
-C:\Workspace>node hello.js
-Hello, world.
+var width;
+if (getIEVersion(navigator.userAgent) < 9) {
+    width = document.body.clientWidth;
+} else {
+    width = window.innerWidth;
+}
 ```
 
-也可以保存为别的名字, 但是必须以`.js`结尾. 此外, 文件名只能是英文字母, 数字和下划线的组合.
-
-在命令行模式运行`.js`文件和在`Node`交互式环境下直接运行`JavaScript`代码有所不同.
-`Node`交互式环境会把每一行`JavaScript`代码的结果自动打印出来, 但是, 直接运行`JavaScript`文件却不会.
-想要输出结果, 必须自己用`console.log()`打印出来. 例如:
+但这样既可能判断不准确,也很难维护代码. 正确的方法是充分利用`JavaScript`对不存在属性返回`undefined`的特性,直接用短路运算符`||`计算: 
 
 ```js
-console.log(100 + 200 + 300);
+var width = window.innerWidth || document.body.clientWidth;
 ```
 
-可以给`node`程序传递参数, 让`Node`直接为所有`js`文件开启严格模式:
+#### screen
 
-```bash
-node --use_strict calc.js
+`screen` 对象表示屏幕的信息,常用的属性有: 
+
++ `screen.width` ; 屏幕宽度,以`像素`为单位;
++ `screen.height` ; 屏幕高度,以`像素`为单位;
++ `screen.colorDepth` ; 返回颜色位数, 如`8`,`16`,`24`   .
+
+```js
+'use strict';
+console.log('Screen size = ' + screen.width + ' x ' + screen.height);
 ```
 
-后续代码, 如无特殊说明, 我们都会直接给`Node`传递`--use_strict`参数来开启严格模式.
+#### location
+
+`location` 对象表示当前页面的`URL`信息.例如,一个完整的`URL`: 
+
+    http://www.example.com:8080/path/index.html?a=1&b=2#TOP
+
+可以用 `location.href` 获取.要获得`URL`各个部分的值,可以这么写: 
+
+```js
+location.protocol; // 'http'
+location.host; // 'www.example.com'
+location.port; // '8080'
+location.pathname; // '/path/index.html'
+location.search; // '?a=1&b=2'
+location.hash; // 'TOP'
+```
+
+要加载一个新页面,可以调用`location.assign()`. 如果要重新加载当前页面,调用`location.reload()`方法非常方便.
+
+```js
+'use strict';
+if (confirm('重新加载当前页' + location.href + '?')) {
+    location.reload();
+} else {
+    location.assign('/'); // 设置一个新的URL地址
+}
+```
+
+#### document
+
++ `document`对象表示当前页面. 由于`HTML`在浏览器中以`DOM`形式表示为树形结构,`document`对象就是整个`DOM`树的根节点.
++ `document`的`title`属性是从`HTML`文档中的`<title>xxx</title>`读取的,但是可以动态改变: 
+
+```js
+'use strict';
+document.title = '努力学习JavaScript!';
+```
+
+请观察浏览器窗口标题的变化.
+
+要查找`DOM`树的某个节点,需要`从document`对象开始查找.最常用的查找是根据`ID`和`Tag Name`.
+我们先准备`HTML`数据: 
+
+```js
+<dl id="drink-menu" style="border:solid 1px #ccc;padding:6px;">
+    <dt>摩卡</dt>
+    <dd>热摩卡咖啡</dd>
+    <dt>酸奶</dt>
+    <dd>北京老酸奶</dd>
+    <dt>果汁</dt>
+    <dd>鲜榨苹果汁</dd>
+</dl>
+```
+
+用`document`对象提供的`getElementById()`和`getElementsByTagName()`可以按`ID`获得一个`DOM`节点和按`Tag`名称获得一组`DOM`节点: 
+
+```js
+'use strict';
+var menu = document.getElementById('drink-menu');
+var drinks = document.getElementsByTagName('dt');
+var i, s;
+s = '提供的饮料有:';
+for (i=0; i<drinks.length; i++) {
+    s = s + drinks[i].innerHTML + ',';
+}
+console.log(s);
+```
+
+`document`对象还有一个`cookie`属性,可以获取当前页面的`Cookie`.
+
+`Cookie`是由服务器发送的`key-value`标示符.
+因为`HTTP`协议是无状态的,但是服务器要区分到底是哪个用户发过来的请求,就可以用`Cookie`来区分.
+当用户成功登录后,服务器发送一个`Cookie`给浏览器,例如`user=ABC123XYZ`(加密的字符串).... 
+此后,浏览器访问该网站时,会在请求头附上这个`Cookie`,服务器根据`Cookie`即可区分出用户.
+
+`Cookie`还可以存储网站的一些设置, 例如页面显示的语言等等.
+
+`JavaScript`可以通过`document.cookie`读取到当前页面的`Cookie`: 
+
+```js
+document.cookie; // 'v=123; remember=true; prefer=zh'
+```
+
+由于`JavaScript`能读取到页面的`Cookie`,而用户的登录信息通常也存在`Cookie`中,这就造成了巨大的安全隐患,这是因为在`HTML`页面中引入第三方的J`avaScript`代码是允许的: 
+
+```js
+<!-- 当前页面在wwwexample.com -->
+<html>
+    <head>
+        <script src="http://www.foo.com/jquery.js"></script>
+    </head>
+    ...
+</html>
+```
+
+如果引入的第三方的`JavaScript`中存在恶意代码,则`www.foo.com`网站将直接获取到`www.example.com`网站的用户登录信息.
+
+为了解决这个问题,服务器在设置`Cookie`时可以使用`httpOnly`,设定了`httpOnly`的`Cookie`将不能被`JavaScript`读取.
+这个行为由浏览器实现,主流浏览器均支持`httpOnly`选项,IE从IE6 SP1开始支持.
+为了确保安全,服务器端在设置`Cookie`时,应该始终坚持使用`httpOnly`.
+
+#### history
+
+`history`对象保存了浏览器的历史记录, `JavaScript`可以调用`history`对象的`back()`或`forward ()`,相当于用户点击了浏览器的"后退"或"前进"按钮.
+
+这个对象属于历史遗留对象,对于现代`Web`页面来说,由于大量使用`AJAX`和页面交互,简单粗暴地调用`history.back()`可能会让用户感到非常愤怒.
+新手开始设计`Web`页面时喜欢在登录页登录成功时调用`history.back()`,试图回到登录前的页面.这是一种错误的方法.
+
+任何情况,你都不应该使用`history`这个对象了.
+
+### 操作DOM
+
+[文档对象模型 (DOM)](https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model)
+
+文档对象模型 (`DOM`) 将 `web` 页面与脚本或编程语言连接起来.
+通常是指  `JavaScript`,但将 HTML,SVG 或 XML 文档建模为对象并不是 `JavaScript` 语言的一部分.
+`DOM` 模型用`逻辑树`来表示一个文档,`树`的每个分支的终点都是一个节点(`node`),每个节点都包含着对象(`objects`).
+`DOM`的方法(methods)让你可以用特定方式操作这个树,用这些方法你可以改变文档的结构,样式或者内容.
+节点可以关联上`事件处理器`,一旦某一事件被触发了,那些事件处理器就会被执行.
+
+由于`HTML`文档被浏览器解析后就是一棵`DOM`树,要改变`HTML`的结构,就需要通过`JavaScript`来操作`DOM`.
+始终记住`DOM`是一个树形结构.操作一个`DOM`节点实际上就是这么几个操作: 
+
++ 更新 ; 更新该`DOM`节点的内容,相当于更新了该`DOM`节点表示的`HTML`的内容;
++ 遍历 ; 遍历该`DOM`节点下的子节点,以便进行进一步操作;
++ 添加 ; 在该`DOM`节点下新增一个子节点,相当于动态增加了一个`HTML`节点;
++ 删除 ; 将该节点从`HTML`中删除,相当于删掉了该`DOM`节点的内容以及它包含的所有子节点.
+
+在操作一个`DOM`节点前,我们需要通过各种方式先拿到这个`DOM`节点.
+最常用的方法是`document.getElementById()`和`document.getElementsByTagName()`,以及CSS选择器`document.getElementsByClassName()`.
+
+由于`ID`在 `HTML` 文档中是唯一的, 所以`document.getElementById()`可以直接定位唯一的一个`DOM`节点.
+`document.getElementsByTagName()`和`document.getElementsByClassName()`总是返回一组`DOM`节点.要精确地选择`DOM`,
+可以先定位父节点,再从父节点开始选择,以缩小范围.
+
+例如: 
+
+```js
+// 返回ID为'test'的节点: 
+var test = document.getElementById('test');
+// 先定位ID为'test-table'的节点,再返回其内部所有tr节点: 
+var trs = document.getElementById('test-table').getElementsByTagName('tr');
+// 先定位ID为'test-div'的节点,再返回其内部所有class包含red的节点: 
+var reds = document.getElementById('test-div').getElementsByClassName('red');
+// 获取节点test下的所有直属子节点:
+var cs = test.children;
+// 获取节点test下第一个,最后一个子节点: 
+var first = test.firstElementChild;
+var last = test.lastElementChild;
+```
+
+第二种方法是使用`querySelector()`和`querySelectorAll()`,需要了解`selector`语法,然后使用条件来获取节点,更加方便: 
+
+```js
+// 通过querySelector获取ID为q1的节点: 
+var q1 = document.querySelector('#q1');
+// 通过querySelectorAll获取q1节点内的符合条件的所有节点: 
+var ps = q1.querySelectorAll('div.highlighted > p');
+```
+
+注意: 低版本的`IE<8`不支持`querySelector`和`querySelectorAll`. `IE8`仅有限支持.
+
+严格地讲,我们这里的`DOM`节点是指`Element`, 但是`DOM`节点实际上是`Node`. 
+在`HTML`中, `Node`包括`Element`,`Comment`,`CDATA_SECTION`等很多种,以及根节点`Document`类型.
+但是,绝大多数时候我们只关心 `Element`,也就是实际控制页面结构的 `Node`,其他类型的 `Node` 忽略即可.
+根节点`Document`已经自动绑定为全局变量`document`.
+
+#### 练习
+
+如下的`HTML`结构: 
+
+```js
+<!-- HTML结构 -->
+<div id="test-div">
+<div class="c-red">
+    <p id="test-p">JavaScript</p>
+    <p>Java</p>
+  </div>
+  <div class="c-red c-green">
+    <p>Python</p>
+    <p>Ruby</p>
+    <p>Swift</p>
+  </div>
+  <div class="c-green">
+    <p>Scheme</p>
+    <p>Haskell</p>
+  </div>
+</div>
+```
+
+请选择出指定条件的节点: 
+
+```js
+'use strict';
+// 选择<p>JavaScript</p>:
+var js = document.getElementById("test-p");
+// 选择<p>Python</p>,<p>Ruby</p>,<p>Swift</p>:
+var arr = document.querySelectorAll(".c-red.c-green p");
+// 选择<p>Haskell</p>:
+var haskell = document.querySelector("#test-div div:last-child p:last-child");
+// 测试:
+if (!js || js.innerText !== 'JavaScript') {
+    alert('选择JavaScript失败!');
+} else if (!arr || arr.length !== 3 || !arr[0] || !arr[1] || !arr[2] || arr[0].innerText !== 'Python' || arr[1].innerText !== 'Ruby' || arr[2].innerText !== 'Swift') {
+    console.log('选择Python,Ruby,Swift失败!');
+} else if (!haskell || haskell.innerText !== 'Haskell') {
+    console.log('选择Haskell失败!');
+} else {
+    console.log('测试通过!');
+}
+```
+
+### 更新DOM
+
+拿到一个`DOM`节点后,我们可以对它进行更新. 可以直接修改节点的文本,方法有两种: 
+
+一种是修改 `innerHTML` 属性,这个方式非常强大,不但可以修改一个`DOM`节点的文本内容, 还可以直接通过`HTML`片段修改`DOM`节点内部的子树: 
+
+```js
+// 获取<p id="p-id">...</p>
+var p = document.getElementById('p-id');
+// 设置文本为abc:
+p.innerHTML = 'ABC'; // <p id="p-id">ABC</p>
+// 设置HTML:
+p.innerHTML = 'ABC <span style="color:red">RED</span> XYZ';
+// <p>...</p>的内部结构已修改
+```
+
+用`innerHTML`时要注意,是否需要写入`HTML`.`如果写入的字符串是通过网络拿到的, 要注意对字符编码来避免`XSS`攻击.
+
+第二种是修改`innerText`或`textContent`属性,这样可以自动对字符串进行`HTML`编码,保证无法设置任何`HTML`标签: 
+
+```js
+// 获取<p id="p-id">...</p>
+var p = document.getElementById('p-id');
+// 设置文本:
+p.innerText = '<script>alert("Hi")</script>';
+// HTML被自动编码,无法设置一个<script>节点:
+// <p id="p-id">&lt;script&gt;alert("Hi")&lt;/script&gt;</p>
+```
+
+两者的区别在于读取属性时, `innerText`不返回隐藏元素的文本,而`textContent`返回所有文本.另外注意`IE<9`不支持`textContent`.
+
+修改`CSS`也是经常需要的操作. `DOM`节点的`style`属性对应所有的`CSS`,可以直接获取或设置.
+因为`CSS`允许`font-size`这样的名称,但它并非`JavaScript`有效的属性名,所以需要在`JavaScript`中改写为驼峰式命名`fontSize`: 
+
+```js
+// 获取<p id="p-id">...</p>
+var p = document.getElementById('p-id');
+// 设置CSS:
+p.style.color = '#ff0000';
+p.style.fontSize = '20px';
+p.style.paddingTop = '2em';
+```
+
+#### 练习
+
+有如下的HTML结构: 
+
+```js
+<!-- HTML结构 -->
+<div id="test-div">
+  <p id="test-js">javascript</p>
+  <p>Java</p>
+</div>
+```
+
+请尝试获取指定节点并修改: 
+
+```js
+'use strict';
+// 获取<p>javascript</p>节点:
+var js = document.getElementById('test-js');
+// 修改文本为JavaScript:
+// TODO:
+js.innerHTML = 'JavaScript';
+// 修改CSS为: color: #ff0000, font-weight: bold
+// TODO:
+js.style.color = '#ff0000';
+js.style.fontWeight = 'bold';
+// 测试:
+if (js && js.parentNode && js.parentNode.id === 'test-div' && js.id === 'test-js') {
+    if (js.innerText === 'JavaScript') {
+        if (js.style && js.style.fontWeight === 'bold' && (js.style.color === 'red' || js.style.color === '#ff0000' || js.style.color === '#f00' || js.style.color === 'rgb(255, 0, 0)')) {
+            console.log('测试通过!');
+        } else {
+            console.log('CSS样式测试失败!');
+        }
+    } else {
+        console.log('文本测试失败!');
+    }
+} else {
+    console.log('节点测试失败!');
+}
+```
+
+### 插入DOM
+
+当我们获得了某个`DOM`节点,想在这个`DOM`节点内插入新的`DOM`,应该如何做？
+
+如果这个`DOM`节点是空的,例如,`<div></div>`,那么,直接使用 `innerHTML = '<span>child</span>'` 就可以修改`DOM`节点的内容, 相当于"插入"了新的`DOM`节点.
+如果这个`DOM`节点不是空的,那就不能这么做,因为`innerHTML`会直接替换掉原来的所有子节点.
+
+有两个办法可以插入新的节点.一个是使用`appendChild`,把`子节点`添加到父节点的最后一个子节点.例如: 
+
+```js
+<!-- HTML结构 -->
+<p id="js">JavaScript</p>
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+```
+
+把`<p id="js">JavaScript</p>添加到<div id="list">`的最后一项: 
+
+```js
+var
+    js = document.getElementById('js'),
+    list = document.getElementById('list');
+list.appendChild(js);
+```
+
+现在, `HTML` 结构变成了这样: 
+
+```js
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+    <p id="js">JavaScript</p>
+</div>
+```
+
+因为我们插入的`js`节点已经存在于当前的文档树, 因此这个节点首先会从原先的位置删除,再插入到新的位置.
+更多的时候我们会从零创建一个新的节点,然后插入到指定位置: 
+
+```js
+var
+    list = document.getElementById('list'),
+    haskell = document.createElement('p');
+haskell.id = 'haskell';
+haskell.innerText = 'Haskell';
+list.appendChild(haskell);
+```
+
+这样我们就动态添加了一个新的节点: 
+
+```js
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+    <p id="haskell">Haskell</p>
+</div>
+```
+
+动态创建一个节点然后添加到`DOM`树中,可以实现很多功能.
+举个例子,下面的代码动态创建了一个`<style>`节点,然后把它添加到`<head>`节点的末尾,这样就动态地给文档添加了新的`CSS`定义: 
+
+```js
+var d = document.createElement('style');
+d.setAttribute('type', 'text/css');
+d.innerHTML = 'p { color: red }';
+document.getElementsByTagName('head')[0].appendChild(d);
+```
+
+可以在`Chrome`的控制台执行上述代码,观察页面样式的变化.
+
+#### insertBefore
+
+如果我们要把子节点插入到指定的位置怎么办？可以使用`parentElement.insertBefore(newElement, referenceElement);`, 子节点会插入到`referenceElement`之前.
+还是以上面的`HTML`为例,假定我们要把`Haskell`插入到`Python`之前: 
+
+```js
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+```
+
+可以这么写: 
+
+```js
+var
+    list = document.getElementById('list'),
+    ref = document.getElementById('python'),
+    haskell = document.createElement('p');
+haskell.id = 'haskell';
+haskell.innerText = 'Haskell';
+list.insertBefore(haskell, ref);
+```
+
+新的`HTML`结构如下: 
+
+```js
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="haskell">Haskell</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+```
+
+可见,使用`insertBefore`的重点是, 拿到一个"参考子节点"的引用.很多时候,需要循环一个父节点的所有子节点,可以通过迭代children属性实现: 
+
+```js
+var
+    i, c,
+    list = document.getElementById('list');
+for (i = 0; i < list.children.length; i++) {
+    c = list.children[i]; // 拿到第i个子节点
+}
+```
+
+#### 练习
+
+对于一个已有的`HTML`结构: 
+
+```js
+<!-- HTML结构 -->
+<ol id="test-list">
+    <li class="lang">Scheme</li>
+    <li class="lang">JavaScript</li>
+    <li class="lang">Python</li>
+    <li class="lang">Ruby</li>
+    <li class="lang">Haskell</li>
+</ol>
+```
+
+按字符串顺序重新排序`DOM`节点: 
+
+```js
+'use strict';
+// sort list:
+list = document.getElementById('test-list');
+sort = Array.from(list.children).sort((a, b) => a.innerText > b.innerText ? 1:-1);
+for (let e of sort) list.appendChild(e); // 因为插入的节点已经存在于当前的文档树, 插入相当于 `移动' 操作.
+// 测试:
+;(function () {
+    var
+        arr, i,
+        t = document.getElementById('test-list');
+    if (t && t.children && t.children.length === 5) {
+        arr = [];
+        for (i=0; i<t.children.length; i++) {
+            arr.push(t.children[i].innerText);
+        }
+        if (arr.toString() === ['Haskell', 'JavaScript', 'Python', 'Ruby', 'Scheme'].toString()) {
+            console.log('测试通过!');
+        }
+        else {
+            console.log('测试失败: ' + arr.toString());
+        }
+    }
+    else {
+        console.log('测试失败!');
+    }
+})();
+```
+
+#### 删除DOM
+
+删除一个`DOM`节点就比插入要容易得多.
+要删除一个节点,首先要获得该节点本身以及它的父节点,然后,调用父节点的`removeChild`把自己删掉: 
+
+```js
+// 拿到待删除节点:
+var self = document.getElementById('to-be-removed');
+// 拿到父节点:
+var parent = self.parentElement;
+// 删除:
+var removed = parent.removeChild(self);
+removed === self; // true
+```
+
+注意到删除后的节点虽然不在文档树中了,但其实它还在内存中,可以随时再次被添加到别的位置.
+当你遍历一个父节点的子节点并进行删除操作时,要注意, `children` 属性是一个只读属性,并且它在子节点变化时会实时更新.
+
+例如,对于如下`HTML`结构: 
+
+```js
+<div id="parent">
+    <p>First</p>
+    <p>Second</p>
+</div>
+```
+
+当我们用如下代码删除子节点时: 
+
+```js
+var parent = document.getElementById('parent');
+parent.removeChild(parent.children[0]);
+parent.removeChild(parent.children[1]); // <-- 浏览器报错
+```
+
+浏览器报错: `parent.children[1]`不是一个有效的节点.
+原因就在于,当`<p>First</p>`节点被删除后, `parent.children` 的节点数量已经从`2`变为了`1`, 索引`[1]`已经不存在了.
+
+因此,删除多个节点时,要注意`children`属性时刻都在变化.
+
+#### 练习
+
+```js
+<!-- HTML结构 -->
+<ul id="test-list">
+    <li>JavaScript</li>
+    <li>Swift</li>
+    <li>HTML</li>
+    <li>ANSI C</li>
+    <li>CSS</li>
+    <li>DirectX</li>
+</ul>
+```
+
+把与`Web`开发技术不相关的节点删掉: 
+
+```js
+'use strict';
+// TODO
+var arr = ['JavaScript','HTML','CSS'], removed = []; // 存储删除的节点
+var parent = document.getElementById('test-list');
+Array.from(parent.children).forEach(ele => arr.includes(ele.innerText) ?{}: removed.push(parent.removeChild(ele)))
+console.log(removed)
+// 测试:
+;(function () {
+    var
+        arr, i,
+        t = document.getElementById('test-list');
+    if (t && t.children && t.children.length === 3) {
+        arr = [];
+        for (i = 0; i < t.children.length; i ++) {
+            arr.push(t.children[i].innerText);
+        }
+        if (arr.toString() === ['JavaScript', 'HTML', 'CSS'].toString()) {
+            console.log('测试通过!');
+        }
+        else {
+            console.log('测试失败: ' + arr.toString());
+        }
+    }
+    else {
+        console.log('测试失败!');
+    }
+})();
+```
+
+### 操作表单
+
