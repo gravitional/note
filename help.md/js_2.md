@@ -1079,7 +1079,7 @@ if (js && js.parentNode && js.parentNode.id === 'test-div' && js.id === 'test-js
 
 ### 插入DOM
 
-当我们获得了某个`DOM`节点,想在这个`DOM`节点内插入新的`DOM`,应该如何做？
+当我们获得了某个`DOM`节点,想在这个`DOM`节点内插入新的`DOM`,应该如何做?
 
 如果这个`DOM`节点是空的,例如,`<div></div>`,那么,直接使用 `innerHTML = '<span>child</span>'` 就可以修改`DOM`节点的内容, 相当于"插入"了新的`DOM`节点.
 如果这个`DOM`节点不是空的,那就不能这么做,因为`innerHTML`会直接替换掉原来的所有子节点.
@@ -1151,11 +1151,11 @@ d.innerHTML = 'p { color: red }';
 document.getElementsByTagName('head')[0].appendChild(d);
 ```
 
-可以在`Chrome`的控制台执行上述代码,观察页面样式的变化.
+可以在`Firefox`的控制台执行上述代码,观察页面样式的变化.
 
 #### insertBefore
 
-如果我们要把子节点插入到指定的位置怎么办？可以使用`parentElement.insertBefore(newElement, referenceElement);`, 子节点会插入到`referenceElement`之前.
+如果我们要把子节点插入到指定的位置怎么办?可以使用`parentElement.insertBefore(newElement, referenceElement);`, 子节点会插入到`referenceElement`之前.
 还是以上面的`HTML`为例,假定我们要把`Haskell`插入到`Python`之前: 
 
 ```js
@@ -1532,3 +1532,798 @@ else { return true; }
 ```
 
 ### 操作文件
+
+在`HTML`表单中,可以上传文件的唯一控件就是`<input type="file">`.
+
+注意: 当一个表单包含<input type="file">时,表单的`enctype`必须指定为`multipart/form-data`,
+`method`必须指定为`post`,浏览器才能正确编码并以`multipart/form-data`格式发送表单的数据.
+
+出于安全考虑,浏览器只允许用户点击`<input type="file">`来选择本地文件,
+用`JavaScript`对`<input type="file">`的`value`赋值是没有任何效果的.当用户选择了上传某个文件后,`JavaScript`也无法获得该文件的真实路径: 
+
+通常, 上传的文件都由后台服务器处理, `JavaScript` 可以在提交表单时对文件扩展名做检查,以便防止用户上传无效格式的文件: 
+
+```js
+var f = document.getElementById('test-file-upload');
+var filename = f.value; // 'C:\fakepath\test.png'
+if (!filename || !(filename.endsWith('.jpg') || filename.endsWith('.png') || filename.endsWith('.gif'))) {
+    alert('Can only upload image file.');
+    return false;
+}
+```
+
+#### File API
+
+由于`JavaScript`对用户上传的文件操作非常有限,尤其是无法读取文件内容,使得很多需要操作文件的网页不得不用`Flash`这样的第三方插件来实现.
+
+随着`HTML5`的普及,新增的`File API`允许`JavaScript`读取文件内容,获得更多的文件信息.
+`HTML5`的`File API`提供了`File`和`FileReader`两个主要对象,可以获得文件信息并读取文件.
+
+下面的例子演示了如何读取用户选取的图片文件,并在一个`<div>`中预览图像, 图片预览: 
+
+```js
+var
+    fileInput = document.getElementById('test-image-file'), // 输入的文件
+    info = document.getElementById('test-file-info'), // 文件信息
+    preview = document.getElementById('test-image-preview'); //文件预览
+// 监听change事件:
+fileInput.addEventListener('change', function () {
+    preview.style.backgroundImage = '';    // 清除背景图片:
+    if (!fileInput.value) {    // 检查文件是否选择:
+        info.innerHTML = '没有选择文件';
+        return;
+    }
+    var file = fileInput.files[0];    // 获取File引用:
+    // 获取File信息:
+    info.innerHTML = '文件: ' + file.name + '<br>' +
+                     '大小: ' + file.size + '<br>' +
+                     '修改: ' + file.lastModifiedDate;
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+        alert('不是有效的图片文件!');
+        return;
+    }
+    // 读取文件:
+    var reader = new FileReader();
+    reader.onload = function(e) { // on load,在读取完成的时候
+        var
+            data = e.target.result; // 'data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...'            
+        preview.style.backgroundImage = 'url(' + data + ')';
+    };
+    reader.readAsDataURL(file); // 以DataURL的形式读取文件:
+});
+```
+
+上面的代码演示了如何通过`HTML5`的`File API`读取文件内容.
+以`DataURL`的形式读取到的文件是一个字符串,类似于`data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...`,常用于设置图像.
+如果需要服务器端处理,把字符串`base64,`后面的字符发送给服务器并用`Base64`解码就可以得到原始文件的二进制内容.
+
+#### 回调
+
+上面的代码还演示了`JavaScript`的一个重要的特性就是`单线程`执行模式.
+在`JavaScript`中,浏览器的`JavaScript`执行引擎在执行`JavaScript`代码时,总是以`单线程`模式执行.
+也就是说,任何时候,`JavaScript`代码都不可能同时有多于`1`个线程在执行.
+
+你可能会问,`单线程`模式执行的`JavaScript`,如何处理多任务? 在`JavaScript`中,执行多任务实际上都是异步调用, 比如上面的代码: 
+
+```js
+reader.readAsDataURL(file);
+```
+
+就会发起一个`异步操作`来读取文件内容. 因为是异步操作,所以我们在`JavaScript`代码中就不知道什么时候操作结束,因此需要先设置一个`回调函数`: 
+
+```js
+reader.onload = function(e) {
+        // 当文件读取完成后,自动调用此函数:
+};
+```
+
+当文件读取完成后,`JavaScript`引擎将自动调用我们设置的`回调函数`. 执行`回调函数`时,文件已经读取完毕,所以我们可以在`回调函数`内部安全地获得文件内容.
+
+回调函数: 一般是`用户`调用`系统`的函数; `回调函数`与通常相反,用户提供`函数`, 被`系统`调用, 所以称为`callback`.
+
+### AJAX
+
+`AJAX` 不是 `JavaScript` 的规范,它只是一个哥们"发明"的缩写: `Asynchronous JavaScript and XML`,意思就是用`JavaScript`执行异步网络请求.
+
+如果仔细观察一个`Form`的提交,你就会发现,一旦用户点击`Submit`按钮,表单开始提交,浏览器就会刷新页面,然后在新页面里告诉你操作是成功了还是失败了.
+如果不幸由于网络太慢或者其他原因,就会得到一`个404页面`.
+这就是`Web`的运作原理: 一次`HTTP`请求对应一个页面.
+
+如果要让用户留在`当前页面`中,同时发出新的`HTTP`请求,就必须用`JavaScript`发送这个新请求,接收到数据后,再用`JavaScript`更新页面,
+这样一来,用户就感觉自己仍然停留在当前页面,但是数据却可以不断地更新.
+最早大规模使用`AJAX`的就是 `Gmail`,`Gmail`的页面在首次加载后,剩下的所有数据都依赖于`AJAX`来更新.
+
+用`JavaScript`写一个完整的`AJAX`代码并不复杂,但是需要注意: `AJAX`请求是异步执行的,也就是说,要通过`回调函数`获得响应.
+在现代浏览器上写`AJAX`主要依靠`XMLHttpRequest`对象: 
+
+```js
+'use strict';
+function success(text) { // 响应成功
+    var textarea = document.getElementById('test-response-text');  // 返回的文本
+    textarea.value = text;
+}
+function fail(code) { // 响应失败
+    var textarea = document.getElementById('test-response-text');
+    textarea.value = 'Error code: ' + code;
+}
+var request = new XMLHttpRequest(); // 新建XMLHttpRequest对象
+request.onreadystatechange = function () { // 状态发生变化时,函数被回调
+    if (request.readyState === 4) { // 成功完成
+        if (request.status === 200) { // 判断响应结果:
+            return success(request.responseText); // 成功,通过responseText拿到响应的文本:
+        } else { // 失败,根据响应码判断失败原因:
+            return fail(request.status);
+        }
+    } else {
+        // HTTP请求还在继续...
+    }
+}
+// 发送请求:
+request.open('GET', '/api/categories');
+request.send();
+alert('请求已发送,请等待响应...');
+```
+
+对于低版本的`IE`,需要换一个`ActiveXObject`对象: 
+
+```js
+'use strict';
+function success(text) {
+    var textarea = document.getElementById('test-ie-response-text');
+    textarea.value = text;
+}
+function fail(code) {
+    var textarea = document.getElementById('test-ie-response-text');
+    textarea.value = 'Error code: ' + code;
+}
+var request = new ActiveXObject('Microsoft.XMLHTTP');  // 新建Microsoft.XMLHTTP对象
+request.onreadystatechange = function () { // 状态发生变化时,函数被回调
+    if (request.readyState === 4) { // 成功完成
+        // 判断响应结果:
+        if (request.status === 200) {
+            // 成功,通过responseText拿到响应的文本:
+            return success(request.responseText);
+        } else {
+            // 失败,根据响应码判断失败原因:
+            return fail(request.status);
+        }
+    } else {
+        // HTTP请求还在继续...
+    }
+}
+// 发送请求:
+request.open('GET', '/api/categories');
+request.send();
+alert('请求已发送,请等待响应...');
+```
+
+如果你想把标准写法和`IE`写法混在一起,可以这么写: 
+
+```js
+var request;
+if (window.XMLHttpRequest) {
+    request = new XMLHttpRequest();
+} else {
+    request = new ActiveXObject('Microsoft.XMLHTTP');
+}
+```
+
+通过检测 `window` 对象是否有 `XMLHttpRequest` 属性来确定浏览器是否支持标准的 `XMLHttpRequest`.
+注意,不要根据浏览器的`navigator.userAgent`来检测浏览器是否支持某个`JavaScript`特性,一是因为这个字符串本身可以伪造, 二是通过`IE`版本判断`JavaScript`特性将非常复杂.
+
+当创建了`XMLHttpRequest`对象后,要先设置`onreadystatechange`的回调函数.
+在回调函数中, 通常我们只需通过`readyState === 4`判断请求是否完成,如果已完成,再根据`status === 200`判断是否是一个成功的响应.
+
+`XMLHttpRequest`对象的`open()`方法有`3`个参数,第一个参数指定是`GET`还是`POST`,第二个参数指定`URL`地址,第三个参数指定是否使用`异步`,默认是 `true`,所以不用写.
+注意,千万不要把第三个参数指定为`false`, 否则浏览器将停止响应,直到`AJAX`请求完成. 如果这个请求耗时`10`秒,那么`10`秒内你会发现浏览器处于`假死`状态.
+
+最后调用`send()`方法才真正发送请求. `GET` 请求不需要参数,`POST` 请求需要把`body`部分以字符串或者`FormData`对象传进去.
+
+#### 安全限制
+
+上面代码的`URL`使用的是`相对路径`. 如果你把它改为`'http://www.sina.com.cn/'`, 再运行,肯定报错. 在`Chrome`的控制台里,还可以看到错误信息.
+这是因为浏览器的同源策略导致的. 默认情况下,`JavaScript` 在发送`AJAX`请求时, `URL` 的域名必须和当前页面完全一致. 完全一致的意思是,
+
++ 域名要相同(`www.example.com和example.com`不同),
++ 协议要相同(`http`和`https`不同),
++ 端口号要相同(默认是`:80`端口,它和`:8080`就不同). 
+
+有的浏览器口子松一点,允许端口不同, 大多数浏览器都会严格遵守这个限制.
+那是不是用`JavaScript`无法请求外域(就是其他网站)的`URL`了呢?方法还是有的,大概有这么几种: 
+
++ 一是通过`Flash`插件发送`HTTP`请求,这种方式可以绕过浏览器的安全限制,但必须安装`Flash`,并且跟`Flash`交互.不过`Flash`用起来麻烦,而且现在用得也越来越少了.
++ 二是通过在同源域名下架设一个`代理服务器`来转发, `JavaScript` 负责把请求发送到代理服务器: 
+
+    '/proxy?url=http://www.sina.com.cn'
+
+代理服务器再把结果返回,这样就遵守了浏览器的同源策略. 这种方式麻烦之处在于需要服务器端额外做开发.
+
++ 第三种方式称为`JSONP`,它有个限制,只能用`GET`请求,并且要求返回`JavaScript`.这种方式跨域实际上是利用了浏览器允许跨域引用`JavaScript`资源: 
+
+```js
+<html>
+<head>
+    <script src="http://example.com/abc.js"></script>
+    ...
+</head>
+<body>
+...
+</body>
+</html>
+```
+
+`JSONP`通常以函数调用的形式返回,例如,返回`JavaScript`内容如下: 
+
+```js
+foo('data');
+```
+
+这样一来,我们如果在页面中先准备好`foo()`函数,然后给页面动态加一个`<script>`节点,相当于动态读取外域的`JavaScript`资源,最后就等着接收回调了.
+以`163`的股票查询`URL`为例,对于`URL`: [api.money.126.net](http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice),你将得到如下返回: 
+
+```js
+refreshPrice({"0000001":{"code": "0000001", ... });
+```
+
+因此我们需要首先在页面中准备好回调函数: 
+
+```js
+function refreshPrice(data) {
+    var p = document.getElementById('test-jsonp');
+    p.innerHTML = '当前价格: ' +
+        data['0000001'].name +': ' + 
+        data['0000001'].price + ';' +
+        data['1399001'].name + ': ' +
+        data['1399001'].price;
+}
+```
+
+最后用`getPrice()`函数触发: 
+
+```js
+function getPrice() {
+    var
+        js = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0];
+    js.src = 'http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice';
+    head.appendChild(js);
+}
+```
+
+就完成了跨域加载数据.
+
+#### CORS
+
+如果浏览器支持`HTML5`,那么就可以一劳永逸地使用新的`跨域策略`: `CORS`了.
+
+`CORS`全称`Cross-Origin Resource Sharing`, 是`HTML5`规范定义的如何`跨域访问资源`.
+
+了解`CORS`前,我们先搞明白概念: 
+
+`Origin`表示本域,也就是浏览器当前页面的域. 当`JavaScript`向外域(如`sina.com`)发起请求后,
+浏览器收到响应后,首先检查`Access-Control-Allow-Origin`是否包含本域,如果是,则此次跨域请求成功,如果不是,则请求失败,`JavaScript`将无法获取到响应的任何数据.
+
+用一个图来表示就是: 
+
+![js-cors](https://static.liaoxuefeng.com/files/attachments/1027024093709472/l)
+
+假设本域是`my.com`,外域是`sina.com`,只要响应头`Access-Control-Allow-Origin`为`http://my.com`,或者是`*`,本次请求就可以成功.
+可见,跨域能否成功,取决于对方服务器是否愿意给你设置一个正确的`Access-Control-Allow-Origin`,决定权始终在对方手中.
+
+上面这种跨域请求,称之为`简单请求`.
+简单请求包括`GET`,`HEAD`和`POST`(`POST`的`Content-Type`类型, 仅限`application/x-www-form-urlencoded`,`multipart/form-data`和`text/plain`),
+并且不能出现任何自定义头(例如,`X-Custom: 12345`),通常能满足`90%`的需求.
+
+无论你是否需要用`JavaScript`通过`CORS`跨域请求资源,你都要了解`CORS`的原理.
+最新的浏览器全面支持`HTML5`. 在引用外域资源时,除了`JavaScript`和`CSS`外,都要验证`CORS`.例如,当你引用了某个第三方`CDN`上的字体文件时: 
+
+```js
+/* CSS */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('http://cdn.com/fonts/fontawesome.ttf') format('truetype');
+}
+```
+
+如果该`CDN`服务商未正确设置`Access-Control-Allow-Origin`,那么浏览器无法加载字体资源.
+
+对于`PUT`,`DELETE` 以及其他类型如`application/json`的`POST`请求, 
+在发送`AJAX`请求之前,浏览器会先发送一个`OPTIONS`请求(称为`preflighted`请求)到这个`URL`上,询问目标服务器是否接受: 
+
+```js
+OPTIONS /path/to/resource HTTP/1.1
+Host: bar.com
+Origin: http://my.com
+Access-Control-Request-Method: POST
+```
+
+服务器必须响应并明确指出允许的`Method`: 
+
+```js
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://my.com
+Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS
+Access-Control-Max-Age: 86400
+```
+
+浏览器确认服务器响应的`Access-Control-Allow-Methods`头确实包含将要发送的`AJAX`请求的`Method`,才会继续发送`AJAX`, 否则,抛出一个错误.
+
+由于以`POST`,`PUT`方式传送`JSON`格式的数据在`REST`中很常见, 所以要跨域正确处理`POST`和`PUT`请求,服务器端必须正确响应`OPTIONS`请求.
+
+需要深入了解`CORS`的童鞋请移步[W3C文档](https://fetch.spec.whatwg.org/#http-cors-protocol).
+
+### Promise
+
+[Promise 对象](https://es6.ruanyifeng.com/#docs/promise)
+
+在`JavaScript`的世界中,所有代码都是单线程执行的.
+由于这个"缺陷",导致`JavaScript`的所有网络操作,浏览器事件,都必须是`异步执行`. `异步执行`可以用`回调函数`实现: 
+
+```js
+Promise( f(x,y) ).then(A).catch(B)
+```
+
+其中, `f`的两个参数`x,y`也是函数, `x,y`作为头部, 用来封装产生的数据.
+如果`Promise`执行`f(x,y)`的结果是`x(data)`, 就保证执行`A(data)`,  `A`存储在`then`中.
+如果结果是`y(data)`, 就保证执行`B(data)`,  `B`存储在`catch`中.
+
+```js
+function callback() {
+    console.log('Done');
+}
+console.log('before setTimeout()');
+setTimeout(callback, 1000); // 1秒钟后调用callback函数
+console.log('after setTimeout()');
+```
+
+观察上述代码执行,在`Firefox`的控制台输出可以看到: 
+
+```js
+before setTimeout()
+after setTimeout()
+(等待1秒后)
+Done
+```
+
+可见,异步操作会在将来的某个时间点触发一个函数调用.  `AJAX` 就是典型的异步操作.以上一节的代码为例: 
+
+```js
+request.onreadystatechange = function () {
+    if (request.readyState === 4) {
+        if (request.status === 200) {
+            return success(request.responseText);
+        } else {
+            return fail(request.status);
+        }
+    }
+}
+```
+
+把回调函数`success(request.responseText)` 和 `fail(request.status)`写到一个`AJAX`操作里很正常, 但是不好看,而且不利于代码复用.
+有没有更好的写法?比如写成这样: 
+
+```js
+var ajax = ajaxGet('http://...');
+ajax.ifSuccess(success).ifFail(fail);
+```
+
+这种链式写法的好处在于,先统一执行`AJAX`逻辑,不关心如何处理结果,
+然后,根据结果是成功还是失败,在将来的某个时候调用`success`函数或`fail`函数.
+古人云: "君子一诺千金",这种"承诺将来会执行"的对象在`JavaScript`中称为`Promise`对象.
+
+`Promise`有各种开源实现,在`ES6`中被统一规范,由浏览器直接支持. 先测试一下你的浏览器是否支持`Promise`: 
+
+```js
+'use strict';
+new Promise(function () {});
+// 直接运行测试:
+console.log('支持Promise!');
+```
+
+我们先看一个最简单的`Promise`例子: 生成一个`0-2`之间的随机数,如果小于`1`,则等待一段时间后返回成功,否则返回失败: 
+
+```js
+function test(resolve, reject) {
+    var timeOut = Math.random() * 2;
+    log('set timeout to: ' + timeOut + ' seconds.');
+    setTimeout(function () { // 等待一段时间之后再执行
+        if (timeOut < 1) {
+            log('call resolve()...');
+            resolve('200 OK'); // 执行成功,就调用 resolve
+        }
+        else {
+            log('call reject()...');
+            reject('timeout in ' + timeOut + ' seconds.'); // 执行失败, 就调用 reject
+        }
+    }, timeOut * 1000);
+}
+```
+
+这个`test()`函数有两个参数,这两个参数都是`函数`, 如果执行成功,我们将调用`resolve('200 OK')`,
+如果执行`失败`,我们将调用`reject('timeout in ' + timeOut + ' seconds.')`.
+可以看出,`test()`函数只关心自身的逻辑,并不关心具体的`resolve`和`reject`将如何处理结果.
+
+有了执行函数,我们就可以用一个`Promise`对象来执行它,并在将来某个时刻获得成功或失败的结果: 
+
+```js
+var p1 = new Promise(test);
+var p2 = p1.then(function (result) { // then, 成功就执行这个
+    console.log('成功: ' + result);
+});
+var p3 = p2.catch(function (reason) { // 不成功就执行这个
+    console.log('失败: ' + reason);
+});
+```
+
+变量`p1`是一个`Promise`对象,它负责执行`test`函数. 由于`test`函数在内部是异步执行的,当`test`函数执行成功时,我们告诉`Promise`对象: 
+
+```js
+// 如果成功,执行这个函数: 
+p1.then(function (result) {
+    console.log('成功: ' + result);
+});
+```
+
+当`test`函数执行失败时,我们告诉`Promise`对象: 
+
+```js
+p2.catch(function (reason) {
+    console.log('失败: ' + reason);
+});
+```
+
+`Promise`对象可以串联起来,所以上述代码可以简化为: 
+
+```js
+new Promise(test).then(function (result) { // test 执行后, 如果返回 resolve(data), 就调用 then(f) 中的f,  返回 f(data)
+    console.log('成功: ' + result);
+}).catch(function (reason) { // 如果返回 reject(data), 就调用 catch(g) 中的g,  返回 g(data)
+    console.log('失败: ' + reason);
+});
+```
+
+实际测试一下,看看`Promise`是如何异步执行的: 
+
+```js
+'use strict';
+// 清除log:
+var logging = document.getElementById('test-promise-log');
+while (logging.children.length > 1) {
+    logging.removeChild(logging.children[logging.children.length - 1]);
+}
+// 输出log到页面:
+function log(s) {
+    var p = document.createElement('p');
+    p.innerHTML = s;
+    logging.appendChild(p);
+}
+new Promise(function (resolve, reject) {
+    log('start new Promise...');
+    var timeOut = Math.random() * 2;
+    log('set timeout to: ' + timeOut + ' seconds.');
+    setTimeout(function () {
+        if (timeOut < 1) {
+            log('call resolve()...');
+            resolve('200 OK');
+        }
+        else {
+            log('call reject()...');
+            reject('timeout in ' + timeOut + ' seconds.');
+        }
+    }, timeOut * 1000);
+}).then(function (r) { // 给出 resolve的具体形式
+    log('Done: ' + r);
+}).catch(function (reason) { // 给出 reject 的具体形式
+    log('Failed: ' + reason);
+});
+```
+
+可见`Promise`最大的好处是在异步执行的流程中,把执行代码和处理结果的代码清晰地分离了: 
+
+![promise](https://static.liaoxuefeng.com/files/attachments/1027242914217888/l)
+
+`Promise` 还可以做更多的事情,比如,有若干个`异步任务`,需要先做`任务1`,如果成功后再做`任务2`,任何任务失败则不再继续并执行错误处理函数.
+要串行执行这样的异步任务,不用`Promise`需要写一层一层的嵌套代码.有了`Promise`,我们只需要简单地写: 
+
+```js
+job1.then(job2).then(job3).catch(handleError);
+```
+
+其中, `job1`, `job2` 和 `job3` 都是 `Promise`对象.
+
+下面的例子演示了如何`串行`执行一系列需要`异步计算`获得结果的任务: 
+
+```js
+'use strict';
+var logging = document.getElementById('test-promise2-log');
+while (logging.children.length > 1) {
+    logging.removeChild(logging.children[logging.children.length - 1]); //删除末尾的节点
+}
+function log(s) { // 将结果添加到 log
+    var p = document.createElement('p');
+    p.innerHTML = s;
+    logging.appendChild(p);
+}
+// 0.5秒后返回 input*input 的计算结果:
+function multiply(input) { // 测试中第一行的 multiply
+    return new Promise(function (resolve, reject) { // 在测试中, resolve 函数对应第二行的 add
+        log('calculating ' + input + ' x ' + input + '...');
+        setTimeout(resolve, 500, input * input); // 执行成功,将返回 add(input*input)
+    });
+}
+function add(input) { // 0.5秒后返回 input+input 的计算结果:
+    return new Promise(function (resolve, reject) { // resolve 函数对应第三行的 divide
+        log('calculating ' + input + ' + ' + input + '...');
+        setTimeout(resolve, 500, input + input);
+    });
+}
+function divide(input) {
+    return new Promise(function (resolve, reject) { // resolve 函数对应第四行的 add
+        log('calculating ' + input + ' x ' + input + '...');
+        setTimeout(resolve, 500, input *0.5 );
+    });
+}
+var p = new Promise(function (resolve, reject) { // 承诺执行一个函数,
+    log('start new Promise...');
+    resolve(123); // resolve 函数对应第一行的 multiply
+});
+// 开始执行异步操作
+p.then(multiply)
+ .then(add)
+ .then(divide)
+ .then(add)
+ .then(function (result) {
+    log('Got value: ' + result);
+});
+```
+
+`setTimeout`可以看成一个模拟网络等异步执行的函数.
+
+现在,我们把上一节的`AJAX`异步执行函数转换为`Promise`对象,看看用`Promise`如何简化异步处理: 
+
+```js
+'use strict';
+// ajax函数将返回Promise对象:
+function ajax(method, url, data) {
+    var request = new XMLHttpRequest();
+    return new Promise(function (resolve, reject) { //返回 Promise 对象
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    resolve(request.responseText); // 成功则调用 resolve
+                } else {
+                    reject(request.status); // 调用 reject
+                }
+            }
+        };
+        request.open(method, url);
+        request.send(data);
+    });
+}
+```
+
+除了串行执行若干异步任务外, `Promise` 还可以并行执行异步任务.
+
+试想一个页面聊天系统,我们需要从两个不同的`URL`分别获得用户的`个人信息`和`好友列表`,这两个任务是可以`并行执行`的, 用`Promise.all()`实现如下: 
+
+```js
+var p1 = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 500, 'P1');
+});
+var p2 = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 600, 'P2');
+});
+// 同时执行p1和p2,并在它们都完成后执行then:
+Promise.all([p1, p2]).then(function (results) {
+    console.log(results); // 获得一个Array: ['P1', 'P2']
+});
+```
+
+有些时候,多个`异步任务`是为了容错. 比如,同时向两个`URL`读取用户的个人信息, 只需要获得先返回的结果即可.这种情况下,用`Promise.race()`实现: 
+
+```js
+var p1 = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 500, 'P1');
+});
+var p2 = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 600, 'P2');
+});
+Promise.race([p1, p2]).then(function (result) {
+    console.log(result); // 'P1'
+});
+```
+
+由于`p1`执行较快, `Promise`的`then()`将获得结果`'P1'`. `p2`仍在继续执行,但执行结果将被丢弃.
+如果我们组合使用`Promise`,就可以把很多异步任务以`并行`和`串行`的方式组合起来执行.
+
+### Canvas
+
+`Canvas`是`HTML5`新增的组件,它就像一块幕布,可以用`JavaScript`在上面绘制各种图表,动画等.
+
+没有`Canvas`的年代,绘图只能借助`Flash`插件实现,页面不得不用`JavaScript`和`Flash`进行交互.
+有了`Canvas`,我们就再也不需要`Flash`了,直接使用`JavaScript`完成绘制.
+一个`Canvas`定义了一个指定尺寸的`矩形框`,在这个范围内我们可以随意绘制: 
+
+```js
+<canvas id="test-canvas" width="300" height="200"></canvas>
+```
+
+由于浏览器对`HTML5`标准支持不一致,所以,通常在`<canvas>`内部添加一些说明性`HTML`代码,
+如果浏览器支持`Canvas`,它将忽略`<canvas>`内部的`HTML`,如果浏览器不支持`Canvas`,它将显示`<canvas>`内部的`HTML`: 
+
+```js
+<canvas id="test-stock" width="300" height="200">
+    <p>Current Price: 25.51</p>
+</canvas>
+```
+
+在使用`Canvas`前,用`canvas.getContext`来测试浏览器是否支持`Canvas`: 
+
+```js
+<!-- HTML代码 -->
+<canvas id="test-canvas" width="200" heigth="100">
+    <p>你的浏览器不支持Canvas</p>
+</canvas>
+
+'use strict';
+var canvas = document.getElementById('test-canvas');
+if (canvas.getContext) {
+    console.log('你的浏览器支持Canvas!');
+} else {
+    console.log('你的浏览器不支持Canvas!');
+}
+```
+
+`getContext('2d')`方法让我们拿到一个`CanvasRenderingContext2D`对象,所有的绘图操作都需要通过这个对象完成.
+
+```js
+var ctx = canvas.getContext('2d');
+```
+
+如果需要绘制`3D`怎么办?`HTML5`还有一个`WebGL`规范,允许在`Canvas`中绘制`3D`图形: 
+
+```js
+gl = canvas.getContext("webgl");
+```
+
+本节我们只专注于绘制`2D`图形.
+
+#### 绘制形状
+
+我们可以在`Canvas`上绘制各种形状.在绘制前,我们需要先了解一下`Canvas`的坐标系统: 
+
+![canvas-xy](https://static.liaoxuefeng.com/files/attachments/1028111602807456/l)
+
+`Canvas`的坐标以左上角为原点,水平向右为`X`轴,垂直向下为`Y`轴,以像素为单位, 所以每个点都是非负整数.
+`CanvasRenderingContext2D`对象有若干方法来绘制图形: 
+
+```js
+'use strict';
+var
+    canvas = document.getElementById('test-shape-canvas'),
+    ctx = canvas.getContext('2d');
+ctx.clearRect(0, 0, 200, 200); // 擦除(0,0)位置大小为200x200的矩形,擦除的意思是把该区域变为透明
+ctx.fillStyle = '#dddddd'; // 设置颜色
+ctx.fillRect(10, 10, 130, 130); // 把(10,10)位置大小为130x130的矩形涂色
+// 利用Path绘制复杂路径:
+var path=new Path2D();
+path.arc(75, 75, 60, 0, Math.PI*2, true);
+path.moveTo(110,75);
+path.arc(75, 75, 35, 0, Math.PI, false);
+path.moveTo(65, 65);
+path.arc(60, 65, 5, 0, Math.PI*2, true);
+path.moveTo(95, 65);
+path.arc(90, 65, 5, 0, Math.PI*2, true);
+ctx.strokeStyle = '#0000ff';
+ctx.stroke(path);
+```
+
+绘制文本就是在指定的位置输出文本,可以设置文本的字体,样式,阴影等,与`CSS`完全一致: 
+
+```js
+'use strict';
+var
+    canvas = document.getElementById('test-text-canvas'),
+    ctx = canvas.getContext('2d');
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.shadowOffsetX = 2;
+ctx.shadowOffsetY = 2;
+ctx.shadowBlur = 2;
+ctx.shadowColor = '#666666';
+ctx.font = '24px Arial';
+ctx.fillStyle = '#333333';
+ctx.fillText('带阴影的文字', 20, 40);
+```
+
+`Canvas`除了能绘制基本的形状和文本,还可以实现动画,缩放,各种滤镜和像素转换等高级操作. 如果要实现非常复杂的操作,考虑以下优化方案: 
+
++ 通过创建一个不可见的`Canvas`来绘图,然后将最终绘制结果复制到页面的可见`Canvas`中;
++ 尽量使用整数坐标而不是浮点数;
++ 可以创建多个重叠的`Canvas`绘制不同的层,而不是在一个`Canvas`中绘制非常复杂的图;
++ 背景图片如果不变可以直接用`<img>`标签并放到最底层.
+
+#### 练习
+
+请根据从`163`获取的`JSON`数据绘制最近`30`个交易日的`K`线图,数据已处理为包含一组对象的数组: 
+
+[_时空秋千](https://www.liaoxuefeng.com/discuss/1023622307115840/1429842354503713)
+
+```js
+'use strict';
+// 导入数据
+window.loadStockData = function (r) {
+    var
+        NUMS = 30,
+        data = r.data;
+    if (data.length > NUMS) {
+        data = data.slice(data.length - NUMS);
+    }
+    data = data.map(function (x) {
+        return {
+            date: x[0],
+            open: x[1],
+            close: x[2],
+            high: x[3],
+            low: x[4],
+            vol: x[5],
+            change: x[6]
+        };
+    });
+    window.drawStock(data);
+}
+// 绘图函数
+window.drawStock = function (data) {
+    var
+        canvas = document.getElementById('stock-canvas'),
+        width = canvas.width,
+        height = canvas.height,
+        ctx = canvas.getContext('2d'),
+        colWidth = canvas.width / 30 / 1.5, // 矩形宽
+        start,  // 中心线起始位置
+        spacing,    // 中心线间隔
+        max = data.map(x => x.high).sort()[data.length - 1],    // 最高价
+        min = data.map(x => x.low).sort()[0],   // 最低价
+        unitLen = canvas.height / (max - min),  // 单位价格区间长度对应的坐标长度
+        bottom = canvas.height; // 底部
+    // 限制宽度和高度
+    if (colWidth > 10) {
+        colWidth = 10;
+    }
+    if (unitLen > 1) {
+        bottom = 1 / unitLen * bottom;  // 使图像靠上
+        unitLen = 1;
+    }
+    // aaa
+    start = colWidth / 2;
+    spacing = colWidth * 1.5;
+    console.log(JSON.stringify(data[0])); 
+    // {"date":"20150602","open":4844.7,"close":4910.53,"high":4911.57,"low":4797.55,"vol":62374809900,"change":1.69}
+    ctx.clearRect(0, 0, width, height);
+    // ctx.fillText('Test Canvas', 10, 10);
+    for (let i = 0; i < data.length; i++) {
+        // 绘制中心线
+        var path = new Path2D();
+        let coord = start + spacing * i;    // 中心线坐标  
+        path.moveTo(coord, bottom - (data[i].low - min) * unitLen);
+        path.lineTo(coord, bottom - (data[i].high - min) * unitLen);
+        ctx.strokeStyle = 'black';
+        ctx.stroke(path);
+        // 绘制矩形
+        let higher, lower;
+        if (data[i].open < data[i].close) {
+            ctx.fillStyle = 'red';
+            higher = data[i].close;
+            lower = data[i].open;
+        } else {
+            ctx.fillStyle = 'green';
+            higher = data[i].open;
+            lower = data[i].close;
+        }
+        ctx.fillRect(coord - colWidth / 2, bottom - (higher - min) * unitLen, colWidth, (higher - lower) * unitLen);
+    }
+};
+// 加载最近30个交易日的K线图数据:
+var js = document.createElement('script');
+js.src = 'http://img1.money.126.net/data/hs/kline/day/history/2015/0000001.json?callback=loadStockData&t=' + Date.now();
+document.getElementsByTagName('head')[0].appendChild(js);
+```
