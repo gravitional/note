@@ -6,6 +6,17 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usepackage{xeCJK}% 没有这个会无法实现中文断行
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
 % 如果没有这一句命令，XeTeX会出错，原因参见
 % http://bbs.ctex.org/viewthread.php?tid=60547
 % \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
@@ -4568,7 +4579,7 @@ little group
 我们定义协变导数，
 \begin_inset Formula 
 \begin{align*}
-D_{\mu}\phi & \equiv(\partial_{\mu}+ieA_{\mu})\phi\to e^{-i\alpha(x)}D_{\mu}\phi\\
+D_{\mu}\phi & \equiv\left(\partial_{\mu}+ieA_{\mu}\right)\phi\to e^{-i\alpha\left(x\right)}D_{\mu}\phi\\
 A_{\mu} & \to A_{\mu}+\frac{1}{e}\partial_{\mu}\alpha
 \end{align*}
 
@@ -7106,10 +7117,22 @@ scalar QED的费曼规则
 \end_layout
 
 \begin_layout Standard
+page 121; 8.3, schwartz 的书中约定 
+\begin_inset Formula $e>0$
+\end_inset
+
+，规范变换的一般约定为：
+\begin_inset Formula 
+\[
+D_{\mu}\phi\equiv\left(\partial_{\mu}-ieQ_{n}A_{\mu}\right)\phi,\quad\phi_{n}\to e^{iQ_{n}\alpha\left(x\right)}\phi_{n}.
+\]
+
+\end_inset
+
 复场的传播子为
 \begin_inset Formula 
 \[
-=\frac{i}{p^{2}-m^{2}+i\varepsilon}
+\frac{i}{p^{2}-m^{2}+i\varepsilon}
 \]
 
 \end_inset
@@ -7130,6 +7153,32 @@ scalar QED的费曼规则
 \end_layout
 
 \begin_layout Standard
+在 scalar QED 这里选取了
+\begin_inset Formula $Q=-1$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+\mathcal{L} & =-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}+\abs*{D_{\mu}\phi}^{2}-m^{2}\phi^{2},\\
+D_{\mu}\phi & \equiv\left(\partial_{\mu}+ieA_{\mu}\right)\phi,\quad\phi\to e^{-i\alpha\left(x\right)}\phi.
+\end{align*}
+
+\end_inset
+
+得到相互作用项的形式为：
+\begin_inset Formula 
+\begin{align*}
+ & ieQA^{\mu}\left[\phi^{\dagger}\left(\partial_{\mu}\phi\right)-\left(\partial_{\mu}\phi^{\dagger}\right)\phi\right]+e^{2}A_{\mu}^{2}\abs{\phi}^{2},\quad\text{此处}\,Q=-1,\\
+= & -ieA^{\mu}\left[\phi^{\dagger}\left(\partial_{\mu}\phi\right)-\left(\partial_{\mu}\phi^{\dagger}\right)\phi\right]+e^{2}A_{\mu}^{2}\abs{\phi}^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -7144,18 +7193,10 @@ scalar QED的费曼规则
 因子进入到顶点的费曼规则中。
 \end_layout
 
-\begin_layout Standard
-由于相互作用项的形式为：
-\begin_inset Formula 
-\[
--ieA_{\mu}\left[\phi^{*}\left(\partial_{\mu}\phi\right)-\left(\partial_{\mu}\phi^{*}\right)\phi\right]
-\]
-
-\end_inset
-
+\begin_layout Enumerate
 
 \series bold
-每一项中总是有一个
+每项中总是有一个
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -7190,6 +7231,9 @@ scalar QED的费曼规则
 \end_inset
 
 ，负进正出。
+\end_layout
+
+\begin_layout Enumerate
 \begin_inset Formula $A_{\mu}\phi^{*}\left(\partial_{\mu}\phi\right)$
 \end_inset
 
@@ -7207,13 +7251,13 @@ scalar QED的费曼规则
 \end_inset
 
 的样子。
-\begin_inset Formula $-ie$
+\begin_inset Formula $e>0$
 \end_inset
 
-来自于约定，我们显式地写出单位电荷的负号。
+，我们显式地写出单位电荷的负号。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 场的收缩就是费曼传播子，对于传播子，就是从
 \begin_inset Formula $x$
 \end_inset
@@ -7226,10 +7270,10 @@ scalar QED的费曼规则
 \begin_inset Formula $\otimes$
 \end_inset
 
-进入/出射，
+进入/出射。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 粒子入射，反粒子出射，对应的编时乘积是一样的。区别在于使用 LSZ 公式的时候，选择
 \begin_inset Formula $\phi$
 \end_inset
@@ -7238,10 +7282,10 @@ scalar QED的费曼规则
 \begin_inset Formula $\phi^{\dagger}$
 \end_inset
 
-作为渐近态，还有选择它作为初态还是末态，以此决定了初末态粒子还是反粒子。但是内线的传播子还是同时传播粒子和反粒子，这两个过程是无法区分开的。
+作为渐近态，还有选择它作为初态还是末态，以此决定初末态为粒子还是反粒子。但是内线的传播子还是同时传播粒子和反粒子，这两个过程是无法区分开的。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 由于电荷守恒，
 \begin_inset Formula $-ieA_{\mu}\left[\phi^{*}\left(\partial_{\mu}\phi\right)-\left(\partial_{\mu}\phi^{*}\right)\phi\right]$
 \end_inset
@@ -7261,18 +7305,19 @@ scalar QED的费曼规则
 的特点，某一类带电粒子的箭头总是连续的，但是不同种类粒子的箭头方向无所谓。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 如此，可以用电荷流箭头的方向作为动量的参考方向，因为它总是连续的经过顶点。规定动量方向与电荷方向相同表示粒子，动量方向与电荷方向相反表示反粒子。
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
--ieA_{\mu}\left[\phi^{*}\left(\partial_{\mu}\phi\right)-\left(\partial_{\mu}\phi^{*}\right)\phi\right]
+-ieA^{\mu}\left[\phi^{*}\left(\partial_{\mu}\phi\right)-\left(\partial_{\mu}\phi^{*}\right)\phi\right]
 \]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Enumerate
 对进入顶点的电荷流箭头进行分析，如果动量和电荷方向相同，对应粒子进入，即
 \begin_inset Formula $\partial_{\mu}\phi$
 \end_inset
@@ -7285,7 +7330,11 @@ scalar QED的费曼规则
 \begin_inset Formula $\pm p^{\mu}$
 \end_inset
 
-，会差一个负号。说明动量和电荷方向相同，或是相反的情形，顶点的费曼规则会差一个负号。同理，对离开顶点的电荷流箭头进行分析，如果两个方向相同，对应粒子出射，即
+，会差一个负号。说明动量和电荷方向相同，或是相反的情形，顶点的费曼规则会差一个负号。
+\end_layout
+
+\begin_layout Enumerate
+同理，对离开顶点的电荷流箭头进行分析，如果两个方向相同，对应粒子出射，即
 \begin_inset Formula $\partial_{\mu}\phi^{*}$
 \end_inset
 
@@ -7293,7 +7342,19 @@ scalar QED的费曼规则
 \begin_inset Formula $\partial_{\mu}\phi^{*}$
 \end_inset
 
-，也会差一个相对负号。也就是说，动量和电流的相对方向决定了符号，考虑一种情况下的正确符号。
+，也会差一个相对负号。也就是说，动量和电流的相对方向决定了符号，考虑某一种情况下的正确符号即可。
+\end_layout
+
+\begin_layout Enumerate
+schwartz 在这里约定负电荷流的方向为正方向，当动量也沿着这个方向时，费曼顶点为
+\begin_inset Formula $-ie\left(p_{1\mu}+p_{2\mu}\right)\sim ieQ\left(p_{1\mu}+p_{2\mu}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+
 \series bold
 所以标量QED的顶点费曼规则是，
 \begin_inset Formula $-ie\left(\pm p_{\mu}^{1}\pm p_{\mu}^{2}\right)$
@@ -7303,10 +7364,18 @@ scalar QED的费曼规则
 \begin_inset Formula $p_{\mu}^{1},p_{\mu}^{2}$
 \end_inset
 
-分别是两个标量粒子的动量，如果和电荷方向相同，符号为正；如果和电荷方向相反，符号为负。
+分别是两个标量粒子的动量，如果和电荷
+\begin_inset Formula $e$
+\end_inset
+
+的方向相同，符号为正；如果和电荷
+\begin_inset Formula $e$
+\end_inset
+
+的方向相反，符号为负。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 对于外线粒子，一般依照真实的物理过程，将动量画成从左到右的。但是对于内线粒子，不管是电荷，还是动量，都不可能只朝一个方向，但是上面的约定可以完美解决这个问题。两
 方向相同，出正号，相反，出负号。这样，不管一个圈中的方向是逆时针，还是顺时针，由于一个圈有两个顶点，最后符号的平方
 \begin_inset Formula $\left(\pm1\right)^{2}$
@@ -7315,7 +7384,7 @@ scalar QED的费曼规则
 一定是相同的，所以结果一定是相同的。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 对于不带电的粒子，动量的方向可以随意选择，只要在每个顶点守恒就可以。
 \end_layout
 
