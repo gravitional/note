@@ -1,4 +1,4 @@
-# learn.vscode.md
+# vscode
 
 如果没有特别说明, `C` for `Ctrl`, `A` for `Alt`, `S` for `Shift`.
 

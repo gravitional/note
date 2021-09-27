@@ -1,4 +1,7 @@
-# x.vscode.md
+# vscode.x
+
+[code.visualstudio.com/docs](https://code.visualstudio.com/docs)
+[codebasics](https://code.visualstudio.com/docs/editor/codebasics)
 
 ## 按文件名搜索文件
 
