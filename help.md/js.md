@@ -1620,18 +1620,19 @@ obj.getAge(2015); // 25
 
 ### 词法作用域,动态作用域
 
-`lexical`相当于`Mathematica`中的`Module[vars,body]`; 把代码体`body`中的变量`var`看作局部变量, 根据`body`的上下文确定局部变量的值.
-`dynamical` 相当于`Mathematica`中的`Block[vars,body]`; 先记录`var`的值, 在代码`body`的执行过程中, 将变量`var`局部化, 执行完成后, 再恢复`var`的值.
++ `lexical`相当于`Mathematica`中的`Module[vars,body]`; 把代码体`body`中的变量`var`看作局部变量, 根据`body`的上下文确定局部变量的值.
++ `dynamical` 相当于`Mathematica`中的`Block[vars,body]`; 先记录`var`的值, 在代码`body`的执行过程中, 
+将变量`var`局部化, 执行完成后, 再恢复`var`的值.
 
 ```mathematica
 m = i^2;
-Block[{i = a}, i + m] (* m 被替换 *)
+Block[{i = a}, i + m] (* m=i^2 被替换, 全局变量 i 被局部化, 所有绑定都受影响 *)
 a + a^2
-Module[{i = a}, i + m] (* m 不会被替换*)
+Module[{i = a}, i + m] (* m=i^2 不会被替换,  module 只做文法替换 *)
 a + i^2
 ```
 
-`i+m` 中只有显式出现的`i`才被替换成`local`的值. `lisp`除了支持`lexical scope`, 还支持`dynamic scope`.
+`i+m` 中只有`显式`出现的`i`才被替换成`local`的值. `lisp`除了支持`lexical scope`, 还支持`dynamic scope`.
 
 ### generator生成器
 

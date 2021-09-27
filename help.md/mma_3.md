@@ -1,5 +1,31 @@
 # mathematica
 
+## snippet
+
+### position
+
+```mathematica
+pos[e_, f_] := 
+ Module[{posR}, 
+  posR[expr_, form_, i_] := 
+   DeleteCases[(*从列表末尾开始递归*)
+    If[! AtomQ@expr[[i]],(*如果不是基元,递归下一层*)
+     Join[posR[expr, form, i - 1],(*还未处理的部分*)
+      Prepend[#, i] & /@ 
+       posR[expr[[i]], form, Length@expr[[i]]]],(*如果是基元*)
+     If[i > 1,(*如果还没有循环到 first 元素*)
+      If[MatchQ[expr[[i]], form], 
+       Append[posR[expr, form, i - 1], {i}],(*匹配则添加指标*)
+       posR[expr, form, i - 1] (*不匹配则循环上一个元素*)],(*如果循环到了 First 元素*)
+      If[MatchQ[First@expr, form], {{1}}, {{Missing}}](*递归结束点,匹配返回{1},
+      否则返回 Missing*)]], {___, Missing}(*删除失败的匹配*)];
+  posR[e, f, e // Length]]
+(*+++++++++++++++++++++测试+++++++++++++++++++++*)
+Echo[test = RandomInteger[9, {5, 5, 5}]];
+pos[test, 1] // AbsoluteTiming
+Position[test, 1] // AbsoluteTiming
+```
+
 ## 坐标变换
 
 + 一般性的教程在：tutorial/ChangingCoordinateSystems
