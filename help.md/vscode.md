@@ -1,5 +1,8 @@
 # vscode
 
+[code.visualstudio.com/docs](https://code.visualstudio.com/docs)
+[codebasics](https://code.visualstudio.com/docs/editor/codebasics)
+
 如果没有特别说明, `C` for `Ctrl`, `A` for `Alt`, `S` for `Shift`.
 
 ## 常用设置
