@@ -147,7 +147,7 @@ Notebook[{
  }]
 ```
 
-上例仅定义了两种样式： `Section` 和 `Subsection`. 两者的定义仅使用了一个选项.
+上例仅定义了两种样式:  `Section` 和 `Subsection`. 两者的定义仅使用了一个选项.
 在没有更多信息的情况下, `Section` 和 `Subsection` 单元在工作笔记本中没有任何不同. 它们的大小相同(正常文本), 并具有相同的边幅, 一个将是灰色的, 另一个将是黑色的, 并且它们的字体也将不同.
 
 ### 继承
@@ -177,7 +177,7 @@ Notebook[{
 例如, 幻灯片放映能够工作是由于分页设置, 而分页设置在其他情况下与正常工作环境无关.
 相似地, 打印操作也受这些相同的分页符的影响, 但 `Printout` 环境将待打印页面中所有内容按比例缩放至一个更合适的尺寸. 字体也被设置为打印所需的较高分辨率.
 
-显示屏和打印环境的设置可以不同, 方法是使用两种不同的菜单：`格式--显示屏环境` 和 `文件--打印设置--打印环境`.
+显示屏和打印环境的设置可以不同, 方法是使用两种不同的菜单: `格式--显示屏环境` 和 `文件--打印设置--打印环境`.
 在默认情况下, 文档界面将显示屏环境设置为 `Working` , 将打印环境设置为 `Printout`.
 因此, 一定要注意这不是一个"所见即所得"的配置.
 
@@ -222,7 +222,7 @@ wolframscript.exe -print all -file .\test.wl para1 para2
 `guide/WolframSystemSetup`: 更一般的系统设置
 
 `$InputFileName`: 脚本的绝对路径.
-`$Notebooks`：如果是用前端运行的, 则为`True`.
+`$Notebooks`: 如果是用前端运行的, 则为`True`.
 `$BatchInput`: 输入是否来自批处理
 `$BatchOutput`:如果在命令行中输出, 则为`True`.
 `$CommandLine`: 唤醒环境变量所使用的命令行,
@@ -252,10 +252,10 @@ Wolfram 语言脚本是一个包含 Wolfram 语言命令的文件, 用户通常�
 例如, 你的计算涉及大量计算任务, 如线性代数, 最优化, 数值积分或微分方程的解, 并且当你不使用排版功能, 动态交互或笔记本的时候.
 
 脚本可以存储在一般的 `.wl` 程序包文件或专门的 `.wls` 脚本文件.
-两种文件的概念是一样的：Wolfram 语言表达式系列, 起始处带有可选的 "shebang" 行一般用于类 Unix 操作系统(参见 Unix 脚本可执行文件).
+两种文件的概念是一样的: Wolfram 语言表达式系列, 起始处带有可选的 "shebang" 行一般用于类 Unix 操作系统(参见 Unix 脚本可执行文件).
 
 文件类型中的唯一不同是它们双击的行为.
-双击程序包文件会在笔记本程序包编辑器中打开文件；
+双击程序包文件会在笔记本程序包编辑器中打开文件;
 双击脚本文件会执行文件, 如果操作系统支持的话.
 脚本文件可以在笔记本界面上编辑, 但是必须使用 `文件--打开` 进行开启.
 
@@ -289,7 +289,7 @@ wolfram -script file.wl
 在这种模式下, 内核读入指定的文件, 并且按顺序计算命令. 通过把输出函数的 `PageWidth` 选项设为 `Infinity` , 内核关闭默认的换行功能, 并且不显示 `In[]` 和 `Out[]` 标签.
 当在该模式下运行时, 标准的输入和输出通道 `stdin`, `stdout` 和 `stderr` 不会被重定向, 数值按 `InputForm` 进行格式化.
 
-运行带有 `-script` 选项的 wolfram 等价于利用 `Get` 命令读入文件, 唯一的不同之处是：**在计算文件中最后一个命令之后, 内核停止运行**.
+运行带有 `-script` 选项的 wolfram 等价于利用 `Get` 命令读入文件, 唯一的不同之处是: **在计算文件中最后一个命令之后, 内核停止运行**.
 这种行为可能会影响 `Wolfram Symbolic Transfer Protocol (WSTP)` 链接或者通过运行脚本创建的外部进程.
 
 ### 使用 WolframScript 运行脚本
@@ -361,7 +361,7 @@ chmod a+x script.wls
 Wolfram 语言脚本无需含有 `.wl` 或 `.wls` 扩展名.
 一个可执行脚本等价于在一个 Unix 操作系统中的任何其它程序的一个全功能程序, 所以它可用于其它脚本中, 在管道中, 根据任务控制的方运行等等.
 每个 Wolfram 语言脚本启动自己的 `WolframKernel` 拷贝, 并且不共享变量或者定义.
-注意：同步运行 Wolfram 语言脚本可能受同时运行的内核数上的许可证限制所影响.
+注意: 同步运行 Wolfram 语言脚本可能受同时运行的内核数上的许可证限制所影响.
 
 在一个交互式的 Wolfram 语言会话中, 可以显式地读入可执行脚本文件并且对其进行计算.
 如果第一行以 `#!` 字符开始的话, `Get` 命令会正常忽略脚本的第一行.
@@ -454,30 +454,30 @@ Print /@ RandomVariate[
 `IO` 的 `I` 是 `Input` 的意思, `O` 是 `output` 的意思.
 意味着输入和输出.
 
-更确切的含义是：
+更确切的含义是: 
 
-+ `I`：从外部设备输入到内存
-+ `O`：从内存输出到外部设备
++ `I`: 从外部设备输入到内存
++ `O`: 从内存输出到外部设备
 
-而标准输入和标准输出是干什么的？它们是用于 `IO` 的.
-那么它们属于 `IO` 的哪个部分？
-内存？还是外部设备？
+而标准输入和标准输出是干什么的?它们是用于 `IO` 的.
+那么它们属于 `IO` 的哪个部分?
+内存?还是外部设备?
 
-答案显然是外部设备(逻辑上的外部设备, 为什么？接着看).
+答案显然是外部设备(逻辑上的外部设备, 为什么?接着看).
 
 ***
-更具体的含义？
+更具体的含义?
 
-在 linux 操作系统中, 外部设备用什么表示？是用文件.
-linux 中一切设备皆是文件！
+在 linux 操作系统中, 外部设备用什么表示?是用文件.
+linux 中一切设备皆是文件!
 因此标准输入和输出更具体的含义是文件.
 
-它们是哪两个文件？
+它们是哪两个文件?
 它们是 `/dev/stdin` 这个文件和 `/dev/stdout` 这个文件.
 也就是说所谓的标准输入和标准输出其实就是两个 linux 下的文件.
 
 ***
-linux 的文件类型有：
+linux 的文件类型有: 
 
 1. 普通文件
 1. 字符设备文件
@@ -487,22 +487,22 @@ linux 的文件类型有：
 1. 管道文件
 1. 套接字文件
 
-思考一下？它们是什么文件？它们在 `/dev` 目录下, 它们是设备文件吗？
+思考一下?它们是什么文件?它们在 `/dev` 目录下, 它们是设备文件吗?
 
-那么所谓的从标准输入读是什么意思？
-逻辑上来看：
+那么所谓的从标准输入读是什么意思?
+逻辑上来看: 
 就是打开 `/dev/stdin` 这个文件, 然后把这个文件里的内容读进来.
-输出到标准输出是什么意思？
-逻辑上来看：
+输出到标准输出是什么意思?
+逻辑上来看: 
 就是打开 `/dev/stdout` 这个文件, 然后把内容输出到这个文件里去.
 
-为什么是从逻辑上来看？因为它们不是设备文件,所以它们不代表一个设备.
-linux里一切皆是文件, 设备是文件, 但是文件不一定是设备！
+为什么是从逻辑上来看?因为它们不是设备文件,所以它们不代表一个设备.
+linux里一切皆是文件, 设备是文件, 但是文件不一定是设备!
 
 ***
-那它们是什么文件？他们是`链接文件`. (可以用` ls -l /dev` 来查看 `l` 开头的就是链接文件. )
+那它们是什么文件?他们是`链接文件`. (可以用` ls -l /dev` 来查看 `l` 开头的就是链接文件. )
 
-什么是链接文件？**文件内容是另一个文件的地址的文件称为链接文件**.
+什么是链接文件?**文件内容是另一个文件的地址的文件称为链接文件**.
 
 因此, 打开, 读或者写 `/dev/stdin` 和` /dev/stdout` 实际上是打开, 读或者写这两个文件中存放的地址对应的设备文件.
 
@@ -531,28 +531,28 @@ URL
 
 #### 命令行代码
 
-在本地 Wolfram Engine 上执行 Wolfram 语言代码 `2+2`：
+在本地 Wolfram Engine 上执行 Wolfram 语言代码 `2+2`: 
 
 ```mathematica
 wolframscript -code 2+2
 4
 ```
 
-在 Wolfram 云中执行 Wolfram 语言代码 `2+2`, 需要时提示输入许可验证：
+在 Wolfram 云中执行 Wolfram 语言代码 `2+2`, 需要时提示输入许可验证: 
 
 ```mathematica
 wolframscript -cloud -code 2+2
 4
 ```
 
-在本地执行 Wolfram 语言代码, 对shell的输入进行转义：
+在本地执行 Wolfram 语言代码, 对shell的输入进行转义: 
 
 ```mathematica
 wolframscript -code 'StringReverse["hello"]'
 olleh
 ```
 
-执行代码并把结果放入文件中：
+执行代码并把结果放入文件中: 
 
 ```mathematica
 wolframscript -code 'Graphics3D[Sphere[ ]]' -format PNG > file.png
@@ -560,14 +560,14 @@ wolframscript -code 'Graphics3D[Sphere[ ]]' -format PNG > file.png
 
 #### 文件代码
 
-从文件中执行 Wolfram 语言代码, 返回产生的最终结果：
+从文件中执行 Wolfram 语言代码, 返回产生的最终结果: 
 
 ```mathematica
 $ wolframscript -file test.wl
 12345
 ```
 
-从本地文件中获取代码, 但是在云端运行代码：
+从本地文件中获取代码, 但是在云端运行代码: 
 
 ```mathematica
 $ wolframscript -cloud -file test.wl
@@ -576,7 +576,7 @@ $ wolframscript -cloud -file test.wl
 
 #### 脚本文件
 
-设置为在本地执行 Wolfram 语言代码的文件：
+设置为在本地执行 Wolfram 语言代码的文件: 
 
 ```mathematica
 #!/usr/bin/env wolframscript
@@ -585,7 +585,7 @@ $ ./file.wls
 4
 ```
 
-在 Wolfram 云中执行 Wolfram 语言代码的文件：
+在 Wolfram 云中执行 Wolfram 语言代码的文件: 
 
 ```mathematica
 #!/usr/bin/env wolframscript -cloud
@@ -594,7 +594,7 @@ $ ./file.wls
 4
 ```
 
-使用命令行参数的文件：
+使用命令行参数的文件: 
 
 ```mathematica
 #!/usr/bin/env wolframscript
@@ -603,7 +603,7 @@ $ ./file.wls 5
 25
 ```
 
-一个能给出函数的文件, 其参数从命令行中来：
+一个能给出函数的文件, 其参数从命令行中来: 
 
 ```mathematica
 #!/usr/bin/env wolframscript -function -signature City City
@@ -615,7 +615,7 @@ Quantity[3453.7070027090986, Miles]
 #### 交互操作
 
 ```mathematica
-在交互 `REPL` 中运行 Wolfram 语言：
+在交互 `REPL` 中运行 Wolfram 语言: 
 
 $ wolframscript
 Wolfram Language 12.0.0 for Microsoft Windows (64-bit)
@@ -637,7 +637,7 @@ $ wolframscript -api https://wolfr.am/bNvKWq2U -args x=1 y=2
 3
 ```
 
-从云中获取 API 代码, 但在本地运行 API：
+从云中获取 API 代码, 但在本地运行 API: 
 
 ```mathematica
 $ wolframscript -api https://wolfr.am/bNvKWq2U -local -args x=1 y=2
@@ -646,7 +646,7 @@ $ wolframscript -api https://wolfr.am/bNvKWq2U -local -args x=1 y=2
 
 #### 更多范例
 
-登录不同的云账户：
+登录不同的云账户: 
 
 ```mathematica
 $ wolframscript -authenticate
@@ -656,26 +656,26 @@ Password:
 Success. Saving connection data.
 ```
 
-提供证书而不使用提示：
+提供证书而不使用提示: 
 
 ```mathematica
 $ wolframscript -username example-user@wolfram.com -password XXXXXX
 Success. Saving connection data.
 ```
 
-断开云端, 清除连接信息：
+断开云端, 清除连接信息: 
 
 ```mathematica
 $ wolframscript -disconnect
 ```
 
-颠倒输入文件中每行字符串的顺序, 并把结果写入另一个文件中：
+颠倒输入文件中每行字符串的顺序, 并把结果写入另一个文件中: 
 
 ```mathematica
 $ wolframscript -code 'StringReverse[$ScriptInputString]' -linewise < file1 > file2
 ```
 
-使用超时限制计算：
+使用超时限制计算: 
 
 ```mathematica
 $ wolframscript -code 'Do[Print[i];Pause[1], {i,10}]' -timeout 3
@@ -685,13 +685,13 @@ $ wolframscript -code 'Do[Print[i];Pause[1], {i,10}]' -timeout 3
 $TimedOut
 ```
 
-输出使用特殊字符：
+输出使用特殊字符: 
 
 ```mathematica
 $ wolframscript -code 'Alphabet["Greek"]' -charset UTF8
 ```
 
-使用脚本的选项 `-print` 和 `-format` 产生一幅图像：
+使用脚本的选项 `-print` 和 `-format` 产生一幅图像: 
 
 ```mathematica
 #!/usr/bin/env wolframscript -print -format PNG
@@ -702,7 +702,7 @@ ListLinePlot[RandomFunction[WienerProcess[],{0,10,0.01},10]]
 $ ./file.wls > plot.png
 ```
 
-使用 `-print All` 选项, 打印执行脚本时产生的每个结果：
+使用 `-print All` 选项, 打印执行脚本时产生的每个结果: 
 
 ```mathematica
 #!/usr/bin/env wolframscript -print All
@@ -714,7 +714,7 @@ Using -print All will each result
 4
 ```
 
-创建一个由 `PermissionsKey` 保护的 `API` , 并把密钥传给 `WolframScript` , 以便访问：
+创建一个由 `PermissionsKey` 保护的 `API` , 并把密钥传给 `WolframScript` , 以便访问: 
 
 ```mathematica
 In[1]:= CloudDeploy[APIFunction[{"n"->Integer},#n^2&],Permissions->{PermissionsKey["thekey"]->"Execute"}]
@@ -723,14 +723,14 @@ $ wolframscript -api 83aa0bc2-8e0c-4ef6-b314-48e0bf283196 -args n=5 -permissions
 25
 ```
 
-检查 WolframScript 的版本：
+检查 WolframScript 的版本: 
 
 ```mathematica
 $ wolframscript -version
 WolframScript 1.2.0 for MacOSX-x86-64
 ```
 
-配置使用特别的 `WolframEngine` ：
+配置使用特别的 `WolframEngine` : 
 
 ```mathematica
 $ wolframscript -config WOLFRAMSCRIPT_KERNELPATH=/Applications/Mathematica.app/MacOS/WolframKernel
@@ -894,7 +894,7 @@ Manipulating Files and Directories
 
 + `ExpandFileName["name"] `; 将`"name"`文件展开成当前系统规范的绝对路径, 给出相对于你当前目录的名称.
 + 它展开通常的目录指定, 如`.`和 `..`.
-+ 它只是对文件名进行操作；它并不实际搜索指定的文件.
++ 它只是对文件名进行操作;它并不实际搜索指定的文件.
 + 它支持 `ExpandFileName[File["name"]]`, 以及`ExpandFileName[URL["file:///path"]]`, 后者将基于文件的`URL`转换为绝对文件名.
 
 + `AbsoluteFileName["name"]`; 给出`"name"`文件的绝对路径. 与`ExpandFileName`的区别是, 它会进入文件系统, 检查文件是否真实存在.
@@ -962,7 +962,7 @@ Manipulating Files and Directories
   + `ResetDirectory`从目录栈中删除最后一个元素, 并使倒数第二的元素成为当前元素.
 
 + `DirectoryStack[]`; 给出当前使用的目录序列/目录栈. 其中的目录用绝对路径给出.
-每次调用`SetDirectory`会在目录栈中压入一个元素；每次调用`ResetDirectory`会弹出一个元素.
+每次调用`SetDirectory`会在目录栈中压入一个元素;每次调用`ResetDirectory`会弹出一个元素.
 
 ### 读取文本数据
 
@@ -1022,33 +1022,33 @@ Wolfram 语言中的流.
 然而, 打开一个流后, 当仅有一个对象和这个流相关联时,
 仍可以用一个简单的文件名或外部程序名取指代这个流.
 
-打开一个输出到文件 tmp 的流：
+打开一个输出到文件 tmp 的流: 
 
 ```mathematica
 In[1]:= stmp = OpenWrite["tmp"]
 Out[1]= OutputStream["tmp", 5321]
 ```
 
-向该文件写入一个表达式序列：
+向该文件写入一个表达式序列: 
 
 ```mathematica
 In[2]:= Write[stmp, a, b, c]
 ```
 
-由于仅有一个流与文件 `tmp` 相关联, 所以能简单地用文件名去指代它：
+由于仅有一个流与文件 `tmp` 相关联, 所以能简单地用文件名去指代它: 
 
 ```mathematica
 In[3]:= Write["tmp", x]
 ```
 
-关闭这个流：
+关闭这个流: 
 
 ```mathematica
 In[4]:= Close[stmp]
 Out[4]= "tmp"
 ```
 
-这是向该文件写入的内容：
+这是向该文件写入的内容: 
 
 ```mathematica
 In[5]:= FilePrint["tmp"]
@@ -1074,21 +1074,21 @@ x
 一般地, 在相继表达式中无空格.
 然而, 在写完了所有表达式之后, Write 总用一个换行结束输出.
 
-重新打开文件 `tmp` ：
+重新打开文件 `tmp` : 
 
 ```mathematica
 In[6]:= stmp = OpenWrite["tmp"]
 Out[6]= OutputStream["tmp", 5322]
 ```
 
-向该文件写入一个表达式序列, 然后关闭：
+向该文件写入一个表达式序列, 然后关闭: 
 
 ```mathematica
 In[7]:= Write[stmp, a^2, 1 + b^2]; Write[stmp, c^3]; Close[stmp]
 Out[7]= "tmp"
 ```
 
-所有表达式用输入形式写入, 同一 `Write` 给出的表达式放在同一行：
+所有表达式用输入形式写入, 同一 `Write` 给出的表达式放在同一行: 
 
 ```mathematica
 In[8]:= FilePrint["tmp"]
@@ -1100,27 +1100,27 @@ c^3
 `Write` 提供了写出完整 Wolfram 语言表达式的途径. 有时需要写出较少结构化的数据.
 `WriteString` 用来写出任意字符串. 与 `Write` `不同, WriteString` 不换行, 也不加任何字符.
 
-打开一个流：
+打开一个流: 
 
 ```mathematica
 In[9]:= stmp = OpenWrite["tmp"]
 Out[9]= OutputStream["tmp", 5323]
 ```
 
-向该流写入2个字符串：
+向该流写入2个字符串: 
 
 ```mathematica
 In[10]:= WriteString[stmp, "Arbitrary output.\n", "More output."]
 ```
 
-这里写入另一个字符串, 然后关闭该流：
+这里写入另一个字符串, 然后关闭该流: 
 
 ```mathematica
 In[11]:= WriteString[stmp, " Second line.\n"]; Close[stmp]
 Out[11]= "tmp"
 ```
 
-这里是该文件的内容. 这些字符串与给定的完全一样. 只有在明确给出换行符的地方才换行：
+这里是该文件的内容. 这些字符串与给定的完全一样. 只有在明确给出换行符的地方才换行: 
 
 ```mathematica
 In[12]:= FilePrint["tmp"]
@@ -1175,21 +1175,21 @@ More output. Second line.
 许多选项与输出流有关.
 第一次用 `OpenWrite` 或 `OpenAppend` 打开输出流时就可以定义这些选项.
 
-这里打开一个流, 指定 `OutputForm` 是默认输出格式：
+这里打开一个流, 指定 `OutputForm` 是默认输出格式: 
 
 ```mathematica
 In[13]:= stmp = OpenWrite["tmp", FormatType -> OutputForm]
 Out[13]= OutputStream["tmp", 5324]
 ```
 
-将表达式写入这个流后关闭它：
+将表达式写入这个流后关闭它: 
 
 ```mathematica
 In[14]:= Write[stmp, x^2 + y^2, " ", z^2]; Close[stmp]
 Out[14]= "tmp"
 ```
 
-这些表达式按 `OutputForm` 格式写入了这个流：
+这些表达式按 `OutputForm` 格式写入了这个流: 
 
 ```mathematica
 In[15]:= FilePrint["tmp"]
@@ -1208,21 +1208,21 @@ x  + y  z
 用 `SetOptions` 可以给出设置 `PageWidth` 的默认规则,
 例如, `PageWidth:><<"!devicewidth"`, 这就可以自动运行外部程序找出选项值.
 
-打开一个流, 指定页宽为`20`个字符：
+打开一个流, 指定页宽为`20`个字符: 
 
 ```mathematica
 In[16]:= stmp = OpenWrite["tmp", PageWidth -> 20]
 Out[16]= OutputStream["tmp", 5325]
 ```
 
-写一个表达式后关闭该流：
+写一个表达式后关闭该流: 
 
 ```mathematica
 In[17]:= Write[stmp, Expand[(1 + x)^5]]; Close[stmp]
 Out[17]= "tmp"
 ```
 
-表达式分为几行以便每行最多是`20`个字符：
+表达式分为几行以便每行最多是`20`个字符: 
 
 ```mathematica
 In[18]:= FilePrint["tmp"]
@@ -1242,20 +1242,20 @@ During evaluation of In[20]:=
 + `Options[stream]`  找出对流设置的选项
 + `SetOptions[stream,Subscript[opt, 1]->Subscript[val, 1],...]`  对一个打开的流重写设置选项
 
-打开一个具有默认设置的流：
+打开一个具有默认设置的流: 
 
 ```mathematica
 In[19]:= stmp = OpenWrite["tmp"]
 Out[19]= OutputStream["tmp", 5326]
 ```
 
-改变打开流的 `FormatType` 选项：
+改变打开流的 `FormatType` 选项: 
 
 ```mathematica
 In[20]:= SetOptions[stmp, FormatType -> TeXForm];
 ```
 
-`Options` 显示了对打开的流所设置的选项：
+`Options` 显示了对打开的流所设置的选项: 
 
 ```mathematica
 In[21]:= Options[stmp]
@@ -1265,7 +1265,7 @@ Out[21]= {BinaryFormat -> False, FormatType -> TeXForm, PageWidth -> 78,
  Method -> {"File", BinaryFormat -> False}}
 ```
 
-关闭这个流：
+关闭这个流: 
 
 ```mathematica
 In[22]:= Close[stmp]
@@ -1296,22 +1296,22 @@ Out[22]= "tmp"
 当程序需要从某个数据源读入数据的时候, 就会开启一个输入流, 数据源可以是文件, 内存或网络等等.
 相反地, 需要写出数据到某个数据源目的地的时候, 也会开启一个输出流, 这个数据源目的地也可以是文件, 内存或网络等等.
 
-流有哪些分类？
+流有哪些分类?
 
-可以从不同的角度对流进行分类：
+可以从不同的角度对流进行分类: 
 
-1. 处理的数据单位不同, 可分为：字符流, 字节流
-2. 数据流方向不同, 可分为：输入流, 输出流
-3. 功能不同, 可分为：节点流, 处理流
+1. 处理的数据单位不同, 可分为: 字符流, 字节流
+2. 数据流方向不同, 可分为: 输入流, 输出流
+3. 功能不同, 可分为: 节点流, 处理流
 
-`1.` 和 `2.` 都比较好理解, 对于根据功能分类的, 可以这么理解：
+`1.` 和 `2.` 都比较好理解, 对于根据功能分类的, 可以这么理解: 
 
-节点流：节点流从一个特定的数据源读写数据.
+节点流: 节点流从一个特定的数据源读写数据.
 
 即节点流是直接操作文件, 网络等的流, 例如 `FileInputStream` 和 `FileOutputStream` , 他们直接从文件中读取或往文件中写入字节流.
 
 ***
-处理流：“连接”在已存在的流(节点流或处理流)之上通过对数据的处理为程序提供更为强大的读写功能.
+处理流: "连接"在已存在的流(节点流或处理流)之上通过对数据的处理为程序提供更为强大的读写功能.
 
 过滤流是使用一个已经存在的输入流或输出流连接创建的, 过滤流就是对节点流进行一系列的包装.
 例如 `BufferedInputStream` 和 `BufferedOutputStream` , 使用已经存在的节点流来构造, 提供带缓冲的读写, 提高了读写的效率, 以及 `DataInputStream` 和 `DataOutputStream` , 使用已经存在的节点流来构造, 提供了读写Java中的基本数据类型的功能.
@@ -1319,9 +1319,9 @@ Out[22]= "tmp"
 
 ### 常见流类介绍
 
-节点流类型常见的有：对文件操作的字符流有`FileReader/FileWriter`, 字节流有`FileInputStream/FileOutputStream`.
+节点流类型常见的有: 对文件操作的字符流有`FileReader/FileWriter`, 字节流有`FileInputStream/FileOutputStream`.
 
-处理流类型常见的有：缓冲流：缓冲流要“套接”在相应的节点流之上, 对读写的数据提供了缓冲的功能, 提高了读写效率, 同事增加了一些新的方法.
+处理流类型常见的有: 缓冲流: 缓冲流要"套接"在相应的节点流之上, 对读写的数据提供了缓冲的功能, 提高了读写效率, 同事增加了一些新的方法.
 
 字节缓冲流有`BufferedInputStream`/`BufferedOutputStream`, 字符缓冲流有`BufferedReader`/`BufferedWriter`,
 字符缓冲流分别提供了读取和写入一行的方法`ReadLine`和`NewLine`方法.
@@ -1330,16 +1330,16 @@ Out[22]= "tmp"
 所以, 在使用字符缓冲流的时候, 一定要先`flush`, 然后再`close`, 避免数据丢失.
 
 ***
-转换流：用于字节数据到字符数据之间的转换.
+转换流: 用于字节数据到字符数据之间的转换.
 
 仅有字符流`InputStreamReader`/`OutputStreamWriter`.
-其中, `InputStreamReader`需要与 `InputStream`“套接”, `OutputStreamWriter`需要与`OutputStream`“套接”.
+其中, `InputStreamReader`需要与 `InputStream`"套接", `OutputStreamWriter`需要与`OutputStream`"套接".
 
-数据流：提供了读写Java中的基本数据类型的功能.
+数据流: 提供了读写Java中的基本数据类型的功能.
 
-`DataInputStream`和`DataOutputStream`分别继承自`InputStream`和`OutputStream`, 需要“套接”在`InputStream`和`OutputStream`类型的节点流之上.
+`DataInputStream`和`DataOutputStream`分别继承自`InputStream`和`OutputStream`, 需要"套接"在`InputStream`和`OutputStream`类型的节点流之上.
 
-对象流：用于直接将对象写入写出.
+对象流: 用于直接将对象写入写出.
 
 流类有`ObjectInputStream`和`ObjectOutputStream`,
 本身这两个方法没什么, 但是其要写出的对象有要求,
@@ -1448,7 +1448,7 @@ In[9]:= Grid[{Range[15]!},ItemSize->Full]
 Out[9]= 1 2 6 24 120 720 5040 40320 362880 3628800 39916800 479001600 6227020800 87178291200 1307674368000
 ```
 
-当然, 这时整个网格过宽而不能在一行中被容纳(除非将这个窗口设置的很宽), 因此网格中有的元素无法被看到. 这把我们带到另一种横向布局函数： `Row` .
+当然, 这时整个网格过宽而不能在一行中被容纳(除非将这个窗口设置的很宽), 因此网格中有的元素无法被看到. 这把我们带到另一种横向布局函数:  `Row` .
 
 给定元素的列表, `Row` 将使整体结果按自然方式自动换行, 就像一个文本行或数学行一样.
 
@@ -1718,7 +1718,7 @@ In[40]:= Table[Row[{i,Row[Superscript @@@ FactorInteger[i],"*"]},"=="],{i,100}]
 ### 使用框符语言(Box Language)
 
 最后一点说明是, 对于已经很熟悉框符语言的用户可能偶尔会发现, 这些框符生成器在您构建自己的底层框符时会产生阻碍,
-然而, 通过一个简单的漏洞, 您可以将有效的框符直接显示在输出中：`RawBoxes`.
+然而, 通过一个简单的漏洞, 您可以将有效的框符直接显示在输出中: `RawBoxes`.
 
 ```mathematica
 In[41]:= {a,b,RawBoxes[SubscriptBox["c","d"]],e}
@@ -1738,7 +1738,7 @@ Out[41]= {a,b,Subscript[c, d],e}
 
 使用`Get`读取`.m`文件, 能够计算文件中的表达式, 上下文中会建立起文件中的变量. 而读取`.nb`文件, 不会建立变量, 只会建立一个笔记本的符号表达式.
 
-`mma` 中写包的大概结构：
+`mma` 中写包的大概结构: 
 
 ```mathematica
 BeginPackage["Package`"]    设置 Package` 为当前上下文, 并且把 System` 放进 $ContextPath
@@ -1763,7 +1763,7 @@ EndPackage[]    结束包, 把Package`放到上下文搜索路径中
 `$ContextPath`中的路径按照出现顺序搜索, 前面的会覆盖后面的.
 
 ***
-`BeginPackage[]` and `Begin[]` 都要配合相应的`EndPackage[]` and `End[]` 使用, 它们的效果不同：
+`BeginPackage[]` and `Begin[]` 都要配合相应的`EndPackage[]` and `End[]` 使用, 它们的效果不同: 
 
 + ``BeginPackage["abc`"] `` 默认会同时设置 `$Context` and `$ContextPath`, 让会话中只剩下`` abc` `` and `` System` ``两个上下文.
 当然, 它也有`` BeginPackage["context`",{"need1`","need2`",... ``这种语法.
@@ -1956,7 +1956,7 @@ Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 
 `JoinAcross` 有效地实现了类似 `SQL JOIN`的方法, 将两个表`ai`和 `bj`中的行通过`spec`指定的列连接起来.
 
-有`RIGHT OUTER JOIN`, 就有`LEFT OUTER JOIN`, 以及`FULL OUTER JOIN`. 它们的区别是：
+有`RIGHT OUTER JOIN`, 就有`LEFT OUTER JOIN`, 以及`FULL OUTER JOIN`. 它们的区别是: 
 
 + `INNER JOIN`只返回同时存在于两张表的行数据, 由于`students`表的`class_id`包含`1`, `2`, `3`, `classes` 表的`id`包含`1`, `2`, `3`, `4`.
 所以, `INNER JOIN`根据条件`s.class_id = c.id`返回的结果集仅包含`1`, `2`, `3`.
@@ -1978,13 +1978,13 @@ Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 `Dataset`具有很多选项, 详见帮助页面 `Dataset Options`.
 
 + 当您将鼠标悬停在元素上时, 可以在数据集底部读取元素的位置.
-+ `MaxItems` 的设置可以如下给出：
++ `MaxItems` 的设置可以如下给出: 
   + `m`; 显示 `m` 行
   + `m1,m2,..mn`; 在数据集级别 `i` 显示`mi` 项
   + `Automatic`; 显示默认的项目数.
 
 + 在 `HiddenItems` 列表中, 后面的设置会覆盖前面的设置.
-+ `ItemDisplayFunction` 和 `HeaderDisplayFunction` 可以单独设置一个纯函数, 应用到项目上生产显示. 这些函数采用三个参数：项目`value`, 项目`position`和包含项目的`dataset`.
++ `ItemDisplayFunction` 和 `HeaderDisplayFunction` 可以单独设置一个纯函数, 应用到项目上生产显示. 这些函数采用三个参数: 项目`value`, 项目`position`和包含项目的`dataset`.
 + 在 `ItemStyle` 和 `HeaderStyle` 设置中的某些位置, 显式规则可能会被解释为 `i->spec`. 如果要使用`style`选项, 请使用 `Directive` 包装规则.
 + 在 `Alignment`, `HeaderAlignment`, `ItemSize` 和 `HeaderSize` 等可能是列表值的选项中, 如果可能, 顶层列表被解释为单个选项值, 否则解释为对数据集不同`Level`的依次设置.
 + 如果规则的左侧不是`列表`, 则该设置将应用于任何位置, 只要它包含了左侧作为键或索引.
@@ -2195,13 +2195,13 @@ Query[MaximalBy[Length[#c] &]] @ data
 
 `Query[op1,op2,...]`是 `Dataset` 的查询语法, 可以对`Dataset`对象作用, 也可以对由列表和关联组成的任意嵌套表达式作用.
 
-例如：
+例如: 
 
 ```mathematica
 Query["b", Total] @ <|"a" -> {1, 2}, "b" -> {3, 4}|>
 ```
 
-+ 算符`[op1,op2,...]`是这样作用于后面的数据集的：`op1`作用于数据整体, `op2`作用于数据第一层等等. 但同时还要考虑算符的结构性质.
++ 算符`[op1,op2,...]`是这样作用于后面的数据集的: `op1`作用于数据整体, `op2`作用于数据第一层等等. 但同时还要考虑算符的结构性质.
 + `下降`算符在深入数据更深层次的时候依次作用, 如果`op1`, `op2`均为下降算符, `op2`作用于`op1`产生的结果的下一层次.
 + `上升`算符在浮出数据时候才作用. 深入数据维度的时候会消耗`下降`算符, 等到`下降`算符用尽, 则会开始向数据集的浅层上浮,
 这个时候才应用`上升`算符, 即使在算符序列中`上升`算符的次序在前面.
@@ -2244,7 +2244,7 @@ Mathematica 采用的是树状数据结构. 下降和上升都是相对于这种
 
 `Normal`可以用来将任何数据集对象转换为其底层数据, 通常是列表和关联的组合.
 
-数据集对象可以通过`Export["file.ext",dataset]` 或 `ExportString[dataset, "fmt"]`来导出,  支持以下格式：
+数据集对象可以通过`Export["file.ext",dataset]` 或 `ExportString[dataset, "fmt"]`来导出,  支持以下格式: 
 
 + `"CSV`: 以逗号分隔的数值表
 + `"TSV"`: 以制表符分隔的数值表

@@ -28,7 +28,7 @@ Position[test, 1] // AbsoluteTiming
 
 ## 坐标变换
 
-+ 一般性的教程在：tutorial/ChangingCoordinateSystems
++ 一般性的教程在: tutorial/ChangingCoordinateSystems
 
 + 使用`CoordinateChartData`查看某种坐标的数据, 如查看球坐标的度规:
 
@@ -48,7 +48,7 @@ CoordinateTransformData[ "Spherical" -> "Cartesian", "Mapping", {r, \[Theta], \[
 TransformedField["Polar" -> "Cartesian",  r^2 Cos[\[Theta]], {r, \[Theta]} -> {x, y}]
 ```
 
-+ 使用`CoordinateTransform`对离散的点进行坐标变换, 例如：
++ 使用`CoordinateTransform`对离散的点进行坐标变换, 例如: 
 
 ```mathematica
 CoordinateTransform[ "Polar" -> "Cartesian", {r, \[Theta]}]
@@ -168,19 +168,19 @@ tutorial/ManipulatingNotebooksFromTheKernel
 + `CurrentValue[obj,option]=rhs` 给出并且设置 option 的值
 + `SetOptions[obj,option->value]` 设置选项的值
 
-这里改变屏幕上当前所选笔记本的尺寸：
+这里改变屏幕上当前所选笔记本的尺寸: 
 
 ```mathematica
 SetOptions[InputNotebook[], WindowSize -> {250, 100}]
 ```
 
-另一方面, 可以使用 CurrentValue 直接获得 WindowSize 的选项值：
+另一方面, 可以使用 CurrentValue 直接获得 WindowSize 的选项值: 
 
 ```mathematica
 CurrentValue[InputNotebook[], WindowSize]
 ```
 
-这里对 CurrentValue 使用简单的赋值来改变选项：
+这里对 CurrentValue 使用简单的赋值来改变选项: 
 
 ```mathematica
 CurrentValue[InputNotebook[], WindowSize] = {400, 300}
@@ -193,7 +193,7 @@ CurrentValue[InputNotebook[], WindowSize] = {400, 300}
 
 #### 查找笔记本的内容
 
-将当前选择移到前一个词 `cell` 出现的位置：
+将当前选择移到前一个词 `cell` 出现的位置: 
 
 ```mathematica
 NotebookFind[nb,"cell",Previous]

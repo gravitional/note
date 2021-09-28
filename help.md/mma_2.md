@@ -945,7 +945,7 @@ Apply[f,expr]
 
 Repeated [ expr_, {5} ]   or Repeated [ expr, {min,max} ]
 
-可以具体制定重复的次数, 精确的！
+可以具体制定重复的次数, 精确的!
 
 ***
 `读写 Wolfram 系统的文件`: tutorial/ReadingAndWritingWolframSystemFiles
@@ -2032,7 +2032,7 @@ Parallelize[
 [free Wolfram Engine](https://mathematica.stackexchange.com/questions/198839/how-to-add-a-front-end-to-the-free-wolfram-engine)
 
 2019 年 5 月, Wolfram 推出了免费的 Wolfram Engine for Developers. 此软件实质上是一个没有笔记本界面, 也没有本地自带帮助的 Mathematica.
-但是, 它是免费的！并且, 虽然没有自带笔记本, 但你可以用 `Jupyter` 笔记本.
+但是, 它是免费的!并且, 虽然没有自带笔记本, 但你可以用 `Jupyter` 笔记本.
 
 ***
 Windows 平台:
