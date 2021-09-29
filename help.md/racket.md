@@ -416,7 +416,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 `模块`系统的设计是为了避免这些问题. 所以脚本请从`#lang`开始, 从长远来看, 你会对`Racket`更加满意.
 
-## Simple Values
+## 简单值
 
 `Racket`值包括`数字`, `布尔值`, `字符串`和`字节字符串`. 在`DrRacket`和文档示例中(当你阅读彩色文档时), 值表达式显示为`绿色`.
 
@@ -430,15 +430,15 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 `Boole`值即`#t`--真, 以及 `#f`--假. 然而在条件判断中, 所有非`#f` 值都被当成真的.
 
-### 简单定义和表达式
+## 简单定义和表达式
 
-一个程序模块为
+程序模块的形式为
 
 ```lisp
-#lang ‹langname› ‹topform›*
+#lang <langname>  <topform>*
 ```
 
-其中 `topform` 是一个 `定义` 或 `表达式`. `REPL` 也会对 `topform` 进行计算.
+其中 `topform` 可以是 `定义` 或 `表达式`. `REPL` 也会对 `topform` 进行计算.
 
 在语法规范中, 灰色背景的文本, 如`#lang`, 代表字面文本.
 在这种字面意义和非字面意义文本, 如`<id>`之间必须有空格, 但在`(`, `)`,`[`, 或`]`之前或之后不需要空格.
@@ -446,10 +446,12 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 按照惯例, 语法中的`*`表示对前一个元素的零次或多次重复, `+`表示对前一个元素的一次或多次重复, `{}`将序列作为单个元素, 以备重复.
 
-一个定义的形式是
+### 定义
+
+定义的形式是
 
 ```lisp
-( define <id>  <expr> )
+( define  <id>  <expr> )
 ```
 
 将 `id` 与 `expr` 的结果绑定, 而
@@ -458,15 +460,15 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 ( define ( <id>  <id>*  ) <expr> )
 ```
 
-将第一个`<id>`绑定到一个函数(也叫过程)上, 该函数接受由其余`<id>*`命名的参数.
+将第一个`<id>`绑定到`函数`(也叫`过程`)上, 该函数接受由其余`<id>*`命名的参数.
 在函数的情况下, `<expr>` 是函数的主体. 当函数被调用时, 它返回最后一个`<expr>`的结果.
 
-在引擎盖下, 一个函数定义实际上和一个非函数定义是一样的, 而且一个函数名称不一定要在函数调用中使用.
-一个函数只是另一种值, 尽管其打印形式必然不如数字或字符串的打印形式完整.
+在`引擎盖`下, `函数定义`实际上和`非函数定义`是一样的, 而且`函数名称`不一定要在函数调用中使用.
+`函数`只是另一种值, 尽管其打印形式必然不如数字或字符串的打印形式完整.
 
-一个函数定义可以为函数主体包括多个表达式.
+`函数`定义可以为函数主体包括多个表达式.
 在这种情况下, 当函数被调用时, 只有最后一个表达式的值被返回.
-其他的表达式只是为了某些副作用而被评估, 例如`打印`.
+其他的表达式只是为了某些副作用而被计算, 例如`打印`.
 
 ```lisp
 (define (bake flavor)
@@ -488,7 +490,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 函数体中的`string-append flavor "jello"`被当成独立的元素, 最后只返回`"jello"`.
 
-### 关于缩进
+#### 关于缩进
 
 换行和缩进对于解析`Racket`程序来说并不重要, 但大多数`Racket`程序员都使用一套标准的惯例来使代码更易读.
 例如, 定义的主体通常在定义的第一行下缩进. 标识符紧跟在开放小括号之后, 不占多余的空间, 闭合小括号不另起一行.
@@ -510,16 +512,14 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 在这种情况下, 缩进有助于突出这个错误.
 在其他情况下, 缩进可能是正常的, 而开放的小括号没有匹配的封闭小括号, `racket`和`DrRacket`都使用源头的缩进来提示可能缺少小括号的地方.
 
-### 标识符
+#### 标识符
 
 标识符可以绑定到一段程序上. `Racket` 的标识符语法是非常自由的. 除了特殊字符
 
-```lisp
-( ) [ ] { } " , ' ` ; # | \
-```
+    ( ) [ ] { } " , ' ` ; # | \
 
-除了构成数字常数的字符序列外, 几乎任何非空白字符的序列都可以作为`id`.
-例如, `substring` 就是一个标识符. 另外, `string-append`和`a+b`是标识符, 而不是算术表达式. 这里还有几个例子.
+除了构成`数字常数`的字符序列外, 几乎任何非空白字符的序列都可以作为`id`.
+例如, `substring` 就是一个标识符. 另外, `string-append`和`a+b`是标识符, 而不是`算术表达式`. 这里还有几个例子.
 
 ```lisp
 +
@@ -530,9 +530,693 @@ john-jacob-jingleheimer-schmidt
 a-b-c+1-2-3
 ```
 
-## Lists, Iteration, and Recursion
+### 函数 Calls,程序Applications
 
-### pairs,列表和 Racket语法
+我们已经看到了许多`函数调用`(calls), 在更传统的术语中,它们被称为`应用过程`(procedure applications).
+`函数调用`的语法是:
+
+```lisp
+( <id>  <expr>* )
+```
+
+其中`<expr>` 的数量决定了, 提供给名为`<id>`的函数的参数数量.
+`racket`语言预先定义了许多函数`标识符`, 比如`substring`和`string-append`.更多的例子在下面.
+
+在整个文档的`Racket`代码示例中, `预定义`的名称的被超链接到`参考手册`中. 因此,你可以点击`标识符`来获得关于其使用的全部细节.
+
+```lisp
+> (string-append "rope" "twine" "yarn")  ; append strings
+"ropetwineyarn"
+> (substring "corduroys" 0 4)            ; extract a substring
+"cord"
+> (string-prefix? "shoelace" "shoe")     ; recognize string prefix/suffix
+#t
+> (string-suffix? "shoelace" "shoe")
+#f
+> (string? "Ceci n'est pas une string.") ; recognize strings
+#t
+> (string? 1)
+#f
+> (sqrt 16)                              ; find a square root
+4
+> (sqrt -16)
+0+4i
+> (+ 1 2)                                ; add numbers
+3
+> (- 2 1)                                ; subtract numbers
+1
+> (< 2 1)                                ; compare numbers
+#f
+> (>= 2 1)
+#t
+> (number? "c'est une number")           ; recognize numbers
+#f
+> (number? 1)
+#t
+> (equal? 6 "half dozen")                ; compare anything
+#f
+> (equal? 6 6)
+#t
+> (equal? "half dozen" "half dozen")
+#t
+```
+
+### 条件式;if,or和cond
+
+下一个最简单的表达式是`if`条件.
+
+```lisp
+( if <expr> <expr> <expr> )
+```
+
+第一个`<expr>`总是被计算.
+如果它产生一个非`#f`的值,那么第二个`<expr>`会被计算,作为整个`if`表达式的结果;  否则第三个`<expr>`会被计算为结果.
+例子.
+
+```lisp
+> (if (> 2 3)
+        "2 is bigger than 3"
+        "2 is smaller than 3")
+"2 is smaller than 3"
+
+(define (reply s)
+  (if (string-prefix? s "hello ")
+        "hi!"
+        "huh?"))
+> (reply "hello racket")
+"hi!"
+> (reply "λx:(μα.α→α).xx")
+"huh?"
+```
+
+`复杂`的条件式可以通过嵌套`if`表达式来形成.
+例如,在前面的回复例子中,输入必须是一个字符串,因为`string-prefix?`在给出非字符串时将会出错.
+你可以通过添加另一个`if`来移除这个限制, 首先检查输入是否是字符串.
+
+```lisp
+(define (reply-non-string s)
+  (if (string? s)
+      (if (string-prefix? s "hello ")
+          "hi!"
+          "huh?")
+      "huh?"))
+```
+
+与其重复 `"huh?"` 的情况, 这个函数最好写成
+
+```lisp
+(define (reply-non-string s)
+  (if (if (string? s)
+            (string-prefix? s "hello ")
+            #f)
+      "hi!"
+      "huh?"))
+```
+
+但是这些嵌套的`if`很难阅读. `Racket`通过`and`和`or`的形式提供了更易读的快捷方式.
+
+```lisp
+( and <expr>* )
+( or <expr>* )
+```
+
+`and`形式是`短路`的: 当一个表达式产生`#f`时, 它就会停止并返回`#f`, 否则就会继续下去. `or` 形式在遇到一个`真`结果时也同样会短路.
+例子.
+
+```lisp
+(define (reply-non-string s)
+  (if (and (string? s) (string-prefix? s "hello "))
+      "hi!"
+      "huh?"))
+> (reply-non-string "hello racket")
+"hi!"
+> (reply-non-string 17)
+"huh?"
+```
+
+请注意,在上述语法中, `and` 和`or`形式可以与任何数量的表达式一起使用.
+例子.
+
+```lisp
+(define (reply-only-enthusiastic s)
+  (if (and (string? s)
+                  (string-prefix? s "hello ")
+                  (string-suffix? s "!"))
+          "hi!"
+          "huh?"))
+ > (reply-only-enthusiastic "hello racket!")
+"hi!"
+> (reply-only-enthusiastic "hello racket")
+"huh?"
+```
+
+另一种常见的嵌套`if`模式涉及一连串的测试,每个测试都有自己的结果.
+
+```lisp
+(define (reply-more s)
+  (if (string-prefix? s "hello ")
+      "hi!"
+      (if (string-prefix? s "goodbye ")
+          "bye!"
+          (if (string-suffix? s "?")
+              "I don't know"
+              "huh?"))))
+```
+
+测试序列的简写是 `cond` 形式.
+
+```lisp
+( cond {[ <expr> <expr>* ]}* )
+```
+
+`cond`形式由一系列, `方括号`内子句(clause)组成.
+在每个`子句`中,第一个`<expr>`是`测试表达式`. 如果它产生了`真值`,那么`子句`中剩下的`<expr>`就会被计算,
+`clause`中的最后一个`expr`作为整个`cond`的值返回; 其余的`clause`被忽略.
+
+如果测试`<expr>`产生`#f`, 那么子句中剩余的`<expr>`将被忽略,并继续计算下一个子句.
+最后一个子句可以使用`else`作为`#t`的同义词.
+
+使用 `cond`, `reply-more` 函数可以更清楚地写成如下.
+
+```lisp
+#lang racket
+(define (reply-more s)
+  (cond
+    [(string-prefix? s "hello ")
+     "hi!"]
+    [(string-prefix? s "goodbye ")
+     "bye!"]
+    [(string-suffix? s "?")
+     "I don't know"]
+    [else "huh?"]))
+
+> (reply-more "hello racket")
+"hi!"
+> (reply-more "goodbye cruel world")
+"bye!"
+> (reply-more "what is your favorite color?")
+"I don't know"
+> (reply-more "mine is lime green")
+"huh?"
+```
+
+为`cond` clauses 使用`方括号`是一种惯例.
+在`Racket`中, 小括号和方括号实际上是可以互换的,只要`(`与`)`匹配, `[`与`]`匹配即可.
+在一些关键的地方使用`方括号`可以使`Racket`的代码更具有可读性.
+
+### 函数调用, Again
+
+在我们先前的`函数调用`语法中,我们过度简化了. `函数调用`的实际语法允许提供任意表达式作为`函数`, 而不仅仅是`<id>`.
+
+```lisp
+( <expr> <expr>* )
+```
+
+第一个`<expr>`通常是一个`<id>`, 例如`string-append`或`+`, 但它也可以是任何可以计算为`函数`的东西. 例如,它可以是一个`条件表达式`.
+
+```lisp
+(define (double v)
+  ((if (string? v) string-append +) v v))
+> (double "mnah")
+"mnahmnah"
+> (double 5)
+10
+```
+
+从语法上讲, 函数调用中的第一个表达式甚至可以是一个`数字`--但这将导致一个错误,因为数字不是`函数`.
+
+```lisp
+> (1 2 3 4)
+application: not a procedure;
+  expected a procedure that can be applied to arguments
+    given: 1
+```
+
+当你不小心省略了`函数名`,或者在表达式周围使用了额外的括号时,你最经常得到的是像这样的`expected a procedure`的错误.
+
+### 使用匿名函数,lambda
+
+如果你必须为所有的数字命名,那么用`Racket`编程就会很乏味. 这样你不能用`(+1 2)`, 而是得写
+
+```lisp
+> (define a 1)
+> (define b 2)
+> (+ a b)
+3
+```
+
+事实证明,必须为所有的函数命名也是很乏味的.
+例如,你可能有函数`twice`,它接受一个`函数`和一个`参数`.
+如果你已经有了另一个函数的名字,比如`sqrt`, 那么使用`twice`就很方便.
+
+```lisp
+(define (twice f v)
+  (f (f v)))
+> (twice sqrt 16)
+2
+```
+
+如果你想调用尚未定义的函数,你可以定义它,然后把它传给 `twice`.
+
+```lisp
+(define (louder s)
+  (string-append s "!"))
+> (twice louder "hello")
+"hello!!"
+```
+
+但如果只是在`twice`这儿用了下`louder`, 那么没必要写个完整的定义.
+在`Racket`中,你可以使用`lambda`表达式来直接产生一个函数.
+`lambda`形式后面是函数`参数`的`标识符`, 然后是函数的`主体`表达式.
+
+```lisp
+( lambda ( <id>* ) <expr>+ )
+```
+
+计算`lambda`形式本身会产生一个`函数`.
+
+```lisp
+> (lambda (s) (string-append s "!"))
+#<procedure>
+```
+
+使用`lambda`,上面对 `twice` 的调用可以改写为
+
+```lisp
+> (twice (lambda (s) (string-append s "!"))
+                  "hello")
+"hello!!"
+> (twice (lambda (s) (string-append s "?!"))
+                  "hello")
+"hello?!?!"
+```
+
+`lambda`的另一个用途是作为函数返回的结果.
+
+```lisp
+(define (make-add-suffix s2)
+  (lambda (s) (string-append s s2)))
+> (twice (make-add-suffix "!") "hello")
+"hello!!"
+> (twice (make-add-suffix "?!") "hello")
+"hello?!?!"
+> (twice (make-add-suffix "...") "hello")
+"hello......"
+```
+
+`Racket`是一种`文法定域`(lexically scoped)的语言,
+这意味着`make-add-suffix`返回的`匿名函数`中的`s2`, 总是指向`匿名函数`被创建时指向的参数.
+换句话说, `lambda` 生成的函数 `记住` 了正确的`s2`. 类似于`mma` 中的 `Module`.
+
+```lisp
+> (define louder (make-add-suffix "!"))
+> (define less-sure (make-add-suffix "?"))
+> (twice less-sure "really")
+"really??"
+> (twice louder "really")
+"really!!"
+```
+
+到目前为止,我们将形式为`(define <id> <expr>)`的定义称为 `非函数定义`.
+这种描述有误导性, 因为`expr`可以是`lambda`形式, 在这种情况下,该定义等同于使用 `函数` 定义形式. 例如,下面两个`louder`的定义是等价的.
+
+```lisp
+(define (louder s)
+  (string-append s "!"))
+ (define louder
+  (lambda (s)
+    (string-append s "!")))
+> louder
+#<procedure:louder>
+```
+
+注意,在第二种情况下, `louder` 的表达式是一个用 `lambda` 写的 `匿名`函数.
+但是如果可能的话,编译器还是会推断出一个名字,以使打印和错误报告更有信息含量.
+
+### 局部绑定,define,let和let*
+
+现在是时候收回我们`Racket`语法中的另一个简化了. 在`函数`的主体中, `定义`可以出现在主体表达式之前.
+
+```lisp
+( define ( <id> <id>* ) <define>* <expr>+ )
+( lambda ( <id>* ) <define>* <expr>+ )
+```
+
+位于`函数体`开始的定义是函数体的`局部定义`.
+例子.
+
+```lisp
+(define (converse s)
+  (define (starts? s2) ; 对 converse 是定域的, 是否用 s2 开始
+    (define spaced-s2 (string-append s2 " ")) ;  对 starts? 是定域的, 给 s2 追加空格.
+    (string-prefix? s spaced-s2)) ; s 是否为前缀
+  (cond
+   [(starts? "hello") "hi!"]
+   [(starts? "goodbye") "bye!"]
+   [else "huh?"]))
+> (converse "hello world")
+"hi!"
+> (converse "hellonearth")
+"huh?"
+> (converse "goodbye friends")
+"bye!"
+> (converse "urp")
+"huh?"
+> starts? ; 在 converse 之外, 所以无法使用...
+starts?: undefined;
+ cannot reference an identifier before its definition
+  in module: top-level
+```
+
+另一种创建`局部绑定`的方法是 `let` 形式. `let` 的优点是它可以在任何表达式的位置使用.
+而且, `let` 一次可以绑定许多标识符, 而不要求为每个`标识符`单独定义.
+
+```lisp
+( let ( {[ <id>  <expr> ]}* )  <expr>+ )
+```
+
+每个绑定子句有一个`<id>`和一个` <expr>`, 用`方括号`包围, `子句`后面的表达式`<expr>+`是`let`的主体.
+在每个子句中, `<id>` 被绑定到 `<expr>` 的结果上, 以便在主体中使用.
+
+```lisp
+> (let ([x (random 4)]
+             [o (random 4)])
+        (cond
+            [(> x o) "X wins"]
+            [(> o x) "O wins"]
+            [else "cat's game"]))
+"O wins"
+```
+
+`let`形式的绑定只在`let`的主体中可用, 所以绑定子句之间不能相互`引用`.
+与此相反, `let*`形式允许后面的子句使用前面的`绑定`.
+
+```lisp
+> (let* ([x (random 4)]
+               [o (random 4)]
+               [diff (number->string (abs (- x o)))])
+          (cond
+              [(> x o) (string-append "X wins by " diff)]
+              [(> o x) (string-append "O wins by " diff)]
+              [else "cat's game"]))
+"X wins by 2"
+```
+
+## 列表,循环和递归
+
+`Racket`是`Lisp`语言的一种方言,它的名字最初是 `LISt Processor`. 内置的`列表`数据类型仍然是该语言的一个突出特点.
+
+`list`函数接收任意数量的值并返回一个包含这些值的列表.
+
+```lisp
+> (list "red" "green" "blue")
+'("red" "green" "blue")
+> (list 1 2 3 4 5)
+'(1 2 3 4 5)
+```
+
+列表通常带`'`打印, 但列表的打印形式取决于其内容. 更多信息请参见`对儿和列表`.
+
+正如你所看到的,`列表`的结果在 `REPL` 中打印为: 一个引号`'`接着是`小括号`包裹着列表元素的形式.
+这里有个混淆的机会, 因为`小括号`既用于表达式, 如 `(list "red" "green" "blue")` ;  也用于打印结果, 如 `'("red" "green" "blue")`.
+
+除了`引号`外,在文档和`DrRacket`中, 结果的小括号以`蓝色`打印, 而表达式的小括号是`棕色`的.
+许多预定义函数对列表进行操作.下面是几个例子.
+
+```lisp
+> (length (list "hop" "skip" "jump"))        ; 计算元素数
+3
+> (list-ref (list "hop" "skip" "jump") 0)    ; 按位置提取
+"hop"
+> (list-ref (list "hop" "skip" "jump") 1)
+"skip"
+> (append (list "hop" "skip") (list "jump")) ; 组合列表
+'("hop" "skip" "jump")
+> (reverse (list "hop" "skip" "jump"))       ; 倒转顺序
+'("jump" "skip" "hop")
+> (member "fall" (list "hop" "skip" "jump")) ; 检查元素是否存在
+#f
+```
+
+### 预定义的列表循环
+
+除了像`append`这样的简单操作外, `Racket` 还包括对列表中的元素进行`迭代`的函数.
+这些迭代函数的作用类似于 `Java`,`Racket` 和其他语言中的 `for`.
+`Racket` 迭代的`主体`被打包成`函数`, 应用于每个元素, 所以`lambda`形式在与`迭代`函数的结合中变得特别方便.
+
+不同的`list-iteration`函数以不同的方式组合迭代结果. `map` 函数使用每个元素的结果来创建一个新的列表.
+
+```lisp
+> (map sqrt (list 1 4 9 16))
+'(1 2 3 4)
+> (map (lambda (i)
+         (string-append i "!"))
+       (list "peanuts" "popcorn" "crackerjack"))
+'("peanuts!" "popcorn!" "crackerjack!")
+```
+
+`andmap`和`ormap`函数通过`and`或`or`来组合结果.
+
+```lisp
+> (andmap string? (list "a" "b" "c"))
+#t
+> (andmap string? (list "a" "b" 6))
+#f
+> (ormap number? (list "a" "b" 6))
+#t
+```
+
+`map`,`andmap` 和 `ormap` 函数都可以处理多个列表,而不仅仅是一个列表.
+这些列表必须都有相同的长度, 并且给定的函数必须从每个列表接受一个参数.
+
+```lisp
+> (map (lambda (s n) (substring s 0 n))
+                (list "peanuts" "popcorn" "crackerjack")
+                (list 6 3 7))
+'("peanut" "pop" "cracker")
+```
+
+`filter`函数保留主体结果为`真`的元素,并丢弃其为`#f`的元素.
+
+```lisp
+> (filter string? (list "a" "b" 6))
+'("a" "b")
+> (filter positive? (list 1 -2 6 7 0))
+'(1 6 7)
+```
+
+`foldl`函数推广了一些迭代函数. 它使用`per-element`函数来处理每个元素, 并将其与 `当前` 值相结合,
+所以`per-element`函数需要额外的第一个参数. 另外,在列表前必须提供一个开始的 `当前` 值.
+
+```lisp
+> (foldl (lambda (elem v)
+           (+ v (* elem elem)))
+         0
+         '(1 2 3))
+14
+```
+
+尽管`foldl`具有通用性,但它并不像其他函数那样流行.
+原因之一是 `map`,`ormap`,`andmap` 和 `filter` 涵盖了最常见的列表循环.
+
+`Racket`提供了一个通用的`list comprehension` 形式`for/list`, 它通过对序列迭代(itering through sequence)来建立一个列表.
+`列表解析`和相关的迭代形式在 `Iterations and Comprehensions`   中有描述.
+
+### 从零开始的列表迭代
+
+尽管`map`和其他迭代函数是预定义的, 但它们在任何有趣的意义上都不是原始的.
+你可以使用少量的列表`原语`(primitives)来编写等价的迭代.
+
+由于`Racket`列表是一个链表, 在一个非空列表上的两个核心操作是
+
++ `first`: 获取列表中的第一项;以及
++ `rest`: 获取列表的其余部分.
+
+例子.
+
+```lisp
+> (first (list 1 2 3))
+1
+> (rest (list 1 2 3))
+'(2 3)
+```
+
+要为`链表`创建新的`节点`--即添加到列表的前面--使用 `cons` 函数, 它是 `construct` 的缩写.
+要从`空列表`开始,使用`empty` 常量.
+
+```lisp
+> empty
+'()
+> (cons "head" empty)
+'("head")
+> (cons "dead" (cons "head" empty))
+'("dead" "head")
+```
+
+要处理`列表`, 你需要能够区分`空列表`和`非空列表`,
+因为`first`和`rest`只对非空列表工作. 函数 `empty?` 检测`空列表`, 而 `cons? `检测`非空列表`.
+
+```lisp
+> (empty? empty)
+#t
+> (empty? (cons "head" empty))
+#f
+> (cons? empty)
+#f
+> (cons? (cons "head" empty))
+#t
+```
+
+有了这些片段,你可以写出你自己版本的`length`函数, `map`函数等.
+例子.
+
+```lisp
+(define (my-length lst)
+  (cond
+    [(empty? lst) 0]
+    [else (+ 1 (my-length (rest lst)))]))
+> (my-length empty)
+0
+> (my-length (list "a" "b" "c"))
+3
+
+(define (my-map f lst)
+    (cond
+        [(empty? lst) empty]
+        [else (cons (f (first lst))
+                   (my-map f (rest lst)))]))
+> (my-map string-upcase (list "ready" "set" "go"))
+'("READY" "SET" "GO")
+```
+
+如果上述定义的推导对你来说是神秘的,可以考虑阅读[如何设计程序](https://htdp.org/).
+如果你只是对使用`递归调用`而不是`循环结构`感到怀疑,那么请继续阅读.
+
+### 尾部递归
+
+对于长度为`n`的列表, `my-length` 和 `my-map` 函数都在`O(n)` 空间内运行.
+通过想象`(my-length (list "a" "b" "c"))`必须如何计算,就很容易看出这一点.
+
+```lisp
+(my-length (list "a" "b" "c"))
+= (+ 1 (my-length (list "b" "c")))
+= (+ 1 (+ 1 (my-length (list "c"))))
+= (+ 1 (+ 1 (+ 1 (my-length (list)))))
+= (+ 1 (+ 1 (+ 1 0)))
+= (+ 1 (+ 1 1))
+= (+ 1 2)
+= 3
+```
+
+对于一个有`n`个元素的列表,求值会堆积`n`个`(+1 ...)`加法, 最后在列表耗尽时将它们加起来.
+
+你可以通过`沿途加法`来避免堆积加法. 为了以这种方式积累长度,我们需要一个同时接收列表和到目前为止看到的列表长度的函数;
+下面的代码使用了一个本地函数`iter`,在参数`len`中积累长度.
+
+```lisp
+(define (my-length lst)
+  ; local function iter:
+    (define (iter lst len)
+         (cond
+             [(empty? lst) len]
+             [else (iter (rest lst) (+ len 1))]))
+  ; body of my-length calls iter:
+  (iter lst 0))
+```
+
+现在计算看起来像这样.
+
+```lisp
+(my-length (list "a" "b" "c"))
+= (iter (list "a" "b" "c") 0)
+= (iter (list "b" "c") 1)
+= (iter (list "c") 2)
+= (iter (list) 3)
+3
+```
+
+修订后的`my-length`在恒长空间中运行, 正如上面的计算步骤所提示的那样.
+
+也就是说,当一个函数调用的结果,比如`(iter (list "b" "c") 1)`, 正好是另一个函数调用的结果,比如 `(iter (list "c") 2)` ,
+那么第一个函数原地等待第二个函数的结果, 因为那会毫无理由地占用空间.
+
+这种计算行为有时被称为`尾部调用优化`(tail-call optimization), 但是在 `Racket` 中它不仅仅是一种 `优化`; 它是对代码运行方式的一种保证.
+更确切地说, 相对于表达式`A`, 处于`尾部`的表达式`B`不会占用额外的计算空间.
+
+在`my-map`的例子中, `O(n)`空间复杂度是合理的, 因为它必须生成一个大小为`O(n)`的结果. 
+尽管如此,你可以通过累积结果列表来减少常数因子. 
+唯一的问题是,累积的列表将是`反向`的,所以你必须在最后把它倒过来.
+
+> 试图像这样减少一个常数因子通常是不值得的,如下文所述.
+
+```lisp
+(define (my-map f lst)
+    (define (iter lst backward-result)
+        (cond
+            [(empty? lst) (reverse backward-result)]
+            [else (iter (rest lst)
+                                 (cons (f (first lst))
+                                              backward-result))]))
+      (iter lst empty))
+```
+
+事实证明,如果你写
+
+```lisp
+(define (my-map f lst)
+    (for/list ([i lst])
+        (f i)))
+```
+
+那么函数中的`for/list`形式被扩展为与`iter`局部定义基本相同的代码, 然后被使用. 区别只是语法更方便.
+
+### 递归与迭代
+
+`my-length`和`my-map`的例子表明, `迭代`(iteration)只是`递归`(recursion)的一种特殊情况.
+
+在许多语言中,重要的是要尽可能多地将计算纳入`迭代`形式.
+否则,性能会很差,而且适度的大输入会导致`堆栈溢出`(stack overflow).
+
+同样,在`Racket`中, 当计算很容易在`常数空间`中进行时,有时必须确保使用`尾部递归`以避免`O(n)`空间的消耗.
+
+同时, 递归在`Racket`中不会导致特别糟糕的性能,也不存在`堆栈溢出`的问题;
+如果一个计算涉及太多的上下文,你可能会耗尽内存,但耗尽内存通常需要比其他语言中触发`堆栈溢出`更深的递归数量级.
+这些考虑,再加上`尾部递归`程序自动运行, 等价于循环的事实, 导致`Racket`程序员拥抱递归形式而不是避免它们.
+
+例如, 假设你想从`列表`中删除连续的重复内容.
+虽然这样的函数可以写成`循环`,在每次迭代中记住前一个元素,但`Racket`程序员更有可能直接写成下面这样.
+
+```lisp
+(define (remove-dups l)
+  (cond
+      [(empty? l) empty]
+       [(empty? (rest l)) l]
+       [else
+          (let ([i (first l)])
+              (if (equal? i (first (rest l)))
+                    (remove-dups (rest l))
+                    (cons i (remove-dups (rest l)))))]))
+> (remove-dups (list "a" "b" "b" "b" "c" "c"))
+'("a" "b" "c")
+```
+
+一般来说, 对于一个长度为`n`的输入列表,这个函数会消耗`O(n)`的空间,但这很好,因为它产生的结果是`O(n)`.
+如果输入的列表恰好大部分是连续重复的,那么产生的列表可以比`O(n)`小得多--而且`remove-dups`也会使用比`O(n)`小得多的空间.
+
+原因是,当该函数丢弃重复数据时,它直接返回 `remove-dups` 调用的结果,因此`尾部调用`的 "优化" 开始发挥作用.
+
+```lisp
+(remove-dups (list "a" "b" "b" "b" "b" "b"))
+= (cons "a" (remove-dups (list "b" "b" "b" "b" "b")))
+= (cons "a" (remove-dups (list "b" "b" "b" "b")))
+= (cons "a" (remove-dups (list "b" "b" "b")))
+= (cons "a" (remove-dups (list "b" "b")))
+= (cons "a" (remove-dups (list "b")))
+= (cons "a" (list "b"))
+= (list "a" "b")
+```
+
+### 对儿,列表和Racket语法
 
 `cons`函数实际上接受任何`成对值`, 第二个参数可以不是`列表`.
 当第二个参数不是`empty`, 并且本身不是由`cons`产生的, 其结果会以特殊的方式打印出来.
@@ -758,10 +1442,18 @@ a-b-c+1-2-3
 上一章介绍了`Racket`的一些内置数据类型: `数字`, `布尔值`, `字符串`, `列表`和`过程`.
 本节将对简单形式的内置数据类型进行更全面的介绍.
 
-### Booleans
++ 数字: `5`, `0.99`, `1/2`, `1+2i`
++ 字符串: `"Apple"`, `"\u03BB"`
+
++ 布尔值 ; `#t`, `#f`, `"no"`
++ character ; `#\A`, `#\u03BB`, `#\space`, `#\newline`.
++ byte string ; `#"Apple"`, `#"\0\0"`
+
++ 符号; `'a`, `#ci'A`
+
+### 布尔值 Booleans
 
 `Racket`有两个特别的`常量`来表示`布尔值`. `#t`表示真, `#f`表示假. 大写的`#T`和`#F`被解析为相同的值, 但小写的形式更受欢迎.
-
 `boolean?` procedure 可以识别这两个布尔值常量. 在`if`, `cond`, `and`, `or`等表达式的测试结果中, 除了`#f`以外的任何值都算作真.
 例子:
 
@@ -779,7 +1471,7 @@ a-b-c+1-2-3
 1
 ```
 
-### 数字
+### 数字 Numbers
 
 `Racket`数字可以是`精确`的, 也可以是`不精确`(inexact)的.
 
@@ -865,8 +1557,8 @@ abs: contract violation
 3.6076607742131563+1.0288031496599335i
 ```
 
-`=` procedure 比较数字是否相等.
-如果同时给定了`非精确数`和`精确数`进行比较, 那么在比较之前, 它基本上将`非精确数`转换为`精确数`.
+`=` 过程(procedure) 比较数字是否相等.
+如果同时给定了`非精确数`和`精确数`进行比较, 那么在比较之前, 基本上它会将`非精确数`转换为`精确数`.
 `eqv?` (因此也就是`equal?`)过程, 与此相反, 它在比较数字时既考虑`exactness`又考虑数值的`equality`. 例子:
 
 ```lisp
@@ -890,7 +1582,7 @@ abs: contract violation
 3602879701896397/36028797018963968
 ```
 
-### 字符Characters
+### 字符 Characters
 
 `Racket`字符对应于`Unicode`标量值.
 粗略的说, `标量值`是一个无符号的整数, 可以表示成`21`位`bit`, 它对应自然语言的`字符`, 或字符的某个`部分`.
@@ -900,7 +1592,7 @@ abs: contract violation
 尽管每个`Racket`字符对应一个整数, 但`字符`数据类型与`数字`是分开的.
 `char->integer`和`integer->char`程序可以在`scalar-value`的数字和对应的字符之间进行转换.
 
-可打印的字符通常打印为`#/`, 后面是代表的字符.
+可打印的字符通常打印为`#\`,  后面是代表的字符.
 不可打印的字符通常以`#u`的形式打印, 后面是标量值的十六进制数字.
 有几个字符按特殊方式打印的; 例如, `空格`和`换行`字符分别打印为`#\space`和`#\newline`.
 例子.
@@ -951,5 +1643,224 @@ procedure `char=?` 比较两个或多个字符, `char-ci=?` 比较字符时忽�
 > (char-ci=? #\a #\A)
 #t
 > (eqv? #\a #\A)
+#f
+```
+
+### 字符串 Unicode
+
+`string`是一个固定长度的`字符`(characters)数组.
+它使用`双引号`进行打印, 其中`string`中的双引号`"`, 和反斜线`\`字符用反斜线转义.
+
+还支持其他常见的`string`转义,包括换行的`\n`, 回车的`\r`, 八进制转义(`\`后面跟三个八进制数字) 以及十六进制转义(使用`\u`,最多四个数字).
+在打印`string`时,`string`中的不可打印字符通常用`\u`表示.
+
+`display` procedure 直接将字符串中的`字符`写入当前的`输出端口`(见`Input and Output`), 这跟打印`字符串常量`的语法不同, 后者定义一个`字符串`.
+例子.
+
+```lisp
+> "Apple"
+"Apple"
+> "\u03BB"
+"λ"
+> (display "Apple")
+Apple
+> (display "a \"quoted\" thing")
+a "quoted" thing
+> (display "two\nlines")
+two
+lines
+> (display "\u03BB")
+λ
+```
+
+`string`可以是`可变`的,也可以是`不可变`的;直接写成表达式的`string`是`不可变`的, 但大多数其他`string`是可变的.
+
+`make-string` 过程, 在给出`长度`和可选的`填充字符`的情况下, 创建一个可变的`string`.
+`string-ref` 过程 从`string`中访问字符(使用基于`0`的索引);
+`string-set!` 过程改变可变`string`中的字符.
+
+例子.
+
+```lisp
+> (string-ref "Apple" 0)
+#\A
+> (define s (make-string 5 #\.))
+> s
+"....."
+> (string-set! s 2 #\λ)
+> s
+"..λ.."
+```
+
+`字符串`排序和`大小写`操作通常是独立于`locale`的; 也就是说,它们对所有用户都是一样的.
+我们提供了一些依赖`locale`的操作, 使字符串的大小写折叠, 和排序方式可以取决于终端用户的地区设置.
+
+例如,如果你要对字符串进行排序, 需要排序结果在不同机器和用户间保持一致,就使用 `string<?` 或 `string-ci<?`,
+如果要依据终端用户给出特定的结果,就使用 `string-locale<?` 或 `string-locale-ci<?`
+例子.
+
+```lisp
+> (string<? "apple" "Banana")
+#f
+> (string-ci<? "apple" "Banana")
+#t
+> (string-upcase "Straße")
+"STRASSE"
+> (parameterize ([current-locale "C"])
+(string-locale-upcase "Straße"))
+"STRAßE"
+```
+
+对于处理纯`ASCII`, 处理`raw bytes`, 或将Unicode字符串`编码`/`解码`为`字节`(bytes), 使用`byte strings`(字节字符串).
+
+### 字节和字节字符串
+
+`byte`是`0`到`255` 之间的精确`整数`,包括两端. `byte?` 谓词(predicate)可以识别代表`字节`的数字.
+例子.
+
+```lisp
+> (byte? 0)
+#t
+> (byte? 256)
+#f
+```
+
+`byte string`类似于`字符串`--见字符串(Unicode)--但其内容是一串`字节`而不是字符.
+`byte string`可用于处理纯`ASCII`码而非`Unicode`文本的应用程序中.
+
+`byte string`的打印形式特别适合这种用途, 因为`byte string`的打印形式就像`byte string`的`ASCII`码, 但前缀为`#`.
+`byte string`中不可打印的`ASCII`字符或`非ASCII字节`会用`八进制`符号来书写.
+例子.
+
+```lisp
+> #"Apple"
+#"Apple"
+> (bytes-ref #"Apple" 0)
+65
+> (make-bytes 3 65)
+#"AAA"
+> (define b (make-bytes 2 0))
+> b
+#"\0\0"
+> (bytes-set! b 0 1)
+> (bytes-set! b 1 255)
+> b
+#"\1\377"
+```
+
+`bytes串`的`display`形式将其`raw bytes`写到当前的输出端口(见输入和输出).
+从技术上讲,普通的(即character)`字符串`的`display`, 就是将该字符串的`UTF-8`编码打印到当前的输出端口, 因为输出最终是以`字节`为单位定义的;
+但是, `display`一个`byte 字符串`, 输出的是没有`编码`的原始字节.
+按照同样的思路,当本文档显示输出时, 从技术上讲, 它显示的是输出的`UTF-8`解码形式.
+例子.
+
+```lisp
+> (display #"Apple")
+Apple
+> (display "\316\273")  ; same as "Î»"
+Î»
+> (display #"\316\273") ; UTF-8 encoding of λ
+λ
+```
+
+为了明确地在字符串和字节字符串之间进行转换, `Racket` 直接支持三种编码方式.
+`UTF-8`,`Latin-1`,以及`当前地区`的编码. `字节`与`字节`之间的转换(尤其是与`UTF-8`之间的转换)的通用实现, 填补了支持任意字符串编码的空白.
+例子.
+
+```lisp
+> (bytes->string/utf-8 #"\316\273")
+"λ"
+> (bytes->string/latin-1 #"\316\273")
+"Î»"
+> (parameterize ([current-locale "C"])  ; C locale supports ASCII,
+    (bytes->string/locale #"\316\273")) ; only, so...
+bytes->string/locale: byte string is not a valid encoding for the current locale  byte string: #"\316\273"
+> (let ([cvt (bytes-open-converter "cp1253" ; Greek code page
+                                   "UTF-8")]
+            [dest (make-bytes 2)])
+    (bytes-convert cvt #"\353" 0 1 dest)
+    (bytes-close-converter cvt)
+    (bytes->string/utf-8 dest))
+"λ"
+```
+
+### 符号 Symbols
+
+类似于`mma` 的 `Symbol`, `SymbolName`.
+
+`符号`(symbol)是一个`原子值`(atomic),其打印方式类似于, 前面带有`'`的标识符. 以`'`开始,接着一个标识符的表达式, 产生一个`符号`值.
+例子:
+
+```lisp
+> 'a
+'a
+> (symbol? 'a)
+#t
+```
+
+对于任何字符序列, 内部(interned)都对应唯一的`符号`;
+调用`string->symbol` 过程, 或者读取一个语法(syntactic)标识符,都会产生一个`内部符号`(interned symbol).
+由于内部符号可以方便地用`eq?` (以及`eqv?`或`equal?`)进行比较,它们可以方便地作为`标签`和`枚举`来使用.
+
+`符号`是区分大小写的. 通过使用`#ci`前缀或其他方式, 可以控制 `reader` 简并字符序列的大小写, 以得到同一个符号,但`reader` 默认保留大小写.
+例子.
+
+```lisp
+> (eq? 'a 'a)
+#t
+> (eq? 'a (string->symbol "a"))
+#t
+> (eq? 'a 'b)
+#f
+> (eq? 'a 'A)
+#f
+> #ci'A
+'a
+```
+
+任何`字符串`(即任何`字符`序列) 都可以提供给`string->symbol`以获得相应的符号.
+输入给 `reader` 时, 任何字符都可以直接出现在`标识符`中, 除了`空白`和以下特殊字符.
+
+    ( ) [ ] { } " , ' ` ; # | \
+
+实际上, 只有符号开头不允许出现`#`, 并且后面不允许跟有`%`; 否则, `#` 也是允许的. 另外, `.` 本身不能当作符号.
+
+`空白`或`特殊字符`可以通过用`|`或`\` quoting , 来包含在`标识符`中.
+这些 quoting 机制用于打印`特殊字符`, 或者避免与`数字`模样的标识符混淆.
+例子.
+
+```lisp
+> (string->symbol "one, two")
+'|one, two|
+> (string->symbol "6")
+'|6|
+```
+
+`write` 函数 打印出不带`'`前缀的`symbol`. `symbol`的显示形式与相应的字符串相同.
+例子.
+
+```lisp
+> (write 'Apple)
+Apple
+> (display 'Apple)
+Apple
+> (write '|6|)
+|6|
+> (display '|6|)
+6
+```
+
+`gensym`和 `string->uninterned-symbol` procedure 生成新的`uninterned`符号,
+这些符号不等于(根据`eq?`)任何先前的 `interned` 或 `uninterned` 符号.
+`unterned` 符号作为新的`标签`是很有用的, 它不会与任何其他值混淆.
+例子.
+
+```lisp
+> (define s (gensym))
+> s ; s 不是内部符号,
+'g42
+> (eq? s 'g42) ; 它根内部符号 'g45 也不相等
+#f
+> (eq? 'a (string->uninterned-symbol "a"))
 #f
 ```

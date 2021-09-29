@@ -864,7 +864,7 @@ rsync -av --rsh=ssh host::module /dest
 rsync -av -e "ssh -l ssh-user" rsync-user@host::module /dest
 ```
 
-`ssh-user` 将在`ssh`级别使用；`rsync-user`将用于登录 `模块`. 
+`ssh-user` 将在`ssh`级别使用;`rsync-user`将用于登录 `模块`. 
 
 #### 启动rsync守护进程以接受连接
 
@@ -895,7 +895,7 @@ rsync -av -e "ssh -l ssh-user" rsync-user@host::module /dest
 + `--q, --quiet` ; 抑制非错误信息
   + `--no-motd` ; 抑制守护进程模式的`MOTD`(见注意事项). 
 + `-c, --checksum` ;  根据校验和跳过, 而不是根据`mod-time`和`size`. 
-+ `-a, --archive` ; 归档模式；等于`-rlptgoD`(没有`-H`,`-A`,`-X`)
++ `-a, --archive` ; 归档模式;等于`-rlptgoD`(没有`-H`,`-A`,`-X`)
   + `--no-OPTION` 关掉一个隐含的`OPTION`(例如: `--no-D`)
 
 `-r`; 递归. `-l`; 符号连接. `-p`; 保留权限. `-t`; 保留修改时间. `-go`; 组和所有者. `-D`; 设备文件和特殊文件.
@@ -997,7 +997,7 @@ rsync -av -e "ssh -l ssh-user" rsync-user@host::module /dest
   + `--files-from=FILE` ; 从`FILE`中读取源文件名的列表
 
 + `-0, --from0` ; 所有的`*from/filter`文件都以`0`为界. 
-+ `-s, --protect-args` ; 不按空格分词；只有通配符. 
++ `-s, --protect-args` ; 不按空格分词;只有通配符. 
 + `--address=ADDRESS` ; 绑定出站`socket`的地址给守护进程. 
   + `--port=PORT` ; 指定双冒号的备用端口号
   + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
@@ -1517,7 +1517,7 @@ echo "frperg grkg" | tr a-zA-Z n-za-mN-ZA-M+ |
 secret text
 ```
 
-`tr` 也可以完成另一个技巧. 使用 `-s` 选项,`tr` 命令能“挤压”(删除)重复的字符实例:
+`tr` 也可以完成另一个技巧. 使用 `-s` 选项,`tr` 命令能"挤压"(删除)重复的字符实例:
 
 ```bash
 [me@linuxbox ~]$ echo "aaabbbccc" | tr -s ab
