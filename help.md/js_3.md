@@ -495,7 +495,7 @@ var sub = langs.slice(2, 4); // Swift, Scheme, 参数和数组的slice()方法�
 
 #### 练习
 
-对于下面的表单: 
+对于下面的表单:
 
 ```html
 <form id="test-form" action="#0" onsubmit="return false;">
@@ -533,6 +533,239 @@ else {
 }
 ```
 
+### 操作DOM
+
+`jQuery`的`选择器`很强大, 拿到了`jQuery`对象之后, 可以用来操作对应的`DOM`节点.
+
+回顾一下修改`DOM`的 `CSS`,`文本`,设置`HTML`有多么麻烦,
+而且有的浏览器只有`innerHTML`,有的浏览器支持`innerText`,有了`jQuery`对象,不需要考虑浏览器差异了,全部统一操作!
+
+#### 修改Text和HTML
+
+`jQuery`对象的`text()`和`html()`方法分别获取节点的文本和原始`HTML`文本,例如,如下的`HTML`结构:
+
+```html
+<!-- HTML结构 -->
+<ul id="test-ul">
+    <li class="js">JavaScript</li>
+    <li name="book">Java &amp; JavaScript</li>
+</ul>
+```
+
+分别获取`文本`和`HTML`:
+
+```js
+$('#test-ul li[name=book]').text(); // 'Java & JavaScript'
+$('#test-ul li[name=book]').html(); // 'Java &amp; JavaScript'
+```
+
+如何设置`文本`或`HTML`?
+`jQuery`的`API`设计非常巧妙: 无参数调用`text()`是获取文本,传入参数就变成设置文本,`HTML`也是类似操作,自己动手试试:
+
+```js
+'use strict';
+var j1 = $('#test-ul li.js');
+var j2 = $('#test-ul li[name=book]');
+j1.html('<span style="color: red">JavaScript</span>');
+j2.text('JavaScript & ECMAScript');
+```
+
+`jQuery`对象可以包含`0`个或`任意`个`DOM`对象,它的方法实际上会作用在对应的每个`DOM`节点上.在上面的例子中试试:
+
+```js
+$('#test-ul li').text('JS'); // 是不是两个节点都变成了JS?
+```
+
+所以`jQuery`对象的另一个好处是我们可以执行一个操作,作用在对应的一组`DOM`节点上.
+即使选择器没有返回任何`DOM`节点,调用`jQuery`对象的方法仍然不会报错:
+
+```js
+// 如果不存在id为not-exist的节点:
+$('#not-exist').text('Hello'); // 代码不报错,没有节点被设置为'Hello'
+```
+
+这意味着`jQuery`帮你免去了许多`if`语句.
+
+#### 修改CSS,链式调用
+
+`jQuery`对象有`批量操作`的特点, 这用于修改`CSS`实在是太方便了. 考虑下面的`HTML`结构:
+
+```html
+<!-- HTML结构 -->
+<ul id="test-css">
+    <li class="lang dy"><span>JavaScript</span></li>
+    <li class="lang"><span>Java</span></li>
+    <li class="lang dy"><span>Python</span></li>
+    <li class="lang"><span>Swift</span></li>
+    <li class="lang dy"><span>Scheme</span></li>
+</ul>
+```
+
+要`高亮显示`动态语言,调用`jQuery`对象的`css('name', 'value')`方法, 我们用一行语句实现:
+
+```js
+'use strict';
+$('#test-css li.dy>span').css('background-color', '#ffd351').css('color', 'red');
+```
+
+注意, `jQuery`对象的所有方法都返回`jQuery`对象(可能是新的也可能是自身),这样我们可以进行`链式调用`,非常方便.
+这里修改的是`HTML`的`CSS`属性. `jQuery`对象的`css()`方法可以用来:
+
++ 修改`class`的值,
+
+    ```js
+    var div = $('#test-div');
+    div.css('color'); // '#000033', 获取CSS属性
+    div.css('color', '#336699'); // 设置CSS属性
+    div.css('color', ''); // 清除CSS属性
+    ```
+
+    为了和`JavaScript`保持一致,`CSS` 属性可以用 `'background-color'` 和 `'backgroundColor'` 两种格式.
+    `css()` 方法将作用于`DOM`节点的`style`属性,具有最高优先级.
+
++ 添加或删除`class`,可以用`jQuery`的下列方法:
+
+    ```js
+    var div = $('#test-div');
+    div.hasClass('highlight'); // false, class是否包含highlight
+    div.addClass('highlight'); // 添加highlight这个class
+    div.removeClass('highlight'); // 删除highlight这个class
+    ```
+
+练习:  使用`css()`方法和`addClass()`方法高亮显示`JavaScript`:
+
+```html
+<!-- HTML结构 -->
+<style>
+.highlight {
+    color: #dd1144;
+    background-color: #ffd351;
+}
+</style>
+<div id="test-highlight-css">
+    <ul>
+        <li class="py"><span>Python</span></li>
+        <li class="js"><span>JavaScript</span></li>
+        <li class="sw"><span>Swift</span></li>
+        <li class="hk"><span>Haskell</span></li>
+    </ul>
+</div>
+```
+
+```js
+'use strict';
+var div = $('#test-highlight-css');
+// TODO:
+div.find('li.js>span').addClass('color').addClass('background-color').css('background-color', '#ffd351').css('color', 'red');
+```
+
+#### 显示和隐藏DOM
+
+要隐藏`DOM`,我们可以设置`CSS`的`display`属性 = `none`,利用`css()`方法就可以实现.
+不过,要显示这个`DOM`就需要恢复原有的`display`属性,这就得先记下来原有的`display`属性到底是`block`还是`inline`还是别的值.
+
+考虑到显示和隐藏`DOM`元素使用非常普遍, `jQuery` 直接提供`show()`和`hide()`方法, 我们不用关心它是如何修改`display`属性的, 总之它能正常工作:
+
+```js
+var a = $('a[target=_blank]');
+a.hide(); // 隐藏
+a.show(); // 显示
+```
+
+注意,隐藏`DOM`节点并未改变`DOM`树的结构,它只影响`DOM`节点的显示. 这和删除`DOM`节点是不同的.
+
+#### 获取DOM信息
+
+利用`jQuery`对象的若干方法,我们直接可以获取`DOM`的高宽等信息, 而无需针对不同浏览器编写特定代码:
+
+```js
+// 浏览器可视窗口大小:
+$(window).width(); // 800
+$(window).height(); // 600
+// HTML文档大小:
+$(document).width(); // 800
+$(document).height(); // 3500
+// 某个div的大小:
+var div = $('#test-div');
+div.width(); // 600
+div.height(); // 300
+div.width(400); // 设置CSS属性 width: 400px,是否生效要看CSS是否有效
+div.height('200px'); // 设置CSS属性 height: 200px,是否生效要看CSS是否有效
+```
+
+`attr()`和`removeAttr()`方法用于操作`DOM`节点的属性:
+
+```js
+// <div id="test-div" name="Test" start="1">...</div>
+var div = $('#test-div');
+div.attr('data'); // undefined, 属性不存在
+div.attr('name'); // 'Test'
+div.attr('name', 'Hello'); // div的name属性变为'Hello'
+div.removeAttr('name'); // 删除name属性
+div.attr('name'); // undefined
+```
+
+`prop()`(property)方法和`attr()`类似, 但是`HTML5`规定有些属性在`DOM`节点中可以没有值, 只有出现与不出现两种,例如:
+
+```html
+<input id="test-radio" type="radio" name="test" checked value="1">
+```
+
+等价于:
+
+```html
+<input id="test-radio" type="radio" name="test" checked="checked" value="1">
+```
+
+`attr()`和`prop()`对于属性`checked`处理有所不同:
+
+```js
+var radio = $('#test-radio');
+radio.attr('checked'); // 'checked'
+radio.prop('checked'); // true
+```
+
+`prop()`返回值更合理一些. 不过,用`is()`方法判断更好:
+
+```js
+var radio = $('#test-radio');
+radio.is(':checked'); // true
+```
+
+类似的属性还有`selected`,处理时最好用`is(':selected')`.
+
+#### 操作表单
+
+对于表单元素, `jQuery` 对象统一提供`val()`方法获取和设置对应的`value`属性:
+
+```html
+    <input id="test-input" name="email" value="test">
+    <select id="test-select" name="city">
+        <option value="BJ" selected>Beijing</option>
+        <option value="SH">Shanghai</option>
+        <option value="SZ">Shenzhen</option>
+    </select>
+    <textarea id="test-textarea">Hello</textarea>
+```
+
+```js
+var
+    input = $('#test-input'),
+    select = $('#test-select'),
+    textarea = $('#test-textarea');
+
+input.val(); // 'test'
+input.val('abc@example.com'); // 文本框的内容已变为abc@example.com
+
+select.val(); // 'BJ'
+select.val('SH'); // 选择框已变为Shanghai
+
+textarea.val(); // 'Hello'
+textarea.val('Hi'); // 文本区域已更新为'Hi'
+```
+
+可见,一个`val()`就统一了各种输入框的取值和赋值的问题.
+
 ### 修改DOM结构
 
 直接使用浏览器提供的API对`DOM`结构进行修改,不但代码复杂,而且要针对浏览器写不同的代码.
@@ -540,7 +773,7 @@ else {
 
 #### 添加DOM
 
-要添加新的`DOM`节点,除了通过`jQuery`的`html()`这种暴力方法外,还可以用`append()`方法,例如: 
+要添加新的`DOM`节点,除了通过`jQuery`的`html()`这种暴力方法外,还可以用`append()`方法,例如:
 
 ```html
 <div id="test-div">
@@ -552,19 +785,19 @@ else {
 </div>
 ```
 
-如何向列表新增一个语言?首先要拿到`<ul>`节点: 
+如何向列表新增一个语言?首先要拿到`<ul>`节点:
 
 ```js
 var ul = $('#test-div>ul');
 ```
 
-然后,调用`append()`传入`HTML`片段: 
+然后,调用`append()`传入`HTML`片段:
 
 ```js
 ul.append('<li><span>Haskell</span></li>');
 ```
 
-除了接受字符串, `append()` 还可以传入原始的`DOM`对象,`jQuery`对象和函数对象: 
+除了接受字符串, `append()` 还可以传入原始的`DOM`对象,`jQuery`对象和函数对象:
 
 ```js
 // 创建DOM对象:
@@ -586,7 +819,7 @@ ul.append(function (index, html) { // 索引和html代码
 `append()`把`DOM`添加到最后,`prepend()`则把`DOM`添加到最前.
 另外注意,如果要添加的`DOM`节点已经存在于`HTML`文档中,它会首先从文档移除,然后再添加,也就是说,用`append()`,你可以移动一个`DOM`节点.
 
-如果要把新节点插入到指定位置,例如,`JavaScript`和`Python`之间,那么,可以先定位到`JavaScript`,然后用`after()`方法: 
+如果要把新节点插入到指定位置,例如,`JavaScript`和`Python`之间,那么,可以先定位到`JavaScript`,然后用`after()`方法:
 
 ```js
 var js = $('#test-div>ul>li:first-child'); // $('#test-div>ul>li:nth-child(2)') 等等
@@ -598,7 +831,7 @@ js.after('<li><span>Lua</span></li>');
 #### 删除节点
 
 要删除`DOM`节点,拿到`jQuery`对象后直接调用`remove()`方法就可以了.
-如果`jQuery`对象包含若干`DOM`节点,实际上可以一次删除多个`DOM`节点: 
+如果`jQuery`对象包含若干`DOM`节点,实际上可以一次删除多个`DOM`节点:
 
 ```js
 var li = $('#test-div>ul>li');
@@ -607,7 +840,7 @@ li.remove(); // 所有<li>全被删除
 
 练习
 
-除了列出的3种语言外,请再添加`Pascal`,`Lua` 和 `Ruby`,然后按字母顺序排序节点: 
+除了列出的3种语言外,请再添加`Pascal`,`Lua` 和 `Ruby`,然后按字母顺序排序节点:
 
 ```html
 <!-- HTML结构 -->
@@ -659,3 +892,366 @@ val.sort()
 $("#test-div>ul>li").remove()
 val.map(x=>$("#test-div>ul").append(` <li><span>${x}</span></li>`))
 ```
+
+### 事件
+
+[jQuery API 速查表,Shifone](https://jquery.cuishifeng.cn/checkbox.html)
+[:checked Selector](https://api.jquery.com/checked-selector/#entry-examples)
+[jQuery; prop](https://jquery.cuishifeng.cn/prop.html)
+
+`$(":checkbox")` ; 匹配所有复选框
+
+因为`JavaScript`在浏览器中以单线程模式运行, 
+页面加载后,一旦页面上所有的`JavaScript`代码被执行完后,就只能依赖触发事件来执行`JavaScript`代码.
+
+浏览器在接收到用户的鼠标或键盘输入后,会自动在对应的`DOM`节点上触发相应的事件.
+如果该节点已经绑定了对应的`JavaScript`处理函数,该函数就会自动调用.
+由于不同的浏览器绑定事件的代码都不太一样,所以用`jQuery`来写代码,就屏蔽了不同浏览器的差异,我们总是编写相同的代码.
+
+举个例子,假设要在用户点击了超链接时弹出提示框,我们用`jQuery`这样绑定一个`click`事件: 
+
+```js
+/* HTML:
+ *
+ * <a id="test-link" href="#0">点我试试</a>
+ *
+ */
+
+// 获取超链接的jQuery对象:
+var a = $('#test-link');
+a.on('click', function () {
+    alert('Hello!');
+});
+```
+
+`on`方法用来绑定一个事件, 我们需要传入`事件名称`和对应的`处理函数`.
+
+另一种更简化的写法是直接调用`click()`方法: 
+
+```js
+a.click(function () {
+    alert('Hello!');
+});
+```
+
+两者完全等价. 我们通常用后面的写法.
+
+`jQuery`能够绑定的事件主要包括: 
+
++ 鼠标事件
+  + `click`: 鼠标单击时触发;
+  + `dblclick`: 鼠标双击时触发;
+  + `mouseenter`: 鼠标进入时触发;
+  + `mouseleave`: 鼠标移出时触发;
+  + `mousemove`: 鼠标在DOM内部移动时触发;
+  + `hover`: 鼠标进入和退出时触发两个函数,相当于mouseenter加上mouseleave.
++ 键盘事件; 键盘事件仅作用在当前焦点的`DOM`上,通常是`<input>`和`<textarea>`.
+  + `keydown`: 键盘按下时触发;
+  + `keyup`: 键盘松开时触发;
+  + `keypress`: 按一次键后触发.
++ 其他事件
+  + `focus`: 当 `DOM` 获得焦点时触发;
+  + `blur`: 当`DOM`失去焦点时触发;
+  + `change`: 当`<input>`,`<select`>或`<textarea>`的内容改变时触发;
+  + `submit`: 当`<form>`提交时触发;
+  + `ready`: 当页面被载入并且`DOM`树完成初始化后触发.
+
+其中,`ready`仅作用于`document`对象.
+由于`ready`事件在`DOM`完成初始化后触发,且只触发一次,所以非常适合用来写其他的初始化代码.
+假设我们想给一个`<form>`表单绑定`submit`事件,下面的代码没有预期的效果: 
+
+```js
+<html>
+<head>
+    <script>
+        // 代码有误:
+        $('#testForm').on('submit', function () {
+            alert('submit!');
+        });
+    </script>
+</head>
+<body>
+    <form id="testForm">
+        ...
+    </form>
+</body>
+```
+
+因为`JavaScript`在此执行的时候, `<form>` 尚未载入浏览器,所以`$('#testForm)`返回`[]`, 并没有绑定事件到任何`DOM`上.
+所以我们自己的初始化代码必须放到`document`对象的`ready`事件中,保证`DOM`已完成初始化: 
+
+```html
+<html>
+<head>
+    <script>
+        $(document).on('ready', function () {
+            $('#testForm).on('submit', function () {
+                alert('submit!');
+            });
+        });
+    </script>
+</head>
+<body>
+    <form id="testForm">
+        ...
+    </form>
+</body>
+```
+
+这样写就没有问题了.因为相关代码会在`DOM`树初始化后再执行.
+由于`ready`事件使用非常普遍,所以可以这样简化: 
+
+```js
+$(document).ready(function () {
+    // on('submit', function)也可以简化:
+    $('#testForm).submit(function () {
+        alert('submit!');
+    });
+});
+```
+
+甚至还可以再简化为: 
+
+```js
+$(function () {
+    // init...
+});
+```
+
+上面的这种写法最为常见.如果你遇到`$(function () {...})`的形式,牢记这是`document`对象的`ready`事件处理函数.
+完全可以反复绑定事件处理函数,它们会依次执行: 
+
+```js
+$(function () {
+    console.log('init A...');
+});
+$(function () {
+    console.log('init B...');
+});
+$(function () {
+    console.log('init C...');
+});
+```
+
+#### 事件参数
+
+有些事件, 如`mousemove`和`keypress`,我们需要获取鼠标位置和按键的值,否则监听这些事件就没什么意义了.
+所有事件都会传入`Event`对象作为参数,可以从`Event`对象上获取到更多的信息: 
+
+```js
+$(function () {
+    $('#testMouseMoveDiv').mousemove(function (e) {
+        $('#testMouseMoveSpan').text('pageX = ' + e.pageX + ', pageY = ' + e.pageY);
+    });
+});
+```
+
+#### 取消绑定
+
+已被绑定的事件可以`解除绑定`,通过`off('click', function)`实现: 
+
+```js
+function hello() {
+    alert('hello!');
+}
+a.click(hello); // 绑定事件
+// 10秒钟后解除绑定:
+setTimeout(function () {
+    a.off('click', hello);
+}, 10000);
+```
+
+需要特别注意的是,下面这种写法是无效的: 
+
+```js
+// 绑定事件:
+a.click(function () {
+    alert('hello!');
+});
+// 解除绑定:
+a.off('click', function () {
+    alert('hello!');
+});
+```
+
+这是因为两个匿名函数虽然长得一模一样,但是它们是两个不同的函数对象, `off('click', function () {...})`无法移除已绑定的第一个匿名函数.
+为了实现移除效果,可以使用`off('click')`一次性移除已绑定的`click`事件的所有处理函数.
+
+同理,无参数调用`off()`一次性移除已绑定的所有`类型`的事件处理函数.
+
+#### 事件触发条件
+
+一个需要注意的问题是, 事件的触发总是由用户操作引发的. 例如,我们监控文本框的内容改动: 
+
+```js
+var input = $('#test-input');
+input.change(function () {
+    console.log('changed...');
+});
+```
+
+当用户在文本框中输入时,就会触发`change`事件.但是,如果用`JavaScript`代码去改动文本框的值,将不会触发`change`事件: 
+
+```js
+var input = $('#test-input');
+input.val('change it!'); // 无法触发change事件
+```
+
+有些时候,我们希望用代码触发`change`事件,可以直接调用无参数的`change()`方法来触发该事件: 
+
+```js
+var input = $('#test-input');
+input.val('change it!');
+input.change(); // 触发change事件
+```
+
+`input.change()`相当于`input.trigger('change')`, 它是`trigger()`方法的简写.
+
+为什么我们希望手动触发一个事件呢?如果不这么做,很多时候,我们就得写两份一模一样的代码.
+
+#### 浏览器安全限制
+
+在浏览器中,有些`JavaScript`代码只有在用户触发下才能执行,例如,`window.open()`函数: 
+
+```js
+// 无法弹出新窗口,将被浏览器屏蔽:
+$(function () {
+    window.open('/');
+});
+```
+
+这些 `敏感代码` 只能由用户操作来触发: 
+
+```js
+var button1 = $('#testPopupButton1');
+var button2 = $('#testPopupButton2');
+function popupTestWindow() {
+    window.open('/');
+}
+button1.click(function () {
+    popupTestWindow();
+});
+button2.click(function () {
+    // 不立刻执行popupTestWindow(),3秒后执行:
+    setTimeout(popupTestWindow, 3000);
+});
+```
+
+当用户点击`button1`时, `click`事件被触发, 由于`popupTestWindow()`在`click`事件处理函数内执行,这是浏览器允许的,
+而`button2`的`click`事件并未立刻执行`popupTestWindow()`,延迟执行的`popupTestWindow()`将被浏览器拦截.
+
+#### 练习
+
+对如下的`Form`表单: 
+
+```html
+<!-- HTML结构 -->
+<form id="test-form" action="test">
+    <legend>请选择想要学习的编程语言: </legend>
+    <fieldset>
+        <p><label class="selectAll"><input type="checkbox"> <span class="selectAll">全选</span><span class="deselectAll">全不选</span></label> <a href="#0" class="invertSelect">反选</a></p>
+        <p><label><input type="checkbox" name="lang" value="javascript"> JavaScript</label></p>
+        <p><label><input type="checkbox" name="lang" value="python"> Python</label></p>
+        <p><label><input type="checkbox" name="lang" value="ruby"> Ruby</label></p>
+        <p><label><input type="checkbox" name="lang" value="haskell"> Haskell</label></p>
+        <p><label><input type="checkbox" name="lang" value="scheme"> Scheme</label></p>
+        <p><button type="submit">Submit</button></p>
+    </fieldset>
+</form>
+```
+
+绑定合适的事件处理函数,实现以下逻辑: 
+
+当用户勾上"全选"时,自动选中所有语言,并把"全选"变成"全不选";
+当用户去掉"全不选"时,自动不选中所有语言;
+当用户点击"反选"时,自动把所有语言状态反转(选中的变为未选,未选的变为选中);
+当用户把所有语言都手动勾上时,"全选"被自动勾上,并变为"全不选";
+当用户手动去掉选中至少一种语言时,"全不选"自动被去掉选中,并变为"全选".
+
+```js
+'use strict';
+var
+    form = $('#test-form'),
+    langs = form.find('[name=lang]'),
+    selectAll = form.find('label.selectAll :checkbox'),
+    selectAllLabel = form.find('label.selectAll span.selectAll'),
+    deselectAllLabel = form.find('label.selectAll span.deselectAll'),
+    invertSelect = form.find('a.invertSelect');
+// 重置初始化状态:
+form.find('*').show().off();
+form.find(':checkbox').prop('checked', false).off();
+deselectAllLabel.hide();
+// 拦截form提交事件:
+form.off().submit(function (e) {
+    e.preventDefault();
+    alert(form.serialize());
+});
+selectAll.click(function(){
+    langs.prop('checked', $(this).prop('checked'))
+});
+// TODO:绑定事件
+selectAll.change(function () {
+    if ($(this).prop('checked')) {
+        deselectAllLabel.show();
+        selectAllLabel.hide();
+    } else {
+        deselectAllLabel.hide();
+        selectAllLabel.show();
+    }
+});
+langs.change(function(){
+    if (langs.get().every(e => e.checked)) {
+        selectAll.prop('checked', true)
+    } else {
+        selectAll.prop('checked', false)
+    };
+    selectAll.change();
+});
+invertSelect.click(function() {
+    langs.each(function() {
+        $(this).prop('checked', (x, y) => !y);
+    });
+    langs.change();
+})
+```
+
+or
+
+```js
+selectAll.click(() => {
+    if (selectAll.is(":checked")) {
+        langs.prop("checked", true);
+        selectAllLabel.hide();
+        deselectAllLabel.show();
+    } else {
+        langs.prop("checked", false);
+        selectAllLabel.show();
+        deselectAllLabel.hide();
+    }
+}
+);
+invertSelect.click(() => {
+    langs.prop("checked", (i, val) => {
+        return !val;
+    })
+})
+
+
+selectAll.click( ()=>  {
+    langs.prop('checked',
+        $(this).prop('checked'))
+});
+```
+
+#### 统计复选框数目
+
+```js
+var countChecked = function() {
+  var n = $( "input:checked" ).length;
+  $( "div" ).text( n + (n === 1 ? " is" : " are") + " checked!" );
+};
+countChecked();
+$( "input[type=checkbox]" ).on( "click", countChecked );
+```
+
+### AJAX
