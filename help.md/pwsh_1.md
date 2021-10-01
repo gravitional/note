@@ -922,3 +922,12 @@ foreach($pidStr in $pidList) {
 }
 Write-Host "完事儿"
 ```
+
+### 7z
+
+```powershell
+function  to7z {
+    $tar=((Get-ChildItem $args ) -replace '.mp4', '.7z');
+    7z a -pxxx -mx=0 $tar $args
+}
+```
