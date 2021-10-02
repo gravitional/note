@@ -901,14 +901,14 @@ val.map(x=>$("#test-div>ul").append(` <li><span>${x}</span></li>`))
 
 `$(":checkbox")` ; 匹配所有复选框
 
-因为`JavaScript`在浏览器中以单线程模式运行, 
+因为`JavaScript`在浏览器中以单线程模式运行,
 页面加载后,一旦页面上所有的`JavaScript`代码被执行完后,就只能依赖触发事件来执行`JavaScript`代码.
 
 浏览器在接收到用户的鼠标或键盘输入后,会自动在对应的`DOM`节点上触发相应的事件.
 如果该节点已经绑定了对应的`JavaScript`处理函数,该函数就会自动调用.
 由于不同的浏览器绑定事件的代码都不太一样,所以用`jQuery`来写代码,就屏蔽了不同浏览器的差异,我们总是编写相同的代码.
 
-举个例子,假设要在用户点击了超链接时弹出提示框,我们用`jQuery`这样绑定一个`click`事件: 
+举个例子,假设要在用户点击了超链接时弹出提示框,我们用`jQuery`这样绑定一个`click`事件:
 
 ```js
 /* HTML:
@@ -926,7 +926,7 @@ a.on('click', function () {
 
 `on`方法用来绑定一个事件, 我们需要传入`事件名称`和对应的`处理函数`.
 
-另一种更简化的写法是直接调用`click()`方法: 
+另一种更简化的写法是直接调用`click()`方法:
 
 ```js
 a.click(function () {
@@ -936,7 +936,7 @@ a.click(function () {
 
 两者完全等价. 我们通常用后面的写法.
 
-`jQuery`能够绑定的事件主要包括: 
+`jQuery`能够绑定的事件主要包括:
 
 + 鼠标事件
   + `click`: 鼠标单击时触发;
@@ -958,7 +958,7 @@ a.click(function () {
 
 其中,`ready`仅作用于`document`对象.
 由于`ready`事件在`DOM`完成初始化后触发,且只触发一次,所以非常适合用来写其他的初始化代码.
-假设我们想给一个`<form>`表单绑定`submit`事件,下面的代码没有预期的效果: 
+假设我们想给一个`<form>`表单绑定`submit`事件,下面的代码没有预期的效果:
 
 ```js
 <html>
@@ -978,7 +978,7 @@ a.click(function () {
 ```
 
 因为`JavaScript`在此执行的时候, `<form>` 尚未载入浏览器,所以`$('#testForm)`返回`[]`, 并没有绑定事件到任何`DOM`上.
-所以我们自己的初始化代码必须放到`document`对象的`ready`事件中,保证`DOM`已完成初始化: 
+所以我们自己的初始化代码必须放到`document`对象的`ready`事件中,保证`DOM`已完成初始化:
 
 ```html
 <html>
@@ -999,7 +999,7 @@ a.click(function () {
 ```
 
 这样写就没有问题了.因为相关代码会在`DOM`树初始化后再执行.
-由于`ready`事件使用非常普遍,所以可以这样简化: 
+由于`ready`事件使用非常普遍,所以可以这样简化:
 
 ```js
 $(document).ready(function () {
@@ -1010,7 +1010,7 @@ $(document).ready(function () {
 });
 ```
 
-甚至还可以再简化为: 
+甚至还可以再简化为:
 
 ```js
 $(function () {
@@ -1019,7 +1019,7 @@ $(function () {
 ```
 
 上面的这种写法最为常见.如果你遇到`$(function () {...})`的形式,牢记这是`document`对象的`ready`事件处理函数.
-完全可以反复绑定事件处理函数,它们会依次执行: 
+完全可以反复绑定事件处理函数,它们会依次执行:
 
 ```js
 $(function () {
@@ -1036,7 +1036,7 @@ $(function () {
 #### 事件参数
 
 有些事件, 如`mousemove`和`keypress`,我们需要获取鼠标位置和按键的值,否则监听这些事件就没什么意义了.
-所有事件都会传入`Event`对象作为参数,可以从`Event`对象上获取到更多的信息: 
+所有事件都会传入`Event`对象作为参数,可以从`Event`对象上获取到更多的信息:
 
 ```js
 $(function () {
@@ -1048,7 +1048,7 @@ $(function () {
 
 #### 取消绑定
 
-已被绑定的事件可以`解除绑定`,通过`off('click', function)`实现: 
+已被绑定的事件可以`解除绑定`,通过`off('click', function)`实现:
 
 ```js
 function hello() {
@@ -1061,7 +1061,7 @@ setTimeout(function () {
 }, 10000);
 ```
 
-需要特别注意的是,下面这种写法是无效的: 
+需要特别注意的是,下面这种写法是无效的:
 
 ```js
 // 绑定事件:
@@ -1081,7 +1081,7 @@ a.off('click', function () {
 
 #### 事件触发条件
 
-一个需要注意的问题是, 事件的触发总是由用户操作引发的. 例如,我们监控文本框的内容改动: 
+一个需要注意的问题是, 事件的触发总是由用户操作引发的. 例如,我们监控文本框的内容改动:
 
 ```js
 var input = $('#test-input');
@@ -1090,14 +1090,14 @@ input.change(function () {
 });
 ```
 
-当用户在文本框中输入时,就会触发`change`事件.但是,如果用`JavaScript`代码去改动文本框的值,将不会触发`change`事件: 
+当用户在文本框中输入时,就会触发`change`事件.但是,如果用`JavaScript`代码去改动文本框的值,将不会触发`change`事件:
 
 ```js
 var input = $('#test-input');
 input.val('change it!'); // 无法触发change事件
 ```
 
-有些时候,我们希望用代码触发`change`事件,可以直接调用无参数的`change()`方法来触发该事件: 
+有些时候,我们希望用代码触发`change`事件,可以直接调用无参数的`change()`方法来触发该事件:
 
 ```js
 var input = $('#test-input');
@@ -1111,7 +1111,7 @@ input.change(); // 触发change事件
 
 #### 浏览器安全限制
 
-在浏览器中,有些`JavaScript`代码只有在用户触发下才能执行,例如,`window.open()`函数: 
+在浏览器中,有些`JavaScript`代码只有在用户触发下才能执行,例如,`window.open()`函数:
 
 ```js
 // 无法弹出新窗口,将被浏览器屏蔽:
@@ -1120,7 +1120,7 @@ $(function () {
 });
 ```
 
-这些 `敏感代码` 只能由用户操作来触发: 
+这些 `敏感代码` 只能由用户操作来触发:
 
 ```js
 var button1 = $('#testPopupButton1');
@@ -1142,7 +1142,7 @@ button2.click(function () {
 
 #### 练习
 
-对如下的`Form`表单: 
+对如下的`Form`表单:
 
 ```html
 <!-- HTML结构 -->
@@ -1160,7 +1160,7 @@ button2.click(function () {
 </form>
 ```
 
-绑定合适的事件处理函数,实现以下逻辑: 
+绑定合适的事件处理函数,实现以下逻辑:
 
 当用户勾上"全选"时,自动选中所有语言,并把"全选"变成"全不选";
 当用户去掉"全不选"时,自动不选中所有语言;
@@ -1186,10 +1186,11 @@ form.off().submit(function (e) {
     e.preventDefault();
     alert(form.serialize());
 });
+// TODO:绑定事件
+// function 不是 lexical scope, $(this) 被绑定到 selectAll 的每个对象, 这里如果用 ()=> 函数,this 会绑定到 window 上
 selectAll.click(function(){
     langs.prop('checked', $(this).prop('checked'))
 });
-// TODO:绑定事件
 selectAll.change(function () {
     if ($(this).prop('checked')) {
         deselectAllLabel.show();
@@ -1254,4 +1255,442 @@ countChecked();
 $( "input[type=checkbox]" ).on( "click", countChecked );
 ```
 
+### 动画
+
+用`JavaScript`实现动画,原理非常简单:
+我们只需要以固定的时间间隔(例如,`0.1`秒),每次把`DOM`元素的`CSS`样式修改一点(例如,高宽各增加`10%`),看起来就像动画了.
+但是要用`JavaScript`手动实现动画效果,需要编写非常复杂的代码. 如果想要把动画效果用函数封装起来便于复用,那考虑的事情就更多了.
+使用 `jQuery` 实现动画,代码已经简单得不能再简化了: 只需要一行代码!
+
+让我们先来看看`jQuery`内置的几种动画样式:
+
+#### show / hide
+
+直接以无参数形式调用`show()`和`hide()`,会显示和隐藏`DOM`元素. 但是,只要传递一个时间参数进去,就变成了动画:
+
+```js
+var div = $('#test-show-hide');
+div.hide(3000); // 在3秒钟内逐渐消失
+```
+
+时间以`毫秒`为单位,但也可以是`'slow'`, `'fast'` 这些字符串:
+
+```js
+var div = $('#test-show-hide');
+div.show('slow'); // 在0.6秒钟内逐渐显示
+```
+
+`toggle()`方法则根据当前状态决定是`show()`还是`hide()`.
+
+你可能已经看出来了,`show()`和`hide()`是从左上角逐渐展开或收缩的, 而`slideUp()`和`slideDown()`则是在垂直方向逐渐展开或收缩的.
+
+`slideUp()`把一个可见的`DOM`元素收起来, 效果跟拉上窗帘似的, `slideDown()`相反,而 `slideToggle()` 则根据元素是否可见来决定下一步动作:
+
+```js
+var div = $('#test-slide');
+div.slideUp(3000); // 在3秒钟内逐渐向上消失
+```
+
+`fadeIn()`和`fadeOut()`的动画效果是淡入淡出, 也就是通过不断设置`DOM`元素的`opacity`属性来实现,而`fadeToggle()`则根据元素是否可见来决定下一步动作:
+
+```js
+var div = $('#test-fade');
+div.fadeOut('slow'); // 在0.6秒内淡出
+```
+
+#### 自定义动画
+
+如果上述动画效果还不能满足你的要求,那就祭出最后大招: `animate()`,
+它可以实现任意动画效果, 我们需要传入的参数就是`DOM`元素最终的`CSS`状态和时间, `jQuery` 在时间段内不断调整`CSS`直到达到我们设定的值:
+
+```js
+var div = $('#test-animate');
+div.animate({
+    opacity: 0.25,
+    width: '256px',
+    height: '256px'
+}, 3000); // 在3秒钟内CSS过渡到设定值
+```
+
+`animate()`还可以再传入一个函数,当动画结束时,该函数将被调用:
+
+```js
+var div = $('#test-animate');
+div.animate({
+    opacity: 0.25,
+    width: '256px',
+    height: '256px'
+}, 3000, function () {
+    console.log('动画已结束');
+    // 恢复至初始状态:
+    $(this).css('opacity', '1.0').css('width', '128px').css('height', '128px');
+});
+```
+
+实际上这个`回调函数`参数对于基本动画 `show()`, `fadeIn()`, ... 也是适用的.
+
+有了`animate()`,你就可以实现各种自定义动画效果了:
+
+#### 串行动画
+
+`jQuery`的动画效果还可以串行执行,通过`delay()`方法还可以实现暂停,这样,我们可以实现更复杂的动画效果,而代码却相当简单:
+
+```js
+var div = $('#test-animates');
+// 动画效果: slideDown - 暂停 - 放大 - 暂停 - 缩小
+div.slideDown(2000)
+   .delay(1000)
+   .animate({
+       width: '256px',
+       height: '256px'
+   }, 2000)
+   .delay(1000)
+   .animate({
+       width: '128px',
+       height: '128px'
+   }, 2000);
+}
+```
+
+因为动画需要执行一段时间, 所以`jQuery`必须不断返回新的`Promise`对象才能后续执行操作.
+简单地把动画封装在函数中是不够的.
+
++ 为什么有的动画没有效果
+
+你可能会遇到,有的动画如`slideUp()`根本没有效果.
+这是因为`jQuery`动画的原理是逐渐改变`CSS`的值, 如`height`从`100px`逐渐变为`0`.
+但是很多不是`block`性质的`DOM`元素,对它们设置`height`根本就不起作用,所以动画也就没有效果.
+
+此外,`jQuery`也没有实现对`background-color`的动画效果, 用`animate()`设置`background-color`也没有效果.
+这种情况下可以使用`CSS3`的`transition`实现动画效果.
+
+#### 练习
+
+在执行删除操作时,给用户显示一个动画比直接调用`remove()`要更好. 请在表格删除一行的时候添加`淡出`的动画效果:
+
+```js
+'use strict';
+function deleteFirstTR() {
+    var tr = $('#test-table>tbody>tr:visible').first();
+    tr.fadeOut(500,() => $(this).remove()); // 回调函数将会作用在每一个对象上, => 函数是 lexical scope 的
+}
+deleteFirstTR();
+```
+
 ### AJAX
+
+用`JavaScript`写`AJAX`前面已经介绍过了,主要问题就是不同浏览器需要写不同代码,并且状态和错误处理写起来很麻烦.
+用`jQuery`的相关对象来处理`AJAX`,不但不需要考虑浏览器问题,代码也能大大简化.
+
+#### ajax
+
+`jQuery`在全局对象`jQuery`(也就是`$`)绑定了`ajax()` 函数,可以处理`AJAX`请求.
+`ajax(url, settings)`函数需要接收一个`URL`和一个可选的`settings`对象, `settings`的常用属性如下:
+
++ `async` ;  是否异步执行`AJAX`请求,默认为`true`,千万不要指定为`false`;
++ `method` ;  发送的 `Method`,缺省为`'GET'`, 可指定为 `'POST'`, `'PUT'` 等;
++ `contentType` ;  发送`POST`请求的格式,默认值为`'application/x-www-form-urlencoded; charset=UTF-8'`,也可以指定为`text/plain`, `application/json`;
++ `data` ;  发送的数据,可以是字符串,数组或 `object`.
+如果是 `GET` 请求, `data` 将被转换成`query`附加到`URL`上,如果是`POST`请求,根据`contentType`把`data`序列化成合适的格式;
++ `headers` ;  发送的额外的`HTTP头`,必须是一个`object`;
++ `dataType` ;  接收的数据格式,可以指定为`'html'`, `'xml'`, `'json'`, `'text'` 等,缺省情况下根据响应的`Content-Type`猜测.
+
+下面的例子发送`GET`请求,并返回`JSON`格式的数据:
+
+```js
+var jqxhr = $.ajax('/api/categories', {
+    dataType: 'json'
+});
+// 请求已经发送了
+```
+
+不过,如何用`回调函数`处理返回的数据和出错时的响应呢?
+还记得`Promise`对象吗? `jQuery`的 `jqXHR`对象是类似`Promise`的对象,我们可以用`链式写法`来处理各种`回调`:
+
+```js
+'use strict';
+// 在表单中, 展示结果的函数
+function ajaxLog(s) {
+    var txt = $('#test-response-text');
+    txt.val(txt.val() + '\n' + s);
+}
+$('#test-response-text').val(''); // 清空内容
+// 类似 promise 的处理过程.
+var jqxhr = $.ajax('/api/categories', {
+    dataType: 'json'
+}).done(function (data) {
+    ajaxLog('成功, 收到的数据: ' + JSON.stringify(data));
+}).fail(function (xhr, status) {
+    ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+}).always(function () {
+    ajaxLog('请求完成: 无论成功或失败都会调用');
+});
+```
+
+对常用的`AJAX`操作, `jQuery` 提供了一些辅助方法. 由于`GET`请求最常见,所以`jQuery`提供了`get()`方法,可以这么写:
+
+```js
+var jqxhr = $.get('/path/to/resource', {
+    name: 'Bob Lee',
+    check: 1
+});
+```
+
+第二个参数如果是`object`, `jQuery`自动把它变成`query string`然后加到`URL`后面,实际的`URL`是:
+
+```js
+/path/to/resource?name=Bob%20Lee&check=1
+```
+
+这样我们就不用关心如何用`URL`编码并构造一个`query string`了.
+
+#### post
+
+`post()`和`get()`类似,但是传入的第二个参数默认被序列化为`application/x-www-form-urlencoded`:
+
+```js
+var jqxhr = $.post('/path/to/resource', {
+    name: 'Bob Lee',
+    check: 1
+});
+```
+
+实际构造的数据`name=Bob%20Lee&check=1`作为`POST`的`body`被发送.
+
+#### getJSON
+
+由于`JSON`用得越来越普遍, 所以`jQuery`也提供了`getJSON()` 方法来快速通过`GET`获取`JSON` 对象:
+
+```js
+var jqxhr = $.getJSON('/path/to/resource', {
+    name: 'Bob Lee',
+    check: 1
+}).done(function (data) {
+    // data已经被解析为JSON对象了
+});
+```
+
+#### 安全限制
+
+`jQuery`的`AJAX`完全封装的是`JavaScript`的`AJAX`操作, 所以它的安全限制和前面讲的用`JavaScript`写`AJAX`完全一样.
+如果需要使用`JSONP`,可以在`ajax()`中设置`jsonp: 'callback'`, 让`jQuery`实现`JSONP`跨域加载数据.
+
+关于跨域的设置请参考`浏览器` - `AJAX`一节中`CORS`的设置.
+
+### 扩展
+
+当我们使用`jQuery`对象的方法时,由于`jQuery`对象可以操作一组`DOM`, 而且支持链式操作,所以用起来非常方便.
+但是`jQuery`内置的方法永远不可能满足所有的需求.
+比如,我们想要高亮显示某些`DOM`元素,用`jQuery`可以这么实现: 
+
+```js
+$('span.hl').css('backgroundColor', '#fffceb').css('color', '#d85030');
+$('p a.hl').css('backgroundColor', '#fffceb').css('color', '#d85030');
+```
+
+总是写重复代码可不好,万一以后还要修改字体就更麻烦了,能不能统一起来,写个`highlight()`方法?
+
+```js
+$('span.hl').highlight();
+$('p a.hl').highlight();
+```
+
+答案是肯定的.我们可以扩展`jQuery`来实现自定义方法.
+将来如果要修改高亮的逻辑,只需修改一处扩展代码.这种方式也称为编写`jQuery`插件.
+
+#### 编写jQuery插件
+
+给`jQuery`对象绑定一个新方法是通过扩展`$.fn`对象实现的. 让我们来编写第一个扩展——`highlight1()`: 
+
+```js
+$.fn.highlight1 = function () {
+    // this已绑定为当前jQuery对象:
+    this.css('backgroundColor', '#fffceb').css('color', '#d85030');
+    return this;
+}
+```
+
+注意到函数内部的`this`在调用时被绑定为`jQuery`对象, 所以函数内部代码可以正常调用所有`jQuery`对象的方法.
+对于如下的`HTML`结构: 
+
+```js
+<!-- HTML结构 -->
+<div id="test-highlight1">
+    <p>什么是<span>jQuery</span></p>
+    <p><span>jQuery</span>是目前最流行的<span>JavaScript</span>库.</p>
+</div>
+```
+
+来测试一下`highlight1()`的效果: 
+
+```js
+'use strict';
+$('#test-highlight1 span').highlight1();
+```
+
+细心的童鞋可能发现了,为什么最后要 `return this;`?(默认返回 `undefined`).
+因为`jQuery`对象支持链式操作, 我们自己写的扩展方法也要能继续链式下去: 
+
+```js
+$('span.hl').highlight1().slideDown();
+```
+
+不然,用户调用的时候,就不得不把上面的代码拆成两行.
+但是这个版本并不完美.有的用户希望高亮的颜色能自己来指定,怎么办?
+我们可以给方法加个参数,让用户自己把参数用对象传进去.于是我们有了第二个版本的`highlight2()`: 
+
+```js
+$.fn.highlight2 = function (options) {
+    // 要考虑到各种情况:
+    // options为undefined
+    // options只有部分key
+    var bgcolor = options && options.backgroundColor || '#fffceb';
+    var color = options && options.color || '#d85030';
+    this.css('backgroundColor', bgcolor).css('color', color);
+    return this;
+}
+```
+
+对于如下`HTML`结构: 
+
+```js
+<!-- HTML结构 -->
+<div id="test-highlight2">
+    <p>什么是<span>jQuery</span> <span>Plugin</span></p>
+    <p>编写<span>jQuery</span> <span>Plugin</span>可以用来扩展<span>jQuery</span>的功能.</p>
+</div>
+```
+
+来实测一下带参数的`highlight2()`: 
+
+```js
+'use strict';
+$('#test-highlight2 span').highlight2({
+    backgroundColor: '#00a8e6',
+    color: '#ffffff'
+});
+```
+
+对于默认值的处理,我们用了一个简单的`&&`和`||`短路操作符,总能得到一个有效的值.
+另一种方法是使用`jQuery`提供的辅助方法`$.extend(target, obj1, obj2, ...)`,
+它把多个`object`对象的属性合并到第一个`target`对象中,遇到同名属性,总是使用靠后的对象的值,也就是越往后优先级越高: 
+
+```js
+// 把默认值和用户传入的options合并到对象{}中并返回:
+var opts = $.extend({}, {
+    backgroundColor: '#00a8e6',
+    color: '#ffffff'
+}, options);
+```
+
+紧接着用户对`highlight2()`提出了意见: 
+每次调用都需要传入自定义的设置,能不能让我自己设定`缺省值`,以后的调用统一使用无参数的`highlight2()`?
+
+也就是说,我们设定的`默认值`应该能允许用户修改.
+那`默认值`放哪比较合适?放全局变量肯定不合适,最佳地点是`$.fn.highlight2`这个函数对象本身.
+于是最终版的`highlight()`终于诞生了: 
+
+```js
+$.fn.highlight = function (options) {
+    // 合并默认值和用户设定值:
+    var opts = $.extend({}, $.fn.highlight.defaults, options);
+    this.css('backgroundColor', opts.backgroundColor).css('color', opts.color);
+    return this;
+}
+// 设定默认值:
+$.fn.highlight.defaults = {
+    color: '#d85030',
+    backgroundColor: '#fff8de'
+}
+```
+
+这次用户终于满意了.用户使用时,只需一次性设定默认值: 
+
+```js
+$.fn.highlight.defaults.color = '#fff';
+$.fn.highlight.defaults.backgroundColor = '#000';
+```
+
+然后就可以非常简单地调用`highlight()`了.
+
+对如下的`HTML`结构: 
+
+```html
+<!-- HTML结构 -->
+<div id="test-highlight">
+    <p>如何编写<span>jQuery</span> <span>Plugin</span></p>
+    <p>编写<span>jQuery</span> <span>Plugin</span>,要设置<span>默认值</span>,并允许用户修改<span>默认值</span>,或者运行时传入<span>其他值</span>.</p>
+</div>
+```
+
+实测一下修改默认值的效果: 
+
+```js
+'use strict';
+$.fn.highlight.defaults.color = '#659f13';
+$.fn.highlight.defaults.backgroundColor = '#f2fae3';
+$('#test-highlight p:first-child span').highlight();
+$('#test-highlight p:last-child span').highlight({
+    color: '#dd1144'
+});
+```
+
+最终,我们得出编写`jQuery`插件的原则: 
+
++ 给`$.fn`绑定函数,实现插件的代码逻辑;
++ 插件函数最后要 `return this;` 以支持链式调用;
++ 插件函数要有`默认值`,绑定在 `$.fn.<pluginName>.defaults` 上;
++ 用户在调用时可传入设定值以便覆盖`默认值`.
+
+#### 针对特定元素的扩展
+
+我们知道`jQuery`对象的有些方法只能作用在特定`DOM`元素上, 比如`submit()`方法只能针对`form`.
+如果我们编写的扩展只能针对某些类型的`DOM`元素,应该怎么写?
+还记得`jQuery`的选择器支持`filter()`方法来过滤吗?我们可以借助这个方法来实现针对特定元素的扩展.
+
+举个例子,现在我们要给所有指向外链的超链接加上跳转提示,怎么做?
+先写出用户调用的代码: 
+
+```js
+$('#main a').external();
+```
+
+然后按照上面的方法编写`external`扩展: 
+
+```js
+$.fn.external = function () {
+    // return返回的each()返回结果,支持链式调用:
+    return this.filter('a').each(function () {
+        // 注意: each()内部的回调函数的this绑定为DOM本身!
+        var a = $(this);
+        var url = a.attr('href');
+        if (url && (url.indexOf('http://')===0 || url.indexOf('https://')===0)) {
+            a.attr('href', '#0')
+             .removeAttr('target') //防止有target属性的 a超链接打开空白页
+             .append(' <i class="uk-icon-external-link"></i>')  //加载图标
+             .click(function () {
+                if(confirm('你确定要前往' + url + '?')) {
+                    window.open(url);
+                }
+            });
+        }
+    });
+}
+```
+
+对如下的`HTML`结构: 
+
+```html
+<!-- HTML结构 -->
+<div id="test-external">
+    <p>如何学习<a href="http://jquery.com">jQuery</a>?</p>
+    <p>首先,你要学习<a href="/wiki/1022910821149312">JavaScript</a>,并了解基本的<a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a>.</p>
+</div>
+```
+
+实测外链效果: 
+
+```js
+'use strict';
+$('#test-external a').external();
+```

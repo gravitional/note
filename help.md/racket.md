@@ -1786,9 +1786,8 @@ bytes->string/locale: byte string is not a valid encoding for the current locale
 
 ### 符号 Symbols
 
-类似于`mma` 的 `Symbol`, `SymbolName`.
-
-`符号`(symbol)是一个`原子值`(atomic),其打印方式类似于, 前面带有`'`的标识符. 以`'`开始,接着一个标识符的表达式, 产生一个`符号`值.
+`符号`(symbol)是一个`原子值`(atomic),其打印方式类似于, 前面带有`'`的标识符. 
+以`'`开始,接着一个标识符的表达式, 产生一个`符号`值.
 例子:
 
 ```lisp
@@ -1864,3 +1863,192 @@ Apple
 > (eq? 'a (string->uninterned-symbol "a"))
 #f
 ```
+
+### 关键字,Keywords
+
+`关键字`值与`符号`(symbol)相似(见`符号`),但它的打印形式是以`#:`为前缀.
+例子.
+
+```lisp
+> (string->keyword "apple")
+'#:apple
+> '#:apple
+'#:apple
+> (eq? '#:apple (string->keyword "apple"))
+#t
+```
+
+更确切地说, `关键字`类似于`标识符`; 类似于`标识符`被`引用`就会产生`符号`, `关键字`被引用也可以产生`值`.
+尽管在引用前后我们都它为 `关键字`, 但是有时我们用`关键字值`来特指`quote-keyword`表达式或`string->keyword`产生的结果.
+
+没`quote`的`关键字`不是`表达式`, 就像没`quote`的`标识符`不产生`符号`.
+例子.
+
+```lisp
+> not-a-symbol-expression
+not-a-symbol-expression: undefined;
+ cannot reference an identifier before its definition
+  in module: top-level
+> #:not-a-keyword-expression // 没有加引号, 不构成 quote-keyword 表达式
+eval:2:0: #%datum: keyword misused as an expression
+  at: #:not-a-keyword-expression
+```
+
+尽管它们有相似之处,`关键字`的使用方式与`标识符`或`符号`不同.
+
+`关键字`(不加引号)被用来作为`参数列表`和某些句法形式(syntactic forms)中的特殊`标记`.
+对于`运行时标志`(flag)和枚举(enumerations), 使用`符号`而不是`关键字`. 
+下面的例子说明了`关键字`和`符号`的不同作用.
+例子.
+
+```lisp
+> (define dir (find-system-path 'temp-dir)) ; 不是 '#:temp-dir
+> (with-output-to-file (build-path dir "stuff.txt")
+    (lambda () (printf "example\n"))
+    ; 可选参数 #:mode 可以是 'text 或者 'binary
+    #:mode 'text
+    ; 可选参数 #:exists 可以是 'replace, 'truncate, ...
+    #:exists 'replace)
+```
+
+### 对儿和列表,Pairs and Lists
+
+`对`连接两个任意`值`. `cons`程序构建`对`, `car`和`cdr`程序分别提取`对`中的`第一`和`第二`元素. `pair?`谓词可以识别`对`.
+
+有些`对`的打印方法是: 在两个对元素的打印形式周围包上小括号`()`, 在元素的开头加上`'`, 在元素之间加上`.`:
+例子.
+
+```lisp
+> (cons 1 2)
+'(1 . 2)
+> (cons (cons 1 2) 3)
+'((1 . 2) . 3)
+> (car (cons 1 2))
+1
+> (cdr (cons 1 2))
+2
+> (pair? (cons 1 2))
+#t
+```
+
+`列表`是`对`的组合,  作为后者的`链表`.  更确切地说, 一个列表要么是空列表`null`,
+要么是一个`对`, 首元素是列表元素, 次元素是`列表`. 
+`list?` 谓词可以识别`列表`. `null?` 谓词识别`空列表`.
+
+列表通常打印为`'`, 后面是一对包裹着列表元素的小括号`()`.
+例子.
+
+```lisp
+> null
+'()
+> (cons 0 (cons 1 (cons 2 null)))
+'(0 1 2)
+> (list? null)
+#t
+> (list? (cons 1 (cons 2 null)))
+#t
+> (list? (cons 1 2))
+#f
+```
+
+当`列表`或`对`中的`元素`不能被写成`quoted value`时, 就用`list`或`cons`来显式表示.
+例如,用`srcloc`构造的值不能用引号表示, 就用`srcloc`打印它.
+
+```lisp
+> (srcloc "file.rkt" 1 0 1 (+ 4 4))
+(srcloc "file.rkt" 1 0 1 8)
+> (list 'here (srcloc "file.rkt" 1 0 1 8) 'there)
+(list 'here (srcloc "file.rkt" 1 0 1 8) 'there)
+> (cons 1 (srcloc "file.rkt" 1 0 1 8))
+(cons 1 (srcloc "file.rkt" 1 0 1 8))
+> (cons 1 (cons 2 (srcloc "file.rkt" 1 0 1 8)))
+(list* 1 2 (srcloc "file.rkt" 1 0 1 8))
+```
+
+如最后一个例子所示, `list*`用来缩写一系列不能用`list`表示的`cons`.
+
+`write`和`display`函数打印没有前导`'`,`cons`,`list`或`list*`的, `对`或`列表`.
+对于对或一个列表,写和显示没有区别,只是它们适用于列表的元素.
+
+例子.
+
+    > (写 (cons 1 2))
+
+    (1 . 2)
+    > (显示 (cons 1 2))
+
+    (1 . 2)
+    > (写空)
+
+    ()
+    > (显示null)
+
+    ()
+    > (写(列表1 2 "3")).
+
+    (1 2 "3")
+    > (显示 (列表 1 2 "3"))
+
+    (1 2 3)
+
+在列表的预定义程序中,最重要的是那些在列表的元素中进行迭代的程序.
+
+    > (map (lambda (i) (/ 1 i))
+           '(1 2 3))
+
+    '(1 1/2 1/3)
+    > (andmap (lambda (i) (i . < . 3))
+             '(1 2 3))
+
+    #f
+    > (ormap (lambda (i) (i . < . 3))
+             '(1 2 3))
+
+    #t
+    > (过滤 (lambda (i) (i . < . 3))
+              '(1 2 3))
+
+    '(1 2)
+    > (foldl (lambda (v i) (+ v i))
+             10
+             '(1 2 3))
+
+    16
+    > (for-each (lambda (i) (display i))
+                '(1 2 3))
+
+    123
+    > (成员 "Keys"
+              '("Florida" "Keys" "U.S.A.")
+
+    '("Keys" "U.S.A.")
+    > (assoc 'where
+             '((when "3:30") (where "Florida") (who "Mickey") ))
+
+    '(where "Florida")
+
+            Racket Reference中的+Pairs and Lists提供了更多关于对和列表的信息.
+
+对是不可变的(与Lisp的传统相反),而pair? 和list? 只识别不可变的对和列表.mcons 过程创建了一个可变的对,它与 set-mcar! 和 set-mcdr! 以及 mcar 和 mcdr 一起工作.可变对使用 mcons 打印,而 write 和 display 使用 { 和 } 打印可变对.
+
+例子.
+
+    > (define p (mcons 1 2))
+    > p
+
+    (mcons 1 2)
+    > (pair? p)
+
+    #f
+    > (mpair?p)
+
+    #t
+    > (set-mcar! p 0)
+    > p
+
+    (mcons 0 2)
+    > (写p)
+
+    {0 . 2}
+
+通过www.DeepL.com/Translator(免费版)翻译
