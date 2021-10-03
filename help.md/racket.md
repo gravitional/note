@@ -1445,21 +1445,24 @@ starts?: undefined;
 本节将对简单形式的内置数据类型进行更全面的介绍.
 
 ```lisp
-数字: 5,    0.99,    1/2,   1+2i
-字符串: "Apple",    "\u03BB"
+5,    0.99,    1/2,   1+2i ; 数字
 
-符号: 'a,    '|one, two|,   #ci'A ,   (string->symbol "one, two")    
+"Apple",     "\u03BB" ; 字符串(unicode)
+#\A,    #\u03BB,    #\space,    #\newline ; 单字符
+#"Apple",    #"\0\0" ; 字节串(byte)
 
-布尔值:  #t,    #f,    "字符串" 相当于 #t
-字符 :  #\A,    #\u03BB,    #\space,    #\newline.
-字节串 : #"Apple",    #"\0\0"
+'a,    (string->symbol "one, two"),    '|one, two|,    #ci'A  ; 符号(symbol)
+'#:apple,   (string->keyword "apple"),   ; 关键字 与 其引用
 
+'(1 . 2),   '((1 . 2) . 3),   '(0 1 2),   (cons 0 (cons 1 (cons 2 null))) ; 对儿, 列表
+'#("a" "b" "c"),   #4(baldwin bruce),  ; 矢量
+'#hash(("apple" . red) ("banana" . yellow)) ; 哈希表
 
-关键字: '#:apple,   (string->keyword "apple"),   
-pair, list: '(1 . 2),   '((1 . 2) . 3),   '(0 1 2),   (cons 0 (cons 1 (cons 2 null)))
+#t,    #f,    一般值如 "字符串" 相当于 #t ; 布尔值
 
+'#&"apple" , (define b (box "apple")), ; 箱子
 
-矢量: #("a" "b" "c"),   #4(baldwin bruce),    '#("a" "b" "c")
+void,   undefined,    #<void>,    #<undefined> ; 空和未定义
 ```
 
 ### 布尔值 Booleans
@@ -1568,7 +1571,7 @@ abs: contract violation
 3.6076607742131563+1.0288031496599335i
 ```
 
-`=` 过程(procedure) 比较数字是否相等.
+`=` 过程(`procedure`) 比较数字是否相等.
 如果同时给定了`非精确数`和`精确数`进行比较, 那么在比较之前, 基本上它会将`非精确数`转换为`精确数`.
 `eqv?` (因此也就是`equal?`)过程, 与此相反, 它在比较数字时既考虑`exactness`又考虑数值的`equality`. 例子:
 
@@ -1579,8 +1582,8 @@ abs: contract violation
 #f
 ```
 
-小心涉及`不精确数字`的比较, 由于其性质, 可能会有令人惊讶的行为.
-即使是表面上简单的`不精确数`, 也可能不是你认为的那样; 例如, 虽然一个以`2`为基数的`IEEE浮点数`可以精确表示`1/2`, 但它只能近似表示`1/10`.
+小心涉及`不精确数字`的比较, 由于其性质, 可能会有令人惊讶的行为. 即使是表面上简单的`不精确数`, 也可能不是你认为的那样; 
+例如, 虽然一个以`2`为基数的`IEEE浮点数`可以精确表示`1/2`, 但它只能近似表示`1/10`.
 
 例子.
 
@@ -2128,8 +2131,7 @@ hash-ref: no value found for key
 例子.
 
 ```lisp
-> #hash(("apple" . red)
-        ("banana" . yellow))
+> #hash(("apple" . red) ("banana" . yellow))
 '#hash(("apple" . red) ("banana" . yellow))
 > (hash 1 (srcloc "file.rkt" 1 0 1 (+ 4 4)))
 (hash 1 (srcloc "file.rkt" 1 0 1 8))
@@ -2141,8 +2143,7 @@ hash-ref: no value found for key
 例子.
 
 ```lisp
-> #hash(("apple" . red)
-        ("banana" . yellow))
+> #hash(("apple" . red) ("banana" . yellow))
 '#hash(("apple" . red) ("banana" . yellow))
 > (hash 1 (srcloc "file.rkt" 1 0 1 (+ 4 4)))
 (hash 1 (srcloc "file.rkt" 1 0 1 8))
@@ -2199,6 +2200,7 @@ hash-ref: no value found for key
 ### 空和未定义,Void and Undefined
 
 一些`过程`或`表达式`不需要结果值. 例如,调用显示过程只是为了`输出屏幕`的副作用.
+
 在这种情况下, 结果值通常是一个特殊的`常数`, 打印为`#<void>`. 
 当表达式的结果只是`#<void>`时, `REPL` 不会打印任何东西.
 
@@ -2219,9 +2221,7 @@ hash-ref: no value found for key
 >在某些情况下,`undefined`结果仍然可以由`shared`形式产生.
 
 ```lisp
-(define (fails)
-  (define x x)
-  x)
+(define (fails) (define x x) x)
 > (fails)
 x: undefined;
  cannot use before initialization
