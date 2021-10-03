@@ -4,17 +4,17 @@
 
 [你应该知道的 Windows 环境变量](https://zhuanlan.zhihu.com/p/67726501)
 
-+ `ComSpec` 变量：规定 http://CMD.COM 文件的位置.运行 http://cmd.com 可直接打开 “命令提示符” 窗口.
-+ `NUMBER_OF_PROCESSORS` 变量：代表用户电脑中处理器的数量.
-+ `OS` 变量：表明用户的操作系统.
-+ `Path` 变量：规定操作系统在指定的文件路径中查看可执行文件.
-+ `PathExt` 变量：规定在 Path 变量中所指定的可执行文件的扩展名有哪些.
-+ `PROCESSOR_ARCHITECTURE` 变量：表明用户处理器的架构.
-+ `PROCESSOR_IDENTIFIER` 变量：表明用户处理器.
-+ `PROCESSOR_LEVEL` 变量：表明用户处理器的等级.
-+ `PROCESSOR_REVISION` 变量：表明用户处理器的版本.
-+ `TEMP`/`TMP` 变量：规定系统运行或安装程序时用来存储临时文件的目录.
-+ `windir` 变量：规定操作系统的系统目录的路径.
++ `ComSpec` 变量: 规定 http://CMD.COM 文件的位置.运行 http://cmd.com 可直接打开 "命令提示符" 窗口.
++ `NUMBER_OF_PROCESSORS` 变量: 代表用户电脑中处理器的数量.
++ `OS` 变量: 表明用户的操作系统.
++ `Path` 变量: 规定操作系统在指定的文件路径中查看可执行文件.
++ `PathExt` 变量: 规定在 Path 变量中所指定的可执行文件的扩展名有哪些.
++ `PROCESSOR_ARCHITECTURE` 变量: 表明用户处理器的架构.
++ `PROCESSOR_IDENTIFIER` 变量: 表明用户处理器.
++ `PROCESSOR_LEVEL` 变量: 表明用户处理器的等级.
++ `PROCESSOR_REVISION` 变量: 表明用户处理器的版本.
++ `TEMP`/`TMP` 变量: 规定系统运行或安装程序时用来存储临时文件的目录.
++ `windir` 变量: 规定操作系统的系统目录的路径.
 
 + `set` 查看所有环境变量
 + `set xxx` 查看特定环境变量`xxx`的值.
@@ -305,7 +305,7 @@ scoop help
 那么现在安装软件的流程就变成了: `scoop search 软件名` -` scoop install 搜索结果中符合条件的那个`,结束.
 更多的进阶命令和使用方法可以参考 Scoop Wiki.
 
-`Scoop` 把软件安装在哪儿？
+`Scoop` 把软件安装在哪儿?
 
 这就是 `Scoop` 设计最为精致的地方所在了,也是我推荐 `Scoop` 超过 Chocolatey 等更知名的 Windows 软件包管理器的原因.
 `Scoop` 和 Homebrew 对软件包安装位置有着相同的处理哲学: `下载, 安装在用户文件夹下`.具体来讲:
@@ -363,7 +363,7 @@ enable-peer-exchange=true
 + 使用`Stop-Job *; Remove-Job *;`关闭所有后台任务. (这样关闭可能会导致`aria2`来不及保存, 还是在网页端`aria2状态`页面点击`关闭aria2`吧)
 
 如果觉得的每次都这样比较麻烦的话,可以考虑把`aria2c.exe`加入环境变量.  这样运行的时候在命令行输入 `aria2c.exe &` 即可.
-修改方法：按下`win+s`打开搜索窗口,输入`环境变量`,依次点击`编辑环境变量`--`环境变量`--`xxx的用户变量`--`Path`--`新建`--`浏览`,
+修改方法: 按下`win+s`打开搜索窗口,输入`环境变量`,依次点击`编辑环境变量`--`环境变量`--`xxx的用户变量`--`Path`--`新建`--`浏览`,
 选中`aria2`的存放目录,添加好之后,一路点击确定即可.
 如果你嫌麻烦,也可以使用下文的`powershell`命令. 参考[命令行输出和添加系统环境变量](https://blog.csdn.net/amoscn/article/details/108654236)
 
@@ -670,7 +670,7 @@ Git Bash
 ### 创建自己的配色方案
 
 关于配色方案可以参考: [Windows 终端中的配色方案](https://docs.microsoft.com/zh-cn/windows/terminal/customize-settings/color-schemes)
-可以在 `settings.json` 文件的 `schemes` 数组中定义配色方案. 它们是使用以下格式写入的：
+可以在 `settings.json` 文件的 `schemes` 数组中定义配色方案. 它们是使用以下格式写入的:
 
 ```json
 {
@@ -969,11 +969,11 @@ Tango Light
 [failing to startup with code 4294967295](https://github.com/microsoft/WSL/issues/5092#:~:text=Solve%20%22process%20exited%20with%20code%204294967295%22%20%2C%20run,complete%20the%20reset.%20Does%20not%20resolve%20the%20issue.)
 [关于使用WSL2出现'参考的对象类型不支持尝试的操作'的解决方法](https://zhuanlan.zhihu.com/p/151392411)
 
-长期解决的方案(推荐),下载此软件：[http://www.proxifier.com/tmp/Test20200228/NoLsp.exe](http://www.proxifier.com/tmp/Test20200228/NoLsp.exe)
+长期解决的方案(推荐),下载此软件: [http://www.proxifier.com/tmp/Test20200228/NoLsp.exe](http://www.proxifier.com/tmp/Test20200228/NoLsp.exe)
 
-因需要梯子访问下载,有些朋友不方便,所以我上传到百度云分享在这里：[https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A](https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A) ,提取码：`vjge`
+因需要梯子访问下载,有些朋友不方便,所以我上传到百度云分享在这里: [https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A](https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A) ,提取码: `vjge`
 
-然后在管理员身份运行`CMD`输入：
+然后在管理员身份运行`CMD`输入:
 
 ```pwsh
 NoLsp.exe C:\windows\system32\wsl.exe
@@ -982,9 +982,9 @@ NoLsp.exe C:\windows\system32\wsl.exe
 请自行注意`NoLsp.exe`程序的位置,以及你的`wsl.exe`位置.
 
 ***
-产生原因和解决方法分析：
+产生原因和解决方法分析:
 
-代理软件和`wsl2`的`sock`端口冲突,使用`netsh winsock reset`重置修复. `Proxifer` 开发人员解释如下：
+代理软件和`wsl2`的`sock`端口冲突,使用`netsh winsock reset`重置修复. `Proxifer` 开发人员解释如下:
 
 如果`Winsock LSP DLL`被加载到其进程中,则`wsl.exe`将显示此错误.
 最简单的解决方案是对`wsl.exe`使用`WSCSetApplicationCategory WinAPI`调用来防止这种情况.
@@ -993,17 +993,17 @@ NoLsp.exe C:\windows\system32\wsl.exe
 
 ## 公众号排版
 
-TMD "小可爱" 微信不支持 SM.MS 这种图床，可能是读取速度有点慢就直接拒绝了。码的纸张吧.
+TMD "小可爱" 微信不支持 SM.MS 这种图床,可能是读取速度有点慢就直接拒绝了.码的纸张吧.
 
 转自: [Typora公众号写作与排版 ](https://sspai.com/post/40524#!)
 
-利用 `Markdown` 排版公众号文章. 所需工具如下：
+利用 `Markdown` 排版公众号文章. 所需工具如下:
 
 + `Typora`. [typora 编辑器](https://www.typora.io/)
 + `PicGo` 图床 app [ PicGo](https://picgo.github.io/PicGo-Doc/zh/guide/)
-+ `CSS`的基本知识, 稍微了解即可. 
++ `CSS`的基本知识, 稍微了解即可.
 
->`CSS`, 层叠样式表(英文全称：Cascading Style Sheets)是一种用来表现 `HTML` (准通用标记语言的一个应用)或 `XML`(准通用标记语言的一个子集)等文件样式的计算机语言.
+>`CSS`, 层叠样式表(英文全称: Cascading Style Sheets)是一种用来表现 `HTML` (准通用标记语言的一个应用)或 `XML`(准通用标记语言的一个子集)等文件样式的计算机语言.
 >`CSS` 不仅可以静态地修饰网页, 还可以配合各种脚本语言动态地对网页各元素进行格式化. [MDN: 什么是CSS](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/First_steps/What_is_CSS)
 
 可以解决以下问题:
@@ -1011,14 +1011,14 @@ TMD "小可爱" 微信不支持 SM.MS 这种图床，可能是读取速度有点
 + 图片上传: 在编辑器中写好文章, 上传平台的时候还得手动粘贴
 + `Markdown` 编辑器中的文章上传至公众号之前, 还得各种转码.
 
-做好相关配置后, 写作和排版能够同步完成, 直接粘贴至公众号编辑器中即可. 
+做好相关配置后, 写作和排版能够同步完成, 直接粘贴至公众号编辑器中即可.
 
-排版的基本思路是: 
+排版的基本思路是:
 
 网页上的`内容`和`排版`是分开的, 内容编辑好以后, 再使用 `CSS` 样式文件完成字号, 行间距, 背景, 颜色等排版.
 所以说, 配置好 `CSS` 文件就相当于一劳永逸的完成了排版工作, 下次只要套用 `CSS` 就好了.
 
-我们使用`Typora`编辑器, [让 Markdown 写作更简单, 免费极简编辑器：Typora](https://sspai.com/post/30292)
+我们使用`Typora`编辑器, [让 Markdown 写作更简单, 免费极简编辑器: Typora](https://sspai.com/post/30292)
 
 + `Typora` 的编辑逻辑是`所见即所得`, 输入 `Markdown` 标记后, 会根据选择的 `主题` 即时渲染成相应格式.
 + `主题` 是使用 `CSS` 文档定义的, 只要修改 `CSS` 文档中的对应参数, 即可修改主题的样式.
@@ -1027,23 +1027,23 @@ TMD "小可爱" 微信不支持 SM.MS 这种图床，可能是读取速度有点
 
 ![所见即所得](https://cdn.sspai.com/2017/08/20/882f2dc69f0223330d31a09a64313c0e.gif)
 
-借助`Typora`, 我们可以非常方便的完成排版：
+借助`Typora`, 我们可以非常方便的完成排版:
 
-+ 在 `Markdown` 中写作, 自动上传本地图片到图床；
++ 在 `Markdown` 中写作, 自动上传本地图片到图床;
 + 应用调整好的`CSS` 格式, 粘贴`富文本`格式到微信中.
 
 ### 插件配置
 
-+ 使用 `Typora` 编写 `Markdown` , 通过配置`图床`插件, 自动将本地图片转成在线图片. 
++ 使用 `Typora` 编写 `Markdown` , 通过配置`图床`插件, 自动将本地图片转成在线图片.
 + 先安装合适的`Typora`插件.  英文好的同学可以查看 [Typora 的官方参考](https://support.typora.io/Upload-Image/#configuration) :
   + `mac` 用户: [iPic + Typora, 方便快捷地在 Markdown 中插图](https://sspai.com/post/36275).
   + `windows` 用户: 安装 [PicGo app](https://picgo.github.io/PicGo-Doc/zh/guide/), 下载地址在 [PicGo.Github](https://github.com/Molunerfinn/PicGo/releases), 打开链接, 按下`Ctrl+F` 搜索`x64.exe` 安装包.如果网络原因不能访问`Github`, 可以下载 [网盘备份](https://www.aliyundrive.com/s/kSzsKeQRHB5).
-  + 下载之后，选择你喜欢的路径安装, 运行. 点击侧栏中的`SM.MS图床`, 下一步 `设定Token`.
-+ 注册图床账号, 例如 [sm.ms](https://sm.ms/). 这一步我不是很熟悉，也许图床不注册也能用.
-这里以 `sm.ms` 为例, 注册, 验证邮箱之后, 网站右上角点击 `User->Dashboard`, -> 侧边栏选择 `API Token`, 点击 `Generate Secret Token-> 确定`, 文本框中会生成一段乱码，复制到上一步 `PicGo` 的输入栏里.
+  + 下载之后,选择你喜欢的路径安装, 运行. 点击侧栏中的`SM.MS图床`, 下一步 `设定Token`.
++ 注册图床账号, 例如 [sm.ms](https://sm.ms/). 这一步我不是很熟悉,也许图床不注册也能用.
+这里以 `sm.ms` 为例, 注册, 验证邮箱之后, 网站右上角点击 `User->Dashboard`, -> 侧边栏选择 `API Token`, 点击 `Generate Secret Token-> 确定`, 文本框中会生成一段乱码,复制到上一步 `PicGo` 的输入栏里.
 + 测试一下: 在 `PicGo` 侧栏选择`上传区`. 随便拖张图片, 到 `PicGo` 的上传提示框, 应该会自动复制 `图片链接` 到 `剪贴板` . 上传框下面的`链接格式`可以更改生成链接的格式, 我们先保持默认的`Markdown` 就好.
 把生成的图片链接直接复制到`Typora`编辑界面中, 看能否预览.
-图片链接的`Markdown`格式应该类似于: 
+图片链接的`Markdown`格式应该类似于:
 
         ![](https://i.loli.net/2021/10/03/Lz3nNVyDjrGfXkb.png)
 
@@ -1051,8 +1051,8 @@ TMD "小可爱" 微信不支持 SM.MS 这种图床，可能是读取速度有点
 
         上传服务 ->PicGo(app), PicGo 路径-> 你的安装路径.
 
-这里有一个`验证图片选项`, 我验证失败了，但是不影响使用, 暂且不管.
-现在使用`Typora`编辑`Markdown`的时候，直接把图片拖放到`Typora`中，它会自动上传图片.
+这里有一个`验证图片选项`, 我验证失败了,但是不影响使用, 暂且不管.
+现在使用`Typora`编辑`Markdown`的时候,直接把图片拖放到`Typora`中,它会自动上传图片.
 
 我们需要做的只是找到 `CSS` 文件的目录, 修改目标格式, 写好文章然后复制粘贴.
 使用`文件->偏好设置->侧边栏:外观->打开主题文件夹`, 即可打开 `CSS` 文件目录.
@@ -1060,18 +1060,18 @@ TMD "小可爱" 微信不支持 SM.MS 这种图床，可能是读取速度有点
 ![a](https://i.loli.net/2021/10/03/y59ekXcoV4fIpt1.png)
 ![b](https://i.loli.net/2021/10/03/Lz3nNVyDjrGfXkb.png)
 
-参考[sspai老哥](https://sspai.com/post/40524#!), 
+参考[sspai老哥](https://sspai.com/post/40524#!),
 >在目录中预设了很多主题, 我个人比较喜欢 `Github` 的样式, 所以我的排版样式是基于 `Github` 修改的.
 (好吧, 其实是我的水平太低, 让我重写一个 `CSS` 还不如去死)
-> 我在目录内新建了名为`WeChat`的 `CSS` 文件. >在电脑上我还是倾向于使用原生 `GitHub` 主题, 在公众号文章中才会选择自定义的格式.`GitHub` 原来的样式已经不错了, 只是在手机端浏览时, 行距, 页边距, 字号等不太合适. 
+> 我在目录内新建了名为`WeChat`的 `CSS` 文件. >在电脑上我还是倾向于使用原生 `GitHub` 主题, 在公众号文章中才会选择自定义的格式.`GitHub` 原来的样式已经不错了, 只是在手机端浏览时, 行距, 页边距, 字号等不太合适.
 > 另外, 我修改了部分颜色, 看起来不是那么单调.
 
-复制`github.css -> wechat.css`, 然后根据个人喜好调整：
+复制`github.css -> wechat.css`, 然后根据个人喜好调整:
 
 ```css
-/* 修改正文部分, 页边距为 0.5em, 行高增加至 1.5em. p 表示段落 , 参考 
+/* 修改正文部分, 页边距为 0.5em, 行高增加至 1.5em. p 表示段落 , 参考
 https://developer.mozilla.org/zh-CN/docs/Learn/Getting_started_with_the_web/CSS_basics */
-p { 
+p {
     margin: 0.8em 0.5em;
     line-height: 1.5em;
 }
@@ -1092,16 +1092,16 @@ blockquote {
 
 [wechat.css 示例 网盘链接](https://www.aliyundrive.com/s/fsGbvVLZ1zH)
 
-此外, 在公众号文章页面， 按下`F12`进入开发者模式，可以查看相关的`CSS` 样式表
+此外, 在公众号文章页面, 按下`F12`进入开发者模式,可以查看相关的`CSS` 样式表
 
 ![CSS style sheet](https://i.loli.net/2021/10/03/8jObYiqfgodmxeB.png)
 
 ### 查看修改后的样式
 
-`Typora` 可以自行选择用于渲染的 `CSS` 文件, 在电脑写作时, 我会选择`Github`, 
+`Typora` 可以自行选择用于渲染的 `CSS` 文件, 在电脑写作时, 我会选择`Github`,
 在发布前, 我会选择`菜单栏:主题->WeChat`, 然后粘贴到公众号编辑器中.
 
-修改前和修改后的样式如下：
+修改前和修改后的样式如下:
 
 ![GithubTheme](https://i.loli.net/2021/10/03/64aM9yRwGPXpE7O.png)
 
@@ -1112,7 +1112,7 @@ blockquote {
 
 ![最终样式](https://i.loli.net/2021/10/03/Xkpfw3EGFIsVUtm.png)
 
-#### 其他参考
+### 其他参考
 
 [使用 Markdown + CSS 搞定公众号的排版规范 ](https://sspai.com/post/59091)
 [Markdown + CSS 实现微信公众号排版](https://cloud.tencent.com/developer/article/1051711)
@@ -1121,3 +1121,34 @@ blockquote {
 [wechat-mp-article](https://github.com/ufologist/wechat-mp-article)
 [中文网页重设与排版.css](https://github.com/sofish/typo.css)
 [可配置的,更适合阅读的中文文章样式库 ](https://github.com/zmmbreeze/Entry.css)
+
+`typora` 官方安装配置命令行版 `PicGo` 教程.
+
+[Install PicGo-Core via npm](https://support.typora.io/Upload-Image/#image-uploaders)
+
+通过 `node` 包管理器安装 `PicGo-Core`(需要 `NodeJS`运行时).
+如果你安装了 `node` 或 `yarn`,你可以在终端运行以下命令.
+
+```bash
+npm install picgo -g
+# 或
+yarn global add picgo
+```
+
+然后你可以在终端输入 `which picgo` 来获得它的实际安装位置,
+然后选择 `自定义命令` 作为 `图片上传器` 功能,并输入`[ node.js 的路径] [picgo-core路径] upload` 作为命令.
+如果安装了 `node` 和 `picgo` 到系统`PATH`,你也可以直接填写 `picgo upload` 作为自定义命令.
+
+#### 配置PicGo-Core
+
++ 选项1: 编辑配置文件.  请在以下位置编辑 `config.json`
+
++ Linux / macOS ->  `~/.picgo/config.json`.
++ Windows -> `C:\Users\[您的用户名]\.picgo\config.json`.
+
+细节可以参考, [配置文件](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html) (Chinese Only).
+
+`picgo` 需要配置文件来启动. 当你未指定配置文件的时候, `picgo` 将会使用默认配置文件来启动.
+
+通常来说你只需要配置 `Uploader` 即可,所以你可以通过 `picgo set uploader` 来进入交互式命令行,
+配置成功后会自动生成配置文件,无需复制粘贴! 其他更多的命令可以参考 `CLI` 命令 一章.

@@ -420,7 +420,7 @@ Racketeers (~~敲诈者~~) 通常把新程序和库写成模块, 通过相对路
 
 `Racket`值包括`数字`, `布尔值`, `字符串`和`字节字符串`. 在`DrRacket`和文档示例中(当你阅读彩色文档时), 值表达式显示为`绿色`.
 
-数字以常规方式书写, 包括分数和虚数.
+数字以常规方式书写, 包括分数和.
 
 ```lisp
 1       3.14
@@ -1439,17 +1439,28 @@ starts?: undefined;
 
 ## 内置的数据类型
 
+[The Reader](https://docs.racket-lang.org/reference/reader.html#%28part._parse-vector%29)
+
 上一章介绍了`Racket`的一些内置数据类型: `数字`, `布尔值`, `字符串`, `列表`和`过程`.
 本节将对简单形式的内置数据类型进行更全面的介绍.
 
-+ 数字: `5`, `0.99`, `1/2`, `1+2i`
-+ 字符串: `"Apple"`, `"\u03BB"`
+```lisp
+数字: 5,    0.99,    1/2,   1+2i
+字符串: "Apple",    "\u03BB"
 
-+ 布尔值 ; `#t`, `#f`, `"no"`
-+ character ; `#\A`, `#\u03BB`, `#\space`, `#\newline`.
-+ byte string ; `#"Apple"`, `#"\0\0"`
+符号: 'a,    '|one, two|,   #ci'A ,   (string->symbol "one, two")    
 
-+ 符号; `'a`, `#ci'A`
+布尔值:  #t,    #f,    "字符串" 相当于 #t
+字符 :  #\A,    #\u03BB,    #\space,    #\newline.
+字节串 : #"Apple",    #"\0\0"
+
+
+关键字: '#:apple,   (string->keyword "apple"),   
+pair, list: '(1 . 2),   '((1 . 2) . 3),   '(0 1 2),   (cons 0 (cons 1 (cons 2 null)))
+
+
+矢量: #("a" "b" "c"),   #4(baldwin bruce),    '#("a" "b" "c")
+```
 
 ### 布尔值 Booleans
 
@@ -1866,7 +1877,7 @@ Apple
 
 ### 关键字,Keywords
 
-`关键字`值与`符号`(symbol)相似(见`符号`),但它的打印形式是以`#:`为前缀.
+`关键字`值与`符号`(symbol)相似(见`符号`), 但它的打印形式是以`#:`为前缀.
 例子.
 
 ```lisp
@@ -1881,7 +1892,7 @@ Apple
 更确切地说, `关键字`类似于`标识符`; 类似于`标识符`被`引用`就会产生`符号`, `关键字`被引用也可以产生`值`.
 尽管在引用前后我们都它为 `关键字`, 但是有时我们用`关键字值`来特指`quote-keyword`表达式或`string->keyword`产生的结果.
 
-没`quote`的`关键字`不是`表达式`, 就像没`quote`的`标识符`不产生`符号`.
+没`quote`的`关键字`不是`表达式`, 就像没`quote`的`标识符`不产生`符号`值.
 例子.
 
 ```lisp
@@ -1967,88 +1978,251 @@ eval:2:0: #%datum: keyword misused as an expression
 
 如最后一个例子所示, `list*`用来缩写一系列不能用`list`表示的`cons`.
 
-`write`和`display`函数打印没有前导`'`,`cons`,`list`或`list*`的, `对`或`列表`.
-对于对或一个列表,写和显示没有区别,只是它们适用于列表的元素.
+`write`和`display`函数 打印没有前导`'`,`cons`,`list`或`list*`的, `对`或`列表`.
+对于`对`或`列表`, `write` 和`display`没有区别, 但是它们作用于列表的元素时有区别.
+例子.
+
+```lisp
+> (write (cons 1 2))
+(1 . 2)
+> (display (cons 1 2))
+(1 . 2)
+> (write null)
+()
+> (display null)
+()
+> (write (list 1 2 "3"))
+(1 2 "3")
+> (display (list 1 2 "3"))
+(1 2 3)
+```
+
+在`列表`的预定义程序中, 最重要的是那些在列表的元素中进行`迭代`的程序.
+
+```lisp
+> (map (lambda (i) (/ 1 i))
+       '(1 2 3))
+'(1 1/2 1/3)
+> (andmap (lambda (i) (i . < . 3))
+         '(1 2 3))
+#f
+> (ormap (lambda (i) (i . < . 3))
+         '(1 2 3))
+#t
+> (filter (lambda (i) (i . < . 3))
+          '(1 2 3))
+'(1 2)
+> (foldl (lambda (v i) (+ v i))
+         10
+         '(1 2 3))
+16
+> (for-each (lambda (i) (display i))
+            '(1 2 3))
+123
+> (member "Keys"
+          '("Florida" "Keys" "U.S.A."))
+'("Keys" "U.S.A.")
+> (assoc 'where
+         '((when "3:30") (where "Florida") (who "Mickey")))
+'(where "Florida")
+```
+
+`对`是不可变的(与`Lisp`的传统相反), 而 `pair?` 和 `list?` 只识别不可变的`对`和`列表`.
+`mcons` 过程创建可变的`对`,它与 `set-mcar!` 和 `set-mcdr!` 以及 `mcar` 和 `mcdr` 一起工作.
+可变对使用 `mcons` 打印,而 `write` 和 `display` 使用 `{` 和 `}` 打印`可变对`.
+例子.
+
+```lisp
+> (define p (mcons 1 2))
+> p
+(mcons 1 2)
+> (pair? p)
+#f
+> (mpair? p)
+#t
+> (set-mcar! p 0)
+> p
+(mcons 0 2)
+> (write p)
+{0 . 2}
+```
+
+### 矢量,Vectors
+
+`矢量`是`固定长度`的任意值的数组. 与列表不同,矢量支持对其元素的 constant-time `访问`和`更新`.
+`矢量`的打印方式类似于`列表`--括号包围的元素序列--但矢量的前缀为`'#`. 如果其中某个元素不能用`quote`表示, 则使用 `vector`.
+对于作为`表达式`的`矢量`,可以提供可选的`长度`.
+另外,作为表达式的矢量隐含着对其内容的`quote`, 这意味着矢量常量中的标识符和括号形式, 分别代表`symbols`和`lists`.
+例子.
+
+```lisp
+> #("a" "b" "c")
+'#("a" "b" "c")
+> #(name (that tune))
+'#(name (that tune))
+> #4(baldwin bruce)
+'#(baldwin bruce bruce bruce)
+> (vector-ref #("a" "b" "c") 1)
+"b"
+> (vector-ref #(name (that tune)) 1)
+'(that tune)
+```
+
+像`字符串`一样,矢量是`可变`或`不可变`的,直接写成表达式的矢量是`不可变`的.
+
+`矢量`可以通过`vector->list`和`list->vector`与`列表`互相转换; 当与列表的预定义程序结合使用时候, 这种转换特别有用.
+当分配额外的列表似乎太昂贵时,可以考虑使用`for/fold`这样的循环形式,它既可以识别`矢量`,也可以识别`列表`.
 
 例子.
 
-    > (写 (cons 1 2))
+```lisp
+> (list->vector (map string-titlecase
+                     (vector->list #("three" "blind" "mice"))))
+'#("Three" "Blind" "Mice")
+```
 
-    (1 . 2)
-    > (显示 (cons 1 2))
+### 哈希表,Hash Tables
 
-    (1 . 2)
-    > (写空)
+`哈希表`实现了从键到值的映射,其中键和值都可以是任意的`Racket`值,对表的`访问`和`更新`通常是 constant-time.
+根据哈希表建立函数 <-> 键值比较 
 
-    ()
-    > (显示null)
-
-    ()
-    > (写(列表1 2 "3")).
-
-    (1 2 "3")
-    > (显示 (列表 1 2 "3"))
-
-    (1 2 3)
-
-在列表的预定义程序中,最重要的是那些在列表的元素中进行迭代的程序.
-
-    > (map (lambda (i) (/ 1 i))
-           '(1 2 3))
-
-    '(1 1/2 1/3)
-    > (andmap (lambda (i) (i . < . 3))
-             '(1 2 3))
-
-    #f
-    > (ormap (lambda (i) (i . < . 3))
-             '(1 2 3))
-
-    #t
-    > (过滤 (lambda (i) (i . < . 3))
-              '(1 2 3))
-
-    '(1 2)
-    > (foldl (lambda (v i) (+ v i))
-             10
-             '(1 2 3))
-
-    16
-    > (for-each (lambda (i) (display i))
-                '(1 2 3))
-
-    123
-    > (成员 "Keys"
-              '("Florida" "Keys" "U.S.A.")
-
-    '("Keys" "U.S.A.")
-    > (assoc 'where
-             '((when "3:30") (where "Florida") (who "Mickey") ))
-
-    '(where "Florida")
-
-            Racket Reference中的+Pairs and Lists提供了更多关于对和列表的信息.
-
-对是不可变的(与Lisp的传统相反),而pair? 和list? 只识别不可变的对和列表.mcons 过程创建了一个可变的对,它与 set-mcar! 和 set-mcdr! 以及 mcar 和 mcdr 一起工作.可变对使用 mcons 打印,而 write 和 display 使用 { 和 } 打印可变对.
++ `make-hash`, `equal?`
++ `make-hasheqv`, `eqv?`
++ `make-hasheq`, `eq?`
 
 例子.
 
-    > (define p (mcons 1 2))
-    > p
+```lisp
+> (define ht (make-hash))
+> (hash-set! ht "apple" '(red round))
+> (hash-set! ht "banana" '(yellow long))
+> (hash-ref ht "apple")
+'(red round)
+> (hash-ref ht "coconut")
+hash-ref: no value found for key
+  key: "coconut"
+> (hash-ref ht "coconut" "not there")
+"not there"
+```
 
-    (mcons 1 2)
-    > (pair? p)
+`hash`, `hashqv` 和 `hashq` 函数从初始的`键`和`值`集合中创建`不可变`的`哈希表`, 其中每个`值`在`键`之后作为参数提供.
+不可变哈希表可以用`hash-set`来扩展, 它可以在`constant time`内产生新的不可变的哈希表.
+例子.
 
-    #f
-    > (mpair?p)
+```lisp
+> (define ht (hash "apple" 'red "banana" 'yellow))
+> (hash-ref ht "apple")
+'red
+> (define ht2 (hash-set ht "coconut" 'brown))
+> (hash-ref ht "coconut")
+hash-ref: no value found for key
+  key: "coconut"
+> (hash-ref ht2 "coconut")
+'brown
+```
 
-    #t
-    > (set-mcar! p 0)
-    > p
+不可变哈希表可以通过使用`#hash`(对基于`equal?`的表), `#hasheqv`(对基于`eqv?`的表)
+或者`#hasheq`(对基于`eq?`的表)写成`表达式`.
+在`#hash`, `#hasheq` 或 `#hasheqv` 之后必须紧跟包在括号`()`内的序列, 其中每个元素是带点的`键值对`.
+`#hash`等形式隐含地`quote`了它们的键和值.
+例子.
 
-    (mcons 0 2)
-    > (写p)
+```lisp
+> #hash(("apple" . red)
+        ("banana" . yellow))
+'#hash(("apple" . red) ("banana" . yellow))
+> (hash 1 (srcloc "file.rkt" 1 0 1 (+ 4 4)))
+(hash 1 (srcloc "file.rkt" 1 0 1 8))
+```
 
-    {0 . 2}
+`可变`和`不可变`的哈希表都按照不可变哈希表的样式打印,
+如果所有的`键`和`值`都可以用`quote`表达, 则使用带引号的`#hash`,`#hasheqv` 或`#hasheq` 形式,
+否则使用 `hash`,`hasheq` 或 `hasheqv`.
+例子.
 
-通过www.DeepL.com/Translator(免费版)翻译
+```lisp
+> #hash(("apple" . red)
+        ("banana" . yellow))
+'#hash(("apple" . red) ("banana" . yellow))
+> (hash 1 (srcloc "file.rkt" 1 0 1 (+ 4 4)))
+(hash 1 (srcloc "file.rkt" 1 0 1 8))
+```
+
+可变的哈希表可以选择`弱保留`它的键(reatin its keys weakly),  只有当`key`在别的地方保留时, 这个`映射`才被保留.
+例子.
+
+```lisp
+> (define ht (make-weak-hasheq))
+> (hash-set! ht (gensym) "can you see me?")
+> (collect-garbage)
+> (hash-count ht)
+0
+```
+
+请注意,即使是`弱`的哈希表,只要相应的`键`可以访问,它的值也会`强保留`(tetains its values strongly).
+这就产生了`catch-22`的依赖性, 当一个`值`套娃引用它的`键`时, 这样的`映射`就会被永久地保留.
+为了打破这个循环, 将`键`映射到一个`ephemeron`, 后者将`值`与它的`键`配对(除了哈希表本身的隐式配对之外).
+例子.
+
+```lisp
+> (define ht (make-weak-hasheq))
+> (let ([g (gensym)])
+    (hash-set! ht g (list g)))
+> (collect-garbage)
+> (hash-count ht)
+1
+> (define ht (make-weak-hasheq))
+> (let ([g (gensym)])
+    (hash-set! ht g (make-ephemeron g (list g)))) ; 将 g 和它的值打包成 ephemero, 再作为 g 的映射
+> (collect-garbage)
+> (hash-count ht)
+0
+```
+
+### 箱子, Boxes
+
+`箱子`就像只有一个元素的`向量`. 它的打印形式为 quoted `#&`, 后面是被框的值的打印形式.
+`#&` 形式也可以作为表达式使用, 但由于产生的`框`是`常数`,它实际上没有什么用.
+例子.
+
+```lisp
+> (define b (box "apple"))
+> b
+'#&"apple"
+> (unbox b)
+"apple"
+> (set-box! b '(banana boat))
+> b
+'#&(banana boat)
+```
+
+### 空和未定义,Void and Undefined
+
+一些`过程`或`表达式`不需要结果值. 例如,调用显示过程只是为了`输出屏幕`的副作用.
+在这种情况下, 结果值通常是一个特殊的`常数`, 打印为`#<void>`. 
+当表达式的结果只是`#<void>`时, `REPL` 不会打印任何东西.
+
+`void`过程接受任意数量的参数,并返回`#<void>`.
+(也就是说, 标识符 `void` 被绑定到一个返回`#<void>`的过程, 而不是直接绑定到`#<void>`).
+例子.
+
+```lisp
+> (void)
+> (void 1 2 3)
+> (list (void))
+'(#<void>)
+```
+
+`undefined`常数, 打印为`#<undefined>`, 有时会被用作`引用`的结果, 当其值还不可用.
+在以前的`Racket`版本中(6.1版之前), 过早地引用局部绑定会产生`#<undefined>`; 现在过早的引用会引发`异常`.
+
+>在某些情况下,`undefined`结果仍然可以由`shared`形式产生.
+
+```lisp
+(define (fails)
+  (define x x)
+  x)
+> (fails)
+x: undefined;
+ cannot use before initialization
+```
