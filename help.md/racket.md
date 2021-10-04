@@ -1892,27 +1892,28 @@ Apple
 #t
 ```
 
-更确切地说, `关键字`类似于`标识符`; 类似于`标识符`被`引用`就会产生`符号`, `关键字`被引用也可以产生`值`.
-尽管在引用前后我们都它为 `关键字`, 但是有时我们用`关键字值`来特指`quote-keyword`表达式或`string->keyword`产生的结果.
+更确切地说, `关键字`类似于`标识符`; 
+类似于`标识符`被`引用`就会产生`符号`, `关键字`被引用也可以产生`值`.
+尽管在引用前后我们都它为 `关键字`, 但是有时我们用`关键字值`, 来特指`quote-keyword`表达式,或`string->keyword`产生的结果.
 
-没`quote`的`关键字`不是`表达式`, 就像没`quote`的`标识符`不产生`符号`值.
+`unquoted keyword`不是`表达式`, 就像`unquoted identifier`不会产生`symbol`值:
 例子.
 
 ```lisp
-> not-a-symbol-expression
+> not-a-symbol-expression ; 不会产生 symbol 值
 not-a-symbol-expression: undefined;
  cannot reference an identifier before its definition
   in module: top-level
-> #:not-a-keyword-expression // 没有加引号, 不构成 quote-keyword 表达式
+> #:not-a-keyword-expression ; 没有被 quote, 不构成表达式
 eval:2:0: #%datum: keyword misused as an expression
   at: #:not-a-keyword-expression
 ```
 
-尽管它们有相似之处,`关键字`的使用方式与`标识符`或`符号`不同.
+尽管它们有相似之处,`关键字`的使用方式与`标识符`或`symbol`不同.
 
 `关键字`(不加引号)被用来作为`参数列表`和某些句法形式(syntactic forms)中的特殊`标记`.
-对于`运行时标志`(flag)和枚举(enumerations), 使用`符号`而不是`关键字`. 
-下面的例子说明了`关键字`和`符号`的不同作用.
+对于`运行时标志`(flag)和枚举(enumerations), 使用`symbol`而不是`关键字`. 
+下面的例子说明了`关键字`和`symbol`的不同作用.
 例子.
 
 ```lisp

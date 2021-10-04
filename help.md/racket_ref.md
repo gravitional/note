@@ -422,7 +422,7 @@ each scope is represented by a `value` that is internal to the representation of
 
 当两个字符的`char->integer`结果相等时, 它们`eqv?`.
 
-一般来说, `eqv?`与`equal?`相同, 只是`eqv?`不能递归比较复合数据类型（如`lists `和`structs`）的内容, 
+一般来说, `eqv?`与`equal?`相同, 只是`eqv?`不能递归比较复合数据类型(如`lists `和`structs`)的内容, 
 也不能由用户定义的数据类型来定制. 我们不鼓励使用`eqv?`, 而是使用`equal?`. 
 例子. 
 
@@ -486,7 +486,7 @@ each scope is represented by a `value` that is internal to the representation of
         v2 : any/c
         recur-proc : (any/c any/c -> any/c)
 
-与`equal?`相似，但使用`recur-proc`进行递归比较（这意味着不会自动处理引用循环）.
+与`equal?`相似,但使用`recur-proc`进行递归比较(这意味着不会自动处理引用循环).
 来自`recur-proc`的非`#f`结果在被`equal?/recur`返回之前被转换为`#t`.
 例子.
 

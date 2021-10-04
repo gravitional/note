@@ -52,12 +52,56 @@ sed -ni 's/foo/bar/' FILE
 
 ## 用法示例
 
+[BRE and extended regular expression](https://www.gnu.org/software/sed/manual/html_node/BRE-vs-ERE.html)
+
+`基本正则表达式`和`扩展正则表达式`是指定`模式`语法的两种变体. (Basic and extended regular expressions)
+`基本正则表达式`(BRE)的语法是`sed`中默认的(同样在`grep`中也是如此).
+使用`POSIX`指定的`-E`选项(`-r`, `--regexp-extended`)来启用`扩展正则表达式`(ERE)语法.
+
+在`GNU sed`中, `基本正则表达式`和`扩展正则表达式`之间的唯一区别在于几个特殊字符的行为：
+    
+    ?, +, 小括号 (), 大括号 {} , 以及 | 
+
+在`基本(BRE)语法`中, 这些字符没有特殊含义, 除非前缀是`反斜杠``\`;
+而在`扩展(ERE)`语法中, 情况正好相反: 这些字符是特殊的, 除非它们被反斜杠前缀转义.
+
 ### 替换中文标点
 
 ```bash
-# 如果只想打印, 不想实际更改, 就去掉 -i 选项. 不要使用-n 选项.
-sed -i -e 's#“#\"#g'  -e 's#”#\"#g' -e 's#：#: #g' -e 's#，#,#g' -e 's#。#.#g' -e 's#、#,#g' -e 's#（#(#g' -e 's#）#)#g' -e 's#；#\;#g'  -e 's#！#!#g' -e 's#？#?#g'    -e 's#‹#<#g'    -e 's#›#>#g'    -zre 's#\n(?:[ \t]*\n[ \t]*)+\n#\n\n#g'
-sed -i  -e 's# +\n##g'
+# 如果只想打印, 不想实际更改, 就去掉 -i 选项. 
+# 不要同时使用 -i -n 选项, 会造成文件丢失.
+sed -i \
+-e '{
+s#[“”]#"#g;
+s#[‘’]#"#g;
+s#：#: #g;
+s#，#, #g;
+s#。#. #g;
+s#、#, #g;
+s#…#... #g;
+s#——# -- #g;
+s#（#(#g; s#）#)#g;
+s#；#\; #g;
+s#！#! #g;
+s#？#? #g;
+s#‹#<#g; s#›#>#g;
+s#《#<#g; s#》#>#g;
+s#【#\[#g; s#】#\]#g;
+s#『#\{#g; s#』#\}#g;
+}' \
+-zre 's#\n([ \t]*\n[ \t]*)+\n#\n\n#g' \
+-zre 's#([ \t]+\n)#\n#g'
+```
+
+解释:
+
+```bash
+# 删除连续空行
+-zre 's#\n([ \t]*\n[ \t]*)+\n#\n\n#g' \
+# 替换: 评估->计算
+-e 's#评估#计算#g' 
+# 删除行末空白
+-zre 's#(\n[ \t]+)#\n#g'
 ```
 
 ### 删除多个空行
@@ -66,7 +110,7 @@ sed -i  -e 's# +\n##g'
 [sed删除连续空白行](https://blog.csdn.net/linxing927/article/details/78865661)
 
 ```bash
-echo -e "1\n\n\n\n2" | sed -zre 's#\n(?:[ \t]*\n[ \t]*)+\n#\n\n#g'
+echo -e "1\n\n\n\n2" | sed -zEe 's#\n(?:[ \t]*\n[ \t]*)+\n#\n\n#g'
 ```
 
 解释为:
@@ -194,6 +238,7 @@ done
 ### 地址定界
 
 + 不提供地址: 则对全文进行处理
++ 地址后面可以提供`!`表示取反.
 
 单地址:
 
