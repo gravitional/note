@@ -36,23 +36,22 @@ lc_letter ::=  "a"..."z"
 
 [查看python库文档](https://www.jianshu.com/p/a6219430b65c)
 
-安装完python第三方库以后, 经常需要查询其文档, 其实python就自带文档查看器. 可以查看所有内置库和第三方库的文档, 虽然不是很详尽, 但是总比没有的好.     在命令行窗口
+安装完 `python` 第三方库以后, 经常需要查询其文档, 其实`python`就自带文档查看器.
+可以查看所有内置库和第三方库的文档, 虽然不是很详尽, 但是总比没有的好.
+在命令行窗口输入
 
 ```python
 python -m pydoc -p 60000
 ```
 
-简单解释一下: 
+简单解释: 
 
-`python -m pydoc`表示打开`pydoc`模块, `pydoc`是查看python文档的首选工具;`-p 6000`表示在`60000`端口上启动`server`
-
-然后在浏览器中访问`http://localhost:60000/`
+`python -m pydoc`表示打开`pydoc`模块, `pydoc`是查看`python`文档的首选工具;
+`-p 6000`表示在`60000`端口上启动 `http server`. 然后在浏览器中访问`http://localhost:60000/`
 
 ## Python运行外部程序
 
-[Python运行外部程序的几种方法][]
-
-[Python运行外部程序的几种方法]: https://blog.csdn.net/xiligey1/article/details/80267983
+[Python运行外部程序的几种方法](https://blog.csdn.net/xiligey1/article/details/80267983)
 
 ### subprocess --- 子进程管理
 
