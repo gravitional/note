@@ -1662,125 +1662,130 @@ Racket参考>中的+准引号: 准引号, 无引号和无引号拼接也记录�
 
 ## 动态绑定: 参数化
 
-            The Racket Reference中的+Parameters也记录了参数化.
+The Racket Reference中的+Parameters也记录了参数化.
 
-parameterize形式在计算主体表达式时将一个新值与一个参数联系起来.
+`parameterize` 形式在计算 `body` 表达式时, 将一个新`值`与`参数`(parameter)联系起来.
 
-        (parameterize ([parameter-expr value-expr] ...)
-          body ...+)
+    (parameterize ([parameter-expr value-expr] ...)
+      body ...+)
 
-            术语 "参数 "有时用来指函数的参数, 但Racket中的 "参数 "具有这里描述的更具体的含义.
+>术语 `参数` 有时用来指函数的参数, 但在这里, `Racket` 中的 `参数` 具有更具体的含义.
+例如, `error-print-width` 参数控制, 在错误信息中打印多少个字符的`值`.
 
-例如, error-print-width参数控制在错误信息中打印多少个字符的值.
+```lisp
+> (parameterize ([error-print-width 5])
+    (car (expt 10 1024)))
+car: contract violation
+  expected: pair?
+  given: 10...
+> (parameterize ([error-print-width 10])
+    (car (expt 10 1024)))
+car: contract violation
+  expected: pair?
+  given: 1000000...
+```
 
-    > (参数化 ([error-print-width 5])
-        (car (expt 10 1024)))
+更一般地说, `参数`实现了一种`动态绑定`(dynamic binding). 
+`make-parameter`函数接受任何值, 并返回一个新的`参数`, 该`参数`被初始化为`给定值`.
+将参数作为一个`函数`应用, 返回其`当前值`.
 
-    car: 违反合同
+```lisp
+> (define location (make-parameter "here"))
+> (location)
+"here"
+```
 
-      预期: 对?
+在`参数化`形式中, 每个`parameter-expr`必须产生一个`参数`. 
+在`body`s的计算过程中, 每个指定的参数都被赋予相应的`value-expr`的结果. 
+当`控制`(control)离开`parameterize`形式时--无论是通过正常的`返回`(return), 
+`异常`还是其他的`escape`-- `参数`都会被恢复到其先前的值.
 
-      给定. 10...
-    > (参数化([错误-打印宽度10])
-        (car (expt 10 1024)))
+```lisp
+> (parameterize ([location "there"])
+    (location))
+"there"
+> (location)
+"here"
+> (parameterize ([location "in a house"])
+    (list (location)
+          (parameterize ([location "with a mouse"])
+            (location))
+          (location)))
+'("in a house" "with a mouse" "in a house")
+> (parameterize ([location "in a box"])
+    (car (location)))
+car: contract violation
+  expected: pair?
+  given: "in a box"
+> (location)
+"here"
+```
 
-    车: 违反合同
+`parameterize` 形式不是像`let`那样的`绑定`形式; 上述`location`的每次使用都直接指向`原始定义`. 
+`parameterize`形式在`parameterize` 的 body 被计算的整个过程中, 调整`parameter`的`值`, 
+即使是在`parameterize`body 以外的文本中使用`parameter `.
+这也是 dynamic scope 和 lexical scope 的主要区别.
 
-      预期: 对?
+```lisp
+> (define (would-you-could-you?)
+    (and (not (equal? (location) "here"))
+         (not (equal? (location) "there"))))
+> (would-you-could-you?)
+#f
+> (parameterize ([location "on a bus"])
+    (would-you-could-you?))
+#t
+```
 
-      给定. 1000000...
+如果一个`parameter `的使用, 在`文本`意义上位于`parameterize`的 body  内,
+但在`parameterize`形式产生`值`之前没有被`计算`, 那么这次`使用`就不会看到`parameterize`形式所安装的`值`.
+也就是`parameterize`生效之后, 如果不及时使用, `parameter` 的值会被还原.
 
-更广泛地说, 参数实现了一种动态绑定. mak-参数函数接受任何值并返回一个新的参数, 该参数被初始化为给定值. 将参数作为一个函数应用, 返回其当前值.
+```lisp
+> (let ([get (parameterize ([location "with a fox"])
+               (lambda () (location)))]); 生成调用 location 的匿名函数
+    (get)) ; 但是这里 location 的值已经被还原了 
+"here"
+```
 
-    > (define location (make-parameter "here"))
-    > (location)
+可以通过把`parameter`作为带`值`的`函数`调用, 来强制性地调整`parameter `的当前`绑定`.
+如果一个`parameterize`已经调整了`参数`的值, 那么直接应用这个`parameter ` procedure , 
+只影响到与当前激活的`parameterize`相关的值.
 
-    "这里"
+```lisp
+> (define (try-again! where)
+    (location where)) ; 把参数当函数, 直接调用
+> (location)
+"here"
+> (parameterize ([location "on a train"])
+    (list (location)
+          (begin (try-again! "in a boat")
+                 (location)))) ; 直接调用, 强行改变参数的值, 只在这里起效
+'("on a train" "in a boat")
+> (location) ; 但是 location 的值之后会被恢复原状
+"here"
+```
 
-在参数化形式中, 每个参数-表达式必须产生一个参数. 在bodys的计算过程中, 每个指定的参数都被赋予相应的value-expr的结果. 当控制权离开参数化形式时--无论是通过正常的返回, 异常还是其他的转义--参数都会恢复到其先前的值.
+使用`parameterize`通常比强制更新`参数`值要好, 这和用 `let` 绑定新的`变量`, 比用 `set!` 要好的原因差不多. (见`Assignment: set!`).
 
-    > (parameterize ([location "there"])
-        (location))
+`变量`和 `set!` 似乎可以解决许多 `参数` 能解决的问题.
+例如, `lokation` 可以被定义为一个`字符串`, 而 `set!` 可以用来调整它的值.
 
-    "那里"
-    > (location)
+```lisp
+> (define lokation "here")
+> (define (would-ya-could-ya?)
+    (and (not (equal? lokation "here"))
+         (not (equal? lokation "there"))))
+> (set! lokation "on a bus")
+> (would-ya-could-ya?)
+#t
+```
 
-    "这里"
-    > (参数化([location "in a house"])
-        (列表(location))
-              (参数化([location "with a mouse"] )
-                (地点))
-              (location)))
+然而, 与 `set!` 相比, `参数` 提供了几个关键的优势.
 
-    '("在一个房子里""用鼠标""在一个房子里")
-    > (参数化([location "in a box"])
-        (汽车(位置))
-
-    汽车: 违反合同
-
-      预期: 对?
-
-      给定. "在一个盒子里"
-    > (位置)
-
-    "这里"
-
-parameterize形式不是像let那样的绑定形式; 上述location的每次使用都直接指向原始定义. 参数化形式在参数化主体被计算的整个过程中调整参数的值, 即使是在参数化主体以外的文本中使用参数.
-
-    > (define (would-you-could-you?)
-        (and (not (equal? (location) "here"))
-             (not (equal? (location) "there"))))
-    > (would-you-could-you?)
-
-    #f
-    > (参数化([location "on a bus"] )
-        (would-you-could-you?))
-
-    #t
-
-如果一个参数的使用在文本上位于参数化的主体内, 但在参数化形式产生一个值之前没有被计算, 那么这个使用就不会看到参数化形式所安装的值.
-
-    > (let ([get (parameterize ([location "with a fox"])
-                   (lambda () (location)) ])
-        (get))
-
-    "这里"
-
-一个参数的当前绑定可以通过调用参数作为一个带值的函数来强制性地调整. 如果一个参数化已经调整了参数的值, 那么直接应用参数化过程只影响到与活动参数化相关的值.
-
-    > (define (try-again! where)
-        (location where))
-    > (location)
-
-    "这里"
-    > (参数化([location "on a train"] )
-        (list (location)
-              (begin (try-again! "in a boat")
-                     (location))))
-
-    '("在火车上""在船上")
-    > (location)
-
-    "这里"
-
-使用参数化通常比强制更新参数值要好, 这和用let绑定一个新的变量比用set! 要好的原因差不多. (见赋值: set!).
-
-变量和set! 似乎可以解决许多与参数相同的问题. 例如, lokation可以被定义为一个字符串, 而set! 可以用来调整它的值.
-
-    > (define lokation "here")
-    > (定义(would-ya-could-ya?
-        (and (not (equal? lokation "here"))
-             (not (equal? lokation "there")))))
-    > (set! lokation "on a bus")
-    > (would-ya-could-ya?)
-
-    #t
-
-然而, 与set! 相比, 参数提供了几个关键的优势.
-
-    参数化形式有助于在控制因异常而逃脱时自动重置参数的值. 添加异常处理程序和其他形式来回溯set! 是相对繁琐的.
-
-    参数与尾部调用配合得很好(见尾部递归). 参数化形式中的最后一个主体相对于参数化形式来说处于尾部位置.
-
-    参数与线程正常工作(见线程). 参数化形式只为当前线程的计算调整参数值, 这就避免了与其他线程的竞赛条件. 
-    
++ `parameterize`形式有助于在 control  因`异常`而 escapes  时, 自动重置`参数`的`值`. 
+添加`异常处理`程序和其他形式来恢复 `set!` 是相对繁琐的.
++ `参数`与`尾部调用`配合得很好(见`Tail Recursion`). 
+`parameterize`形式中的最后一个`body`相对于`parameterize`形式来说处于`尾部位置`.
++ `Parameters`可以配合`threads `正常工作(见`Threads`). 
+`parameterize`形式只为当前线程的计算调整`parameter `值, 这就避免了与其他线程的`race conditions`. 
