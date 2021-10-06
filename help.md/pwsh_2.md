@@ -1133,13 +1133,14 @@ $A = 22,5,10,8,12,9,80
 $B = ,7
 ```
 
-还可以通过使用范围运算符 () 来创建和初始化数组 .. .  下面的示例创建一个包含值5到8的数组.
+还可以通过使用范围运算符 `()` 来创建和初始化数组 .. .  下面的示例创建一个包含值5到8的数组.
 
 ```powershell
 $C = 5..8
 ```
 
-如果未指定数据类型, 则 `PowerShell` 会创建`object`的数组 (`system.object []`) .  若要确定数组的数据类型, 请使用 `GetType ()` 方法.  例如, `$A.GetType()`.
+如果未指定数据类型, 则 `PowerShell` 会创建`object`的数组 (`system.object []`) .  
+若要确定数组的数据类型, 请使用 `GetType ()` 方法.  例如, `$A.GetType()`.
 
 若要创建强类型数组(即只包含特定类型值的数组), 请将该变量强制转换为数组类型, 如 `string[]`, `long[]`, or `int32[]`.
 若要强制转换数组, 请在变量名称之前加上`[类型]`.  例如, 若要创建一个`32`位整数数组, 请键入：
@@ -1164,7 +1165,7 @@ $C = 5..8
 @( ... )
 ```
 
-可以使用 array 运算符创建零个或一个对象的数组.  例如：
+可以使用 `array` 运算符创建零个或一个对象的数组.  例如：
 
 ```powershell
 $a = @("Hello World");$a.Count
@@ -1621,7 +1622,7 @@ $p.getenumerator() | Sort-Object -Property Value -Descending
 
 #### ConvertFrom-StringData
 
-`ConvertFrom-StringData` Cmdlet 将一个包含键/值对的`string`或者`here-string`转换为哈希表.
+`ConvertFrom-StringData` Cmdlet 将一个包含`键/值`对的`string`或者`here-string`转换为哈希表.
 
 可以在脚本的数据部分中安全地使用 `ConvertFrom-StringData` , 并将其与`Import-LocalizedData` 结合,  以在`UI`中显示当前区域的用户消息.
 
