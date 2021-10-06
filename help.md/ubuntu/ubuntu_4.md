@@ -765,9 +765,9 @@ $ echo "obase=8;$(( 8#666 & (8#777 ^ 8#$(umask)) ))" | bc
 + `==`:等于
 + `!=`:不等于
 
-### []文件系统测试
+### [],文件系统测试,bash test
 
-`test`和`[`基本是同一个shell内置命令. `test`  检查文件系统, 或者比较两个值的关系(数字或者字符串)
+`test`和`[`基本是同一个 `shell` 内置命令. `test`  检查文件系统, 或者比较两个值的关系(数字或者字符串)
 
 + 算术比较.比如一个变量是否为`0`, `[ $var -eq 0 ]`.
 + 文件属性测试. 比如一个文件是否存在,`[ -e $var ]`, 是否是目录,`[ -d $var ]`.
@@ -799,40 +799,41 @@ test
 + `EXPRESSION1 -a EXPRESSION2`: EXPRESSION1和EXPRESSION2都是真. 
 + `EXPRESSION1 -o EXPRESSION2`: EXPRESSION1或EXPRESSION2为真. 
   
-+ `-n STRING`: STRING的长度为非零. STRING相当于`-n STRING`
-+ `-z STRING`: 表示STRING的长度为零
-+ `string1 = string2`: 字符串是相等的
-+ `string1 != string2`: 字符串不相等
++ `[[-n STRING]]`: `STRING` 的长度为非零. `STRING` 相当于`-n STRING`, 可以用来判断环境变量是否存在
++ `[[-z STRING]]`: 表示 `STRING` 的长度为零
++ `[[string1 = string2]]`: 字符串是相等的
++ `[[string1 != string2]]`: 字符串不相等
   
-+ `INTEGER1 -eq INTEGER2`: `INTEGER1`等于`INTEGER2`
-+ `INTEGER1 -ge INTEGER2`: 大于或等于
-+ `INTEGER1 -gt INTEGER2`: 大于
-+ `INTEGER1 -le INTEGER2`: 小于或等于
-+ `INTEGER1 -lt INTEGER2`:小于
-+ `INTEGER1 -ne INTEGER2`:不等于
-+ `FILE1 -ef FILE2`: `FILE1`和`FILE2`有相同的设备号和节点号
-+ `FILE1 -nt FILE2`: FILE1比FILE2要新(修改日期). 
-+ `FILE1 -ot FILE2`: FILE1比FILE2老
++ `[INTEGER1 -eq INTEGER2]`: `INTEGER1`等于`INTEGER2`
++ `[INTEGER1 -ge INTEGER2]`: 大于或等于
++ `[INTEGER1 -gt INTEGER2]`: 大于
++ `[INTEGER1 -le INTEGER2]`: 小于或等于
++ `[INTEGER1 -lt INTEGER2]`:小于
++ `[INTEGER1 -ne INTEGER2]`:不等于
 
-+ `-b FILE`: `FILE`存在并且是块类型
-+ `-c FILE`: `FILE`存在, 并且是字符类型
-+ `-d FILE`: `FILE`存在并且是一个目录
-+ `-e FILE`: `FILE`存在.
-+ `-f FILE`: `FILE`存在并且是一个普通文件
-+ `-g FILE`:`FILE`存在并且是`set-group-ID`. 
-+ `-G FILE`: `FILE`存在并且被有效的组ID所拥有
-+ `-h FILE`: `FILE`存在并且是一个符号链接(与-L相同). 
-+ `-k FILE`:`FILE`存在, 并且其`sticky bit `被设置. 
-+ `-L FILE`:`FILE`存在并且是一个符号链接(与-h相同). 
-+ `-O FILE`: `FILE`存在并且被有效的用户`ID`所拥有
-+ `-p FILE`:`FILE`存在, 并且是一个命名的管道
-+ `-r FILE`:`FILE`存在并且被授予读取权限
-+ `-s FILE`:`FILE`存在并且大小大于`0`
-+ `-S FILE`:`FILE`存在并且是一个套接字
-+ `-t FD`: 文件描述符`FD`在一个终端上被打开.
-+ `-u FILE`:`FILE`存在并且其`set-user-ID`位被设置
-+ `-w FILE`:`FILE`存在并且被授予写权限
-+ `-x FILE`:`FILE`存在, 并且被授予执行(或搜索)权限
++ `[FILE1 -ef FILE2]`: `FILE1`和`FILE2`有相同的设备号和节点号
++ `[FILE1 -nt FILE2]`: `FILE1`比`FILE2`要新(修改日期). 
++ `[FILE1 -ot FILE2]`: `FILE1` 比`FILE2`老
+
++ `[-b FILE]`: `FILE`存在并且是块类型
++ `[-c FILE]`: `FILE`存在, 并且是字符类型
++ `[-d FILE]`: `FILE`存在并且是一个目录
++ `[-e FILE]`: `FILE`存在.
++ `[-f FILE]`: `FILE`存在并且是一个普通文件.
++ `[-g FILE]`:`FILE`存在并且是`set-group-ID`. 
++ `[-G FILE]`: `FILE`存在并且被有效的组ID所拥有
++ `[-h FILE]`: `FILE`存在并且是一个符号链接(与-L相同). 
++ `[-k FILE]`:`FILE`存在, 并且其`sticky bit `被设置. 
++ `[-L FILE]`:`FILE`存在并且是一个符号链接(与-h相同). 
++ `[-O FILE]`: `FILE`存在并且被有效的用户`ID`所拥有
++ `[-p FILE]`:`FILE`存在, 并且是一个命名的管道
++ `[-r FILE]`:`FILE`存在并且被授予读取权限
++ `[-s FILE]`:`FILE`存在并且大小大于`0`
++ `[-S FILE]`:`FILE`存在并且是一个套接字
++ `[-t FD]`: 文件描述符`FD`在一个终端上被打开.
++ `[-u FILE]`:`FILE`存在并且其`set-user-ID`位被设置
++ `[-w FILE]`:`FILE`存在并且被授予写权限
++ `[-x FILE]`:`FILE`存在, 并且被授予执行(或搜索)权限
 
 除了`-h`和`-L`之外, 所有与`FILE`相关的测试都会对符号链接`dereference`.  
 注意, 对于`shells`来说, 小括号需要被转义(`\(  \)`).  `INTEGER`也可以是`-l STRING`, 它被评估为`STRING`的长度. 
@@ -841,27 +842,18 @@ test
 注意: `[` 具有 `--help` 和 `--version` 选项, 但 `test` 不具有. `test` 对这些选项的处理与对其他非空字符串的处理相同. 
 注意：你的shell可能有自己的`test`或`[`的版本, 它通常取代这里描述的版本.  关于它所支持的选项的细节, 请参考你的shell的文档. 
 
-***
-如果 `filename` 存在,则为真
+例子:
 
 ```bash
+# 如果 filename 存在,则为真
 if [ -e filename ]; then echo "true";fi
-```
-
-如果存在某文件,则删除
-
-```bash
+# 如果存在某文件,则删除
 if [ -f trials ]; then rm ${result_path}trials; fi
-```
-
-如果没有文件夹,则创建
-
-```bash
+# 如果没有文件夹,则创建
 if [ ! -d $result_name ];then mkdir -p $result_name;fi
 ```
 
-***
-`bash`在变量替换方面比较粗犷, 有时需要用双引号把变量裹住, 例如：
+>注意: `bash`在变量代入时比较粗犷, 最好用双引号把`变量`裹住, 例如：
 
 ```bash
 abc="hello xx"; if test "hello" != "$abc"; then  echo "Your word is not 'hello'."; fi
@@ -873,12 +865,13 @@ abc="hello xx"; if test "hello" != "$abc"; then  echo "Your word is not 'hello'.
 test "hello" != hello xx
 ```
 
-这不是一个合法的 `test` 命令, 所以脚本执行时就会报错. 其实不光是空格, 包含在 `$IFS `(internal field separator)中的其它字符, 以及空变量, 都会造成语法错误. 
+这不是一个合法的 `test` 命令, 所以脚本执行时就会报错. 
+其实不光是空格, 包含在 `$IFS `(internal field separator)中的其它字符, 以及空变量, 都会造成语法错误. 
 所以使用双引号包裹变量是一种保护机制, 可以提高脚本的健壮性. 但是在`zsh`中可以不用引号包裹, `zsh`和`bash`的分词机制不同.
 
 ### [[ ]]字符串比较
 
-在进行字符串比较时,最好使用双中括号 `[[ ]]`. 因为单中括号可能会导致一些错误,因此最好避开它们.
+在进行字符串比较时,最好使用双中括号 `[[ ]]`. 因为单中括号可能会导致一些错误, 因此最好避开它们.
 
 检查两个字符串是否相同:
 
@@ -912,11 +905,7 @@ fi
 
 ```bash
 if [ $var -eq 0 ]; then echo "True"; fi
-```
-
-等价于:
-
-```bash
+# 等价于:
 if test $var -eq 0; then echo "True"; fi
 ```
 

@@ -1603,8 +1603,7 @@ shell 环境中包含相当多的变量,虽然你的 shell 环境可能不同于
 + `/etc/bash.bashrc` 应用于所有用户的全局配置文件.
 + `~/.bashrc` 用户私有的启动文件.可以用来扩展或重写全局配置脚本中的设置.
 
-除了读取以上启动文件之外,非登录 shell 会话也会继承它们父进程的环境设置,通常是一个登录 shell.
-
+除了读取以上启动文件之外,非登录 shell 会话也会继承它们父进程的环境设置,通常是一个登录 `shell`.
 浏览一下你的系统,看一看系统中有哪些启动文件.记住--因为上面列出的大多数文件名都以圆点开头 (意味着它们是隐藏文件),你需要使用带`-a`选项的 `ls` 命令.
 
 在普通用户看来,文件 `~/.bashrc` 可能是最重要的启动文件,因为它几乎总是被读取.
@@ -1614,11 +1613,11 @@ shell 环境中包含相当多的变量,虽然你的 shell 环境可能不同于
 
 ```bash
 # .bash_profile
-# Get the aliases and functions
+# 或取别名和函数
 if [ -f ~/.bashrc ]; then
 . ~/.bashrc
 fi
-# User specific environment and startup programs
+# 用户自定义的环境和自启动程序
 PATH=$PATH:$HOME/bin
 export PATH
 ```

@@ -33,7 +33,7 @@
 
 ### 尾部位置,Tail Position
 
-设`expr2` 包围着 `expr1`, 当`expr1` 被化简成 `redex` 之后,  
+设`expr2` 包围着 `expr1`, 当`expr1` 被化简成 `redex` 之后,
 如果`expr1`的`continuation`, 与`expr2` 的`continuation`相同,
 那么就称作: 表达式`expr1` 处于 `expr2` 的尾部位置.
 直白点说, 就是该做的化简都差不多了, `expr1`可以跳出这层结构.
@@ -43,14 +43,14 @@
 
     C[(- 4 (+ 1 1)) ] → C[(- 4 2)]
 
-在这种情况下, 化简 `(+1 1)`之后, 接下来的 `continuation` 是 `C[(- 4 [])]` , 
-而外层的`continuation` 仅仅是 `C`,  内外层的 `continuation` 不相同, 所以说 `(+1 1)` 不在尾部位置. 
+在这种情况下, 化简 `(+1 1)`之后, 接下来的 `continuation` 是 `C[(- 4 [])]` ,
+而外层的`continuation` 仅仅是 `C`,  内外层的 `continuation` 不相同, 所以说 `(+1 1)` 不在尾部位置.
 
 相反, 我们可以说 `(+ 1 1)` 处于`(if (zero? 0) (+ 1 1) 3) ` 的尾部位置, 因为对于任何`continuation C`.
 
     C[(if (zero? 0) (+ 1 1) 3)] → C[(if #t (+ 1 1) 3)] → C[(+ 1 1)]
 
-内外层的`continuation` 相同, 上述规定的要求得到了满足.  
+内外层的`continuation` 相同, 上述规定的要求得到了满足.
 这个化简序列的步骤是由`if`的定义驱动的, 它们不依赖于`continuation C` 的具体形式.
 事实上, `if`形式的 `then` 分支相对于`if`形式总是处于`尾部位置`.
 由于`if` 和`#f`的类似化简规则, `if` 形式的 `else` 分支也在 `尾部位置`.
@@ -368,21 +368,21 @@ each scope is represented by a `value` that is internal to the representation of
 
 ### Equality
 
-`Equality `是指两个 values  是否 `相同` 的概念. `Racket`默认支持几种不同的`equality `, 但在大多数情况下, `equal?`是首选. 
+`Equality `是指两个 values  是否 `相同` 的概念. `Racket`默认支持几种不同的`equality `, 但在大多数情况下, `equal?`是首选.
 
     (equal? v1 v2) → boolean?
         v1 : any/c
         v2 : any/c
 
-当且仅当它们是`eqv?`时, 两个值是`equal?`的, 除非对特定的`数据类型`另有规定. 
+当且仅当它们是`eqv?`时, 两个值是`equal?`的, 除非对特定的`数据类型`另有规定.
 
-对`equal?`有进一步说明的数据类型包括 `字符串`, `字节字符串`, 
-`对`, `可变对`, `向量`, `盒子`, `哈希表` 和 `可检查结构`(inspectable structures). 
+对`equal?`有进一步说明的数据类型包括 `字符串`, `字节字符串`,
+`对`, `可变对`, `向量`, `盒子`, `哈希表` 和 `可检查结构`(inspectable structures).
 
-对于后六种情况, `equality`是递归定义的; 
-如果`v1`和`v2`都包含引用循环, 那么当值的无限展开是`equal`的, 它们就是`equal`的. 
-另见 gen:equal+hash 和 prop:impersonator-of . 
-例子. 
+对于后六种情况, `equality`是递归定义的;
+如果`v1`和`v2`都包含引用循环, 那么当值的无限展开是`equal`的, 它们就是`equal`的.
+另见 gen:equal+hash 和 prop:impersonator-of .
+例子.
 
 ```lisp
 > (equal? 'yes 'yes)
@@ -412,19 +412,19 @@ each scope is represented by a `value` that is internal to the representation of
   v1 : any/c
   v2 : any/c
 
-当且仅当两个值是`eq?`时, 它们就是`eqv?`, 除非对特定`数据类型`另有规定. 
+当且仅当两个值是`eq?`时, 它们就是`eqv?`, 除非对特定`数据类型`另有规定.
 
-`数字`(number)和`字符`(character)数据类型是`eqv?`与`eq?`不同的数据类型. 
+`数字`(number)和`字符`(character)数据类型是`eqv?`与`eq?`不同的数据类型.
 
-当两个数字具有相同的`精确性`, `精度`, 并且都是相等且`非零`, 
+当两个数字具有相同的`精确性`, `精度`, 并且都是相等且`非零`,
 或者都是`+0.0`, 都是`+0.0f0`, 都是`-0.0`, 都是`-0.0f0`, 都是`+nan.0`, 或者都是`+nan.f`
 在复数的情况下分别考虑`实部`和`虚部`, 从而返回它们的`eqv?`结果.
 
 当两个字符的`char->integer`结果相等时, 它们`eqv?`.
 
-一般来说, `eqv?`与`equal?`相同, 只是`eqv?`不能递归比较复合数据类型(如`lists `和`structs`)的内容, 
-也不能由用户定义的数据类型来定制. 我们不鼓励使用`eqv?`, 而是使用`equal?`. 
-例子. 
+一般来说, `eqv?`与`equal?`相同, 只是`eqv?`不能递归比较复合数据类型(如`lists `和`structs`)的内容,
+也不能由用户定义的数据类型来定制. 我们不鼓励使用`eqv?`, 而是使用`equal?`.
+例子.
 
 ```lisp
 > (eqv? 'yes 'yes)
@@ -453,10 +453,10 @@ each scope is represented by a `value` that is internal to the representation of
         v1 : any/c
         v2 : any/c
 
-如果`v1`和`v2`指向同一个对象, 返回`#t`, 否则返回`#f`. 
-数字作为一个特例, 对于`eq?`, 两个`=`的`fixnums`也是相同的. 
+如果`v1`和`v2`指向同一个对象, 返回`#t`, 否则返回`#f`.
+数字作为一个特例, 对于`eq?`, 两个`=`的`fixnums`也是相同的.
 参见 Object Identity and Comparisons.
-例子. 
+例子.
 
 ```lisp
 > (eq? 'yes 'yes)
@@ -499,3 +499,186 @@ each scope is represented by a `value` that is internal to the representation of
                 (lambda (a b) (<= (abs (- a b)) 0.25)))
 #t
 ```
+
+## 文档的记号,Notation
+
+本章介绍了整个Racket文档中使用的`基本术语`和符号.
+
+### 模块文档的注释
+
+由于`Racket`程序被组织成`模块`(modules), 文档反映了这种组织,
+在`section`或`subsection`的开头有一个`注释`, 描述了特定`模块`提供的绑定.
+
+例如, 描述由 `racket/list` 提供的功能的部分开始于
+
+    (require racket/list)   package: base
+
+有些模块是用 `#lang` 引入的, 而不是 `require`:
+
+    #lang racket/base   package: base
+
+使用 `#lang` 意味着该模块通常被用作整个`模块`的语言--也就是说, 由模块开始的 `#lang` 后面是语言, 而不是用`require`导入.
+然而, 除非另有规定, 用 `#lang` 记录的模块名称也可以用 `require` 来获得语言的绑定.
+
+`模块`注解(annotation)还在右侧显示了该模块所属的`package`. 关于`package`的更多细节, 请参阅`Racket中的包管理`.
+
+有时, 模块说明会出现在文档的开头, 或者出现在包含许多子节的章节开头.
+文件的章节或章节的子部分, `继承`了外层`文档`或`章节`的模块声明.
+因此, 除非在`章节`或`小节`中另有规定, 否则在`The Racket Reference`中记录的绑定可以从`racket`和`racket/base`中获得.
+
+### Syntactic 形式文档的记号
+
+>Racket指南中的 `Notation` 介绍了语法形式的这种记号.
+
+`Syntactic 形式`是用`grammar`(语法)来指定的.
+通常情况下, `语法`以开放的小括号开始, 后面是`语法形式`的名称, 如 `if` 的语法.
+
+    (if test-expr then-expr else-expr) syntax
+
+由于每一种`形式`都是用`语法对象`来表达的, 语法规范中的`小括号`表示包裹(wrapping)着一个列表的`语法对象`,
+前面的 `if` 是一个`标识符`, 它开启了这个列表. 其`绑定`是被记录的`模块`的`if`绑定--在本例中是 `racket/base`.
+语法中的`方括号`与`小括号`一样表示`语法对象列表`, 但在程序源码中, 通常是按惯例使用方括号.
+
+语法中的`斜体`标识符是对应于其他语法产生的`元变量`(metavariables). 某些`元变量`名称对应隐含的语法生成.
+
++ 以`id`结尾的`元变量`代表`标识符`.
++ 以`keyword`结尾的`元变量`代表一个`语法对象`的`关键词`.
++ 以`expr`结尾的`元变量`代表任何形式, 并且该形式将作为`表达式`解析.
++ 以`body`结尾的`元变量`代表任何形式; 该形式将被作为`局部定义`或`表达式`解析.
+`body`只有在前面没有任何表达式的情况下才能解析为`定义`, 而且最后一个`body`必须是`表达式`; 另见`Internal Definitions`.
++ 以 `datum` 结尾的`元变量`代表任何形式, 而且这个形式通常是不被解析的(例如, 被`quote`的形式).
++ 以 `number` 或 `boolean` 结尾的`元变量`分别代表任何语法对象(即字面值的)`number`或`boolean`.
+
+在语法中, 形式 `...` 代表与形式相匹配的任何数量的形式(可能是`零`), 而形式 `...+` 代表与形式相匹配的一个或多个形式.
+
+没有隐含语法的`元变量`, 由句法形式的整体语法旁边的`生成方式` 来定义. 例如, 在
+
+    (lambda formals body ...+)                          syntax
+    formals     =   id
+                        |   (id ...)
+                        |   (id ...+ . rest-id)
+
+`formals` 元变量代表单个`标识符`, 或`语法对象列表`中的零个或多个`标识符`, 或者是一个或多个对组成的链, `链`的末端是`标识符`而不能是`空列表`.
+
+有些`句法形式`有多个`顶层语法`, 在这种情况下, `句法形式`的文档会显示多个语法. 比如说
+
+    (init-rest id)      syntax
+    (init-rest)
+
+表示`init-rest`既可以在其`语法对象列表`中单独出现, 也可以在后面加上一个`标识符.`
+
+最后, 包括`expr`元变量的语法规范, 可以含有对一些`元变量`的`运行时契约`(run-time contract),
+这些`契约`表示, 表达式的结果在运行时必须满足的`谓词`. 比如说
+
+    (parameterize ([parameter-expr value-expr] ...)                     syntax
+        body ...+)
+    parameter-expr      :   parameter?
+
+表示每个`parameter-expr`的结果必须是这样的值`v`, 对于这个值`(parameter? v)`返回真.
+
+### 函数文档的符号
+
+`程序`(procedure)和其他`值`是用基于`契约`(contract)的记号来描述的.
+从本质上讲, 这些`契约`使用`Racket`谓词和`表达式`来描述在档`库`的`接口`.
+
+例如, 下面是一个典型`过程`定义的标题(header).
+
+    (char->integer char) → exact-integer?                               procedure
+    char : char?
+
+被定义的函数, `char->integer`, 像被应用时那样排版.
+在函数名后面的`元变量`代表了`参数`. 角落里的`白色文字`标识了被记录的`值`的`种类`(kind).
+
+每个`元变量`都用一个`契约`来描述. 在前面的例子中, 元变量`char`的契约是`char?`.
+这个契约规定, 任何被 `char?` 谓词判断为`true`的参数`char`都是有效的.
+文档中的函数可能会, 也可能不会`实际检查`这个`属性`, 但是契约表明了实现者的意图(intent).
+
+箭头右边的`契约`, 即本例中的`exact-integer?`, 指定了由函数产生的预期结果.
+
+契约规范可以比只有`谓词`名称更有表达力. 请看下面这个`argmax`的标题.
+
+    (argmax proc lst) → any                             procedure
+    proc : (-> any/c real?)
+    lst : (and/c pair? list?)
+
+契约`(-> any/c real?)`表示一个`函数契约`, 指定`proc`的参数可以是任何`单个值`, 结果应该是一个`实数`.
+`lst`的契约`(and/c pair? list?)`指定`lst`应该同时传递`pair?` 和 `list?` (即它不能是空列表).
+
+`->`和`and/c`都是`契约组合器`(contract combinator)的例子.
+契约组合器如`or/c`, `cons/c`, `listof` 和其他的组合器在整个文档中都被使用.
+点击组合器名称的超链接将提供更多关于其含义的信息.
+
+`Racket`函数可能被记录为有一个或多个`可选参数`. `read` 函数就是一个这样的例子:
+
+    (read [in]) → any                                   procedure
+    in : input-port? = (current-input-port)
+
+`应用形式`的语法中, `in`参数周围的`方括号`(brackets)表示它是`可选参数`.
+
+`read`的 头部条 像往常一样为参数`in`指定了一个`契约`.
+在`契约`的右边, 它还指定了默认值`(current-input-port)`, 如果`read`被调用时没有参数, 就会使用这个值.
+
+函数也可以被记录为接受`强制性`或`可选的`基于`关键字`的`参数`.
+例如, `sort` 函数有两个可选的, 基于`关键字`的参数.
+
+    (sort   lst
+                less-than?
+                [ #:key extract-key
+                #:cache-keys? cache-keys?])     →     list?
+
+        lst : list?
+        less-than? : (any/c any/c . -> . any/c)
+        extract-key : (any/c . -> . any/c) = (lambda (x) x)
+        cache-keys? : boolean? = #f
+
+和之前一样, `extract-key` 和 `cache-keys?` 参数周围的`方括号`表示它们是`可选的`.
+头部条的`契约`部分显示了为这些关键字参数提供的默认值.
+
+### 结构类型的符号
+
+`结构类型`(structure type)也是用`契约`符号来记录的.
+
+    (struct color (red green blue alpha))                                       struct
+        red : (and/c natural-number/c (<=/c 255))
+        green : (and/c natural-number/c (<=/c 255))
+        blue : (and/c natural-number/c (<=/c 255))
+        alpha : (and/c natural-number/c (<=/c 255))
+
+`结构类型`的排版, 跟它在程序`源代码`中使用`struct`形式的声明一样.
+结构的每个字段都有一个相应的`契约`, 规定了该字段可接受的`值`.
+
+在上面的例子中, 结构类型 `color` 有四个字段: `red`, `green`, `blue` 和 `alpha`.
+该`结构类型`的`构造函数`接受满足`(and/c natural-number/c (<=/c 255))`的字段值, 即`255`以内的`非负精确整数`.
+
+在`结构类型`的文档中, 额外的`关键字`可能出现在字段名之后.
+
+    (struct     data-source (connector args extensions)                             struct
+        #:mutable)
+    connector : (or/c 'postgresql 'mysql 'sqlite3 'odbc)
+    args : list?
+    extensions : (listof (list/c symbol? any/c))
+
+在这里, `#:mutable` 关键字表示, `data-source`结构类型的`实例`的字段, 可以用各自的`setter` 函数进行修改(mutate).
+
+### 参数
+
+`parameter`的记录方式与`函数`的记录方式相同.
+
+    (current-command-line-arguments) → (vectorof string?)                               parameter
+    (current-command-line-arguments argv) → void?
+        argv : (vectorof (and/c string? immutable?))
+
+由于`参数`可以被`引用`或`设置`, 上面的 header 有两个条目.
+在没有参数的情况下调用 `current-command-line-arguments` 可以访问参数的值, 它必须是一个`向量`,
+其`元素` 需要同时通过 `string?` 和 `immutable?`.
+使用单参数调用 `current-command-line-arguments`, 将设定参数的值, 这个值必须是`向量`, 其元素必须通过`string?`
+(如果需要的话, `parameter`上的防护措施, 可以将`字符串`转型为`不可变`形式).
+
+### 其他文档的符号
+
+一些`库`(library)提供了与`常量值`的绑定. 这些`值`用单独的头来记录.
+
+    object% : class?                    value
+
+`racket/class`库提供了 `object%` 值, 它是`Racket`中类层次结构的`根`(root of the class hierarchy).
+它的文档标头只是表明, 它是满足谓词 `class?` 的值.

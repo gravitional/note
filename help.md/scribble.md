@@ -496,3 +496,9 @@ See @secref["milk"].
 
 当多个文档同时被渲染时, 文档中的`交叉引用`信息对其他文档是可见的.
 请参阅 Handling Cross-Reference, 以了解关于: 跨文档的引用, 单独构建的信息.
+
+## 数学公式
+
+[公式编辑利器——KaTeX](https://tech.mindseed.cn/Website/formula-editing-tool-katex.html)
+[使用KaTeX渲染数学公式](https://www.liaoxuefeng.com/article/1280024328011810)
+[scribble-math](https://docs.racket-lang.org/scribble-math/)

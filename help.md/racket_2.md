@@ -742,3 +742,1045 @@ x: undefined;
 
 只使用`define`的内部定义序列, 很容易被翻译成等价的`letrec`形式(在下一节介绍).
 然而, 其他定义形式可以作为`body`出现, 包括`define-values`, `struct` (见程序员定义的数据类型)或`define-syntax`(见宏).
+
+## 局域绑定,local binding
+
+尽管可以使用内部`define`用于`局域绑定`, 但`Racket`提供了三种形式, 让程序员对绑定有更多控制: `let`, `let*` 和 `letrec`.
+
+### 平行绑定: let
+
+`Local Binding: let, let*, letrec, ...` in The Racket Reference也记录了 `let`.
+
+`let`形式绑定了一组`标识`符, 每个`标识符`都是某个`表达式`的结果, 以便在`let`主体中使用.
+
+    (let ([id expr] ...) body ...+)
+
+这些标识符是 `并行` 绑定的.
+也就是说, 任何`id`都不会被绑定在中括号内, 右侧的`expr` 中, 但是所有的`id`都可以在`body`中使用.
+这些`id`必须是彼此不同的.
+例子.
+
+```lisp
+> (let ([me "Bob"])
+    me)
+"Bob"
+> (let ([me "Bob"]
+        [myself "Robert"]
+        [I "Bobby"])
+    (list me myself I))
+'("Bob" "Robert" "Bobby")
+> (let ([me "Bob"]
+        [me "Robert"])
+    me)
+eval:3:0: let: duplicate identifier
+  at: me
+  in: (let ((me "Bob") (me "Robert")) me)
+```
+
+`id`的`expr` 看不到它自己的`绑定`, 这对于必须引用`旧值`的`包装器`(wrappers)来说通常很有用.
+
+```lisp
+> (let ([+ (lambda (x y)
+             (if (string? x)
+                 (string-append x y)
+                 (+ x y)))]) ; 使用原来的 + 的定义
+    (list (+ 1 2)
+          (+ "see" "saw")))
+
+'(3 "seesaw")
+```
+
+偶尔, `let` 绑定的平行性质, 对于交换或重排一组`绑定`也是很方便的. 相当于其他语言中的传统艺能`a=c,a=b,b=c`.
+
+```lisp
+> (let ([me "Tarzan"]
+        [you "Jane"])
+    (let ([me you]
+          [you me])
+      (list me you)))
+
+'("Jane" "Tarzan")
+```
+
+将 `let` 绑定描述为 `平行`, 并不意味着要进行`并发`计算(concurrent).
+`绑定`被延迟, 所有表达式按照顺序被计算之后, 再进行绑定操作.
+
+参考: [如何理解: 程序, 进程, 线程, 并发, 并行, 高并发? ](https://www.zhihu.com/question/307100151/answer/894486042)
+
+### 顺序绑定: let*
+
+`Local Binding: let, let*, letrec, ...` in The Racket Reference也记录了 `let*`.
+
+`let*`的语法与`let`相同.
+
+    (let* ([id expr] ...) body ...+)
+
+不同的是, 每个`id`都可以在后面的 `expr` 中使用, 也可以在 `body` 中使用.
+此外, 这些`id`不需要不相同, 最近的绑定是唯一可见的 (most recent binding is the visible one).
+例子.
+
+```lisp
+> (let* ([x (list "Burroughs")]
+         [y (cons "Rice" x)]
+         [z (cons "Edgar" y)])
+    (list x y z))
+'(("Burroughs") ("Rice" "Burroughs") ("Edgar" "Rice" "Burroughs"))
+> (let* ([name (list "Burroughs")]
+         [name (cons "Rice" name)]
+         [name (cons "Edgar" name)])
+    name)
+'("Edgar" "Rice" "Burroughs")
+```
+
+换句话说, `let*` 形式相当于嵌套的 `let` 形式, 每个都有单独的`绑定`.
+
+```lisp
+> (let ([name (list "Burroughs")]) ; 绑定 name(1)
+      (let ([name (cons "Rice" name)]) ; 绑定 name(2)
+          (let ([name (cons "Edgar" name)]) ; 绑定 name(3)
+              name)))
+
+'("Edgar" "Rice" "Burroughs")
+```
+
+### 递归绑定: letrec
+
+`Local Binding: let, let*, letrec, ...` in The Racket Reference 也记录了 `letrec`.
+
+`letrec` 的语法也与 `let` 相同.
+
+    (letrec ([id expr] ...) body ...+)
+
+`let` 只让它的绑定在 `bodys` 中可用, 而 `let*`让它的绑定对任何后来的绑定 `expr` 可用,
+`letrec` 则让它的绑定对所有其他 `expr` --甚至前面的 `expr`--都可用. 换句话说, `letrec` 的绑定是`递归的`.
+
+`letrec` 形式中的 `expr` 通常是`递归`和`相互递归`函数的, `lambda`形式.
+
+```lisp
+> (letrec ([swing ; 将 swing 绑定到匿名函数; swing,摇荡
+            (lambda (t)
+              (if (eq? (car t) 'tarzan) ; 判断首元素是否为 'tarzan ...
+                  (cons 'vine
+                        (cons 'tarzan (cddr t))) ; 是的话, 就改成 'vine 'tarzan ...
+                  (cons (car t)
+                        (swing (cdr t)))))]) ; 否则就判断余下的元素, cdr 取对儿的第二个元素, 对于列表, 相当于首元素之外的部分.
+    (swing '(vine tarzan vine vine))) ; 藤 泰山 藤 藤
+'(vine vine tarzan vine) ; 藤 藤 泰山 藤
+
+> (letrec ([tarzan-near-top-of-tree? ; 局部函数定义: 泰山在树顶吗? 这个函数用来查找文件树前几层的文件.
+                      (lambda (name path depth) ; 它是匿名函数, 名字, 路径, 深度
+                          (or (equal? name "tarzan") ; 如果 name 是泰山, 返回 true
+                                  (and (directory-exists? path) ; 否则, 需要 path 存在
+                                            (tarzan-in-directory? path depth))))] ; 且 泰山在目录中. 调用局部函数
+                    [tarzan-in-directory? ; 局部函数定义: 泰山在目录? 的定义
+                      (lambda (dir depth) ; 它是匿名函数, 目录,深度
+                          (cond ; 分支判断
+                              [(zero? depth) #f] ; 路径深度为0, 则返回 false, 泰山不在目录中.
+                              [else
+                                  (ormap ; 否则返回第一个不为 false 的值, 把下面的 lambda 函数作用到所有的文件上.
+                                        (λ (elem) ; λ 是 lambda 的同义词,
+                                            (tarzan-near-top-of-tree? (path-element->string elem);
+                                                                                                (build-path dir elem)
+                                                                                                (- depth 1))) ; 查找深度减少1
+                                        (directory-list dir))]))]); 给出 dir 中的文件和目录
+    (tarzan-near-top-of-tree? "tmp" ; 此次查找中, 泰山的名字
+                                                        (find-system-path 'temp-dir) ; 给出起始路径
+                                                        4)) ; 给出最大查找深度
+directory-list: could not open directory
+  path: /var/tmp/systemd-private-1eaff33eab174a96aebae0ebdcb
+a6e2e-chronyd.service-b5fOZN
+  system error: Permission denied; errno=13
+```
+
+虽然`letrec`形式的`exprs`通常是`lambda`表达式, 但它们可以是任何表达式.
+表达式是`按顺序`计算的, 在获得每个`值`后, 它立即与相应的`id`关联.
+如果某`id`在其值准备好之前被`引用`, 就会产生(raise)一个`错误`, 就像`内部定义`一样.
+
+```lisp
+> (letrec ([quicksand quicksand])
+    quicksand)
+quicksand: undefined;
+ cannot use before initialization
+```
+
+### let 递归, named let
+
+命名的`let`是一种`迭代`和`递归`形式.
+它使用与`局部绑定`相同的语法关键字 `let`, 但 `let` 后面的`标识符`(而不是直连的开放小括号`(`)会触发不同的解析.
+
+    (let proc-id ([arg-id init-expr] ...)
+      body ...+)
+
+命名的 `let` 形式等同于
+
+    (letrec ([proc-id (lambda (arg-id ...) ; 递归定义匿名函数
+                         body ...+)])
+      (proc-id init-expr ...)) ; 使用 init-expr 的结果作为参数, 初始化调用 proc-id, 用户可以进行后续调用
+
+也就是说, 命名的 `let` 绑定了一个仅在函数`body`中可见的函数`标识符`, 它隐含地用一些`初始表达式`的`值`来调用该`函数`.
+例子.
+
+```lisp
+(define (duplicate pos lst); 函数 deplicate, 变量 pos lst
+  (let dup ([i 0] ; 定义匿名函数 dup, 变量 i=0, lst=lst, 这里给出的是初始值.
+                    [lst lst]) ;这里给出的是初始值.
+   (cond
+    [(= i pos) (cons (car lst) lst)] ; 如果 i=pos, 复制首元素
+    [else (cons  (car lst) (dup (+ i 1) (cdr lst)))]))) ; 如果 i != pos, 递归判断后面的元素
+> (duplicate 1 (list "apple" "cheese burger!" "banana"))
+'("apple" "cheese burger!" "cheese burger!" "banana")
+```
+
+### 多重值: let-values, let*-values, letrec-values
+
+`Local Binding: let, let*, letrec, ...` in The Racket Reference也记录了`多值绑定`形式.
+
+与`define-values` 在定义中`绑定`多个结果的方式相同(见`Multiple Values and define-values`),
+`let-values`, `let*-values`, and `letrec-values` 在局部绑定多个结果.
+
+    (let-values ([(id ...) expr] ...)
+      body ...+)
+
+    (let*-values ([(id ...) expr] ...)
+      body ...+)
+
+    (letrec-values ([(id ...) expr] ...)
+      body ...+)
+
+每个`expr`必须产生与相应id一样多的值. `绑定规则`和没有`-values`的形式是相同的:
+`let-values` 的 `id` 只在 `bodys` 中绑定,
+`let*-values` 的 `id` 在后面子句的 `expr` 中绑定,
+而`letrec-values`的 `id` 对所有 `expr` 都绑定.
+例子.
+
+```lisp
+> (let-values ([(q r) (quotient/remainder 14 3)])
+    (list q r))
+'(4 2)
+```
+
+## 条件式,Conditionals
+
+大多数用于`分支`的函数, 如`<`和`string?`, 产生`#t`或`#f`.
+然而, `Racket` 的分支形式将 `#f` 以外的`任何值`都视为`真`.
+我们说的`真值`是指`#f`以外的任何值.
+
+这种对 `真值` 的约定与某些协议相吻合, 在这些协议中, `#f`可以作为`failure`或者表示一个`可选值`没有被提供.
+(注意不要过度使用这个技巧, 记住`exception`通常是报告失败的更好机制). )
+
+例如, `member`函数有双重作用;
+它可以用来查找以某一特定项目开始的`尾部列表`, 也可以用来简单地检查`列表`中是否存在某一`项目`.
+
+```lisp
+> (member "Groucho" '("Harpo" "Zeppo"))
+#f
+> (member "Groucho" '("Harpo" "Groucho" "Zeppo"))
+'("Groucho" "Zeppo")
+> (if (member "Groucho" '("Harpo" "Zeppo"))
+      'yep
+      'nope)
+'nope
+> (if (member "Groucho" '("Harpo" "Groucho" "Zeppo"))
+      'yep
+      'nope)
+'yep
+```
+
+### 简单分支: if
+
+`条件: if, cond, and, and or` 在`<Racket参考>`中也记录了 `if`.
+
+在`if`的形式中.
+
+    (if test-expr then-expr else-expr)
+
+`test-expr`总是被计算. 如果它产生了 `#f` 以外的`任何值`, 那么`then-expr`将被计算. 否则, `else-expr`被计算.
+
+`if`形式必须有一个`then-expr`和一个`else-expr`; 后者不是`可选的`.
+要根据`test-expr`执行(或跳过)副作用, 可以使用`when`或`unless`, 我们将在后面的 `Sequencing` 中介绍.
+
+### 组合测试: and 和 or
+
+条件: if, cond, and, and or 在`<Racket参考>`中也记录了and和or.
+
+`Racket`的`and`和`or`是`syntactic 形式`, 而不是`函数`.
+与`函数`不同, 如果前面的表达式决定了答案, 那么`and`和`or`形式可以跳过后面的表达式的计算.
+
+    (and expr ...)
+
+如果它的任何一个`expr`产生`#f`, 那么`and`形式就会产生`#f`. 否则, 它产生最后一个`expr`的值.
+作为一种特殊情况, `(and)`产生`#t`.
+
+    (or expr ...)
+
+如果所有的表达式都产生`#f`, 那么`or`形式会产生`#f`. 否则, 它会产生其表达式中第一个非`#f`的值. 作为一种特殊情况, `(or)`产生`#f`.
+例子.
+
+```lisp
+> (define (got-milk? lst)
+    (and (not (null? lst)) ; 不能是空列表
+         (or (eq? 'milk (car lst)) ; 对列表一个接一个判断
+             (got-milk? (cdr lst))))) ; 如果需要, 对后面的元素递归
+> (got-milk? '(apple banana))
+#f
+> (got-milk? '(apple milk banana))
+#t
+```
+
+如果求值到达`and` 或 `or` 形式的最后一个`expr`, 那么 `expr` 的值直接决定了`and` 或 `or` 的结果.
+因此, 最后一个`expr` 处于`尾部位置`, 这意味着上面的 `got-milk?` 函数在恒定空间中运行(constant space).
+
+`Tail Recursion` 介绍了`尾部调用`和`尾部位置`.
+
+### 链式测试: cond
+
+`cond`形式将一系列的`测试`串联起来, 以选择一个`结果`表达式. 初步来说, `cond` 的语法如下.
+
+条件: if, cond, and, and or 在Racket Reference中也记录了cond.
+
+    (cond [test-expr body ...+] .
+                  ...)
+
+每个`test-expr`都是按顺序计算的.
+如果产生`#f`, 相应的`bodys`就会被忽略, 然后继续计算下一个`test-expr`.
+一旦某个测试表达式产生`真值`, 相关的`bodys`就会被计算, 以产生`cond`形式的结果, 并且`不再计算`其他测试表达式.
+
+`cond`中的最后一个`test-expr可`以用`else`代替.
+在计算方面, `else`是`#t`的同义词, 但是它阐明了最后一个`子句`是为了捕捉`所有`剩余的情况.
+如果不使用`else`, 那么有可能没有测试表达式产生一个`真值`; 在这种情况下, `cond` 表达式的结果是`#<void>`.
+示例.
+
+```lisp
+> (cond
+   [(= 2 3) (error "wrong!")]
+   [(= 2 2) 'ok])
+'ok
+> (cond
+   [(= 2 3) (error "wrong!")])
+> (cond
+   [(= 2 3) (error "wrong!")]
+   [else 'ok])
+'ok
+(define (got-milk? lst)
+  (cond
+    [(null? lst) #f]
+    [(eq? 'milk (car lst)) #t]
+    [else (got-milk? (cdr lst))]))
+
+> (got-milk? '(apple banana))
+#f
+> (got-milk? '(apple milk banana))
+#t
+```
+
+`cond` 的完整语法还包括两种子句.
+
+    (cond-clause ...)
+
+    cond-clause = [test-expr then-body ...+]
+                                | [else then-body ...+].
+                                | [test-expr => proc-expr].
+                                | [test-expr] [test-expr
+
+`=>` 变体捕获其`test-expr` 的`true`结果, 并将其传递给 `proc-expr` 的结果, 该`结果`必须是个`单参数的函数`.
+例子.
+
+```lisp
+> (define (after-groucho lst)
+    (cond
+      [(member "Groucho" lst) => cdr]
+      [else (error "not there")]))
+> (after-groucho '("Harpo" "Groucho" "Zeppo"))
+'("Zeppo")
+> (after-groucho '("Harpo" "Zeppo"))
+not there
+```
+
+只包括`test-expr` 的`子句`很少使用. 它捕获`test-expr`的`true`结果, 并简单地返回为整个`cond`表达式的结果.
+
+## 流程化,Sequencing
+
+`Racket`的程序员们更喜欢编写尽可能少的`副作用`的程序, 因为纯粹的`functional code`更容易测试和组成更大的程序.
+然而, 与外部环境的`交互`需要`sequencing`, 比如在向显示器写东西, 打开`图形窗口`, 或者操作磁盘上的`文件`时.
+
+### Before的效果: begin
+
+序列: begin, begin0和begin-for-syntax在 `<Racket参考>` 中也记录了begin.
+
+`begin`表达式对`表达式`进行排序.
+
+    (begin expr ...+)
+
+这些`表达式`按顺序被计算, 除了最后一个`表达式`, 其他的结果都被`忽略`.
+最后一个`expr`的结果作为`begin` 表达式的结果, 相对于 `begin` 表达式, 它处于`尾部位置`.
+例子.
+
+```lisp
+(define (print-triangle height)
+  (if (zero? height)
+      (void)
+      (begin
+        (display (make-string height #\*))
+        (newline)
+        (print-triangle (sub1 height)))))
+> (print-triangle 4)
+****
+***
+**
+*
+```
+
+许多形式, 如 `lambda` 或 `cond` , 即使没有 `begin`, 也支持表达式的`sequence`.
+这些位置有时被称为`含有隐含begin`.
+举例来说.
+
+```lisp
+(define (print-triangle height)
+  (cond
+    [(positive? height)
+     (display (make-string height #\*))
+     (newline)
+     (print-triangle (sub1 height))]))
+> (print-triangle 4)
+****
+***
+**
+*
+```
+
+`begin` 形式在`顶层`, `模块层`或在`内部定义`之后作为`body`时, 是很特别的.
+在这些位置, `begin` 的内容不形成一个表达式, 而是被`拼接`(spliced)到周围的上下文中.
+例子.
+
+```lisp
+> (let ([curly 0])
+    (begin
+      (define moe (+ 1 curly))
+      (define larry (+ 1 moe)))
+    (list larry curly moe))
+'(2 0 1)
+```
+
+这种拼接行为主要对宏有用, 我们在后面的`Macros`中讨论.
+
+### After的效果:  begin0
+
+Sequencing: begin, begin0, 和 The Racket Reference 中的 begin-for-syntax 也记录了 begin0.
+
+`begin0`表达式的语法与`begin`表达式相同.
+
+    (begin0 expr ...+)
+
+不同的是, `begin0` 返回第一个 `expr` 的结果, 而不是最后一个 `expr` 的结果.
+`begin0` 形式对于实现计算后发生的副作用很有用, 特别是在计算产生`未知数量`的结果的情况下.
+例子.
+
+```lisp
+(define (log-times thunk)
+  (printf "Start: ~s\n" (current-inexact-milliseconds))
+  (begin0
+    (thunk)
+    (printf "End..: ~s\n" (current-inexact-milliseconds))))
+> (log-times (lambda () (sleep 0.1) 0))
+Start: 1626421344073.401
+End..: 1626421344173.4265
+0
+> (log-times (lambda () (values 1 2)))
+Start: 1626421344174.647
+End..: 1626421344174.661
+1
+2
+```
+
+### Effects If...: when 和 unless
+
+Guarded Evaluation: when and unless in The Racket Reference 也记录了 when 和 unless.
+
+`when`形式结合了`if`风格的条件, 对 `then`子句进行`sequencing`, 没有 `else` 子句.
+
+    (when test-expr then-body ...+)
+
+如果 `test-expr` 产生一个`真值`, 那么所有的 `then-body` 都被计算.
+最后一个 `then-body` 的结果是 `when` 形式的结果. 否则, 没有 `then-body` 被计算, 结果是 `#<void>`.
+
+`unless` 形式也是类似的.
+
+    (unless test-expr then-body ...+)
+
+不同的是, `test-expr` 的结果是相反的: 只有当 `test-expr` 的结果是 `#f` 时, `then-body` 才被计算.
+例子:
+
+```lisp
+(define (enumerate lst)
+  (if (null? (cdr lst))
+      (printf "~a.\n" (car lst))
+      (begin
+        (printf "~a, " (car lst))
+        (when (null? (cdr (cdr lst)))
+          (printf "and "))
+        (enumerate (cdr lst)))))
+
+> (enumerate '("Larry" "Curly" "Moe"))
+Larry, Curly, and Moe.
+(define (print-triangle height)
+  (unless (zero? height)
+    (display (make-string height #\*))
+    (newline)
+    (print-triangle (sub1 height))))
+
+> (print-triangle 4)
+****
+***
+**
+*
+```
+
+## 赋值: set!
+
+赋值: set! 和set! -value 在`<Racket参考>`中也记载了set! .
+
+使用 `set!` 给变量赋值.
+
+    (set! id expr)
+
+`set!` 表达式会对 `expr` 进行求值, 并将 `id`(必须在包围的环境中绑定过)改为`结果值`.
+`set!` 表达式本身的结果是 `#<void>`.
+例子.
+
+```lisp
+(define greeted null)
+(define (greet name)
+  (set! greeted (cons name greeted))
+  (string-append "Hello, " name))
+> (greet "Athos")
+"Hello, Athos"
+> (greet "Porthos")
+"Hello, Porthos"
+> (greet "Aramis")
+"Hello, Aramis"
+> greeted
+'("Aramis" "Porthos" "Athos")
+
+(define (make-running-total)
+  (let ([n 0])
+    (lambda ()
+      (set! n (+ n 1))
+      n)))
+(define win (make-running-total))
+(define lose (make-running-total))
+> (win)
+1
+> (win)
+2
+> (lose)
+1
+> (win)
+3
+```
+
+### 使用赋值的准则
+
+尽管有时使用 `set!` 是合适的, 但 `Racket` 风格一般不鼓励使用 `set!`. 下面的指南可以帮助解释什么时候使用 `set!` 是合适的.
+
+如同在任何现代语言中, 不要使用 `对共享标识符的赋值` 代替 `向过程传递参数或从过程获得其结果`.
+
+真垃圾的例子:
+
+```lisp
+(define name "unknown")
+(define result "unknown")
+(define (greet)
+  (set! result (string-append "Hello, " name)))
+
+> (set! name "John")
+> (greet)
+> result
+"Hello, John"
+```
+
+Ok 的例子:
+
+```lisp
+(define (greet name)
+(string-append "Hello, " name))
+
+> (greet "John")
+"Hello, John"
+> (greet "Anna")
+"Hello, Anna"
+```
+
+对局部变量的`一连串赋值`远不如`嵌套式绑定`.
+
+Bad 例子:
+
+```lisp
+> (let ([tree 0])
+    (set! tree (list tree 1 tree))
+    (set! tree (list tree 2 tree))
+    (set! tree (list tree 3 tree))
+    tree)
+'(((0 1 0) 2 (0 1 0)) 3 ((0 1 0) 2 (0 1 0)))
+```
+
+Ok 例子:
+
+```lisp
+> (let* ([tree 0]
+         [tree (list tree 1 tree)]
+         [tree (list tree 2 tree)]
+         [tree (list tree 3 tree)])
+    tree)
+'(((0 1 0) 2 (0 1 0)) 3 ((0 1 0) 2 (0 1 0)))
+```
+
+使用`赋值`来累积`迭代`的结果是不好的风格. 通过一个`loop`参数进行`累积`是更好的.
+
+不太好的例子:
+
+```lisp
+(define (sum lst)
+  (let ([s 0])
+    (for-each (lambda (i) (set! s (+ i s)))
+              lst)
+    s))
+> (sum '(1 2 3))
+6
+```
+
+Ok 例子:
+
+```lisp
+(define (sum lst)
+  (let loop ([lst lst] [s 0]) ; let 的迭代形式, 这里给出初始值
+    (if (null? lst) ; 如果为空,返回 0
+        s
+        (loop (cdr lst) (+ s (car lst)))))) ; 否则迭代
+> (sum '(1 2 3))
+6
+```
+
+更好的(使用现有函数)例子:
+
+```lisp
+(define (sum lst)
+  (apply + lst))
+> (sum '(1 2 3))
+6
+```
+
+Good(一个一般的方法)例子:
+
+```lisp
+(define (sum lst)
+  (for/fold ([s 0]) ; (for/fold ([累积-id 初始化-expr] ... 可以有-result处理 ) (for-子句 ...)
+            ([i (in-list lst)])
+    (+ s i)))
+> (sum '(1 2 3))
+6
+```
+
+若必须使用`有状态`的对象, 或这样更合适, 那么用 `set!` 来设置对象的状态是合理的.
+
+Ok 例子(计数器):
+
+```lisp
+(define next-number!
+  (let ([n 0])
+    (lambda ()
+      (set! n (add1 n))
+      n)))
+> (next-number!)
+1
+> (next-number!)
+2
+> (next-number!)
+3
+```
+
+在其他条件相同的情况下, 不使用`赋值`或`变异`(mutation)的程序总是比使用`赋值`或`变异`的程序要好.
+虽然要避免副作用, 但是如果产生的代码可读性明显提高, 或者实现了明显更好的算法, 就应该使用.
+
+与直接使用`set!` 相比, 使用`可变值`(mutable values), 如`向量`和`哈希表`, 引起对程序风格的疑虑(suspicions)更少.
+然而, 简单地用`vector-set!`代替程序中的`set!`显然不能改善程序的风格.
+
+### 多重值: set! -values
+
+Racket Reference>中的+赋值: set! 和set! -values也记录了set! -values.
+
+`set!-values` 形式一次赋值给`多个变量`, 如果给定一个`表达式`, 产生适当数量的`值`.
+
+    (set!-values (id ...) expr)
+
+这种形式等同于使用 `let-values` 从 `expr`接收多个结果, 然后使用 `set!` 将结果单独分配给 `id`.
+例子.
+
+```lisp
+(define game
+  (let ([w 0]
+        [l 0])
+    (lambda (win?)
+      (if win?
+          (set! w (+ w 1))
+          (set! l (+ l 1)))
+      (begin0
+        (values w l)
+        ; swap sides...
+        (set!-values (w l) (values l w))))))
+> (game #t)
+1
+0
+> (game #t)
+1
+1
+> (game #f)
+1
+2
+```
+
+## 引用: quote和 '
+
+Literals: quote和#%datum在The Racket Reference中也记录了quote.
+
+`quote`形式产生常数.
+
+    (quote datum)
+
+在技术上, `datum`的语法, 可以指定为任何能被`read`函数解析为`单元素`的东西.
+`quote` 形式的值与 `read` 在给定 `datum`时产生的`值`相同.
+
+`datum`可以是`符号`, `布尔值`, `数字`, `(字符或字节)字符串`, `字符`, `关键字`, `空列表`,
+包含更多此类值的`对(或列表)`, 包含更多此类值的`向量`, 包含更多此类值的`哈希表`, 或者包含其他此类值的`盒子`.
+例子.
+
+```lisp
+> (quote apple)
+'apple
+> (quote #t)
+#t
+> (quote 42)
+42
+> (quote "hello")
+"hello"
+> (quote ())
+'()
+> (quote ((1 2 3) #("z" x) . the-end))
+'((1 2 3) #("z" x) . the-end)
+> (quote (1 2 . (3)))
+'(1 2 3)
+```
+
+正如上面的最后一个例子所示, `datum`不一定要与`值`的`规范化打印形式`相匹配.
+`datum`不能是以`#<`开头的打印形式, 所以它不能是 `#<void>`, `#<undefined>`, 或一个`过程`(procedure).
+
+`引号`形式很少用于本身是`布尔值`, `数字`或`字符串`的数据, 因为这些值的打印形式已经可以作为`常量`使用.
+`引号`形式更多的是用于`符号`和`列表`, `符号`和`列表`在不加`引号`时有其他的含义(`标识符`, `函数调用`等).
+
+表达式
+
+    'datum
+
+是以下内容的缩写
+
+    (quote datum)
+
+Racket参考>中的+Reading Quotes提供了更多关于`'` 速记的信息.
+而且这个速记几乎总是用来代替 `quote`. 这个速记法甚至适用于`datum`内部, 所以它可以产生包含`quote`的列表.
+例子.
+
+```lisp
+> 'apple
+'apple
+> '"hello"
+"hello"
+> '(1 2 3)
+'(1 2 3)
+> (display '(you can 'me))
+(you can (quote me))
+```
+
+## 准引用: quasiquote和'
+
+Racket参考>中的+准引号: 准引号, 无引号和无引号拼接也记录了准引号.
+
+`quasiquote` 的形式与 `quote` 类似.
+
+    (quasiquote datum)
+
+然而, 对于每一个出现在`datum`中的`(unquote expr)`, `expr` 会被计算出`值`, 以取代`unquote`子形式.
+例子.
+
+```lisp
+> (quasiquote (1 2 (unquote (+ 1 2)) (unquote (- 5 1))))
+'(1 2 3 4)
+```
+
+这种形式可以用来编写某些函数, 根据`模式`建立起`列表`.
+例子.
+
+```lisp
+> (define (deep n)
+    (cond
+      [(zero? n) 0]
+      [else
+       (quasiquote ((unquote n) (unquote (deep (- n 1)))))]))
+> (deep 8)
+'(8 (7 (6 (5 (4 (3 (2 (1 0))))))))
+```
+
+甚至可以`廉价`地以编程的方式构造`表达式`. (当然, 十有八九, 你应该使用`macro`来做这件事
+(第十次是当你在学习[PLAI](https://cs.brown.edu/~sk/Publications/Books/ProgLangs/)这样的教科书时).
+例子.
+
+```lisp
+> (define (build-exp n)
+    (add-lets n (make-sum n)))
+> (define (add-lets n body)
+    (cond
+      [(zero? n) body]
+      [else
+       (quasiquote
+        (let ([(unquote (n->var n)) (unquote n)])
+          (unquote (add-lets (- n 1) body))))]))
+> (define (make-sum n)
+    (cond
+      [(= n 1) (n->var 1)]
+      [else
+       (quasiquote (+ (unquote (n->var n))
+                      (unquote (make-sum (- n 1)))))]))
+> (define (n->var n) (string->symbol (format "x~a" n)))
+> (build-exp 3)
+'(let ((x3 3)) (let ((x2 2)) (let ((x1 1)) (+ x3 (+ x2 x1)))))
+```
+
+`unquote-splicing` 形式与 `unquote` 相似, 但是它的 `expr` 必须产生一个列表,
+而 `unquote-splicing` 形式必须出现在产生`列表`或`向量`的`上下文`中.
+顾名思义, 它产生的`列表`被拼接到它所在的`上下文`中.
+例子.
+
+```lisp
+> (quasiquote (1 2 (unquote-splicing (list (+ 1 2) (- 5 1))) 5))
+'(1 2 3 4 5)
+```
+
+使用`splicing`, 我们可以修改上面的示例`表达式`的结构, 使其只有一个`let`表达式和一个`+`表达式.
+例子.
+
+```lisp
+> (define (build-exp n)
+    (add-lets
+     n
+     (quasiquote (+ (unquote-splicing
+                     (build-list
+                      n
+                      (λ (x) (n->var (+ x 1)))))))))
+> (define (add-lets n body)
+    (quasiquote
+     (let (unquote
+           (build-list
+            n
+            (λ (n)
+              (quasiquote
+               [(unquote (n->var (+ n 1))) (unquote (+ n 1))]))))
+       (unquote body))))
+> (define (n->var n) (string->symbol (format "x~a" n)))
+> (build-exp 3)
+
+'(let ((x1 1) (x2 2) (x3 3)) (+ x1 x2 x3))
+```
+
+如果 `quasiquote` 形式出现在一个 enclosing 的`quasiquote`形式内,
+那么内部的`quasiquote`就有效地取消一层`unquote`和`unquote-splicing`形式,
+这样就需要第二个`unquote`或`splicing`.
+例子.
+
+```lisp
+> (quasiquote (1 2 (quasiquote (unquote (+ 1 2)))))
+'(1 2 (quasiquote (unquote (+ 1 2))))
+> (quasiquote (1 2 (quasiquote (unquote (unquote (+ 1 2))))))
+'(1 2 (quasiquote (unquote 3)))
+> (quasiquote (1 2 (quasiquote ((unquote (+ 1 2)) (unquote (unquote (- 5 1)))))))
+'(1 2 (quasiquote ((unquote (+ 1 2)) (unquote 4))))
+```
+
+上面的求值实际上不会如图所示打印.  相反, 将使用`quasiquote`和`unquote`的简写形式.
+`` ` ``, 即`反引号` 和`,` 即`逗号`. 同样的速记方式也可以在`表达式`中使用.
+例子.
+
+```lisp
+> `(1 2 `(,(+ 1 2) ,,(- 5 1)))
+'(1 2 `(,(+ 1 2) ,4))
+```
+
+`unquote-splicing` 的速记形式是`,@`:
+例子.
+
+```lisp
+> `(1 2 ,@(list (+ 1 2) (- 5 1)))
+'(1 2 3 4)
+```
+
+### 简单派发: case
+
+`case` 形式跳转(dispatch)到子句, 通过将`表达式`的结果与子句的`值`相匹配.
+
+    (case expr
+      [(datum ...+) body ...+]
+      ...)
+
+每个 `datum` 将使用 `equal?` 与 `expr` 的结果进行比较, 然后对相应的 `bodys` 进行计算.
+对于`N`个`datum`s, `case` 形式可以在 `O(log N)` 时间内调度到正确的子句.
+
+每个`子句`可以提供多个`datums`, 如果有任何一个`datum`匹配, 就计算相应的`子句`.
+例子.
+
+```lisp
+> (let ([v (random 6)])
+    (printf "~a\n" v)
+    (case v
+      [(0) 'zero]
+      [(1) 'one]
+      [(2) 'two]
+      [(3 4 5) 'many]))
+3
+'many
+```
+
+`case`形式的最后一个子句可以使用`else`, 就像`cond`一样.
+例子.
+
+```lisp
+> (case (random 6)
+    [(0) 'zero]
+    [(1) 'one]
+    [(2) 'two]
+    [else 'many])
+'zero
+```
+
+对于更一般的`模式匹配`(但没有`调度时间`(dispatch-time)的保证), 使用`match`, 它在`模式匹配`中介绍.
+
+## 动态绑定: 参数化
+
+            The Racket Reference中的+Parameters也记录了参数化.
+
+parameterize形式在计算主体表达式时将一个新值与一个参数联系起来.
+
+        (parameterize ([parameter-expr value-expr] ...)
+          body ...+)
+
+            术语 "参数 "有时用来指函数的参数, 但Racket中的 "参数 "具有这里描述的更具体的含义.
+
+例如, error-print-width参数控制在错误信息中打印多少个字符的值.
+
+    > (参数化 ([error-print-width 5])
+        (car (expt 10 1024)))
+
+    car: 违反合同
+
+      预期: 对?
+
+      给定. 10...
+    > (参数化([错误-打印宽度10])
+        (car (expt 10 1024)))
+
+    车: 违反合同
+
+      预期: 对?
+
+      给定. 1000000...
+
+更广泛地说, 参数实现了一种动态绑定. mak-参数函数接受任何值并返回一个新的参数, 该参数被初始化为给定值. 将参数作为一个函数应用, 返回其当前值.
+
+    > (define location (make-parameter "here"))
+    > (location)
+
+    "这里"
+
+在参数化形式中, 每个参数-表达式必须产生一个参数. 在bodys的计算过程中, 每个指定的参数都被赋予相应的value-expr的结果. 当控制权离开参数化形式时--无论是通过正常的返回, 异常还是其他的转义--参数都会恢复到其先前的值.
+
+    > (parameterize ([location "there"])
+        (location))
+
+    "那里"
+    > (location)
+
+    "这里"
+    > (参数化([location "in a house"])
+        (列表(location))
+              (参数化([location "with a mouse"] )
+                (地点))
+              (location)))
+
+    '("在一个房子里""用鼠标""在一个房子里")
+    > (参数化([location "in a box"])
+        (汽车(位置))
+
+    汽车: 违反合同
+
+      预期: 对?
+
+      给定. "在一个盒子里"
+    > (位置)
+
+    "这里"
+
+parameterize形式不是像let那样的绑定形式; 上述location的每次使用都直接指向原始定义. 参数化形式在参数化主体被计算的整个过程中调整参数的值, 即使是在参数化主体以外的文本中使用参数.
+
+    > (define (would-you-could-you?)
+        (and (not (equal? (location) "here"))
+             (not (equal? (location) "there"))))
+    > (would-you-could-you?)
+
+    #f
+    > (参数化([location "on a bus"] )
+        (would-you-could-you?))
+
+    #t
+
+如果一个参数的使用在文本上位于参数化的主体内, 但在参数化形式产生一个值之前没有被计算, 那么这个使用就不会看到参数化形式所安装的值.
+
+    > (let ([get (parameterize ([location "with a fox"])
+                   (lambda () (location)) ])
+        (get))
+
+    "这里"
+
+一个参数的当前绑定可以通过调用参数作为一个带值的函数来强制性地调整. 如果一个参数化已经调整了参数的值, 那么直接应用参数化过程只影响到与活动参数化相关的值.
+
+    > (define (try-again! where)
+        (location where))
+    > (location)
+
+    "这里"
+    > (参数化([location "on a train"] )
+        (list (location)
+              (begin (try-again! "in a boat")
+                     (location))))
+
+    '("在火车上""在船上")
+    > (location)
+
+    "这里"
+
+使用参数化通常比强制更新参数值要好, 这和用let绑定一个新的变量比用set! 要好的原因差不多. (见赋值: set!).
+
+变量和set! 似乎可以解决许多与参数相同的问题. 例如, lokation可以被定义为一个字符串, 而set! 可以用来调整它的值.
+
+    > (define lokation "here")
+    > (定义(would-ya-could-ya?
+        (and (not (equal? lokation "here"))
+             (not (equal? lokation "there")))))
+    > (set! lokation "on a bus")
+    > (would-ya-could-ya?)
+
+    #t
+
+然而, 与set! 相比, 参数提供了几个关键的优势.
+
+    参数化形式有助于在控制因异常而逃脱时自动重置参数的值. 添加异常处理程序和其他形式来回溯set! 是相对繁琐的.
+
+    参数与尾部调用配合得很好(见尾部递归). 参数化形式中的最后一个主体相对于参数化形式来说处于尾部位置.
+
+    参数与线程正常工作(见线程). 参数化形式只为当前线程的计算调整参数值, 这就避免了与其他线程的竞赛条件. 
+    

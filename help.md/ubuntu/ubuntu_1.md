@@ -254,7 +254,7 @@ command1; command2; command3...
 我们会用到下面的例子:
 
 ```bash
-[me@linuxbox ~]$ cd /usr; ls; cd -
+$ cd /usr; ls; cd -
 bin games
 kerberos lib64
 local
@@ -267,21 +267,21 @@ local
 为了查清此事,可以使用 type 命令:
 
 ```bash
-[me@linuxbox ~]$ type test
+$ type test
 test is a shell builtin
 ```
 
 哦!`test`名字已经被使用了.试一下`foo`:
 
 ```bash
-[me@linuxbox ~]$ type foo
+$ type foo
 bash: type: foo: not found
 ```
 
 创建命令别名:
 
 ```bash
-[me@linuxbox ~]$ alias foo='cd /usr; ls; cd -'
+$ alias foo='cd /usr; ls; cd -'
 ```
 
 注意命令结构:
@@ -295,16 +295,15 @@ alias name='string'
 删除别名,使用 unalias 命令,像这样:
 
 ```bash
-[me@linuxbox ~]$ unalias foo
-[me@linuxbox ~]$ type foo
+$ unalias foo
+$ type foo
 bash: type: foo: not found
 ```
 
 如果想要永久保存定义的`alias`,可以将其写入到 `/etc/profile` 或者 `~/.bash_rc` 中去,
 两个的区别是影响的范围不一样而已
 
-***
-zsh 别名
+#### zsh 别名
 
 + `grep`='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
