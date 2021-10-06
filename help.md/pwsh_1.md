@@ -923,11 +923,23 @@ foreach($pidStr in $pidList) {
 Write-Host "完事儿"
 ```
 
-### 7z
+### 7z 解压缩
+
+批量压缩文件
 
 ```powershell
 function  to7z {
-    $tar=((Get-ChildItem $args ) -replace '.mp4', '.7z');
-    7z a -pxxx -mx=0 $tar $args
+    $lst = (Get-ChildItem -Path $args)
+    foreach ($f in $lst ) { 
+        7z a -pmua -mx=0 ( $f.BaseName + '.7z' ) $f 
+    }
 }
+```
+
+### 打开exe所在的目录
+
+例如`cmd.exe`
+
+```powershell
+Start-Process (Split-Path -Parent (gcm cmd).Path)
 ```
