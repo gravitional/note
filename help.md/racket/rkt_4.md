@@ -1485,7 +1485,8 @@ Literals: quote和#%datum在The Racket Reference中也记录了quote.
     (quote datum)
 
 Racket参考>中的+Reading Quotes提供了更多关于`'` 速记的信息.
-而且这个速记几乎总是用来代替 `quote`. 这个速记法甚至适用于`datum`内部, 所以它可以产生包含`quote`的列表.
+
+而且这个`速记`几乎总是用来代替 `quote`. 这个速记法甚至适用于`datum`内部, 所以它可以产生包含`quote`的列表.
 例子.
 
 ```lisp

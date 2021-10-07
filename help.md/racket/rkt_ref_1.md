@@ -632,7 +632,7 @@ each scope is represented by a `value` that is internal to the representation of
         cache-keys? : boolean? = #f
 
 和之前一样, `extract-key` 和 `cache-keys?` 参数周围的`方括号`表示它们是`可选的`.
-头部条的`契约`部分显示了为这些关键字参数提供的默认值.
+头部条的`契约`部分显示了为这些`关键字参数`提供的`默认值`.
 
 ### 结构类型的符号
 
