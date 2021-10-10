@@ -54,7 +54,7 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 ```
 
 编辑后保存, 运行安装即可. (运行前先给`install.sh`权限, `chmod +x install.sh`). 
-安装完成后修改仓库地址
+安装完成后修改同步的`仓库地址`
 
 ```bash
 cd ~/.oh-my-zsh
