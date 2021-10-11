@@ -23,7 +23,8 @@ before_script:
   - cargo install-update -a
 
 script:
-  - mdbook build && mdbook test # 如果是自定义图书路径, 使用: mdbook build 路径/mybook && mdbook test 路径/mybook
+  - mdbook build && mdbook test 
+  # 如果是自定义图书路径, 使用: mdbook build path/to/mybook && mdbook test path/to/mybook, 相对于项目根目录
 ```
 
 ## 将你的书部署到GitHub页面
