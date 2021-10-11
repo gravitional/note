@@ -4,7 +4,7 @@
 
 ## 确保你的书的构建和测试通过
 
-下面是一个 `Travis CI .travis.yml`的配置样本, 它可以确保 `mdbook build`和 `mdbook test` 成功运行.
+下面是一个 `Travis CI .travis.yml`的配置`样本`, 它可以确保 `mdbook build`和 `mdbook test` 成功运行.
 快速的`CI周转时间`(turnaround times) 的关键是, 缓存 `mdbook` 的安装, 这样你就不需要在每次运行 `CI`时编译 `mdbook`.
 
 ```yaml
@@ -134,7 +134,7 @@ pages:
     - export PATH="$PATH:$CARGO_HOME/bin"
     - mdbook --version || cargo install mdbook
   script:
-    - mdbook build -d public
+    - mdbook build --dest-dir public # 更改为相应目录
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
   artifacts:
