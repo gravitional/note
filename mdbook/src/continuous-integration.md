@@ -33,7 +33,7 @@ script:
 
 首先, 创建一个具有 `public_repo` 权限的 GitHub `Personal Access Token`(个人访问令牌, 如果是私有仓库, 则是 `repo`权限).
 
-    settins-> Developer settings -> Personal access tokens
+`settins-> Developer settings -> Personal access tokens`
 
 进入`仓库`的 `Travis CI` 设置页面, 添加一个名为 `GITHUB_TOKEN` 的环境变量, 该变量被标记为`安全`, 并且`不在`日志中显示.
 
