@@ -1,4 +1,4 @@
-# awk2
+# awk-2
 
 [awk命令](https://man.linuxde.net/awk)
 

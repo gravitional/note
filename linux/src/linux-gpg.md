@@ -1,4 +1,4 @@
-# gpg
+# linux-gpg
 
 [Gnu 隐私卫士HOWTO](https://www.gnupg.org/howtos/zh/)
 

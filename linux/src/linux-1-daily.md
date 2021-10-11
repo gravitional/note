@@ -1,4 +1,4 @@
-# ubuntu-1
+# linux-1-daily
 
 ***
 `ls *.tex` and `"ls *.tex"`
@@ -588,10 +588,10 @@ unzip -j '*.zip'  '*.otf'
     对于`7z`格式,
     Parameter  Default  Description  
 
-  + `x=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`;  例如: `x=9`.定压缩级别. 将选择不同的`Dictionary`, `FastBytes`,  `MatchFinder`, `Filter` .
-  + `yx=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`; 文件分析的级别. 
-  + `s=[off | on | [e] [{N}f] [{N}b | {N}k | {N}m | {N}g | {N}t]`; `on`;  默认模式是`s=on`. 在`solid`模式下, 文件被分组在一起, 通常可以提高压缩率. 
-  + `qs=[off | on]`; `off`;  在固实档案中按类型对文件进行分类.  
+    + `x=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`;  例如: `x=9`.定压缩级别. 将选择不同的`Dictionary`, `FastBytes`,  `MatchFinder`, `Filter` .
+    + `yx=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`; 文件分析的级别. 
+    + `s=[off | on | [e] [{N}f] [{N}b | {N}k | {N}m | {N}g | {N}t]`; `on`;  默认模式是`s=on`. 在`solid`模式下, 文件被分组在一起, 通常可以提高压缩率. 
+    + `qs=[off | on]`; `off`;  在固实档案中按类型对文件进行分类.  
 
 ***
 
@@ -1964,6 +1964,6 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
 + 说明; `bluetooth-sendto [--device=XX:XX:XX:XX:XX:XX [--name=NAME]] [file...]`
 + 描述; `bluetooth-sendto` 将显示一个通过蓝牙传输文件的对话框. `bluetooth-sendto`是`gnome-bluetooth`的一部分, 参见[GnomeBluetooth](http://live.gnome.org/GnomeBluetooth)
 + 选项; 
-  + `--device`;  定义要发送文件的设备地址.  如果省略, 将显示一个选择器. 
-  + `--name`; 定义要发送文件的设备名称.  如果省略, 将被自动检测. 
-  + `file` 要发送到设备的文件.  如果省略, 将显示一个选择器. 
+    + `--device`;  定义要发送文件的设备地址.  如果省略, 将显示一个选择器. 
+    + `--name`; 定义要发送文件的设备名称.  如果省略, 将被自动检测. 
+    + `file` 要发送到设备的文件.  如果省略, 将显示一个选择器. 

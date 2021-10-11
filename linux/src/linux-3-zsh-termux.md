@@ -1,4 +1,4 @@
-# ubuntu-3
+# linux-3
 
 ## zsh和Bash的不同
 
