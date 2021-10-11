@@ -1,4 +1,4 @@
-# learn.premiere.md
+# premiere.md
 
 收集一些常见的`adobe premiere`概念和教程, 原文见链接. 版权归原作者所有.
 
