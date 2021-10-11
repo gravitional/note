@@ -1,8 +1,7 @@
-# learn.markdown.md
+# markdown.md
 
-reference: [Simplelified Markdown Syntax][]
-
-[Simplelified Markdown Syntax]: https://www.appinn.com/markdown/#backslash
+reference: [Simplelified Markdown Syntax](https://www.appinn.com/markdown/#backslash)
+[CommonMark specification ](https://commonmark.org/)
 
 ## 删除线
 

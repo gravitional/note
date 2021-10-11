@@ -1,4 +1,4 @@
-# learn.vim.md
+# vim.md
 
 For myself and for you
 

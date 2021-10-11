@@ -1,4 +1,4 @@
-# learn.vim.x.md
+# vim-x.md
 
 ## 概念
 
