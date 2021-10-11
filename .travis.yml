@@ -1,5 +1,6 @@
 language: rust
-sudo: false
+os: linux
+dist: xenial
 
 cache:
   - cargo
@@ -15,13 +16,14 @@ before_script:
 script:
   - mdbook build mdbook && mdbook test mdbook # 自定义路径
 
-
 deploy:
   provider: pages
-  skip-cleanup: true
+  strategy: git
+  edge: true
+  cleanup: false
   github-token: $GITHUB_TOKEN
   local-dir: mdbook # 自定义路径
   keep-history: false
   on:
     branch: main
-    
+  target_branch: gh-pages
