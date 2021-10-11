@@ -217,7 +217,7 @@ sudo restart mdm # 对于MDM (例如对于Mint Cinnamon )
 
 [Display manager](https://wiki.archlinux.org/title/Display_manager)
 
-显示管理器, 或称登录管理器, display manager, or login manager, 通常是一个图形用户界面, 在 boot 过程结束时显示, 以取代默认的shell. 
+`显示管理器`(display manager), 或称`登录管理器`(login manager), 通常是一个图形用户界面, 在 boot 过程结束时显示, 以取代默认的shell. 
 显示管理器有多种实现方式, 就像有各种类型的 window managers 和 desktop environments 一样. 通常每一种都有一定程度的定制和主题性可供选择. 
 
 ### 录制屏幕

@@ -1,7 +1,5 @@
 # Summary
 
-# Linux手册
-
 - [日常使用](linux-1-daily.md)
 - [报错维护](linux-1-exception.md)
 - [systemd](linux-1-systemd.md)

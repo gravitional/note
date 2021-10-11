@@ -612,7 +612,8 @@ cat a b b | sort | uniq -u > c   # c is set difference a - b 差集
 [https://www.jianshu.com/p/36fb9eed82a3](https://www.jianshu.com/p/36fb9eed82a3)
 
 ***
-进入`TTY`终端. `Ctrl+Alt+F1`进入`TTY1`终端字符界面, 输入用户名和密码以登录,也可能是`Ctrl+Alt+F2`,`Ctrl+Alt+F3`等等, 不同系统可能有点点区别. 
+进入`TTY`终端. `Ctrl+Alt+F1`进入`TTY1`终端字符界面, 输入用户名和密码以登录, 
+也可能是`Ctrl+Alt+F2`,`Ctrl+Alt+F3`等等, 不同系统可能有点点区别. 
 输入`top`命令, 找到可能造成假死的进程, 用`kill`命令结束掉进程. 然后`Ctrl+Alt+F7`回到桌面
 
 ***

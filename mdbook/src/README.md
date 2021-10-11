@@ -1,5 +1,7 @@
 # 介绍
 
+[mdBook Documentation](https://rust-lang.github.io/mdBook/)
+
 `mdBook` 是一个`命令行工具`, 也是一个 `Rust crate`, 可以用 `Markdown` 创建书籍.
 它的输出类似于 `Gitbook` 这样的工具, 是创建 `产品` 或 `API文档`, `教程`, `课程材料`
 或任何需要 `简洁`,  `易于浏览` 和 可定制的 `演示文稿`的理想选择.
