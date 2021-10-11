@@ -31,7 +31,10 @@ script:
 按照这些说明, 在仓库的`master`分支上成功运行`CI`后, 你的书就会发布到 `GitHub页面`上.
 
 首先, 创建一个具有 `public_repo` 权限的 GitHub `Personal Access Token`(个人访问令牌, 如果是私有仓库, 则是 `repo`权限).
-进入仓库的 `Travis CI` 设置页面, 添加一个名为 `GITHUB_TOKEN` 的环境变量, 该变量被标记为`安全`, 并且`不在`日志中显示.
+
+    settins-> Developer settings -> Personal access tokens
+
+进入`仓库`的 `Travis CI` 设置页面, 添加一个名为 `GITHUB_TOKEN` 的环境变量, 该变量被标记为`安全`, 并且`不在`日志中显示.
 
 在仓库的设置页面中, 导航到`Options`, 将 `GitHub` 页面上的 `源代码` 改为 `gh-pages`.
 
