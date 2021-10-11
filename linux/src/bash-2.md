@@ -1,4 +1,4 @@
-# ubuntu-4
+# bash-2
 
 ## shell 变量
 

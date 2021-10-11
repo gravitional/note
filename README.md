@@ -1,6 +1,6 @@
 # note-on-physics
 
-Tom 捡垃圾的地方. 收录物理, 计算机相关的笔记.
+捡垃圾茨德. 收录物理, 计算机相关的笔记.
 
 Some note on Physics and Computing.
 
@@ -23,3 +23,4 @@ Some note on Physics and Computing.
 + Linux, Ubuntu, Windows, Mac, Android
 + Java, Perl, Python, C++, Bash, Powershell,
 + Regex, Vim, VSCode, 
++ racket, rust

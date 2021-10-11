@@ -1,4 +1,4 @@
-# ubuntu_1a
+# linux-1-exception
 
 ## 常用软件
 
