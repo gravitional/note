@@ -5,7 +5,7 @@ param(
     [string] $texPath,
     [string]$texEngine = "xelatex" )
 # 剩下的参数会被传递给$args
-if ($(Get-ExecutionPolicy) -ne 'Unrestricted') {
+if ('Unrestricted', 'RemoteSigned' -notcontains $(Get-ExecutionPolicy) ) {
     @'
 ++++++++++++++++++++++++++++++
 PowerShell 的默认脚本执行策略不是 'Unrestricted', 这样可以防止执行互联网上的恶意脚本。
@@ -39,8 +39,6 @@ Adobe Reader 可能会加文件锁，造成 LaTeX 没法动态更新PDF.
 '@
 }
 
-# 设置格式化相关的部分
-$nameis = "name is :"
 # 定义一个打印的函数,并且加上颜色输出
 function echo2() {
     $delimiter1 = '-------------------------------------------------------'
@@ -50,30 +48,36 @@ function echo2() {
     Write-Host  $delimiter2;
 }
 # 打印当前目录
-echo2 "current directory is ", (Get-Location)
+echo2 "current directory is: "
+Out-Host -InputObject (Get-Location).Path
 # tex主文档的默认文件名是 main.tex
 $tex_usual = "main.tex"
-echo2 "tex_usual", $nameis, $tex_usual
-# 当前tex文件列表
-$tex_here = (Get-ChildItem -path . *.tex)
-echo2 "tex_here $nameis,$tex_here"
+echo2 "tex_usual name is :", $tex_usual
+# 当前tex文件列表, 默认编译前 5 个
+$tex_here = (Get-ChildItem -path . *.tex | Select-Object -First 5)
+echo2 'the first 5 .tex files here are'
+Format-Table -InputObject $tex_here.Name
 
-# 如果有命令行参数，优先使用
+# 如果有命令行参数，优先使用, 考虑了没有加后缀名的情形
 if ($texPath) {
-    $tex_here = $(Get-ChildItem $texPath)
-    echo2 "We just compile the, ", $tex_here
+    $tex_here = $(Get-ChildItem -ErrorAction Ignore $texPath) || 
+    $(Get-ChildItem "$texPath.tex")
+    echo2 "Follow your input, we just compile the: "
+    Out-Host -InputObject $tex_here.Name
 }
 # 如果无命令行参数, 判断当前文件列表中是否包含 main.tex
 elseif ($tex_here -contains 'main.tex') {
     $tex_here = $tex_usual
-    echo2 "We just compile the, ", $tex_here
+    echo2 "We just compile the: "
+    Out-Host -InputObject $tex_here
 }
 # 如果当前目录中没有tex文件，提示检查
 elseif ($null -eq $tex_here) {
     echo2 "I can not see any tex file here, check the file names or whatever. "
 }
 else {
-    echo2 "There isn't a tex file named 'main.tex', so we just compile the, ", $tex_here
+    echo2 "There isn't a tex file named 'main.tex', so we just compile the: "
+    Out-Host -InputObject $tex_here.Name
 }
 # 开始循环，对每一个tex文件编译，并寻找错误
 # 可增加输出文件夹选项 -auxdir=temp -outdir=temp
