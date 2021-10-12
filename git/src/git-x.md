@@ -674,7 +674,7 @@ You can omit any one of `<commit>`, which has the same effect as using HEAD inst
 然而, `diff`比较的是两个 endpoints, 而不是一个范围.
 所以 `<commit>..<commit>`and `<commit>...<commit>`在这里指的不是范围.
 
-## 文件管理
+## 文件恢复
 
 ### checkout 还原文件
 
@@ -700,6 +700,8 @@ With `-m`, changes made to the working tree file can be discarded to re-create t
 解决方法是创建新分支:
 
 `git checkout -b new`
+
+## git rebase
 
 ### rebase 删除某次提交
 
@@ -746,6 +748,127 @@ commit-id 为要删除的 `commit` 的前一次`commit`号
 通常, `git push`拒绝更新不是本地引用的祖先的远程引用, 从而避免覆盖它.
 另外, 当使用`--force-with-lease`选项时, `git push`将拒绝更新其与当前值不匹配的远程引用.
 `-f`将禁用这些检查, 并可能导致远程存储库丢失提交.  小心使用.
+
+### 合并提交
+
+[Git 压缩多个commit为单个commit](https://kinboyw.github.io/2019/04/09/Git-%E5%8E%8B%E7%BC%A9%E5%A4%9A%E4%B8%AAcommit%E4%B8%BA%E5%8D%95%E4%B8%AAcommit/)
+[Squash commits into one with Git](https://www.internalpointers.com/post/squash-commits-into-one-git)
+
+`git` 具有一个很棒的, 能将多次`修改`合并起来的方法, 尤其是在将他们共享出去之前.
+
+你可以使用强大的 `interactive rebase`(交互式 rebase)将多次`提交`合并成`一次`. 
+这样可以把多个临时的小的`提交`合并成一次提交, 然后将整理好的代码 `push` 给远端.
+
+#### 选择你的起始提交
+
+首先让 `git` 开始交互式 `rebase` 会话:
+
+```bash
+git rebase --interactive HEAD~[N]
+# 或者使用简写:
+git rebase -i HEAD~[N]
+```
+
+这里的 `N` 就是你想要合并的提交的数量, 从最近的一次提交`往前数`. 
+下面是一个假想的从 git log 中拉取的提交列表, 我们以它为例, 假设当前我们正在修改 `feature Z`:
+
+```log
+1. 871adf OK, feature Z 完成              --- 最近的 commit
+2. 0c3317 问题不大...
+...
+7. d94e78 准备实现 feature Z
+8. 6394dc Feature Y                               --- 早先的 commit
+```
+
+然后这是我要做的事情:
+
+```log
+1. 871adf OK, feature Z 完成           --- 最近的 commit --┐
+2. 0c3317 问题不大...                                                                    |
+...                                                                                                      |
+                                                                                                         |-- 合并成一个提交
+                                                                                                         |
+                                                                                                         |
+7. d94e78 准备实现 feature Z     -----------------------------┘
+8. 6394dc Feature Y                                --- 早先的 commit
+```
+
+要达到的效果:
+
+```log
+1. 84d1f8 Feature Z                               --- 新的 commit (rebase 的结果)
+2. 6394dc Feature Y                               --- 早先的 commit
+```
+
+所以在这个案例中, 要执行的命令就是:
+
+```bash
+git rebase --interactive HEAD~[7]
+```
+
+例如我想将最后的 `7` 次提交合并为一次, 所以 `d94e78 准备实现 feature Z`  就是第 `7` 次提交.
+那如果我有数不清的`提交`要压缩, 必须一个一个的数吗? dark 不必, 使用 `提交的哈希` 即可
+
+```bash
+git rebase --interactive [commit-hash]
+```
+
+这里的 `[commit-hash]` 是压缩范围起点的`前一次`提交的 `hash`. 
+`[commit-hash]` 将被作为压缩的`基`, 它需要比压缩的起点还要早一次, 或者你可以看自己的情况选择.
+所以在示例中的命令就是:
+
+```bash
+git rebase --interactive 6394dc # 6394dc Feature Y         
+```
+
+你可以将这个命令理解为: 对提交时间比 `[commit-hash]` 新的所有`提交`进行合并.
+
+#### 选择与压缩
+
+这时你的默认 `编辑器` 会有弹窗, 显示出你想要`合并`的`提交列表`, 就是我们在上一步选中的. 
+注意, 一开始可能会感觉有点看不明白, 因为是按 `反序` 排列的, `旧的提交` 显示在顶部. 
+我通过 `--- 早先的 commit` 和 `--- 新的 commit` 进行了说明, 在 `编辑器` 的窗口中不会显示这些说明, 但可以根据提交信息判断.
+
+```log
+pick d94e78 准备实现 feature Z     --- 早先的 commit
+...
+pick 0c3317 问题不大... 
+pick 871adf feature Z 完成     --- 新的 commit
+[...]
+```
+
+在 `提交列表` 的底部有一个简短的 `注释`(示例中忽略了), 提示了所有的 `操作选项`. 
+你可以在交互式 `rebase` 中进行各种操作, 我们现在只进行一些基本的操作.
+我们的任务是将所有的`提交`注释为 `squashable`, 除了第一个(最早的)提交: 它将被用作`基`.
+
+把提交哈希前面的 `pick` 标记修改为 `squash` (或者简写为 `s` , 下面以 # 开头的行中有提示)，
+这样 `提交` 就被标记为可压缩的 . 最后的结果就是:
+
+```log
+pick d94e78 准备实现 feature Z       --- 早先的 commit
+...
+s 0c3317 问题不大... 
+s 871adf OK, feature Z 完成      --- 新的 commit
+[...]
+```
+
+保存文件, 关闭`编辑器`.
+
+#### 创建新的提交
+
+你刚刚告诉了 `Git` 将全部的 `7` 次 `提交` 合并到列表的第一个 `提交` 中. 
+现在要给它添加 `注释`: 你的编辑器会再次弹出一个带有 `默认消息` 的窗口, 内容合并了被压缩的所有`提交`的 `注释`.
+
+你可以保留默认的 `提交注释`, 这样最终的提交信息将会是这些临时提交的 `注释列表`, 如下所示:
+
+```log
+准备实现 feature Z
+...
+问题不大... 
+feature Z 完成
+```
+
+通常我不喜欢保留这些信息, 所以我会清除默认消息, 使用一些自定义 `注释`, 例如只保留 `feature Z 完成`.
 
 ## 清理大文件, filter-repo
 
@@ -815,7 +938,7 @@ commit-id 为要删除的 `commit` 的前一次`commit`号
 + 要清除`特定路径`的大文件, 需要结合使用` --path` 和 `--invert-paths` 选项, `--invert-paths` 表示`反向选择`:
 
    ```bash
-   git filter-repo --invert-paths --path 大文件路径.m4v 
+   git filter-repo --invert-paths --path 大文件路径.m4v
    ```
 
    参见[git filter-repo 文档](https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#EXAMPLES), 获取更多的例子和完整的文档.
@@ -871,7 +994,7 @@ git push origin --force 'refs/replace/*'
 
 ```bash
 # git 会自动检测到远程服务器进行了 force update
-git fetch origin 
+git fetch origin
 git reset --hard origin/master
 # 和上面的一样, 需要删除旧提交, 清理本地仓库
 git for-each-ref --format='delete %(refname)' refs/origin | git update-ref --stdin
@@ -885,7 +1008,7 @@ git gc --prune=now
 
 引入于 `GitLab 11.6`.
 
-`仓库清理`允许你上传一个包含`对象列表`的文本文件, `GitLab` 将删除 内部 Git 对这些对象的`引用`. 
+`仓库清理`允许你上传一个包含`对象列表`的文本文件, `GitLab` 将删除 内部 Git 对这些对象的`引用`.
 你可以使用 `git filter-repo` 来生成一个`对象列表`(在一个commit-map文件), 可以用来进行仓库清理.
 
 引入于GitLab 13.6.  安全地清理仓库, 需要在操作期间将其变成`只读`.
@@ -963,7 +1086,7 @@ git gc --prune=now
 另外, 值得注意的是, 有一个重要的`安全机制`.
 
 + 如果从不是新鲜克隆(fresh clone)的 `repo` 中运行, 则`中止`(abort, 以防止, 因改写不存在于其他地方的`本地历史`, 而意外丢失数据). 见`[FRESHCLONE]`.
-+ 对于那些知道他们的`历史`中有大量不需要的东西, 并希望帮助找到它的人, 
++ 对于那些知道他们的`历史`中有大量不需要的东西, 并希望帮助找到它的人,
 也提供了一个`选项`来`analyze`版本库并生成报告, 这对决定过滤什么很有用(或者决定一个单独的过滤命令是否成功).
 
 参见 `[VERSATILITY]`, `[DISCUSSION]`, `[EXAMPLES]`, 和 `[INTERNALS]`.
@@ -1175,24 +1298,24 @@ git filter-repo --to-subdirectory-filter my-module/
 
 ### fresh clone 安全检查和 --force
 
-由于 `filter-repo` 会对历史进行`不可逆`的重写, 因此必须避免对用户`没有良好备份`的 `repo` 进行修改. 
+由于 `filter-repo` 会对历史进行`不可逆`的重写, 因此必须避免对用户`没有良好备份`的 `repo` 进行修改.
 主要的`防御机制`是简单地教导用户, 并依靠他们成为数据的好管家; 因此在文档中对 `filter repo` 如何重写历史有几个警告.
 
-然而, 作为对用户的一项服务, 我们想在`文档`之外提供额外的`安全检查`. 
+然而, 作为对用户的一项服务, 我们想在`文档`之外提供额外的`安全检查`.
 很难找到好方法来检查用户是否具有良好的备份, 但我们可以问一个`相关的问题`, 这是一个不完美但相当合理的代理: `这个版本库是一个新的克隆吗?`
-不幸的是, 这也是一个我们无法得到`完美答案`的问题; `git` 没有提供回答这个问题的方法. 
+不幸的是, 这也是一个我们无法得到`完美答案`的问题; `git` 没有提供回答这个问题的方法.
 然而, 我发现大约有`一打东西`, 对于全新的克隆, 似乎总是成立的 (假设它们要么是`远程仓库`的克隆, 要么是用 `--no-local `标志制作的), 我检查所有这些东西.
 
-这些检查可能有`假阳性`和`假阴性`之分. 有人可能有一个很好的备份, 但实际上它并不是一个`新的克隆`--但 `filter-repo`没有办法知道这点. 
+这些检查可能有`假阳性`和`假阴性`之分. 有人可能有一个很好的备份, 但实际上它并不是一个`新的克隆`--但 `filter-repo`没有办法知道这点.
 相反, 有人可以查看 `filter-repo` 在`安全检查`中, 检查的所有东西, 然后`调整`他们`没有备份`的版本库以满足这些条件.
-(尽管这需要相当大的努力, 而且一个不是`新鲜克隆`的`版本库`, 随机地符合`所有标准`的可能性是非常小的). 
-在实践中,  `filter-repo` 使用的安全检查, 似乎很好地避免了人们意外地在不适用的版本库上运行 ` filter-repo`. 
+(尽管这需要相当大的努力, 而且一个不是`新鲜克隆`的`版本库`, 随机地符合`所有标准`的可能性是非常小的).
+在实践中,  `filter-repo` 使用的安全检查, 似乎很好地避免了人们意外地在不适用的版本库上运行 ` filter-repo`.
 甚至有一次, 我确实想在错误的目录运行 `filter-repo`, 它阻止了我.
 
-简而言之, 只要你同意 `filter-repo 不可逆地`改写当前版本库的内容, 使用 `--force` 来覆盖`安全检查`是完全可以的. 
-养成总是指定 `--force` 的习惯是个坏主意; 如果你这样做了, 有一天你会像我一样在`错误的目录下`运行你的某个命令, 你就不会再有`安全检查`来救你了. 
+简而言之, 只要你同意 `filter-repo 不可逆地`改写当前版本库的内容, 使用 `--force` 来覆盖`安全检查`是完全可以的.
+养成总是指定 `--force` 的习惯是个坏主意; 如果你这样做了, 有一天你会像我一样在`错误的目录下`运行你的某个命令, 你就不会再有`安全检查`来救你了.
 
-此外, 在论坛, Q&A 网站或给其他用户的电子邮件中推荐 `--force` , 而不首先仔细解释 `--force` 意味着将你的存储库数据置于危险之中, 这是绝对不行的. 
+此外, 在论坛, Q&A 网站或给其他用户的电子邮件中推荐 `--force` , 而不首先仔细解释 `--force` 意味着将你的存储库数据置于危险之中, 这是绝对不行的.
 我对那些在明显不需要的情况下, 建议使用该标志的人感到特别困扰; 他们毫无必要地将其他人的数据置于危险之中.
 
 ## zsh 定义的 git别名
