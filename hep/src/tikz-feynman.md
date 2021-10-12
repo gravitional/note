@@ -1110,11 +1110,11 @@ key:
 
 As the name suggests, this specifies how ‘loose’ or ‘tight’ a curve is connecting two vertices.
 
-## Examples-tikz
+## 例子
 
 Below are a few diagrams which demonstrate how the package can be used in some more practical examples.
 
-### Vertex Rule
+### 顶点规则,Vertex Rule
 
 ```tikz
 \feynmandiagram [horizontal=a to b] {
@@ -1125,7 +1125,7 @@ f1 [particle=\(\overline f\)]
 }
 ```
 
-### Tree Level Diagrams
+### 树图, Tree Level Diagrams
 
 ```tikz
 \feynmandiagram [horizontal=a to b] {
@@ -1172,7 +1172,7 @@ i2 [particle=\(e^{+}\)]
 Same as `\diagram`, but instead of using the `spring layout` algorithm to place the vertices, this uses the most basic algorithm. This basic algorithm in most cases will not produce a satisfactory diagram, but is intended to be used with vertices are declared and positioned outside of the `\diagram*` command.
 Essentially, `\diagram*` should be used only to connect existing vertices.
 
-### Loops
+### 圈图, Loops
 
 ```tikz
 \feynmandiagram [layered layout, horizontal=b to c] {
@@ -1190,7 +1190,7 @@ b -- {f1, f2},
 };
 ```
 
-### Box Diagrams
+### 盒子图, Box Diagrams
 
 ```tikz
 \feynmandiagram [layered layout, horizontal=a to b] {
