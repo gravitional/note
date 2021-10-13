@@ -4,7 +4,8 @@
 
 Regular Expression 久仰大名, 以前也一直有过类似的需求, 然而之前或者用其他工具实现了, 或者暴力解决了 😅
 
-不过辣个咸鱼没点理想呢？加上 [notepad++](https://www.runoob.com/regexp/regexp-tutorial.html) 事件, 坚定了我学习Vim的决心, 学 Vim 当然也要学习 `regex` 了, 当然 `regex` 的应用远远不止在 Vim 当中.
+不过辣个咸鱼没点理想呢？加上 [notepad++](https://www.runoob.com/regexp/regexp-tutorial.html) 事件, 
+坚定了我学习Vim的决心, 学 Vim 当然也要学习 `regex` 了, 当然 `regex` 的应用远远不止在 Vim 当中.
 
 此笔记参考了：[runoob-tutorial](https://www.jianshu.com/p/1adced676d79), 版权归原作者所有
 

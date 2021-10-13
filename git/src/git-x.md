@@ -52,7 +52,8 @@ $ git config --global user.email johndoe@example.com
 
 + 文本编辑器配置
 
-接下来要设置的是默认使用的文本编辑器. Git 需要你输入一些额外消息的时候, 会自动调用一个外部文本编辑器给你用. 如果你有其他偏好, 比如 Emacs 的话, 可以重新设置:
+接下来要设置的是默认使用的文本编辑器. `Git` 需要你输入一些额外消息的时候, 会自动调用一个外部文本编辑器给你用. 
+如果你有其他偏好, 比如 `Emacs` 的话, 可以重新设置:
 
 ```bash
 $ git config --global core.editor emacs
@@ -66,14 +67,14 @@ $ git config --global merge.tool vimdiff
 
 + 查看配置信息 : `git config --list`
 
-`Zsh`, 以及一些专门为它打造的完整框架, 比如`on-my-zsh`, 包含强大的`Git Tab`补全功能, 并且提示符主题可以展示版本控制数据.
+`Zsh`, 以及一些专门为它打造的完整框架, 比如 `on-my-zsh` , 包含强大的 `Git Tab` 补全功能, 并且提示符主题可以展示版本控制数据.
 
 ### git 配置文件写法
 
-以`#` or `;` 开头的将被看成是注释, 到行末.
+以`# ` or ` ;` 开头的将被看成是注释, 到行末.
 大部分空格将被忽略, 空行也被忽略
 
-文件包含`Sections` 和`variables`, 类似下面这种格式, `[section]`, 还可以有`[section "subsection"]`
+文件包含`Sections` 和 `variables` , 类似下面这种格式, `[section]`, 还可以有`[section "subsection"]`
 所有名字都是大小写敏感的. 其他的行被看成是设置变量值.
 
 ```gitconfig
@@ -95,7 +96,7 @@ $ git config --global merge.tool vimdiff
    fetch = <refspec>
 ```
 
-`pushurl`之用来推送, 默认和`<url>`相同
+`pushurl`之用来推送, 默认和 `<url>` 相同
 
 ### windows 图形界面
 
@@ -112,15 +113,15 @@ $ git config --global merge.tool vimdiff
 
 [在 Windows 终端中设置 Powerline](https://docs.microsoft.com/zh-cn/windows/terminal/tutorials/powerline-setup)
 
-适用于 `PowerShell`, 也适用于 Linux or macOS 上运行的`PowerShell Core`, 只许安装名为`Posh-Git`的拓展包. link: [Posh-Git](https://github.com/dahlbyk/posh-git)
+适用于 `PowerShell`, 也适用于 Linux or macOS 上运行的 `PowerShell Core` , 只许安装名为 `Posh-Git` 的拓展包. link: [Posh-Git](https://github.com/dahlbyk/posh-git)
 
 ***
 安装前提需求(仅限 Windows)
 
 在可以运行 PowerShell 脚本之前, 你需要将本地的 `ExecutionPolicy` 设置为 `RemoteSigned` (可以说是允许除了 `Undefined` 和 `Restricted` 之外的任何内容).
 如果你选择了 `AllSigned` 而非 `RemoteSigned` , 那么你的本地脚本还需要数字签名后才能执行.
-如果设置为 `RemoteSigned` ,  那么只有`ZoneIdentifier`设置为 `Internet`, 即从 `Web` 上下载的脚本才需要签名, 其它则不需要.
-如果你是管理员, 想要为本机上的所有用户设置它, 请使用`-Scope LocalMachine`.  如果你是没有管理权限的普通用户, 可使用`-Scope CurrentUser`来只给自己设置.
+如果设置为 `RemoteSigned` ,  那么只有 `ZoneIdentifier` 设置为 `Internet`, 即从 `Web` 上下载的脚本才需要签名, 其它则不需要.
+如果你是管理员, 想要为本机上的所有用户设置它, 请使用 `-Scope LocalMachine` .  如果你是没有管理权限的普通用户, 可使用 `-Scope CurrentUser` 来只给自己设置.
 
 ```powershell
 Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
@@ -141,7 +142,7 @@ Install-Module oh-my-posh -Scope CurrentUser # 安装 oh-my-posh 插件
 Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck #PSReadline 允许在 PowerShell 中自定义命令行编辑环境.
 ```
 
-如果你想为所有的用户安装 `posh-git`, 请使用`-Scope AllUsers`并在管理员权限启动的 `PowerShell` 控制台中执行.
+如果你想为所有的用户安装 `posh-git`, 请使用 `-Scope AllUsers` 并在管理员权限启动的 `PowerShell` 控制台中执行.
 如果第二条命令执行失败并出现类似 `Module 'PowerShellGet' was not installed by using Install-Module` 这样的错误,  那么你需要先运行另一条命令:
 
 ```powershell
@@ -194,7 +195,7 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 },
 ```
 
-或者添加到所有终端的默认配置`"defaults"`中,
+或者添加到所有终端的默认配置 `"defaults"` 中,
 
 ```json
 "profiles":
@@ -221,7 +222,7 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 
 ### git restore
 
-还原工作区的文件, 可以用 `--source` 指定例如`HEAD`.
+还原工作区的文件, 可以用 `--source` 指定例如 `HEAD` .
 
 ```git
 git restore [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>... ​
@@ -231,16 +232,16 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
 使用恢复源中的某些内容还原工作树中的指定路径.
 如果跟踪了一条路径, 但该路径在恢复源中不存在, 则会将其删除以匹配该源.
 
-该命令还可用于通过`--staged`还原索引中的内容, 或通过`--staged --worktree`还原工作树和索引.
+该命令还可用于通过 `--staged` 还原索引中的内容, 或通过 `--staged --worktree` 还原工作树和索引.
 
 ```git
 -s <tree>
 --source=<tree>
 ```
 
-使用给定`tree`中的内容还原工作树文件.  可以通过与之关联的`commit`, `branch`或`tag`来指定`source tree`.
-如果未指定, 则`working tree`的默认还原源为`index`, 而 `index`的默认还原源为`HEAD`.
-当同时指定了`--staged`和`--worktree`时, 则必须指定`--source`.
+使用给定 `tree` 中的内容还原工作树文件.  可以通过与之关联的 `commit` , `branch`或 `tag` 来指定 `source tree` .
+如果未指定, 则 `working tree` 的默认还原源为 `index` , 而 `index`的默认还原源为 `HEAD` .
+当同时指定了 `--staged` 和 `--worktree` 时, 则必须指定 `--source` .
 
 ```git
 -W
@@ -249,7 +250,7 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
 --staged
 ```
 
-指定要还原的对象. 如果未给出, 默认还原`working tree`. 指定`--staged`则只还原`index`, 指定两个的话都还原.
+指定要还原的对象. 如果未给出, 默认还原 `working tree` . 指定 `--staged` 则只还原 `index` , 指定两个的话都还原.
 
 例子:
 
@@ -263,20 +264,20 @@ git restore --source=9ea00d1 parton.note.1.nb
 
 ### git checkout
 
-切换分支或者恢复`working tree`中的文件
+切换分支或者恢复 `working tree` 中的文件
 
 ```bash
 git checkout [<tree-ish>] [--] <pathspec>... ​
 ```
 
-用 `index`或者`<tree-ish>`(通常是一个`commit`)里面的内容替换`working tree`里面的 `paths`.
-当给出一个`<tree-ish>`的时候, 与`<pathspec>`匹配的路径会在`index`和`working tree` 里面都更新.
+用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `paths`.
+当给出一个 `<tree-ish>` 的时候, 与 `<pathspec>` 匹配的路径会在 `index` 和`working tree` 里面都更新.
 
-`index` 中可能包含有之前合并失败的`entries`.默认情况下, 如果你想 `checkout` 一个这样的entries, 会失败, 什么都不会发生. 使用`-f`选项忽略未合并的项目.
+`index` 中可能包含有之前合并失败的 `entries` .默认情况下, 如果你想 `checkout` 一个这样的entries, 会失败, 什么都不会发生. 使用 `-f` 选项忽略未合并的项目.
 
-当合并的时候, 特定来源方的内容可以通过使用 `--ours` or `--theirs`从`index`中取出.
+当合并的时候, 特定来源方的内容可以通过使用 `--ours ` or ` --theirs`从 `index` 中取出.
 
-使用`-m`, 对 `working tree` 所做的更改将会被丢弃, 重新创建冲突的`merge`结果.
+使用 `-m` , 对 `working tree` 所做的更改将会被丢弃, 重新创建冲突的 `merge` 结果.
 
 ### git reset
 
@@ -287,33 +288,33 @@ git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
 git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 ```
 
-在前三种形式中, 将`entries`从`<tree-ish>`复制到`index`.
-在最后一种形式中, 将当前分支头(`HEAD`)设置为`<commit>`, 可以选择修改`index`和`working tree`以使其匹配.
-` <tree-ish>` / `<commit>`在所有形式中均默认为`HEAD`.
+在前三种形式中, 将 `entries` 从 `<tree-ish>` 复制到 `index` .
+在最后一种形式中, 将当前分支头( `HEAD` )设置为 `<commit>` , 可以选择修改 `index` 和 `working tree` 以使其匹配.
+` <tree-ish>` / `<commit>`在所有形式中均默认为 `HEAD` .
 
 ***
 `git reset --hard <commit>` or 别名 `grhh <commit>`
 
-`--hard` 会清空`working tree`和`index`的改动.
+`--hard` 会清空 `working tree` 和 `index` 的改动.
 彻底回退版本, 连本地文件都会被回退到上个版本的内容
 
 ***
 `git reset --soft xxxx` or 别名 `grh --soft <commit>`
 
-保留`working tree`和`index`, 并合并到`index`中.
-只回退`commit`, 如果你想再次提交直接`git commit`即可.
+保留 `working tree` 和 `index` , 并合并到 `index` 中.
+只回退 `commit` , 如果你想再次提交直接 `git commit` 即可.
 
-`reset --soft` 会在重置 `HEAD` 和 `branch` 时, 保留`working tree`和`index`中的内容,
-并把重置 `HEAD` 所带来的新的差异放进`index`.
+`reset --soft` 会在重置 `HEAD` 和 `branch` 时, 保留 `working tree` 和 `index` 中的内容,
+并把重置 `HEAD` 所带来的新的差异放进 `index` .
 
 ***
 `reset 不加参数(--mixed)` or 别名 `grh <commit>`
 
-清空`index`,`mix`到`working tree`中
+清空 `index` , `mix` 到 `working tree` 中
 
-`reset` 如果不加参数, 那么默认使用 `--mixed` 参数. 它的行为是: 保留`working tree`, 并且清空`index`.
-也就是说, `working tree`的修改, `index`的内容以及由 `reset` 所导致的新的文件差异, 都会被放进`working tree`.
-简而言之, 就是把所有差异都混合(`mixed`)放在`working tree`中`.
+`reset` 如果不加参数, 那么默认使用 `--mixed` 参数. 它的行为是: 保留 `working tree` , 并且清空 `index` .
+也就是说, `working tree`的修改, `index`的内容以及由 `reset` 所导致的新的文件差异, 都会被放进 `working tree` .
+简而言之, 就是把所有差异都混合( `mixed` )放在 `working tree` 中`.
 
 ***
 同理, `reset --hard` 不仅可以撤销提交, 还可以用来把 `HEAD` 和 `branch` 移动到其他的任何地方.
@@ -322,7 +323,7 @@ git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 git reset --hard branch2
 ```
 
-把 `HEAD` 和 `branch`移动到`branch2`指向的提交.
+把 `HEAD` 和 `branch`移动到 `branch2` 指向的提交.
 
 ### git-restore
 
@@ -336,27 +337,27 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
 
 DESCRIPTION
 
-使用`restore source`中的某些内容还原`working tree`中的指定路径.
-如果`path`被追踪, 但在`restore source`中不存在, 则会将其删除以匹配该`restore source`.
+使用 `restore source` 中的某些内容还原 `working tree` 中的指定路径.
+如果 `path` 被追踪, 但在 `restore source` 中不存在, 则会将其删除以匹配该 `restore source` .
 
-该命令还可用于通过`--staged`还原`index`中的内容, 或通过`--staged --worktree`还原`working tree`和`index`.
+该命令还可用于通过 `--staged` 还原 `index` 中的内容, 或通过 `--staged --worktree` 还原 `working tree` 和 `index` .
 
-默认情况下, `working tree`和`index`的`restore source`分别是`index`和`HEAD`.
-`--source`可用于将`commit`指定为`restore source`.
+默认情况下, `working tree`和 `index` 的 `restore source` 分别是 `index` 和 `HEAD` .
+`--source`可用于将 `commit` 指定为 `restore source` .
 
 有关这三个命令之间的差异, See "Reset, restore and revert" in git(1).
 此命令是实验性的.  行为可能会改变.
 
 ### 三者的区别
 
-有三个名称相似的命令: `git reset`, `git restore`和`git revert`.
+有三个名称相似的命令: `git reset`, `git restore`和 `git revert` .
 
-+ `git-revert (1)` 用于进行新的`commit`, 该`commit`将还原其他`commit`所做的更改.
-+ `git-restore (1)` 用于从`index`或另一个`commit`还原`working tree`中的文件.
-此命令不会更新您的分支.  该命令还可用于从另一个`commit`还原`index`中的文件.
-+ `git-reset (1)` 用于更新分支, 移动`tip`以从分支中添加或删除`branch`.  此操作更改`commit`历史记录.
++ `git-revert (1)` 用于进行新的 `commit` , 该 `commit` 将还原其他 `commit` 所做的更改.
++ `git-restore (1)` 用于从 `index` 或另一个 `commit` 还原 `working tree` 中的文件.
+此命令不会更新您的分支.  该命令还可用于从另一个 `commit` 还原 `index` 中的文件.
++ `git-reset (1)` 用于更新分支, 移动 `tip` 以从分支中添加或删除 `branch` .  此操作更改 `commit` 历史记录.
 
-+ `git reset`也可以用来还原`index`, 与`git restore`功能重叠.
++ `git reset`也可以用来还原 `index` , 与 `git restore` 功能重叠.
 
 ## git重命名文件夹
 
@@ -366,7 +367,7 @@ DESCRIPTION
 
 + `git mv game gamesdk`
 + `git commit -m 'rename dir game to gamesdk'`
-+ `git push origin dev`  推送到`dev`分支
++ `git push origin dev`  推送到 `dev` 分支
 
 ref: [git重命名文件夹](https://www.jianshu.com/p/e886fde18ba0)
 
@@ -414,9 +415,9 @@ ssh -T git@gitee.com
 + `git fetch <remote>` ; 从远程仓库抓取
 + `git push origin master` ; 推送到远程仓库
 + `git remote show origin` ; 查看远程仓库`origin`
-+ `git remote rename pb paul` ; 将远程仓库`pb`重命名为`paul`
++ `git remote rename pb paul` ; 将远程仓库 `pb` 重命名为`paul`
 + `git remote remove paul` ; 删除失效的远程仓库
-+ `git remote set-url origin` ; 修改远程仓库`origin`对应的地址
++ `git remote set-url origin` ; 修改远程仓库 `origin` 对应的地址
 
 ```bash
 git remote set-url [--push] <远程仓库名> <newurl> [<oldurl>]
@@ -426,13 +427,13 @@ git remote set-url --delete [--push] <远程仓库名> <url>
 
 + `--add` ;    添加地址, 而不是修改
 + `--delete` ; 删除所有匹配的地址
-+ `--push` ;   操作`push`地址而不是`fetch` URLs
++ `--push` ;   操作 `push` 地址而不是`fetch` URLs
 
 ### 设置多个远程
 
 [git 本地仓库同时推送到多个远程仓库](https://blog.csdn.net/fox9916/article/details/79386169)
 
-先准备两个空的远程仓库, 如果远程仓库里有`readme`这样的文件, 先`pull`一下, 如果`pull`的时候失败, 提示: `fatal: refusing to merge unrelated histories`
+先准备两个空的远程仓库, 如果远程仓库里有 `readme` 这样的文件, 先 `pull` 一下, 如果 `pull` 的时候失败, 提示: `fatal: refusing to merge unrelated histories`
 
 那么在进行 `git pull` 时, 添加一个可选项
 `git pull origin master --allow-unrelated-histories`
@@ -501,18 +502,18 @@ git remote set-url --add [--push] <name> <newurl>
 git remote set-url --delete [--push] <name> <url>
 ```
 
-为远程仓库设置新的链接,改变远程`<name>`的链接, 可以通过给出` <oldurl>`进一步确认.
+为远程仓库设置新的链接,改变远程 `<name>` 的链接, 可以通过给出 ` <oldurl>` 进一步确认.
 
 `--push `, 设置push URLs 而不是 fetch URLs
 `--add`, 不改变已经存在的 URLs, 添加新 URL
-`--delete`, 不改变已经存在的 URLs, 删除`<name>`上匹配 regex `<url>`的URLs.Trying to delete all non-push URLs is an error.
+`--delete`, 不改变已经存在的 URLs, 删除 `<name>` 上匹配 regex `<url>`的URLs.Trying to delete all non-push URLs is an error.
 
 ### 远程分支
 
 ***
 如果你的当前分支设置了`跟踪远程分支`, 那么可以用 `git pull` 命令来自动抓取后合并该远程分支到当前分支
 ***
-推送工作使用`git push <remote> <branch>`, 比如`$ git push origin serverfix`
+推送工作使用 `git push <remote> <branch>` , 比如`$ git push origin serverfix`
 
 这里有些工作被简化了.
 Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads/serverfix`,  意味着, 推送本地的serverfix 分支来更新远程仓库上的 serverfix 分支.
@@ -524,7 +525,7 @@ Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads
 
 ### 跟踪分支
 
-从一个远程跟踪分支`checkout`一个本地分支会自动创建所谓的`跟踪分支`(它跟踪的分支叫做`上游分支`).  跟踪分支是与远程分支有直接关系的本地分支.
+从一个远程跟踪分支 `checkout` 一个本地分支会自动创建所谓的`跟踪分支`(它跟踪的分支叫做`上游分支`).  跟踪分支是与远程分支有直接关系的本地分支.
 如果在一个跟踪分支上输入 `git pull`, Git 能自动地识别去哪个服务器上抓取, 合并到哪个分支.
 
 当克隆一个仓库时, 它通常会自动地创建一个跟踪 `origin/master` 的 `master` 分支.
@@ -538,7 +539,7 @@ Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads
 
 ## 删除远程分支
 
-可以运行带有`--delete`选项的`git push`命令
+可以运行带有 `--delete` 选项的 `git push` 命令
 
 ```bash
 $ git push origin --delete serverfix
@@ -554,30 +555,30 @@ git push [远程仓库] --delete [branchname]
 
 `git checkout -b|-B <new_branch> [<start point>]`
 
-指定`-b`选项, 将会创建新分支, 如同调用`git-branch(1)`, 然后`checkout`一样.
+指定 `-b` 选项, 将会创建新分支, 如同调用`git-branch(1)`, 然后 `checkout` 一样.
 
-在这种情况下, 你可以使用`--track` or `--no-track` options, 这些选项会传递给`git branch`
-为方便起见, `--track` without `-b`意味着创建新分支; 见`--track` 的描述
+在这种情况下, 你可以使用`--track ` or ` --no-track` options, 这些选项会传递给`git branch`
+为方便起见, `--track ` without ` -b`意味着创建新分支; 见`--track` 的描述
 
 ***
 `git checkout`:
 `-t, --track`
 
-当创建新分支的时候, 自动设置上游. 如果`-b` 选项没有给出, 本地分支的名字会从`remote-tracking branch`推导.`git`先查看本地中远程的`refspec`, 然后把前面的初始部分去掉.
+当创建新分支的时候, 自动设置上游. 如果`-b` 选项没有给出, 本地分支的名字会从 `remote-tracking branch` 推导. `git` 先查看本地中远程的 `refspec` , 然后把前面的初始部分去掉.
 也就是说, 如果远程名字是`origin/hack` (or `remotes/origin/hack`, 或者是`refs/remotes/origin/hack`),
-新的本地分支就叫做`hack`, 如果查询到的名称中没有`slash`(`/`), 或者上面的猜测得到一个空字符串, 那么猜测就会停止,
-你可以用`-b`选项手动指定一个名字.
+新的本地分支就叫做 `hack` , 如果查询到的名称中没有 `slash` (`/`), 或者上面的猜测得到一个空字符串, 那么猜测就会停止,
+你可以用 `-b` 选项手动指定一个名字.
 
 ***
 `git branch`:
 `-t`, `--track`
 
-当创建新分支的时候, 设置`branch.<name>.remote`和`branch.<name>.merge`条目,把`start-point branch`当作`upstream`(上游分支).
-这个配置会告诉`git`, 在`git status` and `git branch -v`命令中显示两个分支的关系.而且, 当切换到新分支的时候, 它指导不带参数的`git pull`从上游拉取更新.
+当创建新分支的时候, 设置 `branch.<name>.remote` 和 `branch.<name>.merge` 条目,把 `start-point branch` 当作 `upstream` (上游分支).
+这个配置会告诉 `git` , 在`git status ` and ` git branch -v`命令中显示两个分支的关系.而且, 当切换到新分支的时候, 它指导不带参数的 `git pull` 从上游拉取更新.
 
-如果 `start point` 是`remote-tracking`分支, 会默认进行上面的设置.
-如果你想让`git checkout` and `git branch`默认行为是`--no-track`, 也就是不自动跟踪上游,可以配置变量`branch.autoSetupMerge`为`false` .
-也可以设置成`always`, 这样不管`start-point`是本地还是远程分支, 都会自动跟踪.
+如果 `start point` 是 `remote-tracking` 分支, 会默认进行上面的设置.
+如果你想让`git checkout ` and ` git branch`默认行为是 `--no-track` , 也就是不自动跟踪上游,可以配置变量 `branch.autoSetupMerge` 为`false` .
+也可以设置成 `always` , 这样不管 `start-point` 是本地还是远程分支, 都会自动跟踪.
 
 ### 常见使用方法
 
@@ -589,23 +590,23 @@ git push [远程仓库] --delete [branchname]
 
 `git push -u origin <refspec>`
 
-第一次推送`source`分支的所有内容, 并把本地的`source`分支和远程的`destination`分支关联起来
+第一次推送 `source` 分支的所有内容, 并把本地的 `source` 分支和远程的 `destination` 分支关联起来
 
 ***
 `git push`:
 
 `<refspec>...`
 
-`<refspec>`指定用`source object`更新哪一个`destination ref`.
-`<refspec> `的格式是: 可选的`+`号, 接着一个`source object <src>`, 然后是`:`,
+`<refspec>`指定用 `source object` 更新哪一个 `destination ref` .
+`<refspec> `的格式是: 可选的`+`号, 接着一个 `source object <src>` , 然后是`:`,
 然后是the `destination ref <dst>`,就是`本地分支:远程分支`的格式,
 
-推送一个空的`<src>`相当于删除远程库中的`<dst> ref`.
+推送一个空的 `<src>` 相当于删除远程库中的 `<dst> ref` .
 特殊的refspec `:` (or `+:` to allow non-fast-forward updates) ,
 告诉Git推送匹配的分支: 如果远程库里存在和本地名字一样的分支, 就把本地分支推送过去.
 
 `--all`
-推送所有分支(i.e. `refs/heads/`下面的所有ref); 这时候不要再指定其他特定`<refspec>`.
+推送所有分支(i.e. `refs/heads/`下面的所有ref); 这时候不要再指定其他特定 `<refspec>` .
 
 ## git diff
 
@@ -630,25 +631,25 @@ git diff [<options>] --no-index [--] <path> <path>
 working tree v.s. stage
 `git diff [--options] [--] [<path>...]`
 
-默认相对于`index`(`stage`)的改动.
+默认相对于 `index` ( `stage` )的改动.
 
 ***
 path v.s. path
 `git diff --no-index [--options] [--] [<path>...]`
 
-文件系统上的两个`path`, 如果其中一个不是`Git`控制的`working tree`, 可以不加`--no-index`
+文件系统上的两个 `path` , 如果其中一个不是 `Git` 控制的 `working tree` , 可以不加`--no-index`
 
 ***
 stage v.s. commit
 `git diff [--options] --cached [<commit>] [--] [<path>...]`
 
-比较`staged` and `<commit>`, 默认commit 是 HEAD. `--staged` is a synonym of `--cached`.
+比较`staged ` and ` <commit>`, 默认commit 是 HEAD. `--staged ` is a synonym of ` --cached`.
 
 ***
 commit v.s. working tree
 `git diff [--options] <commit> [--] [<path>...]`
 
-比较 `working tree` 相对于`<commit>`, commit可以是HEAD, 也可以是分支名字, 就是比较 分支的顶端.
+比较 `working tree` 相对于 `<commit>` , commit可以是HEAD, 也可以是分支名字, 就是比较 分支的顶端.
 
 ***
 commit v.s. commit
@@ -659,7 +660,7 @@ commit v.s. commit
 ***
 `git diff [--options] <commit>..<commit> [--] [<path>...]`
 
-跟上一个相同, 如果有一边的`<commit>`省略, 则相当于`HEAD`
+跟上一个相同, 如果有一边的 `<commit>` 省略, 则相当于`HEAD`
 
 ***
 `git diff [--options] <commit>...<commit> [--] [<path>...]`
@@ -668,11 +669,11 @@ commit v.s. commit
 
 You can omit any one of `<commit>`, which has the same effect as using HEAD instead.
 
-为了避免你写的很奇怪, 注意所有的`<commit>`, 除了最后两个使用`..`记号的, 都可以是任何`<tree>`
+为了避免你写的很奇怪, 注意所有的 `<commit>` , 除了最后两个使用 `..` 记号的, 都可以是任何`<tree>`
 
-更完整的关于拼写`<commit>`的方法, 见"SPECIFYING REVISIONS" in gitrevisions(7)
+更完整的关于拼写 `<commit>` 的方法, 见"SPECIFYING REVISIONS" in gitrevisions(7)
 然而, `diff`比较的是两个 endpoints, 而不是一个范围.
-所以 `<commit>..<commit>`and `<commit>...<commit>`在这里指的不是范围.
+所以 `<commit>..<commit> `and ` <commit>...<commit>`在这里指的不是范围.
 
 ## 文件恢复
 
@@ -682,19 +683,19 @@ You can omit any one of `<commit>`, which has the same effect as using HEAD inst
 git checkout [<tree-ish>] [--] <pathspec>... ​
 ```
 
-用 `index`或者`<tree-ish>`(通常是一个`commit`)里面的内容替换`working tree`里面的 `pathspec` (可以有多个指定).
-当给出一个`<tree-ish>`的时候, the`paths` that match the `<pathspec>`会在`index` and in the `working tree`里面都更新.
+用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `pathspec` (可以有多个指定).
+当给出一个 `<tree-ish>` 的时候, the`paths ` that match the ` <pathspec>`会在`index ` and in the ` working tree`里面都更新.
 
-`index`中可能包含有之前合并失败的`entries`. 默认情况下, 如果你想`checkout `一个这样的entries, 会失败, 什么都不会发生.
-使用`-f`选项忽略未合并的entries.
+`index`中可能包含有之前合并失败的 `entries` . 默认情况下, 如果你想 `checkout ` 一个这样的entries, 会失败, 什么都不会发生.
+使用 `-f` 选项忽略未合并的entries.
 
-The contents from a specific side of the merge can be checked out of the `index` by using `--ours` or `--theirs`.
+The contents from a specific side of the merge can be checked out of the `index ` by using ` --ours ` or ` --theirs`.
 
 With `-m`, changes made to the working tree file can be discarded to re-create the original conflicted merge result.
 
 ### detached
 
-如果用`git checkout <commit>`切换到某次提交, 那么 `HEAD`不是指在某个指针(如`master`,`dev`)上的, 所以是游离的--`detached`,
+如果用 `git checkout <commit>` 切换到某次提交, 那么 `HEAD`不是指在某个指针(如 `master` , `dev` )上的, 所以是游离的-- `detached` ,
 
 如果这个时候进行更改, 并提交, 相当于创建了匿名分支, 所作的提交日后无法再索引到. 它们将被git的默认回收机制所回收.
 解决方法是创建新分支:
@@ -707,7 +708,7 @@ With `-m`, changes made to the working tree file can be discarded to re-create t
 
 [git删除中间某次提交](https://www.cnblogs.com/qiqi715/p/11540999.html)
 
-首先用`git log` or `gitk --all`获取`commit`信息
+首先用`git log ` or ` gitk --all`获取 `commit` 信息
 比如:
 
 ```git
@@ -721,7 +722,7 @@ commit 7753f40d892a8e0d14176a42f6e12ae0179a3210
 ...
 ```
 
-假如要删除备注为 `commit` 为`0fb295fe0e0`的这次提交
+假如要删除备注为 `commit` 为 `0fb295fe0e0` 的这次提交
 
 + 首先找到此次提交之前的一次提交的 `commit` `7753f40d89`
 + 执行如下命令
@@ -732,21 +733,21 @@ git rebase -i 7753f40
 
 解释:
 `git rebase -i  commit-id`
-commit-id 为要删除的 `commit` 的前一次`commit`号
+commit-id 为要删除的 `commit` 的前一次 `commit` 号
 `-i` `--interactive`
 
 将弹出一个编辑界面
 
-+ 根据提示编辑文件, 将要删除的`commit`之前的单词改为`drop` , 然后按照提示保存退出
++ 根据提示编辑文件, 将要删除的 `commit` 之前的单词改为`drop` , 然后按照提示保存退出
 
-+ 这样就删除了指定的`commit`, 可以使用`git log`查看下.
++ 这样就删除了指定的 `commit` , 可以使用 `git log` 查看下.
 `git push  –f` 然后推送到远程仓库. 此时 `commit 0fb295fe0e`就被干掉了, 不影响后面的提交
 
 说明:
 `-f`, `--force`
 
 通常, `git push`拒绝更新不是本地引用的祖先的远程引用, 从而避免覆盖它.
-另外, 当使用`--force-with-lease`选项时, `git push`将拒绝更新其与当前值不匹配的远程引用.
+另外, 当使用 `--force-with-lease` 选项时, `git push`将拒绝更新其与当前值不匹配的远程引用.
 `-f`将禁用这些检查, 并可能导致远程存储库丢失提交.  小心使用.
 
 ### 合并提交
@@ -857,7 +858,7 @@ s 871adf OK, feature Z 完成      --- 新的 commit
 #### 创建新的提交
 
 你刚刚告诉了 `Git` 将全部的 `7` 次 `提交` 合并到列表的第一个 `提交` 中. 
-现在要给它添加 `注释`: 你的编辑器会再次弹出一个带有 `默认消息` 的窗口, 内容合并了被压缩的所有`提交`的 `注释`.
+现在要给它添加 `注释`: 你的编辑器会再次弹出一个带有 `默认消息` 的窗口, 内容合并了被压缩的所有`提交 `的 ` 注释`.
 
 你可以保留默认的 `提交注释`, 这样最终的提交信息将会是这些临时提交的 `注释列表`, 如下所示:
 
@@ -876,7 +877,7 @@ feature Z 完成
 
 `Git` 仓库会随着时间的推移变得越来越大. 当`大文件`被添加到 `Git` 仓库时:
 
-+ 获取`repository`的速度会变慢, 因为大家必须下载这些文件.
++ 获取 `repository` 的速度会变慢, 因为大家必须下载这些文件.
 + 它们在服务器上占用了大量的存储空间.
 + `Git` 仓库的存储空间会达到极限.
 
@@ -885,14 +886,14 @@ feature Z 完成
 我们推荐 [git filter-repo](https://github.com/newren/git-filter-repo/blob/main/README.md), 而不是 `git filter-branch` 和 `BFG`.
 
 >警告. 重写`库历史`是一个破坏性的操作.
->开始之前, 确保备份你的`repository`. 备份repository的最好方法是[导出项目](http://code.ihep.ac.cn/help/user/project/settings/import_export.md#export-a-project-and-its-data).
+>开始之前, 确保备份你的 `repository` . 备份repository的最好方法是[导出项目](http://code.ihep.ac.cn/help/user/project/settings/import_export.md#export-a-project-and-its-data).
 
 ### 清除repository历史中的文件
 
 要减少 `GitLab` 仓库的大小, 首先必须从`分支`, `标签`和其他由 `GitLab` 自动创建的`内部引用`(refs)中删除对`大文件`的`引用`.
-其他由`GitLab`自动创建的`内部引用`(refs). 这些`refs`包括
+其他由 `GitLab` 自动创建的`内部引用`(refs). 这些 `refs` 包括
 
-+ `refs/merge-requests/*` ; 用于`merge `请求.
++ `refs/merge-requests/*` ; 用于 `merge ` 请求.
 + `refs/pipelines/*` ; 用于[管道](http://code.ihep.ac.cn/help/ci/troubleshooting.md#fatal-reference-is-not-a-tree-error).
 + `refs/environments/*` ; 用于环境.
 + `refs/keep-around/*` 被创建为`隐藏的 refs`, 以防止`数据库`中引用的`提交`被删除.
@@ -903,8 +904,8 @@ feature Z 完成
 + 使用包管理器, [安装git filter-repo](https://github.com/newren/git-filter-repo/blob/main/INSTALL.md)
 或从`源代码`安装.
 + [从项目生成一个新的导出](http://code.ihep.ac.cn/help/user/project/settings/import_export.html#export-a-project-and-its-data), 并下载它.
-这个项目导出包含了你的`仓库`和`refs`的备份, 我们可以用它来清除`repository`中的`文件`.
-    + 完整的项目`export`功能仅限于项目`维护者`和`所有者`. 你可以通过`项目设置`来配置这种功能. 要导出一个项目及其数据, 请遵循以下步骤.
+这个项目导出包含了你的`仓库`和 `refs` 的备份, 我们可以用它来清除 `repository` 中的`文件`.
+    + 完整的项目 `export` 功能仅限于项目`维护者`和`所有者`. 你可以通过`项目设置`来配置这种功能. 要导出一个项目及其数据, 请遵循以下步骤.
     + 转到你的项目主页.
     + 点击侧边栏的设置.
     + 向下滚动, 找到导出项目的按钮.
@@ -917,15 +918,15 @@ feature Z 完成
 
 解压结果会包含一个 `project.bundle`文件, 它是由 [git bundle](https://git-scm.com/docs/git-bundle) 创建的.
 
-+ 新建一个目录例, 从 `bundle` 克隆一个新鲜的`repository `.
++ 新建一个目录例, 从 `bundle` 克隆一个新鲜的 `repository ` .
 
    ```bash
    mkdir repofilter && cd repofilter # 新建目录
    git clone <project.bundle的路径>
    ```
 
-+ 使用 `git filter-repo`, 清除`repository`历史中的`任何文件`.
-因为我们正在试图删除`内部 refs`, 我们依靠每次运行产生的`commit-map`(提交图)来告诉我们哪些`内部 refs`需要删除.
++ 使用 `git filter-repo`, 清除 `repository` 历史中的`任何文件`.
+因为我们正在试图删除`内部 refs`, 我们依靠每次运行产生的 `commit-map` (提交图)来告诉我们哪些`内部 refs`需要删除.
    > 注意. `git filter-repo` 每次运行都会创建一个新的 `commit-map` 文件, 并覆盖上一次运行产生的 `commit-map`.
    >  You need this file from every run. 请在每次运行 `git filter-repo` 时都要做下一步.
 
@@ -942,7 +943,7 @@ feature Z 完成
    ```
 
    参见[git filter-repo 文档](https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#EXAMPLES), 获取更多的例子和完整的文档.
-+ 因为从 `bundle` 文件克隆会将 `origin remote` 设置为本地 `bundle` 文件, 所以删除这个`origin remote`, 并将其设置为你的仓库的 `URL`.
++ 因为从 `bundle` 文件克隆会将 `origin remote` 设置为本地 `bundle` 文件, 所以删除这个 `origin remote` , 并将其设置为你的仓库的 `URL`.
 
    ```bash
    git remote show  # 查看现有的远程仓库
@@ -958,9 +959,9 @@ feature Z 完成
 
    [受保护的分支](http://code.ihep.ac.cn/help/user/project/protected_branches.md)会导致推送失败.
    要继续, 您必须`移除`分支保护, `推送`, 然后再重新启用`受保护的分支`.
-   在侧边栏: `settings->Repository->Protected branches, Protected tags `, 展开之后选择`unprotect`.
+   在侧边栏: `settings->Repository->Protected branches, Protected tags `, 展开之后选择 `unprotect` .
 
-   从`tagged releases`中删除`大文件`, 请强制推送您的修改到 `GitLab` 上的所有`tags `.
+   从 `tagged releases` 中删除`大文件`, 请强制推送您的修改到 `GitLab` 上的所有 `tags ` .
 
    ```bash
    git push origin --force 'refs/tags/*'
@@ -969,7 +970,7 @@ feature Z 完成
    [受保护的标签](http://code.ihep.ac.cn/help/user/project/protected_tags.md)会导致推送失败.
    要继续, 你必须`移除`标签保护, 然后`推送`, 再重新启用`受保护的标签`.
 
-   为了防止产生指向不存在`提交`的`dead links`, 推送由 `git filter-repo` 创建的 `refs/replace`.
+   为了防止产生指向不存在`提交`的 `dead links` , 推送由 `git filter-repo` 创建的 `refs/replace`.
 
    ```bash
    git push origin --force 'refs/replace/*'
@@ -988,9 +989,9 @@ git push origin --force 'refs/replace/*'
 ### 更新其他的clone
 
 在过滤存储库, 并重写提交历史后, 将更改`强制推送`到远程服务器之后.
-现在要更新该`存储库`的每一份`clone`, 仅靠常用的`pull`是无法做到这一点的.
+现在要更新该`存储库`的每一份 `clone` , 仅靠常用的 `pull` 是无法做到这一点的.
 
-从远程服务器获取存储库, 再使用 `git reset` 将`HEAD`移动到 `origin/master`.
+从远程服务器获取存储库, 再使用 `git reset` 将 `HEAD` 移动到 `origin/master`.
 
 ```bash
 # git 会自动检测到远程服务器进行了 force update
@@ -1017,7 +1018,7 @@ git gc --prune=now
 要清理一个 `repository`.
 
 + 转到该 `repository` 的项目.
-+ 导航到`settings > repository`.
++ 导航到 `settings > repository` .
 + 上传`对象列表`. 例如, 一个由 `git filter-repo` 创建的 `commit-map` 文件, 它位于 `filter-repo` 目录.
 + 如果你的 `commit-map` 文件大于 `250KB` 或 `3000 行`, 可以将该文件拆分并逐块上传.
 
@@ -1032,12 +1033,12 @@ git gc --prune=now
 + 删除任何内部 `Git` 对`旧提交`的`引用`.
 + 对仓库运行 `git gc --prune=30.minutes.against`, 以`删除未引用的对象`.
 + 暂时重新打包你的仓库, 导致你的仓库的大小显著增加, 因为旧的打包文件不会被`删除`, 直到新的包文件被创建之前, 旧的包文件不会被删除.
-+ 解除连接到你的项目的任何未使用的`LFS`对象的`链接`, 释放出存储空间. 重新计算磁盘上存储库的大小.
++ 解除连接到你的项目的任何未使用的 `LFS` 对象的`链接`, 释放出存储空间. 重新计算磁盘上存储库的大小.
 
 清理工作完成后, `GitLab` 会发送一封电子邮件通知, 告知重新计算的仓库大小.
 
 如果仓库的大小没有减少, 这可能是由于`松散的对象`被保留下来, 因为它们被引用了.
-也就是在过去30分钟内发生的`Git`操作中, 引用了这些`松散的对象`
+也就是在过去30分钟内发生的 `Git` 操作中, 引用了这些`松散的对象`
 试着在仓库休眠至少30分钟后重新运行这些步骤. 当使用仓库清理时, 注意.
 
 + 项目的统计数据是`缓存的`. 你可能需要等待 `5-10` 分钟才能看到存储利用率的降低.
@@ -1060,15 +1061,15 @@ git gc --prune=now
 
 ### 描述
 
-使用用户指定的`filters`快速重写整个`版本库`历史.
-这是一个破坏性的操作, 不能轻易使用; 它写入新的`提交`, `树`, `标签`和 `blobs`, 对应于版本库中的原始对象, 但经过`过滤`, 然后删除`原始历史`, 只留下新的.
+使用用户指定的 `filters` 快速重写整个`版本库`历史.
+这是一个破坏性的操作, 不能轻易使用; 它写入新的`提交`, `树`, `标签 `和 ` blobs`, 对应于版本库中的原始对象, 但经过`过滤`, 然后删除`原始历史`, 只留下新的.
 关于使用这个工具的更多细节, 请参见 `[DISCUSSION]` . 可以进行多种不同类型的`历史重写`; 例子包括(但不限于).
 
 + 剥离大文件(或大目录或大扩展名).
 + 按`路径`剥离(stripping)不需要的文件
 + `提取`想要的路径和它们的历史(剥离其他的东西)
 + 重组`文件布局`(比如将所有文件移到一个子目录中, 准备与另一个 `repo` 合并, 使一个子目录成为新的顶层目录, 或者将两个有独立文件名的目录合并到一个目录中).
-+ 重命名`tags`(通常也是为了准备与另一个 `repo` 合并).
++ 重命名 `tags` (通常也是为了准备与另一个 `repo` 合并).
 + 替换或删除敏感文本, 如密码
 + 永久性的重写`用户名`或`电子邮件`的`mailmap`
 + 永久性的`移植`或替换`refs`
@@ -1078,8 +1079,8 @@ git gc --prune=now
 
 + 重写`提交`信息中的`哈希值`(可能是缩写的), 指向`重写后`的`新提交`的哈希值
 + `修剪`(pruning)`空提交`, 产生自使用`过滤器`(也处理边缘情况, 如修剪之后变成`退化`和`空`的`合并提交`).
-+ 为旧的`commit 哈希`创建`replace-refs`, 见 [git-replace(1)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/newren/git-filter-repo/docs/html/git-replace.html).
-如果手动`pushed`和`fetched`, 将允许用户继续使用(非缩写的)`旧的提交ID`来引用`新的提交`
++ 为旧的`commit 哈希`创建 `replace-refs` , 见 [git-replace(1)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/newren/git-filter-repo/docs/html/git-replace.html).
+如果手动 `pushed` 和 `fetched` , 将允许用户继续使用(非缩写的)`旧的提交ID`来引用`新的提交`
 + `剥离`(stripping)`原历史`, 以避免新旧历史的混合
 + `rewrite`后, `重新打包`版本库, 为用户缩小版本库的体积
 
@@ -1087,13 +1088,13 @@ git gc --prune=now
 
 + 如果从不是新鲜克隆(fresh clone)的 `repo` 中运行, 则`中止`(abort, 以防止, 因改写不存在于其他地方的`本地历史`, 而意外丢失数据). 见`[FRESHCLONE]`.
 + 对于那些知道他们的`历史`中有大量不需要的东西, 并希望帮助找到它的人,
-也提供了一个`选项`来`analyze`版本库并生成报告, 这对决定过滤什么很有用(或者决定一个单独的过滤命令是否成功).
+也提供了一个`选项`来 `analyze` 版本库并生成报告, 这对决定过滤什么很有用(或者决定一个单独的过滤命令是否成功).
 
 参见 `[VERSATILITY]`, `[DISCUSSION]`, `[EXAMPLES]`, 和 `[INTERNALS]`.
 
 ### 选项
 
-`--analyze` ;  分析`repository`历史, 并创建一份报告, 对于确定在后续运行中过滤什么可能很有用, 或确定之前的过滤命令是否达到了你想要的效果. 不会修改你的 `repo`.
+`--analyze` ;  分析 `repository` 历史, 并创建一份报告, 对于确定在后续运行中过滤什么可能很有用, 或确定之前的过滤命令是否达到了你想要的效果. 不会修改你的 `repo`.
 
 基于`路径`的过滤(参见-filename-callback)
 
@@ -1101,7 +1102,7 @@ git gc --prune=now
 + `--path-match   <dir_or_file> <dir_or_file>.`
 + `--path <dir_or_file> `; 确切的路径(文件或目录), 将被包括在`过滤历史`中. 可以指定多个 `--path` 选项来获得一个路径的并集(union).
 + `--path-glob <glob>` ; 要包含在`过滤的历史`的`glob 路径`(也就是 shell 展开). 可以指定多个`--path-glob` 选项来获得路径的并集.
-+ `--path-regex <regex>`; 包含在`过滤的历史`的 `Regex` 路径.可以指定多个 `--path-regex` 选项来获得路径的联合.
++ `--path-regex <regex>`; 包含在`过滤的历史 `的 ` Regex` 路径.可以指定多个 `--path-regex` 选项来获得路径的联合.
 + `--use-base-name ` ; 匹配文件基本名称(basename), 而不是从 `repo` 顶部开始的全路径. 与 `--path-rename` 不兼容, 与即于`目录名`的匹配不兼容.
 
 ### 例子
@@ -1118,7 +1119,7 @@ git filter-repo --path README.md --path guides/ --path tools/releases
 git filter-repo --path README.md --path guides/ --path tools/releases --invert-paths
 ```
 
-如果你想同时指定一个`inclusion`过滤器和一个`exclusion`过滤器, 只需多次运行 `filter-repo`.
+如果你想同时指定一个 `inclusion` 过滤器和一个 `exclusion` 过滤器, 只需多次运行 `filter-repo`.
 例如, 要保留 `src/main` 子目录, 但排除 `src/main` 下名为 `data` 的文件, 运行
 
 ```bash
@@ -1171,13 +1172,13 @@ git filter-repo --path-rename sources/:src/main/ --path src/main/
 git filter-repo --path src/main/ --path-rename tools/:scripts/
 ```
 
-将不会选中`tools`或`scripts`目录, 让它们出现在结果中, 因为单个`过滤器`只选择了 `src/main/`. 你想运行的其实是,
+将不会选中 `tools` 或 `scripts` 目录, 让它们出现在结果中, 因为单个`过滤器`只选择了 `src/main/`. 你想运行的其实是,
 
 ```bash
 git filter-repo --path src/main/ --path tools/ --path-rename tools/:scripts/
 ```
 
-如果你喜欢只根据`basename`来过滤, 可以使用 `--use-base-name` 标志(flag, 不过这与 `--path-rename` 不兼容).
+如果你喜欢只根据 `basename` 来过滤, 可以使用 `--use-base-name` 标志(flag, 不过这与 `--path-rename` 不兼容).
 例如, 只选中在任何目录下的 `README.md` 和 `Makefile` 文件.
 
 ```bash
@@ -1229,7 +1230,7 @@ git filter-repo --paths-from-file stuff-i-want.txt
 
 来得到一个只包含顶层 `README.md` 文件, `guidelines/` 和 `tools/releases/` 目录, 所有 `python` 文件,
 名称为 `YYY-MM-DD.txt` 且目录深度至少两层的文件的 `repo`, 并将 `tools/` 重命名为 `scripts/`, 将 `foo/bar/baz.text` 等文件重命名为 `bar/foo/baz.txt`.
-注意特殊行前缀 `glob:`和 `regex:`, 以及表示`重命名`的特殊字符串 `==>`.
+注意特殊行前缀 `glob: `和 ` regex:`, 以及表示`重命名`的特殊字符串 `==>`.
 
 有时, 你可以轻松地生你想保留的文件的列表.
 例如, 如果您知道当前`追踪`(tracked)的文件中没有任何`换行符`或`特殊字符`(参见 `git config --help` 中的 `core.quotePath`),
@@ -1277,7 +1278,7 @@ bar.c
 git filter-repo --subdirectory-filter module/
 ```
 
-如果你想要原来`repo`中的所有文件, 但想把所有文件移到一个名为`my-module/`的子目录下, 这样你的`新目录结构`看起来就像
+如果你想要原来 `repo` 中的所有文件, 但想把所有文件移到一个名为`my-module/`的子目录下, 这样你的`新目录结构`看起来就像
 
 ```conf
 my-module/
@@ -1298,7 +1299,7 @@ git filter-repo --to-subdirectory-filter my-module/
 
 ### fresh clone 安全检查和 --force
 
-由于 `filter-repo` 会对历史进行`不可逆`的重写, 因此必须避免对用户`没有良好备份`的 `repo` 进行修改.
+由于 `filter-repo` 会对历史进行`不可逆`的重写, 因此必须避免对用户`没有良好备份 `的 ` repo` 进行修改.
 主要的`防御机制`是简单地教导用户, 并依靠他们成为数据的好管家; 因此在文档中对 `filter repo` 如何重写历史有几个警告.
 
 然而, 作为对用户的一项服务, 我们想在`文档`之外提供额外的`安全检查`.
@@ -1323,19 +1324,19 @@ git filter-repo --to-subdirectory-filter my-module/
 ***
 `--depth <depth>`:
 
-创建一个浅表克隆, 其历史记录将被截断为指定的提交数. 暗示使用了`--single-branch`, 除非给出`--no-single-branc`来获取所有分支的tip附近的历史记录.
-如果要浅层克隆`--no-single-branc`, 则还要传递`--shallow-submodules`.
+创建一个浅表克隆, 其历史记录将被截断为指定的提交数. 暗示使用了 `--single-branch` , 除非给出 `--no-single-branc` 来获取所有分支的tip附近的历史记录.
+如果要浅层克隆 `--no-single-branc` , 则还要传递 `--shallow-submodules` .
 
 ***
 `-C <path>`:
-将`git`的起始目录设置成`<paht>`.  给定多个`-C`选项时,  后面每个不是绝对路径的指定, 将和前面的连接起来.
-如果`<path>`存在但为空, 例如`-C`, 则当前工作目录保持不变.
+将 `git` 的起始目录设置成 `<paht>` .  给定多个 `-C` 选项时,  后面每个不是绝对路径的指定, 将和前面的连接起来.
+如果 `<path>` 存在但为空, 例如 `-C` , 则当前工作目录保持不变.
 
 ### short
 
 + `gcl`='git clone --recurse-submodules', `git clone  <仓库> [本地目录]`, 也就是后面可以跟上本地目录位置.
 
-`git clone -b <name>`; 克隆之后, 指向`<name>`分支, 如`release`.
+`git clone -b <name>`; 克隆之后, 指向 `<name>` 分支, 如 `release` .
 
 + `gst`='git status'
 + `gaa`='git add --all'
@@ -1375,10 +1376,10 @@ git filter-repo --to-subdirectory-filter my-module/
 + `-D`: 与 `--delete --force`相同.
 + `-d, --delete` ;删除分支. 该分支必须完全被合并到上游, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游, or in `HEAD`.
 + `-f, --force`: 将 `<branchname>` 重置为 `<startpoint>`, 即使 `<branchname>` 已经存在.  如果没有 `-f`, `git branch` 将拒绝更改现有分支.
-结合`-d`(或`--delete`), 允许删除分支, 而不管其合并状态如何.
-结合`-m`(或`--move`), 即使新分支名称已经存在, 也允许重命名分支, 同样适用于`-c`(或`--copy`).
-+ `-m` `-M`: 对分支进行重命名, 并且把`reflog`出现的分支名字一并更改. 如果新分支已经存在, 使用`-M`强迫重命名
-+ `-r`,` --remotes`列出或删除(与 `-d` 一起使用)远程跟踪分支.
+结合 `-d` (或 `--delete` ), 允许删除分支, 而不管其合并状态如何.
+结合 `-m` (或 `--move` ), 即使新分支名称已经存在, 也允许重命名分支, 同样适用于 `-c` (或 `--copy` ).
++ `-m` `-M`: 对分支进行重命名, 并且把 `reflog` 出现的分支名字一并更改. 如果新分支已经存在, 使用 `-M` 强迫重命名
++ `-r`, ` --remotes` 列出或删除(与 `-d` 一起使用)远程跟踪分支.
 
 ### add
 
@@ -1390,9 +1391,9 @@ git filter-repo --to-subdirectory-filter my-module/
 
 选项:
 
-+ `-p`, `--patch`: 交互式地选择更新的内容. 能够使用户在增加文件前查看与`index`的不同.
-+ `-u`,` --update`: 更新 `index` 中匹配 `working tree`的文件. 移除相比`working tree`多余的, 但是不会增加新的文件. 如果没有给出具体的`<pathspec>`, `working tree`中所有被追踪的文件都会被更新, 下同.
-+ `-A`,`--all`,`--no-ignore-removal`: 添加, 修改, 删除`index entries`, 使之完全匹配`working tree`.
++ `-p`, `--patch`: 交互式地选择更新的内容. 能够使用户在增加文件前查看与 `index` 的不同.
++ `-u`, ` --update` : 更新 `index` 中匹配 `working tree`的文件. 移除相比 `working tree` 多余的, 但是不会增加新的文件. 如果没有给出具体的 `<pathspec>` , `working tree`中所有被追踪的文件都会被更新, 下同.
++ `-A`, `--all` , `--no-ignore-removal` : 添加, 修改, 删除 `index entries` , 使之完全匹配 `working tree` .
 
 ### commit
 
@@ -1407,12 +1408,12 @@ git filter-repo --to-subdirectory-filter my-module/
 
 选项:
 
-+ `-a`, `--all`: 自动`stage`所有被修改或删除的文件, 但是还没有被`Git`追踪的文件不受影响. 也就是跳过使用`index`.
-+ `-v`, `--verbose`: 在提交信息的尾部, 展示`HEAD`和将要提交`commit`的`diff`. 这个`diff`的输出行没有前置的`#`. 并且不是提交信息的一部分. See the commit.verbose configuration variable in git-config(1).
-如果使用两次,i.e.`-vv`, 则额外展示`working tree`和`next commit`的区别
-+ `--amend`: 创造一个新的`commit`, 代替当前分支的`tip`. 提交信息基于上次的`commit`.
-+ `-m`: 添加提交信息, 可以给出多个`-m`, 会被当作多个段落被合并.
-+ `-s`,`-S`:签名相关
++ `-a`, `--all`: 自动 `stage` 所有被修改或删除的文件, 但是还没有被 `Git` 追踪的文件不受影响. 也就是跳过使用 `index` .
++ `-v`, `--verbose`: 在提交信息的尾部, 展示 `HEAD` 和将要提交 `commit` 的 `diff` . 这个 `diff` 的输出行没有前置的`#`. 并且不是提交信息的一部分. See the commit.verbose configuration variable in git-config(1).
+如果使用两次,i.e. `-vv` , 则额外展示 `working tree` 和 `next commit` 的区别
++ `--amend`: 创造一个新的 `commit` , 代替当前分支的 `tip` . 提交信息基于上次的 `commit` .
++ `-m`: 添加提交信息, 可以给出多个 `-m` , 会被当作多个段落被合并.
++ `-s`, `-S` :签名相关
 
 ### checkout cherry-pick
 
@@ -1425,32 +1426,32 @@ git filter-repo --to-subdirectory-filter my-module/
 选项:
 
 + `git checkout -b|-B <new_branch> [<start point>]`:
-指定`-b`选项会创建新分支, 如同调用了`git branch`一样, 然后check out到新分支一样.
-可以使用`--track` or `--no-track`选项, 它们会被传递给`git branch`.
-为了方便起见, `--track` without `-b`意味着创建新分支.
-如果给的是`-B`, 新分支会被创建, 或者直接`reset`已存在的分支,
+指定 `-b` 选项会创建新分支, 如同调用了 `git branch` 一样, 然后check out到新分支一样.
+可以使用`--track ` or ` --no-track`选项, 它们会被传递给 `git branch` .
+为了方便起见, `--track ` without ` -b`意味着创建新分支.
+如果给的是 `-B` , 新分支会被创建, 或者直接 `reset` 已存在的分支,
 相当于`git branch -f <branch> [<start point>] ; git checkout <branch>`
 
-`git-cherry-pick` :从已经存在的一系列`commits`中应用改变
+`git-cherry-pick` :从已经存在的一系列 `commits` 中应用改变
 
-给出一个或者多个已经存在的`commits`, 然后`apply`每个的`change`, 对于每个改变生成一个`commit`.
-需要`working tree`是`clean`的.  (从 HEAD commit 之后没有修改过).
+给出一个或者多个已经存在的 `commits` , 然后 `apply` 每个的 `change` , 对于每个改变生成一个 `commit` .
+需要 `working tree` 是 `clean` 的.  (从 HEAD commit 之后没有修改过).
 
 选项:
 
 `--abort`: 取消操作, 回复到pre-sequence 状态.
-`--continue`: 继续操作, 利用`.git/sequencer.`中的信息. 可以在`cherry-pick` or `revert`失败, 解决冲突之后使用.
+`--continue`: 继续操作, 利用`.git/sequencer.`中的信息. 可以在`cherry-pick ` or ` revert`失败, 解决冲突之后使用.
 
 ### gitk & log
 
 ***
 
-1. `git-shortlog` - 总结`git log`的输出.
+1. `git-shortlog` - 总结 `git log` 的输出.
 
 选项:
 
 `-n`, `--numbered`:对输出结果进行排序, 按照每个提交者的提交数量, 而不是字母顺序.
-`-s`, `--summary`: 压缩`commit`描述, 只总结`commit`数量.
+`-s`, `--summary`: 压缩 `commit` 描述, 只总结 `commit` 数量.
 
 ***
 ` gitk [<options>] [<revision range>] [--] [<path>...]`
@@ -1458,8 +1459,8 @@ git filter-repo --to-subdirectory-filter my-module/
 2. `gk`='\gitk --all --branches'
 3. `gke`='\gitk --all $(git log -g --pretty=%h)'
 
-`--all`:把`refs/`下的所有条目, 包括`HEAD`都用 `<commit>`的形式列出
-`--branches[=<pattern>]`: 类似`--all`, 但是要匹配`shell glob`模式, `?`, `*`, or `[`, `/*`
+`--all`:把`refs/`下的所有条目, 包括 `HEAD` 都用 `<commit>`的形式列出
+`--branches[=<pattern>]`: 类似 `--all` , 但是要匹配 `shell glob` 模式, `?`, `*`, or `[`, `/*`
 `--tags[=<pattern>]`: 类似`--branches`
 
 `gitk`可以查看单个文件的提交历史, 使用`gitk filepath`
@@ -1478,7 +1479,7 @@ git filter-repo --to-subdirectory-filter my-module/
 
 ### rebase
 
-假如我们现在在`topic`分支上:
+假如我们现在在 `topic` 分支上:
 
 ```diagram
        A---B---C topic
@@ -1503,7 +1504,7 @@ D---E---F---G master
 
 ***
 --onto 用法
-假设`topic`基于`next`
+假设 `topic` 基于`next`
 
 ```diagram
  o---o---o---o---o  master
@@ -1513,7 +1514,7 @@ D---E---F---G master
                          o---o---o  topic
 ```
 
-我们想把`topic`移动到`master`分支上, 最后想得到下面这个图
+我们想把 `topic` 移动到 `master` 分支上, 最后想得到下面这个图
 
 ```diagram
 o---o---o---o---o  master
@@ -1529,7 +1530,7 @@ o---o---o---o---o  master
 git rebase --onto master next topic
 ```
 
-也就是说, rebase 这个运算是向左进行的, `topic - next`, 然后应用到`master`上.
+也就是说, rebase 这个运算是向左进行的, `topic - next`, 然后应用到 `master` 上.
 
 ### push
 
@@ -1541,11 +1542,11 @@ git rebase --onto master next topic
 
 选项:
 
-`-n`, `--dry-run`: 模拟运行所有步骤, 但不实际发送更新.
-`--all`: Push all branches (i.e. refs under `refs/heads/`); cannot be used with other `<refspec>`.
-` --prune`: 删除远程分支, 如果它没有local对应.
-`--force-with-lease` 单独使用,不指定细节, 将会保护所有远程分支, 如果远程分支的名字和remote-tracking branch 一样才更新.
-`-f`, `--force`: 通常, 远程分支是本地分支祖先的时候, 才会更新, 并且名字需要和期望的一样. `-f`选项禁用这些检查, 可能会使远程库丢失`commit`, 小心使用.
++ `-n`, `--dry-run`: 模拟运行所有步骤, 但不实际发送更新.
++ `--all`: Push all branches (i.e. refs under `refs/heads/`); cannot be used with other `<refspec>`.
++ ` --prune`: 删除远程分支, 如果它没有local对应.
++ `--force-with-lease` 单独使用,不指定细节, 将会保护所有远程分支, 如果远程分支的名字和remote-tracking branch 一样才更新.
++ `-f`, `--force`: 通常, 远程分支是本地分支祖先的时候, 才会更新, 并且名字需要和期望的一样. `-f`选项禁用这些检查, 可能会使远程库丢失 `commit` , 小心使用.
 
 ### fetch
 
@@ -1566,10 +1567,10 @@ git rebase --onto master next topic
 
 选项:
 
-1.`--all`: fetch all remotes.
+1. `--all`: fetch all remotes.
 2. `-r`,` --rebase[=false|true|preserve|interactive]`:
-当设置为`true`时, `rebase`当前分支on top of the upstream branch after fetching.
-如果某一`remote-tracking branch`对应的`upstream`在上次`fetch`之后`rebase`过, `rebase`使用那些信息避免`rebase`非本地的改变.
+当设置为 `true` 时, `rebase`当前分支on top of the upstream branch after fetching.
+如果某一 `remote-tracking branch` 对应的 `upstream` 在上次 `fetch` 之后 `rebase` 过, `rebase`使用那些信息避免 `rebase` 非本地的改变.
 
 ### diff
 
@@ -1582,18 +1583,18 @@ git rebase --onto master next topic
 选项:
 
 1. `--color[=<when>]`: 展示着色的diff.
-` --color` (i.e. `without =<when>`) is the same as `-color=always`.
-` <when>` can be one of `always`, `never`, or `auto`
+` --color` (i.e. `without =<when> `) is the same as ` -color=always`.
+` <when> ` can be one of ` always`, `never`, or `auto`
 
-2. `--word-diff[=<mode>]`: Show a word diff, 使用`<mode>`定界改变的`words`.
-默认的定界符是`whitespace`,参见下面的`--word-diff-regex`.
-`<mode>`默认是`plain`, 可以是以下之一:
+2. `--word-diff[=<mode>]`: Show a word diff, 使用 `<mode>` 定界改变的 `words` .
+默认的定界符是 `whitespace` ,参见下面的 `--word-diff-regex` .
+`<mode>`默认是 `plain` , 可以是以下之一:
 
 + `color`: Highlight changed words using only colors. Implies --color.
-+ `plain`: Show words as `[-removed-]` and `{+added+}`. 不尝试`escape`定界符号, 如果它们出现在input中, 所以可能有歧义.
++ `plain `: Show words as ` [-removed-] ` and ` {+added+}`. 不尝试 `escape` 定界符号, 如果它们出现在input中, 所以可能有歧义.
 + `porcelain`: 使用一种特殊的line-based格式for script consumption.
 Added/removed/unchanged runs are printed in the usual unified diff format,
-starting with a `+/-/` character at the beginning of the line and extending to the end of the line. Newlines in the input are represented by a tilde `~` on a line of its own.
+starting with a `+/-/ ` character at the beginning of the line and extending to the end of the line. Newlines in the input are represented by a tilde ` ~` on a line of its own.
 + `none`: Disable word diff again.
 
 注意: 不管使用哪个模式, 都会使用颜色标示改变, 如果可用的话.
