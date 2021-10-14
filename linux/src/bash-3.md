@@ -1403,9 +1403,9 @@ AB在同一局域网,C位于外网.
 + 查看环境变量`$XDG_CURRENT_DESKTOP`的值来看自己处于哪个图形环境.
 + 重启输入法; `ibus restart`: 
 + 重启 ibus 守护进程； `ibus-daemon -drx`
-  + `-d --daemonize`:作为后台程序运行
-  + `-r, --replace`: 如果有旧的`ibus-daemon`在运行, 就替换它. 
-  + `-x, --xim`: 运行`XIM`服务器
+    + `-d --daemonize`:作为后台程序运行
+    + `-r, --replace`: 如果有旧的`ibus-daemon`在运行, 就替换它. 
+    + `-x, --xim`: 运行`XIM`服务器
 
 + gedit设置默认编码UTF-8;
 [gedit默认编码设置](https://blog.csdn.net/miscclp/article/details/39154639).

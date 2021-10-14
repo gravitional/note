@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-texPath=$1;
+texPath=$1
 
 if [[ $2 != "" ]]; then
 	texEngine=$2
@@ -8,7 +8,6 @@ else
 	texEngine="xelatex"
 fi
 # 设置格式化相关的部分
-nameis="name is :"
 # 定义一个打印的函数,并且加上颜色输出
 function echo2() {
 	delimiter1="-------------------------------------------------------"
@@ -16,15 +15,18 @@ function echo2() {
 	echo -e "${delimiter1}\n\033[1;44m\033[1;37m$*\033[0;0m\n${delimiter2}"
 }
 # 打印当前目录
-echo2 "current directory is $(pwd)  "
+echo2 "current directory is: "
+pwd
 # tex主文档的默认文件名是 main.tex
 texUsual="main.tex"
-echo2 "texUsual" $nameis $texUsual
+echo2 "texUsual name is: $texUsual"
 # 当前tex文件列表
-texHere=$(find . -mindepth 1 -maxdepth 1 -type f -iname '*.tex' -print0 | xargs --null echo)
-echo2 "tex here $nameis $texHere"
+declare -a texArr=($(find . -mindepth 1 -maxdepth 1 -type f -iname '*.tex' -print0 | xargs --null echo))
+texHere=${texArr[@]:0:5}
+echo2 "The first 5 .tex files here are:"
+ls --color=always -h $texHere
 
-# 如果有命令行参数，优先使用
+# 如果有命令行参数，优先使用, 后面会去掉后缀名.
 result=$(echo $texHere | grep -iP "main.tex")
 if [[ $texPath != "" ]]; then
 	texHere=$texPath
