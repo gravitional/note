@@ -24,3 +24,8 @@
     - [定义枚举](rust-6-1.md)
     - [match 控制流运算符](rust-6-2.md)
     - [if let 简洁控制流](rust-6-3.md)
+
+- [常见集合](rust-8.md)
+    - [vector](rust-8-1.md)
+    - [字符串](rust-8-2.md)
+    - [哈希 map](rust-8-3.md)
