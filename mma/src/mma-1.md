@@ -6,6 +6,13 @@
 
 ## 常用脚本
 
+### Benchmark
+
+```mathematica
+Needs["Benchmarking`"]
+BenchmarkReport[]
+```
+
 ### 初始化单元
 
 + 计算环境变量

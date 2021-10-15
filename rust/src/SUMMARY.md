@@ -25,6 +25,13 @@
     - [match 控制流运算符](rust-6-2.md)
     - [if let 简洁控制流](rust-6-3.md)
 
+- [使用包, Crate 和模块管理不断增长的项目](rust-7.md)
+    - [包和crate](rust-7-1.md)
+    - [定义模块来控制作用域和私有性](rust-7-2.md)
+    - [路径用于模块树中的项](rust-7-3.md)
+    - [使用 use 关键字将名称引入作用域](rust-7-4.md)
+    - [将模块分割进不同文件](rust-7-5.md)
+
 - [常见集合](rust-8.md)
     - [vector](rust-8-1.md)
     - [字符串](rust-8-2.md)
