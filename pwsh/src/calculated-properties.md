@@ -1,6 +1,4 @@
-# 关于系列
-
-## 关于计算属性
+# 关于计算属性
 
 [about_Calculated_Properties](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_calculated_properties?view=powershell-7)
 
@@ -17,7 +15,7 @@
 `计算属性`由[哈希表](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_hash_tables?view=powershell-7)定义,
 该哈希表包含一些键值对, 指定`新属性名`, 用于计算值的`表达式`, 以及可选的`格式化`信息.
 
-### 受支持的 cmdlet
+## 受支持的 cmdlet
 
 以下 `cmdlet` 支持设置 `Property` 参数的值, 来产生`计算属性`.
 `Format-*cmdlet` 还支持 `GroupBy` 参数的计算值.
@@ -71,12 +69,12 @@
 
 > 备注; `expression` 的值可以是 `脚本块`, 而不是`哈希表`.  有关详细信息, 请参阅 `备注` 部分.
 
-### 哈希表键定义
+## 哈希表键定义
 
 + `name/label` ; 指定要创建的`属性`的`名称 `.  ` name`和它的别名 `label`, 可以互换使用.
 + `expression` ; 用于计算`新属性`的`值`的`脚本块`.
 + `alignment` ; 由生成`表格输出 `的 ` cmdlet` 使用, 用于定义`值`在`列`中的显示方式.  值必须为 `'left'`, `'center'` 或 `'right'`.
-+ `formatstring` ; 指定一个`格式化字符串`, 该`字符串`定义如何为`输出`设置`值`的`格式`.  有关格式字符串详细信息, 
++ `formatstring` ; 指定一个`格式化字符串`, 该`字符串`定义如何为`输出`设置`值`的`格式`.  有关格式字符串详细信息,
 请参阅[.NET 中的格式类型](https://docs.microsoft.com/en-us/dotnet/standard/base-types/formatting-types).
 + `width` ; 指定显示`值`时表中列的`最大宽度`.  该值必须大于 `0` .
 + `depth` ; `Format-Custom` 的 `Depth` 参数, 指定所有`属性`的`展开深度`.  使用  `depth key` 可以指定每个`属性`的`展开深度`.
@@ -84,9 +82,9 @@
 
 只要指定的`名称前缀`是明确的, 不需要写出`哈希表键`的全称, 例如,  n 可用于代替 `Name` , `e`可用于代替 `Expression`.
 
-### 示例
+## 示例
 
-#### Compare-Object
+### Compare-Object
 
 使用计算属性, 可以控制如何比较输入对象的属性.  本示例将值与算术运算的结果进行比较, 而不是直接比较值 (2) .
 
@@ -99,7 +97,7 @@ Output
          1 <=
 ```
 
-#### ConvertTo-Html
+### ConvertTo-Html
 
 `ConvertTo-Html` 可以将 `对象` 的集合转换为 `HTML` 表.  使用 `计算属性` 可以控制表的显示方式.
 
@@ -117,14 +115,14 @@ Get-Alias |
 
 此示例创建一个 `HTML` 表, 其中包含每个`PowerShell` 命令的, `别名` 和 `参数`数目, ` ParameterCount` 列的`值`居中.
 
-#### Format-Custom
+### Format-Custom
 
 `Format-Custom` 提供对象的自定义视图, 其格式类似于 `class 定义`.
 更复杂的 `对象` 可以包含, 深度嵌套复杂 `type` 的`成员`.
-`Format-Custom` 的 `Depth` 参数指定所有`属性`的`展开深度`.  
+`Format-Custom` 的 `Depth` 参数指定所有`属性`的`展开深度`.
 使用 `depth key` 可以指定每个 `属性` 的 `展开深度`.
 
-此示例中,  `depth key` 简化了 `Get-Date` cmdlet 的自定义输出.  
+此示例中,  `depth key` 简化了 `Get-Date` cmdlet 的自定义输出.
 `Get-Date` 返回 `DateTime` 对象.  此对象的 `Date` 属性也是 `DateTime` 对象, 因此该对象是`嵌套的`.
 
 ```powershell
@@ -141,7 +139,7 @@ class DateTime
 }
 ```
 
-#### Format-List
+### Format-List
 
 本示例使用`计算属性`, 更改 `Get-ChildItem`, 即 `ls` , 输出的 `名称` 和 `格式`.
 
@@ -166,7 +164,7 @@ Size     : 2.40
 ...
 ```
 
-#### Format-Table
+### Format-Table
 
 此示例中, 用 `计算属性` 添加 `Type` 属性, 用于按`内容类型`对文件进行`分类`.
 
@@ -197,7 +195,7 @@ LICENSE            19047
 ...
 ```
 
-#### Format-Wide
+### Format-Wide
 
 使用 `Format-Wide`  cmdlet, 你可以将`集合中`的`对象` 的某个 `属性的值` 显示为`多列`列表.
 
@@ -213,7 +211,7 @@ Output
 ...
 ```
 
-#### Group-Object
+### Group-Object
 
 `Group-Object` cmdlet 基于指定`属性的值`, 将对象分组显式. 此示例中, `计算属性` 计算每个 `内容类型` 的文件数.
 
@@ -240,7 +238,7 @@ Count Name
 ...
 ```
 
-#### Measure-Object
+### Measure-Object
 
 `Measure-Object` cmdlet 计算 `对象` 的 `数值属性`.  本示例使用 `计算属性` 获取,  `1..10` 的 `count`, `sum`, 以及可以被 `3` 整除的数字的 `计数`.
 
@@ -256,7 +254,7 @@ Property          : ($_ % 3) -eq 0
 
 > 备注: 与其他 cmdlet 不同,  `Measure-Object` 不接受 `哈希表` 作为 `计算属性`, 必须使用`脚本块`.
 
-#### Select-Object
+### Select-Object
 
 可以使用 `计算属性`, 将其他成员添加到 `Select-Object` cmdlet 的 对象输出中. 本例列出了以字母 `C` 开头的 `PowerShell` 别名.
 使用 `Select-Object`, 我们可以输出 `别名`, 它映射的 `cmdlet`, 以及为 cmdlet 定义的参数的`数目`.
@@ -282,7 +280,7 @@ Equals         Method       bool Equals(System.Object obj)
 ...
 ```
 
-#### Sort-Object
+### Sort-Object
 
 使用 `计算属性`, 可以按数据的各个属性进行排序.  此例按 `日期升序` 对 `CSV` 文件中的数据进行排序.
 但在每个`日期` 内, 它按 `UnitsSold 降序` 进行 `行排序`.
@@ -300,7 +298,7 @@ Date       Salesperson UnitsSold
 ...
 ```
 
-### 备注
+## 备注
 
 + 可以直接将` 脚本块表达式` 指定为 `参数`, 而不是将 `表达式脚本块` 指定为 `哈希表` 中的 `Expression` 条目.  例如:
 

@@ -15,4 +15,5 @@
 - [常用操作](pwsh-1.md)
 - [运算符,数组,哈希](pwsh-2.md)
 - [类,对象](pwsh-3.md)
-- [关于系列](pwsh-4.md)
+- [关于计算属性](calculated-properties.md)
+- [关于自动变量](auto_variables.md)

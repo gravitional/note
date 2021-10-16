@@ -35,7 +35,7 @@ $FileList
 ls function:
 ```
 
-其他的类似命令还有：
+其他的类似命令还有:
 
 + `Get-Command` 获取所有可用命令
 + `ls alias:` 获取所有别名
@@ -43,7 +43,7 @@ ls function:
 + `ls variable:` 查看所有已定义的变量
 + `env:windir` 驱动器变量
 
-查看某一具体命令的信息,如 `ls` ：
+查看某一具体命令的信息,如 `ls` :
 
 ```powershell
 PS C:> Get-command ls
@@ -77,7 +77,7 @@ del Function:Get-Command
 ***
 对象的属性
 
-如果只显示属性可以使用参数 `memberType` 为“`Property`”
+如果只显示属性可以使用参数 `memberType` 为"`Property`"
 
 ```powershell
 $host | Get-Member -memberType property
@@ -88,7 +88,7 @@ $host | Get-Member -memberType property
 
 方法定义了一个对象可以做什么事情.
 当你把一个对象输出在控制台时,它的属性可能会被转换成可视的文本, 但是它的方法却不可见.
-列出一个对象的所有方法可是使用`Get-Member`命令,给“`MemeberType`”参数传入“`Method`”:
+列出一个对象的所有方法可是使用`Get-Member`命令,给"`MemeberType`"参数传入"`Method`":
 
 ```powershell
 $Host | Get-Member -MemberType Method
@@ -99,9 +99,9 @@ $Host | Get-Member -MemberType Method
 
 `Get_` 和 `Set_` 方法
 
-所有名称以”`get_`”打头的方法都是为了给对应的属性返回一个值.
-例如”`get_someInfo()`”方法的作用就是返回属性`someInfo`的值,因此可以直接通过属性调用.
-类似的像”`set_someinfo`”一样,该方法只是为了给属性`someinfo`赋值,可以直接通过属性赋值调用.
+所有名称以"`get_`"打头的方法都是为了给对应的属性返回一个值.
+例如"`get_someInfo()`"方法的作用就是返回属性`someInfo`的值,因此可以直接通过属性调用.
+类似的像"`set_someinfo`"一样,该方法只是为了给属性`someinfo`赋值,可以直接通过属性赋值调用.
 
 剔除包含下划线的方法可以使用操作符 `-notlike` 和 通配符 `*`
 
@@ -181,7 +181,7 @@ $Host.Version.Build
 [System.DateTime] | Get-Member -static -memberType Method
 ```
 
-注：
+注:
 `C++`中,若类的方法前加了`static`关键字,则该方法称为`静态方法`,反之为`实例方法`.
 静态方法为类所有,可以通过`对象`来使用,也可以通过`类`来使用.
 但一般提倡通过`类`来使用,因为静态方法只要定义了`类`,不必建立类的`实例`就可使用.
@@ -231,7 +231,7 @@ Major  Minor  Build  Revision
 
 #### 枚举某个属性
 
-脚本执行策略类为：`Microsoft.PowerShell.ExecutionPolicy`, 查看所有支持的执行策略：
+脚本执行策略类为: `Microsoft.PowerShell.ExecutionPolicy`, 查看所有支持的执行策略:
 
 ```powershell
 [System.Enum]::GetNames([Microsoft.PowerShell.ExecutionPolicy])
@@ -250,7 +250,7 @@ Major  Minor  Build  Revision
 
 [class Enum](https://docs.microsoft.com/zh-cn/dotnet/api/system.enum?redirectedfrom=MSDN&view=netframework-4.8#definition)
 
-枚举类型是一组命名常量定义的值类型, 底层是整数类型. 要定义枚举类型, 请使用`enum`关键字并指定枚举成员的名称：
+枚举类型是一组命名常量定义的值类型, 底层是整数类型. 要定义枚举类型, 请使用`enum`关键字并指定枚举成员的名称:
 
 ```C#
 enum Season
@@ -262,8 +262,8 @@ enum Season
 }
 ```
 
-默认情况下, 与枚举成员的相关的常数是`int`类型；它们从零开始, 并按照定义文本顺序增加一.
-您可以显式指定任何其他整数类型作为枚举类型的基础类型. 您还可以显式指定关联的常数值, 例如：
+默认情况下, 与枚举成员的相关的常数是`int`类型; 它们从零开始, 并按照定义文本顺序增加一.
+您可以显式指定任何其他整数类型作为枚举类型的基础类型. 您还可以显式指定关联的常数值, 例如:
 
 ```C#
 enum ErrorCode : ushort
@@ -284,8 +284,7 @@ enum ErrorCode : ushort
 [AppDomain]::CurrentDomain.GetAssemblies()
 ```
 
-***
-搜索指定类型
+### 搜索指定类型
 
 查询每个程序集中的方法可使用 `GetExportedTypes()` 方法. 因为许多程序集中包含了大量的方法,在搜索时最好指定关键字.
 
@@ -297,49 +296,93 @@ System.Environment
 ...
 ```
 
-### 自动变量
-
-[about_Automatic_Variables](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_automatic_variables)
-
-+ 简短说明; Automatic_Variables 是存储 `PowerShell` 的状态信息的变量.  这些变量由 `PowerShell` 创建和维护.
-+ 长说明 ; 从概念上讲, 这些变量被视为只读.  即使它们 `可以` 写入, 但为了向后兼容 , `不应写入` 它们.
-
-下面是 PowerShell 中的自动变量列表：
-
-+ `$$` ; 包含会话收到的最后一行中的最后一个令牌.
-+ `$?`; 包含最后一个命令的执行状态.  如果最后一个命令成功, 它包含 `True`; 如果失败, 它包含 `False`.
-
-对于在管道中各个阶段运行的 cmdlet 和高级函数(例如在`process `和`end `块中),
-在任意位置调用`this.WriteError()` or `$PSCmdlet.WriteError()` 将设置`$?`为`False`,
-`this.ThrowTerminatingError()`和`$PSCmdlet.ThrowTerminatingError()` 类似.
-
-`Write-Error` 在执行后总是立即将`$?`设置为 `False`, 但对于调用它的函数, 它不会将`$?`设置为`False`：
-
-```powershell
-function Test-WriteError
-{
-    Write-Error "Bad"
-    $? # $false
-}
-```
-
-对于后一种 用途, 应该使用`$PSCmdlet.WriteError()`.
-
-对于本机命令 (二进制可执行程序) , 当`$LASTEXITCODE`为 `0`时, `$?`被设置为 `True`, 如果`$LASTEXITCODE` 为其他任意值, 则设置为`False`.
-
-> 备注：
->在 `PowerShell 7`之前, 包含在括号内的语句`(...)`, 子表达式语法`$(...)`或数组表达式`@(...)`总是将`$?`重置为`True`, 因此`(Write-Error)`显示`$?`为`True`. 这一点在 `PowerShell 7` 中有所改变, `$?` 将总是反映表达式中运行的最后一条命令的实际结果.
-
-***
-
-+ `$^`; 包含会话收到的最后一行中的第一个token(令牌).
-+ `$_`; 与`$PSItem`相同. 包含管道对象中的当前对象. 你可以使用这个变量, 对管道中的每个对象, 或选定的对象执行动作.
-+ `$args`; 包含一个`数组`, 传递未声明的`参数值`给`函数`, `脚本`或`脚本块`.
-当你创建`函数`时, 你可以通过使用`param`关键字来声明参数, 或者在`函数`名称后面的括号中添加一个`逗号`分隔的`参数列表`.
-
-在`event action`(事件动作)中, `$args` 变量包含代表正在处理的事件参数的对象. 这个变量只在事件注册命令的`Action`块中被填充.
-这个变量的值也可以在`Get-Event`返回的`PSEventArgs`对象的`SourceArgs`属性中找到.
-
 ## 函数
 
 [Chapter 9 - Functions](https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/09-functions?view=powershell-7.1#parameters)
+
+## 函数的高级参数
+
+[about_Functions_Advanced_Parameters](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_parameters?view=powershell-7.1)
+
+简要说明; 解释了如何为`高级函数`添加参数.
+
+长描述
+
+你可以向你编写的`高级函数`添加参数, 并使用参数 `attributes` and `arguments`, 来限制函数用户提交的参数值.
+
+除了 PowerShell 自动添加到所有 cmdlet 和高级函数中的`常用参数`外, 你添加到函数中的参数也可以供用户使用.
+关于 PowerShell 通用参数的更多信息, 请参阅about_CommonParameters.
+
+从 PowerShell 3.0开始, 你可以使用 `@Args` 的 splitting, 来表示命令中的参数.
+`Splatting` 对简单和高级函数都有效. 欲了解更多信息, 请参见 about_Functions 和 about_Splatting .
+
+## about_Splatting
+
+[about_Splatting](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting?view=powershell-7.1)
+
+简要说明 ; 描述了如何在 `PowerShell` 中使用 `splitting` 向命令传递参数.
+
+### 长描述
+
+`Splatting` 是一种将`参数值`的集合作为一个单元, 传递给命令的方法.
+`PowerShell` 将集合中的每个`值`与一个`命令参数`相关联.
+`拼合的参数值`存储在被命名的`拼合变量`中, 这些变量看起来像标准变量, 但以 `At` 符号(`@`)而不是美元符号(`$`)开头.
+`At`符号告诉 `PowerShell`, 你传递的是`值的集合`, 而不是`单一的值`.
+
+`拼接`(Splatting)使你的命令更短, 更容易阅读.
+你可以在不同的命令调用中重复使用`拼接值`, 并使用`拼接`将参数值从 `$PSBoundParameters` 自动变量传递给其他脚本和函数.
+
+从Windows PowerShell 3.0开始, 你也可以用`splatting`来表示一个命令的所有参数.
+
+### 语法
+
+```powershell
+<CommandName> <optional parameters> @<HashTable> <optional parameters>
+<CommandName> <optional parameters> @<Array> <optional parameters>
+```
+
+要为`位置参数`提供`参数值`, 其中不需要`参数名`, 使用`数组语法`.
+要提供`参数名称`和`值`组成的对, 请使用`哈希表`语法. `拼接的值`可以出现在参数列表的任何地方(顺序无关).
+
+当拼接时, 你不需要使用`哈希表`或`数组`来传递`所有参数`.
+你可以通过使用`拼接`来传递一些参数, 并通过`位置`或 `参数名称` 来传递其他参数.
+另外, 你可以在一个命令中拼接`多个对象`, 这样你就不用为每个`参数`传递一个以上的`值`.
+
+从 PowerShell 7.1 开始, 你可以通过在命令中明确定义一个参数, 来`覆盖`一个`拼接`的参数.
+
+### 用哈希表拼接
+
+使用`哈希表`来拼接参数名称和值对.
+你可以对所有参数类型使用这种格式, 包括`位置参数`和`switch 参数`. `位置参`数必须按`名称`分配.
+
+下面的例子比较了两个`Copy-Item`命令, 将 `Test.txt` 文件复制到同一目录下的 `Test2.txt` 文件.
+
+第一个例子使用传统的格式, 其中包括参数名称.
+
+```PowerShell
+Copy-Item -Path "test.txt" -Destination "test2.txt" -WhatIf
+```
+
+第二个例子使用`哈希表拼接`.
+第一条命令创建了一个参数名和参数值对的`哈希表`, 并将其存储在 `$HashArguments` 变量中.
+第二条命令在命令中使用 `$HashArguments` 变量 with `splatting`.
+`At`符号(`@HashArguments`)取代了命令中的美元符号(`$HashArguments`).
+
+要为 `WhatIf` 开关参数提供一个值, 使用 `$True` 或 `$False`.
+
+```PowerShell
+$HashArguments = @{
+  Path = "test.txt"
+  Destination = "test2.txt"
+  WhatIf = $true
+}
+Copy-Item @HashArguments
+```
+
+> 注意;
+>在第一条命令中, `At`符号(`@`)表示`哈希表`, 而不是一个`splatted`的值.
+>PowerShell 中哈希表的语法是: `@{<name>=<value>; <name>=<value>; ...}`
+
+## about_Functions_CmdletBindingAttribute
+
+[about_Functions_CmdletBindingAttribute](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_cmdletbindingattribute?view=powershell-7.1)

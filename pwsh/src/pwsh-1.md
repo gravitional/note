@@ -50,7 +50,7 @@ Get-CimInstance -Class Win32_LogicalDisk |
 + `[方括号中的文字]`  可选项.
 + `{大括号中的文字}`  所需项的集合. 您必须选择一个.
 + 竖线 `(|)`  互斥项的分隔符. 您必须选择一个.
-+ 省略 `(…)`  可以重复并多次使用的项.
++ 省略 `(... )`  可以重复并多次使用的项.
 
 使用`update-help -UICulture en-us`更新帮助文档, 一般英文文档比较多.
 
@@ -138,7 +138,7 @@ New-Alias -Option {None | ReadOnly | Constant | Private | AllScope}
 
 欲了解更多信息, 请参阅 about_Functions_Advanced_Parameters.
 
-+ `MoveNext`; `MoveNext`方法将枚举器推进到集合的下一个元素. 如果枚举器成功前进, `MoveNext`返回`True`；如果枚举器已经超过了集合的末端, 则返回`False`.
++ `MoveNext`; `MoveNext`方法将枚举器推进到集合的下一个元素. 如果枚举器成功前进, `MoveNext`返回`True`; 如果枚举器已经超过了集合的末端, 则返回`False`.
 `MoveNext`返回的布尔值被发送到输出流. 你可以通过将其类型转换为`[void]`或将其输送到`Out-Null`来抑制该输出.
 
 ```powershell
@@ -197,8 +197,8 @@ Get-ExecutionPolicy #查看脚本执行策略, 默认为Restricted
 Set-ExecutionPolicy UnRestricted #更改脚本执行策略
 ```
 
-脚本执行策略类型为：`Microsoft.PowerShell.ExecutionPolicy`
-查看所有支持的执行策略：
+脚本执行策略类型为: `Microsoft.PowerShell.ExecutionPolicy`
+查看所有支持的执行策略:
 
 ```powershell
 [System.Enum]::GetNames([Microsoft.PowerShell.ExecutionPolicy])
@@ -212,9 +212,9 @@ Undefined
 ```
 
 + `Unrestricted` :权限最高,可以不受限制执行任何脚本.
-+ `Default` :为`Powershell`默认的策略：`Restricted`,不允许任何脚本执行.
-+ `AllSigned` ：所有脚本都必须经过签名才能在运行.
-+ `RemoteSigned` ：本地脚本无限制,但是对来自网络的脚本必须经过签名.
++ `Default` :为`Powershell`默认的策略: `Restricted`,不允许任何脚本执行.
++ `AllSigned` : 所有脚本都必须经过签名才能在运行.
++ `RemoteSigned` : 本地脚本无限制,但是对来自网络的脚本必须经过签名.
 
 关于`Powershell`脚本的签名在后续会谈到.
 
@@ -258,13 +258,13 @@ Get-Command -CommandType Alias | where {$_.DisplayName -like -join("*", "Get-Com
  C:\Users\Administrator> Get-History
  ```
 
-当然,`PowerShell`并不会无止境的记录历史命令,你可以通过使用如下保留自变量来查看系统默认可以记录多少历史命令：
+当然,`PowerShell`并不会无止境的记录历史命令,你可以通过使用如下保留自变量来查看系统默认可以记录多少历史命令:
 
 ```powershell
 PS C:\Users\Administrator> $MaximumHistoryCount
 ```
 
-你也可以直接给这个变量赋一个阿拉伯数字设置你想设置的上限值,比如我设置为`5`：
+你也可以直接给这个变量赋一个阿拉伯数字设置你想设置的上限值,比如我设置为`5`:
 
 ```powershell
 PS C:\Users\Administrator> $MaximumHistoryCount = 5
@@ -273,7 +273,7 @@ PS C:\Users\Administrator> $MaximumHistoryCount
 
 当你在用`Get-History`命令查看记录了多少命令的时候你会发现,它只自动截取了最近的`5`行命令
 
-我们可以使用`Invoke-History`或者别名`r` 来调用历史命令：
+我们可以使用`Invoke-History`或者别名`r` 来调用历史命令:
 
 ```powershell
 PS C:\Users\Administrator> `Invoke-History -id 51`
@@ -291,7 +291,7 @@ Module : Microsoft.PowerShell.Utility
 将指定的对象发送到管道中的下一个命令.
 如果该命令是管道中的最后一个命令,则对象将显示在控制台中.
 
-Syntax：
+Syntax:
 
 ```powershell
 Write-Output
@@ -300,7 +300,7 @@ Write-Output
      [<CommonParameters>]
 ```
 
-示例：将输出传递到另一个cmdlet
+示例: 将输出传递到另一个cmdlet
 
 ```powershell
 Write-Output "test output" | Get-Member
@@ -493,7 +493,7 @@ Get-ChildItem -Path C:\Test\Logs\* -Exclude A*
 
 [Rename-Item](https://docs.microsoft.com/zh-cn/powershell/module/Microsoft.PowerShell.Management/Rename-Item)
 
-例4：重命名多个文件
+例4: 重命名多个文件
 
 这个例子把当前目录下的所有`*.txt`文件重命名为`*.log` :
 
@@ -600,7 +600,7 @@ Test-Path (Get-location) -Filter *.bib
 #### diskpart格式化U盘
 
 格式化 U 盘或磁盘的另一种方式便是使用 `diskpart` 命令行工具.
-`diskpart` 命令可集成于 `Windows PE` 中方便管理员操作, 也可以写到 MDT 的部署脚本当中进行使用；
+`diskpart` 命令可集成于 `Windows PE` 中方便管理员操作, 也可以写到 MDT 的部署脚本当中进行使用;
 使用 `diskpart` 格式化的 U 盘还可以直接将 Windows Vista 至 Windows 10 的 ISO 解压上去用于 U 盘启动引导系统, 免去了用其它工具制作 Windows 10 安装 U 盘的麻烦.
 
 1. 使用 `Windows+X` 快捷键打开`命令提示符(管理员)`工具:
@@ -846,7 +846,7 @@ usage: handle [[-a] [-u] | [-c <handle> [-l] [-y]] | [-s]] [-p <processname>|<pi
 参数说明
 
 + `-a` ; Dump所有类型的句柄信息, 而不仅仅是那些指向文件的信息. 其他类型包括端口, 注册表键, `synchronization primitives`, 线程和进程.
-+ `-c` ; 关闭指定的句柄(解释为十六进制数字). 你必须通过其`PID`来指定进程. 警告：关闭句柄可能导致应用程序或系统不稳定.
++ `-c` ; 关闭指定的句柄(解释为十六进制数字). 你必须通过其`PID`来指定进程. 警告: 关闭句柄可能导致应用程序或系统不稳定.
 + `-l` ;  Dump `pagefile-backed`部分的大小.
 + `-y` ; 不提示关闭句柄的确认.
 + `-s` ; 打印每一种打开的句柄的数量.
@@ -930,8 +930,8 @@ Write-Host "完事儿"
 ```powershell
 function  to7z {
     $lst = (Get-ChildItem -Path $args)
-    foreach ($f in $lst ) { 
-        7z a -pmua -mx=0 ( $f.BaseName + '.7z' ) $f 
+    foreach ($f in $lst ) {
+        7z a -pmua -mx=0 ( $f.BaseName + '.7z' ) $f
     }
 }
 ```

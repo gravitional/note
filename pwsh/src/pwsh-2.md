@@ -17,10 +17,10 @@
 10. `,` : 数组分隔,或创建单元素数组
 11. `#` : 添加注释,单行
 
-备注：
+备注:
 
 + `.\`运算符用于执行一个脚本或命令.  如果执行的是`Powershell`脚本,那么脚本会在自己的作用域中执行, 也就是说在当前环境下无法访问被执行的脚本中的变量.
-+ `&`默认键入一个字符串,`powershell`会将它原样输出,如果该字符串是一个`命令`或者`外部程序`,在字符串前加‘`&`’可以执行命令,或者启动程序.
++ `&`默认键入一个字符串,`powershell`会将它原样输出,如果该字符串是一个`命令`或者`外部程序`,在字符串前加"`&`"可以执行命令,或者启动程序.
 + 如果你之前将`Powershell`命令存储在了一个字符串中,或者一个变量中. 此时,`&`将字符串直接解释成命令并执行
 + 事实上,`&`可以直接执行一个`CommandInfo`对象,绕过自身的内部`get-command`, 如
 
@@ -44,11 +44,11 @@ True
 
 ### 子表达式运算符$()
 
-返回一个或多个`语句`的结果. 
+返回一个或多个`语句`的结果.
 对于单个结果, 返回一个`标量`. 对于多个结果, 返回一个`数组`.
-当你想在`A表达式`中使用`B表达式`时, 可以使用这个操作. 
-例如, 将命令的结果嵌入到一个字符串表达式中. 
-与圆括号`()`的明显区别是，当表达式出现字符串中时，也能"激活计算". 例如:
+当你想在`A表达式`中使用`B表达式`时, 可以使用这个操作.
+例如, 将命令的结果嵌入到一个字符串表达式中.
+与圆括号`()`的明显区别是, 当表达式出现字符串中时, 也能"激活计算". 例如:
 
 ```powershell
 # 单纯圆括号不输入日期.
@@ -671,7 +671,7 @@ $a -isnot $b.GetType() # Output: True
 
 ### 传递参数
 
-+ 传递给一个函数或者一个脚本的参数都保存在`$args`变量中. 默认情况下,传递给`Powershell`脚本的参数类型为`数组`,例如：
++ 传递给一个函数或者一个脚本的参数都保存在`$args`变量中. 默认情况下,传递给`Powershell`脚本的参数类型为`数组`,例如:
 
 ```powershell
 PS E:> .MyScript.ps1 My Website      Is        www.mossfly.com
@@ -686,7 +686,7 @@ PS E:> ./MyScript.ps1 "My Website      Is        www.mossfly.com"
 Hello,My Website      Is        www.mossfly.com
 ```
 
-+ 因为`$args`是一个`数组`,自然可以通过索引访问数组的每一个元素. 可以将`MyScript.sp1`的内容改为：
++ 因为`$args`是一个`数组`,自然可以通过索引访问数组的每一个元素. 可以将`MyScript.sp1`的内容改为:
 
 ```powershell
 For($i=0;$i -lt $args.Count; $i++)
@@ -695,7 +695,7 @@ For($i=0;$i -lt $args.Count; $i++)
 }
 ```
 
-然后在控制台测试：
+然后在控制台测试:
 
 ```powershell
 PS E:> .\MyScript.ps1 www moss fly com
@@ -706,7 +706,7 @@ parameter 0 : www
 + 在脚本中使用参数名
 
 通过`Powershell`传递参数固然方便,但是如果用户不知道参数的传递顺序,也是很郁闷的.
-所以最好的方式给参数指定名称,输入以下的脚本：
+所以最好的方式给参数指定名称,输入以下的脚本:
 
 ```powershell
 param($Directory,$FileName)
@@ -717,7 +717,7 @@ param($Directory,$FileName)
 
 其中`param`给参数指定名称.
 
-执行脚本：
+执行脚本:
 
 ```powershell
 PS E:> .\MyScript.ps1 -Directory $env:windir -FileName config.xml
@@ -770,7 +770,7 @@ C:\PS> throw (get-process Pwsh)
 
 ### if 条件判断
 
-`Where-Object` 进行条件判断很方便,如果在判断执行代码段,可以使用`IF-ELSEIF-ELSE`语句.语句模板：
+`Where-Object` 进行条件判断很方便,如果在判断执行代码段,可以使用`IF-ELSEIF-ELSE`语句.语句模板:
 
 ```powershell
 If (条件1){
@@ -805,7 +805,7 @@ if($n -lt 0 ){"-1" } elseif($n -eq 0){"0"} else {"1"}
 语句 `Switch` 列出每个条件和可选操作.  如果某个条件满足, 则执行该操作. `Switch`语句可以使用`$_ `,  `$switch` 自动变量.
 
 + `$switch`; 包含`enumerator`而不是`Switch`语句的结果值.
-`$switch`变量只在`Switch`语句运行时存在；当`Switch`语句执行完毕时, 它将被删除. 欲了解更多信息, 请参见`about_Switch`.
+`$switch`变量只在`Switch`语句运行时存在; 当`Switch`语句执行完毕时, 它将被删除. 欲了解更多信息, 请参见`about_Switch`.
 枚举器包含属性和方法, 你可以用来检索循环值和改变当前循环迭代. 更多信息, 请参见`Using Enumerators`.
 
 #### 基本用法
@@ -991,8 +991,8 @@ foreach ($i in $array) {
 ```
 
 使用这种方法时,`for-each`后面可以跟三个语句块,第一个语句块是开始语句块,
-在循环前执行一次,常用来初始化一些数据；
-第三个是结束语句块,在循环结束之后执行一次,常用于统计一些循环数据；
+在循环前执行一次,常用来初始化一些数据;
+第三个是结束语句块,在循环结束之后执行一次,常用于统计一些循环数据;
 第二个就是正常的循环语句块,会循环多次.
 
 ### while循环
@@ -1010,10 +1010,10 @@ while ($i -lt 3) {
 
 通过管道可以过滤某些对象和对象的属性,这个功能很实用,因为很多时候我们并不是对所有的结果感兴趣,可能只会对某些结果感兴趣.
 
-+ `Select-Object`：`select`,选取前几个对象如`-First 3`, 或者对象的属性. 可以用它先查看对象都有什么属性,
++ `Select-Object`: `select`,选取前几个对象如`-First 3`, 或者对象的属性. 可以用它先查看对象都有什么属性,
 + `Where-Object`:  `where`,根据对象的属性, 从对象集合中挑选特定的几个. 例如, 选择在某个日期之后创建的文件, 具有特定ID的事件, 或者使用特定版本Windows的计算机.
-+ `ForEach-Object`：`foreach`,对输入对象集合中的每个项目执行操作. 输入对象可以通过管道进入`cmdlet`, 也可以通过使用`InputObject`参数指定.
-+ `Get-Uinque`：`gu`,从排序过的列表中返回不重复的对象.
++ `ForEach-Object`: `foreach`,对输入对象集合中的每个项目执行操作. 输入对象可以通过管道进入`cmdlet`, 也可以通过使用`InputObject`参数指定.
++ `Get-Uinque`: `gu`,从排序过的列表中返回不重复的对象.
 
 + `Select-Object -Index`: 根据`index`从一个数组中选择对象. 在一个逗号分隔的列表中输入索引. 数组中的索引从`0`开始, 其中`0`代表第一个值, `n-1`代表最后一个值.
 
@@ -1123,13 +1123,13 @@ ForEach-Object {Copy-Item $_.FullName -Destination (-Join("C:\Users\Tom\Desktop\
 [about_Arrays](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_arrays)
 
 数组是一种数据结构, 用于存储项的集合.  项可以是同一类型, 也可以是不同的类型.
-若要创建一个名为 `$A` 的数组, 该数组包含七个数值 (`int`) 值, 请键入：
+若要创建一个名为 `$A` 的数组, 该数组包含七个数值 (`int`) 值, 请键入:
 
 ```powershell
 $A = 22,5,10,8,12,9,80
 ```
 
-若要创建名为 `$B` , 值为`7`的单项数组, 请键入：
+若要创建名为 `$B` , 值为`7`的单项数组, 请键入:
 
 ```powershell
 $B = ,7
@@ -1141,11 +1141,11 @@ $B = ,7
 $C = 5..8
 ```
 
-如果未指定数据类型, 则 `PowerShell` 会创建`object`的数组 (`system.object []`) .  
+如果未指定数据类型, 则 `PowerShell` 会创建`object`的数组 (`system.object []`) .
 若要确定数组的数据类型, 请使用 `GetType ()` 方法.  例如, `$A.GetType()`.
 
 若要创建强类型数组(即只包含特定类型值的数组), 请将该变量强制转换为数组类型, 如 `string[]`, `long[]`, or `int32[]`.
-若要强制转换数组, 请在变量名称之前加上`[类型]`.  例如, 若要创建一个`32`位整数数组, 请键入：
+若要强制转换数组, 请在变量名称之前加上`[类型]`.  例如, 若要创建一个`32`位整数数组, 请键入:
 
 ```powershell
 [int32[]]$ia = 1500,2230,3350,4000
@@ -1153,7 +1153,7 @@ $C = 5..8
 
 `$ia` 数组只能包含整数.
 
-可以创建强制转换为 `.NET` 中任何受支持的类型的数组.  例如,  `Get-Process` 检索以表示进程的对象属于 `system.object` 类型.  若要创建进程对象的强类型数组：
+可以创建强制转换为 `.NET` 中任何受支持的类型的数组.  例如,  `Get-Process` 检索以表示进程的对象属于 `system.object` 类型.  若要创建进程对象的强类型数组:
 
 ```powershell
 [Diagnostics.Process[]]$zz = Get-Process
@@ -1161,13 +1161,13 @@ $C = 5..8
 
 #### 子表达式运算符@()
 
-数组 sub-expression 运算符根据它内部的语句创建一个数组.  运算符将语句生成的结果放在数组中, 即使是零个或一个对象. 数组运算符的语法如下所示：
+数组 sub-expression 运算符根据它内部的语句创建一个数组.  运算符将语句生成的结果放在数组中, 即使是零个或一个对象. 数组运算符的语法如下所示:
 
 ```powershell
 @( ... )
 ```
 
-可以使用 `array` 运算符创建零个或一个对象的数组.  例如：
+可以使用 `array` 运算符创建零个或一个对象的数组.  例如:
 
 ```powershell
 $a = @("Hello World");$a.Count
@@ -1217,7 +1217,7 @@ while($i -lt 4) {
 
 #### Rank
 
-返回数组中的维数.  `PowerShell` 中的大多数数组是一维的. 即使您认为生成多维数组, 如以下示例中所示：
+返回数组中的维数.  `PowerShell` 中的大多数数组是一维的. 即使您认为生成多维数组, 如以下示例中所示:
 
 ```powershell
 $a = @(
@@ -1250,7 +1250,7 @@ $rank2[1,1]
 
 若要访问多维数组中的项, 请使用`[1,2,3]`的索引形式.
 
-对多维数组的某些运算(例如复制和串联)要求对数组进行展平.  展平将数组转换为无类型的一维数组. 生成的数组按行顺序列出所有元素.  请考虑以下示例：
+对多维数组的某些运算(例如复制和串联)要求对数组进行展平.  展平将数组转换为无类型的一维数组. 生成的数组按行顺序列出所有元素.  请考虑以下示例:
 
 ```powershell
 $a = "red",$true
@@ -1292,7 +1292,7 @@ Get-Member -InputObject $a
 $a[1] = 10
 ```
 
-还可使用数组的 `SetValue` 方法更改值.  以下示例将数组`$a`的元素`2`更改为`500`：
+还可使用数组的 `SetValue` 方法更改值.  以下示例将数组`$a`的元素`2`更改为`500`:
 
 ```powershell
 $a.SetValue(500,1)
@@ -1308,7 +1308,7 @@ $a += 5
 备注: 使用`+=`运算符时,  `PowerShell` 实际上会创建一个新数组.  如果多次重复操作或数组太大, 则可能会导致性能问题.
 
 从数组中删除元素并不简单, 但可以创建一个新数组, 该数组仅包含现有数组的选定元素.
-例如, 若要创建不包含元素 `2` 的新数组,请键入：
+例如, 若要创建不包含元素 `2` 的新数组,请键入:
 
 ```powershell
 $t = $a[0,1 + 3..($a.length - 1)]
@@ -1363,7 +1363,7 @@ $files = (New-Item -Type File -Force '/temp/t1.txt'),
 $files.LastWriteTime
 ```
 
-成员枚举可用于`get`集合中项目的值, 但不能用于`set`项目的值.  例如：
+成员枚举可用于`get`集合中项目的值, 但不能用于`set`项目的值.  例如:
 
 ```powershell
 $files.LastWriteTime = (Get-Date).AddDays(-1)
@@ -1408,13 +1408,13 @@ LastWriteTimeUtc  Property   datetime LastWriteTimeUtc {get;set;}
 通常使用哈希表, 因为它们非常适合用于查找和检索数据.  您可以使用哈希表来存储列表, 并在 `PowerShell` 中创建带计算的属性.
 此外, `PowerShell` 有一个 `cmdlet`: `ConvertFrom-StringData`, 它将字符串转换为哈希表.
 
-哈希表的语法如下所示：
+哈希表的语法如下所示:
 
 ```powershell
 @{ <name> = <value>; [<name> = <value> ] ...}
 ```
 
-排序字典的语法如下所示：
+排序字典的语法如下所示:
 
 ```powershell
 [ordered]@{ <name> = <value>; [<name> = <value> ] ...}
@@ -1422,7 +1422,7 @@ LastWriteTimeUtc  Property   datetime LastWriteTimeUtc {get;set;}
 
 #### 创建哈希表
 
-若要创建哈希表, 请遵循以下准则：
+若要创建哈希表, 请遵循以下准则:
 
 + 使用 `at` 符号 `@`.
 + 将哈希表放在大括号中`{}`.
@@ -1432,7 +1432,7 @@ LastWriteTimeUtc  Property   datetime LastWriteTimeUtc {get;set;}
 + 若要管理哈希表, 请将它保存在变量中.
 + 将有序哈希表分配给变量时, 请将`[ordered]`属性置于`@`符号之前.  如果将其放在变量名称之前, 则该命令将失败.
 
-若要使`$hash`变量的值为空的哈希表, 请键入：
+若要使`$hash`变量的值为空的哈希表, 请键入:
 
 ```powershell
 $hash = @{}
@@ -1470,12 +1470,12 @@ $hash.values
 
 ```powershell
 $hashtable.<key>
-# 例如：
+# 例如:
 $hash.Number
 ```
 
 如果`key`名称与哈希表类型的某个属性名称冲突, 则可以使用 `PSBase` 来访问这些属性.
-例如, 如果哈希表中某个`key`的名字为`keys`, 覆盖掉了原本的`keys`属性, 请使用以下语法：
+例如, 如果哈希表中某个`key`的名字为`keys`, 覆盖掉了原本的`keys`属性, 请使用以下语法:
 
 ```powershell
 $hashtable.PSBase.Keys
@@ -1507,7 +1507,7 @@ $hash["<key>"] = "<value>"
 $hash["Time"] = "Now"
 ```
 
-还可以通过使用 `System.Collections.Hashtable` 对象的 `Add` 方法, 将键和值添加到哈希表中.  `Add` 方法具有以下语法：
+还可以通过使用 `System.Collections.Hashtable` 对象的 `Add` 方法, 将键和值添加到哈希表中.  `Add` 方法具有以下语法:
 
 ```powershell
 Add(Key, Value)
@@ -1535,7 +1535,7 @@ $hash.Add($t, $now)
 
 ```powershell
 Remove(Key)
-# 例如：
+# 例如:
 $hash.Remove("Time")
 ```
 
@@ -1611,7 +1611,7 @@ $p.getenumerator() | Sort-Object -Property Value -Descending
 
 #### 从哈希表创建对象
 
-从 PowerShell 3.0 开始, 可以从`属性`和`属性值`组成的哈希表创建对象. 语法如下：
+从 PowerShell 3.0 开始, 可以从`属性`和`属性值`组成的哈希表创建对象. 语法如下:
 
 ```powershell
 [<class-name>]@{
