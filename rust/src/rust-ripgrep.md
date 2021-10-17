@@ -1,6 +1,4 @@
-# rust-tools
-
-[sd - search & displace](https://github.com/chmln/sd)
+# rust-ripgrep
 
 [ripgrep](https://github.com/BurntSushi/ripgrep)
 

@@ -117,3 +117,6 @@
     - [E - 版本](rust-21-5.md)
     - [F - 书本译名](rust-21-6.md)
     - [G - Rust 是如何开发的与 "Nightly Rust"](rust-21-7.md)
+
+- [rust sd](rust-sd.md)
+- [rust ripgrep](rust-ripgrep.md)
