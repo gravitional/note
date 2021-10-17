@@ -46,7 +46,7 @@ make && make install
 
 ## 基本使用
 
-`FFmpeg` 命令的典型语法是：
+`FFmpeg` 命令的典型语法是:
 
 ```bash
 ffmpeg [全局选项] {[输入文件选项] -i 输入_url_地址} ...  {[输出文件选项] 输出_url_地址} ...
@@ -56,7 +56,7 @@ ffmpeg [全局选项] {[输入文件选项] -i 输入_url_地址} ...  {[输出�
 
 ### 获取音频/视频文件信息
 
-为显示你的媒体文件细节, 运行：
+为显示你的媒体文件细节, 运行:
 
 ```bash
 ffmpeg -i video.mp4
@@ -71,25 +71,25 @@ ffmpeg -i video.mp4 -hide_banner
 
 ### 视频转换格式
 
-`FFmpeg` 是强有力的音频和视频转换器, 因此, 它能在不同格式之间转换媒体文件. 举个例子, 要转换 `mp4` 文件到 `avi` 文件, 运行：
+`FFmpeg` 是强有力的音频和视频转换器, 因此, 它能在不同格式之间转换媒体文件. 举个例子, 要转换 `mp4` 文件到 `avi` 文件, 运行:
 
 ```bash
 ffmpeg -i video.mp4 video.avi
 ```
 
-类似地, 你可以转换媒体文件到你选择的任何格式. 例如, 为转换 YouTube `flv` 格式视频为 `mpeg` 格式, 运行：
+类似地, 你可以转换媒体文件到你选择的任何格式. 例如, 为转换 YouTube `flv` 格式视频为 `mpeg` 格式, 运行:
 
 ```bash
 ffmpeg -i video.flv video.mpeg
 ```
 
-如果你想维持你的源视频文件的质量, 使用 `-qscale 0` 参数：
+如果你想维持你的源视频文件的质量, 使用 `-qscale 0` 参数:
 
 ```bash
 ffmpeg -i input.webm -qscale 0 output.mp4
 ```
 
-为检查 `FFmpeg` 的支持格式的列表, 运行：
+为检查 `FFmpeg` 的支持格式的列表, 运行:
 
 ```bash
 ffmpeg -formats
@@ -149,7 +149,7 @@ ffmpeg -i input.mp4 -vn -ar 44100 -ac 2 -b:a 320k -f mp3 output.mp3
 
 ### 更改视频文件的分辨率
 
-如果你想设置一个视频文件为指定的分辨率, 你可以使用下面的命令：
+如果你想设置一个视频文件为指定的分辨率, 你可以使用下面的命令:
 
 ```bash
 ffmpeg -i input.mp4 -filter:v scale=1280:720 -c:a copy output.mp4
@@ -216,7 +216,7 @@ Stream specifiers
 同样, 一个文件中的流也用它们的索引来指代. 例如, `2:3`指的是第三个输入文件中的第四个流. 也可参见`Stream specifiers`一章.
 
 一般来说, 选项会应用于下一个指定的文件. 因此, 顺序很重要, 你可以在命令行上多次出现同一个选项.
-每次出现的选项都会应用到下一个输入或输出文件.  这个规则的例外情况是全局选项(例如：`verbosity level`), 应该先指定.
+每次出现的选项都会应用到下一个输入或输出文件.  这个规则的例外情况是全局选项(例如: `verbosity level`), 应该先指定.
 
 不要混合输入和输出文件 -- 首先指定所有的输入文件, 然后是所有的输出文件. 也不要混合属于不同文件的选项.
 所有的选项只适用于下一个输入或输出文件, 并且在不同的文件之间被重置.
@@ -388,14 +388,14 @@ ffmpeg -i multichannel.mxf -map 0:v:0 -map 0:a:0 -map 0:a:0 -c:a:0 ac3 -b:a:0 64
 
 [使用avconv录制视频和音频](https://linux.cn/article-4323-1.html)
 
-`Libav`是一款跨平台的工具库, 能够用来处理多媒体文件, 流和协议. 它最初是源自`ffmpeg`. `Libav`带有一些工具, 比如：
+`Libav`是一款跨平台的工具库, 能够用来处理多媒体文件, 流和协议. 它最初是源自`ffmpeg`. `Libav`带有一些工具, 比如:
 
 + `Avplay`: 一款视频音频播放器.
 + `Avconv`: 能够记录多个设备输入源的一个多媒体转换器和视频音频录制器.
 + `Avprobe`: 一个连接多媒体文件流并且返回关于这个文件流的统计信息的工具.
 + `Libavfilter`: 一个`Libav`工具的过滤器(`filtering`)API.
 
-列出所有的音频输入源：
+列出所有的音频输入源:
 
 ```bash
 arecord -l
@@ -408,7 +408,7 @@ arecord -l
 [Ubuntu下用cue文件对ape和wav文件自动分轨](https://www.cnblogs.com/pandachen/p/4557573.html)
 [shntool download](http://shnutils.freeshell.org/shntool/)
 
-+ `iconv`: 将文本从一种字符编码转换成另一种. 语法：
++ `iconv`: 将文本从一种字符编码转换成另一种. 语法:
     iconv [options] [-f from-encoding] [-t to-encoding] [inputfile]...
 
 ```bash
@@ -463,7 +463,7 @@ SYNOPSIS:
 
 + `-D` :打印调试信息
 + `-F file`:指定一个包含要处理的文件名列表的文件.  这优先于在命令行或终端上指定的任何文件.
-注意：大多数模式将接受来自单一来源的输入文件名, 根据以下优先顺序：由`-F`选项指定的文件, 然后是命令行上的文件名, 然后是从终端输入的文件名
+注意: 大多数模式将接受来自单一来源的输入文件名, 根据以下优先顺序: 由`-F`选项指定的文件, 然后是命令行上的文件名, 然后是从终端输入的文件名
 
 + `-H`: 以`h:mm:ss.{ff,nnn}`格式打印时间, 而不是`m:ss.{ff,nnn}`.
 + `-P type`: 指定进度指示器类型, 是下列之一,  `{pct, dot, spin, face, none}`.
@@ -474,7 +474,7 @@ SYNOPSIS:
 + `-i fmt`: 指定输入文件`格式解码器/参数`.  其格式为 `fmt decoder [arg1 ... argN]`, 并且必须用引号包围.
 如果给出了参数, 那么其中一个参数必须包含`%f`, 它将被在输入文件名代替. 例如
 
-    -i 'shn shorten-2.3b'(使用官方的 shorten-2.3b, 而不是后来的版本；不修改默认参数
+    -i 'shn shorten-2.3b'(使用官方的 shorten-2.3b, 而不是后来的版本; 不修改默认参数
     -i 'shn shorten -x -d 2048 %f -' (强迫 shorten 跳过每个文件的前 2048 字节)
 
 `-q`: 抑制非关键性输出(安静模式).  除了错误或调试信息(如果指定的话), 通常进入`stderr`的输出将不被显示.
@@ -487,12 +487,12 @@ SYNOPSIS:
 
 任何创建输出文件的模式都支持以下选项.
 
-+ `-O val`: 覆盖现有文件？`val`是以下选项之一,`{ask, always, never}`.  默认是询问.
++ `-O val`: 覆盖现有文件? `val`是以下选项之一,`{ask, always, never}`.  默认是询问.
 + `-a str`: 在文件名的基础部分(不包含拓展名)之前添加`str`.
 + `-z str`: 在基础部分(不包含拓展名)之后添加`str`
 + `-d dir`: 指定输出目录
 + `-o str`: 指定输出文件格式扩展名, 编码器/参数.
-格式是：`fmt [ext=abc] [encoder [arg1 ... argN (%f = filename)]]`, 并且必须用引号包围.  如果给出了参数, 那么其中一个参数必须包含`%f`, 它将被替换为输出文件名.  例:
+格式是: `fmt [ext=abc] [encoder [arg1 ... argN (%f = filename)]]`, 并且必须用引号包围.  如果给出了参数, 那么其中一个参数必须包含`%f`, 它将被替换为输出文件名.  例:
 
     -o 'shn shorten -v2 - %f' (创建没有寻址表的简短文件)
     -o 'flac flake - %f' (使用替代的flac编码器)
@@ -516,7 +516,7 @@ SYNOPSIS:
 
 #### 分割
 
-使用 `shnsplit` 命令分割 `.wav` 文件：
+使用 `shnsplit` 命令分割 `.wav` 文件:
 
 ```bash
 shnsplit -f file.cue file.wav
@@ -534,7 +534,7 @@ bchunk -v -w file.bin file.cue out
 shnsplit -f file.cue -t "%n %t" file.wav
 ```
 
-`shnsplit` 支持许多无损格式(参见 `shntool`).  以 `.flac `格式为例：
+`shnsplit` 支持许多无损格式(参见 `shntool`).  以 `.flac `格式为例:
 
 ```bash
 shnsplit -f file.cue -o flac file.flac
@@ -546,7 +546,7 @@ shnsplit -f file.cue -o flac file.flac
 shnsplit -f file.cue -o "flac flac -s -8 -o %f -" file.flac
 ```
 
-可用 `shntool -a` 命令查看 `shntool` 原生支持的格式和编码器. 如果没有原生支持, 可以手动指定. 例如输出`ogg`格式：
+可用 `shntool -a` 命令查看 `shntool` 原生支持的格式和编码器. 如果没有原生支持, 可以手动指定. 例如输出`ogg`格式:
 
 ```bash
 shnsplit -f file.cue -o "cust ext=ogg oggenc -b 192 -o %f -" file.ape

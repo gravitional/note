@@ -53,9 +53,9 @@ The downloaded source is then checked with `dscverify` and, if successful, unpac
 
 为保证完整的软件包(重)构建能顺利进行,你必须保证系统中已经安装
 
-    build-essential 软件包；
+    build-essential 软件包;
 
-    列于 Build-Depends 域的软件包(参看 第 4.1 节 `control`)；
+    列于 Build-Depends 域的软件包(参看 第 4.1 节 `control`);
 
     列于 Build-Depends-indep 域的软件包(参看 第 4.1 节 `control`).
 
@@ -149,39 +149,39 @@ The hostname (like `products`) is the text that *precedes* the `domain` name (fo
 
 Executing `hostname` from the Command Prompt is the easiest way to show the hostname of a computer.
 
-## Linux查看硬件信息 
+## Linux查看硬件信息
 
 [用 Linux 命令显示硬件信息 ](https://linux.cn/article-11422-1.html)
 
 最简单的方法是使用标准的 Linux GUI 程序之一:
 
-+ `i-nex` 收集硬件信息, 并且类似于 Windows 下流行的 `CPU-Z` 的显示. 
-+ `HardInfo` 显示硬件具体信息, 甚至包括一组八个的流行的性能基准程序, 你可以用它们评估你的系统性能. 
-+ `KInfoCenter` 和 `Lshw` 也能够显示硬件的详细信息, 并且可以从许多软件仓库中获取. 
++ `i-nex` 收集硬件信息, 并且类似于 Windows 下流行的 `CPU-Z` 的显示.
++ `HardInfo` 显示硬件具体信息, 甚至包括一组八个的流行的性能基准程序, 你可以用它们运算你的系统性能.
++ `KInfoCenter` 和 `Lshw` 也能够显示硬件的详细信息, 并且可以从许多软件仓库中获取.
 
 ### 硬件概述
 
-`inxi` 命令能够列出包括 CPU, 图形, 音频, 网络, 驱动, 分区, 传感器等详细信息. 当论坛里的人尝试帮助其他人解决问题的时候, 他们常常询问此命令的输出. 
+`inxi` 命令能够列出包括 CPU, 图形, 音频, 网络, 驱动, 分区, 传感器等详细信息. 当论坛里的人尝试帮助其他人解决问题的时候, 他们常常询问此命令的输出.
 
 ```bash
 inxi -Fxz
 ```
 
-`-F` 参数意味着你将得到完整的输出, `x` 增加细节信息, `z` 参数隐藏像 `MAC` 和 `IP` 等私人身份信息. 
+`-F` 参数意味着你将得到完整的输出, `x` 增加细节信息, `z` 参数隐藏像 `MAC` 和 `IP` 等私人身份信息.
 
 ***
-`hwinfo` 和 `lshw` 命令以不同的格式显示大量相同的信息：
+`hwinfo` 和 `lshw` 命令以不同的格式显示大量相同的信息:
 `hwinfo --short` 或 `lshw -short`
-这两条命令的长格式输出非常详细, 但也有点难以阅读：
+这两条命令的长格式输出非常详细, 但也有点难以阅读:
 `hwinfo` 或`lshw`
 
 ### CPU 详细信息
 
-通过命令你可以了解关于你的 CPU 的任何信息. 使用 `lscpu` 命令或与它相近的 `lshw` 命令查看 `CPU` 的详细信息：
+通过命令你可以了解关于你的 CPU 的任何信息. 使用 `lscpu` 命令或与它相近的 `lshw` 命令查看 `CPU` 的详细信息:
 
 `lscpu`  或 `lshw -C cpu`
 
-在这两个例子中, 输出的最后几行都列出了所有 `CPU` 的功能. 你可以查看你的处理器是否支持特定的功能. 
+在这两个例子中, 输出的最后几行都列出了所有 `CPU` 的功能. 你可以查看你的处理器是否支持特定的功能.
 
 使用这些命令的时候, 你可以使用 `grep` 过滤信息. 例如, 只查看 CPU 品牌和型号:
 
@@ -201,38 +201,38 @@ lscpu | grep -i mhz
 lscpu | grep -i bogo
 ```
 
-`grep` 命令的 `-i`参数代表搜索结果忽略大小写. 
+`grep` 命令的 `-i`参数代表搜索结果忽略大小写.
 
 ### 内存
 
-`Linux` 命令行使你能够收集关于你的计算机内存的所有可能的详细信息. 
-你甚至可以不拆开计算机机箱就能确定是否可以为计算机添加额外的内存条. 
+`Linux` 命令行使你能够收集关于你的计算机内存的所有可能的详细信息.
+你甚至可以不拆开计算机机箱就能确定是否可以为计算机添加额外的内存条.
 
-使用 `dmidecode` 命令列出每根内存条和其容量：
+使用 `dmidecode` 命令列出每根内存条和其容量:
 
 ```bash
 dmidecode -t memory | grep -i size
 ```
 
-使用以下命令获取系统内存更多的信息, 包括类型, 容量, 速度和电压：
+使用以下命令获取系统内存更多的信息, 包括类型, 容量, 速度和电压:
 
 ```bash
 lshw -short -C memory
 ```
 
-你肯定想知道的一件事是你的计算机可以安装的最大内存：
+你肯定想知道的一件事是你的计算机可以安装的最大内存:
 
 ```bash
 dmidecode -t memory | grep -i max
 ```
 
-现在检查一下计算机是否有空闲的插槽可以插入额外的内存条. 你可以通过使用命令在不打开计算机机箱的情况下就做到：
+现在检查一下计算机是否有空闲的插槽可以插入额外的内存条. 你可以通过使用命令在不打开计算机机箱的情况下就做到:
 
 ```bash
 lshw -short -C memory | grep -i empty
 ```
 
-输出为空则意味着所有的插槽都在使用中. 
+输出为空则意味着所有的插槽都在使用中.
 
 ### 显卡
 
@@ -242,13 +242,13 @@ lshw -short -C memory | grep -i empty
 lspci | grep -i vga
 ```
 
-视频控制器的设备号输出信息通常如下：
+视频控制器的设备号输出信息通常如下:
 
 ```bash
 00:02.0 VGA compatible controller: Intel Corporation 82Q35 Express Integrated Graphics Controller (rev 02)
 ```
 
-现在再加上视频设备号重新运行 `lspci` 命令：
+现在再加上视频设备号重新运行 `lspci` 命令:
 
 ```bash
 lspci -v -s 00:02.0
@@ -261,80 +261,80 @@ lspci -v -s 00:02.0
 ***
 安装专有显卡驱动:
 
-首先查看显卡硬件型号`ubuntu-drivers devices`, 使用`ubuntu-drivers -h`可以查看使用帮助：
+首先查看显卡硬件型号`ubuntu-drivers devices`, 使用`ubuntu-drivers -h`可以查看使用帮助:
 
-用法：`ubuntu-drivers [OPTIONS] COMMAND [ARGS]...`
+用法: `ubuntu-drivers [OPTIONS] COMMAND [ARGS]...`
 
-选项：
+选项:
 
 `--gpgpu`:gpgpu驱动程序
 `--free-only`:仅考虑免费软件包
 `--package-list PATH`:使用已安装软件包列表,创建文件(在`install`模式)
-`--no-oem`: 不包括OEM软件包,默认值：`False`
-`-h`, `--help`:显示此消息并退出. 
+`--no-oem`: 不包括OEM软件包,默认值: `False`
+`-h`, `--help`:显示此消息并退出.
 
-命令：
+命令:
 
 `autoinstall`:已弃用, 请改用`install`
-`debug`:打印有关驱动程序的所有可用信息和调试数据. 
+`debug`:打印有关驱动程序的所有可用信息和调试数据.
 `devices`:显示所有需要驱动程序的设备以及哪些软件包可用
 `install`:安装驱动程序`[driver[:version][,driver[:version]]]`
-`list`:显示适用于当前系统的所有驱动程序包. 
+`list`:显示适用于当前系统的所有驱动程序包.
 `  list-oem`:显示适用于此系统的所有OEM软件包
 
 ***
-使用下面的命令展示当前内存使用量(兆字节)：
+使用下面的命令展示当前内存使用量(兆字节):
 
 ```bash
 free -m
 ```
 
-这条命令告诉你多少内存是空闲的, 多少命令正在使用中以及交换内存的大小和是否正在使用. `top` 命令为你提供内存使用更加详细的信息. 
+这条命令告诉你多少内存是空闲的, 多少命令正在使用中以及交换内存的大小和是否正在使用. `top` 命令为你提供内存使用更加详细的信息.
 它显示了当前全部内存和 CPU 使用情况并按照进程 ID, 用户 ID 及正在运行的命令细分. 同时这条命令也是全屏输出.
 
 ### 磁盘文件系统和设备
 
-你可以轻松确定有关磁盘, 分区, 文件系统和其他设备信息. 
+你可以轻松确定有关磁盘, 分区, 文件系统和其他设备信息.
 
-显示每个磁盘设备的描述信息：
+显示每个磁盘设备的描述信息:
 
 ```bash
 lshw -short -C disk
 ```
 
-通过以下命令获取任何指定的 `SATA` 磁盘详细信息, 例如其型号, 序列号以及支持的模式和扇区数量等：
+通过以下命令获取任何指定的 `SATA` 磁盘详细信息, 例如其型号, 序列号以及支持的模式和扇区数量等:
 
 ```bash
 hdparm -i /dev/sda
 ```
 
-当然, 如果需要的话你应该将 `sda` 替换成 `sdb` 或者其他设备号. 
+当然, 如果需要的话你应该将 `sda` 替换成 `sdb` 或者其他设备号.
 
-列出所有磁盘及其分区和大小：
+列出所有磁盘及其分区和大小:
 
 ```bash
 lsblk
 ```
 
-使用以下命令获取更多有关扇区数量, 大小, 文件系统 ID 和 类型以及分区开始和结束扇区：
+使用以下命令获取更多有关扇区数量, 大小, 文件系统 ID 和 类型以及分区开始和结束扇区:
 
 ```bash
 fdisk -l
 ```
 
-要启动 Linux, 你需要确定 `GRUB` 引导程序的可挂载分区. 你可以使用 `blkid` 命令找到此信息. 它列出了每个分区的唯一标识符(UUID)及其文件系统类型(例如 ext3 或 ext4)：
+要启动 Linux, 你需要确定 `GRUB` 引导程序的可挂载分区. 你可以使用 `blkid` 命令找到此信息. 它列出了每个分区的唯一标识符(UUID)及其文件系统类型(例如 ext3 或 ext4):
 
 ```bash
 blkid
 ```
 
-使用以下命令列出已挂载的文件系统和它们的挂载点, 以及已用的空间和可用的空间(兆字节为单位)：
+使用以下命令列出已挂载的文件系统和它们的挂载点, 以及已用的空间和可用的空间(兆字节为单位):
 
 ```bash
 df -m
 ```
 
-最后, 你可以列出所有的 `USB` 和 `PCI` 总线以及其他设备的详细信息：
+最后, 你可以列出所有的 `USB` 和 `PCI` 总线以及其他设备的详细信息:
 
 ```bash
 lsusb
@@ -348,7 +348,7 @@ lspci
 
 ### 网络
 
-Linux 提供大量的网络相关命令, 下面只是几个例子. 
+Linux 提供大量的网络相关命令, 下面只是几个例子.
 
 查看你的网卡硬件详细信息:
 
@@ -356,13 +356,13 @@ Linux 提供大量的网络相关命令, 下面只是几个例子.
 lshw -C network
 ```
 
-`ifconfig` 是显示网络接口的传统命令：
+`ifconfig` 是显示网络接口的传统命令:
 
 ```bash
 ifconfig -a
 ```
 
-但是现在很多人们使用：
+但是现在很多人们使用:
 
 ```bash
 ip link show
@@ -374,7 +374,7 @@ ip link show
 netstat -i
 ```
 
-在阅读输出时, 了解常见的网络缩写十分有用：
+在阅读输出时, 了解常见的网络缩写十分有用:
 
 缩写    含义
 
@@ -384,9 +384,9 @@ netstat -i
 + `ppp0`    点对点协议接口(由拨号调制解调器, PPTP VPN 连接或者 USB 调制解调器使用)
 + `vboxnet0` 或 `vmnet*`    虚拟机网络接口
 
-表中的星号是通配符, 代表不同系统的任意字符. 
+表中的星号是通配符, 代表不同系统的任意字符.
 
-使用以下命令显示默认网关和路由表：
+使用以下命令显示默认网关和路由表:
 
 ```bash
 ip route | column -t
@@ -400,14 +400,14 @@ netstat -r
 
 ### 软件
 
-让我们以显示最底层软件详细信息的两条命令来结束. 
-例如, 如果你想知道是否安装了最新的固件该怎么办？这条命令显示了 `UEFI` 或 `BIOS` 的日期和版本:
+让我们以显示最底层软件详细信息的两条命令来结束.
+例如, 如果你想知道是否安装了最新的固件该怎么办? 这条命令显示了 `UEFI` 或 `BIOS` 的日期和版本:
 
 ```bash
 dmidecode -t bios
 ```
 
-内核版本是多少, 以及它是 64 位的吗？网络主机名是什么？使用下面的命令查出结果：
+内核版本是多少, 以及它是 64 位的吗? 网络主机名是什么? 使用下面的命令查出结果:
 
 ```bash
 uname -a
@@ -424,7 +424,7 @@ uname -a
 + 显示当前内存大小和配置   `dmidecode -t memory | grep -i size` 或 `lshw -short -C memory`
 + 显示硬件支持的最大内存   `dmidecode -t memory | grep -i max`
 + 确定是否有空闲内存插槽   `lshw -short -C memory | grep -i empty`(输出为空表示没有可用插槽)
-+ 确定显卡内存数量   `lspci | grep -i vga` 然后指定设备号再次使用；例如：`lspci -v -s 00:02.0` 
++ 确定显卡内存数量   `lspci | grep -i vga` 然后指定设备号再次使用; 例如: `lspci -v -s 00:02.0`
 显卡内存数量就是  `prefetchable` 的值
 + 显示当前内存使用情况  `free -m` 或 `top`
 + 列出磁盘驱动器   `lshw -short -C disk`
@@ -886,97 +886,97 @@ menuentry 'Example GNU/Linux distribution' --class gnu-linux --id example-gnu-li
 
 安装
 
-本节假设您正在 `x86_64` 系统上安装 `GRUB`. 对于 `IA32` (32 位) `UEFI `系统(不要和 32 位 CPU 相混淆),  将`x86_64-efi`替换成`i386-efi`. 
-首先安装软件包 `grub` 和 `efibootmgr`. 其中`GRUB`是启动引导器, `efibootmgr`被 `GRUB` 脚本用来将启动项写入 `NVRAM` . 
+本节假设您正在 `x86_64` 系统上安装 `GRUB`. 对于 `IA32` (32 位) `UEFI `系统(不要和 32 位 CPU 相混淆),  将`x86_64-efi`替换成`i386-efi`.
+首先安装软件包 `grub` 和 `efibootmgr`. 其中`GRUB`是启动引导器, `efibootmgr`被 `GRUB` 脚本用来将启动项写入 `NVRAM` .
 
-然后按照下列步骤安装 `GRUB`：
+然后按照下列步骤安装 `GRUB`:
 
-挂载 `EFI` 系统分区, 在本节之后的内容里, 把 `esp` 替换成挂载点. 
-选择一个启动引导器标识, 这里叫做 `new`. 这将在 `esp/EFI/` 中创建一个`new`目录来储存 `EFI` 二进制文件, 而且这个名字还会在 `UEFI` 启动菜单中表示 `new` 启动项. 
-执行下面的命令来将 `GRUB EFI` 应用 `grubx64.efi` 安装到 `esp/EFI/new/`, 并将其模块安装到 `/boot/grub/x86_64-efi/`. 
+挂载 `EFI` 系统分区, 在本节之后的内容里, 把 `esp` 替换成挂载点.
+选择一个启动引导器标识, 这里叫做 `new`. 这将在 `esp/EFI/` 中创建一个`new`目录来储存 `EFI` 二进制文件, 而且这个名字还会在 `UEFI` 启动菜单中表示 `new` 启动项.
+执行下面的命令来将 `GRUB EFI` 应用 `grubx64.efi` 安装到 `esp/EFI/new/`, 并将其模块安装到 `/boot/grub/x86_64-efi/`.
 
 ```
 # grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=new
 ```
 
-上述安装完成后 GRUB 的主目录将位于 `/boot/grub/`. 注意上述例子中, grub-install 还将在固件启动管理器中创建一个条目, 名叫 `new`. 
+上述安装完成后 GRUB 的主目录将位于 `/boot/grub/`. 注意上述例子中, grub-install 还将在固件启动管理器中创建一个条目, 名叫 `new`.
 
-在配置完成后, 记得生成主配置文件. 
+在配置完成后, 记得生成主配置文件.
 
-提示： 如果你使用了 `--removable` 选项, 那 `GRUB` 将被安装到 `esp/EFI/BOOT/BOOTX64.EFI` (当使用 `i386-efi` 时是 e`sp/EFI/BOOT/BOOTIA32.EFI`), 
-此时即使 `EFI` 变量被重设或者你把这个驱动器接到其他电脑上, 你仍可从这个驱动器上启动. 
-通常来说, 你只要像操作 `BIOS` 设备一样在启动时选择这个驱动器就可以了. 
-如果和 `Windows` 一起多系统启动, 注意 `Windows` 通常会在那里安装一个 `EFI` 可执行程序, 这只是为了重建 `Windows` 的 UEFI 启动项. 
+提示:  如果你使用了 `--removable` 选项, 那 `GRUB` 将被安装到 `esp/EFI/BOOT/BOOTX64.EFI` (当使用 `i386-efi` 时是 e`sp/EFI/BOOT/BOOTIA32.EFI`),
+此时即使 `EFI` 变量被重设或者你把这个驱动器接到其他电脑上, 你仍可从这个驱动器上启动.
+通常来说, 你只要像操作 `BIOS` 设备一样在启动时选择这个驱动器就可以了.
+如果和 `Windows` 一起多系统启动, 注意 `Windows` 通常会在那里安装一个 `EFI` 可执行程序, 这只是为了重建 `Windows` 的 UEFI 启动项.
 
-注意：
-`--efi-directory` 和 `--bootloader-id` 是 `GRUB UEFI` 特有的. -`-efi-directory` 替代了已经废弃的 `--root-directory`. 
-您可能注意到在 `grub-install` 命令中没有一个 `<device_path>` 选项, 例如 `/dev/sda`. 事实上即使提供了 `<device_path>`, 也会被 `GRUB` 安装脚本忽略, 因为 `UEFI` 启动加载器不使用 MBR 启动代码或启动扇区. 
-确保 `grub-install` 命令是在你想要用 GRUB 引导的那个系统上运行的. 也就是说如果你是用安装介质启动进入了安装环境中, 你需要在 `chroot` 之后再运行 `grub-install`. 
-如果因为某些原因不得不在安装的系统之外运行 `grub-install`, 在后面加上 `--boot-directory= `选项来指定挂载 `/boot` 目录的路径, 例如 `--boot-directory=/mnt/boot`. 
+注意:
+`--efi-directory` 和 `--bootloader-id` 是 `GRUB UEFI` 特有的. -`-efi-directory` 替代了已经废弃的 `--root-directory`.
+您可能注意到在 `grub-install` 命令中没有一个 `<device_path>` 选项, 例如 `/dev/sda`. 事实上即使提供了 `<device_path>`, 也会被 `GRUB` 安装脚本忽略, 因为 `UEFI` 启动加载器不使用 MBR 启动代码或启动扇区.
+确保 `grub-install` 命令是在你想要用 GRUB 引导的那个系统上运行的. 也就是说如果你是用安装介质启动进入了安装环境中, 你需要在 `chroot` 之后再运行 `grub-install`.
+如果因为某些原因不得不在安装的系统之外运行 `grub-install`, 在后面加上 `--boot-directory= `选项来指定挂载 `/boot` 目录的路径, 例如 `--boot-directory=/mnt/boot`.
 
 ### grub 修复
 
 [Linux与Windows 10用grub引导教程](https://www.cnblogs.com/jpfss/p/9462792.html)
 
-首先, 在你装了 Windows 之后, Windows 在装机过程中会将硬盘划分出一个约 `100MB` 大小的分区, 称为 `EFI` 分区. 
-这个分区就是起引导作用的. 在资源管理器中是看不到的这个分区的, 可以在磁盘管理中看到, 管理则需要借助 `DiskGenius` 工具. 
-可以看到该分区包含 3 个文件夹(如果你没有装 `Linux` 的话, 就只有两个), 分别是 `Boot`, `Microsoft` 和 `Manjaro`, 其中 `Boot` 文件夹就是 `UEFI` 引导所必需的文件. 
+首先, 在你装了 Windows 之后, Windows 在装机过程中会将硬盘划分出一个约 `100MB` 大小的分区, 称为 `EFI` 分区.
+这个分区就是起引导作用的. 在资源管理器中是看不到的这个分区的, 可以在磁盘管理中看到, 管理则需要借助 `DiskGenius` 工具.
+可以看到该分区包含 3 个文件夹(如果你没有装 `Linux` 的话, 就只有两个), 分别是 `Boot`, `Microsoft` 和 `Manjaro`, 其中 `Boot` 文件夹就是 `UEFI` 引导所必需的文件.
 
-我们继续打开 `Microsoft/Boot` 文件夹, 将会看到许多文件, 这些文件就是启动 `Windows 10` 所必需的, 包含了语言包, 字体等, `BCD` 包含了 `Windows` 引导开始以后的信息. 
-其中, `bootmgfw.efi `是 `Windows` 默认引导文件. 
+我们继续打开 `Microsoft/Boot` 文件夹, 将会看到许多文件, 这些文件就是启动 `Windows 10` 所必需的, 包含了语言包, 字体等, `BCD` 包含了 `Windows` 引导开始以后的信息.
+其中, `bootmgfw.efi `是 `Windows` 默认引导文件.
 
 ```bash
 EFI/Boot/bootx64.efi
 EFI/Microsoft/Boot/bootmgfw.efi
 ```
 
-以上是采用 `UEFI` 启动 `Windows 10` 的文件结构, 也就是说, 当你按下开机按钮的时候, 首先 `UEFI` 找到 `EFI` 分区的 `Boot` 文件夹, 然后加载 `bootx64.efi` 文件, 读取文件信息, 找到 `EFI/Microsoft/Boot/bootmgfw.efi`, 按照 `bootmgfw.efi` 的要求, 加载所需的启动信息, 启动 `Windows 10`. 
+以上是采用 `UEFI` 启动 `Windows 10` 的文件结构, 也就是说, 当你按下开机按钮的时候, 首先 `UEFI` 找到 `EFI` 分区的 `Boot` 文件夹, 然后加载 `bootx64.efi` 文件, 读取文件信息, 找到 `EFI/Microsoft/Boot/bootmgfw.efi`, 按照 `bootmgfw.efi` 的要求, 加载所需的启动信息, 启动 `Windows 10`.
 
 ***
 准备工作
 
-在正式装系统之前, 我们还需要做一些准备工作：
+在正式装系统之前, 我们还需要做一些准备工作:
 
 关闭 `Windows` 的快速启动
-这个功能的作用是在于关机的时候不完全断电, 类似将系统处于`休眠`状态, 这样可以让开机更加迅速. 但这也就导致了只能使用 `Windows` 系统. 
+这个功能的作用是在于关机的时候不完全断电, 类似将系统处于`休眠`状态, 这样可以让开机更加迅速. 但这也就导致了只能使用 `Windows` 系统.
 
 关闭 `BIOS` 的 `Secure Boot `的功能
 
-在默认情况下, `UEFI` 固件只会加载那些被签名的引导程序. 在缺少 `Secure Boot` 功能的传统 PC 机上, 恶意的后门程序可以加载自身, 进而摇身一变伪装成一个引导程序. 
-这样的话, `BIOS` 就会在启动的时候加载后门程序, 这样它就可以躲过操作系统, 把自己隐藏得很深. 
-但是不得不说, 这对我们安装 `Linux` 造成了很大的困扰, 也是直接导致我们重启到 Windows 10 后进不去 `Linux` 的原因. 
-首先我们要关闭这个功能：进入 `BIOS` 找到 `Secure Boot`, 选择 `disabled`, 这样就关闭了. 当然, 有些人进入 `BIOS` 会发现 Secure Boot 这个选项是灰色的(比如我的就是), 这时你需要先给你的 `BIOS` 设一个密码, 然后就能关 Secure Boot 了. 
+在默认情况下, `UEFI` 固件只会加载那些被签名的引导程序. 在缺少 `Secure Boot` 功能的传统 PC 机上, 恶意的后门程序可以加载自身, 进而摇身一变伪装成一个引导程序.
+这样的话, `BIOS` 就会在启动的时候加载后门程序, 这样它就可以躲过操作系统, 把自己隐藏得很深.
+但是不得不说, 这对我们安装 `Linux` 造成了很大的困扰, 也是直接导致我们重启到 Windows 10 后进不去 `Linux` 的原因.
+首先我们要关闭这个功能: 进入 `BIOS` 找到 `Secure Boot`, 选择 `disabled`, 这样就关闭了. 当然, 有些人进入 `BIOS` 会发现 Secure Boot 这个选项是灰色的(比如我的就是), 这时你需要先给你的 `BIOS` 设一个密码, 然后就能关 Secure Boot 了.
 
 ***
 安装 Linux
 
-所有的准备都已经完成, 这时就可以准备刻录 U 盘了, 推荐`Rufus`和`USBWriter`. 
-刻录完成后, 重启按 `f12`, 选择从 USB 设备启动, 对于绝大多数发行版来说一路回车就行了, 只需要注意一点：在选择挂载 `boot` 位置的时候, 一定要挂载在 `efi` 分区, 别的都不行. 
-重启之后, 不出意外的话, 你会直接进入 Windows 10, 不要担心, 这时 Linux 已经安装成功了, 我们只需要将引导文件替换一下. 
+所有的准备都已经完成, 这时就可以准备刻录 U 盘了, 推荐`Rufus`和`USBWriter`.
+刻录完成后, 重启按 `f12`, 选择从 USB 设备启动, 对于绝大多数发行版来说一路回车就行了, 只需要注意一点: 在选择挂载 `boot` 位置的时候, 一定要挂载在 `efi` 分区, 别的都不行.
+重启之后, 不出意外的话, 你会直接进入 Windows 10, 不要担心, 这时 Linux 已经安装成功了, 我们只需要将引导文件替换一下.
 
 ***
 替换引导文件
 
-先用 `DG` 打开 `EFI` 分区, 你会看到多了一个文件夹, 名称取决于你安装的是哪一个发行版. 
-我安装的是 `Manjaro Linux`, 名称就是 `Manjaro`, 打开之后会发现里面有一个名为 `grubx64.efi` 的文件, 这就是启动 `Linux` 的引导文件. 
-和 `Windows 10` 的 `bootmgfw.efi` 类似, 我们想要用 `grubx64.efi` 引导代替掉 `bootmgfw.efi`, 这样就可以用 `GRUB` 引导了. 步骤：
+先用 `DG` 打开 `EFI` 分区, 你会看到多了一个文件夹, 名称取决于你安装的是哪一个发行版.
+我安装的是 `Manjaro Linux`, 名称就是 `Manjaro`, 打开之后会发现里面有一个名为 `grubx64.efi` 的文件, 这就是启动 `Linux` 的引导文件.
+和 `Windows 10` 的 `bootmgfw.efi` 类似, 我们想要用 `grubx64.efi` 引导代替掉 `bootmgfw.efi`, 这样就可以用 `GRUB` 引导了. 步骤:
 
-进入管理员命令行. 方法：`win + x`, 再按 `a`
-输入 `bcdedit /set {bootmgr} path \EFI\Manjaro\grubx64.efi`. 提示操作成功的话, 就完成了. 
+进入管理员命令行. 方法: `win + x`, 再按 `a`
+输入 `bcdedit /set {bootmgr} path \EFI\Manjaro\grubx64.efi`. 提示操作成功的话, 就完成了.
 
-注：如果输入以上命令提示`参数错误`的话, 将`{bootmgr}`改为 `'{bootmgr}'`, 原因是 `PowerShell` 和 `CMD` 语法的差别. 
+注: 如果输入以上命令提示`参数错误`的话, 将`{bootmgr}`改为 `'{bootmgr}'`, 原因是 `PowerShell` 和 `CMD` 语法的差别.
 
-至此, 如果你安装的是除 `Arch` 之外绝大多数发行版, 那么接下来就和你没有啥关系了, 你已经成功了, 好好享受吧！
+至此, 如果你安装的是除 `Arch` 之外绝大多数发行版, 那么接下来就和你没有啥关系了, 你已经成功了, 好好享受吧!
 
-开机之后会发现进入 `GRUB` 的引导了, 通常会包含至少三个选项(以 `Manjaro` 举例)：`Manjaro`, `Manjaro 高级选项`和 `Windows Manager`. 
-这就代表你已经完美的解决了 Windows 和 Linux 双系统引导的问题. 
+开机之后会发现进入 `GRUB` 的引导了, 通常会包含至少三个选项(以 `Manjaro` 举例): `Manjaro`, `Manjaro 高级选项`和 `Windows Manager`.
+这就代表你已经完美的解决了 Windows 和 Linux 双系统引导的问题.
 
 ***
 修复 `Windows` 引导
 
-这一点是我安装 Arch Llinux 的时候发现的, Arch Linux 安装过程是手动安装的, 在编写 GRUB 的时候会扫描不到 Windows Manager 所在的分区(当然可能不是所有人都会遇到), 
-所以在 GRUB 界面可能会看不到 Windows Manager 选项, 导致进不去 Windows 10, 这里就需要手动编辑 GRUB 信息, 
-我们打开 `/boot/grub/grub.cfg` 文件, 发现里面确实没有 Windows 10 的启动信息, 在后面加上：
+这一点是我安装 Arch Llinux 的时候发现的, Arch Linux 安装过程是手动安装的, 在编写 GRUB 的时候会扫描不到 Windows Manager 所在的分区(当然可能不是所有人都会遇到),
+所以在 GRUB 界面可能会看不到 Windows Manager 选项, 导致进不去 Windows 10, 这里就需要手动编辑 GRUB 信息,
+我们打开 `/boot/grub/grub.cfg` 文件, 发现里面确实没有 Windows 10 的启动信息, 在后面加上:
 
 ```bash
 menuentry "Microsoft Windows 10" {
@@ -989,38 +989,38 @@ menuentry "Microsoft Windows 10" {
     }
 ```
 
-注意：
+注意:
 
-这里的 `$hints_string`, 代表的是终端执行命令：
+这里的 `$hints_string`, 代表的是终端执行命令:
 
 ```bash
 sudo grub-probe --target=hints_string /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi
 ```
 
-后的输出；
+后的输出;
 
-而 `$fs_uuid` 代表的是：
+而 `$fs_uuid` 代表的是:
 
 ```bash
 sudo grub-probe --target=fs_uuid /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi
 ```
 
-的输出. 然后保存. 在终端执行命令：`sudo grub-mkconfig -o /boot/grub/grub.cfg`, 就 `OK` 了. 
+的输出. 然后保存. 在终端执行命令: `sudo grub-mkconfig -o /boot/grub/grub.cfg`, 就 `OK` 了.
 
-到此, Arch Linux 和 Windows 10 双系统也配置完毕了. 
+到此, Arch Linux 和 Windows 10 双系统也配置完毕了.
 
 ***
 附加问题
 
-+ 在 Windows 10 进行了一个大更新后, 会发现 GRUB 引导界面没有了, 还是直接进入了 Windows 10, 这时只需要按照 替换引导文件 的方法重新输入一遍命令就行. 
-+ 使用 Linux 某个发行版一段时间之后, 难免会想尝试一下另一个发行版. 这时请务必将之前的发型版的引导文件删除, 否则可能会出现无论怎么设置都无法进入 GRUB 的情况. 例如：我之前用的是 `Ubuntu`, 我现在换成了 Manjaro, 我就需要用 DG 删除 EFI 分区的 Ubuntu 文件夹. 
-+ 在我使用 `Manjaro` 更新了一次 `Linux` 的内核后, 进不去 Windows 10 了, 这个时候千万不要直接修复 `Windows 10` 引导, 这会格式化 `EFI` 分区, 只需要按上面修复 `Windows` 引导 的方法编辑一下 `GRUB` 就可以了. 
++ 在 Windows 10 进行了一个大更新后, 会发现 GRUB 引导界面没有了, 还是直接进入了 Windows 10, 这时只需要按照 替换引导文件 的方法重新输入一遍命令就行.
++ 使用 Linux 某个发行版一段时间之后, 难免会想尝试一下另一个发行版. 这时请务必将之前的发型版的引导文件删除, 否则可能会出现无论怎么设置都无法进入 GRUB 的情况. 例如: 我之前用的是 `Ubuntu`, 我现在换成了 Manjaro, 我就需要用 DG 删除 EFI 分区的 Ubuntu 文件夹.
++ 在我使用 `Manjaro` 更新了一次 `Linux` 的内核后, 进不去 Windows 10 了, 这个时候千万不要直接修复 `Windows 10` 引导, 这会格式化 `EFI` 分区, 只需要按上面修复 `Windows` 引导 的方法编辑一下 `GRUB` 就可以了.
 
 ***
 [Arch Wiki 上的示例](https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%90%AF%E5%8A%A8%E8%8F%9C%E5%8D%95%E6%9D%A1%E7%9B%AE%E7%A4%BA%E4%BE%8B)
 
-这个模式寻找 `Windows` 的启动加载器的位置, 然后当用户选择了相应的菜单条目的时候, 通过链式载入的方法在 `GRUB` 之后加载它. 
-这里主要的任务是找到 EFI 系统分区然后从上面运行启动加载器. 注意： 这个启动项仅在 `UEFI` 模式下才起作用, 而且 `Windows` 和 `UEFI` 的位数必须相同. 
+这个模式寻找 `Windows` 的启动加载器的位置, 然后当用户选择了相应的菜单条目的时候, 通过链式载入的方法在 `GRUB` 之后加载它.
+这里主要的任务是找到 EFI 系统分区然后从上面运行启动加载器. 注意:  这个启动项仅在 `UEFI` 模式下才起作用, 而且 `Windows` 和 `UEFI` 的位数必须相同.
 
 ```bash
 if [ "${grub_platform}" == "efi" ]; then
@@ -1034,25 +1034,25 @@ if [ "${grub_platform}" == "efi" ]; then
 fi
 ```
 
-其中 `$hints_string` 和 `$fs_uuid` 由下述两个命令得到. 
+其中 `$hints_string` 和 `$fs_uuid` 由下述两个命令得到.
 
-`$fs_uuid` 命令检测 EFI 系统分区的 `UUID` ：
+`$fs_uuid` 命令检测 EFI 系统分区的 `UUID` :
 
 ```bash
 # grub-probe --target=fs_uuid esp/EFI/Microsoft/Boot/bootmgfw.efi
 1ce5-7f28
 ```
 
-或者你可以(以 `root` 身份)运行 `blkid` 然后从结果中找到 `EFI` 系统分区的 `UUID` . 
+或者你可以(以 `root` 身份)运行 `blkid` 然后从结果中找到 `EFI` 系统分区的 `UUID` .
 
-`$hints_string` 命令可以确定 EFI 系统分区的位置, 在当前的例子中是 `harddrive 0`：
+`$hints_string` 命令可以确定 EFI 系统分区的位置, 在当前的例子中是 `harddrive 0`:
 
 ```bash
 # grub-probe --target=hints_string esp/EFI/Microsoft/Boot/bootmgfw.efi
 --hint-bios=hd0,gpt1 --hint-efi=hd0,gpt1 --hint-baremetal=ahci0,gpt1
 ```
 
-这两个命令都是假设 `Windows` 使用的 `ESP` 是挂载在`$esp`上的. 当然,  `Windows` 的 `EFI` 文件路径可能有变,因为这就是 `Windows` .... 
+这两个命令都是假设 `Windows` 使用的 `ESP` 是挂载在`$esp`上的. 当然,  `Windows` 的 `EFI` 文件路径可能有变,因为这就是 `Windows` ....
 
 ### 我使用的 grub 自定义
 
@@ -1066,7 +1066,7 @@ GRUB_TIMEOUT=10 #设置等待时间
 GRUB_TIMEOUT_STYLE=menu # 强制显示启动菜单
 ```
 
-+ 编辑 `/etc/grub.d/40_custom`, 添加 `windows`启动项, 
++ 编辑 `/etc/grub.d/40_custom`, 添加 `windows`启动项,
 
 ```bash
 if [ "${grub_platform}" == "efi" ]; then
@@ -1097,31 +1097,31 @@ boot
 
 [nomodeset, quiet and splash](https://askubuntu.com/questions/716957/what-do-the-nomodeset-quiet-and-splash-kernel-parameters-mean)
 
-+ `nomodeset` ; 最新的内核已将`video mode setting`移入内核. 
-So all the programming of the hardware specific clock rates and registers on the video card 发生在内核中, 
-而不是`X`服务器启动后的`X`驱动中. 如此, 可以在开机时展示高分辨率`splash/boot`画面, 并实现平滑过渡, 不用闪烁一下子. 
-然而有些显卡无法正常工作, 并且最终会出现黑屏. 添加`nomodeset`参数指示内核在加载`X`之前不加载显卡驱动程序, 而改用`BIOS`模式. 
++ `nomodeset` ; 最新的内核已将`video mode setting`移入内核.
+So all the programming of the hardware specific clock rates and registers on the video card 发生在内核中,
+而不是`X`服务器启动后的`X`驱动中. 如此, 可以在开机时展示高分辨率`splash/boot`画面, 并实现平滑过渡, 不用闪烁一下子.
+然而有些显卡无法正常工作, 并且最终会出现黑屏. 添加`nomodeset`参数指示内核在加载`X`之前不加载显卡驱动程序, 而改用`BIOS`模式.
 
-+ `quiet splash`; `splash`(由`/boot/grub/grub.cfg`设置)导致显示启动画面. 同时, 您希望启动过程安静一些, 否则所有类型的消息都会覆盖启动屏幕. 
++ `quiet splash`; `splash`(由`/boot/grub/grub.cfg`设置)导致显示启动画面. 同时, 您希望启动过程安静一些, 否则所有类型的消息都会覆盖启动屏幕.
 尽管在`GRUB`中指定了这些参数, 但它们是影响内核或其模块加载的内核参数, 而不是改变`GRUB`行为的参数. 来自`GRUB_CMDLINE_LINUX_DEFAULT`的重要部分是`CMDLINE_LINUX`
 
-+ `acpi`, `noapic` and `nolapic`;通常不需要这些参数, 除非你的`BIOS`很古老, 不支持这些标准. 
++ `acpi`, `noapic` and `nolapic`;通常不需要这些参数, 除非你的`BIOS`很古老, 不支持这些标准.
 
-`ACPI`(Advanced Configuration and Power Interface)是用于处理电源管理的标准. 
+`ACPI`(Advanced Configuration and Power Interface)是用于处理电源管理的标准.
 较早的系统可能不完全支持`ACPI`, 因此有时它有助于向内核提示不使用它. `acpi=off`
 
-`APIC`(`Advanced Programmable Interrupt Controller`)是在较新的系统上发行的一种功能. 
-`"local"`版本称为`LAPIC`. 该控制器可以生成和处理中断, 中断是硬件用来传递消息的信号. 
-同样, `APIC`的某些实现在较旧的系统上可能会出现问题, 因此禁用它很有用.  `noapic` ,`nolapic`. 
+`APIC`(`Advanced Programmable Interrupt Controller`)是在较新的系统上发行的一种功能.
+`"local"`版本称为`LAPIC`. 该控制器可以生成和处理中断, 中断是硬件用来传递消息的信号.
+同样, `APIC`的某些实现在较旧的系统上可能会出现问题, 因此禁用它很有用.  `noapic` ,`nolapic`.
 
-有时, `APIC`可以正常工作, 但是传递消息可能会减慢速度, 这可能会干扰音频和视频处理. 人们也可能出于这个原因禁用它. 
+有时, `APIC`可以正常工作, 但是传递消息可能会减慢速度, 这可能会干扰音频和视频处理. 人们也可能出于这个原因禁用它.
 
 ### ACPI 伪装 windows
 
 [Manjaro折腾记录](https://blog.csdn.net/hustcw98/article/details/81979172)
 [how to set acpi_osi parameter in the grub](https://unix.stackexchange.com/questions/246672/how-to-set-acpi-osi-parameter-in-the-grub)
 
-有时从suspend恢复时, 会发现登录后整个桌面一片黑色, 只有一个亮亮的鼠标可以移动. 
+有时从suspend恢复时, 会发现登录后整个桌面一片黑色, 只有一个亮亮的鼠标可以移动.
 
 ```bash
 vim /etc/default/grub
@@ -1129,14 +1129,14 @@ vim /etc/default/grub
 acpi_osi=! acpi_osi='Windows 2009'
 ```
 
-`acpi_osi=!`清空表示`acpi_osi`原来的值, 然后假装成`Windows 7, Win Server 2008 R2`, 
-具体的版本对应可以参考：[如何使用 _OSI 识别 ACPI 中的 Windows 版本](https://docs.microsoft.com/zh-cn/windows-hardware/drivers/acpi/winacpi-osi).
+`acpi_osi=!`清空表示`acpi_osi`原来的值, 然后假装成`Windows 7, Win Server 2008 R2`,
+具体的版本对应可以参考: [如何使用 _OSI 识别 ACPI 中的 Windows 版本](https://docs.microsoft.com/zh-cn/windows-hardware/drivers/acpi/winacpi-osi).
 
-对于`Debian`系列的发行版, 可能需要转义引号, 写成`acpi_osi=\"Windows 2009\"`,修改后, 运行`sudo update-grub`重新生成引导配置. 
+对于`Debian`系列的发行版, 可能需要转义引号, 写成`acpi_osi=\"Windows 2009\"`,修改后, 运行`sudo update-grub`重新生成引导配置.
 可以使用`cat /proc/cmdline`检查内核启动的参数, 参考[Linux中proc/cmdline](https://blog.csdn.net/baidu_33879812/article/details/104906774)
 
 ***
-`Manjaro`在更新内核到`Linux 5.11.14-1`的时候出现问题, 开机提示`NMI watchdog: Watchdog detected hard LOCKUP on cpu x`,删除这个配置之后可以正常进入. 
+`Manjaro`在更新内核到`Linux 5.11.14-1`的时候出现问题, 开机提示`NMI watchdog: Watchdog detected hard LOCKUP on cpu x`,删除这个配置之后可以正常进入.
 
 ***
 20210423  测试:
@@ -1391,20 +1391,20 @@ AB在同一局域网,C位于外网.
 
 ### 输入法
 
-添加删除输入法在系统设置目录, 直接搜索`settings-Region&Language--input sources`, 添加输入法是按照语言进行的, 先选择语言, 然后可以选择具体的输入法. 
+添加删除输入法在系统设置目录, 直接搜索`settings-Region&Language--input sources`, 添加输入法是按照语言进行的, 先选择语言, 然后可以选择具体的输入法.
 如`Intelligent Pinyin`
 
-+ 切换输入法可以使用如下命令：`im-config -s fcitx`, 
-`-s`:    无动作； 对可能发生的事件进行模拟,但实际上不更改配置文件. 
++ 切换输入法可以使用如下命令: `im-config -s fcitx`,
+`-s`:    无动作;  对可能发生的事件进行模拟,但实际上不更改配置文件.
 
 + 如果要查看当前可用的输入法可以使用 `im-config -l` , 更多查看 `man im-config`.
 + `ibus-setup`: 图形界面程序, 用于设置`ibus`输入法框架
 
 + 查看环境变量`$XDG_CURRENT_DESKTOP`的值来看自己处于哪个图形环境.
-+ 重启输入法; `ibus restart`: 
-+ 重启 ibus 守护进程； `ibus-daemon -drx`
++ 重启输入法; `ibus restart`:
++ 重启 ibus 守护进程;  `ibus-daemon -drx`
     + `-d --daemonize`:作为后台程序运行
-    + `-r, --replace`: 如果有旧的`ibus-daemon`在运行, 就替换它. 
+    + `-r, --replace`: 如果有旧的`ibus-daemon`在运行, 就替换它.
     + `-x, --xim`: 运行`XIM`服务器
 
 + gedit设置默认编码UTF-8;
@@ -1418,7 +1418,7 @@ gsettings set org.gnome.gedit.preferences.encodings candidate-encodings "['UTF-8
 + 导入ibus词库
 [iBus拼音输入法导入搜狗词库](https://blog.csdn.net/betabin/article/details/7798668)
 
-终端下输入`ibus-setup`--`Input Method`--`Chinese - intelligent pinyin`, 
+终端下输入`ibus-setup`--`Input Method`--`Chinese - intelligent pinyin`,
 点击右侧的 `preference`--`user data`--`import`, 把制作好的词库导入进去即可. 测试:
 
     亥姆霍兹方程
@@ -1447,28 +1447,28 @@ gsettings set org.gnome.gedit.preferences.encodings candidate-encodings "['UTF-8
 
 [System program problem detected?](https://askubuntu.com/questions/1160113/system-program-problem-detected)
 
-查看转储到您的磁盘上的崩溃报告. 目录是`/var/crash/`, 它将包含几个文件, 这些文件将您指向它所涉及的软件包以及崩溃的原因. 
-该目录描述为：
+查看转储到您的磁盘上的崩溃报告. 目录是`/var/crash/`, 它将包含几个文件, 这些文件将您指向它所涉及的软件包以及崩溃的原因.
+该目录描述为:
 
->`/var/crash`：系统崩溃转储(可选)
->该目录包含系统故障转储. 
->自本标准发布之日起, Linux不支持系统故障转储, 但其他可能符合FHS的系统也可能支持系统转储. 
+>`/var/crash`: 系统崩溃转储(可选)
+>该目录包含系统故障转储.
+>自本标准发布之日起, Linux不支持系统故障转储, 但其他可能符合FHS的系统也可能支持系统转储.
 
-`Ubuntu`版本使用此(可选)目录来转储崩溃和执行崩溃的软件包, 称为`apport` (and `whoopsie`). 
-如果您想获得关于崩溃的真正详细的报告, 请安装`GDB`：`The GNU Project Debugger` with `sudo apt-get install gdb`. 
+`Ubuntu`版本使用此(可选)目录来转储崩溃和执行崩溃的软件包, 称为`apport` (and `whoopsie`).
+如果您想获得关于崩溃的真正详细的报告, 请安装`GDB`: `The GNU Project Debugger` with `sudo apt-get install gdb`.
 
 + 如何摆脱它
 
-取决于您所说的`摆脱`. 理想的解决方法是检查报告中包含的内容, 然后尝试找到解决方法. 
-如果不需要包装或良性包装, 也可以将其清除. 多数情况下, 它是一项核心功能. 
+取决于您所说的`摆脱`. 理想的解决方法是检查报告中包含的内容, 然后尝试找到解决方法.
+如果不需要包装或良性包装, 也可以将其清除. 多数情况下, 它是一项核心功能.
 
-您可以选择以下任意一种来删除崩溃报告, 直到实际删除该软件包为止(如果错误来自于`apport`本身, 那将非常具有讽刺意味)：
+您可以选择以下任意一种来删除崩溃报告, 直到实际删除该软件包为止(如果错误来自于`apport`本身, 那将非常具有讽刺意味):
 
-+ `sudo rm /var/crash/*`将删除旧的崩溃并停止通知您, 直到某些软件包再次崩溃为止. 
++ `sudo rm /var/crash/*`将删除旧的崩溃并停止通知您, 直到某些软件包再次崩溃为止.
 + 您可以通过`sudo systemctl disable apport`停止服务(并通过`sudo systemctl enable apport`再次启用它)
-+ 如果不想看到崩溃报告, 可以通过`vim /etc/default/apport`将其禁用. 并将`enabled = 1`更改为` enabled = 0`. 反向编辑将再次启用它. 
++ 如果不想看到崩溃报告, 可以通过`vim /etc/default/apport`将其禁用. 并将`enabled = 1`更改为` enabled = 0`. 反向编辑将再次启用它.
 + 您可以使用`sudo apt purge apport`(使用`sudo apt install apport`再次安装)
-+还有一种桌面方法(`问题报告`选项)：
++还有一种桌面方法(`问题报告`选项):
 
-[如何阅读和使用崩溃报告](https://askubuntu.com/questions/346953/how-to-read-and-use-crash-reports)有一些有趣的答案. 
-它有一个示例崩溃报告和一种跟踪崩溃的方法. 
+[如何阅读和使用崩溃报告](https://askubuntu.com/questions/346953/how-to-read-and-use-crash-reports)有一些有趣的答案.
+它有一个示例崩溃报告和一种跟踪崩溃的方法.

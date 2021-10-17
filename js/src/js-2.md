@@ -417,7 +417,7 @@ p1.toString(); // hasOwnProperty 等等的一些方法
 #### constructor属性
 
 `constructor`属性是让`徒弟`, `徒孙` 们知道是谁创造了自己.
-这里可不是`师父`..., 而是自己的`父母`, `父母`创造了自己, `父母`又是由上一辈人创造的, …… 追溯到头就是`Function()`(女娲).
+这里可不是`师父`..., 而是自己的`父母`, `父母`创造了自己, `父母`又是由上一辈人创造的, ... ...  追溯到头就是`Function()`(女娲).
 
 ![constructor属性.png](https://image-static.segmentfault.com/485/683/48568374-4a2ca8b9a839496e_fix732)
 
@@ -719,7 +719,7 @@ if ((new Cat('x') instanceof Animal)
 
 `window`对象不但充当`全局作用域`,而且表示`浏览器窗口`.
 
-`window`对象有`innerWidth`和`innerHeight`属性,可以获取浏览器窗口的`内部宽度`和`高度`. 
+`window`对象有`innerWidth`和`innerHeight`属性,可以获取浏览器窗口的`内部宽度`和`高度`.
 `内部宽高`是指除去`菜单栏`,`工具栏`,`边框`等占位元素后,用于显示网页的净宽高.
 兼容性: `IE<=8`不支持.
 
@@ -732,7 +732,7 @@ console.log('window inner size: ' + window.innerWidth + ' x ' + window.innerHeig
 
 #### navigator
 
-`navigator` 对象表示浏览器的信息,最常用的属性包括: 
+`navigator` 对象表示浏览器的信息,最常用的属性包括:
 
 + `navigator.appName` ;  浏览器名称;
 + `navigator.appVersion` ;  浏览器版本;
@@ -740,7 +740,7 @@ console.log('window inner size: ' + window.innerWidth + ' x ' + window.innerHeig
 + `navigator.platform` ;  操作系统类型;
 + `navigator.userAgent` ;  浏览器设定的User-Agent字符串.
 
-例如: 
+例如:
 
 ```js
 'use strict';
@@ -751,7 +751,7 @@ console.log('platform = ' + navigator.platform);
 console.log('userAgent = ' + navigator.userAgent);
 ```
 
-请注意, `navigator` 的信息可以很容易地被用户修改,所以`JavaScript`读取的值不一定是正确的.很多初学者为了针对不同浏览器编写不同的代码,喜欢用`if`判断浏览器版本,例如: 
+请注意, `navigator` 的信息可以很容易地被用户修改,所以`JavaScript`读取的值不一定是正确的.很多初学者为了针对不同浏览器编写不同的代码,喜欢用`if`判断浏览器版本,例如:
 
 ```js
 var width;
@@ -762,7 +762,7 @@ if (getIEVersion(navigator.userAgent) < 9) {
 }
 ```
 
-但这样既可能判断不准确,也很难维护代码. 正确的方法是充分利用`JavaScript`对不存在属性返回`undefined`的特性,直接用短路运算符`||`计算: 
+但这样既可能判断不准确,也很难维护代码. 正确的方法是充分利用`JavaScript`对不存在属性返回`undefined`的特性,直接用短路运算符`||`计算:
 
 ```js
 var width = window.innerWidth || document.body.clientWidth;
@@ -770,7 +770,7 @@ var width = window.innerWidth || document.body.clientWidth;
 
 #### screen
 
-`screen` 对象表示屏幕的信息,常用的属性有: 
+`screen` 对象表示屏幕的信息,常用的属性有:
 
 + `screen.width` ; 屏幕宽度,以`像素`为单位;
 + `screen.height` ; 屏幕高度,以`像素`为单位;
@@ -783,11 +783,11 @@ console.log('Screen size = ' + screen.width + ' x ' + screen.height);
 
 #### location
 
-`location` 对象表示当前页面的`URL`信息.例如,一个完整的`URL`: 
+`location` 对象表示当前页面的`URL`信息.例如,一个完整的`URL`:
 
     http://www.example.com:8080/path/index.html?a=1&b=2#TOP
 
-可以用 `location.href` 获取.要获得`URL`各个部分的值,可以这么写: 
+可以用 `location.href` 获取.要获得`URL`各个部分的值,可以这么写:
 
 ```js
 location.protocol; // 'http'
@@ -812,7 +812,7 @@ if (confirm('重新加载当前页' + location.href + '?')) {
 #### document
 
 + `document`对象表示当前页面. 由于`HTML`在浏览器中以`DOM`形式表示为树形结构,`document`对象就是整个`DOM`树的根节点.
-+ `document`的`title`属性是从`HTML`文档中的`<title>xxx</title>`读取的,但是可以动态改变: 
++ `document`的`title`属性是从`HTML`文档中的`<title>xxx</title>`读取的,但是可以动态改变:
 
 ```js
 'use strict';
@@ -822,7 +822,7 @@ document.title = '努力学习JavaScript!';
 请观察浏览器窗口标题的变化.
 
 要查找`DOM`树的某个节点,需要`从document`对象开始查找.最常用的查找是根据`ID`和`Tag Name`.
-我们先准备`HTML`数据: 
+我们先准备`HTML`数据:
 
 ```js
 <dl id="drink-menu" style="border:solid 1px #ccc;padding:6px;">
@@ -835,7 +835,7 @@ document.title = '努力学习JavaScript!';
 </dl>
 ```
 
-用`document`对象提供的`getElementById()`和`getElementsByTagName()`可以按`ID`获得一个`DOM`节点和按`Tag`名称获得一组`DOM`节点: 
+用`document`对象提供的`getElementById()`和`getElementsByTagName()`可以按`ID`获得一个`DOM`节点和按`Tag`名称获得一组`DOM`节点:
 
 ```js
 'use strict';
@@ -853,18 +853,18 @@ console.log(s);
 
 `Cookie`是由服务器发送的`key-value`标示符.
 因为`HTTP`协议是无状态的,但是服务器要区分到底是哪个用户发过来的请求,就可以用`Cookie`来区分.
-当用户成功登录后,服务器发送一个`Cookie`给浏览器,例如`user=ABC123XYZ`(加密的字符串).... 
+当用户成功登录后,服务器发送一个`Cookie`给浏览器,例如`user=ABC123XYZ`(加密的字符串)....
 此后,浏览器访问该网站时,会在请求头附上这个`Cookie`,服务器根据`Cookie`即可区分出用户.
 
 `Cookie`还可以存储网站的一些设置, 例如页面显示的语言等等.
 
-`JavaScript`可以通过`document.cookie`读取到当前页面的`Cookie`: 
+`JavaScript`可以通过`document.cookie`读取到当前页面的`Cookie`:
 
 ```js
 document.cookie; // 'v=123; remember=true; prefer=zh'
 ```
 
-由于`JavaScript`能读取到页面的`Cookie`,而用户的登录信息通常也存在`Cookie`中,这就造成了巨大的安全隐患,这是因为在`HTML`页面中引入第三方的J`avaScript`代码是允许的: 
+由于`JavaScript`能读取到页面的`Cookie`,而用户的登录信息通常也存在`Cookie`中,这就造成了巨大的安全隐患,这是因为在`HTML`页面中引入第三方的J`avaScript`代码是允许的:
 
 ```js
 <!-- 当前页面在wwwexample.com -->
@@ -902,7 +902,7 @@ document.cookie; // 'v=123; remember=true; prefer=zh'
 节点可以关联上`事件处理器`,一旦某一事件被触发了,那些事件处理器就会被执行.
 
 由于`HTML`文档被浏览器解析后就是一棵`DOM`树,要改变`HTML`的结构,就需要通过`JavaScript`来操作`DOM`.
-始终记住`DOM`是一个树形结构.操作一个`DOM`节点实际上就是这么几个操作: 
+始终记住`DOM`是一个树形结构.操作一个`DOM`节点实际上就是这么几个操作:
 
 + 更新 ; 更新该`DOM`节点的内容,相当于更新了该`DOM`节点表示的`HTML`的内容;
 + 遍历 ; 遍历该`DOM`节点下的子节点,以便进行进一步操作;
@@ -916,41 +916,41 @@ document.cookie; // 'v=123; remember=true; prefer=zh'
 `document.getElementsByTagName()`和`document.getElementsByClassName()`总是返回一组`DOM`节点.要精确地选择`DOM`,
 可以先定位父节点,再从父节点开始选择,以缩小范围.
 
-例如: 
+例如:
 
 ```js
-// 返回ID为'test'的节点: 
+// 返回ID为'test'的节点:
 var test = document.getElementById('test');
-// 先定位ID为'test-table'的节点,再返回其内部所有tr节点: 
+// 先定位ID为'test-table'的节点,再返回其内部所有tr节点:
 var trs = document.getElementById('test-table').getElementsByTagName('tr');
-// 先定位ID为'test-div'的节点,再返回其内部所有class包含red的节点: 
+// 先定位ID为'test-div'的节点,再返回其内部所有class包含red的节点:
 var reds = document.getElementById('test-div').getElementsByClassName('red');
 // 获取节点test下的所有直属子节点:
 var cs = test.children;
-// 获取节点test下第一个,最后一个子节点: 
+// 获取节点test下第一个,最后一个子节点:
 var first = test.firstElementChild;
 var last = test.lastElementChild;
 ```
 
-第二种方法是使用`querySelector()`和`querySelectorAll()`,需要了解`selector`语法,然后使用条件来获取节点,更加方便: 
+第二种方法是使用`querySelector()`和`querySelectorAll()`,需要了解`selector`语法,然后使用条件来获取节点,更加方便:
 
 ```js
-// 通过querySelector获取ID为q1的节点: 
+// 通过querySelector获取ID为q1的节点:
 var q1 = document.querySelector('#q1');
-// 通过querySelectorAll获取q1节点内的符合条件的所有节点: 
+// 通过querySelectorAll获取q1节点内的符合条件的所有节点:
 var ps = q1.querySelectorAll('div.highlighted > p');
 ```
 
 注意: 低版本的`IE<8`不支持`querySelector`和`querySelectorAll`. `IE8`仅有限支持.
 
-严格地讲,我们这里的`DOM`节点是指`Element`, 但是`DOM`节点实际上是`Node`. 
+严格地讲,我们这里的`DOM`节点是指`Element`, 但是`DOM`节点实际上是`Node`.
 在`HTML`中, `Node`包括`Element`,`Comment`,`CDATA_SECTION`等很多种,以及根节点`Document`类型.
 但是,绝大多数时候我们只关心 `Element`,也就是实际控制页面结构的 `Node`,其他类型的 `Node` 忽略即可.
 根节点`Document`已经自动绑定为全局变量`document`.
 
 #### 练习
 
-如下的`HTML`结构: 
+如下的`HTML`结构:
 
 ```js
 <!-- HTML结构 -->
@@ -971,7 +971,7 @@ var ps = q1.querySelectorAll('div.highlighted > p');
 </div>
 ```
 
-请选择出指定条件的节点: 
+请选择出指定条件的节点:
 
 ```js
 'use strict';
@@ -995,9 +995,9 @@ if (!js || js.innerText !== 'JavaScript') {
 
 ### 更新DOM
 
-拿到一个`DOM`节点后,我们可以对它进行更新. 可以直接修改节点的文本,方法有两种: 
+拿到一个`DOM`节点后,我们可以对它进行更新. 可以直接修改节点的文本,方法有两种:
 
-一种是修改 `innerHTML` 属性,这个方式非常强大,不但可以修改一个`DOM`节点的文本内容, 还可以直接通过`HTML`片段修改`DOM`节点内部的子树: 
+一种是修改 `innerHTML` 属性,这个方式非常强大,不但可以修改一个`DOM`节点的文本内容, 还可以直接通过`HTML`片段修改`DOM`节点内部的子树:
 
 ```js
 // 获取<p id="p-id">...</p>
@@ -1011,7 +1011,7 @@ p.innerHTML = 'ABC <span style="color:red">RED</span> XYZ';
 
 用`innerHTML`时要注意,是否需要写入`HTML`.`如果写入的字符串是通过网络拿到的, 要注意对字符编码来避免`XSS`攻击.
 
-第二种是修改`innerText`或`textContent`属性,这样可以自动对字符串进行`HTML`编码,保证无法设置任何`HTML`标签: 
+第二种是修改`innerText`或`textContent`属性,这样可以自动对字符串进行`HTML`编码,保证无法设置任何`HTML`标签:
 
 ```js
 // 获取<p id="p-id">...</p>
@@ -1025,7 +1025,7 @@ p.innerText = '<script>alert("Hi")</script>';
 两者的区别在于读取属性时, `innerText`不返回隐藏元素的文本,而`textContent`返回所有文本.另外注意`IE<9`不支持`textContent`.
 
 修改`CSS`也是经常需要的操作. `DOM`节点的`style`属性对应所有的`CSS`,可以直接获取或设置.
-因为`CSS`允许`font-size`这样的名称,但它并非`JavaScript`有效的属性名,所以需要在`JavaScript`中改写为驼峰式命名`fontSize`: 
+因为`CSS`允许`font-size`这样的名称,但它并非`JavaScript`有效的属性名,所以需要在`JavaScript`中改写为驼峰式命名`fontSize`:
 
 ```js
 // 获取<p id="p-id">...</p>
@@ -1038,7 +1038,7 @@ p.style.paddingTop = '2em';
 
 #### 练习
 
-有如下的HTML结构: 
+有如下的HTML结构:
 
 ```js
 <!-- HTML结构 -->
@@ -1048,7 +1048,7 @@ p.style.paddingTop = '2em';
 </div>
 ```
 
-请尝试获取指定节点并修改: 
+请尝试获取指定节点并修改:
 
 ```js
 'use strict';
@@ -1084,7 +1084,7 @@ if (js && js.parentNode && js.parentNode.id === 'test-div' && js.id === 'test-js
 如果这个`DOM`节点是空的,例如,`<div></div>`,那么,直接使用 `innerHTML = '<span>child</span>'` 就可以修改`DOM`节点的内容, 相当于"插入"了新的`DOM`节点.
 如果这个`DOM`节点不是空的,那就不能这么做,因为`innerHTML`会直接替换掉原来的所有子节点.
 
-有两个办法可以插入新的节点.一个是使用`appendChild`,把`子节点`添加到父节点的最后一个子节点.例如: 
+有两个办法可以插入新的节点.一个是使用`appendChild`,把`子节点`添加到父节点的最后一个子节点.例如:
 
 ```js
 <!-- HTML结构 -->
@@ -1096,7 +1096,7 @@ if (js && js.parentNode && js.parentNode.id === 'test-div' && js.id === 'test-js
 </div>
 ```
 
-把`<p id="js">JavaScript</p>添加到<div id="list">`的最后一项: 
+把`<p id="js">JavaScript</p>添加到<div id="list">`的最后一项:
 
 ```js
 var
@@ -1105,7 +1105,7 @@ var
 list.appendChild(js);
 ```
 
-现在, `HTML` 结构变成了这样: 
+现在, `HTML` 结构变成了这样:
 
 ```js
 <!-- HTML结构 -->
@@ -1118,7 +1118,7 @@ list.appendChild(js);
 ```
 
 因为我们插入的`js`节点已经存在于当前的文档树, 因此这个节点首先会从原先的位置删除,再插入到新的位置.
-更多的时候我们会从零创建一个新的节点,然后插入到指定位置: 
+更多的时候我们会从零创建一个新的节点,然后插入到指定位置:
 
 ```js
 var
@@ -1129,7 +1129,7 @@ haskell.innerText = 'Haskell';
 list.appendChild(haskell);
 ```
 
-这样我们就动态添加了一个新的节点: 
+这样我们就动态添加了一个新的节点:
 
 ```js
 <!-- HTML结构 -->
@@ -1142,7 +1142,7 @@ list.appendChild(haskell);
 ```
 
 动态创建一个节点然后添加到`DOM`树中,可以实现很多功能.
-举个例子,下面的代码动态创建了一个`<style>`节点,然后把它添加到`<head>`节点的末尾,这样就动态地给文档添加了新的`CSS`定义: 
+举个例子,下面的代码动态创建了一个`<style>`节点,然后把它添加到`<head>`节点的末尾,这样就动态地给文档添加了新的`CSS`定义:
 
 ```js
 var d = document.createElement('style');
@@ -1156,7 +1156,7 @@ document.getElementsByTagName('head')[0].appendChild(d);
 #### insertBefore
 
 如果我们要把子节点插入到指定的位置怎么办?可以使用`parentElement.insertBefore(newElement, referenceElement);`, 子节点会插入到`referenceElement`之前.
-还是以上面的`HTML`为例,假定我们要把`Haskell`插入到`Python`之前: 
+还是以上面的`HTML`为例,假定我们要把`Haskell`插入到`Python`之前:
 
 ```js
 <!-- HTML结构 -->
@@ -1167,7 +1167,7 @@ document.getElementsByTagName('head')[0].appendChild(d);
 </div>
 ```
 
-可以这么写: 
+可以这么写:
 
 ```js
 var
@@ -1179,7 +1179,7 @@ haskell.innerText = 'Haskell';
 list.insertBefore(haskell, ref);
 ```
 
-新的`HTML`结构如下: 
+新的`HTML`结构如下:
 
 ```js
 <!-- HTML结构 -->
@@ -1191,7 +1191,7 @@ list.insertBefore(haskell, ref);
 </div>
 ```
 
-可见,使用`insertBefore`的重点是, 拿到一个"参考子节点"的引用.很多时候,需要循环一个父节点的所有子节点,可以通过迭代children属性实现: 
+可见,使用`insertBefore`的重点是, 拿到一个"参考子节点"的引用.很多时候,需要循环一个父节点的所有子节点,可以通过迭代children属性实现:
 
 ```js
 var
@@ -1204,7 +1204,7 @@ for (i = 0; i < list.children.length; i++) {
 
 #### 练习
 
-对于一个已有的`HTML`结构: 
+对于一个已有的`HTML`结构:
 
 ```js
 <!-- HTML结构 -->
@@ -1217,7 +1217,7 @@ for (i = 0; i < list.children.length; i++) {
 </ol>
 ```
 
-按字符串顺序重新排序`DOM`节点: 
+按字符串顺序重新排序`DOM`节点:
 
 ```js
 'use strict';
@@ -1251,7 +1251,7 @@ for (let e of sort) list.appendChild(e); // 因为插入的节点已经存在于
 #### 删除DOM
 
 删除一个`DOM`节点就比插入要容易得多.
-要删除一个节点,首先要获得该节点本身以及它的父节点,然后,调用父节点的`removeChild`把自己删掉: 
+要删除一个节点,首先要获得该节点本身以及它的父节点,然后,调用父节点的`removeChild`把自己删掉:
 
 ```js
 // 拿到待删除节点:
@@ -1266,7 +1266,7 @@ removed === self; // true
 注意到删除后的节点虽然不在文档树中了,但其实它还在内存中,可以随时再次被添加到别的位置.
 当你遍历一个父节点的子节点并进行删除操作时,要注意, `children` 属性是一个只读属性,并且它在子节点变化时会实时更新.
 
-例如,对于如下`HTML`结构: 
+例如,对于如下`HTML`结构:
 
 ```js
 <div id="parent">
@@ -1275,7 +1275,7 @@ removed === self; // true
 </div>
 ```
 
-当我们用如下代码删除子节点时: 
+当我们用如下代码删除子节点时:
 
 ```js
 var parent = document.getElementById('parent');
@@ -1302,7 +1302,7 @@ parent.removeChild(parent.children[1]); // <-- 浏览器报错
 </ul>
 ```
 
-把与`Web`开发技术不相关的节点删掉: 
+把与`Web`开发技术不相关的节点删掉:
 
 ```js
 'use strict';
@@ -1339,7 +1339,7 @@ console.log(removed)
 用`JavaScript`操作表单和操作DOM是类似的,因为表单本身也是DOM树.
 不过表单的`输入框`,`下拉框`等可以接收用户输入,所以用`JavaScript`来操作表单,可以获得用户输入的内容,或者对一个`输入框`设置新的内容.
 
-`HTML`表单的输入控件主要有以下几种: 
+`HTML`表单的输入控件主要有以下几种:
 
 + `文本框` ; 对应的`<input type="text">`, 用于输入文本;
 + `口令框` ; 对应的`<input type="password">`, 用于输入口令;
@@ -1350,7 +1350,7 @@ console.log(removed)
 
 #### 获取值
 
-如果我们获得了一个`<input>`节点的引用,就可以直接调用`value`获得对应的用户输入值: 
+如果我们获得了一个`<input>`节点的引用,就可以直接调用`value`获得对应的用户输入值:
 
 ```js
 // <input type="text" id="email">
@@ -1359,7 +1359,7 @@ input.value; // '用户输入的值'
 ```
 
 这种方式可以应用于 `text`,`password`,`hidden` 以及 `select`.
-但是,对于`单选框`和`复选框`,`value`属性返回的永远是`HTML`预设的值, 而我们需要获得的实际是用户是否`勾上了`选项, 所以应该用`checked`判断: 
+但是,对于`单选框`和`复选框`,`value`属性返回的永远是`HTML`预设的值, 而我们需要获得的实际是用户是否`勾上了`选项, 所以应该用`checked`判断:
 
 ```js
 // <label><input type="radio" name="weekday" id="monday" value="1"> Monday</label>
@@ -1374,7 +1374,7 @@ tue.checked; // true或者false
 
 #### 设置值
 
-设置值和获取值类似, 对于 `text`,`password`,`hidden` 以及 `select`,直接设置`value`就可以: 
+设置值和获取值类似, 对于 `text`,`password`,`hidden` 以及 `select`,直接设置`value`就可以:
 
 ```js
 // <input type="text" id="email">
@@ -1386,7 +1386,7 @@ input.value = 'test@example.com'; // 文本框的内容已更新
 
 #### HTML5控件
 
-`HTML5`新增了大量标准控件,常用的包括 `date`,`datetime`,`datetime-local`,`color` 等,它们都使用`<input>`标签: 
+`HTML5`新增了大量标准控件,常用的包括 `date`,`datetime`,`datetime-local`,`color` 等,它们都使用`<input>`标签:
 
 ```js
 <input type="date" value="2015-07-01">
@@ -1400,7 +1400,7 @@ input.value = 'test@example.com'; // 文本框的内容已更新
 #### 提交表单
 
 最后,`JavaScript`可以以两种方式来处理表单的提交(`AJAX` 方式在后面章节介绍).
-方式一是通过`<form>`元素的`submit()`方法提交一个表单,例如, 响应一个`<button>`的`click`事件,在`JavaScript`代码中提交表单: 
+方式一是通过`<form>`元素的`submit()`方法提交一个表单,例如, 响应一个`<button>`的`click`事件,在`JavaScript`代码中提交表单:
 
 ```js
 <!-- HTML -->
@@ -1421,7 +1421,7 @@ function doSubmitForm() {
 
 这种方式的缺点是扰乱了浏览器对`form`的正常提交. 浏览器默认点击`<button type="submit">`时提交表单,或者用户在最后一个输入框按回车键.
 
-因此,第二种方式是响应`<form>`本身的`onsubmit`事件,在提交`form`时作修改: 
+因此,第二种方式是响应`<form>`本身的`onsubmit`事件,在提交`form`时作修改:
 
 ```js
 <!-- HTML -->
@@ -1443,7 +1443,7 @@ function checkForm() {
 注意要`return true`来告诉浏览器继续提交, 如果`return false`, 浏览器将不会继续提交`form`,这种情况通常对应用户输入有误,提示用户错误信息后终止提交`form`.
 在检查和修改`<input>`时,要充分利用`<input type="hidden">`来传递数据.
 
-例如,很多登录表单希望用户输入用户名和`口令`,但是,安全考虑,提交表单时不传输明文`口令`,而是`口令`的`MD5`. 普通`JavaScript`开发人员会直接修改`<input>`: 
+例如,很多登录表单希望用户输入用户名和`口令`,但是,安全考虑,提交表单时不传输明文`口令`,而是`口令`的`MD5`. 普通`JavaScript`开发人员会直接修改`<input>`:
 
 ```js
 <!-- HTML -->
@@ -1465,7 +1465,7 @@ function checkForm() {
 ```
 
 这个做法看上去没啥问题,但用户输入了口令提交时,口令框的显示会突然从几个`*`变成`32`个`*`(因为`MD5`有`32`个字符).
-要想不改变用户的输入,可以利用`<input type="hidden">`实现: 
+要想不改变用户的输入,可以利用`<input type="hidden">`实现:
 
 ```js
 <!-- HTML -->
@@ -1493,7 +1493,7 @@ function checkForm() {
 
 #### 练习
 
-利用`JavaScript`检查用户注册信息是否正确,在以下情况不满足时报错并阻止提交表单: 
+利用`JavaScript`检查用户注册信息是否正确,在以下情况不满足时报错并阻止提交表单:
 
 + 用户名必须是`3-10`位英文字母或数字;
 + 口令必须是`6-20`位;
@@ -1539,9 +1539,9 @@ else { return true; }
 `method`必须指定为`post`,浏览器才能正确编码并以`multipart/form-data`格式发送表单的数据.
 
 出于安全考虑,浏览器只允许用户点击`<input type="file">`来选择本地文件,
-用`JavaScript`对`<input type="file">`的`value`赋值是没有任何效果的.当用户选择了上传某个文件后,`JavaScript`也无法获得该文件的真实路径: 
+用`JavaScript`对`<input type="file">`的`value`赋值是没有任何效果的.当用户选择了上传某个文件后,`JavaScript`也无法获得该文件的真实路径:
 
-通常, 上传的文件都由后台服务器处理, `JavaScript` 可以在提交表单时对文件扩展名做检查,以便防止用户上传无效格式的文件: 
+通常, 上传的文件都由后台服务器处理, `JavaScript` 可以在提交表单时对文件扩展名做检查,以便防止用户上传无效格式的文件:
 
 ```js
 var f = document.getElementById('test-file-upload');
@@ -1559,7 +1559,7 @@ if (!filename || !(filename.endsWith('.jpg') || filename.endsWith('.png') || fil
 随着`HTML5`的普及,新增的`File API`允许`JavaScript`读取文件内容,获得更多的文件信息.
 `HTML5`的`File API`提供了`File`和`FileReader`两个主要对象,可以获得文件信息并读取文件.
 
-下面的例子演示了如何读取用户选取的图片文件,并在一个`<div>`中预览图像, 图片预览: 
+下面的例子演示了如何读取用户选取的图片文件,并在一个`<div>`中预览图像, 图片预览:
 
 ```js
 var
@@ -1586,7 +1586,7 @@ fileInput.addEventListener('change', function () {
     var reader = new FileReader();
     reader.onload = function(e) { // on load,在读取完成的时候
         var
-            data = e.target.result; // 'data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...'            
+            data = e.target.result; // 'data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...'
         preview.style.backgroundImage = 'url(' + data + ')';
     };
     reader.readAsDataURL(file); // 以DataURL的形式读取文件:
@@ -1603,13 +1603,13 @@ fileInput.addEventListener('change', function () {
 在`JavaScript`中,浏览器的`JavaScript`执行引擎在执行`JavaScript`代码时,总是以`单线程`模式执行.
 也就是说,任何时候,`JavaScript`代码都不可能同时有多于`1`个线程在执行.
 
-你可能会问,`单线程`模式执行的`JavaScript`,如何处理多任务? 在`JavaScript`中,执行多任务实际上都是异步调用, 比如上面的代码: 
+你可能会问,`单线程`模式执行的`JavaScript`,如何处理多任务? 在`JavaScript`中,执行多任务实际上都是异步调用, 比如上面的代码:
 
 ```js
 reader.readAsDataURL(file);
 ```
 
-就会发起一个`异步操作`来读取文件内容. 因为是异步操作,所以我们在`JavaScript`代码中就不知道什么时候操作结束,因此需要先设置一个`回调函数`: 
+就会发起一个`异步操作`来读取文件内容. 因为是异步操作,所以我们在`JavaScript`代码中就不知道什么时候操作结束,因此需要先设置一个`回调函数`:
 
 ```js
 reader.onload = function(e) {
@@ -1634,7 +1634,7 @@ reader.onload = function(e) {
 最早大规模使用`AJAX`的就是 `Gmail`,`Gmail`的页面在首次加载后,剩下的所有数据都依赖于`AJAX`来更新.
 
 用`JavaScript`写一个完整的`AJAX`代码并不复杂,但是需要注意: `AJAX`请求是异步执行的,也就是说,要通过`回调函数`获得响应.
-在现代浏览器上写`AJAX`主要依靠`XMLHttpRequest`对象: 
+在现代浏览器上写`AJAX`主要依靠`XMLHttpRequest`对象:
 
 ```js
 'use strict';
@@ -1664,7 +1664,7 @@ request.send();
 alert('请求已发送,请等待响应...');
 ```
 
-对于低版本的`IE`,需要换一个`ActiveXObject`对象: 
+对于低版本的`IE`,需要换一个`ActiveXObject`对象:
 
 ```js
 'use strict';
@@ -1697,7 +1697,7 @@ request.send();
 alert('请求已发送,请等待响应...');
 ```
 
-如果你想把标准写法和`IE`写法混在一起,可以这么写: 
+如果你想把标准写法和`IE`写法混在一起,可以这么写:
 
 ```js
 var request;
@@ -1726,19 +1726,19 @@ if (window.XMLHttpRequest) {
 
 + 域名要相同(`www.example.com和example.com`不同),
 + 协议要相同(`http`和`https`不同),
-+ 端口号要相同(默认是`:80`端口,它和`:8080`就不同). 
++ 端口号要相同(默认是`:80`端口,它和`:8080`就不同).
 
 有的浏览器口子松一点,允许端口不同, 大多数浏览器都会严格遵守这个限制.
-那是不是用`JavaScript`无法请求外域(就是其他网站)的`URL`了呢?方法还是有的,大概有这么几种: 
+那是不是用`JavaScript`无法请求外域(就是其他网站)的`URL`了呢?方法还是有的,大概有这么几种:
 
 + 一是通过`Flash`插件发送`HTTP`请求,这种方式可以绕过浏览器的安全限制,但必须安装`Flash`,并且跟`Flash`交互.不过`Flash`用起来麻烦,而且现在用得也越来越少了.
-+ 二是通过在同源域名下架设一个`代理服务器`来转发, `JavaScript` 负责把请求发送到代理服务器: 
++ 二是通过在同源域名下架设一个`代理服务器`来转发, `JavaScript` 负责把请求发送到代理服务器:
 
     '/proxy?url=http://www.sina.com.cn'
 
 代理服务器再把结果返回,这样就遵守了浏览器的同源策略. 这种方式麻烦之处在于需要服务器端额外做开发.
 
-+ 第三种方式称为`JSONP`,它有个限制,只能用`GET`请求,并且要求返回`JavaScript`.这种方式跨域实际上是利用了浏览器允许跨域引用`JavaScript`资源: 
++ 第三种方式称为`JSONP`,它有个限制,只能用`GET`请求,并且要求返回`JavaScript`.这种方式跨域实际上是利用了浏览器允许跨域引用`JavaScript`资源:
 
 ```js
 <html>
@@ -1752,33 +1752,33 @@ if (window.XMLHttpRequest) {
 </html>
 ```
 
-`JSONP`通常以函数调用的形式返回,例如,返回`JavaScript`内容如下: 
+`JSONP`通常以函数调用的形式返回,例如,返回`JavaScript`内容如下:
 
 ```js
 foo('data');
 ```
 
 这样一来,我们如果在页面中先准备好`foo()`函数,然后给页面动态加一个`<script>`节点,相当于动态读取外域的`JavaScript`资源,最后就等着接收回调了.
-以`163`的股票查询`URL`为例,对于`URL`: [api.money.126.net](http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice),你将得到如下返回: 
+以`163`的股票查询`URL`为例,对于`URL`: [api.money.126.net](http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice),你将得到如下返回:
 
 ```js
 refreshPrice({"0000001":{"code": "0000001", ... });
 ```
 
-因此我们需要首先在页面中准备好回调函数: 
+因此我们需要首先在页面中准备好回调函数:
 
 ```js
 function refreshPrice(data) {
     var p = document.getElementById('test-jsonp');
     p.innerHTML = '当前价格: ' +
-        data['0000001'].name +': ' + 
+        data['0000001'].name +': ' +
         data['0000001'].price + ';' +
         data['1399001'].name + ': ' +
         data['1399001'].price;
 }
 ```
 
-最后用`getPrice()`函数触发: 
+最后用`getPrice()`函数触发:
 
 ```js
 function getPrice() {
@@ -1798,12 +1798,12 @@ function getPrice() {
 
 `CORS`全称`Cross-Origin Resource Sharing`, 是`HTML5`规范定义的如何`跨域访问资源`.
 
-了解`CORS`前,我们先搞明白概念: 
+了解`CORS`前,我们先搞明白概念:
 
 `Origin`表示本域,也就是浏览器当前页面的域. 当`JavaScript`向外域(如`sina.com`)发起请求后,
 浏览器收到响应后,首先检查`Access-Control-Allow-Origin`是否包含本域,如果是,则此次跨域请求成功,如果不是,则请求失败,`JavaScript`将无法获取到响应的任何数据.
 
-用一个图来表示就是: 
+用一个图来表示就是:
 
 ![js-cors](https://static.liaoxuefeng.com/files/attachments/1027024093709472/l)
 
@@ -1815,7 +1815,7 @@ function getPrice() {
 并且不能出现任何自定义头(例如,`X-Custom: 12345`),通常能满足`90%`的需求.
 
 无论你是否需要用`JavaScript`通过`CORS`跨域请求资源,你都要了解`CORS`的原理.
-最新的浏览器全面支持`HTML5`. 在引用外域资源时,除了`JavaScript`和`CSS`外,都要验证`CORS`.例如,当你引用了某个第三方`CDN`上的字体文件时: 
+最新的浏览器全面支持`HTML5`. 在引用外域资源时,除了`JavaScript`和`CSS`外,都要验证`CORS`.例如,当你引用了某个第三方`CDN`上的字体文件时:
 
 ```js
 /* CSS */
@@ -1827,8 +1827,8 @@ function getPrice() {
 
 如果该`CDN`服务商未正确设置`Access-Control-Allow-Origin`,那么浏览器无法加载字体资源.
 
-对于`PUT`,`DELETE` 以及其他类型如`application/json`的`POST`请求, 
-在发送`AJAX`请求之前,浏览器会先发送一个`OPTIONS`请求(称为`preflighted`请求)到这个`URL`上,询问目标服务器是否接受: 
+对于`PUT`,`DELETE` 以及其他类型如`application/json`的`POST`请求,
+在发送`AJAX`请求之前,浏览器会先发送一个`OPTIONS`请求(称为`preflighted`请求)到这个`URL`上,询问目标服务器是否接受:
 
 ```js
 OPTIONS /path/to/resource HTTP/1.1
@@ -1837,7 +1837,7 @@ Origin: http://my.com
 Access-Control-Request-Method: POST
 ```
 
-服务器必须响应并明确指出允许的`Method`: 
+服务器必须响应并明确指出允许的`Method`:
 
 ```js
 HTTP/1.1 200 OK
@@ -1857,7 +1857,7 @@ Access-Control-Max-Age: 86400
 [Promise 对象](https://es6.ruanyifeng.com/#docs/promise)
 
 在`JavaScript`的世界中,所有代码都是单线程执行的.
-由于这个"缺陷",导致`JavaScript`的所有网络操作,浏览器事件,都必须是`异步执行`. `异步执行`可以用`回调函数`实现: 
+由于这个"缺陷",导致`JavaScript`的所有网络操作,浏览器事件,都必须是`异步执行`. `异步执行`可以用`回调函数`实现:
 
 ```js
 Promise( f(x,y) ).then(A).catch(B)
@@ -1876,7 +1876,7 @@ setTimeout(callback, 1000); // 1秒钟后调用callback函数
 console.log('after setTimeout()');
 ```
 
-观察上述代码执行,在`Firefox`的控制台输出可以看到: 
+观察上述代码执行,在`Firefox`的控制台输出可以看到:
 
 ```js
 before setTimeout()
@@ -1885,7 +1885,7 @@ after setTimeout()
 Done
 ```
 
-可见,异步操作会在将来的某个时间点触发一个函数调用.  `AJAX` 就是典型的异步操作.以上一节的代码为例: 
+可见,异步操作会在将来的某个时间点触发一个函数调用.  `AJAX` 就是典型的异步操作.以上一节的代码为例:
 
 ```js
 request.onreadystatechange = function () {
@@ -1900,7 +1900,7 @@ request.onreadystatechange = function () {
 ```
 
 把回调函数`success(request.responseText)` 和 `fail(request.status)`写到一个`AJAX`操作里很正常, 但是不好看,而且不利于代码复用.
-有没有更好的写法?比如写成这样: 
+有没有更好的写法?比如写成这样:
 
 ```js
 var ajax = ajaxGet('http://...');
@@ -1911,7 +1911,7 @@ ajax.ifSuccess(success).ifFail(fail);
 然后,根据结果是成功还是失败,在将来的某个时候调用`success`函数或`fail`函数.
 古人云: "君子一诺千金",这种"承诺将来会执行"的对象在`JavaScript`中称为`Promise`对象.
 
-`Promise`有各种开源实现,在`ES6`中被统一规范,由浏览器直接支持. 先测试一下你的浏览器是否支持`Promise`: 
+`Promise`有各种开源实现,在`ES6`中被统一规范,由浏览器直接支持. 先测试一下你的浏览器是否支持`Promise`:
 
 ```js
 'use strict';
@@ -1920,7 +1920,7 @@ new Promise(function () {});
 console.log('支持Promise!');
 ```
 
-我们先看一个最简单的`Promise`例子: 生成一个`0-2`之间的随机数,如果小于`1`,则等待一段时间后返回成功,否则返回失败: 
+我们先看一个最简单的`Promise`例子: 生成一个`0-2`之间的随机数,如果小于`1`,则等待一段时间后返回成功,否则返回失败:
 
 ```js
 function test(resolve, reject) {
@@ -1943,7 +1943,7 @@ function test(resolve, reject) {
 如果执行`失败`,我们将调用`reject('timeout in ' + timeOut + ' seconds.')`.
 可以看出,`test()`函数只关心自身的逻辑,并不关心具体的`resolve`和`reject`将如何处理结果.
 
-有了执行函数,我们就可以用一个`Promise`对象来执行它,并在将来某个时刻获得成功或失败的结果: 
+有了执行函数,我们就可以用一个`Promise`对象来执行它,并在将来某个时刻获得成功或失败的结果:
 
 ```js
 var p1 = new Promise(test);
@@ -1955,16 +1955,16 @@ var p3 = p2.catch(function (reason) { // 不成功就执行这个
 });
 ```
 
-变量`p1`是一个`Promise`对象,它负责执行`test`函数. 由于`test`函数在内部是异步执行的,当`test`函数执行成功时,我们告诉`Promise`对象: 
+变量`p1`是一个`Promise`对象,它负责执行`test`函数. 由于`test`函数在内部是异步执行的,当`test`函数执行成功时,我们告诉`Promise`对象:
 
 ```js
-// 如果成功,执行这个函数: 
+// 如果成功,执行这个函数:
 p1.then(function (result) {
     console.log('成功: ' + result);
 });
 ```
 
-当`test`函数执行失败时,我们告诉`Promise`对象: 
+当`test`函数执行失败时,我们告诉`Promise`对象:
 
 ```js
 p2.catch(function (reason) {
@@ -1972,7 +1972,7 @@ p2.catch(function (reason) {
 });
 ```
 
-`Promise`对象可以串联起来,所以上述代码可以简化为: 
+`Promise`对象可以串联起来,所以上述代码可以简化为:
 
 ```js
 new Promise(test).then(function (result) { // test 执行后, 如果返回 resolve(data), 就调用 then(f) 中的f,  返回 f(data)
@@ -1982,7 +1982,7 @@ new Promise(test).then(function (result) { // test 执行后, 如果返回 resol
 });
 ```
 
-实际测试一下,看看`Promise`是如何异步执行的: 
+实际测试一下,看看`Promise`是如何异步执行的:
 
 ```js
 'use strict';
@@ -2018,12 +2018,12 @@ new Promise(function (resolve, reject) {
 });
 ```
 
-可见`Promise`最大的好处是在异步执行的流程中,把执行代码和处理结果的代码清晰地分离了: 
+可见`Promise`最大的好处是在异步执行的流程中,把执行代码和处理结果的代码清晰地分离了:
 
 ![promise](https://static.liaoxuefeng.com/files/attachments/1027242914217888/l)
 
 `Promise` 还可以做更多的事情,比如,有若干个`异步任务`,需要先做`任务1`,如果成功后再做`任务2`,任何任务失败则不再继续并执行错误处理函数.
-要串行执行这样的异步任务,不用`Promise`需要写一层一层的嵌套代码.有了`Promise`,我们只需要简单地写: 
+要串行执行这样的异步任务,不用`Promise`需要写一层一层的嵌套代码.有了`Promise`,我们只需要简单地写:
 
 ```js
 job1.then(job2).then(job3).catch(handleError);
@@ -2031,7 +2031,7 @@ job1.then(job2).then(job3).catch(handleError);
 
 其中, `job1`, `job2` 和 `job3` 都是 `Promise`对象.
 
-下面的例子演示了如何`串行`执行一系列需要`异步计算`获得结果的任务: 
+下面的例子演示了如何`串行`执行一系列需要`异步计算`获得结果的任务:
 
 ```js
 'use strict';
@@ -2079,7 +2079,7 @@ p.then(multiply)
 
 `setTimeout`可以看成一个模拟网络等异步执行的函数.
 
-现在,我们把上一节的`AJAX`异步执行函数转换为`Promise`对象,看看用`Promise`如何简化异步处理: 
+现在,我们把上一节的`AJAX`异步执行函数转换为`Promise`对象,看看用`Promise`如何简化异步处理:
 
 ```js
 'use strict';
@@ -2104,7 +2104,7 @@ function ajax(method, url, data) {
 
 除了串行执行若干异步任务外, `Promise` 还可以并行执行异步任务.
 
-试想一个页面聊天系统,我们需要从两个不同的`URL`分别获得用户的`个人信息`和`好友列表`,这两个任务是可以`并行执行`的, 用`Promise.all()`实现如下: 
+试想一个页面聊天系统,我们需要从两个不同的`URL`分别获得用户的`个人信息`和`好友列表`,这两个任务是可以`并行执行`的, 用`Promise.all()`实现如下:
 
 ```js
 var p1 = new Promise(function (resolve, reject) {
@@ -2119,7 +2119,7 @@ Promise.all([p1, p2]).then(function (results) {
 });
 ```
 
-有些时候,多个`异步任务`是为了容错. 比如,同时向两个`URL`读取用户的个人信息, 只需要获得先返回的结果即可.这种情况下,用`Promise.race()`实现: 
+有些时候,多个`异步任务`是为了容错. 比如,同时向两个`URL`读取用户的个人信息, 只需要获得先返回的结果即可.这种情况下,用`Promise.race()`实现:
 
 ```js
 var p1 = new Promise(function (resolve, reject) {
@@ -2142,14 +2142,14 @@ Promise.race([p1, p2]).then(function (result) {
 
 没有`Canvas`的年代,绘图只能借助`Flash`插件实现,页面不得不用`JavaScript`和`Flash`进行交互.
 有了`Canvas`,我们就再也不需要`Flash`了,直接使用`JavaScript`完成绘制.
-一个`Canvas`定义了一个指定尺寸的`矩形框`,在这个范围内我们可以随意绘制: 
+一个`Canvas`定义了一个指定尺寸的`矩形框`,在这个范围内我们可以随意绘制:
 
 ```js
 <canvas id="test-canvas" width="300" height="200"></canvas>
 ```
 
 由于浏览器对`HTML5`标准支持不一致,所以,通常在`<canvas>`内部添加一些说明性`HTML`代码,
-如果浏览器支持`Canvas`,它将忽略`<canvas>`内部的`HTML`,如果浏览器不支持`Canvas`,它将显示`<canvas>`内部的`HTML`: 
+如果浏览器支持`Canvas`,它将忽略`<canvas>`内部的`HTML`,如果浏览器不支持`Canvas`,它将显示`<canvas>`内部的`HTML`:
 
 ```js
 <canvas id="test-stock" width="300" height="200">
@@ -2157,7 +2157,7 @@ Promise.race([p1, p2]).then(function (result) {
 </canvas>
 ```
 
-在使用`Canvas`前,用`canvas.getContext`来测试浏览器是否支持`Canvas`: 
+在使用`Canvas`前,用`canvas.getContext`来测试浏览器是否支持`Canvas`:
 
 ```js
 <!-- HTML代码 -->
@@ -2180,7 +2180,7 @@ if (canvas.getContext) {
 var ctx = canvas.getContext('2d');
 ```
 
-如果需要绘制`3D`怎么办?`HTML5`还有一个`WebGL`规范,允许在`Canvas`中绘制`3D`图形: 
+如果需要绘制`3D`怎么办?`HTML5`还有一个`WebGL`规范,允许在`Canvas`中绘制`3D`图形:
 
 ```js
 gl = canvas.getContext("webgl");
@@ -2190,12 +2190,12 @@ gl = canvas.getContext("webgl");
 
 #### 绘制形状
 
-我们可以在`Canvas`上绘制各种形状.在绘制前,我们需要先了解一下`Canvas`的坐标系统: 
+我们可以在`Canvas`上绘制各种形状.在绘制前,我们需要先了解一下`Canvas`的坐标系统:
 
 ![canvas-xy](https://static.liaoxuefeng.com/files/attachments/1028111602807456/l)
 
 `Canvas`的坐标以左上角为原点,水平向右为`X`轴,垂直向下为`Y`轴,以像素为单位, 所以每个点都是非负整数.
-`CanvasRenderingContext2D`对象有若干方法来绘制图形: 
+`CanvasRenderingContext2D`对象有若干方法来绘制图形:
 
 ```js
 'use strict';
@@ -2218,7 +2218,7 @@ ctx.strokeStyle = '#0000ff';
 ctx.stroke(path);
 ```
 
-绘制文本就是在指定的位置输出文本,可以设置文本的字体,样式,阴影等,与`CSS`完全一致: 
+绘制文本就是在指定的位置输出文本,可以设置文本的字体,样式,阴影等,与`CSS`完全一致:
 
 ```js
 'use strict';
@@ -2235,7 +2235,7 @@ ctx.fillStyle = '#333333';
 ctx.fillText('带阴影的文字', 20, 40);
 ```
 
-`Canvas`除了能绘制基本的形状和文本,还可以实现动画,缩放,各种滤镜和像素转换等高级操作. 如果要实现非常复杂的操作,考虑以下优化方案: 
+`Canvas`除了能绘制基本的形状和文本,还可以实现动画,缩放,各种滤镜和像素转换等高级操作. 如果要实现非常复杂的操作,考虑以下优化方案:
 
 + 通过创建一个不可见的`Canvas`来绘图,然后将最终绘制结果复制到页面的可见`Canvas`中;
 + 尽量使用整数坐标而不是浮点数;
@@ -2244,7 +2244,7 @@ ctx.fillText('带阴影的文字', 20, 40);
 
 #### 练习
 
-请根据从`163`获取的`JSON`数据绘制最近`30`个交易日的`K`线图,数据已处理为包含一组对象的数组: 
+请根据从`163`获取的`JSON`数据绘制最近`30`个交易日的`K`线图,数据已处理为包含一组对象的数组:
 
 [_时空秋千](https://www.liaoxuefeng.com/discuss/1023622307115840/1429842354503713)
 
@@ -2296,14 +2296,14 @@ window.drawStock = function (data) {
     // aaa
     start = colWidth / 2;
     spacing = colWidth * 1.5;
-    console.log(JSON.stringify(data[0])); 
+    console.log(JSON.stringify(data[0]));
     // {"date":"20150602","open":4844.7,"close":4910.53,"high":4911.57,"low":4797.55,"vol":62374809900,"change":1.69}
     ctx.clearRect(0, 0, width, height);
     // ctx.fillText('Test Canvas', 10, 10);
     for (let i = 0; i < data.length; i++) {
         // 绘制中心线
         var path = new Path2D();
-        let coord = start + spacing * i;    // 中心线坐标  
+        let coord = start + spacing * i;    // 中心线坐标
         path.moveTo(coord, bottom - (data[i].low - min) * unitLen);
         path.lineTo(coord, bottom - (data[i].high - min) * unitLen);
         ctx.strokeStyle = 'black';

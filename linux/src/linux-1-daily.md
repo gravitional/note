@@ -86,7 +86,7 @@ pip install --user powerline-status
 + `ldd`查看依赖信息
 + `sha256sum`: 计算并检查 `SHA256` message digest (消息摘要)
 + `xdg-open`: 可以设置别名为`open`, 使用默认的程序打开文件或者`url`.
-+ `lsusb`: 用于显示系统中的`USB`总线和连接到它们的设备信息的工具. 
++ `lsusb`: 用于显示系统中的`USB`总线和连接到它们的设备信息的工具.
 + `lspci`: 用于显示系统中的`PCI`总线和连接到它们的设备的信息的工具. Peripheral Component Interconnect, 外围组件互连标准. `pcie`--express:高速串行总线.
 + `ssh remote-sys 'ls * > dirlist.txt'` ; 远程连接到`remote-sys`, 并执行`ls * > dirlist.txt` 命令.
 
@@ -99,16 +99,16 @@ echo  -e "\033[1;47m\033[1;32m Testing output... "
 
 ***
 
-`ls --color=always | less -R`: 这个命令可以保持颜色控制字符的传递. 
+`ls --color=always | less -R`: 这个命令可以保持颜色控制字符的传递.
 
 `less -R` or `--RAW-CONTROL-CHARS`:
 
-和`-r`一样, 但只把ANSI "color"转义序列以 "raw" 形式输出.  大多数情况下幕外观保持正确. 
-ANSI "颜色"转义序列是以下形式的序列：`ESC [ ... m`. 其中`...`是`0`个或更多的颜色规范字符. 为了保持屏幕外观, `ANSI`颜色转义序列被认为不会移动光标.  
-你可以设置`m`之外的结束字符, 方法是将环境变量`LESSANSIENDCHARS`设为结束颜色转义序列的字符列表. 
+和`-r`一样, 但只把ANSI "color"转义序列以 "raw" 形式输出.  大多数情况下幕外观保持正确.
+ANSI "颜色"转义序列是以下形式的序列: `ESC [ ... m`. 其中`...`是`0`个或更多的颜色规范字符. 为了保持屏幕外观, `ANSI`颜色转义序列被认为不会移动光标.
+你可以设置`m`之外的结束字符, 方法是将环境变量`LESSANSIENDCHARS`设为结束颜色转义序列的字符列表.
 也可以设置环境变量`LESSANSIMIDCHARS`,使标准字符之外的字符出现在`ESC`和`m`之间
 
-或者可以使用`git diff --word-diff --no-index file1 file2 `. `--word-diff`指定按单词模式显示差异, `--no-index`表明不是与`cached`作比较, 而是比较工作区中的文件. 
+或者可以使用`git diff --word-diff --no-index file1 file2 `. `--word-diff`指定按单词模式显示差异, `--no-index`表明不是与`cached`作比较, 而是比较工作区中的文件.
 
 ***
 
@@ -129,7 +129,7 @@ ANSI "颜色"转义序列是以下形式的序列：`ESC [ ... m`. 其中`...`�
 ***
 查看系统版本信息
 
-[ubuntu：查看ubuntu系统的版本信息](https://blog.csdn.net/whbing1471/article/details/52074390)
+[ubuntu: 查看ubuntu系统的版本信息](https://blog.csdn.net/whbing1471/article/details/52074390)
 
 ```bash
 cat /proc/version
@@ -137,7 +137,7 @@ uname -a
 sb_release -a
 ```
 
-*** 
+***
 查看主要存储设备的使用情况
 
 ```bash
@@ -148,13 +148,13 @@ df -h | sort -hr --key=2
 
 [/etc/environment 与 /etc/profile区别](https://blog.csdn.net/lijingshan34/article/details/86568596)
 
-`/etc/environment`是设置整个系统的环境, 而`/etc/profile`是设置所有用户的环境, 前者与登录用户无关, 后者与登录用户有关. 
+`/etc/environment`是设置整个系统的环境, 而`/etc/profile`是设置所有用户的环境, 前者与登录用户无关, 后者与登录用户有关.
 
-跟环境变量相关的参数：
+跟环境变量相关的参数:
 
 `/etc/profile` ->`/etc/enviroment` -->`$HOME/.profile` -->`$HOME/.env`
 
-如果你把文本放在双引号中, `shell` 使用的特殊字符, 除了`\`(反斜杠),`$` ,和 `` ` ``(倒引号)之外, 则失去它们的特殊含义,被当作普通字符来看待. 
+如果你把文本放在双引号中, `shell` 使用的特殊字符, 除了`\`(反斜杠),`$` ,和 `` ` ``(倒引号)之外, 则失去它们的特殊含义,被当作普通字符来看待.
 
 这意味着
 
@@ -198,18 +198,18 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:~/bin:$PATH
 sudo systemctl restart display-manager
 ```
 
-注：这将强制退出所有图形程序, 将丢失未保存的工作, 强制被注销. 非图形程序不会受到影响. 
+注: 这将强制退出所有图形程序, 将丢失未保存的工作, 强制被注销. 非图形程序不会受到影响.
 
-对于其他`Ubuntu`版本, 首先使用以下命令找到`Ubuntu`的显示管理器：
+对于其他`Ubuntu`版本, 首先使用以下命令找到`Ubuntu`的显示管理器:
 
 ```bash
 cat /etc/X11/default-display-manager
 ```
 
-根据显示管理器的不同, 可以使用以下命令之一：
+根据显示管理器的不同, 可以使用以下命令之一:
 
 ```bash
-sudo restart lightdm # 使用LightDM 
+sudo restart lightdm # 使用LightDM
 sudo restart gdm # Gnome (带GDM )
 sudo restart kdm # KDE (带KDM )
 sudo restart mdm # 对于MDM (例如对于Mint Cinnamon )
@@ -217,8 +217,8 @@ sudo restart mdm # 对于MDM (例如对于Mint Cinnamon )
 
 [Display manager](https://wiki.archlinux.org/title/Display_manager)
 
-`显示管理器`(display manager), 或称`登录管理器`(login manager), 通常是一个图形用户界面, 在 boot 过程结束时显示, 以取代默认的shell. 
-显示管理器有多种实现方式, 就像有各种类型的 window managers 和 desktop environments 一样. 通常每一种都有一定程度的定制和主题性可供选择. 
+`显示管理器`(display manager), 或称`登录管理器`(login manager), 通常是一个图形用户界面, 在 boot 过程结束时显示, 以取代默认的shell.
+显示管理器有多种实现方式, 就像有各种类型的 window managers 和 desktop environments 一样. 通常每一种都有一定程度的定制和主题性可供选择.
 
 ### 录制屏幕
 
@@ -321,12 +321,12 @@ bash: type: foo: not found
 
 短命令可以堆叠, `-i -r -f`=`-irf`=`--interactive --force --recursive`
 
-`-R` 如果`source_file`是目录, 则`cp`复制目录和整个子目录.  如果`source_file`以`/`结尾, 则复制目录内容, 而不是此目录本身. 
-此选项还会导致复制符号链接, 而不是复制链接对应的文件, 并让`cp`创建特殊文件, 而不是普通文件. 创建的目录与相应的源目录具有相同的`mode`, 不会被`umask`修改. 
-在`-R`模式下, 即使检测到错误, `cp`仍将继续复制. 
-请注意, `cp`将硬链接的文件单独复制一份.  如果你需要保持硬链接, 考虑改用`tar(1)`, `cpio(1)`, or `pax(1)`. 
+`-R` 如果`source_file`是目录, 则`cp`复制目录和整个子目录.  如果`source_file`以`/`结尾, 则复制目录内容, 而不是此目录本身.
+此选项还会导致复制符号链接, 而不是复制链接对应的文件, 并让`cp`创建特殊文件, 而不是普通文件. 创建的目录与相应的源目录具有相同的`mode`, 不会被`umask`修改.
+在`-R`模式下, 即使检测到错误, `cp`仍将继续复制.
+请注意, `cp`将硬链接的文件单独复制一份.  如果你需要保持硬链接, 考虑改用`tar(1)`, `cpio(1)`, or `pax(1)`.
 
-`-a`与`-pPR`选项相同.  保留文件的结构和属性, 但不保留目录结构. 
+`-a`与`-pPR`选项相同.  保留文件的结构和属性, 但不保留目录结构.
 ***
 要删除名称以`-`开头的文件,例如` -foo`,请使用以下命令之一:
 
@@ -382,7 +382,7 @@ DESCRIPTION
 
 + 匹配; `m`
 + 替换; `s`
-+ 转化; `tr` or `y` ： 相当于一个映射表格, 进行批量替换
++ 转化; `tr` or `y` :  相当于一个映射表格, 进行批量替换
 
 `perlepxr`的后向引用
 
@@ -395,13 +395,13 @@ $1 : 反向引用的第一个字符串
 
 `/expr/sub/mod`中`mod`表示模式修饰符, 可以是
 
-+ `i`    如果在修饰符中加上`$1`, 则正则将会取消大小写敏感性, 即`$1`和`$1` 是一样的. 
-+ `m`    默认的正则开始`^`和结束`$`只是对于正则字符串. 
-如果在修饰符中加上`m`, 那么开始和结束将会指字符串的每一行：每一行的开头就是`^`, 结尾就是`$`. 
-+ `o`    表达式只执行一次. 
-+ `s`    如果在修饰符中加入`s`, 那么默认的`.`代表除了换行符以外的任何字符将会变成任意字符, 也就是包括换行符！
-+ `x`    如果加上该修饰符, 表达式中的空白字符将会被忽略, 除非它已经被转义. 
-+ `g`    替换所有匹配的字符串. 
++ `i`    如果在修饰符中加上`$1`, 则正则将会取消大小写敏感性, 即`$1`和`$1` 是一样的.
++ `m`    默认的正则开始`^`和结束`$`只是对于正则字符串.
+如果在修饰符中加上`m`, 那么开始和结束将会指字符串的每一行: 每一行的开头就是`^`, 结尾就是`$`.
++ `o`    表达式只执行一次.
++ `s`    如果在修饰符中加入`s`, 那么默认的`.`代表除了换行符以外的任何字符将会变成任意字符, 也就是包括换行符!
++ `x`    如果加上该修饰符, 表达式中的空白字符将会被忽略, 除非它已经被转义.
++ `g`    替换所有匹配的字符串.
 + `e`    替换字符串作为表达式
 
 例如,要重命名所有匹配`* .bak`的文件,以去除扩展名,可以用
@@ -427,9 +427,9 @@ rename -v 'y/-/_/' */* # 去掉 -n 选项, 执行操作
 参数
 
 + ` -v, --verbose`;  打印出重命名成功的文件.
-+ `-0, --null`; 当从`STDIN`读取时, 使用`\0`作为分隔符. 
++ `-0, --null`; 当从`STDIN`读取时, 使用`\0`作为分隔符.
 + `--path, --fullpath`; Rename full path: 重命名任何路径元素, 默认行为
-+ `-d, --filename, --nopath, --nofullpath`; 不重命名文件夹, 只重命名文件部分. 
++ `-d, --filename, --nopath, --nofullpath`; 不重命名文件夹, 只重命名文件部分.
 + `-n, --nono`;No action: 打印出要重命名的文件, 但不执行操作
 + `-e  Expression`; 作用到文件名上的代码. 可以重复使用`-e expr1 -e expr2 ...`来构建代码, (like `perl -e`). 如果没有`-e`, 第一个参数被当成`code`
 + `-E Statement`; 类似于`-e`, 但需要`;`结束
@@ -442,7 +442,7 @@ SYNOPSIS
 `realpath [OPTION]... FILE...`
 
 DESCRIPTION
-打印解析的绝对文件名； 除最后一个组件外的所有组件都必须存在
+打印解析的绝对文件名;  除最后一个组件外的所有组件都必须存在
 
 `-e`, `--canonicalize-existing`: 路径的所有组成部分必须存在
 `-m`,`--canonicalize-missing`:路径组件不需要存在,也不必是目录
@@ -466,21 +466,21 @@ canonical order: 在排序中,指一种标准的顺序,比如字母顺序.
 + `gzip -fvr foo.txt `: force,verbose,recursive
 + `zip -r foo.zip a b c ...`
 
-创建存档的同时用`gunzip`压缩: `tar -czvf a.tar.gz /etc`.  
+创建存档的同时用`gunzip`压缩: `tar -czvf a.tar.gz /etc`.
 `tar`默认把路径当成相对路径, 如果提供的路径为`/home/user/file`, `tar`在创建存档时依次创建这些目录层次, 并且去掉开头的`/`, 使用`-P`选项改变默认设置.
-下面讨论一些`tar`的选项：
+下面讨论一些`tar`的选项:
 
 + `-P, --absolute-names`:在创建存档时, 不去掉领头的`/`.
-+ `--no-recursion`:避免自动递归子目录. 
-+ `--recursion`:递归子目录, 默认. 
-+ `-f, --file=ARCHIVE`: 设置存档用的文件或设备为`ARCHIVE`. 
++ `--no-recursion`:避免自动递归子目录.
++ `--recursion`:递归子目录, 默认.
++ `-f, --file=ARCHIVE`: 设置存档用的文件或设备为`ARCHIVE`.
 
-如果未提供`--file=ARCHIVE`, 则`tar`将首先检查环境变量`TAPE`. 如果`TAPE`不为`null`, 其值将用作存档名称. 
-否则, `tar`将采用编译的默认值. 默认值可以使用`--show-defaults`选项, 或在`tar --help`输出的末尾查看. 
-用带有`:`的存档名称表示远程计算机上的文件或设备. 冒号之前的部分作为机器名称或`IP`地址, 其后的部分为文件或设备路径名, 例如：`--file=remotehost:/dev/sr0`.
-也可以使用`user@host`, 即`用户名@主机名`的形式. 默认情况下, 通过`rsh(1)`命令访问远程主机. 如今通常使用`ssh(1)`代替, 可以通过以下选项指定：`--rsh-command=/usr/bin/ssh`. 
-远程计算机应安装了`rmt(8)`命令. 如果远程机器上`rmt`的路径名与`tar`的默认不匹配, 可以通过`--rmt-command`选项来指定正确的路径. 
-使用`--force-local`选项: 即使带有`:`号, 也认为文件存在于本地. 
+如果未提供`--file=ARCHIVE`, 则`tar`将首先检查环境变量`TAPE`. 如果`TAPE`不为`null`, 其值将用作存档名称.
+否则, `tar`将采用编译的默认值. 默认值可以使用`--show-defaults`选项, 或在`tar --help`输出的末尾查看.
+用带有`:`的存档名称表示远程计算机上的文件或设备. 冒号之前的部分作为机器名称或`IP`地址, 其后的部分为文件或设备路径名, 例如: `--file=remotehost:/dev/sr0`.
+也可以使用`user@host`, 即`用户名@主机名`的形式. 默认情况下, 通过`rsh(1)`命令访问远程主机. 如今通常使用`ssh(1)`代替, 可以通过以下选项指定: `--rsh-command=/usr/bin/ssh`.
+远程计算机应安装了`rmt(8)`命令. 如果远程机器上`rmt`的路径名与`tar`的默认不匹配, 可以通过`--rmt-command`选项来指定正确的路径.
+使用`--force-local`选项: 即使带有`:`号, 也认为文件存在于本地.
 
 ***
 解压缩`xxx.tar.gz`
@@ -500,19 +500,19 @@ canonical order: 在排序中,指一种标准的顺序,比如字母顺序.
 
 支持的解压过滤器如下
 
-+ `-a, --auto-compress`  使用存档后缀来确定压缩程序. 
-+ `-I, --use-compress-program=COMMAND`: 通过COMMAND过滤数据.  它必须接受`-d`选项以进行解压缩.  该参数可以包含命令行选项. 
-+ `-j, --bzip2`: 通过`bzip2(1)`过滤存档. 
-+ `-J, --xz`: 通过`xz(1)`过滤存档. 
-+ `--lzip` :通过`lzip(1)`过滤存档. 
-+ `--lzma` :通过`lzma(1)`过滤存档. 
-+ `--lzop`:通过lzop(1)过滤存档. 
-+ `--no-auto-compress`: 不要使用存档后缀来确定压缩程序. 
-+ `-z, --gzip, --gunzip, --ungzip`: 通过`gzip(1)`过滤存档. 
-+ `-Z, --compress, --uncompress`通过`compress(1)`过滤存档. 
-+ `--zstd`: 通过`zstd(1)`过滤存档. 
++ `-a, --auto-compress`  使用存档后缀来确定压缩程序.
++ `-I, --use-compress-program=COMMAND`: 通过COMMAND过滤数据.  它必须接受`-d`选项以进行解压缩.  该参数可以包含命令行选项.
++ `-j, --bzip2`: 通过`bzip2(1)`过滤存档.
++ `-J, --xz`: 通过`xz(1)`过滤存档.
++ `--lzip` :通过`lzip(1)`过滤存档.
++ `--lzma` :通过`lzma(1)`过滤存档.
++ `--lzop`:通过lzop(1)过滤存档.
++ `--no-auto-compress`: 不要使用存档后缀来确定压缩程序.
++ `-z, --gzip, --gunzip, --ungzip`: 通过`gzip(1)`过滤存档.
++ `-Z, --compress, --uncompress`通过`compress(1)`过滤存档.
++ `--zstd`: 通过`zstd(1)`过滤存档.
 
-`unzip` 解压特定文件合并到当前目录: 使用`unzip -j`选项: junk paths, 不会重新创建档案的目录结构； 所有文件都存放在提取目录中(默认为当前目录), 结合通配符.
+`unzip` 解压特定文件合并到当前目录: 使用`unzip -j`选项: junk paths, 不会重新创建档案的目录结构;  所有文件都存放在提取目录中(默认为当前目录), 结合通配符.
 
 ```bash
 unzip -j '*.zip'  '*.otf'
@@ -569,37 +569,37 @@ unzip -j '*.zip'  '*.otf'
 + `-y` : 对所有询问回答 yes
 + `-t{Type}`:设置归档的类型
 + `-ai[r[-|0]]@{listfile} | !{wildcard}`: 包括额外的压缩文件, 以及通配符. 支持使用多次.
-+ `-an`: 禁止命令行自动解析压缩文档的名字,需要与`-ai` (Include archives)开关一起使用 
++ `-an`: 禁止命令行自动解析压缩文档的名字,需要与`-ai` (Include archives)开关一起使用
 + `-m`: 设置压缩方法开关
-+ `-v{Size}[b | k | m | g]`: 创建 Volumes, 指定分卷体积. 
++ `-v{Size}[b | k | m | g]`: 创建 Volumes, 指定分卷体积.
 
 `-an`禁止解析命令行中的压缩文档名称. 此开关必须与 `-ai` (Include archives) 开关一起使用.
-如果你的压缩文档在列表文件中给出, 你要用`-ai`开关指定它, 所以在命令行中你需要禁止解析`存档_名称`字段. 
+如果你的压缩文档在列表文件中给出, 你要用`-ai`开关指定它, 所以在命令行中你需要禁止解析`存档_名称`字段.
 
 ***
 
-+ `-m`: 设置压缩方法开关. 语法:  `-m<method_parameters>`(压缩方法).  
++ `-m`: 设置压缩方法开关. 语法:  `-m<method_parameters>`(压缩方法).
     例如`7z a -pa.7z-mx=0 a.txt` 创建加密文档`a.7z`, 只是简单复制.
 
-    开关描述中的 "默认值 "是指如果没有指定开关, 将使用的值. 
-    允许使用布尔型开关的简化形式：`sw+`或`sw`代替`sw=on`, `sw-`代替`sw=off`. 
-    此开关的格式取决于存档类型: `Zip `, `GZip `, `BZip2 `, `7z `, `XZ `, `WIM `. `-m`开关还可以为`h`(Hash)命令指定散列方法. 
+    开关描述中的 "默认值 "是指如果没有指定开关, 将使用的值.
+    允许使用布尔型开关的简化形式: `sw+`或`sw`代替`sw=on`, `sw-`代替`sw=off`.
+    此开关的格式取决于存档类型: `Zip `, `GZip `, `BZip2 `, `7z `, `XZ `, `WIM `. `-m`开关还可以为`h`(Hash)命令指定散列方法.
 
     对于`7z`格式,
-    Parameter  Default  Description  
+    Parameter  Default  Description
 
     + `x=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`;  例如: `x=9`.定压缩级别. 将选择不同的`Dictionary`, `FastBytes`,  `MatchFinder`, `Filter` .
-    + `yx=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`; 文件分析的级别. 
-    + `s=[off | on | [e] [{N}f] [{N}b | {N}k | {N}m | {N}g | {N}t]`; `on`;  默认模式是`s=on`. 在`solid`模式下, 文件被分组在一起, 通常可以提高压缩率. 
-    + `qs=[off | on]`; `off`;  在固实档案中按类型对文件进行分类.  
+    + `yx=[0 | 1 | 3 | 5 | 7 | 9 ]`; `5`; 文件分析的级别.
+    + `s=[off | on | [e] [{N}f] [{N}b | {N}k | {N}m | {N}g | {N}t]`; `on`;  默认模式是`s=on`. 在`solid`模式下, 文件被分组在一起, 通常可以提高压缩率.
+    + `qs=[off | on]`; `off`;  在固实档案中按类型对文件进行分类.
 
 ***
 
-+ `-v{Size}[b | k | m | g]`: 创建 Volumes, 指定分卷体积. 
++ `-v{Size}[b | k | m | g]`: 创建 Volumes, 指定分卷体积.
 
-以 `Bytes`,` Kilobytes` (1 `Kilobyte` = 1024 `bytes`), `Megabytes` (1 `Megabyte` = 1024 `Kilobytes`) 或 `Gigabytes` (1 `Gigabyte` = 1024 `Megabytes`) 为单位指定卷的大小. 
-如果你只指定 `{Size}`, `7-zip` 会把它当作字节来处理. 可以指定多个 `-v` 开关. 
-注意：在完成归档之前, 请不要使用卷(也不要复制卷). `7-Zip` 可能在归档操作结束时改变任何卷, 包括第一个卷. 
+以 `Bytes`,` Kilobytes` (1 `Kilobyte` = 1024 `bytes`), `Megabytes` (1 `Megabyte` = 1024 `Kilobytes`) 或 `Gigabytes` (1 `Gigabyte` = 1024 `Megabytes`) 为单位指定卷的大小.
+如果你只指定 `{Size}`, `7-zip` 会把它当作字节来处理. 可以指定多个 `-v` 开关.
+注意: 在完成归档之前, 请不要使用卷(也不要复制卷). `7-Zip` 可能在归档操作结束时改变任何卷, 包括第一个卷.
 
 例子, 创建多卷`a.7z`档案. 第一个卷是`10KB`, 第二个是`15KB`, 其他都是`2MB`. :
 
@@ -608,12 +608,12 @@ unzip -j '*.zip'  '*.otf'
 ```
 
 + `7z`解压多个`.zip`文件; 使用下列形式:
-    
+
     ```
     7z -an -ai[r[-|0]]@{listfile} | !{wildcard}
     ```
 
-`-an`表示禁止`bash`解析压缩文档名, `-ai`表示要包括的压缩文件名. 由于`!`在`bash`中是特殊符号, 需要转义或者用引号`'`裹起来：
+`-an`表示禁止`bash`解析压缩文档名, `-ai`表示要包括的压缩文件名. 由于`!`在`bash`中是特殊符号, 需要转义或者用引号`'`裹起来:
 
 ```bash
 7z x -an -'air!*.zip'
@@ -622,7 +622,7 @@ find . -mindepth 1 -maxdepth 1 -type f -iname *.zip -exec 7z x -o'{}' '{}' + #�
 ```
 
 类似的, `-i` 开关表示添加文件, 在创建压缩文档时使用.
- 
+
 ```bash
 7z a -tzip src.zip *.txt -ir!DIR1\*.cpp
 ```
@@ -642,7 +642,7 @@ IFS=$SAVEIFS;
 ```bash
 SAVEIFS=$IFS;IFS=$(echo -en "\n\b");
 declare -a archs=( $(find . -mindepth 1 -maxdepth 1 -type f -iname '*.zip' -print0 | xargs --null  basename -s '.zip' ) );declare -p archs;
-for i in ${archs}; do  unzip $i -d $i; done; 
+for i in ${archs}; do  unzip $i -d $i; done;
 IFS=$SAVEIFS
 ```
 
@@ -653,31 +653,31 @@ IFS=$SAVEIFS
     "Dir\Program files\*"
     Dir\"Program files"\*
 
-`开关选项`可以组合起来以节省命令行长度. 
-然而, 一些开关选项具有`可选参数`, 因此, 这种选项必须在`开关组合`的末尾, 因为`7-Zip`把`开关组合`后面的参数看作开关选项的`可选参数`. 
+`开关选项`可以组合起来以节省命令行长度.
+然而, 一些开关选项具有`可选参数`, 因此, 这种选项必须在`开关组合`的末尾, 因为`7-Zip`把`开关组合`后面的参数看作开关选项的`可选参数`.
 
 `7-Zip`使用类似于`Windows 95`的通配符.
 
-+ `*`表示一个任意字符的序列. 
-+ `?`意味着任何字符. 
++ `*`表示一个任意字符的序列.
++ `?`意味着任何字符.
 
->`7-Zip`不使用系统的通配符解析器. 
+>`7-Zip`不使用系统的通配符解析器.
 `7-Zip`不遵循古老的规则, 也就是`*.*`表示任何文件. `7-Zip`将`*.*`视为任何有扩展名的文件名. 要处理所有的文件, 你必须使用单个`*`通配符.
 举例来说:
 
-`*.txt`表示所有扩展名为`.txt`的文件. 
-`?a*`表示所有第二个字符为`a`的文件 
-`*1*`表示所有包含字符`1`的名字 
-`*.*.*`表示所有包含两个至少`.`字符的名称. 
+`*.txt`表示所有扩展名为`.txt`的文件.
+`?a*`表示所有第二个字符为`a`的文件
+`*1*`表示所有包含字符`1`的名字
+`*.*.*`表示所有包含两个至少`.`字符的名称.
 
 如果命令行中没有`文件名`/`通配符`, 将使用默认通配符`*`.
-路径末尾的斜杠`\`表示一个目录. 如果路径末尾没有斜杠`\`, 路径可以指一个文件或一个目录. 
+路径末尾的斜杠`\`表示一个目录. 如果路径末尾没有斜杠`\`, 路径可以指一个文件或一个目录.
 
 + 列出文件
 
 你可以为特殊的列表文件(包含文件列表的文件)提供一个或多个文件名或通配符. 这种列表文件中的文件名必须用换行符号分开.
-对于列表文件, `7-Zip`默认使用`UTF-8`编码. 你可以使用 `-scs` 开关改变编码. 支持多个列表文件. 
-例如, 如果文件 `listfile.txt` 包含以下内容. 
+对于列表文件, `7-Zip`默认使用`UTF-8`编码. 你可以使用 `-scs` 开关改变编码. 支持多个列表文件.
+例如, 如果文件 `listfile.txt` 包含以下内容.
 
     My programs\*.cpp
     Src\*.cpp
@@ -688,9 +688,9 @@ IFS=$SAVEIFS
 7z a -tzip archive.zip @listfile.txt
 ```
 
-将 `My programs` 和 `Src` 目录下的所有 `*.cpp` 文件添加到`archive.zip`中. 
+将 `My programs` 和 `Src` 目录下的所有 `*.cpp` 文件添加到`archive.zip`中.
 
-+ 短和长的文件名; `7-Zip`在某些情况下支持短文件名(如`FILENA~1.TXT`). 然而, 我们强烈建议只使用真正的(长)文件名. 
++ 短和长的文件名; `7-Zip`在某些情况下支持短文件名(如`FILENA~1.TXT`). 然而, 我们强烈建议只使用真正的(长)文件名.
 
 ### 查看和安装字体
 
@@ -780,9 +780,9 @@ sudo fc-cache -fv
 
 `install, remove, purge (apt-get(8))`
 `apt list`(半成品)
-`apt list`类似于`dpkg-query --list`, 它可以显示满足某些条件的软件包列表. 
+`apt list`类似于`dpkg-query --list`, 它可以显示满足某些条件的软件包列表.
 
-它支持用`glob(7)`匹配软件包名称, 以及列出已安装(`--installed`), 可升级(`--upgradeable`)或所有可用(`--all-versions`)版本的选项. 
+它支持用`glob(7)`匹配软件包名称, 以及列出已安装(`--installed`), 可升级(`--upgradeable`)或所有可用(`--all-versions`)版本的选项.
 
 另外也可以用`whereis`
 
@@ -803,10 +803,10 @@ apt-get -f install pkg
 + `dpkg -i pkg`: 安装`pkg.deb`
 + `dpkg -r pkg`: 删除已安装的程序包
 + `dpkg -P pkg`: 彻底清除已安装的程序包
-+ `dpkg -l, --list package-name-pattern...`: 列出与给定模式匹配的软件包. 
-+ `dpkg -s, --status package-name...`: 报告指定软件包的状态. 
-+ `dpkg -L, --listfiles package-name...`: 从软件包名称列出安装到系统的文件. 
-+ `dpkg -S, --search filename-search-pattern...` 从已安装的软件包中搜索文件名. 
++ `dpkg -l, --list package-name-pattern...`: 列出与给定模式匹配的软件包.
++ `dpkg -s, --status package-name...`: 报告指定软件包的状态.
++ `dpkg -L, --listfiles package-name...`: 从软件包名称列出安装到系统的文件.
++ `dpkg -S, --search filename-search-pattern...` 从已安装的软件包中搜索文件名.
 + `dpkg -p, --print-avail package-name...` 显示有关软件包名称的详细信息, 存放在`/var/lib/dpkg/available`,基于`APT`的前端的用户使用`apt-cache`
 
 ### grep 过滤输出
@@ -821,12 +821,12 @@ apt-get -f install pkg
 + `-i` `--ignore-case` 忽略大小写
 
 ***
-`-m NUM`, `--max-count=NUM` 输出的最大行: 在`NUM`行匹配的行之后停止读取文件. 
+`-m NUM`, `--max-count=NUM` 输出的最大行: 在`NUM`行匹配的行之后停止读取文件.
 
-如果输入来自于普通文件, 就输出`NUM`行匹配的结果. 之后`grep`将标准输入定位到最后一个匹配行后面, 不再处理后面的内容. 
-这使调用`grep`的程序可以继续搜索, 当`grep`停止之后, 它可以继续输出后面的文本. 
-当同时使用`-c`或`--count`选项时, `grep`不会输出大于`NUM`的计数. 
-当同时使用`-v`或`--invert-match`选项时, `grep`在输出`NUM`不匹配的行后停止. 
+如果输入来自于普通文件, 就输出`NUM`行匹配的结果. 之后`grep`将标准输入定位到最后一个匹配行后面, 不再处理后面的内容.
+这使调用`grep`的程序可以继续搜索, 当`grep`停止之后, 它可以继续输出后面的文本.
+当同时使用`-c`或`--count`选项时, `grep`不会输出大于`NUM`的计数.
+当同时使用`-v`或`--invert-match`选项时, `grep`在输出`NUM`不匹配的行后停止.
 
 example:
 
@@ -842,16 +842,16 @@ grep -n --color -P -B 1 -A 6 "(?:tex:\d+:|warning:)" ./temp $tex_file".log"
 
 ### 图片格式转换
 
-`pdf`转成图片格式. 包名: `pdftoppm`. 语法是：`pdftoppm input.pdf outputname -png -f {page} -singlefile`
+`pdf`转成图片格式. 包名: `pdftoppm`. 语法是: `pdftoppm input.pdf outputname -png -f {page} -singlefile`
 
 ```bash
 pdftoppm  -png -rx 300 -ry 300  input.pdf outputname
 ```
 
-这个命令将会把`PDF`的每一页转换成`png`格式, 文件名为`outputname-01.png`,`outputname-02.png`等等. 
-如果只想转换其中的特定一页, 使用`-f {page}`选项指定. 例如`-f 1`表示第一页. 
+这个命令将会把`PDF`的每一页转换成`png`格式, 文件名为`outputname-01.png`,`outputname-02.png`等等.
+如果只想转换其中的特定一页, 使用`-f {page}`选项指定. 例如`-f 1`表示第一页.
 
-`gnome`默认的查看图片程序为`eog`: eye of gnome 
+`gnome`默认的查看图片程序为`eog`: eye of gnome
 
 ### ubuntu 自带截图
 
@@ -987,29 +987,29 @@ umount /dev/sda5
 
 [将 USB 盘格式化为 exFAT](https://linux.cn/article-12294-1.html)
 
-从 `Linux kernel 5.4`开始, `Linux` 内核本身中启用了 `exFAT` 文件系统支持. 
-检查正在运行的 `Linux` 内核版本: `uname -r`. 如果是内核 `5.4` 或更高版本, 那么应该没问题. 
-不然, 你必须启用`exFAT`支持. 在基于 `Ubuntu` 的发行版中, 你可以安装以下软件包：
+从 `Linux kernel 5.4`开始, `Linux` 内核本身中启用了 `exFAT` 文件系统支持.
+检查正在运行的 `Linux` 内核版本: `uname -r`. 如果是内核 `5.4` 或更高版本, 那么应该没问题.
+不然, 你必须启用`exFAT`支持. 在基于 `Ubuntu` 的发行版中, 你可以安装以下软件包:
 
 ```bash
 sudo apt install exfat-fuse exfat-utils
 ```
 
 ***
-方法 1：使用 `GNOME 磁盘工具`将磁盘格式化为 `exFAT`.
+方法 1: 使用 `GNOME 磁盘工具`将磁盘格式化为 `exFAT`.
 
-使用`GNOME 磁盘` 格式化驱动器是一项简单的工作. 它预装在许多 Linux 发行版中. 
-插入外部 `USB` 盘. 在菜单中查找 `Disk`, 然后打开`GNOME 磁盘` 应用. 第一步, 选择要格式化的驱动器, 要使用 `exFAT`, 请选择 `其它`, 然后单击`下一步`. 
+使用`GNOME 磁盘` 格式化驱动器是一项简单的工作. 它预装在许多 Linux 发行版中.
+插入外部 `USB` 盘. 在菜单中查找 `Disk`, 然后打开`GNOME 磁盘` 应用. 第一步, 选择要格式化的驱动器, 要使用 `exFAT`, 请选择 `其它`, 然后单击`下一步`.
 
 ***
-方法 2：在 `Linux` 命令行中将磁盘格式化为 `exFAT`.
+方法 2: 在 `Linux` 命令行中将磁盘格式化为 `exFAT`.
 
 插入外部硬盘, 然后在终端中输入以下命令`sudo fdisk -l`.通过列出的磁盘大小信息找出`USB`的标记, 假设`/dev/sdc1`.
 如果磁盘有多个分区, 想要管理, 可以使用`sudo fdisk /dev/sdc`进行分区的管理工作. 这里要输入`/dev/sdc`也就是整个`U`盘, 而不是`/dev/sdc1`.
 进入交互式分区工具:
 
 `m`提示可用的命令列表.
-`o`:创建新的`dos`分区表, `n`添加一个新的分区.       
+`o`:创建新的`dos`分区表, `n`添加一个新的分区.
 `t`:更改分区类型, `dos` 类型的分区表, 如果要和`windows`格式化一致, 为`HPFS/NTFS/exFAT`, 就输入`7`.
 `w`:保存更改, `q`退出不保存更改.
 
@@ -1018,18 +1018,18 @@ sudo apt install exfat-fuse exfat-utils
 + `mkfs.exfat`:格式化成`exfat`.
 + `mkfs.fat`:格式化成`fat32`.
 
-`man mkfs.exfat`会发现, `mkfs.exfat`的同义词`mkexfatfs`. 如果分区表是`MBR`类型的, 需要将文件系统类型设置为`0X07`(`NTFS/exFAT`), 否则其他操作系统可能会拒绝挂载. 
-仍然假设U盘分区为`/dev/sdc1`, 使用以下命令将它格式化为 `exfat`. 
+`man mkfs.exfat`会发现, `mkfs.exfat`的同义词`mkexfatfs`. 如果分区表是`MBR`类型的, 需要将文件系统类型设置为`0X07`(`NTFS/exFAT`), 否则其他操作系统可能会拒绝挂载.
+仍然假设U盘分区为`/dev/sdc1`, 使用以下命令将它格式化为 `exfat`.
 
 ```bash
 sudo mkfs.exfat -i 0x07 -n udisk /dev/sdc1
 ```
 
-将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称. 可选地, 运行 `fsck` 检查`sudo fsck.exfat /dev/sdc1`, 以确保格式化正确, 享受 `exFAT` 盘吧. 
+将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称. 可选地, 运行 `fsck` 检查`sudo fsck.exfat /dev/sdc1`, 以确保格式化正确, 享受 `exFAT` 盘吧.
 
 ### 查看文档首行末行
 
-文档尾巴, `tail -n, --lines=[+]NUM`, 从第`num`行开始. 
+文档尾巴, `tail -n, --lines=[+]NUM`, 从第`num`行开始.
 文档开头, `head -n, --lines=[-]NUM`, 减去最后`num`行.
 
 ### 查看使用的桌面环境 x11 wayland
@@ -1076,7 +1076,7 @@ uname
 
 这意味着您正在运行Linux内核`5.4.0-48`,或更笼统地说,您正在运行Linux内核版本`5.4`.
 
-但是其他数字在这里意味着什么？
+但是其他数字在这里意味着什么?
 
 + `5` – 内核版本
 + `4` – 重大修订
@@ -1144,28 +1144,28 @@ dmesg | grep Linux
 curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 
 `-f, --fail`
-(HTTP)服务器错误时`静默失败`(没有输出).  这样做主要是为了, 使脚本等更好地处理失败的尝试. 
-在正常情况下, 当`HTTP`服务器无法交付文档时, 它将返回`HTML文档`, 说明(通常还会描述原因及更多).  
-该`flag`将阻止`curl`输出该错误并返回`error 22`. 
+(HTTP)服务器错误时`静默失败`(没有输出).  这样做主要是为了, 使脚本等更好地处理失败的尝试.
+在正常情况下, 当`HTTP`服务器无法交付文档时, 它将返回`HTML文档`, 说明(通常还会描述原因及更多).
+该`flag`将阻止`curl`输出该错误并返回`error 22`.
 
-此方法不是`fail-safe`的, 并且有时会漏入不成功的响应代码, 尤其是在涉及验证时(response codes 401 and 407). 
+此方法不是`fail-safe`的, 并且有时会漏入不成功的响应代码, 尤其是在涉及验证时(response codes 401 and 407).
 
 `-s, --silent`
 
-静音或安静模式.  不显示进度表或错误消息.  使`Curl`静音.  仍会输出您要求的数据, 甚至到终端/标准输出, 除非您将其重定向. 
-除此选项外, 还可以使用`-S`, `--show-error`禁用进度表, 但仍显示错误消息. 
-另请参见`-v`, `--verbose` and `--stderr`.       
+静音或安静模式.  不显示进度表或错误消息.  使`Curl`静音.  仍会输出您要求的数据, 甚至到终端/标准输出, 除非您将其重定向.
+除此选项外, 还可以使用`-S`, `--show-error`禁用进度表, 但仍显示错误消息.
+另请参见`-v`, `--verbose` and `--stderr`.
 
 `-S, --show-error`
-与`-s`, `--silent`一起使用时, 如果`curl`失败, 它将使`curl`显示一条错误消息. 
+与`-s`, `--silent`一起使用时, 如果`curl`失败, 它将使`curl`显示一条错误消息.
 
 `-L, --location`
 
-(HTTP)如果服务器报告请求的页面已移动到其他位置(由`Location:  header`  and  a `3XX`响应代码), 此选项将使`curl`在新位置上重做请求. 
+(HTTP)如果服务器报告请求的页面已移动到其他位置(由`Location:  header`  and  a `3XX`响应代码), 此选项将使`curl`在新位置上重做请求.
 如果与`-i`, `--include`或`-l`,`--head`一起使用, 将显示所有请求页面的`headers`. 使用身份验证时, curl仅将其凭据发送到初始主机.
-如果重定向将curl转移到其他主机, 它无法截获`user+password`. 
-另请参阅`--location-trusted`查看如何修改这项设置. 
-您可以使用`--max-redirs`选项来限制要遵循的重定向数量. 
+如果重定向将curl转移到其他主机, 它无法截获`user+password`.
+另请参阅`--location-trusted`查看如何修改这项设置.
+您可以使用`--max-redirs`选项来限制要遵循的重定向数量.
 
 当curl跟随重定向并且请求不是简单的`GET`(例如`POST`或`PUT`)时, it will do the following request with a GET:
 如果`HTTP`响应是`301`, `302`或`303`. 如果响应代码是任何其他`3xx`代码, curl will resend the following request using the same unmodified method.
@@ -1288,25 +1288,25 @@ sudo find /var/log/ -type f -mtime +30 -exec rm -f {} \;
 ***
 `expression`
 
-`starting points`列表之后的部分是`表达式`.  这是一种查询规范, 描述了我们如何匹配文件以及如何处理匹配的文件. 
+`starting points`列表之后的部分是`表达式`.  这是一种查询规范, 描述了我们如何匹配文件以及如何处理匹配的文件.
 表达式由一系列事物组成:`Test`, `Actions`,...
 
 ***
 `-exec command ;`
 
-执行命令； 如果返回`0`状态, 则为`true`.  之后传递给`find`的参数都将作为命令的参数, 直到遇到`;`为止. 
-字符` {}`被替换为当前文件名命令参数中出现的任何地方的当前文件名, 而不仅仅是在单独存在的参数中. 
-这两种构造都可能需要转义(以`\`表示)或加引号以保护它们, 避免 shell 展开. 
-有关使用`-exec`选项的示例, 请参见示例部分. 对每个匹配的文件运行一次指定的命令.  
-该命令在起始目录中执行.  与`-exec`有关的操作具有不可避免的安全问题； 你应该使用`-execdir`选项代替. 
+执行命令;  如果返回`0`状态, 则为`true`.  之后传递给`find`的参数都将作为命令的参数, 直到遇到`;`为止.
+字符` {}`被替换为当前文件名命令参数中出现的任何地方的当前文件名, 而不仅仅是在单独存在的参数中.
+这两种构造都可能需要转义(以`\`表示)或加引号以保护它们, 避免 shell 展开.
+有关使用`-exec`选项的示例, 请参见示例部分. 对每个匹配的文件运行一次指定的命令.
+该命令在起始目录中执行.  与`-exec`有关的操作具有不可避免的安全问题;  你应该使用`-execdir`选项代替.
 
 ***
 `-exec command {} +`
 
-在选定的文件上运行指定的命令, `-exec` action的变体. 但是通过在命令结尾附加上每个选中的文件名; 
+在选定的文件上运行指定的命令, `-exec` action的变体. 但是通过在命令结尾附加上每个选中的文件名;
 该命令的调用总数将远远少于匹配文件的数目.  命令行的构建方式与`xargs`几乎相同.
-命令中仅允许使用一个`{}`实例, 并且当从`shell`调用`find`时,应该用引号保护起来, 例如`'{}'`, 以防止其被`shell`解释.  
-该命令在起始目录中执行.  如果有任何调用返回一个非零值作为退出状态, 则`find`返回一个非零退出状态.  
+命令中仅允许使用一个`{}`实例, 并且当从`shell`调用`find`时,应该用引号保护起来, 例如`'{}'`, 以防止其被`shell`解释.
+该命令在起始目录中执行.  如果有任何调用返回一个非零值作为退出状态, 则`find`返回一个非零退出状态.
 如果`find`遇到错误, 有时可能会导致立即退出, 因此一些待处理的命令可能根本不会运行. This variant of `-exec` always returns `true`.
 
 ***
@@ -1330,7 +1330,7 @@ File is of type c:
 有时候,自己创建压缩文件,可以使用 `ls -hl`查看文件大小.参数`-h` 表示`Human-Readable`,使用`GB`,`MB`等易读的格式方式显示.对于文件夹的大小,`ll -h` 显示只有`4k`.
 
 ***
-那么如何来查看文件夹的大小呢？
+那么如何来查看文件夹的大小呢?
 
 使用`du`命令查看文件或文件夹的磁盘使用空间,`–max-depth` 用于指定深入目录的层数.
 
@@ -1348,7 +1348,7 @@ du [OPTION]... --files0-from=F
 
 + `-s,` `--summarize`: 对每个参数仅显示总计
 + ` -h`, `--human-readable`: 以人类可读的格式显示大小(例如`1K` `234M` `2G`)
-+ `-d,` `--max-depth=N`: 指定目录递归的层数； `--max-depth = 0`与`--summaryize`相同
++ `-d,` `--max-depth=N`: 指定目录递归的层数;  `--max-depth = 0`与`--summaryize`相同
 + `--si`   like `-h`, 但是使用`1000`的幂而不是`1024`的幂
 + `-a,` `--all` :给出所有文件的统计, 而不仅仅是目录
 
@@ -1456,8 +1456,8 @@ $ echo $dir , $fullname , $filename , $extension
 ***
 更复杂的情况
 
-如果对付简单应用场景,到这里已经可以打完收工了,但是有时候文件可能不止有一个后缀,比如`*.tar.gz`,怎样得到最后一个后缀呢？
-再`cut`一回？当然可以,但是如果文件名是`mylib.1.0.1a.zip`这样的呢？呃......正则表达式肯定可以.
+如果对付简单应用场景,到这里已经可以打完收工了,但是有时候文件可能不止有一个后缀,比如`*.tar.gz`,怎样得到最后一个后缀呢?
+再`cut`一回? 当然可以,但是如果文件名是`mylib.1.0.1a.zip`这样的呢? 呃......正则表达式肯定可以.
 
 ```bash
 $ fullname=mylib.1.0.1a.zip
@@ -1472,7 +1472,7 @@ mylib.1.0.1a, zip
 文件名:把以`.`字符开头以后一直到行尾都是非`.`字符的子串替换为空.
 后缀名:把从行首开始以`.`字符结尾的子串替换为空.
 
-光用语言把这两个正则表达式描述出来脑细胞也要死不少.有没有像上面`cut`版本一样简单容易理解的方法呢？
+光用语言把这两个正则表达式描述出来脑细胞也要死不少.有没有像上面`cut`版本一样简单容易理解的方法呢?
 由于`.`分隔符的个数不确定,正常使用`cut`来分割最后一个`.`字符是不太可能的.
 但是我们可使用`rev`命令将字符串反转一下,区分后缀和文件名的`.`字符位置就确定了.
 截取了想要的部分之后,再次反转就得到了我们想要的内容.
@@ -1557,7 +1557,7 @@ stat example.txt
 ***
 inode的大小
 
-`inode`也会消耗硬盘空间,所以硬盘格式化的时候,操作系统自动将硬盘分成两个区域.一个是数据区,存放文件数据；另一个是`inode`区(`inode table`),存放`inode`所包含的信息.
+`inode`也会消耗硬盘空间,所以硬盘格式化的时候,操作系统自动将硬盘分成两个区域.一个是数据区,存放文件数据; 另一个是`inode`区(`inode table`),存放`inode`所包含的信息.
 每个`inode`节点的大小,一般是`128`字节或`256`字节.
 `inode`节点的总数,在格式化时就给定,一般是每1KB或每2KB就设置一个`inode`.
 假定在一块1GB的硬盘中,每个`inode`节点的大小为128字节,每`1KB`就设置一个`inode`,那么`inode table`的大小就会达到`128MB`,占整块硬盘的`12.8%`.
@@ -1582,7 +1582,7 @@ inode号码
 每个`inode`都有一个号码,操作系统用`inode`号码来识别不同的文件.
 
 这里值得重复一遍,`Unix/Linux`系统内部不使用文件名,而使用`inode`号码来识别文件.对于系统来说,文件名只是`inode`号码便于识别的别称或者绰号.
-表面上,用户通过文件名,打开文件.实际上,系统内部这个过程分成三步:首先,系统找到这个文件名对应的`inode`号码；其次,通过`inode`号码,获取`inode`信息；
+表面上,用户通过文件名,打开文件.实际上,系统内部这个过程分成三步:首先,系统找到这个文件名对应的`inode`号码; 其次,通过`inode`号码,获取`inode`信息;
 最后,根据`inode`信息,找到文件数据所在的`block`,读出数据.
 
 使用`ls -i`命令,可以看到文件名对应的`inode`号码:
@@ -1620,7 +1620,7 @@ ls -l /etc
 硬链接
 
 一般情况下,文件名和`inode`号码是"一一对应"关系,每个`inode`号码对应一个文件名.但是,Unix/Linux系统允许,多个文件名指向同一个`inode`号码.
-这意味着,可以用不同的文件名访问同样的内容；对文件内容进行修改,会影响到所有文件名；但是,删除一个文件名,不影响另一个文件名的访问.这种情况就被称为"硬链接"(`hard link`).
+这意味着,可以用不同的文件名访问同样的内容; 对文件内容进行修改,会影响到所有文件名; 但是,删除一个文件名,不影响另一个文件名的访问.这种情况就被称为"硬链接"(`hard link`).
 
 `ln`命令可以创建硬链接:
 
@@ -1630,7 +1630,7 @@ ln 源文件 目标文件
 
 运行上面这条命令以后,源文件与目标文件的inode号码相同,都指向同一个`inode`.`inode`信息中有一项叫做"链接数",记录指向该`inode`的文件名总数,这时就会增加1.反过来,删除一个文件名,就会使得`inode`节点中的"链接数"减1.当这个值减到0,表明没有文件名指向这个`inode`,系统就会回收这个`inode`号码,以及其所对应`block`区域.
 
-这里顺便说一下目录文件的"链接数".创建目录时,默认会生成两个目录项:"."和"..".前者的`inode`号码就是当前目录的`inode`号码,等同于当前目录的"硬链接"；后者的`inode`号码就是当前目录的父目录的`inode`号码,等同于父目录的"硬链接".所以,任何一个目录的"硬链接"总数,总是等于`2`加上它的子目录总数(含隐藏目录),这里的`2`是父目录对其的"硬链接"和当前目录下的".硬链接".
+这里顺便说一下目录文件的"链接数".创建目录时,默认会生成两个目录项:"."和"..".前者的`inode`号码就是当前目录的`inode`号码,等同于当前目录的"硬链接"; 后者的`inode`号码就是当前目录的父目录的`inode`号码,等同于父目录的"硬链接".所以,任何一个目录的"硬链接"总数,总是等于`2`加上它的子目录总数(含隐藏目录),这里的`2`是父目录对其的"硬链接"和当前目录下的".硬链接".
 
 ***
 软链接
@@ -1664,7 +1664,7 @@ inode的特殊作用
 
 [Shebang](https://bash.cyberciti.biz/guide/Shebang)
 
-大多数`Linux shell`和`perl`/`python`脚本以以下行开头：
+大多数`Linux shell`和`perl`/`python`脚本以以下行开头:
 
 ```bash
 #!/bin/bash
@@ -1674,18 +1674,18 @@ inode的特殊作用
 #!/usr/bin/env bash
 ```
 
-这称为`shebang`或`bang`行. 
+这称为`shebang`或`bang`行.
 
 `shebang`(意思为这一切)其实就是`Bash`解释器的绝对路径. 几乎所有的`bash`脚本通常都以`#!/bin/bash`开头(假设`Bash`已安装在`/bin`中).
-这样可以确保即使在另一个`shell`下执行脚本, 也可以使用`Bash`来解释该脚本. 
-`Shebang`是由Dennis Ritchie在第7版和8版`Unix`之间在`Bell`实验室推出的.  然后, 它也被添加到Berkeley的`BSD`中. 
+这样可以确保即使在另一个`shell`下执行脚本, 也可以使用`Bash`来解释该脚本.
+`Shebang`是由Dennis Ritchie在第7版和8版`Unix`之间在`Bell`实验室推出的.  然后, 它也被添加到Berkeley的`BSD`中.
 
-`/usr/bin/env`在修改后的环境中运行`bash`之类的程序.  它使您的`bash`脚本具有可移植性.  
-`#!/usr/bin/env bash`的优点是, 它将使用运行用户的`$PATH`变量中最先出现的`bash`可执行文件. 
+`/usr/bin/env`在修改后的环境中运行`bash`之类的程序.  它使您的`bash`脚本具有可移植性.
+`#!/usr/bin/env bash`的优点是, 它将使用运行用户的`$PATH`变量中最先出现的`bash`可执行文件.
 
 ### 日志文件
 
-[linux系统日志在哪？](https://www.php.cn/linux-435716.html)
+[linux系统日志在哪? ](https://www.php.cn/linux-435716.html)
 [linux日志介绍](https://zhuanlan.zhihu.com/p/26428150)
 
 ```bash
@@ -1694,26 +1694,26 @@ sudo tail -f /var/log/messages
 sudo tail -f /var/log/kern.log
 ```
 
-`linux`日志大多是以明文存储, 一般存储在`/var/log`目录中, linux系统中主要有三个日志子系统：连接时间日志, 进程统计日志, 错误日志. 
+`linux`日志大多是以明文存储, 一般存储在`/var/log`目录中, linux系统中主要有三个日志子系统: 连接时间日志, 进程统计日志, 错误日志.
 
 + `assess-log` 记录和`HTTP/web`的传输
 + `secure` 记录登录系统存取资料的消息
 + `btmp` 记录失败的消息
 + `lastlog` 记录最近几次成功登录的事件和最后一次不成功的登录
-+ `messages`：包括整体系统信息, 其中也包含系统启动期间的日志. 此外, 还包括`mail`, `cron`, `daemon`, `kern`和`auth`等内容
++ `messages`: 包括整体系统信息, 其中也包含系统启动期间的日志. 此外, 还包括`mail`, `cron`, `daemon`, `kern`和`auth`等内容
 + `sudolog` 记录`sudo`发出的命令
 + `sulog` 记录使用`su`命令的使用
 + `utmp` 记录当前登录的每个用户
 + `wtmp` 一个用户每次登录进入和退出的的永久记录
-+ `syslog`：它和`/etc/log/messages`日志文件不同, 它只记录警告信息, 常常是系统出问题的信息. 
++ `syslog`: 它和`/etc/log/messages`日志文件不同, 它只记录警告信息, 常常是系统出问题的信息.
 + `xferlog` 记录了FTP会话
-+ `user.log`：记录所有等级用户信息的日志. 
-+ `auth.log`：包含系统授权信息, 包括用户登录和使用的权限机制等. 
-+ `daemon.log`：包含各种系统后台守护进程日志信息. 
-+ `kern.log`：包含内核产生的日志, 有助于在定制内核时解决问题. 
++ `user.log`: 记录所有等级用户信息的日志.
++ `auth.log`: 包含系统授权信息, 包括用户登录和使用的权限机制等.
++ `daemon.log`: 包含各种系统后台守护进程日志信息.
++ `kern.log`: 包含内核产生的日志, 有助于在定制内核时解决问题.
 
-连接时间日志是有多个程序执行的, 把日志记录到`/var/log/wtmp`, `/var/run/utmp`,`/var/log/lastlog` 三个文件中, 这三个文件记录了用户登录系统和退出的有关信息, 
-`utmp`保存了当前用户的每个用户的信息, `wtmp`记录了每个用户登录注销和系统的启动, 关机的事件, `lastlog`记录了每个用户最后登录的信息记录. 
+连接时间日志是有多个程序执行的, 把日志记录到`/var/log/wtmp`, `/var/run/utmp`,`/var/log/lastlog` 三个文件中, 这三个文件记录了用户登录系统和退出的有关信息,
+`utmp`保存了当前用户的每个用户的信息, `wtmp`记录了每个用户登录注销和系统的启动, 关机的事件, `lastlog`记录了每个用户最后登录的信息记录.
 
 `wtmp`和`utmp`文件都是二进制, 不能使用`cat`和`tail`命令查看, 但是可以使用`who`, `w`,`users`,`last` 等命令查看着两个文件的信息
 
@@ -1725,9 +1725,9 @@ sudo tail -f /var/log/kern.log
 + `-q` 只显示当前登录到系统中的用户名称和数量, 和其他参数共同使用的时候, 其他参数将被忽略
 
 ***
-`Systemd`统一管理所有 `Unit` 的启动日志. 带来的好处就是可以只用`journalctl`一个命令, 查看所有日志(内核日志和 应用日志). 
+`Systemd`统一管理所有 `Unit` 的启动日志. 带来的好处就是可以只用`journalctl`一个命令, 查看所有日志(内核日志和 应用日志).
 
-语法格式： `journalctl [参数]`
+语法格式:  `journalctl [参数]`
 
 + `-k,--dmesg`: 查看内核日志
 + `-b`:  查看系统本次启动的日志
@@ -1737,31 +1737,31 @@ sudo tail -f /var/log/kern.log
 + `--disk-usage`:  查看当前日志占用磁盘的空间的总大小
 
 `-S, -since =, -U, -until =`
-显示比指定日期更早或更晚的日志. 日期格式为`"2012-10-30 18:17:16"`.如果省略时间部分, 则假定为`00:00:00`.如果只有秒部分是省略, 则假定为`:00`. 
-如果省略日期部分, 则假定为当前日期.  也可以使用字符串`yesterday`, `"today"`, `"tomorrow"`.`now`是指当前时间. 
-是指当日, 当日或当日后一天的00:00:00. 最后, 可以用`-`或`+`为前缀指定相对时间. 有关完整的时间和日期规范, 请参见`systemd.time(7).`. 
-`--output=short-full`将完全按照此格式打印时间戳. 
+显示比指定日期更早或更晚的日志. 日期格式为`"2012-10-30 18:17:16"`.如果省略时间部分, 则假定为`00:00:00`.如果只有秒部分是省略, 则假定为`:00`.
+如果省略日期部分, 则假定为当前日期.  也可以使用字符串`yesterday`, `"today"`, `"tomorrow"`.`now`是指当前时间.
+是指当日, 当日或当日后一天的00:00:00. 最后, 可以用`-`或`+`为前缀指定相对时间. 有关完整的时间和日期规范, 请参见`systemd.time(7).`.
+`--output=short-full`将完全按照此格式打印时间戳.
 
 `x, --catalog`:
-用信息目录中的解释文本来增加日志行. 这将为输出中的日志信息添加解释性的帮助文本, 如果这是可用的. 
-这些简短的帮助文本将解释错误或日志事件的背景, 可能的解决方案, 以及指向支持论坛, 开发人员文档和任何其他相关手册的指针. 
-请注意, 帮助文本不是对所有的信息都可用, 而只是对选定的 的帮助文本. 关于消息目录的更多信息, 请参考消息目录开发者文档[5]. 
+用信息目录中的解释文本来增加日志行. 这将为输出中的日志信息添加解释性的帮助文本, 如果这是可用的.
+这些简短的帮助文本将解释错误或日志事件的背景, 可能的解决方案, 以及指向支持论坛, 开发人员文档和任何其他相关手册的指针.
+请注意, 帮助文本不是对所有的信息都可用, 而只是对选定的 的帮助文本. 关于消息目录的更多信息, 请参考消息目录开发者文档[5].
 
-注意：当把 `journalctl` 输出附加到错误报告时, 请不要使用 `-x`. 
+注意: 当把 `journalctl` 输出附加到错误报告时, 请不要使用 `-x`.
 
 `-e, --pager-end`:
 
-立即跳到默认的分页工具的日志末尾. 这意味着`-n1000`, 以保证`pager`不会缓冲无限制大小的日志. 
-可以用一个明确的`-n数值`来覆盖, 而`-nall`将禁用这个上限. 注意, 这个选项只支持`less(1)`pager. 
+立即跳到默认的分页工具的日志末尾. 这意味着`-n1000`, 以保证`pager`不会缓冲无限制大小的日志.
+可以用一个明确的`-n数值`来覆盖, 而`-nall`将禁用这个上限. 注意, 这个选项只支持`less(1)`pager.
 
 参考实例
 
-+ 查看所有日志： `journalctl` 
-+ 查看httpd的日志： `journalctl -u httpd`
-+ 查看最近发生的20条日志： `journalctl -n 20`
-+ 追踪日志： `journalctl -f`
++ 查看所有日志:  `journalctl`
++ 查看httpd的日志:  `journalctl -u httpd`
++ 查看最近发生的20条日志:  `journalctl -n 20`
++ 追踪日志:  `journalctl -f`
 
-### Linux 安装时的分区 
+### Linux 安装时的分区
 
 [UEFI/GPT 示例](https://wiki.archlinux.org/title/Parted_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#UEFI/GPT_%E7%A4%BA%E4%BE%8B)
 [manjaro_user_guide 也有分区的例子](https://manjaro.org/support/userguide/)
@@ -1775,7 +1775,7 @@ sudo tail -f /var/log/kern.log
 + `linuxswap`,不需要挂载, $\sqrt{\text{内存大小}} \sim 2* \text{内存大小}$
 + `ext4`,`/`,最简单的, 可以把剩下空间全部分配给`/`,文件系统也可以选别的, 比如`Btrfs`
 
-强迫症可以把分区调整成`EFI`,`root`,`swap`的顺序, 可能有玄学加成. 
+强迫症可以把分区调整成`EFI`,`root`,`swap`的顺序, 可能有玄学加成.
 
 ### 交换分区 swap
 
@@ -1803,35 +1803,35 @@ sudo parted --list
 创建交换分区
 
 使用`Ubuntu`安装介质如U盘开机, 选择`立即运行Ubuntu`.
-打开`GParted`分区编辑器：删除原先的`swap`, `resize`主分区大小, 留出合适的空白空间用作`swap`.可以直接在`"free space following"`一项中设置想要的`swap`分区大小.
-在新的空白空间中, 选择`new`, 输入`linux-swap`, 如果喜欢,可以起个名`swap`到`Partition name`中, 然后点击`Apply`应用.  完成后, 重新启动原先硬盘上的`Ubuntu`系统. 
+打开`GParted`分区编辑器: 删除原先的`swap`, `resize`主分区大小, 留出合适的空白空间用作`swap`.可以直接在`"free space following"`一项中设置想要的`swap`分区大小.
+在新的空白空间中, 选择`new`, 输入`linux-swap`, 如果喜欢,可以起个名`swap`到`Partition name`中, 然后点击`Apply`应用.  完成后, 重新启动原先硬盘上的`Ubuntu`系统.
 
 ***
 激活交换分区
 
-如果交换位于主硬盘驱动器上, 则无需在此处做任何事情. 
-现在, 您需要查找`swap`所在的`分区`及其`UUID`, Universally Unique IDentifier, 它是该分区的通用唯一身份, 即使由于添加磁盘, 重启之后分区挂载点改变, `UUID`也不会改变. 
+如果交换位于主硬盘驱动器上, 则无需在此处做任何事情.
+现在, 您需要查找`swap`所在的`分区`及其`UUID`, Universally Unique IDentifier, 它是该分区的通用唯一身份, 即使由于添加磁盘, 重启之后分区挂载点改变, `UUID`也不会改变.
 
-切换到`root`用户, 运行`gparted` . 右键单击交换分区, 然后选择`Information`. 
-应该可以看到`Path`和`UUID`. 保持打开状态以供进一步参考. 
-运行 `gedit /etc/fstab`, 查找其中带有`swap`的行. 它应该在第三列, 用空格或制表符分隔. 您可以使用路径或`UUID`来告诉`Linux`在哪里找到交换分区. 建议使用`UUID`, 因为即使您移动分区或磁盘之后, `sdb`变成`sda`, `UUID`也将保持不变. 
-如果您使用的是UUID, 则您的代码行应如下所示：
+切换到`root`用户, 运行`gparted` . 右键单击交换分区, 然后选择`Information`.
+应该可以看到`Path`和`UUID`. 保持打开状态以供进一步参考.
+运行 `gedit /etc/fstab`, 查找其中带有`swap`的行. 它应该在第三列, 用空格或制表符分隔. 您可以使用路径或`UUID`来告诉`Linux`在哪里找到交换分区. 建议使用`UUID`, 因为即使您移动分区或磁盘之后, `sdb`变成`sda`, `UUID`也将保持不变.
+如果您使用的是UUID, 则您的代码行应如下所示:
 
     UUID=41e86209-3802-424b-9a9d-d7683142dab7 none swap sw 0 0
 
-或使用路径：
+或使用路径:
 
-    /dev/sda2 none swap sw 0 0 
+    /dev/sda2 none swap sw 0 0
 
-保存更改. 
+保存更改.
 
-使用此命令启用新的交换分区. 
+使用此命令启用新的交换分区.
 
 ```bash
 sudo swapon --all # 或者 sudo swapon --all --verbose
 ```
 
-确认交换分区存在. 
+确认交换分区存在.
 
 ```bash
 $ cat /proc/swaps
@@ -1839,7 +1839,7 @@ Filename                                Type            Size  Used    Priority
 /dev/sda2                               partition      20971480       -1
 ```
 
-接着可以重启查看交换分区能否被正确激活. 
+接着可以重启查看交换分区能否被正确激活.
 
 ***
 使交换分区用于休眠(可选)
@@ -1850,7 +1850,7 @@ Filename                                Type            Size  Used    Priority
 
 修改`grub`(启动引导加载程序)的配置. 如果怕出问题可以先备份
 
-    sudo cp -a /etc/default/grub /etc/default/grub.bak 
+    sudo cp -a /etc/default/grub /etc/default/grub.bak
 
 查找`GRUB_CMDLINE_LINUX="xx"`行, 在后面添加上:
 
@@ -1858,19 +1858,19 @@ Filename                                Type            Size  Used    Priority
 
 并保存文件.`sudo update-grub`并等待其完成.
 
-然后`sudo gedit /etc/initramfs-tools/conf.d/resume`, 确保内容类似下面这样：
+然后`sudo gedit /etc/initramfs-tools/conf.d/resume`, 确保内容类似下面这样:
 
-    resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7 
-    
+    resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7
+
 如果不使用`swap`, 这里的设置应该是`resume=none`,保存文件.
  然后运行`sudo update-initramfs -u`. 重启. 现在应该可以休眠了.
 
 ***
-启用未生效的交换分区：如果你已经有交换分区, 则有几种启用它的方法. 首先查看`fstab`
+启用未生效的交换分区: 如果你已经有交换分区, 则有几种启用它的方法. 首先查看`fstab`
 
     cat /etc/fstab
 
-确保下面有`swap`的记录, 这样可以在启动时启用`swap`. 
+确保下面有`swap`的记录, 这样可以在启动时启用`swap`.
 
     /dev/sdb5       none            swap    sw              0       0
 
@@ -1883,16 +1883,16 @@ sudo swapon -a
 ```
 
 ***
-什么是`swappiness`, 我该如何更改？
+什么是`swappiness`, 我该如何更改?
 
-`swappiness`参数控制内核使用`swap`的倾向. 因为磁盘要比`RAM`慢得多, 所以如果进程经常主动地移出内存, 可能导致系统和应用程序的响应时间变慢. 
+`swappiness`参数控制内核使用`swap`的倾向. 因为磁盘要比`RAM`慢得多, 所以如果进程经常主动地移出内存, 可能导致系统和应用程序的响应时间变慢.
 
 + `swappiness` 的值可以在`0`到`100`之间
 + `swappiness=0`告诉内核尽可能避免将进程从物理内存中交换出来
 + `swappiness=100` 告诉内核积极地把进程从物理内存移动到`swap`缓存
 
-`Ubuntu` 中的默认设置为`swappiness=60`. 降低 `swappiness` 的默认值可能会提高典型的`Ubuntu`桌面安装的整体性能. 
-建议将 `swappiness` 的值设置为`10`, 你也可以自己尝试. `Ubuntu`服务器对桌面系统的性能要求不同, 默认值`60`可能更合适. 
+`Ubuntu` 中的默认设置为`swappiness=60`. 降低 `swappiness` 的默认值可能会提高典型的`Ubuntu`桌面安装的整体性能.
+建议将 `swappiness` 的值设置为`10`, 你也可以自己尝试. `Ubuntu`服务器对桌面系统的性能要求不同, 默认值`60`可能更合适.
 
 检查`swappiness`值
 
@@ -1902,21 +1902,21 @@ sudo swapon -a
 
     sudo sysctl vm.swappiness=10
 
-永久更改：
+永久更改:
 
     sudo gedit /etc/sysctl.conf
 
-搜索`vm.swappiness`根据需要更改其值. 如果`vm.swappiness`不存在则自己添加：
+搜索`vm.swappiness`根据需要更改其值. 如果`vm.swappiness`不存在则自己添加:
 
     vm.swappiness=10
 
-保存文件并重新启动. 
+保存文件并重新启动.
 
 ### 编码,字符集
 
 [File name is garbled](https://wiki.archlinux.org/title/Localization/Simplified_Chinese)
 
-避免乱码基本原则：使用 `utf-8` 代替 `gbk/gb2312`.  
+避免乱码基本原则: 使用 `utf-8` 代替 `gbk/gb2312`.
 
 `convmv`: 将文件名从一种编码转换到另一种编码, 例如:
 
@@ -1924,33 +1924,33 @@ sudo swapon -a
 convmv -f GBK -t UTF-8 --notest --nosmart file
 ```
 
-`-f`指定原始编码, `-t`指定输出编码. 使用 `convmv --list` 可查询所有支持的编码.  
-`--notest` 表示进行实际操作, 而非测试, 如果不使用该参数只会打印出转换结果而不会实际转码. `--smart`表示如果已经是`UTF-8` 则忽略. 
+`-f`指定原始编码, `-t`指定输出编码. 使用 `convmv --list` 可查询所有支持的编码.
+`--notest` 表示进行实际操作, 而非测试, 如果不使用该参数只会打印出转换结果而不会实际转码. `--smart`表示如果已经是`UTF-8` 则忽略.
 
 #### 文件内容乱码
 
-使用 `iconv` 命令转换格式. 示例：
+使用 `iconv` 命令转换格式. 示例:
 
 ```bash
 iconv -f GBK -t UTF-8 -o new-file origin-file
 ```
 
-`-f` 指定原始编码, `-t` 指定输出编码. 使用 `iconv -l` 可查询所有支持的编码. `-o` 指定输出文件. 
+`-f` 指定原始编码, `-t` 指定输出编码. 使用 `iconv -l` 可查询所有支持的编码. `-o` 指定输出文件.
 
 #### zip 压缩包乱码
 
-避免方法：非 `utf8` 编码环境下(一般 `windows` 下的中文环境即是)不使用 `zip` 进行压缩(建议使用 `7z`). 
-解决方案：安装使用 `unzip-iconv` 或者 `unzip-natspec`取代原版的 `unzip` 来解压缩, 示例：
+避免方法: 非 `utf8` 编码环境下(一般 `windows` 下的中文环境即是)不使用 `zip` 进行压缩(建议使用 `7z`).
+解决方案: 安装使用 `unzip-iconv` 或者 `unzip-natspec`取代原版的 `unzip` 来解压缩, 示例:
 
 ```bash
 unzip -O gbk file.zip
 ```
 
-`file.zip` 是压缩文件, `gbk` 是该文件的编码格式, 以 `-O` 指定(原版 `unzip` 无 `-O` 选项). 
+`file.zip` 是压缩文件, `gbk` 是该文件的编码格式, 以 `-O` 指定(原版 `unzip` 无 `-O` 选项).
 
 #### MP3 文件标签乱码
 
-对于用 `GStreamer` 做后端的播放器, 如 `Rhythmbox``, totem`, 设置如下的环境变量后即可正确读取 `mp3` 中 `GBK` 编码的 `ID3 tag`：
+对于用 `GStreamer` 做后端的播放器, 如 `Rhythmbox``, totem`, 设置如下的环境变量后即可正确读取 `mp3` 中 `GBK` 编码的 `ID3 tag`:
 
 ```bash
 export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030
@@ -1963,7 +1963,7 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
 
 + 说明; `bluetooth-sendto [--device=XX:XX:XX:XX:XX:XX [--name=NAME]] [file...]`
 + 描述; `bluetooth-sendto` 将显示一个通过蓝牙传输文件的对话框. `bluetooth-sendto`是`gnome-bluetooth`的一部分, 参见[GnomeBluetooth](http://live.gnome.org/GnomeBluetooth)
-+ 选项; 
-    + `--device`;  定义要发送文件的设备地址.  如果省略, 将显示一个选择器. 
-    + `--name`; 定义要发送文件的设备名称.  如果省略, 将被自动检测. 
-    + `file` 要发送到设备的文件.  如果省略, 将显示一个选择器. 
++ 选项;
+    + `--device`;  定义要发送文件的设备地址.  如果省略, 将显示一个选择器.
+    + `--name`; 定义要发送文件的设备名称.  如果省略, 将被自动检测.
+    + `file` 要发送到设备的文件.  如果省略, 将显示一个选择器.

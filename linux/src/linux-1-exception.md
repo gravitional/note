@@ -19,9 +19,9 @@
 [Oh My Zsh 插件](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins)
 [Mac/Linux使用ZSH (oh-my-zsh)](https://www.jianshu.com/p/fa6aa9329be6)
 [oh-my-zsh国内镜像安装和更新方法](https://www.jianshu.com/p/6b47198fd430)
-[ Gitee 极速下载](https://gitee.com/mirrors):`Gitee 极速下载` 是为了提升国内下载速度的镜像仓库, 每日同步一次.  
+[ Gitee 极速下载](https://gitee.com/mirrors):`Gitee 极速下载` 是为了提升国内下载速度的镜像仓库, 每日同步一次.
 
-`oh-my-zsh`的 github 地址在国内可能用不了, 可以考虑使用`gitee`的镜像. 
+`oh-my-zsh`的 github 地址在国内可能用不了, 可以考虑使用`gitee`的镜像.
 
 首先需要安装`zsh`, 可以直接用`sudo apt install zsh`.  然后安装`oh-my-zsh`, 下载[码云安装脚本install.sh](https://gitee.com/mirrors/oh-my-zsh)
 
@@ -53,7 +53,7 @@ REPO=${REPO:-mirrors/oh-my-zsh}
 REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 ```
 
-编辑后保存, 运行安装即可. (运行前先给`install.sh`权限, `chmod +x install.sh`). 
+编辑后保存, 运行安装即可. (运行前先给`install.sh`权限, `chmod +x install.sh`).
 安装完成后修改同步的`仓库地址`
 
 ```bash
@@ -139,7 +139,7 @@ source XXXXX/powerline/bindings/bash/powerline.sh
 pip3 show powerline-status
 ```
 
-在 `~/.vimrc` 中添加如下内容打开该插件(译注：注意同样需要根据你的系统情况修改路径).
+在 `~/.vimrc` 中添加如下内容打开该插件(译注: 注意同样需要根据你的系统情况修改路径).
 
 ```bash
 set rtp+=/home/tom/.local/lib/python3.6/site-packages/powerline/bindings/vim/
@@ -151,7 +151,7 @@ set t_Co=256
 
 ### tldr
 
-`tldr`(Too Long; Don't Read)：帮你更加高效地学习`linux`命令
+`tldr`(Too Long; Don't Read): 帮你更加高效地学习`linux`命令
 
 ```bash
 pip3 install --user tldr
@@ -180,7 +180,7 @@ pip3 install --user tldr
 他不仅是一个窗口管理器, 还有很多配套的应用软件和方便使用的桌面环境, 比如任务栏, 开始菜单, 桌面图标等等.
 `GNOME`是`GNU Network Object Model Environment` 的缩写.和`KDE`一样, 也是一个功能强大的综合环境.
 
-办公室的电脑在4K分辨率下会卡顿, 2K则正常. 
+办公室的电脑在4K分辨率下会卡顿, 2K则正常.
 
 ### 幕后控制台
 
@@ -195,7 +195,7 @@ pip3 install --user tldr
 [将标准输出重定向到剪贴板](https://blog.csdn.net/tcliuwenwen/article/details/103752486)
 
 作为一名优秀的程序员,终端和复制粘贴必将是必不可少的,手动将输出复制粘贴不应该是一名优秀程序员的作风.
-那么如何将标准输出重定向到剪贴板方便我们粘贴呢？
+那么如何将标准输出重定向到剪贴板方便我们粘贴呢?
 
 安装`xsel`或者`xclip`
 
@@ -254,17 +254,17 @@ extensions: `Blyr `,`Dash to panel`,`User themes`,`openweather`
 ****
 Plymouth
 
-[Ubuntu 16.04美化——Plymouth(splash screen/开机画面)主题安装](https://blog.csdn.net/mutilcam_prince/article/details/78299628)
+[Ubuntu 16.04美化 -- Plymouth(splash screen/开机画面)主题安装](https://blog.csdn.net/mutilcam_prince/article/details/78299628)
 
 [www.gnome-look.org](www.gnome-look.org)上有大量的`Ubuntu Plymouth`主题,也就是通常所说的开机画面主题,
 但是几乎所有的主题在`16.04`之后变的不可用了,那是因为从`16.04`开始, `plymouth`主题存放路径已经变了,
-而网络上的主题还是对应的老版路径,那就是`/lib/plymouth/themes/`,`16.04`之后已改为：`/usr/share/plymouth/themes/`.
+而网络上的主题还是对应的老版路径,那就是`/lib/plymouth/themes/`,`16.04`之后已改为: `/usr/share/plymouth/themes/`.
 这导致老版的主题不光用作者写的脚本安装不上,即便是自己手动复制到主题目录里,也不能正常使用.
 
 本篇文章重点介绍一下老版`plymouth`主题如何安装到`16.04`上.
 
 首先正常的话,`16.04`已经默认安装了一个`plymouth`主题,
-如果不知道何种原因,你的`16.04`没有默认安装`plymouth`的默认主题,那么可以通过下面这个命令安装：
+如果不知道何种原因,你的`16.04`没有默认安装`plymouth`的默认主题,那么可以通过下面这个命令安装:
 
 ` sudo apt-get install plymouth-themes`
 
@@ -273,7 +273,7 @@ Plymouth
 那么下面我们来开始安装自定义主题.以[`NSA Splash Screen`] (https://www.gnome-look.org/p/1173975/)为例.
 
 ***
-下载主题,然后解压后得到一个目录.(本文以解压到`~/Downloads`为例)解压完成后, 
+下载主题,然后解压后得到一个目录.(本文以解压到`~/Downloads`为例)解压完成后,
 重点是`images`目录, `nsa.plymouth`, `nsa.script`
 那么我们可以得知,这个主题叫`nsa`
 `Plymouth`的主题名称和主题文件名以及主题目录名,必须完全一致,不然会报错.
@@ -282,7 +282,7 @@ Plymouth
 ***
 查看并修改主题文件
 
-`nsa`是个老版本的主题,这个是怎么看出来的呢,用文本编辑器打开`nsa.plymouth`：
+`nsa`是个老版本的主题,这个是怎么看出来的呢,用文本编辑器打开`nsa.plymouth`:
 
 [Plymouth Theme]
 Name=nsa
@@ -294,7 +294,7 @@ ImageDir=/lib/plymouth/themes/nsa-plymouth
 ScriptFile=/lib/plymouth/themes/nsa-plymouth/nsa.script
 
 正如之前所说,`ImageDir`和`ScriptFile`对应的路径已经不存在了.因此我们需要对其进行修改.
-对于我们这个主题来说,具体是这样的：
+对于我们这个主题来说,具体是这样的:
 
 ```bash
 ImageDir=/usr/share/plymouth/themes/nsa
@@ -326,7 +326,7 @@ ScriptFile=/usr/share/plymouth/themes/nsa/nsa.script
 重启即可看到效果.
 
 ***
-如果在`sudo update-alternatives –config default.plymouth`这一步出现错误提示：
+如果在`sudo update-alternatives –config default.plymouth`这一步出现错误提示:
 
 ```bash
 W: plymouth module "(/usr/lib/i386-linux-gnu/plymouth//.so)" missing, skipping that theme.
@@ -335,7 +335,7 @@ W: plymouth module "(/usr/lib/i386-linux-gnu/plymouth//.so)" missing, skipping t
 这是个内核级的错误,此时不要重启,不然可能卡在开机界面.绝大多数可能是某个步骤中的路径搞错了.
 仔细检查所有步骤的路径,然后重来一遍.
 
-本文中的三四步骤, 可以通过一个shell脚本完成. 
+本文中的三四步骤, 可以通过一个shell脚本完成.
 下面贴上脚本内容(仅限本主题, 其他主题可以简单将文中的`nsa`更换为相应主题的名称, 前提是修改完`nsa.script`)
 
 ```bash
@@ -346,7 +346,7 @@ echo  -e "\033[36m Copying new files...  \033[0m"
 sudo mkdir /usr/share/plymouth/themes/nsa
 # 复制主题内容, 其中使用了花括号展开, 这里相当于直接给出
 sudo cp --recursive {images,nsa.plymouth,nsa.script,README.md} /usr/share/plymouth/themes/nsa
-# 安装主题, 语法是：update-alternatives --install link name path priority ... 分别是2级链接, 一级连接, 实际路径
+# 安装主题, 语法是: update-alternatives --install link name path priority ... 分别是2级链接, 一级连接, 实际路径
 echo -e "\033[31m Installing the theme...  \033[0m"
 sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nsa/nsa.plymouth  100
 # 使用 update-alternatives 设置为默认主题, 依照提示选择
@@ -374,26 +374,26 @@ chmod +x xxx.sh
 [ubuntu-touch: A Plymouth startup and shutdown animated splash](http://gnome-look.org/content/show.php/colours%3A+Ubuntu+rainbow+plymouth+theme?content=163234)
 
 1. 下载解压缩, 进入`ubuntu-touch-splash`
-2. `./install-ubuntu-touch [ENTER]`.将安装`plymouth-x11`软件包以提供测试主题的功能, 而无需重新启动. 
-之后, 将显示新主题的启动和关闭的10秒测试. 
+2. `./install-ubuntu-touch [ENTER]`.将安装`plymouth-x11`软件包以提供测试主题的功能, 而无需重新启动.
+之后, 将显示新主题的启动和关闭的10秒测试.
 
-如果修改不小心导致启动屏幕黑屏, 则恢复的最快方法是重新提取下载文件, 然后重新安装它. 
-如果尚未对`ubuntu-touch-splash`文件夹中的文件进行任何更改, 则可以使用以下方法重复测试：
+如果修改不小心导致启动屏幕黑屏, 则恢复的最快方法是重新提取下载文件, 然后重新安装它.
+如果尚未对`ubuntu-touch-splash`文件夹中的文件进行任何更改, 则可以使用以下方法重复测试:
 `  ./test-plymouth [输入]`
- 
-在启动动画的持续时间非常非常短的情况下, 可以通过在`ubuntu-touch-splash`文件夹中执行来获得改进的效果：
+
+在启动动画的持续时间非常非常短的情况下, 可以通过在`ubuntu-touch-splash`文件夹中执行来获得改进的效果:
 ` ./assert-framebuffer`
-如果您最终对该主题不满意, 还原可以在主题目录下执行：
+如果您最终对该主题不满意, 还原可以在主题目录下执行:
 
 ```bash
 ./update-plymouth [ENTER]
 ```
 
-根据要求选择`ubuntu-logo`或者其他之前使用的主题. 
+根据要求选择`ubuntu-logo`或者其他之前使用的主题.
 
 ### KDE 桌面环境
 
-现在, 如果您不喜欢KDE或出于任何原因想要删除此环境, 请按照以下步骤在Ubuntu上卸载KDE：
+现在, 如果您不喜欢KDE或出于任何原因想要删除此环境, 请按照以下步骤在Ubuntu上卸载KDE:
 
 ```bash
 sudo apt --purge remove kde-standard
@@ -401,9 +401,9 @@ sudo apt autoremove
 reboot
 ```
 
-注意：在安装KDE软件包时安装的某些应用程序必须手动删除.  像(Konsole, Konqueror等)之类的应用
-重新启动后, 如果遇到CLI登录屏幕, 请不要慌张. 
-这是因为您已将SDDM设置为默认显示管理器, 现在已将其删除.  因此, 我们将`gdm3`设置为默认值. 
+注意: 在安装KDE软件包时安装的某些应用程序必须手动删除.  像(Konsole, Konqueror等)之类的应用
+重新启动后, 如果遇到CLI登录屏幕, 请不要慌张.
+这是因为您已将SDDM设置为默认显示管理器, 现在已将其删除.  因此, 我们将`gdm3`设置为默认值.
 
 ```bash
 sudo systemctl restart gdm3
@@ -411,19 +411,19 @@ sudo dpkg-reconfigure gdm3
 reboot
 ```
 
-重新启动系统, 然后检查是否一切正常. 
+重新启动系统, 然后检查是否一切正常.
 
 ## ubuntu 备份和恢复
 
 教程中排除的目录
 
 ```bash
---exclude=/proc 
---exclude=/tmp 
-# --exclude=/home 
---exclude=/lost+found 
---exclude=/media 
---exclude=/mnt 
+--exclude=/proc
+--exclude=/tmp
+# --exclude=/home
+--exclude=/lost+found
+--exclude=/media
+--exclude=/mnt
 --exclude=/run
 --exclude=/sys
 ```
@@ -440,13 +440,13 @@ reboot
 `/`  7aba3e2f-f94d-454c-9ad6-9098d658401a `Ext4`
 
 ***
-可以用ubuntu18.04自带软件`gnome-disks`查看自己系统分区情况：
+可以用ubuntu18.04自带软件`gnome-disks`查看自己系统分区情况:
 在新电脑上, 可以用`GParted`对硬盘进行分区
 
 ***
-首先启动live CD, 选择`try Ubuntu`；
+首先启动live CD, 选择`try Ubuntu`;
 
-开始对需要用live CD备份的分区进行挂载, 所以挂载除了`swap`之外的分区, 对比我们之前创建的表来看下面的挂载命令会更容易理解：
+开始对需要用live CD备份的分区进行挂载, 所以挂载除了`swap`之外的分区, 对比我们之前创建的表来看下面的挂载命令会更容易理解:
 
 ```bash
 #获取最高权限
@@ -462,7 +462,7 @@ mount /dev/sdb6   /mnt/home
 ```
 
 ***
-插入U盘或硬盘开始备份：
+插入U盘或硬盘开始备份:
 
 ```bash
 #-- 将root, home和efi分区备份到硬盘中
@@ -474,12 +474,12 @@ sync
 umount /media/ubuntu/* /mnt/*
 ```
 
-`root`, `home`和`efi`分区备份完成. 
+`root`, `home`和`efi`分区备份完成.
 
 ***
 对新硬盘进行分区
 
-在新电脑上启动live CD, 选择试用, 打开live CD中自带分区工具`GParted`, 对新电脑进行分区, 分区大小根据个人情况而定, 参照之前填的表：
+在新电脑上启动live CD, 选择试用, 打开live CD中自带分区工具`GParted`, 对新电脑进行分区, 分区大小根据个人情况而定, 参照之前填的表:
 
 ```bash
 efi分区
@@ -493,7 +493,7 @@ home分区(主分区或逻辑分区无所谓)
 
 使用`live CD`自带软件`gnome-disks`查看新分区的信息, 完善之前的表, 我的情况如下:
 
-插入存有备份文件的移动硬盘开始恢复备份：
+插入存有备份文件的移动硬盘开始恢复备份:
 
 ```bash
 sudo su
@@ -514,8 +514,8 @@ mount -o loop /media/ubuntu/存放备份文件的路径/efi.sfs  /backup/efi
 mount -o loop /media/ubuntu/存放备份文件的路径/home.sfs  /backup/home
 #-- 开始恢复
 cp -a /backup/root/* /mnt/root
-cp -a /backup/efi/* /mnt/efi 
-cp -a /backup/home/* /mnt/home 
+cp -a /backup/efi/* /mnt/efi
+cp -a /backup/home/* /mnt/home
 # -- 同步数据并取消挂载
 sync
 umount /backup/*
@@ -526,11 +526,11 @@ umount /media/ubuntu/*
 ***
 启动引导修复
 
-恢复完成之后, 开始来修改引导文件,首先使用`/mnt`目录来挂载新电脑完整的文件系统, 再次掏出我们之前填好的表：
+恢复完成之后, 开始来修改引导文件,首先使用`/mnt`目录来挂载新电脑完整的文件系统, 再次掏出我们之前填好的表:
 
 ```bash
 sudo su
-# -- 移除之前创建的临时文件夹 
+# -- 移除之前创建的临时文件夹
 rm -r /mnt/root /mnt/efi /mnt/home
 # -- 首先挂载新电脑的根目录
 mount /dev/sdc5 /mnt
@@ -542,11 +542,11 @@ mount /dev/sdc6 /mnt/home
 mount --o bind /dev   /mnt/dev
 mount --o bind /proc   /mnt/proc
 mount --o bind /sys   /mnt/sys
-# 将liveCD的根目录改为新电脑的根目录确保之后的操作安全. (这里也请大佬指点, 是否只是安全？)
+# 将liveCD的根目录改为新电脑的根目录确保之后的操作安全. (这里也请大佬指点, 是否只是安全? )
 # chroot /mnt
 ```
 
-接下来修改两个文件分别位于新电脑的`/etc/fstab`和`/boot/grub/grub.cfg`(不用手动修改), 接下来我们再次掏出我们的表：
+接下来修改两个文件分别位于新电脑的`/etc/fstab`和`/boot/grub/grub.cfg`(不用手动修改), 接下来我们再次掏出我们的表:
 
 ```bash
 # -- 用nano编辑器打开/etc/fstab
@@ -555,7 +555,7 @@ nano /etc/fstab
 
 按照提示, 和`uuid`变化的对照表, 修改`root`,`/boot/efi`,`/home`等的`uuid`
 
-`/boot/grub/grub.cfg`这个文件是用`grub-mkconfig`自动生成的, 所以不需要手动修改. 
+`/boot/grub/grub.cfg`这个文件是用`grub-mkconfig`自动生成的, 所以不需要手动修改.
 
 >It is automatically generated by grub-mkconfig using templates  from /etc/grub.d and settings from /etc/default/grub
 
@@ -568,16 +568,16 @@ update-grub
 sync #确保数据写入硬盘
 #-- 退出chroot
 exit
-umount /mnt/*/media/ubuntu/* 
+umount /mnt/*/media/ubuntu/*
 exit
 reboot
 ```
 
-系统重启, 拔出你的`live CD`, 不出意外电脑开机将会进入你备份恢复完成的新电脑. 
+系统重启, 拔出你的`live CD`, 不出意外电脑开机将会进入你备份恢复完成的新电脑.
 
 ### 问题排查
 
-如果无法开机/开机时间过长, 首先(使用 liveCD进入系统查看)确保`/etc/fstab`中的硬盘`uuid`没有写错. 
+如果无法开机/开机时间过长, 首先(使用 liveCD进入系统查看)确保`/etc/fstab`中的硬盘`uuid`没有写错.
 
 使用下面命令查看问题
 
@@ -589,7 +589,7 @@ systemd-analyze critical-chain
 sudo cat /var/log/boot.log | less
 ```
 
-如果之前有`swap`分区, 还原的时候没有`swap`分区, 修改`initramfs`配置：
+如果之前有`swap`分区, 还原的时候没有`swap`分区, 修改`initramfs`配置:
 
 ```bash
 sudo vim /etc/initramfs-tools/conf.d/resume
@@ -611,14 +611,14 @@ sudo dmesg
 [Linux系统制作Ubuntu18.04启动盘](https://blog.csdn.net/xiaoma_2018/article/details/85059930)
 
 ```bash
-# 插入U盘, 在Linux系统中打开终端, 查看 U 盘信息：
-sudo fdisk -l 
-# 然后卸载掉 U 盘：
+# 插入U盘, 在Linux系统中打开终端, 查看 U 盘信息:
+sudo fdisk -l
+# 然后卸载掉 U 盘:
 sudo umount /dev/sdb*
-# U 盘格式化：
+# U 盘格式化:
 sudo mkfs.vfat /dev/sdb -I # 使用 -I 选项创建
-#完成格式化后查看磁盘信息：
-# 最后使用 dd 命令制作启动盘：
+#完成格式化后查看磁盘信息:
+# 最后使用 dd 命令制作启动盘:
 sudo dd if=ubuntu-18.04.1-desktop-amd64.iso of=/dev/sdb bs=10M
 ```
 
@@ -639,7 +639,7 @@ sudo apt-get autoremove
 
 ubuntu 秉承一切皆文件的思想, 系统备份就相当于把整个`/`(根目录)所有文件打包压缩保存
 
-主要有两种方式备份还原：
+主要有两种方式备份还原:
 
 + `tar` 命令
 + `livecd` 模式
@@ -657,30 +657,30 @@ tar -cvpzf /media/Disk/myDisk/ubuntu_backup@ $(date +%Y-%m+%d).tar.gz --exclude=
 
 ***
 
-tar命令参数：
+tar命令参数:
 
-+ `-c`： 新建一个备份文档
-+ `-v`： 显示详细信息
-+ `-p`： 保存权限, 并应用到所有文件
-+ `-z`： 用 `gzip` 压缩备份文档, 减小空间
-+ `-f`： 指定压缩包名称(带路径), 只能做最后一个参数
-+ `–exclude`： 排除指定目录, 不进行备份
++ `-c`:  新建一个备份文档
++ `-v`:  显示详细信息
++ `-p`:  保存权限, 并应用到所有文件
++ `-z`:  用 `gzip` 压缩备份文档, 减小空间
++ `-f`:  指定压缩包名称(带路径), 只能做最后一个参数
++ `–exclude`:  排除指定目录, 不进行备份
 
-注意, 如果没有把`/home`或者`/boot`目录单独分一个区, 一定不要加`–exclude=/home`或`–exclude=/boot`参数！
+注意, 如果没有把`/home`或者`/boot`目录单独分一个区, 一定不要加`–exclude=/home`或`–exclude=/boot`参数!
 
 文件目录介绍
 
-`/proc`：一个虚拟文件系统, 系统运行的每一个进程都会自动在这个目录下面创建一个进程目录. 既然是系统自动创建, 也就没必要备份的必要了. 
-`/tmp`：一个临时文件夹, 系统的一些临时文件会放在这里. 
-`/lost+found`：系统发生错误时(比如非法关机), 可以在这里找回一些丢失文件. 
-`/media`：多媒体挂载点, 像u盘, 移动硬盘, windons分区等都会自动挂载到这个目录下. 
-`/mnt`：临时挂载点, 你可以自己挂载一些文件系统到这里. 
-`/run`：系统从启动以来产生的一些信息文件. 
-`/home`：用户家目录, 存放用户个人文件和应用程序. 
-`/boot`：和系统启动相关的文件, 像grub相关文件都放在这里, 这个目录很重要！
+`/proc`: 一个虚拟文件系统, 系统运行的每一个进程都会自动在这个目录下面创建一个进程目录. 既然是系统自动创建, 也就没必要备份的必要了.
+`/tmp`: 一个临时文件夹, 系统的一些临时文件会放在这里.
+`/lost+found`: 系统发生错误时(比如非法关机), 可以在这里找回一些丢失文件.
+`/media`: 多媒体挂载点, 像u盘, 移动硬盘, windons分区等都会自动挂载到这个目录下.
+`/mnt`: 临时挂载点, 你可以自己挂载一些文件系统到这里.
+`/run`: 系统从启动以来产生的一些信息文件.
+`/home`: 用户家目录, 存放用户个人文件和应用程序.
+`/boot`: 和系统启动相关的文件, 像grub相关文件都放在这里, 这个目录很重要!
 
-为了保险起见, 也可以对`/home`和`/boot`备份, 但是备份频率完全没必要和/分区一样高. 
-比如`/`分区每周备份一次, 那`/home`和`/boot`完全可以一个月备份一次, 因为这两个分区出问题的概率真的很小, 而且变动也不会太频繁. 
+为了保险起见, 也可以对`/home`和`/boot`备份, 但是备份频率完全没必要和/分区一样高.
+比如`/`分区每周备份一次, 那`/home`和`/boot`完全可以一个月备份一次, 因为这两个分区出问题的概率真的很小, 而且变动也不会太频繁.
 
 ```bash
 tar -cvpzf /media/Disk/my_Disk/ubuntu_home_backup@`date +%Y-%m-%d`.tar.gz /home
@@ -692,25 +692,25 @@ tar -cvpzf /media/Disk/myDisk/ubuntu_boot_backup@`date +%Y-%m-%d`.tar.gz /boot
 打包过程中会遇到如下错误或警告信息
 
 ```bash
-tar: Exiting with failure status due to previous errors 
+tar: Exiting with failure status due to previous errors
 ```
 
-这个问题其实不是真正的错误信息,  真正的错误信息混杂在标准输出(stout)中, 重新执行命令并把`v`参数去掉即可看到真正问题所在. 
+这个问题其实不是真正的错误信息,  真正的错误信息混杂在标准输出(stout)中, 重新执行命令并把`v`参数去掉即可看到真正问题所在.
 
 ```bash
-tar: Removing leading '/' from member names  
-#或 
-tar: Removing leading '/' from hard link targets 
+tar: Removing leading '/' from member names
+#或
+tar: Removing leading '/' from hard link targets
 ```
 
-这个问题其实不影响程序的执行, 产生的原因是`tar`在压缩的过程中自动帮我们去掉了路径前的`/`, 也就是tar压缩后的包是按照相对路径压缩的. 
- 当我们恢复时,  就需要通过 `-C` 参数手动指定解压到 `/` 目录,  如：
+这个问题其实不影响程序的执行, 产生的原因是`tar`在压缩的过程中自动帮我们去掉了路径前的`/`, 也就是tar压缩后的包是按照相对路径压缩的.
+ 当我们恢复时,  就需要通过 `-C` 参数手动指定解压到 `/` 目录,  如:
 
 ```bash
-tar zxvpf ubuntu_20170120_11.tar.bz2 -C / 
+tar zxvpf ubuntu_20170120_11.tar.bz2 -C /
 ```
 
-可以使用`-P`参数来指定按照绝对路径打包：
+可以使用`-P`参数来指定按照绝对路径打包:
 
 ```bash
 tar -cvpzf /media/Disk/myDisk/ubuntu_backup@`date +%Y-%m+%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run -P /
@@ -719,18 +719,18 @@ tar -cvpzf /media/Disk/myDisk/ubuntu_backup@`date +%Y-%m+%d`.tar.gz --exclude=/p
 另外, 如果出现
 
 ```bash
-tar: /dev/shm: file changed as we read it 
-或 
-tar: /run/udev/control: socket ignored 
+tar: /dev/shm: file changed as we read it
+或
+tar: /run/udev/control: socket ignored
 ```
 
-这个 `socket ignored` 产生的原因是压缩的过程中文件正在使用, 无需理会, 不影响压缩. 
+这个 `socket ignored` 产生的原因是压缩的过程中文件正在使用, 无需理会, 不影响压缩.
 
 ```bash
-tar: /run/user/1000/gvfs: Cannot stat: Permission denied 
+tar: /run/user/1000/gvfs: Cannot stat: Permission denied
 ```
 
-这个问题不用理会, 与虚拟文件系统有关, 不影响压缩. 
+这个问题不用理会, 与虚拟文件系统有关, 不影响压缩.
 
 Ubuntu系统U盘(livecd)方式备份
 
@@ -741,9 +741,9 @@ sudo su
 fdisk -l
 ```
 
-其中`boot`分区为`/dev/sda5`,`home`分区为`/dev/sda7`,主分区`/`为`/dev/sda8`. 
+其中`boot`分区为`/dev/sda5`,`home`分区为`/dev/sda7`,主分区`/`为`/dev/sda8`.
 
-分别进行挂载：
+分别进行挂载:
 
 ```bash
 mount /dev/sda5 /boot
@@ -751,13 +751,13 @@ mount /dev/sda7 /home
 mount /dev/sda8 /mnt
 ```
 
-再对移动硬盘进行挂载：
+再对移动硬盘进行挂载:
 
 ```bash
 mount /media/ubuntu/移动硬盘对应盘符 /data
 ```
 
-进行备份：
+进行备份:
 
 ```bash
 mksquashfs /mnt /data/ubuntu_main.sfs(文件名任意)
@@ -766,7 +766,7 @@ mksquashfs /boot /data/ubuntu_boot.sfs(文件名任意)
 sync(让系统保存一下数据)
 ```
 
-卸载硬盘：
+卸载硬盘:
 
 ```bash
 umount /data
@@ -775,14 +775,14 @@ umount /home
 umount /boot
 ```
 
-到此备份成功. 
+到此备份成功.
 
 ### 系统还原
 
 系统备份的意义就在于系统哪天发生意外时可以系统还原拯救回来
 
-这里有两种还原方式, 如果你系统出问题了, 但是还可以进入终端, 那就可以直接解压备份文件进行还原. 
-但是如果你连系统都不能登录了, 就要使用`LiveCD`(U盘启动盘)进行还原了. 
+这里有两种还原方式, 如果你系统出问题了, 但是还可以进入终端, 那就可以直接解压备份文件进行还原.
+但是如果你连系统都不能登录了, 就要使用`LiveCD`(U盘启动盘)进行还原了.
 
 #### tar命令还原系统
 
@@ -795,14 +795,14 @@ cd /
 tar -xvpzf /media/Disk/myDisk/ubuntu_backup@2016-6-6.tar.gz -C /
 ```
 
-注意先创建一个临时目录用于挂载你的`/`根目录分区, `sdaX`代表你的`/`根目录分区, 
-如果不知道就用`fdisk -l`查看一下, 另外如果你的移动硬盘没有被自动挂载, 你也需要手动创建一个临时目录进行挂载. 
+注意先创建一个临时目录用于挂载你的`/`根目录分区, `sdaX`代表你的`/`根目录分区,
+如果不知道就用`fdisk -l`查看一下, 另外如果你的移动硬盘没有被自动挂载, 你也需要手动创建一个临时目录进行挂载.
 
-Note：
+Note:
 因为 tar还原是只会覆盖相同的文件, 但是这种方法只是恢复备份时的文件, 就是说如果某些文件丢失或损坏了, 这样可以恢复修复这些文件, 但不能删除自备份到恢复前这期间所生成的其它文件.
-假如你备份系统时有`1234`这四个文件, 如果三天后, 由于某些原因变成了`1234'5`(`4`改变了), 你恢复后, 就会变成`12345`, 其中`4'`恢复成备份时的文件, `5`保留. 
-所以大家要是想彻底还原成备份时候的样子最好彻底删除根目录下的所有文件, 然后再还原, 这样就可以还原成备份时的样子了. 
-删除整个文件系统, 比如运行命令`rm -fr /*`, 那么你还原系统后一定要把你之前没有备份的目录手动创建, 不然重启系统是有问题的. 
+假如你备份系统时有`1234`这四个文件, 如果三天后, 由于某些原因变成了`1234'5`(`4`改变了), 你恢复后, 就会变成`12345`, 其中`4'`恢复成备份时的文件, `5`保留.
+所以大家要是想彻底还原成备份时候的样子最好彻底删除根目录下的所有文件, 然后再还原, 这样就可以还原成备份时的样子了.
+删除整个文件系统, 比如运行命令`rm -fr /*`, 那么你还原系统后一定要把你之前没有备份的目录手动创建, 不然重启系统是有问题的.
 
 ```bash
 mkdir proc tmp lost+found media mnt run
@@ -821,9 +821,9 @@ mount /dev/sdaX /mnt/sys
 tar -xvpzf /media/myDisk/ubuntu_boot_backup@2016-6-6.tar.gz -C /mnt/sys
 ```
 
-执行恢复命令之前请再确认一下你所键入的命令是不是你想要的, 执行恢复命令可能需要一段不短的时间. 
+执行恢复命令之前请再确认一下你所键入的命令是不是你想要的, 执行恢复命令可能需要一段不短的时间.
 
-恢复命令结束时, 你的工作还没完成, 别忘了重新创建那些在备份时被排除在外的目录：
+恢复命令结束时, 你的工作还没完成, 别忘了重新创建那些在备份时被排除在外的目录:
 
 ```bash
 mkdir proc
@@ -834,13 +834,13 @@ mkdir sys
 
 等等
 
-当你重启电脑, 你会发现一切东西恢复到你创建备份时的样子了！
+当你重启电脑, 你会发现一切东西恢复到你创建备份时的样子了!
 
-#### livecd 还原 
+#### livecd 还原
 
-还有一个稍微复杂点的`livecd`方式还原, 如下：
+还有一个稍微复杂点的`livecd`方式还原, 如下:
 
-先要对之前的启动文件和分区文件做一个备份, 分别为`/etc/fstab`,`/etc/fstab.d`(可能没有),`/boot/grub/grub.cfg`：
+先要对之前的启动文件和分区文件做一个备份, 分别为`/etc/fstab`,`/etc/fstab.d`(可能没有),`/boot/grub/grub.cfg`:
 
 ```bash
 cp /etc/fstab /media/用户名/移动硬盘对应盘符/
@@ -849,7 +849,7 @@ cp /boot/grub/grub.cfg /media/用户名/移动硬盘对应盘符/
 
 接下来进行恢复系统, 同样利用系统`u`盘进入`livecd`模式. 同样进入`root`模式, 查看分区情况
 
-假设分区情况如上：`/dev/sda1`为`boot`分区, `/dev/sda2`为主分区, `/dev/sda3`为`home`分区. 对`home`分区和主分区进行格式化：
+假设分区情况如上: `/dev/sda1`为`boot`分区, `/dev/sda2`为主分区, `/dev/sda3`为`home`分区. 对`home`分区和主分区进行格式化:
 
 ```bash
 sudo su
@@ -857,17 +857,17 @@ mkfs.ext4 /dev/sda2 # root
 mkfs.ext4 /dev/sda3 # home
 ```
 
-然后分别进行挂载：
+然后分别进行挂载:
 
 ```bash
 mount /dev/sda2 /mnt #挂载 root
 # 新建home和boot文件:
-mkdir /mnt/home 
+mkdir /mnt/home
 mkdir /mnt/boot
-#挂载其他两个盘：
+#挂载其他两个盘:
 mount /dev/sda1 /mnt/boot #挂载 boot
 mount /dev/sda3 /mnt/home # 挂载 home
-# 挂载数据盘：
+# 挂载数据盘:
 mkdir /rescovery/mnt
 mkdir /rescovery/home
 mkdir /rescovery/boot
@@ -880,30 +880,30 @@ mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_boot.sfs /rescovery/boot
 cp -a /recovery/mnt/* /mnt
 cp -a /recovery/home/* /mnt/home
 cp -a /recovery/boot/* /mnt/boot
-# 然后拷贝之前的fstab和grub.cfg文件到硬盘：
+# 然后拷贝之前的fstab和grub.cfg文件到硬盘:
 cp /media/ubuntu/移动硬盘盘符/fstab /mnt/etc/
 cp /media/ubuntu/移动硬盘盘符/grub.cfg /mnt/boot/grub/
-# 挂载虚拟文件系统, 这是为了后面修复引导做准备. 
+# 挂载虚拟文件系统, 这是为了后面修复引导做准备.
 mount --bind /dev /mnt/dev
 mount --bind /proc /mnt/proc
 mount --bind /sys /mnt/sys
-# chroot进入已经还原的操作系统. 
+# chroot进入已经还原的操作系统.
 chroot /mnt
 ```
 
 ### 查看当前UUID
 
-由于我们格式化了分区, 所以`UUID`发生了变化, 若不修改, 系统将无法正常挂载分区, 导致启动异常. 
+由于我们格式化了分区, 所以`UUID`发生了变化, 若不修改, 系统将无法正常挂载分区, 导致启动异常.
 故需要修改本机系统的`UUID`设置,当前终端不要关闭, 新建一个终端, 输入`blkid`:
 
-在`fstab`文件中更新上面两个新硬盘的`UUID`,在`chroot`过的端口输入：
+在`fstab`文件中更新上面两个新硬盘的`UUID`,在`chroot`过的端口输入:
 
 ```bash
 nano /etc/fstab
-# 更改两个UUID, ctrl+x退出, Y保存. 进行grub的更新：
+# 更改两个UUID, ctrl+x退出, Y保存. 进行grub的更新:
 grub-install /dev/sda
 update-grub
-退出并卸载盘：
+退出并卸载盘:
 exit
 umount /mnt/dev
 umount /mnt/sys
@@ -915,33 +915,33 @@ sync
 
 ### mount 简介
 
-`-o --options opts`:使用指定的安装选项.  `opts`参数是用逗号分隔的列表.  例如：
+`-o --options opts`:使用指定的安装选项.  `opts`参数是用逗号分隔的列表.  例如:
 
 ```bash
 mount LABEL=mydisk -o noatime,nodev,nosuid
 ```
 
-复制文件：
+复制文件:
 
-在其他位置重新挂载文件结构的一部分.  语法是：
+在其他位置重新挂载文件结构的一部分.  语法是:
 
 ```bash
 mount --bind olddir newdir
 ```
 
-或使用以下`fstab`条目：
+或使用以下`fstab`条目:
 
 ```bash
 /olddir /newdir none bind
 ```
 
-调用之后, 可以在两个位置访问相同的内容. 
+调用之后, 可以在两个位置访问相同的内容.
 
-重要的是要理解`bind`不会在`kernel VFS`中创建任何`second-class `或`special node`.  
-`bind`只是`attach`文件系统的另一种操作. 没有一个特定的地方去记录哪些文件系统是通过`bind`附加到系统上的. 
-`olddir` 和 `newdir` 是独立的, 并且可以卸载`olddir`. 
+重要的是要理解`bind`不会在`kernel VFS`中创建任何`second-class `或`special node`.
+`bind`只是`attach`文件系统的另一种操作. 没有一个特定的地方去记录哪些文件系统是通过`bind`附加到系统上的.
+`olddir` 和 `newdir` 是独立的, 并且可以卸载`olddir`.
 
-也可以将单个文件重新挂载(在单个文件上).  也可以使用`bind`从常规目录创建`mountpoint`, 例如：
+也可以将单个文件重新挂载(在单个文件上).  也可以使用`bind`从常规目录创建`mountpoint`, 例如:
 
 ```bash
 mount --bind foo foo
@@ -1174,11 +1174,11 @@ ubuntu 仓库的texlive
 
 原因如下:
 
-未初始化`tlmgr`时会产生此错误. 在大多数情况下,以普通用户身份启动以下命令可以解决此问题：
+未初始化`tlmgr`时会产生此错误. 在大多数情况下,以普通用户身份启动以下命令可以解决此问题:
 
 `$ tlmgr init-usertree`
 
-此命令将在您的家目录内创建几个文件夹. 请参见手册页以获取解释：
+此命令将在您的家目录内创建几个文件夹. 请参见手册页以获取解释:
 
 >在用户模式下使用`tlmgr`之前,您必须使用`init-usertree`操作设置用户树.
 >这将创建`usertree / web2c`和`usertree / tlpkg / tlpobj`,以及最小的`usertree / tlpkg / texlive.tlpdb`.
@@ -1197,27 +1197,27 @@ ubuntu 仓库的texlive
 
 `tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet`
 
-[texlive home page](https://tug.org/texlive/) 
+[texlive home page](https://tug.org/texlive/)
 [texlive installation and updates](https://tug.org/texlive/pkginstall.html) texlive 安装和更新
-[archive of tlnet ](https://www.texlive.info/tlnet-archive/) ：各个年份的 tex 更新, 可以选择用来更新的 repository 的版本
+[archive of tlnet ](https://www.texlive.info/tlnet-archive/) : 各个年份的 tex 更新, 可以选择用来更新的 repository 的版本
 [texlive.info](https://texlive.info/) 查看各种关于 texlive 的信息
 
-告诉`tlmgr`使用附近的CTAN镜像进行将来的更新； 如果您从DVD映像安装了TeX Live,并且想要持续更新,则很有用.
-这两个命令是等效的. `ctan`只是给定URL的别名. 
-注意：`mirror.ctan.org`解析为许多不同的主机,它们并没有完全同步. 我们建议仅(最多)每天更新一次,而不要更频繁.
+告诉`tlmgr`使用附近的CTAN镜像进行将来的更新;  如果您从DVD映像安装了TeX Live,并且想要持续更新,则很有用.
+这两个命令是等效的. `ctan`只是给定URL的别名.
+注意: `mirror.ctan.org`解析为许多不同的主机,它们并没有完全同步. 我们建议仅(最多)每天更新一次,而不要更频繁.
 
 + `tlmgr update --list` 报告将要更新的内容,而无需实际更新任何内容.
 + `tlmgr update --all` 使本地TeX安装与软件包存储库中的安装相对应(从CTAN更新时通常很有用).
 + `tlmgr info pkg` 显示有关软件包内容的详细信息,例如搜索所有软件包中内容的安装状态和描述.
 
-可能遇到的错误：
+可能遇到的错误:
 
 [tlmgr: unexpected return value from verify_checksum: -5](https://tex.stackexchange.com/questions/528634/tlmgr-unexpected-return-value-from-verify-checksum-5)
 
-出现这个错误是由于某个`repository`的`signing key`过期了, 
+出现这个错误是由于某个`repository`的`signing key`过期了,
 首先可以使用`tlmgr repository list`列出所有的库, 使用`tlmgr key list`列出所有的`keys`
 
-首先把`repository`更换到对应`debian`发行版的仓库, 比如使用 `2019` 版本的 `repository` , 
+首先把`repository`更换到对应`debian`发行版的仓库, 比如使用 `2019` 版本的 `repository` ,
 `tlmgr option repository https://www.texlive.info/tlnet-archive/2019/12/31/tlnet/`
 
 然后把[tug](https://www.tug.org/texlive/)的 `GPG` key 加入到 `tlmgr` 的key 列表中
@@ -1226,9 +1226,9 @@ ubuntu 仓库的texlive
 curl -fsSL https://www.tug.org/texlive/files/texlive.asc | tlmgr key add -
 ```
 
-这样就不会出现`erify_checksum: -5`错误了. 
+这样就不会出现`erify_checksum: -5`错误了.
 
-总结：
+总结:
 
 + `tlmgr key list`列出所有的`key`
 + `tlmgr repository list`列出使用的仓库
@@ -1243,9 +1243,9 @@ curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 `install [option]... pkg...`
 
 如果尚未安装,请安装命令行上给出的每个`pkg`.
-(它不涉及现有软件包；有关如何获取软件包的最新版本,请参见`更新`操作.)
+(它不涉及现有软件包; 有关如何获取软件包的最新版本,请参见`更新`操作.)
 
-默认情况下,这还会安装给定pkg所依赖的所有软件包. 选项：
+默认情况下,这还会安装给定pkg所依赖的所有软件包. 选项:
 
 + `--dry-run` : 实际没有安装任何东西. 而是将要执行的动作写入终端.
 + `--file`: 不从安装库中获取软件包, 使用命令行上给出的软件包文件. 这些文件必须是标准的`TeX Live`软件包文件(包含`tlpobj`文件).
@@ -1253,7 +1253,7 @@ curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 则除非给出此选项,否则`tlmgr`将退出紧急状态并且不会执行安装. 不建议.
 + `--no-depends`:不要安装依赖项. (默认情况下,安装软件包可确保满足该软件包的所有依赖关系.)
 + `--no-depends-at-all`:通常,当您安装附带二进制文件的软件包时,还将安装相应的二进制软件包.
-也就是说,对于软件包`foo`,软件包`foo.i386-linux`也将安装在`i386-linux`系统上. 
+也就是说,对于软件包`foo`,软件包`foo.i386-linux`也将安装在`i386-linux`系统上.
 此选项抑制了这种行为,并且还暗示了`--no-depends`.
 除非您确定自己在做什么,否则不要使用它.
 + `--reinstall`:即使似乎已经安装了软件包(即TLPDB中已存在),也要重新安装软件包(包括集合的依赖项).
@@ -1264,14 +1264,14 @@ curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 + `conf [texmf|tlmgr|updmap [--conffile file] [--delete] [key [value]]]`
 + `conf auxtrees [--conffile file] [show|add|delete] [value]`
 
-仅使用`conf`,即可显示TeX Live的常规配置信息,包括活动配置文件,路径设置等. 
+仅使用`conf`,即可显示TeX Live的常规配置信息,包括活动配置文件,路径设置等.
 这就像运行`texconfig conf`一样,但是可以在所有支持的平台上运行.
 
 使用`conf texmf`,`conf tlmgr`或`conf updmap`之一显示`ROOT / texmf.cnf`(用户特定的`tlmgr`配置)中保存的所有键/值对(即所有设置) 文件(请参见下文)或第一个(通过`kpsewhich`找到的)`updmap.cfg`文件.
 
 `conf`显示的`PATH`值与`tlmgr`使用的值相同. 包含`tlmgr`可执行文件的目录会自动添加到从环境继承的PATH值之前.
 
-这是更改配置值的实际示例. 如果在安装过程中启用了通过`\ write18`执行的(部分或全部)系统命令,则可以在以后将其禁用：
+这是更改配置值的实际示例. 如果在安装过程中启用了通过`\ write18`执行的(部分或全部)系统命令,则可以在以后将其禁用:
 
 ```bash
 tlmgr conf texmf shell_escape 0
@@ -1280,8 +1280,8 @@ tlmgr conf texmf shell_escape 0
 子命令`auxtrees`允许完全在用户控制下添加和删除任意其他texmf树.
 `auxtrees show`显示其他树的列表,`auxtrees add`树将树添加到列表中,`auxtrees remove`树从列表中删除树(如果存在).
 
-树中不应包含`ls-R`文件(否则,如果`ls-R`过时,则可能找不到文件). 
-通过操作`ROOT / texmf.cnf`中的Kpathsea变量`TEXMFAUXTREES`来生效. 例：
+树中不应包含`ls-R`文件(否则,如果`ls-R`过时,则可能找不到文件).
+通过操作`ROOT / texmf.cnf`中的Kpathsea变量`TEXMFAUXTREES`来生效. 例:
 
 ```bash
 tlmgr conf auxtrees add /quick/test/tree
@@ -1290,27 +1290,27 @@ tlmgr conf auxtrees remove /quick/test/tree
 
 在所有情况下,如果需要,都可以通过选项`--conffile`文件显式指定配置文件.
 
-警告：此处是用于更改配置值的一般工具,但是强烈建议不要以这种方式修改设置. 
+警告: 此处是用于更改配置值的一般工具,但是强烈建议不要以这种方式修改设置.
 同样,不对键或值进行错误检查,因此可能发生任何破损.
 
 ### 手动安装宏包
 
-如果无法使用`tlmgr`自动安装宏包, 例如`ubuntu`自带的`texlive`, 默认的版本比远程仓库中的低, 无法自动升级. 
+如果无法使用`tlmgr`自动安装宏包, 例如`ubuntu`自带的`texlive`, 默认的版本比远程仓库中的低, 无法自动升级.
 可以直接从网上下载想要安装的宏包, 大部分宏包已经打包成标准格式, 例如`siunitx.tds.zip`, [siunitx](https://www.ctan.org/pkg/siunitx).
 直接解压到`texlive`的安装目录即可.
 
-如何定位安装目录呢？可以参考[Installing TeX fonts](http://www.tug.org/fonts/fontinstall.html), 虽然这个文章主要是介绍安装字体的. 
-使用类似下面的命令找出`texlive`的安装目录. 
+如何定位安装目录呢? 可以参考[Installing TeX fonts](http://www.tug.org/fonts/fontinstall.html), 虽然这个文章主要是介绍安装字体的.
+使用类似下面的命令找出`texlive`的安装目录.
 
 ```bash
 kpsewhich --var-value TEXMF
 tlmgr conf # 这个会输出texlive大部分配置的信息
 ```
 
-我电脑上`texlive`安装在`/usr/share/texmf `, 这是共享目录, 如果安装在这里, 所有账户都能使用. 
-此外在家目录下, 即`/home/tom/texmf`还有一个用户目录树, 建议把宏包解压到这里, 不会影响`ubuntu`自带的发行版. 
-如果你的`home`没有这个文件夹, 可以运行`tlmgr init-usertree`产生一个. 
-由于路径中`/home/tom/texmf`在前面, 把宏包装在这里, 就会被优先使用. 
+我电脑上`texlive`安装在`/usr/share/texmf `, 这是共享目录, 如果安装在这里, 所有账户都能使用.
+此外在家目录下, 即`/home/tom/texmf`还有一个用户目录树, 建议把宏包解压到这里, 不会影响`ubuntu`自带的发行版.
+如果你的`home`没有这个文件夹, 可以运行`tlmgr init-usertree`产生一个.
+由于路径中`/home/tom/texmf`在前面, 把宏包装在这里, 就会被优先使用.
 
 ### jabref
 
@@ -1320,10 +1320,10 @@ entry 时间戳
 
 本功能可以在`选项->偏好设置->通用设置`中关闭或配置. `JabRef`能自动的产生一个包含题录加入数据库的日期的域.
 
-格式：
+格式:
 
 时间戳记的格式由包含指示词的字符串确定,指示词表示日期各部分的位置.
-以下是一些可用的指示字母(示例在括号中给出,为： 2005年9月14日(星期三)下午5.45)：
+以下是一些可用的指示字母(示例在括号中给出,为:  2005年9月14日(星期三)下午5.45):
 
 + yy: year (05)
 + yyyy: year (2005)
@@ -1332,7 +1332,7 @@ entry 时间戳
 + HH: hour in day (17)
 + mm: minute in hour (45)
 
-这些指示符可以与标点符号和空格一起使用. 几个例子：
+这些指示符可以与标点符号和空格一起使用. 几个例子:
 
 + `yyyy.MM.dd gives 2005.09.14`
 + `yy.MM.dd gives 05.09.14`
@@ -1350,15 +1350,15 @@ Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland
 按照[SDB:在 Wayland 中启用输入法](https://zh.opensuse.org/SDB:%E5%9C%A8_Wayland_%E4%B8%AD%E5%90%AF%E7%94%A8%E8%BE%93%E5%85%A5%E6%B3%95)
 操作仍然不行.
 
-进入 `KDE` 或 `GNOME` 的 `Wayland` 会话之后, 您可能会发现输入法(Fcitx 或 iBus)无法使用. 
-最新的稳定版 `Fcitx` 和 `iBus` 都已经了基本的 `Wayland` 支持, 通过 X 的协议转接实现. 
-`Wayland` 读取的环境配置文件是`/etc/environment` 而不是 `X` 所读取的环境变量文件. 因此对 `X` 有效的输入法配置在 `Wayland` 上不起效果了. 以管理员权限编辑它：
+进入 `KDE` 或 `GNOME` 的 `Wayland` 会话之后, 您可能会发现输入法(Fcitx 或 iBus)无法使用.
+最新的稳定版 `Fcitx` 和 `iBus` 都已经了基本的 `Wayland` 支持, 通过 X 的协议转接实现.
+`Wayland` 读取的环境配置文件是`/etc/environment` 而不是 `X` 所读取的环境变量文件. 因此对 `X` 有效的输入法配置在 `Wayland` 上不起效果了. 以管理员权限编辑它:
 
 ```bash
 sudo vi /etc/environment
 ```
 
-这个文件应该是空的, 只有几行注释. 添加下面几行, 以 `Fcitx` 为例：
+这个文件应该是空的, 只有几行注释. 添加下面几行, 以 `Fcitx` 为例:
 
 ```bash
 INPUT_METHOD=fcitx
@@ -1367,7 +1367,7 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 ```
 
-如果您使用 iBus 的话, 那么应该添加这几行：
+如果您使用 iBus 的话, 那么应该添加这几行:
 
 ```bash
 INPUT_METHOD=ibus
@@ -1376,14 +1376,14 @@ QT_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
 ```
 
-之后请重启您的系统.  
+之后请重启您的系统.
 
 ***
 有时安装好了texlive,也安装好了`lyx`,却仍然报错,这个时候一般是因为路径(`$PATH`)没有配置好,
 lyx没有检测到texlive的各种文件.参考 [LYX Manuals](https://wiki.lyx.org/uploads//LyX/Manuals/1.6.4//Manuals.pdf)
 
-`LYX`的一些功能可以从`LYX`内部进行配置,而无需重新配置文件. 
-首先,`LYX`能够检查您的系统,以查看可以使用哪些程序,`LATEX`文档类和`LATEX`软件包. 
+`LYX`的一些功能可以从`LYX`内部进行配置,而无需重新配置文件.
+首先,`LYX`能够检查您的系统,以查看可以使用哪些程序,`LATEX`文档类和`LATEX`软件包.
 它使用此知识为多个`Preferences`设置提供合理的默认值.
 尽管在系统上安装`LYX`时已经完成了此配置,但是您可能需要在本地安装一些项目,
 新的`LATEX`类,而`LYX`看不到这种变化.
@@ -1512,7 +1512,7 @@ run `latexmk -showextraoptions`给出选项列表,这些选项被直接传递给
 
 `texlive` 自带了一个叫做 `pdfcrop` 的 `perl` 脚本
 
-使用方法如下：
+使用方法如下:
 
 `pdfcrop --margins 3 --clip input.pdf output.pdf; ` 或者
 
@@ -1540,7 +1540,7 @@ loop 设备 (循环设备)
 
 上面说的文件格式,我们经常见到的是 CD 或 DVD 的 ISO 光盘镜像文件或者是软盘(硬盘)的 `*.img` 镜像文件.通过这种 `loop mount` (回环`mount`)的方式,这些镜像文件就可以被 `mount` 到当前文件系统的一个目录下.
 
-至此,顺便可以再理解一下 `loop` 的含义:对于第一层文件系统,它直接安装在我们计算机的物理设备之上；
+至此,顺便可以再理解一下 `loop` 的含义:对于第一层文件系统,它直接安装在我们计算机的物理设备之上;
 而对于这种被 `mount` 起来的镜像文件(它也包含有文件系统),它是建立在第一层文件系统之上,
 这样看来,它就像是在第一层文件系统之上再绕了一圈的文件系统,所以称为 `loop`.
 
@@ -1572,10 +1572,10 @@ mount -t minix -o loop ./disk.img ./disk_test
 
 [Ubuntu使用snap安装常用软件](https://www.jianshu.com/p/4049b97151a1)
 
-什么是`snap`, `snap`是一种全新的软件包管理方式, 它类似一个容器拥有一个应用程序所有的文件和库, 各个应用程序之间完全独立. 
-所以使用`snap`包的好处就是它解决了应用程序之间的依赖问题, 使应用程序之间更容易管理. 但是由此带来的问题就是它占用更多的磁盘空间. 
+什么是`snap`, `snap`是一种全新的软件包管理方式, 它类似一个容器拥有一个应用程序所有的文件和库, 各个应用程序之间完全独立.
+所以使用`snap`包的好处就是它解决了应用程序之间的依赖问题, 使应用程序之间更容易管理. 但是由此带来的问题就是它占用更多的磁盘空间.
 
-`Snap`的安装包扩展名是`.snap`, 类似于一个容器, 它包含一个应用程序需要用到的所有文件和库(`snap`包包含一个私有的`root`文件系统, 里面包含了依赖的软件包). 
-它们会被安装到单独的目录；各个应用程序之间相互隔离. 使用`snap`有很多好处, 首先它解决了软件包的依赖问题；其次, 也使应用程序更容易管理. 
+`Snap`的安装包扩展名是`.snap`, 类似于一个容器, 它包含一个应用程序需要用到的所有文件和库(`snap`包包含一个私有的`root`文件系统, 里面包含了依赖的软件包).
+它们会被安装到单独的目录; 各个应用程序之间相互隔离. 使用`snap`有很多好处, 首先它解决了软件包的依赖问题; 其次, 也使应用程序更容易管理.
 
 现在支持`snap`的应用并不多, `snap`软件包一般安装在`/snap`目录下.

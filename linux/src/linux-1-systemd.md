@@ -19,7 +19,7 @@
 | `ALT-F`  | 光标往前跳一个词(移动到光标所在词的末尾).     |
 | `ALT-D`  | 删除光标所在位置到光标所在词的结尾位置的所有内容      |
 | `ALT-BASKSPACE` | 删除光标所在位置到词开头的所有内容.    |
-| `ALT-数值`      | 这个数值可以是正或者是负,这个键单独没有作用,必须后面再接其他内容,如果后面是字符,则表示重复次数.如:`[ALT-9,k]`则光标位置会插入`9`个`k`字符(负值在这种情况下无效)；如果后面接的是命令,则数字会影响后面命令的执行结果,如:`[ALT-9,CTRL-D]`则向`CTRL-D`默认方向相反(负数)的方向执行`9`次操作. |
+| `ALT-数值`      | 这个数值可以是正或者是负,这个键单独没有作用,必须后面再接其他内容,如果后面是字符,则表示重复次数.如:`[ALT-9,k]`则光标位置会插入`9`个`k`字符(负值在这种情况下无效); 如果后面接的是命令,则数字会影响后面命令的执行结果,如:`[ALT-9,CTRL-D]`则向`CTRL-D`默认方向相反(负数)的方向执行`9`次操作. |
 | `ALT-<`  | 移动到历史记录中的第一行命令.   |
 | `ALT->`  | 移动到历史的最后一行,即当前正在输入的行(没有输入的情况下为空). |
 | `ALT-P`  | 从当前行开始向前搜索,有必要则向"上"移动,移动时,使用非增量搜索查找用户提供的字符串.      |
@@ -88,7 +88,7 @@ terminal 快捷键
 | `CTRL-W` | 当在控制台或一个xterm窗口敲入文本时, `CTRL-W` 会删除从在光标处往后(回)的第一个空白符之间的内容.在某些设置里, `CTRL-W` 删除光标往后(回)到第一个非文字和数字之间的字符.     |
 | `CTRL-X` | 在某些文字处理程序中,这个控制字符将会剪切高亮的文本并且将它复制到剪贴板中.       |
 | `CTRL-Y` | 将之前已经清除的文本粘贴回来(主要针对`CTRL-U`或`CTRL-W`).   |
-| `CTRL-Z` | 暂停一个前台的作业；在某些文本处理程序中也作为替换操作；在MSDOS文件系统中作为EOF(End-of-file)字符.    |
+| `CTRL-Z` | 暂停一个前台的作业; 在某些文本处理程序中也作为替换操作; 在MSDOS文件系统中作为EOF(End-of-file)字符.    |
 | `CTRL-\` | 退出.和`CTRL-C`差不多,也可能dump一个"core"文件到你的工作目录下(这个文件可能对你没用).  |
 | `CTRL-/` | 撤消操作,Undo.  |
 | `CTRL-_` | 撤消操作.        |
@@ -104,7 +104,7 @@ terminal 快捷键
 | `ALT-T`  | 当光标两侧都存在词的时候,交换光标两侧词的位置.如:`abc <ALT-T>bcd -> bcd abc|`   |
 | `ALT-.`  | 使用前一次命令的最后一个词(命令本身也是一个词,参见后一篇的Bang命令中的词指示符概念).    |
 | `ALT-_`  | 同`ALT-.`.       |
-| `ALT-数值`      | 这个数值可以是正或者是负,这个键单独没有作用,必须后面再接其他内容,如果后面是字符,则表示重复次数.如:`[ALT-10,k]`则光标位置会插入`10`个`k`字符(负值在这种情况下无效)；如果后面接的是命令,则数字会影响后面命令的执行结果,如:`[ALT--10,CTRL-D]`则向`CTRL-D`默认方向相反(负数)的方向执行`10`次操作. |
+| `ALT-数值`      | 这个数值可以是正或者是负,这个键单独没有作用,必须后面再接其他内容,如果后面是字符,则表示重复次数.如:`[ALT-10,k]`则光标位置会插入`10`个`k`字符(负值在这种情况下无效); 如果后面接的是命令,则数字会影响后面命令的执行结果,如:`[ALT--10,CTRL-D]`则向`CTRL-D`默认方向相反(负数)的方向执行`10`次操作. |
 | `ALT-<`  | 移动到历史记录中的第一行命令.        |
 | `ALT->`  | 移动到历史的最后一行,即当前正在输入的行(没有输入的情况下为空).      |
 | `ALT-P`  | 从当前行开始向前搜索,有必要则向"上"移动,移动时,使用非增量搜索查找用户提供的字符串.    |
@@ -228,8 +228,8 @@ $ sudo localectl set-keymap en_GB
 
 ```bash
 $ timedatectl # 查看当前时区设置
-$ timedatectl list-timezones # 显示所有可用的时区                                                         
-$ sudo timedatectl set-timezone America/New_York # 设置当前时区               
+$ timedatectl list-timezones # 显示所有可用的时区
+$ sudo timedatectl set-timezone America/New_York # 设置当前时区
 $ sudo timedatectl set-time YYYY-MM-DD
 $ sudo timedatectl set-time HH:MM:SS
 ```
@@ -511,7 +511,7 @@ Traditional runlevel      New target name     Symbolically linked to...
 $ sudo journalctl  # 查看所有日志(默认情况下 ,只保存本次启动的日志)
 $ sudo journalctl -k # 查看内核日志(不显示应用日志)
 # 查看系统本次启动的日志
-$ sudo journalctl -b 
+$ sudo journalctl -b
 $ sudo journalctl -b -0
 $ sudo journalctl -b -1 # 查看上一次启动的日志(需更改设置)
 # 查看指定时间的日志
@@ -799,7 +799,7 @@ $ systemctl list-dependencies multi-user.target
 $ sudo systemctl isolate shutdown.target
 ```
 
-一般来说,常用的 `Target` 有两个:一个是`multi-user.target`,表示多用户命令行状态；
+一般来说,常用的 `Target` 有两个:一个是`multi-user.target`,表示多用户命令行状态;
 另一个是`graphical.target`,表示图形用户状态,它依赖于`multi-user.target`.官方文档有一张非常清晰的 `Target` 依赖关系图.
 
 ### Target 的配置文件

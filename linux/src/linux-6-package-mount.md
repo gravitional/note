@@ -665,30 +665,30 @@ $
 
 `GNU Parted` 是创建和处理分区表的程序.  `GParted`是`GUI`前端.
 
-`Parted` 有两种模式：命令行和交互,请用下面命令启动：`#`表示超级用户模式
+`Parted` 有两种模式: 命令行和交互,请用下面命令启动: `#`表示超级用户模式
 
 ```bash
 # parted device  # device 是要编辑的硬盘设备,例如 /dev/sda
 ```
 
 ***
-`命令行模式`: 在命令行模式下,可以同时执行一个或多个命令：
+`命令行模式`: 在命令行模式下,可以同时执行一个或多个命令:
 
 ```bash
 # parted /dev/sda mklabel gpt mkpart P1 ext3 1MiB 8MiB
 ```
 
 ***
-`交互模式`: 交互模式简化了分区过程,可以自动对设备执行分区操作. 打开需要新建分区表的设备：
+`交互模式`: 交互模式简化了分区过程,可以自动对设备执行分区操作. 打开需要新建分区表的设备:
 
 ```bash
 sudo parted /dev/sdx
 ```
 
-命令提示符会从 (`#`) 变成 (`parted`): 要查看可用的命令：`(parted) help`
-完成操作后,用下面命令退出：`(parted) quit`.
+命令提示符会从 (`#`) 变成 (`parted`): 要查看可用的命令: `(parted) help`
+完成操作后,用下面命令退出: `(parted) quit`.
 
-如果命令没带参数,`Parted` 会进行询问：
+如果命令没带参数,`Parted` 会进行询问:
 
 ```bash
 (parted) mklabel
@@ -702,14 +702,14 @@ New disk label type? gpt
 `创建新分区表`: 如果设备没有分区,或者要改变分区表类型,重建分区结构,需要新建分区表.
 
 + 打开分区: `# parted /dev/sdx`:
-+ 为 `BIOS` 系统创建 `MBR/msdos` 分区表：`(parted) mklabel msdos`
-+ 为`UEFI`系统创建 `GPT` 分区表：`(parted) mklabel gpt`
++ 为 `BIOS` 系统创建 `MBR/msdos` 分区表: `(parted) mklabel msdos`
++ 为`UEFI`系统创建 `GPT` 分区表: `(parted) mklabel gpt`
 
 ### 分区方案
 
-您可以决定磁盘应该分为多少个区,每个分区如何映射至目录(一般称此为挂载点),取决于您的分区方案. 需要满足：
+您可以决定磁盘应该分为多少个区,每个分区如何映射至目录(一般称此为挂载点),取决于您的分区方案. 需要满足:
 
-+ 至少需要创建一个 `/` (`root`) 目录,有些分区类型和`启动加载器`(`bootloader`)组合有额外的分区要求：
++ 至少需要创建一个 `/` (`root`) 目录,有些分区类型和`启动加载器`(`bootloader`)组合有额外的分区要求:
 + `BIOS/GPT`+`GRUB`: 需要按照 `BIOS` 启动分区设置 的方式创建一个 `1M` 或 `2M` 的 `EF02` 类型分区.
 + `UEFI` 的主板,需要一个 `EFI` 系统分区.
 + 如果您需要加密磁盘,则必须加以调整分区方案. 系统安装后,也可以再配置加密文件夹,容器或 `home` 目录.
@@ -717,13 +717,13 @@ New disk label type? gpt
 系统需要需要 `/boot`, `/home` 等目录, [Arch 文件系统架构](https://man.archlinux.org/man/file-hierarchy.7) 有各目录的详细介绍.
 如果没有创建单独的`/boot` 或 `/home` 分区,这些目录直接放到了根分区下面
 
-用下面命令打开 `parted` 交互模式：
+用下面命令打开 `parted` 交互模式:
 
 ```bash
 # parted /dev/sdx
 ```
 
-用下面命令创建分区：`(parted) mkpart part-type fs-type start end`
+用下面命令创建分区: `(parted) mkpart part-type fs-type start end`
 
 + `part-type` 是分区类型,可以选择 `primary`, `extended` 或 `logical`,仅用于 `MBR `分区表.
 + `fs-type` 是文件系统类型,支持的类型列表可以通过 `help mkpart` 查看.  `mkpart` 并不会实际创建文件系统, `fs-type` 参数仅是让 `parted` 设置一个 `1-byte` 编码,让启动管理器可以提前知道分区中有什么格式的数据. 参阅 Wikipedia:Disk partitioning#PC partition types.
@@ -733,7 +733,7 @@ Tips: 大多数 Linux native file systems 对应的分区码相同 (`0x83`), 所
 + `end` 是设备的结束位置(不是与 `start` 值的差),同样可以带单位,也可以用百分比,例如 `100%` 表示到设备的末尾.
 + 为了不留空隙,分区的开始和结束应该首尾相连.
 
-Warning: 分区不相互重叠是很重要的：如果您不想在设备中留下未使用的空间,请确保每个分区从上一个分区的结尾处开始. 如果看到下面警告：
+Warning: 分区不相互重叠是很重要的: 如果您不想在设备中留下未使用的空间,请确保每个分区从上一个分区的结尾处开始. 如果看到下面警告:
 
 ```bash
 Warning: The resulting partition is not properly aligned for best performance.
@@ -742,7 +742,7 @@ Ignore/Cancel?
 
 表示分区没对齐,请参照分区对齐进行修正.
 
-下面命令设置 `/boot` 为启动目录：
+下面命令设置 `/boot` 为启动目录:
 
 ```bash
 (parted) set <partition> boot on
@@ -760,20 +760,20 @@ UEFI/GPT 示例
 (parted) set 1 boot on
 ```
 
-剩下的空间可以按需要创建. 可以`root` 占用全部 `100%` 剩余空间：
+剩下的空间可以按需要创建. 可以`root` 占用全部 `100%` 剩余空间:
 
 ```bash
 (parted) mkpart primary ext4 513M 100%
 ```
 
-也可以`/`(`20GiB`),剩下的给 `/home`：
+也可以`/`(`20GiB`),剩下的给 `/home`:
 
 ```bash
 (parted) mkpart primary ext4 513M 20.5G
 (parted) mkpart primary ext4 20.5G 100%
 ```
 
-创建 `/` (`20GiB`), `swap` (`4Gib`), 剩下给 `/home`：
+创建 `/` (`20GiB`), `swap` (`4Gib`), 剩下给 `/home`:
 
 ```bash
 (parted) mkpart primary ext4 513M 20.5G
@@ -784,14 +784,14 @@ UEFI/GPT 示例
 ***
 `BIOS/MBR` 示例
 
-单个`/`目录分区：
+单个`/`目录分区:
 
 ```bash
 (parted) mkpart primary ext4 1M 100%
 (parted) set 1 boot on
 ```
 
-`/` (`20Gib`)分区,剩下的给 `/home`：
+`/` (`20Gib`)分区,剩下的给 `/home`:
 
 ```bash
 (parted) mkpart primary ext4 1M 20G
@@ -818,9 +818,9 @@ UEFI/GPT 示例
 
 ### 调整分区
 
-警告： 若要调整分区,必须先停止使用并卸载它. 如果无法卸载(比如,它被挂载到 `/`,使用安装介质或者备用系统.  )
+警告:  若要调整分区,必须先停止使用并卸载它. 如果无法卸载(比如,它被挂载到 `/`,使用安装介质或者备用系统.  )
 
-注意：
+注意:
 
 + 使用 `parted`,你只能移动分区的末尾.
 + 在 parted v4.2 `resizepart` 可能需要使用#Interactive `mode`
@@ -830,7 +830,7 @@ UEFI/GPT 示例
 如果要缩小分区,必须先调整`文件系统`的大小,再调整`分区`,以避免数据丢失.
 
 ***
-扩展分区(在 `parted` 交互模式下)：
+扩展分区(在 `parted` 交互模式下):
 
 ```bash
 (parted) resizepart number end
@@ -838,7 +838,7 @@ UEFI/GPT 示例
 
 其中 `number` 是您正在扩展的分区的编号,而 `end` 是该分区的新末端(需要大于旧的末端).
 
-然后,扩展此分区上的文件系统：
+然后,扩展此分区上的文件系统:
 
 ```bash
 # resize2fs /dev/sdaX size
@@ -847,7 +847,7 @@ UEFI/GPT 示例
 `sdaX` 代表您正在扩展的分区,而 `size` 是分区的新大小.
 
 ***
-缩小分区上的文件系统：
+缩小分区上的文件系统:
 
 ```bash
 # resize2fs /dev/sdaX size
@@ -855,7 +855,7 @@ UEFI/GPT 示例
 
 其中 `sdaX` 代表您要缩小的分区,而 `size` 是该分区的新大小.
 
-然后缩小分区(在 `parted` 交互模式下)：
+然后缩小分区(在 `parted` 交互模式下):
 
 ```bash
 (parted) resizepart number end
@@ -863,7 +863,7 @@ UEFI/GPT 示例
 
 其中 `number` 是您要缩小的分区的编号,而 `end` 是该分区的新末端(需要小于旧末端).
 
-完成后,使用 `util-linux` 中的 `resizepart` 命令告诉内核新的分区大小：
+完成后,使用 `util-linux` 中的 `resizepart` 命令告诉内核新的分区大小:
 
 ```bash
 # resizepart device number size
@@ -1288,7 +1288,7 @@ $ find ~ -type f -iname "\*.JPG" -size +1M | wc -l
 
 这不是一个完整的列表.`find` 命令手册有更详细的说明.
 
-+ `-size n[cwbkMG]`: 文件占据的体积, 可以大于, 小于, 和精确等于, `n`个单位的空间, 向上取整.  后缀可以是：
++ `-size n[cwbkMG]`: 文件占据的体积, 可以大于, 小于, 和精确等于, `n`个单位的空间, 向上取整.  后缀可以是:
     + `b` ;   for 512-byte blocks (this is the default if no suffix is used)
     + `c` ;   for bytes
     + `w` ;   for two-byte words
@@ -1549,7 +1549,7 @@ $ find . .. / /tmp /tmp/TRACE compile compile/64/tests/find -maxdepth 0 -printf 
 ```
 
 ***
-只打印文件名称：
+只打印文件名称:
 
 ```bash
 find ./opentype ./truetype -mindepth 1 -printf '%f\n'
@@ -1699,7 +1699,7 @@ A `\' character followed by any other character is treated as an ordinary charac
 
 如果要使用通配符,需要用括号包住,或者进行转义(escape),否则shell 会将路径名展开,find 会接受到错误的参数列表.
 
-比如`find . -name *.c  -print`会被shell 展开为类似于：`find . -name frcode.c locate.c word_io.c -print`
+比如`find . -name *.c  -print`会被shell 展开为类似于: `find . -name frcode.c locate.c word_io.c -print`
 这将会使`find`报错.
  Instead of doing things this way, you should enclose the pattern in quotes or escape the wildcard:
 
@@ -1709,7 +1709,7 @@ A `\' character followed by any other character is treated as an ordinary charac
 `escape`:逃脱,逃离,避开,即避免`shell`对提供的字符串进行各种处理.
 
 ***
-例子：抽取所有子文件,即把子目录的所有文件复制到当前目录下
+例子: 抽取所有子文件,即把子目录的所有文件复制到当前目录下
 
 `find ./  -type f -print0 | xargs -0 cp -t . --backup=t `
 
