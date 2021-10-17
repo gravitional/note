@@ -40,9 +40,9 @@ s#『#{#g; s#』#}#g;
 
 ## rust-sd
 
+windows 上的换行符为`\n\r`, 另外`quoting`规则也不同.
+
 ```powershell
-# 如果只想打印, 不想实际更改, 就去掉 -i 选项. 
-# 不要同时使用 -i -n 选项, 会造成文件丢失.
 sd  --string-mode  '：'  ': '  $tmp
 sd  --string-mode  '，'  ', '  $tmp
 sd  --string-mode  '。'  '. '  $tmp
@@ -60,8 +60,8 @@ sd  --string-mode  '【'  '['  $tmp
 sd  --string-mode  '】'  ']'  $tmp
 sd  --string-mode  '『'  '{'  $tmp
 sd  --string-mode  '』'  '}'  $tmp
-sd  '[“”]'  '"'  $tmp
-sd  '[‘’]'  "'"  $tmp
-sd  --flags m  '\n([ \t]*\n[ \t]*)+\n'  '\n\n'  $tmp
-sd  '\s+$'  ''  $tmp
+sd "[`“`”]"  '\"'     $tmp
+sd "[`‘`’]"  "\'"  $tmp
+sd '\n\r(\s*\n\r\s*)+\n\r' '\n\r'  $tmp
+sd '\s+\n\r' '\n\r'     $tmp
 ```
