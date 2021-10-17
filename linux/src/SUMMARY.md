@@ -5,6 +5,7 @@
 - [systemd](linux-1-systemd.md)
 - [unix-进程](linux-2-process.md)
 - [zsh,termux](linux-3-zsh-termux.md)
+- [linux 包管理](linux-3-package.md)
 - [权限,shell 环境](linux-5-owner.md)
 - [网络](linux-6-network.md)
 - [包管理,挂载](linux-6-package-mount.md)
@@ -19,7 +20,6 @@
 
 - [bash常用命令](bash-1.md)
 - [bash 变量,脚本参数](bash-2.md)
-- [grub2](bash-3.md)
 - [内核风格](bash-4.md)
 
 -----------

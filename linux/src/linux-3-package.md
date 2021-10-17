@@ -1,4 +1,4 @@
-# bash-3
+# linxu 包管理
 
 ## Ubuntu 镜像使用帮助
 
@@ -30,7 +30,7 @@ deb https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricte
 # deb-src https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
 ```
 
-### dpkg-buildpackage
+### dpkg创建包,dpkg-buildpackage
 
 `dget` -- Download Debian source and binary packages
 
@@ -49,7 +49,7 @@ In the first form, dget fetches the requested `URLs`.  If this is a `.dsc` or `.
 then dget acts as a source-package aware form of wget: it also fetches any files referenced in the `.dsc/.changes` file.
 The downloaded source is then checked with `dscverify` and, if successful, unpacked by `dpkg-source`.
 
-6.1. 完整的(重)构建
+### 完整的(重)构建
 
 为保证完整的软件包(重)构建能顺利进行,你必须保证系统中已经安装
 
@@ -79,7 +79,7 @@ $ dpkg-buildpackage -us -uc
 
 如果构建结果令人满意,那就用 debsign 命令以你的私有 GPG 密钥签署 .dsc 文件和 .changes 文件.你需要输入密码两次. [63]
 
-对于非本土 Debian 软件包,比如 gentoo, 构建软件包之后,你将会在上一级目录(~/gentoo) 中看到下列文件:
+对于非本地 Debian 软件包,比如 gentoo, 构建软件包之后,你将会在上一级目录(~/gentoo) 中看到下列文件:
 
     gentoo_0.9.12.orig.tar.gz
 
@@ -134,7 +134,7 @@ Hostnames are also used by `DNS` servers so you can access a website by a common
 A computer's hostname may instead be referred to as a computer name, sitename, or nodename.
 You may also see hostname `spelled` as host name.
 
-### Examples of a Hostname
+### 主机的例子,Hostname
 
 Each of the following is an example of a Fully Qualified Domain Name with its hostname written off to the side:
 
@@ -145,7 +145,7 @@ Each of the following is an example of a Fully Qualified Domain Name with its ho
 
 The hostname (like `products`) is the text that *precedes* the `domain` name (for example, office), which is the text that comes before the *top-level domain* (`.com`).
 
-### How to Find a Hostname in Windows
+### 在 windows 中找出 Hostname
 
 Executing `hostname` from the Command Prompt is the easiest way to show the hostname of a computer.
 

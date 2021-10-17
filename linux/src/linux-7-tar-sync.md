@@ -889,143 +889,143 @@ rsync -av -e "ssh -l ssh-user" rsync-user@host::module /dest
 这里是`rsync`中可用选项的简短总结. 请参考下面的详细说明以获得完整的描述.
 
 + `-v, --verbose` ;  增加详细程度.
-  + `--info=FLAGS` ; 详细的, 较多信息的 verbosity.
-  + `--debug=FLAGS`; 详细的, debug verbosity.
-  + `--msgs2stderr` ; 用于调试的特殊输出处理
+    + `--info=FLAGS` ; 详细的, 较多信息的 verbosity.
+    + `--debug=FLAGS`; 详细的, debug verbosity.
+    + `--msgs2stderr` ; 用于调试的特殊输出处理
 + `--q, --quiet` ; 抑制非错误信息
-  + `--no-motd` ; 抑制守护进程模式的`MOTD`(见注意事项).
+    + `--no-motd` ; 抑制守护进程模式的`MOTD`(见注意事项).
 + `-c, --checksum` ;  根据校验和跳过, 而不是根据`mod-time`和`size`.
 + `-a, --archive` ; 归档模式;等于`-rlptgoD`(没有`-H`,`-A`,`-X`)
-  + `--no-OPTION` 关掉一个隐含的`OPTION`(例如: `--no-D`)
+    + `--no-OPTION` 关掉一个隐含的`OPTION`(例如: `--no-D`)
 
 `-r`; 递归. `-l`; 符号连接. `-p`; 保留权限. `-t`; 保留修改时间. `-go`; 组和所有者. `-D`; 设备文件和特殊文件.
 
 + `-r, --recursive` ; 递归到目录中去.
 + `-R, --relative` ; 使用相对路径名
-  + `--no-implied-dirs` ; 不发送带有`--relative`的隐含目录.
+    + `--no-implied-dirs` ; 不发送带有`--relative`的隐含目录.
 + `-b, --backup`; 进行备份 (见 `--suffix` & `--backup-dir`).
-  + `--backup-dir=DIR` ; 在`DIR`的基础上进行备份, 使其成为层次结构.
-  + `--suffix=SUFFIX` ; 备份后缀. (默认`~` without `--backup-dir`).
+    + `--backup-dir=DIR` ; 在`DIR`的基础上进行备份, 使其成为层次结构.
+    + `--suffix=SUFFIX` ; 备份后缀. (默认`~` without `--backup-dir`).
 + `-u, --update` ; 跳过`接收方`较新的文件
-  + `--inplace` ; 就地更新目标文件
-  + `--append` ; 将数据附加到较短的文件上
-  + `--append-verify` ; --append w/old data in file checksum.
+    + `--inplace` ; 就地更新目标文件
+    + `--append` ; 将数据附加到较短的文件上
+    + `--append-verify` ; --append w/old data in file checksum.
 
 + `-d, --dirs` ; 传输目录, 不进行递归.
 + `-l, --links` ; 将`符号链接`复制为`符号链接`
 + `-L, --copy-links` ; 将符号链接转换成指向的`文件`/`目录`
-  + `--copy-unsafe-links` ; 只有 `不安全` 的符号链接转换成文件.
-  + `--safe-links` ; 忽略指向树外的`符号链接`
-  + `--munge-links` ; 对符号链接进行整合, 使其更加安全.
+    + `--copy-unsafe-links` ; 只有 `不安全` 的符号链接转换成文件.
+    + `--safe-links` ; 忽略指向树外的`符号链接`
+    + `--munge-links` ; 对符号链接进行整合, 使其更加安全.
 + `-k, --copy-dirlinks` ; 将指向`dir`的符号链接转化为`dir`.
 + `-K, --keep-dirlinks` ; 将`接收方`的符号链接`dir`视为真实的`dir`.
 + `-H, --hard-links` ; 保留硬链接
 + `-p, --perms` ; 保留权限
 + `-E, --executability` ; 保留可执行性
-  + `--chmod=CHMOD` 影响文件和/或目录权限
+    + `--chmod=CHMOD` 影响文件和/或目录权限
 + ` -A, --acls` ; 保留 `ACLs` (暗示 `-p`)
 + `-X, --xattrs` ; 保留扩展属性
 + `-o, --owner` ; 保留所有者(仅超级用户).
 + `-g, --group` ;  保留组
-  + `--devices` ; 保留设备文件(仅超级用户)
-  + `--specials` ; 保留特殊文件
+    + `--devices` ; 保留设备文件(仅超级用户)
+    + `--specials` ; 保留特殊文件
 + `-D` ; 与`--devices --specials`相同
 + `-t, --times` ; 保留修改时间
 + `-O, --omit-dir-times` ; 从 `--times` 中省略目录.
 + `-J, --omit-link-times` ; 从`--times`中省略符号链接
-  + `--super` ; 接收方尝试超级用户活动
-  + `--fake-super` 使用`xattrs`存储/恢复特权属性
+    + `--super` ; 接收方尝试超级用户活动
+    + `--fake-super` 使用`xattrs`存储/恢复特权属性
 + `-S, --sparse` ; 将`null`序列转换成`稀疏块`
-  + `--preallocate` ; 在写入前分配目标文件
+    + `--preallocate` ; 在写入前分配目标文件
 + `-n, --dry-run` ; 执行试运行, 不做任何修改
 
 + `--W, --whole-file` ; 完整复制文件(不采用`delta-xfer`算法).
-  + `--checksum-choice=STR` ; 选择校验算法
+    + `--checksum-choice=STR` ; 选择校验算法
 + `-x, --one-file-system` ; 不跨越文件系统的边界
 + `-B, --block-size=SIZE` ; 强制采用固定的校验块大小
 
 + `-e, --rsh=COMMAND` ; 指定要使用的远程 `shell`
-  + `--rsync-path=PROGRAM` ; 指定要在远程机器上运行的`rsync`
-  + `--existing` ; 跳过在接收器上创建新文件
-  + `--ignore-existing` ; 跳过更新接收方存在的文件
-  + `--remove-source-files` ; 发送方删除同步过的文件(非目录)
-  + `--del` ; 是 `--delete-during` 的别名
-  + `--delete` ; 删除目的地目录中不相干的文件
-  + `--delete-before` ; 接收方在发送前删除, 而不是在发送过程中删除.
-  + `--delete-during` ; 接收者在传输过程中删除文件
-  + `--delete-delay` ; 在传输过程中找出删除, 在传输后删除
-  + `--delete-after` ; 接收者在转移后删除, 而不是在转移过程中.
-  + `--delete-excluded` ; 从目的地目录中删除被排除的文件
-  + `--ignore-missing-args` ; 忽略丢失的源参数, 不报错
-  + `--delete-missing-args` ; 从目的地删除缺失的源文件`args`
-  + `--ignore-errors` ; 即使有`I/O`错误, 也删除.
-  + `--force` ; 强制删除目录, 即使不是空的.
-  + `--max-delete=NUM` ; 不删除超过`NUM`的文件
-  + `--max-size=SIZE` ; 不传输任何大于`SIZE`的文件
-  + `--min-size=SIZE` ; 不传输任何小于`SIZE`的文件
-  + `--partial` ; 保留部分传输的文件
-  + `--partial-dir=DIR` ; 将部分传输的文件放入`DIR`中
-  + `--delay-updates` ; 最后再把所有更新的文件放到地方
+    + `--rsync-path=PROGRAM` ; 指定要在远程机器上运行的`rsync`
+    + `--existing` ; 跳过在接收器上创建新文件
+    + `--ignore-existing` ; 跳过更新接收方存在的文件
+    + `--remove-source-files` ; 发送方删除同步过的文件(非目录)
+    + `--del` ; 是 `--delete-during` 的别名
+    + `--delete` ; 删除目的地目录中不相干的文件
+    + `--delete-before` ; 接收方在发送前删除, 而不是在发送过程中删除.
+    + `--delete-during` ; 接收者在传输过程中删除文件
+    + `--delete-delay` ; 在传输过程中找出删除, 在传输后删除
+    + `--delete-after` ; 接收者在转移后删除, 而不是在转移过程中.
+    + `--delete-excluded` ; 从目的地目录中删除被排除的文件
+    + `--ignore-missing-args` ; 忽略丢失的源参数, 不报错
+    + `--delete-missing-args` ; 从目的地删除缺失的源文件`args`
+    + `--ignore-errors` ; 即使有`I/O`错误, 也删除.
+    + `--force` ; 强制删除目录, 即使不是空的.
+    + `--max-delete=NUM` ; 不删除超过`NUM`的文件
+    + `--max-size=SIZE` ; 不传输任何大于`SIZE`的文件
+    + `--min-size=SIZE` ; 不传输任何小于`SIZE`的文件
+    + `--partial` ; 保留部分传输的文件
+    + `--partial-dir=DIR` ; 将部分传输的文件放入`DIR`中
+    + `--delay-updates` ; 最后再把所有更新的文件放到地方
 
 + `--m, --prune-empty-dirs` ; 从文件列表中删去空目录链
-  + `--numeric-ids` ; 不按`用户`/`组`名映射`uid`/`gid`值.
-  + `--usermap=STRING` ; 自定义用户名映射
-  + `--groupmap=STRING` ; 自定义组名映射
-  + `--chown=USER:GROUP` ; 简单的用户名/组名映射
-  + `--timeout=SECONDS` ; 设置`I/O`超时, 单位为`秒`
-  + `--contimeout=SECONDS` ; 设置守护程序连接超时, 单位为`秒`
+    + `--numeric-ids` ; 不按`用户`/`组`名映射`uid`/`gid`值.
+    + `--usermap=STRING` ; 自定义用户名映射
+    + `--groupmap=STRING` ; 自定义组名映射
+    + `--chown=USER:GROUP` ; 简单的用户名/组名映射
+    + `--timeout=SECONDS` ; 设置`I/O`超时, 单位为`秒`
+    + `--contimeout=SECONDS` ; 设置守护程序连接超时, 单位为`秒`
 + `--I, --ignore-times` ; 不跳过大小和时间相符的文件
-  + `--size-only` ; 跳过大小一致的文件
+    + `--size-only` ; 跳过大小一致的文件
 + `-@, --modify-window=NUM` ;  设置`mod-time`比较的准确性
 + `-T, --temp-dir=DIR` 在目录DIR中创建临时文件
 + `-y, --fuzzy` ; 在没有目标文件的情况下为`basis`找到类似的文件
-  + `--compare-dest=DIR` ; also compare received files relative to `DIR`.
-  + `--copy-dest=DIR` ; ... and include copies of unchanged files
-  + `--link-dest=DIR` ; 当未改变时, 硬链接到`DIR`中的文件
+    + `--compare-dest=DIR` ; also compare received files relative to `DIR`.
+    + `--copy-dest=DIR` ; ... and include copies of unchanged files
+    + `--link-dest=DIR` ; 当未改变时, 硬链接到`DIR`中的文件
 
 + `-z, --compress` ; 在传输过程中压缩文件数据
-  + `--compress-level=NUM` ; 明确设置压缩级别
-  + `--skip-compress=LIST` ; 跳过压缩后缀为`LIST`的文件
+    + `--compress-level=NUM` ; 明确设置压缩级别
+    + `--skip-compress=LIST` ; 跳过压缩后缀为`LIST`的文件
 + `--C, --cvs-exclude` ; 以`CVS`的方式自动忽略文件
 + `-f, --filter=RULE` ; 添加一个文件过滤规则.
 + `-F` ; 与 `--filter='dir-merge /.rsync-filter'`相同
-  + `repeated`: `--filter='- .rsync-filter'`.
-  + `--exclude=PATTERN` ; 排除匹配`PATTERN`的文件
-  + `--exclude-from=FILE` ; 从`FILE`读取排除模式
-  + `--include=PATTERN` ; 不排除匹配`PATTERN`的文件
-  + `--include-from=FILE` ; 从`FILE`中读取包含模式
-  + `--files-from=FILE` ; 从`FILE`中读取源文件名的列表
+    + `repeated`: `--filter='- .rsync-filter'`.
+    + `--exclude=PATTERN` ; 排除匹配`PATTERN`的文件
+    + `--exclude-from=FILE` ; 从`FILE`读取排除模式
+    + `--include=PATTERN` ; 不排除匹配`PATTERN`的文件
+    + `--include-from=FILE` ; 从`FILE`中读取包含模式
+    + `--files-from=FILE` ; 从`FILE`中读取源文件名的列表
 
 + `-0, --from0` ; 所有的`*from/filter`文件都以`0`为界.
 + `-s, --protect-args` ; 不按空格分词;只有通配符.
 + `--address=ADDRESS` ; 绑定出站`socket`的地址给守护进程.
-  + `--port=PORT` ; 指定双冒号的备用端口号
-  + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
-  + `--blocking-io` ; 对远程`shell`使用阻塞式`I/O`
-  + `--outbuf=N|L|B` ; 设置输出缓冲为`无`, `行`或`块`.
-  + `--stats` ; 提供一些文件传输的统计信息.
+    + `--port=PORT` ; 指定双冒号的备用端口号
+    + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
+    + `--blocking-io` ; 对远程`shell`使用阻塞式`I/O`
+    + `--outbuf=N|L|B` ; 设置输出缓冲为`无`, `行`或`块`.
+    + `--stats` ; 提供一些文件传输的统计信息.
 
 + `--8, --8-bit-output` ; 在输出中不对高位字符进行转义.
 + `-h,--human-readable` ; 以人类可读的格式输出数字
-  + `--progress` ; 显示传输过程中的进度
+    + `--progress` ; 显示传输过程中的进度
 + `-P` ; 与 `--partial --progress` 相同
 + `-i, --itemize-changes`; 输出所有更新的变化摘要
 + `-M, --remote-option=OPTION` ; 只向远端发送`OPTION`
-  + `--out-format=FORMAT` ; 使用指定的`FORMAT`输出更新信息
-  + `--log-file=FILE` ; 在`FILE`中记录我们正在做的事情
-  + `--log-file-format=FMT` ; 使用指定的`FMT`记录更新信息
-  + `--password-file=FILE` ; 从`FILE`读取 daemon-access 的访问密码
-  + `--list-only` ; 列出文件而不是复制它们
-  + `--bwlimit=RATE` ; 限制 socket `I/O`带宽
-  + `--stop-at=y-m-dTh:m` ; 在`year-month-dayThour:minute`停止`rsync`
-  + `--time-limit=MINS` ; 在`MINS`分钟后停止`rsync`的运行
-  + `--write-batch=FILE` ; 将批量更新写入`FILE`中
-  + `--only-write-batch=FILE` ; 类似`--write-batch` 但不更新`dest`
-  + `--read-batch=FILE` ; 从`FILE`中读取一个批处理的更新
-  + `--protocol=NUM` ; 强制使用一个较早的协议版本
-  + `--iconv=CONVERT_SPEC` ; 要求转换文件名的字符集
-  + `--checksum-seed=NUM` ; 设置`块`/`文件`checksum seed(高级).
-  + `--noatime` ; 打开源文件时不改变`atime`
+    + `--out-format=FORMAT` ; 使用指定的`FORMAT`输出更新信息
+    + `--log-file=FILE` ; 在`FILE`中记录我们正在做的事情
+    + `--log-file-format=FMT` ; 使用指定的`FMT`记录更新信息
+    + `--password-file=FILE` ; 从`FILE`读取 daemon-access 的访问密码
+    + `--list-only` ; 列出文件而不是复制它们
+    + `--bwlimit=RATE` ; 限制 socket `I/O`带宽
+    + `--stop-at=y-m-dTh:m` ; 在`year-month-dayThour:minute`停止`rsync`
+    + `--time-limit=MINS` ; 在`MINS`分钟后停止`rsync`的运行
+    + `--write-batch=FILE` ; 将批量更新写入`FILE`中
+    + `--only-write-batch=FILE` ; 类似`--write-batch` 但不更新`dest`
+    + `--read-batch=FILE` ; 从`FILE`中读取一个批处理的更新
+    + `--protocol=NUM` ; 强制使用一个较早的协议版本
+    + `--iconv=CONVERT_SPEC` ; 要求转换文件名的字符集
+    + `--checksum-seed=NUM` ; 设置`块`/`文件`checksum seed(高级).
+    + `--noatime` ; 打开源文件时不改变`atime`
 
 + `--4, --ipv4` ; 偏好`IPv4`
 + `-6, --ipv6` ; 偏好`IPv6`
@@ -1035,15 +1035,15 @@ rsync -av -e "ssh -l ssh-user" rsync-user@host::module /dest
 ` `也可以作为一个守护进程运行, 在这种情况下, 可以接受以下选项.
 
 + `--daemon` ; 作为`rsync`守护进程运行
-  + `--address=ADDRESS` ; 绑定到指定地址
-  + `--bwlimit=RATE` ; 限制 socket `I/O` 带宽
-  + `--config=FILE` ; 指定备用的`rsyncd.conf `文件
+    + `--address=ADDRESS` ; 绑定到指定地址
+    + `--bwlimit=RATE` ; 限制 socket `I/O` 带宽
+    + `--config=FILE` ; 指定备用的`rsyncd.conf `文件
 + `--M, --dparam=OVERRIDE` ; 覆盖全局守护进程配置参数
-  + `--no-detach` ; 不从parent中分离出来
-  + `--port=PORT` ; 在备用端口号上监听
-  + `--log-file=FILE` ; 覆盖 `日志文件` 设置
-  + `--log-file-format=FMT` ; 覆盖 `日志格式` 的设置
-  + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
+    + `--no-detach` ; 不从parent中分离出来
+    + `--port=PORT` ; 在备用端口号上监听
+    + `--log-file=FILE` ; 覆盖 `日志文件` 设置
+    + `--log-file-format=FMT` ; 覆盖 `日志格式` 的设置
+    + `--sockopts=OPTIONS` ; 指定自定义`TCP`选项
 
 + `-v, --verbose` ; 增加 verbosity
 + `-4, --ipv4` ; 优先选择`IPv4`

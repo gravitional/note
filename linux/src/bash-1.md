@@ -1,4 +1,4 @@
-# bash-1
+# bash 常用操作
 
 [runoob-linux-tutorial](https://www.runoob.com/linux/linux-tutorial.html)
 

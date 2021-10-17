@@ -1,4 +1,4 @@
-# bash-2
+# bash 语法
 
 ## shell 变量
 
