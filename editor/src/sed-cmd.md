@@ -64,7 +64,7 @@ sd  --string-mode  '』'  '}'  $tmp
 sd "[`“`”]"  '\"'     $tmp
 sd "[`‘`’]"  "\'"  $tmp
 sd '\n\r(\s*\n\r\s*)+\n\r' '\n\r'  $tmp
-sd '\s+\n\r' '\n\r'     $tmp
+sd '[ \t]+\n\r' '\n\r'     $tmp
 ```
 
 `linux` 上的换行符为`\n`, 所以
