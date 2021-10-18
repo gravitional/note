@@ -119,7 +119,7 @@ function Test-WriteError
 
 `$IsCoreCLR` ; 如果当前会话在 `.NET Core Runtime(CoreCLR)` 上运行, 则包含 `$True`, 否则包含 `$False`.
 
-`CLR`, 全名 `Common Language Runtime`, 是微软为 `.NET` 实现的托管运行时环境(或者叫"虚拟机"). 
+`CLR`, 全名 `Common Language Runtime`, 是微软为 `.NET` 实现的托管运行时环境(或者叫"虚拟机").
 `CLR` 也是ECMA-335 Common Language Infrastructure规范的一个实现.
 
 `$IsLinux` ; 如果当前会话在Linux操作系统上运行, 则包含 `$True`, 否则包含 `$False`.
@@ -132,24 +132,24 @@ function Test-WriteError
 
 ## `$Matches`
 
-`$Matches` 变量与 `-match` 和 `-notmatch` 操作符一起工作. 
-当你向 `-match` 或 `-notmatch` 操作符提交 `标量输入` 时, 如果这两个操作符检测到`匹配`, 它们会返回一个布尔值, 
-并在 `$Matches` 自动变量中填充任何匹配的字符串值的`哈希表`. 
+`$Matches` 变量与 `-match` 和 `-notmatch` 操作符一起工作.
+当你向 `-match` 或 `-notmatch` 操作符提交 `标量输入` 时, 如果这两个操作符检测到`匹配`, 它们会返回一个布尔值,
+并在 `$Matches` 自动变量中填充任何匹配的字符串值的`哈希表`.
 当你使用 `正则表达式` 和 `-match` 操作符时, `$Matches 哈希表` 也将用 `捕获的数据` 填充.
 
-关于 `-match` 操作符的更多信息, 见 [about_Comparison_Operators][]. 
+关于 `-match` 操作符的更多信息, 见 [about_Comparison_Operators][].
 关于正则表达式的更多信息, 请看 [about_Regular_Expressions][].
 
-`$Matches` 变量也可以在带有 `-Regex` 参数的 `switch` 语句中使用. 
-它的填充方式与 `-match` 和 `-notmatch` 操作符的填充方式相同. 
+`$Matches` 变量也可以在带有 `-Regex` 参数的 `switch` 语句中使用.
+它的填充方式与 `-match` 和 `-notmatch` 操作符的填充方式相同.
 关于`switch`语句的更多信息, 请参见 [about_Switch][].
 
 [about_Switch]: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1
 
 > 注意
 
-在会话中, 当 `$Matches` 被填充时, 它保留了匹配的值, 直到它被另一个匹配值覆盖. 
-如果再次使用 `-match` 而没有找到匹配值, 它不会将 `$Matches` 重置为 `$null`. 
+在会话中, 当 `$Matches` 被填充时, 它保留了匹配的值, 直到它被另一个匹配值覆盖.
+如果再次使用 `-match` 而没有找到匹配值, 它不会将 `$Matches` 重置为 `$null`.
 之前匹配的值会保留在`$Matches`中, 直到找到另一个匹配值.
 
 [about_Comparison_Operators]: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.1
@@ -157,12 +157,12 @@ function Test-WriteError
 
 ## `$MyInvocation`
 
-`$MyInvocation` 包含了关于当前命令的信息, 如 `名称`, `参数`, `参数值`, 
+`$MyInvocation` 包含了关于当前命令的信息, 如 `名称`, `参数`, `参数值`,
 以及关于该命令如何被启动, 调用的信息, 如调用当前命令的`脚本`的名称.
 
-`$MyInvocation` 只在脚本, 函数和脚本块的情形被填充值(populated). 
-你可以使用 `$MyInvocation` 在当前脚本中返回的, `System.Management.Automation.InvocationInfo` 对象中的信息, 
-如脚本的 `路径` 和 `文件名`(`$MyInvocation.MyCommand.Path`), 或函数的名称(`$MyInvocation.MyCommand.Name`)来识别当前命令. 
+`$MyInvocation` 只在脚本, 函数和脚本块的情形被填充值(populated).
+你可以使用 `$MyInvocation` 在当前脚本中返回的, `System.Management.Automation.InvocationInfo` 对象中的信息,
+如脚本的 `路径` 和 `文件名`(`$MyInvocation.MyCommand.Path`), 或函数的名称(`$MyInvocation.MyCommand.Name`)来识别当前命令.
 这对于查找`当前脚本的名称`特别有用.
 
 从PowerShell 3.0开始, `MyInvocation` 有以下新属性.
@@ -170,21 +170,21 @@ function Test-WriteError
 + `PSScriptRoot` ; 包含调用当前命令的脚本的完整路径. 这个属性的值只有在`调用者`是`脚本`时才会被填充.
 + `PSCommandPath` ; 包含调用当前命令的脚本的完整路径和文件名. 这个属性的值只有在调用者是脚本时才会被填入.
 
-与 `$PSScriptRoot` 和 `$PSCommandPath` 自动变量不同, 
+与 `$PSScriptRoot` 和 `$PSCommandPath` 自动变量不同,
 `$MyInvocation` 自动变量的 `PSScriptRoot` 和 `PSCommandPath` 属性包含关于`调用者`或调用脚本的信息, 而不是`当前脚本`(current script).
 
 ## `$NestedPromptLevel`
 
-`$NestedPromptLevel` 包含了当前的 `prompt` 级别. 
+`$NestedPromptLevel` 包含了当前的 `prompt` 级别.
 值为 `0` 表示原始 `prompt`级别. 当你进入一个嵌套级别时, 该值会被递增, 当你退出该级别时, 会被递减.
 
-例如, 当你使用 `$Host.EnterNestedPrompt` 方法时, `PowerShell` 呈现一个嵌套的命令`prompt`. 
+例如, 当你使用 `$Host.EnterNestedPrompt` 方法时, `PowerShell` 呈现一个嵌套的命令`prompt`.
 当你在 `PowerShell` 调试器中达到一个断点时, `PowerShell` 也会呈现一个嵌套命令`prompt`.
 
-当你进入一个嵌套`prompt`时, `PowerShell` 会暂停当前命令, 保存执行环境, 并增加 `$NestedPromptLevel` 变量的值. 
+当你进入一个嵌套`prompt`时, `PowerShell` 会暂停当前命令, 保存执行环境, 并增加 `$NestedPromptLevel` 变量的值.
 要创建额外的嵌套命令提示(最多128级)或返回原始命令提示, 请完成命令, 或键入`exit`.
 
-`$NestedPromptLevel` 变量帮助你跟踪`prompt`级别. 
+`$NestedPromptLevel` 变量帮助你跟踪`prompt`级别.
 你可以创建一个包括这个值的, alternative `PowerShell command prompt`, 以便它总是可见.
 
 ## `$null`
@@ -243,8 +243,8 @@ Appointment on Friday: Team lunch
 
 `$PID`包含承载当前 `PowerShell` 会话的进程的, `进程标识符`(`PID`).
 
-`$PROFILE`, 包含`当前用户` 和 `当前 host 应用程序` 的 `PowerShell` 配置文件的完整路径. 
-你可以在命令中使用这个变量来表示配置文件. 
+`$PROFILE`, 包含`当前用户` 和 `当前 host 应用程序` 的 `PowerShell` 配置文件的完整路径.
+你可以在命令中使用这个变量来表示配置文件.
 例如, 你可以在命令中使用它来确定是否已经创建了一个配置文件.
 
 ```PowerShell
@@ -266,11 +266,11 @@ notepad.exe $PROFILE
 
 ## `$PSBoundParameters`
 
-`$PSBoundParameters` 包含传给`脚本`或`函数`的 `参数的字典`(hash-map), 以及它们的当前值. 
-这个变量只在声明该参数的范围内 有值, 比如脚本或函数. 
+`$PSBoundParameters` 包含传给`脚本`或`函数`的 `参数的字典`(hash-map), 以及它们的当前值.
+这个变量只在声明该参数的范围内 有值, 比如脚本或函数.
 你可以用它来显示或改变参数的当前值, 或者将参数值传递给另一个脚本或函数.
 
-在这个例子中, `Test2` 函数将 `$PSBoundParameters` 传递给 `Test1` 函数. 
+在这个例子中, `Test2` 函数将 `$PSBoundParameters` 传递给 `Test1` 函数.
 `$PSBoundParameters` 是以 `Key` 和 `Value` 的格式显示的.
 
 ```PowerShell
@@ -301,31 +301,31 @@ b     Shell
 
 + `$PSCmdlet` 包含一个代表 `正在运行` 的 cmdlet 或 高级函数的对象.
 
-你可以在你的 `cmdlet` 或函数代码中, 使用该对象的`属`性和`方法`来响应`使用条件`. 
-例如, `ParameterSetName` 属性包含正在使用的`参数集`的名称, 
+你可以在你的 `cmdlet` 或函数代码中, 使用该对象的`属`性和`方法`来响应`使用条件`.
+例如, `ParameterSetName` 属性包含正在使用的`参数集`的名称,
 `ShouldProcess` 方法动态地将 `WhatIf` 和 `Confirm` 参数添加到 cmdlet 中.
 
 关于 `$PSCmdlet` 自动变量的更多信息, 请参阅 about_Functions_CmdletBindingAttribute 和 [about_Functions_Advanced_Parameters][].
 
 + `$PSCommandPath` ; 包含`正在运行`的脚本的完整路径和文件名. 这个变量在所有脚本中都有效.
 
-+ `$PSCulture` ; 从 PowerShell 7 开始, `$PSCulture` 反映了当前 `PowerShell` 运行空间(会话)的文化. 
++ `$PSCulture` ; 从 PowerShell 7 开始, `$PSCulture` 反映了当前 `PowerShell` 运行空间(会话)的文化.
 如果 PowerShell 运行空间中的文化被改变, 该运行空间的 `$PSCulture` 值也会被更新.
 
-`culture` 决定了 `数字`, `货币` 和 `日期` 等项目的显示格式, 并被存储在 `System.Globalization.CultureInfo` 对象中. 
+`culture` 决定了 `数字`, `货币` 和 `日期` 等项目的显示格式, 并被存储在 `System.Globalization.CultureInfo` 对象中.
 使用 `Get-Culture` 来显示计算机的文化. `$PSCulture` 包含 `Name` 属性的值.
 
-+ 在调试时, `$PSDebugContext` 包含调试环境的信息. 否则, 它包含一个`null`值. 
-因此, 你可以用它来表示`debugger`是否有控制权. 
-当填充时, 它包含一个 `PsDebugContext` 对象, 它有 `Breakpoints` 和 `InvocationInfo` 属性. 
++ 在调试时, `$PSDebugContext` 包含调试环境的信息. 否则, 它包含一个`null`值.
+因此, 你可以用它来表示`debugger`是否有控制权.
+当填充时, 它包含一个 `PsDebugContext` 对象, 它有 `Breakpoints` 和 `InvocationInfo` 属性.
 `InvocationInfo` 属性有几个有用的属性, 包括 `Location` 属性. `Location` 属性表示被调试的脚本的路径.
 
-## `$PSHOME`,`$PSItem`,`$PSScriptRoot` 
+## `$PSHOME`,`$PSItem`,`$PSScriptRoot`
 
 + `$PSHOME` 包含 `PowerShell` 安装目录的完整路径,
 
-在 `Windows` 系统中通常为 `$env:windir\System32\PowerShell\v1.0`. 
-你可以在 `PowerShell` 文件的路径中使用这个变量. 
+在 `Windows` 系统中通常为 `$env:windir\System32\PowerShell\v1.0`.
+你可以在 `PowerShell` 文件的路径中使用这个变量.
 例如, 下面的命令在概念帮助主题中搜索`variable`这个词.
 
 ```PowerShell
@@ -337,25 +337,25 @@ Select-String -Pattern Variable -Path $pshome\*.txt
 + `$PSScriptRoot` ; 包含执行脚本的父目录的完整路径.
 在 PowerShell 2.0 中, 这个变量只在`脚本模块`(`.psm1`)中有效. 从PowerShell 3.0开始, 它在所有脚本中都有效.
 
-+ `$PSSenderInfo` ; 包含启动 `PSSession` 的用户的信息, 包括用户身份和`发送端`计算机的时区. 
++ `$PSSenderInfo` ; 包含启动 `PSSession` 的用户的信息, 包括用户身份和`发送端`计算机的时区.
 
 这个变量只在 `PSSession`中可用.
-`$PSSenderInfo` 变量包括一个用户可配置的属性, `ApplicationArguments`, 默认情况下, 它只包含来自起始会话的 `$PSVersionTable`. 
+`$PSSenderInfo` 变量包括一个用户可配置的属性, `ApplicationArguments`, 默认情况下, 它只包含来自起始会话的 `$PSVersionTable`.
 要向 `ApplicationArguments` 属性添加`数据`, 使用 `New-PSSessionOption` cmdlet的 `ApplicationArguments` 参数.
 
 + `$PSUICulture` ; 包含当前在操作系统中使用的用户界面(UI)文化的名称.
 
-`UI Culture` 决定了哪些文本字符串被用于用户界面元素, 如菜单和信息. 
-这是系统的 `System.Globalization.CultureInfo.CurrentUICulture.Name` 属性的值. 
+`UI Culture` 决定了哪些文本字符串被用于用户界面元素, 如菜单和信息.
+这是系统的 `System.Globalization.CultureInfo.CurrentUICulture.Name` 属性的值.
 要获得系统的 `System.Globalization.CultureInfo` 对象, 请使用 `Get-UICulture` cmdlet.
 
 ## `$PSVersionTable`,`$PWD`,`$Sender`
 
-包含一个只读的`哈希表`, 显示关于当前会话中正在运行的 `PowerShell` 版本的详细信息. 
+包含一个只读的`哈希表`, 显示关于当前会话中正在运行的 `PowerShell` 版本的详细信息.
 该表包括以下项目.
 
 + `PSVersion` ; `PowerShell` 的版本号
-+ `PSEdition` ; 对于 `PowerShell 4` 及以下版本, 以及全功能 `Windows` 版本的PowerShell 5.1, 该属性的值为`'Desktop'`. 
++ `PSEdition` ; 对于 `PowerShell 4` 及以下版本, 以及全功能 `Windows` 版本的PowerShell 5.1, 该属性的值为`'Desktop'`.
 对于 `PowerShell 6` 及以上版本以及在 `Windows Nano Server` 或 `Windows IoT` 等减缩版上的 `PowerShell PowerShell 5.1`, 该属性的值为 `Core`.
 + `GitCommitId` ; `源文件`的 commit id, 在 `GitHub` 中.
 + `OS` ; `PowerShell` 所运行的操作系统的描述.
@@ -367,25 +367,25 @@ Select-String -Pattern Variable -Path $pshome\*.txt
 
 + `$PWD` 包含一个路径对象, 表示当前 PowerShell 运行空间的, 当前目录位置的完整路径.
 
->注意:`PowerShell` 支持`每个进程`拥有多个`运行空间`(runspaces). 每个`运行空间`都有自己的 `当前目录`. 
+>注意:`PowerShell` 支持`每个进程`拥有多个`运行空间`(runspaces). 每个`运行空间`都有自己的 `当前目录`.
 >这与`进程`的`当前目录`不一样: `[System.Environment]::CurrentDirectory`.
 
-+ `$Sender` ; 包含产生此事件的`对象`. 
++ `$Sender` ; 包含产生此事件的`对象`.
 
-这个变量只在事件注册命令的 `Action` 块中被填充. 
+这个变量只在事件注册命令的 `Action` 块中被填充.
 这个变量的值也可以在 `Get-Event` 返回的 `PSEventArgs` 对象的 `Sender` 属性中找到.
 
 + `$ShellId` ; 包含当前`shell`的`标识符`.
 
 + `$StackTrace` ; 包含最近一次`错误`的`堆栈跟踪`(stack trace).
 
-## `$switch` 
+## `$switch`
 
-包含`枚举器`(enumerator), 不是 `Switch` 语句的结果值. `$switch` 变量只在 `Switch` 语句运行时存在; 
-当 `switch` 语句执行完毕时, 它将被删除. 
+包含`枚举器`(enumerator), 不是 `Switch` 语句的结果值. `$switch` 变量只在 `Switch` 语句运行时存在;
+当 `switch` 语句执行完毕时, 它将被删除.
 欲了解更多信息, 请参见 [about_Switch](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1).
 
-`枚举器`包含属性和方法, 你可以用来检索`循环值`和改变当前`循环迭代`. 
+`枚举器`包含属性和方法, 你可以用来检索`循环值`和改变当前`循环迭代`.
 更多信息, 请参见 [使用枚举器][].
 
 ## `$this`
@@ -397,7 +397,7 @@ Select-String -Pattern Variable -Path $pshome\*.txt
 
 `$input`, `$foreach`, 和 `$switch` 变量都是`枚举器`, 用于`遍历` 它们所包含的代码块要处理的值.
 
-`枚举器` 包含属性和方法, 你可以用来`推进`或`重置`迭代, 或检索迭代值. 
+`枚举器` 包含属性和方法, 你可以用来`推进`或`重置`迭代, 或检索迭代值.
 直接操作`枚举器`并不被认为是最佳做法.
 
 ### `$input`
@@ -410,13 +410,13 @@ Select-String -Pattern Variable -Path $pshome\*.txt
 + 在 `Process` 块中, `$input` 变量包含当前在 `管道` 中的对象.
 + 在 `End` 块中, `$input` 变量枚举, 该函数的所有`输入` 组成的集合.
 
->注意: 
+>注意:
 >你不能在同一个`函数`或`脚本块` 中的 `Process`块 和 `End`块中, 同时使用 `$input` 变量.
 
 因为 `$input` 是一个枚举器(enumerator), 访问它的任何属性都会导致 `$input` 不再可用.
 你可以将 `$input` 存储在另一个变量中, 以便重复使用 `$input` 的属性.
 
-枚举器包含属性和方法, 你可以用来检索`循环值`和改变当前循环的迭代. 
+枚举器包含属性和方法, 你可以用来检索`循环值`和改变当前循环的迭代.
 更多信息, 请参见 [使用枚举器][].
 
 当从命令行调用时, `$input` 变量也可用于 `pwsh` 的 `-Command` 参数指定的命令.
@@ -434,11 +434,11 @@ echo Hello | pwsh -Command ""$input World!""
 
 ### MoveNext
 
-`MoveNext` 方法将 `枚举器` 推进到集合的下一个元素. 
+`MoveNext` 方法将 `枚举器` 推进到集合的下一个元素.
 如果`枚举器`被成功推进, `MoveNext` 返回 `True`; 如果枚举器已经超过了集合的末端, 则返回 `False`.
 
 >注意:
-由 `MoveNext` 返回的`布尔值`被发送到`输出流`. 
+由 `MoveNext` 返回的`布尔值`被发送到`输出流`.
 你可以通过将其类型转换为`[void]`, 或将其输送到 `Out-Null` 来抑制输出.
 
 ```PowerShell
@@ -465,7 +465,7 @@ $input.MoveNext() | Out-Null # or
 
 ### 使用`$input`变量
 
-在下面的例子中, 访问 `$input` 变量会清除该变量, 直到下一次执行该`进程块`时, `$input` 才会被重新赋值. 
+在下面的例子中, 访问 `$input` 变量会清除该变量, 直到下一次执行该`进程块`时, `$input` 才会被重新赋值.
 使用 `Reset` 方法将 `$input` 变量重置为当前管道值.
 
 ```powershell
@@ -569,10 +569,10 @@ After MoveNext:
 
 ### 使用`$input.Current`属性
 
-通过使用 `Current` 属性, 可以多次访问当前的`管道值`, 而无需使用 `Reset` 方法. 
+通过使用 `Current` 属性, 可以多次访问当前的`管道值`, 而无需使用 `Reset` 方法.
 过程块不会自动调用 `MoveNext` 方法.
 
-除非你明确地调用 `MoveNext`, 否则 `Current` 属性将永远不会被填充. 
+除非你明确地调用 `MoveNext`, 否则 `Current` 属性将永远不会被填充.
 在进程块内可以多次访问 `Current` 属性, 而不清除其值.
 
 ```powershell
@@ -609,14 +609,14 @@ Iteration: 1
 
 ### 使用`$foreach`变量
 
-与 `$input` 变量不同, 在直接访问时, `$foreach` 变量总是代表集合中的所有项目. 
+与 `$input` 变量不同, 在直接访问时, `$foreach` 变量总是代表集合中的所有项目.
 使用 `Current` 属性来访问当前的集合元素, 并使用 `Reset` 和 `MoveNext` 方法来改变其值.
 
 >注意:
 >`foreach` 循环的每一次迭代都会自动调用 `MoveNext` 方法.
 
-下面这个循环只执行了两次. 
-在第二次迭代中, 集合在迭代完成前被移动到第三个元素. 
+下面这个循环只执行了两次.
+在第二次迭代中, 集合在迭代完成前被移动到第三个元素.
 在第二次迭代之后, 现在已经没有更多的值可以迭代了, 循环终止.
 
 `MoveNext` 属性并不影响, 被选择在集合上迭代的变量(`$Num`).
@@ -651,8 +651,8 @@ After MoveNext (Current): three
 Num has not changed: two
 ```
 
-使用 `Reset` 方法可以重置集合中的`当前元素`. 
-下面的例子在前两个元素中循环了两次, 因为调用了 `Reset` 方法. 
+使用 `Reset` 方法可以重置集合中的`当前元素`.
+下面的例子在前两个元素中循环了两次, 因为调用了 `Reset` 方法.
 在前两次循环后, `if` 语句失效, 循环正常遍历所有三个元素.
 
 >重要:
