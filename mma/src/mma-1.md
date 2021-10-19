@@ -215,9 +215,8 @@ wolframscript.exe -print all -file .\test.wl para1 para2
 ```
 
 ***
-`unix`: 通过加上`#!/usr/bin/env wolframscript -print all`,
-运行的时候, 不用输入`wolframscript`,
-传递参数的方法不变
+`unix`: 通过加上`#!/usr/bin/env wolframscript -print all`,运行的时候, 不用输入`wolframscript`,
+传递参数的方法不变.
 
 ```bash
 ./test.wl para1 para2
