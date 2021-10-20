@@ -178,6 +178,218 @@ Out[3]= {0.055431, {{0.310021, 0.500236, 0.749769, 0.408784},...}}
 
 ## SetSharedVariable
 
+    SetSharedFunction[Subscript[f, 1],Subscript[f, 2],...]
+
+声明符号 `f_i` 为共享函数, 其 `下值`(downvalues), 在所有并行内核中同步.
+
+在`任何内核上`(主核,或从核)定义的`共享函数`的 `下值`都由 `主内核`维护, 在 `并行子内核`上的每一次访问都通过主内核进行`同步`.
+`f[...]` 形式的表达式如果计算不出值, 就会返回 `Null`.
+
+### scope
+
++ 定义一个 `共享函数`, 来操作 `主内核`上的局部变量`results`.
+
+```mathematica
+append[res_] := (AppendTo[results, res];)
+SetSharedFunction[append]
+```
+
+从子核中调用该函数:
+
+```mathematica
+results = {};
+ParallelDo[If[PrimeQ[2^i + 1], append[i]], {i, 5000}]
+```
+
+主核上的变量已被修改:
+
+```mathematica
+result
+Out[3]= {1, 2, 4, 8, 16}
+```
+
+### Generalizations & Extensions
+
+在主内核上, 为一个共享函数作`延迟定义`(delayed definition):
+
+```mathematica
+SetSharedFunction[f1]
+f1[n_] := n*$KernelID
+```
+
+这样的定义总是在主内核上被计算, 无论在哪个子内核计算它:
+
+```bash
+ParallelMap[f1, Range[4]]
+Out[3]= {0, 0, 0, 0}
+```
+
+在某个并行`子内核`上, 作共享函数的定义:
+
+```mathematica
+SetSharedFunction[f2]
+ParallelEvaluate[f2[n_] := n*$KernelID, First[Kernels[]]]
+```
+
+这样的定义, 总是在请求返回值的那个内核上被计算, 也就是子核自己计算, 所有的子核都有自己的计算.
+
+```mathematica
+ParallelMap[f2, Range[4]]
+Out[6]= {4, 6, 6, 4}
+```
+
+### Applications
+
+Shared functions can be used for synchronization:
+
+```mathematica
+In[1]:= mlist = {};
+include[e_] := (mlist = Union[mlist, {e}];)
+SetSharedFunction[include]
+In[2]:= ParallelDo[include[RandomInteger[10]], {10}]
+In[3]:= mlist
+Out[3]= {2, 4, 5, 6, 8, 9}
+Less efficient is the use of a shared variable and critical section:
+In[4]:= slist = {}; SetSharedVariable[slist];
+Clear[lock]
+In[5]:= ParallelDo[e = RandomInteger[10];
+ CriticalSection[{lock}, slist = Union[slist, {e}]], {10}]
+In[6]:= slist
+Out[6]= {1, 2, 3, 5, 7, 8, 9}
+```
+
++ 简单数据类型(栈)的构造函数(constructor):
+
+```mathematica
+newList[list_Symbol] := Module[{data = {}},  list[push, e_] := (AppendTo[data, e];);(* 压入数据*)
+
+  list[pop] :=  If[Length[data] == 0, $Failed,   With[{e = First[data]}, data = Rest[data]; e]];
+  (*弹出数据, 如果末尾则返回失败*)
+  list[] := data;(*提取出数据*)
+    list](*返回构造的队列数据, 以及方法*)
+
+(*创建两个共享的队列 queues *)
+newList[input]; SetSharedFunction[input]
+newList[input]; SetSharedFunction[input]
+(*填充输入队列 queue*)
+newList[input]; SetSharedFunction[input]
+
+(*在输入队列的元素上并行工作, 并将结果放入输出队列. *)
+numberOfPrimes[n_] := Total[FactorInteger[e! + 1][[All, 2]]];
+DistributeDefinitions[numberOfPrimes](*将定义发送到各个从核*)
+(*当 input 队列没有穷尽, 就持续弹出栈中数据*)
+
+ParallelEvaluate[   While[(e = input[pop]) =!= $Failed,
+ output[push, {e, numberOfPrimes[e! + 1]}]]];
+ output[]
+```
+
++ asdfsadfdas
+
+```mathematica
+(*Use a single shared function to communicate both input and result:*)
+
+record[0, _] := next++;
+record[n_, nf_] := (results[n] = nf; next++)
+SetSharedFunction[record]
+
+(*Set up a search and display its progress until it is manually aborted:*)
+first = next = 100; Clear[results];
+results[_] := "\[WatchIcon]";
+PrintTemporary[(*暂时输出, 计算完成后删除*)
+
+Dynamic[{next, Array[results, next - first, first]}](* Array[f,  length,origin] *)];(*动态展示表达式*)
+CheckAbort[(* 如果检测到终止, 返回 null, 但不 abort,继续运行 *)
+ ParallelEvaluate[Module[{next = 0, res},
+   While[True, next = record[next, res];    res = Total[FactorInteger[2^next + 1][[All, 2]]]]
+   ]], Null]
+
+(*The results found so far\[LongDash]a list of the number of factors of 2^n+1:*)
+Style[Table[{n, results[n]}, {n, first, next}], Small]
+```
+
+### properties & relations
+
+```mathematica
+(*Use a shared append function for a local variable to collect results:*)
+append[res_] := (AppendTo[localres, res];)
+SetSharedFunction[append]
+localres = {};
+ParallelDo[If[PrimeQ[2^i + 1], append[i]], {i, 1000}];
+localres
+
+(*Using AppendTo on a shared variable has the same effect:*)
+SetSharedVariable[sharedres]
+sharedres = {};
+ParallelDo[If[PrimeQ[2^i + 1], AppendTo[sharedres, i]], {i, 1000}];
+sharedres
+```
+
+### Possible Issues  
+
+A shared function is inefficient for mere code distribution and leads to sequential evaluation:
+
+```
+In[1]:= nfs[n_] := Total[FactorInteger[2^n + 1][[All, 2]]];SetSharedFunction[nfs]
+In[2]:= AbsoluteTiming[ ParallelMap[nfs, Range[140, 160], Method -> "FinestGrained"]]
+Out[2]= {3.136468, {4, 7, 6, 7, 7, 6, 5, 7, 2, 5, 14, 3, 4, 11, 9, 6, 5, 5, 4,   6, 4}}
+(*Simply distribute the definitions of any function needed on the parallel kernels:*)
+In[3]:= nfu[n_] := Total[FactorInteger[2^n + 1][[All, 2]]];
+DistributeDefinitions[nfu]
+In[4]:= AbsoluteTiming[ ParallelMap[nfu, Range[140, 160], Method -> "FinestGrained"]]
+Out[4]= {1.961938, {4, 7, 6, 7, 7, 6, 5, 7, 2, 5, 14, 3, 4, 11, 9, 6, 5, 5, 4,   6, 4}}
+```
+
+Separate read and write operations on a shared variable are not thread-safe:
+
+In[1]:= ns = 0; SetSharedVariable[ns]
+In[2]:= ParallelEvaluate[ns = 2 ns + $KernelID]
+Out[2]= {1, 2, 3, 4}
+In[3]:= ns
+Out[3]= 4
+
+Use a shared function to synchronize access to an (unshared) variable:
+
+In[4]:= nu = 0;
+update[kid_] := (nu = 2 nu + kid);
+SetSharedFunction[update]
+In[5]:= ParallelEvaluate[update[$KernelID]]
+Out[5]= {1, 4, 11, 26}
+In[6]:= nu
+Out[6]= 26
+
+Alternatively, use CriticalSection to make a whole code section atomic:
+
+In[7]:= ns = 0; SetSharedVariable[ns]; Clear[nlock]
+In[8]:= ParallelEvaluate[CriticalSection[{nlock}, ns = 2 ns + $KernelID]]
+Out[8]= {1, 4, 11, 26}
+In[9]:= ns
+Out[9]= 26
+
+Parallel dynamic programming:
+
+```mathematica
+In[1]:= SetSharedFunction[fib];
+fib[1] = fib[2] = 1;
+In[2]:= ParallelEvaluate[fib[n_] := fib[n] = fib[n - 1] + fib[n - 2],
+ First[Kernels[]]]
+In[3]:= ParallelTable[fib[i], {i, 10}]
+Out[3]= {1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
+In[4]:= Definition[fib]
+Out[4]= Definition[fib]
+```
+
+### Neat Examples
+
+A parallel version of Sow:
+
+```
+In[1]:= sow[e_] := Sow[e];
+SetSharedFunction[sow]
+In[2]:= Reap[ParallelDo[sow[$KernelID], {10}]]
+Out[2]= {Null, {{4, 3, 2, 1, 4, 3, 2, 1, 4, 3}}}
+```
+
 ## 虚拟共享内存
 
 ### 同步

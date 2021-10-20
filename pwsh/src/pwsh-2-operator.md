@@ -341,7 +341,7 @@ Select-String -Path .\*.txt -Pattern 'Get-'
 欲了解更多信息, 请参见about_Quoting_Rules.
 + `-NotMatch` ; 查找与指定模式不匹配的文本.
 
-### equality运算符
+### -eq,equality运算符
 
 [about_Comparison_Operators](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_comparison_operators)
 
@@ -362,7 +362,7 @@ Out:Object[]
 
 有几个例外情况.
 
-+ `containment `和`type `类型运算符总是返回一个`布尔值`
++ `包含 `和 `type ` 类型运算符总是返回一个`布尔值`
 + `-replace`操作符返回替换结果
 + 除非表达式的左边是一个集合, 否则`-match`和`-notmatch`操作符还会填充`$Matches`自动变量.
 
@@ -380,7 +380,7 @@ Out:Object[]
 "abc" -ne "abc", "def"  # Output: True
 ```
 
-当左手边是一个集合时, `-eq`返回那些与右手边匹配的成员, 而`-ne`则过滤掉它们.
+当左手边是一个`集合`时, `-eq`返回那些与右手边匹配的成员, 而`-ne`则过滤掉它们.
 
 ```powershell
 1,2,3 -eq 2             # Output: 2
