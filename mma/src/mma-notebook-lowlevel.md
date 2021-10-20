@@ -1,154 +1,6 @@
-# mathematica
+# 笔记本底层结构
 
-## snippet
-
-### position
-
-```mathematica
-pos[e_, f_] := 
- Module[{posR}, 
-  posR[expr_, form_, i_] := 
-   DeleteCases[(*从列表末尾开始递归*)
-    If[! AtomQ@expr[[i]],(*如果不是基元,递归下一层*)
-     Join[posR[expr, form, i - 1],(*还未处理的部分*)
-      Prepend[#, i] & /@ 
-       posR[expr[[i]], form, Length@expr[[i]]]],(*如果是基元*)
-     If[i > 1,(*如果还没有循环到 first 元素*)
-      If[MatchQ[expr[[i]], form], 
-       Append[posR[expr, form, i - 1], {i}],(*匹配则添加指标*)
-       posR[expr, form, i - 1] (*不匹配则循环上一个元素*)],(*如果循环到了 First 元素*)
-      If[MatchQ[First@expr, form], {{1}}, {{Missing}}](*递归结束点,匹配返回{1},
-      否则返回 Missing*)]], {___, Missing}(*删除失败的匹配*)];
-  posR[e, f, e // Length]]
-(*+++++++++++++++++++++测试+++++++++++++++++++++*)
-Echo[test = RandomInteger[9, {5, 5, 5}]];
-pos[test, 1] // AbsoluteTiming
-Position[test, 1] // AbsoluteTiming
-```
-
-## 坐标变换
-
-+ 一般性的教程在: tutorial/ChangingCoordinateSystems
-
-+ 使用`CoordinateChartData`查看某种坐标的数据, 如查看球坐标的度规:
-
-```mathematica
-CoordinateChartData["Spherical", "Metric", {r, \[Theta], \[CurlyPhi]}]
-```
-
-+ 使用`CoordinateTransformData`查看坐标变换的数据, 例如新旧坐标间的映射矩阵, 以及新旧正交基之间的变换矩阵.
-
-```mathematica
-CoordinateTransformData[ "Spherical" -> "Cartesian", "Mapping", {r, \[Theta], \[CurlyPhi]}]
-```
-
-+ 使用`TransformedField`对函数进行坐标变换, 得到新的坐标系下的函数. 例如:
-
-```mathematica
-TransformedField["Polar" -> "Cartesian",  r^2 Cos[\[Theta]], {r, \[Theta]} -> {x, y}]
-```
-
-+ 使用`CoordinateTransform`对离散的点进行坐标变换, 例如: 
-
-```mathematica
-CoordinateTransform[ "Polar" -> "Cartesian", {r, \[Theta]}]
-CoordinateTransform[{"Cartesian" -> "Polar", 2}, {1, -1}]
-```
-
-## 图像处理
-
-### 图像平滑
-
-guide/ImageRestoration
-
-图像邻域处理
-guide/ImageFilteringAndNeighborhoodProcessing
-
-## 颜色
-
-### ColorData
-
-mathematica 有一些默认的颜色集合, 可以通过 `ColorData` 调用, 可以用整数指定索引, 例如`ColorData[63]`.
-在`LineLegend`这样的函数中, 如果在颜色参数的位置给一个整数, 会自动调用`ColorData[..]`.
-
-## 群论
-
-### 置换群
-
-#### Permute,置换操作
-
-置换可以表示成置换列表的形式, 即对`{1,2,3,..}`的重排结果.
-也可以表示成不相连循环的形式, 即类似`{123}{45}{78}`, 每一组内部独立进行轮换.
-
-+ `Permute[expr,perm]` ; 根据置换 `perm` 对 `expr`元素的位置进行排列.
-+ `Permute[expr,gr]` ; 返回 `expr` 在置换群`gr`的元素作用下形式.
-
-+ `Permute`适用于任何非原子表达式, 对表达式的第一层进行操作.
-+ `permute`对表达式的元素进行重新排序, 但不改变其长度.
-+ 置换`perm`可以用不相连的轮换形式给出, 或者以置换列表的形式给出.
-+ 当`perm`以循环形式给出时 `Cycles[cyc1,cyc2,...]}]`, 轮换 `{p1,p2}`以循环的方式移动`expr`的元素, 使`expr[[pi]`被移动到位置`p(i+1)`.
-+ 当`perm` 以置换列表的形式给出, 其结果等同于使用 `Permute[expr, PermutationCycles[perm] ]`.
-+ 置换群 `gr` 可以由生成元指定, 头部为 `PermutationGroup`, 或者用名称指定, 头部为 `SymmetricGroup`, `AlternatingGroup`, ...
-
-```mathematica
-Permute[{a, b, c, d, e}, Cycles[{{1, 3, 2}}]]
-{b, c, a, d, e}
-```
-
-#### Cycles,轮换的表示
-
-+ `Cycles[ {cyc1, cyc2, ... }]` ; 代表一个具有不相连轮换`cyci`的置换.
-+ 置换中的循环`cyc1]`是用正整数列表的形式给出的, 代表置换作用的位置.
-+ 循环`{p1, p2, ..., pn}` 代表把`pi`映射到`p(i+1)`. 最后一个点`pn`被映射到`p1`.
-+ 不包括在任何循环中的点被认为映射到它们自己.
-+ 循环必须是不相交的, 也就是说, 它们必须没有公共点, 参数必须都是正整数.
-+ 循环对象被自动正规化, 通过丢弃空循环和单一循环, 旋转每个循环使最小的点先出现. 并按第一个点对多个循环排序.
-+ `Cycles[{}]`代表恒等置换.
-
-#### 置换形式的转换
-
-+ `PermutationCycles[perm]`; 给出置换 `perm` 的不相交的轮换表示.
-
-+ 输入的 `perm` 可以是一个置换列表, 也可以是不相连的循环.
-+ 置换列表是连续正整数`{1,2,..,n}`的重新排序.
-+ `PermutationCycles[perm]`返回一个表达式, 头部是`Cycles`, 并包含循环的列表, 每个循环的形式为`{p1, p2, ..., pn}`, 它表示`pi`到`p(i+1)`的映射.
-最后一点`pn`被映射到`p1`.
-+ `PermutationCycles[perm,h]`返回一个头部为`h`的表达式.
-+ `PermutationCycles`的结果自动正规化, 通过旋转每个循环使最小的点出现在前面, 并通过首位的点对循环进行排序.
-
-```mathematica
-PermutationCycles[{2, 5, 3, 6, 1, 8, 7, 9, 4, 10}]
-Cycles[{{1, 2, 5}, {4, 6, 8, 9}}]
-```
-
-+ `PermutationList[perm]` ; 给出置换`perm` 的置换列表形式.
-
-+ `PermutationList[perm,len]`; 返回一个长度为 `len` 的置换列表.
-+ 置换`perm`的输入形式可以是置换列表, 也可以是不相连的循环.
-+ `PermutationList` 也可以作用到 `SparseArray` 对象上.
-
-```mathematica
-PermutationList[Cycles[{{3, 2}, {1, 6, 7}}]]
-{6, 3, 2, 4, 5, 7, 1}
-```
-
-#### 生成置换组合
-
-`Permutations[list]`; 生成 `list` 中元素的所有可能的排列组合的列表.
-`Permutations[list,n]` ; 给出所有最多包含 `n` 个元素的排列组合.
-`Permutations[list,{n}]` ; 给出所有正好包含 `n` 个元素的排列组合.
-`Signature[list]`; 给出置换的`signature`, 这个置换能把列表中的元素恢复成标准顺序.
-
-### 置换的运算
-
-`PermutationProduct `
-`InversePermutation`
-`PermutationPower`
-`FindPermutation`
-
-## 笔记本底层结构
-
-### 通过内核操作笔记本
+## 通过内核操作笔记本
 
 tutorial/ManipulatingNotebooksFromTheKernel
 
@@ -168,45 +20,45 @@ tutorial/ManipulatingNotebooksFromTheKernel
 + `CurrentValue[obj,option]=rhs` 给出并且设置 option 的值
 + `SetOptions[obj,option->value]` 设置选项的值
 
-这里改变屏幕上当前所选笔记本的尺寸: 
+这里改变屏幕上当前所选笔记本的尺寸:
 
 ```mathematica
 SetOptions[InputNotebook[], WindowSize -> {250, 100}]
 ```
 
-另一方面, 可以使用 CurrentValue 直接获得 WindowSize 的选项值: 
+另一方面, 可以使用 CurrentValue 直接获得 WindowSize 的选项值:
 
 ```mathematica
 CurrentValue[InputNotebook[], WindowSize]
 ```
 
-这里对 CurrentValue 使用简单的赋值来改变选项: 
+这里对 CurrentValue 使用简单的赋值来改变选项:
 
 ```mathematica
 CurrentValue[InputNotebook[], WindowSize] = {400, 300}
 ```
 
-#### 通过内核移动笔记本
+### 通过内核移动笔记本
 
 在任何打开的笔记本中, 前端总是保持当前的选择, 这个选择由一个单元中的文本区域组成, 或者是由这个单元组成.
 通常这个选择在屏幕上是由一个高亮度形式表明. 这个选择也可以在文本的两个字符之间, 或者在两个单元之间, 这时它在屏幕上由两个竖直或水平的插入杠来表明.
 
-#### 查找笔记本的内容
+### 查找笔记本的内容
 
-将当前选择移到前一个词 `cell` 出现的位置: 
+将当前选择移到前一个词 `cell` 出现的位置:
 
 ```mathematica
 NotebookFind[nb,"cell",Previous]
 ```
 
-#### 为整个笔记本和当前选择寻找和设置选项
+### 为整个笔记本和当前选择寻找和设置选项
 
 + `Options[obj,option]`  找出完整笔记本的一个选项值
 + `Options[NotebookSelection[obj],option]`  找出当前选择的值
 + `SetOptions[obj,option->value]` 设置完整的笔记本的一个选项值
 + `SetOptions[NotebookSelection[obj],option->value]`  设置当前选择的值
 
-#### 以整个笔记本为对象的操作:
+### 以整个笔记本为对象的操作:
 
 + `CreateWindow[]`  产生一个新笔记本
 + `CreateWindow[options]`  产生一个具有指定选项的笔记本
@@ -225,7 +77,7 @@ NotebookFind[nb,"cell",Previous]
 执行 `SetSelectedNotebook` 和 `NotebookOpen` 等指令时, 就是让 Wolfram 语言改变所看到的窗口.
 在`NotebookOpen` 和 `CreateWindow` 中使用选项设置 `Visible->False` 可以处理笔记本, 但不将它显示在屏幕上.
 
-#### 通过内核操作前端
+### 通过内核操作前端
 
 + `$FrontEnd`  当前使用的前端
 + `Options[$FrontEnd,option]`  前端全局选项的设置
@@ -233,7 +85,7 @@ NotebookFind[nb,"cell",Previous]
 + `SetOptions[$FrontEnd,option->value]`  在前端重设选项
 + `CurrentValue[$FrontEnd, option]`  返回选项值, 当用于赋值的左边时, 允许设置选项.
 
-### 在前端操作全局选项
+## 在前端操作全局选项
 
 + 前端令牌; 通过前端令牌, 用户可以执行通常情况下使用菜单才能实现的内核命令. 前端令牌对于编写操作笔记本的程序特别方便.
 
@@ -244,7 +96,7 @@ NotebookFind[nb,"cell",Previous]
 FrontEndExecute[FrontEndToken["New"]]
 ```
 
-#### 在前端直接执行笔记本指令
+### 在前端直接执行笔记本指令
 
 在执行 `NotebookWrite[obj,data]` 等指令时, 向笔记本中插入数据的实际操作是在前端进行的. 但为了估算原来的指令和构造送向前端的适当请求, 还是要使用内核的. 不过, 前端可以直接执行一定量的指令, 而不需涉及内核.
 
@@ -262,7 +114,7 @@ FrontEnd`NotebookWrite[obj,data] 在前端直接执行的 NotebookWrite 版本�
 
 在书写操纵笔记本的精细复杂的程序时, 这些程序必须在内核执行但对于通过简单按钮所进行的运算, 可以在前端直接执行所需要的所有指令, 甚至不需要运行内核.
 
-#### 复合令牌
+### 复合令牌
 
 复合令牌有可以使用令牌参数来控制其行为的某些方面. 对于复合令牌, `FrontEndToken`的三个参数必须是一个`NotebookObject`, `前端令牌`和选定的`令牌参数`.
 例如, 以下命令将选定的笔记本保存为纯文本.
@@ -274,7 +126,7 @@ FrontEndExecute[{FrontEndToken[FrontEnd`InputNotebook[], "SaveRenameSpecial", "T
 此外, 使用内核命令也能保存笔记本, 但只能保存为`.nb`格式.
 `NotebookSave[notebook,"file"]`; 将笔记本保存到特定的文件当中.
 
-### 前段令牌和命令的对应关系
+## 前段令牌和命令的对应关系
 
 `FrontEndToken[]`命令的帮助页面提到, `前段令牌`和`菜单项`或`键盘快捷键`之间的映射在`前端文本资源`中定义.
 在笔记本中输入`$InstallationDirectory // SystemOpen` 命令打开安装目录. 例如`/usr/local/Wolfram/Mathematica/12.2/`
@@ -338,29 +190,3 @@ FrontEndTokenExecute[FrontEnd`InputNotebook[],"SaveRename", {"/../test.wl", "Pac
 + 这相当于手动执行`文件>另存为...`选择`Mathematica软件包(*.m)`, 保存笔记本的`初始化单元`. 而其他单元被保存为`(*注释*)`, 后者在脚本中调用的时候不会执行.
 + 如果您不提供文件路径, 文件将被保存在`$HomeDirectory`中, 这通常不是您想要的地方.
 + 如果文件不能被保存, 不会发出警告信息.
-
-## FeynCalc
-
-### FeynArts
-
-[FeynArts in FeynCalc](https://github.com/FeynCalc/feyncalc/wiki/FeynArts)
-
-如果你使用自动安装程序安装`FeynCalc`的稳定版或开发版, 你会被问到是否应该下载和修补最新版本的`FeynArts`. 因此, 不需要额外的步骤.
-然而, 你可能会想更新你的`FeynArts`版本而不重新安装`FeynCalc`. 在这种情况下, 请遵循以下步骤.
-
-下载最新版本的`FeynArts`, 并将`tarball`解压到
-
-```mathematica
-<< FeynCalc`
-Print[$FeynArtsDirectory]
-```
-
-启动 `Mathematica` 并输入
-
-```mathematica
-$LoadFeynArts = True;
-<<FeynCalc`;
-```
-
-将出现一个对话框, 询问您是否要对`FeynArts`打补丁. 点击确定, 等到修补过程结束.
-重启`Mathematica`内核, 并尝试运行一些示例代码(点击`FeynCalc`加载时出现的横幅上的示例链接). 确保一切都能正确运行, 没有任何警告和错误.
