@@ -1,7 +1,10 @@
-# 并行计算
+# 并行计算--内置函数
 
-ParallelTools/tutorial/Overview
-ParallelTools/tutorial/ConcurrencyManagingParallelProcesses
+## Parallelize
+
+    Parallelize[expr]
+
+使用 `自动并行化` 来运算 `expr`.
 
 `Parallelize`是偏底层的函数, `ParallelTable`,`ParallelMap`是偏上层的函数.
 `Parallelize`的默认选项, `DistributedContexts:>$Context`,它分配当前`context`中所有符号的定义, 但不分配`packages`中符号的定义.
@@ -15,12 +18,6 @@ ParallelTools/tutorial/ConcurrencyManagingParallelProcesses
 `DistributeDefinitions`会递归的运行,  `s1,s2`依赖的符号也会被分配.
 
 `DistributeDefinitions[expr]`会分配`expr`中所有符号的定义.
-
-## Parallelize
-
-    Parallelize[expr]
-
-使用 `自动并行化` 来运算 `expr`.
 
 ### Details
 
@@ -187,128 +184,158 @@ Parallelize[{a`f[1], b`f[1]}, DistributedContexts -> Automatic]
 
 #### method
 
-Break the computation into evaluations of at most 5 elements each:
+将`computation`分成最多五个元素的`evaluations`:
 
-Parallelize[Table[Labeled[Framed[i], $KernelID], {i, 18}],
- Method -> "ItemsPerEvaluation" -> 5]
+```mathematica
+Parallelize[Table[Labeled[Framed[i], $KernelID], {i, 18}], Method -> "ItemsPerEvaluation" -> 5]
+```
 
-Calculations with vastly differing runtimes should be parallelized as finely as possible:
+对于运行时间相差悬殊的计算, 应该尽可能`精细地`进行并行化:
 
-Parallelize[Select[Range[4000, 5000], PrimeQ[2^# - 1] &],
- Method -> "FinestGrained"]
+```mathematica
+Parallelize[Select[Range[4000, 5000], PrimeQ[2^# - 1] &],Method -> "FinestGrained"]
+```
 
-A large number of simple calculations should be distributed into as few batches as possible:
+大量的简单计算应该被分配到尽可能少的 `batches` 中:
 
-BinCounts[
- Parallelize[Map[Mod[Floor[#*Pi], 10] &, Range[10000]],
-  Method -> "CoarsestGrained"], {0, 10}]
+```mathematica
+BinCounts[ Parallelize[Map[Mod[Floor[#*Pi], 10] &, Range[10000]],  Method -> "CoarsestGrained"], {0, 10}]
+```
 
 ### Applications
 
-Watch the results appear as they are found:
+当找到结果时, 进行展示:
 
+```mathematica
 SetSharedVariable[primes]
 primes = {};
 Monitor[Parallelize[
-   Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &,
+    Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &,
     Range[1000, 5000]], Method -> "FinestGrained"], primes];
 primes
+```
 
 ### Properties
 
-For data parallel functions, Parallelize is implemented in terms of ParallelCombine:
+对于`数据`并行函数, `Parallelize` 是以 `ParallelCombine` 的方式实现的.
+下面的表达式具有相同的效果:
 
+```mathematica
 Parallelize[Select[Range[100], PrimeQ]]
 ParallelCombine[Select[#, PrimeQ] &, Range[100]]
 
 Parallelize[Count[Range[100], _?PrimeQ]]
 ParallelCombine[Count[#, _?PrimeQ] &, Range[100], Plus]
+```
 
-Parallel speedup can be measured with a calculation that takes a known amount of time:
+`并行`的加速效果, 可以用一个已知时间的`计算`来衡量:
 
+```mathematica
 AbsoluteTiming[Parallelize[Table[Pause[1]; $KernelID, {8}]]]
+```
 
-For functions from a package, use ParallelNeeds rather than DistributeDefinitions:
+对于来自`package`的函数, 使用 `ParallelNeeds` 而不是 `DistributeDefinitions`:
+
+```mathematica
 Needs["FiniteFields`"]
 Table[GF[7][{3}]^i, {i, 7}]
 ParallelNeeds["FiniteFields`"]
 Parallelize[Table[GF[7][{3}]^i, {i, 7}]]
+```
 
-Set up a random number generator that is suitable for parallel use and initialize each kernel:
+设置一个适合并行使用的随机数发生器, 并初始化每个内核:
 
-ParallelEvaluate[
-  SeedRandom[1,
-   Method -> {"ParallelMersenneTwister", "Index" -> $KernelID}]];
+```mathematica
+ParallelEvaluate[SeedRandom[1,Method -> {"ParallelMersenneTwister", "Index" -> $KernelID}]];
 Join @@ ParallelEvaluate[RandomReal[1, 10]]
+```
 
 ### Possible Issues
 
-Expressions that cannot be parallelized are evaluated normally:
+不能被`并行化`的表达式, 会进行普通计算.
 
+```mathematica
 Parallelize[Integrate[1/(x - 1), x]]
 Parallelize::nopar1:.... cannot be parallelized; proceeding with sequential evaluation.
 
 Parallelize[Map[f, {a, b, c}, 0]]
-
 Parallelize::nopar1: Map[f,{a,b,c},0] cannot be parallelized; proceeding with sequential evaluation.
+```
 
+并行计算的函数不能使用副作用:
 Side effects cannot be used in the function mapped in parallel:
 
+```mathematica
 primes = {};
 Parallelize[
   Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &, Range[1000, 4000]]];
 primes
+```
 
-Use a shared variable to support side effects:
+使用 `shared variable` 来实现副作用:
 
+```mathematica
 SetSharedVariable[primes]
 primes = {};
 Parallelize[
   Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &, Range[1000, 4000]]];
 primes
+```
 
-If no subkernels are available, the result is computed on the master kernel:
+如果没有`子核`可用, 结果就在`主核`上计算:
 
+```mathematica
 CloseKernels[];
 Parallelize[Map[f, {a, b, c}]]
+```
 
-If a function used is not distributed first, the result may still appear to be correct:
-Only if the function is distributed is the result actually calculated on the available kernels:
+如果使用的函数没有预先 `distributed`, 结果可能仍然看起来是正确的:
+但只有当函数被`分发`之后, 结果才会在可用的内核上实际计算. 
 
-Definitions of functions in the current context are distributed automatically:
-Definitions from contexts other than the default context are not distributed automatically:
-Use DistributeDefinitions to distribute such definitions:
+当前上下文中的函数定义是自动分布的.
+来自默认上下文以外的上下文的定义不会被自动分发.
+使用 `DistributeDefinitions` 来分发这些定义:
 
+```mathematica
 DistributeDefinitions[ctx`gtest];
 Parallelize[Map[ctx`gtest, Range[1275, 1285]]]
+```
 
-Alternatively, set the DistributedContexts option to include all contexts:
+或者, 将 `DistributedContexts` 选项设置为包括所有上下文, 通过 `Automatic` :
 
+```mathematica
 cty`gtest[n_] := Labeled[Framed[PrimeQ[2^n - 1]], $KernelID]
-Parallelize[Map[cty`gtest, Range[1275, 1285]],
- DistributedContexts -> Automatic]
+Parallelize[Map[cty`gtest, Range[1275, 1285]],  DistributedContexts -> Automatic]
+```
 
-Symbols defined only on the subkernels are not distributed automatically:
+只在`子核`上定义的符号不会自动分发:
 
+```mathematica
 ParallelEvaluate[h[i_] := {i, $KernelID}];
 Parallelize[Map[h, Range[8]]]
+```
 
-The value of $DistributedContexts is not used in Parallelize:
++ `Parallelize` 中不使用 `$DistributedContexts` 的值:
 
-Restore all settings to their default values:
++ 将所有设置恢复为默认值:
 
+```mathematica
 $DistributedContexts := $Context
 SetOptions[Parallelize, DistributedContexts :> $Context]
+```
 
-Trivial operations may take longer when parallelized:
+琐碎的操作在并行化时, 可能反而需要更长的时间:
 
+```mathematica
 AbsoluteTiming[Parallelize[Table[N[Sin[x]], {x, 0, 1000}]];]
 AbsoluteTiming[Table[N[Sin[x]], {x, 0, 1000}];]
+```
 
-### Neat
+### Neat examples
 
-Display nontrivial automata as they are found:
+在发现非平庸(nontrivial)自动机时显示它们:
 
+```mathematica
 Module[{auto = {}}, SetSharedVariable[auto];
  (* Progress *)
 
@@ -330,6 +357,7 @@ Module[{auto = {}}, SetSharedVariable[auto];
 
  GraphicsGrid[Partition[auto, 3, 3, 1, {}], Frame -> All,
   ImageSize -> 500]]
+```
 
 ## ParallelNeeds
 
@@ -337,55 +365,6 @@ Module[{auto = {}}, SetSharedVariable[auto];
 
 在主核加载:`Needs["ComputerArithmetic`"]`
 在所有子核加载: `ParallelNeeds["ComputerArithmetic`"]`
-
-## 配置和监控运行
-
-常用的管理多核的函数及变量为:
-
-+ `LaunchKernels`: 启动子核
-+ `AbortKernels`-- 停止所有子核上的运算
-+ `CloseKernels`: 关闭所有子核
-+ `$KernelCount`:目前运行的子核数量.
-+ `Kernels`: 列出正在运行的子核
-+ `$KernelID`: 每个子核的特有`ID`
-+ `$ConfiguredKernels`:子核的默认启动列表
-
-## 启动并链接子核
-
-## 并行计算
-
-## 并发: 管理多进程
-
-每个要计算的表达式就是一个进程(`process`),
-
-并发控制的常用函数:
-
-+ `ParallelSubmit`; 提交表达式进行并发运算
-+ `WaitAll`;  等待所有并发计算完成, 相当于并发任务的启动按钮
-+ `WaitNext`; 运行下一个并发任务, 相当于并发任务的步进按钮
-
-+ 还有并发任务的开发者工具,导入工具包;
-
-```mathematica
-Needs["Parallel`Developer`"]
-```
-
-可以使用底层函数:
-
-`ProcessID[pid]`:表示进程的整数
-`Process[pid]`: 对应进程的表达式
-`Scheduling[pid]`:分配给进程的优先级
-`ProcessState[pid]`进程的运行状态: `queued`, `running`, `finished`
-
-## 与 Parallelize 的比较
-
-`Parallel Evaluation` 中介绍了 Parallel mapping, tables, and inner product .
-这些函数在`method`选项的控制下, 将任务分为若干个子问题.
-本节中的功能为每个子问题生成一个计算.  此划分等效于设置`Method->"FinestGrained"`.
-
-如果所有子问题花费相同的时间, 则诸如`ParallelMap[]`和`ParallelTable[]`之类的功能会更快.
-但是, 如果子问题的计算时间不同, 并且不容易预先估计, 则最好使用本节中所述的`WaitAll [... ParallelSubmit [] ...]`或等效的`Method->"FinestGrained"`.
-如果生成的进程数大于远程内核数, 则此方法将执行自动负载均衡, 一旦完成前一个作业, 便将作业分配给内核, 使所有内核始终保持忙碌状态.
 
 ## 共享变量,SetSharedVariable
 
@@ -1238,31 +1217,12 @@ Module[{x = v[[1]], y = v[[2]]}, x^2 + y^2]
 Out[3]= a^2+b^2
 ```
 
-## 虚拟共享内存
+## 与 Parallelize 的比较
 
-### 同步
+`Parallel Evaluation` 中介绍了 Parallel mapping, tables, and inner product .
+这些函数在`method`选项的控制下, 将任务分为若干个子问题.
+本节中的功能为每个子问题生成一个计算.  此划分等效于设置`Method->"FinestGrained"`.
 
-一个简单的实现`deadlock`的例子.
-
-```mathematica
-Parallelize[
- {
-      (*获得锁a*)
-  CriticalSection[{lcka},
-   CriticalSection[{lckb},
-    Pause[Random[]];
-    Print["A done"]
-    ]
-   ],
-   (*获得锁b*)
-  CriticalSection[{lckb},
-   CriticalSection[{lcka},
-    Pause[Random[]];
-    Print["B done"]
-    ]
-   ]
-  }
- ]
-```
-
-## 推送定义到远程
+如果所有子问题花费相同的时间, 则诸如`ParallelMap[]`和`ParallelTable[]`之类的功能会更快.
+但是, 如果子问题的计算时间不同, 并且不容易预先估计, 则最好使用本节中所述的`WaitAll [... ParallelSubmit [] ...]`或等效的`Method->"FinestGrained"`.
+如果生成的进程数大于远程内核数, 则此方法将执行自动负载均衡, 一旦完成前一个作业, 便将作业分配给内核, 使所有内核始终保持忙碌状态.

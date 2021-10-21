@@ -16,10 +16,12 @@
 - [笔记本底层](mma-notebook-lowlevel.md)
 - [运算符与优先级](mma-operator.md)
 - [包,模块](mma-package.md)
-- [并行与并发](mma-parallel.md)
 - [模式](mma-pattern.md)
 - [流和文件](mma-stream.md)
 - [样式表](mma-style-sheet.md)
 - [系统 IO](mma-sys-io.md)
 - [Wolfram 脚本](mma-wolframscript.md)
 - [Wolfram Engine](mma-wolfram-engine.md)
+
+- [并行与并发手册](mma-parallel-guide.md)
+- [并行与并发的函数](mma-parallel-builtins.md)
