@@ -27,7 +27,7 @@ bash -c `command` arg1 arg2 ...
 bash -c 'ls;echo;uptime'
 ```
 
-## 日常
+## 命令类型
 
 命令可以是下面四种形式之一:
 
@@ -67,7 +67,7 @@ get the latest release version
 pip install --user powerline-status
 ```
 
-### 常用命令
+## 基本命令
 
 + `type` – 说明怎样解释一个命令名
 + `which` – 显示会执行哪个可执行程序
@@ -144,7 +144,7 @@ sb_release -a
 df -h | sort -hr --key=2
 ```
 
-### 环境变量
+## 环境变量
 
 [/etc/environment 与 /etc/profile区别](https://blog.csdn.net/lijingshan34/article/details/86568596)
 
@@ -177,7 +177,7 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:~/bin:$PATH
 
 `$HOME`:用户目录
 
-### shell 模式切换
+## shell 模式切换
 
 1. 查看系统支持的shell模式及位置
 
@@ -188,7 +188,7 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:~/bin:$PATH
 
 `# chsh -s /bin/sh`
 
-### 重启x-org
+## 重启x-org
 
 [xorg 重新启动X窗口服务器](https://www.kaifa99.com/ubuntu/article_156280)
 
@@ -220,28 +220,24 @@ sudo restart mdm # 对于MDM (例如对于Mint Cinnamon )
 `显示管理器`(display manager), 或称`登录管理器`(login manager), 通常是一个图形用户界面, 在 boot 过程结束时显示, 以取代默认的shell.
 显示管理器有多种实现方式, 就像有各种类型的 window managers 和 desktop environments 一样. 通常每一种都有一定程度的定制和主题性可供选择.
 
-### 录制屏幕
-
-如果是`Gnome3`系用户,可以按`ctrl + shift + alt + r`,屏幕右下角有红点出现,则开始录屏,
-要结束的话再按一次`ctrl + shift + alt + r`,录好的视频在`~/video`下
-
-### ls 选项
+## ls 选项
 
 `ls -d */`
 
-+ `-d`= 选项指定只列出目录,`glob`模式当前目录下`*/`表示所有的子目录
-+ `-S` 按文件大小排序,大的优先
-+ `--sort=WORD` =  按`WORD`排序,而不是`name`: none (-U), size (-S), time (-t), version (-v), extension (-X)
-+ `--time=WORD`= 和 `-l`一起使用,使用`WORD`代替默认的修改时间:atime or access or use (-u); ctime or status (-c); also use specified time as sort key if  `--sort=time` (newest first)
-+ `-X` = 按拓展名的字母顺序排列
-+ `-m`用逗号分隔的条目列表填充宽度
-+ `-x` 按行而不是按列输出条目
-+ `-b, --escape`: 对非图形字符, 打印`C`式转义符
-+ `-q, --hide-control-chars`: 对非图形字符, 打印`?`
-+ `-1`: 每行打印一个文件. 可以使用`-q`或者`-b`避免`\n`
-+ `--format=WORD` 横跨`-x`,逗号`-m`,水平`-x`,长`-l`,单列`-1`,verbose`-l`,垂直`-C`
++ `-d`; 选项指定只列出目录,`glob`模式当前目录下`*/`表示所有的子目录
++ `-S` ;  按文件大小排序,大的优先
++ `--sort=WORD` ;  按`WORD`排序,而不是`name`: none (-U), size (-S), time (-t), version (-v), extension (-X)
++ `--time=WORD`; 和 `-l`一起使用, 显示`WORD`时间, 而不是默认的修改时间, 可使用字段:
+`atime` or `access` or `use` (`-u`); `ctime` or `status` (`-c`); 同时使用指定的 `time` 作为排序键, 如果使用了`--sort=time` (新的在前)
++ `-X` ; 按拓展名的字母顺序排列
++ `-m`; 用逗号分隔的条目列表填充宽度
++ `-x` ;    按行而不是按列输出条目
++ `-b, --escape`;    对非图形字符, 打印`C`式转义符
++ `-q, --hide-control-chars`;    对非图形字符, 打印`?`
++ `-1` ;    每行打印一个文件. 可以使用`-q`或者`-b`避免`\n`
++ `--format=WORD` ;  横跨`-x`,逗号`-m`,水平`-x`,长`-l`,单列`-1`,verbose`-l`,垂直`-C`
 
-### 别名(alias)
+## 别名(alias)
 
 [Linux shell 脚本中使用 alias 定义的别名](https://www.cnblogs.com/chenjo/p/11145021.html)
 
@@ -303,11 +299,11 @@ bash: type: foo: not found
 如果想要永久保存定义的`alias`,可以将其写入到 `/etc/profile` 或者 `~/.bash_rc` 中去,
 两个的区别是影响的范围不一样而已
 
-#### zsh 别名
+## zsh 别名
 
 + `grep`='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
-### 文件管理 cp rm mv
+## 文件管理 cp rm mv
 
 复制移动的时候,可以加上 `-i` 参数,防止覆盖
 
@@ -355,7 +351,7 @@ find . -mindepth 1 -maxdepth 1 -type d -exec rm -rf '{}' + #使用 + 号将输�
 
 其中`{}`是当前路径名的符号表示,`;`界定符表示命令结束, `+`界定符表示合并结果一起执行命令.
 
-### 重命名 rename
+## 重命名 rename
 
 重命名除了使用`mv`,也可以使用`rename`.  在`ubuntu`上, 有两个版本的`rename`程序.
 `perl`版的`rename`程序就叫做`rename`, `util-linux`包中的版本叫做`rename.ul`.
@@ -434,7 +430,7 @@ rename -v 'y/-/_/' */* # 去掉 -n 选项, 执行操作
 + `-e  Expression`; 作用到文件名上的代码. 可以重复使用`-e expr1 -e expr2 ...`来构建代码, (like `perl -e`). 如果没有`-e`, 第一个参数被当成`code`
 + `-E Statement`; 类似于`-e`, 但需要`;`结束
 
-### 获取绝对路径 realpath
+## 获取绝对路径 realpath
 
 `realpath` - `print the resolved path`(打印已解析的路径)
 
@@ -456,7 +452,7 @@ DESCRIPTION
 
 canonical order: 在排序中,指一种标准的顺序,比如字母顺序.
 
-### tar unzip
+## tar unzip
 
 ***
 创建压缩文件
@@ -518,7 +514,7 @@ canonical order: 在排序中,指一种标准的顺序,比如字母顺序.
 unzip -j '*.zip'  '*.otf'
 ```
 
-### 7z
+## 7z
 
 支持的格式
 
@@ -646,7 +642,7 @@ for i in ${archs}; do  unzip $i -d $i; done;
 IFS=$SAVEIFS
 ```
 
-#### 7z 的通配符
+### 7z 的通配符
 
 通配符或带空格的文件名必须加引号.
 
@@ -692,7 +688,7 @@ IFS=$SAVEIFS
 
 + 短和长的文件名; `7-Zip`在某些情况下支持短文件名(如`FILENA~1.TXT`). 然而, 我们强烈建议只使用真正的(长)文件名.
 
-### 查看和安装字体
+## 查看和安装字体
 
 `fc-list`: 列出系统中可用的字体
 
@@ -703,9 +699,9 @@ fc-list [ -vVh ]  [ pattern  [ element... ]   ]
 fc-list :lang=zh
 ```
 
-#### 安装字体
+### 安装字体
 
-[Ubuntu系统字体命令和字体的安装](https://www.jianshu.com/p/e7f12b8c8602)
+[x-org 系统字体命令和字体的安装](https://www.jianshu.com/p/e7f12b8c8602)
 
 字体有`.ttf格`式(truetype font)和`.otf`格式(opentype font)字体
 
@@ -764,52 +760,7 @@ sudo fc-cache -fv
 
 至此字体就安装成功了,如果需要安装其他字体,只需将字体拷贝到字体目录下,重新运行以上的命令即可.
 
-### apt 与 apt-get
-
-[Linux中apt与apt-get命令的区别与解释](https://www.sysgeek.cn/apt-vs-apt-get/)
-
-如果你已阅读过我们的 `apt-get` 命令指南,可能已经遇到过许多类似的命令,如`apt-cache`,`apt-config` 等.如你所见,这些命令都比较低级又包含众多功能,普通的 Linux 用户也许永远都不会使用到.换种说法来说,就是最常用的 Linux 包管理命令都被分散在了 `apt-get`,`apt-cache` 和 `apt-config` 这三条命令当中.
-
-`apt` 命令的引入就是为了解决命令过于分散的问题,它包括了 `apt-get` 命令出现以来使用最广泛的功能选项,以及 `apt-cache` 和 `apt-config` 命令中很少用到的功能.
-在使用 apt 命令时,用户不必再由 `apt-get` 转到 `apt-cache` 或 `apt-config`,而且 apt 更加结构化,并为用户提供了管理软件包所需的必要选项.
-
-> 简单来说就是:`apt = apt-get`,`apt-cache` 和 `apt-config` 中最常用命令选项的集合.
-
-***
-`apt`
-
-`install, remove, purge (apt-get(8))`
-`apt list`(半成品)
-`apt list`类似于`dpkg-query --list`, 它可以显示满足某些条件的软件包列表.
-
-它支持用`glob(7)`匹配软件包名称, 以及列出已安装(`--installed`), 可升级(`--upgradeable`)或所有可用(`--all-versions`)版本的选项.
-
-另外也可以用`whereis`
-
-`whereis` - 找到命令的二进制文件, 源文件和 man 文件
-
-***
-`apt-get --install-suggests`
-
-将建议的软件包视为安装的依赖项. 配置项:`APT::Install-Suggests`.
-
-```bash
-apt-get -f install pkg
-```
-
-### dpkg 应用管理
-
-+ `ldd /bin/ls` : `ldd`查看依赖信息
-+ `dpkg -i pkg`: 安装`pkg.deb`
-+ `dpkg -r pkg`: 删除已安装的程序包
-+ `dpkg -P pkg`: 彻底清除已安装的程序包
-+ `dpkg -l, --list package-name-pattern...`: 列出与给定模式匹配的软件包.
-+ `dpkg -s, --status package-name...`: 报告指定软件包的状态.
-+ `dpkg -L, --listfiles package-name...`: 从软件包名称列出安装到系统的文件.
-+ `dpkg -S, --search filename-search-pattern...` 从已安装的软件包中搜索文件名.
-+ `dpkg -p, --print-avail package-name...` 显示有关软件包名称的详细信息, 存放在`/var/lib/dpkg/available`,基于`APT`的前端的用户使用`apt-cache`
-
-### grep 过滤输出
+## grep 过滤输出
 
 + `-n` 行号
 + `-v`,`--invert-match` 匹配不符合
@@ -840,48 +791,7 @@ grep -n --color -P -B 1 -A 6 "(?:tex:\d+:|warning:)" ./temp $tex_file".log"
 `f FILE`, `--file=FILE`:从`FILE`中获取模式,每行一个.
 如果此选项多次使用或与`-e`(`--regexp`)选项结合使用,则搜索给定的所有模式. 空文件包含零个模式,因此不匹配.
 
-### 图片格式转换
-
-`pdf`转成图片格式. 包名: `pdftoppm`. 语法是: `pdftoppm input.pdf outputname -png -f {page} -singlefile`
-
-```bash
-pdftoppm  -png -rx 300 -ry 300  input.pdf outputname
-```
-
-这个命令将会把`PDF`的每一页转换成`png`格式, 文件名为`outputname-01.png`,`outputname-02.png`等等.
-如果只想转换其中的特定一页, 使用`-f {page}`选项指定. 例如`-f 1`表示第一页.
-
-`gnome`默认的查看图片程序为`eog`: eye of gnome
-
-### ubuntu 自带截图
-
-`ubuntu` 自带截图程序叫做`gnome-serceenshot`
-
-[Ubuntu设置截图到剪贴板,像QQ一样截图](https://www.jianshu.com/p/7f453c144f9c). 可以定义一个快捷键,保存到桌面文件
-
-```bash
-gnome-screenshot -a --file=(~"/Desktop/$(date +%s).png")
-```
-
-`date +%s`给出 UTC 时间
-
-在 Ubuntu(18.04,16.04)或 Debian(Jessie 和更新版本)中安装 `GPaste`
-
-对于 Debian,GPaste 可用于 Jessie 和更新版本,而对于 Ubuntu,GPaste 在 16.04 及更新版本的仓库中(因此可在 Ubuntu 18.04 Bionic Beaver 中使用).
-
-你可以使用以下命令在 Debian 或 Ubuntu 中安装 GPaste(守护程序和 Gnome Shell 扩展):
-
-```bash
-sudo apt install gnome-shell-extensions-gpaste gpaste
-```
-
-安装完成后,按下 `Alt + F2` 并输入 `r` 重新启动 Gnome Shell,然后按回车键.现在应该启用了 GPaste Gnome Shell 扩展,其图标应显示在顶部 Gnome Shell 面板上.
-如果没有,请使用 Gnome Tweaks(Gnome Tweak Tool)启用扩展.
-
-Debian 和 Ubuntu 的 GPaste 3.28.0 中有一个错误,如果启用了图像支持选项会导致它崩溃,所以现在不要启用此功能.
-这在 GPaste 3.28.2 中被标记为已修复,但 Debian 和 Ubuntu 仓库中尚未提供此包.
-
-### 文档格式转换
+## 文档格式转换
 
 用 `pandoc`
 
@@ -897,22 +807,7 @@ Debian 和 Ubuntu 的 GPaste 3.28.0 中有一个错误,如果启用了图像支�
 pandoc -f markdown --latex-engine=xelatex -o output.pdf input.md
 ```
 
-### ubunut 安装 typora
-
-[typora for linux](https://www.typora.io/#linux)
-
-```bash
-# or run:
-# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
-wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
-# add Typora's repository
-sudo add-apt-repository 'deb https://typora.io/linux ./'
-sudo apt-get update
-# install typora
-sudo apt-get install typora
-```
-
-### 挂载命令 mount
+## 挂载命令 mount
 
 [linux挂载命令mount及U盘,移动硬盘的挂载](https://www.cnblogs.com/sunshine-cat/p/7922193.html)
 [gpt格式的移动硬盘在Linux系统下挂载方法](https://blog.csdn.net/zhang_can/article/details/79714012)
@@ -921,8 +816,7 @@ sudo apt-get install typora
 + `findmnt [options] device|mountpoint`: 可以更清晰的显示文件系统
 + `umount [-dflnrv] {directory|device}` : 卸载文件系统,应该通过给出文件目录来使用,`-l, --lazy`Lazy  unmount
 
-***
-`fdisk` 查看磁盘列表
++ `fdisk` 查看磁盘列表
 
 ```bash
 sudo fdisk -l
@@ -983,7 +877,7 @@ umount /dev/sda5
 
 通过`df`可以查看设备挂载点
 
-### U盘格式化 exFAT
+## U盘格式化 exFAT
 
 [将 USB 盘格式化为 exFAT](https://linux.cn/article-12294-1.html)
 
@@ -1027,12 +921,12 @@ sudo mkfs.exfat -i 0x07 -n udisk /dev/sdc1
 
 将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称. 可选地, 运行 `fsck` 检查`sudo fsck.exfat /dev/sdc1`, 以确保格式化正确, 享受 `exFAT` 盘吧.
 
-### 查看文档首行末行
+## 查看文档首行末行
 
 文档尾巴, `tail -n, --lines=[+]NUM`, 从第`num`行开始.
 文档开头, `head -n, --lines=[-]NUM`, 减去最后`num`行.
 
-### 查看使用的桌面环境 x11 wayland
+## 查看使用的桌面环境 x11 wayland
 
 [如何找出你所使用的桌面环境 ](https://linux.cn/article-12124-1.html)
 
@@ -1063,7 +957,7 @@ loginctl show-session <SESSION_ID> -p Type
 对于其他 Linux 发行版,请使用系统的软件包管理器来安装此程序.
 安装后,只需在终端中输入 `screenfetch` 即可,它应该显示桌面环境版本以及其他系统信息.
 
-### 查看linux 系统信息
+## 查看 linux 系统信息
 
 ref: [3 Ways to Check Linux Kernel Version in Command Line](https://itsfoss.com/find-which-kernel-version-is-running-in-ubuntu/)
 
@@ -1139,7 +1033,7 @@ dmesg | grep Linux
 [   12.936690] Intel(R) Wireless WiFi driver for Linux
 ```
 
-### curl wget
+## curl wget
 
 curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 
@@ -1172,7 +1066,7 @@ curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 
 您可以通过使用专用的选项`--post301,` `--post302` and `--post303`, 来告诉curl 对于`30x`response, 不要将 `non-GET` request method 更改为`GET`.
 
-### 查看ip地址
+## 查看ip地址
 
 使用`ip`命令
 
@@ -1181,7 +1075,7 @@ ip addr show
 ip link show #查看 MAC 地址
 ```
 
-### 安装额外解码器
+## 安装额外解码器
 
 如果你刚刚安装了 Ubuntu 或其他 Ubuntu 特色版本 如 Kubuntu,Lubuntu 等,你会注意到系统无法播放某些音频或视频文件.
 
@@ -1208,7 +1102,7 @@ sudo apt install ubuntu-restricted-extras
 [What are Ubuntu Repositories](https://itsfoss.com/ubuntu-repositories/)
 [一条命令在 Ubuntu 中安装所有基本的媒体编解码器 ](https://linux.cn/article-11906-1.html)
 
-### source 命令
+## source 命令
 
 [Ubuntu如何使用source命令执行文件](http://www.xitongzhijia.net/xtjc/20150714/52870.html)
 
@@ -1250,7 +1144,7 @@ make clean &&
 
 `export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin`
 
-### 查看磁盘空间
+## 查看磁盘空间
 
 `df`命令是linux系统以磁盘分区为单位查看文件系统,可以加上参数查看磁盘剩余空间信息,命令格式:
 
@@ -1266,7 +1160,7 @@ SYNOPSIS
 + `-h`, `--human-readable` print sizes in powers of 1024 (e.g., 1023M)
 + `-T`, `--print-type` print file system type
 
-### find 过滤文件
+## find 过滤文件
 
 删除日志文件
 
@@ -1322,7 +1216,7 @@ File is of type c:
 + `p`  named pipe (FIFO)
 + `f`  regular file
 
-### 查看文件大小
+## 查看文件大小
 
 [Ubuntu下查看文件, 文件夹和磁盘空间的大小](https://blog.csdn.net/BigData_Mining/java/article/details/88998472)
 
@@ -1352,7 +1246,7 @@ du [OPTION]... --files0-from=F
 + `--si`   like `-h`, 但是使用`1000`的幂而不是`1024`的幂
 + `-a,` `--all` :给出所有文件的统计, 而不仅仅是目录
 
-### 创建链接
+## 创建链接
 
 `ln` — 创建链接
 
@@ -1363,7 +1257,7 @@ du [OPTION]... --files0-from=F
 + `ln file link` 创建硬链接
 + `ln -s item link` 创建符号链接,`item` 可以是一个文件或是一个目录.
 
-#### 硬链接
+### 硬链接
 
 硬链接和符号链接比起来,硬链接是最初 `Unix` 创建链接的方式,而符号链接更加现代. 在默认情况下,每个文
 件有一个硬链接,这个硬链接给文件起名字.
@@ -1378,7 +1272,7 @@ du [OPTION]... --files0-from=F
 的磁盘空间不会被重新分配), 直到所有关联这个文件的链接都删除掉.知道硬链接很重要,因为你可能有时
 会遇到它们,但现在实际中更喜欢使用符号链接,下一步我们会讨论符号链接.
 
-#### 符号链接
+### 符号链接
 
 创建符号链接是为了克服硬链接的局限性.
 符号链接生效,是通过创建一个特殊类型的文件,这个文件包含一个关联文件或目录的文本指针.
@@ -1431,7 +1325,7 @@ ln -s /home/me/playground/fun dir1/fun-sym
 
 也可用相对路径名,正如前面例题所展示的.使用相对路径名更令人满意, 因为它允许一个包含符号链接的目录重命名或移动,而不会破坏链接.
 
-### basename
+## basename
 
 ***
 截取文件名和后缀
@@ -1518,7 +1412,7 @@ $ echo $dir , $fullname , $filename , $extension
 basename -s '.tex' $(ls *.tex) | xargs echo
 ```
 
-### inode
+## inode
 
 [Linux的inode的理解](https://www.cnblogs.com/itech/archive/2012/05/15/2502284.html)
 
@@ -1660,7 +1554,7 @@ inode的特殊作用
 因为系统通过`inode`号码,识别运行中的文件,不通过文件名.更新的时候,新版文件以同样的文件名,生成一个新的`inode`,不会影响到运行中的文件.
 等到下一次运行这个软件的时候,文件名就自动指向新版文件,旧版文件的`inode`则被回收.
 
-### shebang 脚本开头
+## shebang 脚本开头
 
 [Shebang](https://bash.cyberciti.biz/guide/Shebang)
 
@@ -1683,7 +1577,7 @@ inode的特殊作用
 `/usr/bin/env`在修改后的环境中运行`bash`之类的程序.  它使您的`bash`脚本具有可移植性.
 `#!/usr/bin/env bash`的优点是, 它将使用运行用户的`$PATH`变量中最先出现的`bash`可执行文件.
 
-### 日志文件
+## 日志文件
 
 [linux系统日志在哪? ](https://www.php.cn/linux-435716.html)
 [linux日志介绍](https://zhuanlan.zhihu.com/p/26428150)
@@ -1761,7 +1655,7 @@ sudo tail -f /var/log/kern.log
 + 查看最近发生的20条日志:  `journalctl -n 20`
 + 追踪日志:  `journalctl -f`
 
-### Linux 安装时的分区
+## Linux 安装时的分区
 
 [UEFI/GPT 示例](https://wiki.archlinux.org/title/Parted_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#UEFI/GPT_%E7%A4%BA%E4%BE%8B)
 [manjaro_user_guide 也有分区的例子](https://manjaro.org/support/userguide/)
@@ -1777,7 +1671,7 @@ sudo tail -f /var/log/kern.log
 
 强迫症可以把分区调整成`EFI`,`root`,`swap`的顺序, 可能有玄学加成.
 
-### 交换分区 swap
+## 交换分区 swap
 
 [ubnuntu SwapFaq](https://help.ubuntu.com/community/SwapFaq)
 
@@ -1912,7 +1806,7 @@ sudo swapon -a
 
 保存文件并重新启动.
 
-### 编码,字符集
+## 编码,字符集
 
 [File name is garbled](https://wiki.archlinux.org/title/Localization/Simplified_Chinese)
 
@@ -1927,7 +1821,7 @@ convmv -f GBK -t UTF-8 --notest --nosmart file
 `-f`指定原始编码, `-t`指定输出编码. 使用 `convmv --list` 可查询所有支持的编码.
 `--notest` 表示进行实际操作, 而非测试, 如果不使用该参数只会打印出转换结果而不会实际转码. `--smart`表示如果已经是`UTF-8` 则忽略.
 
-#### 文件内容乱码
+### 文件内容乱码
 
 使用 `iconv` 命令转换格式. 示例:
 
@@ -1937,7 +1831,7 @@ iconv -f GBK -t UTF-8 -o new-file origin-file
 
 `-f` 指定原始编码, `-t` 指定输出编码. 使用 `iconv -l` 可查询所有支持的编码. `-o` 指定输出文件.
 
-#### zip 压缩包乱码
+### zip 压缩包乱码
 
 避免方法: 非 `utf8` 编码环境下(一般 `windows` 下的中文环境即是)不使用 `zip` 进行压缩(建议使用 `7z`).
 解决方案: 安装使用 `unzip-iconv` 或者 `unzip-natspec`取代原版的 `unzip` 来解压缩, 示例:
@@ -1947,23 +1841,3 @@ unzip -O gbk file.zip
 ```
 
 `file.zip` 是压缩文件, `gbk` 是该文件的编码格式, 以 `-O` 指定(原版 `unzip` 无 `-O` 选项).
-
-#### MP3 文件标签乱码
-
-对于用 `GStreamer` 做后端的播放器, 如 `Rhythmbox``, totem`, 设置如下的环境变量后即可正确读取 `mp3` 中 `GBK` 编码的 `ID3 tag`:
-
-```bash
-export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030
-export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
-```
-
-### gnome 蓝牙传送文件
-
-`bluetooth-sendto`; 用于通过蓝牙传输文件的GTK应用程序
-
-+ 说明; `bluetooth-sendto [--device=XX:XX:XX:XX:XX:XX [--name=NAME]] [file...]`
-+ 描述; `bluetooth-sendto` 将显示一个通过蓝牙传输文件的对话框. `bluetooth-sendto`是`gnome-bluetooth`的一部分, 参见[GnomeBluetooth](http://live.gnome.org/GnomeBluetooth)
-+ 选项;
-    + `--device`;  定义要发送文件的设备地址.  如果省略, 将显示一个选择器.
-    + `--name`; 定义要发送文件的设备名称.  如果省略, 将被自动检测.
-    + `file` 要发送到设备的文件.  如果省略, 将显示一个选择器.

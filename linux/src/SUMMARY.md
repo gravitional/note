@@ -3,6 +3,7 @@
 - [日常使用](linux-1-daily.md)
 - [报错维护](linux-1-exception.md)
 - [systemd](linux-1-systemd.md)
+- [gnome 桌面](linux-1-gnome.md)
 - [unix-进程](linux-2-process.md)
 - [zsh,termux](linux-3-zsh-termux.md)
 - [linux 包管理](linux-3-package.md)

@@ -16,7 +16,323 @@ ParallelTools/tutorial/ConcurrencyManagingParallelProcesses
 
 `DistributeDefinitions[expr]`会分配`expr`中所有符号的定义.
 
-***
+## Parallelize
+
+    Parallelize[expr]
+
+使用 `自动并行化` 来运算 `expr`.
+
+### Details
+
+`Parallelize[expr]` 自动将 `expr` 的不同部分的求值, 分配给不同的 `可用内核`(kernels) 和 `处理器`.
+
++ `Parallelize[expr]` 通常会给出与计算 `expr` 相同的结果, 除了计算过程中的副作用(side effects).
++ `Parallelize` 具有 `HoldFirst` 属性, 因此表达式在并行化之前不会被计算.
++ `Parallelize的Method` 选项 指定了要使用的并行化方法. 可能的设置包括.
+    + `"CoarsestGrained"` ; 将计算分成与 `可用内核` 相同数量的部分.
+    + `"FinestGrained"` ; 将计算分成 `尽可能小` 的子单元.
+    + `"EvaluationsPerKernel"->e` ; 将计算分成每个内核最多 `e 个部分`.
+    + `"ItemsPerEvaluation"->m` ; 将`computation`计成最多 `m` 个子单元的`evaluation`.
+    + `Automatic`   ; 在`开销`(overhead) 和 `负载均衡`(load-balancing) 之间自动平衡
+
++ `Method->"CoarsestGrained"` ; 适用于涉及许多子单元的计算, 所有这些子单元需要`大致相同的时间`.
+它使开销最小化, 但不提供任何`负载均衡`.
++ `Method->"FinestGrained"` ;适用于涉及少数子单元的计算, 这些子单元的计算需要不同的时间.
+它导致了更高的`通信开销`, 但最大限度地提高了`负载均衡`.
++ `Parallelize` 的 `DistributedContexts` 选项指定了 `expr` 中出现的哪些符号在计算前, 被自动分配到所有可用的内核中.
+`默认值`是 `DistributedContexts:>$Context`, 它分发`当前上下文`中所有符号的定义, 但不分发`包`(package)中的符号定义.
+
+### Basic
+
+以交互方式定义的函数可以立即被并行使用.
+
+```mathematica
+f1[n_] := Length[FactorInteger[(10^n - 1)/9]]
+Parallelize[Map[f1, Range[50, 60]]]
+```
+
+### scope
+
+#### listable functions
+
+所有有一个参数的可列表函数在应用于列表时将自动并行化:
+隐式定义的列表:
+
+```mathematica
+Parallelize[Prime[Range[10]]]
+```
+
+### Structure-Preserving Functions
+
+许多保持列表结构的, `函数式编程`的 constructs 都是并行的:
+
+```mathematica
+Parallelize[Map[f, {a, b, c, d}]]
+Parallelize[MapIndexed[List, {a, b, c, d}]]
+```
+
+结果不需要与输入的长度相同:
+
+```mathematica
+Parallelize[Cases[Range[100], _?PrimeQ]]
+```
+
+在没有明显的可并行 `函数` 的情况下, Parallelize只是对元素进行并行计算:
+
+```mathematica
+Parallelize[{1 + 2, Sin[1.0], Print[3], $KernelID}]
+```
+
+#### Reductions
+
+数出100万以内的素数:
+
+```mathematica
+Parallelize[Count[Range[10^6], _?PrimeQ]]
+```
+
+#### 内积和外积
+
+内积,外积都可以自动并行化:
+
+```mathematica
+Parallelize[ Inner[f, {{a1, a2}, {b1, b2}, {c1, c2}, {d1, d2}}, {x1, x2}]]
+Parallelize[Outer[StringJoin, {"", "re", "un"}, {"cover", "draw", "wind"}, {"",  "ing", "s"}]]
+```
+
+#### 迭代,Iterators
+
+不管有或没有迭代器变量, 都可以并行计算 `Table`:
+
+```mathematica
+Parallelize[Table[i, {i, 2, 21, 2}]]
+Parallelize[Table[Random[], {10}, {2}]]
+```
+
+并行计算`sum`s 与 `product`s:
+
+```mathematica
+Parallelize[Product[i, {i, 100}]]
+```
+
+函数的计算是平行进行的:
+
+```
+Parallelize[Sum[Pause[1]; i, {i, 4}]] // AbsoluteTiming
+{1.01192,10}
+```
+
+文件名列表在子核上进行本地展开:
+
+```mathematica
+Parallelize[ Count[FileNames["*.m", $InstallationDirectory, Infinity],  f_ /; FileByteCount[f] > 500000]]
+```
+
+#### Associative 函数
+
+具有 `Flat` 属性的函数会自动并行化:
+
+```mathematica
+Parallelize[a + b + c + d + e + f]
+Parallelize[a*b*c*d]
+Parallelize[LCM[1, 2, 3, 4, 5, 6]]
+```
+
+### Generalizations
+
+在赋值中, 只有右侧的表达式被并行化:
+
+```mathematica
+Parallelize[primes = Select[Range[10^10, 10^10 + 100], PrimeQ]]
+```
+
+复合表达式的元素, 一个接一个地被并行化:
+
+```mathematica
+Parallelize[ primes = Table[Prime[10^i], {i, 11}]; IntegerLength /@ primes]
+```
+
+将视频帧的生成并行化:
+
+```mathematica
+Parallelize[ VideoGenerator[
+     Plot[Sin[# x], {x, 0, 10},
+    PlotLabel -> ("Plot[Sin[a x]]\na = " <> ToString[N@#]),
+    ImageSize -> {320, 240}] &, 5]]
+```
+
+### 选项
+
+默认情况下, 当前上下文中的定义会自动分发.
+
+```mathematica
+remote[x_] := {$KernelID, x^3}
+Parallelize[Table[remote[i], {i, 4}]]
+```
+
+手动设置不分发任何函数的定义:
+
+```mathematica
+local[x_] := {$KernelID, x^2}
+Parallelize[Table[local[i], {i, 4}], DistributedContexts -> None]
+```
+
+为并行计算中出现的, 所有`上下文`中的所有符号分发定义:
+
+```mathematica
+a`f[x_] := {$KernelID, x}
+b`f[x_] := {$KernelID, -x}
+Parallelize[{a`f[1], b`f[1]}, DistributedContexts -> Automatic]
+```
+
+#### method
+
+Break the computation into evaluations of at most 5 elements each:
+
+Parallelize[Table[Labeled[Framed[i], $KernelID], {i, 18}],
+ Method -> "ItemsPerEvaluation" -> 5]
+
+Calculations with vastly differing runtimes should be parallelized as finely as possible:
+
+Parallelize[Select[Range[4000, 5000], PrimeQ[2^# - 1] &],
+ Method -> "FinestGrained"]
+
+A large number of simple calculations should be distributed into as few batches as possible:
+
+BinCounts[
+ Parallelize[Map[Mod[Floor[#*Pi], 10] &, Range[10000]],
+  Method -> "CoarsestGrained"], {0, 10}]
+
+### Applications
+
+Watch the results appear as they are found:
+
+SetSharedVariable[primes]
+primes = {};
+Monitor[Parallelize[
+   Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &,
+    Range[1000, 5000]], Method -> "FinestGrained"], primes];
+primes
+
+### Properties
+
+For data parallel functions, Parallelize is implemented in terms of ParallelCombine:
+
+Parallelize[Select[Range[100], PrimeQ]]
+ParallelCombine[Select[#, PrimeQ] &, Range[100]]
+
+Parallelize[Count[Range[100], _?PrimeQ]]
+ParallelCombine[Count[#, _?PrimeQ] &, Range[100], Plus]
+
+Parallel speedup can be measured with a calculation that takes a known amount of time:
+
+AbsoluteTiming[Parallelize[Table[Pause[1]; $KernelID, {8}]]]
+
+For functions from a package, use ParallelNeeds rather than DistributeDefinitions:
+Needs["FiniteFields`"]
+Table[GF[7][{3}]^i, {i, 7}]
+ParallelNeeds["FiniteFields`"]
+Parallelize[Table[GF[7][{3}]^i, {i, 7}]]
+
+Set up a random number generator that is suitable for parallel use and initialize each kernel:
+
+ParallelEvaluate[
+  SeedRandom[1,
+   Method -> {"ParallelMersenneTwister", "Index" -> $KernelID}]];
+Join @@ ParallelEvaluate[RandomReal[1, 10]]
+
+### Possible Issues
+
+Expressions that cannot be parallelized are evaluated normally:
+
+Parallelize[Integrate[1/(x - 1), x]]
+Parallelize::nopar1:.... cannot be parallelized; proceeding with sequential evaluation.
+
+Parallelize[Map[f, {a, b, c}, 0]]
+
+Parallelize::nopar1: Map[f,{a,b,c},0] cannot be parallelized; proceeding with sequential evaluation.
+
+Side effects cannot be used in the function mapped in parallel:
+
+primes = {};
+Parallelize[
+  Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &, Range[1000, 4000]]];
+primes
+
+Use a shared variable to support side effects:
+
+SetSharedVariable[primes]
+primes = {};
+Parallelize[
+  Scan[If[PrimeQ[2^# - 1], AppendTo[primes, #]] &, Range[1000, 4000]]];
+primes
+
+If no subkernels are available, the result is computed on the master kernel:
+
+CloseKernels[];
+Parallelize[Map[f, {a, b, c}]]
+
+If a function used is not distributed first, the result may still appear to be correct:
+Only if the function is distributed is the result actually calculated on the available kernels:
+
+Definitions of functions in the current context are distributed automatically:
+Definitions from contexts other than the default context are not distributed automatically:
+Use DistributeDefinitions to distribute such definitions:
+
+DistributeDefinitions[ctx`gtest];
+Parallelize[Map[ctx`gtest, Range[1275, 1285]]]
+
+Alternatively, set the DistributedContexts option to include all contexts:
+
+cty`gtest[n_] := Labeled[Framed[PrimeQ[2^n - 1]], $KernelID]
+Parallelize[Map[cty`gtest, Range[1275, 1285]],
+ DistributedContexts -> Automatic]
+
+Symbols defined only on the subkernels are not distributed automatically:
+
+ParallelEvaluate[h[i_] := {i, $KernelID}];
+Parallelize[Map[h, Range[8]]]
+
+The value of $DistributedContexts is not used in Parallelize:
+
+Restore all settings to their default values:
+
+$DistributedContexts := $Context
+SetOptions[Parallelize, DistributedContexts :> $Context]
+
+Trivial operations may take longer when parallelized:
+
+AbsoluteTiming[Parallelize[Table[N[Sin[x]], {x, 0, 1000}]];]
+AbsoluteTiming[Table[N[Sin[x]], {x, 0, 1000}];]
+
+### Neat
+
+Display nontrivial automata as they are found:
+
+Module[{auto = {}}, SetSharedVariable[auto];
+ (* Progress *)
+
+ PrintTemporary@
+  Dynamic[GraphicsGrid[Partition[auto, 3, 3, 1, {}], Frame -> All,
+    ImageSize -> 500]];
+ (* Compute *)
+
+ Parallelize[
+  Scan[(out =
+      Position[
+       CellularAutomaton[{#, {2, 1}, {1, 1, 1}}, {{{{1}}},
+         0}, {{{8}}}], 1];
+     If[Length[out] > 50,
+      AppendTo[auto,
+       Graphics3D[{Cuboid /@ out}, Boxed -> False]]];) &,
+   Range[2, 50, 2]]];
+ (* Output *)
+
+ GraphicsGrid[Partition[auto, 3, 3, 1, {}], Frame -> All,
+  ImageSize -> 500]]
+
+## ParallelNeeds
+
 `ParallelNeeds`可以在所有`子核`加载`packages`, 新开的`子核`也会自动加载.
 
 在主核加载:`Needs["ComputerArithmetic`"]`
@@ -69,7 +385,7 @@ Needs["Parallel`Developer`"]
 
 如果所有子问题花费相同的时间, 则诸如`ParallelMap[]`和`ParallelTable[]`之类的功能会更快.
 但是, 如果子问题的计算时间不同, 并且不容易预先估计, 则最好使用本节中所述的`WaitAll [... ParallelSubmit [] ...]`或等效的`Method->"FinestGrained"`.
-如果生成的进程数大于远程内核数, 则此方法将执行自动负载平衡, 一旦完成前一个作业, 便将作业分配给内核, 使所有内核始终保持忙碌状态.
+如果生成的进程数大于远程内核数, 则此方法将执行自动负载均衡, 一旦完成前一个作业, 便将作业分配给内核, 使所有内核始终保持忙碌状态.
 
 ## 共享变量,SetSharedVariable
 
@@ -321,7 +637,7 @@ ParallelEvaluate[ While[(e = input[pop]) =!= $Failed,
 output[]
 ```
 
-+ 使用单一的共享函数, 来交换输入(input)和结果(result):
++ 使用单一的`共享函数`, 来交换输入(input)和结果(result):
 
 ```mathematica
 record[0, _] := next++;
@@ -456,6 +772,472 @@ Reap[ParallelDo[sow[$KernelID], {10}]]
 Out[2]= {Null, {{4, 3, 2, 1, 4, 3, 2, 1, 4, 3}}}
 ```
 
+## DistributeDefinitions
+
+    [s1,s2,...]
+
+将符号 `s_i` 的所有定义分配给所有并行内核.
+
+    ["context`"]
+
+分发 `指定上下文`中所有符号的定义.
+
++ `DistributeDefinitions`  将 `ParallelEvaluate` 应用于涉及符号 `s_i` 的赋值和 `属性`, 不仅包括`ownvalues`, 还包括`downvalues`, `upvalues`和其他类型的`值`.
++ `DistributeDefinitions` 将自己递归地应用于出现在 符号 `s_i` 的定义中的任何符号.
++ `DistributeDefinitions` 具有 `HoldAll` 属性.
++ `DistributeDefinitions` 实际上是 `注册`(registers) 了符号 `s_i` 的定义, 这样它们就会自动分发到每个被启动的`新的`并行内核.
++ 对于一个任意的表达式 `expr`, `DistributeDefinitions[expr]` 分发 `expr` 中出现的所有符号的定义.
+
+### basic
+
+确保启动了 `并行的子内核`:
+
+```mathematica
+LaunchKernels[]; $KernelCount
+Out[1]= 4
+(*在子核中使用的 `值` 需要先进行分发. *)
+ctx`y = 42;
+ParallelEvaluate[ToString[ctx`y]]
+Out[3]= {"ctx`y", "ctx`y", "ctx`y", "ctx`y"}
+DistributeDefinitions[ctx`y]
+{ctx`y}
+ParallelEvaluate[ToString[ctx`y]]
+Out[5]= {"42", "42", "42", "42"}
+```
+
+默认上下文中的符号会自动分发:
+
+```mathematica
+y = 43;
+ParallelEvaluate[ToString[y]]
+Out[2]= {"43", "43", "43", "43"}
+```
+
+### scope
+
+变量的值:
+
+```mathematica
+ni = 5; nd := $KernelID
+DistributeDefinitions[ni, nd]
+{ni,nd}
+ParallelEvaluate[{ni, nd}]
+Out[2]= {{5, 1}, {5, 2}, {5, 3}, {5, 4}}
+```
+
+函数:
+
+```mathematica
+nfactors[n_] := Total[FactorInteger[(10^n - 1)/9][[All, 2]]]
+DistributeDefinitions[nfactors]
+{nfactors}
+ParallelMap[nfactors, Range[50, 70]]
+Out[2]= {10, 8, 9, 4, 14, 8, 12, 6, 8, 2, 20, 7, 5, 14, 15, 7, 15, 3, 10, 6, 12}
+```
+
+上值:
+
+```mathematica
+g /: f[g[x_]] := fg[x, $KernelID]
+DistributeDefinitions[g]
+{g}
+ParallelMap[f, {g[1], h[2], g[3]}]
+Out[2]= {fg[1, 4], f[h[2]], fg[3, 2]}
+```
+
+属性, Attributes:
+
+```mathematica
+np = 5; Protect[np]
+DistributeDefinitions[np]
+{"np"}
+ParallelEvaluate[np = $KernelID, First[Kernels[]]]
+During evaluation of Set::wrsym: Symbol Cell$$4410`np is Protected.
+Out[2]= 1
+```
+
+分发当前`上下文`中所有符号的定义.
+
+```mathematica
+f[x_] := N[Pi^x, $prec]; $prec = 50;
+DistributeDefinitions[Evaluate[Context[]]];
+ParallelEvaluate[f[$KernelID]]
+Out[3]= {3.14159265...}
+```
+
+### Generalizations
+
+将要被`分布`的定义, 它所依赖的辅助定义也会`自动分布`:
+
+```mathematica
+prec = 18;(* prec 将被自动分布, 它是 mtest 的依赖*)
+mtest[n_] :=  Timing[Inverse[RandomReal[{-1, 1}, {n, n}, WorkingPrecision -> prec]]][[1]]
+DistributeDefinitions[mtest]
+{mtest,prec}
+
+ParallelTable[mtest[i], {i, 10, 100, 10}]
+Out[3]= {0.004000, 0.006000...}
+```
+
+### Properties & Relations
+
+`DistributeDefinitions` 会覆盖之前存在的任何`values`和`attributes`:
+
+```mathematica
+ParallelEvaluate[f[0] = "Zero"; f[x_] := x^2,
+  DistributedContexts -> None];
+ParallelMap[f, {0, 1, 2, 3, 4}, DistributedContexts -> None]
+Out[2]= {"Zero", 1, 4, 9, 16}
+{f}
+
+ParallelMap[f, {0, 1, 2, 3, 4}, DistributedContexts -> None]
+Out[4]= {0, 1, 4, 9, 16}
+```
+
+通过`清除`函数, 并再次分发来删除被`分发过`的定义:
+
+```mathematica
+f[x_] := Labeled[Framed[x^2], $KernelID]
+DistributeDefinitions[f];
+ParallelMap[f, {1, 2, 3, 4}]
+(* 清除定义, 重新分发 *)
+ClearAll[f]; DistributeDefinitions[f];
+ParallelMap[f, {1, 2, 3, 4}]
+Out[4]= {f[1], f[2], f[3], f[4]}
+```
+
+`DistributeDefinitions` 使用 `ParallelEvaluate` 向所有内核发送定义:
+
+```mathematica
+f[n_] := PrimeQ[2^n - 1]
+DistributeDefinitions[f];
+
+(*一个显式的 ParallelEvaluate 也能达到效果*)
+ParallelEvaluate[g[n_] := PrimeQ[2^n + 1]];
+ParallelEvaluate[Through[{Identity, f, g}[$KernelID]]]
+Out[4]= {{1, False, True}, {2, True, True}, {3, True, False}, {4, False, True}}
+
+(* 新内核 将会记住 `Distributed 定义`; 而 ParallelEvaluate 则无此效果 *)
+
+CloseKernels[]; LaunchKernels[];
+In[6]:= ParallelEvaluate[Through[{Identity, f, g}[$KernelID]]]
+Out[6]= {{5, True, g[5]}, {6, False, g[6]}, {7, True, g[7]}, {8, False, g[8]}}
+```
+
++ 对于`上层的`并行命令, 以交互方式定义的函数会`自动分发`.
+
+```
+ftest[n_] := Labeled[Framed[PrimeQ[2^n - 1]], $KernelID]
+ParallelMap[ftest, Range[1275, 1285]]
+...
+```
+
+也可以选择`手动`分发定义, 禁用`自动分发`, 运行结果是相同的:
+
+```mathematica
+gtest[n_] := Labeled[Framed[PrimeQ[2^n - 1]], $KernelID]
+DistributeDefinitions[gtest];
+ParallelMap[gtest, Range[1275, 1285], DistributedContexts -> None]
+```
+
++ 只在`子核`上`values` 的符号不会被分发:
+
+```mathematica
+ParallelEvaluate[xr = 5]
+Out[1]= {5, 5, 5, 5}
+DistributeDefinitions[xr] (* 结果为空, 表示没有分发*)
+Out[2]= {}
+(* 子核上的值不会被修改 *)
+ParallelTable[Sqrt[i]/xr, {i, 5}]
+Out[3]= {1/5, Sqrt[2]/5, Sqrt[3]/5, 2/5, 1/Sqrt[5]}
+
+(*只要`符号`得到`局部值`, 它就会随着下一次的`并行计算`而被分发:*)
+xr = 6;
+ParallelTable[Sqrt[i]/xr, {i, 5}]
+Out[5]= {1/6, 1/(3 Sqrt[2]), 1/(2 Sqrt[3]), 1/3, Sqrt[5]/6}
+```
+
++ 使用 `ParallelNeeds` 在所有并行内核上`设置`一个`package`:
+
+```mathematica
+Needs["GraphUtilities`"]
+ParallelNeeds["GraphUtilities`"]
+ParallelEvaluate[HamiltonianCycles[CompleteGraph[3], All]]
+Out[2]= {{{1, 2, 3}, {1, 3, 2}}, {{1, 2, 3}, {1, 3, 2}}, {{1, 2, 3}, {1, 3, 2}}, {{1, 2, 3}, {1, 3, 2}}}
+
+使用 DistributeDefinitions 来设置你自己的定义:
+
+hcg[n_] := HamiltonianCycles[CompleteGraph[n], All]
+DistributeDefinitions[hcg];
+ParallelMap[hcg, Range[4]]
+Out[5]= {{}, {}, {{1, 2, 3}, {1, 3, 2}}, {{1, 2, 3, 4}, {1, 2, 4, 3}, {1, 3,2, 4}, {1, 3, 4, 2}, {1, 4, 2, 3}, {1, 4, 3, 2}}}
+```
+
+### Possible Issues
+
+在`并行子核` 上使用未知函数可能会导致`顺序计算`(sequential evaluation):
+
+```mathematica
+ftest[n_] := Labeled[Framed[PrimeQ[2^n - 1]], $KernelID]
+ParallelEvaluate[ftest[$KernelID], DistributedContexts -> None]
+```
+
+解决方法是在所有子核上定义这个函数:
+
+```mathematica
+DistributeDefinitions[ftest];
+The function is now evaluated on the parallel kernels:
+ParallelEvaluate[ftest[$KernelID], DistributedContexts -> None]
+```
+
+使用 `DistributeDefinitions` 并不能抑制定义的自动分发.
+
+The use of DistributeDefinitions does not suppress automatic distribution of definitions:
+
+```mathematica
+f[i_] := {i, $KernelID}
+DistributeDefinitions[f];
+
+(* 修改定义 *)
+Clear[f]
+(* 修改过的定义会被自动分发 *)
+Parallelize[Map[f, Range[8]]]
+Out[3]= {f[1], f[2], f[3], f[4], f[5], f[6], f[7], f[8]}
+
+(* 抑制自动分法行为 *)
+g[i_] := {i, $KernelID}
+DistributeDefinitions[g];
+Clear[g]
+In[6]:= Parallelize[Map[g, Range[8]], DistributedContexts -> None]
+Out[6]= {{1, 4}, {2, 4}, {3, 3}, {4, 3}, {5, 2}, {6, 2}, {7, 1}, {8, 1}}
+```
+
+只在子核上定义的`符号`不会被自动分发:
+
+```mathematica
+In[7]:= ParallelEvaluate[h[i_] := {i, $KernelID}];
+In[8]:= Parallelize[Map[h, Range[8]]]
+Out[8]= {{1, 4}, {2, 4}, {3, 3}, {4, 3}, {5, 2}, {6, 2}, {7, 1}, {8, 1}}
+```
+
++ 具有`内部状态`的某些对象, 在分布后, 可能会造成效率损失:
+
+```mathematica
+data = RandomReal[{-1, 1}, 1000];
+fdata = ListInterpolation[data]
+Out[2]= {0.044, Null}
+
+DistributeDefinitions[fdata];
+ParallelEvaluate[Timing[Table[fdata[r], {r, 1.0, 1000, 0.1}];], First[Kernels[]]]
+Out[4]= {0.16, Null}
+```
+
+在子核上重新计算, 来改善速度:
+
+```mathematica
+DistributeDefinitions[data, fdata]
+ParallelEvaluate[fdata = ListInterpolation[data];];
+ParallelEvaluate[Timing[Table[fdata[r], {r, 1.0, 1000, 0.1}];],  First[Kernels[]]]
+Out[7]= {0.044, Null}
+```
+
+或者在计算之前, 在所有 `子核` 上, 先重新计算所有数据:
+
+```mathematica
+fdata1 = fdata;
+DistributeDefinitions[fdata1]
+ParallelEvaluate[fdata1 = fdata1];
+
+ParallelEvaluate[Timing[Table[fdata1[r], {r, 1.0, 1000, 0.1}];],
+ Last[Kernels[]]]
+Out[10]= {0.044, Null}
+```
+
+如果`符号`具有 `ReadProtected`, 则无法对它的定义进行分发:
+
+```mathematica
+ftest[n_] := Labeled[Framed[PrimeQ[2^n - 1]], $KernelID];
+SetAttributes[ftest, ReadProtected]
+DistributeDefinitions[ftest]
+
+ParallelMap[ftest, Range[$KernelCount]]
+```
+
+### Neat Examples
+
+快速可视化的高斯素数:
+
+```mathematica
+test[x_] := Boole[PrimeQ[x, GaussianIntegers -> True]]
+data = With[{n = 100}, (* 适用 with 初始化局域常量, 便于修改变量的值, 并且比 Module 效率高*)
+ParallelTable[test[x + y I], {x, -n, n}, {y, -n, n}]];
+ArrayPlot[data]
+```
+
+## With
+
+    With[{x=Subscript[x, 0],y=Subscript[y, 0],...},expr]
+
+指定在 `expr` 中出现的所有符号 `x, y, ...` 应该替换成 `x_0, y_0,    ...`.
+
++ `With`允许你定义 `局部常量`.
++ 只有当 `expr` 中的符号不处在 深层嵌套 `scoping` 构造内的情况下, `with` 才替换符号.
++ 你可以使用 `With[{vars},body/;cond]` 作为 transformation 规则的右侧表达式, 可以附带一个`condition`.
++ `With` 具有 `HoldAll` 属性.
++ `With` 构造可以任意嵌套, 如果需要的话, 它会对内部变量进行重命名.
++ `With` 是一个 `scoping` 结构, 它实现了`只读的`词法变量( read-only lexical variables).
+
+### Possible Issues
+
+`With` 是一个作用域结构; 嵌套作用域中的变量将被重新命名.
+
+```mathematica
+With[{e = Expand[(1 + x)^5]}, Function[x, e]]
+(*Functions 也是scope, x 将被重命名, 返回的函数不能正常使用 *)
+Out[1]= Function[x$, 1 + 5 x + 10 x^2 + 10 x^3 + 5 x^4 + x^5]
+ %[10]
+Out[2]= 1 + 5 x + 10 x^2 + 10 x^3 + 5 x^4 + x^5
+```
+
++ 从函数的元素开始建立函数, 以避免重命名.
+
+```mathematica
+With[{e = Expand[(1 + x)^5]}, Function @@ {x, e}]
+Out[3]= Function[x, 1 + 5 x + 10 x^2 + 10 x^3 + 5 x^4 + x^5]
+ %[10]
+Out[4]= 161051
+```
+
+### Neat Examples
+
++ 用牛顿方法找到一个任意函数的零点:
+
+```mathematica
+newton[f_, x0_] := With[{fp = f'}, FixedPoint[# - f[#]/fp[#] &, x0]]
+
+newton[Cos, 1`20]
+Out[2]= 1.570796326794896619
+```
+
+找到一个固定点(fixed point).
+
+```mathematica
+newton[Cos[#] - # &, 1`20]
+Out[3]= 0.739085133215160642
+```
+
++ 另一个版本的 `With`, `initializer`(即下面的`val`) 处在`局部变量`的作用域中.
+`letrec` 即 `let recursive`, 递归赋值.
+A version of With where the initializer is within the scope of the local variable
+
+```mathematica
+SetAttributes[letrec, HoldAll];(* HoldAll 属性, 要求函数的所有参数保持不计算的形式 *)
+letrec[{var_ = val_}, body_] := Module[{var},
+(* letrec 接收参数, 下文中 var 的实参为 f ;
+Module 对 f 进行局域化, 而 val 中的 f 将被 Module 替换成相同的局部变量,
+所以处在相同的作用域中, 可以进行递归计算 *)
+var = val;
+body]
+
+letrec[{f = Function[n, If[n == 0, 1, n*f[n - 1]]]}, f[10]]
+Out[2]= 3628800
+```
+
+在下面的定义中, `Function[]`中的 `f`  , 跟外面 `f=` 中的 `f`, 处在不同的作用域,
+由于 `With` 会重命名内层作用域的`f`.  总的效果是无法实现递归定义:
+
+```mathematica
+With[{f = Function[n, If[n == 0, 1, n*f[n - 1]]]}, f[10]]
+Out[3]= 10 f[9]
+```
+
+## Moudles
+
+如果不需要`赋值`给局部变量, 应该使用`常量`来代替:
+
+```mathematica
+With[{x=2.0},Sqrt[x]+1]
+Out[1]= 2.41421
+(*With 比 Module 速度快:*)
+Timing[Do[Module[{x=5},x;],{10^5}]]
+Out[2]= {0.312,Null}
+Timing[Do[With[{x=5},x;],{10^5}]]
+Out[3]= {0.093,Null}
+```
+
+`Block`只对`values`进行居域化, 它不创建新的符号.
+
+```mathematica
+x = 7;
+Block[{x = 5}, Print[x]]; x
+5
+7
+```
+
+`Unique` 以类似于 `Module` 的方式创建新的变量.
+
+```mathematica
+{Unique[x], Module[{x}, x]}
+Out[1]= {x$949,x$950}.
+```
+
+`本地变量`不受 `全局变量` 的影响, 反之亦然.
+
+```mathematica
+x = 17;
+Module[{x = x}, x = x + 1; x]
+x
+输出[2]=17
+```
+
+带入 `Module` 范围的`symbol`不受命名冲突的影响.
+
+```mathematica
+y = x^2;
+Module[{x = 5}, x + y]
+Out[2]= 5+x^2
+```
+
+### Possible Issues
+
+`Module`是一个`scoping`结构; `内部局部变量` 屏蔽 `外部变量`.
+
+```mathematica
+Module[{x}, Print[x]; Module[{x}, Print[x]]]
+x$119
+x$120
+```
+
++ `嵌套作用域`中的变量被重新命名.
+
+```mathematica
+Module[{e = Expand[(1 + x)^5]}, Function[x, e]]
+Out[1]:= Function[x$,e$100477] .
+%[10]
+Out[2]= 1+5 x+10 x^2+10 x^3+5 x^4+x^5
+```
+
+从它的组成部分建立函数以避免重命名.
+
+```mathematica
+Module[{e = Expand[(1 + x)^5]}, Function @@ {x, e}]
+Out[3]= Function[x,1+5 x+10 x^2+10 x^3+5 x^4+x^5] .
+%[10]
+Out[4]= 161051
+```
+
++ 并行赋值, 对`Module`变量是不可用的:
+
+```mathematica
+v = {a, b};
+Module[{{x, y} = v}, x^2 + y^2]
+在运算Module::lvset的过程中...
+
+(* 进行逐个赋值 *)
+Module[{x = v[[1]], y = v[[2]]}, x^2 + y^2]
+Out[3]= a^2+b^2
+```
+
 ## 虚拟共享内存
 
 ### 同步
@@ -484,47 +1266,3 @@ Parallelize[
 ```
 
 ## 推送定义到远程
-
-## Wolfram Engine
-
-[Mathematica 激活指南](https://tiebamma.github.io/InstallTutorial/)
-[free Wolfram Engine](https://mathematica.stackexchange.com/questions/198839/how-to-add-a-front-end-to-the-free-wolfram-engine)
-
-2019 年 5 月, Wolfram 推出了免费的 Wolfram Engine for Developers.
-此软件实质上是一个没有笔记本界面, 也没有本地自带帮助的 Mathematica. 但是, 它是免费的!并且, 虽然没有自带笔记本, 但你可以用 `Jupyter` 笔记本.
-
-## Windows 平台
-
-+ 下载安装 `Python`:[https://www.python.org/](https://www.python.org/).
-不要忘了勾选`"add python environment variables" / "add to PATH"`,否则需要自己添加`python.exe`到环境变量.
-+ 从[github : WLforJupyter > releases](https://github.com/WolframResearch/WolframLanguageForJupyter/releases)下载`.paclet`文件.
-+ 在`cmd(管理员)`执行:
-
-```bash
-pip install jupyter ## 等待安装jupyter笔记本
-wolframscript ## 运行wolfram内核,下面的命令将在Wolfram 内核运行
-PacletInstall @ ".paclet文件的路径" # 安装.paclet文件
-<< WolframLanguageForJupyter`## 导入这个包
-ConfigureJupyter["Add"] ## 配置Jupyter笔记本
-```
-
-然后输入`Quit`退出, 重新运行`CMD`, 输入`jupyter notebook`就会打开浏览器, 选择`New -> Wolfram Language`就可以运行`Wolfram`语言.
-
-## Linux安装
-
-首先安装好`wolframscript`和`Jupyter`
-
-Clone [WolframLanguageForJupyter](https://github.com/WolframResearch/WolframLanguageForJupyter)仓库:
-在终端中进入仓库, 运行`git clone https://github.com/WolframResearch/WolframLanguageForJupyter.git`
-在克隆好的仓库中运行`./configure-jupyter.wls add`. 如果报错`Jupyter installation on Environment["PATH"] not found`, 可以尝试指定具体的路径:
-
-```bash
-configure-jupyter.wls add "Wolfram Engine二进制程序的绝对路径" "Jupyter二进制程序的绝对路径"
-```
-
-`Jupyter`二进制的目录一般在`~/.local/bin/jupyter `,` Wolfram binary`的位置可以在`wolframscript`中得到:
-
-```bash
-wolframscript
-FileNameJoin[{$InstallationDirectory, "Executables", "WolframKernel"}]
-```
