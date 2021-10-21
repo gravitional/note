@@ -348,3 +348,53 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrac
 通过`立即退出`而不是允许内存访问并继续执行, `Rust` 让你避开此类错误.
 
 第九章会讨论更多 `Rust` 的错误处理.
+
+## String, &str
+
+`字符串` 是作为`字节`(byte)的集合, 外加一些方法实现的, 当这些字节被解释为`文本`时, `方法`提供了实用的功能.
+
+`Rust` 的核心语言中只有一种字符串类型: `str`, 字符串 `slice`, 它通常以被借用的形式出现, `&str`.
+
+第四章讲到了 `字符串 slice`: 它们是一些储存在别处的 `UTF-8` 编码字符串数据的`引用`.
+比如`字符串字面值`(literal string) 被储存在程序的 `二进制输出` 中, `字符串 slice` 也是如此.
+顺便, `字符串字面值` 其实就是 `slice`. 例如
+
+```rust
+let s = "Hello, world!";
+```
+
+这里 `s` 的类型是 `&str`: 它是一个指向二进制程序特定位置的 `slice`.
+这也就是为什么字符串字面值是不可变的; `&str` 是一个不可变引用.
+
+称作 `String` 的类型是由标准库提供的, 而没有写进核心语言部分, 它是可增长的, 可变的, 有`所有权的`, UTF-8 编码的字符串类型.
+`String` 字符串类型, 可以管理被分配到堆上的数据, 所以能够存储在编译时未知大小的文本.
+可以使用 `from` 函数基于 `字符串字面值` 来创建 `String`, 如下:
+
+```rust
+let s = String::from("hello");
+```
+
+Rust 标准库中还包含一系列其他字符串类型, 比如 `OsString`, `OsStr`, `CString` 和 `CStr`.
+相关库 `crate` 甚至会提供更多储存字符串数据的选择.
+这些由 `String` 或是 `Str` 结尾的名字, 分别对应 `owned` 和 `borrowed` 类型, 也就是你之前看到的 `String` 和 `str`.
+
+### 字符串 slice 作为参数
+
+考虑如下的例子, `add` 的函数签名大致如下
+
+```rust
+let s1 = String::from("Hello, ");
+let s2 = String::from("world!");
+let s3 = s1 + &s2; // 注意 s1 被移动了，不能继续使用
+
+// + 运算符使用了 add 函数
+fn add(self, s: &str) -> String {
+```
+
+`add` 的第二个参数要求是 `&str`, 也就是 `slice` 类型.
+但是在这里,  `&s2` 的类型是 `&String` 而不是 `&str`, 这个例子却可以工作.
+
+之所以能够在 `add` 调用中使用 `&s2` 是因为, `&String` 可以被 强转(coerced)成 `&str`. 
+当 `add` 函数被调用时, Rust 使用了一个被称为 `Deref 强制转换`(deref coercion)的技术, 你可以将其理解为它把 `&s2` 变成了 `&s2[..]`. 
+顺便, 因为 `add` 没有获取参数的所有权, 所以 `s2` 在这个操作后仍然是有效的 `String`. 
+第十五章会更深入的讨论 `Deref 强制转换`. 

@@ -182,11 +182,11 @@ Out[3]= {0.055431, {{0.310021, 0.500236, 0.749769, 0.408784},...}}
 
 声明各符号 `f_i` 为共享函数, 它们的 `下值`(downvalues) 在`所有并行内核`中同步(synchronized).
 
-+ 在`任何内核`上(主核或子核) 定义的`共享函数`的 `下值`, 都由 `主内核`负责维护, 
++ 在`任何内核`上(主核或子核) 定义的`共享函数`的 `下值`, 都由 `主内核`负责维护,
 从 `并行子内核`  中每一次对`共享函数`的访问, 都通过主内核进行`同步`.
 + `f[...]` 形式的表达式如果计算不出值, 就会返回 `Null`.
 
-`共享函数`在所有内核中，均有相同的`定义`(`Definition`), 普通函数在每个内核中有一份自己的拷贝.
+`共享函数`在所有内核中, 均有相同的`定义`(`Definition`), 普通函数在每个内核中有一份自己的拷贝.
 
 ### scope
 
@@ -249,7 +249,7 @@ Out: f1[n_] := {n, $KernelID} (* 主核函数的定义 *)
 ```mathematica
 SetSharedFunction[f2]
 (*例如在第一个子核中添加 延迟定义*)
-ParallelEvaluate[f2[n_] := {n,$KernelID}, First[Kernels[]]] 
+ParallelEvaluate[f2[n_] := {n,$KernelID}, First[Kernels[]]]
 ```
 
 这样添加的定义, 总是`子核`自己进行计算. 也就是哪个`子核`请求返回值, 就用哪个`子核`计算, 所有的`子核`得到自己的本地值.
@@ -258,7 +258,7 @@ ParallelEvaluate[f2[n_] := {n,$KernelID}, First[Kernels[]]]
 ParallelMap[f2, Range[4]]
 Out[6]= {4, 6, 6, 4}
 Definition@f2
-f2[n_] := Parallel`Developer`SendBack[{n, $KernelID}] 
+f2[n_] := Parallel`Developer`SendBack[{n, $KernelID}]
 ```
 
 查看 `子核` 函数的定义, 由名称 SendBack 可以推测`主核` 将把计算遣返回`子核`, 让子核 自行计算.
@@ -271,7 +271,7 @@ f2[n_] := Parallel`Developer`SendBack[{n, $KernelID}]
 mlist = {};
 include[e_] := (mlist = Union[mlist, {e}];)
 SetSharedFunction[include]
-(*在 主核 定义的函数，将由主核负责计算*)
+(*在 主核 定义的函数, 将由主核负责计算*)
 ParallelDo[include[RandomInteger[10]], {10}]
 mlist
 Out[3]= {2, 4, 5, 6, 8, 9}
@@ -280,9 +280,9 @@ Out[3]= {2, 4, 5, 6, 8, 9}
 若使用 `共享变量` 以及 `CriticalSection` 实现, 而不使用上述 `共享函数`,  会比较绕:
 
 ```mathematica
-slist = {}; SetSharedVariable[slist]; Clear[lock] (* 使用共享变量，并加锁*)
+slist = {}; SetSharedVariable[slist]; Clear[lock] (* 使用共享变量, 并加锁*)
 ParallelDo[e = RandomInteger[10];
-    CriticalSection[{lock}, slist = Union[slist, {e}]], {10}] 
+    CriticalSection[{lock}, slist = Union[slist, {e}]], {10}]
     (* 使用 CriticalSection 对 lock  上锁, 其他进程无法使用, 计算完成后才释放 lock *)
 slist
 Out[6]= {1, 2, 3, 5, 7, 8, 9}
@@ -297,7 +297,7 @@ list[push, e_] := (AppendTo[data, e];);
   (*pop 方法弹出数据, 如果到达队列末尾, 则返回 $Failed*)
   list[pop] :=  If[Length[data] == 0, $Failed,   With[{e = First[data]}, data = Rest[data]; e]];
 (*相当于 get 方法, 返回整个队列的数据*)
-  list[] := data; 
+  list[] := data;
   (*最后返回构造的队列 实例*)
     list ]
 ```
@@ -329,7 +329,7 @@ record[0, _] := next++;
 record[n_, nf_] := (results[n] = nf; next++)
 SetSharedFunction[record]
 
-(* 建立一个搜索，并显示其进度，直到它被手动中止: Alt+. *)
+(* 建立一个搜索, 并显示其进度, 直到它被手动中止: Alt+. *)
 first = next = 100; Clear[results];
 results[_] := "\[WatchIcon]";
 (*暂时输出, 计算完成后删除*)
@@ -371,7 +371,7 @@ sharedres
 
 ### Possible Issues  
 
-对于单纯的将代码分发到`子核`(code distribution)来说, 使用 `共享函数` 并不高效，结果是单纯的顺序计算(sequential evaluation):
+对于单纯的将代码分发到`子核`(code distribution)来说, 使用 `共享函数` 并不高效, 结果是单纯的顺序计算(sequential evaluation):
 
 ```mathematica
 (*定义并共享函数代码*)
@@ -414,7 +414,7 @@ nu
 Out[6]= 26
 ```
 
-或者，使用 `CriticalSection` 来使这段代码 变成 `原子的`(atomic, 即必须作为单元执行, 不能被干扰)
+或者, 使用 `CriticalSection` 来使这段代码 变成 `原子的`(atomic, 即必须作为单元执行, 不能被干扰)
 
 ```mathematica
 ns = 0; SetSharedVariable[ns]; Clear[nlock] (* 共享, 加锁 *)

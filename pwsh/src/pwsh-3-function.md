@@ -12,10 +12,10 @@
 
 [about_Functions_Advanced](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced?view=powershell-7.1)
 
-`cmdlet` 是一个参与 PowerShell 管道语义(pipeline semantics)的单一命令. 
+`cmdlet` 是一个参与 PowerShell 管道语义(pipeline semantics)的单一命令.
 这包括二进制cmdlet, 高级脚本函数, CDXML和工作流(Workflows).
 
-`高级函数`(Advanced functions) 允许你 以 `PowerShell 函数` 的形式创造 cmdlet. 
+`高级函数`(Advanced functions) 允许你 以 `PowerShell 函数` 的形式创造 cmdlet.
 高级函数使创建cmdlet更容易, 而不需要编写和编译 `二进制cmdlet`.
 `二进制 cmdlet` 是用 `.NET语言`(如`C#`) 编写的 `.NET类`.
 
@@ -44,11 +44,11 @@ function Send-Greeting
 }
 ```
 
-函数的 `参数` 是通过使用 `Parameter` 属性来声明的. 
-这个属性可以单独使用, 也可以与 `Alias属性` (attribute) 或其他几个 `参数验证` 属性结合使用. 
+函数的 `参数` 是通过使用 `Parameter` 属性来声明的.
+这个属性可以单独使用, 也可以与 `Alias属性` (attribute) 或其他几个 `参数验证` 属性结合使用.
 关于如何声明参数(包括在运行时添加的动态参数)的更多信息, 请参阅 [about_Functions_Advanced_Parameters][].
 
-上述函数的实际工作是在 `Process 块` 中进行的, 它相当于 `ProcessingRecord` 方法, `编译形式的 cmdlet` 用来处理传递给 `cmdlet` 的数据. 
+上述函数的实际工作是在 `Process 块` 中进行的, 它相当于 `ProcessingRecord` 方法, `编译形式的 cmdlet` 用来处理传递给 `cmdlet` 的数据.
 `Process 块`, 以及 `Begin` 和 `End块`, 在 [about_Functions_Advanced_Methods][] 主题中描述.
 
 高级函数在以下方面与 `编译的cmdlet` 不同.
