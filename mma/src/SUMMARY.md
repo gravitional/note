@@ -6,7 +6,6 @@
 - [关联](mma-association.md)
 - [坐标变换](mma-coordinate.md)
 - [数据集](mma-dataset.md)
-- [FeynCalc](mma-feyncalc.md)
 - [排版](mma-formatting.md)
 
 - [函数](mma-function.md)
@@ -27,6 +26,9 @@
 - [系统 IO](mma-sys-io.md)
 - [Wolfram 脚本](mma-wolframscript.md)
 - [Wolfram Engine](mma-wolfram-engine.md)
+
+- [FeynCalc 场论通用计算](mma-feyncalc.md)
+- [Package-X 圈积分](mma-package-x.md)
 
 - [并行与并发手册](mma-parallel-guide.md)
 - [并行与并发的函数](mma-parallel-builtins.md)

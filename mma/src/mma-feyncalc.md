@@ -1,5 +1,13 @@
 # FeynCalc
 
+## 输出格式
+
+恢复被 `FeynCalc` 更改默认输出格式:
+
+```mathematica
+SetOptions[EvaluationNotebook[],  CommonDefaultFormatTypes -> {"Output" -> StandardForm}]
+```
+
 ## FeynArts
 
 [FeynArts in FeynCalc](https://github.com/FeynCalc/feyncalc/wiki/FeynArts)
@@ -25,3 +33,9 @@ $LoadFeynArts = True;
 将出现一个对话框, 询问您是否要对`FeynArts`打补丁. 点击确定, 等到修补过程结束.
 重启`Mathematica`内核, 并尝试运行一些示例代码(点击`FeynCalc`加载时出现的横幅上的示例链接).
 确保一切都能正确运行, 没有任何警告和错误.
+
+## 圈积分
+
+### 费曼参数化
+
+`FeynmanParametrize[exp,k]`

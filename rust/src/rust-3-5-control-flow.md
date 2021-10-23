@@ -134,7 +134,7 @@ number is divisible by 3
 
 因为 `if` 是一个表达式, 我们可以在 `let` 语句的右侧使用它, 例如在示例 3-2 中:
 
-```
+```rust
 fn main() {
     let condition = true;
     let number = if condition {

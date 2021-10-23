@@ -1292,20 +1292,8 @@ user 0m0.056s
 sys 0m0.008s
 ```
 
-原来的脚本扫描整个文本文件需耗时`3.168`秒,而该新版本,使用参数展开,仅仅花费了`0.06`秒  --  一个非常巨
-大的提高.
-
-### formfactor bash 脚本
-
-```bash
-curveopacity=1
-markers="Bands"
-markopacity=0.1
-expr_marker=3
-expr_opacity=1
-
-wolframscript -print "all" -file ./f.figure.series-full.rencon3.strange.baryons-all.band.wl "full" 0.90 1.50 $curveopacity $markers $markopacity $expr_marker $expr_opacity
-```
+原来的脚本扫描整个文本文件需耗时`3.168`秒,
+而使用参数展开的新版本, 仅仅花费了`0.06`秒  --  一个非常巨大的提高.
 
 ### 通配符/Wildcard/glob
 

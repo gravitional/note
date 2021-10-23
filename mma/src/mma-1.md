@@ -1,4 +1,4 @@
-# mathematica.md
+# mathematica snippets
 
 + 参数序列比较短的时候可以直接用`List[...]`,
 + 参数比较长, 但不是巨大规模时, 用关联收集参数.

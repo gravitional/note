@@ -385,7 +385,7 @@ Rust 标准库中还包含一系列其他字符串类型, 比如 `OsString`, `Os
 ```rust
 let s1 = String::from("Hello, ");
 let s2 = String::from("world!");
-let s3 = s1 + &s2; // 注意 s1 被移动了，不能继续使用
+let s3 = s1 + &s2; // 注意 s1 被移动了, 不能继续使用
 
 // + 运算符使用了 add 函数
 fn add(self, s: &str) -> String {
@@ -394,7 +394,7 @@ fn add(self, s: &str) -> String {
 `add` 的第二个参数要求是 `&str`, 也就是 `slice` 类型.
 但是在这里,  `&s2` 的类型是 `&String` 而不是 `&str`, 这个例子却可以工作.
 
-之所以能够在 `add` 调用中使用 `&s2` 是因为, `&String` 可以被 强转(coerced)成 `&str`. 
-当 `add` 函数被调用时, Rust 使用了一个被称为 `Deref 强制转换`(deref coercion)的技术, 你可以将其理解为它把 `&s2` 变成了 `&s2[..]`. 
-顺便, 因为 `add` 没有获取参数的所有权, 所以 `s2` 在这个操作后仍然是有效的 `String`. 
-第十五章会更深入的讨论 `Deref 强制转换`. 
+之所以能够在 `add` 调用中使用 `&s2` 是因为, `&String` 可以被 强转(coerced)成 `&str`.
+当 `add` 函数被调用时, Rust 使用了一个被称为 `Deref 强制转换`(deref coercion)的技术, 你可以将其理解为它把 `&s2` 变成了 `&s2[..]`.
+顺便, 因为 `add` 没有获取参数的所有权, 所以 `s2` 在这个操作后仍然是有效的 `String`.
+第十五章会更深入的讨论 `Deref 强制转换`.

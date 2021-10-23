@@ -131,7 +131,7 @@ Out[3]=1022+cl[18215]
 使用`局部表达式`来可视化一个复杂的图.
 
 ```mathematica
-Block[{f = Sin[x + I y]}, 
+Block[{f = Sin[x + I y]},
  ParametricPlot[Evaluate[{Re[f], Im[f]}], {x, -Pi, Pi}, {y, -2, 2}, Mesh -> 10]]
 ```
 

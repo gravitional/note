@@ -191,7 +191,7 @@ ExportString[{1, "text", 2, 3},
  ]
  ```
 
-`wolframscripts` 结合`shell` 使用时, 传递参数最好用字符串, 不会改变结构.
+`wolframscripts` 结合 `shell` 使用时, 传递参数最好用字符串, 不会改变结构.
 在 `mma` 脚本内部, 使用 `ToString` 和 `ToExpression` 进行转化, 为了保险, 可以增加`InputForm`选项.
 
 ***

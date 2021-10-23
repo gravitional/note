@@ -1,0 +1,117 @@
+# 接受命令行参数
+
+一如既往使用 `cargo new` 新建一个项目, 我们称之为 `minigrep`,
+以便与可能已经安装在系统上的 grep 工具相区别:
+
+```bash
+$ cargo new minigrep
+     Created binary (application) `minigrep` project
+$ cd minigrep
+```
+
+第一个任务是让 `minigrep` 能够接受两个命令行参数: `文件名` 和 `要搜索的字符串`.
+也就是说我们希望能够使用 cargo run, 要搜索的字符串和被搜索的文件的路径来运行程序, 像这样:
+
+```bash
+$ cargo run searchstring example-filename.txt
+```
+
+现在 `cargo new` 生成的程序忽略任何传递给它的参数.
+`Crates.io` 上有一些现成的库可以帮助我们接受命令行参数, 不过我们正在学习这些内容, 让我们自己来实现一个.
+
+## 读取参数值
+
+为了确保 `minigrep` 能够获取传递给它的命令行参数的值, 我们需要一个 `Rust` 标准库提供的函数, 也就是 `std::env::args`.
+这个函数返回一个传递给程序的命令行参数的 迭代器(iterator).  我们会在 第十三章 全面的介绍它们.
+但是现在只需理解迭代器的两个细节:
+迭代器生成一系列的值, 可以在迭代器上调用 collect 方法将其转换为一个集合, 比如包含所有迭代器产生元素的 vector.
+
+使用示例 12-1 中的代码来读取任何传递给 minigrep 的命令行参数并将其收集到一个 vector 中.
+
+文件名: src/main.rs
+
+```rust
+use std::env;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    println!("{:?}", args);
+}
+```
+
+示例 12-1: 将命令行参数收集到一个 vector 中并打印出来
+
+首先使用 use 语句来将 std::env 模块引入作用域以便可以使用它的 args 函数.
+注意 std::env::args 函数在 `两层嵌套的模块` 中.
+正如 第七章 讲到的, 当所需函数嵌套了多于一层模块时, 通常将父模块引入作用域, 而不是其自身.
+这便于我们利用 std::env 中的其他函数.
+这比使用 use std::env::args; 导入后, 仅仅使用 args 调用函数要更明确一些, 因为 args 容易被错认成一个定义于当前模块的函数.
+
+>args 函数和无效的 Unicode
+>注意 std::env::args 在其任何参数包含无效 Unicode 字符时会 panic.
+>如果你需要接受包含无效 Unicode 字符的参数, 使用 std::env::args_os 代替. 这个函数返回 OsString 值而不是 String 值.
+>这里出于简单考虑使用了 std::env::args, 因为 OsString 值每个平台都不一样而且比 String 值处理起来更为复杂.
+
+在 main 函数的第一行, 我们调用了 env::args, 并立即使用 collect 来创建了一个包含迭代器所有值的 vector.
+collect 可以被用来创建很多类型的集合, 所以这里显式注明 args 的类型来指定我们需要一个字符串 vector.
+虽然在 Rust 中我们很少会需要注明类型, 然而 collect 是一个经常需要注明类型的函数, 因为 Rust 不能推断出你想要什么类型的集合.
+
+最后, 我们使用调试格式 :? 打印出 vector. 让我们尝试分别用两种方式(不包含参数和包含参数)运行代码:
+
+```rust
+$ cargo run
+--snip--
+["target/debug/minigrep"]
+
+$ cargo run needle haystack
+--snip--
+["target/debug/minigrep", "needle", "haystack"]
+```
+
+注意 vector 的第一个值是 "target/debug/minigrep", 它是我们二进制文件的名称.
+这与 C 中的参数列表的行为相匹配, 让程序使用在执行时调用它们的名称.
+如果要在消息中打印它或者根据用于调用程序的命令行别名更改程序的行为,
+通常可以方便地访问程序名称, 不过考虑到本章的目的, 我们将忽略它并只保存所需的两个参数.
+
+## 将参数值保存进变量
+
+打印出参数 vector 中的值展示了程序可以访问指定为命令行参数的值.
+现在需要将这两个参数的值保存进变量这样就可以在程序的余下部分使用这些值了.
+让我们如示例 12-2 这样做:
+
+文件名: src/main.rs
+
+```rust
+use std::env;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let query = &args[1];
+    let filename = &args[2];
+
+    println!("Searching for {}", query);
+    println!("In file {}", filename);
+}
+```
+
+示例 12-2: 创建变量来存放查询参数和文件名参数
+
+正如之前打印出 vector 时所所看到的, 程序的名称占据了 vector 的第一个值 `args[0]`, 所以我们从索引 1 开始.
+minigrep 获取的第一个参数是需要搜索的字符串, 所以将其将第一个参数的引用存放在变量 query 中.
+第二个参数将是文件名, 所以将第二个参数的引用放入变量 filename 中.
+
+我们将临时打印出这些变量的值, 来证明代码如我们期望那样工作.
+使用参数 test 和 sample.txt 再次运行这个程序:
+
+```bash
+$ cargo run test sample.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep test sample.txt`
+Searching for test
+In file sample.txt
+```
+
+好的, 它可以工作! 我们将所需的参数值保存进了对应的变量中.
+之后会增加一些错误处理来应对类似用户没有提供参数的情况, 不过现在我们将忽略他们并开始增加读取文件功能.
