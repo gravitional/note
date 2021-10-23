@@ -8,7 +8,12 @@
 - [数据集](mma-dataset.md)
 - [FeynCalc](mma-feyncalc.md)
 - [排版](mma-formatting.md)
+
 - [函数](mma-function.md)
+    - [作用域](mma-function-scope.md)
+    - [标准计算流程,计算控制](mma-function-eval-control.md)
+    - [消息系统](mma-function-message.md)
+
 - [群论](mma-group-theory.md)
 - [图像处理](mma-image.md)
 - [积分](mma-integral.md)

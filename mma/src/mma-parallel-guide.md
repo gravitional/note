@@ -989,6 +989,9 @@ ParallelTools/tutorial/ConcurrencyManagingParallelProcesses
 你可以启动任意多的 `进程`, 它们最终都会在任何可用的 `远程处理器` 上被计算.
 当你需要一个特定的结果时, 你可以等待任何特定的 `eid`, 或者你可以重复调用 `WaitNext` 来等待所有的结果.
 
+>`ParallelSubmit[{var1, var2, ... },expr]` 在提交 `expr` 进行计算之前, 将 `var_i`的`当前值`代入 `expr`.
+>`ParallelSubmit` 有属性 `HoldAllComplete`, `Evaluate` 也无法覆盖.
+
 ## Basic Usage
 
 为了尝试这里的例子, 请启动几个并行的内核.
@@ -1048,7 +1051,7 @@ Out[7]= {9, 16, 25}
 ### 关于使用变量的说明
 
 如果 `ParallelSubmit[e]` 中的表达式 `e` 涉及到 `被赋值` 的变量,
-必须注意确保远程内核有相同的变量值定义.
+必须注意确保 `远程内核` 具有相同的变量值定义.
 
 除非你使用 `DistributeDefinitions` 或 `共享变量`, 否则本地定义的变量将无法提供给远程内核.
 更多信息请参见教程 `并行计算` 中的 `Values of Variables`.

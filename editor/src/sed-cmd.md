@@ -51,7 +51,7 @@ Wiki 上有说, 简单来说就是当时的电传打字机使用 `CR-LF` 作为�
 Multics 则利用驱动分离了打印机和程序, 所以使用单个 `LF`, 这样处理方便些.
 
 ```powershell
-function comma {
+function conv-punct {
 $tmp=(Get-ChildItem $args) ;    
 sd  --string-mode  '：'  ': '  $tmp;
 sd  --string-mode  '，'  ', '  $tmp;    
@@ -62,17 +62,18 @@ sd  --string-mode  '）'  ')'  $tmp;
 sd  --string-mode  '；'  ';'  $tmp;
 sd  --string-mode  '！'  '!'  $tmp;
 sd  --string-mode  '？'  '?'  $tmp;
-sd  --string-mode  '‹'    '<'    $tmp;
-sd  --string-mode  '›'    '>'    $tmp;
+sd  --string-mode  '‹'   '<'    $tmp;
+sd  --string-mode  '›'   '>'    $tmp;
 sd  --string-mode  '《'  '<'  $tmp;
 sd  --string-mode  '》'  '>'  $tmp;
 sd  --string-mode  '【'  '['  $tmp;
 sd  --string-mode  '】'  ']'  $tmp;
 sd  --string-mode  '『'  '{'  $tmp;
 sd  --string-mode  '』'  '}'  $tmp;
+sd  --string-mode  "评估" "计算"  $tmp;
 sd '[“”]'  '\"'     $tmp;
 sd "[‘’]"  "\'"  $tmp;
-sd '\r\n([ \t]*\r\n[ \t]*)+\r\n' '\r\n'  $tmp;
+sd '\r\n([ \t]*\r\n[ \t]*)+\r\n' '\r\n\r\n'  $tmp;
 sd '[ \t]+\r\n' '\r\n'     $tmp; 
 }
 ```
