@@ -122,37 +122,27 @@ HoldComplete[DisableFormatting[Grid[{{1, 2}, {3, 4}}]] ]
 
 ## Unevaluated
 
-`Unevaluated` 保持表达式不计算, 然后外层函数可以接收到 `raw 形式`.
-
-尽管`Set`具有`HoldFirst`属性, `SetDelayed, UpSetDelayed` 具有 `HoldAll`属性.
-但是在 `Set` 将接收到的参数转换成 `Definition`的时候, 参数默认情况下仍然会被计算,
-所以最终出现在定义里面的参数, 是已经被计算过的形式.
-
-例如在下面的定义中, 还是会先计算`g[x]`的值:
-
-```mathematica
-g[x]=2; f[g[x]]:=0
-??f
-```
-
-最后`f`的定义是`f[2]=0`, 而不是`f[g[x]]=0`.
-这样的好处是, 可以放心将`g[x]`用作复杂表达式的接口,
-定义`f`的时候, 内部的表达式会自动替换成其定义. 可以方便输入.
-
-如果想要保持参数始终不被计算, 需要同时使用`HoldAll`属性和`Unevaluated`,
-这样在参数传递的整条链路上, 始终不进行计算.
-比如想实现`f[g[x]]=0`这种定义, 需要使用
-
-```mathematica
-ClearAll[f];(* 清除之前的定义 *)
-g[x]=2; f[Unevaluated[g[x]]]:=0
-??f
-```
+### Detail
 
 + `Unevaluated[expr]`; 表示当`expr`作为一个函数的参数出现时, 它的未运算的原始形式.
-`f[Unevaluated[expr]]` 通过临时设置属性, 使 `f` 保持其参数不运算, 然后再计算 `f[expr]`, 其中`expr`保持接受时的形式. 例如:
+`f[Unevaluated[expr]]` 通过`临时设置属性`, 例如`HoldFirst`, 使 `f` 保持其参数不运算,
+然后再计算 `f[expr]`, 其中`expr`保持接受时的形式. 例如:
 
-将一个未运算的表达式送入`Length`.
++ 当 `Unevaluated[expr]` 独自出现时, 保持不计算的形式,  被放进嵌套结构时, 将发挥作用.
++ 根据这个描述, `Unevaluated` 不给表达式增加额外深度, `Depth` 和 `Level` 均跳过 `Unevaluated` 这层结构.
+
+```mathematica
+Depth[Hold[Plus[5,6,7,8]]] (*Depth 返回最大索引数目+1*)
+Out[4]= 3
+
+Depth[Unevaluated[5 + 6 + 7 + 8]]
+Out[3]= 2
+
+Level[Unevaluated[5 + 6 + 7 + 8], 1]
+Out[2]= {5, 6, 7, 8}
+```
+
+将`未运算`的表达式送入`Length`:
 
 ```mathematica
 Length[Unevaluated[5 + 6 + 7 + 8]]
@@ -196,6 +186,39 @@ Hold[Evaluate[Unevaluated[1 + 2]]]
 ```mathematica
 SetAttributes[f, HoldAll]
 f[Unevaluated[1 + 2]]
+```
+
+### 应用
+
+对于函数`定义`/`调用`
+
+    f:=[expr1,expr2]
+
+尽管`Set`具有`HoldFirst`属性, `SetDelayed, UpSetDelayed` 具有 `HoldAll`属性.
+`arguments` 在传递给函数`f` 的时候, 的确保持未被计算的形式, 但是在 `f` 的函数体中,
+简单地使用参数, 或者将运算符作用于参数, 都会造成`参数`被递归计算.
+所以最终参数无法维持 `raw` 形式.
+
+例如在下面的定义中, 还是会先计算`g[x]`的值:
+
+```mathematica
+g[x]=2; f[g[x]]:=0
+??f
+Out: f[2]:=0
+```
+
+最后`f`的定义是`f[2]=0`, 而不是`f[g[x]]=0`.
+这样的好处是, 可以放心将`g[x]`用作复杂表达式的接口,
+定义`f`的时候, 内部的表达式会自动替换成其定义. 可以方便输入.
+
+如果想要保持参数始终不被计算, 需要同时使用`HoldAll`属性和`Unevaluated`,
+这样在参数传递的整条链路上, 始终不进行计算.
+比如想实现`f[g[x]]=0`这种定义, 需要使用
+
+```mathematica
+ClearAll[f];(* 清除之前的定义 *)
+g[x]=2; f[Unevaluated[g[x]]]:=0
+??f
 ```
 
 ## Inactivate, Activate
@@ -262,11 +285,69 @@ Out[4]= 1/Sqrt[2]
 
 ### HoldPattern
 
-`HoldPattern[expr]`
-用于模式匹配的时候, 等价于`expr`, 但是保持`expr`不计算
+`HoldPattern[expr]` ; 用于模式匹配的时候, 等价于 `expr`, 但是保持 `expr` 不计算.
 属性:  `HoldAll`
 
-还有一个更强的函数
+`HoldPattern` 的一个应用是, 指定适用于`未计算`的表达式的`模式`, 或以未计算形式被 `Hold`的表达式, 例如:
+
+`HoldPattern` 使 `1+1` 不被计算, 并允许它与 `/.` 运算符左侧的 `1+1` 相匹配.
+
+```mathematica
+Hold[u[1 + 1]] /. HoldPattern[1 + 1] -> x
+Out[3]= Hold[u[x]]
+```
+
+请注意, 虽然像 `Hold` 这样的函数阻止了对表达式的计算,
+但它们并不影响用 `/.` 和其他 `运算符` 对这些表达式的部分进行操作.
+
+下面定义了 `r` 的值, 只要`r` 的参数不是原子对象(原子表达式):
+
+```mathematica
+r[x_] := x^2 /; ! AtomQ[x]
+```
+
+根据这个定义, 像 `r[3]` 这样的表达式就不会被改变:
+
+```mathematica
+r[3]
+Out[5]=r[3]
+```
+
+然而, 根据 `r` 的定义, 模式 `r[x_]` 将被转化:
+
+```mathematica
+r[x_]
+Out[6]= x_^2
+```
+
+你需要把 `HoldPattern` 包在 `r[x_]` 周围, 以防止 `r[x_]`被计算后,  从而无法用于替换规则:
+
+```mathematica
+{r[3], r[5]} /. HoldPattern[r[x_]] -> x
+Out[7]= {3, 5}
+```
+
+如上图所示, 像 `lhs->rhs` 这样的`转换规则`的左手边通常被立即计算,
+因为这些规则通常被应用于`已经被计算过的`表达式. `lhs->rhs` 的右边也被立即计算.
+然而, 在延迟规则 `lhs:>rhs` 中, 表达式 `rhs` 不被计算.
+
+在`->`规则中, 右手边会立即被计算, 但在`:>`规则中不会.
+
+```mathematica
+{{x -> 1 + 1}, {x :> 1 + 1}}
+Out[8]= {{x -> 2}, {x :> 1 + 1}}
+```
+
+下面是应用这些规则的结果. `:>` 规则的右侧被插入 `Hold` 内, 保持不计算的形式.
+
+```mathematica
+{x^2, Hold[x]} /. {{x -> 1 + 1}, {x :> 1 + 1}}
+Out[9]= {{4, Hold[2]}, {4, Hold[1 + 1]}}
+```
+
+### Verbatim
+
+`Verbatim` 相比于 `HoldPattern`, 具有更强的控制
 
 `Verbatim`, 不翻译模式比如`_`, 只匹配字面值
 
