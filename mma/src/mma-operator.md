@@ -50,9 +50,9 @@ exp1/;exp2,    (e/;e)/;e
 `exp1~exp2~exp3`, exp2[exp1,exp3], 中缀
 ***
 `exp1/@exp2`,Map, 映射, 右结合
-`exp1//@exp2`,MapAll
-`exp1@@exp2`,Apply
-`exp1@@@exp2`,Apply,1
+`exp1//@exp2`,MapAll, 右结合
+`exp1@@exp2`,Apply, 右结合
+`exp1@@@exp2`,Apply,1, 右结合
 ***
 `exp!`,Factorial
 `exp!!`,Factorial2

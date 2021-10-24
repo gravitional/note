@@ -23,6 +23,7 @@ wolframscript.exe -print all -file .\test.wl para1 para2
 
 ```bash
 ./test.wl para1 para2
+wolframscript -file ./init.wl &> ~/test/log.txt & # 在后台运行, 把输出重定向到日志文件 log.txt
 ```
 
 经常用到的`mma`系统变量,参考
