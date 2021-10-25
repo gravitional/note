@@ -61,7 +61,7 @@ ListPlot[Table[{n, First[Timing[Fourier[RandomReal[1, n]]]]}, {n, 2^16, 2^16 + 1
 + `AbsoluteTiming` 总是精确到 `$TimeUnit` 秒的粒度(granularity), 但在许多系统上要精确得多.
 + `AbsoluteTiming[expr]` 只测量实际计算 ` expr` 的时间, 而不包括`格式化`结果的时间.
 
-### 示例 
+### 示例
 
 获取做一次计算的总时间:
 
