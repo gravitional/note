@@ -68,7 +68,7 @@ fn parse_config(args: &[String]) -> (&str, &str) { // 这里 args 只允许借�
 示例 12-5: 从 main 中提取出 parse_config 函数
 
 我们仍然将命令行参数收集进一个 vector,
-不过不同于在 main 函数中将索引 1 的参数值赋值给变量 query 和将索引 2 的值赋值给变量 filename,
+不过不同于在 main 函数中将索引 1 的参数值赋值给变量 query, 和将索引 2 的值赋值给变量 filename,
 我们将整个 vector 传递给 parse_config 函数.
 接着 parse_config 函数中的逻辑, 将决定哪个参数该放入哪个变量, 并将这些值返回到 main.
 仍然在 main 中创建变量 query 和 filename, 不过 main 不再负责处理命令行参数与变量如何对应.
@@ -125,7 +125,8 @@ fn parse_config(args: &[String]) -> Config {
 
 新定义的结构体 Config 中包含字段 query 和 filename.  parse_config 的签名表明它现在返回一个 Config 值.
 在之前的 parse_config 函数体中, 我们返回了引用 args 中 String 值的字符串 slice, 现在我们定义 Config 来包含拥有所有权的 String 值.
-main 中的 args 变量是参数值的所有者, 并只允许 parse_config 函数借用他们,
+
+`main` 中的 `args` 变量是参数值的`所有者`, 并只允许 `parse_config` 函数借用他们,
 这意味着如果 Config 尝试获取 args 中值的所有权, 将违反 Rust 的借用规则.
 
 还有许多不同的方式可以处理 String 的数据, 而最简单但有些不太高效的方式是调用这些值的 clone 方法.
@@ -140,8 +141,8 @@ main 中的 args 变量是参数值的所有者, 并只允许 parse_config 函�
 >在第一轮编写时拥有一个可以工作但有点低效的程序要比尝试过度优化代码更好一些.
 >随着你对 Rust 更加熟练, 将能更轻松的直奔合适的方法, 不过现在调用 clone 是完全可以接受的.
 
-我们更新 main 将 parse_config 返回的 Config 实例放入变量 config 中, 并
-将之前分别使用 query 和 filename 变量的代码, 更新为现在的使用 Config 结构体的字段的代码.
+我们更新 main 将 parse_config 返回的 Config 实例放入变量 config 中,
+并将之前分别使用 query 和 filename 变量的代码, 更新为现在的使用 Config 结构体的字段的代码.
 
 现在代码更明确的表现了我们的意图, query 和 filename 是相关联的并且他们的目的是配置程序如何工作.
 任何使用这些值的代码就知道, 在 config 实例中寻找对应`目的`的字段名.

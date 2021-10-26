@@ -371,7 +371,7 @@ fn main() {
 
 这个结构体有一个字段, part, 它存放了一个字符串 slice, 这是一个引用.
 类似于泛型参数类型, 必须在结构体名称后面的尖括号中声明泛型生命周期参数, 以便在结构体定义中使用生命周期参数.
-这个注解意味着 ImportantExcerpt 的实例不能比其 part 字段中的引用存在的更久.
+这个注解意味着, `ImportantExcerpt` 的实例存活的周期, 必须小于其 `part` 字段中的引用存活的周期.
 
 这里的 main 函数创建了一个 ImportantExcerpt 的实例, 它存放了变量 novel 所拥有的 String 的第一个句子的引用.
 novel 的数据在 ImportantExcerpt 实例创建之前就存在.

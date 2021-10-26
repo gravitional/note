@@ -13,6 +13,8 @@
     - [标准计算流程,计算控制](mma-function-eval-control.md)
     - [消息系统](mma-function-message.md)
 
+- [mma 画图](mma-plot-figure.md)
+
 - [群论](mma-group-theory.md)
 - [图像处理](mma-image.md)
 - [积分](mma-integral.md)

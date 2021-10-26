@@ -98,3 +98,18 @@ Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Languag
     + `...` ; 层次结构中的上一级目录
     + `~` ; 用户的主目录
 + `$Path` 可以包含嵌套的子列表.
+
+### 基本例子
+
+添加一个目录, 可以查找其中的文件, 优先级在所有的系统默认值之后:
+
+```mathematica
+AppendTo[$Path, FileNameJoin[{$HomeDirectory, "MyPackages"}]];
+```
+
+添加一个目录, 可以查找其中的文件, 优先级在任何系统默认值之前:
+
+```mathematica
+PrependTo[$Path,  FileNameJoin[{$HomeDirectory, "MyPackages", "LookHereFirst"}]];
+```
+  
