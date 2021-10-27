@@ -111,10 +111,10 @@ Exclusions -> {Cos[x^3 - x + 1] == 0, x + 3 Exp[x] == 0}]
 [mark-caprio/SciDraw](https://github.com/mark-caprio/SciDraw)
 [SciDraw — Mathematica 科学绘图包 ](https://pencilq.com/35/)
 
-`SciDraw` 是一个用Mathematica编制具有出版质量的科学图表的系统.   
+`SciDraw` 是一个用Mathematica编制具有出版质量的科学图表的系统.
 
-`SciDraw` 既提供了一个排版 figures 的框架, 又提供了生成 figures 内容的工具.  
-`SciDraw` 有助于生成涉及数学图, 数据图 和 diagrams.  
+`SciDraw` 既提供了一个排版 figures 的框架, 又提供了生成 figures 内容的工具.
+`SciDraw` 有助于生成涉及数学图, 数据图 和 diagrams.
 (mathematical plots, data plots, and diagrams).
 
 该软件包允许对文本和图形的风格进行广泛的手动微调.
@@ -134,12 +134,12 @@ Exclusions -> {Cos[x^3 - x + 1] == 0, x + 3 Exp[x] == 0}]
 
 SciDraw还提供了与Mathematica内置功能互补的, 数据绘图和图例生成功能(data plotting and legend generation).
 
-SciDraw是LevelScheme的继承者[参见Comput.Phys.Commun.171, 107 (2005)].  
+SciDraw是LevelScheme的继承者[参见Comput.Phys.Commun.171, 107 (2005)].
 
-LevelScheme软件包的设计目的是允许简单而有效地准备高质量的 `能级方案`(level schemes), 
-或`能级图`(level energy diagrams), 用于核, 原子, 分子和强子物理学. 
+LevelScheme软件包的设计目的是允许简单而有效地准备高质量的 `能级方案`(level schemes),
+或`能级图`(level energy diagrams), 用于核, 原子, 分子和强子物理学.
 
-这些功能被保留了下来.  与LevelScheme一样, SciDraw自动处理了准备 `level schemes` 的许多繁琐环节, 
-比如定位`levels`之间的过渡箭头, 或将文本标签放在它们所标注的对象旁边. 
+这些功能被保留了下来.  与LevelScheme一样, SciDraw自动处理了准备 `level schemes` 的许多繁琐环节,
+比如定位`levels`之间的过渡箭头, 或将文本标签放在它们所标注的对象旁边.
 
 它还包括创建核物理学中常见的几种类型的`level schemes`的专门功能.

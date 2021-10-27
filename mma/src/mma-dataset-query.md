@@ -8,6 +8,14 @@
 + 数据集对象中的子集可以通过`dataset[[parts]]`获得.
 + 数据集对象也可以通过编写`dataset[query]`来使用专门的查询语法进行查询.
 
+>二维数据集的显示模式, 只有内嵌关联的 `Key` 都是字符串的时候, 才会自动排版成表格的形式. 例如:
+
+```mathematica
+dataset = Dataset[{
+   <|"a" -> 1, "b" -> "x", "c" -> {1}|>,
+   <|"a" -> 2, "b" -> "y", "c" -> {2, 3}|>}]
+```
+
 ## JoinAcross 与 SQL
 
 [连接查询](https://www.liaoxuefeng.com/wiki/1177760294764384/1179610888796448)
@@ -147,7 +155,7 @@ Descending and Ascending Query Operators
 + `All` ;`对列表或关联的每个部分应用后续运算符
 + `i;;j` ; 抽取`i`到`j`部分并对每个部分应用后续操作符
 + `i` ; 只取第`i`部分, 并对其应用后续操作符
-+ `"key",Key[key]` ; 在一个关联中取`key`的值, 并对其应用后续运算符.
++ `"key",Key[key]` ; 在一个关联中取 `key` 对应的值, 并对其应用后续运算符.
 + `Values` ; 取关联中的值, 并对每个值应用后续运算符.
 + `{part1,part2,...}` ; 取给定的部分并对每个部分应用后续运算符
 
@@ -192,8 +200,10 @@ Descending and Ascending Query Operators
 
 + `Query[...]` ;  对结果进行子查询
 + `{op1,op2,...}` ; 对结果一次性应用多个运算符, 产生一个列表
-+ `<|key1->op1, key2->op2,...|>` ; 对结果同时应用多个运算符, 产生与给定`key`相关的关联.
-+ `{key1->op1,key2->op2,...}` ; 对结果中的特定部分应用不同的运算符.
++ `<|key1->op1, key2->op2,...|>` ; 产生一个新的关联: 将 `key1`, `key2` 用作新的`键`,  将 `op1`, `op2` 应用到中间结果得到的值, 作为新的 `value`.
+如果原数据的 ascending 是关联, 得到的结果还是关联,  `key` 将更新为指定的`key`.
++ `{key1->op1,key2->op2,...}` ; 使用给定的 `key1`, `key2` 选择结果的特定子集, 然后对它们作用对应的运算符`op1`, `op2`, ...,
+如果原数据的 ascending 是关联, 得到的结果还是关联, 并且保持 `key` 不变.
 
 + 当一个或多个`descending`运算符与一个或多个`ascending`运算符组成时(如`desc/*asc`), 先应用`descending`部分, 然后应用后续运算符到更深的层次, 最后, 再应用`ascending`算符到该层的结果.
 
@@ -206,7 +216,8 @@ Query[f, g] // Normal
 Query[GroupBy["a"], Total] // Normal
 ```
 
-***
+### 结构更新语法
+
 `{}`和`<||>`两种语法非常方便:
 
 + 制作一个数据集:
@@ -221,7 +232,7 @@ data = {
    <|"a" -> 6, "b" -> "z", "c" -> {}|>};
 ```
 
-+ 将算符依次应用到各 column 上
+将算符依次应用到各 column 上
 
 ```mathematica
 Query[All, {"a" -> f, "b" -> g, "c" -> h}] @ data

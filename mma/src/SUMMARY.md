@@ -5,7 +5,9 @@
 - [数组](mma-array.md)
 - [关联](mma-association.md)
 - [坐标变换](mma-coordinate.md)
-- [数据集](mma-dataset.md)
+- 
+- [数据集](mma-dataset-query.md)
+- 
 - [排版](mma-formatting.md)
 
 - [函数](mma-function.md)
