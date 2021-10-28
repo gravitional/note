@@ -27,4 +27,4 @@ Updating registry `https://github.com/rust-lang/crates.io-index`
 
 最后一行输出展示了安装的二进制文件的位置和名称, 在这里 `ripgrep` 被命名为 `rg`.
 只要你像上面提到的那样将安装目录加入 `$PATH`,
-就可以运行 `rg --help`, 并开始使用一个更快更 Rust 的工具来搜索文件了!
+就可以运行 `rg --help`, 并开始使用一个更快更 `Rust` 的工具来搜索文件了!
