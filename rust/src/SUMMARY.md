@@ -93,10 +93,10 @@
     - [为使用不同类型的值而设计的 trait 对象](rust-17-2-trait-objects.md)
     - [面向对象设计模式的实现](rust-17-3-design-patterns.md)
 
-- [模式与模式匹配](rust-18.md)
-    - [所有可能会用到模式的位置](rust-18-1.md)
-    - [Refutability(可反驳性):模式是否会匹配失败](rust-18-2.md)
-    - [模式的全部语法](rust-18-3.md)
+- [模式与模式匹配](rust-18-patterns.md)
+    - [所有可能会用到模式的位置](rust-18-1-places.md)
+    - [Refutability(可反驳性):模式是否会匹配失败](rust-18-2-refutability.md)
+    - [模式的全部语法](rust-18-3-pattern-syntax.md)
 
 - [高级特征](rust-19.md)
     - [不安全的 Rust](rust-19-1.md)

@@ -1,4 +1,4 @@
-# 为使用不同类型的值而设计的 trait 对象
+# 为使用不同类型的值而设计的 trait object
 
 在第八章中, 我们谈到了 `vector` 一个限制是: 只能存储`同种类型`的元素.
 
@@ -30,27 +30,27 @@
 [动态大小类型和 Sized trait]: https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
 
 为了实现 `gui` 所期望的行为, 让我们定义一个 `Draw` trait, 其中包含名为 `draw` 的方法.
-接着可以定义一个存放 `trait 对象`(trait object) 的 `vector`.
+接着可以定义一个存放 `trait object`(trait object) 的 `vector`.
 
-`trait 对象` 指向某个`type` 的 实例, 它实现了我们指定的 `trait`,
-同时 `trait 对象` 还指向一个表, 用于在运行时查找作用于该`type`的 `trait 方法`.
+>`trait object` 指向某种 `type` 的 `实例`, 此 `type` 实现了我们指定的 `trait`,
+>同时 `trait object` 还指向一个`表`, 用于在`运行时`查找作用于该`type`的 `trait 方法`.
 
-我们通过指定某种`指针`来创建 `trait 对象`,
-例如 `&` 引用或 `Box<T>` 智能指针, 然后是 `dyn` keyword,  然后指定相关的 `trait`.
+我们通过指定某种`指针`来创建 `trait object`, 例如 `&` 引用或 `Box<T>` 智能指针,
+然后是 `dyn` keyword,  接着指定相关的 `trait`.
 
->第十九章 [动态大小类型和 Sized trait][] 部分会介绍,  `trait` 对象必须使用指针的原因.
+>第十九章 [动态大小类型和 Sized trait][] 部分会介绍,  `trait` 对象为何必须使用指针.
 
-我们可以使用 `trait 对象`代替`泛型`或`具体类型`(concrete type).
-在任何使用 `trait 对象`的位置, Rust 的`type 系统`会在编译时确保, 任何在此上下文中使用的`值`会实现了 `trait 对象`的 trait.
+我们可以使用 `trait object`代替`泛型`或`具体类型`(concrete type).
+在任何使用 `trait object`的位置, Rust 的`type 系统`会在编译时确保, 任何在此上下文中使用的`值`会实现了 `trait object`的 trait.
 因此, 我们不需要在编译时知道所有可能遇到的类型.
 
 之前提到过, Rust 刻意不将`结构体`与`枚举`称为 `对象`, 以便与其他语言中的对象相区别.
 
 在`结构体`或`枚举`中, 结构体字段中的`数据`和 `impl` 块中的行为是分开的,
 不同于其他语言中将`数据`和`行为`组合进一个称为`对象`的概念中.
-`trait 对象` 将`数据`和`行为`两者相结合, 从这种意义上说, `trait objects` 更类似其他语言中的对象.
-不过 `trait 对象`不同于传统的对象, 因为不能向 `trait 对象`增加数据.
-`trait 对象` 并不像其他语言中的对象那么通用: `trait 对象`具体的作用是对`通用行为`进行抽象.
+`trait object` 将`数据`和`行为`两者相结合, 从这种意义上说, `trait objects` 更类似其他语言中的对象.
+不过 `trait object`不同于传统的对象, 因为不能向 `trait object`增加数据.
+`trait object` 并不像其他语言中的对象那么通用: `trait object`具体的作用是对`通用行为`进行抽象.
 
 示例 17-3 展示了如何定义一个带有 `draw` 方法的 `trait Draw`:
 
@@ -66,7 +66,7 @@ pub trait Draw {
 
 因为第十章已经讨论过如何定义 trait, 其语法看起来应该比较眼熟. 接下来就是新内容了:
 示例 17-4 定义了名为 `Screen` 的结构体:  它存放了名为 `components` 的 `vector`.
-这个 `vector` 的类型是 `Box<dyn Draw>`, 后者是一个 `trait 对象`:
+这个 `vector` 的类型是 `Box<dyn Draw>`, 后者是一个 `trait object`:
 它是一个占位符(stand-in), 表示处于 `Box` 中的任何 `type`, 但必须实现了 `Draw trait`.
 
 文件名: src/lib.rs
@@ -77,7 +77,7 @@ pub struct Screen {
 }
 ```
 
-示例 17-4:  `Screen` 结构体的定义, 它带有字段 `components`, 它是 `vector`, 包含实现了 `Draw` trait 的 trait 对象.
+示例 17-4:  `Screen` 结构体的定义, 它带有字段 `components`, 它是 `vector`, 包含实现了 `Draw` trait 的 trait object.
 
 在 `Screen` 结构体上, 我们将定义 `run` 方法, 该方法会对其 `components` 上的每个组件调用 `draw` 方法, 如示例 17-5 所示:
 
@@ -98,7 +98,7 @@ impl Screen {
 这不同于定义一个结构体, 并带有 `trait bounds` 的 `泛型参数`.
 This works differently from defining a struct that uses a generic type parameter with trait bounds
 
-`泛型类型`参数一次只能替代一个具体类型, 而 `trait 对象` 则允许在运行时替代多种具体类型.
+`泛型类型`参数一次只能替代一个具体类型, 而 `trait object` 则允许在运行时替代多种具体类型.
 例如, 可以定义 `Screen` 结构体来使用`泛型`和 `trait bound`, 如示例 17-6 所示:
 
 文件名: src/lib.rs
@@ -123,7 +123,7 @@ impl<T> Screen<T>
 这限制了 `Screen` 实例必须拥有一个全是 `Button` 类型或者全是 `TextField` 类型的组件列表.
 如果只需要`同质`(相同类型)集合, 则倾向于使用 `泛型` 和 `trait bound`, 因为在`编译时`, 其定义会被具体类型`单态化`.
 
-另一方面, 通过使用 `trait 对象` 的方式,  `Screen` 实例可以存放一个既能包含 `Box<Button>`, 也能包含 `Box<TextField>` 的 `Vec<T>`.
+另一方面, 通过使用 `trait object` 的方式,  `Screen` 实例可以存放一个既能包含 `Box<Button>`, 也能包含 `Box<TextField>` 的 `Vec<T>`.
 让我们看看它是如何工作的, 接着会讲到它对`运行时`性能的影响.
 
 ## 实现 trait
@@ -181,7 +181,7 @@ impl Draw for SelectBox {
 示例 17-8: 另一个使用 `gui` 的 `crate` 中, 在 `SelectBox` 结构体上实现 Draw trait
 
 库使用者现在可以在他们的 `main` 函数中创建一个 `Screen` 实例.
-至此可以通过将 `SelectBox` 和 `Button` 放入 `Box<T>` 转变为 `trait 对象`来增加组件.
+至此可以通过将 `SelectBox` 和 `Button` 放入 `Box<T>` 转变为 `trait object`来增加组件.
 接着可以调用 `Screen` 的 `run` 方法, 它会调用每个组件的 `draw` 方法.
 示例 17-9 展示了这个实现:
 
@@ -229,7 +229,7 @@ fn main() {
 
 使用 `trait` 对象和 `Rust` 类型系统来编写代码, 实现类似`鸭子类型` 的操作,其优势是:
 无需在`运行时`检查一个`值`是否实现了`特定方法`, 或者担心, 因为`值`没有实现方法, 而在调用时产生错误.
-如果 `值` 没有实现 `trait 对象`所需的 `trait`, 则 Rust `不会编译`这些代码.
+如果 `值` 没有实现 `trait object`所需的 `trait`, 则 Rust `不会编译`这些代码.
 
 例如, 示例 17-10 展示了, 用 `String` 做为组件, 创建 `Screen` 时发生的情况:
 
@@ -250,7 +250,7 @@ fn main() {
 }
 ```
 
-示例 17-10: 尝试使用一种没有实现 `trait 对象`的 trait 的类型
+示例 17-10: 尝试使用一种没有实现 `trait object`的 trait 的类型
 
 我们会遇到这个错误, 因为 `String` 没有实现 `rust_gui::Draw` trait:
 
@@ -268,7 +268,7 @@ error[E0277]: the trait bound `std::string::String: gui::Draw` is not satisfied
 这告诉了我们, 要么是我们传递了并不应该传递给 `Screen` 的类型, 所以应该提供其他类型,
 要么应该在 `String` 上实现 `Draw`, 以便 `Screen` 可以调用其上的 `draw`.
 
-## trait 对象执行动态分发
+## trait object执行动态分发
 
 [泛型代码的性能]: https://kaisery.github.io/trpl-zh-cn/ch10-01-syntax.html#performance-of-code-using-generics
 
@@ -281,34 +281,38 @@ error[E0277]: the trait bound `std::string::String: gui::Draw` is not satisfied
 在`动态分发`的情况下, `编译器`会生成特定代码, 后者在运行时确定调用哪个方法.
 
 当使用 `trait` 对象时, Rust 必须使用 `动态分发`.
-`编译器` 不知道 所有可能的`type`,  它们都可能用于包含 `trait 对象` 的代码 ,
+`编译器` 不知道 所有可能的`type`,  它们都可能用于包含 `trait object` 的代码 ,
 所以`编译器`也不知道应该调用, 哪个类型实现的哪个方法.
 
-为此, Rust 在运行时使用 `trait 对象` 内部的指针, 来知晓需要调用哪个方法.
+为此, Rust 在运行时使用 `trait object` 内部的指针, 来知晓需要调用哪个方法.
 当这种查找发生时, 会有一个运行时消耗, 而`静态分发`则没有这种消耗.
 
 `动态分发`也阻止编译器将方法的代码变成内联的(inline), 这会相应的禁用一些优化.
 尽管在编写示例 17-5 的代码时确实获得了额外的灵活性, 并且可以支持示例 17-9 ,
 但仍然需要权衡取舍.
 
-## Trait 对象要求对象安全
+## trait object 要求对象安全
 
-只有 `对象安全`(object safe)的 `trait` 才可以组成 `trait 对象`.
-存在一些复杂的规则控制对象的属性, 来保证 `trait 对象` 是安全的, 不过在实践中, 只涉及到两条规则.
-如果 trait 中所有的方法都具有如下属性时, 则该 trait 是`对象安全`的:
+你只能把 `对象安全`(object safe)的 `trait` 变成 `trait object`.
+存在一些复杂的规则控制对象的属性, 来保证 `trait object` 是安全的, 不过在实践中只涉及到两条规则:
+如果 `trait` 中声明的所有`方法`都具有如下属性时, 则该 `trait` 是`对象安全`的:
 
 + 返回值类型不为 `Self`
-+ 方法没有任何泛型类型参数
++ 方法没有任何`泛型 type 参数`
 
-`Self` 关键字是某个`type`的别名, 我们要在这个`type`上实现 `trait`s 或 `方法`.
+`Self` 关键字是某个`type`的别名, 我们要在这个`type`上实现 `trait`s 或 `method`s.
+`trait object` 必须是 `对象安全` 的:
 
-`trait 对象` 必须是 `对象安全` 的, 因为你一旦使用了 `trait 对象`, Rust 就不再知道实现该`trait`的具体类型了.
-如果我们令 `trait` 方法返回具体的 `Self` 类型, 然而 `trait 对象` 并不记录 `Self` 的具体类型,
-那么这个方法就无法使用原来的具体类型.
+因为你一旦使用了 `trait object`, Rust 就不再知道是哪个具体的`type`, 实现了此`trait`.
+如果某个 `trait` 方法需要返回具体的 `Self` 类型, 然而 `trait object` 忘了 `Self` 的具体类型,
+那么不可能让此方法使用原来的`具体类型`(original concrete type).
 
-对于`泛型type参数`来说也是同理, 当使用 `trait` 时, 会将具体的`type 参数` 代入 `T`:
-此`具体 type A`变成了, 实现该 `trait` 的`type B`的一部分.
-当使用 `trait 对象`时, 这个`具体 type A` 被抹去了, 所以没有办法知道用何种`type` 填入`泛型 type 参数 ` 的位置.
+在使用特质时, 用具体类型参数填充的通用类型参数也是如此: 具体类型成为实现特质的类型的一部分. 当类型通过使用特质对象而被遗忘时, 没有办法知道用什么类型来填入通用类型参数.
+
+对于`泛型 type 参数`来说也是同理, 在使用 `trait` 时, 会用具体的`type` 参数填充`泛型 type`参数:
+此具体 `type`(例如`A`), 成为实现了该 `trait` 的`type`(例如`B`) 的一部分.
+当使用 `trait object`时, 具体的` type`  B 被抹去了,
+所以没有办法知道用何种 `type` A 填入`泛型 type 参数 ` 的位置.
 
 举一个标准库中的 `Clone` trait 的例子, 它的方法不是 `对象安全` 的:
 `Clone` trait 的 `clone` 方法的`参数签名`看起来像这样:
@@ -335,15 +339,19 @@ pub struct Screen {
 将会得到如下错误:
 
 ```log
-error[E0038]: the trait `std::clone::Clone` cannot be made into an object
- --> src/lib.rs:2:5
+$ cargo build
+   Compiling gui v0.1.0 (file:///projects/gui)
+error[E0038]: the trait `Clone` cannot be made into an object
+ --> src/lib.rs:2:21
   |
 2 |     pub components: Vec<Box<dyn Clone>>,
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `std::clone::Clone`
-  cannot be made into an object
+  |                     ^^^^^^^^^^^^^^^^^^^ `Clone` cannot be made into an object
   |
-  = note: the trait cannot require that `Self : Sized`
+  = note: the trait cannot be made into an object because it requires `Self: Sized`
+  = note: for a trait to be "object safe" it needs to allow building a vtable to allow the call to be resolvable dynamically; for more information visit <https://doc.rust-lang.org/reference/items/traits.html#object-safety>
 ```
 
 这意味着不能以这种方式使用此 `trait` 作为 `trait对象`.
 如果你对 `对象安全` 的更多细节感兴趣, 请查看 [Rust RFC 255](https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md).
+
+vtable: virtual method table
