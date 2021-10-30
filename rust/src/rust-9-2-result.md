@@ -175,10 +175,11 @@ fn main() {
 
 ## 失败时 panic 的简写: unwrap 和 expect
 
-match 能够胜任它的工作, 不过它可能有点冗长并且不总是能很好的表明其意图.
-Result<T, E> 类型定义了很多辅助方法来处理各种情况. 其中之一叫做 unwrap, 它的实现就类似于示例 9-4 中的 match 语句.
-如果 Result 值是成员 Ok, unwrap 会返回 Ok 中的值. 如果 Result 是成员 Err, unwrap 会为我们调用 `panic!`.
-这里是一个实践 unwrap 的例子:
+`match` 能够胜任它的工作, 不过它可能有点冗长并且不总是能很好的表明其意图.
+`Result<T, E>` 类型定义了很多辅助方法来处理各种情况.
+其中之一叫做 `unwrap`, 它的实现就类似于示例 9-4 中的 `match` 语句.
+如果 `Result` 值是成员 `Ok`, `unwrap` 会返回 `Ok` 中的值. 如果 `Result` 是成员 `Err`, `unwrap` 会为我们调用 `panic!`.
+这里是一个实践 `unwrap` 的例子:
 
 文件名: src/main.rs
 
@@ -190,7 +191,7 @@ fn main() {
 }
 ```
 
-如果调用这段代码时不存在 hello.txt 文件, 我们将会看到一个 unwrap 调用 panic! 时提供的错误信息:
+如果调用这段代码时不存在 `hello.txt` 文件, 我们将会看到一个 `unwrap` 调用 panic! 时提供的错误信息:
 
 ```log
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error {
@@ -198,8 +199,9 @@ repr: Os { code: 2, message: "No such file or directory" } }',
 src/libcore/result.rs:906:4
 ```
 
-还有另一个类似于 unwrap 的方法它还允许我们选择 panic! 的错误信息: expect.
-使用 expect 而不是 unwrap 并提供一个好的错误信息可以表明你的意图并更易于追踪 panic 的根源. expect 的语法看起来像这样:
+还有另一个类似于 `unwrap` 的方法, 它还允许我们选择 `panic!` 的错误信息: `expect`.
+使用 `expect` 而不是 `unwrap` 并提供一个好的错误信息, 可以表明你的意图并更易于追踪 panic 的根源.
+`expect` 的语法看起来像这样:
 
 文件名: src/main.rs
 
