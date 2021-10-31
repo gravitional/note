@@ -1,5 +1,47 @@
 # 群论
 
+![群环域](https://img-blog.csdnimg.cn/20210429150145188.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N3Mzk3MjY1MzYy,size_16,color_FFFFFF,t_70)
+
+[群, 环, 域的概念总结](https://blog.csdn.net/xq723310/article/details/90382479)
+
+群:
+
++ 加法封闭性
++ 加法结合律
++ 加法单位元
++ 加法逆元
+
+***
+交换群:
+
++ 加法交换律
+
+***
+环:
+
++ 乘法封闭性
++ 乘法结合律
++ 分配律
+
+***
+交换环:
+
++ 乘法交换律
+
+***
+整环:
+
++ 乘法单位元:
++ 无零因子:
+
+***
+域:
+
++ 乘法逆元
+
+域是`交换性`除环: `(F,  +,  *)`, 其中加法单位元(`0`)不等于乘法单位元(`1`), 所有`非零元素`都有乘法`逆元`.
+其中 $0 \neq 1$ 的要求是为了排除没有什么意义的, 只有一个元素组成的域.
+
 ## 置换群
 
 ### Permute,置换操作

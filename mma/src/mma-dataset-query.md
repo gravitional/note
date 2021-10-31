@@ -175,7 +175,7 @@ Descending and Ascending Query Operators
 
 语法 `op1/*op2`可以用来将两个或更多的过滤操作符结合成一个操作符, 但仍在一个层次上操作.
 
-### 聚合运算符
+### 聚合运算符 `/*`, `@*`
 
 `ascending` aggregation 运算符将后续运算符应用到更深层次的结果合并或汇总.
 
@@ -193,6 +193,16 @@ Descending and Ascending Query Operators
 + `TakeLargest[n],TakeSmallest[n]` ; 取最大或最小的`n`个元素.
 
 语法 `op1/*op2`可以用来将两个或更多的聚合运算符组合成一个运算符, 但仍在一个层次上操作.
+类似地算符有 `op1 @* op2`, 它们的区别在于结合次序:
+
+`/*` 连接的算符, `从左到右`依次作用到对象上,
+`@*` 连接的算符, `从右到左`依次作用到对象上,
+并注意到 `/*` 和 `@*` 的优先级很高, 如果用它们组合匿名函数,
+需要适当的括号`()`把函数包起来, 以避免使用非预期的结合方式, 如下所示:
+
+```mathematica
+(f[#]&) /*  (g[#]&)  /* (h[#]&)
+```
 
 ### 子查询运算符 Query
 
@@ -322,3 +332,164 @@ Mathematica 采用的是树状数据结构. 下降和上升都是相对于这种
 + `"MX"`: 打包的二进制协议
 
 + `SemanticImport` 可用于将文件导入为数据集对象.
+
+## GroupBy
+
++ `GroupBy[elem1,  elem2 , ...},   f]` ; 将`elem_i`分组, 结果为一个关联, `键`是互不相同的 `f[elem_i]`, `值` 是映射到同一个`f[elem_i]`的`elem_i`.
++ `GroupBy[{elem1,  elem2 , ...},  fk -> fv]` ; 根据 `fk[elem_i]`, 将 `fv[elem_i]` 分组.
++ `GroupBy[elem1,  elem2 , ...},  {f1, f2, f3}]` ; 形成嵌套关联, 在第 `i` 层使用 `f_i` 进行分组.
++ `GroupBy[elem1,  elem2 , ...},   spec, red]` ; 应用函数 `red` 当作 reduce 方法, 作用到生成的`值的列表`.
++ `GroupBy[spec]` ; 代表 `GroupBy` 的运算符形式, 可以应用于表达式.
+
+### 详细
+
++ `GroupBy` 是 `map reduce` 操作套路 的推广.
++ `GroupBy[list,f]` 给出一个`关联`, 其键是独立的 `f[elem_i]`, 其值是 `list` 列表的`子列表`.
++ `GroupBy[assoc,f]` 给出一个`关联`, 其键是独立的 `f[elem_i]`, 其值是关联 `assoc` 的 `子关联`.
++ `GroupBy[spec][expr]` 等同于 `GroupBy[expr,spec]`.
+
+### 例子
+
+通过使用几个`函数`, 对元素进行迭代分组:
+
+```mathematica
+GroupBy[Range[10], {PrimeQ, OddQ}]
+Out[1]= <|True -> <|False -> {2}, True -> {3, 5, 7}|>, False -> <|True -> {1, 9}, False -> {4, 6, 8, 10}|>|>
+```
+
+通过使用几个函数, 对一个关联的`值`进行分组:
+
+```mathematica
+GroupBy[<|a -> 1, b -> 2, c -> 4|>, {EvenQ, PrimeQ}]
+Out[1]= <|True -> <|True -> <|b -> 2|>, False -> <|c -> 4|>|>, False -> <|False -> <|a -> 1|>|>|>
+```
+
+按`首元素`分组, 并计算相应最后一个元素的平均值:
+
+```mathematica
+GroupBy[{{a, x}, {b, v}, {a, y}, {a, z}, {b, w}},  First -> Last, Mean]
+Out[1]= <|a -> 1/3 (x + y + z), b -> (v + w)/2|>
+```
+
+### 范围
+
+根据对儿数据的首元素, 将末元素分组:
+
+```mathematica
+GroupBy[{{a, 10}, {b, 20}, {a, 30}}, First -> Last]
+Out[1]= <|a -> {10, 30}, b -> {20}|>
+```
+
+使用`组合器`(combiner)函数来组合结果中的值:
+
+```mathematica
+GroupBy[{{a, b}, {a, c}, {b, c}}, First -> Last, Total]
+Out[1]= <|a -> b + c, b -> c|>
+
+GroupBy[{{a, 10}, {b, 20}, {a, 30}}, First -> Last, Total]
+Out[2]= <|a -> 40, b -> 20|>
+```
+
+使用`Key`指定键和值:
+
+```mathematica
+GroupBy[{<|1 -> a, 2 -> c|>, <|1 -> b, 2 -> c|>}, Key[2] -> Key[1]]
+Out[1]= <|c -> {a, b}|>
+```
+
+使用不同的函数来分别提取`键`和`值`:
+
+```mathematica
+GroupBy[{{a, b}, {a, c}, {b, c}}, f -> g]
+Out[1]= <|f[{a, b}] -> {g[{a, b}]}, f[{a, c}] -> {g[{a, c}]}, f[{b, c}] -> {g[{b, c}]}|>
+
+GroupBy[{{a, b}, {a, c}, {b, c}}, f -> Last]
+Out[2]= <|f[{a, b}] -> {b}, f[{a, c}] -> {c}, f[{b, c}] -> {c}|>
+
+GroupBy[{{a, b}, {a, c}, {b, c}}, First -> Last]
+Out[3]= <|a -> {b, c}, b -> {c}|>
+```
+
+Use the operator form of Extract to specify the key or the value:
+
+使用 `Extract` 的算符形式来指定`键`或`值`.
+
+```mathematica
+GroupBy[{{{a}, b}, {{a}, d}}, Extract[{1, 1}]]
+Out[1]= <|a -> {{{a}, b}, {{a}, d}}|>
+
+GroupBy[{{{a}, b}, {{a}, d}}, Extract[2] -> Extract[{1, 1}]]
+Out[2]= <|b -> {a}, d -> {a}|>
+```
+
+用 `Key`来指定 `key`s 和 `value`s:
+
+```mathematica
+GroupBy[{<|1 -> a, 2 -> c|>, <|1 -> b, 2 -> c|>}, Key[2] -> Key[1]]
+Out[1]= <|c -> {a, b}|>
+```
+
+缺失的 `keys` 用 `Missing` 代替:
+
+```mathematica
+GroupBy[{<|1 -> a, 2 -> b|>, <|1 -> a, 3 -> c|>}, Key[2]]
+Out[1]= <|b -> {<|1 -> a, 2 -> b|>},  Missing["KeyAbsent", 2] -> {<|1 -> a, 3 -> c|>}|>
+```
+
+将`函数`应用于关联的`值`, 进行分组:
+
+```mathematica
+GroupBy[<|a -> 1, b -> 2, c -> 4|>, EvenQ -> (# + 1 &)]
+Out[2]= <|False -> <|a -> 2|>, True -> <|b -> 3, c -> 5|>|>
+```
+
+### 应用
+
+使用 `GroupBy` 对 `数据集` 中的`行`进行分组, 引入新的关联层次:
+
+```mathematica
+titanic = ExampleData[{"Dataset", "Titanic"}]
+
+(*将乘客按等级分组.*)
+titanic[GroupBy["class"]]
+
+(*按性别分组, 然后再按等级分组:*)
+titanic[GroupBy["sex"], GroupBy["class"]]
+```
+
+### 性质和关系
+
+`GroupBy` 返回一个关联, 而 `GatherBy` 返回一个列表:
+
+```mathematica
+GroupBy[{{a, b}, {a, c}, {b, c}}, First]
+Out[1]= <|a -> {{a, b}, {a, c}}, b -> {{b, c}}|>
+
+GatherBy[{{a, b}, {a, c}, {b, c}}, First]
+Out[2]= {{{a, b}, {a, c}}, {{b, c}}}
+```
+
+按`f`分组等同于按`f->Identity`分组:
+
+```mathematica
+GroupBy[{a, b, a}, f]
+Out[1]= <|f[a] -> {a, a}, f[b] -> {b}|>
+GroupBy[{a, b, a}, f -> Identity]
+Out[2]= <|f[a] -> {a, a}, f[b] -> {b}|>
+```
+
+## Extract
+
++ `Extract[expr,pos]`; 提取 `expr` 在  指定位置 `pos` 的部分.
++ `Extract[expr,{pos1, pos2, ...}]` ; 提取 `expr` 的部分的列表.
++ `Extract[expr,pos,h] ` ;  提取 `expr` 的部分内容, 在`求值`前, 用头部 `h` 包住每个部分.
++ `Extract[pos] ` ; 代表 `Extract` 的运算符形式, 可以应用于表达式.
+
+### Details
+
++ `Extract[expr,{i,j,...}]` 等同于 `Part[expr,i,j,...]` .
++ `Extract`所使用的`位置指定`, 与 `Position` 所返回的 `位置指定` 具有相同的形式, 并可以在 `MapAt` 和 `ReplacePart` 等函数中使用.
++ 你可以使用 `Extract[expr,...,Hold]` 来提取部分, 而保持不计算的形式.
++ 如果 `expr` 是一个 `SparseArray` 对象, `Extract[expr,...]` 会提取相应普通数组中的部分.
++ `Extract` 对 `Association` 对象起作用, 使用与 `Part` 相同的`keys`规范.
++ `Extract[pos][expr]` 相当于 `Extract[expr,pos]`.
