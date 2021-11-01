@@ -338,7 +338,7 @@ Mathematica 采用的是树状数据结构. 下降和上升都是相对于这种
 + `GroupBy[elem1,  elem2 , ...},   f]` ; 将`elem_i`分组, 结果为一个关联, `键`是互不相同的 `f[elem_i]`, `值` 是映射到同一个`f[elem_i]`的`elem_i`.
 + `GroupBy[{elem1,  elem2 , ...},  fk -> fv]` ; 根据 `fk[elem_i]`, 将 `fv[elem_i]` 分组.
 + `GroupBy[elem1,  elem2 , ...},  {f1, f2, f3}]` ; 形成嵌套关联, 在第 `i` 层使用 `f_i` 进行分组.
-+ `GroupBy[elem1,  elem2 , ...},   spec, red]` ; 应用函数 `red` 当作 reduce 方法, 作用到生成的`值的列表`.
++ `GroupBy[elem1,  elem2 , ...},   spec, red]` ; 应用函数 `red` 当作 `reduce` 方法, 作用到生成的`值的列表`.
 + `GroupBy[spec]` ; 代表 `GroupBy` 的运算符形式, 可以应用于表达式.
 
 ### 详细
@@ -357,18 +357,28 @@ GroupBy[Range[10], {PrimeQ, OddQ}]
 Out[1]= <|True -> <|False -> {2}, True -> {3, 5, 7}|>, False -> <|True -> {1, 9}, False -> {4, 6, 8, 10}|>|>
 ```
 
-通过使用几个函数, 对一个关联的`值`进行分组:
++ 通过使用几个函数, 对一个关联的`值`进行分组:
 
 ```mathematica
 GroupBy[<|a -> 1, b -> 2, c -> 4|>, {EvenQ, PrimeQ}]
 Out[1]= <|True -> <|True -> <|b -> 2|>, False -> <|c -> 4|>|>, False -> <|False -> <|a -> 1|>|>|>
 ```
 
-按`首元素`分组, 并计算相应最后一个元素的平均值:
++ 按`首元素`分组, 并计算相应最后一个元素的平均值:
 
 ```mathematica
 GroupBy[{{a, x}, {b, v}, {a, y}, {a, z}, {b, w}},  First -> Last, Mean]
 Out[1]= <|a -> 1/3 (x + y + z), b -> (v + w)/2|>
+```
+
++ 对于迭代分组, Reduce 函数`g` 将作用在最终的小组上, 参数被放在括号中:
+
+```mathematica
+GroupBy[{<|1 -> a1, 2 -> b1, 3 -> c1|>, <|1 -> a2, 2 -> b2, 3 -> c2|>}, {Key[1], Key[2]}, g]
+Out:=<|
+a2 -> <|b2 -> g[{<|1 -> a2, 2 -> b2, 3 -> c2|>}]|>, 
+a1 -> <|b1 -> g[{<|1 -> a1, 2 -> b1, 3 -> c1|>}]|>
+|>
 ```
 
 ### 范围
@@ -493,3 +503,87 @@ Out[2]= <|f[a] -> {a, a}, f[b] -> {b}|>
 + 如果 `expr` 是一个 `SparseArray` 对象, `Extract[expr,...]` 会提取相应普通数组中的部分.
 + `Extract` 对 `Association` 对象起作用, 使用与 `Part` 相同的`keys`规范.
 + `Extract[pos][expr]` 相当于 `Extract[expr,pos]`.
+
+## Catenate,Join
+
+```mathematica
+Join[list1, list2, ... ];  连接共享同一`头部`的列表, 或其他表达式
+Join[list1, list2, ..., n];  连接每个 list_i 中的第 n 层对象
+
+Catenate[{list1, list2, ... }]; 产生一个单一的列表, 其中有来自 list_i 的所有元素依次排列
+Catenate[{assoc1, assoc2, ...}];  产生一个列表, 按照`values` 在关联中出现的次序排列.
+```
+
++ `Join` 中的 `list_i`不需要有 `List` 头部, 但必须都有相同的`头部`.
++ `Join` 在 `Association` 对象上工作, 保留与任何给定键相关的`最后一个`值.
++ `Join` 在 `SparseArray` 对象上工作, 有效地连接了相应的普通列表.
++ `Join[list1, list2, ... , n]` 通过有效地连接 `list_i` 中的所有连续的 `n`级元素, 来处理锯齿状数组. (ragged arrays)
+
++ `Catenate[{expr1, expr2, ...}]` 允许 `expr_i` 是任何`列表`和`关联`的混合物.
++ 任何带有` Missing` 头部的 `exp_i` 都会被忽略掉.
++ 对于一个关联 `assoc`, `Catenate[assoc]` 被认为是 `Catenate[Values[assoc]]`.
+
+### 例子
+
++ 中缀形式:
+
+```mathematica
+{a, b, c}~Join~{x, y}~Join~{u, v, w}
+Out[1]= {a, b, c, x, y, u, v, w}
+```
+
++ 连接两个关联:
+
+```mathematica
+Join[<|a -> b|>, <|c -> d, a -> e|>]
+Out[1]= <|a -> e, c -> d|>
+```
+
+`Catenate` 关联:
+
+```mathematica
+Catenate[{<|a -> 1, b -> 2|>, <|c -> 3, d -> 4|>}]
+Out[1]= {1, 2, 3, 4}
+```
+
++ `Catenate` 有效地压平了高维数组的前两层:
+
+```mathematica
+Catenate[ConstantArray[1, {2, 2, 2}]]
+Out[1]= {{1, 1}, {1, 1}, {1, 1}, {1, 1}}.
+```
+
++ `Catenate` 剥离键, 连接所有的值.
+
+```mathematica
+Catenate[{{1, 2}, <|a -> 1, b -> 2|>}]
+Out[1]= {1, 2, 1, 2}
+```
+
++ `Catenate` 不会覆盖`重复键`的`值`:
+
+```mathematica
+Catenate[{<|a -> 1, b -> 2|>, <|c -> 3, a -> 5|>}]
+Out[1]= {1, 2, 3, 5}.
+```
+
+### 性质和关系
+
+`Join[list1, list2, ...]`  等价于 `Flatten[{list1, list2, ...}, 1]` :
+
+```mathematica
+Join[{1, 2}, {{a, b}, {c, d}}, {3, 4, 5}]
+Out[1]= {1, 2, {a, b}, {c, d}, 3, 4, 5}
+
+Flatten[{{1, 2}, {{a, b}, {c, d}}, {3, 4, 5}}, 1]
+Out[2]= {1, 2, {a, b}, {c, d}, 3, 4, 5}
+```
+
+### Neat examples
+
+不断 `double` 一个列表, 通过与自己连接:
+
+```mathematica
+NestList[Join[#, #] &, {x}, 4]
+Out[1]= {{x}, {x, x}, {x, x, x, x}, {x, x, x, x, x, x, x, x}, {x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x}}
+```
