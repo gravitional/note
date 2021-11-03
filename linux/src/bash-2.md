@@ -1597,7 +1597,7 @@ The quick brown fox jumped over the lazy dog.
 
 使用`<`重定向操作符,我们把标准输入源从键盘改到文件 `lazy_dog.txt`.
 
-`2.05b`版本以后, `bash`可以用下列语法重定向标准输入至字符串(称为here string):
+`2.05b`版本以后, `bash`可以用下列语法重定向标准输入至字符串(称为here string/here-string):
 
 ```bash
 command <<< "string to be read as standard input"

@@ -4,33 +4,33 @@ ref: [这是小白的Python新手教程](https://www.liaoxuefeng.com/wiki/101695
 
 ## 常用第三方模块
 
-除了内建的模块外, Python还有大量的第三方模块. 
+除了内建的模块外, Python还有大量的第三方模块.
 
-基本上, 所有的第三方模块都会在[PyPI - the Python Package Index](https://pypi.org/)上注册, 只要找到对应的模块名字, 即可用`pip`安装. 
-此外, 在安装第三方模块一节中, [我们强烈推荐安装Anaconda](https://www.anaconda.com/), 安装后, 数十个常用的第三方模块就已经就绪, 不用`pip`手动安装. 
+基本上, 所有的第三方模块都会在[PyPI - the Python Package Index](https://pypi.org/)上注册, 只要找到对应的模块名字, 即可用`pip`安装.
+此外, 在安装第三方模块一节中, [我们强烈推荐安装Anaconda](https://www.anaconda.com/), 安装后, 数十个常用的第三方模块就已经就绪, 不用`pip`手动安装.
 
-本章介绍常用的第三方模块. 
+本章介绍常用的第三方模块.
 
 ### Pillow
 
-`PIL`：`Python Imaging Library`, 已经是Python平台事实上的图像处理标准库了. PIL功能非常强大, 但API却非常简单易用. 
+`PIL`: `Python Imaging Library`, 已经是Python平台事实上的图像处理标准库了. PIL功能非常强大, 但API却非常简单易用.
 
-由于`PIL`仅支持到`Python 2.7`, 加上年久失修, 于是一群志愿者在PIL的基础上创建了兼容的版本, 名字叫`Pillow`, 支持最新`Python 3.x`, 又加入了许多新特性, 因此, 我们可以直接安装使用`Pillow`. 
+由于`PIL`仅支持到`Python 2.7`, 加上年久失修, 于是一群志愿者在PIL的基础上创建了兼容的版本, 名字叫`Pillow`, 支持最新`Python 3.x`, 又加入了许多新特性, 因此, 我们可以直接安装使用`Pillow`.
 
 #### 安装Pillow
 
-如果安装了`Anaconda`, `Pillow`就已经可用了. 否则, 需要在命令行下通过pip安装：
+如果安装了`Anaconda`, `Pillow`就已经可用了. 否则, 需要在命令行下通过pip安装:
 
 ```python
 $ pip install pillow
 None
 ```
 
-如果遇到`Permission denied`安装失败, 请加上`sudo`重试. 
+如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
 
 #### 操作图像
 
-来看看最常见的图像缩放操作, 只需三四行代码：
+来看看最常见的图像缩放操作, 只需三四行代码:
 
 ```python
 from PIL import Image
@@ -47,9 +47,9 @@ print('Resize image to: %sx%s' % (w//2, h//2))
 im.save('thumbnail.jpg', 'jpeg')
 ```
 
-其他功能如切片, 旋转, 滤镜, 输出文字, 调色板等一应俱全. 
+其他功能如切片, 旋转, 滤镜, 输出文字, 调色板等一应俱全.
 
-比如, 模糊效果也只需几行代码：
+比如, 模糊效果也只需几行代码:
 
 ```python
 from PIL import Image, ImageFilter
@@ -61,7 +61,7 @@ im2 = im.filter(ImageFilter.BLUR)
 im2.save('blur.jpg', 'jpeg')
 ```
 
-`PIL`的`ImageDraw`提供了一系列绘图方法, 让我们可以直接绘图. 比如要生成字母验证码图片：
+`PIL`的`ImageDraw`提供了一系列绘图方法, 让我们可以直接绘图. 比如要生成字母验证码图片:
 
 ```python
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -102,13 +102,13 @@ image.save('code.jpg', 'jpeg')
 
 我们用随机颜色填充背景, 再画上文字, 最后对图像进行模糊, 得到验证码图片
 
-如果运行的时候报错：
+如果运行的时候报错:
 
 ```python
 IOError: cannot open resource
 ```
 
-这是因为`PIL`无法定位到字体文件的位置, 可以根据操作系统提供绝对路径, 比如：
+这是因为`PIL`无法定位到字体文件的位置, 可以根据操作系统提供绝对路径, 比如:
 
 ```python
 '/Library/Fonts/arial.ttf'
@@ -119,13 +119,13 @@ IOError: cannot open resource
 
 字体路径使用这个就不会报错了
 
-要详细了解`PIL`的强大功能, 请请参考Pillow官方文档：
+要详细了解`PIL`的强大功能, 请请参考Pillow官方文档:
 
 [https://pillow.readthedocs.org/](https://pillow.readthedocs.org/)
 
 #### 小结-Pillow
 
-PIL提供了操作图像的强大功能, 可以通过简单的代码完成复杂的图像处理. 
+PIL提供了操作图像的强大功能, 可以通过简单的代码完成复杂的图像处理.
 
 #### 参考源码
 
@@ -137,21 +137,21 @@ PIL提供了操作图像的强大功能, 可以通过简单的代码完成复杂
 
 ### requests-访问网络资源
 
-我们已经讲解了Python内置的`urllib`模块, 用于访问网络资源. 但是, 它用起来比较麻烦, 而且, 缺少很多实用的高级功能. 
-更好的方案是使用`requests`. 它是一个Python第三方库, 处理URL资源特别方便. 
+我们已经讲解了Python内置的`urllib`模块, 用于访问网络资源. 但是, 它用起来比较麻烦, 而且, 缺少很多实用的高级功能.
+更好的方案是使用`requests`. 它是一个Python第三方库, 处理URL资源特别方便.
 安装`requests`
-如果安装了`Anaconda`, `requests`就已经可用了. 否则, 需要在命令行下通过pip安装：
+如果安装了`Anaconda`, `requests`就已经可用了. 否则, 需要在命令行下通过pip安装:
 
 ```python
 $ pip install requests
 None
 ```
 
-如果遇到`Permission denied`安装失败, 请加上`sudo`重试. 
+如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
 
 #### 使用requests
 
-要通过GET访问一个页面, 只需要几行代码：
+要通过GET访问一个页面, 只需要几行代码:
 
 ```python
 >>> import requests
@@ -163,7 +163,7 @@ r.text
 '<!DOCTYPE HTML>\n<html>\n<head>\n<meta name="description" content="提供图书, 电影, 音乐唱片的推荐, 评论和...'
 ```
 
-对于带参数的`URL`, 传入一个`dict`作为`params`参数：
+对于带参数的`URL`, 传入一个`dict`作为`params`参数:
 
 ```python
 >>> r = requests.get('https://www.douban.com/search', params={'q': 'python', 'cat': '1001'})
@@ -171,21 +171,21 @@ r.text
 'https://www.douban.com/search?q=python&cat=1001'
 ```
 
-`requests`自动检测编码, 可以使用`encoding`属性查看：
+`requests`自动检测编码, 可以使用`encoding`属性查看:
 
 ```python
 >>> r.encoding
 'utf-8'
 ```
 
-无论响应是文本还是二进制内容, 我们都可以用`content`属性获得`bytes`对象：
+无论响应是文本还是二进制内容, 我们都可以用`content`属性获得`bytes`对象:
 
 ```python
 >>> r.content
 b'<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n...'
 ```
 
-`requests`的方便之处还在于, 对于特定类型的响应, 例如`JSON`, 可以直接获取：
+`requests`的方便之处还在于, 对于特定类型的响应, 例如`JSON`, 可以直接获取:
 
 ```python
 >>> r = requests.get('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json')
@@ -193,7 +193,7 @@ b'<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text
 {'query': {'count': 1, 'created': '2017-11-17T07:14:12Z', ...
 ```
 
-需要传入`HTTP Header`时, 我们传入一个`dict`作为`headers`参数：
+需要传入`HTTP Header`时, 我们传入一个`dict`作为`headers`参数:
 
 ```python
 >>> r = requests.get('https://www.douban.com/', headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit'})
@@ -201,31 +201,31 @@ b'<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text
 '<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n <title>豆瓣(手机版)</title>...'
 ```
 
-要发送`POST`请求, 只需要把`get()`方法变成`post()`, 然后传入`data`参数作为`POST`请求的数据：
+要发送`POST`请求, 只需要把`get()`方法变成`post()`, 然后传入`data`参数作为`POST`请求的数据:
 
 ```python
 >>> r = requests.post('https://accounts.douban.com/login', data={'form_email': 'abc@example.com', 'form_password': '123456'})
 ```
 
-`requests`默认使用`application/x-www-form-urlencoded`对`POST`数据编码. 如果要传递`JSON`数据, 可以直接传入`json`参数：
+`requests`默认使用`application/x-www-form-urlencoded`对`POST`数据编码. 如果要传递`JSON`数据, 可以直接传入`json`参数:
 
 ```python
 params = {'key': 'value'}
 r = requests.post(url, json=params) # 内部自动序列化为JSON
 ```
 
-类似的, 上传文件需要更复杂的编码格式, 但是`requests`把它简化成files参数：
+类似的, 上传文件需要更复杂的编码格式, 但是`requests`把它简化成files参数:
 
 ```python
 >>> upload_files = {'file': open('report.xls', 'rb')}
 >>> r = requests.post(url, files=upload_files)
 ```
 
-在读取文件时, 注意务必使用`'rb'`即二进制模式读取, 这样获取的`bytes`长度才是文件的长度. 
+在读取文件时, 注意务必使用`'rb'`即二进制模式读取, 这样获取的`bytes`长度才是文件的长度.
 
-把`post()`方法替换为`put()`, `delete()`等, 就可以以`PUT`或`DELETE`方式请求资源. 
+把`post()`方法替换为`put()`, `delete()`等, 就可以以`PUT`或`DELETE`方式请求资源.
 
-除了能轻松获取响应内容外, `requests`对获取`HTTP`响应的其他信息也非常简单. 例如, 获取响应头：
+除了能轻松获取响应内容外, `requests`对获取`HTTP`响应的其他信息也非常简单. 例如, 获取响应头:
 
 ```python
 >>> r.headers
@@ -234,21 +234,21 @@ r = requests.post(url, json=params) # 内部自动序列化为JSON
 'text/html; charset=utf-8'
 ```
 
-`requests`对`Cookie`做了特殊处理, 使得我们不必解析`Cookie`就可以轻松获取指定的`Cookie`：
+`requests`对`Cookie`做了特殊处理, 使得我们不必解析`Cookie`就可以轻松获取指定的`Cookie`:
 
 ```python
 >>> r.cookies['ts']
 'example_cookie_12345'
 ```
 
-要在请求中传入`Cookie`, 只需准备一个`dict`传入`cookie`s参数：
+要在请求中传入`Cookie`, 只需准备一个`dict`传入`cookie`s参数:
 
 ```python
 >>> cs = {'token': '12345', 'status': 'working'}
 >>> r = requests.get(url, cookies=cs)
 ```
 
-最后, 要指定超时, 传入以秒为单位的`timeout`参数：
+最后, 要指定超时, 传入以秒为单位的`timeout`参数:
 
 ```python
 >>> r = requests.get(url, timeout=2.5) # 2.5秒后超时
@@ -256,39 +256,39 @@ r = requests.post(url, json=params) # 内部自动序列化为JSON
 
 #### 小结-requests
 
-用`requests`获取URL资源, 就是这么简单！
+用`requests`获取URL资源, 就是这么简单!
 
 #### chardet-检测编码
 
-字符串编码一直是令人非常头疼的问题, 尤其是我们在处理一些不规范的第三方网页的时候. 虽然Python提供了`Unicode`表示的`str`和`bytes`两种数据类型, 并且可以通过`encode()`和`decode()`方法转换, 但是, 在不知道编码的情况下, 对`bytes`做`decode()`不好做. 
+字符串编码一直是令人非常头疼的问题, 尤其是我们在处理一些不规范的第三方网页的时候. 虽然Python提供了`Unicode`表示的`str`和`bytes`两种数据类型, 并且可以通过`encode()`和`decode()`方法转换, 但是, 在不知道编码的情况下, 对`bytes`做`decode()`不好做.
 
-对于未知编码的`bytes`, 要把它转换成`str`, 需要先“猜测”编码. 猜测的方式是先收集各种编码的特征字符, 根据特征字符判断, 就能有很大概率“猜对”. 
+对于未知编码的`bytes`, 要把它转换成`str`, 需要先"猜测"编码. 猜测的方式是先收集各种编码的特征字符, 根据特征字符判断, 就能有很大概率"猜对".
 
-当然, 我们肯定不能从头自己写这个检测编码的功能, 这样做费时费力. `chardet`这个第三方库正好就派上了用场. 用它来检测编码, 简单易用. 
+当然, 我们肯定不能从头自己写这个检测编码的功能, 这样做费时费力. `chardet`这个第三方库正好就派上了用场. 用它来检测编码, 简单易用.
 
 #### 安装chardet
 
-如果安装了`Anaconda`, `chardet`就已经可用了. 否则, 需要在命令行下通过`pip`安装：
+如果安装了`Anaconda`, `chardet`就已经可用了. 否则, 需要在命令行下通过`pip`安装:
 
 ```python
 $ pip install chardet
 None
 ```
 
-如果遇到`Permission denied`安装失败, 请加上`sudo`重试. 
+如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
 
 #### 使用chardet
 
-当我们拿到一个`bytes`时, 就可以对其检测编码. 用`chardet`检测编码, 只需要一行代码：
+当我们拿到一个`bytes`时, 就可以对其检测编码. 用`chardet`检测编码, 只需要一行代码:
 
 ```python
 >>> chardet.detect(b'Hello, world!')
 {'encoding': 'ascii', 'confidence': 1.0, 'language': ''}
 ```
 
-检测出的编码是`ascii`, 注意到还有个`confidence`字段, 表示检测的概率是`1.0`(即100%). 
+检测出的编码是`ascii`, 注意到还有个`confidence`字段, 表示检测的概率是`1.0`(即100%).
 
-我们来试试检测`GBK`编码的中文：
+我们来试试检测`GBK`编码的中文:
 
 ```python
 >>> data = '离离原上草, 一岁一枯荣'.encode('gbk')
@@ -296,9 +296,9 @@ None
 {'encoding': 'GB2312', 'confidence': 0.7407407407407407, 'language': 'Chinese'}
 ```
 
-检测的编码是`GB2312`, 注意到`GBK`是`GB2312`的超集, 两者是同一种编码, 检测正确的概率是74%, `language`字段指出的语言是`'Chinese'`. 
+检测的编码是`GB2312`, 注意到`GBK`是`GB2312`的超集, 两者是同一种编码, 检测正确的概率是74%, `language`字段指出的语言是`'Chinese'`.
 
-对`UTF-8`编码进行检测：
+对`UTF-8`编码进行检测:
 
 ```python
 >>> data = '离离原上草, 一岁一枯荣'.encode('utf-8')
@@ -306,7 +306,7 @@ None
 {'encoding': 'utf-8', 'confidence': 0.99, 'language': ''}
 ```
 
-我们再试试对日文进行检测：
+我们再试试对日文进行检测:
 
 ```python
 >>> data = '最新の主要ニュース'.encode('euc-jp')
@@ -314,36 +314,36 @@ None
 {'encoding': 'EUC-JP', 'confidence': 0.99, 'language': 'Japanese'}
 ```
 
-可见, 用`chardet`检测编码, 使用简单. 获取到编码后, 再转换为`str`, 就可以方便后续处理. 
+可见, 用`chardet`检测编码, 使用简单. 获取到编码后, 再转换为`str`, 就可以方便后续处理.
 
-`chardet`支持检测的编码列表[请参考官方文档Supported encodings]. 
+`chardet`支持检测的编码列表[请参考官方文档Supported encodings].
 
 [请参考官方文档Supported encodings]]: https://chardet.readthedocs.io/en/latest/supported-encodings.html
 
 #### 小结-chardet
 
-使用`chardet`检测编码非常容易, `chardet`支持检测中文, 日文, 韩文等多种语言. 
+使用`chardet`检测编码非常容易, `chardet`支持检测中文, 日文, 韩文等多种语言.
 
 ### psutil
 
-用Python来编写脚本简化日常的运维工作是Python的一个重要用途. 在`Linux`下, 有许多系统命令可以让我们时刻监控系统运行的状态, 如`ps`, `top`, `free`等等. 要获取这些系统信息, Python可以通过`subprocess`模块调用并获取结果. 但这样做显得很麻烦, 尤其是要写很多解析代码. 
+用Python来编写脚本简化日常的运维工作是Python的一个重要用途. 在`Linux`下, 有许多系统命令可以让我们时刻监控系统运行的状态, 如`ps`, `top`, `free`等等. 要获取这些系统信息, Python可以通过`subprocess`模块调用并获取结果. 但这样做显得很麻烦, 尤其是要写很多解析代码.
 
-在Python中获取系统信息的另一个好办法是使用`psutil`这个第三方模块. 顾名思义, `psutil = process and system utilities`, 它不仅可以通过一两行代码实现系统监控, 还可以跨平台使用, 支持Linux／UNIX／OSX／Windows等, 是系统管理员和运维小伙伴不可或缺的必备模块. 
+在Python中获取系统信息的另一个好办法是使用`psutil`这个第三方模块. 顾名思义, `psutil = process and system utilities`, 它不仅可以通过一两行代码实现系统监控, 还可以跨平台使用, 支持Linux／UNIX／OSX／Windows等, 是系统管理员和运维小伙伴不可或缺的必备模块.
 
 #### 安装psutil
 
-如果安装了Anaconda, `psutil`就已经可用了. 否则, 需要在命令行下通过pip安装：
+如果安装了Anaconda, `psutil`就已经可用了. 否则, 需要在命令行下通过pip安装:
 
 ```python
 $ pip install psutil
 None
 ```
 
-如果遇到`Permission denied`安装失败, 请加上`sudo`重试. 
+如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
 
 #### 获取CPU信息
 
-我们先来获取CPU的信息：
+我们先来获取CPU的信息:
 
 ```python
 >>> import psutil
@@ -355,19 +355,19 @@ None
 at this moment, this young man has realized that he had an improper msconfig.
 ```
 
-统计CPU的用户／系统／空闲时间：
+统计CPU的用户／系统／空闲时间:
 
 ```python
 >>> psutil.cpu_times()
 scputimes(user=10963.31, nice=0.0, system=5138.67, idle=356102.45)
 ```
 
-再实现类似`top`命令的CPU使用率, 每秒刷新一次, 累计10次：
+再实现类似`top`命令的CPU使用率, 每秒刷新一次, 累计10次:
 
 ```python
 >>> for x in range(10):
 ...     psutil.cpu_percent(interval=1, percpu=True)
-... 
+...
 [14.0, 4.0, 4.0, 4.0]
 [12.0, 3.0, 4.0, 3.0]
 [8.0, 4.0, 3.0, 4.0]
@@ -382,7 +382,7 @@ scputimes(user=10963.31, nice=0.0, system=5138.67, idle=356102.45)
 
 #### 获取内存信息
 
-使用`psutil`获取物理内存和交换内存信息, 分别使用：
+使用`psutil`获取物理内存和交换内存信息, 分别使用:
 
 ```python
 >>> psutil.virtual_memory()
@@ -391,13 +391,13 @@ svmem(total=8589934592, available=2866520064, percent=66.6, used=7201386496, fre
 sswap(total=1073741824, used=150732800, free=923009024, percent=14.0, sin=10705981440, sout=40353792)
 ```
 
-返回的是字节为单位的整数, 可以看到, 总内存大小是`8589934592 = 8 GB`, 已用`7201386496 = 6.7 GB`, 使用了`66.6%`. 
+返回的是字节为单位的整数, 可以看到, 总内存大小是`8589934592 = 8 GB`, 已用`7201386496 = 6.7 GB`, 使用了`66.6%`.
 
-而交换区大小是`1073741824 = 1 GB`. 
+而交换区大小是`1073741824 = 1 GB`.
 
 #### 获取磁盘信息
 
-可以通过`psutil`获取磁盘分区, 磁盘使用率和磁盘`IO`信息：
+可以通过`psutil`获取磁盘分区, 磁盘使用率和磁盘`IO`信息:
 
 ```python
 >>> psutil.disk_partitions() # 磁盘分区信息
@@ -408,11 +408,11 @@ sdiskusage(total=998982549504, used=390880133120, free=607840272384, percent=39.
 sdiskio(read_count=988513, write_count=274457, read_bytes=14856830464, write_bytes=17509420032, read_time=2228966, write_time=1618405)
 ```
 
-可以看到, 磁盘`'/'`的总容量是`998982549504 = 930 GB`, 使用了`39.1%`. 文件格式是`HFS`, `opts`中包含`rw`表示可读写, `journaled`表示支持日志. 
+可以看到, 磁盘`'/'`的总容量是`998982549504 = 930 GB`, 使用了`39.1%`. 文件格式是`HFS`, `opts`中包含`rw`表示可读写, `journaled`表示支持日志.
 
 #### 获取网络信息
 
-`psutil`可以获取网络接口和网络连接信息：
+`psutil`可以获取网络接口和网络连接信息:
 
 ```python
 >>> psutil.net_io_counters() # 获取网络读写字节／包的个数
@@ -435,7 +435,7 @@ snetio(bytes_sent=3885744870, bytes_recv=10357676702, packets_sent=10613069, pac
 }
 ```
 
-要获取当前网络连接信息, 使用`net_connections()`：
+要获取当前网络连接信息, 使用`net_connections()`:
 
 ```python
 >>> psutil.net_connections()
@@ -450,7 +450,7 @@ Traceback (most recent call last):
 psutil.AccessDenied: psutil.AccessDenied (pid=3847)
 ```
 
-你可能会得到一个`AccessDenied`错误, 原因是`psutil`获取信息也是要走系统接口, 而获取网络连接信息需要root权限, 这种情况下, 可以退出Python交互环境, 用`sudo`重新启动：
+你可能会得到一个`AccessDenied`错误, 原因是`psutil`获取信息也是要走系统接口, 而获取网络连接信息需要root权限, 这种情况下, 可以退出Python交互环境, 用`sudo`重新启动:
 
 ```python
 $ sudo python3
@@ -474,7 +474,7 @@ Type "help", ... for more information.
 
 #### 获取进程信息
 
-通过`psutil`可以获取到所有进程的详细信息：
+通过`psutil`可以获取到所有进程的详细信息:
 
 ```python
 >>> psutil.pids() # 所有进程ID
@@ -520,10 +520,10 @@ pmem(rss=8310784, vms=2481725440, pfaults=3207, pageins=18)
 Terminated: 15 <-- 自己把自己结束了
 ```
 
-和获取网络连接类似, 获取一个`root`用户的进程需要`root`权限, 
-启动Python交互环境或者`.py`文件时, 需要`sudo`权限. 
+和获取网络连接类似, 获取一个`root`用户的进程需要`root`权限,
+启动Python交互环境或者`.py`文件时, 需要`sudo`权限.
 
-`psutil`还提供了一个`test()`函数, 可以模拟出`ps`命令的效果：
+`psutil`还提供了一个`test()`函数, 可以模拟出`ps`命令的效果:
 
 ```python
 $
@@ -547,28 +547,28 @@ root          53  0.1 2500592    6132 ?             Nov18   00:02  configd
 
 #### 小结-psutil
 
-`psutil`使得Python程序获取系统信息变得易如反掌. 
+`psutil`使得Python程序获取系统信息变得易如反掌.
 
-`psutil`还可以获取用户信息, Windows服务等很多有用的系统信息, 具体请参考psutil的官网：`https://github.com/giampaolo/psutil`
+`psutil`还可以获取用户信息, Windows服务等很多有用的系统信息, 具体请参考psutil的官网: `https://github.com/giampaolo/psutil`
 
 ## virtualenv
 
-在开发Python应用程序的时候, 系统安装的`Python3`只有一个版本：`3.4`. 所有第三方的包都会被`pip`安装到Python3的`site-packages`目录下. 
+在开发Python应用程序的时候, 系统安装的`Python3`只有一个版本: `3.4`. 所有第三方的包都会被`pip`安装到Python3的`site-packages`目录下.
 
-如果我们要同时开发多个应用程序, 那这些应用程序都会共用一个Python, 就是安装在系统的`Python 3`. 如果应用A需要`jinja 2.7`, 而应用B需要`jinja 2.6`怎么办？
+如果我们要同时开发多个应用程序, 那这些应用程序都会共用一个Python, 就是安装在系统的`Python 3`. 如果应用A需要`jinja 2.7`, 而应用B需要`jinja 2.6`怎么办?
 
-这种情况下, 每个应用可能需要各自拥有一套“独立”的Python运行环境. `virtualenv`就是用来为一个应用创建一套“隔离”的Python运行环境. 
+这种情况下, 每个应用可能需要各自拥有一套"独立"的Python运行环境. `virtualenv`就是用来为一个应用创建一套"隔离"的Python运行环境.
 
-首先, 我们用pip安装`virtualenv`：
+首先, 我们用pip安装`virtualenv`:
 
 ```python
 $ pip3 install virtualenv
 None
 ```
 
-然后, 假定我们要开发一个新的项目, 需要一套独立的Python运行环境, 可以这么做：
+然后, 假定我们要开发一个新的项目, 需要一套独立的Python运行环境, 可以这么做:
 
-第一步, 创建目录：
+第一步, 创建目录:
 
 ```python
 Mac:~ michael$ mkdir myproject
@@ -576,7 +576,7 @@ Mac:~ michael$ cd myproject/
 Mac:myproject michael$
 ```
 
-第二步, 创建一个独立的Python运行环境, 命名为`venv`：
+第二步, 创建一个独立的Python运行环境, 命名为`venv`:
 
 ```python
 Mac:myproject michael$ virtualenv --no-site-packages venv
@@ -586,18 +586,18 @@ Also creating executable in venv/bin/python
 Installing setuptools, pip, wheel...done.
 ```
 
-命令`virtualenv`就可以创建一个独立的Python运行环境, 我们还加上了参数`--no-site-packages`, 这样, 已经安装到系统Python环境中的所有第三方包都不会复制过来, 这样, 我们就得到了一个不带任何第三方包的“干净”的Python运行环境. 
+命令`virtualenv`就可以创建一个独立的Python运行环境, 我们还加上了参数`--no-site-packages`, 这样, 已经安装到系统Python环境中的所有第三方包都不会复制过来, 这样, 我们就得到了一个不带任何第三方包的"干净"的Python运行环境.
 
-新建的Python环境被放到当前目录下的`venv`目录. 有了`venv`这个Python环境, 可以用`source`进入该环境：
+新建的Python环境被放到当前目录下的`venv`目录. 有了`venv`这个Python环境, 可以用`source`进入该环境:
 
 ```python
 Mac:myproject michael$ source venv/bin/activate
 (venv)Mac:myproject michael$
 ```
 
-注意到命令提示符变了, 有个`(venv)`前缀, 表示当前环境是一个名为`venv`的Python环境. 
+注意到命令提示符变了, 有个`(venv)`前缀, 表示当前环境是一个名为`venv`的Python环境.
 
-下面正常安装各种第三方包, 并运行python命令：
+下面正常安装各种第三方包, 并运行python命令:
 
 ```python
 (venv)Mac:myproject michael$ pip install jinja2
@@ -607,21 +607,21 @@ Successfully installed jinja2-2.7.3 markupsafe-0.23
 ...
 ```
 
-在`venv`环境下, 用pip安装的包都被安装到`venv`这个环境下, 系统Python环境不受任何影响. 也就是说, `venv`环境是专门针对`myproject`这个应用创建的. 
+在`venv`环境下, 用pip安装的包都被安装到`venv`这个环境下, 系统Python环境不受任何影响. 也就是说, `venv`环境是专门针对`myproject`这个应用创建的.
 
-退出当前的`venv`环境, 使用`deactivate`命令：
+退出当前的`venv`环境, 使用`deactivate`命令:
 
 ```python
-(venv)Mac:myproject michael$ deactivate 
-Mac:myproject michael$ 
+(venv)Mac:myproject michael$ deactivate
+Mac:myproject michael$
 ```
 
-此时就回到了正常的环境, 现在`pip`或python均是在系统Python环境下执行. 
+此时就回到了正常的环境, 现在`pip`或python均是在系统Python环境下执行.
 
-完全可以针对每个应用创建独立的Python运行环境, 这样就可以对每个应用的Python环境进行隔离. 
+完全可以针对每个应用创建独立的Python运行环境, 这样就可以对每个应用的Python环境进行隔离.
 
-virtualenv是如何创建“独立”的Python运行环境的呢？原理很简单, 就是把系统Python复制一份到`virtualenv`的环境, 用命令`source venv/bin/activate`进入一个`virtualenv`环境时, `virtualenv`会修改相关环境变量, 让命令`python`和`pip`均指向当前的`virtualenv`环境. 
+virtualenv是如何创建"独立"的Python运行环境的呢? 原理很简单, 就是把系统Python复制一份到`virtualenv`的环境, 用命令`source venv/bin/activate`进入一个`virtualenv`环境时, `virtualenv`会修改相关环境变量, 让命令`python`和`pip`均指向当前的`virtualenv`环境.
 
 ### 小结-virtualenv
 
-`virtualenv`为应用提供了隔离的Python运行环境, 解决了不同应用间多版本的冲突问题. 
+`virtualenv`为应用提供了隔离的Python运行环境, 解决了不同应用间多版本的冲突问题.

@@ -46,10 +46,92 @@ i \bar{u}(p^\prime) \sigma^{\mu\nu} (p^\prime-p)_\nu u(p) $$
 
 ## 圈积分,LoopIntegrate
 
-+ 给`LoopIntegrate`提供分子的列表, 能获得对应圈积分的列表
-+ `LoopRefine`能自动线性作用于列表.
+```mathematica
+LoopIntegrate[num, k, {q0, m0 }, {q1, m1 }, ... ] ;
+用 Passarino-Veltman 系数函数, 表示对 k 的单圈张量积分, 分子为 num, 分母为 (q0^2-m0^2)(q1^2-m1^2)
 
-如果外线动量不是线性独立的(例如, 零转移动量时的形状因子), 分子分母中的公共因子不会自动消除.
+LoopIntegrate[num, k, {q0, m0, w0 }, {q1, m1,w1 }, ... ];
+用 Passarino-Veltman 系数函数, 表示单圈张量积分, 并且分母的权重分别为 w0, w1, ...
+```
+
+### 详细
+
++ `LoopIntegrate` 生成用系数函数 `PVA`, `PVB`, `PVC`, `PVD` 和 `PVX` 表示的洛伦兹协变积分, 它对任何运动学参数值, 以及所有阶的 `Epsilon`有效.
++ 应用 `LoopRefine` 将 `PVA`, `PVB`, `PVC` 和 `PVD` 转换为解析表达式.
++ `分母指定` 的通常形式为: `{qn,mn}`, 代表被积式中的因子 $1/(q_n^2-m_n^2+i\epsilon)$.
+其中 `qn` 和 `mn` 分别对应于 `内部动量`和 `质量` 变量.
++ `分母指定`可以带有附加参数, 也就是`{qn,mn,wn}` 的形式, 其中整数`wn`表示分母的权重,
+$1/(q_n^2-m_n^2+i\epsilon)^{w_n}$. 默认的权重为 `1`.
++ 与积分变量`k`独立的分母, 将从积分中移出, 相同的分母被合并, 表示成带权重的形成.
++ 给予 `LoopIntegrate` 的独立的`分母指定`的数量, 决定了相应单圈图的拓扑结构:
+
+$$ \text{LoopIntegrate}[ \mathrm{num},k, {k+p_0, m_0}, {k+p_1, m_1}, ... ] \\
+=\frac{1}{C_\epsilon} \mu^{2\epsilon} \int \frac{\mathrm{d}^d k}{(2\pi)^d}
+\frac{\mathrm{num}}{ [(k+p_0)^2-m_0^2+ i\epsilon] [(k+p_1)^2-m_1^2+i\epsilon]} $$
+
+$$ \text{LoopIntegrate}[ \mathrm{num},k, {k+p_0, m_0, w_0}, {k+p_1, m_1, w_1}, ... ] \\
+=\frac{1}{C_\epsilon} \mu^{2\epsilon} \int \frac{\mathrm{d}^d k}{(2\pi)^d}
+\frac{\mathrm{num}}{ [(k+p_0)^2-m_0^2+ i\epsilon]^{w^0} [(k+p_1)^2-m_1^2+i\epsilon]^{w^1} }$$
+
++ 尽管在典型的单圈计算中出现的标准积分度量是$\mu^{2\epsilon}\int \frac{\mathrm{d}^d k}{(2\pi)^d}$,
+但 `LoopIntegrate` 给出的结果是将 $C_\epsilon= \frac{ie^{-\gamma_E \epsilon}}{(4\pi)^{d/2}}$ 这个组合因子提取并省略.
+要从 `LoopIntegrate` 的输出得到 `4`维时空的结果,
+    + 将 `LoopRefine` 的输出乘以 $i/(16\pi^2)$,
+    + 按照与下面 `LoopRefineSeries` 中相同的对应规则去解释, $\epsilon\sim0$ 处的极点.
+
++ 选项 `Apart` 控制: 是否在进行洛伦兹协变分解之前, 将被积式进行部分分式展开(partial fraction expansion). 可能的值为:
+    + `False` ; 默认, 不进行部分分式展开
+    + `True`; 进行部分分式展开
+
++ 选项 `Cancel` 控制: 是否在进行洛伦兹协变分解之前, 约掉分子和分母中的公因子. 可能的值是:
+    + `Automatic` ; 默认, 如果分子包含运动学奇异点, 则不约掉`公因子`, 其他情况则约掉.
+    + `True` ; 约掉公因子
+    + `False` ; 不约掉公因子
+
++ 选项 `Dimensions->n` 将积分测量的维度设置为 $n-2\epsilon$. 默认设置为`4`, 可以设置为任何偶数整数.
++ 选项 `DiracAlgebra` 指定是否应用 `Dirac 代数`来简化`分子`. 可能的值是:
+    + `True`;   应用狄拉克代数.
+    + `False`;  不应用狄拉克代数, 只使用`linearity`来分解积分.
++ 在设置 `DiracAlgebra->True` 的情况下, `LoopIntegrate` 遵守 `FermionLineExpand` 的默认选项设置, 可以通过 `SetOptions` 进行更改.
++ 选项 `Organization` 规定了输出结果的整理方式.  可能的值是:
+    + `Automatic`; 默认, 自动选择组织方案
+    + `LTensor`; 按洛伦兹张量结构组织结果
+    + `Function`; 用 Passarino--Veltman 函数组织结果(比较快)
+    + `None` ; 不整理结果(运行速度最快).
+
++ 如果在`LoopIntegrate` 的`num`参数中提供分子的列表, 能获得对应圈积分的列表.
+`LoopRefine` 也能自动线性作用于列表.
+
+### 例子
+
+计算单`传播子`的标量一圈积分(蝌蚪图):
+
+$$\mu^{2\epsilon} \int \frac{\mathrm{d}^d k}{(2\pi)^d} \frac{1}{ k^2-m^2} $$
+
+```mathematica
+tea=LoopIntegrate[1, k, {k, m}]
+Out[1]= PVA[0, m]
+```
+
+应用 `LoopRefine` 来获得显式表达式:
+
+```mathematica
+LoopRefine[tea]
+```
+
+为了解释这个结果:
+
+1. 恢复整体系数 $i/(16\pi^2)$;
+2. 把$1/\epsilon$ 展开成 $\frac{1}{\epsilon}- \gamma_E +\ln(4\pi)$
+
+所以最终结果是:
+
+$$\mu^{2\epsilon} \int \frac{\mathrm{d}^d k}{(2\pi)^d} \frac{1}{ k^2-m^2}=
+\frac{i}{16\pi^2}[m^2+m^2(\frac{1}{\epsilon}-\gamma_E+\ln(4\pi)+\ln(\frac{\mu^2}{m^2}))] $$
+
+### 可能的问题
+
++ 如果外线动量不是线性独立的(例如, 零转移动量时的形状因子), 分子分母中的公共因子不会自动消除.
 输出会与`Cancel->False`情形的结果相同.
 
 ![LoopIntegrate](https://packagex.hepforge.org/Documentation/HTML/X/ref/Files/LoopIntegrate/61.png)
@@ -128,4 +210,56 @@ LoopRefineSeries[PVB[0, 0, s, m, m], {s, 4 m^2, 2}, Analytic -> True]
 ```mathematica
 LoopRefine[PVB[0, 0, s, m, m]];
 Series[%, {s, 4 m^2, 2}]
+```
+
+## PVX
+
+```mathematica
+PVX[r,n1,n2,..., s01, s12, s23, ... , m0, m1, m2, ... ]
+是一般的 Passarino-Veltman 系数函数, 如下:
+```
+
+$$X_{ \underbrace{{0\cdots0}}_{2r}
+\underbrace{{1\cdots1}}_{n_1} \underbrace{{2\cdots2}}_{n_2} }
+(s_{01},s_{12},s_{23}, \cdots ; m_0, m_1, m_2, \cdots )$$
+
+### 详细
+
++ PaVe 系数函数将乘上一个洛伦兹协变的张量结构, 即全对称张量:
+
+$$\{ [p_1]^{n_1} [p_2]^{n_2} \cdots [g]^r\}^
+{\mu_1 \cdots \mu_{2r+n_1+n_2+\cdots} }$$
+
+张量的指标一共有 $2r+n_1+n_2+\cdots$ 个, 其中:
+
++ $2r$属于`r`个度规张量$g^{\mu\nu}$,
++ $n_1$ 个指标属于第一个独立动量 $p_1$, 它们组成 $p_1^{a}p_1^{b}p_1^{c}\cdots$
++ $n_2$ 个指标属于第二个独立动量 $p_2$, 它们组成 $p_2^{d}p_2^{e}p_2^{f}\cdots$
+
+等等, 依次类推. 由于整体的动量守恒, `n`点单圈图最多有 `n-1` 个线性独立的外动量,
+所以分子中最多出现`n-1`个独立的外动量 $p_1\cdots p_n$, 再考虑到度规张量 $g^{\mu\nu}$,
+这些洛伦兹结构的不同幂次组合, 形成每个圈积分特有的张量结构.
+
++ `PVX[...]` 隐式地依赖于时空维数`d`.
++ `PVX` 不直接求值, `LoopRefine` 也不会用它的显式表达式代替它.
++ N点系数函数的 `PVX` 表示中, 其参数的含义如下:
+    + 前 `N` 个参数是整数, 并指定线性独立动量或度规的 `指标重数`;
+    + 接下来的 `N(N-1)/2` 个参数是外部动量不变量;
+    + 最后 `N` 个参数是内部质量.
+    + 所以参数总共有 `N(N+3)/2` 个, 例如 `5点` 图有 `20` 个参数.
++ 对于 `N<=4 点` 的系数函数, `PVX` 被自动替换为 `PVA`, `PVB`, `PVC` 或 `PVD`.
+
+### 需要注意的问题
+
+对于 ChPT 费曼图, 设圈积分变量为 `k`, KR addition 图中, 非定域正规子的标量部分满足 `R(q-k)=R(k-q)`,
+这里可能会有个 "bug", 与 `Package-X` 的实现有关系:
+
+以下两个积分的结果应该是相同的, 因为传播子是动量的偶次幂, 与正负号无关.
+但 Package-X 却不会自动给出相同的结果, 需要手动把 `-k` 换成 `+k`.
+貌似这里 Package-X 没有自动整理动量, 把 `k`, `-k` 当成独立的动量, 它认为第二行有`5`个独立的动量:
+`PVD` 的帮助页面也提到: `PVD` 不会自动整理它的参数, 猜测 `PVX` 也是如此.
+
+```mathematica
+LoopIntegrate[1, k, {k, m2}, {k, m2}, {k - p1 + p2, m2}, {k,m1}, {k - p1, mo1}]
+LoopIntegrate[1, k, {k, m2}, {-k, m2}, {k + p1 - p2, m2}, {k, m1}, {k - p2, mo1}]
 ```

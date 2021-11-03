@@ -1719,7 +1719,7 @@ n-3 %% last line needn't the \\
  \texorpdfstring{math objec}{Lg}
 ```
 
-## 上下标
+## 上下标,左下标
 
 [数学运算符 Math Operator](https://zhuanlan.zhihu.com/p/137969798)
 [如何公式实现左下标? ](https://wenda.latexstudio.net/q-2075.html)
@@ -1746,7 +1746,7 @@ $\limsup\limits_{x\rightarrow0}$ vs $\lim\sup\limits_{x\rightarrow0}$
 
 So you will want to use `\limsup`.
 
-如果要使用左侧下标,使用 `amsmath` 提供的`\sideset`.例如
+如果要使用`左侧下标`,使用 `amsmath` 提供的`\sideset`.例如
 
 ```bash
 %\usepackage{amsmath}

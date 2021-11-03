@@ -1,14 +1,20 @@
 # Summary
 
-- [基础](python-1.md)
-- [函数](python-2.md)
-- [对象](python-3.md)
-- [调试,IO,进程](python-4.md)
-- [正则,内建模块](python-5.md)
-- [第三方模块](python-6.md)
-- [图形界面](python-7.md)
-- [网络开发](python-8.md)
+- [基础](py-basics.md)
+- [函数](py-functions.md)
+- [对象](py-oop.md)
+- [调试,IO,进程](py-debug.md)
+- [正则,内建模块](py-builtins.md)
+- [第三方模块](py-modules.md)
+- [图形界面](py-gui.md)
+- [网络开发](py-network.md)
+- [网络开发](py-conda.md)
+- [jupyter](py-jupyter.md)
+- [conda](py-conda.md)
+- [py 语言参考](py-lang-ref.md)
+
+- [总结](py-summary.md)
 
 # 画图
 
-- [matplotlib](matplotlib.md)
+- [matplotlib](py-matplotlib.md)

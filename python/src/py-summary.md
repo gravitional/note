@@ -44,7 +44,7 @@ lc_letter ::=  "a"..."z"
 python -m pydoc -p 60000
 ```
 
-简单解释: 
+简单解释:
 
 `python -m pydoc`表示打开`pydoc`模块, `pydoc`是查看`python`文档的首选工具;
 `-p 6000`表示在`60000`端口上启动 `http server`. 然后在浏览器中访问`http://localhost:60000/`
@@ -82,7 +82,7 @@ subprocess.run(args, *, stdin=None, input=None, stdout=None, stderr=None, captur
 
 如果未使用文本模式,  `stdin` ,  `stdout` 和 `stderr` 将会以二进制流模式打开. 则不会发生编码和换行符(`line ending`)的转换.
 
-注意: 
+注意:
 file objects `Popen.stdin` ,  `Popen.stdout` 和 `Popen.stderr` 的换行符属性不会被 `Popen.communicate()` 方法更新.
 
 如果 `shell` 设为 `True`,, 则使用指定的`shell` 执行指定的指令.
@@ -244,7 +244,7 @@ environ({'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'TERM_PROGRAM_VERSION': '326', 
 
 这些合并, 拆分路径的函数**并不要求目录和文件要真实存在**,它们只对字符串进行操作.
 
-文件操作使用下面的函数. 假定当前目录下有一个`test.txt`文件: 
+文件操作使用下面的函数. 假定当前目录下有一个`test.txt`文件:
 
 + 对文件重命名: `os.rename('test.txt', 'test.py')`
 + 删掉文件: `os.remove('test.py')`
@@ -253,14 +253,14 @@ environ({'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'TERM_PROGRAM_VERSION': '326', 
 幸运的是`shutil`模块提供了`copyfile()`的函数,你还可以在`shutil`模块中找到很多实用函数,它们可以看做是`os`模块的补充.
 
 ***
-利用Python的特性来过滤文件. 比如我们要列出当前目录下的所有**目录**,只需要一行代码: 
+利用Python的特性来过滤文件. 比如我们要列出当前目录下的所有**目录**,只需要一行代码:
 
 ```python
 >>> [x for x in os.listdir('.') if os.path.isdir(x)]
 ['.lein', '.local', '.m2', '.npm', '.ssh', '.Trash', '.vim', 'Applications', 'Desktop', ...]
 ```
 
-要列出所有的`.py`文件,也只需一行代码: 
+要列出所有的`.py`文件,也只需一行代码:
 
 ```python
 >>> [x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1]=='.py']
@@ -328,7 +328,7 @@ if os.path.exists(os.path.join('.','')):
 反过来,把变量内容从序列化的对象重新读到内存里称之为反序列化,即`unpickling`.
 Python提供了`pickle`模块来实现序列化.
 
-首先,我们尝试把一个对象序列化并写入文件: 
+首先,我们尝试把一个对象序列化并写入文件:
 
 ```python
 >>> import pickle
@@ -338,7 +338,7 @@ b'...'
 ```
 
 `pickle.dumps()`方法把任意对象序列化成一个`bytes`,然后,就可以把这个`bytes`写入文件.
-或者用另一个方法`pickle.dump()`直接把对象序列化后写入一个`file-like Object`: 
+或者用另一个方法`pickle.dump()`直接把对象序列化后写入一个`file-like Object`:
 
 ```python
 >>> f = open('dump.txt', 'wb')
@@ -349,7 +349,7 @@ b'...'
 看看写入的`dump.txt`文件,一堆乱七八糟的内容,这些都是Python保存的对象内部信息.
 
 当我们要把对象从磁盘读到内存时,可以先把内容读到一个`bytes`,然后用`pickle.loads()`方法反序列化出对象,也可以直接用`pickle.load()`方法从一个`file-like Object`中直接反序列化出对象.
-我们打开另一个Python命令行来反序列化刚才保存的对象: 
+我们打开另一个Python命令行来反序列化刚才保存的对象:
 
 ```python
 >>> f = open('dump.txt', 'rb')
@@ -371,7 +371,7 @@ Pickle的问题和所有其他编程语言特有的序列化问题一样,就是�
 
 #### 读文件
 
-读文件使用Python内置的`open()`函数,传入文件名和标示符: 
+读文件使用Python内置的`open()`函数,传入文件名和标示符:
 
 + 打开文件(读取): `f = open('/Users/thomas/desktop/test.py', 'r')`
 + 打开文件(写入)`f = open('/Users/michael/test.txt', 'w')`
@@ -384,14 +384,14 @@ Pickle的问题和所有其他编程语言特有的序列化问题一样,就是�
 + 给`open()`函数传入编码参数(一般是uft-8): `f = open('/Users/michael/gbk.txt', 'r', encoding='gbk')`
 + 忽略未识别字符`f = open('/Users/michael/gbk.txt', 'r', encoding='gbk', errors='ignore')`
 
-Python引入了`with`语句来自动帮我们调用`close()`方法: 
+Python引入了`with`语句来自动帮我们调用`close()`方法:
 
 ```python
 with open('/path/to/file', 'r') as f:
     print(f.read())
 ```
 
-写文件和读文件是一样的,唯一区别是调用`open()`函数时,传入标识符`'w'`或者`'wb'`表示写文本文件或写二进制文件: 
+写文件和读文件是一样的,唯一区别是调用`open()`函数时,传入标识符`'w'`或者`'wb'`表示写文本文件或写二进制文件:
 
 ```python
 >>> f = open('/Users/michael/test.txt', 'w')
@@ -399,7 +399,7 @@ with open('/path/to/file', 'r') as f:
 >>> f.close()
 ```
 
-你可以反复调用`write()`来写入文件,但是务必要调用`f.close()`来关闭文件. 当我们写文件时,操作系统往往不会立刻把数据写入磁盘,而是放到内存缓存起来,空闲的时候再慢慢写入. 所以,还是用`with`语句来得保险: 
+你可以反复调用`write()`来写入文件,但是务必要调用`f.close()`来关闭文件. 当我们写文件时,操作系统往往不会立刻把数据写入磁盘,而是放到内存缓存起来,空闲的时候再慢慢写入. 所以,还是用`with`语句来得保险:
 
 ```python
 with open('/Users/michael/test.txt', 'w') as f:
@@ -451,7 +451,7 @@ print(sum)
 
 ***
 第二种循环是`while`循环,只要条件满足,就不断循环,条件不满足时退出循环.
-比如我们要计算`100`以内所有奇数之和,可以用`while`循环实现: 
+比如我们要计算`100`以内所有奇数之和,可以用`while`循环实现:
 
 ```python
 sum = 0
@@ -462,7 +462,7 @@ while n > 0:
 print(sum)
 ```
 
-如果要提前结束循环,可以用`break`语句: 
+如果要提前结束循环,可以用`break`语句:
 在循环过程中,也可以通过`continue`语句,跳过当前的这次循环,直接开始下一次循环.
 
 ## formfactor 脚本
@@ -525,7 +525,7 @@ Python本身就内置了很多非常有用的模块,只要安装完毕,这些模
 
 ### 模块写法
 
-我们以内建的`sys`模块为例,编写一个`hello`的模块: 
+我们以内建的`sys`模块为例,编写一个`hello`的模块:
 
 ```python
 #!/usr/bin/env python3
@@ -561,16 +561,16 @@ if __name__=='__main__':
 
 后面开始就是真正的代码部分.
 
-你可能注意到了,使用`sys`模块的第一步,就是导入该模块: 
+你可能注意到了,使用`sys`模块的第一步,就是导入该模块:
 `import sys`
 
 导入`sys`模块后,我们就有了变量`sys`指向该模块,利用`sys`这个变量,就可以访问`sys`模块的所有功能.
 
-`sys`模块有一个`argv`变量,用`list`存储了命令行的所有参数. `argv`至少有一个元素,因为第一个参数永远是该`.py`文件的名称,例如: 
+`sys`模块有一个`argv`变量,用`list`存储了命令行的所有参数. `argv`至少有一个元素,因为第一个参数永远是该`.py`文件的名称,例如:
 
 运行`python3 hello.py Michael`获得的`sys.argv`就是`['hello.py', 'Michael]`.
 
-最后,注意到这两行代码: 
+最后,注意到这两行代码:
 
 ```python
 if __name__=='__main__':
@@ -579,7 +579,7 @@ if __name__=='__main__':
 
 当我们在命令行运行`hello`模块文件时,Python解释器把一个特殊变量`__name__`置为`__main__`,而如果在其他地方导入该`hello`模块时,`if`判断将失败,因此,这种`if`测试可以让一个模块通过命令行运行时执行一些额外的代码,最常见的就是运行测试.
 
-我们可以用命令行运行`hello.py`看看效果: 
+我们可以用命令行运行`hello.py`看看效果:
 
 ```bash
 $ python3 hello.py
@@ -588,7 +588,7 @@ $ python hello.py Michael
 Hello, Michael!
 ```
 
-如果启动Python交互环境,再导入hello模块: 
+如果启动Python交互环境,再导入hello模块:
 
 ```python
 $ python3
@@ -598,7 +598,7 @@ Python 3.4.3...
 
 导入时,没有打印`Hello, word!`,因为没有执行`test()`函数.
 
-调用`hello.test()`时,才能打印出Hello, word!: 
+调用`hello.test()`时,才能打印出Hello, word!:
 
 ```python
 >>> hello.test()
@@ -614,7 +614,7 @@ Hello, world!
 每一个 Python 程序同时也是一个模块. 你只需要保证它以 `.py` 为扩展名即可. 下面的案例会作出清晰的解释.
 
 ***
-案例(保存为 `mymodule.py`): 
+案例(保存为 `mymodule.py`):
 
 ```python
 def say_hi():
@@ -627,7 +627,7 @@ __version__ = '0.1'
 
 要记住该模块应该放置于与其它我们即将导入这一模块的程序相同的目录下,或者是放置在`sys.path`所列出的其中一个目录下.
 
-另一个模块(保存为`mymodule_demo.py`): 
+另一个模块(保存为`mymodule_demo.py`):
 
 ```python
 import mymodule
@@ -636,7 +636,7 @@ mymodule.say_hi()
 print('Version', mymodule.__version__)
 ```
 
-输出: 
+输出:
 
 ```python
 $ python mymodule_demo.py
@@ -645,7 +645,7 @@ Version 0.1
 ```
 
 ***
-下面是一个使用 `from...import` 语法的范本(保存为 `mymodule_demo2.py`): 
+下面是一个使用 `from...import` 语法的范本(保存为 `mymodule_demo2.py`):
 
 ```python
 from mymodule import say_hi, __version__
@@ -660,7 +660,7 @@ print('Version', __version__)
 这可能是因为每个模块通常都会使用这一名称来声明它们各自的版本号.
 因此最好使用 `import` 语句,尽管这会使你的程序变得稍微长一些.
 
-你还可以使用: 
+你还可以使用:
 
 ```python
 from mymodule import *
@@ -684,7 +684,7 @@ from mymodule import *
 
 之所以我们说,private函数和变量''不应该''被直接引用,而不是''不能''被直接引用,是因为Python并没有一种方法可以完全限制访问private函数或变量,但是,从编程习惯上不应该引用private函数或变量.
 
-private函数或变量不应该被别人引用,那它们有什么用呢?请看例子: 
+private函数或变量不应该被别人引用,那它们有什么用呢?请看例子:
 
 ```python
 def _private_1(name):
@@ -700,11 +700,11 @@ def greeting(name):
         return _private_2(name)
 ```
 
-我们在模块里公开`greeting()`函数,而把内部逻辑用private函数隐藏起来了,这样,调用`greeting()`函数不用关心内部的private函数细节,这也是一种非常有用的代码封装和抽象的方法,即: 
+我们在模块里公开`greeting()`函数,而把内部逻辑用private函数隐藏起来了,这样,调用`greeting()`函数不用关心内部的private函数细节,这也是一种非常有用的代码封装和抽象的方法,即:
 
 外部不需要引用的函数全部定义成private,只有外部需要引用的函数才定义为public.
 
-如果一个函数定义中包含`yield`关键字,那么这个函数就不再是一个普通函数,而是一个`generator`: 
+如果一个函数定义中包含`yield`关键字,那么这个函数就不再是一个普通函数,而是一个`generator`:
 
 ### 通配符删除文件
 
@@ -779,7 +779,7 @@ def write_result(str):
 ```
 
 函数参数类型,一共五种
-可以这么理解, 参数一共有两大类, 位置参数(无名参数)和字典参数(署名参数). 想象python解释器去解释函数的参数列表: 
+可以这么理解, 参数一共有两大类, 位置参数(无名参数)和字典参数(署名参数). 想象python解释器去解释函数的参数列表:
 
 1. **位置参数**和**字典参数**初看起来, 形式上是一样的, 单纯从各自的形式上, 将无法区分,
 所以需要约定一个分割符, 左边的是**位置参数**和**默认参数**, 然后右边是**不定字典参数**和**字典参数**
@@ -806,7 +806,7 @@ def write_result(str):
 为了确保可读性和运行效率, 限制允许的参数传递形式是有意义的,
 这样开发者只需查看函数定义即可确定参数项是仅按位置, 按位置也按关键字, 还是仅按关键字传递.
 
-函数的定义看起来可以像是这样: 
+函数的定义看起来可以像是这样:
 
 ```python
 def f(pos1, pos2, #只能是位置参数 (Positional only)
@@ -828,7 +828,7 @@ def f(pos1, pos2, #只能是位置参数 (Positional only)
 要将形参标记为 `keyword-only` , 即指明该形参必须以关键字参数的形式传入,
 应在参数列表的第一个 `keyword-only ` 形参之前放置一个 `*`.
 
-函数举例: 
+函数举例:
 
 请考虑以下示例函数定义并特别注意 `/` 和 `*` 标记:
 
@@ -928,7 +928,7 @@ for name in glob.glob('dir/*'):
     print (name)
 ```
 
-列出子目录中的文件,必须在模式中包括子目录名: 
+列出子目录中的文件,必须在模式中包括子目录名:
 
 ```python
 import glob
@@ -968,7 +968,7 @@ for name in glob.glob('dir/*[0-9].*'):
 
 `open launch.json` 打开调试文件
 
-有两种标准配置,或者在`code`的集成终端中运行,或者在外部终端运行: 
+有两种标准配置,或者在`code`的集成终端中运行,或者在外部终端运行:
 
 ```json
 {
@@ -987,7 +987,7 @@ for name in glob.glob('dir/*[0-9].*'):
 }
 ```
 
-还可以添加其他设置如`args`,但它不属于标准配置的一部分.  比如,你经常运行 `startup.py`,并使用参数 `--port 1593`, 则可以添加如下配置: 
+还可以添加其他设置如`args`,但它不属于标准配置的一部分.  比如,你经常运行 `startup.py`,并使用参数 `--port 1593`, 则可以添加如下配置:
 
 ```bash
  {
@@ -1013,7 +1013,7 @@ for name in glob.glob('dir/*[0-9].*'):
 + `cwd` 指定当前工作目录,默认为`${workspaceFolder}` (打开`vscode`的目录)
 + `redirectOutput` ; 是否重定向debug输出. 选择`XXterminal`时,默认关闭. (不在VS code debug window中输出)
 + `justMyCode` ;  `true`或忽略,只调试用户写的代码. `false`也调试标准库函数.
-+ `django` ;  当设置为 `true` 时,会激活 `Django` 网络框架特有的调试功能. 
++ `django` ;  当设置为 `true` 时,会激活 `Django` 网络框架特有的调试功能.
 + `sudo` ; 设置为`true`,且调试窗口选择为`externalTerminal`时,可以提升权限
 + `pyramid` ;  当设置为 `true`时,确保用必要的`pserve`命令启动一个`Pyramid`应用程序.
 + `env` ; 设置可选的环境变量, 为 `debugger` 进程, 除了系统变量之外. `值`必须为字符串.
@@ -1162,7 +1162,7 @@ Python有两个内置库: `smtplib`和`email`,能够实现邮件功能,`smtplib`
 
 邮件发送需要遵守`SMTP`协议,Python内置对`SMTP`的支持,可以发送纯文本邮件, `HTML`邮件以及带附件的邮件.
 
-脚本如下: 
+脚本如下:
 
 ```python
 #!/usr/bin/env python3
@@ -1302,7 +1302,7 @@ from fibo import fib as fibonacci
 如果你以前从未使用过此模块或者不确定在项目中使用哪一个类是正确的,则 Path 总是你需要的.
 它在运行代码的平台上实例化为一个具体路径.
 
-在一些用例中纯路径很有用,例如: 
+在一些用例中纯路径很有用,例如:
 
 + 如果你想要在 Unix 设备上操作 `Windows` 路径(或者相反).
 你不应在 `Unix` 上实例化一个 WindowsPath,但是你可以实例化 `PureWindowsPath`.
@@ -1382,14 +1382,14 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
 ***
 设为默认
 
-升级 `pip` 到最新的版本 (>=10.0.0) 后进行配置: 
+升级 `pip` 到最新的版本 (>=10.0.0) 后进行配置:
 
 ```bash
 pip3 install pip -U
 pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-如果您到 pip 默认源的网络连接较差,临时使用本镜像站来升级 `pip3`: 
+如果您到 pip 默认源的网络连接较差,临时使用本镜像站来升级 `pip3`:
 
 ```bash
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
@@ -1399,7 +1399,7 @@ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 
 [PyPI使用国内源](https://www.cnblogs.com/sunnydou/p/5801760.html)
 
-如果想配置成默认的源,方法如下: 
+如果想配置成默认的源,方法如下:
 
 需要创建或修改配置文件(一般都是创建),
 
@@ -1407,7 +1407,7 @@ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 
 `windows`在`%HOMEPATH%\pip\pip.ini`),
 
-修改内容为: 
+修改内容为:
 
 ```bash
 [global]
@@ -1438,10 +1438,10 @@ trusted-host=pypi.douban.com
 'The sum of 1 + 2 is 3,while 4+6 is 10'
 ```
 
-字符串方法: 
+字符串方法:
 
 + `str.removesuffix(suffix, /)`
-如果字符串以 `suffix` 字符串结尾, 并且 `suffix` 非空, 返回 `string[:-len(suffix)]` . 否则, 返回原始字符串的副本: 
+如果字符串以 `suffix` 字符串结尾, 并且 `suffix` 非空, 返回 `string[:-len(suffix)]` . 否则, 返回原始字符串的副本:
 + `str.replace(old, new[, count])`
 返回字符串的副本, 其中出现的所有子字符串 `old` 都将被替换为 `new` .  如果给出了可选参数 `count`, 则只替换前 `count` 个.
 + `str.lstrip([chars])`
@@ -1456,7 +1456,7 @@ trusted-host=pypi.douban.com
 ```
 
 `str.removeprefix(prefix, /)`
-如果字符串以 `prefix` 字符串开头, 返回 `string[len(prefix):]` . 否则, 返回原始字符串的副本: 
+如果字符串以 `prefix` 字符串开头, 返回 `string[len(prefix):]` . 否则, 返回原始字符串的副本:
 
 ```python
 >>> 'TestHook'.removeprefix('Test')
@@ -1485,7 +1485,7 @@ trusted-host=pypi.douban.com
 
 `str.removesuffix(suffix, /)`
 如果字符串以 `suffix` 字符串结尾, 并且 `suffix` 非空, 返回 `string[:-len(suffix)]` .
-否则, 返回原始字符串的副本: 
+否则, 返回原始字符串的副本:
 
 ```python
 >>> 'MiscTests'.removesuffix('Tests')
@@ -1501,7 +1501,7 @@ trusted-host=pypi.douban.com
 ### 单下划线
 
 Python没有真正的私有方法,因此在方法或属性开头加下划线表示您不应访问此方法,因为它不是API的一部分.
-使用属性时很常见: 
+使用属性时很常见:
 
 ```python
 class BaseForm(StrAndUnicode):
@@ -1521,7 +1521,7 @@ class BaseForm(StrAndUnicode):
 
 ### __xxx
 
-开头有两个下划线,这个约定引起很多混乱. 它不是用来标记私有方法,而是用来避免方法被子类覆盖. 让我们来看一个例子: 
+开头有两个下划线,这个约定引起很多混乱. 它不是用来标记私有方法,而是用来避免方法被子类覆盖. 让我们来看一个例子:
 
 ```python
 class A(object):
@@ -1550,7 +1550,7 @@ b.method()
 如你所见,`A.method()`没有像我们期望的那样调用`B.__method()`.
 实际上,这是`__`的正确行为. 因此,当您创建以`__`开头的方法时,表示你想避免它被重写,你想让这个方法只在这个类内部被访问.
 
-`python`是怎么做的?很简单,它只是重命名方法. 看一看: 
+`python`是怎么做的?很简单,它只是重命名方法. 看一看:
 
 ```python
 a = A()
@@ -1703,7 +1703,7 @@ Traceback (most recent call last):
 TypeError: Can't convert 'int' object to str implicitly
 ```
 
-错误信息的最后一行告诉我们程序遇到了什么类型的错误. 异常有不同的类型, 而其类型名称将会作为错误信息的一部分中打印出来: 
+错误信息的最后一行告诉我们程序遇到了什么类型的错误. 异常有不同的类型, 而其类型名称将会作为错误信息的一部分中打印出来:
 上述示例中的异常类型依次是: `ZeroDivisionError`,  `NameError` 和 `TypeError`. 作为异常类型打印的字符串是发生的内置异常的名称.
 对于所有内置异常都是如此, 但对于用户定义的异常则不一定如此(虽然这是一个有用的规范). 标准的异常类型是`built-in identifiers`(而不是`reserved keywords`).
 

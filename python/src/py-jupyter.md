@@ -26,14 +26,14 @@ jupyter notebook notebook.ipynb
 使用自定义IP或端口启动笔记本电脑.
 
 默认情况下, 笔记本服务器从端口`8888`启动. 如果端口`8888`不可用或正在使用中, 则笔记本服务器搜索下一个可用端口.
-您也可以手动指定端口.  在此示例中, 我们将服务器的端口设置为`9999`：
+您也可以手动指定端口.  在此示例中, 我们将服务器的端口设置为`9999`:
 
 ```bash
 jupyter notebook --port 9999
 ```
 
 ***
-在不打开Web浏览器的情况下启动笔记本服务器：
+在不打开Web浏览器的情况下启动笔记本服务器:
 
 ```bash
 jupyter notebook --no-browser
@@ -56,7 +56,7 @@ The directory to use for notebooks and kernels.
 编辑模式允许您在单元格中键入代码或文本, 并以绿色单元格边框指示.
 命令模式将键盘绑定到笔记本级别的命令, 并由带有蓝色左边界的灰色单元格边框指示.
 
-`enter`：进入编辑模式
+`enter`: 进入编辑模式
 `esc`: 进入命令模式
 
 笔记本界面, 菜单中有快捷键提示, 在命令模式按下`h`打开, 也可以自定义快捷键
@@ -71,8 +71,8 @@ The directory to use for notebooks and kernels.
 + `Z`: 撤回删除
 + `ctrl+shit+-`: 分割cells
 + `shift+L`: 切换行号显示
-+ `A`：上方插入
-+ `B`：下方插入
++ `A`: 上方插入
++ `B`: 下方插入
 + `Y`: code 格式
 + `M`: markdwon 格式
 + `R` : rawNBConvert 格式
@@ -92,7 +92,7 @@ The directory to use for notebooks and kernels.
 
 ### 前提:笔记本配置文件
 
-检查是否有笔记本配置文件`jupyter_notebook_config.py.`.  该文件的默认位置是位于主目录中的 `Jupyter` 文件夹：
+检查是否有笔记本配置文件`jupyter_notebook_config.py.`.  该文件的默认位置是位于主目录中的 `Jupyter` 文件夹:
 
 ```path
 Windows: C:\Users\USERNAME\.jupyter\jupyter_notebook_config.py
@@ -100,7 +100,7 @@ OS X: /Users/USERNAME/.jupyter/jupyter_notebook_config.py
 Linux: /home/USERNAME/.jupyter/jupyter_notebook_config.py
 ```
 
-如果你还没有 `Jupyter` 文件夹, 或者你的 `Jupyter` 文件夹中没有笔记本配置文件, 请运行以下命令：
+如果你还没有 `Jupyter` 文件夹, 或者你的 `Jupyter` 文件夹中没有笔记本配置文件, 请运行以下命令:
 
 ```bash
 $ jupyter notebook --generate-config
@@ -121,6 +121,6 @@ Verify password: 123
 [NotebookPasswordApp] Wrote hashed password to /Users/you/.jupyter/jupyter_notebook_config.json
 ```
 
-这可以用来重置丢失的密码； 或者如果您认为您的凭据已泄漏并且希望更改密码.  重启服务器后, 更改密码将使所有登录的会话无效.
+这可以用来重置丢失的密码;  或者如果您认为您的凭据已泄漏并且希望更改密码.  重启服务器后, 更改密码将使所有登录的会话无效.
 
 设置`--NotebookApp.allow_password_change=False`可以禁用首次登录时更改密码的功能.
