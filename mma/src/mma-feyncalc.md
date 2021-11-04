@@ -39,3 +39,21 @@ $LoadFeynArts = True;
 ### 费曼参数化
 
 `FeynmanParametrize[exp,k]`
+
+## Spinor,旋量
+
+`Spinor[p,m,o]`;    是 Dirac 旋量的头部.
+
+### 细节
+
+`Spinor[p,m,o]` 被具体理解成哪一个旋量, 取决于参数中动量的正负, 和在费米子链中的位置.
+
++ `Spinor[Momentum[p],m]` , 且位于 chain 的开头, 被理解成 Ubar.
++ `Spinor[Momentum[p],m]`, 且位于 chain 的结尾, 被理解成 U.
++ `Spinor[-Momentum[p],m]`, 且位于 chain 的开头, 被理解成 Vbar.
++ `Spinor[-Momentum[p],m]`, 且位于 chain 的结尾, 被理解成 V.
+
++ 质量为 `m` 的费米子, 被归一化为 $\bar u u=2$, and $\bar vv=-2m$
++ 可选参数 `o` 可用于额外的自由度. 如果没有提供可选的参数 `o`, 则以 `1` 代之.
+
+当动量带有负号时, 即 `-Momentum[p]`, 理解成动量流和费米子流方向相反, 也就是反粒子解`v`.

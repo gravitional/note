@@ -107,6 +107,7 @@
 \newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
 \newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref
 \use_default_options true
@@ -231,7 +232,7 @@ L_{v}^{0} & =i\tr\bar{B}_{v}\left(v\cdot\mathcal{D}\right)B_{v}+2D\tr\bar{B}_{v}
 参考 chpt_primer, 其中 spin matrix 
 \begin_inset Formula 
 \[
-S_{v}^{\mu}\equiv\frac{i}{2}\gamma^{5}\sigma^{\mu\nu}v_{\nu}=-\frac{1}{2}\gamma^{5}\left(\gamma^{\mu}\slashed{v}-v^{\mu}\right),\quad S_{v}^{\mu\dagger}=\gamma_{0}S_{v}^{\mu}\gamma_{0}
+S_{v}^{\mu}\equiv\frac{i}{2}\gamma^{5}\sigma^{\mu\nu}v_{\nu}=-\frac{1}{2}\gamma^{5}\left(\gamma^{\mu}\sla{v}-v^{\mu}\right),\quad S_{v}^{\mu\dagger}=\gamma_{0}S_{v}^{\mu}\gamma_{0}
 \]
 
 \end_inset
@@ -251,7 +252,7 @@ S_{v}^{\mu}\equiv\frac{i}{2}\gamma^{5}\sigma^{\mu\nu}v_{\nu}=-\frac{1}{2}\gamma^
 。其中
 \begin_inset Formula 
 \begin{align*}
-\mathcal{N}_{v} & =e^{+imv\cdot x}P_{v+}\Psi,\quad P_{v\pm}\equiv\frac{1}{2}\left(\mathbbm{1}\pm\slashed{v}\right)\\
+\mathcal{N}_{v} & =e^{+imv\cdot x}P_{v+}\Psi,\quad P_{v\pm}\equiv\frac{1}{2}\left(\mathbbm{1}\pm\sla{v}\right)\\
 \Psi\left(x\right) & =e^{-imv\cdot x}\left[\mathcal{N}_{v}\left(x\right)+\mathcal{H}_{v}\left(x\right)\right]
 \end{align*}
 
@@ -1206,16 +1207,124 @@ B^{\mu}p^{\nu}+C^{\mu}\gamma^{\nu}=\gamma^{\mu}p^{\nu}-p^{\mu}\gamma^{\nu}
 强子矢量流和轴矢流
 \end_layout
 
+\begin_layout Subsection
+Scherer
+\end_layout
+
 \begin_layout Standard
+chpt primer 书中的记号，page150, page 151：手征 connection 和 手征 vielbein 分别定义为：
 \begin_inset Formula 
 \begin{align*}
-\Gamma_{\mu} & =\frac{1}{2}\left(\xi\partial_{\mu}\xi^{\dagger}+\xi^{\dagger}\partial_{\mu}\xi\right)+\frac{1}{2}ie\mathcal{A}_{\mu}\left(\xi Q_{c}\xi^{\dagger}+\xi^{\dagger}Q_{c}\xi\right)\\
-u_{\mu} & =\frac{i}{2}\left(\xi\partial_{\mu}\xi^{\dagger}-\xi^{\dagger}\partial_{\mu}\xi\right)+\frac{1}{2}ie\mathcal{A}_{\mu}i\left(\xi Q_{c}\xi^{\dagger}-\xi^{\dagger}Q_{c}\xi\right)
+ & \Gamma_{\mu}\equiv\frac{1}{2}\left[u^{\dagger}\left(\partial_{\mu}-ir_{\mu}\right)u+u\left(\partial_{\mu}-i\ell_{\mu}\right)u^{\dagger}\right]\\
+ & u_{\mu}\equiv i\left[u^{\dagger}\left(\partial_{\mu}-ir_{\mu}\right)u-u\left(\partial_{\mu}-i\ell_{\mu}\right)u^{\dagger}\right]
 \end{align*}
 
 \end_inset
 
-其中
+其中的协变导数 
+\begin_inset Formula $\partial_{\mu}-ir_{\mu}$
+\end_inset
+
+ 符合通常的约定。整理成：
+\begin_inset Formula 
+\begin{align*}
+ & \Gamma_{\mu}=\frac{1}{2}\left(u^{\dagger}\partial_{\mu}u+u\partial_{\mu}u^{\dagger}\right)-\frac{i}{2}\left(u^{\dagger}r_{\mu}u+u\ell_{\mu}u^{\dagger}\right)\\
+ & u_{\mu}=i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+\left(u^{\dagger}r_{\mu}u-u\ell_{\mu}u^{\dagger}\right)
+\end{align*}
+
+\end_inset
+
+代入
+\begin_inset Formula $l_{\mu}=r_{\mu}=eQ_{c}\mathcal{A}_{\mu}$
+\end_inset
+
+，得到：
+\begin_inset Formula 
+\begin{align*}
+ & \Gamma_{\mu}=\frac{1}{2}\left(u^{\dagger}\partial_{\mu}u+u\partial_{\mu}u^{\dagger}\right)-\frac{i}{2}e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u+uQ_{c}u^{\dagger}\right)\\
+ & u_{\mu}=i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u-uQ_{c}u^{\dagger}\right)
+\end{align*}
+
+\end_inset
+
+chpt primer 书中介子场的定义为, page 80：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi=\sqrt{2}\left(\begin{array}{ccc}
+\frac{1}{\sqrt{2}}\pi^{0}+\frac{1}{\sqrt{6}}\eta & \pi^{-} & K^{+}\\
+\pi^{+} & -\frac{1}{\sqrt{2}}\pi^{0}+\frac{1}{\sqrt{6}}\eta & K^{0}\\
+K^{-} & \bar{K}^{0} & \frac{-2}{\sqrt{6}}\eta
+\end{array}\right),\quad U\left(x\right)=u^{2}=\exp\left(\frac{i\phi\left(x\right)}{F_{0}}\right)
+\]
+
+\end_inset
+
+相应的最低阶轴矢拉氏量为：
+\begin_inset Formula 
+\begin{align*}
+ & -\frac{D}{2}\tr\left(\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right)-\frac{F}{2}\tr\left(\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right)\\
+ & \mathcal{D}_{\mu}B=\partial_{\mu}B+\left[\Gamma_{\mu},B\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+He
+\end_layout
+
+\begin_layout Standard
+另一种约定，所有量用下标
+\begin_inset Formula $2$
+\end_inset
+
+与上面进行区别：
+\begin_inset Formula 
+\[
+\phi_{2}=\left(\begin{array}{ccc}
+\frac{1}{\sqrt{2}}\pi^{0}+\frac{1}{\sqrt{6}}\eta & \pi^{+} & K^{+}\\
+\pi^{-} & -\frac{1}{\sqrt{2}}\pi^{0}+\frac{1}{\sqrt{6}}\eta & K^{0}\\
+K^{-} & \bar{K}^{0} & -\frac{2}{\sqrt{6}}\eta
+\end{array}\right)=\frac{\phi}{\sqrt{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+U_{2}=u_{2}^{2}=\exp\left(i\frac{\sqrt{2}\phi_{2}}{F_{0}}\right)=U
+\]
+
+\end_inset
+
+也就是
+\begin_inset Formula $u_{2}=u$
+\end_inset
+
+，和上面的定义是相同的。同时定义手征强子流为：
+\begin_inset Formula 
+\begin{align*}
+ & \Gamma_{2\mu}=\frac{1}{2}\left(u^{\dagger}\partial_{\mu}u+u\partial_{\mu}u^{\dagger}\right)-\frac{i}{2}e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u+uQ_{c}u^{\dagger}\right)\\
+ & u_{2\mu}=\frac{1}{2}i\left(u\partial_{\mu}u^{\dagger}-u^{\dagger}\partial_{\mu}u\right)+\frac{1}{2}e\mathcal{A}_{\mu}\left(uQ_{c}u^{\dagger}-u^{\dagger}Q_{c}u\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $u_{2\mu}$
+\end_inset
+
+的定义差一个
+\begin_inset Formula $-1/2$
+\end_inset
+
+。其中
 \begin_inset Formula $Q_{c}$
 \end_inset
 
@@ -1227,118 +1336,52 @@ u_{\mu} & =\frac{i}{2}\left(\xi\partial_{\mu}\xi^{\dagger}-\xi^{\dagger}\partial
 \begin_inset Formula $e>0$
 \end_inset
 
-。fch 论文中
+。
+\begin_inset CommandInset href
+LatexCommand href
+name "Phys. Rev. D 97"
+target "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.97.036007"
+literal "false"
+
+\end_inset
+
+ 论文中
 \begin_inset Formula $u_{\mu}$
 \end_inset
 
-的定义应该是打错了。
+的定义应该是打错了。对应地，将最低阶轴矢拉氏量写成：
 \begin_inset Formula 
 \[
-\xi=\exp\left(\frac{i\phi}{f}\right),\quad\xi^{\dagger}=\exp\left(\frac{i\phi^{\dagger}}{f}\right),f=93\si{\MeV}
+D\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right].
 \]
 
 \end_inset
 
-手征拉氏量其中两项为，
-\begin_inset Formula 
-\[
--D*\tr\left[\bar{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]-F*\tr\left[\bar{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right]
-\]
-
+也就是把拉氏量中的
+\begin_inset Formula $-1/2$
 \end_inset
 
-其中的
+ 移动到了流
 \begin_inset Formula $u_{\mu}$
 \end_inset
 
-是按如下定义得到的，
-\begin_inset Formula 
-\[
-u_{\mu}=\frac{1}{2}i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+\frac{1}{2}\left(u^{\dagger}r_{\mu}u-u\ell_{\mu}u^{\dagger}\right)
-\]
-
-\end_inset
-
-fch 论文中的
-\begin_inset Formula $\frac{1}{2}$
-\end_inset
-
-来自于
-\begin_inset Formula $D,F$
-\end_inset
-
-项的系数，移动到了
-\begin_inset Formula $u_{\mu}$
-\end_inset
-
-的定义里。代入
-\begin_inset Formula $l_{\mu}=r_{\mu}=ieQ\mathcal{A}_{\mu}$
-\end_inset
-
-，得到
-\begin_inset Formula 
-\[
-u_{\mu}=\frac{1}{2}i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+\frac{1}{2}e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u-uQ_{c}u^{\dagger}\right)
-\]
-
-\end_inset
-
-这个流的形式，暗示了介子场矩阵对应夸克场张量的。
-\end_layout
-
-\begin_layout Standard
-chpt primer 书中的记号为，
-\begin_inset Formula 
-\[
-u_{\mu}=i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+\left(u^{\dagger}r_{\mu}u-u\ell_{\mu}u^{\dagger}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi=\frac{1}{\sqrt{2}}\left(\begin{array}{ccc}
-\frac{1}{\sqrt{2}}\pi^{0}+\frac{1}{\sqrt{6}}\eta & \pi^{-} & K^{+}\\
-\pi^{+} & -\frac{1}{\sqrt{2}}\pi^{0}+\frac{1}{\sqrt{6}}\eta & K^{0}\\
-K^{-} & \bar{K}^{0} & \frac{-2}{\sqrt{6}}\eta
-\end{array}\right)
-\]
-
-\end_inset
-
-可以看到，
-\begin_inset Formula $\phi_{\text{fch}}=\frac{1}{2}\phi_{\text{primer}}$
-\end_inset
-
-，代入到
-\begin_inset Formula $u_{\mu}=-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left(Q\phi-\phi Q\right)$
-\end_inset
-
-中，考虑到 fch 论文中还有
-\begin_inset Formula $\frac{1}{2}$
-\end_inset
-
-，所以最终形式是一样的。
-\begin_inset Formula 
-\[
-X_{\mu}=u_{\mu}=-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left(Q\phi-\phi Q\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula $X_{\mu}$
-\end_inset
-
-是何方成论文中使用的形式。
+的定义中。
 \end_layout
 
 \begin_layout Subsection
-Eur.Phys.J.C,18,747
+Bastian
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Bastian Kubis"
+target "https://arxiv.org/pdf/hep-ph/0010283.pdf"
+literal "false"
+
+\end_inset
+
+，page 4：
 \end_layout
 
 \begin_layout Standard
@@ -1364,21 +1407,29 @@ u_{\mu} & =i\left\{ u^{\dagger},\nabla_{\mu}u\right\} =iu^{\dagger}\nabla_{\mu}u
 \begin{align*}
 u_{\mu} & =i\left\{ u^{\dagger},\nabla_{\mu}u\right\} \\
  & =i\left(u^{\dagger}\left(\partial_{\mu}u+iu\ell_{\mu}-ir_{\mu}u\right)\right)+\left(\partial_{\mu}u+iu\ell_{\mu}-ir_{\mu}u\right)u^{\dagger}\\
- & \text{令}\ell_{\mu}=r_{\mu}\\
- & =i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+u^{\dagger}r_{\mu}u-u\ell_{\mu}u^{\dagger}
+\text{令}\,\ell_{\mu}=r_{\mu}\quad & \Rightarrow i\left[u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right]+u^{\dagger}r_{\mu}u-u\ell_{\mu}u^{\dagger}
 \end{align*}
 
 \end_inset
 
-与 A chpt primer 书中的结果一致。
+与 A chpt primer 书中的结果一致：
+\begin_inset Formula 
+\begin{align*}
+ & \Gamma_{\mu}=\frac{1}{2}\left(u^{\dagger}\partial_{\mu}u+u\partial_{\mu}u^{\dagger}\right)-\frac{i}{2}e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u+uQ_{c}u^{\dagger}\right)\\
+ & u_{\mu}=i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u-uQ_{c}u^{\dagger}\right)
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-A chpt primer
+chpt primer
 \end_layout
 
 \begin_layout Standard
-在 chpt primer 中, P43 Exercise 1.19 we first define 
+在 chpt primer 中, P43 Exercise 1.19，定义了： 
 \begin_inset Formula 
 \[
 r_{\mu}=v_{\mu}+a_{\mu},\quad l_{\mu}=v_{\mu}-a_{\mu}
@@ -1386,10 +1437,6 @@ r_{\mu}=v_{\mu}+a_{\mu},\quad l_{\mu}=v_{\mu}-a_{\mu}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 p83 介子最低阶有效拉矢量为
 \begin_inset Formula 
 \[
@@ -1436,7 +1483,7 @@ u_{\mu} & =i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+u
 
 \end_inset
 
-where 
+其中 
 \begin_inset Formula $D_{\mu}B=\partial_{\mu}B+\left[\Gamma_{\mu},B\right]$
 \end_inset
 
@@ -1448,28 +1495,25 @@ where
 \end_layout
 
 \begin_layout Standard
-使用 A chpt primer 一书中的记号展开，代入
-\begin_inset Formula $U=u^{2}=\exp\left(\frac{i\phi\left(x\right)}{F_{0}}\right)$
-\end_inset
-
-，
-\begin_inset Formula $u=\exp\left[\frac{i}{2f}\phi\right]$
-\end_inset
-
-，
-\begin_inset Formula $l_{\mu}=r_{\mu}=\pm eQ\mathcal{A}_{\mu}$
-\end_inset
-
-。
+使用 A chpt primer 书中的记号展开，代入下列各定义：
 \begin_inset Formula 
 \begin{align*}
-\Gamma_{\mu} & =\frac{1}{2}\left(u\partial_{\mu}u^{\dagger}+u^{\dagger}\partial_{\mu}u\right)-\frac{1}{2}\left(u^{\dagger}Qu+uQu^{\dagger}\right)\left(\pm ie\mathcal{A}_{\mu}\right)\\
-u_{\mu} & =i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+\left(u^{\dagger}Qu-uQu^{\dagger}\right)\left(\pm e\mathcal{A}_{\mu}\right)
+ & U=\exp\left[\frac{i\phi\left(x\right)}{F_{0}}\right],\quad u=\exp\left[\frac{i}{2f}\phi\right]\\
+ & l_{\mu}=r_{\mu}=eQ\mathcal{A}_{\mu},\quad\mathscr{D}_{\mu}=\partial_{\mu}-eQ\mathcal{A}_{\mu}
 \end{align*}
 
 \end_inset
 
-展开到第一阶，
+即：
+\begin_inset Formula 
+\begin{align*}
+ & \Gamma_{\mu}=\frac{1}{2}\left(u^{\dagger}\partial_{\mu}u+u\partial_{\mu}u^{\dagger}\right)-\frac{i}{2}e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u+uQ_{c}u^{\dagger}\right)\\
+ & u_{\mu}=i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u-uQ_{c}u^{\dagger}\right)
+\end{align*}
+
+\end_inset
+
+展开到第一阶，考虑到介子矩阵厄米：
 \begin_inset Formula $\phi^{\dagger}=\phi$
 \end_inset
 
@@ -1481,24 +1525,24 @@ u=1+\frac{i}{2f}\phi,\quad u^{\dagger}=1-\frac{i}{2f}\phi
 
 \end_inset
 
+令
+\begin_inset Formula $a=+\frac{i}{2f}\phi$
+\end_inset
 
+，
 \begin_inset Formula 
 \begin{align*}
-u_{\mu} & =i\left[\left(1-a\right)\partial_{\mu}\left(1+a\right)-\left(1+a\right)\partial_{\mu}\left(1-a\right)\right]+\left[\left(1-a\right)Q\left(1+a\right)-\left(1+a\right)Q\left(1-a\right)\right]\left(\pm e\mathcal{A}_{\mu}\right)\\
- & =i\left[\left(1-a\right)\partial_{\mu}a+\left(1+a\right)\partial_{\mu}a\right]+\left[Q-aQa-aQ+Qa-\left(Q-aQa+aQ-Qa\right)\right]\left(\pm e\mathcal{A}_{\mu}\right)\\
- & =i\left[2\partial_{\mu}a\right]+2\left(Qa-aQ\right)\left(\pm e\mathcal{A}_{\mu}\right)
+u_{\mu} & =i\left[\left(1-a\right)\partial_{\mu}\left(1+a\right)-\left(1+a\right)\partial_{\mu}\left(1-a\right)\right]+\left[\left(1-a\right)Q\left(1+a\right)-\left(1+a\right)Q\left(1-a\right)\right]e\mathcal{A}_{\mu}\\
+ & =i\left[\left(1-a\right)\partial_{\mu}a+\left(1+a\right)\partial_{\mu}a\right]+\left[Q-aQa-aQ+Qa-\left(Q-aQa+aQ-Qa\right)\right]e\mathcal{A}_{\mu}\\
+ & =i\left[2\partial_{\mu}a\right]+2\left(Qa-aQ\right)\left(e\mathcal{A}_{\mu}\right)
 \end{align*}
 
 \end_inset
 
-其中
-\begin_inset Formula $a=+\frac{i}{2f}\phi$
-\end_inset
-
-，所以
+所以：
 \begin_inset Formula 
 \[
-u_{\mu}=-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}\left(\pm e\mathcal{A}_{\mu}\right)\left[Q,\phi\right]
+u_{\mu}=-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\phi\right]
 \]
 
 \end_inset
@@ -1511,6 +1555,7 @@ u_{\mu}=-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}\left(\pm e\mathcal{A}_{\mu}\r
 \end_layout
 
 \begin_layout Standard
+对于矢量流，同样代入：
 \begin_inset Formula 
 \[
 u=1+\frac{i}{2f}\phi,\quad u^{\dagger}=1-\frac{i}{2f}\phi
@@ -1518,22 +1563,27 @@ u=1+\frac{i}{2f}\phi,\quad u^{\dagger}=1-\frac{i}{2f}\phi
 
 \end_inset
 
-then,
-\size small
 
 \begin_inset Formula 
 \begin{align*}
-\Gamma_{\mu} & =\frac{1}{2}\left(u\partial_{\mu}u^{\dagger}+u^{\dagger}\partial_{\mu}u\right)-\frac{1}{2}\left(u^{\dagger}Qu+uQu^{\dagger}\right)\left(\pm ie\mathcal{A}_{\mu}\right)\\
- & =\frac{1}{2}\left[\left(1+a\right)\partial_{\mu}\left(1-a\right)+\left(1-a\right)\partial_{\mu}\left(1+a\right)\right]-\frac{1}{2}\left[\left(1-a\right)Q\left(1+a\right)+\left(1+a\right)Q\left(1-a\right)\right]\left(\pm ie\mathcal{A}_{\mu}\right)\\
- & =\frac{1}{2}\left[-\left(1+a\right)\partial_{\mu}a+\left(1-a\right)\partial_{\mu}a\right]-\frac{1}{2}\left[\left(1-a\right)Q\left(1+a\right)+\left(1+a\right)Q\left(1-a\right)\right]\left(\pm ie\mathcal{A}_{\mu}\right)\\
- & =\frac{1}{2}\left[-2a\partial_{\mu}a\right]-\frac{1}{2}\left[2Q-2aQa\right]\left(\pm ie\mathcal{A}_{\mu}\right)\\
- & =\left[-a\partial_{\mu}a\right]-\left[Q-aQa\right]\left(\pm ie\mathcal{A}_{\mu}\right)
+ & \Gamma_{\mu}=\frac{1}{2}\left(u^{\dagger}\partial_{\mu}u+u\partial_{\mu}u^{\dagger}\right)-\frac{i}{2}e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u+uQ_{c}u^{\dagger}\right)\\
+ & u_{\mu}=i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+e\mathcal{A}_{\mu}\left(u^{\dagger}Q_{c}u-uQ_{c}u^{\dagger}\right)
 \end{align*}
 
 \end_inset
 
+then,
+\begin_inset Formula 
+\begin{align*}
+\Gamma_{\mu} & =\frac{1}{2}\left(u\partial_{\mu}u^{\dagger}+u^{\dagger}\partial_{\mu}u\right)-\frac{1}{2}ie\mathcal{A}_{\mu}\left(u^{\dagger}Qu+uQu^{\dagger}\right)\\
+ & =\frac{1}{2}\left[\left(1+a\right)\partial_{\mu}\left(1-a\right)+\left(1-a\right)\partial_{\mu}\left(1+a\right)\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\left[\left(1-a\right)Q\left(1+a\right)+\left(1+a\right)Q\left(1-a\right)\right]\\
+ & =\frac{1}{2}\left[-\left(1+a\right)\partial_{\mu}a+\left(1-a\right)\partial_{\mu}a\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\left[\left(1-a\right)Q\left(1+a\right)+\left(1+a\right)Q\left(1-a\right)\right]\\
+ & =\frac{1}{2}\left[-2a\partial_{\mu}a\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\left[2Q-2aQa\right]\\
+ & =\left[-a\partial_{\mu}a\right]-ie\mathcal{A}_{\mu}\left[Q-aQa\right]
+\end{align*}
 
-\size default
+\end_inset
+
 其中
 \begin_inset Formula $a=+\frac{i}{2f}\phi$
 \end_inset
@@ -1541,30 +1591,26 @@ then,
 ，所以
 \begin_inset Formula 
 \begin{align*}
-\Gamma_{\mu} & =-\left(\frac{i}{2f}\right)^{2}\phi\partial_{\mu}\phi-\left(\pm ieQ\mathcal{A}_{\mu}\right)+\left(\frac{i}{2f}\right)^{2}\phi\left(\pm ieQ\mathcal{A}_{\mu}\right)\phi\\
-\Gamma_{\mu} & =-\left(\pm ieQ\mathcal{A}_{\mu}\right)+\frac{1}{4f^{2}}\phi\left(\partial_{\mu}-\left(\pm ieQ\mathcal{A}_{\mu}\right)\right)\phi
+\Gamma_{\mu} & =-\left(\frac{i}{2f}\right)^{2}\phi\partial_{\mu}\phi-ieQ\mathcal{A}_{\mu}+ie\mathcal{A}_{\mu}\left(\frac{i}{2f}\right)^{2}\phi Q\phi\\
+\Gamma_{\mu} & =-ieQ\mathcal{A}_{\mu}+\frac{1}{4f^{2}}\phi\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\phi
 \end{align*}
 
 \end_inset
 
 考虑到
-\begin_inset Formula $\mathscr{D}_{\mu}B=\partial_{\mu}B+ie\mathcal{A}_{\mu}\left[Q,B\right]+ie\mathcal{A}_{\mu}\langle Q\rangle B$
-\end_inset
-
-，
 \begin_inset Formula $\mathscr{D}_{\mu}B=\partial_{\mu}B+\left[\Gamma,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B$
 \end_inset
 
-
+：
 \begin_inset Formula 
 \begin{align*}
-\mathscr{D}_{\mu}B & =\partial_{\mu}B+\left[-\left(\pm ieQ\mathcal{A}_{\mu}\right)+\frac{1}{4f^{2}}\phi\left(\partial_{\mu}-\left(\pm ieQ\mathcal{A}_{\mu}\right)\right)\phi,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B\\
- & =\partial_{\mu}B-\left[\left(\pm ieQ\mathcal{A}_{\mu}\right),B\right]+\frac{1}{4f^{2}}\left[\phi\left(\partial_{\mu}-\left(\pm ieQ\mathcal{A}_{\mu}\right)\right)\phi,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B
+\mathscr{D}_{\mu}B & =\partial_{\mu}B+\left[-ieQ\mathcal{A}_{\mu}+\frac{1}{4f^{2}}\phi\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\phi,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B\\
+ & =\partial_{\mu}B-\left[ieQ\mathcal{A}_{\mu},B\right]+\frac{1}{4f^{2}}\left[\phi\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\phi,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B
 \end{align*}
 
 \end_inset
 
-如果一开始取的流为
+其中我们取了流的形式为：
 \begin_inset Formula $l_{\mu}=r_{\mu}=+eQ\mathcal{A}_{\mu}$
 \end_inset
 
@@ -1576,25 +1622,22 @@ then,
 \begin_inset Formula $e>0$
 \end_inset
 
-。则结果为
-\color cyan
-
-\begin_inset Formula 
-\[
-D_{\mu}B=\partial_{\mu}B-ie\mathcal{A}_{\mu}\left[Q,B\right]+\frac{1}{4f^{2}}\left[\phi\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\phi,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B
-\]
-
+为电荷单位。也可以约定
+\begin_inset Formula $e<0$
 \end_inset
 
+，所有含有
+\begin_inset Formula $e$
+\end_inset
 
-\color inherit
-前两项即非阿贝尔群，自伴表示协变导数的标准形式，最后一项是味单态矢量流耦合。
+的式子加上负号即可。
 \end_layout
 
 \begin_layout Standard
+展开中的前两项即非阿贝尔群，自伴表示协变导数的标准形式，最后一项是味单态矢量流耦合。
 \begin_inset Formula 
 \[
-\tr\left[\bar{B}i\gamma.DB\right]=\tr\left[\bar{B}\partial_{\mu}B\right]+e\mathcal{A}_{\mu}\tr\left[\bar{B}\left[Q,B\right]\right]
+\tr\left[\overline{B}i\gamma.DB\right]=\tr\left[\overline{B}\partial_{\mu}B\right]+e\mathcal{A}_{\mu}\tr\left[\overline{B}\left[Q,B\right]\right]
 \]
 
 \end_inset
@@ -1602,12 +1645,16 @@ D_{\mu}B=\partial_{\mu}B-ie\mathcal{A}_{\mu}\left[Q,B\right]+\frac{1}{4f^{2}}\le
 
 \begin_inset Formula 
 \[
-\tr\left[\bar{B}\left[Q,B\right]\right]=\tr\left[BQ\bar{B}-\bar{B}BQ\right]
+\tr\left[\overline{B}\left[Q,B\right]\right]=\tr\left[BQ\overline{B}-\overline{B}BQ\right]
 \]
 
 \end_inset
 
-代入
+
+\begin_inset Formula $B$
+\end_inset
+
+的具体形式为：
 \begin_inset Formula 
 \[
 B=\sum_{a=1}^{8}\frac{B_{a}\lambda_{a}}{\sqrt{2}}=\left(\begin{array}{ccc}
@@ -1622,7 +1669,7 @@ B=\sum_{a=1}^{8}\frac{B_{a}\lambda_{a}}{\sqrt{2}}=\left(\begin{array}{ccc}
 
 \begin_inset Formula 
 \[
-\bar{B}=\sum_{a=1}^{8}\frac{\bar{B}_{a}\lambda_{a}}{\sqrt{2}}=\left(\begin{array}{ccc}
+\overline{B}=\sum_{a=1}^{8}\frac{\bar{B}_{a}\lambda_{a}}{\sqrt{2}}=\left(\begin{array}{ccc}
 \frac{\bar{\Sigma}^{0}}{\sqrt{2}}+\frac{\bar{\Lambda}}{\sqrt{6}} & \bar{\Sigma}^{-} & \bar{\Xi}^{-}\\
 \bar{\Sigma}^{+} & -\frac{\bar{\Sigma}^{0}}{\sqrt{2}}+\frac{\bar{\Lambda}}{\sqrt{6}} & \bar{\Xi}^{0}\\
 \bar{p}^{+} & \bar{n}^{0} & \frac{-2\bar{\Lambda}}{\sqrt{6}}
@@ -1640,10 +1687,10 @@ B=\sum_{a=1}^{8}\frac{B_{a}\lambda_{a}}{\sqrt{2}}=\left(\begin{array}{ccc}
 
 \begin_layout Standard
 约定插入的流为
-\begin_inset Formula $l_{\mu}=r_{\mu}=+eQ\mathcal{A}_{\mu}$
+\begin_inset Formula $l_{\mu}=r_{\mu}=eQ\mathcal{A}_{\mu}$
 \end_inset
 
-，强子流的矢量和轴矢量展开分别为，
+，强子流的矢量和轴矢量展开分别为：
 \begin_inset Formula 
 \begin{align*}
 \Gamma_{\mu} & =-ieQ\mathcal{A}_{\mu}+\frac{1}{4f^{2}}\phi\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\phi\\
@@ -1652,7 +1699,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 
 \end_inset
 
-对应的协变导数为，
+相应的协变导数为：
 \begin_inset Formula 
 \[
 \mathscr{D}_{\mu}B=\partial_{\mu}B-ie\mathcal{A}_{\mu}\left[Q,B\right]+\frac{1}{4f^{2}}\left[\phi\partial_{\mu}\phi,B\right]-\frac{ie\mathcal{A}_{\mu}}{4f^{2}}\left[\phi Q\phi,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B
@@ -1660,15 +1707,11 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 
 \end_inset
 
-如果想得到
-\begin_inset Formula $l_{\mu}=r_{\mu}=-eQ\mathcal{A}_{\mu}$
+
+\begin_inset Formula $\langle Q\rangle$
 \end_inset
 
-的结果，令
-\begin_inset Formula $e\to-e$
-\end_inset
-
-即可。
+表示对夸克电荷矩阵求迹。
 \end_layout
 
 \begin_layout Subsection
@@ -2013,7 +2056,7 @@ literal "true"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L} & ={\rm Tr}\big[\bar{B}\left(i\slashed{\mathscr{D}}-M_{B}\right)B\big]+D\,{\rm Tr}\left[\bar{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\,{\rm Tr}\left[\bar{B}\gamma^{\mu}\gamma_{5}\left[u_{\mu},B\right]\right]\\
+\mathcal{L} & ={\rm Tr}\big[\bar{B}\left(i\sla{\mathscr{D}}-M_{B}\right)B\big]+D\,{\rm Tr}\left[\bar{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\,{\rm Tr}\left[\bar{B}\gamma^{\mu}\gamma_{5}\left[u_{\mu},B\right]\right]\\
  & +\overline{T}_{\mu}^{ijk}\left(i\gamma^{\mu\nu\alpha}\mathscr{D}_{\alpha}-M_{T}\gamma^{\mu\nu}\right)T_{\nu}^{ijk}+\mathcal{C}\left[\varepsilon^{ijk}\overline{T}_{\mu}^{ilm}\Theta^{\mu\nu}\left(u_{\nu}\right)^{lj}B^{mk}+\text{h.c.}\right]\\
  & +\mathcal{H}\,\overline{T}_{\mu}^{ijk}\gamma^{\mu\nu\alpha}\gamma^{5}\left(u_{\alpha}\right)^{kl}T_{\nu}^{ijl}+\frac{f^{2}}{4}{\rm Tr}\big[\mathscr{D}_{\mu}U\left(\mathscr{D}^{\mu}U\right)^{\dagger}\big]
 \end{align*}
@@ -2106,7 +2149,7 @@ B=\left(\begin{array}{ccc}
 是介子矩阵
 \begin_inset Formula 
 \[
-u=\exp\left(i\frac{\phi}{\sqrt{2}f}\right)\quad U=u^{2}=\exp\left(i\sqrt{2}\frac{\phi}{f}\right)
+u=\exp\left(i\frac{\phi}{\sqrt{2}f}\right)\quad U=u^{2}=\exp\left(i\frac{\sqrt{2}\phi}{f}\right)
 \]
 
 \end_inset
@@ -2196,11 +2239,11 @@ v_{\mu}^{a}=x^{a}\left(-e\mathcal{A}_{\mu}\right),a=0,1,\cdots8.
 \end_inset
 
 ，对应QCD中耦合到
-\begin_inset Formula $\bar{q}\mathbbm{1}\gamma^{\mu}q$
+\begin_inset Formula $\overline{q}\,\mathbbm1\gamma^{\mu}q$
 \end_inset
 
 的外场，一般还是光子场
-\begin_inset Formula $v_{\mu}^{0}=x^{0}\left(-e\mathcal{A}_{\mu}\right)$
+\begin_inset Formula $v_{\mu}^{0}=x^{0}\left(e\mathcal{A}_{\mu}\right)$
 \end_inset
 
 。
@@ -2231,7 +2274,7 @@ v_{\mu}^{a}=x^{a}\left(-e\mathcal{A}_{\mu}\right),a=0,1,\cdots8.
 \begin_inset Formula 
 \begin{align*}
 \mathscr{D}_{\mu}B & =\partial_{\mu}B+\left[-i\lambda^{a}v_{\mu}^{a},B\right]-i\langle\lambda^{0}\rangle v_{\mu}^{0}B\\
- & =\partial_{\mu}B+ie\mathcal{A}_{\mu}\left(\left[\lambda^{a}x^{a},B\right]+\langle\lambda^{0}\rangle\lambda^{0}x^{0}B\right)
+ & =\partial_{\mu}B-ie\mathcal{A}_{\mu}\left(\left[\lambda^{a}x^{a},B\right]-\langle\lambda^{0}\rangle\lambda^{0}x^{0}B\right)
 \end{align*}
 
 \end_inset
@@ -2247,7 +2290,7 @@ v_{\mu}^{a}=x^{a}\left(-e\mathcal{A}_{\mu}\right),a=0,1,\cdots8.
 的矩阵结果不变，所以可以写成
 \begin_inset Formula 
 \[
-\mathscr{D}_{\mu}B=\partial_{\mu}B+ie\mathcal{A}_{\mu}\left[Q,B\right]+ie\mathcal{A}_{\mu}\langle Q\rangle B
+\mathscr{D}_{\mu}B=\partial_{\mu}B-ie\mathcal{A}_{\mu}\left[Q,B\right]-ie\mathcal{A}_{\mu}\langle Q\rangle B
 \]
 
 \end_inset
@@ -3077,8 +3120,8 @@ Q_{u}\\
 \begin_inset Formula 
 \begin{align*}
  & \frac{ie\left(d-u\right)c_{4}\mathcal{F}_{\mu\nu}}{4\sqrt{3}M_{N}}\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}+\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)\\
- & =\frac{e\left(d-u\right)c_{4}}{4\sqrt{3}M_{N}}\left[\overline{p}\left(\slashed{q}\gamma^{5}\Delta^{+\mu}-\gamma^{\mu}\gamma^{5}q_{\nu}\Delta^{+\nu}\right)+\left(\overline{\Delta^{+\nu}}q_{\nu}\gamma^{\mu}\gamma^{5}-\overline{\Delta^{+\mu}}\slashed{q}\gamma^{5}\right)p\right]A_{\mu}\\
- & =\frac{e\left(d-u\right)c_{4}}{4\sqrt{3}M_{N}}\left[\overline{p}\left(\slashed{q}g^{\mu\nu}-\gamma^{\mu}q^{\nu}\right)\gamma^{5}A_{\mu}\Delta_{\nu}^{+}+A_{\mu}\overline{\Delta_{\nu}^{+}}\left(\gamma^{\mu}q^{\nu}-g^{\mu\nu}\slashed{q}\right)\gamma^{5}p\right]
+ & =\frac{e\left(d-u\right)c_{4}}{4\sqrt{3}M_{N}}\left[\overline{p}\left(\sla{q}\gamma^{5}\Delta^{+\mu}-\gamma^{\mu}\gamma^{5}q_{\nu}\Delta^{+\nu}\right)+\left(\overline{\Delta^{+\nu}}q_{\nu}\gamma^{\mu}\gamma^{5}-\overline{\Delta^{+\mu}}\sla{q}\gamma^{5}\right)p\right]A_{\mu}\\
+ & =\frac{e\left(d-u\right)c_{4}}{4\sqrt{3}M_{N}}\left[\overline{p}\left(\sla{q}g^{\mu\nu}-\gamma^{\mu}q^{\nu}\right)\gamma^{5}A_{\mu}\Delta_{\nu}^{+}+A_{\mu}\overline{\Delta_{\nu}^{+}}\left(\gamma^{\mu}q^{\nu}-g^{\mu\nu}\sla{q}\right)\gamma^{5}p\right]
 \end{align*}
 
 \end_inset
@@ -3086,7 +3129,7 @@ Q_{u}\\
 其中
 \begin_inset Formula 
 \[
-q_{\mu}\left(\slashed{q}g^{\mu\nu}-\gamma^{\mu}q^{\nu}\right)=\slashed{q}q^{\nu}-\slashed{q}q^{\nu}=0.
+q_{\mu}\left(\sla{q}g^{\mu\nu}-\gamma^{\mu}q^{\nu}\right)=\sla{q}q^{\nu}-\sla{q}q^{\nu}=0.
 \]
 
 \end_inset
@@ -4282,8 +4325,8 @@ BBMM耦合项
 。例如：
 \begin_inset Formula 
 \begin{align*}
- & \bar{p}\gamma^{\mu}p\left(\pi^{+}\partial_{\mu}\pi^{-}-\pi^{-}\partial_{\mu}\pi^{+}\right)\frac{1}{f_{\phi}^{2}}{\color{red}\frac{i}{4}}\\
- & \bar{p}\gamma^{\mu}p\left(2\pi^{+}\partial_{\mu}\pi^{-}\right)\frac{1}{f_{\phi}^{2}}{\color{red}\frac{i}{4}}
+ & \overline{p}\gamma^{\mu}p\left(\pi^{+}\partial_{\mu}\pi^{-}-\pi^{-}\partial_{\mu}\pi^{+}\right)\frac{1}{f_{\phi}^{2}}{\color{red}\frac{i}{4}}\\
+ & \overline{p}\gamma^{\mu}p\left(2\pi^{+}\partial_{\mu}\pi^{-}\right)\frac{1}{f_{\phi}^{2}}{\color{red}\frac{i}{4}}
 \end{align*}
 
 \end_inset
@@ -4302,7 +4345,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\bar{p}\gamma^{\mu}p\frac{1}{f_{\phi}^{2}}$
+\begin_inset Formula $\overline{p}\gamma^{\mu}p\frac{1}{f_{\phi}^{2}}$
 \end_inset
 
 
@@ -4314,7 +4357,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\bar{n}\gamma^{\mu}n\frac{1}{f_{\phi}^{2}}$
+\begin_inset Formula $\overline{n}\gamma^{\mu}n\frac{1}{f_{\phi}^{2}}$
 \end_inset
 
 
@@ -4328,7 +4371,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{-i}{4}}$
+\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{i}{4}}$
 \end_inset
 
 
@@ -4340,7 +4383,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{-i}{4}}$
+\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{i}{4}}$
 \end_inset
 
 
@@ -4354,7 +4397,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{i}{4}}$
+\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}-\frac{i}{4}}$
 \end_inset
 
 
@@ -4366,7 +4409,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{i}{4}}$
+\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{-i}{4}}$
 \end_inset
 
 
@@ -4470,7 +4513,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\overline{K}^{0}\partial_{\mu}K^{0}-K^{0}\partial_{\mu}\overline{K}^{0}\to{\color{red}-\frac{i}{2}}$
+\begin_inset Formula $\overline{K}^{0}\partial_{\mu}K^{0}-K^{0}\partial_{\mu}\overline{K}^{0}\to{\color{red}\frac{-i}{2}}$
 \end_inset
 
 
@@ -4681,7 +4724,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\pi^{+}\partial_{\mu}\pi^{-}-\pi^{-}\partial_{\mu}\pi^{+}\to{\color{red}-\frac{i}{2}}$
+\begin_inset Formula $\pi^{+}\partial_{\mu}\pi^{-}-\pi^{-}\partial_{\mu}\pi^{+}\to{\color{red}\frac{-i}{2}}$
 \end_inset
 
 
@@ -4719,7 +4762,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $K^{+}\partial_{\mu}K^{-}-K^{-}\partial_{\mu}K^{+}\to{\color{red}-\frac{i}{4}}$
+\begin_inset Formula $K^{+}\partial_{\mu}K^{-}-K^{-}\partial_{\mu}K^{+}\to{\color{red}\frac{-i}{4}}$
 \end_inset
 
 
@@ -4757,7 +4800,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\overline{K}^{0}\partial_{\mu}K^{0}-K^{0}\partial_{\mu}\overline{K}^{0}\to{\color{red}-\frac{i}{4}}$
+\begin_inset Formula $\overline{K}^{0}\partial_{\mu}K^{0}-K^{0}\partial_{\mu}\overline{K}^{0}\to{\color{red}\frac{-i}{4}}$
 \end_inset
 
 
@@ -4830,7 +4873,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{i}{4}}$
+\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{-i}{4}}$
 \end_inset
 
 
@@ -4842,7 +4885,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{i}{4}}$
+\begin_inset Formula $\pi^{0}\partial_{\mu}\pi^{0}\to{\color{red}\frac{-i}{4}}$
 \end_inset
 
 
@@ -4868,7 +4911,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{-i}{4}}$
+\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{i}{4}}$
 \end_inset
 
 
@@ -4880,7 +4923,7 @@ BBMM耦合项
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{-i}{4}}$
+\begin_inset Formula $\eta^{8}\partial_{\mu}\eta^{8}\to{\color{red}\frac{i}{4}}$
 \end_inset
 
 
@@ -8025,7 +8068,7 @@ BBMMA八重态
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\overline{p}\gamma^{\mu}p\pi^{+}\pi^{-}{\color{red}\frac{d}{2f_{\phi}^{2}}}
+\overline{p}\gamma^{\mu}p\pi^{+}\pi^{-}{\color{red}\frac{-u+d}{2f_{\phi}^{2}}}
 \]
 
 \end_inset
@@ -8033,7 +8076,7 @@ BBMMA八重态
 也就是电磁相互作用拉氏量为，
 \begin_inset Formula 
 \[
-Q_{d}\,e\,\mathcal{A}_{\mu}\,\frac{\pi^{+}\pi^{-}}{2f_{\phi}^{2}}\overline{p}\gamma^{\mu}p
+e\,\mathcal{A}_{\mu}{\color{red}\left(-u+d\right)}\frac{\pi^{+}\pi^{-}}{{\color{red}2f_{\phi}^{2}}}\overline{p}\gamma^{\mu}p
 \]
 
 \end_inset
@@ -11617,7 +11660,7 @@ F_{2p}^{s}=c_{1}-c_{2}+c_{3}=0
 考虑到形状因子的定义是
 \begin_inset Formula 
 \[
-\bra{p^{\prime}}J_{\text{em}}^{\mu}\ket{p}=\bar{u}\left(p^{\prime}\right)\left(\gamma^{\mu}F_{1}+\frac{i\sigma^{\mu\nu}q_{\nu}}{2M_{N}}F_{2}\right)u\left(p\right)
+\bra{p^{\prime}}J_{\text{em}}^{\mu}\ket{p}=\overline{u}\left(p^{\prime}\right)\left(\gamma^{\mu}F_{1}+\frac{i\sigma^{\mu\nu}q_{\nu}}{2M_{N}}F_{2}\right)u\left(p\right)
 \]
 
 \end_inset
