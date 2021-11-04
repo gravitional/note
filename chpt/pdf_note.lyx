@@ -113,7 +113,8 @@
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
 \newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
@@ -3011,6 +3012,39 @@ T不变性
 不变性可知，两部分图对应的形状因子相等。具体的计算也会验证这一点。
 \end_layout
 
+\begin_layout Standard
+圈积分的洛伦兹结构是：
+\begin_inset Formula 
+\begin{align*}
+\bra{u\left(p^{\prime}\right)}\Gamma^{\mu}\ket{u\left(p\right)} & =\bra{u\left(p^{\prime}\right)}\gamma^{\mu}F_{1}\left(Q^{2}\right)+\frac{i\sigma^{\mu\nu}q_{\nu}}{2m}F_{2}\left(Q^{2}\right)\ket{u\left(p\right)}\\
+\text{运动方程：} & =\bra{u\left(p^{\prime}\right)}\gamma^{\mu}\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\left(p+p^{\prime}\right)^{\mu}\frac{F_{2}\left(Q^{2}\right)}{2m}\ket{u\left(p\right)}
+\end{align*}
+
+\end_inset
+
+也就是说，最终的洛伦兹结构不依赖于线性项
+\begin_inset Formula $q^{\mu}=p^{\prime\mu}-p^{\mu}$
+\end_inset
+
+，只依赖于
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+； 同时积分的结果不依赖于内线积分动量
+\begin_inset Formula $k$
+\end_inset
+
+，所以积分应该在
+\begin_inset Formula $k\leftrightarrow-k$
+\end_inset
+
+，
+\begin_inset Formula $q\leftrightarrow-q$
+\end_inset
+
+的任意变换下不变。
+\end_layout
+
 \begin_layout Subsection
 数值检验
 \end_layout
@@ -3561,13 +3595,67 @@ f_{a}^{+}\left(y\right) & ={\color{red}\left(i\right)^{2}}{\color{blue}\left(e_{
 \begin_inset Formula 
 \begin{align*}
 f_{a}^{+}\left(y\right) & =\left(ie_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right),\\
-H^{\mu} & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k+q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\left(k+q\right)\gamma\gamma^{5}\left[\gamma\left(p-k\right)+M_{B}\right]\left(k\gamma\gamma^{5}\right)}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)D_{B}\left(p-k\right)},\\
+H^{\mu} & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k+q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\left(k+q\right).\gamma\gamma^{5}\left[\gamma.\left(p-k\right)+M_{B}\right]\left(k.\gamma\gamma^{5}\right)}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)D_{B}\left(p-k\right)},\\
 \overline{\Lambda} & =\Lambda-m_{\phi}.
 \end{align*}
 
 \end_inset
 
 和 salamu 的结果相同。
+\end_layout
+
+\begin_layout Standard
+考虑外腿在壳：
+\begin_inset Formula 
+\[
+D_{B}\left(p-k\right)=p^{2}+k^{2}-2k.p-M_{N}^{2}=k^{2}-2p.k
+\]
+
+\end_inset
+
+旋量部分，使用
+\begin_inset Formula $\sla k\,\sla p=2k.q-\sla p\,\sla k$
+\end_inset
+
+以及运动方程得到，
+\begin_inset Formula 
+\begin{align*}
+\left(\sla k+\sla q\right)\gamma^{5}\left(\sla k\gamma^{5}\right) & =\left(-\right)\left(\sla k+\sla q\right)\left(\sla k\right)\\
+ & =\left(-\right)\left(k^{2}+\sla q\,\sla k\right)\\
+ & =\left(-\right)\left(k^{2}+2M_{B}\sla k-2p.k\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(\sla k+\sla q\right)\gamma^{5}\left(\sla p-\sla k\right)\left(\sla k\gamma^{5}\right) & =\left(\sla k+\sla q\right)\left(\sla p-\sla k\right)\sla k\\
+ & =\left(\sla k+\sla q\right)\left(2p.k-M_{B}\sla k-k^{2}\right)\\
+ & =\left(2p.k-k^{2}\right)\sla k-M_{B}k^{2}-M_{B}\left(2M_{B}\sla k-2p.k\right).
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \left(-M_{B}k^{2}-2M_{B}^{2}\sla k+2M_{B}p.k\right)+\left(2p.k-k^{2}\right)\sla k-M_{B}k^{2}-\left(2M_{B}^{2}\sla k+2M_{B}q.k\right)\\
+= & -\left(k^{2}-2p.k\right)\left(\sla k+2M_{B}\right)-4M_{B}^{2}\sla k
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\frac{\left(-\right)\left(k^{2}-2p.k\right)\left(\sla k+2M_{B}\right)-4M_{B}^{2}\sla k}{\cdots D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)\left(k^{2}-2p.k\right)} & =\frac{\left(-\right)\left(\sla k+2M_{B}\right)}{\cdots D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)}+\frac{\left(-\right)4M_{B}^{2}\sla k}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)\left(k^{2}-2p.k\right)}\\
+ & \Rightarrow\frac{\left(-\right)\sla k{\color{blue}2k^{\mu}}}{\cdots D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)}+\frac{\left(-\right)4M_{B}^{2}\sla k{\color{blue}\left(2k+q\right)^{\mu}}}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)\left(k^{2}-2p.k\right)}
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
