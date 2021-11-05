@@ -178,7 +178,8 @@ Out[18]=...
 注意到在前面的输出中, 一旦两个黄色单元彼此相邻, 则两者之间没有蓝色空格, 这只能通过 `Item` 实现.
 
 不仅仅是 `Background` , 对于 `Item` 的所有选项均是如此.
-现在来看 `Frame` 选项, 如果只想在某些特定元素周围加框架, 而其它部位不加, 您很可能认为必须在这些元素自己的 `Grid` 中进行 `Frame->True` 的设置来完成.
+现在来看 `Frame` 选项, 如果只想在某些特定元素周围加框架, 而其它部位不加,
+您很可能认为必须在这些元素自己的 `Grid` 中进行 `Frame->True` 的设置来完成.
 (在下一小节中我们将学习一种更简单的方法来给任意一个表达式加框架.)
 
 ```mathematica
@@ -308,7 +309,8 @@ In[34]:= Panel[Range[10], BaseStyle -> {"StandardForm"}]
 Out[34]= {1,2,3,4,5,6,7,8,9,10}
 ```
 
-事实上, 几乎所用的框符生成器都有一个 `BaseStyle` 选项. 例如这里是一个默认字体颜色为蓝色的网格, 注意灰色的元素保持灰色, 因为内部的 `Style` 封装胜过外围 `Grid` 的 `BaseStyle`.
+事实上, 几乎所用的框符生成器都有一个 `BaseStyle` 选项. 例如这里是一个默认字体颜色为蓝色的网格,
+注意灰色的元素保持灰色, 因为内部的 `Style` 封装胜过外围 `Grid` 的 `BaseStyle`.
 (这是选项可继承性的主要特征之一, 它超出了本文的讨论范围.)
 
 ```mathematica
@@ -318,7 +320,8 @@ Out[35]=
 
 ## 默认选项
 
-假设您有一个表达式, 多次出现同一框符生成器, 如一个 `Framed` 或 `Panel`, 您想将它们全部改变, 使之含有相同的选项集合. 在函数每一次出现时都添加相同的选项集可能会非常繁琐,  幸好这里有一个更简单的方法.
+假设您有一个表达式, 多次出现同一框符生成器, 如一个 `Framed` 或 `Panel`, 您想将它们全部改变, 使之含有相同的选项集合.
+在函数每一次出现时都添加相同的选项集可能会非常繁琐,  幸好这里有一个更简单的方法.
 
 `DefaultOptions` 是 `Style` 的一个选项, 当被设置成形如 `head->{opt->val,...}` 的一列元素时, 该选项会用所给选项设置一个环境, 作为给定框符生成头部的默认环境.
 
@@ -382,3 +385,17 @@ Out[41]= {a,b,Subscript[c, d],e}
 
 `TextString[expr]`; 将`expr`转换成人类可读的字符串表示.
 `TextString[expr]` 还支持一些特殊功能, 例如`TextString[Now]`格式化现在的时间.
+
+## Dividers,Frame
+
+`Dividers` 的相当于对已有 `Frame` 规定的补充:
+
+```mathematica
+Grid[Table[x, {4}, {7}], Dividers -> {{2 -> Red, -2 -> Blue}, {2 -> Red, -2 -> Blue}}, Frame -> True]
+```
+
+`FrameStyle` 将为网格中的所有线条设置默认样式:
+
+```mathematica
+Grid[Table[x, {4}, {7}],  Dividers -> {{2 -> Red, -2 -> Blue}, {2 -> Red, -2 -> Blue}}, Frame -> True, FrameStyle -> Thickness[5]]
+```
