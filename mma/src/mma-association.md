@@ -68,14 +68,6 @@ out: <|a -> 1, b -> 2, c -> 3|>
 + `KeyValueMap` ; 在关联中的`键`和`值`上 map 一个函数
 + `KeyMemberQ`,`KeyFreeQ`
 
-### 关联的匹配
-
-使用`KeyValuePattern[{p1,p2,p3}]`确保匹配到每个模式`p1,p2,p3`, 与实际出现的顺序无关.
-
-```mathematica
-MatchQ[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{b -> 2}]]
-```
-
 ### 修改键,KeyMap
 
 将函数应用于关联的`键`, 使用`KeyMap` 函数, 例如:
@@ -110,10 +102,206 @@ Append[<|1 -> a, 2 -> b|>, 3 -> d]
 Append[<|1 -> a, 2 -> b|>, {3 -> d, 4 -> e}]
 ```
 
-### 匹配关联子集,KeyValuePattern
+## 匹配关联子集,KeyValuePattern
 
 + `KeyValuePattern[{patt1,...}]` ; 是一个模式对象, 表示一个关联, 或规则列表, 它能匹配到每个 `patti`的元素, 也就是包含的关系.
 + 匹配 `patti` 的元素可以在关联或规则列表中以任何顺序出现.
 + `patti` 按照它们出现的顺序进行匹配.
 + 如果只有一个模式`patt`, `KeyValuePattern[patt]`等同于`KeyValuePattern[{patt}]`.
-+ `KeyValuePattern[{}]` 匹配任何关联或规则的列表.
++ `KeyValuePattern[{}]` ; 匹配任何`关联`或`规则`的列表.
+
+关联的特点是: 元素的存取可以不依赖于次序; `KeyValuePattern` 的正是契合这一特点的`模式`对象.
+
+### 详细
+
+`KeyValuePattern` 可以匹配到关联中的 `任何元素`.
+
+```mathematica
+MatchQ[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[b -> 2]]
+Out[1]:= True
+```
+
+它也适用于`rule`s的列表:
+
+```mathematica
+MatchQ[{a -> 1, b -> 2, c -> 3}, KeyValuePattern[b -> 2]]
+Out[2]= True
+```
+
+`KeyValuePattern` 匹配在关联中任何地方出现的元素:
+
+```mathematica
+Replace[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{a -> x_, c -> y_}] -> {x, y}]
+Out[1]= {1, 3}
+```
+
+匹配任何具有两个条目的关联:
+
+```mathematica
+MatchQ[<|a -> 1, b -> 2|>, KeyValuePattern[{_, _}]]
+Out[1]= 真
+```
+
+### 范围
+
++ `KeyValuePattern` 区分 `Rule` 和 `RuleDelayed`:
+
+```mathematica
+MatchQ[<|a->1|>, KeyValuePattern[{a :>1}]]
+Out[1]= False
+```
+
++ 从一个 `关联` 中提取符合`rule`的键:
+
+```mathematica
+ReplaceAll[<|a->1, b->2, c->3|>, KeyValuePattern[{x_ -> 1}] :> x]
+Out[1]= a
+```
+
++ 根据`condition`提取`规则`:
+
+```mathematica
+ReplaceAll[<|a -> 1, b -> 2|>, KeyValuePattern[{x_ -> y_?EvenQ}] :> (x -> y)]
+Out[1]= b -> 2
+```
+
++ 指定 `rule`s 的 `Keys` 具有某种关系, 也可以改成等价的 `PatternTest` 语法:
+
+```mathematica
+MatchQ[<|1 -> a, 2 -> b|>, KeyValuePattern[{x_ -> _, y_ -> _}] /; x + 1 == y]
+```
+
++ `关联`中的每个`规则`最多被匹配一次:
+
+```mathematica
+ReplaceAll[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{_ -> x_, _ -> y_}] :> {x, y}]
+Out[1]= {1, 2}
+```
+
++ `KeyValuePattern` 中的`单个`模式, 不需要写在列表中:
+
+```mathematica
+MatchQ[<|a -> 1|>, KeyValuePattern[x_ -> y_]]
+Out[1]= True
+
+MatchQ[<|a -> 1|>, KeyValuePattern[{x_ -> y_}]]
+Out[2]=True
+```
+
++ 空的 `KeyValuePattern` 匹配任何 `关联` 或 `rule`的列表:
+
+```mathematica
+MatchQ[<||>, KeyValuePattern[{}]]
+Out[1]=True
+
+MatchQ[<|a -> 1|>, KeyValuePattern[{}]]
+Out[2]=True
+
+MatchQ[{}, KeyValuePattern[{}]]
+Out[3]=True
+
+MatchQ[{a -> 1}, KeyValuePattern[{}]]
+Out[4]=True
+```
+
+### 应用
+
+对`关联列表`应用`过滤器`(filter), 挑选出特定元素:
+
+```mathematica
+Cases[{
+    <|"PartOfSpeech" -> "Noun", "Number" -> "Singular"|>,
+    <|"PartOfSpeech" -> "Verb"|>},
+KeyValuePattern[{"PartOfSpeech" -> "Noun"}]]
+
+Out[1]= {<|"PartOfSpeech" -> "Noun", "Number" -> "Singular"|>}
+```
+
+### 属性和关系
+
++ `KeyValuePattern` 以任意顺序匹配:
+
+```mathematica
+MatchQ[<|a -> 1, b -> 2|>, KeyValuePattern[{_ -> 2, _ -> 1}]]
+Out[1]= True
+```
+
+而写成`关联`形式的模式, 必须按准确的顺序匹配规则:
+
+```mathematica
+MatchQ[<|a -> 1, b -> 2|>, <|_ -> 2, _ -> 1|>]
+Out[2]= False
+```
+
++ 由 `KeyValuePattern` 匹配的表达式, 可能包含`指定规则`以外的其他规则.
+
+```mathematica
+MatchQ[<|a -> 1, b -> 2|>, KeyValuePattern[{a -> _}]]
+Out[1]= True
+```
+
+写成`关联`形式的模式, 将尝试精确匹配所有规则:
+
+```mathematica
+MatchQ[<|a -> 1, b -> 2|>, Association[a -> _]]
+Out[2]= False
+
+MatchQ[<|a -> 1, b -> 2|>, Association[a -> _, b -> _]]
+Out[3]= True
+```
+
++ 由于 `KeyValuePattern` 匹配不依赖顺序, 可以有旁观规则,
+如果再让它可以匹配任意个元素, 那么这个模式将太过宽泛而失去意义,
+所以 `KeyValuePattern` 中的 `BlankNullSequence` 只匹配`一条规则`:
+
+```mathematica
+ReplaceAll[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{x___}] :> {x}]
+Out[1]= {a -> 1}
+
+ReplaceAll[<|a -> 1, b -> 2, c -> 3|>,
+ KeyValuePattern[{x_, y__}] :> {x, y}]
+Out[2]= {{a -> 1}, {b -> 2}}
+```
+
++ 与之相反, 显式`关联`模式执行精确匹配,
+所以规定在含有`关联`的模式中, `BlankNullSequence` 可以匹配多个规则:
+
+```mathematica
+ReplaceAll[<|a -> 1, b -> 2, c -> 3|>,  Association[x___, y_] :> {{x}, {y}}]
+Out[2]= {{a -> 1, b -> 2}, {c -> 3}}
+```
+
+### 可能的问题
+
+`KeyValuePattern` 中的每个模式可能只匹配一条规则.
+
+```mathematica
+ReplaceAll[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{x___}] :> {x}]
+Out[1]= {a->1}
+
+ReplaceAll[<|a -> 1, b -> 2, c -> 3|>, KeyValuePattern[{x_, y__}] :> {x, y}]
+Out[2]= {a -> 1, b -> 2}
+```
+
+`空列表`或`空关联`,可由 `BlankNullSequence` 或 `RepeatedNull` 模式匹配.
+
+```mathematica
+MatchQ[<||>, KeyValuePattern[{___}]]
+Out[1]= True
+
+MatchQ[<||>, KeyValuePattern[{}]]
+Out[3]= True
+```
+
+`KeyValuePattern` 只匹配`关联`或`规则列表`, 即使没有指定模式参数.
+
+```mathematica
+MatchQ[{a}, KeyValuePattern[{}]]
+Out[1]= False
+
+MatchQ[{a}, KeyValuePattern[{_}]]
+Out[2]= False
+
+MatchQ[{a -> b}, KeyValuePattern[{}]]
+Out[3]=True
+```
