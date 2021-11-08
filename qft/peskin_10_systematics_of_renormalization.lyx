@@ -6,41 +6,117 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usepackage{xeCJK}% 没有这个会无法实现中文断行
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
 % 如果没有这一句命令，XeTeX会出错，原因参见
 % http://bbs.ctex.org/viewthread.php?tid=60547
 % \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
 %%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic} 
-\usepackage{tikz}
-\usepackage{tikz-feynman}
+\usepackage{eso-pic}
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
 \usepackage{adjustbox} % 对齐tikz图用
-% This package makes it easy to add some picture commands to every page at ab-solute positions
-\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
-\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
-
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，
+%给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+%%%+++++++++++++++++++++++++++++++
 \usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % 提供了mathscr 命令
-% Required for specifying colors by name 
-\usepackage{enumerate} 
-
-\usepackage{hepunits} % hep units
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{bm,bbm} 
-\usepackage{simplewick} 
-\usepackage{makeidx} 
-\usepackage{multirow}
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+\usepackage{bm,bbm}  %\bm 命令使参数变成粗体
+% Blackboard variants of Computer Modern fonts.
+\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+\usepackage{tikz-feynman}  % 画费曼图用
+\usepackage{tikz} %画矢量图用
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+%%++++++++++++++++++++++++++++++++++++++
 \usepackage{mathtools}% 定义配对的数学符号
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
-%% \usepackage{axodraw2} 
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-%\DeclareMathOperator{\re}{Re}
-%\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res}
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\newcommand{\cola}[1]{{\color{blue}{#1}}}
+%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
@@ -384,7 +460,7 @@ noprefix "false"
 做泰勒展开：
 \begin_inset Formula 
 \[
-\text{电子自能修正}\text{图}=A_{0}+A_{1}\slashed{p}+A_{2}\slashed{p}^{2}+c\dots
+\text{电子自能修正}\text{图}=A_{0}+A_{1}\sla p+A_{2}\sla p^{2}+c\dots
 \]
 
 \end_inset
@@ -396,19 +472,19 @@ noprefix "false"
 无关：
 \begin_inset Formula 
 \[
-A_{n}=\left.\frac{1}{n!}\frac{\dif^{n}}{\dif\slashed{p}^{n}}(\text{电子自能修正图})\right\vert _{\slashed{p}=0}
+A_{n}=\left.\frac{1}{n!}\frac{\dif^{n}}{\dif\sla p^{n}}(\text{电子自能修正图})\right\vert _{\sla p=0}
 \]
 
 \end_inset
 
 这些系数是红外发散的，为了计算它们，我们需要一个红外正规子。我们知道电子全传播子大概是
-\begin_inset Formula $\frac{1}{\slashed{p}-m}$
+\begin_inset Formula $\frac{1}{\sla p-m}$
 \end_inset
 
 这种形式，对它微分，得到各阶贡献
 \begin_inset Formula 
 \[
-\frac{\dif}{\dif\slashed{p}}\left(\frac{1}{\slashed{k}+\slashed{p}-m}\right)=-\frac{1}{(\slashed{k}+\slashed{p}-m)^{2}}
+\frac{\dif}{\dif\sla p}\left(\frac{1}{\sla k+\sla p-m}\right)=-\frac{1}{(\sla k+\sla p-m)^{2}}
 \]
 
 \end_inset
@@ -440,7 +516,7 @@ A_{n}=\left.\frac{1}{n!}\frac{\dif^{n}}{\dif\slashed{p}^{n}}(\text{电子自能�
 。所以自能修正的形式为
 \begin_inset Formula 
 \[
-\text{电子自能修正图}=a_{0}m\log\Lambda+a_{1}\slashed{p}\log\Lambda+(\text{finite terms})
+\text{电子自能修正图}=a_{0}m\log\Lambda+a_{1}\sla p\log\Lambda+(\text{finite terms})
 \]
 
 \end_inset
@@ -1008,10 +1084,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-\begin_inset Formula $\phi^{4}$
-\end_inset
-
-理论的单圈结构
+phi4理论的单圈结构
 \end_layout
 
 \begin_layout Standard
@@ -2532,10 +2605,22 @@ noprefix "false"
 
 \begin_layout Enumerate
 通过重新标度场，将场强重正化吸收到 Lagrangian 中。
+\begin_inset Formula $\psi=Z_{2}^{1/2}\psi_{r}$
+\end_inset
+
+，
+\begin_inset Formula $A^{\mu}=Z_{3}^{1/2}A_{r}^{\mu}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
 把 Lagrangian 的每一项分成两个部分，将无穷大的不可观测平移吸收到抵消项中。
+\begin_inset Formula $e_{0}Z_{2}Z_{3}^{1/2}=eZ_{1}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2558,7 +2643,7 @@ noprefix "false"
 原先的 Lagrangian 是
 \begin_inset Formula 
 \[
-\mathcal{L}=-\frac{1}{4}(F_{\mu\nu})^{2}+\bar{\psi}(i\slashed{\partial}-m_{0})\psi-e_{0}\bar{\psi}\gamma^{\mu}\psi A_{\mu}
+\mathcal{L}=-\frac{1}{4}\left(F_{\mu\nu}\right)^{2}+\bar{\psi}\left(i\sla\partial-m_{0}\right)\psi-e_{0}\bar{\psi}\gamma^{\mu}\psi A_{\mu}
 \]
 
 \end_inset
@@ -2566,7 +2651,7 @@ noprefix "false"
 使用这个 Lagrangian 计算电子和光子的传播子，我们会发现具有下列一般形式的表达式
 \begin_inset Formula 
 \[
-\text{电子传播子}=\frac{iZ_{2}}{\slashed{p}-m}+\cdots;\quad\text{光子传播子}=\frac{-iZ_{3}g_{\mu\nu}}{q^{2}}+\cdots
+\text{电子传播子}=\frac{iZ_{2}}{\sla p-m}+\cdots;\quad\text{光子传播子}=\frac{-iZ_{3}g_{\mu\nu}}{q^{2}}+\cdots
 \]
 
 \end_inset
@@ -2575,7 +2660,7 @@ noprefix "false"
 \begin_inset Formula $Z_{2}$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $Z_{3}$
 \end_inset
 
@@ -2591,14 +2676,14 @@ noprefix "false"
 \begin_inset Formula $\psi=Z_{2}^{1/2}\psi_{r}$
 \end_inset
 
- and 
+ 以及 
 \begin_inset Formula $A^{\mu}=Z_{3}^{1/2}A_{r}^{\mu}$
 \end_inset
 
 。然后 Lagrangian 变成
 \begin_inset Formula 
 \[
-\mathcal{L}=-\frac{1}{4}Z_{3}(F_{r}^{\mu\nu})^{2}+Z_{2}\bar{\psi}_{r}(i\slashed{\partial}-m_{0})\psi_{r}-e_{0}Z_{2}Z_{3}^{1/2}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}
+\mathcal{L}=-\frac{1}{4}Z_{3}\left(F_{r}^{\mu\nu}\right)^{2}+Z_{2}\bar{\psi}_{r}\left(i\sla\partial-m_{0}\right)\psi_{r}-e_{0}Z_{2}Z_{3}^{1/2}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}
 \]
 
 \end_inset
@@ -2607,11 +2692,11 @@ noprefix "false"
 \begin_inset Formula $e$
 \end_inset
 
-，measured at large distances (
+，它在大距离被测量（
 \begin_inset Formula $q=0$
 \end_inset
 
-)，通过像如下这样定义一个标度因子
+），通过像如下这样定义一个标度因子
 \begin_inset Formula $Z_{1}$
 \end_inset
 
@@ -2630,8 +2715,8 @@ e_{0}Z_{2}Z_{3}^{1/2}=eZ_{1}\label{eq:10.37}
 为物理质量（电子传播子pole的位置），然后我们把 Lagrangian 中的每一项分成两部分：
 \begin_inset Formula 
 \begin{align}
-\mathcal{L} & =-\frac{1}{4}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}(i\slashed{\partial}-m)\psi_{r}-e_{0}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}\nonumber \\
- & -\frac{1}{4}\delta_{3}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}(i\delta_{2}\slashed{\partial}-\delta_{m})\psi_{r}-e\delta_{1}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}\label{eq:10.38}
+\mathcal{L} & =-\frac{1}{4}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}(i\sla\partial-m)\psi_{r}-e_{0}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}\nonumber \\
+ & -\frac{1}{4}\delta_{3}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}(i\delta_{2}\sla\partial-\delta_{m})\psi_{r}-e\delta_{1}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}\label{eq:10.38}
 \end{align}
 
 \end_inset
@@ -2647,7 +2732,7 @@ e_{0}Z_{2}Z_{3}^{1/2}=eZ_{1}\label{eq:10.37}
 
 \begin_inset Formula 
 \[
-\delta_{m}=Z_{2}m_{0}-m,\quad\text{and}\quad\delta_{1}=Z_{1}-1=(e_{0}/e)Z_{2}Z_{3}^{1/2}-1
+\delta_{m}=Z_{2}m_{0}-m,\quad\text{and}\quad\delta_{1}=Z_{1}-1=\left(e_{0}/e\right)Z_{2}Z_{3}^{1/2}-1
 \]
 
 \end_inset
@@ -2688,6 +2773,7 @@ noprefix "false"
 
 来简化。
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -2738,34 +2824,43 @@ name "fig:fig10.4"
 ，另外两个定义物理的电子质量和电荷。为了更清楚地写出这些条件，回忆我们在 chapter 6 and 7 中使用的记号：
 \begin_inset Formula 
 \begin{align*}
-\text{光子自能} & =i\Pi^{\mu\nu}(q)=i(g^{\mu\nu}q^{2}-q^{\mu}q^{\nu})\Pi(q^{2})\\
-\text{电子自能} & =-i\Sigma(\slashed{p})\\
-\text{顶点修正} & =-ie\Gamma^{\mu}(p^{\prime},p)
+\text{光子自能} & =i\Pi^{\mu\nu}(q)=i(g^{\mu\nu}q^{2}-q^{\mu}q^{\nu})\Pi\left(q^{2}\right)\\
+\text{电子自能} & =-i\Sigma(\sla p)\\
+\text{顶点修正} & =-ie\Gamma^{\mu}\left(p^{\prime},p\right)
 \end{align*}
 
 \end_inset
 
-现在，将在重正化的微扰理论中计算这些幅度； 我们重新定义
-\begin_inset Formula $\Pi(q^{2})$
+其中
+\begin_inset Formula 
+\begin{align*}
+\int\dif^{4}x\bra\Omega T\psi\left(x\right)\overline{\psi}\left(0\right)\ket\Omega e^{ipx} & =\frac{i}{\sla p-m_{0}}+\frac{i}{\sla p-m_{0}}\left(\frac{\Sigma\left(\sla p\right)}{\sla p-m_{0}}\right)+\frac{i}{\sla p-m_{0}}\left(\frac{\Sigma\left(\sla p\right)}{\sla p-m_{0}}\right)^{2}\\
+ & =\frac{i}{\sla p-m_{0}-\Sigma\left(\sla p\right)}
+\end{align*}
+
+\end_inset
+
+现在，将在重正化的微扰理论中计算这些幅度； 我们重新定义 
+\begin_inset Formula $\Pi\left(q^{2}\right)$
 \end_inset
 
 ，
-\begin_inset Formula $\Sigma(\slashed{p})$
+\begin_inset Formula $\Sigma\left(\sla p\right)$
 \end_inset
 
-和
-\begin_inset Formula $\Gamma(p^{\prime},p)$
+ 和 
+\begin_inset Formula $\Gamma\left(p^{\prime},p\right)$
 \end_inset
 
-以包括抵消项顶点。 此外，
+ 以包括抵消项顶点。 此外，
 \begin_inset Formula $\Gamma$
 \end_inset
 
 的新定义涉及物理的电子电荷。使用这些符号，四个重正化条件是
 \begin_inset Formula 
 \begin{align}
-\Sigma(\slashed{p}=m) & =0;\nonumber \\
-\frac{\dif}{\dif\slashed{p}}\left.\Sigma(\slashed{p})\right\vert _{\slashed{p}=m} & =0;\nonumber \\
+\Sigma(\sla p=m) & =0;\nonumber \\
+\frac{\dif}{\dif\sla p}\left.\Sigma(\sla p)\right\vert _{\sla p=m} & =0;\nonumber \\
 \Pi(q^{2}=0) & =0;\nonumber \\
 -ie\Gamma^{\mu}(p^{\prime}-p=0) & =-ie\gamma^{\mu};\label{eq:10.40}
 \end{align}
@@ -2829,7 +2924,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 -i\Sigma_{2}(p) & =-i\frac{e^{2}}{(4\pi)^{d/2}}\int_{0}^{1}\dif x\frac{\Gamma(2-d/2)}{\left((1-x)m^{2}+x\mu^{2}-x(1-x)p^{2}\right)^{2-d/2}}\\
- & \times\left((4-\epsilon)m-(2-\epsilon)x\slashed{p}\right)
+ & \times\left((4-\epsilon)m-(2-\epsilon)x\sla p\right)
 \end{align*}
 
 \end_inset
@@ -2845,7 +2940,7 @@ noprefix "false"
 \end_inset
 
  中的第一个条件
-\begin_inset Formula $\Sigma(\slashed{p}=m)=0;$
+\begin_inset Formula $\Sigma(\sla p=m)=0;$
 \end_inset
 
 ，
@@ -2871,13 +2966,13 @@ noprefix "false"
 \end_inset
 
 ，
-\begin_inset Formula $\frac{\dif}{\dif\slashed{p}}\left.\Sigma(\slashed{p})\right\vert _{\slashed{p}=m}=0;$
+\begin_inset Formula $\frac{\dif}{\dif\sla p}\left.\Sigma(\sla p)\right\vert _{\sla p=m}=0;$
 \end_inset
 
 :
 \begin_inset Formula 
 \begin{align}
-\delta_{2} & =\frac{\dif}{\dif\slashed{p}}\Sigma_{2}(m)\nonumber \\
+\delta_{2} & =\frac{\dif}{\dif\sla p}\Sigma_{2}(m)\nonumber \\
  & =-\frac{e^{2}}{(4\pi)^{d/2}}\int_{0}^{1}\dif x\frac{\Gamma(2-\frac{d}{2})}{\left((1-x)^{2}m^{2}+x\mu^{2}\right)^{2-d/2}}\nonumber \\
  & \phantom{=}\times\left[(2-\epsilon)x-\frac{\epsilon}{2}\frac{2x(1-x)m^{2}}{2(1-x)^{2}m^{2}+x\mu^{2}}\left(4-2x-\epsilon(1-x)\right)\right]\label{eq:10.43}
 \end{align}
@@ -2929,7 +3024,7 @@ noprefix "false"
 的改变为
 \begin_inset Formula 
 \begin{align*}
-\delta F_{1}(q^{2}) & =-\frac{e^{2}}{(4\pi)^{d/2}}\int\dif x\dif y\dif z\delta(x+y+z-1)\Bigg[\frac{\Gamma(2-\frac{d}{2})}{\Delta^{2-d/2}}\frac{(2-\epsilon)^{2}}{2}\\
+\delta F_{1}\left(q^{2}\right) & =-\frac{e^{2}}{(4\pi)^{d/2}}\int\dif x\dif y\dif z\delta(x+y+z-1)\Bigg[\frac{\Gamma(2-\frac{d}{2})}{\Delta^{2-d/2}}\frac{(2-\epsilon)^{2}}{2}\\
  & +\frac{\Gamma(3-\frac{d}{2})}{\Delta^{3-d/2}}\left(q^{2}\left[2(1-x)(1-y)-\epsilon xy\right]+m^{2}\left[2(1-4z+z^{2})-\epsilon(1-z)^{2}\right]\right)\Bigg]
 \end{align*}
 
@@ -2946,7 +3041,7 @@ noprefix "false"
 ，决定了
 \begin_inset Formula 
 \begin{align}
-\delta_{1} & =-\delta F_{1}(0)=-\frac{e^{2}}{(4\pi)^{d/2}}\int\dif z(1-z)\Bigg[\frac{\Gamma(2-\frac{d}{2})}{((1-z)^{2}m^{2}+z\mu^{2})^{2-d/2}}\frac{(2-\epsilon)^{2}}{2}\label{eq:10.46}\\
+\delta_{1} & =-\delta F_{1}\left(0\right)=-\frac{e^{2}}{(4\pi)^{d/2}}\int\dif z(1-z)\Bigg[\frac{\Gamma(2-\frac{d}{2})}{((1-z)^{2}m^{2}+z\mu^{2})^{2-d/2}}\frac{(2-\epsilon)^{2}}{2}\label{eq:10.46}\\
  & +\frac{\Gamma(3-\frac{d}{2})}{((1-z)^{2}m^{2}+z\mu^{2})^{3-d/2}}\left(m^{2}\left[2(1-4z+z^{2})-\epsilon(1-z)^{2}\right]\right)\Bigg]\nonumber 
 \end{align}
 
@@ -2985,8 +3080,7 @@ noprefix "false"
 \begin_inset Formula $Z_{1}=Z_{2}$
 \end_inset
 
-。就像之前推导的，这个等式来自于 Ward identity.
- 不带抵消项的 Lagrangian 
+。就像之前推导的，这个等式可以从 Ward 恒等式得到。不带抵消项的 Lagrangian 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:10.38"
@@ -2999,33 +3093,50 @@ noprefix "false"
  
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L} & =-\frac{1}{4}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}(i\slashed{\partial}-m)\psi_{r}-e_{0}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}\\
- & -\frac{1}{4}\delta_{3}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}(i\delta_{2}\slashed{\partial}-\delta_{m})\psi_{r}-e\delta_{1}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}
+\mathcal{L} & =-\frac{1}{4}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}\left(i\sla\partial-m\right)\psi_{r}-e_{0}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}\\
+ & {\color{blue}-\frac{1}{4}\delta_{3}(F_{r}^{\mu\nu})^{2}+\bar{\psi}_{r}\left(i\delta_{2}\sla\partial-\delta_{m}\right)\psi_{r}-e\delta_{1}\bar{\psi}_{r}\gamma^{\mu}\psi_{r}A_{r,\mu}}
 \end{align*}
 
 \end_inset
 
-是规范不变的，如果正规子也是规范不变的（我们使用了维数正则化），这暗示了对于不含抵消项顶点的图存在 Ward identity。特别地，这暗示着
-\begin_inset Formula $\delta F_{1}(0)=-\left.\frac{\dif\Sigma_{2}}{\dif\slashed{p}}\right|_{m}$
+是规范不变的，如果正规子也是规范不变的（我们使用的维数正则化保持规范不变），则暗示：对于不包括抵消项顶点的图，存在 Ward 恒等式。特别地，这说明
+ 
+\begin_inset Formula $\delta F_{1}\left(0\right)=-\left.\frac{\dif\Sigma_{2}}{\dif\sla p}\right|_{m}$
 \end_inset
 
-。然后两个用来抵消这两个因子的抵消项
+。然后，抵消项
 \begin_inset Formula $\delta_{1}$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $\delta_{2}$
 \end_inset
 
-，应该是相等的。
+，正是用来抵消原来的两个发散因子的，所以它们应该是相等的。
 \end_layout
 
 \begin_layout Standard
-通过继续这个论证，使用 section 7.4 中的类似方法（在裸微扰论中证明 Ward-Takahashi identity），可以在费曼图的所有阶证明
+通过继续这个论证，使用 section 7.4 中的类似方法（在裸微扰论中证明 Ward-Takahashi 恒等式），可以在费曼图的所有阶证明
 \begin_inset Formula $\delta_{1}=\delta_{2}$
 \end_inset
 
-。将section 7.4 中的论证稍稍推广，可以证明图形等式 eq.7.68 对于包含抵消项顶点的图也成立。因此，如果在 order 
+。将 section 7.4 中的论证稍稍推广，可以证明图形等式 （7.68） 对于包含抵消项顶点的图也成立：含有光子动量
+\begin_inset Formula $k^{\mu}$
+\end_inset
+
+的QED振幅，可以分解为一系列振幅的求和；后者去掉光子，将
+\begin_inset Formula $k^{\mu}$
+\end_inset
+
+插入到各种可能的费米子线上。
+\begin_inset Formula 
+\[
+k_{\mu}\mathcal{M}^{\mu}\left(k;p_{1}\cdots p_{n};q_{1}\cdots q_{n}\right)=e\sum_{i}\left[\mathcal{M}_{0}\left(p_{1}\cdots p_{n};q_{1}\cdots\left(q_{i}-k\right)\cdots\right)-\mathcal{M}_{0}\left(p_{1}\cdots\left(p_{i}+k\right)\cdots;q_{1}\cdots q_{n}\right)\right]
+\]
+
+\end_inset
+
+因此，如果在 order 
 \begin_inset Formula $\alpha^{n}$
 \end_inset
 
@@ -3033,19 +3144,27 @@ noprefix "false"
 \begin_inset Formula $\delta_{1}$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $\delta_{2}$
 \end_inset
 
-，在order 
+；在 order 
 \begin_inset Formula $\alpha^{n+1}$
 \end_inset
 
-时， 
+时，未重正化顶点图在 
 \begin_inset Formula $q^{2}=0$
 \end_inset
 
- 的未重正化顶点图等于未重正化电子自能图的导数。为了满足重正化条件 
+ 的值，应等于未重正化电子自能图的导数：
+\begin_inset Formula 
+\[
+\delta_{1}=-\delta F_{1}\left(0\right)=\delta_{2}=\frac{\dif}{\dif\sla p}\Sigma_{2}\left(p=m\right)
+\]
+
+\end_inset
+
+为了满足重正化条件 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:10.40"
@@ -3055,11 +3174,15 @@ noprefix "false"
 
 \end_inset
 
-，我们必须在 
+，
+\begin_inset Formula $-ie\Gamma^{\mu}(p^{\prime}-p=0)=-ie\gamma^{\mu}$
+\end_inset
+
+，在 
 \begin_inset Formula $\alpha^{n+1}$
 \end_inset
 
- 阶，令
+ 阶，我们必须令
 \begin_inset Formula $\delta_{1}$
 \end_inset
 
@@ -3067,11 +3190,23 @@ noprefix "false"
 \begin_inset Formula $\delta_{2}$
 \end_inset
 
-。这个递归的论证给出了在 QED 微扰论所有阶
+。这个递归论证给出了另一个证明：在 QED 微扰论所有阶
 \begin_inset Formula $Z_{1}=Z_{2}$
 \end_inset
 
-的另一个证明。关系 
+。其中
+\begin_inset Formula $Z_{1}$
+\end_inset
+
+是电子的顶点重正化常数，
+\begin_inset Formula $Z_{2}$
+\end_inset
+
+是电子的场强重正化常数，它们都被光子内线修正。
+\end_layout
+
+\begin_layout Standard
+关系 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:10.37"
@@ -3115,8 +3250,8 @@ e=\sqrt{Z_{3}}e_{0}
 
 \end_inset
 
-正是在 section 7.5 中我们时有图形方法证明的 relation 7.76 。它表明裸电荷和重正化电荷的关系只跟 光子场强重正化有关，而跟电子独有的量无关
-。为了看出这个关系的重要性，考虑写下两类带电例子的 重正化量子电动力学，比如，电子和 muons。那么，除了 
+正是在 section 7.5 中，我们使用图形方法证明的关系（7.76）。它表明裸电荷和重正化电荷的关系只跟 光子场强重正化有关，而跟电子独有的量无关。为了看出这
+个关系的重要性，考虑写下两类带电例子的 重正化量子电动力学，比如，电子和 muons。那么，除了 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:10.37"
@@ -3138,7 +3273,7 @@ eZ_{1}^{\prime}=Z_{3}^{1/2}Z_{2}^{\prime}e_{0}\label{eq:10.48}
 \begin_inset Formula $Z_{1}^{\prime}$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $Z_{2}^{\prime}$
 \end_inset
 

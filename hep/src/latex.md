@@ -406,8 +406,7 @@ texdoc texbytopic
 ### newcommand 新命令
 
 [LaTeX2e unofficial reference manual (October 2018)](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html)
-
-`12.1 \newcommand & \renewcommand`
+12.1 \newcommand & \renewcommand
 
 语法为:
 
@@ -429,10 +428,11 @@ texdoc texbytopic
 \renewcommand*{\cmd}[nargs][optargdefault]{defn}
 ```
 
-定义或重定义一个命令. See also the discussion of `\DeclareRobustCommand` in Class and package commands.
-这两个命令的`*`号形式要求参数中不包含多段文字. (用 `plain TeX` 术语说,不能为`\long` ).
++ 定义或重定义一个命令. 
+参见关于 `\DeclareRobustCommand` 的讨论, 位于 `Class  and package commands`中.
++ 这两个命令的`*`号形式要求参数不能包含多段文字. (用 `plain TeX` 术语说,不能为`\long` ).
 
-参数说明:
+#### 参数说明
 
 + `cmd`:必选,命令名称. 用`\`开头. 且不能以`\end`开头,对于`\newcommand`,命令不能定义过.
 对于`\renewcommand`,命令必须已经定义过.

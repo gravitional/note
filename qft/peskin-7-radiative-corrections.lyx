@@ -1,0 +1,1008 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usepackage{xeCJK}% 没有这个会无法实现中文断行
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
+% 如果没有这一句命令，XeTeX会出错，原因参见
+% http://bbs.ctex.org/viewthread.php?tid=60547
+% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic}
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+\usepackage{adjustbox} % 对齐tikz图用
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，
+%给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+\usepackage{bm,bbm}  %\bm 命令使参数变成粗体
+% Blackboard variants of Computer Modern fonts.
+\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+\usepackage{tikz-feynman}  % 画费曼图用
+\usepackage{tikz} %画矢量图用
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+%%++++++++++++++++++++++++++++++++++++++
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\sla}{\slashed}% feynman slash
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+辐射修正：一些正式的推导
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Section
+LSZ 约化公式
+\end_layout
+
+\begin_layout Standard
+在上一节中，我们看到，两点关联函数的傅立叶变换，作为
+\begin_inset Formula $p^{2}$
+\end_inset
+
+的解析函数，在单粒子态的质量的位置上，具有一个单极点（simple pole），
+\begin_inset Formula 
+\[
+\int\dif^{4}xe^{ip.x}\bra\Omega T\phi\left(x\right)\phi\left(0\right)\ket\Omega\underset{p^{2}\to m^{2}}{\sim}\frac{iZ}{p^{2}-m^{2}+i\varepsilon}.
+\]
+
+\end_inset
+
+这里使用
+\begin_inset Formula $\sim$
+\end_inset
+
+表示方程两边的极点是相同的。
+\end_layout
+
+\begin_layout Standard
+我们证明了，我们可以提取出散射的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的值，通过将场的真空期望值用波包折叠（by folding the corresponding vacuum expection values
+ of fields with wvaepackets），提取出能量
+\begin_inset Formula $p_{i}^{0}$
+\end_inset
+
+的领头阶奇点，然后取极限，令波包趋于
+\begin_inset Formula $\delta$
+\end_inset
+
+函数。然而，如果我们可以将操作顺序反过来，计算会简单很多——即先取波包为
+\begin_inset Formula $\delta$
+\end_inset
+
+函数，得到简单的傅立叶变换，然后提取出奇点。事实上，交换操作顺序，不影响领头阶奇点的值。然而在此刻，证明这一点不太容易。粗略地说：接上文分析的语境，在傅立叶变换
+中，由于在很远的将来
+\begin_inset Formula $x_{1}$
+\end_inset
+
+和
+\begin_inset Formula $x_{2}$
+\end_inset
+
+会靠的很近，这会产生新的奇点。然而，在此区域中，指数因子接近于
+\begin_inset Formula $\exp\left[i\left(p_{1}+p_{2}\right).x_{1}\right]$
+\end_inset
+
+，因此新的奇点是变量
+\begin_inset Formula $\left(p_{1}^{0}+p_{2}^{0}\right)$
+\end_inset
+
+的单极点，而不是两个独立能量变量的，极点的乘积。一个更严格的证明（不幸的是，会用别的语言描述）可以在 Lehmann, Symanzik 和 Zimmerman
+n 的原始文献中找到，这在本章开始引用过。
+\end_layout
+
+\begin_layout Standard
+假设我们可以反转上述操作的顺序，我们将会得到关联函数的傅立叶变换，和散射的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元之间的精确关系。也就是 LSZ 约化公式：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+ & \prod_{1}^{n}\int\dif^{4}x_{i}e^{ip_{i}.x_{i}}\prod_{1}^{m}\dif^{4}y_{j}e^{-ik_{j}.y_{j}}\bra\Omega T{\phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)\phi\left(y_{1}\right)\cdots\phi\left(y_{m}\right)}\ket\Omega\nonumber \\
+\text{每个}\begin{array}{c}
+p_{i}^{0}\to+E_{p_{i}}\\
+k_{j}^{0}\to+E_{k_{j}}
+\end{array} & \sim\left(\prod_{i=1}^{n}\frac{\sqrt{Z}i}{p_{i}^{2}-m^{2}+i\varepsilon}\right)\left(\prod_{j=1}^{m}\frac{\sqrt{Z}i}{k_{j}^{2}-m^{2}+i\varepsilon}\right)\bra{\sbf p_{1}\cdots\sbf p_{n}}S\ket{\sbf k_{1}\cdots\sbf k_{m}}\label{eq:7.42}
+\end{align}
+
+\end_inset
+
+出现在方程中的
+\begin_inset Formula $Z$
+\end_inset
+
+ 正是场强重正化常数（field–strength renormalization constant），在 Section 7.1 中，定义为场的两点函数的单粒子
+极点。每种不同的粒子将会有不同的重正化因子
+\begin_inset Formula $Z$
+\end_inset
+
+，从它自己的两点函数中得到。对于高自旋粒子，每个因子
+\begin_inset Formula $\sqrt{Z}$
+\end_inset
+
+还会伴有一个极化因子例如
+\begin_inset Formula $u^{s}\left(p\right)$
+\end_inset
+
+，如 (7.12)。
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的极化
+\begin_inset Formula $s$
+\end_inset
+
+必须求和掉。
+\end_layout
+
+\begin_layout Standard
+简而言之，LSZ公式告诉我们，可以如下计算散射的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元。计算关联函数的适当的傅立叶变换，在动量空间中寻找外线粒子在壳的区域，提取多粒子pole（multiparticle pole）的系数。对于带有自旋的场
+，必须乘上一个极化旋量（例如
+\begin_inset Formula $u^{s}\left(p\right)$
+\end_inset
+
+）或者矢量（如
+\begin_inset Formula $\epsilon^{r}\left(k\right)$
+\end_inset
+
+）来投影出特定的自旋态。
+\end_layout
+
+\begin_layout Standard
+我们下一步的目标是把这个程序用费曼图表示。让我们分析标量场的四点函数，与
+\begin_inset Formula $2\to2$
+\end_inset
+
+散射过程的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元之间的关系。我们将显式考虑对关联子有贡献的全连通费曼图。通过类似地分析，容易确认非连通图应该被丢掉，因为它们缺乏相应的极点结构，即四个极点的乘积，表示在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+方程的右边。
+\end_layout
+
+\begin_layout Standard
+精确的四点函数为：
+\begin_inset Formula 
+\[
+\left(\prod_{1}^{2}\int\dif^{4}x_{i}e^{ip_{i}.x_{i}}\right)\left(\prod_{1}^{2}\dif^{4}y_{j}e^{-ik_{j}.y_{j}}\right)\bra\Omega T{\phi\left(x_{1}\right)\phi\left(x_{2}\right)\phi\left(y_{1}\right)\phi\left(y_{2}\right)}\ket\Omega
+\]
+
+\end_inset
+
+具有 Fig.7.4 所示的一般形式。在图中，我们显式标出了每条外腿的图像修正；位于中间的阴影圆，表示所有被截腿的四点图的求和。
+\end_layout
+
+\begin_layout Standard
+如同之前的章节中，我们对电子传播子的操作，我们可以将每条外腿的修正求和起来。令
+\begin_inset Formula $-iM^{2}\left(p^{2}\right)$
+\end_inset
+
+表示标量传播子中，所有单粒子不可约插入图的求和（one-particle-irreducible 1PI）：
+\begin_inset Formula 
+\[
+-iM^{2}\left(p^{2}\right)=\cdots=\text{1PI}
+\]
+
+\end_inset
+
+则精确的传播子可以写成几何级数，类似(7.23) 那样求和起来：
+\begin_inset Formula 
+\begin{align*}
+\text{精确传播子} & =\cdots\\
+ & =\frac{i}{p^{2}-m_{0}^{2}}+\frac{i}{p^{2}-m_{0}^{2}}\left(-iM^{2}\right)\frac{i}{p^{2}-m_{0}^{2}}+\cdots\\
+ & =\frac{i}{p^{2}-m_{0}^{2}-M^{2}\left(p^{2}\right)}.
+\end{align*}
+
+\end_inset
+
+注意到，如同电子传播子的情形，我们对于 1PI 自能
+\begin_inset Formula $M^{2}\left(p^{2}\right)$
+\end_inset
+
+的符号约定暗示了，对
+\begin_inset Formula $M^{2}\left(p^{2}\right)$
+\end_inset
+
+正的贡献，对应于标量粒子质量正的改变（shift）。如果我们将每个重求和（resummed）传播子在物理粒子极点附近展开，我们看到四点振幅的每个外腿贡献了，
+\begin_inset Formula 
+\[
+\frac{i}{p^{2}-m_{0}^{2}-M^{2}}\underset{p^{0}\to E_{\sbf p}}{\sim}\frac{iZ}{p^{2}-m^{2}}+\left(\text{regular}\right).
+\]
+
+\end_inset
+
+因此，费曼图的求和，将包含四极点的乘积：
+\begin_inset Formula 
+\[
+\frac{iZ}{p_{1}^{2}-m^{2}}\frac{iZ}{p_{2}^{2}-m^{2}}\frac{iZ}{k_{1}^{2}-m^{2}}\frac{iZ}{k_{2}^{2}-m^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+这正是
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+第二行的极点结构。比较这个极点乘积的系数，我们得到关系：
+\begin_inset Formula 
+\[
+\bra{\sbf p_{1}\sbf p_{2}}S\ket{\sbf k_{1}\sbf k_{2}}=\left(\sqrt{Z}\right)^{4}\text{截腿四点振幅}
+\]
+
+\end_inset
+
+其中阴影圆表示所有截腿四点费曼图的求和，
+\begin_inset Formula $Z$
+\end_inset
+
+是场强重正化因子。
+\end_layout
+
+\begin_layout Standard
+对于一般场论中的
+\begin_inset Formula $\left(n+2\right)$
+\end_inset
+
+–点函数的傅立叶变换，可以进行完全相同的分析。
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元和费曼图之间存在关系：
+\begin_inset Formula 
+\[
+\bra{\sbf p_{1}\cdots\sbf p_{n}}S\ket{\sbf k_{1}\sbf k_{2}}=\left(\sqrt{Z}\right)^{n+2}\text{截腿n+2点振幅}
+\]
+
+\end_inset
+
+如果外线粒子种类不同，每种粒子都有自己的重正化因子
+\begin_inset Formula $\sqrt{Z}$
+\end_inset
+
+；如果粒子的自旋不为零，在式子右边将会有额外的极化因子，例如
+\begin_inset Formula $u^{s}\left(k\right)$
+\end_inset
+
+。这跟我们在 Section 4.6 中写下的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的图形公式几乎一样。在微扰理论的领头阶，无需考虑
+\begin_inset Formula $Z$
+\end_inset
+
+因子，但是在高阶的计算中，
+\begin_inset Formula $Z$
+\end_inset
+
+就很重要了。
+\end_layout
+
+\begin_layout Standard
+目前为止，我们只进行了一次高阶修正的完整计算，即电子形状因子的 order–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 修正。我们没有考虑电子场强重正化的影响，让我们假如这个因子，看看它的影响。
+\end_layout
+
+\begin_layout Standard
+由于电子在重靶上散射的表达式 (6.28) 和 (6.30) 是使用我们之前的，不正确的 
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的公式得到的，我们应该修正这些公式，通过为初末态电子插入因子
+\begin_inset Formula $\sqrt{Z_{2}}$
+\end_inset
+
+。对应精确顶点的方程(6.33)应该是，
+\begin_inset Formula 
+\begin{equation}
+Z_{2}\Gamma^{\mu}\left(p^{\prime},p\right)=\gamma^{\mu}F_{1}\left(q^{2}\right)+\frac{i\sigma^{\mu\nu}q_{\nu}}{2m}F_{2}\left(q^{2}\right),\label{eq:7.46}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Gamma^{\mu}\left(p^{\prime},p\right)$
+\end_inset
+
+是所有截腿电子–光子顶点图的求和。
+\end_layout
+
+\begin_layout Standard
+使用这个方程，我们重新计算 order 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的形状因子。由于
+\begin_inset Formula $Z_{2}=1+\mathcal{O}\left(\alpha\right)$
+\end_inset
+
+，
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ 从 order 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 开始取值，之前我们关于
+\begin_inset Formula $F_{2}$
+\end_inset
+
+的计算未受影响。为计算
+\begin_inset Formula $F_{1}$
+\end_inset
+
+，我们将
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.46"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的左边写成：
+\begin_inset Formula 
+\[
+Z_{2}\Gamma^{\mu}=\left(1+\delta Z_{2}\right)\left(\gamma^{\mu}+\delta\Gamma^{\mu}\right)=\gamma^{\mu}+\delta\Gamma^{\mu}+\gamma^{\mu}\cdot\delta Z_{2},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\delta Z_{2}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\delta\Gamma^{\mu}$
+\end_inset
+
+ 表示对于这些量的 order–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 修正。比较
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.46"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的右边，我们看出
+\begin_inset Formula $F_{1}\left(q^{2}\right)$
+\end_inset
+
+收到一项新的贡献，等于
+\begin_inset Formula $\delta Z_{2}$
+\end_inset
+
+。现在令
+\begin_inset Formula $\delta F_{1}\left(q^{2}\right)$
+\end_inset
+
+表示在 Section6.3 中，我们算出的对形状因子的（未减除）修正，并回忆起在 Section 7.1 结尾得到 
+\begin_inset Formula $\delta Z_{2}=-\delta F_{1}\left(0\right)$
+\end_inset
+
+。则：
+\begin_inset Formula 
+\[
+F_{1}\left(q^{2}\right)=1+\delta F_{1}\left(q^{2}\right)+\delta Z_{2}=1+\left[\delta F_{1}\left(q^{2}\right)-\delta F_{1}\left(0\right)\right].
+\]
+
+\end_inset
+
+这正是在 Section 6.3 我们声称，却没有证明的式子。囊括场强重正化，验证了在那里我们对专用（ad hoc）基函数的减除手续。
+\end_layout
+
+\begin_layout Standard
+以目前的分析方法，很难看出
+\begin_inset Formula $F_{1}$
+\end_inset
+
+中发散的抵消，如何在高阶持续成立。更糟糕的是，尽管我们在 Section 6.3 中论证了 
+\begin_inset Formula $F_{1}\left(0\right)=1$
+\end_inset
+
+ 的普遍结论，但我们在 order 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的验证似乎依赖于数值巧合。
+\end_layout
+
+\begin_layout Standard
+我们可以更仔细地阐述这个问题：在定义一个标度因子
+\begin_inset Formula $Z_{1}$
+\end_inset
+
+，通过关系：
+\begin_inset Formula 
+\[
+\Gamma^{\mu}\left(q=0\right)=Z_{1}^{-1}\gamma^{\mu},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\Gamma^{\mu}$
+\end_inset
+
+是完整的截腿顶点函数。为令
+\begin_inset Formula $F_{1}\left(0\right)=1$
+\end_inset
+
+，我们必须证明恒等式
+\begin_inset Formula $Z_{1}=Z_{2}$
+\end_inset
+
+，如此顶点的归一化，正好抵消掉电子场强重正化。在 Section 7.4 中，我们会证明这个等式对于微扰论任意阶都成立。
+\end_layout
+
+\begin_layout Standard
+我们用一个更加正式的观察，来总结关于 LSZ 约化公式的讨论。LSZ 公式只需通过傅立叶变换动量 
+\begin_inset Formula $p_{i}^{0}$
+\end_inset
+
+ 或 
+\begin_inset Formula $k_{i}^{0}$
+\end_inset
+
+的正负号，就可以区分入射和出射粒子。这意味着，通过将
+\begin_inset Formula $p^{2}$
+\end_inset
+
+极点的留数，从正的
+\begin_inset Formula $p^{0}$
+\end_inset
+
+解析延拓（analytically continuing）到负的
+\begin_inset Formula $p^{0}$
+\end_inset
+
+，我们可以将带有
+\begin_inset Formula $\phi\left(\sbf p\right)$
+\end_inset
+
+末态的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元，转换成带有
+\begin_inset Formula $\phi^{*}\left(-\sbf p\right)$
+\end_inset
+
+初态的
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元。这正是 交叉对称性（crossing symmetry） 的意思，在 Section 5.4 中，我们在图像上推出过，
+\begin_inset Formula 
+\[
+\bra{\cdots\phi\left(p\right)}S\ket{\cdots}|_{p=-k}=\bra{\cdots}S\ket{\phi^{*}\left(k\right)\cdots}.
+\]
+
+\end_inset
+
+由于 LSZ 公式的证明不依赖于微扰论，我们看出 
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的交叉对称性是量子场论的一般结果，而不仅仅是费曼图的性质。
+\end_layout
+
+\begin_layout Section
+Ward–Takahashi 恒等式
+\end_layout
+
+\begin_layout Standard
+本章开头提过的零散问题只剩一个，那就是 Ward 恒等式的证明。回忆 Section 5.5 节，这个恒等式表示：如果
+\begin_inset Formula $\mathcal{M}\left(k\right)=\epsilon_{\mu}\left(k\right)\mathcal{M}^{\mu}\left(k\right)$
+\end_inset
+
+ 是某 QED 过程的振幅，其中外腿光子的动量为
+\begin_inset Formula $k$
+\end_inset
+
+；若我们将
+\begin_inset Formula $\epsilon_{\mu}$
+\end_inset
+
+替换成
+\begin_inset Formula $k_{\mu}$
+\end_inset
+
+，则修改过的振幅为零：
+\begin_inset Formula 
+\begin{equation}
+k_{\mu}\mathcal{M}^{\mu}\left(k\right)=0.\label{eq:7.64}
+\end{equation}
+
+\end_inset
+
+为了证明这个论断，可以先证明一个对于 QED 关联函数 更一般的等式，称为 Ward–Takahashi 恒等式。
+\end_layout
+
+\begin_layout Standard
+对于某特定图，将所有可能的插入点求和，我们得到：
+\begin_inset Formula 
+\[
+\text{WT恒等式的图形表示}
+\]
+
+\end_inset
+
+其中阴影圆代表任何对
+\begin_inset Formula $\mathcal{M}_{0}$
+\end_inset
+
+有贡献的特定图。对所有这样的图求和，我们最终得到：
+\begin_inset Formula 
+\begin{equation}
+k_{\mu}\mathcal{M}^{\mu}\left(k;p_{1}\cdots p_{n};q_{1}\cdots q_{n}\right)=e\sum_{i}\left[\mathcal{M}_{0}\left(p_{1}\cdots p_{n};q_{1}\cdots\left(q_{i}-k\right)\cdots\right)-\mathcal{M}_{0}\left(p_{1}\cdots\left(p_{i}+k\right)\cdots;q_{1}\cdots q_{n}\right)\right]\label{eq:7.68}
+\end{equation}
+
+\end_inset
+
+这就是 QED关联函数的 Ward–Takahashi 恒等式。在 (7.66) 下面我们看到了，上述方程右边对
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵没有贡献；因此对于
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+是
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的特殊情形，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.68"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 退化到 Ward 恒等式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.64"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+在进一步讨论这个恒等式之前，我们应该提一下上述证明潜在的瑕疵。为了发现 (7.67) 中必要的抵消，我们必须将积分变量平移一个常数。然而如果积分发散，平移是不被允
+许的。类似地，导向（7.66）的表达式中，可能会有发散的圈动量积分。尽管在此处的证明中，没有进行明显的平移，但一般在计算圈积分时，还是需要进行积分动量平移的。不管
+哪种情形，紫外发散都可能会使 Ward–Takahashi 恒等式不再成立。在下一节中，我们会看到这个问题的一个例子，以及一般化的解决方案。
+\end_layout
+
+\begin_layout Standard
+Ward–Takahashi 恒等式最简单的例子是，方程左边为三点函数，包含一进一出的电子，以及一个外线光子：
+\begin_inset Formula 
+\[
+\text{三点函数的WT恒等式}
+\]
+
+\end_inset
+
+方程右边的量刚好就是电子传播子，分别在
+\begin_inset Formula $p$
+\end_inset
+
+和
+\begin_inset Formula $\left(p+k\right)$
+\end_inset
+
+求值。由 (7.23)，将这些量标记为
+\begin_inset Formula $S\left(p\right)$
+\end_inset
+
+和
+\begin_inset Formula $S\left(p+k\right)$
+\end_inset
+
+；
+\begin_inset Formula 
+\[
+S\left(p\right)=\frac{i}{\sla p-m-\Sigma\left(p\right)}.
+\]
+
+\end_inset
+
+类似 (7.44)，方程左边的 完全 三点振幅可以重写为，入射和出射电子的全传播子，乘上截腿的散射振幅。在本例中，截腿函数正是顶点
+\begin_inset Formula $\Gamma^{\mu}\left(p+k,p\right)$
+\end_inset
+
+。则对应的 Ward–Takahashi 恒等式是：
+\begin_inset Formula 
+\[
+S\left(p+k\right)\left[-iek_{\mu}\Gamma^{\mu}\left(p+k,p\right)\right]S\left(p\right)=e\left[S\left(p\right)-S\left(p+k\right)\right].
+\]
+
+\end_inset
+
+为简化这个方程，在方程左右两边同时乘上狄拉克矩阵 
+\begin_inset Formula $S^{-1}\left(p+k\right)$
+\end_inset
+
+和
+\begin_inset Formula $S^{-1}\left(p\right)$
+\end_inset
+
+，得到：
+\begin_inset Formula 
+\begin{equation}
+-ik_{\mu}\Gamma^{\mu}\left(p+k,p\right)=S^{-1}\left(p+k\right)-S^{-1}\left(p\right).\label{eq:7.69}
+\end{equation}
+
+\end_inset
+
+W–T 恒等式也经常指代此特殊的情形。
+\end_layout
+
+\begin_layout Standard
+我们可以使用恒等式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.69"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到重正化因子
+\begin_inset Formula $Z_{1}$
+\end_inset
+
+和
+\begin_inset Formula $Z_{2}$
+\end_inset
+
+的一般关系。我们定义了(7.47)中的
+\begin_inset Formula $Z_{1}$
+\end_inset
+
+为：
+\begin_inset Formula 
+\[
+\Gamma^{\mu}\left(p+k,p\right)\to Z_{1}^{-1}\gamma^{\mu}\quad\text{as}\quad k\to0.
+\]
+
+\end_inset
+
+我们定义
+\begin_inset Formula $Z_{2}$
+\end_inset
+
+为
+\begin_inset Formula $S\left(p\right)$
+\end_inset
+
+在极点的留数：
+\begin_inset Formula 
+\[
+S\left(p\right)\sim\frac{iZ_{2}}{\sla p-m}.
+\]
+
+\end_inset
+
+令
+\begin_inset Formula $p$
+\end_inset
+
+趋于质量壳，并在
+\begin_inset Formula $k=0$
+\end_inset
+
+附近展开
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.69"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，在领头阶，我们得到关系：
+\begin_inset Formula 
+\[
+-iZ_{1}^{-1}\sla k=-iZ_{2}^{-1}\sla k,
+\]
+
+\end_inset
+
+也就是
+\begin_inset Formula 
+\[
+Z_{1}=Z_{2}.
+\]
+
+\end_inset
+
+因此， Ward–Takahashi 恒等式保证了，电子散射顶点中的无穷大归一化因子的相互抵消，正如我们在 Section 7.2 中发现的那样。结合
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:7.46"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中电子形状因子的正确严格形式，此恒等式保证了在微扰论的所有阶，
+\begin_inset Formula $F_{1}\left(0\right)=1$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+Z_{2}\Gamma^{\mu}\left(p^{\prime},p\right)=\gamma^{\mu}F_{1}\left(q^{2}\right)+\frac{i\sigma^{\mu\nu}q_{\nu}}{2m}F_{2}\left(q^{2}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在文献中，术语
+\begin_inset space ~
+\end_inset
+
+Ward 恒等式，流守恒 和 规范不变性，经常互相指代（used interchangeably）。这是相当自然的，由于 Ward 恒等式正是电磁流守恒的图形表
+示，而后者又是规范不变性的结果。然而在本书中，我们会区分这三个概念。我们用 
+\series bold
+规范不变性
+\series default
+ 表示拉氏量的基本对称性；用 
+\series bold
+流守恒
+\series default
+ 来表示从这种对称性得到的运动方程；用 
+\series bold
+Ward恒等式
+\series default
+ 来表示施加（impose）到量子力学振幅上的图形恒等式。
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xxxxx
+\end_layout
+
+\end_body
+\end_document
