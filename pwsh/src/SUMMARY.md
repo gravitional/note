@@ -13,6 +13,7 @@
 # docs microsoft com
 
 - [常用操作](pwsh-1.md)
+- [日常维护](pwsh-1-maintain.md)
 
 - [控制流](pwsh-2-flow-control.md)
 - [运算符](pwsh-2-operator.md)

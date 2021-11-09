@@ -113,7 +113,8 @@ $ git config --global merge.tool vimdiff
 
 [在 Windows 终端中设置 Powerline](https://docs.microsoft.com/zh-cn/windows/terminal/tutorials/powerline-setup)
 
-适用于 `PowerShell` , 也适用于 Linux or macOS 上运行的 `PowerShell Core` , 只许安装名为 `Posh-Git` 的拓展包. link: [Posh-Git](https://github.com/dahlbyk/posh-git)
+适用于 `PowerShell` , 也适用于 Linux or macOS 上运行的 `PowerShell Core` , 只需安装名为 `Posh-Git` 的拓展包. 
+link: [Posh-Git](https://github.com/dahlbyk/posh-git)
 
 ***
 安装前提需求(仅限 Windows)

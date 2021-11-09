@@ -1,4 +1,4 @@
-# mathematica 安装
+# mathematica 安装,维护
 
 ## linux mathematica 只打开单个前端
 
@@ -31,7 +31,7 @@ Allows only one copy of the front end to exist per DISPLAY setting and directs t
 创建文件`~/.Mathematica/FrontEnd/frontend.css`,在其中追加配置
 
 ```css
-* { font-size:16pt; font-family:"Griffy"; }
+* { font-size:14pt; font-family:"Griffy"; }
 ```
 
 ### 没有启动图标
