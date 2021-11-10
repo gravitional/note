@@ -6,37 +6,115 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+\usepackage{xeCJK}% 没有这个会无法实现中文断行
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
 % 如果没有这一句命令，XeTeX会出错，原因参见
 % http://bbs.ctex.org/viewthread.php?tid=60547
 % \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
 %%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic} 
-\usepackage{xcolor}
-\usepackage{amsmath} 
-\usepackage{amssymb} 
-\usepackage{amsfonts} 
-\usepackage{latexsym} 
-% Required for specifying colors by name 
-\definecolor{ocre}{RGB}{243,102,25} 
-\usepackage{enumerate} 
-
-%\usepackage{hepunits} % hep units
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{bm} 
-\usepackage{graphicx,graphics,color} 
-\usepackage{simplewick} 
-\usepackage{makeidx} 
-\usepackage{multirow} 
-%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
-%% \usepackage{axodraw2} 
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr} 
-\DeclareMathOperator{\re}{Re} 
-\DeclareMathOperator{\im}{Im} 
-\DeclareMathOperator{\res}{Res} 
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\newcommand{\cola}[1]{{\color{blue}{#1}}}
+\usepackage{eso-pic}
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+\usepackage{bm,bbm}  %\bm 命令使参数变成粗体
+% Blackboard variants of Computer Modern fonts.
+\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+\usepackage{tikz-feynman}  % 画费曼图用
+\usepackage{tikz} %画矢量图用
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+%%++++++++++++++++++++++++++++++++++++++
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
@@ -1353,18 +1431,14 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-SU(2)
-\begin_inset Formula $\times$
-\end_inset
-
-SU(2)
+SU(2)xSU(2)
 \end_layout
 
 \begin_layout Standard
 现在，我们来研究一个更有趣的例子。只包含up and down 夸克的QCD 拉格朗日模型为
 \begin_inset Formula 
 \begin{equation}
-\mathcal{L}=-\frac{1}{4}\left(F_{\mu\nu}^{a}\right)^{2}+i\bar{u}\slashed{D}u+i\bar{d}\slashed{D}d-m_{u}\bar{u}u-m_{d}\bar{d}d\label{eq:28.17}
+\mathcal{L}=-\frac{1}{4}\left(F_{\mu\nu}^{a}\right)^{2}+i\bar{u}\sla{D}u+i\bar{d}\sla{D}d-m_{u}\bar{u}u-m_{d}\bar{d}d\label{eq:28.17}
 \end{equation}
 
 \end_inset
@@ -1388,7 +1462,7 @@ SU(2)
 ，Lagrangian 是
 \begin_inset Formula 
 \begin{equation}
-\mathcal{L}=-\frac{1}{4}\left(F_{\mu\nu}^{a}\right)^{2}+i\bar{u}^{L}\slashed{D}u^{L}+i\bar{u}^{R}\slashed{D}u^{R}+i\bar{d}^{L}\slashed{D}d^{L}+i\bar{d}^{R}\slashed{D}d^{R}\label{eq:28.18}
+\mathcal{L}=-\frac{1}{4}\left(F_{\mu\nu}^{a}\right)^{2}+i\bar{u}^{L}\sla{D}u^{L}+i\bar{u}^{R}\sla{D}u^{R}+i\bar{d}^{L}\sla{D}d^{L}+i\bar{d}^{R}\sla{D}d^{R}\label{eq:28.18}
 \end{equation}
 
 \end_inset
@@ -1422,9 +1496,9 @@ and
 \end_inset
 
 。
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
+\begin_layout Enumerate
 等价地，对称性可以写成
 \begin_inset Formula $q\to e^{i\left(I\theta_{a}\tau^{a}+\gamma_{5}\beta_{a}\tau^{a}\right)}q$
 \end_inset
@@ -1445,14 +1519,14 @@ d
 \end_inset
 
 的味道二重态。
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
+\begin_layout Enumerate
 用
 \begin_inset Formula $\theta_{a}$
 \end_inset
 
-with 
+ 以及 
 \begin_inset Formula $\beta_{a}=0$
 \end_inset
 
@@ -1466,16 +1540,14 @@ with
 ），叫做 
 \series bold
 同位旋(isospin)。
-\series default
+\end_layout
 
-\begin_inset Newline newline
-\end_inset
-
+\begin_layout Enumerate
 用
 \begin_inset Formula $\beta_{a}$
 \end_inset
 
-with 
+以及 
 \begin_inset Formula $\theta_{a}=0$
 \end_inset
 
@@ -1531,16 +1603,15 @@ j_{\mu}^{a}=\bar{q}\tau^{a}\gamma^{\mu}q,\quad J_{\mu}^{5a}=\bar{q}\tau^{a}\gamm
 
 \end_inset
 
-在chapter 34 中我们会看到，axial U(1)，under which 
+在chapter 34 中我们会看到，在 轴U(1)变换 下 
 \begin_inset Formula $q\to e^{i\theta\gamma_{5}}q$
 \end_inset
 
-，不再是无质量夸克QCD的一个精确对称性，它被叫做 反常(anomalies)的量子效应破坏了。vector U(1)对称性，under which
- 
+，即它不再是无质量夸克QCD的一个精确对称性，它被称为反常(anomalies)的量子效应破坏了。而在矢量U(1)变换下 
 \begin_inset Formula $q\to e^{i\theta}q$
 \end_inset
 
-，即使包括进夸克质量时，也是一个对称性。见
+，即使包括夸克质量时，也仍然保持对称性，见
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:28.17"
@@ -1558,22 +1629,22 @@ noprefix "false"
 \begin_inset Formula $-\frac{1}{3}$
 \end_inset
 
-）。在完全的 标准模型中，当包括弱相互作用时，重子数也是反常的。但是，重子数和轻子数的差,
+）。在完全的标准模型中，当包括弱相互作用时，重子数也是反常的。但是，重子数和轻子数的差,
 \begin_inset Formula $B-L$
 \end_inset
 
-，是不反常的。由于这些反常，我们推迟U(1)对称性的讨论到chapter 34 中，目前集中注意力到
-\begin_inset Formula $SU(2)\times SU(2)$
+，是不反常的。由于这些反常，我们推迟U(1)对称性的讨论到chapter 34 中，目前集中注意力到 
+\begin_inset Formula $\mathrm{SU}(2)\times\mathrm{SU}(2)$
 \end_inset
 
-的自发破缺上。
+ 的自发破缺上。
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $SU(2)\times SU(2)$
+\begin_inset Formula $\mathrm{SU}(2)\times\mathrm{SU}(2)$
 \end_inset
 
-的自发破缺发生在14亿年以前，当宇宙的温度冷却到低于
+ 的自发破缺发生在14亿年以前，当宇宙的温度冷却到低于
 \begin_inset Formula $T_{C}\sim\Lambda_{\text{QCD}}$
 \end_inset
 
@@ -1633,8 +1704,8 @@ with
 \begin_inset Formula $\langle\bar{u}u\rangle=\langle\bar{d}d\rangle\equiv V^{3}$
 \end_inset
 
-，对称性破缺 as
-\begin_inset Formula $SU(2)\times SU(2)\to SU(2)_{\text{isospin}}$
+，对称性发生破缺：
+\begin_inset Formula $\mathrm{SU}(2)\times\mathrm{SU}(2)\to\mathrm{SU}(2)_{\text{isospin}}$
 \end_inset
 
 。未破缺的对称性是对角子群（就是左右手按照相同方式变化），它按相同的方式转动左手和右手场。这和核物理中的isospin是相同的，在那里它联系了中子和质子。确实，
@@ -1986,7 +2057,11 @@ noprefix "false"
 
 \end_inset
 
-这就是 Chiral Lagrangian。这里的协变导数只包含电弱规范场，而不包含胶子。
+这就是
+\series bold
+手征拉氏量
+\series default
+（手征拉氏量）。这里的协变导数只包含电弱规范场，而不包含胶子。
 \begin_inset Formula $\mathcal{L}$
 \end_inset
 
@@ -1998,8 +2073,7 @@ noprefix "false"
 \begin_inset Formula $UU^{\dagger}$
 \end_inset
 
-的项是trivial的。因此，Chiral Lagrangian 中的每一项都必须包含一个协变导数。特别地，pions 不能有质量项，与 pions
- 是无质量Goldstone玻色子一致。
+的项是平庸的。因此，手征拉氏量中的每一项都必须带有协变导数。特别地，pions 不能有质量项，与 pions 是无质量Goldstone玻色子一致。
 \end_layout
 
 \begin_layout Standard
@@ -2025,12 +2099,12 @@ noprefix "false"
 \begin_inset Formula $\frac{F_{\pi}^{2}}{4}\tr\left[\left(D_{\mu}U\right)\left(D_{\mu}U\right)^{\dagger}\right]$
 \end_inset
 
-的展开决定。换句话说，pion 相互作用具有非常特别的形式。在有效 Lagrangian 出现之前，比如 Chiral Lagrangian，人们直接使用对称性
-和在壳态去理解 pions 相互作用的各种限制，通过一种叫做 
+的展开决定。换句话说，pion 相互作用具有非常特别的形式。在有效拉氏量，比如手征拉氏量出现之前，人们直接使用对称性和在壳态去理解 pions
+ 相互作用的各种限制，通过一种叫做 
 \series bold
-current algebra 
+流代数（current algebra ）
 \series default
-的技巧.由于有效作用量提供了一个更加有效的方法去编码理论的对称性，流代数现在更多的是一种历史兴趣了。
+的技巧。由于有效拉氏量提供了更加有效的方法，来编码理论的对称性，流代数现在更多地作为一种历史兴趣了。
 \end_layout
 
 \begin_layout Standard
@@ -2042,17 +2116,12 @@ current algebra
 \begin_inset Formula $\frac{E}{F_{\pi}}$
 \end_inset
 
-的幂次压低的，相对于领头阶的贡献。因此，尽管 Chiral Lagrangian 是一个不可重整化理论，它仍然有预言能力。事实上，它在圈图水平上仍然具有预言能力
-，通过可以计算的非解析的动量依赖（有时候称为 
+的幂次压低的，相对于领头阶的贡献。因此，尽管 手征拉氏量 是一个不可重整化理论，它仍然有预言能力。事实上，它在圈图水平上仍然具有预言能力，通过可以计算的非解析的
+动量依赖（有时候称为手征对数，
 \series bold
 chiral logarithms
 \series default
-）。一旦领头阶被重整化，也可以从 
-\begin_inset space ~
-\end_inset
-
-Chiral Lagrangian 中得到有限的解析的预测。事实上，有一整个产业的人们使用 Chiral Lagrangian 和它的推广计算各种各样的低能可观
-测量。
+）。一旦领头阶被重整化，也可以从 手征拉氏量 中得到有限的解析的预测。事实上，有一整个产业的人们使用 手征拉氏量 和它的推广计算各种各样的低能可观测量。
 \end_layout
 
 \begin_layout Standard
@@ -2167,7 +2236,7 @@ noprefix "false"
 
 \end_inset
 
-中的变换性质，它就是 Chiral Lagrangian 的诺特流
+中的变换性质，它就是 手征拉氏量 的诺特流
 \begin_inset Formula $F_{\pi}\partial_{\mu}\pi^{a}$
 \end_inset
 
@@ -2197,11 +2266,7 @@ noprefix "false"
 \begin_inset Formula $4$
 \end_inset
 
-–费米理论中计算起来比较简单，
-\begin_inset Newline newline
-\end_inset
-
-该理论将
+–费米理论中计算起来比较简单，该理论将
 \begin_inset Formula $W_{\mu}^{a}$
 \end_inset
 
@@ -2307,7 +2372,7 @@ noprefix "false"
 \begin_inset Formula $F_{\pi}$
 \end_inset
 
- 拟合到实验， Chiral Lagrangian 
+ 拟合到实验， 手征拉氏量 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:28.28"
@@ -2393,8 +2458,8 @@ m_{u} & 0\\
 \end_inset
 
 矩阵）被称为 spurions （虚假粒子），由于它们是虚假（fictional）场。现在，pions 的低能理论中不再有夸克，但是可以有质量矩阵。因此我们可以
-利用 spurious（假的） 变换性质限制 Chiral Lagrangian 中质量矩阵可能出现的方式。确实，我们能添加到 nonlinear
- sigma model 中领头的
+利用 spurious（假的） 变换性质限制 手征拉氏量 中质量矩阵可能出现的方式。确实，我们能添加到 nonlinear sigma model
+ 中领头的
 \begin_inset Formula $SU(2)\times SU(2)$
 \end_inset
 
@@ -2484,8 +2549,8 @@ noprefix "false"
 \end_inset
 
 ，联系pion 质量和夸克质量，and 计算量子效应比如pion散射。对称性也限制了pion和重子，比如 proton and neutron
- 的作用形式。确实，protons and neutrons 间的强相互作用的模型阐明了那些被我们简洁地编码在 Chiral Lagrangian
- 中的对称性原则。在这个模型中，proton and neutron通过交换 pion 传递的 Yukawa 力相互作用。
+ 的作用形式。确实，protons and neutrons 间的强相互作用的模型阐明了那些被我们简洁地编码在 手征拉氏量 中的对称性原则。在这个模型中，pro
+ton and neutron通过交换 pion 传递的 Yukawa 力相互作用。
 \end_layout
 
 \begin_layout Standard
@@ -2549,11 +2614,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-end of file
-\end_layout
-
-\begin_layout Standard
-end of file
+EOF
 \end_layout
 
 \begin_layout Bibliography
