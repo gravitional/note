@@ -1,0 +1,2096 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>权限,shell 环境 - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html" class="active"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linux-5"><a class="header" href="#linux-5">linux-5</a></h1>
+<h2 id="权限"><a class="header" href="#权限">权限</a></h2>
+<p>Unix 传统中的操作系统不同于那些 MS-DOS 传统中的系统,区别在于它们不仅是多任务系统,而且也是多用户系统.
+这到底意味着什么?它意味着多个用户可以在同一时间使用同一台计算机.</p>
+<p>例如,如果一台 计算机连接到一个网络或者因特网,那么远程用户通过<code>ssh</code>(安全 shell)可以登录并操纵这台电脑.
+事实上,远程用户也能运行图形界面应用程序,并且图形化的输出结果会出现在远端的显示器上.
+<code>X</code>窗口系统把这个作为基本设计理念的一部分,并支持这种功能.</p>
+<p>在这一章中,我们将看看这一系统安全的本质部分,会介绍以下命令:</p>
+<ul>
+<li><code>id</code> – 显示用户身份号</li>
+<li><code>chmod</code> – 更改文件模式</li>
+<li><code>umask</code> – 设置默认的文件权限</li>
+<li><code>su</code> – 以另一个用户的身份来运行 shell</li>
+<li><code>sudo</code> – 以另一个用户的身份来执行命令</li>
+<li><code>chown</code> – 更改文件所有者</li>
+<li><code>chgrp</code> – 更改文件组所有权</li>
+<li><code>passwd</code> – 更改用户密码</li>
+</ul>
+<h3 id="拥有者组成员和其他人"><a class="header" href="#拥有者组成员和其他人">拥有者,组成员,和其他人</a></h3>
+<p>在第四章探究文件系统时,当我们试图查看一个像<code>/etc/shadow</code>那样的文件的时候,我们会遇到一个问题.</p>
+<pre><code class="language-bash">file /etc/shadow
+/etc/shadow: regular file, no read permission
+less /etc/shadow
+/etc/shadow: Permission denied
+</code></pre>
+<p>产生这种错误信息的原因是,作为一个普通用户,我们没有权限来读取这个文件.</p>
+<p>在 Unix 安全模型中,一个用户可能拥有文件和目录.
+当一个用户拥有一个文件或目录时, 用户可以设置这个文件或目录的访问权限.
+用户,反过来又属于用户组(由一个或多个用户组成),文件和目录的owner 可以对用户组成员授予对这些文件和目录的访问权限.
+除了对一个用户组授予权限之外,owner 还能给其他人授予一些权限.在 Unix 术语中,每个人 是指整个世界.</p>
+<p>可以用 <code>id</code> 命令,来找到关于你自己身份的信息:</p>
+<pre><code class="language-bash">id
+uid=500(me) gid=500(me) groups=500(me)
+</code></pre>
+<p>让我们看一下输出结果.
+当用户创建帐户之后,系统会给用户分配一个号码,叫做用户 <code>ID</code> 或者 <code>uid</code>,然后,为了符合人类的习惯,这个 <code>ID</code> 映射到一个用户名.</p>
+<p>系统又会给这个用户分配一个原始的组 <code>ID</code> 或者是 <code>gid</code>,这个 <code>gid</code> 可能属于另外的组.</p>
+<p>上面的例子来自于 <code>Fedora</code> 系统, 比方说 <code>Ubuntu</code> 的输出结果可能看起来有点儿不同:</p>
+<pre><code class="language-bash">id
+uid=1000(me) gid=1000(me)
+groups=4(adm),20(dialout),24(cdrom),25(floppy),29(audio),30(dip),44(v
+ideo),46(plugdev),108(lpadmin),114(admin),1000(me)
+</code></pre>
+<p>正如我们能看到的,两个系统中用户的 <code>uid</code> 和 <code>gid</code> 号码是不同的.
+原因很简单,因为 <code>Fedora</code> 系统 从500开始进行普通用户帐户的编号,而 <code>Ubuntu</code> 从1000开始.
+我们也能看到 <code>Ubuntu</code> 的用户属于 更多的用户组.这和<code>Ubuntu</code> 管理系统设备和服务权限的方式有关系.</p>
+<p>那么这些信息来源于哪里呢?像 <code>Linux</code> 系统中的许多东西一样,来自一系列的文本文件.</p>
+<p>用户帐户定义在 <code>/etc/passwd</code> 文件里面,用户组定义在<code> /etc/group</code> 文件里面.</p>
+<p>当用户帐户和用户组创建以后, 这些文件随着文件 <code>/etc/shadow</code> 的变动而修改,文件 /<code>etc/shadow</code> 包含了关于用户密码的信息.</p>
+<p>对于每个用户帐号,文件<code>/etc/passwd</code> 定义了用户(登录)名,<code>uid</code>,<code>gid</code>,帐号的真实姓名,家目录, 和登录 <code>shell</code>.如果你查看一下文件<code>/etc/passwd</code> 和文件<code>/etc/group</code> 的内容,你会注意到除了普通 用户帐号之外,还有超级用户(<code>uid 0</code>)帐
+号,和各种各样的系统用户.</p>
+<p>在下一章中,当我们讨论进程时,你会知道这些其他的<code>用户</code>是谁,实际上,他们相当忙碌.</p>
+<p>然而许多像 Unix 的系统会把普通用户分配到一个公共的用户组中,例如<code>users</code>,
+现在的 Linux 会创建一个独一无二的,只有一个成员的用户组,这个用户组与用户同名.
+这样使某种类型的 权限分配更容易些.</p>
+<h3 id="读取写入和执行"><a class="header" href="#读取写入和执行">读取,写入,和执行</a></h3>
+<p>对于文件和目录的访问权力是根据读访问,写访问,和执行访问来定义的.
+如果我们看一下 <code>ls</code> 命令的输出结果,我们能得到一些线索,这是怎样实现的:</p>
+<pre><code class="language-bash">&gt; foo.txt
+ls -l foo.txt
+-rw-rw-r-- 1 me me 0 2008-03-06 14:52 foo.txt
+</code></pre>
+<p>列表的前十个字符是文件的属性.这十个字符的第一个字符表明文件类型.
+下表是你可能经常看到 的文件类型(还有其它的,不常见类型):</p>
+<hr />
+<p>属性 文件类型</p>
+<ul>
+<li><code>-</code> 一个普通文件</li>
+<li><code>d</code> 一个目录</li>
+<li><code>l</code> 一个符号链接.注意对于符号链接文件,剩余的文件属性总是<code>rwxrwxrwx</code>,而且都是 虚拟值.
+真正的文件属性是指符号链接所指向的文件的属性.</li>
+<li><code>c</code> 一个字符设备文件.这种文件类型是指按照字节流,来处理数据的设备. 比如说终端机,或者调制解调器</li>
+<li><code>b</code> 一个块设备文件.这种文件类型是指按照数据块,来处理数据的设备,例如一个硬盘,或者 CD-ROM 盘.</li>
+</ul>
+<p>剩下的九个字符,叫做文件模式,代表着<strong>文件所有者</strong>,<strong>文件组所有者</strong>,和<strong>其他人</strong>的<strong>读</strong>,<strong>写</strong>,<strong>执行</strong>权限.</p>
+<h3 id="chmod---更改文件模式"><a class="header" href="#chmod---更改文件模式">chmod - 更改文件模式</a></h3>
+<p>更改文件或目录的模式(权限),可以利用 <code>chmod</code> 命令.
+注意只有文件的所有者或者超级用户才能更改文件或目录的模式.
+<code>chmod</code> 命令支持两种不同的方法来改变文件模式:八进制数字表示法,或 符号表示法.</p>
+<p>首先我们讨论一下八进制数字表示法.</p>
+<p>虽然我们能知道二进制的意义(因为计算机只有一个手指),但是八进制和十六进制对什么 好处呢?
+答案是为了人类的便利.许多时候,在计算机中,一小部分数据以二进制的形式表示.
+以 RGB 颜色为例来说明.大多数的计算机显示器,每个像素由三种颜色组成:<code>8</code>位红色,<code>8</code>位绿色, <code>8</code>位蓝色.
+这样,一种可爱的中蓝色就由24位数字来表示:<code>010000110110111111001101</code></p>
+<p>我不认为你每天都喜欢读写这类数字.另一种数字系统对我们更有帮助.
+每个十六进制 数字代表四个二进制.在八进制中,每个数字代表三个二进制数字.
+那么代表中蓝色的<code>24</code>位 二进制能够压缩成<code>6</code>位十六进制数:<code>436FCD</code></p>
+<p>因为十六进制中的两个数字对应二进制的<code>8</code>位数字,我们可以看到<code>43</code>代表红色,<code>6F</code>代表绿色,<code>CD</code>代表蓝色.</p>
+<p>现在,十六进制表示法(经常叫做<code>hex</code>)比八进制更普遍,但是我们很快会看到,
+用八进制 来表示<code>3</code>个二进制数非常有用处...</p>
+<p>通过八进制表示法,我们使用八进制数字来设置所期望的权限模式.
+因为每个八进制数字代表了<code>3</code>个二进制数字,这种对应关系,正好映射到用来存储文件模式所使用的方案上.
+下表展示了 我们所要表达的意思:</p>
+<p>Octal Binary File Mode</p>
+<ul>
+<li>
+<p><code>0</code> <code>000</code> <code>---</code></p>
+</li>
+<li>
+<p><code>1</code> <code>001</code> <code>--x</code></p>
+</li>
+<li>
+<p><code>2</code> <code>010</code> <code>-w-</code></p>
+</li>
+<li>
+<p><code>3</code> <code>011</code> <code>-wx</code></p>
+</li>
+<li>
+<p><code>4</code> <code>100</code> <code>r--</code></p>
+</li>
+<li>
+<p><code>5</code> <code>101</code> <code>r-x</code></p>
+</li>
+<li>
+<p><code>6</code> <code>110</code> <code>rw-</code></p>
+</li>
+<li>
+<p><code>7</code> <code>111</code> <code>rwx</code></p>
+</li>
+<li>
+<p><code>r</code>:<code>4</code></p>
+</li>
+<li>
+<p><code>w</code>:<code>2</code></p>
+</li>
+<li>
+<p><code>x</code>:<code>1</code></p>
+</li>
+</ul>
+<p>通过使用<code>3</code>个八进制数字,我们能够设置<strong>文件所有者</strong>,<strong>文件的用户组</strong>,和<strong>其他人</strong>的权限:</p>
+<pre><code class="language-bash">&gt; foo.txt
+ls -l foo.txt
+chmod 600 foo.txt
+</code></pre>
+<p>通过传递参数 <code>600</code>,我们能够设置文件所有者的权限为读写权限,而删除<strong>用户组</strong>和<strong>其他人</strong>的所有权限.
+虽然八进制到二进制的映射看起来不方便,但通常只会用到一些常见的映射关系:</p>
+<ul>
+<li><code>7</code>: <code>rwx</code></li>
+<li><code>6</code> :<code>rw-</code></li>
+<li><code>5</code>: <code>r-x</code></li>
+<li><code>4</code>:<code>r--</code></li>
+<li><code>0</code>:<code>---</code></li>
+</ul>
+<p><code>chmod</code> 命令支持一种符号表示法,来指定文件模式.</p>
+<p>符号表示法分为三部分:更改会影响谁, 要执行哪个操作,要设置哪种权限.
+通过字符 <code>u</code>,<code>g</code>,<code>o</code>,和 <code>a</code>的组合来指定 要影响的对象,如下所示:</p>
+<ul>
+<li><code>u</code> <code>user</code>的简写,意思是文件或目录的所有者.</li>
+<li><code>g</code> 用户组</li>
+<li><code>o</code> <code>others</code>的简写,意思是其他所有的人</li>
+<li><code>a</code> <code>all</code>的简写,是<code>u</code>, <code>g</code>和<code>o</code>三者的联合</li>
+</ul>
+<p>如果没有指定字符,则假定使用<code>all</code>.</p>
+<p>执行的操作可能是一个<code>+</code>字符,表示加上一个权限,
+一个<code>-</code>,表示删掉一个权限,
+或者是一个<code>=</code>,表示只有指定的权限可用,其它所有的权限被删除.
+权限由 <code>r</code>,<code>w</code>,和 <code>x</code> 来指定.</p>
+<p>这里是一些符号表示法的实例:</p>
+<ul>
+<li><code>u+x</code> 为文件所有者添加可执行权限.</li>
+<li><code>u-x</code> 删除文件所有者的可执行权限.</li>
+<li><code>+x</code> 为文件所有者,用户组,和其他所有人添加可执行权限. 等价于 <code>a+x</code>.</li>
+<li><code>o-rw</code> 除了文件所有者和用户组,删除其他人的读权限和写权限.</li>
+<li><code>go=rw</code> 给群组的主人和任意文件拥有者的人读写权限.如果群组的主人或全局之前已
+经有了执行的权限,他们将被移除.</li>
+<li><code>u+x,go=rw</code> 给文件拥有者执行权限并给组和其他人读和执行的权限.多种设定可以用逗号分开.</li>
+</ul>
+<p>一些人喜欢使用八进制表示法,而另些人真正地喜欢符号表示法.
+符号表示法的优点是, 允许你设置文件模式的单个组成部分的属性,而没有影响其他的部分.</p>
+<p>要注意<code>chmod</code>的<code>--recursive</code>选项: 它可以同时作用于文件和目录,所以它并不是如我们期望的那么有用处,
+因为我们很少希望文件和目录拥有同样的权限.</p>
+<h3 id="umask---设置默认权限"><a class="header" href="#umask---设置默认权限">umask - 设置默认权限</a></h3>
+<p>当创建一个文件时,<code>umask</code> 命令控制着文件的默认权限.
+<code>umask</code> 命令使用八进制表示法来表达从文件模式属性中删除一个位掩码.大家看下面的例子:</p>
+<pre><code class="language-bash">rm -f foo.txt
+umask
+:0002
+&gt;foo.txt
+ls -l foo.txt
+:-rw-rw-r-- 1 me me 0 2008-03-06 14:53 foo.txt
+</code></pre>
+<p>首先,删除文件<code>foo.txt</code>,确保我们从新开始.下一步,运行不带参数的 <code>umask</code> 命令, 看一下当前的掩码值.
+<code>umask</code>的数值是<code>0002</code>(<code>0022</code>是另一个常用值),这个数值是掩码的八进制表示形式.
+下一步,我们创建文件<code>foo.txt</code>,并且保留它的权限.</p>
+<p>我们可以看到文件所有者和用户组都得到读权限和写权限,而其他人只是得到读权限.
+其他人没有得到写权限的原因是由掩码值决定的.重复我们的实验,这次自己设置掩码值:</p>
+<pre><code class="language-bash">rm foo.txt
+umask 0000
+&gt; foo.txt
+ls -l foo.txt
+-rw-rw-rw- me me 0 2008-03-06 14:58 foo.txt
+</code></pre>
+<p>当掩码设置为<code>0000</code>(实质上是关掉它)之后,我们看到其他人能够读写文件.
+为了弄明白这是 怎么回事,我们需要看一下掩码的八进制形式.把掩码展开成二进制形式,然后与文件属性相比较,看看有什么区别:</p>
+<table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td>Original file mode</td><td><code>--- rw- rw- rw-</code></td></tr>
+<tr><td>Mask</td><td><code>000 000 000 010</code></td></tr>
+<tr><td>Result</td><td><code>--- rw- rw- r--</code></td></tr>
+</tbody></table>
+<p>此刻先忽略掉开头的三个零(我们一会儿再讨论),注意掩码中若出现一个数字<code>1</code>,
+则 删除文件模式中和这个<code>1</code>在相同位置的属性,在这是指其他人的写权限.这就是掩码要完成的任务.
+掩码的二进制形式中,出现数字<code>1</code>的位置,相应地关掉一个文件模式属性.</p>
+<p>看一下掩码0022的作用:</p>
+<table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td>Original file mode</td><td><code>--- rw- rw- rw-</code></td></tr>
+<tr><td>Mask</td><td><code>000 000 010 010</code></td></tr>
+<tr><td>Result</td><td><code>--- rw- r-- r--</code></td></tr>
+</tbody></table>
+<p>又一次,二进制中数字<code>1</code>出现的位置,相对应的属性被删除.
+再试一下其它的掩码值(一些带数字7的) ,习惯于掩码的工作原理.当你实验完成之后,要记得清理现场:</p>
+<pre><code class="language-bash">rm foo.txt; umask 0002
+</code></pre>
+<p>大多数情况下,你不必修改掩码值,系统提供的默认掩码值就很好了.
+然而,在一些高安全级别下,你要能控制掩码值.</p>
+<h3 id="一些特殊权限"><a class="header" href="#一些特殊权限">一些特殊权限</a></h3>
+<p>虽然我们通常看到一个八进制的权限掩码用三位数字来表示,但是从技术层面上来讲, 用四位数字来表示它更确切些.
+为什么呢?因为,除了读取,写入,和执行权限之外,还有其它的,较少用到的权限设置.</p>
+<p>其中之一是 <code>setuid</code> 位(八进制<code>4000</code>).
+当一个普通用户运行一个程序,这个程序由根用户(<code>root</code>) 所有,并且设置了 <code>setuid</code> 位,
+那么这个程序运行时就具有超级用户的特权,这样程序就可以访问普通用户禁止访问的文件和目录.</p>
+<p>第二个是 <code>setgid</code> 位(八进制<code>2000</code>),这个类似 <code>setuid</code> 位.
+如果设置了一个<strong>目录</strong>的<code>setgid</code>位,则目录中新创建的文件的用户组继承自<code>父目录</code>.</p>
+<p>第三个是 <code>sticky</code> 位(八进制<code>1000</code>).这个继承于Unix,在 Unix 中,它可能把一个可执行文件 标志为<code>不可交换的</code>.
+在 Linux 中,会忽略文件的 <code>sticky</code> 位,但是如果一个目录设置了 <code>sticky</code> 位, 那么它能阻止用户删除或重命名文件,
+除非用户是这个目录(文件)的所有者,或是超级用户.这个经常用来控制访问共享目录,比方说<code>/tmp</code>.</p>
+<p>这里有一些例子,使用<code>chmod</code>命令和符号表示法,来设置这些特殊的权限.
+首先, 授予一个程序 <code>setuid</code> 权限.</p>
+<pre><code class="language-bash">chmod u+s program
+</code></pre>
+<p>下一步,授予一个目录 <code>setgid</code> 权限:</p>
+<pre><code class="language-bash">chmod g+s dir
+</code></pre>
+<p>最后,授予一个目录 <code>sticky</code> 权限:</p>
+<pre><code class="language-bash">chmod +t dir
+</code></pre>
+<p>当浏览 <code>ls</code> 命令的输出结果时,你可以确认这些特殊权限.</p>
+<ul>
+<li>具有 <code>setuid</code>属性的程序:<code>-rwsr-xr-x</code></li>
+<li>具有 <code>setgid</code>属性的目录:<code>drwxrwsr-x</code></li>
+<li>具有 <code>sticky</code> 属性的目录:<code>drwxrwxrwt</code></li>
+</ul>
+<h3 id="更改身份"><a class="header" href="#更改身份">更改身份</a></h3>
+<p>在不同的时候,我们会发现很有必要具有另一个用户的身份.
+经常地,我们想要得到超级 用户特权,来执行一些管理任务,但是也有可能变为另一个普通用户,比如说测试一个帐号.
+有三种方式,可以拥有多重身份:</p>
+<ol>
+<li>注销系统并以其他用户身份重新登录系统.</li>
+<li>使用 <code>su</code> 命令.</li>
+<li>使用 <code>sudo</code> 命令.</li>
+</ol>
+<p>我们将跳过第一种方法,因为我们知道怎样使用它,并且它缺乏其它两种方法的方便性.
+在我们自己的 <code>shell</code> 会话中, <code>su</code> 命令允许你,
+假定为另一个用户的身份,以这个用户的 <code>ID</code> 启动一个新的 <code>shell</code> 会话,或者是以这个用户的身份来发布一个命令.</p>
+<p><code>sudo</code> 命令允许管理员设置一个叫做<code>/etc/sudoers</code>的配置文件,并且定义了一些具体命令,特殊用户可以执行这些命令.
+选择使用哪个命令,很大程度上是由你使用的 <code>Linux</code> 发行版来决定的.
+你的发行版可能这两个命令都包含,但系统配置可能会偏袒其中之一.我们先介绍 <code>su</code> 命令.</p>
+<h4 id="su---以其他用户身份和组id运行一个shell"><a class="header" href="#su---以其他用户身份和组id运行一个shell">su - 以其他用户身份和组ID运行一个shell</a></h4>
+<p>su 命令用来以另一个用户的身份来启动 shell.这个命令语法看起来像这样:</p>
+<pre><code class="language-bash">su [-[l]] [user]
+</code></pre>
+<p>如果包含<code>-l</code>选项,那么会为指定用户启动一个需要登录的 <code>shell</code> .
+这意味着会加载此用户的 <code>shell</code> 环境, 并且工作目录会更改到这个用户的家目录.这通常是我们所需要的.
+如果不指定用户,那么就假定是超级用户.
+注意,选项<code>-l</code>可以缩写为<code>-</code>,这是经常用到的形式.启动超级用户的 shell, 我们可以这样做:</p>
+<pre><code class="language-bash">su -
+Password:
+[root@linuxbox ~]#
+</code></pre>
+<p>按下回车符之后,<code>shell</code> 提示我们输入超级用户的密码.
+如果密码输入正确,出现一个新的 <code>shell</code> 提示符, 这表明这个 <code>shell</code> 具有超级用户特权(提示符的末尾字符是<code>#</code>而不是<code>$</code>),
+并且当前工作目录是超级用户的家目录 (通常是<code>/root</code>).
+一旦进入一个新的 <code>shell</code>,我们能执行超级用户所使用的命令.当工作完成后, 输入<code>exit</code>,则返回到原来的 <code>shell</code>:</p>
+<pre><code class="language-bash">[root@linuxbox ~]# exit
+[me@linuxbox ~]$
+</code></pre>
+<p>以这样的方式使用 <code>su</code> 命令,也可以只执行单个命令,而不是启动一个新的可交互的 shell:</p>
+<pre><code class="language-bash">su -c 'command'
+</code></pre>
+<p>使用这种模式,命令传递到一个新 <code>shell</code> 中执行.
+把命令用单引号引起来很重要,因为我们不想命令在我们的 <code>shell</code> 中展开,但需要在新 <code>shell</code> 中展开.</p>
+<pre><code class="language-bash">su -c 'ls -l /root/*'
+</code></pre>
+<h4 id="sudo---以另一个用户身份执行命令"><a class="header" href="#sudo---以另一个用户身份执行命令">sudo - 以另一个用户身份执行命令</a></h4>
+<p><code>sudo</code> 命令在很多方面都相似于 <code>su</code> 命令,但是 <code>sudo</code> 还有一些非常重要的功能.</p>
+<p>管理员能够配置 <code>sudo</code> 命令,从而允许一个普通用户以不同的身份(通常是超级用户),通过一种非常可控的方式来执行命令.
+尤其是,只有一个用户可以执行一个或多个特殊命令时,(更体现了 <code>sudo</code> 命令的方便性).</p>
+<p>另一个重要差异是 <code>sudo</code> 命令不要求超级用户的密码.使用 <code>sudo</code> 命令时,用户使用他/她自己的密码 来认证.
+比如说,例如,<code>sudo</code> 命令经过配置,允许我们运行一个虚构的备份程序,叫做<code>backup_script</code>, 这个程序要求超级用户权限.
+通过 <code>sudo</code> 命令,这个程序会像这样运行:</p>
+<pre><code class="language-bash">sudo backup_script
+Password:
+System Backup Starting...
+</code></pre>
+<p>按下回车键之后,<code>shell</code> 提示我们输入我们的密码(不是超级用户的).一旦认证完成,则执行 具体的命令.</p>
+<p><code>su</code> 和 <code>sudo</code> 之间的一个重要区别是 <code>sudo</code> 不会重新启动一个 <code>shell</code>,也不会加载另一个 用户的 <code>shell</code> 运行环境.
+这意味者命令不必用单引号引起来.注意通过指定各种各样的选项,这 种行为可以被推翻.
+详细信息,阅读 <code>sudo</code> 手册页.</p>
+<p>想知道 <code>sudo</code> 命令可以授予哪些权限,使用<code>-l</code>选项,列出所有权限:</p>
+<pre><code class="language-bash">sudo -l
+User me may run the following commands on this host:
+(ALL) ALL
+</code></pre>
+<blockquote>
+<p>Ubuntu 与 sudo</p>
+</blockquote>
+<p><code>Unix</code> 采取的方法是只有在需要的时候,才授予普通用户超级用户权限.这样,普遍会 用到 <code>su</code> 和 <code>sudo</code> 命令.</p>
+<p>几年前,大多数的 Linux 发行版都依赖于 <code>su</code> 命令,来达到目的.<code>su</code> 命令不需要 <code>sudo</code> 命令 所要求的配置, <code>su</code> 命令拥有一个 <code>root</code> 帐号,是 Unix 中的传统.</p>
+<p>但这会引起问题.所有用户会企图以 <code>root</code> 用户帐号来操纵系统.
+事实上,一些用户专门以 <code>root</code> 用户帐号来操作系统, 因为这样做,的确消除了所有那些讨厌的权限
+被拒绝的消息.相比于 <code>Windows</code> 系统安全性而言, 这样做,你就削弱了 <code>Linux</code> 系统安全性能.</p>
+<p>当引进 <code>Ubuntu</code> 的时候,它的创作者们采取了不同的策略.
+默认情况下,<code>Ubuntu</code> 不允许用户登录到 <code>root</code>帐号(因为不能为 <code>root</code> 帐号设置密码),而是使用 <code>sudo</code> 命令授予普通用户超级用户权限.</p>
+<p>通过 <code>sudo</code> 命令,最初的用户可以拥有超级用户权限,也可以授予随后的用户帐号相似的权力.</p>
+<h3 id="chown---更改文件所有者和用户组"><a class="header" href="#chown---更改文件所有者和用户组">chown - 更改文件所有者和用户组</a></h3>
+<p><code>chown</code> 命令被用来更改文件或目录的所有者和用户组.使用这个命令需要超级用户权限.
+<code>chown</code> 命令 的语法看起来像这样:</p>
+<pre><code class="language-bash">chown [owner][:[group]] file...
+</code></pre>
+<p><code>chown </code>命令可以更改文件所有者和/或文件用户组,依据于这个命令的第一个参数.这里有 一些例子:</p>
+<hr />
+<p>参数 结果</p>
+<ul>
+<li><code>bob</code> 把文件所有者从当前属主更改为用户<code>bob</code></li>
+<li><code>bob:users</code> 把文件所有者改为用户 <code>bob</code>,文件用户组改为用户组 <code>users</code>.</li>
+<li><code>:admins</code> 把文件用户组改为组 <code>admins</code>,文件所有者不变.</li>
+<li><code>bob:</code> 文件所有者改为用户 <code>bob</code>,文件用户组改为<code>bob</code> 登录系统时所属的用户组.</li>
+</ul>
+<p>比方说,我们有两个用户: <code>janet</code>(拥有超级用户访问权限),<code>tony</code>(没有).</p>
+<p>用户<code>janet</code>想要从 她的家目录复制一个文件到用户 <code>tony</code> 的家目录.
+因为用户 <code>janet</code> 想要 <code>tony</code>能够编辑这个文件, <code>janet</code> 把这个文件的所有者更改为<code>tony</code>:</p>
+<pre><code class="language-bash">[janet@linuxbox ~]$ sudo cp myfile.txt ~tony
+[janet@linuxbox ~]$ sudo ls -l ~tony/myfile.txt
+-rw-r--r-- 1 root root 8031 2008-03-20 14:30 /home/tony/myfile.txt
+[janet@linuxbox ~]$ sudo chown tony: ~tony/myfile.txt
+[janet@linuxbox ~]$ sudo ls -l ~tony/myfile.txt
+-rw-r--r-- 1 tony tony 8031 2008-03-20 14:30 /home/tony/myfile.txt
+</code></pre>
+<p>这里,我们看到用户 <code>janet</code> 把文件从她的目录复制到 <code>tony</code> 的家目录.
+下一步,<code>janet</code> 把文件所有者 从 <code>root</code>(因为使用了<code>sudo</code> 命令)改到 <code>tony</code>.
+通过在第一个参数中使用末尾的<code>:</code>字符,<code>janet</code> 同时把文件用户组改为<code>tony</code> 登录系统时所属的用户组(也叫<code>tony</code>).</p>
+<p>注意,第一次使用 <code>sudo</code> 命令之后,为什么(<code>shell</code>)没有提示 <code>janet</code> 输入她的密码?
+这是因为在 大多数的配置中,<code>sudo</code> 命令会相信你几分钟,直到计时结束.</p>
+<h3 id="chgrp---更改用户组所有权"><a class="header" href="#chgrp---更改用户组所有权">chgrp - 更改用户组所有权</a></h3>
+<p>在旧版 Unix 系统中,<code>chown</code> 命令只能更改文件所有权,而不是用户组所有权.
+为了达到目的, 使用一个独立的命令,<code>chgrp</code> 来完成.除了限制多一点之外,<code>chgrp</code> 命令与 <code>chown</code> 命令使用起来很相似.</p>
+<h3 id="练习使用权限"><a class="header" href="#练习使用权限">练习使用权限</a></h3>
+<p>我们将展示一个常见问题的解决方案,这个问题是如何设置一个共享目录.
+假想我们有两个用户, 他们分别是 <code>bill</code> 和 <code>karen</code>.他们都有音乐 CD 收藏品,也愿意设置一个共享目录.
+在这个共享目录中,他们分别以 <code>Ogg Vorbis</code> 或 <code>MP3</code> 的格式来存储他们的音乐文件.
+通过 <code>sudo</code> 命令, 用户 <code>bill</code> 具有超级用户访问权限.</p>
+<p>我们需要做的第一件事,是创建一个以 <code>bill</code> 和 <code>karen</code> 为成员的用户组.
+下一步,<code>bill</code> 创建了存储音乐文件的目录:<code>sudo mkdir /usr/local/share/Music</code></p>
+<p>因为 <code>bill</code> 正在他的家目录之外操作文件,所以需要超级用户权限.这个目录创建之后,它具有以下所有权和权限:</p>
+<pre><code class="language-bash">ls -ld /usr/local/share/Music
+drwxr-xr-x 2 root root 4096 2008-03-21 18:05 /usr/local/share/Music
+</code></pre>
+<p>正如我们所见到的,这个目录由 <code>root</code> 用户拥有,并且具有权限<code>755</code>.
+为了使这个目录共享,允许(用户 <code>karen</code>)写入,<code>bill</code> 需要更改目录用户组所有权和权限:</p>
+<pre><code class="language-bash">[bill@linuxbox ~]$ sudo chown :music /usr/local/share/Music
+[bill@linuxbox ~]$ sudo chmod 775 /usr/local/share/Music
+[bill@linuxbox ~]$ ls -ld /usr/local/share/Music
+drwxrwxr-x 2 root music 4096 2008-03-21 18:05 /usr/local/share/Music
+</code></pre>
+<p>那么这是什么意思呢? 它的意思是,现在我们拥有一个目录,<code>/usr/local/share/Music</code>,
+这个目录由 <code>root</code> 用户拥有,并且允许用户组 <code>music</code> 读取和写入.</p>
+<p>用户组 <code>music</code> 有两个成员 <code>bill</code> 和 <code>karen</code>,这样 <code>bill</code> 和 <code>karen</code> 能够在目录 <code>/usr/local/share/Music</code> 中创建文件.其他用户能够列出目录中的内容,但是不能在其中创建文件.</p>
+<p>但是我们仍然会遇到问题.
+通过我们目前所拥有的权限,在 <code>Music</code> 目录中创建的文件,只具有用户 <code>bill</code> 和 <code>karen</code> 的普通权限:</p>
+<pre><code class="language-bash">[bill@linuxbox ~]$ &gt; /usr/local/share/Music/test_file
+[bill@linuxbox ~]$ ls -l /usr/local/share/Music
+-rw-r--r-- 1 bill bill 0 2008-03-24 20:03 test_file
+</code></pre>
+<p>实际上,存在两个问题.
+第一个,系统中默认的掩码值是<code>0022</code>,这会禁止用户组成员编辑属于同组成员的文件.
+如果共享目录中只包含文件,这就不是个问题,但是因为这个目录将会存储音乐, 通常音乐会按照艺术家和唱片的层次结构来组织分类.
+所以用户组成员需要在同组其他成员创建的目录中创建文件和目录.
+我们将把用户 <code>bill</code> 和 <code>karen</code> 使用的掩码值改为<code>0002</code>.</p>
+<p>第二个问题是,<code>bill</code>创建的文件(或目录)的用户组会被设置为<code>bill</code>,而不是<code>music</code>用户组 .
+通过设置此目录的 <code>setgid</code> 位来解决这个问题:</p>
+<pre><code class="language-bash">[bill@linuxbox ~]$ sudo chmod g+s /usr/local/share/Music
+[bill@linuxbox ~]$ ls -ld /usr/local/share/Music
+drwxrwsr-x 2 root music 4096 2008-03-24 20:03 /usr/local/share/Music
+</code></pre>
+<p>现在测试一下,看看是否新的权限解决了这个问题.
+<code>bill</code> 把他的掩码值设为<code>0002</code>,删除 先前的测试文件,并创建了一个新的测试文件和目录:</p>
+<pre><code class="language-bash">[bill@linuxbox ~]$ umask 0002
+[bill@linuxbox ~]$ rm /usr/local/share/Music/test_file
+[bill@linuxbox ~]$ &gt; /usr/local/share/Music/test_file
+[bill@linuxbox ~]$ mkdir /usr/local/share/Music/test_dir
+[bill@linuxbox ~]$ ls -l /usr/local/share/Music
+drwxrwsr-x 2 bill music 4096 2008-03-24 20:24 test_dir
+-rw-rw-r-- 1 bill music 0 2008-03-24 20:22 test_file
+</code></pre>
+<p>现在,创建的文件和目录都具有正确的权限,允许用户组 <code>music</code> 的所有成员在目录 <code>Music</code> 中创建文件和目录.</p>
+<p>剩下一个问题是关于 <code>umask</code> 命令的.
+<code>umask</code> 命令设置的掩码值只能在当前 <code>shell</code> 会话中生效,若当前 <code>shell</code> 会
+话结束后,则必须重新设置.在这本书的第三部分,我们将看一下,怎样使掩码值永久生效.</p>
+<h3 id="更改用户密码"><a class="header" href="#更改用户密码">更改用户密码</a></h3>
+<p>这一章最后一个话题,我们将讨论自己帐号的密码(和其他人的密码,如果你具有超级用户权限).
+使用 <code>passwd</code> 命令,来设置或更改用户密码.命令语法如下所示:</p>
+<pre><code class="language-bash">passwd [user]
+</code></pre>
+<p>只要输入 <code>passwd</code> 命令,就能更改你的密码.<code>shell</code> 会提示你输入你的旧密码和你的新密码:</p>
+<pre><code class="language-bash">passwd
+(current) UNIX password:
+New UNIX password:
+</code></pre>
+<p>passwd 命令将会试着强迫你使用<code>强</code>密码.
+这意味着,它会拒绝接受太短的密码,与先前相似的密码, 字典中的单词作为密码,或者是太容易猜到的密码:</p>
+<p>如果你具有超级用户权限,你可以指定一个用户名作为 <code>passwd</code> 命令的参数,这样可以设置另一个用户的密码.</p>
+<p>还有其它的 <code>passwd</code> 命令选项对超级用户有效,允许帐号锁定,密码失效,等等.
+详细内容,参考 passwd 命令的手册页.</p>
+<h2 id="linux-用户和用户组管理"><a class="header" href="#linux-用户和用户组管理">Linux 用户和用户组管理</a></h2>
+<p><a href="https://www.runoob.com/linux/linux-user-manage.html">Linux 用户和用户组管理</a></p>
+<p><code>Linux</code>系统是一个多用户多任务的分时操作系统,任何一个要使用系统资源的用户, 都必须首先向系统管理员申请一个账号,然后以这个账号的身份进入系统.</p>
+<p>用户的账号一方面可以帮助系统管理员对使用系统的用户进行跟踪,并控制他们对系统资源的访问;
+另一方面也可以帮助用户组织文件,并为用户提供安全性保护.
+每个用户账号都拥有一个唯一的用户名和各自的口令.用户在登录时键入正确的用户名和口令后,就能够进入系统和自己的主目录.</p>
+<p>实现用户账号的管理,要完成的工作主要有如下几个方面:</p>
+<ul>
+<li>用户账号的添加, 删除与修改.</li>
+<li>用户口令的管理.</li>
+<li>用户组的管理.</li>
+</ul>
+<h3 id="linux系统用户账号的管理"><a class="header" href="#linux系统用户账号的管理">Linux系统用户账号的管理</a></h3>
+<p>用户账号的管理工作主要涉及到用户账号的添加, 修改和删除.</p>
+<p>添加用户账号就是在系统中创建一个新账号,然后为新账号分配用户号, 用户组, 主目录和登录Shell等资源.
+刚添加的账号是被锁定的,无法使用.</p>
+<hr />
+<p>添加新的用户账号使用useradd命令,其语法如下:</p>
+<pre><code class="language-bash">useradd 选项 用户名
+</code></pre>
+<p>选项:</p>
+<ul>
+<li><code>-c comment</code>  指定一段注释性描述.</li>
+<li><code>-d 目录</code>  指定用户主目录,如果此目录不存在,则同时使用<code>-m</code>选项,可以创建主目录.</li>
+<li><code>-g 用户组</code>  指定用户所属的用户组.</li>
+<li><code>-G用户组,用户组</code> 指定用户所属的附加组.</li>
+<li><code>-s Shell文件</code>  指定用户的登录Shell.</li>
+<li><code>-u 用户号</code>  指定用户的用户号,如果同时有<code>-o</code>选项,则可以重复使用其他用户的标识号.</li>
+</ul>
+<p>用户名:   指定新账号的登录名.</p>
+<hr />
+<p>实例1</p>
+<pre><code class="language-bash">useradd –d  /home/sam -m sam
+</code></pre>
+<p>此命令创建了一个用户<code>sam</code>,其中<code>-d</code>和<code>-m</code>选项用来为登录名<code>sam</code>产生一个主目录 <code>/home/sam</code>
+(<code>/home</code>为默认的用户主目录所在的父目录)</p>
+<hr />
+<p>实例2</p>
+<pre><code class="language-bash">useradd -s /bin/sh -g group –G adm,root gem
+</code></pre>
+<p>此命令新建了一个用户<code>gem</code>,该用户的登录<code>Shell</code>是<code> /bin/sh</code>,
+它属于<code>group</code>用户组,同时又属于<code>adm</code>和<code>root</code>用户组,其中<code>group</code>用户组是其主组.</p>
+<p>这里可能新建组:<code>groupadd group</code>及<code>groupadd adm</code></p>
+<p>增加用户账号就是在<code>/etc/passwd</code>文件中为新用户增加一条记录,同时更新其他系统文件如<code>/etc/shadow</code>, <code>/etc/group</code>等.</p>
+<p>Linux提供了集成的系统管理工具<code>userconf</code>,它可以用来对用户账号进行统一管理.</p>
+<h3 id="删除帐号"><a class="header" href="#删除帐号">删除帐号</a></h3>
+<p>如果一个用户的账号不再使用,可以从系统中删除.
+删除用户账号就是要将<code>/etc/passwd</code>等系统文件中的该用户记录删除,必要时还删除用户的主目录.</p>
+<p>删除一个已有的用户账号使用<code>userdel</code>命令,其格式如下:</p>
+<pre><code>userdel 选项 用户名
+</code></pre>
+<p>常用的选项是 <code>-r</code>,它的作用是把用户的主目录一起删除.例如:</p>
+<pre><code class="language-bash">userdel -r sam
+</code></pre>
+<p>此命令删除用户<code>sam</code>在系统文件中(主要是<code>/etcpasswd/</code>, <code>/etc/shadow</code>, <code>/etc/group</code>等)的记录,同时删除用户的主目录.</p>
+<h2 id="修改帐号"><a class="header" href="#修改帐号">修改帐号</a></h2>
+<p>修改用户账号就是根据实际情况更改用户的有关属性,如用户号, 主目录, 用户组, 登录Shell等.</p>
+<p>修改已有用户的信息使用<code>usermod</code>命令,其格式如下:</p>
+<pre><code class="language-bash">usermod 选项 用户名
+</code></pre>
+<p>常用的选项包括<code>-c,</code> <code>-d</code>, <code>-m</code>,<code> -g</code>,<code> -G</code>,<code> -s</code>,<code>-u</code>以及<code>-o</code>等,这些选项的意义与<code>useradd</code>命令中的选项一样,可以为用户指定新的资源值.</p>
+<p>另外,有些系统可以使用选项:<code>-l 新用户名</code>
+这个选项指定一个新的账号,即将原来的用户名改为新的用户名.</p>
+<p>例如:</p>
+<pre><code class="language-bash">usermod -s /bin/ksh -d /home/z –g developer sam
+</code></pre>
+<p>此命令将用户<code>sam</code>的登录<code>Shell</code>修改为<code>ksh</code>,主目录改为<code>/home/z</code>,用户组改为<code>developer</code>.</p>
+<h3 id="用户口令的管理"><a class="header" href="#用户口令的管理">用户口令的管理</a></h3>
+<p>用户管理的一项重要内容是用户口令的管理.
+用户账号刚创建时没有口令,但是被系统锁定,无法使用,必须为其指定口令后才可以使用,即使是指定空口令.</p>
+<p>指定和修改用户口令的Shell命令是<code>passwd</code>.
+超级用户可以为自己和其他用户指定口令,普通用户只能用它修改自己的口令.命令的格式为:</p>
+<pre><code class="language-bash">passwd 选项 用户名
+</code></pre>
+<p>可使用的选项:</p>
+<ul>
+<li><code>-l</code> 锁定口令,即禁用账号.</li>
+<li><code>-u</code> 口令解锁.</li>
+<li><code>-d</code> 使账号无口令.</li>
+<li><code>-f</code> 强迫用户下次登录时修改口令.</li>
+</ul>
+<p>如果默认用户名,则修改当前用户的口令.</p>
+<p>例如,假设当前用户是<code>sam</code>,则下面的命令修改该用户自己的口令:</p>
+<pre><code class="language-bash">$ passwd
+Old password:******
+New password:*******
+Re-enter new password:*******
+</code></pre>
+<p>如果是超级用户,可以用下列形式指定任何用户的口令:</p>
+<pre><code class="language-bash">passwd sam
+New password:*******
+Re-enter new password:*******
+</code></pre>
+<p>普通用户修改自己的口令时,<code>passwd</code>命令会先询问原口令,验证后再要求用户输入两遍新口令,
+如果两次输入的口令一致,则将这个口令指定给用户;而超级用户为用户指定口令时,就不需要知道原口令.</p>
+<p>为了系统安全起见,用户应该选择比较复杂的口令,例如最好使用<code>8</code>位长的口令,口令中包含有大写, 小写字母和数字,并且应该与姓名, 生日等不相同.</p>
+<p>为用户指定空口令时,执行下列形式的命令:</p>
+<pre><code class="language-bash">passwd -d sam
+</code></pre>
+<p>此命令将用户 <code>sam</code> 的口令删除,这样用户 <code>sam</code> 下一次登录时,系统就不再允许该用户登录了.</p>
+<p><code>passwd</code> 命令还可以用 <code>-l(lock)</code> 选项锁定某一用户,使其不能登录,例如:</p>
+<pre><code class="language-bash">passwd -l sam
+</code></pre>
+<h3 id="linux系统用户组的管理"><a class="header" href="#linux系统用户组的管理">Linux系统用户组的管理</a></h3>
+<p>每个用户都有一个用户组,系统可以对一个用户组中的所有用户进行集中管理.
+不同Linux 系统对用户组的规定有所不同,如 ubuntu 下的用户属于与它同名的用户组,这个用户组在创建用户时同时创建.</p>
+<p>用户组的管理涉及用户组的添加, 删除和修改.组的增加, 删除和修改实际上就是对<code>/etc/group</code>文件的更新.</p>
+<hr />
+<p>增加一个新的用户组使用<code>groupadd</code>命令.其格式如下:</p>
+<pre><code class="language-bash">groupadd 选项 用户组
+</code></pre>
+<p>可以使用的选项有:</p>
+<ul>
+<li><code>-g</code> <code>GID</code> 指定新用户组的组标识号(GID).</li>
+<li><code>-o</code> 一般与<code>-g</code>选项同时使用,表示新用户组的GID可以与系统已有用户组的GID相同.</li>
+</ul>
+<hr />
+<p>实例1:</p>
+<pre><code class="language-bash">groupadd group1
+</code></pre>
+<p>此命令向系统中增加了一个新组<code>group1</code>,新组的组标识号是在当前已有的最大组标识号的基础上加<code>1</code>.</p>
+<p>实例2:</p>
+<pre><code class="language-bash">groupadd -g 101 group2
+</code></pre>
+<p>此命令向系统中增加了一个新组<code>group2</code>,同时指定新组的组标识号是<code>101</code>.</p>
+<hr />
+<p>如果要删除一个已有的用户组,使用<code>groupdel</code>命令,其格式如下:</p>
+<pre><code class="language-bash">groupdel 用户组
+</code></pre>
+<p>例如:</p>
+<pre><code class="language-bash">groupdel group1
+</code></pre>
+<p>此命令从系统中删除组<code>group1</code>.</p>
+<hr />
+<p>修改用户组的属性使用<code>groupmod</code>命令.其语法如下:</p>
+<pre><code class="language-bash">groupmod 选项 用户组
+</code></pre>
+<p>常用的选项有:</p>
+<ul>
+<li><code>-g GID</code> 为用户组指定新的组标识号.</li>
+<li><code>-o</code>  与<code>-g</code>选项同时使用,用户组的新<code>GID</code>可以与系统已有用户组的<code>GID</code>相同.</li>
+<li><code>-n 新用户组</code>  将用户组的名字改为新名字</li>
+</ul>
+<p>实例1:</p>
+<pre><code class="language-bash">groupmod -g 102 group2
+</code></pre>
+<p>此命令将组<code>group2</code>的组标识号修改为102.</p>
+<p>实例2:</p>
+<pre><code class="language-bash">groupmod –g 10000 -n group3 group2
+</code></pre>
+<p>此命令将组<code>group2</code>的标识号改为<code>10000</code>,组名修改为<code>group3</code>.</p>
+<hr />
+<p>如果一个用户同时属于多个用户组,那么用户可以在用户组之间切换,以便具有其他用户组的权限.
+用户可以在登录后,使用命令<code>newgrp</code>切换到其他用户组,这个命令的参数就是目的用户组.例如:</p>
+<pre><code class="language-bash">$ newgrp root
+</code></pre>
+<p>这条命令将当前用户切换到<code>root</code>用户组,前提条件是<code>root</code>用户组确实是该用户的主组或附加组.
+类似于用户账号的管理,用户组的管理也可以通过集成的系统管理工具来完成.</p>
+<h3 id="与用户账号有关的系统文件"><a class="header" href="#与用户账号有关的系统文件">与用户账号有关的系统文件</a></h3>
+<p>完成用户管理的工作有许多种方法,但是每一种方法实际上都是对有关的系统文件进行修改.</p>
+<p>与用户和用户组相关的信息都存放在一些系统文件中,这些文件包括<code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>/etc/group</code>等.</p>
+<p>下面分别介绍这些文件的内容.</p>
+<h4 id="etcpasswd文件"><a class="header" href="#etcpasswd文件">/etc/passwd文件</a></h4>
+<p><code>/etc/passwd</code>文件是用户管理工作涉及的最重要的一个文件</p>
+<p>Linux系统中的每个用户都在<code>/etc/passwd</code>文件中有一个对应的记录行,它记录了这个用户的一些基本属性.</p>
+<p>这个文件对所有用户都是可读的.它的内容类似下面的例子:</p>
+<pre><code class="language-bash">＃ cat /etc/passwd
+root:x:0:0:Superuser:/:
+daemon:x:1:1:System daemons:/etc:
+bin:x:2:2:Owner of system commands:/bin:
+sys:x:3:3:Owner of system files:/usr/sys:
+adm:x:4:4:System accounting:/usr/adm:
+uucp:x:5:5:UUCP administrator:/usr/lib/uucp:
+auth:x:7:21:Authentication administrator:/tcb/files/auth:
+cron:x:9:16:Cron daemon:/usr/spool/cron:
+listen:x:37:4:Network daemon:/usr/net/nls:
+lp:x:71:18:Printer administrator:/usr/spool/lp:
+sam:x:200:50:Sam san:/home/sam:/bin/sh
+</code></pre>
+<p>从上面的例子我们可以看到,<code>/etc/passwd</code>中一行记录对应着一个用户,
+每行记录又被冒号(<code>:</code>)分隔为7个字段,其格式和具体含义如下:</p>
+<p><code>用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell</code></p>
+<ol>
+<li><code>用户名</code>是代表用户账号的字符串.</li>
+</ol>
+<p>通常长度不超过<code>8</code>个字符,并且由大小写字母或数字组成.登录名中不能有冒号(<code>:</code>),因为冒号在这里是分隔符.
+为了兼容起见,登录名中最好不要包含点字符(<code>.</code>),并且不使用连字符(<code>-</code>)和加号(<code>+</code>)打头.</p>
+<ol>
+<li><code>口令</code>一些系统中,存放着加密后的用户口令字.</li>
+</ol>
+<p>虽然这个字段存放的只是用户口令的加密串,不是明文,但是由于<code>/etc/passwd</code>文件对所有用户都可读,所以这仍是一个安全隐患.
+因此,现在许多Linux 系统(如<code>SVR4</code>)都使用了 <code>shadow</code> 技术,把真正的加密后的用户口令字存放到<code>/etc/shadow</code>文件中,而在<code>/etc/passwd</code>文件的口令字段中只存放一个特殊的字符,例如<code>x</code>或者<code>*</code>.</p>
+<ol start="3">
+<li><code>用户标识号</code>是一个整数,系统内部用它来标识用户.
+一般情况下它与用户名是一一对应的.
+如果几个用户名对应的用户标识号是一样的,系统内部将把它们视为同一个用户,但是它们可以有不同的口令, 不同的主目录以及不同的登录Shell等.</li>
+</ol>
+<p>通常用户标识号的取值范围是<code>0</code>~<code>65 535</code>.<code>0</code>是超级用户<code>root</code>的标识号,<code>1</code>~<code>99</code>由系统保留,作为管理账号,普通用户的标识号从<code>100</code>开始.在Linux系统中,这个界限是<code>500</code>.</p>
+<ol start="4">
+<li><code>组标识号</code>字段记录的是用户所属的用户组.</li>
+</ol>
+<p>它对应着<code>/etc/group</code>文件中的一条记录.</p>
+<ol start="5">
+<li><code>注释性描述</code>字段记录着用户的一些个人情况.</li>
+</ol>
+<p>例如用户的真实姓名, 电话, 地址等,这个字段并没有什么实际的用途.在不同的Linux 系统中,这个字段的格式并没有统一.
+在许多Linux系统中,这个字段存放的是一段任意的注释性描述文字,用做<code>finger</code>命令的输出.</p>
+<ol start="6">
+<li><code>主目录</code>,也就是用户的起始工作目录.</li>
+</ol>
+<p>它是用户在登录到系统之后所处的目录.
+在大多数系统中,各用户的主目录都被组织在同一个特定的目录下,而用户主目录的名称就是该用户的登录名.
+各用户对自己的主目录有读, 写, 执行(搜索)权限,其他用户对此目录的访问权限则根据具体情况设置.</p>
+<ol start="7">
+<li>用户登录后,要启动一个进程,负责将用户的操作传给内核,这个进程是用户登录到系统后运行的命令解释器或某个特定的程序,即<code>Shell</code>.</li>
+</ol>
+<p><code>Shell</code>是用户与Linux系统之间的接口.Linux的<code>Shell</code>有许多种,每种都有不同的特点.
+常用的有<code>sh</code>(Bourne Shell), <code>csh</code>(C Shell), <code>ksh</code>(Korn Shell), <code>tcsh</code>(TENEX/TOPS-20 type C Shell), <code>bash</code>(Bourne Again Shell)等.</p>
+<p>系统管理员可以根据系统情况和用户习惯为用户指定某个<code>Shell</code>.
+如果不指定<code>Shell</code>,那么系统使用<code>sh</code>为默认的登录<code>Shell</code>,即这个字段的值为<code>/bin/sh</code>.</p>
+<p>用户的登录<code>Shell</code>也可以指定为某个特定的程序(此程序不是一个命令解释器).
+利用这一特点,我们可以限制用户只能运行指定的应用程序,在该应用程序运行结束后,用户就自动退出了系统.
+有些<code>Linux</code>系统要求只有那些在系统中登记了的程序才能出现在这个字段中.</p>
+<ol start="8">
+<li>系统中有一类用户称为伪用户(pseudo users).</li>
+</ol>
+<p>这些用户在<code>/etc/passwd</code>文件中也占有一条记录,但是不能登录,因为它们的登录<code>Shell</code>为空.
+它们的存在主要是方便系统管理,满足相应的系统进程对文件属主的要求.</p>
+<p>常见的伪用户如下所示:</p>
+<ul>
+<li><code>bin</code>:  拥有可执行的用户命令文件</li>
+<li><code>sys</code>:  拥有系统文件</li>
+<li><code>adm</code>:  拥有帐户文件</li>
+<li><code>uucp</code>:  <code>UUCP</code>使用</li>
+<li><code>lp</code>:  <code>lp</code>或<code>lpd</code>子系统使用</li>
+<li><code>nobody</code>:  <code>NFS</code>使用</li>
+</ul>
+<h4 id="拥有帐户文件"><a class="header" href="#拥有帐户文件">拥有帐户文件</a></h4>
+<ul>
+<li>除了上面列出的伪用户外,还有许多标准的伪用户,例如:<code>audit</code>, <code>cron</code>, <code>mail</code>, <code>usenet</code>等,它们也都各自为相关的进程和文件所需要.</li>
+</ul>
+<p>由于<code>/etc/passwd</code>文件是所有用户都可读的,如果用户的密码太简单或规律比较明显的话,一台普通的计算机就能够很容易地将它破解.
+因此对安全性要求较高的Linux系统都把加密后的口令字分离出来,单独存放在一个文件中,这个文件是<code>/etc/shadow</code>文件. 有超级用户才拥有该文件读权限,这就保证了用户密码的安全性.</p>
+<ul>
+<li><code>/etc/shadow</code>中的记录行与<code>/etc/passwd</code>中的一一对应,它由<code>pwconv</code>命令根据<code>/etc/passwd</code>中的数据自动产生,
+它的文件格式与<code>/etc/passwd</code>类似,由若干个字段组成,字段之间用<code>:</code>隔开.这些字段是:
+<code>登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志</code></li>
+</ul>
+<ol>
+<li><code>登录名</code>是与<code>/etc/passwd</code>文件中的登录名相一致的用户账号</li>
+<li><code>口令</code>字段存放的是加密后的用户口令字,长度为<code>13</code>个字符.如果为空,则对应用户没有口令,登录时不需要口令;
+如果含有不属于集合<code> { ./0-9A-Za-z }</code>中的字符,则对应的用户不能登录.</li>
+<li><code>最后一次修改时间</code>表示的是从某个时刻起,到用户最后一次修改口令时的天数.时间起点对不同的系统可能不一样.
+例如在<code>SCO Linux </code>中,这个时间起点是<code>1970年1月1日</code>.</li>
+<li><code>最小时间间隔</code>指的是两次修改口令之间所需的最小天数.</li>
+<li><code>最大时间间隔</code>指的是口令保持有效的最大天数.</li>
+<li><code>警告时间</code>字段表示的是从系统开始警告用户到用户密码正式失效之间的天数.</li>
+<li><code>不活动时间</code>表示的是用户没有登录活动但账号仍能保持有效的最大天数.</li>
+<li><code>失效时间</code>字段给出的是一个绝对的天数,如果使用了这个字段,那么就给出相应账号的生存期.期满后,该账号就不再是一个合法的账号,也就不能再用来登录了.</li>
+</ol>
+<p>下面是<code>/etc/shadow</code>的一个例子:</p>
+<pre><code class="language-bash">＃ cat /etc/shadow
+
+root:Dnakfw28zf38w:8764:0:168:7:::
+daemon:*::0:0::::
+bin:*::0:0::::
+sys:*::0:0::::
+adm:*::0:0::::
+uucp:*::0:0::::
+nuucp:*::0:0::::
+auth:*::0:0::::
+cron:*::0:0::::
+listen:*::0:0::::
+lp:*::0:0::::
+sam:EkdiSECLWPdSa:9740:0:0::::
+</code></pre>
+<ul>
+<li>用户组的所有信息都存放在<code>/etc/group</code>文件中.</li>
+</ul>
+<p>将用户分组是 Linux 系统中对用户进行管理及控制访问权限的一种手段.
+每个用户都属于某个用户组;一个组中可以有多个用户,一个用户也可以属于不同的组.
+当一个用户同时是多个组中的成员时,在<code>/etc/passwd</code>文件中记录的是用户所属的主组,也就是登录时所属的默认组,而其他组称为附加组.</p>
+<p>用户要访问属于附加组的文件时,必须首先使用<code>newgrp</code>命令使自己成为所要访问的组中的成员.
+用户组的所有信息都存放在<code>/etc/group</code>文件中.此文件的格式也类似于<code>/etc/passwd</code>文件,由冒号(<code>:</code>)隔开若干个字段,这些字段有:</p>
+<p><code>组名:口令:组标识号:组内用户列表</code></p>
+<ul>
+<li><code>组名</code>是用户组的名称,由字母或数字构成.与<code>/etc/passwd</code>中的登录名一样,组名不应重复.</li>
+<li><code>口令</code>字段存放的是用户组加密后的口令字.一般Linux 系统的用户组都没有口令,即这个字段一般为<code>空</code>,或者是<code>*</code>.</li>
+<li><code>组标识号</code>与用户标识号类似,也是一个整数,被系统内部用来标识组.</li>
+<li><code>组内用户列表</code>是属于这个组的所有用户的列表,不同用户之间用逗号(<code>,</code>)分隔.这个用户组可能是用户的主组,也可能是附加组.</li>
+</ul>
+<p><code>/etc/group</code>文件的一个例子如下:</p>
+<pre><code class="language-bash">root::0:root
+bin::2:root,bin
+sys::3:root,uucp
+adm::4:root,adm
+daemon::5:root,daemon
+lp::7:root,lp
+users::20:root,sam
+</code></pre>
+<h3 id="添加批量用户"><a class="header" href="#添加批量用户">添加批量用户</a></h3>
+<p>添加和删除用户对每位Linux系统管理员都是轻而易举的事,比较棘手的是如果要添加几十个, 上百个甚至上千个用户时,我们不太可能还使用useradd一个一个地添加,必然要找一种简便的创建大量用户的方法.
+Linux系统提供了创建大量用户的工具,可以让您立即创建大量用户,方法如下:</p>
+<ol>
+<li>先编辑一个文本用户文件.</li>
+</ol>
+<p>每一列按照<code>/etc/passwd</code>密码文件的格式书写,要注意每个用户的用户名, <code>UID</code>, 宿主目录都不可以相同,其中密码栏可以留做空白或输入<code>x</code>号.一个范例文件<code>user.txt</code>内容如下:</p>
+<pre><code class="language-bash">user001::600:100:user:/home/user001:/bin/bash
+user002::601:100:user:/home/user002:/bin/bash
+user003::602:100:user:/home/user003:/bin/bash
+...
+</code></pre>
+<ol start="2">
+<li>以root身份执行命令 <code>/usr/sbin/newusers</code>,从刚创建的用户文件<code>user.txt</code>中导入数据,创建用户:</li>
+</ol>
+<pre><code class="language-bash">newusers &lt; user.txt
+</code></pre>
+<p>然后可以执行命令 <code>vipw</code> 或 <code>vi /etc/passwd</code> 检查<code>/etc/passwd</code> 文件是否已经出现这些用户的数据,并且用户的宿主目录是否已经创建.</p>
+<ol start="3">
+<li>执行命令<code>/usr/sbin/pwunconv</code>.</li>
+</ol>
+<p>将 <code>/etc/shadow</code> 产生的 <code>shadow</code> 密码解码,然后回写到<code> /etc/passwd</code> 中,并将<code>/etc/shadow</code>的<code>shadow</code>密码栏删掉.
+这是为了方便下一步的密码转换工作,即先取消 <code>shadow password</code> 功能.</p>
+<pre><code class="language-bash">pwunconv
+</code></pre>
+<ol start="4">
+<li>编辑每个用户的密码对照文件.</li>
+</ol>
+<p>格式为:<code>用户名:密码</code></p>
+<p>实例文件 <code>passwd.txt</code> 内容如下:</p>
+<pre><code class="language-bash">user001:123456
+user002:123456
+user003:123456
+user004:123456
+user005:123456
+user006:123456
+</code></pre>
+<ol start="5">
+<li>以 <code>root</code> 身份执行命令 <code>/usr/sbin/chpasswd</code>.</li>
+</ol>
+<p>创建用户密码,<code>chpasswd</code> 会将经过 <code>/usr/bin/passwd</code> 命令编码过的密码写入 <code>/etc/passwd</code> 的密码栏.</p>
+<pre><code class="language-bash">chpasswd &lt; passwd.txt
+</code></pre>
+<ol start="6">
+<li>确定密码经编码写入<code>/etc/passwd</code>的密码栏后.</li>
+</ol>
+<p>执行命令 <code>/usr/sbin/pwconv</code> 将密码编码为 <code>shadow password</code>,并将结果写入 <code>/etc/shadow</code>.</p>
+<pre><code class="language-bash">pwconv
+</code></pre>
+<p>这样就完成了大量用户的创建了,之后您可以到<code>/home</code>下检查这些用户宿主目录的权限设置是否都正确,并登录验证用户密码是否正确.</p>
+<h2 id="第十一章进程"><a class="header" href="#第十一章进程">第十一章:进程</a></h2>
+<p>通常,现在的操作系统都支持多任务,意味着操作系统(给用户)造成了一种假象,(让用户觉得) 它同时能够做多件事情,事实上,它是快速地轮换执行这些任务的.</p>
+<p>Linux 内核通过使用<strong>进程</strong>,来管理多任务.通过进程,Linux 安排不同的程序等待使用 CPU.
+有时候,计算机变得呆滞,运行缓慢,或者一个应用程序停止响应.
+在这一章中,我们将看一些可用的命令行工具,这些工具帮助我们查看程序的执行状态,以及怎样终止行为不当的进程.</p>
+<p>这一章将介绍以下命令:</p>
+<ul>
+<li><code>ps</code> – 报告当前进程快照</li>
+<li><code>top</code> – 显示任务</li>
+<li><code>jobs</code> – 列出活跃的任务</li>
+<li><code>bg</code> – 把一个任务放到后台执行</li>
+<li><code>fg</code> – 把一个任务放到前台执行</li>
+<li><code>kill</code> – 给一个进程发送信号</li>
+<li><code>killall</code> – 杀死指定名字的进程</li>
+<li><code>shutdown</code> – 关机或重启系统</li>
+</ul>
+<h3 id="进程是怎样工作的"><a class="header" href="#进程是怎样工作的">进程是怎样工作的</a></h3>
+<p>当系统启动的时候,内核先把一些它自己的程序初始化为进程,然后运行一个叫做 <code>init</code> 的程序.
+<code>init</code>再依次运行一系列被称为 <code>init 脚本</code>的 <code>shell</code> 脚本(位于<code>/etc</code>),它们可以启动所有的系统服务.</p>
+<p>其中许多系统服务以守护(daemon)程序的形式实现,守护程序仅在后台运行,没有任何用户接口.
+这样,即使我们没有登录系统,至少系统也在忙于执行一些例行事务.</p>
+<p>一个程序可以发动另一个程序,这个事实在进程方案中,表述为一个父进程创建了一个子进程.</p>
+<p>内核维护每个进程的信息,以此来保持事情有序.
+例如,系统分配给每个进程一个数字,这个数字叫做 进程 <code>ID</code>或 <code>PID</code>.<code>PID</code> 号按升序分配,<code>init</code> 进程的 <code>PID</code> 总是1.
+内核也对分配给每个进程的内存进行跟踪. 像文件一样,进程也有所有者和用户 <code>ID</code>,有效用户 <code>ID</code>,等等.</p>
+<h3 id="查看进程"><a class="header" href="#查看进程">查看进程</a></h3>
+<p>查看进程,最常使用的命令(有几个命令)是<code> ps</code>.<code>ps</code> 程序有许多选项,它最简单地使用形式是这样的:</p>
+<pre><code class="language-bash">ps
+</code></pre>
+<p>正如我们所看到的, 默认情况下,ps 不会显示很多进程信息,只是列出与当前终端会话相关的进程.</p>
+<p>为了得到更多信息, 我们需要加上一些选项,但是在这样做之前,我们先看一下 <code>ps</code> 命令运行结果的其它字段.</p>
+<p>TTY 是 <code>Teletype</code> 的简写,是指进程的控制终端.这里,<code>Unix</code> 展示它的年龄.<code>TIME</code> 字段表示 进程所消耗的 <code>CPU</code> 时间数量.</p>
+<p>如果给 <code>ps</code> 命令加上选项,我们可以得到更多关于系统运行状态的信息:</p>
+<pre><code class="language-bash">ps x
+</code></pre>
+<p>加上 <code>x</code> 选项(注意没有开头的 <code>-</code> 字符),告诉 <code>ps</code> 命令,展示所有进程,不管它们由什么 终端(如果有的话)控制.
+在 <code>TTY</code> 一栏中出现的 <code>?</code> ,表示没有控制终端.使用这个 <code>x</code> 选项,可以 看到我们所拥有的每个进程的信息.</p>
+<p>因为系统中正运行着许多进程,所以 <code>ps</code> 命令的输出结果很长.把 <code>ps</code> 的输出结果管道到<code>less</code>命令经常很有帮助.
+一些选项组合也会产生很长的输出结果,所以最大化 终端仿真器窗口,也是一个好主意.</p>
+<p>输出结果中,新添加了一栏,标题为 <code>STAT</code> .<code>STAT</code> 是 <code>state</code> 的简写,它揭示了进程当前状态:</p>
+<hr />
+<p>状态 意义</p>
+<ul>
+<li><code>R</code> :  运行.这意味着,进程正在运行或准备运行.</li>
+<li><code>S</code> :  正在睡眠. 进程没有运行,而是,正在等待一个事件, 比如说,一个按键或者网络数据包.</li>
+<li><code>D</code> :  不可中断睡眠.进程正在等待<code> I/O</code>,比方说,一个磁盘驱动器的<code> I/O</code>.</li>
+<li><code>T</code> :  已停止. 已经指示进程停止运行.稍后介绍更多.</li>
+<li><code>Z</code> :  一个死进程或<code>僵尸</code>(zombie)进程.这是一个已经终止的子进程,但是它的父进程还没有清空它. (父进程没有把子进程从进程表中删除)</li>
+<li><code>&lt;</code> : 一个高优先级进程.这可能会授予一个进程更多重要的资源,给它更多的CPU 时间. 进程的这种属性叫做niceness.
+具有高优先级的进程据说是不好的(less nice), 因为它占用了比较多的 CPU 时间,这样就给其它进程留下很少时间.</li>
+<li><code>N</code> :低优先级进程. 一个低优先级进程(一个<code>好</code>进程)只有当其它高优先级进程执行之后,才会得到处理器时间.</li>
+</ul>
+<p>进程状态信息之后,可能还跟随其他的字符.这表示各种外来进程的特性.详细信息请看 <code>ps</code> 手册页.</p>
+<p>另一个流行的选项组合是 <code>aux</code>(不带开头的<code>-</code>字符).这会给我们更多信息:</p>
+<pre><code class="language-bash">ps aux
+</code></pre>
+<p>这个选项组合,能够显示属于每个用户的进程信息.使用这个选项,可以唤醒 <code>BSD 风格</code> 的输出结果.</p>
+<p>Linux 版本的 <code>ps</code> 命令,可以模拟几个不同 Unix 版本中的 <code>ps</code> 程序的行为.
+通过这些选项,我们得到 这些额外的列.</p>
+<hr />
+<p>标题 意思</p>
+<ul>
+<li><code>USER</code> 用户 <code>ID</code>. 进程的所有者.</li>
+<li><code>%CPU</code> 以百分比表示的 CPU 使用率</li>
+<li><code>%MEM</code> 以百分比表示的内存使用率</li>
+<li><code>VSZ</code> 虚拟内存大小</li>
+<li><code>RSS</code> 进程占用的物理内存的大小,以千字节为单位.</li>
+<li><code>START</code> 进程运行的起始时间.若超过<code>24</code>小时,则用天表示.</li>
+</ul>
+<p>寻找进程:<code>top ps pgrep</code>
+发送信号:<code>kill</code></p>
+<p><code>ps</code> 选项</p>
+<ul>
+<li><code>ps u -C lyx</code>: Display user-oriented format, with command <code>lyx</code></li>
+<li><code>ps u t 2</code> : Display user-oriented format, with tty <code>2</code></li>
+<li><code>ps l</code>:  Display BSD long format.</li>
+</ul>
+<p>For BSD formats and when the stat keyword is used, additional characters may be displayed:</p>
+<ul>
+<li><code>&lt;</code> :高优先级进程 (not nice to other users)</li>
+<li><code>N</code> : 低优先级进程 (nice to other users)</li>
+<li><code>L</code> : has pages locked into memory (for real-time and custom IO)</li>
+<li><code>s</code> : is a session leader</li>
+<li><code>l</code> : 多线程进程 (using CLONE_THREAD, like NPTL pthreads do)</li>
+<li><code>+</code> : 在前端进程组中</li>
+</ul>
+<h3 id="与-awk结合使用"><a class="header" href="#与-awk结合使用">与 <code>awk</code>结合使用</a></h3>
+<pre><code class="language-bash">ps  aux |awk '$8 ~ &quot;Z[\x00-\x7F]*&quot;' # 匹配zombie 进程
+ps  aux | gawk '$8 ~ &quot;Z\\w*&quot;' # 此处要用 \\ 对 \ 进行转义, 查看zombie进程
+</code></pre>
+<p>自带的排序功能</p>
+<pre><code class="language-bash">ps jax --sort=uid,-ppid,+pid # 按照 uid, ppid, pid 排序,+表示升序,-表示降序
+ps aux --sort=-start | less # 按照运行时间排序
+ps ux --sort=-start_time | head -n 10 # 查看用户最近运行的进程
+</code></pre>
+<h3 id="top-命令"><a class="header" href="#top-命令">top 命令</a></h3>
+<p><a href="https://javawind.net/p131">linux top命令VIRT,RES,SHR,DATA的含义</a></p>
+<p>虽然 <code>ps</code> 命令能够展示许多计算机运行状态的信息,但是它只是提供,<code>ps</code> 命令执行时刻的机器状态快照.
+为了看到更多动态的信息,我们使用 <code>top</code> 命令:</p>
+<pre><code class="language-bash">top
+</code></pre>
+<p><code>top</code> 程序连续显示系统进程更新的信息(默认情况下,每三分钟更新一次),<code>top</code>这个名字来源于这个事实,<code>top</code> 程序是用来查看系统中<code>顶端</code>进程的.
+<code>top</code> 显示结果由两部分组成: 最上面是系统概要,下面是进程列表,以 <code>CPU</code> 的使用率排序.</p>
+<p>其中系统概要包含许多有用信息.下表是对系统概要的说明:</p>
+<hr />
+<p>行号 字段 意义</p>
+<ol>
+<li><code>top</code>--程序名. <code>14:59:20</code> 当前时间. <code>up 6:30</code> 这是正常运行时间.它是计算机从上次启动到现在所运行的时间. 在这个例子里,系统已经运行了六个半小时.
+<code>2 users</code> 有两个用户登录系统.<code>load average</code>: 加载平均值是指,等待运行的进程数目,也就是说,处于运行状态的进程个数, 这些进程共享<code>CPU</code>.
+展示了三个数值,每个数值对应不同的时间周期.第一个是最后<code>60</code>秒的平均值, 下一个是前<code>5</code>分钟的平均值,最后一个是前<code>15</code>分钟的平均值.若平均值低于<code>1.0</code>,则指示计算机 工作不忙碌.</li>
+<li><code>Tasks</code>: 总结了进程数目和各种进程状态.</li>
+<li><code>Cpu(s)</code>: 这一行描述了<code> CPU</code> 正在执行的进程的特性.
+<code>0.7%us</code>: <code>0.7%</code> 的<code>CPU</code>被用于用户进程, user processes. 这意味着进程在内核之外.
+<code>1.0%sy</code>: <code>1.0%</code>的 <code>CPU</code> 时间被用于 系统(内核)进程.
+<code>0.0%ni</code> : <code>0.0%</code>的 <code>CPU</code> 时间被用于<code>nice</code>(低优先级)进程.
+<code>98.3%id</code>: <code>98.3%</code>的 <code>CPU</code> 时间是空闲的.
+<code>0.0%wa</code> : <code>0.0%</code>的 <code>CPU</code> 时间来等待 <code>I/O</code>.</li>
+<li><code>Mem</code>: 展示物理内存的使用情况.</li>
+<li><code>Swap</code>: 展示交换分区(虚拟内存)的使用情况.</li>
+</ol>
+<p><code>top</code> 程序接受一系列从键盘输入的命令.两个最有趣的命令是 <code>h</code> 和 <code>q</code>.
+<code>h</code>:显示程序的帮助屏幕,<code>q</code>: 退出 <code>top</code> 程序.</p>
+<p>两个主要的桌面环境都提供了图形化应用程序,来显示与 <code>top</code> 程序相似的信息 (和 <code>Windows</code> 中的任务管理器差不多),
+但是我觉得 <code>top</code> 程序要好于图形化的版本, 因为它运行速度快,并且消费很少的系统资源.
+毕竟,我们的系统监测程序不能成为系统怠工的源泉,而这是我们试图追踪的信息.</p>
+<p><code>Z,B,E,e</code>全局:<code>Z</code>颜色; <code>B</code>粗体; <code>E</code>/<code>e</code>摘要/任务存储单位
+<code>l,t,m </code>切换摘要:<code>l</code>加载平均值; <code>t</code>任务/cpu 统计信息样式; <code>m</code>内存信息
+<code>0,1,2,3,I</code>切换:<code>0</code>为零; <code>1/2/3</code> cpus或 <code>numa</code>节点视图; <code>I</code> <code>Irix</code>模式
+<code>f,F,X</code> 字段:<code>f</code>/<code>F</code>添加/删除/顺序/排序; <code>X</code>增加固定宽度</p>
+<p>下面这些命令需要可见的任务显示窗口</p>
+<ul>
+<li><code>L</code>,<code>＆</code>,<code>&lt;</code>,<code>&gt;</code>.定位:<code>L</code>/<code>＆</code>查找/再次; 按不同的列排序:<code>&lt;</code>/<code>&gt;</code></li>
+<li><code>R</code>,<code>H</code>,<code>J</code>,<code>C</code>.切换:<code>R</code>排序; <code>H</code>Threads; <code>J</code>Num justify数字对齐; <code>C</code>坐标</li>
+<li><code>c</code>,<code>i</code>,<code>S</code>,<code>j</code>.切换:<code>c</code> Cmd名称/行; <code>i</code>空闲; <code>S</code>Time;<code>j</code>字符串对齐</li>
+<li><code>x</code>,<code>y</code>,切换高亮显示:<code>x</code>用来排序的字段;<code>y</code>正在运行任务</li>
+<li><code>z</code>,<code>b</code>,切换:<code>z</code>颜色/单色; <code>b</code>粗体/反色(仅适用于<code>x</code>或<code>y</code>)</li>
+<li><code>u</code>,<code>U</code>,<code>o</code>,<code>O</code>. 筛选依据:<code>u</code>/<code>U</code>有效/任何用户; <code>o</code>/<code>O</code>其他条件</li>
+<li><code>n</code>,<code>＃</code>,<code>^O</code>.设置:显示任务最大为<code>n</code>/<code>＃</code>个;显示:<code>Ctrl +O</code>其他过滤器</li>
+<li><code>V</code>,<code>v</code>.切换:<code>V</code>forest 视图; <code>v</code>forest view children</li>
+</ul>
+<p><code>k</code>,<code>r</code>操作任务:<code>k</code>,<code>kill</code>; <code>r</code>,<code>renice</code>
+<code>d</code>或<code>s</code>,设置更新间隔
+<code>W</code>,<code>Y</code>写入配置文件<code>W</code>;检查其他输出<code>Y</code>
+<code>q</code>退出</p>
+<h3 id="top-内存占用virtresshr"><a class="header" href="#top-内存占用virtresshr">top 内存占用VIRT,RES,SHR</a></h3>
+<p><a href="https://blog.csdn.net/xu1314/article/details/7719651">Top的VIRT是什么</a></p>
+<p>Top命令监控某个进程的资源占有情况, 下面是各种内存:</p>
+<p><code>VIRT</code>: virtual memory usage</p>
+<ol>
+<li>进程&quot;需要的&quot;虚拟内存大小, 包括进程使用的库, 代码, 数据等</li>
+<li>假如进程申请 <code>100m</code> 的内存, 但实际只使用了 <code>10m</code>, 那么它会增长 <code>100m</code>, 而不是实际的使用量</li>
+</ol>
+<p><code>RES</code>: resident memory usage 常驻内存</p>
+<ol>
+<li>进程当前使用的内存大小, 但不包括 <code>swap out</code></li>
+<li>包含其他进程的共享</li>
+<li>如果申请 <code>100m</code> 的内存, 实际使用 <code>10m</code>, 它只增长 <code>10m</code>, 与 <code>VIRT</code> 相反</li>
+<li>关于库占用内存的情况, 它只统计<code>加载的库文件</code> 所占内存大小</li>
+</ol>
+<p><code>SHR</code>: shared memory</p>
+<ol>
+<li>除了<code>自身进程</code>的共享内存, 也包括<code>其他进程</code>的共享内存</li>
+<li>虽然进程只使用了几个共享库的函数, 但它包含了<code>整个共享库</code>的大小</li>
+<li>计算某个进程所占的物理内存大小公式: <code>RES – SHR</code></li>
+<li><code>swap out</code> 后, 它将会降下来</li>
+</ol>
+<p>DATA</p>
+<ol>
+<li>数据占用的内存. 如果 <code>top</code> 没有显示, 按 <code>f</code> 键可以显示出来.</li>
+<li>该程序真正要求的数据空间, 是真正在运行中要使用的.</li>
+</ol>
+<h3 id="控制进程"><a class="header" href="#控制进程">控制进程</a></h3>
+<p>现在我们可以看到和监测进程,然后得到一些对它们的控制权.
+为了我们的实验,我们将使用 一个叫做 <code>xlogo</code> 的小程序,作为我们的实验品.</p>
+<p>这个 <code>xlogo</code> 程序是 <code>X</code> 窗口系统 (底层引擎使图形界面显示在屏幕上)提供的实例程序,这个实例简单地显示一个大小可调的包含 X 标志的窗口.</p>
+<p>首先,我们需要知道测试的主题:</p>
+<pre><code class="language-bash">xlogo
+</code></pre>
+<p>命令执行之后,一个包含 <code>X</code> 标志的小窗口应该出现在屏幕的某个位置上.在一些系统中,<code>xlogo</code> 命令 会打印一条警告信息,但是不用理会它.
+小贴士:如果你的系统不包含 xlogo 程序,试着用 <code>gedit</code> 或者 <code>kwrite</code> 来代替.</p>
+<p>通过调整它的窗口大小,我们能够证明 <code>xlogo</code> 程序正在运行.如果这个标志以新的尺寸被重画, 则这个程序正在运行.</p>
+<p>注意,为什么我们的 <code>shell</code> 提示符还没有返回?这是因为 <code>shell</code> 正在等待这个程序结束, 就像到目前为止我们用过的其它所有程序一样.如果我们关闭 <code>xlogo</code> 窗口,<code>shell</code> 提示符就返回了.</p>
+<h4 id="中断一个进程"><a class="header" href="#中断一个进程">中断一个进程</a></h4>
+<p>我们再运行 <code>xlogo</code> 程序一次,观察一下发生了什么事.首先,执行 <code>xlogo</code> 命令,并且 证实这个程序正在运行.
+下一步,回到终端窗口,按下 <code>Ctrl-c</code>.</p>
+<p>在一个终端中,输入 <code>Ctrl-c</code>,中断一个程序.这意味着,我们礼貌地要求终止这个程序. 输入 <code>Ctrl-c</code> 之后, <code>xlogo</code> 窗口关闭,<code>shell</code> 提示符返回.通过这个技巧,许多(但不是全部)命令行程序可以被中断.</p>
+<h4 id="把一个进程放置到后台执行"><a class="header" href="#把一个进程放置到后台执行">把一个进程放置到后台(执行)</a></h4>
+<p>比方说,我们想让 <code>shell</code> 提示符返回,却不想终止 <code>xlogo</code> 程序.为达到这个目的,我们把 这个程序放到后台执行.</p>
+<p>把终端看作是一个有前台(表层放置可见的事物,像 <code>shell</code> 提示符) 和后台(表层之下放置隐藏的事物)(的设备).
+启动一个程序,让它立即在后台 运行,我们在程序命令之后,加上<code>&amp;</code>字符:
+注意,在<code>bash</code>中,会把<code>&amp;</code>当作语句结束的标志,后面不能再出现<code>;</code>,否则会报错.
+而在<code>zsh</code>中,可以在<code>&amp;</code>后面再加上<code>;</code>号.</p>
+<pre><code class="language-bash">xlogo &amp;
+[1] 28236
+</code></pre>
+<p>执行命令之后,这个 <code>xlogo</code> 窗口出现,并且 <code>shell</code> 提示符返回,同时打印一些有趣的数字.
+这条信息是 <code>shell</code> 特性的一部分,叫做工作控制.
+通过这条信息,<code>shell</code> 告诉我们,已经启动了 工作号为<code>1</code>(<code>[1]</code>),<code>PID</code> 为<code>28236</code>的程序.
+如果我们运行 <code>ps</code> 命令,可以看到我们的进程.</p>
+<p>shell 功能--工作控制,这个 可以列出从终端中启动的任务.执行 <code>jobs</code> 命令,我们可以看到这个输出列表:</p>
+<pre><code class="language-bash">jobs
+[1]+ Running
+xlogo &amp;
+</code></pre>
+<p>结果显示我们有一个任务,编号为<code>1</code>,它正在运行,并且这个任务的命令是 <code>xlogo &amp;</code>.</p>
+<pre><code class="language-bash">jobs [-lnprs] [jobspec ...] or jobs -x command [args]
+</code></pre>
+<p>Display status of jobs.</p>
+<p>Lists the active jobs.  JOBSPEC restricts output to that job.
+Without options, the status of all active jobs is displayed.</p>
+<p>Options:</p>
+<ul>
+<li><code>-l</code>    lists process IDs in addition to the normal information</li>
+<li><code>-n</code>    lists only processes that have changed status since the last notification</li>
+<li><code>-p</code>    lists process IDs only</li>
+<li><code>-r</code>    restrict output to running jobs</li>
+<li><code>-s</code>    restrict output to stopped jobs</li>
+</ul>
+<p>If -x is supplied, COMMAND is run after all job specifications that appear in ARGS have been replaced with the process ID of that job's   process group leader.</p>
+<p>Exit Status:</p>
+<p>Returns success unless an invalid option is given or an error occurs.
+If -x is used, returns the exit status of COMMAND.</p>
+<h4 id="进程返回到前台"><a class="header" href="#进程返回到前台">进程返回到前台</a></h4>
+<p>一个在后台运行的进程对一切来自键盘的输入都免疫,也不能用 <code>Ctrl-c</code> 来中断它.
+使用 <code>fg</code> 命令,让一个进程返回前台执行:</p>
+<pre><code class="language-bash">jobs
+[1]+ Running
+xlogo &amp;
+fg %1
+xlogo
+</code></pre>
+<p><code>fg</code> 命令之后,跟随着一个百分号和工作序号(叫做 <code>jobspec</code>).如果我们只有一个后台任务,那么 <code>jobspec</code> 是可有可无的.
+输入 <code>Ctrl-c</code> 来终止 <code>xlogo</code> 程序.</p>
+<h4 id="停止一个进程"><a class="header" href="#停止一个进程">停止一个进程</a></h4>
+<p>有时候,我们想要停止一个进程,而没有终止它.这样会把一个前台进程移到后台等待.
+输入<code>Ctrl-z</code>,可以停止一个前台进程.让我们试一下.在命令提示符下,执行 <code>xlogo</code> 命令, 然后输入 <code>Ctrl-z</code>:</p>
+<pre><code class="language-bash">xlogo
+[1]+ Stopped xlogo
+</code></pre>
+<p>停止 <code>xlogo</code> 程序之后,通过调整 <code>xlogo</code> 的窗口大小,我们可以证实这个程序已经停止了.
+它看起来像死掉了一样.使用 <code>fg</code> 命令,可以恢复程序到前台运行,或者用 <code>bg</code> 命令把程序移到后台.</p>
+<pre><code class="language-bash">bg %1
+[1]+ xlogo &amp;
+</code></pre>
+<p>和 <code>fg</code> 命令一样,如果只有一个任务的话, <code>jobspec</code> 参数是可选的.
+因为把一个进程从前台移到后台很方便,如果我们从命令行启动一个图形界面的程序,但是忘记把它放到后台执行,即没有在命令后加上字符<code>&amp;</code>,(也不用担心).</p>
+<p>为什么要从命令行启动一个图形界面程序呢?有两个原因.
+第一个,你想要启动的程序,可能 没有在窗口管理器的菜单中列出来(比方说 <code>xlogo</code>).
+第二个,从命令行启动一个程序, 你能够看到一些错误信息,如果从窗口系统中运行程序的话,这些信息是不可见的.
+有时候, 一个程序不能从图形界面菜单中启动.这时候,应该从命令行中启动它.我们可能会看到 错误信息,这些信息揭示了问题所在.
+一些图形界面程序还有许多有意思并且有用的命令行选项.</p>
+<h4 id="signals"><a class="header" href="#signals">Signals</a></h4>
+<p><code>kill</code> 命令被用来<code>杀死</code>程序.这样我们就可以终止需要杀死的程序.这里有一个实例:</p>
+<pre><code class="language-bash">xlogo &amp;
+:[1] 28401
+kill 28401
+:[1]+ Terminated
+xlogo
+</code></pre>
+<p>首先,我们在后台启动 <code>xlogo</code> <code>程序.shell</code> 打印出 <code>jobspec</code> 和这个后台进程的 <code>PID</code>.
+下一步,我们使用 <code>kill</code> 命令,并且指定我们想要终止的进程 <code>PID</code>.也可以用 <code>jobspec</code>(例如,<code>%1</code>)来代替 <code>PID</code>.</p>
+<p>虽然这个命令很直接了当,但不仅仅这些.这个 <code>kill</code> 命令不是确切地<code>杀死</code>程序,而是给程序 发送信号.
+信号是操作系统与程序之间进行通信,所采用的几种方式中的一种.</p>
+<p>我们已经看到 信号,在使用 <code>Ctrl-c</code> 和 <code>Ctrl-z</code> 的过程中.当终端接受了其中一个按键组合后,它会给在前端运行 的程序发送一个信号.
+在使用 <code>Ctrl-c</code> 的情况下,会发送一个叫做 <code>INT</code>(中断)的信号;当使用 <code>Ctrl-z</code> 时,则发送一个叫做 <code>TSTP</code>(终端停止)的信号.程序,反过来,倾听信号的到来,当程序 接到信号之后,则做出响应.</p>
+<p>一个程序能够倾听和响应信号,这个事实允许一个程序做些事情, 比如,当程序接到一个终止信号时,它可以保存所做的工作.</p>
+<h4 id="通过-kill命令给进程发送信号"><a class="header" href="#通过-kill命令给进程发送信号">通过 kill命令给进程发送信号</a></h4>
+<p><code>kill</code> 命令被用来给程序发送信号.它最常见的语法形式看起来像这样:</p>
+<pre><code class="language-bash">kill [-signal] PID...
+</code></pre>
+<p>如果在命令行中没有指定信号,那么默认情况下,发送 <code>TERM</code>(终止)信号.<code>kill</code> 命令被经常 用来发送以下命令:</p>
+<hr />
+<p>常用信号
+| 编号 | 名字 | 含义 |</p>
+<ul>
+<li>
+<p><code>1</code> <code>HUP</code> <code>挂起</code> : 这是美好往昔的痕迹,那时候终端机通过电话线和调制解调器连接到 远端的计算机.这个信号
+被用来告诉程序,控制的终端机已经<code>挂起</code>. 通过关闭一个终端会话,可以说明这个信号的作用.发送这个信号到终端机上的前台程序,程序会终止.
+许多守护进程也使用这个信号,来重新初始化.这意味着,当发送这个信号到一个守护进程后, 这个进程会重新启动,并且重新读取它的配置文件.<code>Apache</code> 网络服务器守护进程就是一个例子.</p>
+</li>
+<li>
+<p><code>2</code> <code>INT</code> <code>中断</code>:实现和 <code>Ctrl-c</code> 一样的功能,由终端发送.通常,它会终止一个程序.</p>
+</li>
+<li>
+<p><code>9</code> <code>KILL</code> <code>杀死</code> : 这个信号很特别.鉴于进程可能会选择不同的方式来处理信号,其中也包含忽略信号.
+<code>Kill</code>并不发送<code>9</code>信号到目标进程.而是内核立即终止 这个进程.
+当一个进程以这种方式终止的时候,它没有机会去做些<code>清理</code>工作,或者是保存劳动成果.
+因为这个原因,把 <code>KILL</code> 信号看作杀手锏,当其它终止信号失败后,再使用它.</p>
+</li>
+<li>
+<p><code>15</code> <code>TERM</code> <code>终止</code>: 这是 <code>kill</code> 命令发送的默认信号.如果程序仍然<code>活着</code>,可以接受信号,那么 这个信号终止程序.</p>
+</li>
+<li>
+<p><code>18</code> <code>CONT</code> <code>继续</code>: 在停止一段时间后,进程恢复运行.</p>
+</li>
+<li>
+<p><code>19</code> <code>STOP</code> <code>停止</code>: 这个信号导致进程停止运行,而没有终止.类似<code>KILL</code> 信号,它不被发送到目标进程,因此它不能被忽略.</p>
+</li>
+</ul>
+<p>让我们实验一下 <code>kill</code> 命令:</p>
+<pre><code class="language-bash">xlogo &amp;
+[1] 13546
+kill -1 13546
+[1]+ Hangup
+xlogo
+</code></pre>
+<p>在这个例子里,我们在后台启动 <code>xlogo</code> 程序,然后通过 <code>kill</code> 命令,发送给它一个 <code>HUP</code> 信号.
+这个 <code>xlogo</code> 程序终止运行,并且 <code>shell</code> 指示这个后台进程已经接受了一个挂起信号.
+在看到这条 信息之前,你可能需要多按几次 <code>enter</code> 键.注意,既可以用号码,也可以用名字,不过要在名字前面 加上字母<code>SIG</code>,来指定所要发送的信号.</p>
+<pre><code class="language-bash">xlogo &amp;
+[1] 13546
+kill -1 13546
+[1]+ Hangup
+xlogo
+</code></pre>
+<p>重复上面的例子,试着使用其它的信号.记住,你也可以用 <code>jobspecs</code> 来代替 <code>PID</code> .</p>
+<p>进程,和文件一样,拥有所有者,所以为了能够通过 <code>kill</code> 命令来给进程发送信号, 你必须是进程的所有者(或者是超级用户).</p>
+<p>除了上表列出的 <code>kill</code> 命令最常使用的信号之外,还有一些系统频繁使用的信号.以下是其它一些常用 信号列表:</p>
+<hr />
+<p>其它常用信号
+| 编号 | 名字 | 含义 |</p>
+<ul>
+<li><code>3</code> <code>QUIT</code> <code>退出</code></li>
+<li><code>11</code> <code>SEGV</code> <code>段错误</code>: 如果一个程序非法使用内存,就会发送这个信号.也就是说, 程序试图写入内存,而这个内存空间是不允许此程序写入的</li>
+<li><code>20</code> <code>TSTP</code> <code>终端停止</code>: 当按下 <code>Ctrl-z</code> 组合键后,终端发送这个信号.不像 <code>STOP</code> 信号, <code>TSTP</code> 信号由目标进程
+接收,且可能被忽略.</li>
+<li><code>28</code> <code>WINCH</code> <code>改变窗口大小</code>: 当改变窗口大小时,系统会发送这个信号. 一些程序,像 <code>top</code> 和 <code>less</code> 程序会响
+应这个信号,按照新窗口的尺寸,刷新显示的内容.</li>
+</ul>
+<p>为了满足读者的好奇心,通过下面的命令可以得到一个完整的信号列表:</p>
+<pre><code class="language-bash">kill -l
+</code></pre>
+<h4 id="通过-killall命令给多个进程发送信号"><a class="header" href="#通过-killall命令给多个进程发送信号">通过 killall命令给多个进程发送信号</a></h4>
+<p>也有可能通过 <code>killall</code> 命令,给匹配特定程序或用户名的多个进程发送信号.下面是 <code>killall</code> 命令的语法形式:</p>
+<pre><code class="language-bash">killall [-u user] [-signal] name...
+</code></pre>
+<p>为了说明情况,我们将启动一对 <code>xlogo</code> 程序的实例,然后再终止它们:</p>
+<pre><code class="language-bash">$ xlogo &amp;
+[1] 18801
+$ xlogo &amp;
+[2] 18802
+$ killall xlogo
+[1]- Terminated xlogo
+[2]+ Terminated xlogo
+</code></pre>
+<p>记住,和 <code>kill</code> 命令一样,你必须拥有超级用户权限才能给不属于你的进程发送信号.</p>
+<h3 id="更多和进程相关的命令"><a class="header" href="#更多和进程相关的命令">更多和进程相关的命令</a></h3>
+<p>因为监测进程是一个很重要的系统管理任务,所以有许多命令与它相关.玩玩下面几个命令:</p>
+<hr />
+<p>| 命令名 | 命令描述 |</p>
+<ul>
+<li><code>pstree</code> : 输出一个树型结构的进程列表,这个列表展示了进程间父/子关系.</li>
+<li><code>vmstat</code>: 输出一个系统资源使用快照,包括内存,交换分区和磁盘<code>I/O</code>. 为了看到连续的显示结果,则在命令名后加上延时的时间(以秒为单位).例如,<code>vmstat 5</code>. 终止输出,按下 <code>Ctrl-c</code> 组合键.</li>
+<li><code>xload</code>: 一个图形界面程序,可以画出系统负载的图形.</li>
+<li><code>tload</code>: 与 <code>xload</code> 程序相似,但是在终端中画出图形.使用 <code>Ctrl-c</code>,来终止输出.</li>
+</ul>
+<h2 id="第十二章shell环境"><a class="header" href="#第十二章shell环境">第十二章:shell环境</a></h2>
+<p>正如我们之前所讨论到的,<code>shell</code> 在 <code>shell</code>会话中维护着大量的信息,这些信息称为 (<code>shell</code>) 环境.
+存储在 <code>shell</code>环境中的数据被程序用来确定配置属性.</p>
+<p>然而大多数程序用配置文件来存储程序设置, 某些程序也会查找存储在<code>shell</code> 环境中的数值来调整他们的行为.
+知道了这些,我们就可以用 <code>shell</code> 环境 来自定制 <code>shell</code> 经历.</p>
+<p>在这一章,我们将用到以下命令:</p>
+<ul>
+<li><code>printenv</code> - 打印部分或所有的环境变量</li>
+<li><code>set</code> - 设置 <code>shell</code> 选项</li>
+<li><code>export</code> — 导出环境变量,让随后执行的程序知道.</li>
+<li><code>alias</code> - 创建命令别名</li>
+</ul>
+<h3 id="什么存储在环境变量中"><a class="header" href="#什么存储在环境变量中">什么存储在环境变量中?</a></h3>
+<p>shell 在环境中存储了两种基本类型的数据,虽然对于 bash 来说,很大程度上这些类型是不可辨别的.
+它们是环境变量和 shell 变量.</p>
+<p>Shell 变量是由 <code>bash</code> 存放的少量数据,而剩下的基本上 都是环境变量.</p>
+<p>除了变量,shell 也存储了一些可编程的数据,命名为别名和 shell 函数.
+我们 已经在第六章讨论了别名,而 shell 函数(涉及到 shell 脚本)将会在第五部分叙述.</p>
+<h3 id="检查环境变量"><a class="header" href="#检查环境变量">检查环境变量</a></h3>
+<p>我们既可以用 bash 的内部命令 <code>set</code>,或者是 <code>printenv</code> 程序来查看什么存储在环境当中.</p>
+<p><code>set</code> 命令可以显示shell 和环境变量两者,而 <code>printenv</code> 只是显示环境变量.
+因为环境变量内容列表相当长,所以最好 把每个命令的输出结果管道到 less 命令:</p>
+<pre><code class="language-bash">$ printenv | less
+</code></pre>
+<p>执行以上命令之后,我们应该能得到类似以下内容:</p>
+<pre><code class="language-bash">KDE_MULTIHEAD=false
+SSH_AGENT_PID=6666
+...
+</code></pre>
+<p>我们所看到的是环境变量及其数值的列表.
+例如,我们看到一个叫做 USER 的变量,这个变量值是 <code>me</code>.<code>printenv</code> 命令也能够列出特定变量的数值:</p>
+<pre><code class="language-bash">$ printenv USER
+me
+</code></pre>
+<p>当使用没有带选项和参数的 <code>set</code> 命令时,shell 和环境变量二者都会显示,同时也会显示定义的 shell 函数.
+不同于 <code>printenv</code> 命令,<code>set</code> 命令的输出结果很礼貌地按照字母顺序排列:</p>
+<pre><code class="language-bash">$ set | less
+</code></pre>
+<p>也可以通过 <code>echo</code> 命令来查看一个变量的内容,像这样:</p>
+<pre><code class="language-bash">$ echo $HOME
+/home/me
+</code></pre>
+<p>如果 shell 环境中的一个成员既不可用 <code>set</code> 命令也不可用 <code>printenv</code> 命令显示,则这个变量是别名.
+输入不带参数的 <code>alias</code> 命令来查看它们:</p>
+<pre><code class="language-bash">$ alias
+alias l.='ls -d .* --color=tty'
+alias ll='ls -l --color=tty'
+...
+</code></pre>
+<h3 id="一些有趣的变量"><a class="header" href="#一些有趣的变量">一些有趣的变量</a></h3>
+<p>shell 环境中包含相当多的变量,虽然你的 shell 环境可能不同于这里展示的,但是你可能会看到 以下变量在你的 shell 环境中:</p>
+<hr />
+<p>环境变量
+变量 内容</p>
+<ul>
+<li><code>DISPLAY</code>: 如果你正在运行图形界面环境,那么这个变量就是你显示器的名字.
+通常,它是 <code>:0</code>, 意思是由<code>X</code>产生的第一个显示器.</li>
+<li><code>EDITOR</code>: 文本编辑器的名字.</li>
+<li><code>SHELL</code>: shell 程序的名字.</li>
+<li><code>HOME</code>: 用户家目录.</li>
+<li><code>LANG</code>: 定义了字符集以及语言编码方式.</li>
+<li><code>OLD_PWD</code>: 先前的工作目录.</li>
+<li><code>PAGER</code>: 页输出程序的名字.这经常设置为<code>/usr/bin/less</code>.</li>
+<li><code>PATH</code>: 由冒号分开的目录列表,当你输入可执行程序名后,会搜索这个目录列表.</li>
+<li><code>PS1</code>: <code>Prompt String 1</code>. 这个定义了你的shell 提示符的内容.随后我们可以看到,这个变量 内容可以全面地定制.</li>
+<li><code>PWD</code>: 当前工作目录.</li>
+<li><code>TERM</code>: 终端类型名.类 Unix 的系统支持许多终端协议;这个变量设置你的终端仿真器所用的协议.</li>
+<li><code>TZ</code>: 指定你所在的时区.大多数类 Unix 的系统按照协调时间时 (UTC) 来维护计算机内部的时钟 ,然后应用一个由这个变量指定的偏差来显示本地时间.</li>
+<li><code>USER</code>: 你的用户名</li>
+</ul>
+<p>如果缺失了一些变量,不要担心,这些变量会因发行版本的不同而不同.</p>
+<h3 id="如何建立-shell-环境"><a class="header" href="#如何建立-shell-环境">如何建立 shell 环境?</a></h3>
+<p>当我们登录系统后,启动 bash 程序,并且会读取一系列称为启动文件的配置脚本, 这些文件定义了默认的可供所有用户共享的 shell 环境.
+然后是读取更多位于我们自己家目录中的启动文件,这些启动文件定义了用户个人的 shell 环境.</p>
+<p>精确的启动顺序依赖于要运行的 shell 会话 类型.
+有两种 shell 会话类型:一个是登录 shell 会话,另一个是非登录 shell 会话.
+登录 shell 会话会提示用户输入用户名和密码;例如,我们启动一个虚拟控制台会话.
+当我们在 GUI 模式下 运行终端会话时,非登录 shell 会话会出现.</p>
+<p>登录 shell 会读取一个或多个启动文件,正如表12-2所示:</p>
+<hr />
+<p>表12-2: 登录 shell 会话的启动文件文件 内容</p>
+<ul>
+<li><code>/etc/profile</code>: 应用于所有用户的全局配置脚本.</li>
+<li><code>~/.bash_profile</code>: 用户私人的启动文件.可以用来扩展或重写全局配置脚本中的设置.</li>
+<li><code>~/.bash_login</code>: 如果文件 <code>~/.bash_profile</code> 没有找到,<code>bash</code> 会尝试读取这个脚本.</li>
+<li><code>~/.profile</code>: 如果文件 <code>~/.bash_profile</code> 或文件<code>~/.bash_login</code> 都没有找到,<code>bash</code> 会试图读取这个文件.
+这是基于 Debian发行版的默认设置,比方说 Ubuntu.</li>
+</ul>
+<p>非登录 shell 会话会读取以下启动文件:</p>
+<hr />
+<p>表12-3: 非登录 shell 会话的启动文件
+文件 内容</p>
+<ul>
+<li><code>/etc/bash.bashrc</code> 应用于所有用户的全局配置文件.</li>
+<li><code>~/.bashrc</code> 用户私有的启动文件.可以用来扩展或重写全局配置脚本中的设置.</li>
+</ul>
+<p>除了读取以上启动文件之外,非登录 shell 会话也会继承它们父进程的环境设置,通常是一个登录 <code>shell</code>.
+浏览一下你的系统,看一看系统中有哪些启动文件.记住--因为上面列出的大多数文件名都以圆点开头 (意味着它们是隐藏文件),你需要使用带<code>-a</code>选项的 <code>ls</code> 命令.</p>
+<p>在普通用户看来,文件 <code>~/.bashrc</code> 可能是最重要的启动文件,因为它几乎总是被读取.</p>
+<p>非登录 shell 默认 会读取它,并且大多数登录 shell 的启动文件会设置成读取 <code>~/.bashrc</code> 文件.
+一个启动文件的内容如果我们看一下典型的 <code>.bash_profile</code> 文件(来自于 <code>CentOS 4</code> 系统),它看起来像这样:</p>
+<pre><code class="language-bash"># .bash_profile
+# 或取别名和函数
+if [ -f ~/.bashrc ]; then
+. ~/.bashrc
+fi
+# 用户自定义的环境和自启动程序
+PATH=$PATH:$HOME/bin
+export PATH
+</code></pre>
+<p>以<code>#</code>开头的行是注释,shell 不会读取它们.它们在那里是为了方便人们阅读.
+第一件有趣的事情发生在第四行,伴随着以下代码:</p>
+<pre><code class="language-bash">if [ -f ~/.bashrc ]; then
+. ~/.bashrc
+fi
+</code></pre>
+<p>这叫做一个 <code>if</code> 复合命令,我们将会在第五部分详细地介绍它,现在我们对它翻译一下:</p>
+<pre><code class="language-bash">If the file ~/.bashrc exists, then
+read the ~/.bashrc file.
+</code></pre>
+<p>我们可以看到这一小段代码就是一个登录 shell 得到 <code>.bashrc</code> 文件内容的方式.
+在我们启动文件中, 下一件有趣的事与 <code>PATH</code> 变量有关系.</p>
+<p>曾经是否感到迷惑 shell 是怎样知道到哪里找到我们在命令行中输入的命令的?
+例如,当我们输入 <code>ls</code> 后, shell不会查找整个计算机系统,来找到 <code>/bin/ls</code>(<code>ls</code> 命令的绝对路径名),
+它将查找一个目录列表, 这些目录包含在 <code>PATH</code> 变量中.</p>
+<p><code>PATH</code> 变量经常(但不总是,依赖于发行版)在<code>/etc/profile</code> 启动文件中设置,通过这些代码:</p>
+<pre><code class="language-bash">PATH=$PATH:$HOME/bin
+</code></pre>
+<p>修改 <code>PATH</code> 变量,添加目录 <code>$HOME/bin</code> 到目录列表的末尾.这是一个参数展开的实例, 参数展开我们在第八章中提到过.</p>
+<p>为了说明这是怎样工作的,试试下面的例子:</p>
+<pre><code class="language-bash">$ foo=&quot;This is some&quot;
+$ echo $foo
+$ foo=&quot;$foo text.&quot;
+$ echo $foo
+</code></pre>
+<p>使用这种技巧,我们可以把文本附加到一个变量值的末尾.</p>
+<p>通过添加字符串 <code>$HOME/bin</code> 到 <code>PATH</code> 变量值 的末尾,则目录 <code>$HOME/bin</code> 就添加到了命令搜索目录列表中.
+这意味着当我们想要在自己的家目录下, 创建一个目录来存储我们自己的私人程序时,shell 已经给我们准备好了.</p>
+<p>我们所要做的事就是把创建的目录叫做 <code>bin</code>,赶快行动吧.注意:很多发行版默认地提供了这个 <code>PATH</code> 设置.
+一些基于 Debian 的发行版,例如 Ubuntu,在登录 的时候,会检测目录 <code>~/bin</code> 是否存在,若找到目录则把它动态地加到 <code>PATH</code> 变量中.</p>
+<p>最后,有下面一行代码:</p>
+<pre><code class="language-bash">export PATH
+</code></pre>
+<p>这个 <code>export</code> 命令告诉 <code>shell</code> 让这个 <code>shell</code> 的子进程可以使用 PATH 变量的内容.</p>
+<h3 id="修改-shell-环境"><a class="header" href="#修改-shell-环境">修改 shell 环境</a></h3>
+<p>既然我们知道了启动文件所在的位置和它们所包含的内容,我们就可以修改它们来定制自己的 shell 环境.
+我们应该修改哪个文件?</p>
+<p>按照通常的规则,添加目录到你的 PATH 变量或者是定义额外的环境变量,要把这些更改放置到 <code>.bash_profile</code>文件中(或者其替代文件中,根据不同的发行版.例如,Ubuntu 使用 <code>.profile</code> 文件).</p>
+<p>对于其它的更改,要放到 <code>.bashrc</code> 文件中.除非你是系统管理员,需要为系统中的所有用户修改默认设置,那么则限定你只能对自己家
+目录下的文件进行修改.</p>
+<p>当然,有可能会更改 <code>/etc</code> 目录中的文件,比如说 <code>profile</code> 文件,而且在许多情况下,修改这些文件也是明智的,但是现在,我们要 安全起见.</p>
+<h3 id="文本编辑器"><a class="header" href="#文本编辑器">文本编辑器</a></h3>
+<p>为了编辑(例如,修改)shell 的启动文件,还有系统中大多数其它配置文件,我们使用一个叫做文本编辑器的程序.</p>
+<p>文件编辑器是一个,在某些方面,类似于文字处理器的程序,比如说随着鼠标的移动, 它允许你在屏幕上编辑文字.
+只有一点,文本编辑器不同于文字处理器,就是它只能支持纯文本,并且 经常包含为便于写程序而设计的特性.</p>
+<p>文本编辑器分为两种基本类型:图形化的和基于文本的编辑器.
+GNOME 和 KDE 两者都包含一些流行的 图形编辑器.GNOME 自带了一个叫做 <code>gedit</code> 的编辑器,这个编辑器通常在 <code>GNOME</code> 菜单中称为<code>文本编辑器</code>.</p>
+<p><code>KDE</code> 通常自带了三种编辑器,分别是(按照复杂度递增的顺序排列)<code>kedit</code>,<code>kwrite</code>,<code>kate</code>.
+有许多基于文本的编辑器.你将会遇到一些流行的编辑器,它们是 <code>nano</code>,<code>vi</code>,和 <code>emacs</code>.</p>
+<p>这个 <code>nano</code> 编辑器 是一个简单的,容易使用的编辑器,它是 <code>pico</code> 编辑器的替代物,<code>pico</code> 编辑器由 <code>PINE</code> 邮件套件提供.
+<code>vi</code> 编辑器(在大多数 Linux 系统中被 <code>vim</code> 替代,<code>vim</code> 是 <code>Vi IMproved</code>的简写)是类 Unix 操作系统的传统编辑器.
+<code>vim</code> 是我们下一章节的讨论对象.</p>
+<p><code>emacs</code> 编辑器最初由 Richard Stallman 写成.
+<code>emacs</code> 是一个庞大的,多用途的, 可做任何事情的编程环境.虽然 <code>emacs</code> 很容易获取,但是大多数 Linux 系统很少默认安装它.</p>
+<h3 id="使用文本编辑器"><a class="header" href="#使用文本编辑器">使用文本编辑器</a></h3>
+<p>所有的文本编辑器都可以通过在命令行中输入编辑器的名字,加上你所想要编辑的文件来唤醒.
+如果所 输入的文件名不存在,编辑器则会假定你想要创建一个新文件.下面是一个使用 <code>gedit</code> 的例子:</p>
+<pre><code class="language-bash">$ gedit some_file
+</code></pre>
+<p>这条命令将会启动 <code>gedit</code> 文本编辑器,同时加载名为 <code>some_file</code> 的文件,如果这个文件存在的话.</p>
+<p>所有的图形文本编辑器都相当不言自明的,所以我们在这里不会介绍它们.
+反之,我们将集中精力在 我们第一个基于文本的文本编辑器,<code>nano</code>.</p>
+<p>让我们启动 <code>nano</code>,并且编辑文件<code>.bashrc</code>.但是在我们这样 做之前,先练习一些<code>安全准备</code>.</p>
+<p>当我们编辑一个重要的配置文件时,首先创建一个这个文件的备份总是一个不错的主意.
+这样能避免我们在编辑文件时弄乱文件.创建文件 <code>.bashrc</code> 的备份文件,这样做:</p>
+<pre><code class="language-bash">$ cp .bashrc .bashrc.bak
+</code></pre>
+<p>备份文件的名字无关紧要,只要选择一个容易理解的文件名.
+扩展名 <code>.bak</code>,<code>.sav</code>, <code>.old</code>,和<code>.orig</code> 都是用来指示备份文件的流行方法.
+哦,记住 <code>cp</code> 命令会默默地重写存在的文件.现在我们有了一个备份文件,我们启动 <code>nano</code> 编辑器吧:</p>
+<pre><code class="language-bash">$ nano .bashrc
+</code></pre>
+<p>一旦 <code>nano</code> 编辑器启动后,我们将会得到一个像下面一样的屏幕:</p>
+<pre><code class="language-bash">GNU nano 2.0.3
+....
+</code></pre>
+<p>注意:如果你的系统中没有安装 <code>nano</code> 编辑器,你可以用一个图形化的编辑器代替.</p>
+<p>这个屏幕由上面的标头,中间正在编辑的文件文本和下面的命令菜单组成.
+因为设计 nano 是为了 代替由电子邮件客户端提供的编辑器的,所以它相当缺乏编辑特性.</p>
+<p>在任一款编辑器中,你应该 学习的第一个命令是怎样退出程序.
+以 nano 为例,你输入 <code>Ctrl-x</code> 来退出 nano.在屏幕底层的菜单中 说明了这个命令.
+<code>^X</code> 表示法意思是 <code>Ctrl-x</code>.这是控制字符的常见表示法,许多程序都使用它.</p>
+<p>第二个我们需要知道的命令是怎样保存我们的劳动成果.对于 nano 来说是 <code>Ctrl-o</code>.
+尽然我们 已经获得了这些知识,接下来我们准备做些编辑工作.</p>
+<p>使用下箭头按键和 / 或下翻页按键,移动鼠标到文件的最后一行,然后添加以下几行到文件 <code>.bashrc</code> 中:</p>
+<pre><code class="language-bash">umask 0002
+export HISTCONTROL=ignoredups
+export HISTSIZE=1000
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+</code></pre>
+<p>注意:你的发行版可能已经包含其中的一些行,但是复制没有任何伤害.</p>
+<p>下表是所添加行的意义:</p>
+<hr />
+<p>表12-4:
+文本行 含义</p>
+<ul>
+<li><code>umask 0002</code> 设置掩码来解决共享目录的问题.</li>
+<li><code>export HISTCONTROL=ignoredups</code> 使得 shell 的历史记录功能忽略一个命令,如果相同的命令已被记录.</li>
+<li><code>export HISTSIZE=1000</code> 增加命令历史的大小,从默认的 <code>500</code> 行扩大到 <code>1000</code> 行.</li>
+<li><code>alias l.='ls -d .* --color=auto'</code> 创建一个新命令,叫做<code>l.</code>,这个命令会显示所有以点开头的目录项.</li>
+<li><code>alias ll='ls -l --color=auto'</code> 创建一个叫做<code>ll</code>的命令,这个命令会显示长格式目录列表.</li>
+</ul>
+<p>正如我们所看到的,我们的许多附加条目意思直觉上并不是明显的,所以添加注释到我们的文件 <code>.bashrc</code> 中是 一个好主意,可以帮助人们理解.
+使用编辑器,更改我们的附加条目,让它们看起来像这样:</p>
+<pre><code class="language-bash"># Change umask to make directory sharing easier
+umask 0002
+# Ignore duplicates in command history and increase
+# history size to 1000 lines
+export HISTCONTROL=ignoredups
+export HISTSIZE=1000
+# Add some helpful aliases
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+</code></pre>
+<p>啊,看起来好多了! 当我们完成修改后,输入 <code>Ctrl-o</code> 来保存我们修改的 <code>.bashrc</code> 文件,输入 <code>Ctrl-x</code> 退出 nano.
+为什么注释很重要?</p>
+<p>不管什么时候你修改配置文件时,给你所做的更改加上注释都是一个好主意.
+的确,明天你会记得你修改了的内容,但是六个月之后会怎样呢?帮自己一个忙,加上一些注释吧.
+<code>Shell</code> 脚本和 <code>bash</code> 启动文件都使用 <code>#</code> 符号来开始注释.其它配置文件可能使用其它的符号.
+大多数配置文件都有注释.把它们作为指南.
+你会经常看到配置文件中的一些行被注释掉,以此防止它们被受影响的程序使用.</p>
+<p>这样做 是为了给读者在可能的配置选项方面一些建议,或者给出正确的配置语法实例.
+例如,Ubuntu 8.04 中的 <code>.bashrc </code>文件包含这些行:</p>
+<pre><code class="language-bash"># some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+</code></pre>
+<p>最后三行是有效的被注释掉的别名定义.如果你删除这三行开头的 <code>#</code> 符号,此技术程称为 <code>uncommenting</code> (不注释),这样你就会激活这些别名.
+相反地,如果你在一行的开头加上 <code>#</code> 符号, 你可以注销掉这一行,但会保留它所包含的信息.</p>
+<h3 id="激活我们的修改"><a class="header" href="#激活我们的修改">激活我们的修改</a></h3>
+<p>我们对于文件 <code>.bashrc</code> 的修改不会生效,直到我们关闭终端会话,再重新启动一个新的会话,
+因为 <code>.bashrc</code> 文件只是在刚开始启动终端会话时读取.</p>
+<p>然而,我们可以强迫 bash 重新读取修改过的 <code>.bashrc</code> 文件,使用下面的命令:</p>
+<pre><code class="language-bash">$ source .bashrc
+</code></pre>
+<p>运行上面命令之后,我们就应该能够看到所做修改的效果了.试试其中一个新的别名:</p>
+<pre><code class="language-bash">$ ll
+</code></pre>
+<p>总结</p>
+<p>在这一章中,我们学到了用文本编辑器来编辑配置文件的必要技巧.
+随着继续学习,当我们 读到命令的手册页时,记录下命令所支持的环境变量.可能会有一个或两个宝贝.</p>
+<p>在随后的章节里面,我们将会学习 shell 函数,一个很强大的特性,你可以把它包含在 bash 启动文件里面,以此来添加你自定制的命令宝库.</p>
+<p>拓展阅读</p>
+<p>bash 手册页的 INVOCATION 部分非常详细地讨论了 bash 启动文件.</p>
+<h2 id="第十三章vi简介"><a class="header" href="#第十三章vi简介">第十三章:VI简介</a></h2>
+<p>有一个古老的笑话,说是一个在纽约的游客向行人打听这座城市中著名古典音乐场馆的方向:</p>
+<p>游客: 请问一下,我怎样去卡内基音乐大厅?
+行人: 练习,练习,练习!</p>
+<p>学习 Linux 命令行,就像要成为一名造诣很深的钢琴家一样,它不是我们一下午就能学会的技能.
+这需要 经历几年的勤苦练习.在这一章中,我们将介绍 vi(发音<code>vee eye</code>)文本编辑器,它是 Unix 传统中核心程序之一.</p>
+<p>vi 因它难用的用户界面而有点声名狼藉,但是当我们看到一位大师坐在钢琴前开始演奏时,我们的确成了 伟大艺术的见证人.
+虽然我们在这里不能成为 vi 大师,但是当我们学完这一章后, 我们会知道怎样在 vi 中玩<code>筷子</code>.</p>
+<h3 id="为什么我们应该学习-vi"><a class="header" href="#为什么我们应该学习-vi">为什么我们应该学习 vi</a></h3>
+<p>在现在这个图形编辑器和易于使用的基于文本编辑器的时代,比如说 <code>nano</code>,为什么我们还应该学习 <code>vi</code> 呢? 下面有三个充分的理由:</p>
+<ol>
+<li><code>vi</code> 很多系统都预装.如果我们的系统没有图形界面,比方说一台远端服务器或者是一个 <code>X</code> 配置损坏了的本地系统,那么 <code>vi</code> 就成了我们的救星.
+虽然 <code>nano</code> 逐渐流行起来,但是它 还没有普及.<code>POSIX</code>,这套 Unix 系统中程序兼容的标准,就要求系统要预装<code>vi</code>.</li>
+<li><code>vi</code> 是轻量级且执行快速的编辑器.
+对于许多任务来说,启动 <code>vi</code> 比起在菜单中找到一个图形化文本编辑器,再等待编辑器数倍兆字节的数据加载而言,要容易的多.
+另外,<code>vi</code> 是为了加快输入速度而设计的. 我们将会看到,当一名熟练的 <code>vi</code> 用户在编辑文件时,他或她的手从不需要移开键盘.</li>
+<li>我们不希望其他 Linux 和 Unix 用户把我们看作胆小鬼.</li>
+</ol>
+<p>好吧,可能只有两个充分的理由.</p>
+<h3 id="一点儿背景介绍"><a class="header" href="#一点儿背景介绍">一点儿背景介绍</a></h3>
+<p>第一版 <code>vi</code> 是在1976由 <code>Bill Joy</code> 写成的,当时他是加州大学伯克利分校的学生, 后来他共同创建了 <code>Sun</code> 微系统公司.</p>
+<p><code>vi</code> 这个名字 来源于单词<code>visual</code>,因为它打算在带有可移动光标的视频终端上编辑文本.
+在发明可视化编辑器之前, 有一次只能操作一行文本的行编辑器.
+为了指定一个修改,我们告诉行编辑器到一个特殊行并且说明做什么修改,比方说添加或删除文本.</p>
+<p>视频终端(而不是基于打印机的终端,像电传打印机)的出现 ,可视化编辑成为可能.
+<code>vi</code> 实际上整合了一个强大的叫做 <code>ex</code> 行编辑器, 所以我们在使用 <code>vi</code> 时能运行行编辑命令.</p>
+<p>大多数 Linux 发行版不包含真正的 <code>vi</code>;而是自带一款高级替代版本,叫做 <code>vim</code>(它是<code>vi improved</code>的简写)由 Bram Moolenaar 开发的.<code>vim</code> 相对于传统的 Unix vi 来说,取得了实质性进步.
+通常,<code>vim</code> 在 Linux 系统中是<code>vi</code>的符号链接(或别名). 在随后的讨论中,我们将会假定我们有一个叫做<code>vi</code>的程序,但它其实是<code>vim</code>.</p>
+<h3 id="启动和停止-vi"><a class="header" href="#启动和停止-vi">启动和停止 vi</a></h3>
+<p>要想启动 <code>vi</code>,只要简单地输入以下命令:</p>
+<pre><code>$ vi
+</code></pre>
+<p>一个像这样的屏幕应该出现:</p>
+<pre><code class="language-bash">VIM - Vi Improved
+....
+</code></pre>
+<p>正如我们之前操作 <code>nano</code> 时,首先要学的是怎样退出 <code>vi</code>.要退出 <code>vi</code>,输入下面的命令(注意冒号是命令的一部分):</p>
+<pre><code class="language-bash">:q
+</code></pre>
+<p>shell 提示符应该返回.如果由于某种原因,<code>vi</code> 不能退出(通常因为我们对文件做了修改,却没有保存文件).
+通过给命令加上叹号,我们可以告诉 <code>vi</code> 我们真要退出 <code>vi</code>.</p>
+<pre><code class="language-bash">:q!
+</code></pre>
+<p>小贴示:如果你在 vi 中<code>迷失</code>了,试着按下 Esc 键两次来找到路(回到普通模式).</p>
+<h3 id="vi模式"><a class="header" href="#vi模式">vi模式</a></h3>
+<h4 id="兼容模式"><a class="header" href="#兼容模式">兼容模式</a></h4>
+<p>上面实例中的启动屏幕(来自于 Ubuntu 8.04),我们看到一行文字<code>以 Vi 兼容的模式运行</code>.
+这意味着vim 将以近似于 vi 常规的模式 运行,而不是 vim 的高级规范.
+为了这章的目的,我们想要使用 vim 的高级规范.要想这样做, 你有几个选择:
+用 <code>vim</code> 来代替 <code>vi</code>.
+如果命令生效,考虑在你的<code>.bashrc</code> 文件中添加别名 <code>vi='vim'</code>.
+或者,使用这个命令在你的 <code>vim</code> 配置文件中添加一行:</p>
+<pre><code class="language-bash">echo `set nocp` &gt;&gt; ~/.vimrc
+</code></pre>
+<p>不同的 Linux 发行版其 vim 软件包也迥然不同.一些发行版只是安装了 vim 的最小版本, 其默认只支持有限的 vim 特性.
+当练习随后的课程时,你可能会遇到缺失的功能. 如果是这种情况,就安装 vim 的完整版.</p>
+<h4 id="编辑模式"><a class="header" href="#编辑模式">编辑模式</a></h4>
+<p>再次启动 <code>vi</code>,这次传递给 <code>vi</code> 一个不存在的文件名.这也是用 <code>vi</code> 创建新文件的方法.</p>
+<pre><code class="language-bash">$ rm -f foo.txt
+$ vi foo.txt
+</code></pre>
+<p>如果一切运行正常,我们应该获得一个像这样的屏幕:</p>
+<pre><code class="language-bash">....
+&quot;foo.txt&quot; [New File]
+</code></pre>
+<p>每行开头的波浪号(<code>~</code>)指示那一行不存在文本.这表示我们有一个空文件.还没有输入任何字符?
+学习 vi 时,要知道的第二件非常重要的事情是(知道了如何退出 vi 后)vi 是一个模式编辑器,当 vi 启动后,进入 的是命令模式.
+这种模式下,几乎每个按键都是一个命令,所以如果我们打算输入字符,vi 会发疯,弄得一团糟.</p>
+<h4 id="插入模式"><a class="header" href="#插入模式">插入模式</a></h4>
+<p>为了在文件中添加文本,首先我们必须进入插入模式.
+按下<code>i</code>按键进入插入模式.之后,我们应该 在屏幕底部看到下面一行,如果 vi 运行在高级模式下(这不会出现在 vi 兼容模式下):</p>
+<pre><code class="language-bash">-- INSERT --
+</code></pre>
+<p>现在我们能输入一些文本了.试着输入这些文本:<code>The quick brown fox jumped over the lazy dog.</code>
+按下 <code>Esc</code> 按键,退出插入模式并返回命令模式.</p>
+<h4 id="保存我们的工作"><a class="header" href="#保存我们的工作">保存我们的工作</a></h4>
+<p>为了保存我们刚才对文件所做的修改,我们必须在命令模式下输入一个 <code>ex</code> 命令.
+通过按下<code>:</code>键,这很容易完成.按下冒号键之后,一个冒号字符应该出现在屏幕的底部:</p>
+<pre><code class="language-bash">:
+</code></pre>
+<p>为了写入我们修改的文件,我们在冒号之后输入<code>w</code>字符,然后按下回车键:</p>
+<pre><code class="language-bash">:w
+</code></pre>
+<p>文件将会写入到硬盘,并且我们应该在屏幕底部得到一个确认信息,就像这样:</p>
+<pre><code class="language-bash">&quot;foo.txt&quot; [New] 1L, 46C written
+</code></pre>
+<p>小贴示:如果你阅读 vim 的文档,你注意到(混淆地)命令模式被叫做普通模式,<code>ex</code> 命令 叫做命令模式.当心.</p>
+<h4 id="移动光标"><a class="header" href="#移动光标">移动光标</a></h4>
+<p>当在 vi 命令模式下时,vi 提供了大量的移动命令,其中一些是与 <code>less</code> 阅读器共享的.这里 列举了一些:</p>
+<hr />
+<p>表13-1: 光标移动按键
+按键 移动光标</p>
+<ul>
+<li><code>l</code> or 右箭头 向右移动一个字符</li>
+<li><code>h</code> or 左箭头 向左移动一个字符</li>
+<li><code>j</code> or 下箭头 向下移动一行</li>
+<li><code>k</code> or 上箭头 向上移动一行</li>
+<li><code>0</code> (零按键) 移动到当前行的行首.</li>
+<li><code>^</code> 移动到当前行的第一个非空字符.</li>
+<li><code>$</code> 移动到当前行的末尾.</li>
+<li><code>w</code> 移动到下一个单词或标点符号的开头.</li>
+<li><code>W</code> 移动到下一个单词的开头,忽略标点符号.</li>
+<li><code>b</code> 移动到上一个单词或标点符号的开头.</li>
+<li><code>B</code> 移动到上一个单词的开头,忽略标点符号.</li>
+<li><code>Ctrl -f </code> or <code>Page Down</code> 向下翻一页</li>
+<li><code>Ctrl -b</code> or <code>Page Up</code> 向上翻一页</li>
+<li><code>numberG</code> 移动到第 <code>number</code> 行.例如,<code>1G</code> 移动到文件的第一行.<code>G</code> 移动到文件末尾.</li>
+</ul>
+<p>为什么 <code>h</code>,<code>j</code>,<code>k</code>,和 <code>l</code> 按键被用来移动光标呢?
+因为在开发 vi 之初,并不是所有的视频终端都有箭头按键,
+熟练的打字员可以使用规则的键盘按键来移动光标,他们的手从不需要移开键盘.</p>
+<p><code>vi</code> 中的许多命令都可以在前面加上一个数字,比方说上面提到的<code>G</code>命令.
+在命令之前加上一个 数字,我们就可以指定命令执行的次数.例如,命令<code>5j</code>导致 vi 向下移动5行.</p>
+<h3 id="基本编辑"><a class="header" href="#基本编辑">基本编辑</a></h3>
+<p>大多数编辑工作由一些基本的操作组成,比如说插入文本,删除文本和通过剪切和粘贴来移动文本.</p>
+<p>vi,当然,以它自己的独特方式来支持所有的操作.vi 也提供了有限的撤销形式.
+如果我们按下<code>u</code> 按键,当在命令模式下,vi 将会撤销你所做的最后一次修改.
+当我们试着执行一些基本的 编辑命令时,这会很方便.</p>
+<h4 id="追加文本"><a class="header" href="#追加文本">追加文本</a></h4>
+<p>vi 有几种不同进入插入模式的方法.我们已经使用了 <code>i</code> 命令来插入文本.
+让我们返回到我们的 <code>foo.txt</code> 文件中,呆一会儿:<code>The quick brown fox jumped over the lazy dog.</code></p>
+<p>如果我们想要在这个句子的末尾添加一些文本,我们会发现 <code>i</code> 命令不能完成任务,因为我们不能把 光标移到行尾.</p>
+<p>vi 提供了追加文本的命令,明智地命名为<code>a</code>命令.
+如果我们把光标移动到行尾,输入<code>a</code>, 光标就会越过行尾,vi 进入插入模式.这样就允许我们添加更多的文本:
+<code>The quick brown fox jumped over the lazy dog. It was cool.</code>
+记住按下 <code>Esc</code> 按键来退出插入模式.</p>
+<p>因为我们几乎总是想要在行尾附加文本,所以 vi 提供了一种快捷方式来移动到当前行的末尾,并且能添加文本.
+它是<code>A</code>命令.试着用一下它,给文件添加更多行.</p>
+<p>首先,使用<code>0</code>(零)命令,将光标移动到行首.现在我们输入<code>A</code>,来添加以下文本行:</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+Line 2
+Line 3
+</code></pre>
+<p>再一次,按下 <code>Esc</code> 按键退出插入模式.</p>
+<p>正如我们所看到的,大 <code>A</code> 命令非常有用,因为在启动插入模式之前,它把光标移到了行尾.</p>
+<h3 id="打开一行"><a class="header" href="#打开一行">打开一行</a></h3>
+<p>我们插入文本的另一种方式是<code>打开</code>一行.这会在存在的两行之间插入一个空白行,并且进入插入模式.
+这种方式有两个变体:</p>
+<hr />
+<p>表13-2: 文本行打开按键
+命令 打开行</p>
+<ul>
+<li><code>o</code> 当前行的下方打开一行.</li>
+<li><code>O</code> 当前行的上方打开一行.</li>
+</ul>
+<p>我们可以演示一下:把光标放到<code>Line 3</code>上,按下小 <code>o</code> 按键.</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+Line 2
+Line 3
+</code></pre>
+<p>在第三行之下打开了新的一行,并且进入插入模式.按下 <code>Esc</code>,退出插入模式.按下 <code>u</code> 按键,撤销我们的修改.
+按下大 <code>O</code> 按键在光标之上打开新的一行:</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+Line 2
+Line 3
+</code></pre>
+<p>按下 <code>Esc</code> 按键,退出插入模式,并且按下 <code>u</code> 按键,撤销我们的更改.</p>
+<h3 id="删除文本"><a class="header" href="#删除文本">删除文本</a></h3>
+<p>正如我们期望的,vi 提供了各种各样的方式来删除文本,所有的方式包含一个或两个按键.</p>
+<p>首先, <code>x</code> 按键会删除光标位置的一个字符.可以在 <code>x</code> 命令之前带上一个数字,来指明要删除的字符个数.
+<code>d</code> 按键更通用一些.类似 <code>x</code>命令,<code>d</code> 命令之前可以带上一个数字,来指定要执行的删除次数.
+另外, <code>d</code> 命令之后总是带上一个移动命令,用来控制删除的范围.这里有些实例:</p>
+<hr />
+<p>表13-3: 文本删除命令
+命令 删除的文本</p>
+<ul>
+<li><code>x</code> : 当前字符</li>
+<li><code>3x</code> : 当前字符及其后的两个字符.</li>
+<li><code>dd</code> : 当前行.</li>
+<li><code>5dd</code> : 当前行及随后的四行文本.</li>
+<li><code>dW</code> : 从光标位置开始到下一个单词的开头.</li>
+<li><code>d$</code> : 从光标位置开始到当前行的行尾.</li>
+<li><code>d0</code> : 从光标位置开始到当前行的行首.</li>
+<li><code>d^</code> : 从光标位置开始到文本行的第一个非空字符.</li>
+<li><code>dG</code> : 从当前行到文件的末尾.</li>
+<li><code>d20G</code>: 从当前行到文件的第20行.</li>
+</ul>
+<p>把光标放到第一行单词<code>It</code>之上.重复按下 <code>x</code> 按键直到删除剩下的部分.下一步,重复按下 <code>u</code> 按键 直到恢复原貌.</p>
+<p>注意:真正的 vi 只是支持单层面的 <code>undo</code> 命令.vim 则支持多个层面的.</p>
+<p>我们再次执行删除命令,这次使用 <code>d</code> 命令.还是移动光标到单词<code>fox</code>之上,按下的 <code>dW</code> 来删除单词,
+按下 <code>d$</code>删除从光标位置到行尾的文本.按下 <code>dG</code> 按键删除从当前行到文件末尾的所有行.</p>
+<p>连续按下 <code>u</code> 按键三次,来恢复删除部分.</p>
+<h3 id="剪切复制和粘贴文本"><a class="header" href="#剪切复制和粘贴文本">剪切,复制和粘贴文本</a></h3>
+<p>这个 <code>d</code> 命令不仅删除文本,它还<code>剪切</code>文本.每次我们使用 <code>d</code> 命令,删除的部分被复制到一个 粘贴缓冲区中(看作剪切板).
+过后我们执行小 <code>p</code> 命令把剪切板中的文本粘贴到光标位置之后, 或者是大 <code>P</code> 命令把文本粘贴到光标之前.</p>
+<p><code>y</code> 命令用来<code>拉</code>(复制)文本,和 <code>d</code> 命令剪切文本的方式差不多.这里有些把 <code>y</code> 命令和各种移动命令结合起来使用的实例:</p>
+<hr />
+<p>表13-4: 复制命令
+命令 复制的内容</p>
+<ul>
+<li><code>yy</code> 当前行.</li>
+<li><code>5yy</code> 当前行及随后的四行文本.</li>
+<li><code>yw</code>从当前光标位置到下一个单词的开头.</li>
+<li><code>y$</code> 从当前光标位置到当前行的末尾.</li>
+<li><code>y0</code> 从当前光标位置到行首.</li>
+<li><code>y^</code> 从当前光标位置到文本行的第一个非空字符.</li>
+<li><code>yG</code> 从当前行到文件末尾.</li>
+<li><code>y20G</code> 从当前行到文件的第20行.</li>
+</ul>
+<p>我们试着做些复制和粘贴工作.把光标放到文本第一行,输入 <code>yy</code> 来复制当前行.
+下一步,把光标移到 最后一行(<code>G</code>),输入小写的 <code>p</code> 把复制的一行粘贴到当前行的下面:</p>
+<p>和以前一样,<code>u</code> 命令会撤销我们的修改.光标仍然位于文件的最后一行,输入大写的 <code>P</code> 命令把 所复制的文本粘贴
+到当前行之上</p>
+<p>试着执行上表中一些其他的 <code>y</code> 命令,了解小写 <code>p</code> 和大写 <code>P</code> 命令的行为.当你完成练习之后,把文件 恢复原样.</p>
+<h4 id="连接行"><a class="header" href="#连接行">连接行</a></h4>
+<p><code>vi</code> 对于行的概念相当严格.通常,不可能把光标移到行尾,再删除行尾结束符(回车符)来连接当前行和它下面的一行.</p>
+<p>由于这个原因,vi 提供了一个特定的命令,大写的 <code>J</code>(不要与小写的 <code>j</code> 混淆了, <code>j</code> 是用来移动光标的)把行与行之间连接起来.
+如果我们把光标放到 <code>line 3</code>上,输入大写的 <code>J</code> 命令,看看发生什么情况:</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+Line 2
+Line 3 Line 4
+Line 5
+</code></pre>
+<h3 id="查找和替换"><a class="header" href="#查找和替换">查找和替换</a></h3>
+<p>vi 有能力把光标移到搜索到的匹配项上.vi 可以在单一行或整个文件中运用这个功能.
+它也可以在有或没有用户确认的情况下实现文本替换.</p>
+<h4 id="查找一行"><a class="header" href="#查找一行">查找一行</a></h4>
+<p><code>f</code> 命令查找一行,移动光标到下一个所指定的字符上.例如,命令 <code>fa</code> 会把光标定位到同一行中下一个出现的<code>a</code>字符上.
+在一行中执行了字符的查找命令之后,通过输入分号来重复这个查找.</p>
+<h4 id="查找整个文件"><a class="header" href="#查找整个文件">查找整个文件</a></h4>
+<p>移动光标到下一个出现的单词或短语上,使用 <code>/</code> 命令.这个命令和我们之前在 <code>less</code> 程序中学到 的一样.</p>
+<p>当你输入<code>/</code>命令后,一个<code>/</code>字符会出现在屏幕底部.下一步,输入要查找的单词或短语后, 按下回车.
+光标就会移动到下一个包含所查找字符串的位置.通过 <code>n</code> 命令来重复先前的查找. 这里有个例子:</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+Line 2
+Line 3
+Line 4
+Line 5
+</code></pre>
+<p>把光标移动到文件的第一行.输入:<code>/Line</code>然后键入回车.光标会移动到第二行.</p>
+<p>下一步,输入 <code>n</code>,光标移到第三行.重复这个 <code>n</code> 命令,光标会 继续向下移动直到遍历了所有的匹配项.</p>
+<p>虽然目前,我们只是使用了单词和短语来作为我们的查找 模式,但是 vi 允许使用正则表达式,一种强大的用来表示复杂文本模式的方法.</p>
+<p>我们将会在随后 的章节里面详尽地介绍正则表达式.</p>
+<h4 id="全局查找和替代"><a class="header" href="#全局查找和替代">全局查找和替代</a></h4>
+<p>vi 使用 <code>ex</code> 命令来执行查找和替代操作(vi 中叫做<code>替换</code>).</p>
+<p>把整个文件中的单词<code>Line</code>更改为<code>line</code>,我们输入以下命令:</p>
+<pre><code class="language-bash">:%s/Line/line/g
+</code></pre>
+<p>我们把这个命令分解为几个单独的部分,看一下每部分的含义:</p>
+<hr />
+<p>条目 含义</p>
+<ul>
+<li><code>:</code>: 冒号字符运行一个 <code>ex</code> 命令.指定要操作的行数.</li>
+<li><code>%</code> :是一个快捷方式,表示从第一行到最后一行.
+另外,操作范围也 可以用 <code>1,5</code> 来代替(因为我们的文件只有<code>5</code>行文本),或者用 <code>1,$</code>来代替,意思是 从第一行到文件的最后一行.`如果省略了文本行的范围,那么操作只对当前行生效.</li>
+<li><code>s</code> :指定操作.在这种情况下是,替换(查找与替代).</li>
+<li><code>/Line/line</code> :查找类型与替代文本.</li>
+<li><code>g</code> :这是<code>全局</code>的意思,意味着对文本行中所有匹配的字符串执行查找和替换操作.如果省略 g,则 只替换每个文本行中第一个匹配的字符串.</li>
+</ul>
+<p>执行完查找和替代命令之后,我们的文件看起来像这样:</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+line 2
+line 3
+line 4
+line 5
+</code></pre>
+<p>我们也可以指定一个需要用户确认的替换命令.通过添加一个<code>c</code>字符到这个命令的末尾,来完成 这个替换命令.例如:</p>
+<pre><code class="language-bash">:%s/line/Line/gc
+</code></pre>
+<p>这个命令会把我们的文件恢复先前的模样;然而,在执行每个替换命令之前,vi 会停下来, 通过下面的信息,来要求我们确认这个替换:
+<code>replace with Line (y/n/a/q/l/^E/^Y)?</code></p>
+<p>括号中的每个字符都是一个可能的选择,如下所示:</p>
+<hr />
+<p>表13-5: 替换确认按键
+按键 行为</p>
+<ul>
+<li><code>y</code> 执行替换操作</li>
+<li><code>n</code> 跳过这个匹配的实例</li>
+<li><code>a</code> 对这个及随后所有匹配的字符串执行替换操作.</li>
+<li><code>q</code> or <code>esc</code> 退出替换操作.</li>
+<li><code>l</code> 执行这次替换并退出.l 是 <code>last</code> 的简写.</li>
+</ul>
+<p><code>Ctrl-e</code>, <code>Ctrl-y </code>分别是向下滚动和向上滚动.用于查看建议替换的上下文.
+如果你输入 <code>y</code>,则执行这个替换,输入 <code>n</code> 则会导致 <code>vi</code> 跳过这个实例,而移到下一个匹配项上.</p>
+<h3 id="编辑多个文件"><a class="header" href="#编辑多个文件">编辑多个文件</a></h3>
+<p>同时能够编辑多个文件是很有用的.你可能需要更改多个文件或者从一个文件复制内容到 另一个文件.
+通过 vi,我们可以打开多个文件来编辑,只要在命令行中指定要编辑的文件名.</p>
+<pre><code class="language-bash">vi file1 file2 file3...
+</code></pre>
+<p>我们先退出已经存在的 vi 会话,然后创建一个新文件来编辑.输入<code>:wq</code> 来退出 vi 并且保存了所做的修改.
+下一步,我们将在家目录下创建一个额外的用来玩耍的文件.通过获取从 ls 命令的输出,来创建这个文件.</p>
+<pre><code class="language-bash">$ ls -l /usr/bin &gt; ls-output.txt
+</code></pre>
+<p>用 vi 来编辑我们的原文件和新创建的文件:</p>
+<pre><code class="language-bash">$ vi foo.txt ls-output.txt
+</code></pre>
+<p>vi 启动,我们会看到第一个文件显示出来.</p>
+<h4 id="文件之间转换"><a class="header" href="#文件之间转换">文件之间转换</a></h4>
+<p>从这个文件转到下一个文件,使用这个 ex 命令:</p>
+<pre><code class="language-bash">:n
+</code></pre>
+<p>回到先前的文件使用:</p>
+<pre><code class="language-bash">:N
+</code></pre>
+<p>当我们从一个文件移到另一个文件时,如果当前文件没有保存修改,vi 会阻止我们转换文件, 这是 vi 强制执行的政策.
+在命令之后添加感叹号,可以强迫 vi 放弃修改而转换文件.</p>
+<p>另外,上面所描述的转换方法,vim(和一些版本的 vi)也提供了一些 ex 命令,这些命令使 多个文件更容易管理.</p>
+<p>我们可以查看正在编辑的文件列表,使用<code>:buffers</code> 命令.运行这个 命令后,屏幕顶部就会显示出一个文件列表:</p>
+<pre><code class="language-bash">:buffers
+1 # &quot;foo.txt&quot; line 1
+2 %a &quot;ls-output.txt&quot; line 0
+Press ENTER or type command to continue
+</code></pre>
+<p>注意:你不能通过<code>:n</code> 或<code>:N</code> 命令在由<code>:e</code> 命令加载的文件之间进行切换.
+这时要使用<code>:buffer</code> 命令, 其后加上缓冲区号码,来转换文件.</p>
+<p>从一个文件复制内容到另一个文件当我们编辑多个文件时,经常地要复制文件的一部分到另一个正在编辑的文件.
+使用之前我们学到的 拉(<code>yank</code>)和粘贴命令,这很容易完成.说明如下.</p>
+<p>以打开的两个文件为例,首先转换到缓冲区1(foo.txt) ,输入:</p>
+<pre><code class="language-bash">:buffer 1
+</code></pre>
+<p>我们应该得到以下输出:</p>
+<pre><code class="language-bash">The quick brown fox jumped over the lazy dog. It was cool.
+Line 2
+Line 3
+Line 4
+Line 5
+</code></pre>
+<p>下一步,把光标移到第一行,并且输入 <code>yy</code> 来复制这一行.
+转换到第二个缓冲区,输入:</p>
+<pre><code class="language-bash">:buffer 2
+</code></pre>
+<p>现在屏幕会包含一些文件列表,移动光标到第一行,输入 <code>p</code> 命令把我们从前面文件中复制的一行粘贴到这个文件中.</p>
+<h3 id="插入整个文件到另一个文件"><a class="header" href="#插入整个文件到另一个文件">插入整个文件到另一个文件</a></h3>
+<p>也有可能把整个文件插入到我们所编辑的文件中.
+看一下实际操作,结束 vi 会话,重新 启动一个只打开一个文件的 vi 会话:</p>
+<pre><code class="language-bash">$ vi ls-output.txt
+</code></pre>
+<p>移动光标到第三行,然后输入以下 <code>ex</code> 命令:</p>
+<pre><code class="language-bash">:r foo.txt
+</code></pre>
+<p>这个<code>:r</code> 命令(是<code>read</code>的简称)把指定的文件插入到光标位置之前.</p>
+<h3 id="保存工作"><a class="header" href="#保存工作">保存工作</a></h3>
+<p>像 vi 中的其它操作一样,有几种不同的方法来保存我们所修改的文件,我们已经研究了<code>:w</code> 这个 ex 命令, 但还有几种方法,可能我们也觉得有帮助.</p>
+<p>在命令模式下,输入 <code>ZZ</code> 就会保存并退出当前文件.同样地,<code>ex</code> 命令<code>:wq</code> 把<code>:w</code> 和<code>:q</code> 命令结合到 一起,来完成保
+存和退出任务.</p>
+<p>这个<code>:w </code>命令也可以指定可选的文件名.这个的作用就如<code>Save As...</code>.</p>
+<p>例如,如果我们 正在编辑 <code>foo.txt</code> 文件,想要保存一个副本,叫做 <code>foo1.txt</code>,那么我们可以执行以下命令:</p>
+<pre><code class="language-bash">:w foo1.txt
+</code></pre>
+<p>注意:当上面的命令以一个新名字保存文件时,但它并没有更改你正在编辑的文件的名字.
+如果你继续编辑的话,你还是在编辑文件 <code>foo.txt</code>,而不是 <code>foo1.txt</code>.</p>
+<h3 id="拓展阅读"><a class="header" href="#拓展阅读">拓展阅读</a></h3>
+<p>即使把这章所学的内容都加起来,我们也只是学了 vi 和 vim 的一点儿皮毛而已.这里 有一些在线的资料,你可
+以用来继续 vi 学习之旅.</p>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/Vi">学习 vi 编辑器</a>:一本来自于 Wikipedia 的 Wikibook,是一本关于 vi 的简要指南,并介绍了几个类似 vi 的程序,其中包括 vim.</li>
+<li>[The Vim Book-vim 项目][], 一本570页的书籍,包含了(几乎)所有的 vim 特性.你能在下面链接中找到它:</li>
+<li>Wikipedia 上关于 <a href="http://en.wikipedia.org/wiki/Bill_Joy">Bill Joy</a> 的文章,<code>vi</code> 的创始人.http://en.wikipedia.org/wiki/Bill_Joy</li>
+<li>Wikipedia 上关于 <a href="http://en.wikipedia.org/wiki/Bram_Moolenaar">Bram Moolenaar</a> 的文章,vim 的作者</li>
+</ul>
+<h2 id="第十四章自定制shell提示符"><a class="header" href="#第十四章自定制shell提示符">第十四章:自定制shell提示符</a></h2>
+<p>在这一章中,我们将会看一下表面上看来很琐碎的细节-shell 提示符.但这会揭示一些内部 shell 和 终端仿真器的工作方式.</p>
+<p>和 Linux 内的许多程序一样,shell 提示符是可高度配置的,虽然我们大多时候把它看作是理所当然的, 但是我们一旦学会了怎样控制它,shell 提示符是一个真正有用的设备.</p>
+<h3 id="解剖一个提示符"><a class="header" href="#解剖一个提示符">解剖一个提示符</a></h3>
+<p>我们默认的提示符看起来像这样:</p>
+<pre><code class="language-bash">$
+</code></pre>
+<p>注意它包含我们的用户名,主机名和当前工作目录,但是它又是怎样得到这些东西的呢? 结果证明非常简单.
+提示符是由一个环境变量定义的,叫做 PS1(是<code>prompt string one</code> 的简写).</p>
+<p>我们可以通过 <code>echo</code> 命令来查看 <code>PS1</code> 的内容.</p>
+<pre><code class="language-bash">$ echo $PS1
+[\u@\h \W]\$
+</code></pre>
+<p>注意:如果你 <code>shell</code> 提示符的内容和上例不是一模一样,也不必担心.
+每个 <code>Linux</code> 发行版 定义的提示符稍微有点不同,其中一些相当异乎寻常.</p>
+<p>从输出结果中,我们看到那个 <code>PS1</code> 环境变量包含一些这样的字符,比方说<code>中括号</code>,<code>@</code>符号,和<code>$</code>符号, 但是剩余部分就是个谜.
+我们中一些机敏的人会把这些看作是由反斜杠转义的特殊字符,就像我们在第八章中看到的一样.
+这里是一部分字符列表,在 <code>shell</code> 中会受到特殊对待:</p>
+<hr />
+<p>表14-1: Shell 提示符中用到的转义字符
+序列 显示值</p>
+<ul>
+<li><code>\a</code> 以 ASCII 格式编码的铃声 . 当遇到这个转义序列时,计算机会发出嗡嗡的响声.</li>
+<li><code>\d</code> 以日,月,天格式来表示当前日期.例如,<code>Mon May 26.</code></li>
+<li><code>\h</code> 本地机的主机名,但不带末尾的域名.</li>
+<li><code>\H</code> 完整的主机名.</li>
+<li><code>\j</code> 运行在当前 shell 会话中的工作数.</li>
+<li><code>\l</code> 当前终端设备名.</li>
+<li><code>\n</code> 一个换行符.</li>
+<li><code>\r</code> 一个回车符.</li>
+<li><code>\s</code> shell 程序名.</li>
+<li><code>\t</code> 以24小时制,<code>hours:minutes:seconds</code>的格式表示当前时间.</li>
+<li><code>\T</code> 以12小时制表示当前时间.</li>
+<li><code>@ </code>以12小时制,<code>AM/PM</code> 格式来表示当前时间.</li>
+<li><code>\A</code> 以24小时制,<code>hours:minutes</code> 格式表示当前时间.</li>
+<li><code>\u</code> 当前用户名.</li>
+<li><code>\v</code> shell 程序的版本号.</li>
+<li><code>\V</code> Version and release numbers of theshell.</li>
+<li><code>\w</code> 当前工作目录名.</li>
+<li><code>\W</code> 当前工作目录名的最后部分.</li>
+<li><code>!</code> 当前命令的历史号.</li>
+<li><code>#</code> 当前 <code>shell</code> 会话中的命令数.</li>
+<li><code>\$</code> 这会显示一个<code>$</code>字符,除非你拥有超级用户权限.在那种情况下, 它会显示一个<code>#</code>字符.</li>
+<li><code>\[</code> 标志着一系列一个或多个非打印字符的开始.这被用来嵌入非打印 的控制字符,这些字符以某种方式来操作终端仿真器,比方说移动光标或者是更改文本颜色.</li>
+<li><code>\]</code> 标志着非打印字符序列结束.</li>
+</ul>
+<h3 id="试试一些可替代的提示符设计"><a class="header" href="#试试一些可替代的提示符设计">试试一些可替代的提示符设计</a></h3>
+<p>参照这个特殊字符列表,我们可以更改提示符来看一下效果.首先, 我们把原来提示符字符串的内容备份一下,以备之后恢复原貌.</p>
+<p>为了完成备份, 我们把已有的字符串复制到另一个 shell 变量中,这个变量是我们自己创造的.</p>
+<pre><code class="language-bash">$ ps1_old=&quot;$PS1&quot;
+</code></pre>
+<p>我们新创建了一个叫做 <code>ps1_old</code> 的变量,并把变量 PS1的值赋 <code>ps1_old</code>.通过 <code>echo</code> 命令可以证明 我们的确复制了 PS1的值.</p>
+<pre><code class="language-bash">$ echo $ps1_old
+[\u@\h \W]\$
+</code></pre>
+<p>在终端会话中,我们能在任一时间复原提示符,只要简单地反向操作就可以了.</p>
+<pre><code class="language-bash">$ PS1=&quot;$ps1_old&quot;
+</code></pre>
+<p>现在,我们准备开始,让我们看看如果有一个空的字符串会发生什么:</p>
+<pre><code class="language-bash">$ PS1=
+</code></pre>
+<p>如果我们没有给提示字符串赋值,那么我们什么也得不到.
+根本没有提示字符串!提示符仍然在那里, 但是什么也不显示,正如我们所要求的那样.我们将用一个最小的提示符来代替它:</p>
+<pre><code class="language-bash">PS1=&quot;\$ &quot;
+</code></pre>
+<p>这样要好一些.至少能看到我们在做什么.注意双引号中末尾的空格.当提示符显示的时候, 这个空格把美元符号和光标分离开.
+在提示符中添加一个响铃:</p>
+<pre><code class="language-bash">$ PS1=&quot;\a\$ &quot;
+</code></pre>
+<p>现在每次提示符显示的时候,我们应该能听到嗡嗡声.这会变得很烦人,但是它可能会 很有用,特别是当一个需要运行很长时间的命令执行完后,我们要得到通知.</p>
+<p>下一步,让我们试着创建一个信息丰富的提示符,包含主机名和当天时间的信息.</p>
+<pre><code class="language-bash">$ PS1=&quot;\A \h \$ &quot;
+17:33 linuxbox $
+</code></pre>
+<p>试试其他上表中列出的转义序列,看看你能否想出精彩的新提示符.</p>
+<h3 id="添加颜色"><a class="header" href="#添加颜色">添加颜色</a></h3>
+<p>大多数终端仿真器程序支持一定的非打印字符序列来控制,比方说字符属性(像颜色,黑体和可怕的闪烁) 和光标位置.我们会更深入地讨论光标位置,但首先我们要看一下字体颜色.</p>
+<h4 id="混乱的终端时代"><a class="header" href="#混乱的终端时代">混乱的终端时代</a></h4>
+<p>回溯到终端连接到远端计算机的时代,有许多竞争的终端品牌,它们各自工作不同.它们有着不同的键盘,以不同的方式来解释控制信息.</p>
+<p><code>Unix</code> 和类 <code>Unix</code> 的系统有两个 相当复杂的子系统来处理终端控制领域的混乱局面(称为 termcap 和 <code>terminfo</code>).
+如果你 查看一下终端仿真器最底层的属性设置,可能会找到一个关于终端仿真器类型的设置.</p>
+<p>为了努力使所有的终端都讲某种通用语言,美国国家标准委员会(<code>ANSI</code>)制定了 一套标准的字符序列集合来控制视频终端.
+原先 <code>DOS</code> 用户会记得 <code>ANSI.SYS</code> 文件, 这是一个用来使这些编码解释生效的文件.</p>
+<p>字符颜色是由发送到终端仿真器的一个嵌入到了要显示的字符流中的 <code>ANSI</code> 转义编码来控制的.
+这个控制编码不会<code>打印</code>到屏幕上,而是被终端解释为一个指令.正如我们在上表看到的字符序列, <code>\[</code> 和 <code>\]</code> 被用来封装这些非打印字符.</p>
+<p>一个 <code>ANSI</code> 转义编码以一个八进制<code>033</code>(这个编码由<code>退出按键</code>产生)开头,其后跟着一个可选的字符属性,在之后是一个指令.</p>
+<p>例如,把文本颜色 设为正常(<code>attribute = 0</code>),黑色文本的编码如下:</p>
+<pre><code class="language-bash">\033[0;30m
+</code></pre>
+<p>这里是一个可用的文本颜色列表.
+注意这些颜色被分为两组,由应用程序粗体字符属性(<code>1</code>) 分化开来,这个属性可以描绘出<code>浅</code>色文本.</p>
+<hr />
+<p>表14-2: 用转义序列来设置文本颜色
+序列 文本颜色 序列 文本颜色</p>
+<ul>
+<li><code>\033[0;30m</code> 黑色 <code>\033[1;30m</code> 深灰色</li>
+<li><code>\033[0;31m</code> 红色 <code>\033[1;31m</code> 浅红色</li>
+<li><code>\033[0;32m</code> 绿色 <code>\033[1;32m</code> 浅绿色</li>
+<li><code>\033[0;33m</code> 棕色 <code>\033[1;33m</code> 黄色</li>
+<li><code>\033[0;34m</code> 蓝色 <code>\033[1;34m</code> 浅蓝色</li>
+<li><code>\033[0;35m</code> 粉红 <code>\033[1;35m</code> 浅粉色</li>
+<li><code>\033[0;36m</code> 青色 <code>\033[1;36m</code> 浅青色</li>
+<li><code>\033[0;37m</code> 浅灰色 <code>\033[1;37m</code> 白色</li>
+</ul>
+<p>可以用<code>echo</code>探索这些效果,<code>echo -e</code>: enable interpretation of backslash escapes
+<code>\033[0;36m</code>可以缩写成<code>\033[36m</code>,<code>\033[0;0m</code>代表默认颜色</p>
+<pre><code class="language-bash">echo  -e &quot;\033[36m Testing output...  \033[0;36m Testing output... \033[0m Testing output... \033[0,0m Testing output...&quot;
+echo  -e &quot;  \033[0;30m Testing output... \033[1;30m Testing output... &quot;
+echo  -e &quot;\033[0;36m Testing output...  \033[0;37m Testing output...&quot;
+echo  -e &quot;\033[1;36m Testing output...  \033[0m Testing output...&quot;
+</code></pre>
+<p>让我们试着制作一个红色提示符.我们将在开头加入转义编码:</p>
+<pre><code class="language-bash">&lt;me@linuxbox ~&gt;$ PS1='\[\033[0;31m\]&lt;\u@\h \W&gt;\$'
+&lt;me@linuxbox ~&gt;$
+</code></pre>
+<p>我们的提示符生效了,但是注意我们在提示符之后输入的文本也是红色的.
+为了修改这个问题, 我们将添加另一个转义编码到这个提示符的末尾来告诉终端仿真器恢复到原来的颜色.</p>
+<pre><code class="language-bash">&lt;me@linuxbox ~&gt;$ PS1='\[\033[0;31m\]&lt;\u@\h \W&gt;\$\[\033[0m\]'
+&lt;me@linuxbox ~&gt;$
+</code></pre>
+<p>这看起来要好些!</p>
+<p>也有可能要设置文本的背景颜色,使用下面列出的转义编码.这个背景颜色不支持黑体属性.
+在<code>zsh</code>中,支持<code>echo  -e &quot;\033[1;47m \033[1;32m Testing output... &quot;</code></p>
+<hr />
+<p>表14-3: 用转义序列来设置背景颜色
+序列 文本颜色 序列 文本颜色</p>
+<ul>
+<li><code>\033[0;40m</code> 蓝色 <code>\033[1;44m</code> 黑色</li>
+<li><code>\033[0;41m</code> 红色 <code>\033[1;45m</code> 粉红</li>
+<li><code>\033[0;42m</code> 绿色 <code>\033[1;46m</code> 青色</li>
+<li><code>\033[0;43m</code> 棕色 <code>\033[1;47m</code> 浅灰色</li>
+</ul>
+<p>我们可以创建一个带有红色背景的提示符,只是对第一个转义编码做个简单的修改.</p>
+<pre><code class="language-bash">&lt;me@linuxbox ~&gt;$ PS1='\[\033[0;41m\]&lt;\u@\h \W&gt;\$\[\033[0m\] '
+&lt;me@linuxbox ~&gt;$
+</code></pre>
+<p>试试这些颜色编码,看看你能定制出怎样的提示符~</p>
+<p>注意:除了正常的 (<code>0</code>) 和黑体 (<code>1</code>) 字符属性之外,文本也可以具有下划线 (<code>4</code>),闪烁 (<code>5</code>), 和反向 (<code>7</code>) 属性.
+为了拥有好品味,然而,许多终端仿真器拒绝使用这个闪烁属性.</p>
+<h3 id="移动光标-1"><a class="header" href="#移动光标-1">移动光标</a></h3>
+<p>转义编码也可以用来定位光标.</p>
+<p>这些编码被普遍地用来,每次当提示符出现的时候,会在屏幕的不同位置比如说上面一个角落,显示一个时钟或者其它一些信息.
+这里是一系列用来定位光标的转义编码:</p>
+<hr />
+<p>表14-4: 光标移动转义序列
+转义编码 行动</p>
+<ul>
+<li><code>\033[l;cH</code>: 把光标移到第 <code>l</code> 行,第 <code>c</code> 列.</li>
+<li><code>\033[nA</code>: 把光标向上移动 <code>n</code> 行.</li>
+<li><code>\033[nB</code>: 把光标向下移动 <code>n</code> 行.</li>
+<li><code>\033[nC</code>: 把光标向前移动 <code>n</code> 个字符.</li>
+<li><code>\033[nD</code>: 把光标向后移动 <code>n</code> 个字符.</li>
+<li><code>\033[2J</code>: 清空屏幕,把光标移到左上角(第零行,第零列).</li>
+<li><code>\033[K</code>: 清空从光标位置到当前行末的内容.</li>
+<li><code>\033[s</code>: 存储当前光标位置.</li>
+<li><code>\033[u</code>: 唤醒之前存储的光标位置.</li>
+</ul>
+<p>使用上面的编码,我们将构建一个提示符,每次当这个提示符出现的时候,会在屏幕的上方画出一个包含时钟(由黄色文本渲染)的红色长条.
+提示符的编码就是这个看起来令人敬畏的字符串:</p>
+<pre><code class="language-bash">$ PS1='\[\033[s\033[0;0H\033[0;41m\033[K\033[1;33m\t\033[0m\033[u\]&lt;\u@\h \W&gt;\$ '
+</code></pre>
+<p>让我们分别看一下这个字符串的每一部分所表示的意思:</p>
+<hr />
+<p>序列 行动</p>
+<ul>
+<li><code>\[</code> 开始一个非打印字符序列.其真正的目的是为了让 bash 能够正确地计算提示符的大小.
+如果没有这个转义字符的话,命令行编辑 功能会弄错光标的位置.</li>
+<li><code>\033[s</code> 存储光标位置.这个用来使光标能回到原来提示符的位置, 当长条和时钟显示到屏幕上方之后.
+当心一些终端仿真器不推崇这个编码.</li>
+<li><code>\033[0;0H</code> 把光标移到屏幕左上角,也就是第零行,第零列的位置.</li>
+<li><code>\033[0;41m</code> 把背景设置为红色.</li>
+<li><code>\033[K</code> 清空从当前光标位置到行末的内容.因为现在 背景颜色是红色,则被清空行背
+景成为红色,以此来创建长条.注意虽然一直清空到行末, 但是不改变光标位置,它仍然在屏幕左上角.</li>
+<li><code>\033[1;33m</code> 把文本颜色设为黄色.</li>
+<li><code>\t</code> 显示当前时间.虽然这是一个可<code>打印</code>的元素,但我们仍把它包含在提示符的非打印部分,
+因为我们不想 bash在计算可见提示符的真正大小时包括这个时钟在内.</li>
+<li><code>\033[0m</code> 关闭颜色设置.这对文本和背景都起作用.</li>
+<li><code>\033[u</code> 恢复到之前保存过的光标位置处.</li>
+<li><code>\]</code> 结束非打印字符序列.</li>
+<li><code>\$</code> 提示符字符串.</li>
+</ul>
+<h3 id="保存提示符"><a class="header" href="#保存提示符">保存提示符</a></h3>
+<p>显然地,我们不想总是敲入那个怪物,所以我们将要把这个提示符存储在某个地方.
+通过把它 添加到我们的.bashrc 文件,可以使这个提示符永久存在.为了达到目的,把下面这两行添加到<code>.bashrc</code> 文件中.</p>
+<pre><code class="language-bash">PS1='\[\033[s\033[0;0H\033[0;41m\033[K\033[1;33m\t\033[0m\033[u\]&lt;\u@\h \W&gt;\$ '
+export PS1
+</code></pre>
+<p>总结归纳</p>
+<p>不管你信不信,还有许多事情可以由提示符来完成,涉及到我们在这里没有论及的 shell 函数和脚本, 但这是一个好的开始.</p>
+<p>并不是每个人都会花心思来更改提示符,因为通常默认的提示符就很让人满意.
+但是对于我们这些喜欢思考的人们来说,shell 却提供了许多制造琐碎乐趣的机会.</p>
+<p>拓展阅读</p>
+<p>The Bash Prompt HOWTO 来自于 Linux 文档工程,对 shell 提示符的用途进行了相当 完备的论述.可在以下链接中得到:
+http://tldp.org/HOWTO/Bash-Prompt-HOWTO/</p>
+<p>Wikipedia 上有一篇关于 ANSI Escape Codes 的好文章:
+http://en.wikipedia.org/wiki/ANSI_escape_code</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-3-package.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-6-network.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-3-package.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-6-network.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

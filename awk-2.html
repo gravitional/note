@@ -1,0 +1,869 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>awk another - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html" class="active"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="awk-2"><a class="header" href="#awk-2">awk-2</a></h1>
+<p><a href="https://man.linuxde.net/awk">awk命令</a></p>
+<p><code>awk</code>是一种编程语言, 用于在<code>linux/unix</code>下对文本和数据进行处理. 数据可以来自标准输入(stdin), 一个或多个文件, 或其它命令的输出.
+它支持用户自定义函数和动态正则表达式等先进功能, 是<code>linux/unix</code>下的一个强大编程工具.
+它在命令行中使用, 但更多是作为脚本来使用.</p>
+<p><code>awk</code>有很多内建的功能, 比如数组, 函数等, 这是它和<code>C</code>语言的相同之处, 灵活性是<code>awk</code>最大的优势.</p>
+<h2 id="awk命令格式和选项"><a class="header" href="#awk命令格式和选项">awk命令格式和选项</a></h2>
+<p>我们可以直接通过命令行的方式为 <code>AWK</code> 程序提供 <code>AWK</code> 命令, 也可以使用包括 <code>AWK</code> 命令的脚本文件.</p>
+<hr />
+<p>语法形式</p>
+<pre><code class="language-bash">awk [options] 'script' var=value file(s)
+awk [options] -f scriptfile var=value file(s)
+</code></pre>
+<hr />
+<p>常用命令选项</p>
+<ul>
+<li><code>-F fs</code>   fs指定输入分隔符, <code>fs</code>可以是字符串或正则表达式, 如<code>-F:</code></li>
+<li><code>-v var=value</code>   赋值一个用户定义变量, 将外部变量传递给<code>awk</code></li>
+<li><code>-f scripfile</code>  从脚本文件中读取<code>awk</code>命令</li>
+<li><code>-m[fr] val</code>   对<code>val</code>值设置内在限制, <code>-mf</code>选项限制分配给<code>val</code>的最大块数目; <code>-mr</code>选项限制记录的最大数目. 这两个功能是Bell实验室版awk的扩展功能, 在标准awk中不适用.</li>
+<li><code>--dump-variables[=file] 选项</code>: 将全局变量及相应值按序输出到指定文件中, 默认的输出文件名是 <code>awkvars.out</code>.</li>
+</ul>
+<hr />
+<p><code>--lint[=fatal]</code> 选项</p>
+<p>这个选项用于检查程序的可移植情况以及代码中的可疑部分. 如果提供了参数 <code>fatal</code>, AWK 会将所有的警告信息当作错误信息处理. 下面这个简单的示例说明了 <code>lint</code> 选项的用法:</p>
+<p><code>awk --lint '' /bin/ls</code></p>
+<hr />
+<p><code>--posix</code> 选项</p>
+<p>这个选项会打开严格 <code>POSIX</code> 兼容性审查.  如此, 所有共同的以及 GAWK 特定的扩展将被设置为无效.</p>
+<hr />
+<p><code>--profile[=file]</code> 选项</p>
+<p>这个选项会将程序文件以一种很优美的方式输出(译注: 用于格式化 awk 脚本文件). 默认输出文件是 <code>awkprof.out</code>. 示例如下:</p>
+<pre><code class="language-bash">awk --profile 'BEGIN{printf&quot;---|Header|--\n&quot;} {print} END{printf&quot;---|Footer|---\n&quot;}' marks.txt &gt; /dev/null
+cat awkprof.out
+</code></pre>
+<hr />
+<p><code>--traditional</code> 选项</p>
+<p>此选项用于禁止 GAWK 相关的扩展</p>
+<h3 id="awk模式和操作"><a class="header" href="#awk模式和操作">awk模式和操作</a></h3>
+<p>awk脚本是由模式和操作组成的.</p>
+<hr />
+<p>模式</p>
+<p>模式可以是以下任意一个:</p>
+<ul>
+<li>/正则表达式/: 使用通配符的扩展集.</li>
+<li>关系表达式: 使用运算符进行操作, 可以是字符串或数字的比较测试.</li>
+<li>模式匹配表达式: 用运算符<code>~</code>(匹配)和<code>~!</code>(不匹配).</li>
+<li><code>BEGIN</code>语句块, <code>pattern</code>语句块, <code>END</code>语句块: 参见awk的工作原理</li>
+</ul>
+<hr />
+<p>操作</p>
+<p>操作由一个或多个命令, 函数, 表达式组成, 之间由换行符或分号隔开, 并位于大括号内, 主要部分是:</p>
+<ul>
+<li>变量或数组赋值</li>
+<li>输出命令</li>
+<li>内置函数</li>
+<li>控制流语句</li>
+</ul>
+<h3 id="awk脚本基本结构"><a class="header" href="#awk脚本基本结构">awk脚本基本结构</a></h3>
+<pre><code class="language-bash">awk 'BEGIN{ print &quot;start&quot; } pattern{ commands } END{ print &quot;end&quot; }' file
+</code></pre>
+<p>一个<code>awk</code>脚本通常由: <code>BEGIN</code>语句块, 能够使用模式匹配的通用语句块, <code>END</code>语句块3部分组成, 这三个部分是可选的.
+任意一个部分都可以不出现在脚本中, 脚本通常在单引号或双引号中, 例如:</p>
+<pre><code class="language-bash">awk 'BEGIN{ i=0 } { i++ } END{ print i }' filename
+awk &quot;BEGIN{ i=0 } { i++ } END{ print i }&quot; filename
+</code></pre>
+<h3 id="awk的工作原理"><a class="header" href="#awk的工作原理">awk的工作原理</a></h3>
+<pre><code class="language-bash">awk 'BEGIN{ commands } pattern{ commands } END{ commands }'
+</code></pre>
+<ul>
+<li>第一步: 执行<code>BEGIN{ commands }</code>语句块中的语句;</li>
+<li>第二步: 从文件或标准输入(stdin)读取一行, 然后执行<code>pattern{ commands }</code>语句块, 它逐行扫描文件, 从第一行到最后一行重复这个过程, 直到文件全部被读取完毕.</li>
+<li>第三步: 当读至输入流末尾时, 执行<code>END{ commands }</code>语句块.</li>
+</ul>
+<p><code>BEGIN</code>语句块在<code>awk</code>开始从输入流中读取行之前被执行,
+这是一个可选的语句块, 比如变量初始化, 打印输出表格的表头等语句通常可以写在<code>BEGIN</code>语句块中.</p>
+<p><code>END</code>语句块在<code>awk</code>从输入流中读取完所有的行之后即被执行,
+比如打印所有行的分析结果这类信息汇总都是在<code>END</code>语句块中完成, 它也是一个可选语句块.</p>
+<p><code>pattern</code>语句块中的通用命令是最重要的部分, 它也是可选的. 如果没有提供<code>pattern</code>语句块, 则默认执行<code>{ print }</code>, 即打印每一个读取到的行, <code>awk</code>读取的每一行都会执行该语句块.</p>
+<p>示例</p>
+<pre><code class="language-bash">echo -e &quot;A line 1\nA line 2&quot; | awk 'BEGIN{ print &quot;Start&quot; } { print } END{ print &quot;End&quot; }'
+</code></pre>
+<p>当使用不带参数的<code>print</code>时, 它就打印当前行, 当<code>print</code>的参数是以逗号进行分隔时, 打印时则以空格作为定界符.
+在<code>awk</code>的<code>print</code>语句块中双引号是被当作拼接符使用, 例如:</p>
+<pre><code class="language-bash">echo | awk '{ var1=&quot;v1&quot;; var2=&quot;v2&quot;; var3=&quot;v3&quot;; print var1,var2,var3; }'
+v1 v2 v3
+</code></pre>
+<p>双引号拼接使用:</p>
+<pre><code class="language-bash">echo | awk '{ var1=&quot;v1&quot;; var2=&quot;v2&quot;; var3=&quot;v3&quot;; print var1&quot;=&quot;var2&quot;=&quot;var3; }'
+v1=v2=v3
+</code></pre>
+<p><code>{ }</code>类似一个循环体, 会对文件中的每一行进行迭代,
+通常变量初始化语句(如: <code>i=0</code>)以及打印文件头部的语句放入<code>BEGIN</code>语句块中, 将打印的结果等语句放在<code>END</code>语句块中.</p>
+<h3 id="awk内置变量"><a class="header" href="#awk内置变量">awk内置变量</a></h3>
+<p>内置变量, 也就是预定义变量</p>
+<p>说明: <code>[A][N][P][G]</code>表示第一个支持变量的工具, <code>[A]=awk</code>, <code>[N]=nawk</code>, <code>[P]=POSIXawk</code>, <code>[G]=gawk</code></p>
+<p><code>$n</code>: 当前记录的第<code>n</code>个字段, 比如<code>n</code>为<code>1</code>表示第一个字段, <code>n</code>为<code>2</code>表示第二个字段.
+<code>$0</code>: 这个变量包含执行过程中当前行的文本内容.
+<code>ARGC</code>: (<code>[N]</code> ) 命令行参数的数目.
+<code>ARGIND</code>: (<code>[G]</code> ) 命令行中当前文件的位置(从0开始算).
+<code>ARGV</code>: (<code>[N]</code> ) 包含命令行参数的数组.
+<code>CONVFMT</code>: (<code>[G]</code> ) 数字转换格式(默认值为%.6g).
+<code>ENVIRON</code>: (<code>[P]</code> ) 环境变量关联数组.
+<code>ERRNO</code>: (<code>[N]</code> ) 最后一个系统错误的描述.
+<code>FIELDWIDTHS</code>: (<code>[G]</code> ) 字段宽度列表(用空格键分隔).
+<code>FILENAME</code>: (<code>[A]</code> ) 当前输入文件的名.
+<code>FNR</code>: (<code>[P]</code> ) 同NR, 但相对于当前文件.
+<code>FS</code>: (<code>[A]</code> ) 字段分隔符(默认是任何空格).
+<code>IGNORECASE</code>: (<code>[G]</code> ) 如果为真, 则进行忽略大小写的匹配.
+<code>NF</code>: (<code>[A]</code> ) 表示字段数, 在执行过程中对应于当前的字段数.
+<code>NR</code>: (<code>[A]</code> ) 表示记录数, 在执行过程中对应于当前的行号.
+<code>OFMT</code>: (<code>[A]</code> ) 数字的输出格式(默认值是%.6g).
+<code>OFS</code>: (<code>[A]</code> ) 输出字段分隔符(默认值是一个空格).
+<code>ORS</code>: (<code>[A]</code> ) 输出记录分隔符(默认值是一个换行符).
+<code>RS</code>: (<code>[A]</code> ) 记录分隔符(默认是一个换行符).
+<code>RSTART</code>: (<code>[N]</code> ) 由match函数所匹配的字符串的第一个位置.
+<code>RLENGTH</code>: (<code>[N]</code> ) 由match函数所匹配的字符串的长度.
+<code>SUBSEP</code>: (<code>[N]</code> ) 数组下标分隔符(默认值是34).</p>
+<h3 id="内建变量示例"><a class="header" href="#内建变量示例">内建变量示例</a></h3>
+<hr />
+<p>简单查询</p>
+<pre><code class="language-bash">echo -e &quot;line1 f2 f3\nline2 f4 f5\nline3 f6 f7&quot; | awk '{print &quot;行数:&quot;NR, &quot;字段总数:&quot;NF, &quot;字段0=&quot;$0, &quot;字段1=&quot;$1, &quot;字段2=&quot;$2, &quot;字段3=&quot;$3}'
+</code></pre>
+<p>使用<code>print $NF</code>可以打印出一行中的最后一个字段, 使用<code>$(NF-1)</code>则是打印倒数第二个字段, 其他以此类推:</p>
+<pre><code class="language-bash">echo -e &quot;line1 f2 f3\n line2 f4 f5&quot; | awk '{print $NF}'
+echo -e &quot;line1 f2 f3\n line2 f4 f5&quot; | awk '{print $(NF-1)}'
+</code></pre>
+<p>打印每一行的第二和第三个字段:</p>
+<pre><code class="language-bash">awk '{ print $2,$3 }' filename
+</code></pre>
+<p>统计文件中的行数:</p>
+<pre><code class="language-bash">awk 'END{ print NR }' filename
+</code></pre>
+<p>以上命令只使用了<code>END</code>语句块, 在读入每一行的时, <code>awk</code>会将<code>NR</code>更新为对应的行号,
+当到达最后一行<code>NR</code>的值就是最后一行的行号, 所以<code>END</code>语句块中的<code>NR</code>就是文件的行数.</p>
+<p>一个每一行中第一个字段值累加的例子:</p>
+<pre><code class="language-bash">seq 5 | awk 'BEGIN{ sum=0; print &quot;总和: &quot; } { print $1&quot;+&quot;; sum+=$1 } END{ print &quot;等于&quot;; print sum }'
+</code></pre>
+<p><code>seq</code> - print a sequence of numbers</p>
+<h3 id="将外部变量值传递给awk"><a class="header" href="#将外部变量值传递给awk">将外部变量值传递给awk</a></h3>
+<p>借助<code>-v</code>选项, 可以将外部值(并非来自<code>stdin</code>)传递给<code>awk</code>:</p>
+<pre><code class="language-bash">VAR=10000
+echo | awk -v VARIABLE=$VAR '{ print VARIABLE }'
+</code></pre>
+<p>另一种传递外部变量方法:</p>
+<pre><code class="language-bash">var1=&quot;aaa&quot;
+var2=&quot;bbb&quot;
+echo | awk '{ print v1,v2 }' v1=$var1 v2=$var2
+</code></pre>
+<p>当输入来自于文件时使用:</p>
+<p><code>awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename</code></p>
+<p>以上方法中, 变量之间用空格分隔作为<code>awk</code>的命令行参数跟随在<code>BEGIN</code>, <code>{}</code>和<code>END</code>语句块之后.</p>
+<h2 id="awk运算与判断"><a class="header" href="#awk运算与判断">awk运算与判断</a></h2>
+<p>作为一种程序设计语言所应具有的特点之一, <code>awk</code>支持多种运算, 这些运算与C语言提供的基本相同.
+<code>awk</code>还提供了一系列内置的运算函数(如<code>log</code>, <code>sqr</code>, <code>cos</code>, <code>sin</code>等)和一些用于对字符串进行操作(运算)的函数(如<code>length</code>, <code>substr</code>等等).</p>
+<p>这些函数的引用大大的提高了<code>awk</code>的运算功能. 作为对条件转移指令的一部分, 关系判断是每种程序设计语言都具备的功能, <code>awk</code>也不例外, <code>awk</code>中允许进行多种测试, 作为样式匹配, 还提供了模式匹配表达式<code>~</code>(匹配)和<code>~!</code>(不匹配).
+作为对测试的一种扩充, <code>awk</code>也支持用逻辑运算符.</p>
+<hr />
+<p>算术运算符</p>
+<ul>
+<li><code>+ -</code>  加, 减</li>
+<li><code>* / &amp;</code>  乘, 除与求余</li>
+<li><code>+ - !</code>  一元加, 减和逻辑非</li>
+<li><code>^ ***</code>  求幂</li>
+<li><code>++ --</code>  增加或减少, 作为前缀或后缀</li>
+</ul>
+<p>例:</p>
+<pre><code class="language-bash">awk 'BEGIN{a=&quot;b&quot;;print a++,++a;}'
+</code></pre>
+<p>注意: 所有用作算术运算符进行操作, 操作数自动转为数值, 所有非数值都变为0</p>
+<h3 id="赋值运算符"><a class="header" href="#赋值运算符">赋值运算符</a></h3>
+<p><code>= += -= *= /= %= ^= **=  赋值语句</code></p>
+<p>例:</p>
+<p><code>a+=5; 等价于: a=a+5; 其它同类</code></p>
+<h3 id="逻辑运算符"><a class="header" href="#逻辑运算符">逻辑运算符</a></h3>
+<ul>
+<li><code>||</code>  逻辑或</li>
+<li><code>&amp;&amp; </code> 逻辑与</li>
+</ul>
+<p>例:</p>
+<pre><code class="language-bash">awk 'BEGIN{a=1;b=2;print (a&gt;5 &amp;&amp; b&lt;=2),(a&gt;5 || b&lt;=2);}'
+</code></pre>
+<h3 id="正则运算符"><a class="header" href="#正则运算符">正则运算符</a></h3>
+<p><code>~ ~!</code>  匹配正则表达式和不匹配正则表达式</p>
+<p>例:</p>
+<pre><code class="language-bash">awk 'BEGIN{a=&quot;100testa&quot;;if(a ~ /^100*/){print &quot;ok&quot;;}}'
+ok
+</code></pre>
+<h3 id="关系运算符"><a class="header" href="#关系运算符">关系运算符</a></h3>
+<p><code>&lt; &lt;= &gt; &gt;= != ==</code>  关系运算符</p>
+<p>例:</p>
+<pre><code class="language-bash">awk 'BEGIN{a=11;if(a &gt;= 9){print &quot;ok&quot;;}}'
+ok
+</code></pre>
+<p>注意: <code>&gt;</code>,<code>&lt;</code>可以作为字符串比较, 也可以用作数值比较, 关键看操作数(operand).
+如果是字符串就会转换为字符串比较, 两个都为数字才转为数值比较. 字符串比较: 按照<code>ASCII</code>码顺序比较.</p>
+<h3 id="其它运算符"><a class="header" href="#其它运算符">其它运算符</a></h3>
+<ul>
+<li><code>$</code>  字段引用</li>
+<li><code>空格</code>  字符串连接符</li>
+<li><code>?:</code>  C条件表达式</li>
+<li><code>in</code>  <strong>数组中</strong>是否存在某<strong>键值</strong></li>
+</ul>
+<p>例:</p>
+<pre><code class="language-bash">awk 'BEGIN{a=&quot;b&quot;;print a==&quot;b&quot;?&quot;ok&quot;:&quot;err&quot;;}'
+awk 'BEGIN{a=&quot;b&quot;;arr[0]=&quot;b&quot;;arr[1]=&quot;c&quot;;print (a in arr);}'
+awk 'BEGIN{a=&quot;b&quot;;arr[0]=&quot;b&quot;;arr[&quot;b&quot;]=&quot;c&quot;;print (a in arr);}'
+</code></pre>
+<h3 id="运算级优先级表"><a class="header" href="#运算级优先级表">运算级优先级表</a></h3>
+<p>级别越高越优先
+级别越高越优先</p>
+<h2 id="awk高级输入输出"><a class="header" href="#awk高级输入输出">awk高级输入输出</a></h2>
+<h3 id="读取下一条记录"><a class="header" href="#读取下一条记录">读取下一条记录</a></h3>
+<p><code>awk</code>中<code>next</code>语句使用: 在循环逐行匹配, 如果遇到<code>next</code>, 就会跳过当前行, 直接忽略下面语句. 而进行下一行匹配.
+<code>next</code>语句一般用于多行合并:</p>
+<pre><code class="language-bash">cat text.txt
+a
+b
+c
+d
+e
+awk 'NR%2==1{next}{print NR,$0;}' text.txt
+</code></pre>
+<p>当记录行号除以<code>2</code>余<code>1</code>, 就跳过当前行. 下面的<code>print NR,$0</code>也不会执行.
+下一行开始, 程序有开始判断<code>NR%2</code>值. 这个时候记录行号是: <code>2</code> , 就会执行下面语句块: <code>printNR,$0</code></p>
+<hr />
+<p>例子</p>
+<p>将包含有<code>web</code>的行与下面的行合并:</p>
+<pre><code class="language-bash">cat text.txt
+web01[192.168.2.100]
+httpd            ok
+tomcat               ok
+sendmail               ok
+web02[192.168.2.101]
+httpd            ok
+postfix               ok
+web03[192.168.2.102]
+mysqld            ok
+httpd               ok
+</code></pre>
+<pre><code class="language-bash">awk '/^web/{T=$0;next;}{print T&quot;:\t&quot;$0;}' marks.txt
+</code></pre>
+<h3 id="简单地读取一条记录"><a class="header" href="#简单地读取一条记录">简单地读取一条记录</a></h3>
+<p><code>awk</code> <code>getline</code>用法: 输出重定向需用到<code>getline</code>函数.</p>
+<p><code>getline</code>从标准输入, 管道或者当前正在处理的文件之外的其他输入文件获得输入.
+它负责从输入获得下一行的内容, 并给<code>NF</code>,<code>NR</code>和<code>FNR</code>等内建变量赋值.
+如果得到一条记录, <code>getline</code>函数返回<code>1</code>, 如果到达文件的末尾就返回<code>0</code>, 如果出现错误, 例如打开文件失败, 就返回<code>-1</code>.</p>
+<p><code>getline</code>语法: <code>getline var</code>, 变量<code>var</code>包含了特定行的内容.</p>
+<p>awk <code>getline</code>从整体上来说, 用法说明:</p>
+<p>当其左右无重定向符<code>|</code>或<code>&lt;</code>时: <code>getline</code>作用于当前文件, 读入当前文件的第一行给其后跟的变量<code>var</code>或<code>$0</code>(无变量时候),
+应该注意到, 由于<code>awk</code>在处理<code>getline</code>之前已经读入了一行, 所以<code>getline</code>得到的返回结果是隔行的.</p>
+<p>当其左右有重定向符<code>|</code>或<code>&lt;</code>时: <code>getline</code>则作用于定向输入文件,
+由于该文件是刚打开, 并没有被<code>awk</code>读入一行, 只是<code>getline</code>读入, 那么<code>getline</code>返回的是该文件的第一行, 而不是隔行.</p>
+<p>示例:</p>
+<p>执行<code>linux</code>的<code>date</code>命令, 并通过管道输出给<code>getline</code>, 然后再把输出赋值给自定义变量<code>out</code>, 并打印它:</p>
+<pre><code class="language-bash">awk 'BEGIN{ &quot;date&quot; | getline out; print out }' test
+</code></pre>
+<p>执行<code>shell</code>的<code>date</code>命令, 并通过管道输出给<code>getline</code>, 然后<code>getline</code>从管道中读取并将输入赋值给<code>out</code>, <code>split</code>函数把变量<code>out</code>转化成数组<code>mon</code>, 然后打印数组<code>mon</code>的第二个元素:</p>
+<pre><code class="language-bash">awk 'BEGIN{ &quot;date&quot; | getline out; split(out,mon); print mon[2] }' test
+</code></pre>
+<p>命令<code>ls</code>的输出传递给<code>geline</code>作为输入, 循环使<code>getline</code>从<code>ls</code>的输出中读取一行, 并把它打印到屏幕.
+这里没有输入文件, 因为<code>BEGIN</code>块在打开输入文件前执行, 所以可以忽略输入文件.</p>
+<pre><code class="language-bash">awk 'BEGIN{ while( &quot;ls&quot; | getline) print }'
+</code></pre>
+<h3 id="关闭文件"><a class="header" href="#关闭文件">关闭文件</a></h3>
+<p><code>awk</code>中允许在程序中关闭一个<strong>输入或输出</strong>文件, 方法是使用<code>awk</code>的<code>close</code>语句.</p>
+<p><code>close(&quot;filename&quot;)</code></p>
+<p><code>filename</code>可以是<code>getline</code>打开的文件, 也可以是<code>stdin</code>, 包含文件名的变量, 或者<code>getline</code>使用的确切命令.
+或一个输出文件, 可以是<code>stdout</code>, 包含文件名的变量或使用管道的确切命令.</p>
+<h3 id="输出到一个文件"><a class="header" href="#输出到一个文件">输出到一个文件</a></h3>
+<p><code>awk</code>中允许用如下方式将结果输出到一个文件:</p>
+<p><code>echo | awk '{printf(&quot;hello word!n&quot;) &gt; &quot;datafile&quot;}'</code>
+或
+<code>echo | awk '{printf(&quot;hello word!n&quot;) &gt;&gt; &quot;datafile&quot;}'</code></p>
+<h2 id="设置字段定界符"><a class="header" href="#设置字段定界符">设置字段定界符</a></h2>
+<p>默认的字段定界符是空格, 可以使用<code>-F &quot;定界符&quot;</code> 明确指定一个定界符:</p>
+<p><code>awk -F: '{ print $NF }' /etc/passwd</code>
+或
+<code>awk 'BEGIN{ FS=&quot;:&quot; } { print $NF }' /etc/passwd</code></p>
+<p>在<code>BEGIN</code>语句块中则可以用<code>OFS=&quot;定界符&quot;</code>设置输出字段的定界符.</p>
+<h2 id="流程控制语句"><a class="header" href="#流程控制语句">流程控制语句</a></h2>
+<p><code>linux awk</code>的<code>while</code>, <code>do-while</code>和<code>for</code>语句允许使用<code>break</code>,<code>continue</code>语句来控制流程走向, 也允许使用<code>exit</code>这样的语句来退出.</p>
+<p><code>break</code>中断当前正在执行的循环并跳到循环外执行下一条语句. <code>if </code>是流程选择用法.
+<code>awk</code>中, 流程控制语句, 语法结构, 与c语言类似. 有了这些语句, 其实很多<code>shell</code>程序都可以交给<code>awk</code>, 而且性能是非常快的.
+下面是各个语句用法.</p>
+<h3 id="条件判断语句"><a class="header" href="#条件判断语句">条件判断语句</a></h3>
+<pre><code class="language-bash">if(表达式)
+  {语句1}
+else
+  {语句2}
+</code></pre>
+<p>格式中<code>语句1</code>可以是多个语句, 为了方便判断和阅读, 最好将多个语句用<code>{}</code>括起来. <code>awk</code>分枝结构允许嵌套, 其格式为:</p>
+<pre><code class="language-bash">if(表达式)
+  {语句1}
+else if(表达式)
+  {语句2}
+else
+  {语句3}
+</code></pre>
+<p>示例:</p>
+<pre><code class="language-bash">awk 'BEGIN{
+test=100;
+if(test&gt;90){
+  print &quot;very good&quot;;
+  }
+  else if(test&gt;60){
+    print &quot;good&quot;;
+  }
+  else{
+    print &quot;no pass&quot;;
+  }
+}'
+</code></pre>
+<p>每条命令语句后面可以用<code>;</code>分号结尾.</p>
+<h3 id="循环语句"><a class="header" href="#循环语句">循环语句</a></h3>
+<p><code>while</code>语句</p>
+<pre><code class="language-bash">while(表达式)
+  {语句}
+</code></pre>
+<p>示例:</p>
+<pre><code class="language-bash">awk 'BEGIN{
+test=100;
+total=0;
+while(i&lt;=test){
+  total+=i;
+  i++;
+}
+print total;
+}'
+</code></pre>
+<hr />
+<p><code>for</code>循环</p>
+<p><code>for</code>循环有两种格式:</p>
+<p>格式1:</p>
+<pre><code class="language-bash">for(变量 in 数组)
+  {语句}
+</code></pre>
+<p>示例:</p>
+<pre><code class="language-bash">awk 'BEGIN{
+for(k in ENVIRON){
+  print k&quot;=&quot;ENVIRON[k];
+}
+}'
+</code></pre>
+<p>注: <code>ENVIRON</code>是<code>awk</code>常量, 是字典型数组.</p>
+<p>格式2:</p>
+<pre><code class="language-bash">for(变量;条件;表达式)
+  {语句}
+</code></pre>
+<p>示例:</p>
+<pre><code class="language-bash">awk 'BEGIN{
+total=0;
+for(i=0;i&lt;=100;i++){
+  total+=i;
+}
+print total;
+}'
+</code></pre>
+<hr />
+<p><code>do</code>循环</p>
+<pre><code class="language-bash">do
+{语句} while(条件)
+</code></pre>
+<p>例子:</p>
+<pre><code class="language-bash">awk 'BEGIN{
+total=0;
+i=0;
+do {total+=i;i++;} while(i&lt;=100)
+  print total;
+}'
+</code></pre>
+<h3 id="其他语句"><a class="header" href="#其他语句">其他语句</a></h3>
+<ul>
+<li><code>break</code> 当 <code>break</code> 语句用于 <code>while</code> 或 <code>for</code> 语句时, 导致退出程序循环.</li>
+<li><code>continue</code> 当 <code>continue</code> 语句用于 <code>while</code> 或 <code>for</code> 语句时, 使程序循环移动到下一个迭代.</li>
+<li><code>next</code> 能能够导致读入下一个输入行, 并返回到脚本的顶部. 这可以避免对当前输入行执行其他的操作过程.</li>
+<li><code>exit</code> 语句使主输入循环退出并将控制转移到<code>END</code>,如果<code>END</code>存在的话. 如果没有定义<code>END</code>规则, 或在<code>END</code>中应用<code>exit</code>语句, 则终止脚本的执行.</li>
+</ul>
+<h2 id="数组应用"><a class="header" href="#数组应用">数组应用</a></h2>
+<p>数组是<code>awk</code>的灵魂, 处理文本中最不能少的就是它的数组处理.
+<code>awk</code>的数组索引(下标)可以是<strong>数字</strong>或者<strong>字符串</strong>, 所以<code>awk</code>的数组叫做关联数组(associative arrays).
+<code>awk</code> 中的数组不必提前声明, 也不必声明大小. 数组元素用<code>0</code>或<strong>空字符串</strong>来初始化, 这根据上下文而定.</p>
+<h3 id="数组的定义"><a class="header" href="#数组的定义">数组的定义</a></h3>
+<p>数字做数组索引(下标):</p>
+<pre><code class="language-bash">Array[1]=&quot;sun&quot;
+Array[2]=&quot;kai&quot;
+</code></pre>
+<p>字符串做数组索引(下标):</p>
+<pre><code class="language-bash">Array[&quot;first&quot;]=&quot;www&quot;
+Array[&quot;last&quot;]=&quot;name&quot;
+Array[&quot;birth&quot;]=&quot;1987&quot;
+</code></pre>
+<p>使用中<code>print Array[1]</code>会打印出<code>sun</code>; 使用<code>print Array[2]</code>会打印出<code>kai</code>; 使用<code>print[&quot;birth&quot;]</code>会得到<code>1987</code>.</p>
+<p>读取数组的值</p>
+<pre><code class="language-bash">{ for(item in array) {print array[item]}; }       #输出的顺序是随机的
+{ for(i=1;i&lt;=len;i++) {print array[i]}; }         #Len是数组的长度
+</code></pre>
+<h3 id="数组相关函数"><a class="header" href="#数组相关函数">数组相关函数</a></h3>
+<p>得到数组长度:</p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;it is a test&quot;;lens=split(info,tA,&quot; &quot;);print length(tA),&quot;length is:&quot;lens;}'
+</code></pre>
+<p><code>length</code>返回字符串以及数组长度, <code>split</code>进行分割字符串为数组, 也会返回分割得到数组长度.</p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;it is a test&quot;;split(info,tA,&quot; &quot;);print asort(tA);for (k in tA){print k,tA[k];}}'
+</code></pre>
+<p><code>asort</code>对数组进行排序, 返回数组长度.</p>
+<p>输出数组内容(无序, 有序输出):</p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;it is a test&quot;;split(info,tA,&quot; &quot;);for(k in tA){print k,tA[k];}}'
+</code></pre>
+<p><code>for... in</code>输出, 因为数组是关联数组, 默认是无序的. 所以通过<code>for... in</code>得到是无序的数组. 如果需要得到有序数组, 需要通过下标获得.</p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;it is a test&quot;;tlen=split(info,tA,&quot; &quot;);for(k=1;k&lt;=tlen;k++){print k,tA[k];}}'
+</code></pre>
+<p>注意: 数组下标是从<code>1</code>开始, 与<code>C</code>数组不一样.</p>
+<p>判断键值存在以及删除键值:</p>
+<pre><code class="language-bash">#错误的判断方法:
+awk 'BEGIN{tB[&quot;a&quot;]=&quot;a1&quot;;tB[&quot;b&quot;]=&quot;b1&quot;;if(tB[&quot;c&quot;]!=&quot;1&quot;){print &quot;no found&quot;;};for(k in tB){print k,tB[k];}}'
+no found
+a a1
+b b1
+c
+</code></pre>
+<p>以上出现奇怪问题, <code>tB[&quot;c&quot;]</code>没有定义, 但是循环时候, 发现已经存在该键值, 它的值为空.
+这里需要注意, <code>awk</code>数组是关联数组, 只要通过数组引用它的<code>key</code>, 就会自动创建改序列.</p>
+<pre><code class="language-bash">#正确判断方法:
+awk 'BEGIN{tB[&quot;a&quot;]=&quot;a1&quot;;tB[&quot;b&quot;]=&quot;b1&quot;;if( &quot;c&quot; in tB){print &quot;ok&quot;;};for(k in tB){print k,tB[k];}}'
+a a1
+b b1
+</code></pre>
+<p><code>if(key in array)</code>通过这种方法判断数组中是否包含<code>key</code>键值.</p>
+<pre><code class="language-bash">#删除键值:
+[chengmo@localhost ~]$ awk 'BEGIN{tB[&quot;a&quot;]=&quot;a1&quot;;tB[&quot;b&quot;]=&quot;b1&quot;;delete tB[&quot;a&quot;];for(k in tB){print k,tB[k];}}'
+b b1
+</code></pre>
+<p><code>delete array[key]</code>可以删除, 对应数组<code>key</code>的, 序列值.</p>
+<h3 id="二维-多维数组使用"><a class="header" href="#二维-多维数组使用">二维, 多维数组使用</a></h3>
+<p><code>awk</code>的多维数组在本质上是一维数组, 更确切一点, <code>awk</code>在存储上并不支持多维数组. <code>awk</code>提供了逻辑上模拟二维数组的访问方式.
+例如, <code>array[2,4]=1</code>这样的访问是允许的. <code>awk</code>使用一个特殊的字符串<code>SUBSEP</code>作为分割字段, 在上面的例子中, 关联数组array存储的键值实际上是<code>2SUBSEP4</code>.</p>
+<p>类似一维数组的成员测试, 多维数组可以使用<code>if ( (i,j) in array)</code>这样的语法, 但是下标必须放置在圆括号中.</p>
+<pre><code class="language-bash">awk 'BEGIN{
+for(i=1;i&lt;=4;i++){
+  for(j=1;j&lt;=4;j++){
+    tarr[i,j]=i*j;
+  }
+}
+if ((4,5) in tarr)
+{print tarr[4,5]}
+else
+{print &quot;does not exist&quot;}
+
+if ((4,4) in tarr)
+{print tarr[4,4]}
+else
+{print &quot;does not exist&quot;}
+}'
+
+类似一维数组的循环访问, 多维数组使用`for ( item in array )`这样的语法遍历数组.
+
+```bash
+awk 'BEGIN{
+for(i=1;i&lt;=4;i++){
+  for(j=1;j&lt;=4;j++){
+    tarr[i,j]=i*j;
+  }
+}
+for(m in tarr){
+  print m,tarr[m];
+}
+}'
+</code></pre>
+<p>与一维数组不同的是, 多维数组必须使用<code>split()</code>函数来访问单独的下标分量.</p>
+<pre><code class="language-bash">awk 'BEGIN{
+for(i=1;i&lt;=9;i++){
+  for(j=1;j&lt;=9;j++){
+    tarr[i,j]=i*j; print i,&quot;*&quot;,j,&quot;=&quot;,tarr[i,j];
+  }
+}
+}'
+</code></pre>
+<p>可以通过<code>array[k,k2]</code>引用获得数组内容.</p>
+<p>另一种方法:</p>
+<pre><code class="language-bash">awk 'BEGIN{
+for(i=1;i&lt;=9;i++){
+  for(j=1;j&lt;=9;j++){
+    tarr[i,j]=i*j;
+  }
+}
+for(m in tarr){
+  split(m,tarr2,SUBSEP); print tarr2[1],&quot;*&quot;,tarr2[2],&quot;=&quot;,tarr[m];
+}
+}'
+</code></pre>
+<h2 id="内置函数"><a class="header" href="#内置函数">内置函数</a></h2>
+<p><code>awk</code>内置函数, 主要分以下<code>3</code>种类似: 算数函数, 字符串函数, 其它一般函数, 时间函数.</p>
+<h3 id="算术函数"><a class="header" href="#算术函数">算术函数</a></h3>
+<ul>
+<li><code>atan2(y, x)</code>  返回 y/x 的反正切.</li>
+<li><code>cos(x)</code>  返回 <code>x</code> 的余弦; <code>x</code> 是弧度.</li>
+<li><code>sin(x)</code>  返回 <code>x</code> 的正弦; <code>x</code> 是弧度.</li>
+<li><code>exp(x)</code>  返回 <code>x</code> 幂函数.</li>
+<li><code>log(x)</code>  返回 <code>x</code> 的自然对数.</li>
+<li><code>sqrt(x)</code>  返回 <code>x</code> 平方根.</li>
+<li><code>int(x)</code>  返回 <code>x</code> 的截断至整数的值.</li>
+<li><code>rand( )</code>  返回任意数字 <code>n</code>, 其中 <code>0 &lt;= n &lt; 1</code>.</li>
+<li><code>srand( [expr])</code>  将 <code>rand</code> 函数的种子值设置为 <code>Expr</code> 参数的值, 或如果省略 <code>Expr</code> 参数则使用某天的时间. 返回先前的种子值.</li>
+</ul>
+<p>举例说明:</p>
+<pre><code class="language-bash">awk 'BEGIN{OFMT=&quot;%.3f&quot;;fs=sin(1);fe=exp(10);fl=log(10);fi=int(3.1415);print fs,fe,fl,fi;}'
+0.841 22026.466 2.303 3
+</code></pre>
+<p><code>OFMT</code> 设置输出数据格式是保留<code>3</code>位小数.</p>
+<p>获得随机数:</p>
+<pre><code class="language-bash">awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
+awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
+awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
+</code></pre>
+<h3 id="字符串函数"><a class="header" href="#字符串函数">字符串函数</a></h3>
+<ul>
+<li><code>gsub(Ere, Repl, [In] )</code>  和<code>sub</code>函数类似, 只不过进行所有可能的替换.</li>
+<li><code>sub(Ere, Repl, [In] )</code>  匹配<code>In</code>中由 <code>Ere</code> 指定的字符串(扩展正则表达式), 并用 <code>Repl</code>参数替换, 只替换第一个具体值. <code>sub</code>函数返回替换的数量. 用<code>&amp;</code>来进行匹配结果的引用. 如果未指定 <code>In</code> 参数, 缺省值是整个记录(<code>$0</code> 记录变量).</li>
+<li><code>index(str1,str2)</code>  返回<code>str2</code>在<code>str1</code>中的位置, 从 1 开始编号. 如果 <code>str2</code>参数不在<code>str1</code>中出现, 则返回<code>0</code>(零).</li>
+<li><code>length [(str)]</code>  返回 <code>str</code> 参数指定的字符串的长度(字符形式). 如果未给出 <code>str</code>, 则返回整个记录的长度(<code>$0</code>的长度).</li>
+<li><code>blength [(str)]</code>  返回 <code>str</code> 参数指定的字符串的长度(以<strong>字节</strong>为单位). 如果未给出 <code>str</code> 参数, 则返回整个记录的长度(<code>$0</code>的长度).</li>
+<li><code>substr(str,M,[N])</code>  返回<code>str</code>中长度为<code>N</code>的字符子串. 子串从 <code>M</code>指定的位置开始.  <code>str</code> 中的第一个字符编号为 <code>1</code>. 如果未指定 <code>N</code> 参数, 则默认取到 <code>str</code> 的末尾.</li>
+<li><code>match(str,Ere)</code>  返回 <code>str</code>中<code>Ere</code>的位置(字符形式), 从<code>1</code> 开始编号. 如果 Ere 参数不出现, 则返回 <code>0</code>. <code>RSTART</code> 特殊变量记录返回值. <code>RLENGTH</code> 特殊变量记录匹配字符串的长度, 或如果未找到任何匹配, 则值为 <code>-1</code>.</li>
+<li><code>split(str,A,[Ere])</code>  将 <code>str</code> 分割为数组 <code>A[1]</code>, <code>A[2]</code>, <code>. . .</code>, <code>A[n]</code>, 并返回<code>n</code>(数组的长度). 分隔符为<code>Ere</code>指定的扩展正则表达式. 如果没有给出 <code>Ere</code> 参数, 则为当前字段分隔符(<code>FS</code> 特殊变量).
+除非上下文指明特定的元素为数字值, 否则 <code>A</code> 中的元素为字符串.</li>
+<li><code>tolower(str)</code>  返回 <code>str</code> 的小写形式, 大写和小写的映射由当前语言环境的 <code>LC_CTYPE</code> 范畴定义.</li>
+<li><code>toupper(str)</code>  返回 <code>str</code> 的大写形式, 大写和小写的映射由当前语言环境的<code>LC_CTYPE</code> 范畴定义.</li>
+<li><code>sprintf(Format, Expr, Expr, . . . )</code>  根据 <code>Format</code> 参数指定的 <code>printf</code> 格式字输出 <code>Expr</code> 参数指定的表达式, 并返回最后生成的字符串.</li>
+</ul>
+<p>注: <code>Ere</code>都可以是正则表达式.</p>
+<hr />
+<p><code>gsub</code>,<code>sub</code></p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;this is a test2010test!&quot;;gsub(/[0-9]+/,&quot;AAA&quot;,info);print info}'
+</code></pre>
+<p>在<code>info</code>中查找<code>/[0-9]+/ </code>,并用<code>&quot;AAA&quot;</code>替换, 并将替换后的值, 赋给<code>info</code>.
+如果未给出<code>info</code>参数, 则默认为<code>$0</code>.</p>
+<hr />
+<p>查找字符串<code>index</code></p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;this is a test2010test!&quot;;print index(info,&quot;test&quot;)?&quot;ok&quot;:&quot;no found&quot;;}'
+## or
+awk 'BEGIN{info=&quot;this is a test2010test!&quot;;
+if(index(info,&quot;test&quot;))
+{print &quot;Ok&quot;;}
+else{print &quot;not found&quot;;}
+}'
+## or
+awk 'BEGIN{info=&quot;this is a test2010test!&quot;;
+if(&quot;test&quot; in info)
+{print &quot;Ok&quot;;}
+else{print &quot;not found&quot;;}
+}'
+</code></pre>
+<hr />
+<p>正则表达式匹配查找<code>match</code></p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;this is a test2010test!&quot;;print match(info,/[0-9]+/)?&quot;ok&quot;:&quot;no found&quot;;}'
+</code></pre>
+<hr />
+<p>截取字符串<code>substr</code></p>
+<pre><code class="language-bash">awk 'BEGIN{info=&quot;this is a test2010test!&quot;;print substr(info,4,10);}'
+
+</code></pre>
+<p>从第 4个 字符开始, 截取10个长度字符串</p>
+<hr />
+<p>字符串分割<code>split</code></p>
+<p>awk 'BEGIN{info=&quot;this is a test&quot;;split(info,tA,&quot; &quot;);print length(tA);for(k in tA){print k,tA[k];}}'</p>
+<p>分割<code>info</code>, 动态创建数组<code>tA</code>. <code>awk</code>中的<code>for ... in</code>循环, 是一个无序的循环.
+并不是按照数组下标<code>1... n</code>循环 , 因此使用时候需要注意.</p>
+<hr />
+<p>格式化字符串输出<code>sprintf</code></p>
+<p>格式化的字符串包括两部分内容(内容和格式):
+一部分是正常字符, 这些字符将按原样输出;
+另一部分是格式控制字符, 以<code>&quot;%&quot;</code>开始, 后跟一个或几个规定字符,用来确定输出内容格式.</p>
+<p>格式  描述</p>
+<ul>
+<li><code>%d</code>  十进制有符号整数</li>
+<li><code>%u</code>  十进制无符号整数</li>
+<li><code>%f</code>  浮点数</li>
+<li><code>%s</code>  字符串</li>
+<li><code>%c</code>  单个字符</li>
+<li><code>%p</code>  指针的值</li>
+<li><code>%e</code>  指数形式的浮点数</li>
+<li><code>%x</code>  <code>%X</code> 无符号以十六进制表示的整数</li>
+<li><code>%o</code>  无符号以八进制表示的整数</li>
+<li><code>%g</code>  自动选择合适的表示法</li>
+</ul>
+<pre><code class="language-bash">awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf(&quot;%.2f,%.2u,%.2g,%X,%o\n&quot;,n1,n2,n3,n1,n1);}'
+</code></pre>
+<h3 id="一般函数"><a class="header" href="#一般函数">一般函数</a></h3>
+<p>格式  描述</p>
+<ul>
+<li><code>close(Expression)</code>  用同一个 <code>Expression</code>参数(值为字符串)来关闭文件或管道. 它们由 <code>print</code>或<code>printf</code> 语句或<code>getline</code> 函数打开.
+如果文件或管道成功关闭, 则返回<code>0</code>; 其它情况下返回非零值.
+如果打算写一个文件, 并稍后在同一个程序中读取文件, 则<code>close</code>语句是必需的.</li>
+<li><code>system(command)</code>  执行 <code>Command</code> 参数指定的命令, 并返回退出状态. 等同于 <code>system</code> 子例程.</li>
+<li><code>Expression | getline [Variable]</code>  将 <code>Expression</code>的值当作命令执行, 然后从管道传送的流中读取一个输入记录, 并将该记录的值赋给<code>Variable</code>. 如果当前不存在执行<code>Expression</code>得到的流, 则创建一个.
+创建的流等同于调用 <code>popen</code> 子例程, 此时 <code>Command</code> 参数取 <code>Expression</code> 的值且 <code>Mode</code> 为<code>r</code>.
+只要流保留打开且<code>Expression</code>不变, 则<code>getline</code>函数继续读取下一个记录. 如果未指定 <code>Variable</code> 参数, 则使用 <code>$0</code> 和<code>NF</code>存储记录.</li>
+<li><code>getline [Variable] &lt; Expression</code> 从<code>Expression</code>指定的文件读取下一个记录, 并将 <code>Variable</code>设置为该记录的值. 只要流保留打开且<code>Expression</code>的值不变, 则<code>getline</code>函数继续往下读取记录.
+如果未指定 <code>Variable</code> 参数, 则使用 <code>$0</code> 和<code>NF</code>存储记录.</li>
+<li><code>getline [Variable]</code>  将 <code>Variable</code> 设置为下一个输入记录. 如果未指定 <code>Variable</code> 参数, 则使用<code>$0</code>,<code>NF</code>, <code>NR</code> 和 <code>FNR</code> 特殊变量.</li>
+</ul>
+<h3 id="打开外部文件close用法"><a class="header" href="#打开外部文件close用法">打开外部文件(close用法)</a></h3>
+<pre><code class="language-bash">awk 'BEGIN{while(&quot;cat /etc/passwd&quot;|getline){print $0;};close(&quot;/etc/passwd&quot;);}'
+</code></pre>
+<p>逐行读取外部文件</p>
+<pre><code class="language-bash">awk 'BEGIN{while(getline &lt; &quot;/etc/passwd&quot;){print $0;};close(&quot;/etc/passwd&quot;);}'
+</code></pre>
+<pre><code class="language-bash">awk 'BEGIN{print &quot;Enter your name:&quot;;getline name;print name;}'
+</code></pre>
+<p>调用外部应用程序</p>
+<pre><code class="language-bash">awk 'BEGIN{b=system(&quot;ls -al&quot;);print b;}'
+</code></pre>
+<h3 id="时间函数"><a class="header" href="#时间函数">时间函数</a></h3>
+<p>函数名  说明</p>
+<ul>
+<li><code>mktime( YYYY MM dd HH MM ss[ DST])</code> 生成时间格式</li>
+<li><code>strftime([format [, timestamp]])</code> 格式化时间输出, 将时间戳转为时间字符串, 具体格式见下表.</li>
+<li><code>systime()</code>  得到时间戳,返回从<code>1970年1月1日</code>开始到当前时间(不计闰年)的整秒数</li>
+</ul>
+<p>建指定时间(mktime使用)</p>
+<pre><code class="language-bash">awk 'BEGIN{tstamp=mktime(&quot;2001 01 01 12 12 12&quot;);print strftime(&quot;%c&quot;,tstamp);}'
+</code></pre>
+<pre><code class="language-bash">awk 'BEGIN{tstamp1=mktime(&quot;2001 01 01 12 12 12&quot;);tstamp2=mktime(&quot;2001 02 01 0 0 0&quot;);print tstamp2-tstamp1;}'
+</code></pre>
+<hr />
+<p>strftime日期和时间格式说明符</p>
+<p>格式  描述</p>
+<ul>
+<li><code>%a</code>  星期几的缩写(Sun)</li>
+<li><code>%A</code>  星期几的完整写法(Sunday)</li>
+<li><code>%b</code>  月名的缩写(Oct)</li>
+<li><code>%B</code>  月名的完整写法(October)</li>
+<li><code>%c</code>  本地日期和时间</li>
+<li><code>%d</code>  十进制日期</li>
+<li><code>%D</code>  日期 <code>08/20/99</code></li>
+<li><code>%e</code>  日期, 如果只有一位会补上一个空格</li>
+<li><code>%H</code>  用十进制表示24小时格式的小时</li>
+<li><code>%I</code>  用十进制表示12小时格式的小时</li>
+<li><code>%j</code>  从<code>1</code>月<code>1</code>日起一年中的第几天</li>
+<li><code>%m</code>  十进制表示的月份</li>
+<li><code>%M</code>  十进制表示的分钟</li>
+<li><code>%p</code>  12小时表示法(AM/PM)</li>
+<li><code>%S</code>  十进制表示的秒</li>
+<li><code>%U</code>  十进制表示的一年中的第几个星期(星期天作为一个星期的开始)</li>
+<li><code>%w</code>  十进制表示的星期几(星期天是0)</li>
+<li><code>%W</code>  十进制表示的一年中的第几个星期(星期一作为一个星期的开始)</li>
+<li><code>%x</code>  重新设置本地日期(08/20/99)</li>
+<li><code>%X</code>  重新设置本地时间(12: 00: 00)</li>
+<li><code>%y</code>  两位数字表示的年(99)</li>
+<li><code>%Y</code>  当前月份</li>
+<li><code>%Z</code>  时区(PDT)</li>
+<li><code>%%</code>  百分号(%)</li>
+</ul>
+<h2 id="一些示例"><a class="header" href="#一些示例">一些示例</a></h2>
+<h3 id="分隔文件"><a class="header" href="#分隔文件">分隔文件</a></h3>
+<p>下面这个例子, 是按第<code>6</code>例分隔文件, 相当的简单(其中的<code>NR!=1</code>表示不处理表头).</p>
+<p><code>awk 'NR!=1{print &gt; $6}' netstat.txt</code></p>
+<p>你也可以把指定的列输出到文件:</p>
+<p><code>awk 'NR!=1{print $4,$5 &gt; $6}' netstat.txt</code></p>
+<p>再复杂一点: (注意其中的<code>if-else-if</code>语句, 可见<code>awk</code>其实是个脚本解释器)</p>
+<pre><code class="language-bash">$ awk 'NR!=1{if($6 ~ /TIME|ESTABLISHED/) print &gt; &quot;1.txt&quot;;
+else if($6 ~ /LISTEN/) print &gt; &quot;2.txt&quot;;
+else print &gt; &quot;3.txt&quot; }' netstat.txt
+</code></pre>
+<h3 id="统计"><a class="header" href="#统计">统计</a></h3>
+<p>下面的命令计算所有的<code>C</code>文件, <code>CPP</code>文件和<code>H</code>文件的文件大小总和.</p>
+<pre><code class="language-bash">$ ls -l  *.cpp *.c *.h | awk '{sum+=$5} END {print sum}'
+</code></pre>
+<hr />
+<p>注: 如果你要指定多个分隔符, 你可以这样来:</p>
+<p>awk -F '[;:]'</p>
+<hr />
+<p>如果我们需要表头的话, 我们可以引入内建变量NR:</p>
+<pre><code class="language-bash">awk '$3==0 &amp;&amp; $6==&quot;LISTEN&quot; || NR==1 ' netstat.txt
+</code></pre>
+<h3 id="环境变量"><a class="header" href="#环境变量">环境变量</a></h3>
+<p>即然说到了脚本, 我们来看看怎么和环境变量交互: (使用<code>-v</code>参数和<code>ENVIRON</code>, 使用<code>ENVIRON</code>的环境变量需要<code>export</code>)</p>
+<pre><code class="language-bash">$ x=5
+$ y=10
+$ export y
+$ echo $x $y
+5 10
+$ awk -v val=$x '{print $1, $2, $3, $4+val, $5+ENVIRON[&quot;y&quot;]}' OFS=&quot;\t&quot; score.txt
+</code></pre>
+<h3 id="几个花活"><a class="header" href="#几个花活">几个花活</a></h3>
+<p><a href="https://coolshell.cn/articles/9070.html">AWK 简明教程</a></p>
+<pre><code class="language-bash">#从file文件中找出长度大于80的行
+awk 'length&gt;80' file
+#按连接数查看客户端IP
+netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr
+#打印99乘法表
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i&lt;=NF;i++)printf(&quot;%dx%d=%d%s&quot;, i, NR, i*NR, i==NR?&quot;\n&quot;:&quot;\t&quot;)}'
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="awk.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-gpg.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="awk.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-gpg.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

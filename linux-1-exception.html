@@ -1,0 +1,1280 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>报错维护 - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html" class="active"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linux-1-exception"><a class="header" href="#linux-1-exception">linux-1-exception</a></h1>
+<h2 id="常用软件"><a class="header" href="#常用软件">常用软件</a></h2>
+<h3 id="ubuntu-dock"><a class="header" href="#ubuntu-dock">Ubuntu Dock</a></h3>
+<p><a href="https://zhuanlan.zhihu.com/p/48078003">如何移除或禁用 Ubuntu Dock</a></p>
+<p>使用 <code>Dash to Panel</code> 扩展:</p>
+<p><code>Dash to Panel</code> 是 Gnome Shell 的一个高度可配置面板,是 Ubuntu Dock 或 Dash to Dock 的一个很好的替代品(Ubuntu Dock 是从 Dash to Dock 分叉而来的).
+安装和启动 <code>Dash to Panel</code> 扩展会禁用 Ubuntu Dock,因此你无需执行其它任何操作.
+你可以从 extensions.gnome.org 来安装 <a href="https://extensions.gnome.org/extension/1160/dash-to-panel/">Dash to Panel</a>.</p>
+<p>如果你改变主意并希望重新使用 Ubuntu Dock,那么你可以使用 Gnome Tweaks 应用程序禁用 Dash to Panel,或者通过单击以下网址旁边的 X 按钮完全移除 <code>Dash to Panel</code>: https://extensions.gnome.org/local/ .</p>
+<h3 id="oh-my-zsh"><a class="header" href="#oh-my-zsh">oh-my-zsh</a></h3>
+<p><a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins">Oh My Zsh 插件</a>
+<a href="https://www.jianshu.com/p/fa6aa9329be6">Mac/Linux使用ZSH (oh-my-zsh)</a>
+<a href="https://www.jianshu.com/p/6b47198fd430">oh-my-zsh国内镜像安装和更新方法</a>
+<a href="https://gitee.com/mirrors"> Gitee 极速下载</a>:<code>Gitee 极速下载</code> 是为了提升国内下载速度的镜像仓库, 每日同步一次.</p>
+<p><code>oh-my-zsh</code>的 github 地址在国内可能用不了, 可以考虑使用<code>gitee</code>的镜像.</p>
+<p>首先需要安装<code>zsh</code>, 可以直接用<code>sudo apt install zsh</code>.  然后安装<code>oh-my-zsh</code>, 下载<a href="https://gitee.com/mirrors/oh-my-zsh">码云安装脚本install.sh</a></p>
+<pre><code class="language-bash">wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
+</code></pre>
+<p>编辑<code>install.sh</code>, 找到以下部分</p>
+<pre><code class="language-bash"># Default settings
+ZSH=${ZSH:-~/.oh-my-zsh}
+REPO=${REPO:-ohmyzsh/ohmyzsh}
+REMOTE=${REMOTE:-https://github.com/${REPO}.git}
+BRANCH=${BRANCH:-master}
+</code></pre>
+<p>把其中的</p>
+<pre><code class="language-bash">REPO=${REPO:-ohmyzsh/ohmyzsh}
+REMOTE=${REMOTE:-https://github.com/${REPO}.git}
+</code></pre>
+<p>替换为</p>
+<pre><code class="language-bash">REPO=${REPO:-mirrors/oh-my-zsh}
+REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
+</code></pre>
+<p>编辑后保存, 运行安装即可. (运行前先给<code>install.sh</code>权限, <code>chmod +x install.sh</code>).
+安装完成后修改同步的<code>仓库地址</code></p>
+<pre><code class="language-bash">cd ~/.oh-my-zsh
+git remote set-url origin https://gitee.com/mirrors/oh-my-zsh.git
+git pull
+</code></pre>
+<h3 id="powerline-状态条"><a class="header" href="#powerline-状态条">Powerline 状态条</a></h3>
+<p><code>Powerline</code> 是一个极棒的 <code>Vim</code> 编辑器的状态行插件,这个插件是使用 Python 开发的,主要用于显示状态行和提示信息,适用于很多软件,比如 <code>bash</code>, <code>zsh</code>, <code>tmux</code> 等等.
+<a href="https://linux.cn/article-8118-1.html">使用Powerline为VIM和Bash注入强劲动力</a></p>
+<p>首次安装<code>pip</code>,即python包管理器,在 Debian, Ubuntu 和 Linux Mint 中安装 <code>pip</code></p>
+<pre><code class="language-bash">apt-get install python3-pip
+</code></pre>
+<p>然后你可以通过 pip 命令安装 <code>Powerline</code>.</p>
+<pre><code class="language-bash">pip3 install git+git://github.com/powerline/powerline
+</code></pre>
+<h4 id="安装-powerline-的字体"><a class="header" href="#安装-powerline-的字体">安装 Powerline 的字体</a></h4>
+<p><code>Powerline</code> 使用特殊的符号来为开发者显示特殊的箭头效果和符号内容.因此你的系统中必须要有符号字体或者补丁过的字体.
+通过下面的 <code>wget</code> 命令下载最新的系统字体及字体配置文件.</p>
+<pre><code class="language-bash">wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+</code></pre>
+<p>然后你将下载的字体放到字体目录下 <code>/usr/share/fonts</code> 或者 <code>/usr/local/share/fonts</code>,或者你可以通过 <code>xset q</code> 命令找到一个有效的字体目录.</p>
+<pre><code class="language-bash">mv PowerlineSymbols.otf /usr/share/fonts/
+</code></pre>
+<p>接下来你需要通过如下命令更新你系统的字体缓存.</p>
+<pre><code class="language-bash">fc-cache -vf /usr/share/fonts/
+</code></pre>
+<p>其次安装字体配置文件.</p>
+<pre><code class="language-bash">mv 10-powerline-symbols.conf /etc/fonts/conf.d/
+</code></pre>
+<h4 id="bash-中的-powerline"><a class="header" href="#bash-中的-powerline">bash 中的 Powerline</a></h4>
+<p>如果希望在 <code>bash shell</code> 中默认打开 <code>Powerline</code>,可以在 <code>~/.bashrc</code> 中添加如下内容.</p>
+<p>首先通过如下命令获取 powerline 的安装位置.</p>
+<pre><code class="language-bash">pip3 show powerline-status
+...
+Location: XXXXX
+...
+</code></pre>
+<p>一旦找到 <code>powerline</code> 的具体位置后,根据你系统的情况替换到下列行中的 <code>XXXXX</code> 对应的位置.</p>
+<pre><code class="language-bash">powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+source XXXXX/powerline/bindings/bash/powerline.sh
+</code></pre>
+<p>然后退出后重新登录,现在 <code>powerline</code> 的状态行应该如下显示了.</p>
+<h4 id="vim-中的-powerline"><a class="header" href="#vim-中的-powerline">Vim 中的 Powerline</a></h4>
+<p>首先通过如下命令获取 <code>powerline</code> 的安装位置.</p>
+<pre><code class="language-bash">pip3 show powerline-status
+</code></pre>
+<p>在 <code>~/.vimrc</code> 中添加如下内容打开该插件(译注: 注意同样需要根据你的系统情况修改路径).</p>
+<pre><code class="language-bash">set rtp+=/home/tom/.local/lib/python3.6/site-packages/powerline/bindings/vim/
+set laststatus=2
+set t_Co=256
+</code></pre>
+<p>然后你打开 <code>vim</code> 后会看到一个新的状态行</p>
+<h3 id="tldr"><a class="header" href="#tldr">tldr</a></h3>
+<p><code>tldr</code>(Too Long; Don't Read): 帮你更加高效地学习<code>linux</code>命令</p>
+<pre><code class="language-bash">pip3 install --user tldr
+</code></pre>
+<h2 id="x窗口系统"><a class="header" href="#x窗口系统">X窗口系统</a></h2>
+<p><code>X</code>窗口系统(使GUI工作的底层引擎)内建了一种机制,支持快速拷贝和粘贴技巧.</p>
+<p>按下鼠标左键,沿着文本拖动鼠标(或者双击一个单词)高亮了一些文本,
+那么这些高亮的文本就被拷贝到了一个由X管理的缓冲区里面.然后按下鼠标中键,这些文本就被粘贴到光标所在的位置.</p>
+<blockquote>
+<p><code>ctrl-c</code> and <code>ctrl-v</code>,这两个控制代码对于Shell 有不同的含义,它们在早于Microsoft Windows许多年之前就赋予了不同的意义.</p>
+</blockquote>
+<p>可以把聚焦策略设置为&quot;跟随鼠标&quot;,这样鼠标移动到的窗口,就可以接受输入</p>
+<h3 id="图形界面"><a class="header" href="#图形界面">图形界面</a></h3>
+<p><a href="https://blog.csdn.net/qq_16093937/article/details/83269106">Linux图形界面知识</a></p>
+<p><code>X</code>是协议, 不是具体的某个软件. <code>XFree86</code>只是实现<code>X</code>协议的一个免费X服务器软件
+<code>X11R6</code> 是 X Protocol version 11 Release 6,(<code>X</code>协议第<code>11</code>版第<code>6</code>次发行)的意思
+窗口管理器的作用是最大化, 最小化, 移动, 关闭窗口等.而这些不是<code>X</code>服务器来负责完成的.</p>
+<p><code>KDE</code> 和<code>GNOME</code>是<code>Linux</code>里最常用的图形界面操作环境, 他们不仅仅是一个窗口管理器那么简单,  <code>KDE</code>是<code>K Desktop Environment</code> 的缩写.
+他不仅是一个窗口管理器, 还有很多配套的应用软件和方便使用的桌面环境, 比如任务栏, 开始菜单, 桌面图标等等.
+<code>GNOME</code>是<code>GNU Network Object Model Environment</code> 的缩写.和<code>KDE</code>一样, 也是一个功能强大的综合环境.</p>
+<p>办公室的电脑在4K分辨率下会卡顿, 2K则正常.</p>
+<h3 id="幕后控制台"><a class="header" href="#幕后控制台">幕后控制台</a></h3>
+<p>即使仿真终端没有运行,后台仍然有几个终端会话运行.他们叫做虚拟终端或者虚拟控制台.</p>
+<p>在大多数Linux发行版中,可以通过按下 <code>Ctrl+Alt+F1</code> 到 <code>Ctrl+Alt+F6</code> 访问.</p>
+<p>切换可以直接按<code>Alt+F1..F6</code>.返回图形桌面,按下<code>Alt+F7</code></p>
+<h3 id="将标准输出重定向到剪贴板"><a class="header" href="#将标准输出重定向到剪贴板">将标准输出重定向到剪贴板</a></h3>
+<p><a href="https://blog.csdn.net/tcliuwenwen/article/details/103752486">将标准输出重定向到剪贴板</a></p>
+<p>作为一名优秀的程序员,终端和复制粘贴必将是必不可少的,手动将输出复制粘贴不应该是一名优秀程序员的作风.
+那么如何将标准输出重定向到剪贴板方便我们粘贴呢?</p>
+<p>安装<code>xsel</code>或者<code>xclip</code></p>
+<pre><code class="language-bash">sudo apt install xsel
+sudo apt install xclip
+</code></pre>
+<hr />
+<p>将输出通过管道重定向到剪贴板</p>
+<pre><code class="language-bash">ls | xsel -ib  # 使用xsel
+ls | xclip -select clip  # 使用xclip
+</code></pre>
+<hr />
+<p>可以考虑使用别名来简短命令这里不再赘述</p>
+<h3 id="剪贴板管理程序"><a class="header" href="#剪贴板管理程序">剪贴板管理程序</a></h3>
+<p><a href="https://www.linuxprobe.com/10-best-linux-clipboard.html">10 款最佳剪贴板管理器</a></p>
+<ul>
+<li>CopyQ</li>
+<li>GPaste</li>
+<li>Klipper</li>
+<li>Clipman</li>
+<li>Diodon</li>
+</ul>
+<p>etc</p>
+<h3 id="linux-录屏软件"><a class="header" href="#linux-录屏软件">Linux 录屏软件</a></h3>
+<p><a href="https://www.zhihu.com/question/51920876">Linux 录屏软件有哪些</a></p>
+<p>如果是<code>Gnome3</code>系用户,可以按<code>ctrl + shift + alt + r</code>,屏幕右下角有红点出现,则开始录屏,
+要结束的话再按一次<code>ctrl + shift + alt + r</code>,录好的视频在<code>~/video</code>下</p>
+<hr />
+<p>修改默认30秒的问题, 改成1小时</p>
+<pre><code class="language-bash">gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 3600
+</code></pre>
+<h3 id="美化"><a class="header" href="#美化">美化</a></h3>
+<p>shell: <a href="https://github.com/ohmyzsh/ohmyzsh">ohmyzsh</a>
+themes: <a href="https://github.com/vinceliuice/vimix-gtk-themes">vimix-gtk-themes</a>
+icon: <a href="https://github.com/vinceliuice/vimix-icon-theme/">vimix-icon-theme/</a></p>
+<p><code>sudo apt install gnome-shell-extensions</code></p>
+<p>extensions: <code>Blyr </code>,<code>Dash to panel</code>,<code>User themes</code>,<code>openweather</code></p>
+<hr />
+<p>Plymouth</p>
+<p><a href="https://blog.csdn.net/mutilcam_prince/article/details/78299628">Ubuntu 16.04美化 -- Plymouth(splash screen/开机画面)主题安装</a></p>
+<p><a href="www.gnome-look.org">www.gnome-look.org</a>上有大量的<code>Ubuntu Plymouth</code>主题,也就是通常所说的开机画面主题,
+但是几乎所有的主题在<code>16.04</code>之后变的不可用了,那是因为从<code>16.04</code>开始, <code>plymouth</code>主题存放路径已经变了,
+而网络上的主题还是对应的老版路径,那就是<code>/lib/plymouth/themes/</code>,<code>16.04</code>之后已改为: <code>/usr/share/plymouth/themes/</code>.
+这导致老版的主题不光用作者写的脚本安装不上,即便是自己手动复制到主题目录里,也不能正常使用.</p>
+<p>本篇文章重点介绍一下老版<code>plymouth</code>主题如何安装到<code>16.04</code>上.</p>
+<p>首先正常的话,<code>16.04</code>已经默认安装了一个<code>plymouth</code>主题,
+如果不知道何种原因,你的<code>16.04</code>没有默认安装<code>plymouth</code>的默认主题,那么可以通过下面这个命令安装:</p>
+<p><code> sudo apt-get install plymouth-themes</code></p>
+<p>这条命令会自动创建<code>/usr/share/plymouth/themes/</code>并且附带几个简单默认的主题.</p>
+<p>那么下面我们来开始安装自定义主题.以[<code>NSA Splash Screen</code>] (https://www.gnome-look.org/p/1173975/)为例.</p>
+<hr />
+<p>下载主题,然后解压后得到一个目录.(本文以解压到<code>~/Downloads</code>为例)解压完成后,
+重点是<code>images</code>目录, <code>nsa.plymouth</code>, <code>nsa.script</code>
+那么我们可以得知,这个主题叫<code>nsa</code>
+<code>Plymouth</code>的主题名称和主题文件名以及主题目录名,必须完全一致,不然会报错.
+所以我们首先需要把这个<code>skd1993-nsa-plymouth-50df7fd</code>目录名改成<code>nsa</code></p>
+<hr />
+<p>查看并修改主题文件</p>
+<p><code>nsa</code>是个老版本的主题,这个是怎么看出来的呢,用文本编辑器打开<code>nsa.plymouth</code>:</p>
+<p>[Plymouth Theme]
+Name=nsa
+Description=An NSA style cool bootsplash
+ModuleName=script</p>
+<p>[script]
+ImageDir=/lib/plymouth/themes/nsa-plymouth
+ScriptFile=/lib/plymouth/themes/nsa-plymouth/nsa.script</p>
+<p>正如之前所说,<code>ImageDir</code>和<code>ScriptFile</code>对应的路径已经不存在了.因此我们需要对其进行修改.
+对于我们这个主题来说,具体是这样的:</p>
+<pre><code class="language-bash">ImageDir=/usr/share/plymouth/themes/nsa
+ScriptFile=/usr/share/plymouth/themes/nsa/nsa.script
+</code></pre>
+<p>保存退出.</p>
+<hr />
+<p>安装主题</p>
+<p>把主题文件夹复制到<code>plymouth</code>的<code>theme</code>目录</p>
+<p><code>sudo cp -r  ~/Downloads/nsa   /usr/share/plymouth/themes/</code></p>
+<p>然后安装这个主题.</p>
+<p><code>sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth       default.plymouth        /usr/share/plymouth/themes/nsa/nsa.plymouth  100</code></p>
+<p>更新一下<code>plymouth</code>,根据提示手动输入序号选择我们刚刚安装的主题.</p>
+<p><code>sudo update-alternatives --config default.plymouth</code></p>
+<p>最后更新一下<code>initramfs</code></p>
+<p><code>sudo update-initramfs -u</code></p>
+<p>完成
+重启即可看到效果.</p>
+<hr />
+<p>如果在<code>sudo update-alternatives –config default.plymouth</code>这一步出现错误提示:</p>
+<pre><code class="language-bash">W: plymouth module &quot;(/usr/lib/i386-linux-gnu/plymouth//.so)&quot; missing, skipping that theme.
+</code></pre>
+<p>这是个内核级的错误,此时不要重启,不然可能卡在开机界面.绝大多数可能是某个步骤中的路径搞错了.
+仔细检查所有步骤的路径,然后重来一遍.</p>
+<p>本文中的三四步骤, 可以通过一个shell脚本完成.
+下面贴上脚本内容(仅限本主题, 其他主题可以简单将文中的<code>nsa</code>更换为相应主题的名称, 前提是修改完<code>nsa.script</code>)</p>
+<pre><code class="language-bash">#!/bin/bash
+# 打印提示信息, 选择颜色使其更醒目
+echo  -e &quot;\033[36m Copying new files...  \033[0m&quot;
+# 在/usr/share/plymouth/themes文件夹下, 创建目录存放主题文件
+sudo mkdir /usr/share/plymouth/themes/nsa
+# 复制主题内容, 其中使用了花括号展开, 这里相当于直接给出
+sudo cp --recursive {images,nsa.plymouth,nsa.script,README.md} /usr/share/plymouth/themes/nsa
+# 安装主题, 语法是: update-alternatives --install link name path priority ... 分别是2级链接, 一级连接, 实际路径
+echo -e &quot;\033[31m Installing the theme...  \033[0m&quot;
+sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nsa/nsa.plymouth  100
+# 使用 update-alternatives 设置为默认主题, 依照提示选择
+echo -e &quot;\033[32m Please Select your theme and set it default...  \033[0m&quot;
+sudo update-alternatives --config default.plymouth
+# 更新
+sudo update-initramfs -u
+echo -e &quot;\033[36m Installation Complete!  \033[0m&quot;
+</code></pre>
+<p>将上述代码保存到主题目录下, 文件名比如为<code>xxx.sh</code></p>
+<pre><code class="language-bash">chmod +x xxx.sh
+./xxx.sh
+</code></pre>
+<p>即可完成安装</p>
+<hr />
+<p>其他主题安装</p>
+<p>有的主题也可能自带安装脚本, 比如</p>
+<p><a href="http://gnome-look.org/content/show.php/colours%3A+Ubuntu+rainbow+plymouth+theme?content=163234">ubuntu-touch: A Plymouth startup and shutdown animated splash</a></p>
+<ol>
+<li>下载解压缩, 进入<code>ubuntu-touch-splash</code></li>
+<li><code>./install-ubuntu-touch [ENTER]</code>.将安装<code>plymouth-x11</code>软件包以提供测试主题的功能, 而无需重新启动.
+之后, 将显示新主题的启动和关闭的10秒测试.</li>
+</ol>
+<p>如果修改不小心导致启动屏幕黑屏, 则恢复的最快方法是重新提取下载文件, 然后重新安装它.
+如果尚未对<code>ubuntu-touch-splash</code>文件夹中的文件进行任何更改, 则可以使用以下方法重复测试:
+<code>  ./test-plymouth [输入]</code></p>
+<p>在启动动画的持续时间非常非常短的情况下, 可以通过在<code>ubuntu-touch-splash</code>文件夹中执行来获得改进的效果:
+<code> ./assert-framebuffer</code>
+如果您最终对该主题不满意, 还原可以在主题目录下执行:</p>
+<pre><code class="language-bash">./update-plymouth [ENTER]
+</code></pre>
+<p>根据要求选择<code>ubuntu-logo</code>或者其他之前使用的主题.</p>
+<h3 id="kde-桌面环境"><a class="header" href="#kde-桌面环境">KDE 桌面环境</a></h3>
+<p>现在, 如果您不喜欢KDE或出于任何原因想要删除此环境, 请按照以下步骤在Ubuntu上卸载KDE:</p>
+<pre><code class="language-bash">sudo apt --purge remove kde-standard
+sudo apt autoremove
+reboot
+</code></pre>
+<p>注意: 在安装KDE软件包时安装的某些应用程序必须手动删除.  像(Konsole, Konqueror等)之类的应用
+重新启动后, 如果遇到CLI登录屏幕, 请不要慌张.
+这是因为您已将SDDM设置为默认显示管理器, 现在已将其删除.  因此, 我们将<code>gdm3</code>设置为默认值.</p>
+<pre><code class="language-bash">sudo systemctl restart gdm3
+sudo dpkg-reconfigure gdm3
+reboot
+</code></pre>
+<p>重新启动系统, 然后检查是否一切正常.</p>
+<h2 id="ubuntu-备份和恢复"><a class="header" href="#ubuntu-备份和恢复">ubuntu 备份和恢复</a></h2>
+<p>教程中排除的目录</p>
+<pre><code class="language-bash">--exclude=/proc
+--exclude=/tmp
+# --exclude=/home
+--exclude=/lost+found
+--exclude=/media
+--exclude=/mnt
+--exclude=/run
+--exclude=/sys
+</code></pre>
+<h3 id="备份方法1"><a class="header" href="#备份方法1">备份方法1</a></h3>
+<hr />
+<p>分区 id 记录</p>
+<p>设备 挂载点 原始uuid 分区格式 新uuid new设备</p>
+<p><code>/boot/efi</code> 2EEE-149A <code>FAT (32-bit version)</code>
+<code>none</code> 3278e9ef-8c04-4eaa-bfde-af2313f36545 <code>Swap</code>
+<code>/</code>  7aba3e2f-f94d-454c-9ad6-9098d658401a <code>Ext4</code></p>
+<hr />
+<p>可以用ubuntu18.04自带软件<code>gnome-disks</code>查看自己系统分区情况:
+在新电脑上, 可以用<code>GParted</code>对硬盘进行分区</p>
+<hr />
+<p>首先启动live CD, 选择<code>try Ubuntu</code>;</p>
+<p>开始对需要用live CD备份的分区进行挂载, 所以挂载除了<code>swap</code>之外的分区, 对比我们之前创建的表来看下面的挂载命令会更容易理解:</p>
+<pre><code class="language-bash">#获取最高权限
+sudo su
+#-- 在mnt下创建root目录和efi目录, 分别用来挂载原系统的root分区和efi分区
+mkdir /mnt/root   /mnt/efi  /mnt/home
+#-- 将原系统根分区挂载到/mnt目录
+mount /dev/sdb5   /mnt/root
+#将原系统的boot/efi分区挂载到/mnt/efi目录
+mount /dev/sda2   /mnt/efi
+#-- 将原系统的home分区挂载到/mnt/home
+mount /dev/sdb6   /mnt/home
+</code></pre>
+<hr />
+<p>插入U盘或硬盘开始备份:</p>
+<pre><code class="language-bash">#-- 将root, home和efi分区备份到硬盘中
+mksquashfs /mnt/root /media/ubuntu/你的移动硬盘/备份的目录/root.sfs
+mksquashfs /mnt/efi /media/ubuntu/你的移动硬盘/备份目录/efi.sfs
+mksquashfs /mnt/home /media/ubuntu/你的移动硬盘/备份目录/home.sfs
+sync
+#-- 卸载刚刚挂载的分区和硬盘
+umount /media/ubuntu/* /mnt/*
+</code></pre>
+<p><code>root</code>, <code>home</code>和<code>efi</code>分区备份完成.</p>
+<hr />
+<p>对新硬盘进行分区</p>
+<p>在新电脑上启动live CD, 选择试用, 打开live CD中自带分区工具<code>GParted</code>, 对新电脑进行分区, 分区大小根据个人情况而定, 参照之前填的表:</p>
+<pre><code class="language-bash">efi分区
+swap分区,如果不需要休眠, 其实不用分这个, 而且固态硬盘不分这个比较好
+root分区(主分区或逻辑分区无所谓)
+home分区(主分区或逻辑分区无所谓)
+</code></pre>
+<hr />
+<p>将备份文件恢复到各个分区</p>
+<p>使用<code>live CD</code>自带软件<code>gnome-disks</code>查看新分区的信息, 完善之前的表, 我的情况如下:</p>
+<p>插入存有备份文件的移动硬盘开始恢复备份:</p>
+<pre><code class="language-bash">sudo su
+#-- 在mnt下创建root, home和efi目录, 分别用来挂载新电脑的root, home和efi分区
+mkdir /mnt/root /mnt/efi  /mnt/home
+#-- 挂载新电脑的根分区到/mnt/root目录
+mount /dev/sdc5 /mnt/root
+#-- 挂载新电脑的efi分区到/mnt/efi
+mount /dev/sdc1 /mnt/efi
+#-- 挂载新电脑home分区到/mnt/home
+mount /dev/sdc6 /mnt/home
+#-- 新建/backup/root/, /backup/home和/backup/efi目录,使用loop模式将之前准备好的sfs文件挂载到对应的目录下
+mkdir /backup
+cd /backup
+mkdir root efi home
+mount -o loop /media/ubuntu/存放备份文件的路径/root.sfs /backup/root
+mount -o loop /media/ubuntu/存放备份文件的路径/efi.sfs  /backup/efi
+mount -o loop /media/ubuntu/存放备份文件的路径/home.sfs  /backup/home
+#-- 开始恢复
+cp -a /backup/root/* /mnt/root
+cp -a /backup/efi/* /mnt/efi
+cp -a /backup/home/* /mnt/home
+# -- 同步数据并取消挂载
+sync
+umount /backup/*
+umount /mnt/*
+umount /media/ubuntu/*
+</code></pre>
+<hr />
+<p>启动引导修复</p>
+<p>恢复完成之后, 开始来修改引导文件,首先使用<code>/mnt</code>目录来挂载新电脑完整的文件系统, 再次掏出我们之前填好的表:</p>
+<pre><code class="language-bash">sudo su
+# -- 移除之前创建的临时文件夹
+rm -r /mnt/root /mnt/efi /mnt/home
+# -- 首先挂载新电脑的根目录
+mount /dev/sdc5 /mnt
+#-- 挂载efi
+mount /dev/sdc1 /mnt/boot/efi
+# -- 挂载home
+mount /dev/sdc6 /mnt/home
+# 接下来挂载虚拟文件系统, 为后面的修复做准备
+mount --o bind /dev   /mnt/dev
+mount --o bind /proc   /mnt/proc
+mount --o bind /sys   /mnt/sys
+# 将liveCD的根目录改为新电脑的根目录确保之后的操作安全. (这里也请大佬指点, 是否只是安全? )
+# chroot /mnt
+</code></pre>
+<p>接下来修改两个文件分别位于新电脑的<code>/etc/fstab</code>和<code>/boot/grub/grub.cfg</code>(不用手动修改), 接下来我们再次掏出我们的表:</p>
+<pre><code class="language-bash"># -- 用nano编辑器打开/etc/fstab
+nano /etc/fstab
+</code></pre>
+<p>按照提示, 和<code>uuid</code>变化的对照表, 修改<code>root</code>,<code>/boot/efi</code>,<code>/home</code>等的<code>uuid</code></p>
+<p><code>/boot/grub/grub.cfg</code>这个文件是用<code>grub-mkconfig</code>自动生成的, 所以不需要手动修改.</p>
+<blockquote>
+<p>It is automatically generated by grub-mkconfig using templates  from /etc/grub.d and settings from /etc/default/grub</p>
+</blockquote>
+<p>然后一定要更新<code>grub</code>引导:</p>
+<pre><code class="language-bash"># -- grub安装到efi分区
+grub-install /dev/sdc1
+update-grub
+sync #确保数据写入硬盘
+#-- 退出chroot
+exit
+umount /mnt/*/media/ubuntu/*
+exit
+reboot
+</code></pre>
+<p>系统重启, 拔出你的<code>live CD</code>, 不出意外电脑开机将会进入你备份恢复完成的新电脑.</p>
+<h3 id="问题排查"><a class="header" href="#问题排查">问题排查</a></h3>
+<p>如果无法开机/开机时间过长, 首先(使用 liveCD进入系统查看)确保<code>/etc/fstab</code>中的硬盘<code>uuid</code>没有写错.</p>
+<p>使用下面命令查看问题</p>
+<pre><code class="language-bash">systemd-analyze
+systemd-analyze blame
+systemd-analyze critical-chain
+## 以及
+sudo cat /var/log/boot.log | less
+</code></pre>
+<p>如果之前有<code>swap</code>分区, 还原的时候没有<code>swap</code>分区, 修改<code>initramfs</code>配置:</p>
+<pre><code class="language-bash">sudo vim /etc/initramfs-tools/conf.d/resume
+#在文件中添加一行
+RESUME=none
+sudo update-grub
+sudo update-initramfs -u
+</code></pre>
+<p>以下命令在排除错误时可能用到</p>
+<pre><code class="language-bash">sudo blkid
+sudo fdisk -l
+sudo dmesg
+</code></pre>
+<p><a href="https://www.sysgeek.cn/ubuntu-18-04-swap/">Ubuntu 18.04 如何添加或删除 SWAP 交换分区</a>
+<a href="https://blog.csdn.net/xiaoma_2018/article/details/85059930">Linux系统制作Ubuntu18.04启动盘</a></p>
+<pre><code class="language-bash"># 插入U盘, 在Linux系统中打开终端, 查看 U 盘信息:
+sudo fdisk -l
+# 然后卸载掉 U 盘:
+sudo umount /dev/sdb*
+# U 盘格式化:
+sudo mkfs.vfat /dev/sdb -I # 使用 -I 选项创建
+#完成格式化后查看磁盘信息:
+# 最后使用 dd 命令制作启动盘:
+sudo dd if=ubuntu-18.04.1-desktop-amd64.iso of=/dev/sdb bs=10M
+</code></pre>
+<h3 id="ubuntu系统备份2"><a class="header" href="#ubuntu系统备份2">Ubuntu系统备份2</a></h3>
+<p><a href="https://zhuanlan.zhihu.com/p/51827233">Ubuntu系统备份</a></p>
+<p>备份前可以先清理一下缓存</p>
+<pre><code class="language-bash"># 清理旧版本的软件缓存
+sudo apt-get autoclean
+# 清理所有软件缓存
+sudo apt-get clean
+# 删除系统不再使用的孤立软件
+sudo apt-get autoremove
+</code></pre>
+<p>ubuntu 秉承一切皆文件的思想, 系统备份就相当于把整个<code>/</code>(根目录)所有文件打包压缩保存</p>
+<p>主要有两种方式备份还原:</p>
+<ul>
+<li><code>tar</code> 命令</li>
+<li><code>livecd</code> 模式</li>
+</ul>
+<p>首先介绍下 <code>tar</code> 命令备份</p>
+<pre><code class="language-bash"># 备份前先切换到root用户, 避免权限问题
+sudo su
+# 再切换到 /(根目录)
+cd /
+# 备份系统
+tar -cvpzf /media/Disk/myDisk/ubuntu_backup@ $(date +%Y-%m+%d).tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run /
+</code></pre>
+<hr />
+<p>tar命令参数:</p>
+<ul>
+<li><code>-c</code>:  新建一个备份文档</li>
+<li><code>-v</code>:  显示详细信息</li>
+<li><code>-p</code>:  保存权限, 并应用到所有文件</li>
+<li><code>-z</code>:  用 <code>gzip</code> 压缩备份文档, 减小空间</li>
+<li><code>-f</code>:  指定压缩包名称(带路径), 只能做最后一个参数</li>
+<li><code>–exclude</code>:  排除指定目录, 不进行备份</li>
+</ul>
+<p>注意, 如果没有把<code>/home</code>或者<code>/boot</code>目录单独分一个区, 一定不要加<code>–exclude=/home</code>或<code>–exclude=/boot</code>参数!</p>
+<p>文件目录介绍</p>
+<p><code>/proc</code>: 一个虚拟文件系统, 系统运行的每一个进程都会自动在这个目录下面创建一个进程目录. 既然是系统自动创建, 也就没必要备份的必要了.
+<code>/tmp</code>: 一个临时文件夹, 系统的一些临时文件会放在这里.
+<code>/lost+found</code>: 系统发生错误时(比如非法关机), 可以在这里找回一些丢失文件.
+<code>/media</code>: 多媒体挂载点, 像u盘, 移动硬盘, windons分区等都会自动挂载到这个目录下.
+<code>/mnt</code>: 临时挂载点, 你可以自己挂载一些文件系统到这里.
+<code>/run</code>: 系统从启动以来产生的一些信息文件.
+<code>/home</code>: 用户家目录, 存放用户个人文件和应用程序.
+<code>/boot</code>: 和系统启动相关的文件, 像grub相关文件都放在这里, 这个目录很重要!</p>
+<p>为了保险起见, 也可以对<code>/home</code>和<code>/boot</code>备份, 但是备份频率完全没必要和/分区一样高.
+比如<code>/</code>分区每周备份一次, 那<code>/home</code>和<code>/boot</code>完全可以一个月备份一次, 因为这两个分区出问题的概率真的很小, 而且变动也不会太频繁.</p>
+<pre><code class="language-bash">tar -cvpzf /media/Disk/my_Disk/ubuntu_home_backup@`date +%Y-%m-%d`.tar.gz /home
+tar -cvpzf /media/Disk/myDisk/ubuntu_boot_backup@`date +%Y-%m-%d`.tar.gz /boot
+</code></pre>
+<hr />
+<p>打包过程中会遇到如下错误或警告信息</p>
+<pre><code class="language-bash">tar: Exiting with failure status due to previous errors
+</code></pre>
+<p>这个问题其实不是真正的错误信息,  真正的错误信息混杂在标准输出(stout)中, 重新执行命令并把<code>v</code>参数去掉即可看到真正问题所在.</p>
+<pre><code class="language-bash">tar: Removing leading '/' from member names
+#或
+tar: Removing leading '/' from hard link targets
+</code></pre>
+<p>这个问题其实不影响程序的执行, 产生的原因是<code>tar</code>在压缩的过程中自动帮我们去掉了路径前的<code>/</code>, 也就是tar压缩后的包是按照相对路径压缩的.
+当我们恢复时,  就需要通过 <code>-C</code> 参数手动指定解压到 <code>/</code> 目录,  如:</p>
+<pre><code class="language-bash">tar zxvpf ubuntu_20170120_11.tar.bz2 -C /
+</code></pre>
+<p>可以使用<code>-P</code>参数来指定按照绝对路径打包:</p>
+<pre><code class="language-bash">tar -cvpzf /media/Disk/myDisk/ubuntu_backup@`date +%Y-%m+%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run -P /
+</code></pre>
+<p>另外, 如果出现</p>
+<pre><code class="language-bash">tar: /dev/shm: file changed as we read it
+或
+tar: /run/udev/control: socket ignored
+</code></pre>
+<p>这个 <code>socket ignored</code> 产生的原因是压缩的过程中文件正在使用, 无需理会, 不影响压缩.</p>
+<pre><code class="language-bash">tar: /run/user/1000/gvfs: Cannot stat: Permission denied
+</code></pre>
+<p>这个问题不用理会, 与虚拟文件系统有关, 不影响压缩.</p>
+<p>Ubuntu系统U盘(livecd)方式备份</p>
+<p>启动过程中从U盘启动, 采用试用Ubuntu系统的方式, 进入<code>livecd</code>模式(试用ubuntu)</p>
+<pre><code class="language-bash">sudo su
+fdisk -l
+</code></pre>
+<p>其中<code>boot</code>分区为<code>/dev/sda5</code>,<code>home</code>分区为<code>/dev/sda7</code>,主分区<code>/</code>为<code>/dev/sda8</code>.</p>
+<p>分别进行挂载:</p>
+<pre><code class="language-bash">mount /dev/sda5 /boot
+mount /dev/sda7 /home
+mount /dev/sda8 /mnt
+</code></pre>
+<p>再对移动硬盘进行挂载:</p>
+<pre><code class="language-bash">mount /media/ubuntu/移动硬盘对应盘符 /data
+</code></pre>
+<p>进行备份:</p>
+<pre><code class="language-bash">mksquashfs /mnt /data/ubuntu_main.sfs(文件名任意)
+mksquashfs /home /data/ubuntu_home.sfs(文件名任意)
+mksquashfs /boot /data/ubuntu_boot.sfs(文件名任意)
+sync(让系统保存一下数据)
+</code></pre>
+<p>卸载硬盘:</p>
+<pre><code class="language-bash">umount /data
+umount /mnt
+umount /home
+umount /boot
+</code></pre>
+<p>到此备份成功.</p>
+<h3 id="系统还原"><a class="header" href="#系统还原">系统还原</a></h3>
+<p>系统备份的意义就在于系统哪天发生意外时可以系统还原拯救回来</p>
+<p>这里有两种还原方式, 如果你系统出问题了, 但是还可以进入终端, 那就可以直接解压备份文件进行还原.
+但是如果你连系统都不能登录了, 就要使用<code>LiveCD</code>(U盘启动盘)进行还原了.</p>
+<h4 id="tar命令还原系统"><a class="header" href="#tar命令还原系统">tar命令还原系统</a></h4>
+<pre><code class="language-bash"># 备份前先切换到`root`用户, 避免权限问题
+sudo su
+# 再切换到/(根目录)
+cd /
+# 还原
+tar -xvpzf /media/Disk/myDisk/ubuntu_backup@2016-6-6.tar.gz -C /
+</code></pre>
+<p>注意先创建一个临时目录用于挂载你的<code>/</code>根目录分区, <code>sdaX</code>代表你的<code>/</code>根目录分区,
+如果不知道就用<code>fdisk -l</code>查看一下, 另外如果你的移动硬盘没有被自动挂载, 你也需要手动创建一个临时目录进行挂载.</p>
+<p>Note:
+因为 tar还原是只会覆盖相同的文件, 但是这种方法只是恢复备份时的文件, 就是说如果某些文件丢失或损坏了, 这样可以恢复修复这些文件, 但不能删除自备份到恢复前这期间所生成的其它文件.
+假如你备份系统时有<code>1234</code>这四个文件, 如果三天后, 由于某些原因变成了<code>1234'5</code>(<code>4</code>改变了), 你恢复后, 就会变成<code>12345</code>, 其中<code>4'</code>恢复成备份时的文件, <code>5</code>保留.
+所以大家要是想彻底还原成备份时候的样子最好彻底删除根目录下的所有文件, 然后再还原, 这样就可以还原成备份时的样子了.
+删除整个文件系统, 比如运行命令<code>rm -fr /*</code>, 那么你还原系统后一定要把你之前没有备份的目录手动创建, 不然重启系统是有问题的.</p>
+<pre><code class="language-bash">mkdir proc tmp lost+found media mnt run
+</code></pre>
+<hr />
+<p>进入 LiveCD 之后 还原系统</p>
+<pre><code class="language-bash">#切换到root用户
+sudo su
+#进入到 / 目录
+cd /
+mkdir /mnt/sys
+mount /dev/sdaX /mnt/sys
+tar -xvpzf /media/myDisk/ubuntu_boot_backup@2016-6-6.tar.gz -C /mnt/sys
+</code></pre>
+<p>执行恢复命令之前请再确认一下你所键入的命令是不是你想要的, 执行恢复命令可能需要一段不短的时间.</p>
+<p>恢复命令结束时, 你的工作还没完成, 别忘了重新创建那些在备份时被排除在外的目录:</p>
+<pre><code class="language-bash">mkdir proc
+mkdir lost+found
+mkdir mnt
+mkdir sys
+</code></pre>
+<p>等等</p>
+<p>当你重启电脑, 你会发现一切东西恢复到你创建备份时的样子了!</p>
+<h4 id="livecd-还原"><a class="header" href="#livecd-还原">livecd 还原</a></h4>
+<p>还有一个稍微复杂点的<code>livecd</code>方式还原, 如下:</p>
+<p>先要对之前的启动文件和分区文件做一个备份, 分别为<code>/etc/fstab</code>,<code>/etc/fstab.d</code>(可能没有),<code>/boot/grub/grub.cfg</code>:</p>
+<pre><code class="language-bash">cp /etc/fstab /media/用户名/移动硬盘对应盘符/
+cp /boot/grub/grub.cfg /media/用户名/移动硬盘对应盘符/
+</code></pre>
+<p>接下来进行恢复系统, 同样利用系统<code>u</code>盘进入<code>livecd</code>模式. 同样进入<code>root</code>模式, 查看分区情况</p>
+<p>假设分区情况如上: <code>/dev/sda1</code>为<code>boot</code>分区, <code>/dev/sda2</code>为主分区, <code>/dev/sda3</code>为<code>home</code>分区. 对<code>home</code>分区和主分区进行格式化:</p>
+<pre><code class="language-bash">sudo su
+mkfs.ext4 /dev/sda2 # root
+mkfs.ext4 /dev/sda3 # home
+</code></pre>
+<p>然后分别进行挂载:</p>
+<pre><code class="language-bash">mount /dev/sda2 /mnt #挂载 root
+# 新建home和boot文件:
+mkdir /mnt/home
+mkdir /mnt/boot
+#挂载其他两个盘:
+mount /dev/sda1 /mnt/boot #挂载 boot
+mount /dev/sda3 /mnt/home # 挂载 home
+# 挂载数据盘:
+mkdir /rescovery/mnt
+mkdir /rescovery/home
+mkdir /rescovery/boot
+mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_main.sfs /rescovery/mnt  # 这里使用了 loop mount, 循环挂载
+mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_home.sfs /rescovery/home
+mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_boot.sfs /rescovery/boot
+</code></pre>
+<pre><code class="language-bash">cp -a /recovery/mnt/* /mnt
+cp -a /recovery/home/* /mnt/home
+cp -a /recovery/boot/* /mnt/boot
+# 然后拷贝之前的fstab和grub.cfg文件到硬盘:
+cp /media/ubuntu/移动硬盘盘符/fstab /mnt/etc/
+cp /media/ubuntu/移动硬盘盘符/grub.cfg /mnt/boot/grub/
+# 挂载虚拟文件系统, 这是为了后面修复引导做准备.
+mount --bind /dev /mnt/dev
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys
+# chroot进入已经还原的操作系统.
+chroot /mnt
+</code></pre>
+<h3 id="查看当前uuid"><a class="header" href="#查看当前uuid">查看当前UUID</a></h3>
+<p>由于我们格式化了分区, 所以<code>UUID</code>发生了变化, 若不修改, 系统将无法正常挂载分区, 导致启动异常.
+故需要修改本机系统的<code>UUID</code>设置,当前终端不要关闭, 新建一个终端, 输入<code>blkid</code>:</p>
+<p>在<code>fstab</code>文件中更新上面两个新硬盘的<code>UUID</code>,在<code>chroot</code>过的端口输入:</p>
+<pre><code class="language-bash">nano /etc/fstab
+# 更改两个UUID, ctrl+x退出, Y保存. 进行grub的更新:
+grub-install /dev/sda
+update-grub
+退出并卸载盘:
+exit
+umount /mnt/dev
+umount /mnt/sys
+umount /proc
+sync
+</code></pre>
+<p>重启即可</p>
+<h3 id="mount-简介"><a class="header" href="#mount-简介">mount 简介</a></h3>
+<p><code>-o --options opts</code>:使用指定的安装选项.  <code>opts</code>参数是用逗号分隔的列表.  例如:</p>
+<pre><code class="language-bash">mount LABEL=mydisk -o noatime,nodev,nosuid
+</code></pre>
+<p>复制文件:</p>
+<p>在其他位置重新挂载文件结构的一部分.  语法是:</p>
+<pre><code class="language-bash">mount --bind olddir newdir
+</code></pre>
+<p>或使用以下<code>fstab</code>条目:</p>
+<pre><code class="language-bash">/olddir /newdir none bind
+</code></pre>
+<p>调用之后, 可以在两个位置访问相同的内容.</p>
+<p>重要的是要理解<code>bind</code>不会在<code>kernel VFS</code>中创建任何<code>second-class </code>或<code>special node</code>.
+<code>bind</code>只是<code>attach</code>文件系统的另一种操作. 没有一个特定的地方去记录哪些文件系统是通过<code>bind</code>附加到系统上的.
+<code>olddir</code> 和 <code>newdir</code> 是独立的, 并且可以卸载<code>olddir</code>.</p>
+<p>也可以将单个文件重新挂载(在单个文件上).  也可以使用<code>bind</code>从常规目录创建<code>mountpoint</code>, 例如:</p>
+<pre><code class="language-bash">mount --bind foo foo
+</code></pre>
+<h2 id="texlive-lyx-相关"><a class="header" href="#texlive-lyx-相关">texlive lyx 相关</a></h2>
+<h3 id="xelatex-脚本"><a class="header" href="#xelatex-脚本">xelatex 脚本</a></h3>
+<p><a href="https://blog.csdn.net/donaldsy/article/details/99938408">shell 参数换行 &amp; shell 输出换行的方法</a></p>
+<p>首先测试一下括号的用法:</p>
+<pre><code class="language-bash">tex_list=1; echo $tex_list; tex_list=$( { ls -x *.tex } ); echo $tex_list;
+tex_list=1; echo $tex_list; tex_list=$( ( ls -x *.tex ) ); echo $tex_list;
+tex_list=$(ls -x *.tex; ls -x *.log); echo $tex_list;
+tex_list=$( (ls -x *.tex; ls -x *.log) ); echo $tex_list;
+</code></pre>
+<pre><code class="language-bash">#!/bin/bash
+
+# 设置格式化相关的部分
+delimiter=&quot;echo -e \\\n+++++++++++++&quot;
+nameis=&quot;name is :&quot;
+eval  $delimiter
+
+# 默认文件名是 main,否则使用文件夹中的tex文件名
+tex_usual=&quot;main&quot;
+echo &quot;tex_usual $nameis $tex_usual&quot;
+eval  $delimiter
+
+# 当前tex文件列表,去掉后缀
+
+tex_list=$(ls -x *.tex)
+echo &quot;tex_list $nameis $tex_list&quot;
+
+tex_here=${tex_list//&quot;.tex&quot;/}
+echo &quot;tex_here $nameis $tex_here&quot;
+eval  $delimiter
+
+# 判断当前tex文件列表中是否包含 main.tex
+# 若有 main.tex,使用之,若没有,则使用 列表中的tex
+# tex_file=${${tex_here}%% *}
+
+if [[ $tex_usual =~ $tex_here ]]
+then
+    tex_file=$tex_usual
+else
+    tex_file=${tex_here}
+fi
+
+echo &quot;tex_file $nameis $tex_file&quot;
+eval  $delimiter
+
+# 可增加输出文件夹选项 -auxdir=temp -outdir=temp
+# 还有 -shell-escape 选项
+
+# 把下面这行加入到 ~/.latexmkrc,指定 pdf 查看程序
+# $pdf_previewer = 'evince %O %S';
+# -silent 可以抑制输出
+
+latexmk -xelatex  -silent -pv  -view=pdf -bibtex -cd -recorder -file-line-error -halt-on-error -interaction=nonstopmode -synctex=1 -view=pdf ${tex_file}
+
+## 输出错误记录
+eval  $delimiter
+echo 'error message'
+eval  $delimiter
+## 用 tail 减少输出数量
+## grep -m 100 -i -n --color -P -B 0 -A 8 &quot;\[\d+\]&quot; ./$tex_file&quot;.log&quot; | tail -n 50
+grep -m 10 -i -n --color -P -B 0 -A 8 &quot;\[\d+\]&quot; ./$tex_file&quot;.log&quot;
+</code></pre>
+<hr />
+<p>默认情况下,<code>echo</code>关闭了对转义字符的解释,添加 <code>-e </code>参数可打开<code>echo</code>对转义字符的解释功能.<code>-E</code>关闭转义字符,是默认值.</p>
+<pre><code class="language-bash">echo -e &quot;hello\n wrold&quot; #换行输出 hello world
+echo -E &quot;hello\n wrold&quot; #输出 hello\n world, 默认情况
+</code></pre>
+<h3 id="texlive安装与卸载"><a class="header" href="#texlive安装与卸载">texlive安装与卸载</a></h3>
+<hr />
+<p><a href="https://blog.csdn.net/l2563898960/article/details/86774599">Linux环境下LaTex的安装与卸载</a>
+<a href="https://blog.csdn.net/williamyi96/java/article/details/90732304">Ubuntu Texlive 2019 安装与环境配置</a>
+<a href="https://zhuanlan.zhihu.com/p/64530166">TexLive 2019 安装指南</a>
+<a href="https://tug.org/texlive/quickinstall.html">TeX Live - Quick install</a></p>
+<hr />
+<p>准备工作:下载,清除</p>
+<p>注意:安装 <code>lyx</code>, <code>apt</code> 会默认安装 <code>tex2017</code>版本,覆盖掉新版的<code>texlive2020</code></p>
+<p>注意:如果重新安装,请务必完全删除之前的失败安装,默认情况下,这将在这两个目录中:</p>
+<pre><code class="language-bash">rm -rf /usr/local/texlive/2020
+rm -rf ~/.texlive2020
+</code></pre>
+<p>或者参考下面的命令</p>
+<pre><code class="language-bash">sudo rm -rf /usr/local/texlive/2020
+rm -rf ~/.texlive2020
+sudo rm -rf /usr/local/texlive
+sudo rm -rf /usr/local/share/texmf
+sudo rm -rf /var/lib/texmf
+sudo rm -rf /etc/texmf
+sudo apt-get purge texlive*
+sudo apt-get remove tex-common --purge
+</code></pre>
+<hr />
+<p>进行安装</p>
+<p>因为下载好的是一个<code>iso</code>镜像文件,所以下载好之后,还需要挂载到<code>/mnt</code>目录下</p>
+<pre><code class="language-bash">sudo mount -o ro,loop,noauto texlive2020-20200406.iso /mnt
+</code></pre>
+<ul>
+<li><code>ro</code> :     Mount the filesystem read-only.</li>
+<li><code>loop</code> : loop 文件</li>
+<li><code>auto</code> :   Can be mounted with the -a option.</li>
+<li><code>noauto</code> : Can only be mounted explicitly (i.e., the  -a  option  will  not cause the filesystem to be mounted).</li>
+</ul>
+<hr />
+<p>接着运行<code>install-tl</code>脚本进行安装.</p>
+<p>若要更改安装目录或其他选项,请阅读提示和说明.
+一般需要更改路径到自己有读写权限的文件夹下面,按<code>D</code>,然后按<code>1</code>,输入比如<code>~/texlive/2020</code></p>
+<p>更改目录到</p>
+<ul>
+<li>
+<p><code>TEXDIR:         /home/tome/texlive/2020</code></p>
+</li>
+<li>
+<p><code>main tree:      /home/tome/texlive/2020/texmf-dist</code></p>
+</li>
+<li>
+<p><code>TEXMFLOCAL:     /home/tome/texlive/texmf-local</code></p>
+</li>
+<li>
+<p><code>TEXMFSYSVAR:    /home/tome/texlive/2020/texmf-var</code></p>
+</li>
+<li>
+<p><code>TEXMFSYSCONFIG: /home/tome/texlive/2020/texmf-config</code></p>
+</li>
+<li>
+<p><code>TEXMFVAR:       ~/.texlive2020/texmf-var</code></p>
+</li>
+<li>
+<p><code>TEXMFCONFIG:    ~/.texlive2020/texmf-config</code></p>
+</li>
+<li>
+<p><code>TEXMFHOME:      ~/texmf</code></p>
+</li>
+</ul>
+<pre><code class="language-bash">cd /tex_iso_directory
+sudo ./install-tl --profile installation.profile
+[... messages omitted ...]
+Enter command: i
+[... when done, see below for post-install ...]
+</code></pre>
+<p>安装程序的接口:文本,GUI,批处理
+安装程序支持:文本,图形,和批处理接口.(Linux系统下没有图像安装,在Windows下支持图形安装)</p>
+<p><code>install-tl -gui text #</code>使用简单文本模式.也是输入<code>install-tl</code>默认选项.</p>
+<p><code>install-tl --profile=profile #</code>进行一个批处理安装,需要一个 <code>profile</code> (配置文件),为了创建一个<code>profile</code>,最简单的方式是使用<code>tlpkg/texlive.profile</code>文件,这是安装器在安装成功后生成的文件.</p>
+<hr />
+<p>卸载镜像文件</p>
+<pre><code class="language-bash">sudo umount /mnt
+</code></pre>
+<hr />
+<p>字体配置</p>
+<pre><code class="language-bash">sudo cp /home/tom/texlive/2020/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/20-texlive.conf
+sudo fc-cache -fsv
+</code></pre>
+<hr />
+<p>环境变量</p>
+<p>安装完之后有提示:</p>
+<pre><code class="language-bash">Add /home/tom/texlive/2020/texmf-dist/doc/man to MANPATH.
+Add /home/tom/texlive/2020/texmf-dist/doc/info to INFOPATH.
+Most importantly, add /home/tom/texlive/2020/bin/x86_64-linux
+to your PATH for current and future sessions.
+</code></pre>
+<p>我用的是<code>zsh</code>,如果用的是<code>bash</code>则修改<code>~/.bashrc</code>,其中的<code>/home/tom/texlive/2020</code>改称你安装时的路径
+直接把下面的语句添加到<code>.zshrc</code>文件末尾.</p>
+<pre><code class="language-bash">export MANPATH=${MANPATH}:/home/tom/texlive/2020/texmf-dist/doc/man
+export INFOPATH=${INFOPATH}:/home/tom/texlive/2020/texmf-dist/doc/info
+export PATH=${PATH}:/home/tom/texlive/2020/bin/x86_64-linux
+</code></pre>
+<hr />
+<p>验证安装是否成功</p>
+<pre><code class="language-bash">tex -v
+</code></pre>
+<hr />
+<p>设置默认纸张尺寸</p>
+<p><code>tlmgr paper letter</code></p>
+<hr />
+<p>ubuntu 仓库的texlive</p>
+<p>使用<code>apt</code>命令从<code>ubuntu</code>仓库安装的<code>texlive</code>可以使用<code>dpkg -L texlive-full</code>查询</p>
+<p>安装在 <code>/usr/local/</code>目录下,
+<code>texmf</code>(TDS的根目录)在<code>/usr/share/texmf</code> and <code>/usr/share/texlive/texmf-dist</code></p>
+<h3 id="texlive常用命令"><a class="header" href="#texlive常用命令">texlive常用命令</a></h3>
+<p>用<code>texlive**.iso</code>手动安装的 texlive 是可以正常使用下面这些命令的,而用 <code>debian</code>源<code>apt</code>安装的,可能会出问题.</p>
+<p><code>tlmgr [option]... action [option]... [operand]...</code></p>
+<p>安装好 <code>texlive</code> 后</p>
+<p>如果使用<code>tlmgr option</code> 报错
+<code>cannot setup TLPDB in /home/USER/texmf at /usr/bin/tlmgr line 5308.</code></p>
+<p>原因如下:</p>
+<p>未初始化<code>tlmgr</code>时会产生此错误. 在大多数情况下,以普通用户身份启动以下命令可以解决此问题:</p>
+<p><code>$ tlmgr init-usertree</code></p>
+<p>此命令将在您的家目录内创建几个文件夹. 请参见手册页以获取解释:</p>
+<blockquote>
+<p>在用户模式下使用<code>tlmgr</code>之前,您必须使用<code>init-usertree</code>操作设置用户树.
+这将创建<code>usertree / web2c</code>和<code>usertree / tlpkg / tlpobj</code>,以及最小的<code>usertree / tlpkg / texlive.tlpdb</code>.
+此时,您可以通过添加<code>--usermode</code>命令行选项来告诉<code>tlmgr</code>执行(支持的)动作.</p>
+</blockquote>
+<hr />
+<p>下面这些是<code>tlmgr</code>的常用命令:</p>
+<ul>
+<li><code>tlmgr option repository ctan</code></li>
+<li><code>tlmgr option repository http://mirror.ctan.org/systems/texlive/tlnet</code></li>
+<li><code>tlmgr repository list</code></li>
+<li><code>tlmgr update --self</code></li>
+<li><code>tlmgr update  --all</code></li>
+</ul>
+<p>如果要使用清华的<code>mirror</code>:</p>
+<p><code>tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet</code></p>
+<p><a href="https://tug.org/texlive/">texlive home page</a>
+<a href="https://tug.org/texlive/pkginstall.html">texlive installation and updates</a> texlive 安装和更新
+<a href="https://www.texlive.info/tlnet-archive/">archive of tlnet </a> : 各个年份的 tex 更新, 可以选择用来更新的 repository 的版本
+<a href="https://texlive.info/">texlive.info</a> 查看各种关于 texlive 的信息</p>
+<p>告诉<code>tlmgr</code>使用附近的CTAN镜像进行将来的更新;  如果您从DVD映像安装了TeX Live,并且想要持续更新,则很有用.
+这两个命令是等效的. <code>ctan</code>只是给定URL的别名.
+注意: <code>mirror.ctan.org</code>解析为许多不同的主机,它们并没有完全同步. 我们建议仅(最多)每天更新一次,而不要更频繁.</p>
+<ul>
+<li><code>tlmgr update --list</code> 报告将要更新的内容,而无需实际更新任何内容.</li>
+<li><code>tlmgr update --all</code> 使本地TeX安装与软件包存储库中的安装相对应(从CTAN更新时通常很有用).</li>
+<li><code>tlmgr info pkg</code> 显示有关软件包内容的详细信息,例如搜索所有软件包中内容的安装状态和描述.</li>
+</ul>
+<p>可能遇到的错误:</p>
+<p><a href="https://tex.stackexchange.com/questions/528634/tlmgr-unexpected-return-value-from-verify-checksum-5">tlmgr: unexpected return value from verify_checksum: -5</a></p>
+<p>出现这个错误是由于某个<code>repository</code>的<code>signing key</code>过期了,
+首先可以使用<code>tlmgr repository list</code>列出所有的库, 使用<code>tlmgr key list</code>列出所有的<code>keys</code></p>
+<p>首先把<code>repository</code>更换到对应<code>debian</code>发行版的仓库, 比如使用 <code>2019</code> 版本的 <code>repository</code> ,
+<code>tlmgr option repository https://www.texlive.info/tlnet-archive/2019/12/31/tlnet/</code></p>
+<p>然后把<a href="https://www.tug.org/texlive/">tug</a>的 <code>GPG</code> key 加入到 <code>tlmgr</code> 的key 列表中</p>
+<pre><code class="language-bash">curl -fsSL https://www.tug.org/texlive/files/texlive.asc | tlmgr key add -
+</code></pre>
+<p>这样就不会出现<code>erify_checksum: -5</code>错误了.</p>
+<p>总结:</p>
+<ul>
+<li><code>tlmgr key list</code>列出所有的<code>key</code></li>
+<li><code>tlmgr repository list</code>列出使用的仓库</li>
+<li><code>curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -</code>为<code>contrib</code>仓库添加新的gpg key</li>
+<li><code>tlmgr install  --verify-repo=none pkg</code> 免去验证</li>
+</ul>
+<p>curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -</p>
+<h3 id="tlmgr-命令"><a class="header" href="#tlmgr-命令">tlmgr 命令</a></h3>
+<hr />
+<p><code>install [option]... pkg...</code></p>
+<p>如果尚未安装,请安装命令行上给出的每个<code>pkg</code>.
+(它不涉及现有软件包; 有关如何获取软件包的最新版本,请参见<code>更新</code>操作.)</p>
+<p>默认情况下,这还会安装给定pkg所依赖的所有软件包. 选项:</p>
+<ul>
+<li><code>--dry-run</code> : 实际没有安装任何东西. 而是将要执行的动作写入终端.</li>
+<li><code>--file</code>: 不从安装库中获取软件包, 使用命令行上给出的软件包文件. 这些文件必须是标准的<code>TeX Live</code>软件包文件(包含<code>tlpobj</code>文件).</li>
+<li><code>--force</code>:如果存在对<code>tlmgr</code>本身(或基本基础结构的其他部分)的更新,
+则除非给出此选项,否则<code>tlmgr</code>将退出紧急状态并且不会执行安装. 不建议.</li>
+<li><code>--no-depends</code>:不要安装依赖项. (默认情况下,安装软件包可确保满足该软件包的所有依赖关系.)</li>
+<li><code>--no-depends-at-all</code>:通常,当您安装附带二进制文件的软件包时,还将安装相应的二进制软件包.
+也就是说,对于软件包<code>foo</code>,软件包<code>foo.i386-linux</code>也将安装在<code>i386-linux</code>系统上.
+此选项抑制了这种行为,并且还暗示了<code>--no-depends</code>.
+除非您确定自己在做什么,否则不要使用它.</li>
+<li><code>--reinstall</code>:即使似乎已经安装了软件包(即TLPDB中已存在),也要重新安装软件包(包括集合的依赖项).
+这对于从意外删除层次结构中的文件中恢复非常有用.</li>
+</ul>
+<hr />
+<ul>
+<li><code>conf [texmf|tlmgr|updmap [--conffile file] [--delete] [key [value]]]</code></li>
+<li><code>conf auxtrees [--conffile file] [show|add|delete] [value]</code></li>
+</ul>
+<p>仅使用<code>conf</code>,即可显示TeX Live的常规配置信息,包括活动配置文件,路径设置等.
+这就像运行<code>texconfig conf</code>一样,但是可以在所有支持的平台上运行.</p>
+<p>使用<code>conf texmf</code>,<code>conf tlmgr</code>或<code>conf updmap</code>之一显示<code>ROOT / texmf.cnf</code>(用户特定的<code>tlmgr</code>配置)中保存的所有键/值对(即所有设置) 文件(请参见下文)或第一个(通过<code>kpsewhich</code>找到的)<code>updmap.cfg</code>文件.</p>
+<p><code>conf</code>显示的<code>PATH</code>值与<code>tlmgr</code>使用的值相同. 包含<code>tlmgr</code>可执行文件的目录会自动添加到从环境继承的PATH值之前.</p>
+<p>这是更改配置值的实际示例. 如果在安装过程中启用了通过<code>\ write18</code>执行的(部分或全部)系统命令,则可以在以后将其禁用:</p>
+<pre><code class="language-bash">tlmgr conf texmf shell_escape 0
+</code></pre>
+<p>子命令<code>auxtrees</code>允许完全在用户控制下添加和删除任意其他texmf树.
+<code>auxtrees show</code>显示其他树的列表,<code>auxtrees add</code>树将树添加到列表中,<code>auxtrees remove</code>树从列表中删除树(如果存在).</p>
+<p>树中不应包含<code>ls-R</code>文件(否则,如果<code>ls-R</code>过时,则可能找不到文件).
+通过操作<code>ROOT / texmf.cnf</code>中的Kpathsea变量<code>TEXMFAUXTREES</code>来生效. 例:</p>
+<pre><code class="language-bash">tlmgr conf auxtrees add /quick/test/tree
+tlmgr conf auxtrees remove /quick/test/tree
+</code></pre>
+<p>在所有情况下,如果需要,都可以通过选项<code>--conffile</code>文件显式指定配置文件.</p>
+<p>警告: 此处是用于更改配置值的一般工具,但是强烈建议不要以这种方式修改设置.
+同样,不对键或值进行错误检查,因此可能发生任何破损.</p>
+<h3 id="手动安装宏包"><a class="header" href="#手动安装宏包">手动安装宏包</a></h3>
+<p>如果无法使用<code>tlmgr</code>自动安装宏包, 例如<code>ubuntu</code>自带的<code>texlive</code>, 默认的版本比远程仓库中的低, 无法自动升级.
+可以直接从网上下载想要安装的宏包, 大部分宏包已经打包成标准格式, 例如<code>siunitx.tds.zip</code>, <a href="https://www.ctan.org/pkg/siunitx">siunitx</a>.
+直接解压到<code>texlive</code>的安装目录即可.</p>
+<p>如何定位安装目录呢? 可以参考<a href="http://www.tug.org/fonts/fontinstall.html">Installing TeX fonts</a>, 虽然这个文章主要是介绍安装字体的.
+使用类似下面的命令找出<code>texlive</code>的安装目录.</p>
+<pre><code class="language-bash">kpsewhich --var-value TEXMF
+tlmgr conf # 这个会输出texlive大部分配置的信息
+</code></pre>
+<p>我电脑上<code>texlive</code>安装在<code>/usr/share/texmf </code>, 这是共享目录, 如果安装在这里, 所有账户都能使用.
+此外在家目录下, 即<code>/home/tom/texmf</code>还有一个用户目录树, 建议把宏包解压到这里, 不会影响<code>ubuntu</code>自带的发行版.
+如果你的<code>home</code>没有这个文件夹, 可以运行<code>tlmgr init-usertree</code>产生一个.
+由于路径中<code>/home/tom/texmf</code>在前面, 把宏包装在这里, 就会被优先使用.</p>
+<h3 id="jabref"><a class="header" href="#jabref">jabref</a></h3>
+<p><a href="https://blog.csdn.net/zd0303/article/details/7676807">JabRef中文手册</a></p>
+<p>entry 时间戳</p>
+<p>本功能可以在<code>选项-&gt;偏好设置-&gt;通用设置</code>中关闭或配置. <code>JabRef</code>能自动的产生一个包含题录加入数据库的日期的域.</p>
+<p>格式:</p>
+<p>时间戳记的格式由包含指示词的字符串确定,指示词表示日期各部分的位置.
+以下是一些可用的指示字母(示例在括号中给出,为:  2005年9月14日(星期三)下午5.45):</p>
+<ul>
+<li>yy: year (05)</li>
+<li>yyyy: year (2005)</li>
+<li>MM: month (09)</li>
+<li>dd: day in month (14)</li>
+<li>HH: hour in day (17)</li>
+<li>mm: minute in hour (45)</li>
+</ul>
+<p>这些指示符可以与标点符号和空格一起使用. 几个例子:</p>
+<ul>
+<li><code>yyyy.MM.dd gives 2005.09.14</code></li>
+<li><code>yy.MM.dd gives 05.09.14</code></li>
+<li><code>yyyy.MM.dd HH:mm gives 2005.09.14 17:45</code></li>
+</ul>
+<h3 id="lyx-报错"><a class="header" href="#lyx-报错">lyx 报错</a></h3>
+<hr />
+<p>如果桌面环境使用<code>Gnome</code>默认, 也就是<code>Wayland</code>协议, 默认<code>ibus</code>输入法在<code>lyx</code>下无法使用. 报错为</p>
+<pre><code class="language-bash">Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway.
+</code></pre>
+<p>按照<a href="https://zh.opensuse.org/SDB:%E5%9C%A8_Wayland_%E4%B8%AD%E5%90%AF%E7%94%A8%E8%BE%93%E5%85%A5%E6%B3%95">SDB:在 Wayland 中启用输入法</a>
+操作仍然不行.</p>
+<p>进入 <code>KDE</code> 或 <code>GNOME</code> 的 <code>Wayland</code> 会话之后, 您可能会发现输入法(Fcitx 或 iBus)无法使用.
+最新的稳定版 <code>Fcitx</code> 和 <code>iBus</code> 都已经了基本的 <code>Wayland</code> 支持, 通过 X 的协议转接实现.
+<code>Wayland</code> 读取的环境配置文件是<code>/etc/environment</code> 而不是 <code>X</code> 所读取的环境变量文件. 因此对 <code>X</code> 有效的输入法配置在 <code>Wayland</code> 上不起效果了. 以管理员权限编辑它:</p>
+<pre><code class="language-bash">sudo vi /etc/environment
+</code></pre>
+<p>这个文件应该是空的, 只有几行注释. 添加下面几行, 以 <code>Fcitx</code> 为例:</p>
+<pre><code class="language-bash">INPUT_METHOD=fcitx
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+</code></pre>
+<p>如果您使用 iBus 的话, 那么应该添加这几行:</p>
+<pre><code class="language-bash">INPUT_METHOD=ibus
+GTK_IM_MODULE=ibus
+QT_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+</code></pre>
+<p>之后请重启您的系统.</p>
+<hr />
+<p>有时安装好了texlive,也安装好了<code>lyx</code>,却仍然报错,这个时候一般是因为路径(<code>$PATH</code>)没有配置好,
+lyx没有检测到texlive的各种文件.参考 <a href="https://wiki.lyx.org/uploads//LyX/Manuals/1.6.4//Manuals.pdf">LYX Manuals</a></p>
+<p><code>LYX</code>的一些功能可以从<code>LYX</code>内部进行配置,而无需重新配置文件.
+首先,<code>LYX</code>能够检查您的系统,以查看可以使用哪些程序,<code>LATEX</code>文档类和<code>LATEX</code>软件包.
+它使用此知识为多个<code>Preferences</code>设置提供合理的默认值.
+尽管在系统上安装<code>LYX</code>时已经完成了此配置,但是您可能需要在本地安装一些项目,
+新的<code>LATEX</code>类,而<code>LYX</code>看不到这种变化.
+要强制LYX重新检查系统,您应该使用<code>Tools,Reconfigure</code>. 然后,您应该重新启动<code>LYX</code>以确保考虑到更改.</p>
+<p>添加<code>tex</code>文件的路径到<code>$PATH</code>中的时候,注意尽量把新的<code>tex</code>路径添加到<code>$PATH</code>前面,
+以防止之前安装的残留掩盖新的路径.也就是,</p>
+<pre><code class="language-bash">if [[ $SHELL == &quot;/bin/zsh&quot; ]] ;then
+echo &quot;\n# add texlive paths&quot; &gt;&gt; ~/.zshrc
+echo &quot;export MANPATH=your_texlive_path/texmf-dist/doc/man:${MANPATH}&quot; &gt;&gt; ~/.zshrc
+echo &quot;export INFOPATH=your_texlive_path/texmf-dist/doc/info:${INFOPATH}&quot; &gt;&gt; ~/.zshrc
+echo &quot;export PATH=your_texlive_path/bin/x86_64-linux:${PATH}&quot; &gt;&gt; ~/.zshrc
+fi
+</code></pre>
+<p>直接使用<code>apt</code>仓库安装的<code>texlive</code>套装和<code>lyx</code>一般没有问题.</p>
+<h3 id="lyx-默认pdf查看"><a class="header" href="#lyx-默认pdf查看">lyx 默认pdf查看</a></h3>
+<p>在<code>tools-preferences-File Handling-File Formats</code></p>
+<p>在 <code>Format</code> 一栏中选中<code>PDF(XeTex)</code>  或者其他想要更改的格式,然后在 <code>Viewer</code>中更改程序,或者自定义程序位置.</p>
+<h3 id="latexmk-选项"><a class="header" href="#latexmk-选项">latexmk 选项</a></h3>
+<p>一般来说, <code>latexmk</code> 的通用<code>cmd</code>命令形式为:</p>
+<p><code>latexmk [options] [file]</code></p>
+<p>所有的选项可以用单个<code>-</code>连字符,也可以用双连字符<code>--</code>引入,e.g., &quot;latexmk -help&quot; or &quot;latexmk --help&quot;.</p>
+<hr />
+<p>注意:</p>
+<p>除了文档里列出的选项, <code>latexmk</code>认识几乎所有the options recognized by the latex, pdflatex programs (and their relatives),
+在当前的 TexLive and MikTeX 发行版中.</p>
+<p>这些程序的一些选项还会引起 latexmk 的特殊 action or behavior,在本文档中有解释.否则,它们被直接传递给latex or pdflatex.
+run <code>latexmk -showextraoptions</code>给出选项列表,这些选项被直接传递给latex or pdflatex.</p>
+<hr />
+<p>注意:</p>
+<p>&quot;Further processing&quot; 意味着需要运行其他程序,或者再次运行<code>latex</code>(etc),如果没有 <code>errors</code> 的话.
+如果你不想让<code>latex</code>在遇到错误的时候停下,应该使用 latexmk's option <code>-interaction=nonstopmode</code></p>
+<p><code>-xelatex</code>  使用<code>xelatex</code>编译
+<code>-pv </code>   - preview document.  (Side effect turn off continuous preview)
+<code> -pv-</code>   - turn off preview mode
+<code>-pvc</code>   - preview document and continuously update.  (This also turns  on force mode, so errors do not cause latexmk to stop.)
+(Side effect: turn off ordinary preview mode.)
+<code>-pvc-</code>  - turn off -pvc</p>
+<p><code>-view=default</code> - viewer is default (dvi, ps, pdf)
+<code>-view=ps</code>      - viewer is for ps
+<code>-view=pdf</code>     - viewer is for pdf</p>
+<p><code>-bibtex</code>       - use bibtex when needed (default)
+<code>-bibtex-</code>      - never use bibtex</p>
+<p><code>-cd</code>    - Change to directory of source file when processing it</p>
+<p><code>-recorder</code> - Use -recorder option for (pdf)latex (to give list of input and output files)
+<code> -recorder-</code> - Do not use -recorder option for (pdf)latex</p>
+<hr />
+<p>简单传递的命令</p>
+<p><code>-error-line=n</code> set the width of context lines on terminal error messages
+<code>-half-error-line=n</code>      set the width of first lines of contexts in terminal error messages</p>
+<p><code>-file-line-error </code>       enable <code>file:line:error</code> style messages
+<code>-halt-on-error</code>          stop processing at the first error
+<code>-interaction=STRING</code>     set interaction mode (STRING=batchmode/nonstopmode/scrollmode/errorstopmode)
+<code>-synctex=NUMBER</code>         generate <code>SyncTeX</code> data for previewers if nonzero</p>
+<h3 id="安装latex包"><a class="header" href="#安装latex包">安装latex包</a></h3>
+<p><a href="https://blog.csdn.net/codeforces_sphinx/article/details/7315044">Ubuntu/Mint下LaTeX宏包安装及更新</a></p>
+<p>一般使用texlive的包管理工具,否则需要手动安装:</p>
+<ol>
+<li>Get the package from <a href="http://www.ctan.org/CTAN">CTAN</a> or wherever.</li>
+<li>如果其中有一个文件是<code>.ins</code> 结尾的,打开终端,执行命令<code>latex foiltex.ins</code>,就获得了安装需要的包.大多数 latex 包没有打包,所以可以跳过这一步.</li>
+<li>现在你需要决定,这个包要安装给所有用户使用,还是only for you.</li>
+<li>在*nix 系统上(OSX),给所有用户使用,安装到<code>local</code> TeX tree, 给自己使用,安装到<code>user</code>TeX tree.</li>
+</ol>
+<p>查看<code>texmf.cnf</code>文件,它通常在<code>$TEXMF/web2c</code>文件夹,但是可以用<code>kpsewhich texmf.cnf</code>定位.</p>
+<p><code>local</code> Tree 的位置在 <code>TEXMFLOCAL</code> variable 中定义,通常像是<code>/usr/local/share/texmf</code>.
+<code>user</code>  Tree 的位置在<code>TEXMFHOME</code>中定义,通常像是<code>$HOME/texmf</code> or <code>$HOME/.texliveXXXX</code></p>
+<p>如果这些变量没有定义,你需要手工指定.修改<code>local</code> Tree 可能需要 root 权限.建议修改 user tree, 因为在升级的时候,不会被覆盖.这样在备份系统的时候,可以一起备份.</p>
+<p>现在,你需要告诉 Latex 有新文件.这取决于 LaTex 发行版.</p>
+<ol>
+<li>
+<p>对于 TeXLive,运行<code>texhash</code>,可能需要 root 权限</p>
+</li>
+<li>
+<p>对于MikTeX,运行 <code>Settings (Admin)</code> and press the button marked <code>Refresh FNDB</code></p>
+</li>
+<li>
+<p>最后,你需要告诉 LyX 有新的包可以使用.在LyX 中,运行 <code>Tools-&gt;Reconfigure</code> and then restart LyX</p>
+</li>
+</ol>
+<p>现在,新的文档 class 可以选择了,<code>Document-&gt;Settings-&gt;Document Class</code>.</p>
+<h3 id="latex包安装方式2"><a class="header" href="#latex包安装方式2">latex包安装方式2</a></h3>
+<p>首先要找到默认宏包所在目录,一般是:</p>
+<pre><code class="language-bash">/usr/share/texmf/tex/latex
+/usr/share/texmf-texlive/tex/latex
+</code></pre>
+<ol>
+<li>如果是安装一个新的宏包,就直接把宏包的压缩文件扔进第一个目录下,直接解压就行,注意解压后的文件里可能有安装说明,照着安装说明做就是了.
+如果是更新一个宏包,一般都可以在第二个目录下找到,把原先的宏包重命名成<code>*-backup</code>,再解压新下载的宏包压缩文件,同时如果有安装说明的话,也照着做.</li>
+<li>之后要对宏包重新标记下,终端下执行</li>
+</ol>
+<pre><code class="language-bash"># texhash
+</code></pre>
+<p><code>Log off/Log in</code>后,就完成了~</p>
+<h3 id="latex-pdf-裁剪"><a class="header" href="#latex-pdf-裁剪">latex pdf 裁剪</a></h3>
+<p><code>texlive</code> 自带了一个叫做 <code>pdfcrop</code> 的 <code>perl</code> 脚本</p>
+<p>使用方法如下:</p>
+<p><code>pdfcrop --margins 3 --clip input.pdf output.pdf; </code> 或者</p>
+<pre><code class="language-bash">pdfcrop --clip --bbox '120 480 570 830' input.pdf output.pdf;
+pdfcrop --clip --bbox '60 660 516 775' moban.pdf moban_crop.pdf &amp;&amp; evince moban_crop.pdf  # 国科大试卷的裁减参数
+</code></pre>
+<p>四个数字的含义是,以左下角为原点,给出<code>left bottom right top</code>的数值,单位是<code>point</code></p>
+<p><code>1 point</code>=<code>0.3527 mm</code>=<code>1/72 inch</code>.
+A4纸张(mm) <code>210</code> * <code>297</code>=<code>595.4 point</code>*<code>842.1 point</code>.</p>
+<h2 id="loop-设备"><a class="header" href="#loop-设备">loop 设备</a></h2>
+<p>loop 设备 (循环设备)</p>
+<p><a href="https://blog.csdn.net/neiloid/article/details/8150629">loop 设备 (循环设备)</a></p>
+<h3 id="loop-设备介绍"><a class="header" href="#loop-设备介绍">loop 设备介绍</a></h3>
+<p>在类 UNIX 系统里,<code>loop</code> 设备是一种伪设备(pseudo-device),或者也可以说是仿真设备.它能使我们像块设备一样访问一个文件.</p>
+<p>在使用之前,一个 <code>loop</code> 设备必须要和一个文件进行连接.这种结合方式给用户提供了一个替代块特殊文件的接口.因此,如果这个文件包含有一个完整的文件系统,那么这个文件就可以像一个磁盘设备一样被 <code>mount</code> 起来.</p>
+<p>上面说的文件格式,我们经常见到的是 CD 或 DVD 的 ISO 光盘镜像文件或者是软盘(硬盘)的 <code>*.img</code> 镜像文件.通过这种 <code>loop mount</code> (回环<code>mount</code>)的方式,这些镜像文件就可以被 <code>mount</code> 到当前文件系统的一个目录下.</p>
+<p>至此,顺便可以再理解一下 <code>loop</code> 的含义:对于第一层文件系统,它直接安装在我们计算机的物理设备之上;
+而对于这种被 <code>mount</code> 起来的镜像文件(它也包含有文件系统),它是建立在第一层文件系统之上,
+这样看来,它就像是在第一层文件系统之上再绕了一圈的文件系统,所以称为 <code>loop</code>.</p>
+<p>在 Linux 里,<code>loop</code> 设备的设备名形如:</p>
+<pre><code class="language-bash">ls /dev/loop*
+/dev/loop0  /dev/loop2  /dev/loop4  /dev/loop6
+/dev/loop1  /dev/loop3  /dev/loop5  /dev/loop7
+... ...
+</code></pre>
+<p>例如,要在一个目录下 mount 一个包含有磁盘镜像的文件,需要分 2 步走:</p>
+<pre><code class="language-bash">losetup /dev/loop0 disk.img           #使磁盘镜像文件与循环设备连结起来
+mount /dev/loop0 /home/groad/disk_test   #将循环设备 mount 到目录 disk_test 下
+</code></pre>
+<p>经过上面的两个命令后,镜像文件就如同一个文件系统挂载在 <code>disk_test</code> 目录下,当然我们也可以往镜像里面添加文件.</p>
+<p>其实上面的两个步骤可以写成一个步骤:</p>
+<pre><code class="language-bash">mount -t minix -o loop ./disk.img ./disk_test
+</code></pre>
+<h2 id="snap"><a class="header" href="#snap">snap</a></h2>
+<p><a href="https://www.jianshu.com/p/4049b97151a1">Ubuntu使用snap安装常用软件</a></p>
+<p>什么是<code>snap</code>, <code>snap</code>是一种全新的软件包管理方式, 它类似一个容器拥有一个应用程序所有的文件和库, 各个应用程序之间完全独立.
+所以使用<code>snap</code>包的好处就是它解决了应用程序之间的依赖问题, 使应用程序之间更容易管理. 但是由此带来的问题就是它占用更多的磁盘空间.</p>
+<p><code>Snap</code>的安装包扩展名是<code>.snap</code>, 类似于一个容器, 它包含一个应用程序需要用到的所有文件和库(<code>snap</code>包包含一个私有的<code>root</code>文件系统, 里面包含了依赖的软件包).
+它们会被安装到单独的目录; 各个应用程序之间相互隔离. 使用<code>snap</code>有很多好处, 首先它解决了软件包的依赖问题; 其次, 也使应用程序更容易管理.</p>
+<p>现在支持<code>snap</code>的应用并不多, <code>snap</code>软件包一般安装在<code>/snap</code>目录下.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-1-daily.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-1-systemd.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-1-daily.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-1-systemd.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

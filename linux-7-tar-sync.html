@@ -1,0 +1,1112 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>压缩,同步文件 - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html" class="active"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linux-7"><a class="header" href="#linux-7">linux-7</a></h1>
+<h2 id="第十九章归档和备份"><a class="header" href="#第十九章归档和备份">第十九章:归档和备份</a></h2>
+<p>计算机系统管理员的一个主要任务就是保护系统的数据安全,其中一种方法是通过定时备份系统文件,来保护数据.
+即使你不是一名系统管理员,像做做拷贝或者在各个位置和设备之间移动大量的文件,通常也是很有帮助的.</p>
+<p>在这一章中,我们将会看看几个经常用来管理文件集合的程序.它们就是文件压缩程序:</p>
+<ul>
+<li><code>gzip</code> – 压缩或者展开文件</li>
+<li><code>bzip2</code> – 块排序文件压缩器</li>
+</ul>
+<p>归档程序:</p>
+<ul>
+<li><code>tar</code> – 磁带打包工具</li>
+<li><code>zip</code> – 打包和压缩文件</li>
+</ul>
+<p>还有文件同步程序:</p>
+<ul>
+<li><code>rsync</code> – 同步远端文件和目录</li>
+</ul>
+<h3 id="压缩文件"><a class="header" href="#压缩文件">压缩文件</a></h3>
+<p>纵观计算领域的发展历史,人们努力想把最多的数据存放到到最小的可用空间中,不管是内存,存储设备 还是网络带宽.
+诸如便携式音乐播放器, 高清电视,或宽带网络之类的存在都应归功于高效的数据压缩技术.</p>
+<p>数据压缩就是一个删除冗余数据的过程.</p>
+<p>比方说我们有一张<code>100*100</code>像素的 纯黑的图片文件,假定每个像素占<code>24</code>位,或者<code>3</code>个字节,那么这张图像将会占用 <code>30,000</code> 个字节的存储空间:</p>
+<pre><code class="language-bash">100 * 100 * 3 = 30,000
+</code></pre>
+<p>一张单色图像包含的数据全是多余的.我们只要简单地描述这个事实,我们有3万个黑色的像素数据块.
+所以,我们不存储包含<code>3万</code>个<code>0</code> (通常在图像文件中,黑色由<code>0</code>来表示)的数据块,
+相反,我们把这些数据压缩为数字<code>30,000</code>, 后跟一个<code>0</code>.
+这种数据压缩方案被称为游程编码,是一种最基本的压缩技术.</p>
+<p>压缩算法(数学技巧被用来执行压缩任务)分为两大类,无损压缩和有损压缩.</p>
+<p>无损压缩保留了原始文件的所有数据.还原出的文件与原文件一模一样.</p>
+<p>而另一方面,有损压缩,执行压缩操作时会删除数据,允许更大的压缩.
+有损文件被还原后, 与原文件不相匹配, 而是一个近似值.
+有损压缩的例子有 <code>JPEG</code>(图像)文件和 <code>MP3</code>(音频)文件.</p>
+<p>在我们的讨论中,我们将看看完全无损压缩,因为计算机中的大多数数据是不能容忍丢失任何数据的.</p>
+<h3 id="gzip"><a class="header" href="#gzip">gzip</a></h3>
+<p><code>gzip</code> 程序被用来压缩一个或多个文件.当执行 <code>gzip</code> 命令时,原始文件的压缩版会替代原始文件.
+相对应的 <code>gunzip</code> 程序用来把压缩文件复原.这里有个例子:</p>
+<pre><code class="language-bash">$ ls -l /etc &gt; foo.txt
+$ gzip foo.txt
+$ gunzip foo.txt.gz
+</code></pre>
+<p>在这个例子里,我们创建了一个名为 <code>foo.txt</code> 的文本文件,其内容是一个目录的列表.
+接下来,我们运行 <code>gzip</code> 命令,它会把原始文件替换为一个叫做 <code>foo.txt.gz</code> 的压缩文件.
+在 <code>foo.*</code> 文件列表中,我们看到原始文件已经被压缩文件替代了,这个压缩文件大约是原始文件的十五分之一.
+我们也能看到压缩文件与原始文件有着相同的权限和时间戳.</p>
+<p>接下来,我们运行 <code>gunzip</code> 程序来解压缩文件.
+随后,我们见到压缩文件已经被原始文件替代了, 同样地保留了相同的权限和时间戳.</p>
+<p><code>gzip</code> 命令有许多选项.这里列出了一些:
+表19-1: gzip 选项</p>
+<hr />
+<p>选项 说明</p>
+<ul>
+<li><code>-c</code> 把输出写入到标准输出,并且保留原始文件.也能用 <code>--stdout</code> 和 <code>--to-stdout</code> 选项来指定.</li>
+<li><code>-d</code> 解压缩.正如 <code>gunzip</code> 命令一样.也可以用<code>--decompress</code> 或者<code>--uncompress</code> 选项来指定.</li>
+<li><code>-f</code> 强制压缩,即使原始文件的压缩文件已经存在了,也要执行.也可以用<code>--force</code>选项来指定.</li>
+<li><code>-h</code> 显示用法信息.也可用<code>--help</code> 选项来指定.</li>
+<li><code>-l</code> 列出每个被压缩文件的压缩数据.也可用<code>--list</code> 选项.</li>
+<li><code>-r</code> 若命令的一个或多个参数是目录,则递归地压缩目录中的文件.也可用<code>--recursive</code> 选项来指定.</li>
+<li><code>-t</code> 测试压缩文件的完整性.也可用<code>--test</code>选项来指定.</li>
+<li><code>-v</code> 显示压缩过程中的信息.也可用<code>--verbose</code> 选项来指定.</li>
+<li><code>-number</code> 设置压缩指数.<code>number</code> 是一个在<code>1</code>(最快,最小压缩)到<code>9</code>(最慢,最大压缩)之间的整数.
+数值<code>1</code>和<code>9</code>也可以用<code>--fast</code>和<code>--best</code> 选项来表示.默认值是整数6.</li>
+</ul>
+<p>返回到我们之前的例子中:</p>
+<pre><code class="language-bash">$ gzip foo.txt
+$ gzip -tv foo.txt.gz
+foo.txt.gz: OK
+$ gzip -d foo.txt.gz
+</code></pre>
+<p>这里,我们用压缩文件来替代文件 <code>foo.txt</code>,压缩文件名为 <code>foo.txt.gz</code>. 下一步,我们测试了压缩文件 的完整性,使用了<code>-t</code> 和 <code>-v</code> 选项.</p>
+<pre><code class="language-bash">$ ls -l /etc | gzip &gt; foo.txt.gz
+</code></pre>
+<p>这个命令创建了一个目录列表的压缩文件.
+<code>gunzip</code> 程序,会解压缩 <code>gzip</code> 文件,假定那些文件名的扩展名是<code>.gz</code>,所以没有必要指定它, 只要指定的名字与现有的未压缩文件不冲突就可以:</p>
+<pre><code class="language-bash">$ gunzip foo.txt
+</code></pre>
+<p>如果我们的目标只是为了浏览一下压缩文本文件的内容,我们可以这样做:</p>
+<pre><code class="language-bash">$ gunzip -c foo.txt | less
+</code></pre>
+<p>另外,对应于 <code>gzip</code> 还有一个程序,叫做 <code>zcat</code>,它等同于带有<code>-c</code> 选项的 <code>gunzip</code> 命令.
+它可以被用来如 <code>cat</code> 命令作用于 <code>gzip</code> 压缩文件:</p>
+<pre><code class="language-bash">$ zcat foo.txt.gz | less
+</code></pre>
+<p>小贴士: 还有一个 <code>zless</code> 程序.它与上面的管道线有相同的功能.</p>
+<h3 id="bzip2"><a class="header" href="#bzip2">bzip2</a></h3>
+<p><code>bzip2</code> 程序,由 Julian Seward 开发,与 <code>gzip</code> 程序相似,但使用了不同的压缩算法, 舍弃了压缩速度,从而实现了更高的压缩级别. 在大多数情况下,它的工作模式等同于 <code>gzip</code> .
+由 <code>bzip2</code> 压缩的文件,用扩展名 <code>.bz2</code>来表示:</p>
+<pre><code class="language-bash">$ ls -l /etc &gt; foo.txt
+$ ls -l foo.txt
+$ bzip2 foo.txt
+$ ls -l foo.txt.bz2
+$ bunzip2 foo.txt.bz2
+</code></pre>
+<p>正如我们所看到的, <code>bzip2</code> 程序用起来和 <code>gzip</code> 程序一样.</p>
+<p>我们之前讨论的 <code>gzip</code> 程序的所有选项(除了<code>-r</code>) ,<code>bzip2</code> 程序同样也支持.
+注意,然而,压缩级别选项(<code>-number</code>)对于 <code>bzip2</code> 程序来说,含义有稍许不同.</p>
+<p>伴随着 <code>bzip2</code> 程序,有 <code>bunzip2</code> 和 <code>bzcat</code> 程序用来解压缩文件.
+还有 <code>bzip2recover</code> 程序,可以用来尝试恢复受损的 <code>.bz2</code> 文件.</p>
+<h4 id="不要强迫性压缩"><a class="header" href="#不要强迫性压缩">不要强迫性压缩</a></h4>
+<p>偶尔会有人试图用高效的压缩算法,来压缩一个已经被压缩过的文件:</p>
+<pre><code class="language-bash">$ gzip picture.jpg
+</code></pre>
+<p>不要这样,  你可能只是在浪费时间和空间.
+如果你再次压缩已经压缩过的文件,实际上你会得到一个更大的文件.
+这是因为所有的压缩技术都会涉及一些开销,文件中会被添加描述此次压缩过程的信息.
+如果你试图压缩一个已经不包含多余信息的文件,那么再次压缩不会节省空间,以抵消额外的开销.</p>
+<h3 id="归档文件"><a class="header" href="#归档文件">归档文件</a></h3>
+<p>一个常见的,与文件压缩结合一块使用的文件管理任务是归档.归档就是收集许多文件,并把它们 捆绑成一个大文件的过程.</p>
+<p>归档经常作为系统备份的一部分来使用.当把旧数据从一个系统移到某种类型的长期存储设备中时,也会用到归档程序.</p>
+<h3 id="tar"><a class="header" href="#tar">tar</a></h3>
+<p>在类 <code>Unix</code> 的软件世界中,这个 <code>tar</code> 程序是用来归档文件的经典工具.它是 <code>tape archive</code> 的简称,揭示了它的起源是一款制作磁带备份的工具.
+虽然仍被用来完成传统任务, 它也同样适用于其它类型的存储设备.</p>
+<p>我们经常看到扩展名为 <code>.tar</code> 或者 <code>.tgz</code> 的文件,它们各自表示<code>普通</code> 的 <code>tar</code> 包和被 <code>gzip</code> 程序压缩过的 <code>tar</code> 包.
+一个 <code>tar</code> 包可以由一组独立的文件,一个或者多个目录,或者 两者混合体组成. 命令语法如下:</p>
+<pre><code class="language-bash">tar mode[options] pathname...
+</code></pre>
+<p>这里的 <code>mode</code> 是指以下操作模式之一(这里只展示了一部分,查看 <code>tar</code> 的手册来得到完整列表):</p>
+<hr />
+<p>表19-2: <code>tar</code> 模式
+模式 说明</p>
+<ul>
+<li><code>c</code> 为文件和/或目录列表创建归档文件.</li>
+<li><code>x</code> 抽取归档文件.</li>
+<li><code>r</code> 追加具体的路径到归档文件的末尾.</li>
+<li><code>t</code> 列出归档文件的内容.</li>
+</ul>
+<p><code>tar</code> 命令使用了稍微有点奇怪的方式来表达它的选项,所以我们需要一些例子来展示它是怎样工作的.
+首先,让我们重新创建之前我们用过的操练场:</p>
+<pre><code class="language-bash">$ mkdir -p playground/dir-{00{1..9},0{10..99},100}
+$ touch playground/dir-{00{1..9},0{10..99},100}/file-{A..Z}
+</code></pre>
+<p>下一步,让我们创建整个操练场的 <code>tar</code> 包:</p>
+<pre><code class="language-bash">$ tar cf playground.tar playground
+</code></pre>
+<p>这个命令创建了一个名为 <code>playground.tar</code> 的 tar 包,其包含整个 <code>playground</code> 目录层次结果.
+我们 可以看到模式 <code>c</code> 和选项 <code>f</code>,其被用来指定这个 <code>tar</code> 包的名字,模式和选项可以写在一起,而且不需要开头的短横线.</p>
+<p>注意,必须首先指定模式,然后才是其它的选项. 要想列出归档文件的内容,我们可以这样做:</p>
+<pre><code class="language-bash">$ tar tf playground.tar
+</code></pre>
+<p>为了得到更详细的列表信息,我们可以添加选项 <code>v</code>:</p>
+<pre><code class="language-bash">$ tar tvf playground.tar
+</code></pre>
+<p>现在,抽取 <code>tar</code> 包 <code>playground</code> 到一个新位置.我们先创建一个名为 <code>foo</code> 的新目录,更改目录, 然后抽取 <code>tar</code> 包中的文件:</p>
+<pre><code class="language-bash">$ mkdir foo
+$ cd foo
+$ tar xf ../playground.tar
+$ ls playground
+</code></pre>
+<p>如果我们检查 <code>~/foo/playground</code> 目录中的内容,会看到这个已经成功创建了原始文件的精确副本.
+然而有个警告:除非你是超级用户,否则从归档文件中抽取的文件和目录的所有权在执行复原操作的用户手里,而不属于原始所有者.</p>
+<hr />
+<p><code>tar</code> 命令另一个有趣的行为是它处理归档文件路径名的方式.
+默认情况下,路径名是相对的,而不是绝对路径.当创建归档文件的时候,<code>tar</code> 命令会简单地删除路径名开头的斜杠.
+为了说明问题,我们将重新创建我们的归档文件,这次指定一个绝对路径:</p>
+<pre><code class="language-bash">$ cd
+$ tar cf playground2.tar ~/playground
+</code></pre>
+<p>记住,当按下回车键后,<code>~/playground</code> 会展开成 <code>/home/me/playground</code>,所以我们会得到一个绝对路径.
+接下来和之前一样, 我们抽取归档文件,观察发生了什么:</p>
+<pre><code class="language-bash">$ cd foo
+$ tar xf ../playground2.tar
+$ ls
+home playground
+$ ls home
+me
+$ ls home/me
+playground
+</code></pre>
+<p>我们看到, 当抽取第二个归档文件时,它重新创建了 <code>home/me/playground</code> 目录.
+并且是相对于当前的工作目录<code>~/foo</code>,而不是相对于 <code>root</code>.
+这看起来似乎是一种奇怪的工作方式,但事实上这种方式很有用,因为这样就允许我们抽取文件到任意位置,
+而不是强制地把抽取的文件放置到原始目录下.</p>
+<p>加上 <code>verbose</code>(<code>v</code>)选项,重做 这个练习,将会展现更加详细的信息.</p>
+<hr />
+<p>让我们展示一个<code>tar</code>命令的实际应用. 假定我们想要复制家目录及其内容到另一个系统中, 并且有一个大容量的 <code>USB</code> 硬盘,可以作为传输工具.</p>
+<p>在现代 <code>Linux</code> 系统中, 这个硬盘会被<code>自动地</code>挂载到 <code>/media</code> 目录下. 我们也假定硬盘中有一个名为 <code>BigDisk</code> 的逻辑卷. 为了制作 <code>tar</code> 包,我们可以这样做:</p>
+<pre><code class="language-bash">$ sudo tar cf /media/BigDisk/home.tar /home
+</code></pre>
+<p><code>tar</code> 包制作完成之后,我们卸载硬盘,然后把它连接到第二个计算机上.
+再一次,此硬盘被挂载到<code>/media/BigDisk</code> 目录下.为了抽取归档文件,我们这样做:</p>
+<pre><code class="language-bash">$ cd /
+$ sudo tar xf /media/BigDisk/home.tar
+</code></pre>
+<p>值得注意的一点是,因为归档文件中的所有路径名都是相对的,所以首先我们必须更改目录到根目录下, 这样抽取的文件路径是相对于根目录的.
+当抽取一个归档文件时,可以限制从归档文件中抽取的内容. 例如抽取单个文件, 可以这样实现:</p>
+<pre><code class="language-bash">tar xf archive.tar pathname
+</code></pre>
+<p>通过给命令添加末尾的路径名,<code>tar</code> 命令就只会恢复指定的文件.可以指定多个路径名.
+注意:路径名必须是精准的相对路径名,和存储在归档文件中的完全一样.</p>
+<p>当指定路径名的时候, 通常不支持通配符.
+然而,<code>GNU</code> 版本的 <code>tar</code> 命令(在 Linux 发行版中最常出现)可以通过 <code>--wildcards</code> 选项来支持通配符.
+这个例子使用了之前的 <code>playground.tar</code> 文件:</p>
+<pre><code class="language-bash">$ cd foo
+$ tar xf ../playground2.tar --wildcards 'home/me/playground/dir-*/file-A'
+</code></pre>
+<p>这个命令将只会抽取路径名匹配 <code>dir-*</code>的文件.</p>
+<p><code>tar</code> 命令经常结合 <code>find</code> 命令一起来制作归档文件.
+我们可以使用 <code>find</code>来产生一个文件集合,然后把它们加入到归档文件中.</p>
+<pre><code class="language-bash">$ find playground -name 'file-A' -exec tar rf playground.tar '{}' '+'
+</code></pre>
+<p>这里我们使用 <code>find</code> 命令来匹配 <code>playground</code> 目录中所有名为 <code>file-A</code> 的文件,
+然后使用 <code>-exec</code> 行为,来唤醒带有追加模式(<code>r</code>)的 <code>tar</code> 命令,把匹配的文件添加到归档文件 <code>playground.tar</code> 中.</p>
+<p>使用 <code>tar</code> 和 <code>find</code> 命令,来创建逐渐增加的目录树, 或者整个系统的备份,是个不错的方法.
+通过 <code>find</code> 命令匹配新于某个时间戳的文件,我们就能够创建一个归档文件,
+令其只包含新于上一个 <code>tar</code> 包的文件(假定这个时间戳文件恰好在每个归档文件创建之后被更新了).</p>
+<p><code>tar</code> 命令也可以利用标准输出和输入.这里是一个完整的例子:</p>
+<pre><code class="language-bash">$ cd
+$ find playground -name 'file-A' | tar cf - --files-from=- | gzip &gt; playground.tgz
+</code></pre>
+<p>在这个例子里面,我们使用 <code>find</code> 程序产生了一个匹配文件列表,然后把它们管道到 <code>tar</code> 命令中.</p>
+<p>如果指定了文件名<code>-</code>,则其被看作是标准输入或标准输出.
+在上面的例子中<code>tar cf -</code>中的是标准输出,<code>--files-from=-</code>中的是标准输入.
+(顺便说一下,使用<code>-</code>来表示 标准输入/输出的惯例,也被大量的其它程序使用).</p>
+<p>这个 <code>--file-from</code> 选项(也可以用 <code>-T</code> 来指定) 导致 <code>tar</code> 命令从一个文件而不是命令行来读入它的路径名列表.</p>
+<p>最后,这个由 <code>tar</code> 命令产生的归档 文件被管道到 <code>gzip</code> 命令中,然后创建了压缩归档文件 <code>playground.tgz</code>.
+<code>.tgz</code> 扩展名是被<code>gzip</code> 压缩过的 <code>tar</code> 文件的常规扩展名.有时候也会使用 <code>.tar.gz</code>这个扩展名.</p>
+<h3 id="顺便压缩"><a class="header" href="#顺便压缩">顺便压缩</a></h3>
+<p>在这里我们手动调用了<code>gzip</code>来制作归档文件的压缩版本.
+实际上现在 GUN 版本的 <code>tar</code> 命令 ,可以直接在归档的同时进行压缩,<code>gzip</code>压缩对应选项<code>z</code>, <code>bzip2</code> 压缩对应选项<code>j</code>.
+之前的例子可以简化为:</p>
+<pre><code class="language-bash"># 创建一个由 gzip 压缩的归档文件,可以这样做:
+$ find playground -name 'file-A' | tar czf playground.tgz -T -
+# 创建一个由 bzip2 压缩的归档文件,可以这样做:
+$ find playground -name 'file-A' | tar cjf playground.tbz -T -
+</code></pre>
+<hr />
+<p>另一个 <code>tar</code> 命令与标准输入和输出的有趣使用,涉及到在系统之间经过 网络传输文件.</p>
+<p>假定我们有两台机器,每台都运行着类 Unix,且装备着 <code>tar</code> 和 <code>ssh</code> 工具的操作系统.
+在这种情景下,我们可以把一个目录从远端系统(名为 <code>remote-sys</code>)传输到我们的本地系统中:</p>
+<pre><code class="language-bash">$ mkdir remote-stuff
+$ cd remote-stuff
+$ ssh remote-sys 'tar cf - Documents' | tar xf -
+me@remote-sys' s password:
+$ ls Documents
+</code></pre>
+<p>这里我们能够从远端系统 <code>remote-sys</code> 中复制目录 <code>Documents</code> 到本地系统名为 <code>remote-stuff</code> 目录中.</p>
+<p>我们怎样做的呢?首先,通过使用 <code>ssh</code> 命令在远端系统中启动 <code>tar</code> 程序.
+你可记得 <code>ssh</code> 允许我们在远程联网的计算机上执行程序,并将远端系统中产生的输出结果被发送到本地系统中查看.
+然后在本地系统中,我们执行 <code>tar xf -</code> 命令, 抽取标准输出中的文件.</p>
+<h3 id="zip"><a class="header" href="#zip">zip</a></h3>
+<p><code>zip</code> 程序既是压缩工具,也是一个打包工具. 它读取和写入 <code>.zip</code> 文件, <code>Windows</code> 用户比较熟悉这种文件格式.
+然而,在 Linux 中 <code>gzip</code> 是主要的压缩程序, <code>bzip2</code>则排第二.</p>
+<p>在 <code>zip</code> 命令的基本用法为:</p>
+<pre><code class="language-bash">zip options zipfile file...
+</code></pre>
+<p>例如,制作一个 <code>playground</code> 的 <code>zip</code> 版本的文件包,这样做:</p>
+<pre><code class="language-bash">$ zip -r playground.zip playground
+</code></pre>
+<p>我们需要包含 <code>-r</code> 选项,不然只有 <code>playground</code> 目录(没有任何它的内容)被存储.
+虽然程序会自动添加 <code>.zip</code> 扩展名,但为了清晰起见,我们还是手动加上.</p>
+<p>在创建 <code>zip</code> 版本的文件包时,<code>zip</code> 命令通常会显示一系列的信息:</p>
+<pre><code class="language-bash">adding: playground/dir-020/file-Z (stored 0%)
+adding: playground/dir-020/file-Y (stored 0%)
+</code></pre>
+<p>这些信息显示了添加到文件包中每个文件的状态.</p>
+<p><code>zip</code> 命令会选用两种存储方法之一,来添加文件到文件包中:
+一种是<code>store</code>,没有经过压缩的文件,正如这里所示,
+另一种是<code>deflate</code>, 执行压缩操作.
+在存储方法之后显示的数值表明了压缩量.</p>
+<p>因为我们的 <code>playground</code> 目录只包含空文件,没有对它的内容执行压缩操作.</p>
+<hr />
+<p>使用 <code>unzip</code> 程序,来直接抽取一个 <code>zip</code> 文件的内容.</p>
+<pre><code class="language-bash">$ cd foo
+$ unzip ../playground.zip
+</code></pre>
+<p>对于 <code>zip</code> 命令(与 <code>tar</code> 命令相反)要注意一点,就是如果指定了的文件包已经存在,那么它会被更新而不是被替代.
+这意味着会保留此文件包,但是会添加新文件,同时替换匹配的文件.</p>
+<p>可以列出 文件或者有选择地从一个 <code>zip</code> 文件包中抽取文件,只要给 <code>unzip</code> 命令指定文件名:</p>
+<pre><code class="language-bash">$ unzip -l playground.zip playground/dir-087/file-Z
+$ cd foo
+$ unzip ./playground.zip playground/dir-087/file-Z
+</code></pre>
+<p>使用 <code>-l</code> 选项,导致 <code>unzip</code> 命令只是列出文件包中的内容而没有抽取文件.</p>
+<p>如果没有指定文件, <code>unzip</code> 程序将会列出文件包中的所有文件.
+添加这个 <code>-v</code> 选项会增加列表的冗余信息.注意当抽取的文件与已经存在的文件冲突时,会在替代此文件之前提醒用户.</p>
+<p>像 <code>tar</code> 命令一样,<code>zip</code> 命令能够利用标准输入和输出,虽然它的实施不大有用.
+通过<code>-@</code>选项,有可能把一系列的文件名管道到 <code>zip</code> 命令.</p>
+<pre><code class="language-bash">$ cd
+$ find playground -name &quot;file-A&quot; | zip -@ file-A.zip
+</code></pre>
+<p>这里我们使用 <code>find</code> 命令产生一系列与<code>file-A</code>相匹配的文件列表,并且把此列表管道到 <code>zip</code> 命令,然后创建包含所选文件的文件包 <code>file-A.zip</code>.</p>
+<p><code>zip</code> 命令也支持把它的输出写入到标准输出,但是它的使用是有限的,因为很少的程序能利用输出.
+不幸地是,<code>unzip</code> 程序不接受标准输入.这就阻止了 <code>zip</code> 和 <code>unzip</code> 一块使用,像 <code>tar</code> 命令那样, 来复制网络上的文件.</p>
+<p>然而<code>zip</code> 命令可以接受标准输入,所以它可以被用来压缩其它程序的输出:</p>
+<pre><code class="language-bash">$ ls -l /etc/ | zip ls-etc.zip -
+adding: - (deflated 80%)
+</code></pre>
+<p>在这个例子里,我们把 <code>ls</code> 命令的输出管道到 <code>zip</code> 命令.
+像 <code>tar</code> 命令,<code>zip</code> 命令把末尾的<code>横杠</code>解释为 <code>使用标准输入作为输入文件</code></p>
+<p>通过指定<code>-p</code>选项,<code>unzip</code> 程序允许把它的结果发送到标准输出:</p>
+<pre><code class="language-bash">$ unzip -p ls-etc.zip | less
+</code></pre>
+<p>我们讨论了一些 <code>zip</code>/<code>unzip</code> 可以完成的基本操作.
+它们两个都有许多选项,其增加了 命令的灵活性,虽然一些选项只针对于特定的平台.</p>
+<p><code>zip</code> 和 <code>unzip</code> 命令的说明手册都相当不错, 并且包含了有用的实例.
+然而,这些程序的主要用途是为了和 <code>Windows</code> 系统交换文件,
+而不是在 <code>Linux</code> 系统中执行压缩和打包操作,<code>tar</code> 和 <code>gzip</code> 程序在Linux 系统中更受欢迎.</p>
+<h3 id="7z解压缩"><a class="header" href="#7z解压缩">7z解压缩</a></h3>
+<p>支持的格式</p>
+<p><code>LZMA2</code>, <code>XZ</code>, <code>ZIP</code>, <code>Zip64</code>, <code>CAB</code>, <code>RAR</code> (如果安装了 non-free <code>p7zip-rar</code>包),
+<code>ARJ</code>,  <code>GZIP</code>, <code>BZIP2</code>, <code>TAR</code>, <code>CPIO</code>, <code>RPM</code>, <code>ISO</code></p>
+<p>用法: <code>7z &lt;command&gt; [&lt;switches&gt;...] &lt;archive_name&gt; [&lt;file_names&gt;...] [&lt;@listfiles...&gt;]</code></p>
+<p>解压缩,输入密码,并保持目录结构:</p>
+<p><code>7z x -p1234 filename</code></p>
+<p>压缩单个文件</p>
+<p><code>7z a -t7z archive_name filename</code></p>
+<p>压缩txt中的文件</p>
+<p><code>7z a -t7z configrc.win.7z @tom.rc_list.win</code>
+<code>7z a -t7z configrc.linux.7z @tom.rc_list.linux</code></p>
+<p><code>&lt;Commands&gt;</code></p>
+<ul>
+<li><code>a</code> : 添加文件到归档中</li>
+<li><code>b</code> : Benchmark</li>
+<li><code>d</code> : 从归档中删除</li>
+<li><code>e</code> : 从归档中提取(不使用目录名)</li>
+<li><code>h</code> : 计算文件的 hash 值</li>
+<li><code>i</code> : 展示支持的格式</li>
+<li><code>l</code> : 列出归档的内容</li>
+<li><code>rn</code> : 重命名归档中的文件</li>
+<li><code>t</code> : 检查归档的完整性</li>
+<li><code>u</code> : 把文件更新到归档</li>
+<li><code>x</code> : 提取文件, 使用全路径(也就是保持文件结构)</li>
+</ul>
+<p><code>&lt;Switches&gt;</code></p>
+<ul>
+<li><code>--</code> : Stop switches parsing</li>
+<li><code>-o{Directory}</code> : 设置输出目录</li>
+<li><code>-p{Password}</code> : 设置密码</li>
+<li><code>-r[-|0]</code> : 递归子目录</li>
+<li><code>-y</code> : 所有 queries 回答 yes</li>
+<li><code>-t{Type}</code>设置归档的 type</li>
+</ul>
+<h3 id="同步文件和目录"><a class="header" href="#同步文件和目录">同步文件和目录</a></h3>
+<p>维护系统备份的常见策略是保持一个或多个目录与另一个本地系统(通常是某种可移动的存储设备), 或者远端系统中的目录(或多个目录)同步.
+例如我们有一个在开发中的网站, 需要经常将它的本地备份与远端网络服务器保持同步. 在类 <code>Unix</code> 系统的世界里,能完成此任务且备受人们喜爱的工具是 <code>rsync</code>.</p>
+<p>这个程序能同步本地与远端的目录,通过使用 <code>rsync</code> 远端更新协议,此协议允许 <code>rsync</code> 快速地检测两个目录的差异,执行最小量的复制来达到目录间的同步.
+比起其它种类的复制程序, 这就使得<code>rsync</code> 命令非常快速和高效.唤醒<code>rsync</code>:</p>
+<pre><code class="language-bash">rsync 选项 src dest
+</code></pre>
+<p>这里 <code>src</code> 和 <code>dest</code> 是下列选项之一:</p>
+<ul>
+<li>本地文件或目录一个远端文件或目录,以 <code>[user@]host:path</code> 的形式存在</li>
+<li>远端 <code>rsync</code> 服务器,由 <code>rsync://[user@]host[:port]/path</code> 指定</li>
+</ul>
+<p>注意 <code>源</code> 和 <code>目标</code> 两者之一必须是本地文件,<code>rsync</code> 不支持远端到远端的复制.</p>
+<p>让我们试着对一些本地文件使用 <code>rsync</code> 命令.首先,清空我们的 <code>foo</code> 目录:</p>
+<pre><code class="language-bash">$ rm -rf foo/*
+</code></pre>
+<p>下一步,我们同步 <code>playground</code> 目录和它在 <code>foo</code> 目录中对应的副本</p>
+<pre><code class="language-bash">$ rsync -av playground foo
+</code></pre>
+<p>我们使用了<code>-a</code> 选项(<code>递归</code>和<code>保护文件属性</code>)和 <code>-v</code> 选项(冗余输出), 从而同步<code>playground</code> 目录的内容到 <code>foo</code> 目录.
+当这个命令执行的时候, 我们将会看到一系列的文件和目录被复制.在最后,我们将看到一条像这样的总结信息:</p>
+<pre><code class="language-bash">sent 135759 bytes received 57870 bytes 387258.00 bytes/sec
+total size is 3230 speedup is 0.02
+...
+</code></pre>
+<p>它说明了复制的数量.</p>
+<p>如果再次运行这个命令,我们将会看到不同的结果:</p>
+<pre><code class="language-bash">$ rsync -av playgound foo
+building file list ... done
+sent 22635 bytes received 20 bytes
+total size is 3230 speedup is 0.14
+45310.00 bytes/sec
+</code></pre>
+<p>注意到这一次的输出没有文件列表.
+这是因为 <code>rsync</code> 程序检测到目录<code>~/playground</code> 和 <code>~/foo/playground</code> 之间不存在差异,因此它不需要复制任何数据.
+如果我们在 <code>playground</code> 目录中修改一个文件,然后 再次运行 <code>rsync</code> 命令:</p>
+<pre><code class="language-bash">$ touch playground/dir-099/file-Z
+$ rsync -av playground foo
+building file list ... done
+playground/dir-099/file-Z
+</code></pre>
+<p>我们看到 <code>rsync</code> 命令检测到更改,并且只复制了更新的文件.</p>
+<p>考虑之前<code>tar</code> 命令中的例子, 我们再次把此硬盘连接到系统,
+它被挂载到<code>/media/BigDisk</code> 目录下,我们可以执行一个有用的系统备份了.</p>
+<p>首先在外部硬盘上创建一个目录,名为<code>/backup</code>,然后使用 <code>rsync</code> 程序从我们的系统中复制最重要的数据到外部硬盘上:</p>
+<pre><code class="language-bash">$ mkdir /media/BigDisk/backup
+$ sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/backup
+</code></pre>
+<p>在这个例子里,我们把<code>/etc</code>,<code>/home</code>,和<code>/usr/local</code> 目录从我们的系统中复制到外部硬盘的<code>/media/BigDisk/backup</code>目录上.</p>
+<p>我们使用了<code>--delete</code> 这个选项,来删除可能在备份设备中已经存在但却不再存在于源设备中的文件,
+(这与我们第一次创建备份无关,但是会在随后的复制操作中发挥作用).</p>
+<p>挂载外部驱动器,运行 <code>rsync</code> 命令,不断重复这个过程,是一个不错的系统(虽然不理想)备份方式.
+当然,别名会对这个操作更有帮助些.我们创建一个别名,并把它添加到<code>.bashrc</code> 文件中, 来提供这个特性:</p>
+<pre><code class="language-bash">alias backup='sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/backup'
+</code></pre>
+<p>现在我们只需要连接外部驱动器,然后运行 <code>backup</code> 命令来完成工作.</p>
+<h3 id="在网络间使用-rsync-命令"><a class="header" href="#在网络间使用-rsync-命令">在网络间使用 rsync 命令</a></h3>
+<p><code>rsync</code> 程序的真正好处之一,是它可以被用来在网络间复制文件.毕竟,<code>rsync</code> 中的<code>r</code>象征着<code>remote</code>.
+远程复制可以通过两种方法完成.</p>
+<hr />
+<p>第一个方法要求另一个系统已经安装了 <code>rsync</code> 程序,还安装了远程 <code>shell</code> 程序,比如 <code>ssh</code>.
+比方说我们本地网络中的某系统有大量可用的硬盘空间,我们用这个远程系统代替外部驱动器,来执行文件备份操作.</p>
+<p>假定远程系统中有一个名为<code>/backup</code> 的目录, 其用来存放我们传送的文件,我们这样做:</p>
+<pre><code class="language-bash">$ sudo rsync -av --delete --rsh=ssh /etc /home /usr/local remote-sys:/backup
+</code></pre>
+<p>我们对命令做了两处修改,来方便网络间文件复制.</p>
+<ul>
+<li>首先,我们添加了<code>--rsh=ssh</code> 选项,其指示 <code>rsync</code> 使用 <code>ssh</code>程序作为它的远程 <code>shell</code>.
+这样我们就能使用 <code>ssh</code> 加密通道,来把数据安全地传送到远程主机中.</li>
+<li>其次,在目标路径名前面指定了远端主机的名字(此例中远端主机名为 <code>remote-sys</code>),.</li>
+</ul>
+<hr />
+<p>第二种方式是通过使用 <code>rsync</code> 服务器.
+<code>rsync</code> 可以被配置为一个 守护进程,监听即将到来的同步请求.
+这样做通常是为了方便一个远程系统的镜像.</p>
+<p>例如, <code>Red Hat</code> 软件中心为它的 <code>Fedora</code> 发行版,维护着一个巨大的开发中软件包的仓库.
+对于软件测试人员, 在发行周期的测试阶段,镜像这些软件集合是非常有帮助的.
+因为仓库中的这些文件会频繁地 (通常每天不止一次)改动,定期同步本地镜像更加合理, 而不是大量地拷贝软件仓库.</p>
+<p>这些软件库之一被维护在 <code>Georgia Tech</code>.
+我们可以使用本地<code>rsync</code> 程序和<code>Georgia Tech</code>的 <code>rsync</code> 服务器来镜像它.</p>
+<pre><code class="language-bash">$ mkdir fedora-devel
+$ rsync -av -delete rsync://rsync.gtlib.gatech.edu/fedora-linux-core/development/i386/os fedora-devel
+</code></pre>
+<p>在这个例子里,我们使用了远端 <code>rsync</code> 服务器的 <code>URI</code>.
+<code>URI</code>由协议(<code>rsync://</code>),远端主机名(<code>rsync.gtlib.gatech.edu</code>),和软件仓库的路径名组成.</p>
+<p>拓展阅读</p>
+<p>在这里讨论的所有命令的手册文档都相当清楚明白,并且包含了有用的例子.
+另外, <code>GNU</code> 版本的 <code>tar</code> 命令有一个不错的<a href="http://www.gnu.org/software/tar/manual/index.html">在线文档</a>.</p>
+<h3 id="rsync-帮助页面"><a class="header" href="#rsync-帮助页面">rsync 帮助页面</a></h3>
+<h4 id="说明"><a class="header" href="#说明">说明</a></h4>
+<pre><code>    rsync [选项...]     源...     [目标]
+</code></pre>
+<ul>
+<li>
+<p>通过远程 shell 访问.</p>
+<pre><code>   Pull: rsync [选项...]   [用户@]主机:源...      [本机目标]
+   Push: rsync [选项...]   本机源...      [用户@]主机:目标
+</code></pre>
+</li>
+<li>
+<p>通过 <code>rsync</code> 守护程序访问.</p>
+<pre><code>  Pull: rsync [选项...]       [用户@]主机::源...      [本机目录]
+              rsync [选项...]       rsync://[用户@]主机[:PORT]/源...      [本机目标]
+  Push: rsync [选项...]       本机源...       [用户@]主机::目标
+              rsync [选项...]       本机源...       rsync://[用户@]主机[:PORT]/目标
+</code></pre>
+</li>
+</ul>
+<p>只有一个 <code>SRC</code> 参数而没有 <code>DEST</code> 参数的用法将列出源文件而不是复制.</p>
+<p>源文件上的尾部<code>/</code>会阻止在<code>目的地</code>创建额外的目录级别.
+源文件上的尾部<code>/</code>相当于 <code>复制这个目录的内容</code>, 而不是 <code>按名称复制目录</code>,</p>
+<h4 id="描述"><a class="header" href="#描述">描述</a></h4>
+<p><code>Rsync</code> 是一个快速的, 非常通用的文件复制工具.  它可以在本地复制, 通过任何远程 <code>shell</code> 同步到/从另一个主机.
+或者从远程<code>rsync</code>守护进程复制.   它提供了大量的选项, 允许非常灵活地指定要复制的文件集.
+它因<code>delta-transfer</code>算法而闻名, 它只发送源文件和目的地文件之间的差异, 来减少网络数据的使用量.
+<code>Rsync</code> 被广泛用于备份和镜像, 并可作为进阶的复制命令用于日常.</p>
+<p><code>Rsync</code> 使用 <code>quick check</code> 算法(默认情况下)寻找需要传输的文件, 该算法寻找在体积或最后修改时间上有变化的文件.
+当快速检查表明文件的数据不需要更新时, 指定追踪的其他文件属性若有变化(根据选项), 会直接应用到目的地文件上.</p>
+<p><code>rsync</code>的一些附加功能是:</p>
+<ul>
+<li>支持复制<code>links</code>, <code>devices</code>, <code>owners</code>, <code>groups</code>和<code>permissions</code></li>
+<li>类似于<code>GNU tar</code> 的<code>exclude</code>和<code>exclude-from</code>选项</li>
+<li><code>CVS exclude</code> 模式, 忽略和 <code>CVS</code> 相同的文件</li>
+<li>可以使用任何透明的远程 <code>shell</code>, 包括 <code>ssh</code> 或 <code>rsh</code></li>
+<li>不需要<code>超级用户</code>权限</li>
+<li>文件传输的管道化, 以减少延迟</li>
+<li>支持匿名或需要认证的<code>rsync</code>守护程序(非常适合做镜像)</li>
+</ul>
+<h4 id="general"><a class="header" href="#general">general</a></h4>
+<p><code>Rsync</code>可以复制文件到远程主机, 或从远程主机复制文件, 或在当前主机上复制文件(它不支持在两个远程主机之间复制文件).</p>
+<p>有两种不同的方式让<code>rsync</code>连接远程系统: 使用远程<code>shell</code>程序作为传输方式(如 <code>ssh</code> 或 <code>rsh</code>), 或通过<code>TCP</code>直连<code>rsync</code>守护进程.
+当源文件或目标文件的路径含有一个冒号(<code>:</code>)的分隔符时, 就会使用远程<code>shell</code>传输.
+当源文件或目标文件路径包含双冒号(<code>::</code>), 或指定<code>rsync:// URL</code>时, 直连<code>rsync</code>守护进程.
+参见 <code>USING RSYNC-DAEMON FEATURES VIA A REMOTE-SHELL CONNECTION</code>一节, 了解后一条规则的例外情况).</p>
+<ul>
+<li>作为特殊情况, 如果指定了单一的源参数而没有目的地, 文件将以类似于 <code>ls -l</code> 的输出格式列出.</li>
+<li>正如预期的那样, 如果源路径和目标路径都没有指定一个远程主机, 那么复制就发生在本地(也见 <code>--list-only</code>选项).</li>
+<li><code>Rsync</code> 将本地端称为 <code>客户端</code>, 将远程端称为 <code>服务器</code>.  不要把 <code>服务器</code> 和 <code>rsync守护进程</code>混淆起来
+守护进程总是一个<code>服务器</code>, 但<code>服务器</code>既可以是<code>守护进程</code>也可以是远程<code>shell</code>生成的<code>进程</code>.</li>
+</ul>
+<h4 id="安装设置"><a class="header" href="#安装设置">安装设置</a></h4>
+<p>参见 <code>README</code> 文件中的安装说明.
+你可以通过使用 <code>-e</code> 选项或设置 <code>RSYNC_RSH</code> 环境变量来指定你喜欢的任何远程 <code>shell</code>.
+注意<code>rsync</code>必须同时安装在源机器和目的机器上.</p>
+<h4 id="使用方法"><a class="header" href="#使用方法">使用方法</a></h4>
+<p>使用<code>rsync</code>的方式与使用<code>rcp</code>相同. 你需要指定一个源和一个目的地, 其中一个可能是远程的. 也许用一些例子来解释最好.</p>
+<pre><code class="language-bash">rsync -t *.c foo:src/
+</code></pre>
+<p>这将把所有与模式 <code>*.c</code> 匹配的文件从当前目录转移到机器<code>foo</code>上的目录<code>src</code>.
+如果文件已经存在于远程系统中, 那么将使用<code>rsync</code>远程更新协议, 只发送数据的差异.
+请注意, 通配符(<code>*.c</code>)的展开是由<code>shell</code>控制的, 发生在运行<code>rsync</code>, 而不是由<code>rsync</code>本身处理(与所有其他<code>posix</code>风格的程序完全一样).</p>
+<pre><code class="language-bash">rsync -avz foo:src/bar /data/tmp
+</code></pre>
+<p>以上递归地将<code>foo</code>机器上<code>src/bar</code>目录下的所有文件传输到本地机器上的<code>/data/tmp/bar</code>目录.
+文件是以 <code>归档</code>模式传输的, 这就确保了<code>符号链接</code>, <code>设备</code>, <code>属性</code>, <code>权限</code>, <code>所有权</code>等在传输过程中被保留下来.  此外, 压缩被用来减少传输的数据部分的大小.</p>
+<pre><code class="language-bash">rsync -avz foo:src/bar/ /data/tmp
+</code></pre>
+<p>源文件上的尾部<code>/</code>会改变这一行为, 阻止在<code>目的地</code>创建额外的目录级别.
+你可以把源文件上的尾部<code>/</code>看作是 <code>复制这个目录的内容</code>, 而不是 <code>按名称复制目录</code>,
+但在两种情况下, <code>包裹目录</code>的属性都会被转移到目的地的<code>包裹目录</code>中.
+换句话说, 下面两个命令效果相同, 将 <code>/src/foo</code>整个复制到<code>/dest</code>下面, 包括对<code>/dest/foo</code>的属性设置.</p>
+<pre><code class="language-bash">rsync -av /src/foo /dest
+rsync -av /src/foo/ /dest/foo
+</code></pre>
+<p>还要注意的是, 主机和<code>module</code>引用, 不需要尾部的<code>/</code>来指定复制默认目录的内容.  例如, 以下都将远程目录的内容复制到<code>/dest</code>.</p>
+<pre><code class="language-bash">rsync -av host: /dest
+rsync -av host::module /dest
+</code></pre>
+<ul>
+<li>你也可以在纯本地模式下使用<code>rsync</code>, 即源文件和目标文件的名称中都没有<code>:</code>. 在这种情况下, 它就像增强的拷贝命令.</li>
+<li>最后, 你可以通过省略<code>module</code>名称来列出某个<code>rsync</code>守护进程中所有可用的<code>模块</code>.</li>
+</ul>
+<pre><code class="language-bash">rsync somehost.mydomain.com::
+</code></pre>
+<p>更多细节请看下面的章节.</p>
+<h4 id="举例说明"><a class="header" href="#举例说明">举例说明</a></h4>
+<p>下面是一些我如何使用<code>rsync</code>的例子:</p>
+<ul>
+<li>为了备份我妻子的<code>home</code>目录, 其中包括许多<code>MS Word</code>文件和邮件文件夹, 我建立一个<code>cron</code> 任务, 它执行 :</li>
+</ul>
+<pre><code class="language-bash">rsync -Cavz . arvidsjaur:backup
+# -C:cvs 忽略规则, a : 归档模式, -v: 增加详细程度, -z: 传输过程中压缩
+</code></pre>
+<p>每天晚上它通过<code>PPP</code>连接到我机器<code>arvidsjaur</code>上的一个备份目录 .</p>
+<ul>
+<li>为了同步我的<code>samba</code>源文件树, 我使用下面的<code>Makefile</code> targets:</li>
+</ul>
+<pre><code class="language-bash">get:
+    rsync -avuzb --exclude '*~' samba:samba/ .
+    # -u, --update ; 跳过接收方较新的文件, -b, --backup ; 进行备份
+put:
+    rsync -Cavuzb . samba:samba/
+sync: get put
+</code></pre>
+<p>它将与连接另一端的<code>CVS</code>目录同步. 然后我在远程机器上进行<code>CVS</code>操作, 这节省了很多时间, 因为远程<code>CVS</code>协议不是很有效.</p>
+<ul>
+<li>在我的 <code>旧</code> 和 <code>新</code> ftp 站点之间镜像目录:</li>
+</ul>
+<pre><code class="language-bash">rsync -az -e ssh --delete ~ftp/pub/samba nimbus:&quot;~ftp/pub/tridge&quot;
+# --delete: 删除源中不存在的文件. -e: 指定要使用的远程 shell
+</code></pre>
+<p>每隔几个小时它从<code>cron</code>启动.</p>
+<h4 id="高级用法"><a class="header" href="#高级用法">高级用法</a></h4>
+<p>从远程主机请求多个文件的语法, 是通过指定额外的远程主机参数来完成的, 样式与第一个相同, 但可以省略主机名.  例如, 以下这些都可以</p>
+<pre><code class="language-bash">rsync -av host:file1 :file2 host:file{3,4} /dest/
+rsync -av host::modname/file{1,2} host::modname/file3 /dest/
+rsync -av host::modname/file1 ::modname/file{3,4}
+</code></pre>
+<p>旧版本的<code>rsync</code>要求在<code>SRC</code>中使用带引号的空格, 比如这些例子:</p>
+<pre><code class="language-bash">rsync -av host:'dir1/file1 dir2/file2' /dest
+rsync host::'modname/dir1/file1 modname/dir2/file2' /dest
+</code></pre>
+<p>这种分词法在最新的<code>rsync</code>中仍然有效(默认情况下), 但不像第一种方法那样容易使用.</p>
+<p>如果你需要传输一个含有空格的文件名, 你可以指定 <code>--protect-args</code> (<code>-s</code>) 选项, 或者你需要以远程<code>shell</code>能够理解的方式来转义空格.  比如说</p>
+<pre><code class="language-bash">rsync -av host:'file\ name\ with\ spaces' /dest
+</code></pre>
+<h4 id="连接到一个rsync守护进程"><a class="header" href="#连接到一个rsync守护进程">连接到一个rsync守护进程</a></h4>
+<p>也可以使用<code>rsync</code>而不使用远程<code>shell</code>作为传输工具.  在这种情况下, 你将直接连接到一个远程<code>rsync</code>守护进程, 通常使用<code>TCP 873</code>端口.
+(这显然需要在远程系统上运行守护进程, 所以请参考下面的<code>STARTING AN RSYNC DAEMON TO ACCEPT CONNECTIONS</code>一节来了解这方面的信息).</p>
+<p>以这种方式使用<code>rsync</code>, 与在远程<code>shell</code>使用<code>rsync</code>是一样的, 除了:</p>
+<ul>
+<li>使用双冒号<code>::</code> 而不是单冒号来分隔主机名和路径, 或者使用<code>rsync:// URL</code>.</li>
+<li><code>路径</code> 的第一个词实际上是<code>模块</code>的名字.</li>
+<li>当你连接时, 远程守护进程可能会打印当天的信息.</li>
+<li>如果您在远程守护进程中没有指定路径名称, 那么将显示守护进程中的可访问路径列表.</li>
+<li>如果你没有指定本地目标, 那么将打印指定的远程文件列表.</li>
+<li>你不能使用<code>--rsh</code> (<code>-e</code>) 选项.</li>
+</ul>
+<p>拷贝远程模块 <code>src</code> 中所有文件的例子.</p>
+<pre><code class="language-bash">rsync -av host::src /dest
+</code></pre>
+<p>远程守护程序上的某些模块可能需要认证. 如果是这样, 你在连接时将会收到一个密码提示.
+您可以通过设置环境变量 <code>RSYNC_PASSWORD</code> 为密码来省略密码提示.或使用<code>--password-file</code>选项来避免密码提示.
+这在编写<code>rsync</code>脚本时可能很有用.</p>
+<p>警告: 在某些系统中, 环境变量对所有用户都是可见的. 在这些系统中, 建议使用<code>--password-file</code>.</p>
+<ul>
+<li>你可以通过设置环境变量<code>RSYNC_PROXY</code>指向你的网络代理的<code>主机名:端口</code>对来建立连接.  注意, 你的网络代理的配置必须支持代理连接到<code>873</code>端口.</li>
+<li>你也可以通过设置环境变量<code>RSYNC_CONNECT_PROG</code>为你想运行的命令, 使用程序作为代理来建立连接, 以代替<code>socket</code>直连.
+这个字符串可以包含转义字符 <code>%H</code> 来表示在<code>rsync</code>命令中指定的主机名(所以如果你需要在字符串中使用单个<code>%</code>, 就使用<code>%%</code>).  比如说</li>
+</ul>
+<pre><code class="language-bash">export RSYNC_CONNECT_PROG='ssh proxyhost nc %H 873'
+rsync -av targethost1::module/src/ /dest/
+rsync -av rsync:://targethost2/module/src/ /dest/
+</code></pre>
+<p>以上命令使用<code>ssh</code>在<code>proxyhost</code>上运行<code>nc</code>(<code>netcat</code>), <code>nc</code>将所有数据转发到目标主机(<code>%H</code>)上的<code>873</code>端口(<code>rsync</code>守护程序).</p>
+<h4 id="通过远程shell连接使用rsync-daemon功能"><a class="header" href="#通过远程shell连接使用rsync-daemon功能">通过远程shell连接使用rsync-daemon功能</a></h4>
+<p>有时使用<code>rsync</code>守护进程的各种功能(如命名模块)而不允许任何新的<code>socket</code>连接到系统中是很有用的(除了允许远程<code>shell</code> 访问).
+<code>Rsync</code>支持使用远程<code>shell</code>连接到主机, 然后生成一次性的 <code>daemon</code>服务器, 并期望在远程用户的家目录中读取其配置文件.</p>
+<p>如果你想加密一个<code>守护进程式</code>的传输数据, 但由于<code>守护进程</code>是由远程用户重新启动的, 你可能无法使用<code>chroot</code> 或改变守护进程的<code>UID</code>等功能,.
+(对于另一种加密<code>守护进程</code>的方法, 考虑使用<code>ssh</code>隧道将<code>本地端口</code>连接到<code>远程主机</code>. 并在<code>远程主机</code>上配置普通的<code>rsync</code>守护进程, 只允许<code>rsync</code>连接到 <code>localhost</code>).</p>
+<p>从用户的角度来看, 通过<code>远程shell</code>连接进行的<code>守护进程</code>传输, 使用的命令行语法与普通 <code>rsync-daemon传输</code>几乎相同,
+唯一的例外是你需要用选项 <code>--rsh=COMMAND</code> 明确地设置远程<code>shell</code>程序.  (在环境中设置<code>RSYNC_RSH</code>不会开启这个功能).  比如说</p>
+<pre><code class="language-bash">rsync -av --rsh=ssh host::module /dest
+</code></pre>
+<p>如果你需要指定不同的<code>远程shell</code>用户, 请在<code>host</code>前面使用<code>user@</code>前缀来指定<code>rsync-user</code>(对于需要使用用户认证的<code>模块</code>).
+这意味着你必须在指定<code>远程shell</code>时给<code>ssh</code>提供<code>-l user</code>选项, 例如下面的例子, 其中使用<code>--rsh</code>选项的缩写<code>-e</code></p>
+<pre><code class="language-bash">rsync -av -e &quot;ssh -l ssh-user&quot; rsync-user@host::module /dest
+</code></pre>
+<p><code>ssh-user</code> 将在<code>ssh</code>级别使用;<code>rsync-user</code>将用于登录 <code>模块</code>.</p>
+<h4 id="启动rsync守护进程以接受连接"><a class="header" href="#启动rsync守护进程以接受连接">启动rsync守护进程以接受连接</a></h4>
+<p>为了连接到<code>rsync</code>守护进程, 远程系统需要有一个已经运行的守护进程
+(或者它需要配置像<code>inetd</code>这样的东西来生成<code>rsync</code>守护进程, 以便为特定端口上传入的连接 spawn <code>rsync</code>守护进程).</p>
+<p>关于如何启动处理 incoming <code>socket</code>连接的守护进程的完整信息, 请参见<code>rsyncd.conf(5)</code>手册页 -- 它是守护进程的配置文件,
+它包含如何运行守护进程的全部细节(包括<code>独立的</code>和<code>inetd</code>的配置).</p>
+<p>如果你使用其中远程<code>shell</code>传输工具进行传输, 就不需要手动启动<code>rsync</code>守护进程.</p>
+<h4 id="排序的传输顺序"><a class="header" href="#排序的传输顺序">排序的传输顺序</a></h4>
+<p><code>Rsync</code>总是将指定的文件名排序到它的内部传输列表.  这可以处理同名目录内容的合并, 使其容易删除重复的文件名.
+当文件的传输顺序与命令行上给出的顺序不同时, 可能会使某人感到困惑.</p>
+<p>如果你需要一个特定的文件先于其他文件传输, 可以使用独立的<code>rsync</code>调用, 也可以考虑使用<code>--delay-updates</code>.
+这不会影响排序的传输顺序, 但会使最后的<code>文件更新</code>阶段更快发生).</p>
+<h4 id="选项总结"><a class="header" href="#选项总结">选项总结</a></h4>
+<p>这里是<code>rsync</code>中可用选项的简短总结. 请参考下面的详细说明以获得完整的描述.</p>
+<ul>
+<li><code>-v, --verbose</code> ;  增加详细程度.
+<ul>
+<li><code>--info=FLAGS</code> ; 详细的, 较多信息的 verbosity.</li>
+<li><code>--debug=FLAGS</code>; 详细的, debug verbosity.</li>
+<li><code>--msgs2stderr</code> ; 用于调试的特殊输出处理</li>
+</ul>
+</li>
+<li><code>--q, --quiet</code> ; 抑制非错误信息
+<ul>
+<li><code>--no-motd</code> ; 抑制守护进程模式的<code>MOTD</code>(见注意事项).</li>
+</ul>
+</li>
+<li><code>-c, --checksum</code> ;  根据校验和跳过, 而不是根据<code>mod-time</code>和<code>size</code>.</li>
+<li><code>-a, --archive</code> ; 归档模式;等于<code>-rlptgoD</code>(没有<code>-H</code>,<code>-A</code>,<code>-X</code>)
+<ul>
+<li><code>--no-OPTION</code> 关掉一个隐含的<code>OPTION</code>(例如: <code>--no-D</code>)</li>
+</ul>
+</li>
+</ul>
+<p><code>-r</code>; 递归. <code>-l</code>; 符号连接. <code>-p</code>; 保留权限. <code>-t</code>; 保留修改时间. <code>-go</code>; 组和所有者. <code>-D</code>; 设备文件和特殊文件.</p>
+<ul>
+<li>
+<p><code>-r, --recursive</code> ; 递归到目录中去.</p>
+</li>
+<li>
+<p><code>-R, --relative</code> ; 使用相对路径名</p>
+<ul>
+<li><code>--no-implied-dirs</code> ; 不发送带有<code>--relative</code>的隐含目录.</li>
+</ul>
+</li>
+<li>
+<p><code>-b, --backup</code>; 进行备份 (见 <code>--suffix</code> &amp; <code>--backup-dir</code>).</p>
+<ul>
+<li><code>--backup-dir=DIR</code> ; 在<code>DIR</code>的基础上进行备份, 使其成为层次结构.</li>
+<li><code>--suffix=SUFFIX</code> ; 备份后缀. (默认<code>~</code> without <code>--backup-dir</code>).</li>
+</ul>
+</li>
+<li>
+<p><code>-u, --update</code> ; 跳过<code>接收方</code>较新的文件</p>
+<ul>
+<li><code>--inplace</code> ; 就地更新目标文件</li>
+<li><code>--append</code> ; 将数据附加到较短的文件上</li>
+<li><code>--append-verify</code> ; --append w/old data in file checksum.</li>
+</ul>
+</li>
+<li>
+<p><code>-d, --dirs</code> ; 传输目录, 不进行递归.</p>
+</li>
+<li>
+<p><code>-l, --links</code> ; 将<code>符号链接</code>复制为<code>符号链接</code></p>
+</li>
+<li>
+<p><code>-L, --copy-links</code> ; 将符号链接转换成指向的<code>文件</code>/<code>目录</code></p>
+<ul>
+<li><code>--copy-unsafe-links</code> ; 只有 <code>不安全</code> 的符号链接转换成文件.</li>
+<li><code>--safe-links</code> ; 忽略指向树外的<code>符号链接</code></li>
+<li><code>--munge-links</code> ; 对符号链接进行整合, 使其更加安全.</li>
+</ul>
+</li>
+<li>
+<p><code>-k, --copy-dirlinks</code> ; 将指向<code>dir</code>的符号链接转化为<code>dir</code>.</p>
+</li>
+<li>
+<p><code>-K, --keep-dirlinks</code> ; 将<code>接收方</code>的符号链接<code>dir</code>视为真实的<code>dir</code>.</p>
+</li>
+<li>
+<p><code>-H, --hard-links</code> ; 保留硬链接</p>
+</li>
+<li>
+<p><code>-p, --perms</code> ; 保留权限</p>
+</li>
+<li>
+<p><code>-E, --executability</code> ; 保留可执行性</p>
+<ul>
+<li><code>--chmod=CHMOD</code> 影响文件和/或目录权限</li>
+</ul>
+</li>
+<li>
+<p><code> -A, --acls</code> ; 保留 <code>ACLs</code> (暗示 <code>-p</code>)</p>
+</li>
+<li>
+<p><code>-X, --xattrs</code> ; 保留扩展属性</p>
+</li>
+<li>
+<p><code>-o, --owner</code> ; 保留所有者(仅超级用户).</p>
+</li>
+<li>
+<p><code>-g, --group</code> ;  保留组</p>
+<ul>
+<li><code>--devices</code> ; 保留设备文件(仅超级用户)</li>
+<li><code>--specials</code> ; 保留特殊文件</li>
+</ul>
+</li>
+<li>
+<p><code>-D</code> ; 与<code>--devices --specials</code>相同</p>
+</li>
+<li>
+<p><code>-t, --times</code> ; 保留修改时间</p>
+</li>
+<li>
+<p><code>-O, --omit-dir-times</code> ; 从 <code>--times</code> 中省略目录.</p>
+</li>
+<li>
+<p><code>-J, --omit-link-times</code> ; 从<code>--times</code>中省略符号链接</p>
+<ul>
+<li><code>--super</code> ; 接收方尝试超级用户活动</li>
+<li><code>--fake-super</code> 使用<code>xattrs</code>存储/恢复特权属性</li>
+</ul>
+</li>
+<li>
+<p><code>-S, --sparse</code> ; 将<code>null</code>序列转换成<code>稀疏块</code></p>
+<ul>
+<li><code>--preallocate</code> ; 在写入前分配目标文件</li>
+</ul>
+</li>
+<li>
+<p><code>-n, --dry-run</code> ; 执行试运行, 不做任何修改</p>
+</li>
+<li>
+<p><code>--W, --whole-file</code> ; 完整复制文件(不采用<code>delta-xfer</code>算法).</p>
+<ul>
+<li><code>--checksum-choice=STR</code> ; 选择校验算法</li>
+</ul>
+</li>
+<li>
+<p><code>-x, --one-file-system</code> ; 不跨越文件系统的边界</p>
+</li>
+<li>
+<p><code>-B, --block-size=SIZE</code> ; 强制采用固定的校验块大小</p>
+</li>
+<li>
+<p><code>-e, --rsh=COMMAND</code> ; 指定要使用的远程 <code>shell</code></p>
+<ul>
+<li><code>--rsync-path=PROGRAM</code> ; 指定要在远程机器上运行的<code>rsync</code></li>
+<li><code>--existing</code> ; 跳过在接收器上创建新文件</li>
+<li><code>--ignore-existing</code> ; 跳过更新接收方存在的文件</li>
+<li><code>--remove-source-files</code> ; 发送方删除同步过的文件(非目录)</li>
+<li><code>--del</code> ; 是 <code>--delete-during</code> 的别名</li>
+<li><code>--delete</code> ; 删除目的地目录中不相干的文件</li>
+<li><code>--delete-before</code> ; 接收方在发送前删除, 而不是在发送过程中删除.</li>
+<li><code>--delete-during</code> ; 接收者在传输过程中删除文件</li>
+<li><code>--delete-delay</code> ; 在传输过程中找出删除, 在传输后删除</li>
+<li><code>--delete-after</code> ; 接收者在转移后删除, 而不是在转移过程中.</li>
+<li><code>--delete-excluded</code> ; 从目的地目录中删除被排除的文件</li>
+<li><code>--ignore-missing-args</code> ; 忽略丢失的源参数, 不报错</li>
+<li><code>--delete-missing-args</code> ; 从目的地删除缺失的源文件<code>args</code></li>
+<li><code>--ignore-errors</code> ; 即使有<code>I/O</code>错误, 也删除.</li>
+<li><code>--force</code> ; 强制删除目录, 即使不是空的.</li>
+<li><code>--max-delete=NUM</code> ; 不删除超过<code>NUM</code>的文件</li>
+<li><code>--max-size=SIZE</code> ; 不传输任何大于<code>SIZE</code>的文件</li>
+<li><code>--min-size=SIZE</code> ; 不传输任何小于<code>SIZE</code>的文件</li>
+<li><code>--partial</code> ; 保留部分传输的文件</li>
+<li><code>--partial-dir=DIR</code> ; 将部分传输的文件放入<code>DIR</code>中</li>
+<li><code>--delay-updates</code> ; 最后再把所有更新的文件放到地方</li>
+</ul>
+</li>
+<li>
+<p><code>--m, --prune-empty-dirs</code> ; 从文件列表中删去空目录链</p>
+<ul>
+<li><code>--numeric-ids</code> ; 不按<code>用户</code>/<code>组</code>名映射<code>uid</code>/<code>gid</code>值.</li>
+<li><code>--usermap=STRING</code> ; 自定义用户名映射</li>
+<li><code>--groupmap=STRING</code> ; 自定义组名映射</li>
+<li><code>--chown=USER:GROUP</code> ; 简单的用户名/组名映射</li>
+<li><code>--timeout=SECONDS</code> ; 设置<code>I/O</code>超时, 单位为<code>秒</code></li>
+<li><code>--contimeout=SECONDS</code> ; 设置守护程序连接超时, 单位为<code>秒</code></li>
+</ul>
+</li>
+<li>
+<p><code>--I, --ignore-times</code> ; 不跳过大小和时间相符的文件</p>
+<ul>
+<li><code>--size-only</code> ; 跳过大小一致的文件</li>
+</ul>
+</li>
+<li>
+<p><code>-@, --modify-window=NUM</code> ;  设置<code>mod-time</code>比较的准确性</p>
+</li>
+<li>
+<p><code>-T, --temp-dir=DIR</code> 在目录DIR中创建临时文件</p>
+</li>
+<li>
+<p><code>-y, --fuzzy</code> ; 在没有目标文件的情况下为<code>basis</code>找到类似的文件</p>
+<ul>
+<li><code>--compare-dest=DIR</code> ; also compare received files relative to <code>DIR</code>.</li>
+<li><code>--copy-dest=DIR</code> ; ... and include copies of unchanged files</li>
+<li><code>--link-dest=DIR</code> ; 当未改变时, 硬链接到<code>DIR</code>中的文件</li>
+</ul>
+</li>
+<li>
+<p><code>-z, --compress</code> ; 在传输过程中压缩文件数据</p>
+<ul>
+<li><code>--compress-level=NUM</code> ; 明确设置压缩级别</li>
+<li><code>--skip-compress=LIST</code> ; 跳过压缩后缀为<code>LIST</code>的文件</li>
+</ul>
+</li>
+<li>
+<p><code>--C, --cvs-exclude</code> ; 以<code>CVS</code>的方式自动忽略文件</p>
+</li>
+<li>
+<p><code>-f, --filter=RULE</code> ; 添加一个文件过滤规则.</p>
+</li>
+<li>
+<p><code>-F</code> ; 与 <code>--filter='dir-merge /.rsync-filter'</code>相同</p>
+<ul>
+<li><code>repeated</code>: <code>--filter='- .rsync-filter'</code>.</li>
+<li><code>--exclude=PATTERN</code> ; 排除匹配<code>PATTERN</code>的文件</li>
+<li><code>--exclude-from=FILE</code> ; 从<code>FILE</code>读取排除模式</li>
+<li><code>--include=PATTERN</code> ; 不排除匹配<code>PATTERN</code>的文件</li>
+<li><code>--include-from=FILE</code> ; 从<code>FILE</code>中读取包含模式</li>
+<li><code>--files-from=FILE</code> ; 从<code>FILE</code>中读取源文件名的列表</li>
+</ul>
+</li>
+<li>
+<p><code>-0, --from0</code> ; 所有的<code>*from/filter</code>文件都以<code>0</code>为界.</p>
+</li>
+<li>
+<p><code>-s, --protect-args</code> ; 不按空格分词;只有通配符.</p>
+</li>
+<li>
+<p><code>--address=ADDRESS</code> ; 绑定出站<code>socket</code>的地址给守护进程.</p>
+<ul>
+<li><code>--port=PORT</code> ; 指定双冒号的备用端口号</li>
+<li><code>--sockopts=OPTIONS</code> ; 指定自定义<code>TCP</code>选项</li>
+<li><code>--blocking-io</code> ; 对远程<code>shell</code>使用阻塞式<code>I/O</code></li>
+<li><code>--outbuf=N|L|B</code> ; 设置输出缓冲为<code>无</code>, <code>行</code>或<code>块</code>.</li>
+<li><code>--stats</code> ; 提供一些文件传输的统计信息.</li>
+</ul>
+</li>
+<li>
+<p><code>--8, --8-bit-output</code> ; 在输出中不对高位字符进行转义.</p>
+</li>
+<li>
+<p><code>-h,--human-readable</code> ; 以人类可读的格式输出数字</p>
+<ul>
+<li><code>--progress</code> ; 显示传输过程中的进度</li>
+</ul>
+</li>
+<li>
+<p><code>-P</code> ; 与 <code>--partial --progress</code> 相同</p>
+</li>
+<li>
+<p><code>-i, --itemize-changes</code>; 输出所有更新的变化摘要</p>
+</li>
+<li>
+<p><code>-M, --remote-option=OPTION</code> ; 只向远端发送<code>OPTION</code></p>
+<ul>
+<li><code>--out-format=FORMAT</code> ; 使用指定的<code>FORMAT</code>输出更新信息</li>
+<li><code>--log-file=FILE</code> ; 在<code>FILE</code>中记录我们正在做的事情</li>
+<li><code>--log-file-format=FMT</code> ; 使用指定的<code>FMT</code>记录更新信息</li>
+<li><code>--password-file=FILE</code> ; 从<code>FILE</code>读取 daemon-access 的访问密码</li>
+<li><code>--list-only</code> ; 列出文件而不是复制它们</li>
+<li><code>--bwlimit=RATE</code> ; 限制 socket <code>I/O</code>带宽</li>
+<li><code>--stop-at=y-m-dTh:m</code> ; 在<code>year-month-dayThour:minute</code>停止<code>rsync</code></li>
+<li><code>--time-limit=MINS</code> ; 在<code>MINS</code>分钟后停止<code>rsync</code>的运行</li>
+<li><code>--write-batch=FILE</code> ; 将批量更新写入<code>FILE</code>中</li>
+<li><code>--only-write-batch=FILE</code> ; 类似<code>--write-batch</code> 但不更新<code>dest</code></li>
+<li><code>--read-batch=FILE</code> ; 从<code>FILE</code>中读取一个批处理的更新</li>
+<li><code>--protocol=NUM</code> ; 强制使用一个较早的协议版本</li>
+<li><code>--iconv=CONVERT_SPEC</code> ; 要求转换文件名的字符集</li>
+<li><code>--checksum-seed=NUM</code> ; 设置<code>块</code>/<code>文件</code>checksum seed(高级).</li>
+<li><code>--noatime</code> ; 打开源文件时不改变<code>atime</code></li>
+</ul>
+</li>
+<li>
+<p><code>--4, --ipv4</code> ; 偏好<code>IPv4</code></p>
+</li>
+<li>
+<p><code>-6, --ipv6</code> ; 偏好<code>IPv6</code></p>
+</li>
+<li>
+<p><code>--version</code> ;  打印版本号</p>
+</li>
+<li>
+<p><code>(-h) --help</code> 显示此帮助(关于<code>-h</code>的注释见下文).</p>
+</li>
+</ul>
+<p><code> </code>也可以作为一个守护进程运行, 在这种情况下, 可以接受以下选项.</p>
+<ul>
+<li>
+<p><code>--daemon</code> ; 作为<code>rsync</code>守护进程运行</p>
+<ul>
+<li><code>--address=ADDRESS</code> ; 绑定到指定地址</li>
+<li><code>--bwlimit=RATE</code> ; 限制 socket <code>I/O</code> 带宽</li>
+<li><code>--config=FILE</code> ; 指定备用的<code>rsyncd.conf </code>文件</li>
+</ul>
+</li>
+<li>
+<p><code>--M, --dparam=OVERRIDE</code> ; 覆盖全局守护进程配置参数</p>
+<ul>
+<li><code>--no-detach</code> ; 不从parent中分离出来</li>
+<li><code>--port=PORT</code> ; 在备用端口号上监听</li>
+<li><code>--log-file=FILE</code> ; 覆盖 <code>日志文件</code> 设置</li>
+<li><code>--log-file-format=FMT</code> ; 覆盖 <code>日志格式</code> 的设置</li>
+<li><code>--sockopts=OPTIONS</code> ; 指定自定义<code>TCP</code>选项</li>
+</ul>
+</li>
+<li>
+<p><code>-v, --verbose</code> ; 增加 verbosity</p>
+</li>
+<li>
+<p><code>-4, --ipv4</code> ; 优先选择<code>IPv4</code></p>
+</li>
+<li>
+<p><code>-6, --ipv6</code> ; 偏好<code>IPv6</code></p>
+</li>
+<li>
+<p><code>-h, --help</code> ; 显示此帮助(如果在 <code>--daemon</code> 之后使用).</p>
+</li>
+</ul>
+<h4 id="选项"><a class="header" href="#选项">选项</a></h4>
+<p><code>Rsync</code>接受长(双破折号+字)和短(单破折号+字母)选项.  可用选项的完整列表在下面描述.
+如果<code>选项</code>可以用多种方式指定, 则选择应该用<code>逗号</code>隔开.   有些选项只有<code>长选项</code>, 没有<code>短选项</code>.</p>
+<p>如果选项需要参数, 则参数说明只列在长选项后面, 尽管也必须为短选项指定.  当指定一个参数时, 你可以使用 <code>--option=param</code> 的形式, 或者用空格代替<code>=</code>.
+该参数可能需要以某种方式加<code>引号</code>, 以避免被<code>shell</code>命令行解析掉.
+请记住文件名的领头<code>~</code>会被你的<code>shell</code>替换掉, 所以<code>--option=~/foo</code>不会把<code>tilde</code>改成你的家目录(要想跳转到家目录的话, 请去掉<code>=</code>).</p>
+<p><code>--help</code> 打印一个简短的帮助页面, 描述<code>rsync</code>中可用的选项并退出.  为了向后兼容旧版本的<code>rsync</code>, 如果你使用<code>-h</code>选项而不使用任何其他参数, 也会输出帮助.</p>
+<ul>
+<li><code>--delete</code>;</li>
+</ul>
+<p>这告诉<code>rsync</code>从接收端删除不相干的文件(那些不在发送端上的文件), 但只针对被同步的目录.
+你必须要求<code>rsync</code>发送整个目录(例如 <code>dir</code>或 <code>dir/</code>), 而不是用目录内容的通配符(例如 <code>dir/*</code>),
+因为通配符会被<code>shell</code>展开, 因此<code>rsync</code>会得到一个传输单个文件的请求, 而不是文件的父目录.</p>
+<p>被排除在传输之外的文件也不会被删除, 除非你使用 <code>--delete-excluded</code> 选项或将规则标记为只在发送方匹配(见<code>FILTER RULES</code>部分的<code>include/exclude modifiers</code>).</p>
+<p>在<code>rsync 2.6.7</code>之前, 除非启用 <code>--recursive</code>, 否则该选项没有任何作用.
+从<code>2.6.7</code>开始, 当启用<code>--dirs</code> (<code>-d</code>)时, 删除也会发生, 但只对内容被复制的目录被复制的目录.
+如果使用不当, 这个选项可能会很危险!  首先尝试使用 <code>--dry-run</code> 选项(<code>-n</code>)进行运行, 看看哪些文件将被删除.</p>
+<p>如果发送方检测到任何<code>I/O</code>错误, 那么将自动禁止删除目的地的任何文件. 这是为了防止发送方的临时文件系统故障(如<code>NFS</code>错误)导致目的地的文件被大量删除.
+你可以用<code>--ignore-errors</code>选项来覆盖这一点.</p>
+<p><code>--delete</code>选项可以和<code>--delete-WHEN</code>选项以及<code>--delete-excluded</code>选项结合使用, 不会发生冲突.
+然而, 如果没有指定<code>--delete-WHEN</code>选项, 当使用<code>rsync 3.0.0</code>或更新的版本时, <code>rsync</code>将选择<code>--delete-during</code>算法,
+而使用较早版本的<code>rsync</code>时, 将选择<code>--delete-before</code>算法.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-6-package-mount.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-7-text-operation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-6-package-mount.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-7-text-operation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>systemd - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html" class="active"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linux-1-systemd"><a class="header" href="#linux-1-systemd">linux-1-systemd</a></h1>
+<h2 id="bash-快捷键"><a class="header" href="#bash-快捷键">bash 快捷键</a></h2>
+<p><a href="https://linux.cn/article-5660-1.html">Bash 快捷键大全 </a>
+<a href="https://www.cnblogs.com/cocoliu/p/6369749.html">vim ,vi总是卡死,终于找到原因了.</a></p>
+<ul>
+<li><code>Alt+tab</code>:切换程序</li>
+<li><code>Alt+`</code>:切换程序的不同窗口</li>
+</ul>
+<p>在<code>vim</code>下,有时候不小心按下了<code>CTRL-S</code>--<code>Suspend(XOFF)</code>,会冻结终端的输入,表现为按什么键都没有反应,这时候按下<code>CTRL-Q</code>即可恢复.</p>
+<h3 id="常用的"><a class="header" href="#常用的">常用的</a></h3>
+<table><thead><tr><th>快捷键</th><th>快捷键说明</th></tr></thead><tbody>
+<tr><td><code>CTRL-/</code></td><td>撤消操作,Undo.</td></tr>
+<tr><td><code>ALT-B</code></td><td>光标往回跳一个词,词以非字母为界(跳动到当前光标所在词的开头).</td></tr>
+<tr><td><code>ALT-F</code></td><td>光标往前跳一个词(移动到光标所在词的末尾).</td></tr>
+<tr><td><code>ALT-D</code></td><td>删除光标所在位置到光标所在词的结尾位置的所有内容</td></tr>
+<tr><td><code>ALT-BASKSPACE</code></td><td>删除光标所在位置到词开头的所有内容.</td></tr>
+<tr><td><code>ALT-数值</code></td><td>这个数值可以是正或者是负,这个键单独没有作用,必须后面再接其他内容,如果后面是字符,则表示重复次数.如:<code>[ALT-9,k]</code>则光标位置会插入<code>9</code>个<code>k</code>字符(负值在这种情况下无效); 如果后面接的是命令,则数字会影响后面命令的执行结果,如:<code>[ALT-9,CTRL-D]</code>则向<code>CTRL-D</code>默认方向相反(负数)的方向执行<code>9</code>次操作.</td></tr>
+<tr><td><code>ALT-&lt;</code></td><td>移动到历史记录中的第一行命令.</td></tr>
+<tr><td><code>ALT-&gt;</code></td><td>移动到历史的最后一行,即当前正在输入的行(没有输入的情况下为空).</td></tr>
+<tr><td><code>ALT-P</code></td><td>从当前行开始向前搜索,有必要则向&quot;上&quot;移动,移动时,使用非增量搜索查找用户提供的字符串.</td></tr>
+<tr><td><code>ALT-N</code></td><td>从当前行开始向后搜索,如果有必要向&quot;下&quot;移动,移动时,使用非增量搜索查找用户提供的字符串.</td></tr>
+<tr><td><code>ALT-?</code></td><td>列出能够补全标志点前的条目.</td></tr>
+<tr><td><code>ALT-C</code></td><td>将光标所在位置的字母转为大写</td></tr>
+<tr><td><code>ALT-U</code></td><td>将光标所在位置到词尾的所有字母转为大写.</td></tr>
+<tr><td><code>ALT-L</code></td><td>将光标位置到词尾的所有字母转为小写.</td></tr>
+<tr><td><code>ALT-R</code></td><td>取消所有变更,并将当前行恢复到在历史记录中的原始状态</td></tr>
+<tr><td><code>ALT-T</code></td><td>当光标两侧都存在词的时候,交换光标两侧词的位置.如:`abc <ALT-T>bcd -&gt; bcd abc</td></tr>
+<tr><td><code>ALT-.</code></td><td>使用前一次命令的最后一个词(命令本身也是一个词,参见后一篇的Bang命令中的词指示符概念).</td></tr>
+<tr><td><code>CTRL-A</code></td><td>将光标移到行首(在命令行下)</td></tr>
+<tr><td><code>CTRL-C</code></td><td>中断,终结一个前台作业.</td></tr>
+<tr><td><code>CTRL-E</code></td><td>将光标移动到行尾(在命令行下)</td></tr>
+<tr><td><code>CTRL-K</code></td><td>在控制台或 xterm 窗口输入文本时,<code>CTRL-K</code>会删除从光标所在处到行尾的所有字符.</td></tr>
+<tr><td><code>CTRL-U</code></td><td>擦除从光标位置开始到行首的所有字符内容.</td></tr>
+<tr><td><code>CTRL-W</code></td><td><code>CTRL-W</code> 会删除从在光标处往回的第一个空白符之间的内容</td></tr>
+<tr><td><code>CTRL-Y</code></td><td>将之前已经清除的文本粘贴回来(主要针对<code>CTRL-U</code>或<code>CTRL-W</code>).</td></tr>
+<tr><td><code>CTRL-N</code></td><td>每按一次,是更接近的一条命令.</td></tr>
+<tr><td><code>CTRL-P</code></td><td>此快捷键召回的顺序是由近及远的召回,</td></tr>
+<tr><td><code>ALT-*</code></td><td>把能够补全[<code>ALT-?</code>]命令能生成的所有文本条目插入到标志点前.</td></tr>
+<tr><td><code>CTRL-Q</code></td><td><code>Resume (XON)</code>.恢复/解冻,这个命令是恢复终端的stdin用的,可参见<code>CTRL-S</code>.</td></tr>
+<tr><td><code>CTRL-R</code></td><td>回溯搜索(Backwards search)history缓冲区内的文本(在命令行下).注意:按下之后,提示符会变成<code>(reverse-i-search)'':</code>输入的搜索内容出现在单引号内,同时冒号后面出现最近最匹配的历史命令.</td></tr>
+<tr><td><code>CTRL-S</code></td><td><code>Suspend(XOFF)</code>,挂起.这个是冻结终端的<code>stdin</code>.要恢复可以按<code>CTRL-Q</code>.</td></tr>
+<tr><td><code>CTRL-T</code></td><td>交换光标位置与光标的前一个位置的字符内容(在命令行下)</td></tr>
+<tr><td><code>CTRL-\</code></td><td>退出.和<code>CTRL-C</code>差不多,也可能dump一个&quot;core&quot;文件到你的工作目录下(这个文件可能对你没用).</td></tr>
+</tbody></table>
+<hr />
+<p>terminal 快捷键</p>
+<table><thead><tr><th>快捷键</th><th>快捷键说明</th></tr></thead><tbody>
+<tr><td><code>Ctrl+Shift+t</code></td><td>new tab</td></tr>
+<tr><td><code>Ctrl+Shift+n</code></td><td>new window</td></tr>
+<tr><td><code>Ctrl+Shift+w</code></td><td>close tab</td></tr>
+<tr><td><code>Ctrl+Shift+q</code></td><td>close window</td></tr>
+<tr><td><code>Ctrl+page up</code></td><td>switch to previous tab</td></tr>
+<tr><td><code>Ctrl+Shift+page up</code></td><td>switch to the left</td></tr>
+</tbody></table>
+<h3 id="广泛的"><a class="header" href="#广泛的">广泛的</a></h3>
+<table><thead><tr><th>快捷键</th><th>快捷键说明</th></tr></thead><tbody>
+<tr><td><code>CTRL-A</code></td><td>将光标移到行首(在命令行下)</td></tr>
+<tr><td><code>CTRL-B</code></td><td>退格 (非破坏性的),这个只是将光标位置往回移动一个位置.</td></tr>
+<tr><td><code>CTRL-C</code></td><td>中断,终结一个前台作业.</td></tr>
+<tr><td><code>CTRL-D</code></td><td>&quot;EOF&quot; (文件结尾:end of file).它用于表示标准输入(<code>stdin</code>)的结束.</td></tr>
+<tr><td><code>CTRL-E</code></td><td>将光标移动到行尾(在命令行下)</td></tr>
+<tr><td><code>CTRL-F</code></td><td>将光标向前移动一个字符(在命令行下)</td></tr>
+<tr><td><code>CTRL-G</code></td><td><code>BEL</code>.在一些老式打印机终端上,这会引发一个响铃.在xterm终端上可能是哔的一声.</td></tr>
+<tr><td><code>CTRL-H</code></td><td>擦除(Rubout)(破坏性的退格).在光标往回移动的时候,同时擦除光标前的一个字符.</td></tr>
+<tr><td><code>CTRL-I</code></td><td>水平制表符.</td></tr>
+<tr><td><code>CTRL-J</code></td><td>新行(<code>换行[line feed]</code>并到行首).在脚本中,也可能表示为八进制形式(<code>'\012'</code>)或十六进制形式(<code>'\x0a'</code>).</td></tr>
+<tr><td><code>CTRL-K</code></td><td>垂直制表符(Vertical tab).在控制台或 xterm 窗口输入文本时,<code>CTRL-K</code>会删除从光标所在处到行尾的所有字符.</td></tr>
+<tr><td><code>CTRL-L</code></td><td>跳纸,换页(Formfeed),清屏.清空终端屏幕.在终端上,这个命令的作用和<code>clear</code>命令一样.但当这个命令发送到打印机时,<code>Ctrl-L</code>会直接跳到纸张(Paper sheet)的末尾.</td></tr>
+<tr><td><code>CTRL-M</code></td><td>回车(Carriage return).</td></tr>
+<tr><td><code>CTRL-N</code></td><td>擦除从history缓冲区召回的一行文本(在命令行下).如果当前输入是历史记录中选择的时候,这个是从这个历史记录开始,每按一次,是更接近的一条命令.</td></tr>
+<tr><td><code>CTRL-O</code></td><td>产生一个新行(在命令行下).</td></tr>
+<tr><td><code>CTRL-P</code></td><td>从history缓冲区召回上一次的命令(在命令行下).此快捷键召回的顺序是由近及远的召回,即按一次,召回的是前一次的命令,再按一次,是召回上一次之前的命令,这和<code>CTRL-N</code>都是以当前的输入为起点,但是两个命令操作刚好相反,<code>CTRL-N</code>是从起点开始由远及近(如果起点是历史命令的话).</td></tr>
+<tr><td><code>CTRL-Q</code></td><td><code>Resume (XON)</code>.恢复/解冻,这个命令是恢复终端的stdin用的,可参见<code>CTRL-S</code>.</td></tr>
+<tr><td><code>CTRL-R</code></td><td>回溯搜索(Backwards search)history缓冲区内的文本(在命令行下).注意:按下之后,提示符会变成<code>(reverse-i-search)'':</code>输入的搜索内容出现在单引号内,同时冒号后面出现最近最匹配的历史命令.</td></tr>
+<tr><td><code>CTRL-S</code></td><td><code>Suspend(XOFF)</code>,挂起.这个是冻结终端的<code>stdin</code>.要恢复可以按<code>CTRL-Q</code>.</td></tr>
+<tr><td><code>CTRL-T</code></td><td>交换光标位置与光标的前一个位置的字符内容(在命令行下).比如:<code>echo $var;</code>,假设光标在<code>a</code>上,那么,按下<code>C-T</code>之后,<code>v</code>和<code>a</code>将会交换位置:<code>echo $avr;</code>.</td></tr>
+<tr><td><code>CTRL-U</code></td><td>擦除从光标位置开始到行首的所有字符内容.在某些设置下,<code>CTRL-U</code>会不以光标位置为参考而删除整行的输入.</td></tr>
+<tr><td><code>CTRL-V</code></td><td>在输入文本的时候,按下<code>C-V</code>之后,可以插入控制字符.比如:<code>echo -e '\x0a';</code>和<code>echo &lt;CTRL-V&gt;&lt;CTRL-J&gt;;</code>这两种效果一样.这点功能在文本编辑器内非常有效.</td></tr>
+<tr><td><code>CTRL-W</code></td><td>当在控制台或一个xterm窗口敲入文本时, <code>CTRL-W</code> 会删除从在光标处往后(回)的第一个空白符之间的内容.在某些设置里, <code>CTRL-W</code> 删除光标往后(回)到第一个非文字和数字之间的字符.</td></tr>
+<tr><td><code>CTRL-X</code></td><td>在某些文字处理程序中,这个控制字符将会剪切高亮的文本并且将它复制到剪贴板中.</td></tr>
+<tr><td><code>CTRL-Y</code></td><td>将之前已经清除的文本粘贴回来(主要针对<code>CTRL-U</code>或<code>CTRL-W</code>).</td></tr>
+<tr><td><code>CTRL-Z</code></td><td>暂停一个前台的作业; 在某些文本处理程序中也作为替换操作; 在MSDOS文件系统中作为EOF(End-of-file)字符.</td></tr>
+<tr><td><code>CTRL-\</code></td><td>退出.和<code>CTRL-C</code>差不多,也可能dump一个&quot;core&quot;文件到你的工作目录下(这个文件可能对你没用).</td></tr>
+<tr><td><code>CTRL-/</code></td><td>撤消操作,Undo.</td></tr>
+<tr><td><code>CTRL-_</code></td><td>撤消操作.</td></tr>
+<tr><td><code>CTRL-xx</code></td><td>在行首和光标两个位置间进行切换,此处是两个<code>&quot;x&quot;</code>字符.</td></tr>
+<tr><td><code>ALT-B</code></td><td>光标往回跳一个词,词以非字母为界(跳动到当前光标所在词的开头).</td></tr>
+<tr><td><code>ALT-F</code></td><td>光标往前跳一个词(移动到光标所在词的末尾).</td></tr>
+<tr><td><code>ALT-D</code></td><td>删除光标所在位置到光标所在词的结尾位置的所有内容(如果光标是在词开头,则删除整个词).</td></tr>
+<tr><td><code>ALT-BASKSPACE</code></td><td>删除光标所在位置到词开头的所有内容.</td></tr>
+<tr><td><code>ALT-C</code></td><td>将光标所在位置的字母转为大写(如果光标在一个词的起始位置或之前,则词首字母大写).</td></tr>
+<tr><td><code>ALT-U</code></td><td>将光标所在位置到词尾的所有字母转为大写.</td></tr>
+<tr><td><code>ALT-L</code></td><td>将光标位置到词尾的所有字母转为小写.</td></tr>
+<tr><td><code>ALT-R</code></td><td>取消所有变更,并将当前行恢复到在历史记录中的原始状态(前提是当前命令是从历史记录中来的,如果是手动输入,则会清空行).</td></tr>
+<tr><td><code>ALT-T</code></td><td>当光标两侧都存在词的时候,交换光标两侧词的位置.如:`abc <ALT-T>bcd -&gt; bcd abc</td></tr>
+<tr><td><code>ALT-.</code></td><td>使用前一次命令的最后一个词(命令本身也是一个词,参见后一篇的Bang命令中的词指示符概念).</td></tr>
+<tr><td><code>ALT-_</code></td><td>同<code>ALT-.</code>.</td></tr>
+<tr><td><code>ALT-数值</code></td><td>这个数值可以是正或者是负,这个键单独没有作用,必须后面再接其他内容,如果后面是字符,则表示重复次数.如:<code>[ALT-10,k]</code>则光标位置会插入<code>10</code>个<code>k</code>字符(负值在这种情况下无效); 如果后面接的是命令,则数字会影响后面命令的执行结果,如:<code>[ALT--10,CTRL-D]</code>则向<code>CTRL-D</code>默认方向相反(负数)的方向执行<code>10</code>次操作.</td></tr>
+<tr><td><code>ALT-&lt;</code></td><td>移动到历史记录中的第一行命令.</td></tr>
+<tr><td><code>ALT-&gt;</code></td><td>移动到历史的最后一行,即当前正在输入的行(没有输入的情况下为空).</td></tr>
+<tr><td><code>ALT-P</code></td><td>从当前行开始向前搜索,有必要则向&quot;上&quot;移动,移动时,使用非增量搜索查找用户提供的字符串.</td></tr>
+<tr><td><code>ALT-N</code></td><td>从当前行开始向后搜索,如果有必要向&quot;下&quot;移动,移动时,使用非增量搜索查找用户提供的字符串.</td></tr>
+<tr><td><code>ALT-CTRL-Y</code></td><td>在标志点上插入前一个命令的第一个参数(一般是前一行的第二个词).如果有参数<code>n</code>,则插入前一个命令的第<code>n</code>个词(前一行的词编号从<code>0</code>开始,见历史扩展).负的参数将插入冲前一个命令的结尾开始的第n个词.参数<code>n</code>通过<code>M-No.</code>的方式传递,如:<code>[ALT-0,ALT-CTRL-Y]</code>插入前一个命令的第<code>0</code>个词(命令本身).</td></tr>
+<tr><td><code>ALT-Y</code></td><td>轮询到删除环,并复制新的顶端文本.只能在<code>yank[CTRL-Y]</code>或者<code>yank-pop[M-Y]</code>之后使用这个命令.</td></tr>
+<tr><td><code>ALT-?</code></td><td>列出能够补全标志点前的条目.</td></tr>
+<tr><td><code>ALT-*</code></td><td>把能够补全[<code>ALT-?</code>]命令能生成的所有文本条目插入到标志点前.</td></tr>
+<tr><td><code>ALT-/</code></td><td>试图对标志点前的文本进行文件名补全.<code>[CTRL-X,/]</code>把标志点前的文本当成文件名并列出可以补全的条目.</td></tr>
+<tr><td><code>ALT-~</code></td><td>把标志点前的文本当成用户名并试图进行补全.<code>[CTRL-X,~]</code>列出可以作为用户名补全标志点前的条目.</td></tr>
+<tr><td><code>ALT-$</code></td><td>把标志点前的文本当成Shell变量并试图进行补全.<code>[CTRL-X,$]</code>列出可以作为变量补全标志点前的条目.</td></tr>
+<tr><td><code>ALT-@</code></td><td>把标志点前的文本当成主机名并试图进行补全.<code>[CTRL-X,@]</code>列出可以作为主机补全标志点前的条目.</td></tr>
+<tr><td><code>ALT-!</code></td><td>把标志点前的文本当成命令名并试图进行补全.进行命令名补全时会依次使用别名,保留字,Shell函数,shell内部命令,最后是可执行文件名.<code>[CTRL-X,!]</code>把标志点前的文本当成命令名并列出可补全的条目.</td></tr>
+<tr><td><code>ALT-TAB</code></td><td>把标志点前的文本与历史记录中的文本进行比较以寻找匹配的并试图进行补全.</td></tr>
+<tr><td><code>ALT-{</code></td><td>进行文件名补全,把可以补全的条目列表放在大括号之间,让shell可以使用.</td></tr>
+</tbody></table>
+<hr />
+<p>在控制台或<code>xterm</code> 窗口输入文本时,<code>CTRL-D</code> 删除在光标下的字符.从一个shell中退出 (类似于<code>exit</code>).如果没有字符存在,<code>CTRL-D</code> 则会登出该会话.在一个xterm窗口中,则会产生关闭此窗口的效果.</p>
+<p><code>CTRL-K</code>
+在脚本中,也可能表示为八进制形式(<code>'\013'</code>)或十六进制形式(<code>'\x0b'</code>).在脚本中,<code>CTRL-K</code>可能会有不一样的行为,下面的例子给出其不一样的行为:</p>
+<pre><code class="language-bash">#!/bin/bash
+## 一个`CTRL-K`垂直制表符的例子
+var=$'\x0aBottom Line\x0bTop line\x0a'
+## 直接输出
+echo &quot;$var&quot;
+## 使用col来过滤控制字符
+echo &quot;$var&quot; | col
+## 上面的显示将会不一样
+exit 0
+</code></pre>
+<h3 id="系统快捷键"><a class="header" href="#系统快捷键">系统快捷键</a></h3>
+<ul>
+<li>不同<code>workspace</code>导航; ubuntu: <code>Super+PageUp/PageDown</code>; manjaro: <code>Ctrl+Super+Left/Right/Up/Down</code></li>
+<li>将应用窗口移动到不同的<code>workspace</code>; ubuntu: <code>Shit+Super+ PageUp/PageDown</code>; manjaro: <code>Ctrl+Shift+Super+Left/Right/Up/Down</code></li>
+</ul>
+<h2 id="systemd"><a class="header" href="#systemd">systemd</a></h2>
+<p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程:命令篇</a>
+<a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd 入门教程:实战篇</a></p>
+<p>历史上,Linux 的启动一直采用<code>init</code>进程.下面的命令用来启动服务.</p>
+<pre><code class="language-bash">$ sudo /etc/init.d/apache2 start # 或者
+$ service apache2 start
+</code></pre>
+<p>这种方法有两个缺点.</p>
+<ul>
+<li>一是启动时间长.<code>init</code>进程是串行启动,只有前一个进程启动完,才会启动下一个进程.</li>
+<li>二是启动脚本复杂.<code>init</code>进程只是执行启动脚本,不管其他事情.脚本需要自己处理各种情况,这往往使得脚本变得很长.</li>
+</ul>
+<p><code>Systemd</code> 就是为了解决这些问题而诞生的.它的设计目标是,为系统的启动和管理提供一套完整的解决方案.
+根据 <code>Linux</code> 惯例,字母<code>d</code>是守护进程(<code>daemon</code>)的缩写. <code>Systemd</code> 这个名字的含义,就是它要守护整个系统.</p>
+<p>使用了 <code>Systemd</code>,就不需要再用init了.<code>Systemd</code> 取代了<code>initd</code>,成为系统的第一个进程(<code>PID </code>等于 <code>1</code>),其他进程都是它的子进程.</p>
+<pre><code class="language-bash">$ systemctl --version
+</code></pre>
+<p>上面的命令查看 <code>Systemd</code> 的版本.</p>
+<h3 id="系统管理"><a class="header" href="#系统管理">系统管理</a></h3>
+<p><code>Systemd</code> 并不是一个命令,而是一组命令,涉及到系统管理的方方面面.</p>
+<h4 id="systemctl"><a class="header" href="#systemctl">systemctl</a></h4>
+<p><code>systemctl</code> 是 <code>Systemd</code> 的主命令,用于管理系统.</p>
+<pre><code class="language-bash">$ sudo systemctl reboot # 重启系统
+$ sudo systemctl poweroff # 关闭系统,切断电源
+$ sudo systemctl halt # CPU停止工作
+$ sudo systemctl suspend # 暂停系统
+$ sudo systemctl hibernate # 让系统进入冬眠状态
+$ sudo systemctl hybrid-sleep # 让系统进入交互式休眠状态
+$ sudo systemctl rescue # 启动进入救援状态(单用户状态)
+</code></pre>
+<h4 id="systemd-analyze"><a class="header" href="#systemd-analyze">systemd-analyze</a></h4>
+<p><code>systemd-analyze</code>命令用于查看启动耗时.</p>
+<pre><code class="language-bash">$ systemd-analyze # 查看启动耗时
+$ systemd-analyze blame # 查看每个服务的启动耗时
+$ systemd-analyze critical-chain # 显示瀑布状的启动过程流
+$ systemd-analyze critical-chain atd.service # 显示指定服务的启动流
+</code></pre>
+<h4 id="hostnamectl"><a class="header" href="#hostnamectl">hostnamectl</a></h4>
+<p><code>hostnamectl</code>命令用于查看当前主机的信息.</p>
+<pre><code class="language-bash">$ hostnamectl # 显示当前主机的信息
+$ sudo hostnamectl set-hostname rhel7 # 设置主机名.
+</code></pre>
+<h4 id="localectl"><a class="header" href="#localectl">localectl</a></h4>
+<p><code>localectl</code>命令用于查看本地化设置.</p>
+<pre><code class="language-bash">
+$ localectl # 查看本地化设置
+$ sudo localectl set-locale LANG=en_GB.utf8 # 设置本地化参数.
+$ sudo localectl set-keymap en_GB
+</code></pre>
+<h4 id="timedatectl"><a class="header" href="#timedatectl">timedatectl</a></h4>
+<p><code>timedatectl</code> 命令用于查看当前时区设置.</p>
+<pre><code class="language-bash">$ timedatectl # 查看当前时区设置
+$ timedatectl list-timezones # 显示所有可用的时区
+$ sudo timedatectl set-timezone America/New_York # 设置当前时区
+$ sudo timedatectl set-time YYYY-MM-DD
+$ sudo timedatectl set-time HH:MM:SS
+</code></pre>
+<h4 id="loginctl"><a class="header" href="#loginctl">loginctl</a></h4>
+<p><code>loginctl</code>命令用于查看当前登录的用户.</p>
+<pre><code class="language-bash">$ loginctl list-sessions # 列出当前session
+$ loginctl list-users # 列出当前登录用户
+$ loginctl show-user ruanyf # 列出显示指定用户的信息
+</code></pre>
+<h3 id="unit"><a class="header" href="#unit">Unit</a></h3>
+<h4 id="含义"><a class="header" href="#含义">含义</a></h4>
+<p><code>Systemd</code> 可以管理所有系统资源.不同的资源统称为 <code>Unit</code>(单位).</p>
+<p><code>Unit</code> 一共分成12种.</p>
+<ul>
+<li><code>Service unit</code>:系统服务</li>
+<li><code>Target unit</code>:多个 <code>Unit</code> 构成的一个组</li>
+<li><code>Device Unit</code>:硬件设备</li>
+<li><code>Mount Unit</code>:文件系统的挂载点</li>
+<li><code>Automount Unit</code>:自动挂载点</li>
+<li><code>Path Unit</code>:文件或路径</li>
+<li><code>Scope Unit</code>:不是由 <code>Systemd</code> 启动的外部进程</li>
+<li><code>Slice Unit</code>:进程组</li>
+<li><code>Snapshot Unit</code>:<code>Systemd</code> 快照,可以切回某个快照</li>
+<li><code>Socket Unit</code>:进程间通信的 <code>socket</code></li>
+<li><code>Swap Unit</code>:<code>swap</code> 文件</li>
+<li><code>Timer Unit</code>:定时器</li>
+</ul>
+<p><code>systemctl list-units</code>命令可以查看当前系统的所有<code>Unit </code>.</p>
+<pre><code class="language-bash">$ systemctl list-units # 列出正在运行的 Unit
+$ systemctl list-units --all # 列出所有Unit,包括没有找到配置文件的或者启动失败的
+$ systemctl list-units --all --state=inactive # 列出所有没有运行的 Unit
+$ systemctl list-units --failed # 列出所有加载失败的 Unit
+$ systemctl list-units --type=service # 列出所有正在运行的, 类型为 service 的 Unit
+</code></pre>
+<h4 id="unit-的状态"><a class="header" href="#unit-的状态">Unit 的状态</a></h4>
+<p><code>systemctl status</code>命令用于查看系统状态和单个 <code>Unit</code> 的状态.</p>
+<pre><code class="language-bash">$ systemctl status # 显示系统状态
+$ sysystemctl status bluetooth.service # 显示单个 Unit 的状态
+$ systemctl -H root@rhel7.example.com status httpd.service # 显示远程主机的某个 Unit 的状态
+</code></pre>
+<p>除了<code>status</code>命令,<code>systemctl</code>还提供了三个查询状态的简单方法,主要供脚本内部的判断语句使用.</p>
+<pre><code class="language-bash">$ systemctl is-active application.service # 显示某个 Unit 是否正在运行
+$ systemctl is-failed application.service # 显示某个 Unit 是否处于启动失败状态
+$ systemctl is-enabled application.service # 显示某个 Unit 服务是否建立了启动链接
+</code></pre>
+<h4 id="unit-管理"><a class="header" href="#unit-管理">Unit 管理</a></h4>
+<p>对于用户来说,最常用的是下面这些命令,用于启动和停止 <code>Unit</code>(主要是 <code>service</code>).</p>
+<pre><code class="language-bash">$ sudo systemctl start apache.service # 立即启动一个服务
+$ sudo systemctl stop apache.service # 立即停止一个服务
+$ sudo systemctl restart apache.service # 重启一个服务
+$ sudo systemctl kill apache.service # 杀死一个服务的所有子进程
+$ sudo systemctl reload apache.service # 重新加载一个服务的配置文件
+$ sudo systemctl daemon-reload # 重载所有修改过的配置文件
+$ systemctl show httpd.service # 显示某个 Unit 的所有底层参数
+$ systemctl show -p CPUShares httpd.service # 显示某个 Unit 的指定属性的值
+$ sudo systemctl set-property httpd.service CPUShares=500 # 设置某个 Unit 的指定属性
+</code></pre>
+<h4 id="依赖关系"><a class="header" href="#依赖关系">依赖关系</a></h4>
+<p><code>Unit</code> 之间存在依赖关系:<code>A</code> 依赖于 <code>B</code>,就意味着 <code>Systemd</code> 在启动 <code>A</code> 的时候,同时会去启动 <code>B</code>.</p>
+<p><code>systemctl list-dependencies</code>命令列出一个 <code>Unit</code> 的所有依赖.</p>
+<pre><code class="language-bash">$ systemctl list-dependencies nginx.service
+</code></pre>
+<p>上面命令的输出结果之中,有些依赖是 <code>Target</code> 类型(详见下文),默认不会展开显示.如果要展开 <code>Target</code>,就需要使用<code>--all</code>参数.</p>
+<pre><code class="language-bash">$ systemctl list-dependencies --all nginx.service
+</code></pre>
+<h3 id="unit-的配置文件"><a class="header" href="#unit-的配置文件">Unit 的配置文件</a></h3>
+<h4 id="概述"><a class="header" href="#概述">概述</a></h4>
+<p>每一个 <code>Unit</code> 都有一个配置文件,告诉 <code>Systemd</code> 怎么启动这个 <code>Unit</code> . <code>Systemd</code> 默认从目录<code>/etc/systemd/system/</code>读取配置文件.
+但是,里面存放的大部分文件都是符号链接,指向目录<code>/usr/lib/systemd/system/</code>,真正的配置文件存放在那个目录, 也可能是<code>/lib/systemd/system/</code>.
+<code>systemctl enable</code>命令用于在上面两个目录之间,建立符号链接关系.</p>
+<pre><code class="language-bash">$ sudo systemctl enable clamd@scan.service # 等同于
+$ sudo ln -s '/usr/lib/systemd/system/clamd@scan.service' '/etc/systemd/system/multi-user.target.wants/clamd@scan.service'
+</code></pre>
+<p>如果配置文件里面设置了开机启动,<code>systemctl enable</code>命令相当于激活开机启动.
+与之对应的,<code>systemctl disable</code>命令用于在两个目录之间,撤销符号链接关系,相当于撤销开机启动.</p>
+<pre><code class="language-bash">$ sudo systemctl disable clamd@scan.service
+</code></pre>
+<p>配置文件的后缀名,就是该 <code>Unit</code> 的种类,比如<code>sshd.socket</code>.如果省略,<code>Systemd</code> 默认后缀名为<code>.service</code>,所以<code>sshd</code>会被理解成<code>sshd.service</code>.</p>
+<h4 id="配置文件的状态"><a class="header" href="#配置文件的状态">配置文件的状态</a></h4>
+<p><code>systemctl list-unit-files</code> 命令用于列出所有配置文件.</p>
+<pre><code class="language-bash">$ systemctl list-unit-files  # 列出所有配置文件
+$ systemctl list-unit-files --type=service # 列出指定类型的配置文件
+</code></pre>
+<p>这个命令会输出一个列表.</p>
+<pre><code class="language-bash">$ systemctl list-unit-files
+UNIT FILE              STATE
+chronyd.service        enabled
+clamd@.service         static
+clamd@scan.service     disabled
+</code></pre>
+<p>这个列表显示每个配置文件的状态,一共有四种.</p>
+<ul>
+<li><code>enabled</code>:已建立启动链接</li>
+<li><code>disabled</code>:没建立启动链接</li>
+<li><code>static</code>:该配置文件没有<code>[Install]</code>部分(无法执行),只能作为其他配置文件的依赖</li>
+<li><code>masked</code>:该配置文件被禁止建立启动链接</li>
+</ul>
+<p>注意,从配置文件的状态无法看出,该 <code>Unit</code> 是否正在运行.这必须执行前面提到的<code>systemctl status</code>命令.</p>
+<pre><code class="language-bash">$ systemctl status bluetooth.service
+</code></pre>
+<p>一旦修改配置文件,就要让 <code>SystemD</code> 重新加载配置文件,然后重新启动,否则修改不会生效.</p>
+<pre><code class="language-bash">$ sudo systemctl daemon-reload
+$ sudo systemctl restart httpd.service
+</code></pre>
+<h4 id="配置文件的格式"><a class="header" href="#配置文件的格式">配置文件的格式</a></h4>
+<p>配置文件就是普通的文本文件,可以用文本编辑器打开.</p>
+<p><code>systemctl cat</code>命令可以查看配置文件的内容.</p>
+<pre><code class="language-bash">$ systemctl cat atd.service
+[Unit]
+Description=ATD daemon
+[Service]
+Type=forking
+ExecStart=/usr/bin/atd
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>从上面的输出可以看到,配置文件分成几个区块.每个区块的第一行,是用方括号表示的区别名,比如<code>[Unit]</code>.注意,配置文件的区块名和字段名,都是大小写敏感的.</p>
+<p>每个区块内部是一些等号连接的键值对.</p>
+<pre><code class="language-bash">[Section]
+Directive1=value
+Directive2=value
+. . .
+</code></pre>
+<p>注意,键值对的等号两侧不能有空格.</p>
+<h4 id="配置文件的区块"><a class="header" href="#配置文件的区块">配置文件的区块</a></h4>
+<p><code>[Unit]</code>区块通常是配置文件的第一个区块,用来定义 <code>Unit</code> 的元数据,以及配置与其他 <code>Unit</code> 的关系.它的主要字段如下.</p>
+<ul>
+<li><code>Description</code>:简短描述</li>
+<li><code>Documentation</code>:文档地址</li>
+<li><code>Requires</code>:当前 <code>Unit</code> 依赖的其他 <code>Unit</code>,如果它们没有运行,当前 <code>Unit</code> 会启动失败</li>
+<li><code>Wants</code>:与当前 <code>Unit</code> 配合的其他 <code>Unit</code>,如果它们没有运行,当前 <code>Unit</code> 不会启动失败</li>
+<li><code>BindsTo</code>:与Requires类似,它指定的 <code>Unit</code> 如果退出,会导致当前 <code>Unit</code> 停止运行</li>
+<li><code>Before</code>:如果该字段指定的 <code>Unit</code> 也要启动,那么必须在当前 <code>Unit</code> 之后启动</li>
+<li><code>After</code>:如果该字段指定的 <code>Unit</code> 也要启动,那么必须在当前 <code>Unit</code> 之前启动</li>
+<li><code>Conflicts</code>:这里指定的 <code>Unit</code> 不能与当前 <code>Unit</code> 同时运行</li>
+<li><code>Condition</code>...:当前 <code>Unit</code> 运行必须满足的条件,否则不会运行</li>
+<li><code>Assert</code>...:当前 <code>Unit</code> 运行必须满足的条件,否则会报启动失败</li>
+</ul>
+<p><code>[Install]</code>通常是配置文件的最后一个区块,用来定义如何启动,以及是否开机启动.它的主要字段如下.</p>
+<ul>
+<li><code>WantedBy</code>:它的值是一个或多个 <code>Target</code>,当前 <code>Unit</code> 激活时(<code>enable</code>)符号链接会放入<code>/etc/systemd/system</code>目录下面以 <code>Target</code> 名 + <code>.wants</code>后缀构成的子目录中</li>
+<li><code>RequiredBy</code>:它的值是一个或多个 <code>Target</code>,当前 <code>Unit</code> 激活时,符号链接会放入<code>/etc/systemd/system</code>目录下面以 <code>Target</code> 名 + <code>.required</code>后缀构成的子目录中</li>
+<li><code>Alias</code>:当前 <code>Unit</code> 可用于启动的别名</li>
+<li><code>Also</code>:当前 <code>Unit</code> 激活(<code>enable</code>)时,会被同时激活的其他 <code>Unit</code></li>
+</ul>
+<p><code>[Service]</code>区块用来 <code>Service</code> 的配置,只有 <code>Service</code> 类型的 <code>Unit</code> 才有这个区块.它的主要字段如下.</p>
+<ul>
+<li><code>Type</code>:定义启动时的进程行为.它有以下几种值.</li>
+<li><code>Type=simple</code>:默认值,执行 <code>ExecStart</code> 指定的命令,启动主进程</li>
+<li><code>Type=forking</code>:以 <code>fork</code> 方式从父进程创建子进程,创建后父进程会立即退出</li>
+<li><code>Type=oneshot</code>:一次性进程,<code>Systemd</code> 会等当前服务退出,再继续往下执行</li>
+<li><code>Type=dbus</code>:当前服务通过<code>D-Bus</code>启动</li>
+<li><code>Type=notify</code>:当前服务启动完毕,会通知<code>Systemd</code>,再继续往下执行</li>
+<li><code>Type=idle</code>:若有其他任务执行完毕,当前服务才会运行</li>
+<li><code>ExecStart</code>:启动当前服务的命令</li>
+<li><code>ExecStartPre</code>:启动当前服务之前执行的命令</li>
+<li><code>ExecStartPost</code>:启动当前服务之后执行的命令</li>
+<li><code>ExecReload</code>:重启当前服务时执行的命令</li>
+<li><code>ExecStop</code>:停止当前服务时执行的命令</li>
+<li><code>ExecStopPost</code>:停止当其服务之后执行的命令</li>
+<li><code>RestartSec</code>:自动重启当前服务间隔的秒数</li>
+<li><code>Restart</code>:定义何种情况 <code>Systemd</code> 会自动重启当前服务,可能的值包括<code>always</code>(总是重启), <code>on-success</code>, <code>on-failure</code>, <code>on-abnormal</code>, <code>on-abort</code>, <code>on-watchdog</code></li>
+<li><code>TimeoutSec</code>:定义 <code>Systemd</code> 停止当前服务之前等待的秒数</li>
+<li><code>Environment</code>:指定环境变量</li>
+</ul>
+<p><code>Unit</code> 配置文件的完整字段清单,请参考官方文档.</p>
+<h3 id="target"><a class="header" href="#target">Target</a></h3>
+<p>启动计算机的时候,需要启动大量的 <code>Unit</code>.如果每一次启动,都要一一写明本次启动需要哪些 <code>Unit</code>,显然非常不方便.<code>Systemd</code> 的解决方案就是 <code>Target</code>.
+简单说,<code>Target</code> 就是一个 <code>Unit</code> 组,包含许多相关的 <code>Unit</code> .启动某个 <code>Target</code> 的时候,<code>Systemd</code> 就会启动里面所有的 <code>Unit</code>.
+从这个意义上说,<code>Target</code> 这个概念类似于&quot;状态点&quot;,启动某个 <code>Target</code> 就好比启动到某种状态.</p>
+<p>传统的<code>init</code>启动模式里面,有 <code>RunLevel</code> 的概念,跟 <code>Target</code> 的作用很类似.不同的是,<code>RunLevel</code> 是互斥的,不可能多个 <code>RunLevel</code> 同时启动,但是多个 <code>Target</code> 可以同时启动.</p>
+<pre><code class="language-bash"># 查看当前系统的所有 Target
+$ systemctl list-unit-files --type=target
+# 查看一个 Target 包含的所有 Unit
+$ systemctl list-dependencies multi-user.target
+# 查看启动时的默认 Target
+$ systemctl get-default
+# 设置启动时的默认 Target
+$ sudo systemctl set-default multi-user.target
+# 切换 Target 时,默认不关闭前一个 Target 启动的进程,
+# systemctl isolate 命令改变这种行为,
+# 关闭前一个 Target 里面所有不属于后一个 Target 的进程
+$ sudo systemctl isolate multi-user.target
+</code></pre>
+<p><code>Target</code> 与 传统 <code>RunLevel</code> 的对应关系如下.</p>
+<p>Traditional runlevel      New target name     Symbolically linked to...</p>
+<ul>
+<li><code>Runlevel 0</code>  |  <code>runlevel0.target -&gt; poweroff.target</code></li>
+<li><code>Runlevel 1</code>  |  <code>runlevel1.target -&gt; rescue.target</code></li>
+<li><code>Runlevel 2</code>  |  <code>runlevel2.target -&gt; multi-user.target</code></li>
+<li><code>Runlevel 3</code>  |  <code>runlevel3.target -&gt; multi-user.target</code></li>
+<li><code>Runlevel 4</code>  |  <code>runlevel4.target -&gt; multi-user.target</code></li>
+<li><code>Runlevel 5</code>  |  <code>runlevel5.target -&gt; graphical.target</code></li>
+<li><code>Runlevel 6</code>  |  <code>runlevel6.target -&gt; reboot.target</code></li>
+</ul>
+<p>它与<code>init</code>进程的主要差别如下.</p>
+<ul>
+<li>默认的 <code>RunLevel</code>(在<code>/etc/inittab</code>文件设置)现在被默认的 <code>Target</code> 取代,位置是<code>/etc/systemd/system/default.target</code>,通常符号链接到<code>graphical.target</code>(图形界面)或者<code>multi-user.target</code>(多用户命令行).</li>
+<li>启动脚本的位置,以前是<code>/etc/init.d</code>目录,符号链接到不同的 <code>RunLevel</code> 目录 (比如<code>/etc/rc3.d</code>, <code>/etc/rc5.d</code>等),现在则存放在<code>/lib/systemd/system</code>和<code>/etc/systemd/system</code>目录.</li>
+<li>配置文件的位置,以前<code>init</code>进程的配置文件是<code>/etc/inittab</code>,各种服务的配置文件存放在<code>/etc/sysconfig</code>目录.现在的配置文件主要存放在<code>/lib/systemd</code>目录,在<code>/etc/systemd</code>目录里面的修改可以覆盖原始设置.</li>
+</ul>
+<h3 id="日志管理"><a class="header" href="#日志管理">日志管理</a></h3>
+<p><code>Systemd</code> 统一管理所有 <code>Unit</code> 的启动日志.带来的好处就是,可以只用<code>journalctl</code>一个命令,查看所有日志(内核日志和应用日志).日志的配置文件是<code>/etc/systemd/journald.conf</code>.</p>
+<p><code>journalctl</code>功能强大,用法非常多.</p>
+<pre><code class="language-bash">$ sudo journalctl  # 查看所有日志(默认情况下 ,只保存本次启动的日志)
+$ sudo journalctl -k # 查看内核日志(不显示应用日志)
+# 查看系统本次启动的日志
+$ sudo journalctl -b
+$ sudo journalctl -b -0
+$ sudo journalctl -b -1 # 查看上一次启动的日志(需更改设置)
+# 查看指定时间的日志
+$ sudo journalctl --since=&quot;2012-10-30 18:17:16&quot;
+$ sudo journalctl --since &quot;20 min ago&quot;
+$ sudo journalctl --since yesterday
+$ sudo journalctl --since &quot;2015-01-10&quot; --until &quot;2015-01-11 03:00&quot;
+$ sudo journalctl --since 09:00 --until &quot;1 hour ago&quot;
+
+$ sudo journalctl -n # 显示尾部的最新10行日志
+$ sudo journalctl -n 20 # 显示尾部指定行数的日志
+$ sudo journalctl -f # 实时滚动显示最新日志
+$ sudo journalctl /usr/lib/systemd/systemd # 查看指定服务的日志
+$ sudo journalctl _PID=1 # 查看指定进程的日志
+$ sudo journalctl /usr/bin/bash # 查看某个路径的脚本的日志
+
+$ sudo journalctl _UID=33 --since today # 查看指定用户的日志
+$ sudo journalctl -u nginx.service # 查看某个 Unit 的日志
+$ sudo journalctl -u nginx.service --since today
+$ sudo journalctl -u nginx.service -f # 实时滚动显示某个 Unit 的最新日志
+
+$ journalctl -u nginx.service -u php-fpm.service --since today # 合并显示多个 Unit 的日志
+# 查看指定优先级(及其以上级别)的日志,共有8级
+# 0: emerg , 1: alert , 2: crit , 3: err, 4: warning
+# 5: notice, 6: info, 7: debug
+$ sudo journalctl -p err -b
+
+$ sudo journalctl --no-pager # 日志默认分页输出,--no-pager 改为正常的标准输出
+$ sudo journalctl -b -u nginx.service -o json # 以 JSON 格式(单行)输出
+$ sudo journalctl -b -u nginx.serviceqq -o json-pretty # 以 JSON 格式(多行)输出,可读性更好
+
+$ sudo journalctl --disk-usage # 显示日志占据的硬盘空间
+$ sudo journalctl --vacuum-size=1G # 指定日志文件占据的最大空间
+$ sudo journalctl --vacuum-time=1years # 指定日志文件保存多久
+</code></pre>
+<h2 id="systemd-常见任务"><a class="header" href="#systemd-常见任务">Systemd 常见任务</a></h2>
+<h3 id="开机启动"><a class="header" href="#开机启动">开机启动</a></h3>
+<p>对于那些支持 <code>Systemd</code> 的软件,安装的时候,会自动在<code>/usr/lib/systemd/system</code>目录添加一个配置文件.
+如果你想让该软件开机启动,就执行下面的命令(以<code>httpd.service</code>为例).</p>
+<pre><code class="language-bash">$ sudo systemctl enable httpd
+</code></pre>
+<p>上面的命令相当于在<code>/etc/systemd/system</code>目录添加一个符号链接,指向<code>/usr/lib/systemd/system</code>里面的<code>httpd.service</code>文件.
+这是因为开机时,<code>Systemd</code>只执行<code>/etc/systemd/system</code>目录里面的配置文件.这也意味着,如果把修改后的配置文件放在该目录,就可以达到覆盖原始配置的效果.</p>
+<h3 id="启动服务"><a class="header" href="#启动服务">启动服务</a></h3>
+<p>设置开机启动以后,软件并不会立即启动,必须等到下一次开机.如果想现在就运行该软件,那么要执行<code>systemctl start</code>命令.</p>
+<pre><code class="language-bash">$ sudo systemctl start httpd
+</code></pre>
+<p>执行上面的命令以后,有可能启动失败,因此要用<code>systemctl status</code>命令查看一下该服务的状态.</p>
+<pre><code class="language-bash">$ sudo systemctl status httpd
+httpd.service - The Apache HTTP Server
+Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled)
+Active: active (running) since 金 2014-12-05 12:18:22 JST; 7min ago
+Main PID: 4349 (httpd)
+Status: &quot;Total requests: 1; Current requests/sec: 0; Current traffic:   0 B/sec&quot;
+CGroup: /system.slice/httpd.service
+├─4349 /usr/sbin/httpd -DFOREGROUND
+...
+12月 05 12:18:22 localhost.localdomain systemd[1]: Starting The Apache HTTP Server...
+...
+</code></pre>
+<p>上面的输出结果含义如下.</p>
+<ul>
+<li><code>Loaded行</code>:配置文件的位置,是否设为开机启动</li>
+<li><code>Active行</code>:表示正在运行</li>
+<li><code>Main PID行</code>:主进程<code>ID</code></li>
+<li><code>Status行</code>:由应用本身(这里是 <code>httpd</code> )提供的软件当前状态</li>
+<li><code>CGroup块</code>:应用的所有子进程</li>
+<li><code>日志块</code>:应用的日志</li>
+</ul>
+<h3 id="停止服务"><a class="header" href="#停止服务">停止服务</a></h3>
+<p>终止正在运行的服务,需要执行<code>systemctl stop</code>命令.</p>
+<pre><code class="language-bash">$ sudo systemctl stop httpd.service
+</code></pre>
+<p>有时候,该命令可能没有响应,服务停不下来.这时候就不得不&quot;杀进程&quot;了,向正在运行的进程发出<code>kill</code>信号.</p>
+<pre><code class="language-bash">$ sudo systemctl kill httpd.service
+</code></pre>
+<p>此外,重启服务要执行<code>systemctl restart</code>命令.</p>
+<pre><code class="language-bash">$ sudo systemctl restart httpd.service
+</code></pre>
+<h3 id="读懂配置文件"><a class="header" href="#读懂配置文件">读懂配置文件</a></h3>
+<p>一个服务怎么启动,完全由它的配置文件决定.下面就来看,配置文件有些什么内容.
+前面说过,配置文件主要放在<code>/usr/lib/systemd/system</code>目录,也可能在<code>/etc/systemd/system</code>目录.找到配置文件以后,使用文本编辑器打开即可.
+<code>systemctl cat</code>命令可以用来查看配置文件,下面以<code>sshd.service</code>文件为例,它的作用是启动一个 <code>SSH</code> 服务器,供其他用户以 <code>SSH</code> 方式登录.</p>
+<pre><code class="language-bash">$ systemctl cat sshd.service
+[Unit]
+Description=OpenSSH server daemon
+...
+[Service]
+EnvironmentFile=/etc/sysconfig/sshd
+...
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>可以看到,配置文件分成几个区块,每个区块包含若干条键值对.</p>
+<p>下面依次解释每个区块的内容.</p>
+<h4 id="unit-区块启动顺序与依赖关系"><a class="header" href="#unit-区块启动顺序与依赖关系">[Unit] 区块:启动顺序与依赖关系.</a></h4>
+<p><code>Unit</code>区块的<code>Description</code>字段给出当前服务的简单描述,<code>Documentation</code>字段给出文档位置.接下来的设置是启动顺序和依赖关系,这个比较重要.</p>
+<p><code>After</code>字段:表示如果<code>network.target</code>或<code>sshd-keygen.service</code>需要启动,那么<code>sshd.service</code>应该在它们之后启动.
+相应地,还有一个<code>Before</code>字段,定义<code>sshd.service</code>应该在哪些服务之前启动.</p>
+<p>注意,<code>After</code>和<code>Before</code>字段只涉及启动顺序,不涉及依赖关系.</p>
+<p>举例来说,某 <code>Web</code> 应用需要 <code>postgresql</code> 数据库储存数据.在配置文件中,它只定义要在 <code>postgresql</code> 之后启动,而没有定义依赖 <code>postgresql</code> .
+上线后,由于某种原因,<code>postgresql</code> 需要重新启动,在停止服务期间,该 <code>Web</code> 应用就会无法建立数据库连接.</p>
+<p>设置依赖关系,需要使用<code>Wants</code>字段和<code>Requires</code>字段.
+<code>Wants</code>字段:表示<code>sshd.service</code>与<code>sshd-keygen.service</code>之间存在&quot;弱依赖&quot;关系,即如果<code>sshd-keygen.service</code>启动失败或停止运行,不影响<code>sshd.service</code>继续执行.</p>
+<p><code>Requires</code>字段则表示&quot;强依赖&quot;关系,即如果该服务启动失败或异常退出,那么<code>sshd.service</code>也必须退出.
+注意,<code>Wants</code>字段与<code>Requires</code>字段只涉及依赖关系,与启动顺序无关,默认情况下是同时启动的.</p>
+<h4 id="service-区块启动行为"><a class="header" href="#service-区块启动行为">[Service] 区块:启动行为</a></h4>
+<p><code>Service</code>区块定义如何启动当前服务.</p>
+<h4 id="启动命令"><a class="header" href="#启动命令">启动命令</a></h4>
+<p>许多软件都有自己的环境参数文件,该文件可以用 <code>EnvironmentFile</code> 字段读取.</p>
+<p><code>EnvironmentFile</code>字段:指定当前服务的环境参数文件.该文件内部的<code>key=value</code>键值对,可以用<code>$key</code>的形式,在当前配置文件中获取.</p>
+<p>上面的例子中,<code>sshd</code> 的环境参数文件是<code>/etc/sysconfig/sshd</code>.
+配置文件里面最重要的字段是<code>ExecStart</code>.
+<code>ExecStart</code>字段:定义启动进程时执行的命令.</p>
+<p>上面的例子中,启动<code>sshd</code>,执行的命令是<code>/usr/sbin/sshd -D $OPTIONS</code>,其中的变量<code>$OPTIONS</code>就来自<code>EnvironmentFile</code>字段指定的环境参数文件.</p>
+<p>与之作用相似的,还有如下这些字段.</p>
+<ul>
+<li><code>ExecReload字段</code>:重启服务时执行的命令</li>
+<li><code>ExecStop字段</code>:停止服务时执行的命令</li>
+<li><code>ExecStartPre字段</code>:启动服务之前执行的命令</li>
+<li><code>ExecStartPost字段</code>:启动服务之后执行的命令</li>
+<li><code>ExecStopPost字段</code>:停止服务之后执行的命令</li>
+</ul>
+<p>请看下面的例子.</p>
+<pre><code class="language-service">[Service]
+ExecStart=/bin/echo execstart1
+ExecStart=
+ExecStart=/bin/echo execstart2
+ExecStartPost=/bin/echo post1
+ExecStartPost=/bin/echo post2
+</code></pre>
+<p>上面这个配置文件,第二行<code>ExecStart</code>设为空值,等于取消了第一行的设置,运行结果如下.</p>
+<pre><code class="language-bash">execstart2
+post1
+post2
+</code></pre>
+<p>所有的启动设置之前,都可以加上一个连词号(<code>-</code>),表示&quot;抑制错误&quot;,即发生错误的时候,不影响其他命令的执行.
+比如,<code>EnvironmentFile=-/etc/sysconfig/sshd</code>(注意等号后面的那个连词号),就表示即使<code>/etc/sysconfig/sshd</code>文件不存在,也不会抛出错误.</p>
+<h4 id="启动类型"><a class="header" href="#启动类型">启动类型</a></h4>
+<p><code>Type</code>字段定义启动类型.它可以设置的值如下.</p>
+<ul>
+<li><code>simple(默认值)</code>: <code>ExecStart</code>字段启动的进程为主进程</li>
+<li><code>forking</code>:<code>ExecStart</code>字段将以<code>fork()</code>方式启动,此时父进程将会退出,子进程将成为主进程</li>
+<li><code>oneshot</code>:类似于<code>simple</code>,但只执行一次,<code>Systemd</code>会等它执行完,才启动其他服务</li>
+<li><code>dbus:</code>类似于<code>simple</code>,但会等待 <code>D-Bus</code> 信号后启动</li>
+<li><code>notify:</code>类似于<code>simple</code>,启动结束后会发出通知信号,然后 <code>Systemd</code> 再启动其他服务</li>
+<li><code>idle:</code>类似于<code>simple</code>,但是要等到其他任务都执行完,才会启动该服务.一种使用场合是为让该服务的输出,不与其他服务的输出相混合</li>
+</ul>
+<p>下面是一个<code>oneshot</code>的例子,笔记本电脑启动时,要把触摸板关掉,配置文件可以这样写.</p>
+<pre><code class="language-service">[Unit]
+Description=Switch-off Touchpad
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/touchpad-off
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>上面的配置文件,启动类型设为<code>oneshot</code>,就表明这个服务只要运行一次就够了,不需要长期运行.
+如果关闭以后,将来某个时候还想打开,配置文件修改如下.</p>
+<pre><code class="language-service">[Unit]
+Description=Switch-off Touchpad
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/touchpad-off start
+ExecStop=/usr/bin/touchpad-off stop
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>上面配置文件中,<code>RemainAfterExit</code>字段设为<code>yes</code>,表示进程退出以后,服务仍然保持执行.
+这样的话,一旦使用<code>systemctl stop</code>命令停止服务,<code>ExecStop</code>指定的命令就会执行,从而重新开启触摸板.</p>
+<h4 id="重启行为"><a class="header" href="#重启行为">重启行为</a></h4>
+<p><code>Service</code>区块有一些字段,定义了重启行为.</p>
+<p><code>KillMode</code>字段:定义 <code>Systemd</code> 如何停止 <code>sshd</code> 服务.</p>
+<p>上面这个例子中,将<code>KillMode</code>设为<code>process</code>,表示只停止主进程,不停止任何 <code>sshd</code> 子进程,即子进程打开的 <code>SSH session</code> 仍然保持连接.
+这个设置不太常见,但对 <code>sshd</code> 很重要,否则你停止服务的时候,会连自己打开的 <code>SSH session</code> 一起杀掉.</p>
+<p><code>KillMode</code>字段可以设置的值如下.</p>
+<ul>
+<li><code>control-group</code>(默认值):当前控制组里面的所有子进程,都会被杀掉</li>
+<li><code>process</code>:只杀主进程</li>
+<li><code>mixed</code>:主进程将收到 <code>SIGTERM</code> 信号,子进程收到 <code>SIGKILL</code> 信号</li>
+<li><code>none</code>:没有进程会被杀掉,只是执行服务的 <code>stop</code> 命令.</li>
+</ul>
+<p>接下来是<code>Restart</code>字段.<code>Restart</code>字段:定义了 <code>sshd</code> 退出后,<code>Systemd</code> 的重启方式.
+上面的例子中,<code>Restart</code>设为<code>on-failure</code>,表示任何意外的失败,就将重启<code>sshd</code>.如果 <code>sshd</code> 正常停止(比如执行<code>systemctl stop</code>命令),它就不会重启.</p>
+<p>Restart字段可以设置的值如下.</p>
+<ul>
+<li><code>no</code>(默认值):退出后不会重启</li>
+<li><code>on-success</code>:只有正常退出时(退出状态码为<code>0</code>),才会重启</li>
+<li><code>on-failure</code>:非正常退出时(退出状态码非<code>0</code>),包括被信号终止和超时,才会重启</li>
+<li><code>on-abnormal</code>:只有被信号终止和超时,才会重启</li>
+<li><code>on-abort</code>:只有在收到没有捕捉到的信号终止时,才会重启</li>
+<li><code>on-watchdog</code>:超时退出,才会重启</li>
+<li><code>always</code>:不管是什么退出原因,总是重启</li>
+</ul>
+<p>对于守护进程,推荐设为<code>on-failure</code>.对于那些允许发生错误退出的服务,可以设为<code>on-abnormal</code>.
+最后是<code>RestartSec</code>字段,表示 <code>Systemd</code> 重启服务之前,需要等待的秒数.上面的例子设为等待<code>42</code>秒.</p>
+<h4 id="install-区块"><a class="header" href="#install-区块">[Install] 区块</a></h4>
+<p><code>Install</code>区块,定义如何安装这个配置文件,即怎样做到开机启动.</p>
+<ul>
+<li><code>WantedBy字段</code>:表示该服务所在的 <code>Target</code>.</li>
+</ul>
+<p><code>Target</code>的含义是服务组,表示一组服务.<code>WantedBy=multi-user.target</code>指的是,<code>sshd</code>所在的 <code>Target</code> 是<code>multi-user.target</code>.
+这个设置非常重要,因为执行<code>systemctl enable sshd.service</code>命令时,<code>sshd.service</code>的一个符号链接,就会放在<code>/etc/systemd/system</code>目录下面的<code>multi-user.target.wants</code>子目录之中. <code>Systemd</code> 有默认的启动 <code>Target</code>.</p>
+<pre><code class="language-bash">$ systemctl get-default
+multi-user.target
+</code></pre>
+<p>上面的结果表示,默认的启动 <code>Target</code> 是 <code>multi-user.target</code>.在这个组里的所有服务,都将开机启动.这就是为什么<code>systemctl enable</code>命令能设置开机启动的原因.
+使用 <code>Target</code> 的时候,<code>systemctl list-dependencies</code>命令和<code>systemctl isolate</code>命令也很有用.</p>
+<pre><code class="language-bash"># 查看 multi-user.target 包含的所有服务
+$ systemctl list-dependencies multi-user.target
+# 切换到另一个 target
+# shutdown.target 就是关机状态
+$ sudo systemctl isolate shutdown.target
+</code></pre>
+<p>一般来说,常用的 <code>Target</code> 有两个:一个是<code>multi-user.target</code>,表示多用户命令行状态;
+另一个是<code>graphical.target</code>,表示图形用户状态,它依赖于<code>multi-user.target</code>.官方文档有一张非常清晰的 <code>Target</code> 依赖关系图.</p>
+<h3 id="target-的配置文件"><a class="header" href="#target-的配置文件">Target 的配置文件</a></h3>
+<p><code>Target</code> 也有自己的配置文件.</p>
+<pre><code class="language-bash">$ systemctl cat multi-user.target
+[Unit]
+Description=Multi-User System
+Documentation=man:systemd.special(7)
+Requires=basic.target
+Conflicts=rescue.service rescue.target
+After=basic.target rescue.service rescue.target
+AllowIsolate=yes
+</code></pre>
+<p>注意,<code>Target</code> 配置文件里面没有启动命令. 上面输出结果中,主要字段含义如下.</p>
+<ul>
+<li><code>Requires</code>字段:要求<code>basic.target</code>一起运行.</li>
+<li><code>Conflicts</code>字段:冲突字段.如果<code>rescue.service</code>或<code>rescue.target</code>正在运行,<code>multi-user.target</code>就不能运行,反之亦然.</li>
+<li><code>After</code>:表示<code>multi-user.target</code>在<code>basic.target</code> ,  <code>rescue.service</code>, <code>rescue.target</code>之后启动,如果它们有启动的话.</li>
+<li><code>AllowIsolate</code>:允许使用<code>systemctl isolate</code>命令切换到<code>multi-user.target</code>.</li>
+</ul>
+<h3 id="修改配置文件后重启"><a class="header" href="#修改配置文件后重启">修改配置文件后重启</a></h3>
+<p>修改配置文件以后,需要重新加载配置文件,然后重新启动相关服务.</p>
+<pre><code class="language-bash">$ sudo systemctl daemon-reload  # 重新加载配置文件
+$ sudo systemctl restart foobar # 重启相关服务
+</code></pre>
+<h2 id="cgroup"><a class="header" href="#cgroup">cgroup</a></h2>
+<p><a href="https://wiki.archlinux.org/title/Cgroups">Control groups</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-1-exception.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-1-gnome.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-1-exception.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-1-gnome.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

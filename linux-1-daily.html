@@ -1,0 +1,1531 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>日常使用 - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html" class="active"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linux-1-daily"><a class="header" href="#linux-1-daily">linux-1-daily</a></h1>
+<hr />
+<p><code>ls *.tex</code> and <code>&quot;ls *.tex&quot;</code>
+前一种 bash 认为 <code>*.tex</code> 是参数,后一种 bash 认为 <code>&quot;ls *.tex&quot;</code> 是一个整体命令的名字.</p>
+<p>bash 物理行上单个语句不用分号,两个语句并列时,采用分号.</p>
+<hr />
+<p>如果用显式字符串作 <code>cd</code> 的参数,应该用绝对路径避免<code>~</code>的解析问题.如</p>
+<pre><code class="language-bash">cd  /home/tom/Downloads
+</code></pre>
+<hr />
+<p><code>whoami</code>会输出用户的名称</p>
+<hr />
+<p>bash -c <code>command</code> arg1 arg2 ...</p>
+<p>这种调用形式,会读取 <code>-c</code>后面的<code>command_string</code>并执行命令,然后退出
+如果在<code>command_string</code>之后有参数,则第一个参数分配给<code>$0</code>,其余所有参数分配给<code>位置参数</code>.
+<code>$0</code>的赋值设置<code>shell</code>的名称,该名称用于<code>warning</code>和<code>error</code>消息.如</p>
+<pre><code class="language-bash">bash -c 'ls;echo;uptime'
+</code></pre>
+<h2 id="命令类型"><a class="header" href="#命令类型">命令类型</a></h2>
+<p>命令可以是下面四种形式之一:</p>
+<ol>
+<li>是一个可执行程序,就像我们所看到的位于目录<code>/usr/bin</code> 中的文件一样.
+属于这一类的程序,可以编译成二进制文件,诸如用 <code>C</code> 和 <code>C++</code>语言写成的程序, 也可以是由脚本语言写成的程序,比如说 <code>shell</code>,<code>perl</code>,<code>python</code>,<code>ruby</code>,等等.</li>
+<li>是一个内建于 <code>shell</code> 自身的命令.bash 支持若干命令,内部叫做 shell 内部命令 <code>(builtins</code>).例如,<code>cd</code> 命
+令,就是一个 <code>shell</code> 内部命令.</li>
+<li>是一个 <code>shell</code> 函数.这些是小规模的 <code>shell</code> 脚本,它们混合到环境变量中. 在后续的章节里,我们将讨论配
+置环境变量以及书写 shell 函数.但是现在, 仅仅意识到它们的存在就可以了.</li>
+<li>是一个命令别名.我们可以定义自己的命令,建立在其它命令之上</li>
+</ol>
+<hr />
+<p><a href="https://ohmyz.sh/#install">oh_my_zsh</a></p>
+<p>查看或设置主题</p>
+<pre><code class="language-zsh">_omz::theme list agnoster
+_omz::theme set agnoster
+</code></pre>
+<p>更新 <code>omz</code></p>
+<pre><code>_omz::update
+</code></pre>
+<hr />
+<p>powerline</p>
+<p><a href="https://github.com/powerline/powerline">Powerline is a statusline plugin</a>
+<a href="https://powerline.readthedocs.io/en/latest/installation/linux.html">Installation on Linux</a></p>
+<p>get the latest release version</p>
+<pre><code class="language-powershell">pip install --user powerline-status
+</code></pre>
+<h2 id="基本命令"><a class="header" href="#基本命令">基本命令</a></h2>
+<ul>
+<li><code>type</code> – 说明怎样解释一个命令名</li>
+<li><code>which</code> – 显示会执行哪个可执行程序</li>
+<li><code>man</code> – 许多希望被命令行使用的可执行程序,提供了一个正式的文档,叫做手册或手册页(man page).一个特殊的叫做<code>man</code> 的分页程序,可用来浏览他们</li>
+<li><code>apropos</code> - 显示适当的命令,基于某个关键字的匹配项.虽然很粗糙但有时很有用.</li>
+<li><code>info</code> – 项目提供了一个命令程序手册页的替代物,称为<code>info</code>.</li>
+<li><code>whatis</code> – 程序显示匹配特定关键字的手册页的名字和一行命令说明</li>
+<li><code>alias</code> – 创建命令别名</li>
+<li><code>type</code> 命令是 <code>shell</code> 内部命令,它会显示命令的类别</li>
+<li><code>which</code>这个命令只对可执行程序有效,不包括内部命令和命令别名,别名是真正的可执行程序的替代物</li>
+<li><code>bash</code> 有一个内建的帮助工具,可供每一个 <code>shell</code> 内部命令使用.输入<code>help</code>,接着是 <code>shell</code> 内部命令名.例如: <code>help cd</code></li>
+<li><code> --help</code> : 许多可执行程序支持这个选项, 显示命令所支持的语法和选项说明.</li>
+<li><code>less </code> 浏览文件内容</li>
+<li><code>basename file suffix</code> 用来去掉文件后缀名</li>
+<li><code>/bin/kill -L</code> : 查看linux <code>kill</code> 的数字对应的短语</li>
+<li><code>ldd</code>查看依赖信息</li>
+<li><code>sha256sum</code>: 计算并检查 <code>SHA256</code> message digest (消息摘要)</li>
+<li><code>xdg-open</code>: 可以设置别名为<code>open</code>, 使用默认的程序打开文件或者<code>url</code>.</li>
+<li><code>lsusb</code>: 用于显示系统中的<code>USB</code>总线和连接到它们的设备信息的工具.</li>
+<li><code>lspci</code>: 用于显示系统中的<code>PCI</code>总线和连接到它们的设备的信息的工具. Peripheral Component Interconnect, 外围组件互连标准. <code>pcie</code>--express:高速串行总线.</li>
+<li><code>ssh remote-sys 'ls * &gt; dirlist.txt'</code> ; 远程连接到<code>remote-sys</code>, 并执行<code>ls * &gt; dirlist.txt</code> 命令.</li>
+</ul>
+<hr />
+<p><code>echo</code>输出的时候,可以考虑改变颜色增加辨认度</p>
+<pre><code class="language-bash">echo  -e &quot;\033[1;47m\033[1;32m Testing output... &quot;
+</code></pre>
+<hr />
+<p><code>ls --color=always | less -R</code>: 这个命令可以保持颜色控制字符的传递.</p>
+<p><code>less -R</code> or <code>--RAW-CONTROL-CHARS</code>:</p>
+<p>和<code>-r</code>一样, 但只把ANSI &quot;color&quot;转义序列以 &quot;raw&quot; 形式输出.  大多数情况下幕外观保持正确.
+ANSI &quot;颜色&quot;转义序列是以下形式的序列: <code>ESC [ ... m</code>. 其中<code>...</code>是<code>0</code>个或更多的颜色规范字符. 为了保持屏幕外观, <code>ANSI</code>颜色转义序列被认为不会移动光标.
+你可以设置<code>m</code>之外的结束字符, 方法是将环境变量<code>LESSANSIENDCHARS</code>设为结束颜色转义序列的字符列表.
+也可以设置环境变量<code>LESSANSIMIDCHARS</code>,使标准字符之外的字符出现在<code>ESC</code>和<code>m</code>之间</p>
+<p>或者可以使用<code>git diff --word-diff --no-index file1 file2 </code>. <code>--word-diff</code>指定按单词模式显示差异, <code>--no-index</code>表明不是与<code>cached</code>作比较, 而是比较工作区中的文件.</p>
+<hr />
+<ul>
+<li><code>date</code> :日期</li>
+<li><code>cal</code>: 日历</li>
+<li><code>df</code> :磁盘剩余空间</li>
+<li><code>free</code>: 空闲内存</li>
+<li><code> file</code>  :确定文件类型</li>
+<li><code>which</code>: 确定命令的位置, <code>where</code>: <code>zsh</code>内置命令, <code>which</code>:内置命令, 也有二进制, <code>whereis</code>: 二进制程序.</li>
+<li><code>type</code>: 用来查看命令的类型</li>
+<li><code>cd -</code> :更改工作目录到先前的工作目录</li>
+<li><code>cd ~user_name</code> :切换到用户家目录</li>
+<li><code>cp -u *.html destination</code> :更新文件到destination</li>
+<li><code>ln file link</code> :创建硬链接</li>
+<li><code>ln -s item link</code> :创建符号链接, <code>item</code>可以是一个文件或目录,<code>gnome</code>中,按住<code>ctrl+shift</code>拖动会创建链接.</li>
+<li><code>df -hT</code>: <code>h</code>让你以 <code>MB</code> 或 <code>G</code> 为单位查看磁盘的空间, <code>T</code>打印设备类型</li>
+</ul>
+<hr />
+<p>查看系统版本信息</p>
+<p><a href="https://blog.csdn.net/whbing1471/article/details/52074390">ubuntu: 查看ubuntu系统的版本信息</a></p>
+<pre><code class="language-bash">cat /proc/version
+uname -a
+sb_release -a
+</code></pre>
+<hr />
+<p>查看主要存储设备的使用情况</p>
+<pre><code class="language-bash">df -h | sort -hr --key=2
+</code></pre>
+<h2 id="环境变量"><a class="header" href="#环境变量">环境变量</a></h2>
+<p><a href="https://blog.csdn.net/lijingshan34/article/details/86568596">/etc/environment 与 /etc/profile区别</a></p>
+<p><code>/etc/environment</code>是设置整个系统的环境, 而<code>/etc/profile</code>是设置所有用户的环境, 前者与登录用户无关, 后者与登录用户有关.</p>
+<p>跟环境变量相关的参数:</p>
+<p><code>/etc/profile</code> -&gt;<code>/etc/enviroment</code> --&gt;<code>$HOME/.profile</code> --&gt;<code>$HOME/.env</code></p>
+<p>如果你把文本放在双引号中, <code>shell</code> 使用的特殊字符, 除了<code>\</code>(反斜杠),<code>$</code> ,和 <code>`</code>(倒引号)之外, 则失去它们的特殊含义,被当作普通字符来看待.</p>
+<p>这意味着</p>
+<ul>
+<li>单词分割, (<code>空格</code>)</li>
+<li>路径名展开, (<code>*``?</code>)</li>
+<li>波浪线展开,(<code>~</code>)</li>
+<li>和花括号展开(<code>{}</code>)</li>
+</ul>
+<p>都被禁止,然而</p>
+<ul>
+<li>参数展开(<code>$USER</code>)</li>
+<li>算术展开(<code>$(())</code>)</li>
+<li>命令替换<code>$()</code></li>
+</ul>
+<p>仍被执行, 所以在<code>.zshrc</code> or <code>.bashrc</code> 中设置环境变量的时候, 如果需要用到<code>~</code>, 那么就不用加<code>&quot;</code> or <code>'</code>,(不要加任何引号)</p>
+<pre><code class="language-bash">export PATH=/usr/local/opt/coreutils/libexec/gnubin:~/bin:$PATH
+</code></pre>
+<p><code>$HOME</code>:用户目录</p>
+<h2 id="shell-模式切换"><a class="header" href="#shell-模式切换">shell 模式切换</a></h2>
+<ol>
+<li>查看系统支持的shell模式及位置</li>
+</ol>
+<p><code>echo &amp;SHELL</code>
+<code>cat /etc/shells</code></p>
+<ol start="2">
+<li>切换shell为/bin/sh</li>
+</ol>
+<p><code># chsh -s /bin/sh</code></p>
+<h2 id="重启x-org"><a class="header" href="#重启x-org">重启x-org</a></h2>
+<p><a href="https://www.kaifa99.com/ubuntu/article_156280">xorg 重新启动X窗口服务器</a></p>
+<p>在<code>systemd</code>系统上(<code>Ubuntu 15.04</code>和更新版本)</p>
+<pre><code class="language-bash">sudo systemctl restart display-manager
+</code></pre>
+<p>注: 这将强制退出所有图形程序, 将丢失未保存的工作, 强制被注销. 非图形程序不会受到影响.</p>
+<p>对于其他<code>Ubuntu</code>版本, 首先使用以下命令找到<code>Ubuntu</code>的显示管理器:</p>
+<pre><code class="language-bash">cat /etc/X11/default-display-manager
+</code></pre>
+<p>根据显示管理器的不同, 可以使用以下命令之一:</p>
+<pre><code class="language-bash">sudo restart lightdm # 使用LightDM
+sudo restart gdm # Gnome (带GDM )
+sudo restart kdm # KDE (带KDM )
+sudo restart mdm # 对于MDM (例如对于Mint Cinnamon )
+</code></pre>
+<p><a href="https://wiki.archlinux.org/title/Display_manager">Display manager</a></p>
+<p><code>显示管理器</code>(display manager), 或称<code>登录管理器</code>(login manager), 通常是一个图形用户界面, 在 boot 过程结束时显示, 以取代默认的shell.
+显示管理器有多种实现方式, 就像有各种类型的 window managers 和 desktop environments 一样. 通常每一种都有一定程度的定制和主题性可供选择.</p>
+<h2 id="ls-选项"><a class="header" href="#ls-选项">ls 选项</a></h2>
+<p><code>ls -d */</code></p>
+<ul>
+<li><code>-d</code>; 选项指定只列出目录,<code>glob</code>模式当前目录下<code>*/</code>表示所有的子目录</li>
+<li><code>-S</code> ;  按文件大小排序,大的优先</li>
+<li><code>--sort=WORD</code> ;  按<code>WORD</code>排序,而不是<code>name</code>: none (-U), size (-S), time (-t), version (-v), extension (-X)</li>
+<li><code>--time=WORD</code>; 和 <code>-l</code>一起使用, 显示<code>WORD</code>时间, 而不是默认的修改时间, 可使用字段:
+<code>atime</code> or <code>access</code> or <code>use</code> (<code>-u</code>); <code>ctime</code> or <code>status</code> (<code>-c</code>); 同时使用指定的 <code>time</code> 作为排序键, 如果使用了<code>--sort=time</code> (新的在前)</li>
+<li><code>-X</code> ; 按拓展名的字母顺序排列</li>
+<li><code>-m</code>; 用逗号分隔的条目列表填充宽度</li>
+<li><code>-x</code> ;    按行而不是按列输出条目</li>
+<li><code>-b, --escape</code>;    对非图形字符, 打印<code>C</code>式转义符</li>
+<li><code>-q, --hide-control-chars</code>;    对非图形字符, 打印<code>?</code></li>
+<li><code>-1</code> ;    每行打印一个文件. 可以使用<code>-q</code>或者<code>-b</code>避免<code>\n</code></li>
+<li><code>--format=WORD</code> ;  横跨<code>-x</code>,逗号<code>-m</code>,水平<code>-x</code>,长<code>-l</code>,单列<code>-1</code>,verbose<code>-l</code>,垂直<code>-C</code></li>
+</ul>
+<h2 id="别名alias"><a class="header" href="#别名alias">别名(alias)</a></h2>
+<p><a href="https://www.cnblogs.com/chenjo/p/11145021.html">Linux shell 脚本中使用 alias 定义的别名</a></p>
+<p>可以把多个命令放在同一行上,命令之间 用<code>;</code>分开</p>
+<pre><code class="language-bash">command1; command2; command3...
+</code></pre>
+<p>我们会用到下面的例子:</p>
+<pre><code class="language-bash">$ cd /usr; ls; cd -
+bin games
+kerberos lib64
+local
+</code></pre>
+<p>正如我们看到的,我们在一行上联合了三个命令.
+首先更改目录到<code>/usr</code>,然后列出目录 内容,最后回到原始目录(用命令<code>cd -</code>),结束在开始的地方.
+现在,通过 <code>alia</code> 命令 把这一串命令转变为一个命令.</p>
+<p>为了查清此事,可以使用 type 命令:</p>
+<pre><code class="language-bash">$ type test
+test is a shell builtin
+</code></pre>
+<p>哦!<code>test</code>名字已经被使用了.试一下<code>foo</code>:</p>
+<pre><code class="language-bash">$ type foo
+bash: type: foo: not found
+</code></pre>
+<p>创建命令别名:</p>
+<pre><code class="language-bash">$ alias foo='cd /usr; ls; cd -'
+</code></pre>
+<p>注意命令结构:</p>
+<pre><code class="language-bash">alias name='string'
+</code></pre>
+<p>在命令<code>alias</code>之后,输入<code>name</code>,紧接着(没有空格)是一个等号,等号之后是 一串用引号引起的字符串,字符串的内容要赋值给 <code>name</code>.</p>
+<p>删除别名,使用 unalias 命令,像这样:</p>
+<pre><code class="language-bash">$ unalias foo
+$ type foo
+bash: type: foo: not found
+</code></pre>
+<p>如果想要永久保存定义的<code>alias</code>,可以将其写入到 <code>/etc/profile</code> 或者 <code>~/.bash_rc</code> 中去,
+两个的区别是影响的范围不一样而已</p>
+<h2 id="zsh-别名"><a class="header" href="#zsh-别名">zsh 别名</a></h2>
+<ul>
+<li><code>grep</code>='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'</li>
+</ul>
+<h2 id="文件管理-cp-rm-mv"><a class="header" href="#文件管理-cp-rm-mv">文件管理 cp rm mv</a></h2>
+<p>复制移动的时候,可以加上 <code>-i</code> 参数,防止覆盖</p>
+<p><code>cp [OPTION]... SOURCE... DIRECTORY</code></p>
+<p><code>...</code> 表示可以重复</p>
+<p><code>cp -i  ... ... </code></p>
+<p><code>cp -irf  ... ... </code></p>
+<p>短命令可以堆叠, <code>-i -r -f</code>=<code>-irf</code>=<code>--interactive --force --recursive</code></p>
+<p><code>-R</code> 如果<code>source_file</code>是目录, 则<code>cp</code>复制目录和整个子目录.  如果<code>source_file</code>以<code>/</code>结尾, 则复制目录内容, 而不是此目录本身.
+此选项还会导致复制符号链接, 而不是复制链接对应的文件, 并让<code>cp</code>创建特殊文件, 而不是普通文件. 创建的目录与相应的源目录具有相同的<code>mode</code>, 不会被<code>umask</code>修改.
+在<code>-R</code>模式下, 即使检测到错误, <code>cp</code>仍将继续复制.
+请注意, <code>cp</code>将硬链接的文件单独复制一份.  如果你需要保持硬链接, 考虑改用<code>tar(1)</code>, <code>cpio(1)</code>, or <code>pax(1)</code>.</p>
+<p><code>-a</code>与<code>-pPR</code>选项相同.  保留文件的结构和属性, 但不保留目录结构.</p>
+<hr />
+<p>要删除名称以<code>-</code>开头的文件,例如<code> -foo</code>,请使用以下命令之一:</p>
+<ul>
+<li><code>rm -- -foo</code></li>
+<li><code>rm ./-foo</code></li>
+</ul>
+<p>删除本层目录下除了源文件的<code>latex</code>辅助文件</p>
+<pre><code>temp_a=$(find . -mindepth 1 -maxdepth 1 -type f   \( -not -name  &quot;*.pdf&quot; \)  \( -not -name  &quot;*.tex&quot; \) \( -not -name  &quot;*.bib&quot; \) -print0); if [[ ${temp_a} != '' ]]; then  echo -n ${temp_a} |  xargs --null rm; fi
+</code></pre>
+<p>可以多用花括号展开,指定多个文件名,例如:</p>
+<pre><code class="language-bash">ls ~/draft/draft.2008{03,04,05}.nb
+/home/tom/draft/draft.200803.nb  /home/tom/draft/draft.200804.nb  /home/tom/draft/draft.200805.nb
+</code></pre>
+<p>删除本目录下的子目录, 只保留文件:</p>
+<pre><code class="language-bash">find . -mindepth 1 -maxdepth 0 -type d # 先查看输出
+find . -mindepth 1 -maxdepth 1 -type d -exec rm -rf '{}' + #使用 + 号将输出合并到 rm -rf 后面
+</code></pre>
+<p>其中<code>{}</code>是当前路径名的符号表示,<code>;</code>界定符表示命令结束, <code>+</code>界定符表示合并结果一起执行命令.</p>
+<h2 id="重命名-rename"><a class="header" href="#重命名-rename">重命名 rename</a></h2>
+<p>重命名除了使用<code>mv</code>,也可以使用<code>rename</code>.  在<code>ubuntu</code>上, 有两个版本的<code>rename</code>程序.
+<code>perl</code>版的<code>rename</code>程序就叫做<code>rename</code>, <code>util-linux</code>包中的版本叫做<code>rename.ul</code>.</p>
+<p>以下是简单的说明:</p>
+<hr />
+<p>rename - renames multiple files</p>
+<p>SYNOPSIS</p>
+<pre><code class="language-bash">rename [ -h|-m|-V ] [ -v ] [ -n ] [ -f ] [ -e|-E perlexpr]*|perlexpr [ files ]
+</code></pre>
+<p>DESCRIPTION</p>
+<p><code>rename</code>根据指定为第一个参数的规则重命名提供的文件名.
+<code>perlexpr</code>参数是一个<code>Perl</code>表达式,它修改<code>Perl</code>中的<code>$ _</code>字符串.
+如果给定的文件名未被表达式修改,则不会重命名.
+如果命令行中未提供文件名,则将通过标准输入读取文件名.</p>
+<p><code>perlepxr</code>三种模式,分别是:</p>
+<ul>
+<li>匹配; <code>m</code></li>
+<li>替换; <code>s</code></li>
+<li>转化; <code>tr</code> or <code>y</code> :  相当于一个映射表格, 进行批量替换</li>
+</ul>
+<p><code>perlepxr</code>的后向引用</p>
+<pre><code class="language-perl">$` : 匹配部分的前一部分字符串
+$&amp; : 匹配的字符串
+$'  : 还没有匹配的剩余字符串
+$1 : 反向引用的第一个字符串
+</code></pre>
+<p><code>/expr/sub/mod</code>中<code>mod</code>表示模式修饰符, 可以是</p>
+<ul>
+<li><code>i</code>    如果在修饰符中加上<code>$1</code>, 则正则将会取消大小写敏感性, 即<code>$1</code>和<code>$1</code> 是一样的.</li>
+<li><code>m</code>    默认的正则开始<code>^</code>和结束<code>$</code>只是对于正则字符串.
+如果在修饰符中加上<code>m</code>, 那么开始和结束将会指字符串的每一行: 每一行的开头就是<code>^</code>, 结尾就是<code>$</code>.</li>
+<li><code>o</code>    表达式只执行一次.</li>
+<li><code>s</code>    如果在修饰符中加入<code>s</code>, 那么默认的<code>.</code>代表除了换行符以外的任何字符将会变成任意字符, 也就是包括换行符!</li>
+<li><code>x</code>    如果加上该修饰符, 表达式中的空白字符将会被忽略, 除非它已经被转义.</li>
+<li><code>g</code>    替换所有匹配的字符串.</li>
+<li><code>e</code>    替换字符串作为表达式</li>
+</ul>
+<p>例如,要重命名所有匹配<code>* .bak</code>的文件,以去除扩展名,可以用</p>
+<pre><code class="language-bash">rename 's/\w.bak$//' *.bak
+</code></pre>
+<p>要将大写名称转换为小写,可以使用</p>
+<pre><code class="language-bash">rename 'y/A-Z/a-z/' *
+</code></pre>
+<p>把文件名中的 中划线 改称 下划线</p>
+<pre><code class="language-bash">rename -n 'y/-/_/' */* # 先使用 -n 查看将被改名的文件, 但不执行操作
+rename -v 'y/-/_/' */* # 去掉 -n 选项, 执行操作
+</code></pre>
+<hr />
+<p>参数</p>
+<ul>
+<li><code> -v, --verbose</code>;  打印出重命名成功的文件.</li>
+<li><code>-0, --null</code>; 当从<code>STDIN</code>读取时, 使用<code>\0</code>作为分隔符.</li>
+<li><code>--path, --fullpath</code>; Rename full path: 重命名任何路径元素, 默认行为</li>
+<li><code>-d, --filename, --nopath, --nofullpath</code>; 不重命名文件夹, 只重命名文件部分.</li>
+<li><code>-n, --nono</code>;No action: 打印出要重命名的文件, 但不执行操作</li>
+<li><code>-e  Expression</code>; 作用到文件名上的代码. 可以重复使用<code>-e expr1 -e expr2 ...</code>来构建代码, (like <code>perl -e</code>). 如果没有<code>-e</code>, 第一个参数被当成<code>code</code></li>
+<li><code>-E Statement</code>; 类似于<code>-e</code>, 但需要<code>;</code>结束</li>
+</ul>
+<h2 id="获取绝对路径-realpath"><a class="header" href="#获取绝对路径-realpath">获取绝对路径 realpath</a></h2>
+<p><code>realpath</code> - <code>print the resolved path</code>(打印已解析的路径)</p>
+<p>SYNOPSIS
+<code>realpath [OPTION]... FILE...</code></p>
+<p>DESCRIPTION
+打印解析的绝对文件名;  除最后一个组件外的所有组件都必须存在</p>
+<p><code>-e</code>, <code>--canonicalize-existing</code>: 路径的所有组成部分必须存在
+<code>-m</code>,<code>--canonicalize-missing</code>:路径组件不需要存在,也不必是目录
+<code>-L</code>, <code>--logical</code>:解析符号链接前的<code>..</code>组件
+<code>-P</code>, <code>--physical</code>:解析遇到的符号链接(默认)
+<code>-q</code>, <code>--quiet</code>:禁止显示大多数错误消息
+<code>--relative-to=DIR</code>:打印相对于<code>DIR</code>的解析路径
+<code>--relative-base=DIR</code>:只打印<code>DIR</code>后面的绝对路径路径
+<code>-s</code>, <code>--strip, --no-symlinks</code>:不扩展符号链接
+<code>-z</code>,<code> --zero</code>:用NUL而不是换行符结束每个输出行</p>
+<p>canonical order: 在排序中,指一种标准的顺序,比如字母顺序.</p>
+<h2 id="tar-unzip"><a class="header" href="#tar-unzip">tar unzip</a></h2>
+<hr />
+<p>创建压缩文件</p>
+<ul>
+<li><code>tar -cvf a.tar /etc</code></li>
+<li><code>gzip foo.txt</code></li>
+<li><code>gzip -fvr foo.txt </code>: force,verbose,recursive</li>
+<li><code>zip -r foo.zip a b c ...</code></li>
+</ul>
+<p>创建存档的同时用<code>gunzip</code>压缩: <code>tar -czvf a.tar.gz /etc</code>.
+<code>tar</code>默认把路径当成相对路径, 如果提供的路径为<code>/home/user/file</code>, <code>tar</code>在创建存档时依次创建这些目录层次, 并且去掉开头的<code>/</code>, 使用<code>-P</code>选项改变默认设置.
+下面讨论一些<code>tar</code>的选项:</p>
+<ul>
+<li><code>-P, --absolute-names</code>:在创建存档时, 不去掉领头的<code>/</code>.</li>
+<li><code>--no-recursion</code>:避免自动递归子目录.</li>
+<li><code>--recursion</code>:递归子目录, 默认.</li>
+<li><code>-f, --file=ARCHIVE</code>: 设置存档用的文件或设备为<code>ARCHIVE</code>.</li>
+</ul>
+<p>如果未提供<code>--file=ARCHIVE</code>, 则<code>tar</code>将首先检查环境变量<code>TAPE</code>. 如果<code>TAPE</code>不为<code>null</code>, 其值将用作存档名称.
+否则, <code>tar</code>将采用编译的默认值. 默认值可以使用<code>--show-defaults</code>选项, 或在<code>tar --help</code>输出的末尾查看.
+用带有<code>:</code>的存档名称表示远程计算机上的文件或设备. 冒号之前的部分作为机器名称或<code>IP</code>地址, 其后的部分为文件或设备路径名, 例如: <code>--file=remotehost:/dev/sr0</code>.
+也可以使用<code>user@host</code>, 即<code>用户名@主机名</code>的形式. 默认情况下, 通过<code>rsh(1)</code>命令访问远程主机. 如今通常使用<code>ssh(1)</code>代替, 可以通过以下选项指定: <code>--rsh-command=/usr/bin/ssh</code>.
+远程计算机应安装了<code>rmt(8)</code>命令. 如果远程机器上<code>rmt</code>的路径名与<code>tar</code>的默认不匹配, 可以通过<code>--rmt-command</code>选项来指定正确的路径.
+使用<code>--force-local</code>选项: 即使带有<code>:</code>号, 也认为文件存在于本地.</p>
+<hr />
+<p>解压缩<code>xxx.tar.gz</code></p>
+<ul>
+<li><code>tar -xzvf  xxx.tar.gz</code></li>
+<li><code>gzip foo.txt</code></li>
+<li><code>gzip -tv foo.txt.gz</code> : test,检验压缩文件完整性</li>
+<li><code>unzip file[.zip] [file(s) ...]  [-x xfile(s) ...] [-d exdir]</code>  文件名中可以使用通配符,但要<code>quote</code>起来</li>
+</ul>
+<p>查看压缩文件内容,以下命令都可以</p>
+<ul>
+<li><code>tar -tf  xxx.tar.gz</code></li>
+<li><code>tar -tzf  xxx.tar.gz</code></li>
+<li><code>gunzip -c foo.txt | less</code></li>
+<li><code>zcat foo.txt.gz | less</code></li>
+<li><code>unzip -l file[.zip] [file(s) ...]</code></li>
+</ul>
+<p>支持的解压过滤器如下</p>
+<ul>
+<li><code>-a, --auto-compress</code>  使用存档后缀来确定压缩程序.</li>
+<li><code>-I, --use-compress-program=COMMAND</code>: 通过COMMAND过滤数据.  它必须接受<code>-d</code>选项以进行解压缩.  该参数可以包含命令行选项.</li>
+<li><code>-j, --bzip2</code>: 通过<code>bzip2(1)</code>过滤存档.</li>
+<li><code>-J, --xz</code>: 通过<code>xz(1)</code>过滤存档.</li>
+<li><code>--lzip</code> :通过<code>lzip(1)</code>过滤存档.</li>
+<li><code>--lzma</code> :通过<code>lzma(1)</code>过滤存档.</li>
+<li><code>--lzop</code>:通过lzop(1)过滤存档.</li>
+<li><code>--no-auto-compress</code>: 不要使用存档后缀来确定压缩程序.</li>
+<li><code>-z, --gzip, --gunzip, --ungzip</code>: 通过<code>gzip(1)</code>过滤存档.</li>
+<li><code>-Z, --compress, --uncompress</code>通过<code>compress(1)</code>过滤存档.</li>
+<li><code>--zstd</code>: 通过<code>zstd(1)</code>过滤存档.</li>
+</ul>
+<p><code>unzip</code> 解压特定文件合并到当前目录: 使用<code>unzip -j</code>选项: junk paths, 不会重新创建档案的目录结构;  所有文件都存放在提取目录中(默认为当前目录), 结合通配符.</p>
+<pre><code class="language-bash">unzip -j '*.zip'  '*.otf'
+</code></pre>
+<h2 id="7z"><a class="header" href="#7z">7z</a></h2>
+<p>支持的格式</p>
+<p><code>LZMA2</code>, <code>XZ</code>, <code>ZIP</code>, <code>Zip64</code>, <code>CAB</code>, <code>RAR</code> (如果安装了 non-free <code>p7zip-rar</code>包),
+<code>ARJ</code>,  <code>GZIP</code>, <code>BZIP2</code>, <code>TAR</code>, <code>CPIO</code>, <code>RPM</code>, <code>ISO</code></p>
+<p>用法: <code>7z &lt;command&gt; [&lt;switches&gt;...] &lt;archive_name&gt; [&lt;file_names&gt;...] [&lt;@listfiles...&gt;]</code></p>
+<ul>
+<li>解压缩,输入密码, <code>x</code>动作保持压缩档案的目录结构:</li>
+</ul>
+<pre><code class="language-bash">7z x -p1234 filename
+</code></pre>
+<ul>
+<li>压缩单个文件, <code>a</code>动作即添加压缩档案</li>
+</ul>
+<pre><code class="language-bash">7z a -t7z archive_name filename
+</code></pre>
+<ul>
+<li>压缩<code>txt</code>中的文件</li>
+</ul>
+<pre><code class="language-bash">7z a -t7z configrc.win.7z @tom.rc_list.win
+7z a -t7z configrc.linux.7z @tom.rc_list.linux
+</code></pre>
+<ul>
+<li>
+<p>各种动作</p>
+</li>
+<li>
+<p><code>a</code> : 添加文件到归档中</p>
+</li>
+<li>
+<p><code>b</code> : Benchmark</p>
+</li>
+<li>
+<p><code>d</code> : 从归档中删除</p>
+</li>
+<li>
+<p><code>e</code> : 从归档中提取(不使用目录名)</p>
+</li>
+<li>
+<p><code>h</code> : 计算文件的 hash 值</p>
+</li>
+<li>
+<p><code>i</code> : 展示支持的格式</p>
+</li>
+<li>
+<p><code>l</code> : 列出归档的内容</p>
+</li>
+<li>
+<p><code>rn</code> : 重命名归档中的文件</p>
+</li>
+<li>
+<p><code>t</code> : 检查归档的完整性</p>
+</li>
+<li>
+<p><code>u</code> : 把文件更新到归档</p>
+</li>
+<li>
+<p><code>x</code> : 提取文件, 使用全路径(也就是保持文件结构)</p>
+</li>
+<li>
+<p>可以使用的开关. 开关后面跟的具体参数不需要空格隔开.</p>
+</li>
+<li>
+<p><code>--</code> : 停止解析开关</p>
+</li>
+<li>
+<p><code>-o{Directory}</code> : 设置输出目录</p>
+</li>
+<li>
+<p><code>-p{Password}</code> : 设置密码</p>
+</li>
+<li>
+<p><code>-r[-|0]</code> : 递归子目录,作者不推荐使用</p>
+</li>
+<li>
+<p><code>-y</code> : 对所有询问回答 yes</p>
+</li>
+<li>
+<p><code>-t{Type}</code>:设置归档的类型</p>
+</li>
+<li>
+<p><code>-ai[r[-|0]]@{listfile} | !{wildcard}</code>: 包括额外的压缩文件, 以及通配符. 支持使用多次.</p>
+</li>
+<li>
+<p><code>-an</code>: 禁止命令行自动解析压缩文档的名字,需要与<code>-ai</code> (Include archives)开关一起使用</p>
+</li>
+<li>
+<p><code>-m</code>: 设置压缩方法开关</p>
+</li>
+<li>
+<p><code>-v{Size}[b | k | m | g]</code>: 创建 Volumes, 指定分卷体积.</p>
+</li>
+</ul>
+<p><code>-an</code>禁止解析命令行中的压缩文档名称. 此开关必须与 <code>-ai</code> (Include archives) 开关一起使用.
+如果你的压缩文档在列表文件中给出, 你要用<code>-ai</code>开关指定它, 所以在命令行中你需要禁止解析<code>存档_名称</code>字段.</p>
+<hr />
+<ul>
+<li>
+<p><code>-m</code>: 设置压缩方法开关. 语法:  <code>-m&lt;method_parameters&gt;</code>(压缩方法).
+例如<code>7z a -pa.7z-mx=0 a.txt</code> 创建加密文档<code>a.7z</code>, 只是简单复制.</p>
+<p>开关描述中的 &quot;默认值 &quot;是指如果没有指定开关, 将使用的值.
+允许使用布尔型开关的简化形式: <code>sw+</code>或<code>sw</code>代替<code>sw=on</code>, <code>sw-</code>代替<code>sw=off</code>.
+此开关的格式取决于存档类型: <code>Zip </code>, <code>GZip </code>, <code>BZip2 </code>, <code>7z </code>, <code>XZ </code>, <code>WIM </code>. <code>-m</code>开关还可以为<code>h</code>(Hash)命令指定散列方法.</p>
+<p>对于<code>7z</code>格式,
+Parameter  Default  Description</p>
+<ul>
+<li><code>x=[0 | 1 | 3 | 5 | 7 | 9 ]</code>; <code>5</code>;  例如: <code>x=9</code>.定压缩级别. 将选择不同的<code>Dictionary</code>, <code>FastBytes</code>,  <code>MatchFinder</code>, <code>Filter</code> .</li>
+<li><code>yx=[0 | 1 | 3 | 5 | 7 | 9 ]</code>; <code>5</code>; 文件分析的级别.</li>
+<li><code>s=[off | on | [e] [{N}f] [{N}b | {N}k | {N}m | {N}g | {N}t]</code>; <code>on</code>;  默认模式是<code>s=on</code>. 在<code>solid</code>模式下, 文件被分组在一起, 通常可以提高压缩率.</li>
+<li><code>qs=[off | on]</code>; <code>off</code>;  在固实档案中按类型对文件进行分类.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<ul>
+<li><code>-v{Size}[b | k | m | g]</code>: 创建 Volumes, 指定分卷体积.</li>
+</ul>
+<p>以 <code>Bytes</code>,<code> Kilobytes</code> (1 <code>Kilobyte</code> = 1024 <code>bytes</code>), <code>Megabytes</code> (1 <code>Megabyte</code> = 1024 <code>Kilobytes</code>) 或 <code>Gigabytes</code> (1 <code>Gigabyte</code> = 1024 <code>Megabytes</code>) 为单位指定卷的大小.
+如果你只指定 <code>{Size}</code>, <code>7-zip</code> 会把它当作字节来处理. 可以指定多个 <code>-v</code> 开关.
+注意: 在完成归档之前, 请不要使用卷(也不要复制卷). <code>7-Zip</code> 可能在归档操作结束时改变任何卷, 包括第一个卷.</p>
+<p>例子, 创建多卷<code>a.7z</code>档案. 第一个卷是<code>10KB</code>, 第二个是<code>15KB</code>, 其他都是<code>2MB</code>. :</p>
+<pre><code class="language-bash">7z a a.7z *.txt -v10k -v15k -v2m
+</code></pre>
+<ul>
+<li>
+<p><code>7z</code>解压多个<code>.zip</code>文件; 使用下列形式:</p>
+<pre><code>7z -an -ai[r[-|0]]@{listfile} | !{wildcard}
+</code></pre>
+</li>
+</ul>
+<p><code>-an</code>表示禁止<code>bash</code>解析压缩文档名, <code>-ai</code>表示要包括的压缩文件名. 由于<code>!</code>在<code>bash</code>中是特殊符号, 需要转义或者用引号<code>'</code>裹起来:</p>
+<pre><code class="language-bash">7z x -an -'air!*.zip'
+7z t -an -ai!*.7z -ax!a*.7z # 测试所有*.7z 归档, 但排除 a*.7z 归档
+find . -mindepth 1 -maxdepth 1 -type f -iname *.zip -exec 7z x -o'{}' '{}' + #使用 + 号将输出合并到 rm -rf 后面
+</code></pre>
+<p>类似的, <code>-i</code> 开关表示添加文件, 在创建压缩文档时使用.</p>
+<pre><code class="language-bash">7z a -tzip src.zip *.txt -ir!DIR1\*.cpp
+</code></pre>
+<p>将当前目录下的所有<code>*.txt</code>文件, 以及<code>DIR1</code>目录和所有它的子目录中的<code>*.cpp</code>文件添加到<code>src.zip</code> 中.</p>
+<ul>
+<li>解压<code>zip</code>文件同时, 创建外层的同名文件夹. 处理带有空格的文件名参考<a href="https://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html">For Loop File Names With Spaces</a></li>
+</ul>
+<pre><code class="language-bash">SAVEIFS=$IFS;IFS=$(echo -en &quot;\n\b&quot;); #定义分词关键字为 \n\b newline, backspace
+for f in *;do  echo &quot;$f&quot;;done
+IFS=$SAVEIFS;
+</code></pre>
+<p>所以, 可处理含有空格文件的, 批量解压缩的脚本为:</p>
+<pre><code class="language-bash">SAVEIFS=$IFS;IFS=$(echo -en &quot;\n\b&quot;);
+declare -a archs=( $(find . -mindepth 1 -maxdepth 1 -type f -iname '*.zip' -print0 | xargs --null  basename -s '.zip' ) );declare -p archs;
+for i in ${archs}; do  unzip $i -d $i; done;
+IFS=$SAVEIFS
+</code></pre>
+<h3 id="7z-的通配符"><a class="header" href="#7z-的通配符">7z 的通配符</a></h3>
+<p>通配符或带空格的文件名必须加引号.</p>
+<pre><code>&quot;Dir\Program files\*&quot;
+Dir\&quot;Program files&quot;\*
+</code></pre>
+<p><code>开关选项</code>可以组合起来以节省命令行长度.
+然而, 一些开关选项具有<code>可选参数</code>, 因此, 这种选项必须在<code>开关组合</code>的末尾, 因为<code>7-Zip</code>把<code>开关组合</code>后面的参数看作开关选项的<code>可选参数</code>.</p>
+<p><code>7-Zip</code>使用类似于<code>Windows 95</code>的通配符.</p>
+<ul>
+<li><code>*</code>表示一个任意字符的序列.</li>
+<li><code>?</code>意味着任何字符.</li>
+</ul>
+<blockquote>
+<p><code>7-Zip</code>不使用系统的通配符解析器.
+<code>7-Zip</code>不遵循古老的规则, 也就是<code>*.*</code>表示任何文件. <code>7-Zip</code>将<code>*.*</code>视为任何有扩展名的文件名. 要处理所有的文件, 你必须使用单个<code>*</code>通配符.
+举例来说:</p>
+</blockquote>
+<p><code>*.txt</code>表示所有扩展名为<code>.txt</code>的文件.
+<code>?a*</code>表示所有第二个字符为<code>a</code>的文件
+<code>*1*</code>表示所有包含字符<code>1</code>的名字
+<code>*.*.*</code>表示所有包含两个至少<code>.</code>字符的名称.</p>
+<p>如果命令行中没有<code>文件名</code>/<code>通配符</code>, 将使用默认通配符<code>*</code>.
+路径末尾的斜杠<code>\</code>表示一个目录. 如果路径末尾没有斜杠<code>\</code>, 路径可以指一个文件或一个目录.</p>
+<ul>
+<li>列出文件</li>
+</ul>
+<p>你可以为特殊的列表文件(包含文件列表的文件)提供一个或多个文件名或通配符. 这种列表文件中的文件名必须用换行符号分开.
+对于列表文件, <code>7-Zip</code>默认使用<code>UTF-8</code>编码. 你可以使用 <code>-scs</code> 开关改变编码. 支持多个列表文件.
+例如, 如果文件 <code>listfile.txt</code> 包含以下内容.</p>
+<pre><code>My programs\*.cpp
+Src\*.cpp
+</code></pre>
+<p>那么命令</p>
+<pre><code class="language-bash">7z a -tzip archive.zip @listfile.txt
+</code></pre>
+<p>将 <code>My programs</code> 和 <code>Src</code> 目录下的所有 <code>*.cpp</code> 文件添加到<code>archive.zip</code>中.</p>
+<ul>
+<li>短和长的文件名; <code>7-Zip</code>在某些情况下支持短文件名(如<code>FILENA~1.TXT</code>). 然而, 我们强烈建议只使用真正的(长)文件名.</li>
+</ul>
+<h2 id="查看和安装字体"><a class="header" href="#查看和安装字体">查看和安装字体</a></h2>
+<p><code>fc-list</code>: 列出系统中可用的字体</p>
+<pre><code class="language-bash"># 语法
+fc-list [ -vVh ]  [ pattern  [ element... ]   ]
+# 例如列出所有中文字体, :lang=zh  代表匹配模式
+fc-list :lang=zh
+</code></pre>
+<h3 id="安装字体"><a class="header" href="#安装字体">安装字体</a></h3>
+<p><a href="https://www.jianshu.com/p/e7f12b8c8602">x-org 系统字体命令和字体的安装</a></p>
+<p>字体有<code>.ttf格</code>式(truetype font)和<code>.otf</code>格式(opentype font)字体</p>
+<p>如果系统中没有中文字体,需要先行安装中文字体,在<code>Ubuntu</code>和<code>Cent OS</code>中的安装步骤如下:</p>
+<ul>
+<li>从网络上下载字体或者直接从其他计算机(windows)上拷贝</li>
+<li>建立<code>/usr/share/fonts/myfonts</code> 目录</li>
+<li><code>cd /usr/share/fonts/</code></li>
+</ul>
+<p>在<code>/etc/fonts/conf.d</code>目录下,有字体配置文件的符号链接</p>
+<p>如果<code>fonts/</code>目录不存在,则创建</p>
+<pre><code class="language-bash">mkdir fonts
+mkdir myfonts
+</code></pre>
+<p>把下载好的字体拷贝到<code>/usr/share/fonts/myfonts</code>目录下:</p>
+<pre><code class="language-bash">sudo cp ~/myfonts/* /usr/share/fonts/myfonts/
+# ~/myfonts/ 是保存字体的目录
+</code></pre>
+<ul>
+<li>修改字体文件的权限,使root用户以外的用户也可以使用</li>
+</ul>
+<pre><code class="language-bash">cd /usr/share/fonts/
+sudo chmod -R  755 myfonts/
+</code></pre>
+<p>(5) 建立字体缓存</p>
+<pre><code class="language-bash">cd /usr/share/fonts/myfonts
+sudo mkfontscale &amp;&amp; mkfontdir &amp;&amp; fc-cache -fv
+</code></pre>
+<pre><code class="language-bash">sudo mkfontscale
+# 如果提示 mkfontscale: command not found
+# 在Ubuntu下运行如下命令
+# sudo apt-get install ttf-mscorefonts-installer
+# 在cent os下运行如下命令
+# yum install mkfontscale
+sudo mkfontdir
+sudo fc-cache -fv
+# fc-cache - build font information cache files
+# 如果提示 fc-cache: command not found
+# 在Ubuntu下运行如下命令
+# sudo apt-get install fontconfig
+# 在cent os下运行如下命令
+# yum install fontconfig
+</code></pre>
+<p>至此字体就安装成功了,如果需要安装其他字体,只需将字体拷贝到字体目录下,重新运行以上的命令即可.</p>
+<h2 id="grep-过滤输出"><a class="header" href="#grep-过滤输出">grep 过滤输出</a></h2>
+<ul>
+<li><code>-n</code> 行号</li>
+<li><code>-v</code>,<code>--invert-match</code> 匹配不符合</li>
+<li><code>--color</code> 染色</li>
+<li><code>-P</code> perl 拓展</li>
+<li><code>-B</code> before 前输出</li>
+<li><code>-A</code> after 后输出</li>
+<li><code>-o</code> only 仅输出匹配字符</li>
+<li><code>-i</code> <code>--ignore-case</code> 忽略大小写</li>
+</ul>
+<hr />
+<p><code>-m NUM</code>, <code>--max-count=NUM</code> 输出的最大行: 在<code>NUM</code>行匹配的行之后停止读取文件.</p>
+<p>如果输入来自于普通文件, 就输出<code>NUM</code>行匹配的结果. 之后<code>grep</code>将标准输入定位到最后一个匹配行后面, 不再处理后面的内容.
+这使调用<code>grep</code>的程序可以继续搜索, 当<code>grep</code>停止之后, 它可以继续输出后面的文本.
+当同时使用<code>-c</code>或<code>--count</code>选项时, <code>grep</code>不会输出大于<code>NUM</code>的计数.
+当同时使用<code>-v</code>或<code>--invert-match</code>选项时, <code>grep</code>在输出<code>NUM</code>不匹配的行后停止.</p>
+<p>example:</p>
+<pre><code class="language-bash">grep -n --color -P -B 1 -A 6 &quot;(?:tex:\d+:|warning:)&quot; ./temp $tex_file&quot;.log&quot;
+</code></pre>
+<p><code>-e PATTERNS</code>, <code>--regexp=PATTERNS</code>: 使用<code>PATTERNS</code>作为模式.
+此选项可以多次使用或与<code>-f</code>(<code>--file</code>)选项结合使用,搜索给定的所有模式. 此选项可用于保护以<code>-</code>开头的模式.</p>
+<p><code>f FILE</code>, <code>--file=FILE</code>:从<code>FILE</code>中获取模式,每行一个.
+如果此选项多次使用或与<code>-e</code>(<code>--regexp</code>)选项结合使用,则搜索给定的所有模式. 空文件包含零个模式,因此不匹配.</p>
+<h2 id="文档格式转换"><a class="header" href="#文档格式转换">文档格式转换</a></h2>
+<p>用 <code>pandoc</code></p>
+<p><code>pandoc [options] [input-file]...</code></p>
+<p><code>-f --from -t --to</code></p>
+<p><code>--latex-engine=pdflatex|lualatex|xelatex</code></p>
+<p>把markdown转换成<code>pdf</code></p>
+<pre><code class="language-bash">pandoc -f markdown --latex-engine=xelatex -o output.pdf input.md
+</code></pre>
+<h2 id="挂载命令-mount"><a class="header" href="#挂载命令-mount">挂载命令 mount</a></h2>
+<p><a href="https://www.cnblogs.com/sunshine-cat/p/7922193.html">linux挂载命令mount及U盘,移动硬盘的挂载</a>
+<a href="https://blog.csdn.net/zhang_can/article/details/79714012">gpt格式的移动硬盘在Linux系统下挂载方法</a></p>
+<ul>
+<li>
+<p><code>mount -l -t type</code> : <code>-l</code> 选项可以显示<code>label</code></p>
+</li>
+<li>
+<p><code>findmnt [options] device|mountpoint</code>: 可以更清晰的显示文件系统</p>
+</li>
+<li>
+<p><code>umount [-dflnrv] {directory|device}</code> : 卸载文件系统,应该通过给出文件目录来使用,<code>-l, --lazy</code>Lazy  unmount</p>
+</li>
+<li>
+<p><code>fdisk</code> 查看磁盘列表</p>
+</li>
+</ul>
+<pre><code class="language-bash">sudo fdisk -l
+</code></pre>
+<p>显示某个特定设备</p>
+<pre><code class="language-bash">sudo fdisk -l /dev/sdb
+</code></pre>
+<p>首先查看所有已经 mount 的设备:</p>
+<pre><code class="language-bash">mount [-l] [-t type]
+</code></pre>
+<p>显示如下信息</p>
+<pre><code class="language-bash">root@kali:~# fdisk -l
+...
+Device     Boot     Start       End   Sectors   Size Id Type
+/dev/sda1  *  2048 209719295 209717248   100G  7 HPFS/NTFS/exFAT
+/dev/sda2       209719296 976773119 767053824 365.8G  f W95 Ext'd (LBA)
+/dev/sda5       209721344 465575935 255854592   122G  7 HPFS/NTFS/exFAT
+/dev/sda6       465577984 721432575 255854592   122G  7 HPFS/NTFS/exFAT
+/dev/sda7       721434624 976773119 255338496 121.8G  7 HPFS/NTFS/exFAT
+...
+</code></pre>
+<p><code>parted /dev/sdb print</code>  显示 sdb 的分区表</p>
+<p>可以知道sdb2(135M to 6001G)为基本数据分区,格式为<code>NTFS</code></p>
+<p>mount 命令的标准格式:</p>
+<pre><code class="language-bash">mount -t type device dir
+</code></pre>
+<p>告诉 kernel attach the filesystem found on <code>device</code> (which is of type <code>type</code>) at the directory <code>dir</code>.  The option <code>-t type</code> is optional.</p>
+<p>挂载到指定目录即可:</p>
+<pre><code class="language-bash">sudo mount -t ntfs /dev/sda1 /home/6T
+</code></pre>
+<p>The option <code>-l</code> adds labels to this listing.</p>
+<hr />
+<p>弹出设备</p>
+<pre><code class="language-bash">umount /dev/sda5
+</code></pre>
+<p>通过<code>df</code>可以查看设备挂载点</p>
+<h2 id="u盘格式化-exfat"><a class="header" href="#u盘格式化-exfat">U盘格式化 exFAT</a></h2>
+<p><a href="https://linux.cn/article-12294-1.html">将 USB 盘格式化为 exFAT</a></p>
+<p>从 <code>Linux kernel 5.4</code>开始, <code>Linux</code> 内核本身中启用了 <code>exFAT</code> 文件系统支持.
+检查正在运行的 <code>Linux</code> 内核版本: <code>uname -r</code>. 如果是内核 <code>5.4</code> 或更高版本, 那么应该没问题.
+不然, 你必须启用<code>exFAT</code>支持. 在基于 <code>Ubuntu</code> 的发行版中, 你可以安装以下软件包:</p>
+<pre><code class="language-bash">sudo apt install exfat-fuse exfat-utils
+</code></pre>
+<hr />
+<p>方法 1: 使用 <code>GNOME 磁盘工具</code>将磁盘格式化为 <code>exFAT</code>.</p>
+<p>使用<code>GNOME 磁盘</code> 格式化驱动器是一项简单的工作. 它预装在许多 Linux 发行版中.
+插入外部 <code>USB</code> 盘. 在菜单中查找 <code>Disk</code>, 然后打开<code>GNOME 磁盘</code> 应用. 第一步, 选择要格式化的驱动器, 要使用 <code>exFAT</code>, 请选择 <code>其它</code>, 然后单击<code>下一步</code>.</p>
+<hr />
+<p>方法 2: 在 <code>Linux</code> 命令行中将磁盘格式化为 <code>exFAT</code>.</p>
+<p>插入外部硬盘, 然后在终端中输入以下命令<code>sudo fdisk -l</code>.通过列出的磁盘大小信息找出<code>USB</code>的标记, 假设<code>/dev/sdc1</code>.
+如果磁盘有多个分区, 想要管理, 可以使用<code>sudo fdisk /dev/sdc</code>进行分区的管理工作. 这里要输入<code>/dev/sdc</code>也就是整个<code>U</code>盘, 而不是<code>/dev/sdc1</code>.
+进入交互式分区工具:</p>
+<p><code>m</code>提示可用的命令列表.
+<code>o</code>:创建新的<code>dos</code>分区表, <code>n</code>添加一个新的分区.
+<code>t</code>:更改分区类型, <code>dos</code> 类型的分区表, 如果要和<code>windows</code>格式化一致, 为<code>HPFS/NTFS/exFAT</code>, 就输入<code>7</code>.
+<code>w</code>:保存更改, <code>q</code>退出不保存更改.</p>
+<p>在这里更改分区表保存后, 磁盘已经可用了. 如果保存原来的分区直接格式, 可以使用<code>mkfs.exfat</code>:</p>
+<ul>
+<li><code>mkfs.exfat</code>:格式化成<code>exfat</code>.</li>
+<li><code>mkfs.fat</code>:格式化成<code>fat32</code>.</li>
+</ul>
+<p><code>man mkfs.exfat</code>会发现, <code>mkfs.exfat</code>的同义词<code>mkexfatfs</code>. 如果分区表是<code>MBR</code>类型的, 需要将文件系统类型设置为<code>0X07</code>(<code>NTFS/exFAT</code>), 否则其他操作系统可能会拒绝挂载.
+仍然假设U盘分区为<code>/dev/sdc1</code>, 使用以下命令将它格式化为 <code>exfat</code>.</p>
+<pre><code class="language-bash">sudo mkfs.exfat -i 0x07 -n udisk /dev/sdc1
+</code></pre>
+<p>将<code>/dev/sdc1</code> 替换为你的磁盘 <code>ID</code>. <code>udisk</code> 是你要为磁盘命名的名称. 可选地, 运行 <code>fsck</code> 检查<code>sudo fsck.exfat /dev/sdc1</code>, 以确保格式化正确, 享受 <code>exFAT</code> 盘吧.</p>
+<h2 id="查看文档首行末行"><a class="header" href="#查看文档首行末行">查看文档首行末行</a></h2>
+<p>文档尾巴, <code>tail -n, --lines=[+]NUM</code>, 从第<code>num</code>行开始.
+文档开头, <code>head -n, --lines=[-]NUM</code>, 减去最后<code>num</code>行.</p>
+<h2 id="查看使用的桌面环境-x11-wayland"><a class="header" href="#查看使用的桌面环境-x11-wayland">查看使用的桌面环境 x11 wayland</a></h2>
+<p><a href="https://linux.cn/article-12124-1.html">如何找出你所使用的桌面环境 </a></p>
+<hr />
+<p>检查你使用的是哪个桌面环境</p>
+<p>你可以在<code>Linux</code>中使用 <code>echo</code> 命令在终端中显示 <code>XDG_CURRENT_DESKTOP</code> 变量的值.</p>
+<pre><code class="language-bash">echo $XDG_CURRENT_DESKTOP
+echo $XDG_SESSION_TYPE
+</code></pre>
+<p>或者使用<code>loginctl</code>得到<code>&lt;SESSION_ID&gt;</code>, 然后使用下列命令查看会话的类型:</p>
+<pre><code class="language-bash">loginctl show-session &lt;SESSION_ID&gt; -p Type
+</code></pre>
+<hr />
+<p>如何获取桌面环境版本</p>
+<p>与获取桌面环境的名称不同.获取其版本号的方法并不直接,因为它没有标准的命令或环境变量可以提供此信息.
+在 <code>Linux</code> 中获取桌面环境信息的一种方法是使用 <code>screenfetch</code>,<code>neofetch</code>之类的工具.
+此命令行工具以 <code>ascii</code> 格式显示 <code>Linux</code> 发行版的 logo 以及一些基本的系统信息.桌面环境版本就是其中之一.
+安装:<code>sudo apt install screenfetch</code>.</p>
+<p>对于其他 Linux 发行版,请使用系统的软件包管理器来安装此程序.
+安装后,只需在终端中输入 <code>screenfetch</code> 即可,它应该显示桌面环境版本以及其他系统信息.</p>
+<h2 id="查看-linux-系统信息"><a class="header" href="#查看-linux-系统信息">查看 linux 系统信息</a></h2>
+<p>ref: <a href="https://itsfoss.com/find-which-kernel-version-is-running-in-ubuntu/">3 Ways to Check Linux Kernel Version in Command Line</a></p>
+<hr />
+<p>uname</p>
+<p><code>inxi -S</code>: 命令行系统信息脚本 for 终端和 IRC(InternetRelayChat)
+<code>uname</code> -打印系统信息
+<code>uname -r</code>命令的输出为:<code>5.4.0-48-generic</code></p>
+<p>这意味着您正在运行Linux内核<code>5.4.0-48</code>,或更笼统地说,您正在运行Linux内核版本<code>5.4</code>.</p>
+<p>但是其他数字在这里意味着什么?</p>
+<ul>
+<li><code>5</code> – 内核版本</li>
+<li><code>4</code> – 重大修订</li>
+<li><code>0</code> – 次要修订</li>
+<li><code>48</code>– Bug fix</li>
+<li><code>generic</code>–特定于发行版的字符串.对于Ubuntu,这表示我使用的是<code>desktop</code>版本.
+对于Ubuntu服务器版本,它将是<code>server</code></li>
+</ul>
+<p>使用<code>-a</code>选项可以输出更多信息
+<code>uname -a</code></p>
+<p>命令的输出应如下所示:
+<code>Linux OP7050 5.4.0-48-generic #52-Ubuntu SMP Thu Sep 10 10:58:49 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></p>
+<p>让我解释一下输出及其含义:</p>
+<ul>
+<li><code>Linux</code> –内核名称. 如果在BSD或macOS上运行相同的命令,结果将有所不同.</li>
+<li><code>OP7050</code> –主机名.</li>
+<li><code>5.4.0-48-generic</code> –内核版本(如我们在上面看到的).</li>
+<li><code>52-Ubuntu SMP Thu Sep 10 10:58:49 UTC 2020</code> –这意味着Ubuntu已编译<code>5.4.0-48-generic</code> <code>52</code>次. 最后一次编译的时间戳也在那里.</li>
+<li><code>x86_64</code> –机器架构.</li>
+<li><code>x86_64</code> –处理器架构.</li>
+<li><code>x86_64</code> –操作系统体系结构(您可以在64位处理器上运行32位OS).</li>
+<li><code>GNU / Linux</code> –操作系统(它不会显示发行版名称).</li>
+</ul>
+<p>让我们看看其他一些命令来查找您的Linux内核版本.</p>
+<hr />
+<p>使用<code>/proc/version file</code></p>
+<p>在Linux中,您还可以在文件<code>/proc/version</code>中找到内核信息. 只需查看此文件的内容即可:</p>
+<p><code>cat /proc/version</code></p>
+<p>在命令行中检查Linux内核版本, 您会看到类似于uname的输出.</p>
+<p><code>Linux version 5.4.0-48-generic (buildd@lcy01-amd64-010) (gcc version 9.3.0 (Ubuntu 9.3.0-10ubuntu2)) #52-Ubuntu SMP Thu Sep 10 10:58:49 UTC 2020</code></p>
+<p>您可以在此处看到内核版本<code>5.4.0-48-generic</code>.</p>
+<hr />
+<p>使用<code>dmesg</code></p>
+<p><a href="https://www.runoob.com/linux/linux-comm-dmesg.html">Linux dmesg命令</a></p>
+<p>dmesg是用于编写内核消息的强大命令.这对于获取系统信息也非常有用.<code>dmesg</code>命令用于显示开机信息.
+<code>kernel</code>会将开机信息存储在<code>ring buffer</code>中.您若是开机时来不及查看信息,可利用dmesg来查看.开机信息亦保存在<code>/var/log</code>目录中,名称为<code>dmesg</code>的文件里.</p>
+<p>由于<code>dmesg</code>提供了很多信息,使用<code>grep</code>挑选.</p>
+<pre><code class="language-bash">dmesg | grep Linux
+</code></pre>
+<p>输出将包含几行,但是您应该能够在其中轻松识别Linux内核版本.</p>
+<pre><code class="language-bash">[    0.000000] Linux version 5.4.0-48-generic (buildd@lcy01-amd64-010) (gcc version 9.3.0 (Ubuntu 9.3.0-10ubuntu2)) #52-Ubuntu SMP Thu Sep 10 10:58:49 UTC 2020 (Ubuntu 5.4.0-48.52-generic 5.4.60)
+...
+[   12.936690] Intel(R) Wireless WiFi driver for Linux
+</code></pre>
+<h2 id="curl-wget"><a class="header" href="#curl-wget">curl wget</a></h2>
+<p>curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -</p>
+<p><code>-f, --fail</code>
+(HTTP)服务器错误时<code>静默失败</code>(没有输出).  这样做主要是为了, 使脚本等更好地处理失败的尝试.
+在正常情况下, 当<code>HTTP</code>服务器无法交付文档时, 它将返回<code>HTML文档</code>, 说明(通常还会描述原因及更多).
+该<code>flag</code>将阻止<code>curl</code>输出该错误并返回<code>error 22</code>.</p>
+<p>此方法不是<code>fail-safe</code>的, 并且有时会漏入不成功的响应代码, 尤其是在涉及验证时(response codes 401 and 407).</p>
+<p><code>-s, --silent</code></p>
+<p>静音或安静模式.  不显示进度表或错误消息.  使<code>Curl</code>静音.  仍会输出您要求的数据, 甚至到终端/标准输出, 除非您将其重定向.
+除此选项外, 还可以使用<code>-S</code>, <code>--show-error</code>禁用进度表, 但仍显示错误消息.
+另请参见<code>-v</code>, <code>--verbose</code> and <code>--stderr</code>.</p>
+<p><code>-S, --show-error</code>
+与<code>-s</code>, <code>--silent</code>一起使用时, 如果<code>curl</code>失败, 它将使<code>curl</code>显示一条错误消息.</p>
+<p><code>-L, --location</code></p>
+<p>(HTTP)如果服务器报告请求的页面已移动到其他位置(由<code>Location:  header</code>  and  a <code>3XX</code>响应代码), 此选项将使<code>curl</code>在新位置上重做请求.
+如果与<code>-i</code>, <code>--include</code>或<code>-l</code>,<code>--head</code>一起使用, 将显示所有请求页面的<code>headers</code>. 使用身份验证时, curl仅将其凭据发送到初始主机.
+如果重定向将curl转移到其他主机, 它无法截获<code>user+password</code>.
+另请参阅<code>--location-trusted</code>查看如何修改这项设置.
+您可以使用<code>--max-redirs</code>选项来限制要遵循的重定向数量.</p>
+<p>当curl跟随重定向并且请求不是简单的<code>GET</code>(例如<code>POST</code>或<code>PUT</code>)时, it will do the following request with a GET:
+如果<code>HTTP</code>响应是<code>301</code>, <code>302</code>或<code>303</code>. 如果响应代码是任何其他<code>3xx</code>代码, curl will resend the following request using the same unmodified method.</p>
+<p>您可以通过使用专用的选项<code>--post301,</code> <code>--post302</code> and <code>--post303</code>, 来告诉curl 对于<code>30x</code>response, 不要将 <code>non-GET</code> request method 更改为<code>GET</code>.</p>
+<h2 id="查看ip地址"><a class="header" href="#查看ip地址">查看ip地址</a></h2>
+<p>使用<code>ip</code>命令</p>
+<pre><code class="language-bash">ip addr show
+ip link show #查看 MAC 地址
+</code></pre>
+<h2 id="安装额外解码器"><a class="header" href="#安装额外解码器">安装额外解码器</a></h2>
+<p>如果你刚刚安装了 Ubuntu 或其他 Ubuntu 特色版本 如 Kubuntu,Lubuntu 等,你会注意到系统无法播放某些音频或视频文件.</p>
+<p>对于视频文件,你可以在 Ubuntu 上安装 <code>VLC</code>.<code>VLC</code> 是 Linux 上的最佳视频播放器之一,它几乎可以播放任何视频文件格式.但你仍然会遇到无法播放音频和 <code>flash</code> 的麻烦.</p>
+<p>好消息是 Ubuntu 提供了一个软件包来安装所有基本的媒体编解码器:<code>ubuntu-restricted-extras</code>.</p>
+<p>ubuntu-restricted-extras 是一个包含各种基本软件,如 <code>Flash</code> 插件,<code>unrar</code> ,<code>gstreamer</code>,<code>mp4</code>,<code>Ubuntu</code> 中的 <code>Chromium</code> 浏览器的编解码器等的软件包.</p>
+<p>由于这些软件不是开源软件,并且其中一些涉及软件专利,因此 Ubuntu 默认情况下不会安装它们.你必须使用 <code>multiverse</code> 仓库,它是 Ubuntu 专门为用户提供非开源软件而创建的仓库.</p>
+<p>由于 <code>ubuntu-restrcited-extras</code> 软件包在 <code>multiverse</code> 仓库中,因此你应验证系统上已启用 <code>multiverse</code> 仓库:</p>
+<pre><code class="language-bash">sudo add-apt-repository multiverse
+</code></pre>
+<p>然后你可以使用以下命令安装:</p>
+<pre><code class="language-bash">sudo apt install ubuntu-restricted-extras
+</code></pre>
+<p><a href="https://itsfoss.com/ubuntu-repositories/">What are Ubuntu Repositories</a>
+<a href="https://linux.cn/article-11906-1.html">一条命令在 Ubuntu 中安装所有基本的媒体编解码器 </a></p>
+<h2 id="source-命令"><a class="header" href="#source-命令">source 命令</a></h2>
+<p><a href="http://www.xitongzhijia.net/xtjc/20150714/52870.html">Ubuntu如何使用source命令执行文件</a></p>
+<p><code>Ubuntu source</code> 命令的作用就是将设置在文件中的配置信息马上生效,而不需要经过重启.</p>
+<p>Ubuntu如何使用<code>source</code>命令执行文件</p>
+<p>source命令用法:
+<code>source filename</code> 或 <code>. filename</code></p>
+<p>在对编译系统核心时常常需要输入一长串的命令,如:</p>
+<pre><code class="language-bash">make mrproper
+make menuconfig
+make dep
+make clean
+make bzImage
+......
+</code></pre>
+<p>如果把这些命令做成一个文件,让它自动顺序执行,对于需要多次反复编译系统核心的用户来说会很方便,
+而用source命令就可以做到这一点,
+它的作用就是把一个文件的内容当成shell来执行,先在linux的源代码目录下(如<code>/usr/src/linux-2.4.20</code>)建立一个文件,如<code>make_command</code>,在其中输入一下内容:</p>
+<pre><code class="language-bash">make mrproper &amp;&amp;
+make menuconfig &amp;&amp;
+make dep &amp;&amp;
+make clean &amp;&amp;
+...
+</code></pre>
+<p>文件建立好之后,每次编译核心的时候,只需要在<code>/usr/src/linux-2.4.20</code>下输入:<code>source make_command</code>即可</p>
+<p>顺便补充一点,<code>&amp;&amp;</code>命令表示顺序执行由它连接的命令,但是只有它之前的命令成功执行完成了之后才可以继续执行它后面的命令.</p>
+<p>另外执行source命令时如果提示command not found,是因为环境变量没配置好的原因,在终端运行如下命令即可修复:</p>
+<p><code>export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin</code></p>
+<h2 id="查看磁盘空间"><a class="header" href="#查看磁盘空间">查看磁盘空间</a></h2>
+<p><code>df</code>命令是linux系统以磁盘分区为单位查看文件系统,可以加上参数查看磁盘剩余空间信息,命令格式:</p>
+<p><code>df - report file system disk space usage</code></p>
+<hr />
+<p>SYNOPSIS</p>
+<p><code>df [OPTION]... [FILE]...</code></p>
+<ul>
+<li><code>-a</code>, <code>--all</code> include pseudo, duplicate, inaccessible file systems</li>
+<li><code>-l</code>, <code>--local</code> limit listing to local file systems</li>
+<li><code>-h</code>, <code>--human-readable</code> print sizes in powers of 1024 (e.g., 1023M)</li>
+<li><code>-T</code>, <code>--print-type</code> print file system type</li>
+</ul>
+<h2 id="find-过滤文件"><a class="header" href="#find-过滤文件">find 过滤文件</a></h2>
+<p>删除日志文件</p>
+<pre><code class="language-bash">sudo /dev/null &gt; /var/log/**.log
+</code></pre>
+<p>下面这个推荐使用,删除30天之前的旧文件</p>
+<pre><code class="language-bash">sudo find /var/log/ -type f -mtime +30 -exec rm -f {} \;
+</code></pre>
+<hr />
+<p><code>find</code> - search for files in a directory hierarchy</p>
+<p><code>find [-H] [-L] [-P] [-D debugopts] [-Olevel] [starting-point...] [expression]</code></p>
+<hr />
+<p><code>expression</code></p>
+<p><code>starting points</code>列表之后的部分是<code>表达式</code>.  这是一种查询规范, 描述了我们如何匹配文件以及如何处理匹配的文件.
+表达式由一系列事物组成:<code>Test</code>, <code>Actions</code>,...</p>
+<hr />
+<p><code>-exec command ;</code></p>
+<p>执行命令;  如果返回<code>0</code>状态, 则为<code>true</code>.  之后传递给<code>find</code>的参数都将作为命令的参数, 直到遇到<code>;</code>为止.
+字符<code> {}</code>被替换为当前文件名命令参数中出现的任何地方的当前文件名, 而不仅仅是在单独存在的参数中.
+这两种构造都可能需要转义(以<code>\</code>表示)或加引号以保护它们, 避免 shell 展开.
+有关使用<code>-exec</code>选项的示例, 请参见示例部分. 对每个匹配的文件运行一次指定的命令.
+该命令在起始目录中执行.  与<code>-exec</code>有关的操作具有不可避免的安全问题;  你应该使用<code>-execdir</code>选项代替.</p>
+<hr />
+<p><code>-exec command {} +</code></p>
+<p>在选定的文件上运行指定的命令, <code>-exec</code> action的变体. 但是通过在命令结尾附加上每个选中的文件名;
+该命令的调用总数将远远少于匹配文件的数目.  命令行的构建方式与<code>xargs</code>几乎相同.
+命令中仅允许使用一个<code>{}</code>实例, 并且当从<code>shell</code>调用<code>find</code>时,应该用引号保护起来, 例如<code>'{}'</code>, 以防止其被<code>shell</code>解释.
+该命令在起始目录中执行.  如果有任何调用返回一个非零值作为退出状态, 则<code>find</code>返回一个非零退出状态.
+如果<code>find</code>遇到错误, 有时可能会导致立即退出, 因此一些待处理的命令可能根本不会运行. This variant of <code>-exec</code> always returns <code>true</code>.</p>
+<hr />
+<p><code>-mtime n</code>
+文件数据的最后修改时间为 <code>n*24</code> 小时. 请参阅<code>-atime</code>的注释, 以了解舍入如何影响文件修改时间的解释</p>
+<p><code>-type c</code>
+File is of type c:</p>
+<ul>
+<li><code>b</code>  block (buffered) special</li>
+<li><code>c</code>  character (unbuffered) special</li>
+<li><code>d</code>  directory</li>
+<li><code>p</code>  named pipe (FIFO)</li>
+<li><code>f</code>  regular file</li>
+</ul>
+<h2 id="查看文件大小"><a class="header" href="#查看文件大小">查看文件大小</a></h2>
+<p><a href="https://blog.csdn.net/BigData_Mining/java/article/details/88998472">Ubuntu下查看文件, 文件夹和磁盘空间的大小</a></p>
+<p>在实际使用<code>ubuntu</code>时候,经常要碰到需要查看文件以及文件夹大小的情况.
+有时候,自己创建压缩文件,可以使用 <code>ls -hl</code>查看文件大小.参数<code>-h</code> 表示<code>Human-Readable</code>,使用<code>GB</code>,<code>MB</code>等易读的格式方式显示.对于文件夹的大小,<code>ll -h</code> 显示只有<code>4k</code>.</p>
+<hr />
+<p>那么如何来查看文件夹的大小呢?</p>
+<p>使用<code>du</code>命令查看文件或文件夹的磁盘使用空间,<code>–max-depth</code> 用于指定深入目录的层数.</p>
+<p>如要查看当前目录已经使用总大小及当前目录下一级文件或文件夹各自使用的总空间大小,
+输入<code>du -h --max-depth=1</code>即可.</p>
+<p>如要查看当前目录已使用总大小可输入:<code>du -h --max-depth=0</code></p>
+<hr />
+<pre><code class="language-bash">du [OPTION]... [FILE]...
+du [OPTION]... --files0-from=F
+</code></pre>
+<ul>
+<li><code>-s,</code> <code>--summarize</code>: 对每个参数仅显示总计</li>
+<li><code> -h</code>, <code>--human-readable</code>: 以人类可读的格式显示大小(例如<code>1K</code> <code>234M</code> <code>2G</code>)</li>
+<li><code>-d,</code> <code>--max-depth=N</code>: 指定目录递归的层数;  <code>--max-depth = 0</code>与<code>--summaryize</code>相同</li>
+<li><code>--si</code>   like <code>-h</code>, 但是使用<code>1000</code>的幂而不是<code>1024</code>的幂</li>
+<li><code>-a,</code> <code>--all</code> :给出所有文件的统计, 而不仅仅是目录</li>
+</ul>
+<h2 id="创建链接"><a class="header" href="#创建链接">创建链接</a></h2>
+<p><code>ln</code> — 创建链接</p>
+<p><code>ln</code> 命令即可创建硬链接,也可以创建符号链接.</p>
+<p>可以用其中一种方法来使用它:</p>
+<ul>
+<li><code>ln file link</code> 创建硬链接</li>
+<li><code>ln -s item link</code> 创建符号链接,<code>item</code> 可以是一个文件或是一个目录.</li>
+</ul>
+<h3 id="硬链接"><a class="header" href="#硬链接">硬链接</a></h3>
+<p>硬链接和符号链接比起来,硬链接是最初 <code>Unix</code> 创建链接的方式,而符号链接更加现代. 在默认情况下,每个文
+件有一个硬链接,这个硬链接给文件起名字.
+当我们创建一个 硬链接以后,就为文件创建了一个额外的目录条目.硬链接有两个重要局限性:</p>
+<ol>
+<li>一个硬链接不能关联它所在文件系统之外的文件.这是说一个链接不能关联 与链接本身不在同一个磁盘分区
+上的文件.</li>
+<li>一个硬链接不能关联一个目录.</li>
+</ol>
+<p>一个硬链接和文件本身没有什么区别.不像符号链接,当你列出一个包含硬链接的目录 内容时,你会看到没有特
+殊的链接指示说明.当一个硬链接被删除时,这个链接 被删除,但是文件本身的内容仍然存在(这是说,它所占
+的磁盘空间不会被重新分配), 直到所有关联这个文件的链接都删除掉.知道硬链接很重要,因为你可能有时
+会遇到它们,但现在实际中更喜欢使用符号链接,下一步我们会讨论符号链接.</p>
+<h3 id="符号链接"><a class="header" href="#符号链接">符号链接</a></h3>
+<p>创建符号链接是为了克服硬链接的局限性.
+符号链接生效,是通过创建一个特殊类型的文件,这个文件包含一个关联文件或目录的文本指针.
+在这一方面, 它们和 Windows 的快捷方式差不多,当然,符号链接早于Windows 的快捷方式 很多年;-)</p>
+<p>一个符号链接指向一个文件,而且这个符号链接本身与其它的符号链接几乎没有区别.
+例如,如果你往一个符号链接里面写入东西,那么相关联的文件也被写入.</p>
+<p>然而, 当你删除一个符号链接时,只有这个链接被删除,而不是文件自身.
+如果先于符号链接删除文件,这个链接仍然存在,但是不指向任何东西.
+在这种情况下,这个链接被称为坏链接.
+在许多实现中,<code>ls</code> 命令会以不同的颜色展示坏链接,比如说红色,来显示它们的存在.</p>
+<hr />
+<p>创建硬链接</p>
+<p>现在,我们试着创建链接.首先是硬链接.我们创建一些关联我们 数据文件的链接:</p>
+<pre><code class="language-bash">[me@linuxbox playground]$ ln fun fun-hard
+[me@linuxbox playground]$ ln fun dir1/fun-hard
+[me@linuxbox playground]$ ln fun dir2/fun-hard
+</code></pre>
+<p><code>ls</code> 命令有一种方法,来展示(文件索引节点)的信息.在命令中加上<code>-i</code>选项:</p>
+<hr />
+<p>创建符号链接</p>
+<p>建立符号链接的目的是为了克服硬链接的两个缺点:硬链接不能跨越物理设备, 硬链接不能关联目录,只能是文
+件.符号链接是文件的特殊类型,它包含一个指向 目标文件或目录的文本指针.</p>
+<p>符号链接的建立过程相似于创建硬链接:</p>
+<pre><code class="language-bash">[me@linuxbox playground]$ ln -s fun fun-sym
+[me@linuxbox playground]$ ln -s ../fun dir1/fun-sym
+[me@linuxbox playground]$ ln -s ../fun dir2/fun-sym
+</code></pre>
+<p>第一个实例相当直接,在 ln 命令中,简单地加上<code>-s</code>选项就可以创建一个符号链接, 而不是一个硬链接.</p>
+<p><code>fun-sym</code> 的列表说明了它是一个符号链接,通过在第一字段中的首字符<code>l</code> 可知,并且它还指向<code>../fun</code>,也是正确的.</p>
+<p>当建立符号链接时,你即可以使用绝对路径名:</p>
+<pre><code class="language-bash">ln -s /home/me/playground/fun dir1/fun-sym
+</code></pre>
+<p>也可用相对路径名,正如前面例题所展示的.使用相对路径名更令人满意, 因为它允许一个包含符号链接的目录重命名或移动,而不会破坏链接.</p>
+<h2 id="basename"><a class="header" href="#basename">basename</a></h2>
+<hr />
+<p>截取文件名和后缀</p>
+<p>编写Shell脚本的过程中,经常会和文件名和文件路径打交道.
+如果用户输入了一个文件的全名(可能包含绝对路径和文件后缀),如何得到文件的路径名,文件名,文件后缀这些信息呢.
+Shell脚本拥有强大的字符串处理能力,如果把文件名当做字符串,我们不难使用<code>cut</code>或<code>sed</code>这样的工具得到我们想要的结果.</p>
+<pre><code class="language-bash">$fullfile=/the/path/foo.txt
+$fullname=$(basename $fullfile)
+$dir=$(dirname $fullfile)
+$filename=$(echo $fullname | cut -d . -f1)
+$extension=$(echo $fullname | cut -d . -f2)
+$ echo $dir , $fullname , $filename , $extension
+/the/path , foo.txt , foo , txt
+</code></pre>
+<p>这里使用<code>basename</code>命令可以直接得到包含后缀的文件名,而<code>dirname</code>命令可以得到路径名,
+然后就能简单的用<code>cut</code>截取文件名和后缀名.</p>
+<hr />
+<p>更复杂的情况</p>
+<p>如果对付简单应用场景,到这里已经可以打完收工了,但是有时候文件可能不止有一个后缀,比如<code>*.tar.gz</code>,怎样得到最后一个后缀呢?
+再<code>cut</code>一回? 当然可以,但是如果文件名是<code>mylib.1.0.1a.zip</code>这样的呢? 呃......正则表达式肯定可以.</p>
+<pre><code class="language-bash">$ fullname=mylib.1.0.1a.zip
+$ filename=$(echo $fullname | sed 's/\.[^.]*$//')
+$ extension=$(echo $fullname | sed 's/^.*\.//')
+$ echo $filename, $extension
+mylib.1.0.1a, zip
+</code></pre>
+<p>这里面的逻辑是这样的:</p>
+<p>文件名:把以<code>.</code>字符开头以后一直到行尾都是非<code>.</code>字符的子串替换为空.
+后缀名:把从行首开始以<code>.</code>字符结尾的子串替换为空.</p>
+<p>光用语言把这两个正则表达式描述出来脑细胞也要死不少.有没有像上面<code>cut</code>版本一样简单容易理解的方法呢?
+由于<code>.</code>分隔符的个数不确定,正常使用<code>cut</code>来分割最后一个<code>.</code>字符是不太可能的.
+但是我们可使用<code>rev</code>命令将字符串反转一下,区分后缀和文件名的<code>.</code>字符位置就确定了.
+截取了想要的部分之后,再次反转就得到了我们想要的内容.</p>
+<pre><code class="language-bash">$ fullname=mylib.1.0.1a.zip
+$ filename=$(rev &lt;&lt;&lt; $fullname | cut -d . -f2- | rev)
+$ extension=$(rev &lt;&lt;&lt; $fullname | cut -d . -f1 | rev)
+$ echo $filename, $extension
+mylib.1.0.1a, zip
+</code></pre>
+<hr />
+<p>使用参数扩展</p>
+<p>其实不借助复杂的正则表达式,甚至不调用<code>basename</code>, <code>dirname</code>, <code>cut</code>, <code>sed</code>命令,<code>shel</code>l脚本一样可以做到所有的操作.
+看下面的实现:</p>
+<pre><code class="language-bash">$ fullfile=/the/path/mylib.1.0.1a.zip
+$ fullname=&quot;${fullfile##*/}&quot;
+$ dir=&quot;${fullfile%/*}&quot;
+$ extension=&quot;${fullname##*.}&quot;
+$ filename=&quot;${fullname%.*}&quot;
+$ echo $dir , $fullname , $filename , $extension
+/the/path , mylib.1.0.1a.zip , mylib.1.0.1a , zip
+</code></pre>
+<p>真是不能再简洁了,大括号之内变量名配合几个神奇的字符,就是Shell的参数扩展(Parameter Extension)功能.</p>
+<ul>
+<li><code>${fullfile##*/}</code>:从前面开始删除<code>fullfile</code>中最大匹配(longest matching pattern) <code>*/</code> 的字符串</li>
+<li><code>${fullfile%/*}</code>:从后面开始删除<code>fullfile</code>中最小匹配(shortest matching pattern) <code>/*</code> 的字符串</li>
+<li><code>${fullname##*.}</code>:从前面开始删除<code>fullname</code>中最大匹配(longest matching pattern) <code>*.</code> 的字符串</li>
+<li><code>${fullname%.*}</code>:从后面开始删除<code>fullname</code>中最小匹配(shortest matching pattern) <code>.*</code> 的字符串</li>
+</ul>
+<p>参数扩展有多种形式,在shell编程中可以用作参数的拼接,字符串的替换,参数列表截取,变量初值等操作,
+这里不再详述,请参考后面的功能列表和官方文档</p>
+<hr />
+<p>使用<code>basename</code>命令输出所有<code>*.tex</code>的名字</p>
+<pre><code class="language-bash">basename -s '.tex' $(ls *.tex) | xargs echo
+</code></pre>
+<h2 id="inode"><a class="header" href="#inode">inode</a></h2>
+<p><a href="https://www.cnblogs.com/itech/archive/2012/05/15/2502284.html">Linux的inode的理解</a></p>
+<hr />
+<p>inode是什么</p>
+<p>理解<code>inode</code>,要从文件储存说起.
+文件储存在硬盘上,硬盘的最小存储单位叫做<code>扇区</code>(Sector).每个扇区储存<code>512</code>Byte(相当于<code>0.5KB</code>).
+操作系统读取硬盘的时候,不会一个个扇区地读取,这样效率太低,而是一次性连续读取多个扇区,即一次性读取一个&quot;块&quot;(<code>block</code>).
+这种由多个扇区组成的<code>块</code>,是文件存取的最小单位.<code>块</code>的大小,最常见的是<code>4KB</code>,即连续八个 <code>sector</code>组成一个 <code>block</code>.</p>
+<p>文件数据都储存在<code>块</code>中,那么很显然,我们还必须找到一个地方储存文件的元信息,比如文件的创建者, 文件的创建日期, 文件的大小等等.
+这种储存文件元信息的区域就叫做<code>inode</code>,中文译名为<code>索引节点</code>, <code>index node</code>.</p>
+<hr />
+<p>inode的内容</p>
+<p><code>inode</code>包含文件的元信息,具体来说有以下内容:</p>
+<ul>
+<li>文件的字节数</li>
+<li>文件拥有者的User ID</li>
+<li>文件的Group ID</li>
+<li>文件的读, 写, 执行权限</li>
+<li>文件的时间戳,共有三个:<code>ctime</code> 指 <code>inode</code> 上一次变动的时间, <code>mtime</code> 指文件内容上一次变动的时间, <code>atime</code> 指文件上一次打开的时间.</li>
+<li>链接数,即有多少文件名指向这个 <code>inode</code></li>
+<li>文件数据<code>block</code>的位置</li>
+</ul>
+<p>可以用<code>stat</code>命令,查看某个文件的<code>inode</code>信息:</p>
+<pre><code class="language-bash">stat example.txt
+</code></pre>
+<p>总之,除了文件名以外的所有文件信息,都存在<code>inode</code>之中.至于为什么没有文件名,下文会有详细解释.</p>
+<hr />
+<p>inode的大小</p>
+<p><code>inode</code>也会消耗硬盘空间,所以硬盘格式化的时候,操作系统自动将硬盘分成两个区域.一个是数据区,存放文件数据; 另一个是<code>inode</code>区(<code>inode table</code>),存放<code>inode</code>所包含的信息.
+每个<code>inode</code>节点的大小,一般是<code>128</code>字节或<code>256</code>字节.
+<code>inode</code>节点的总数,在格式化时就给定,一般是每1KB或每2KB就设置一个<code>inode</code>.
+假定在一块1GB的硬盘中,每个<code>inode</code>节点的大小为128字节,每<code>1KB</code>就设置一个<code>inode</code>,那么<code>inode table</code>的大小就会达到<code>128MB</code>,占整块硬盘的<code>12.8%</code>.</p>
+<p>查看每个硬盘分区的<code>inode</code>总数和已经使用的数量,可以使用<code>df</code>命令.</p>
+<pre><code class="language-bash">df -i
+</code></pre>
+<p>查看每个<code>inode</code>节点的大小,可以用如下命令:</p>
+<pre><code class="language-bash">sudo dumpe2fs -h /dev/hda | grep &quot;Inode size&quot;
+</code></pre>
+<p>由于每个文件都必须有一个<code>inode</code>,因此有可能发生<code>inode</code>已经用光,但是硬盘还未存满的情况.这时,就无法在硬盘上创建新文件.</p>
+<hr />
+<p>inode号码</p>
+<p>每个<code>inode</code>都有一个号码,操作系统用<code>inode</code>号码来识别不同的文件.</p>
+<p>这里值得重复一遍,<code>Unix/Linux</code>系统内部不使用文件名,而使用<code>inode</code>号码来识别文件.对于系统来说,文件名只是<code>inode</code>号码便于识别的别称或者绰号.
+表面上,用户通过文件名,打开文件.实际上,系统内部这个过程分成三步:首先,系统找到这个文件名对应的<code>inode</code>号码; 其次,通过<code>inode</code>号码,获取<code>inode</code>信息;
+最后,根据<code>inode</code>信息,找到文件数据所在的<code>block</code>,读出数据.</p>
+<p>使用<code>ls -i</code>命令,可以看到文件名对应的<code>inode</code>号码:</p>
+<pre><code class="language-bash">ls -i example.txt
+</code></pre>
+<hr />
+<p>目录文件</p>
+<p><code>Unix/Linux</code>系统中,目录(directory)也是一种文件.打开目录,实际上就是打开目录文件.</p>
+<p>目录文件的结构非常简单,就是一系列目录项(<code>dirent</code>)的列表.每个目录项,由两部分组成: 所包含文件的文件名,以及该文件名对应的 <code>inode</code> 号码.</p>
+<p><code>ls</code>命令只列出目录文件中的所有文件名:</p>
+<pre><code class="language-bash">ls /etc
+</code></pre>
+<p>ls -i命令列出整个目录文件,即文件名和<code>inode</code>号码:</p>
+<pre><code class="language-bash">ls -i /etc
+</code></pre>
+<p>如果要查看文件的详细信息,就必须根据<code>inode</code>号码,访问<code>inode</code>节点,读取信息.<code>ls -l</code>命令列出文件的详细信息.</p>
+<pre><code class="language-bash">ls -l /etc
+</code></pre>
+<hr />
+<p>硬链接</p>
+<p>一般情况下,文件名和<code>inode</code>号码是&quot;一一对应&quot;关系,每个<code>inode</code>号码对应一个文件名.但是,Unix/Linux系统允许,多个文件名指向同一个<code>inode</code>号码.
+这意味着,可以用不同的文件名访问同样的内容; 对文件内容进行修改,会影响到所有文件名; 但是,删除一个文件名,不影响另一个文件名的访问.这种情况就被称为&quot;硬链接&quot;(<code>hard link</code>).</p>
+<p><code>ln</code>命令可以创建硬链接:</p>
+<pre><code class="language-bash">ln 源文件 目标文件
+</code></pre>
+<p>运行上面这条命令以后,源文件与目标文件的inode号码相同,都指向同一个<code>inode</code>.<code>inode</code>信息中有一项叫做&quot;链接数&quot;,记录指向该<code>inode</code>的文件名总数,这时就会增加1.反过来,删除一个文件名,就会使得<code>inode</code>节点中的&quot;链接数&quot;减1.当这个值减到0,表明没有文件名指向这个<code>inode</code>,系统就会回收这个<code>inode</code>号码,以及其所对应<code>block</code>区域.</p>
+<p>这里顺便说一下目录文件的&quot;链接数&quot;.创建目录时,默认会生成两个目录项:&quot;.&quot;和&quot;..&quot;.前者的<code>inode</code>号码就是当前目录的<code>inode</code>号码,等同于当前目录的&quot;硬链接&quot;; 后者的<code>inode</code>号码就是当前目录的父目录的<code>inode</code>号码,等同于父目录的&quot;硬链接&quot;.所以,任何一个目录的&quot;硬链接&quot;总数,总是等于<code>2</code>加上它的子目录总数(含隐藏目录),这里的<code>2</code>是父目录对其的&quot;硬链接&quot;和当前目录下的&quot;.硬链接&quot;.</p>
+<hr />
+<p>软链接</p>
+<p>除了硬链接以外,还有一种特殊情况.文件<code>A</code>和文件<code>B</code>的<code>inode</code>号码虽然不一样,但是文件<code>A</code>的内容是文件<code>B</code>的路径.
+读取文件<code>A</code>时,系统会自动将访问者导向文件<code>B</code>.因此,无论打开哪一个文件,最终读取的都是文件<code>B</code>.这时,文件<code>A</code>就称为文件<code>B</code>的&quot;软链接&quot;(soft link)或者&quot;符号链接(symbolic link).</p>
+<p>这意味着,文件<code>A</code>依赖于文件<code>B</code>而存在,如果删除了文件<code>B</code>,打开文件<code>A</code>就会报错:&quot;No such file or directory&quot;.
+这是软链接与硬链接最大的不同:文件<code>A</code>指向文件<code>B</code>的文件名,而不是文件<code>B</code>的<code>inode</code>号码,文件<code>B</code>的<code>inode</code>&quot;链接数&quot;不会因此发生变化.</p>
+<p><code>ln -s</code>命令可以创建软链接.</p>
+<pre><code class="language-bash">ln -s 源文文件或目录 目标文件或目录
+</code></pre>
+<hr />
+<p>inode的特殊作用</p>
+<p>由于<code>inode</code>号码与文件名分离,这种机制导致了一些<code>Unix/Linux</code>系统特有的现象.</p>
+<ul>
+<li>有时,文件名包含特殊字符,无法正常删除. 这时,直接删除<code>inode</code>节点,就能起到删除文件的作用.</li>
+<li>移动文件或重命名文件,只是改变文件名,不影响<code>inode</code>号码.</li>
+<li>打开一个文件以后,系统就以<code>inode</code>号码来识别这个文件,不再考虑文件名.因此,通常来说,系统无法从<code>inode</code>号码得知文件名.</li>
+</ul>
+<p>第<code>3</code>点使得软件更新变得简单,可以在不关闭软件的情况下进行更新,不需要重启.
+因为系统通过<code>inode</code>号码,识别运行中的文件,不通过文件名.更新的时候,新版文件以同样的文件名,生成一个新的<code>inode</code>,不会影响到运行中的文件.
+等到下一次运行这个软件的时候,文件名就自动指向新版文件,旧版文件的<code>inode</code>则被回收.</p>
+<h2 id="shebang-脚本开头"><a class="header" href="#shebang-脚本开头">shebang 脚本开头</a></h2>
+<p><a href="https://bash.cyberciti.biz/guide/Shebang">Shebang</a></p>
+<p>大多数<code>Linux shell</code>和<code>perl</code>/<code>python</code>脚本以以下行开头:</p>
+<pre><code class="language-bash">#!/bin/bash
+#!/usr/bin/perl
+#!/usr/bin/python
+#!/usr/bin/python3
+#!/usr/bin/env bash
+</code></pre>
+<p>这称为<code>shebang</code>或<code>bang</code>行.</p>
+<p><code>shebang</code>(意思为这一切)其实就是<code>Bash</code>解释器的绝对路径. 几乎所有的<code>bash</code>脚本通常都以<code>#!/bin/bash</code>开头(假设<code>Bash</code>已安装在<code>/bin</code>中).
+这样可以确保即使在另一个<code>shell</code>下执行脚本, 也可以使用<code>Bash</code>来解释该脚本.
+<code>Shebang</code>是由Dennis Ritchie在第7版和8版<code>Unix</code>之间在<code>Bell</code>实验室推出的.  然后, 它也被添加到Berkeley的<code>BSD</code>中.</p>
+<p><code>/usr/bin/env</code>在修改后的环境中运行<code>bash</code>之类的程序.  它使您的<code>bash</code>脚本具有可移植性.
+<code>#!/usr/bin/env bash</code>的优点是, 它将使用运行用户的<code>$PATH</code>变量中最先出现的<code>bash</code>可执行文件.</p>
+<h2 id="日志文件"><a class="header" href="#日志文件">日志文件</a></h2>
+<p><a href="https://www.php.cn/linux-435716.html">linux系统日志在哪? </a>
+<a href="https://zhuanlan.zhihu.com/p/26428150">linux日志介绍</a></p>
+<pre><code class="language-bash">sudo tail -f /var/log/messages
+# or in ubuantu
+sudo tail -f /var/log/kern.log
+</code></pre>
+<p><code>linux</code>日志大多是以明文存储, 一般存储在<code>/var/log</code>目录中, linux系统中主要有三个日志子系统: 连接时间日志, 进程统计日志, 错误日志.</p>
+<ul>
+<li><code>assess-log</code> 记录和<code>HTTP/web</code>的传输</li>
+<li><code>secure</code> 记录登录系统存取资料的消息</li>
+<li><code>btmp</code> 记录失败的消息</li>
+<li><code>lastlog</code> 记录最近几次成功登录的事件和最后一次不成功的登录</li>
+<li><code>messages</code>: 包括整体系统信息, 其中也包含系统启动期间的日志. 此外, 还包括<code>mail</code>, <code>cron</code>, <code>daemon</code>, <code>kern</code>和<code>auth</code>等内容</li>
+<li><code>sudolog</code> 记录<code>sudo</code>发出的命令</li>
+<li><code>sulog</code> 记录使用<code>su</code>命令的使用</li>
+<li><code>utmp</code> 记录当前登录的每个用户</li>
+<li><code>wtmp</code> 一个用户每次登录进入和退出的的永久记录</li>
+<li><code>syslog</code>: 它和<code>/etc/log/messages</code>日志文件不同, 它只记录警告信息, 常常是系统出问题的信息.</li>
+<li><code>xferlog</code> 记录了FTP会话</li>
+<li><code>user.log</code>: 记录所有等级用户信息的日志.</li>
+<li><code>auth.log</code>: 包含系统授权信息, 包括用户登录和使用的权限机制等.</li>
+<li><code>daemon.log</code>: 包含各种系统后台守护进程日志信息.</li>
+<li><code>kern.log</code>: 包含内核产生的日志, 有助于在定制内核时解决问题.</li>
+</ul>
+<p>连接时间日志是有多个程序执行的, 把日志记录到<code>/var/log/wtmp</code>, <code>/var/run/utmp</code>,<code>/var/log/lastlog</code> 三个文件中, 这三个文件记录了用户登录系统和退出的有关信息,
+<code>utmp</code>保存了当前用户的每个用户的信息, <code>wtmp</code>记录了每个用户登录注销和系统的启动, 关机的事件, <code>lastlog</code>记录了每个用户最后登录的信息记录.</p>
+<p><code>wtmp</code>和<code>utmp</code>文件都是二进制, 不能使用<code>cat</code>和<code>tail</code>命令查看, 但是可以使用<code>who</code>, <code>w</code>,<code>users</code>,<code>last</code> 等命令查看着两个文件的信息</p>
+<hr />
+<p><code>who [参数]</code></p>
+<ul>
+<li><code>-a</code> 显示全部信息</li>
+<li><code>-m</code> 只显示当前终端的登录用户信息</li>
+<li><code>-q</code> 只显示当前登录到系统中的用户名称和数量, 和其他参数共同使用的时候, 其他参数将被忽略</li>
+</ul>
+<hr />
+<p><code>Systemd</code>统一管理所有 <code>Unit</code> 的启动日志. 带来的好处就是可以只用<code>journalctl</code>一个命令, 查看所有日志(内核日志和 应用日志).</p>
+<p>语法格式:  <code>journalctl [参数]</code></p>
+<ul>
+<li><code>-k,--dmesg</code>: 查看内核日志</li>
+<li><code>-b</code>:  查看系统本次启动的日志</li>
+<li><code>-u</code>:  查看指定服务的日志</li>
+<li><code>-n</code>:  指定日志条数</li>
+<li><code>-f</code>:  追踪日志</li>
+<li><code>--disk-usage</code>:  查看当前日志占用磁盘的空间的总大小</li>
+</ul>
+<p><code>-S, -since =, -U, -until =</code>
+显示比指定日期更早或更晚的日志. 日期格式为<code>&quot;2012-10-30 18:17:16&quot;</code>.如果省略时间部分, 则假定为<code>00:00:00</code>.如果只有秒部分是省略, 则假定为<code>:00</code>.
+如果省略日期部分, 则假定为当前日期.  也可以使用字符串<code>yesterday</code>, <code>&quot;today&quot;</code>, <code>&quot;tomorrow&quot;</code>.<code>now</code>是指当前时间.
+是指当日, 当日或当日后一天的00:00:00. 最后, 可以用<code>-</code>或<code>+</code>为前缀指定相对时间. 有关完整的时间和日期规范, 请参见<code>systemd.time(7).</code>.
+<code>--output=short-full</code>将完全按照此格式打印时间戳.</p>
+<p><code>x, --catalog</code>:
+用信息目录中的解释文本来增加日志行. 这将为输出中的日志信息添加解释性的帮助文本, 如果这是可用的.
+这些简短的帮助文本将解释错误或日志事件的背景, 可能的解决方案, 以及指向支持论坛, 开发人员文档和任何其他相关手册的指针.
+请注意, 帮助文本不是对所有的信息都可用, 而只是对选定的 的帮助文本. 关于消息目录的更多信息, 请参考消息目录开发者文档[5].</p>
+<p>注意: 当把 <code>journalctl</code> 输出附加到错误报告时, 请不要使用 <code>-x</code>.</p>
+<p><code>-e, --pager-end</code>:</p>
+<p>立即跳到默认的分页工具的日志末尾. 这意味着<code>-n1000</code>, 以保证<code>pager</code>不会缓冲无限制大小的日志.
+可以用一个明确的<code>-n数值</code>来覆盖, 而<code>-nall</code>将禁用这个上限. 注意, 这个选项只支持<code>less(1)</code>pager.</p>
+<p>参考实例</p>
+<ul>
+<li>查看所有日志:  <code>journalctl</code></li>
+<li>查看httpd的日志:  <code>journalctl -u httpd</code></li>
+<li>查看最近发生的20条日志:  <code>journalctl -n 20</code></li>
+<li>追踪日志:  <code>journalctl -f</code></li>
+</ul>
+<h2 id="linux-安装时的分区"><a class="header" href="#linux-安装时的分区">Linux 安装时的分区</a></h2>
+<p><a href="https://wiki.archlinux.org/title/Parted_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#UEFI/GPT_%E7%A4%BA%E4%BE%8B">UEFI/GPT 示例</a>
+<a href="https://manjaro.org/support/userguide/">manjaro_user_guide 也有分区的例子</a>
+<a href="https://wiki.archlinux.org/title/Arch_boot_process_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%99%A8">Arch boot process</a></p>
+<p>以<code>UEFI</code>主板为例, 参考<code>manjaro_user_guide</code>. 主要设置三个分区:</p>
+<p>文件系统格式, 挂载点, 建议大小, <code>flags</code></p>
+<ul>
+<li><code>fat32</code>,<code>/boot/efi</code>,<code>512MiB</code>, <code>boot,esp</code>, <code>esp</code>即 <code>UEFI System Partition</code>, GPT 中它是<code>boot</code>的别名.</li>
+<li><code>linuxswap</code>,不需要挂载, $\sqrt{\text{内存大小}} \sim 2* \text{内存大小}$</li>
+<li><code>ext4</code>,<code>/</code>,最简单的, 可以把剩下空间全部分配给<code>/</code>,文件系统也可以选别的, 比如<code>Btrfs</code></li>
+</ul>
+<p>强迫症可以把分区调整成<code>EFI</code>,<code>root</code>,<code>swap</code>的顺序, 可能有玄学加成.</p>
+<h2 id="交换分区-swap"><a class="header" href="#交换分区-swap">交换分区 swap</a></h2>
+<p><a href="https://help.ubuntu.com/community/SwapFaq">ubnuntu SwapFaq</a></p>
+<p>**
+如果想要确认是否有<code>swap</code>分区, 使用<code>parted</code>查看所有分区</p>
+<pre><code class="language-bash">sudo parted --list
+</code></pre>
+<p>如果有<code>swap</code>, 在输出中可以看到类似下面的内容</p>
+<pre><code>5      236GB   256GB   20.0GB  linux-swap(v1)
+</code></pre>
+<hr />
+<p>增加交换分区大小并将其用于休眠</p>
+<ul>
+<li>创建交换分区</li>
+<li>激活交换分区</li>
+<li>使新的交换分区适用于休眠状态(可选)</li>
+</ul>
+<hr />
+<p>创建交换分区</p>
+<p>使用<code>Ubuntu</code>安装介质如U盘开机, 选择<code>立即运行Ubuntu</code>.
+打开<code>GParted</code>分区编辑器: 删除原先的<code>swap</code>, <code>resize</code>主分区大小, 留出合适的空白空间用作<code>swap</code>.可以直接在<code>&quot;free space following&quot;</code>一项中设置想要的<code>swap</code>分区大小.
+在新的空白空间中, 选择<code>new</code>, 输入<code>linux-swap</code>, 如果喜欢,可以起个名<code>swap</code>到<code>Partition name</code>中, 然后点击<code>Apply</code>应用.  完成后, 重新启动原先硬盘上的<code>Ubuntu</code>系统.</p>
+<hr />
+<p>激活交换分区</p>
+<p>如果交换位于主硬盘驱动器上, 则无需在此处做任何事情.
+现在, 您需要查找<code>swap</code>所在的<code>分区</code>及其<code>UUID</code>, Universally Unique IDentifier, 它是该分区的通用唯一身份, 即使由于添加磁盘, 重启之后分区挂载点改变, <code>UUID</code>也不会改变.</p>
+<p>切换到<code>root</code>用户, 运行<code>gparted</code> . 右键单击交换分区, 然后选择<code>Information</code>.
+应该可以看到<code>Path</code>和<code>UUID</code>. 保持打开状态以供进一步参考.
+运行 <code>gedit /etc/fstab</code>, 查找其中带有<code>swap</code>的行. 它应该在第三列, 用空格或制表符分隔. 您可以使用路径或<code>UUID</code>来告诉<code>Linux</code>在哪里找到交换分区. 建议使用<code>UUID</code>, 因为即使您移动分区或磁盘之后, <code>sdb</code>变成<code>sda</code>, <code>UUID</code>也将保持不变.
+如果您使用的是UUID, 则您的代码行应如下所示:</p>
+<pre><code>UUID=41e86209-3802-424b-9a9d-d7683142dab7 none swap sw 0 0
+</code></pre>
+<p>或使用路径:</p>
+<pre><code>/dev/sda2 none swap sw 0 0
+</code></pre>
+<p>保存更改.</p>
+<p>使用此命令启用新的交换分区.</p>
+<pre><code class="language-bash">sudo swapon --all # 或者 sudo swapon --all --verbose
+</code></pre>
+<p>确认交换分区存在.</p>
+<pre><code class="language-bash">$ cat /proc/swaps
+Filename                                Type            Size  Used    Priority
+/dev/sda2                               partition      20971480       -1
+</code></pre>
+<p>接着可以重启查看交换分区能否被正确激活.</p>
+<hr />
+<p>使交换分区用于休眠(可选)</p>
+<p>运行<code>cat /proc/swaps</code>, 可以看到<code>swap</code>分区的路径. 找到它的<code>UUID</code>. 使用</p>
+<pre><code>sudo gedit /etc/default/grub
+</code></pre>
+<p>修改<code>grub</code>(启动引导加载程序)的配置. 如果怕出问题可以先备份</p>
+<pre><code>sudo cp -a /etc/default/grub /etc/default/grub.bak
+</code></pre>
+<p>查找<code>GRUB_CMDLINE_LINUX=&quot;xx&quot;</code>行, 在后面添加上:</p>
+<pre><code>GRUB_CMDLINE_LINUX=&quot;XXX resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7&quot;
+</code></pre>
+<p>并保存文件.<code>sudo update-grub</code>并等待其完成.</p>
+<p>然后<code>sudo gedit /etc/initramfs-tools/conf.d/resume</code>, 确保内容类似下面这样:</p>
+<pre><code>resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7
+</code></pre>
+<p>如果不使用<code>swap</code>, 这里的设置应该是<code>resume=none</code>,保存文件.
+然后运行<code>sudo update-initramfs -u</code>. 重启. 现在应该可以休眠了.</p>
+<hr />
+<p>启用未生效的交换分区: 如果你已经有交换分区, 则有几种启用它的方法. 首先查看<code>fstab</code></p>
+<pre><code>cat /etc/fstab
+</code></pre>
+<p>确保下面有<code>swap</code>的记录, 这样可以在启动时启用<code>swap</code>.</p>
+<pre><code>/dev/sdb5       none            swap    sw              0       0
+</code></pre>
+<p>然后禁用所有<code>swap</code>, 再重新创建它, 然后使用以下命令重新启用</p>
+<pre><code class="language-bash">sudo swapoff -a
+sudo /sbin/mkswap /dev/sdb5
+sudo swapon -a
+</code></pre>
+<hr />
+<p>什么是<code>swappiness</code>, 我该如何更改?</p>
+<p><code>swappiness</code>参数控制内核使用<code>swap</code>的倾向. 因为磁盘要比<code>RAM</code>慢得多, 所以如果进程经常主动地移出内存, 可能导致系统和应用程序的响应时间变慢.</p>
+<ul>
+<li><code>swappiness</code> 的值可以在<code>0</code>到<code>100</code>之间</li>
+<li><code>swappiness=0</code>告诉内核尽可能避免将进程从物理内存中交换出来</li>
+<li><code>swappiness=100</code> 告诉内核积极地把进程从物理内存移动到<code>swap</code>缓存</li>
+</ul>
+<p><code>Ubuntu</code> 中的默认设置为<code>swappiness=60</code>. 降低 <code>swappiness</code> 的默认值可能会提高典型的<code>Ubuntu</code>桌面安装的整体性能.
+建议将 <code>swappiness</code> 的值设置为<code>10</code>, 你也可以自己尝试. <code>Ubuntu</code>服务器对桌面系统的性能要求不同, 默认值<code>60</code>可能更合适.</p>
+<p>检查<code>swappiness</code>值</p>
+<pre><code>cat /proc/sys/vm/swappiness
+</code></pre>
+<p>临时更改 <code>swappiness</code> 值(重启之后丢失):</p>
+<pre><code>sudo sysctl vm.swappiness=10
+</code></pre>
+<p>永久更改:</p>
+<pre><code>sudo gedit /etc/sysctl.conf
+</code></pre>
+<p>搜索<code>vm.swappiness</code>根据需要更改其值. 如果<code>vm.swappiness</code>不存在则自己添加:</p>
+<pre><code>vm.swappiness=10
+</code></pre>
+<p>保存文件并重新启动.</p>
+<h2 id="编码字符集"><a class="header" href="#编码字符集">编码,字符集</a></h2>
+<p><a href="https://wiki.archlinux.org/title/Localization/Simplified_Chinese">File name is garbled</a></p>
+<p>避免乱码基本原则: 使用 <code>utf-8</code> 代替 <code>gbk/gb2312</code>.</p>
+<p><code>convmv</code>: 将文件名从一种编码转换到另一种编码, 例如:</p>
+<pre><code class="language-bash">convmv -f GBK -t UTF-8 --notest --nosmart file
+</code></pre>
+<p><code>-f</code>指定原始编码, <code>-t</code>指定输出编码. 使用 <code>convmv --list</code> 可查询所有支持的编码.
+<code>--notest</code> 表示进行实际操作, 而非测试, 如果不使用该参数只会打印出转换结果而不会实际转码. <code>--smart</code>表示如果已经是<code>UTF-8</code> 则忽略.</p>
+<h3 id="文件内容乱码"><a class="header" href="#文件内容乱码">文件内容乱码</a></h3>
+<p>使用 <code>iconv</code> 命令转换格式. 示例:</p>
+<pre><code class="language-bash">iconv -f GBK -t UTF-8 -o new-file origin-file
+</code></pre>
+<p><code>-f</code> 指定原始编码, <code>-t</code> 指定输出编码. 使用 <code>iconv -l</code> 可查询所有支持的编码. <code>-o</code> 指定输出文件.</p>
+<h3 id="zip-压缩包乱码"><a class="header" href="#zip-压缩包乱码">zip 压缩包乱码</a></h3>
+<p>避免方法: 非 <code>utf8</code> 编码环境下(一般 <code>windows</code> 下的中文环境即是)不使用 <code>zip</code> 进行压缩(建议使用 <code>7z</code>).
+解决方案: 安装使用 <code>unzip-iconv</code> 或者 <code>unzip-natspec</code>取代原版的 <code>unzip</code> 来解压缩, 示例:</p>
+<pre><code class="language-bash">unzip -O gbk file.zip
+</code></pre>
+<p><code>file.zip</code> 是压缩文件, <code>gbk</code> 是该文件的编码格式, 以 <code>-O</code> 指定(原版 <code>unzip</code> 无 <code>-O</code> 选项).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="next" href="linux-1-exception.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="next" href="linux-1-exception.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

@@ -1,0 +1,1343 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>linux 包管理 - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html" class="active"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linxu-包管理"><a class="header" href="#linxu-包管理">linxu 包管理</a></h1>
+<h2 id="ubuntu-镜像使用帮助"><a class="header" href="#ubuntu-镜像使用帮助">Ubuntu 镜像使用帮助</a></h2>
+<p>清华大学的源</p>
+<p>域名选择</p>
+<pre><code class="language-bash">https://mirrors.tuna.tsinghua.edu.cn 自动选择
+https://mirrors6.tuna.tsinghua.edu.cn 只解析 IPv6
+https://mirrors4.tuna.tsinghua.edu.cn 只解析 IPv4
+</code></pre>
+<p>Ubuntu 的软件源配置文件是 <code>/etc/apt/sources.list</code>.将系统自带的该文件做个备份,将该文件替换为下面内容,即可使用 <code>TUNA</code> 的软件源镜像.</p>
+<pre><code class="language-bash"># 默认注释了源码镜像以提高 apt update 速度,如有需要可自行取消注释
+deb https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+# deb-src https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+# deb-src https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+# deb-src https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+# deb-src https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+
+# 预发布软件源,不建议启用
+# deb https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+# deb-src https://mirrors6.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+</code></pre>
+<h3 id="dpkg创建包dpkg-buildpackage"><a class="header" href="#dpkg创建包dpkg-buildpackage">dpkg创建包,dpkg-buildpackage</a></h3>
+<p><code>dget</code> -- Download Debian source and binary packages</p>
+<p>SYNOPSIS</p>
+<pre><code>dget [options] URL ...
+dget [options] [--all] package[=version] ...
+</code></pre>
+<p>DESCRIPTION</p>
+<p>dget downloads Debian packages.</p>
+<p>In the first form, dget fetches the requested <code>URLs</code>.  If this is a <code>.dsc</code> or <code>.changes</code> file,
+then dget acts as a source-package aware form of wget: it also fetches any files referenced in the <code>.dsc/.changes</code> file.
+The downloaded source is then checked with <code>dscverify</code> and, if successful, unpacked by <code>dpkg-source</code>.</p>
+<h3 id="完整的重构建"><a class="header" href="#完整的重构建">完整的(重)构建</a></h3>
+<p>为保证完整的软件包(重)构建能顺利进行,你必须保证系统中已经安装</p>
+<pre><code>build-essential 软件包;
+
+列于 Build-Depends 域的软件包(参看 第 4.1 节 `control`);
+
+列于 Build-Depends-indep 域的软件包(参看 第 4.1 节 `control`).
+</code></pre>
+<p>然后在源代码目录中执行以下命令:</p>
+<p>$ dpkg-buildpackage -us -uc</p>
+<p>这样会自动完成所有从源代码包构建二进制包的工作,包括:</p>
+<pre><code>清理源代码树(debian/rules clean)
+
+构建源代码包(dpkg-source -b)
+
+构建程序(debian/rules build)
+
+构建二进制包(fakeroot debian/rules binary)
+
+制作 .dsc 文件
+
+用 dpkg-genchanges 命令制作 .changes 文件.
+</code></pre>
+<p>如果构建结果令人满意,那就用 debsign 命令以你的私有 GPG 密钥签署 .dsc 文件和 .changes 文件.你需要输入密码两次. [63]</p>
+<p>对于非本地 Debian 软件包,比如 gentoo, 构建软件包之后,你将会在上一级目录(~/gentoo) 中看到下列文件:</p>
+<pre><code>gentoo_0.9.12.orig.tar.gz
+
+这是原始的源代码 tarball,最初由 dh_make -f ../gentoo-0.9.12.tar.gz 命令创建,它的内容与上游 tarball 相同,仅被重命名以符合 Debian 的标准.
+
+gentoo_0.9.12-1.dsc
+
+这是一个从 control 文件生成的源代码概要,可被 dpkg-source(1) 程序解包.
+
+gentoo_0.9.12-1.debian.tar.gz
+
+这个压缩的 Tar 归档包含你的 debian 目录内容.其他所有对于源代码的修改都由 quilt 补丁存储于 debian/patches 中.
+
+如果其他人想要重新构建你的软件包,他们可以使用以上三个文件很容易地完成.只需复制三个文件,再运行 dpkg-source -x gentoo_0.9.12-1.dsc. [64]
+
+gentoo_0.9.12-1_i386.deb
+
+这是你的二进制包,可以使用 dpkg 程序安装或卸载它,就像其他软件包一样.
+
+gentoo_0.9.12-1_i386.changes
+
+这个文件描述了当前修订版本软件包中的全部变更,它被 Debian FTP 仓库维护程序用于安装二进制和源代码包.它是部分从 changelog 和 .dsc 文件生成的.
+
+随着你不断完善这个软件包,程序的行为会发生变化,也会有更多新特性添加进来.下载你软件包的人可以查看这个文件来快速找到有哪些变化,Debian 仓库维护程序还会把它的内容发表至 debian-devel-changes@lists.debian.org 邮件列表.
+</code></pre>
+<p>在上传到 Debian FTP 仓库中前,gentoo_0.9.12-1.dsc 文件和 gentoo_0.9.12-1_i386.changes 文件必须用 debsign 命令签署,其中使用你自己存放在 ~/.gnupg/ 目录中的 GPG 私钥. 用你的公钥,可以令 GPG 签名证明这些文件真的是你的.</p>
+<p>debsign 命令可以用来以指定 ID 的 GPG 密钥进行签署 (这方便了赞助(sponsor)软件包), 只要照着下边在 ~/.devscripts 中的内容:</p>
+<p>DEBSIGN_KEYID=Your_GPG_keyID</p>
+<p>.dsc 和 .changes 文件中很长的数字串是其中提及文件的 SHA1/SHA256 校验和.下载你软件包的人可以使用 sha1sum(1) 或 sha256sum(1) 来进行核对.如果校验和不符,则说明文件已被损坏或偷换</p>
+<h3 id="hostname"><a class="header" href="#hostname">Hostname</a></h3>
+<p><a href="https://www.lifewire.com/what-is-a-hostname-2625906">What Is a Hostname? </a></p>
+<p>域名(英语:<code>Domain Name</code>),又称网域,是由一串用点分隔的名字组成的<code>Internet</code>上某一台计算机或计算机组的名称,
+用于在数据传输时对计算机的定位标识(有时也指地理位置)</p>
+<p>由于<code>IP</code>地址具有不方便记忆并且不能显示地址组织的名称和性质等缺点,人们设计出了域名,
+并通过网域名称系统(<code>DNS</code>,<code>Domain Name System</code>)来将域名和<code>IP</code>地址相互映射,使人更方便地访问互联网,
+而不用去记住能够被机器直接读取的<code>IP</code>地址数串</p>
+<p>A <code>hostname</code> is a label assigned to a <code>device</code> (a host) on a <code>network</code>.</p>
+<p>It distinguishes one device from another on a specific network or over the internet.
+The hostname for a computer on a home network may be something like <code>new laptop</code>, <code>Guest-Desktop</code>, or <code>FamilyPC</code>.</p>
+<p>Hostnames are also used by <code>DNS</code> servers so you can access a website by a common, easy-to-remember name. This way, you don't have to remember a string of numbers (an <code>IP address</code>) to open a website.</p>
+<p>A computer's hostname may instead be referred to as a computer name, sitename, or nodename.
+You may also see hostname <code>spelled</code> as host name.</p>
+<h3 id="主机的例子hostname"><a class="header" href="#主机的例子hostname">主机的例子,Hostname</a></h3>
+<p>Each of the following is an example of a Fully Qualified Domain Name with its hostname written off to the side:</p>
+<ul>
+<li><code>www.google.com: www</code></li>
+<li><code>images.google.com: images</code></li>
+<li><code>products.office.com: products</code></li>
+<li><code>www.microsoft.com: www</code></li>
+</ul>
+<p>The hostname (like <code>products</code>) is the text that <em>precedes</em> the <code>domain</code> name (for example, office), which is the text that comes before the <em>top-level domain</em> (<code>.com</code>).</p>
+<h3 id="在-windows-中找出-hostname"><a class="header" href="#在-windows-中找出-hostname">在 windows 中找出 Hostname</a></h3>
+<p>Executing <code>hostname</code> from the Command Prompt is the easiest way to show the hostname of a computer.</p>
+<h2 id="linux查看硬件信息"><a class="header" href="#linux查看硬件信息">Linux查看硬件信息</a></h2>
+<p><a href="https://linux.cn/article-11422-1.html">用 Linux 命令显示硬件信息 </a></p>
+<p>最简单的方法是使用标准的 Linux GUI 程序之一:</p>
+<ul>
+<li><code>i-nex</code> 收集硬件信息, 并且类似于 Windows 下流行的 <code>CPU-Z</code> 的显示.</li>
+<li><code>HardInfo</code> 显示硬件具体信息, 甚至包括一组八个的流行的性能基准程序, 你可以用它们运算你的系统性能.</li>
+<li><code>KInfoCenter</code> 和 <code>Lshw</code> 也能够显示硬件的详细信息, 并且可以从许多软件仓库中获取.</li>
+</ul>
+<h3 id="硬件概述"><a class="header" href="#硬件概述">硬件概述</a></h3>
+<p><code>inxi</code> 命令能够列出包括 CPU, 图形, 音频, 网络, 驱动, 分区, 传感器等详细信息. 当论坛里的人尝试帮助其他人解决问题的时候, 他们常常询问此命令的输出.</p>
+<pre><code class="language-bash">inxi -Fxz
+</code></pre>
+<p><code>-F</code> 参数意味着你将得到完整的输出, <code>x</code> 增加细节信息, <code>z</code> 参数隐藏像 <code>MAC</code> 和 <code>IP</code> 等私人身份信息.</p>
+<hr />
+<p><code>hwinfo</code> 和 <code>lshw</code> 命令以不同的格式显示大量相同的信息:
+<code>hwinfo --short</code> 或 <code>lshw -short</code>
+这两条命令的长格式输出非常详细, 但也有点难以阅读:
+<code>hwinfo</code> 或<code>lshw</code></p>
+<h3 id="cpu-详细信息"><a class="header" href="#cpu-详细信息">CPU 详细信息</a></h3>
+<p>通过命令你可以了解关于你的 CPU 的任何信息. 使用 <code>lscpu</code> 命令或与它相近的 <code>lshw</code> 命令查看 <code>CPU</code> 的详细信息:</p>
+<p><code>lscpu</code>  或 <code>lshw -C cpu</code></p>
+<p>在这两个例子中, 输出的最后几行都列出了所有 <code>CPU</code> 的功能. 你可以查看你的处理器是否支持特定的功能.</p>
+<p>使用这些命令的时候, 你可以使用 <code>grep</code> 过滤信息. 例如, 只查看 CPU 品牌和型号:</p>
+<pre><code class="language-bash">lshw -C cpu | grep -i product
+</code></pre>
+<p>仅查看 <code>CPU</code> 的速度(兆赫兹):</p>
+<pre><code class="language-bash">lscpu | grep -i mhz
+</code></pre>
+<p>或其 <code>BogoMips</code> 额定功率:</p>
+<pre><code class="language-bash">lscpu | grep -i bogo
+</code></pre>
+<p><code>grep</code> 命令的 <code>-i</code>参数代表搜索结果忽略大小写.</p>
+<h3 id="内存"><a class="header" href="#内存">内存</a></h3>
+<p><code>Linux</code> 命令行使你能够收集关于你的计算机内存的所有可能的详细信息.
+你甚至可以不拆开计算机机箱就能确定是否可以为计算机添加额外的内存条.</p>
+<p>使用 <code>dmidecode</code> 命令列出每根内存条和其容量:</p>
+<pre><code class="language-bash">dmidecode -t memory | grep -i size
+</code></pre>
+<p>使用以下命令获取系统内存更多的信息, 包括类型, 容量, 速度和电压:</p>
+<pre><code class="language-bash">lshw -short -C memory
+</code></pre>
+<p>你肯定想知道的一件事是你的计算机可以安装的最大内存:</p>
+<pre><code class="language-bash">dmidecode -t memory | grep -i max
+</code></pre>
+<p>现在检查一下计算机是否有空闲的插槽可以插入额外的内存条. 你可以通过使用命令在不打开计算机机箱的情况下就做到:</p>
+<pre><code class="language-bash">lshw -short -C memory | grep -i empty
+</code></pre>
+<p>输出为空则意味着所有的插槽都在使用中.</p>
+<h3 id="显卡"><a class="header" href="#显卡">显卡</a></h3>
+<p>确定你的计算机拥有多少显卡内存需要下面的命令. 首先使用 <code>lspci</code> 列出所有设备信息然后过滤出你想要的显卡设备信息:</p>
+<pre><code class="language-bash">lspci | grep -i vga
+</code></pre>
+<p>视频控制器的设备号输出信息通常如下:</p>
+<pre><code class="language-bash">00:02.0 VGA compatible controller: Intel Corporation 82Q35 Express Integrated Graphics Controller (rev 02)
+</code></pre>
+<p>现在再加上视频设备号重新运行 <code>lspci</code> 命令:</p>
+<pre><code class="language-bash">lspci -v -s 00:02.0
+</code></pre>
+<p>输出信息中 <code>prefetchable</code> 那一行显示了系统中的显卡内存大小:</p>
+<p>使用<code>xrandr</code> 可以设置屏幕输出的大小, 方向或反射.  它还可以设置屏幕尺寸.</p>
+<hr />
+<p>安装专有显卡驱动:</p>
+<p>首先查看显卡硬件型号<code>ubuntu-drivers devices</code>, 使用<code>ubuntu-drivers -h</code>可以查看使用帮助:</p>
+<p>用法: <code>ubuntu-drivers [OPTIONS] COMMAND [ARGS]...</code></p>
+<p>选项:</p>
+<p><code>--gpgpu</code>:gpgpu驱动程序
+<code>--free-only</code>:仅考虑免费软件包
+<code>--package-list PATH</code>:使用已安装软件包列表,创建文件(在<code>install</code>模式)
+<code>--no-oem</code>: 不包括OEM软件包,默认值: <code>False</code>
+<code>-h</code>, <code>--help</code>:显示此消息并退出.</p>
+<p>命令:</p>
+<p><code>autoinstall</code>:已弃用, 请改用<code>install</code>
+<code>debug</code>:打印有关驱动程序的所有可用信息和调试数据.
+<code>devices</code>:显示所有需要驱动程序的设备以及哪些软件包可用
+<code>install</code>:安装驱动程序<code>[driver[:version][,driver[:version]]]</code>
+<code>list</code>:显示适用于当前系统的所有驱动程序包.
+<code>  list-oem</code>:显示适用于此系统的所有OEM软件包</p>
+<hr />
+<p>使用下面的命令展示当前内存使用量(兆字节):</p>
+<pre><code class="language-bash">free -m
+</code></pre>
+<p>这条命令告诉你多少内存是空闲的, 多少命令正在使用中以及交换内存的大小和是否正在使用. <code>top</code> 命令为你提供内存使用更加详细的信息.
+它显示了当前全部内存和 CPU 使用情况并按照进程 ID, 用户 ID 及正在运行的命令细分. 同时这条命令也是全屏输出.</p>
+<h3 id="磁盘文件系统和设备"><a class="header" href="#磁盘文件系统和设备">磁盘文件系统和设备</a></h3>
+<p>你可以轻松确定有关磁盘, 分区, 文件系统和其他设备信息.</p>
+<p>显示每个磁盘设备的描述信息:</p>
+<pre><code class="language-bash">lshw -short -C disk
+</code></pre>
+<p>通过以下命令获取任何指定的 <code>SATA</code> 磁盘详细信息, 例如其型号, 序列号以及支持的模式和扇区数量等:</p>
+<pre><code class="language-bash">hdparm -i /dev/sda
+</code></pre>
+<p>当然, 如果需要的话你应该将 <code>sda</code> 替换成 <code>sdb</code> 或者其他设备号.</p>
+<p>列出所有磁盘及其分区和大小:</p>
+<pre><code class="language-bash">lsblk
+</code></pre>
+<p>使用以下命令获取更多有关扇区数量, 大小, 文件系统 ID 和 类型以及分区开始和结束扇区:</p>
+<pre><code class="language-bash">fdisk -l
+</code></pre>
+<p>要启动 Linux, 你需要确定 <code>GRUB</code> 引导程序的可挂载分区. 你可以使用 <code>blkid</code> 命令找到此信息. 它列出了每个分区的唯一标识符(UUID)及其文件系统类型(例如 ext3 或 ext4):</p>
+<pre><code class="language-bash">blkid
+</code></pre>
+<p>使用以下命令列出已挂载的文件系统和它们的挂载点, 以及已用的空间和可用的空间(兆字节为单位):</p>
+<pre><code class="language-bash">df -m
+</code></pre>
+<p>最后, 你可以列出所有的 <code>USB</code> 和 <code>PCI</code> 总线以及其他设备的详细信息:</p>
+<pre><code class="language-bash">lsusb
+</code></pre>
+<p>或</p>
+<pre><code class="language-bash">lspci
+</code></pre>
+<h3 id="网络"><a class="header" href="#网络">网络</a></h3>
+<p>Linux 提供大量的网络相关命令, 下面只是几个例子.</p>
+<p>查看你的网卡硬件详细信息:</p>
+<pre><code class="language-bash">lshw -C network
+</code></pre>
+<p><code>ifconfig</code> 是显示网络接口的传统命令:</p>
+<pre><code class="language-bash">ifconfig -a
+</code></pre>
+<p>但是现在很多人们使用:</p>
+<pre><code class="language-bash">ip link show
+</code></pre>
+<p>或</p>
+<pre><code class="language-bash">netstat -i
+</code></pre>
+<p>在阅读输出时, 了解常见的网络缩写十分有用:</p>
+<p>缩写    含义</p>
+<ul>
+<li><code>lo</code>    回环接口</li>
+<li><code>eth0</code> 或 <code>enp*</code>    以太网接口</li>
+<li><code>wlan0</code>    无线网接口</li>
+<li><code>ppp0</code>    点对点协议接口(由拨号调制解调器, PPTP VPN 连接或者 USB 调制解调器使用)</li>
+<li><code>vboxnet0</code> 或 <code>vmnet*</code>    虚拟机网络接口</li>
+</ul>
+<p>表中的星号是通配符, 代表不同系统的任意字符.</p>
+<p>使用以下命令显示默认网关和路由表:</p>
+<pre><code class="language-bash">ip route | column -t
+</code></pre>
+<p>或</p>
+<pre><code class="language-bash">netstat -r
+</code></pre>
+<h3 id="软件"><a class="header" href="#软件">软件</a></h3>
+<p>让我们以显示最底层软件详细信息的两条命令来结束.
+例如, 如果你想知道是否安装了最新的固件该怎么办? 这条命令显示了 <code>UEFI</code> 或 <code>BIOS</code> 的日期和版本:</p>
+<pre><code class="language-bash">dmidecode -t bios
+</code></pre>
+<p>内核版本是多少, 以及它是 64 位的吗? 网络主机名是什么? 使用下面的命令查出结果:</p>
+<pre><code class="language-bash">uname -a
+</code></pre>
+<h3 id="快速查询表"><a class="header" href="#快速查询表">快速查询表</a></h3>
+<p>用途   命令</p>
+<ul>
+<li>显示所有硬件信息   <code>inxi -Fxz</code> 或 <code>hwinfo --short</code> 或 <code>lshw  -short</code></li>
+<li><code>CPU</code> 信息   <code>lscpu</code> 或 <code>lshw -C cpu</code></li>
+<li>显示 <code>CPU</code> 功能(例如 PAE, SSE2)  <code>lshw -C cpu | grep -i capabilities</code></li>
+<li>报告 <code>CPU</code> 位数   <code>lshw -C cpu | grep -i width</code></li>
+<li>显示当前内存大小和配置   <code>dmidecode -t memory | grep -i size</code> 或 <code>lshw -short -C memory</code></li>
+<li>显示硬件支持的最大内存   <code>dmidecode -t memory | grep -i max</code></li>
+<li>确定是否有空闲内存插槽   <code>lshw -short -C memory | grep -i empty</code>(输出为空表示没有可用插槽)</li>
+<li>确定显卡内存数量   <code>lspci | grep -i vga</code> 然后指定设备号再次使用; 例如: <code>lspci -v -s 00:02.0</code>
+显卡内存数量就是  <code>prefetchable</code> 的值</li>
+<li>显示当前内存使用情况  <code>free -m</code> 或 <code>top</code></li>
+<li>列出磁盘驱动器   <code>lshw -short -C disk</code></li>
+<li>显示指定磁盘驱动器的详细信息   <code>hdparm -i /dev/sda</code>(需要的话替换掉 <code>sda</code> )</li>
+<li>列出磁盘和分区信息   <code>lsblk</code>(简单) 或 <code>fdisk -l</code>(详细)</li>
+<li>列出分区 ID(UUID)   <code>blkid</code></li>
+<li>列出已挂载文件系统挂载点以及已用和可用空间   d<code>f -m</code></li>
+<li>列出 USB 设备   <code>lsusb</code></li>
+<li>列出 PCI 设备   <code>lspci</code></li>
+<li>显示网卡详细信息  <code> lshw -C network</code></li>
+<li>显示网络接口   <code>ifconfig -a</code> 或 <code>ip link show</code> 或 <code>netstat -i</code></li>
+<li>显示路由表   <code>ip route | column -t</code> 或 <code>netstat -r</code></li>
+<li>显示 UEFI/BIOS 信息   <code>dmidecode -t bios</code></li>
+<li>显示内核版本网络主机名等   <code>uname -a</code></li>
+</ul>
+<p><a href="https://blog.csdn.net/zdwzzu2006/article/details/7747977">Linux下/proc目录简介</a></p>
+<p>Linux 内核提供了一种通过 <code>/proc</code> 文件系统,在运行时访问内核内部数据结构, 改变内核设置的机制.proc文件系统是一个伪文件系统,它只存在内存当中,而不占用外存空间.它以文件系统的方式为访问系统内核数据的操作提供接口.</p>
+<p>用户和应用程序可以通过proc得到系统的信息,并可以改变内核的某些参数.
+由于系统的信息,如进程,是动态改变的,所以用户或应用程序读取proc文件时,proc文件系统是动态从系统内核读出所需信息并提交的.
+下面列出的这些文件或子文件夹,并不是都是在你的系统中存在,这取决于你的内核配置和装载的模块.
+另外,在<code>/proc</code>下还有三个很重要的目录:<code>net</code>,<code>scsi</code>和<code>sys</code>. <code>Sys</code>目录是可写的,可以通过它来访问或修改内核的参数,而<code>net</code>和<code>scsi</code>则依赖于内核配置.例如,如果系统不支持<code>scsi</code>,则<code>scsi</code>目录不存在.</p>
+<p>除了以上介绍的这些,还有的是一些以数字命名的目录,它们是进程目录.
+系统中当前运行的每一个进程都有对应的一个目录在<code>/proc</code>下,以进程的 <code>PID</code>号为目录名,它们是读取进程信息的接口.
+而<code>self</code>目录则是读取进程本身的信息接口,是一个<code>link</code>.</p>
+<h2 id="shell-语法"><a class="header" href="#shell-语法">shell 语法</a></h2>
+<h3 id="空白字符"><a class="header" href="#空白字符">空白字符</a></h3>
+<p><a href="https://blog.csdn.net/boyinnju/article/details/6877087">对C标准中空白字符的理解</a>
+<a href="https://blog.csdn.net/Jerry_1126/java/article/details/85009615">Shell中去掉文件中的换行符简单方法</a></p>
+<p><code>C</code>标准库里<code>&lt;ctype.h&gt;</code>中声明了一个函数:</p>
+<p><code>int isspace(int c);</code></p>
+<p>该函数判断字符<code>c</code>是否为一个空白字符.</p>
+<p><code>C</code>标准中空白字符有六个:
+空格(<code>' '</code>), 换页(<code>'\f'</code>), 换行(<code>'\n'</code>), 回车(<code>'\r'</code>), 水平制表符(<code>'\t'</code>), 垂直制表符(<code>'\v'</code>)</p>
+<hr />
+<p>空格: ASCII码为<code>0x20</code>,而不是<code>0x00</code>.<code>0x00</code>代表空(<code>NULL</code>)</p>
+<p><code>0X00-0XFF</code> <code>16</code>进制一共<code>256</code>个,刚好是一个<code>bit</code>的范围.</p>
+<hr />
+<p>回车('\r')效果是输出回到本行行首,结果可能会将这一行之前的输出覆盖掉,例如执行:</p>
+<pre><code class="language-bash">puts(&quot;hello world!\rxxx&quot;);
+#在终端输出的是:
+xxxlo world!
+</code></pre>
+<p>如果将上面的字符串写入文件中,例如执行:</p>
+<pre><code class="language-bash">char *s = &quot;hello world!\rxxx&quot;;
+FILE *str = fopen(&quot;t.txt&quot;,&quot;r&quot;);
+fwrite(s, 16, 1, str);
+</code></pre>
+<p>用文本编辑器打开<code>t.txt</code>.显示的效果将由打开的编辑器所决定.
+vi将<code>\r</code>用<code>^M</code>代替,而记事本就没有显示该字符.</p>
+<hr />
+<p>换行('\n')
+顾名思义,换行就是转到下一行输出.例如:</p>
+<pre><code class="language-bash">puts(&quot;hello\nworld!&quot;);
+#在终端中将输出
+hello
+world!
+</code></pre>
+<p>但需要注意的是,终端输出要达到换行效果用<code>\n</code>就可以,但要在文本文件输出中达到换行效果在各个系统中有所区别.
+在<code>*nix</code>系统中,每行的结尾是&quot;<code>\n</code>&quot;,windows中则是&quot;<code>\n\r</code>&quot;,mac则是&quot;<code>\r</code>&quot;.</p>
+<hr />
+<p>水平制表符('\t')</p>
+<p>相信大家对'\t'还是比较熟悉的.一般来说,其在终端和文件中的输出显示相当于按下键盘<code>TAB</code>键效果.
+一般系统中,显示水平制表符将占8列.同时水平制表符开始占据的初始位置是第<code>8*n</code>列(第一列的下标为0).例如:</p>
+<pre><code class="language-bash">puts(&quot;0123456\txx&quot;);
+puts(&quot;0123456t\txx&quot;);
+</code></pre>
+<hr />
+<p>垂直制表符('\v')</p>
+<p>垂直制表符不常用.它的作用是让<code>'\v'</code>后面的字符从下一行开始输出,且开始的列数为<code>\v</code>前一个字符所在列后面一列.例如:</p>
+<pre><code class="language-bash">puts(&quot;01\v2345&quot;);
+</code></pre>
+<hr />
+<p>换页('\f')</p>
+<p>换页符的在终端的中的效果相当于<code>*nix</code>中<code>clear</code>命令.
+终端在输出<code>'\f'</code>之后内容之前,会将整个终端屏幕清空空,然后在输出内容.给人的该觉是在<code>clear</code>命令后的输出字符串.</p>
+<p>最后我想说明一点,<code>\t \r, \v \f</code>也是控制字符,它们会控制字符的输出方式.
+它们在终端输出时会有上面的表现,但如果写入文本文件,一般文本编辑器(vi或记事本)对<code>\t \r, \v \f</code>的显示是没有控制效果的.</p>
+<h3 id="shell-换行"><a class="header" href="#shell-换行">shell 换行</a></h3>
+<p>把换行符注释掉,如果同时想插入注释,可以用<code>$()</code>或者两个<code>backtick</code>包裹注释</p>
+<pre><code class="language-bash">emcc -o ./dist/test.html `# 目标文件` \
+--shell-file ./tmp.html `# 模板文件` \
+--source-map-base dist `# source map 根路径` \
+-O3 `# 优化级别` \
+</code></pre>
+<h3 id="删除换行符"><a class="header" href="#删除换行符">删除换行符</a></h3>
+<p>文件中每行都以<code>\n</code>结尾,如果要去掉换行符,使用<code>sed</code>命令</p>
+<pre><code class="language-bash">[root@host ~]# sed -i 's/\n//g' FileName
+</code></pre>
+<p>或者使用<code>tr</code>命令: tr - translate or delete characters</p>
+<pre><code class="language-bash">[root@host ~]# cat fileName | tr  -d '\n'
+</code></pre>
+<p>有一种简单的方法:</p>
+<p><code>xargs</code> - build and execute command lines from standard input</p>
+<pre><code class="language-bash">cat FileName | xargs | echo -n   # 连文件末尾换行符也去掉
+# 或者
+cat FileName | xargs           # 会保留文件末尾的换行符
+</code></pre>
+<h3 id="eval"><a class="header" href="#eval">eval</a></h3>
+<p><a href="https://blog.csdn.net/luliuliu1234/article/details/80994391">Shell 中eval的用法</a></p>
+<pre><code class="language-bash">eval command-line
+</code></pre>
+<p>其中<code>command-line</code>是在终端上键入的一条普通命令行.
+然而当在它前面放上<code>eval</code>时,其结果是<code>shell</code>在执行命令行之前扫描它两次.如:</p>
+<pre><code class="language-bash">$ pipe=&quot;|&quot;
+$ eval ls $pipe wc -l
+1
+2
+3
+</code></pre>
+<p>shell第1次扫描命令行时,它替换出<code>pipe</code>的值<code>|</code>,接着<code>eval</code>使它再次扫描命令行,这时shell把<code>|</code>作为管道符号了.</p>
+<p>如果变量中包含任何需要<code>shell</code>直接在命令行中看到的字符,就可以使用eval.
+命令行结束符(<code>;  |  &amp;</code>),I/o重定向符(<code>&lt; &gt;</code>)和引号就属于对shell具有特殊意义的符号,必须直接出现在命令行中.</p>
+<p><code>eval echo \$$#</code>取得最后一个参数, 如:</p>
+<pre><code class="language-bash">$ cat last    #此处last是一个脚本文件,内容是下一行显示
+$  eval echo \$$#
+$ ./last one two three four
+
+four
+</code></pre>
+<p>第一遍扫描后,shell把反斜杠去掉了.当shell再次扫描该行时,它替换了<code>$4</code>的值,并执行echo命令</p>
+<hr />
+<p>以下示意如何用<code>eval</code>命令创建指向变量的<code>指针</code>:</p>
+<pre><code class="language-bash">x=100
+ptrx=x
+eval echo \$$ptrx  #指向 ptrx,用这里的方法可以理解上面的例子
+eval $ptrx=50 #将 50 存到 ptrx 指向的变量中.
+echo $x
+</code></pre>
+<pre><code class="language-bash"># ptrx 指向x
+echo $ptrx
+x
+# \$ 转义之后,再跟 x 连成一个字符串
+echo \$$ptrx
+$x
+# eval 执行两次扫描,所以相当于 echo $x
+eval echo \$$ptrx
+</code></pre>
+<h3 id="chmod"><a class="header" href="#chmod">chmod</a></h3>
+<p>chmod - change file mode bits</p>
+<p>SYNOPSIS</p>
+<p><code>chmod [OPTION]... MODE[,MODE]... FILE...</code>
+<code>chmod [OPTION]... OCTAL-MODE FILE...</code>
+<code>chmod [OPTION]... --reference=RFILE FILE...</code></p>
+<p>DESCRIPTION</p>
+<p>chmod 后面可以接符号表示新的权限,也可以接一个octal number --表示新的mode bits.</p>
+<p>符号mode的格式一般是<code>[ugoa...][[-+=][perms...]...]</code>,<code>perms</code>一般是<code>0</code>,或者<code>rwxXst</code>中的多个字符,
+或者<code>ugo</code>中的一个字符.多种符号mode可以给出,用逗号隔开.</p>
+<p><code>ugoa</code>表示控制特定用户访问权限:</p>
+<ul>
+<li>u:the user who owns it</li>
+<li>g:other users in the file's group</li>
+<li>o:other users not in the file's group</li>
+<li>a:all  users
+如果没有给出,默认就是 a,but bits that are set in the umask are not affected.</li>
+</ul>
+<p>operator <code>+</code>添加权限,<code>-</code>删除权限,<code>=</code>设置为<code>xxx</code>,except that a directory's unmentioned set user and group ID bits are not affected.</p>
+<p><code>rwxXst</code>表示mode bits,read (r), write (w), execute (or  search  for directories)  (x),
+execute/search  only if the file is a directory or already has execute permission for some user (X),
+set user or group ID on execution (s), restricted deletion flag or sticky bit (t)</p>
+<p>或者指定<code>ugo</code>中的一个,
+the permissions granted to the user who owns the file (u),
+the permissions granted to other users who are members of the file's group (g),
+and the permissions granted to users that are in neither of the two preceding categories (o).</p>
+<hr />
+<p>数字模式</p>
+<p>数字mode 是1到4个 octal digits(0-7),derived by adding up the bits with values 4, 2, and 1.</p>
+<p>省略的数字被认为是前置的<code>0</code>.</p>
+<p>第一位数字选择用户组
+the set user ID (4) and
+set group  ID(2)  and
+restricted deletion or sticky (1) attributes.</p>
+<p>第二位数字选择权限
+read (4), write (2), and execute (1);</p>
+<p>第三位数字设定组中其他用户的权限</p>
+<p>第四位数字设定不在组中用户的权限</p>
+<h2 id="shell脚本"><a class="header" href="#shell脚本">shell脚本</a></h2>
+<h3 id="shell脚本中的符号"><a class="header" href="#shell脚本中的符号">shell脚本中的符号</a></h3>
+<p><a href="https://www.cnblogs.com/xuxm2007/archive/2011/10/20/2218846.html">shell脚本中一些特殊符号</a></p>
+<h3 id="formfactor-脚本"><a class="header" href="#formfactor-脚本">formfactor 脚本</a></h3>
+<p>复制结果的脚本</p>
+<pre><code class="language-bash">#!/usr/bin/env python3
+import os,shutil,time,gfm
+# 复制到论文中的都是 ci==1.50 的结果
+user_name='tom'
+# 配置计算结果目录,论文目录,论文压缩文件目录
+originpath=os.getcwd()
+result_path=os.path.join(originpath,'expression-results/')
+paper_path=os.path.join('/home',user_name,'private','paper-2.prd/')
+desk_path=os.path.join('/home',user_name,'Desktop','paper.ff/')
+# 复制计算结果到论文目录
+shutil.copy(os.path.join(result_path,'fig.baryons.ge.charge.L-0.90.ci-1.50.pdf'),os.path.join(paper_path,'fig4.pdf'))
+shutil.copy(os.path.join(result_path,'fig.baryons.ge.neutral.L-0.90.ci-1.50.pdf'),os.path.join(paper_path,'fig5.pdf'))
+shutil.copy(os.path.join(result_path,'fig.baryons.gm.charge.L-0.90.ci-1.50.pdf'),os.path.join(paper_path,'fig2.pdf'))
+shutil.copy(os.path.join(result_path,'fig.baryons.gm.neutral.L-0.90.ci-1.50.pdf'),os.path.join(paper_path,'fig3.pdf'))
+# cd 到论文目录,重新编译论文
+os.chdir(paper_path)
+# 清除之前的编译结果,重新编译
+os.system('latexmk -C')
+os.system('./build.sh')
+# 如果桌面有压缩文件目录,就删除,shutil.copytree需要目标不存在
+src_list=['fig1.pdf','fig2.pdf','fig3.pdf','fig4.pdf','fig5.pdf','octetFF.tex','octetFF.pdf']
+# 把论文目录的东西复制到桌面目录中
+if  os.path.isdir(desk_path):
+    for src in src_list:
+        shutil.copy2(src,desk_path)
+else:
+    os.mkdir(desk_path)
+    for src in src_list:
+        shutil.copy2(src,desk_path)
+
+## 切换到桌面整理目录
+os.chdir(desk_path)
+
+print(&quot;+++++++\nthe file left in&quot;,os.getcwd(),&quot;\n+++++++&quot;)
+os.listdir(desk_path)
+
+# 产生论文压缩文件
+os.system('rm ../paper.7z; 7z a ../paper.7z '+desk_path)
+# 回到原来的文件夹
+os.listdir(originpath)
+</code></pre>
+<h2 id="环境变量"><a class="header" href="#环境变量">环境变量</a></h2>
+<p><a href="https://www.jianshu.com/p/ac2bc0ad3d74">Linux环境变量总结</a></p>
+<p><code>Linux</code>是一个多用户多任务的操作系统,可以在Linux中为不同的用户设置不同的运行环境,具体做法是设置不同用户的环境变量.</p>
+<h3 id="linux环境变量分类"><a class="header" href="#linux环境变量分类">Linux环境变量分类</a></h3>
+<hr />
+<p>按照生命周期来分,Linux环境变量可以分为两类:</p>
+<ol>
+<li>永久的:需要用户修改相关的配置文件,变量永久生效.</li>
+<li>临时的:用户利用<code>export</code>命令,在当前终端下声明环境变量,关闭Shell终端失效.</li>
+</ol>
+<hr />
+<p>按照作用域来分,Linux环境变量可以分为:</p>
+<ol>
+<li>系统环境变量:系统环境变量对该系统中所有用户都有效.</li>
+<li>用户环境变量:顾名思义,这种类型的环境变量只对特定的用户有效.</li>
+</ol>
+<h3 id="linux设置环境变量的方法"><a class="header" href="#linux设置环境变量的方法">Linux设置环境变量的方法</a></h3>
+<ol>
+<li>在<code>/etc/profile</code>文件中添加变量 对所有用户生效(永久的)</li>
+</ol>
+<p>用<code>vim</code>在文件<code>/etc/profile</code>文件中增加变量,该变量将会对<code>Linux</code>下所有用户有效,并且是<code>永久的</code>.
+例如:编辑<code>/etc/profile</code>文件,添加<code>CLASSPATH</code>变量</p>
+<pre><code class="language-bash">vim /etc/profile
+export CLASSPATH=./JAVA_HOME/lib;$JAVA_HOME/jre/lib
+</code></pre>
+<p>要想马上生效,运行<code>source /etc/profile</code>,不然只能在下次重进此用户时生效.</p>
+<ol start="2">
+<li>在用户目录下的<code>~/.bashrc</code>文件中增加变量 [对单一用户生效(永久的)]</li>
+</ol>
+<p>用<code>vim ~/.bashrc</code>文件中增加变量,改变量仅会对当前用户有效,并且是<code>永久的</code>.</p>
+<pre><code class="language-bash">vim ~/.bashrc
+export CLASSPATH=./JAVA_HOME/lib;$JAVA_HOME/jre/lib
+</code></pre>
+<ol>
+<li>直接运行<code>export</code>命令定义变量 [只对当前shell(BASH)有效(临时的)]</li>
+</ol>
+<p>在shell的命令行下直接使用<code>export 变量名=变量值</code></p>
+<p>定义变量,该变量只在当前的shell(BASH)或其子shell(BASH)下是有效的,
+shell关闭了,变量也就失效了,再打开新shell时就没有这个变量,需要使用的话还需要重新定义.</p>
+<h3 id="linux环境变量使用"><a class="header" href="#linux环境变量使用">Linux环境变量使用</a></h3>
+<p>Linux中常见的环境变量有:</p>
+<hr />
+<p>PATH:指定命令的搜索路径</p>
+<p>PATH声明用法:</p>
+<pre><code class="language-bash">export PATH=$PAHT:&lt;PATH 1&gt;:&lt;PATH 2&gt;:&lt;PATH 3&gt;:--------:&lt; PATH n &gt;
+</code></pre>
+<p>你可以自己加上指定的路径,中间用冒号隔开.环境变量更改后,在用户下次登陆时生效.</p>
+<p>可以利用<code>echo $PATH</code>查看当前当前系统PATH路径.</p>
+<pre><code>HOME:指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录).
+HISTSIZE:指保存历史命令记录的条数.
+LOGNAME:指当前用户的登录名.
+HOSTNAME:指主机的名称,许多应用程序如果要用到主机名的话,通常是从这个环境变量中来取得的
+SHELL:指当前用户用的是哪种Shell.
+LANG/LANGUGE:和语言相关的环境变量,使用多种语言的用户可以修改此环境变量.
+MAIL:指当前用户的邮件存放目录.
+</code></pre>
+<p>注意:上述变量的名字并不固定,如HOSTNAME在某些Linux系统中可能设置成HOST</p>
+<ol start="2">
+<li>Linux也提供了修改和查看环境变量的命令,下面通过几个实例来说明:</li>
+</ol>
+<ul>
+<li><code>echo</code>  显示某个环境变量值 <code>echo $PATH</code></li>
+<li><code>export</code>  设置一个新的环境变量 <code>export HELLO=&quot;hello&quot;</code> (可以无引号)</li>
+<li><code>env</code>  显示所有环境变量</li>
+<li><code>set</code>  显示本地定义的<code>shell</code>变量</li>
+<li><code>unset</code>  清除环境变量 <code>unset HELLO</code></li>
+<li><code>readonly</code>  设置只读环境变量 <code>readonly HELLO</code></li>
+</ul>
+<ol start="3">
+<li>C程序调用环境变量函数</li>
+</ol>
+<ul>
+<li><code>getenv()</code> 返回一个环境变量.</li>
+<li><code>setenv()</code> 设置一个环境变量.</li>
+<li><code>unsetenv()</code> 清除一个环境变量.</li>
+</ul>
+<h2 id="linux-grub2"><a class="header" href="#linux-grub2">Linux Grub2</a></h2>
+<p><a href="https://www.cnblogs.com/f-ck-need-u/archive/2017/06/29/7094693.html#auto_id_37">grub2详解(翻译和整理官方手册)</a>
+<a href="https://www.gnu.org/software/grub/manual/html_node/Simple-configuration.html#Simple-configuration">官方手册原文</a></p>
+<p><code>grub2-mkconfig</code>是根据<code>/etc/default/grub</code>文件来创建配置文件的.该文件中定义的是<code>grub</code>的全局宏,修改内置的宏可以快速生成<code>grub</code>配置文件.
+实际上在<code>/etc/grub.d/</code>目录下还有一些<code>grub</code>配置脚本,这些<code>shell</code>脚本读取一些脚本配置文件(如<code>/etc/default/grub</code>),根据指定的逻辑生成<code>grub</code>配置文件.
+若有兴趣,不放读一读<code>/etc/grub.d/10_linux</code>文件,它指导了创建<code>grub.cfg</code>的细节,例如如何生成启动菜单.</p>
+<pre><code class="language-bash">[root@xuexi ~]# ls /etc/grub.d/
+00_header  00_tuned  01_users  10_linux  20_linux_xen  20_ppc_terminfo  30_os-prober  40_custom  41_custom  README
+</code></pre>
+<p>在<code>/etc/default/grub</code>中,使用<code>key=vaule</code>的格式,<code>key</code>全部为大小字母,如果<code>vaule</code>部分包含了空格或其他特殊字符,则需要使用引号包围.</p>
+<p>例如,下面是一个<code>/etc/default/grub</code>文件的示例:</p>
+<pre><code class="language-bash">[root@xuexi ~]# cat /etc/default/grub
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR=&quot;$(sed 's, release .*$,,g' /etc/system-release)&quot;
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT=&quot;console&quot;
+GRUB_CMDLINE_LINUX=&quot;crashkernel=auto biosdevname=0 net.ifnames=0 rhgb quiet&quot;
+GRUB_DISABLE_RECOVERY=&quot;true&quot;
+</code></pre>
+<p>虽然可用的宏较多,但可能用的上的就几个:
+<code>GRUB_DEFAULT</code>, <code>GRUB_TIMEOUT</code>, <code>GRUB_CMDLINE_LINUX</code>和<code>GRUB_CMDLINE_LINUX_DEFAULT</code>.</p>
+<p>以下列出了部分key.</p>
+<hr />
+<p><code>GRUB_DEFAULT</code></p>
+<p>默认的菜单项,默认值为<code>0</code>.其值可为数值<code>N</code>,表示从<code>0</code>开始计算的第<code>N</code>项是默认菜单,也可以指定对应的<code>title</code>表示该项为默认的菜单项.
+使用数值比较好,因为使用的<code>title</code>可能包含了容易改变的设备名.例如有如下菜单项</p>
+<pre><code class="language-grub">menuentry 'Example GNU/Linux distribution' --class gnu-linux --id example-gnu-linux {
+    ...
+}
+</code></pre>
+<p>如果想将此菜单设为默认菜单,则可设置<code>GRUB_DEFAULT=example-gnu-linux</code>.</p>
+<p>如果<code>GRUB_DEFAULT</code>的值设置为<code>saved</code>,则表示默认的菜单项是<code>GRUB_SAVEDEFAULT</code>或<code>grub-set-default</code>所指定的菜单项.</p>
+<h3 id="uefi-系统下的安装"><a class="header" href="#uefi-系统下的安装">UEFI 系统下的安装</a></h3>
+<p><a href="https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">GRand Unified Bootloader</a></p>
+<p>安装</p>
+<p>本节假设您正在 <code>x86_64</code> 系统上安装 <code>GRUB</code>. 对于 <code>IA32</code> (32 位) <code>UEFI </code>系统(不要和 32 位 CPU 相混淆),  将<code>x86_64-efi</code>替换成<code>i386-efi</code>.
+首先安装软件包 <code>grub</code> 和 <code>efibootmgr</code>. 其中<code>GRUB</code>是启动引导器, <code>efibootmgr</code>被 <code>GRUB</code> 脚本用来将启动项写入 <code>NVRAM</code> .</p>
+<p>然后按照下列步骤安装 <code>GRUB</code>:</p>
+<p>挂载 <code>EFI</code> 系统分区, 在本节之后的内容里, 把 <code>esp</code> 替换成挂载点.
+选择一个启动引导器标识, 这里叫做 <code>new</code>. 这将在 <code>esp/EFI/</code> 中创建一个<code>new</code>目录来储存 <code>EFI</code> 二进制文件, 而且这个名字还会在 <code>UEFI</code> 启动菜单中表示 <code>new</code> 启动项.
+执行下面的命令来将 <code>GRUB EFI</code> 应用 <code>grubx64.efi</code> 安装到 <code>esp/EFI/new/</code>, 并将其模块安装到 <code>/boot/grub/x86_64-efi/</code>.</p>
+<pre><code># grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=new
+</code></pre>
+<p>上述安装完成后 GRUB 的主目录将位于 <code>/boot/grub/</code>. 注意上述例子中, grub-install 还将在固件启动管理器中创建一个条目, 名叫 <code>new</code>.</p>
+<p>在配置完成后, 记得生成主配置文件.</p>
+<p>提示:  如果你使用了 <code>--removable</code> 选项, 那 <code>GRUB</code> 将被安装到 <code>esp/EFI/BOOT/BOOTX64.EFI</code> (当使用 <code>i386-efi</code> 时是 e<code>sp/EFI/BOOT/BOOTIA32.EFI</code>),
+此时即使 <code>EFI</code> 变量被重设或者你把这个驱动器接到其他电脑上, 你仍可从这个驱动器上启动.
+通常来说, 你只要像操作 <code>BIOS</code> 设备一样在启动时选择这个驱动器就可以了.
+如果和 <code>Windows</code> 一起多系统启动, 注意 <code>Windows</code> 通常会在那里安装一个 <code>EFI</code> 可执行程序, 这只是为了重建 <code>Windows</code> 的 UEFI 启动项.</p>
+<p>注意:
+<code>--efi-directory</code> 和 <code>--bootloader-id</code> 是 <code>GRUB UEFI</code> 特有的. -<code>-efi-directory</code> 替代了已经废弃的 <code>--root-directory</code>.
+您可能注意到在 <code>grub-install</code> 命令中没有一个 <code>&lt;device_path&gt;</code> 选项, 例如 <code>/dev/sda</code>. 事实上即使提供了 <code>&lt;device_path&gt;</code>, 也会被 <code>GRUB</code> 安装脚本忽略, 因为 <code>UEFI</code> 启动加载器不使用 MBR 启动代码或启动扇区.
+确保 <code>grub-install</code> 命令是在你想要用 GRUB 引导的那个系统上运行的. 也就是说如果你是用安装介质启动进入了安装环境中, 你需要在 <code>chroot</code> 之后再运行 <code>grub-install</code>.
+如果因为某些原因不得不在安装的系统之外运行 <code>grub-install</code>, 在后面加上 <code>--boot-directory= </code>选项来指定挂载 <code>/boot</code> 目录的路径, 例如 <code>--boot-directory=/mnt/boot</code>.</p>
+<h3 id="grub-修复"><a class="header" href="#grub-修复">grub 修复</a></h3>
+<p><a href="https://www.cnblogs.com/jpfss/p/9462792.html">Linux与Windows 10用grub引导教程</a></p>
+<p>首先, 在你装了 Windows 之后, Windows 在装机过程中会将硬盘划分出一个约 <code>100MB</code> 大小的分区, 称为 <code>EFI</code> 分区.
+这个分区就是起引导作用的. 在资源管理器中是看不到的这个分区的, 可以在磁盘管理中看到, 管理则需要借助 <code>DiskGenius</code> 工具.
+可以看到该分区包含 3 个文件夹(如果你没有装 <code>Linux</code> 的话, 就只有两个), 分别是 <code>Boot</code>, <code>Microsoft</code> 和 <code>Manjaro</code>, 其中 <code>Boot</code> 文件夹就是 <code>UEFI</code> 引导所必需的文件.</p>
+<p>我们继续打开 <code>Microsoft/Boot</code> 文件夹, 将会看到许多文件, 这些文件就是启动 <code>Windows 10</code> 所必需的, 包含了语言包, 字体等, <code>BCD</code> 包含了 <code>Windows</code> 引导开始以后的信息.
+其中, <code>bootmgfw.efi </code>是 <code>Windows</code> 默认引导文件.</p>
+<pre><code class="language-bash">EFI/Boot/bootx64.efi
+EFI/Microsoft/Boot/bootmgfw.efi
+</code></pre>
+<p>以上是采用 <code>UEFI</code> 启动 <code>Windows 10</code> 的文件结构, 也就是说, 当你按下开机按钮的时候, 首先 <code>UEFI</code> 找到 <code>EFI</code> 分区的 <code>Boot</code> 文件夹, 然后加载 <code>bootx64.efi</code> 文件, 读取文件信息, 找到 <code>EFI/Microsoft/Boot/bootmgfw.efi</code>, 按照 <code>bootmgfw.efi</code> 的要求, 加载所需的启动信息, 启动 <code>Windows 10</code>.</p>
+<hr />
+<p>准备工作</p>
+<p>在正式装系统之前, 我们还需要做一些准备工作:</p>
+<p>关闭 <code>Windows</code> 的快速启动
+这个功能的作用是在于关机的时候不完全断电, 类似将系统处于<code>休眠</code>状态, 这样可以让开机更加迅速. 但这也就导致了只能使用 <code>Windows</code> 系统.</p>
+<p>关闭 <code>BIOS</code> 的 <code>Secure Boot </code>的功能</p>
+<p>在默认情况下, <code>UEFI</code> 固件只会加载那些被签名的引导程序. 在缺少 <code>Secure Boot</code> 功能的传统 PC 机上, 恶意的后门程序可以加载自身, 进而摇身一变伪装成一个引导程序.
+这样的话, <code>BIOS</code> 就会在启动的时候加载后门程序, 这样它就可以躲过操作系统, 把自己隐藏得很深.
+但是不得不说, 这对我们安装 <code>Linux</code> 造成了很大的困扰, 也是直接导致我们重启到 Windows 10 后进不去 <code>Linux</code> 的原因.
+首先我们要关闭这个功能: 进入 <code>BIOS</code> 找到 <code>Secure Boot</code>, 选择 <code>disabled</code>, 这样就关闭了. 当然, 有些人进入 <code>BIOS</code> 会发现 Secure Boot 这个选项是灰色的(比如我的就是), 这时你需要先给你的 <code>BIOS</code> 设一个密码, 然后就能关 Secure Boot 了.</p>
+<hr />
+<p>安装 Linux</p>
+<p>所有的准备都已经完成, 这时就可以准备刻录 U 盘了, 推荐<code>Rufus</code>和<code>USBWriter</code>.
+刻录完成后, 重启按 <code>f12</code>, 选择从 USB 设备启动, 对于绝大多数发行版来说一路回车就行了, 只需要注意一点: 在选择挂载 <code>boot</code> 位置的时候, 一定要挂载在 <code>efi</code> 分区, 别的都不行.
+重启之后, 不出意外的话, 你会直接进入 Windows 10, 不要担心, 这时 Linux 已经安装成功了, 我们只需要将引导文件替换一下.</p>
+<hr />
+<p>替换引导文件</p>
+<p>先用 <code>DG</code> 打开 <code>EFI</code> 分区, 你会看到多了一个文件夹, 名称取决于你安装的是哪一个发行版.
+我安装的是 <code>Manjaro Linux</code>, 名称就是 <code>Manjaro</code>, 打开之后会发现里面有一个名为 <code>grubx64.efi</code> 的文件, 这就是启动 <code>Linux</code> 的引导文件.
+和 <code>Windows 10</code> 的 <code>bootmgfw.efi</code> 类似, 我们想要用 <code>grubx64.efi</code> 引导代替掉 <code>bootmgfw.efi</code>, 这样就可以用 <code>GRUB</code> 引导了. 步骤:</p>
+<p>进入管理员命令行. 方法: <code>win + x</code>, 再按 <code>a</code>
+输入 <code>bcdedit /set {bootmgr} path \EFI\Manjaro\grubx64.efi</code>. 提示操作成功的话, 就完成了.</p>
+<p>注: 如果输入以上命令提示<code>参数错误</code>的话, 将<code>{bootmgr}</code>改为 <code>'{bootmgr}'</code>, 原因是 <code>PowerShell</code> 和 <code>CMD</code> 语法的差别.</p>
+<p>至此, 如果你安装的是除 <code>Arch</code> 之外绝大多数发行版, 那么接下来就和你没有啥关系了, 你已经成功了, 好好享受吧!</p>
+<p>开机之后会发现进入 <code>GRUB</code> 的引导了, 通常会包含至少三个选项(以 <code>Manjaro</code> 举例): <code>Manjaro</code>, <code>Manjaro 高级选项</code>和 <code>Windows Manager</code>.
+这就代表你已经完美的解决了 Windows 和 Linux 双系统引导的问题.</p>
+<hr />
+<p>修复 <code>Windows</code> 引导</p>
+<p>这一点是我安装 Arch Llinux 的时候发现的, Arch Linux 安装过程是手动安装的, 在编写 GRUB 的时候会扫描不到 Windows Manager 所在的分区(当然可能不是所有人都会遇到),
+所以在 GRUB 界面可能会看不到 Windows Manager 选项, 导致进不去 Windows 10, 这里就需要手动编辑 GRUB 信息,
+我们打开 <code>/boot/grub/grub.cfg</code> 文件, 发现里面确实没有 Windows 10 的启动信息, 在后面加上:</p>
+<pre><code class="language-bash">menuentry &quot;Microsoft Windows 10&quot; {
+    insmod part_gpt
+    insmod fat
+    insmod search_fs_uuid
+    insmod chain
+    search --fs-uuid --set=root $hints_string $fs_uuid
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    }
+</code></pre>
+<p>注意:</p>
+<p>这里的 <code>$hints_string</code>, 代表的是终端执行命令:</p>
+<pre><code class="language-bash">sudo grub-probe --target=hints_string /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi
+</code></pre>
+<p>后的输出;</p>
+<p>而 <code>$fs_uuid</code> 代表的是:</p>
+<pre><code class="language-bash">sudo grub-probe --target=fs_uuid /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi
+</code></pre>
+<p>的输出. 然后保存. 在终端执行命令: <code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code>, 就 <code>OK</code> 了.</p>
+<p>到此, Arch Linux 和 Windows 10 双系统也配置完毕了.</p>
+<hr />
+<p>附加问题</p>
+<ul>
+<li>在 Windows 10 进行了一个大更新后, 会发现 GRUB 引导界面没有了, 还是直接进入了 Windows 10, 这时只需要按照 替换引导文件 的方法重新输入一遍命令就行.</li>
+<li>使用 Linux 某个发行版一段时间之后, 难免会想尝试一下另一个发行版. 这时请务必将之前的发型版的引导文件删除, 否则可能会出现无论怎么设置都无法进入 GRUB 的情况. 例如: 我之前用的是 <code>Ubuntu</code>, 我现在换成了 Manjaro, 我就需要用 DG 删除 EFI 分区的 Ubuntu 文件夹.</li>
+<li>在我使用 <code>Manjaro</code> 更新了一次 <code>Linux</code> 的内核后, 进不去 Windows 10 了, 这个时候千万不要直接修复 <code>Windows 10</code> 引导, 这会格式化 <code>EFI</code> 分区, 只需要按上面修复 <code>Windows</code> 引导 的方法编辑一下 <code>GRUB</code> 就可以了.</li>
+</ul>
+<hr />
+<p><a href="https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%90%AF%E5%8A%A8%E8%8F%9C%E5%8D%95%E6%9D%A1%E7%9B%AE%E7%A4%BA%E4%BE%8B">Arch Wiki 上的示例</a></p>
+<p>这个模式寻找 <code>Windows</code> 的启动加载器的位置, 然后当用户选择了相应的菜单条目的时候, 通过链式载入的方法在 <code>GRUB</code> 之后加载它.
+这里主要的任务是找到 EFI 系统分区然后从上面运行启动加载器. 注意:  这个启动项仅在 <code>UEFI</code> 模式下才起作用, 而且 <code>Windows</code> 和 <code>UEFI</code> 的位数必须相同.</p>
+<pre><code class="language-bash">if [ &quot;${grub_platform}&quot; == &quot;efi&quot; ]; then
+    menuentry &quot;Microsoft Windows Vista/7/8/8.1 UEFI/GPT&quot; {
+    insmod part_gpt
+    insmod fat
+    insmod chain
+    search --no-floppy --fs-uuid --set=root $hints_string $fs_uuid
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    }
+fi
+</code></pre>
+<p>其中 <code>$hints_string</code> 和 <code>$fs_uuid</code> 由下述两个命令得到.</p>
+<p><code>$fs_uuid</code> 命令检测 EFI 系统分区的 <code>UUID</code> :</p>
+<pre><code class="language-bash"># grub-probe --target=fs_uuid esp/EFI/Microsoft/Boot/bootmgfw.efi
+1ce5-7f28
+</code></pre>
+<p>或者你可以(以 <code>root</code> 身份)运行 <code>blkid</code> 然后从结果中找到 <code>EFI</code> 系统分区的 <code>UUID</code> .</p>
+<p><code>$hints_string</code> 命令可以确定 EFI 系统分区的位置, 在当前的例子中是 <code>harddrive 0</code>:</p>
+<pre><code class="language-bash"># grub-probe --target=hints_string esp/EFI/Microsoft/Boot/bootmgfw.efi
+--hint-bios=hd0,gpt1 --hint-efi=hd0,gpt1 --hint-baremetal=ahci0,gpt1
+</code></pre>
+<p>这两个命令都是假设 <code>Windows</code> 使用的 <code>ESP</code> 是挂载在<code>$esp</code>上的. 当然,  <code>Windows</code> 的 <code>EFI</code> 文件路径可能有变,因为这就是 <code>Windows</code> ....</p>
+<h3 id="我使用的-grub-自定义"><a class="header" href="#我使用的-grub-自定义">我使用的 grub 自定义</a></h3>
+<p><a href="https://www.gnu.org/software/grub/manual/grub/grub.html#search">Writing your own configuration file</a></p>
+<ul>
+<li>编辑 <code>/etc/default/grub</code></li>
+</ul>
+<pre><code class="language-grub">GRUB_DEFAULT=0 #设置默认为第一个
+GRUB_TIMEOUT=10 #设置等待时间
+GRUB_TIMEOUT_STYLE=menu # 强制显示启动菜单
+</code></pre>
+<ul>
+<li>编辑 <code>/etc/grub.d/40_custom</code>, 添加 <code>windows</code>启动项,</li>
+</ul>
+<pre><code class="language-bash">if [ &quot;${grub_platform}&quot; == &quot;efi&quot; ]; then
+    menuentry &quot;Windows UEFI GPT&quot; {
+    insmod part_gpt
+    insmod fat
+    insmod chain
+    search --no-floppy --set=root --fs-uuid &quot;C045-C995&quot;
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    }
+fi
+</code></pre>
+<p>然后运行<code>sudo os-prober ;sudo update-grub</code></p>
+<h3 id="grub-命令行手动引导"><a class="header" href="#grub-命令行手动引导">grub 命令行手动引导</a></h3>
+<p>链式加载<code>UEFI</code>模式下安装的 <code>Windows/Linux</code></p>
+<pre><code class="language-bash">insmod fat
+set root=(hd1,gpt1)
+chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+boot
+</code></pre>
+<h3 id="grub-参数"><a class="header" href="#grub-参数">grub 参数</a></h3>
+<p><a href="https://askubuntu.com/questions/716957/what-do-the-nomodeset-quiet-and-splash-kernel-parameters-mean">nomodeset, quiet and splash</a></p>
+<ul>
+<li>
+<p><code>nomodeset</code> ; 最新的内核已将<code>video mode setting</code>移入内核.
+So all the programming of the hardware specific clock rates and registers on the video card 发生在内核中,
+而不是<code>X</code>服务器启动后的<code>X</code>驱动中. 如此, 可以在开机时展示高分辨率<code>splash/boot</code>画面, 并实现平滑过渡, 不用闪烁一下子.
+然而有些显卡无法正常工作, 并且最终会出现黑屏. 添加<code>nomodeset</code>参数指示内核在加载<code>X</code>之前不加载显卡驱动程序, 而改用<code>BIOS</code>模式.</p>
+</li>
+<li>
+<p><code>quiet splash</code>; <code>splash</code>(由<code>/boot/grub/grub.cfg</code>设置)导致显示启动画面. 同时, 您希望启动过程安静一些, 否则所有类型的消息都会覆盖启动屏幕.
+尽管在<code>GRUB</code>中指定了这些参数, 但它们是影响内核或其模块加载的内核参数, 而不是改变<code>GRUB</code>行为的参数. 来自<code>GRUB_CMDLINE_LINUX_DEFAULT</code>的重要部分是<code>CMDLINE_LINUX</code></p>
+</li>
+<li>
+<p><code>acpi</code>, <code>noapic</code> and <code>nolapic</code>;通常不需要这些参数, 除非你的<code>BIOS</code>很古老, 不支持这些标准.</p>
+</li>
+</ul>
+<p><code>ACPI</code>(Advanced Configuration and Power Interface)是用于处理电源管理的标准.
+较早的系统可能不完全支持<code>ACPI</code>, 因此有时它有助于向内核提示不使用它. <code>acpi=off</code></p>
+<p><code>APIC</code>(<code>Advanced Programmable Interrupt Controller</code>)是在较新的系统上发行的一种功能.
+<code>&quot;local&quot;</code>版本称为<code>LAPIC</code>. 该控制器可以生成和处理中断, 中断是硬件用来传递消息的信号.
+同样, <code>APIC</code>的某些实现在较旧的系统上可能会出现问题, 因此禁用它很有用.  <code>noapic</code> ,<code>nolapic</code>.</p>
+<p>有时, <code>APIC</code>可以正常工作, 但是传递消息可能会减慢速度, 这可能会干扰音频和视频处理. 人们也可能出于这个原因禁用它.</p>
+<h3 id="acpi-伪装-windows"><a class="header" href="#acpi-伪装-windows">ACPI 伪装 windows</a></h3>
+<p><a href="https://blog.csdn.net/hustcw98/article/details/81979172">Manjaro折腾记录</a>
+<a href="https://unix.stackexchange.com/questions/246672/how-to-set-acpi-osi-parameter-in-the-grub">how to set acpi_osi parameter in the grub</a></p>
+<p>有时从suspend恢复时, 会发现登录后整个桌面一片黑色, 只有一个亮亮的鼠标可以移动.</p>
+<pre><code class="language-bash">vim /etc/default/grub
+## 在 GRUB_CMDLINE_LINUX_DEFAUT= 后面添加下面的语句
+acpi_osi=! acpi_osi='Windows 2009'
+</code></pre>
+<p><code>acpi_osi=!</code>清空表示<code>acpi_osi</code>原来的值, 然后假装成<code>Windows 7, Win Server 2008 R2</code>,
+具体的版本对应可以参考: <a href="https://docs.microsoft.com/zh-cn/windows-hardware/drivers/acpi/winacpi-osi">如何使用 _OSI 识别 ACPI 中的 Windows 版本</a>.</p>
+<p>对于<code>Debian</code>系列的发行版, 可能需要转义引号, 写成<code>acpi_osi=\&quot;Windows 2009\&quot;</code>,修改后, 运行<code>sudo update-grub</code>重新生成引导配置.
+可以使用<code>cat /proc/cmdline</code>检查内核启动的参数, 参考<a href="https://blog.csdn.net/baidu_33879812/article/details/104906774">Linux中proc/cmdline</a></p>
+<hr />
+<p><code>Manjaro</code>在更新内核到<code>Linux 5.11.14-1</code>的时候出现问题, 开机提示<code>NMI watchdog: Watchdog detected hard LOCKUP on cpu x</code>,删除这个配置之后可以正常进入.</p>
+<hr />
+<p>20210423  测试:</p>
+<ul>
+<li><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;apparmor=1 security=apparmor resume=UUID=0f163abf-8e60-4626-a4de-54332c64db51 udev.log_priority=3&quot;</code>: 不设置这个选项, 可以正常启动.</li>
+<li>加上<code>acpi_osi=! acpi_osi='Windows 2009'</code> : 可以正常启动</li>
+<li>加上<code>acpi_osi=! acpi_osi='Windows 2015'</code>  : 可以正常启动</li>
+</ul>
+<p>三种参数的开机日志基本没啥区别</p>
+<h2 id="概念解释"><a class="header" href="#概念解释">概念解释</a></h2>
+<h3 id="查看网络配置"><a class="header" href="#查看网络配置">查看网络配置</a></h3>
+<p>EXAMPLES</p>
+<ul>
+<li><code>ip addr</code> Shows addresses assigned to all network interfaces.</li>
+<li><code>ip neigh</code> Shows the current neighbour table in kernel.</li>
+<li><code>ip link set x up</code> Bring up interface x.</li>
+<li><code>ip link set x down</code> Bring down interface x.</li>
+<li><code>ip route</code> Show table routes.</li>
+</ul>
+<p>EXAMPLES</p>
+<ul>
+<li><code>ip ro</code> Show all route entries in the kernel.</li>
+<li><code>ip route add default via 192.168.1.1 dev eth0</code> Adds a default route (for all addresses) via the local gateway 192.168.1.1 that can be reached on device eth0.</li>
+<li><code>ip route add 10.1.1.0/30 encap mpls 200/300 via 10.1.1.1 dev eth0</code> Adds an ipv4 route with mpls encapsulation attributes attached to it.</li>
+<li><code>ip -6 route add 2001:db8:1::/64 encap seg6 mode encap segs 2001:db8:42::1,2001:db8:ffff::2 dev eth0</code> Adds an IPv6 route with SRv6 encapsulation and two segments attached.</li>
+</ul>
+<hr />
+<p><code>Ubuntu 18.04 Server</code> 安装好后,Netplan 的默认描述文件是:<code>/etc/netplan/50-cloud-init.yaml</code>.</p>
+<p><a href="https://blog.csdn.net/uaniheng/article/details/104233137?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase">Ubuntu18.04的网络配置 netplan</a></p>
+<h3 id="配置netplan-固定ip"><a class="header" href="#配置netplan-固定ip">配置netplan 固定ip</a></h3>
+<p><code>vim /etc/netplan/50-cloud-init.yaml </code></p>
+<p>配置如下:</p>
+<pre><code class="language-bash">network:
+    ethernets:
+        enp3s0:
+            addresses: [192.168.0.20/24]  //IP址
+            gateway4: 192.168.0.1  // 网关
+            nameservers:
+             addresses: [114.114.114.114, 192.168.0.1] //DNS
+            dhcp4: no
+            optional: no
+    version: 2
+</code></pre>
+<p>或者配置dhcp自动获取ip</p>
+<p><code>vim /etc/netplan/50-cloud-init.yaml </code></p>
+<p>配置如下:</p>
+<pre><code class="language-bash">network:
+    ethernets:
+        enp3s0:
+            dhcp4: true
+            optional: yes
+    version: 2
+</code></pre>
+<p>应用:</p>
+<p><code>sudo netplan apply</code></p>
+<h3 id="查看mac地址"><a class="header" href="#查看mac地址">查看MAC地址</a></h3>
+<ul>
+<li><code>ifconfig | awk '/eth/{print $1,$5}'</code></li>
+<li><code>arp -a | awk '{print $4}</code></li>
+<li><code>sudo lshw -C network</code></li>
+<li><code>sudo lshw -c network | grep serial</code></li>
+</ul>
+<pre><code class="language-bash">wlp2s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+      link/ether 10:5b:ad:df:4c:cd brd ff:ff:ff:ff:ff:ff
+    inet 192.168.32.6/24 brd 192.168.32.255 scope global dynamic noprefixroute wlp2s0
+       valid_lft 4185sec preferred_lft 4185sec
+    inet6 fe80::310a:df04:1f02:d5ac/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+</code></pre>
+<p><code>link/ether 10:5b:ad:df:4c:cd brd ff:ff:ff:ff:ff:ff</code> This is the mac address</p>
+<h3 id="子网掩码"><a class="header" href="#子网掩码">子网掩码</a></h3>
+<p><a href="https://www.zhihu.com/question/263438014/answer/278015413">为什么每台电脑都要设置子网掩码?</a>
+<a href="https://zhidao.baidu.com/question/517459209.html">24 28 30 位的子网掩码是多少 </a></p>
+<p>例如:
+IP地址为<code>130.39.37.100</code>,
+网络地址为<code>130.39.0.0</code>,
+子网地址为<code>130.39.37.0</code>,
+子网掩码为<code>255.255.255.0</code>,
+网络地址部分和子网标识部分对应<code>1</code>,host部分对应<code>0</code>.
+使用CIDR表示为:<code>130.39.37.100/24</code>即<code>IP地址/ 掩码长度</code>.</p>
+<p><code>ipv4</code>是<code>8bit.8bit.8bit.8bit</code>的形式,二进制到十六进制是<code>4</code>位到<code>1</code>位,<code>8bit</code>相当于两个<code>16</code>进制数字.
+所以<code>ipv4</code>是四段地址:<code>0x0x.0x0x.0x0x.0x0x</code>,每段两个<code>16</code>进制数字.
+<code>24</code>表示掩码开头有<code>24</code>个<code>1</code>,对应地址中的<code>3</code>段,也就是公网地址是<code>3</code>段.</p>
+<p><code>awk</code>执行按位<strong>与</strong>操作.</p>
+<pre><code class="language-bash">awk 'BEGIN {
+awk 'BEGIN {
+    num1 = 10
+    num2 = 6
+    printf &quot;(%d AND %d) = %d\n&quot;, num1, num2, and(num1, num2)
+}'
+</code></pre>
+<p>设</p>
+<pre><code class="language-ip">A:10.1.1.10 /24
+B:10.1.1.20 /24
+C:50.1.1.80 /24
+</code></pre>
+<p>AB在同一局域网,C位于外网.</p>
+<p>三个表:</p>
+<ul>
+<li><code>ARP</code>表:主机维护,存放<code>IP</code>地址和<code>MAC</code>地址对应关系.</li>
+<li><code>MAC</code>地址表:交换机维护,存放<code>MAC</code>地址和交换机端口对应关系.</li>
+<li>路由表:路由器维护,存放<code>IP</code>地址和路由器端口对应关系.</li>
+</ul>
+<p>首先<code>AB</code>通信,
+例如<code>A</code>要给<code>B</code>发送一个数据包,目前<code>A</code>知道<code>B</code>的<code>IP</code>地址,根据掩码规则判定<code>B</code>和自己在同一个局域网,同一个广播域.</p>
+<p>接下来<code>A</code>通过广播方式获取<code>B</code>的<code>MAC</code>地址,添加到自己的<code>ARP</code>表中.
+然后把要发送的包封装,然后发送给交换机,交换机收到数据包后解封装得到<code>B</code>的<code>MAC</code>地址,
+根据<code>MAC</code>地址表转发到<code>B</code>所连接的交换机端口,完成发送.</p>
+<p>如果<code>A</code>要和<code>C</code>通信,发送一个包给<code>C</code>的话,也只知道<code>C</code>的<code>IP</code>地址,然后<code>A</code>根据掩码规则发现<code>C</code>和自己不是同一个局域网的,
+广播不到<code>C</code>,所以<code>A</code>只能把数据包发给网关,由网关发出去给到<code>C</code>.</p>
+<p><code>A</code>同样通过广播方式获取网关的<code>MAC</code>地址,然后把<code>C</code>的<code>IP</code>地址和网关的<code>MAC</code>地址封装到数据包后发给交换机,
+交换机解封装后对比<code>MAC</code>地址表,发现是发给网关的包,就转发到网关即路由器所在的交换机端口.
+路由器收到包之后再解封装,得到<code>C</code>的<code>IP</code>地址,然后根据自己的路由表转发到相应的端口.完成通信.</p>
+<p>所以如果计算机上不设置子网掩码,从第一步就不能完成,下面就更不能继续了.
+如果同一个广播域里有机器设置不同的子网掩码,依然能够通信,只不过有的内网包需要到网关绕一圈.</p>
+<p>外网包的话只要网关设置对了就没问题.</p>
+<h3 id="查看登录用户"><a class="header" href="#查看登录用户">查看登录用户</a></h3>
+<p><a href="https://blog.csdn.net/wanchaopeng/article/details/88425067">linux查看当前登录用户</a></p>
+<ul>
+<li>
+<p><code>w</code>命令:显示目前登入系统的用户信息. 选项:</p>
+</li>
+<li>
+<p><code>-f</code>: 开启或关闭显示用户从何处登入系统.</p>
+</li>
+<li>
+<p><code>-h</code>: 不显示各栏位的标题信息列.</p>
+</li>
+<li>
+<p><code>-s</code>: 使用简洁格式列表,不显示用户登入时间,终端机阶段作业和程序所耗费的CPU时间.</p>
+</li>
+<li>
+<p><code>-u</code>: 忽略执行程序的名称,以及该程序耗费CPU时间的信息.</p>
+</li>
+<li>
+<p><code>-V</code>: 显示版本信息.</p>
+</li>
+</ul>
+<p>输出的结果的含义:</p>
+<ul>
+<li>
+<p><code>USER</code> 登录的用户名</p>
+</li>
+<li>
+<p><code>TTY</code> 登录终端</p>
+</li>
+<li>
+<p><code>FROM</code> 从哪个IP地址登录</p>
+</li>
+<li>
+<p><code>LOGIN</code>@ 登录时间</p>
+</li>
+<li>
+<p><code>IDLE</code> 用户闲置时间</p>
+</li>
+<li>
+<p><code>JCPU</code> 指的是和该终端连接的所有进程占用的时间,这个时间里并不包括过去的后台作业时间,但却包括当前正在运行的后台作业所占用的时间</p>
+</li>
+<li>
+<p><code>PCPU</code> 当前进程所占用的时间</p>
+</li>
+<li>
+<p><code>WHAT</code> 当前正在运行的命令</p>
+</li>
+<li>
+<p><code>who</code>; 显示当前已登录的用户信息,输出的结果有:用户名,登录终端,登录的时间</p>
+</li>
+<li>
+<p><code>last</code>; 列出目前与过去登入系统的用户相关信息.</p>
+</li>
+<li>
+<p><code>-R</code>: 省略 hostname 的栏位</p>
+</li>
+<li>
+<p><code>-n</code>:指定输出记录的条数.</p>
+</li>
+<li>
+<p><code>-f file</code>:指定用文件<code>file</code>作为查询用的<code>log</code>文件.</p>
+</li>
+<li>
+<p><code>-t time</code>:显示到指定的时间.</p>
+</li>
+<li>
+<p><code>-h </code>:显示帮助.</p>
+</li>
+<li>
+<p><code>-i</code> or<code>--ip</code>:以<code>数字</code>and <code>点</code>的形式显示<code>ip</code>地址.</p>
+</li>
+<li>
+<p><code>-x</code>:显示系统关闭, 用户登录和退出的历史.</p>
+</li>
+</ul>
+<p>命令的输出包含:用户名,登录终端,登录IP,登录时间,退出时间(在线时间)</p>
+<ul>
+<li>
+<p><code>lastlog</code>;检查某特定用户上次登录的时间. 选项:</p>
+</li>
+<li>
+<p><code>-b</code>, <code>--before DAYS</code>: 仅打印早于 DAYS 的最近登录记录</p>
+</li>
+<li>
+<p><code>-h</code>, <code>--help</code>: 显示此帮助信息并推出</p>
+</li>
+<li>
+<p><code>-R</code>, <code>--root CHROOT_DIR</code> directory to chroot into</p>
+</li>
+<li>
+<p><code>-t</code>, <code>--time DAYS</code> : 仅打印比 DAYS 新近的登录记录</p>
+</li>
+<li>
+<p><code>-u</code>, <code>--user LOGIN</code> : 打印 LOGIN 用户的最近登录记录</p>
+</li>
+</ul>
+<p>注意:<code>lastlog</code>命令默认读取的是<code>/var/log/wtmp</code>这个文件的数据,一定注意这个文件不能用<code>vi</code>来查看.
+命令输出包括:用户名,登录终端,登录<code>IP</code>,最后一次登录时.</p>
+<h3 id="linux目录含义"><a class="header" href="#linux目录含义">Linux目录含义</a></h3>
+<p><a href="https://www.jianshu.com/p/142deb98ed5a">Linux各目录含义</a></p>
+<ul>
+<li>FHS标准; <code>linux</code>系统的目录都遵循一个标准, 即由<code>Linux</code>基金会发布的 文件系统层次结构标准 (<code>Filesystem Hierarchy Standard</code>, FHS).
+这个标准里面定义了linux系统该有哪些目录,各个目录应该存放什么,起什么作用等等:</li>
+</ul>
+<p>目录  含义</p>
+<ul>
+<li>
+<p><code>/bin</code>  <code>binary</code>,即用来存放二进制可执行文件,并且比较特殊的是<code>/bin</code>里存放的是所有一般用户都能使用的可执行文件,如:<code>cat</code>, <code>chmod</code>, <code>chown</code>, <code>mv</code>, <code>mkdir</code>, <code>cd</code> 等常用指令</p>
+</li>
+<li>
+<p><code>/boot</code>  存放开机时用到的引导文件</p>
+</li>
+<li>
+<p><code>/dev</code>  device(并不是<code>develop</code>哦),任何设备都以文件的形式存放在这个目录中</p>
+</li>
+<li>
+<p><code>/etc</code>  <code>Editable Text Configuration</code>(早期含义为<code>etcetera</code>,但是有争议),存放系统配置文件,如各种服务的启动配置,账号密码等</p>
+</li>
+<li>
+<p><code>/home</code>  用户的主目录,每当新建一个用户系统都会在这个目录下创建以该用户名为名称的目录作为该用户的主目录.并且在命令行中~代表当前用户的主目录,~yousiku表示yousiku这个用户的主目录</p>
+</li>
+<li>
+<p><code>/lib</code>  library,存放着系统开机时所需的函数库以及/bin和/sbin目录下的命令会调用的函数库</p>
+</li>
+<li>
+<p><code>/lib64</code>  存放相对于/lib中支持64位格式的函数库</p>
+</li>
+<li>
+<p><code>/media</code>  可移除的媒体设备,如光盘,DVD等</p>
+</li>
+<li>
+<p><code>/mnt</code>  <code>mount</code>,临时挂载的设备文件</p>
+</li>
+<li>
+<p><code>/opt</code>  <code>optional</code>,可选的软件包,即第三方软件.我们可以将除了系统自带软件之外的其他软件安装到这个目录下</p>
+</li>
+<li>
+<p><code>/proc</code>  <code>process</code>,该目录是一个虚拟文件系统,即该目录的内容存放于内存中而不是硬盘中,存放着系统内核以及进程的运行状态信息</p>
+</li>
+<li>
+<p><code>/root</code>  超级管理员root的主目录</p>
+</li>
+<li>
+<p><code>/run</code>  最近一次开机后所产生的各项信息,如当前的用户和正在运行中的守护进程等</p>
+</li>
+<li>
+<p><code>/sbin</code>  存放一些只有root账户才有权限执行的可执行文件,如init, ip, mount等命令</p>
+</li>
+<li>
+<p><code>/srv</code>  service,存放一些服务启动后所需的数据</p>
+</li>
+<li>
+<p><code>/sys</code>  system,与/proc类似也是一个虚拟文件系统,存放系统核心与硬件相关的信息</p>
+</li>
+<li>
+<p><code>/tmp</code>  temporary,存放临时文件,可以被所有用户访问,系统重启时会清空该目录</p>
+</li>
+<li>
+<p><code>/usr</code>  Unix Software Resource(并不是指user哦),存放着所有用户的绝大多数工具和应用程序(下文详细介绍)</p>
+</li>
+<li>
+<p><code>/var</code>  variable,存放动态文件,如系统日志,程序缓存等(下文详细介绍)</p>
+</li>
+<li>
+<p><code>/usr</code>目录; <code>Unix Software Resource</code> 意为 <code>Unix</code>系统软件资源.
+系统自带的软件都装在这个目录下(好比Windows系统的<code>C:\Windows</code>),用户安装的第三方软件也在这个目录下(好比Windows系统的<code>C:\Program Files</code>).
+不同的是, 在Windows系统上安装软件通常将该软件的所有文件放置在同一个目录下,但在Linux系统, 安装软件会将该软件的不同文件分别放置在<code>/usr</code>目录下的不同子目录下.
+而不应该自行创建该软件自己的独立目录. <code>/usr</code>目录一般有以下子目录:</p>
+</li>
+</ul>
+<p>目录  含义</p>
+<ul>
+<li><code>/usr/bin</code>  即<code>/bin</code>,用链接文件到方式将<code>/bin</code>链接至此</li>
+<li><code>/usr/etc</code>  应用程序的配置文件</li>
+<li><code>/usr/games</code>  与游戏相关的数据</li>
+<li><code>/usr/include</code>  <code>c/c++</code>程序的头文件</li>
+<li><code>/usr/lib</code>  即<code>/lib</code>,用链接文件到方式将<code>/lib</code>链接至此</li>
+<li><code>/usr/lib64</code>  即<code>/lib64</code>,用链接文件到方式将<code>/lib64</code>链接至此</li>
+<li><code>/usr/libexec</code>  不常用的执行文件或脚本</li>
+<li><code>/usr/local</code>  应用程序的安装目录,每个应用程序目录下还会有对应的<code>bin</code>, <code>etc</code>, <code>lib</code>等目录</li>
+<li><code>/usr/sbin</code>  即<code>/sbin</code>,用链接文件到方式将<code>/sbin</code>链接至此</li>
+<li><code>/usr/share</code>  共享文件,通常是一些文字说明文件,如软件文档等</li>
+<li><code>/usr/src</code>  <code>source</code>,应用程序源代码</li>
+<li><code>/usr/tmp</code>  应用程序临时文件</li>
+</ul>
+<h3 id="输入法"><a class="header" href="#输入法">输入法</a></h3>
+<p>添加删除输入法在系统设置目录, 直接搜索<code>settings-Region&amp;Language--input sources</code>, 添加输入法是按照语言进行的, 先选择语言, 然后可以选择具体的输入法.
+如<code>Intelligent Pinyin</code></p>
+<ul>
+<li>
+<p>切换输入法可以使用如下命令: <code>im-config -s fcitx</code>,
+<code>-s</code>:    无动作;  对可能发生的事件进行模拟,但实际上不更改配置文件.</p>
+</li>
+<li>
+<p>如果要查看当前可用的输入法可以使用 <code>im-config -l</code> , 更多查看 <code>man im-config</code>.</p>
+</li>
+<li>
+<p><code>ibus-setup</code>: 图形界面程序, 用于设置<code>ibus</code>输入法框架</p>
+</li>
+<li>
+<p>查看环境变量<code>$XDG_CURRENT_DESKTOP</code>的值来看自己处于哪个图形环境.</p>
+</li>
+<li>
+<p>重启输入法; <code>ibus restart</code>:</p>
+</li>
+<li>
+<p>重启 ibus 守护进程;  <code>ibus-daemon -drx</code></p>
+<ul>
+<li><code>-d --daemonize</code>:作为后台程序运行</li>
+<li><code>-r, --replace</code>: 如果有旧的<code>ibus-daemon</code>在运行, 就替换它.</li>
+<li><code>-x, --xim</code>: 运行<code>XIM</code>服务器</li>
+</ul>
+</li>
+<li>
+<p>gedit设置默认编码UTF-8;
+<a href="https://blog.csdn.net/miscclp/article/details/39154639">gedit默认编码设置</a>.
+在终端下输入:</p>
+</li>
+</ul>
+<pre><code class="language-bash">gsettings set org.gnome.gedit.preferences.encodings candidate-encodings &quot;['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'UTF-16']&quot;
+</code></pre>
+<ul>
+<li>导入ibus词库
+<a href="https://blog.csdn.net/betabin/article/details/7798668">iBus拼音输入法导入搜狗词库</a></li>
+</ul>
+<p>终端下输入<code>ibus-setup</code>--<code>Input Method</code>--<code>Chinese - intelligent pinyin</code>,
+点击右侧的 <code>preference</code>--<code>user data</code>--<code>import</code>, 把制作好的词库导入进去即可. 测试:</p>
+<pre><code>亥姆霍兹方程
+重整化群
+</code></pre>
+<h3 id="定制自己的libpinyin"><a class="header" href="#定制自己的libpinyin">定制自己的libpinyin</a></h3>
+<p><a href="https://blog.csdn.net/godbreak/article/details/9031887">ibus下定制自己的libpinyin</a></p>
+<p>智能拼音输入法从<code>ibus-pinyin</code>更名为<code>ibus-libpinyin</code></p>
+<p><code>libpinyin</code>添加了词库导入功能,并刚刚修复相关<code>bug</code>,所以要先更新<code>libpinyin</code>到最新版.
+在<code>libpinyin</code>的配置界面(可以从<code>语言选项</code>---<code>输入源</code>找到,实在找不到,<code>/usr/share/ibus-libpinyin/setup/main2.py</code>),可以找到<strong>用户数据导入选项</strong>.</p>
+<p>这个要求文件:</p>
+<ol>
+<li>文件采用本地编码格式</li>
+<li>格式为每行<code>字符 拼音 位置(可选)</code>,且字符数和拼音数要对应,例如<code>你好 ni'hao 5</code>.</li>
+</ol>
+<p>去搜狗词库下搜狗细胞词库文件,然后下个<strong>深蓝词库转换器</strong>(<code>exe</code>),<code>wine</code>中打开转换器,选择从搜狗细胞词库转换到手机<code>QQ</code>格式,转换结束后不要选择文件保存本地,编码格式不大对,在输出框里面全选复制粘贴到你的文本编辑器,保存为<code>.txt</code>后缀.
+然后在<code>libpinyin</code>配置界面导入即可.导入完成后,<code>kill ibus-engine-libpinyin</code>进程,再切回拼音输入法.</p>
+<h2 id="日常维护"><a class="header" href="#日常维护">日常维护</a></h2>
+<h3 id="开机报错"><a class="header" href="#开机报错">开机报错</a></h3>
+<p><a href="https://askubuntu.com/questions/1160113/system-program-problem-detected">System program problem detected?</a></p>
+<p>查看转储到您的磁盘上的崩溃报告. 目录是<code>/var/crash/</code>, 它将包含几个文件, 这些文件将您指向它所涉及的软件包以及崩溃的原因.
+该目录描述为:</p>
+<blockquote>
+<p><code>/var/crash</code>: 系统崩溃转储(可选)
+该目录包含系统故障转储.
+自本标准发布之日起, Linux不支持系统故障转储, 但其他可能符合FHS的系统也可能支持系统转储.</p>
+</blockquote>
+<p><code>Ubuntu</code>版本使用此(可选)目录来转储崩溃和执行崩溃的软件包, 称为<code>apport</code> (and <code>whoopsie</code>).
+如果您想获得关于崩溃的真正详细的报告, 请安装<code>GDB</code>: <code>The GNU Project Debugger</code> with <code>sudo apt-get install gdb</code>.</p>
+<ul>
+<li>如何摆脱它</li>
+</ul>
+<p>取决于您所说的<code>摆脱</code>. 理想的解决方法是检查报告中包含的内容, 然后尝试找到解决方法.
+如果不需要包装或良性包装, 也可以将其清除. 多数情况下, 它是一项核心功能.</p>
+<p>您可以选择以下任意一种来删除崩溃报告, 直到实际删除该软件包为止(如果错误来自于<code>apport</code>本身, 那将非常具有讽刺意味):</p>
+<ul>
+<li><code>sudo rm /var/crash/*</code>将删除旧的崩溃并停止通知您, 直到某些软件包再次崩溃为止.</li>
+<li>您可以通过<code>sudo systemctl disable apport</code>停止服务(并通过<code>sudo systemctl enable apport</code>再次启用它)</li>
+<li>如果不想看到崩溃报告, 可以通过<code>vim /etc/default/apport</code>将其禁用. 并将<code>enabled = 1</code>更改为<code> enabled = 0</code>. 反向编辑将再次启用它.</li>
+<li>您可以使用<code>sudo apt purge apport</code>(使用<code>sudo apt install apport</code>再次安装)
++还有一种桌面方法(<code>问题报告</code>选项):</li>
+</ul>
+<p><a href="https://askubuntu.com/questions/346953/how-to-read-and-use-crash-reports">如何阅读和使用崩溃报告</a>有一些有趣的答案.
+它有一个示例崩溃报告和一种跟踪崩溃的方法.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-3-zsh-termux.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-5-owner.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-3-zsh-termux.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-5-owner.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>manjaro - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html" class="active"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="manjaro"><a class="header" href="#manjaro">manjaro</a></h1>
+<p><a href="https://zhuanlan.zhihu.com/p/114296129">Manjaro-KDE安装配置全攻略</a></p>
+<h2 id="系统安装"><a class="header" href="#系统安装">系统安装</a></h2>
+<p>这里我假设你的电脑引导方式是 <code>UEFI</code>, 如果你的<code>ssd</code>是<code>NVMe</code>协议<code>M.2</code>的,
+需要在进入安装界面之前先进去<code>BIOS</code>里面修改从硬盘的启动形式, 把<code>RAID</code>改成<code>AHCI</code>, 保存退出, 否则进入安装界面你不会看到你的<code>NVMe</code>硬盘, 做好这件事其他就都和普通ssd一样了.
+还需要注意的一点是, 修改成<code>AHCI</code>模式之后, 重新进入<code>Windows</code>时会有问题, 这个时候不要慌, 等电脑自动重启第三次的时候, 进入安全模式启动<code>Windows</code>,
+进去之后重启系统, 再次进入<code>Windows</code>就不需要安全模式了</p>
+<p>插上U盘, 在电脑<code>logo</code>出现之前狂按<code>F12</code>手动选择从<code>U</code>盘启动
+如果你的电脑有<code>NVIDIA</code>和Intel双显卡的话, 开机界面将<code>drive</code>改成<code>nonfree</code>, 这样系统会自动帮你安装适配的<code>NVIDIA</code>驱动(简直太方便了)
+如果这一步你没有改, 进去之后手动安装<code>NVIDIA</code>驱动千万不要自己随便安装, 这样很可能会导致下次启动进入<code>X-Window</code>界面失败, 具体怎么安装可以参考<code>Manjaro WiKi</code>的解决方案</p>
+<p>为保安装一步成功请在启动安装程序之前先联网,
+一般来讲, 你只要在Windows下给Manjaro预留出磁盘空间, 如果你有多个硬盘记得在安装窗口的最上面选对硬盘,
+安装时候的分区方案直接选择取代一个分区, 点击你之前分好的硬盘空间, 接着下一步即可</p>
+<p>如果你需要手动分区:
+如果你的硬盘是<code>ssd+hdd</code>, 并且打算把系统装在<code>hdd</code>下的话, 建议直接用<code>windows</code>的<code>efi</code>分区,
+<code>hdd</code>中划分一个区出来挂载<code>/</code>区, 或者在<code>ssd</code>中分一个<code>150MB</code>(当然大点也行)的区出来挂载<code>/boot/efi</code>, 安装完毕重启即可.</p>
+<h3 id="换源"><a class="header" href="#换源">换源</a></h3>
+<p>启动<code>terminal</code>, 输入:</p>
+<pre><code class="language-bash">sudo pacman-mirrors -i -c China -m rank
+</code></pre>
+<p>在弹出的框中选一个最快的源, 一个就好, 选多了会降低速度.
+若要安装<code>archlinuxcn</code>的源,参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/archlinuxcn/">ArchlinuxCN 镜像使用帮助</a></p>
+<p>打开配置文件: <code>sudo vim /etc/pacman.conf</code>, 在末尾输入:</p>
+<pre><code class="language-bash">[archlinuxcn]
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+</code></pre>
+<p>保存退出, 接着更新缓存, 导入 <code>PGP</code>Keys:</p>
+<pre><code class="language-bash">sudo pacman -Syy &amp;&amp; sudo pacman -S archlinuxcn-keyring
+</code></pre>
+<h3 id="安装软件"><a class="header" href="#安装软件">安装软件</a></h3>
+<p><code>Manjaro</code> 背靠<code>Arch</code>软件仓库,</p>
+<pre><code class="language-bash">sudo pacman -S yay
+</code></pre>
+<p><code>yay</code>是一个用<code>Go</code>语言写的一个<code>AUR</code>助手, 有些时候官方仓库没有你想要的软件, 就需要通过<code>yay</code>来安装,有了<code>yay</code>, 以后就不用<code>sudo pacman</code>了</p>
+<hr />
+<p>安装拼音输入法, 安装<code>fcitx5</code>(输入法框架)</p>
+<pre><code class="language-bash">yay -S fcitx5-im
+</code></pre>
+<p>配置<code>fcitx5</code>的环境变量:</p>
+<pre><code class="language-bash">nano ~/.pam_environment
+</code></pre>
+<p>内容为:</p>
+<pre><code class="language-pam">GTK_IM_MODULE DEFAULT=fcitx
+QT_IM_MODULE  DEFAULT=fcitx
+XMODIFIERS    DEFAULT=\@im=fcitx
+SDL_IM_MODULE DEFAULT=fcitx
+</code></pre>
+<p>安装中文维基百科词库:</p>
+<pre><code class="language-bash">yay -S fcitx5-pinyin-zhwiki
+</code></pre>
+<p>配置主题:</p>
+<pre><code class="language-bash">yay -S fcitx5-material-color
+</code></pre>
+<p><a href="https://github.com/ayamir/fcitx5-nord">大佬制作的fcitx5主题</a></p>
+<p>安装</p>
+<pre><code class="language-bash">git clone https://github.com/tonyfettes/fcitx5-nord.git
+mkdir -p ~/.local/share/fcitx5/themes/
+cd fcitx5-nord
+cp -r nord-Dark/ nord-Light/ ~/.local/share/fcitx5/themes/
+</code></pre>
+<p>然后编辑<code>~/.config/fcitx5/conf/classicui.conf</code>, 更改主题指定的行,</p>
+<pre><code class="language-bash">Theme=Nord-Dark
+# or
+Theme=Nord-Light
+</code></pre>
+<p>然后重启<code>fcitx5</code>, <code>fcitx5 -r</code></p>
+<p>完成之后就可以注销, 重新登录之后打开<code>fcitx5-configtool</code>编辑一下相应配置:</p>
+<h3 id="配置ohmyzsh"><a class="header" href="#配置ohmyzsh">配置ohmyzsh</a></h3>
+<p>首先说一下这个过程不需要使用<code>pacman/yay</code>安装软件, 首先修改默认<code>shell</code>为<code>zsh</code></p>
+<pre><code class="language-bash">chsh -s /usr/bin/zsh
+#安装ohmyzsh
+wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+</code></pre>
+<p>安装<code>zsh-syntax-highlighting</code>: <a href="https://github.com/zsh-users/zsh-syntax-highlighting">提供命令高亮</a>
+作者建议把这个插件放在插件列表的最后</p>
+<pre><code class="language-bash">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+</code></pre>
+<p>安装<a href="https://github.com/zsh-users/zsh-autosuggestions"><code>autosuggestions</code></a>: 记住你之前使用过的命令</p>
+<pre><code class="language-bash">git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+</code></pre>
+<p>安装incr: (需要注意的是这个插件会拖慢<code>zsh</code>的速度, 新手入门可以试试)</p>
+<pre><code class="language-bash">git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr
+</code></pre>
+<p>启用所有插件</p>
+<pre><code class="language-bash">nano ~/.zshrc
+# 将 plugins=(git) 改为:
+plugins=(git tmux  sudo extract  zsh-autosuggestions zsh-syntax-highlighting)
+</code></pre>
+<p>这个<code>sudo</code>是<code>ohmyzsh</code>自带的插件, 功能是在你输入的命令的开头添加<code>sudo </code>, 方法是<code>双击Esc</code>
+<code>extract</code>也是自带插件, 不用再去记不同文件的解压命令, 方法是<code>extract +你要解压的文件名</code>.
+保存退出之后, 手动修改<code>konsole</code>的默认<code>bash</code>为<code>zsh</code>: (右键<code>Konsole - 编辑当前方案</code>),打开<code>konsole</code>执行<code>source ~/.zshrc</code>, 配置完毕.</p>
+<h3 id="安装vimplus"><a class="header" href="#安装vimplus">安装Vimplus</a></h3>
+<p>(现代化的vim插件管理工具, 开箱即用, 不使用vim的可以略过</p>
+<pre><code class="language-bash">git clone https://github.com/chxuan/vimplus.git ~/.vimplus
+cd ~/.vimplus
+./install.sh
+</code></pre>
+<h3 id="安装腾讯系软件"><a class="header" href="#安装腾讯系软件">安装腾讯系软件</a></h3>
+<p>安装Tim</p>
+<pre><code class="language-bash">yay -S deepin-wine-tim
+</code></pre>
+<p>安装过程中出现选择输入<code>n</code>就好</p>
+<p>切换<code>deepin-wine</code>环境</p>
+<pre><code class="language-bash">sh /opt/deepinwine/apps/Deepin-Tim/run.sh -d
+</code></pre>
+<p>有问题直接去 <a href="https://github.com/countstarlight/deepin-wine-tim-arch/issues">countstarlight/deepin-wine-tim-arch </a> 开issue反馈就好了,
+如果这个版本的卡或者有其他问题, 建议安装:</p>
+<pre><code class="language-bash">yay -S deepin.com.qq.office
+</code></pre>
+<p>如果这个也没办法装, 则使用<code>linuxqq</code></p>
+<pre><code class="language-bash">yay -S linuxqq
+</code></pre>
+<hr />
+<p>安装微信</p>
+<p><code>deepin-wine</code>版:</p>
+<pre><code class="language-bash">yay -S deepin-wine-wechat
+</code></pre>
+<p>切换到<code>deepin-wine</code>环境:</p>
+<pre><code class="language-bash">/opt/apps/com.qq.weixin.deepin/files/run.sh -d
+</code></pre>
+<p>关于字体发虚问题:</p>
+<p>在切换到<code>deepin-wine</code>环境后, 在<code>terminal</code>输入下面的指令:</p>
+<pre><code class="language-bash">env WINEPREFIX=&quot;$HOME/.deepinwine/Deepin-TIM&quot; /usr/bin/deepin-wine winecfg
+</code></pre>
+<p>在弹出的窗口中选择<code>windows xp</code>, 将<code>DPI</code>调大(默认是<code>96</code>), 我调成了<code>120</code></p>
+<p>微信的同样, 只需要将命令改为:</p>
+<pre><code class="language-bash">env WINEPREFIX=&quot;$HOME/.deepinwine/Deepin-WeChat&quot; /usr/bin/deepin-wine winecfg
+</code></pre>
+<p><code>electron</code>版:</p>
+<pre><code class="language-bash">yay -S electron-wechat
+</code></pre>
+<h3 id="安装其他软件"><a class="header" href="#安装其他软件">安装其他软件</a></h3>
+<p><code>tldr</code>(Too Long; Don't Read): 帮你更加高效地学习<code>linux</code>命令</p>
+<pre><code class="language-bash">pip install --user tldr
+</code></pre>
+<p>如果下载太慢:</p>
+<pre><code class="language-bash">mkdir -p ~/.config/pip
+nano ~/.config/pip/pip.conf
+</code></pre>
+<p>写入如下内容</p>
+<pre><code class="language-bash">[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre>
+<p>这样就永久地修改了用户级别的<code>pip</code>下载源</p>
+<p>如果安装失败则用:</p>
+<pre><code class="language-bash">yay -S tldr
+</code></pre>
+<p><code>ranger</code>: 终端文件浏览器</p>
+<pre><code class="language-bash">yay -S ranger
+</code></pre>
+<p><code>wps</code>:中文版, 想要英文版把后面那个包去掉</p>
+<pre><code class="language-bash">yay -S wps-office wps-office-mui-zh-cn
+</code></pre>
+<p>如果你使用<code>fcitx5</code>的话, 还需要修改<code>/usr/bin/wps</code>和<code>/usr/bin/wpp</code>, 将下面这行代码加到文件开头:</p>
+<pre><code class="language-bash">export QT_IM_MODULE=&quot;fcitx5&quot;
+</code></pre>
+<p>网易云音乐:</p>
+<pre><code class="language-bash">yay -S netease-cloud-music
+</code></pre>
+<p>这样得到的版本不能在搜索框输入中文,</p>
+<p>高颜值, 开发活跃的第三方客户端:</p>
+<pre><code class="language-bash">yay -S yesplaymusic
+</code></pre>
+<p>qq音乐:</p>
+<pre><code class="language-bash">yay -S qqmusic-bin
+</code></pre>
+<p>一个支持全平台听歌的软件: <code>FeelUown</code></p>
+<pre><code class="language-bash">yay -S feeluown
+</code></pre>
+<p>根据装完之后的提示装对应平台的依赖</p>
+<p>chrome</p>
+<pre><code class="language-bash">yay -S google-chrome
+</code></pre>
+<p>百度网盘:</p>
+<pre><code class="language-bash">yay -S baidunetdisk
+</code></pre>
+<p>或者命令行(CLI)的:</p>
+<pre><code class="language-bash">yay -S baidupcs-go
+</code></pre>
+<p>坚果云:</p>
+<pre><code class="language-bash">yay -S nutstore
+</code></pre>
+<p>为知笔记: 全平台通用, 有云端同步, 支持md的笔记</p>
+<pre><code class="language-bash">yay -S wiznote
+</code></pre>
+<p>Typora: 我认为最舒适的md编辑器</p>
+<pre><code class="language-bash">yay -S typora
+</code></pre>
+<hr />
+<p><code>flameshot</code>: 强大的截图工具</p>
+<pre><code class="language-bash">yay -S flameshot
+</code></pre>
+<p>设置快捷键启动的方式</p>
+<p><code>设置-&gt;快捷键-&gt;自定义快捷键 -&gt; 编辑 -&gt; 新建 -&gt; 全局快捷键 -&gt; 命令/URL</code>, 转到<code>触发器</code>标签, 设置习惯的快捷键.
+转到<code>动作</code>标签,在<code>命令/URL</code>中填上<code>/usr/bin/flameshot gui</code></p>
+<hr />
+<p><code>timeshift</code> : 强大好用的备份, 回滚系统工具</p>
+<pre><code class="language-bash">yay -S timeshift
+</code></pre>
+<p>XDM: Linux下最快的下载神器</p>
+<pre><code class="language-bash">yay -S xdman
+</code></pre>
+<p>建议直接去<a href="https://subhra74.github.io/xdm/">https://subhra74.github.io/xdm/</a>下载压缩包安装, 比命令行快很多</p>
+<hr />
+<p><code>calibre</code>: 电子书管理神器</p>
+<pre><code class="language-bash">yay -S calibre
+</code></pre>
+<p>系统托盘那开启夜间颜色控制, 不需要安装redshift了</p>
+<h3 id="字体"><a class="header" href="#字体">字体</a></h3>
+<p>使用Windows/Mac OS字体:
+<a href="https://wiki.archlinux.org/index.php/Fonts_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#Microsoft_%E5%AD%97%E4%BD%93">Fonts (简体中文) - ArchWiki​</a></p>
+<p>这里建议直接拷贝字体文件</p>
+<p><a href="https://zhuanlan.zhihu.com/p/343934880">渲染效果优化</a></p>
+<h3 id="美化"><a class="header" href="#美化">美化</a></h3>
+<p>安装<code>latte-dock</code></p>
+<pre><code class="language-bash">yay -S latte-dock
+</code></pre>
+<p>添加一个新空面板, 默认会出现在桌面上方, 可以删除下面自带的面板, 在新面板上添加必要的部件: 应用程序面板, 数字时钟, 托盘, 还可以加全局菜单, 显示面板等等</p>
+<p>启动<code>latte-dock</code>, 下方就会出现一个dock栏, 具体配置看自己爱好.
+除dock栏中时钟的方法: 右键<code>配置lattedock</code>,接着右键时钟,选择<code>移除</code>就好了</p>
+<hr />
+<p><code>设置-外观</code>中选择你喜欢的主题什么的安装并且应用即可
+<code>设置-工作区行为-桌面特效</code> 中可以启用一些华丽的特效
+<code>设置-开机和关机</code>中更改登录屏幕等效果
+<code>设置-工作区行为-常规行为-点击行为</code>设置双击打开文件/文件夹的设置</p>
+<hr />
+<p>修改<code>/home/user</code>下的用户文件夹名称为英文:
+先去手动修改文件夹名称, 然后在 <code>设置 -&gt; 应用程序 -&gt; 地点</code> 中修改</p>
+<hr />
+<p>双系统时间同步</p>
+<p>按照<a href="https://wiki.archlinux.org/index.php/System_time_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)"> Arch WiKi </a>的建议, 这里修改<code>Windows</code>系统的注册表:
+<code>win+X</code> 以管理员方式打开PowerShell, 输入</p>
+<pre><code class="language-bash">reg add &quot;HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation&quot; /v RealTimeIsUniversal /d 1 /t REG_QWORD /f
+</code></pre>
+<p>如果你的<code>Windows</code>是<code>32</code>位的, 把上述代码中的<code>REG_QWORD</code>改成<code>REG_DWORD</code></p>
+<p>同时禁用<code>Windows</code>的自动同步时间功能</p>
+<hr />
+<p>查看系统信息</p>
+<pre><code class="language-bash">yay -S neofetch lolcat # lolcat 只是渐变色的工具
+neofetch | lolcat
+</code></pre>
+<p>装好<code>Manjaro</code>必须要有的习惯:</p>
+<ol>
+<li>必须要做<code>timeshift</code>, 以防你哪天玩坏只能重装</li>
+<li>每天要开机执行一遍<code>sudo pacman -Syyu</code></li>
+</ol>
+<p>虽说<code>Manjaro</code>相对<code>Arch</code>应该稳定一点, 但终究是滚动发行版, 还是有滚挂的风险, 防止滚挂的最好办法就是 及时滚 长时间不更新必挂.</p>
+<h2 id="维护"><a class="header" href="#维护">维护</a></h2>
+<h3 id="manjaro-开机红色提示"><a class="header" href="#manjaro-开机红色提示">manjaro 开机红色提示</a></h3>
+<p><code>Failed to start Load/Save Screen Backlight Brightness of amdgpu_bl0</code></p>
+<p><a href="https://www.linux.org/threads/failed-to-start-load-save-screen-backlight-brightness-of-amdgpu_bl1.31998/">Load/Save Screen Backlight Brightness</a></p>
+<p>开关机的时候出现上面的错误提示, 查看运行状态</p>
+<pre><code class="language-bash">sudo systemctl status systemd-backlight@backlight:amdgpu_bl0
+</code></pre>
+<p>手动启动</p>
+<pre><code class="language-bash">sudo systemctl start systemd-backlight@backlight:amdgpu_bl0
+</code></pre>
+<p>关于 <code>systemd</code> 可以参考:
+<a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程: 命令篇</a>
+<a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">systemd</a>
+<a href="https://wiki.archlinux.org/index.php/Kernel_parameters">Kernel parameters </a></p>
+<p>添加<code>systemd</code>开机启动配置, <code>sudo vim /etc/systemd/system/startup-brightness.service</code></p>
+<pre><code class="language-systemd">[Unit]
+Description=Dummy service for attempting to start the problematic amdgpu_bl0 service
+
+[Service]
+Type=simple
+ExecStart=systemctl start systemd-backlight@backlight:amdgpu_bl0
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>然后启用: <code>sudo systemctl enable startup-brightness.service</code>. 下次开机虽然还有提示, 但是<code>systemd-backlight@backlight:amdgpu_bl0</code>会自动运行.</p>
+<hr />
+<p>也可以手动调节亮度, <a href="https://zhuanlan.zhihu.com/p/138880080">manjaro 手动调节屏幕亮度</a></p>
+<p>亮度由<code>ACPI</code>内核模块控制, 这个模块的接口在以下位置: <code>/sys/class/backlight</code>.
+使用<code>root</code>用户进入这个文件夹, 其中<code>max_brightness</code>表示亮度的最大值, 笔者的设备显示为<code>255</code>, 想要修改亮度的话直接修改<code>brightness</code>即可: <code>echo 255 &gt; brightness</code></p>
+<hr />
+<p><a href="https://bbs.archlinux.org/viewtopic.php?id=254654">Failed to start Load/Save Screen Backlight Brightness of</a></p>
+<p><code>ls /sys/class/backlight</code>可以查看<code>linux</code>背光子系统.
+对于报错的另一个设备: <code>Failed to start Load/Save Screen Backlight Brightness of backlight:acpi_video1</code>, 提示设备不存在, 直接禁用这个服务:
+<code>sudo systemctl mask systemd-backlight@backlight:acpi_video0.service</code></p>
+<h3 id="manjaro-grub-内核参数"><a class="header" href="#manjaro-grub-内核参数">manjaro grub 内核参数</a></h3>
+<hr />
+<p><a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">systemd</a></p>
+<hr />
+<p><code>apparmor=1 security=apparmor</code>
+<a href="https://wiki.archlinux.org/index.php/AppArmor#Installation">AppArmor</a></p>
+<p>AppArmor是基于Linux安全模块(Linux Security Modules, LSM)实施的强制性访问控制(Mandatory Access Control,MAC)系统.</p>
+<hr />
+<p><a href="https://wiki.archlinux.org/index.php/Udev_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">udev</a>
+<code>udev</code> 是 <code>Linux</code> 内核的设备管理器. 总的来说, 它取代了 <code>devfs</code> 和 <code>hotplug</code>, 负责管理 <code>/dev</code> 中的设备节点.
+同时, <code>udev</code> 也处理所有用户空间发生的硬件添加, 删除事件, 以及某些特定设备所需的固件加载.</p>
+<p>与传统的顺序加载相比, <code>udev</code> 通过并行加载内核模块提供了潜在的性能优势.
+异步加载模块的方式也有一个天生的缺点: 无法保证每次加载模块的顺序, 如果机器具有多个块设备, 那么它们的设备节点可能随机变化. 例如如果有两个硬盘, <code>/dev/sda</code> 可能会随机变成<code>/dev/sdb</code></p>
+<p><code>Debug output</code></p>
+<p>要获取硬件调试信息, 请使用内核参数<code>udev.log-priority=debug</code>.  或者, 您可以设置<code>/etc/udev/udev.conf</code></p>
+<pre><code class="language-bash">udev_log=&quot;debug&quot;
+</code></pre>
+<hr />
+<p><a href="https://wiki.archlinux.org/index.php/Kernel_parameters">Kernel parameters </a>
+<a href="https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate#Hibernation">Power management/Suspend and hibernate</a>
+<a href="https://wiki.archlinux.org/index.php/Kernel_module#Blacklisting">Blacklisting</a></p>
+<p><code>resume=UUID=0f163abf-8e60-4626-a4de-54332c64db51</code>. <code>resume</code>指定从休眠状态唤醒时要使用的<code>swap</code>设备.</p>
+<p>在升级到内核版本<code>4.15.3</code>后, 唤醒系统时可能会黑屏, 只在黑屏上留下一个静止不动的鼠标指针.  <code>Blacklisting</code> 这个模块 <code>nvidiafb</code> 可能会有帮助.</p>
+<hr />
+<p>方法1: 在 <code>/etc/modprobe.d/</code> 中创建 <code>.conf</code> 文件, 使用 <code>blacklist</code> 关键字屏蔽不需要的模块, 例如如果不想装入 <code>pcspkr</code> 模块:</p>
+<pre><code class="language-bash">vim /etc/modprobe.d/nobeep.conf
+# Do not load the pcspkr module on boot
+blacklist pcspkr
+</code></pre>
+<p>注意:  <code>blacklist</code> 命令将屏蔽一个模板, 所以不会自动装入, 但是如果其它非屏蔽模块需要这个模块, 系统依然会装入它. 要避免这个行为, 可以让 <code>modprobe</code> 使用自定义的 <code>install</code> 命令, 而不是像往常一样将模块插入内核, 因此您可以通过以下方式强制模块始终无法加载:</p>
+<pre><code class="language-bash">/etc/modprobe.d/blacklist.conf
+...
+install MODULE /bin/true
+...
+</code></pre>
+<hr />
+<p>方法2: 从引导加载程序,例如<code>grub</code>, 将模块列入黑名单.
+如<code>Kernel parameters</code>中所述, 只需将<code>module_blacklist=modname1,modname2,modname3</code> 添加到引导加载程序的内核行中即可.
+注意:  将多个模块列入黑名单时, 请注意, 它们之间仅用逗号分隔.  空格或其他内容可能会破坏语法.</p>
+<p><a href="https://wiki.archlinux.org/index.php/Kernel_parameters">Kernel parameters</a>
+对于初学者, 建议编辑 <code>/etc/default/grub</code> 并将您的内核选项添加至 <code>GRUB_CMDLINE_LINUX_DEFAULT</code> 行:</p>
+<pre><code class="language-bash">GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash&quot;
+GRUB_CMDLINE_LINUX_DEFAULT=&quot;module_blacklist=nvidiafb&quot;
+</code></pre>
+<p>然后重新生成 <code>grub.cfg</code> 文件:</p>
+<pre><code class="language-bash">sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<h3 id="vscode-登陆报错"><a class="header" href="#vscode-登陆报错">vscode 登陆报错</a></h3>
+<p><a href="https://code.visualstudio.com/docs/editor/settings-sync#_troubleshooting-keychain-issues">Troubleshooting keychain issues</a>
+<a href="https://github.com/microsoft/vscode/issues/92972">Sync requests to re-login every 2 minutes</a>
+<a href="https://rtfm.co.ua/en/linux-the-nextcloud-client-qtkeychain-and-the-the-name-org-freedesktop-secrets-was-not-provided-by-any-service-files-error/">install gnome keyring and qtkeychain</a></p>
+<p><code>KDE</code> 环境下, <code>vs-code</code>登陆账户无法保存, 下次启动仍然提示登陆. 问题出在<code>keychain</code>. 解决方法是安装 gnome keyring and qtkeychain</p>
+<pre><code class="language-bash">yay -S qtkeychain gnome-keyring
+# 验证现在存在
+ls -l /usr/share/dbus-1/services/ | grep secret
+cat /usr/share/dbus-1/services/org.freedesktop.secrets.service
+</code></pre>
+<h3 id="vscode-更新报错"><a class="header" href="#vscode-更新报错">vscode 更新报错</a></h3>
+<p><a href="https://github.com/archlinuxcn/repo">Arch Linux Chinese Community Repository</a></p>
+<p>vscode 的二进制包<code>visual-studio-code-bin</code>位于<code>archlinucn</code>仓库, 可能是由于 <code>PGP keys</code> 更新, 执行</p>
+<pre><code class="language-bash">sudo pacman -Syy &amp;&amp; sudo pacman -S archlinuxcn-keyring
+</code></pre>
+<h3 id="lyx-打开文件窗口报错"><a class="header" href="#lyx-打开文件窗口报错">lyx 打开文件窗口报错</a></h3>
+<p><a href="https://forum.manjaro.org/t/unable-to-create-io-slave-klauncher-said-error-loading-usr-lib-qt-plugins-kf5-kio-file-so/1217">/usr/lib/qt/plugins/kf5/kio/file.so</a></p>
+<p>类似于</p>
+<pre><code>Unable to create io-slave. klauncher said: Error loading  '/usr/lib/qt/plugins/kf5/kio/file.so'
+</code></pre>
+<ul>
+<li>如果进行了系统更新, 应该尝试重新启动你的设备.</li>
+<li>如果你确实更新了,请确保没有部分更新.</li>
+</ul>
+<pre><code class="language-bash">sudo pacman-mirrors -f &amp;&amp; sudo pacman -Syyu
+</code></pre>
+<p>甚至重新安装<code>kio</code>也会有帮助, 然后按照上面的建议重新启动.</p>
+<h2 id="archwiki-帮助"><a class="header" href="#archwiki-帮助">archwiki 帮助</a></h2>
+<p><a href="https://wiki.archlinux.org/index.php/Help:Reading_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Help:Reading</a></p>
+<h3 id="安装软件包"><a class="header" href="#安装软件包">安装软件包</a></h3>
+<p>绝大部分文章仅是给出软件包的名字, 不会列出详细的软件包安装命令.</p>
+<hr />
+<p>官方软件包:如果软件包位于 官方软件仓库, 安装指令是这样: <code>Install the foobar package</code>. 这意味着需要执行:</p>
+<pre><code class="language-bash"># pacman -S foobar
+</code></pre>
+<hr />
+<p>Arch 用户仓库(AUR): 如果软件包来自AUR, 你会看到:<code>Install the foobarAUR package.</code></p>
+<p>这意味这您需要打开<code>foobarAUR</code>链接, 下载 <code>PKGBUILD</code>, 解压, 验证内容, 然后在文件目录执行:</p>
+<pre><code class="language-bash">$ makepkg -sri
+</code></pre>
+<h3 id="控制-systemd-单元"><a class="header" href="#控制-systemd-单元">控制 systemd 单元</a></h3>
+<p>绝大部分文章仅仅要求你<code>启动</code>(start),<code>启用</code>(enable),<code>停止</code>(stop),<code>重启</code>(restart)<code>systemd</code> 单元(例如: 服务), 不会列出详细的命令. 你会看见类似这样的说明:
+<code>启动 example.service.</code></p>
+<p>这意味着你需要执行</p>
+<pre><code class="language-bash"># systemctl start example.service
+</code></pre>
+<p><code>systemd</code> 页面包含了管理 systemd 单元的详细介绍.  下面列出一些常用的命令:</p>
+<p>立即激活单元: <code># systemctl start &lt;单元&gt;</code>
+立即停止单元: <code># systemctl stop &lt;单元&gt;</code>
+重启单元: <code># systemctl restart &lt;单元&gt;</code>
+重新加载配置: <code># systemctl reload &lt;单元&gt;</code>
+输出单元运行状态: <code>$ systemctl status &lt;单元&gt;</code>
+检查单元是否配置为自动启动: <code>$ systemctl is-enabled &lt;单元&gt;</code>
+开机自动激活单元: <code># systemctl enable &lt;单元&gt;</code>
+设置单元为自动启动并立即启动这个单元:<code># systemctl enable --now unit</code>
+取消开机自动激活单元: <code># systemctl disable &lt;单元&gt;</code>
+禁用一个单元(禁用后, 间接启动也是不可能的): <code># systemctl mask &lt;单元&gt;</code>
+取消禁用一个单元: <code># systemctl unmask &lt;单元&gt;</code></p>
+<h2 id="pacman"><a class="header" href="#pacman">pacman</a></h2>
+<p><a href="https://wiki.archlinux.org/index.php/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">pacman</a>
+<a href="https://man.archlinux.org/man/pacman.8">PACMAN(8)</a></p>
+<p>使用过其它发行版的用户, 可以参考 Pacman Rosetta 中的对比.
+<a href="https://wiki.archlinux.org/index.php/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Rosetta_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Pacman Rosetta</a></p>
+<h3 id="pacman-mirrors"><a class="header" href="#pacman-mirrors">pacman-mirrors</a></h3>
+<p>使用下面的命令选择较快的镜像.</p>
+<pre><code class="language-bash">sudo pacman-mirrors -i -c China -m rank
+</code></pre>
+<hr />
+<p><code>pacman-mirrors</code>:产生Manjaro Linux 的镜像列表</p>
+<ul>
+<li><code>-i,--interactive [-default]</code>: 互动模式. <code>-default</code>强迫载入默认的镜像文件, 忽略任何自定义pool.</li>
+<li><code>-c</code>: 指定国家</li>
+<li><code>-m,--method METHOD</code>: 默认的方法是<code>rank</code>, 但可以选择<code>random</code>. <code>rank</code>: 按访问延迟排列镜像. <code>random</code>:随机排列镜像.</li>
+</ul>
+<h3 id="安装指定的包"><a class="header" href="#安装指定的包">安装指定的包</a></h3>
+<p>安装或者升级单个软件包, 或者一列软件包(包含依赖包), 使用如下命令:</p>
+<pre><code class="language-bash"># pacman -S package_name1 package_name2 ...
+</code></pre>
+<p>用正则表达式安装多个软件包(参见 这个帖子):</p>
+<pre><code class="language-bash"># pacman -S $(pacman -Ssq package_regex)
+</code></pre>
+<p>有时候在不同的软件仓库中, 一个软件包有多个版本(比如<code>[extra]</code>和<code>[testing]</code>). 可以选择一个来安装:</p>
+<pre><code class="language-bash"># pacman -S extra/package_name
+</code></pre>
+<p>安装多个含有相似名称的软件包, 而并非整个包组或全部匹配的软件包;  例如, <code>plasma</code>:</p>
+<pre><code class="language-bash"># pacman -S plasma-{desktop,mediacenter,nm}
+</code></pre>
+<p>当然, 可以多层扩展, 并不作限制:</p>
+<pre><code class="language-bash"># pacman -S plasma-{workspace{,-wallpapers},pa}
+</code></pre>
+<h3 id="虚包"><a class="header" href="#虚包">虚包</a></h3>
+<p>虚拟软件包是一个特殊的软件包, 它本身并不存在, 但由一或多个其它软件包提供.
+虚拟软件包允许其它软件包不以某一个特定的包为依赖, 以应对有多个候选的情况. 虚包不能用它们的名称安装, 相反它们会在你安装提供虚包的软件包时被安装到你的系统中.</p>
+<h3 id="安装包组"><a class="header" href="#安装包组">安装包组</a></h3>
+<p>一些包属于一个可以同时安装的软件包组. 例如, 运行下面的命令</p>
+<pre><code class="language-bash"># pacman -S gnome
+</code></pre>
+<p>会提醒用户选择 <code>gnome</code> 内需要安装的包.
+有的包组包含大量的软件包, 有时用户只需其中几个. 除了逐一键入序号外, <code>pacman</code> 还支持选择或排除某个区间内的的软件包:</p>
+<pre><code class="language-bash">Enter a selection (default=all): 1-10 15
+</code></pre>
+<p>这将选中序号 <code>1</code> 至 <code>10</code> 和 <code>15</code> 的软件包. 而</p>
+<pre><code class="language-bash">Enter a selection (default=all): ^5-8 ^2
+</code></pre>
+<p>将会选中除了序号 <code>5</code> 至 <code>8</code> 和 <code>2</code> 之外的所有软件包.</p>
+<p>想要查看哪些包属于 <code>gnome</code> 组, 运行:</p>
+<pre><code class="language-bash"># pacman -Sg gnome
+</code></pre>
+<p>也可以访问<a href="https://archlinux.org/groups/">https://archlinux.org/groups/</a> 查看可用的包组.</p>
+<p>注意:  如果列表中的包已经安装在系统中, 它会被重新安装, 即使它已经是最新的. 可以用 <code>--needed</code> 选项覆盖这种行为.</p>
+<h3 id="删除软件包"><a class="header" href="#删除软件包">删除软件包</a></h3>
+<p>删除单个软件包, 保留其全部已经安装的依赖关系</p>
+<pre><code class="language-bash"># pacman -R package_name
+</code></pre>
+<p>删除指定软件包, 及其所有没有被其他已安装软件包使用的依赖关系:</p>
+<pre><code class="language-bash"># pacman -Rs package_name
+</code></pre>
+<p>上面这条命令在移除包含其他所需包的组时有时候会拒绝运行. 这种情况下可以尝试</p>
+<pre><code class="language-bash"># pacman -Rsu package_name
+</code></pre>
+<p>要删除软件包和所有依赖这个软件包的程序:
+警告:  此操作是递归的, 请小心检查, 可能会一次删除大量的软件包.</p>
+<pre><code class="language-bash"># pacman -Rsc package_name
+</code></pre>
+<p>要删除一个被其他软件包依赖的软件包, 但是不删除依赖这个软件包的其他软件包:
+警告:  此操作有破坏系统的能力, 应该尽量避免使用. 详情请看<code>避免某些 Pacman 命令</code>.</p>
+<pre><code class="language-bash"># pacman -Rdd package_name
+</code></pre>
+<p>pacman 删除某些程序时会备份重要配置文件, 在其后面加上*.pacsave扩展名. -n 选项可以避免备份这些文件:</p>
+<pre><code class="language-bash">pacman -Rn package_name
+</code></pre>
+<p>注意:  pacman 不会删除软件自己创建的文件(例如主目录中的&quot;点文件&quot;不会被删除. )</p>
+<h3 id="升级软件包"><a class="header" href="#升级软件包">升级软件包</a></h3>
+<p>警告:</p>
+<blockquote>
+<p>建议用户遵守<a href="https://wiki.archlinux.org/index.php/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Rosetta_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">System maintenance (简体中文)#更新系统</a>的指导, 定期更新系统, 并不盲目地执行这些命令.
+Arch 只支持系统完整升级, 详细参见System maintenance (简体中文)#不支持部分升级和安装软件包.</p>
+</blockquote>
+<p>一个 <code>pacman</code> 命令就可以升级整个系统. 花费的时间取决于系统有多老. 这个命令会同步非本地(local)软件仓库并升级系统的软件包:</p>
+<pre><code class="language-bash"># pacman -Syu
+</code></pre>
+<h3 id="查询包数据库"><a class="header" href="#查询包数据库">查询包数据库</a></h3>
+<p><code>pacman</code> 使用 <code>-Q</code> 参数查询本地软件包数据库,  <code>-S</code> 查询同步数据库, 以及 <code>-F</code> 查询文件数据库.
+要了解每个参数的子选项, 分别参见 <code>Pacman -Q --help</code>, <code>Pacman -S --help</code>和<code>Pacman -F --help</code>.</p>
+<p><code>pacman</code> 可以在包数据库中查询软件包, 查询位置包含了软件包的名字和描述:</p>
+<pre><code class="language-bash">$ pacman -Ss string1 string2 ...
+</code></pre>
+<p>有时, <code>-s</code>的内置正则会匹配很多不需要的结果, 所以应当指定仅搜索包名, 而非描述或其他子段:</p>
+<pre><code class="language-bash">$ pacman -Ss '^vim-'
+</code></pre>
+<p>要查询已安装的软件包:</p>
+<pre><code class="language-bash">$ pacman -Qs string1 string2 ...
+</code></pre>
+<p>按文件名查找软件库:</p>
+<pre><code class="language-bash">$ pacman -F string1 string2 ...
+</code></pre>
+<p>显示软件包的详尽的信息:</p>
+<pre><code class="language-bash">$ pacman -Si package_name
+</code></pre>
+<p>查询本地安装包的详细信息:</p>
+<pre><code class="language-bash">$ pacman -Qi package_name
+</code></pre>
+<p>使用两个 <code>-i</code> 将同时显示备份文件和修改状态:</p>
+<pre><code class="language-bash">$ pacman -Qii package_name
+</code></pre>
+<p>要获取已安装软件包所包含文件的列表:</p>
+<pre><code class="language-bash">$ pacman -Ql package_name
+</code></pre>
+<p>查询远程库中软件包包含的文件:</p>
+<pre><code class="language-bash">$ pacman -Fl package_name
+</code></pre>
+<p>检查软件包安装的文件是否都存在:</p>
+<pre><code class="language-bash">$ pacman -Qk package_name
+</code></pre>
+<p>两个参数<code>k</code>将会执行一次更彻底的检查.  查询数据库获取某个文件属于哪个软件包:</p>
+<pre><code class="language-bash">$ pacman -Qo /path/to/file_name
+</code></pre>
+<p>查询文件属于远程数据库中的哪个软件包:</p>
+<pre><code class="language-bash">$ pacman -F /path/to/file_name
+</code></pre>
+<p>要罗列所有不再作为依赖的软件包(孤立orphans):</p>
+<pre><code class="language-bash">$ pacman -Qdt
+</code></pre>
+<p>提示:  将上述命令添加到 pacman 的一个处理后 hook用于在如果有处理产生孤立包后获得提示. 这在当有软件包被仓库放弃时是有用的,
+因为任何被抛弃的包都会成为本地的一个孤立包(除非它是被显式安装的).
+要避免在没有找到孤立包时<code>failed to execute command</code>的错误, 在你的 <code>hook</code> 中为<code>Exec</code>使用如下的指令:</p>
+<pre><code class="language-bash">/usr/bin/bash -c &quot;/usr/bin/pacman -Qtd || /usr/bin/echo '=&gt; None found.'&quot;
+</code></pre>
+<p>要罗列所有明确安装而且不被其它包依赖的软件包:</p>
+<pre><code class="language-bash">$ pacman -Qet
+</code></pre>
+<p>更多例子查看<code>pacman tips</code>.</p>
+<h3 id="pactree"><a class="header" href="#pactree">Pactree</a></h3>
+<p>注意:  <code>pactree(8)</code>不再是 <code>pacman</code> 的一部分. 它现在在 <code>pacman-contrib</code> 中.</p>
+<p>要显示软件包的依赖树:</p>
+<pre><code class="language-bash">$ pactree package_name
+</code></pre>
+<p>检查一个安装的软件包被哪些包依赖, 将递归标识<code>-r</code>传递给 pactree, 或者使用 <code>pkgtoolsAUR</code> 中的 <code>whoneeds</code></p>
+<h3 id="数据库结构"><a class="header" href="#数据库结构">数据库结构</a></h3>
+<p><code>pacman</code>数据库通常位于 <code>/var/lib/pacman/sync</code>. 对于每一个在<code>/etc/pacman.conf</code>中指定的软件仓库,  这里都有一个一致的数据库.
+数据库文件夹里每个<code>tar.gz</code>文件都包含着一个仓库的软件包信息. 例如 <code>which</code> 包:</p>
+<pre><code class="language-bash">$ tree which-2.21-5
+which-2.21-5
+|-- desc
+</code></pre>
+<p>这个 <code>depends</code> 项列出了该软件的依赖包,  而<code>desc</code>有该包的介绍, 例如文件大小和MD5值 .</p>
+<h3 id="清理软件包缓存"><a class="header" href="#清理软件包缓存">清理软件包缓存</a></h3>
+<p><code>pacman</code> 将下载的软件包保存在 <code>/var/cache/pacman/pkg/</code> 并且不会自动移除旧的和未安装版本的软件包. 这样做有一些好处:</p>
+<ul>
+<li>这样允许降级软件包而不需要通过其他方式提取旧版本, 例如 Arch Linux Archive.</li>
+<li>被卸载的软件包可以轻易地直接从缓存文件夹重新安装, 不需要重新从软件仓库下载.</li>
+</ul>
+<p>然而, 需要定期手动清理缓存来避免该文件夹无限制增大.</p>
+<p><code>pacman-contrib</code> 提供的 <code>paccache(8)</code> 脚本默认会删除所有缓存的版本和已卸载的软件包, 除了最近的<code>3</code>个会被保留:</p>
+<pre><code class="language-bash"># paccache -r
+</code></pre>
+<p>启用 和 启动 <code>paccache.timer</code>来每周删除不使用的包.</p>
+<p>也可以自己设置保留最近几个版本:</p>
+<pre><code class="language-bash"># paccache -rk1
+</code></pre>
+<p>添加<code>-u</code>/<code>--uninstalled</code>开关来限制<code>paccache</code>的行为只作用于卸载的包. 例如清理所有卸载的包的缓存版本, 可以用以下命令:</p>
+<pre><code class="language-bash"># paccache -ruk0
+</code></pre>
+<p>或者你可以将安装其结合, 同时作用于安装的和卸载的包, 例如想要保留最近两个安装的包但是移除所有卸载的包的缓存版本, 使用以下命令:</p>
+<pre><code class="language-bash"># paccache -rk2 -ruk0
+</code></pre>
+<p>更多参数参见<code>paccache -h</code>.</p>
+<p>pacman也有一些内建参数用于清除缓存和那些不再在<code>/etc/pacman.conf</code>配置文件中列出的软件仓库残留数据库文件.
+然而pacman并不提供保留一定数量的过去版本的功能, 因此它比<code>paccache</code>的默认选项更加激进.</p>
+<p>要删除目前没有安装的所有缓存的包, 和没有被使用的同步数据库, 执行:</p>
+<pre><code class="language-bash"># pacman -Sc
+</code></pre>
+<p>要删除缓存中的全部文件, 使用两次-c开关. 这是最为激进的方式, 将会清空缓存文件夹:</p>
+<pre><code class="language-bash"># pacman -Scc
+</code></pre>
+<p>警告:  应当避免从缓存中删除所有过去版本和卸载的包, 除非需要更多磁盘空间. 这样会导致无法降级或重新安装包而不再次下载他们</p>
+<p><code>pkgcachecleanAUR</code>以及<code>pacleanerAUR</code>是两个进一步清理缓存的替代工具</p>
+<hr />
+<p>其它命令</p>
+<p>升级系统时安装其他软件包:</p>
+<pre><code class="language-bash"># pacman -Syu package_name1 package_name2 ...
+</code></pre>
+<p>安装原因</p>
+<p><code>pacman</code>数据库按照软件包被安装的原因, 将其分为两类:</p>
+<ul>
+<li>显式安装: 那些真正地被传递给通用<code>pacman -S</code>和<code>-U</code>命令的包;</li>
+<li>依赖: 那些虽然(一般)从未被传递给<code>pacman</code>安装命令, 但由于被其它显式安装的包需要从而被隐式安装的包</li>
+</ul>
+<p>当安装软件包时, 可以把安装原因强制设为依赖:</p>
+<pre><code class="language-bash"># pacman -D --asdeps package_name
+</code></pre>
+<h3 id="配置"><a class="header" href="#配置">配置</a></h3>
+<p><code>pacman</code> 的配置文件位于<code>/etc/pacman.conf</code>.  <code>man pacman.conf</code> 可以查看配置文件的进一步信息.</p>
+<hr />
+<p>通用选项: 通用选项都在<code>[options]</code>段. 阅读 man 手册或者查看默认的 pacman.conf 可以获得有关信息和用法.</p>
+<hr />
+<p>升级前对比版本:要查看旧版和新版的有效安装包, 请取消<code>/etc/pacman.conf</code>中<code>&quot;VerbosePkgLists&quot;</code>的注释. 修改后的<code>pacman -Syu</code>会列出详细表格.</p>
+<h2 id="git"><a class="header" href="#git">git</a></h2>
+<h3 id="gitk"><a class="header" href="#gitk">gitk</a></h3>
+<p>首先需要安装依赖包<code>tk</code>, 然后运行的时候可能会报错<code>unknown color name &quot;BACKGROUND&quot;</code>或者类似下面的</p>
+<pre><code class="language-bash">application-specific initialization failed: unknown color name &quot;S_base3&quot;
+Error in startup script: unknown color name &quot;S_base3&quot;
+    (database entry for &quot;-background&quot; in widget &quot;.&quot;)
+    invoked from within
+&quot;load /usr/lib/x86_64-linux-gnu/libtk8.6.so Tk&quot;
+    (&quot;package ifneeded Tk 8.6.1&quot; script)
+    invoked from within
+&quot;package require Tk&quot;
+    (file &quot;/usr/bin/gitk&quot; line 10)
+</code></pre>
+<p><code>xrdb</code>--X resource datebase, <a href="https://wiki.archlinux.org/index.php/X_resources">X resources</a>.
+<code>Xrdb</code>是一种为GUI应用程序的各种属性指定默认值的方法. 这些属性之一是背景色. 其中有一个规范, 即gitk主窗口的背景颜色为<code>S_base3</code>, 但程序不知道如何解析该颜色名称.</p>
+<p><code>Xrdb</code>实际上是在<code>X root window</code>(<code>RESOURCE_MANAGER</code>)的子项中维护的, 对于应用程序是全局指定的. 初始化内容通常来自于用户家目录, 通常是<code>~/.Xresources</code>, 但也可以由桌面环境软件设置. 找出导致问题的原因可能很棘手, 因为许多程序都可以写入该属性.</p>
+<p><code>xrdb</code>程序可用于编辑资源数据库. 可以使用: <code>xrdb -query&gt; xprops.txt</code>将当前内容列出到<code>xprops.txt</code>. 编辑文件以获取一些合理的值, 然后使用: <code>xrdb -load &lt;xprops.txt</code>载入新值.</p>
+<p>例如把<code>Solarized</code>的颜色方案添加到<code>xprops.txt</code>的前面,<a href="https://github.com/altercation/solarized/blob/master/xresources/solarized">solarized-TrevorBramble</a>.
+其中使用了<code>#define</code>, 需要安装<code>gcc</code>编译器.</p>
+<pre><code class="language-c">#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+</code></pre>
+<h2 id="yay"><a class="header" href="#yay">yay</a></h2>
+<p><a href="https://zhuanlan.zhihu.com/p/363666022">yay进阶</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-8-printer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="bash-1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-8-printer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="bash-1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

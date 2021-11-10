@@ -1,0 +1,753 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>文本操作 - linux</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="linux-1-daily.html"><strong aria-hidden="true">1.</strong> 日常使用</a></li><li class="chapter-item expanded "><a href="linux-1-exception.html"><strong aria-hidden="true">2.</strong> 报错维护</a></li><li class="chapter-item expanded "><a href="linux-1-systemd.html"><strong aria-hidden="true">3.</strong> systemd</a></li><li class="chapter-item expanded "><a href="linux-1-gnome.html"><strong aria-hidden="true">4.</strong> gnome 桌面</a></li><li class="chapter-item expanded "><a href="linux-2-process.html"><strong aria-hidden="true">5.</strong> unix-进程</a></li><li class="chapter-item expanded "><a href="linux-3-zsh-termux.html"><strong aria-hidden="true">6.</strong> zsh,termux</a></li><li class="chapter-item expanded "><a href="linux-3-package.html"><strong aria-hidden="true">7.</strong> linux 包管理</a></li><li class="chapter-item expanded "><a href="linux-5-owner.html"><strong aria-hidden="true">8.</strong> 权限,shell 环境</a></li><li class="chapter-item expanded "><a href="linux-6-network.html"><strong aria-hidden="true">9.</strong> 网络</a></li><li class="chapter-item expanded "><a href="linux-6-package-mount.html"><strong aria-hidden="true">10.</strong> 包管理,挂载</a></li><li class="chapter-item expanded "><a href="linux-7-tar-sync.html"><strong aria-hidden="true">11.</strong> 压缩,同步文件</a></li><li class="chapter-item expanded "><a href="linux-7-text-operation.html" class="active"><strong aria-hidden="true">12.</strong> 文本操作</a></li><li class="chapter-item expanded "><a href="linux-8-printer.html"><strong aria-hidden="true">13.</strong> 打印机</a></li><li class="chapter-item expanded "><a href="manjaro.html"><strong aria-hidden="true">14.</strong> manjaro</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">bash 手册</li><li class="chapter-item expanded "><a href="bash-1.html"><strong aria-hidden="true">15.</strong> bash常用命令</a></li><li class="chapter-item expanded "><a href="bash-2.html"><strong aria-hidden="true">16.</strong> bash 变量,脚本参数</a></li><li class="chapter-item expanded "><a href="bash-4.html"><strong aria-hidden="true">17.</strong> 内核风格</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">其他工具</li><li class="chapter-item expanded "><a href="awk.html"><strong aria-hidden="true">18.</strong> w3c awk</a></li><li class="chapter-item expanded "><a href="awk-2.html"><strong aria-hidden="true">19.</strong> awk another</a></li><li class="chapter-item expanded "><a href="linux-gpg.html"><strong aria-hidden="true">20.</strong> GnuPG</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">linux</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="linux-7"><a class="header" href="#linux-7">linux-7</a></h1>
+<h2 id="第二十章正则表达式"><a class="header" href="#第二十章正则表达式">第二十章:正则表达式</a></h2>
+<p>追溯到 <code>Unix</code> 刚刚开发的时候,它只知道 <code>ASCII</code> 字符. 在 <code>ASCII</code> 中,前<code>32</code>个字符 (数字<code>0-31</code>)都是控制码(如 <code>tabs</code>,<code>backspaces</code>,和<code>回车</code>).
+随后的<code>32</code>个字符(<code>32-63</code>)包含可打印的字符, 包括大多数的标点符号和数字<code>0</code>到<code>9</code>.
+再随后的<code>32</code>个字符(<code>64-95</code>)包含大写字符和一些更多的标点符号.  最后的<code>31</code>个字符(<code>96-127</code>)包含小写字母和更多的标点符号.
+基于这种安排方式,系统使用这种排序规则 的 <code>ASCII</code>:</p>
+<pre><code class="language-bash">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+</code></pre>
+<p>而普通的字典顺序像这样:</p>
+<pre><code class="language-bash">aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+</code></pre>
+<p>随着 <code>Unix</code> 系统的知名度在美国之外的国家传播开来,就需要支持不在 U.S.英语范围内的字符.
+于是就扩展了<code>ASCII</code> 字符表,使用了整个<code>8</code>位,添加了字符(数字<code>128-255</code>),这样就 容纳了更多的语言.
+为了支持这种能力,<code>POSIX</code> 标准介绍了一种叫做 <code>locale</code> 的概念,其可以被调整,来为某个特殊的区域, 选择所需的字符集. 通过使用下面这个命令,我们能够查看到我们系统的语言设置:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo $LANG
+en_US.UTF-8
+</code></pre>
+<p>通过这个设置,<code>POSIX</code> 相容的应用程序将会使用字典排列顺序而不是 <code>ASCII</code> 顺序. 当<code>[A-Z]</code>字符区域按照字典顺序解释的时候,包含除了小写字母<code>a</code>之外的所有字母.
+为了部分地解决这个问题,<code>POSIX</code> 标准包含了大量的字符集,其提供了有用的字符区域.  下表中描述了它们:</p>
+<p>表20-2: POSIX 字符集
+字符集 说明</p>
+<ul>
+<li><code>[:alnum:]</code>:   字母数字字符. 在 <code>ASCII</code> 中,等价于:<code>[A-Za-z0-9]</code></li>
+<li><code>[:word:]</code>:   与<code>[:alnum:]</code>相同, 但增加了下划线字符.</li>
+<li><code>[:alpha:]</code>:   字母字符. 在 <code>ASCII</code> 中,等价于:<code>[A-Za-z]</code></li>
+<li><code>[:blank:]</code>:   包含<code>空格</code>和 <code>tab</code> 字符.</li>
+<li><code>[:cntrl:]</code>:   <code>ASCII</code> 的控制码. 包含了<code>0</code>到<code>31</code>,和<code>127</code>的 <code>ASCII</code> 字符.</li>
+<li><code>[:digit:]</code>:   数字<code>0</code>到<code>9</code></li>
+<li><code>[:graph:]</code>: 可视字符. 在 <code>ASCII</code> 中,它包含<code>33</code>到<code>126</code>的字符.</li>
+<li><code>[:lower:]</code>:   小写字母.</li>
+<li><code>[:punct:]</code>:   标点符号字符. 在 <code>ASCII</code> 中</li>
+<li><code>[:print:]</code>:   可打印的字符. 在<code>[:graph:]</code>中的所有字符,再加上<code>空格</code>字符.</li>
+<li><code>[:space:]</code>:   空白字符,包括<code>空格</code>,<code>tab</code>,<code>回车</code>,<code>换行</code>,<code>vertical tab</code>, 和 <code>form feed</code>.在<code>ASCII</code> 中, 等价于:<code>[ \t\r\n\v\f]</code></li>
+<li><code>[:upper:]</code>:   大写字母.</li>
+<li><code>[:xdigit:]</code>: 用来表示十六进制数字的字符. 在<code>ASCII</code> 中,等价于:<code>[0-9A-Fa-f]</code></li>
+</ul>
+<h3 id="用-find-筛选不规范文件名"><a class="header" href="#用-find-筛选不规范文件名">用 find 筛选不规范文件名</a></h3>
+<p><code>find</code> 命令支持一个基于正则表达式的测试.
+当某一行包含的字符串匹配上了一个表达式的时候,<code>grep</code> 命令会打印出这一行,然而 <code>find</code> 命令要求路径名精确地匹配这个正则表达式.
+在下面的例子里面,我们将使用带有一个正则表达式的 <code>find</code> 命令,来查找每个路径名,其包含的任意字符都不是以下字符集中的一员.</p>
+<pre><code class="language-bash">[-\_./0-9a-zA-Z]
+</code></pre>
+<p>这样一种扫描会发现包含空格和其它潜在不规范字符的路径名:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ find . -regex '.*[^-\_./0-9a-zA-Z].*'
+</code></pre>
+<p>由于要精确地匹配整个路径名,所以我们在表达式的两端使用了<code>.*</code>来匹配零个或多个字符.  在表达式中间,我们使用了否定的中括号表达式,其包含了我们一系列可接受的路径名字符.</p>
+<h3 id="用-locate-查找文件"><a class="header" href="#用-locate-查找文件">用 locate 查找文件</a></h3>
+<p><code>locate</code> 程序支持基本的(<code>--regexp</code> 选项)和扩展的(<code>--regex</code> 选项)正则表达式.</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ locate --regex 'bin/(bz|gz|zip)'
+</code></pre>
+<p>通过使用 <code>alternation</code>,我们搜索包含 <code>bin/bz</code>,<code>bin/gz</code>,或<code>/bin/zip</code> 字符串的路径名.</p>
+<h2 id="第二十一章文本处理"><a class="header" href="#第二十一章文本处理">第二十一章:文本处理</a></h2>
+<h3 id="cat"><a class="header" href="#cat">cat</a></h3>
+<p><code>cat</code> 程序具有许多有趣的选项. 其中许多选项用来帮助更好的可视化文本内容.
+一个例子是<code>cat -A</code>可以用来显示文本中的非打印字符.
+<code>tab</code> 字符在我们的文本中由 <code>^I</code> 字符来表示. 这是一种常见的表示方法,意思是<code>Control-I</code>,结果证明,它和 <code>tab</code>字符是一样的</p>
+<p><code>cat</code> 程序也包含用来修改文本的选项.
+最著名的两个选项是<code>-n</code>,其给文本行添加行号. 以及<code>-s</code>, 禁止输出多行空白.</p>
+<h3 id="sort"><a class="header" href="#sort">sort</a></h3>
+<p><code>sort</code> 程序对标准输入或命令行中指定的一个或多个文件进行排序,然后把排序结果发送到标准输出.
+<code>sort</code> 程序能接受命令行中的多个文件作为参数,所以有可能把多个文件合并成一个有序的文件. 例如:</p>
+<pre><code class="language-bash">sort file1.txt file2.txt file3.txt &gt; final_sorted_list.txt
+</code></pre>
+<p><code>sort</code> 程序有几个有趣的选项. 这里只是一部分列表:
+表21-1: 常见的 sort 程序选项
+选项 长选项 描述</p>
+<p><code>-b</code>,<code>--ignore-leading-blanks</code>:默认情况下,排序从每行的第一个字符开始. 这个选项导致 <code>sort</code> 程序忽略空格,从第一个非空白字符开始排序.
+<code>-f</code>,<code>--ignore-case</code>:让排序不区分大小写.
+<code>-n</code>:<code>--numeric-sort</code>:默认基于字符串的长度来排序. 使用此选项允许根据数字值执行排序,而不是字母值.
+<code>-r</code>,<code>--reverse</code>:  按相反顺序排序. 结果按照降序排列,而不是升序.
+<code>-k</code>,<code>--key=field1[,field2]</code> 对从 <code>field1</code> 到 <code>field2</code> 之间的字符排序,而不是整个文本行. 看下面的讨论.
+<code>-m</code>,<code>--merge</code>: 把每个参数看作是一个预先排好序的文件. 把多个文件合并成一个排好序的文件,而没有执行额外的排序.
+<code>-o</code>,<code>--output=file</code>: 把排好序的输出结果发送到文件,而不是标准输出.
+<code>-t</code>,<code>--field-separator=char</code>: 定义域分隔字符. 默认情况下,域由空格或制表符分隔.</p>
+<p>首先,让我们看一下 <code>-n</code> 选项,被用做数值排序. 通过这个选项,可以基于数值进行排序. <code>du</code> 命令可以确定最大的磁盘空间用户. 通常 <code>du</code> 命令列出的输出结果按照路径名来排序:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ du -s /usr/share/* | head
+68K  /usr/share/a11y-profile-manager
+28K  /usr/share/accounts
+40K  /usr/share/accountsservice
+...
+</code></pre>
+<p>我们能够产生一个按数值排序的列表,来显示 <code>10</code> 个最大的空间占据者:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ du -s /usr/share/* | sort -nr | head
+1020K  /usr/share/speech-dispatcher
+1008K  /usr/share/rubygems-integration
+972K  /usr/share/pandoc
+...
+</code></pre>
+<p>通过使用<code>-nr</code> 选项,我们产生了一个反向的数值排序,最大数值排列在第一位. 这种排序起作用是因为数值出现在每行的开头.
+但是如果我们想要基于文件行中的某个数值排序,又会怎样呢? 例如,命令 <code>ls -l</code> 的输出结果:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ ls -lh /usr/bin | head
+-rwxr-xr-x 1 root   root      59K 9月   5  2019 [
+-rwxr-xr-x 1 root   root       96 3月   8 21:02 2to3-2.7
+-rwxr-xr-x 1 root   root     9.9K 4月  23  2016 411toppm
+...
+</code></pre>
+<p>此刻,忽略 <code>ls</code> 程序也能按照文件大小排序,我们使用 <code>sort</code> 程序来完成此任务:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ ls -l /usr/bin | sort -nr -k 5 | head
+-rwxr-xr-x 1 root   root    1023K 3月  26  2020 x86_64-linux-gnu-gcc-7
+-rwxr-xr-x 1 root   root     1019 4月  20  2020 wine-stable
+-rwxr-xr-x 1 root   root     1007 8月  22  2020 dvipdf
+...
+</code></pre>
+<p><code>sort</code> 程序的许多用法都涉及到处理表格数据,例如上面 <code>ls</code> 命令的输出结果.
+如果我们把数据库的术语应用到上面的表格中,每行是一条记录,并且每条记录由多个字段组成, 例如文件属性,链接数,文件名,文件大小等等.
+<code>sort</code> 程序能够处理独立的字段. 在数据库术语中, 我们能够指定一个或者多个关键字段,来作为排序的关键值.
+在上面的例子中,我们指定 <code>n</code> 和 <code>r</code> 选项来执行相反的数值排序,并且指定 <code>-k 5</code>,让 <code>sort</code> 程序使用第五字段作为排序的关键值.</p>
+<p><code>sort</code> 程序允许多个 <code>-k</code> 选项的实例,所以可以指定多个排序关键值. 下面是多键值排序的语法:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ sort --key=1,1 --key=2n distros.txt
+</code></pre>
+<p>虽然为了清晰,我们使用了选项的长格式,但是 <code>-k 1,1 -k 2n</code> 格式是等价的. <code>1,1</code>意味着始于并且结束于第一个字段.
+在第二个实例中,我们指定了 <code>2n</code>,表示按第二个字段排序, 并且按照数值排序. 键值说明符的末尾可以附上一个选项字母, 用来指定排序的种类.
+这些选项字母和 <code>sort</code> 程序的全局选项一样:<code>b</code>(忽略开头的空格),<code>n</code>(数值排序),<code>r</code>(逆向排序),等等.</p>
+<p>对于日期格式, 在计算机中,日期通常设置为 <code>YYYY-MM-DD</code> 格式, 这样按时间顺序排序变得容易,但有时我们的日期为<code>MM/DD/YYYY</code>的格式.
+幸运地是, <code>key</code> 选项允许在字段中指定偏移量,所以我们能在字段中定义键值.</p>
+<p>[me@linuxbox ~]$ sort -k 3.7nbr -k 3.1nbr -k 3.4nbr distros.txt</p>
+<p>通过指定 <code>-k 3.7</code>,我们指示 <code>sort</code> 程序使用一个排序键值,其始于第三个字段中的第七个字符,对应于年的开头.
+同样地,我们指定 <code>-k 3.1</code> 和 <code>-k 3.4</code> 来分离日期中的月和日.  我们也添加了 <code>n</code> 和 <code>r</code> 选项来实现一个逆向的数值排序.
+<code>b</code> 选项用来删除日期字段中开头的空格( 行与行之间的空格数迥异,因此会影响 <code>sort</code> 程序的输出结果).</p>
+<p>一些文件不会使用 <code>tabs</code> 和<code>空格</code>做为字段界定符;例如, <code>/etc/passwd</code> 文件.<code>sort</code> 程序提供 了一个 <code>-t</code> 选项来定义分隔符.
+按照第七个字段(帐户的默认 <code>shell</code>)来排序此 <code>passwd</code> 文件,我们可以这样做:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ sort -t ':' -k 7 /etc/passwd | head
+</code></pre>
+<h3 id="uniq"><a class="header" href="#uniq">uniq</a></h3>
+<p>与 <code>sort</code> 程序相比,<code>uniq</code> 程序是个轻量级程序.  <code>uniq</code> 执行一个看似琐碎的认为. 当给定一个排好序的文件(包括标准输出),<code>uniq</code> 会删除任意重复行,并且把结果发送到标准输出.
+它常常和 <code>sort</code> 程序一块使用,来清理重复的输出.
+<code>uniq</code> 程序是一个传统的 <code>Unix</code> 工具,经常与 <code>sort</code> 程序一块使用, <code>GNU</code> 版本的 <code>sort</code> 程序支持一个 <code>-u</code> 选项,其可以从排好序的输出结果中删除重复行.  <code>uniq</code> 只会删除相邻的重复行.</p>
+<p>表21-2: 常用的 <code>uniq</code> 选项
+选项 说明</p>
+<ul>
+<li><code>-c</code> 输出所有的重复行,并且每行开头显示重复的次数.</li>
+<li><code>-d</code> 只输出重复行,而不是特有的文本行.</li>
+<li><code>-f n</code> 忽略每行开头的 <code>n</code> 个字段,字段之间由空格分隔, 不同于 <code>sort</code> 程序, <code>uniq</code> 没有选项来设置备用的字段分隔符.</li>
+<li><code>-i</code> 在比较文本行的时候忽略大小写.</li>
+<li><code>-s n</code> 跳过(忽略)每行开头的 <code>n</code> 个字符.</li>
+<li><code>-u</code> 只是输出独有的文本行. 这是默认的</li>
+</ul>
+<h3 id="切片和切块"><a class="header" href="#切片和切块">切片和切块</a></h3>
+<p>下面我们将要讨论的三个程序用来从文件中获得文本列,并且以有用的方式重组它们.</p>
+<h3 id="cut"><a class="header" href="#cut">cut</a></h3>
+<p><code>cut</code> 程序被用来从文本行中抽取文本,并把其输出到标准输出. 它能够接受多个文件参数或者 标准输入. 从文本行中指定要抽取的文本有些麻烦,使用以下选项:</p>
+<p>表21-3: cut 程序选择项
+选项 说明</p>
+<ul>
+<li><code>-c char_list</code> 从文本行中抽取由 <code>char_list</code> 定义的文本. 这个列表由一个或多个逗号分隔开的数值区间组成.</li>
+<li><code>-f field_list</code> 从文本行中抽取一个或多个由 <code>field_list</code>定义的字段. 列表包括一个或多个字段,或由逗号分隔开的字段区间.</li>
+<li><code>-d delim_char</code> 当指定<code>-f</code> 选项之后,使用 <code>delim_char</code>做为字段分隔符. 默认情况下, 字段之间必须由单个 <code>tab</code> 字符分隔开.</li>
+<li><code>--complement</code> 抽取整个文本行,除了那些由<code>-c</code> 和/或<code>-f</code> 选项指定的文本.</li>
+</ul>
+<p>正如我们所看到的,<code>cut</code> 程序抽取文本的方式相当不灵活. <code>cut</code> 命令最好用来从其它程序产生的文件中抽取文本,而不是从人们直接输入的文本中抽取, 例子为:</p>
+<pre><code class="language-bash">cut -f 3 distros.txt #抽取第三个字段
+cut -f 3 distros.txt | cut -c 7-10 # 再抽取位置为7到10的字符
+</code></pre>
+<p><code>Coreutils</code> 软件包有一个工具<code>expand</code>可以将<code>tab</code>转换成相应数目的空格, <code>unexpand</code>把空格替换成<code>tab</code>. 使用 <code>-d</code> 选项,我们能够指定冒号做为字段分隔符.</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ cut -d ':' -f 1 /etc/passwd | head
+</code></pre>
+<h3 id="paste"><a class="header" href="#paste">paste</a></h3>
+<p><code>paste</code> 命令的功能正好与 <code>cut</code> 相反. 它会添加一个或多个文本列到文件中. 它通过读取多个文件,然后把每个文件中顺序对应的行合并, 写入标准输出.</p>
+<h3 id="join"><a class="header" href="#join">join</a></h3>
+<p>在某些方面,<code>join</code> 命令类似于 <code>paste</code>,它会往文件中添加列,但是它使用了独特的方法来完成.
+<code>join</code>会合并具有相同<code>key</code>的条目. 例如下面两个文件</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ head distros-key-names.txt
+11/25/2008 Fedora
+10/30/2008 Ubuntu
+06/19/2008 SUSE
+
+[me@linuxbox ~]$ head distros-key-vernums.txt
+11/25/2008 10
+10/30/2008 8.10
+06/19/2008 11.0
+</code></pre>
+<p>使用<code>join</code>可以把它们连接起来:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ join distros-key-names.txt distros-key-vernums.txt | head
+11/25/2008 Fedora 10
+10/30/2008 Ubuntu 8.10
+06/19/2008 SUSE 11.0
+</code></pre>
+<p>现在我们有两个具有共享<code>key</code>( <code>发行日期</code> )的文件. 有必要指出,为了使 <code>join</code> 命令 能正常工作, 所有文件必须按照<code>key</code>排序.
+默认情况下,<code>join</code> 命令使用空白字符做为输入字段的界定符,<code>一个空格</code>作为输出字段的界定符.</p>
+<h3 id="比较文本"><a class="header" href="#比较文本">比较文本</a></h3>
+<p>通常比较文本文件的版本很有帮助. 对于系统管理员和软件开发者来说,这个尤为重要.  一名系统管理员可能需要拿现有的配置文件与先前的版本做比较,来诊断一个系统错误.
+同样的,一名程序员经常需要查看程序的修改.</p>
+<h3 id="comm"><a class="header" href="#comm">comm</a></h3>
+<p><code>comm</code> 程序会比较两个文本文件,并且会显示每个文件特有的文本行和共有的文本行.</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ comm file1.txt file2.txt
+</code></pre>
+<p><code>comm</code> 命令产生三列输出. 第一列包含第一个文件独有的文本行;第二列是第二个文件独有的;第三列包含两个文件共有的文本行.
+<code>comm</code> 支持 <code>-n</code> 形式的选项,这里 <code>n</code> 代表 <code>1</code>,<code>2</code> 或 <code>3</code>. 这些选项使用的时候,指定了要隐藏的列.
+例如,如果我们只想输出两个文件共享的文本行, 我们将隐藏第一列和第二列的输出结果:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ comm -12 file1.txt file2.txt
+</code></pre>
+<h3 id="diff"><a class="header" href="#diff">diff</a></h3>
+<p>类似于 <code>comm</code> 程序,<code>diff</code> 程序被用来监测文件之间的差异. 然而,<code>diff</code> 是一款更加复杂的工具,它支持许多输出格式,并且一次能处理许多文本文件.
+软件开发员经常使用 <code>diff</code> 程序来检查不同程序源码版本之间的更改,<code>diff</code> 能够递归地检查源码目录,经常称之为源码树.
+<code>diff</code> 程序的一个常见用例是创建 <code>diff</code> 文件或者补丁,它会被其它程序使用,例如 <code>patch</code> 程序(我们一会儿讨论),来把文件从一个版本转换为另一个版本.
+如果我们使用 <code>diff</code> 程序,来查看我们之前的文件实例:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ diff file1.txt file2.txt
+1d0
+&lt; a
+4a4
+&gt; e
+</code></pre>
+<p>我们看到 <code>diff</code> 程序的默认输出风格:对两个文件之间差异的简短描述. 在默认格式中, 每组的更改之前都是一个更改命令,其形式为 <code>range operation range</code> ,
+用来描述要求更改的位置和类型,从而把第一个文件转变为第二个文件:</p>
+<p>表21-4: <code>diff</code> 更改命令
+改变 说明</p>
+<ul>
+<li><code>r1ar2</code>: <code>add</code>, 把第二个文件中位置 <code>r2</code> 处的文件行添加到第一个文件中的 <code>r1</code> 处,</li>
+<li><code>r1cr2</code>: <code>cover</code>, 用第二个文件中位置 <code>r2</code> 处的文本行覆盖位置 <code>r1</code> 处的文本行</li>
+<li><code>r1dr2</code>:<code>delete</code>, 删除第一个文件中位置 <code>r1</code> 处的文本行,这些文本行对应第二个文件中位置 <code>r2</code> 处</li>
+</ul>
+<p>在这种格式中,一个范围就是由逗号分隔开的开头行和结束行的列表.
+然这种格式是默认情况(主要是为了服从 <code>POSIX</code> 标准且向后与传统的 <code>Unix diff</code> 命令兼容), 但是它并不像其它可选格式一样被广泛地使用.
+最流行的两种格式是上下文模式和统一模式. 当使用上下文模式(带上<code> -c</code> 选项),我们将看到这些:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ diff -c file1.txt file2.txt
+*** file1.txt 2008-12-23 06:40:13.000000000 -0500
+--- file2.txt 2008-12-23 06:40:34.000000000 -0500
+...
+</code></pre>
+<p>这个输出结果以两个文件名和它们的时间戳开头. 第一个文件用<code>星号</code>做标记,第二个文件用<code>短横线</code>做标记.
+这些标记将象征它们各自代表的文件. 下一步,我们看到几组修改, 包括默认的周围上下文行数. 在第一组中,我们看到:
+<code>*** 1,4 ***</code>其表示第一个文件中从第一行到第四行的文本行. <code>--- 1,4 ---</code>这表示第二个文件中从第一行到第四行的文本行.
+在更改组内,文本行以四个指示符之一开头:</p>
+<p>表21-5: <code>diff</code> 上下文模式更改指示符
+指示符 意思</p>
+<ul>
+<li><code>blank</code>:  上下文显示行, 表示没有差异</li>
+<li><code>-</code>:  删除行. 第一个文件中有, 第二个没有.</li>
+<li><code>+</code>:  添加行. 第一个文件中没有, 第二个有. 这一行将会出现在第二个文件内,而不是第一个文件中.</li>
+<li><code>!</code>:  更改行. 两个文件的本行的内容不同.</li>
+</ul>
+<p>统一模式相似于上下文模式,但是更加简洁. 通过 <code>-u</code> 选项来指定它:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ diff -u file1.txt file2.txt
+--- file1.txt 2008-12-23 06:40:13.000000000 -0500
++++ file2.txt 2008-12-23 06:40:34.000000000 -0500
+@@ -1,4 +1,4 @@
+</code></pre>
+<p>上下文模式和统一模式之间最显著的差异就是重复上下文的消除,这就使得统一模式的输出结果要比上下文模式的输出结果简短.
+在我们上述实例中,我们看到类似于上下文模式中的文件时间戳,其紧紧跟随字符串 <code>@@ -1,4+1,4 @@</code>.
+这行字符串表示了在更改组中描述的第一个文件中的文本行和第二个文件中的文本行.  这行字符串之后就是文本行本身,与三行默认的上下文. 每行以可能的三个字符中的一个开头:</p>
+<p>表21-6: <code>diff</code> 统一模式更改指示符
+字符 意思</p>
+<ul>
+<li><code>空格</code>:  两个文件都包含这一行.</li>
+<li><code>-</code>:  在第一个文件中删除这一行.</li>
+<li><code>+</code>:  添加这一行到第一个文件中.</li>
+</ul>
+<h3 id="patch"><a class="header" href="#patch">patch</a></h3>
+<p><code>patch</code> 程序被用来把更改应用到文本文件中. 它接受从 <code>diff</code> 程序的输出,并且通常被用来把较老的文件版本转变为较新的文件版本.</p>
+<p>让我们考虑一个著名的例子. <code>Linux</code> 内核是由一个 大型的,组织松散的贡献者团队开发而成,这些贡献者会提交固定的少量更改到源码包中.
+<code>Linux</code> 内核由几百万行代码组成,虽然每个贡献者每次所做的修改相当少. 对于一个贡献者来说,每做一个修改就给每个开发者发送整个的内核源码树,这是没有任何意义的.
+相反, 提交一个 diff 文件. 一个 <code>diff</code> 文件包含先前的内核版本与带有贡献者修改的新版本之间的差异.
+然后一个接受者使用 <code>patch</code> 程序,把这些更改应用到他自己的源码树中. 使用 <code>diff/patch</code> 组合提供了 两个重大优点:</p>
+<ol>
+<li>一个 diff 文件非常小,与整个源码树的大小相比较而言.</li>
+<li>一个 diff 文件简洁地显示了所做的修改,从而允许程序补丁的审阅者能快速地运算它.</li>
+</ol>
+<p>当然,<code>diff/patch</code> 能工作于任何文本文件,不仅仅是源码文件. 它同样适用于配置文件或任意其它文本.
+准备一个 <code>diff</code> 文件供 <code>patch</code> 程序使用,<code>GNU</code> 文档(查看下面的拓展阅读部分)建议这样使用 <code>diff</code> 命令:</p>
+<pre><code class="language-bash">diff -Naur 旧文件 新文件 &gt; 补丁文件
+</code></pre>
+<p><code>旧文件</code> 和 <code>新文件</code> 可以是单个文件也可以是包含文件的目录. <code>r</code> 选项支持递归目录树. 一旦创建了 <code>diff</code> 文件,我们就能应用它,把旧文件修补成新文件.</p>
+<pre><code class="language-bash">patch &lt; 补丁文件
+</code></pre>
+<p>我们不需要指定要修补的目标文件,因为 <code>diff</code> 文件(在统一模式中)已经 在标题行中包含了文件名.
+<code>patch</code> 程序有大量的选项,而且还有额外的实用程序可以被用来分析和编辑补丁.</p>
+<ul>
+<li><code>-N, --new-file</code>:  认为缺失文件为空.</li>
+<li><code>-a, --text</code>: 将所有文件当成文本格式</li>
+<li><code>-u, -U NUM, --unified[=NUM]</code>: 在统一模式下, 共同内容的行数(默认为<code>3</code>)</li>
+<li><code>-r, --recursive</code>:  递归地比较子文件夹</li>
+</ul>
+<h3 id="tr"><a class="header" href="#tr">tr</a></h3>
+<p>一般的文本编辑器是交互式的,意思是我们手动移动光标,然后输入我们的修改.  然而,也有非交互式的方法来编辑文本. 有可能,例如,通过单个命令把一系列修改应用到多个文件中.</p>
+<p><code>tr</code> 程序被用来更改字符. 我们可以把它看作是一种基于字符的查找和替换操作. 换字是一种把字符从一个字母转换为另一个字母的过程. 例如,把小写字母转换成大写字母就是换字.
+我们可以通过 <code>tr</code> 命令来执行这样的转换,如下所示:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;lowercase letters&quot; | tr a-z A-Z
+LOWERCASE LETTERS
+</code></pre>
+<p>正如我们所见,<code>tr</code> 命令操作标准输入,并把结果输出到标准输出. <code>tr</code> 命令接受两个参数:要被转换的字符集以及相对应的转换后的字符集. 字符集可以用三种方式来表示:</p>
+<ol>
+<li>一个枚举列表. 例如, <code>ABCDEFGHIJKLMNOPQRSTUVWXYZ</code></li>
+<li>一个字符域. 例如,<code>A-Z</code> . 注意这种方法有时候面临与其它命令相同的问题,归因于语系的排序规则,因此应该谨慎使用.</li>
+<li><code>POSIX</code> 字符类. 例如,<code>[:upper:]</code></li>
+</ol>
+<p>大多数情况下,两个字符集应该长度相同;然而,有可能第一个集合大于第二个,尤其如果我们想要把多个字符转换为单个字符:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;lowercase letters&quot; | tr [:lower:] A
+AAAAAAAAA AAAAAAA
+</code></pre>
+<p>除了换字之外,<code>tr</code> 命令能允许字符从输入流中简单地被删除. 在之前的章节中,我们讨论了转换 <code>MS-DOS</code> 文本文件为 <code>Unix</code> 风格文本的问题.
+为了执行这个转换,每行末尾的回车符需要被删除.  这个可以通过 <code>tr</code> 命令来执行,如下所示:</p>
+<pre><code class="language-bash">tr -d '\r' &lt; dos_file &gt; unix_file
+</code></pre>
+<p>这里的 <code>dos_file</code> 是需要被转换的文件,<code>unix_file</code> 是转换后的结果. 这种形式的命令使用转义序列 <code>\r </code>来代表回车符. 查看 <code>tr</code> 命令所支持地完整的转义序列和字符类别列表,试试下面的命令:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ tr --help
+</code></pre>
+<hr />
+<p>ROT13: 不那么秘密的加密</p>
+<p><code>tr</code> 命令的一个有趣的用法是执行 <code>ROT13</code> 文本编码. 把 ROT13称为<code>加密</code>有点夸张, <code>文本模糊处理</code>更准确些.
+这个方法就是简单地把每个字符在字母表中向前移动<code>13</code>位. 因为移动的位数是可能的<code>26</code>个字符的一半, 所以对文本再次执行这个算法,就恢复到了它最初的形式.
+通过 <code>tr</code> 命令来执行这种编码:</p>
+<pre><code class="language-bash">echo  &quot;secret text&quot;  | tr a-zA-Z n-za-mN-ZA-M |
+frperg grkg
+</code></pre>
+<p>再次执行相同的过程,得到翻译结果:</p>
+<pre><code class="language-bash">echo &quot;frperg grkg&quot; | tr a-zA-Z n-za-mN-ZA-M+ |
+secret text
+</code></pre>
+<p><code>tr</code> 也可以完成另一个技巧. 使用 <code>-s</code> 选项,<code>tr</code> 命令能&quot;挤压&quot;(删除)重复的字符实例:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;aaabbbccc&quot; | tr -s ab
+abccc
+</code></pre>
+<p>这里我们有一个包含重复字符的字符串. 通过给 <code>tr</code> 命令指定字符集<code>ab</code>,我们能够消除字符集中字母的重复实例,对字符集之外字符(<code>c</code>)不作用.
+注意重复的字符必须是相邻的.  如果它们不相邻,那么挤压会没有效果.</p>
+<h3 id="sed"><a class="header" href="#sed">sed</a></h3>
+<p><code>sed</code> 是 <code>stream editor</code>(流编辑器)的简称. 它对文本流进行编辑,或是一系列指定的文件,或是标准输入.
+<code>sed</code> 是一款强大的,并且有些复杂的程序(有整本内容都是关于 <code>sed</code> 程序的书籍), 所以在这里我们不会详尽的讨论它.
+总之, <code>sed</code> 的工作方式可以是给出单个编辑命令(在命令行中), 也可以是包含多个命令的脚本文件名, 然后它就按行来执行这些命令. 这里有一个非常简单的 <code>sed</code> 实例:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;front&quot; | sed 's/front/back/'
+back
+</code></pre>
+<p>在这个例子中,我们使用 <code>echo</code> 命令产生了一个单词的文本流,然后把它管道给 <code>sed</code> 命令. <code>sed</code>依次对流文本执行指令 <code>s/front/back/</code>,随后输出<code>back</code>.
+我们也能够把这个命令认为是相似于 <code>vi</code> 中的<code>替换</code> (查找和替代)命令.</p>
+<p><code>sed</code> 中的命令开始于单个字符. 在上面的例子中,这个替换命令由字母 <code>s</code> 来代表,其后跟着<code>查找</code>和<code>替代</code>字符串,<code>斜杠</code>字符做为分隔符.
+分隔符的选择是随意的. 按照惯例,经常使用斜杠字符, 但是 <code>sed</code> 将会接受紧随命令之后的任意字符做为分隔符. 我们可以按照这种方式来执行相同的命令:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;front&quot; | sed 's_front_back_'
+back
+</code></pre>
+<p>通过紧跟命令之后使用<code>下划线</code>字符,则它变成界定符. <code>sed</code> 可以设置界定符的能力,使命令的可读性更强, 正如我们将看到的.
+<code>sed</code> 中的大多数命令之前都会带有一个地址,其指定了输入流中要被编辑的文本行. 如果省略了地址, 然后会对输入流的每一行执行编辑命令.
+最简单的地址形式是一个行号. 我们能够添加一个地址 到我们例子中:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;front&quot; | sed '1s/front/back/'
+back
+</code></pre>
+<p>给我们的命令添加地址 <code>1</code>,就导致只对仅有一行文本的输入流的第一行执行替换操作. 如果我们指定另一 个数字:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;front&quot; | sed '2s/front/back/'
+front
+</code></pre>
+<p>我们看到没有执行这个编辑命令,因为我们的输入流没有第二行. 地址可以用许多方式来表达. 这里是最常用的:</p>
+<p>表21-7: <code>sed</code> 地址表示法
+地址 说明</p>
+<ul>
+<li><code>n</code>: 行号,<code>n</code> 是一个正整数.</li>
+<li><code>$</code>: 最后一行.</li>
+<li><code>/regexp/</code>: 所有匹配一个 <code>POSIX</code> 基本正则表达式的文本行, 表达式通过斜杠界定. 正则表达式可以有备用字符界定,例如<code>\cregexpc</code>,这里 <code>c</code> 就是一个备用的字符.</li>
+<li><code>addr1,addr2</code>: 从 <code>addr1</code> 到 <code>addr2</code> 范围内的文本行,包含地址 <code>addr2</code> 在内. 地址可能是上述任意单独的地址形式.</li>
+<li><code>first~step</code>: 匹配由数字 <code>first</code> 代表的文本行,然后随后的每个在 <code>step</code> 间隔处的文本行. 例如 <code>1~2</code> 是指每个位于奇数行号的文本行,<code>5~5</code> 则指第五行和之后每五行位置的文本行.</li>
+<li><code>addr1,+n</code>: 匹配地址 <code>addr1</code> 和随后的 <code>n</code> 个文本行.</li>
+<li><code>addr!</code>: 匹配所有的文本行,除了 <code>addr</code> 之外,<code>addr</code> 可能是上述任意的地址形式.</li>
+</ul>
+<p>例如打印<code>1</code>到<code>5</code>行,</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ sed -n '1,5p' distros.txt
+</code></pre>
+<p>一般为了高效,我们必须指定选项 <code>-n</code>(不自动打印选项), 让 <code>sed</code> 不要默认地打印每一行, <code>p</code> 命令, 其就是简单地把匹配的文本行打印出来.</p>
+<pre><code class="language-bash">$ sed -n '/SUSE/p' distros.txt
+</code></pre>
+<p>通过包含由斜杠界定的正则表达式 <code>/SUSE/</code>,我们能够孤立出包含它的文本行,和 <code>grep</code> 程序的功能是相同的.
+最后,我们将试着否定上面的操作,通过给这个地址添加一个感叹号:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ sed -n '/SUSE/!p' distros.txt
+</code></pre>
+<p>目前为止,我们已经知道了两个 sed 的编辑命令,<code>s</code> 和 <code>p</code>. 这里是一个更加全面的基本编辑命令列表:</p>
+<p>表21-8: <code>sed</code> 基本编辑命令
+命令 说明</p>
+<ul>
+<li><code>=</code>: 输出当前的行号.</li>
+<li><code>a</code>: 在当前行之后追加文本.</li>
+<li><code>d</code>: 删除当前行.</li>
+<li><code>i</code>: 在当前行之前插入文本.</li>
+<li><code>p</code>: 打印当前行. 默认情况下,<code>sed</code> 程序打印每一行. 通过指定 <code>-n</code> 选项,这个默认的行为能够被忽略.</li>
+<li><code>q</code>: 退出 <code>sed</code>,不再处理更多的文本行. 如果不指定 <code>-n</code> 选项,输出当前行.</li>
+<li><code>Q</code>: 退出 <code>sed</code>,不再处理更多的文本行.</li>
+<li><code>s/regexp/replacement/</code>: 只要找到一个 <code>regexp</code> 匹配项,就替换为 <code>replacement</code> 的内容. <code>replacement</code>可以是<code>&amp;</code>, 就是<code>regexp</code>匹配到的文本.
+另外, <code>replacement</code> 可能包含序列 <code>\1</code>到<code>\9</code>,也就是反向引用. 在 <code>replacement</code> 末尾的斜杠之后,可以指定一个 可选的标志,来修改 <code>s</code> 命令的行为.</li>
+<li><code>y/set1/set2</code>:  执行字符转写操作,通过把 <code>set1</code> 中的字符转变为相对应的 <code>set2</code> 中的字符. 注意不同于 <code>tr</code> 程序,<code>sed</code> 要求两个字符集合具有相同的长度.</li>
+</ul>
+<p>到目前为止,<code>s</code> 命令是最常使用的编辑命令. 例如 文件中的日期格式是<code>MM/DD/YYYY</code>,但如果格式是 <code>YYYY-MM-DD</code> 会更好一些(利于排序).
+手动修改 日期格式不仅浪费时间而且易出错,但是有了 <code>sed</code>,只需一步就能完成修改:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ sed 's/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/' distros.txt
+</code></pre>
+<p>哇!这个命令看起来很丑陋. 但是它起作用了. 仅用一步,我们就更改了文件中的日期格式.  它也是一个例子: 有时候我们会开玩笑地把正则表达式称为是&quot;只写&quot;的.
+我们能写正则表达式,但是有时候我们不能读它们. 在我们恐惧地忍不住要逃离此命令之前,让我们看一下 怎样来构建它.</p>
+<p>因为日期是 <code>MM/DD/YYYY</code> 格式,并且出现在文本行的末尾,我们可以使用这样的表达式:</p>
+<pre><code class="language-bash">([0-9]{2})/([0-9]{2})/([0-9]{4})$
+</code></pre>
+<p>此表达式匹配两位数字,一个斜杠,两位数字,一个斜杠,四位数字,以及行尾. 圆括号包围的是子表达式, 稍后可以使用反向引用,现在我们就可以构建<code>replacement</code>,如下所示:</p>
+<pre><code class="language-bash">\3-\1-\2
+</code></pre>
+<p>此表达式给出了<code>年份-月份-日期</code>.合起来就是 <code>sed 's/([0-9]{2})/([0-9]{2})/([0-9]{4})$/\3-\1-\2/' distros.txt</code>.</p>
+<p>我们还有两个问题. 第一个是在我们表达式中额外的斜杠将会迷惑 <code>sed</code>.第二个是在默认情况下,<code>sed</code>只接受基本的正则表达式,在表达式中的几个字符会 被当作文字字面值,而不是元字符.
+我们能够通过反斜杠的自由应用来转义令人不快的字符:<code>sed 's/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/' distros.txt</code>. 你掌握了吧!</p>
+<p><code>s</code> 命令的另一个功能是使用可选标志,其跟随替代字符串. 一个最重要的可选标志是 <code>g</code> 标志,其 指示 <code>sed</code> 对某个文本行全范围地执行查找和替代操作,不仅仅是对第一个实例,例如:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;aaabbbccc&quot; | sed 's/b/B/'
+aaaBbbccc
+</code></pre>
+<p>我们看到虽然执行了替换操作,但是只针对第一个字母 <code>b</code> 实例,然而剩余的实例没有更改.</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ echo &quot;aaabbbccc&quot; | sed 's/b/B/g'
+aaaBBBccc
+</code></pre>
+<p>目前为止,通过命令行我们只让 <code>sed</code> 执行单个命令. 使用 <code>-f</code> 选项,也有可能在一个脚本文件中构建更加复杂的命令.
+我们需要编写一个脚本,所以我们将打开文本编辑器,然后输入以下文字:</p>
+<pre><code class="language-bash"># sed script to produce Linux distributions report
+1 i\
+\
+Linux Distributions Report\
+s/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/
+y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
+</code></pre>
+<p>我们将把 <code>sed</code> 脚本保存为 <code>distros.sed</code> 文件,然后像这样运行它:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ sed -f distros.sed distros.txt
+</code></pre>
+<p>让我们分析一下脚本文件. 我们将使用 <code>cat</code> 来给每行文本编号:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ cat -n distros.sed
+1 # sed script to produce Linux distributions report
+2
+3 1 i\
+4 \
+5 Linux Distributions Report\
+6
+7 s/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/
+8 y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
+</code></pre>
+<p>我们脚本文件的第一行是一条注释. 如同 <code>Linux</code> 系统中的许多配置文件和编程语言一样,注释以<code>#</code>字符开始, 然后是人类可读的文本.
+第二行是一个空行. 正如注释一样,添加空白行是为了提高程序的可读性.</p>
+<p>许多 <code>sed</code> 命令支持行地址. 这些行地址被用来指定对输入文本的哪一行执行操作. 行地址可能被 表示为单独的行号,行号范围,以及特殊的行号<code>$</code>,它表示输入文本的最后一行.
+从第三行到第六行所包含地文本要被插入到地址 <code>1</code> 处,也就是输入文本的第一行中. 这个 <code>i</code> 命令 之后是反斜杠回车符,来产生一个转义的回车符,或者就是所谓的连行符.
+这个序列能够 被用在许多环境下,包括 <code>shell</code> 脚本,从而允许把回车符嵌入到文本流中,而没有通知解释器(在这是指 <code>sed</code> 解释器)已经到达了文本行的末尾.
+<code>i</code> 命令,同样地,命令 <code>a</code>(追加文本, 而不是插入文本)和 <code>c</code>(取代文本)命令都允许多个文本行,只要每个文本行,除了最后一行,以一个 连行符结束.
+实际上,脚本的第六行是插入文本的末尾,它以一个普通的回车符结尾,而不是一个 连行符,通知解释器 <code>i</code> 命令结束了.</p>
+<p>注意:一个连行符由一个<code>斜杠字符</code>其后紧跟一个<code>回车符</code>组成. 它们之间不允许有空白字符.</p>
+<p>第七行是我们的查找和替代命令. 因为命令之前没有添加地址,所以输入流中的每一行文本 都得服从它的操作.
+第八行执行小写字母到大写字母的字符替换操作. 注意不同于 <code>tr</code> 命令,这个 <code>sed</code> 中的 <code>y</code> 命令不 支持字符区域(例如,<code>[a-z]</code>),也不支持 <code>POSIX</code> 字符集.
+因为 <code>y</code> 命令之前不带地址, 所以它会操作输入流的每一行.</p>
+<p><code>sed</code> 是一款非常强大的程序,它能够针对文本流完成相当复杂的编辑任务. 它最常用于简单的行任务,而不是长长的脚本.
+许多用户喜欢使用其它工具,来执行较大的工作.  在这些工具中最著名的是 <code>awk</code> 和 <code>perl</code> .
+它们不仅仅是工具,像这里介绍的程序,且延伸到 完整的编程语言领域. 特别是 <code>perl</code>,经常被用来代替 <code>shell</code>脚本,来完成许多系统管理任务, 同时它也是一款非常流行网络开发语言.
+<code>awk</code> 更专用一些. 其具体优点是其操作表格数据的能力.  虽然关于 <code>awk</code> 和 <code>perl</code> 的内容都超出了本书所讨论的范围, 但是对于 Linux 命令行用户来说,它们都是非常好的技能.</p>
+<h3 id="aspell"><a class="header" href="#aspell">aspell</a></h3>
+<p>我们要查看的最后一个工具是 <code>aspell</code>,一款交互式的拼写检查器. <code>aspell</code> 程序是早先 <code>ispell</code> 程序的继承者,大多数情况下,它可以被用做一个替代品.
+虽然 <code>aspell</code> 程序大多被其它需要拼写检查能力的 程序使用,但它也可以作为一个独立的命令行工具使用.
+它能够智能地检查各种类型的文本文件, 包括 <code>HTML</code> 文件,<code>C/C++</code>程序,电子邮件和其它种类的专业文本. 拼写检查一个包含简单的文本文件,可以这样使用 <code>aspell</code>:</p>
+<pre><code class="language-bash">aspell check textfile
+</code></pre>
+<p>这里的 <code>textfile</code> 是要检查的文件名. 作为一个实际例子,让我们创建一个简单的文本文件,叫做 <code>foo.txt</code>, 包含一些故意的拼写错误:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ cat &gt; foo.txt
+The quick brown fox jimped over the laxy dog.
+</code></pre>
+<p>下一步我们将使用 <code>aspell</code> 来检查文件:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ aspell check foo.txt
+</code></pre>
+<p><code>aspell</code> 在检查模式下是交互的,在显示屏的顶部,我们看到我们的文本中有一个拼写可疑且高亮显示的单词. 在中间部分,我们看到 十个拼写建议,序号从 <code>0</code> 到 <code>9</code>,然后是一系列其它可能的操作.
+最后,在最底部,我们看到一个提示符, 准备接受我们的选择. 如果我们按下 <code>1</code> 按键,<code>aspell</code> 会用单词 <code>jumped</code> 代替错误单词,然后移动到下一个拼写错的单词,就是<code>laxy</code>.
+一旦 aspell 结束操作,我们 可以检查我们的文件,会看到拼写错误的单词已经更正了.</p>
+<p>[me@linuxbox ~]$ cat foo.txt
+The quick brown fox jumped over the lazy dog.</p>
+<p>除非由命令行选项 <code>--dont-backup</code> 告诉 <code>aspell</code>,否则通过追加扩展名<code>.bak</code> 到文件名中, <code>aspell</code> 会创建一个包含原始文本的备份文件.</p>
+<p>对于<code>HTML</code>文件, 使用<code>-H(HTML)</code>检查模式选项,能够避免<code>aspell</code>认为<code>&lt;HTML&gt;</code>这样的标签是错误拼写.</p>
+<h3 id="总结归纳"><a class="header" href="#总结归纳">总结归纳</a></h3>
+<p>在这一章中,我们已经查看了一些操作文本的命令行工具. 我们将在随后的章节中发现这些工具组成 了解决实际问题的基本工具箱.
+这将是确定无疑的,当我们学习 shell 脚本的时候, 到时候这些工具将真正体现出它们的价值.</p>
+<p>还有一些更有趣的文本操作命令:<code>split</code>(把文件分割成碎片), <code>csplit</code>(基于上下文把文件分割成碎片),和 <code>sdiff</code>(并排合并文件差异).</p>
+<h2 id="第二十二章-格式化输出"><a class="header" href="#第二十二章-格式化输出">第二十二章: 格式化输出</a></h2>
+<p>在这章中, 我们继续着手于文本相关的工具, 关注那些用来格式化输出的程序, 而不是改变文本自身.
+这些工具通常让文本准备就绪打印, 这是我们在下一章会提到的. 我们在这章中会提到的工具有:</p>
+<ul>
+<li>nl – 添加行号</li>
+<li>fold – 限制文件列宽</li>
+<li>fmt – 一个简单的文本格式转换器</li>
+<li>pr – 让文本为打印做好准备</li>
+<li>printf – 格式化数据并打印出来</li>
+<li>groff – 一个文件格式系统</li>
+</ul>
+<h3 id="简单的格式化工具"><a class="header" href="#简单的格式化工具">简单的格式化工具</a></h3>
+<p>我们将先着眼于一些简单的格式工具. 他们都是功能单一的程序, 并且做法有一点单纯,
+但是他们能被用于小任务并且作为脚本和管道的一部分 .</p>
+<h3 id="nl---添加行号"><a class="header" href="#nl---添加行号">nl - 添加行号</a></h3>
+<p>nl 程序是一个相当神秘的工具, 用作一个简单的任务. 它添加文件的行数.
+在它最简单的用途中, 它相当于 <code>cat -n</code>:</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ nl distros.txt | head
+</code></pre>
+<p>像 cat, nl 既能接受多个文件作为命令行参数, 也能标准输出.
+然而, nl 有一个相当数量的选项并支持一个简单的标记方式去允许更多复杂的方式的计算.</p>
+<p>nl 在计算文件行数的时候支持一个叫&quot;逻辑页面&quot;的概念 . 这允许nl在计算的时候去重设(再一次开始)可数的序列.
+用到那些选项 的时候, 可以设置一个特殊的开始值, 并且在某个可限定的程度上还能设置它的格式.
+一个逻辑页面被进一步分为 header,body 和 footer 这样的元素. 在每一个部分中, 数行数可以被重设,
+并且/或被设置成另外一个格式.
+如果nl同时处理多个文件, 它会把他们当成一个单一的 文本流. 文本流中的部分被一些相当古怪的标记的存在加进了文本:
+每一个上述的标记元素肯定在自己的行中独自出现. 在处理完一个标记元素之后, nl 把它从文本流中删除.</p>
+<p>这里有一些常用的 nl 选项:</p>
+<p>表格 22-2: 常用 nl 选项
+选项 含义</p>
+<p>把 body 按被要求方式数行, 可以是以下方式: a = 数所有行 t = 数非空行.这是默认设置. n = 无 pregexp = 只数那些匹配了正则表达式的行</p>
+<p>-f style 将 footer 按被要求设置数. 默认是无
+-h style 将 header 按被要求设置数. 默认是
+-i number 将页面增加量设置为数字. 默认是一.
+-n format 设置数数的格式, 格式可以是: ln = 左偏, 没有前导零. rn = 右偏, 没有前导零. rz = 右偏, 有前导零.</p>
+<p>-p 不要在没一个逻辑页面的开始重设页面数.
+-s string 在没一个行的末尾加字符作分割符号.默认是单个的 tab.
+-v number 将每一个逻辑页面的第一行设置成数字. 默认是一.
+-w width 将行数的宽度设置, 默认是六.</p>
+<p>坦诚的说, 我们大概不会那么频繁地去数行数, 但是我们能用 nl 去查看我们怎么将多个工具结合在一个去完成更复杂的任务.
+我们将在之前章节的基础上做一个 Linux 发行版的报告. 因为我们将使用 nl, 包含它的header/body/footer 标记将会十分有用.
+我们将把它加到上一章的 sed 脚本来做这个. 使用我们的文本编辑器, 我们将脚本改成一下并且把它保存成 distros-nl.sed:</p>
+<pre><code class="language-bash"># sed script to produce Linux distributions report
+1 i\
+\\:\\:\\:\
+\
+Linux Distributions Report\
+\
+Name
+Ver. Released\
+----
+---- --------\
+\\:\\:
+s/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/
+$ i\
+\\:\
+\
+End Of Report
+</code></pre>
+<p>这个脚本现在加入了 nl 的逻辑页面标记并且在报告的最后加了一个 footer.
+记得我们在我们的标记中必须两次使用反斜杠,  因为他们通常被 sed 解释成一个转义字符.
+下一步, 我们将结合 sort, sed, nl 来生成我们改进的报告:</p>
+<pre><code class="language-bash">$ sort -k 1,1 -k 2n distros.txt | sed -f distros-nl.sed | nl
+
+Linux Distributions Report
+Name    Ver.    Released
+----        ----         --------
+1       Fedora      5       2006-03-20
+2       Fedora      6       2006-10-24
+...
+</code></pre>
+<p>我们的报告是一串命令的结果, 首先, 我们给名单按发行版本和版本号(表格1和2处)进行排序,
+然后我们用sed 生产结果,  增加了 header(包括了为 nl 增加的逻辑页面标记)和 footer.
+最后, 我们按默认用 nl 生成了结果, 只数了属于逻辑页面的 body 部分的 文本流的行数.
+我们能够重复命令并且实验不同的 nl 选项. 一些有趣的方式:</p>
+<pre><code class="language-bash">nl -n rz
+# 和
+nl -w 3 -s ' '
+</code></pre>
+<h3 id="fold---限制文件行宽"><a class="header" href="#fold---限制文件行宽">fold - 限制文件行宽</a></h3>
+<p>折叠是将文本的行限制到特定的宽的过程. 像我们的其他命令, fold 接受一个或多个文件及标准输入.
+如果我们将一个简单的文本流 fold, 我们可以看到它工具的方式:</p>
+<pre><code class="language-bash">$ echo &quot;The quick brown fox jumped over the lazy dog.&quot; | fold -w 12
+</code></pre>
+<p>这里我们看到了 fold 的行为. 这个用 echo 命令发送的文本用 -w 选项分解成块.
+在这个例子中, 我们设定了行宽为12个字符.  如果没有字符设置, 默认是80.
+注意到文本行不会因为单词边界而不会被分解. 增加的 -s 选项将让 fold 分解到最后可用的空白 字符, 即会考虑单词边界.</p>
+<pre><code class="language-bash">$ echo &quot;The quick brown fox jumped over the lazy dog.&quot; | fold -w 12 -s
+</code></pre>
+<h3 id="fmt---一个简单的文本格式器"><a class="header" href="#fmt---一个简单的文本格式器">fmt - 一个简单的文本格式器</a></h3>
+<p><code>fmt</code> 程序同样折叠文本, 外加很多功能.
+它接受文本或标准输入并且在文本流上呈现照片转换. 基础来说, 他填补并且将文本粘帖在 一起并且保留了空白符和缩进.
+为了解释, 我们将需要一些文本. 让我们抄一些 fmt 主页上的东西吧:
+我们将把这段文本复制进我们的文本编辑器并且保存文件名为 fmt-info.txt.
+现在, 让我们重新格式这个文本并且让它成为一个50 个字符宽的项目.
+我们能用 -w 选项对文件进行处理:</p>
+<pre><code class="language-bash">$ fmt -w 50 fmt-info.txt | head
+</code></pre>
+<p>好, 这真是一个奇怪的结果. 大概我们应该认真的阅读这段文本, 因为它恰好解释了发生了什么:
+默认来说, 空白行, 单词间距, 还有缩进都会在输出中保留;
+持续输入不同的缩进的流不会被结合; tabs被用来扩展 输入并且引入输出.
+所以, fmt 保留了第一行的缩进. 幸运的是, fmt 提供一个修正这个的选项:
+好多了. 通过加了 -c 选项, 我们现在有了我们想要的结果.</p>
+<p>fmt 有一些有趣的选项:
+-p 选项特别有趣. 通过它, 我们可以格式文件选中的部分, 通过在开头使用一样的符号.
+很多编程语言使用锚标记(#)去提醒注释的开始, 而且它可以通过这个选项来被格式.
+让我们创建一个有用到注释的程序.</p>
+<pre><code class="language-bash">[me@linuxbox ~]$ cat &gt; fmt-code.txt
+# This file contains code with comments.
+# This line is a comment.
+# Followed by another comment line.
+# And another.
+This, on the other hand, is a line of code.
+And another line of code.
+And another.
+</code></pre>
+<p>我们的示例文件包含了用 &quot;#&quot; 开始的注释(一个 # 后跟着一个空白符)和代码. 现在, 使用 fmt, 我们能格式注释, 并且不让代码被触及.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="linux-7-tar-sync.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="linux-8-printer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="linux-7-tar-sync.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="linux-8-printer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
