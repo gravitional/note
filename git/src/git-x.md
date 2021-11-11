@@ -52,7 +52,7 @@ $ git config --global user.email johndoe@example.com
 
 + 文本编辑器配置
 
-接下来要设置的是默认使用的文本编辑器. `Git` 需要你输入一些额外消息的时候, 会自动调用一个外部文本编辑器给你用. 
+接下来要设置的是默认使用的文本编辑器. `Git` 需要你输入一些额外消息的时候, 会自动调用一个外部文本编辑器给你用.
 如果你有其他偏好, 比如 `Emacs` 的话, 可以重新设置:
 
 ```bash
@@ -113,7 +113,7 @@ $ git config --global merge.tool vimdiff
 
 [在 Windows 终端中设置 Powerline](https://docs.microsoft.com/zh-cn/windows/terminal/tutorials/powerline-setup)
 
-适用于 `PowerShell` , 也适用于 Linux or macOS 上运行的 `PowerShell Core` , 只需安装名为 `Posh-Git` 的拓展包. 
+适用于 `PowerShell` , 也适用于 Linux or macOS 上运行的 `PowerShell Core` , 只需安装名为 `Posh-Git` 的拓展包.
 link: [Posh-Git](https://github.com/dahlbyk/posh-git)
 
 ***
@@ -368,7 +368,7 @@ DESCRIPTION
 
 + `git mv game gamesdk`
 + `git commit -m 'rename dir game to gamesdk'`
-+ `git push origin dev`  推送到 `dev` 分支
++ `git push origin dev`  ; 推送到 `dev` 分支
 
 ref: [git重命名文件夹](https://www.jianshu.com/p/e886fde18ba0)
 
@@ -511,14 +511,49 @@ git remote set-url --delete [--push] <name> <url>
 
 ### 远程分支
 
-***
+```bash
+git push [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+                  [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+                  [-u | --set-upstream] [-o <string> | --push-option=<string>]
+                  [--[no-]signed|--signed=(true|false|if-asked)]
+                  [--force-with-lease[=<refname>[:<expect>]]]
+                  [--no-verify] [<repository> [<refspec>...]]
+```
+
++ `<refspec>...`: 指定用哪个`源对象`, 来更新哪个`目标 ref`.
++ `<refspec>` 参数的格式是: 可选的加号`+`,  后面跟上源对象 `<src>`, 后面跟冒号`:`, 后面是目标 ref `<dst>`.
++ `<src>` 通常是你想推送的`分支`的名称, 但它可以是任何任意的 `SHA-1表达式`, 如 `master~4` 或 `HEAD`(见gitrevisions(7)).
+
++ `<dst>` 指明`远程`的哪个`ref`会随着这次推送被更新.
+这里不能使用任意的表达式, 必须指定一个实际的 `ref` 名称.
+在配置了 `remote.<repository>.push`的情况下,
+可以使用 `git push [<repository>] <src>` 或者 `git push [<repository>] `, 来更新 `<src>` 默认对应的远程分支.
+如果未配置上述变量, 缺少 `:<dst>` 意味着要更新与   `<src>` 同名的远程 `ref`.
+
++ 如果 `<dst>` 不是以 `refs/` 开头(例如 `refs/heads/master`), 我们将尝试推断它在远程 `<repository> refs/*` 中的位置 .
+这取决于被推送的 `<src>` 的类型, 和 `<dst>` 是否有歧义:
+
+- 如果 `<dst>` 明确地指向远程 `<repository>` 的某个 `ref`, 那么就推送到那个 `ref`.
+- 如果 `<src>` 被解析为以 `refs/heads/` 或 `refs/tags/` 开头的 `ref`, 则将完整路径添加到 `<dst>` 前面.
+- 其他含糊不清的解决方法可能会在将来被添加, 但现在任何其他情况都会出错, 会有一个错误表明我们所作的尝试,
+并根据 `advice.pushUnqualifiedRefname` 的配置(见 git-config(1)), 建议你可能想要推送至的,  `refs/` 命名空间.
+
+#### 例子
+
 如果你的当前分支设置了`跟踪远程分支`, 那么可以用 `git pull` 命令来自动抓取后合并该远程分支到当前分支
-***
+
 推送工作使用 `git push <remote> <branch>` , 比如`$ git push origin serverfix`
 
 这里有些工作被简化了.
-Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads/serverfix`,  意味着, 推送本地的serverfix 分支来更新远程仓库上的 serverfix 分支.
-我们将会详细学习 Git 内部原理 的 `refs/heads/` 部分,  但是现在可以先把它放在儿. 你也可以运行 `git push origin serverfix:serverfix`,  它会做同样的事,  可以通过这种格式来推送本地分支到一个命名不相同的远程分支.  如果并不想让远程仓库上的分支叫做 `serverfix`, 可以运行 `git push origin serverfix:awesomebranch` 来将本地的 serverfix 分支推送到远程仓库上的 `awesomebranch` 分支.
+Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads/serverfix`,
+意味着, 推送本地的 `serverfix` 分支来更新远程仓库上的 `serverfix` 分支.
+
+我们将会详细学习 Git 内部原理 的 `refs/heads/` 部分,  但是现在可以先把它放在儿.
+你也可以运行 `git push origin serverfix:serverfix`,  它起同样的效果.
+可以通过这种格式来推送本地分支到一个命名不相同的远程分支.
+
+如果并不想让远程仓库上的分支叫做 `serverfix`,  可以运行 `git push origin serverfix:awesomebranch`,
+来将本地的 `serverfix` 分支推送到远程仓库上的 `awesomebranch` 分支.
 
 使用 `git checkout -b serverfix origin/serverfix`来从设置的远程仓库里创建新分支
 
@@ -758,7 +793,7 @@ commit-id 为要删除的 `commit` 的前一次 `commit` 号
 
 `git` 具有一个很棒的, 能将多次`修改`合并起来的方法, 尤其是在将他们共享出去之前.
 
-你可以使用强大的 `interactive rebase`(交互式 rebase)将多次`提交`合并成`一次`. 
+你可以使用强大的 `interactive rebase`(交互式 rebase)将多次`提交`合并成`一次`.
 这样可以把多个临时的小的`提交`合并成一次提交, 然后将整理好的代码 `push` 给远端.
 
 #### 选择你的起始提交
@@ -771,7 +806,7 @@ git rebase --interactive HEAD~[N]
 git rebase -i HEAD~[N]
 ```
 
-这里的 `N` 就是你想要合并的提交的数量, 从最近的一次提交`往前数`. 
+这里的 `N` 就是你想要合并的提交的数量, 从最近的一次提交`往前数`.
 下面是一个假想的从 git log 中拉取的提交列表, 我们以它为例, 假设当前我们正在修改 `feature Z`:
 
 ```log
@@ -815,41 +850,41 @@ git rebase --interactive HEAD~[7]
 git rebase --interactive [commit-hash]
 ```
 
-这里的 `[commit-hash]` 是压缩范围起点的`前一次`提交的 `hash`. 
+这里的 `[commit-hash]` 是压缩范围起点的`前一次`提交的 `hash`.
 `[commit-hash]` 将被作为压缩的`基`, 它需要比压缩的起点还要早一次, 或者你可以看自己的情况选择.
 所以在示例中的命令就是:
 
 ```bash
-git rebase --interactive 6394dc # 6394dc Feature Y         
+git rebase --interactive 6394dc # 6394dc Feature Y
 ```
 
 你可以将这个命令理解为: 对提交时间比 `[commit-hash]` 新的所有`提交`进行合并.
 
 #### 选择与压缩
 
-这时你的默认 `编辑器` 会有弹窗, 显示出你想要`合并`的`提交列表`, 就是我们在上一步选中的. 
-注意, 一开始可能会感觉有点看不明白, 因为是按 `反序` 排列的, `旧的提交` 显示在顶部. 
+这时你的默认 `编辑器` 会有弹窗, 显示出你想要`合并`的`提交列表`, 就是我们在上一步选中的.
+注意, 一开始可能会感觉有点看不明白, 因为是按 `反序` 排列的, `旧的提交` 显示在顶部.
 我通过 `--- 早先的 commit` 和 `--- 新的 commit` 进行了说明, 在 `编辑器` 的窗口中不会显示这些说明, 但可以根据提交信息判断.
 
 ```log
 pick d94e78 准备实现 feature Z     --- 早先的 commit
 ...
-pick 0c3317 问题不大... 
+pick 0c3317 问题不大...
 pick 871adf feature Z 完成     --- 新的 commit
 [...]
 ```
 
-在 `提交列表` 的底部有一个简短的 `注释`(示例中忽略了), 提示了所有的 `操作选项`. 
+在 `提交列表` 的底部有一个简短的 `注释`(示例中忽略了), 提示了所有的 `操作选项`.
 你可以在交互式 `rebase` 中进行各种操作, 我们现在只进行一些基本的操作.
 我们的任务是将所有的`提交`注释为 `squashable`, 除了第一个(最早的)提交: 它将被用作`基`.
 
-把提交哈希前面的 `pick` 标记修改为 `squash` (或者简写为 `s` , 下面以 # 开头的行中有提示)，
+把提交哈希前面的 `pick` 标记修改为 `squash` (或者简写为 `s` , 下面以 # 开头的行中有提示),
 这样 `提交` 就被标记为可压缩的 . 最后的结果就是:
 
 ```log
 pick d94e78 准备实现 feature Z       --- 早先的 commit
 ...
-s 0c3317 问题不大... 
+s 0c3317 问题不大...
 s 871adf OK, feature Z 完成      --- 新的 commit
 [...]
 ```
@@ -858,7 +893,7 @@ s 871adf OK, feature Z 完成      --- 新的 commit
 
 #### 创建新的提交
 
-你刚刚告诉了 `Git` 将全部的 `7` 次 `提交` 合并到列表的第一个 `提交` 中. 
+你刚刚告诉了 `Git` 将全部的 `7` 次 `提交` 合并到列表的第一个 `提交` 中.
 现在要给它添加 `注释`: 你的编辑器会再次弹出一个带有 `默认消息` 的窗口, 内容合并了被压缩的所有`提交 `的 ` 注释`.
 
 你可以保留默认的 `提交注释`, 这样最终的提交信息将会是这些临时提交的 `注释列表`, 如下所示:
@@ -866,7 +901,7 @@ s 871adf OK, feature Z 完成      --- 新的 commit
 ```log
 准备实现 feature Z
 ...
-问题不大... 
+问题不大...
 feature Z 完成
 ```
 

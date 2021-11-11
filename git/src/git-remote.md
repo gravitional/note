@@ -816,7 +816,7 @@ Git makes conflict resolution easy.
 默认情况下,  某个 `stash` 显示为`WIP on branchname ...`, 但是在创建`存储项`时, 可以在命令行上提供更具描述性的消息.
 `WIP`: Work in progress, 正在工作过程中, 引申含义为 "目前工作树中的代码正在编写中, 这部分代码不能独立运行, 是半成品".
 
-你新创建的 `stash` 存储在 `refs/stash` 中. 
+你新创建的 `stash` 存储在 `refs/stash` 中.
 更早的`stash`es 可以在这个`引用`(reference)的 `reflog` 中找到, 并能通过普通的 `reflog` 语法进行`引用`.
 例如`stash@{0}`是最近创建的 `stash`, `stash@{1}` 是之前创建的 `stash`, `stash@{2.hours.ago}` 也可以.
 还可以只给定 `stash index` 来引用`存储`. 例如, 整数 `n` 相当于 `stash@{n}`.

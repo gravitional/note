@@ -15,6 +15,15 @@ Wolfram 语言中模块的基本工作方式非常简单.
 从全局变量 `$ModuleNumber` 的值可以找到序列号. 该变量计算 `Module` 的任何形式所使用的总次数.
 `Module` 中产生形如 `x$nnn` 的符号去代表每个局部变量.
 
+`mathematica` 的脚本格式文件, 即 `.wl`,在保存时并不会保存输出信息.
+所以适合用来保存源代码, 配合 `git` 使用. 
+`.m`, `.wls`文件特性和`.wl`基本相同, `.wls` 会自动加上一条 `shebang` 行.
+
+    #!/usr/bin/env wolframscript
+
+而普通的 `.nb` 文件则会保存计算输出信息, 在存档之前最好使用
+`单元`--`删除所有输出` 清理输出, 这样可以减小体积.
+
 ***
 `张量` tutorial/SymmetrizedArrays
 
