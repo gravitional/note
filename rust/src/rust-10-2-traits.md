@@ -98,19 +98,23 @@ println!("1 new tweet: {}", tweet.summarize());
 
 这会打印出 1 new tweet: horse_ebooks: of course, as you probably already know, people.
 
-注意因为示例 10-13 中我们在相同的 lib.rs 里定义了 Summary trait 和 NewsArticle 与 Tweet 类型, 所以他们是位于同一作用域的.
-如果这个 lib.rs 是对应 aggregator crate 的, 而别人想要利用我们 crate 的功能为其自己的库作用域中的结构体实现 Summary trait.
-首先他们需要将 trait 引入作用域. 这可以通过指定 use aggregator::Summary; 实现, 这样就可以为其类型实现 Summary trait 了.
-Summary 还必须是公有 trait 使得其他 crate 可以实现它, 这也是为什么实例 10-12 中将 pub 置于 trait 之前.
+注意因为示例 10-13 中我们在相同的 lib.rs 里定义了 `Summary` trait 和 `NewsArticle` 与 Tweet 类型, 所以他们是位于同一作用域的.
+如果这个 `lib.rs` 是对应 `aggregator` crate 的, 而别人想要利用我们 crate 的功能, 为其自己的库作用域中的结构体实现 `Summary` trait.
+首先他们需要将 `trait` 引入作用域. 这可以通过指定 `use aggregator::Summary;` 实现, 这样就可以为其类型实现 `Summary` trait 了.
+`Summary` 还必须是公有 `trait`, 使得其他 crate 可以实现它, 这也是为什么实例 10-12 中将 pub 置于 trait 之前.
 
-实现 trait 时需要注意的一个限制是, 只有当 trait 或者要实现 trait 的类型位于 crate 的本地作用域时, 才能为该类型实现 trait.
-例如, 可以为 aggregator crate 的自定义类型 Tweet 实现如标准库中的 Display trait, 这是因为 Tweet 类型位于 aggregator crate 本地的作用域中.
-类似地, 也可以在 aggregator crate 中为 `Vec<T>` 实现 Summary, 这是因为 Summary trait 位于 aggregator crate 本地作用域中.
+实现 `trait` 时需要注意的一个限制是, 只有当 `trait` 或者要实现 `trait` 的类型位于 `crate` 的本地作用域时, 才能为该类型实现 `trait`.
+例如, 可以为 `aggregator` crate 的自定义类型 `Tweet`, 实现例如标准库中的 `Display` trait,
+这是因为 `Tweet` 类型位于 `aggregator` crate 本地的作用域中.
+类似地, 也可以在 `aggregator` crate 中为 `Vec<T>` 实现 `Summary`,
+这是因为 `Summary` trait 位于 `aggregator` crate 本地作用域中.
 
-但是不能为外部类型实现外部 trait. 例如, 不能在 aggregator crate 中为 `Vec<T>` 实现 Display trait.
-这是因为 Display 和 `Vec<T>` 都定义于标准库中, 它们并不位于 aggregator crate 本地作用域中.
-这个限制是被称为 相干性(coherence) 的程序属性的一部分, 或者更具体的说是 孤儿规则(orphan rule), 其得名于不存在父类型.
-这条规则确保了其他人编写的代码不会破坏你代码, 反之亦然. 没有这条规则的话, 两个 crate 可以分别对相同类型实现相同的 trait, 而 Rust 将无从得知应该使用哪一个实现.
+但是不能为`外部类型`实现`外部 trait`. 例如, 不能在 `aggregator` crate 中为 `Vec<T>` 实现 `Display` trait.
+这是因为 `Display` 和 `Vec<T>` 都定义于标准库中, 它们并不位于 `aggregator` crate 本地作用域中.
+
+这个限制是被称为 `相干性`(coherence) 的程序属性的一部分, 或者更具体的说是 `孤儿规则`(orphan rule), 其得名于不存在父类型.
+这条规则确保了其他人编写的代码不会破坏你代码, 反之亦然.
+如果不规定这条规则的话, 两个 `crate` 可以对同一`type` 的某 `trait` 作不同实现, 而 Rust 将无从得知应该使用哪一个实现.
 
 ## 默认实现
 
@@ -220,7 +224,7 @@ pub fn notify(item: impl Summary) {
 
 ## Trait Bound 语法
 
-`impl Trait` 语法适用于直观的例子, 它实际上是一种较长形式语法的语法糖. 我们称为 trait bound, 它看起来像:
+`impl Trait` 语法适用于直观的例子, 它实际上是一种较长形式语法的语法糖. 我们称为 `trait bound`, 它看起来像:
 
 ```rust
 pub fn notify<T: Summary>(item: T) {
@@ -230,24 +234,26 @@ pub fn notify<T: Summary>(item: T) {
 
 这与之前的例子相同, 不过稍微冗长了一些. trait bound 与泛型参数声明在一起, 位于尖括号中的冒号后面.
 
-impl Trait 很方便, 适用于短小的例子. trait bound 则适用于更复杂的场景. 例如, 可以获取两个实现了 Summary 的参数. 使用 impl Trait 的语法看起来像这样:
+impl Trait 很方便, 适用于短小的例子. trait bound 则适用于更复杂的场景.
+例如, 可以获取两个实现了 Summary 的参数. 使用 impl Trait 的语法看起来像这样:
 
 ```rust
 pub fn notify(item1: impl Summary, item2: impl Summary) {
 ```
 
-这适用于 item1 和 item2 允许是不同类型的情况(只要它们都实现了 Summary). 不过如果你希望强制它们都是相同类型呢? 这只有在使用 trait bound 时才有可能:
+这适用于 item1 和 item2 允许是不同类型的情况(只要它们都实现了 `Summary`).
+不过如果你希望强制它们都是相同类型呢? 这只有在使用 trait bound 时才有可能:
 
 ```rust
 pub fn notify<T: Summary>(item1: T, item2: T) {
 ```
 
-泛型 T 被指定为 item1 和 item2 的参数限制, 如此传递给参数 item1 和 item2 值的具体类型必须一致.
+`泛型 T` 被指定为 `item1` 和 `item2` 的参数限制, 如此传递给参数 `item1` 和 `item2` 值的具体类型必须一致.
 
-## 通过 `+` 指定多个 trait bound
+## 通过 + 指定多个 trait bound
 
-如果 notify 需要显示 item 的格式化形式, 同时也要使用 summarize 方法,
-那么 item 就需要同时实现两个不同的 trait: Display 和 Summary. 这可以通过 + 语法实现:
+如果 `notify` 需要显示 `item` 的格式化形式, 同时也要使用 `summarize` 方法,
+那么 `item` 就需要同时实现两个不同的 trait: `Display` 和 `Summary`. 这可以通过 `+` 语法实现:
 
 ```rust
 pub fn notify(item: impl Summary + Display) {
@@ -263,7 +269,9 @@ pub fn notify<T: Summary + Display>(item: T) {
 
 ### 通过 where 简化 trait bound
 
-然而, 使用过多的 trait bound 也有缺点. 每个泛型有其自己的 trait bound, 所以有多个泛型参数的函数在名称和参数列表之间会有很长的 trait bound 信息, 这使得函数签名难以阅读. 为此, Rust 有另一个在函数签名之后的 where 从句中指定 trait bound 的语法. 所以除了这么写:
+然而, 使用过多的 trait bound 也有缺点.
+每个泛型有其自己的 trait bound, 所以有多个泛型参数的函数在名称和参数列表之间会有很长的 trait bound 信息, 这
+使得函数签名难以阅读. 为此, Rust 有另一个在函数签名之后的 where 从句中指定 trait bound 的语法. 所以除了这么写:
 
 ```rust
 fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U) -> i32 {
