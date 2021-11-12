@@ -723,15 +723,15 @@ Tango Dark
 Tango Light
 ```
 
-***
-等宽字体
+#### 等宽字体
 
 [Cascadia Code](https://docs.microsoft.com/zh-cn/windows/terminal/cascadia-code)
 
 `Cascadia Code` 是 `Microsoft` 提供的一种新的等宽字体,可为命令行应用程序和文本编辑器提供全新的体验.
 `Cascadia Code` 是与 `Windows` 终端一起开发的. 建议将此字体与终端应用程序和文本编辑器(如 `Visual Studio` 和 `Visual Studio Code`)一起使用.
 
-***
+#### 终端提示
+
 [Windows 终端提示与技巧](https://docs.microsoft.com/zh-cn/windows/terminal/tips-and-tricks)
 
 可以通过按住 `ctrl` 和滚动来缩放 `Windows` 终端的文本窗口. 缩放后,终端会话将保持新的缩放效果.
@@ -964,7 +964,7 @@ Tango Light
 
 ### WSL2 参考的对象类型不支持尝试的操作
 
-使用VPN造成的 WSL2 启动 crash
+使用 `VPN` 造成的 WSL2 启动 crash
 
 [failing to startup with code 4294967295](https://github.com/microsoft/WSL/issues/5092#:~:text=Solve%20%22process%20exited%20with%20code%204294967295%22%20%2C%20run,complete%20the%20reset.%20Does%20not%20resolve%20the%20issue.)
 [关于使用WSL2出现'参考的对象类型不支持尝试的操作'的解决方法](https://zhuanlan.zhihu.com/p/151392411)

@@ -102,7 +102,7 @@ $ git config --global merge.tool vimdiff
 
 [git scm book](https://git-scm.com/book/zh/v2/), 附录A: 在其他环境中使用 Git - 图形界面
 
-两个常用的图形工具 `gitk ` and `git gui`, 安装 Github 客户端, 会提供`git gui`
+两个常用的图形工具 `gitk ` and `git-gui`, 安装 Github 客户端, 会提供`git-gui`
 
 `GitHub`客户端将许多操作整合成一个功能, 比如点击同步的时候, 实际上会执行
 
@@ -111,7 +111,8 @@ $ git config --global merge.tool vimdiff
 
 ### 在 PowerShell 中使用 Git
 
-[在 Windows 终端中设置 Powerline](https://docs.microsoft.com/zh-cn/windows/terminal/tutorials/powerline-setup)
+[在 Windows 终端中设置 Powerline](https://docs.microsoft.com/en-us/windows/terminal/tutorials/custom-prompt-setup)
+[PowerShell 图标 module](https://github.com/devblackops/Terminal-Icons)
 
 适用于 `PowerShell` , 也适用于 Linux or macOS 上运行的 `PowerShell Core` , 只需安装名为 `Posh-Git` 的拓展包.
 link: [Posh-Git](https://github.com/dahlbyk/posh-git)
