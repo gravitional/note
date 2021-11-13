@@ -33,13 +33,15 @@ git log refs/remotes/origin/master
 在新的系统上, 我们一般都需要先配置下自己的 `Git` 工作环境.
 配置工作只需一次, 以后升级时还会沿用现在的配置. 当然, 如果需要, 你随时可以用相同的命令修改已有的配置.
 
-Git 提供了一个叫做 `git config` 的工具(译注: 实际是 `git-config` 命令, 只不过可以通过 `git` 加一个名字来呼叫此命令. ), 专门用来配置或读取相应的工作环境变量.
+Git 提供了一个叫做 `git config` 的工具, 专门用来配置或读取相应的工作环境变量.
+>译注: 实际是 `git-config` 命令, 只不过可以通过 `git` 加一个名字来呼叫此命令.
 而正是由这些环境变量, 决定了 Git 在各个环节的具体工作方式和行为. 这些变量可以存放在以下三个不同的地方:
 
 + `/etc/gitconfig` 文件: 系统中对所有用户都普遍适用的配置. 若使用 `git config` 时用 `--system` 选项, 读写的就是这个文件.
-+ `~/.gitconfig` 文件: 用户目录下的配置文件只适用于该用户. 若使用 `git config` 时用 --global 选项, 读写的就是这个文件.
-+ 当前仓库的 `Git` 目录中的配置文件(也就是工作目录中的 `.git/config` 文件): 这里的配置仅仅针对当前仓库有效. 每一个级别的配置都会覆盖上层的相同配置, 所以 `.git/config` 里的配置会覆盖 `/etc/gitconfig` 中的同名变量.
-外, Git 还会尝试找寻 /etc/gitconfig 文件, 只不过看当初 Git 装在什么目录, 就以此作为根目录来定位.
++ `~/.gitconfig` 文件: 用户目录下的配置文件只适用于该用户. 若使用 `git config` 时用 `--global` 选项, 读写的就是这个文件.
++ 当前仓库的 `Git` 目录中的配置文件(也就是工作目录中的 `.git/config` 文件): 这里的配置仅仅针对当前仓库有效. 
+每一个级别的配置都会覆盖上层的相同配置, 所以 `.git/config` 里的配置会覆盖 `/etc/gitconfig` 中的同名变量.
+此外, Git 还会尝试找寻 `/etc/gitconfig` 文件, 只不过看当初 Git 装在什么目录, 就以此作为根目录来定位.
 
 + 用户信息配置
 
@@ -227,40 +229,37 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 还原工作区的文件, 可以用 `--source` 指定例如 `HEAD` .
 
 ```git
-git restore [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>... ​
-git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [<pathspec>... ​]
+git restore [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
+git restore [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-from-file=<file> [--pathspec-file-nul]
+git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
 ```
 
 使用恢复源中的某些内容还原工作树中的指定路径.
 如果跟踪了一条路径, 但该路径在恢复源中不存在, 则会将其删除以匹配该源.
-
 该命令还可用于通过 `--staged` 还原索引中的内容, 或通过 `--staged --worktree` 还原工作树和索引.
 
++ 使用给定 `tree` 中的内容还原工作树文件.
+
 ```git
--s <tree>
---source=<tree>
+-s <tree>, --source=<tree>
 ```
 
-使用给定 `tree` 中的内容还原工作树文件.  可以通过与之关联的 `commit` , `branch`或 `tag` 来指定 `source tree` .
+可以通过与之关联的 `commit` , `branch`或 `tag` 来指定 `source tree` .
 如果未指定, 则 `working tree` 的默认还原源为 `index` , 而 `index`的默认还原源为 `HEAD` .
 当同时指定了 `--staged` 和 `--worktree` 时, 则必须指定 `--source` .
 
++ 指定要还原的对象: 如果未给出, 默认还原 `working tree` . 
+
 ```git
--W
---worktree
--S
---staged
+-W, --worktree ; 工作区
+-S, --staged ; 暂存区
 ```
 
-指定要还原的对象. 如果未给出, 默认还原 `working tree` . 指定 `--staged` 则只还原 `index` , 指定两个的话都还原.
+指定 `--staged` 则只还原 `index` , 也可以同时指定两个, 并且都还原. 例子:
 
-例子:
-
-```git
+```bash
 git restore --source master~2 Makefile
-```
-
-```git
+# or 
 git restore --source=9ea00d1 parton.note.1.nb
 ```
 
@@ -717,7 +716,13 @@ You can omit any one of `<commit>`, which has the same effect as using HEAD inst
 ### checkout 还原文件
 
 ```bash
-git checkout [<tree-ish>] [--] <pathspec>... ​
+git checkout [-q] [-f] [-m] [<branch>]
+git checkout [-q] [-f] [-m] --detach [<branch>]
+git checkout [-q] [-f] [-m] [--detach] <commit>
+git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
+git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
 ```
 
 用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `pathspec` (可以有多个指定).
@@ -732,12 +737,14 @@ With `-m`, changes made to the working tree file can be discarded to re-create t
 
 ### detached
 
-如果用 `git checkout <commit>` 切换到某次提交, 那么 `HEAD`不是指在某个指针(如 `master` , `dev` )上的, 所以是游离的-- `detached` ,
+如果用 `git checkout <commit>` 切换到某次提交, 那么 `HEAD`不是指向某个指针的(如 `master`, `dev` ), 所以是游离的 -- `detached` ,
 
-如果这个时候进行更改, 并提交, 相当于创建了匿名分支, 所作的提交日后无法再索引到. 它们将被git的默认回收机制所回收.
-解决方法是创建新分支:
+如果这个时候进行更改, 并提交, 相当于创建了匿名分支, 所作的提交日后无法再索引到.
+它们将被 `git` 的默认回收机制所回收.解决方法是创建新分支:
 
-`git checkout -b new`
+```bash
+git checkout -b new
+```
 
 ## git rebase
 
