@@ -224,7 +224,7 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 
 ## 还原文件
 
-### git restore
+### git-restore
 
 还原工作区的文件, 可以用 `--source` 指定例如 `HEAD` .
 
@@ -234,11 +234,12 @@ git restore [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-fro
 git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
 ```
 
-使用恢复源中的某些内容还原工作树中的指定路径.
-如果跟踪了一条路径, 但该路径在恢复源中不存在, 则会将其删除以匹配该源.
-该命令还可用于通过 `--staged` 还原索引中的内容, 或通过 `--staged --worktree` 还原工作树和索引.
+使用`source`中的某些内容, 还原`工作树`中的`<pathspec>`.
+如果某个`路径`已被`git`追踪, 但在`source`中它不存在, 则会删除它以匹配`source`的状态.
+还可以使用 `--staged` 选项, 将此命令用于还原`index`中的内容, 
+或通过 `--staged --worktree` 同时还原`working tree`和`index`.
 
-+ 使用给定 `tree` 中的内容还原工作树文件.
++ 使用给定`树对象`中的内容, 还原`working tree`文件.
 
 ```git
 -s <tree>, --source=<tree>
@@ -263,7 +264,7 @@ git restore --source master~2 Makefile
 git restore --source=9ea00d1 parton.note.1.nb
 ```
 
-### git checkout
+### git-checkout
 
 切换分支或者恢复 `working tree` 中的文件
 
@@ -280,7 +281,7 @@ git checkout [<tree-ish>] [--] <pathspec>... ​
 
 使用 `-m` , 对 `working tree` 所做的更改将会被丢弃, 重新创建冲突的 `merge` 结果.
 
-### git reset
+### git-reset
 
 ```bash
 git reset [-q] [<tree-ish>] [--] <pathspec>...
@@ -326,39 +327,22 @@ git reset --hard branch2
 
 把 `HEAD` 和 `branch`移动到 `branch2` 指向的提交.
 
-### git-restore
-
-SYNOPSIS
-
-```bash
-git restore [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
-git restore [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-from-file=<file> [--pathspec-file-nul]
-git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
-```
-
-DESCRIPTION
-
-使用 `restore source` 中的某些内容还原 `working tree` 中的指定路径.
-如果 `path` 被追踪, 但在 `restore source` 中不存在, 则会将其删除以匹配该 `restore source` .
-
-该命令还可用于通过 `--staged` 还原 `index` 中的内容, 或通过 `--staged --worktree` 还原 `working tree` 和 `index` .
-
-默认情况下, `working tree`和 `index` 的 `restore source` 分别是 `index` 和 `HEAD` .
-`--source`可用于将 `commit` 指定为 `restore source` .
-
-有关这三个命令之间的差异, See "Reset, restore and revert" in git(1).
-此命令是实验性的.  行为可能会改变.
-
 ### 三者的区别
 
+有关这三个命令之间的差异, 见["Reset, restore and revert" in git(1)](https://git-scm.com/docs/git#_reset_restore_and_revert). 
 有三个名称相似的命令: `git reset`, `git restore`和 `git revert` .
 
-+ `git-revert (1)` 用于进行新的 `commit` , 该 `commit` 将还原其他 `commit` 所做的更改.
-+ `git-restore (1)` 用于从 `index` 或另一个 `commit` 还原 `working tree` 中的文件.
-此命令不会更新您的分支.  该命令还可用于从另一个 `commit` 还原 `index` 中的文件.
-+ `git-reset (1)` 用于更新分支, 移动 `tip` 以从分支中添加或删除 `branch` .  此操作更改 `commit` 历史记录.
++ [git-revert (1)][]; 将产生新的 `commit` , 新 `commit` 将还原旧 `commit` 所做的更改.
++ [git-restore (1)][]; 用于从 `index` 或某个 `commit` 还原 `working tree` 中的文件.
+此命令不会更新您的`分支`.  该命令还可用于从某个 `commit` 还原 `index` 中的文件.
++ [git-reset (1)][]; 用于`更新`某个分支, 移动 分支头(`tip`), 以添加或删除 `commit`s .  此操作将更改 `commit` 历史.
 
 + `git reset`也可以用来还原 `index` , 与 `git restore` 功能重叠.
+
+[git-revert (1)]: https://git-scm.com/docs/git-revert
+[git-restore (1)]: https://git-scm.com/docs/git-restore
+[git-reset (1)]: https://git-scm.com/docs/git-reset
+There are three commands with similar names: git reset, git restore and git revert.
 
 ## git重命名文件夹
 
@@ -1382,30 +1366,32 @@ git filter-repo --to-subdirectory-filter my-module/
 
 `git clone -b <name>`; 克隆之后, 指向 `<name>` 分支, 如 `release` .
 
-+ `gst`='git status'
-+ `gaa`='git add --all'
-+ `gcam`='git commit -a -m'
+```bash
+gst='git status'
+gaa='git add --all'
+gcam='git commit -a -m'
 
-+ `gco`='git checkout'
-+ `gb`='git branch'
-+ `gcb`='git checkout -b'
+gco='git checkout'
+gb='git branch'
+gcb='git checkout -b'
 
-+ `gp`='git push'
-+ `gpd`='git push --dry-run'
-+ `gpoat`='git push origin --all && git push origin --tags'
-+ `ggpull`='git pull origin "$(git_current_branch)"'
-+ `gf`='git fetch'
-+ `gl`='git pull'
+gp='git push'
+gpd='git push --dry-run'
+gpoat='git push origin --all && git push origin --tags'
+ggpull='git pull origin "$(git_current_branch)"'
+gf='git fetch'
+gl='git pull'
 
-+ `gd`='git diff'
-+ `gdw`='git diff --word-diff'
+gd='git diff'
+gdw='git diff --word-diff'
+```
 
 ### 查看状态
 
+`git status -s` ; -s forshort
+
 + `gss`='git status -s'
 + `gst`='git status'
-
-`-s` : short
 
 ### branch
 
@@ -1508,6 +1494,12 @@ git filter-repo --to-subdirectory-filter my-module/
 `--tags[=<pattern>]`: 类似`--branches`
 
 `gitk`可以查看单个文件的提交历史, 使用`gitk filepath`
+
+### restore
+
++ `grs`='git restore'
++ `grss`='git restore --source'
++ `grst`='git restore --staged'
 
 ### remote
 
@@ -1665,7 +1657,6 @@ starting with a `+/-/ ` character at the beginning of the line and extending to 
 + `grhh`='git reset --hard'
 + `groh`='git reset origin/$(git_current_branch) --hard'
 + `grev`='git revert'
-+ `grs`='git restore'
 
 + `grb`='git rebase'
 + `grba`='git rebase --abort'
