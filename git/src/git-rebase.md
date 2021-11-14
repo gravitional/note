@@ -64,13 +64,12 @@ git rebase --onto master[被施加重放的分支] server[父节点/修改起始
 
 [git设置忽略文件和目录](https://www.cnblogs.com/wtil/p/11676092.html)
 
-1. 创建.gitignore
-2. 修改文件, 添加忽略正则
+每个目录都可以有自己的 `.gitignore` 文件, 并覆盖上一层的设定. 例如:
 
-***
-
-+ `.idea` //忽略`.idea`文件夹及文件夹下文件
-+ `*.iml` //忽略以`.iml`结尾的文件
+```conf
+.idea   //忽略 `.idea`文件/文件夹, 以及文件夹下的文件
+*.iml   //忽略以 `.iml`结尾的文件
+```
 
 #### 例子
 
