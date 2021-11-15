@@ -4,7 +4,30 @@
 \usepackage{tikz-feynman}
 \begin{document}
 
+\tikzset{
+% Defines a custom style which generates BOTH, .pdf and .png export
+% but prefers the .png on inclusion.
+%
+% This style is not pre-defined, you may need to copy-paste and
+% adjust it.
+png export/.style={
+external/system call/.add=
+{}
+{; convert -density 300 -transparent white "\image.pdf" "\image.png"},
+%
+/pgf/images/external info,
+/pgf/images/include external/.code={%
+\includegraphics
+[width=\pgfexternalwidth,height=\pgfexternalheight]
+{##1.png}%
+},
+}
+}
+
+
+
 \begin{tikzpicture}
+    \tikzset{png export}
 	\begin{feynman}
 		%% fig d
 		\vertex (d1) at (0,0);
