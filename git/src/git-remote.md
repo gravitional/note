@@ -177,55 +177,59 @@ git push
 [--no-verify] [<repository> [<refspec>...  ]]
 ```
 
-the **current branch** is pushed to the corresponding **upstream branch**, but as a safety measure,
-the push is aborted if the upstream branch does not have **the same name** as the local one.
+`当前分支` 被推送到相应的 `上游分支`, 但作为安全措施, 如果`上游分支`与`本地分支`名称不相同, 则推送会被中止.
 
-Specify what destination ref to update with what source object.
-The format of a `<refspec>` parameter is an optional plus `+`,
-followed by the source object `<src>`, followed by a colon `:`,
-followed by the destination ref `<dst>`.
+指定用哪个`源对象`, 来更新哪个目标`引用`(ref):
+`<refspec>`参数的格式是一个可选的加号`+`, 后接是源对象`<src>`,
+后接冒号`:`,  然后是目标引用`<dst>`. 也就是:
 
-i.e. `git push origin <src>:<dst>`
+```bash
+git push origin <src>:<dst>
+```
 
-The `<src>` is often the name of the branch you would want to push, but it can be any arbitrary "SHA-1 expression", such as `master~4` or `HEAD`
-The `<dst>` tells which ref on the remote side is updated with this push.
-Arbitrary expressions **cannot** be used here, an actual ref must be named.
++ `<src>`通常是你想推送的`分支`的名字, 但它可以是任意的 "SHA-1表达式", 如`master~4`或`HEAD`.
+`<dst>` 指明`远程`的哪个`ref`会随着这次推送被更新.
+这里**不能**使用任意的表达式, 必须指定一个实际的 `ref` 名称.
+在配置了 `remote.<repository>.push`的情况下,
+可以使用 `git push [<repository>] <src>` 或者 `git push [<repository>] `, 来更新 `<src>` 默认对应的远程分支.
+如果未配置上述变量, 缺少 `:<dst>` 意味着要更新与   `<src>` 同名的远程 `ref`.
 
-If `git push [<repository>]`
-without any `<refspec>` argument
-is set to update some ref at the destination
-with `<src>`
-with `remote.<repository>.push` configuration variable,
-`:<dst>` part can be omitted
-—such a push will update a ref that `<src>` normally updates
-without any `<refspec>` on the command line.
++ 如果 `<dst>` 不是以 `refs/` 开头(例如 `refs/heads/master`), 我们将尝试推断它在远程 `<repository> refs/*` 中的位置 .
+这取决于被推送的 `<src>` 的类型, 和 `<dst>` 是否有歧义:
 
-Otherwise, missing `:<dst>` means to update the same ref as the `<src>`.
+- 如果 `<dst>` 明确地指向远程 `<repository>` 的某个 `ref`, 那么就推送到那个 `ref`.
+- 如果 `<src>` 被解析为以 `refs/heads/` 或 `refs/tags/` 开头的 `ref`, 则将完整路径添加到 `<dst>` 前面.
+- 其他含糊不清的解决方法可能会在将来被添加, 但现在任何其他情况都会出错, 会有一个错误表明我们所作的尝试,
+并根据 `advice.pushUnqualifiedRefname` 的配置(见 git-config(1)), 建议你可能想要推送至的,  `refs/` 命名空间.
 
-`git push origin :`
++ `git push origin :` 推送 "匹配 "的分支到origin. 关于 "匹配 "分支的描述, 见上面 OPTIONS 部分的`<refspec>`.
 
-Push "matching" branches to origin. See `<refspec>`  in the OPTIONS section above for a
-description of "matching" branches.
++ `git push origin master:refs/heads/experimental`;
+通过复制当前的`master`分支, 在远程的 `origin` 库中创建`experimental`分支.
+只有在本地名称和远程名称**不同**的情况下, 在远程仓库中创建新的分支或`tag`时, 才需要这种形式;
+否则, `ref` 本身的名称就足够了.
 
-`git push origin master:refs/heads/experimental`
++ `git push origin master`;
+在本地代码仓库中寻找匹配 `master` 的 `ref`(最可能的是 `refs/heads/master`),
+然后更新远程 `origin` 库中与它相同的 `ref`(例如 `refs/heads/master`).
+如果 `master` 在远程不存在, 它将被创建.
 
-Create **the branch experimental in the origin** repository by copying the **current master branch**. This form is only needed to create a new branch or tag in the remote repository when the local name and the remote name are different; otherwise, the ref name on its own will work.
++ `git push origin HEAD`;
+把当前分支推送到远程的同名分支上的快捷方式.
 
-`git push origin master`
++ `git push mothership master:satellite/master dev:satellite/dev`;
 
-Find a ref that matches master in the source repository (most likely, it would find refs/heads/master),
-and update the same ref (e.g. refs/heads/master) in origin repository with it. If master did not exist remotely, it would be created.
+使用与 `master` 匹配的`源ref`(例如 `refs/heads/master`),
+来更新 `mothership` 库中与 `satellite/master` 匹配的 `ref`(很可能是 `refs/remotes/satellite/master`).
+对 `dev` 和 `satellite/dev` 执行同样的操作
 
-`git push origin HEAD`
+关于匹配语法(matching semantics)的讨论, 请参见上面描述`<refspec>`...的部分.
 
-A handy way to push the current branch to the same name on the remote.
-
-`git push mothership master:satellite/master dev:satellite/dev`
-
-Use the source ref that matches master (e.g. refs/heads/master) to update the ref that matches satellite/master (most probably refs/remotes/satellite/master) in the mothership repository;
-do the same for dev and satellite/dev.
-
-See the section describing `<refspec>`... above for a discussion of the matching semantics.
++ `--mirror`;
+不需要给出每个要推送的 `ref`, 而指定 `refs/`下的所有 `ref` 都被`镜像`到远程仓库
+(包括但不限于 `refs/heads/`, `refs/remotes/` 和 `refs/tags/`).
+新创建的本地 `refs` 将被推送到远程端, 本地更新的 `refs` 将被强制更新到远程端, 而删除的 `refs` 将从远程端删除.
+如果配置选项 `remote.<remote>.mirror` 被 set, 这将是默认行为.
 
 ### push flag
 
@@ -505,20 +509,22 @@ git filter-branch [--setup <command>] [--subdirectory-filter <directory>]
 ### 删除缓存
 
 你的历史中将不再包含对那个文件的引用.
-不过, 你的`引用日志`和你在 `.git/refs/original` 通过 `filter-branch` 选项添加的新引用中还存有对这个文件的引用,
-所以你必须移除它们然后重新打包数据库. 在重新打包前需要移除任何包含指向那些旧提交的指针的文件.
+不过, 你的`引用日志` 和你通过 `filter-branch` 选项, 在 `.git/refs/origin` 添加的新引用中,
+还存有对这个文件的引用, 所以你必须移除它们然后重新打包数据库.
+在重新打包前需要移除任何包含指向那些旧提交的指针的文件.
 
 移除本地仓库中指向旧`commit`的剩余`refs`:
-`git for-each-ref` 会打印仓库中匹配`refs/original`的所有`refs`, 并使用`delete`作为前缀,
+`git for-each-ref` 会打印仓库中匹配 `refs/origin` 的所有`refs`, 并使用`delete`作为前缀,
 此命令通过管道传送到 `git update-ref` 命令, 该命令会移除所有指向旧`commit`的引用.
 
 ```bash
-rm -Rf .git/refs/original ;rm -Rf .git/logs/ ; git gc
+rm -Rf .git/refs/origin ;rm -Rf .git/logs/ ; git gc
 # 或者
-git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
+git for-each-ref --format='delete %(refname)' refs/origin | git update-ref --stdin
 ```
 
-以下命令会使`reflog`到期, 因为它依然包含着对旧`commit`的引用. 使用 `--expire=now` 参数, 确保它在目前为止到期了. 如果没有该参数, 只会移除超过`90`天的`reflog`.
+以下命令会使`reflog`到期, 因为它依然包含着对旧`commit`的引用.
+使用 `--expire=now` 参数, 确保它在目前为止到期了. 如果没有该参数, 只会移除超过`90`天的`reflog`.
 
 ```bash
 git reflog expire --expire=now --all
@@ -526,19 +532,21 @@ git reflog expire --expire=now --all
 
 现在本地仓库依然包含着所有旧`commit`的对象, 但已经没有引用指向它们了, 这些对象需要被删除掉.
 此时可以使用 `git gc` 命令, `Git`的垃圾回收器会删除这些没有引用指向的对象.
-`git-gc`使用 `--prune` 参数来清理特定时期的对象, 默认情况下为`2`周, 指定`now`将删除所有这些对象而没有时期限制.
+`git-gc`使用 `--prune` 参数来清理特定时期的对象,
+默认情况下为`2`周, 指定`now`将删除所有这些对象而没有时期限制.
 
 ```bash
 git gc --prune=now
 ```
 
-让我们看看你省了多少空间.
+让我们看看你省了多少空间:
 
 ```bash
 git count-objects -v
 ```
 
-可以从 `size` 的值看出, 这个大文件还在你的松散对象中, 并没有消失; 但是它不会在推送或接下来的克隆中出现, 这才是最重要的.
+可以从 `size` 的值看出, 这个大文件还在你的松散对象中, 并没有消失;
+但是它不会在推送或接下来的克隆中出现, 这才是最重要的.
 如果真的想要删除它, 可以通过有 `--expire` 选项的 `git prune` 命令来完全地移除那个对象:
 
 ```bash
@@ -546,7 +554,7 @@ git prune --expire now
 git count-objects -v
 ```
 
-用`du -sh`查看文件夹的体积
+用`du -sh`查看文件夹的体积:
 
 ```bash
 du -sh .git
@@ -555,7 +563,7 @@ du -sh .git
 ### 提交重写的历史到远程
 
 如果确认所做的删除大文件操作没有问题, 就可以提交到远程仓库了, 一旦提交, 再也没有办法恢复到原来的状态.
-一定要小心谨慎! 一定要小心谨慎! 一定要小心谨慎!
+!!!一定要小心谨慎!!!
 
 先进行备份工作, 以免出现问题:
 
@@ -565,9 +573,9 @@ mkdir gitthin_mirror && cd gitthin_mirror
 git push --mirror git@github.com:gravitional/note.git
 ```
 
-`git@github.com:gravitional/note.git`是你的项目在`gitee`上的地址.
+`git@github.com:gravitional/note.git` 是你的项目在`gitee`上的地址.
 
-再回到刚才做的已经瘦身的`Git`仓库
+再回到刚才做的已经瘦身的`Git`仓库:
 
 ```bash
 $ cd ~/Desktop/gitthin/gitthin
@@ -577,21 +585,12 @@ $ cd ~/Desktop/gitthin/gitthin
 
 ```bash
 git push --mirror git@github.com:gravitional/note.git
-```
-
-为了确保都已同步, 再执行以下命令:
-
-```bash
+# 为了确保都已同步, 再执行以下命令:
 git push --all --force
 git push --tags --force
 ```
 
-+ `git push --mirror`
-
-不用一个一个`ref`的指定, 直接推送所有`refs/`下的所有 `ref` 到远程仓库, 也就是`镜像`.
-包括但不限于 `refs/heads/`, `refs/remotes/` 和 `refs/tags/`.
-新创建的本地 `refs` 将被推送到远程端, 本地更新的 `refs` 将被强制更新到远程端, 而删除的 `refs` 将从远程端删除.
-如果配置选项 `remote.<remote>.mirror` 被设置, 这将是默认行为.
+`--mirror` 选项强制更新远程仓库的所有`refs`, 以和本地保持一致.
 
 ### 更新其他的clone
 

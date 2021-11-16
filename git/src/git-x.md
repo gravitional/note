@@ -39,7 +39,7 @@ Git 提供了一个叫做 `git config` 的工具, 专门用来配置或读取相
 
 + `/etc/gitconfig` 文件: 系统中对所有用户都普遍适用的配置. 若使用 `git config` 时用 `--system` 选项, 读写的就是这个文件.
 + `~/.gitconfig` 文件: 用户目录下的配置文件只适用于该用户. 若使用 `git config` 时用 `--global` 选项, 读写的就是这个文件.
-+ 当前仓库的 `Git` 目录中的配置文件(也就是工作目录中的 `.git/config` 文件): 这里的配置仅仅针对当前仓库有效. 
++ 当前仓库的 `Git` 目录中的配置文件(也就是工作目录中的 `.git/config` 文件): 这里的配置仅仅针对当前仓库有效.
 每一个级别的配置都会覆盖上层的相同配置, 所以 `.git/config` 里的配置会覆盖 `/etc/gitconfig` 中的同名变量.
 此外, Git 还会尝试找寻 `/etc/gitconfig` 文件, 只不过看当初 Git 装在什么目录, 就以此作为根目录来定位.
 
@@ -236,7 +236,7 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
 
 使用`source`中的某些内容, 还原`工作树`中的`<pathspec>`.
 如果某个`路径`已被`git`追踪, 但在`source`中它不存在, 则会删除它以匹配`source`的状态.
-还可以使用 `--staged` 选项, 将此命令用于还原`index`中的内容, 
+还可以使用 `--staged` 选项, 将此命令用于还原`index`中的内容,
 或通过 `--staged --worktree` 同时还原`working tree`和`index`.
 
 + 使用给定`树对象`中的内容, 还原`working tree`文件.
@@ -249,7 +249,7 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
 如果未指定, 则 `working tree` 的默认还原源为 `index` , 而 `index`的默认还原源为 `HEAD` .
 当同时指定了 `--staged` 和 `--worktree` 时, 则必须指定 `--source` .
 
-+ 指定要还原的对象: 如果未给出, 默认还原 `working tree` . 
++ 指定要还原的对象: 如果未给出, 默认还原 `working tree` .
 
 ```git
 -W, --worktree ; 工作区
@@ -260,7 +260,7 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
 
 ```bash
 git restore --source master~2 Makefile
-# or 
+# or
 git restore --source=9ea00d1 parton.note.1.nb
 ```
 
@@ -269,7 +269,13 @@ git restore --source=9ea00d1 parton.note.1.nb
 切换分支或者恢复 `working tree` 中的文件
 
 ```bash
-git checkout [<tree-ish>] [--] <pathspec>... ​
+git checkout [-q] [-f] [-m] [<branch>]
+git checkout [-q] [-f] [-m] --detach [<branch>]
+git checkout [-q] [-f] [-m] [--detach] <commit>
+git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
+git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
 ```
 
 用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `paths`.
@@ -329,7 +335,7 @@ git reset --hard branch2
 
 ### 三者的区别
 
-有关这三个命令之间的差异, 见["Reset, restore and revert" in git(1)](https://git-scm.com/docs/git#_reset_restore_and_revert). 
+有关这三个命令之间的差异, 见["Reset, restore and revert" in git(1)](https://git-scm.com/docs/git#_reset_restore_and_revert).
 有三个名称相似的命令: `git reset`, `git restore`和 `git revert` .
 
 + [git-revert (1)][]; 将产生新的 `commit` , 新 `commit` 将还原旧 `commit` 所做的更改.
@@ -371,25 +377,33 @@ ref: [git重命名文件夹](https://www.jianshu.com/p/e886fde18ba0)
 用如下命令来生成 `sshkey`:
 
 ```bash
-ssh-keygen -t rsa -C "xxxxx@xxxxx.com"
+ssh-keygen -t rsa -C "abc@def.com"
 # Generating public/private rsa key pair...
 ```
 
-注意: 这里的 `xxxxx@xxxxx.com` 只是生成的 `sshkey` 的名称, 并不约束或要求具体命名为某个邮箱.
-
-现网的大部分教程均讲解的使用邮箱生成, 其一开始的初衷仅仅是为了便于辨识所以使用了邮箱
-复制生成后的 `ssh key`, 在仓库主页`管理`页面中, 添加生成的 public key 添加到仓库中.
+复制生成后的ssh key, 一般在 `~/.ssh/id_rsa.pub`, 在仓库主页`管理`页面中, 添加生成的 public key 添加到仓库中.
 
 添加后, 在终端中输入下面的命令, 来检测是否能成功连接
 
 ```bash
-ssh -T git@gitee.com
-# -T      Disable pseudo-terminal allocation.
+ssh -T git@gitee.com # -T  禁止分配伪终端
 ```
 
 首次使用需要确认并添加主机到本机SSH可信列表. 若返回 `Hi XXX! You've successfully authenticated,....` 内容, 则证明添加成功.
-
 添加成功后, 就可以使用SSH协议对仓库进行操作了.
+
+***
+ssh-keygen 选项说明;
+
++ `-C comment`; 提供一个新注释. 上面的 `abc@def.com` 只是生成的 `sshkey` 的名称, 并不约束或要求具体命名为某个邮箱, 邮箱只是为了便于识别
++ `-t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa`; 指定要创建的密钥的类型.  可能的值是 "dsa", "ecdsa", "ecdsa-sk", "ed25519", "ed25519-sk", 或 "rsa".
+当使用RSA CA密钥签署证书时, 该标志也可用于指定所需的签名类型.  可用的RSA签名变体是 "ssh-rsa"(SHA1签名, 不推荐), "rsa-sha2-256 "和 "rsa-sha2-512"(默认).
+
+***
+ssh 选项说明;
+
++ `-T` ; 禁用伪终端分配.
++ `-t` ; 强制进行伪终端分配.  这可以用来在远程机器上执行任意的, 基于屏幕的程序, 这可能非常有用, 例如在实现菜单服务时.  多个`-t`选项强制分配 `tty`, 即使 `ssh` 没有本地 `tty`.
 
 ### 远程仓库操作
 
@@ -418,10 +432,13 @@ git remote set-url --delete [--push] <远程仓库名> <url>
 
 [git 本地仓库同时推送到多个远程仓库](https://blog.csdn.net/fox9916/article/details/79386169)
 
-先准备两个空的远程仓库, 如果远程仓库里有 `readme` 这样的文件, 先 `pull` 一下, 如果 `pull` 的时候失败, 提示: `fatal: refusing to merge unrelated histories`
+先准备两个空的远程仓库, 如果远程仓库里有 `readme` 这样的文件, 先 `pull` 一下.
+如果 `pull` 的时候失败, 提示: `fatal: refusing to merge unrelated histories`,
+这是由于本地仓库和远程仓库的历史没有联系, git 拒绝合并, 我们添加选项让它强行合并,
 
-那么在进行 `git pull` 时, 添加一个可选项
-`git pull origin master --allow-unrelated-histories`
+```bash
+git pull origin master --allow-unrelated-histories
+```
 
 有两种方法
 
@@ -461,14 +478,15 @@ git remote set-url --add  origin git@xxxx2
 grset --add  origin git@xxxx2
 ```
 
-查看远程仓库情况. 可以看到 `origin` 远程仓库有两个 `push` 地址. 这种方法的好处是每次只需要 `push` 一次就行了.
+查看远程仓库情况. 可以看到 `origin` 远程仓库有两个 `push` 地址. 
+这种方法的好处是每次只需要 `push` 一次就行了.
 
 ```bash
 git remote -v
 git push origin master:master
 ```
 
-另外手动更改本地仓库`/.git/config`文件也是可以的, 改成如下格式
+另外手动更改本地仓库`.git/config`文件也是可以的, 改成如下格式
 
 ```bash
 [remote "origin"]
@@ -477,8 +495,7 @@ git push origin master:master
    fetch = +refs/heads/*:refs/remotes/github/*
 ```
 
-下面介绍命令语法
-***
++ 命令语法:
 
 ```bash
 git remote get-url [--push] [--all] <name>
@@ -491,7 +508,7 @@ git remote set-url --delete [--push] <name> <url>
 
 `--push `, 设置push URLs 而不是 fetch URLs
 `--add`, 不改变已经存在的 URLs, 添加新 URL
-`--delete`, 不改变已经存在的 URLs, 删除 `<name>` 上匹配 regex `<url>`的URLs.Trying to delete all non-push URLs is an error.
+`--delete`, 不改变已经存在的 URLs, 删除 `<name>` 上匹配正则 `<url>`的 地址. 试图删除所有 non-push URLs 将导致错误.
 
 ### 远程分支
 
@@ -1014,10 +1031,19 @@ git push origin --force 'refs/tags/*'
 git push origin --force 'refs/replace/*'
 ```
 
+使用 `git-push` 的 `--mirror` 选项是等价的:
+
+```bash
+git push --mirror git@github.com:gravitional/note.git
+# 为了确保都已同步, 再执行以下命令:
+git push --all --force
+git push --tags --force
+```
+
 ### 更新其他的clone
 
 在过滤存储库, 并重写提交历史后, 将更改`强制推送`到远程服务器之后.
-现在要更新该`存储库`的每一份 `clone` , 仅靠常用的 `pull` 是无法做到这一点的.
+现在要更新该仓库的每一份 `clone` , 仅靠常用的 `pull` 是无法做到这一点的.
 
 从远程服务器获取存储库, 再使用 `git reset` 将 `HEAD` 移动到 `origin/master`.
 
@@ -1078,14 +1104,14 @@ git gc --prune=now
 
 ## git-filter-repo
 
-      git filter-repo --analyze
-      git filter-repo [<path_filtering_options>]
-      [<content_filtering_options>]
-           [<ref_renaming_options>]
-           [<commit_message_filtering_options>]
-           [<name_or_email_filtering_options>]
-           [<parent_rewriting_options>]
-           [<generic_callback_options>] [<miscellaneous_options>]
+    git filter-repo --analyze
+    git filter-repo [<path_filtering_options>]
+    [<content_filtering_options>]
+        [<ref_renaming_options>]
+        [<commit_message_filtering_options>]
+        [<name_or_email_filtering_options>]
+        [<parent_rewriting_options>]
+        [<generic_callback_options>] [<miscellaneous_options>]
 
 ### 描述
 
@@ -1455,9 +1481,9 @@ gdw='git diff --word-diff'
 
 选项:
 
-+ `git checkout -b|-B <new_branch> [<start point>]`; 
++ `git checkout -b|-B <new_branch> [<start point>]`;
 + 指定 `-b` 选项会创建新分支, 如同调用了 `git branch` 一样, 然后check out到新分支一样.
-可以使用`--track ` or ` --no-track`选项, 它们会被传递给 `git branch` . 为了方便起见, `--track ` without ` -b`意味着创建新分支. 
+可以使用`--track ` or ` --no-track`选项, 它们会被传递给 `git branch` . 为了方便起见, `--track ` without ` -b`意味着创建新分支.
 如果给的是 `-B` , 新分支会被创建, 或者直接 `reset` 已存在的分支, 相当于`git branch -f <branch> [<start point>] ; git checkout <branch>`
 
 新版本的 git 也可以使用 `git-switch`, 更不容易混淆:
@@ -1466,7 +1492,7 @@ gdw='git diff --word-diff'
 
 + gsw='git switch' ; 切换到新分支
 + gswc='git switch -c' ; 创建并切换到新分支
-+ git switch -C' ; 创建并切换到新分支, 如果名称已经存在，强制切换到起始点, 默认是 HEAD
++ git switch -C' ; 创建并切换到新分支, 如果名称已经存在, 强制切换到起始点, 默认是 HEAD
 
 ### git-cherry-pick
 

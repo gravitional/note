@@ -104,10 +104,16 @@ Note the quotes around `*.c` The file `hello.c` will also be restored, even thou
 命令`git rm`用于删除一个文件.
 如果一个文件已经被提交到版本库, 那么你永远不用担心误删, 但是要小心, 你只能恢复文件到最新版本, 你会丢失最近一次提交后你修改的内容.
 
-### checkout还原文件
+## checkout 还原文件
 
 ```bash
-git checkout [<tree-ish>] [--] <pathspec>... ​
+git checkout [-q] [-f] [-m] [<branch>]
+git checkout [-q] [-f] [-m] --detach [<branch>]
+git checkout [-q] [-f] [-m] [--detach] <commit>
+git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>…​
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
+git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>…​]
 ```
 
 用 **index**或者`<tree-ish>`(通常是一个`commit`)里面的内容替换`working tree`里面的 paths.
@@ -120,6 +126,24 @@ git checkout [<tree-ish>] [--] <pathspec>... ​
 可以选择`merge`的特定一方的内容, 使用选项`--ours` or `--theirs`.
 
 使用`-m`选项, 可以抛弃对`working tree`的更改, 恢复到 the original conflicted merge result
+
+### 孤儿分支
+
+    git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+
+创建一个新的孤儿分支, 命名为 `<new_branch>`, 从 `<start_point>` 开始, 并切换到它.
+在这个新分支上的第一次提交将没有父分支, 它将是一个新历史的根, 与所有其他分支和提交完全断开.
+
+`index`和`working tree`会被调整, 如同你之前运行过 `git checkout <start_point>` .
+这让你可以通过简单地运行 `git commit -a` 来进行 root commit, 从而启动新的历史,
+记录一组与 `<start_point>` 大致相似的文件路径.
+
+当你想发布一个`commit`的树形式, 而不想暴露其完整的历史时, 这可能很有用.
+你可能需要这样的功能, 来发布一个开源项目的分支, 这个分支的当前树是 "干净的", 但它的全部历史包含了专有的或其他冗杂的代码.
+
+如果你想开始一个不相连历史, 记录一组与 `<start_point>` 完全不同的文件路径,
+那么你应该在创建孤儿分支后, 立即清除 `index`和`working tree`, 即在工作树的顶层运行 `git rm -rf`.
+之后, 你就可以准备你的新文件了, 通过从其他地方拷贝, 从压缩包中提取, 或者重新填充工作树等等.
 
 ## 分支管理
 
