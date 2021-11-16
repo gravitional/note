@@ -1445,9 +1445,9 @@ gdw='git diff --word-diff'
 + `-m`: 添加提交信息, 可以给出多个 `-m` , 会被当作多个段落被合并.
 + `-s`, `-S` :签名相关
 
-### checkout cherry-pick
+### checkout
 
-+ `gcb`='git checkout -b'
++ `gcb`='git checkout -b' ; 创建并切换到新分支
 + `gco`='git checkout'
 + `gcp`='git cherry-pick'
 + `gcpa`='git cherry-pick --abort'
@@ -1455,19 +1455,27 @@ gdw='git diff --word-diff'
 
 选项:
 
-+ `git checkout -b|-B <new_branch> [<start point>]`:
-指定 `-b` 选项会创建新分支, 如同调用了 `git branch` 一样, 然后check out到新分支一样.
-可以使用`--track ` or ` --no-track`选项, 它们会被传递给 `git branch` .
-为了方便起见, `--track ` without ` -b`意味着创建新分支.
-如果给的是 `-B` , 新分支会被创建, 或者直接 `reset` 已存在的分支,
-相当于`git branch -f <branch> [<start point>] ; git checkout <branch>`
++ `git checkout -b|-B <new_branch> [<start point>]`; 
++ 指定 `-b` 选项会创建新分支, 如同调用了 `git branch` 一样, 然后check out到新分支一样.
+可以使用`--track ` or ` --no-track`选项, 它们会被传递给 `git branch` . 为了方便起见, `--track ` without ` -b`意味着创建新分支. 
+如果给的是 `-B` , 新分支会被创建, 或者直接 `reset` 已存在的分支, 相当于`git branch -f <branch> [<start point>] ; git checkout <branch>`
 
-`git-cherry-pick` :从已经存在的一系列 `commits` 中应用改变
+新版本的 git 也可以使用 `git-switch`, 更不容易混淆:
+
+    git switch [<options>] (-c|-C) <new-branch> [<start-point>]
+
++ gsw='git switch' ; 切换到新分支
++ gswc='git switch -c' ; 创建并切换到新分支
++ git switch -C' ; 创建并切换到新分支, 如果名称已经存在，强制切换到起始点, 默认是 HEAD
+
+### git-cherry-pick
+
++ `git-cherry-pick` :从已经存在的一系列 `commits` 中应用改变
 
 给出一个或者多个已经存在的 `commits` , 然后 `apply` 每个的 `change` , 对于每个改变生成一个 `commit` .
 需要 `working tree` 是 `clean` 的.  (从 HEAD commit 之后没有修改过).
 
-选项:
++ 选项:
 
 `--abort`: 取消操作, 回复到pre-sequence 状态.
 `--continue`: 继续操作, 利用`.git/sequencer.`中的信息. 可以在`cherry-pick ` or ` revert`失败, 解决冲突之后使用.
