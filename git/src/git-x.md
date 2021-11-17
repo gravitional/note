@@ -440,9 +440,9 @@ git remote set-url --delete [--push] <远程仓库名> <url>
 git pull origin master --allow-unrelated-histories
 ```
 
-有两种方法
+有两种方法:
 
-#### git remote add 命令
++ git remote add 命令:
 
 将本地仓库与远程仓库关联起来, 再查看一下远程仓库情况
 
@@ -463,7 +463,7 @@ git  push origin master:master
 git  push gitee master:master
 ```
 
-#### git remote set-url 命令
++ git remote set-url 命令
 
 另一种方法是使用 git remote set-url 添加多个仓库地址
 
@@ -478,7 +478,7 @@ git remote set-url --add  origin git@xxxx2
 grset --add  origin git@xxxx2
 ```
 
-查看远程仓库情况. 可以看到 `origin` 远程仓库有两个 `push` 地址. 
+查看远程仓库情况. 可以看到 `origin` 远程仓库有两个 `push` 地址.
 这种方法的好处是每次只需要 `push` 一次就行了.
 
 ```bash
@@ -486,7 +486,9 @@ git remote -v
 git push origin master:master
 ```
 
-另外手动更改本地仓库`.git/config`文件也是可以的, 改成如下格式
+#### 修改 config
+
+另外手动更改本地仓库`.git/config`文件也是可以的, 改成如下格式:
 
 ```bash
 [remote "origin"]
@@ -619,31 +621,28 @@ git push [远程仓库] --delete [branchname]
 
 ### 常见使用方法
 
-先运行 `checkout -b` 命令创建新分支
++ 先运行 `checkout -b` 命令创建新分支
 
-`git checkout -b branchname startpoint`
+        git checkout -b branchname startpoint
 
-然后用 `push -u` 命令推送到远程
++ 然后用 `push -u` 命令推送到远程:
 
-`git push -u origin <refspec>`
+        git push -u origin <refspec>
 
-第一次推送 `source` 分支的所有内容, 并把本地的 `source` 分支和远程的 `destination` 分支关联起来
+    第一次推送 `source` 分支的所有内容, 并把本地的 `source` 分支和远程的 `destination` 分支关联起来
 
 ***
-`git push`:
+`git push` 语法说明;
 
-`<refspec>...`
++ `<refspec>...`; `<refspec>`指定用 `source` 对象更新哪个 `destination` ref.
+    `<refspec> `的格式是: 可选的`+`号, 接着一个 `source object <src>` , 然后是`:`,
+    然后是the `destination ref <dst>`,就是`本地分支:远程分支`的格式,
 
-`<refspec>`指定用 `source object` 更新哪一个 `destination ref` .
-`<refspec> `的格式是: 可选的`+`号, 接着一个 `source object <src>` , 然后是`:`,
-然后是the `destination ref <dst>`,就是`本地分支:远程分支`的格式,
+    推送一个空的 `<src>` 相当于删除远程库中的 `<dst> ref` .
+    特殊的refspec `:` (or `+:` to allow non-fast-forward updates) ,
+    告诉Git推送匹配的分支: 如果远程库里存在和本地名字一样的分支, 就把本地分支推送过去.
 
-推送一个空的 `<src>` 相当于删除远程库中的 `<dst> ref` .
-特殊的refspec `:` (or `+:` to allow non-fast-forward updates) ,
-告诉Git推送匹配的分支: 如果远程库里存在和本地名字一样的分支, 就把本地分支推送过去.
-
-`--all`
-推送所有分支(i.e. `refs/heads/`下面的所有ref); 这时候不要再指定其他特定 `<refspec>` .
++ `--all` ; 推送所有分支(i.e. `refs/heads/`下面的所有ref); 这时候不要再指定其他特定 `<refspec>` .
 
 ## git diff
 
@@ -1424,7 +1423,7 @@ gdw='git diff --word-diff'
 + `gb`='git branch'
 + `gbD`='git branch -D' ; 与 `--delete --force`相同, 强制删除分支.
 + `gba`='git branch -a'; `--all`, 列出远程跟踪分支和本地分支. 与 `--list` 结合使用, 以匹配可选的模式.
-+ `gbd`='git branch -d'; `--delete`, 删除分支. 该分支必须完全被合并到上游, 或者在`HEAD`中, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游. 
++ `gbd`='git branch -d'; `--delete`, 删除分支. 该分支必须完全被合并到上游, 或者在`HEAD`中, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游.
 + `gbr`='git branch --remote'; ` --remotes`, 列出或删除远程跟踪分支(与 `-d` 一起使用).
 
 选项:
@@ -1505,28 +1504,49 @@ gdw='git diff --word-diff'
 `--abort`: 取消操作, 回复到pre-sequence 状态.
 `--continue`: 继续操作, 利用`.git/sequencer.`中的信息. 可以在`cherry-pick ` or ` revert`失败, 解决冲突之后使用.
 
-### gitk & log
+### git-log
 
-***
-
-1. `git-shortlog` - 总结 `git log` 的输出.
+`git-shortlog` - 总结 `git log` 的输出.
 
 选项:
 
-`-n`, `--numbered`:对输出结果进行排序, 按照每个提交者的提交数量, 而不是字母顺序.
-`-s`, `--summary`: 压缩 `commit` 描述, 只总结 `commit` 数量.
++ `-n`, `--numbered`:对输出结果进行排序, 按照每个提交者的提交数量, 而不是字母顺序.
++ `-s`, `--summary`: 压缩 `commit` 描述, 只总结 `commit` 数量.
++ `-g, --walk-reflogs`; 不是沿着 `commit`的祖先链(commit ancestry chain), 而是沿着时间顺序, 从最近的遍历到更早的 `reflog` 条目.
+    使用这个选项时, 你不能指定排除某些提交,
+    也就是说, 不能使用 `^commit`, `commit1...commit2` 和 `commit1...commit2` 的符号.
 
-***
-` gitk [<options>] [<revision range>] [--] [<path>...]`
+    如果使用 `--pretty` 格式, 而不是 `oneline` 和 `reference`(原因显而易见),
+    这将导致输出中包含两行额外的信息, 从 `reflog` 中提取.
+    输出中的 `reflog` 代号可以显示为 `ref@{Nth}`. 其中 `Nth` 是 `reflog` 中的逆序索引(reverse-chronological),
+    或显示为 `ref@{timestamp}`, 带有该条目的时间戳, 取决于一些规则:
 
-2. `gk`='\gitk --all --branches'
-3. `gke`='\gitk --all $(git log -g --pretty=%h)'
+    1. 如果起点被指定为 `ref@{Nth}`, 显示 `index` 格式.
+    2. 如果起点被指定为 `ref@{now}`, 显示 `时间戳`(timestamp) 格式.
+    3. 如果两者都没有使用, 但在命令行中给出了`--date`, 则以 `--date` 所要求的格式显示时间戳.
+    4. 否则, 显示 `index` 格式.
 
-`--all`:把`refs/`下的所有条目, 包括 `HEAD` 都用 `<commit>`的形式列出
-`--branches[=<pattern>]`: 类似 `--all` , 但是要匹配 `shell glob` 模式, `?`, `*`, or `[`, `/*`
-`--tags[=<pattern>]`: 类似`--branches`
+    在 `--pretty=oneline` 选项下, 这些信息将作为`commit`信息的前缀, 放在同一行.
+    此选项不能与 `--reverse` 结合使用. 参见 git-reflog(1).
+    在 `--pretty=reference` 下, 这些信息将完全不显示.
 
-`gitk`可以查看单个文件的提交历史, 使用`gitk filepath`
+### gitk
+
++ ` gitk [<options>] [<revision range>] [--] [<path>...]`
+
+```zsh
+gk='\gitk --all --branches &!'
+gke='\gitk --all $(git log -g --pretty=%h) &!'
+```
+
+>`git log -g --pretty=%h`  中的 `%h` 占位符表示缩写的 `commit` 哈希值, 即 7 位哈希
+>`&|` 或 `&!`; 是 `bash/Zsh ` 的任务控制语法, 表示让当前 `shell` 忘记这个任务, 即 `disown`.
+>这样即使关闭当前`shell`, 任务也可以继续运行.
+
++ `--all`:把`refs/`下的所有条目, 包括 `HEAD` 都用 `<commit>`的形式列出
++ `--branches[=<pattern>]`: 类似 `--all` , 但是要匹配 `shell glob` 模式, `?`, `*`, or `[`, `/*`
++ `--tags[=<pattern>]`: 类似`--branches`
++ `gitk`可以查看单个文件的提交历史, 使用`gitk filepath`
 
 ### restore
 
@@ -1716,7 +1736,7 @@ starting with a `+/-/ ` character at the beginning of the line and extending to 
 
 + `grm`='git rm'
 + `grmc`='git rm --cached'
-+ `git-gc` Cleanup unnecessary files and optimize the local repository
++ `git-gc` ; 清理不必要的文件, 优化本地存储库
 
 ## hosts
 

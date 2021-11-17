@@ -1,6 +1,7 @@
 # Summary
 
-- [日常使用](linux-1-daily.md)
+- [日常使用1](linux-1-daily.md)
+- [日常使用2](linux-1-tricks.md)
 - [报错维护](linux-1-exception.md)
 - [systemd](linux-1-systemd.md)
 - [gnome 桌面](linux-1-gnome.md)
