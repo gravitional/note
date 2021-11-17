@@ -108,7 +108,7 @@ $ git config --global merge.tool vimdiff
 
 `GitHub`客户端将许多操作整合成一个功能, 比如点击同步的时候, 实际上会执行
 
-+ `git pull --rebase`.  如果上述命令由于存在合并冲突而失败, 则会退而执行 `git pull --no-rebase`.
++ `git pull --rebase`; 如果上述命令由于存在合并冲突而失败, 则会退而执行 `git pull --no-rebase`.
 + `git push`
 
 ### 在 PowerShell 中使用 Git
@@ -1422,20 +1422,19 @@ gdw='git diff --word-diff'
 ### branch
 
 + `gb`='git branch'
-+ `gbD`='git branch -D'
-+ `gba`='git branch -a'
-+ `gbd`='git branch -d'
-+ `gbr`='git branch --remote'
++ `gbD`='git branch -D' ; 与 `--delete --force`相同, 强制删除分支.
++ `gba`='git branch -a'; `--all`, 列出远程跟踪分支和本地分支. 与 `--list` 结合使用, 以匹配可选的模式.
++ `gbd`='git branch -d'; `--delete`, 删除分支. 该分支必须完全被合并到上游, 或者在`HEAD`中, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游. 
++ `gbr`='git branch --remote'; ` --remotes`, 列出或删除远程跟踪分支(与 `-d` 一起使用).
 
 选项:
 
 + `-D`: 与 `--delete --force`相同.
 + `-d, --delete` ;删除分支. 该分支必须完全被合并到上游, 如果没有使用 `--track` 或 `--set-upstream-to` 设置上游, or in `HEAD`.
 + `-f, --force`: 将 `<branchname>` 重置为 `<startpoint>`, 即使 `<branchname>` 已经存在.  如果没有 `-f`, `git branch` 将拒绝更改现有分支.
-结合 `-d` (或 `--delete` ), 允许删除分支, 而不管其合并状态如何.
-结合 `-m` (或 `--move` ), 即使新分支名称已经存在, 也允许重命名分支, 同样适用于 `-c` (或 `--copy` ).
+    + 结合 `-d` (或 `--delete` ), 允许删除分支, 而不管其合并状态如何.
+    + 结合 `-m` (或 `--move` ), 即使新分支名称已经存在, 也允许重命名分支, 同样适用于 `-c` (或 `--copy` ).
 + `-m` `-M`: 对分支进行重命名, 并且把 `reflog` 出现的分支名字一并更改. 如果新分支已经存在, 使用 `-M` 强迫重命名
-+ `-r`, ` --remotes` 列出或删除(与 `-d` 一起使用)远程跟踪分支.
 
 ### add
 
