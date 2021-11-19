@@ -222,7 +222,7 @@ Unloading the module doesn't unload the assembly from the PSReadLine module (by 
 虽然 `GitWeb` 相当简单.  但如果你正在寻找一个更现代, 功能更全的 Git 服务器, 这里有几个开源的解决方案可供你选择安装.
 因为 `GitLab` 是其中最出名的一个, 我们将它作为示例并讨论它的安装和使用.  这比 `GitWeb` 要复杂的多并且需要更多的维护, 但它的确是一个功能更全的选择.
 
-## 还原文件
+## 还原文件,恢复
 
 ### git-restore
 
@@ -234,39 +234,37 @@ git restore [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-fro
 git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
 ```
 
-使用`source`中的某些内容, 还原`工作树`中的`<pathspec>`.
-如果某个`路径`已被`git`追踪, 但在`source`中它不存在, 则会删除它以匹配`source`的状态.
-还可以使用 `--staged` 选项, 将此命令用于还原`index`中的内容,
-或通过 `--staged --worktree` 同时还原`working tree`和`index`.
-
++ 使用`source`中的某些内容, 还原`工作树`中的`<pathspec>`.
++ 如果某个`路径`已被`git`追踪, 但在`source`中它不存在, 则会删除它以匹配`source`的状态.
++ 还可以使用 `--staged` 选项, 将此命令用于还原`index`中的内容,
++ 或通过 `--staged --worktree` 同时还原`working tree`和`index`.
 + 使用给定`树对象`中的内容, 还原`working tree`文件.
 
-```git
--s <tree>, --source=<tree>
-```
+    ```git
+    -s <tree>, --source=<tree>
+    ```
 
-可以通过与之关联的 `commit` , `branch`或 `tag` 来指定 `source tree` .
-如果未指定, 则 `working tree` 的默认还原源为 `index` , 而 `index`的默认还原源为 `HEAD` .
-当同时指定了 `--staged` 和 `--worktree` 时, 则必须指定 `--source` .
-
++ 可以通过与之关联的 `commit` , `branch`或 `tag` 来指定 `source tree` .
++ 如果未指定, 则 `working tree` 的默认还原源为 `index` , 而 `index`的默认还原源为 `HEAD` .
++ 当同时指定了 `--staged` 和 `--worktree` 时, 则必须指定 `--source` .
 + 指定要还原的对象: 如果未给出, 默认还原 `working tree` .
 
-```git
--W, --worktree ; 工作区
--S, --staged ; 暂存区
-```
+    ```git
+    -W, --worktree ; 工作区
+    -S, --staged ; 暂存区
+    ```
 
-指定 `--staged` 则只还原 `index` , 也可以同时指定两个, 并且都还原. 例子:
++ 指定 `--staged` 则只还原 `index` , 也可以同时指定两个, 并且都还原. 例子:
 
-```bash
-git restore --source master~2 Makefile
-# or
-git restore --source=9ea00d1 parton.note.1.nb
-```
+    ```bash
+    git restore --source master~2 Makefile
+    # or
+    git restore --source=9ea00d1 parton.note.1.nb
+    ```
 
 ### git-checkout
 
-切换分支或者恢复 `working tree` 中的文件
+切换分支, 或者恢复 `working tree` 中的文件
 
 ```bash
 git checkout [-q] [-f] [-m] [<branch>]
@@ -278,14 +276,49 @@ git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-
 git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
 ```
 
-用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `paths`.
-当给出一个 `<tree-ish>` 的时候, 与 `<pathspec>` 匹配的路径会在 `index` 和`working tree` 里面都更新.
++ 用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `<pathspec>` (可以有多个指定).
++ 当给出一个 `<tree-ish>` 的时候, 匹配 `<pathspec>` 的文件路径(path), 会在 `index ` 和 `working tree` 里面都更新.
++ `index`中可能包含有之前合并失败的条目 . 如果你想 `checkout ` 这样的条目, 默认情况下会失败, 什么都不会发生.
+    使用 `-f` 选项忽略未合并的项目.
++ 通过使用`--ours`或`--theirs`, 可以从`index` 中检查出, 合并的特定一方的内容.
++ 使用`-m`, 对`工作树`文件所做的修改可以被丢弃, 以重新创建原先产生冲突(conflicted)的合并结果.
 
-`index` 中可能包含有之前合并失败的 `entries` .默认情况下, 如果你想 `checkout` 一个这样的entries, 会失败, 什么都不会发生. 使用 `-f` 选项忽略未合并的项目.
+#### detached
 
-当合并的时候, 特定来源方的内容可以通过使用 `--ours ` or ` --theirs`从 `index` 中取出.
+[DETACHED HEAD](https://git-scm.com/docs/git-checkout#_detached_head)
 
-使用 `-m` , 对 `working tree` 所做的更改将会被丢弃, 重新创建冲突的 `merge` 结果.
+如果用 `git checkout <commit>` 切换到某次提交,
+那么 `HEAD`不是指向某个指针的(如 `master`, `dev` ), 所以是游离的 -- `detached` ,
+
+如果这个时候进行更改, 并提交, 相当于创建了匿名分支, 所作的提交日后无法再索引到.
+它们将被 `git` 的默认回收机制所回收. 解决方法是创建新分支:
+
+```bash
+git checkout -b new
+```
+
+重要的是要意识到, 此时没有任何东西会指向提交 `f`.
+提交 f(以及延伸的提交 e)最终会被 Git 的例行垃圾回收程序删除, 除非我们在这之前创建一个引用.
+如果我们还没有离开提交 f, 那么下面的任一命令都可以创建对它的引用.
+
+```bash
+$ git checkout -b foo
+$ git branch foo
+$ git tag foo
+```
+
+创建一个新的分支 foo, 它引用了提交的 f, 然后更新 HEAD 以引用分支 foo.
+换句话说, 这条命令之后, 我们将不再处于分离的 HEAD 状态.
+类似地, 创建一个新的分支 foo, 它指向提交的 f, 但让 HEAD 脱离.
+创建一个新的标签 foo, 它引用了提交的 f, 但 HEAD 被分离.
+
+如果我们已经离开了提交 f, 那么我们必须首先恢复它的对象名称(通常是通过使用 git reflog), 然后我们可以为它创建一个引用.
+例如, 要查看 HEAD 最后提到的两个提交, 我们可以使用以下任一命令.
+
+```bash
+$ git reflog -2 HEAD # 或
+$ git log -g -2 HEAD
+```
 
 ### git-reset
 
@@ -296,9 +329,9 @@ git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
 git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 ```
 
-在前三种形式中, 将 `entries` 从 `<tree-ish>` 复制到 `index` .
-在最后一种形式中, 将当前分支头( `HEAD` )设置为 `<commit>` , 可以选择修改 `index` 和 `working tree` 以使其匹配.
-` <tree-ish>` / `<commit>`在所有形式中均默认为 `HEAD` .
++ 在前三种形式中, 将 `entries` 从 `<tree-ish>` 复制到 `index` .
++ 在最后一种形式中, 将当前分支头( `HEAD` )设置为 `<commit>` , 可以选择修改 `index` 和 `working tree` 以使其匹配.
+` <tree-ish>` / `<commit>`在所有形式中的默认值都是 `HEAD` .
 
 ***
 `git reset --hard <commit>` or 别名 `grhh <commit>`
@@ -710,41 +743,6 @@ You can omit any one of `<commit>`, which has the same effect as using HEAD inst
 更完整的关于拼写 `<commit>` 的方法, 见"SPECIFYING REVISIONS" in gitrevisions(7)
 然而, `diff`比较的是两个 endpoints, 而不是一个范围.
 所以 `<commit>..<commit> `and ` <commit>...<commit>`在这里指的不是范围.
-
-## 文件恢复
-
-### checkout 还原文件
-
-```bash
-git checkout [-q] [-f] [-m] [<branch>]
-git checkout [-q] [-f] [-m] --detach [<branch>]
-git checkout [-q] [-f] [-m] [--detach] <commit>
-git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
-git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
-git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
-git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
-```
-
-用 `index`或者 `<tree-ish>` (通常是一个 `commit` )里面的内容替换 `working tree` 里面的 `pathspec` (可以有多个指定).
-当给出一个 `<tree-ish>` 的时候, the`paths ` that match the ` <pathspec>`会在`index ` and in the ` working tree`里面都更新.
-
-`index`中可能包含有之前合并失败的 `entries` . 默认情况下, 如果你想 `checkout ` 一个这样的entries, 会失败, 什么都不会发生.
-使用 `-f` 选项忽略未合并的entries.
-
-The contents from a specific side of the merge can be checked out of the `index ` by using ` --ours ` or ` --theirs`.
-
-With `-m`, changes made to the working tree file can be discarded to re-create the original conflicted merge result.
-
-### detached
-
-如果用 `git checkout <commit>` 切换到某次提交, 那么 `HEAD`不是指向某个指针的(如 `master`, `dev` ), 所以是游离的 -- `detached` ,
-
-如果这个时候进行更改, 并提交, 相当于创建了匿名分支, 所作的提交日后无法再索引到.
-它们将被 `git` 的默认回收机制所回收.解决方法是创建新分支:
-
-```bash
-git checkout -b new
-```
 
 ## git rebase
 
@@ -1463,8 +1461,9 @@ gdw='git diff --word-diff'
 选项:
 
 + `-a`, `--all`: 自动 `stage` 所有被修改或删除的文件, 但是还没有被 `Git` 追踪的文件不受影响. 也就是跳过使用 `index` .
-+ `-v`, `--verbose`: 在提交信息的尾部, 展示 `HEAD` 和将要提交 `commit` 的 `diff` . 这个 `diff` 的输出行没有前置的`#`. 并且不是提交信息的一部分. See the commit.verbose configuration variable in git-config(1).
-如果使用两次,i.e. `-vv` , 则额外展示 `working tree` 和 `next commit` 的区别
++ `-v`, `--verbose`: 在提交信息的尾部, 展示 `HEAD` 和将要提交 `commit` 的 `diff` .
+    `diff` 的输出行没有前置的`#`. 并且不是提交信息的一部分. 参考 git-config(1) 中的 `commit.verbose` 配置变量.
+    如果使用两次,i.e. `-vv` , 则额外展示 `working tree` 和 下次 `commit` 的区别.
 + `--amend`: 创造一个新的 `commit` , 代替当前分支的 `tip` . 提交信息基于上次的 `commit` .
 + `-m`: 添加提交信息, 可以给出多个 `-m` , 会被当作多个段落被合并.
 + `-s`, `-S` :签名相关

@@ -149,8 +149,7 @@ windows 管理工具: `%windir%\system32\control.exe\ /name Microsoft.Administra
 
 ### powershell 配置
 
-`oh-my-posh`发展到第三版
-
+`oh-my-posh`发展到第三版;
 [Oh my Posh 3](https://zhuanlan.zhihu.com/p/308481493)
 [A prompt theme engine for any shell.](https://ohmyposh.dev/docs/upgrading)
 
@@ -175,26 +174,32 @@ Get-PSReadLineKeyHandler -Chord Enter, Shift+Enter # 查看特定按键的 key m
 [第 9 章 - 函数](https://docs.microsoft.com/zh-cn/powershell/scripting/learn/ps101/09-functions?view=powershell-7.1#parameter-validation)
 
 ***
-下面给出一个 `powershell`配置的例子.`vim $PROFILE`即可打开这个配置文件
+下面给出一个 `powershell`配置的例子. `vim $PROFILE`即可打开这个配置文件
 
 ```powershell
 Import-Module posh-git # 引入 posh-git
 Import-Module oh-my-posh # 引入 oh-my-posh
+import-Module -Name Terminal-Icons # 引入终端图标
 
 # Set-Theme Agnoster # 第二版设置主题为 Agnoster
-Set-PoshPrompt -Theme agnoster #第三版设置主体命令
+# Set-PoshPrompt -Theme agnoster #第三版设置主体命令,设置本地主题
+# Set-PoshPrompt -Theme cinnamon
+Set-PoshPrompt -Theme craver
 
 # PSReadLine 设置
 # 设置预测文本来源为历史记录并将光标移动到末尾
 $PSReadLineOptions = @{
-    PredictionSource = "History"
-    HistoryNoDuplicates = $true
+    PredictionSource              = "History"
+    HistoryNoDuplicates           = $true
     HistorySearchCursorMovesToEnd = $true
 }
 Set-PSReadLineOption @PSReadLineOptions
 
 Set-PSReadlineKeyHandler -Key Tab -Function Complete # 设置 Tab 键补全
 #Set-PSReadLineKeyHandler -Key "Ctrl+d" -Function MenuComplete # 设置 Ctrl+d 为菜单补全和 Intellisense
+if ($IsWindows) {
+    Set-PSReadLineKeyHandler -Key "Ctrl+a" -Function BeginningOfLine # 设置 Ctrl+a 移动到行首
+}
 Set-PSReadLineKeyHandler -Key "Ctrl+w" -Function BackwardKillWord # 设置 Ctrl+w 删除word
 Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo # 设置 Ctrl+z 为撤销
 Set-PSReadLineKeyHandler -Key "Ctrl+u" -Function BackwardKillLine # 删除到行首
@@ -206,34 +211,104 @@ Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward # 设置�
 
 Set-Alias edit vim #默认编辑器
 Set-Alias gh Get-Help # 查看命令帮助
-Set-Alias ll Get-ChildItem
-Set-Alias open Start-Process #打开的别名
 
 # 常用函数
-function  lss { Get-ChildItem | Format-Wide Name -Column 6 }
+# 如果是 unix, 就用
+if (  $IsLinux ) {
+    function la { /usr/bin/env ls --color=tty $args }
+    function lb { /usr/bin/env ls --color=tty  -l --human-readable $args }
+    function open { xdg-open $args }    # linux open,  MacOs 自带 open
+}
+if ( $IsMacOS ) {
+    function la { /usr/bin/env ls -G $args }
+    function lb { /usr/bin/env ls -Glh $args }
+}
+if ($IsWindows) {
+    Set-Alias open Start-Process  # `打开`的别名
+}
+# 成几列的样式查看文件
+function  lc { Get-ChildItem | Format-Wide Name -Column 6 }
+# 以MB 为单位查看文件大小
+function lh {
+    $unit = "MB";
+    Get-ChildItem -File $args | Select-Object Name, @{label = "Size($unit)"; expression = { ($_.length / "1$unit").ToString('F2') } }, @{l = "Days"; e = { ((Get-Date) - $_.LastAccessTime).Days } }
+
+}
 function .. { Set-Location .. }
 function ... { Set-Location ../.. }
 function .... { Set-Location ../../.. }
 # pwsh 6.2增加了对`-`和`+`作为路径参数值的支持. pwsh 维护了可以用`-`和`+`访问的最后20个位置的历史
 # git 常用命令
-function gcam  {  param ( [string]$message )
-git commit -a -m  $message
+function gcam {
+    param ( [string]$message )
+    git commit -a -m  $message
 }
-function ga  { git add $args }
-function gaa  { git add --all $args }
-function gpw  { git push $args }
-function glw  { git pull $args }
-function gbr  { git branch --remote $args }
-function gba  { git branch -a $args }
-function gcl  { git clone --recurse-submodules $args }
-function gst  { git status $args }
-function gd  { git diff $args }
-function gdca  { git diff --cached $args }
-function gdcw  { git diff --cached --word-diff $args }
-function gds  { git diff --staged $args }
-function gdw  { git diff --word-diff $args }
+function ga { git add $args }
+function gaa { git add --all $args }
+function grhh { git reset --hard $args }
+function gpw { git push $args }
+function glw { git pull $args }
+function gbr { git branch --remote $args }
+function gba { git branch -a $args }
+function gcl { git clone --recurse-submodules $args }
+function gst { git status $args }
+function gd { git diff $args }
+function gdca { git diff --cached $args }
+function gdcw { git diff --cached --word-diff $args }
+function gds { git diff --staged $args }
+function gdw { git diff --word-diff $args }
 function gfw { git fetch $args }
 function gkw { gitk --all --branches $args }
+# mathematica
+function mma { mathematica $args }
+function mms { mathematica -singleLaunch $args }
+# 查看文件夹占用体积的函数
+function Get-du {
+    param ([switch] $total, [switch] $inclueFile, [string] $path = '.', [string] $unit) # 使用 total 开关可以指定求总空间占用
+    if ($args) { $path = $args }
+    function selectUnit {
+        # 根据命令行参数，以及文件大小选择显示单位
+        if ($unit) { $selUnit = $unit }
+        elseif ($args -gt '1TB' ) { $selUnit = 'TB' }
+        elseif ($args -gt '1GB' ) { $selUnit = 'GB' }
+        elseif ($args -gt '1MB' ) { $selUnit = 'MB' }
+        elseif ($args -gt '1KB' ) { $selUnit = 'KB' }
+        else { $selUnit = 's' }
+        return $selUnit
+    }
+    # 执行文件体积统计任务
+    if ($total ) {
+        # 如果只统计总量
+        $totalSize = (Get-ChildItem -Path $path -Force -Recurse -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
+        $selUnit = selectUnit($totalSize)
+        write-host -fore green ("{0,8:N2} {1,-2} {2} {3,-20}" -f ($totalSize / "1$selUnit"), $selUnit, ' -- ', ( Resolve-Path $path))
+    }
+    # 用循环处理子项目, 如果 $inclueFile=True, 除了统计文件夹, 还统计文件
+    elseif ($inclueFile) {
+        $colItems = (Get-ChildItem $path | Sort-Object)
+    }
+    else {
+        $colItems = (Get-ChildItem $path | Where-Object { $_.PSIsContainer -eq $True } | Sort-Object)
+    }
+    foreach ($i in $colItems) {
+        $subFolderItems = (Get-ChildItem $i.FullName -recurse | Measure-Object -Sum { $_.Length } ) # 计算求和
+        $selUnit = selectUnit($subFolderItems.Sum)
+        $FileSize = ("{0:N2}" -f ($subFolderItems.Sum / "1$selUnit")) # 格式化字符串
+        write-host -fore green ("{0,8:N2} {1,-2} {2} {3,-20}" -f $FileSize, $selUnit, ' -- ', $i.FullName)
+    }
+}
+# 7z 批量压缩
+function  to7z {
+    if ( -not $args  ) {
+        throw 'Please input the file path, such as *'
+    }
+    else {
+        $lst = (Get-ChildItem -Path $args)
+        foreach ($f in $lst ) { 
+            7z a -pxxx -mx=0 ( $f.BaseName + '.7z' ) $f 
+        }
+    }
+}
 ```
 
 ### windows api
@@ -1036,9 +1111,9 @@ TMD "小可爱" 微信不支持 SM.MS 这种图床,可能是读取速度有点�
 
 + 使用 `Typora` 编写 `Markdown` , 通过配置`图床`插件, 自动将本地图片转成在线图片.
 + 先安装合适的`Typora`插件.  英文好的同学可以查看 [Typora 的官方参考](https://support.typora.io/Upload-Image/#configuration) :
-  + `mac` 用户: [iPic + Typora, 方便快捷地在 Markdown 中插图](https://sspai.com/post/36275).
-  + `windows` 用户: 安装 [PicGo app](https://picgo.github.io/PicGo-Doc/zh/guide/), 下载地址在 [PicGo.Github](https://github.com/Molunerfinn/PicGo/releases), 打开链接, 按下`Ctrl+F` 搜索`x64.exe` 安装包.如果网络原因不能访问`Github`, 可以下载 [网盘备份](https://www.aliyundrive.com/s/kSzsKeQRHB5).
-  + 下载之后,选择你喜欢的路径安装, 运行. 点击侧栏中的`SM.MS图床`, 下一步 `设定Token`.
+    + `mac` 用户: [iPic + Typora, 方便快捷地在 Markdown 中插图](https://sspai.com/post/36275).
+    + `windows` 用户: 安装 [PicGo app](https://picgo.github.io/PicGo-Doc/zh/guide/), 下载地址在 [PicGo.Github](https://github.com/Molunerfinn/PicGo/releases), 打开链接, 按下`Ctrl+F` 搜索`x64.exe` 安装包.如果网络原因不能访问`Github`, 可以下载 [网盘备份](https://www.aliyundrive.com/s/kSzsKeQRHB5).
+    + 下载之后,选择你喜欢的路径安装, 运行. 点击侧栏中的`SM.MS图床`, 下一步 `设定Token`.
 + 注册图床账号, 例如 [sm.ms](https://sm.ms/). 这一步我不是很熟悉,也许图床不注册也能用.
 这里以 `sm.ms` 为例, 注册, 验证邮箱之后, 网站右上角点击 `User->Dashboard`, -> 侧边栏选择 `API Token`, 点击 `Generate Secret Token-> 确定`, 文本框中会生成一段乱码,复制到上一步 `PicGo` 的输入栏里.
 + 测试一下: 在 `PicGo` 侧栏选择`上传区`. 随便拖张图片, 到 `PicGo` 的上传提示框, 应该会自动复制 `图片链接` 到 `剪贴板` . 上传框下面的`链接格式`可以更改生成链接的格式, 我们先保持默认的`Markdown` 就好.
