@@ -267,7 +267,7 @@ function Get-du {
     param ([switch] $total, [switch] $inclueFile, [string] $path = '.', [string] $unit) # 使用 total 开关可以指定求总空间占用
     if ($args) { $path = $args }
     function selectUnit {
-        # 根据命令行参数，以及文件大小选择显示单位
+        # 根据命令行参数, 以及文件大小选择显示单位
         if ($unit) { $selUnit = $unit }
         elseif ($args -gt '1TB' ) { $selUnit = 'TB' }
         elseif ($args -gt '1GB' ) { $selUnit = 'GB' }
@@ -304,8 +304,8 @@ function  to7z {
     }
     else {
         $lst = (Get-ChildItem -Path $args)
-        foreach ($f in $lst ) { 
-            7z a -pxxx -mx=0 ( $f.BaseName + '.7z' ) $f 
+        foreach ($f in $lst ) {
+            7z a -pxxx -mx=0 ( $f.BaseName + '.7z' ) $f
         }
     }
 }
@@ -725,7 +725,25 @@ wsl --set-default-version 2
 ]
 ```
 
-## 添加其他程序
+### 等宽字体
+
+[Cascadia Code](https://docs.microsoft.com/zh-cn/windows/terminal/cascadia-code)
+
+`Cascadia Code` 是 `Microsoft` 提供的一种新的等宽字体,可为命令行应用程序和文本编辑器提供全新的体验.
+`Cascadia Code` 是与 `Windows` 终端一起开发的. 建议将此字体与终端应用程序和文本编辑器(如 `Visual Studio` 和 `Visual Studio Code`)一起使用.
+
+编程连字是通过组合字符创建的字形.  它们在编写代码时最有用.  "Code"变体包含连字, 而"Mono"变体不包含连字.
+
+![连字](https://docs.microsoft.com/zh-cn/windows/terminal/images/programming-ligatures.gif)
+
++ 简体中文等距更纱黑体+Nerd图标字体库:
+
+[laishulu/Sarasa-Mono-SC-Nerd ](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
+
+国内镜像:
+[whjkd / Sarasa-Mono-SC-Nerd ](https://gitee.com/whjkd/Sarasa-Mono-SC-Nerd)
+
+### 添加其他程序
 
 [Adding profiles for third-party tools](https://github.com/microsoft/terminal/blob/main/doc/user-docs/ThirdPartyToolProfiles.md)
 
@@ -797,13 +815,6 @@ Solarized Light
 Tango Dark
 Tango Light
 ```
-
-#### 等宽字体
-
-[Cascadia Code](https://docs.microsoft.com/zh-cn/windows/terminal/cascadia-code)
-
-`Cascadia Code` 是 `Microsoft` 提供的一种新的等宽字体,可为命令行应用程序和文本编辑器提供全新的体验.
-`Cascadia Code` 是与 `Windows` 终端一起开发的. 建议将此字体与终端应用程序和文本编辑器(如 `Visual Studio` 和 `Visual Studio Code`)一起使用.
 
 #### 终端提示
 
