@@ -309,7 +309,8 @@ kpsewhich latinmodern-math.otf
 对中文字体的选择可以通过[xeCJK](https://www.ctan.org/pkg/xecjk)完成:
 
 ```latex
-\usepackage[slantfont, boldfont]{xeCJK}
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 % 设置中文字体
 \setCJKmainfont[Mapping=tex-text]{Noto Sans CJK SC}
 \setCJKsansfont[Scale=0.7,Mapping=tex-text]{Source Han Sans SC}
