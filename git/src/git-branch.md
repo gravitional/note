@@ -111,9 +111,9 @@ git checkout [-q] [-f] [-m] [<branch>]
 git checkout [-q] [-f] [-m] --detach [<branch>]
 git checkout [-q] [-f] [-m] [--detach] <commit>
 git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
-git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>…​
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>…
 git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
-git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>…​]
+git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>…]
 ```
 
 用 **index**或者`<tree-ish>`(通常是一个`commit`)里面的内容替换`working tree`里面的 paths.

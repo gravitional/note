@@ -199,9 +199,9 @@ test line4.  test line5.  test line6.
 SYNOPSIS
 
 ```git
-git diff [<options>] [<commit>] [--] [<path>... ​]
-git diff [<options>] --cached [<commit>] [--] [<path>... ​]
-git diff [<options>] <commit> <commit> [--] [<path>... ​]
+git diff [<options>] [<commit>] [--] [<path>... ]
+git diff [<options>] --cached [<commit>] [--] [<path>... ]
+git diff [<options>] <commit> <commit> [--] [<path>... ]
 git diff [<options>] <blob> <blob>
 git diff [<options>] --no-index [--] <path> <path>
 ```
@@ -220,32 +220,32 @@ use as:
 
 | SYNOPSIS | explanation |
 | ---- | ---- |
-| `git diff [<options>] [--] [<path>... ​]` | `working tree` and the `index` |
+| `git diff [<options>] [--] [<path>... ]` | `working tree` and the `index` |
 | `git diff [<options>] --no-index [--] <path> <path>` | two paths on the filesystem |
-| `git diff [<options>] --cached [<commit>] [--] [<path>... ​]` | changes you staged relative to the named `<commit>` |
-| `git diff [<options>] <commit> [--] [<path>... ​]` | changes in your working tree relative to the named `<commit>` |
-| `git diff [<options>] <commit> <commit> [--] [<path>... ​]` | changes between two arbitrary `<commit>` |
-| `git diff [<options>] <commit>..<commit> [--] [<path>... ​]` | This is synonymous to the previous form |
+| `git diff [<options>] --cached [<commit>] [--] [<path>... ]` | changes you staged relative to the named `<commit>` |
+| `git diff [<options>] <commit> [--] [<path>... ]` | changes in your working tree relative to the named `<commit>` |
+| `git diff [<options>] <commit> <commit> [--] [<path>... ]` | changes between two arbitrary `<commit>` |
+| `git diff [<options>] <commit>..<commit> [--] [<path>... ]` | This is synonymous to the previous form |
 
 ### the details
 
 + `git diff [<options>] <blob> <blob>` ; 这种形式是为了查看两个`blob`对象的原始内容之间的差异.
-+ `git diff [<options>] [--] [<path>... ​]`; 这个形式是用来查看你相对于`index`(下次提交的暂存区)所做的修改.
++ `git diff [<options>] [--] [<path>... ]`; 这个形式是用来查看你相对于`index`(下次提交的暂存区)所做的修改.
 换句话说, 这些差异是你可以告诉`Git`进一步添加到stage中的, 但还没有实际添加. 你可以通过使用`git-add`对这些修改进行添加.
 
 + `git diff [<options>] --no-index [--] <path> <path>` ; 这种形式是为了比较文件系统上给定的两个路径.
 当在一个由Git控制的工作树中运行该命令, 并且至少有一个路径指向该工作树之外时, 可以省略`--no-index`选项. 或在`Git`控制的工作树之外运行该命令.
 
-+ `git diff [<options>] --cached [<commit>] [--] [<path>... ​]`; 这种形式是用来查看你为下一次`commit`所做的相对于`<commit>`的修改.
++ `git diff [<options>] --cached [<commit>] [--] [<path>... ]`; 这种形式是用来查看你为下一次`commit`所做的相对于`<commit>`的修改.
 通常情况下, 你希望与最新的提交进行比较, 所以如果你没有给出`<commit>`, 它默认为`HEAD`.
 如果`HEAD`不存在(例如未出生的分支), 并且没有给出`<commit>`, 它将显示所有已提交的修改. `--staged`是`--cached`的同义词.
 
-+ `git diff [<options>] <commit> [--] [<path>... ​]`;  这种形式是用来查看你的工作区中相对于命名为`<commit>`的修改.
++ `git diff [<options>] <commit> [--] [<path>... ]`;  这种形式是用来查看你的工作区中相对于命名为`<commit>`的修改.
 你可以用`HEAD`与最新的提交进行比较, 或者用`branch name`与不同分支的`tip`进行比较.
 
-+ `git diff [<options>] <commit> <commit> [--] [<path>... ​]` ; 用来查看两个任意的`<commit>`之间的变化.
-+ `git diff [<options>] <commit>..<commit> [--] [<path>... ​]`; 上一条的同义形式. 如果省略了一边的`<commit>`, 将使用`HEAD`.
-+ `git diff [<options>] <commit>...<commit> [--] [<path>... ​]` ; 这种形式是用来查看
++ `git diff [<options>] <commit> <commit> [--] [<path>... ]` ; 用来查看两个任意的`<commit>`之间的变化.
++ `git diff [<options>] <commit>..<commit> [--] [<path>... ]`; 上一条的同义形式. 如果省略了一边的`<commit>`, 将使用`HEAD`.
++ `git diff [<options>] <commit>...<commit> [--] [<path>... ]` ; 这种形式是用来查看
     + 当前分支上的修改
     + 包含并直到第二个 `<commit>`
     + 起点是两个`<commit>`的共同祖先.

@@ -91,6 +91,8 @@ s#‹#<#g; s#›#>#g;
 s#《#<#g; s#》#>#g;
 s#【#\[#g; s#】#\]#g;
 s#『#\{#g; s#』#\}#g;
+s#「# `#g;
+s#」#` #g;
 s#评估#运算#g;
 }' \
 -zre 's#\n([ \t]*\n[ \t]*)+\n#\n\n#g' \
@@ -107,6 +109,18 @@ s#评估#运算#g;
 # 删除行末空白
 -zre 's#(\n[ \t]+)#\n#g'
 ```
+
+### 处理 unicode 字符
+
+[delete Unicode in some range](https://stackoverflow.com/questions/48162882/how-to-use-sed-delete-unicode-in-some-range)
+
+sed 中的 Unicode支持并没有很好的定义. 你可能最好使用命令行 `perl`
+
+```bash
+echo "abcＡＢＣ123" | perl -CS -pe 's/[\x{FF21}-\x{FF3B}]+//g'
+```
+
+在这里使用 `-CS` 标志是很重要的, 它指定`输入`/`输出`/`错误` 均为正确的 `UTF8` 编码
 
 ### 删除多个空行
 
