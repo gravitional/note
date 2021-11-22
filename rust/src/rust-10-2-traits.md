@@ -458,11 +458,11 @@ impl<T: Display + PartialOrd> Pair<T> { // 要求 T 实现了 Display,PartialOrd
 }
 ```
 
-示例 10-16: 根据 trait bound 在泛型上有条件的实现方法
+示例 10-16: 根据 `trait bound` 在泛型上有条件的实现方法
 
-也可以对任何实现了特定 trait 的类型有条件地实现 trait.
-对任何满足特定 trait bound 的类型实现 trait 被称为 blanket implementations, 他们被广泛的用于 Rust 标准库中.
-例如, 标准库为任何实现了 Display trait 的类型实现了 ToString trait. 这个 impl 块看起来像这样:
+也可以对任何实现了特定 `trait` 的类型有条件地实现 `trait`.
+对任何满足特定 `trait bound` 的类型实现 `trait`, 被称为 `blanket implementations`, 他们被广泛的用于 Rust 标准库中.
+例如, 标准库为任何实现了 `Display trait` 的类型实现了 `ToString trait`. 这个 `impl` 块看起来像这样:
 
 ```rust
 impl<T: Display> ToString for T {
@@ -470,8 +470,8 @@ impl<T: Display> ToString for T {
 }
 ```
 
-因为标准库有了这些 blanket implementation, 我们可以对任何实现了 Display trait 的类型调用由 ToString 定义的 to_string 方法.
-例如, 可以将整型转换为对应的 String 值, 因为整型实现了 Display:
+因为标准库有了这些 `blanket` implementation, 我们可以对任何实现了 Display trait 的类型, 调用由 `ToString` 定义的 `to_string` 方法.
+例如, 可以将整型转换为对应的 `String` 值, 因为整型实现了 `Display`:
 
 ```rust
 let s = 3.to_string();

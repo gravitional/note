@@ -270,14 +270,19 @@ A baby dog is called a puppy
 
 通常, 完全限定语法定义为:
 
+```rust
 <Type as Trait>::function(receiver_if_method, next_arg, ...);
+```
 
 对于关联函数, 其没有一个 receiver, 故只会有其他参数的列表. 可以选择在任何函数或方法调用处使用完全限定语法. 然而, 允许省略任何 Rust 能够从程序中的其他信息中计算出的部分. 只有当存在多个同名实现而 Rust 需要帮助以便知道我们希望调用哪个实现时, 才需要使用这个较为冗长的语法.
-父 trait 用于在另一个 trait 中使用某 trait 的功能
 
-有时我们可能会需要某个 trait 使用另一个 trait 的功能. 在这种情况下, 需要能够依赖相关的 trait 也被实现. 这个所需的 trait 是我们实现的 trait 的 父(超) trait(supertrait).
+## 父 trait 用于在另一个 trait 中使用某 trait 的功能
 
-例如我们希望创建一个带有 outline_print 方法的 trait OutlinePrint, 它会打印出带有星号框的值. 也就是说, 如果 Point 实现了 Display 并返回 (x, y), 调用以 1 作为 x 和 3 作为 y 的 Point 实例的 outline_print 会显示如下:
+有时我们可能会需要某个 trait 使用另一个 trait 的功能.
+在这种情况下, 需要能够依赖相关的 trait 也被实现. 这个所需的 trait 是我们实现的 trait 的 父(超) trait(supertrait).
+
+例如我们希望创建一个带有 `outline_print` 方法的 `trait` OutlinePrint, 它会打印出带有星号框的值.
+也就是说, 如果 `Point` 实现了 `Display` 并返回 `(x, y)`, 调用以 1 作为 x 和 3 作为 y 的 Point 实例的 `outline_print` 会显示如下:
 
 ```log
 **********
@@ -287,13 +292,17 @@ A baby dog is called a puppy
 **********
 ```
 
-在 outline_print 的实现中, 因为希望能够使用 Display trait 的功能, 则需要说明 OutlinePrint 只能用于同时也实现了 Display 并提供了 OutlinePrint 需要的功能的类型. 可以通过在 trait 定义中指定 OutlinePrint: Display 来做到这一点. 这类似于为 trait 增加 trait bound. 示例 19-22 展示了一个 OutlinePrint trait 的实现:
+在 `outline_print` 的实现中, 因为希望能够使用 `Display` trait 的功能,
+则需要说明 `OutlinePrint` 只能用于同时也实现了 `Display`, 并提供了 `OutlinePrint` 需要的功能的类型.
+可以通过在 `trait` 定义中指定 `OutlinePrint: Display` 来做到这一点.
+这类似于为 `trait` 增加 `trait bound`. 示例 19-22 展示了一个 `OutlinePrint` trait 的实现:
 
 文件名: src/main.rs
 
+```rust
 use std::fmt;
 
-trait OutlinePrint: fmt::Display {
+trait OutlinePrint: fmt::Display { // 指定 OutlinePrint 需要实现 Display trait
     fn outline_print(&self) {
         let output = self.to_string();
         let len = output.len();
@@ -304,6 +313,7 @@ trait OutlinePrint: fmt::Display {
         println!("{}", "*".repeat(len + 4));
     }
 }
+```
 
 示例 19-22: 实现 OutlinePrint trait, 它要求来自 Display 的功能
 
@@ -382,6 +392,6 @@ fn main() {
 
 Display 的实现使用 self.0 来访问其内部的 Vec<T>, 因为 Wrapper 是元组结构体而 Vec<T> 是结构体总位于索引 0 的项. 接着就可以使用 Wrapper 中 Display 的功能了.
 
-此方法的缺点是, 因为 Wrapper 是一个新类型, 它没有定义于其值之上的方法; 必须直接在 Wrapper 上实现 Vec<T> 的所有方法, 这样就可以代理到self.0 上 —— 这就允许我们完全像 Vec<T> 那样对待 Wrapper. 如果希望新类型拥有其内部类型的每一个方法, 为封装类型实现 Deref trait(第十五章 "通过 Deref trait 将智能指针当作常规引用处理" 部分讨论过)并返回其内部类型是一种解决方案. 如果不希望封装类型拥有所有内部类型的方法 —— 比如为了限制封装类型的行为 —— 则必须只自行实现所需的方法.
+此方法的缺点是, 因为 Wrapper 是一个新类型, 它没有定义于其值之上的方法; 必须直接在 Wrapper 上实现 Vec<T> 的所有方法, 这样就可以代理到self.0 上  --  这就允许我们完全像 Vec<T> 那样对待 Wrapper. 如果希望新类型拥有其内部类型的每一个方法, 为封装类型实现 Deref trait(第十五章 "通过 Deref trait 将智能指针当作常规引用处理" 部分讨论过)并返回其内部类型是一种解决方案. 如果不希望封装类型拥有所有内部类型的方法  --  比如为了限制封装类型的行为  --  则必须只自行实现所需的方法.
 
-上面便是 newtype 模式如何与 trait 结合使用的; 还有一个不涉及 trait 的实用模式. 现在让我们将话题的焦点转移到一些与 Rust 类型系统交互的高级方法上来吧. 
+上面便是 newtype 模式如何与 trait 结合使用的; 还有一个不涉及 trait 的实用模式. 现在让我们将话题的焦点转移到一些与 Rust 类型系统交互的高级方法上来吧.

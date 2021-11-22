@@ -421,7 +421,7 @@ hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 
 ## 属性宏
 
-`属性宏`(attribute-like)与自定义派生宏相似, 但不同于为 `derive` attribute 生成代码, 它们允许你创建新的 attributes.
+`属性宏`(attribute-like)与自定义派生宏相似, 但不同于为 `derive` attribute 生成代码, 它们允许你创建新的 `attributes`.
 它们也更为灵活; `derive` 只能用于结构体和枚举; `attributes`还可以用于其它的项, 比如`函数`.
 作为使用`属性宏`的例子, 可以创建一个名为 `route` 的属性, 用于注解 `web 应用程序框架`(web application framework)的函数:
 

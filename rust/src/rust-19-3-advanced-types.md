@@ -120,7 +120,7 @@ pub trait Write {
 type Result<T> = std::result::Result<T, std::io::Error>;
 ```
 
-因为这位于 `std::io` 中, 可用的完全限定的别名是 `std::io::Result<T>` —— 也就是说,
+因为这位于 `std::io` 中, 可用的完全限定的别名是 `std::io::Result<T>`  --  也就是说,
 `Result<T, E>` 中 `E` 被放入了 `std::io::Error`. `Write` trait 中的函数最终看起来像这样:
 
 ```rust
