@@ -2,19 +2,19 @@
 
 `package`,`包` : tutorial/SettingUpWolframLanguagePackages
 
-使用`Get`读取`.m`文件, 能够计算文件中的表达式, 上下文中会建立起文件中的变量.
-而读取`.nb`文件, 不会建立变量, 只会建立一个笔记本的符号表达式.
+使用 `Get` 读取 `.m` 文件, 能够计算文件中的表达式, 上下文中会建立起文件中的变量.
+而读取 `.nb` 文件, 不会建立变量, 只会建立一个笔记本的符号表达式.
 
 ## 环境变量和工作目录
 
-+ `mma` 的环境变量一共有两部分, 分别叫做`$ContextPath` and `$Context`. 分别是当前`上下文列表`, 以及当前`上下文`.
++ `mma` 的环境变量一共有两部分, 分别叫做 `$ContextPath` and `$Context`. 分别是当前 `上下文列表`, 以及当前`上下文`.
 参见: ref/\$ContextPath,  ref/\$Context:
 
-+ `$ContextPath`类似 `Linux` 的 `$PATH`环境变量. `$Context`类似于`Linux`的当前工作目录.
++ `$ContextPath` 类似 Linux 的  `$PATH` 环境变量. `$Context` 类似于 Linux 的当前工作目录.
 搜索函数以及变量名称的时候, 先搜索`$ContextPath`中的, 再搜索`$Context`中的. 这也和建立包的顺序一致.
-你可以把它看成是在文件搜索路径上附加了 `.`(当前工作目录).
+`$Context` 可以看作是, 在文件搜索路径上附加了 `.`(当前工作目录).
 
-如果遇到符号名冲突, 就使用全名调用, 或者更改 ``Globla` `` 上下文中符号的名称.
+如果遇到符号名冲突, 就应该用全名指定符号, 或者修改 ``Globla` `` 上下文中的符号名称, 因为 `package` 中的你一般无法修改.
 
 + `$ContextPath`中的路径按照出现顺序搜索, 也就是说, 前面的会覆盖后面的.
 
@@ -98,7 +98,7 @@ Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Languag
 + `$BaseDirectory/FrontEnd`: 所有用户的前端初始化代码
 + `$UserBaseDirectory/FrontEnd`:  前端初始化代码, 适用于当前登录的用户
 
-`Wolfram`系统`基础目录`的典型子目录.
+`Wolfram` 系统 `BaseDirectory` 的典型子目录.
 
 + `Applications`;  Wolfram Language应用程序包
 + `Autoload`; 启动时自动加载的软件包
@@ -120,9 +120,9 @@ Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Languag
 
 其他教程已经讨论了使用 `<<package` 和 `Needs[package]` 显式加载 Wolfram Language 软件包的方法.
 
-然而, 有时你可能想设置 Wolfram Language, 以便在需要特定的包时, 自动加载它.
-你可以使用 `DeclarePackage` 来给出在某个特定包中定义的符号.
-然后, 当这些符号之一被实际使用时, Wolfram Language 将自动加载定义该符号的包.
+然而, 有时你可能想设置 Wolfram Language, 以便在需要特定的包时自动加载它.
+你可以使用 `DeclarePackage` 来给出在某个特定包中定义的 `符号`.
+然后, 当这些符号之一被实际使用时, Wolfram Language 将自动加载定义该符号的`包`.
 
 ```mathematica
 DeclarePackage["context`", {"name1", "name2", ...}]
@@ -137,7 +137,7 @@ DeclarePackage["context`", {"name1", "name2", ...}]
 `DeclarePackage` 的工作方式是: 立即用你指定的名称创建符号, 但给这些符号都添加一个特殊属性 `Stub`.
 每当 Wolfram Language 找到一个带有 `Stub` 属性的符号时, 它就会自动加载与该符号的`上下文`对应的`package`, 以试图找到该符号的`定义`.
 
-## $Path
+## $Path,搜索路径
 
 `$Path` 给出了, 搜索外部文件所使用的`搜索目录`的默认列表.
 
@@ -150,6 +150,16 @@ DeclarePackage["context`", {"name1", "name2", ...}]
     + `...` ; 层次结构中的上一级目录
     + `~` ; 用户的主目录
 + `$Path` 可以包含嵌套的子列表.
+
++ `Get`, `Needs`, `OpenRead`, `Install` 和 其他函数使用 `FindFile` 寻找文件, 然后加载(load).
++ `FindFile` 递归搜索 `$Path` 中的目录, 也就是遍历子目录搜索给定的文件名, 
+目录中浅层的文件名会覆盖深层的文件名, 如果想找到深层的文件, 可以添加目录前缀进行区分.
+例如:
+
+    ```mathematica
+    FindFile["a.txt"]
+    FindFile["coes/a.txt"]
+    ```
 
 ### 基本例子
 
@@ -165,7 +175,7 @@ DeclarePackage["context`", {"name1", "name2", ...}]
     PrependTo[$Path, FileNameJoin[{$HomeDirectory, "MyPackages", "LookHereFirst"}]];
     ```
 
-## Get
+## 读取文件,Get
 
 ```mathematica
 <<name; 读入文件, 计算其中的每个表达式, 并返回最后一个表达式.
@@ -175,7 +185,7 @@ Get["file", "key"]; 读取一个用 Encode["source", "file", "key"] 编码的文
 
 ### Details and Options
 
-+ 如果 `name` 是 Wolfram Language 上下文的名称, 即用`` ` `` 上下文标记字符结尾, 那么 `Get` 将处理该名称以查找要读取的文件.
++ 如果 `name` 是 Wolfram Language 上下文的名称, 即结尾字符是 `` ` ``(上下文标记字符), 那么 `Get` 将处理该名称以查找要读取的文件.
 + 对于 `` "context`" `` 形式的名称, `Get` 将默认搜索以下文件.
     + `context.mx`; `DumpSave` 格式的文件
     + `context.mx/$SystemID/context.mx`; 本地计算机系统的 `DumpSave` 格式文件
@@ -187,7 +197,7 @@ Get["file", "key"]; 读取一个用 Encode["source", "file", "key"] 编码的文
     + `context/init.m`; 某特定目录的一般初始化文件
 
 + 对于 `` "context`subcontext`" `` 形式的名称, `Get` 默认会在名为 `"context"` 的目录下搜索 `` "subcontext`" ``.
-+ 如果`name`是一个文件名称, 任何扩展名都必须明确包括在内.
++ 如果`name`是一个文件名称, 任何 `文件扩展名` 都必须明确包括在内.
 + ` <<"name "` 等同于 `<<name`. 可以省略双引号, 如果`name` 只包含
 
         字母, 数字,  `  /   .  \  !   -  _  :  $  *  ~  ?
@@ -202,7 +212,7 @@ Get["file", "key"]; 读取一个用 Encode["source", "file", "key"] 编码的文
 
         filename: line: syntax error in expr
 
-    即使检测到语法错误, `Ge` t也会继续尝试读取文件.
+    即使检测到语法错误, `Get` 也会继续尝试读取文件.
     然而, 如果检测到错误, `$Context` 和 `$ContextPath` 将被重置为调用 `Get` 时的值.
 
 + `Get`可以读取 `.nb` 笔记本文件, 返回代表这些文件的 底层 box 结构.
@@ -211,7 +221,7 @@ Get["file", "key"]; 读取一个用 Encode["source", "file", "key"] 编码的文
 + `Get[Databin[...]]` 可以获得 Wolfram Data Drop 中的一个 Databin 的内容.
 + 当对本地文件进行操作时, 全局变量 `$Input` 和 `$InputFileName` 在执行 `Get` 时被分别设置为`文件名`和被读文件的`完整路径`.
 + 有了 `Method` 选项, `stream`就会用给定的输入流方法打开. 它覆盖 `Get` 解析文件名的默认方式.
-方法选项的值可以是 `$InputStreamMethods` 的任何成员.
+`Method` 选项的值可以是 `$InputStreamMethods` 的任何成员.
 
 ### 选项
 
@@ -254,7 +264,7 @@ Out[2]= $Failed
     Out[3]= {"DifferentialEquationTrek", "EquationTrekker", ...
     ```
 
-+ 确保初始化文件只被读取一次:
++ 确保`初始化文件`只被读取一次:
 
     ```mathematica
     Once[Get["init.m"]]
