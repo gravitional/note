@@ -49,7 +49,7 @@ tutorial/FilesStreamsAndExternalOperations#12068
     + 如果`NotebookOpen`打开指定的文件失败, 则返回`$Failed`.
     + 若给出相对路径, `NotebookOpen`搜索由前端的全局选项`NotebookPath`指定的目录
     + 若使用选项 `Visible->False` 设置, `NotebookOpen` 将打开带有此选项的笔记本,它永远不会显示在屏幕上.
-    + `NotebookOpen` 将当前`selection`初始化设置在笔记本的第一行单元之前.
+    + 在初始化的时候, `NotebookOpen` 将当前`selection` 设置在笔记本的第一行单元之前.
 
 + `NotebookSave[notebook]`; 保存特定笔记本的当前版本.
     + `notebook`必须是一个`NotebookObject`.
@@ -69,7 +69,7 @@ tutorial/FilesStreamsAndExternalOperations#12068
 tutorial/FilesStreamsAndExternalOperations#12068
 Manipulating Files and Directories
 
-+ `ExpandFileName["name"] `; 将`"name"`文件展开成当前系统规范的绝对路径, 给出相对于你当前目录的名称.
++ `ExpandFileName["name"] `; 将`"name"`文件展开成当前系统规范的绝对路径, 解释 `"name"` 时, 相对于你当前目录的名称.
 + 它展开通常的目录指定, 如`.`和 `..`.
 + 它只是对文件名进行操作;它并不实际搜索指定的文件.
 + 它支持 `ExpandFileName[File["name"]]`, 以及`ExpandFileName[URL["file:///path"]]`, 后者将基于文件的`URL`转换为绝对文件名.
