@@ -1050,7 +1050,3 @@ Error in startup script: unknown color name "S_base3"
 #define S_red           #dc322f
 #define S_magenta       #d33682
 ```
-
-## yay
-
-[yay进阶](https://zhuanlan.zhihu.com/p/363666022)

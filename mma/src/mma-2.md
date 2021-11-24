@@ -16,7 +16,7 @@ Wolfram 语言中模块的基本工作方式非常简单.
 `Module` 中产生形如 `x$nnn` 的符号去代表每个局部变量.
 
 `mathematica` 的脚本格式文件, 即 `.wl`,在保存时并不会保存输出信息.
-所以适合用来保存源代码, 配合 `git` 使用. 
+所以适合用来保存源代码, 配合 `git` 使用.
 `.m`, `.wls`文件特性和`.wl`基本相同, `.wls` 会自动加上一条 `shebang` 行.
 
     #!/usr/bin/env wolframscript

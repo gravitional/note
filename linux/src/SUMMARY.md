@@ -14,7 +14,7 @@
 - [压缩,同步文件](linux-7-tar-sync.md)
 - [文本操作](linux-7-text-operation.md)
 - [打印机](linux-8-printer.md)
-- [manjaro](manjaro.md)
+- [manjaro basic](manjaro-1-basic.md)
 
 -----------
 
