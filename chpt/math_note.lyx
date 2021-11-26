@@ -7824,6 +7824,299 @@ chpt转移磁矩
 
 \end_layout
 
+\begin_layout Section
+圈积分数值化
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Package-X"
+target "https://packagex.hepforge.org/"
+literal "true"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+圈积分函数 
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+：
+\begin_inset Newline newline
+\end_inset
+
+给出 Passarino – Veltman 三点函数 
+\begin_inset Formula $C_{0}\left(s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right)$
+\end_inset
+
+，对于实数外不变量 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+，
+\begin_inset Formula $s_{12}$
+\end_inset
+
+，
+\begin_inset Formula $s_{2}$
+\end_inset
+
+，以及正质量
+\begin_inset Formula $m_{0}$
+\end_inset
+
+，
+\begin_inset Formula $m_{1}$
+\end_inset
+
+，
+\begin_inset Formula $m_{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+数学函数，适用于数值计算，对于快速的机器精度计算，ScalarC0 使用编译到 Wolfram 虚拟机的代码（在第一次数值计算时触发）。 对于任意精度的计算，S
+calarC0 使用 Wolfram 语言代码。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 由 LoopRefine 生成，为了让表达式看起来更紧凑。使用 C0Expand, 或者给 LoopRefine 设置选项 
+\begin_inset Formula $\mathrm{ExplicitC0}\to\mathrm{All}$
+\end_inset
+
+，将 ScalarC0 替换成它的显式表达式。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+对应
+\begin_inset Graphics
+	filename inset/scalarC0.pdf
+	scale 40
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+表达式的解析形式为：
+\begin_inset Formula 
+\begin{align*}
+C_{0}\left(s_{1},s_{12},s_{2};m_{0},m_{1},m_{2}\right)= & -\lim_{\varepsilon\to0^{+}}\int_{0}^{1}\dif y\int_{0}^{1-y}\dif z\Big[s_{1}y^{2}+s_{12}z^{2}+\left(s_{1}+s_{12}-s_{2}\right)yz+\left(-s_{1}+m_{1}^{2}-m_{2}^{2}\right)y\\
+ & +\left(-s_{12}+m_{0}^{2}-m_{2}^{2}\right)z+m_{2}^{2}-i\varepsilon\Big]^{-1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+若外部不变量为零，ScalarC0 将会自动替换成显式形式。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 在 
+\begin_inset Formula $\left\{ s_{12}\leftrightarrow s_{2},m_{0}\leftrightarrow m_{1}\right\} $
+\end_inset
+
+, 
+\begin_inset Formula $\left\{ s_{12}\leftrightarrow s_{1},m_{0}\leftrightarrow m_{2}\right\} $
+\end_inset
+
+，或
+\begin_inset Formula $\left\{ s_{1}\leftrightarrow s_{2},m_{2}\leftrightarrow m_{1}\right\} $
+\end_inset
+
+对易下是对称的（symmetric）。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 自动把参数组织成正则形式（canonically）。
+\end_layout
+
+\begin_layout Enumerate
+ScalarC0 只对实数外部不变量和质量进行计算。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 对应其他包中的：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+FeynCalc/LoopTools，
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $C_{0}\left(s_{1},s_{12},s_{2};m_{0}^{2},m_{1}^{2},m_{2}^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Package-X 1.0,
+\begin_inset space \qquad{}
+\end_inset
+
+ 
+\begin_inset Formula $\mathrm{pvC0}\left(s_{1},s_{2},s_{12};m_{2},m_{1},m_{0}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+在 电磁形状因子的计算中，实际的参数为，例如
+\begin_inset Formula 
+\begin{align*}
+ & \mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\mathrm{mm}_{1},\mathrm{mo}_{1},\mathrm{mm}_{1}\right),\quad\mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\mathrm{mm}_{1}\right)\\
+ & \mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\Lambda\right),\quad\mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\mathrm{mm}_{1},\mathrm{mo}_{1},\mathrm{mm}_{1}\right)\\
+ & \mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\mathrm{mm}_{1}\right),\quad\mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\Lambda\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+动量积分
+\end_layout
+
+\begin_layout Standard
+对一般的单圈积分进行费曼参数化，形式为：
+\begin_inset Formula 
+\begin{align*}
+I_{N}^{D} & =\Gamma\left(N\right)\int_{0}^{\infty}\prod_{i=1}^{N}\dif z_{i}\delta\left(1-\sum_{\ell=1}^{N}z_{\ell}\right)\int_{-\infty}^{+\infty}\dif\overline{k}\left[k^{2}+2k\cdot Q+\sum_{i=1}^{N}z_{i}\left(r_{i}^{2}-m_{i}^{2}+i\varepsilon^{+}\right)\right]^{-N}\\
+Q^{\mu} & =\sum_{i=1}^{N}z_{i}r_{i}^{\mu}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $r_{i}$
+\end_inset
+
+是各内线动量，
+\begin_inset Formula $m_{i}$
+\end_inset
+
+是内线粒子质量。我们作变量平移
+\begin_inset Formula $\ell=k+Q$
+\end_inset
+
+，消去方括号中
+\begin_inset Formula $k$
+\end_inset
+
+的线性项，得到
+\begin_inset Formula 
+\[
+I_{N}^{D}=\Gamma\left(N\right)\int_{0}^{\infty}\prod_{i=1}^{N}\dif z_{i}\delta\left(1-\sum_{\ell=1}^{N}z_{\ell}\right)\int_{-\infty}^{+\infty}\dif\overline{\ell}\left[\ell^{2}-R^{2}+i\varepsilon^{+}\right]^{-N}
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $Q^{\mu}$
+\end_inset
+
+的定义，
+\begin_inset Formula $R^{2}$
+\end_inset
+
+的一般形式为：
+\begin_inset Formula 
+\begin{align*}
+R^{2} & =Q^{2}-\sum_{i=1}^{N}z_{i}\left(r_{i}^{2}-m_{i}^{2}\right)\\
+ & =\sum_{i,j=1}^{N}z_{i}z_{j}r_{i}\cdot r_{j}-\frac{1}{2}\sum_{i=1}^{N}z_{i}\left(r_{i}^{2}-m_{i}^{2}\right)\sum_{j=1}^{N}z_{j}-\frac{1}{2}\sum_{j=1}^{N}z_{j}\left(r_{j}^{2}-m_{j}^{2}\right)\sum_{i=1}^{N}z_{i}\\
+ & =-\frac{1}{2}\sum_{i,j=1}^{N}z_{i}z_{j}\left(r_{i}^{2}+r_{j}^{2}-2r_{i}\cdot r_{j}-m_{i}^{2}-m_{j}^{2}\right)\\
+ & =-\frac{1}{2}\sum_{i,j=1}^{N}z_{i}z_{j}\mathcal{S}_{ij}\\
+\mathcal{S}_{ij} & =\left(r_{i}-r_{j}\right)^{2}-m_{i}^{2}-m_{j}^{2}
+\end{align*}
+
+\end_inset
+
+矩阵
+\begin_inset Formula $\mathcal{S}_{ij}$
+\end_inset
+
+有时被称为 Cayley 矩阵，它是一个重要的量，编码了积分对运动学的所有依赖。它在代数化简和 Landau 奇点的分析中都占有重要作用，后者是
+ 
+\begin_inset Formula $\det\mathcal{S}$
+\end_inset
+
+为零或者
+\begin_inset Formula $\mathcal{S}$
+\end_inset
+
+子行列式为零的（动量）奇点。
+\end_layout
+
+\begin_layout Itemize
+IR 发散：最坏情况为
+\begin_inset Formula $1/\varepsilon^{2L}$
+\end_inset
+
+。IR 发散的必要条件由 Landau 方程给出：
+\begin_inset Formula 
+\[
+\begin{cases}
+\forall i\quad z_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0,\\
+\sum_{i=1}^{n}z_{i}q_{i}=0.
+\end{cases}
+\]
+
+\end_inset
+
+如果方程对所有
+\begin_inset Formula $i\in\left\{ 1,\cdots,N\right\} $
+\end_inset
+
+有
+\begin_inset Formula $z_{i}>0$
+\end_inset
+
+ 的解，即所有内线粒子同时在壳，则称积分具有 领头阶朗道奇点（leading Landau singularity）。如果解中一些
+\begin_inset Formula $z_{i}=0$
+\end_inset
+
+，而另外一些不为零，则对应 lower–order 的朗道奇点。Soft 和 collinear 奇点表现为
+\begin_inset Formula $1/\epsilon$
+\end_inset
+
+，总是来自于某些 
+\begin_inset Formula $z_{i}=0$
+\end_inset
+
+ 的奇点。
+\end_layout
+
 \begin_layout Standard
 EOF
 \end_layout
