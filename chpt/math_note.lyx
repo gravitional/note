@@ -8117,8 +8117,256 @@ IR 发散：最坏情况为
  的奇点。
 \end_layout
 
+\begin_layout Section
+DiLog
+\end_layout
+
 \begin_layout Standard
-EOF
+refs: Package-X
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathrm{DiLog}\left[x,\alpha\right]$
+\end_inset
+
+给出双对数（dilogrithm）函数，对于
+\begin_inset Formula $x>1$
+\end_inset
+
+，在 
+\begin_inset Formula $\lim_{\varepsilon\to0^{+}}\mathrm{Li}_{2}\left(x+i\alpha\varepsilon\right)$
+\end_inset
+
+ 描述的 branch 上求值。
+\end_layout
+
+\begin_layout Standard
+详细：
+\end_layout
+
+\begin_layout Enumerate
+数学函数，可用于符号或者数值计算。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{DiLog}\left[x,\alpha\right]$
+\end_inset
+
+在
+\begin_inset Formula $x$
+\end_inset
+
+的复平面上，具有从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $+\infty$
+\end_inset
+
+的 branch cut discontinuity。
+\end_layout
+
+\begin_layout Enumerate
+对于
+\begin_inset Formula $x>1$
+\end_inset
+
+，
+\begin_inset Formula $\alpha$
+\end_inset
+
+的符号决定了 
+\begin_inset Formula $\mathrm{DiLog}$
+\end_inset
+
+ 在 branch cut 的哪一侧计算。对于
+\begin_inset Formula $x$
+\end_inset
+
+的其他值，
+\begin_inset Formula $\mathrm{DiLog}\left[x,\alpha\right]$
+\end_inset
+
+返回 
+\begin_inset Formula $\mathrm{PolyLog}\left[2,x\right]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+复杂情况的 Passarino–Veltman C–函数，大多情况可以用 
+\begin_inset Formula $\mathrm{DiLog}$
+\end_inset
+
+ 精确表示
+\begin_inset Formula 
+\begin{align*}
+ & \text{LoopRefine}\left[\text{ScalarC0}\left(s,0,M^{2},0,0,m\right),\text{ExplicitC0}\to\text{All}\right]\\
+\Rightarrow & \frac{-1}{M^{2}-s}\Big[\text{DiLog}\left(-\frac{M^{2}\left(-m^{2}+M^{2}-s\right)}{m^{2}s},\left(s-M^{2}\right)\left(m^{2}-M^{2}+s\right)\right)\\
+ & +\text{Li}_{2}\left(\frac{-m^{2}+M^{2}-s}{M^{2}-s}\right)+\frac{1}{2}\log^{2}\left(\frac{m^{2}}{M^{2}-s}\right)-\text{Li}_{2}\left(\frac{M^{2}}{s}\right)+\frac{\pi^{2}}{6}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{DiLog}$
+\end_inset
+
+的倒数是
+\begin_inset Formula $\mathrm{Ln}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\frac{\partial\text{DiLog}\left[x,\alpha\right]}{\partial x}=-\frac{\text{Ln}\left[1-x,\alpha\right]}{x}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\mathrm{Ln}\left(x,\alpha\right)$
+\end_inset
+
+是自然对数，它在
+\begin_inset Formula $x$
+\end_inset
+
+的复平面上，有一条
+\begin_inset Formula $-\infty$
+\end_inset
+
+到
+\begin_inset Formula $0$
+\end_inset
+
+的支割线，对于
+\begin_inset Formula $x<0$
+\end_inset
+
+的实数值，在 
+\begin_inset Formula $\lim_{\varepsilon\to0^{+}}\mathrm{Log}\left(x+i\alpha\varepsilon\right)$
+\end_inset
+
+描述的分支上计算。对于其它 
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $\mathrm{Ln}\left(x,\alpha\right)$
+\end_inset
+
+ 返回
+\begin_inset Formula $\mathrm{Log}\left[x\right]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+PolyLog
+\end_layout
+
+\begin_layout Standard
+PolyLog – 多对数函数。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{PolyLog}\left[n,z\right]$
+\end_inset
+
+给出 polylogarithm 函数 
+\begin_inset Formula $\mathrm{Li}_{2}\left(z\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{PolyLog}\left[n,p,z\right]$
+\end_inset
+
+ 给出 Nielsen 推广的 polylogarithm 函数 
+\begin_inset Formula $S_{n,p}\left(z\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+详细：
+\end_layout
+
+\begin_layout Enumerate
+级数定义：
+\begin_inset Formula 
+\[
+\mathrm{Li}_{n}\left(z\right)=\sum_{k=1}^{\infty}\frac{z^{k}}{k^{n}}\text{. }
+\]
+
+\end_inset
+
+
+\begin_inset Formula $n$
+\end_inset
+
+越大，收敛性越好。
+\end_layout
+
+\begin_layout Enumerate
+Nielsen 推广
+\begin_inset Formula 
+\begin{align*}
+ & S_{n,p}\left(z\right)=\frac{\left(-1\right)^{n+p-1}}{\left(n-1\right)!p!}\int_{0}^{1}\frac{\log^{n-1}\left(t\right)\log^{p}(1-zt)}{t}\dif t\\
+ & S_{n-1,1}\left(z\right)=\frac{\left(-1\right)^{n-1}}{\left(n-2\right)!}\int_{0}^{1}\frac{\log^{n-2}\left(t\right)\log(1-zt)}{t}\dif t=\mathrm{Li}_{n}\left(z\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{PolyLog}\left[n,z\right]$
+\end_inset
+
+在
+\begin_inset Formula $z$
+\end_inset
+
+的复平面上，具有从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $+\infty$
+\end_inset
+
+的支割线。
+\end_layout
+
+\begin_layout Enumerate
+示例图像：
+\begin_inset Formula $\text{Plot}[\text{Evaluate}@\text{ReIm}@\mathrm{PolyLog}[2,x]],\{x,-2,2\}]$
+\end_inset
+
+，蓝色为实部，黄色为虚部：
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/polyLog2.pdf
+	scale 40
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

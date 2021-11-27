@@ -9,7 +9,7 @@
 
 参见: ref/\$ContextPath,  ref/\$Context:
 
-`mma` 的环境变量一共有两部分, 分别叫做 `$ContextPath` 和 `$Context`. 
+`mma` 的环境变量一共有两部分, 分别叫做 `$ContextPath` 和 `$Context`.
 分别叫做当前 `上下文列表`, 以及当前`上下文`.
 
 + `$ContextPath` 类似 Linux 的  `$PATH` 环境变量. `$Context` 类似于 Linux 的当前工作目录.
@@ -50,7 +50,7 @@ EndPackage[]    结束包, 把Package`放到上下文搜索路径中
 ```
 
 + `$Packages` 环境变量:提供与当前 `Wolfram` 系统会话中已加载的所有软件包相对应的上下文列表.
-+ `` Needs ["context`"] ``:如果指定的上下文尚未在 `$Packages` 中, 则加载适当的文件. 
++ `` Needs ["context`"] ``:如果指定的上下文尚未在 `$Packages` 中, 则加载适当的文件.
 它会根据情况, 自动调用且只调用一次 `Get[]`.
 
 ## 包的文件
