@@ -1,0 +1,2118 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
+% 如果没有这一句命令，XeTeX会出错，原因参见
+% http://bbs.ctex.org/viewthread.php?tid=60547
+% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic}
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+\usepackage{bm,bbm}  %\bm 命令使参数变成粗体
+% Blackboard variants of Computer Modern fonts.
+\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+\usepackage{tikz-feynman}  % 画费曼图用
+\usepackage{tikz} %画矢量图用
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{latinmodern-math.otf}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%++++++++++++++++++++++++++++++++++++++++
+% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
+% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
+% \setmathrm{Latin Modern Roman}
+%%++++++++++++++++++++++++++++++++++++++
+\usepackage{mathtools}% 定义配对的数学符号
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\sla}{\slashed}% feynman slash
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+费曼积分的解析工具
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+Others
+\end_layout
+
+\begin_layout Section
+圈积分数值化
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Package-X"
+target "https://packagex.hepforge.org/"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+圈积分函数 
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+：
+\begin_inset Newline newline
+\end_inset
+
+给出 Passarino – Veltman 三点函数 
+\begin_inset Formula $C_{0}\left(s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right)$
+\end_inset
+
+，对于实数外不变量 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+，
+\begin_inset Formula $s_{12}$
+\end_inset
+
+，
+\begin_inset Formula $s_{2}$
+\end_inset
+
+，以及正质量
+\begin_inset Formula $m_{0}$
+\end_inset
+
+，
+\begin_inset Formula $m_{1}$
+\end_inset
+
+，
+\begin_inset Formula $m_{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+数学函数，适用于数值计算，对于快速的机器精度计算，ScalarC0 使用编译到 Wolfram 虚拟机的代码（在第一次数值计算时触发）。 对于任意精度的计算，S
+calarC0 使用 Wolfram 语言代码。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 由 LoopRefine 生成，为了让表达式看起来更紧凑。使用 C0Expand, 或者给 LoopRefine 设置选项 
+\begin_inset Formula $\mathrm{ExplicitC0}\to\mathrm{All}$
+\end_inset
+
+，将 ScalarC0 替换成它的显式表达式。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+对应
+\begin_inset Graphics
+	filename inset/scalarC0.pdf
+	scale 40
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+表达式的解析形式为：
+\begin_inset Formula 
+\begin{align*}
+C_{0}\left(s_{1},s_{12},s_{2};m_{0},m_{1},m_{2}\right)= & -\lim_{\varepsilon\to0^{+}}\int_{0}^{1}\dif y\int_{0}^{1-y}\dif z\Big[s_{1}y^{2}+s_{12}z^{2}+\left(s_{1}+s_{12}-s_{2}\right)yz+\left(-s_{1}+m_{1}^{2}-m_{2}^{2}\right)y\\
+ & +\left(-s_{12}+m_{0}^{2}-m_{2}^{2}\right)z+m_{2}^{2}-i\varepsilon\Big]^{-1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+若外部不变量为零，ScalarC0 将会自动替换成显式形式。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 在 
+\begin_inset Formula $\left\{ s_{12}\leftrightarrow s_{2},m_{0}\leftrightarrow m_{1}\right\} $
+\end_inset
+
+, 
+\begin_inset Formula $\left\{ s_{12}\leftrightarrow s_{1},m_{0}\leftrightarrow m_{2}\right\} $
+\end_inset
+
+，或
+\begin_inset Formula $\left\{ s_{1}\leftrightarrow s_{2},m_{2}\leftrightarrow m_{1}\right\} $
+\end_inset
+
+对易下是对称的（symmetric）。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 自动把参数组织成正则形式（canonically）。
+\end_layout
+
+\begin_layout Enumerate
+ScalarC0 只对实数外部不变量和质量进行计算。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{ScalarC0}\left[s_{1},s_{12},s_{2},m_{0},m_{1},m_{2}\right]$
+\end_inset
+
+ 对应其他包中的：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+FeynCalc/LoopTools，
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $C_{0}\left(s_{1},s_{12},s_{2};m_{0}^{2},m_{1}^{2},m_{2}^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Package-X 1.0,
+\begin_inset space \qquad{}
+\end_inset
+
+ 
+\begin_inset Formula $\mathrm{pvC0}\left(s_{1},s_{2},s_{12};m_{2},m_{1},m_{0}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+在 电磁形状因子的计算中，实际的参数为，例如
+\begin_inset Formula 
+\begin{align*}
+ & \mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\mathrm{mm}_{1},\mathrm{mo}_{1},\mathrm{mm}_{1}\right),\quad\mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\mathrm{mm}_{1}\right)\\
+ & \mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\Lambda\right),\quad\mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\mathrm{mm}_{1},\mathrm{mo}_{1},\mathrm{mm}_{1}\right)\\
+ & \mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\mathrm{mm}_{1}\right),\quad\mathrm{ScalarC0}\left(\mathrm{mE}^{2},\mathrm{mE}^{2},-Q^{2},\Lambda,\mathrm{mo}_{1},\Lambda\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+动量积分
+\end_layout
+
+\begin_layout Standard
+对一般的单圈积分进行费曼参数化，形式为：
+\begin_inset Formula 
+\begin{align*}
+I_{N}^{D} & =\Gamma\left(N\right)\int_{0}^{\infty}\prod_{i=1}^{N}\dif z_{i}\delta\left(1-\sum_{\ell=1}^{N}z_{\ell}\right)\int_{-\infty}^{+\infty}\dif\overline{k}\left[k^{2}+2k\cdot Q+\sum_{i=1}^{N}z_{i}\left(r_{i}^{2}-m_{i}^{2}+i\varepsilon^{+}\right)\right]^{-N}\\
+Q^{\mu} & =\sum_{i=1}^{N}z_{i}r_{i}^{\mu}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $r_{i}$
+\end_inset
+
+是各内线动量，
+\begin_inset Formula $m_{i}$
+\end_inset
+
+是内线粒子质量。我们作变量平移
+\begin_inset Formula $\ell=k+Q$
+\end_inset
+
+，消去方括号中
+\begin_inset Formula $k$
+\end_inset
+
+的线性项，得到
+\begin_inset Formula 
+\[
+I_{N}^{D}=\Gamma\left(N\right)\int_{0}^{\infty}\prod_{i=1}^{N}\dif z_{i}\delta\left(1-\sum_{\ell=1}^{N}z_{\ell}\right)\int_{-\infty}^{+\infty}\dif\overline{\ell}\left[\ell^{2}-R^{2}+i\varepsilon^{+}\right]^{-N}
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $Q^{\mu}$
+\end_inset
+
+的定义，
+\begin_inset Formula $R^{2}$
+\end_inset
+
+的一般形式为：
+\begin_inset Formula 
+\begin{align*}
+R^{2} & =Q^{2}-\sum_{i=1}^{N}z_{i}\left(r_{i}^{2}-m_{i}^{2}\right)\\
+ & =\sum_{i,j=1}^{N}z_{i}z_{j}r_{i}\cdot r_{j}-\frac{1}{2}\sum_{i=1}^{N}z_{i}\left(r_{i}^{2}-m_{i}^{2}\right)\sum_{j=1}^{N}z_{j}-\frac{1}{2}\sum_{j=1}^{N}z_{j}\left(r_{j}^{2}-m_{j}^{2}\right)\sum_{i=1}^{N}z_{i}\\
+ & =-\frac{1}{2}\sum_{i,j=1}^{N}z_{i}z_{j}\left(r_{i}^{2}+r_{j}^{2}-2r_{i}\cdot r_{j}-m_{i}^{2}-m_{j}^{2}\right)\\
+ & =-\frac{1}{2}\sum_{i,j=1}^{N}z_{i}z_{j}\mathcal{S}_{ij}\\
+\mathcal{S}_{ij} & =\left(r_{i}-r_{j}\right)^{2}-m_{i}^{2}-m_{j}^{2}
+\end{align*}
+
+\end_inset
+
+矩阵
+\begin_inset Formula $\mathcal{S}_{ij}$
+\end_inset
+
+有时被称为 Cayley 矩阵，它是一个重要的量，编码了积分对运动学的所有依赖。它在代数化简和 Landau 奇点的分析中都占有重要作用，后者是
+ 
+\begin_inset Formula $\det\mathcal{S}$
+\end_inset
+
+为零或者
+\begin_inset Formula $\mathcal{S}$
+\end_inset
+
+子行列式为零的（动量）奇点。
+\end_layout
+
+\begin_layout Itemize
+IR 发散：最坏情况为
+\begin_inset Formula $1/\varepsilon^{2L}$
+\end_inset
+
+。IR 发散的必要条件由 Landau 方程给出：
+\begin_inset Formula 
+\[
+\begin{cases}
+\forall i\quad z_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0,\\
+\sum_{i=1}^{n}z_{i}q_{i}=0.
+\end{cases}
+\]
+
+\end_inset
+
+如果方程对所有
+\begin_inset Formula $i\in\left\{ 1,\cdots,N\right\} $
+\end_inset
+
+有
+\begin_inset Formula $z_{i}>0$
+\end_inset
+
+ 的解，即所有内线粒子同时在壳，则称积分具有 领头阶朗道奇点（leading Landau singularity）。如果解中一些
+\begin_inset Formula $z_{i}=0$
+\end_inset
+
+，而另外一些不为零，则对应 lower–order 的朗道奇点。Soft 和 collinear 奇点表现为
+\begin_inset Formula $1/\epsilon$
+\end_inset
+
+，总是来自于某些 
+\begin_inset Formula $z_{i}=0$
+\end_inset
+
+ 的奇点。
+\end_layout
+
+\begin_layout Section
+DiLog
+\end_layout
+
+\begin_layout Standard
+refs: Package-X
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathrm{DiLog}\left[x,\alpha\right]$
+\end_inset
+
+给出双对数（dilogrithm）函数，对于
+\begin_inset Formula $x>1$
+\end_inset
+
+，在 
+\begin_inset Formula $\lim_{\varepsilon\to0^{+}}\mathrm{Li}_{2}\left(x+i\alpha\varepsilon\right)$
+\end_inset
+
+ 描述的 branch 上求值。
+\end_layout
+
+\begin_layout Standard
+详细：
+\end_layout
+
+\begin_layout Enumerate
+数学函数，可用于符号或者数值计算。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{DiLog}\left[x,\alpha\right]$
+\end_inset
+
+在
+\begin_inset Formula $x$
+\end_inset
+
+的复平面上，具有从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $+\infty$
+\end_inset
+
+的 branch cut discontinuity。
+\end_layout
+
+\begin_layout Enumerate
+对于
+\begin_inset Formula $x>1$
+\end_inset
+
+，
+\begin_inset Formula $\alpha$
+\end_inset
+
+的符号决定了 
+\begin_inset Formula $\mathrm{DiLog}$
+\end_inset
+
+ 在 branch cut 的哪一侧计算。对于
+\begin_inset Formula $x$
+\end_inset
+
+的其他值，
+\begin_inset Formula $\mathrm{DiLog}\left[x,\alpha\right]$
+\end_inset
+
+返回 
+\begin_inset Formula $\mathrm{PolyLog}\left[2,x\right]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+复杂情况的 Passarino–Veltman C–函数，大多情况可以用 
+\begin_inset Formula $\mathrm{DiLog}$
+\end_inset
+
+ 精确表示
+\begin_inset Formula 
+\begin{align*}
+ & \text{LoopRefine}\left[\text{ScalarC0}\left(s,0,M^{2},0,0,m\right),\text{ExplicitC0}\to\text{All}\right]\\
+\Rightarrow & \frac{-1}{M^{2}-s}\Big[\text{DiLog}\left(-\frac{M^{2}\left(-m^{2}+M^{2}-s\right)}{m^{2}s},\left(s-M^{2}\right)\left(m^{2}-M^{2}+s\right)\right)\\
+ & +\text{Li}_{2}\left(\frac{-m^{2}+M^{2}-s}{M^{2}-s}\right)+\frac{1}{2}\log^{2}\left(\frac{m^{2}}{M^{2}-s}\right)-\text{Li}_{2}\left(\frac{M^{2}}{s}\right)+\frac{\pi^{2}}{6}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{DiLog}$
+\end_inset
+
+的倒数是
+\begin_inset Formula $\mathrm{Ln}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\partial_{x}\text{DiLog}\left[x,\alpha\right]=-\frac{\text{Ln}\left[1-x,\alpha\right]}{x}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\mathrm{Ln}\left(x,\alpha\right)$
+\end_inset
+
+ 是自然对数，它在
+\begin_inset Formula $x$
+\end_inset
+
+的复平面上，有一条
+\begin_inset Formula $-\infty$
+\end_inset
+
+到
+\begin_inset Formula $0$
+\end_inset
+
+的支割线，对于
+\begin_inset Formula $x<0$
+\end_inset
+
+的实数值，在 
+\begin_inset Formula $\lim_{\varepsilon\to0^{+}}\mathrm{Log}\left(x+i\alpha\varepsilon\right)$
+\end_inset
+
+描述的分支上计算。对于其它 
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $\mathrm{Ln}\left(x,\alpha\right)$
+\end_inset
+
+ 返回
+\begin_inset Formula $\mathrm{Log}\left[x\right]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+PolyLog
+\end_layout
+
+\begin_layout Standard
+PolyLog – 多对数函数。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{PolyLog}\left[n,z\right]$
+\end_inset
+
+给出 polylogarithm 函数 
+\begin_inset Formula $\mathrm{Li}_{2}\left(z\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{PolyLog}\left[n,p,z\right]$
+\end_inset
+
+ 给出 Nielsen 推广的 polylogarithm 函数 
+\begin_inset Formula $S_{n,p}\left(z\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+详细：
+\end_layout
+
+\begin_layout Enumerate
+级数定义：
+\begin_inset Formula 
+\[
+\mathrm{Li}_{n}\left(z\right)=\sum_{k=1}^{\infty}\frac{z^{k}}{k^{n}}\text{. }
+\]
+
+\end_inset
+
+
+\begin_inset Formula $n$
+\end_inset
+
+越大，收敛性越好。
+\end_layout
+
+\begin_layout Enumerate
+Nielsen 推广
+\begin_inset Formula 
+\begin{align*}
+ & S_{n,p}\left(z\right)=\frac{\left(-1\right)^{n+p-1}}{\left(n-1\right)!p!}\int_{0}^{1}\frac{\log^{n-1}\left(t\right)\log^{p}(1-zt)}{t}\dif t\\
+ & S_{n-1,1}\left(z\right)=\frac{\left(-1\right)^{n-1}}{\left(n-2\right)!}\int_{0}^{1}\frac{\log^{n-2}\left(t\right)\log(1-zt)}{t}\dif t=\mathrm{Li}_{n}\left(z\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{PolyLog}\left[n,z\right]$
+\end_inset
+
+在
+\begin_inset Formula $z$
+\end_inset
+
+的复平面上，具有从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $+\infty$
+\end_inset
+
+的支割线。
+\end_layout
+
+\begin_layout Enumerate
+示例图像：
+\begin_inset Formula $\text{Plot}[\text{Evaluate}@\text{ReIm}@\mathrm{PolyLog}[2,x]],\{x,-2,2\}]$
+\end_inset
+
+，蓝色为实部，黄色为虚部：
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/polyLog2.pdf
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+费曼积分：基本定义和工具
+\end_layout
+
+\begin_layout Section
+费曼规则和费曼积分
+\end_layout
+
+\begin_layout Standard
+在微扰理论中，任何量子场模型由 Lagrangian 描述，它是场的自由部分和相互作用部分的和，
+\begin_inset Formula $\mathcal{L}=\mathcal{L}_{0}+\mathcal{L}_{I}$
+\end_inset
+
+。从
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元出发，它使用相互作用拉氏量的指数的编时乘积表示，然后用 Wick 定理展开；或者从Green 函数出发，它用泛函的路径积分表示，后者可以用微扰方法处理；
+在微扰论的某一阶，我们可以得到，振幅可以写成有限费曼图的求和，费曼图用费曼规则构建：线对应
+\begin_inset Formula $\mathcal{L}_{0}$
+\end_inset
+
+，顶点由
+\begin_inset Formula $\mathcal{L}_{I}$
+\end_inset
+
+决定。费曼图的基本组成单元是传播子：
+\begin_inset Formula 
+\[
+T\left[\phi_{i}\left(x_{1}\right)\phi_{i}\left(x_{2}\right)\right]=:\phi_{i}\left(x_{1}\right)\phi_{i}\left(x_{2}\right):+D_{F,i}\left(x_{1}-x_{2}\right).
+\]
+
+\end_inset
+
+这里
+\begin_inset Formula $D_{F,i}$
+\end_inset
+
+是
+\begin_inset Formula $i$
+\end_inset
+
+类型场的费曼传播子，冒号表示自由场的正规乘积（normal product）。传播子的傅立叶变换具有如下形式：
+\begin_inset Formula 
+\begin{equation}
+\tilde{D}_{F,i}\left(p\right)\equiv\int\dif^{4}xe^{ip\cdot x}D_{F,i}\left(x\right)=\frac{iZ_{i}\left(p\right)}{\left(p^{2}-m_{i}^{2}+i0\right)^{a_{i}}},\label{eq:2.2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $m_{i}$
+\end_inset
+
+是对应的质量，
+\begin_inset Formula $Z_{i}$
+\end_inset
+
+是多项式（polynomial），
+\begin_inset Formula $a_{i}=1$
+\end_inset
+
+或
+\begin_inset Formula $2$
+\end_inset
+
+（对于一般协变规范中的胶子传播子）。传播子的幂次
+\begin_inset Formula $a_{\ell}$
+\end_inset
+
+也被称为指标（indices）。对于标量场，我们有
+\begin_inset Formula $Z=1$
+\end_inset
+
+，
+\begin_inset Formula $a=1$
+\end_inset
+
+。这不是传播子的最一般形式。例如，在 axial 或 Coulomb 规范下，胶子传播子可以有不一样的形式。有时为了简略，我们会忽略常规的 
+\begin_inset Formula $i0$
+\end_inset
+
+。与图的顶点相关的多项式可以被考虑进
+\begin_inset Formula $Z_{l}$
+\end_inset
+
+。我们也忽略标准费曼规则中的
+\begin_inset Formula $i$
+\end_inset
+
+和
+\begin_inset Formula $\left(2\pi\right)^{4}$
+\end_inset
+
+（特别是，在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中）；这些可以在计算的末尾考虑。
+\end_layout
+
+\begin_layout Standard
+最终，在微扰展开的任意阶我们得到，一系列费曼振幅的求和，它们用费曼图标记，对于给定类型的顶点和传播子。用通常的物理俚语说，对应的费曼振幅和积分通常都被叫做“di
+agram”。费曼图之间可以通过被称为 外点（external）的顶点子集来区分，费曼积分依赖的外部动量或坐标，联系到外部顶点。
+\end_layout
+
+\begin_layout Standard
+因此在微扰理论的任意阶，可以被微扰计算的量被写成费曼图（Feynman graphs）的求和。对于给定的图
+\begin_inset Formula $\Gamma$
+\end_inset
+
+，对应的费曼振幅可以写成对动量的积分：
+\begin_inset Formula 
+\begin{align}
+ & G_{\Gamma}\left(q_{1},\cdots q_{n+1}\right)=\left(2\pi\right)^{4}i\delta\left(\sum_{i}q_{i}\right)F_{\Gamma}\left(q_{1},\cdots q_{n}\right)\label{eq:2.3}\\
+ & F_{\Gamma}\left(q_{1},\cdots q_{n}\right)=\int\dif^{4}k_{1}\cdots\int\dif^{4}k_{h}\prod_{l=1}^{L}\tilde{D}_{F,l}\left(p_{l}\right)\label{eq:2.4}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\dif^{4}k=\dif k_{i}^{0}\dif\sbf k_{i}$
+\end_inset
+
+，其中省略了
+\begin_inset Formula $\left(2\pi\right)$
+\end_inset
+
+的幂因子，我们上面提到过。费曼积分
+\begin_inset Formula $F_{\Gamma}$
+\end_inset
+
+依赖于
+\begin_inset Formula $n$
+\end_inset
+
+个线性独立的外部动量
+\begin_inset Formula $q_{i}=\left(q_{i}^{0},\sbf q_{i}\right)$
+\end_inset
+
+；对于给定的图，对应的被积式是
+\begin_inset Formula $L$
+\end_inset
+
+个内动量
+\begin_inset Formula $p_{l}$
+\end_inset
+
+的函数，它们可以表示成外动量和
+\begin_inset Formula $h$
+\end_inset
+
+个选定的圈动量
+\begin_inset Formula $k_{i}$
+\end_inset
+
+的线性组合，其中
+\begin_inset Formula $h=L-V+1$
+\end_inset
+
+，
+\begin_inset Formula $L$
+\end_inset
+
+是传播子的数目，
+\begin_inset Formula $V$
+\end_inset
+
+是顶点的数目，
+\begin_inset Formula $h$
+\end_inset
+
+是独立的圈数。
+\end_layout
+
+\begin_layout Standard
+可以通过固定给定图的 tree T 选择圈动量，即选择一个最大的连通子图，并且不带圈，给每个不属于这个子树的传播子分配一个圈动量。因此，我们可以得到一个清晰的公
+式，表示传播子的动量：
+\begin_inset Formula 
+\[
+p_{l}=\sum_{i=1}^{h}e_{il}k_{i}+\sum_{i=1}^{n}d_{il}q_{i},
+\]
+
+\end_inset
+
+其中，如果
+\begin_inset Formula $l$
+\end_inset
+
+属于第
+\begin_inset Formula $j$
+\end_inset
+
+个圈则
+\begin_inset Formula $e_{il}=\pm1$
+\end_inset
+
+，否则
+\begin_inset Formula $e_{il}=0$
+\end_inset
+
+；如果
+\begin_inset Formula $l$
+\end_inset
+
+处于 tree T 中，且tree T 位于动量
+\begin_inset Formula $q_{i}$
+\end_inset
+
+的路径上，则
+\begin_inset Formula $d_{il}=\pm1$
+\end_inset
+
+，否则
+\begin_inset Formula $d_{il}=0$
+\end_inset
+
+。求和中的符号由方向（orientation）定义。
+\end_layout
+
+\begin_layout Standard
+经过张量约化（tensor reduction），可以只处理标量费曼积分。张量积分可以使用多种投影算符（projectors）。例如对于电磁形状因子的费曼积分，
+\begin_inset Formula 
+\[
+\Gamma^{\mu}\left(p_{1},p_{2}\right)=\gamma^{\mu}F_{1}\left(q^{2}\right)+\sigma^{\mu\nu}q_{\nu}F_{2}\left(q^{2}\right),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $q=p_{1}-p_{2}$
+\end_inset
+
+，
+\begin_inset Formula $\gamma^{\mu}$
+\end_inset
+
+和
+\begin_inset Formula $\sigma^{\mu\nu}$
+\end_inset
+
+分别是
+\begin_inset Formula $\gamma$
+\end_inset
+
+和
+\begin_inset Formula $\sigma$
+\end_inset
+
+矩阵，在无质量情形下（
+\begin_inset Formula $F_{2}=0$
+\end_inset
+
+），可以使用以下投影算符抽取贡献到形状因子
+\begin_inset Formula $F_{1}$
+\end_inset
+
+的标量积分：
+\begin_inset Formula 
+\[
+F_{1}\left(q^{2}\right)=\frac{\tr\left[\gamma_{\mu}\sla p_{2}\Gamma^{\mu}\left(p_{1},p_{2}\right)\sla p_{1}\right]}{2\left(d-2\right)q^{2}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\sla p=\gamma^{\mu}p_{\mu}$
+\end_inset
+
+，
+\begin_inset Formula $d$
+\end_inset
+
+是维数正规化的参数（见 Sect.2.4）。
+\end_layout
+
+\begin_layout Standard
+无论如何，通过使用投影算符，对于给定的图，我们最后得到一族费曼积分，它们具有不同的幂次的传播子标量部，
+\begin_inset Formula $1/\left(p_{l}^{2}-m_{l}^{2}\right)^{a_{l}}$
+\end_inset
+
+，分子上具有不同的单项式（monomial）。分母
+\begin_inset Formula $p_{l}^{2}$
+\end_inset
+
+可以线性地表示成圈动量和外动量的标量积。分子上的因子同样可以表示成圈动量和外动量的二次多项式（quadratic polynomials）的幂次组合。将这两种类
+型的二次多项式放在同一基础上考虑是很方便的，可以将分子中的因子挪到分母中，添加对应的负幂次。对于给定的图，分母的集合是线性独立的，很自然地，我们把来自分子的类似
+因子也加入到集合中，并让整个集合是线性独立的。
+\end_layout
+
+\begin_layout Standard
+所以对于给定图，我们最后得到下列形式的标量积分：
+\begin_inset Formula 
+\begin{equation}
+F\left(a_{1},\cdots,a_{N}\right)=\int\cdots\int\frac{\dif^{4}k_{1}\cdots\dif^{4}k_{h}}{E_{1}^{a_{1}}\cdots E_{1}^{a_{N}}},\label{eq:2.7}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $k_{i},i=1,\cdots h$
+\end_inset
+
+是圈动量，
+\begin_inset Formula $a_{i}$
+\end_inset
+
+是整数指标，分母的形式为：
+\begin_inset Formula 
+\[
+E_{l}=\sum_{i\ge j\ge1}A_{l}^{ij}r_{i}\cdot r_{j}-m_{l}^{2},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $l=1,\cdots,N$
+\end_inset
+
+。动量
+\begin_inset Formula $r_{i}$
+\end_inset
+
+可以是 graph 中的圈动量
+\begin_inset Formula $r_{i}=k_{i}$
+\end_inset
+
+，
+\begin_inset Formula $i=1,\cdots,h$
+\end_inset
+
+，也可以是线性独立的外动量
+\begin_inset Formula $r_{h+1}=q_{1},\cdots,r_{h+n}=q_{l}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+对于通常的费曼图（Feynman graph），分母
+\begin_inset Formula $E_{r}$
+\end_inset
+
+由某些二次型矩阵确定（indeed quadratic）。然而，在实际计算中更一般的费曼积分也会出现，它们的分母对于圈动量/外动量是线性的。线性传播子经常在费曼
+积分的按区域展开策略（strategy of expansion by region）的渐近展开（asymptotic）中出现。这些展开有效地把由拉氏量描述原始
+理论，和各种有效理论联系起来，后者中的传播子的确可以是外动量和圈动量的线性项。例如，可能遇到类似的分母：
+\begin_inset Formula $p\cdot k$
+\end_inset
+
+，当外动量
+\begin_inset Formula $p$
+\end_inset
+
+位于光锥，
+\begin_inset Formula $p^{2}=0$
+\end_inset
+
+对于 Sudakov 极限，
+\begin_inset Formula $p^{2}\neq0$
+\end_inset
+
+对于 重夸克有效理论（HQET）的夸克传播子。在在阈值展开（threshold expansion），以及非相对论 QCD（NRQCD）理论中，也会出现非相对论
+传播子，例如：
+\begin_inset Formula 
+\[
+k_{0}-\frac{\sbf k^{2}}{2m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+发散度
+\end_layout
+
+\begin_layout Standard
+在量子场论的早期就知道，费曼积分受到发散（divergence）的苦恼，也就是说这些积分是病态的（ill–defined），由于对动量的积分一般是发散的。当动量
+到达很高的能标时，积分会显现出紫外发散（UV， ultraviolet divergences）。例如考虑对应某个标量传播子的费曼积分。积分可以写成
+\begin_inset Formula 
+\begin{equation}
+F_{\Gamma}\left(q\right)=\int\frac{\dif^{4}k}{\left(k^{2}-m_{1}^{2}\right)\left[\left(q-k\right)^{2}-m_{2}^{2}\right]},\label{eq:2.9}
+\end{equation}
+
+\end_inset
+
+其中第一条内线的圈动量选择为
+\begin_inset Formula $k$
+\end_inset
+
+。引入推广到四维的球坐标
+\begin_inset Formula $k=r\hat{k}$
+\end_inset
+
+，其中
+\begin_inset Formula $\hat{k}$
+\end_inset
+
+在（推广的）单位球面上，用三个角度表示。数一数传播子的幂次，我们发现，在大
+\begin_inset Formula $r$
+\end_inset
+
+极限下，积分的发散行为是：
+\begin_inset Formula $\int_{\Lambda}^{\infty}\dif rr^{-1}$
+\end_inset
+
+。对于一般的图，在大动量时进行类似地幂次清点：对
+\begin_inset Formula $h$
+\end_inset
+
+个圈动量，引入
+\begin_inset Formula $\left(4\times h\right)$
+\end_inset
+
+– 维推广的球坐标，Jacobian 会给出
+\begin_inset Formula $4h\left(\Gamma\right)-1$
+\end_inset
+
+，加上传播子幂次的贡献，以及它的多项式的自由度，最终给出积分行为
+\begin_inset Formula $\int_{\Lambda}^{\infty}\dif r\,r^{\omega-1}$
+\end_inset
+
+，其中
+\begin_inset Formula 
+\[
+\omega=4h-2L+\sum_{l}n_{l},
+\]
+
+\end_inset
+
+被称为 graph 的 UV 发散度（degree of divergence）。其中
+\begin_inset Formula $n_{l}$
+\end_inset
+
+是多项式
+\begin_inset Formula $Z_{l}$
+\end_inset
+
+的 degree。
+\end_layout
+
+\begin_layout Standard
+这个估计表明，如果发散度是负数，则 费曼积分 是整体 UV 收敛的（overall convergent），即在所有圈动量区域无穷时不引起发散。当
+\begin_inset Formula $\omega=0,1,2,\cdots$
+\end_inset
+
+时，我们就说 费曼积分 具有 对数（logarithmic），线性（linear），平方（quadratic）等的整体发散。为了确保不存在 UV
+ 发散，还必须检查各种区域，其中圈动量分别趋于无穷，及所有的子图
+\begin_inset Formula $\gamma$
+\end_inset
+
+也需要满足
+\begin_inset Formula $\omega\left(\gamma\right)<0$
+\end_inset
+
+。如果某个
+\begin_inset Formula $\omega\left(\gamma\right)\ge0$
+\end_inset
+
+，我们就称为 subgraph UV 发散。实际上，只需检查所有的 单粒子不可约图（one–particle–irreducible，1PI）
+ 满足 
+\begin_inset Formula $\omega\left(\gamma\right)<0$
+\end_inset
+
+ 即可，术语的意思是，这些图无法通过只切断一条传播子分成不相连的子图。事实证明，这个粗略的估计确实成立–见 Sect.4.4。
+\end_layout
+
+\begin_layout Standard
+如果我们从费曼积分的动量空间表示转换到其他表示，UV 发散会以不同的方式显现出来。例如在坐标空间中，费曼振幅（即
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的傅立叶逆变换）可以表示成传播子的傅立叶变换的乘积
+\begin_inset Formula 
+\[
+\prod_{l=1}^{L}D_{F,l}\left(x_{li}-x_{lf}\right),
+\]
+
+\end_inset
+
+并需要对内部顶点的四维坐标
+\begin_inset Formula $x_{i}$
+\end_inset
+
+积分。这里
+\begin_inset Formula $li$
+\end_inset
+
+和
+\begin_inset Formula $lf$
+\end_inset
+
+分别是 line 
+\begin_inset Formula $l$
+\end_inset
+
+ 的起点和终点。
+\end_layout
+
+\begin_layout Standard
+坐标空间的传播子，
+\begin_inset Formula 
+\begin{equation}
+D_{F,l}\left(x\right)=\frac{1}{\left(2\pi\right)^{4}}\int\dif^{4}p\tilde{D}_{F,l}\left(p\right)e^{-ix\cdot p},\label{eq:2.12}
+\end{equation}
+
+\end_inset
+
+在坐标
+\begin_inset Formula $x=\left(x_{0},\sbf x\right)$
+\end_inset
+
+的微小值时是奇异的（singular）。为了清楚地显示这种奇异性，我们把
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的传播子写成对 所谓的 alpha-参数 积分的形式：
+\begin_inset Formula 
+\begin{align}
+ & \tilde{D}_{F,i}\left(p\right)\equiv\int\dif^{4}xe^{ip\cdot x}D_{F,i}\left(x\right)=\frac{iZ_{i}\left(p\right)}{\left(p^{2}-m_{i}^{2}+i0\right)^{{\color{blue}a_{i}}}},\nonumber \\
+ & \tilde{D}_{F,l}\left(p\right)=\left.iZ_{l}\left(\frac{1}{2i}\frac{\partial}{\partial u_{l}}\right)e^{2iu_{l}\cdot p}\right|_{u_{l}=0}\frac{\left(-i\right)^{{\color{blue}a_{l}}}}{\Gamma\left({\color{blue}a_{l}}\right)}\int_{0}^{\infty}\alpha_{l}^{{\color{blue}a_{l}-1}}e^{i\left(p^{2}-m^{2}\right)\alpha_{l}}\dif\alpha_{l}.\label{eq:2.13}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $Z_{l}\left(\cdots\right)$
+\end_inset
+
+表示泛函偏导；另外使用了 Schwinger 参数化公式，
+\begin_inset Formula 
+\[
+\frac{1}{A^{n}}=\frac{\left(-i\right)^{n}}{\Gamma\left(n\right)!}\int_{0}^{\infty}\alpha^{n-1}e^{i\alpha A}\dif\alpha,\quad\Gamma\left(n\right)=\left(n-1\right)!\quad\forall n\in Z^{+}
+\]
+
+\end_inset
+
+我们假设
+\begin_inset Formula $\im A>0$
+\end_inset
+
+，使得积分 well–defined。
+\end_layout
+
+\begin_layout Standard
+为了给出标量传播子在坐标空间中的具体形式（即 
+\begin_inset Formula $a=1$
+\end_inset
+
+，
+\begin_inset Formula $Z=1$
+\end_inset
+
+）：
+\begin_inset Formula 
+\begin{equation}
+\tilde{D}_{F}\left(p\right)=\int_{0}^{\infty}\dif\alpha\,e^{i\left(p^{2}-m^{2}\right)\alpha}\label{eq:2.14}
+\end{equation}
+
+\end_inset
+
+我们把
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+插入到
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，改变对
+\begin_inset Formula $p$
+\end_inset
+
+和
+\begin_inset Formula $\alpha$
+\end_inset
+
+的积分次序，并使用下面的公式完成高斯积分（Gaussian）：
+\begin_inset Formula 
+\begin{equation}
+\int\dif^{4}k\,e^{i\left(\alpha k^{2}-2q\cdot k\right)}=-i\pi^{2}\alpha^{-2}e^{-iq^{2}/\alpha}\label{eq:2.15}
+\end{equation}
+
+\end_inset
+
+这只不过是把四个一维的高斯积分乘起来：
+\begin_inset Formula 
+\begin{align*}
+ & \int_{-\infty}^{+\infty}\dif k_{0}\,e^{i\left(\alpha k_{0}^{2}-2q_{0}k_{0}\right)}=\sqrt{\frac{\pi}{\alpha}}e^{-iq_{0}^{2}/\alpha+i\pi/4},\\
+ & \int_{-\infty}^{+\infty}\dif k_{j}\,e^{i\left(\alpha k_{j}^{2}-2q_{j}k_{j}\right)}=\sqrt{\frac{\pi}{\alpha}}e^{-iq_{j}^{2}/\alpha-i\pi/4},\quad j=1,2,3
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+最后再对
+\begin_inset Formula $\alpha$
+\end_inset
+
+进行积分，得到下列结果：
+\begin_inset Formula 
+\begin{align*}
+D_{F}\left(x\right) & =\frac{-im}{4\pi^{2}\sqrt{-x^{2}+i0}}K_{1}\left(im\sqrt{-x^{2}+i0}\right)\\
+ & =\frac{-1}{\pi^{2}}\frac{-im}{x^{2}-i0}+\mathcal{O}\left(m^{2}\ln m^{2}\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $K_{1}$
+\end_inset
+
+是 Bessel 函数。
+\begin_inset Formula $x=0$
+\end_inset
+
+ 处的领头阶奇点由坐标空间无质量传播子的值给出。
+\end_layout
+
+\begin_layout Standard
+因此，卷积积分（convolution）
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的逆傅立叶变换，
+\begin_inset Formula 
+\[
+F_{\Gamma}\left(q\right)=\int\frac{\dif^{4}k}{\left(k^{2}-m_{1}^{2}\right)\left[\left(q-k\right)^{2}-m_{2}^{2}\right]}
+\]
+
+\end_inset
+
+等于坐标空间标量传播子的平方，奇点为
+\begin_inset Formula $\left(x^{2}-i0\right)^{-2}$
+\end_inset
+
+。幂次计数表明，这个奇点导致积分在
+\begin_inset Formula $x=0$
+\end_inset
+
+的邻域发散，这是 UV 发散在坐标空间的显现。
+\end_layout
+
+\begin_layout Standard
+由小圈动量处的奇点引起的发散被称为红外（IR，infrared divergences）发散。首先，我们要区分在一般的外动量值下产生的红外发散。这种发散的典型的
+例子是，Fig.2.2 中，某条边对应传播子的二次方，即
+\begin_inset Formula $a_{1}=2$
+\end_inset
+
+。如果这条边的质量为零，被积式中会出现
+\begin_inset Formula $1/\left(k^{2}\right)^{2}$
+\end_inset
+
+因子，其中
+\begin_inset Formula $k$
+\end_inset
+
+被选为这条边的动量。然后，牢记引入广义球坐标的方法，并在小
+\begin_inset Formula $k$
+\end_inset
+
+（即四动量
+\begin_inset Formula $k$
+\end_inset
+
+的所有分量都很小）处进行幂次计数，我们再次遇到发散行为
+\begin_inset Formula $\int_{0}^{\Lambda}\dif r\,r^{-1}$
+\end_inset
+
+，但这次是在
+\begin_inset Formula $r$
+\end_inset
+
+的小值区域。红外发散的特性与紫外发散的特性有相似之处。对于这种离壳红外发散，可以定义类似于紫外情况下红外发散度。一个合理的选择是，
+\begin_inset Formula 
+\[
+\tilde{\omega}\left(\gamma\right)=-\omega\left(\Gamma/\overline{\gamma}\right)-\omega\left(\Gamma\right),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\gamma}\equiv\Gamma/\gamma$
+\end_inset
+
+ 是 subgraph 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 在给定图
+\begin_inset Formula $\Gamma$
+\end_inset
+
+中的完成度（completion），
+\begin_inset Formula $\Gamma/\gamma$
+\end_inset
+
+ 表示缩减图，缩减图是通过将 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 的每个连通分量（connectivity component）缩减到一个点，而从
+\begin_inset Formula $\Gamma$
+\end_inset
+
+得到的。如果所有无质量子图
+\begin_inset Formula $\gamma$
+\end_inset
+
+的完成度
+\begin_inset Formula $\overline{\gamma}$
+\end_inset
+
+，包括同一连接分量中的所有外部顶点，则保证不存在离壳红外发散。(详见 Sect.4.4)。离壳红外发散是最糟糕的，但事实上在物理的理论中是不存在的。然而，它们在费曼
+图的渐进展开中起着重要作用 —— 见[31]和 Chap.9。
+\end_layout
+
+\begin_layout Standard
+当所考虑的外部动量位于特定表面上时费曼图是奇异的，就会出现其他种类的红外发散：要么在质量壳上，要么在阈值（threshold）处。例如，考虑 Fig.2.2，指数
+ 
+\begin_inset Formula $a_{1}=1$
+\end_inset
+
+， 
+\begin_inset Formula $a_{2}=2$
+\end_inset
+
+，质量
+\begin_inset Formula $m_{1}=0$
+\end_inset
+
+，
+\begin_inset Formula $m_{2}=m\neq0$
+\end_inset
+
+位于质量壳，
+\begin_inset Formula $q^{2}=m^{2}$
+\end_inset
+
+。以 
+\begin_inset Formula $k$
+\end_inset
+
+作为第二条边的动量，相应的费曼积分的形式是：
+\begin_inset Formula 
+\[
+F_{\Gamma}\left(q;d\right)=\int\frac{\dif^{4}k}{k^{2}\left(k^{2}-2q\cdot k\right)^{2}}.
+\]
+
+\end_inset
+
+在小的
+\begin_inset Formula $k$
+\end_inset
+
+值附近，积分行为是
+\begin_inset Formula $1/\left[4k^{2}\left(q\cdot k\right)^{2}\right]$
+\end_inset
+
+，在幂次计数的帮助下，我们看到存在 on–shell IR 发散，这在
+\begin_inset Formula $q^{2}\neq m^{2}$
+\end_inset
+
+时是不存在的。
+\end_layout
+
+\begin_layout Standard
+如果我们考虑质量相等时的 Fig.2.2，指数 
+\begin_inset Formula $a_{1}=a_{2}=2$
+\end_inset
+
+ 的阈值，即在
+\begin_inset Formula $q^{2}=4m^{2}$
+\end_inset
+
+时，似乎有一个 阈值 IR 发散，因为，若选择边的动量为
+\begin_inset Formula $q/2$
+\end_inset
+
+和
+\begin_inset Formula $q/2-k$
+\end_inset
+
+，我们得到积分
+\begin_inset Formula 
+\[
+\int\frac{\dif^{4}k}{\left(k^{2}+q\cdot k\right)^{2}\left(k^{2}-q\cdot k\right)^{2}},
+\]
+
+\end_inset
+
+在小
+\begin_inset Formula $k$
+\end_inset
+
+处，被积式趋于
+\begin_inset Formula $1/\left(q\cdot k\right)^{4}$
+\end_inset
+
+，并且在形式上是发散的。然而，阈值红外发散确实存在。例如，FIg.2.3 的日落图，general masses 在阈值，
+\begin_inset Formula $q^{2}=\left(m_{1}+m_{2}+m_{3}\right)$
+\end_inset
+
+，当传播子的整数幂次和大于或等于5时，在这个意义上是发散的（见[14]）。
+\end_layout
+
+\begin_layout Standard
+上面描述的红外发散在动量空间中是局域的（local），即它们与圈积分动量的特殊点有关。共线发散（collinear）出现在传播子与某些类光矢量平行时。Fig.2.4
+ 的无质量三角图提供了一个典型的共线发散的例子。让我们令 
+\begin_inset Formula $p_{1}^{2}=p_{2}^{2}=0$
+\end_inset
+
+，以及所有的质量都等于零。相应的Feynman积分为：
+\begin_inset Formula 
+\[
+\int\frac{\dif^{4}k}{\left(k^{2}-2p_{1}\cdot k\right)\left(k^{2}-2p_{2}\cdot k\right)k^{2}}.
+\]
+
+\end_inset
+
+至少存在一个 on–shell 红外发散，因为当 
+\begin_inset Formula $k\to0$
+\end_inset
+
+时，积分是发散的（componentwise）。然而，在
+\begin_inset Formula $k$
+\end_inset
+
+的非零值处也存在发散，这些值与，当
+\begin_inset Formula $k^{2}\sim0$
+\end_inset
+
+ 且与
+\begin_inset Formula $p_{1}$
+\end_inset
+
+或
+\begin_inset Formula $p_{2}$
+\end_inset
+
+共线时。 着来自于乘积
+\begin_inset Formula 
+\[
+\frac{1}{\left(k^{2}-2p\cdot k\right)k^{2}},
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $p^{2}=0$
+\end_inset
+
+且
+\begin_inset Formula $p\neq0$
+\end_inset
+
+时，产生共线发散。 为了看到这一点，将乘积在
+\begin_inset Formula $k_{0}$
+\end_inset
+
+平面上积分时，让我们在上半复平面上取留数，例如，在
+\begin_inset Formula $k_{0}=-\abs{\sbf k}+i0$
+\end_inset
+
+ 处取留数，导致积分包含
+\begin_inset Formula 
+\[
+\frac{1}{p\cdot k}=\frac{1}{p^{0}\abs{\sbf k}\left(1-\cos\theta\right)},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\theta$
+\end_inset
+
+是空间分量
+\begin_inset Formula $k$
+\end_inset
+
+和
+\begin_inset Formula $p$
+\end_inset
+
+之间的角度。 因此，对于小的
+\begin_inset Formula $\theta$
+\end_inset
+
+，我们在角度上的积分是发散的，因为系数
+\begin_inset Formula 
+\[
+\frac{\dif\cos\theta}{1-\cos\theta}=\sim\frac{\dif\theta}{\theta}.
+\]
+
+\end_inset
+
+第二个留数产生类似的发散行为——这可以通过变换
+\begin_inset Formula $k\to p-k$
+\end_inset
+
+看出。
+\end_layout
+
+\begin_layout Standard
+揭示共线发散的另一种方法是引入光锥坐标
+\begin_inset Formula $k_{\pm}=k_{0}\pm k_{3}$
+\end_inset
+
+，
+\begin_inset Formula $\underline{k}=\left(k_{1},k_{2}\right)$
+\end_inset
+
+。如果我们选择
+\begin_inset Formula $p$
+\end_inset
+
+的唯一非零的分量为
+\begin_inset Formula $p_{+}$
+\end_inset
+
+，我们将看到一个对数发散来自区域
+\begin_inset Formula $k_{-}\sim\underline{k}^{2}\sim0$
+\end_inset
+
+，只需通过幂次计数。 
+\end_layout
+
+\begin_layout Standard
+这些是通常费曼积分的主要发散类型。各种特殊的发散出现在更一般的费曼积分中，这些积分可以包含线性的传播子，并出现在动量的渐进展开的右手边。
+\end_layout
+
+\begin_layout Standard
+这些是通常费曼积分的主要发散类型。各种特殊的发散出现在更一般的费曼积分
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，这些积分可以包含线性传播子，并出现在动量和质量的渐进展开的右手边以及相关的有效理论中。例如，在 Sudakov 极限中，人们遇到的发散可以被归类为紫外共线发
+散。另一种具有各种非标准发散的情况发生在阈值展开和相应的有效理论，NRQCD 和 pNRQCD 中，其中需要特殊的幂次计数方案来描述发散的特征。
+\end_layout
+
+\begin_layout Section
+Alpha 表示
+\end_layout
+
+\begin_layout Standard
+分析费曼积分发散度（divergences）的一个有用工具被称为 alpha 表示（alpha representation），基于
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tilde{D}_{F,l}\left(p\right)=\left.iZ_{\ell}\left(\frac{1}{2i}\frac{\partial}{\partial_{\ell}}\right)e^{2iu_{\ell}\cdot p}\right|_{u_{\ell}=0}\frac{\left(-i\right)^{a_{\ell}}}{\Gamma\left(a_{\ell}\right)}\int_{0}^{\infty}\alpha_{\ell}\alpha_{\ell}^{a_{\ell}-1}e^{i\left(p^{2}-m^{2}\right)\alpha_{\ell}}.
+\]
+
+\end_inset
+
+它对任何费曼积分都成立。例如对于
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F_{\Gamma}\left(q\right)=\int\frac{\dif^{4}k}{\left(k^{2}-m_{1}^{2}\right)\left[\left(q-k\right)^{2}-m_{2}^{2}\right]},
+\]
+
+\end_inset
+
+对每个传播子使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+替换，
+\begin_inset Formula 
+\[
+\tilde{D}_{F,l}\left(p\right)=\left.iZ_{l}\left(\frac{1}{2i}\frac{\partial}{\partial u_{l}}\right)e^{2iu_{l}\cdot p}\right|_{u_{l}=0}\frac{\left(-i\right)^{{\color{blue}a_{l}}}}{\Gamma\left({\color{blue}a_{l}}\right)}\int_{0}^{\infty}\alpha_{l}^{{\color{blue}a_{l}-1}}e^{i\left(p^{2}-m^{2}\right)\alpha_{l}}\dif\alpha_{l}.
+\]
+
+\end_inset
+
+使用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+完成四维高斯积分，
+\begin_inset Formula 
+\[
+\int\dif^{4}k\,e^{i\left(\alpha k^{2}-2q\cdot k\right)}=-i\pi^{2}\alpha^{-2}e^{-iq^{2}/\alpha}
+\]
+
+\end_inset
+
+得到：
+\begin_inset Formula 
+\begin{align*}
+F_{\Gamma}\left(q\right) & =i\pi^{2}\int_{0}^{\infty}\int_{0}^{\infty}\dif\alpha_{1}\dif\alpha_{2}\left(\alpha_{1}+\alpha_{2}\right)^{-2}\\
+ & \times\exp\left(iq^{2}\frac{\alpha_{1}\alpha_{2}}{\alpha_{1}+\alpha_{2}}-i\left(m_{1}^{2}\alpha_{1}+m_{2}^{2}\alpha_{2}\right)\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于一般的费曼积分，同样可以明确地实施这个过程。对一般费曼积分地每个传播子使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，即对通常的传播子
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tilde{D}_{F,i}\left(p\right)\equiv\int\dif^{4}xe^{ip\cdot x}D_{F,i}\left(x\right)=\frac{iZ_{i}\left(p\right)}{\left(p^{2}-m_{i}^{2}+i0\right)^{a_{i}}},
+\]
+
+\end_inset
+
+使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 方法推广到任意数目圈积分动量的情形，完成
+\begin_inset Formula $4h$
+\end_inset
+
+–维的高斯积分：
+\begin_inset Formula 
+\begin{align}
+ & \int\dif^{4}k_{1}\cdots\dif^{4}k_{h}\exp\left[i\left(\sum_{i,j}A_{ij}k_{i}\cdot k_{j}+2\sum_{i}q_{i}\cdot k_{i}\right)\right]\nonumber \\
+= & i^{-h}\pi^{2h}\left(\det A\right)^{-2}\exp\left[-i\sum_{i,j}A_{ij}^{-1}q_{i}\cdot q_{j}\right].\label{eq:2.24}
+\end{align}
+
+\end_inset
+
+这里
+\begin_inset Formula $A$
+\end_inset
+
+是
+\begin_inset Formula $h\times h$
+\end_inset
+
+的矩阵，
+\begin_inset Formula $A^{-1}$
+\end_inset
+
+是它的逆矩阵。
+\end_layout
+
+\begin_layout Standard
+这里涉及的逆矩阵的元素是用图论语言（graph–theoretical languange）改写的（详见[7，23]），由此产生的 alpha
+ 表示的形式为
+\begin_inset Formula 
+\[
+F_{\Gamma}\left(q_{1},\cdots,q_{n};d\right)=\frac{i^{-a-h}\pi^{2h}}{\prod_{l}\Gamma\left(a_{l}\right)}\times\int_{0}^{\infty}\dif\alpha_{1}\cdots\int_{0}^{\infty}\dif\alpha_{l}\prod_{l}\alpha_{l}^{a_{l}-1}\mathcal{U}^{-2}Ze^{i\mathcal{V}/\mathcal{U}-i\sum m_{l}^{2}\alpha_{l}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $a=\sum a_{l}$
+\end_inset
+
+，
+\begin_inset Formula $\mathcal{U}$
+\end_inset
+
+和
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+是众所周知的函数：
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\begin{align}
+ & \mathcal{U}=\sum_{T\in T^{1}}\prod_{l\notin T}\alpha_{l},\label{eq:2.25}\\
+ & \mathcal{V}=\sum_{T\in T^{2}}\prod_{l\notin T}\alpha_{l}\left(q^{T}\right)^{2},\label{eq:2.26}
+\end{align}
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，求和遍历给定 graph 的 trees；在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.26"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，遍历 2–trees，也就是不涉及圈并由两个相连元素（connectivity components）组成的子图；
+\begin_inset Formula $\pm q^{T}$
+\end_inset
+
+是流入 2–tree T 的连通元素之一的外动量的求和
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+（由于外部动量的守恒定律，取哪个元素并不重要）。alpha 参数所涉及的乘积取遍不属于给定 tree T 的线。函数
+\begin_inset Formula $\mathcal{U}$
+\end_inset
+
+和
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+是 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 参数的 homogeneous 函数，homogeneity degree 分别为
+\begin_inset Formula $h$
+\end_inset
+
+和
+\begin_inset Formula $h+1$
+\end_inset
+
+。关于这两个基本函数的各种属性，也请参见[6]。
+\end_layout
+
+\begin_layout Standard
+因子
+\begin_inset Formula $Z$
+\end_inset
+
+负责 diagram 的非标量结构：
+\begin_inset Formula 
+\begin{equation}
+Z=\left.\prod_{l}Z_{l}\left(\frac{1}{2i}\frac{\partial}{\partial u_{l}}\right)e^{i\left(2B-K\right)/\mathcal{U}}\right|_{u_{1}=\cdots=u_{L}=0},\label{eq:2.27}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align}
+ & B=\sum_{l}u_{l}\sum_{T\in T_{l}^{1}}q_{T}\prod_{l^{\prime}\notin T}\alpha_{l^{\prime}},\label{eq:2.28}\\
+ & K=\sum_{T\in T^{0}}\prod_{l\notin T}\alpha_{l}\left(\sum_{l}\pm u_{l}\right)^{2}.\label{eq:2.29}\\
+\nonumber 
+\end{align}
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，求和遍历 trees 
+\begin_inset Formula $T_{l}^{1}$
+\end_inset
+
+，对于给定的 line 
+\begin_inset Formula $l$
+\end_inset
+
+，
+\begin_inset Formula $q_{T}$
+\end_inset
+
+是流过 line 
+\begin_inset Formula $l$
+\end_inset
+
+（沿着它朝向的方向）的总外动量。
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，求和遍历 pseudotrees 
+\begin_inset Formula $T^{0}$
+\end_inset
+
+（pseudotree 通过在 tree 上添加 line 得到），对
+\begin_inset Formula $l$
+\end_inset
+
+的求和遍历 pseudotree T 的 loop（circuit），其符号取决于 line 
+\begin_inset Formula $l$
+\end_inset
+
+ 和 pseudotree T 的朝向的重合性（coincidence）。
+\end_layout
+
+\begin_layout Standard
+让我强调一下，这种用于计算由费曼积分产生的矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的行列式，以及计算逆矩阵元素的可怕机制，以及从图论的角度解释这些结果，与用于解决电路的基尔霍夫定律问题（Kirchhoff's）的机制完全相同，这是一个典型的1
+9世纪的问题。例如回顾一下，参数
+\begin_inset Formula $\alpha_{l}$
+\end_inset
+
+起着欧姆电阻（ohmic resistances）的作用，而函数
+\begin_inset Formula $\mathcal{U}$
+\end_inset
+
+的表达式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2.25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+作为对 trees 的求和正是基尔霍夫的结果。
+\end_layout
+
+\begin_layout Standard
+在实际计算中，人们常常用手推导出具体 diagrams 的 alpha 表示，而不是从上面提出的一般公式中推导出来。 对于推导，人们也可以使用开源代码
+ UF.m[29]，它也适用于一般的二次和线性传播子。
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xxxxx
+\end_layout
+
+\end_body
+\end_document
