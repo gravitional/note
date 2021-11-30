@@ -1,0 +1,23 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tikz-feynman} % texdoc tikz-feynman 
+\usepackage{pgfplots}
+\pgfplotsset{width=7cm,compat=1.16}\usepgfplotslibrary{groupplots}
+\begin{document}
+
+\begin{tikzpicture}
+    \begin{axis}[view={60}{30}]
+    \addplot3 [
+    surf,shader=flat,
+    samples=20,
+    domain=-1:0,y domain=0:2*pi,
+    z buffer=sort,
+    ] (
+    {sqrt(1-x^2) * cos(deg(y))},
+    {sqrt(1-x^2) * sin(deg(y))},   x
+    );
+    \end{axis}
+    \end{tikzpicture}
+
+\end{document}

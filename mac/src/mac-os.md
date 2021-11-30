@@ -14,13 +14,13 @@
 ***
 `pbcopy`, 与之对应的是`pbpaste`
 
-把命令行的输出直接复制到粘贴板: 
+把命令行的输出直接复制到粘贴板:
 
 ```bash
 $ sort -u | pbcopy
 ```
 
-把粘贴板内容直接存入一个文件: 
+把粘贴板内容直接存入一个文件:
 
 ```bash
 $ pbpaste > out.txt
@@ -99,7 +99,7 @@ Yuppy SC Regular
 
 [Sarasa Mono SC](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
 
-MacOS 用户可以直接通过cask安装: 
+MacOS 用户可以直接通过cask安装:
 
 ```bash
 brew tap laishulu/cask-fonts
@@ -117,7 +117,7 @@ brew install font-sarasa-nerd
 如果希望 `kpathsea` 搜索系统字体目录的话, 还需要配置 `OSFONTDIR` 这个环境变量.
 在 `MacTeX 2014` 中, 这个变量是默认配置好了的. 但是在 `MacTeX 2015` 中, 不知为何, 这个变量没有预先配置. 因此, 需要用户自行配置.
 
-具体的配置方法如下: 
+具体的配置方法如下:
 编辑文件`/usr/local/texlive/2015/texmf.cnf`, 在文件末尾加上一行: `OSFONTDIR = /Library/Fonts//:~/Library/Fonts//`
 保存文件
 
@@ -130,7 +130,7 @@ brew install font-sarasa-nerd
 [在 Mac 上使用全局键盘快捷键](https://support.apple.com/zh-cn/guide/mac-help/mchlp2262/10.15/mac/10.15)
 您只能为现有菜单命令创建键盘快捷键. 您不能为通用任务定义键盘快捷键, 例如: 打开一个 `App` 或在 `App` 之间切换.
 
-妙控键盘的控制键顺序是 `contrl`,`option`,`command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改: 
+妙控键盘的控制键顺序是 `contrl`,`option`,`command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改:
 
 + 切换输入为`opt+space`
 + `spotlight`的快捷键为`opt+s`
@@ -165,11 +165,10 @@ Finder中显示隐藏文件`Cmd+Shift+.`
 
 `mac` 中询问窗口, 焦点的移动方式仍然是按下`tab`, 但是取消操作需要按下`space`,不管在什么情况下, `enter`都是确定.
 
-## homebrew 软件安装
+## homebrew,软件管理
 
-`brew Shellenv`:
-Print export statements. 在shell中运行时, 将Homebrew 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`.
-变量`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`和`HOMEBREW_REPOSITORY`也被导出以避免多次查询.
+`brew Shellenv`: 打印 export 设置. 在 `shell` 中运行时, 将 `Homebrew` 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`.
+变量`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`和`HOMEBREW_REPOSITORY`也被 `export` 以避免多次查询.
 考虑将该命令的输出添加配置文件中(例如`~/.profile, ~/.bash_profile, or ~/.zprofile`), 例如: `eval "$(/opt/homebrew/bin/brew shellenv)"`
 
 ***
@@ -196,22 +195,129 @@ fi
 
 其中`/share/zsh-completions`是插件`zsh-completions`补全函数的位置.
 
-### brew,tuna
+### brew 国内源
 
 建议按照[Homebrew / Linuxbrew 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/)中的教程安装
 以及 [Homebrew-bottles 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew-bottles/)
+或者参考使用中科大镜像的 `git` 备份, [ineo6/homebrew-install](https://github.com/ineo6/homebrew-install)
 
-或者参考使用中科大镜像的git备份, [ineo6/homebrew-install](https://github.com/ineo6/homebrew-install)
+如果没有使用过`homebrew/cask/sublime-text`下面的软件,
+可能没有`/opt/homebrew/Library/Taps/homebrew/homebrew-cask`这个目录, 随便安装一个`cask`软件, 再设置即可.
 
-如果没有使用过`homebrew/cask/sublime-text`下面的软件, 可能没有`/opt/homebrew/Library/Taps/homebrew/homebrew-cask`这个目录, 随便安装一个`cask`软件, 再设置即可.
+#### Homebrew Bottles
+
++ 地址: https://mirrors.ustc.edu.cn/homebrew-bottles/
++ 说明: Homebrew 预编译二进制软件包
++ 收录仓库: homebrew/homebrew-core
++ 使用说明: 请在运行 `brew` 前设置环境变量 `HOMEBREW_BOTTLE_DOMAIN`, 值为 `https://mirrors.ustc.edu.cn/homebrew-bottles`.
++ 临时替换:
+
+    ```bash
+    export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+    ```
+    
++ 永久替换, 在shell 配置文件中添加:
+
+    ```bash
+    # 对于 bash 用户, ~/.bash_profile
+    export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+    # 对于 zsh 用户, ~/.zshrc
+    export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+    ```
+
+>注解: 
+>Linuxbrew 核心仓库(`linuxbrew-core`)自 2021 年 10 月 25 日(brew 版本 3.3.0 起)被弃用, 
+>Linuxbrew 用户应迁移至 `homebrew-core`.  Linuxbrew 用户请依本镜像说明重新设置镜像.
+
+#### Homebrew Core 源使用帮助
+
++ 地址: https://mirrors.ustc.edu.cn/homebrew-core.git/
++ 说明: Homebrew 核心软件仓库
++ 临时使用 USTC 镜像:
+
+    ```bash
+    export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+    brew update
+    ```
+
++ 永久替换, 在shell 配置文件中添加:
+
+    ```bash
+    # 对于 bash 用户, ~/.bash_profile
+    export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+    # 对于 zsh 用户, ~/.zshrc
+    export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+    ```
+
+重置为官方地址:
+
+```bash
+unset HOMEBREW_CORE_GIT_REMOTE
+brew tap --custom-remote homebrew/core https://github.com/Homebrew/homebrew-core
+```
+
+>注解:
+
+若出现 `Error: invalid option: --custom-remote` 错误, 请先运行 `brew update` 将 brew 更新至 3.2.17 或以上版本.  
+重置回默认远程后, 用户应该删除 `shell` 的 `profile` 设置中的环境变量 `HOMEBREW_CORE_GIT_REMOTE` 以免运行 `brew update` 时远程再次被更换.
+
+注解
+
+Linuxbrew 核心仓库(linuxbrew-core)自 2021 年 10 月 25 日(brew 版本 3.3.0 起)被弃用, Linuxbrew 用户应迁移至 homebrew-core.  
+Linuxbrew 用户请依本镜像说明重新设置镜像. 注意迁移前请先运行 brew update 将 brew 更新至 3.3.0 或以上版本.  
+迁移过程中若出现任何问题, 可使用如下命令重新安装 homebrew-core:
+
+```bash
+export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+rm -rf "$(brew --repo homebrew/core)"
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.ustc.edu.cn/homebrew-core.git
+```
+
+#### Homebrew Cask
+
++ 地址: https://mirrors.ustc.edu.cn/homebrew-cask.git/
++ 说明: Homebrew cask 软件仓库，提供 macOS 应用和大型二进制文件
++ 使用说明: 使用 USTC 镜像安装, 或将已安装的仓库远程替换为 USTC 镜像:
+
+    ```bash
+    brew tap --custom-remote --force-auto-update homebrew/cask https://mirrors.ustc.edu.cn/homebrew-cask.git
+    ```
+
+    > 注解:若出现 `Error: invalid option: --custom-remote` 错误, 请先运行 `brew update` 将 `brew` 更新至 3.2.17 或以上版本.
+
++ 重置为官方地址:
+
+    ```bash
+    brew tap --custom-remote --force-auto-update homebrew/cask https://github.com/Homebrew/homebrew-cask
+    ```
+
+    >注解: Caskroom 的 `Git` 地址在 2018 年 5 月 25 日从 https://github.com/caskroom/homebrew-cask 迁移到了 https://github.com/Homebrew/homebrew-cask .
+
+#### Homebrew Cask Versions 源使用帮助
+
++ 地址: https://mirrors.ustc.edu.cn/homebrew-cask-versions.git/
++ 说明: Homebrew cask 其他版本 (alternative versions) 软件仓库, 提供使用人数多的, 需要的版本不在 cask 仓库中的应用.
++ 使用说明: 使用 USTC 镜像安装, 或将已安装的仓库远程替换为 USTC 镜像:
+
+    ```bash
+    brew tap --custom-remote --force-auto-update homebrew/cask-versions https://mirrors.ustc.edu.cn/homebrew-cask-versions.git
+    ```
+
+>注解: 若出现 `Error: invalid option: --custom-remote` 错误, 请先运行 `brew update` 将 brew 更新至 3.2.17 或以上版本.
+
+    重置为官方地址:
+
+    ```bash
+    brew tap --custom-remote --force-auto-update homebrew/cask-versions https://github.com/Homebrew/homebrew-cask-versions
+    ```
 
 ### brew,sspai
 
 [在 M1 芯片 Mac 上使用 Homebrew](https://sspai.com/post/63935)
 
-为什么 ARM 版 Mac 要使用 `/opt `路径？
+为什么 ARM 版 Mac 要使用 `/opt `路径?
 
-根据《文件系统层次结构标准》(Filesystem Hierarchy Standard, 主要为 Linux 系统制定, 但对具有共同 UNIX 基因的 macOS 也有参考价值): 
+根据<文件系统层次结构标准>(Filesystem Hierarchy Standard, 主要为 Linux 系统制定, 但对具有共同 UNIX 基因的 macOS 也有参考价值):
 `/usr/local` 目录用于系统管理员在本地安装软件. 系统软件更新时, 该目录应免于被覆盖.
 `/opt` 目录留作附加应用程序(add-on application)软件包的安装. 安装在该目录下的软件包必须将其静态文件放置在单独的 `/opt/<package>` 或` /opt/<provider>` 路径下.
 历史上, `/usr/local` 主要用于放置在本地编译并另行安装的程序, 避免和` /usr `下的系统自带版本冲突;而 `/opt` 则用于安装非系统自带的, 第三方预先编译并发行的独立软件包.
@@ -379,7 +485,7 @@ git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zs
 
 在 `.zshrc` 中开启:
 
-  plugins=(… zsh-completions)
+  plugins=(...  zsh-completions)
   autoload -U compinit && compinit
 
 ### 终端配置
@@ -480,7 +586,7 @@ $ bash --noediting
 大多数情况下, 你执行 `ls --color`  就可以了, 它会用彩色来区分不同的文件类型．
 你可以添加 `alias ls='ls --color=auto'`  到你的 `~/.zshrc` . `auto`这个值可以确保你将`ls`的输出重定向到一个文件时不会产生问题．
 
-如果你想要详细了解这个功能, 可以阅读`coreutils`文档里面的相应章节: 
+如果你想要详细了解这个功能, 可以阅读`coreutils`文档里面的相应章节:
 [GNU Coreutils: General output formatting](http://www.gnu.org/software/coreutils/manual/html_node/General-output-formatting.html#General-output-formatting),
 [GNU Coreutils: dircolors invocation](http://www.gnu.org/software/coreutils/manual/html_node/dircolors-invocation.html#dircolors-invocation). (注意配置文件的详细说明其实在 `dircolors --print-database`  这个命令的输出里面)．
 
@@ -514,7 +620,7 @@ killall Dock
 ```
 
 命令中有两个数字 `8` 和 `7`,它们分别代表的是布局中的列数和行数,如果想更清除的了解该段命令,
-可以参考[《通过终端命令改变 Launchpad 中应用图标的大小》](https://sspai.com/post/33299).
+可以参考[<通过终端命令改变 Launchpad 中应用图标的大小>](https://sspai.com/post/33299).
 
 除了可以对 `Launchpad` 的布局进行更改,还可以根据自己的喜好对背景的模糊程度进行更改,复制以下代码至终端即可:
 
@@ -631,11 +737,11 @@ brew install mas
 Mac App Store 中每一个应用都有自己的应用识别码(Product Identifier),这可以在每个应用的链接中看到.
 `mas` 就是根据 `Product Identifier `安装与更新应用,也提供了查询应用 `ID` 的命令.
 
-由 `1Password` 的链接可知其识别码为 `443987910` 
+由 `1Password` 的链接可知其识别码为 `443987910`
 
    https://itunes.apple.com/cn/app/1password/id443987910?mt=12
 
-除了查看链接,有以下 `x` 种方法获取应用的识别码: 
+除了查看链接,有以下 `x` 种方法获取应用的识别码:
 
 + 用命令 `mas search` 关键词 查询应用.比如在终端中执行 `mas search xcode`;
 + 用命令 `mas list` 查询已安装应用及其识别码.
@@ -644,16 +750,16 @@ Mac App Store 中每一个应用都有自己的应用识别码(Product Identifie
 mas search Xcode & mas list
 ```
 
-安装应用只需知道此应用的识别码就可以安装具体软件.比如安装 `Bear`,流程如下: 
+安装应用只需知道此应用的识别码就可以安装具体软件.比如安装 `Bear`,流程如下:
 第一步: 由命令 `mas search bear` 得知应用 `Bear` 的识别码为 `1091189122`;
 第二步: 使用命令 `mas install 1091189122` 安装.
 
->注意: 
+>注意:
 >应用必须在商店登陆账号的已购列表中,因为命令行无法完成`购买`这个操作;
 >对于新上架的应用,可能无法查询到其`识别码`.因为 `mas` 的查询列表在缓存文件中,目前尚不清楚其列表更新周期,
 但若由其他途径(如`应用链接`)>得知新上架`应用识别码`,仍可正常安装.
 
-我们不仅可以使用命令行安装单个应用,还可以批量安装应用,只需在应用识别码之间加上空格: 
+我们不仅可以使用命令行安装单个应用,还可以批量安装应用,只需在应用识别码之间加上空格:
 
 ```bash
 mas install 甲应用识别码 乙应用识别码 丙应用识别码
@@ -661,13 +767,13 @@ mas install 甲应用识别码 乙应用识别码 丙应用识别码
 
 #### 更新应用
 
-如果要更新所有 `Mac App Store` 应用,只需终端执行一句命令: 
+如果要更新所有 `Mac App Store` 应用,只需终端执行一句命令:
 
 ```bash
 mas upgrade
 ```
 
-如果更新特定应用,需要使用命令 `mas outdated` 先查询待更新列表以获取应用识别码,再更新一个或几个应用: 
+如果更新特定应用,需要使用命令 `mas outdated` 先查询待更新列表以获取应用识别码,再更新一个或几个应用:
 
 ```bash
 mas upgrade 甲应用识别码
@@ -680,7 +786,7 @@ mas upgrade 甲应用识别码 乙应用识别码 丙应用识别码
 #### 切换 MacAppStore 账号
 
 这是多区账号拥有者的福音,我们终于可以更方便地下载和更新其他区的应用了.
-如果忘记了当前帐号,使用命令 `mas account` 查询.可用命令 `mas signout` 退出当前帐号,并按如下命令登陆新的账号: 
+如果忘记了当前帐号,使用命令 `mas account` 查询.可用命令 `mas signout` 退出当前帐号,并按如下命令登陆新的账号:
 
 ```bash
 mas signin Apple ID "密码" # 如: mas signin mas@example.com "mypassword"
@@ -695,7 +801,7 @@ alias mas?='mas account'
 ```
 
 需重新打开终端以载入设置,那么在终端中执行 `masus` 即可切换到美区帐号,`mascn` 即切到中区, `mas?` 可查询目前登陆帐号.
-但如果开启了双重认证,可能遇到错误信息: 
+但如果开启了双重认证,可能遇到错误信息:
 
    Error: Sign in failed: The operation couldn' t be completed. (mas.MASError error 1.)
 
