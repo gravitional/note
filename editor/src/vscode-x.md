@@ -49,14 +49,12 @@ Keyboard Shortcut: `Ctrl+P`
 
 ## vscode 集成终端
 
-
-
 ### 集成终端
 
 [超链接]: https://code.visualstudio.com/docs/editor/integrated-terminal#_links
 [错误检测]: https://code.visualstudio.com/docs/editor/tasks
 
-Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在工作区的根目录(root)启动. 
+Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在工作区的根目录(root)启动.
 它提供了与编辑器的集成, 以支持[超链接][] 和 [错误检测][] 等功能.
 
 要打开终端.
@@ -71,19 +69,19 @@ Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在�
 
 ### 管理终端
 
-终端标签视图在终端视图的右侧. 
+终端标签视图在终端视图的右侧.
 每个终端都有一个条目, 包含其`名称`, `图标`, `颜色` 和 组别装饰(如果有的话).
 
 ![终端选项卡](https://code.visualstudio.com/assets/docs/editor/integrated-terminal/tabs.png)
 
 >提示: 使用 `terminal.integrated.tabs.location` 设置来改变标签的位置.
 
-通过点击 `TERMINAL` 面板右上方的 `+` 图标, 从终端下拉菜单中选择一个配置文件, 
+通过点击 `TERMINAL` 面板右上方的 `+` 图标, 从终端下拉菜单中选择一个配置文件,
 或通过触发`` Ctrl+Shift+` ``命令, 可以添加终端实例. 这个动作会在与该终端相关的标签列表中创建另一个条目.
 
-删除终端实例可以通过将鼠标悬浮在一个标签上, 并选择 `垃圾桶` 按钮, 
-或选择标签项目并按下 `Delete`, 
-或使用 `Terminal: Kill the Active Terminal Instance ` 命令, 
+删除终端实例可以通过将鼠标悬浮在一个标签上, 并选择 `垃圾桶` 按钮,
+或选择标签项目并按下 `Delete`,
+或使用 `Terminal: Kill the Active Terminal Instance ` 命令,
 或者通过右键菜单.
 
 在终端组之间的导航, 可以使用`Ctrl+PageDown` 将焦点移动到下一个,  `Ctrl+PageUp` 焦点上一个.
@@ -103,8 +101,8 @@ Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在�
 
 通过聚焦前一个窗格 -- `Alt+Left`, 和聚焦下一个窗格 -- `Alt+Right`, 在一个组中的终端之间导航.
 
-标签支持拖放, 以允许重新排列. 
-将一个终端组中的条目拖入空的, 将从组中删除(例如, unsplit). 
+标签支持拖放, 以允许重新排列.
+将一个终端组中的条目拖入空的, 将从组中删除(例如, unsplit).
 将一个标签拖入主终端区, 允许加入一个组.
 
 通过触发 `Terminal: Unsplit Terminal` 来解除(unsplit)拆分终端命令.
@@ -258,3 +256,177 @@ Windows 上的分离式终端(Split terminals)将在父终端开始的目录中�
 ```
 
 还有一些扩展可以提供更多的选项, 如 [Terminal Here](https://marketplace.visualstudio.com/items?itemName=Tyriar.vscode-terminal-here).
+
+## LaTeX-Workshop
+
+[LaTeX recipes](https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipes)
+
+### LaTeX配方
+
+LaTeX配方(recipes), 是指LaTeX Workshop在构建LaTeX项目时按顺序执行的`命令序列`.
+它是由 `latex-workshop.latex.recipes` 定义的.
+默认情况下, LaTeX Workshop 包括两个基本的配方, 由变量 `latex-workshop.latex.recipes` 和 `latex-workshop.latex.tools` 定义.
+
++ 第一个是简单地依赖 `latexmk` 命令
++ 第二种运行以下命令序列: `pdflatex→bibtex→pdflatex→pdflatex`.
+
+把下面的配置添加到你的 Vscode 的 json 配置文件中:
+
+```json
+"latex-workshop.latex.recipes": [
+  {
+    "name": "latexmk 🔃",
+    "tools": [
+      "latexmk"
+    ]
+  },
+  {
+    "name": "pdflatex ➞ bibtex ➞ pdflatex`×2",
+    "tools": [
+      "pdflatex",
+      "bibtex",
+      "pdflatex",
+      "pdflatex"
+    ]
+  }
+]
+```
+
+以及出现在`tools` field 中的每个`tool`都被定义在 `latex-workshop.latex.tools` 中.
+它的默认值是:
+
+```json
+"latex-workshop.latex.tools": [
+  {
+    "name": "latexmk",
+    "command": "latexmk",
+    "args": [
+      "-synctex=1",
+      "-interaction=nonstopmode",
+      "-file-line-error",
+      "-pdf",
+      "-outdir=%OUTDIR%",
+      "%DOC%"
+    ],
+    "env": {}
+  },
+  {
+    "name": "pdflatex",
+    "command": "pdflatex",
+    "args": [
+      "-synctex=1",
+      "-interaction=nonstopmode",
+      "-file-line-error",
+      "%DOC%"
+    ],
+    "env": {}
+  },
+  {
+    "name": "bibtex",
+    "command": "bibtex",
+    "args": [
+      "%DOCFILE%"
+    ],
+    "env": {}
+  }
+]
+```
+
+你可以用不同的`tools`创建多个`recipes`.
+每个`配方`是`配置列表`中的一个对象, 由一个`name`字段和配方中要调用的`tools`列表组成.
+
+配方中的`tools`可以在 `latex-workshop.latex.tools` 中定义, 其中每个命令就是一个`tool`.
+每个`tool`都是一个对象, 由一个`name`, 一个要生成的`command`, 它的参数(`args`)和一些特定的环境变量(`env`)组成.
+`env` 条目是一个字典. 想象一下, 你想使用一个 `texmf` 的子目录, 它处于你的主项目中, 只要写
+
+```json
+"env": {
+    "TEXMFHOME": "%DIR%/texmf"
+}
+```
+
+你也可以覆盖 `PATH` 环境变量. 注意, 在属性中, 只有占位符(placeholders) 例如`%DIR%`, 才会生效, 而其他变量, 例如 `$PATH`, **则不会被展开**.
+
+要在配方中包括一个工具, 该工具的名称应包括在配方的工具列表中.
+
+在构建项目时, 如果根文件中存在[魔法注释][], 就会使用它, 否则就使用第一个配方.
+你可以通过 `latex-workshop.recipes` 命令用另一个配方进行编译. 默认情况下使用[latexmk][].
+这个工具被捆绑在大多数LaTeX发行版中, 需要 `perl` 来执行.
+对于非 `perl` 用户, MikTeX的以下 `texify` 工具链可能值得一试.
+
+```json
+"latex-workshop.latex.recipes": [{
+  "name": "texify",
+  "tools": [
+    "texify"
+  ]
+}],
+"latex-workshop.latex.tools": [{
+  "name": "texify",
+  "command": "texify",
+  "args": [
+    "--synctex",
+    "--pdf",
+    "--tex-option=\"-interaction=nonstopmode\"",
+    "--tex-option=\"-file-line-error\"",
+    "%DOC_EXT%"
+  ],
+  "env": {}
+}]
+```
+
+`args` 和 `env` 参数可以包含由`%`包围的符号. 这些占位符会被即时替换(on-the-fly).
+
+[魔法注释]: https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#magic-comments
+[latexmk]: https://personal.psu.edu/jcc8/software/latexmk/
+
+### 占位符
+
+LaTeX Workshop 注册(registers)了以下占位符. 根文件值的是 LaTeX 主文件, 例如 `main.tex`.
+
+占位符 代替的是
+
++ `%DOC%`;  不含扩展名的根文件`全路径`(tex root file)
++ `%DOC_W32%`;  根文件的`全路径`, 不含扩展名, 在Windows下使用`\`路径分隔符.
++ `%DOCFILE%`;  不含扩展名的根文件名
++ `%DOC_EXT%`;  带有`扩展名`的根文件`全路径`
++ `%DOC_EXT_W32%`;  根文件的完整路径, 带有扩展名, 在Windows下使用`\`路径分隔符
++ `%DOCFILE_EXT%`;  带有扩展名的根文件名
++ `%DIR%`;  根文件目录
++ `%DIR_W32%`;  根文件目录, 在Windows中使用`\`路径分隔符
++ `%TMPDIR%`;   用于存储辅助文件的临时文件夹
++ `%OUTDIR%`;   在 [latex-workshop.latex.outDir][] 中配置的输出目录.
++ `%OUTDIR_W32%`;   在 `latex-workshop.latex.outDir` 中配置的输出目录, 在Windows中使用`\`路径分隔符.
++ `%WORKSPACE_FOLDER%`; 当前`工作区`的路径
++ `%RELATIVE_DIR%`; 相对于`工作区`文件夹的根文件目录
++ `%RELATIVE_DOC%`; 相对于`工作区`文件夹的根文件路径
+
+由于大多数 `LaTeX` 编译器接受没有扩展名的根文件名, `%DOC%`和`%DOCFILE%`不包括文件名扩展名. 
+同时, `texify` 工具需要完整的文件名及其扩展名, 因此在 `texify` 的配置中使用 `%DOC_EXT%`.
+
+大多数命令都接受使用`/`路径分隔符, 甚至在Windows上, 大多数LaTeX工具甚至要求使用它. 
+相反, 一些Windows命令只能使用`\`路径分隔符. 因此, 我们提供两个版本的占位符. 
+所有不带`_W32`后缀的占位符, 即使在 `Windows` 上也总是使用`/`路径分隔符. 
+所有带`_W32`后缀的占位符在 `Windows` 上使用 `\` 路径分隔符.
+注意在Linux和Unix系统上, 有和没有`_W32`后缀的占位符是相同的.
+
+[latex-workshop.latex.outDir]: https://github.com/James-Yu/LaTeX-Workshop/wiki/View#latex-workshoplatexoutDir
+
+### latex-workshop.latex.recipe.default
+
+定义 `Build LaTeX` 项目命令所使用的配方. 它也适用于自动构建. 
+配方是以 `latex-workshop.latex.recipes` 中定义的名称来指代的. 注意有两个特殊的值.
+
++ `"first"`: 使用 `latex-workshop.latex.recipes` 中定义的第一个配方.
++ `"lastUsed"`: 使用 `LaTeX Workshop: Build with recipe` 命令上次使用过的配方.
+
+类型 默认值
+
++ `string` `"first"`
+
+### latex-workshop.latex.build.forceRecipeUsage
+
+强制使用配方系统, 即使是在`魔法注释`中定义了`TeX命令`.
+类型 默认值
+
++ `boolean` `false`
