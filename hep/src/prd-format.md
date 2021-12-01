@@ -12,7 +12,7 @@
 + `twocolumn`: 双栏样式.
 
 + `REVTEX 4.2` 设计成自动切换单双栏,只需在设置中更改选项.
-+ `preprint` 做三件事：增加字号到`12 pt`, 增加行距,改变格式到单栏.
++ `preprint` 做三件事: 增加字号到`12 pt`, 增加行距,改变格式到单栏.
 + 手稿提交到 APS 时,应该使用 letter size paper.
 
 ## FRONT MATTER 前置段落
@@ -63,7 +63,7 @@ Authors, affiliations, and collaborations
 
 #### 摘要- Abstract
 
-摘要需要通过 `abstract` 环境指定, `abstract` 必须出现在 `\maketitle` 命令之前. `revtex4.2 `现在支持结构性摘要,用法如下：
+摘要需要通过 `abstract` 环境指定, `abstract` 必须出现在 `\maketitle` 命令之前. `revtex4.2 `现在支持结构性摘要,用法如下:
 
 ```latex
 \begin{abstract}
@@ -108,7 +108,7 @@ Authors, affiliations, and collaborations
 \documentclass[aps,prd,superscriptaddress]{revtex4-2}
 ```
 
-`revtex4.2`包含`5`种基本的格式：
+`revtex4.2`包含`5`种基本的格式:
 
 + `apsrev4-2.bst` (APS journals using a numeric citation style, i.e., all but RMP),
 + `apsrmp4-2.bst` (author/year style citations for RMP),
@@ -231,7 +231,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 ### Citing data sets with a DOI
 
-`BibTEX` styles in `REVTEX 4.2` 增加了对 data sets 的支持, 使用了新的 BibTEX type `@dataset`：
+`BibTEX` styles in `REVTEX 4.2` 增加了对 data sets 的支持, 使用了新的 BibTEX type `@dataset`:
 
 ```bib
 @dataset{haigh:2016,
@@ -239,7 +239,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
     Sharma, S. and Blanter, Y. and
     Bauer, G. E. W. and Ramsay, A. J.",
     year = "2018",
-    title = "{Data from Figures in‘‘Selection rules
+    title = "{Data from Figures in""Selection rules
     for cavity-enhanced Brillouin light scattering
     from magnetostatic modes" [Data set]}",
     doi = "10.5281/zenodo.1284434",
@@ -249,7 +249,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 将产生格式化的参考文献.
 
-    “J. A. Haigh, N. J. Lambert, S. Sharma, Y. Blanter, G. E. W. Bauer, and A. J. Ramsay, Data from Figures in “Selection rules for cavity-enhanced     Brillouin light scattering from mag-netostatic modes” [Data set], 10.5281/zenodo.1284434(2018), Zenodo.”
+    "J. A. Haigh, N. J. Lambert, S. Sharma, Y. Blanter, G. E. W. Bauer, and A. J. Ramsay, Data from Figures in "Selection rules for cavity-enhanced     Brillouin light scattering from mag-netostatic modes" [Data set], 10.5281/zenodo.1284434(2018), Zenodo."
 
 这主要用于分配有 `DOI` 的数据集.
 
@@ -291,7 +291,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 }
 ```
 
-将会被格式化为：
+将会被格式化为:
 
     "S. Cotogno, T. van Daal, and P. J. Mulders, Positivity bounds on gluon TMDs for hadrons of spin ≤ 1, J. High Energy Phys. 2017 (11), 185."
 
@@ -300,7 +300,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 若使用 `BibTEX`, `REVTEX 4.2`允许在单个`bibliography`条目中包含多个 `reference`. 这可以通过使用在 `\cite` 命令中使用带星号(`*`) 的参数实现.
 并需要一个兼容的 `natbib` 版本和 `REVTEX 4.2` 自带的 `bst` 文件.
 
-为了把多个 `ref` 包括进一个 `\bibitem`,在 `\cite`命令中的第二,三个`citation keys`前面加上星号,例如：
+为了把多个 `ref` 包括进一个 `\bibitem`,在 `\cite`命令中的第二,三个`citation keys`前面加上星号,例如:
 
     \cite{bethe, *feynman, *bohr}
 
@@ -308,7 +308,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 ### Prepending and/or appending text to a citation
 
-`cite`命令参数的扩展语法, 也可以用来指定 `citation` 前置的或后置的文本,例如：
+`cite`命令参数的扩展语法, 也可以用来指定 `citation` 前置的或后置的文本,例如:
 
 使用以下命令:
 
@@ -421,7 +421,7 @@ The `verbatim` environment is allowed.
 
 Boxes
 
-大多数盒子命令是不行的.包括：
+大多数盒子命令是不行的.包括:
 
 These include `\raisebox`, `\parbox`, `\minipage`, `\rulebox`, `\framebox`, `\mbox`, `\fbox`, `\savebox`, `\newsavebox`, `\sbox`, `\usebox`, and the environment `\begin{lrbox}`.
 
@@ -456,7 +456,7 @@ Rules produced with `\rule` are not allowed.
 
 使用 LATEX2e 标准表格排版环境即可,包括`longtable`包.
 
-Hint：
+Hint:
 
 + 使用`longtable`包以使得表格跨页.
 + 使用`\squeezetable`宏减小表格字体.
@@ -540,7 +540,7 @@ The proper markup is
 
 为了减少敲键盘次数,作者也可以自定义宏 . 但是不要调用上下文依赖的命令比如 `\if `.
 
-`LATEX2e` 提供了三种声明新命令的宏：`\providecommand`, `\newcommand`, and `\renewcommand`, 以及带星号的版本(`*`versions)
+`LATEX2e` 提供了三种声明新命令的宏: `\providecommand`, `\newcommand`, and `\renewcommand`, 以及带星号的版本(`*`versions)
 不要用 `TEX` 的底层命令,如 `\def`, `\edef`, and `\gdef`.
 
 ## 总结

@@ -2,7 +2,14 @@
 
 ## Thread
 
-`Thread`可以理解成, 自动对参数进行同样的处理;
+```mathematica
+Thread[f[args]] ; 将 f "threads" 到 args 中出现的任意列表上.
+Thread[f[args],h]; 将 f thread 到 args 中出现的任何头部为 h 的对象.
+Thread[f[args],h,n]; 将 f thread 到前 n 个 args 中头部为 h 的对象上.
+```
+
+`Thread`可以理解成, `Listable` 的函数, 即向量化算符, `+`, `-` , `*` , `/`, 在一般情形下的推广.
+`Thread@f[args]` 让 `f` 也对 `args` 进行向量化运算;
 
 + 如果是`一元算符`, 则直接轮流作用一遍.
 + 如果是`多元算符`, 首先把`参数列表`对齐:
@@ -15,9 +22,103 @@ In[1]:= Thread[f[{a, b}, {r, s}, {u, v}, {x, y}], List, 2]
 Out[1]= {f[a, r, {u, v}, {x, y}], f[b, s, {u, v}, {x, y}]}
 ```
 
-## Thread 和 MapThread 的区别
+### 可能的问题
 
-`MapThread` 和 `Thread` 类似, 但是将`函数f`和`参数` 分开处理:
++ `Thread` 会在 threading 之前计算整个表达式:
+
+    ```mathematica
+    Thread[D[{x, x y, x z}, {x, y, z}]]
+    报错...
+    ```
+
+    `MapThread` 将函数和它的参数分开:
+
+    ```mathematica
+    MapThread[D, {{x, x y, x z}, {x, y, z}]
+    Out[2]= {1, x, x}.
+    ```
+
++ 抑制计算也有类似的效果:
+
+    ```mathematica
+    Thread[Unevaluated[D[{x, x y, x z}, {x, y, z}]].
+    Out[3]= {1, x, x}.
+    ```
+
+### 应用
+
++ 建立一个规则列表:
+
+    ```mathematica
+    Thread[{a, b, c}-> {1, 2, 3}]
+    Out[1]= {a -> 1, b -> 2, c -> 3}
+    ```
+
++ 联系多项式方程中的系数:
+
+    ```mathematica
+    CoefficientList[#, x] & /@ (1 + 2 x + 3 x^2 == a + b x + c x^2)
+    Out[1]= {1, 2, 3} == {a, b, c}
+    Thread[%]
+    Out[2]= {1 == a, 2 == b, 3 == c}
+    ```
+
+    或者, 使用 `SolveAlways`:
+
+    ```mathematica
+    SolveAlways[1 + 2 x + 3 x^2 == a + b x + c x^2, x]
+    Out[3]= {{a -> 1, b -> 2, c -> 3}}.
+    ```
+
++ 组成具有恒定第二元素的对儿:
+
+    ```mathematica
+    Thread[{{a, b, c}, 0}]
+    Out[1]= {{a, 0}, {b, 0}, {c, 0}}
+    ```
+
+### 性质和关系
+
++ 具有 `Listable` 属性的函数会在列表上自动被 thread:
+
+    ```mathematica
+    Sqrt[{1, 2, 3, 4}]
+    Out[1]= {1, Sqrt[2], Sqrt[3], 2}
+
+    {1, 2, 3, 4} + 1
+    Out[2]= {2, 3, 4, 5}
+
+    {1, 2, 3, 4} + {a, b, c, d}
+    Out[3]= {1 + a, 2 + b, 3 + c, 4 + d}.
+    ```
+
++ `MapThread` 的工作原理与 `Thread` 类似, 但分别接受 `函数` 和 `参数` :
+
+    ```mathematica
+    MapThread[f, {{a, b, c}, {x, y, z}}]
+    Out[1]= {f[a, x], f[b, y], f[c, z]}
+
+    Thread[f[{a, b, c}, {x, y, z}]]
+    输出[2]= {f[a, x], f[b, y], f[c, z]}
+    ```
+
++ 用来 `thread` 的函数也可以是 `List`:
+
+    ```mathematica
+    Thread[{{a, b, c}, {x, y, z}}]
+    Out[1]= {{a, x}, {b, y}, {c, z}}
+    ```
+
+    在这种情况下, 其结果与转置相同:
+
+    ```mathematica
+    Transpose[{{a, b, c}, {x, y, z}}]
+    Out[2]= {{a, x}, {b, y}, {c, z}}}
+    ```
+
+### Thread 和 MapThread 的区别
+
+`MapThread` 和 `Thread` 类似, 但是将 `函数f` 和 `参数` 分开处理:
 
 ```mathematica
 In[1]:= MapThread[f,{{a,b,c},{x,y,z}}]

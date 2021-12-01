@@ -2,7 +2,7 @@
 
 ## 帮助文档
 
-查看latex 的帮助文档,可以直接用 `texdoc pkg`
+查看 LaTeX 的帮助文档,可以直接用 `texdoc pkg`
 
 `texdoc` - find & view documentation in TeX Live
 
@@ -133,7 +133,7 @@ No pages of output.
 于是你只需要根据提示调整一下 `\usepackage` 的位置就好了.
 
 实际使用中遇到的错误多种多样,一些错误的分析和修复可能不这么简单.
-刘海洋 的《LaTeX 入门》中有名为「从错误中救赎」的章节,
+刘海洋 的<LaTeX 入门>中有名为 `从错误中救赎` 的章节,
 专门讲解 `LaTeX` 的排错,对 `LaTeX` 的不同报错进行了详细地叙述.
 
 ### 清理latex 辅助文件powershell
@@ -206,26 +206,26 @@ Usage: xetex [OPTION]... [TEXNAME[.tex]] [COMMANDS]
 
 如果未指定任何参数或选项,则提示输入.
 
-| options | effect |
-| ----- | ----- |
-| `[-no]-file-line-error`  |   disable/enable file:line:error style messages |
-| `-fmt=FMTNAME`           |   use FMTNAME instead of program name or a %& line |
-| `-halt-on-error`         |   stop processing at the first error |
-| ------------------------ | ------------------------ |
-| `-interaction=STRING`    |   set interaction mode (STRING=batchmode/nonstopmode/scrollmode/errorstopmode) |
-| ------------------------ | ------------------------ |
-| `-output-comment=STRING` |   use STRING for XDV file comment instead of date |
-| `-output-directory=DIR`  |   use existing DIR as the directory to write files in |
-| `-output-driver=CMD`     |   use CMD as the XDV-to-PDF driver instead of xdvipdfmx |
-| `-no-pdf`                |   generate XDV (extended DVI) output rather than PDF |
-| ------------------------ | ------------------------ |
-| `[-no]-parse-first-line` |   disable/enable parsing of first line of input file |
-| ------------------------ | ------------------------ |
-| `[-no]-shell-escape`     |   disable/enable \write18{SHELL COMMAND} |
-| `-shell-restricted`      |   enable restricted \write18 |
-| ------------------------ | ------------------------ |
-| `-help`                  |   display this help and exit |
-| `-version`               |   output version information and exit |
+| options                  | effect                                                                       |
+| ------------------------ | ---------------------------------------------------------------------------- |
+| `[-no]-file-line-error`  | disable/enable file:line:error style messages                                |
+| `-fmt=FMTNAME`           | use FMTNAME instead of program name or a %& line                             |
+| `-halt-on-error`         | stop processing at the first error                                           |
+| ------------------------ | ------------------------                                                     |
+| `-interaction=STRING`    | set interaction mode (STRING=batchmode/nonstopmode/scrollmode/errorstopmode) |
+| ------------------------ | ------------------------                                                     |
+| `-output-comment=STRING` | use STRING for XDV file comment instead of date                              |
+| `-output-directory=DIR`  | use existing DIR as the directory to write files in                          |
+| `-output-driver=CMD`     | use CMD as the XDV-to-PDF driver instead of xdvipdfmx                        |
+| `-no-pdf`                | generate XDV (extended DVI) output rather than PDF                           |
+| ------------------------ | ------------------------                                                     |
+| `[-no]-parse-first-line` | disable/enable parsing of first line of input file                           |
+| ------------------------ | ------------------------                                                     |
+| `[-no]-shell-escape`     | disable/enable \write18{SHELL COMMAND}                                       |
+| `-shell-restricted`      | enable restricted \write18                                                   |
+| ------------------------ | ------------------------                                                     |
+| `-help`                  | display this help and exit                                                   |
+| `-version`               | output version information and exit                                          |
 
 ```bash
 pdflatex -halt-on-error file.tex 1 > /dev/null
@@ -251,8 +251,8 @@ Invoke-Expression $("lualatex" + " " + "-halt-on-error " + "-output-directory=te
 最简单的解决方案是`LaTeX \listfiles` 命令. 它将在日志文件中列出所使用的`文件`和它们的`版本号`.
 如果你把这个列表提取出来并与你的文件一起传送, 它可以作为一个检查列表, 以防出现问题.
 
-请注意, `\listfiles`只记录由 `标准LaTeX`机制( `\documentclass`、`\usepackage`、`\include`、`\includegraphics`等)输入的东西.
-`\input`命令, 经`LaTeX`修改后, 用`LaTeX`的语法表示为：
+请注意, `\listfiles`只记录由 `标准LaTeX`机制( `\documentclass`, `\usepackage`, `\include`, `\includegraphics`等)输入的东西.
+`\input`命令, 经`LaTeX`修改后, 用`LaTeX`的语法表示为:
 
 ```latex
 input\mymacros}
@@ -310,7 +310,7 @@ kpsewhich latinmodern-math.otf
 
 ```latex
 %\usepackage{xeCJK}% 可以用来实现中文断行
-\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
+\usepackage{ctex} % 中文排版通用框架, 汉字, 标点, 字体字号, 标题, 版式, 数字日期转换
 % 设置中文字体
 \setCJKmainfont[Mapping=tex-text]{Noto Sans CJK SC}
 \setCJKsansfont[Scale=0.7,Mapping=tex-text]{Source Han Sans SC}
@@ -429,7 +429,7 @@ texdoc texbytopic
 \renewcommand*{\cmd}[nargs][optargdefault]{defn}
 ```
 
-+ 定义或重定义一个命令. 
++ 定义或重定义一个命令.
 参见关于 `\DeclareRobustCommand` 的讨论, 位于 `Class  and package commands`中.
 + 这两个命令的`*`号形式要求参数不能包含多段文字. (用 `plain TeX` 术语说,不能为`\long` ).
 
@@ -553,7 +553,7 @@ This is \verb!literally! the biggest pumpkin ever.
 And this is the best squash, \verb+literally!+
 ```
 
-第一个`\verb`的文字文本带有感叹号`！`.第二个取而代之的是使用加号`+`,因为感叹号是文字文本的一部分.
+第一个`\verb`的文字文本带有感叹号`! `.第二个取而代之的是使用加号`+`,因为感叹号是文字文本的一部分.
 
 包围文字文本的单字符定界符`char`必须相同.
 `\verb`或`\verb*`与`char`之间,`char`与文字文本之间,或文本与第二个`char`之间不能有空格
@@ -656,7 +656,7 @@ And this is the best squash, \verb+literally!+
 
 把浮动体放到确定的位置:
 改进了用于定义浮动对象(如图形和表格)的接口.引入了`boxed float`, `ruled float` and the `plaintop float`. 您可以定义自己的`floats`并改善旧`floats`的行为.
-该软件包还提供了`H` float修饰符选项,用来替换过时的`here`包.您可以使用`\floatplacement{figure}{H}`将其设置为默认. 例如：
+该软件包还提供了`H` float修饰符选项,用来替换过时的`here`包.您可以使用`\floatplacement{figure}{H}`将其设置为默认. 例如:
 
 ```latex
 \begin{figure}[H]
@@ -1140,7 +1140,7 @@ bar\cite{baz}
 
 在这里,`\relax` 表示休息一会儿,什么也不做; `\citation` 则是由 `tex` 文件中的 `\cite` 命令写入 `aux` 文件的标记.
 它说明了:用户需要标记为 `baz` 的参考文献信息.
-当 BibTeX 读入 `aux` 文件的时候,它就会记录下所有 `\citation` 命令中的内容(即文献标记——`label`),这样就知道了用户需要哪些参考文献信息.
+当 BibTeX 读入 `aux` 文件的时候,它就会记录下所有 `\citation` 命令中的内容(即文献标记 -- `label`),这样就知道了用户需要哪些参考文献信息.
 
 ***
 了解文献列表格式以及读取文献数据库
@@ -1253,7 +1253,7 @@ latex foo.tex
 接下来,我们看看 dvi 文件的内容:`foo.pdf`不难发现,由于读入了 `foo.bbl` 文件,参考文献列表已经正确展现出来了.
 然而,正文中依然有一个问号.  实际上,LaTeX 需要 `aux` 文件中的 `\bibcite` 命令,将参考文献标记与参考文献编号关联起来,从而在 tex文件中的 `\cite` 命令位置填上正确的参考文献编号.
 我们注意到,在我们第二次执行 `LaTeX` 命令编译之前,`foo.aux` 文件中是没有这些信息的,直到编译完成,这些信息才被正确写入. 因此,第二次执行 `LaTeX` 命令时,`LaTeX` 还不能填入正确的文献编号,于是就写入了一个问号作为占位符.
- 解决这个问题的办法也很简单——此时 `aux` 文件中已经有了需要的信息,再编译一遍就好了.
+ 解决这个问题的办法也很简单 -- 此时 `aux` 文件中已经有了需要的信息,再编译一遍就好了.
 
 ```latex
 latex foo.tex
@@ -1761,21 +1761,21 @@ reference: [Math accents](http://tug.ctan.org/tex-archive/info/latex2e-help-texi
 `LaTeX` provides a variety of commands for producing accented letters in math.
 These are different from `accents` in `normal text` (see `Accents`).
 
-| command | description |
-| ----- | ----- |
-| `\acute` |      Math acute accent |
-| `\bar` |        Math bar-over accent |
-| `\breve` |      Math breve accent |
-| `\check` |      Math hacek (check) accent |
-| `\ddot` |       Math dieresis accent |
-| `\dot` |        Math dot accent |
-| `\grave` |      Math grave accent |
-| `\hat` |        Math hat (circumflex) accent |
-| `\mathring` |   Math ring accent |
-| `\tilde` |      Math tilde accent |
-| `\vec` |        Math vector symbol |
-| `\widehat` |    Math wide hat accent |
-| `\widetilde` |  Math wide tilde accent |
+| command      | description                  |
+| ------------ | ---------------------------- |
+| `\acute`     | Math acute accent            |
+| `\bar`       | Math bar-over accent         |
+| `\breve`     | Math breve accent            |
+| `\check`     | Math hacek (check) accent    |
+| `\ddot`      | Math dieresis accent         |
+| `\dot`       | Math dot accent              |
+| `\grave`     | Math grave accent            |
+| `\hat`       | Math hat (circumflex) accent |
+| `\mathring`  | Math ring accent             |
+| `\tilde`     | Math tilde accent            |
+| `\vec`       | Math vector symbol           |
+| `\widehat`   | Math wide hat accent         |
+| `\widetilde` | Math wide tilde accent       |
 
 ## 简单的规则
 
@@ -1808,13 +1808,13 @@ These are different from `accents` in `normal text` (see `Accents`).
 
 以下是在` LaTeX`的标准文档类中用于控制编号的`counter`列表.
 
-| | | | |
-| ----- | ----- | ----- | ----- |
-| part             | paragraph        | figure           | enumi |
-| chapter          | subparagraph     | table            | enumii |
-| section          | page             | footnote         | enumiii |
-| subsection       | equation         | mpfootnote       | enumiv |
-| subsubsection |  |  |  |
+|               |              |            |         |
+| ------------- | ------------ | ---------- | ------- |
+| part          | paragraph    | figure     | enumi   |
+| chapter       | subparagraph | table      | enumii  |
+| section       | page         | footnote   | enumiii |
+| subsection    | equation     | mpfootnote | enumiv  |
+| subsubsection |              |            |         |
 
 The `mpfootnote` counter is used by the `\footnote` command inside of a `minipage` (see minipage).
 The counters `enumi` through `enumiv` are used in the `enumerate` environment, for up to four levels of nesting (see `enumerate`).
@@ -2160,18 +2160,18 @@ http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Accents
 ***
 Latex下 字体大小命令 比较
 
-|size| 10pt (default)| 11pt   |12pt |
-|---|---|---|---|
-| `\tiny` | `5pt`  | `6pt` | `6pt` |
-| `\scriptsize` | `7pt`  | `8pt` | `8pt` |
-| `\footnotesize` | `8pt`  | `9pt` | `10pt` |
-| `\small` | `9pt`  | `10pt` | `11pt` |
-| `\normalsize` | `10pt`  | `11pt` | `12pt` |
-| `\large` | `12pt`  | `12pt` | `14pt` |
-| `\Large` | `14pt`  | `14pt` | `17pt` |
-| `\LARGE` | `17pt`  | `17pt` | `20pt` |
-| `\huge` | `20pt`  | `20pt` | `25pt` |
-| `\Huge` | `25pt`  | `25pt` | `25pt` |
+| size            | 10pt (default) | 11pt   | 12pt   |
+| --------------- | -------------- | ------ | ------ |
+| `\tiny`         | `5pt`          | `6pt`  | `6pt`  |
+| `\scriptsize`   | `7pt`          | `8pt`  | `8pt`  |
+| `\footnotesize` | `8pt`          | `9pt`  | `10pt` |
+| `\small`        | `9pt`          | `10pt` | `11pt` |
+| `\normalsize`   | `10pt`         | `11pt` | `12pt` |
+| `\large`        | `12pt`         | `12pt` | `14pt` |
+| `\Large`        | `14pt`         | `14pt` | `17pt` |
+| `\LARGE`        | `17pt`         | `17pt` | `20pt` |
+| `\huge`         | `20pt`         | `20pt` | `25pt` |
+| `\Huge`         | `25pt`         | `25pt` | `25pt` |
 
 如修改表格字体大小
 
@@ -2199,7 +2199,7 @@ Latex下 字体大小命令 比较
 + $\circ$ : 可以用来当作角度的符号. 虽然国际单位更建议使用`siunitx`包处理.
 
 ***
-`latinmodern-math.otf`中没有`\sslash`字形, 但总是可以从其他数学字体中借用缺少的字形. 例如下面的例子：
+`latinmodern-math.otf`中没有`\sslash`字形, 但总是可以从其他数学字体中借用缺少的字形. 例如下面的例子:
 
 ```latex
 \documentclass[a4paper,11pt]{article}
@@ -2239,7 +2239,7 @@ $a \sslash b$
 [mkern](https://www.tutorialspoint.com/tex_commands/mkern.htm)
 [AtBeginDocument]([mkern](https://tex.stackexchange.com/questions/177397/why-does-it-matter-when-atbegindocument-is-run))
 
-+ ` \AtBeginDocument`宏：将它的内容附加到`\@begindocumenthook`后面, 后者紧随`\begin{document}`展开.
++ ` \AtBeginDocument`宏: 将它的内容附加到`\@begindocumenthook`后面, 后者紧随`\begin{document}`展开.
 + `\mathbin`:给出正确的间距, 让某个对象称为二元运算符.例如`a\mathbin{\text{op}} b`
 + `\mkern`: 给出水平间距.例如, `a\mkern18mu b`
 
@@ -2294,7 +2294,7 @@ $a \sslash b$
 ref-2: [LaTeX小写花体字母](https://www.zhihu.com/question/26941177/answer/34623570)
 ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/26941177/answer/34626024)
 
-拥有小写字母的数字花体字体当然也是存在的——比如`MathTime Pro 2`的`\mathcal`就支持小写,
+拥有小写字母的数字花体字体当然也是存在的 -- 比如`MathTime Pro 2`的`\mathcal`就支持小写,
 需要付钱.  把一些正文字体借用于数学公式中是可能
 把一些正文字体借用于数学公式中是可能的. 不过不推荐.
 如果是为了区分不同的变量,可以考虑用`black letter`风格的`\mathfrak`.
@@ -2306,36 +2306,36 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 
 ### 数学符号
 
-| `latex` | appearance | 描述 |
-| ----- | ----- |----- |
-| `\oint` | $\oint$ | 环路积分 |
-| `\approx` | $\approx$ | Almost equal to (relation) 双线约等于 |
-| `\sim` | $\sim$ | 相似 单线约为 |
-| `\ldots` | $\ldots$ | lying dots 省略号 |
-| `\cdots` | $\cdots$ | centerd dots 省略号 |
-| `\infty` | $\infty$ | infinity 无穷 |
-| `\gg` | $\gg$ |greater greater 远远大于 |
-| `\ll` | $\ll$ | less less 远远小于 |
-| `\propto` | $\propto$ | 正比于 |
-| `\in` | $\in$ | 属于 |
-| `\notin` | $\notin$ | 不属于|
-| `\ast` | $\ast$ | Asterisk operator, convolution, six-pointed (binary) 六角星|
-| `\cong` | $\cong$ | Congruent (relation).  全等|
-| `\dagger` | $\dagger$ | Dagger relation (binary). 厄米共轭  |
-| `\ast` | $\ast$ | asterisk. 复共轭  |
-| `\equiv` | $\equiv$ | Equivalence (relation).  恒等于 |
-| `\subset` | $\subset$ | Subset (occasionally, is implied by) (relation) 子集|
-| `\varphi` | $\varphi$ | Variant on the lowercase Greek letter 变型希腊字母 |
-| `\zeta` | $\zeta$ | Lowercase Greek letter  |
-| `\Zeta` | $\Zeta$ | Lowercase Greek letter  |
-| `\xi` | $\xi$ | Lowercase Greek letter  |
-| `\upsilon` | $\upsilon$ | Lowercase Greek letter  |
-| `\mathsection` | $\mathsection$ | Section sign in math mode  |
-| `\langle` | $\langle$ | Section sign in math mode 尖括号 |
-| `\left| a \right|` | $\left\| a \right\|$ | absolute value 绝对值 |
-| `\leftrightarrow` | $\leftrightarrow$ | 双向箭头 |
-| `\widehat{}` | $\widehat{M}$ | 宽帽子 |
-|`\sqrt[4]{8}`|$\sqrt[4]{8}$ | 四次根号`8` |
+| `latex`            | appearance           | 描述                                                        |
+| ------------------ | -------------------- | ----------------------------------------------------------- |
+| `\oint`            | $\oint$              | 环路积分                                                    |
+| `\approx`          | $\approx$            | Almost equal to (relation) 双线约等于                       |
+| `\sim`             | $\sim$               | 相似 单线约为                                               |
+| `\ldots`           | $\ldots$             | lying dots 省略号                                           |
+| `\cdots`           | $\cdots$             | centerd dots 省略号                                         |
+| `\infty`           | $\infty$             | infinity 无穷                                               |
+| `\gg`              | $\gg$                | greater greater 远远大于                                    |
+| `\ll`              | $\ll$                | less less 远远小于                                          |
+| `\propto`          | $\propto$            | 正比于                                                      |
+| `\in`              | $\in$                | 属于                                                        |
+| `\notin`           | $\notin$             | 不属于                                                      |
+| `\ast`             | $\ast$               | Asterisk operator, convolution, six-pointed (binary) 六角星 |
+| `\cong`            | $\cong$              | Congruent (relation).  全等                                 |
+| `\dagger`          | $\dagger$            | Dagger relation (binary). 厄米共轭                          |
+| `\ast`             | $\ast$               | asterisk. 复共轭                                            |
+| `\equiv`           | $\equiv$             | Equivalence (relation).  恒等于                             |
+| `\subset`          | $\subset$            | Subset (occasionally, is implied by) (relation) 子集        |
+| `\varphi`          | $\varphi$            | Variant on the lowercase Greek letter 变型希腊字母          |
+| `\zeta`            | $\zeta$              | Lowercase Greek letter                                      |
+| `\Zeta`            | $\Zeta$              | Lowercase Greek letter                                      |
+| `\xi`              | $\xi$                | Lowercase Greek letter                                      |
+| `\upsilon`         | $\upsilon$           | Lowercase Greek letter                                      |
+| `\mathsection`     | $\mathsection$       | Section sign in math mode                                   |
+| `\langle`          | $\langle$            | Section sign in math mode 尖括号                            |
+| `\left| a \right|` | $\left\| a \right\|$ | absolute value 绝对值                                       |
+| `\leftrightarrow`  | $\leftrightarrow$    | 双向箭头                                                    |
+| `\widehat{}`       | $\widehat{M}$        | 宽帽子                                                      |
+| `\sqrt[4]{8}`      | $\sqrt[4]{8}$        | 四次根号`8`                                                 |
 
 ### 自定义数学符号
 
@@ -2431,7 +2431,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 ```
 
 这份代码,试图利用 `\mathop`,只在必要的时候于左边插入空白,修复了上面的问题.
-不过,这样一来也带来了一些副作用——在 `\mathop` 的作用下,`\mathrm{d}` 的基线发生了改变,不再与正常的数学变量保持在同一个基线上. 这也是不好的.
+不过,这样一来也带来了一些副作用 -- 在 `\mathop` 的作用下,`\mathrm{d}` 的基线发生了改变,不再与正常的数学变量保持在同一个基线上. 这也是不好的.
 最终解决问题,应该对微分算子有这样的定义
 
 ```latex
@@ -2653,7 +2653,7 @@ URL链接
 `latex`中使用单位, 现在最好使用[siunitx](https://www.ctan.org/pkg/siunitx), 它是`LaTeX 3 `项目中的包.
 `hepunits`会调用`physics`和`SIunits`, 这两个包会与`siunitx`冲突, 所以不要调用这些宏包.
 
-`siunitx`的说明文档中有具体的用法例子：
+`siunitx`的说明文档中有具体的用法例子:
 `3.3Units` 章节列举了常用的命令, `3.6Unit abbreviations` 中有大量单位的缩写, 但是注意很多单位的定义只在`\unit{}`环境内才生效.
 另外`siunitx`有第二版和第三版, 使用`texdoc siunitx`查看本地对应版本的文档, 两个版本的命令名称不同, 根据具体情况使用.
 
@@ -2661,7 +2661,7 @@ URL链接
 
 ```latex
 \SI[mode=text]{1.23}{J.mol^{-1}.K^{-1}}
-\ang{1;2;3} % 角度：1度2分3秒
+\ang{1;2;3} % 角度: 1度2分3秒
 \si{\henry\tothe{5}}  %一般的指数可以用 \tothe 输入
 \si{\raiseto{4.5}\radian} % 或者用 \raiseto
 \si{\kilogram\of{metal}} %一般的限定符可以使用 \of
@@ -2736,7 +2736,7 @@ URL链接
 [Latex的页脚和页眉](https://zhuanlan.zhihu.com/p/114676221)
 [fancyhdr – Extensive control of page headers](https://www.ctan.org/pkg/fancyhdr)
 [LaTex页码格式,第几页共几页 ](https://www.latexstudio.net/archives/7680.html)
-[LaTeX入门(七)——页面设置](https://zhuanlan.zhihu.com/p/56405574)
+[LaTeX入门(七) -- 页面设置](https://zhuanlan.zhihu.com/p/56405574)
 
 对于页眉页脚的设置,我们使用宏包`fancyhdr`. 所以,我们首先在导言区中写上
 
@@ -2785,7 +2785,7 @@ URL链接
 而`单倍行距`又根据字体, 字号, 软件的不同而改变(不同软件中有不同的定义, 没有一个通用的值).
 
 在 LaTeX 里面也有这些概念, 在你定义字号的时候, `单倍行距`也随之确定. 更改时, 我们更改的是`单倍行距`的倍数.
-比如在 LaTeX 中 `10` 号字(无论字体), 对应的单倍行距是 `12` 磅. 修改行距倍数的方法有两个：
+比如在 LaTeX 中 `10` 号字(无论字体), 对应的单倍行距是 `12` 磅. 修改行距倍数的方法有两个:
 
 ***
 在导言区使用 `\linespread` 命令. 这个是 `LaTeX2e` 提供的. (推荐)
@@ -2823,7 +2823,7 @@ URL链接
 \end{document}
 ```
 
-被 `spacing` 环境框住的地方行距就会改变. `spacing` 还有一些奇怪的功能：
+被 `spacing` 环境框住的地方行距就会改变. `spacing` 还有一些奇怪的功能:
 如果想让`行距 = 2倍字体高度`, 并且你的字号正好是 `10/11/12 pt` 之一的话, 就可以使用 `\doublespace` 命令(这个命令容易使人误以为是两倍行距).
 
 上面两个办法的效果差不多, `\linespread` 背后的实现更复杂一些, 本质上是把`行距倍数`传递给 `\baselinestretch`, 所以实际上你也可以调用
@@ -2843,10 +2843,10 @@ URL链接
 如果想直接改`单位行距`的大小, 也是可以做到的, 因为同样理由, 也不推荐.
 
 ```latex
-\setlength{\normalbaselineskip}{20pt}    % 改变“单倍行距”. 不推荐, 因为字号一改就得重新定义.
+\setlength{\normalbaselineskip}{20pt}    % 改变"单倍行距". 不推荐, 因为字号一改就得重新定义.
 ```
 
-如果你想把行距搞得和 `Word` 很像, 需要改变每个字号下的`单倍行距`大小. 参考[LaTeX 设置的行距与 Word 的行距如何对应？](https://www.zhihu.com/question/62327906/answer/197899935)
+如果你想把行距搞得和 `Word` 很像, 需要改变每个字号下的`单倍行距`大小. 参考[LaTeX 设置的行距与 Word 的行距如何对应? ](https://www.zhihu.com/question/62327906/answer/197899935)
 
 ### 添加水印或者背景图片 eso-pic
 

@@ -6,7 +6,7 @@
 
 `//` 用作单行注释, `/**/`用作多行注释
 
-示例代码1：--弦图
+示例代码1: --弦图
 
 ```asymptote
 // 网格
@@ -24,7 +24,7 @@ fillpen=opacity(0.1)+red, drawpen=red+0.5mm  //指定填充用的笔和描绘用
 ```
 
 保存到`test.asy`文件中, 通过 `asy -V -f pdf test` 运行, 生成 `pdf` 格式的图像.
-如果脚本中含有指定透明度的语句, 如`opacity(0.5)`, 可能会报错, 原因是`ghostscripts`的安全选项, 通过使用加上`-nosafe`来禁止安全选项即可：
+如果脚本中含有指定透明度的语句, 如`opacity(0.5)`, 可能会报错, 原因是`ghostscripts`的安全选项, 通过使用加上`-nosafe`来禁止安全选项即可:
 
 ```asymptote
 asy -V  -nosafe -f pdf test

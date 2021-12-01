@@ -970,7 +970,7 @@ page 841 75.4 Loops
 还要注意的是, 如果主路径中有几个`edge`或`node`操作, 每个操作都会创建自己的路径, 并且按照它们在主路径上出现的顺序来绘制.
 
 ```latex
-\path … edge[<options>] <nodes> (<coordinate>) …;
+\path ...  edge[<options>] <nodes> (<coordinate>) ... ;
 ```
 
 `edge`操作的效果是, 在主路径之后, 下面的路径被添加到图片中:
@@ -1197,7 +1197,7 @@ page 260; 17.13 Referencing Nodes Outside the Current Picture
 反过来说, 你有时可能会注意到一些选项只应该在`后期`被添加到节点上. 于此,可以使用下面这个版本的`node`路径命令:
 
 ```latex
-\path … node also[<late options>](<name>) …;
+\path ...  node also[<late options>](<name>) ... ;
 ```
 
 请注意, `<name>`是强制性的, 不能在这里给出节点文本. 另外, 选项和节点标签的顺序必须如上.

@@ -272,7 +272,7 @@ page 80
 
 [数学字体](https://mirrors.bfsu.edu.cn/CTAN/info/Free_Math_Font_Survey/en/survey.html)
 [xeCJK中文字体包](https://www.ctan.org/pkg/xecjk)
-[如何使用 LaTeX/XeLaTeX 编辑中文？](https://zhuanlan.zhihu.com/p/27739925)
+[如何使用 LaTeX/XeLaTeX 编辑中文? ](https://zhuanlan.zhihu.com/p/27739925)
 [全面总结如何在 LaTeX 中使用中文 (2020 最新版)](https://jdhao.github.io/2018/03/29/latex-chinese.zh/)
 
 这里介绍 `LaTeX` 编辑中文的两种方式. 注意, 虽说是使用`LaTeX`,实际使用的是 `XeLaTeX` 引擎. 具体方法如下:
@@ -344,7 +344,7 @@ page 80
 对于中文来说, `\setCJKmainfont{}` 命令用来设置正文使用的中文字体, 同时也是 `\textrm{}` 命令使用的字体.
 `\setCJKmonofont{}` 用来设置 `\texttt{}` 命令中的中文使用的字体. `\setCJKsansfont{}` 用来设置 `\textsf{}` 命令中的中文使用的字体.
 
-那么问题来了, 如何找到可用的中文字体呢？如果你已经安装了 `TeX Live`, 那么很容易找到中文字体. 在系统的命令行, 使用下面的命令:
+那么问题来了, 如何找到可用的中文字体呢? 如果你已经安装了 `TeX Live`, 那么很容易找到中文字体. 在系统的命令行, 使用下面的命令:
 
 ```bash
 fc-list :lang=zh
@@ -379,7 +379,7 @@ lyx 的设置
 %!TEX program=xelatex
 \documentclass{ctexart}
 \begin{document}
-    你好！
+    你好!
 \end{document}
 ```
 
@@ -624,7 +624,7 @@ center, north west, west, north, base, north east, east
 \usepacakge[UTF8]{ctex}
 \begin{document}
 \begin{frame}
-你好 Beamer！
+你好 Beamer!
 \end{frame}
 \end{document}
 ```

@@ -1,10 +1,10 @@
 # tikz_feynman
 
-文档原地址：[tikz-feynman](https://ctan.org/pkg/tikz-feynman), 版权归原作者所有, 转载请注明
+文档原地址: [tikz-feynman](https://ctan.org/pkg/tikz-feynman), 版权归原作者所有, 转载请注明
 
 `TikZ-Feynman` provides a new way to draw Feynman diagrams in `LATEX` that does not rely on external programs and uses a clear extensible syntax.
 If you use `TikZ-Feynman` in an academic setting, please cite:
-`J. Ellis, ‘TikZ-Feynman: Feynmandiagrams with TikZ’, (2016), arXiv: 1601.05437 [hep-ph]`
+`J. Ellis, "TikZ-Feynman: Feynmandiagrams with TikZ", (2016), arXiv: 1601.05437 [hep-ph]`
 
 ## Tutorial --教程
 
@@ -25,7 +25,7 @@ Typically, this is used in the preamble of the document to add or change certain
 This commands creates a `{tikzpicture}` and `{feynman}` environment,and places a `\diagram` inside with the provided `<diagram instruction>`.
 Please refer to the documentation for `\diagram` for the `<diagram instruction>` syntax.
 
-结构如下：
+结构如下:
 
 ```tikz
 \begin{tikzpicture}
@@ -121,10 +121,10 @@ f1 -- [fermion] b -- [fermion] f2,
 };
 ```
 
-Let’s go through this example line by line:
+Let"s go through this example line by line:
 
 + Line 1 : `\feynmandiagram` introduces the Feynman diagram and allows for optiona larguments to be given in the brackets `[<options>]`. In this instance, `horizontal=a to b` orients the algorithm outputs such that the line through vertices `a` and `b` is horizontal.
-+ Line 2 : The left fermion line is drawn by declaring three vertices ( `i1`, `a` and `i2` ) and connecting them with `edges`(边；边缘；边线；边沿) `--`. Just like the `\feynmandiagram` command above,each edge also take optional arguments specified in brackets `[<options>]`. In this instance, we want these edges to have arrows to indicate that they are fermion lines, so we add the fermion style to them.
++ Line 2 : The left fermion line is drawn by declaring three vertices ( `i1`, `a` and `i2` ) and connecting them with `edges`(边; 边缘; 边线; 边沿) `--`. Just like the `\feynmandiagram` command above,each edge also take optional arguments specified in brackets `[<options>]`. In this instance, we want these edges to have arrows to indicate that they are fermion lines, so we add the fermion style to them.
 As you will see later on, optional arguments can also be given to the vertices in exactly the same way.
 + Line 3 This edge connects vertices `a` and `b` with an edge styled as a photon. Since there is already a vertex labelled `a`, the algorithm will connect it to a new vertex labeled `b` .
 + Line 4 This line is analogous to line `2` and introduces two new vertices, `f1` and `f2`. It re-uses the previously labelled `b` vertex.
@@ -182,11 +182,11 @@ f1 [particle=\(\tilde g\)] -- [plain, gluon] b -- [fermion] [particle=\(q\)],
 };
 ```
 
-### When the Algorithm Isn’t Enough --若算法不豫
+### When the Algorithm Isn"t Enough --若算法不豫
 
 By default, the `\feynmandiagram` and `\diagram` commands use the `spring layout algorithm` to place all the
 edges.
-The `spring layout algorithm` attempts to ‘spread out’ the diagram as much as possible which—for most simpler diagrams—give sasatisfactory result;
+The `spring layout algorithm` attempts to "spread out" the diagram as much as possible which—for most simpler diagrams—give sasatisfactory result;
 however in some cases,this does not produce the best diagram and this section will look at alternatives.
 
 There are three main alternatives:
@@ -225,7 +225,7 @@ p1 -- [opacity=0.2] p2,
 
 Thegraph drawing library from TikZ has several different algorithms to position the vertices. By default, `\diagram` and `\feynmandiagram` use the `spring layout` algorithm to place the vertices.
 The `spring layout` attempts to spread everything out as much as possible which,in most cases, gives a nice diagram; however, there are certain cases where this does not work.
-A good example where the spring layout doesn’t work are decays where we have the decaying particle on the left and all the daughter particles on the right.
+A good example where the spring layout doesn"t work are decays where we have the decaying particle on the left and all the daughter particles on the right.
 
 ```tikz
 % Using the default spring layout
@@ -250,7 +250,7 @@ You may notice that in addition to adding the `layered layout` style to `\feynma
 This is because the `layered layout` algorithm does pay attention to the order in which vertices are declared(unlike the default spring layout ); as a result, `c--f2`, `c--f3` has a different meaning to `f2--c--f3` .
 In the former case, `f2` and `f3` are both on the layer below `c` as desired; whilst the latter case places `f2` on the layer above `c` (that, the same layer as where the $W^−$ originates).
 
-**note:** 层状的；分层的
+**note:** 层状的; 分层的
 
 ```tikz
 % Using the layered layout f2--c--f3
@@ -468,7 +468,7 @@ key:
 /tikz/baseline= <node> (no default)
 ```
 
-Changes the vertical alignment of the Feynman diagram such that it diagram’s baseline is at the node specified.
+Changes the vertical alignment of the Feynman diagram such that it diagram"s baseline is at the node specified.
 This works in the same was as `inline=<node>`, but it does not apply any additional styles (notice how the following example is larger than the one above).
 
 ```tikz
@@ -536,11 +536,11 @@ b -- [boson] d,
 /tikzfeynman/large (no value)
 ```
 
-Changes the default separation betweenthe vertices and changes thesize of arrows,blobs, and other shapes to fit different context. The `small` size is best used with when the diagram is quite simple and doesn’t have too many annotations(such as momentum arrows and particle labels).
+Changes the default separation betweenthe vertices and changes thesize of arrows,blobs, and other shapes to fit different context. The `small` size is best used with when the diagram is quite simple and doesn"t have too many annotations(such as momentum arrows and particle labels).
 The `medium` size is the default and is usually large enough that even diagrams with many labels and momentum arrows donot become too cluttered.
 Finally the `large` key is best for large illustrations as used on the title page of this document.
 
-**note:** cluttered: 杂乱的；凌乱的；挤满的
+**note:** cluttered: 杂乱的; 凌乱的; 挤满的
 
 ```tikz
 \feynmandiagram [baseline=(b), small, horizontal=d to b, red] {
@@ -560,7 +560,7 @@ b -- [boson] d,
 There are several algorithms which are available to place the vertices which are all provided within the graph drawing libraryfrom `TikZ`. Below are listed a few of these layouts which are more relevant for drawing Feynman diagrams. For a more complete description of how these algorithm work, please refer to the `TikZ` manual.
 Please note that most graph drawing algorithms are implemented in Lua and thus require `LuaTEX` in order to work.If `LuaTEX` is not used, `TikZ-Feynman` will default to a more rudimentary algorithm and will warn the user instead.
 
-**note:** rudimentary: 基础的；基本的
+**note:** rudimentary: 基础的; 基本的
 
 key:
 
@@ -568,9 +568,9 @@ key:
 /graph drawing/spring layout= <string> (no default)
 ```
 
-Uses Hu’s spring layout as implemented by Pohlmann. This models each edge as springs and attempts to spread everything out as much as possible. This is the default layout.
+Uses Hu"s spring layout as implemented by Pohlmann. This models each edge as springs and attempts to spread everything out as much as possible. This is the default layout.
 
-**note:** spring: 弹簧；发条
+**note:** spring: 弹簧; 发条
 
 ```tikz
 \feynmandiagram [nodes=circle, small, horizontal=c to d] {
@@ -584,7 +584,7 @@ key:
 /graph drawing/spring electrical layout= <string> (no default)
 ```
 
-Uses Hu’s spring electrical layout as implemented by Pohlmann. This models each edge as springs and gives each vertex a charge. This algorithm allows for the charge of a particular vertex to be adjusted using the electric charge key (the default is 1 ).
+Uses Hu"s spring electrical layout as implemented by Pohlmann. This models each edge as springs and gives each vertex a charge. This algorithm allows for the charge of a particular vertex to be adjusted using the electric charge key (the default is 1 ).
 
 **note:** charge: (电池或带电物质的)充电量,电荷
 
@@ -1004,7 +1004,7 @@ Specifies additional styles to applying to the lines of the insertion.
 
 Places a momentum arrow on the specified edge with label given by `<text>`. The primed(') version place the momentum arrow on the other side of the edge; that is, if the momentum arrow was on the right, it will be placed on the left of the edge. The reversed momentum and reversed momentum' keys are analogous to momentum and momentum' except that the momentum arrow points in the opposite direction.
 Finally, the rmomentum and rmomentum' are aliases of reversed momentum and reversed momentum' .
-Note that due to the way the arrow is drawn, it doesn’t inherit styles of the edge. As a result,they have to be re-specified through `<options>`.
+Note that due to the way the arrow is drawn, it doesn"t inherit styles of the edge. As a result,they have to be re-specified through `<options>`.
 
 ```tikz
 \feynmandiagram [layered layout, horizontal=a to b] {
@@ -1108,7 +1108,7 @@ key:
 /tikz/looseness= <number> (no default,initially 1)
 ```
 
-As the name suggests, this specifies how ‘loose’ or ‘tight’ a curve is connecting two vertices.
+As the name suggests, this specifies how "loose" or "tight" a curve is connecting two vertices.
 
 ## 例子
 
