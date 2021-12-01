@@ -94,7 +94,7 @@ updateMaTeX[] :=
 后者将自动将 `TeXForm` 应用于 `expression`.
 
 `LaTeX` 代码以数学模式解释.
-在 `Mathematica` 字符串中编写 `LaTeX` 代码时, 请记住要转义反斜杠(即当你想表示 `\` 时请输入`\\`), 例如
+在 `Mathematica` 字符串中编写 `LaTeX` 代码时, 请记住要转义(escape)反斜杠(即当你想表示 `\` 时请输入`\\`), 例如
 
 ```mathematica
 MaTeX["\\sum_{k=1}^{\\infty} \\frac{1}{k}"]
@@ -120,12 +120,9 @@ MaTeX[{
 但是, MaTeX 会缓存结果, 从而使得使用相同 TeX 代码的后续调用几乎是瞬时的.
 `MaTeX` 还可以使用 LaTeX 一次性运行处理表达式列表, 这比分别处理每个表达式要快得多.
 
-## 详细
+## 详细使用
 
-[LaTeX typesetting in Mathematica](http://szhorvat.net/pelican/latex-typesetting-in-mathematica.html)
-[GitHub上找到]: https://github.com/szhorvat/MaTeX#revision-history
-[PSTricks]: tug.org/PSTricks/main.cgi/
-[PGFPlots]: http://pgfplots.sourceforge.net/
+ref: [MaTeX blog](http://szhorvat.net/pelican/latex-typesetting-in-mathematica.html)
 
 如果您正在寻找有关 `MaTeX` 的文档, 只需在 `Mathematica` 的文档中心搜索 `"matex"` 就可以了!
 
@@ -137,7 +134,7 @@ MaTeX[{
 
 对于这个问题已经有几个解决方案, 比如 [PSTricks][] 或者用 [PGFPlots][] 画轴和标签.
 但这些解决方案都不能使以 Mathematica 为中心的工作流程变得简单.
-`MaTeX` 使生成 `LaTeX` 类型的表达式变得简单, 如
+`MaTeX` 可以更简洁地生成 `LaTeX` 类型的表达式, 如:
 
 ```mathematica
 <<MaTeX`
@@ -171,6 +168,10 @@ ConfigureMaTeX["pdfLaTeX" -> "/Library/TeX/texbin/pdflatex", "Ghostscript" -> "/
 从帮助菜单中选择 Wolfram Documentation, 然后搜索 "matex" 或 "MaTeX", 就可以访问该文档.
 
 现在 `MaTeX` 应该可以使用了. 用 `MaTeX["x^2"]` 来测试下.
+
+[GitHub上找到]: https://github.com/szhorvat/MaTeX#revision-history
+[PSTricks]: tug.org/PSTricks/main.cgi/
+[PGFPlots]: http://pgfplots.sourceforge.net/
 
 ### 使用实例
 
@@ -207,6 +208,8 @@ Mathematica 的默认`frame`和 `axes `样式是 `dark grey`, 而MateX则输出 
 为了保持一致性, 下面的 `BlackFrame` 样式也使框架变成黑色.
 
 ```mathematica
+texStyle = {FontFamily -> "Latin Modern Roman", FontSize -> 12};
+
 Plot[Sin[x], {x, 0, 2 Pi},
 Frame -> True, FrameStyle -> BlackFrame,
 FrameTicks -> {{Automatic, None},
@@ -221,6 +224,8 @@ BaseStyle -> texStyle]
 从MaTeX 1.6开始, 我们可以通过将 `MaTeX` 应用于`表达式的列表`来使用更快的批量处理.
 
 ```mathematica
+texStyle = {FontFamily -> "Latin Modern Roman", FontSize -> 12};
+
 Plot[Sin[x], {x, 0, 2 Pi}, Frame -> True, FrameStyle -> BlackFrame,
  FrameTicks -> {{Automatic, None}, {
     With[{ticks = Pi/4 Range[0, 8]},
@@ -233,7 +238,39 @@ Plot[Sin[x], {x, 0, 2 Pi}, Frame -> True, FrameStyle -> BlackFrame,
 也可用于任意的 `Mathematica` 表达式. 它将自动对非字符串表达式应用 `TeXForm`.
 
 当在 Mathematica `字符串` 中编写 TeX 代码时, 记住一定要转义`反斜线`. 因此 `\sum` 必须写成 `\\sum`.
-在MaTeX 1.7.3或更高版本中, 有一个避免转义反斜线的技巧, 见MaTeX文档页的 "Neat Examples  "部分.
+在 MaTeX 1.7.3 或更高版本中, 有一个避免转义反斜线的技巧, 见MaTeX文档页的 "Neat Examples  "部分.
+
+### 避免转义
+
++ `MaTeX` 使用函数 `` MaTeX`Developer`Texify `` 将表达式转换成 `TEX` 代码:
+
+    ```mathematica
+    ?MaTeX`Developer`Texify
+    MaTeX`Developer`Texify[expr] converts expr to TeX code suitable for MateX.
+    ```
+
++ 可以根据具体需要定制这个函数. 让我们把它设置为, 简单地从 `TextCell` 表达式中提取文本.
+
+    ```mathematica
+    Unprotect[MaTeX`Developer`Texify];
+    MaTeX`Developer`Texify[TextCell[code_, ___]] := ToString[code]
+    ```
+
+    格式化的 `TextCell` 表达式可以使用以下方法输入: 在输入单元格内使用 `Ctrl+(` 开始`内联单元格`(inline cell).
+    在`内联单元格` 中输入`反斜线`时不需要转义, 使 TEX 代码更易读. 使用 `Ctrl+)` 关闭内联单元格, 或者直接使用键盘的 `RightArrow` 退出.
+
+    ```mathematica
+    MaTeX[
+    (* inline cell*)
+     \left(
+    \begin{array}{rr}
+    \cos\phi & -\sin\phi \\
+    \sin\phi & \cos\phi \\
+    \end{array}
+    \right)
+    (* inline cell*)
+     ]
+    ```
 
 ### 高级用法
 

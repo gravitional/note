@@ -1484,3 +1484,156 @@ p984, 常用的 `key handler`:
 ### Defining Styles
 
 `.style`是`key`的列表, 它的`handler`和`key`基本相同, 只需要作替换`.code`->`.style`
+
+## 为 node 自动添加名称标签
+
+ref: [为 node 自动添加名称标签](https://zhuanlan.zhihu.com/p/429321732)
+
+用 `tikz` 绘图, 经常定义 `named node`/`coordinate`.
+但 node 多了之后, 对着输出结果尝试调整绘图时, 难以快速知道某个图形对应的 `node` 的名字.
+
+`tikz-auto-mark-nodes.tex` 提供了 在 node 斜上方自动添加 node 名称的功能 .
+源码见项目 [muzimuzhi/latex-examples](https://github.com/muzimuzhi/latex-examples).
+
+### 应用示例 1
+
+把它应用于同项目下例子 `tikz-example-flowchar2-fit-a4paper.tex` 的效果:
+
++ 在导言区添加 `\input tikz-auto-mark-nodes`, 然后给 `tikzpicture` 添加选项 `auto mark`:
+
+    ![流程图](https://pic3.zhimg.com/80/v2-5a0f823ea8c81967a77b258eacbdc9de_720w.jpg)
+
++ 为了减少重叠, 调整角度后
+
+    ```latex
+    \input tikz-auto-mark-nodes
+    \tikzset{
+      every auto mark/.append style={
+        pin position=20
+      }
+    }
+
+    % \begin{tikzpicture}[..., auto mark]
+    ```
+
+### 实现简介
+
++ 每个标签是一个 `node pin`, 包含文字和指向该 `node` 的线.
++ 通过 patch `node` 相关代码, 记录有名字的 `node` 的信息, 包括 `node` name 和 `node` shape.
++ 在每个 `tikzpicture` 末尾, 使用记录的信息, 通过 `\node also[pin={[<pin options>]<text>}](<node name>)` 集中绘制.
+
+### 可配置项
+
+每个 `auto mark` 都会应用选项 `every auto mark` 和 `every auto <shape> mark`,  初始值为:
+
+```latex
+every auto mark/.style={
+  font=\ttfamily,
+  rotate=45,
+  red, anchor=west,
+  pin position=45,
+},
+every auto coordinate mark/.style={
+  blue, anchor=east, pin position=180+45
+},
+```
+
++ `pin` 里的文字由 `\tikzAutoMarkText` 控制, 初始定义为 `\tikzNodeName`
++ 在 `every ... auto mark` 这类选项和 `\tikzAutoMarkText` 的定义中, 可以使用 `\tikzNodeShape` 和 `\tikzNodeName` 来表示/代替当前 `node` 的形状和名称.
+
+### 应用示例 2
+
+来自 `pgfmanual Sec. 5 "Tutorial: Diagrams as Simple Graphs"`
+
+```latex
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{graphs,shapes.misc}
+\tikzset{ampersand replacement=\&,point/.style={coordinate}}
+
+\input tikz-auto-mark-nodes
+\tikzset{
+  every auto coordinate mark/.append code={%
+    \expandafter\ifodd\expandafter\@gobble\tikzNodeName\else
+      \pgfkeysalso{pin distance=6ex}% distance doubled
+    \fi
+  }
+}
+
+\begin{document}
+\def\matrixcontent{
+  % First row:
+  \& \& \& \& \& \& \&  \& \& \& \& \node (plus) [terminal] {+};\\
+  % Second row:
+  \node (p1) [point]  {}; \&    \node (ui1)   [nonterminal] {unsigned integer}; \&
+  \node (p2) [point]  {}; \&    \node (dot)   [terminal]    {.};                \&
+  \node (p3) [point]  {}; \&    \node (digit) [terminal]    {digit};            \&
+  \node (p4) [point]  {}; \&    \node (p5)    [point]  {};                      \&
+  \node (p6) [point]  {}; \&    \node (e)     [terminal]    {E};                \&
+  \node (p7) [point]  {}; \&                                                    \&
+  \node (p8) [point]  {}; \&    \node (ui2)   [nonterminal] {unsigned integer}; \&
+  \node (p9) [point]  {}; \&    \node (p10)   [point]       {};\\
+  % Third row:
+  \& \& \& \& \& \& \&  \& \& \& \& \node (minus)[terminal] {-};\\
+}
+
+\tikzset{
+  nonterminal/.style={
+    % The shape:
+    rectangle,
+    % The size:
+    minimum size=6mm,
+    % The border:
+    very thick,
+    draw=red!50!black!50,         % 50% red and 50% black,
+                                  % and that mixed with 50% white
+    % The filling:
+    top color=white,              % a shading that is white at the top...
+    bottom color=red!50!black!20, % and something else at the bottom
+    % Font
+    font=\itshape
+  },
+  terminal/.style={
+    % The shape:
+    rounded rectangle,
+    minimum size=6mm,
+    % The rest
+    very thick,draw=black!50,
+    top color=white,bottom color=black!20,
+    font=\ttfamily},
+  skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}}
+}
+\tikzset{terminal/.append style={text height=1.5ex,text depth=.25ex}}
+\tikzset{nonterminal/.append style={text height=1.5ex,text depth=.25ex}}
+
+\begin{tikzpicture}[skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}},
+                    hv path/.style={to path={-| (\tikztotarget)}},
+                    vh path/.style={to path={|- (\tikztotarget)}},
+                    auto mark]
+  \matrix[row sep=1mm,column sep=2mm] { \matrixcontent };
+
+  \graph {
+    (p1) -> (ui1) -- (p2) -> (dot) -- (p3) -> (digit) -- (p4)
+         -- (p5)  -- (p6) -> (e) -- (p7) -- (p8) -> (ui2) -- (p9) -> (p10);
+    (p4) ->[skip loop
+
+=-5mm]  (p3);
+    (p2) ->[skip loop=5mm
+
+]   (p5);
+    (p6) ->[skip loop=-11mm] (p9);
+    (p7) ->[vh path]         (plus)  -> [hv path] (p8);
+    (p7) ->[vh path]         (minus) -> [hv path] (p8);
+  };
+\end{tikzpicture}
+\end{document}
+```
+
++ 为了避免重叠, 这里为名为 `p2, p4, ..., p<odd num>` 的 `coordinate` 设置了更大的 `pin distance`.
++ 修改 `\tikzAutoMarkText` 的一个例子, 让它显示 `<first four chars of node shape>:<node name>:`
+
+    ```latex
+    \def\pickFirstFour#1#2#3#4#5\stop{#1#2#3#4}
+    \renewcommand\tikzAutoMarkText{%
+      \expandafter\pickFirstFour\tikzNodeShape\stop:\tikzNodeName}
+    ```

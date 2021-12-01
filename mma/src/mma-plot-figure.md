@@ -143,3 +143,199 @@ LevelScheme软件包的设计目的是允许简单而有效地准备高质量的
 比如定位`levels`之间的过渡箭头, 或将文本标签放在它们所标注的对象旁边.
 
 它还包括创建核物理学中常见的几种类型的`level schemes`的专门功能.
+
+## 图形叠加
+
+tutorial/TheStructureOfGraphicsAndSound
+tutorial/GraphicsAndSound#9501
+
+实现`图形叠加`的函数有
+
++ `Show `;  合并要显示的图形, 也可以改变选项
++ `Overlay`;  堆叠图形或任何其他表达方式
++ `Canvas`; (画布)代表一个可以与图形结合的自由画布.
+
++ `Inset`; 将一个图形或表达式插入到一个更大的图形中.
++ `GraphicsGroup`; 使图形作为一个组被选择.
++ `双击`; "向下钻取"(drill down) `inset` 或 `group`内的图形
+
++ `Epilog`, `Prolog`; 在 `graphics` 中包含额外的材料
+
+## Overlay
+
+```mathematica
+Overlay[{expr1, expr2, ... }]; 显示为所有 expr_i 的叠加.
+Overlay[{expr1, expr2, ...},{i,j,...}]; 显示为 expr_i, expr_j, ... 的叠加.
+Overlay[{expr1, expr2, ...},{i,j,...}, s]; 允许在 expr_s 中进行选择和点击控制.
+```
+
+### 细节和选项
+
++ `expr_i` 可以是图形, 文本或任何其他表达式.
++ 在 `Overlay[{expr1, expr2, ...}]` 中, 后面的 `expr_i` 被 渲染在前者的上面.
++ `Overlay[exprs]` 等同于 `Overlay[exprs,All,None]`, 显示为所有 `exprs` 的叠加.
++ `Overlay[exprs]` 默认不允许在 `exprs` 中进行选择.
++ 可以给出以下选项:
+    + `Alignment`; `{Automatic,Automatic}`; 如何对齐显示区域中的对象
+    + `Background`; `None`; 使用的背景颜色
+    + `BaselinePosition`; `Automatic`; 与周围文本基线对齐的位置.
+    + `BaseStyle`; `{}`; 被显示对象的基本样式规范
+    + `ContentPadding`; `True`; 是否紧缩内容周围的边距(margin)
+    + `FrameMargins`; `Automatic`; 整体 frame 内, 要留出的边距
+    + `ImageMargins`; `0`; 被显示对象的图像周围的边距
+    + `ImageSize`;  `All`; 被显示对象的整体图像尺寸
+
++ 在默认选项设置 `ImageSize->All` 的情况下, `Overlay` 总是为要显示的最大的`expr_i`留出空间, 因此其整体尺寸不会改变.
++ 在选项设置 `ImageSize->Automatic` 时, `Overlay` 只为当前显示的`expr_i`留出空间.
++ `BaseStyle` 的设置被附加到, 当前样式表中 `"Overlay"` 样式所给出的默认样式上.
+
+### 基本例子
+
++ Overlay 两个表达式:
+
+    ```mathematica
+    Overlay[{2, 4}]
+    ```
+
++ Overlay 两个图形:
+
+    ```mathematica
+    Overlay[{Plot[Sin[x], {x, 0, 6}, PlotRange -> 2], Plot[Sin[x] + .1 Sin[10 x], {x, 0, 6}, PlotRange -> 2]}]
+    ```
+
+### 范围
+
++ Overlay 许多对象:
+
+    ```mathematica
+    Style[Overlay[Range[9]], 48]
+    ```
+
++ Overlay 二维和三维的图形:
+
+    ```mathematica
+    Overlay[{Plot3D[Sin[x y], {x, 0, 3}, {y, 0, 3}], Plot[Sin[x], {x, 0, 6}]}]
+    ```
+
++ Overlay 文本 和 graphics:
+
+    ```mathematica
+    Overlay[{StringTake[ExampleData[{"Text", "ToBeOrNotToBe"}], 400], Plot[Sin[E^x], {x, 0, 5}]}]
+    ```
+
++ 使用非默认排序
+
+    ```mathematica
+    Overlay[{Button["short"], Button["\t\tlong"], Button["\tmedium"]}, {2,3, 1}]
+   ```
+
++ 允许点击第二层:
+
+    ```mathematica
+    Overlay[{Slider2D[], Graphics[{Opacity[.2], Disk[]}]}, All, 1]
+    ```
+
+### 推广和延伸
+
++ 单个元素的`Overlay`在行为上类似于 `PaneSelector`:
+
+    ```mathematica
+    Grid[{{SetterBar[Dynamic[x], {1, 2, 3}],
+       Overlay[{"aaa", "bbb", "ccc"}, Dynamic[{x}]],
+       PaneSelector[{1 -> "aaa", 2 -> "bbb", 3 -> "ccc"}, Dynamic[x]]}}, Frame -> All]
+   ```
+
+### 选项
+
+#### Alignment
+
+排列对象:
+
+```mathematica
+Overlay[{Graphics[{Disk[]}], Slider2D[]}, All, 2, Alignment -> Center]
+```
+
+#### Background
+
+设置背景:
+
+```mathematica
+Overlay[{Graphics3D[Sphere[]], Panel["a sphere"]}, Background -> LightOrange]
+```
+
+#### BaseStyle
+
+设置 `Overlay` 的 base style:
+
+```mathematica
+Overlay[{1, 2, 3}, BaseStyle -> {FontSize -> 24}]
+```
+
+### 应用
+
++ 从已有的字符创建新字符:
+
+    ```mathematica
+    Overlay[{"\[DownRightTeeVector]", "\[DownRightVectorBar]"}]
+    ```
+
++ 给输出加水印:
+
+    ```mathematica
+    Overlay[{Manipulate[x, {x, 0, 1}],
+      Graphics[Text[Style["Confidential", Bold, Red, Opacity[.1], 40], {0, 0}, {0, 0}, {1, .3}], ImageSize -> {250, 100}]}]
+    ```
+
++ 将不可见的`控件`叠加到图像上, 创建一个图像 map:
+
+    ```mathematica
+    calcButtonFactory[row_, col_] := With[{
+        val =Switch[{row, col}, {1, 3}, ".", {1, _}, 0, _, (row - 2)*3 + col]},
+        Tooltip[Button["", Print[val], Appearance -> None, ImageSize -> {70, 70}], val]];
+    ```
+
+    这些控件创造了一个逼真的, 功能齐全的数字键盘(photorealistic):
+
+    ```mathematica
+    Overlay[{Show[键盘图片.jpg], Grid[Table[
+         calcButtonFactory[row, col], {row, 4, 1, -1}, {col, 1, 3}],
+        Spacings -> {0, 0}, ItemSize -> All]}, All, 2]
+    ```
+
+### 可能的问题
+
+前面的表达可能完全掩盖了(obscure)后面的表达式:
+
+```mathematica
+Overlay[{ExampleData[{"TestImage", "Clock"}], Plot[Cos[x], {x, 0, 6}, Background -> LightOrange]}, Alignment -> Center]
+```
+
+使用`透明度`或去除背景颜色可能会达到理想的外观:
+
+```mathematica
+Overlay[{ExampleData[{"TestImage", "Clock"}], Plot[Cos[x], {x, 0, 6}, Background -> Directive[{Opacity[0.1], LightOrange}]]}, Alignment -> Center]
+```
+
+### Neat 例子
+
++ 使用 `Overlay` 来制作一个渐变的过渡效果(fading transition effect):
+
+    ```mathematica
+    Manipulate[Overlay[{ExampleData[{"TestImage", "House"}], SetAlphaChannel[ExampleData[{"TestImage", "Clock"}], x]}], {x, 0, 1}]
+    ```
+
++ 为三维物体创建一个装饰性框架, 同时不影响旋转:
+
+    ```mathematica
+    mask = Blur[Image[Graphics[Disk[{0, 0}, .7], PlotRange -> {-1, 1}, ImageSize -> {144, 144}]], 30]
+
+    Overlay[{Graphics3D[{Cone[]}, ImageSize -> {144, 144}, Boxed -> False],
+        SetAlphaChannel[
+           Image[Graphics[{}, ImageSize -> {144, 144}, Background -> Brown]], mask]}, All, 1]
+    ```
+
+## Inset,插图
+
+## Show
+
+## Prolog,Epilog
