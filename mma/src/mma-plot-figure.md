@@ -52,30 +52,6 @@ howto/CustomizePlotsAndGraphics
 Short[InputForm[FullGraphics[ListPlot[Table[EulerPhi[n], {n, 10}]]]],6]
 ```
 
-## 图例, Legended
-
-`Legended` 是可以嵌套的
-
-```mathematica
-Legended[
- Legended[
-  PieChart[{1, 2, 3, 4}],
-  Placed[
-   "aaaa",
-   {{0.5, 0.5},
-    {0, 0}}
-   ]
-  ],
- Placed[
-  "aaaa",
-  {{0.5, 0.51},
-   {0, 0}}
-  ]
- ]
-```
-
-https://scidraw.nd.edu/
-
 ## Plot
 
 ### Plot 采样
@@ -339,3 +315,55 @@ Overlay[{ExampleData[{"TestImage", "Clock"}], Plot[Cos[x], {x, 0, 6}, Background
 ## Show
 
 ## Prolog,Epilog
+
+## 图例,Legended
+
+`Legended` 是可以嵌套的
+
+```mathematica
+Legended[
+ Legended[
+  PieChart[{1, 2, 3, 4}],
+  Placed[
+   "aaaa",
+   {{0.5, 0.5},
+    {0, 0}}
+   ]
+  ],
+ Placed[
+  "aaaa",
+  {{0.5, 0.51},
+   {0, 0}}
+  ]
+ ]
+```
+
+https://scidraw.nd.edu/
+
+### 细节和选项
+
+可以给出以下选项:
+
++ `Joined`;     `True`;  是否绘制 shapes
++ `LabelStyle`;    `Automatic`; 用于标签的样式
++ `LegendFunction`;     `Identity`;  图例整体的封装(wrapper)
++ `LegendLabel`;    `None`; 图例的整体标签
++ `LegendLayout`;       `Automatic`; 使用的图例布局(layout)
++ `LegendMargins`;   `None`;  图例整体和边界之间的空间
++ `LegendMarkers`;      `None`;  用于指示每个元素的标记(markers)
++ `LegendMarkerSize`;   `Automatic` 形状(shape)的大小
+
+### LegendLayout
+
+图例的大小, 记号, 图例之间的间隔
+
+图例在一般情形下的排版, 可以通过传入一个排版函数, 例如:
+
+```mathematica
+table[pairs_] := TableForm[pairs,
+TableHeadings -> {{"Group A", "Group B", "Group C"}, {"color", "mascot"}}, TableAlignments -> Center]
+
+SwatchLegend[63, {"lion", "whale", "rocket"}, LegendLayout -> table]
+```
+
+图例之间的间隔, 可以通过排版函数自定义.
