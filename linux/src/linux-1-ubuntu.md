@@ -59,3 +59,21 @@ sudo apt-get update
 # install typora
 sudo apt-get install typora
 ```
+
+### ubuntu 安装 microsoft-edge
+
+[Edge Insider Channels](https://www.microsoftedgeinsider.com/en-us/download)
+
+如果你是一个 Linux 爱好者, 你可能想自己设置我们的PPA. 
+下面我们提供了命令行说明, 可以粘贴到终端窗口来安装 `签名密钥`(signing key), `sources.lst` 文件, 以及安装 edge.
+
+```bash
+## 设置密钥
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-beta.list'
+sudo rm microsoft.gpg
+## 安装
+sudo apt update
+sudo apt install microsoft-edge-beta
+```
