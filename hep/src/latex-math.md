@@ -829,6 +829,8 @@ LaTeX 不会把数学模式中的黑体全搞成 poor man's bold,
 
 ### 基本机制
 
+[LATEX 2efont selection](https://www.latex-project.org/help/documentation/fntguide.pdf)
+
 在 `LaTeX` 中, 选择字体通常都是通过 `NFSS` 机制完成的, 数学字体也不例外. (New Font Selection Scheme)
 基本的切换为数学粗体的命令是 `\boldmath`, 它通常被定义为 `\mathversion{bold}`, 
 意思是`全局地`把当前的数学字体设置为粗体, 并且它应该在 `数学环境外面` 使用. 
