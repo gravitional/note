@@ -4,6 +4,7 @@
 - [latex-figure](latex-figure.md)
 - [latex-math](latex-math.md)
 - [latex-elegant-note](latex-elegant-note.md)
+- [latex-格式化](latex-formatting.md)
 
 - [beamer](beamer.md)
 - [lyx](lyx.md)

@@ -308,7 +308,7 @@ input\mymacros}
 [在 LaTeX 中使用中文](https://jdhao.github.io/2018/03/29/latex-chinese.zh/)
 [LaTeX数学公式的默认字体是什么](https://www.zhihu.com/question/30058577/answer/46612848).
 
-`LaTeX` 默认的文章类中的字体是 `Computer Modern Math`(`LaTeX`), `Latin Modern Math`(`XeTeX`). 
+`LaTeX` 默认的文章类中的字体是 `Computer Modern Math`(`LaTeX`), `Latin Modern Math`(`XeTeX`).
 字体文件的位置可以用`kpsewhich`查看. 在安装`TeXLive`的时候会自动安装.
 如果没有安装的话,[GUST][] 可以下载`Latin Modern Math`字体,以及其他字体.
 
@@ -655,6 +655,18 @@ bibtex foo.aux
 我听说还有一个名为 `biblatex` 的工具,能介绍一下吗?
 
 `biblatex` 与 `BibTeX` 是不同的工具,超出了本文的范围.
+
+***
+[tamethebeast](https://www.ctan.org/tex-archive/info/bibtex/tamethebeast/)
+`texdoc latex-notes-zh-cn `: 包太雷的 latex 笔记
+
+如何在 `参考文献列表` 中添加 `条目` 而不在文件中引用它们?
+
+这是由 `\nocite` 命令实现的. 它的工作原理与 `\cite` 完全一样, 但在文件中不写任何内容. 
+它只是在 `.aux` 文件中包含了 `\citation` 命令.
+这个命令的一个变体是 ``nocite{*}`: 它相当于一次把整个书目写进去. 
+这些参考文献会按照它们在 `.bib` 文件中出现的顺序包括在内, 除了那些在前面被引用过的文献. 
+请注意,  `\cite{*}` 也是正确的, 但我不确定它是否有任何意义......
 
 ### cite,其他的参考文献包
 

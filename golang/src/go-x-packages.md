@@ -5,6 +5,8 @@
 [claudiodangelis/qrcp](https://github.com/claudiodangelis/qrcp)
 [使用 qrcp 在你的手机和 Linux 之间传输文件 ](https://linux.cn/article-13999-1.html)
 
+Quick Response Code
+
 ### 安装
 
 用 `go` 安装最新开发版:
@@ -48,7 +50,7 @@ $ qrcp config
 + 用 qrcp 传输文件
 
 现在你已经准备好从你的 `Linux` 电脑向你的移动设备发送一个文件.
-在这个例子中, 我使用了我的 iPhone, 它完全不支持 `Linux`, 这是臭名昭著的.
+在这个例子中, 我使用了我的 `iPhone`, 它完全不支持 `Linux`, 这是臭名昭著的.
 这个过程在安卓设备上是完全一样的.
 
 使用 `send` 子命令将文件从 Linux 电脑发送到我的手机:
@@ -57,11 +59,11 @@ $ qrcp config
 $ qrcp send example.txt
 ```
 
-打开相机应用, iPhone 扫描二维码并启动 Safari 浏览器. 最后, 点击"下载"按钮.
+打开相机应用, `iPhone` 扫描二维码并启动 `Safari` 浏览器. 最后, 点击"下载"按钮.
 
 ![下载电脑上的文件](https://img.linux.net.cn/data/attachment/album/202111/19/114133xdpd6iad56sairah.png)
 
-+ 用 qrcp 接收文件
++ 用 `qrcp` 接收文件
 
 接收文件也一样简单, 只是命令略有不同:
 
