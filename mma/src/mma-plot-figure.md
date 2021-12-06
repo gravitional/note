@@ -681,13 +681,13 @@ ListPlot[{
 即样式和相关标签: `{{style1, label1},{style2, label2}, ...}`.
 + 对于 `BarLegend`, `f` 的参数是一个颜色函数 `cf`, 值的范围 `{min,max}`, 以及 contour值的列表: `contours`.
 
-图例在一般情形下的排版, 可以通过传入一个排版函数, 例如:
++ 图例要实现最一般的排版效果, 可以传入一个排版函数`f`, 例如:
 
-```mathematica
-table[pairs_] := TableForm[pairs,
-TableHeadings -> {{"Group A", "Group B", "Group C"}, {"color", "mascot"}}, TableAlignments -> Center]
+    ```mathematica
+    table[pairs_] := TableForm[pairs,
+    TableHeadings -> {{"Group A", "Group B", "Group C"}, {"color", "mascot"}}, TableAlignments -> Center]
 
-SwatchLegend[63, {"lion", "whale", "rocket"}, LegendLayout -> table]
-```
+    SwatchLegend[63, {"lion", "whale", "rocket"}, LegendLayout -> table]
+    ```
 
-所以要自定义图例之间的间隔, 可以指定排版函数`f`.
+    所以要自定义图例之间的间隔, 可以指定排版函数`f`.

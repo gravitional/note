@@ -259,39 +259,39 @@ ibus-setup
 
 更接地气的说法是, `dconf` 是 `GNOME3` 的注册表, `gsettings` 是一个查询, 读取, 设置注册表键值的命令行工具.
 
-列出所有schema
++ 列出所有 `schema`
 
-    gsettings list-schemas
+      gsettings list-schemas
 
-查找某个schema
++ 查找某个schema
 
-    gsettings list-schemas | grep "org.gnome.settings-daemon.plugins.keyboard"
-    org.gnome.settings-daemon.plugins.keyboard
+        gsettings list-schemas | grep "org.gnome.settings-daemon.plugins.keyboard"
+        org.gnome.settings-daemon.plugins.keyboard
 
-查找某个schema下的所有key
++ 查找某个 `schema下的所有` `key`
 
-    gsettings list-keys "org.gnome.settings-daemon.plugins.keyboard"
+        gsettings list-keys "org.gnome.settings-daemon.plugins.keyboard"
 
-查看某个schema下某个key的值
++ 查看某个 `schema` 下某个 `key` 的值
 
-    gsettings get "org.gnome.settings-daemon.plugins.keyboard" priority
+        gsettings get "org.gnome.settings-daemon.plugins.keyboard" priority
 
-查看某个schema下某个key的值类型
++ 查看某个 `schema` 下某个 `key` 的值类型
 
-```bash
-gsettings range "org.gnome.settings-daemon.plugins.keyboard" priority
-type i #这是一个整形
+    ```bash
+    gsettings range "org.gnome.settings-daemon.plugins.keyboard" priority
+    type i #这是一个整形
 
-gsettings range "org.gnome.settings-daemon.plugins.keyboard" active
-type b 这是一个boolean类型
-```
+    gsettings range "org.gnome.settings-daemon.plugins.keyboard" active
+    type b 这是一个boolean类型
+    ```
 
-+ 设置某个schema下某个key的值
++ 设置某个 `schema` 下某个 `key` 的值
 
-    gsettings set "org.gnome.settings-daemon.plugins.keyboard" active false
+        gsettings set "org.gnome.settings-daemon.plugins.keyboard" active false
 
-也可以一步到位, 同时搜索schema和keys
++ 也可以一步到位, 同时搜索 `schema` 和 `keys`
 
-    gsettings list-recursively | grep "org.gnome.settings-daemon.plugins.keyboard"
+        gsettings list-recursively | grep "org.gnome.settings-daemon.plugins.keyboard"
 
 如果你觉得命令行操作还是不太直观, 可以使用 `GUI` 工具 `gconf-editor`
