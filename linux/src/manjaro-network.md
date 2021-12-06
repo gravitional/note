@@ -6,6 +6,39 @@
 软的接入点(software access point), 也被称为虚拟路由器或虚拟Wi-Fi(virtual router or virtual Wi-Fi),
 使一台计算机能够将其无线接口变成一个Wi-Fi接入点. 它省去了购买独立无线路由器的麻烦.
 
+## iw
+
+iw - 显示/操作无线设备和它们的配置
+
+### 说明:
+
+```bash
+iw [ OPTIONS ] { help [ command ] | OBJECT COMMAND }
+    OBJECT := { dev | phy | reg }
+    OPTIONS := { --version | --debug }
+```
+
+### OPTIONS
+
+`--version`; 打印版本信息并退出.
+`--debug`; 启用网链信息调试.
+
+### iw - 命令语法
+
++ OBJECT;
+    + `dev <interface name>`; 列出无线硬件的所有网络接口.
+    + `phy <phy名称>`;无线硬件设备(按名称).
+    + `phy#<phy index>`; 无线硬件设备(按索引).
+    + `reg` - 监管代理(regulatory agent).
+
++ COMMAND;
+指定要对对象执行的`动作`.  可能的动作集取决于对象的类型.
+`iw help` 将打印所有支持的命令, 而 `iw help command` 将打印所有匹配命令的帮助.
+
+> 另见; ip(8), crda(8), regdbdump(8), regulatory.bin(5)
+
+[wireless.kernel.org](http://wireless.kernel.org/en/users/Documentation/iw)
+
 ## 要求
 
 Wi-Fi 设备必须支持 `AP模式`
@@ -36,7 +69,8 @@ Wiphy phy1
 ## 使用单一Wi-Fi设备的无线客户端和软件AP
 
 创建`软件AP` 是独立于你的网络连接(`以太网`, `无线`......). 许多无线设备甚至支持`同时`作为 `AP` 和无线 "客户端 "操作.
-利用这种能力, 你可以使用单个无线设备, 创建`软件AP`作为现有网络的 "无线中继器"(wireless repeater). 这种能力在 `iw list` 的输出的以下部分列出:
+利用这种能力, 你可以使用单个无线设备, 创建`软件AP`作为现有网络的 "无线中继器"(wireless repeater).
+这种能力在 `iw list` 的输出的以下部分列出:
 
 ```bash
 $ iw list
@@ -57,8 +91,8 @@ Wiphy phy1
 为网络连接(`wlan0_sta`)本身, 以及`软件AP`/`hostapd` "无线中继器" 创建具有唯一MAC地址的虚拟接口(virtual interfaces):
 
 ```bash
-# iw dev wlan0 interface add wlan0_sta type managed addr 12:34:56:78:ab:cd
-# iw dev wlan0 interface add wlan0_ap type managed addr 12:34:56:78:ab:ce
+iw dev wlan0 interface add wlan0_sta type managed addr 12:34:56:78:ab:cd
+iw dev wlan0 interface add wlan0_ap type managed addr 12:34:56:78:ab:ce
 ```
 
 可以使用 [macchanger][] 生成随机 `MAC` 地址.
@@ -195,10 +229,10 @@ After=sys-subsystem-net-devices-wlan0.device
 [dnsmasq]: https://wiki.archlinux.org/title/Dnsmasq
 [iptables]: https://wiki.archlinux.org/title/Iptables
 
-### linux-wifi-hotspot
+## linux-wifi-hotspot
 
 [linux-wifi-hotspot][] 软件包提供了一个脚本, 可以创建一个桥接的或NAT的接入点, 用于网络共享.
-它结合了 `hostapd`, [dnsmasq][] 和 [iptables][] 来保证接入点的良好运作. 包括命令行和gui.
+它结合了 `hostapd`, [dnsmasq][] 和 [iptables][] 来保证接入点的良好运作. 包括 `命令行` 和 `gui`.
 创建一个 NAT 的虚拟网络的基本语法如下:
 
 ```bash
@@ -223,6 +257,129 @@ After=sys-subsystem-net-devices-wlan0.device
 
 注意: 在桥接模式下, 在 boot time `create_ap` 可能与当前的网络配置冲突.
 在这种情况下, 不要配置以太网接口的 `IP` 地址, 既不要配置 `DHCP`, 也不要配置 `statip IP` 地址, 以方便与网桥的绑定.
+
+[linux-wifi-hotspot](https://github.com/lakinduakash/linux-wifi-hotspot)
+
++ 特点;
+    + 在任何频道创建AP(接入点).
+    + 选择以下加密方式之一: WPA, WPA2, WPA/WPA2, 开放(无加密).
+    + 隐藏你的SSID.
+    + 禁用客户端之间的通信(客户端隔离).
+    + 支持IEEE 802.11n & 802.11ac
+    + 互联网共享方法. NATed或桥接或无(无互联网共享).
+    + 选择AP网关IP(仅适用于 "NATed "和 "None "互联网共享方法).
+    + 你可以用你的互联网连接的相同接口创建一个AP.
+    + 你可以通过管道或通过参数传递你的SSID和密码(见例子).
+
+![gui](https://github.com/lakinduakash/linux-wifi-hotspot/raw/master/docs/sc4.png)
+
++ 一般依赖;
+    + bash (用于运行这个脚本)
+    + util-linux (用于getopt)
+    + procps 或 procps-ng
+    + hostapd
+    + iproute2
+    + iw
+    + iwconfig(只有在 "iw "不能识别你的适配器时才需要这个).
+    + haveged (可选)
+
++ 对于 "NATed "或 "None "互联网共享方法, 还需要依赖;
+    + dnsmasq
+    + iptables
+
++ 通用的安装方法
+
+    ```bash
+    git clone https://github.com/lakinduakash/linux-wifi-hotspot
+    cd linux-wifi-hotspot/src/scripts
+    make install
+    ```
+
++ ArchLinux
+
+    ```bash
+    pacman -S create_ap
+    ```
+
++ Gentoo
+
+    ```bash
+    emerge layman
+    layman -f -a jorgicio
+    emerge net-wireless/create_ap
+    ```
+
+### 使用例子
+
++ 语法;
+
+    ```bash
+    create_ap [options] <wifi-接口>    [<已联网的接口>]     [<access-point-name>]   [<passphrase>]
+    ```
+
++ 没有口令(开放网络):
+
+        create_ap wlan0 eth0 MyAccessPoint
+
++ WPA + WPA2口令:
+
+        create_ap wlan0 eth0 MyAccessPoint MyPassPhrase
+
+    如果你的无线网卡叫做 `wlp4s0`, 并想用同一张无线网卡连接互联网/开热点,
+    假设你起的热点名字为 `ReDian`, 密码为 `12345678`, 则使用下列命令即可:
+
+        sudo create_ap wlp4s0 wlp4s0 ReDian 12345678
+
++ AP, 没有互联网共享:
+
+        create_ap -n wlan0 MyAccessPoint MyPassPhrase
+
++ 桥接式互联网共享:
+
+        create_ap -m bridge wlan0 eth0 MyAccessPoint MyPassPhrase
+
++ 桥接互联网共享(预先配置的桥接接口):
+
+        create_ap -m bridge wlan0 br0 MyAccessPoint MyPassPhrase
+
++ 从同一WiFi接口共享互联网.
+
+        create_ap wlan0 wlan0 MyAccessPoint MyPassPhrase
+
++ 选择一个不同的WiFi适配器驱动程序
+
+        create_ap --driver rtl871xdrv wlan0 eth0 MyAccessPoint MyPassPhrase
+
++ 没有密码(开放网络)使用管道.
+
+        echo -e "MyAccessPoint" | create_ap wlan0 eth0
+
++ WPA + WPA2口令使用管道.
+
+        echo -e "MyAccessPoint\nMyPassPhrase" | create_ap wlan0 eth0
+
++ 启用IEEE 802.11n
+
+        create_ap --ieee80211n --ht_capab '[HT40+]' wlan0 eth0 MyAccessPoint MyPassPhrase
+
++ 客户端隔离.
+
+        create_ap --isolate-clients wlan0 eth0 MyAccessPoint MyPassPhrase
+
++ Systemd服务; 使用 [持久化的systemd][]服务
+    + 立即启动服务:
+
+            systemctl start create_ap
+
+    + 启动时启动:
+
+            systemctl enable create_ap
+
+[持久化的systemd]: https://wiki.archlinux.org/index.php/systemd#Basic_systemctl_usage
+
++ 许可证; FreeBSD
+    + Copyright (c) 2013, oblique
+    + Copyright (c) 2019, lakinduakash
 
 ## RADIUS
 
@@ -279,140 +436,3 @@ unmanaged-devices=interface-name:ifname
 
 + [Hostapd : 创建虚拟Wi-Fi接入点的Linux方法](https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/)
 + [用DHCP和DNS配置子网的教程和脚本](https://xyne.dev/notes/network/dhcp_with_dns.html)
-
-## wihotspot
-
-[linux-wifi-hotspot ](https://github.com/lakinduakash/linux-wifi-hotspot)
-
-### 特点
-
-+ 在任何频道创建AP(接入点).
-+ 选择以下加密方式之一: WPA, WPA2, WPA/WPA2, 开放(无加密).
-+ 隐藏你的SSID.
-+ 禁用客户端之间的通信(客户端隔离).
-+ 支持IEEE 802.11n & 802.11ac
-+ 互联网共享方法. NATed或桥接或无(无互联网共享).
-+ 选择AP网关IP(仅适用于 "NATed "和 "None "互联网共享方法).
-+ 你可以用你的互联网连接的相同接口创建一个AP.
-+ 你可以通过管道或通过参数传递你的SSID和密码(见例子).
-
-![gui](https://github.com/lakinduakash/linux-wifi-hotspot/raw/master/docs/sc4.png)
-
-### 依赖
-
-一般
-
-+ bash (用于运行这个脚本)
-+ util-linux (用于getopt)
-+ procps 或 procps-ng
-+ hostapd
-+ iproute2
-+ iw
-+ iwconfig(只有在 "iw "不能识别你的适配器时才需要这个).
-+ haveged (可选)
-
-对于 "NATed "或 "None "互联网共享方法
-
-+ dnsmasq
-+ iptables
-
-### 安装
-
-+ 通用的
-
-```bash
-git clone https://github.com/lakinduakash/linux-wifi-hotspot
-cd linux-wifi-hotspot/src/scripts
-make install
-```
-
-+ ArchLinux
-
-```bash
-pacman -S create_ap
-```
-
-+ Gentoo
-
-```bash
-emerge layman
-layman -f -a jorgicio
-emerge net-wireless/create_ap
-```
-
-### 例子
-
-```bash
-create_ap [options] <wifi-接口>    [<通网的接口>]     [<access-point-name>]   [<passphrase>]
-```
-
-+ 没有口令(开放网络):
-
-```bash
-create_ap wlan0 eth0 MyAccessPoint
-```
-
-+ WPA + WPA2口令:
-
-```bash
-create_ap wlan0 eth0 MyAccessPoint MyPassPhrase
-```
-
-+ AP, 没有互联网共享:
-
-```bash
-create_ap -n wlan0 MyAccessPoint MyPassPhrase
-```
-
-+ 桥接式互联网共享:
-
-    create_ap -m bridge wlan0 eth0 MyAccessPoint MyPassPhrase
-
-+ 桥接互联网共享(预先配置的桥接接口):
-
-    create_ap -m bridge wlan0 br0 MyAccessPoint MyPassPhrase
-
-+ 从同一WiFi接口共享互联网.
-
-    create_ap wlan0 wlan0 MyAccessPoint MyPassPhrase
-
-+ 选择一个不同的WiFi适配器驱动程序
-
-    create_ap --driver rtl871xdrv wlan0 eth0 MyAccessPoint MyPassPhrase
-
-+ 没有密码(开放网络)使用管道.
-
-    echo -e "MyAccessPoint" | create_ap wlan0 eth0
-
-+ WPA + WPA2口令使用管道.
-
-    echo -e "MyAccessPoint\nMyPassPhrase" | create_ap wlan0 eth0
-
-+ 启用IEEE 802.11n
-
-    create_ap --ieee80211n --ht_capab '[HT40+]' wlan0 eth0 MyAccessPoint MyPassPhrase
-
-+ 客户端隔离.
-
-    create_ap --isolate-clients wlan0 eth0 MyAccessPoint MyPassPhrase
-
-+ Systemd服务
-
-使用[持久化的systemd][]服务
-
-+ 立即启动服务:
-
-    systemctl start create_ap
-
-+ 启动时启动:
-
-    systemctl enable create_ap
-
-[持久化的systemd]: https://wiki.archlinux.org/index.php/systemd#Basic_systemctl_usage
-
-### 许可证
-
-FreeBSD
-
-- Copyright (c) 2013, oblique
-- Copyright (c) 2019, lakinduakash
