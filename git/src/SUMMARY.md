@@ -4,4 +4,6 @@
 - [git 分支](git-branch.md)
 - [远程分支](git-remote.md)
 - [git 变基, 对象](git-rebase.md)
+- [git 比较差异](git-diff.md)
+
 - [git 总结](git-x.md)
