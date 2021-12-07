@@ -213,6 +213,6 @@ presentation:
 `Ctrl+Shift+p` 输入`m p e`可以看到它的大部分配置入口.
 按下快捷键`Ctrl+k v` 可以打开渲染预览窗口.
 
-在渲染预览窗口右击, 菜单中选择 `HTML->HTML(offline)`. 
-将会输出幻灯片为 `HTML` 格式, 使用浏览器即可播放. 
-如果担心在别的电脑上无法正常显示，可以选择 `HTML->HTML(cdn hosted)`
+在渲染预览窗口右击, 菜单中选择 `HTML->HTML(offline)`.
+将会输出幻灯片为 `HTML` 格式, 使用浏览器即可播放.
+如果担心在别的电脑上无法正常显示, 可以选择 `HTML->HTML(cdn hosted)`

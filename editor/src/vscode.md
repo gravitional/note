@@ -852,7 +852,7 @@ git config --global merge.tool code
 
 `open launch.json` 打开调试文件
 
-有两种标准配置,或者在`code`的集成终端中运行,或者在外部终端运行: 
+有两种标准配置,或者在`code`的集成终端中运行,或者在外部终端运行:
 
 ```json
 {
@@ -871,7 +871,7 @@ git config --global merge.tool code
 }
 ```
 
-还可以添加其他设置如`args`,但它不属于标准配置的一部分.  比如,你经常运行 `startup.py`,并使用参数 `--port 1593`, 则可以添加如下配置: 
+还可以添加其他设置如`args`,但它不属于标准配置的一部分.  比如,你经常运行 `startup.py`,并使用参数 `--port 1593`, 则可以添加如下配置:
 
 ```bash
  {
@@ -897,7 +897,7 @@ git config --global merge.tool code
 + `cwd` 指定当前工作目录,默认为`${workspaceFolder}` (打开`vscode`的目录)
 + `redirectOutput` ; 是否重定向debug输出. 选择`XXterminal`时,默认关闭. (不在VS code debug window中输出)
 + `justMyCode` ;  `true`或忽略,只调试用户写的代码. `false`也调试标准库函数.
-+ `django` ;  当设置为 `true` 时,会激活 `Django` 网络框架特有的调试功能. 
++ `django` ;  当设置为 `true` 时,会激活 `Django` 网络框架特有的调试功能.
 + `sudo` ; 设置为`true`,且调试窗口选择为`externalTerminal`时,可以提升权限
 + `pyramid` ;  当设置为 `true`时,确保用必要的`pserve`命令启动一个`Pyramid`应用程序.
 + `env` ; 设置可选的环境变量, 为 `debugger` 进程, 除了系统变量之外. `值`必须为字符串.

@@ -32,7 +32,7 @@ gnome-screenshot -a --file=(~"/Desktop/$(date +%s).png")
 
 在 Ubuntu(18.04,16.04)或 Debian(Jessie 和更新版本)中安装 `GPaste`
 
-对于 Debian,GPaste 可用于 Jessie 和更新版本,而对于 Ubuntu,GPaste 在 16.04 及更新版本的仓库中(因此可在 Ubuntu 18.04 Bionic Beaver 中使用).
+对于 Debian, GPaste 可用于 Jessie 和更新版本,而对于 Ubuntu,GPaste 在 16.04 及更新版本的仓库中(因此可在 Ubuntu 18.04 Bionic Beaver 中使用).
 
 你可以使用以下命令在 Debian 或 Ubuntu 中安装 GPaste(守护程序和 Gnome Shell 扩展):
 

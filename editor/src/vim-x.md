@@ -248,10 +248,16 @@ Run `:PlugClean`. It will detect and remove undeclared plugins.
 
 ### 切换标签页
 
-- `gt` or `:tabnext` 缩写 `:tabn` 下一个标签页(最后一个会循环到第一个)
+- `gt` or `:tabnext`; 缩写 `:tabn` 下一个标签页(最后一个会循环到第一个),
 - `gT` or `:tabprevious` 缩写 `:tabp` 上一个标签页(第一个会循环到最后一个)
 - `:tabrewind` 缩写 `:tabr` or `:tabfirst` 缩写 `:tabfir` 到第一个
 - `:tablast` 缩写 `:tabl` 到最后一个标签页
+
+可以加上页码数字.
+
++ `:tabp[revious] {count}`, `:tabN[ext]{count}{count}`
++ `{count}<Ctrl-上翻页>`, `{count}gT` 往前翻`{count}`标签页.  第一页接着最后一页.
+注意, `{count}` 的使用与 `:tabnext` 不同, 在后者中它被用作标签页的页码.
 
 #### 关闭标签页
 
@@ -335,7 +341,7 @@ $vim --version | grep clipboard
 
 如果`xterm_clipboard`不可用, 需要按照vim的插件
 
-```A
+```bash
 $sudo apt-get install vim vim-scripts vim-gtk vim-gnome
 ```
 

@@ -401,12 +401,12 @@ LaTeX Workshop 注册(registers)了以下占位符. 根文件值的是 LaTeX 主
 + `%RELATIVE_DIR%`; 相对于`工作区`文件夹的根文件目录
 + `%RELATIVE_DOC%`; 相对于`工作区`文件夹的根文件路径
 
-由于大多数 `LaTeX` 编译器接受没有扩展名的根文件名, `%DOC%`和`%DOCFILE%`不包括文件名扩展名. 
+由于大多数 `LaTeX` 编译器接受没有扩展名的根文件名, `%DOC%`和`%DOCFILE%`不包括文件名扩展名.
 同时, `texify` 工具需要完整的文件名及其扩展名, 因此在 `texify` 的配置中使用 `%DOC_EXT%`.
 
-大多数命令都接受使用`/`路径分隔符, 甚至在Windows上, 大多数LaTeX工具甚至要求使用它. 
-相反, 一些Windows命令只能使用`\`路径分隔符. 因此, 我们提供两个版本的占位符. 
-所有不带`_W32`后缀的占位符, 即使在 `Windows` 上也总是使用`/`路径分隔符. 
+大多数命令都接受使用`/`路径分隔符, 甚至在Windows上, 大多数LaTeX工具甚至要求使用它.
+相反, 一些Windows命令只能使用`\`路径分隔符. 因此, 我们提供两个版本的占位符.
+所有不带`_W32`后缀的占位符, 即使在 `Windows` 上也总是使用`/`路径分隔符.
 所有带`_W32`后缀的占位符在 `Windows` 上使用 `\` 路径分隔符.
 注意在Linux和Unix系统上, 有和没有`_W32`后缀的占位符是相同的.
 
@@ -414,7 +414,7 @@ LaTeX Workshop 注册(registers)了以下占位符. 根文件值的是 LaTeX 主
 
 ### latex-workshop.latex.recipe.default
 
-定义 `Build LaTeX` 项目命令所使用的配方. 它也适用于自动构建. 
+定义 `Build LaTeX` 项目命令所使用的配方. 它也适用于自动构建.
 配方是以 `latex-workshop.latex.recipes` 中定义的名称来指代的. 注意有两个特殊的值.
 
 + `"first"`: 使用 `latex-workshop.latex.recipes` 中定义的第一个配方.
