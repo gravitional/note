@@ -321,6 +321,7 @@ kpsewhich latinmodern-math.otf
 一般可以使用[fontspec][] 包控制西文字体和数学字体.用法大概如下:
 
 ```latex
+\usepackage{fontspec}
 % 设置英文字体
 \setmainfont{Microsoft YaHei}
 \setsansfont{Comic Sans MS}

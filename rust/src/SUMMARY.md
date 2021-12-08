@@ -119,5 +119,19 @@
     - [F - 书本译名](rust-21-6.md)
     - [G - Rust 是如何开发的与 "Nightly Rust"](rust-21-7.md)
 
+***
+
 - [rust sd](rust-sd.md)
 - [rust ripgrep](rust-ripgrep.md)
+
+***
+
+- [rust 命令行工具](rust-cmd-1.md)
+- [建立项目](rust-cmd-1.1-setup.md)
+- [解析命令行参数](rust-cmd-1.2-parsing.md)
+- [第一个实现](rust-cmd-1.3-1st-implement.md)
+- [更好看的错误输出](rust-cmd-1.4-nicer-error.md)
+- [输出](rust-cmd-1.5-output.md)
+- [测试](rust-rust-cmd-1.6-testing.md)
+- [打包和发布](rust-cmd-1.7-packaging.md)
+- [有用的箱子](rust-cmd-3-userful-crates.md)

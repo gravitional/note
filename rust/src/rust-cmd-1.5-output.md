@@ -190,7 +190,7 @@ $ cargo run --bin output-log
 [2018-11-30T20:25:52Z WARN  output_log] 哎呀, 什么都没实现!
 ```
 
-在 Windows CMD 中, 你可以像这样运行它.
+在 `Windows CMD` 中, 你可以像这样运行它.
 
 ```cmd
 $ set RUST_LOG=info
@@ -201,7 +201,7 @@ $ cargo run --bin output-log
 [2018-11-30T20:25:52Z WARN  output_log] 哎呀, 什么都没实现!
 ```
 
-`RUST_LOG` 是环境变量的名称, 你可以用它来设置你的日志设置.
+`RUST_LOG` 是环境变量的名称, 你可以用它来配置日志.
 `env_logger` 还包含一个构建器(builder), 所以你可以通过编程来调整这些设置, 例如, 也可以默认显示`info`级别的消息.
 
 有很多替代性的 logging adapters , 也有`log`的替代品或扩展.

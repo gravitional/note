@@ -238,13 +238,13 @@ Deref 强制转换使得 Rust 自动的帮我们处理这些转换.
 
 ## Deref 强制转换如何与可变性交互
 
-类似于如何使用 Deref trait 重载不可变引用的 * 运算符, Rust 提供了 DerefMut trait 用于重载可变引用的 * 运算符.
+类似于如何使用 `Deref` trait 重载不可变引用的 `*` 运算符, `Rust` 提供了 `DerefMut` trait 用于重载可变引用的 `*` 运算符.
 
 Rust 在发现类型和 trait 实现满足三种情况时会进行 Deref 强制转换:
 
-+ 当 T: Deref<Target=U> 时从 &T 到 &U.
-+ 当 T: DerefMut<Target=U> 时从 &mut T 到 &mut U.
-+ 当 T: Deref<Target=U> 时从 &mut T 到 &U.
++ 当 `T: Deref<Target=U>` 时从 `&T` 到 `&U`.
++ 当 `T: DerefMut<Target=U>` 时从 `&mut T` 到 `&mut U`.
++ 当 `T: Deref<Target=U>` 时从 `&mut T` 到 `&U`.
 
 头两个情况除了可变性之外是相同的:
 第一种情况表明如果有一个 &T, 而 T 实现了返回 U 类型的 Deref, 则可以直接得到 &U.

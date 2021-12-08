@@ -49,7 +49,8 @@ pub trait Iterator<T> {
 通过关联类型, 则无需标注类型, 因为不能多次实现这个 trait. 对于示例 19-12 使用关联类型的定义, 我们只能选择一次 Item 会是什么类型, 因为只能有一个 impl Iterator for Counter. 当调用 Counter 的 next 时不必每次指定我们需要 u32 值的迭代器.
 默认泛型类型参数和运算符重载
 
-当使用泛型类型参数时, 可以为泛型指定一个默认的具体类型. 如果默认类型就足够的话, 这消除了为具体类型实现 trait 的需要. 为泛型类型指定默认类型的语法是在声明泛型类型时使用 <PlaceholderType=ConcreteType>.
+当使用泛型类型参数时, 可以为泛型指定一个默认的具体类型. 如果默认类型就足够的话, 这消除了为具体类型实现 trait 的需要.
+为泛型类型指定默认类型的语法是在声明泛型类型时使用 <PlaceholderType=ConcreteType>.
 
 这种情况的一个非常好的例子是用于运算符重载. 运算符重载(Operator overloading)是指在特定情况下自定义运算符(比如 +)行为的操作.
 
@@ -83,21 +84,29 @@ fn main() {
 
 示例 19-14: 实现 Add trait 重载 Point 实例的 + 运算符
 
-add 方法将两个 Point 实例的 x 值和 y 值分别相加来创建一个新的 Point. Add trait 有一个叫做 Output 的关联类型, 它用来决定 add 方法的返回值类型.
+`add` 方法将两个 Point 实例的 x 值和 y 值分别相加来创建一个新的 Point.
+`Add` trait 有一个叫做 `Output` 的关联类型, 它用来决定 add 方法的返回值类型.
 
-这里默认泛型类型位于 Add trait 中. 这里是其定义:
+这里默认泛型类型位于 `Add` trait 中. 这里是其定义:
 
+```rust
 trait Add<RHS=Self> {
     type Output;
 
     fn add(self, rhs: RHS) -> Self::Output;
 }
+```
 
-这看来应该很熟悉, 这是一个带有一个方法和一个关联类型的 trait. 比较陌生的部分是尖括号中的 RHS=Self: 这个语法叫做 默认类型参数(default type parameters). RHS 是一个泛型类型参数("right hand side" 的缩写), 它用于定义 add 方法中的 rhs 参数. 如果实现 Add trait 时不指定 RHS 的具体类型, RHS 的类型将是默认的 Self 类型, 也就是在其上实现 Add 的类型.
+这看来应该很熟悉, 这是一个带有方法和关联类型的 trait.
+比较陌生的部分是尖括号中的 `RHS=Self`: 这个语法叫做 `默认类型参数`(default type parameters).
+`RHS` 是`泛型类型参数`("right hand side" 的缩写), 它用于定义 `add` 方法中的 `rhs` 参数.
+如果实现 `Add` trait 时不指定 `RHS` 的具体类型, `RHS` 的类型将是默认的 `Self` 类型, 也就是在被实现 `Add` 的类型.
 
-当为 Point 实现 Add 时, 使用了默认的 RHS, 因为我们希望将两个 Point 实例相加. 让我们看看一个实现 Add trait 时希望自定义 RHS 类型而不是使用默认类型的例子.
+当为 `Point` 实现 `Add` 时, 使用了默认的 `RHS`, 因为我们希望将两个 `Point` 实例相加.
+让我们看看一个实现 Add trait 时希望自定义 RHS 类型而不是使用默认类型的例子.
 
-这里有两个存放不同单元值的结构体, Millimeters 和 Meters. 我们希望能够将毫米值与米值相加, 并让 Add 的实现正确处理转换. 可以为 Millimeters 实现 Add 并以 Meters 作为 RHS, 如示例 19-15 所示.
+这里有两个存放不同单元值的结构体, Millimeters 和 Meters.
+我们希望能够将毫米值与米值相加, 并让 Add 的实现正确处理转换. 可以为 Millimeters 实现 Add 并以 Meters 作为 RHS, 如示例 19-15 所示.
 
 文件名: src/lib.rs
 
