@@ -3,61 +3,89 @@
     ch19-03-advanced-traits.md
     commit 426f3e4ec17e539ae9905ba559411169d303a031
 
-第十章 "trait: 定义共享的行为" 部分, 我们第一次涉及到了 trait, 不过就像生命周期一样, 我们并没有覆盖一些较为高级的细节.
-现在我们更加了解 Rust 了, 可以深入理解其本质了.
+第十章 "trait: 定义共享的行为" 部分, 我们第一次涉及到了 `trait`, 不过就像生命周期一样, 我们并没有覆盖一些较为高级的细节.
+现在我们更加了解 `Rust` 了, 可以深入理解其本质了.
 
 ## 关联类型在 trait 定义中指定占位符类型
 
-关联类型(associated types)是一个将类型占位符与 trait 相关联的方式, 这样 trait 的方法签名中就可以使用这些占位符类型. trait 的实现者会针对特定的实现在这个类型的位置指定相应的具体类型. 如此可以定义一个使用多种类型的 trait, 直到实现此 trait 时都无需知道这些类型具体是什么.
+`关联类型`(associated types)是一个将`类型占位符`与 `trait` 相关联的方式, 这样 `trait` 的方法签名中就可以使用这些占位符类型.
+`trait` 的实现者会针对具体情况, 在占位符的位置给出具体的类型.
+如此可以定义一个使用多种类型的 `trait`, 直到实现此 `trait` 时都无需知道这些类型具体是什么.
 
-本章所描述的大部分内容都非常少见. 关联类型则比较适中; 它们比本书其他的内容要少见, 不过比本章中的很多内容要更常见.
+本章所描述的大部分内容都非常少见.
+关联类型则比较适中; 它们比本书其他的内容要少见, 不过比本章中的很多内容要更常见.
 
-一个带有关联类型的 trait 的例子是标准库提供的 Iterator trait. 它有一个叫做 Item 的关联类型来替代遍历的值的类型. 第十三章的 "Iterator trait 和 next 方法" 部分曾提到过 Iterator trait 的定义如示例 19-12 所示:
+带有`关联类型`的 `trait` 的例子是标准库提供的 `Iterator` trait.
+它有一个叫做 `Item` 的关联类型来替代遍历的值的类型.
+第十三章的 "Iterator trait 和 next 方法" 部分曾提到过 `Iterator` trait 的定义如示例 19-12 所示:
 
+```rust
 pub trait Iterator {
     type Item;
 
-    fn next(&mut self) -> Option<Self::Item>;
+fn next(&mut self) -> Option<Self::Item>;
 }
+```
 
-示例 19-12: Iterator trait 的定义中带有关联类型 Item
+示例 19-12: `Iterator` trait 的定义中带有关联类型 `Item`
 
-Item 是一个占位类型, 同时 next 方法定义表明它返回 Option<Self::Item> 类型的值. 这个 trait 的实现者会指定 Item 的具体类型, 然而不管实现者指定何种类型, next 方法都会返回一个包含了此具体类型值的 Option.
+`Item` 是一个占位类型, 同时 `next` 方法定义表明它返回 `Option<Self::Item>` 类型的值.
+这个 `trait` 的实现者会指定 `Item` 的具体类型,
+然而不管实现者指定何种类型, `next` 方法都会返回包含了此具体类型值的 `Option`.
 
-关联类型看起来像一个类似泛型的概念, 因为它允许定义一个函数而不指定其可以处理的类型. 那么为什么要使用关联类型呢?
+`关联类型` 看起来像一个类似`泛型`的概念, 因为它允许定义一个函数而不指定其可以处理的类型.
+那么为什么要使用关联类型呢?
 
-让我们通过一个在第十三章中出现的 Counter 结构体上实现 Iterator trait 的例子来检视其中的区别. 在示例 13-21 中, 指定了 Item 的类型为 u32:
+让我们通过一个例子来检视其中的区别: 第十三章中出现的 `Counter` 结构体上实现了 `Iterator` trait .
+在示例 13-21 中, 指定了 `Item` 的类型为 `u32`:
 
 文件名: src/lib.rs
 
+```rust
 impl Iterator for Counter {
     type Item = u32;
 
     fn next(&mut self) -> Option<Self::Item> {
         // --snip--
+```
 
-这类似于泛型. 那么为什么 Iterator trait 不像示例 19-13 那样定义呢?
+这类似于 `泛型`. 那么为什么 `Iterator` trait 不像示例 19-13 那样定义呢?
 
+```rust
 pub trait Iterator<T> {
     fn next(&mut self) -> Option<T>;
 }
+```
 
-示例 19-13: 一个使用泛型的 Iterator trait 假想定义
+示例 19-13: 一个使用泛型的 `Iterator` trait 假想定义
 
-区别在于当如示例 19-13 那样使用泛型时, 则不得不在每一个实现中标注类型. 这是因为我们也可以实现为 Iterator<String> for Counter, 或任何其他类型, 这样就可以有多个 Counter 的 Iterator 的实现. 换句话说, 当 trait 有泛型参数时, 可以多次实现这个 trait, 每次需改变泛型参数的具体类型. 接着当使用 Counter 的 next 方法时, 必须提供类型注解来表明希望使用 Iterator 的哪一个实现.
+区别在于当如示例 19-13 那样使用`泛型`时, 则不得不在每一个实现中`标注`类型.
+这是因为我们也可以实现为 `Iterator<String> for Counter`, 或任何其他类型,
+这样对于`Counter`,  就可以有多个 `Iterator` 的实现.
 
-通过关联类型, 则无需标注类型, 因为不能多次实现这个 trait. 对于示例 19-12 使用关联类型的定义, 我们只能选择一次 Item 会是什么类型, 因为只能有一个 impl Iterator for Counter. 当调用 Counter 的 next 时不必每次指定我们需要 u32 值的迭代器.
-默认泛型类型参数和运算符重载
+换句话说, 当 `trait` 有 `泛型参数` 时, 可以多次实现这个 `trait`, 每次需改变 `泛型参数` 的具体类型.
+接着当使用 `Counter` 的 `next` 方法时, 必须提供 `类型注解` 来表明希望使用 `Iterator` 的哪一个实现.
 
-当使用泛型类型参数时, 可以为泛型指定一个默认的具体类型. 如果默认类型就足够的话, 这消除了为具体类型实现 trait 的需要.
-为泛型类型指定默认类型的语法是在声明泛型类型时使用 <PlaceholderType=ConcreteType>.
+通过 `关联类型`, 则无需 `标注类型`, 因为不能多次实现这个 `trait`.
+对于示例 19-12 使用关联类型的定义, 我们只能选择一次 `Item` 会是什么类型, 因为只能有一个 `impl Iterator for Counter`.
+当调用 `Counter` 的 `next` 时不必每次指定我们需要 `u32` 值的迭代器.
 
-这种情况的一个非常好的例子是用于运算符重载. 运算符重载(Operator overloading)是指在特定情况下自定义运算符(比如 +)行为的操作.
+## 默认泛型类型参数和运算符重载
 
-Rust 并不允许创建自定义运算符或重载任意运算符, 不过 std::ops 中所列出的运算符和相应的 trait 可以通过实现运算符相关 trait 来重载. 例如, 示例 19-14 中展示了如何在 Point 结构体上实现 Add trait 来重载 + 运算符, 这样就可以将两个 Point 实例相加了:
+当使用`泛型类型`参数时, 可以为`泛型`指定一个默认的具体类型.
+如果默认类型就足够的话, 这消除了为具体类型实现 `trait` 的需要.
+为泛型类型指定 `默认类型` 的语法是在声明泛型类型时使用 `<占位符类型=具体类型>`.
+
+这种情况的一个非常好的例子是用于运算符重载.
+`运算符重载`(Operator overloading)是指在特定情况下自定义运算符(比如 `+`)行为的操作.
+
+`Rust` 并不允许创建自定义`运算符`或`重载`任意运算符,
+不过 `std::ops` 中所列出的运算符和相应的 `trait` 可以通过实现运算符相关 `trait` 来重载.
+例如, 示例 19-14 中展示了如何在 `Point` 结构体上实现 `Add trait` 来重载 `+` 运算符, 这样就可以将两个 `Point` 实例相加了:
 
 文件名: src/main.rs
 
+```rust
 use std::ops::Add;
 
 #[derive(Debug, PartialEq)]
@@ -81,13 +109,13 @@ fn main() {
     assert_eq!(Point { x: 1, y: 0 } + Point { x: 2, y: 3 },
                Point { x: 3, y: 3 });
 }
+```
 
-示例 19-14: 实现 Add trait 重载 Point 实例的 + 运算符
+示例 19-14: 实现 `Add` trait 重载 `Point` 实例的 `+` 运算符
 
-`add` 方法将两个 Point 实例的 x 值和 y 值分别相加来创建一个新的 Point.
-`Add` trait 有一个叫做 `Output` 的关联类型, 它用来决定 add 方法的返回值类型.
-
-这里默认泛型类型位于 `Add` trait 中. 这里是其定义:
+`add` 方法将两个 `Point` 实例的 `x` 值和 `y` 值分别相加来创建一个新的 `Point`.
+`Add` trait 有一个叫做 `Output` 的`关联类型`, 它用来决定 `add` 方法的返回值类型.
+这里 `默认泛型类型` 位于 `Add` trait 中. 这里是其定义:
 
 ```rust
 trait Add<RHS=Self> {
@@ -97,10 +125,10 @@ trait Add<RHS=Self> {
 }
 ```
 
-这看来应该很熟悉, 这是一个带有方法和关联类型的 trait.
+这看来应该很熟悉, 这是一个带有 `方法` 和 `关联类型` 的 trait.
 比较陌生的部分是尖括号中的 `RHS=Self`: 这个语法叫做 `默认类型参数`(default type parameters).
 `RHS` 是`泛型类型参数`("right hand side" 的缩写), 它用于定义 `add` 方法中的 `rhs` 参数.
-如果实现 `Add` trait 时不指定 `RHS` 的具体类型, `RHS` 的类型将是默认的 `Self` 类型, 也就是在被实现 `Add` 的类型.
+如果实现 `Add` trait 时不指定 `RHS` 的具体类型, `RHS` 的类型将是默认的 `Self` 类型, 也就是要实现 `Add` 的类型.
 
 当为 `Point` 实现 `Add` 时, 使用了默认的 `RHS`, 因为我们希望将两个 `Point` 实例相加.
 让我们看看一个实现 Add trait 时希望自定义 RHS 类型而不是使用默认类型的例子.
@@ -110,6 +138,7 @@ trait Add<RHS=Self> {
 
 文件名: src/lib.rs
 
+```rust
 use std::ops::Add;
 
 struct Millimeters(u32);
@@ -122,20 +151,25 @@ impl Add<Meters> for Millimeters {
         Millimeters(self.0 + (other.0 * 1000))
     }
 }
+```
 
-示例 19-15: 在 Millimeters 上实现 Add, 以便能够将 Millimeters 与 Meters 相加
+示例 19-15: 在 `Millimeters` 上实现 `Add`, 以便能够将 `Millimeters` 与 `Meters` 相加
 
-为了使 Millimeters 和 Meters 能够相加, 我们指定 impl Add<Meters> 来设定 RHS 类型参数的值而不是使用默认的 Self.
+为了使 `Millimeters` 和 `Meters` 能够相加, 我们指定 `impl Add<Meters>` 来设定 `RHS` 类型参数的值而不是使用默认的 `Self`.
 
 默认参数类型主要用于如下两个方面:
 
-    扩展类型而不破坏现有代码.
-    在大部分用户都不需要的特定情况进行自定义.
++ 扩展类型而不破坏现有代码.
++ 在大部分用户都不需要的特定情况进行自定义.
 
-标准库的 Add trait 就是一个第二个目的例子: 大部分时候你会将两个相似的类型相加, 不过它提供了自定义额外行为的能力. 在 Add trait 定义中使用默认类型参数意味着大部分时候无需指定额外的参数. 换句话说, 一小部分实现的样板代码是不必要的, 这样使用 trait 就更容易了.
+标准库的 Add trait 就是一个第二个目的例子: 大部分时候你会将两个相似的类型相加, 不过它提供了自定义额外行为的能力.
+在 Add trait 定义中使用默认类型参数意味着大部分时候无需指定额外的参数.
+换句话说, 一小部分实现的样板代码是不必要的, 这样使用 trait 就更容易了.
 
-第一个目的是相似的, 但过程是反过来的: 如果需要为现有 trait 增加类型参数, 为其提供一个默认类型将允许我们在不破坏现有实现代码的基础上扩展 trait 的功能.
-完全限定语法与消歧义: 调用相同名称的方法
+第一个目的是相似的, 但过程是反过来的:
+如果需要为现有 trait 增加类型参数, 为其提供一个默认类型将允许我们在不破坏现有实现代码的基础上扩展 trait 的功能.
+
+## 完全限定语法与消歧义: 调用相同名称的方法
 
 Rust 既不能避免一个 trait 与另一个 trait 拥有相同名称的方法, 也不能阻止为同一类型同时实现这两个 trait. 甚至直接在类型上实现开始已经有的同名方法也是可能的!
 
@@ -143,6 +177,7 @@ Rust 既不能避免一个 trait 与另一个 trait 拥有相同名称的方法,
 
 文件名: src/main.rs
 
+```rust
 trait Pilot {
     fn fly(&self);
 }
@@ -170,6 +205,7 @@ impl Human {
         println!("*waving arms furiously*");
     }
 }
+```
 
 示例 19-16: 两个 trait 定义为拥有 fly 方法, 并在直接定义有 fly 方法的 Human 类型上实现这两个 trait
 

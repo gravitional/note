@@ -117,10 +117,11 @@ fn main() {
 }
 ```
 
-示例 16-2: 从 thread::spawn 保存一个 JoinHandle 以确保该线程能够运行至结束
+示例 16-2: 从 `thread::spawn` 保存一个 `JoinHandle` 以确保该线程能够运行至结束
 
-通过调用 handle 的 join 会阻塞当前线程直到 handle 所代表的线程结束. 阻塞(Blocking) 线程意味着阻止该线程执行工作或退出.
-因为我们将 join 调用放在了主线程的 for 循环之后, 运行示例 16-2 应该会产生类似这样的输出:
+通过调用 `handle` 的 `join` 会阻塞当前线程, 直到 `handle` 所代表的线程结束.
+阻塞(`Blocking`) 线程意味着阻止该线程执行工作或退出.
+因为我们将 `join` 调用放在了主线程的 `for` 循环之后, 运行示例 16-2 应该会产生类似这样的输出:
 
 ```log
 hi number 1 from the main thread!
@@ -138,9 +139,9 @@ hi number 8 from the spawned thread!
 hi number 9 from the spawned thread!
 ```
 
-这两个线程仍然会交替执行, 不过主线程会由于 handle.join() 调用会等待直到新建线程执行完毕.
+这两个线程仍然会交替执行, 不过主线程由于 `handle.join()` 调用会等待直到新建线程执行完毕.
 
-不过让我们看看将 handle.join() 移动到 main 中 for 循环之前会发生什么, 如下:
+不过让我们看看将 `handle.join()` 移动到 `main` 中 for 循环之前会发生什么, 如下:
 
 文件名: src/main.rs
 
