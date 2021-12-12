@@ -94,9 +94,10 @@ cpanm Module::Name
 关于如何开始, 请看[引导技术](https://metacpan.org/pod/local::lib#The-bootstrapping-technique).
 你可以为每个用户/项目/公司创建一个目录, 并通过`复制`该目录部署到其他服务器(只要你在同一个操作系统和 `perl版本`).
 
-来自 [App::cpanminus][] 的 `cpanm` 是一个从 `CPAN` 获取, 解包, 构建和安装模块的脚本.
+来自 [App::cpanminus][] 的 `cpanm` 是从 CPAN `获取`, `解包`, `构建` 和 `安装` 模块的脚本.
 它是无依赖的(可以自己启动, bootstrap), 并且不需要配置([安装说明][]).
-它可以自动完成CPAN上大多数模块的整个构建过程, 并且与 `local::lib` 和 `perlbrew` 配合得很好.
+
+它可以自动完成 `CPAN` 上大多数模块的整个构建过程, 并且与 `local::lib` 和 `perlbrew` 配合得很好.
 许多有经验的Perl开发者把它作为他们的首选工具.
 相关工具: [cpan-outdated][], [pm-uninstall][], [cpan-listchanges][].
 
