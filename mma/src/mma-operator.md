@@ -165,3 +165,7 @@ exp1/;exp2,    (e/;e)/;e
 `symb_:expr`, Optional[Pattern[symb,Blank[]],expr], 命名的带有默认值的可选参数,
 `_head :expr`, Optional[Blank[head],expr], 带有头部和默认值的可选参数
 `symb_head:expr`, Optional[Pattern[symb,Blank[head]],expr], 命名的带有头部和默认值的可选参数
+
+## 算符复合形式
+
+guide/FunctionCompositionAndOperatorForms
