@@ -471,11 +471,12 @@ AbsoluteTiming[
 Out[3]= {0.055431, {{0.310021, 0.500236, 0.749769, 0.408784},...}}
 ```
 
-## 共享函数,SetSharedVariable
+## 共享函数,SetSharedFunction
 
-    SetSharedFunction[f1,   f2, ...]
-
+```mathematica
+SetSharedFunction[f1,   f2, ...];
 声明各符号 `f_i` 为共享函数, 它们的 `下值`(downvalues) 在`所有并行内核`中同步(synchronized).
+```
 
 + 在`任何内核`上(主核或子核) 定义的`共享函数`的 `下值`, 都由 `主内核`负责维护,
 从 `并行子内核`  中每一次对`共享函数`的访问, 都通过主内核进行`同步`.
@@ -523,14 +524,14 @@ Out[3]= {1, 2, 4, 8, 16}
 
 ### 推广
 
-+ 在`主内核`上, 给 `共享函数` 添加`延迟定义`(delayed definition):
++ 在 `主内核` 上, 给 `共享函数` 添加`延迟定义`(delayed definition):
 
 ```mathematica
 SetSharedFunction[f1]
 f1[n_] := {n,$KernelID}
 ```
 
-这样的`定义`总是返回到 `主内核` 中计算, 无论在哪个`子核`中调用它:
+这样的 `定义` 总是返回到 `主内核` 中计算, 无论在哪个`子核`中调用它:
 
 ```mathematica
 ParallelMap[f1, Range[4]]
@@ -539,7 +540,7 @@ Definition@f1
 Out: f1[n_] := {n, $KernelID} (* 主核函数的定义 *)
 ```
 
-+ 在某个并行`子内核`上, 给共享函数添加定义:
++ 在某个并行 `子内核` 上, 给共享函数添加定义:
 
 ```mathematica
 SetSharedFunction[f2]
@@ -583,64 +584,67 @@ slist
 Out[6]= {1, 2, 3, 5, 7, 8, 9}
 ```
 
-+ 简单`队列`数据类型(`先进先出`)的构造函数(constructor):
++ 简单 `队列数据类型`(`先进先出`) 的构造函数(constructor):
 
-```mathematica
-newList[list_Symbol] := Module[{data = {}},  (*初始化为空列表*)
-(*push 方法,在队列末尾压入数据*)
-list[push, e_] := (AppendTo[data, e];);
-  (*pop 方法弹出数据, 如果到达队列末尾, 则返回 $Failed*)
-  list[pop] :=  If[Length[data] == 0, $Failed,   With[{e = First[data]}, data = Rest[data]; e]];
-(*相当于 get 方法, 返回整个队列的数据*)
-  list[] := data;
-  (*最后返回构造的队列 实例*)
-    list ]
-```
+    ```mathematica
+    newList[list_Symbol] := Module[(*局部变量 data 存储列表的元素, 初始化为空列表*){data = {}},
+      (*push 方法,在队列末尾压入数据*)
+      list[push, e_] := (AppendTo[data, e];);
+      (*pop 方法弹出数据,如果到达队列末尾,则返回 $Failed*)
+      list[pop] :=   If[Length[data] == 0, $Failed, With[{e = First[data]}, data = Rest[data]; e]];
+      (*相当于 get 方法,返回整个队列的数据*)
+      list[] := data;
+      (*最后返回构造的队列实例*)
+      list ]
+    ```
 
-创建两个共享的队列 queues
+    创建两个 `共享队列 `(queues):
 
-```mathematica
-newList[input]; SetSharedFunction[input]
-newList[input]; SetSharedFunction[input]
+    ```mathematica
+    newList[input]; SetSharedFunction[input]
+    newList[output]; SetSharedFunction[output]
 
-(*填充输入队列 *)
-newList[input]; SetSharedFunction[input]
-(*在输入队列的元素上并行工作, 并将结果放入输出队列. *)
-numberOfPrimes[n_] := Total[FactorInteger[e! + 1][[All, 2]]];
-(*将定义发送到各个子核*)
-DistributeDefinitions[numberOfPrimes]
+    (*填充输入队列 *)
+    Scan[input[push, #] &, Range[25, 45]]; input[]
 
-(*当 input 队列不到末尾, 就持续弹出队列数据*)
-ParallelEvaluate[ While[(e = input[pop]) =!= $Failed,
-    output[push, {e, numberOfPrimes[e! + 1]}]]];
-output[]
-```
+    (*在输入队列的元素上并行工作, 并将结果放入输出队列. *)
+    numberOfPrimes[n_] := Total[FactorInteger[e! + 1][[All, 2]]];
+    (*将定义发送到各个子核*)
+    DistributeDefinitions[numberOfPrimes]
 
-+ 使用单一的`共享函数`, 来交换输入(input)和结果(result):
+    (*当 input 队列不到末尾, 就持续弹出队列数据*)
+   ParallelEvaluate[While[(e = input[pop]) =!= $Failed,
+   output[push, {e, numberOfPrimes[e! + 1]}]]];
 
-```mathematica
-record[0, _] := next++;
-(*记录函数, 将结果保存到 results 的下值, 并返回迭代指标++*)
-record[n_, nf_] := (results[n] = nf; next++)
-SetSharedFunction[record]
+   (* 查看 output 队列 收集到的结果 *)
+     output[]
+    ```
 
-(* 建立一个搜索, 并显示其进度, 直到它被手动中止: Alt+. *)
-first = next = 100; Clear[results];
-results[_] := "\[WatchIcon]";
-(*暂时输出, 计算完成后删除*)
-PrintTemporary[
-(*动态展示表达式, Array[f,  length,origin] *)
-Dynamic[{next, Array[results, next - first, first]}]];
-(* 如果 CheckAbort 检测到终止, 返回 null, 但不 abort,继续运行 *)
-CheckAbort[
- ParallelEvaluate[Module[{next = 0, res},
-    While[True, next = record[next, res]; (* 记录 next 步的结果 res*)
-   res = Total[FactorInteger[2^next + 1][[All, 2]]]] (* 计算 next+1 步的结果 *)
-   ]], Null]
++ 使用单个 `共享函数`, 来交流(communicate) input 和 result:
 
-(* 2^n+1的因子数的列表, 目前得到的结果:*)
-Style[Table[{n, results[n]}, {n, first, next}], Small]
-```
+    ```mathematica
+    record[0, _] := next++;
+    (*记录函数, 将结果保存到 results 的下值, 并返回迭代指标++*)
+    record[n_, nf_] := (results[n] = nf; next++)
+    SetSharedFunction[record]
+
+    (* 建立一个搜索, 并显示其进度, 直到它被手动中止: Alt+. *)
+    first = next = 100; Clear[results];
+    results[_] := "\[WatchIcon]";
+    (*暂时输出, 计算完成后删除*)
+    PrintTemporary[
+    (*动态展示表达式, Array[f,  length,origin] *)
+    Dynamic[{next, Array[results, next - first, first]}]];
+    (* 如果 CheckAbort 检测到终止, 返回 null, 但不 abort,继续运行 *)
+    CheckAbort[
+     ParallelEvaluate[Module[{next = 0, res},
+        While[True, next = record[next, res]; (* 记录 next 步的结果 res*)
+       res = Total[FactorInteger[2^next + 1][[All, 2]]]] (* 计算 next+1 步的结果 *)
+       ]], Null]
+
+    (* 2^n+1的因子数的列表, 目前得到的结果:*)
+    Style[Table[{n, results[n]}, {n, first, next}], Small]
+    ```
 
 ### 性质和关系
 
@@ -664,7 +668,7 @@ ParallelDo[If[PrimeQ[2^i + 1], AppendTo[sharedres, i]], {i, 1000}];
 sharedres
 ```
 
-### Possible Issues  
+### Possible Issues
 
 对于单纯的将代码分发到`子核`(code distribution)来说, 使用 `共享函数` 并不高效, 结果是单纯的顺序计算(sequential evaluation):
 
