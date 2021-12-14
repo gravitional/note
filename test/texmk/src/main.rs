@@ -66,11 +66,17 @@ fn main() -> Result<(), Box<dyn Error>> {
         .args(&args)
         .stderr(Redirection::Merge)
         .join()?;
+
     // 查找错误位置
     let mut file_log = String::from(files[0].strip_suffix(".tex").unwrap());
     file_log = file_log + ".log";
-
-    find_error(&file_log)
+    // 查找错误
+    Exec::cmd("grep")
+        .arg(r" -m 10 -Pi -n --color -B 0 -A 8 \[\d+\] ")
+        .arg(&file_log)
+        .stderr(Redirection::Merge)
+        .join()?;
+    Ok(())
 }
 
 // https://docs.rs/grep-printer/latest/grep_printer/

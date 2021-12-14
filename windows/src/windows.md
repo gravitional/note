@@ -32,7 +32,7 @@
 大家都认为,Windows 10家庭版中并不包含组策略,其实不然,它是有相关文件的,只是不让你使用而已.那么我们让系统允许你使用就好了.
 制作一个`bat`脚本,安装组策略包.
 
-1, 首先你需要在桌面上新建一个txt文本文档.然后将以下代码复制到这个新建的txt文本文档中.
+1, 首先你需要在桌面上新建一个txt文本文档.然后将以下代码复制到这个新建的 `txt` 文本文档中.
 
 ```cmd
 @echo off
@@ -1238,3 +1238,7 @@ yarn global add picgo
 
 通常来说你只需要配置 `Uploader` 即可,所以你可以通过 `picgo set uploader` 来进入交互式命令行,
 配置成功后会自动生成配置文件,无需复制粘贴! 其他更多的命令可以参考 `CLI` 命令 一章.
+
+## 安装 windows 11
+
+[下载 Windows 11](https://www.microsoft.com/zh-cn/software-download/windows11?)
