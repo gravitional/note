@@ -12,7 +12,9 @@
 
 # docs microsoft com
 
-- [常用操作](pwsh-1.md)
+- [pwsh 安装和配置](pwsh-1-setup.md)
+
+- [常用操作](pwsh-1-basic.md)
 - [日常维护](pwsh-1-maintain.md)
 
 - [控制流](pwsh-2-flow-control.md)

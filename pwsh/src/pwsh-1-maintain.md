@@ -109,7 +109,7 @@ Function        Find-Module                                        2.2.5      Po
 Get-Command -Module PowerShellGet | Group-Object -Property Verb
 Count Name                      Group
 ----- ----                      -----
-    5 Find                      {Find-Command, Find-DscResource, Find-Module, Find-RoleCapability…}
+    5 Find                      {Find-Command, Find-DscResource, Find-Module, Find-RoleCapability... }
 ...
 ```
 
