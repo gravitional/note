@@ -384,7 +384,7 @@ tutorial/CollectingObjectsTogether
 
 + 过程控制函数 ; `Sow`, `Reap`, `Catch`,  `Throw`
 + 插入元素: `Insert[expr,elem,{i,j,...}]`: 把元素插入到 `expr` 的 `{i,j,...}` 位置.
-+ 求数列公式有个函数`FindSequenceFunction`
++ 求数列公式有个函数 `FindSequenceFunction`
 
 ## MapThread,level 的区别
 
@@ -404,4 +404,48 @@ Out[2]= {f[{a, b}, {u, v}], f[{c, d}, {s, t}]}
 ```mathematica
 >In[3]:= MapThread[f, {{{a, b}, {c, d}}, {{u, v}, {s, t}}}, 2]
 Out[3]= {{f[a, u], f[b, v]}, {f[c, s], f[d, t]}}
+```
+
+## Sow,Reap
+
+tutorial/CollectingExpressionsDuringEvaluation
+
+在 `计算过程中` 收集表达式, 使用 `Sow Reap` 函数. `Reap`收割, 收获
+
++ 获得非末尾表达式的值:
+
+    ```mathematica
+    Extract[{2, 1, 1}]@Reap[Sow@expr; expr2]
+    ```
+
+## Reap 语法
+
+```mathematica
+Reap[expr] ; 给出 expr 的值, 以及所有在其计算过程中被 Sow 封装的表达式.
+使用 Sow[e] 或 Sow[e, tag_i] 播种的具有不同标记的表达式, 将收集到不同的列表中.
+
+Reap[expr,patt]; 只收集 ` sown tag` 与 patt 匹配的表达式.
+
+Reap[expr,{ patt1, patt2, ...}]; 将与 patt_i 相关的表达式放在单独的列表中.
+
+Reap[expr,patt,f]; 返回
+    {expr, {
+            f[tag1, {e_11, e_12, ...}], ...
+            }} .
+```
+
+### 细节
+
++ `Sow` 和 `Reap` 提供了方便的方法, 来累积计算中的 `中间结果`列表.
++ `Reap` 按照 `Sow` 作用于表达式的顺序来积累表达式.
++ 用特定 `tag` 播种的表达式, 被最内层的 Reap 收集, 并要求 `Reap` 中的模式与 `tag` 可以匹配.
++ `Reap[expr]` 等同于 `Reap[expr,_]`.
++ `Reap` 具有 `HoldFirst` 属性.
+
+### 应用
+
+Find the list of values sampled by `Plot`:
+
+```mathematica
+Reap[Plot[Sin[x], {x, 0, 10}, EvaluationMonitor :> Sow[x]];] // Short
 ```

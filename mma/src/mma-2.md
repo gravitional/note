@@ -571,11 +571,6 @@ v = ToExpression["x" <> ToString[#]] & /@ Range[5]
 tutorial/CurveFitting
 
 ***
-`在计算过程中收集表达式`: Sow Reap
-
-tutorial/CollectingExpressionsDuringEvaluation
-
-***
 `数值运算`: tutorial/NumericalCalculations
 
 ***
@@ -730,12 +725,6 @@ a_2 & b_2 \\
 `将求和换成列表`: tev3 = tev2 /. Plus -> List;
 
 ***
-`Reap`收割, 收获
-
-`Reap[expr]`
-给出表达式 expr 的值, 以及在计算中已经应用 `Sow` 的所有表达式. 使用 `Sow[e]` 或具有不同标记的 `Sow[e,tag, i]]` "散布"的表达式在不同列表中给出.
-
-***
 `产生 C 和 Fortran 表达式`: tutorial/GeneratingCAndFortranExpressions
 
 ***
@@ -764,66 +753,6 @@ Show[%, Frame -> True]
 
 `Delayed` and 不带 `Delayed` 的最重要区别就是, 定义时计算, 还是调用的时候计算.
 也就是不带 `Delayed` 容易受到全局变量的影响, 带 `Delayed` 更加接近函数式编程
-
-***
-一个变量的值具有许多类型, 见:ref/Set
-
-OwnValues
-DownValues
-SubValues
-UpValues
-DefaultValues
-NValues
-FormatValues
-Definition
-
-`上值`:`UpValue`
-
-`^:=` 定义上值(`upvalue`), 它的方式和使用一个标签的相同:
-
-```mathematica
-In[1]:= g /: f[g[x_]] := f1[x]
-
-In[2]:= f[h[x_]] ^:= f2[x]
-
-In[3]:= {UpValues[g], UpValues[h]}
-
-Out[3]= {{HoldPattern[f[g[x_]]] :> f1[x]}, {HoldPattern[f[h[x_]]] :> f2[x]}}
-```
-
-一个标签仅定义一个上值(upvalue), `^:=` 执行所有符号的定义:
-
-```mathematica
-In[1]:= g /: f1[g[x_], h[y_]] := gh[x y]
-
-In[2]:= f2[g[x_], h[y_]] ^:= gh[x y]
-
-In[3]:= {UpValues[g], UpValues[h]}
-
-Out[3]= {{HoldPattern[f1[g[x_], h[y_]]] :> gh[x y],
-HoldPattern[f2[g[x_], h[y_]]] :> gh[x y]}, {HoldPattern[f2[g[x_], h[y_]]] :>
-  gh[x y]}}
-```
-
-进行定义时, 计算立即赋值的右边:
-
-```mathematica
-In[1]:= rand[int] ^= Random[Integer];
-
-In[2]:= {rand[int], rand[int]}
-
-Out[2]= {0, 0}
-```
-
-每次使用定义时, 每次计算延迟定义的右边:
-
-```mathematica
-In[3]:= rand[real] ^:= Random[Real]
-
-In[4]:= {rand[real], rand[real]}
-
-Out[4]= {0.409393, 0.730688}
-```
 
 ***
 `调试不完全数组`
