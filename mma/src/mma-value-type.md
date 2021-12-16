@@ -1,6 +1,8 @@
 # mma 的数据类型 值类型
 
-一个变量的值具有许多类型, 见: ref/Set
+绑定到 `变量` 上的 `值`, 具有许多分类, 见: ref/Set
+
+可以使用 `Information["*Values"]` 查看各种值的说明;
 
 OwnValues
 DownValues
@@ -11,40 +13,51 @@ NValues
 FormatValues
 Definition
 
-`上值`:`UpValue`
+`FullName`;  完整的符号名称, 包括 `上下文`(context)
+`Usage`; 符号的使用信息
+`Options`; 默认选项的列表
+`Attributes`; 属性的列表
+`Documentation`; 本地和网络文档的链接
+`Definitions`; 函数定义
+`OwnValues`; ownvalue 的定义, 相当于其他程序语言中的 `值绑定`
+`DownValues`; `下值` 的定义
+`UpValues`; `上值` 的定义, 定义外层映射
+`SubValues`; `子值`定义, Curry 化函数的定义
+`DefaultValues`; `默认值` 的定义
+`NValues`; `数值值` 的定义
 
-`^:=` 定义上值(`upvalue`), 它的方式和使用一个标签的相同:
+`FormatValues[f]` 给出为符号 `f` 定义的, 与打印格式(`Format[f[x,...],...]` 的值 等)有关的`转换规则列表`.
+
+## `上值`:`UpValue`
+
+`^:=` 定义上值(`upvalue`), 使用它, 等价于用 `TagSetDelayed(/::=)` 设置单个标签:
 
 ```mathematica
-In[1]:= g /: f[g[x_]] := f1[x]
-
-In[2]:= f[h[x_]] ^:= f2[x]
-
-In[3]:= {UpValues[g], UpValues[h]}
+g /: f[g[x_]] := f1[x]
+f[h[x_]] ^:= f2[x]
+{UpValues[g], UpValues[h]}
 
 Out[3]= {{HoldPattern[f[g[x_]]] :> f1[x]}, {HoldPattern[f[h[x_]]] :> f2[x]}}
 ```
 
-一个标签仅定义一个上值(upvalue), `^:=` 执行所有符号的定义:
+`TagSetDelayed` 中的 `标签` 仅定义单个符号的 `上值`(upvalue),
+`^:=` 定义左边所有符号的上值:
 
 ```mathematica
-In[1]:= g /: f1[g[x_], h[y_]] := gh[x y]
-
-In[2]:= f2[g[x_], h[y_]] ^:= gh[x y]
-
-In[3]:= {UpValues[g], UpValues[h]}
+g /: f1[g[x_], h[y_]] := gh[x y]
+f2[g[x_], h[y_]] ^:= gh[x y]
+{UpValues[g], UpValues[h]}
 
 Out[3]= {{HoldPattern[f1[g[x_], h[y_]]] :> gh[x y],
-HoldPattern[f2[g[x_], h[y_]]] :> gh[x y]}, {HoldPattern[f2[g[x_], h[y_]]] :>
-  gh[x y]}}
+    HoldPattern[f2[g[x_], h[y_]]] :> gh[x y]},
+    {HoldPattern[f2[g[x_], h[y_]]] :>  gh[x y]}}
 ```
 
 进行定义时, 计算立即赋值的右边:
 
 ```mathematica
-In[1]:= rand[int] ^= Random[Integer];
-
-In[2]:= {rand[int], rand[int]}
+rand[int] ^= Random[Integer];
+{rand[int], rand[int]}
 
 Out[2]= {0, 0}
 ```
@@ -52,9 +65,8 @@ Out[2]= {0, 0}
 每次使用定义时, 每次计算延迟定义的右边:
 
 ```mathematica
-In[3]:= rand[real] ^:= Random[Real]
-
-In[4]:= {rand[real], rand[real]}
+rand[real] ^:= Random[Real]
+{rand[real], rand[real]}
 
 Out[4]= {0.409393, 0.730688}
 ```

@@ -22,3 +22,5 @@ tutorial/Numbers#21155
 x = N[Pi^10, 30]
 Out[45]= 93648.0474760830209737166901849
 ```
+
+## FunctionInterpolate

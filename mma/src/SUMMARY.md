@@ -34,5 +34,8 @@
 - [FeynCalc 场论通用计算](mma-feyncalc.md)
 - [Package-X 圈积分](mma-package-x.md)
 
-- [并行与并发手册](mma-parallel-guide.md)
 - [并行与并发的函数](mma-parallel-builtins.md)
+- [并行与并发介绍](mma-parallel-config-monitor.md)
+- [并行计算](mma-parallel-evaluation.md)
+- [并发: 管理并行进程](mma-parallel-concurrency.md)
+- [虚拟共享内存](mma-parallel-concurrency.md)

@@ -2,9 +2,9 @@
 
 ## Parallelize
 
-    Parallelize[expr]
-
-使用 `自动并行化` 来运算 `expr`.
+```mathematica
+Parallelize[expr]; 使用 `自动并行化` 来运算 `expr`.
+```
 
 `Parallelize`是偏底层的函数, `ParallelTable`,`ParallelMap`是偏上层的函数.
 `Parallelize`的默认选项, `DistributedContexts:>$Context`,它分配当前`context`中所有符号的定义, 但不分配`packages`中符号的定义.
@@ -19,7 +19,7 @@
 
 `DistributeDefinitions[expr]`会分配`expr`中所有符号的定义.
 
-### Details
+### 细节
 
 `Parallelize[expr]` 自动将 `expr` 的不同部分的求值, 分配给不同的 `可用内核`(kernels) 和 `处理器`.
 
@@ -39,7 +39,7 @@
 + `Parallelize` 的 `DistributedContexts` 选项指定了 `expr` 中出现的哪些符号在计算前, 被自动分配到所有可用的内核中.
 `默认值`是 `DistributedContexts:>$Context`, 它分发`当前上下文`中所有符号的定义, 但不分发`包`(package)中的符号定义.
 
-### Basic
+### 例子
 
 以交互方式定义的函数可以立即被并行使用.
 
@@ -48,9 +48,9 @@ f1[n_] := Length[FactorInteger[(10^n - 1)/9]]
 Parallelize[Map[f1, Range[50, 60]]]
 ```
 
-### scope
+### 范围
 
-#### listable functions
+#### listable 函数
 
 所有有一个参数的可列表函数在应用于列表时将自动并行化:
 隐式定义的列表:
@@ -59,7 +59,7 @@ Parallelize[Map[f1, Range[50, 60]]]
 Parallelize[Prime[Range[10]]]
 ```
 
-### Structure-Preserving Functions
+### 结构保持函数
 
 许多保持列表结构的, `函数式编程`的 constructs 都是并行的:
 
@@ -82,7 +82,7 @@ Parallelize[{1 + 2, Sin[1.0], Print[3], $KernelID}]
 
 #### Reductions
 
-数出100万以内的素数:
+数出100万以内的 `素数`:
 
 ```mathematica
 Parallelize[Count[Range[10^6], _?PrimeQ]]
@@ -135,7 +135,7 @@ Parallelize[a*b*c*d]
 Parallelize[LCM[1, 2, 3, 4, 5, 6]]
 ```
 
-### Generalizations
+### 推广
 
 在赋值中, 只有右侧的表达式被并行化:
 
@@ -250,7 +250,7 @@ ParallelEvaluate[SeedRandom[1,Method -> {"ParallelMersenneTwister", "Index" -> $
 Join @@ ParallelEvaluate[RandomReal[1, 10]]
 ```
 
-### Possible Issues
+### 可能的问题
 
 不能被`并行化`的表达式, 会进行普通计算.
 
@@ -668,7 +668,7 @@ ParallelDo[If[PrimeQ[2^i + 1], AppendTo[sharedres, i]], {i, 1000}];
 sharedres
 ```
 
-### Possible Issues
+### 可能的问题
 
 对于单纯的将代码分发到`子核`(code distribution)来说, 使用 `共享函数` 并不高效, 结果是单纯的顺序计算(sequential evaluation):
 
@@ -744,7 +744,7 @@ fib[5] = 5,
 fib[n_] := Parallel`Developer`SendBack[fib[n] = fib[n - 1] + fib[n - 2]]
 ```
 
-### Neat Examples
+### Neat 例子
 
 `Sow` 的 并行版本:
 
@@ -771,7 +771,7 @@ Out[2]= {Null, {{4, 3, 2, 1, 4, 3, 2, 1, 4, 3}}}
 + `DistributeDefinitions` 实际上是 `注册`(registers) 了符号 `s_i` 的定义, 这样它们就会自动分发到每个被启动的`新的`并行内核.
 + 对于一个任意的表达式 `expr`, `DistributeDefinitions[expr]` 分发 `expr` 中出现的所有符号的定义.
 
-### basic
+### 例子
 
 确保启动了 `并行的子内核`:
 
@@ -796,7 +796,7 @@ ParallelEvaluate[ToString[y]]
 Out[2]= {"43", "43", "43", "43"}
 ```
 
-### scope
+### 范围
 
 变量的值:
 
@@ -848,7 +848,7 @@ ParallelEvaluate[f[$KernelID]]
 Out[3]= {3.14159265...}
 ```
 
-### Generalizations
+### 推广
 
 将要被`分布`的定义, 它所依赖的辅助定义也会`自动分布`:
 
@@ -862,7 +862,7 @@ ParallelTable[mtest[i], {i, 10, 100, 10}]
 Out[3]= {0.004000, 0.006000...}
 ```
 
-### Properties & Relations
+### 性质和关系
 
 `DistributeDefinitions` 会覆盖之前存在的任何`values`和`attributes`:
 
@@ -956,7 +956,7 @@ ParallelMap[hcg, Range[4]]
 Out[5]= {{}, {}, {{1, 2, 3}, {1, 3, 2}}, {{1, 2, 3, 4}, {1, 2, 4, 3}, {1, 3,2, 4}, {1, 3, 4, 2}, {1, 4, 2, 3}, {1, 4, 3, 2}}}
 ```
 
-### Possible Issues
+### 可能的问题
 
 在`并行子核` 上使用未知函数可能会导致`顺序计算`(sequential evaluation):
 
@@ -1046,7 +1046,7 @@ DistributeDefinitions[ftest]
 ParallelMap[ftest, Range[$KernelCount]]
 ```
 
-### Neat Examples
+### Neat 例子
 
 快速可视化的高斯素数:
 
@@ -1059,18 +1059,18 @@ ArrayPlot[data]
 
 ## With
 
-    With[{x=Subscript[x, 0],y=Subscript[y, 0],...},expr]
-
-指定在 `expr` 中出现的所有符号 `x, y, ...` 应该替换成 `x_0, y_0,    ...`.
+```mathematica
+With[{x=x0, y=y0,   ...},expr]; 指定在 `expr` 中出现的所有符号 `x, y, ...` 应该替换成 `x0`, `y0`, ...
+```
 
 + `With`允许你定义 `局部常量`.
 + 只有当 `expr` 中的符号不处在 深层嵌套 `scoping` 构造内的情况下, `with` 才替换符号.
 + 你可以使用 `With[{vars},body/;cond]` 作为 transformation 规则的右侧表达式, 可以附带一个`condition`.
 + `With` 具有 `HoldAll` 属性.
 + `With` 构造可以任意嵌套, 如果需要的话, 它会对内部变量进行重命名.
-+ `With` 是一个 `scoping` 结构, 它实现了`只读的`词法变量( read-only lexical variables).
++ `With` 是一个 `scoping` 结构, 它实现了 `只读` 词法变量( read-only lexical variables).
 
-### Possible Issues
+### 可能的问题
 
 `With` 是一个作用域结构; 嵌套作用域中的变量将被重新命名.
 
@@ -1091,9 +1091,9 @@ Out[3]= Function[x, 1 + 5 x + 10 x^2 + 10 x^3 + 5 x^4 + x^5]
 Out[4]= 161051
 ```
 
-### Neat Examples
+### Neat 例子:
 
-+ 用牛顿方法找到一个任意函数的零点:
++ 用 `牛顿法` 找到任意函数的零点:
 
 ```mathematica
 newton[f_, x0_] := With[{fp = f'}, FixedPoint[# - f[#]/fp[#] &, x0]]
@@ -1181,9 +1181,9 @@ Module[{x = 5}, x + y]
 Out[2]= 5+x^2
 ```
 
-### Possible Issues
+### 可能的问题
 
-`Module`是一个`scoping`结构; `内部局部变量` 屏蔽 `外部变量`.
+`Module` 是一个 `scoping`结构; `内部局部变量` 屏蔽 `外部变量`.
 
 ```mathematica
 Module[{x}, Print[x]; Module[{x}, Print[x]]]

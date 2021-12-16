@@ -6,7 +6,7 @@
 
 + `前端令牌`--`guide/FrontEndTokens` :
 Wolfram语言允许通过发送适当的前端令牌, 从内核以脚本的方式执行任何前端命令. 如`保存`,`打开`文件等等.
-除了所有标准菜单命令, 还包括默认前端菜单配置无法直接访问的`tokens`.
+除了所有标准菜单命令, 还包括默认前端菜单配置无法直接访问的 `tokens`.
 
 + `模块` tutorial/HowModulesWork
 Wolfram 语言中模块的基本工作方式非常简单.
@@ -22,7 +22,7 @@ Wolfram 语言中模块的基本工作方式非常简单.
     #!/usr/bin/env wolframscript
 
 而普通的 `.nb` 文件则会保存计算输出信息, 在存档之前最好使用
-`单元`--`删除所有输出` 清理输出, 这样可以减小体积.
+`单元` -- `删除所有输出` 清理输出, 这样可以减小体积.
 
 ***
 `张量` tutorial/SymmetrizedArrays
@@ -422,7 +422,7 @@ Wolfram 语言也支持上值 (upvalue), 上值可以把不直接作为标头的
 
 比如, 在定义 `Exp[g[x_]]:=rhs` 中, 一种可能是把定义与符号 `Exp` 相关联, 认为它是 `Exp` 的下值. 但是从组织或效率的角度来看未必是最好的方式.
 
-较好的方式是将 `Exp[g[x_]]:=rhs` 与 `g` 关联起来, 即对应为 `g` 的上值.
+较好的方式是将 `Exp[g[x_]]:=rhs` 与 `g` 关联起来, 即对应为 `g` 的上值.
 
 ```mathematica
 f[args]:=rhs    定义 f 的下值
@@ -1055,7 +1055,7 @@ Front end(前端)-笔记本界面系统
 
 + `Directory` 当前目录
 + `Names`  已知符号的名称
-+ `Notebooks `
++ `Notebooks`
 + `MemoryInUse`
 + `SystemInformation`
 + `DateString`
@@ -1107,7 +1107,7 @@ NotebookEvaluate: 计算 `notebook`  中所有可计算单元
 ***
 启动对话和从对话返回.
 
-+`Dialog[]` 启动 `Wolfram` 语言对话
-+`Dialog[expr]` 启动对话, 将 `expr` 作为 `%` 的当前值
-+`Return[]` 从对话返回, 取 `%` 的当前值作为返回值
-+`Return[expr]` 从对话返回, 取 `expr` 作为返回值
++ `Dialog[]` 启动 `Wolfram` 语言对话
++ `Dialog[expr]` 启动对话, 将 `expr` 作为 `%` 的当前值
++ `Return[]` 从对话返回, 取 `%` 的当前值作为返回值
++ `Return[expr]` 从对话返回, 取 `expr` 作为返回值
