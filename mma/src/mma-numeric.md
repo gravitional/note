@@ -23,4 +23,213 @@ x = N[Pi^10, 30]
 Out[45]= 93648.0474760830209737166901849
 ```
 
-## FunctionInterpolate
+## FunctionInterpolation
+
+```mathematica
+FunctionInterpolation[expr,{x, x_min, x_max}];
+用 `x` 从 `x_min` 到 `x_max` 计算 expr, 并构造 `InterpolatingFunction` 对象,
+代表与结果对应的近似函数.
+
+FunctionInterpolation[expr,{x, x_min, x_max}, {y, y_min, y_max}, ...];
+构建 `多参数` 的 `插值函数对象`.
+```
+
+### 细节和选项
+
+你可以使用 `FunctionInterpolation`, 从包含几个 `FunctionInterpolation` 对象的表达式中, 生成单个 `InterpolatingFunction` 对象.
+
+### 例子
+
+计算 `Exp[-Sin[x]^2]` 的 `InterpolatingFunction` 表示:
+
+```mathematica
+f = FunctionInterpolation[Exp[-Sin[x]^2], {x, 0, 6}]
+```
+
+将产生的函数像其他函数那样使用:
+
+```mathematica
+Plot[{f[x], f'[x]}, {x, 0, 6}]
+```
+
+### 范围
+
+使用导数来提高近似的平滑度:
+
+```mathematica
+flist=Table[D[Sin[x y], {{x, y}, k}], {k, 0, 2}]
+f = FunctionInterpolation[flist, {x, 0., 2. Pi}, {y, 0., 2. Pi}]
+
+Plot3D[f[x, y], {x, 0, 2 Pi}, {y, 0, 2 Pi}]
+```
+
+## InterpolatingFunction
+
+```mathematica
+InterpolatingFunction[domain,table]; 代表一个近似的函数, 它的值是通过 `插值` 找到的.
+```
+
++ `InterpolatingFunction` 的工作方式如同 `Function`.
++ `InterpolatingFunction[...][x]` 给出近似函数在特定参数 `x` 处的值.
++ 在标准输出格式中, `InterpolatingFunction` 对象中只有 `domain` 元素被明确打印. 其余元素用 `<>` 表示.
++ `domain` 指定了构建 `InterpolatingFunction` 的数据域.
++ 如果你提供 `domain` 外的参数, 会产生警告, 然后返回 `外推值`(extrapolated).
++ 可以构造, 接受任何数量 `实参数` 的 `InterpolatingFunction` 对象.
++ 你可以使用 `D` 和 `Derivative` 来获取 `InterpolatingFunction` 对象的 `导数`.
++ `NDSolve` 使用 `InterpolatingFunction` 对象返回其结果.
+
+### 例子
+
++ 制作 `InterpolatingFunction` 对象, 它将穿过给定的点:
+
+    ```mathematica
+    points = {{0, 0}, {1, 1}, {2, 3}, {3, 4}, {4, 3}, {5, 0}};
+    ```
+
+    在标准输出格式中, 只显示出域:
+
+    ```mathematica
+    ifun = Interpolation[points]
+    ```
+
+    在 `domain` 中的一个点上计算该函数:
+
+    ```mathematica
+    ifun[2.5]
+    Out[3]= 3.6875
+    ```
+
++ 在其域上绘制函数图, 显示 `内插点`:
+
+```mathematica
+Plot[ifun[x], {x, 0, 5}, Epilog -> Point[points]]
+```
+
++ 获取 `微分方程的解` 的近似插值函数对象:
+
+```mathematica
+ifun = First[u /. NDSolve[{u''[t] + u[t] == 0, u[0] == 0, u'[0] == 1}, u, {t, 0, \[Pi]}]]
+```
+
++ 绘制函数及其导数图:
+
+    ```mathematica
+    Plot[{ifun[t], ifun'[t]}, {t, 0, \[Pi]}]
+    ```
+
+    给出解的 `不定积分`:
+
+    ```mathematica
+    Integrate[ifun[t], t]
+    Plot[%, {t, 0, \[Pi]}]
+    ```
+
+### 范围
+
+用精确数据制作`插值函数`:
+
+```mathematica
+points = {{0, 0}, {1, 1}, {2, 3}, {3, 4}, {4, 3}, {5, 0}};
+ifun = Interpolation[points]
+```
+
++ 使用精确算术计算该值:
+
+```mathematica
+ifun[5/2]
+Out[2]= 59/16
+```
+
+使用 `机器精度数字`(machine-number)算术进行计算:
+
+```mathematica
+ifun[N[5/2]]
+Out[3]= 3.6875
+```
+
+使用任意精度的算术进行计算:
+
+```mathematica
+ifun[N[5/2, 20]]
+Out[4]= 3.687500000000000000
+```
+
+用所有数据的`数值`(numerical values), 制作新的 `InterpolatingFunction`:
+
+```mathematica
+nifun = N[ifun]
+```
+
+使用此 `InterpolatingFunction`, `values` 是用 `机器精度算术` 得到的:
+
+```mathematica
+nifun[5/2] (*尽管输入是任意精度值*)
+Out[6]= 3.6875
+```
+
++ 对 `InterpolatingFunction` 积分:
+
+```mathematica
+ifun = Interpolation[{{0, 0}, {1, 1}, {2, 3}, {3, 4}, {4, 3}, {5, 0}}];
+Integrate[ifun[x], {x, 0, 5}]
+
+Out[2]= 271/24
+```
+
++ 制作新的 `InterpolatingFunction`, 它是不定积分:
+
+```mathematica
+indef[x_] = Integrate[ifun[x], x]
+
+Plot[{ifun[x], indef[x]}, {x, 0, 5}]
+```
+
++ `InterpolatingFunction` 的 `导数`, 是另一个 `InterpolatingFunction`:
+
+```mathematica
+ifun = Interpolation[{{0, 0}, {1, 1}, {2, 3}, {3, 4}, {4, 3}, {5, 0}}];
+difun = ifun'
+
+Plot[{ifun[x], difun[x]}, {x, 0, 5}]
+```
+
++ 使用 `插值函数` 的 `偏导数`, 来检查 `PDE` 的 留数(residual):
+
+```mathematica
+ifun = NDSolveValue[{
+    D[u[t, x], t] == D[u[t, x], x, x],
+    u[0, x] == Exp[-100 x^2], u[t, 0] == 1, u[t, 1] == 0}, u, {t, 0, 1}, {x, 0, 1}];
+
+Plot[Derivative[1, 0][ifun][1, x] - Derivative[0, 2][ifun][1, x], {x, 0, 1}]
+```
+
++ 制作一个需要 `4参数` 的 `插值函数`:
+
+```mathematica
+ifun = ListInterpolation[RandomReal[1, {5, 5, 5, 5}], {{0, 1}, {0, 2}, {0, 3}, {0, 4}}]
+```
+
++ 把它沿着 `第一个`和 `最后一个`维度积分:
+
+```mathematica
+integ = Integrate[ifun[x1, x2, x3, x4], {x1, 0, 1}, {x4, 0, 4}]
+
+Plot3D[integ, {x2, 0, 2}, {x3, 0, 3}]
+```
+
+### 性质和关系
+
+`InterpolatingFunction` 进行 `Piecewise` 多项式插值(polynomial):
+
+```mathematica
+points = {{0, 0}, {1, 1}, {2, 3}, {3, 4}, {4, 3}, {5, 0}};
+ifun = Interpolation[points]
+
+pf[x_] = Piecewise[{
+    {InterpolatingPolynomial[Take[points, {1, 4}], x], x < 2},
+    {InterpolatingPolynomial[Take[points, {2, 5}], x], 2 <= x < 3},
+    {InterpolatingPolynomial[Take[points, {3, 6}], x], x >= 3}}]
+
+(*比较差别*)
+Plot[pf[x] - ifun[x], {x, 0, 5}, PlotRange -> All]
+```
