@@ -519,6 +519,8 @@ guide/FunctionCompositionAndOperatorForms
 
 一些内置函数也直接支持 "curried" 形式, 在 Curry 形式下, 它们相当于符号算子(symbolic operators).
 
+## CurryApplied
+
 ```mathematica
 CurryApplied[f,n]; 代表 `n` 个参数的函数 `f` 的算符形式,
 因此 CurryApplied[f,n][x1] ... [xn] 等同于 f[x1, ..., xn].
@@ -545,13 +547,19 @@ CurryApplied[f, k->{i1, ..., in}];
 
 + `CurryApplied[f,{i1, ..., in, opts}][x1] ... [xk]` 等同于 `f[x_i1, ..., x_in],opts]`, 对于选项序列 `opts`.
 
-+ `CurryApplied[f,{i1, ..., in}]` 的第 `i_p` 个 curried 的参数, 是 `f` 的第 `p` 个参数.
++ 对于`CurryApplied[f,{i1, ..., in}]` 形式, `f` 的第 `p` 个参数, 是第 `i_p` 个 curried 参数.
+
+        CurryApplied[f,{i1, ..., in}]  [i2] [i1] [i4] [i3] [i5]
+
+    | f 的参数 | 1 | 2 | 3 | 4 | 5 |
+    | --- | --- | --- | --- | --- | --- |
+    | curried 参数 | i1 | i2 | i3 | i4 | i5 |
 
 + `CurryApplied[arity][f]` 等同于 `CurryApplied[f,arity]`.
 
 arity: 变元数目
 
-## 例子
+### 例子
 
 `柯里化` 两参数函数:
 
@@ -730,6 +738,20 @@ Out[1]= f[g[h[x, y]]]
 Array[CurryApplied[Subscript, 4][x], {2, 3, 2}]
 ```
 
+#### 组合子
+
+guide/CombinatoryLogic
+
+组合逻辑(Combinatory logic)是一个形式化系统, 等价于 `Lambda` 表达式, 可以在不使用 `形式化变量` 的情况下, 表示 `函数`.
+每个 `术语` 都是 `函数`, 只有一个 `二元` 操作, 即 `应用`(application).
+
++ 基本组合子:
+    + `K` 组合子性质为: `K.x.y -> x`
+    + `S` 组合子性质为: `S.x.y.z -> x.z.(y.z)`
+
++ `B` 组合子性质为: `B.x.y.z -> x.(y.z)`.
++ `C` 组合子性质为: `C.x.y.z -> x.y.z`.
+
 使用 `CurryApplied` 建立 `K` 和 `S` 组合子(combinators):
 
 ```mathematica
@@ -737,7 +759,11 @@ k = CurryApplied[Identity, 2 -> {1}];
 s = CurryApplied[Function[#1[#3][#2[#3]]], 3];
 ```
 
-组合 `SKK` 和 `SKS` 和 恒元 相等:
+组合 `SKK` 和 `SKS` 等价于 `恒元`:
+
+KK->K
+SKK.z-> K.z.(K.z) -> z
+SKS-> K.z(S.z)->z
 
 ```mathematica
 s[k][k][x]
