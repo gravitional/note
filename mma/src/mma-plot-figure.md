@@ -249,25 +249,19 @@ Overlay[{expr1, expr2, ...},{i,j,...}, s]; 允许在 expr_s 中进行选择和�
 
 ### 选项
 
-#### Alignment
-
-排列对象:
++ Alignment; 排列对象:
 
 ```mathematica
 Overlay[{Graphics[{Disk[]}], Slider2D[]}, All, 2, Alignment -> Center]
 ```
 
-#### Background
-
-设置背景:
++ Background; 设置背景:
 
 ```mathematica
 Overlay[{Graphics3D[Sphere[]], Panel["a sphere"]}, Background -> LightOrange]
 ```
 
-#### BaseStyle
-
-设置 `Overlay` 的 base style:
++ BaseStyle; 设置 `Overlay` 的 base style:
 
 ```mathematica
 Overlay[{1, 2, 3}, BaseStyle -> {FontSize -> 24}]
@@ -691,3 +685,142 @@ ListPlot[{
     ```
 
     所以要自定义图例之间的间隔, 可以指定排版函数`f`.
+
+## plot 术语
+
+`Frame`; 指图的外框架.
+`Axes`; 坐标轴, 位于 `Frame` 中, 一般情形下, 不与 `Frame` 重合.
+`Ticks`; 刻度线, 位于 `Axes` 上
+
+## Ticks
+
+`Ticks` 是 graphics 函数的选项, 用于指定 `axes`(坐标轴) 的 `tick marks`.
+如果只想指定 `刻度`, 但不附加 `label`, 可以使用 `{{x1, ""}, {x2, ""}, ...}` 的规范, 也就是传入 `空字符串`. 例如:
+
+```mathematica
+Plot[Sin[x], {x, 0, 10}, Ticks -> {{{Pi, ""}, {2 Pi, 360 \[Degree]}, {3 Pi, 540 \[Degree]}}, {-1, 1}}]
+```
+
+也可以传入 `Null`, 或者使用 `f[e1, , e2]` 的语法.
+
+### 细节
+
++ 下列设置可用于 `Ticks`:
+    + `None`;不画刻度
+    + `Automatic`; 自动放置刻度线
+    + `{xticks,yticks,...}`; 为每个`axis` 分别指定 `刻度线` 选项
+
++ 在 `Automatic` 设置下, 刻度线通常被放置在, 十进制表示中,  坐标的 `数字位数` 最少的 点上.
+
++ 对于每个`轴`, 可以给出以下 `刻度线` 选项:
+    + `None`; 不画刻度线
+    + `Automatica`; 自动选择 `刻度线` 位置和 `标签`
+    + `{x1,x2, ...}`; 在指定位置画出 `刻度线`
+    + `{{x1, label1}, {x2, label2}, ...}`; 用指定的 `标签` 画出 `刻度线`
+    + `{{x1, label1, len1}, ...}`; 用指定的 scaled 长度绘制 `刻度线`.
+    + `{{x1, label1, {plen1, mlen1}}, ...}`;  在正负方向上分别指定,刻度线的长度
+    + `{{x1, label1, len1, style1,}, ...}`; 具有指定 `样式` 的刻度线
+    + `func`; 应用于`x_min, x_max`的函数, 以给出 `刻度线` 的规格.
+
++ 如果没有给出明确的 `标签`, 默认将 `刻度线位置` 的 `数值` 作为 `标签`.
++ 任何`表达式`, 都可以作为 `刻度线标签`.
++ `Tick` 的长度, 以横跨整个 `plot` 的距离的比例来给出.
++ `Tick` 样式可以包括任何 `图形指令`.
++ `Tick mark`  函数 `func[x_min, x_max]` 可以返回任何其他 `tick mark`选项.
++ `Ticks` 可以在二维和三维图形中使用.
++ `AbsoluteOptions` 给出 `Automatica` 对应的 `Ticks` 规范的显式.
++ `TicksStyle` 给出用于 `刻度线` 和 `刻度线标签` 的默认样式.
+
+### 推广
+
+指定一个 `grid` 函数, 应用于每个方向的 `x_min` 和 `x_max` 值:
+
+```mathematica
+ticks[min_, max_] := Table[If[EvenQ[i], {i, i, .06, Red}, {i, i, .02, Blue}], {i, Ceiling[min], Floor[max], 1}]
+
+Graphics[Circle[{0, 0}, 4], Axes -> True, Ticks -> ticks]
+```
+
+### 应用
+
+在每个 `整数` 处放 `带标签` 的大刻度, 中间放 `小刻度`:
+
+```mathematica
+ticks[min_, max_] := Join[
+    Table[{i, Style[i, 12], {.04, 0}}, {i, Ceiling[min], Floor[max]}],
+    Table[{j + .5, , {.02, 0}}, {j, Round[min], Round[max - 1], 1}]]
+
+Plot3D[Sin[x y], {x, 0, 4}, {y, 0, 4}, Ticks -> ticks, Mesh -> None]
+```
+
+### 性质和关系
+
++ `TicksStyle` 影响 `ticks` 和 `tick labels`:
+
+```mathematica
+Plot[2 Sin[x], {x, 0, 10}, AxesLabel -> {x, y}, PlotLabel -> 2 Sin[x],TicksStyle -> Orange]
+```
+
+`LabelStyle` 提供了整体 `style`, 赋予所有 label-like 元素, 包括 tick labels:
+
+```mathematica
+Plot[2 Sin[x], {x, 0, 10}, PlotLabel -> 2 Sin[x], AxesLabel -> {x, y},
+  LabelStyle -> Directive[Blue, FontFamily -> "Helvetica"]]
+```
+
+`TicksStyle` 可以和 `LabelStyle` 一起使用, 但优先级更高:
+
+```mathematica
+Plot[2 Sin[x], {x, 0, 10}, PlotLabel -> 2 Sin[x], AxesLabel -> {x, y},
+  LabelStyle -> Directive[Blue, FontFamily -> "Helvetica"],
+ TicksStyle -> Orange]
+```
+
+`AxesStyle` 影响 axes(坐标轴), axes labels, ticks 和 tick labels:
+
+```mathematica
+Plot[2 Sin[x], {x, 0, 10}, AxesLabel -> {x, y}, PlotLabel -> 2 Sin[x],
+  TicksStyle -> Orange]
+```
+
+`TicksStyle` 也可以和 `AxesStyle` 一起使用, 但优先级更高:
+
+```mathematica
+Plot[2 Sin[x], {x, 0, 10}, AxesLabel -> {x, y}, PlotLabel -> 2 Sin[x],
+  AxesStyle -> Directive[Gray, FontSize -> 15], TicksStyle -> Orange]
+```
+
++ 可以使用单独定制的 `ticks`, 夹杂在其他 ticks 中间, 它自己样式的优先级更高:
+
+```mathematica
+Plot[Sin[x], {x, 0, 10},
+ Ticks -> {{0, {Pi, Pi, 1, Directive[Blue, Thick]}, 2 Pi, 3 Pi}, {-1,
+    1}}, AxesStyle -> Directive[Gray, Dashed],
+ TicksStyle -> Directive[Orange, 12]]
+```
+
+`FrameTicks` 控制 `frame edges` 的 `ticks` 和 `tick labels`:
+
+```mathematica
+Graphics[Circle[], Frame -> True, FrameTicks -> All]
+```
+
+`GridLines` 在图片中加上网格:
+
+```mathematica
+Graphics[Circle[], GridLines -> Automatic, Axes -> True]
+```
+
+`FaceGrids` 在 3D 包装盒的各个面上添加网格:
+
+```mathematica
+Graphics3D[Cylinder[], FaceGrids -> All, Axes -> True]
+```
+
+### 可能的问题
+
+位于坐标原点的 `tick label` 不显示:
+
+```mathematica
+Plot[Sin[x], {x, -4, 4}, Ticks -> {{-Pi, 0, Pi}, {-1, 0, 1}}]
+```

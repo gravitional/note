@@ -1,4 +1,6 @@
-# 格式化输出
+# 格式化
+
+## 格式化输出
 
 tutorial/FormattedOutput
 
@@ -12,7 +14,7 @@ tutorial/FormattedOutput
 我们首先了解一下与显示大量表达式相关的框符生成器,
 然后再介绍几种超出了简单数学排版的方式, 这些方式能用于生成漂亮的格式化输出.
 
-## 样式化输出(Styling Output)
+### 样式化输出(Styling Output)
 
 Wolfram 系统前端支持文字处理器中出现的所有惯用样式机制, 然而, 在生成的结果中自动访问这些样式机制曾经非常困难.
 
@@ -46,7 +48,7 @@ In[2]:= Style[%, FontFamily->"Helvetica"]
 要求一段输出的样式与文本一样也是很常见的. 将代码所用的字体用于文本可能会看上去非常奇怪.
 为此, 有一个函数`Text`能够使其参数将永远以文本字体呈现.
 
-## 网格布局(Grid Layout)
+### 网格布局(Grid Layout)
 
 在 Wolfram 语言中, 这种布局的基本函数是 `Grid`. `Grid` 的布局功能很灵活, 能够任意调整对齐方式, 框架元素(frame elements), 以及跨度元素(spanning element)等.
 
@@ -117,7 +119,7 @@ Out[11]= 1,2,6,24,120,720,5040,40320,362880,3628800,39916800,479001600,622702080
 
 如果调整笔记本窗口的尺寸, 将看到设置为 `ItemSize->Automatic` 时的 `Grid` 其行为仍与 `Row` 不同, 每一个在不同的情形中都有用.
 
-## 将输出用作输入
+### 将输出用作输入
 
 这是一个很好的机会来指出 `Style`, `Grid` 及其它框符生成器在输出中是持久的.
 如果所取的一段输出中的某些格式是由 ``Style`` 或者 `Grid` 创建并作为输入被再次使用, 则 ``Style`` 或 `Grid` 表达式将在输入表达式中出现.
@@ -143,7 +145,7 @@ In[15]:= % //. {Grid[a_,___]:>a,Style[a_,___]:>a}
 Out[15]= {{216,343,512,729},{1000,1331,1728,2197},{2744,3375,4096,4913},{5832,6859,8000,9261}}
 ```
 
-## 特殊网格条目(Special Grid Entries)
+### 特殊网格条目(Special Grid Entries)
 
 为了让二维布局更灵活,  `Grid` 接受 `SpanFromLeft` 等一些特殊符号作为条目.
 条目 `SpanFromLeft` 表明, 紧靠左边的网格条目既占用自己的空间也占用跨越字符的空间.
@@ -197,7 +199,7 @@ In[20]:= Grid[Partition[Table[If[PrimeQ[i],Item[i, Frame -> True],i],{i,1,100}],
 Out[20]=...
 ```
 
-## 框架和标签
+### 框架和标签
 
 为一个表达式添加框架或标签可以通过 `Grid` 完成, 但添加框架在概念上比一般的二维布局简单得多, 所以有相应更简单的方法来达到这个目的.
 例如 `Framed` 是一个简单的函数, 用于在任意表达式周围绘制一个框架, 这样做可以将注意力吸引到表达式的各个部分.
@@ -244,7 +246,7 @@ In[25]:= Panel[ptable, {"Primes and Composites"}, {{Bottom,Right}}]
 Out[25]=
 ```
 
-## 其它注释
+### 其它注释
 
 到目前为止所提到的注释都有一个非常明确的可视组件. 还有一些注释在用户需要它们之前实际上是不可见的.
 例如 Tooltip 不改变其第一个参数的显示, 只有当您将鼠标指针在显示部分移动时, 第二个参数才作为一个提示条(tooltips)出现.
@@ -294,7 +296,7 @@ In[32]:= Graphics[{LightBlue,EdgeForm[Gray],Tooltip[CountryData[#,"SchematicPoly
 Out[32]=
 ```
 
-## 默认样式
+### 默认样式
 
 正如我们在"框架和标签"小节中所看到的, 对 `Panel` 等的创建实际上类似于 `Style`, 因为它们设置了一个能使一组默认样式应用于其内容的环境.
 
@@ -318,7 +320,7 @@ In[35]:= Grid[Partition[ptable, 10], BaseStyle -> {FontColor -> Blue}]
 Out[35]=
 ```
 
-## 默认选项
+### 默认选项
 
 假设您有一个表达式, 多次出现同一框符生成器, 如一个 `Framed` 或 `Panel`, 您想将它们全部改变, 使之含有相同的选项集合.
 在函数每一次出现时都添加相同的选项集可能会非常繁琐,  幸好这里有一个更简单的方法.
@@ -352,7 +354,7 @@ Out[38]=
 
 这种方法可以方便地建立遵循统一样式的结构, 而不必将样式在多处进行指定, 这可以产生相对清晰的代码和更小的文件, 也更易于维护.
 
-## 数学排版
+### 数学排版
 
 没有格式化输出的讨论将是不完整的, 至少要提及数学语法中所特有的格式结构.
 
@@ -369,7 +371,7 @@ In[39]:= {Subscript[a,b],Superscript[a,b],Underscript[a,b],Overscript[a,b], Subs
 In[40]:= Table[Row[{i,Row[Superscript @@@ FactorInteger[i],"*"]},"=="],{i,100}]
 ```
 
-## 使用框符语言(Box Language)
+### 使用框符语言(Box Language)
 
 最后一点说明是, 对于已经很熟悉框符语言的用户可能偶尔会发现, 这些框符生成器在您构建自己的底层框符时会产生阻碍,
 然而, 通过一个简单的漏洞, 您可以将有效的框符直接显示在输出中: `RawBoxes`.
@@ -381,12 +383,12 @@ Out[41]= {a,b,Subscript[c, d],e}
 
 正如和其它所有漏洞一样, `RawBoxes` 给了您更高的灵活性, 但它也可以让您搬起石头砸自己的脚, 请小心使用.
 
-## TextString
+### TextString
 
 `TextString[expr]`; 将`expr`转换成人类可读的字符串表示.
 `TextString[expr]` 还支持一些特殊功能, 例如`TextString[Now]`格式化现在的时间.
 
-## Dividers,Frame
+### Dividers,Frame
 
 `Dividers` 的相当于对已有 `Frame` 规定的补充:
 
@@ -399,3 +401,251 @@ Grid[Table[x, {4}, {7}], Dividers -> {{2 -> Red, -2 -> Blue}, {2 -> Red, -2 -> B
 ```mathematica
 Grid[Table[x, {4}, {7}],  Dividers -> {{2 -> Red, -2 -> Blue}, {2 -> Red, -2 -> Blue}}, Frame -> True, FrameStyle -> Thickness[5]]
 ```
+
+## 盒子 Boxes
+
+像Wolfram语言中的所有其他内容一样, 笔记本最终是符号表达式.  `mma` 的高维结构是用 "Box" 来实现的.
+
+参考:
+
+guide/LowLevelNotebookStructure
+tutorial/RepresentingTextualFormsByBoxes
+
+### `Box` 转换与自定义
+
+`Box`有自己的语法, 可以查看一个显示的表达式对应的`Box`表达式, 也可以对后者再次排版.
+也就是说笔记本中显示的二维格式,与 low-level 的 `Box` 之间, 可以进行转换, 基本的转换有:
+
++ `DisplayForm[expr]`:将`expr`中的 `low-level` 框符表示成显式的二维格式.
++ `ToBoxes[expr,form]`: 给出对应于特定`form`的`Box`.
+
+`ToBoxes` 会计算`expr`, 而`MakeBoxes`不计算`expr`
+
+### `Box` 自定义输出格式
+
+一般很少需要修改这些规则.
+主要原因是 `Wolfram` 语言已经为许多`operators`的输入和输出建立了内置规则, 而该`operators`本身并未为其分配特定的含义.
+也就是预置了很多可以用, 但没有数学规则, 只有排版规则的`operators`.
+
+可以用来自定义输出的函数有:
+`MakeBoxes`: 底层版本
+`Format`: 上层版本
+
+`mma` 在输出计算结果的时候, 会使用`MakeBoxes`从表达式构建二维结构(`Box`).
+`MakeBoxes`是Wolfram系统会话(`sessions`)中用于将表达式转换为`boxes`的`low-level`函数.
+所以可以通过定义表达式的`MakeBoxes`上值来自定义输出.
+
+另一方面, `MakeBoxes`也会使用通过`Format`添加的排版规则:
+
+### `MakeBoxes` 自定义输出
+
+```mathematica
+gplus /: MakeBoxes[gplus[x_, y_, n_], StandardForm] :=  RowBox[{MakeBoxes[x, StandardForm],
+SubscriptBox["\[CirclePlus]", MakeBoxes[n, StandardForm]],
+MakeBoxes[y, StandardForm]}]
+gplus[a, b, m + n]
+```
+
+### `Format`自定义输出
+
+`Format[f[...]]:=rhs` 定义`f`的输出格式像是`rhs`.
+`Format[expr,form]`:对特定`form`如`StandardForm`指定自定义格式.
+
+```mathematica
+Format[f[x_, y_, z__]] := f[x, ...]
+```
+
+`Format`的下值将被优先使用, 然后才使用跟`MakeBoxes`相关的上值.
+`MakeBoxes`可以理解成是`Format`的底层版本.
+不过一个重要的区别是`MakeBoxes`不会计算它的参数, 所以你可以只定义排版规则, 而不必担心这些表达式将会被如何计算.
+
+此外, `Format`会自动在计算结果上再次调用`Format`, 而`MakeBoxes`不会.
+所以你需要在需要排版的子表达式上,手动再次调用`MakeBoxes`.
+
+当排版的时候,
+
+`RawBoxes[boxes]`直接插入`boxes`到已有的`Box`结构中, 不检查错误, 由前端直接渲染.
+
+### 辅助信息: `TagBox`
+
+在不同排版格式之间转换的时候, 参数信息可能会丢失.
+此时可以使用`TagBox`,`TagBox`提供了一种在 Wolfram 语言`input`和`output`中存储隐藏信息的方法.
+`TagBox[bbb,tag]`构建的`Box`和`bbb`一样, 但可以包含额外信息`tag`. 一般是函数的头部.
+
+比如:
+
+```mathematica
+ToBoxes[InverseFunction[f], StandardForm]
+out: TagBox[SuperscriptBox["f",   RowBox[{"(", RowBox[{"-", "1"}], ")"}]], InverseFunction,  Editable -> False]
+```
+
+此外, `InterpretationBox`提供了一种在Wolfram语言`output`中存储隐藏信息的方法.
+
+`InterpretationBox[boxes,expr]`
+是一个底层`box`构建, 显示和`boxes`一样, 但如果在输入中, 被理解成`expr`
+
+## 脚本中的原始字符格式
+
+mathematica 的层次结构
+
+```mathematica
+guide/LowLevelNotebookStructure
+tutorial/StringRepresentationOfBoxes
+tutorial/RepresentingTextualFormsByBoxes
+```
+
+内核--前端,
+`box`--笔记本,
+字符串表示--框符
+`\[name]`
+
+最核心的概念是, 一切皆是表达式, 对于内核来说, 它接受的全部是类 `LISP` 的表达式 语言.
+就类似于纯字符界面的交互方式, 只有 `LISP` 表达式, 在这个层次上, 考虑的是输入的编码问题.
+往上, 包括图形, 二维化表示等等, 这个层面上, 出现 框符 的概念,
+二维化框符的显示, 带来了一批处理显示相关的表达式, 它们是`mma`的排版层.
+框符不仅有 `LISP` 表示, 而且有字符串表示.
+
+### 框符的字符串表示
+
+tutorial/StringRepresentationOfBoxes
+
+区分原始框符和其代表的表达式.
+
++ `\(input\)`  原始框符(即仅仅是一个二维化结构式)
++ `\!\(input\)`  框符的意义(二维化结构式的数学意义)
+
+如果将一个 `StandardForm` 单元的内容复制到另一个如文本编辑器的程序中,
+Wolfram 系统将在必要时生成一个 `\!\(...\)` 形式.
+这样做是为了当讲这个格式的内容重新复制回 Wolfram 系统中时, 该 `StandardForm` 单元的原始内容会自动再次生成.
+如果没有 `\!`, 则仅得到对应于这些内容的原始框符.
+
+在选项的默认设置下, 贴入 Wolfram 系统笔记本中的 `\!\(...\)` 格式自动显示成二维格式.
+
+### 字符串中嵌入二维框架结构
+
++ `"\(input\)"`  一个原始字符串
++ `"\!\(input\)"`  含有框符的字符串
+
++ `\(box1,box2,...\)`  `RowBox[box1,box2,...]`
++ `box1\^box2`  SuperscriptBox[box1,box2]
++ `box1\_ box2`  SubscriptBox[box1,box2]
++ `box1\_box2\% box3`  SubsuperscriptBox[box1,box2,box3]
++ `box1\& box2`  OverscriptBox[box1,box2]
++ `box1\+box2`  UnderscriptBox[box1,box2]
++ `box1\+box2\% box3`  UnderoverscriptBox[box1,box2,box3]
++ `box1\/box2`  FractionBox[box1,box2]
++ `\@box`  SqrtBox[box]
++ `\@box1\%box2`  RadicalBox[box1,box2]
++ `` form\` box ``  FormBox[box,form]
++ `\*input`  构建来自 input 的框符
+
+### 控制输入被解释的方式
+
++ `\!\(input\)`  解释当前形式中的输入
++ `` \!\(form\`input\) ``  使用指定形式解释输入
+
+### 文本格式的框符表示
+
+tutorial/RepresentingTextualFormsByBoxes
+
+tutorial/FormattedOutput
+
+Wolfram 语言中的所有文本和图形格式最终是用框符的嵌套集合来表示的.
+通常这些框符中的元素对应于要放在二维相对位置处的对象.
+
+这里是对应于表达式 `a+b` 的框符:
+
+```mathematica
+In[1]:= ToBoxes[a+b]
+Out[1]=  RowBox[{a,+,b}]
+```
+
+`DisplayForm` 表明这些框符是如何显示的:
+
+```mathematica
+In[2]:= DisplayForm[%]
+Out[2]//DisplayForm=  a+b
+```
+
+`DisplayForm[boxes]` 表明 `boxes` 被显示的格式
+
+### 基本的框符类型
+
++ `"text"`  原样的文本
++ `RowBox[{a,b,...}]`  一行框符或字符串 a,b,...
++ `GridBox[{{a1,b1,...},{a2,b2,...},...}]`   一个框符网
++ `SubscriptBox[a,b]`  下标
++ `SuperscriptBox[a,b]`  上标
++ `SubsuperscriptBox[a,b,c]`  上下标
++ `UnderscriptBox[a,b]`  底标
++ `OverscriptBox[a,b]`  顶标
++ `UnderoverscriptBox[a,b,c]`  顶底标
++ `FractionBox[a,b]`  分式 `a/b`
++ `SqrtBox[a]`  平方根 `Sqrt[a]`
++ `RadicalBox[a,b]`  `b` 次方根 `Power[a, (b)^-1]`
+
+### 修改框符的外观
+
++ `StyleBox[boxes,options]`  按指定选项的设置显示 `boxes`
++ `StyleBox[boxes,"style"]`  按指定样式显示 `boxes`
+
+### 控制框符的解释
+
++ `FormBox[boxes,form]`  用与指定格式有关的规则解释 `boxes`
++ `InterpretationBox[boxes,expr]`  将 `boxes` 当作表达式 `expr` 的表示形式
++ `TagBox[boxes,tag]`  用 `tag` 引导 `boxes` 的解释
++ `ErrorBox[boxes]`  指出错误并不再对 `boxes` 进行解释
+
+### 输入语法
+
+tutorial/InputSyntax
+
+各种输入表达式的特殊方式
+
+`!command` 执行外部命令,只在命令行有效.
+
+### 无内置定义的算符
+
+tutorial/OperatorsWithoutBuiltInMeanings
+
+有几百个记号没有内部(`built-in`)定义, 也就是没有和函数绑定.
+可以用来构建自己的记号. 如:
+
+```mathematica
+CirclePlus[x,y]
+TildeTilde[x,y]
+Therefore[x,y]
+LeftRightArrow[x,y]
+Del[x]
+Square[x]
+AngleBracket[x,y,...]
+x,y]
+Superscript[x, y]
+UnderBar[x]
+SubPlus[x]
+SubMinus[x]
+SubStar[x]
+SuperPlus[x]
+SuperMinus[x]
+SuperStar[x]
+SuperDagger[x]
+Overscript[x,y]
+Underscript[x,y]
+OverBar[x]
+OverVector[x]
+OverTilde[x]
+OverHat[x]
+OverDot[x]
+UnderBar[x]
+```
+
+`Wolfram` 语言遵循一般约定, 对于某个算符, 和其有关的函数和这个算符的名字相同, 例如:
+
+函数是 `Congruent[x,y,...] `
+符号的名字是: `\[Congruent]`
+
+一般有对应关系如下:
+
++ `x \[name]  y` ->  `name[x, y]`
++ `\[name] x` -> `name[x]`
++ `\[Leftname] x,y,...` -> `\[Rightname]  name[x, y, ...]`
