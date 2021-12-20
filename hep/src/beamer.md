@@ -481,7 +481,7 @@ DarkCyan
 
 ### picture 环境
 
-基于对LaTeX`picture`环境的巧妙使用, 将每张幻灯片变成一幅大图, 在其中可以使用坐标来放置公式, 文本, 图像或视频.
+基于对LaTeX `picture` 环境的巧妙使用, 将每张幻灯片变成一幅大图, 在其中可以使用坐标来放置公式, 文本, 图像或视频.
 
 举个例子. 使用的图像文件在[blogs.helsinki.fi](https://blogs.helsinki.fi/smsiltan/?p=107).
 ![img](https://blogs.helsinki.fi/smsiltan/files/2012/10/sincos21-1024x768.png)

@@ -134,7 +134,7 @@ Synopses:
 
 长度是列之间间隔的一半.  默认值为`6pt`.  用 `\setlength`更改它.
 
-### LaTeX对齐
+### 文本对齐
 
 [LaTeX 对齐问题](https://blog.csdn.net/lvchaoshun/article/details/50518271)
 [latex23 doc](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ccentering)
@@ -195,8 +195,7 @@ Synopses:
 \end{flushright}
 ```
 
-***
-LaTeX公式对齐
+### 公式对齐
 
 默认情况下公式是居中对齐的,但若希望改成左对齐可以
 
@@ -262,7 +261,7 @@ split
 
 ### 其它对齐方法
 
-左对齐, 居中对齐, 右对齐的环境分别为`flushleft`, `center`和`flushright`.
+`左对齐`, `居中对齐`, `右对齐` 的环境分别为`flushleft`, `center`和`flushright`.
 也可以使用命令`\raggedright`, `\centering`和`\raggedleft`使以后的文本按指定方式对齐.
 
 加载`amsmath`宏包后,使用选项`fleqn`(就是声明加载宏包时使用`\usepackage[fleqn]{amsmath}`)

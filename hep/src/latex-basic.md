@@ -1020,7 +1020,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 ### 在文中使用链接
 
-使用宏包 `hyperref` 来制作
+使用宏包 [hyperref]() 来制作
 
 ```latex
 \usepackage[dvipdfm, %
@@ -1040,23 +1040,21 @@ linktocpage=true, %
 ]{hyperref}
 ```
 
-***
-email链接
++ `email` 链接
 
-```latex
-\href{mailto:michaelbibby@gmail.com}{给我电邮}
-```
+    ```latex
+    \href{mailto:michaelbibby@gmail.com}{给我电邮}
+    ```
 
-***
-URL链接
++ `URL链接`
 
-链接有颜色,显示为`OpenBSD官方网站`,链接到`http://www.openbsd.org`
+    链接有颜色,显示为`OpenBSD官方网站`,链接到`http://www.openbsd.org`
 
-```latex
-\href{http://www.openbsd.org}{OpenBSD官方网站}
-```
+    ```latex
+    \href{http://www.openbsd.org}{OpenBSD官方网站}
+    ```
 
-只显示`URL`
++ 只显示`URL`
 
 ```latex
 \url{http://www.openbsd.org}
