@@ -21,7 +21,7 @@
     PacletInstall["~/Downloads/MaTeX-1.7.8.paclet"]
     ```
 
-    获取文件路径的最便捷方法是 Mathematica 的 `插入→文件路径` 菜单命令.
+    获取 `文件路径` 的最便捷方法是 Mathematica 的 `插入→文件路径` 菜单命令.
 
 + 确保已安装 [TeX系统][] 和 Ghostscript 9.15 或更高版本.
     + 对于 Windows 和 Linux, 可从 [其官方下载页面][] 获得最新的 Ghostscript.
@@ -32,7 +32,7 @@
 注意:  在 Windows 系统上, 请使用命令行 `Ghostscript` 可执行文件, 即名称以 `c` 结尾的文件: `gswin32c.exe` 或 `gswin64c.exe`.
 
 + 用 `MaTeX ["x ^ 2"]` 测试 `MaTeX`.
-+ 打开文档中心, 搜索 `"MaTeX"` 以开始使用.
++ 打开 `文档中心`, 搜索 `"MaTeX"` 以开始使用.
 
 ### 升级或卸载
 

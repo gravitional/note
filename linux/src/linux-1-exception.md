@@ -765,8 +765,8 @@ tlmgr conf auxtrees remove /quick/test/tree
 可以直接从网上下载想要安装的宏包, 大部分宏包已经打包成标准格式, 例如`siunitx.tds.zip`, [siunitx](https://www.ctan.org/pkg/siunitx).
 直接解压到`texlive`的安装目录即可.
 
-如何定位安装目录呢? 可以参考[Installing TeX fonts](http://www.tug.org/fonts/fontinstall.html), 虽然这个文章主要是介绍安装字体的.
-使用类似下面的命令找出`texlive`的安装目录.
+如何定位安装目录呢? 可以参考[Installing TeX fonts](http://www.tug.org/fonts/fontinstall.html), 虽然这个文章主要是介绍安装 `字体` 的.
+使用类似下面的命令找出 `texlive` 的安装目录.
 
 ```bash
 kpsewhich --var-value TEXMF
