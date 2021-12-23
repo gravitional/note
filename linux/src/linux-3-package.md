@@ -642,17 +642,17 @@ SYNOPSIS
 
 DESCRIPTION
 
-chmod 后面可以接符号表示新的权限,也可以接一个octal number --表示新的mode bits.
+chmod 后面可以接符号表示新的权限,也可以接八进制数字(octal) --表示新的 `模式位`(mode bits).
 
-符号mode的格式一般是`[ugoa...][[-+=][perms...]...]`,`perms`一般是`0`,或者`rwxXst`中的多个字符,
+符号 mode 的格式一般是`[ugoa...][[-+=][perms...]...]`,`perms`一般是`0`,或者`rwxXst`中的多个字符,
 或者`ugo`中的一个字符.多种符号mode可以给出,用逗号隔开.
 
 `ugoa`表示控制特定用户访问权限:
 
-+ u:the user who owns it
-+ g:other users in the file's group
-+ o:other users not in the file's group
-+ a:all  users
++ u:拥有它的用户
++ g:其他在文件的组中的用户
++ o:不在文件的组中的其他用户
++ a:所有用户
 如果没有给出,默认就是 a,but bits that are set in the umask are not affected.
 
 operator `+`添加权限,`-`删除权限,`=`设置为`xxx`,except that a directory's unmentioned set user and group ID bits are not affected.
@@ -663,14 +663,12 @@ set user or group ID on execution (s), restricted deletion flag or sticky bit (t
 
 或者指定`ugo`中的一个,
 the permissions granted to the user who owns the file (u),
- the permissions granted to other users who are members of the file's group (g),
- and the permissions granted to users that are in neither of the two preceding categories (o).
+the permissions granted to other users who are members of the file's group (g),
+and the permissions granted to users that are in neither of the two preceding categories (o).
 
-***
-数字模式
++ 数字模式
 
-数字mode 是1到4个 octal digits(0-7),derived by adding up the bits with values 4, 2, and 1.
-
+数字 `mode` 是1到4个八进制数字(0-7), 通过把相应的值 `4`, `2`, `1`加起来, 可以推导出权限.
 省略的数字被认为是前置的`0`.
 
 第一位数字选择用户组

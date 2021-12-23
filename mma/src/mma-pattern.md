@@ -64,7 +64,7 @@ Out: aa
 ## PatternTest
 
 ```mathematica
-PatternTest[p,test] 或者  p ? Test
+PatternTest[p,test] 或者  p?Test
 是一个模式对象, 代表任何与`p`相匹配的表达式, 并且要满足在`p`上应用`test`给出`True`.
 ```
 
@@ -77,11 +77,34 @@ PatternTest[p,test] 或者  p ? Test
 
 ### 例子
 
-```mathematica
-f[x_] := Condition[ppp[x], x > 0]
-```
++ 作定义, 并要求 `x` 应该是正数. 匹配左值模式 `x_`, 但只有 `x>0` 时, 才匹配 `右值` 的条件.
 
-当`x > 0`为真的时候, 才进行函数的定义.
+    ```mathematica
+    f[x_] := ppp[x] /; x > 0
+    (*相当于*)
+    SetDelayed[ f[Pattern[x,Blank[]]],   Condition[ppp[x],Greater[x,0]] ]
+    ```
+
+    定义函数, 只在 `x>0` 时才匹配 `左值` 模式, 然后计算 `右值`:
+
+    ```mathematica
+    rsqrt::nnarg= "The argument `1` is not greater than or equal to zero.";
+    rsqrt[x_] /; If[TrueQ[x >= 0], True, Message[rsqrt::nnarg, x]; False] := Sqrt[x]
+    ```
+
+    分段函数:
+
+    ```mathematica
+    f[x_ /; x > 0] := Sqrt[2 x]
+
+    unit[x_ /; x < 0] := 0
+    unit[x_ /; x >= 0] := 1
+    {unit[-2], unit[0], unit[1], unit[a]}
+
+    Out[2]= {0, 1, 1, unit[a]}
+    ```
+
+`Condition` 在 `:=` 左右都能实现相同的效果, 但计算过程略有区别.
 
 + 判断是否为数值对象:
 

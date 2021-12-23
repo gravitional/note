@@ -196,7 +196,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 ### arXiv.org 支持
 
-`revtex4.2` 支持引用 `arXiv.org` 的 `e-prints`.比如以下 `.bib`条目:
+`revtex4.2` 支持引用 `arXiv.org` 的 `e-prints`. 比如以下 `.bib`条目:
 
 ```bib
 @Unpublished{Ginsparg:1988ui,
@@ -210,7 +210,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 ```
 
 将会包含`arXiv.org e-print identifier as arXiv:hep-th/9108028`, 并加上超链接 (需要使用`hyperref`包)
-`arXiv` 的新版标识符带有`primary classifications`, 也会产生相应的输出. For example,
+`arXiv` 的新版标识符带有`primary classifications`, 也会产生相应的输出. 例如:
 
 ```bib
 @Unpublished{Ginsparg:2014,
@@ -225,9 +225,16 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 将产生 `arXiv:1407.1855 [physics.hist-ph]`, 并带有超链接.
 
-### noeprint option
+### 不显示 arXiv标识符, noeprint option
 
-在`revtex4.2` bibtex style 中, `noeprint`选项现在只抑制`journal`references 中的 arXiv identifiers, 而保留`e-print` references 中的`arXiv identifiers`.
+在`REVTEX 4.2` 样式文件中, `noeprint` 选项的行为被改变,
+现在它只省略杂志参考文献(`journal`)中的 arXiv 标识符,
+而保留电子版(`e-print`) 参考文献中的 arXiv 标识符.
+使用时可添加到文档类的选项列表中, 例如:
+
+```latex
+\documentclass[aps,prd,superscriptaddress,noeprint]{revtex4-2}
+```
 
 ### Citing data sets with a DOI
 
