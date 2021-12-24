@@ -124,7 +124,7 @@ HoldComplete[DisableFormatting[Grid[{{1, 2}, {3, 4}}]] ]
 
 ### Detail
 
-+ `Unevaluated[expr]`; 表示当`expr`作为一个函数的参数出现时, 它的未运算的原始形式.
++ `Unevaluated[expr]`; 表示当`expr`作为 `函数` 的 `参数` 出现时, 它的 `未计算` 的 `原始形式`.
 `f[Unevaluated[expr]]` 通过`临时设置属性`, 例如`HoldFirst`, 使 `f` 保持其参数不运算,
 然后再计算 `f[expr]`, 其中`expr`保持接受时的形式. 例如:
 
@@ -195,8 +195,8 @@ f[Unevaluated[1 + 2]]
     f:=[expr1,expr2]
 
 尽管`Set`具有`HoldFirst`属性, `SetDelayed, UpSetDelayed` 具有 `HoldAll`属性.
-`arguments` 在传递给函数`f` 的时候, 的确保持未被计算的形式, 但是在 `f` 的函数体中,
-简单地使用参数, 或者将运算符作用于参数, 都会造成`参数`被递归计算.
+`arguments` 在传递给函数`f` 的时候, 的确保持未被计算的形式,
+但是在 `f` 的函数体中简单地 `调用` 参数, 或者将 `算符` 作用于 `参数`, 都会造成`参数`被递归计算.
 所以最终参数无法维持 `raw` 形式.
 
 例如在下面的定义中, 还是会先计算`g[x]`的值:
@@ -207,49 +207,18 @@ g[x]=2; f[g[x]]:=0
 Out: f[2]:=0
 ```
 
-最后`f`的定义是`f[2]=0`, 而不是`f[g[x]]=0`.
-这样的好处是, 可以放心将`g[x]`用作复杂表达式的接口,
-定义`f`的时候, 内部的表达式会自动替换成其定义. 可以方便输入.
+最后 `f` 的定义是 `f[2]=0`, 而不是 `f[g[x]]=0`.
+这样的好处是, 可以放心将 `g[x]` 用作复杂表达式的接口,
+定义 `f` 的时候, 内部的表达式会自动替换成其定义. 可以方便输入.
 
-如果想要保持参数始终不被计算, 需要同时使用`HoldAll`属性和`Unevaluated`,
-这样在参数传递的整条链路上, 始终不进行计算.
-比如想实现`f[g[x]]=0`这种定义, 需要使用
+如果想要保持 `参数` 始终不被计算, 需要同时使用 `HoldAll` 属性和 `Unevaluated`,
+这样在 `参数传递` 的整条链路上, 始终不进行计算.
+比如想实现 `f[g[x]]=0` 这种定义, 需要使用
 
 ```mathematica
 ClearAll[f];(* 清除之前的定义 *)
 g[x]=2; f[Unevaluated[g[x]]]:=0
 ??f
-```
-
-## Inactivate, Activate
-
-+ `Inactivate[expr]` ; 用 `Inactive[f]` 替换`f`,  其中 `f` 任意在 `expr` 中作为头部的符号.
-+ `Inactivate[expr,patt]` ; 灭活 `expr` 中所有与模式 `patt` 匹配的符号.
-
-### Details
-
-+ `Inactivate` 具有 `HoldFirst` 属性, `expr` 中的符号在`evaluation`前被灭活.
-+ 通过选项设置 `Heads->False`, `Inactivate` 不进入表达式的头部, 只`inactivate` 它们的`parts`.
-+ 默认情况下, 某些语义上(semantically)重要的头部不会`inactivated`. 常见的例子包括`List`, `Rule`和`Blank`.
-
-`Inactivate`  维护符号的不激活形式, 并允许表达式的`部分`不激活:
-
-```mathematica
-isin = Inactivate[Sin[ArcTan[1]], Sin]
-Out[1]= Inactive[Sin][\[Pi]/4]
-
-Activate[isin]
-Out[2]= 1/Sqrt[2]
-```
-
-`Hold` 保持表达式的未计算形式, `所有部分`都是`inactive`:
-
-```mathematica
-esin = Hold[Sin[ArcTan[1]]]
-Out[3]= Hold[Sin[ArcTan[1]]]
-
-ReleaseHold[esin]
-Out[4]= 1/Sqrt[2]
 ```
 
 ## Hold 容器,函数
