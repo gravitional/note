@@ -1247,3 +1247,394 @@ Activate[expr,patt] 只替换 `f` 与模式 `patt` 匹配的 `Inactive[f]` 的�
 ### 细节和选项
 
 在选项设置 `Heads->False` 的情况下, `Activate` 不会进入表达式的 `heads` 并激活其子部.
+
+### 例子
+
+Activate `inactive` 的表达式:
+
+```mathematica
+Activate[Inactive[Length][{a, b, c}]]
+Out[1]= 3
+```
+
+`激活` `inactive` 表达式的不同部分:
+
+```mathematica
+expr = Inactivate[2 + 2 + 3^2]
+2+2+3^2
+
+Activate[expr, Plus]
+4+3^2
+
+Activate[expr, Power]
+2+2+9
+
+Activate[expr]
+13
+```
+
+### 范围
+
+定义 `闲置` 表达式:
+
+```mathematica
+expr = Inactive[Sin][\[Pi]/2]
+Inactive[Sin][\[Pi]/2]
+```
+
+使用 `Activate` 计算该表达式:
+
+```mathematica
+Activate[expr]
+1
+```
+
+使用 `Inactivate` 创建 `inactive` 表达式:
+
+```mathematica
+expr = Inactivate[Sin[Pi/2], Sin]
+Out[1]= Inactive[Sin][\[Pi]/2]
+```
+
+计算表达式:
+
+```mathematica
+Activate[expr]
+1
+```
+
+只闲置符号 `g`:
+
+```mathematica
+Inactivate[f[g[h[x]], y, g[z]], g]
+f[Inactive[g][h[x]], y, Inactive[g][z]]
+```
+
+激活 `g`:
+
+```mathematica
+Activate[%]
+f[g[h[x]], y, g[z]]
+```
+
+激活 `g` 和 `h`:
+
+```mathematica
+Inactivate[f[g[h[x]], y, g[z]], g | h]
+f[Inactive[g][Inactive[h][x]], y, Inactive[g][z]]
+```
+
+激活 `h`:
+
+```mathematica
+Activate[%, h]
+f[Inactive[g][h[x]], y, Inactive[g][z]]
+```
+
+激活闲置表达式:
+
+```mathematica
+expr=Cos[\[Pi]]+\[Integral]x\[DifferentialD]x;
+
+Activate[expr]
+-1 + x^2/2
+```
+
+激活 `Integrate` 之外的表达式:
+
+```mathematica
+Activate[expr, Except[Integrate]]
+-1 + Inactive[Integrate][x, x]
+```
+
+防止 `数值函数` 被激活:
+
+```mathematica
+Activate[expr, Except[_?(MemberQ[Attributes[#], NumericFunction] &)]]
+Cos[\[Pi]]+x^2/2
+```
+
+对 `拉普拉斯变换` 进行形式上的微分:
+
+```mathematica
+Inactive[LaplaceTransform][a t^2, t, s]
+LaplaceTransform[a t^2,t,s]
+
+D[%, s]
+LaplaceTransform[-a t^3,t,s]
+
+Activate[%]
+-((6 a)/s^4)
+
+D[LaplaceTransform[a t^2, t, s], s]
+-((6 a)/s^4)
+```
+
+同理, 对 `t` 和 `a` 进行微分:
+
+```mathematica
+D[Inactive[LaplaceTransform][a t^2, t, s], t]
+0
+
+D[Inactive[LaplaceTransform][a t^2, t, s], a]
+Inactive[LaplaceTransform][t^2, t, s]
+```
+
++ `Inactive` 特殊函数表达式:
+
+```mathematica
+expr = Inactivate[Hypergeometric2F1[3, 1, 2, x], Hypergeometric2F1]
+Inactive[Hypergeometric2F1][3, 1, 2, x]
+```
+
+自动简化后的表达式:
+
+```mathematica
+Activate[expr]
+(2 - x)/(2 (1 - x)^2)
+
+Hypergeometric2F1[3, 1, 2, x]
+(2 - x)/(2 (1 - x)^2)
+```
+
+### 选项
+
+`inactive` Derivative 表达式:
+
+```mathematica
+inactive = Inactivate[Derivative[1][Cos][x]]
+Inactive[Derivative][1][Cos][x]
+```
+
+激活表达式:
+
+```mathematica
+Activate[inactive]
+-Sin[x]
+```
+
+使用选项设置 `Heads->False` 来避免激活 `Derivative`:
+
+```mathematica
+Activate[inactive, Heads -> False]
+Inactive[Derivative][1][Cos][x]
+```
+
+### 应用
+
++ 定义有两个闲置项的三角函数表达式:
+
+```mathematica
+expr = Inactivate[Sin[\[Pi]/3] + Cos[\[Pi]/3] + Tan[\[Pi]/3], Sin | Cos]
+Sqrt[3] + Inactive[Cos][\[Pi]/3] + Inactive[Sin][\[Pi]/3]
+```
+
+激活表达式的不同部分:
+
+```mathematica
+Activate[expr, Sin]
+(3 Sqrt[3])/2 + Inactive[Cos][\[Pi]/3]
+
+Activate[expr, Cos]
+1/2 + Sqrt[3] + Inactive[Sin][\[Pi]/3]
+
+Activate[expr]
+1/2 + (3 Sqrt[3])/2
+```
+
+定义 `D[Integrate[(t + x)^2, {t, 0, x}], x]`, 让导数和积分都 inactive:
+
+```mathematica
+inactive = Inactivate[D[Integrate[(t + x)^2, {t, 0, x}], x], D | Integrate]
+```
+
+对积分进行微分, 而不对积分进行计算:
+
+```mathematica
+Activate[inactive, D]
+4 x^2 + Inactive[Integrate][2 (t + x), {t, 0, x}]
+```
+
+激活积分, 计算最终结果:
+
+```mathematica
+di = Activate[%]
+7 x^2
+```
+
+在不进行微分的情况下进行 积分:
+
+```mathematica
+Activate[inactive, Integrate]
+Inactive[D][(7 x^3)/3, x]
+```
+
+激活微分, 计算出最终结果:
+
+```mathematica
+id = Activate[%]
+7 x^2
+```
+
+结果在数学上是相同的:
+
+```mathematica
+Simplify[di - id]
+0
+```
+
++ 三维拉普拉斯方程的非活动积分形式的解:
+
+```mathematica
+V[x_, y_, z_] = Inactivate[Integrate[f[z + I x Cos[u] + I y Sin[u], u], {u, -Pi, Pi}], Integrate]
+Inactive[Integrate][f[z + I x Cos[u] + I y Sin[u], u], {u, -\[Pi], \[Pi]}]
+```
+
+通过指定函数 `f` 获得特定的解:
+
+```mathematica
+f[a_, b_] := 3 a^5 + 7 b^4
+V[x, y, z]
+Inactive[Integrate][(7 u^4 + 3 (z + I x Cos[u] + I y Sin[u])^5), {u, -\[Pi], \[Pi]}]
+
+sol = Activate[%] // Simplify
+(14 \[Pi]^5)/5 + 3/4 \[Pi] z (15 (x^2 + y^2)^2 - 40 (x^2 + y^2) z^2 + 8 z^4)
+```
+
+可视化解:
+
+```mathematica
+Row[Table[Plot3D[sol /. {z -> j}, {x, -3, 3}, {y, -3, 3}, Ticks -> {Automatic, Automatic, None}], {j, -2, 2}]]
+```
+
+验证解:
+
+```mathematica
+Laplacian[sol, {x, y, z}] // Simplify
+0
+```
+
+分部求和公式:
+
+```mathematica
+sumparts = Inactivate[
+    Sum[f[k] g[k], k] == g[k] Sum[f[k], k] - Sum[DifferenceDelta[g[k], k] DiscreteShift[Sum[f[k], k], k], k],
+    Sum | DifferenceDelta | DiscreteShift]
+```
+
+在特殊情况下验证该公式:
+
+```mathematica
+f[k_] := k
+g[k_] := HarmonicNumber[k]
+
+Activate[sumparts]
+True
+```
+
+计算求和:
+
+```mathematica
+Inactive[Sum][k HarmonicNumber[k], k] == Sum[k HarmonicNumber[k], k]
+```
+
+探索矢量恒等式:
+
+```mathematica
+divcurl = Inactivate[
+    Div[Curl[{f[x, y, z], g[x, y, z], h[x, y, z]}, {x, y, z}], {x, y, z}], Div | Curl]
+```
+
+激活 `Curl` 并不是很有趣:
+
+```mathematica
+Activate[divcurl, Curl]
+```
+
+激活 `Div` 证明关系 $\nabla\cdot (\nabla \times v)=0$:
+
+```mathematica
+Activate[divcurl, Div]
+0
+```
+
+### 关系和性质
+
+`Inactive` 表达式可以使用 `Activate` 来计算:
+
+```mathematica
+f[x_] := x^2
+expr = Inactive[f][3]
+Inactive[f][3]
+
+Activate[expr]
+9
+```
+
+`Activate` 是 `Inactivate`的逆:
+
+```mathematica
+Inactivate[f[x], f]
+Inactive[f][x]
+
+Activate[%]
+f[x]
+```
+
+`Activate` 替换表达式中所有 `inactive` 符号的实例:
+
+```mathematica
+Inactivate[f[x] + g[x] + h[x], f | g]
+h[x] + Inactive[f][x] + Inactive[g][x]
+
+Activate[%]
+f[x] + g[x] + h[x]
+```
+
+`Activate` 计算`inactive`的表达式, 并允许表达式的部分`inactive`:
+
+```mathematica
+isin = Inactivate[Sin[ArcTan[1]]]
+Inactive[Sin][Inactive[ArcTan][1]]
+
+Activate[isin, Sin]
+Sin[Inactive[ArcTan][1]]
+
+Activate[%]
+1/Sqrt[2]
+```
+
+`ReleaseHold` 计算保持为 `unevaluated` 的表达式, 所有部分都被计算:
+
+```mathematica
+esin = Hold[Sin[ArcTan[1]]]
+Hold[Sin[ArcTan[1]]]
+
+ReleaseHold[%]
+1/Sqrt[2]
+```
+
+### 巧妙范例
+
+创建不定求和的画册:
+
+```mathematica
+infiniteproducts = Inactivate[{
+    Product[((k + 1)^3*(k + 5))/k^2, {k, 1, n}],
+    Product[k!, {k, 0, n}],
+    Product[1 + 1/k^2, {k, 1, Infinity}],
+    Product[1 - (4/3)*Sin[x/3^k]^2, {k, Infinity}],
+    Product[1 + 1/Prime[k]^s, {k, Infinity}],
+    Product[((k + 3)/(k + 1))^k, {k, 1, n}],
+    Product[Sin[3*k + 5]/Cos[3*k + 1], {k, 1, n}]},
+    Product];
+
+FormulaGallery[forms_List] := Module[{vals = ParallelMap[Activate, forms]},
+    Text[Grid[Table[{forms[[i]], "=", vals[[i]]}, {i, Length[forms]}],
+    Dividers -> {{True, False, False, True}, All},
+    Alignment -> {{Right, Center, Left}, Baseline},
+    Background -> LightYellow, Spacings -> {{4, {}, 4}, 1}]]];
+
+FormulaGallery[infiniteproducts] // TraditionalForm
+```
+
