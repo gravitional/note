@@ -153,7 +153,8 @@ Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Languag
 
 ### $Path,搜索路径
 
-`$Path` 给出了, 搜索外部文件所使用的`搜索目录`的默认列表.
+`$Path` 给出了, 搜索外部文件所使用的 `搜索目录` 的默认列表.
+其中包含了 `当前工作目录 `, 并使用 `.` 表示.
 
 + 在不同的计算机系统中, `目录` 和 `文件名` 的结构可能有所不同.
 + `$Path` 既用于 `Get` 调用文件的场景, 也用于 `Install` 调用外部程序.
@@ -177,13 +178,13 @@ Wolfram 系统初始化文件`init.m`包含启动代码, 每当 `Wolfram Languag
 
 ### 基本例子
 
-+ 添加一个`目录`, 用于查找其中的文件, 但优先级在所有 `系统默认值` 之后:
++ 添加`目录`, 用于查找其中的文件, 但优先级在所有 `系统默认值` 之后:
 
     ```mathematica
     AppendTo[$Path, FileNameJoin[{$HomeDirectory, "MyPackages"}]];
     ```
 
-+ 添加一个`目录`, 用于查找其中的文件, 但优先级在任何 `系统默认值` 之前:
++ 添加`目录`, 用于查找其中的文件, 但优先级在任何 `系统默认值` 之前:
 
     ```mathematica
     PrependTo[$Path, FileNameJoin[{$HomeDirectory, "MyPackages", "LookHereFirst"}]];
