@@ -451,7 +451,7 @@ Who kept all of his cash in a bucket.
 
 + ``[a-z]` ; 匹配所有的小写字母
 + `[A-Z] ; 匹配所有的大写字母
-+ `[a-zA-Z] ; 匹配所有的字母
++ `[a-zA-Z0-9] ; 匹配所有的字母
 + `[0-9] ; 匹配所有的数字
 + `[0-9\.\-] ; 匹配所有的数字, 句号和减号
 + `[ \f\r\t\n] ; 匹配所有的白字符
@@ -488,7 +488,7 @@ Who kept all of his cash in a bucket.
 
 字符簇  描述
 
-+ `[[:alnum:]]` :  任何字母和数字
++ `[[:alnum:]]` :  任何 `字母` 和 `数字`
 + `[[:alpha:]]` :  任何字母
 + `[[:blank:]]`: space and tab
 + `[[:cntrl:]]` : 控制字符 ASCII octal `000-037,177(DEL)`
