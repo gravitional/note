@@ -1,17 +1,83 @@
 # Wolframscripts
 
+## 命令行二进制程序
+
+```bash
+file -L `which wolframscript`
+wolframscript --help
+```
+
+`--help` 的输出是:
+
+### 选项:
+
++ `-h, -help` ; 打印帮助文本.
++ `-c, -code WL`; 给出要执行的 Wolfram Language 代码.
++ `-f, -file PATH`; 给出要执行的包含 Wolfram 语言代码的 `文件`.
++ `-a, -api URL|UUID`; 使用指定 `URL` 的 `API`, 或来自指定 `UUID` 的云或本地对象. 在'-args'之后, 以 `key=value` 的形式提供参数.
+
++ `-fun, -function WL`; 使用函数, 参数为使用 `-args` 给出的 `字符串`
+并将参数解析为 `-signature` 给出的类型.
++ `-o, -cloud [CLOUDBASE]`; 在 `云` 中执行代码, 使用指定的 `cloud base`.
+默认情况下, 云基地是 [https://wolframcloud.com](https://wolframcloud.com)
++ `-l, -local [KERNELPATH]`; 在本地执行代码, 使用指定路径的 Wolfram Engine kernel.
+默认情况下, `KernelPath` 使用本地系统中最新版本的Wolfram 语言
++ `--, -args ARGS...`; 与 `-api` 或 `-function` 一起使用, 以提供参数.
++ `-s, -signature TYPE...`; 与 `-function` 和 `-args` 一起使用, 为提供的参数指定解释器类型.
+
++ `-v, -verbose`; 在执行过程中打印附加信息.
+
++ `-activate [KEY]`; 通过 `云端` 或钥匙激活 Wolfram Engine.
++ `-entitlement ID`;  使用按需许可, 用给定的许可权限 ID 激活Wolfram Engine.
++ `-authenticate [ID PASS]`; 通过 `云端` 认证, 指定特定的 Wolfram ID 和密码, 如果没有给出, 则提示. 可以为不同的云指定不同的认证.
++ `-disconnect` 断开与云的连接, 删除认证信息.
++ `-configure [KEY=VAL...]`;  通过指定特定 `配置变量键` 的值来配置WolframScript. 如果没有给出 `keys`, 这将打印出当前的配置.
++ `-version`; 打印 WolframScript 的版本.
++ `-username USERNAME` 给出用于认证的用户名.
++ `-password PASSWORD`; 给出用于认证的密码.
++ `-permissionskey KEY`; 给出`权限密钥`, 用于授权访问云端部署的API.
++ `-k, -noverifypeer`; 在与云端互动时禁用对等的证书验证(peer certificate verification).
++ `-timeout SECONDS [VALUE]` 指定允许执行的`秒数`. 如果超过时间, 则返回`VALUE`.
+
++ `-charset ENCODING`; 使用`ENCODING`进行输出.
+编码可以是 `None`, 用于输出原始字节,
+或是 `$CharacterEncodings` 中的任何条目, 除了 `Unicode`.
+默认情况继承终端的 `语言设置` 中的值.
++ `-format TYPE`; 指定输出的格式. 可以使用 `Export` 所理解的任何格式.
+
++ `-print [all]`; 当运行 `脚本` 时, 打印脚本 `最后一行` 的结果. 如果给了 `all` 参数, 则打印 `每一行`.
++ `-linewise`; 执行读取到的 `标准输入` 中的每行代码.
++ `-script ARGS...`; 与 `wolfram -script` 相对应, 另外设置了 `$ScriptCommandLine`.
+
+常用的调用方式为:
+
+```bash
+wolframscript -script ./test.wl --abs 1 --box  3 apple banana
+```
+
+注意 `$ScriptCommandLine` 中的参数, 类型均为 `String`.
+也就是命令行接收到的参数, 会被强制转码为 `字符串`. 所以上面收到的参数列表为:
+
+```mathematica
+{"./test.wl", "--abs", "1", "--box", "3", "apple", "banana"}
+```
+
+如果需要使用 `数值` 或其他类型的值, 需要在脚本内部自行 `ToExpression`.
+
+## OS covery
+
 总的来说,
 
-windows: 建立后缀名为`.wl`的文件, 然后按正常的方法去写`mma`笔记本,
+windows: 建立后缀名为 `.wl`/`.wls` 的文件, 然后按正常的方法去写 `mma` 笔记本,
 运行的时候用`wolframscript.exe`
-用`-print all` 指定输出所有没被`;` 抑制输出的表达式.
-用`para1 para2 ...` 传递参数.
+用 `-print all` 指定输出所有没被`;` 抑制输出的表达式.
+用 `para1 para2 ...` 传递参数.
 
 参数用下面的变量调用
 
-+ `$CommandLine` -- 一系列字符串给出使用的完整的命令行.
-+ `$ScriptCommandLine` -- 为正在运行的脚本准备的一系列命令行参数. 这些参数出现在 `-option` 给出的选项之后.
-+ `$ScriptInputString` -- 一个通过标准输入给出脚本输入的字符串. 在脚本的每次迭代中, 选项 `-linewise` 用一行标准输入载入该变量.
++ `$CommandLine` -- 一系列字符串, 给出使用的 `完整的` 命令行.
++ `$ScriptCommandLine` -- `字符串` 的列表, 给出了调用 `独立 Wolfram System 脚本` 时, 使用的命令行参数. 这些参数出现在 `-option` 给出的选项之后.
++ `$ScriptInputString` -- 通过 `标准输入` 给出脚本输入的字符串. 在脚本的每次迭代中, 选项 `-linewise` 用一行标准输入载入该变量.
 
 ```powershell
 wolframscript.exe -print all -file .\test.wl para1 para2
