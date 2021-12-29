@@ -160,8 +160,8 @@ tutorial/FilesStreamsAndExternalOperations
     + `Export["dest.ext",expr]`; 将数据导出到`dest.ext`文件中, 根据文件的后缀名转换成相应的格式.
     + `Export[dest,expr,"format"]`; 显式指定保存的格式.
 
-+ `ReadString, WriteString` ; 将表达式转换成字符串, 再写入文件. 或者将文件以字符串的形式读入.
-+ `ImportString`, `ExportString`; 从字符串中读取数据, 或者将表达式转换成数据.
++ `ReadString, WriteString` ; 将 `表达式` 转换成 `字符串`, 再写入 `channel` 或 `file`. 或者将文件以 `字符串` 的形式读入.
++ `ImportString`, `ExportString`; 从 `字符串` 中读取数据, 或者将 `表达式` 转换成 `数据`.
 + `BinaryRead,BinaryRead`; 读写二进制数据
 
 ### 字符串导出导入
@@ -191,7 +191,7 @@ ExportString[{1, "text", 2, 3},
  ]
  ```
 
-`wolframscripts` 结合 `shell` 使用时, 传递参数最好用字符串, 不会改变结构.
+`wolframscripts` 结合 `shell` 使用时, 传递参数最好用 `字符串`, 不会改变结构.
 在 `mma` 脚本内部, 使用 `ToString` 和 `ToExpression` 进行转化, 为了保险, 可以增加`InputForm`选项.
 
 ***
