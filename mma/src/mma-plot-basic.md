@@ -72,6 +72,53 @@ Plot[Tan[x^3 - x + 1] + 1/(x + 3 Exp[x]), {x, -2, 2},
 Exclusions -> {Cos[x^3 - x + 1] == 0, x + 3 Exp[x] == 0}]
 ```
 
+### PlotRange
+
+```mathematica
+PlotRange ; 是图形函数的选项, 用于指定在绘图中包括哪些坐标范围.
+```
+
+### 细节
+
++ `PlotRange` 可以用于二维和三维图形.
++ 可以使用以下设置:
+    + `All`; 所有的点都包括在内
+    + `Automatic`; 放弃外围(outlying)的点
+    + `Full`; 包括 `原始数据` 的全部范围
+    + `max`; 每个函数的显式上限(见下文)
+    + `{min,max}`; y(2D), z(3D), 或 `数组值` 的明确范围
+    + `{{x_min, x_max}, {y_min, y_max}}`; `x` 和 `y` 的明确范围
+    + `{{x_min, x_max}, {y_min, y_max}, {z_min, z_max}}`; `x`, `y`和 `z` 的明确范围(三维).
+
++ 当没有为特定的坐标给出明确的限制时, 就会假定设置为 `Automatica`.
++ 在 `Automatica` 设置下, 会寻找坐标值的 `分布`, 任何在分布中足够远的点都会被放弃.
+这些点通常是由于被绘制的函数的奇异性而产生的.
++ 任何明确的 `limit` 或 `{min,max} pair` 都可以用 `All` 或 `Automatic` 这样的指定来代替.
++ 像 `{min,Automatic}` 这样的设置为某个坐标提供了特定的 `最小值`, 而最大值将被自动确定.
++ 如果特定的 `最小值` 或 `最大值` 被指定为 `{Automatic, alpha}`, 这意味着该范围实际上应该被切断, 对于超过绘图中的 `alpha` 部分的点.
+当绘制平滑曲线或曲面时, 点的测度基于 `投影长度` 或 `面积`.
+
++ 设置 `Full` 可以在 `Plot` 和相关函数中使用, 以指定作图范围应该由 `输入到绘图函数的范围` 决定.
++ `Plot[f,{x, x_min, x_max}, PlotRange->Full]` 指定应该使用 `{x_min, x_max}` 的整个范围, 即使在该范围的一部分, 并没有实际绘制出 `f`.
+
++ 通过设置 `PlotRange->s`, 相当于使用以下范围:
+    + `Graphics`;    {{-s,s},{-s,s}}
+    + `Graphics3D`;    {{-s,s},{-s,s},{-s,s}}
+    + `Plot`;    {Full,{-s,s}}
+    + `ListPlot` and `ListLinePlot`;     {Full,{0,s}}
+    + `ParametricPlot` and `RegionPlot`     {{-s,s},{-s,s}}
+    + `ContourPlot` and `ListContourPlot`    {Full,Full,{-s,s}}
+    + `DensityPlot` and `ListDensityPlot`    {Full,Full,{-s,s}}
+    + `ArrayPlot`;    {Full,Full,{0,s}}
+    + `Spectrogram` and `Cepstrogram`;    {Full,{0,s},Full}
+    + `Plot3D` and `ListPlot3D`    {Full,Full,{-s,s}}
+    + `ListSurfacePlot3D`;  {{-s,s},{-s,s},{-s,s}}
+    + `ParametricPlot3D` and `RegionPlot3D`;    {{-s,s},{-s,s},{-s,s}}
+    + `ContourPlot3D` and `ListContourPlot3D`;    {Full,Full,Full,{-s,s}}
+
++ `AbsoluteOptions` 给出了`Automatic`设置对应的 `PlotRange` 规范的显式形式.
++ `plot` 中包含的最终绝对坐标范围由 `PlotRangePadding` 和 `PlotRange` 决定.
+
 ## Legended,图例
 
 ```mathematica

@@ -110,8 +110,8 @@ exp1/;exp2,    (e/;e)/;e
 `exp1:>exp2`, RuleDelayed, 右结合
 `exp1:> exp2`,RuleDelayed, 右结合
 ***
-`exp1/.exp2`, ReplaceAll, 替换规则
-`exp1//.exp2`, ReplaceRepeated
+`exp1/.exp2`, ReplaceAll, 替换规则, 左结合
+`exp1//.exp2`, ReplaceRepeated, 左结合
 ***
 `expr&`, Function, 函数
 ***

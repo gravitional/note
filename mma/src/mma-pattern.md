@@ -43,7 +43,8 @@ True
 `对模式施加限制` tutorial/PuttingConstraintsOnPatterns
 `限制模式` tutorial/PuttingConstraintsOnPatterns
 
-Wolfram 语言中提供了对模式进行限制的一般方法, 通过在模式后面加 `/;condition` 来实现. 此运算符 `/;` 可读作"斜杠分号", "每当"或"只要", 其作用是当所指定的 `condition` 值为 `True` 时模式才能使用.
+Wolfram 语言中提供了对模式进行限制的一般方法, 通过在模式后面加 `/;condition` 来实现.
+此运算符 `/;` 可读作 `斜杠分号`, "每当"或"只要", 其作用是当所指定的 `condition` 值为 `True` 时模式才能使用.
 
 ## Condition, 条件
 
@@ -275,7 +276,7 @@ MatchQ[Hold[2 + 3], Hold[n_] /; IntegerQ[Unevaluated@n]]
 False
 ```
 
-## 重复的模式
+## 重复模式
 
 `重复模式` tutorial/Introduction-Patterns
 `expr..` 重复一次或多次的模式或表达式
@@ -285,7 +286,90 @@ False
 guide/RulesAndPatterns
 guide/Patterns
 
-Wolfram 语言符号编程范式的核心, 是任意符号模式转换规则的概念. Wolfram 语言的模式语言方便的描述了一系列各种类型的表达式, 让程序变得易读, 简洁且高效.
+Wolfram 语言符号编程范式的核心, 是任意符号模式转换规则的概念.
+Wolfram 语言的模式语言方便的描述了一系列各种类型的表达式, 让程序变得易读, 简洁且高效.
+
+## Repeated(..), 重复
+
+p...或 Repeated[p] 是一个模式对象, 表示一个或多个表达式的序列, 每个表达式都匹配 `p`.
+Repeated[p,max] 表示与 p 匹配的从 1 到 max 的表达式.
+Repeated[p,{min,max}] 表示与 p 匹配的最小和最大的表达式之间.
+Repeated[p,{n}] 表示正好有n个表达式与p匹配.
+
+```mathematica
+p.. or Repeated[p]; 是 `模式对象`, 表示一个或多个表达式的序列, 每个表达式都匹配 `p`.
+Repeated[p,max]; 表示与 `p` 匹配的, `1` 到 `max` 个表达式
+Repeated[p,{min,max}]; 表示与 p 匹配的, 数目在 min 和 max 的表达式之间的表达式.
+Repeated[p,{n}]; 表示匹配 `p` 且刚好为 `n` 个的表达式.
+```
+
+### 细节
+
++ `p..` 可以作为任何函数的 `参数` 出现. 它代表任何参数的序列.
++ `p..` 代表的序列, 其中的所有对象必须与 `p` 相匹配, 但这些对象不需要相同.
++ 表达式 `p` 本身, 可以但不必须是 `模式对象`.
+
+Repeated [ expr_, {5} ]   or Repeated [ expr, {min,max} ]
+
+### 范围
+
+要求整个 `序列` 中, 只有部分 模式 是相同的:
+
+```mathematica
+MatchQ[{f[a, b], f[a, c], f[a, d]}, {f[x_, _] ..}]
+Out[1]= True
+
+MatchQ[{f[a, b], f[a, c], f[a, d]}, {f[_, x_] ..}]
+Out[2]= False
+```
+
+### 性质和关系
+
+`Repeated[p]` 或 `p..` 等价于 `Repeated[p,{1,Infinity}]`:
+
+```mathematica
+{{}, {a}, {a, a}, {a, a, a}} /. {a ..} -> x
+Out[3]= {{}, x, x, x}
+
+{{}, {a}, {a, a}, {a, a, a}} /. {Repeated[a, {1, \[Infinity]}]} -> x
+Out[2]= {{}, x, x, x}
+```
+
+`Repeated[p,max]` 等价于 `Repeated[p,{1,max}]`:
+
+```mathematica
+{{}, {a}, {a, a}, {a, a, a}} /. {Repeated[a, 2]} -> x
+Out[1]= {{}, x, x, {a, a, a}}
+
+{{}, {a}, {a, a}, {a, a, a}} /. {Repeated[a, {1, 2}]} -> x
+Out[2]= {{}, x, x, {a, a, a}}
+```
+
+### 可能的问题
+
+用 `括号` 或 `空格` 表示 `1..` 不是 `1.`, 后面跟一个点:
+
+```mathematica
+{{1, 1}, {1}, {2, 1}} /. {(1) ..} -> x
+Out[1]= {x, x, {2, 1}}
+```
+
+重复的 `命名模式` 将只匹配 `全等的` 重复序列:
+
+```mathematica
+MatchQ[{4, 5, 6}, {Repeated[x_Integer]}]
+Out[1]= False
+
+MatchQ[{4, 4, 4}, {Repeated[x_Integer]}]
+Out[2]= True
+```
+
+重复的 `无名模式` 可以匹配一连串非相同元素:
+
+```mathematica
+MatchQ[{4, 5, 6}, {Repeated[_Integer]}]
+Out[3]= True
+```
 
 ## 无序模式
 
@@ -300,6 +384,18 @@ MatchQ[{2, 1}, {OrderlessPatternSequence[1, 2]}]
 + `ReplaceRepeated`
 + `ReplacePart`
 + `Dispatch[{lhs1->rhs1,lhs2->rhs2}]`: 不影响替换结果, 但可以加速替换.
+
+`Replace` 可以指定层数, 例如
+
+```mathematica
+Replace[f[f[f[f[x]]]], f[x_] :> g[x], {0, 2}]
+Out[1]= g[g[g[f[x]]]]
+
+Replace[f[f[f[f[x]]]], f[x_] :> g[x], All]
+Out[2]= g[g[g[g[x]]]]
+```
+
+后面可以选`All`, 全部替换.
 
 `mma`中的`表达式`都可以表示成`树`. 不同的函数具体的操作流程不同.
 
@@ -407,46 +503,6 @@ Out[1]= True
 Normal[Dispatch[{a -> b, b -> c, c -> a, d -> e, e -> d}]]
 Out[1]= {a -> b, b -> c, c -> a, d -> e, e -> d}]
 ```
-
-## 字符串模式
-
-`字符串处理`: `字符串模式` tutorial/WorkingWithStringPatterns
-
-StringExpression objects can be used in many string manipulation functions, including StringReplace, StringCases, StringSplit, and StringMatchQ.
-
-`MatchQ`不能识别`StringExpression`, 即字符串表达式. 需要用`StringMatchQ`才可以识别. 例如:
-
-```mathematica
-MatchQ["adbasdd", __ ~~ "dd"]
-StringMatchQ["adbasdd", __ ~~ "dd"]
-```
-
-`DeleteCases`不能删除字符串模式,可能是由于它使用`MatchQ`做匹配.
-
-+ `LetterQ`
-
-比较字符串时忽略大小写, 这个功能在`StringMatchQ`的选项中:
-`StringMatchQ["acggtATTCaagc", __ ~~ "aT" ~~ __, IgnoreCase -> True]`
-
-在字符串匹配中, `x_`只匹配单个字符, `characters`,`StringExpression[pattern...]`可以用来表示模式序列, 有各种各样对应正则表达式功能的函数.
-
-比如
-
-+ `StartOfString`   字符串开头
-+ `EndOfString`   字符串结尾
-+ `StartOfLine`   行的开始
-+ `EndOfLine`   行的结束
-+ `WordBoundary`   boundary between word characters and others
-+ `Except[WordBoundary]`   anywhere except a word boundary
-
-***
-
-`字符串模式`: tutorial/StringPatterns
-`文本标准化` guide/TextNormalization
-`StringDelete`
-`StringReplace`:替换字符串
-`字符串运算`: guide/StringOperations
-`正则表达式`:RegularExpression
 
 ## 匹配表达式序列
 

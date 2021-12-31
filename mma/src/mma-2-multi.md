@@ -428,15 +428,6 @@ Apply[f,expr]
 把列表或其它享有相同头部的表达式连接在一起.
 
 ***
-`Replace` 指定层数
-
-`Replace[f[f[f[f[x]]]], f[x_] :> g[x], {0, 2}]`, 后面可以选`All`, 全部替换
-
-Repeated [ expr_, {5} ]   or Repeated [ expr, {min,max} ]
-
-可以具体制定重复的次数, 精确的!
-
-***
 `读写 Wolfram 系统的文件`: tutorial/ReadingAndWritingWolframSystemFiles
 
 ***
