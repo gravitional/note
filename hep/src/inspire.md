@@ -61,9 +61,9 @@ t 'fusion' not t fusion
 包括 `中间名的首字母`, 将使搜索只匹配含有 `中间名字` 的 `记录`.
 包括 `全名` 将使搜索只匹配与 `首字母` 或 `确切名字` 相符的记录.
 在 `INSPIRE中` 首字母的排序没有区别(`J.R.` 与 `R.J.`).
+例如:
 
-例子列表
-搜索 找到姓名如下的论文
+搜索词 找到姓名如下的论文
 
 + `j ellis`;    `"J. Ellis"`, `"J.R. Ellis"`, `"J.Q. Ellis"`, `"Jane Ellis"`, `"John Ellis"`,
 `"Jane Q. Ellis"`, `"John R. Ellis"`, `"P.J. Ellis"`, `"Peter J. Ellis"`,

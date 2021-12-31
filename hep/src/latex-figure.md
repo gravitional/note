@@ -280,7 +280,8 @@ split
 \parbox[position] [height] [inner-pos] {width} {contents}
 ```
 
-产生一个宽度为`width`的文本框. 使用此命令可以使一小段文本框变成单个段落.该命令是`fragile`的(请参阅`\protect`).
+产生一个宽度为`width`的文本框. 
+使用此命令可以使一小段文本框变成单个段落.该命令是`fragile`的(请参阅`\protect`).
 
 ```latex
 \begin{picture}(0,0)
@@ -291,14 +292,16 @@ split
 \end{picture}
 ```
 
-内容被以文本模式处理
+内容被以 `文本模式` 处理
 (请参见[`Modes`](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Modes)),
-因此`LaTeX`会中断换行以形成段落.但是它不会包含多个段落; 为此,请使用`minipage`环境(请参见`minipage`).
+因此`LaTeX` 会中断换行以形成段落. 但是它不会包含多个段落; 为此,请使用`minipage`环境(请参见`minipage`).
 
-`\parbox`的选项(除了内容)与`minipage`的选项相同.为方便起见,此处提供了选项的摘要,但完整说明请参见[minipage](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#minipage).
+`\parbox`的选项(除了内容)与`minipage`的选项相同.
+为方便起见,此处提供了选项的摘要,但完整说明请参见[minipage](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#minipage).
 
-有两个必需的参数.`width`是刚性长度(请参见`Lengths`).
-它设置LaTeX将内容排版到其中的框的宽度.`contents`是放置在该框中的文本.它不应包含任何`paragraph-making`组件.
+有两个必需的参数. `width`是刚性长度(请参见`Lengths`).
+它设置 `LaTeX` 将内容排版到其中的框的宽度.
+`contents`是放置在该框中的文本. 它不应包含任何`paragraph-making`组件.
 
 有三个可选参数,`position`, `height`, and `inner-pos`.
 `position`给出`parbox`相对于周围材料的垂直对齐.
@@ -307,9 +310,9 @@ split
 
 可选参数`height`覆盖框的自然高度.
 
-可选参数`inner-pos`控制内容在`parbox`中的位置.它的默认值是`position`的值.
-其可能的值为:`t`将内容放置在框的顶部,`c`将其放置在框的垂直中心,`b`将其放置在框的底部,
-`s`将其垂直拉伸(为此,文本必须包含垂直可拉伸的空间).
+可选参数`inner-pos`控制内容在 `parbox` 中的位置. 它的默认值是`position`的值.
+其可能的值为: `t` 将内容放置在框的顶部, `c` 将其放置在框的垂直中心, `b` 将其放置在框的底部,
+`s` 将其垂直拉伸(为此,文本必须包含垂直可拉伸的空间).
 
 ## 源代码展示环境
 

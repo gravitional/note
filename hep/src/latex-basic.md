@@ -655,7 +655,7 @@ bibtex foo.aux
 ***
 我听说还有一个名为 `biblatex` 的工具,能介绍一下吗?
 
-`biblatex` 与 `BibTeX` 是不同的工具,超出了本文的范围.
+`BibLaTeX` 与 `BibTeX` 是不同的工具,超出了本文的范围.
 
 ***
 [tamethebeast](https://www.ctan.org/tex-archive/info/bibtex/tamethebeast/)
@@ -687,11 +687,10 @@ bibtex foo.aux
 
 [natbib – Flexible bibliography support ](https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/)
 
-natbib软件包是LATEX的扩展,允许作者年份(author–year)的引用形式,也支持数字引用.
-可以方便的切换.
+`natbib` 软件包是 `LaTeX` 的扩展,允许作者年份(author–year)的引用形式,也支持数字引用. 可以方便的切换.
 
 首先导入包,`\usepackage[sectionbib,square]{natbib}`
-natbib 提供了三种新的格式,
+`natbib` 提供了三种新的格式,
 
 + plainnat.bst
 + abbrvnat.bst
@@ -701,7 +700,7 @@ natbib 提供了三种新的格式,
 
 `bibliographystyle{plainnat}`
 
-natbib 特别定义了 `citet` (cite textual) and `citep`(cite parenthetical).
+`natbib` 特别定义了 `citet` (cite textual) and `citep`(cite parenthetical).
 以及 `\citet*` and `\citep*` 可以打印出作者全名.
 这些命令都可以接受一到两个参数,在引用前后输出额外文字.
 可以同时引用多个参考文献.
@@ -713,8 +712,8 @@ natbib 特别定义了 `citet` (cite textual) and `citep`(cite parenthetical).
 \citep{jon90a,jon90b} --> (Jones et al., 1990a,b)
 ```
 
-These examples are for author–year citation mode.
-In numerical mode,the results are different.
+这些例子是针对 `author–year` 引文模式的.
+在 `数字模` 式下, 结果是不同的.
 
 ```latex
 \citet{jon90} --> Jones et al.  [21]
@@ -743,7 +742,7 @@ In numerical mode,the results are different.
 + `sort&compress` 类似`sort`,但如果可能的话,还会压缩多个数字引用(如`3-6,15`);
 + `compress` 压缩而不排序,因此压缩仅在给定的引用按照数字升序时生效;
 + `longnamesfirst` 使任何参考文献的第一个引用都等同于已加星标的变体(完整作者列表),而随后的引用均是普通引用(缩写列表);
-+ `sectionbib` 重新定义`\ thebibliography`来引用`\ section *`而不是`\ chapter *`;仅对带有`\ chapter`命令的类有效;  与`chapterbib`软件包一起使用;
++ `sectionbib` 重新定义`\thebibliography`来引用`\ section*`而不是`\ chapter*`;仅对带有`\ chapter`命令的类有效;  与`chapterbib`软件包一起使用;
 + `nonamebreak` 将所有作者的名字放在同一行中,导致`hbox`过多,但有助于解决一些`hyperref`问题;
 + `merge` 允许在`citation key`前面加上`*`前缀,并将此类引文的引用与先前引文的引用合并;
 + `elide` 合并参考文献后,去掉重复的共同要素,例如作者或年份;

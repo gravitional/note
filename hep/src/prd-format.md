@@ -79,9 +79,10 @@ Authors, affiliations, and collaborations
 
 ### 参考文献和脚标
 
-建议使用 `BibTEX` 准备参考文献.
+建议使用 `BibTeX` 准备参考文献.
 
-如果用 `BibTEX` 的话, `APS Author Guide for REVTEX 4.2`建议你把`.bib`编译生成的 `.bbl`  文件直接`included`到 `.tex`主文件中.参见`IV.REFERENCES AND FOOTNOTES`.
+如果用 `BibTEX` 的话, 
+`APS Author Guide for REVTEX 4.2` 建议你把`.bib`编译生成的 `.bbl` 文件直接`included`到 `.tex`主文件中.参见`IV.REFERENCES AND FOOTNOTES`.
 在`revtex 4.2`中,`BibTEX`风格被修改成:`杂志-文章名`
 不管用不用`BibTEX`,应该满足以下条件:
 
@@ -100,7 +101,7 @@ Authors, affiliations, and collaborations
 `bibtex` 一般附在 Latex 发行版如`TeXLive`中,用于辅助制作参考文献.
 
 + 使用`bibtex`, 需要你先准备一个`.bib`文件, 它是参考文献条目的集合.
-+ 还有一个控制参考文献格式的文件---`.bst` (bibtex style file). 它控制如何把`.bib`转换成 `latex` 标准的 `\bibitem` 格式,可以修改成适应不同的杂志.
++ 还有一个控制参考文献格式的文件 --- `.bst` (bibtex style file). 它控制如何把`.bib`转换成 `latex` 标准的 `\bibitem` 格式,可以修改成适应不同的杂志.
 
 在文章 `class` 中设置合适的选项,会自动从 `revtex4.2` 中选择合适的 `.bst` 文件, 也就是类似下面的`aps,prd`
 
@@ -119,7 +120,7 @@ Authors, affiliations, and collaborations
 通过使用`latex2e` 标准的 `\bibliographystyle` 宏指定另外的 `.bst` 可以覆盖这个选择.
 但是命令需要出现在导言区,  在 `\begin{document}` 行之前,这跟标准的 `latex2e`语法不同.(不知道现在是否更改)
 
-bibtex 的 `.bib` 文件中将包含如下格式的条目:
+`BibTeX` 的 `.bib` 文件中将包含如下格式的条目:
 
 ```bib
 @Book{GSW,
@@ -147,10 +148,11 @@ bibtex 的 `.bib` 文件中将包含如下格式的条目:
 ***
 `RevTeX4.2` 提供的格式还允许 `URL` 和 `e-print` 标识符. 除了`author` 域,还有`collaboration` 域.
 
-在草稿中创建参考文献时,请使用 `\bibliography{bib文件,不需要后缀名}` 宏. `<bib files>` 是一串用逗号分隔开的参考文献库列表, 即`.bib`文件列表.
-`\bibliography`宏应该被放在参考文献要出现的地方, 一般是正文的后面.
+在草稿中创建参考文献时,请使用 `\bibliography{bib文件,不需要后缀名}` 宏. 
+`<bib files>` 是一串用逗号分隔开的参考文献库列表, 即`.bib`文件列表.
+`\bibliography` 宏应该被放在参考文献要出现的地方, 一般是正文的后面.
 
-假设`.tex`源文件叫做`abc`, 编译的时候不用加上后缀名`.tex`.
+假设 `.tex` 源文件叫做`abc`, 编译的时候不用加上后缀名`.tex`.
 
 + 运行第一遍`pdflatex abc`时, `\cite` 宏引用的 `key` 会被写入 `abc.aux` 中.
 + 接着运行 `bibtex abc`,就会产生 `latex` 需要的 `\bibitem` 条目,保存在 `abc.bbl` 文件中.
@@ -331,7 +333,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 
 ### natbib 简介
 
-`natbib` 宏包重定义了 LATEX 命令 `\cite` ,可以采用作者年份格式或者数字格式引用文献,
+`natbib` 宏包重定义了 `LaTeX` 命令 `\cite` ,可以采用作者年份格式或者数字格式引用文献,
 适用于 `plain` 等标准的参考文献格式, 也与 `harvard` `,apalike` , `chicago` `,astron` `,authordate` 以及 `natbib` 等兼容.
 
 与上述宏包相比, `natbib`  宏包不仅支持众多的作者年份格式,也支持标准的数字格式引用.
@@ -340,7 +342,7 @@ pdflatex abc; bibtex abc; pdflatex abc; pdflatex abc;
 `natbib` 宏包可以定义引用格式,如括号以及不同引用条目间标点的类型等.
 甚至可以关联文献格式名以自动激活不同引用格式,也可以通过当前的配置文件 `natbib.cfg` 为 `.bst` 文件定义引用格式.
 
-natbib 宏包与 `babel` , `index` ,`citeref` , `showkeys` , `chapterbib` , `hyperref` , `koma` 等宏包以及 `amsbook` , `amsart` 等文档类兼容,
+`natbib` 宏包与 `babel` , `index` ,`citeref` , `showkeys` , `chapterbib` , `hyperref` , `koma` 等宏包以及 `amsbook` , `amsart` 等文档类兼容,
 也能实现 `cite` 宏包的排 序与压缩功能,还能实现 Thorsten Ohl 写的 `mcite` 宏包的多个引用的合并功能.
 然而, `natbib` 宏包本身与 `cite` 或 `mcite` 宏包不兼容.
 
