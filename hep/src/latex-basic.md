@@ -1019,7 +1019,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 ### 在文中使用链接
 
-使用宏包 [hyperref]() 来制作
+使用宏包 [hyperref](https://www.ctan.org/pkg/hyperref) 来制作
 
 ```latex
 \usepackage[dvipdfm, %
