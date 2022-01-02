@@ -130,9 +130,9 @@ adb devices -l
 
 + 序列号：由 `adb` 创建的字符串, 用于通过`端口号`唯一标识设备.  下面是一个序列号示例：`emulator-5554`
 + 状态：设备的连接状态可以是以下几项之一：
-  + `offline`：设备未连接到 adb 或没有响应.
-  + `device`：设备现已连接到 `adb` 服务器. 请注意, 此状态并不表示 `Android` 系统已完全启动并可正常运行, 因为在设备连接到 `adb` 时系统仍在启动. 不过, 在启动后, 这将是设备的正常运行状态.
-  + no device：未连接任何设备.
+    + `offline`：设备未连接到 adb 或没有响应.
+    + `device`：设备现已连接到 `adb` 服务器. 请注意, 此状态并不表示 `Android` 系统已完全启动并可正常运行, 因为在设备连接到 `adb` 时系统仍在启动. 不过, 在启动后, 这将是设备的正常运行状态.
+    + no device：未连接任何设备.
  说明：如果您包含 -l 选项, devices 命令会告知您设备是什么. 当您连接了多个设备时, 此信息很有用, 可帮助您将它们区分开来.
 
 以下示例展示了 `devices` 命令及其输出. 有三个设备正在运行. 列表中的前两行表示模拟器, 第三行表示连接到计算机的硬件设备.
@@ -232,7 +232,7 @@ adb forward tcp:6100 tcp:7100
 adb forward tcp:6100 local:logd
 ```
 
-### 将文件复制到设备/从设备复制文件
+### push/pull,将文件复制到设备/从设备复制文件
 
 您可以使用 `pull` 和 `push` 命令将文件复制到设备或从设备复制文件.
 与 `install` 命令(仅将 APK 文件复制到特定位置)不同, 使用 `pull` 和 `push` 命令可将任意目录和文件复制到设备中的任何位置.
@@ -253,6 +253,35 @@ adb push local remote
 
 ```bash
 adb push foo.txt /sdcard/foo.txt
+```
+
+### 拉取多个文件
+
+[pull 多个文件](https://www.javaroad.cn/questions/145373)
+
+您可以将文件移动到其他文件夹, 然后拉出整个文件夹 :
+
+```bash
+adb shell mkdir /sdcard/tmp
+adb shell mv /sdcard/mydir/*.jpg /sdcard/tmp # move your jpegs to temporary dir
+adb pull /sdcard/tmp/ # pull this directory (be sure to put '/' in the end)
+adb shell mv /sdcard/tmp/* /sdcard/mydir/ # move them back
+adb shell rmdir /sdcard/tmp # remove temporary directory
+```
+
+使用正则表达式拉取多个文件, 创建pullFiles.sh:
+
+```bash
+#!/bin/bash
+HOST_DIR=<pull-to>
+DEVICE_DIR=/sdcard/<pull-from>
+EXTENSION=".jpg"
+
+for file in $(adb shell ls $DEVICE_DIR | grep $EXTENSION'$')
+do
+    file=$(echo -e $file | tr -d "\r\n"); # EOL fix
+    adb pull $DEVICE_DIR/$file $HOST_DIR/$file;
+done
 ```
 
 ### 停止 adb 服务器
@@ -279,22 +308,22 @@ adb --help
 ```
 
 + `push [--sync] [-z ALGORITHM] [-Z] LOCAL... REMOTE`: copy local files/directories to device
-  + `--sync`: 只推送host上比设备新的文件.
-  + `-n`: dry run: 模拟推送到设备, 但不实际存储到文件系统
-  + `-z`: 使用特定算法压缩 (any, none, brotli)
-  + `-Z`: 不使用压缩
+    + `--sync`: 只推送host上比设备新的文件.
+    + `-n`: dry run: 模拟推送到设备, 但不实际存储到文件系统
+    + `-z`: 使用特定算法压缩 (any, none, brotli)
+    + `-Z`: 不使用压缩
 
 + `pull [-a] [-z ALGORITHM] [-Z] REMOTE... LOCAL`: copy files/dirs from device
-  + `-a`: 保持文件的时间戳和mode
-  + `-z`: 使用特定算法压缩 (any, none, brotli)
-  + `-Z`: 不使用压缩
+    + `-a`: 保持文件的时间戳和mode
+    + `-z`: 使用特定算法压缩 (any, none, brotli)
+    + `-Z`: 不使用压缩
 
 + `sync [-l] [-z ALGORITHM] [-Z] [all|data|odm|oem|product|system|system_ext|vendor]`:
 sync a local build from `$ANDROID_PRODUCT_OUT` to the device (default all)
-  + `-n`: dry run: push files to device without storing to the filesystem
-  + `-l`: 列出将要复制的文件, 但不进行复制
-  + `-z`: 使用特定算法压缩 (any, none, brotli)
-  + `-Z`: 不使用压缩
+    + `-n`: dry run: push files to device without storing to the filesystem
+    + `-l`: 列出将要复制的文件, 但不进行复制
+    + `-z`: 使用特定算法压缩 (any, none, brotli)
+    + `-Z`: 不使用压缩
 
 ### 发出 shell 命令
 
@@ -544,7 +573,7 @@ fastboot flash boot_b boot_patched.img
 
 + SafetyNet 无法通过
 
-刷了 `Magisk` 后, `Safe­tyNet` 检测就无法通过. 无法通过的话, `Google Play` 保证机制就无法通过, 有些游戏就下载不了.
+刷了 `Magisk` 后, `SafetyNet` 检测就无法通过. 无法通过的话, `Google Play` 保证机制就无法通过, 有些游戏就下载不了.
 
 解决方法是：使用下面这两个模块
 
@@ -577,13 +606,13 @@ Magisk` 会在重启时自动卸载该模块. 更简单粗暴的方式是直接�
 [秋叶随风](https://www.coolapk.com/feed/21534499?shareKey=OGUxNGU1NDdlNjA4NjAyMjZmNWU~)
 [小米11刷机记录 ](https://www.himiku.com/archives/xiaomi-11.html)
 
-在 `Android 11` 版本, Google 使用了名为 `vir­tual A/​B` 的新分区, 并将其率先使用在 Google Pixel 5 上. `vir­tual A/​B` 更新系统的方法与 `A/​B` 类似, 核心功能也相同.
+在 `Android 11` 版本, Google 使用了名为 `virtual A/B` 的新分区, 并将其率先使用在 Google Pixel 5 上. `virtual A/B` 更新系统的方法与 `A/B` 类似, 核心功能也相同.
 在系统进行 `OTA` 更新时, 如果更新失败会自动回滚到上一个系统, 成功开机进入之后才会将新数据写入到系统中.
 且系统更新可在待机状态下完成, 无需重启等待新数据写入, 可谓是极大地改善了更新系统时的用户体验.
-只是 `A/​B` 需要准备两个相同的分区, 会占用更多的存储空间, 而 `vir­tual A/​B` 删除了 `cache` 和`re­cov­ery` 分区, `sys­tem` 分区只保留一个, 以解决上述空间占用问题.
+只是 `A/B` 需要准备两个相同的分区, 会占用更多的存储空间, 而 `virtual A/B` 删除了 `cache` 和`recovery` 分区, `system` 分区只保留一个, 以解决上述空间占用问题.
 
-小米 11 也是使用的 `vir­tual A/​B`, 可这对我来说并不是什么好消息. 因为`vir­tual A/​B`删除了`re­cov­ery`分区, 没有了`re­cov­ery` 分区就不能刷入第三方`re­cov­ery`.
-因此在 `TWRP` 官方解决为这类新分区方式刷入第三方 `re­cov­ery` 之前, 我只能使用其他方法来为小米 11 刷机了.
+小米 11 也是使用的 `virtual A/B`, 可这对我来说并不是什么好消息. 因为`virtual A/B`删除了`recovery`分区, 没有了`recovery` 分区就不能刷入第三方`recovery`.
+因此在 `TWRP` 官方解决为这类新分区方式刷入第三方 `recovery` 之前, 我只能使用其他方法来为小米 11 刷机了.
 
 ***
 名词解释: [设备端OTA升级](https://help.aliyun.com/document_detail/85700.html).
