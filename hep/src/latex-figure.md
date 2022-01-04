@@ -280,7 +280,7 @@ split
 \parbox[position] [height] [inner-pos] {width} {contents}
 ```
 
-产生一个宽度为`width`的文本框. 
+产生一个宽度为`width`的文本框.
 使用此命令可以使一小段文本框变成单个段落.该命令是`fragile`的(请参阅`\protect`).
 
 ```latex
