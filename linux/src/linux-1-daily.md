@@ -734,7 +734,7 @@ cd /usr/share/fonts/
 sudo chmod -R  755 myfonts/
 ```
 
-(5) 建立字体缓存
++ 建立字体缓存
 
 ```bash
 cd /usr/share/fonts/myfonts

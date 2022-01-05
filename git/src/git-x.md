@@ -958,9 +958,9 @@ feature Z 完成
    tar xzf project-backup.tar.gz
    ```
 
-解压结果会包含一个 `project.bundle`文件, 它是由 [git bundle](https://git-scm.com/docs/git-bundle) 创建的.
+解压结果会包含 `project.bundle`文件, 它是由 [git bundle](https://git-scm.com/docs/git-bundle) 创建的.
 
-+ 新建一个目录例, 从 `bundle` 克隆一个新鲜的 `repository ` .
++ 新建目录, 从 `bundle` 克隆一个新鲜的 `repository ` .
 
    ```bash
    mkdir repofilter && cd repofilter # 新建目录
