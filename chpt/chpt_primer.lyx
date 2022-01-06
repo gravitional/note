@@ -6,24 +6,49 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic} 
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
+\usepackage{eso-pic}
 % This package makes it easy to add some picture commands to every page at ab-solute positions
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
 \usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
 %\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
 % xcolor package starts from the basic facilities of the 
 % color package, and provides easy driver-independent access
 %to several kinds of color tints, shades, tones, 
 %and mixes of arbitrary colors
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{fontspec}
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
-% Required for specifying colors by name 
+\usepackage{ytableau} % Young tableaux and diagrams
+%++++++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+%设置数学字体
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%++++++++++++++++++++++++++++++++++++++++
 \usepackage{enumerate} 
-
-\usepackage{hepunits} % hep units
+\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usetikzlibrary{shapes.misc,animations}
+\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
 \usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
 \usepackage{slashed} % also for slash notation: take your pick!
 \usepackage{bm,bbm} 
@@ -35,25 +60,13 @@
 % Standard package for creating indexes
 \usepackage{multirow}
 \usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\usepackage{ytableau}
-% Many-featured Young tableaux and Young diagrams
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-%\DeclareMathOperator{\re}{Re}
-%\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res}
-\DeclareMathOperator{\disc}{Disc}
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\newcommand{\cola}[1]{{\color{blue}{#1}}}
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
 \usepackage{framed}
 % 在对象周围添加方框，阴影等等，允许跨页
-% 定义阴影的颜色
-\definecolor{shadecolor}{rgb}{0.9412,1,1}
-%定义代码高亮的各种颜色
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+%定义各种颜色
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -78,9 +91,29 @@
     showtabs=false,                  
     tabsize=2
 }
+%%++++++++++++++++++++ 
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\re}{Re}
+% * 号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+%\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+\end_modules
 \maintain_unincluded_children false
 \language chinese-simplified
 \language_package none
@@ -267,7 +300,7 @@ U\left(\Theta\right)=\exp\left(-i\sum_{a=1}^{8}\Theta_{a}\frac{\lambda_{a}}{2}\r
 
 \begin_inset Formula 
 \begin{equation}
-\tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}\label{eq:1.4}
+\Tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}\label{eq:1.4}
 \end{equation}
 
 \end_inset
@@ -275,7 +308,7 @@ U\left(\Theta\right)=\exp\left(-i\sum_{a=1}^{8}\Theta_{a}\frac{\lambda_{a}}{2}\r
 
 \begin_inset Formula 
 \begin{equation}
-\tr\left(\lambda_{a}\right)=0\label{eq:1.5}
+\Tr\left(\lambda_{a}\right)=0\label{eq:1.5}
 \end{equation}
 
 \end_inset
@@ -295,7 +328,7 @@ noprefix "false"
 \end_inset
 
 。另一方面，由
-\begin_inset Formula $\det\left[\exp(C)\right]=\exp\left[\tr(C)\right]$
+\begin_inset Formula $\det\left[\exp(C)\right]=\exp\left[\Tr(C)\right]$
 \end_inset
 
 ，公式
@@ -469,7 +502,7 @@ noprefix "false"
 获取
 \begin_inset Formula 
 \[
-f_{abc}=\frac{1}{4i}\tr\left(\left[\lambda_{a},\lambda_{b}\right]\lambda_{c}\right)
+f_{abc}=\frac{1}{4i}\Tr\left(\left[\lambda_{a},\lambda_{b}\right]\lambda_{c}\right)
 \]
 
 \end_inset
@@ -758,7 +791,7 @@ f_{abc}=\frac{1}{4i}\tr\left(\left[\lambda_{a},\lambda_{b}\right]\lambda_{c}\rig
 由下式给出
 \begin_inset Formula 
 \[
-d_{abc}=\frac{1}{4}\tr\left(\left\{ \lambda_{a},\lambda_{b}\right\} \lambda_{c}\right)
+d_{abc}=\frac{1}{4}\Tr\left(\left\{ \lambda_{a},\lambda_{b}\right\} \lambda_{c}\right)
 \]
 
 \end_inset
@@ -1603,7 +1636,7 @@ D_{\mu}q_{f}=\left(\partial_{\mu}+ig\mathcal{A}_{\mu}\right)q_{f}
 上分量和矩阵形式可以通过正交关系联系起来：
 \begin_inset Formula 
 \begin{equation}
-\tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}
+\Tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}
 \end{equation}
 
 \end_inset
@@ -1611,7 +1644,7 @@ D_{\mu}q_{f}=\left(\partial_{\mu}+ig\mathcal{A}_{\mu}\right)q_{f}
 
 \begin_inset Formula 
 \begin{equation}
-\tr\left(\lambda_{a}\right)=0
+\Tr\left(\lambda_{a}\right)=0
 \end{equation}
 
 \end_inset
@@ -1635,7 +1668,7 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset Formula $\tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}$
+\begin_inset Formula $\Tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}$
 \end_inset
 
 ，胶子部分可以写成
@@ -1647,7 +1680,7 @@ noprefix "false"
 \end_inset
 
 然后使用求迹的轮换对称性，
-\begin_inset Formula $\tr\left(AB\right)=\tr\left(BA\right)$
+\begin_inset Formula $\Tr\left(AB\right)=\Tr\left(BA\right)$
 \end_inset
 
 ，以及
@@ -1702,7 +1735,7 @@ q_{R} & \mapsto U_{R}q_{R}=\exp\left(-i\Theta_{R}\right)\exp\left(-i\sum_{a=1}^{
 \begin{align*}
 \Phi_{i}(x) & \mapsto\Phi_{i}^{\prime}(x)=\Phi_{i}(x)-i\varepsilon_{a}(x)t_{a,ij}\Phi_{j}(x)\\
 J_{a}^{\mu}(x) & =-i\frac{\partial\mathcal{L}}{\partial\partial_{\mu}\Phi_{i}}t_{a,ij}\Phi_{j}\\
-Q_{a}(t) & =-i\int\dif^{3}x\Pi_{i}(x)t_{a,ij}\Phi_{j}(x)
+Q_{a}(t) & =-i\int\dd[3]x\Pi_{i}(x)t_{a,ij}\Phi_{j}(x)
 \end{align*}
 
 \end_inset
@@ -1801,28 +1834,28 @@ name "sec:1.3"
 \begin_inset Formula 
 \[
 \left(\begin{array}{c}
-m_{u}=\left(1.7-3.3\right)\MeV\\
-m_{d}=\left(4.1-5.8\right)\MeV\\
-m_{s}=\left(80-130\right)\MeV
-\end{array}\right)\ll1\GeV\le\left(\begin{array}{c}
-m_{c}=1.27_{-0.09}^{+0.07}\GeV\\
-m_{d}=4.19_{-0.06}^{+0.18}\GeV\\
-m_{s}=\left(172.0\pm0.9\pm1.3\right)\GeV
+m_{u}=\left(1.7-3.3\right)\si{\MeV}\\
+m_{d}=\left(4.1-5.8\right)\si{\MeV}\\
+m_{s}=\left(80-130\right)\si{\MeV}
+\end{array}\right)\ll1\si{\GeV}\le\left(\begin{array}{c}
+m_{c}=1.27_{-0.09}^{+0.07}\si{\GeV}\\
+m_{d}=4.19_{-0.06}^{+0.18}\si{\GeV}\\
+m_{s}=\left(172.0\pm0.9\pm1.3\right)\si{\GeV}
 \end{array}\right)
 \]
 
 \end_inset
 
 而
-\begin_inset Formula $1\GeV$
+\begin_inset Formula $1\si{\GeV}$
 \end_inset
 
 与包含轻夸克的最轻的强子的质量有关，也就是，
-\begin_inset Formula $m_{\rho}=770\MeV$
+\begin_inset Formula $m_{\rho}=770\si{\MeV}$
 \end_inset
 
 ，它不是来自于真空对称性自发破缺的 Goldstone 玻色子。与对称性自发破缺有关的能标，
-\begin_inset Formula $4\pi F_{\pi}\approx1170\MeV$
+\begin_inset Formula $4\pi F_{\pi}\approx1170\si{\MeV}$
 \end_inset
 
 ，数量级大致相同。pion 衰变常数不为零是手征对称性自发破缺的充分必要判据。
@@ -1830,7 +1863,7 @@ m_{s}=\left(172.0\pm0.9\pm1.3\right)\GeV
 
 \begin_layout Standard
 两个上夸克和一个下夸克的流夸克质量相加，与质子质量
-\begin_inset Formula $m_{p}=938\MeV$
+\begin_inset Formula $m_{p}=938\si{\MeV}$
 \end_inset
 
 相比
@@ -1843,7 +1876,7 @@ m_{p}\gg2m_{u}+m_{d}\label{eq:1.31}
 
 说明用流夸克质量参数去诠释质子质量的机制，一定跟氢原子那种情形很不一样。氢原子的质量主要来自于电子加上质子质量，结合能有一个小的修正。在这个语境中，必须区分开流
 夸克质量和非相对论模型中的组分夸克质量，一般是
-\begin_inset Formula $350\MeV$
+\begin_inset Formula $350\si{\MeV}$
 \end_inset
 
 。特别地，
@@ -2210,9 +2243,9 @@ A^{\mu} & =R^{\mu}-L^{\mu}=\bar{q}\gamma^{\mu}\gamma^{5}q
 对称性。守恒荷算符，定义为守恒流对全空间的积分。
 \begin_inset Formula 
 \begin{align*}
-Q_{La}\left(t\right) & =\int\dif^{3}xq_{L}^{\dagger}\left(t,\vec{x}\right)\frac{\lambda_{a}}{2}q_{L}\left(t,\vec{x}\right)=\int\dif^{3}xq^{\dagger}\left(t,\vec{x}\right)P_{L}\frac{\lambda_{a}}{2}q\left(t,\vec{x}\right)\\
-Q_{Ra}\left(t\right) & =\int\dif^{3}xq_{R}^{\dagger}\left(t,\vec{x}\right)\frac{\lambda_{a}}{2}q_{R}\left(t,\vec{x}\right)=\int\dif^{3}xq^{\dagger}\left(t,\vec{x}\right)P_{R}\frac{\lambda_{a}}{2}q\left(t,\vec{x}\right)\\
-Q_{V}\left(t\right) & =\int\dif^{3}x\left[q_{L}^{\dagger}\left(t,\vec{x}\right)q_{L}\left(t,\vec{x}\right)+q_{R}^{\dagger}\left(t,\vec{x}\right)q_{R}\left(t,\vec{x}\right)\right]=\int\dif^{3}xq^{\dagger}\left(t,\vec{x}\right)q\left(t,\vec{x}\right)
+Q_{La}\left(t\right) & =\int\dd[3]xq_{L}^{\dagger}\left(t,\vec{x}\right)\frac{\lambda_{a}}{2}q_{L}\left(t,\vec{x}\right)=\int\dd[3]xq^{\dagger}\left(t,\vec{x}\right)P_{L}\frac{\lambda_{a}}{2}q\left(t,\vec{x}\right)\\
+Q_{Ra}\left(t\right) & =\int\dd[3]xq_{R}^{\dagger}\left(t,\vec{x}\right)\frac{\lambda_{a}}{2}q_{R}\left(t,\vec{x}\right)=\int\dd[3]xq^{\dagger}\left(t,\vec{x}\right)P_{R}\frac{\lambda_{a}}{2}q\left(t,\vec{x}\right)\\
+Q_{V}\left(t\right) & =\int\dd[3]x\left[q_{L}^{\dagger}\left(t,\vec{x}\right)q_{L}\left(t,\vec{x}\right)+q_{R}^{\dagger}\left(t,\vec{x}\right)q_{R}\left(t,\vec{x}\right)\right]=\int\dd[3]xq^{\dagger}\left(t,\vec{x}\right)q\left(t,\vec{x}\right)
 \end{align*}
 
 \end_inset
@@ -2850,7 +2883,7 @@ Hints: 编时乘积定义为
 \begin_inset Formula 
 \begin{align}
  & Z\left[j,j^{*},j^{\mu}\right]=\exp\left[iW\left[j,j^{*},j^{\mu}\right]\right]\nonumber \\
- & =\bra{0}T\left(\exp\left\{ i\int\dif^{4}x\left[j\left(x\right)\Phi^{\dagger}\left(x\right)+j^{*}\left(x\right)\Phi\left(x\right)+j_{\mu}\left(x\right)J^{\mu}\left(x\right)\right]\right\} \right)\ket{0}\label{eq:1.130}
+ & =\bra{0}T\left(\exp\left\{ i\int\dd[4]x\left[j\left(x\right)\Phi^{\dagger}\left(x\right)+j^{*}\left(x\right)\Phi\left(x\right)+j_{\mu}\left(x\right)J^{\mu}\left(x\right)\right]\right\} \right)\ket{0}\label{eq:1.130}
 \end{align}
 
 \end_inset
@@ -2891,7 +2924,7 @@ noprefix "false"
 其中
 \begin_inset Formula 
 \begin{align}
-H & =\int\dif^{3}x\mathcal{H}\label{eq:1.132}\\
+H & =\int\dd[3]x\mathcal{H}\label{eq:1.132}\\
 \mathcal{H} & =\Pi^{\dagger}\Pi+\vec{\nabla}\Phi^{\dagger}\cdot\vec{\nabla}\Phi+m^{2}\Phi^{\dagger}\Phi+\lambda\left(\Phi^{\dagger}\Phi\right)^{2}\nonumber 
 \end{align}
 
@@ -2964,7 +2997,7 @@ Z\left[j,j^{*},j^{\mu}\right]=\langle0,\text{out}|0,\text{in}\rangle_{j,j^{*},j_
 为了讨论理论底层的对称性对生成泛函施加的限制，我们考虑它的路径积分表示
 \begin_inset Formula 
 \[
-Z\left[j,j^{*},j^{\mu}\right]=\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]\exp\left[iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]\right]
+Z\left[j,j^{*},j^{\mu}\right]=\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]\exp\left[iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]\right]
 \]
 
 \end_inset
@@ -2972,7 +3005,7 @@ Z\left[j,j^{*},j^{\mu}\right]=\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\ri
 其中
 \begin_inset Formula 
 \begin{equation}
-S\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]=S\left[\Phi,\Phi^{*}\right]+\int\dif^{4}x\left[\Phi\left(x\right)j^{*}\left(x\right)+\Phi^{*}\left(x\right)j\left(x\right)+J^{\mu}\left(x\right)j_{\mu}\left(x\right)\right]\label{eq:1.137}
+S\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]=S\left[\Phi,\Phi^{*}\right]+\int\dd[4]x\left[\Phi\left(x\right)j^{*}\left(x\right)+\Phi^{*}\left(x\right)j\left(x\right)+J^{\mu}\left(x\right)j_{\mu}\left(x\right)\right]\label{eq:1.137}
 \end{equation}
 
 \end_inset
@@ -3028,10 +3061,10 @@ noprefix "false"
 中的具体变换形式。我们如下可以验证生成泛函的不变性，
 \begin_inset Formula 
 \begin{align}
-Z\left[j,j^{*},j_{\mu}\right] & =\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}\nonumber \\
- & =\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]e^{iS\left[\Phi^{\prime},\Phi^{\prime*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}\nonumber \\
- & =\int\left[\dif\Phi_{1}^{\prime}\right]\left[\dif\Phi_{2}^{\prime}\right]\left(\frac{\partial\Phi_{i}}{\partial\Phi_{j}^{\prime}}\right)e^{iS\left[\Phi^{\prime},\Phi^{\prime*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}\label{eq:1.140}\\
- & =\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]e^{iS\left[\Phi,\Phi^{*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}\nonumber \\
+Z\left[j,j^{*},j_{\mu}\right] & =\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}\nonumber \\
+ & =\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]e^{iS\left[\Phi^{\prime},\Phi^{\prime*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}\nonumber \\
+ & =\int\left[\dd\Phi_{1}^{\prime}\right]\left[\dd\Phi_{2}^{\prime}\right]\left(\frac{\partial\Phi_{i}}{\partial\Phi_{j}^{\prime}}\right)e^{iS\left[\Phi^{\prime},\Phi^{\prime*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}\label{eq:1.140}\\
+ & =\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]e^{iS\left[\Phi,\Phi^{*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}\nonumber \\
  & =Z\left[j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]\nonumber 
 \end{align}
 
@@ -3082,8 +3115,8 @@ noprefix "false"
 出发，我们进行泰勒展开，保留到无穷小量的线性项
 \begin_inset Formula 
 \begin{align*}
-0 & =\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]\left(e^{iS\left[\Phi,\Phi^{*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}-e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}\right)\\
- & =\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]\int\dif x\left\{ \varepsilon\left[\Phi j^{*}-\Phi^{*}j\right]-iJ^{\mu}\partial_{\mu}\varepsilon\right\} e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}
+0 & =\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]\left(e^{iS\left[\Phi,\Phi^{*},j^{\prime},j^{\prime*},j_{\mu}^{\prime}\right]}-e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}\right)\\
+ & =\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]\int\dd x\left\{ \varepsilon\left[\Phi j^{*}-\Phi^{*}j\right]-iJ^{\mu}\partial_{\mu}\varepsilon\right\} e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}
 \end{align*}
 
 \end_inset
@@ -3099,7 +3132,7 @@ noprefix "false"
 对其他项类似，可得
 \begin_inset Formula 
 \begin{align*}
-0 & =\int\left[\dif\Phi_{1}\right]\left[\dif\Phi_{2}\right]\int\dif^{4}x\Bigg\{\varepsilon\left[-i\times j^{*}\left(x\right)\frac{\delta}{\delta j^{*}\left(x\right)}+i\times j\left(x\right)\frac{\delta}{\delta j\left(x\right)}\right]\\
+0 & =\int\left[\dd\Phi_{1}\right]\left[\dd\Phi_{2}\right]\int\dd[4]x\Bigg\{\varepsilon\left[-i\times j^{*}\left(x\right)\frac{\delta}{\delta j^{*}\left(x\right)}+i\times j\left(x\right)\frac{\delta}{\delta j\left(x\right)}\right]\\
  & -\partial_{\mu}\varepsilon\left(x\right)\frac{\delta}{\delta j_{\mu}\left(x\right)}\Bigg\} e^{iS\left[\Phi,\Phi^{*},j,j^{*},j_{\mu}\right]}
 \end{align*}
 
@@ -3108,7 +3141,7 @@ noprefix "false"
 最后，我们交换积分次序，使用分部积分，并应用散度定理：
 \begin_inset Formula 
 \[
-0=\int\dif^{4}x\varepsilon\left(x\right)\left[i\times j\left(x\right)\frac{\delta}{\delta j\left(x\right)}-i\times j^{*}\left(x\right)\frac{\delta}{\delta j^{*}\left(x\right)}+\partial_{\mu}^{x}\frac{\delta}{\delta j_{\mu}\left(x\right)}\right]Z\left[j,j^{*},j_{\mu}\right]=0
+0=\int\dd[4]x\varepsilon\left(x\right)\left[i\times j\left(x\right)\frac{\delta}{\delta j\left(x\right)}-i\times j^{*}\left(x\right)\frac{\delta}{\delta j^{*}\left(x\right)}+\partial_{\mu}^{x}\frac{\delta}{\delta j_{\mu}\left(x\right)}\right]Z\left[j,j^{*},j_{\mu}\right]=0
 \]
 
 \end_inset
@@ -3237,7 +3270,7 @@ noprefix "false"
 的定义
 \begin_inset Formula 
 \[
-Z\left[j,j^{\dagger},j^{\mu}\right]=\bra{0}T\left(\exp\left\{ i\int\dif^{4}x\left[j\left(x\right)\Phi^{\dagger}\left(x\right)+j^{\dagger}\left(x\right)\Phi\left(x\right)+j_{\mu}\left(x\right)J^{\mu}\left(x\right)\right]\right\} \right)\ket{0}
+Z\left[j,j^{\dagger},j^{\mu}\right]=\bra{0}T\left(\exp\left\{ i\int\dd[4]x\left[j\left(x\right)\Phi^{\dagger}\left(x\right)+j^{\dagger}\left(x\right)\Phi\left(x\right)+j_{\mu}\left(x\right)J^{\mu}\left(x\right)\right]\right\} \right)\ket{0}
 \]
 
 \end_inset
@@ -3695,7 +3728,7 @@ Following Gasse and leutwyler 的手续，引入和外部
 。真空 sector 的格林函数可以被组合成生成泛函
 \begin_inset Formula 
 \[
-Z\left[v,a,s,p\right]=\exp\left(iW\left[v,a,s,p\right]\right)=\bra{0}T\exp\left[i\int\dif^{4}x\mathcal{L}_{\text{ext}}\right]\ket{0}_{0}
+Z\left[v,a,s,p\right]=\exp\left(iW\left[v,a,s,p\right]\right)=\bra{0}T\exp\left[i\int\dd[4]x\mathcal{L}_{\text{ext}}\right]\ket{0}_{0}
 \]
 
 \end_inset
@@ -4318,7 +4351,7 @@ T_{+}=\left(\begin{array}{ccc}
  质量联系起来，
 \begin_inset Formula 
 \[
-G_{F}=\sqrt{2}\frac{g^{2}}{8M_{W}^{2}}=1.16637\left(1\right)\times10^{-5}\GeV^{-2}
+G_{F}=\sqrt{2}\frac{g^{2}}{8M_{W}^{2}}=\SI{1.16637(1)e-5}{\GeV}^{-2}
 \]
 
 \end_inset
@@ -4958,7 +4991,7 @@ E=E^{\left(0\right)}\pm\varepsilon a+\cdots
 
 \begin_inset Formula 
 \[
-\int\dif^{3}y\bra{u}\mathscr{H}(\vec{y},0)\Phi(\vec{x},0)\ket{v}=\int\dif^{3}y\bra{u}\mathscr{H}(\vec{x},0)\Phi(\vec{y},0)\ket{v}
+\int\dd[3]y\bra{u}\mathscr{H}(\vec{y},0)\Phi(\vec{x},0)\ket{v}=\int\dd[3]y\bra{u}\mathscr{H}(\vec{x},0)\Phi(\vec{y},0)\ket{v}
 \]
 
 \end_inset
@@ -4966,8 +4999,8 @@ E=E^{\left(0\right)}\pm\varepsilon a+\cdots
 我们考虑左手边的式子，
 \begin_inset Formula 
 \begin{align*}
-\int\dif^{3}y\bra{u}\mathscr{H}(\vec{y},0)\Phi(\vec{x},0)\ket{v} & =\sum_{w}\bra{u}H\ket{w}\bra{w}\Phi(0)\ket{v}\\
- & \int\dif^{3}y\dif^{3}p\sum_{n}\bra{u}\mathscr{H}(\vec{y},0)\ket{n,\vec{p}}\bra{n,\vec{p}}\Phi(0)\ket{v}e^{-i\vec{p}\cdot\vec{x}}
+\int\dd[3]y\bra{u}\mathscr{H}(\vec{y},0)\Phi(\vec{x},0)\ket{v} & =\sum_{w}\bra{u}H\ket{w}\bra{w}\Phi(0)\ket{v}\\
+ & \int\dd[3]y\dd[3]p\sum_{n}\bra{u}\mathscr{H}(\vec{y},0)\ket{n,\vec{p}}\bra{n,\vec{p}}\Phi(0)\ket{v}e^{-i\vec{p}\cdot\vec{x}}
 \end{align*}
 
 \end_inset
@@ -4987,7 +5020,7 @@ f_{n}(\vec{y},\vec{p})=\bra{u}\mathscr{H}(\vec{y},0)\ket{n,\vec{p}}\bra{n,\vec{p
 性质很好，可以应用 the lemma of Riemann and Lebesgue,
 \begin_inset Formula 
 \[
-\lim_{\lvert\vec{x}\rvert\to\infty}\int\dif^{3}pf(\vec{p})e^{-i\vec{p}\cdot\vec{x}}=0
+\lim_{\lvert\vec{x}\rvert\to\infty}\int\dd[3]pf(\vec{p})e^{-i\vec{p}\cdot\vec{x}}=0
 \]
 
 \end_inset
@@ -5485,7 +5518,7 @@ Q_{2}\ket{0}\neq0
 不能被归一化。在严格推导中，使用
 \begin_inset Formula 
 \[
-\int\dif^{3}x\bra{0}\left[J_{k}^{0}\left(t,\vec{x},\Phi_{l}\left(0\right)\right)\right]\ket{0}
+\int\dd[3]x\bra{0}\left[J_{k}^{0}\left(t,\vec{x},\Phi_{l}\left(0\right)\right)\right]\ket{0}
 \]
 
 \end_inset
@@ -5579,7 +5612,7 @@ B & =\bra{0}\left[Q_{2},\Phi_{1}\right]\ket{0}\\
 \begin_inset Formula 
 \begin{align*}
 0\neq v & =\bra{0}\Phi_{3}\left(0\right)\ket{0}=-i\bra{0}\left[Q_{1},\Phi_{2}\left(0\right)\right]\ket{0}\\
- & =-i\int\dif^{3}x\bra{0}\left[J_{1}^{0}\left(t,\vec{x}\right),\Phi_{2}\left(0\right)\right]\ket{0}
+ & =-i\int\dd[3]x\bra{0}\left[J_{1}^{0}\left(t,\vec{x}\right),\Phi_{2}\left(0\right)\right]\ket{0}
 \end{align*}
 
 \end_inset
@@ -5591,7 +5624,7 @@ B & =\bra{0}\left[Q_{2},\Phi_{1}\right]\ket{0}\\
 得到：
 \begin_inset Formula 
 \begin{equation}
-v=-i\sum_{n}\int\dif^{3}x\left(\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra{n}\Phi_{2}\left(0\right)\ket{0}-\bra{0}\Phi_{2}\left(0\right)\ket{n}\bra{n}J_{1}^{0}\left(t,\vec{x}\right)\ket{0}\right)\label{eq:2.31}
+v=-i\sum_{n}\int\dd[3]x\left(\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra{n}\Phi_{2}\left(0\right)\ket{0}-\bra{0}\Phi_{2}\left(0\right)\ket{n}\bra{n}J_{1}^{0}\left(t,\vec{x}\right)\ket{0}\right)\label{eq:2.31}
 \end{equation}
 
 \end_inset
@@ -5599,9 +5632,9 @@ v=-i\sum_{n}\int\dif^{3}x\left(\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra
 并使用平移不变性
 \begin_inset Formula 
 \begin{align*}
- & =-i\sum_{n}\int\dif^{3}x\left(e^{-iP_{n}\cdot x}\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra{n}\Phi_{2}\left(0\right)\ket{0}-e^{iP_{n}\cdot x}\bra{0}\Phi_{2}\left(0\right)\ket{n}\bra{n}J_{1}^{0}\left(t,\vec{x}\right)\ket{0}\right)\\
- & =-i\sum_{n}\int\dif^{3}x\delta^{3}\left(\vec{P}_{n}\right)e^{-iE_{n}\cdot x}\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra{n}\Phi_{2}\left(0\right)\ket{0}\\
- & \phantom{=}-i\sum_{n}\int\dif^{3}x\delta^{3}\left(\vec{P}_{n}\right)e^{iE_{n}\cdot x}\bra{0}\Phi_{2}\left(0\right)\ket{n}\bra{n}J_{1}^{0}\left(t,\vec{x}\right)\ket{0}
+ & =-i\sum_{n}\int\dd[3]x\left(e^{-iP_{n}\cdot x}\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra{n}\Phi_{2}\left(0\right)\ket{0}-e^{iP_{n}\cdot x}\bra{0}\Phi_{2}\left(0\right)\ket{n}\bra{n}J_{1}^{0}\left(t,\vec{x}\right)\ket{0}\right)\\
+ & =-i\sum_{n}\int\dd[3]x\delta^{3}\left(\vec{P}_{n}\right)e^{-iE_{n}\cdot x}\bra{0}J_{1}^{0}\left(t,\vec{x}\right)\ket{n}\bra{n}\Phi_{2}\left(0\right)\ket{0}\\
+ & \phantom{=}-i\sum_{n}\int\dd[3]x\delta^{3}\left(\vec{P}_{n}\right)e^{iE_{n}\cdot x}\bra{0}\Phi_{2}\left(0\right)\ket{n}\bra{n}J_{1}^{0}\left(t,\vec{x}\right)\ket{0}
 \end{align*}
 
 \end_inset
@@ -6033,7 +6066,7 @@ status open
 \end_inset
 
 ，Massed in 
-\begin_inset Formula $\MeV$
+\begin_inset Formula $\si{\MeV}$
 \end_inset
 
 
@@ -6090,7 +6123,7 @@ status open
 \end_inset
 
 ，Massed in 
-\begin_inset Formula $\MeV$
+\begin_inset Formula $\si{\MeV}$
 \end_inset
 
 
@@ -6260,7 +6293,7 @@ condensation
 而守恒荷为
 \begin_inset Formula 
 \[
-Q_{Va}\left(t\right)=\int\dif^{3}xq^{\dagger}\left(t,\vec{x}\right)\frac{\lambda_{a}}{2}q\left(t,\vec{x}\right)
+Q_{Va}\left(t\right)=\int\dd[3]xq^{\dagger}\left(t,\vec{x}\right)\frac{\lambda_{a}}{2}q\left(t,\vec{x}\right)
 \]
 
 \end_inset
@@ -7486,7 +7519,7 @@ S_{2}\equiv\left\{ \phi:M^{4}\to\tilde{\mathscr{H}}(N)|\phi\text{ smooth}\right\
 \end_inset
 
 其中
-\begin_inset Formula $\tilde{\mathscr{H}}(N)\equiv\left\{ A\in\text{gl}\left(N,\mathbb{C}\right)|A^{\dagger}=A\land\tr(A)=0\right\} $
+\begin_inset Formula $\tilde{\mathscr{H}}(N)\equiv\left\{ A\in\text{gl}\left(N,\mathbb{C}\right)|A^{\dagger}=A\land\Tr(A)=0\right\} $
 \end_inset
 
 , 所有的
@@ -7532,7 +7565,7 @@ S_{2}\equiv\left\{ \phi:M^{4}\to\tilde{\mathscr{H}}(N)|\phi\text{ smooth}\right\
 \end_inset
 
 是通常的 Pauli 矩阵 and 
-\begin_inset Formula $\phi_{i}=\frac{1}{2}\tr\left[\tau_{i}\phi\right]$
+\begin_inset Formula $\phi_{i}=\frac{1}{2}\Tr\left[\tau_{i}\phi\right]$
 \end_inset
 
 。
@@ -7782,7 +7815,7 @@ U & =1+i\frac{\phi}{F_{0}}-\frac{\phi^{2}}{2F_{0}^{2}}+\cdots\mapsto V(1+i\frac{
 ,因为
 \begin_inset Formula 
 \begin{align*}
-\left(V\phi V^{\dagger}\right)^{\dagger}=V\phi V^{\dagger}, & \tr\left(V\phi V^{\dagger}\right)=\tr\left(\phi\right)=0\\
+\left(V\phi V^{\dagger}\right)^{\dagger}=V\phi V^{\dagger}, & \Tr\left(V\phi V^{\dagger}\right)=\Tr\left(\phi\right)=0\\
 V_{1}\left(V_{2}\phi V_{2}^{\dagger}\right)V_{1}^{\dagger} & =\left(V_{1}V_{2}\right)\phi\left(V_{1}V_{2}\right)^{\dagger}
 \end{align*}
 
@@ -7904,7 +7937,7 @@ U\left(x\right)=\exp\left(i\frac{\phi\left(x\right)}{F_{0}}\right)\label{eq:3.41
 最低阶的有效拉氏量为
 \begin_inset Formula 
 \begin{equation}
-\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\tr\left(\partial_{\mu}U,\partial^{\mu}U^{\dagger}\right)\label{eq:3.42}
+\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\Tr\left(\partial_{\mu}U,\partial^{\mu}U^{\dagger}\right)\label{eq:3.42}
 \end{equation}
 
 \end_inset
@@ -7912,8 +7945,8 @@ U\left(x\right)=\exp\left(i\frac{\phi\left(x\right)}{F_{0}}\right)\label{eq:3.41
 可以求出相应的守恒流为
 \begin_inset Formula 
 \begin{align}
-J_{La}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{La}}=i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}\partial^{\mu}U^{\dagger}U\right)\nonumber \\
-J_{Ra}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{Ra}}=-i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}U\partial^{\mu}U^{\dagger}\right)\label{eq:3.48}
+J_{La}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{La}}=i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}\partial^{\mu}U^{\dagger}U\right)\nonumber \\
+J_{Ra}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{Ra}}=-i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}U\partial^{\mu}U^{\dagger}\right)\label{eq:3.48}
 \end{align}
 
 \end_inset
@@ -7921,8 +7954,8 @@ J_{Ra}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{
 
 \begin_inset Formula 
 \begin{align*}
-J_{Va}^{\mu} & =J_{Ra}^{\mu}+J_{La}^{\mu}=-i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}\left[U,\partial^{\mu}U^{\dagger}\right]\right)\\
-J_{Aa}^{\mu} & =J_{Ra}^{\mu}-J_{La}^{\mu}=-i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}\left\{ U,\partial^{\mu}U^{\dagger}\right\} \right)
+J_{Va}^{\mu} & =J_{Ra}^{\mu}+J_{La}^{\mu}=-i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}\left[U,\partial^{\mu}U^{\dagger}\right]\right)\\
+J_{Aa}^{\mu} & =J_{Ra}^{\mu}-J_{La}^{\mu}=-i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}\left\{ U,\partial^{\mu}U^{\dagger}\right\} \right)
 \end{align*}
 
 \end_inset
@@ -7930,7 +7963,7 @@ J_{Aa}^{\mu} & =J_{Ra}^{\mu}-J_{La}^{\mu}=-i\frac{F_{0}^{2}}{4}\tr\left(\lambda_
 
 \begin_inset Formula 
 \begin{align*}
-J_{Aa}^{\mu} & =-i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}\left\{ \mathbbm{1}+\cdots,-i\frac{\partial_{\mu}\phi_{b}\lambda_{b}}{F_{0}}+\cdots\right\} \right)=-F_{0}\partial^{\mu}\phi_{a}+\cdots
+J_{Aa}^{\mu} & =-i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}\left\{ \mathbbm{1}+\cdots,-i\frac{\partial_{\mu}\phi_{b}\lambda_{b}}{F_{0}}+\cdots\right\} \right)=-F_{0}\partial^{\mu}\phi_{a}+\cdots
 \end{align*}
 
 \end_inset
@@ -8020,7 +8053,7 @@ U\mapsto R\mathcal{M}L^{\dagger},\quad\mathcal{M}\mapsto R\mathcal{M}L^{\dagger}
 的幂次展开。最低阶为
 \begin_inset Formula 
 \begin{equation}
-\mathcal{L}_{\text{sb}}=\frac{F_{0}^{2}B_{0}}{2}\tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)\label{eq:3.55}
+\mathcal{L}_{\text{sb}}=\frac{F_{0}^{2}B_{0}}{2}\Tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)\label{eq:3.55}
 \end{equation}
 
 \end_inset
@@ -8032,7 +8065,7 @@ U\mapsto R\mathcal{M}L^{\dagger},\quad\mathcal{M}\mapsto R\mathcal{M}L^{\dagger}
 的物理意义，我们考虑
 \begin_inset Formula 
 \[
-\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\tr\left(\partial_{\mu}U,\partial^{\mu}U^{\dagger}\right)+\frac{F_{0}^{2}B_{0}}{2}\tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)
+\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\Tr\left(\partial_{\mu}U,\partial^{\mu}U^{\dagger}\right)+\frac{F_{0}^{2}B_{0}}{2}\Tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)
 \]
 
 \end_inset
@@ -8044,8 +8077,8 @@ U\mapsto R\mathcal{M}L^{\dagger},\quad\mathcal{M}\mapsto R\mathcal{M}L^{\dagger}
 它对应的哈密顿密度为，
 \begin_inset Formula 
 \begin{align*}
-\mathcal{H}_{\text{eff}} & =\frac{F_{0}^{2}}{4}\tr\left(\dot{U}\dot{U}^{\dagger}\right)+\frac{F_{0}^{2}}{4}\tr\left(\vec{\nabla}U\cdot\vec{\nabla}U^{\dagger}\right)-\mathcal{L}_{\text{sb}}\\
- & =\frac{F_{0}^{2}}{4}\tr\left(\dot{U}\dot{U}^{\dagger}\right)+\frac{F_{0}^{2}}{4}\tr\left(\vec{\nabla}U\cdot\vec{\nabla}U^{\dagger}\right)-\frac{F_{0}^{2}B_{0}}{2}\tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)
+\mathcal{H}_{\text{eff}} & =\frac{F_{0}^{2}}{4}\Tr\left(\dot{U}\dot{U}^{\dagger}\right)+\frac{F_{0}^{2}}{4}\Tr\left(\vec{\nabla}U\cdot\vec{\nabla}U^{\dagger}\right)-\mathcal{L}_{\text{sb}}\\
+ & =\frac{F_{0}^{2}}{4}\Tr\left(\dot{U}\dot{U}^{\dagger}\right)+\frac{F_{0}^{2}}{4}\Tr\left(\vec{\nabla}U\cdot\vec{\nabla}U^{\dagger}\right)-\frac{F_{0}^{2}B_{0}}{2}\Tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)
 \end{align*}
 
 \end_inset
@@ -8144,14 +8177,14 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $\tr\left(\mathcal{M}\right)$
+\begin_inset Formula $\Tr\left(\mathcal{M}\right)$
 \end_inset
 
 单个不是不变的。
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $\tr\left(\mathcal{M}U^{\dagger}-U\mathcal{M}^{\dagger}\right)$
+\begin_inset Formula $\Tr\left(\mathcal{M}U^{\dagger}-U\mathcal{M}^{\dagger}\right)$
 \end_inset
 
 在宇称变换
@@ -8161,8 +8194,8 @@ noprefix "false"
 下的行为不对，因为
 \begin_inset Formula 
 \begin{align*}
-\tr\left(\mathcal{M}U^{\dagger}\left(t,\vec{x}\right)-U\left(t,\vec{x}\right)\mathcal{M}^{\dagger}\right) & \stackrel{P}{\mapsto}\tr\left(\mathcal{M}U\left(t,-\vec{x}\right)-U^{\dagger}\left(t,-\vec{x}\right)\mathcal{M}^{\dagger}\right)\\
- & \stackrel{\mathcal{M}=\mathcal{M}^{\dagger}}{=}-\tr\left(\mathcal{M}U^{\dagger}\left(t,\vec{x}\right)-U\left(t,\vec{x}\right)\mathcal{M}^{\dagger}\right)
+\Tr\left(\mathcal{M}U^{\dagger}\left(t,\vec{x}\right)-U\left(t,\vec{x}\right)\mathcal{M}^{\dagger}\right) & \stackrel{P}{\mapsto}\Tr\left(\mathcal{M}U\left(t,-\vec{x}\right)-U^{\dagger}\left(t,-\vec{x}\right)\mathcal{M}^{\dagger}\right)\\
+ & \stackrel{\mathcal{M}=\mathcal{M}^{\dagger}}{=}-\Tr\left(\mathcal{M}U^{\dagger}\left(t,\vec{x}\right)-U\left(t,\vec{x}\right)\mathcal{M}^{\dagger}\right)
 \end{align*}
 
 \end_inset
@@ -8194,7 +8227,7 @@ noprefix "false"
  的第二阶
 \begin_inset Formula 
 \[
-\mathcal{L}_{\text{sb}}=-\frac{B_{0}}{2}\tr\left(\phi^{2}\mathcal{M}\right)+\cdots
+\mathcal{L}_{\text{sb}}=-\frac{B_{0}}{2}\Tr\left(\phi^{2}\mathcal{M}\right)+\cdots
 \]
 
 \end_inset
@@ -8202,7 +8235,7 @@ noprefix "false"
 展开到第二阶我们发现，
 \begin_inset Formula 
 \begin{align*}
-\tr\left(\phi^{2}\mathcal{M}\right) & =2\left(m_{u}+m_{d}\right)\pi^{+}\pi^{-}+2\left(m_{u}+m_{s}\right)K^{+}K^{-}+2\left(m_{d}+m_{s}\right)K^{0}\bar{K}^{0}\\
+\Tr\left(\phi^{2}\mathcal{M}\right) & =2\left(m_{u}+m_{d}\right)\pi^{+}\pi^{-}+2\left(m_{u}+m_{s}\right)K^{+}K^{-}+2\left(m_{d}+m_{s}\right)K^{0}\bar{K}^{0}\\
  & +\left(m_{u}+m_{d}\right)\pi^{0}\pi^{0}+\frac{2}{\sqrt{3}}\left(m_{u}-m_{d}\right)\pi^{0}\eta+\frac{m_{u}+m_{d}+4m_{s}}{3}\eta^{2}
 \end{align*}
 
@@ -8289,7 +8322,7 @@ noprefix "false"
 \end_inset
 
  
-\begin_inset Formula $\mathcal{L}_{\text{sb}}=\frac{F_{0}^{2}B_{0}}{2}\tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)$
+\begin_inset Formula $\mathcal{L}_{\text{sb}}=\frac{F_{0}^{2}B_{0}}{2}\Tr\left(\mathcal{M}U^{\dagger}+U\mathcal{M}^{\dagger}\right)$
 \end_inset
 
 不仅导致真空能量的改变，同时也导致了 Goldstone bosons 的有限质量，两种效果都正比于参数
@@ -8301,7 +8334,7 @@ noprefix "false"
 \end_inset
 
 的领头阶，是由于对称性排除了
-\begin_inset Formula $\tr\left(\mathcal{M}\right)$
+\begin_inset Formula $\Tr\left(\mathcal{M}\right)$
 \end_inset
 
 这样的项，它将使真空能的改变和 Goldstone bosons 质量的关系退耦。
@@ -8377,7 +8410,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\tr\left(\partial_{\mu}U,U^{\dagger}\right)=0
+\Tr\left(\partial_{\mu}U,U^{\dagger}\right)=0
 \]
 
 \end_inset
@@ -8393,7 +8426,7 @@ U(x)=\exp\left(\frac{i\phi}{F_{0}}\right)
 
 \begin_inset Formula 
 \[
-\tr\left(\partial_{\mu}U,U^{\dagger}\right)=\tr\left(\frac{i}{F_{0}}U\partial_{\mu}\phi,U^{\dagger}\right)=\tr\left(\frac{i}{F_{0}}U^{\dagger}U\partial_{\mu}\phi\right)=\tr\left(\frac{i}{F_{0}}\partial_{\mu}\phi\right)=0
+\Tr\left(\partial_{\mu}U,U^{\dagger}\right)=\Tr\left(\frac{i}{F_{0}}U\partial_{\mu}\phi,U^{\dagger}\right)=\Tr\left(\frac{i}{F_{0}}U^{\dagger}U\partial_{\mu}\phi\right)=\Tr\left(\frac{i}{F_{0}}\partial_{\mu}\phi\right)=0
 \]
 
 \end_inset
@@ -8458,7 +8491,7 @@ and
 \begin{align*}
 f_{R\mu\nu} & \equiv\partial_{\mu}r_{\nu}-\partial_{\nu}r_{\mu}-i\left[r_{\mu},r_{\nu}\right]\\
 f_{L\mu\nu} & \equiv\partial_{\mu}l_{\nu}-\partial_{\nu}l_{\mu}-i\left[l_{\mu},l_{\nu}\right]\\
-\tr\left(f_{R\mu\nu}\right) & =\tr\left(f_{L\mu\nu}\right)=0
+\Tr\left(f_{R\mu\nu}\right) & =\Tr\left(f_{L\mu\nu}\right)=0
 \end{align*}
 
 \end_inset
@@ -9077,8 +9110,8 @@ noprefix "false"
 在最低阶，可能的三项是：
 \begin_inset Formula 
 \begin{align*}
- & \tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\\
- & \tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
+ & \Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\\
+ & \Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
 \end{align*}
 
 \end_inset
@@ -9090,7 +9123,7 @@ noprefix "false"
 ，所以第二项中减号的宇称不对。最终，在最低阶，最一般的 locally invariant, effective Lagrangian 是
 \begin_inset Formula 
 \begin{equation}
-\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]\label{eq:3.77}
+\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]\label{eq:3.77}
 \end{equation}
 
 \end_inset
@@ -9118,7 +9151,7 @@ noprefix "false"
 运动方程
 \begin_inset Formula 
 \[
-\mathcal{O}_{\text{EOM}}^{\left(2\right)}\left(U\right)\equiv D^{2}UU^{\dagger}-U\left(D^{2}U\right)^{\dagger}-\chi U^{\dagger}+U\chi^{\dagger}+\frac{1}{3}\tr\left(\chi U^{\dagger}-U\chi^{\dagger}\right)=0
+\mathcal{O}_{\text{EOM}}^{\left(2\right)}\left(U\right)\equiv D^{2}UU^{\dagger}-U\left(D^{2}U\right)^{\dagger}-\chi U^{\dagger}+U\chi^{\dagger}+\frac{1}{3}\Tr\left(\chi U^{\dagger}-U\chi^{\dagger}\right)=0
 \]
 
 \end_inset
@@ -9224,7 +9257,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
+\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
 \]
 
 \end_inset
@@ -9258,7 +9291,7 @@ noprefix "false"
 ，得到线性项为
 \begin_inset Formula 
 \[
-\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]=i\frac{F_{0}^{2}}{2}\tr\left(l_{\mu}\partial^{\mu}U^{\dagger}U\right)+\cdots
+\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]=i\frac{F_{0}^{2}}{2}\Tr\left(l_{\mu}\partial^{\mu}U^{\dagger}U\right)+\cdots
 \]
 
 \end_inset
@@ -9278,7 +9311,7 @@ l_{\mu}=\sum_{a=1}^{8}l_{\mu a}\frac{\lambda_{a}}{2}
 的相互作用项为
 \begin_inset Formula 
 \[
-\mathcal{L}_{\text{int}}=\sum_{a=1}^{8}l_{\mu a}\left[i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}\partial^{\mu}U^{\dagger}U\right)\right]=\sum_{a=1}^{8}l_{\mu a}J_{La}^{\mu}
+\mathcal{L}_{\text{int}}=\sum_{a=1}^{8}l_{\mu a}\left[i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}\partial^{\mu}U^{\dagger}U\right)\right]=\sum_{a=1}^{8}l_{\mu a}J_{La}^{\mu}
 \]
 
 \end_inset
@@ -9306,8 +9339,8 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align*}
-J_{La}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{La}}=i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}\partial^{\mu}U^{\dagger}U\right)\\
-J_{Ra}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{Ra}}=-i\frac{F_{0}^{2}}{4}\tr\left(\lambda_{a}U\partial^{\mu}U^{\dagger}\right)\\
+J_{La}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{La}}=i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}\partial^{\mu}U^{\dagger}U\right)\\
+J_{Ra}^{\mu} & =\frac{\partial\delta\mathcal{L}_{\text{eff}}}{\partial\partial_{\mu}\varepsilon_{Ra}}=-i\frac{F_{0}^{2}}{4}\Tr\left(\lambda_{a}U\partial^{\mu}U^{\dagger}\right)\\
 U\left(x\right) & =\exp\left(i\frac{\phi\left(x\right)}{F_{0}}\right)
 \end{align*}
 
@@ -9354,7 +9387,7 @@ noprefix "false"
 的相互作用为
 \begin_inset Formula 
 \[
-\mathcal{L}_{W\phi}=\frac{F_{0}}{2}\tr\left(l_{\mu}\partial^{\mu}\phi\right)=-\frac{g}{\sqrt{2}}\frac{F_{0}}{2}\tr\left[\left(\mathcal{W}_{\mu}^{+}T_{+}+\mathcal{W}_{\mu}^{-}T_{-}\right)\partial^{\mu}\phi\right]
+\mathcal{L}_{W\phi}=\frac{F_{0}}{2}\Tr\left(l_{\mu}\partial^{\mu}\phi\right)=-\frac{g}{\sqrt{2}}\frac{F_{0}}{2}\Tr\left[\left(\mathcal{W}_{\mu}^{+}T_{+}+\mathcal{W}_{\mu}^{-}T_{-}\right)\partial^{\mu}\phi\right]
 \]
 
 \end_inset
@@ -9362,7 +9395,7 @@ noprefix "false"
 因此，我们需要计算
 \begin_inset Formula 
 \begin{align*}
-\tr\left[T_{+}\partial^{\mu}\phi\right] & =\tr\left[\left(\begin{array}{ccc}
+\Tr\left[T_{+}\partial^{\mu}\phi\right] & =\Tr\left[\left(\begin{array}{ccc}
 0 & V_{ud} & V_{us}\\
 0 & 0 & 0\\
 0 & 0 & 0
@@ -9379,7 +9412,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align*}
-\tr\left[T_{-}\partial^{\mu}\phi\right] & =\tr\left[\left(\begin{array}{ccc}
+\Tr\left[T_{-}\partial^{\mu}\phi\right] & =\Tr\left[\left(\begin{array}{ccc}
 0 & 0 & 0\\
 V_{ud} & 0 & 0\\
 V_{us} & 0 & 0
@@ -9420,8 +9453,8 @@ V_{us} & 0 & 0
 的高阶项，weak pion decay 的洛伦兹不变的振幅，其形式为
 \begin_inset Formula 
 \begin{align*}
-\mathcal{M} & =i\left[-\frac{g}{2\sqrt{2}}\bar{u}\left(\nu_{\mu}\right)\gamma^{\rho}\left(\mathbbm{1}-\gamma^{5}\right)\nu\left(\mu^{+}\right)\right]\frac{ig_{\rho\sigma}}{M_{W}^{2}}i\left[-g\frac{F_{0}}{2}V_{ud}\left(-ip^{\sigma}\right)\right]\\
- & =-G_{F}V_{ud}F_{0}\bar{u}\left(\nu_{\mu}\right)\slashed{p}\left(\mathbbm{1}-\gamma^{5}\right)\nu\left(\mu^{+}\right)
+\mathcal{M} & =i\left[-\frac{g}{2\sqrt{2}}\bar{u}\left(\nu_{\mu}\right)\gamma^{\rho}\left(\mathbbm1-\gamma^{5}\right)\nu\left(\mu^{+}\right)\right]\frac{ig_{\rho\sigma}}{M_{W}^{2}}i\left[-g\frac{F_{0}}{2}V_{ud}\left(-ip^{\sigma}\right)\right]\\
+ & =-G_{F}V_{ud}F_{0}\bar{u}\left(\nu_{\mu}\right)\sla p\left(\mathbbm1-\gamma^{5}\right)\nu\left(\mu^{+}\right)
 \end{align*}
 
 \end_inset
@@ -9481,7 +9514,7 @@ noprefix "false"
 \end_inset
 
 的简并被去除。实验（empirical）数据是
-\begin_inset Formula $F_{\pi}=92.4\MeV,F_{K}=113\MeV$
+\begin_inset Formula $F_{\pi}=\SI{92.4}{\MeV},F_{K}=\SI{113}{\MeV}$
 \end_inset
 
 。
@@ -9520,7 +9553,7 @@ sector with
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}+U\chi^{\dagger}\right]
+\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}+U\chi^{\dagger}\right]
 \]
 
 \end_inset
@@ -9625,7 +9658,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{2}^{4\phi}=\frac{1}{48F^{2}}\left[\tr\left(\left[\phi,\partial_{\mu}\phi\right]\left[\phi,\partial^{\mu}\phi\right]\right)+2B\tr\left(\mathcal{M}\phi^{4}\right)\right]
+\mathcal{L}_{2}^{4\phi}=\frac{1}{48F^{2}}\left[\Tr\left(\left[\phi,\partial_{\mu}\phi\right]\left[\phi,\partial^{\mu}\phi\right]\right)+2B\Tr\left(\mathcal{M}\phi^{4}\right)\right]
 \]
 
 \end_inset
@@ -10009,11 +10042,11 @@ a_{0}^{0}=\frac{7M_{\pi}^{2}}{32\pi F_{\pi}^{2}}=0.159,\qquad a_{0}^{2}=-\frac{M
 \end_inset
 
 其中我们使用了数值
-\begin_inset Formula $F_{\pi}=92.4\MeV$
+\begin_inset Formula $F_{\pi}=\SI{92.4}{\MeV}$
 \end_inset
 
  and 
-\begin_inset Formula $M_{\pi}=M_{\pi^{+}}=139.57\MeV$
+\begin_inset Formula $M_{\pi}=M_{\pi^{+}}=\SI{139.57}{\MeV}$
 \end_inset
 
 。
@@ -10106,7 +10139,7 @@ Exercise 3.18 我们将研究反应
 的第一项
 \begin_inset Formula 
 \[
-\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
+\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
 \]
 
 \end_inset
@@ -10160,8 +10193,8 @@ D_{\mu}U & =\partial_{\mu}U+ie\mathcal{A}_{\mu}\left[Q,U\right]\\
 ，验证
 \begin_inset Formula 
 \begin{align*}
-\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right] & =\frac{F_{0}^{2}}{4}\tr\left[\partial_{\mu}U\partial^{\mu}U^{\dagger}\right]-ie\mathcal{A}_{\mu}\frac{F_{0}^{2}}{2}\tr\left(Q\left[\partial^{\mu}U,U^{\dagger}\right]\right)\\
- & -e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\frac{F_{0}^{2}}{4}\tr\left(\left[Q,U\right]\left[Q,U^{\dagger}\right]\right)
+\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right] & =\frac{F_{0}^{2}}{4}\Tr\left[\partial_{\mu}U\partial^{\mu}U^{\dagger}\right]-ie\mathcal{A}_{\mu}\frac{F_{0}^{2}}{2}\Tr\left(Q\left[\partial^{\mu}U,U^{\dagger}\right]\right)\\
+ & -e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\frac{F_{0}^{2}}{4}\Tr\left(\left[Q,U\right]\left[Q,U^{\dagger}\right]\right)
 \end{align*}
 
 \end_inset
@@ -10189,8 +10222,8 @@ Hint:
 ，提出这些相互作用项中只包含两个 Goldstone-bosons 的部分：
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}_{2}^{A-2\Phi} & =-e\mathcal{A}_{\mu}\frac{i}{2}\tr\left(Q\left[\partial^{\mu}\phi,\phi\right]\right)\\
-\mathcal{L}_{2}^{2A-2\Phi} & =-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)
+\mathcal{L}_{2}^{A-2\Phi} & =-e\mathcal{A}_{\mu}\frac{i}{2}\Tr\left(Q\left[\partial^{\mu}\phi,\phi\right]\right)\\
+\mathcal{L}_{2}^{2A-2\Phi} & =-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)
 \end{align*}
 
 \end_inset
@@ -10256,7 +10289,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 \mathcal{L}_{2}^{A-2\Phi} & =-ie\mathcal{A}_{\mu}\left(\partial^{\mu}\pi^{+}\pi^{-}-\pi^{+}\partial^{\mu}\pi^{-}+\partial^{\mu}K^{+}K^{-}-K^{+}\partial^{\mu}K^{-}\right)\\
-\mathcal{L}_{2}^{2A-2\Phi} & =e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\pi^{+}\pi^{-}+K^{+}K^{-}\right)
+\mathcal{L}_{2}^{2A-2\Phi} & =e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\pi^{+}\pi^{-}+K^{+}K^{-}\right)
 \end{align*}
 
 \end_inset
@@ -10394,7 +10427,7 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset Formula $\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]$
+\begin_inset Formula $\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]$
 \end_inset
 
  ，我们会遇到来自圈积分的紫外发散。对于圈图的正规化我们使用维数正规化，因为它保持格林函数之间的代数关系（Ward identities）。如果
@@ -10405,7 +10438,7 @@ noprefix "false"
 为了完成，我们简单阐述以下维数正规化的方法，让我们考虑积分
 \begin_inset Formula 
 \begin{equation}
-I=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}\label{eq:3.98}
+I=\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}\label{eq:3.98}
 \end{equation}
 
 \end_inset
@@ -10487,7 +10520,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 \end_inset
 
 为了确定
-\begin_inset Formula $\int_{-\infty}^{+\infty}\dif k_{0}f\left(k_{0}\right)$
+\begin_inset Formula $\int_{-\infty}^{+\infty}\dd k_{0}f\left(k_{0}\right)$
 \end_inset
 
 ，作为计算
@@ -10501,7 +10534,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 的复平面，使用 Cauchy's 定理
 \begin_inset Formula 
 \begin{equation}
-\oint_{C}\dif zf\left(z\right)=0\label{eq:3.99}
+\oint_{C}\dd zf\left(z\right)=0\label{eq:3.99}
 \end{equation}
 
 \end_inset
@@ -10523,7 +10556,7 @@ noprefix "false"
 中的积分路径
 \begin_inset Formula 
 \begin{equation}
-0=\sum_{i=1}^{4}\int_{\gamma_{i}}\dif zf\left(z\right)
+0=\sum_{i=1}^{4}\int_{\gamma_{i}}\dd zf\left(z\right)
 \end{equation}
 
 \end_inset
@@ -10575,7 +10608,7 @@ name "fig:3.8"
 并使用
 \begin_inset Formula 
 \[
-\int_{\gamma}\dif zf\left(z\right)=\int_{a}^{b}\dif tf\left[\gamma\left(t\right)\right]\gamma^{\prime}\left(t\right)
+\int_{\gamma}\dd zf\left(z\right)=\int_{a}^{b}\dd tf\left[\gamma\left(t\right)\right]\gamma^{\prime}\left(t\right)
 \]
 
 \end_inset
@@ -10590,7 +10623,7 @@ name "fig:3.8"
 :
 \begin_inset Formula 
 \[
-\int_{\gamma_{1}}\dif zf\left(z\right)=\int_{-\infty}^{+\infty}\dif tf\left[t\right]
+\int_{\gamma_{1}}\dd zf\left(z\right)=\int_{-\infty}^{+\infty}\dd tf\left[t\right]
 \]
 
 \end_inset
@@ -10605,7 +10638,7 @@ name "fig:3.8"
 :
 \begin_inset Formula 
 \[
-\int_{\gamma_{2}}\dif zf\left(z\right)=\lim_{R\to\infty}\int_{-0}^{\frac{\pi}{2}}\dif tf\left[Re^{it}\right]iRe^{it}=0,\text{ because }\lim_{R\to\infty}\underbrace{Rf\left(Re^{it}\right)}_{\sim\frac{1}{R}}=0
+\int_{\gamma_{2}}\dd zf\left(z\right)=\lim_{R\to\infty}\int_{-0}^{\frac{\pi}{2}}\dd tf\left[Re^{it}\right]iRe^{it}=0,\text{ because }\lim_{R\to\infty}\underbrace{Rf\left(Re^{it}\right)}_{\sim\frac{1}{R}}=0
 \]
 
 \end_inset
@@ -10620,7 +10653,7 @@ name "fig:3.8"
 :
 \begin_inset Formula 
 \[
-\int_{\gamma_{3}}\dif zf\left(z\right)=i\int_{\infty}^{-\infty}\dif tf\left[if\right]
+\int_{\gamma_{3}}\dd zf\left(z\right)=i\int_{\infty}^{-\infty}\dd tf\left[if\right]
 \]
 
 \end_inset
@@ -10635,7 +10668,7 @@ name "fig:3.8"
 :
 \begin_inset Formula 
 \[
-\int_{\gamma_{4}}\dif zf\left(z\right)=0\text{ 类比于\gamma_{2}}
+\int_{\gamma_{4}}\dd zf\left(z\right)=0\text{ 类比于\gamma_{2}}
 \]
 
 \end_inset
@@ -10649,13 +10682,13 @@ name "fig:3.8"
 \end_inset
 
 衰减的够快。结合
-\begin_inset Formula $\oint_{C}\dif zf\left(z\right)=0$
+\begin_inset Formula $\oint_{C}\dd zf\left(z\right)=0$
 \end_inset
 
 我们得到 Wick 转动
 \begin_inset Formula 
 \begin{equation}
-\int_{-\infty}^{+\infty}\dif tf\left(t\right)=-i\int_{+\infty}^{-\infty}\dif tf\left(it\right)=i\int_{-\infty}^{+\infty}\dif tf\left(it\right)\label{eq:3.100}
+\int_{-\infty}^{+\infty}\dd tf\left(t\right)=-i\int_{+\infty}^{-\infty}\dd tf\left(it\right)=i\int_{-\infty}^{+\infty}\dd tf\left(it\right)\label{eq:3.100}
 \end{equation}
 
 \end_inset
@@ -10677,8 +10710,8 @@ noprefix "false"
  中的积分变成
 \begin_inset Formula 
 \begin{align}
-I & =\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}\nonumber \\
- & =\frac{1}{\left(2\pi\right)^{4}}i\int_{-\infty}^{+\infty}\dif k_{0}\int\dif^{3}k\frac{i}{\left(ik_{0}\right)^{2}-\vec{k}^{2}-M^{2}+i0^{+}}=\int\frac{\dif^{4}l}{\left(2\pi\right)^{4}}\frac{1}{l^{2}+M^{2}-i0^{+}}\label{eq:3.101}
+I & =\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}\nonumber \\
+ & =\frac{1}{\left(2\pi\right)^{4}}i\int_{-\infty}^{+\infty}\dd k_{0}\int\dd[3]k\frac{i}{\left(ik_{0}\right)^{2}-\vec{k}^{2}-M^{2}+i0^{+}}=\int\frac{\dd[4]l}{\left(2\pi\right)^{4}}\frac{1}{l^{2}+M^{2}-i0^{+}}\label{eq:3.101}
 \end{align}
 
 \end_inset
@@ -10706,7 +10739,7 @@ I & =\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}\non
 平方发散（紫外发散）：
 \begin_inset Formula 
 \begin{align*}
-I\left(\Lambda\right) & =\frac{1}{8\pi^{2}}\int_{0}^{\Lambda}\dif l\frac{l^{3}}{l^{2}+M^{2}}=\frac{\Lambda^{2}}{\left(4\pi\right)^{2}}+\frac{M^{2}}{\left(4\pi\right)^{2}}\ln\left(\frac{M^{2}}{\Lambda^{2}+M^{2}}\right)\\
+I\left(\Lambda\right) & =\frac{1}{8\pi^{2}}\int_{0}^{\Lambda}\dd l\frac{l^{3}}{l^{2}+M^{2}}=\frac{\Lambda^{2}}{\left(4\pi\right)^{2}}+\frac{M^{2}}{\left(4\pi\right)^{2}}\ln\left(\frac{M^{2}}{\Lambda^{2}+M^{2}}\right)\\
  & =\frac{M^{2}}{\left(4\pi\right)^{2}}\left[\frac{1}{x^{2}}+\ln\left(x^{2}\right)-\ln\left(1+x^{2}\right)\right]
 \end{align*}
 
@@ -10721,7 +10754,7 @@ I\left(\Lambda\right) & =\frac{1}{8\pi^{2}}\int_{0}^{\Lambda}\dif l\frac{l^{3}}{
 \end_inset
 
 。发散的程度可以简单通过计数动量的幂次估计。如果积分的渐近性为是
-\begin_inset Formula $\int\dif^{4}l/l^{2},\int\dif^{4}l/l^{3},\int\dif^{4}l/l^{4}$
+\begin_inset Formula $\int\dd[4]l/l^{2},\int\dd[4]l/l^{3},\int\dd[4]l/l^{4}$
 \end_inset
 
 ，那么分别被称为 平方发散，线性发散，对数发散。
@@ -10775,7 +10808,7 @@ where
 。一个一般的积分可以表示为下面的形式
 \begin_inset Formula 
 \[
-\int\dif^{n}l\cdots=\int_{0}^{\infty}\dif l\,l^{n-1}\int_{0}^{2\pi}\dif\theta_{n-1}\int_{0}^{\pi}\dif\theta_{n-2}\sin\left(\theta_{n-2}\right)\cdots\int_{0}^{\pi}\dif\theta_{1}\sin^{n-2}\left(\theta_{1}\right)\cdots
+\int\dd[n]l\cdots=\int_{0}^{\infty}\dd l\,l^{n-1}\int_{0}^{2\pi}\dd\theta_{n-1}\int_{0}^{\pi}\dd\theta_{n-2}\sin\left(\theta_{n-2}\right)\cdots\int_{0}^{\pi}\dd\theta_{1}\sin^{n-2}\left(\theta_{1}\right)\cdots
 \]
 
 \end_inset
@@ -10783,7 +10816,7 @@ where
 如果积分式不依赖于角度，那么角度部分可以提出外面。使用公式
 \begin_inset Formula 
 \[
-\int_{0}^{\pi}\dif\theta\sin^{m}\left(\theta\right)=\frac{\sqrt{\pi}\Gamma\left(\frac{m+1}{2}\right)}{\Gamma\left(\frac{m+2}{2}\right)}
+\int_{0}^{\pi}\dd\theta\sin^{m}\left(\theta\right)=\frac{\sqrt{\pi}\Gamma\left(\frac{m+1}{2}\right)}{\Gamma\left(\frac{m+2}{2}\right)}
 \]
 
 \end_inset
@@ -10791,7 +10824,7 @@ where
 可以通过induction证明(see Exercise 3.21)。对于角度部分我们获得
 \begin_inset Formula 
 \begin{align}
-\int_{0}^{2\pi}\dif\theta_{n-1}\int_{0}^{\pi}\dif\theta_{n-2}\sin\left(\theta_{n-2}\right)\cdots\int_{0}^{\pi}\dif\theta_{1}\sin^{n-2}\left(\theta_{1}\right) & =2\pi\underbrace{\frac{\sqrt{\pi}\Gamma\left(1\right)}{\Gamma\left(\frac{3}{2}\right)}\frac{\sqrt{\pi}\Gamma\left(\frac{3}{2}\right)}{\Gamma\left(2\right)}\cdots\frac{\sqrt{\pi}\Gamma\left(\frac{n-1}{2}\right)}{\Gamma\left(\frac{n}{2}\right)}}_{\left(n-1\right)\text{ factors}}\nonumber \\
+\int_{0}^{2\pi}\dd\theta_{n-1}\int_{0}^{\pi}\dd\theta_{n-2}\sin\left(\theta_{n-2}\right)\cdots\int_{0}^{\pi}\dd\theta_{1}\sin^{n-2}\left(\theta_{1}\right) & =2\pi\underbrace{\frac{\sqrt{\pi}\Gamma\left(1\right)}{\Gamma\left(\frac{3}{2}\right)}\frac{\sqrt{\pi}\Gamma\left(\frac{3}{2}\right)}{\Gamma\left(2\right)}\cdots\frac{\sqrt{\pi}\Gamma\left(\frac{n-1}{2}\right)}{\Gamma\left(\frac{n}{2}\right)}}_{\left(n-1\right)\text{ factors}}\nonumber \\
  & =2\pi\frac{\pi^{\frac{n-2}{2}}}{\Gamma\left(\frac{n}{2}\right)}=2\frac{\pi^{\frac{n}{2}}}{\Gamma\left(\frac{n}{2}\right)}\label{eq:3.104}
 \end{align}
 
@@ -10808,7 +10841,7 @@ where
 为正数）积分为
 \begin_inset Formula 
 \begin{equation}
-I_{n}\left(M^{2},\mu^{2}\right)=\mu^{4-n}\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{i}{k^{2}-M^{2}+i0^{+}}\label{eq:3.105}
+I_{n}\left(M^{2},\mu^{2}\right)=\mu^{4-n}\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{i}{k^{2}-M^{2}+i0^{+}}\label{eq:3.105}
 \end{equation}
 
 \end_inset
@@ -10858,7 +10891,7 @@ noprefix "false"
 的角度积分之后，积分变成
 \begin_inset Formula 
 \[
-I_{n}\left(M^{2},\mu^{2}\right)=\mu^{4-n}\frac{\pi^{\frac{n}{2}}}{\Gamma\left(\frac{n}{2}\right)}\frac{1}{\left(2\pi\right)^{n}}\int_{0}^{\infty}\dif l\frac{l^{n-1}}{l^{2}+M^{2}}
+I_{n}\left(M^{2},\mu^{2}\right)=\mu^{4-n}\frac{\pi^{\frac{n}{2}}}{\Gamma\left(\frac{n}{2}\right)}\frac{1}{\left(2\pi\right)^{n}}\int_{0}^{\infty}\dd l\frac{l^{n-1}}{l^{2}+M^{2}}
 \]
 
 \end_inset
@@ -10866,7 +10899,7 @@ I_{n}\left(M^{2},\mu^{2}\right)=\mu^{4-n}\frac{\pi^{\frac{n}{2}}}{\Gamma\left(\f
 为了之后的使用，我们研究更一般的积分
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\dif l\frac{l^{n-1}}{\left(l^{2}+M^{2}\right)^{\alpha}}=\frac{1}{\left(M^{2}\right)^{\alpha}}\int_{0}^{\infty}\dif l\frac{l^{n-1}}{\left(\frac{l^{2}}{M^{2}}+1\right)^{\alpha}}=\frac{1}{2}\left(M^{2}\right)^{\frac{n}{2}-\alpha}\int_{0}^{\infty}\dif t\frac{t^{\frac{n}{2}-1}}{\left(t+1\right)^{\alpha}}
+\int_{0}^{\infty}\dd l\frac{l^{n-1}}{\left(l^{2}+M^{2}\right)^{\alpha}}=\frac{1}{\left(M^{2}\right)^{\alpha}}\int_{0}^{\infty}\dd l\frac{l^{n-1}}{\left(\frac{l^{2}}{M^{2}}+1\right)^{\alpha}}=\frac{1}{2}\left(M^{2}\right)^{\frac{n}{2}-\alpha}\int_{0}^{\infty}\dd t\frac{t^{\frac{n}{2}-1}}{\left(t+1\right)^{\alpha}}
 \]
 
 \end_inset
@@ -10878,7 +10911,7 @@ I_{n}\left(M^{2},\mu^{2}\right)=\mu^{4-n}\frac{\pi^{\frac{n}{2}}}{\Gamma\left(\f
 。我们使用 Beta 函数
 \begin_inset Formula 
 \[
-B\left(x,y\right)=\int_{0}^{\infty}\dif t\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=\frac{\Gamma\left(x\right)\Gamma\left(y\right)}{\Gamma\left(x+y\right)}
+B\left(x,y\right)=\int_{0}^{\infty}\dd t\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=\frac{\Gamma\left(x\right)\Gamma\left(y\right)}{\Gamma\left(x+y\right)}
 \]
 
 \end_inset
@@ -10926,7 +10959,7 @@ B\left(x,y\right)=\int_{0}^{\infty}\dif t\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=
  我们的中间积分变成
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\dif l\frac{l^{n-1}}{\left(l^{2}+M^{2}\right)^{\alpha}}=\frac{1}{2}\left(M^{2}\right)^{\frac{n}{2}-\alpha}\frac{\Gamma\left(\frac{n}{2}\right)\Gamma\left(\alpha-\frac{n}{2}\right)}{\Gamma\left(\alpha\right)}
+\int_{0}^{\infty}\dd l\frac{l^{n-1}}{\left(l^{2}+M^{2}\right)^{\alpha}}=\frac{1}{2}\left(M^{2}\right)^{\frac{n}{2}-\alpha}\frac{\Gamma\left(\frac{n}{2}\right)\Gamma\left(\alpha-\frac{n}{2}\right)}{\Gamma\left(\alpha\right)}
 \]
 
 \end_inset
@@ -11098,7 +11131,7 @@ noprefix "false"
 使用类似地技巧，可以容易地对更一般的积分推导出一个非常有用的表达式(see Exercise 3.22)
 \begin_inset Formula 
 \begin{equation}
-\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{\left(k^{2}\right)^{p}}{\left(k^{2}-M^{2}+i0^{+}\right)^{q}}=i\left(-1\right)^{p-q}\frac{1}{\left(4\pi\right)^{\frac{n}{2}}}\left(M^{2}\right)^{p+\frac{n}{2}-q}\frac{\Gamma\left(p+\frac{n}{2}\right)\Gamma\left(q-p-\frac{n}{2}\right)}{\Gamma\left(\frac{n}{2}\right)\Gamma\left(q\right)}\label{eq:3.112}
+\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{\left(k^{2}\right)^{p}}{\left(k^{2}-M^{2}+i0^{+}\right)^{q}}=i\left(-1\right)^{p-q}\frac{1}{\left(4\pi\right)^{\frac{n}{2}}}\left(M^{2}\right)^{p+\frac{n}{2}-q}\frac{\Gamma\left(p+\frac{n}{2}\right)\Gamma\left(q-p-\frac{n}{2}\right)}{\Gamma\left(\frac{n}{2}\right)\Gamma\left(q\right)}\label{eq:3.112}
 \end{equation}
 
 \end_inset
@@ -11208,7 +11241,7 @@ noprefix "false"
 Exercise 3.19 考虑积分
 \begin_inset Formula 
 \[
-I=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}
+I=\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}
 \]
 
 \end_inset
@@ -11226,7 +11259,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 \end_inset
 
 为了确定
-\begin_inset Formula $\int_{-\infty}^{+\infty}\dif k_{0}f\left(k_{0}\right)$
+\begin_inset Formula $\int_{-\infty}^{+\infty}\dd k_{0}f\left(k_{0}\right)$
 \end_inset
 
 ，作为
@@ -11256,7 +11289,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 使用留数定理，说明
 \begin_inset Formula 
 \[
-\oint\dif zf\left(z\right)=\int_{\gamma_{1}}\dif zf\left(z\right)+\lim_{R\to\infty}\int_{\gamma_{2}}\dif zf\left(z\right)=2\pi i\text{Res}\left[f\left(z\right),-\left(a-i0^{+}\right)\right]
+\oint\dd zf\left(z\right)=\int_{\gamma_{1}}\dd zf\left(z\right)+\lim_{R\to\infty}\int_{\gamma_{2}}\dd zf\left(z\right)=2\pi i\text{Res}\left[f\left(z\right),-\left(a-i0^{+}\right)\right]
 \]
 
 \end_inset
@@ -11264,7 +11297,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 验证
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif k_{0}f\left(k_{0}\right)=\frac{-i\pi}{\sqrt{\vec{k}^{2}+M^{2}}-i0^{+}}
+\int_{-\infty}^{+\infty}\dd k_{0}f\left(k_{0}\right)=\frac{-i\pi}{\sqrt{\vec{k}^{2}+M^{2}}-i0^{+}}
 \]
 
 \end_inset
@@ -11276,7 +11309,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 使用1，证明
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}=\frac{1}{2}\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{\vec{k}^{2}+M^{2}}-i0^{+}}
+\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}=\frac{1}{2}\int\frac{\dd[3]k}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{\vec{k}^{2}+M^{2}}-i0^{+}}
 \]
 
 \end_inset
@@ -11292,7 +11325,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 的推广：
 \begin_inset Formula 
 \[
-\int\frac{\dif^{n-1}k}{\left(2\pi\right)^{n-1}}\frac{1}{\sqrt{\vec{k}^{2}+M^{2}}},\quad\vec{k}^{2}=k_{1}^{2}+k_{2}^{2}+\cdots+k_{n-1}^{2}
+\int\frac{\dd^{n-1}k}{\left(2\pi\right)^{n-1}}\frac{1}{\sqrt{\vec{k}^{2}+M^{2}}},\quad\vec{k}^{2}=k_{1}^{2}+k_{2}^{2}+\cdots+k_{n-1}^{2}
 \]
 
 \end_inset
@@ -11308,7 +11341,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 维的极坐标，并对角度部分进行积分，得到
 \begin_inset Formula 
 \[
-\int\frac{\dif^{n-1}k}{\left(2\pi\right)^{n-1}}\frac{1}{\sqrt{\vec{k}^{2}+M^{2}}}=\frac{1}{2^{n-2}}\pi^{-\frac{n-1}{2}}\frac{1}{\Gamma\left(\frac{n-1}{2}\right)}\int_{0}^{\infty}\dif r\frac{r^{n-2}}{\sqrt{r^{2}+M^{2}}}
+\int\frac{\dd^{n-1}k}{\left(2\pi\right)^{n-1}}\frac{1}{\sqrt{\vec{k}^{2}+M^{2}}}=\frac{1}{2^{n-2}}\pi^{-\frac{n-1}{2}}\frac{1}{\Gamma\left(\frac{n-1}{2}\right)}\int_{0}^{\infty}\dd r\frac{r^{n-2}}{\sqrt{r^{2}+M^{2}}}
 \]
 
 \end_inset
@@ -11328,7 +11361,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 ，证明
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\dif r\frac{r^{n-2}}{\sqrt{r^{2}+M^{2}}}=\frac{1}{2}M^{n-2}\frac{\Gamma\left(\frac{n-1}{2}\right)\Gamma\left(1-\frac{n}{2}\right)}{\underbrace{\Gamma\left(\frac{1}{2}\right)}_{=\sqrt{\pi}}}
+\int_{0}^{\infty}\dd r\frac{r^{n-2}}{\sqrt{r^{2}+M^{2}}}=\frac{1}{2}M^{n-2}\frac{\Gamma\left(\frac{n-1}{2}\right)\Gamma\left(1-\frac{n}{2}\right)}{\underbrace{\Gamma\left(\frac{1}{2}\right)}_{=\sqrt{\pi}}}
 \]
 
 \end_inset
@@ -11336,7 +11369,7 @@ f\left(k_{0}\right)=\frac{1}{\left[k_{0}+\left(a-i0^{+}\right)\right]\left[k_{0}
 Hint: 使用 Beta 函数
 \begin_inset Formula 
 \[
-B\left(x,y\right)=\int_{0}^{\infty}\dif t\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=\frac{\Gamma\left(x\right)\Gamma\left(y\right)}{\Gamma\left(x+y\right)}
+B\left(x,y\right)=\int_{0}^{\infty}\dd t\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=\frac{\Gamma\left(x\right)\Gamma\left(y\right)}{\Gamma\left(x+y\right)}
 \]
 
 \end_inset
@@ -11345,9 +11378,9 @@ B\left(x,y\right)=\int_{0}^{\infty}\dif t\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=
 \begin_inset Formula 
 \begin{align*}
 q & =\frac{1}{1+t},\quad t=\frac{1-q}{q}\\
-\dif q & =\frac{-\dif t}{\left(1+t\right)^{2}},\quad\dif t=-\left(1+t\right)^{2}\dif q\\
-\int_{0}^{\infty}\dif t\frac{t^{x-1}}{\left(1+t\right)^{x+y}} & =-\int_{1}^{0}\dif q\left(1+t\right)^{2}\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=\int_{0}^{1}\dif q\frac{t^{x-1}}{\left(1+t\right)^{x+y-2}}\\
- & =\int_{0}^{1}\dif q\left(\frac{1-q}{q}\right)^{x-1}q^{x+y-2}=\int_{0}^{1}\dif q\left(1-q\right)^{x-1}q^{y-1}
+\dd q & =\frac{-\dd t}{\left(1+t\right)^{2}},\quad\dd t=-\left(1+t\right)^{2}\dd q\\
+\int_{0}^{\infty}\dd t\frac{t^{x-1}}{\left(1+t\right)^{x+y}} & =-\int_{1}^{0}\dd q\left(1+t\right)^{2}\frac{t^{x-1}}{\left(1+t\right)^{x+y}}=\int_{0}^{1}\dd q\frac{t^{x-1}}{\left(1+t\right)^{x+y-2}}\\
+ & =\int_{0}^{1}\dd q\left(\frac{1-q}{q}\right)^{x-1}q^{x+y-2}=\int_{0}^{1}\dd q\left(1-q\right)^{x-1}q^{y-1}
 \end{align*}
 
 \end_inset
@@ -11359,7 +11392,7 @@ q & =\frac{1}{1+t},\quad t=\frac{1-q}{q}\\
 把上述结果拼接到一起
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}=\frac{1}{\left(4\pi\right)^{\frac{n}{2}}}M^{n-2}\Gamma\left(1-\frac{n}{2}\right)
+\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-M^{2}+i0^{+}}=\frac{1}{\left(4\pi\right)^{\frac{n}{2}}}M^{n-2}\Gamma\left(1-\frac{n}{2}\right)
 \]
 
 \end_inset
@@ -11433,7 +11466,7 @@ J=\left(\begin{array}{ccc}
 所以
 \begin_inset Formula 
 \[
-\dif l_{1}\dif l_{2}\dif l_{3}\dif l_{4}=l^{3}\dif l\underbrace{\sin^{2}\left(\theta_{1}\right)\sin\left(\theta_{2}\right)\dif\theta_{1}\dif\theta_{2}\dif\theta_{3}}_{=\dif\Omega}
+\dd l_{1}\dd l_{2}\dd l_{3}\dd l_{4}=l^{3}\dd l\underbrace{\sin^{2}\left(\theta_{1}\right)\sin\left(\theta_{2}\right)\dd\theta_{1}\dd\theta_{2}\dd\theta_{3}}_{=\dd\Omega}
 \]
 
 \end_inset
@@ -11441,7 +11474,7 @@ J=\left(\begin{array}{ccc}
 with 
 \begin_inset Formula 
 \[
-\int\dif\Omega=2\pi^{2}
+\int\dd\Omega=2\pi^{2}
 \]
 
 \end_inset
@@ -11453,7 +11486,7 @@ with
 Exercise 3.21 Show by induction
 \begin_inset Formula 
 \[
-\int_{0}^{\pi}\dif\theta\sin^{m}\left(\theta\right)=\frac{\sqrt{\pi}\Gamma\left(\frac{m+1}{2}\right)}{\Gamma\left(\frac{m+2}{2}\right)}
+\int_{0}^{\pi}\dd\theta\sin^{m}\left(\theta\right)=\frac{\sqrt{\pi}\Gamma\left(\frac{m+1}{2}\right)}{\Gamma\left(\frac{m+2}{2}\right)}
 \]
 
 \end_inset
@@ -11473,7 +11506,7 @@ for
 Exercise 3.22 证明在维数正规化中
 \begin_inset Formula 
 \[
-\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{\left(k^{2}\right)^{p}}{\left(k^{2}-M^{2}+i0^{+}\right)^{q}}=i\left(-1\right)^{p-q}\frac{1}{\left(4\pi\right)^{\frac{n}{2}}}\left(M^{2}\right)^{p+\frac{n}{2}-q}\frac{\Gamma\left(p+\frac{n}{2}\right)\Gamma\left(q-p-\frac{n}{2}\right)}{\Gamma\left(\frac{n}{2}\right)\Gamma\left(q\right)}
+\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{\left(k^{2}\right)^{p}}{\left(k^{2}-M^{2}+i0^{+}\right)^{q}}=i\left(-1\right)^{p-q}\frac{1}{\left(4\pi\right)^{\frac{n}{2}}}\left(M^{2}\right)^{p+\frac{n}{2}-q}\frac{\Gamma\left(p+\frac{n}{2}\right)\Gamma\left(q-p-\frac{n}{2}\right)}{\Gamma\left(\frac{n}{2}\right)\Gamma\left(q\right)}
 \]
 
 \end_inset
@@ -11505,7 +11538,7 @@ Exercise 3.22 证明在维数正规化中
 维的角度积分。完成剩下的轴向积分，使用
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\dif l\frac{l^{n-1}}{\left(l^{2}+M^{2}\right)^{\alpha}}=\frac{1}{2}\left(M^{2}\right)^{\frac{n}{2}-\alpha}\frac{\Gamma\left(\frac{n}{2}\right)\Gamma\left(\alpha-\frac{n}{2}\right)}{\Gamma\left(\alpha\right)}
+\int_{0}^{\infty}\dd l\frac{l^{n-1}}{\left(l^{2}+M^{2}\right)^{\alpha}}=\frac{1}{2}\left(M^{2}\right)^{\frac{n}{2}-\alpha}\frac{\Gamma\left(\frac{n}{2}\right)\Gamma\left(\alpha-\frac{n}{2}\right)}{\Gamma\left(\alpha\right)}
 \]
 
 \end_inset
@@ -11744,7 +11777,7 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset Formula $\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]$
+\begin_inset Formula $\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]$
 \end_inset
 
 .
@@ -11971,7 +12004,7 @@ I\left(M^{2},\mu^{2},n\right)=\frac{M^{2}}{16\pi^{2}}\left[R+\ln\left(\frac{M^{2
 \end_inset
 
 大约是
-\begin_inset Formula $\Lambda_{\chi}=4\pi F_{0}=O\left(1\GeV\right)$
+\begin_inset Formula $\Lambda_{\chi}=4\pi F_{0}=O\left(1\si{\GeV}\right)$
 \end_inset
 
 。在圈图修正中，每一个 Goldstone-boson 内线的端点都会乘上一个
@@ -12115,8 +12148,8 @@ noprefix "false"
 维空间的传播子描述，在 rescaling 下
 \begin_inset Formula 
 \begin{align}
-\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{i}{k^{2}-M^{2}+i0^{+}} & \mapsto\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{i}{t^{2}\left(k^{2}/t^{2}-M^{2}+i0^{+}\right)}\nonumber \\
- & \stackrel{t=tk^{\prime}}{=}t^{n-2}\int\frac{\dif^{n}k^{\prime}}{\left(2\pi\right)^{n}}\frac{i}{k^{\prime2}-M^{2}+i0^{+}}\label{eq:3.122}
+\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{i}{k^{2}-M^{2}+i0^{+}} & \mapsto\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{i}{t^{2}\left(k^{2}/t^{2}-M^{2}+i0^{+}\right)}\nonumber \\
+ & \stackrel{t=tk^{\prime}}{=}t^{n-2}\int\frac{\dd[n]k^{\prime}}{\left(2\pi\right)^{n}}\frac{i}{k^{\prime2}-M^{2}+i0^{+}}\label{eq:3.122}
 \end{align}
 
 \end_inset
@@ -12342,7 +12375,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
+\mathcal{L}_{2}=\frac{F_{0}^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]+\frac{F_{0}^{2}}{4}\Tr\left[\chi U^{\dagger}\pm U\chi^{\dagger}\right]
 \]
 
 \end_inset
@@ -12457,12 +12490,12 @@ noprefix "false"
 –不变的拉氏量。这里我们只引用一下Gasser and Leutwyler的结果：
 \begin_inset Formula 
 \begin{align}
-\mathcal{L}_{4} & =L_{1}\left\{ \tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\right\} ^{2}+L_{2}\tr\left[D_{\mu}U\left(D_{\nu}U\right)^{\dagger}\right]\tr\left[D^{\mu}U\left(D^{\nu}U\right)^{\dagger}\right]\nonumber \\
- & +L_{3}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}D_{\nu}U\left(D^{\nu}U\right)^{\dagger}\right]+L_{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\tr\left(\chi U^{\dagger}+U\chi^{\dagger}\right)\nonumber \\
- & +L_{5}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\left(\chi U^{\dagger}+U\chi^{\dagger}\right)\right]+L_{6}\left[\tr\left(\chi U^{\dagger}+U\chi^{\dagger}\right)\right]^{2}\nonumber \\
- & +L_{7}\left[\tr\left(\chi U^{\dagger}-U\chi^{\dagger}\right)\right]^{2}+L_{8}\tr\left(U\chi^{\dagger}U\chi^{\dagger}+\chi U^{\dagger}\chi U^{\dagger}\right)\nonumber \\
- & -iL_{9}\tr\left[f_{\mu\nu}^{R}D^{\mu}U\left(D^{\nu}U\right)^{\dagger}+f_{\mu\nu}^{L}\left(D^{\mu}U\right)^{\dagger}D^{\nu}U\right]+L_{10}\tr\left(Uf_{\mu\nu}^{L}U^{\dagger}f_{R}^{\mu\nu}\right)\nonumber \\
- & +H_{1}\tr\left(f_{\mu\nu}^{R}f_{R}^{\mu\nu}+f_{\mu\nu}^{L}f_{L}^{\mu\nu}\right)+H_{2}\tr\left(\chi\chi^{\dagger}\right)\label{eq:3.123}
+\mathcal{L}_{4} & =L_{1}\left\{ \Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\right\} ^{2}+L_{2}\Tr\left[D_{\mu}U\left(D_{\nu}U\right)^{\dagger}\right]\Tr\left[D^{\mu}U\left(D^{\nu}U\right)^{\dagger}\right]\nonumber \\
+ & +L_{3}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}D_{\nu}U\left(D^{\nu}U\right)^{\dagger}\right]+L_{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\Tr\left(\chi U^{\dagger}+U\chi^{\dagger}\right)\nonumber \\
+ & +L_{5}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\left(\chi U^{\dagger}+U\chi^{\dagger}\right)\right]+L_{6}\left[\Tr\left(\chi U^{\dagger}+U\chi^{\dagger}\right)\right]^{2}\nonumber \\
+ & +L_{7}\left[\Tr\left(\chi U^{\dagger}-U\chi^{\dagger}\right)\right]^{2}+L_{8}\Tr\left(U\chi^{\dagger}U\chi^{\dagger}+\chi U^{\dagger}\chi U^{\dagger}\right)\nonumber \\
+ & -iL_{9}\Tr\left[f_{\mu\nu}^{R}D^{\mu}U\left(D^{\nu}U\right)^{\dagger}+f_{\mu\nu}^{L}\left(D^{\mu}U\right)^{\dagger}D^{\nu}U\right]+L_{10}\Tr\left(Uf_{\mu\nu}^{L}U^{\dagger}f_{R}^{\mu\nu}\right)\nonumber \\
+ & +H_{1}\Tr\left(f_{\mu\nu}^{R}f_{R}^{\mu\nu}+f_{\mu\nu}^{L}f_{L}^{\mu\nu}\right)+H_{2}\Tr\left(\chi\chi^{\dagger}\right)\label{eq:3.123}
 \end{align}
 
 \end_inset
@@ -13423,7 +13456,7 @@ M_{\phi}^{2}-M_{\phi,2}^{2}-\Sigma_{\phi}\left(M_{\phi}^{2}\right)=0\label{eq:3.
 为（see Exercise 3.14）
 \begin_inset Formula 
 \[
-\mathcal{L}_{2}^{4\phi}=\frac{1}{48F_{0}^{2}}\left\{ \tr\left(\left[\phi,\partial_{\mu}\phi\right]\left[\phi,\partial^{\mu}\phi\right]\right)+2B_{0}\tr\left(\mathcal{M}\phi^{4}\right)\right\} 
+\mathcal{L}_{2}^{4\phi}=\frac{1}{48F_{0}^{2}}\left\{ \Tr\left(\left[\phi,\partial_{\mu}\phi\right]\left[\phi,\partial^{\mu}\phi\right]\right)+2B_{0}\Tr\left(\mathcal{M}\phi^{4}\right)\right\} 
 \]
 
 \end_inset
@@ -13473,7 +13506,7 @@ noprefix "false"
 这一项
 \begin_inset Formula 
 \begin{align*}
-L_{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\tr\left(\chi U^{\dagger}+U\chi^{\dagger}\right) & =L_{4}\frac{2}{F_{0}^{2}}\Big[\partial_{\mu}\eta\partial^{\mu}\eta+\partial_{\mu}\pi^{0}\partial^{\mu}\pi^{0}+2\partial_{\mu}\pi^{+}\partial^{\mu}\pi^{-}\\
+L_{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]\Tr\left(\chi U^{\dagger}+U\chi^{\dagger}\right) & =L_{4}\frac{2}{F_{0}^{2}}\Big[\partial_{\mu}\eta\partial^{\mu}\eta+\partial_{\mu}\pi^{0}\partial^{\mu}\pi^{0}+2\partial_{\mu}\pi^{+}\partial^{\mu}\pi^{-}\\
  & +2\partial_{\mu}K^{+}\partial^{\mu}K^{-}+2\partial_{\mu}K^{0}\partial^{\mu}\bar{K}^{0}+O\left(\phi^{4}\right)\Big]\\
  & \times\left[4B_{0}\left(2\hat{m}+m_{s}\right)+O\left(\phi^{2}\right)\right]
 \end{align*}
@@ -13656,9 +13689,9 @@ noprefix "false"
 :
 \begin_inset Formula 
 \begin{align}
- & -\frac{1}{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}i\Bigg[\underbrace{\delta_{3j}\delta_{3j}}_{=1}\frac{\left(p+k\right)^{2}-M_{\pi,2}^{2}}{F_{0}^{2}}+\underbrace{\delta_{33}\delta_{jj}}_{=3}\frac{-M_{\pi,2}^{2}}{F_{0}^{2}}+\underbrace{\delta_{3j}\delta_{j3}}_{=1}\frac{\left(p-k\right)^{2}-M_{\pi,2}^{2}}{F_{0}^{2}}\nonumber \\
+ & -\frac{1}{2}\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}i\Bigg[\underbrace{\delta_{3j}\delta_{3j}}_{=1}\frac{\left(p+k\right)^{2}-M_{\pi,2}^{2}}{F_{0}^{2}}+\underbrace{\delta_{33}\delta_{jj}}_{=3}\frac{-M_{\pi,2}^{2}}{F_{0}^{2}}+\underbrace{\delta_{3j}\delta_{j3}}_{=1}\frac{\left(p-k\right)^{2}-M_{\pi,2}^{2}}{F_{0}^{2}}\nonumber \\
  & -\frac{1}{3F_{0}^{2}}\underbrace{\left(\delta_{3j}\delta_{3j}+\delta_{33}\delta_{jj}+\delta_{3j}\delta_{j3}\right)}_{=5}\left(2p^{2}+2k^{2}-4M_{\pi,2}^{2}\right)\Bigg]\frac{i}{k^{2}-M_{\pi,2}^{2}+i0^{+}}\label{eq:3.134}\\
- & =\frac{1}{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{3F_{0}^{2}}\left(-4p^{2}-4k^{2}+5M_{\pi,2}^{2}\right)\frac{i}{k^{2}-M_{\pi,2}^{2}+i0^{+}}\nonumber 
+ & =\frac{1}{2}\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{i}{3F_{0}^{2}}\left(-4p^{2}-4k^{2}+5M_{\pi,2}^{2}\right)\frac{i}{k^{2}-M_{\pi,2}^{2}+i0^{+}}\nonumber 
 \end{align}
 
 \end_inset
@@ -13768,7 +13801,7 @@ R & =\frac{2}{n-4}-\left[\ln\left(4\pi\right)+\Gamma^{\prime}\left(1\right)+1\ri
 以外，我们还需要
 \begin_inset Formula 
 \[
-\mu^{4-n}i\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{k^{2}}{k^{2}-M^{2}+i0^{+}}=\mu^{4-n}i\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{k^{2}-M^{2}+M^{2}}{k^{2}-M^{2}+i0^{+}}
+\mu^{4-n}i\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{k^{2}}{k^{2}-M^{2}+i0^{+}}=\mu^{4-n}i\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{k^{2}-M^{2}+M^{2}}{k^{2}-M^{2}+i0^{+}}
 \]
 
 \end_inset
@@ -13780,7 +13813,7 @@ where 我们在分子中使用了
 。在维数正规化中，
 \begin_inset Formula 
 \[
-\mu^{4-n}i\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}=0
+\mu^{4-n}i\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}=0
 \]
 
 \end_inset
@@ -13788,7 +13821,7 @@ where 我们在分子中使用了
 考虑更一般的形式
 \begin_inset Formula 
 \[
-\int\dif^{n}k\left(k^{2}\right)^{p}
+\int\dd[n]k\left(k^{2}\right)^{p}
 \]
 
 \end_inset
@@ -13804,7 +13837,7 @@ where 我们在分子中使用了
 ,
 \begin_inset Formula 
 \begin{equation}
-\int\dif^{n}k\left(k^{2}\right)^{p}=\lambda^{n+2p}\int\dif^{n}k\left(k^{2}\right)^{p}\label{eq:3.136}
+\int\dd[n]k\left(k^{2}\right)^{p}=\lambda^{n+2p}\int\dd[n]k\left(k^{2}\right)^{p}\label{eq:3.136}
 \end{equation}
 
 \end_inset
@@ -13860,7 +13893,7 @@ noprefix "false"
 我们得到
 \begin_inset Formula 
 \[
-\mu^{4-n}i\int\frac{\dif^{n}k}{\left(2\pi\right)^{n}}\frac{k^{2}}{k^{2}-M^{2}+i0^{+}}=M^{2}I\left(M^{2},\mu^{2},n\right)
+\mu^{4-n}i\int\frac{\dd[n]k}{\left(2\pi\right)^{n}}\frac{k^{2}}{k^{2}-M^{2}+i0^{+}}=M^{2}I\left(M^{2},\mu^{2},n\right)
 \]
 
 \end_inset
@@ -14207,7 +14240,7 @@ noprefix "false"
 ，证明
 \begin_inset Formula 
 \[
-\frac{\dif L_{i}^{r}\left(\mu\right)}{\dif\mu}=-\frac{\Gamma_{i}}{16\pi^{2}\mu}
+\frac{\dd L_{i}^{r}\left(\mu\right)}{\dd\mu}=-\frac{\Gamma_{i}}{16\pi^{2}\mu}
 \]
 
 \end_inset
@@ -14219,7 +14252,7 @@ noprefix "false"
 证明
 \begin_inset Formula 
 \[
-\frac{\dif M_{\pi,4}^{2}}{\dif\mu}=0
+\frac{\dd M_{\pi,4}^{2}}{\dd\mu}=0
 \]
 
 \end_inset
@@ -15001,7 +15034,7 @@ where Minkowski 空间定义在五维空间的表面
 表示）：
 \begin_inset Formula 
 \begin{equation}
-S_{\text{WZW}}^{0}=-\frac{i}{240\pi^{2}}\int_{0}^{1}\dif\alpha\int\dif^{4}x\varepsilon^{ijklm}\tr\left(\mathcal{U}_{Li}\mathcal{U}_{Lj}\mathcal{U}_{Lk}\mathcal{U}_{Ll}\mathcal{U}_{Lm}\right)\label{eq:3.148}
+S_{\text{WZW}}^{0}=-\frac{i}{240\pi^{2}}\int_{0}^{1}\dd\alpha\int\dd[4]x\varepsilon^{ijklm}\Tr\left(\mathcal{U}_{Li}\mathcal{U}_{Lj}\mathcal{U}_{Lk}\mathcal{U}_{Ll}\mathcal{U}_{Lm}\right)\label{eq:3.148}
 \end{equation}
 
 \end_inset
@@ -15071,7 +15104,7 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset Formula $\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\tr\left(\partial_{\mu}U,\partial^{\mu}U^{\dagger}\right)$
+\begin_inset Formula $\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\Tr\left(\partial_{\mu}U,\partial^{\mu}U^{\dagger}\right)$
 \end_inset
 
 的作用量，
@@ -15097,7 +15130,7 @@ U^{\prime}\left(y\right)=\left[\mathbbm{1}+i\alpha\Delta\left(x\right)\right]U\l
 验证
 \begin_inset Formula 
 \[
-\delta S_{\text{ano}}^{0}=\frac{n}{48\pi^{2}}\int_{0}^{1}\dif\alpha\int\dif^{4}x\varepsilon^{ijklm}\tr\left(U^{\dagger}\partial_{i}\left(\alpha\Delta\right);U\mathcal{U}_{Lj}\mathcal{U}_{Lk}\mathcal{U}_{Ll}\mathcal{U}_{Lm}\right)
+\delta S_{\text{ano}}^{0}=\frac{n}{48\pi^{2}}\int_{0}^{1}\dd\alpha\int\dd[4]x\varepsilon^{ijklm}\Tr\left(U^{\dagger}\partial_{i}\left(\alpha\Delta\right);U\mathcal{U}_{Lj}\mathcal{U}_{Lk}\mathcal{U}_{Ll}\mathcal{U}_{Lm}\right)
 \]
 
 \end_inset
@@ -15113,7 +15146,7 @@ Hint:使用置换对称性
 ，还有置换对称性，得到
 \begin_inset Formula 
 \[
-\delta S_{\text{ano}}^{0}=\frac{n}{48\pi^{2}}\int\dif^{4}x\varepsilon^{\mu\nu\rho\sigma}\tr\left(\Delta\mathcal{U}_{R\mu}\mathcal{U}_{R\nu}\mathcal{U}_{R\rho}\mathcal{U}_{R\sigma}\right)
+\delta S_{\text{ano}}^{0}=\frac{n}{48\pi^{2}}\int\dd[4]x\varepsilon^{\mu\nu\rho\sigma}\Tr\left(\Delta\mathcal{U}_{R\mu}\mathcal{U}_{R\nu}\mathcal{U}_{R\rho}\mathcal{U}_{R\sigma}\right)
 \]
 
 \end_inset
@@ -15139,7 +15172,7 @@ noprefix "false"
 ），产生
 \begin_inset Formula 
 \begin{equation}
-\int\dif^{4}x\Delta_{\alpha}\tr\left\{ \lambda_{a}\left[i\frac{F_{0}^{2}}{4}\left(\square U;U^{\dagger}-U\square U^{\dagger}\right)+\frac{n}{46\pi^{2}}\varepsilon^{\mu\nu\rho\sigma}\mathcal{U}_{R\mu}\mathcal{U}_{R\nu}\mathcal{U}_{R\rho}\mathcal{U}_{R\sigma}\right]\right\} =0\label{eq:3.149}
+\int\dd[4]x\Delta_{\alpha}\Tr\left\{ \lambda_{a}\left[i\frac{F_{0}^{2}}{4}\left(\square U;U^{\dagger}-U\square U^{\dagger}\right)+\frac{n}{46\pi^{2}}\varepsilon^{\mu\nu\rho\sigma}\mathcal{U}_{R\mu}\mathcal{U}_{R\nu}\mathcal{U}_{R\rho}\mathcal{U}_{R\sigma}\right]\right\} =0\label{eq:3.149}
 \end{equation}
 
 \end_inset
@@ -15225,9 +15258,9 @@ noprefix "false"
 积分，得到普通的作用量，表示成四维 local Lagrangian 的积分。例如，包含最少 Goldstone-bosons 的一项是
 \begin_inset Formula 
 \begin{align*}
-S_{\text{WZW}}^{5\phi} & =\frac{1}{240\pi^{2}F_{0}^{5}}\int_{0}^{1}\dif\alpha\int\dif^{4}x\varepsilon^{ijklm}\tr\left[\partial_{i}\left(\alpha\phi\right)\partial_{j}\left(\alpha\phi\right)\partial_{k}\left(\alpha\phi\right)\partial_{l}\left(\alpha\phi\right)\partial_{m}\left(\alpha\phi\right)\right]\\
- & =\frac{1}{240\pi^{2}F_{0}^{5}}\int_{0}^{1}\dif\alpha\int\dif^{4}x\varepsilon^{ijklm}\partial_{i}\tr\left[\left(\alpha\phi\right)\partial_{j}\left(\alpha\phi\right)\partial_{k}\left(\alpha\phi\right)\partial_{l}\left(\alpha\phi\right)\partial_{m}\left(\alpha\phi\right)\right]\\
- & =\frac{1}{240\pi^{2}F_{0}^{5}}\int\dif^{4}x\varepsilon^{\mu\nu\rho\sigma}\tr\left[\phi\partial_{\mu}\phi\partial_{\nu}\phi\partial_{\rho}\phi\partial_{\sigma}\phi\right]
+S_{\text{WZW}}^{5\phi} & =\frac{1}{240\pi^{2}F_{0}^{5}}\int_{0}^{1}\dd\alpha\int\dd[4]x\varepsilon^{ijklm}\Tr\left[\partial_{i}\left(\alpha\phi\right)\partial_{j}\left(\alpha\phi\right)\partial_{k}\left(\alpha\phi\right)\partial_{l}\left(\alpha\phi\right)\partial_{m}\left(\alpha\phi\right)\right]\\
+ & =\frac{1}{240\pi^{2}F_{0}^{5}}\int_{0}^{1}\dd\alpha\int\dd[4]x\varepsilon^{ijklm}\partial_{i}\Tr\left[\left(\alpha\phi\right)\partial_{j}\left(\alpha\phi\right)\partial_{k}\left(\alpha\phi\right)\partial_{l}\left(\alpha\phi\right)\partial_{m}\left(\alpha\phi\right)\right]\\
+ & =\frac{1}{240\pi^{2}F_{0}^{5}}\int\dd[4]x\varepsilon^{\mu\nu\rho\sigma}\Tr\left[\phi\partial_{\mu}\phi\partial_{\nu}\phi\partial_{\rho}\phi\partial_{\sigma}\phi\right]
 \end{align*}
 
 \end_inset
@@ -15301,7 +15334,7 @@ S_{\text{ano}}=S_{\text{ano}}^{0}+S_{\text{ano}}^{\text{ext}}=n\left(S_{\text{WZ
 由ref18 给出
 \begin_inset Formula 
 \[
-S_{\text{WZW}}^{\text{ext}}=-\frac{i}{48\pi^{2}}\int\dif^{4}x\varepsilon^{\mu\nu\rho\sigma}\tr\left(Z_{\mu\nu\rho\sigma}\right)
+S_{\text{WZW}}^{\text{ext}}=-\frac{i}{48\pi^{2}}\int\dd[4]x\varepsilon^{\mu\nu\rho\sigma}\Tr\left(Z_{\mu\nu\rho\sigma}\right)
 \]
 
 \end_inset
@@ -15357,7 +15390,7 @@ r_{\mu}=l_{\mu}=-e\mathcal{A}_{\mu}Q
 \begin_inset Formula 
 \begin{align}
 n\mathcal{L}_{\text{WZW}}^{\text{ext}} & =-en\mathcal{A}_{\mu}J^{\mu}+i\frac{ne^{2}}{48\pi^{2}}\varepsilon^{\mu\nu\rho\sigma}\partial_{\nu}\mathcal{A}_{\rho}\mathcal{A}_{\sigma}\nonumber \\
- & \times\tr\left[2Q^{2}\left(U\partial_{\mu}U^{\dagger}-U^{\dagger}\partial_{\mu}U\right)-QU^{\dagger}Q\partial_{\mu}U+QUQ\partial_{\mu}U^{\dagger}\right]\label{eq:3.154}
+ & \times\Tr\left[2Q^{2}\left(U\partial_{\mu}U^{\dagger}-U^{\dagger}\partial_{\mu}U\right)-QU^{\dagger}Q\partial_{\mu}U+QUQ\partial_{\mu}U^{\dagger}\right]\label{eq:3.154}
 \end{align}
 
 \end_inset
@@ -15365,7 +15398,7 @@ n\mathcal{L}_{\text{WZW}}^{\text{ext}} & =-en\mathcal{A}_{\mu}J^{\mu}+i\frac{ne^
 我们注意到流
 \begin_inset Formula 
 \begin{equation}
-J^{\mu}=\frac{\varepsilon^{\mu\nu\rho\sigma}}{48\pi^{2}}\tr\left(Q\partial_{\nu}U;U^{\dagger}\partial_{\rho}U;U^{\dagger}\partial_{\sigma}U;U^{\dagger}+QU^{\dagger}\partial_{\nu}U;U^{\dagger}\partial_{\rho}U;U^{\dagger}\partial_{\sigma}U\right),\quad\varepsilon_{0123}=1\label{eq:3.155}
+J^{\mu}=\frac{\varepsilon^{\mu\nu\rho\sigma}}{48\pi^{2}}\Tr\left(Q\partial_{\nu}U;U^{\dagger}\partial_{\rho}U;U^{\dagger}\partial_{\sigma}U;U^{\dagger}+QU^{\dagger}\partial_{\nu}U;U^{\dagger}\partial_{\rho}U;U^{\dagger}\partial_{\sigma}U\right),\quad\varepsilon_{0123}=1\label{eq:3.155}
 \end{equation}
 
 \end_inset
@@ -15453,7 +15486,7 @@ Hint: 使用分部积分，把 pion 场的导数移动到电磁四矢量势上�
 Exercise 3.29 对末态光子极化求和，并对相空间积分，得到衰变率（see Exercise 3.13）
 \begin_inset Formula 
 \begin{equation}
-\Gamma_{\pi^{0}\to\gamma\gamma}=\frac{\alpha^{2}M_{\pi^{0}}^{3}}{64\pi^{3}F_{0}^{2}}\frac{n^{2}}{N_{c}^{2}}=7.6\eV\times\left(\frac{n}{N_{c}}\right)^{2}\label{eq:3.157}
+\Gamma_{\pi^{0}\to\gamma\gamma}=\frac{\alpha^{2}M_{\pi^{0}}^{3}}{64\pi^{3}F_{0}^{2}}\frac{n^{2}}{N_{c}^{2}}=7.6\si{\eV}\times\left(\frac{n}{N_{c}}\right)^{2}\label{eq:3.157}
 \end{equation}
 
 \end_inset
@@ -15509,7 +15542,7 @@ noprefix "false"
 \end_inset
 
 和实验值
-\begin_inset Formula $\left(7.7\pm0.6\right)\eV$
+\begin_inset Formula $\left(7.7\pm0.6\right)\si{\eV}$
 \end_inset
 
 符合的很好，如果
@@ -16047,7 +16080,7 @@ noprefix "false"
  (see Exercise 3.18)
 \begin_inset Formula 
 \begin{align*}
-\frac{\dif\sigma}{\dif\Omega_{\text{lab}}} & =\left(\frac{\omega^{\prime}}{\omega}\right)^{2}\frac{e^{2}}{4\pi M_{\pi}}\Bigg\{\frac{e^{2}}{4\pi M_{\pi}}\frac{1+z^{2}}{2}\\
+\frac{\dd\sigma}{\dd\Omega_{\text{lab}}} & =\left(\frac{\omega^{\prime}}{\omega}\right)^{2}\frac{e^{2}}{4\pi M_{\pi}}\Bigg\{\frac{e^{2}}{4\pi M_{\pi}}\frac{1+z^{2}}{2}\\
  & -\frac{\omega\omega^{\prime}}{2}\left[\left(\alpha+\beta\right)_{\pi^{+}}\left(1+z\right)^{2}+\left(\alpha-\beta\right)_{\pi^{+}}\left(1-z\right)^{2}\right]\Bigg\}+\cdots,
 \end{align*}
 
@@ -16637,7 +16670,7 @@ B_{2}\mapsto LB_{2}L^{\dagger},\quad U\mapsto RUL^{\dagger}
 我们定义新的重子场为
 \begin_inset Formula 
 \[
-\tilde{B}\equiv UB_{2}-\frac{1}{3}\tr\left(UB_{2}\right)
+\tilde{B}\equiv UB_{2}-\frac{1}{3}\Tr\left(UB_{2}\right)
 \]
 
 \end_inset
@@ -16649,7 +16682,7 @@ B_{2}\mapsto LB_{2}L^{\dagger},\quad U\mapsto RUL^{\dagger}
 变换形式为
 \begin_inset Formula 
 \[
-\tilde{B}\mapsto RUB_{2}L^{\dagger}-\frac{1}{3}\tr\left(RUB_{2}L^{\dagger}\right),\quad U\mapsto RUL^{\dagger}
+\tilde{B}\mapsto RUB_{2}L^{\dagger}-\frac{1}{3}\Tr\left(RUB_{2}L^{\dagger}\right),\quad U\mapsto RUL^{\dagger}
 \]
 
 \end_inset
@@ -16879,7 +16912,225 @@ u_{\mu}\stackrel{P}{\mapsto}Ku_{\mu}K^{\dagger}
 
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
+最低阶的重子拉氏量
+\end_layout
+
+\begin_layout Section
+最低阶的应用
+\end_layout
+
+\begin_layout Section
+次领头阶拉氏量
+\end_layout
+
+\begin_layout Section
+圈图：重正化和幂次计数
+\end_layout
+
+\begin_layout Section
+重正化方案
+\end_layout
+
+\begin_layout Subsection
+重重子方法
+\end_layout
+
+\begin_layout Standard
+在手征极限下，我们并不期望核子质量为零，它的大小和 手征对称性破缺能标 
+\begin_inset Formula $4\pi F$
+\end_inset
+
+ 大致相当，后者出现在 pion 圈图的计算中。这使得可观测量按照动量幂次的展开变得复杂，由于核子四动量
+\begin_inset Formula $p$
+\end_inset
+
+的能量分量，相比于
+\begin_inset Formula $4\pi F$
+\end_inset
+
+不再是小量，即
+\begin_inset Formula 
+\begin{equation}
+\frac{p^{0}}{4\pi F}\sim1,\label{eq:4.94}
+\end{equation}
+
+\end_inset
+
+因此
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:4.94"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的比值不是好的展开参数。重-重子手征微扰论（heavy-baryon chiral perturbation theory, HBChPT）的基本想法是，将核
+子四动量
+\begin_inset Formula $p$
+\end_inset
+
+分成两部分：一部分是在壳运动学附近的大分量，一部分是 软的剩余贡献
+\begin_inset Formula $k_{p}$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{equation}
+p^{\mu}=mv^{\mu}+k_{p}^{\mu}.\label{eq:4.95}
+\end{equation}
+
+\end_inset
+
+四速度
+\begin_inset Formula $v^{\mu}$
+\end_inset
+
+的性质为
+\begin_inset Formula 
+\begin{equation}
+v^{2}=1,\quad v^{0}\ge1,\label{eq:4.96}
+\end{equation}
+
+\end_inset
+
+为了方便通常选取
+\begin_inset Formula $v^{\mu}=\left(1,0,0,0\right)$
+\end_inset
+
+。将
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:4.95"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+移项并平方得到，
+\begin_inset Formula 
+\begin{equation}
+v\cdot k_{p}=-\frac{k_{p}^{2}}{2m}\stackrel{v^{\mu}=\left(1,0,0,0\right)}{=}k_{p}^{0}=E-m\ll m.\label{eq:4.97}
+\end{equation}
+
+\end_inset
+
+此外，将相对论的核子场分解到两个依赖速度的场，
+\begin_inset Formula 
+\begin{equation}
+\Psi\left(x\right)=e^{-imv\cdot x}\left[\mathcal{N}_{v}\left(x\right)+\mathcal{H}_{v}\left(x\right)\right],\label{eq:4.98}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+\mathcal{N}_{v}=e^{+imv\cdot x}P_{v+}\Psi,\quad\mathcal{H}_{v}\left(x\right)=e^{+imv\cdot x}P_{v-}\Psi,\label{eq:4.99}
+\end{equation}
+
+\end_inset
+
+我们定义了投影算符：
+\begin_inset Formula 
+\begin{align}
+P_{v\pm} & \equiv\frac{1}{2}\left(\symbb1\pm\sla v\right)=\frac{1}{2}\left(\begin{array}{cc}
+1 & \pm v\cdot\sigma\\
+\pm v\cdot\bar{\sigma} & 1
+\end{array}\right)=\frac{1}{2}\left(\begin{array}{cc}
+1 & \pm1\\
+\pm1 & 1
+\end{array}\right)\label{eq:4.100}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+使用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:4.96"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，证明：
+\begin_inset Formula 
+\[
+P_{v+}+P_{v-}=\symbb1,\quad P_{v\pm}^{2}=P_{v\pm},\quad P_{v\pm}P_{v\mp}=0.
+\]
+
+\end_inset
+
+使用这些结果证明
+\begin_inset Formula 
+\begin{equation}
+\sla v\mathcal{N}_{v}=\mathcal{N}_{v},\quad\sla v\mathcal{H}_{v}=-\mathcal{H}_{v}.\label{eq:4.101}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+从相对论的领头阶拉氏量 4.17 出发，
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}_{\pi N}^{\left(1\right)}=\overline{\Psi}\left(i\sla D-m+\frac{g_{A}}{2}\gamma^{\mu}\gamma^{5}u_{\mu}\right)\Psi\label{eq:4.102}
+\end{equation}
+
+\end_inset
+
+我们现在推导 HBChPT 的领头阶拉氏量。尽管可以使用路径积分方法，但是在这里我们用运动方程化简，这样就不需要泛函积分的详尽知识。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+我们的目标是推导出重重子框架下的领头阶拉氏量。
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+使用核子场的欧拉–拉格朗日方程
+\begin_inset Formula 
+\[
+-\partial_{\mu}\frac{\partial\mathcal{L}_{\pi N}^{\left(1\right)}}{\partial\partial_{\mu}\overline{\Psi}}+\frac{\partial\mathcal{L}_{\pi N}^{\left(1\right)}}{\partial\overline{\Psi}}=0,
+\]
+
+\end_inset
+
+推导运动方程（EOM）
+\begin_inset Formula 
+\begin{equation}
+\left(i\sla D-m+\frac{g_{A}}{2}\sla u\gamma^{5}\right)\Psi=0.\label{eq:4.103}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Delta 共振态
+\end_layout
+
+\begin_layout Chapter*
 手征变换表格
 \end_layout
 
@@ -17618,7 +17869,7 @@ Q\mapsto LQL^{\dagger}=RQR^{\dagger}=VQV^{\dagger}
 \end_inset
 
 如果
-\begin_inset Formula $\tr\left[Q\right]\neq0$
+\begin_inset Formula $\Tr\left[Q\right]\neq0$
 \end_inset
 
 ，则还需要分解到单位矩阵
@@ -17696,7 +17947,7 @@ Q_{u}=\left(\begin{array}{ccc}
 \end_inset
 
 第一项是
-\begin_inset Formula $\tr$
+\begin_inset Formula $\Tr$
 \end_inset
 
 部分。第二项是无迹部分，再分解到
@@ -17708,7 +17959,7 @@ Q_{u}=\left(\begin{array}{ccc}
 \end_inset
 
 的系数可以利用正交性求出，
-\begin_inset Formula $\tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}$
+\begin_inset Formula $\Tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}$
 \end_inset
 
 。不过实际中一般不需要明确求出。例如八重态重子的协变导数
@@ -17763,7 +18014,7 @@ Q_{u}=\left(\begin{array}{ccc}
 分成有迹部分和无迹部分即可，
 \begin_inset Formula 
 \[
-\mathscr{D}_{\mu}B=\partial_{\mu}B+ie\mathcal{A}_{\mu}\left\{ \left[Q-\frac{1}{3}\tr\left[Q\right],B\right]+\tr\left[Q\right]B\right\} 
+\mathscr{D}_{\mu}B=\partial_{\mu}B+ie\mathcal{A}_{\mu}\left\{ \left[Q-\frac{1}{3}\Tr\left[Q\right],B\right]+\Tr\left[Q\right]B\right\} 
 \]
 
 \end_inset
@@ -17773,19 +18024,19 @@ Q_{u}=\left(\begin{array}{ccc}
 \end_inset
 
 ，第一项中可以加上
-\begin_inset Formula $\frac{1}{3}\tr\left[Q\right]$
+\begin_inset Formula $\frac{1}{3}\Tr\left[Q\right]$
 \end_inset
 
 ，最后可以写成
 \begin_inset Formula 
 \[
-\mathscr{D}_{\mu}B=\partial_{\mu}B+ie\mathcal{A}_{\mu}\left[Q,B\right]+ie\mathcal{A}_{\mu}\tr\left[Q\right]B
+\mathscr{D}_{\mu}B=\partial_{\mu}B+ie\mathcal{A}_{\mu}\left[Q,B\right]+ie\mathcal{A}_{\mu}\Tr\left[Q\right]B
 \]
 
 \end_inset
 
 这里单态的系数之所以是
-\begin_inset Formula $\tr\left[Q\right]$
+\begin_inset Formula $\Tr\left[Q\right]$
 \end_inset
 
 ，是要求展开展开之后的结果匹配夸克电荷数目得到的。
@@ -17805,7 +18056,7 @@ chpt primer 前面章节中出现的拉氏量，电荷矩阵的投影基是
 \end_inset
 
 由于
-\begin_inset Formula $\tr\left(\frac{I}{3}\right)=1$
+\begin_inset Formula $\Tr\left(\frac{I}{3}\right)=1$
 \end_inset
 
 ，这样
@@ -17815,7 +18066,11 @@ chpt primer 前面章节中出现的拉氏量，电荷矩阵的投影基是
 中的系数直接等于电荷矩阵的迹。
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Standard
+sdf
+\end_layout
+
+\begin_layout Chapter*
 附录B
 \end_layout
 
@@ -17823,7 +18078,7 @@ chpt primer 前面章节中出现的拉氏量，电荷矩阵的投影基是
 一般比如
 \begin_inset Formula 
 \[
-F\left[j\right]=\int\dif^{n}xg\left(j(x)\right)
+F\left[j\right]=\int\dd[n]xg\left(j(x)\right)
 \]
 
 \end_inset
@@ -17898,9 +18153,9 @@ x & \mapsto\delta_{y}(x)=\delta^{n}\left(x-y\right)
 由于
 \begin_inset Formula 
 \begin{align*}
- & f\left(y\right)=F_{y}\left[y\right]=\int\dif^{n}z\delta^{n}\left(y-z\right)f\left(z\right)\\
-\Rightarrow & \frac{\delta f\left(y\right)}{\delta f\left(x\right)}=\lim_{\varepsilon\to0}\int\dif^{n}z\frac{\delta^{n}\left(y-z\right)\left(f\left(z\right)+\varepsilon\delta^{n}\left(z-x\right)\right)-\delta^{n}\left(y-z\right)f\left(z\right)}{\varepsilon}\\
- & \int\dif^{n}z\delta^{n}\left(y-z\right)\delta^{n}\left(z-x\right)=\delta^{n}\left(y-x\right)
+ & f\left(y\right)=F_{y}\left[y\right]=\int\dd[n]z\delta^{n}\left(y-z\right)f\left(z\right)\\
+\Rightarrow & \frac{\delta f\left(y\right)}{\delta f\left(x\right)}=\lim_{\varepsilon\to0}\int\dd[n]z\frac{\delta^{n}\left(y-z\right)\left(f\left(z\right)+\varepsilon\delta^{n}\left(z-x\right)\right)-\delta^{n}\left(y-z\right)f\left(z\right)}{\varepsilon}\\
+ & \int\dd[n]z\delta^{n}\left(y-z\right)\delta^{n}\left(z-x\right)=\delta^{n}\left(y-x\right)
 \end{align*}
 
 \end_inset
@@ -17952,7 +18207,7 @@ f\left(x\right)=a_{0}+a_{1}x+\frac{1}{2}a_{2}x^{2}+\frac{1}{3!}x^{3}+\cdots
 计算导数
 \begin_inset Formula 
 \[
-\frac{\dif f}{\dif x^{n}}\left(x=0\right)=a_{n}
+\frac{\dd f}{\dd x^{n}}\left(x=0\right)=a_{n}
 \]
 
 \end_inset
@@ -17968,9 +18223,9 @@ f\left(x\right)=a_{0}+a_{1}x+\frac{1}{2}a_{2}x^{2}+\frac{1}{3!}x^{3}+\cdots
 给出
 \begin_inset Formula 
 \begin{align*}
-Z[j]=\exp\left(iW[j]\right) & =\bra{0}T\exp\left[i\int\dif^{4}x\mathcal{L}_{\text{ext}}\left(x\right)\right]\ket{0}=\bra{0}T\exp\left[iS_{\text{ext}}\right]\ket{0}\\
- & =1+i\int\dif^{4}xj\left(x\right)\bra{0}\phi\left(x\right)\ket{0}\\
- & +\sum_{k=2}^{\infty}\frac{i^{k}}{k!}\int\dif^{4}x_{1}\cdots\int\dif^{4}x_{k}\,j\left(x_{1}\right)\cdots j\left(x_{k}\right)*\bra{0}T\left[\phi\left(x_{1}\right)\cdots\phi\left(x_{k}\right)\right]\ket{0}
+Z[j]=\exp\left(iW[j]\right) & =\bra{0}T\exp\left[i\int\dd[4]x\mathcal{L}_{\text{ext}}\left(x\right)\right]\ket{0}=\bra{0}T\exp\left[iS_{\text{ext}}\right]\ket{0}\\
+ & =1+i\int\dd[4]xj\left(x\right)\bra{0}\phi\left(x\right)\ket{0}\\
+ & +\sum_{k=2}^{\infty}\frac{i^{k}}{k!}\int\dd[4]x_{1}\cdots\int\dd[4]x_{k}\,j\left(x_{1}\right)\cdots j\left(x_{k}\right)*\bra{0}T\left[\phi\left(x_{1}\right)\cdots\phi\left(x_{k}\right)\right]\ket{0}
 \end{align*}
 
 \end_inset

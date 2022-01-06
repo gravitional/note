@@ -342,6 +342,12 @@ linktocpage=true, %
 \unit{\kilogram\of{metal}}
 ```
 
+### 兼容性
+
+一般来说, `siunitx` 应该可以和其他软件包一起使用而不受干扰.
+当 `physics` 在 `siunitx` 之前加载时, 不定义命令 `\qty` : 用户需要使用第二版的命令 `\SI`.
+当 `units` 在 `siunitx` 之前加载时, 不定义命令 `\unit`, 用户将需要使用第二版的命令 `\si`.
+
 ## 页眉与页脚
 
 [Latex的页脚和页眉](https://zhuanlan.zhihu.com/p/114676221)

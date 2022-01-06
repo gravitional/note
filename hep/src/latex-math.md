@@ -189,7 +189,7 @@ $(\lambda)=(\lambda_1,\lambda_2,\cdots \lambda_m)$
 
 [ytableau – Many-featured Young tableaux and Young diagrams](https://www.ctan.org/pkg/ytableau)
 
-该软件包提供了一些绘制 Young tableaux 和 Young diagrams 的功能,扩展了 `young` 和 `youngtab` 软件包,但提供了更多功能.
+该软件包提供了一些绘制 Young tableaux 和 Young diagrams 的功能, 扩展了 `young` 和 `youngtab` 软件包,但提供了更多功能.
 倾斜和彩色表格很容易, and pgfkeys-enabled options are provided both at package load and configurably.
 
 ```latex
