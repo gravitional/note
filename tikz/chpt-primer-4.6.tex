@@ -1,0 +1,26 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}[x=2.5cm,y=2.5cm]
+	\begin{feynman}
+		%% fig a
+		\vertex (a1) at (0,0);
+		\vertex[above right = 0 and 1 of a1] (a2);
+		\vertex[above right = 0 and 3 of a1] (a3);
+		\vertex[above right = 0 and 4 of a1] (a4);
+		\vertex[above right = 1 and 0.5 of a1] (a5);
+		\vertex[above right = 1 and 3.5 of a1] (a6);
+		% 对各个顶点连线
+		\diagram*{
+        (a1)--[fermion,momentum'=\(p\)]
+        (a2)--[fermion,momentum'=\(p+q\)]
+        (a3)--[fermion,momentum'=\(p^\prime\)](a4);
+        (a5)--[charged scalar,momentum=\(q\)](a2);
+        (a3)--[charged scalar,momentum=\(q^\prime\)](a6);
+		};
+	\end{feynman}
+\end{tikzpicture}
+
+\end{document}

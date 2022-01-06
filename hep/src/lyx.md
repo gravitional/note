@@ -114,11 +114,12 @@ You need to  maybe `reconfigure`  and restart LyX.
 [Lyx, Error Converting to Loadable Format for PDFs](https://tex.stackexchange.com/questions/326244/lyx-error-converting-to-loadable-format-for-pdfs)
 [How LyX handles figures](https://wiki.lyx.org/LyX/FiguresInLyX)
 
-要在`LyX`屏幕上查看图像,需要与`XForms`或`Qt GUI`库兼容的格式,即`bmp`,`gif`,`jpeg`,`pbm`,`pgm`,`ppm`,`tif`,`xbm`或`mng`,`png`和`xpm`.
+要在`LyX`屏幕上查看图像,需要与 `XForms` 或 `Qt GUI` 库兼容的格式,即`bmp`,`gif`,`jpeg`,`pbm`,`pgm`,`ppm`,`tif`,`xbm`或`mng`,`png`和`xpm`.
+出现消息
 
-出现消息"Error converting to loadable format" 表示无法将图像转换为`PNG`或任何上面的格式.
+    "Error converting to loadable format"
 
-一般来说需要增加已知`converters`的列表.
+表示无法将图像转换为`PNG`或任何上面的格式. 一般来说需要增加已知`converters`的列表.
 
 ### 添加转换器
 
@@ -130,42 +131,70 @@ lyx -dbg graphics
 
 如果图形输出有问题,可以从在上述命令生成的输出中找到原因.
 
-要在LyX屏幕上查看图形,LyX必须从`EncapsulatedPostScript`转换到可加载的图形格式. 在`tools-preference-Converters`部分可以看到配置的转换器机制.
-添加新的转换器将导致类似下面一行
+要在 `LyX` 屏幕上查看图形, LyX必须从`EncapsulatedPostScript`转换到可加载的图形格式.
+在`tools-preference-Converters`部分可以看到配置的转换器机制.
+添加新的 `转换器`将导致类似下面的行
 
 ```latex
 \converter "eps" "png" "my_ps2png $$i $$o" ""
 ```
 
-被添加到您的`.lyx/preferences`文件中. 该行使用外部程序 `my_ps2png` 定义了从`EncapsulatedPostScript`到`PNG`格式的转换器.
+被添加到您的`.lyx/preferences`文件中.
+该行使用外部程序 `my_ps2png` 定义了从`EncapsulatedPostScript`到`PNG`格式的转换器.
 占位符`$$i`和`$$o`由LyX替换为输入文件和输出文件的名称.
 
-如果LyX无法通过转换路径(可能有许多步骤),从`EncapsulatedPostScript`转换到上面列出的可加载格式中的一种,则默认为使用Shell脚本`convertDefault.sh`.
-后者是`ImageMagick`的`convert` utility 的简单`wrapper`. 显然,只有在安装了 `convert` 且`convert`可以处理从A格式到B格式的转换时,它才可以工作.
+如果 `LyX` 无法通过转换路径(可能有许多步骤), 从 `EncapsulatedPostScript` 转换到上面列出的可加载格式中的一种, 则默认为使用 `Shell` 脚本 `convertDefault.sh`.
+后者是`ImageMagick` 的 `convert` utility 的简单`wrapper`.
+显然,只有在安装了 `convert` 且`convert`可以处理从A格式到B格式的转换时,它才可以工作.
 
-如果经过以上步骤,`LyX`仍然无法加载图形,它将在图片位置上输出消息"Error converting to loadable format". 如果出现此类消息,则需要增加(augment)已知转换器的列表.
+如果经过以上步骤, `LyX` 仍然无法加载图形,它将在图片位置上输出消息"Error converting to loadable format".
+如果出现此类消息,则需要增加(augment)已知转换器的列表.
 
-添加`EPS-> PNG`转换器的示例(对于Mac OS X).
+添加`EPS-> PNG`转换器的示例(对于 `Mac OS X`).
 
-+ 安装ImageMagick. 安装后,通过在终端中键入`covert /path/test.eps /path/test.png`(对于Mac OS X),检查将`eps`转换为`png`的转换器是否正常工作.
-+ 在`Lyx->Preferences->File Handling->Converters`中,将EPS添加到Lyx中的PNG转换器.
-选择`EPS-> PDF`,然后将`格式`从`PDF`更改为`PNG`. 在转换器行中,键入`convert $$i $$o`,然后按添加并保存.
-+ 将`convert`命令所在的路径添加到`Lyx`. 例如 `/opt/ImageMagick/bin` (for Mac OS X).
-转到`Lyx>Preferences>Paths>Path prefix`,添加`:/opt/ImageMagick/bin`到路径的末尾. 保存路径并退出Lyx.
++ 安装 `ImageMagick`. 安装后,通过在终端中键入`covert /path/test.eps /path/test.png`(对于Mac OS X),检查将`eps`转换为`png`的转换器是否正常工作.
++ 在`Lyx->Preferences->File Handling->Converters`中, 将 `EPS` 添加到 `LyX` 中的 `PNG` 转换器.
+选择 `EPS-> PDF`, 然后将 `格式` 从 `PDF` 更改为`PNG`. 在转换器行中,键入 `convert $$i $$o`, 然后按添加并保存.
++ 将 `convert` 命令所在的路径添加到 `Lyx`. 例如 `/opt/ImageMagick/bin` (for Mac OS X).
+转到 `Lyx>Preferences>Paths>Path prefix`, 添加`:/opt/ImageMagick/bin`到路径的末尾. 保存路径并退出 `LyX`.
 + 再次运行Lyx,然后打开包含`eps`图形的文件,现在此文件应该在预览中显示`png`图形.
 
 ### Imagemagick 安全策略
 
 [ImageMagick security policy 'PDF' blocking conversion](https://stackoverflow.com/questions/52998331/imagemagick-security-policy-pdf-blocking-conversion)
 
-linux 下 lyx `pdf` 无法预览,可能是由于`Imagemagick`的安全策略引起的. 你需要更改`/etc/ImageMagick-7/policy.xml`中ImageMagick的策略.
-例如在ArchLinux中(2019年5月1日),以下行未注释:
+linux 下 lyx `pdf` 无法预览, 可能是由于`Imagemagick` 的安全策略引起的.
+你需要更改`/etc/ImageMagick-7/policy.xml`中 `ImageMagick` 的策略.
+例如在 `ArchLinux` 中(2019年5月1日), 以下行未注释:
 
 ```xml
 <policy domain="coder" rights="none" pattern="{PS,PS2,PS3,EPS,PDF,XPS}" />
 ```
 
 只需把上面这几行放进`<!--` and `-->`中注释掉,然后pdf转换应该就能工作了.
+
+### ghostscript
+
+如果遇到下列报错:
+
+    gs: symbol lookup error: /usr/lib/x86_64-linux-gnu/libgs.so.9: undefined symbol: cmsCreateContext
+
+则有可能是 ghostscript 版本的问题, 可以先更新到最新版试试.
+参考[newer version ghostscript][], 下载 [Ghostscript AGPL 源码][], 解压缩进入源码目录编译, 即:
+
+```bash
+# 解压缩
+tar xvf ghostscript-x.xx.tar.gz
+# 进入目录
+sudo ./configure
+sudo make install
+# 重启终端, 测试
+gs -v
+ghostscript -v
+```
+
+[newer version ghostscript]: https://askubuntu.com/questions/1076846/how-to-install-newer-version-of-ghostscript-on-server-than-provided-from-ubuntu
+[Ghostscript AGPL 源码]: https://www.ghostscript.com/releases/gsdnld.html
 
 ## lyx preamble
 
