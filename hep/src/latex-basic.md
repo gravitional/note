@@ -333,8 +333,8 @@ kpsewhich latinmodern-math.otf
 \setboldmathrm{⟨font name⟩}[⟨font features⟩]
 ```
 
-但有一个问题,`\boldsymbol`是`AMS`系列包中的`amsbsy`定义的宏,可以产生粗体数学符号.
-如果用`fontspec`设置数学字体为`latinmodern-math.otf`字体时,没有粗体效果,而是变成直立体,原因不明.可以通过使用`unicode-math`包解决,见下文.
+但有一个问题, `\boldsymbol` 是 `AMS` 系列包中的 `amsbsy` 定义的宏,可以产生粗体数学符号.
+如果用 `fontspec` 设置数学字体为 `latinmodern-math.otf` 字体时,没有粗体效果,而是变成直立体,原因不明.可以通过使用`unicode-math`包解决,见下文.
 
 对中文字体的选择可以通过 [xeCJK][] 完成:
 
@@ -348,54 +348,6 @@ kpsewhich latinmodern-math.otf
 % 中文断行设置
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1p
-```
-
-## unicode 数学字体
-
-[mathspec]: https://ctan.org/pkg/mathspec
-[unicode-math]: https://ctan.org/pkg/unicode-math
-[change the math italic font in XeTeX/fontspec]: https://tex.stackexchange.com/questions/11058/how-do-i-change-the-math-italic-font-in-xetex-fontspec
-[Error:Extended mathchar used as mathchar]: https://tex.stackexchange.com/questions/431013/error-extended-mathchar-used-as-mathchar-when-using-bm
-[Theunicode-mathpackage]: https://mirrors.bfsu.edu.cn/CTAN/macros/unicodetex/latex/unicode-math/unicode-math.pdf
-
-其他指定数学字体的包有: [mathspec][], 以及 [unicode-math][].
-`stackexchange`上有关于 [change the math italic font in XeTeX/fontspec][] 的讨论. 作者给出的示例代码为:
-
-```latex
-\documentclass{article}
-\usepackage{unicode-math}
-\setmainfont{Georgia}
-\setmathfont{xits-math.otf}
-\setmathfont[range=\mathit]{Georgia Italic}
-\begin{document}
-Hello $a+b=c$
-\end{document}
-```
-
-载入`unicode-math`包,并使用`\boldsymbol`时会报错: [Error:Extended mathchar used as mathchar][],
-解决方案是不使用`\bm`,`\boldsymbol`命令,而使用`\symbf`,`\symcal`等命令, 见[Theunicode-mathpackage][].
-`unicode-math`引入了一些新的命令,例如:
-
-```latex
-\symbb, \symbbit, \symcal, \symscr, \symfrak, \symsfup, \symsfit,
-\symbfsf, \symbfup, \symbfit, \symbfcal, \symbfscr, \symbffrak, \symbfsfup, \symbfsfit
-```
-
-用来表示单个粗体数学符号, 跟粗体普通文字是不同的,
-粗体普通文字使用`latex`中通常的`\mathbb, \mathbbit, \mathcal`等命令. 例子是:
-
-```latex
-\documentclass{article}
-\usepackage{unicode-math}
-\setmainfont{XITS}
-\setmathfont{XITS Math}
-
-\begin{document}
-This is a simple math example with a variable $k$.
-This works $\symbfit{k}$.
-What I actually need is this: $\mathbfcal{X}$ and $\symbf{\Theta}$.
-Compare with $\mathcal{X}$ and $\Theta$.
-\end{document}
 ```
 
 ## fontenc

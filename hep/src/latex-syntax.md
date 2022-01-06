@@ -10,7 +10,7 @@
 
 另外`CJK`中还有`CJKinput`和`CJKinclude`命令.
 
-## newcommand 新命令
+## newcommand, 新命令
 
 [LaTeX2e unofficial reference manual](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html)
 12.1 \newcommand & \renewcommand
@@ -35,9 +35,8 @@
 \renewcommand*{\cmd}[nargs][optargdefault]{defn}
 ```
 
-+ 定义或重定义一个命令.
-参见关于 `\DeclareRobustCommand` 的讨论, 位于 `Class  and package commands`中.
-+ 这两个命令的`*`号形式要求参数不能包含多段文字. (用 `plain TeX` 术语说,不能为`\long` ).
++ 定义或重定义命令. 参见关于 `\DeclareRobustCommand` 的讨论, 位于 `Class  and package commands`中.
++ 两命令的 `*` 号形式, 要求参数不能包含 `多段文字`. (用 `plain TeX` 术语说,不能为`\long` ).
 
 ### 参数说明
 
@@ -90,6 +89,57 @@ The \shipname{Monitor} met the \shipname{Merrimac}.
 ```latex
 \newcommand{\shipname}[1]{{\it #1}}
 ```
+
+### \DeclareRobustCommand
+
+```latex
+\DeclareRobustCommand{cmd}[num][default]{definition}
+\DeclareRobustCommand*{cmd}[num][default]{definition}
+```
+
+就像 `\newcommand` 和 `\newcommand* ` (见 \newcommand & \renewcommand ),
+但是它们声明 `健壮的命令`(robust), 即使定义中的一些代码是脆弱的.
+(关于健壮的和脆弱的命令的讨论, 请参见 \protect. )
+使用这个命令来定义新的健壮的命令, 或重新定义现有的命令并使其 `健壮`.
+与 `\newcommand` 不同的是, 如果宏 `cmd` 已经存在, 它们不会报错;
+相反, 如果命令被重新定义, `日志信息` 会被放入 `transcript` 文件.
+
+这样定义命令, 比使用 `\newcommand` 定义效率要低一些,
+所以除非命令的数据很脆弱, 而且命令是在 `moving` 参数中使用的, 否则请使用 `\newcommand`.
+
+`etoolbox` 软件包提供了命令 `\newrobustcmd`, `\newrobustcmd*`,
+以及命令 `\renewrobustcmd`, `\renewrobustcmd*`,
+和命令 `\providerobustcmd`, 和`\providerobustcmd*`.
+
+这些命令类似于 `\newcommand`, `\newcommand*`, `\renewcommand`, `\renewcommand*`, `\providecommand`, and `\providecommand*`,
+定义了健壮的 `cmd`, 但与 `\DeclareRobustCommand` 相比, 有两个优点.
+
+它们使用低级别的 `e-TeX` 保护机制, 而不是高级别的 LaTeX `\protect` 机制, 所以它们不会产生上面提到的性能的轻微损失,
+并且它们在 `\new...`, `\renew...`, 和 `\provide...` 之间的区分, 与标准命令相同,
+所以当你重新定义已经存在的 `cmd` 时, 它们不会只做一条日志信息,
+在这种情况下, 你需要使用 `\renew...` 或 `\provide...`, 否则就会出现错误.
+
+## IfFileExists
+
+```latex
+\IfFileExists{filename}{true code}{false code}
+\InputIfFileExists{filename}{true code}{false code}
+```
+
+如果 `LaTeX` 找到了文件的文件名, 就执行 `true code`, 否则就执行 `false code`.
+在第一种情况下, 它执行 `true code`, 然后输入文件. 因此, 该命令
+
+```latex
+\IfFileExists{img.pdf}{%
+    \includegraphics{img.pdf}}{\typeout{!! img.pdf not found}
+```
+
+将 `include img.pdf`, 如果它存在, 否则就发出警告.
+
+这个命令在 `LaTeX` 使用的所有搜索路径中寻找文件, 而不仅仅是在当前目录中.
+要想只在当前目录中寻找, 请执行类似于 `\IfFileExists{./filename}{true code}{false code}`的命令.
+如果你请求不含 `.tex` 扩展名的文件名, 那么 `LaTeX` 将首先通过添加 `.tex` 来寻找该文件;
+关于 `LaTeX` 如何处理文件扩展名的更多信息, 请参见 `\input`.
 
 ## \RequirePackage \usepackage 区别
 

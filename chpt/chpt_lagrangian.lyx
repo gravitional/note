@@ -47,7 +47,7 @@
 \usetikzlibrary{shapes.misc,animations}
 \usetikzlibrary{shapes.geometric}% tikz node 形状的库
 \usepackage{siunitx} % 国际单位制
-%\usepackage{physics} % 物理包
+\usepackage{physics} % 物理包
 \usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
 \usepackage{slashed} % also for slash notation: take your pick!
 \usepackage{bm,bbm} 
@@ -59,7 +59,6 @@
 % Standard package for creating indexes
 \usepackage{multirow}
 \usepackage{mathtools}% 定义配对的数学符号
-
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
@@ -92,19 +91,20 @@
     tabsize=2
 }
 %%++++++++++++++++++++ 
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
-% * 号版本可以把上下标放在符号的正上方/正下方
-\DeclareMathOperator{\im}{Im}
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+%\DeclareMathOperator{\re}{Re}
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\im}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
 \DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+%\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\newcommand*{\sbf}{\symbfit} %粗体数学符号或矢量符号
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
 \newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 \newcommand*{\sla}{\slashed}% feynman slash
@@ -226,9 +226,9 @@ literal "true"
 的拉氏量为
 \begin_inset Formula 
 \begin{align}
-L_{v}^{0} & =i\tr\bar{B}_{v}\left(v\cdot\mathcal{D}\right)B_{v}+2D\tr\bar{B}_{v}S_{v}^{\mu}\left\{ A_{\mu},B_{v}\right\} +2F\tr\bar{B}_{v}S_{v}^{\mu}\left[A_{\mu},B_{v}\right]\nonumber \\
+L_{v}^{0} & =i\Tr\bar{B}_{v}\left(v\cdot\mathcal{D}\right)B_{v}+2D\Tr\bar{B}_{v}S_{v}^{\mu}\left\{ A_{\mu},B_{v}\right\} +2F\Tr\bar{B}_{v}S_{v}^{\mu}\left[A_{\mu},B_{v}\right]\nonumber \\
  & -i\bar{T}_{v}^{\mu}\left(v\cdot\mathcal{D}\right)T_{v\mu}+\mathcal{C}\left(\bar{T}_{v}^{\mu}A_{\mu}B_{v}+\bar{B}_{v}A_{\mu}T_{v}^{\mu}\right)+2\mathcal{H}\bar{T}_{v}^{\mu}S_{v\nu}A^{\nu}T_{v\mu}\label{eq:8}\\
- & +\delta\bar{T}_{v}^{\mu}T_{v\mu}+\frac{f^{2}}{4}\tr\partial_{\mu}\Sigma\partial^{\mu}\Sigma\nonumber 
+ & +\delta\bar{T}_{v}^{\mu}T_{v\mu}+\frac{f^{2}}{4}\Tr\partial_{\mu}\Sigma\partial^{\mu}\Sigma\nonumber 
 \end{align}
 
 \end_inset
@@ -354,11 +354,11 @@ noprefix "false"
 \end_inset
 
 中的 
-\begin_inset Formula $2F\tr\bar{B}_{v}S_{v}^{\mu}\left[A_{\mu},B_{v}\right]$
+\begin_inset Formula $2F\Tr\bar{B}_{v}S_{v}^{\mu}\left[A_{\mu},B_{v}\right]$
 \end_inset
 
  在相对论情形是 
-\begin_inset Formula $F\tr\bar{B}\gamma^{\mu}\gamma^{5}\left[A_{\mu},B\right]$
+\begin_inset Formula $F\Tr\bar{B}\gamma^{\mu}\gamma^{5}\left[A_{\mu},B\right]$
 \end_inset
 
 。
@@ -1329,7 +1329,7 @@ K^{-} & \bar{K}^{0} & \frac{-2}{\sqrt{6}}\eta
 相应的最低阶轴矢拉氏量为：
 \begin_inset Formula 
 \begin{align*}
- & -\frac{D}{2}\tr\left(\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right)-\frac{F}{2}\tr\left(\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right)\\
+ & -\frac{D}{2}\Tr\left(\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right)-\frac{F}{2}\Tr\left(\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right)\\
  & \mathcal{D}_{\mu}B=\partial_{\mu}B+\left[\Gamma_{\mu},B\right]
 \end{align*}
 
@@ -1416,7 +1416,7 @@ literal "false"
 的定义应该是打错了。对应地，将最低阶轴矢拉氏量写成：
 \begin_inset Formula 
 \[
-D\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right].
+D\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right].
 \]
 
 \end_inset
@@ -1504,7 +1504,7 @@ r_{\mu}=v_{\mu}+a_{\mu},\quad l_{\mu}=v_{\mu}-a_{\mu}
 p83 介子最低阶有效拉矢量为
 \begin_inset Formula 
 \[
-\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\tr\left[\partial_{\mu}U;\left(\partial^{\mu}U\right)^{\dagger}\right]
+\mathcal{L}_{\text{eff}}=\frac{F_{0}^{2}}{4}\Tr\left[\partial_{\mu}U;\left(\partial^{\mu}U\right)^{\dagger}\right]
 \]
 
 \end_inset
@@ -1542,7 +1542,7 @@ u_{\mu} & =i\left(u^{\dagger}\partial_{\mu}u-u\partial_{\mu}u^{\dagger}\right)+u
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{\text{MB}}^{\left(1\right)}=\tr\left[i\bar{B}\left(i\gamma.D-M_{0}\right)B\right]-\frac{D}{2}\tr\left(\bar{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right)-\frac{F}{2}\tr\left(\bar{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right)
+\mathcal{L}_{\text{MB}}^{\left(1\right)}=\Tr\left[i\bar{B}\left(i\gamma.D-M_{0}\right)B\right]-\frac{D}{2}\Tr\left(\bar{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right)-\frac{F}{2}\Tr\left(\bar{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right)
 \]
 
 \end_inset
@@ -1701,7 +1701,7 @@ then,
 展开中的前两项即非阿贝尔群，自伴表示协变导数的标准形式，最后一项是味单态矢量流耦合。
 \begin_inset Formula 
 \[
-\tr\left[\overline{B}i\gamma.DB\right]=\tr\left[\overline{B}\partial_{\mu}B\right]+e\mathcal{A}_{\mu}\tr\left[\overline{B}\left[Q,B\right]\right]
+\Tr\left[\overline{B}i\gamma.DB\right]=\Tr\left[\overline{B}\partial_{\mu}B\right]+e\mathcal{A}_{\mu}\Tr\left[\overline{B}\left[Q,B\right]\right]
 \]
 
 \end_inset
@@ -1709,7 +1709,7 @@ then,
 
 \begin_inset Formula 
 \[
-\tr\left[\overline{B}\left[Q,B\right]\right]=\tr\left[BQ\overline{B}-\overline{B}BQ\right]
+\Tr\left[\overline{B}\left[Q,B\right]\right]=\Tr\left[BQ\overline{B}-\overline{B}BQ\right]
 \]
 
 \end_inset
@@ -1833,28 +1833,28 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 \end_inset
 
 介子最低阶拉氏量为
-\begin_inset Formula $\frac{f^{2}}{4}\tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]$
+\begin_inset Formula $\frac{f^{2}}{4}\Tr\left[D_{\mu}U\left(D^{\mu}U\right)^{\dagger}\right]$
 \end_inset
 
 ，展开为
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & \frac{f^{2}}{4}\tr\left\{ \left[\frac{i}{f}\partial_{\mu}\phi+e\mathcal{A}_{\mu}\frac{1}{f}\left[Q,\phi\right]\right]\left[-\frac{i}{f}\partial^{\mu}\phi-e\mathcal{A}_{\mu}\frac{1}{f}\left[Q,\phi\right]\right]\right\} \\
-= & \frac{f^{2}}{4}\tr\left[\frac{1}{f^{2}}\partial_{\mu}\phi;\partial^{\mu}\phi-\frac{ie\mathcal{A}_{\mu}}{f^{2}}\left(\left[Q,\phi\right]\partial^{\mu}\phi+\partial^{\mu}\phi\left[Q,\phi\right]\right)-\frac{e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}}{f^{2}}\left[Q,\phi\right]\left[Q,\phi\right]\right]\\
-= & \frac{1}{4}\tr\left[\partial_{\mu}\phi\partial^{\mu}\phi-2ie\mathcal{A}_{\mu}\left[Q,\phi\right]\partial^{\mu}\phi-e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\left[Q,\phi\right]\left[Q,\phi\right]\right]\\
-= & \frac{1}{4}\tr\left[\partial_{\mu}\phi;\partial^{\mu}\phi^{\dagger}\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\tr\left(\left[Q,\phi\right]\partial^{\mu}\phi\right)-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)
+\Rightarrow & \frac{f^{2}}{4}\Tr\left\{ \left[\frac{i}{f}\partial_{\mu}\phi+e\mathcal{A}_{\mu}\frac{1}{f}\left[Q,\phi\right]\right]\left[-\frac{i}{f}\partial^{\mu}\phi-e\mathcal{A}_{\mu}\frac{1}{f}\left[Q,\phi\right]\right]\right\} \\
+= & \frac{f^{2}}{4}\Tr\left[\frac{1}{f^{2}}\partial_{\mu}\phi;\partial^{\mu}\phi-\frac{ie\mathcal{A}_{\mu}}{f^{2}}\left(\left[Q,\phi\right]\partial^{\mu}\phi+\partial^{\mu}\phi\left[Q,\phi\right]\right)-\frac{e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}}{f^{2}}\left[Q,\phi\right]\left[Q,\phi\right]\right]\\
+= & \frac{1}{4}\Tr\left[\partial_{\mu}\phi\partial^{\mu}\phi-2ie\mathcal{A}_{\mu}\left[Q,\phi\right]\partial^{\mu}\phi-e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\left[Q,\phi\right]\left[Q,\phi\right]\right]\\
+= & \frac{1}{4}\Tr\left[\partial_{\mu}\phi;\partial^{\mu}\phi^{\dagger}\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\Tr\left(\left[Q,\phi\right]\partial^{\mu}\phi\right)-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)
 \end{align*}
 
 \end_inset
 
 由
-\begin_inset Formula $\tr$
+\begin_inset Formula $\Tr$
 \end_inset
 
 的轮换不变性，也可以写成
 \begin_inset Formula 
 \[
-=\frac{1}{4}\tr\left[\partial_{\mu}\phi;\partial^{\mu}\phi^{\dagger}\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)
+=\frac{1}{4}\Tr\left[\partial_{\mu}\phi;\partial^{\mu}\phi^{\dagger}\right]-\frac{1}{2}ie\mathcal{A}_{\mu}\Tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)
 \]
 
 \end_inset
@@ -1864,7 +1864,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 
 \begin_layout Standard
 由
-\begin_inset Formula $\tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}$
+\begin_inset Formula $\Tr\left(\lambda_{a}\lambda_{b}\right)=2\delta_{ab}$
 \end_inset
 
 ，
@@ -1910,7 +1910,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 \end_inset
 
 :
-\begin_inset Formula $-\frac{1}{2}ie\mathcal{A}_{\mu}\tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)$
+\begin_inset Formula $-\frac{1}{2}ie\mathcal{A}_{\mu}\Tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)$
 \end_inset
 
 。
@@ -1938,7 +1938,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 
 \begin_inset Formula 
 \begin{align*}
- & \frac{1}{2}\tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)\\
+ & \frac{1}{2}\Tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)\\
 = & u\left(\pi^{+}\partial^{\mu}\pi^{-}+K^{+}\partial^{\mu}K^{-}-\partial^{\mu}\pi^{+};\pi^{-}-\partial^{\mu}K^{+};K^{-}\right)\\
 + & d\left(\pi^{-}\partial^{\mu}\pi^{+}+K^{0}\partial^{\mu}\bar{K}^{0}-\partial^{\mu}\pi^{-};\pi^{+}-\partial^{\mu}K^{0};\bar{K}^{0}\right)\\
 + & s\left(K^{-}\partial^{\mu}K^{+}+\bar{K}^{0}\partial^{\mu}K^{0}-\partial^{\mu}K^{-};K^{+}-\partial^{\mu}\bar{K}^{0};K^{0}\right)\\
@@ -1952,7 +1952,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 所以,
 \begin_inset Formula 
 \begin{align*}
- & -\frac{1}{2}ie\mathcal{A}_{\mu}\tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)\\
+ & -\frac{1}{2}ie\mathcal{A}_{\mu}\Tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)\\
  & =\left(-ie\mathcal{A}_{\mu}\right)\left[\left(u-d\right)\mathcal{H}^{\mu}\left(\pi^{+},\pi^{-}\right)+\left(u-s\right)\mathcal{H}^{\mu}\left(K^{+},K^{-}\right)+\left(d-s\right)\mathcal{H}^{\mu}\left(K^{0},\bar{K}^{0}\right)\right]
 \end{align*}
 
@@ -1969,7 +1969,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 ，进一步简化到
 \begin_inset Formula 
 \begin{align*}
- & -\frac{1}{2}ie\mathcal{A}_{\mu}\tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)\\
+ & -\frac{1}{2}ie\mathcal{A}_{\mu}\Tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right)\\
  & =\left(-ie\mathcal{A}_{\mu}\right)\left(u-d\right)\left(\pi^{+}\partial^{\mu}\pi^{-}-\partial^{\mu}\pi^{+};\pi^{-}+K^{+}\partial^{\mu}K^{-}-\partial^{\mu}K^{+};K^{-}\right)
 \end{align*}
 
@@ -1986,7 +1986,7 @@ u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\
 \end_inset
 
 :
-\begin_inset Formula $-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)$
+\begin_inset Formula $-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)$
 \end_inset
 
 
@@ -2060,7 +2060,7 @@ u\sqrt{2}K^{-} & d\sqrt{2}\bar{K}^{0} & s\left(\frac{-2}{\sqrt{3}}\eta\right)
 这种情况下的拉氏量为
 \begin_inset Formula 
 \begin{align*}
- & -\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)\\
+ & -\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right)\\
 \Rightarrow & \frac{1}{2}\left(u-d\right)^{2}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\left(\pi^{+}\pi^{-}+K^{+}K^{-}+\pi^{-}\pi^{+}+K^{-}K^{+}\right)\\
 = & \left(u-d\right)^{2}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\left(\pi^{+}\pi^{-}+K^{+}K^{-}\right)
 \end{align*}
@@ -2078,8 +2078,8 @@ u\sqrt{2}K^{-} & d\sqrt{2}\bar{K}^{0} & s\left(\frac{-2}{\sqrt{3}}\eta\right)
 时，
 \begin_inset Formula 
 \begin{align*}
--\frac{1}{2}ie\mathcal{A}_{\mu}\tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right) & =\left(-ie\mathcal{A}_{\mu}\right)\left(Q_{u}-Q_{d}\right)\left(\pi^{+}\partial^{\mu}\pi^{-}-\partial^{\mu}\pi^{+};\pi^{-}+K^{+}\partial^{\mu}K^{-}-\partial^{\mu}K^{+};K^{-}\right)\\
--\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right) & =\left(Q_{u}-Q_{d}\right)^{2}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\left(\pi^{+}\pi^{-}+K^{+}K^{-}\right)
+-\frac{1}{2}ie\mathcal{A}_{\mu}\Tr\left(Q\left[\phi,\partial^{\mu}\phi\right]\right) & =\left(-ie\mathcal{A}_{\mu}\right)\left(Q_{u}-Q_{d}\right)\left(\pi^{+}\partial^{\mu}\pi^{-}-\partial^{\mu}\pi^{+};\pi^{-}+K^{+}\partial^{\mu}K^{-}-\partial^{\mu}K^{+};K^{-}\right)\\
+-\frac{1}{4}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\Tr\left(\left[Q,\phi\right]\left[Q,\phi\right]\right) & =\left(Q_{u}-Q_{d}\right)^{2}e^{2}\mathcal{A}_{\mu}\mathcal{A}^{\mu}\left(\pi^{+}\pi^{-}+K^{+}K^{-}\right)
 \end{align*}
 
 \end_inset
@@ -2162,7 +2162,7 @@ literal "true"
 \end_inset
 
 是介子衰变常数，
-\begin_inset Formula $f\approx\qty{93}{\MeV}$
+\begin_inset Formula $f\approx\SI{93}{\MeV}$
 \end_inset
 
 .
@@ -2463,7 +2463,7 @@ literal "false"
 此外还有跟反常磁矩相关的拉氏量
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}^{\text{mag}} & =\frac{e}{4M_{N}}\left(c_{1}^{\prime}\tr\left[\overline{B}\sigma^{\mu\nu}\left\{ \mathcal{F}_{\mu\nu}^{u},B\right\} \right]+c_{2}^{\prime}\tr\left[\overline{B}\sigma^{\mu\nu}\left[\mathcal{F}_{\mu\nu}^{u},B\right]\right]+c_{3}^{\prime}\tr\left[\mathcal{F}_{\mu\nu}^{u}\right]\tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right)\\
+\mathcal{L}^{\text{mag}} & =\frac{e}{4M_{N}}\left(c_{1}^{\prime}\Tr\left[\overline{B}\sigma^{\mu\nu}\left\{ \mathcal{F}_{\mu\nu}^{u},B\right\} \right]+c_{2}^{\prime}\Tr\left[\overline{B}\sigma^{\mu\nu}\left[\mathcal{F}_{\mu\nu}^{u},B\right]\right]+c_{3}^{\prime}\Tr\left[\mathcal{F}_{\mu\nu}^{u}\right]\Tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right)\\
  & +\frac{-eF_{2}^{T}}{4M_{T}}\overline{T}_{\mu}^{abc}\sigma^{\alpha\beta}\mathcal{F}_{\alpha\beta}Q^{ce}T^{\mu,eba}\\
  & +\frac{iec_{4}}{4M_{N}}\mathcal{F}_{\mu\nu}\left(\varepsilon^{ijk}\overline{B}^{jm}Q^{il}\gamma^{\mu}\gamma^{5}T^{\nu,klm}+\varepsilon^{ijk}\overline{T}^{\mu,klm}Q^{li}\gamma^{\nu}\gamma^{5}B^{mj}\right)
 \end{align*}
@@ -2524,7 +2524,7 @@ literal "true"
 \end_inset
 
 对应无迹部分
-\begin_inset Formula $Q-\tr\left[Q\right]/3$
+\begin_inset Formula $Q-\Tr\left[Q\right]/3$
 \end_inset
 
 ，
@@ -2532,7 +2532,7 @@ literal "true"
 \end_inset
 
 对应有迹部分
-\begin_inset Formula $\tr\left[Q\right]$
+\begin_inset Formula $\Tr\left[Q\right]$
 \end_inset
 
 。但是
@@ -2552,7 +2552,7 @@ literal "true"
 \end_inset
 
 相当于
-\begin_inset Formula $-2x\mathcal{F}_{\mu\nu}c_{1}^{\prime}\tr\left[\bar{B}\sigma^{\mu\nu}B\right]$
+\begin_inset Formula $-2x\mathcal{F}_{\mu\nu}c_{1}^{\prime}\Tr\left[\bar{B}\sigma^{\mu\nu}B\right]$
 \end_inset
 
 ，这样和
@@ -2581,7 +2581,7 @@ literal "true"
 。所以在领头阶可以一般地写成
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}^{\text{mag}} & =\frac{e}{4M_{N}}\mathcal{F}_{\mu\nu}\left(c_{1}\tr\left[\overline{B}\sigma^{\mu\nu}\left\{ Q,B\right\} \right]+c_{2}\tr\left[\overline{B}\sigma^{\mu\nu}\left[Q,B\right]\right]+c_{3}\tr\left[Q\right]\tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right)\\
+\mathcal{L}^{\text{mag}} & =\frac{e}{4M_{N}}\mathcal{F}_{\mu\nu}\left(c_{1}\Tr\left[\overline{B}\sigma^{\mu\nu}\left\{ Q,B\right\} \right]+c_{2}\Tr\left[\overline{B}\sigma^{\mu\nu}\left[Q,B\right]\right]+c_{3}\Tr\left[Q\right]\Tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right)\\
  & +\frac{-eF_{2}^{T}}{4M_{T}}\overline{T}_{\mu}^{abc}\sigma^{\alpha\beta}\mathcal{F}_{\alpha\beta}Q^{ce}T^{\mu,eba}\\
  & +\frac{iec_{4}}{4M_{N}}\left(\varepsilon^{ijk}\overline{B}^{jm}\mathcal{F}_{\mu\nu}Q^{il}\gamma^{\mu}\gamma^{5}T^{\nu,klm}+\varepsilon^{ijk}\overline{T}^{\mu,klm}\mathcal{F}_{\mu\nu}Q^{li}\gamma^{\nu}\gamma^{5}B^{mj}\right)
 \end{align*}
@@ -2861,7 +2861,7 @@ x^{\dagger}Ay\Rightarrow x_{i}^{*}A_{ij}y_{j}
 \begin{align*}
  & \Rightarrow\frac{iec_{4}}{4m_{N}}\left(\varepsilon^{ijk}\overline{B}^{jm}\left(\mathcal{F}_{\mu\nu}\right)^{il}\gamma^{\mu}\gamma^{5}T^{\nu,klm}+\varepsilon^{ijk}\overline{T}^{\mu,klm}\left(\mathcal{F}_{\mu\nu}\right)^{li}\gamma^{\nu}\gamma^{5}B^{mj}\right)\\
  & =\frac{iec_{4}}{4m_{N}}\left(\overline{B}^{jm}\left(\mathcal{F}_{\mu\nu}\right)^{il}\left(\gamma^{\mu}\gamma^{5}\right)T^{\nu,lmk}\left(-\varepsilon^{kji}\right)+\varepsilon^{ijk}\overline{T}^{\mu,kml}\left(\mathcal{F}_{\mu\nu}\right)^{li}\gamma^{\nu}\gamma^{5}B^{mj}\right)\\
- & =\frac{iec_{4}}{4m_{N}}\left(\tr\left(\overline{B}.\left(\mathcal{F}_{\mu\nu}.\gamma^{\mu}\gamma^{5}T^{\nu}.\left(-\varepsilon\right)\right)^{\left\{ 1,4\right\} }\right)+\tr\left(\left(\varepsilon.\overline{T}^{\mu}.\mathcal{F}_{\mu\nu}\right)^{\left\{ 1,4\right\} }.\gamma^{\nu}\gamma^{5}.B\right)\right)
+ & =\frac{iec_{4}}{4m_{N}}\left(\Tr\left(\overline{B}.\left(\mathcal{F}_{\mu\nu}.\gamma^{\mu}\gamma^{5}T^{\nu}.\left(-\varepsilon\right)\right)^{\left\{ 1,4\right\} }\right)+\Tr\left(\left(\varepsilon.\overline{T}^{\mu}.\mathcal{F}_{\mu\nu}\right)^{\left\{ 1,4\right\} }.\gamma^{\nu}\gamma^{5}.B\right)\right)
 \end{align*}
 
 \end_inset
@@ -2876,7 +2876,7 @@ x^{\dagger}Ay\Rightarrow x_{i}^{*}A_{ij}y_{j}
  & \mathcal{C}\left[\varepsilon^{ijk}\overline{T}_{\mu}^{ilm}\Theta^{\mu\nu}\left(u_{\nu}\right)^{lj}B^{mk}+\text{h.c.}\right]\\
 = & \mathcal{C}\left[\varepsilon^{jki}\overline{T}_{\mu}^{iml}\Theta^{\mu\nu}\left(u_{\nu}\right)^{lj}B^{mk}+\overline{B}^{km}\left(-\Theta^{\mu\nu}\right)^{\dagger}T_{\nu}^{ilm}\left(u_{\mu}\right)^{jl}\varepsilon^{ijk}\right]\\
 = & \mathcal{C}\left[\overline{B}^{km}\left(u_{\mu}\right)^{jl}\Theta^{\mu\nu}T_{\nu}^{lmi}\left(-\varepsilon^{ikj}\right)+\varepsilon^{jki}\overline{T}_{\mu}^{iml}\Theta^{\mu\nu}\left(u_{\nu}\right)^{lj}B^{mk}\right]\\
-= & \mathcal{C}\left[\tr\left(\overline{B}.\Theta^{\mu\nu}.\left(u_{\mu}.T_{\nu}.\left(-\varepsilon\right)\right)^{\left\{ 1,4\right\} }\right)+\tr\left(\left(\varepsilon.\overline{T}_{\mu}.u_{\nu}\right)^{\left\{ 1,4\right\} }.\Theta^{\mu\nu}.B\right)\right]
+= & \mathcal{C}\left[\Tr\left(\overline{B}.\Theta^{\mu\nu}.\left(u_{\mu}.T_{\nu}.\left(-\varepsilon\right)\right)^{\left\{ 1,4\right\} }\right)+\Tr\left(\left(\varepsilon.\overline{T}_{\mu}.u_{\nu}\right)^{\left\{ 1,4\right\} }.\Theta^{\mu\nu}.B\right)\right]
 \end{align*}
 
 \end_inset
@@ -2968,10 +2968,10 @@ x^{\dagger}Ay\Rightarrow x_{i}^{*}A_{ij}y_{j}
 耦合，
 \begin_inset Formula 
 \begin{align*}
-J_{a}^{\mu} & ={\color{blue}\frac{1}{2}\tr\left(\overline{B}\gamma^{\mu}\left[u\lambda^{a}u^{\dagger}+u^{\dagger}\lambda^{a}u,B\right]\right)}\\
- & +\frac{D}{2}\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u\lambda^{a}u^{\dagger}-u^{\dagger}\lambda^{a}u,B\right\} \right]+\frac{F}{2}\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u\lambda^{a}u^{\dagger}-u^{\dagger}\lambda^{a}u,B\right]\right]\\
+J_{a}^{\mu} & ={\color{blue}\frac{1}{2}\Tr\left(\overline{B}\gamma^{\mu}\left[u\lambda^{a}u^{\dagger}+u^{\dagger}\lambda^{a}u,B\right]\right)}\\
+ & +\frac{D}{2}\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u\lambda^{a}u^{\dagger}-u^{\dagger}\lambda^{a}u,B\right\} \right]+\frac{F}{2}\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u\lambda^{a}u^{\dagger}-u^{\dagger}\lambda^{a}u,B\right]\right]\\
  & +{\color{blue}\frac{1}{2}\overline{T}_{\nu}\gamma^{\nu\alpha\mu}\left(u\lambda^{a}u^{\dagger}+u^{\dagger}\lambda^{a}u,T_{\alpha}\right)}+\frac{\mathcal{C}}{2}\left(\overline{T}_{\nu}\Theta^{\nu\mu}\left(u\lambda^{a}u^{\dagger}-u^{\dagger}\lambda^{a}u\right)B+\text{h.c.}\right)\\
- & +\frac{f^{2}}{4}\tr\left[\partial^{\mu}U\left(U^{\dagger}i\lambda^{a}-i\lambda^{a}U^{\dagger}\right)+\left(Ui\lambda^{a}-i\lambda^{a}U\right)\partial^{\mu}U^{\dagger}\right].
+ & +\frac{f^{2}}{4}\Tr\left[\partial^{\mu}U\left(U^{\dagger}i\lambda^{a}-i\lambda^{a}U^{\dagger}\right)+\left(Ui\lambda^{a}-i\lambda^{a}U\right)\partial^{\mu}U^{\dagger}\right].
 \end{align*}
 
 \end_inset
@@ -2987,7 +2987,7 @@ J_{a}^{\mu} & ={\color{blue}\frac{1}{2}\tr\left(\overline{B}\gamma^{\mu}\left[u\
 耦合，
 \begin_inset Formula 
 \[
-J_{0}^{\mu}=\langle\lambda^{0}\rangle\tr\left[\overline{B}\gamma^{\mu}B\right]+\langle\lambda^{0}\rangle\overline{T}_{\nu}\gamma^{\nu\alpha\mu}T_{\alpha}.
+J_{0}^{\mu}=\langle\lambda^{0}\rangle\Tr\left[\overline{B}\gamma^{\mu}B\right]+\langle\lambda^{0}\rangle\overline{T}_{\nu}\gamma^{\nu\alpha\mu}T_{\alpha}.
 \]
 
 \end_inset
@@ -3080,7 +3080,7 @@ Q_{u}\\
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}^{\text{mag}} & =\frac{e}{4M_{N}}\mathcal{F}_{\mu\nu}\left(c_{1}\tr\left[\overline{B}\sigma^{\mu\nu}\left\{ Q,B\right\} \right]+c_{2}\tr\left[\overline{B}\sigma^{\mu\nu}\left[Q,B\right]\right]+c_{3}\tr\left[Q\right]\tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right)\\
+\mathcal{L}^{\text{mag}} & =\frac{e}{4M_{N}}\mathcal{F}_{\mu\nu}\left(c_{1}\Tr\left[\overline{B}\sigma^{\mu\nu}\left\{ Q,B\right\} \right]+c_{2}\Tr\left[\overline{B}\sigma^{\mu\nu}\left[Q,B\right]\right]+c_{3}\Tr\left[Q\right]\Tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right)\\
  & +\frac{-eF_{2}^{T}}{4M_{T}}\overline{T}_{\mu}^{abc}\sigma^{\alpha\beta}\mathcal{F}_{\alpha\beta}Q^{ce}T^{\mu,eba}\\
  & +\frac{iec_{4}}{4M_{N}}\left(\varepsilon^{ijk}\overline{B}^{jm}\mathcal{F}_{\mu\nu}Q^{il}\gamma^{\mu}\gamma^{5}T^{\nu,klm}+\varepsilon^{ijk}\overline{T}^{\mu,klm}\mathcal{F}_{\mu\nu}Q^{li}\gamma^{\nu}\gamma^{5}B^{mj}\right)
 \end{align*}
@@ -3121,7 +3121,7 @@ Q_{u}\\
 \begin_inset Formula 
 \begin{align*}
  & J_{q}^{\mu\left(\text{mag}\right)}=\frac{\delta\mathcal{L}^{\text{mag}}}{\delta A_{\mu}}\\
- & =\frac{e\partial_{\nu}}{4M_{N}}\left\{ c_{1}\tr\left[\overline{B}\sigma^{\mu\nu}\left\{ u^{\dagger}Qu+uQu^{\dagger},B\right\} \right]+c_{2}\tr\left[\overline{B}\sigma^{\mu\nu}\left[u^{\dagger}Qu+uQu^{\dagger},B\right]\right]+c_{3}\tr\left[u^{\dagger}Qu+uQu^{\dagger}\right]\tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right\} \\
+ & =\frac{e\partial_{\nu}}{4M_{N}}\left\{ c_{1}\Tr\left[\overline{B}\sigma^{\mu\nu}\left\{ u^{\dagger}Qu+uQu^{\dagger},B\right\} \right]+c_{2}\Tr\left[\overline{B}\sigma^{\mu\nu}\left[u^{\dagger}Qu+uQu^{\dagger},B\right]\right]+c_{3}\Tr\left[u^{\dagger}Qu+uQu^{\dagger}\right]\Tr\left[\overline{B}\sigma^{\mu\nu}B\right]\right\} \\
  & +\frac{\left(-eF_{2}^{T}\partial_{\nu}\right)}{2M_{T}}\overline{T}_{\alpha}^{abc}\sigma^{\mu\nu}Q^{ce}T^{\alpha,eba}\\
  & +\frac{iec_{4}\left(\partial_{\sigma}g^{\mu\rho}-\partial_{\rho}g^{\mu\sigma}\right)}{4M_{N}}\left(\varepsilon^{ijk}\overline{B}^{jm}Q^{il}\gamma^{\rho}\gamma^{5}T^{\sigma,klm}+\varepsilon^{ijk}\overline{T}^{\rho,klm}Q^{li}\gamma^{\sigma}\gamma^{5}B^{mj}\right)
 \end{align*}
@@ -3225,7 +3225,7 @@ literal "false"
 
 \begin_inset Formula 
 \[
-\mathcal{L}^{\left(2\right)}=\frac{i}{2}b_{9}\sigma^{\mu\nu}\tr\left(\bar{B}u_{\mu}\right)\tr\left(u_{\nu}B\right)+\frac{i}{2}b_{10}\sigma^{\mu\nu}\tr\left[\bar{B}\left[\left[u_{\mu},u_{\nu}\right],B\right]\right]+\frac{i}{2}b_{11}\sigma^{\mu\nu}\tr\left[\bar{B}\left\{ \left[u_{\mu},u_{\nu}\right],B\right\} \right]
+\mathcal{L}^{\left(2\right)}=\frac{i}{2}b_{9}\sigma^{\mu\nu}\Tr\left(\bar{B}u_{\mu}\right)\Tr\left(u_{\nu}B\right)+\frac{i}{2}b_{10}\sigma^{\mu\nu}\Tr\left[\bar{B}\left[\left[u_{\mu},u_{\nu}\right],B\right]\right]+\frac{i}{2}b_{11}\sigma^{\mu\nu}\Tr\left[\bar{B}\left\{ \left[u_{\mu},u_{\nu}\right],B\right\} \right]
 \]
 
 \end_inset
@@ -3247,7 +3247,7 @@ u_{\mu}=\frac{i}{2}\left(u\partial_{\mu}u^{\dagger}-u^{\dagger}\partial_{\mu}u\r
 \end_inset
 
 的值为
-\begin_inset Formula $b_{9}=\qty{1.36}{\GeV},b_{10}=\qty{1.24}{\GeV},b_{11}=\qty{0.46}{\GeV}$
+\begin_inset Formula $b_{9}=\SI{1.36}{\GeV},b_{10}=\SI{1.24}{\GeV},b_{11}=\SI{0.46}{\GeV}$
 \end_inset
 
 。考虑到
@@ -3257,7 +3257,7 @@ u_{\mu}=\frac{i}{2}\left(u\partial_{\mu}u^{\dagger}-u^{\dagger}\partial_{\mu}u\r
 是反对称的，可以化简成，
 \begin_inset Formula 
 \[
-\mathcal{L}=\frac{i}{2}b_{9}\sigma^{\mu\nu}\tr\left(\bar{B}u_{\mu}\right)\tr\left(u_{\nu}B\right)+ib_{10}\sigma^{\mu\nu}\tr\left[\bar{B}\left\{ u_{\mu}u_{\nu},B\right\} \right]+ib_{11}\sigma^{\mu\nu}\tr\left[\bar{B}\left[u_{\mu}u_{\nu},B\right]\right]
+\mathcal{L}=\frac{i}{2}b_{9}\sigma^{\mu\nu}\Tr\left(\bar{B}u_{\mu}\right)\Tr\left(u_{\nu}B\right)+ib_{10}\sigma^{\mu\nu}\Tr\left[\bar{B}\left\{ u_{\mu}u_{\nu},B\right\} \right]+ib_{11}\sigma^{\mu\nu}\Tr\left[\bar{B}\left[u_{\mu}u_{\nu},B\right]\right]
 \]
 
 \end_inset
@@ -3322,7 +3322,7 @@ D_{\mu}D_{\nu}-D_{\mu}L_{\nu}-L_{\mu}D_{\nu}-D_{\mu}U_{\nu}-U_{\mu}D_{\nu}+L_{\m
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\tr\left[\overline{B}\left(i\gamma\cdot\partial-M_{B}\right)B\right]
+\Tr\left[\overline{B}\left(i\gamma\cdot\partial-M_{B}\right)B\right]
 \]
 
 \end_inset
@@ -3400,7 +3400,7 @@ P_{\beta\rho} & =\langle\hat{T}\,T_{\beta}\left(x\right)\bar{T}_{\rho}\left(x\ri
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{f_{\phi}^{2}}{4}*\tr\left[\partial_{\mu}U\left(\partial_{\mu}U^{\dagger}\right)\right]
+\frac{f_{\phi}^{2}}{4}*\Tr\left[\partial_{\mu}U\left(\partial_{\mu}U^{\dagger}\right)\right]
 \]
 
 \end_inset
@@ -3445,7 +3445,7 @@ BBM 轴矢项DF
 
 \begin_inset Formula 
 \[
-D\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right]
+D\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right]
 \]
 
 \end_inset
@@ -4385,7 +4385,7 @@ BBMM 矢量耦合项
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\tr\left(\overline{B}i\gamma^{\mu}\left[\Gamma_{\mu},B\right]\right)
+\Tr\left(\overline{B}i\gamma^{\mu}\left[\Gamma_{\mu},B\right]\right)
 \]
 
 \end_inset
@@ -4885,7 +4885,7 @@ BTM 耦合项 C
 八重态–十重态–介子耦合项，
 \begin_inset Formula 
 \[
-\mathcal{C}\tr\left\{ \left(\varepsilon\cdot\overline{T}_{\mu}.u_{\nu}\right)^{\left(1,4\right)}\cdot\left(\Theta^{\mu\nu}\cdot B\right)+\left[\overline{B}\cdot u_{\mu}\cdot\Theta^{\mu\nu}\cdot T_{\nu}\cdot\left(-\varepsilon\right)\right]^{\left(1,4\right)}\right\} .
+\mathcal{C}\Tr\left\{ \left(\varepsilon\cdot\overline{T}_{\mu}.u_{\nu}\right)^{\left(1,4\right)}\cdot\left(\Theta^{\mu\nu}\cdot B\right)+\left[\overline{B}\cdot u_{\mu}\cdot\Theta^{\mu\nu}\cdot T_{\nu}\cdot\left(-\varepsilon\right)\right]^{\left(1,4\right)}\right\} .
 \]
 
 \end_inset
@@ -6705,7 +6705,7 @@ BBMM张量耦合项,Modified
 拉氏密度为，
 \begin_inset Formula 
 \[
-\mathcal{L}=\frac{i}{2}\left\{ b_{9}\tr\left[\overline{B}u_{\mu}\right]\sigma^{\mu\nu}\tr\left[u_{\nu}B\right]+b_{10}\tr\left[\overline{B}\left[u_{\mu},u_{\nu}\right]\sigma^{\mu\nu}B\right]+b_{11}\tr\left[\overline{B}\left\{ u_{\mu},u_{\nu}\right\} \sigma^{\mu\nu}B\right]\right\} 
+\mathcal{L}=\frac{i}{2}\left\{ b_{9}\Tr\left[\overline{B}u_{\mu}\right]\sigma^{\mu\nu}\Tr\left[u_{\nu}B\right]+b_{10}\Tr\left[\overline{B}\left[u_{\mu},u_{\nu}\right]\sigma^{\mu\nu}B\right]+b_{11}\Tr\left[\overline{B}\left\{ u_{\mu},u_{\nu}\right\} \sigma^{\mu\nu}B\right]\right\} 
 \]
 
 \end_inset
@@ -7642,7 +7642,7 @@ MMA介子
 介子的电磁流为：
 \begin_inset Formula 
 \[
-i\frac{f^{2}}{4}\tr\left[\partial^{\mu}U.\left[U^{\dagger},\lambda^{a}\right]+\left[U,\lambda^{a}\right].\partial^{\mu}U^{\dagger}\right]
+i\frac{f^{2}}{4}\Tr\left[\partial^{\mu}U.\left[U^{\dagger},\lambda^{a}\right]+\left[U,\lambda^{a}\right].\partial^{\mu}U^{\dagger}\right]
 \]
 
 \end_inset
@@ -7827,7 +7827,7 @@ BBMMA八重态
 守恒流的八重态分量为，
 \begin_inset Formula 
 \[
-\frac{1}{2}\tr\left[\overline{B}\gamma^{\mu}.\left[u.\lambda^{a}.u^{\dagger}+u^{\dagger}.\lambda^{a}.u,B\right]\right]
+\frac{1}{2}\Tr\left[\overline{B}\gamma^{\mu}.\left[u.\lambda^{a}.u^{\dagger}+u^{\dagger}.\lambda^{a}.u,B\right]\right]
 \]
 
 \end_inset
@@ -8384,19 +8384,19 @@ DF 轴矢项
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{D}{2}\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ uQu^{\dagger}-u^{\dagger}Qu,B\right\} \right]+\frac{F}{2}\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[uQu^{\dagger}-u^{\dagger}Qu,B\right]\right]
+\frac{D}{2}\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ uQu^{\dagger}-u^{\dagger}Qu,B\right\} \right]+\frac{F}{2}\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[uQu^{\dagger}-u^{\dagger}Qu,B\right]\right]
 \]
 
 \end_inset
 
 反对易操作之后，只有八重态作用保留下来，
-\begin_inset Formula $\tr$
+\begin_inset Formula $\Tr$
 \end_inset
 
 部分被消掉。对应的强相互作用拉氏量为，
 \begin_inset Formula 
 \begin{align*}
- & D\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right]\\
+ & D\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F\Tr\left[\overline{B}\gamma^{\mu}\gamma^{5}\left[u_{\mu},B\right]\right]\\
 u_{\mu} & =\frac{i}{2}\left(u\partial_{\mu}u^{\dagger}-u^{\dagger}\partial_{\mu}u\right)+\frac{1}{2}\left(u\lambda^{a}u^{\dagger}-u^{\dagger}\lambda^{a}u\right)v_{\mu}^{a}\\
 u_{\mu} & =-\frac{1}{f}\partial_{\mu}\phi+\frac{i}{f}e\mathcal{A}_{\mu}\left[Q,\phi\right]
 \end{align*}
@@ -11467,7 +11467,7 @@ BMTA 耦合项 C
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{\mathcal{C}}{2}\tr\left[\left(\varepsilon.\overline{T_{\nu}}.\left(u.\lambda^{a}.u^{\dagger}-u^{\dagger}.\lambda^{a}.u\right)\right)^{1,4}.\Theta^{\nu\mu}.B\right]+\frac{\mathcal{C}}{2}\tr\left[\overline{B}.\left(\left(u.\lambda^{a}.u^{\dagger}-u^{\dagger}.\lambda^{a}.u\right).\Theta^{\mu\nu}.T_{\nu}.\left(-\varepsilon\right)\right)^{1,4}\right]
+\frac{\mathcal{C}}{2}\Tr\left[\left(\varepsilon.\overline{T_{\nu}}.\left(u.\lambda^{a}.u^{\dagger}-u^{\dagger}.\lambda^{a}.u\right)\right)^{1,4}.\Theta^{\nu\mu}.B\right]+\frac{\mathcal{C}}{2}\Tr\left[\overline{B}.\left(\left(u.\lambda^{a}.u^{\dagger}-u^{\dagger}.\lambda^{a}.u\right).\Theta^{\mu\nu}.T_{\nu}.\left(-\varepsilon\right)\right)^{1,4}\right]
 \]
 
 \end_inset
@@ -12246,7 +12246,7 @@ F_{2p}^{s}=c_{1}-c_{2}+c_{3}=0
 拉氏密度为
 \begin_inset Formula 
 \[
-\frac{e}{4M_{N}}\left(c_{1}\tr\left[\overline{B}.\sigma^{\mu\nu}.\left\{ F_{\mu\nu}^{+},B\right\} \right]+c_{2}\tr\left[\overline{B}.\sigma^{\mu\nu}.\left[F_{\mu\nu}^{+},B\right]\right]+c_{3}\tr\left[\overline{B}.\sigma^{\mu\nu}.B\right]*\tr\left[Q\right]\right).
+\frac{e}{4M_{N}}\left(c_{1}\Tr\left[\overline{B}.\sigma^{\mu\nu}.\left\{ F_{\mu\nu}^{+},B\right\} \right]+c_{2}\Tr\left[\overline{B}.\sigma^{\mu\nu}.\left[F_{\mu\nu}^{+},B\right]\right]+c_{3}\Tr\left[\overline{B}.\sigma^{\mu\nu}.B\right]*\Tr\left[Q\right]\right).
 \]
 
 \end_inset
@@ -13708,7 +13708,7 @@ c_{T} & =\frac{1}{2}\left(3\mu_{u}-2\right)=\frac{3}{2}\left(1+c_{2}\right)-1=\f
 \begin_inset Formula 
 \begin{align*}
  & \frac{-ie}{M_{N}}\sqrt{3}c_{4}F_{\mu\nu}\left(\varepsilon_{ijk}\,Q_{\phantom{i}l}^{i}\,\overline{B}_{\phantom{j}m}^{j}\gamma^{\mu}\gamma^{5}T^{\nu,klm}-\varepsilon_{ijk}\,Q_{\phantom{i}l}^{i}\,\overline{T}^{\nu,klm}\gamma^{\mu}\gamma^{5}B_{m}^{\phantom{m}j}\right)\\
-= & \frac{ie}{M_{N}}\sqrt{3}c_{4}\left\{ \tr\left[\overline{B}.\gamma^{\mu}\gamma^{5}\left(F_{\mu\nu}.T^{\nu}.\varepsilon\right)^{\left\{ 1,4\right\} }\right]+\tr\left[\left(\varepsilon.\overline{T}^{\nu}.F_{\mu\nu}\right)^{\left\{ 1,4\right\} }.\gamma^{\mu}\gamma^{5}.B\right]\right\} 
+= & \frac{ie}{M_{N}}\sqrt{3}c_{4}\left\{ \Tr\left[\overline{B}.\gamma^{\mu}\gamma^{5}\left(F_{\mu\nu}.T^{\nu}.\varepsilon\right)^{\left\{ 1,4\right\} }\right]+\Tr\left[\left(\varepsilon.\overline{T}^{\nu}.F_{\mu\nu}\right)^{\left\{ 1,4\right\} }.\gamma^{\mu}\gamma^{5}.B\right]\right\} 
 \end{align*}
 
 \end_inset
@@ -20820,7 +20820,7 @@ verb!0.90`20,1.00`20,"Baryons","L_0.90_ci_1.00"!
 。
 \begin_inset Formula 
 \[
-\langle r^{2}\rangle=\frac{-6}{G\left(Q^{2}\right)}\frac{\dif G\left(Q^{2}\right)}{\dif Q^{2}}
+\langle r^{2}\rangle=\frac{-6}{G\left(Q^{2}\right)}\frac{\dd G\left(Q^{2}\right)}{\dd Q^{2}}
 \]
 
 \end_inset
@@ -21459,7 +21459,7 @@ verb!0.90`20,1.00`20,"Baryons","L_0.90_ci_1.00"!
 。
 \begin_inset Formula 
 \[
-\langle r^{2}\rangle=-6\frac{\dif G\left(Q^{2}\right)}{\dif Q^{2}}
+\langle r^{2}\rangle=-6\frac{\dd G\left(Q^{2}\right)}{\dd Q^{2}}
 \]
 
 \end_inset
