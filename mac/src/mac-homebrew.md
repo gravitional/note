@@ -305,7 +305,7 @@ arch命令的另一个用途是运行通用二进制文件的选定体系结构.
 
 ### 导出 Homebrew 和 App Store 的软件列表
 
-借助 `Homebrew Bundle`, 我们可以非常简洁地导出所安装的 Homebrew, Homebrew Cask 和 Mac App Store 应用. 
+借助 `Homebrew Bundle`, 我们可以非常简洁地导出所安装的 Homebrew, Homebrew Cask 和 Mac App Store 应用.
 为了处理 Mac App Store 应用, 首先需要安装一个依赖:
 
 ```bash
@@ -327,7 +327,7 @@ cask
 mas
 ```
 
-对于 `brew`, 它导出的列表已经剔除了自动安装的依赖项, 而只留下了我们手动安装的部分. 
+对于 `brew`, 它导出的列表已经剔除了自动安装的依赖项, 而只留下了我们手动安装的部分.
 对于 `mas`, 它导出的列表包含了程序名称, 以及用于后续安装的 `app ID`.
 
 ### 导出 Launchpad 中的软件列表

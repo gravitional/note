@@ -44,8 +44,8 @@ tutorial/FilesStreamsAndExternalOperations#12068
 
 + `NotebookOpen["name"]`;  打开已经存在的笔记本`"name"`, 返回笔记本对象. `"name"`可以是绝对路径.
 + `NotebookOpen["name",options]`; 使用指定的选项打开笔记本.
-    + `NotebookOpen[File["path"]]`和`NotebookOpen[URL["url"]]`也被支持.
-    + `NotebookOpen`通常会导致一个新的笔记本窗口在你的屏幕上被打开.
+    + `NotebookOpen[File["path"]]` 和 `NotebookOpen[URL["url"]]`也被支持.
+    + `NotebookOpen` 通常会导致一个新的笔记本窗口在你的屏幕上被打开.
     + 如果`NotebookOpen`打开指定的文件失败, 则返回`$Failed`.
     + 若给出相对路径, `NotebookOpen`搜索由前端的全局选项`NotebookPath`指定的目录
     + 若使用选项 `Visible->False` 设置, `NotebookOpen` 将打开带有此选项的笔记本,它永远不会显示在屏幕上.
@@ -176,8 +176,8 @@ tutorial/FilesStreamsAndExternalOperations
 选项 默认值 含义
 
 + `"TextDelimiters"` ; 字符串或者字符串列表, 给非数字(一般是字符串)分界
-+ `"FieldSeparators"`, `{" ","\t"}`;给columns分界的字符串
-+ `"LineSeparators"`, `{"\r\n","\n","\r"}` ;  给rows分界的字符串
++ `"FieldSeparators"`, `{" ","\t"}`; 给 `columns` 分界的字符串
++ `"LineSeparators"`, `{"\r\n","\n","\r"}` ;  给 `rows` 分界的字符串
 + `"Numeric"`, `True`; 如果可能的话, 是否把数据导入成数字
 
 例子
@@ -189,16 +189,114 @@ ExportString[{1, "text", 2, 3},
  "LineSeparators" -> "\n",
  "FieldSeparators" -> " "
  ]
- ```
+```
 
-`wolframscripts` 结合 `shell` 使用时, 传递参数最好用 `字符串`, 不会改变结构.
++ `wolframscripts` 结合 `shell` 使用时, 传递的参数会被强制转型成 `字符串`, 即使是数字.
 在 `mma` 脚本内部, 使用 `ToString` 和 `ToExpression` 进行转化, 为了保险, 可以增加`InputForm`选项.
 
-***
-命令行输出的时候, 可以用
++ 命令行输出的时候, 可以用 `ExportString`:
 
-```
-ExportString[RandomReal[10, {4, 3}], "Table"]
+    ```mathematica
+    ExportString[RandomReal[10, {4, 3}], "Table"]
+    ```
+
+    还有`"List"`格式
+
+## DumpSave
+
+```mathematica
+DumpSave["file.mx",symbol]; 将与 `symbol` 相关的定义, 以 `Wolfram System 内部格式` 写入 file.mx.
+DumpSave["file.mx", "context`"]; 存储与指定 `上下文` 中所有符号有关的定义.
+DumpSave["file.mx",{object_1, object_2, ...}]; 写出若干 `symbol` 或 `上下文` 的定义.
+DumpSave["package`", objects]; 根据使用的计算机系统, 选择输出文件的名称.
 ```
 
-还有`"List"`格式
+它返回被保存的符号的名称.
+
+### 细节和选项
+
++ `DumpSave` 以 `二进制格式` 存储定义, 并对 Wolfram Language 的输入进行了优化.
++ 每个文件都有 纯文本的标题(header), 用来识别其 `类型` 和 `内容`.
++ 由 `DumpSave` 编写的文件可由 `Get` 读取.
++ 由 `DumpSave` 编写的文件不能在 `$SystemWordLeng(th` 不同的操作系统之间进行交换.
++ `DumpSave` 不会保留开放的 `流`(stream) 和链接对象(link objects).
++ 由 `DumpSave` 输出的文件, 其名称通常以 `.mx` 结尾.
++ `DumpSave` 对本地对象起作用.
++ `` DumpSave["package`",...] `` 写入的文件名称为 `package.mx/($SystemID的值)/package.mx`.
++ 你可以使用 `DumpSave["file", "s"]` 来存储符号 `s` 本身的值的定义.
++ 通常在启动 Wolfram System 时, 您可以使用 `initfile 命令行选项` 来读取转储文件(dump file).
++ `DumpSave[File["file.mx"],...]` 也支持.
+
+### 例子
+
+将 `函数` 的所有定义保存在 `二进制文件` 中:
+
+```mathematica
+f[x_Real] := x^2 + 1;
+f[x_?NumericQ] := N[x^2 + 1]
+```
+
+将 `当前目录` 设置为存储临时文件的地方:
+
+```mathematica
+SetDirectory[$TemporaryDirectory]
+Out[3]= "/private/tmp"
+```
+
+存储 `f` 的所有定义:
+
+```mathematica
+DumpSave["f.mx", f]
+Out[4]= {f}
+```
+
+清除 `f` 的定义:
+
+```mathematica
+Clear[f]
+?? f
+```
+
+从文件中恢复 `f` 的定义:
+
+```mathematica
+<< f.mx
+?? f
+
+f[3/2]
+Out[9]= 3.25
+```
+
+恢复原先的目录:
+
+```mathematica
+ResetDirectory[];
+```
+
+## MX(.mx)
+
++ `Import` 和 `Export` 完全支持 `Wolfram Language MX文件`.
++ `Wolfram语言MX文件` 可以用 `DumpSave` 创建, 用 `Get` 读取.
+
+### 背景和上下文
+
++ Wolfram语言的序列化 `package` 格式.
++ 用于Wolfram语言包的分发.
++ 将任意的 Wolfram Language 表达式以序列化的格式存储, 为快速加载进行了优化.
++ 二进制文件格式.
+
++ `MX文件` 不能在 `$SystemWordLength` 不同的操作系统之间进行交换.
++ 较新版本的 Wolfram 系统创建的 `MX文件`, 可能无法在较旧版本中使用.
++ 由 Wolfram Research 开发.
+
+### 导入和导出
+
++ `Import["file.mx"]` 读入 `MX 文件` 并返回 `表达式`.
++ `Export["file.mx",expr]` 将任意的 Wolfram 语言表达式序列化, 并将其保存为 MX 文件.
+
++ `Import["file.mx",elem]` 从 `MX 文件` 导入指定的元素.
++ 导入格式可以用 `Import["file", "MX"]` 或 `Import["file",{"MX",elem,...}]` 指定.
++ `Import["file.mx"]` 相当于 `Get["file.mx"]`.
+
++ 关于 `Import` 和 `Export` 的全部通用信息, 请参见参考页.
++ `ImportString` 和 `ExportString` 支持 `MX` 格式.
