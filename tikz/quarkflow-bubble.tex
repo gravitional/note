@@ -1,4 +1,4 @@
-\documentclass[tikz,border=10pt]{standalone}
+\documentclass[tikz,border=2pt]{standalone}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usetikzlibrary{scopes}
@@ -6,34 +6,35 @@
 \begin{document}
 
 \tikzset{
-pics/figChpt/.style n args={4}{
+pics/figChpt/.style n args={3}{
         code={
                 \begin{feynman}
+                    %% fig j
                     \vertex (x1) at (0,0);
                     \vertex[right =1cm  of x1] (x2);
-                    \vertex[right =2.5cm  of x1] (x3);
-                    \vertex[right =4cm  of x1] (x4);
+                    \vertex[right =2.48cm  of x1] (x3);
+                    \vertex[right =2.52cm  of x1] (x4);
                     \vertex[right =5cm  of x1] (x5);
+                    \vertex[above =2cm  of x3,crossed dot,anchor=center] (x6);
+                    % 横线粒子
                     \node[below  right = 2pt ] at (x1) {#2};
-                    \node[below  = 2pt ] at (x3) {#3};
                     \node[below  left= 2pt ] at (x5) {#2};
-                    \node[above = 1.35cm ] at (x3) {#4};
+                    % 圈图介子
+                    \node[above = 1.35cm ] at (x3) {#3};
                     % 图形的名称
                     \node[above right =1.2 and 4.2 of x1] {#1};
                     % 对各个顶点连线
                     \diagram*{
-                    %费米子箭头连线
                     { [edge= fermion]
-                            (x1) --(x2)--(x4) --(x5),
+                            (x1) --  (x3)--(x5),
                         },
-                    % 介子连线
+                    %介子连线
                     { [edge= charged scalar]
-                    (x2) --[half left,](x4),
+                    (x3) --[controls=+(148:4.8) and +(32:4.8)](x4),
                     }
                     };
                 \end{feynman}
-            }
-    },
+            }},
 %% quench 图
 pics/figQrkQch/.style n args={4}{
 code={
@@ -148,18 +149,21 @@ code={
 }
 
 \begin{tikzpicture}
+    \path (0,3) pic { figChpt = {$(1)$}{$p$}{$\pi^+$}} ;
     \path (0,0) pic { figQrkQch = {$(a)$}{$u$}{$d$}{$u$} } ;
     \path (6,0) pic { figQrkQch = {$(b)$}{$d$}{$u$}{$u$} } ;
-    %
     \path (0,-4) pic { figQrkSeaA = {$(c)$}{$u$}{$d$}{$u$}{$d$} };
     \path (6,-4) pic { figQrkSeaB = {$(d)$}{$u$}{$d$}{$u$}{$d$} };
-    \path (12,-4) pic { figQrkSeaA = {$(e)$}{$u$}{$d$}{$u$}{$s$} };
-    \path (18,-4) pic { figQrkSeaB = {$(f)$}{$u$}{$d$}{$u$}{$s$} };
+    \path (0,-8) pic { figQrkSeaA = {$(e)$}{$d$}{$u$}{$u$}{$u$} };
+    \path (6,-8) pic { figQrkSeaB = {$(f)$}{$d$}{$u$}{$u$}{$u$} };
     %
-    \path (0,-8) pic { figQrkSeaA = {$(g)$}{$d$}{$u$}{$u$}{$u$} };
-    \path (6,-8) pic { figQrkSeaB = {$(h)$}{$d$}{$u$}{$u$}{$u$} };
-    \path (12,-8) pic { figQrkSeaA = {$(i)$}{$d$}{$u$}{$u$}{$s$} };
-    \path (18,-8) pic { figQrkSeaB = {$(j)$}{$d$}{$u$}{$u$}{$s$} };
+    \path (12,3) pic { figChpt = {$(2)$}{$p$}{$K^+$}} ;
+    \path (12,0) pic { figQrkSeaA = {$(h)$}{$u$}{$d$}{$u$}{$s$} };
+    \path (18,0) pic { figQrkSeaB = {$(i)$}{$u$}{$d$}{$u$}{$s$} };
+    %
+    \path (12,-5) pic { figChpt = {$(3)$}{$p$}{$K^0$}} ;
+    \path (12,-8) pic { figQrkSeaA = {$(j)$}{$d$}{$u$}{$u$}{$s$} };
+    \path (18,-8) pic { figQrkSeaB = {$(k)$}{$d$}{$u$}{$u$}{$s$} };
 \end{tikzpicture}
 
 \end{document}
