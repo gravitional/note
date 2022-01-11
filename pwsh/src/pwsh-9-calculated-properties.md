@@ -4,7 +4,7 @@
 
 + 简短说明
 
-`PowerShell` 可以动态添加 `新属性` ,或者更改输出到`管道`的`对象`的`格式`.
+`PowerShell` 可以动态添加 `新属性` , 或者更改输出到`管道`的`对象`的`格式`.
 
 + 长说明
 
@@ -256,7 +256,9 @@ Property          : ($_ % 3) -eq 0
 
 ### Select-Object
 
-可以使用 `计算属性`, 将其他成员添加到 `Select-Object` cmdlet 的 对象输出中. 本例列出了以字母 `C` 开头的 `PowerShell` 别名.
+可以使用 `计算属性`, 将其他成员添加到 `Select-Object` cmdlet 的 对象输出中.
+本例列出了以字母 `C` 开头的 `PowerShell` 别名.
+
 使用 `Select-Object`, 我们可以输出 `别名`, 它映射的 `cmdlet`, 以及为 cmdlet 定义的参数的`数目`.
 使用 `计算属性`, 我们可以创建 `ParameterCount` 属性.
 
@@ -265,8 +267,8 @@ $aliases = Get-Alias c* |
   Select-Object Name,
                 Definition,
                 @{
-                    name='ParameterCount'
-                    expr={$_.Parameters.Keys.Count}
+                    name='ParameterCount' #  可以简写为 n=xxx
+                    expr={$_.Parameters.Keys.Count} #  可以简写为 e=xxx
                 }
 $aliases | Get-Member
 $aliases
