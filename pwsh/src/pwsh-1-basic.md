@@ -1,6 +1,8 @@
 # 系统管理的示例脚本
 
-[系统管理的示例脚本](https://docs.microsoft.com/zh-cn/powershell/scripting/samples/sample-scripts-for-administration?view=powershell-7.1), 可以快速 get 到 pwsh 的风格.
+[系统管理的示例脚本][], 可以快速 get 到 pwsh 的风格.
+
+[系统管理的示例脚本]: https://docs.microsoft.com/zh-cn/powershell/scripting/samples/sample-scripts-for-administration?view=powershell-7.1
 
 ## 使用对象
 
