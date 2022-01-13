@@ -1145,11 +1145,11 @@ acpi_osi=! acpi_osi='Windows 2009'
 
 三种参数的开机日志基本没啥区别
 
-## 概念解释
+## 网络
 
 ### 查看网络配置
 
-EXAMPLES
+例子:
 
 + `ip addr` Shows addresses assigned to all network interfaces.
 + `ip neigh` Shows the current neighbour table in kernel.
@@ -1157,7 +1157,7 @@ EXAMPLES
 + `ip link set x down` Bring down interface x.
 + `ip route` Show table routes.
 
-EXAMPLES
+更多例子:
 
 + `ip ro` Show all route entries in the kernel.
 + `ip route add default via 192.168.1.1 dev eth0` Adds a default route (for all addresses) via the local gateway 192.168.1.1 that can be reached on device eth0.
@@ -1191,7 +1191,7 @@ network:
     version: 2
 ```
 
-或者配置dhcp自动获取ip
+或者配置 `dhcp` 自动获取 `ip`
 
 `vim /etc/netplan/50-cloud-init.yaml `
 
@@ -1206,9 +1206,11 @@ network:
     version: 2
 ```
 
-应用:
+应用配置文件:
 
-`sudo netplan apply`
+```bash
+sudo netplan apply
+```
 
 ### 查看MAC地址
 
@@ -1291,7 +1293,7 @@ AB在同一局域网,C位于外网.
 
 外网包的话只要网关设置对了就没问题.
 
-### 查看登录用户
+## 查看登录用户
 
 [linux查看当前登录用户](https://blog.csdn.net/wanchaopeng/article/details/88425067)
 
@@ -1338,7 +1340,7 @@ AB在同一局域网,C位于外网.
 注意:`lastlog`命令默认读取的是`/var/log/wtmp`这个文件的数据,一定注意这个文件不能用`vi`来查看.
 命令输出包括:用户名,登录终端,登录`IP`,最后一次登录时.
 
-### Linux目录含义
+## Linux目录含义
 
 [Linux各目录含义](https://www.jianshu.com/p/142deb98ed5a)
 
@@ -1387,7 +1389,7 @@ AB在同一局域网,C位于外网.
 + `/usr/src`  `source`,应用程序源代码
 + `/usr/tmp`  应用程序临时文件
 
-### 输入法
+## 输入法
 
 添加删除输入法在系统设置目录, 直接搜索`settings-Region&Language--input sources`, 添加输入法是按照语言进行的, 先选择语言, 然后可以选择具体的输入法.
 如`Intelligent Pinyin`
