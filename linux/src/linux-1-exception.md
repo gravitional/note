@@ -987,10 +987,10 @@ pdfcrop --clip --bbox '120 480 570 830' input.pdf output.pdf;
 pdfcrop --clip --bbox '60 660 516 775' moban.pdf moban_crop.pdf && evince moban_crop.pdf  # 国科大试卷的裁减参数
 ```
 
-四个数字的含义是,以左下角为原点,给出`left bottom right top`的数值,单位是`point`
+四个数字的含义是, 以左下角为原点, 给出 `left bottom right top` 的数值(左下--右上), 单位是打印点 -- `point`:
 
-`1 point`=`0.3527 mm`=`1/72 inch`.
-A4纸张(mm) `210` * `297`=`595.4 point`*`842.1 point`.
+    1 point = 0.3527 mm = 1/72 inch
+    A4纸张 210mm * 297mm = 595.4 point * 842.1 point
 
 ## loop 设备
 
