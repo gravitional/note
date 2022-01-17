@@ -430,3 +430,151 @@ LaTeX Workshop 注册(registers)了以下占位符. 根文件值的是 LaTeX 主
 类型 默认值
 
 + `boolean` `false`
+
+## Wolfram Language extension
+
+Wolfram语言的官方Visual Studio Code扩展
+
+### 功能介绍
+
++ 语法高亮
++ 诊断和修复建议
++ 文件和选择的格式化
++ 语义高亮
++ 扩大和缩小选择范围
++ 大纲
++ 色标(Color swatches)
++ 符号参考(Symbol references)
++ 鼠标悬停时的文档(on hover)
+
+## 语法高亮
+
+支持整个 `Wolfram` 语言的语法和所有 `内置函数`.
+
+### 安装
+
+`LSP功能`(Language Server Protocal) 使用 Wolfram 内核, 作为语言服务器运行.
+这需要 Wolfram System 12.1 或更高版本.
+
+Wolfram语言扩展依赖于 [LSPServer paclet][] 来提供 `LSP` 功能.
+通过运行此 `Wolfram Language` 代码来安装 `LSPServer paclet` 及其依赖:
+
+```wolfram
+PacletInstall["CodeParser"] .
+PacletInstall["CodeInspector"]
+PacletInstall["CodeFormatter"]
+PacletInstall["LSPServer"]
+```
+
+如果设置正确, 你应该有 `Wolfram Language .wl` 文件的语法高亮和提示.
+在新的 `.wl` 文件中以下内容并保存, 以测试:
+
+```wolfram
+Which[a, b, a, b]
+```
+
+你应该看到关于重复 clauses 的警告.
+
+[LSPServer paclet]: https://github.com/WolframResearch/lspserver
+
+### 设置
+
+如果你把 Wolfram System安装在你系统的默认位置, 你可能不需要改变任何设置.
+
+#### 如果 `Wolfram System` 不在默认位置, 那么请指定实际位置:
+
+打开 `命令板`, 输入命令: `Preferences: Configure Language Specific Settings...`,
+选择 `Wolfram`, 则打开 `settings.json` 文件,
+添加 `wolfram.kernel` 设置:
+
+```json
+{
+  ...
+
+"wolfram.kernel": "/Applications/Mathematica.app/Contents/MacOS/WolframKernel"
+
+...
+}
+```
+
+而不要写在特定语言设置中:
+
+```json
+"[wolfram]": {
+
+}
+```
+
+#### 你也可以改变用于启动 `server` 的命令:
+
+```json
+{
+  ...
+
+"wolfram.command": [
+    "`kernel`",
+    "-noinit",
+    "-noprompt",
+    "-nopaclet",
+    "-noicon",
+    "-nostartuppaclets",
+    "-run",
+    "Needs[\"LSPServer`\"];LSPServer`StartServer[]"
+]
+
+ ...
+}
+```
+
+现在你应该可以对 `Wolfram .m` 和 `.wl` 文件的 `语法高亮` 和 `提示`了.
+在新的 `.m` 文件中输入这些内容并保存, 以测试这一点.
+
+```wolfram
+Which[a, b, a, b]
+```
+
+你应该看到关于重复 Clauses 的警告.
+
+### 其他设置
+
+指定没有 `$` 字符不在 `单词分隔符` 范围是很方便的, `$` 字符在 `WL` 中是类字母的字符(普通符号):
+
+```wolfram
+"editor.wordSeparators": "`~!@#%^&*()-=+[{]}\\|:'\",.<>/?",
+```
+
+### 实验性设置
+
+你可以启用实验性设置, 但不建议.
+
+`implicitTokens` 控制隐含标记的显示, 如 ```  `` ``` 后的 `Null` 和隐含的 `Times` 字符`x`:
+
+```json
+{
+  ...
+
+  "wolfram.implicitTokens": ["*", ",", ";;", "?"]
+
+  ...
+}
+```
+
+`semanticTokens` 控制语义高亮, 如 `Module` 变量:
+
+```json
+{
+  ...
+
+  "wolfram.semanticTokens": true
+
+  ...
+}
+```
+
+### 故障排除
+
+确保在你的系统中能够找到这些 `paclets`(小程序)
+
+```wolfram
+Needs["LSPServer`"]
+```
