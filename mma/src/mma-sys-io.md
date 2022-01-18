@@ -18,7 +18,7 @@ tutorial/FilesStreamsAndExternalOperations#12068
     + `name.tm` ;  WSTP 模版文件
     + `name.ml` ;  WSTP 流文件
 
-+ `$Path`; 默认的目录列表, 用于搜索输入文件的相关目录. 一般来说, 全局变量 `$Path` 被定义为一个字符串的列表, 每个字符串代表一个目录.
++ `$Path`; 默认的目录列表, 用于搜索输入文件的相关目录. 一般来说, 全局变量 `$Path` 被定义为 `字符串的列表`, 每个字符串代表一个`目录`.
 每次你要求打开文件时, `Wolfram` 就暂时将这些目录中的依次变成你的当前工作目录, 然后从该目录中尝试找到你要求的文件.
 
 在`$Path`的典型设置中, 当前目录`.`和你的主目录`~`被列在第一位.
@@ -89,11 +89,28 @@ Manipulating Files and Directories
 + `FileExistsQ["name"] ` ; 检查文件, 目录等等是否存在.
 + `ContextToFileName["context"] ` ; 给出 Mathematica 上下文规范对应的文件名.
 
+### 设置工作目录
+
++ `SetDirectory["dir"]`; 将当前工作目录设置为 `dir`.
+    + `SetDirectory`设置当前工作目录, 然后返回其全名.
+    + `SetDirectory` 将当前工作目录压入`DirectoryStack[]`给出的目录栈中.
+    + 如果给出相对路径, `SetDirectory` 设置相对于当前工作目录的目录.
+    + `SetDirectory[]` 等同于`SetDirectory[$HomeDirectory]`.
+    + `SetDirectory[File["dir"]]`也被支持.
+
++ `ResetDirectory[]`; 将当前工作目录重置为之前的值.
+    + 对`ResetDirectory`的连续调用会恢复越来越早的工作目录.
+    + `ResetDirectory`使用`DirectoryStack[]`给出的目录栈.
+    + `ResetDirectory`从目录栈中删除最后一个元素, 并使倒数第二的元素成为当前元素.
+
++ `DirectoryStack[]`; 给出当前使用的目录序列/目录栈. 其中的目录用绝对路径给出.
+每次调用 `SetDirectory` 会在目录栈中压入元素;每次调用 `ResetDirectory` 会弹出元素.
+
 ### 目录操作
 
 + `DirectoryQ` ; 测试名称是否对应于实际的目录
 + `ParentDirectory["dir"]` ; 给出父目录
-+ `DirectoryName` ; 从一个完整的文件路径中挑选出目录部分
++ `DirectoryName` ; 从完整的 `文件路径` 中挑选出 `目录` 部分
 
 ### 寻找特定文件
 
@@ -123,23 +140,6 @@ Manipulating Files and Directories
 + 设置选项`IgnoreCase>True`使`FileNames`忽略文件名大小写的区别.
 + 在默认设置`IgnoreCase>Automatic`下, `FileNames`在`Windows`系统下忽略文件名大小写, 其他系统不忽略.
 + `File["dir"]`可以用来指定一个要搜索的字面目录名.
-
-### 工作目录设置
-
-+ `SetDirectory["dir"]`; 将当前工作目录设置为 `dir`.
-    + `SetDirectory`设置当前工作目录, 然后返回其全名.
-    + `SetDirectory` 将当前工作目录压入`DirectoryStack[]`给出的目录栈中.
-    + 如果给出相对路径, `SetDirectory` 设置相对于当前工作目录的目录.
-    + `SetDirectory[]`等同于`SetDirectory[$HomeDirectory]`.
-    + `SetDirectory[File["dir"]]`也被支持.
-
-+ `ResetDirectory[]`; 将当前工作目录重置为之前的值.
-    + 对`ResetDirectory`的连续调用会恢复越来越早的工作目录.
-    + `ResetDirectory`使用`DirectoryStack[]`给出的目录栈.
-    + `ResetDirectory`从目录栈中删除最后一个元素, 并使倒数第二的元素成为当前元素.
-
-+ `DirectoryStack[]`; 给出当前使用的目录序列/目录栈. 其中的目录用绝对路径给出.
-每次调用`SetDirectory`会在目录栈中压入一个元素;每次调用`ResetDirectory`会弹出一个元素.
 
 ## 读取文本数据
 
