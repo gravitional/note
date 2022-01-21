@@ -157,21 +157,18 @@ git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>... ]
 
 `Git`鼓励大量使用分支:
 
-查看分支: `git branch`
++ 查看分支: `git branch`
+    + `git br -a`
+    + `git br -vv`
+    + `git br -avv`
 
-`git br -a`
-`git br -vv`
-`git br -avv`
++ 创建分支: `git branch name`
++ 切换分支:  `git switch name`
++ 新建+切换 到新分支:  `git checkout -b branchname`
 
-创建分支: `git branch name`
++ 合并某分支到当前分支: `git merge name`
 
-切换分支:  `git switch name`
-
-新建+切换 到新分支:  `git checkout -b branchname`
-
-合并某分支到当前分支: `git merge name`
-
-删除分支: `git branch -d name`
++ 删除分支: `git branch -d name`
 
 ### 创建分支
 
@@ -181,12 +178,13 @@ git branch [--track | --no-track] [-f] <branchname> [<start-point>]
 
 命令的上述形式创建了名为 `<branchname>` 的新分支头, 它指向当前的`HEAD`, 或者如果给定了 `<start-point>`.
 
-`<start-point>`有一个特殊形式: 如果`A`和`B`恰好有一个合并基, 您可以使用`A...B`作为指定这个合并基的快捷方式.最多可以省略`A`和`B`中的一个, 它默认为`HEAD`.
+`<start-point>`有一个特殊形式: 如果`A`和`B`恰好有一个合并基, 您可以使用`A...B`作为指定这个合并基的快捷方式.
+最多可以省略`A`和`B`中的一个, 它默认为`HEAD`. 也可以用 `git-checkout` 的特殊语法
 
-也可以用checkout 的特殊语法
-
-`git checkout -b`
-`git checkout -b "branchname " "startpoint"`
+```bash
+git checkout -b
+git checkout -b "branchname " "startpoint"
+```
 
 ### 删除远程分支
 
