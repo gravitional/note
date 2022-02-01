@@ -246,10 +246,13 @@ Set it to `always` if you want this behavior when the start-point is either a lo
 
 ### 重命名git分支名称
 
-1. `git branch -m local_oldbranch local_newbranch`(修改本地分支)
-2. `git push origin :remote_branch`(删除远程分支)
-3. `git push origin local_newbranch:remote_branch`(push到远程分支)
-4. `git branch -u  origin/remote_branch`绑定远程分支
+```bash
+
+git branch -m 旧分支 新分支 #修改本地分支
+git push origin :旧远程分支 #删除远程分支, 注意: 前面是空格
+git push origin 新分支:新远程分支 #push到远程分支
+git branch -u  origin/新远程分支 #绑定远程分支
+```
 
 ### merge-file 合并文件
 
@@ -259,7 +262,7 @@ Set it to `always` if you want this behavior when the start-point is either a lo
 
 reset是用来修改提交历史的, 想象这种情况, 如果你在`2`天前提交了一个东西, 突然发现这次提交是有问题的.
 
-这个时候你有两个选择, 要么使用`git revert`(推荐), 要么使用git reset.
+这个时候你有两个选择, 要么使用 `git-revert` (推荐), 要么使用 `git-reset`.
 
 [git的reset和checkout的区别](https://segmentfault.com/a/1190000006185954)
 

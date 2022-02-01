@@ -632,18 +632,14 @@ git push [远程仓库] --delete [branchname]
 在这种情况下, 你可以使用`--track ` or ` --no-track` options, 这些选项会传递给`git branch`
 为方便起见, `--track ` without ` -b`意味着创建新分支; 见`--track` 的描述
 
-***
-`git checkout`:
-`-t, --track`
+### `git checkout`,`-t, --track`
 
 当创建新分支的时候, 自动设置上游. 如果`-b` 选项没有给出, 本地分支的名字会从 `remote-tracking branch` 推导. `git` 先查看本地中远程的 `refspec` , 然后把前面的初始部分去掉.
 也就是说, 如果远程名字是`origin/hack` (or `remotes/origin/hack`, 或者是`refs/remotes/origin/hack`),
 新的本地分支就叫做 `hack` , 如果查询到的名称中没有 `slash` (`/`), 或者上面的猜测得到一个空字符串, 那么猜测就会停止,
 你可以用 `-b` 选项手动指定一个名字.
 
-***
-`git branch`:
-`-t`, `--track`
+### `git branch`,`-t`, `--track`
 
 当创建新分支的时候, 设置 `branch.<name>.remote` 和 `branch.<name>.merge` 条目,把 `start-point branch` 当作 `upstream` (上游分支).
 这个配置会告诉 `git` , 在`git status ` and ` git branch -v`命令中显示两个分支的关系.而且, 当切换到新分支的时候, 它指导不带参数的 `git pull` 从上游拉取更新.
@@ -696,50 +692,28 @@ git diff [<options>] <blob> <blob>
 git diff [<options>] --no-index [--] <path> <path>
 ```
 
-***
-working tree v.s. stage
-`git diff [--options] [--] [<path>...]`
++ `工作树` v.s. `暂存区`; `git diff [--options] [--] [<path>...]`;  默认相对于 `index` ( `stage` )的改动.
 
-默认相对于 `index` ( `stage` )的改动.
++ `path` v.s. `path`; `git diff --no-index [--options] [--] [<path>...]`;
+    文件系统上的两个 `path` , 如果其中一个不是 `Git` 控制的 `working tree` , 可以不加`--no-index`
 
-***
-path v.s. path
-`git diff --no-index [--options] [--] [<path>...]`
++ stage v.s. commit; `git diff [--options] --cached [<commit>] [--] [<path>...]`
+    比较`staged ` and ` <commit>`, 默认commit 是 HEAD. `--staged ` is a synonym of ` --cached`.
 
-文件系统上的两个 `path` , 如果其中一个不是 `Git` 控制的 `working tree` , 可以不加`--no-index`
++ `commit` v.s. `working tree`; `git diff [--options] <commit> [--] [<path>...]`
+    比较 `working tree` 相对于 `<commit>` , commit可以是HEAD, 也可以是分支名字, 就是比较 分支的顶端.
 
-***
-stage v.s. commit
-`git diff [--options] --cached [<commit>] [--] [<path>...]`
++ `commit` v.s. `commit`; `git diff [--options] <commit> <commit> [--] [<path>...]`
+    比较任意两个 `<commit>`, 前一个是base, 后一个是改动
 
-比较`staged ` and ` <commit>`, 默认commit 是 HEAD. `--staged ` is a synonym of ` --cached`.
-
-***
-commit v.s. working tree
-`git diff [--options] <commit> [--] [<path>...]`
-
-比较 `working tree` 相对于 `<commit>` , commit可以是HEAD, 也可以是分支名字, 就是比较 分支的顶端.
-
-***
-commit v.s. commit
-`git diff [--options] <commit> <commit> [--] [<path>...]`
-
-比较任意两个 `<commit>`, 前一个是base, 后一个是改动
-
-***
-`git diff [--options] <commit>..<commit> [--] [<path>...]`
-
++ `git diff [--options] <commit>..<commit> [--] [<path>...]`;
 跟上一个相同, 如果有一边的 `<commit>` 省略, 则相当于`HEAD`
 
-***
-`git diff [--options] <commit>...<commit> [--] [<path>...]`
-
++ `git diff [--options] <commit>...<commit> [--] [<path>...]`
 查看变化, 从A, B的共同祖先开始, 到B为止, "git diff A...B" 等价于`git diff $(git-merge-base A B) B`
 
 You can omit any one of `<commit>`, which has the same effect as using HEAD instead.
-
 为了避免你写的很奇怪, 注意所有的 `<commit>` , 除了最后两个使用 `..` 记号的, 都可以是任何`<tree>`
-
 更完整的关于拼写 `<commit>` 的方法, 见"SPECIFYING REVISIONS" in gitrevisions(7)
 然而, `diff`比较的是两个 endpoints, 而不是一个范围.
 所以 `<commit>..<commit> `and ` <commit>...<commit>`在这里指的不是范围.
@@ -945,8 +919,8 @@ feature Z 完成
 
 + 使用包管理器, [安装git filter-repo](https://github.com/newren/git-filter-repo/blob/main/INSTALL.md)
 或从`源代码`安装.
-+ [从项目生成一个新的导出](http://code.ihep.ac.cn/help/user/project/settings/import_export.html#export-a-project-and-its-data), 并下载它.
-这个项目导出包含了你的`仓库`和 `refs` 的备份, 我们可以用它来清除 `repository` 中的`文件`.
++ [从项目生成新的导出](http://code.ihep.ac.cn/help/user/project/settings/import_export.html#export-a-project-and-its-data), 并下载它.
+    这个项目导出包含了你的`仓库`和 `refs` 的备份, 我们可以用它来清除 `repository` 中的`文件`.
     + 完整的项目 `export` 功能仅限于项目`维护者`和`所有者`. 你可以通过`项目设置`来配置这种功能. 要导出一个项目及其数据, 请遵循以下步骤.
     + 转到你的项目主页.
     + 点击侧边栏的设置.
@@ -968,7 +942,7 @@ feature Z 完成
    ```
 
 + 使用 `git filter-repo`, 清除 `repository` 历史中的`任何文件`.
-因为我们正在试图删除`内部 refs`, 我们依靠每次运行产生的 `commit-map` (提交图)来告诉我们哪些`内部 refs`需要删除.
+    因为我们正在试图删除`内部 refs`, 我们依靠每次运行产生的 `commit-map` (提交图)来告诉我们哪些`内部 refs`需要删除.
    > 注意. `git filter-repo` 每次运行都会创建一个新的 `commit-map` 文件, 并覆盖上一次运行产生的 `commit-map`.
    >  You need this file from every run. 请在每次运行 `git filter-repo` 时都要做下一步.
 
