@@ -945,3 +945,37 @@ function  to7z {
 ```powershell
 Start-Process (Split-Path -Parent (gcm cmd).Path)
 ```
+
+## 合并文件夹
+
+例如, 找出所有 `jpg` 和 `png`:
+
+```powershell
+Get-ChildItem -Recurse | Where-Object {$_ -match '\w*.jpg$' -or $_ -match '\w*.png$'}
+```
+
++ 找出当前文件夹下所有图片, 并 `复制` 到指定路径
+
+```powershell
+Get-ChildItem -Path . -Recurse *.jpg |  Copy-Item $_ -Destination (-Join("xxx\",$_.Name)
+```
+
+### 使用正则表达式重命名
+
+如果是压缩文档, 先解压:
+
+```powershell
+foreach ($arch in Get-ChildItem -File *.zip){
+    Expand-Archive $arch -DestinationPath $arch.BaseName
+    }
+```
+
+然后重命名:
+
+```powershell
+foreach ($dir in Get-ChildItem -Directory){
+    Get-ChildItem $dir/* | Rename-Item -WhatIf -NewName { $_.name -replace '^',($_.Directory.Name+'.') }
+    }
+```
+
+使用 `-WhatIf`, 将打印即将进行的操作, 而不真正执行. 确保改名符合要求, 再去掉 `-WhatIf` 执行.
