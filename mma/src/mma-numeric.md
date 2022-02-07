@@ -233,3 +233,48 @@ pf[x_] = Piecewise[{
 (*比较差别*)
 Plot[pf[x] - ifun[x], {x, 0, 5}, PlotRange -> All]
 ```
+
+## FindMinimum(求极小值和其坐标)
+
+### 性质和关系
+
+`FindMinimum` 试图找到 `局部最小值`; `NMinimize` 试图找到 `全局最小值`.
+
+```mathematica
+FindMinimum[{-100/((x - 1)^2 + (y - 1)^2 + 1) - 200/((x + 1)^2 + (y + 2)^2 + 1), x^2 + y^2 > 3}, {{x, 2}, y}]
+
+NMinimize[{-100/((x - 1)^2 + (y - 1)^2 + 1) - 200/((x + 1)^2 + (y + 2)^2 + 1), x^2 + y^2 > 3}, {x, y}] ``
+```
+
+```mathematica
+ContourPlot[-100/(((x - 1))^2 + ((y - 1))^2 + 1) - 200/(((x + 1))^2 + ((y + 2))^2 + 1)
+,{x, -3, 2}, {y, -3, 2}, RegionFunction -> (#1^2 + #2^2 > 3 &), Contours -> 10
+, Epilog -> ({Red, PointSize[.02], Text["global minimum", {-.995, -2.092}]
+,Point[{-.995, -1.992}], Text["local minimum", {0.5304, 1.2191}], Point[{1.2304, 1.2191}]}), ContourLabels -> True]
+```
+
+`Minimize` 可以找到 `全局最小值`, 并且可以在无限精度下工作:
+
+```mathematica
+Minimize[{-100/((x - 1)^2 + (y - 1)^2 + 1) - 200/((x + 1)^2 + (y + 2)^2 + 1), x^2 + y^2 > 3}, {x, y}]
+
+N[%]
+```
+
+`FindMinimum` 同时给出 `最小值` 和 `最小值的位置`:
+
+```mathematica
+FindMinimum[{x - 2 y, x^2 + y^2 <= 1}, {x, y}]
+```
+
+`FindArgMin` 给出了最小值的位置:
+
+```mathematica
+FindArgMin[{x - 2 y, x^2 + y^2 <= 1}, {x, y}]
+```
+
+`FindMinValue` 给出了最小值的 `值`:
+
+```mathematica
+FindMinValue[{x - 2 y, x^2 + y^2 <= 1}, {x, y}]
+```
