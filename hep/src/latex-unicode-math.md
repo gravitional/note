@@ -49,3 +49,14 @@ What I actually need is this: $\mathbfcal{X}$ and $\symbf{\Theta}$.
 Compare with $\mathcal{X}$ and $\Theta$.
 \end{document}
 ```
+
+## Double-struck
+
+page 14, 5.4.2
+
+double-struck 风格(也被称为 `黑板粗体`) 由直立的拉丁字母 {𝕒-𝕫,𝔸ℤ}, 数字 𝟘-𝟡, 求和符号 ⅀ 和四个希腊字母组成: {ℽ ℼ ℾ ℿ}.
+
+虽然 `\symbb{sum}` 确实产生了双写的求和符号, 但它的极限没有正确对齐. 
+因此, 建议使用字面字符或控制序列 `\Bbbsum` 来代替.
+还有五个拉丁语斜体双写字母: ⅅ ⅆ ⅇ ⅈ ⅉ . 
+这些字母可以用 `\mathbbit` 样式开关来访问, 如果不是用它们的字面字符或控制序列的话, 但要注意只有这五个字母会有预期的输出.

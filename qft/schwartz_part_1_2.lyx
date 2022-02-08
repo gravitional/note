@@ -7,58 +7,56 @@
 \textclass ctex-book
 \begin_preamble
 \usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
-%\usepackage{xeCJK}% 可以用来实现中文断行
-\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
 \usepackage{geometry} % 整体页面设置
 \geometry{a4paper} %页面大小是A4纸
-\geometry{top=2cm} %设置版心顶部距离
 \geometry{top=2cm} %设置版心顶部距离
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
 %++++++++++++++++++++++++++++++++++++++++++++++++
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic} 
+\usepackage{eso-pic}
 % This package makes it easy to add some picture commands to every page at ab-solute positions
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
 \usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
 %\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
 % xcolor package starts from the basic facilities of the 
 % color package, and provides easy driver-independent access
 %to several kinds of color tints, shades, tones, 
 %and mixes of arbitrary colors
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{fontspec}%Advanced font selection in XeLaTeX and LuaLaTeX
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
-% Required for specifying colors by name 
+%++++++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+%设置数学字体
+\usepackage{unicode-math} %boldsymbol,blackboard
+\setmathfont{Latin Modern Math}
+%\setmathfont{XITSMath-Regular}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%++++++++++++++++++++++++++++++++++++++++
 \usepackage{enumerate} 
-
-\usepackage{hepunits} % hep units
+\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usetikzlibrary{shapes.misc,animations}
+\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
 \usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
 \usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{bm,bbm} 
-%\bm which makes its argument bold
-%Blackboard variants of Computer Modern fonts.
 \usepackage{simplewick} 
 % a simple means of drawing Wick contractions above and below expressions. 
 \usepackage{makeidx} 
 % Standard package for creating indexes
 \usepackage{multirow}
 \usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
-\usepackage{tikz-feynman}  % 画费曼图用
-\usepackage{tikz}
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res}
-\DeclareMathOperator{\disc}{Disc}
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\newcommand{\cola}[1]{{\color{blue}{#1}}}
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
@@ -90,6 +88,24 @@
     showtabs=false,                  
     tabsize=2
 }
+%%++++++++++++++++++++ 
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+%\DeclareMathOperator{\re}{Re}
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
@@ -259,11 +275,11 @@ noprefix "false"
 
 \begin_layout Standard
 考虑微分散射截面也是很自然的：
-\begin_inset Formula $\dif\sigma/\dif\Omega$
+\begin_inset Formula $\dd\sigma/\dd\Omega$
 \end_inset
 
 ，它给出
-\begin_inset Formula $\dif\Omega$
+\begin_inset Formula $\dd\Omega$
 \end_inset
 
 立体角内粒子被散射的概率。经典上，它给出了物体的形状， 或者散射
@@ -290,7 +306,7 @@ noprefix "false"
 是发生事件的粒子总数。所以自然地，量子力学的散射截面为
 \begin_inset Formula 
 \[
-\dif\sigma=\frac{1}{T}\frac{1}{\Phi}\dif P
+\dd\sigma=\frac{1}{T}\frac{1}{\Phi}\dd P
 \]
 
 \end_inset
@@ -306,7 +322,7 @@ noprefix "false"
 是散射的量子力学概率。微分是对于动力学变量，如角度，或者末态粒子的能量进行的。在一个碰撞实验中，散射事例的微分数目为
 \begin_inset Formula 
 \[
-\dif N=L\times\dif\sigma
+\dd N=L\times\dd\sigma
 \]
 
 \end_inset
@@ -346,7 +362,7 @@ P_{1}+P_{2}\to\left\{ p_{j}\right\}
 。（我们归一化到好像空间中只有一个粒子，当然它其实是平面波）。所以
 \begin_inset Formula 
 \[
-\dif\sigma=\frac{V}{T}\frac{1}{\abs{\vec{v}_{1}-\vec{v}_{2}}}\dif P
+\dd\sigma=\frac{V}{T}\frac{1}{\abs{\vec{v}_{1}-\vec{v}_{2}}}\dd P
 \]
 
 \end_inset
@@ -354,17 +370,17 @@ P_{1}+P_{2}\to\left\{ p_{j}\right\}
 从量子力学我们知道，概率是振幅的平方。
 \begin_inset Formula 
 \[
-\dif P=\frac{\abs*{\bra{f}S\ket{i}}^{2}}{\langle f|f\rangle\langle i|i\rangle}\dif\Pi
+\dd P=\frac{\abs*{\bra{f}S\ket{i}}^{2}}{\langle f|f\rangle\langle i|i\rangle}\dd\Pi
 \]
 
 \end_inset
 
 其中，
-\begin_inset Formula $\dif\Pi$
+\begin_inset Formula $\dd\Pi$
 \end_inset
 
 是我们寻找末态粒子的动量区间。它正比于每一个末态粒子微分动量
-\begin_inset Formula $\dif^{3}p_{j}$
+\begin_inset Formula $\dd^{3}p_{j}$
 \end_inset
 
 的乘积，并且积分完必须等于
@@ -374,17 +390,17 @@ P_{1}+P_{2}\to\left\{ p_{j}\right\}
 。所以
 \begin_inset Formula 
 \[
-\dif\Pi=\prod_{j}\frac{V}{\left(2\pi\right)^{3}}\dif^{3}p_{j}
+\dd\Pi=\prod_{j}\frac{V}{\left(2\pi\right)^{3}}\dd^{3}p_{j}
 \]
 
 \end_inset
 
 
-\begin_inset Formula $\dif\Pi=1$
+\begin_inset Formula $\dd\Pi=1$
 \end_inset
 
 ，由于
-\begin_inset Formula $\int\frac{\dif p}{2\pi}=L$
+\begin_inset Formula $\int\frac{\dd p}{2\pi}=L$
 \end_inset
 
 （由量纲分析和
@@ -442,8 +458,8 @@ a_{k}^{\dagger}\ket{0}=\frac{1}{\sqrt{2\omega_{k}}}\ket{k},\quad\ket{k}=\sqrt{2\
 是无穷大的，但是会被体积抵消掉。由下面的关系可以理解
 \begin_inset Formula 
 \begin{align*}
-\left(2\pi\right)^{3}\delta^{3}\left(p\right) & =\int\dif^{3}x\exp\left(i\vec{p}\vec{x}\right)\\
-\delta^{3}\left(0\right) & =\frac{1}{\left(2\pi\right)^{3}}\int\dif^{3}x=\frac{V}{\left(2\pi\right)^{3}}
+\left(2\pi\right)^{3}\delta^{3}\left(p\right) & =\int\dd^{3}x\exp\left(i\vec{p}\vec{x}\right)\\
+\delta^{3}\left(0\right) & =\frac{1}{\left(2\pi\right)^{3}}\int\dd^{3}x=\frac{V}{\left(2\pi\right)^{3}}
 \end{align*}
 
 \end_inset
@@ -513,13 +529,13 @@ using
 \end_inset
 
 –矩阵元就是简单的 identity 
-\begin_inset Formula $\mathbbm{1}$
+\begin_inset Formula $\symbb{1}$
 \end_inset
 
 。我们写下
 \begin_inset Formula 
 \[
-S=\mathbbm{1}+i\mathcal{T}
+S=\symbb{1}+i\mathcal{T}
 \]
 
 \end_inset
@@ -563,7 +579,7 @@ S=\mathbbm{1}+i\mathcal{T}
 。因此我们有
 \begin_inset Formula 
 \[
-\bra{f}S-\mathbbm{1}\ket{i}=i\left(2\pi\right)^{4}\delta^{4}\left(\sum p\right)\bra{f}\mathcal{M}\ket{i}
+\bra{f}S-\symbb{1}\ket{i}=i\left(2\pi\right)^{4}\delta^{4}\left(\sum p\right)\bra{f}\mathcal{M}\ket{i}
 \]
 
 \end_inset
@@ -608,8 +624,8 @@ S=\mathbbm{1}+i\mathcal{T}
 。所以
 \begin_inset Formula 
 \begin{align*}
-\dif P & =\frac{\delta^{4}\left(\sum p\right)TV\left(2\pi\right)^{4}}{\left(2E_{1}V\right)\left(2E_{2}V\right)}\frac{1}{\prod_{j}\left(2E_{j}V\right)}\abs*{\mathcal{M}}^{2}\prod_{j}\frac{V}{\left(2\pi\right)^{3}}\dif^{3}p_{j}\\
- & =\frac{T}{V}\frac{1}{\left(2E_{1}\right)\left(2E_{2}\right)}\abs*{\mathcal{M}}^{2}\dif\Pi_{\text{LIPS}}
+\dd P & =\frac{\delta^{4}\left(\sum p\right)TV\left(2\pi\right)^{4}}{\left(2E_{1}V\right)\left(2E_{2}V\right)}\frac{1}{\prod_{j}\left(2E_{j}V\right)}\abs*{\mathcal{M}}^{2}\prod_{j}\frac{V}{\left(2\pi\right)^{3}}\dd^{3}p_{j}\\
+ & =\frac{T}{V}\frac{1}{\left(2E_{1}\right)\left(2E_{2}\right)}\abs*{\mathcal{M}}^{2}\dd\Pi_{\text{LIPS}}
 \end{align*}
 
 \end_inset
@@ -617,7 +633,7 @@ S=\mathbbm{1}+i\mathcal{T}
 其中
 \begin_inset Formula 
 \[
-\dif\Pi_{\text{LIPS}}=\prod_{\text{末态}j}\frac{\dif^{3}p_{j}}{\left(2\pi\right)^{3}}\frac{1}{2E_{p_{j}}}\left(2\pi\right)^{4}\delta^{4}\left(\sum p\right)
+\dd\Pi_{\text{LIPS}}=\prod_{\text{末态}j}\frac{\dd^{3}p_{j}}{\left(2\pi\right)^{3}}\frac{1}{2E_{p_{j}}}\left(2\pi\right)^{4}\delta^{4}\left(\sum p\right)
 \]
 
 \end_inset
@@ -646,10 +662,6 @@ begin{equation}
 
 \begin_layout Plain Layout
 
-
-\backslash
-dif
-\backslash
 sigma=
 \backslash
 frac{1}{
@@ -670,11 +682,7 @@ vec{v}_{2}}}
 \backslash
 abs*{
 \backslash
-mathcal{M}}^{2}
-\backslash
-dif
-\backslash
-Pi_{
+mathcal{M}}^{2}Pi_{
 \backslash
 text{LIPS}}
 \end_layout
@@ -779,7 +787,7 @@ tic states）。在本章中，仅仅利用系统在渐近时间是自由的，�
 的表达式联系在一起：
 \begin_inset Formula 
 \begin{align}
-\bra{f}S\ket{i} & =\left(i\int\dif^{4}x_{1}\exp(-ip_{1}\cdot x_{1})\left(\square_{1}+m^{2}\right)\right)\cdots\left(i\int\dif^{4}x_{n}\exp(+ip_{n}\cdot x_{n})\left(\square_{n}+m^{2}\right)\right)\label{eq:6.1}\\
+\bra{f}S\ket{i} & =\left(i\int\dd^{4}x_{1}\exp(-ip_{1}\cdot x_{1})\left(\square_{1}+m^{2}\right)\right)\cdots\left(i\int\dd^{4}x_{n}\exp(+ip_{n}\cdot x_{n})\left(\square_{n}+m^{2}\right)\right)\label{eq:6.1}\\
  & \times\bra{\Omega}T(\cdots\phi(x_{1})\phi(x_{2})\phi(x_{n}))\ket{\Omega}\nonumber 
 \end{align}
 
@@ -868,7 +876,7 @@ tic states）。在本章中，仅仅利用系统在渐近时间是自由的，�
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\bra{\epsilon_{1}\cdots\epsilon_{2}\cdots}S\ket{\cdots} & =\epsilon_{1;\mu}\epsilon_{2;\alpha}\left(i^{n}\int\dif^{4}x_{1}\exp(+ip_{1}\cdot x_{1})\square_{1}^{\mu\nu}\int\dif^{4}x\exp(+ip_{2}\cdot x_{2})\square_{2}^{\alpha\beta}\right)\\
+\bra{\epsilon_{1}\cdots\epsilon_{2}\cdots}S\ket{\cdots} & =\epsilon_{1;\mu}\epsilon_{2;\alpha}\left(i^{n}\int\dd^{4}x_{1}\exp(+ip_{1}\cdot x_{1})\square_{1}^{\mu\nu}\int\dd^{4}x\exp(+ip_{2}\cdot x_{2})\square_{2}^{\alpha\beta}\right)\\
  & \times\langle A_{\nu}(x_{1})\cdots A_{\beta}(x_{2})\cdots\rangle
 \end{align*}
 
@@ -901,13 +909,13 @@ in chapter 5，我们推导了渐近态
 散射过程的微分散射截面，
 \begin_inset Formula 
 \[
-\dif\sigma=\frac{1}{2E_{1}2E_{2}\abs{\vec{v}_{1}-\vec{v}_{2}}}\abs{\mathcal{M}}^{2}\dif\Pi_{\text{LIPS}}
+\dd\sigma=\frac{1}{2E_{1}2E_{2}\abs{\vec{v}_{1}-\vec{v}_{2}}}\abs{\mathcal{M}}^{2}\dd\Pi_{\text{LIPS}}
 \]
 
 \end_inset
 
 其中
-\begin_inset Formula $\dif\Pi_{\text{LIPS}}$
+\begin_inset Formula $\dd\Pi_{\text{LIPS}}$
 \end_inset
 
 是洛伦兹不变相空间，
@@ -925,7 +933,7 @@ in chapter 5，我们推导了渐近态
 函数之后，剩下的部分：
 \begin_inset Formula 
 \[
-\bra{f}S-\mathbbm{1}\ket{i}=i\left(2\pi\right)^{4}\delta^{4}\left(\sum p\right)\mathcal{M}
+\bra{f}S-\symbb{1}\ket{i}=i\left(2\pi\right)^{4}\delta^{4}\left(\sum p\right)\mathcal{M}
 \]
 
 \end_inset
@@ -978,7 +986,7 @@ in chapter 5，我们推导了渐近态
 \end_inset
 
 ，在这种情况下
-\begin_inset Formula $\mathbbm{1}$
+\begin_inset Formula $\symbb{1}$
 \end_inset
 
 不贡献。这样
@@ -1004,7 +1012,7 @@ in chapter 5，我们推导了渐近态
 回忆起来我们定义场是产生和湮灭算符的求和：
 \begin_inset Formula 
 \[
-\phi\left(x\right)=\phi\left(\vec{x},t\right)=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\left[a_{p}\left(t\right)e^{-ipx}+a_{p}^{\dagger}\left(t\right)e^{+ipx}\right]
+\phi\left(x\right)=\phi\left(\vec{x},t\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\left[a_{p}\left(t\right)e^{-ipx}+a_{p}^{\dagger}\left(t\right)e^{+ipx}\right]
 \]
 
 \end_inset
@@ -1072,7 +1080,7 @@ in chapter 5，我们推导了渐近态
 证明 LSZ 公式的关键是代数关系
 \begin_inset Formula 
 \begin{equation}
-i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}\left\{ a_{p}\left(\infty\right)-a_{p}\left(-\infty\right)\right\} \label{eq:6.8}
+i\int\dd^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}\left\{ a_{p}\left(\infty\right)-a_{p}\left(-\infty\right)\right\} \label{eq:6.8}
 \end{equation}
 
 \end_inset
@@ -1118,10 +1126,10 @@ noprefix "false"
 进行分部积分。则有
 \begin_inset Formula 
 \begin{align*}
-i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =i\int\dif^{4}xe^{ipx}\left(\partial_{t}^{2}-\vec{\partial}_{x}^{2}+m^{2}\right)\phi\left(x\right)\\
- & =i\int\dif^{4}xe^{ipx}\left(\partial_{t}^{2}+\vec{p}^{2}+m^{2}\right)\phi\left(x\right)\\
- & =i\int\dif^{4}xe^{ipx}\left(\partial_{t}^{2}+\omega_{p}^{2}\right)\phi\left(x\right)\\
-i\int\dif^{4}xe^{\pm ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =i\int\dif^{4}xe^{\pm ipx}\left(\partial_{t}^{2}+\omega_{p}^{2}\right)\phi\left(x\right)
+i\int\dd^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =i\int\dd^{4}xe^{ipx}\left(\partial_{t}^{2}-\vec{\partial}_{x}^{2}+m^{2}\right)\phi\left(x\right)\\
+ & =i\int\dd^{4}xe^{ipx}\left(\partial_{t}^{2}+\vec{p}^{2}+m^{2}\right)\phi\left(x\right)\\
+ & =i\int\dd^{4}xe^{ipx}\left(\partial_{t}^{2}+\omega_{p}^{2}\right)\phi\left(x\right)\\
+i\int\dd^{4}xe^{\pm ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =i\int\dd^{4}xe^{\pm ipx}\left(\partial_{t}^{2}+\omega_{p}^{2}\right)\phi\left(x\right)
 \end{align*}
 
 \end_inset
@@ -1153,8 +1161,8 @@ i\int\dif^{4}xe^{\pm ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =i\int\d
 这个等式与边界条件无关。所以
 \begin_inset Formula 
 \begin{align}
-i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =\int\dif^{4}x\partial_{t}\left[e^{ipx}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\right]\nonumber \\
- & =\int\dif t\partial_{t}\left[e^{i\omega_{p}t}\int\dif^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\right]\label{eq:6.11}
+i\int\dd^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =\int\dd^{4}x\partial_{t}\left[e^{ipx}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\right]\nonumber \\
+ & =\int\dd t\partial_{t}\left[e^{i\omega_{p}t}\int\dd^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\right]\label{eq:6.11}
 \end{align}
 
 \end_inset
@@ -1190,9 +1198,9 @@ again,不管场
 的积分：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\\
- & \int\dif^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{k}}}\left(a_{k}\left(t\right)e^{-ikx}+a_{k}^{\dagger}\left(t\right)e^{ikx}\right)\\
- & \int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\int\dif^{3}x\left[\left(\frac{\omega_{k}+\omega_{p}}{\sqrt{2\omega_{k}}}\right)a_{k}\left(t\right)e^{-ikx}e^{-\vec{p}\vec{x}}+\left(\frac{-\omega_{k}+\omega_{p}}{\sqrt{2\omega_{k}}}\right)a_{k}^{\dagger}\left(t\right)e^{ikx}e^{-\vec{p}\vec{x}}\right]
+ & \int\dd^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\\
+ & \int\dd^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{k}}}\left(a_{k}\left(t\right)e^{-ikx}+a_{k}^{\dagger}\left(t\right)e^{ikx}\right)\\
+ & \int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\int\dd^{3}x\left[\left(\frac{\omega_{k}+\omega_{p}}{\sqrt{2\omega_{k}}}\right)a_{k}\left(t\right)e^{-ikx}e^{-\vec{p}\vec{x}}+\left(\frac{-\omega_{k}+\omega_{p}}{\sqrt{2\omega_{k}}}\right)a_{k}^{\dagger}\left(t\right)e^{ikx}e^{-\vec{p}\vec{x}}\right]
 \end{align*}
 
 \end_inset
@@ -1234,7 +1242,7 @@ noprefix "false"
 ，所以我们得到
 \begin_inset Formula 
 \begin{equation}
-\int\dif^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}a_{p}\left(t\right)e^{-i\omega_{p}t}\label{eq:6.13}
+\int\dd^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}a_{p}\left(t\right)e^{-i\omega_{p}t}\label{eq:6.13}
 \end{equation}
 
 \end_inset
@@ -1246,8 +1254,8 @@ noprefix "false"
 等于零。所以
 \begin_inset Formula 
 \begin{align*}
-i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =\int\dif t\partial_{t}\left[e^{i\omega_{p}t}\int\dif^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\right]\\
- & =\int\dif t\partial_{t}\left[e^{i\omega_{p}t}\left(\sqrt{2\omega_{p}}a_{p}\left(t\right)e^{-i\omega_{p}t}\right)\right]\\
+i\int\dd^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =\int\dd t\partial_{t}\left[e^{i\omega_{p}t}\int\dd^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)\right]\\
+ & =\int\dd t\partial_{t}\left[e^{i\omega_{p}t}\left(\sqrt{2\omega_{p}}a_{p}\left(t\right)e^{-i\omega_{p}t}\right)\right]\\
  & =\sqrt{2\omega_{p}}\left[a_{p}\left(\infty\right)-a_{p}\left(-\infty\right)\right]
 \end{align*}
 
@@ -1256,7 +1264,7 @@ i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right) & =\int\dif t\
 正式我们想得到的关系。类似地（可以通过取厄米共轭得到）
 \begin_inset Formula 
 \[
-\sqrt{2\omega_{p}}\left[a_{p}^{\dagger}\left(\infty\right)-a_{p}^{\dagger}\left(-\infty\right)\right]=-i\int\dif^{4}xe^{-ipx}\left(\square+m^{2}\right)\phi\left(x\right)
+\sqrt{2\omega_{p}}\left[a_{p}^{\dagger}\left(\infty\right)-a_{p}^{\dagger}\left(-\infty\right)\right]=-i\int\dd^{4}xe^{-ipx}\left(\square+m^{2}\right)\phi\left(x\right)
 \]
 
 \end_inset
@@ -1370,7 +1378,7 @@ and 我们有了
 最终，结果是
 \begin_inset Formula 
 \begin{align*}
-\bra{p_{3}\cdots p_{n}}S\ket{p_{1}p_{2}} & =\left[i\int\dif^{4}x_{1}e^{-ip_{1}x_{1}}\left(\square_{1}+m^{2}\right)\right]\cdots\left[i\int\dif^{4}x_{n}e^{+ip_{n}\cdot x_{n}}\left(\square_{n}+m^{2}\right)\right]\\
+\bra{p_{3}\cdots p_{n}}S\ket{p_{1}p_{2}} & =\left[i\int\dd^{4}x_{1}e^{-ip_{1}x_{1}}\left(\square_{1}+m^{2}\right)\right]\cdots\left[i\int\dd^{4}x_{n}e^{+ip_{n}\cdot x_{n}}\left(\square_{n}+m^{2}\right)\right]\\
  & \times\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\phi\left(x_{2}\right)\phi\left(x_{3}\right)\cdots\phi\left(x_{n}\right)\right\} \ket{\Omega}
 \end{align*}
 
@@ -1482,7 +1490,7 @@ LSZ 约化公式表明，为了计算
 的渐进时间能够创造自由粒子态。所以LSZ 实际上暗示了
 \begin_inset Formula 
 \begin{align*}
-\bra{p_{3}\cdots p_{n}}S\ket{p_{1}p_{2}} & =\left[i\int\dif^{4}x_{1}e^{-ip_{1}x_{1}}\left(\square_{1}+m^{2}\right)\right]\cdots\left[i\int\dif^{4}x_{n}e^{+ip_{n}\cdot x_{n}}\left(\square_{n}+m^{2}\right)\right]\\
+\bra{p_{3}\cdots p_{n}}S\ket{p_{1}p_{2}} & =\left[i\int\dd^{4}x_{1}e^{-ip_{1}x_{1}}\left(\square_{1}+m^{2}\right)\right]\cdots\left[i\int\dd^{4}x_{n}e^{+ip_{n}\cdot x_{n}}\left(\square_{n}+m^{2}\right)\right]\\
  & \times\bra{\Omega}T\left\{ \mathcal{O}_{1}\left(x_{1}\right)\mathcal{O}_{2}\left(x_{2}\right)\mathcal{O}_{3}\left(x_{3}\right)\cdots\mathcal{O}_{n}\left(x_{n}\right)\right\} \ket{\Omega}
 \end{align*}
 
@@ -1528,7 +1536,7 @@ LSZ 约化公式表明，为了计算
 。任何这样的算符可以写成对产生湮灭算符的求和式：
 \begin_inset Formula 
 \[
-\mathcal{O}=\sum_{n,m}\int\dif q_{1}\cdots\dif q_{n}\dif p_{1}\cdots\dif p_{m}a_{q_{1}}^{\dagger}\cdots a_{q_{n}}^{\dagger}a_{p_{m}}\cdots a_{p_{1}}C_{nm}\left(q_{1},\cdots,p_{m}\right)
+\mathcal{O}=\sum_{n,m}\int\dd q_{1}\cdots\dd q_{n}\dd p_{1}\cdots\dd p_{m}a_{q_{1}}^{\dagger}\cdots a_{q_{n}}^{\dagger}a_{p_{m}}\cdots a_{p_{1}}C_{nm}\left(q_{1},\cdots,p_{m}\right)
 \]
 
 \end_inset
@@ -1562,7 +1570,7 @@ noprefix "false"
  和它的共轭
 \begin_inset Formula 
 \[
-\int\dif^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}a_{p}\left(t\right)e^{-i\omega_{p}t}
+\int\dd^{3}xe^{-i\vec{p}\vec{x}}\left(i\partial_{t}+\omega_{p}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}a_{p}\left(t\right)e^{-i\omega_{p}t}
 \]
 
 \end_inset
@@ -1637,7 +1645,7 @@ and
 。
 \begin_inset Formula 
 \begin{equation}
-i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}\left\{ a_{p}\left(\infty\right)-a_{p}\left(-\infty\right)\right\} 
+i\int\dd^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right)=\sqrt{2\omega_{p}}\left\{ a_{p}\left(\infty\right)-a_{p}\left(-\infty\right)\right\} 
 \end{equation}
 
 \end_inset
@@ -1649,8 +1657,8 @@ i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right)=\sqrt{2\omega_
 –矩阵元写成编时乘积的形式，两边不使用真空，转而使用单粒子态。比如
 \begin_inset Formula 
 \begin{align*}
- & \Gamma_{\phi B}^{\mu}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(p-p\right)=\bra{p}i^{2}\int\dif^{4}x\int\dif^{4}y\int\dif^{4}z\mathcal{L}_{\text{had}\left(B\right)}^{\text{nonloc}}\left(x\right)J_{q,\text{em}}^{\mu}\left(y\right)\mathcal{L}_{\text{had}\left(B\right)}^{\text{nonloc}}\left(z\right)\ket{p}\\
- & =\frac{i^{2}C_{B\phi}^{2}}{f^{2}}\bra{p}\int\dif^{4}x\int\dif^{4}y\int\dif^{4}z\int\dif^{4}aF\left(a\right)\int\dif^{4}bF\left(b\right)\bar{p}\left(x\right)\gamma^{\nu}\gamma^{5}B\left(x\right)\partial_{\nu}\phi\left(x+a\right)\\
+ & \Gamma_{\phi B}^{\mu}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(p-p\right)=\bra{p}i^{2}\int\dd^{4}x\int\dd^{4}y\int\dd^{4}z\mathcal{L}_{\text{had}\left(B\right)}^{\text{nonloc}}\left(x\right)J_{q,\text{em}}^{\mu}\left(y\right)\mathcal{L}_{\text{had}\left(B\right)}^{\text{nonloc}}\left(z\right)\ket{p}\\
+ & =\frac{i^{2}C_{B\phi}^{2}}{f^{2}}\bra{p}\int\dd^{4}x\int\dd^{4}y\int\dd^{4}z\int\dd^{4}aF\left(a\right)\int\dd^{4}bF\left(b\right)\bar{p}\left(x\right)\gamma^{\nu}\gamma^{5}B\left(x\right)\partial_{\nu}\phi\left(x+a\right)\\
  & \times\left(-i\left[\phi\left(y\right)\partial^{\mu}\phi^{\dagger}\left(y\right)-\phi^{\dagger}\left(y\right)\partial^{\mu}\phi\left(y\right)\right]\right)\bar{B}\left(z\right)\gamma^{\rho}\gamma^{5}p\left(z\right)\partial_{\rho}\phi^{\dagger}\left(z+b\right)\ket{p}
 \end{align*}
 
@@ -1667,7 +1675,7 @@ i\int\dif^{4}xe^{ipx}\left(\square+m^{2}\right)\phi\left(x\right)=\sqrt{2\omega_
 计算费曼传播子在位置空间的形式。
 \begin_inset Formula 
 \[
-D_{F}\left(x_{1},x_{2}\right)=\bra{0}T{\phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)}\ket{0}=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-m^{2}+i\varepsilon}e^{ik\left(x_{1}-x_{2}\right)}
+D_{F}\left(x_{1},x_{2}\right)=\bra{0}T{\phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)}\ket{0}=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-m^{2}+i\varepsilon}e^{ik\left(x_{1}-x_{2}\right)}
 \]
 
 \end_inset
@@ -1723,7 +1731,7 @@ D_{F}\left(x_{1},x_{2}\right)=\bra{0}T{\phi_{0}\left(x_{1}\right)\phi_{0}\left(x
 是相互作用理论的基态/真空。表达式中的场不是自由场而是全相互作用的量子场。我们也知道在自由理论中，两个场的编时乘积是费曼传播子：
 \begin_inset Formula 
 \[
-D_{F}\left(x,y\right)\equiv\bra{0}T\left\{ \phi_{0}\left(x\right)\phi_{0}\left(y\right)\right\} \ket{0}=\lim_{\varepsilon\to0}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-m^{2}+i\varepsilon}e^{ik\left(x-y\right)}
+D_{F}\left(x,y\right)\equiv\bra{0}T\left\{ \phi_{0}\left(x\right)\phi_{0}\left(y\right)\right\} \ket{0}=\lim_{\varepsilon\to0}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-m^{2}+i\varepsilon}e^{ik\left(x-y\right)}
 \]
 
 \end_inset
@@ -1850,7 +1858,7 @@ contact interactions
 使用这个公式，两点函数可以写成
 \begin_inset Formula 
 \[
-\langle\phi_{1}\phi_{2}\rangle=\int\dif^{4}x\delta_{x1}\langle\phi_{x}\phi_{2}\rangle=i\int\dif^{4}x\left(\square_{x}D_{x1}\right)\langle\phi_{x}\phi_{2}\rangle=i\int\dif^{4}x\left(D_{x1}\square_{x}\right)\langle\phi_{x}\phi_{2}\rangle
+\langle\phi_{1}\phi_{2}\rangle=\int\dd^{4}x\delta_{x1}\langle\phi_{x}\phi_{2}\rangle=i\int\dd^{4}x\left(\square_{x}D_{x1}\right)\langle\phi_{x}\phi_{2}\rangle=i\int\dd^{4}x\left(D_{x1}\square_{x}\right)\langle\phi_{x}\phi_{2}\rangle
 \]
 
 \end_inset
@@ -1878,7 +1886,7 @@ contact interactions
 ，给出
 \begin_inset Formula 
 \[
-\langle\phi_{1}\phi_{2}\rangle=i\int\dif^{4}x\left(D_{x1}\square_{x}\right)\langle\phi_{x}\phi_{2}\rangle=i\int\dif^{4}xD_{x1}\left(-i\delta_{x2}\right)=D_{12}
+\langle\phi_{1}\phi_{2}\rangle=i\int\dd^{4}x\left(D_{x1}\square_{x}\right)\langle\phi_{x}\phi_{2}\rangle=i\int\dd^{4}xD_{x1}\left(-i\delta_{x2}\right)=D_{12}
 \]
 
 \end_inset
@@ -1890,8 +1898,8 @@ contact interactions
 –点函数，展开是类似的：
 \begin_inset Formula 
 \begin{align*}
-\langle\phi_{1}\phi_{2}\phi_{3}\phi_{4}\rangle & =i\int\dif^{4}xD_{x1}\square_{x}\langle\phi_{x}\phi_{2}\phi_{3}\phi_{4}\rangle\\
- & =\int\dif^{4}xD_{x1}\left\{ \delta_{x2}\langle\phi_{3}\phi_{4}\rangle+\delta_{x3}\langle\phi_{2}\phi_{4}\rangle+\delta_{x4}\langle\phi_{2}\phi_{3}\rangle\right\} 
+\langle\phi_{1}\phi_{2}\phi_{3}\phi_{4}\rangle & =i\int\dd^{4}xD_{x1}\square_{x}\langle\phi_{x}\phi_{2}\phi_{3}\phi_{4}\rangle\\
+ & =\int\dd^{4}xD_{x1}\left\{ \delta_{x2}\langle\phi_{3}\phi_{4}\rangle+\delta_{x3}\langle\phi_{2}\phi_{4}\rangle+\delta_{x4}\langle\phi_{2}\phi_{3}\rangle\right\} 
 \end{align*}
 
 \end_inset
@@ -1923,7 +1931,7 @@ contact interactions
 。类似地
 \begin_inset Formula 
 \[
-\langle\phi_{1}\phi_{2}\rangle=i\int\dif^{4}xD_{x1}\square_{x}\langle\phi_{x}\phi_{2}\rangle
+\langle\phi_{1}\phi_{2}\rangle=i\int\dd^{4}xD_{x1}\square_{x}\langle\phi_{x}\phi_{2}\rangle
 \]
 
 \end_inset
@@ -1935,7 +1943,7 @@ contact interactions
 ，所以我们得到
 \begin_inset Formula 
 \[
-\langle\phi_{1}\phi_{2}\rangle=i\int\dif^{4}xD_{x1}\left(\frac{g}{2}\langle\phi_{x}^{2}\phi_{2}\rangle-i\delta_{x2}\right)
+\langle\phi_{1}\phi_{2}\rangle=i\int\dd^{4}xD_{x1}\left(\frac{g}{2}\langle\phi_{x}^{2}\phi_{2}\rangle-i\delta_{x2}\right)
 \]
 
 \end_inset
@@ -1951,11 +1959,11 @@ contact interactions
 ，内点应该被积分掉：
 \begin_inset Formula 
 \begin{align*}
-\langle\phi_{1}\phi_{2}\rangle & =D_{12}+\frac{g}{2}i\int\dif^{4}x\int\dif^{4}yD_{x1}\delta_{2y}\langle\phi_{x}^{2}\phi_{y}\rangle\\
- & =D_{12}-\frac{g}{2}\int\dif^{4}x\int\dif^{4}yD_{x1}D_{y2}{\color{red}\square_{y}\langle\phi_{x}^{2}\phi_{y}\rangle}\\
- & =D_{12}-\frac{g^{2}}{4}\int\dif^{4}x\int\dif^{4}yD_{x1}D_{2y}\square_{y}\langle\phi_{x}^{2}\phi_{y}^{2}\rangle\\
- & +{\color{red}i\frac{g}{2}\int\dif^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle+i\frac{g}{2}\int\dif^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle}\\
- & =D_{12}-\frac{g^{2}}{4}\int\dif^{4}x\int\dif^{4}yD_{x1}D_{2y}\square_{y}\langle\phi_{x}^{2}\phi_{y}^{2}\rangle+ig\int\dif^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle
+\langle\phi_{1}\phi_{2}\rangle & =D_{12}+\frac{g}{2}i\int\dd^{4}x\int\dd^{4}yD_{x1}\delta_{2y}\langle\phi_{x}^{2}\phi_{y}\rangle\\
+ & =D_{12}-\frac{g}{2}\int\dd^{4}x\int\dd^{4}yD_{x1}D_{y2}{\color{red}\square_{y}\langle\phi_{x}^{2}\phi_{y}\rangle}\\
+ & =D_{12}-\frac{g^{2}}{4}\int\dd^{4}x\int\dd^{4}yD_{x1}D_{2y}\square_{y}\langle\phi_{x}^{2}\phi_{y}^{2}\rangle\\
+ & +{\color{red}i\frac{g}{2}\int\dd^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle+i\frac{g}{2}\int\dd^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle}\\
+ & =D_{12}-\frac{g^{2}}{4}\int\dd^{4}x\int\dd^{4}yD_{x1}D_{2y}\square_{y}\langle\phi_{x}^{2}\phi_{y}^{2}\rangle+ig\int\dd^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle
 \end{align*}
 
 \end_inset
@@ -2043,7 +2051,7 @@ contact interactions
 项可以用 S-D 方程再次展开
 \begin_inset Formula 
 \[
-\langle\phi_{x}\rangle=i\int\dif^{4}yD_{xy}\square_{y}\langle\phi_{y}\rangle=i\frac{g}{2}\int\dif^{4}yD_{xy}\langle\phi_{y}^{2}\rangle=i\frac{g}{2}\int\dif^{4}yD_{xy}D_{yy}+\mathcal{O}\left(g^{2}\right)
+\langle\phi_{x}\rangle=i\int\dd^{4}yD_{xy}\square_{y}\langle\phi_{y}\rangle=i\frac{g}{2}\int\dd^{4}yD_{xy}\langle\phi_{y}^{2}\rangle=i\frac{g}{2}\int\dd^{4}yD_{xy}D_{yy}+\mathcal{O}\left(g^{2}\right)
 \]
 
 \end_inset
@@ -2063,14 +2071,14 @@ contact interactions
 的奇次方项为零，所以用自由场替换时，要展开到偶次项再替换，所以展开式中只有偶次方项。最终的结果是
 \begin_inset Formula 
 \begin{align*}
-\langle\phi_{1}\phi_{2}\rangle & =D_{12}-g^{2}\int\dif^{4}x\int\dif^{4}y\Big(\frac{1}{2}D_{1x}D_{xy}^{2}D_{y2}+\frac{1}{4}D_{1x}D_{xx}D_{yy}D_{y2}\\
+\langle\phi_{1}\phi_{2}\rangle & =D_{12}-g^{2}\int\dd^{4}x\int\dd^{4}y\Big(\frac{1}{2}D_{1x}D_{xy}^{2}D_{y2}+\frac{1}{4}D_{1x}D_{xx}D_{yy}D_{y2}\\
  & +\frac{1}{2}D_{1x}D_{2x}D_{xy}D_{yy}\Big)
 \end{align*}
 
 \end_inset
 
 这便是施温格的套路。由于
-\begin_inset Formula $\langle\cdots\phi_{1}\cdots\rangle=\int\dif^{4}y\delta_{1y}\langle\cdots\phi_{y}\cdots\rangle=\int\dif^{4}yi\square_{y}D_{y1}\langle\cdots\phi_{y}\cdots\rangle=i\int\dif^{4}yD_{1y}\square_{y}\langle\cdots\phi_{y}\cdots\rangle$
+\begin_inset Formula $\langle\cdots\phi_{1}\cdots\rangle=\int\dd^{4}y\delta_{1y}\langle\cdots\phi_{y}\cdots\rangle=\int\dd^{4}yi\square_{y}D_{y1}\langle\cdots\phi_{y}\cdots\rangle=i\int\dd^{4}yD_{1y}\square_{y}\langle\cdots\phi_{y}\cdots\rangle$
 \end_inset
 
 。右边可以使用 SD 方程迭代到更高的阶，会产生耦合系数的幂次展开，也就是微扰。由于相互作用项一般是
@@ -2104,7 +2112,7 @@ contact interactions
 抵消，不包括入射那根线，因为已经被我们固定了。参考
 \begin_inset Formula 
 \[
-\langle\phi_{x}\rangle=i\int\dif^{4}yD_{xy}\square_{y}\langle\phi_{y}\rangle=i\frac{g}{2}\int\dif^{4}yD_{xy}\langle\phi_{y}^{2}\rangle
+\langle\phi_{x}\rangle=i\int\dd^{4}yD_{xy}\square_{y}\langle\phi_{y}\rangle=i\frac{g}{2}\int\dd^{4}yD_{xy}\langle\phi_{y}^{2}\rangle
 \]
 
 \end_inset
@@ -2204,7 +2212,7 @@ name "fig:eq.7.17"
 这部分和 peskin 类似，在相互作用表象中，得到戴森级数
 \begin_inset Formula 
 \[
-U\left(t,t_{0}\right)=T\left\{ \exp\left[-i\int_{t_{0}}^{t}\dif t^{\prime}V_{I}\left(t^{\prime}\right)\right]\right\} 
+U\left(t,t_{0}\right)=T\left\{ \exp\left[-i\int_{t_{0}}^{t}\dd t^{\prime}V_{I}\left(t^{\prime}\right)\right]\right\} 
 \]
 
 \end_inset
@@ -2216,7 +2224,7 @@ U\left(t,t_{0}\right)=T\left\{ \exp\left[-i\int_{t_{0}}^{t}\dif t^{\prime}V_{I}\
 是编时乘积。对于任何时间顺序，它满足
 \begin_inset Formula 
 \[
-U_{31}U_{12}=U_{32},\quad U_{21}\equiv U\left(t_{2},t_{1}\right)=T\left\{ \exp\left[-i\int_{t_{1}}^{t_{2}}\dif t^{\prime}V_{I}\left(t^{\prime}\right)\right]\right\} 
+U_{31}U_{12}=U_{32},\quad U_{21}\equiv U\left(t_{2},t_{1}\right)=T\left\{ \exp\left[-i\int_{t_{1}}^{t_{2}}\dd t^{\prime}V_{I}\left(t^{\prime}\right)\right]\right\} 
 \]
 
 \end_inset
@@ -2232,7 +2240,7 @@ U_{31}U_{12}=U_{32},\quad U_{21}\equiv U\left(t_{2},t_{1}\right)=T\left\{ \exp\l
 决定。
 \begin_inset Formula 
 \[
-\phi\left(t,\vec{x}\right)=e^{-iH_{0}\left(t-t_{0}\right)}\phi\left(\vec{x}\right)e^{iH_{0}\left(t-t_{0}\right)}=\int\frac{\dif^{3}p}{\left(2\pi^{3}\right)}\frac{1}{\sqrt{2\omega_{p}}}\left(a_{p}e^{-ipx}+a_{p}^{\dagger}e^{+ipx}\right)
+\phi\left(t,\vec{x}\right)=e^{-iH_{0}\left(t-t_{0}\right)}\phi\left(\vec{x}\right)e^{iH_{0}\left(t-t_{0}\right)}=\int\frac{\dd^{3}p}{\left(2\pi^{3}\right)}\frac{1}{\sqrt{2\omega_{p}}}\left(a_{p}e^{-ipx}+a_{p}^{\dagger}e^{+ipx}\right)
 \]
 
 \end_inset
@@ -2280,7 +2288,7 @@ i\partial_{t}S\left(t,t_{0}\right) & =H\left(t\right)S\left(t,t_{0}\right)
 能够得到
 \begin_inset Formula 
 \[
-\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)\right\} \ket{\Omega}=\lim_{T\to\infty\left(1-i\varepsilon\right)}\frac{\bra{0}T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)\exp\left(i\int_{-\infty}^{+\infty}\dif^{4}x\mathcal{L}_{\text{int}}\left[\phi_{0}\right]\right)\right\} \ket{0}}{\bra{0}T\left\{ \exp\left(i\int_{-\infty}^{+\infty}\dif^{4}x\mathcal{L}_{\text{int}}\left[\phi_{0}\right]\right)\right\} \ket{0}}
+\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)\right\} \ket{\Omega}=\lim_{T\to\infty\left(1-i\varepsilon\right)}\frac{\bra{0}T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)\exp\left(i\int_{-\infty}^{+\infty}\dd^{4}x\mathcal{L}_{\text{int}}\left[\phi_{0}\right]\right)\right\} \ket{0}}{\bra{0}T\left\{ \exp\left(i\int_{-\infty}^{+\infty}\dd^{4}x\mathcal{L}_{\text{int}}\left[\phi_{0}\right]\right)\right\} \ket{0}}
 \]
 
 \end_inset
@@ -2419,7 +2427,7 @@ noprefix "false"
  第一个圈图
 \begin_inset Formula 
 \[
-\mathcal{T}_{1}=\text{one loop}=-\frac{g^{2}}{2}\int\dif^{4}x\int\dif^{4}yD_{1x}D_{xy}^{2}D_{y2}
+\mathcal{T}_{1}=\text{one loop}=-\frac{g^{2}}{2}\int\dd^{4}x\int\dd^{4}yD_{1x}D_{xy}^{2}D_{y2}
 \]
 
 \end_inset
@@ -2431,19 +2439,19 @@ noprefix "false"
 以简化）：
 \begin_inset Formula 
 \[
-D_{xy}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^{ip\left(x-y\right)}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^{-ip\left(y-x\right)}
+D_{xy}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^{ip\left(x-y\right)}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^{-ip\left(y-x\right)}
 \]
 
 \end_inset
 
 这样将会有四个
-\begin_inset Formula $\dif^{4}p$
+\begin_inset Formula $\dd^{4}p$
 \end_inset
 
 积分，所有的位置坐标只出现在指数里。所以
 \begin_inset Formula 
 \begin{align*}
-\mathcal{T}_{1} & =-\frac{g^{2}}{2}\int\dif^{4}x\int\dif^{4}y\int\frac{\dif^{4}p_{1}}{\left(2\pi\right)^{4}}\int\frac{\dif^{4}p_{2}}{\left(2\pi\right)^{4}}\int\frac{\dif^{4}p_{3}}{\left(2\pi\right)^{4}}\int\frac{\dif^{4}p_{4}}{\left(2\pi\right)^{4}}\\
+\mathcal{T}_{1} & =-\frac{g^{2}}{2}\int\dd^{4}x\int\dd^{4}y\int\frac{\dd^{4}p_{1}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{2}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{3}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{4}}{\left(2\pi\right)^{4}}\\
  & \times e^{ip_{1}\left(x_{1}-x\right)}e^{ip_{2}\left(y-x_{2}\right)}e^{ip_{3}\left(x-y\right)}e^{ip_{4}\left(x-y\right)}\frac{i}{p_{1}^{2}+i\varepsilon}\frac{i}{p_{2}^{2}+i\varepsilon}\frac{i}{p_{3}^{2}+i\varepsilon}\frac{i}{p_{4}^{2}+i\varepsilon}
 \end{align*}
 
@@ -2504,7 +2512,7 @@ D_{xy}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^
 ，则
 \begin_inset Formula 
 \begin{align*}
-\mathcal{T}_{1} & =-\frac{g^{2}}{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\int\frac{\dif^{4}p_{1}}{\left(2\pi\right)^{4}}\int\frac{\dif^{4}p_{2}}{\left(2\pi\right)^{4}}e^{ip_{1}x_{1}}e^{-ip_{2}x_{2}}\\
+\mathcal{T}_{1} & =-\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{1}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{2}}{\left(2\pi\right)^{4}}e^{ip_{1}x_{1}}e^{-ip_{2}x_{2}}\\
  & \times\frac{i}{p_{1}^{2}+i\varepsilon}\frac{i}{p_{2}^{2}+i\varepsilon}\frac{i}{\left(p_{1}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{1}-p_{2}\right)
 \end{align*}
 
@@ -2529,7 +2537,7 @@ D_{xy}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^
 –矩阵元的贡献
 \begin_inset Formula 
 \[
-\bra{f}S\ket{i}=\left[i\int\dif^{4}x_{1}e^{-ip_{i}x_{1}}\left(-p_{i}^{2}\right)\right]\left[i\int\dif^{4}x_{2}e^{ip_{f}x_{2}}\left(-p_{f}^{2}\right)\right]\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\phi\left(x_{2}\right)\right\} \ket{\Omega}
+\bra{f}S\ket{i}=\left[i\int\dd^{4}x_{1}e^{-ip_{i}x_{1}}\left(-p_{i}^{2}\right)\right]\left[i\int\dd^{4}x_{2}e^{ip_{f}x_{2}}\left(-p_{f}^{2}\right)\right]\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\phi\left(x_{2}\right)\right\} \ket{\Omega}
 \]
 
 \end_inset
@@ -2545,7 +2553,7 @@ and
 分别是初态和末态动量。所以这幅图的贡献为
 \begin_inset Formula 
 \[
-\bra{f}S\ket{i}=\left(-1\right)\int\dif^{4}x_{1}e^{-ip_{i}x_{1}}\left(p_{i}^{2}\right)\int\dif^{4}x_{2}e^{ip_{f}x_{2}}\left(p_{f}^{2}\right)\mathcal{T}_{1}+\cdots
+\bra{f}S\ket{i}=\left(-1\right)\int\dd^{4}x_{1}e^{-ip_{i}x_{1}}\left(p_{i}^{2}\right)\int\dd^{4}x_{2}e^{ip_{f}x_{2}}\left(p_{f}^{2}\right)\mathcal{T}_{1}+\cdots
 \]
 
 \end_inset
@@ -2577,8 +2585,8 @@ and
  的积分，给出
 \begin_inset Formula 
 \begin{align*}
-\bra{f}S\ket{i} & =\left(-1\right)\left(-1\right)\frac{g^{2}}{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(p_{i}^{2}\right)i}{p_{i}^{2}+i\varepsilon}\frac{\left(p_{f}^{2}\right)i}{p_{f}^{2}+i\varepsilon}\frac{i}{\left(p_{1}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{i}-p_{f}\right)\\
- & =\left(-1\right)\frac{g^{2}}{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{\left(p_{i}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{i}-p_{f}\right)+\cdots
+\bra{f}S\ket{i} & =\left(-1\right)\left(-1\right)\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{\left(p_{i}^{2}\right)i}{p_{i}^{2}+i\varepsilon}\frac{\left(p_{f}^{2}\right)i}{p_{f}^{2}+i\varepsilon}\frac{i}{\left(p_{1}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{i}-p_{f}\right)\\
+ & =\left(-1\right)\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{\left(p_{i}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{i}-p_{f}\right)+\cdots
 \end{align*}
 
 \end_inset
@@ -2599,7 +2607,7 @@ and
 –矩阵元联系起来那里，我们总是将它分离出来，
 \begin_inset Formula 
 \[
-\mathcal{S}=\mathbbm{1}+\left(2\pi\right)^{4}\delta\left(\sum p_{i}\right)i\mathcal{M}
+\mathcal{S}=\symbb{1}+\left(2\pi\right)^{4}\delta\left(\sum p_{i}\right)i\mathcal{M}
 \]
 
 \end_inset
@@ -2607,7 +2615,7 @@ and
 所以
 \begin_inset Formula 
 \[
-i\mathcal{M}=-\frac{g^{2}}{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{\left(p_{i}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}+\cdots
+i\mathcal{M}=-\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{\left(p_{i}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}+\cdots
 \]
 
 \end_inset
@@ -2815,7 +2823,7 @@ Mandelstam 变量
 给出动量因子。由于
 \begin_inset Formula 
 \[
-\phi\left(x\right)=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\left(a_{p}e^{-ipx}+a_{p}^{\dagger}e^{ipx}\right)
+\phi\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\left(a_{p}e^{-ipx}+a_{p}^{\dagger}e^{ipx}\right)
 \]
 
 \end_inset
@@ -3019,7 +3027,7 @@ T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)=:\phi_{0}\le
 ，其中
 \begin_inset Formula 
 \[
-\phi_{+}\left(x\right)=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}a_{p}^{\dagger}e^{ipx},\quad\phi_{-}\left(x\right)=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}a_{p}e^{-ipx}
+\phi_{+}\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}a_{p}^{\dagger}e^{ipx},\quad\phi_{-}\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}a_{p}e^{-ipx}
 \]
 
 \end_inset
@@ -3172,7 +3180,7 @@ T\left\{ \psi\left(x\right)\bar{\psi}\left(y\right)\right\} =\begin{cases}
 
 \begin_inset Formula 
 \[
-\bra{0}T\psi\left(x\right)\bar{\psi}\left(y\right)\ket{0}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{-ip\cdot\left(x-y\right)}
+\bra{0}T\psi\left(x\right)\bar{\psi}\left(y\right)\ket{0}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{-ip\cdot\left(x-y\right)}
 \]
 
 \end_inset
@@ -3547,7 +3555,7 @@ page 129
 \end_inset
 
 总能量是
-\begin_inset Formula $E=\int\dif^{3}\mathcal{E}$
+\begin_inset Formula $E=\int\dd^{3}\mathcal{E}$
 \end_inset
 
 
@@ -3706,7 +3714,7 @@ page 129
 \end_inset
 
 。所以一般形式为(up to an overall 
-\begin_inset Formula $\int\dif^{4}x\partial_{\mu}L^{\mu}$
+\begin_inset Formula $\int\dd^{4}x\partial_{\mu}L^{\mu}$
 \end_inset
 
 ，which can be neglected.)
@@ -3855,7 +3863,7 @@ Proca Lagrangian 的能动量张量是
 现在让我们尝试写出运动方程的解。我们把场做一个傅立叶分解
 \begin_inset Formula 
 \begin{equation}
-A_{\mu}(x)=\sum_{i}\int\frac{\dif^{3}\vec{p}}{(2\pi)^{3}}\tilde{a}_{i}(\vec{p})\epsilon_{\mu}^{i}(p)e^{ipx},\quad p_{0}=\omega_{p}=\sqrt{\vec{p}^{2}+m^{2}}\label{eq:8.28}
+A_{\mu}(x)=\sum_{i}\int\frac{\dd^{3}\vec{p}}{(2\pi)^{3}}\tilde{a}_{i}(\vec{p})\epsilon_{\mu}^{i}(p)e^{ipx},\quad p_{0}=\omega_{p}=\sqrt{\vec{p}^{2}+m^{2}}\label{eq:8.28}
 \end{equation}
 
 \end_inset
@@ -4015,7 +4023,7 @@ p^{\mu}=(E,0,0,p),\quad E^{2}-p^{2}=m^{2}
 \end_inset
 
 如果我们用纵向模式散射，我们的散射截面在高能下的行为会像是
-\begin_inset Formula $\dif\sigma\sim g^{2}(\epsilon^{L})^{2}\sim g^{2}\frac{E^{2}}{m^{2}}$
+\begin_inset Formula $\dd\sigma\sim g^{2}(\epsilon^{L})^{2}\sim g^{2}\frac{E^{2}}{m^{2}}$
 \end_inset
 
 ，其中
@@ -4035,7 +4043,7 @@ p^{\mu}=(E,0,0,p),\quad E^{2}-p^{2}=m^{2}
 \end_inset
 
 。如果
-\begin_inset Formula $m\sim100\GeV$
+\begin_inset Formula $m\sim\SI{100}{\GeV}$
 \end_inset
 
  and 
@@ -4051,11 +4059,11 @@ p^{\mu}=(E,0,0,p),\quad E^{2}-p^{2}=m^{2}
 \end_inset
 
 玻色子的质量和耦合强度，那么
-\begin_inset Formula $E\sim1\TeV$
+\begin_inset Formula $E\sim\SI{1}{\TeV}$
 \end_inset
 
 。所以
-\begin_inset Formula $\TeV$
+\begin_inset Formula $\si{\TeV}$
 \end_inset
 
 量级是Tevatron and Large Hadron Colliders 的目标。关于perturbative unitary violation
@@ -4322,7 +4330,7 @@ noprefix "false"
 。在傅立叶空间
 \begin_inset Formula 
 \[
-A_{\mu}(x)=\int\frac{\dif^{4}p}{(2\pi)^{4}}\epsilon_{\mu}(p)e^{ipx}
+A_{\mu}(x)=\int\frac{\dd^{4}p}{(2\pi)^{4}}\epsilon_{\mu}(p)e^{ipx}
 \]
 
 \end_inset
@@ -4926,8 +4934,8 @@ J_{\mu}=\sum_{n}\frac{\partial\mathcal{L}}{\partial(\partial_{\mu}\phi_{n})}\fra
 的变分的时候，一定用了运动方程，所以守恒流的成立一定依赖于运动方程。
 \begin_inset Formula 
 \begin{align*}
-\delta S & =\int\dif^{4}x\frac{\delta\mathcal{L}}{\delta\phi}\delta\phi+\frac{\delta\mathcal{L}}{\delta\left(\partial_{\mu}\phi\right)}\delta\left(\partial_{\mu}\phi\right)\\
- & =\int\dif^{4}x\left(\frac{\delta\mathcal{L}}{\delta\alpha}-\partial_{\mu}\frac{\delta\mathcal{L}}{\delta\left(\partial_{\mu}\phi\right)}\right)\delta\phi+\partial_{\mu}\left(\frac{\delta\mathcal{L}}{\delta\left(\partial_{\mu}\phi\right)}\delta\phi\right)
+\delta S & =\int\dd^{4}x\frac{\delta\mathcal{L}}{\delta\phi}\delta\phi+\frac{\delta\mathcal{L}}{\delta\left(\partial_{\mu}\phi\right)}\delta\left(\partial_{\mu}\phi\right)\\
+ & =\int\dd^{4}x\left(\frac{\delta\mathcal{L}}{\delta\alpha}-\partial_{\mu}\frac{\delta\mathcal{L}}{\delta\left(\partial_{\mu}\phi\right)}\right)\delta\phi+\partial_{\mu}\left(\frac{\delta\mathcal{L}}{\delta\left(\partial_{\mu}\phi\right)}\delta\phi\right)
 \end{align*}
 
 \end_inset
@@ -5163,7 +5171,7 @@ J_{\mu}=\sum_{n}\frac{\partial\mathcal{L}}{\partial(\partial_{\mu}\phi_{n})}\fra
 的量子场算符是
 \begin_inset Formula 
 \[
-A_{\mu}(x)=\int\frac{\dif^{3}}{(2\pi)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\sum_{j=1}^{3}\left(\epsilon_{\mu}^{j}(p)a_{p,j}e^{-ipx}+\epsilon_{\mu}^{j*}(p)a_{p,j}^{\dagger}e^{ipx}\right)
+A_{\mu}(x)=\int\frac{\dd^{3}}{(2\pi)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\sum_{j=1}^{3}\left(\epsilon_{\mu}^{j}(p)a_{p,j}e^{-ipx}+\epsilon_{\mu}^{j*}(p)a_{p,j}^{\dagger}e^{ipx}\right)
 \]
 
 \end_inset
@@ -5538,7 +5546,7 @@ little group 方法帮助我们解决了洛伦兹不变性和幺正性的conflic
 ，但是只对两种极化矢量求和
 \begin_inset Formula 
 \[
-A_{\mu}(x)=\int\frac{\dif^{3}}{(2\pi)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\sum_{j=1}^{2}\left(\epsilon_{\mu}^{i}(p)a_{p,i}e^{-ipx}+\epsilon_{\mu}^{i*}(p)a_{p,i}^{\dagger}e^{ipx}\right)
+A_{\mu}(x)=\int\frac{\dd^{3}}{(2\pi)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\sum_{j=1}^{2}\left(\epsilon_{\mu}^{i}(p)a_{p,i}e^{-ipx}+\epsilon_{\mu}^{i*}(p)a_{p,i}^{\dagger}e^{ipx}\right)
 \]
 
 \end_inset
@@ -5845,7 +5853,7 @@ A_{\mu}(x)=\int\frac{\dif^{3}}{(2\pi)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\sum_{j=1}
 ，定义为
 \begin_inset Formula 
 \[
-\bra{0}T{A^{\mu}(x)A^{\nu}(x)}\ket{0}=i\int\frac{\dif^{4}p}{(2\pi)^{4}}e^{ip(x-y)}\Pi^{\mu\nu}(p)
+\bra{0}T{A^{\mu}(x)A^{\nu}(x)}\ket{0}=i\int\frac{\dd^{4}p}{(2\pi)^{4}}e^{ip(x-y)}\Pi^{\mu\nu}(p)
 \]
 
 \end_inset
@@ -6226,11 +6234,7 @@ i\Pi^{\mu\nu}(p)=\frac{i\xi\frac{p^{\mu}p^{\nu}}{p^{2}})}{p^{2}+i\epsilon}
 \begin_inset Formula $x_{\mu}A^{\mu}(x)=0$
 \end_inset
 
-，也可以方便某些计算。对于QED，使用协变规范就
-\begin_inset Formula $\bigstar$
-\end_inset
-
-了。
+，也可以方便某些计算。对于QED，使用协变规范就行了。
 \end_layout
 
 \begin_layout Standard
@@ -6502,11 +6506,7 @@ noprefix "false"
 \begin_inset Formula $S$
 \end_inset
 
-–矩阵元（某种程度上还真
-\begin_inset Formula $\bigstar$
-\end_inset
-
-, Chapter 27，使用recursion 关系），我们也可以完全不鸟这些冗余性。
+–矩阵元（某种程度上还真行，Chapter 27，使用recursion 关系），我们也可以完全不理这些冗余性。
 \end_layout
 
 \begin_layout Standard
@@ -7035,7 +7035,7 @@ and the Lagrangian is
 \end_inset
 
 其中
-\begin_inset Formula $M_{\text{P1}}=G_{N}^{-1/2}\approx10^{19}\GeV$
+\begin_inset Formula $M_{\text{P1}}=G_{N}^{-1/2}\approx\SI{10e19}{\GeV}$
 \end_inset
 
  is the Planck scale, 它的引入可以使
@@ -7075,7 +7075,7 @@ and the Lagrangian is
 \end_inset
 
 的粒子，比如质量为
-\begin_inset Formula $1670\MeV$
+\begin_inset Formula $\SI{1670}{\MeV}$
 \end_inset
 
 的
@@ -8113,7 +8113,7 @@ noprefix "false"
 and 
 \begin_inset Formula 
 \[
-\Lambda_{V}\left(2\pi\right)=\mathbbm{1}
+\Lambda_{V}\left(2\pi\right)=\symbb{1}
 \]
 
 \end_inset
@@ -8180,7 +8180,7 @@ and
  & -1\\
  &  & -1\\
  &  &  & -1
-\end{array}\right)=-\mathbbm{1}
+\end{array}\right)=-\symbb{1}
 \]
 
 \end_inset
@@ -8266,7 +8266,7 @@ projective representation
 \end_inset
 
 的转动映射到群的恒元：
-\begin_inset Formula $r\left[2\pi\right]=\mathbbm{1}$
+\begin_inset Formula $r\left[2\pi\right]=\symbb{1}$
 \end_inset
 
 。并且，按照定义，恒元把对象变成它们自身。问题在于，当指数化洛伦兹群的李代数时，我们实际上得到了一个不同的群，
@@ -8441,7 +8441,7 @@ R\left(t\right)=\left(\begin{array}{ccc}
 \end_inset
 
  and 
-\begin_inset Formula $R\left(t,1\right)=\mathbbm{1}$
+\begin_inset Formula $R\left(t,1\right)=\symbb{1}$
 \end_inset
 
 。
@@ -9311,11 +9311,11 @@ anyons
 \end_inset
 
 ，我们发现有从
-\begin_inset Formula $\mathbbm{1}$
+\begin_inset Formula $\symbb{1}$
 \end_inset
 
 到
-\begin_inset Formula $\mathbbm{1}$
+\begin_inset Formula $\symbb{1}$
 \end_inset
 
 的群路径，无法光滑的变形到 trivial path。比如，绕任意轴转
@@ -9442,8 +9442,8 @@ T\left\{ \psi\left(x\right)\chi\left(y\right)\right\} =\theta\left(x^{0}-y^{0}\r
 我们先来复习一下复标量场的情况。场和它的复共轭的真空矩阵元是
 \begin_inset Formula 
 \begin{align*}
-\bra{0}\phi^{*}\left(x\right)\phi\left(0\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dif^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\bra{0}\left(a_{p}^{+}e^{ipx}+b_{p}e^{-ipx}\right)\left(a_{q}+b_{q}^{\dagger}\right)\ket{0}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-i\omega_{p}t+i\vec{p}\vec{x}}=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\text{ 传播反粒子}
+\bra{0}\phi^{*}\left(x\right)\phi\left(0\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dd^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\bra{0}\left(a_{p}^{+}e^{ipx}+b_{p}e^{-ipx}\right)\left(a_{q}+b_{q}^{\dagger}\right)\ket{0}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-i\omega_{p}t+i\vec{p}\vec{x}}=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\text{ 传播反粒子}
 \end{align*}
 
 \end_inset
@@ -9451,8 +9451,8 @@ T\left\{ \psi\left(x\right)\chi\left(y\right)\right\} =\theta\left(x^{0}-y^{0}\r
 类似地，
 \begin_inset Formula 
 \begin{align*}
-\bra{0}\phi\left(0\right)\phi^{*}\left(x\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dif^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\bra{0}\left(a_{q}+b_{q}^{\dagger}\right)\left(a_{p}^{+}e^{ipx}+b_{p}e^{-ipx}\right)\ket{0}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{i\omega_{p}t-i\vec{p}\vec{x}}=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{ipx}\text{ 传播粒子}
+\bra{0}\phi\left(0\right)\phi^{*}\left(x\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dd^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\bra{0}\left(a_{q}+b_{q}^{\dagger}\right)\left(a_{p}^{+}e^{ipx}+b_{p}e^{-ipx}\right)\ket{0}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{i\omega_{p}t-i\vec{p}\vec{x}}=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{ipx}\text{ 传播粒子}
 \end{align*}
 
 \end_inset
@@ -9460,7 +9460,7 @@ T\left\{ \psi\left(x\right)\chi\left(y\right)\right\} =\theta\left(x^{0}-y^{0}\r
 将这两个方程结合，我们得到
 \begin_inset Formula 
 \[
-\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0}=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[e^{i\vec{p}\vec{x}-i\omega_{p}t}\theta\left(t\right)+e^{-i\vec{p}\vec{x}+i\omega_{p}t}\theta\left(-t\right)\right]
+\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0}=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[e^{i\vec{p}\vec{x}-i\omega_{p}t}\theta\left(t\right)+e^{-i\vec{p}\vec{x}+i\omega_{p}t}\theta\left(-t\right)\right]
 \]
 
 \end_inset
@@ -9472,7 +9472,7 @@ T\left\{ \psi\left(x\right)\chi\left(y\right)\right\} =\theta\left(x^{0}-y^{0}\r
 ，积分测度联合积分区域整体不变，得到
 \begin_inset Formula 
 \[
-\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0}=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-i\vec{p}\vec{x}}\left[e^{-i\omega_{p}t}\theta\left(t\right)+e^{+i\omega_{p}t}\theta\left(-t\right)\right]
+\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0}=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-i\vec{p}\vec{x}}\left[e^{-i\omega_{p}t}\theta\left(t\right)+e^{+i\omega_{p}t}\theta\left(-t\right)\right]
 \]
 
 \end_inset
@@ -9480,8 +9480,8 @@ T\left\{ \psi\left(x\right)\chi\left(y\right)\right\} =\theta\left(x^{0}-y^{0}\r
 使用 eq.6.30 and 6.31
 \begin_inset Formula 
 \begin{align*}
-e^{+i\omega_{p}t}\theta\left(-t\right) & =\frac{i}{2\pi}\int_{-\infty}^{+\infty}\frac{\dif\omega}{\omega-\left(\omega_{p}-i\varepsilon\right)}e^{i\omega t}\text{ 第四象限\ensuremath{t<0}才有值}\\
-e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}\frac{\dif\omega}{\omega-\left(-\omega_{p}+i\varepsilon\right)}e^{i\omega t}\text{ 第二象限\ensuremath{t>0}才有值}
+e^{+i\omega_{p}t}\theta\left(-t\right) & =\frac{i}{2\pi}\int_{-\infty}^{+\infty}\frac{\dd\omega}{\omega-\left(\omega_{p}-i\varepsilon\right)}e^{i\omega t}\text{ 第四象限\ensuremath{t<0}才有值}\\
+e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}\frac{\dd\omega}{\omega-\left(-\omega_{p}+i\varepsilon\right)}e^{i\omega t}\text{ 第二象限\ensuremath{t>0}才有值}
 \end{align*}
 
 \end_inset
@@ -9489,10 +9489,10 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 我们得到
 \begin_inset Formula 
 \begin{align*}
-\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0} & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{2\omega_{p}}e^{ipx}\left(\frac{1}{\omega-\left(\omega_{p}-i\varepsilon\right)}-\frac{1}{\omega+\left(\omega_{p}-i\varepsilon\right)}\right)\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{2\omega_{p}}e^{ipx}\left(\frac{2\omega_{p}}{\omega^{2}-\omega_{p}^{2}+i\varepsilon}\right)\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{\omega^{2}-\omega_{p}^{2}+i\varepsilon}e^{ipx}\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
+\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0} & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{2\omega_{p}}e^{ipx}\left(\frac{1}{\omega-\left(\omega_{p}-i\varepsilon\right)}-\frac{1}{\omega+\left(\omega_{p}-i\varepsilon\right)}\right)\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{2\omega_{p}}e^{ipx}\left(\frac{2\omega_{p}}{\omega^{2}-\omega_{p}^{2}+i\varepsilon}\right)\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{\omega^{2}-\omega_{p}^{2}+i\varepsilon}e^{ipx}\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
 \end{align*}
 
 \end_inset
@@ -9508,9 +9508,9 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 如果我们用反对易关系，我们需要用反对易编时乘积，则
 \begin_inset Formula 
 \begin{align*}
-\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-i\vec{p}\vec{x}}\left[e^{-i\omega_{p}t}\theta\left(t\right)-e^{+i\omega_{p}t}\theta\left(-t\right)\right]\\
- & =-\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{2\omega_{p}}e^{ipx}\left(\frac{1}{\omega-\left(\omega_{p}-i\varepsilon\right)}+\frac{1}{\omega+\left(\omega_{p}-i\varepsilon\right)}\right)\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{-p^{0}}{\sqrt{\vec{p}^{2}+m^{2}}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
+\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-i\vec{p}\vec{x}}\left[e^{-i\omega_{p}t}\theta\left(t\right)-e^{+i\omega_{p}t}\theta\left(-t\right)\right]\\
+ & =-\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{2\omega_{p}}e^{ipx}\left(\frac{1}{\omega-\left(\omega_{p}-i\varepsilon\right)}+\frac{1}{\omega+\left(\omega_{p}-i\varepsilon\right)}\right)\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{-p^{0}}{\sqrt{\vec{p}^{2}+m^{2}}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
 \end{align*}
 
 \end_inset
@@ -9538,8 +9538,8 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 
 \begin_inset Formula 
 \begin{align*}
-\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[e^{-ipx}\theta\left(t\right)+e^{+ipx}\theta\left(-t\right)\right]=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{-ipx}\\
-\bra{0}T\left\{ \phi\left(x\right)\phi^{*}\left(0\right)\right\} \ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[e^{-ipx}\theta\left(t\right)+e^{+ipx}\theta\left(-t\right)\right]=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{-ipx}
+\bra{0}T\left\{ \phi^{*}\left(x\right)\phi\left(0\right)\right\} \ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[e^{-ipx}\theta\left(t\right)+e^{+ipx}\theta\left(-t\right)\right]=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{-ipx}\\
+\bra{0}T\left\{ \phi\left(x\right)\phi^{*}\left(0\right)\right\} \ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[e^{-ipx}\theta\left(t\right)+e^{+ipx}\theta\left(-t\right)\right]=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{-ipx}
 \end{align*}
 
 \end_inset
@@ -9555,9 +9555,9 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 现在我们对旋量重复计算。开头一样：
 \begin_inset Formula 
 \begin{align*}
-\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dif^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}\bra{0}\left(a_{p}^{s}u_{p}^{s}+b_{p}^{s\dagger}v_{p}^{s}\right)\left(a_{q}^{s^{\prime}\dagger}\bar{u}_{q}^{s^{\prime}}e^{iqx}+b_{q}^{s^{\prime}}\bar{v}_{q}^{s^{\prime}}e^{-iqx}\right)\ket{0}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dif^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}u_{p}^{s}\bar{u}_{q}^{s^{\prime}}\bra{0}a_{p}^{s}a_{q}^{s^{\prime}\dagger}\ket{0}e^{iqx}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\sum_{s}u_{p}^{s}\bar{u}_{p}^{s}e^{ipx}\text{ 传播正粒子}
+\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dd^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}\bra{0}\left(a_{p}^{s}u_{p}^{s}+b_{p}^{s\dagger}v_{p}^{s}\right)\left(a_{q}^{s^{\prime}\dagger}\bar{u}_{q}^{s^{\prime}}e^{iqx}+b_{q}^{s^{\prime}}\bar{v}_{q}^{s^{\prime}}e^{-iqx}\right)\ket{0}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dd^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}u_{p}^{s}\bar{u}_{q}^{s^{\prime}}\bra{0}a_{p}^{s}a_{q}^{s^{\prime}\dagger}\ket{0}e^{iqx}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\sum_{s}u_{p}^{s}\bar{u}_{p}^{s}e^{ipx}\text{ 传播正粒子}
 \end{align*}
 
 \end_inset
@@ -9581,7 +9581,7 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 给出
 \begin_inset Formula 
 \[
-\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0}=\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left(\slashed{p}+m\right)e^{ipx}=\left(-i\slashed{\partial}+m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{ipx}
+\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0}=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left(\slashed{p}+m\right)e^{ipx}=\left(-i\slashed{\partial}+m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{ipx}
 \]
 
 \end_inset
@@ -9589,10 +9589,10 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 类似地，
 \begin_inset Formula 
 \begin{align*}
-\bra{0}\bar{\psi}\left(x\right)\psi\left(0\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dif^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}\bra{0}\left(a_{q}^{s^{\prime}\dagger}\bar{u}_{q}^{s^{\prime}}e^{iqx}+b_{q}^{s^{\prime}}\bar{v}_{q}^{s^{\prime}}e^{-iqx}\right)\left(a_{p}^{s}u_{p}^{s}+b_{p}^{s\dagger}v_{p}^{s}\right)\ket{0}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dif^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}v_{p}^{s}\bar{v}_{q}^{s^{\prime}}\bra{0}b_{p}^{s}b_{q}^{s^{\prime}\dagger}\ket{0}e^{-iqx}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\sum_{s}v_{p}^{s}\bar{v}_{p}^{s}e^{-ipx}\text{ 传播反粒子}\\
- & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left(\slashed{p}-m\right)e^{-ipx}=\left(i\slashed{\partial}-m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}
+\bra{0}\bar{\psi}\left(x\right)\psi\left(0\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dd^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}\bra{0}\left(a_{q}^{s^{\prime}\dagger}\bar{u}_{q}^{s^{\prime}}e^{iqx}+b_{q}^{s^{\prime}}\bar{v}_{q}^{s^{\prime}}e^{-iqx}\right)\left(a_{p}^{s}u_{p}^{s}+b_{p}^{s\dagger}v_{p}^{s}\right)\ket{0}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\int\frac{\dd^{3}q}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\frac{1}{\sqrt{2\omega_{q}}}\sum_{s,s^{\prime}}v_{p}^{s}\bar{v}_{q}^{s^{\prime}}\bra{0}b_{p}^{s}b_{q}^{s^{\prime}\dagger}\ket{0}e^{-iqx}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\sum_{s}v_{p}^{s}\bar{v}_{p}^{s}e^{-ipx}\text{ 传播反粒子}\\
+ & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left(\slashed{p}-m\right)e^{-ipx}=\left(i\slashed{\partial}-m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}
 \end{align*}
 
 \end_inset
@@ -9616,8 +9616,8 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 也就是，我们发现
 \begin_inset Formula 
 \begin{align*}
-{\color{blue}\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0}} & {\color{blue}=\left(-i\slashed{\partial}+m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{ipx}\text{ 正粒子}}\\
-{\color{brown}\bra{0}\bar{\psi}\left(x\right)\psi\left(0\right)\ket{0}} & {\color{brown}=-\left(-i\slashed{\partial}+m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\text{ 反粒子}}
+{\color{blue}\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0}} & {\color{blue}=\left(-i\slashed{\partial}+m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{ipx}\text{ 正粒子}}\\
+{\color{brown}\bra{0}\bar{\psi}\left(x\right)\psi\left(0\right)\ket{0}} & {\color{brown}=-\left(-i\slashed{\partial}+m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\text{ 反粒子}}
 \end{align*}
 
 \end_inset
@@ -9633,9 +9633,9 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 。我们得到
 \begin_inset Formula 
 \begin{align*}
-\bra{0}T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \ket{0} & =\left(i\slashed{\partial}-m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[\theta\left(t\right)e^{+\vec{p}\vec{x}-i\omega_{p}t}-\theta\left(-t\right)e^{-\vec{p}\vec{x}+i\omega_{p}t}\right]\\
- & =\left(i\slashed{\partial}-m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[\theta\left(t\right)e^{-ipx}-\theta\left(-t\right)e^{ipx}\right]\\
- & =\left(i\slashed{\partial}-m\right)\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{-p^{0}}{\sqrt{\vec{p}^{2}+m^{2}}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
+\bra{0}T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \ket{0} & =\left(i\slashed{\partial}-m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[\theta\left(t\right)e^{+\vec{p}\vec{x}-i\omega_{p}t}-\theta\left(-t\right)e^{-\vec{p}\vec{x}+i\omega_{p}t}\right]\\
+ & =\left(i\slashed{\partial}-m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[\theta\left(t\right)e^{-ipx}-\theta\left(-t\right)e^{ipx}\right]\\
+ & =\left(i\slashed{\partial}-m\right)\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{-p^{0}}{\sqrt{\vec{p}^{2}+m^{2}}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
 \end{align*}
 
 \end_inset
@@ -9647,9 +9647,9 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 ，我们得到
 \begin_inset Formula 
 \begin{align*}
-\bra{0}T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \ket{0} & =\left(i\slashed{\partial}-m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[{\color{blue}-\theta\left(-t\right)e^{ipx}}{\color{brown}-\theta\left(t\right)e^{-ipx}}\right]\\
- & =\left(-i\slashed{\partial}+m\right)\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
+\bra{0}T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \ket{0} & =\left(i\slashed{\partial}-m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[{\color{blue}-\theta\left(-t\right)e^{ipx}}{\color{brown}-\theta\left(t\right)e^{-ipx}}\right]\\
+ & =\left(-i\slashed{\partial}+m\right)\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{ipx}
 \end{align*}
 
 \end_inset
@@ -9657,8 +9657,8 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 类似地，
 \begin_inset Formula 
 \begin{align*}
-{\color{blue}\bra{0}\psi\left(x\right)\bar{\psi}\left(0\right)\ket{0}} & {\color{blue}=\left(i\slashed{\partial}+m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\text{ 正粒子}}\\
-{\color{brown}\bra{0}\bar{\psi}\left(0\right)\psi\left(x\right)\ket{0}} & {\color{brown}=-\left(i\slashed{\partial}+m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{+ipx}\text{ 反粒子}}
+{\color{blue}\bra{0}\psi\left(x\right)\bar{\psi}\left(0\right)\ket{0}} & {\color{blue}=\left(i\slashed{\partial}+m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\text{ 正粒子}}\\
+{\color{brown}\bra{0}\bar{\psi}\left(0\right)\psi\left(x\right)\ket{0}} & {\color{brown}=-\left(i\slashed{\partial}+m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{+ipx}\text{ 反粒子}}
 \end{align*}
 
 \end_inset
@@ -9666,10 +9666,10 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 
 \begin_inset Formula 
 \begin{align*}
-\bra{0}T\left\{ \psi\left(x\right)\bar{\psi}\left(0\right)\right\} \ket{0} & =\left(i\slashed{\partial}+m\right)\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[{\color{blue}\theta\left(t\right)e^{-ipx}}{\color{brown}+\theta\left(-t\right)e^{+ipx}}\right]\\
- & =\left(i\slashed{\partial}+m\right)\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(-\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{ipx}\\
- & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{-ipx}
+\bra{0}T\left\{ \psi\left(x\right)\bar{\psi}\left(0\right)\right\} \ket{0} & =\left(i\slashed{\partial}+m\right)\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}\left[{\color{blue}\theta\left(t\right)e^{-ipx}}{\color{brown}+\theta\left(-t\right)e^{+ipx}}\right]\\
+ & =\left(i\slashed{\partial}+m\right)\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}e^{ipx}\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(-\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{ipx}\\
+ & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{-ipx}
 \end{align*}
 
 \end_inset
@@ -9689,8 +9689,8 @@ e^{-i\omega_{p}t}\theta\left(t\right) & =-\frac{i}{2\pi}\int_{-\infty}^{+\infty}
 \begin_inset Formula 
 \begin{align*}
 T\left\{ \bar{\psi}\left(x\right)\psi\left(0\right)\right\}  & =\theta\left(t\right)\bar{\psi}\left(x\right)\psi\left(0\right)-\theta\left(-t\right)\psi\left(0\right)\bar{\psi}\left(x\right)=-T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \\
-\bra{0}T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \ket{0} & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-ip\left(0-x\right)}}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(-\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-i\left(-p\right)\left(0-x\right)}}\\
-\bra{0}T\left\{ \psi\left(x\right)\bar{\psi}\left(0\right)\right\} \ket{0} & =\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-ip\left(x-0\right)}}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(-\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-i\left(-p\right)\left(x-0\right)}}
+\bra{0}T\left\{ \psi\left(0\right)\bar{\psi}\left(x\right)\right\} \ket{0} & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-ip\left(0-x\right)}}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(-\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-i\left(-p\right)\left(0-x\right)}}\\
+\bra{0}T\left\{ \psi\left(x\right)\bar{\psi}\left(0\right)\right\} \ket{0} & =\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-ip\left(x-0\right)}}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(-\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-i\left(-p\right)\left(x-0\right)}}
 \end{align*}
 
 \end_inset
@@ -10172,7 +10172,7 @@ end{tikzpicture}
 。这里的正负号，其实会影响每个顶点的动量守恒。也就是说，费米子内线的动量 方向和电流方向相同的时候，才有
 \begin_inset Formula 
 \[
-\bra{0}T\left\{ \psi\left(x\right)\bar{\psi}\left(y\right)\right\} \ket{0}=\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-ip\left(x-y\right)}}
+\bra{0}T\left\{ \psi\left(x\right)\bar{\psi}\left(y\right)\right\} \ket{0}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\slashed{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}{\color{red}e^{-ip\left(x-y\right)}}
 \]
 
 \end_inset
@@ -10259,8 +10259,8 @@ end{tikzpicture}
 最后，让我们追踪计算过程。我们发现，对于标量粒子：
 \begin_inset Formula 
 \begin{align*}
-\bra{0}\phi^{*}\left(x\right)\phi\left(0\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\\
-\bra{0}\phi\left(0\right)\phi^{*}\left(x\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{+ipx}
+\bra{0}\phi^{*}\left(x\right)\phi\left(0\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ipx}\\
+\bra{0}\phi\left(0\right)\phi^{*}\left(x\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{+ipx}
 \end{align*}
 
 \end_inset
@@ -10272,8 +10272,8 @@ end{tikzpicture}
 
 \begin_inset Formula 
 \begin{align*}
-\bra{0}\bar{\psi}\left(x\right)\psi\left(0\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{\slashed{p}}{2\omega_{p}}e^{-ipx}\\
-\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0} & =\int\frac{\dif^{3}p}{\left(2\pi\right)^{3}}\frac{\slashed{p}}{2\omega_{p}}e^{+ipx}
+\bra{0}\bar{\psi}\left(x\right)\psi\left(0\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{\slashed{p}}{2\omega_{p}}e^{-ipx}\\
+\bra{0}\psi\left(0\right)\bar{\psi}\left(x\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{\slashed{p}}{2\omega_{p}}e^{+ipx}
 \end{align*}
 
 \end_inset
@@ -10799,7 +10799,7 @@ literal "false"
 一般形式的圈积分，
 \begin_inset Formula 
 \[
-\int\dif^{4}k_{1}\cdots\dif^{4}k_{n}\frac{B}{A_{1}^{m_{1}}A_{1}^{m_{2}}\cdots A_{n}^{m_{n}}}
+\int\dd^{4}k_{1}\cdots\dd^{4}k_{n}\frac{B}{A_{1}^{m_{1}}A_{1}^{m_{2}}\cdots A_{n}^{m_{n}}}
 \]
 
 \end_inset
@@ -10827,8 +10827,8 @@ A_{i}=q_{i}^{2}-m_{i}^{2},
 的一个多项式。根据费曼参数化，把它变成：
 \begin_inset Formula 
 \begin{align*}
-\int\dif^{4}k_{1}\cdots\dif^{4}\frac{B}{A_{1}^{m_{1}}A_{1}^{m_{2}}\cdots A_{n}^{m_{n}}} & =\frac{\Gamma\left(m_{1}+\cdots+m_{n}\right)}{\Gamma\left(m_{1}\right)\cdots\Gamma\left(m_{n}\right)}\times\\
- & \int_{0}^{1}\dif x_{1}\cdots\dif x_{n}\delta\left(\sum x_{i}-1\right)\dif^{4}k_{1}\cdots\dif^{4}k_{n}\frac{\prod x_{i}^{m_{i}-1}}{\left[\sum x_{i}A_{i}\right]^{\sum m_{i}}}
+\int\dd^{4}k_{1}\cdots\dd^{4}\frac{B}{A_{1}^{m_{1}}A_{1}^{m_{2}}\cdots A_{n}^{m_{n}}} & =\frac{\Gamma\left(m_{1}+\cdots+m_{n}\right)}{\Gamma\left(m_{1}\right)\cdots\Gamma\left(m_{n}\right)}\times\\
+ & \int_{0}^{1}\dd x_{1}\cdots\dd x_{n}\delta\left(\sum x_{i}-1\right)\dd^{4}k_{1}\cdots\dd^{4}k_{n}\frac{\prod x_{i}^{m_{i}-1}}{\left[\sum x_{i}A_{i}\right]^{\sum m_{i}}}
 \end{align*}
 
 \end_inset
@@ -10899,8 +10899,8 @@ literal "false"
 
 \begin_inset Formula 
 \begin{align*}
-\int_{-\infty}^{+\infty}\dif k^{0}\,f\left(k^{0}\right) & =i\int_{-\infty}^{+\infty}\dif k^{0}\,f\left(ik^{0}\right)\\
-\int_{-\infty}^{+\infty}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}} & ={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dif^{4}k_{E}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
+\int_{-\infty}^{+\infty}\dd k^{0}\,f\left(k^{0}\right) & =i\int_{-\infty}^{+\infty}\dd k^{0}\,f\left(ik^{0}\right)\\
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}} & ={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dd^{4}k_{E}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
 \end{align*}
 
 \end_inset
@@ -10985,7 +10985,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 最简单的是
 \begin_inset Formula 
 \[
-\frac{1}{AB}=\int_{0}^{1}\dif x\frac{1}{\left[A+(B-A)x\right]^{2}}=\int_{0}^{1}\dif x\dif y\delta(x+y-1)\frac{1}{\left[xA+yB\right]^{2}}
+\frac{1}{AB}=\int_{0}^{1}\dd x\frac{1}{\left[A+(B-A)x\right]^{2}}=\int_{0}^{1}\dd x\dd y\delta(x+y-1)\frac{1}{\left[xA+yB\right]^{2}}
 \]
 
 \end_inset
@@ -11017,7 +11017,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 ，
 \begin_inset Formula 
 \[
-\frac{1}{A^{2}}\int_{0}^{1}\dif x\dif y\delta\left(x+y-1\right)
+\frac{1}{A^{2}}\int_{0}^{1}\dd x\dd y\delta\left(x+y-1\right)
 \]
 
 \end_inset
@@ -11065,13 +11065,13 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 ，所以
 \begin_inset Formula 
 \[
-\dif s=\sqrt{\abs{\frac{\partial x}{\partial x}}^{2}+\abs{\frac{\partial(1-x)}{\partial x}}^{2}}\dif x=\sqrt{2}\dif x
+\dd s=\sqrt{\abs{\frac{\partial x}{\partial x}}^{2}+\abs{\frac{\partial(1-x)}{\partial x}}^{2}}\dd x=\sqrt{2}\dd x
 \]
 
 \end_inset
 
 与原本低维的积分测度
-\begin_inset Formula $\dif x=\dif y$
+\begin_inset Formula $\dd x=\dd y$
 \end_inset
 
 相比，放大了
@@ -11125,7 +11125,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 函数的限制，可以写成 
 \begin_inset Formula 
 \[
-\int_{0}^{1}\dif x\int_{0}^{1}\dif y\int_{0}^{1}\dif z\cdots\delta\left(x+y+z+\cdots\right)\to\int_{0}^{1}\dif x\int_{0}^{1-x+\epsilon}\dif y\int_{0}^{1-x-y+\epsilon}\dif z\delta\left(x+y+z+\cdots\right)
+\int_{0}^{1}\dd x\int_{0}^{1}\dd y\int_{0}^{1}\dd z\cdots\delta\left(x+y+z+\cdots\right)\to\int_{0}^{1}\dd x\int_{0}^{1-x+\epsilon}\dd y\int_{0}^{1-x-y+\epsilon}\dd z\delta\left(x+y+z+\cdots\right)
 \]
 
 \end_inset
@@ -11141,7 +11141,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 。所以，一般有
 \begin_inset Formula 
 \[
-\frac{1}{A_{1}A_{2}\cdots A_{n}}=\int_{0}^{1}\dif x_{1}\cdots\dif x_{n}\delta\left(\sum x_{1}-1\right)\frac{\left(n-1\right)!}{\left[x_{1}A_{1}+\cdots+x_{n}A_{n}\right]^{n}}
+\frac{1}{A_{1}A_{2}\cdots A_{n}}=\int_{0}^{1}\dd x_{1}\cdots\dd x_{n}\delta\left(\sum x_{1}-1\right)\frac{\left(n-1\right)!}{\left[x_{1}A_{1}+\cdots+x_{n}A_{n}\right]^{n}}
 \]
 
 \end_inset
@@ -11149,7 +11149,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 类似地，
 \begin_inset Formula 
 \[
-\frac{1}{AB^{n}}=\int_{0}^{1}\dif x\dif y\delta\left(x+y-1\right)\frac{ny^{n-1}}{\left[xA+yB\right]^{n+1}}
+\frac{1}{AB^{n}}=\int_{0}^{1}\dd x\dd y\delta\left(x+y-1\right)\frac{ny^{n-1}}{\left[xA+yB\right]^{n+1}}
 \]
 
 \end_inset
@@ -11157,7 +11157,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 
 \begin_inset Formula 
 \[
-\frac{1}{ABC}=\int_{0}^{1}\dif x\dif y\dif z\delta\left(x+y+z-1\right)\frac{2}{\left[xA+yB+zC\right]^{3}}
+\frac{1}{ABC}=\int_{0}^{1}\dd x\dd y\dd z\delta\left(x+y+z-1\right)\frac{2}{\left[xA+yB+zC\right]^{3}}
 \]
 
 \end_inset
@@ -11165,9 +11165,9 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 通过这些公式，可以把传播子合并起来，
 \begin_inset Formula 
 \begin{align*}
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}}\frac{1}{\left(k-p\right)^{2}} & =\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\int_{0}^{1}\dif x\frac{1}{\left[k^{2}+x\left(\left(k-p\right)^{2}-k^{2}\right)\right]^{2}}\\
- & =\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\int_{0}^{1}\dif x\frac{1}{\left[k^{2}-2kxp+xp^{2}\right]^{2}}\\
- & =\int_{0}^{1}\dif x\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left[\left(k-xp\right)^{2}-\Delta\right]^{2}}
+\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}}\frac{1}{\left(k-p\right)^{2}} & =\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\int_{0}^{1}\dd x\frac{1}{\left[k^{2}+x\left(\left(k-p\right)^{2}-k^{2}\right)\right]^{2}}\\
+ & =\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\int_{0}^{1}\dd x\frac{1}{\left[k^{2}-2kxp+xp^{2}\right]^{2}}\\
+ & =\int_{0}^{1}\dd x\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left[\left(k-xp\right)^{2}-\Delta\right]^{2}}
 \end{align*}
 
 \end_inset
@@ -11191,7 +11191,7 @@ when
 peskin书给出了更一般的形式，
 \begin_inset Formula 
 \[
-\frac{1}{A_{1}^{m_{1}}A_{1}^{m_{2}}A_{n}^{m_{n}}}=\int_{0}^{1}\dif x_{1}\cdots\dif x_{n}\delta\left(\sum x_{i}-1\right)\frac{\prod x_{i}^{m_{i}-1}}{\left[\sum x_{i}A_{i}\right]^{\sum m_{i}}}\frac{\Gamma\left(m_{1}+\cdots+m_{n}\right)}{\Gamma\left(m_{1}\right)\cdots\Gamma\left(m_{n}\right)}
+\frac{1}{A_{1}^{m_{1}}A_{1}^{m_{2}}A_{n}^{m_{n}}}=\int_{0}^{1}\dd x_{1}\cdots\dd x_{n}\delta\left(\sum x_{i}-1\right)\frac{\prod x_{i}^{m_{i}-1}}{\left[\sum x_{i}A_{i}\right]^{\sum m_{i}}}\frac{\Gamma\left(m_{1}+\cdots+m_{n}\right)}{\Gamma\left(m_{1}\right)\cdots\Gamma\left(m_{n}\right)}
 \]
 
 \end_inset
@@ -11199,7 +11199,7 @@ peskin书给出了更一般的形式，
 比如，
 \begin_inset Formula 
 \[
-\frac{1}{A^{\alpha}B^{\beta}}=\int_{0}^{1}\dif z\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}
+\frac{1}{A^{\alpha}B^{\beta}}=\int_{0}^{1}\dd z\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}
 \]
 
 \end_inset
@@ -11207,7 +11207,7 @@ peskin书给出了更一般的形式，
 可以这么证明它，通过变量代换：
 \begin_inset Formula 
 \[
-z\equiv\frac{wA}{wA+\left(1-w\right)B},\quad\left(1-z\right)=\frac{\left(1-w\right)B}{wA+\left(1-w\right)B},\dif z-\frac{AB\dif w}{\left[wA+\left(1-w\right)B\right]^{2}}
+z\equiv\frac{wA}{wA+\left(1-w\right)B},\quad\left(1-z\right)=\frac{\left(1-w\right)B}{wA+\left(1-w\right)B},\dd z-\frac{AB\dd w}{\left[wA+\left(1-w\right)B\right]^{2}}
 \]
 
 \end_inset
@@ -11215,7 +11215,7 @@ z\equiv\frac{wA}{wA+\left(1-w\right)B},\quad\left(1-z\right)=\frac{\left(1-w\rig
 所以
 \begin_inset Formula 
 \[
-\int_{0}^{1}\dif w\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}=\frac{1}{A^{\alpha}B^{\beta}}\int_{0}^{1}\dif z\,z^{\alpha-1}\left(1-z\right)^{\beta-1}=\frac{1}{A^{\alpha}B^{\beta}}B\left(\alpha,\beta\right)
+\int_{0}^{1}\dd w\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}=\frac{1}{A^{\alpha}B^{\beta}}\int_{0}^{1}\dd z\,z^{\alpha-1}\left(1-z\right)^{\beta-1}=\frac{1}{A^{\alpha}B^{\beta}}B\left(\alpha,\beta\right)
 \]
 
 \end_inset
@@ -11234,25 +11234,25 @@ Schwinger 参数化
 
 \begin_layout Standard
 当
-\begin_inset Formula $\im A>0$
+\begin_inset Formula $\Im A>0$
 \end_inset
 
 时：
 \begin_inset Formula 
 \begin{equation}
-\frac{i}{A}=\int_{0}^{\infty}\dif se^{isA}\label{eq:b.5}
+\frac{i}{A}=\int_{0}^{\infty}\dd se^{isA}\label{eq:b.5}
 \end{equation}
 
 \end_inset
 
 
-\begin_inset Formula $\im A>0$
+\begin_inset Formula $\Im A>0$
 \end_inset
 
 可以保证积分是良好定义的。
 \begin_inset Formula 
 \[
-\left(\frac{i}{A}\right)^{2}=\int_{0}^{\infty}se^{isA}\dif s
+\left(\frac{i}{A}\right)^{2}=\int_{0}^{\infty}se^{isA}\dd s
 \]
 
 \end_inset
@@ -11264,8 +11264,8 @@ Schwinger 参数化
 次的结果是：
 \begin_inset Formula 
 \begin{align*}
- & \frac{i\left(-1\right)^{n-1}\left(n-1\right)!}{A^{n}}=\int_{0}^{\infty}\dif\alpha\left(i\alpha\right)^{n-1}e^{i\alpha A}\\
- & \frac{1}{A^{n}}=\frac{\left(-i\right)^{n}}{\Gamma\left(n\right)!}\int_{0}^{\infty}\dif\alpha\,\alpha^{n-1}e^{i\alpha A}
+ & \frac{i\left(-1\right)^{n-1}\left(n-1\right)!}{A^{n}}=\int_{0}^{\infty}\dd\alpha\left(i\alpha\right)^{n-1}e^{i\alpha A}\\
+ & \frac{1}{A^{n}}=\frac{\left(-i\right)^{n}}{\Gamma\left(n\right)!}\int_{0}^{\infty}\dd\alpha\,\alpha^{n-1}e^{i\alpha A}
 \end{align*}
 
 \end_inset
@@ -11283,17 +11283,17 @@ noprefix "false"
  暗示了
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{AB}=-\int_{0}^{\infty}\dif s\int_{0}^{\infty}\dif te^{isA+itB}\label{eq:b.7}
+\frac{1}{AB}=-\int_{0}^{\infty}\dd s\int_{0}^{\infty}\dd te^{isA+itB}\label{eq:b.7}
 \end{equation}
 
 \end_inset
 
 当
-\begin_inset Formula $\im A>0$
+\begin_inset Formula $\Im A>0$
 \end_inset
 
  和 
-\begin_inset Formula $\im B>0$
+\begin_inset Formula $\Im B>0$
 \end_inset
 
 (也就是用费曼传播子)。Schwinger 参数 
@@ -11346,8 +11346,8 @@ noprefix "false"
 变成
 \begin_inset Formula 
 \begin{align*}
-\frac{1}{AB} & =-\int_{0}^{\infty}\tau\dif\tau\int_{0}^{1}\dif xe^{i\tau\left(A+Bx-Ax\right)}\\
- & =\int_{0}^{1}\dif x\frac{1}{\left[A+\left(B-A\right)x\right]^{2}}
+\frac{1}{AB} & =-\int_{0}^{\infty}\tau\dd\tau\int_{0}^{1}\dd xe^{i\tau\left(A+Bx-Ax\right)}\\
+ & =\int_{0}^{1}\dd x\frac{1}{\left[A+\left(B-A\right)x\right]^{2}}
 \end{align*}
 
 \end_inset
@@ -11367,7 +11367,7 @@ noprefix "false"
 另外一些有用的等式为
 \begin_inset Formula 
 \[
-\frac{1}{A^{n}B^{m}}=\frac{\Gamma\left(n+m\right)}{\Gamma\left(n\right)\Gamma\left(m\right)}\int_{0}^{\infty}\dif s\frac{s^{m-1}}{\left(A+Bs\right)^{n+m}}
+\frac{1}{A^{n}B^{m}}=\frac{\Gamma\left(n+m\right)}{\Gamma\left(n\right)\Gamma\left(m\right)}\int_{0}^{\infty}\dd s\frac{s^{m-1}}{\left(A+Bs\right)^{n+m}}
 \]
 
 \end_inset
@@ -11375,7 +11375,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\frac{1}{AB}=\int_{0}^{\infty}\dif s\frac{1}{\left(A+Bs\right)^{2}}
+\frac{1}{AB}=\int_{0}^{\infty}\dd s\frac{1}{\left(A+Bs\right)^{2}}
 \]
 
 \end_inset
@@ -11399,7 +11399,7 @@ Wick 转动
 –loop 积分经常是
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}}
+\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}}
 \]
 
 \end_inset
@@ -11450,7 +11450,7 @@ Wick 转动
 。wick转动的最终效果是
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif k^{0}\,f\left(k^{0}\right)\to-\int_{+\infty i}^{-\infty i}\dif k^{0}\,f\left(k^{0}\right)=-i\int_{+\infty}^{-\infty}\dif\ell\,f\left(i\ell\right)
+\int_{-\infty}^{+\infty}\dd k^{0}\,f\left(k^{0}\right)\to-\int_{+\infty i}^{-\infty i}\dd k^{0}\,f\left(k^{0}\right)=-i\int_{+\infty}^{-\infty}\dd\ell\,f\left(i\ell\right)
 \]
 
 \end_inset
@@ -11460,8 +11460,8 @@ Wick 转动
 
 \begin_inset Formula 
 \begin{align*}
-\int_{-\infty}^{+\infty}\dif k^{0}\,f\left(k^{0}\right) & =i\int_{-\infty}^{+\infty}\dif k^{0}\,f\left(ik^{0}\right)\\
-\int_{-\infty}^{+\infty}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}} & ={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dif^{4}k_{E}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
+\int_{-\infty}^{+\infty}\dd k^{0}\,f\left(k^{0}\right) & =i\int_{-\infty}^{+\infty}\dd k^{0}\,f\left(ik^{0}\right)\\
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}} & ={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dd^{4}k_{E}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
 \end{align*}
 
 \end_inset
@@ -11481,13 +11481,13 @@ wick 转动的好处是，转动之后，离积分轴很近的极点一般已经
 
 \begin_layout Standard
 四维 Euclidean 空间的单位球体表面积为
-\begin_inset Formula $\int\dif\Omega_{4}=2\pi^{2}$
+\begin_inset Formula $\int\dd\Omega_{4}=2\pi^{2}$
 \end_inset
 
 。所以
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\dif^{4}k_{E}}{\left(2\pi\right)^{4}}f(k_{E}^{2})=\frac{1}{16\pi^{4}}\int\dif\Omega_{4}\int_{0}^{\infty}k_{E}^{3}\dif k_{E}f(k_{E}^{2})=\frac{1}{8\pi^{2}}\int_{0}^{\infty}k_{E}^{3}\dif k_{E}f(k_{E}^{2})
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k_{E}}{\left(2\pi\right)^{4}}f(k_{E}^{2})=\frac{1}{16\pi^{4}}\int\dd\Omega_{4}\int_{0}^{\infty}k_{E}^{3}\dd k_{E}f(k_{E}^{2})=\frac{1}{8\pi^{2}}\int_{0}^{\infty}k_{E}^{3}\dd k_{E}f(k_{E}^{2})
 \]
 
 \end_inset
@@ -11499,9 +11499,9 @@ Wick rotation 只是数学技巧，并没有物理内容，只要没有新的 po
 常用公式有：
 \begin_inset Formula 
 \begin{align*}
-\int_{-\infty}^{+\infty}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-\Delta+i\varepsilon\right)^{4}} & =\frac{-i}{48\pi^{2}}\frac{1}{\Delta}\\
-\int_{-\infty}^{+\infty}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{r}} & =\frac{i\left(-1\right)^{r}}{16\pi^{2}}\frac{1}{\left(r-1\right)\left(r-2\right)}\frac{1}{\Delta^{r-2}},r>2\\
-\int_{-\infty}^{+\infty}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-\Delta+i\varepsilon\right)^{r}} & =\frac{i\left(-1\right)^{r-1}}{16\pi^{2}}\frac{2}{\left(r-1\right)\left(r-2\right)\left(r-3\right)}\frac{1}{\Delta^{r-3}},r>3
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-\Delta+i\varepsilon\right)^{4}} & =\frac{-i}{48\pi^{2}}\frac{1}{\Delta}\\
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{r}} & =\frac{i\left(-1\right)^{r}}{16\pi^{2}}\frac{1}{\left(r-1\right)\left(r-2\right)}\frac{1}{\Delta^{r-2}},r>2\\
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-\Delta+i\varepsilon\right)^{r}} & =\frac{i\left(-1\right)^{r-1}}{16\pi^{2}}\frac{2}{\left(r-1\right)\left(r-2\right)\left(r-3\right)}\frac{1}{\Delta^{r-3}},r>3
 \end{align*}
 
 \end_inset
@@ -11517,7 +11517,7 @@ Wick rotation 只是数学技巧，并没有物理内容，只要没有新的 po
 现在最常用的是维数正规化。关键的观察是， 
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\dif^{d}k}{(2\pi)^{d}}\frac{1}{(k^{2}-\Delta+i\varepsilon)^{2}}
+\int_{-\infty}^{+\infty}\frac{\dd^{d}k}{(2\pi)^{d}}\frac{1}{(k^{2}-\Delta+i\varepsilon)^{2}}
 \]
 
 \end_inset
@@ -11569,7 +11569,7 @@ g^{\mu\nu}g_{\mu\nu}=d
 洛伦兹不变的相空间为
 \begin_inset Formula 
 \[
-\dif\Pi_{\text{LIPS}}\equiv(2\pi)^{d}\prod_{\text{final states }j}\frac{\dif^{d-1}p_{j}}{(2\pi)^{d-1}}\frac{1}{2E_{p_{j}}}\delta^{d}(\sum p)
+\dd\Pi_{\text{LIPS}}\equiv(2\pi)^{d}\prod_{\text{final states }j}\frac{\dd^{d-1}p_{j}}{(2\pi)^{d-1}}\frac{1}{2E_{p_{j}}}\delta^{d}(\sum p)
 \]
 
 \end_inset
@@ -11595,7 +11595,7 @@ g^{\mu\nu}g_{\mu\nu}=d
 \end_inset
 
 。旋量空间中的单位矩阵满足
-\begin_inset Formula $\tr\mathbbm{1}_{\alpha\beta}=4$
+\begin_inset Formula $\tr\symbb{1}_{\alpha\beta}=4$
 \end_inset
 
  as in four dimensions。在包含
@@ -11629,13 +11629,13 @@ g^{\mu\nu}g_{\mu\nu}=d
 的幅度，然后使用
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif^{d}k=\int\dif\Omega_{d}\int k^{d-1}\dif k
+\int_{-\infty}^{+\infty}\dd^{d}k=\int\dd\Omega_{d}\int k^{d-1}\dd k
 \]
 
 \end_inset
 
 其中，
-\begin_inset Formula $\dif\Omega_{d}$
+\begin_inset Formula $\dd\Omega_{d}$
 \end_inset
 
 是
@@ -11645,7 +11645,7 @@ g^{\mu\nu}g_{\mu\nu}=d
 维空间单维球体的微分立体角。明确写出来是，
 \begin_inset Formula 
 \begin{equation}
-\dif\Omega_{d}=\sin^{d-2}(\phi_{d-1})\dif\phi_{d-1}\sin^{d-3}(\phi_{d-2})\dif\phi_{d-2}\cdots\sin(\phi_{2})\dif\phi_{2}\dif\phi_{1}\label{eq:b.23}
+\dd\Omega_{d}=\sin^{d-2}(\phi_{d-1})\dd\phi_{d-1}\sin^{d-3}(\phi_{d-2})\dd\phi_{d-2}\cdots\sin(\phi_{2})\dd\phi_{2}\dd\phi_{1}\label{eq:b.23}
 \end{equation}
 
 \end_inset
@@ -11655,7 +11655,7 @@ g^{\mu\nu}g_{\mu\nu}=d
 \end_inset
 
 个角度坐标，
-\begin_inset Formula $\dif\phi_{1}$
+\begin_inset Formula $\dd\phi_{1}$
 \end_inset
 
 直接积分，从
@@ -11667,7 +11667,7 @@ g^{\mu\nu}g_{\mu\nu}=d
 \end_inset
 
 函数，
-\begin_inset Formula $\sin(\phi_{2})\dif\phi_{2}$
+\begin_inset Formula $\sin(\phi_{2})\dd\phi_{2}$
 \end_inset
 
 ，后面
@@ -11699,7 +11699,7 @@ th 轴的角度。令
 \end_inset
 
 。例如，
-\begin_inset Formula $\dif\Omega_{2}=\dif\phi$
+\begin_inset Formula $\dd\Omega_{2}=\dd\phi$
 \end_inset
 
 。对于
@@ -11717,7 +11717,7 @@ th 轴的角度。令
  giving
 \begin_inset Formula 
 \[
-\dif\Omega_{3}=\dif\cos\theta\dif\phi
+\dd\Omega_{3}=\dd\cos\theta\dd\phi
 \]
 
 \end_inset
@@ -11741,7 +11741,7 @@ th 轴的角度。令
 维表面积为
 \begin_inset Formula 
 \[
-\Omega_{2}=\int\dif\Omega_{2}=2\pi\text{ (circle) },\int\dif\Omega_{3}=4\pi\text{ sphere },\int\dif\Omega_{4}=2\pi^{2}\text{ three-sphere},\cdots,
+\Omega_{2}=\int\dd\Omega_{2}=2\pi\text{ (circle) },\int\dd\Omega_{3}=4\pi\text{ sphere },\int\dd\Omega_{4}=2\pi^{2}\text{ three-sphere},\cdots,
 \]
 
 \end_inset
@@ -11753,7 +11753,7 @@ th 轴的角度。令
 维球的体积为
 \begin_inset Formula 
 \[
-V_{d}=\Omega_{d}\int_{0}^{R}\dif r\,r^{d-1}=\Omega_{d}\frac{1}{d}R^{d}
+V_{d}=\Omega_{d}\int_{0}^{R}\dd r\,r^{d-1}=\Omega_{d}\frac{1}{d}R^{d}
 \]
 
 \end_inset
@@ -11769,9 +11769,9 @@ which are
 对于非整数维，表面积公式可以用类似高斯积分的方法求出：
 \begin_inset Formula 
 \begin{align*}
-(\sqrt{\pi})^{d} & =\left(\int\dif xe^{-x^{2}}\right)^{d}=\int\dif\Omega_{d}\int_{0}^{\infty}\dif r\,r^{d-1}e^{-r^{2}}\\
- & =\int\dif\Omega_{d}\int_{0}^{\infty}\frac{1}{2}(\dif r^{2})\,r^{2(\nicefrac{d}{2}-1)}e^{-r^{2}}\\
- & =\frac{1}{2}\Gamma(\frac{d}{2})\int\dif\Omega_{d}
+(\sqrt{\pi})^{d} & =\left(\int\dd xe^{-x^{2}}\right)^{d}=\int\dd\Omega_{d}\int_{0}^{\infty}\dd r\,r^{d-1}e^{-r^{2}}\\
+ & =\int\dd\Omega_{d}\int_{0}^{\infty}\frac{1}{2}(\dd r^{2})\,r^{2(\nicefrac{d}{2}-1)}e^{-r^{2}}\\
+ & =\frac{1}{2}\Gamma(\frac{d}{2})\int\dd\Omega_{d}
 \end{align*}
 
 \end_inset
@@ -11779,7 +11779,7 @@ which are
 所以
 \begin_inset Formula 
 \[
-\Omega_{d}=\int\dif\Omega_{d}=\frac{2\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}=2\frac{\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}=2\frac{\pi^{z}}{\Gamma(z)}@\frac{d}{2}
+\Omega_{d}=\int\dd\Omega_{d}=\frac{2\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}=2\frac{\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}=2\frac{\pi^{z}}{\Gamma(z)}@\frac{d}{2}
 \]
 
 \end_inset
@@ -11821,8 +11821,8 @@ noprefix "false"
  积出来：
 \begin_inset Formula 
 \begin{align*}
-\Omega_{d} & =2\pi\prod_{n=2}^{d-1}\left(\int_{0}^{\pi}\dif\phi_{n}\sin^{n-1}(\phi_{n})\right)=2\pi\prod_{n=2}^{d-1}\left(-\int_{1}^{-1}\dif\cos(\phi_{n})\left(1-\cos^{2}\phi_{n}\right)^{(n-2)/2}\right)\\
- & =2\pi\prod_{n=2}^{d-1}2\int_{0}^{1}\dif x\left(1-x^{2}\right)^{(n-2)/2}=2\pi\prod_{n=2}^{d-1}\int_{0}^{1}\dif x^{2}\left(1-x^{2}\right)^{(n-2)/2}x^{2(-1/2)}\\
+\Omega_{d} & =2\pi\prod_{n=2}^{d-1}\left(\int_{0}^{\pi}\dd\phi_{n}\sin^{n-1}(\phi_{n})\right)=2\pi\prod_{n=2}^{d-1}\left(-\int_{1}^{-1}\dd\cos(\phi_{n})\left(1-\cos^{2}\phi_{n}\right)^{(n-2)/2}\right)\\
+ & =2\pi\prod_{n=2}^{d-1}2\int_{0}^{1}\dd x\left(1-x^{2}\right)^{(n-2)/2}=2\pi\prod_{n=2}^{d-1}\int_{0}^{1}\dd x^{2}\left(1-x^{2}\right)^{(n-2)/2}x^{2(-1/2)}\\
  & =2\pi\prod_{n=2}^{d-1}\beta(\frac{n}{2},\frac{1}{2})=2\pi\prod_{n=2}^{d-1}\frac{\Gamma(\frac{n}{2})\Gamma(\frac{1}{2})}{\Gamma(\frac{n+1}{2})}\\
  & 2\pi\prod_{n=2}^{d-1}\sqrt{\pi}\left(\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n+1}{2})}\right)\\
  & =2\pi^{d/2}\frac{\Gamma(\frac{2}{2})}{\Gamma(\frac{3}{2})}\frac{\Gamma(\frac{3}{2})}{\Gamma(\frac{4}{2})}\cdots\frac{\Gamma(\frac{d-1}{2})}{\Gamma(\frac{d}{2})}=2\pi^{d/2}\frac{\Gamma(1)}{\Gamma(\frac{d}{2})}
@@ -11845,7 +11845,7 @@ Using
 上面的推导使用了公式
 \begin_inset Formula 
 \[
-\Gamma(z)=\int_{0}^{\infty}x^{z-1}e^{x}\dif x
+\Gamma(z)=\int_{0}^{\infty}x^{z-1}e^{x}\dd x
 \]
 
 \end_inset
@@ -11913,7 +11913,7 @@ Using
 –function
 \begin_inset Formula 
 \[
-\beta(a,b)=\int_{0}^{1}\dif x(1-x)^{a-1}x^{b-1}=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}
+\beta(a,b)=\int_{0}^{1}\dd x(1-x)^{a-1}x^{b-1}=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}
 \]
 
 \end_inset
@@ -11929,7 +11929,7 @@ Using
 是对称的，
 \begin_inset Formula 
 \[
-\beta(a,b)=\int_{0}^{1}\dif x(1-x)^{b-1}x^{a-1}\stackrel{y=1-x}{\Longrightarrow}\int_{1}^{0}-\dif y(y)^{b-1}(1-y)^{a-1}=\int_{0}^{1}\dif y(1-y)^{a-1}(y)^{b-1}
+\beta(a,b)=\int_{0}^{1}\dd x(1-x)^{b-1}x^{a-1}\stackrel{y=1-x}{\Longrightarrow}\int_{1}^{0}-\dd y(y)^{b-1}(1-y)^{a-1}=\int_{0}^{1}\dd y(1-y)^{a-1}(y)^{b-1}
 \]
 
 \end_inset
@@ -12065,10 +12065,10 @@ gamma函数展开
 利用以上这些关系，可以求解欧几里得空间的圈积分。利用 多项式代换：
 \begin_inset Formula 
 \begin{align*}
- & \int_{0}^{\infty}\dif k_{E}\frac{k_{E}^{a}}{(k_{E}^{2}+\Delta)^{b}}=\Delta^{\frac{a+1}{2}-b}\int_{0}^{\infty}\dif t\frac{t^{a}}{(t^{2}+1)^{b}},\\
- & \text{ with }x=\frac{1}{t^{2}+1},t=(1-x)^{1/2}x^{-1/2},\dif x=\frac{-2t\dif t}{(1+t^{2})^{2}}=-2(1-x)^{1/2}x^{3/2}\dif t\\
- & =\Delta^{\frac{a+1}{2}-b}\frac{1}{2}\int_{0}^{1}\dif x(1-x)^{-1/2}x^{-3/2}(1-x)t^{a/2}x^{-a/2}x^{b}\\
- & =\Delta^{\frac{a+1}{2}-b}\frac{1}{2}\int_{0}^{1}\dif t(1-x)^{(a-1)/2}x^{b-(a+3)/2}\\
+ & \int_{0}^{\infty}\dd k_{E}\frac{k_{E}^{a}}{(k_{E}^{2}+\Delta)^{b}}=\Delta^{\frac{a+1}{2}-b}\int_{0}^{\infty}\dd t\frac{t^{a}}{(t^{2}+1)^{b}},\\
+ & \text{ with }x=\frac{1}{t^{2}+1},t=(1-x)^{1/2}x^{-1/2},\dd x=\frac{-2t\dd t}{(1+t^{2})^{2}}=-2(1-x)^{1/2}x^{3/2}\dd t\\
+ & =\Delta^{\frac{a+1}{2}-b}\frac{1}{2}\int_{0}^{1}\dd x(1-x)^{-1/2}x^{-3/2}(1-x)t^{a/2}x^{-a/2}x^{b}\\
+ & =\Delta^{\frac{a+1}{2}-b}\frac{1}{2}\int_{0}^{1}\dd t(1-x)^{(a-1)/2}x^{b-(a+3)/2}\\
  & =\Delta^{\frac{a+1}{2}-b}\frac{\Gamma(\frac{a+1}{2})\Gamma(b-\frac{a+1}{2})}{2\Gamma(b)}
 \end{align*}
 
@@ -12079,13 +12079,13 @@ gamma函数展开
 
 \begin_layout Standard
 结合之前的
-\begin_inset Formula $\int_{-\infty}^{+\infty}\dif^{d}k=\int\dif\Omega_{d}\int k^{d-1}\dif k,\Omega_{d}=2\frac{\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}$
+\begin_inset Formula $\int_{-\infty}^{+\infty}\dd^{d}k=\int\dd\Omega_{d}\int k^{d-1}\dd k,\Omega_{d}=2\frac{\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}$
 \end_inset
 
 ，我们得到
 \begin_inset Formula 
 \begin{align*}
-\int\frac{\dif^{d}k}{(2\pi)^{d}}\frac{k^{2a}}{(k^{2}-\Delta)^{b}} & =i(-1)^{a-b}2\frac{\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}\frac{1}{(2\pi)^{d}}\Delta^{\frac{2a+d}{2}-b}\frac{\Gamma(\frac{2a+d}{2})\Gamma(b-\frac{2a+d}{2})}{2\Gamma(b)}\\
+\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{k^{2a}}{(k^{2}-\Delta)^{b}} & =i(-1)^{a-b}2\frac{\pi^{\nicefrac{d}{2}}}{\Gamma(\frac{d}{2})}\frac{1}{(2\pi)^{d}}\Delta^{\frac{2a+d}{2}-b}\frac{\Gamma(\frac{2a+d}{2})\Gamma(b-\frac{2a+d}{2})}{2\Gamma(b)}\\
  & =i(-1)^{a-b}\frac{1}{(4\pi)^{d/2}}\frac{1}{\Delta^{b-a-\frac{d}{2}}}\frac{\Gamma(a+\frac{d}{2})\Gamma(b-a-\frac{d}{2})}{\Gamma(b)\Gamma(\frac{d}{2})}
 \end{align*}
 
@@ -12096,10 +12096,10 @@ gamma函数展开
 
 \begin_inset Formula 
 \begin{align*}
-\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{1}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{2-\frac{d}{2}}}\Gamma\left(\frac{4-d}{2}\right)\\
-\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =-\frac{d}{2}\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{1-\frac{d}{2}}}\Gamma\left(\frac{2-d}{2}\right)\\
-\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{3}} & =\frac{d}{4}\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{2-\frac{d}{2}}}\Gamma\left(\frac{4-d}{2}\right)\\
-\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{1}{\left(k^{2}-\Delta+i\epsilon\right)^{3}} & =\frac{-i}{2\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{3-\frac{d}{2}}}\Gamma\left(\frac{6-d}{2}\right)
+\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{1}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{2-\frac{d}{2}}}\Gamma\left(\frac{4-d}{2}\right)\\
+\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =-\frac{d}{2}\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{1-\frac{d}{2}}}\Gamma\left(\frac{2-d}{2}\right)\\
+\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{3}} & =\frac{d}{4}\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{2-\frac{d}{2}}}\Gamma\left(\frac{4-d}{2}\right)\\
+\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{1}{\left(k^{2}-\Delta+i\epsilon\right)^{3}} & =\frac{-i}{2\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{3-\frac{d}{2}}}\Gamma\left(\frac{6-d}{2}\right)
 \end{align*}
 
 \end_inset
@@ -12148,11 +12148,11 @@ gamma函数展开
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\int_{0}^{\infty}\dif k_{E}\frac{k_{E}^{a}}{(k_{E}^{2}+\Delta)^{b}} & =\int_{0}^{\infty}\dif\Delta^{1/2}t\frac{\Delta^{a/2}t^{a}}{\Delta^{b}(t^{2}+1)^{b}}=\Delta^{\frac{a+1}{2}-b}\int_{0}^{\infty}\dif t\frac{t^{a}}{(t^{2}+1)^{b}}\\
- & =\Delta^{\frac{a+1}{2}-b}\int_{0}^{\infty}\dif t\frac{t^{a}}{(t^{2}+1)^{b}}{\color{red}\text{ with }t=\tan kx,\dif t=\dif kx/\cos^{2}kx},k=\frac{\pi}{2}\\
- & =\Delta^{\frac{a+1}{2}-b}\int_{0}^{1}\dif kx(\sin kx)^{a}(\cos kx)^{2b-2-a}\\
- & =\frac{1}{2}\Delta^{\frac{a+1}{2}-b}\int_{0}^{1}\left(\dif\cos(kx)^{2}\right)(\sin kx)^{a-1}(\cos kx)^{2b-3-a}\\
- & =\frac{1}{2}\Delta^{\frac{a+1}{2}-b}\int_{0}^{1}\left(\dif\cos(kx)^{2}\right)\left(1-\cos(kx)^{2}\right)^{(a-1)/2}(\cos kx)^{b-\frac{a+3}{2}}\\
+\int_{0}^{\infty}\dd k_{E}\frac{k_{E}^{a}}{(k_{E}^{2}+\Delta)^{b}} & =\int_{0}^{\infty}\dd\Delta^{1/2}t\frac{\Delta^{a/2}t^{a}}{\Delta^{b}(t^{2}+1)^{b}}=\Delta^{\frac{a+1}{2}-b}\int_{0}^{\infty}\dd t\frac{t^{a}}{(t^{2}+1)^{b}}\\
+ & =\Delta^{\frac{a+1}{2}-b}\int_{0}^{\infty}\dd t\frac{t^{a}}{(t^{2}+1)^{b}}{\color{red}\text{ with }t=\tan kx,\dd t=\dd kx/\cos^{2}kx},k=\frac{\pi}{2}\\
+ & =\Delta^{\frac{a+1}{2}-b}\int_{0}^{1}\dd kx(\sin kx)^{a}(\cos kx)^{2b-2-a}\\
+ & =\frac{1}{2}\Delta^{\frac{a+1}{2}-b}\int_{0}^{1}\left(\dd\cos(kx)^{2}\right)(\sin kx)^{a-1}(\cos kx)^{2b-3-a}\\
+ & =\frac{1}{2}\Delta^{\frac{a+1}{2}-b}\int_{0}^{1}\left(\dd\cos(kx)^{2}\right)\left(1-\cos(kx)^{2}\right)^{(a-1)/2}(\cos kx)^{b-\frac{a+3}{2}}\\
  & =\frac{1}{2}\Delta^{\frac{a+1}{2}-b}\beta(\frac{a+1}{2},b-\frac{a+1}{2})\\
  & =\Delta^{\frac{a+1}{2}-b}\frac{\Gamma(\frac{a+1}{2})\Gamma(b-\frac{a+1}{2})}{2\Gamma(b)}
 \end{align*}
@@ -12302,7 +12302,7 @@ noprefix "false"
 因子把圈积分修改成
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{e^{2}}{(k^{2}-\Delta+i\epsilon)^{2}}\to\mu^{4-d}\int\frac{\dif^{d}k}{(2\pi)^{d}}\frac{e^{2}}{(k^{2}-\Delta+i\varepsilon)^{2}}
+\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{e^{2}}{(k^{2}-\Delta+i\epsilon)^{2}}\to\mu^{4-d}\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{e^{2}}{(k^{2}-\Delta+i\varepsilon)^{2}}
 \]
 
 \end_inset
@@ -12354,7 +12354,7 @@ noprefix "false"
 因子，积分的对数发散可以写成
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{e^{2}}{(k^{2}-\Delta+i\varepsilon)^{2}}\to\mu^{4-d}\frac{ie^{2}}{(4\pi)^{d/2}}\Gamma(\frac{4-d}{2})(\frac{1}{\Delta})^{2-\frac{d}{2}}
+\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{e^{2}}{(k^{2}-\Delta+i\varepsilon)^{2}}\to\mu^{4-d}\frac{ie^{2}}{(4\pi)^{d/2}}\Gamma(\frac{4-d}{2})(\frac{1}{\Delta})^{2-\frac{d}{2}}
 \]
 
 \end_inset
@@ -12391,7 +12391,7 @@ noprefix "false"
 \end_inset
 
 来自于积分
-\begin_inset Formula $\int\frac{\dif^{d}k}{k^{4}}$
+\begin_inset Formula $\int\frac{\dd^{d}k}{k^{4}}$
 \end_inset
 
 ，
@@ -12425,7 +12425,7 @@ noprefix "false"
 从而可以把上面的表达式缩写为
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{e^{2}}{(k^{2}-\Delta+i\varepsilon)^{2}}\to\frac{ie^{2}}{16\pi^{2}}\left[\frac{2}{\varepsilon}+\ln\frac{\tilde{\mu}^{2}}{\Delta}+\mathcal{O}(\varepsilon)\right]
+\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{e^{2}}{(k^{2}-\Delta+i\varepsilon)^{2}}\to\frac{ie^{2}}{16\pi^{2}}\left[\frac{2}{\varepsilon}+\ln\frac{\tilde{\mu}^{2}}{\Delta}+\mathcal{O}(\varepsilon)\right]
 \]
 
 \end_inset
@@ -12447,7 +12447,7 @@ noprefix "false"
 
 \begin_layout Standard
 维数正规化刻画了积分在高能量时候的发散程度，通过正规化结果的解析性质，而不是 cutoff scale 的幂次。比如，积分
-\begin_inset Formula $\int\frac{\dif^{4}k}{(k^{2}-\Delta)^{2}}\sim\Gamma(\frac{4-d}{2})$
+\begin_inset Formula $\int\frac{\dd^{4}k}{(k^{2}-\Delta)^{2}}\sim\Gamma(\frac{4-d}{2})$
 \end_inset
 
 在
@@ -12460,7 +12460,7 @@ noprefix "false"
 
 的时候没有额外的 poles.
  一个二次发散的积分，比如
-\begin_inset Formula $\int\frac{\dif^{4}k}{k^{2}-\Delta}$
+\begin_inset Formula $\int\frac{\dd^{4}k}{k^{2}-\Delta}$
 \end_inset
 
 ，在
@@ -12468,7 +12468,7 @@ noprefix "false"
 \end_inset
 
 维空间对应的是
-\begin_inset Formula $\int\frac{\dif^{4}k}{(k^{2}-\Delta)}\sim\Gamma(\frac{2-d}{2})$
+\begin_inset Formula $\int\frac{\dd^{4}k}{(k^{2}-\Delta)}\sim\Gamma(\frac{2-d}{2})$
 \end_inset
 
 .将结果在
@@ -12500,7 +12500,7 @@ noprefix "false"
 
 \begin_layout Standard
 维数正规化也可以用来正规化 IR-发散的积分。比如，
-\begin_inset Formula $\int\frac{\dif^{4}k}{(k^{2}-m^{2})k^{4}}$
+\begin_inset Formula $\int\frac{\dd^{4}k}{(k^{2}-m^{2})k^{4}}$
 \end_inset
 
  是 IR 发散的，当
@@ -12526,7 +12526,7 @@ noprefix "false"
 有时候在使用维数正规化的时候，我们会遇到即 UV 又 IR 发散的积分；比如，无标度积分
 \begin_inset Formula 
 \[
-\int\frac{\dif^{d}k}{k^{4}}\sim i(-1)^{2}\int_{-\infty}^{\infty}\frac{\dif^{d}k_{E}}{k_{E}^{4}}=\frac{i}{(4\pi)^{d/2}}\frac{1}{\varepsilon_{\text{IR}}^{2-\frac{d}{2}}}\Gamma(\frac{4-d}{2})
+\int\frac{\dd^{d}k}{k^{4}}\sim i(-1)^{2}\int_{-\infty}^{\infty}\frac{\dd^{d}k_{E}}{k_{E}^{4}}=\frac{i}{(4\pi)^{d/2}}\frac{1}{\varepsilon_{\text{IR}}^{2-\frac{d}{2}}}\Gamma(\frac{4-d}{2})
 \]
 
 \end_inset
@@ -12538,7 +12538,7 @@ noprefix "false"
 都不收敛。然而，计算这样的积分也是有用的。为了能继续下去，我们引入一个任意的能标来把欧几里得空间的 UV and IR 能区分开：
 \begin_inset Formula 
 \begin{align*}
-\int_{-\infty}^{\infty}\frac{\dif^{d}k_{E}}{k_{E}^{4}} & =\Omega_{d}\int_{0}^{\Lambda}\dif k_{E}k_{E}^{d-5}+\Omega_{d}\int_{\Lambda}^{\infty}\dif k_{E}k_{E}^{d-5}\\
+\int_{-\infty}^{\infty}\frac{\dd^{d}k_{E}}{k_{E}^{4}} & =\Omega_{d}\int_{0}^{\Lambda}\dd k_{E}k_{E}^{d-5}+\Omega_{d}\int_{\Lambda}^{\infty}\dd k_{E}k_{E}^{d-5}\\
  & ={\color{red}\Omega_{d}\left(\ln(\infty)-\ln(\epsilon)\right)=\Omega_{d}\left(\ln(\infty/\epsilon)\right)}\\
  & =\Omega_{d}\left(\frac{\Lambda^{-\varepsilon_{\text{IR}}}}{-\varepsilon_{\text{IR}}}-\frac{0^{-\varepsilon_{\text{IR}}}}{-\varepsilon_{\text{IR}}}\right)+\Omega_{d}\left(\frac{\Lambda^{-\varepsilon_{\text{UV}}}}{\varepsilon_{\text{UV}}}-\frac{\infty^{-\varepsilon_{\text{UV}}}}{\varepsilon_{\text{UV}}}\right)\\
  & =\Omega_{d}\left(\ln\Lambda-\frac{1}{\varepsilon_{\text{IR}}}\right)+\Omega_{d}\left(\frac{1}{\varepsilon_{\text{UV}}}-\ln\Lambda\right)
@@ -12579,7 +12579,7 @@ noprefix "false"
 \end_inset
 
 。 一个更简单的理由是，积分中不存在含有质量量纲的量，所以无标度积分如
-\begin_inset Formula $\int\frac{\dif^{d}k}{k^{4}}$
+\begin_inset Formula $\int\frac{\dd^{d}k}{k^{4}}$
 \end_inset
 
 在
@@ -12593,7 +12593,7 @@ noprefix "false"
 通常我们只对积分UV发散的部分感兴趣，无标度积分中的UV发散部分为
 \begin_inset Formula 
 \[
-\left[\int\frac{\dif^{d}k}{(2\pi)^{d}}\frac{1}{k^{4}}\right]_{\text{UV-div}}=i\frac{\Omega_{d}}{(2\pi)^{d}}\frac{1}{\varepsilon_{\text{UV}}}=i\frac{2}{(2\pi)^{d}}\frac{\pi^{d/2}}{\Gamma(d/2)}\frac{1}{\varepsilon_{\text{UV}}}=\frac{i}{8\pi^{2}}\frac{1}{\varepsilon_{\text{UV}}}
+\left[\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{1}{k^{4}}\right]_{\text{UV-div}}=i\frac{\Omega_{d}}{(2\pi)^{d}}\frac{1}{\varepsilon_{\text{UV}}}=i\frac{2}{(2\pi)^{d}}\frac{\pi^{d/2}}{\Gamma(d/2)}\frac{1}{\varepsilon_{\text{UV}}}=\frac{i}{8\pi^{2}}\frac{1}{\varepsilon_{\text{UV}}}
 \]
 
 \end_inset
@@ -12629,7 +12629,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-F^{\mu\nu}(\Delta)=\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\Delta)^{n}}
+F^{\mu\nu}(\Delta)=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\Delta)^{n}}
 \]
 
 \end_inset
@@ -12669,7 +12669,7 @@ F^{\mu\nu}(\Delta)=\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-
 。所以
 \begin_inset Formula 
 \[
-\int\frac{\dif^{d}k}{(2\pi)^{d}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\Delta)^{n}}=\frac{1}{d}g^{\mu\nu}\int\frac{\dif^{d}k}{(2\pi)^{d}}\frac{k^{2}}{(k^{2}-\Delta)^{n}}
+\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\Delta)^{n}}=\frac{1}{d}g^{\mu\nu}\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{k^{2}}{(k^{2}-\Delta)^{n}}
 \]
 
 \end_inset
@@ -12681,7 +12681,7 @@ F^{\mu\nu}(\Delta)=\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-
 因子，比如
 \begin_inset Formula 
 \[
-F(p^{2})=\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{k\cdot p}{\left(k^{2}-p^{2}\right)^{4}}
+F(p^{2})=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k\cdot p}{\left(k^{2}-p^{2}\right)^{4}}
 \]
 
 \end_inset
@@ -12722,7 +12722,7 @@ literal "true"
 伽马函数的四种定义：
 \begin_inset Formula 
 \[
-\Gamma(z)=\int_{0}^{\infty}x^{z-1}e^{-x}\dif x
+\Gamma(z)=\int_{0}^{\infty}x^{z-1}e^{-x}\dd x
 \]
 
 \end_inset
@@ -12736,7 +12736,7 @@ literal "true"
 \end_inset
 
 时跟
-\begin_inset Formula $\int_{0}^{\infty}x^{z-1}e^{-x}\dif x$
+\begin_inset Formula $\int_{0}^{\infty}x^{z-1}e^{-x}\dd x$
 \end_inset
 
 相同，在
@@ -12853,8 +12853,8 @@ Digamma 函数
 
 \begin_inset Formula 
 \begin{align*}
-\Gamma^{\prime}(z) & =\int_{0}^{\infty}x^{z-1}\ln(x)e^{-x}\dif x\\
-\Gamma^{\prime}(1) & =\int_{0}^{\infty}\ln(x)e^{-x}\dif x=-\gamma
+\Gamma^{\prime}(z) & =\int_{0}^{\infty}x^{z-1}\ln(x)e^{-x}\dd x\\
+\Gamma^{\prime}(1) & =\int_{0}^{\infty}\ln(x)e^{-x}\dd x=-\gamma
 \end{align*}
 
 \end_inset
@@ -12862,7 +12862,7 @@ Digamma 函数
 Digamma函数的积分表达式
 \begin_inset Formula 
 \begin{align*}
-\psi(z) & =\frac{\Gamma^{\prime}(z)}{\Gamma(z)}=-\gamma+\int_{0}^{1}\frac{1-x^{z-1}}{1-x}\dif x
+\psi(z) & =\frac{\Gamma^{\prime}(z)}{\Gamma(z)}=-\gamma+\int_{0}^{1}\frac{1-x^{z-1}}{1-x}\dd x
 \end{align*}
 
 \end_inset
@@ -12902,7 +12902,7 @@ x=g(y)=g(f(x))
 所以
 \begin_inset Formula 
 \begin{align*}
-\dif x & =g^{\prime}(y)f^{\prime}(x)\dif x\\
+\dd x & =g^{\prime}(y)f^{\prime}(x)\dd x\\
 g^{\prime}(y)f^{\prime}(x) & =1\\
 g^{\prime}(y) & =\frac{1}{f^{\prime}(x)}\\
 g^{\prime}(y) & =\frac{1}{f^{\prime}(g(y))}
