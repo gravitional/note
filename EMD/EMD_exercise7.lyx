@@ -194,9 +194,9 @@ yangmy@ihep.ac.cn
 status collapsed
 
 \begin_layout Plain Layout
-tea = Import["b22.jpg"]; teb = Lighter[ Blur[SetAlphaChanne
-l[ ImageResize[ ImageCollage[{tea, tea, tea}, Method -> "Rows"], {720, 500}],
- 0.22], 100], .0] Export["b2.png", teb]
+tea = Import["b22.jpg"]; teb = Lighter[ Blur[SetAlphaChannel[ ImageResize[
+ ImageCollage[{tea, tea, tea}, Method -> "Rows"], {720, 500}], 0.22], 100],
+ .0] Export["b2.png", teb]
 \end_layout
 
 \end_inset
@@ -467,7 +467,7 @@ c_{\beta}c_{\phi}s_{\alpha}+c_{\alpha}s_{\phi} & c_{\alpha}c_{\phi}-c_{\beta}s_{
 \begin_inset Formula $\left(\beta_{x},\beta_{y},\beta_{z}\right)$
 \end_inset
 
-方向的欧拉角是：
+方向的欧拉角是，
 \begin_inset Formula 
 \[
 \left(\arctan\frac{\beta_{y}}{\beta_{x}},-\frac{\pi}{2}+\arccos\frac{\beta_{z}}{\beta},0\right)
@@ -479,7 +479,15 @@ c_{\beta}c_{\phi}s_{\alpha}+c_{\alpha}s_{\phi} & c_{\alpha}c_{\phi}-c_{\beta}s_{
 \begin_inset Formula $y$
 \end_inset
 
-轴旋转的正方向朝下。所以一般洛伦兹变换的形式为：
+轴旋转的正方向朝下，
+\begin_inset Formula $\theta=0$
+\end_inset
+
+时，
+\begin_inset Formula $\beta_{z}=\beta$
+\end_inset
+
+。所以一般洛伦兹变换的形式为：
 \begin_inset Formula 
 \[
 \mathcal{U}\left(\arctan\frac{\beta_{y}}{\beta_{x}},-\frac{\pi}{2}+\arccos\frac{\beta_{z}}{\beta},0\right)\;\Lambda\left(v\right)\;\mathcal{U}\left(0,\frac{\pi}{2}-\arccos\frac{\beta_{z}}{\beta},-\arctan\frac{\beta_{y}}{\beta_{x}}\right)
@@ -576,6 +584,133 @@ LatexCommand href
 name "计算程序"
 target "https://weibo.com/3294132992/KneQZxPBs"
 literal "false"
+
+\end_inset
+
+
+\bar default
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+rt[
+\backslash
+[Alpha]
+\backslash
+[Beta]
+\backslash
+[Gamma]_] := PadLeft[EulerMatrix[
+\backslash
+[Alpha]
+\backslash
+[Beta]
+\backslash
+[Gamma]], {4, 4}, 0] + SparseArray[{{1, 1} -> 1}, {4, 4}]; Simplify[( rt[{ArcTan
+[ Subscript[
+\backslash
+[Beta], y]/Subscript[
+\backslash
+[Beta], x]], -(
+\backslash
+[Pi]/2) + ArcCos[Subscript[
+\backslash
+[Beta], z]/
+\backslash
+[Beta]], 0}] .
+ ({ {
+\backslash
+[Gamma], +
+\backslash
+[Gamma]*
+\backslash
+[Beta], 0, 0}, {+
+\backslash
+[Gamma]*
+\backslash
+[Beta], 
+\backslash
+[Gamma], 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1} } ) .
+ rt[{0, 
+\backslash
+[Pi]/2 - ArcCos[Subscript[
+\backslash
+[Beta], z]/
+\backslash
+[Beta]], -ArcTan[ Subscript[
+\backslash
+[Beta], y]/Subscript[
+\backslash
+[Beta], x]]}] ) /.
+ 
+\backslash
+[Beta]^2 -> (Subscript[
+\backslash
+[Beta], x]^2 + Subscript[
+\backslash
+[Beta], y]^2 + 
+\backslash
+!
+\backslash
+(
+\backslash
+*SubsuperscriptBox[
+\backslash
+(
+\backslash
+[Beta]
+\backslash
+), 
+\backslash
+(z
+\backslash
+), 
+\backslash
+(2
+\backslash
+)]
+\backslash
+)), Assumptions -> {Subscript[
+\backslash
+[Beta], x] > 0, Subscript[
+\backslash
+[Beta], y] > 0, Subscript[
+\backslash
+[Beta], z] > 0, 
+\backslash
+[Beta] > 0, 
+\backslash
+[Gamma] > 1} ] /.
+ 
+\backslash
+[Beta]^2 -> (Subscript[
+\backslash
+[Beta], x]^2 + Subscript[
+\backslash
+[Beta], y]^2 + 
+\backslash
+!
+\backslash
+(
+\backslash
+*SubsuperscriptBox[
+\backslash
+(
+\backslash
+[Beta]
+\backslash
+), 
+\backslash
+(z
+\backslash
+), 
+\backslash
+(2
+\backslash
+)]
+\backslash
+)) // Simplify // TableForm
+\end_layout
 
 \end_inset
 

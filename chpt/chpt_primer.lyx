@@ -91,9 +91,9 @@
 %%++++++++++++++++++++ 
 %\DeclarePairedDelimiter\abs{\lvert}{\rvert}
 %\DeclareMathOperator{\Tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\re}{Re}
 % * 号版本可以把上下标放在符号的正上方/正下方
-\DeclareMathOperator{\im}{Im}
+%\DeclareMathOperator{\im}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
@@ -5175,6 +5175,13 @@ f_{n}(\vec{y},\vec{p})=\bra{u}\mathscr{H}(\vec{y},0)\ket{n,\vec{p}}\bra{n,\vec{p
 
 \begin_layout Section
 全局，连续，非阿贝尔对称性的自发破缺
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:2.2"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5848,8 +5855,546 @@ noprefix "false"
 有效场论
 \end_layout
 
+\begin_layout Standard
+在详细讨论手征微扰论（ChPT）之前，我们想简要介绍下有效场理论方法的一些主要特点，因为它在物理学中有着广泛的应用。详细的介绍和回顾可以在参考文献中找到
+ [29, 45, 48, 58, 66, 74, 78, 82]。 有效场论（EFT）是对一些底层的、更基本理论的低能近似。我们的意思是，EFT是个有效近似，
+其能量与基础理论的某个能标 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ 相比很小。
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ 的具体数值取决于所研究的理论，实际上可能包含几个这样的能标 
+\begin_inset Formula $\Lambda_{1}<\Lambda_{2}<\cdots$
+\end_inset
+
+。EFT 的基本思想是，我们不需要知道基础理论在能量
+\begin_inset Formula $\Lambda$
+\end_inset
+
+之上的细节，即可在我们感兴趣的能量区域找到有用的物理描述。
+\end_layout
+
+\begin_layout Standard
+EFT 使用适合于感兴趣的特定低能区域的自由度。例如，我们可以忽略那些太重的，在低能不容易产生的自由度，这可以大大简化计算。事实上，自由度可以与基础理论中的自由
+度完全不同：我们将使用赝标量八重态
+\begin_inset Formula $\left(\pi,K,\eta\right)$
+\end_inset
+
+和
+\begin_inset Formula $\frac{1}{2}^{+}$
+\end_inset
+
+八重态重子
+\begin_inset Formula $\left(p,n,\Sigma,\Xi,\Lambda\right)$
+\end_inset
+
+，而不是更基本的夸克和胶子，作为强子物理中低能过程的自由度。
+\end_layout
+
+\begin_layout Standard
+使用不同的自由度，我们必须保证：在EFT中计算的可观测量，与基础理论的可观测量相关。这是通过使用与基础理论的对称性相一致的最一般的拉氏量来实现的，因为这产生了“
+与解析性，微扰幺正性，集团分解和假定的对称性原则相一致的最一般的可能的
+\begin_inset Formula $S$
+\end_inset
+
+矩阵”[100]。由于我们使用的是最一般的拉氏量，它实际上由无数项组成，每个项都有自己的系数，即所谓的低能常数（LECs）。显然，如果没有某种近似的方法，这不是
+一个非常有用的方案，以避免必须计算对每个物理可测量的无穷多项的贡献。解决方案在于两个限制：首先，我们只要求结果具有有限的精确度，即允许我们的结果与基础理论的结果
+相差特定的（小）量；其次，我们将自己限制在某个能区，这意味着 EFT 的适用范围有限。然后，EFT 被用来计算按
+\begin_inset Formula $p/\Lambda$
+\end_inset
+
+展开的物理可测量，其中
+\begin_inset Formula $p$
+\end_inset
+
+泛指小于基础理论相关能标
+\begin_inset Formula $\Lambda$
+\end_inset
+
+的能量、动量或质量。只要
+\begin_inset Formula $p\ll\Lambda$
+\end_inset
+
+，在展开中只有有限项对特定的精度有贡献，这对应于最一般拉氏量中的有限项。我们将在 Sect.3.4.9 中看到例子，说明当考虑温伯格的幂次计数时，如何确定囊括哪些项。
+\end_layout
+
+\begin_layout Standard
+如上所述，拉氏量中的项受到基础理论对称性的约束。这解释了我们在前两章中对QCD对称性的关注。在下文中，我们将研究这些对称性对于，手征对称性自发破缺的戈德斯通玻色
+子的相互作用的影响。虽然对称性于拉氏量的结构施加了条件，但它们
+\color blue
+ 并不限制
+\color inherit
+ LECs。原则上，这些应该是可以从基础理论中计算的。在无法计算的情况下，例如，如果基础理论不知道或者无法求解，可以用数据来拟合。一旦LECs被确定，有效理论就
+具备了预测能力。
+\end_layout
+
+\begin_layout Standard
+从技术上讲，EFT在传统意义上是不可重正化（non-renormalizable），因为随着精度的提高，需要囊括越来越多的项。然而，只要考虑到对称性允许的所有项
+，在 
+\begin_inset Formula $p/\Lambda$
+\end_inset
+
+ 的任意给定阶的计算中出现的发散，可以通过重定义 EFT 拉氏量的场和参数来重正化[101]。
+\end_layout
+
+\begin_layout Standard
+有效理论最著名的例子之一是费米的
+\begin_inset Formula $\beta$
+\end_inset
+
+衰变理论。事实上，它可以被视为EFT的领头阶，其中重的规范玻色子被 “积掉”。在标准模型中，中子的
+\begin_inset Formula $\beta$
+\end_inset
+
+衰变
+\begin_inset Formula $n\to pe^{-}\overline{\nu}_{e}$
+\end_inset
+
+ 是通过质量为
+\begin_inset Formula $M_{W}=\SI{80}{\GeV}$
+\end_inset
+
+ 的
+\begin_inset Formula $W$
+\end_inset
+
+中间玻色子描述的：对于动量转移
+\begin_inset Formula $q\ll M_{W}$
+\end_inset
+
+，
+\begin_inset Formula $W$
+\end_inset
+
+ 玻色子的传播子可以用小量
+\begin_inset Formula $q/M_{W}$
+\end_inset
+
+的最低阶展开代替，用符号表示就是，
+\begin_inset Formula 
+\[
+\frac{1}{q^{2}-M_{W}^{2}}\to-\frac{1}{M_{W}^{2}},
+\]
+
+\end_inset
+
+导致费米理论的四费米子接触相互作用。这个低能理论包括上面讨论的EFT的所有成分：自由度与基础理论的自由度不同，因为
+\begin_inset Formula $W$
+\end_inset
+
+玻色子被排除在外，底层能标
+\begin_inset Formula $\Lambda$
+\end_inset
+
+即质量
+\begin_inset Formula $M_{W}$
+\end_inset
+
+，而且适用范围限于动量转移
+\begin_inset Formula $q\ll M_{W}$
+\end_inset
+
+：它在传统意义上也是非可重正的，因为描述四费米子耦合的费米常数
+\begin_inset Formula $G_{F}$
+\end_inset
+
+具有量纲
+\begin_inset Formula $\text{能量}^{-2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+让我们更详细地考虑一个类似的,但简化的例子。我们选择具有两个大质量标量自由度的玩具模型，
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+该玩具模型仅用于教学目的。作为一个（量子）场论，它是不 自洽的，因为能量没有下界。
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\mathcal{L} & =\mathcal{L}_{0}+\mathcal{L}_{\text{int}},\nonumber \\
+\mathcal{L}_{0} & =\frac{1}{2}\left(\partial_{\mu}\phi\partial^{\mu}\phi-M^{2}\phi^{2}\right)+\frac{1}{2}\left(\partial_{\mu}\varphi\partial^{\mu}\varphi-m^{2}\varphi^{2}\right),\label{eq:3.1}\\
+\mathcal{L}_{\text{int}} & =-\frac{\lambda}{2}\phi\varphi^{2},\nonumber 
+\end{align}
+
+\end_inset
+
+with 
+\begin_inset Formula $m\ll M$
+\end_inset
+
+。从 Euler–Lagrange 方程可以推导出运动方程
+\begin_inset Formula 
+\begin{align}
+ & \square\phi+M^{2}\phi+\frac{\lambda}{2}\varphi^{2}=0,\label{eq:3.2}\\
+ & \square\varphi+m^{2}\varphi+\lambda\varphi\phi=0.\label{eq:3.3}
+\end{align}
+
+\end_inset
+
+形式地写出
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $\phi$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\phi=-\frac{\lambda}{2M^{2}}\frac{1}{1+\frac{\square}{M^{2}}}\varphi^{2},
+\]
+
+\end_inset
+
+并将解代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到：
+\begin_inset Formula 
+\begin{equation}
+\square\varphi+m^{2}\varphi-\frac{\lambda^{2}}{2M^{2}}\varphi\frac{1}{1+\frac{\square}{M^{2}}}\varphi^{2}=0.\label{eq:3.4}
+\end{equation}
+
+\end_inset
+
+我们看到轻粒子运动方程中的重自由度
+\begin_inset Formula $\phi$
+\end_inset
+
+消失了。如果
+\begin_inset Formula $\varphi$
+\end_inset
+
+ 的动量比
+\begin_inset Formula $M$
+\end_inset
+
+小很多，我们可以在形式上，将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的末项按
+\begin_inset Formula $1/M^{2}$
+\end_inset
+
+展开。领头阶为
+\begin_inset Formula 
+\begin{equation}
+\square\varphi+m^{2}\varphi-\frac{\lambda^{2}}{2M^{2}}\varphi^{3}=0.\label{eq:3.5}
+\end{equation}
+
+\end_inset
+
+使用以下有效拉氏量可以得到相同运动方程：
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}_{\text{eff}}=\frac{1}{2}\left(\partial_{\mu}\varphi\partial^{\mu}\varphi-m^{2}\varphi^{2}\right)+\tilde{\lambda}\varphi^{4},\label{eq:3.6}
+\end{equation}
+
+\end_inset
+
+只要令
+\begin_inset Formula 
+\[
+\tilde{\lambda}=\frac{\lambda^{2}}{8M^{2}}.
+\]
+
+\end_inset
+
+有效拉氏量只依赖于轻场
+\begin_inset Formula $\varphi$
+\end_inset
+
+，包含一个
+\begin_inset Formula $\varphi^{4}$
+\end_inset
+
+相互作用，类似于费米相互作用。注意，无需使用运动方程，也可以在路径积分框架中，直接把重自由度从拉氏量中“积掉”。
+\end_layout
+
+\begin_layout Exercise
+现在我们来证明，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的拉氏量产生和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+原理论中的拉氏量相同的低能散射振幅，对于 
+\begin_inset Formula $\varphi\left(p_{1}\right)+\varphi\left(p_{2}\right)\to\varphi\left(p_{3}\right)+\varphi\left(p_{4}\right)$
+\end_inset
+
+过程。
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+证明原理论中，重场
+\begin_inset Formula $\phi$
+\end_inset
+
+耦合到两个轻场
+\begin_inset Formula $\varphi$
+\end_inset
+
+的费曼规则是
+\begin_inset Formula $-i\lambda$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+计算 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:3.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的振幅，其中虚线和实线分别代表场
+\begin_inset Formula $\varphi$
+\end_inset
+
+和
+\begin_inset Formula $\phi$
+\end_inset
+
+。重粒子的费曼传播子为
+\begin_inset Formula 
+\[
+\Delta_{F\phi}=\frac{1}{p^{2}-M^{2}+i0^{+}}.
+\]
+
+\end_inset
+
+证明结果可以用 Mandelstam 变量表示，
+\begin_inset Formula $s=\left(p_{1}+p_{2}\right)^{2}$
+\end_inset
+
+，
+\begin_inset Formula $t=\left(p_{1}-p_{3}\right)^{2}$
+\end_inset
+
+，
+\begin_inset Formula $u=\left(p_{1}-p_{4}\right)^{2}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+\mathcal{M}_{\text{fund}}=-\lambda^{2}\left(\frac{i}{s-M^{2}+i0^{+}}+\frac{i}{t-M^{2}+i0^{+}}+\frac{i}{u-M^{2}+i0^{+}}\right).\label{eq:3.7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+现在我们只关注低能区域，例如
+\begin_inset Formula $\left\{ s,\abs{t},\abs{u}\right\} \ll M^{2}$
+\end_inset
+
+。证明低能展开的领头阶贡献为
+\begin_inset Formula 
+\[
+\mathcal{M}_{\text{fund}}=\frac{3i\lambda^{2}}{M^{2}}+\order{\frac{\left\{ s,\abs{t},\abs{u}\right\} }{M^{2}}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+在有效理论中，我们只需考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:3.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的图。证明对应的振幅为：
+\begin_inset Formula 
+\[
+\mathcal{M}_{\text{eff}}=i\left(4!\right)\tilde{\lambda}=\frac{3i\lambda^{2}}{M^{2}},
+\]
+
+\end_inset
+
+准确地再现了基础理论的领头阶贡献。此计算表明，即使我们知道如何在基础理论中计算可测量，使用EFT 也可以简化必要的计算。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/chpt-primer-fig.3.1.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+基础理论中贡献到
+\begin_inset Formula $\varphi\left(p_{1}\right)+\varphi\left(p_{2}\right)\to\varphi\left(p_{3}\right)+\varphi\left(p_{4}\right)$
+\end_inset
+
+过程的图，从左到右
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3.1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/chpt-primer-fig.3.2.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+有效理论中贡献到
+\begin_inset Formula $\varphi\left(p_{1}\right)+\varphi\left(p_{2}\right)\to\varphi\left(p_{3}\right)+\varphi\left(p_{4}\right)$
+\end_inset
+
+过程的图，从左到右
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3.2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在上面的例子中，我们通过明确的计算消除了一些重自由度。在手征微扰理论的情况下，强子自由度甚至与QCD基础理论的轻自由度都有很大不同，因此我们必须依靠QCD的对称
+性来构造有效拉氏量。这将是以下章节的重点。
+\end_layout
+
 \begin_layout Section
 QCD的对称性自发破缺
+\end_layout
+
+\begin_layout Standard
+虽然 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "sec:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的玩具模型是为了说明自发对称性破缺的概念而构建的，但在理论上还没有完全理解为什么QCD会表现出这种现象。我们将首先说明为什么实验输入，即“真实世界”的强子谱，
+表明自发对称性破缺发生在 QCD 中。其次，我们将表明，非零的 标量单态夸克凝聚 是QCD中自发对称性破缺的充分条件。
 \end_layout
 
 \begin_layout Subsection
