@@ -30,6 +30,7 @@
 \usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
 \usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{mathtools}% 定义配对的数学符号,在 unicode-math 之前调用
 \usepackage{ytableau} % Young tableaux and diagrams
 %++++++++++++++++++++++++++++++++++++++++
 % 设置英文字体
@@ -38,7 +39,7 @@
 \setmonofont{Latin Modern Roman}
 %设置数学字体
 \usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
@@ -56,7 +57,6 @@
 \usepackage{makeidx} 
 % Standard package for creating indexes
 \usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
@@ -5874,7 +5874,7 @@ noprefix "false"
 \begin_inset Formula $\Lambda$
 \end_inset
 
-之上的细节，即可在我们感兴趣的能量区域找到有用的物理描述。
+之上的细节，即可在我们感兴趣的能区找到有用的物理描述。
 \end_layout
 
 \begin_layout Standard
@@ -6499,7 +6499,7 @@ P\ket{\psi_{a\alpha}} & =PQ_{Aa}P^{-1}P\ket{\alpha,+}=-Q_{Aa}\left(+\ket{\alpha,
 \begin_inset Formula $\ket{\psi_{a\alpha}}$
 \end_inset
 
-可以用负宇称多重态展开
+可以用负宇称多重态展开（如果存在的话）
 \begin_inset Formula 
 \[
 \ket{\psi_{a\alpha}}=Q_{Aa}\ket{\alpha,+}=\sum_{\beta}\ket{\beta,-}\bra{\beta,-}Q_{Aa}\ket{\alpha,+}=t_{a,\beta\alpha}\ket{\beta,-}
@@ -6519,15 +6519,48 @@ P\ket{\psi_{a\alpha}} & =PQ_{Aa}P^{-1}P\ket{\alpha,+}=-Q_{Aa}\left(+\ket{\alpha,
 \begin_inset Formula $b_{\alpha+}^{\dagger}$
 \end_inset
 
-表示创造量子数为
+算符创造量子数为
 \begin_inset Formula $\ket{\alpha,+}$
 \end_inset
 
-的态的算符。类似地，
+的态，类似地，令
 \begin_inset Formula $b_{\alpha-}^{\dagger}$
 \end_inset
 
-表示创造相反宇称简并量子态的算符，则
+算符创造相反宇称的简并量子态，则
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ket{\alpha,+}$
+\end_inset
+
+多重态构成对称群的表示，
+\begin_inset Formula $b_{\alpha+}^{\dagger}$
+\end_inset
+
+算符在
+\begin_inset Formula $RbR^{-1}$
+\end_inset
+
+乘法下构成李群的表示。
+\begin_inset Formula $Q_{Aa}$
+\end_inset
+
+是李代数的生成元，若乘法定义为对易子，则
+\begin_inset Formula $b_{\alpha+}^{\dagger}$
+\end_inset
+
+构成
+\begin_inset Formula $Q_{Aa}$
+\end_inset
+
+的表示。
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \left[Q_{Aa},b_{\alpha+}^{\dagger}\right]=t_{a,\beta\alpha}b_{\beta-}^{\dagger}
@@ -6535,7 +6568,7 @@ P\ket{\psi_{a\alpha}} & =PQ_{Aa}P^{-1}P\ket{\alpha,+}=-Q_{Aa}\left(+\ket{\alpha,
 
 \end_inset
 
-通常的论据包括
+通常的证明过程是
 \begin_inset Formula 
 \begin{equation}
 Q_{Aa}\ket{\alpha,+}=Q_{Aa}b_{\alpha+}^{\dagger}\ket{0}=\left(\left[Q_{Aa},b_{\alpha+}^{\dagger}\right]+b_{\alpha+}^{\dagger}\underbrace{Q_{Aa}}_{\hookrightarrow0}\right)\ket{0}=t_{a,\beta\alpha}b_{\beta-}^{\dagger}\ket{0}\label{eq:3.10}
@@ -6545,7 +6578,7 @@ Q_{Aa}\ket{\alpha,+}=Q_{Aa}b_{\alpha+}^{\dagger}\ket{0}=\left(\left[Q_{Aa},b_{\a
 
 然而，如果基态
 \emph on
-不在
+不再
 \emph default
 被
 \begin_inset Formula $Q_{Aa}$
@@ -6553,7 +6586,7 @@ Q_{Aa}\ket{\alpha,+}=Q_{Aa}b_{\alpha+}^{\dagger}\ket{0}=\left(\left[Q_{Aa},b_{\a
 
 湮灭的话，
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:3.10"
 plural "false"
 caps "false"
@@ -6561,11 +6594,28 @@ noprefix "false"
 
 \end_inset
 
-的合理性就会有问题。如果基态对于 Lagrangian 的所有对称性并不是不变的，就会导致对称性自发破缺。换句话说，不存在简并的相反宇称多重态，说明
+的合理性就会有问题。
+\begin_inset Formula $b_{\alpha+}^{\dagger}Q_{Aa}\ket{0}$
+\end_inset
+
+ 的能量很难刚好是
+\begin_inset Formula $E_{\alpha}$
+\end_inset
+
+（考虑现实中重子和介子的质量差距），则
+\begin_inset Formula $\ket{\alpha,+}$
+\end_inset
+
+与
+\begin_inset Formula $Q_{Aa}\ket{\alpha,+}$
+\end_inset
+
+不再是能量简并的本征态。总结，如果基态对于拉氏量的各种对称性不总保持不变（能级简并），就会导致对称性自发破缺。换句话说，不存在简并的相反宇称多重态，说明强子的对
+称性近似为
 \begin_inset Formula $\text{SU(3)}_{V}$
 \end_inset
 
-近似实现为强子的对称性，而不是
+，而不是
 \begin_inset Formula $\text{SU(3)}_{L}\times\text{SU(3)}_{R}$
 \end_inset
 
