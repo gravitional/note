@@ -30,6 +30,7 @@
 \usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
 \usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{mathtools}% 定义配对的数学符号,在unicode-math之前调用
 %++++++++++++++++++++++++++++++++++++++++
 % 设置英文字体
 \setmainfont{Latin Modern Roman}
@@ -37,10 +38,12 @@
 \setmonofont{Latin Modern Roman}
 %设置数学字体
 \usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, 
+% TeX Gyre Termes Math, TeX Gyre Schola Math, XITS Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, 
+% STIX Math, XITS Math
 %++++++++++++++++++++++++++++++++++++++++
 \usepackage{enumerate} 
 \usepackage{tikz,tikz-feynman}% 费曼图及其他作图
@@ -55,8 +58,6 @@
 \usepackage{makeidx} 
 % Standard package for creating indexes
 \usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
-
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
@@ -1991,7 +1992,7 @@ i & 0
 
 \begin_inset Formula 
 \begin{align*}
- & \left\{ \gamma^{\mu},\gamma^{\nu}\right\} =2g^{\mu\nu}\symbb 1\\
+ & \left\{ \gamma^{\mu},\gamma^{\nu}\right\} =2g^{\mu\nu}\symbb1\\
  & \gamma^{0\dagger}=\gamma^{0},\gamma^{i\dagger}=-\gamma^{i}\\
  & \gamma^{2,*}=-\gamma^{2},\gamma^{\left\{ 0,1,3\right\} *}=\gamma^{\left\{ 0,1,3\right\} }\\
  & \gamma^{\{0,2\},T}=\gamma^{\{0,2\}},\gamma^{\left\{ 1,3\right\} T}=-\gamma^{\left\{ 1,3\right\} }
@@ -2055,7 +2056,7 @@ GA5 公式
 0 & -1
 \end{array}\right)\\
  & \left\{ \gamma^{5},\gamma^{\mu}\right\} =0\\
- & \left(\gamma^{5}\right)^{2}=\symbb 1
+ & \left(\gamma^{5}\right)^{2}=\symbb1
 \end{align*}
 
 \end_inset
@@ -4315,7 +4316,7 @@ U\left(P\right)a_{\vec{p}}^{s}U\left(P\right)^{\dagger}\to+a_{-\vec{p}}^{s},\qua
 \begin_inset Formula $\exp\left(-ip\cdot x\right)$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $u^{s}(p)$
 \end_inset
 
@@ -4332,10 +4333,9 @@ b^{-1}w_{\lambda}
 
 
 \begin_inset Formula 
-\begin{align*}
-u\left(p\right) & =\gamma^{0}u\left(\tilde{p}\right)\\
-v\left(p\right) & =-\gamma^{0}v\left(\tilde{p}\right)
-\end{align*}
+\[
+u\left(p\right)=\gamma^{0}u\left(\tilde{p}\right),\quad v\left(p\right)=-\gamma^{0}v\left(\tilde{p}\right)
+\]
 
 \end_inset
 
@@ -4359,20 +4359,20 @@ U\left(P\right)\psi\left(x\right)U\left(P\right) & =\int\frac{\dd^{3}p}{(2\pi)^{
 
 \end_inset
 
-利用旋量解的性质，和积分变量替换
+利用旋量解的性质，及积分变量替换
 \begin_inset Formula $p\to\tilde{p}$
 \end_inset
 
 :
 \begin_inset Formula 
 \begin{align*}
- & =\int\frac{\dd^{3}p}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{\vec{p}}}}\sum_{s}\eta_{a}a^{s}\left(\tilde{p}\right)\gamma^{0}u^{s}\left(\tilde{p}\right)\exp\left(-ip.x\right)-\eta_{b}^{\ast}b^{s\dagger}\left(\tilde{p}\right)\gamma^{0}v^{s}\left(\tilde{p}\right)\exp\left(+ip.x\right)\\
+ & \Rightarrow\int\frac{\dd^{3}p}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{\vec{p}}}}\sum_{s}\eta_{a}a^{s}\left(\tilde{p}\right)\gamma^{0}u^{s}\left(\tilde{p}\right)\exp\left(-ip.x\right)-\eta_{b}^{\ast}b^{s\dagger}\left(\tilde{p}\right)\gamma^{0}v^{s}\left(\tilde{p}\right)\exp\left(+ip.x\right)\\
  & =\int\frac{\dd^{3}\tilde{p}}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{\vec{p}}}}\sum_{s}\eta_{a}a^{s}\left(\tilde{p}\right)\gamma^{0}u^{s}\left(\tilde{p}\right)\exp\left(-i\tilde{p}.\tilde{x}\right)-\eta_{b}^{\ast}b^{s\dagger}\left(\tilde{p}\right)\gamma^{0}v^{s}\left(\tilde{p}\right)\exp\left(+i\tilde{p}.\tilde{x}\right)
 \end{align*}
 
 \end_inset
 
-我们把任意相因子取成
+为简单起见，我们把任意相因子取成
 \begin_inset Formula $\eta_{a}=1\text{，}\eta_{b}^{\ast}=-1$
 \end_inset
 
@@ -4386,21 +4386,31 @@ P\psi(x)P=\int\frac{\dd^{3}p}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{\vec{p}}}}\sum_{s}a^
 
 注意积分变量又重写了一次，所以最终，
 \begin_inset Formula 
-\[
-P\psi\left(x\right)P=\gamma^{0}\psi\left(\tilde{x}\right)
-\]
+\begin{align*}
+ & P\psi\left(x\right)P=\gamma^{0}\psi\left(\tilde{x}\right)\\
+ & P\bar{\psi}\left(x\right)P=\left(P\psi\left(x\right)P\right)^{\dagger}\gamma^{0}=\bar{\psi}\left(\tilde{x}\right)\gamma^{0}\\
+ & U\left(P\right)a_{\vec{p}}^{s}U\left(P\right)^{\dagger}\to+a_{-\vec{p}}^{s},\quad U\left(P\right)b_{\vec{p}}^{s}U\left(P\right)^{\dagger}\to-b_{-\vec{p}}^{s}
+\end{align*}
 
 \end_inset
 
-
-\begin_inset Formula 
-\[
-P\bar{\psi}\left(x\right)P=\left(P\psi\left(x\right)P\right)^{\dagger}\gamma^{0}=\bar{\psi}\left(\tilde{x}\right)\gamma^{0}
-\]
-
+即我们约定，粒子
+\begin_inset Formula $a_{\vec{p}}^{s}$
 \end_inset
 
+在
+\begin_inset Formula $P$
+\end_inset
 
+变换下宇称为正，
+\begin_inset Formula $b_{\vec{p}}^{s}$
+\end_inset
+
+在
+\begin_inset Formula $P$
+\end_inset
+
+变换下宇称为负。
 \end_layout
 
 \begin_layout Standard
@@ -4447,8 +4457,13 @@ P\bar{\psi}\left(x\right)\sigma^{\mu\nu}\psi\left(x\right)P & =\bar{\psi}\left(\
 因子是为了保证整个量是厄米(Hermitian)的。
 \end_layout
 
+\begin_layout Subsection
+费米子系统的宇称
+\end_layout
+
 \begin_layout Standard
-注意，对于正反费米子，宇称变换有一个相对负号。这很重要。对于一个费米子–反费米子组成的状态
+虽然费米子场的宇称变换可以有任意约定的相角，但正反费米子在宇称变换下的相角之和确是固定的。正是这一原因使得正反费米子组成的系统宇称是绝对的，而完全由费米子或反费
+米子组成的系统，宇称是可以任意约定的。对于 费米子–反费米子 组成的状态
 \begin_inset Formula $a_{\vec{p}}^{s\dagger}b_{\vec{q}}^{r\dagger}\ket{0}$
 \end_inset
 
@@ -4473,6 +4488,87 @@ P\bar{\psi}\left(x\right)\sigma^{\mu\nu}\psi\left(x\right)P & =\bar{\psi}\left(\
 \end_inset
 
 是矢量。可以应用到电子偶素和夸克反夸克系统上。（比如低能介子八重态）
+\end_layout
+
+\begin_layout Standard
+我们来讨论一下，由正反费米子组成的处于
+\begin_inset Formula $\,^{2S+1}L_{J}$
+\end_inset
+
+态的系统，在宇称变换下如何改变。我们在系统的静止系中讨论，则系统状态函数为：
+\begin_inset Formula 
+\[
+\ket{\,^{2S+1}L_{J}}=\sum_{m,\alpha,\beta}\int\dd[3]{p}Y_{LM}\left(\vec{p}\right)\chi_{m}\left(\alpha,\beta\right)C_{Mm}a_{\alpha}^{\dagger}\left(\vec{p}\right)b_{\beta}^{\dagger}\left(-\vec{p}\right)\ket{0}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $Y_{LM}\left(\vec{p}\right)$
+\end_inset
+
+为球谐函数，代表系统的空间波函数，
+\begin_inset Formula $\chi_{m}$
+\end_inset
+
+为系统的自旋波函数，
+\begin_inset Formula $C_{Mm}$
+\end_inset
+
+为自旋轨道耦合的 Clebsch-Gordan 系数。单态自旋波函数在置换下反对称，而三重态对称，合在一起写成
+\begin_inset Formula 
+\[
+\chi_{m}\left(\alpha,\beta\right)=\left(-1\right)^{S+1}\chi_{m}\left(\beta,\alpha\right)
+\]
+
+\end_inset
+
+而球谐函数满足
+\begin_inset Formula 
+\[
+Y_{LM}\left(-\vec{p}\right)=\left(-1\right)^{L}Y_{LM}\left(\vec{p}\right)
+\]
+
+\end_inset
+
+我们将 Hilbert 空间的宇称算符作用于态 
+\begin_inset Formula $\ket{\,^{2S+1}L_{J}}$
+\end_inset
+
+ 上（算符作用是相似变换的形式）
+\begin_inset Formula 
+\begin{align*}
+\hat{P}\ket{\,^{2S+1}L_{J}} & =\sum_{m,\alpha,\beta}\int\dd[3]{p}Y_{LM}\left(\vec{p}\right)\chi_{m}\left(\alpha,\beta\right)C_{Mm}{\color{blue}\hat{P}a_{\alpha}^{\dagger}\left(\vec{p}\right)b_{\beta}^{\dagger}\left(-\vec{p}\right)}\ket{0}\\
+ & =\sum_{m,\alpha,\beta}\int\dd[3]{p}Y_{LM}\left(\vec{p}\right)\chi_{m}\left(\alpha,\beta\right)C_{Mm}{\color{blue}\hat{P}a_{\alpha}^{\dagger}\left(\vec{p}\right)\hat{P}^{-1}\hat{P}b_{\beta}^{\dagger}\left(-\vec{p}\right)\hat{P}^{-1}\hat{P}\ket{0}}\\
+ & =-\sum_{m,\alpha,\beta}\int\dd[3]{p}Y_{LM}\left(\vec{p}\right)\chi_{m}\left(\alpha,\beta\right)C_{Mm}{\color{blue}a_{\alpha}^{\dagger}\left(-\vec{p}\right)b_{\beta}^{\dagger}\left(\vec{p}\right)\ket{0}},\quad\text{考虑了}\hat{P}\ket{0}=0\\
+ & \stackrel{\vec{p}\to-\vec{p}}{=}-\sum_{m,\alpha,\beta}\int\dd[3]{p}{\color{blue}Y_{LM}\left(-\vec{p}\right)}\chi_{m}\left(\alpha,\beta\right)C_{Mm}{\color{blue}a_{\alpha}^{\dagger}\left(\vec{p}\right)b_{\beta}^{\dagger}\left(-\vec{p}\right)}\ket{0}\\
+ & =-\left(-1\right)^{L}\sum_{m,\alpha,\beta}\int\dd[3]{p}{\color{blue}Y_{LM}\left(\vec{p}\right)}\chi_{m}\left(\alpha,\beta\right)C_{Mm}a_{\alpha}^{\dagger}\left(\vec{p}\right)b_{\beta}^{\dagger}\left(-\vec{p}\right)\ket{0}\\
+ & =\left(-1\right)^{L+1}\ket{\,^{2S+1}L_{J}}
+\end{align*}
+
+\end_inset
+
+式中第二步到第三部利用了
+\begin_inset Formula $\hat{P}\ket{0}=0$
+\end_inset
+
+，即真空在宇称变换下保持不变。上式表明正反费米子组成的 
+\begin_inset Formula $\,^{2S+1}L_{J}$
+\end_inset
+
+态为宇称本征态，宇称量子数为 
+\begin_inset Formula $\left(-1\right)^{L+1}$
+\end_inset
+
+。对 
+\begin_inset Formula $S$
+\end_inset
+
+ 波，
+\begin_inset Formula $L=0$
+\end_inset
+
+，正反费米子对的宇称为负。
 \end_layout
 
 \begin_layout Section
@@ -4710,11 +4806,11 @@ C\bar{\psi}\left(x\right)C=C\psi\left(x\right)^{\dagger}C\gamma^{0}=(-i\gamma^{2
 
 \begin_layout Enumerate
 如果
-\begin_inset Formula $O=\symbb 1$
+\begin_inset Formula $O=\symbb1$
 \end_inset
 
 ，则
-\begin_inset Formula $\bar{\psi}\symbb 1\psi\stackrel{C}{\mapsto}-\bar{\psi}\gamma^{2}\gamma^{2}\psi=\bar{\psi}\psi$
+\begin_inset Formula $\bar{\psi}\symbb1\psi\stackrel{C}{\mapsto}-\bar{\psi}\gamma^{2}\gamma^{2}\psi=\bar{\psi}\psi$
 \end_inset
 
 ，

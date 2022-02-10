@@ -250,40 +250,6 @@ n-3 %% last line needn't the \\
  \texorpdfstring{math objec}{Lg}
 ```
 
-## 上下标,左下标
-
-[数学运算符 Math Operator](https://zhuanlan.zhihu.com/p/137969798)
-[如何公式实现左下标? ](https://wenda.latexstudio.net/q-2075.html)
-[氢化脱苄苯甲醇-上下标](https://www.jianshu.com/p/229cbbac9446)
-
-我们会发现, 在行内公式中, 所有的符号和上下标都以行内的大小为准, 尽量不去突出一行的高度, 而在行间公式中, 各种巨算符可以尽情舒展, 变成了平常我们见到的样子.
-如果想在行内公式中也使用行间公式款的上下标的话, 可以在对应的命令前面加上`\displaystyle`, 即显示模式, 就可以变成我们想要的样子了, 但是这种方法会产生一些不良行距.
-而另一种方法是比较推荐使用的: `\limits`, 顾名思义, 这个命令可以把上下标变成我们常见的"极限"形式的上下标, 也就是显示在算符的上下, 而不是右边. 而与它对应的命令是`\nolimits`, 也就是把上下标显示在算符的右侧而不是上下. 下面通过一个例子来比较这几种的显示效果
-
-```latex
-\documentclass{article}
-\usepackage[UTF8]{ctex}
-\begin{document}
-\noindent 无穷级数$ \sum_{n=1}^{\infty}a_{i} $收敛\\
-无穷级数$ \displaystyle\sum_{n=1}^{\infty}a_{i} $收敛\\
-无穷级数$ \sum\limits_{n=1}^{\infty}a_{i} $收敛\\
-无穷级数$ \displaystyle\sum\nolimits_{n=1}^{\infty}a_{i} $收敛
-\end{document}
-```
-
-```latex
-$\limsup\limits_{x\rightarrow0}$ vs $\lim\sup\limits_{x\rightarrow0}$
-```
-
-So you will want to use `\limsup`.
-
-如果要使用`左侧下标`,使用 `amsmath` 提供的`\sideset`.例如
-
-```bash
-%\usepackage{amsmath}
-\[\sideset{_h}{_h}{\mathop{\langle\psi|Q_h|\psi\rangle}}\]
-```
-
 ## Math accents
 
 reference: [Math accents](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Math-accents)
@@ -1146,6 +1112,13 @@ $\int \mathop{}\mathrm{d} x $\\
 关于 $x$ 的微分 $\mathop{}\mathrm{d} x$ 是指的思考的问题. \\
 ```
 
+## 积分符号
+
+amsmath; chap 7.4; page 22
+
+`\iint`,` \iiint`, 和 `\iiiint` 给出了多个积分符号, 它们之间的间距得到了很好的调整, 在`text`和`display` style上都是如此.
+`\idotsint` 是同一理念的延伸, 它提供了两个用圆点分隔的积分号.
+
 ## 上下划线和大括号
 
 [LaTeX教学3.2.2 数学结构-上下划线和大括号](https://www.jianshu.com/p/0217f22ebb3e)
@@ -1167,13 +1140,104 @@ $\int \mathop{}\mathrm{d} x $\\
 \]
 ```
 
+## 上下标,左下标
+
+[数学运算符 Math Operator](https://zhuanlan.zhihu.com/p/137969798)
+[如何公式实现左下标? ](https://wenda.latexstudio.net/q-2075.html)
+[氢化脱苄苯甲醇-上下标](https://www.jianshu.com/p/229cbbac9446)
+
+我们会发现, 在行内公式中, 所有的符号和上下标都以行内的大小为准, 尽量不去突出一行的高度, 而在行间公式中, 各种巨算符可以尽情舒展, 变成了平常我们见到的样子.
+如果想在行内公式中也使用行间公式款的上下标的话, 可以在对应的命令前面加上`\displaystyle`, 即显示模式, 就可以变成我们想要的样子了, 但是这种方法会产生一些不良行距.
+而另一种方法是比较推荐使用的: `\limits`, 顾名思义, 这个命令可以把上下标变成我们常见的"极限"形式的上下标, 也就是显示在算符的上下, 而不是右边. 而与它对应的命令是`\nolimits`, 也就是把上下标显示在算符的右侧而不是上下. 下面通过一个例子来比较这几种的显示效果
+
+```latex
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+\begin{document}
+\noindent 无穷级数$ \sum_{n=1}^{\infty}a_{i} $收敛\\
+无穷级数$ \displaystyle\sum_{n=1}^{\infty}a_{i} $收敛\\
+无穷级数$ \sum\limits_{n=1}^{\infty}a_{i} $收敛\\
+无穷级数$ \displaystyle\sum\nolimits_{n=1}^{\infty}a_{i} $收敛
+\end{document}
+```
+
+```latex
+$\limsup\limits_{x\rightarrow0}$ vs $\lim\sup\limits_{x\rightarrow0}$
+```
+
+So you will want to use `\limsup`.
+
+### 多行上下标
+
+amsmath; chap 7.1, page21;
+
+`\substack` 命令可以用来产生多行上下标, 例如:
+
+```latex
+\sum_{\substack{
+0\le i\le m\\
+0<j<n}} P(i,j)
+```
+
+稍微通用的形式是 `subarray` 环境, 它允许你指定每一行应该是`左对齐`而不是`居中`, 就像这里:
+
+```latex
+\sum_{\begin{subarray}{l}
+i\in\Lambda\\ 0<j<n
+\end{subarray}}
+P(i,j)
+```
+
+### \sideset
+
+amsmath; chap 7.2, page21;
+
+还有命令叫 `/sideset`, 用于一个相当特殊的目的: 把`符号`放在 `\sum`或`\prod` 的 下标和 上标角上.
+注意: 这个命令不是为了应用于 `sum 类符号` 以外的东西. 最典型的例子是你想把 `\prime` 放在 `\sum` 符号上的情况.
+如果在 `\sum` 的上方或下方没有上下限(`limits`), 你可以直接使用 `\nolimits`,
+在显示模式下类似于`\sum\nolimits" E_n`:
+$$\sum\nolimits' E_n$$
+
+然而, 如果你不仅想要`\prime`, 还想使用上下限, 那就不那么容易了--事实上, 如果没有 `\sideset`, 这将是非常困难的.
+`有了sideset`, 你可以写成 `\sideset{}{'}\sum_{n<k,\;\text{$n$ odd}} nE_n`.
+额外一对空括号的解释是, `\sideset` 有能力在大运算符的 `每个角` 放一个或多个符号;
+要在`product`符号的每个角放`星号`, 你可以输入 `\sideset{_*^*}{_*^*}\prod`.
+
+其他的例子例如:
+
+```bash
+%\usepackage{amsmath}
+\[\sideset{_h}{_h}{\mathop{\langle\psi|Q_h|\psi\rangle}}\]
+```
+
+## 交换图,Commutative diagrams
+
+`AMS-TEX` 中的 `交换图` 命令作为单独的软件包, `amscd`.
+对于复杂的交换图, 作者需要求助于更全面的软件包, 如 `TikZ`(详细说是 `tikz-cd`)或 `XY-pic`,
+但对于没有对角线箭头的简单图, `amscd` 命令可能更方便. 下面是一个例子:
+
+```latex
+\begin{CD}
+S^{\mathcal{W}_\Lambda}\otimes T    @>j>>       T\\
+@VVV            @VV{\End P}V\\
+(S\otimes T)/I          @=          (Z\otimes T)/J
+\end{CD}
+```
+
+在 `CD` 环境中, 命令 `@>>>`, `@<<<`, `@VVV`, 和 `@AAA` 分别给出了 分别给出 `右`, `左`, `下`和`上`的箭头.
+对于 `水平箭头`, 第一二个`>`或`<`符号之间的内容材料将被排成上标, 而第二三个之间的材料将被排成`下标`.
+同样, 垂直箭头的第一二个或第二三个 `As` 或 `Vs` 之间的内容, 将被排成左或右的 `sidescripts`.
+命令 `@=` 和 `@|` 给出水平和垂直双线.
+在需要的情况下, 可以使用 "空箭头" 命令 `@.`, 来代替可见的箭头, 填充数组.
+
 ## 可延展箭头
 
 [amsmath](https://www.ctan.org/pkg/amsmath)
 
-`amsmath`包中提供了可延展/伸缩的箭头 macro, 详见 page15: 4.9    Extensible arrows.
+`amsmath`包中提供了可延展/伸缩的箭头, 见 chapt 4.9; page15; Extensible arrows.
 
-`\xleftarrow` and `\xrightarrow` 产生可以自动适应上下文字长度的箭头.这些命令接受一个可选参数作为下标, 一个必须参数作为上标, 可以为空.
+`\xleftarrow` and `\xrightarrow` 产生可以自动适应上下文字长度的箭头.
+这些命令接受一个可选参数作为下标, 一个必须参数作为上标, 可以为空.
 类似有`\xLeftarrow`, `xRightarrow`.
 
 ## 下划线,中划线
@@ -1183,20 +1247,21 @@ $\int \mathop{}\mathrm{d} x $\\
 + 加粗 `\textbf{文字}`
 + 斜体 `\emph{文字}`
 + 下划线 `\underline{文字}`
-+ 删除线
-删除线需要调用package:
-`\usepackage{ulem}`
-而后是:
-+ `\sout{文字}` %删除线
-+ `\uwave{文字}` %波浪线
-+ `\xout{文字}` %斜删除线
-+ `\uuline{文字}`  %双下划线
+
++ 删除线; 调用包, `\usepackage{ulem}`, 然后:
+
+    ```latex
+    \sout{文字} %删除线
+    \uwave{文字} %波浪线
+    \xout{文字} %斜删除线
+    \uuline{文字}  %双下划线
+    ```
 
 ## 多重下标
 
 [如何排版公式的多行下标](https://jingyan.baidu.com/article/59703552e0fae18fc1074043.html)
 
-第一种方法:使用命令`\substack`,可以排版多重上标或下标,两行之间用`\\`分隔,居中显示. 例如:
+第一种方法:使用命令`\substack`,可以排版多重上标或下标,两行之间用`\\`分隔, 居中显示. 例如:
 
 ```latex
 \begin{equation}
@@ -1204,9 +1269,7 @@ $\int \mathop{}\mathrm{d} x $\\
 \end{equation}
 ```
 
-第二种方法
-
-我们可以使用`subarray`环境来实现多行上下标,且可以自己选择对齐方式.
+第二种方法: 我们可以使用`subarray`环境来实现多行上下标, 且可以自己选择对齐方式.
 
 ```latex
 \begin{gather}

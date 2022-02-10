@@ -98,9 +98,9 @@ double-struck 风格(也被称为 `黑板粗体`) 由直立的拉丁字母 {𝕒
 ```
 
 如果你在 `unicode-math` 之后加载 `mathtools`, 会发生的情况是:
-`Unicode` 定义的 `\underbrace` 被 `mathtools` 完成的上述修正所覆盖. 
-请注意, 你没有得到任何错误: 
+`Unicode` 定义的 `\underbrace` 被 `mathtools` 完成的上述修正所覆盖.
+请注意, 你没有得到任何错误:
 事实上, `\upbracefill` 使用的数学字符在 `unicode-math` 中并不对应于传统 `LaTeX` 数学字体中的 `brace片段`.
 
-总结: `mathtools` 对传统的数学字体做了很好的修复, 但是当 `unicode-math` 被加载时, 它不应该这样做. 
+总结: `mathtools` 对传统的数学字体做了很好的修复, 但是当 `unicode-math` 被加载时, 它不应该这样做.
 在 `mathtools` 被更新之前, 解决方案是在 `unicode-math` **之前** 加载它.
