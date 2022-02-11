@@ -30,6 +30,7 @@
 \usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
 \usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{amscd} % ams 画交换图
 \usepackage{mathtools}% 定义配对的数学符号,在 unicode-math 之前调用
 \usepackage{ytableau} % Young tableaux and diagrams
 %++++++++++++++++++++++++++++++++++++++++
@@ -45,7 +46,8 @@
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
 %++++++++++++++++++++++++++++++++++++++++
 \usepackage{enumerate} 
-\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usepackage{tikz}% 费曼图及其他作图
+\usetikzlibrary{cd}%commutative diagram交换图
 %\usetikzlibrary{shapes.misc,animations}
 %\usetikzlibrary{shapes.geometric}% tikz node 形状的库
 \usepackage{siunitx} % 国际单位制
@@ -7058,7 +7060,7 @@ condensation
 \begin_inset Formula $\Phi_{i}$
 \end_inset
 
-换成适当的厄米复合 QCD算符。
+换成适当的，厄米的，复合 QCD算符。
 \end_layout
 
 \begin_layout Standard
@@ -7115,7 +7117,7 @@ SU(3) 结构常数满足
 
 \end_inset
 
-可以把 scalar quark densities 的 octet 分量表示成
+可以把 标量夸克密度的 octet 分量表示成
 \begin_inset Formula 
 \[
 S_{b}\left(y\right)=-\frac{i}{3}\sum_{b,c=1}^{8}f_{abc}\left[Q_{Vb}\left(t\right),S_{c}\left(y\right)\right]
@@ -7133,7 +7135,11 @@ noprefix "false"
 
 \end_inset
 
- 。
+ 
+\begin_inset Formula $\Phi_{3}=-\frac{i}{2}\left(\left[Q_{1},\Phi_{2}\right]-\left[Q_{2},\Phi_{1}\right]\right)$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -7153,7 +7159,7 @@ noprefix "false"
 
 \end_inset
 
-其中利用了基态的平移不变性。也就是说，scalar quark condensate 的八重态成分在手征极限下必须为零。在
+其中利用了基态的平移不变性。也就是说，标量夸克凝聚的八重态分量在手征极限下必须为零。在
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:3.25"
@@ -7200,23 +7206,81 @@ noprefix "false"
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\lambda_{3}=\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & -1 & 0\\
+0 & 0 & 0
+\end{array}\right),\quad\lambda_{8}=\sqrt{\frac{1}{3}}\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & -2
+\end{array}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 由于
-\begin_inset Formula $\left[Q_{Va}\left(t\right),S_{0}\left(y\right)\right]=0,\qquad a=1,\cdots,8$
+\begin_inset Formula $\left[Q_{Va}\left(t\right),S_{0}\left(y\right)\right]=0$
 \end_inset
 
-，所以对于 singlet condensate ，不能按以上套路。但是如果我们假设在手征极限下，scalar singlet quark condensate
- 不为零，利用
+，
+\begin_inset Formula $a=1,\cdots,8$
+\end_inset
+
+，所以对于单态夸克凝聚，不能按以上套路。但是如果我们假设在手征极限下，标量单态夸克凝聚不为零，利用
 \begin_inset Formula $\langle\bar{u}u\rangle=\langle\bar{d}d\rangle=\langle\bar{s}s\rangle$
 \end_inset
 
 ，可以得到：
 \begin_inset Formula 
 \begin{equation}
-0\neq\langle\bar{u}u\rangle=\langle\bar{u}u+\bar{d}d+\bar{s}s\rangle=3\langle\bar{u}u\rangle=3\langle\bar{d}d\rangle=3\langle\bar{s}s\rangle\label{eq:3.26}
+0\neq\langle\bar{q}q\rangle=\langle\bar{u}u+\bar{d}d+\bar{s}s\rangle=3\langle\bar{u}u\rangle=3\langle\bar{d}d\rangle=3\langle\bar{s}s\rangle\label{eq:3.26}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+再使用公式
+\begin_inset Formula 
+\[
+i^{2}\left[\gamma^{5}\frac{\lambda_{a}}{2},\gamma^{0}\gamma^{5}\lambda_{a}\right]=\gamma^{0}\lambda_{a}^{2}
+\]
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{align*}
+ & \lambda_{1}^{2}=\lambda_{2}^{2}=\lambda_{3}^{2}=\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 0
+\end{array}\right),\\
+ & \lambda_{4}^{2}=\lambda_{5}^{2}=\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 1
+\end{array}\right),\\
+ & \lambda_{6}^{2}=\lambda_{7}^{2}=\left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{array}\right),\\
+ & \lambda_{8}^{2}=\frac{1}{3}\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 4
+\end{array}\right),
+\end{align*}
 
 \end_inset
 
@@ -7237,7 +7301,7 @@ i\left[Q_{Aa}\left(t\right),P_{a}\left(y\right)\right]=\begin{cases}
 
 \end_inset
 
-右边省略了对
+式子右边省略了对
 \begin_inset Formula $y$
 \end_inset
 
@@ -7255,10 +7319,10 @@ noprefix "false"
 \begin_inset Formula $SU(3)_{V}$
 \end_inset
 
-不变），假设一个不为零的 singlet scalar quark condensate，
+不变），假设单态标量夸克凝聚不为零，
 \begin_inset Formula 
 \begin{equation}
-\bra{0}i\left[Q_{Aa}\left(t\right),P_{a}\left(y\right)\right]\ket{0}=\frac{2}{3}\langle\bar{q}q\rangle,a=1,\cdots,8\label{eq:3.28}
+\bra{0}i\left[Q_{Aa}\left(t\right),P_{a}\left(y\right)\right]\ket{0}=\frac{2}{3}\langle\bar{q}q\rangle,\quad a=1,\cdots,8\label{eq:3.28}
 \end{equation}
 
 \end_inset
@@ -7277,19 +7341,19 @@ noprefix "false"
 
 \end_inset
 
- 的推导可以知道，both 赝标量密度
-\begin_inset Formula $P_{a}\left(y\right)$
-\end_inset
-
- 和轴矢流荷算符 
-\begin_inset Formula $Q_{Aa}$
-\end_inset
-
-都必须有非零的期望值，在真空和无质量单粒子态
+ 的推导可以知道，当处在真空和无质量单粒子态
 \begin_inset Formula $\ket{\phi_{b}}$
 \end_inset
 
-之间。特别地，由于洛伦兹协变性，轴矢荷在真空和这些无质量态之间的矩阵元，在适当归一化之后，应该是
+之间时，赝标量密度
+\begin_inset Formula $P_{a}\left(y\right)$
+\end_inset
+
+ 和轴矢荷算符 
+\begin_inset Formula $Q_{Aa}$
+\end_inset
+
+都必须有非零期望值。特别地，由于洛伦兹协变性，轴矢荷在真空和这些无质量态之间的矩阵元，在适当归一化之后，应该是
 \begin_inset Formula 
 \begin{equation}
 \bra{0}A_{a}^{\mu}\left(0\right)\ket{\phi_{b}\left(p\right)}=ip^{\mu}F_{0}\delta_{ab}\label{eq:3.29}
@@ -7319,7 +7383,7 @@ noprefix "false"
 \begin_inset Formula $F_{0}$
 \end_inset
 
- 取非零值是手征对称性自发破缺的充分且必须条件。另一方面，由 
+ 取非零值是手征对称性自发破缺的充分必要条件。另一方面，由 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:3.28"
@@ -7329,7 +7393,7 @@ noprefix "false"
 
 \end_inset
 
- 可知，非零的 scalar singlet quark condensate 
+ 可知，非零的标量单态夸克凝聚
 \begin_inset Formula $\langle\bar{q}q\rangle$
 \end_inset
 
@@ -7852,8 +7916,8 @@ Goldstone 玻色子的变换性质
 \end_layout
 
 \begin_layout Standard
-让我们考虑一个由 Lagrangian 描述的物理系统，它在一个 compact（紧致）Lie Group（李群）作用下不变。我们假设这个系统的基态（real真
-空，能量最低的状态）仅仅在
+让我们考虑一个由 拉氏量描述的物理系统，它在一个紧致李群（compact Lie Group）作用下不变。我们假设这个系统的基态（real真空，能量最低的状态）
+仅仅在
 \begin_inset Formula $G$
 \end_inset
 
@@ -8188,7 +8252,7 @@ H=\left\{ (V,V)\right\} |V\in SU(N)\cong SU(N)
 \begin_inset Formula $\tilde{g}=(\tilde{L},\tilde{R})\in G$
 \end_inset
 
-，我们用用
+，我们用
 \begin_inset Formula $SU(N)$
 \end_inset
 
@@ -8197,38 +8261,44 @@ H=\left\{ (V,V)\right\} |V\in SU(N)\cong SU(N)
 \end_inset
 
 刻画陪集元素，如此可写成：
-\begin_inset Formula $\tilde{g}H=(1,\tilde{R}\tilde{L}^{\dagger})H$
-\end_inset
-
-。这是一种约定，我们令陪集的代表元素的首位上是单位矩阵（相当于一起从右边乘上
-\begin_inset Formula $\tilde{L}^{\dagger}$
-\end_inset
-
-）。
-\begin_inset Formula $U$
-\end_inset
-
-在
-\begin_inset Formula $g=(L,R)\in G$
-\end_inset
-
-下的变换行为，同构于左陪集
-\begin_inset Formula $\tilde{g}H$
-\end_inset
-
-左乘
-\begin_inset Formula $g$
-\end_inset
-
-
 \begin_inset Formula 
 \[
-g\tilde{g}H=(L,R\tilde{R}\tilde{L}^{\dagger})H=(1,R\tilde{R}\tilde{L}^{\dagger}\tilde{L}^{\dagger})(L,L)H=(1,R(\tilde{R}\tilde{L}^{\dagger})L^{\dagger})H
+\tilde{g}H=\left(1,\tilde{R}\tilde{L}^{\dagger}\right)H.
 \]
 
 \end_inset
 
-这里我们使用了群的重排定理。任何元素
+这是一种约定，我们令陪集的代表元的首位是单位矩阵（相当于一起从右边乘上
+\begin_inset Formula $\tilde{L}^{\dagger}$
+\end_inset
+
+），这样可以避免每次都写两个矩阵。
+\begin_inset Formula $g=\left(L,R\right)\in G$
+\end_inset
+
+对
+\begin_inset Formula $U$
+\end_inset
+
+的作用，同构于
+\begin_inset Formula $g$
+\end_inset
+
+对左陪集
+\begin_inset Formula $\tilde{g}H$
+\end_inset
+
+的群乘法：
+\begin_inset Formula 
+\begin{align*}
+g\tilde{g}H & =\left(L,R\right)\left(1,\tilde{R}\tilde{L}^{\dagger}\right)H=\left(L,R\tilde{R}\tilde{L}^{\dagger}\right)H\\
+\text{在右边提取出}\left(L,L\right)\quad & =\left(1,R\tilde{R}\tilde{L}^{\dagger}\tilde{L}^{\dagger}\right)\left(L,L\right)H\\
+\text{根据重排定理}\quad & =\left(1,R\left(\tilde{R}\tilde{L}^{\dagger}\right)L^{\dagger}\right)H
+\end{align*}
+
+\end_inset
+
+其中使用了群的重排定理。任何元素
 \begin_inset Formula $\left(L,L\right)\in H$
 \end_inset
 
@@ -8240,18 +8310,18 @@ g\tilde{g}H=(L,R\tilde{R}\tilde{L}^{\dagger})H=(1,R\tilde{R}\tilde{L}^{\dagger}\
 \begin_inset Formula $H$
 \end_inset
 
-自己。根据我们的约定，变换后的陪集的代表元素是
+自己。根据约定，变换后陪集的代表元是
 \begin_inset Formula $\left(1,R\tilde{R}\tilde{L}^{\dagger}L^{\dagger}\right)$
 \end_inset
 
-。因此,
+。因此，
 \begin_inset Formula $U$
 \end_inset
 
 的变换行为是
 \begin_inset Formula 
 \[
-U=\tilde{R}\tilde{L}^{\dagger}\mapsto U^{\prime}=R(\tilde{R}\tilde{L}^{\dagger})L^{\dagger}=RUL^{\dagger}
+U=\tilde{R}\tilde{L}^{\dagger}\mapsto U^{\prime}=R\left(\tilde{R}\tilde{L}^{\dagger}\right)L^{\dagger}=RUL^{\dagger}
 \]
 
 \end_inset
@@ -8539,7 +8609,7 @@ and thus
 
 \end_inset
 
-另一方面，在 `axial transformation' 下，亦即用
+另一方面，在 轴变换 下，亦即用
 \begin_inset Formula $A$
 \end_inset
 
@@ -8559,9 +8629,8 @@ and thus
 \end_layout
 
 \begin_layout Standard
-EQ
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:3.36"
 plural "false"
 caps "false"
@@ -8569,9 +8638,9 @@ noprefix "false"
 
 \end_inset
 
- and 
+ 和 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:3.37"
 plural "false"
 caps "false"
@@ -8633,9 +8702,9 @@ V=\exp\left(-i\Theta_{\text{Vb}}\frac{\lambda_{b}}{2}\right)
 
 \end_inset
 
-比较EQ
+比较 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:3.38"
 plural "false"
 caps "false"
@@ -8686,6 +8755,383 @@ noprefix "false"
 
 这个对易关系的结果比较复杂，是的场的非线性函数。这也是为什么我们说上面的映射是手征对称性的非线性实现(nonlinear realization
  of chiral symmetry)。
+\end_layout
+
+\begin_layout Subsection
+群的非线性实现
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+群作用
+\end_layout
+
+\end_inset
+
+给定群
+\begin_inset Formula $G$
+\end_inset
+
+以及集合
+\begin_inset Formula $M$
+\end_inset
+
+，若映射
+\begin_inset Formula $*:G\times M\mapsto M$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{align*}
+ & e*\phi=\phi,\quad\forall\phi\in M,\quad e\text{是群\ensuremath{G}的恒元}\\
+ & g_{1}*\left(g_{2}*\phi\right)=\left(g_{1}g_{2}\right)*\phi,\quad\forall g_{1},g_{2}\in G,\quad\phi\in M
+\end{align*}
+
+\end_inset
+
+则称为群
+\begin_inset Formula $G$
+\end_inset
+
+在
+\begin_inset Formula $M$
+\end_inset
+
+上的作用（action）。它是比群表示更宽泛的概念，因为它不要求映射对于
+\begin_inset Formula $M$
+\end_inset
+
+是线性的。
+\end_layout
+
+\begin_layout Enumerate
+保持
+\begin_inset Formula $\phi$
+\end_inset
+
+不变的子群称为稳定化子（stablizer）：
+\begin_inset Formula 
+\[
+\text{Stab}_{G}\left(\phi\right)=\left\{ g\in G|g*\phi=\phi\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\phi$
+\end_inset
+
+的轨道（orbit）定义为，集合
+\begin_inset Formula $M$
+\end_inset
+
+中所有可以通过群
+\begin_inset Formula $G$
+\end_inset
+
+中的操作
+\begin_inset Formula $g$
+\end_inset
+
+与
+\begin_inset Formula $\phi$
+\end_inset
+
+连接起来的元素：
+\begin_inset Formula 
+\[
+\text{Orb}_{G}\left(\phi\right)=\left\{ \phi^{\prime}\in M|\exists g\in G,g*\phi=\phi^{\prime}\right\} 
+\]
+
+\end_inset
+
+轨道
+\begin_inset Formula $\text{Orb}_{G}\left(\phi\right)$
+\end_inset
+
+中的元素，与
+\begin_inset Formula $G/\text{Stab}_{G}\left(\phi\right)$
+\end_inset
+
+的商即左陪集（不一定是群）存在一一对应的关系。
+\end_layout
+
+\begin_layout Enumerate
+现在假设群作用是可递的（transitive），也就是单个
+\begin_inset Formula $\text{Orb}_{G}\left(0\right)$
+\end_inset
+
+的轨道即可遍历整个集合
+\begin_inset Formula $M$
+\end_inset
+
+。这里定义了一个特殊元素
+\begin_inset Formula $\phi=0$
+\end_inset
+
+，在经典水平上，它代表场的真空态。
+\end_layout
+
+\begin_layout Enumerate
+定义
+\begin_inset Formula $H=\text{Stab}_{G}\left(0\right)$
+\end_inset
+
+。
+\begin_inset Formula $\phi=0$
+\end_inset
+
+在
+\begin_inset Formula $G/H$
+\end_inset
+
+作用下改变，导致简并的真空。
+\end_layout
+
+\begin_layout Enumerate
+现在每个
+\begin_inset Formula $\phi\in M$
+\end_inset
+
+对应于一个左陪集
+\begin_inset Formula $\tilde{g}H$
+\end_inset
+
+，其中
+\begin_inset Formula $\tilde{g}$
+\end_inset
+
+是陪集的代表元素。
+\begin_inset Formula $\tilde{g}$
+\end_inset
+
+的选取是任意的。如果我们规定了选取陪集代表元的某种标准
+\begin_inset Formula $f$
+\end_inset
+
+，则
+\begin_inset Formula $\phi$
+\end_inset
+
+的变换可以表示为：
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Phi 
+\backslash
+arrow[rr, "g"] 
+\backslash
+arrow[d,
+\begin_inset Quotes erd
+\end_inset
+
+f
+\begin_inset Quotes erd
+\end_inset
+
+'] &  & 
+\backslash
+Phi^
+\backslash
+prime           
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tilde{g}H 
+\backslash
+arrow[rr, "g"]     &  & g
+\backslash
+tilde{g}H 
+\backslash
+arrow[u,
+\begin_inset Quotes erd
+\end_inset
+
+f^{-1}
+\begin_inset Quotes erd
+\end_inset
+
+']
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+对于QCD，
+\begin_inset Formula 
+\begin{align*}
+ & G=\text{SU}\left(N\right)_{L}\times\text{SU}\left(N\right)_{R}=\left\{ \left(L,R\right)|L\in\text{SU}\left(N\right),R\in\text{SU}\left(N\right)\right\} \\
+ & H=\left\{ \left(V,V\right)|V\in\text{SU}\left(N\right)\right\} \\
+ & \phi\mapsto U
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\text{SU}\left(N\right)$
+\end_inset
+
+群基础表示是幺正矩阵，陪集元素也是幺正矩阵。我们先不管如何从场映射到幺正矩阵，我们先规定如何表示陪集的代表元：
+\begin_inset Formula 
+\[
+\phi\mapsto\left(L,R\right)\mapsto\left(1,\tilde{R}\tilde{L}^{\dagger}\right)
+\]
+
+\end_inset
+
+这样不用每次都写成
+\begin_inset Formula $\left(L,R\right)$
+\end_inset
+
+的形式，也即我们把幺正矩阵
+\begin_inset Formula $U$
+\end_inset
+
+表示成
+\begin_inset Formula $U=\tilde{R}\tilde{L}^{\dagger}$
+\end_inset
+
+。任一群元
+\begin_inset Formula $g=\left(L,R\right)$
+\end_inset
+
+的作用为：
+\begin_inset Formula 
+\[
+g*\left(1,\tilde{R}\tilde{L}^{\dagger}\right)=\left(L,R\tilde{R}\tilde{L}^{\dagger}\right)\mapsto\left(1,R\tilde{R}\tilde{L}^{\dagger}L^{\dagger}\right)
+\]
+
+\end_inset
+
+即代表元在
+\begin_inset Formula $g=\left(L,R\right)$
+\end_inset
+
+作用下的变换方式是：
+\begin_inset Formula 
+\[
+U\mapsto U^{\prime}=RUL^{\dagger}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+然后我们将
+\begin_inset Formula $U$
+\end_inset
+
+定域化，写成
+\begin_inset Formula $U\left(x\right)$
+\end_inset
+
+，用它描述手征对称性自发破缺的戈德斯通玻色场。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据定义，
+\begin_inset Formula $U\left(x\right)$
+\end_inset
+
+是幺正的。它类似于原来线性
+\begin_inset Formula $\sigma$
+\end_inset
+
+模型中的场。然而，我们感兴趣的是沿着“墨西哥帽 ”谷底的旋转自由度，它现在位于 
+\begin_inset Formula $U\left(x\right)$
+\end_inset
+
+ 的指数上：
+\begin_inset Formula 
+\[
+U=\exp\left(i\frac{\phi}{F_{0}}\right)=1+i\frac{\phi}{F_{0}}-\frac{\phi^{2}}{2F_{0}^{2}}+\cdots
+\]
+
+\end_inset
+
+引入
+\begin_inset Formula $F_{0}$
+\end_inset
+
+使得指数函数无量纲，
+\begin_inset Formula $\phi$
+\end_inset
+
+的量纲如普通的标量场。
+\begin_inset Formula 
+\[
+\phi=\sum_{a=1}^{8}\phi_{a}\lambda_{a}\equiv\left(\begin{array}{ccc}
+\pi^{0}+\frac{1}{\sqrt{3}}\eta & \sqrt{2}\pi^{-} & \sqrt{2}K^{+}\\
+\sqrt{2}\pi^{+} & -\pi^{0}+\frac{1}{\sqrt{3}}\eta & \sqrt{2}K^{0}\\
+\sqrt{2}K^{-} & \sqrt{2}\bar{K}^{0} & \frac{-2}{\sqrt{3}}\eta
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $U=1$
+\end_inset
+
+对应真空态。如果将拉氏量用
+\begin_inset Formula $\phi$
+\end_inset
+
+显式表示，会将手征对称性隐藏起来。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
