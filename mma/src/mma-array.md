@@ -44,3 +44,31 @@ ArrayFlatten[ {
 In[1]:= ArrayReshape[{a,b,c,d,e,f},{2,3}]
 Out[1]= {{a,b,c},{d,e,f}}
 ```
+
+## Splice
+
+```mathematica
+Splice[{ e1, e2, ...}]; 代表`表达式`, 该表达式将被自动 `拼接` 到它出现的任何列表中, 作为元素`e_i` 的序列
+```
+
+### 性质和关系
+
+在列表中时, `Splice[{ e1, e2, ...}] ` 的行为类似于 `Sequence[e1, e2, ...]`:
+
+```mathematica
+{a, b, c, Splice[{1, 2, 3}], d, e}
+Out[1]= {a, b, c, 1, 2, 3, d, e}
+
+{a, b, c, Sequence[1, 2, 3], d, e}
+Out[2]= {a, b, c, 1, 2, 3, d, e}
+```
+
+`Sequence` 对象在其他 `heads` 里面也可以拼接，但 `Splice` 对象不会:
+
+```mathematica
+head[a, b, c, Sequence[1, 2, 3], d, e]
+Out[3]= head[a, b, c, 1, 2, 3, d, e]
+
+head[a, b, c, Splice[{1, 2, 3}], d, e]
+Out[4]= head[a, b, c, Splice[{1, 2, 3}], d, e]
+```
