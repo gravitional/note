@@ -236,6 +236,148 @@ Plot[pf[x] - ifun[x], {x, 0, 5}, PlotRange -> All]
 
 ## FindMinimum(求极小值和其坐标)
 
+### 范围
+
+可以指定 `Or` 型约束条件:
+
+```mathematica
+NMinimize[{x + y, x^2 + y^2 <= 1 ||
+(x + 2)^2 + (y + 2)^2 <= 1}, {x, y}] // Quiet
+
+Out[1]= {-5.41421, {x -> -2.70711, y -> -2.70711}}
+```
+
+对于线性目标(linear objectives)和约束, 使用 `NMinimize`:
+
+```mathematica
+NMinimize[{x + y, 3 x + 2 y >= 7 && x + 2 y >= 6 && x >= 0 && y >= 0}, {x, y}]
+Out[1]= {3.25, {x -> 0.5, y -> 2.75}}
+```
+
+可以施加 `整数` 约束:
+
+```mathematica
+NMinimize[{x + y, 3 x + 2 y >= 7 && x + 2 y >= 6 && x >= 0 && y >= 0 && {x, y} \[Element] Integers}, {x, y}]
+Out[1]= {4., {x -> 2, y -> 2}}
+
+NMinimize[{(x - 1/3)^2 + (y - 1/3)^2, x \[Element] Integers}, {x, y}]
+Out[2]= {0.111111, {x -> 0, y -> 0.333333}}
+```
+
++ 在 `区域内`(region)最小化:
+
+```mathematica
+t = RotationTransform[{{0, 0, 1}, {1, 1, 1}}];
+\[ScriptCapitalR] = TransformedRegion[Ellipsoid[{0, 0, 0}, {1, 2, 3}], t];
+
+res=NMinimize[z, {x, y, z} \[Element] \[ScriptCapitalR]]
+
+Out[2]= {-2.16025, {x -> -1.40386, y -> -0.60208, z -> -2.16025}}
+```
+
+作图:
+
+```mathematica
+Graphics3D[{{Opacity[0.5], Green,
+    GeometricTransformation[Ellipsoid[{0, 0, 0}, {1, 2, 3}], t]},
+    {Red, PointSize[Large], Point[{x, y, z} /. Last[res]]}}]
+```
+
+找到两个区域之间的最小距离:
+
+```mathematica
+Subscript[\[ScriptCapitalR], 1] = Disk[];
+Subscript[\[ScriptCapitalR], 2] = InfiniteLine[{{-2, 0}, {0, 2}}];
+
+res=NMinimize[(x - u)^2 + (y - v)^2,
+{{x, y} \[Element] Subscript[\[ScriptCapitalR], 1],
+{u, v} \[Element] Subscript[\[ScriptCapitalR], 2]}]
+
+Out[2]= {0.171573, {x -> -0.707107, y -> 0.707106, u -> -1., v -> 1.}}
+```
+
+作图:
+
+```mathematica
+Graphics[{{LightBlue, Subscript[\[ScriptCapitalR], 1]},
+{Green, Subscript[\[ScriptCapitalR], 2]},
+{Red, Point[{{x, y}, {u, v}} /. Last[res]]}}]
+```
+
++ 找到最小的 `r`, 使三角形和椭圆仍保持相交(intersect,相切):
+
+```mathematica
+Subscript[\[ScriptCapitalR], 1] = Triangle[{{0, 0}, {1, 0}, {0, 1}}];
+Subscript[\[ScriptCapitalR], 2] = Disk[{1, 1}, {2 r, r}];
+
+res=NMinimize[{r, {x, y} \[Element] Subscript[\[ScriptCapitalR], 1] &&
+{x, y} \[Element] Subscript[\[ScriptCapitalR], 2]}, {r, x, y}]
+
+Out[2]= {0.447213, {r -> 0.447213, x -> 0.2, y -> 0.8}}
+```
+
+作图:
+
+```mathematica
+Graphics[{{LightBlue, Subscript[\[ScriptCapitalR], 1],
+Subscript[\[ScriptCapitalR], 2]},
+{Red, Point[{x, y}]}} /. Last[res]]
+```
+
++ 求包含给定三点的最小半径的`圆盘`:
+
+```mathematica
+Subscript[\[ScriptCapitalR], 3] = Disk[{a, b}, r];
+
+res=NMinimize[{r, ({0, 0} | {1, 0} | {0, 1}) \[Element]
+Subscript[\[ScriptCapitalR], 3]}, {a, b, r}]
+
+Out[2]= {0.707107, {a -> 0.5, b -> 0.5, r -> 0.707107}}
+```
+
+作图:
+
+```mathematica
+Graphics[{{LightBlue, Subscript[\[ScriptCapitalR], 3]} /. res[[2]],
+{Red, Point[{{0, 0}, {1, 0}, {0, 1}}]}}]
+```
+
++ 使用 `Circumsphere` 可以直接得到同样的结果:
+
+```mathematica
+Circumsphere[{{0, 0}, {1, 0}, {0, 1}}] // N
+Out[4]= Sphere[{0.5, 0.5}, 0.707107]
+```
+
++ 使用 `x/[Element] R` 来指定 `x` 是 `R^3` 中的矢量:
+
+```mathematica
+\[ScriptCapitalR] = Sphere[];
+NMinimize[x . {1, 2, 3}, x \[Element] \[ScriptCapitalR]]
+
+Out[2]= {-3.74166, {x -> {-0.267261, -0.534522, -0.801784}}}
+```
+
++ 找到两个 `regions` 之间的最小距离:
+
+```mathematica
+Subscript[\[ScriptCapitalR], 1] = Triangle[{{1, 1}, {2, 1}, {1, 2}}];
+Subscript[\[ScriptCapitalR], 2] = Disk[];
+
+res=NMinimize[ EuclideanDistance[x, y],
+    {x \[Element] Subscript[\[ScriptCapitalR], 1],
+    y \[Element] Subscript[\[ScriptCapitalR], 2]}]
+
+Out[2]= {0.414214, {x -> {1., 1.}, y -> {0.707107, 0.707107}}}
+```
+
+作图:
+
+```mathematica
+Graphics[{{LightBlue, Subscript[\[ScriptCapitalR], 1],
+Subscript[\[ScriptCapitalR], 2]}, {Red, Point[{x, y}]}} /. res[[2]]]
+```
+
 ### 性质和关系
 
 `FindMinimum` 试图找到 `局部最小值`; `NMinimize` 试图找到 `全局最小值`.

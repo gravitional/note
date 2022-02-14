@@ -63,7 +63,7 @@ Out[1]= {a, b, c, 1, 2, 3, d, e}
 Out[2]= {a, b, c, 1, 2, 3, d, e}
 ```
 
-`Sequence` 对象在其他 `heads` 里面也可以拼接，但 `Splice` 对象不会:
+`Sequence` 对象在其他 `heads` 里面也可以拼接, 但 `Splice` 对象不会:
 
 ```mathematica
 head[a, b, c, Sequence[1, 2, 3], d, e]
