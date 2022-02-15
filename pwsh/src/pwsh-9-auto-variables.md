@@ -266,8 +266,8 @@ notepad.exe $PROFILE
 
 ## `$PSBoundParameters`
 
-`$PSBoundParameters` 包含传给`脚本`或`函数`的 `参数的字典`(hash-map), 以及它们的当前值.
-这个变量只在声明该参数的范围内 有值, 比如脚本或函数.
+`$PSBoundParameters` 包含传给`脚本`或`函数`的 `参数的字典`(hash-map), 以及它们的 `当前值`.
+这个变量只在 `声明该参数的范围内` 有值, 比如脚本或函数.
 你可以用它来显示或改变参数的当前值, 或者将参数值传递给另一个脚本或函数.
 
 在这个例子中, `Test2` 函数将 `$PSBoundParameters` 传递给 `Test1` 函数.
@@ -277,14 +277,14 @@ notepad.exe $PROFILE
 function Test1 {
    param($a, $b)
 
-   # Display the parameters in dictionary format.
+   # 使用字典格式显示 parameters.
    $PSBoundParameters
 }
 
 function Test2 {
    param($a, $b)
 
-   # Run the Test1 function with $a and $b.
+   # 使用$a 和 $b 运行 Test1 函数
    Test1 @PSBoundParameters
 }
 

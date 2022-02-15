@@ -5,13 +5,16 @@
 通过管道可以过滤某些对象和对象的属性, 这个功能很实用,
 因为很多时候我们并不是对所有的结果感兴趣, 可能只会对某些结果感兴趣.
 
-+ `Select-Object`: `select`, 选取前几个对象如`-First 3`, 或者对象的属性. 可以用它先查看对象都有什么属性,
++ `Select-Object`: `select`, 选取前几个对象如`-First 3`, 或者选取对象的`属性`.
+可以用它先查看对象都有什么属性,
+
 + `Where-Object`:  `where`, 根据对象的 `属性`, 从对象集合中挑选特定的几个.
 例如, 选择在某个日期之后创建的文件, 具有特定ID的事件, 或者使用特定版本Windows的计算机.
+
 + `ForEach-Object`: `foreach`, 对输入对象集合中的每个项目执行操作.
 输入对象可以通过管道进入`cmdlet`, 也可以通过使用 `InputObject` 参数指定.
-+ `Get-Uinque`: `gu`, 从排序过的列表中返回不重复的对象.
 
++ `Get-Uinque`: `gu`, 从排序过的列表中返回不重复的对象.
 + `Select-Object -Index`: 根据 `index` 从数组中选择对象.
 在 `逗号分隔的列表` 中输入索引. 数组中的索引从`0`开始, 其中`0`代表第一个值, `n-1`代表最后一个值.
 
@@ -38,13 +41,13 @@ Get-Process | where ProcessName -Contains "Svchost"
 
 + `-GE` 大于;
 
-```powershell
-Get-Process | Where-Object -Property Handles -GE -Value 1000
-Get-Process | where Handles -GE 1000
-```
+    ```powershell
+    Get-Process | Where-Object -Property Handles -GE -Value 1000
+    Get-Process | where Handles -GE 1000
+    ```
 
-第一条命令使用`comparison`语句格式. 没有使用别名, 并且所有参数前带上了参数名称.
-第二个命令是更常用的格式, 使用`where`代替了`Where-Object ` cmdlet, 并且省略了所有可选参数名称.
+    第一条命令使用`comparison`语句格式. 没有使用别名, 并且所有参数前带上了参数名称.
+    第二个命令是更常用的格式, 使用 `where` 代替了`Where-Object ` cmdlet, 并且省略了所有可选参数名称.
 
 + `-Like` 通配符; 如果`property`值与包含通配符的值匹配, 则此cmdlet将获取对象.
 
@@ -68,13 +71,14 @@ Get-ChildItem *.md
 ```
 
 有时候可能需要使用正则表达式来查找文件,考虑使用 `Get-ChildItem`+`Where-Object`,比如查找所有`.md`格式的文件,
-`Where-Object`里面的`$_`是形式变量,代表每次迭代的文件. 如果了解过`C#`的`LINQ`,或者`Java 8`的流类库,应该对这种形式会比较熟悉.
+`Where-Object`里面的`$_`是形式变量,代表每次迭代的文件.
+如果了解过`C#`的`LINQ`,或者`Java 8`的流类库,应该对这种形式会比较熟悉.
 
 ```powershell
 Get-ChildItem | Where-Object {$_ -match '\w*.md$'}
 ```
 
-+ 查找大于`5kb`的所有`.md`格式文件,
++ 查找大于`5kb`的所有 `.md` 格式文件,
 
 ```powershell
  Get-ChildItem | Where-Object {$_ -match '\w*.md$' -and $_.Length/1kb -gt 5}
