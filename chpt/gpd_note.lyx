@@ -17,10 +17,6 @@
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
-%++++++++++++++++++++++++++++++++++++++++++++++++
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
 %%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
 % 添加图片命令或者背景到每一页的绝对位置，
@@ -30,6 +26,39 @@
 %\usepackage[colorlinks,linkcolor=blue]{hyperref} 
 \usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
 %%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+% \usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+%\usepackage{tikz-feynman}  % 画费曼图用
+%\usepackage{tikz} %画矢量图用
+\usepackage{mathtools}% 定义配对的数学符号
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{Latin Modern Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
 \usepackage{xcolor} 
 % xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
 % 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
@@ -60,61 +89,20 @@
     showtabs=false,                  
     tabsize=2
 }
-%%%+++++++++++++++++++++++++++++++
-\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
-%%%+++++++++++++++++++++++++++++++
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % \mathscr 命令，更花的花体
-\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
-% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
-%%%+++++++++++++++++++++++++++++++
-\usepackage{siunitx} % 国际单位制
-\usepackage{braket} % 狄拉克 bra-ket notation
-\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
-  %\bm 命令使参数变成粗体
-% Blackboard variants of Computer Modern fonts.
-\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
-\usepackage{makeidx}% 用来创建 indexes 的标准包
-\usepackage{multirow} % 创建具有多行的 tabular
-\usepackage{tikz-feynman}  % 画费曼图用
-\usepackage{tikz} %画矢量图用
-%%++++++++++++++++++++++++++++++++++++
-% 设置英文字体
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Roman}
-% 设置中文字体
-\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
-\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
-\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
-%设置数学字体
-\usepackage{unicode-math}%在其他字体包如amsmath之后调用
-\setmathfont{Latin Modern Math}
-%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
-%%++++++++++++++++++++++++++++++++++++++++
-% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
-% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
-% \setmathrm{Latin Modern Roman}
-%%++++++++++++++++++++++++++++++++++++++
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
+%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\im}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 \newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
@@ -209,8 +197,8 @@ Thomas
 总结就是
 \begin_inset Formula 
 \begin{align*}
- & A=\tr\left[\Gamma^{\mu}\gamma_{\mu}\right]=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]\\
- & B=\tr\left[\Gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=-2\left(4m^{2}+Q^{2}\right)\frac{F_{2}\left(Q^{2}\right)}{m}
+ & A=\Tr\left[\Gamma^{\mu}\gamma_{\mu}\right]=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]\\
+ & B=\Tr\left[\Gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=-2\left(4m^{2}+Q^{2}\right)\frac{F_{2}\left(Q^{2}\right)}{m}
 \end{align*}
 
 \end_inset
@@ -291,7 +279,7 @@ v^{2}
 ：
 \begin_inset Formula 
 \[
-\dif^{4}z=\dif z^{+}\dif z^{-}\dif^{2}\sbf{z}.
+\dd^{4}z=\dd z^{+}\dd z^{-}\dd^{2}\sbf{z}.
 \]
 
 \end_inset
@@ -465,9 +453,9 @@ literal "false"
  的约定，我们定义 广义夸克分布，
 \begin_inset Formula 
 \begin{align}
-F^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\sbf{z}=0}\nonumber \\
+F^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\sbf{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\bar{u}\left(p^{\prime}\right)\left[H^{q}\left(x,\xi,t\right)\gamma^{+}+E^{q}\left(x,\xi,t\right)\frac{i\sigma^{+\alpha}\Delta_{\alpha}}{2m}\right]u\left(p\right)\nonumber \\
-\tilde{F}^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}\gamma^{5}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\sbf{z}=0}\nonumber \\
+\tilde{F}^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}\gamma^{5}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\sbf{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\bar{u}\left(p^{\prime}\right)\left[\tilde{H}^{q}\left(x,\xi,t\right)\gamma^{+}\gamma^{5}+\tilde{E}^{q}\left(x,\xi,t\right)\frac{\gamma^{5}\Delta_{\alpha}}{2m}\right]u\left(p\right)\label{eq:14}
 \end{align}
 
@@ -500,9 +488,9 @@ F^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^
 。为了看出这一点，我们把定义重新写成参考系无关的形式。
 \begin_inset Formula 
 \begin{align}
-F^{q} & =\frac{1}{2}\int\frac{\dif\lambda}{2\pi}\left.e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\sla{n}_{-}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z=\lambda n_{-}}\label{eq:diel15}\\
-F^{q} & =\frac{1}{2}\int\frac{\dif z}{2\pi}e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\nonumber \\
-F^{q} & =\frac{1}{2}\int\frac{\dif\lambda}{2\pi}e^{ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\sla{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\nonumber \\
+F^{q} & =\frac{1}{2}\int\frac{\dd\lambda}{2\pi}\left.e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\sla{n}_{-}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z=\lambda n_{-}}\label{eq:diel15}\\
+F^{q} & =\frac{1}{2}\int\frac{\dd z}{2\pi}e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\nonumber \\
+F^{q} & =\frac{1}{2}\int\frac{\dd\lambda}{2\pi}e^{ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\sla{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\nonumber \\
 F^{q} & =\frac{1}{2\left(Pn_{-}\right)}\bar{u}\left(p^{\prime}\right)\left[H^{q}\left(x,\xi,t\right)\sla{n}_{-}+E^{q}\left(x,\xi,t\right)\frac{i\sigma^{\alpha\beta}n_{-\alpha}\Delta_{\beta}}{2m}\right]u\left(p\right)\nonumber 
 \end{align}
 
@@ -731,7 +719,7 @@ noprefix "false"
  的两个场，
 \begin_inset Formula 
 \[
-W\left[a,b\right]=P\exp\left(ig\int_{b}^{a}\dif x^{-}A^{+}\left(x^{-}n_{-}\right)\right)
+W\left[a,b\right]=P\exp\left(ig\int_{b}^{a}\dd x^{-}A^{+}\left(x^{-}n_{-}\right)\right)
 \]
 
 \end_inset
@@ -1420,15 +1408,15 @@ literal "false"
  中的约定是，
 \begin_inset Formula 
 \begin{align*}
-F^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\sbf{z}=0}\\
- & =\frac{1}{2}\int_{-\infty}^{+\infty}\frac{\dif\lambda}{2\pi}e^{ix\left(\lambda P\cdot n^{-}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\sla{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\\
+F^{q} & =\frac{1}{2}\int\frac{\dd{z^{-}}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket p\right|_{z^{+}=0,\sbf z=0}\\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\frac{\dd{\lambda}}{2\pi}e^{ix\left(\lambda P\cdot n^{-}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\sla n_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket p\\
  & =\frac{1}{2P^{+}}\left[H^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}u\left(p\right)+E^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{i\sigma^{+\alpha}\Delta_{\alpha}}{2m}u\left(p\right)\right].
 \end{align*}
 
 \end_inset
 
 第一行里的要求
-\begin_inset Formula $z^{+}=0,\sbf{z}=0$
+\begin_inset Formula $z^{+}=0,\sbf z=0$
 \end_inset
 
 ，也就是光锥坐标
@@ -1479,7 +1467,7 @@ F^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\pr
 所以上式前两行的定义是等价的。何方成使用的定义为，
 \begin_inset Formula 
 \[
-V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\left(\frac{1}{2}\lambda n\right)\sla{n}q\left(-\frac{1}{2}\lambda n\right)\ket{p}
+V_{q}=\int\frac{\dd{\lambda}}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\left(\frac{1}{2}\lambda n\right)\sla nq\left(-\frac{1}{2}\lambda n\right)\ket p
 \]
 
 \end_inset
@@ -1545,7 +1533,7 @@ V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\le
 歪斜度不为0的投影
 \end_layout
 
-\begin_layout Standard
+\begin_layout Example
 原先的
 \begin_inset Formula $\gamma$
 \end_inset
@@ -1594,7 +1582,7 @@ V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\le
 与动量的洛伦兹不变内积，
 \begin_inset Formula 
 \[
-\gamma^{\mu}p_{\mu}=\gamma^{0}p^{0}-\sbf{\gamma}\sbf{p}=\gamma^{+}p^{-}+\gamma^{-}p^{+}-\gamma^{\perp}p^{\perp}
+\gamma^{\mu}p_{\mu}=\gamma^{0}p^{0}-\sbf\gamma\sbf p=\gamma^{+}p^{-}+\gamma^{-}p^{+}-\gamma^{\perp}p^{\perp}
 \]
 
 \end_inset
@@ -1602,21 +1590,32 @@ V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\le
 从而有，
 \begin_inset Formula 
 \begin{align*}
- & \gamma^{+}\sla{p}=-\sla{p}\gamma^{+}+2p^{+}\\
- & \tr\left[\gamma^{+}\sla{p}\right]=\tr\left[\sla{p}\gamma^{+}\right]=4p^{+}\\
- & \tr\left[\gamma^{-}\sla{p}\right]=\tr\left[\sla{p}\gamma^{-}\right]=4p^{-}
+ & \gamma^{+}\sla p=-\sla p\gamma^{+}+2p^{+}\\
+ & \Tr\left[\gamma^{+}\sla p\right]=\Tr\left[\sla p\gamma^{+}\right]=4p^{+}\\
+ & \Tr\left[\gamma^{-}\sla p\right]=\Tr\left[\sla p\gamma^{-}\right]=4p^{-}
 \end{align*}
 
 \end_inset
 
-跟通常的公式一致
-\begin_inset Formula $\gamma^{\mu}\sla{p}=-\sla{p}\gamma^{\mu}+2p^{\mu}$
+跟通常的公式
+\begin_inset Formula $\gamma^{\mu}\sla p=-\sla p\gamma^{\mu}+2p^{\mu}$
 \end_inset
 
-。计算一下后面会用到的表达式
+一致。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+计算一下后面会用到的表达式
 \begin_inset Formula 
 \[
-\tr\left[\gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]=\tr\left[\gamma^{+}\gamma p_{1}\gamma^{+}\gamma p_{2}\right]=8p_{1}^{+}p_{2}^{+}
+\Tr\left[\gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]=\Tr\left[\gamma^{+}\gamma p_{1}\gamma^{+}\gamma p_{2}\right]=8p_{1}^{+}p_{2}^{+}
 \]
 
 \end_inset
@@ -1624,9 +1623,9 @@ V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\le
 
 \begin_inset Formula 
 \begin{align*}
- & \tr\left[\left(p_{2}+p_{1}\right)^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
- & =m\left(p_{2}+p_{1}\right)^{+}\tr\left[\gamma p_{1}\gamma^{+}+\gamma^{+}\gamma p_{2}\right]\\
- & =m\left(p_{2}+p_{1}\right)^{+}\tr\left[\gamma^{+}\gamma\left(p_{1}+p_{2}\right)\right]\\
+ & \Tr\left[\left(p_{2}+p_{1}\right)^{+}\left(\sla p_{1}+m\right)\gamma^{+}\left(\sla p_{2}+m\right)\right]\\
+ & =m\left(p_{2}+p_{1}\right)^{+}\Tr\left[\sla p_{1}\gamma^{+}+\gamma^{+}\sla p_{2}\right]\\
+ & =m\left(p_{2}+p_{1}\right)^{+}\Tr\left[\gamma^{+}\gamma\left(p_{1}+p_{2}\right)\right]\\
  & =4m\left(p_{2}+p_{1}\right)^{+}\left(p_{2}+p_{1}\right)^{+}
 \end{align*}
 
@@ -1636,6 +1635,13 @@ V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\le
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 振幅的参数化为，
 \begin_inset Formula 
 \[
@@ -1670,8 +1676,8 @@ V_{q}=\int\frac{\dif\lambda}{2\pi}e^{-ix\lambda P^{+}}\bra{p^{\prime}}\bar{q}\le
 构造第一个表达式，
 \begin_inset Formula 
 \begin{align*}
-A & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\gamma^{+}u\left(p_{2}\right)=\tr\left[\Gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
- & =\tr\left[\left(F_{1}+F_{2}\right)\gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)-\frac{F_{2}}{2m}\left(p_{2}+p_{1}\right)^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
+A & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\gamma^{+}u\left(p_{2}\right)=\Tr\left[\Gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
+ & =\Tr\left[\left(F_{1}+F_{2}\right)\gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)-\frac{F_{2}}{2m}\left(p_{2}+p_{1}\right)^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
  & =\left(F_{1}+F_{2}\right)8p_{1}^{+}p_{2}^{+}-2F_{2}\left(p_{2}^{+}+p_{1}^{+}\right)^{2}\\
  & =\left(F_{1}+F_{2}\right)2\frac{1-\xi^{2}}{\xi^{2}}Q^{2}-2F_{2}\frac{Q^{2}}{\xi^{2}}\\
  & =F_{1}2\frac{1-\xi^{2}}{\xi^{2}}Q^{2}-F_{2}2Q^{2}
@@ -1682,9 +1688,9 @@ A & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\ba
 构造第二个表达式，
 \begin_inset Formula 
 \begin{align*}
-B & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}u\left(p_{2}\right)=\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \tr\left[\Gamma^{+}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\right]\right\} \\
- & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \left(F_{1}+F_{2}\right)\tr\left[\gamma^{+}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\right]-\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}F_{2}\tr\left[\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\right]\right\} \\
- & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2}\left(F_{1}+F_{2}\right)\tr\left[\gamma^{+}\gamma\left(p_{1}+p_{2}\right)\right]-\left[\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\right]^{2}F_{2}\tr\left[p_{1}\cdot p_{2}+m^{2}\right]\\
+B & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}u\left(p_{2}\right)=\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \Tr\left[\Gamma^{+}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\right]\right\} \\
+ & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \left(F_{1}+F_{2}\right)\Tr\left[\gamma^{+}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\right]-\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}F_{2}\Tr\left[\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\right]\right\} \\
+ & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2}\left(F_{1}+F_{2}\right)\Tr\left[\gamma^{+}\gamma\left(p_{1}+p_{2}\right)\right]-\left[\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\right]^{2}F_{2}\Tr\left[p_{1}\cdot p_{2}+m^{2}\right]\\
  & =2\left(p_{2}^{+}+p_{1}^{+}\right)^{2}\left(F_{1}+F_{2}\right)-\left(p_{2}^{+}+p_{1}^{+}\right)^{2}F_{2}\left(\frac{Q^{2}}{2m^{2}}+2\right)\\
  & =\frac{Q^{2}}{\xi^{2}}\left[2\left(F_{1}+F_{2}\right)-F_{2}\left(\frac{Q^{2}}{2m^{2}}+2\right)\right]\\
  & =\frac{Q^{2}}{\xi^{2}}\left[2F_{1}-F_{2}\frac{Q^{2}}{2m^{2}}\right]
@@ -1699,8 +1705,8 @@ B & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\ba
 如果不代入参数化的具体形式，
 \begin_inset Formula 
 \begin{align*}
-A & =\tr\left[\Gamma^{+}\left(\sla{p}_{1}+M_{N}\right)\gamma^{+}\left(\sla{p}_{2}+M_{N}\right)\right]=\left(F_{1}+F_{2}\right)8p_{1}^{+}p_{2}^{+}-2F_{2}\left(p_{2}^{+}+p_{1}^{+}\right)^{2}\\
-B & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \tr\left[\Gamma^{+}\left(\sla{p}_{1}+M_{N}\right)\left(\sla{p}_{2}+M_{N}\right)\right]\right\} \\
+A & =\Tr\left[\Gamma^{+}\left(\sla p_{1}+M_{N}\right)\gamma^{+}\left(\sla p_{2}+M_{N}\right)\right]=\left(F_{1}+F_{2}\right)8p_{1}^{+}p_{2}^{+}-2F_{2}\left(p_{2}^{+}+p_{1}^{+}\right)^{2}\\
+B & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \Tr\left[\Gamma^{+}\left(\sla p_{1}+M_{N}\right)\left(\sla p_{2}+M_{N}\right)\right]\right\} \\
  & =2\left(p_{2}^{+}+p_{1}^{+}\right)^{2}\left(F_{1}+F_{2}\right)-\left(p_{2}^{+}+p_{1}^{+}\right)^{2}F_{2}\left(\frac{Q^{2}}{2m^{2}}+2\right)
 \end{align*}
 
@@ -1726,8 +1732,8 @@ B & =\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \tr\left[\Gamma^{+}\left(\sl
 ，得到
 \begin_inset Formula 
 \begin{align*}
- & A=\tr\left[\Gamma^{+}\left(\sla{p}_{1}+M_{N}\right)\gamma^{+}\left(\sla{p}_{2}+M_{N}\right)\right]=F_{1}2\frac{1-\xi^{2}}{\xi^{2}}Q^{2}-F_{2}2Q^{2}\\
- & B=\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \tr\left[\Gamma^{+}\left(\sla{p}_{1}+M_{N}\right)\left(\sla{p}_{2}+M_{N}\right)\right]\right\} =\frac{Q^{2}}{\xi^{2}}\left[2F_{1}-F_{2}\frac{Q^{2}}{2m^{2}}\right]
+ & A=\Tr\left[\Gamma^{+}\left(\sla p_{1}+M_{N}\right)\gamma^{+}\left(\sla p_{2}+M_{N}\right)\right]=F_{1}2\frac{1-\xi^{2}}{\xi^{2}}Q^{2}-F_{2}2Q^{2}\\
+ & B=\frac{\left(p_{2}+p_{1}\right)^{+}}{2m}\left\{ \Tr\left[\Gamma^{+}\left(\sla p_{1}+M_{N}\right)\left(\sla p_{2}+M_{N}\right)\right]\right\} =\frac{Q^{2}}{\xi^{2}}\left[2F_{1}-F_{2}\frac{Q^{2}}{2m^{2}}\right]
 \end{align*}
 
 \end_inset
@@ -1764,7 +1770,7 @@ F_{1}=\frac{-\xi^{2}\left(AQ^{2}-4BM_{N}^{2}\xi^{2}\right)}{2Q^{2}\left(4M_{N}^{
 \begin_inset Formula 
 \begin{align*}
 A & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma^{+}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\gamma^{+}u\left(p_{2}\right)\\
- & =\tr\left[\Gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
+ & =\Tr\left[\Gamma^{+}\left(\gamma p_{1}+m\right)\gamma^{+}\left(\gamma p_{2}+m\right)\right]\\
  & =\left(F_{1}+F_{2}\right)8\left(p_{1}^{+}\right)^{2}-F_{2}8\left(p_{1}^{+}\right)^{2}\\
  & =8\left(p_{1}^{+}\right)^{2}F_{1}
 \end{align*}
@@ -1863,8 +1869,8 @@ noprefix "false"
 a, 光子耦合到介子，它对分裂函数的贡献为，
 \begin_inset Formula 
 \begin{align*}
-\Gamma_{a}^{+} & =\bar{u}\left(p^{\prime}\right)\frac{C_{\phi B}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\left(\sla{k}+\sla{\Delta}\right)\gamma^{5}\tilde{F}\left(k+\Delta\right)\frac{i}{D_{\phi}\left(k+\Delta\right)}\left(2k+\Delta\right)^{+}\\
- & \times\frac{i}{D_{\phi}\left(k\right)}\frac{i\left(\sla{p}-\sla{k}+M_{B}\right)}{D_{B}\left(p-k\right)}\gamma^{5}\sla{k}\tilde{F}\left(k\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)u\left(p\right)\\
+\Gamma_{a}^{+} & =\bar{u}\left(p^{\prime}\right)\frac{C_{\phi B}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\left(\sla{k}+\sla{\Delta}\right)\gamma^{5}\tilde{F}\left(k+\Delta\right)\frac{i}{D_{\phi}\left(k+\Delta\right)}\left(2k+\Delta\right)^{+}\\
+ & \times\frac{i}{D_{\phi}\left(k\right)}\frac{i\left(\sla p-\sla{k}+M_{B}\right)}{D_{B}\left(p-k\right)}\gamma^{5}\sla{k}\tilde{F}\left(k\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)u\left(p\right)\\
  & =\bar{u}\left(p^{\prime}\right)\left\{ \gamma^{+}f_{\phi B}^{\left(\text{rbw}\right)}\left(y,t\right)+\frac{i\sigma^{+\nu}q_{\nu}}{2M_{N}}g_{\phi B}^{\left(\text{rbw}\right)}\left(y,t\right)\right\} u\left(p\right)
 \end{align*}
 
@@ -1873,7 +1879,7 @@ a, 光子耦合到介子，它对分裂函数的贡献为，
 
 \begin_inset Formula 
 \[
-\left(\sla{k}+\sla{\Delta}\right)\gamma_{5}\left(2k+\Delta\right)^{+}\left(\sla{p}-\sla{k}+M_{B}\right)\gamma^{5}\sla{k}
+\left(\sla{k}+\sla{\Delta}\right)\gamma_{5}\left(2k+\Delta\right)^{+}\left(\sla p-\sla{k}+M_{B}\right)\gamma^{5}\sla{k}
 \]
 
 \end_inset
@@ -1881,8 +1887,8 @@ a, 光子耦合到介子，它对分裂函数的贡献为，
 
 \begin_inset Formula 
 \begin{align*}
- & A=\tr\left[\Gamma^{+}\left(\sla{p}_{1}+M_{N}\right)\gamma^{+}\left(\sla{p}_{2}+M_{N}\right)\right]=F_{1}2\frac{1-\xi^{2}}{\xi^{2}}Q^{2}-F_{2}2Q^{2}\\
- & B=\frac{\left(p_{2}+p_{1}\right)^{+}}{2M_{N}}\left\{ \tr\left[\Gamma^{+}\left(\sla{p}_{1}+M_{N}\right)\left(\sla{p}_{2}+M_{N}\right)\right]\right\} =\frac{Q^{2}}{\xi^{2}}\left[2F_{1}-F_{2}\frac{Q^{2}}{2M_{N}^{2}}\right]
+ & A=\Tr\left[\Gamma^{+}\left(\sla p_{1}+M_{N}\right)\gamma^{+}\left(\sla p_{2}+M_{N}\right)\right]=F_{1}2\frac{1-\xi^{2}}{\xi^{2}}Q^{2}-F_{2}2Q^{2}\\
+ & B=\frac{\left(p_{2}+p_{1}\right)^{+}}{2M_{N}}\left\{ \Tr\left[\Gamma^{+}\left(\sla p_{1}+M_{N}\right)\left(\sla p_{2}+M_{N}\right)\right]\right\} =\frac{Q^{2}}{\xi^{2}}\left[2F_{1}-F_{2}\frac{Q^{2}}{2M_{N}^{2}}\right]
 \end{align*}
 
 \end_inset
