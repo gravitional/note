@@ -52,7 +52,7 @@
 \setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
 %设置数学字体
 \usepackage{unicode-math}%在其他字体包如amsmath之后调用
-\setmathfont{Latin Modern Math}
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
@@ -243,13 +243,33 @@ Thomas
 ，
 \begin_inset Formula 
 \begin{align*}
- & v^{+}=\frac{1}{\sqrt{2}}v\cdot n_{-},\quad v^{-}=\frac{1}{\sqrt{2}}v\cdot n_{+}\\
+ & v^{+}=\frac{1}{\sqrt{2}}v\cdot n_{-},v^{-}=\frac{1}{\sqrt{2}}v\cdot n_{+}\\
  & v^{\pm}=\frac{1}{\sqrt{2}}\left(v^{0}\pm v^{3}\right),\quad v^{\perp}=\left(v^{1},v^{2}\right)
 \end{align*}
 
 \end_inset
 
-变换矩阵为：
+即
+\begin_inset Formula $n_{-}$
+\end_inset
+
+投影出
+\begin_inset Formula $+$
+\end_inset
+
+分量，
+\begin_inset Formula $n_{+}$
+\end_inset
+
+投影出
+\begin_inset Formula $-$
+\end_inset
+
+分量。
+\end_layout
+
+\begin_layout Definition
+普通协变坐标系到光锥坐标系的变换矩阵为：
 \begin_inset Formula 
 \[
 \left(\begin{array}{c}
@@ -272,7 +292,11 @@ v^{2}
 
 \end_inset
 
-积分测度的Jacobian为
+
+\end_layout
+
+\begin_layout Enumerate
+积分测度的 Jacobian 为
 \begin_inset Formula $1$
 \end_inset
 
@@ -284,7 +308,11 @@ v^{2}
 
 \end_inset
 
-两个四矢量的不变乘积为：
+
+\end_layout
+
+\begin_layout Enumerate
+两个四矢量的不变内积为：
 \begin_inset Formula 
 \[
 vw=v^{+}w^{-}+v^{-}w^{+}-\sbf v_{\perp}\cdot\sbf w_{\perp}
@@ -292,6 +320,10 @@ vw=v^{+}w^{-}+v^{-}w^{+}-\sbf v_{\perp}\cdot\sbf w_{\perp}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Enumerate
 单个四矢量的内积为
 \begin_inset Formula 
 \[
@@ -300,19 +332,27 @@ vv=2v^{+}v^{-}-\sbf v_{\perp}^{2}
 
 \end_inset
 
-一般地
+
+\end_layout
+
+\begin_layout Enumerate
+一般情况下 
 \begin_inset Formula $v^{+}w^{-}\neq v^{-}w^{+}$
 \end_inset
 
-，由于
+，显然：
 \begin_inset Formula 
 \begin{align*}
-v^{+}w^{-} & =\frac{1}{2}\left[\left(0,0\right)-\left(0,3\right)+\left(3,0\right)-\left(3,3\right)\right]\\
-w^{+}v^{-} & =\frac{1}{2}\left[\left(0,0\right)+\left(0,3\right)-\left(3,0\right)-\left(3,3\right)\right]
+v^{+}w^{-} & =\frac{1}{2}\left[v^{0}w^{0}{\color{blue}-v^{0}w^{3}+v^{3}w^{0}}-v^{3}w^{3}\right]\\
+w^{+}v^{-} & =\frac{1}{2}\left[v^{0}w^{0}{\color{blue}+v^{0}w^{3}-v^{3}w^{0}}-v^{3}w^{3}\right]
 \end{align*}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Enumerate
 沿着光锥方向的导数为
 \begin_inset Formula 
 \[
@@ -324,7 +364,7 @@ w^{+}v^{-} & =\frac{1}{2}\left[\left(0,0\right)+\left(0,3\right)-\left(3,0\right
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
 由于
 \begin_inset Formula $vw=v^{+}w^{-}+v^{-}w^{+}-v_{T}w_{T}$
 \end_inset
@@ -332,12 +372,12 @@ w^{+}v^{-} & =\frac{1}{2}\left[\left(0,0\right)+\left(0,3\right)-\left(3,0\right
 ，所以光锥坐标下的度规是，
 \begin_inset Formula 
 \[
-\left(\begin{array}{cccc}
+g^{\mu\nu}=\left(\begin{array}{cccc}
 0 & 1 & 0 & 0\\
 1 & 0 & 0 & 0\\
 0 & 0 & -1 & 0\\
 0 & 0 & 0 & -1
-\end{array}\right)
+\end{array}\right),\quad\left\{ \mu,\nu\right\} =\left\{ +,-,\perp\right\} 
 \]
 
 \end_inset
@@ -349,8 +389,112 @@ w^{+}v^{-} & =\frac{1}{2}\left[\left(0,0\right)+\left(0,3\right)-\left(3,0\right
 光锥坐标系–salamu
 \end_layout
 
-\begin_layout Standard
-在光锥坐标中，动量的各分量定义为： 
+\begin_layout Definition
+这种定义与上面的正交定义相差
+\begin_inset Formula $1/2$
+\end_inset
+
+。定义各分量为： 
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+v^{+}\\
+v^{-}\\
+v^{1}\\
+v^{2}
+\end{array}\right)=\left[\begin{array}{cccc}
+1 & 1 & 0 & 0\\
+1 & -1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]\left(\begin{array}{c}
+v^{0}\\
+v^{3}\\
+v^{1}\\
+v^{2}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+积分测度的 Jacobian 为 
+\begin_inset Formula $2$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\dd^{4}z=\frac{1}{2}\dd z^{+}\dd z^{-}\dd^{2}\sbf z.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+两个四矢量的不变内积为：
+\begin_inset Formula 
+\[
+vw=\frac{1}{2}\left(v^{+}w^{-}+v^{-}w^{+}\right)-\sbf v_{\perp}\cdot\sbf w_{\perp}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+单个四矢量的内积为：
+\begin_inset Formula 
+\[
+vv=v^{+}v^{-}-\sbf v_{\perp}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+沿着光锥方向的导数为
+\begin_inset Formula 
+\[
+\partial^{+}=\frac{\partial}{\partial z^{-}},\quad\partial^{-}=\frac{\partial}{\partial z^{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+由于
+\begin_inset Formula $vw=\frac{1}{2}\left(v^{+}w^{-}+v^{-}w^{+}\right)-\sbf v_{\perp}\cdot\sbf w_{\perp}$
+\end_inset
+
+，所以光锥坐标下的度规是，
+\begin_inset Formula 
+\[
+g^{\mu\nu}=\left(\begin{array}{cccc}
+0 & 1/2 & 0 & 0\\
+1/2 & 0 & 0 & 0\\
+0 & 0 & -1 & 0\\
+0 & 0 & 0 & -1
+\end{array}\right),\quad\left\{ \mu,\nu\right\} =\left\{ +,-,\perp\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+per.pen.dicu.lar 垂直的；成直角的
 \family roman
 \series medium
 \shape up
@@ -366,8 +510,7 @@ w^{+}v^{-} & =\frac{1}{2}\left[\left(0,0\right)+\left(0,3\right)-\left(3,0\right
 
 \begin_inset Formula 
 \begin{align*}
-k^{\pm}= & k_{0}\pm k_{3},\\
-k_{\perp}^{2}= & k_{1}^{2}+k_{2}^{2}\\
+k^{\pm}= & k_{\perp}^{2}=k_{0}\pm k_{3},\quad k_{1}^{2}+k_{2}^{2}\\
 k^{2}= & k_{0}^{2}-k_{1}^{2}-k_{2}^{2}-k_{3}^{2}=k^{+}k^{-}-k_{\perp}^{2},\\
 p^{+}p^{-}= & M^{2},\quad p_{\perp}^{2}=0
 \end{align*}
@@ -375,13 +518,18 @@ p^{+}p^{-}= & M^{2},\quad p_{\perp}^{2}=0
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-per.pen.dicu.lar 垂直的；成直角的
-\end_layout
-
-\begin_layout Standard
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
 k
 \begin_inset Formula $_{\perp}$
 \end_inset
@@ -402,11 +550,7 @@ k
 \begin_inset Formula $p_{\perp}^{2}=0$
 \end_inset
 
-。
-\end_layout
-
-\begin_layout Standard
-符号约定:介子和重子传播子因子
+。介子和重子传播子
 \begin_inset Formula $D_{\phi}(k)$
 \end_inset
 
@@ -418,8 +562,8 @@ k
 \begin_inset Formula 
 \begin{align*}
 D_{\phi}\left(k\right) & =k^{2}-m_{\phi}^{2}+i\epsilon=k^{+}k^{-}-k_{\perp}^{2}-m_{\phi}^{2}+i\epsilon=k^{+}k^{-}-\Omega_{\phi}+i\epsilon\\
-D_{B}\left(p-k\right) & =(p-k)^{2}-m_{B}^{2}+i\epsilon=(p-k)^{+}(p-k)^{-}-k_{\perp}^{2}-m_{B}^{2}+i\epsilon\\
- & =(p-k)^{+}(p-k)^{-}-\Omega_{B}+i\epsilon
+D_{B}\left(p-k\right) & =\left(p-k\right)^{2}-m_{B}^{2}+i\epsilon=\left(p-k\right)^{+}\left(p-k\right)^{-}-k_{\perp}^{2}-m_{B}^{2}+i\epsilon\\
+ & =\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\epsilon
 \end{align*}
 
 \end_inset
