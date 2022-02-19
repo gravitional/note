@@ -70,11 +70,12 @@
 % 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
 %%%+++++++++++++++++++++++++++++++
 \usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
 \usepackage{braket} % 狄拉克 bra-ket notation
 \usepackage{slashed} % 费曼 slash 记号 \slashed{k}
-  %\bm 命令使参数变成粗体
+%\bm 命令使参数变成粗体
 % Blackboard variants of Computer Modern fonts.
-\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+%\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
 \usepackage{makeidx}% 用来创建 indexes 的标准包
 \usepackage{multirow} % 创建具有多行的 tabular
 \usepackage{tikz-feynman}  % 画费曼图用
@@ -89,6 +90,7 @@
 \setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
 \setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
 %设置数学字体
+\usepackage{mathtools}% 定义配对的数学符号,在 unicode-math之前调用
 \usepackage{unicode-math}%在其他字体包如amsmath之后调用
 \setmathfont{Latin Modern Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
@@ -99,18 +101,17 @@
 % \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
 % \setmathrm{Latin Modern Roman}
 %%++++++++++++++++++++++++++++++++++++++
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+%\DeclareMathOperator{\tr}{tr} %矩阵求迹的符号
+%\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+%\DeclareMathOperator{\Res}{Res} %复变函数的留数
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \DeclareMathOperator{\diag}{diag} %对角矩阵
-\DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
 \DeclareMathOperator{\sign}{Sign}
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
@@ -213,7 +214,7 @@ Young
 \mathcal{L} & ={\rm Tr}\big[\overline{B}\left(i\gamma.\mathscr{D}-M_{B}\right)B\big]+D{\rm Tr}\left[\overline{B}\gamma^{\mu}\gamma^{5}\left\{ u_{\mu},B\right\} \right]+F{\rm Tr}\left[\overline{B}\gamma^{\mu}\gamma_{5}\left[u_{\mu},B\right]\right]\\
  & +\overline{T}_{\mu}^{ijk}(i\gamma^{\mu\nu\alpha}\mathscr{D}_{\alpha}-M_{T}\gamma^{\mu\nu})T_{\nu}^{ijk}+\mathcal{C}\left[\varepsilon^{ijk}\overline{T}_{\mu}^{ilm}\Theta^{\mu\nu}\left(u_{\nu}\right)^{lj}B^{mk}+\text{h.c.}\right]\\
  & -\mathcal{H}\overline{T}_{\mu}^{ijk}\gamma^{\mu\nu\alpha}\gamma^{5}\left(u_{\alpha}\right)^{kl}T_{\nu}^{ijl}+\frac{f^{2}}{4}{\rm Tr}\big[\mathscr{D}_{\mu}U\left(\mathscr{D}^{\mu}U\right)^{\dagger}\big]\\
- & +\frac{i}{2}\left\{ b_{9}\tr\left[\overline{B}u_{\mu}\right]\sigma^{\mu\nu}\tr\left[u_{\nu}B\right]+b_{10}\tr\left[\overline{B}\left[u_{\mu},u_{\nu}\right]\sigma^{\mu\nu}B\right]+b_{11}\tr\left[\overline{B}\left\{ u_{\mu},u_{\nu}\right\} \sigma^{\mu\nu}B\right]\right\} 
+ & +\frac{i}{2}\left\{ b_{9}\Tr\left[\overline{B}u_{\mu}\right]\sigma^{\mu\nu}\Tr\left[u_{\nu}B\right]+b_{10}\Tr\left[\overline{B}\left[u_{\mu},u_{\nu}\right]\sigma^{\mu\nu}B\right]+b_{11}\Tr\left[\overline{B}\left\{ u_{\mu},u_{\nu}\right\} \sigma^{\mu\nu}B\right]\right\} 
 \end{align*}
 
 \end_inset
@@ -435,7 +436,7 @@ noprefix "false"
 的傅立叶变换为，
 \begin_inset Formula 
 \[
-\tilde{F}\left[k\right]=\frac{1}{2\pi}\int_{-\infty}^{+\infty}\dif a\,{\color{blue}e^{-ika}}F\left[a\right],\quad F\left[a\right]=\int_{-\infty}^{+\infty}\dif a\,{\color{red}e^{ika}}\tilde{F}\left[k\right].
+\tilde{F}\left[k\right]=\frac{1}{2\pi}\int_{-\infty}^{+\infty}\dd a\,{\color{blue}e^{-ika}}F\left[a\right],\quad F\left[a\right]=\int_{-\infty}^{+\infty}\dd a\,{\color{red}e^{ika}}\tilde{F}\left[k\right].
 \]
 
 \end_inset
@@ -465,7 +466,7 @@ noprefix "false"
 \begin{align*}
  & B\left(x\right)=\exp\left[ie_{B}^{q}\theta\left(x\right)\right]B^{\prime}\left(x\right),\quad T_{\mu}\left(x\right)=\exp\left[ie_{T}^{q}\theta\left(x\right)\right]T_{\mu}^{\prime}\left(x\right),\quad\phi\left(x\right)=\exp\left[ie_{\phi}^{q}\theta\left(x\right)\right]\phi^{\prime}\left(x\right)\\
  & D_{\mu,x}\phi\left(x\right)=\left[\partial_{\mu,x}-ie_{\phi}^{q}\mathcal{A}_{\mu}\left(x\right)\right]\phi\left(x\right),\quad\mathcal{A}_{\mu}=\mathcal{A}_{\mu}^{\prime}+\partial_{x,\mu}\theta\\
- & \mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right)=e^{+ie_{\phi}^{q}\theta\left({\color{blue}y}\right)}\mathcal{G}_{\phi}^{q,\prime}\left({\color{blue}y},x\right)e^{-ie_{\phi}^{q}\theta\left(x\right)},\quad\mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right)=\exp\left[+ie_{\phi}^{q}\int_{x}^{{\color{blue}y}}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]\\
+ & \mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right)=e^{+ie_{\phi}^{q}\theta\left({\color{blue}y}\right)}\mathcal{G}_{\phi}^{q,\prime}\left({\color{blue}y},x\right)e^{-ie_{\phi}^{q}\theta\left(x\right)},\quad\mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right)=\exp\left[+ie_{\phi}^{q}\int_{x}^{{\color{blue}y}}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]\\
  & \text{正变换：}\phi^{\prime}\left(x\right)=e^{-ie_{\phi}^{q}\theta\left(x\right)}\phi\left(x\right),
 \end{align*}
 
@@ -557,8 +558,8 @@ literal "false"
 其中，
 \begin_inset Formula 
 \begin{align*}
-\mathcal{G}_{\phi}^{q}\left(x,y,P\right) & =\exp\left[+ie_{\phi}^{q}\int_{y}^{x}\dif z_{\nu}\int\dif a\,\mathcal{A}^{\nu}\left(z+c\right)F\left(c\right)\right]\\
-\mathcal{D}_{\mu,x}\phi\left(x\right) & =\left[\partial_{\mu,x}-ie_{\phi}^{q}\int_{-\infty}^{+\infty}\dif a\,\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)\right]\phi\left(x\right)
+\mathcal{G}_{\phi}^{q}\left(x,y,P\right) & =\exp\left[+ie_{\phi}^{q}\int_{y}^{x}\dd z_{\nu}\int\dd a\,\mathcal{A}^{\nu}\left(z+c\right)F\left(c\right)\right]\\
+\mathcal{D}_{\mu,x}\phi\left(x\right) & =\left[\partial_{\mu,x}-ie_{\phi}^{q}\int_{-\infty}^{+\infty}\dd a\,\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)\right]\phi\left(x\right)
 \end{align*}
 
 \end_inset
@@ -582,8 +583,8 @@ A型非定域展开
 的幂次展开，化简非定域 ChPT 拉氏量。由于平移不变性，规范链接的展开有两种写法，这里先展示一种，附录中记录另一种。
 \begin_inset Formula 
 \begin{align*}
-\mathcal{G}_{\phi}^{q}\left({\color{blue}x},x+a\right) & =e^{{\color{blue}\left(ie_{\phi}^{q}\right)}\int_{x+a}^{x}\dif w_{\nu}\int\dif c\,\mathcal{A}^{\nu}\left(w-c\right)F\left(c\right)}\approx1+{\color{blue}ie_{\phi}^{q}}\int_{x+a}^{x}\dif w^{\nu}\int_{-\infty}^{+\infty}\dif c\,F\left(c\right)\mathcal{A}_{\nu}\left(w-c\right)\\
-\mathcal{D}_{\mu,x+a}\phi\left(x+a\right) & =\left[\partial_{\mu,x+a}{\color{red}-ie_{\phi}^{q}}\int_{-\infty}^{+\infty}\dif c\,F\left(c\right)\mathcal{A}_{\mu}\left(x+a-c\right)\right]\phi\left(x+a\right)
+\mathcal{G}_{\phi}^{q}\left({\color{blue}x},x+a\right) & =e^{{\color{blue}\left(ie_{\phi}^{q}\right)}\int_{x+a}^{x}\dd w_{\nu}\int\dd c\,\mathcal{A}^{\nu}\left(w-c\right)F\left(c\right)}\approx1+{\color{blue}ie_{\phi}^{q}}\int_{x+a}^{x}\dd w^{\nu}\int_{-\infty}^{+\infty}\dd c\,F\left(c\right)\mathcal{A}_{\nu}\left(w-c\right)\\
+\mathcal{D}_{\mu,x+a}\phi\left(x+a\right) & =\left[\partial_{\mu,x+a}{\color{red}-ie_{\phi}^{q}}\int_{-\infty}^{+\infty}\dd c\,F\left(c\right)\mathcal{A}_{\mu}\left(x+a-c\right)\right]\phi\left(x+a\right)
 \end{align*}
 
 \end_inset
@@ -597,8 +598,8 @@ A型非定域展开
 \begin{align*}
  & \int_{a}F\left(a\right){\color{blue}\,\mathcal{G}_{\phi}^{q}\left(x,x+a,P\right)\,}{\color{red}\mathcal{D}_{\mu,x+a}\,\phi\left(x+a\right)}\\
  & =\int_{a}F\left(a\right)\,{\color{red}\partial_{\mu,x+a}}\,\phi\left(x+a\right)\\
- & +\int_{y}F\left(a\right)\,{\color{red}\left(-ie_{\phi}^{q}\right)\int_{-\infty}^{+\infty}\dif a\,\mathcal{A}_{\mu}\left(x+a+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
- & +\int_{y}F\left(a\right)\,{\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dif z_{\nu}\int\dif a\,\mathcal{A}^{\nu}\left(x+a-c\right)F\left(c\right)}\,{\color{red}\partial_{\mu,y}}\,\phi\left(x+a\right)
+ & +\int_{y}F\left(a\right)\,{\color{red}\left(-ie_{\phi}^{q}\right)\int_{-\infty}^{+\infty}\dd a\,\mathcal{A}_{\mu}\left(x+a+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
+ & +\int_{y}F\left(a\right)\,{\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dd z_{\nu}\int\dd a\,\mathcal{A}^{\nu}\left(x+a-c\right)F\left(c\right)}\,{\color{red}\partial_{\mu,y}}\,\phi\left(x+a\right)
 \end{align*}
 
 \end_inset
@@ -656,7 +657,7 @@ Re: 非定域拉氏量，
  & \frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\int_{ab}F\left(a\right)F\left(b\right){\color{red}\mathcal{G}_{\phi}^{q}\left(x+b,x+a\right)}\left\{ 2\phi\left(x+a\right)\left[{\color{blue}\mathcal{D}_{\mu,x+b}\phi\left(x+b\right)}\right]^{\dagger}\right\} \\
 = & \frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\int_{ab}F\left(a\right)F\left(b\right){\color{blue}\left\{ 2\phi\left(x+a\right);\partial_{\mu,x+b}\phi^{\dagger}\left(x+b\right)\right\} }\\
 + & \frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\int_{abc}F\left(a\right)F\left(b\right){\color{blue}F\left(c\right)\left[2\phi\left(x+a\right)\mathcal{A}_{\mu}\left(x+b+c\right)\phi^{\dagger}\left(x+b\right)\right]\left(ie_{\phi}^{q}\right)}\\
-+ & \frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\int_{abc}F\left(a\right)F\left(b\right){\color{red}F\left(c\right)\int_{x+a}^{x+b}\mathcal{A}_{\nu}\left(w+c\right)\dif w^{\nu}\left(ie_{\phi}^{q}\right)}{\color{blue}\left[2\phi\left(x+a\right)\partial_{\mu,x+b}\phi^{\dagger}\left(x+b\right)\right]}
++ & \frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\int_{abc}F\left(a\right)F\left(b\right){\color{red}F\left(c\right)\int_{x+a}^{x+b}\mathcal{A}_{\nu}\left(w+c\right)\dd w^{\nu}\left(ie_{\phi}^{q}\right)}{\color{blue}\left[2\phi\left(x+a\right)\partial_{\mu,x+b}\phi^{\dagger}\left(x+b\right)\right]}
 \end{align*}
 
 \end_inset
@@ -833,8 +834,8 @@ Re: 非定域拉氏量，
  散射过程中，强子部分的振幅元为，
 \begin_inset Formula 
 \begin{align*}
-\bra{p^{\prime}}\int\dif^{4}x\,e_{N}\mathcal{A}\left(x\right)J^{\mu}\left(x\right)\ket{p} & =\int\dif^{4}x\,e^{-iqx}e_{N}\mathcal{A}^{-}\bra{p^{\prime}}e^{+iPx}J^{\mu}\left(0\right)e^{-iPx}\ket{p}\\
- & =\int\dif^{4}x\,e^{i\left(p^{\prime}-p-q\right)x}e_{N}\mathcal{A}^{-}\bra{p^{\prime}}J^{\mu}\left(0\right)\ket{p}
+\bra{p^{\prime}}\int\dd^{4}x\,e_{N}\mathcal{A}\left(x\right)J^{\mu}\left(x\right)\ket{p} & =\int\dd^{4}x\,e^{-iqx}e_{N}\mathcal{A}^{-}\bra{p^{\prime}}e^{+iPx}J^{\mu}\left(0\right)e^{-iPx}\ket{p}\\
+ & =\int\dd^{4}x\,e^{i\left(p^{\prime}-p-q\right)x}e_{N}\mathcal{A}^{-}\bra{p^{\prime}}J^{\mu}\left(0\right)\ket{p}
 \end{align*}
 
 \end_inset
@@ -873,7 +874,7 @@ Re: 非定域拉氏量，
  的平移不变性，
 \begin_inset Formula 
 \begin{align*}
- & J_{q,\text{em}}^{\mu}\left(x\right)\equiv\frac{\delta\int\dif^{4}y\,\mathcal{L}_{\text{em}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
+ & J_{q,\text{em}}^{\mu}\left(x\right)\equiv\frac{\delta\int\dd^{4}y\,\mathcal{L}_{\text{em}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
  & =\int_{a}F\left(a\right)\bar{B}\left(x-a\right)\gamma^{\mu}B\left(x-a\right){\color{blue}\left(e_{B}^{q}\right)}+\bar{T}_{\alpha}\left(x-a\right)\gamma^{\alpha\nu\mu}T_{\nu}\left(x-a\right){\color{blue}\left(e_{T}^{q}\right)}\\
  & +\int_{a}F\left(a\right)\left[\phi^{\dagger}\left(x-a\right)\partial^{\mu}\phi\left(x-a\right)-\phi\left(x-a\right)\partial_{\mu}\phi\left(x-a\right)^{\dagger}\right]{\color{blue}\left(ie_{\phi}^{q}\right)}\quad\text{介子流}\\
  & +\int_{ac}F\left(a\right)F\left(c\right)\bar{p}\left(x-a-c\right)\left[\frac{C_{B\phi}}{f}\gamma^{\mu}\gamma^{5}B\left(x-a-c\right)+\frac{C_{T\phi}}{f}\Theta^{\mu\nu}T_{\nu}\left(x-a-c\right)\right]\phi\left(x-c\right){\color{blue}\left(-ie_{\phi}^{q}\right)}+\text{H.c}\\
@@ -1177,8 +1178,8 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 \begin_inset Formula 
 \begin{align*}
  & \mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right)=\int_{ac}F\left(a\right)\left[\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\bar{p}\left(x\right)\Theta^{\rho\nu}T_{\nu}\left(x\right)\right]\\
- & \times{\color{red}\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w+c\right)F\left(c\right)\dif w^{\nu}\left(ie_{\phi}^{q}\right)}\,\partial_{\rho}\phi\left(x+a\right)+\text{H.c}\\
- & +\int_{abc}F\left(a\right)F\left(b\right)\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\,\bar{p}\left(x\right)\gamma^{\rho}p\left(x\right){\color{red}F\left(c\right)\int_{x+a}^{x+b}\mathcal{A}_{\nu}\left(w+c\right)\dif w^{\nu}\left(ie_{\phi}^{q}\right)}\left[2\,\phi\left(x+a\right)\partial_{\rho,x+b}\phi^{\dagger}\left(x+b\right)\right]
+ & \times{\color{red}\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w+c\right)F\left(c\right)\dd w^{\nu}\left(ie_{\phi}^{q}\right)}\,\partial_{\rho}\phi\left(x+a\right)+\text{H.c}\\
+ & +\int_{abc}F\left(a\right)F\left(b\right)\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\,\bar{p}\left(x\right)\gamma^{\rho}p\left(x\right){\color{red}F\left(c\right)\int_{x+a}^{x+b}\mathcal{A}_{\nu}\left(w+c\right)\dd w^{\nu}\left(ie_{\phi}^{q}\right)}\left[2\,\phi\left(x+a\right)\partial_{\rho,x+b}\phi^{\dagger}\left(x+b\right)\right]
 \end{align*}
 
 \end_inset
@@ -1187,7 +1188,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\mathcal{G}_{\phi}^{q}=\exp\left[ie_{\phi}^{q}\int_{x+a}^{x+b}\int_{c}F\left(c\right)\mathcal{A}_{\nu}\left(w+c\right)\dif w^{\nu}\right]$
+\begin_inset Formula $\mathcal{G}_{\phi}^{q}=\exp\left[ie_{\phi}^{q}\int_{x+a}^{x+b}\int_{c}F\left(c\right)\mathcal{A}_{\nu}\left(w+c\right)\dd w^{\nu}\right]$
 \end_inset
 
 不是厄米的，对应的介子场共轭项用负号连接。
@@ -1212,7 +1213,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 \begin_deeper
 \begin_layout Itemize
 其中
-\begin_inset Formula $I\left(y,x,P\right)=ie_{\phi}\int_{x}^{y}\dif w_{\nu}\,\mathcal{A}^{\nu}\left(w\right)$
+\begin_inset Formula $I\left(y,x,P\right)=ie_{\phi}\int_{x}^{y}\dd w_{\nu}\,\mathcal{A}^{\nu}\left(w\right)$
 \end_inset
 
 。
@@ -1267,7 +1268,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 
 \begin_inset Formula 
 \[
-\int_{y+a}^{y+b}\int_{c}\delta\left(x-w-c\right)\dif w^{\mu}=\int_{y}^{y+b}\delta\left(x-w-c\right)\dif w^{\mu}{\color{blue}+}\int_{y+a}^{y}\delta\left(x-w-c\right)\dif w^{\mu}
+\int_{y+a}^{y+b}\int_{c}\delta\left(x-w-c\right)\dd w^{\mu}=\int_{y}^{y+b}\delta\left(x-w-c\right)\dd w^{\mu}{\color{blue}+}\int_{y+a}^{y}\delta\left(x-w-c\right)\dd w^{\mu}
 \]
 
 \end_inset
@@ -1374,7 +1375,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 额外电磁流为，
 \begin_inset Formula 
 \begin{align*}
- & \delta J_{q}^{\mu}\left(x\right)\equiv\frac{\delta\int\dif^{4}y\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
+ & \delta J_{q}^{\mu}\left(x\right)\equiv\frac{\delta\int\dd^{4}y\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
  & =\int_{c}F\left(c\right)\left[\bar{p}\left(x-c\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x-c\right)+\frac{C_{T\phi}}{f}\bar{p}\left(x-c\right)\Theta^{\rho\nu}T_{\nu}\left(x-c\right)\right]\\
  & \times\mathcal{R}^{\mu}\left(k,q\right){\color{blue}\left(+e_{\phi}^{q}\right)}\,\partial_{\rho}\phi\left(x-c\right)+\text{H.c}\\
  & +\int_{ac}F\left(c\right)\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\,\bar{p}\left(x-c\right)\gamma^{\rho}p\left(x-c\right)\left[2\phi\left(x+a-c\right)\partial_{\rho}\phi^{\dagger}\left(x-c\right)\right]\\
@@ -1493,7 +1494,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 \end_inset
 
 等，这是一种临时的表示。我们用
-\begin_inset Formula $\int\dif^{4}x\,\delta J_{q}^{\mu}\left(x\right)$
+\begin_inset Formula $\int\dd^{4}x\,\delta J_{q}^{\mu}\left(x\right)$
 \end_inset
 
  计算编时乘积，当我们完成场的 Wick 收缩之后，对坐标的偏导数将映射到动量空间的动量因子，例如
@@ -1509,7 +1510,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \bar{B}\left(x\right)\gam
 \end_inset
 
  函数。运动学自由度总是不变的，单圈图中净余的自由动量即为圈动量——
-\begin_inset Formula $\int\dif^{4}k/\left(2\pi\right)^{4}$
+\begin_inset Formula $\int\dd^{4}k/\left(2\pi\right)^{4}$
 \end_inset
 
 。对圈动量积分之后，最终的振幅不依赖于任何内线动量。
@@ -1679,8 +1680,8 @@ literal "false"
 其中，
 \begin_inset Formula 
 \begin{align*}
-{\color{blue}\mathcal{G}_{\phi}^{q}\left(x,x+a,P\right)} & =\exp\left[{\color{blue}\left(ie_{\phi}^{q}\right)}\int_{x+a}^{x}\dif w_{\nu}\int\dif c\,\mathcal{A}^{\nu}\left(w+c\right)F\left(c\right)\right]\\
-{\color{red}\mathcal{D}_{\mu,x}}\phi\left(x\right) & =\partial_{\mu,x}-ie_{\phi}^{q}\int_{-\infty}^{+\infty}\dif c\,\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)
+{\color{blue}\mathcal{G}_{\phi}^{q}\left(x,x+a,P\right)} & =\exp\left[{\color{blue}\left(ie_{\phi}^{q}\right)}\int_{x+a}^{x}\dd w_{\nu}\int\dd c\,\mathcal{A}^{\nu}\left(w+c\right)F\left(c\right)\right]\\
+{\color{red}\mathcal{D}_{\mu,x}}\phi\left(x\right) & =\partial_{\mu,x}-ie_{\phi}^{q}\int_{-\infty}^{+\infty}\dd c\,\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)
 \end{align*}
 
 \end_inset
@@ -1690,8 +1691,8 @@ literal "false"
 \begin{align*}
  & \int_{a}F\left(a\right){\color{blue}\,\mathcal{G}_{\phi}^{q}\left(x,x+a,P\right)\,}{\color{red}\mathcal{D}_{\mu,x+a}\,\phi\left(x+a\right)}\\
  & =\int_{a}F\left(a\right)\,{\color{red}\partial_{\mu,x+a}}\,\phi\left(x+a\right)\\
- & +\int_{y}F\left(a\right)\,{\color{red}\left(-ie_{\phi}^{q}\right)\int_{-\infty}^{+\infty}\dif a\,\mathcal{A}_{\mu}\left(x+a+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
- & +\int_{y}F\left(a\right)\,{\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dif z_{\nu}\int\dif a\,\mathcal{A}^{\nu}\left(x+a+c\right)F\left(c\right)}\,{\color{red}\partial_{\mu,y}}\,\phi\left(x+a\right)
+ & +\int_{y}F\left(a\right)\,{\color{red}\left(-ie_{\phi}^{q}\right)\int_{-\infty}^{+\infty}\dd a\,\mathcal{A}_{\mu}\left(x+a+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
+ & +\int_{y}F\left(a\right)\,{\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dd z_{\nu}\int\dd a\,\mathcal{A}^{\nu}\left(x+a+c\right)F\left(c\right)}\,{\color{red}\partial_{\mu,y}}\,\phi\left(x+a\right)
 \end{align*}
 
 \end_inset
@@ -1701,8 +1702,8 @@ literal "false"
 \begin{align*}
  & {\color{red}\mathcal{D}_{\mu,x}}\,\int_{a}F\left(a\right){\color{blue}\,\mathcal{G}_{\phi}^{q}\left(x,x+a,P\right)}\,\phi\left(x+a\right)\\
  & ={\color{red}\partial_{\mu,x}}\int_{a}F\left(a\right)\,\phi\left(x+a\right)\\
- & +\int_{ac}F\left(a\right)\,{\color{red}\left(-ie_{\phi}^{q}\right)\int_{-\infty}^{+\infty}\dif a\,\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
- & +{\color{red}\partial_{\mu,x}}{\color{blue}\int_{ac}F\left(a\right)\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dif w_{\nu}\,\mathcal{A}^{\nu}\left(w+c\right)F\left(c\right)}\,\phi\left(x+a\right)
+ & +\int_{ac}F\left(a\right)\,{\color{red}\left(-ie_{\phi}^{q}\right)\int_{-\infty}^{+\infty}\dd a\,\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
+ & +{\color{red}\partial_{\mu,x}}{\color{blue}\int_{ac}F\left(a\right)\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dd w_{\nu}\,\mathcal{A}^{\nu}\left(w+c\right)F\left(c\right)}\,\phi\left(x+a\right)
 \end{align*}
 
 \end_inset
@@ -1744,13 +1745,13 @@ literal "false"
 \end_inset
 
 ，
-\begin_inset Formula $\Rightarrow\int\dif y\,\delta\left(x-y\right)\partial_{x}f\left(y\right)=0$
+\begin_inset Formula $\Rightarrow\int\dd y\,\delta\left(x-y\right)\partial_{x}f\left(y\right)=0$
 \end_inset
 
 。因为实际上，
 \begin_inset Formula 
 \[
-\int\dif y\,\delta\left(x-y\right)\partial_{x}f\left(y\right)=\partial_{x}f\left(x\right)
+\int\dd y\,\delta\left(x-y\right)\partial_{x}f\left(y\right)=\partial_{x}f\left(x\right)
 \]
 
 \end_inset
@@ -1798,8 +1799,8 @@ literal "false"
 左侧的重子算符上，也容易得出相同的结论：
 \begin_inset Formula 
 \begin{align*}
- & \int_{a}\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)\,\partial_{\rho,x}\,F\left(a\right){\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dif w^{\mu}\,\mathcal{A}_{\mu}\left(w+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
- & \Rightarrow-\partial_{\rho,x}\int_{a}\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right);F\left(a\right){\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dif w^{\mu}\,\mathcal{A}_{\mu}\left(w+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
+ & \int_{a}\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)\,\partial_{\rho,x}\,F\left(a\right){\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dd w^{\mu}\,\mathcal{A}_{\mu}\left(w+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
+ & \Rightarrow-\partial_{\rho,x}\int_{a}\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right);F\left(a\right){\color{blue}\left(ie_{\phi}^{q}\right)\int_{x+a}^{x}\dd w^{\mu}\,\mathcal{A}_{\mu}\left(w+c\right)F\left(c\right)}\,\phi\left(x+a\right)\\
  & \Rightarrow-\partial_{\rho,x}\sim-\left(ip_{\rho}^{\prime}-ip_{\rho}\right)=\left(-ik_{\rho}-iq_{\rho}\right),\quad\text{对应介子，光子进入顶点}
 \end{align*}
 
@@ -2043,7 +2044,7 @@ B型拉开中的协变导数，总是作用到非定域化介子云拉氏量的�
  的平移不变性得到，
 \begin_inset Formula 
 \begin{align*}
- & J_{q,\text{em}}^{\mu}\left(x\right)\equiv\frac{\delta\int\dif^{4}y\,\mathcal{L}_{\text{em}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
+ & J_{q,\text{em}}^{\mu}\left(x\right)\equiv\frac{\delta\int\dd^{4}y\,\mathcal{L}_{\text{em}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
  & =\int_{c}F\left(c\right)\bar{B}\left(x-c\right)\gamma^{\mu}B\left(x-c\right){\color{blue}\left(e_{B}^{q}\right)}+\bar{T}_{\alpha}\left(x-c\right)\gamma^{\alpha\nu\mu}T_{\nu}\left(x-c\right){\color{blue}\left(e_{T}^{q}\right)}\\
  & +\int_{c}F\left(c\right)\left[\phi^{\dagger}\left(x-c\right)\partial^{\mu}\phi\left(x-c\right)-\phi\left(x-c\right)\partial_{\mu}\phi\left(x-c\right)^{\dagger}\right]{\color{blue}\left(ie_{\phi}^{q}\right)}\quad\text{介子流}\\
  & +\int_{ac}F\left(a\right)F\left(c\right)\bar{p}\left(x-c\right)\left[\frac{C_{B\phi}}{f}\gamma^{\mu}\gamma^{5}B\left(x-c\right)+\frac{C_{T\phi}}{f}\Theta^{\mu\nu}T_{\nu}\left(x-c\right)\right]\phi\left(x+a-c\right){\color{blue}\left(-ie_{\phi}^{q}\right)}+\text{H.c}\\
@@ -2318,9 +2319,9 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \overline{B}\left(x\right
 \begin_inset Formula 
 \begin{align*}
  & \mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right)=\int_{ac}\left[\overline{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\overline{p}\left(x\right)\Theta^{\rho\nu}T_{\nu}\left(x\right)\right]\\
- & \times{\color{blue}\partial_{\rho,x}}\left[{\color{red}\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w+c\right)F\left(c\right)\dif w^{\nu}\left(ie_{\phi}^{q}\right)}\,F\left(a\right)\phi\left(x+a\right)\right]+\text{H.c}\\
+ & \times{\color{blue}\partial_{\rho,x}}\left[{\color{red}\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w+c\right)F\left(c\right)\dd w^{\nu}\left(ie_{\phi}^{q}\right)}\,F\left(a\right)\phi\left(x+a\right)\right]+\text{H.c}\\
  & +\int_{abc}\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\,\overline{p}\left(x\right)\gamma^{\rho}p\left(x\right)F\left(a\right)F\left(b\right){\color{red}F\left(c\right)\left(ie_{\phi}^{q}\right)}\\
- & \times\left[2\phi\left(x+a\right){\color{blue}\partial_{\rho,x}}{\color{red}\int_{x+a}^{x+b}\mathcal{A}_{\nu}\left(w+c\right)\dif w^{\nu}}\,{\color{blue}\phi\left(x+b\right)^{\dagger}}\right]
+ & \times\left[2\phi\left(x+a\right){\color{blue}\partial_{\rho,x}}{\color{red}\int_{x+a}^{x+b}\mathcal{A}_{\nu}\left(w+c\right)\dd w^{\nu}}\,{\color{blue}\phi\left(x+b\right)^{\dagger}}\right]
 \end{align*}
 
 \end_inset
@@ -2329,7 +2330,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \overline{B}\left(x\right
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\mathcal{G}_{\phi}^{q}=\exp\left[ie_{\phi}^{q}\int_{x+a}^{x+b}\int_{c}F\left(c\right)\mathcal{A}_{\nu}\left(w+c\right)\dif w^{\nu}\right]$
+\begin_inset Formula $\mathcal{G}_{\phi}^{q}=\exp\left[ie_{\phi}^{q}\int_{x+a}^{x+b}\int_{c}F\left(c\right)\mathcal{A}_{\nu}\left(w+c\right)\dd w^{\nu}\right]$
 \end_inset
 
 不是厄米的，对应的介子场共轭项用负号连接。
@@ -2374,7 +2375,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \overline{B}\left(x\right
 \begin_deeper
 \begin_layout Itemize
 其中
-\begin_inset Formula $I\left(x,y,P\right)=ie_{\phi}\int_{y}^{x}\dif w_{\nu}\,\mathcal{A}^{\nu}\left(w\right)$
+\begin_inset Formula $I\left(x,y,P\right)=ie_{\phi}\int_{y}^{x}\dd w_{\nu}\,\mathcal{A}^{\nu}\left(w\right)$
 \end_inset
 
 。
@@ -2429,7 +2430,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \overline{B}\left(x\right
 
 \begin_inset Formula 
 \[
-\int_{x+a}^{x+b}\mathcal{A}_{\mu}\left(w\right)\dif w^{\mu}=\int_{x}^{x+b}\mathcal{A}_{\mu}\left(w\right)\dif w^{\mu}{\color{blue}+}\int_{x+a}^{x}\mathcal{A}_{\mu}\left(w\right)\dif w^{\mu}
+\int_{x+a}^{x+b}\mathcal{A}_{\mu}\left(w\right)\dd w^{\mu}=\int_{x}^{x+b}\mathcal{A}_{\mu}\left(w\right)\dd w^{\mu}{\color{blue}+}\int_{x+a}^{x}\mathcal{A}_{\mu}\left(w\right)\dd w^{\mu}
 \]
 
 \end_inset
@@ -2549,7 +2550,7 @@ J_{q,\text{em}}^{\mu}\left(x\right)= & \int_{k}\left\{ \overline{B}\left(x\right
 ，得到额外电磁流为，
 \begin_inset Formula 
 \begin{align*}
- & \delta J_{q}^{\mu}\left(x\right)\equiv\frac{\delta\int\dif^{4}y\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
+ & \delta J_{q}^{\mu}\left(x\right)\equiv\frac{\delta\int\dd^{4}y\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
  & =\int_{c}{\color{red}F\left(c\right)}\left[\bar{p}\left(x-c\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x-c\right)+\frac{C_{T\phi}}{f}\bar{p}\left(x-c\right)\Theta^{\rho\nu}T_{\nu}\left(x-c\right)\right]\\
  & \times\mathcal{R}^{\mu}\left(k,q\right){\color{blue}\left(-\overset{\leftarrow}{\partial_{\rho,x}}\right)}{\color{red}\left(+e_{\phi}^{q}\right)}\phi\left(x-c\right)+\text{H.c}\\
  & +\int_{ac}{\color{red}F\left(c\right)}\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\,\bar{p}\left(x-c\right)\gamma^{\rho}p\left(x-c\right)\Big\{\\
@@ -3060,7 +3061,7 @@ Jacobi 行列式为
 。
 \begin_inset Formula 
 \[
-\int\dif v_{\perp}\int\dif v^{+}\int\dif v^{-}=2\int\dif v^{0}\int\dif v^{1}\int\dif v^{2}\int\dif v^{3}
+\int\dd v_{\perp}\int\dd v^{+}\int\dd v^{-}=2\int\dd v^{0}\int\dd v^{1}\int\dd v^{2}\int\dd v^{3}
 \]
 
 \end_inset
@@ -3315,7 +3316,7 @@ literal "true"
 
 \begin_layout Standard
 圈积分的积分测度，
-\begin_inset Formula $\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}$
+\begin_inset Formula $\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}$
 \end_inset
 
 对于
@@ -3331,7 +3332,7 @@ literal "true"
 \end_inset
 
 表示
-\begin_inset Formula $\int\dif^{4}k/\left(2\pi\right)^{4}$
+\begin_inset Formula $\int\dd^{4}k/\left(2\pi\right)^{4}$
 \end_inset
 
 。
@@ -3461,6 +3462,22 @@ T不变性
 \end_inset
 
 的任意变换下不变。
+\end_layout
+
+\begin_layout Subsection
+量纲
+\end_layout
+
+\begin_layout Standard
+考虑到
+\begin_inset Formula 
+\[
+\dim\left[\psi\left(x\right)\right]=\frac{3}{2},\quad\dim\left[\ket{p,\beta}\right]=-1,\quad\dim\left[a^{s}\left(p\right)\right]=-\frac{3}{2},\quad\dim\left[u^{s}\left(p\right)\right]=\frac{1}{2}
+\]
+
+\end_inset
+
+分裂函数和形状因子都是无量纲函数。
 \end_layout
 
 \begin_layout Subsection
@@ -4479,7 +4496,7 @@ Rainbow, meson
 ，则和 schwartz p143 的结果相符。在图a中，强互作用顶点为，
 \begin_inset Formula 
 \[
-\bar{B}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\nu}\gamma^{5}p\left(x\right)\int\dif^{4}aF\left(a\right)\partial_{\nu}\phi^{\dagger}\left(x+a\right)
+\bar{B}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\nu}\gamma^{5}p\left(x\right)\int\dd^{4}aF\left(a\right)\partial_{\nu}\phi^{\dagger}\left(x+a\right)
 \]
 
 \end_inset
@@ -4606,7 +4623,7 @@ i\fmp_{\phi}\left(k\right)=\frac{i}{k^{2}-m_{\phi}^{2}+i\varepsilon}\quad i\fmp_
  是介子和八重态重子的质量。定义正规子的傅里叶变换和逆变换为
 \begin_inset Formula 
 \[
-\tilde{F}\left(k\right)\equiv\int_{a}\exp\left[-ia\cdot k\right]F\left(a\right),\quad F\left(x\right)\equiv\frac{1}{\left(2\pi\right)^{4}}\int\dif^{4}k\exp\left(ik\cdot x\right)\tilde{F}\left(k\right)
+\tilde{F}\left(k\right)\equiv\int_{a}\exp\left[-ia\cdot k\right]F\left(a\right),\quad F\left(x\right)\equiv\frac{1}{\left(2\pi\right)^{4}}\int\dd^{4}k\exp\left(ik\cdot x\right)\tilde{F}\left(k\right)
 \]
 
 \end_inset
@@ -4690,7 +4707,7 @@ f_{a}^{+}\left(y\right) & ={\color{red}\left(i\right)^{2}}{\color{blue}\left(e_{
 可以更结构化地表示成，
 \begin_inset Formula 
 \begin{align*}
-f_{a}^{+}\left(y\right) & =\left(ie_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right),\\
+f_{a}^{+}\left(y\right) & =\left(ie_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right),\\
 H^{\mu} & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k+q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\left(k+q\right).\gamma\gamma^{5}\left[\gamma.\left(p-k\right)+M_{B}\right]\left(k.\gamma\gamma^{5}\right)}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)D_{B}\left(p-k\right)},\\
 \overline{\Lambda} & =\Lambda-m_{\phi}.
 \end{align*}
@@ -4885,7 +4902,7 @@ Kroll–Ruderman (KR) 图的贡献，表达式和费曼图的左右方向相反�
 
 \begin_inset Formula 
 \[
-f_{c}^{+}\left(y\right)={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{B\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1;+}+H^{2;+}\right)u\left(p\right)
+f_{c}^{+}\left(y\right)={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{B\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1;+}+H^{2;+}\right)u\left(p\right)
 \]
 
 \end_inset
@@ -5050,7 +5067,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right)=\int_{ac}F\left(a\right)F\left(c\right)\left[\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)\right]{\color{blue}\left(ie_{\phi}^{q}\right)}\int_{x+a}^{x}\mathcal{A}_{\mu}\left(w+c\right)\dif w^{\mu}\,\partial_{\rho}\phi\left(x+a\right)+\text{H.c}
+\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right)=\int_{ac}F\left(a\right)F\left(c\right)\left[\bar{p}\left(x\right)\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)\right]{\color{blue}\left(ie_{\phi}^{q}\right)}\int_{x+a}^{x}\mathcal{A}_{\mu}\left(w+c\right)\dd w^{\mu}\,\partial_{\rho}\phi\left(x+a\right)+\text{H.c}
 \]
 
 \end_inset
@@ -5152,7 +5169,7 @@ noprefix "false"
 对应的分裂函数为，
 \begin_inset Formula 
 \[
-f_{d}^{+}\left(y\right)={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{B\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1,+}+H^{2,+}\right)u\left(p\right)
+f_{d}^{+}\left(y\right)={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{B\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1,+}+H^{2,+}\right)u\left(p\right)
 \]
 
 \end_inset
@@ -5322,7 +5339,7 @@ f_{b}^{+}\left(y\right)= & {\color{red}i^{2}}{\color{blue}\left(e_{B}^{q}\right)
 可以更结构化地表示成，
 \begin_inset Formula 
 \begin{align*}
- & f_{b}^{+}\left(y\right)={\color{blue}\left(ie_{B}^{q}\right)}\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right),\\
+ & f_{b}^{+}\left(y\right)={\color{blue}\left(ie_{B}^{q}\right)}\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right),\\
  & H^{\mu}=\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\left(k\gamma.\gamma^{5}\right)\left[\gamma\left(p^{\prime}-k\right)+M_{B2}\right]{\color{blue}\gamma^{\mu}}\left[\gamma\left(p-k\right)+M_{B1}\right]\left(k\gamma.\gamma^{5}\right)}{D_{\phi}\left(k\right)D_{B}\left(p^{\prime}-k\right)D_{B}\left(p-k\right)},
 \end{align*}
 
@@ -5461,7 +5478,7 @@ Tadpole, F1,AB
 对应的分裂函数是，
 \begin_inset Formula 
 \begin{align*}
-f_{e}^{+}\left(y\right) & ={\color{magenta}\left(i\right)}\left[{\color{blue}2}\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}{\color{red}\left(ie_{\phi}^{q}\right)}\right]\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\,\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)\\
+f_{e}^{+}\left(y\right) & ={\color{magenta}\left(i\right)}\left[{\color{blue}2}\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}{\color{red}\left(ie_{\phi}^{q}\right)}\right]\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\,\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)\\
 H^{\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{2}D_{\Lambda}\left(k+q\right)^{2}}\frac{\gamma^{\mu}}{D_{\phi}\left(k\right)}
 \end{align*}
 
@@ -5586,7 +5603,7 @@ J_{q,\text{em,loc}}^{\mu}\left(x\right)=\left[e{\color{red}\frac{\left(-u+d\righ
 ，得到：
 \begin_inset Formula 
 \[
-f_{g}^{\mu}\left(y\right)=\left[\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}{\color{red}\left(-e_{\phi}^{q}\right)}{\color{blue}2}\right]\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right){\color{blue}\overline{u}\left(p^{\prime}\right)H^{+}u\left(p\right)}
+f_{g}^{\mu}\left(y\right)=\left[\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}{\color{red}\left(-e_{\phi}^{q}\right)}{\color{blue}2}\right]\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right){\color{blue}\overline{u}\left(p^{\prime}\right)H^{+}u\left(p\right)}
 \]
 
 \end_inset
@@ -5725,7 +5742,7 @@ e\,\frac{C_{\phi\phi}^{m}}{2f_{\phi}^{2}}=e\frac{1}{2f_{\phi}^{2}}\left[{\color{
 ，对应的分裂函数是，
 \begin_inset Formula 
 \begin{align*}
-f_{e}^{+}\left(y\right) & ={\color{magenta}\left(i\right)}{\color{blue}\left(e\frac{C_{\phi\phi}^{m}}{2f_{\phi}^{2}}\right)}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\,\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)\\
+f_{e}^{+}\left(y\right) & ={\color{magenta}\left(i\right)}{\color{blue}\left(e\frac{C_{\phi\phi}^{m}}{2f_{\phi}^{2}}\right)}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\,\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)\\
 H^{\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{1}{D_{\phi}\left(k\right)}\frac{i\sigma^{\mu\nu}q_{\nu}}{2M_{N}}
 \end{align*}
 
@@ -6672,7 +6689,7 @@ f_{h}^{+} & ={\color{red}\left(i\right)^{2}}\left(ie_{\phi}^{q}\right)\frac{C_{T
 整理系数，
 \begin_inset Formula 
 \[
-f_{h}^{+}={\color{blue}\left(ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)
+f_{h}^{+}={\color{blue}\left(ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)
 \]
 
 \end_inset
@@ -6745,7 +6762,7 @@ f_{i}^{+}\left(y\right)= & {\color{blue}\left(e_{T}^{q}\right)}{\color{red}\left
 化简一下系数是,
 \begin_inset Formula 
 \begin{align*}
- & f_{i}^{+}\left(y\right)={\color{blue}\left(ie_{T}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)\\
+ & f_{i}^{+}\left(y\right)={\color{blue}\left(ie_{T}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}H^{+}}u\left(p\right)\\
  & H^{\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left(k_{\alpha}\Theta^{\alpha\beta}\right)S_{T}^{\beta\theta}\left(p^{\prime}-k\right){\color{blue}\gamma^{\theta\nu\mu}}S_{T}^{\nu\rho}\left(p-k\right)\left(\Theta^{\rho\eta}k_{\eta}\right)}{D_{\phi}\left(k\right)D_{T}\left(p^{\prime}-k\right)D_{T}\left(p-k\right)}
 \end{align*}
 
@@ -6841,7 +6858,7 @@ Transition maget
 分裂函数为，
 \begin_inset Formula 
 \begin{align*}
- & f^{+}\left(y\right)={\color{blue}\left(ie\frac{C_{BT}^{\text{m}}}{M_{B}}\right)}\frac{C_{B\phi}}{f}\frac{C_{T\phi}}{f}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}\left(H^{1,+}+H^{2,+}\right)}u\left(p\right)\\
+ & f^{+}\left(y\right)={\color{blue}\left(ie\frac{C_{BT}^{\text{m}}}{M_{B}}\right)}\frac{C_{B\phi}}{f}\frac{C_{T\phi}}{f}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}\left(H^{1,+}+H^{2,+}\right)}u\left(p\right)\\
  & H^{1,\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left[k_{\alpha}\Theta^{\alpha\beta}\right]q_{\nu}\left[S_{T}^{\beta\nu}\gamma^{\mu}\gamma^{5}-S_{T}^{\beta\mu}\gamma^{\nu}\gamma^{5}\right]_{p^{\prime}-k}\left[\gamma.\left(p-k\right)+M_{B}\right]\left[k.\gamma\gamma^{5}\right]}{D_{\phi}\left(k\right)D_{T}\left(p^{\prime}-k\right)D_{B}\left(p-k\right)}\\
  & H^{2,\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left[k.\gamma\gamma^{5}\right]\left[\gamma.\left(p^{\prime}-k\right)+M_{B}\right]q_{\nu}\left[\gamma^{\nu}\gamma^{5}S_{T}^{\mu\beta}-\gamma^{\mu}\gamma^{5}S_{T}^{\nu\beta}\right]_{p-k}\left[\Theta^{\beta\alpha}k_{\alpha}\right]}{D_{\phi}\left(k\right)D_{T}\left(p-k\right)D_{B}\left(p^{\prime}-k\right)}
 \end{align*}
@@ -6934,7 +6951,7 @@ f_{j}^{+} & =\int_{k}{\color{red}\left(i\right)}\frac{C_{T\phi}^{2}}{f^{2}}\left
 化简一下系数是,
 \begin_inset Formula 
 \[
-f_{j}^{+}={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}\left(H^{1,+}+H^{2,+}\right)}u\left(p\right)
+f_{j}^{+}={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}\left(H^{1,+}+H^{2,+}\right)}u\left(p\right)
 \]
 
 \end_inset
@@ -7042,7 +7059,7 @@ f_{j}^{+} & =\int_{k}{\color{red}\left(i\right)}\frac{C_{T\phi}^{2}}{f^{2}}{\col
 得
 \begin_inset Formula 
 \[
-f_{j}^{+}={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1,+}+H^{2,+}\right)u\left(p\right)
+f_{j}^{+}={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\frac{M}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1,+}+H^{2,+}\right)u\left(p\right)
 \]
 
 \end_inset
@@ -7109,7 +7126,7 @@ f_{j}^{+}={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\f
 \end_inset
 
 来自于计算
-\begin_inset Formula $\bar{u}\left(p\right)Qu\left(p\right)=\tr\left[\left(\slashed{p}+M\right)Q\right]$
+\begin_inset Formula $\bar{u}\left(p\right)Qu\left(p\right)=\Tr\left[\left(\slashed{p}+M\right)Q\right]$
 \end_inset
 
 时，归一化的选取。
@@ -7124,8 +7141,8 @@ PDF 的意义是在质子中找到一个给定动量分数
 \begin_inset Formula 
 \begin{align*}
  & f_{q}\left(y\right)=\bra{P}\psi^{\dagger}\psi\ket{P}\delta\left(yp^{+}-k^{+}\right)\\
-\text{也可以写成：} & f_{q}\left(y\right)=\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}e^{-ity\left(n\cdot p\right)}\bra{p}\bar{\psi}_{q}\left(tn^{\mu}\right)\frac{\slashed{n}}{2}W_{n}\psi_{q}\left(0\right)\ket{p}\\
-\text{由平移对称性：} & f_{q}\left(y\right)=\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}e^{-ity\left(n\cdot P\right)}\bra{p}\bar{\psi}_{q}\left(\frac{1}{2}tn^{\mu}\right)\frac{\slashed{n}}{2}W_{n}\psi_{q}\left(-\frac{1}{2}tn^{\mu}\right)\ket{p}
+\text{也可以写成：} & f_{q}\left(y\right)=\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}e^{-ity\left(n\cdot p\right)}\bra{p}\bar{\psi}_{q}\left(tn^{\mu}\right)\frac{\slashed{n}}{2}W_{n}\psi_{q}\left(0\right)\ket{p}\\
+\text{由平移对称性：} & f_{q}\left(y\right)=\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}e^{-ity\left(n\cdot P\right)}\bra{p}\bar{\psi}_{q}\left(\frac{1}{2}tn^{\mu}\right)\frac{\slashed{n}}{2}W_{n}\psi_{q}\left(-\frac{1}{2}tn^{\mu}\right)\ket{p}
 \end{align*}
 
 \end_inset
@@ -7141,7 +7158,7 @@ PDF 的意义是在质子中找到一个给定动量分数
  的 Wilson line，也就是夸克场取值的两个点：
 \begin_inset Formula 
 \[
-W_{n}=\mathrm{P}\exp\left\{ ig_{s}\,n_{\nu}\int_{0}^{t}\dif s\,\mathcal{A}^{\nu}(sn^{\mu})\right\} 
+W_{n}=\mathrm{P}\exp\left\{ ig_{s}\,n_{\nu}\int_{0}^{t}\dd s\,\mathcal{A}^{\nu}(sn^{\mu})\right\} 
 \]
 
 \end_inset
@@ -7161,7 +7178,7 @@ W_{n}=\mathrm{P}\exp\left\{ ig_{s}\,n_{\nu}\int_{0}^{t}\dif s\,\mathcal{A}^{\nu}
 方向。广义部分子分布函数的定义类似，
 \begin_inset Formula 
 \[
-F^{q}\left(x,\xi,Q^{2}\right)=\int_{-\infty}^{+\infty}\frac{\dif t}{2\pi}e^{ix\left(tP\cdot n\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}tn\right)\frac{\slashed{n}}{2}q\left(\frac{1}{2}tn\right)\ket{p},
+F^{q}\left(x,\xi,Q^{2}\right)=\int_{-\infty}^{+\infty}\frac{\dd t}{2\pi}e^{ix\left(tP\cdot n\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}tn\right)\frac{\slashed{n}}{2}q\left(\frac{1}{2}tn\right)\ket{p},
 \]
 
 \end_inset
@@ -7181,7 +7198,7 @@ F^{q}\left(x,\xi,Q^{2}\right)=\int_{-\infty}^{+\infty}\frac{\dif t}{2\pi}e^{ix\l
 ，则
 \begin_inset Formula 
 \[
-f^{q}\left(y\right)=\frac{1}{4}\tr\left[\Gamma^{\mu}\left(\gamma.p+M\right)\right]^{+}=\frac{1}{4p^{+}}\tr\left[\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\Gamma_{\phi B}^{\mu}\,\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left(\gamma.p+M\right)\right]^{+}
+f^{q}\left(y\right)=\frac{1}{4}\Tr\left[\Gamma^{\mu}\left(\gamma.p+M\right)\right]^{+}=\frac{1}{4p^{+}}\Tr\left[\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\Gamma_{\phi B}^{\mu}\,\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left(\gamma.p+M\right)\right]^{+}
 \]
 
 \end_inset
@@ -7189,7 +7206,7 @@ f^{q}\left(y\right)=\frac{1}{4}\tr\left[\Gamma^{\mu}\left(\gamma.p+M\right)\righ
 所以其中使用了
 \begin_inset Formula 
 \[
-\tr\left[\gamma^{+}\slashed{p}\right]=\tr\left[\slashed{p}\gamma^{+}\right]=4p^{+},\quad\delta\left(k^{+}-yp^{+}\right)=\frac{1}{p^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)=\frac{y}{k^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)
+\Tr\left[\gamma^{+}\sla{p}\right]=\Tr\left[\sla p\gamma^{+}\right]=4p^{+},\quad\delta\left(k^{+}-yp^{+}\right)=\frac{1}{p^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)=\frac{y}{k^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)
 \]
 
 \end_inset
@@ -7242,14 +7259,14 @@ where
 ，简化为，
 \begin_inset Formula 
 \begin{align*}
-f_{a}^{+}\left(y\right) & ={\color{blue}\left(e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{\overline{\Lambda}^{8}}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}2yM\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+f_{a}^{+}\left(y\right) & ={\color{blue}\left(e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{\overline{\Lambda}^{8}}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}2yM\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
  & \times\bar{u}\left(p\right)\left(k\gamma\gamma^{5}\right)\left[\gamma\left(p-k\right)+M_{B}\right]\left(k\gamma\gamma^{5}\right)u\left(p\right)
 \end{align*}
 
 \end_inset
 
 使用
-\begin_inset Formula $\bar{u}\left(p\right)Qu\left(p\right)=\tr\left[\left(\gamma p+M\right)Q\right]$
+\begin_inset Formula $\bar{u}\left(p\right)Qu\left(p\right)=\Tr\left[\left(\gamma p+M\right)Q\right]$
 \end_inset
 
 ，将旋量部分求迹得到
@@ -7264,7 +7281,7 @@ f_{a}^{+}\left(y\right) & ={\color{blue}\left(e_{\phi}^{q}\right)}\frac{iC_{B\ph
 所以，
 \begin_inset Formula 
 \[
-f_{a}^{+}\left(y\right)={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}ky\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}4\left(kp\right)^{2}-2k^{2}M\overline{M}-2k^{2}\left(kp\right)}}{D_{\phi}\left(k\right)^{2}D_{\Lambda}\left(k\right)^{4}D_{B}\left(p-k\right)}
+f_{a}^{+}\left(y\right)={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}ky\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}4\left(kp\right)^{2}-2k^{2}M\overline{M}-2k^{2}\left(kp\right)}}{D_{\phi}\left(k\right)^{2}D_{\Lambda}\left(k\right)^{4}D_{B}\left(p-k\right)}
 \]
 
 \end_inset
@@ -7328,7 +7345,7 @@ f_{a}^{+}\left(y\right)={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\
 也就是
 \begin_inset Formula 
 \[
-f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left[\frac{y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}+\frac{y\left(-\overline{M}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}D_{B}}+\frac{y\left(\overline{M}\Delta-2pk\right)}{D_{\Lambda}^{4}D_{\phi}^{2}}\right]
+f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left[\frac{y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}+\frac{y\left(-\overline{M}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}D_{B}}+\frac{y\left(\overline{M}\Delta-2pk\right)}{D_{\Lambda}^{4}D_{\phi}^{2}}\right]
 \]
 
 \end_inset
@@ -7336,7 +7353,7 @@ f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)={\color{blue}\left({\color{bl
 而 salamu 的结果是
 \begin_inset Formula 
 \[
-f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left[\frac{y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}+\frac{y\left(-\overline{M}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}D_{B}}+\frac{y\left(\overline{M}\Delta-2pk\right)}{D_{\Lambda}^{4}D_{\phi}^{2}}\right]
+f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left[\frac{y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}+\frac{y\left(-\overline{M}^{2}\right)}{D_{\Lambda}^{4}D_{\phi}D_{B}}+\frac{y\left(\overline{M}\Delta-2pk\right)}{D_{\Lambda}^{4}D_{\phi}^{2}}\right]
 \]
 
 \end_inset
@@ -7376,7 +7393,7 @@ f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline
 是一个普通的数。所以
 \begin_inset Formula 
 \[
-u\left(p\right)p^{\mu}\bar{u}\left(p\right)=\tr\left[\left(\slashed{p}+M\right)p^{\mu}\right]={\color{blue}4M}p^{\mu}
+u\left(p\right)p^{\mu}\bar{u}\left(p\right)=\Tr\left[\left(\slashed{p}+M\right)p^{\mu}\right]={\color{blue}4M}p^{\mu}
 \]
 
 \end_inset
@@ -7402,7 +7419,7 @@ u\left(p\right)p^{\mu}\bar{u}\left(p\right)=\tr\left[\left(\slashed{p}+M\right)p
 \end_inset
 
 求解其中的
-\begin_inset Formula $\dif^{4}k$
+\begin_inset Formula $\dd^{4}k$
 \end_inset
 
 积分。salamu 使用的光锥坐标和标准的有些不同，Jacobian 为
@@ -7412,7 +7429,7 @@ u\left(p\right)p^{\mu}\bar{u}\left(p\right)=\tr\left[\left(\slashed{p}+M\right)p
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k=\frac{1}{2}\int\dif k^{+}\dif k^{-}\dif k_{\perp}^{2}
+\int\dd^{4}k=\frac{1}{2}\int\dd k^{+}\dd k^{-}\dd k_{\perp}^{2}
 \]
 
 \end_inset
@@ -7528,8 +7545,8 @@ f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)={\color{blue}\left(\frac{{\co
 。使用另一个笔记中的积分公式，
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left[\Delta^{2}-m_{\phi}^{2}-D_{\phi}\left(k\right)\right]}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
-\Rightarrow & \int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{p^{+}\overline{y}}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}^{2}D_{\Lambda B}^{4}}-\frac{1}{D_{\phi B}D_{\Lambda B}^{4}}\right]p^{+}\\
+ & \int\dd^{4}k\frac{\left[\Delta^{2}-m_{\phi}^{2}-D_{\phi}\left(k\right)\right]}{D_{\Lambda}^{4}D_{\phi}^{2}D_{B}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+\Rightarrow & \int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{p^{+}\overline{y}}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}^{2}D_{\Lambda B}^{4}}-\frac{1}{D_{\phi B}D_{\Lambda B}^{4}}\right]p^{+}\\
 = & \frac{\left(-\pi i\right)}{\overline{y}}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)-D_{\phi B}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]
 \end{align*}
 
@@ -7587,9 +7604,9 @@ D_{\phi B}=\frac{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi
 所以
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & {\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\left[\frac{\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}^{2}D_{B}D_{\Lambda}^{4}}-\frac{\overline{M}^{2}}{D_{\phi}D_{B}D_{\Lambda}^{4}}\right]y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & ={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{2}k_{\perp}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y}{\overline{y}}\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\\
- & ={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\int\dif^{2}k_{\perp}\frac{y}{\overline{y}^{2}}\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}
+\Rightarrow & {\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\left[\frac{\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}^{2}D_{B}D_{\Lambda}^{4}}-\frac{\overline{M}^{2}}{D_{\phi}D_{B}D_{\Lambda}^{4}}\right]y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & ={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{2}k_{\perp}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y}{\overline{y}}\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\\
+ & ={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\int\dd^{2}k_{\perp}\frac{y}{\overline{y}^{2}}\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}
 \end{align*}
 
 \end_inset
@@ -7597,7 +7614,7 @@ D_{\phi B}=\frac{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi
 而salamu 的结果是
 \begin_inset Formula 
 \begin{equation}
-f_{B}^{\left(\text{on}\right)}\left(y\right)=\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}^{2}D_{\phi B}^{2}D_{\Lambda B}^{4}}\label{eq:yu_63}
+f_{B}^{\left(\text{on}\right)}\left(y\right)=\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}^{2}D_{\phi B}^{2}D_{\Lambda B}^{4}}\label{eq:yu_63}
 \end{equation}
 
 \end_inset
@@ -7628,7 +7645,7 @@ f_{B}^{\left(\text{on}\right)}\left(y\right)=\overline{\Lambda}^{8}\int\dif k_{\
 。使用公式
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -7636,8 +7653,8 @@ f_{B}^{\left(\text{on}\right)}\left(y\right)=\overline{\Lambda}^{8}\int\dif k_{\
 
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
-= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -7661,8 +7678,8 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 使用上面的公式可以得到，
 \begin_inset Formula 
 \begin{align*}
-f_{a}^{\delta} & ={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{-2kpy\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{2}D_{\Lambda}\left(k\right)^{4}}\\
-f_{a}^{\delta} & ={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\left(z^{3}-z^{4}\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{a}^{\delta} & ={\color{blue}\left({\color{blue}4M}e_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{-2kpy\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{2}D_{\Lambda}\left(k\right)^{4}}\\
+f_{a}^{\delta} & ={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\left(z^{3}-z^{4}\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \end{align*}
 
 \end_inset
@@ -7709,7 +7726,7 @@ f_{\phi B}^{\left(\text{rbw}\right)}\left(y\right)=\frac{C_{B\phi}^{2}\overline{
 的部分为，
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -7717,10 +7734,10 @@ f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{bl
 用 mathematica 求解积分
 \begin_inset Formula 
 \begin{align}
-\Rightarrow & f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\nonumber \\
-= & {\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\delta\left(y\right)}{\overline{M}^{2}}\left(-\overline{\Lambda}^{8}\right)\int\dif k_{\perp}^{2}\left\{ \frac{-\overline{\Lambda}^{2}\left(11\overline{\Lambda}^{4}+15\overline{\Lambda}^{2}\Omega_{\phi}+6\Omega_{\phi}^{2}\right)}{6\overline{\Lambda}^{8}\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{\log\left[\Omega_{\phi}/\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)\right]}{\overline{\Lambda}^{8}}\right\} \nonumber \\
-= & {\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\left\{ \log\left[\frac{\Omega_{\phi}}{\left(\Omega_{\phi}+\overline{\Lambda}^{2}\right)}\right]+\frac{\overline{\Lambda}^{2}\left(11\overline{\Lambda}^{4}+15\overline{\Lambda}^{2}\Omega_{\phi}+6\Omega_{\phi}^{2}\right)}{6\left(\Omega_{\phi}+\overline{\Lambda}^{2}\right)^{3}}\right\} \nonumber \\
-= & {\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\left\{ \log\frac{\Omega_{\phi}}{\Omega_{\Lambda}}+\frac{\overline{\Lambda}^{2}\left(11\Omega_{\Lambda}^{2}-7\Omega_{\Lambda}\Omega_{\phi}+2\Omega_{\phi}^{2}\right)}{6\Omega_{\Lambda}^{3}}\right\} \label{eq:yu_65}
+\Rightarrow & f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\nonumber \\
+= & {\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\delta\left(y\right)}{\overline{M}^{2}}\left(-\overline{\Lambda}^{8}\right)\int\dd k_{\perp}^{2}\left\{ \frac{-\overline{\Lambda}^{2}\left(11\overline{\Lambda}^{4}+15\overline{\Lambda}^{2}\Omega_{\phi}+6\Omega_{\phi}^{2}\right)}{6\overline{\Lambda}^{8}\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{\log\left[\Omega_{\phi}/\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)\right]}{\overline{\Lambda}^{8}}\right\} \nonumber \\
+= & {\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\left\{ \log\left[\frac{\Omega_{\phi}}{\left(\Omega_{\phi}+\overline{\Lambda}^{2}\right)}\right]+\frac{\overline{\Lambda}^{2}\left(11\overline{\Lambda}^{4}+15\overline{\Lambda}^{2}\Omega_{\phi}+6\Omega_{\phi}^{2}\right)}{6\left(\Omega_{\phi}+\overline{\Lambda}^{2}\right)^{3}}\right\} \nonumber \\
+= & {\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\left\{ \log\frac{\Omega_{\phi}}{\Omega_{\Lambda}}+\frac{\overline{\Lambda}^{2}\left(11\Omega_{\Lambda}^{2}-7\Omega_{\Lambda}\Omega_{\phi}+2\Omega_{\phi}^{2}\right)}{6\Omega_{\Lambda}^{3}}\right\} \label{eq:yu_65}
 \end{align}
 
 \end_inset
@@ -7735,7 +7752,7 @@ where
 \end_inset
 
 计算
-\begin_inset Formula $\int_{0}^{1}\dif z$
+\begin_inset Formula $\int_{0}^{1}\dd z$
 \end_inset
 
 积分的 Mathematica 代码如下，可以从 \SpecialChar LyX
@@ -7900,7 +7917,7 @@ literal "true"
  中的一样，
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}\left(y\right)\underset{\Lambda\to\infty}{\rightarrow}\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\log\frac{\Omega_{\phi}}{\Omega_{\Lambda}}
+f_{\phi}^{\left(\delta\right)}\left(y\right)\underset{\Lambda\to\infty}{\rightarrow}\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\log\frac{\Omega_{\phi}}{\Omega_{\Lambda}}
 \]
 
 \end_inset
@@ -7926,7 +7943,7 @@ f_{\phi}^{\left(\delta\right)}\left(y\right)\underset{\Lambda\to\infty}{\rightar
 的部分为，
 \begin_inset Formula 
 \[
--\delta f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{M}^{2}C_{B\phi}^{2}}{\left(4\pi f\right)^{2}}\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{-z^{4}}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\delta\left(y\right)
+-\delta f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{M}^{2}C_{B\phi}^{2}}{\left(4\pi f\right)^{2}}\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{-z^{4}}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\delta\left(y\right)
 \]
 
 \end_inset
@@ -7938,11 +7955,11 @@ f_{\phi}^{\left(\delta\right)}\left(y\right)\underset{\Lambda\to\infty}{\rightar
 为，
 \begin_inset Formula 
 \begin{align}
-\delta f_{\phi}^{\left(\delta\right)} & =\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{4}}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\delta\left(y\right)\label{eq:yu_68}\\
- & =\frac{-\overline{\Lambda}^{8}\delta\left(y\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\left\{ \frac{\overline{\Lambda}^{2}\left(3\overline{\Lambda}^{6}+22\overline{\Lambda}^{4}\Omega_{\phi}+30\overline{\Lambda}^{2}\Omega_{\phi}^{2}+12\Omega_{\phi}^{3}\right)}{3\overline{\Lambda}^{10}\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{4\Omega_{\phi}\log\left[\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)/\Omega_{\phi}\right]}{\overline{\Lambda}^{10}}\right\} \nonumber \\
- & =\frac{-\delta\left(y\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\left\{ \frac{\left(3\overline{\Lambda}^{6}+22\overline{\Lambda}^{4}\Omega_{\phi}+30\overline{\Lambda}^{2}\Omega_{\phi}^{2}+12\Omega_{\phi}^{3}\right)}{3\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{4\Omega_{\phi}\log\left[\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)/\Omega_{\phi}\right]}{\overline{\Lambda}^{2}}\right\} \nonumber \\
- & =\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\left\{ \frac{-\left(3\overline{\Lambda}^{6}+22\overline{\Lambda}^{4}\Omega_{\phi}+30\overline{\Lambda}^{2}\Omega_{\phi}^{2}+12\Omega_{\phi}^{3}\right)}{3\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{4\Omega_{\phi}\log\left[\Omega_{\phi}/\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)\right]}{\overline{\Lambda}^{2}}\right\} \nonumber \\
-\delta f_{\phi}^{\left(\delta\right)} & =\frac{1}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\left[\frac{-4\Omega_{\phi}}{\overline{\Lambda}^{2}}\log\left(\frac{\Omega_{\phi}}{\Omega_{\Lambda}}\right)+\frac{-\left(3\Omega_{\Lambda}^{3}+13\Omega_{\Lambda}^{2}\Omega_{\phi}-5\Omega_{\Lambda}\Omega_{\phi}^{2}+\Omega_{\phi}^{3}\right)}{3\Omega_{\Lambda}^{3}}\right]\delta\left(y\right)\nonumber 
+\delta f_{\phi}^{\left(\delta\right)} & =\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{4}}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\delta\left(y\right)\label{eq:yu_68}\\
+ & =\frac{-\overline{\Lambda}^{8}\delta\left(y\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\left\{ \frac{\overline{\Lambda}^{2}\left(3\overline{\Lambda}^{6}+22\overline{\Lambda}^{4}\Omega_{\phi}+30\overline{\Lambda}^{2}\Omega_{\phi}^{2}+12\Omega_{\phi}^{3}\right)}{3\overline{\Lambda}^{10}\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{4\Omega_{\phi}\log\left[\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)/\Omega_{\phi}\right]}{\overline{\Lambda}^{10}}\right\} \nonumber \\
+ & =\frac{-\delta\left(y\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\left\{ \frac{\left(3\overline{\Lambda}^{6}+22\overline{\Lambda}^{4}\Omega_{\phi}+30\overline{\Lambda}^{2}\Omega_{\phi}^{2}+12\Omega_{\phi}^{3}\right)}{3\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{4\Omega_{\phi}\log\left[\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)/\Omega_{\phi}\right]}{\overline{\Lambda}^{2}}\right\} \nonumber \\
+ & =\frac{\delta\left(y\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\left\{ \frac{-\left(3\overline{\Lambda}^{6}+22\overline{\Lambda}^{4}\Omega_{\phi}+30\overline{\Lambda}^{2}\Omega_{\phi}^{2}+12\Omega_{\phi}^{3}\right)}{3\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)^{3}}-\frac{4\Omega_{\phi}\log\left[\Omega_{\phi}/\left(\overline{\Lambda}^{2}+\Omega_{\phi}\right)\right]}{\overline{\Lambda}^{2}}\right\} \nonumber \\
+\delta f_{\phi}^{\left(\delta\right)} & =\frac{1}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\left[\frac{-4\Omega_{\phi}}{\overline{\Lambda}^{2}}\log\left(\frac{\Omega_{\phi}}{\Omega_{\Lambda}}\right)+\frac{-\left(3\Omega_{\Lambda}^{3}+13\Omega_{\Lambda}^{2}\Omega_{\phi}-5\Omega_{\Lambda}\Omega_{\phi}^{2}+\Omega_{\phi}^{3}\right)}{3\Omega_{\Lambda}^{3}}\right]\delta\left(y\right)\nonumber 
 \end{align}
 
 \end_inset
@@ -7957,7 +7974,7 @@ where
 \end_inset
 
 计算
-\begin_inset Formula $\int_{0}^{1}\dif z$
+\begin_inset Formula $\int_{0}^{1}\dd z$
 \end_inset
 
 积分的 Mathematica 代码和上一节相同，除了
@@ -8021,7 +8038,7 @@ noprefix "false"
  
 \begin_inset Formula 
 \[
-f_{B}^{\left(\text{on}\right)}\left(y\right)=\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}^{2}D_{\phi B}^{2}D_{\Lambda B}^{4}}
+f_{B}^{\left(\text{on}\right)}\left(y\right)=\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}^{2}D_{\phi B}^{2}D_{\Lambda B}^{4}}
 \]
 
 \end_inset
@@ -8060,7 +8077,7 @@ literal "false"
 分裂，
 \begin_inset Formula 
 \[
-f_{\pi^{+}n}^{\left(\text{on}\right)}\left(y\right)\to\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+y^{2}M^{2}\right]}{\left[k_{\perp}^{2}+y^{2}M^{2}+\overline{y}m_{\pi}^{2}\right]^{2}}
+f_{\pi^{+}n}^{\left(\text{on}\right)}\left(y\right)\to\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+y^{2}M^{2}\right]}{\left[k_{\perp}^{2}+y^{2}M^{2}+\overline{y}m_{\pi}^{2}\right]^{2}}
 \]
 
 \end_inset
@@ -8078,9 +8095,9 @@ f_{\pi^{+}n}^{\left(\text{on}\right)}\left(y\right)\to\int\dif k_{\perp}^{2}\fra
 
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & \frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\int\dif^{2}k_{\perp}\frac{y}{\overline{y}^{2}}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]\\
-\Rightarrow & \frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dif^{2}k_{\perp}\frac{y\left[k_{\perp}^{2}+\left(yM\right)^{2}\right]}{\left[k_{\perp}^{2}+y^{2}M^{2}+\overline{y}m_{\pi}^{2}\right]^{2}}\frac{\left(-\overline{y}\right)^{2}}{\overline{y}^{2}}\frac{\overline{\Lambda}^{8}}{\left(-\Lambda^{2}\right)^{4}}\\
-\Rightarrow & \frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dif^{2}k_{\perp}\frac{y\left[k_{\perp}^{2}+y^{2}M^{2}\right]}{\left[k_{\perp}^{2}+y^{2}M^{2}+\overline{y}m_{\pi}^{2}\right]^{2}}
+\Rightarrow & \frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\int\dd^{2}k_{\perp}\frac{y}{\overline{y}^{2}}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]\\
+\Rightarrow & \frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dd^{2}k_{\perp}\frac{y\left[k_{\perp}^{2}+\left(yM\right)^{2}\right]}{\left[k_{\perp}^{2}+y^{2}M^{2}+\overline{y}m_{\pi}^{2}\right]^{2}}\frac{\left(-\overline{y}\right)^{2}}{\overline{y}^{2}}\frac{\overline{\Lambda}^{8}}{\left(-\Lambda^{2}\right)^{4}}\\
+\Rightarrow & \frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dd^{2}k_{\perp}\frac{y\left[k_{\perp}^{2}+y^{2}M^{2}\right]}{\left[k_{\perp}^{2}+y^{2}M^{2}+\overline{y}m_{\pi}^{2}\right]^{2}}
 \end{align*}
 
 \end_inset
@@ -8096,7 +8113,7 @@ f_{\pi^{+}n}^{\left(\text{on}\right)}\left(y\right)\to\int\dif k_{\perp}^{2}\fra
 类似地，
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{y\overline{M}\Delta}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{2}\left(k^{2}-\Lambda^{2}+i\varepsilon\right)^{4}}\Rightarrow\left(4\pi i\right)\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\overline{M}\Delta\left(1-z\right)z^{3}}{\left(k_{\perp}^{2}+\Omega\right)^{5}}y\delta\left(yp^{+}\right)
+\int\dd^{4}k\frac{y\overline{M}\Delta}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{2}\left(k^{2}-\Lambda^{2}+i\varepsilon\right)^{4}}\Rightarrow\left(4\pi i\right)\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\overline{M}\Delta\left(1-z\right)z^{3}}{\left(k_{\perp}^{2}+\Omega\right)^{5}}y\delta\left(yp^{+}\right)
 \]
 
 \end_inset
@@ -8128,7 +8145,7 @@ b
 ，它的表达式为，
 \begin_inset Formula 
 \begin{align*}
-f_{b}^{+}\left(y\right)= & \frac{{\color{red}i^{2}}e_{B}^{q}C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\tilde{F}\left(k\right)^{2}i\frac{1}{D_{\phi}\left(k\right)}\frac{1}{D_{B}\left(p^{\prime}-k\right)}\frac{1}{D_{B}\left(p-k\right)}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+f_{b}^{+}\left(y\right)= & \frac{{\color{red}i^{2}}e_{B}^{q}C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\tilde{F}\left(k\right)^{2}i\frac{1}{D_{\phi}\left(k\right)}\frac{1}{D_{B}\left(p^{\prime}-k\right)}\frac{1}{D_{B}\left(p-k\right)}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
 \times & \bar{u}\left(p^{\prime}\right)\left(\gamma\left(k+q\right)\gamma^{5}\right)i\left[\gamma\left(p^{\prime}-k\right)+M_{B}\right]{\color{blue}\gamma^{+}}i\left[\gamma\left(p-k\right)+M_{B}\right]\left(k\gamma\gamma^{5}\right)u\left(p\right)
 \end{align*}
 
@@ -8141,14 +8158,14 @@ f_{b}^{+}\left(y\right)= & \frac{{\color{red}i^{2}}e_{B}^{q}C_{B\phi}^{2}}{f^{2}
 ，得
 \begin_inset Formula 
 \begin{align*}
-f_{b}^{+}\left(y\right)= & \frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{f^{2}}\left(e_{B}^{q}M\right)\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)^{2}}\frac{y}{k^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+f_{b}^{+}\left(y\right)= & \frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{f^{2}}\left(e_{B}^{q}M\right)\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)^{2}}\frac{y}{k^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
 \times & \bar{u}\left(p\right)\left(k\gamma\right)\left[\gamma\left(p-k\right)+M_{B}\right]{\color{blue}\gamma^{+}}\left[\gamma\left(p-k\right)+M_{B}\right]\left(k\gamma\gamma^{5}\right)u\left(p\right)
 \end{align*}
 
 \end_inset
 
 第二行的旋量结构，使用
-\begin_inset Formula $\bar{u}Qu=\tr\left[\left(\gamma p+M\right)Q\right]$
+\begin_inset Formula $\bar{u}Qu=\Tr\left[\left(\gamma p+M\right)Q\right]$
 \end_inset
 
 可以化简为,
@@ -8195,7 +8212,7 @@ f_{b}^{+}\left(y\right)= & \frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{f^{2}}\le
 
 \begin_inset Formula 
 \[
-f_{b}^{+}\left(y\right)={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{\left[\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}-D_{\phi}\right)+\left(2-y\right)\Delta\overline{M}D_{B}+D_{B}^{2}\right]}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)^{2}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)
+f_{b}^{+}\left(y\right)={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{\left[\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}-D_{\phi}\right)+\left(2-y\right)\Delta\overline{M}D_{B}+D_{B}^{2}\right]}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)^{2}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)
 \]
 
 \end_inset
@@ -8205,7 +8222,7 @@ f_{b}^{+}\left(y\right)={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{
 即
 \begin_inset Formula 
 \[
-f_{b}^{+}\left(y\right)={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\left[\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}^{2}D_{\Lambda}^{4}}-\frac{\overline{y}\overline{M}^{2}}{D_{B}^{2}D_{\Lambda}^{4}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{B}D_{\phi}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)
+f_{b}^{+}\left(y\right)={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\left[\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}^{2}D_{\Lambda}^{4}}-\frac{\overline{y}\overline{M}^{2}}{D_{B}^{2}D_{\Lambda}^{4}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{B}D_{\phi}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)
 \]
 
 \end_inset
@@ -8213,7 +8230,7 @@ f_{b}^{+}\left(y\right)={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{
 而 salamu 的结果是
 \begin_inset Formula 
 \begin{equation}
-f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\left[\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}^{2}D_{\Lambda}^{4}}-\frac{\overline{y}\overline{M}^{2}}{D_{B}^{2}D_{\Lambda}^{4}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{B}D_{\phi}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)\label{eq:yu_71}
+f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\left[\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}^{2}D_{\Lambda}^{4}}-\frac{\overline{y}\overline{M}^{2}}{D_{B}^{2}D_{\Lambda}^{4}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{B}D_{\phi}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)\label{eq:yu_71}
 \end{equation}
 
 \end_inset
@@ -8249,7 +8266,7 @@ f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{
 求偏导会出来两项，使用
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\frac{y}{\overline{y}}\frac{\left(-2\pi i\right)}{p^{+}\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\frac{y}{\overline{y}}\frac{\left(-2\pi i\right)}{p^{+}\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
 \]
 
 \end_inset
@@ -8257,7 +8274,7 @@ f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{
 得到
 \begin_inset Formula 
 \begin{equation}
-\int\dif^{4}k\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)D_{B}^{2}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{\overline{y}}\left[\frac{1}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{4}{D_{\phi B}D_{\Lambda B}^{5}}\right]\label{eq:fb_4}
+\int\dd^{4}k\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)D_{B}^{2}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{\overline{y}}\left[\frac{1}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{4}{D_{\phi B}D_{\Lambda B}^{5}}\right]\label{eq:fb_4}
 \end{equation}
 
 \end_inset
@@ -8285,7 +8302,7 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}-\overline{y}m_{\phi}^{2}+y\overline{y
 求偏导数只会出来一项，
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{-\overline{y}\overline{M}^{2}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{B}^{2}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\int\dif^{4}k\frac{y\left(-2\pi i\right)}{\overline{y}}\frac{4\left(-\overline{M}^{2}\right)}{D_{\Lambda B}^{5}}
+\int\dd^{4}k\frac{-\overline{y}\overline{M}^{2}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{B}^{2}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\int\dd^{4}k\frac{y\left(-2\pi i\right)}{\overline{y}}\frac{4\left(-\overline{M}^{2}\right)}{D_{\Lambda B}^{5}}
 \]
 
 \end_inset
@@ -8313,8 +8330,8 @@ height "1pt"
 的结果
 \begin_inset Formula 
 \begin{align*}
- & \text{on--shell part }=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\left[\frac{\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}^{2}D_{B}D_{\Lambda}^{4}}-\frac{\overline{M}^{2}}{D_{\phi}D_{B}D_{\Lambda}^{4}}\right]y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & f_{B}^{\left(\text{on}\right)}\left(y\right)={\color{blue}\left(\frac{1}{\pi}\right)}\overline{\Lambda}^{8}\int\dif^{2}k_{\perp}\frac{y}{\overline{y}^{2}}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]
+ & \text{on--shell part }=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\left[\frac{\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}^{2}D_{B}D_{\Lambda}^{4}}-\frac{\overline{M}^{2}}{D_{\phi}D_{B}D_{\Lambda}^{4}}\right]y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & f_{B}^{\left(\text{on}\right)}\left(y\right)={\color{blue}\left(\frac{1}{\pi}\right)}\overline{\Lambda}^{8}\int\dd^{2}k_{\perp}\frac{y}{\overline{y}^{2}}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]
 \end{align*}
 
 \end_inset
@@ -8330,7 +8347,7 @@ height "1pt"
 重新写成
 \begin_inset Formula 
 \begin{align*}
-f_{b}^{+}\left(y\right) & =\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+f_{b}^{+}\left(y\right) & =\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
  & \times\left[\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}^{2}D_{\Lambda}^{4}}+\frac{-y\overline{M}^{2}}{D_{\phi}D_{B}D_{\Lambda}^{4}}+\frac{y\overline{M}^{2}}{D_{\phi}D_{B}D_{\Lambda}^{4}}-\frac{\overline{y}\overline{M}^{2}}{D_{B}^{2}D_{\Lambda}^{4}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{B}D_{\phi}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]
 \end{align*}
 
@@ -8377,7 +8394,7 @@ f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{C_{B\phi}^{2}\overline{M
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)D_{B}^{2}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{\overline{y}}\left[\frac{1}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{4}{D_{\phi B}D_{\Lambda B}^{5}}\right]
+\int\dd^{4}k\frac{\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)D_{B}^{2}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y\overline{y}\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{\overline{y}}\left[\frac{1}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{4}{D_{\phi B}D_{\Lambda B}^{5}}\right]
 \]
 
 \end_inset
@@ -8391,7 +8408,7 @@ f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{C_{B\phi}^{2}\overline{M
 ，on–shell 部分为,
 \begin_inset Formula 
 \[
-\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{\left(-\pi i\right)y\overline{M}^{2}}{\overline{y}}\int\dif k_{\perp}^{2}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{-1}{D_{\phi B}D_{\Lambda B}^{4}}\right]
+\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{\left(-\pi i\right)y\overline{M}^{2}}{\overline{y}}\int\dd k_{\perp}^{2}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{-1}{D_{\phi B}D_{\Lambda B}^{4}}\right]
 \]
 
 \end_inset
@@ -8403,8 +8420,8 @@ f_{B\phi}^{\left(\text{rbw}\right)}\left(y\right)=\frac{C_{B\phi}^{2}\overline{M
 的推导过程有，
 \begin_inset Formula 
 \begin{align*}
-f_{B}^{\left(\text{on}\right)}\left(y\right) & ={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{\left(-\pi i\right)y\overline{M}^{2}}{\overline{y}}\int\dif^{2}k_{\perp}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{-1}{D_{\phi B}D_{\Lambda B}^{4}}\right]\\
-f_{B}^{\left(\text{on}\right)}\left(y\right) & ={\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\frac{y}{\overline{y}^{2}}\int\dif^{2}k_{\perp}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]
+f_{B}^{\left(\text{on}\right)}\left(y\right) & ={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{\left(-\pi i\right)y\overline{M}^{2}}{\overline{y}}\int\dd^{2}k_{\perp}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}^{2}D_{\Lambda B}^{4}}+\frac{-1}{D_{\phi B}D_{\Lambda B}^{4}}\right]\\
+f_{B}^{\left(\text{on}\right)}\left(y\right) & ={\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\frac{y}{\overline{y}^{2}}\int\dd^{2}k_{\perp}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}^{2}D_{\Lambda B}^{4}}\right]
 \end{align*}
 
 \end_inset
@@ -8456,10 +8473,10 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
- & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left[\frac{+y\overline{M}^{2}}{D_{\Lambda}^{4}D_{\phi}D_{B}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{\Lambda}^{4}D_{\phi}D_{B}}\right]\label{eq: b_loc_off}\\
-= & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{2\overline{M}\left(yM+\Delta\right)}{D_{\Lambda}^{4}D_{\phi}D_{B}}\\
-= & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{2\overline{M}\left(yM+\Delta\right)}{D_{\Lambda B}^{4}D_{\phi B}}\\
-= & {\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi\right)^{2}f^{2}}\frac{2\overline{\Lambda}^{8}}{\overline{M}}\int\dif k_{\perp}^{2}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\Lambda B}^{4}D_{\phi B}}
+ & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left[\frac{+y\overline{M}^{2}}{D_{\Lambda}^{4}D_{\phi}D_{B}}+\frac{\left(2-y\right)\overline{M}\Delta}{D_{\Lambda}^{4}D_{\phi}D_{B}}\right]\label{eq: b_loc_off}\\
+= & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{2\overline{M}\left(yM+\Delta\right)}{D_{\Lambda}^{4}D_{\phi}D_{B}}\\
+= & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{2\overline{M}\left(yM+\Delta\right)}{D_{\Lambda B}^{4}D_{\phi B}}\\
+= & {\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi\right)^{2}f^{2}}\frac{2\overline{\Lambda}^{8}}{\overline{M}}\int\dd k_{\perp}^{2}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\Lambda B}^{4}D_{\phi B}}
 \end{align}
 
 \end_inset
@@ -8467,7 +8484,7 @@ noprefix "false"
 即定域 off–shell 为
 \begin_inset Formula 
 \begin{equation}
-f_{B}^{\left(\text{off}\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{2\overline{\Lambda}^{8}}{\overline{M}}\int\dif k_{\perp}^{2}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\phi B}D_{\Lambda B}^{4}}\label{eq:yu_72}
+f_{B}^{\left(\text{off}\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{2\overline{\Lambda}^{8}}{\overline{M}}\int\dd k_{\perp}^{2}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\phi B}D_{\Lambda B}^{4}}\label{eq:yu_72}
 \end{equation}
 
 \end_inset
@@ -8511,8 +8528,8 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align}
- & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{4\left(-\pi i\right)y\overline{M}^{2}}{\overline{y}}\int\dif k_{\perp}^{2}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}D_{\Lambda B}^{5}}+\frac{-1}{D_{\Lambda B}^{5}}\right]\label{eq:b_non_off}\\
-= & {\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\frac{4y}{\overline{y}}\int\dif^{2}k_{\perp}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}D_{\Lambda B}^{5}}\right]
+ & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{4\left(-\pi i\right)y\overline{M}^{2}}{\overline{y}}\int\dd k_{\perp}^{2}\left[\frac{\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi B}D_{\Lambda B}^{5}}+\frac{-1}{D_{\Lambda B}^{5}}\right]\label{eq:b_non_off}\\
+= & {\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}\overline{\Lambda}^{8}}{\left(4\pi f\right)^{2}}\frac{4y}{\overline{y}}\int\dd^{2}k_{\perp}\left[\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{D_{\phi B}D_{\Lambda B}^{5}}\right]
 \end{align}
 
 \end_inset
@@ -8520,7 +8537,7 @@ noprefix "false"
 即非定域 off–shell 项为
 \begin_inset Formula 
 \begin{align}
-\Rightarrow & 4\delta f_{B}^{\left(\text{off}\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}4\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}D_{\phi B}D_{\Lambda B}^{5}}\label{eq:yu_73}
+\Rightarrow & 4\delta f_{B}^{\left(\text{off}\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}4\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}D_{\phi B}D_{\Lambda B}^{5}}\label{eq:yu_73}
 \end{align}
 
 \end_inset
@@ -8547,7 +8564,7 @@ delta
 贡献为
 \begin_inset Formula 
 \[
-{\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}D_{\Lambda}^{4}}
+{\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}D_{\Lambda}^{4}}
 \]
 
 \end_inset
@@ -8555,7 +8572,7 @@ delta
 使用发散积分公式，
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -8567,8 +8584,8 @@ where
 .
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}D_{\Lambda}^{4}}={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{z^{3}\left(-\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
-= & {\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+\Rightarrow & {\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}D_{\Lambda}^{4}}={\color{blue}\left(4Me_{B}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\frac{z^{3}\left(-\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
+= & {\color{blue}\left(\frac{4Me_{B}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \end{align*}
 
 \end_inset
@@ -8594,7 +8611,7 @@ noprefix "false"
 项为，
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{\phi}^{\left(\delta\right)}\left(y\right)={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -8612,7 +8629,7 @@ c
 
 \begin_inset Formula 
 \[
-f_{c}^{+}\left(y\right)=\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1;+}+H^{2;+}\right)u\left(p\right)
+f_{c}^{+}\left(y\right)=\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1;+}+H^{2;+}\right)u\left(p\right)
 \]
 
 \end_inset
@@ -8666,8 +8683,8 @@ H^{1;\mu}+H^{2;\mu}=\frac{{\color{blue}\left(\gamma^{\mu}\gamma^{5}\right)}\left
 
 \begin_inset Formula 
 \begin{align*}
-f_{c}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}}{\left(2\pi\right)^{4}f^{2}}\frac{\overline{\Lambda}^{8}M}{1}\int\dif^{4}k\frac{-8\left[y\left(M^{2}+MM_{B}\right)+\left(k^{2}-2kp\right)\right]}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\\
-f_{c}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}\overline{\Lambda}^{8}M}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{-8\left[yM\overline{M}+D_{B}+\Delta\overline{M}\right]}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}
+f_{c}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}}{\left(2\pi\right)^{4}f^{2}}\frac{\overline{\Lambda}^{8}M}{1}\int\dd^{4}k\frac{-8\left[y\left(M^{2}+MM_{B}\right)+\left(k^{2}-2kp\right)\right]}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\\
+f_{c}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}\overline{\Lambda}^{8}M}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{-8\left[yM\overline{M}+D_{B}+\Delta\overline{M}\right]}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}
 \end{align*}
 
 \end_inset
@@ -8679,7 +8696,7 @@ f_{c}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{B\phi}^{2}\overli
 
 \begin_inset Formula 
 \[
-f_{c}^{+}\left(y\right)={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\left[\frac{\left(yM+\Delta\right)\overline{M}}{D_{\phi}D_{B}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]
+f_{c}^{+}\left(y\right)={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\left[\frac{\left(yM+\Delta\right)\overline{M}}{D_{\phi}D_{B}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]
 \]
 
 \end_inset
@@ -8689,7 +8706,7 @@ f_{c}^{+}\left(y\right)={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{\left(-2
 salamu 的结果是
 \begin_inset Formula 
 \begin{equation}
-f_{B}^{\left(\text{KR}\right)}=\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\left[\frac{\left(yM+\Delta\right)\overline{M}}{D_{\phi}D_{B}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)\label{eq:yu_74}
+f_{B}^{\left(\text{KR}\right)}=\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\left[\frac{\left(yM+\Delta\right)\overline{M}}{D_{\phi}D_{B}D_{\Lambda}^{4}}+\frac{1}{D_{\phi}D_{\Lambda}^{4}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)\label{eq:yu_74}
 \end{equation}
 
 \end_inset
@@ -8703,7 +8720,7 @@ f_{B}^{\left(\text{KR}\right)}=\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lam
 使用
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)D_{\Lambda}^{b}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}
 \]
 
 \end_inset
@@ -8713,7 +8730,7 @@ f_{B}^{\left(\text{KR}\right)}=\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lam
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -8723,8 +8740,8 @@ f_{B}^{\left(\text{KR}\right)}=\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lam
 得到
 \begin_inset Formula 
 \begin{align*}
-f_{c}^{+}\left(y\right) & ={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif k_{\perp}^{2}\left[\frac{\left(-\pi i\right)}{\overline{y}}\frac{\left(yM+\Delta\right)\overline{M}}{D_{\phi B}^{1}D_{\Lambda B}^{4}}+\int_{0}^{1}\dif z\frac{z^{3}\left(-\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\right]\\
- & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dif k_{\perp}^{2}\left[\frac{-2\overline{\Lambda}^{8}}{\overline{M}}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\phi B}^{1}D_{\Lambda B}^{4}}+\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int_{0}^{1}\dif z\frac{2z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\right]
+f_{c}^{+}\left(y\right) & ={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{\left(-2i\right)C_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd k_{\perp}^{2}\left[\frac{\left(-\pi i\right)}{\overline{y}}\frac{\left(yM+\Delta\right)\overline{M}}{D_{\phi B}^{1}D_{\Lambda B}^{4}}+\int_{0}^{1}\dd z\frac{z^{3}\left(-\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\right]\\
+ & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dd k_{\perp}^{2}\left[\frac{-2\overline{\Lambda}^{8}}{\overline{M}}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\phi B}^{1}D_{\Lambda B}^{4}}+\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int_{0}^{1}\dd z\frac{2z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\right]
 \end{align*}
 
 \end_inset
@@ -8732,7 +8749,7 @@ f_{c}^{+}\left(y\right) & ={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{\left
 与之前的结果相比
 \begin_inset Formula 
 \[
-f_{B}^{\left(\text{off}\right)}\left(y\right)=\frac{2\overline{\Lambda}^{8}}{\overline{M}}\int\dif k_{\perp}^{2}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\phi B}D_{\Lambda B}^{4}},\quad f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{B}^{\left(\text{off}\right)}\left(y\right)=\frac{2\overline{\Lambda}^{8}}{\overline{M}}\int\dd k_{\perp}^{2}\frac{\left(yM+\Delta\right)}{\overline{y}D_{\phi B}D_{\Lambda B}^{4}},\quad f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -8811,7 +8828,7 @@ d
 对 fig.1d 中三非定域规范链接的贡献，
 \begin_inset Formula 
 \begin{align*}
-f_{d}^{+}\left(y\right)= & \frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1;+}+H^{2;+}\right)u\left(p\right)
+f_{d}^{+}\left(y\right)= & \frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)\left(H^{1;+}+H^{2;+}\right)u\left(p\right)
 \end{align*}
 
 \end_inset
@@ -8852,7 +8869,7 @@ H^{1;\mu}+H^{2;\mu}=\frac{8k^{\mu}{\color{blue}\left(k\gamma\gamma^{5}\right)\le
 
 \begin_inset Formula 
 \begin{align*}
-f_{d}^{+}\left(y\right)= & \frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{\left(2\pi\right)^{4}}\int\dif k^{4}p^{+}\frac{16y\left[4\left(kp\right)^{2}-2k^{2}\left(kp+M\overline{M}\right)\right]}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}
+f_{d}^{+}\left(y\right)= & \frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{\left(2\pi\right)^{4}}\int\dd k^{4}p^{+}\frac{16y\left[4\left(kp\right)^{2}-2k^{2}\left(kp+M\overline{M}\right)\right]}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}
 \end{align*}
 
 \end_inset
@@ -8883,8 +8900,8 @@ f_{d}^{+}\left(y\right)= & \frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}
 所以，
 \begin_inset Formula 
 \begin{align*}
- & f_{d}^{+}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{\left(2\pi\right)^{4}}\int\dif k^{4}\frac{16y\left[D_{B}\left(-2kp+\overline{M}\Delta\right)+\left(\Delta^{2}-m_{\phi}^{2}\right)\overline{M}^{2}-D_{\phi}\overline{M}^{2}\right]}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & ={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif k^{4}\left[\frac{-4y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{5}D_{\phi}D_{B}}+\frac{4y\overline{M}^{2}}{D_{\Lambda}^{5}D_{B}}+\frac{-4y\left(\overline{M}\Delta-2kp\right)}{D_{\Lambda}^{5}D_{\phi}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)
+ & f_{d}^{+}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{B\phi}^{2}}{f^{2}}\frac{\overline{\Lambda}^{8}M}{\left(2\pi\right)^{4}}\int\dd k^{4}\frac{16y\left[D_{B}\left(-2kp+\overline{M}\Delta\right)+\left(\Delta^{2}-m_{\phi}^{2}\right)\overline{M}^{2}-D_{\phi}\overline{M}^{2}\right]}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & ={\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd k^{4}\left[\frac{-4y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{5}D_{\phi}D_{B}}+\frac{4y\overline{M}^{2}}{D_{\Lambda}^{5}D_{B}}+\frac{-4y\left(\overline{M}\Delta-2kp\right)}{D_{\Lambda}^{5}D_{\phi}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)
 \end{align*}
 
 \end_inset
@@ -8894,7 +8911,7 @@ salamu 的结果为，
 
 \begin_inset Formula 
 \[
-\delta f_{B}^{\left(\text{KR}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\left[\frac{-4y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}D_{\Lambda}^{5}}+\frac{4y\overline{M}^{2}}{D_{B}D_{\Lambda}^{5}}+\frac{-4y\left(\overline{M}\Delta-2pk\right)}{D_{\phi}D_{\Lambda}^{5}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)
+\delta f_{B}^{\left(\text{KR}\right)}\left(y\right)=\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\left[\frac{-4y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\phi}D_{B}D_{\Lambda}^{5}}+\frac{4y\overline{M}^{2}}{D_{B}D_{\Lambda}^{5}}+\frac{-4y\left(\overline{M}\Delta-2pk\right)}{D_{\phi}D_{\Lambda}^{5}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)
 \]
 
 \end_inset
@@ -8906,7 +8923,7 @@ salamu 的结果为，
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)D_{\Lambda}^{b}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}
 \]
 
 \end_inset
@@ -8916,7 +8933,7 @@ salamu 的结果为，
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -8924,8 +8941,8 @@ salamu 的结果为，
 
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
-= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -8945,8 +8962,8 @@ where
 积分之后，
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow{\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif k^{4}\left[\frac{-4y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{5}D_{\phi}D_{B}}+\frac{4y\overline{M}^{2}}{D_{\Lambda}^{5}D_{B}}+\frac{-4y\left(\overline{M}\Delta-2kp\right)}{D_{\Lambda}^{5}D_{\phi}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dif k_{\perp}^{2}\left\{ \frac{\left(-4\overline{\Lambda}^{8}\right)y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}D_{\phi B}^{1}D_{\Lambda B}^{5}}+\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int_{0}^{1}\dif z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\right\} 
+ & \Rightarrow{\color{blue}\left(-4Me_{\phi}^{q}\right)}\frac{iC_{B\phi}^{2}\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd k^{4}\left[\frac{-4y\overline{M}^{2}\left(\Delta^{2}-m_{\phi}^{2}\right)}{D_{\Lambda}^{5}D_{\phi}D_{B}}+\frac{4y\overline{M}^{2}}{D_{\Lambda}^{5}D_{B}}+\frac{-4y\left(\overline{M}\Delta-2kp\right)}{D_{\Lambda}^{5}D_{\phi}}\right]\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{B\phi}^{2}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dd k_{\perp}^{2}\left\{ \frac{\left(-4\overline{\Lambda}^{8}\right)y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}D_{\phi B}^{1}D_{\Lambda B}^{5}}+\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int_{0}^{1}\dd z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\right\} 
 \end{align*}
 
 \end_inset
@@ -8966,7 +8983,7 @@ where
 中的推导，设置为零。与之前的结果比较:
 \begin_inset Formula 
 \[
--4\delta f_{B}^{\left(\text{off}\right)}\left(y\right)=-4\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}D_{\phi B}D_{\Lambda B}^{5}}
+-4\delta f_{B}^{\left(\text{off}\right)}\left(y\right)=-4\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM+\Delta\right)^{2}\right]}{\overline{y}D_{\phi B}D_{\Lambda B}^{5}}
 \]
 
 \end_inset
@@ -8974,7 +8991,7 @@ where
 
 \begin_inset Formula 
 \[
--\delta f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{\overline{M}^{2}C_{B\phi}^{2}}{\left(4\pi f\right)^{2}}\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+-\delta f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{\overline{M}^{2}C_{B\phi}^{2}}{\left(4\pi f\right)^{2}}\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -9161,7 +9178,7 @@ e
 ，
 \begin_inset Formula 
 \[
-f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\bar{u}\left(p^{\prime}\right)\gamma^{+}u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)}
+f_{e}^{+}\left(y\right)=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\bar{u}\left(p^{\prime}\right)\gamma^{+}u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)}
 \]
 
 \end_inset
@@ -9177,7 +9194,7 @@ f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-
 
 \begin_inset Formula 
 \[
-f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\bar{u}\left(p\right)\gamma^{+}u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)}
+f_{e}^{+}\left(y\right)=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\bar{u}\left(p\right)\gamma^{+}u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)}
 \]
 
 \end_inset
@@ -9197,7 +9214,7 @@ f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-
 
 \begin_inset Formula 
 \[
-f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{4}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)}
+f_{e}^{+}\left(y\right)=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{4}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)}
 \]
 
 \end_inset
@@ -9207,7 +9224,7 @@ f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-
 使用
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -9215,8 +9232,8 @@ f_{e}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{\left(-
 
 \begin_inset Formula 
 \begin{align*}
-f_{e}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}4M\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}\left(-\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
- & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{-C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{e}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}4M\overline{\Lambda}^{8}}{\left(2\pi\right)^{4}f^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}\left(-\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
+ & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{-C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \end{align*}
 
 \end_inset
@@ -9224,7 +9241,7 @@ f_{e}^{+}\left(y\right) & =\frac{\left(-ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger
 结合之前
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -9258,7 +9275,7 @@ f
 
 \begin_inset Formula 
 \[
-f_{f}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\left(2k+q\right)^{+}\bar{u}\left(p^{\prime}\right)k\gamma u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)}
+f_{f}^{+}\left(y\right)=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\left(2k+q\right)^{+}\bar{u}\left(p^{\prime}\right)k\gamma u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)}
 \]
 
 \end_inset
@@ -9274,7 +9291,7 @@ f_{f}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{{\color
 
 \begin_inset Formula 
 \[
-f_{f}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\left(2k\right)^{+}\bar{u}\left(p^{\prime}\right)k\gamma u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)^{2}}
+f_{f}^{+}\left(y\right)=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\phi^{\dagger}}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{{\color{blue}\left(2k\right)^{+}\bar{u}\left(p^{\prime}\right)k\gamma u\left(p\right)}}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)^{2}}
 \]
 
 \end_inset
@@ -9292,7 +9309,7 @@ f_{f}^{+}\left(y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{{\color
 then
 \begin_inset Formula 
 \[
-f_{f}^{+}\left(y\right)=\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\phi^{\dagger}}}{\left(2\pi\right)^{4}f^{2}}\frac{M\overline{\Lambda}^{8}}{1}\int\dif^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{8ykp}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)^{2}}
+f_{f}^{+}\left(y\right)=\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\phi^{\dagger}}}{\left(2\pi\right)^{4}f^{2}}\frac{M\overline{\Lambda}^{8}}{1}\int\dd^{4}k\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{8ykp}{D_{\Lambda}\left(k\right)^{4}D_{\phi}\left(k\right)^{2}}
 \]
 
 \end_inset
@@ -9300,8 +9317,8 @@ f_{f}^{+}\left(y\right)=\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\ph
 使用
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
-= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -9309,7 +9326,7 @@ f_{f}^{+}\left(y\right)=\frac{{\color{blue}\left(ie_{\phi}^{q}\right)}C_{\phi\ph
 
 \begin_inset Formula 
 \begin{align*}
-f_{f}^{+}\left(y\right) & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{-C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\left(1-z\right)z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
+f_{f}^{+}\left(y\right) & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{-C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{-\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\left(1-z\right)z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
  & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\left[-f_{\phi}^{\left(\delta\right)}\left(y\right)+\delta f_{\phi}^{\left(\delta\right)}\left(y\right)\right]
 \end{align*}
 
@@ -9322,7 +9339,7 @@ f_{f}^{+}\left(y\right) & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}
 的结果：
 \begin_inset Formula 
 \[
-f_{a}^{\delta}=\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\left(z^{3}-z^{4}\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{a}^{\delta}=\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\left(z^{3}-z^{4}\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -9360,7 +9377,7 @@ g
 最后，fig1g 非定域 tadpole 规范链接图的分裂函数是
 \begin_inset Formula 
 \[
-f_{g}^{\mu}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right){\color{blue}H^{+}\bar{u}\left(p^{\prime}\right)\left(k\gamma\right)u\left(p\right)}
+f_{g}^{\mu}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right){\color{blue}H^{+}\bar{u}\left(p^{\prime}\right)\left(k\gamma\right)u\left(p\right)}
 \]
 
 \end_inset
@@ -9396,7 +9413,7 @@ H^{\mu}=\frac{8k^{\mu}}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)}
 then
 \begin_inset Formula 
 \[
-f_{g}^{\mu}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{\left(2\pi\right)^{4}f^{2}}\int\dif^{4}k\frac{M\overline{\Lambda}^{8}}{1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{32ykp}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)}
+f_{g}^{\mu}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{\left(2\pi\right)^{4}f^{2}}\int\dd^{4}k\frac{M\overline{\Lambda}^{8}}{1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{32ykp}{D_{\Lambda}\left(k\right)^{5}D_{\phi}\left(k\right)}
 \]
 
 \end_inset
@@ -9404,8 +9421,8 @@ f_{g}^{\mu}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}
 使用
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
-= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -9413,8 +9430,8 @@ f_{g}^{\mu}\left(y\right)=\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}
 
 \begin_inset Formula 
 \begin{align*}
-f_{g}^{\mu}\left(y\right) & =\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{\left(2\pi\right)^{4}f^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{M\overline{\Lambda}^{8}}{4}\left(-\pi i\right)\frac{16z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
-f_{g}^{\mu}\left(y\right) & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
+f_{g}^{\mu}\left(y\right) & =\frac{\left(ie_{\phi}^{q}\right)C_{\phi\phi^{\dagger}}}{\left(2\pi\right)^{4}f^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{M\overline{\Lambda}^{8}}{4}\left(-\pi i\right)\frac{16z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
+f_{g}^{\mu}\left(y\right) & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}\\
  & ={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{C_{\phi\phi^{\dagger}}\overline{M}^{2}}{\left(4\pi f\right)^{2}}\delta f_{\phi}^{\left(\delta\right)}\left(y\right)
 \end{align*}
 
@@ -9427,7 +9444,7 @@ f_{g}^{\mu}\left(y\right) & ={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right
 的结果，
 \begin_inset Formula 
 \[
--\delta f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+-\delta f_{\phi}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -9508,7 +9525,7 @@ h
 \begin_layout Standard
 \begin_inset Formula 
 \[
-f_{h}^{+}=\left(ie_{\phi}^{q}\right)\frac{C_{T\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
+f_{h}^{+}=\left(ie_{\phi}^{q}\right)\frac{C_{T\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
 \]
 
 \end_inset
@@ -9540,7 +9557,7 @@ PDF 情形化简到
 
 \begin_inset Formula 
 \[
-f_{h}^{+}={\color{blue}\left(4Me_{\phi}^{q}\right)}\frac{iC_{T\phi}^{2}\overline{\Lambda}^{8}}{6M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{-8\left(M\left(M+M_{T}\right)-kp\right)\left(M^{2}k^{2}-\left(kp\right)^{2}\right)}{D_{\Lambda}^{4}D_{\phi}^{2}D_{T}}
+f_{h}^{+}={\color{blue}\left(4Me_{\phi}^{q}\right)}\frac{iC_{T\phi}^{2}\overline{\Lambda}^{8}}{6M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\frac{-8\left(M\left(M+M_{T}\right)-kp\right)\left(M^{2}k^{2}-\left(kp\right)^{2}\right)}{D_{\Lambda}^{4}D_{\phi}^{2}D_{T}}
 \]
 
 \end_inset
@@ -9569,7 +9586,7 @@ f_{h}^{+}={\color{blue}\left(4Me_{\phi}^{q}\right)}\frac{iC_{T\phi}^{2}\overline
 salamu的结果是
 \begin_inset Formula 
 \[
-f_{\phi T}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{T\phi}^{2}\overline{\Lambda}^{8}}{6M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
+f_{\phi T}^{\left(\text{rbw}\right)}\left(y\right)=\frac{iC_{T\phi}^{2}\overline{\Lambda}^{8}}{6M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
 \]
 
 \end_inset
@@ -9654,7 +9671,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align}
-f_{T}^{\left(\text{on}\right)}=\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{y}{\overline{y}}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)^{2}\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)}{D_{\Lambda T}^{4}D_{\phi T}^{2}}+\frac{y\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)}{\overline{y}}\frac{\left[-3\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)-4MM_{T}\right]}{D_{\phi T}D_{\Lambda T}^{4}}\right]\label{eq:yu_86}
+f_{T}^{\left(\text{on}\right)}=\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{y}{\overline{y}}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)^{2}\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)}{D_{\Lambda T}^{4}D_{\phi T}^{2}}+\frac{y\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)}{\overline{y}}\frac{\left[-3\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)-4MM_{T}\right]}{D_{\phi T}D_{\Lambda T}^{4}}\right]\label{eq:yu_86}
 \end{align}
 
 \end_inset
@@ -9662,7 +9679,7 @@ f_{T}^{\left(\text{on}\right)}=\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2
 Mathematica 程序计算出的结果是一样的：
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{on}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{y}{\overline{y}}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)^{2}\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)}{D_{\Lambda T}^{4}D_{\phi T}^{2}}+\frac{y\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left(-\overline{M}_{T}^{2}+3m_{\phi}^{2}-2\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}\right]
+f_{T}^{\left(\text{on}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{y}{\overline{y}}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)^{2}\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)}{D_{\Lambda T}^{4}D_{\phi T}^{2}}+\frac{y\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left(-\overline{M}_{T}^{2}+3m_{\phi}^{2}-2\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}\right]
 \]
 
 \end_inset
@@ -9740,7 +9757,7 @@ noprefix "false"
 是有限值，
 \begin_inset Formula 
 \begin{equation}
-f_{T}^{\left(\text{on end}\right)}=\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\frac{y}{\overline{y}^{2}D_{\Lambda T}^{4}}\left[k_{\perp}^{2}+y^{2}M^{2}-2y\left(\overline{M}_{T}^{2}-M\Delta_{T}\right)-2\overline{y}m_{\phi}^{2}+3\overline{M}_{T}^{2}-4MM_{T}\right]\label{eq:yu_88}
+f_{T}^{\left(\text{on end}\right)}=\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\frac{y}{\overline{y}^{2}D_{\Lambda T}^{4}}\left[k_{\perp}^{2}+y^{2}M^{2}-2y\left(\overline{M}_{T}^{2}-M\Delta_{T}\right)-2\overline{y}m_{\phi}^{2}+3\overline{M}_{T}^{2}-4MM_{T}\right]\label{eq:yu_88}
 \end{equation}
 
 \end_inset
@@ -9750,9 +9767,9 @@ f_{T}^{\left(\text{on end}\right)}=\frac{\overline{\Lambda}^{8}\int\dif k_{\perp
 Mathematica 程序计算出的结果是：
 \begin_inset Formula 
 \begin{align*}
- & f_{T}^{\left(\text{on end}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{-y\left(\overline{\Lambda}^{2}-2\overline{M}_{T}^{2}+3m_{\phi}^{2}-\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}}+\frac{-y}{\overline{y}D_{\Lambda T}^{3}}\right]\\
-\Rightarrow & {\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\frac{y}{\overline{y}^{2}D_{\Lambda T}^{4}}\left[-\overline{y}\left(\overline{\Lambda}^{2}-2\overline{M}_{T}^{2}+3m_{\phi}^{2}-\Delta_{T}^{2}\right)+\left(k_{\perp}^{2}+yM_{T}^{2}-y\overline{y}M^{2}+\overline{y}\Lambda^{2}\right)\right]\\
-\Rightarrow & {\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\frac{y}{\overline{y}^{2}D_{\Lambda T}^{4}}\frac{1}{4}\left[\left(y^{2}+8\overline{y}\right)\overline{M}_{T}^{2}-2\left(y-2\right)y\Delta_{T}\overline{M}_{T}+4k_{\perp}^{2}-8\overline{y}m_{\phi}^{2}+\left(y-2\right)^{2}\Delta_{T}^{2}\right]
+ & f_{T}^{\left(\text{on end}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{-y\left(\overline{\Lambda}^{2}-2\overline{M}_{T}^{2}+3m_{\phi}^{2}-\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}}+\frac{-y}{\overline{y}D_{\Lambda T}^{3}}\right]\\
+\Rightarrow & {\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\frac{y}{\overline{y}^{2}D_{\Lambda T}^{4}}\left[-\overline{y}\left(\overline{\Lambda}^{2}-2\overline{M}_{T}^{2}+3m_{\phi}^{2}-\Delta_{T}^{2}\right)+\left(k_{\perp}^{2}+yM_{T}^{2}-y\overline{y}M^{2}+\overline{y}\Lambda^{2}\right)\right]\\
+\Rightarrow & {\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\frac{y}{\overline{y}^{2}D_{\Lambda T}^{4}}\frac{1}{4}\left[\left(y^{2}+8\overline{y}\right)\overline{M}_{T}^{2}-2\left(y-2\right)y\Delta_{T}\overline{M}_{T}+4k_{\perp}^{2}-8\overline{y}m_{\phi}^{2}+\left(y-2\right)^{2}\Delta_{T}^{2}\right]
 \end{align*}
 
 \end_inset
@@ -9814,7 +9831,7 @@ literal "true"
 项表示成
 \begin_inset Formula 
 \begin{align}
-\frac{\overline{\Lambda}^{8}}{\overline{y}^{4}D_{\Lambda T}^{4}}\underset{\Lambda\to\infty}{\longrightarrow} & \lim_{\Omega_{0}\to\infty}\int_{\Omega_{0}}^{\Omega_{T}}\dif t\left.\frac{-4y\overline{\Lambda}^{8}}{\left(yt-y\overline{y}M^{2}+\overline{y}\Omega_{\Lambda}\right)^{5}}\right|_{\Lambda\to\infty}\nonumber \\
+\frac{\overline{\Lambda}^{8}}{\overline{y}^{4}D_{\Lambda T}^{4}}\underset{\Lambda\to\infty}{\longrightarrow} & \lim_{\Omega_{0}\to\infty}\int_{\Omega_{0}}^{\Omega_{T}}\dd t\left.\frac{-4y\overline{\Lambda}^{8}}{\left(yt-y\overline{y}M^{2}+\overline{y}\Omega_{\Lambda}\right)^{5}}\right|_{\Lambda\to\infty}\nonumber \\
 = & \frac{\overline{\Lambda}^{6}}{\overline{y}^{3}\Omega_{\Lambda}^{3}}\lim_{\Omega_{0}\to\infty}\left(\frac{\overline{\Lambda}^{2}\overline{y}^{3}\Omega_{\Lambda}^{3}}{\overline{y}^{4}D_{\Lambda T}^{4}}-\frac{\overline{\Lambda}^{2}\overline{y}^{3}\Omega_{\Lambda}^{3}}{\overline{y}^{4}D_{0}^{4}}\right)_{\Lambda\to\infty}\label{eq: yu_89}
 \end{align}
 
@@ -9950,7 +9967,7 @@ noprefix "false"
 。
 \begin_inset Formula 
 \begin{align*}
-\int_{0}^{1}\dif y\left(\frac{-1}{\overline{y}+X_{T}/\Omega_{\Lambda}}-\frac{-1}{\overline{y}+X_{0}/\Omega_{\Lambda}}\right) & =\log\left(\frac{0+X_{T}/\Omega_{\Lambda}}{0+X_{0}/\Omega_{\Lambda}}\right)-\log\left(\frac{1+X_{T}/\Omega_{\Lambda}}{1+X_{0}/\Omega_{\Lambda}}\right)\\
+\int_{0}^{1}\dd y\left(\frac{-1}{\overline{y}+X_{T}/\Omega_{\Lambda}}-\frac{-1}{\overline{y}+X_{0}/\Omega_{\Lambda}}\right) & =\log\left(\frac{0+X_{T}/\Omega_{\Lambda}}{0+X_{0}/\Omega_{\Lambda}}\right)-\log\left(\frac{1+X_{T}/\Omega_{\Lambda}}{1+X_{0}/\Omega_{\Lambda}}\right)\\
  & =\log\left(\frac{X_{T}}{X_{0}}\right)
 \end{align*}
 
@@ -10058,7 +10075,7 @@ noprefix "false"
  的定域极限为
 \begin_inset Formula 
 \begin{equation}
-f_{T}^{\left(\text{on end}\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\delta\left(\overline{y}\right)\left[\Omega_{T}-2\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)-6MM_{T}\right]\left(\log\frac{\Omega_{T}}{\mu^{2}}-1\right)\label{eq:yu_95}
+f_{T}^{\left(\text{on end}\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\delta\left(\overline{y}\right)\left[\Omega_{T}-2\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)-6MM_{T}\right]\left(\log\frac{\Omega_{T}}{\mu^{2}}-1\right)\label{eq:yu_95}
 \end{equation}
 
 \end_inset
@@ -10109,7 +10126,7 @@ literal "false"
 中取 pole 单独贡献的结果相同
 \begin_inset Formula 
 \begin{equation}
-f_{T}^{\left(\text{on}\right)}+f_{T}^{\left(\text{on end}\right)}=\frac{\overline{\Lambda}}{4M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(\Delta_{T}+yM\right)^{2}\right]\left[k_{\perp}^{2}+\left(M_{T}-yM\right)^{2}\right]^{2}}{\overline{y}^{4}D_{\phi T}^{2}D_{\Lambda T}^{4}}\label{eq:yu_96}
+f_{T}^{\left(\text{on}\right)}+f_{T}^{\left(\text{on end}\right)}=\frac{\overline{\Lambda}}{4M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(\Delta_{T}+yM\right)^{2}\right]\left[k_{\perp}^{2}+\left(M_{T}-yM\right)^{2}\right]^{2}}{\overline{y}^{4}D_{\phi T}^{2}D_{\Lambda T}^{4}}\label{eq:yu_96}
 \end{equation}
 
 \end_inset
@@ -10167,7 +10184,7 @@ f_{\phi T}^{\left(\text{rbw}\right)}=\frac{C_{T\phi}^{2}\overline{M}_{T}^{2}}{\l
 的定义为
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}-\delta f_{\phi}^{\left(\delta\right)}={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\left(z^{3}-z^{4}\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}},
+f_{\phi}^{\left(\delta\right)}-\delta f_{\phi}^{\left(\delta\right)}={\color{blue}\left(\frac{{\color{blue}4M}e_{\phi}^{q}}{\pi}\right)}\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\left(z^{3}-z^{4}\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}},
 \]
 
 \end_inset
@@ -10191,8 +10208,8 @@ salamu 使用的
 的定义为
 \begin_inset Formula 
 \begin{align}
-\frac{-1}{18}f_{T}^{\left(\delta\right)}\left(y\right) & =\frac{-\overline{\Lambda}^{8}}{18M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{3}}{\left(k_{\perp}^{2}+\Omega\right)^{3}}\delta\left(y\right)\label{eq:yu_97}\\
- & =\frac{1}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{1}{2\Omega_{\Lambda}^{2}}\left[6\Omega_{\Lambda}^{2}\Omega_{\phi}\log\frac{\Omega_{\phi}}{\Omega_{\Lambda}}+\left(\Omega_{\phi}-\Omega_{\Lambda}\right)\left(\Omega_{\phi}^{2}-5\Omega_{\Lambda}\Omega_{\phi}-2\Omega_{\Lambda}^{2}\right)\right]\delta\left(y\right)\nonumber 
+\frac{-1}{18}f_{T}^{\left(\delta\right)}\left(y\right) & =\frac{-\overline{\Lambda}^{8}}{18M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{3}}{\left(k_{\perp}^{2}+\Omega\right)^{3}}\delta\left(y\right)\label{eq:yu_97}\\
+ & =\frac{1}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{1}{2\Omega_{\Lambda}^{2}}\left[6\Omega_{\Lambda}^{2}\Omega_{\phi}\log\frac{\Omega_{\phi}}{\Omega_{\Lambda}}+\left(\Omega_{\phi}-\Omega_{\Lambda}\right)\left(\Omega_{\phi}^{2}-5\Omega_{\Lambda}\Omega_{\phi}-2\Omega_{\Lambda}^{2}\right)\right]\delta\left(y\right)\nonumber 
 \end{align}
 
 \end_inset
@@ -10228,7 +10245,7 @@ where
 的定域极限为
 \begin_inset Formula 
 \[
-f_{T}^{\left(\delta\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{3}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\left[\log\frac{\Omega_{\phi}}{\mu^{2}}-1\right]\Omega_{\phi}\delta\left(y\right),
+f_{T}^{\left(\delta\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{3}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\left[\log\frac{\Omega_{\phi}}{\mu^{2}}-1\right]\Omega_{\phi}\delta\left(y\right),
 \]
 
 \end_inset
@@ -10252,7 +10269,7 @@ where 截断参数满足，
 项之和的定域极限为
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{18}\left[\frac{3\overline{M}_{T}^{2}\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)}{M_{T}^{2}\overline{M}_{T}^{2}}f_{\phi}^{\left(\delta\right)}-f_{T}^{\left(\delta\right)}\right]\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\left[\Omega_{\phi}+\left(\overline{M}_{T}^{2}-m_{\phi}^{2}-\Omega_{\phi}\right)\log\frac{\Omega_{\phi}}{\mu^{2}}\right]\delta\left(y\right)\label{eq:yu_99}
+\frac{1}{18}\left[\frac{3\overline{M}_{T}^{2}\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)}{M_{T}^{2}\overline{M}_{T}^{2}}f_{\phi}^{\left(\delta\right)}-f_{T}^{\left(\delta\right)}\right]\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\left[\Omega_{\phi}+\left(\overline{M}_{T}^{2}-m_{\phi}^{2}-\Omega_{\phi}\right)\log\frac{\Omega_{\phi}}{\mu^{2}}\right]\delta\left(y\right)\label{eq:yu_99}
 \end{equation}
 
 \end_inset
@@ -10326,7 +10343,7 @@ i
 对于 fig.1i 中的重子十重态 rainbow 图，
 \begin_inset Formula 
 \[
-f_{i}^{+}\left(y\right)=\frac{\left(ie_{T}^{q}\right)C_{T\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
+f_{i}^{+}\left(y\right)=\frac{\left(ie_{T}^{q}\right)C_{T\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
 \]
 
 \end_inset
@@ -10366,7 +10383,7 @@ H^{\mu}=\frac{\left(k_{\alpha}\Theta^{\alpha\beta}\right)S_{T}^{\beta\theta}\lef
 丢入 mathemtica 化简，得到
 \begin_inset Formula 
 \begin{equation}
-f_{T\phi}^{\left(\text{rbw}\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{T}^{q}}{1}\right)}\frac{iC_{T\phi}^{2}\overline{\Lambda}^{8}}{6M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#\label{eq:yu_100}
+f_{T\phi}^{\left(\text{rbw}\right)}\left(y\right)={\color{blue}\left(\frac{4Me_{T}^{q}}{1}\right)}\frac{iC_{T\phi}^{2}\overline{\Lambda}^{8}}{6M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#\label{eq:yu_100}
 \end{equation}
 
 \end_inset
@@ -10502,7 +10519,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{on}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{y}{\overline{y}}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)^{2}\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)}{D_{\Lambda T}^{4}D_{\phi T}^{2}}+\frac{y\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left(-\overline{M}_{T}^{2}+3m_{\phi}^{2}-2\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}\right]
+f_{T}^{\left(\text{on}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{y}{\overline{y}}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)^{2}\left(\Delta_{T}^{2}-m_{\phi}^{2}\right)}{D_{\Lambda T}^{4}D_{\phi T}^{2}}+\frac{y\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left(-\overline{M}_{T}^{2}+3m_{\phi}^{2}-2\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}\right]
 \]
 
 \end_inset
@@ -10510,7 +10527,7 @@ f_{T}^{\left(\text{on}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\rig
 
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{on end}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dif k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{-y\left(\overline{\Lambda}^{2}-2\overline{M}_{T}^{2}+3m_{\phi}^{2}-\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}}+\frac{-y}{\overline{y}D_{\Lambda T}^{3}}\right]
+f_{T}^{\left(\text{on end}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{\overline{\Lambda}^{8}\int\dd k_{\perp}^{2}}{6M_{T}^{2}\overline{M}_{T}^{2}}\left[\frac{-y\left(\overline{\Lambda}^{2}-2\overline{M}_{T}^{2}+3m_{\phi}^{2}-\Delta_{T}^{2}\right)}{\overline{y}D_{\Lambda T}^{4}}+\frac{-y}{\overline{y}D_{\Lambda T}^{3}}\right]
 \]
 
 \end_inset
@@ -10553,7 +10570,7 @@ f_{T}^{\left(\text{on end}\right)}={\color{blue}\left(\frac{4Me_{\phi}^{q}}{\pi}
 local 离壳项为
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left[\overline{y}\left(M^{2}-m_{\phi}^{2}\right)-\left(1+y\right)M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}
+f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left[\overline{y}\left(M^{2}-m_{\phi}^{2}\right)-\left(1+y\right)M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}
 \]
 
 \end_inset
@@ -10565,7 +10582,7 @@ f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{
 极限下化简为
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{off}\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left[\overline{y}\left(M^{2}-m_{\phi}^{2}\right)-\left(1+y\right)M_{T}^{2}\right]}{\overline{y}D_{\phi T}}
+f_{T}^{\left(\text{off}\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left[\overline{y}\left(M^{2}-m_{\phi}^{2}\right)-\left(1+y\right)M_{T}^{2}\right]}{\overline{y}D_{\phi T}}
 \]
 
 \end_inset
@@ -10583,7 +10600,7 @@ noprefix "false"
 中的 在壳端点 函数，对于离壳情形还有，
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{off end}\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{\left[k_{\perp}^{2}+\overline{y}^{2}M^{2}+\overline{y}\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)-M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}}
+f_{T}^{\left(\text{off end}\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{\left[k_{\perp}^{2}+\overline{y}^{2}M^{2}+\overline{y}\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)-M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}}
 \]
 
 \end_inset
@@ -10613,7 +10630,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{off end}\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\left\{ \left[\Omega_{T}-2M_{T}^{2}\right]\log\frac{\Omega_{T}}{\mu^{2}}-\Omega_{T}\right\} \delta\left(\overline{y}\right)
+f_{T}^{\left(\text{off end}\right)}\left(y\right)\underset{\Lambda\to\infty}{\longrightarrow}\frac{1}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\left\{ \left[\Omega_{T}-2M_{T}^{2}\right]\log\frac{\Omega_{T}}{\mu^{2}}-\Omega_{T}\right\} \delta\left(\overline{y}\right)
 \]
 
 \end_inset
@@ -10635,7 +10652,7 @@ noprefix "false"
 中八重态的情形，十重态分裂函数也有一项非定域 off–shell 项，
 \begin_inset Formula 
 \[
-\delta f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM-\overline{M}_{T}\right)^{2}\right]^{2}\left[k_{\perp}^{2}+\left(yM+\Delta_{T}\right)^{2}\right]}{\overline{y}^{4}D_{\Lambda T}^{5}D_{\phi T}}
+\delta f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM-\overline{M}_{T}\right)^{2}\right]^{2}\left[k_{\perp}^{2}+\left(yM+\Delta_{T}\right)^{2}\right]}{\overline{y}^{4}D_{\Lambda T}^{5}D_{\phi T}}
 \]
 
 \end_inset
@@ -10733,7 +10750,7 @@ noprefix "false"
  中分别给出，
 \begin_inset Formula 
 \[
-f_{T}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{3}}
+f_{T}^{\left(\delta\right)}\left(y\right)=\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{3}}
 \]
 
 \end_inset
@@ -10741,7 +10758,7 @@ f_{T}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\dif
 
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{\phi}^{\left(\delta\right)}\left(y\right)=\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -10757,7 +10774,7 @@ f_{\phi}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\
 为
 \begin_inset Formula 
 \[
-\delta f_{T}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{1}{\Omega_{\Lambda}^{3}}\delta\left(y\right)
+\delta f_{T}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{1}{\Omega_{\Lambda}^{3}}\delta\left(y\right)
 \]
 
 \end_inset
@@ -10803,7 +10820,7 @@ j
 化简一下系数是，
 \begin_inset Formula 
 \[
-f_{j}^{+}=\frac{\left(-ie_{\phi}^{q}\right)C_{T\phi}^{2}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
+f_{j}^{+}=\frac{\left(-ie_{\phi}^{q}\right)C_{T\phi}^{2}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
 \]
 
 \end_inset
@@ -10827,7 +10844,7 @@ H^{\mu}=\frac{\Theta^{\mu\nu}S_{T\nu\rho}\left(p-k\right)\left(\Theta^{\rho\sigm
 矩阵后为
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{KR}\right)}\left(y\right)=\frac{-iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
+f_{T}^{\left(\text{KR}\right)}\left(y\right)=\frac{-iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
 \]
 
 \end_inset
@@ -10848,7 +10865,7 @@ f_{T}^{\left(\text{KR}\right)}\left(y\right)=\frac{-iC_{T\phi}^{2}\overline{\Lam
 Mathematica 的结果是
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{KR}\right)}\left(y\right)={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{-iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
+f_{T}^{\left(\text{KR}\right)}\left(y\right)={\color{blue}\left(\frac{-4Me_{\phi}^{q}}{\pi}\right)}\frac{-iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
 \]
 
 \end_inset
@@ -10887,7 +10904,7 @@ f_{T}^{\left(\text{KR}\right)}\left(y\right)=\frac{C_{T\phi}^{2}\overline{M}_{T}
 其中各函数遵循之前的定义,
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left[\overline{y}\left(M^{2}-m_{\phi}^{2}\right)-\left(1+y\right)M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}
+f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)\left[\overline{y}\left(M^{2}-m_{\phi}^{2}\right)-\left(1+y\right)M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}D_{\phi T}}
 \]
 
 \end_inset
@@ -10895,7 +10912,7 @@ f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{
 
 \begin_inset Formula 
 \[
-f_{T}^{\left(\text{off end}\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{\left[k_{\perp}^{2}+\overline{y}^{2}M^{2}+\overline{y}\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)-M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}}
+f_{T}^{\left(\text{off end}\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{\left[k_{\perp}^{2}+\overline{y}^{2}M^{2}+\overline{y}\left(\overline{M}_{T}^{2}-m_{\phi}^{2}\right)-M_{T}^{2}\right]}{\overline{y}D_{\Lambda T}^{4}}
 \]
 
 \end_inset
@@ -10903,7 +10920,7 @@ f_{T}^{\left(\text{off end}\right)}\left(y\right)=\frac{-\overline{\Lambda}^{8}}
 
 \begin_inset Formula 
 \[
-f_{T}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{3}}\quad\delta f_{T}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{1}{\Omega_{\Lambda}^{3}}\delta\left(y\right)
+f_{T}^{\left(\delta\right)}\left(y\right)=\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{3}}\quad\delta f_{T}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{1}{\Omega_{\Lambda}^{3}}\delta\left(y\right)
 \]
 
 \end_inset
@@ -10911,7 +10928,7 @@ f_{T}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\dif
 
 \begin_inset Formula 
 \[
-f_{\phi}^{\left(\delta\right)}\left(y\right)=\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
+f_{\phi}^{\left(\delta\right)}\left(y\right)=\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\frac{z^{3}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}}
 \]
 
 \end_inset
@@ -10956,7 +10973,7 @@ k
 \begin_layout Standard
 \begin_inset Formula 
 \[
-f_{j}^{+}=\frac{\left(ie_{\phi}^{q}\right)C_{T\phi}^{2}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
+f_{j}^{+}=\frac{\left(ie_{\phi}^{q}\right)C_{T\phi}^{2}}{f^{2}}\frac{M\overline{\Lambda}^{8}}{P^{+}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right)
 \]
 
 \end_inset
@@ -10973,7 +10990,7 @@ H^{\mu} & =\frac{\left[D_{\Lambda}\left(k\right)+D_{\Lambda}\left(k+q\right)\rig
 规范链接引入的 fig.1k，分裂函数为
 \begin_inset Formula 
 \begin{equation}
-\delta f_{T}^{\left(\text{KR}\right)}\left(y\right)=\frac{-2iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#\label{eq:yu_110}
+\delta f_{T}^{\left(\text{KR}\right)}\left(y\right)=\frac{-2iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#\label{eq:yu_110}
 \end{equation}
 
 \end_inset
@@ -11009,7 +11026,7 @@ Mathematica 的化简结果是
 
 \begin_inset Formula 
 \[
-\Rightarrow{\color{blue}\left(-\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{-2iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
+\Rightarrow{\color{blue}\left(-\frac{4Me_{\phi}^{q}}{\pi}\right)}\frac{-2iC_{T\phi}^{2}\overline{\Lambda}^{8}}{3M_{T}^{2}f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}y\delta\left(y-\frac{k^{+}}{p^{+}}\right)\#
 \]
 
 \end_inset
@@ -11050,7 +11067,7 @@ Mathematica 的化简结果是
 
 \begin_inset Formula 
 \[
-\delta f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM-\overline{M}_{T}\right)^{2}\right]^{2}\left[k_{\perp}^{2}+\left(yM+\Delta_{T}\right)^{2}\right]}{\overline{y}^{4}D_{\Lambda T}^{5}D_{\phi T}}
+\delta f_{T}^{\left(\text{off}\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{6M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{y\left[k_{\perp}^{2}+\left(yM-\overline{M}_{T}\right)^{2}\right]^{2}\left[k_{\perp}^{2}+\left(yM+\Delta_{T}\right)^{2}\right]}{\overline{y}^{4}D_{\Lambda T}^{5}D_{\phi T}}
 \]
 
 \end_inset
@@ -11058,7 +11075,7 @@ Mathematica 的化简结果是
 
 \begin_inset Formula 
 \[
-\delta f_{T}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dif k_{\perp}^{2}\frac{1}{\Omega_{\Lambda}^{3}}\delta\left(y\right)
+\delta f_{T}^{\left(\delta\right)}\left(y\right)=\frac{\overline{\Lambda}^{8}}{M_{T}^{2}\overline{M}_{T}^{2}}\int\dd k_{\perp}^{2}\frac{1}{\Omega_{\Lambda}^{3}}\delta\left(y\right)
 \]
 
 \end_inset
@@ -11066,7 +11083,7 @@ Mathematica 的化简结果是
 
 \begin_inset Formula 
 \[
-\delta f_{\phi}^{\left(\delta\right)}=\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dif k_{\perp}^{2}\int_{0}^{1}\dif z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}},
+\delta f_{\phi}^{\left(\delta\right)}=\frac{\left(-\overline{\Lambda}^{8}\right)}{\overline{M}^{2}}\int\dd k_{\perp}^{2}\int_{0}^{1}\dd z\frac{z^{4}\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{4}},
 \]
 
 \end_inset
@@ -11199,7 +11216,7 @@ literal "false"
 
 \begin_inset Formula 
 \[
-\langle f_{i}\rangle=\int_{0}^{1}\dif yf_{i}\left(y\right)
+\langle f_{i}\rangle=\int_{0}^{1}\dd yf_{i}\left(y\right)
 \]
 
 \end_inset
@@ -11481,10 +11498,10 @@ noprefix "false"
 ）定义为
 \begin_inset Formula 
 \begin{align*}
-Q^{\left(n-1\right)} & =\int_{-1}^{1}\dif x\,x^{n-1}q\left(x\right)=\int_{0}^{1}\dif xx^{n-1}q\left(x\right)+\int_{-1}^{0}\dif xx^{n-1}q\left(x\right)\\
- & =\int_{0}^{1}\dif x\,x^{n-1}q\left(x\right)+\int_{0}^{1}\dif x\left(-x\right)^{n-1}q\left(-x\right)\\
- & =\int_{0}^{1}\dif x\,x^{n-1}q\left(x\right)-\int_{0}^{1}\dif x\left(-x\right)^{n-1}\bar{q}\left(x\right)\\
-Q^{\left(n-1\right)} & =\int_{0}^{1}\dif x\,x^{n-1}\left[q\left(x\right)+\left(-1\right)^{n}\bar{q}\left(x\right)\right]
+Q^{\left(n-1\right)} & =\int_{-1}^{1}\dd x\,x^{n-1}q\left(x\right)=\int_{0}^{1}\dd xx^{n-1}q\left(x\right)+\int_{-1}^{0}\dd xx^{n-1}q\left(x\right)\\
+ & =\int_{0}^{1}\dd x\,x^{n-1}q\left(x\right)+\int_{0}^{1}\dd x\left(-x\right)^{n-1}q\left(-x\right)\\
+ & =\int_{0}^{1}\dd x\,x^{n-1}q\left(x\right)-\int_{0}^{1}\dd x\left(-x\right)^{n-1}\bar{q}\left(x\right)\\
+Q^{\left(n-1\right)} & =\int_{0}^{1}\dd x\,x^{n-1}\left[q\left(x\right)+\left(-1\right)^{n}\bar{q}\left(x\right)\right]
 \end{align*}
 
 \end_inset
@@ -11584,7 +11601,7 @@ Q^{\left(n-1\right)} & =\int_{0}^{1}\dif x\,x^{n-1}\left[q\left(x\right)+\left(-
 中的夸克分布，
 \begin_inset Formula 
 \[
-c_{q/j}^{\left(n\right)}=\int_{-1}^{1}\dif x\,x^{n-1}q_{j}\left(x\right)\equiv Q_{j}^{\left(n-1\right)}
+c_{q/j}^{\left(n\right)}=\int_{-1}^{1}\dd x\,x^{n-1}q_{j}\left(x\right)\equiv Q_{j}^{\left(n-1\right)}
 \]
 
 \end_inset
@@ -11620,7 +11637,7 @@ c_{q/j}^{\left(n\right)}=\int_{-1}^{1}\dif x\,x^{n-1}q_{j}\left(x\right)\equiv Q
 阶 Mellin 矩，
 \begin_inset Formula 
 \[
-f_{j}^{\left(n\right)}=\int_{-1}^{1}\dif y\,y^{n-1}f_{j}\left(y\right)
+f_{j}^{\left(n\right)}=\int_{-1}^{1}\dd y\,y^{n-1}f_{j}\left(y\right)
 \]
 
 \end_inset
@@ -11654,8 +11671,8 @@ noprefix "false"
 给出了PDFs的卷积关系。
 \begin_inset Formula 
 \begin{align*}
-2\int_{-1}^{1}\dif x\,x^{n-1}q\left(x\right)p^{\mu_{1}}\cdots p^{\mu_{n}} & =\sum_{j}2\int_{-1}^{1}\dif x\,x^{n-1}q_{j}\left(x\right)\int_{-1}^{1}\dif y\,y^{n-1}f_{j}\left(y\right)p^{\mu_{1}}\cdots p^{\mu_{n}}\\
-\int_{-1}^{1}\dif x\,x^{n-1}q\left(x\right) & =\sum_{j}\int_{-1}^{1}\dif x\,x^{n-1}q_{j}\left(x\right)\int_{-1}^{1}\dif y\,y^{n-1}f_{j}\left(y\right),\quad n=1,2,\cdots
+2\int_{-1}^{1}\dd x\,x^{n-1}q\left(x\right)p^{\mu_{1}}\cdots p^{\mu_{n}} & =\sum_{j}2\int_{-1}^{1}\dd x\,x^{n-1}q_{j}\left(x\right)\int_{-1}^{1}\dd y\,y^{n-1}f_{j}\left(y\right)p^{\mu_{1}}\cdots p^{\mu_{n}}\\
+\int_{-1}^{1}\dd x\,x^{n-1}q\left(x\right) & =\sum_{j}\int_{-1}^{1}\dd x\,x^{n-1}q_{j}\left(x\right)\int_{-1}^{1}\dd y\,y^{n-1}f_{j}\left(y\right),\quad n=1,2,\cdots
 \end{align*}
 
 \end_inset
@@ -11663,7 +11680,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-q\left(x\right)=\sum_{j}\left(f_{j}\otimes q_{j}^{v}\right)\left(x\right)\equiv\sum_{j}\int_{0}^{1}\dif y\int_{0}^{1}\dif z\delta\left(x-yz\right)f_{j}\left(y\right)q_{j}^{v}\left(z\right)
+q\left(x\right)=\sum_{j}\left(f_{j}\otimes q_{j}^{v}\right)\left(x\right)\equiv\sum_{j}\int_{0}^{1}\dd y\int_{0}^{1}\dd z\delta\left(x-yz\right)f_{j}\left(y\right)q_{j}^{v}\left(z\right)
 \]
 
 \end_inset
@@ -11884,7 +11901,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
  & \mathcal{O}_{q}^{\mu_{1}\cdots\mu_{n}}=\sum_{j}c_{q/j}^{\left(n\right)}\mathcal{O}_{j}^{\mu_{1}\cdots\mu_{n}}\\
- & c_{q/j}^{\left(n\right)}=\int_{-1}^{1}\dif xx^{n-1}q_{j}\left(x\right)\equiv Q_{j}^{\left(n-1\right)}\\
+ & c_{q/j}^{\left(n\right)}=\int_{-1}^{1}\dd xx^{n-1}q_{j}\left(x\right)\equiv Q_{j}^{\left(n-1\right)}\\
  & \bra{N\left(p\right)}\mathcal{O}_{j}^{\mu_{1}\cdots\mu_{n}}\ket{N\left(p\right)}=2f_{j}^{\left(n\right)}p^{\mu_{1}}\cdots p^{\mu_{n}}.
 \end{align*}
 
@@ -11901,13 +11918,13 @@ noprefix "false"
 ）
 \begin_inset Formula 
 \begin{align}
-\mathcal{O}_{q}^{\mu_{1}\cdots\mu_{n}} & =a^{\left(n\right)}i^{n}\frac{f_{\phi}^{2}}{4}\left\{ \tr\left[U^{\dagger}\lambda^{q}\partial_{\mu_{1}}\cdots\partial_{\mu_{n}}U\right]+\tr\left[U\lambda^{q}\partial_{\mu_{1}}\cdots\partial_{\mu_{n}}U^{\dagger}\right]\right\} \nonumber \\
- & +\left[\alpha^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\lambda_{+}^{q}\right)+\beta^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\lambda_{+}^{q}\mathcal{B}\right)+\sigma^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\right)\tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\left[\bar{\alpha}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\lambda_{-}^{q}\right)+\bar{\beta}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\lambda_{-}^{q}\mathcal{B}\right)+\bar{\sigma}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\right)\tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\left[\theta^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\lambda_{+}^{q}\mathcal{T}_{\beta}\right)+\rho^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\mathcal{T}_{\beta}\right)\tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\left[\bar{\theta}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\lambda_{-}^{q}\mathcal{T}_{\alpha}\right)+\bar{\rho}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\mathcal{T}_{\alpha}\right)\tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+\mathcal{O}_{q}^{\mu_{1}\cdots\mu_{n}} & =a^{\left(n\right)}i^{n}\frac{f_{\phi}^{2}}{4}\left\{ \Tr\left[U^{\dagger}\lambda^{q}\partial_{\mu_{1}}\cdots\partial_{\mu_{n}}U\right]+\Tr\left[U\lambda^{q}\partial_{\mu_{1}}\cdots\partial_{\mu_{n}}U^{\dagger}\right]\right\} \nonumber \\
+ & +\left[\alpha^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\lambda_{+}^{q}\right)+\beta^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\lambda_{+}^{q}\mathcal{B}\right)+\sigma^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\right)\Tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+ & +\left[\bar{\alpha}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\lambda_{-}^{q}\right)+\bar{\beta}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\lambda_{-}^{q}\mathcal{B}\right)+\bar{\sigma}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\right)\Tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+ & +\left[\theta^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\lambda_{+}^{q}\mathcal{T}_{\beta}\right)+\rho^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\mathcal{T}_{\beta}\right)\Tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+ & +\left[\bar{\theta}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\lambda_{-}^{q}\mathcal{T}_{\alpha}\right)+\bar{\rho}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\mathcal{T}_{\alpha}\right)\Tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
  & -\sqrt{\frac{3}{2}}\bar{\omega}^{\left(n\right)}\left[\left(\overline{\mathcal{B}}\Theta^{\mu_{1}\mu}\lambda_{-}^{q}\mathcal{T}_{\mu}\right)+\left(\overline{\mathcal{T}}_{\mu}\Theta^{\mu\mu_{1}}\lambda_{-}^{q}\mathcal{B}\right)\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\text{全置换}-\tr\label{eq:yu_4.13}
+ & +\text{全置换}-\Tr\label{eq:yu_4.13}
 \end{align}
 
 \end_inset
@@ -11917,7 +11934,7 @@ noprefix "false"
 \end_inset
 
 对称，
-\begin_inset Formula $\tr$
+\begin_inset Formula $\Tr$
 \end_inset
 
 表示对味道空间求迹。
@@ -12056,12 +12073,12 @@ where
 对于 Kroll–Ruderman图e，f，h，i，顶点处赝标量粒子的存在，引入了强子轴矢流算符，它对夸克轴矢流算符的贡献可以一般地写成
 \begin_inset Formula 
 \begin{align}
-\mathcal{O}_{\Delta q}^{\mu_{1}\cdots\mu_{n}} & =\left[\bar{\alpha}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\lambda_{+}^{q}\right)+\bar{\beta}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\lambda_{+}^{q}\mathcal{B}\right)+\bar{\sigma}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\right)\tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\left[\alpha^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\lambda_{-}^{q}\right)+\beta^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\lambda_{-}^{q}\mathcal{B}\right)+\sigma^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\right)\tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\left[\bar{\theta}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\lambda_{+}^{q}\mathcal{T}_{\alpha}\right)+\bar{\rho}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\mathcal{T}_{\alpha}\right)\tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\left[\theta^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\lambda_{-}^{q}\mathcal{T}_{\beta}\right)+\rho^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\mathcal{T}_{\beta}\right)\tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+\mathcal{O}_{\Delta q}^{\mu_{1}\cdots\mu_{n}} & =\left[\bar{\alpha}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\lambda_{+}^{q}\right)+\bar{\beta}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\lambda_{+}^{q}\mathcal{B}\right)+\bar{\sigma}^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\gamma_{5}\mathcal{B}\right)\Tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+ & +\left[\alpha^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\lambda_{-}^{q}\right)+\beta^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\lambda_{-}^{q}\mathcal{B}\right)+\sigma^{\left(n\right)}\left(\overline{\mathcal{B}}\gamma^{\mu_{1}}\mathcal{B}\right)\Tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+ & +\left[\bar{\theta}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\lambda_{+}^{q}\mathcal{T}_{\alpha}\right)+\bar{\rho}^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\mu_{1}}\gamma_{5}\mathcal{T}_{\alpha}\right)\Tr\left[\lambda_{+}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
+ & +\left[\theta^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\lambda_{-}^{q}\mathcal{T}_{\beta}\right)+\rho^{\left(n\right)}\left(\overline{\mathcal{T}}_{\alpha}\gamma^{\alpha\beta\mu_{1}}\mathcal{T}_{\beta}\right)\Tr\left[\lambda_{-}^{q}\right]\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
  & -\sqrt{\frac{3}{2}}\bar{\omega}^{\left(n\right)}\left[\left(\overline{\mathcal{B}}\Theta^{\mu_{1}\mu}\lambda_{+}^{q}\mathcal{T}_{\mu}\right)+\left(\overline{\mathcal{T}}_{\mu}\Theta^{\mu\mu_{1}}\lambda_{+}^{q}\mathcal{B}\right)\right]p^{\mu_{2}}\cdots p^{\mu_{n}}\nonumber \\
- & +\text{所有置换}-\tr\label{eq:yu_4.17}
+ & +\text{所有置换}-\Tr\label{eq:yu_4.17}
 \end{align}
 
 \end_inset
@@ -12204,9 +12221,9 @@ noprefix "false"
 ）表示。关系为：
 \begin_inset Formula 
 \begin{align}
-\left(\overline{\mathcal{B}}\mathcal{B}\right) & =\tr\left[\overline{B}B\right],\label{eq:yu_4.18}\\
-\left(\overline{\mathcal{B}}\mathcal{B}A\right) & =-\frac{1}{6}\tr\left[\overline{B}BA\right]+\frac{2}{3}\tr\left[\overline{B}AB\right]+\frac{1}{6}\tr\left[\overline{B}B\right]\tr\left[A\right],\nonumber \\
-\left(\overline{\mathcal{B}}A\mathcal{B}\right) & =-\frac{2}{3}\tr\left[\overline{B}BA\right]-\frac{1}{3}\tr\left[\overline{B}AB\right]+\frac{2}{3}\tr\left[\overline{B}B\right]\tr\left[A\right],\nonumber 
+\left(\overline{\mathcal{B}}\mathcal{B}\right) & =\Tr\left[\overline{B}B\right],\label{eq:yu_4.18}\\
+\left(\overline{\mathcal{B}}\mathcal{B}A\right) & =-\frac{1}{6}\Tr\left[\overline{B}BA\right]+\frac{2}{3}\Tr\left[\overline{B}AB\right]+\frac{1}{6}\Tr\left[\overline{B}B\right]\Tr\left[A\right],\nonumber \\
+\left(\overline{\mathcal{B}}A\mathcal{B}\right) & =-\frac{2}{3}\Tr\left[\overline{B}BA\right]-\frac{1}{3}\Tr\left[\overline{B}AB\right]+\frac{2}{3}\Tr\left[\overline{B}B\right]\Tr\left[A\right],\nonumber 
 \end{align}
 
 \end_inset
@@ -12272,12 +12289,12 @@ noprefix "false"
 阶 Mellin 矩，即
 \begin_inset Formula 
 \begin{align*}
-Q_{\phi}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}q_{\phi}\left(x\right)\\
-Q_{B}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}q_{B}\left(x\right)\\
-Q_{T}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}q_{T}\left(x\right)\\
-Q_{\left(\text{tad}\right)B\phi\phi}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}q_{\phi}^{\left(\text{tad}\right)}\\
-Q_{\left(\text{KR}\right)B}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}q_{B}^{\left(\text{KR}\right)}\\
-Q_{\left(\text{KR}\right)T}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}q_{T}^{\left(\text{KR}\right)}
+Q_{\phi}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}q_{\phi}\left(x\right)\\
+Q_{B}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}q_{B}\left(x\right)\\
+Q_{T}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}q_{T}\left(x\right)\\
+Q_{\left(\text{tad}\right)B\phi\phi}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}q_{\phi}^{\left(\text{tad}\right)}\\
+Q_{\left(\text{KR}\right)B}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}q_{B}^{\left(\text{KR}\right)}\\
+Q_{\left(\text{KR}\right)T}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}q_{T}^{\left(\text{KR}\right)}
 \end{align*}
 
 \end_inset
@@ -15839,9 +15856,9 @@ noprefix "false"
 为
 \begin_inset Formula 
 \begin{align}
-\Delta Q_{B}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}\Delta_{qB}\left(x\right)\label{eq:yu_4.31}\\
-\Delta Q_{T}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}\Delta_{qT}\left(x\right)\nonumber \\
-\Delta Q_{BT}^{\left(n-1\right)} & =\int_{-1}^{1}\dif xx^{n-1}\Delta_{qBT}\left(x\right)\nonumber 
+\Delta Q_{B}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}\Delta_{qB}\left(x\right)\label{eq:yu_4.31}\\
+\Delta Q_{T}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}\Delta_{qT}\left(x\right)\nonumber \\
+\Delta Q_{BT}^{\left(n-1\right)} & =\int_{-1}^{1}\dd xx^{n-1}\Delta_{qBT}\left(x\right)\nonumber 
 \end{align}
 
 \end_inset
@@ -17198,7 +17215,7 @@ noprefix "false"
 式中的输入夸克分布函数，我们发现质子海中的奇异数为零，即：
 \begin_inset Formula 
 \[
-\int_{0}^{1}\dif x\left[s_{p}\left(x\right)-\bar{s}_{p}\left(x\right)\right]=0
+\int_{0}^{1}\dd x\left[s_{p}\left(x\right)-\bar{s}_{p}\left(x\right)\right]=0
 \]
 
 \end_inset
@@ -17246,7 +17263,7 @@ salamu 形式
 其中
 \begin_inset Formula 
 \begin{align*}
-\mathcal{G}_{\phi}^{q}\left(y,x\right) & =\exp\left[+ie_{\phi}^{q}\int_{x}^{y}\mathcal{A}_{\nu}\left(z\right)\dif z^{\nu}\right]=1+ie_{\phi}^{q}\int_{x}^{y}\mathcal{A}_{\nu}\left(z\right)\dif z^{\nu}\\
+\mathcal{G}_{\phi}^{q}\left(y,x\right) & =\exp\left[+ie_{\phi}^{q}\int_{x}^{y}\mathcal{A}_{\nu}\left(z\right)\dd z^{\nu}\right]=1+ie_{\phi}^{q}\int_{x}^{y}\mathcal{A}_{\nu}\left(z\right)\dd z^{\nu}\\
 \mathcal{D}_{\mu,x+a}\phi\left(x+a\right) & =\left[\partial_{\mu,x+a}+\left(-ie_{\phi}^{q}\right)\mathcal{A}_{\mu}\left(x+a\right)\right]\phi\left(x+a\right)
 \end{align*}
 
@@ -17259,10 +17276,10 @@ salamu 形式
 除了在He的论文中的形式，非定域拉氏量也可以用 salamu 形式 展开，
 \begin_inset Formula 
 \begin{align*}
-\mathcal{G}_{\phi}^{q}\left(x+b,x+a\right) & =\exp\left[-ie_{\phi}^{q}\left(a-b\right)^{\mu}\int_{0}^{1}\dif t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)\right]\\
- & =1-ie_{\phi}^{q}\left(a-b\right)^{\mu}\int_{0}^{1}\dif t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)+\cdots\\
+\mathcal{G}_{\phi}^{q}\left(x+b,x+a\right) & =\exp\left[-ie_{\phi}^{q}\left(a-b\right)^{\mu}\int_{0}^{1}\dd t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)\right]\\
+ & =1-ie_{\phi}^{q}\left(a-b\right)^{\mu}\int_{0}^{1}\dd t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)+\cdots\\
  & =1+\delta\mathcal{G}_{\phi}^{q}+\cdots\\
-\text{特例：}\mathcal{G}_{\phi}^{q}\left(x,x+a\right) & =1+\left(-ie_{\phi}^{q}\right)a^{\mu}\int_{0}^{1}\dif t\mathcal{A}_{\mu}\left(x+at\right)
+\text{特例：}\mathcal{G}_{\phi}^{q}\left(x,x+a\right) & =1+\left(-ie_{\phi}^{q}\right)a^{\mu}\int_{0}^{1}\dd t\mathcal{A}_{\mu}\left(x+at\right)
 \end{align*}
 
 \end_inset
@@ -17274,7 +17291,7 @@ salamu 形式
 ，平移不改变积分测度，没有 Joccabi 因子，只改变积分上下限。总之
 \begin_inset Formula 
 \[
-\delta\mathcal{G}_{\phi}^{q}=-ie_{\phi}^{q}\int_{x+b}^{x+a}\dif z^{\mu}A_{\mu}\left(z\right)=-ie_{\phi}^{q}\left(a-b\right)^{\mu}\int_{0}^{1}\dif t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)
+\delta\mathcal{G}_{\phi}^{q}=-ie_{\phi}^{q}\int_{x+b}^{x+a}\dd z^{\mu}A_{\mu}\left(z\right)=-ie_{\phi}^{q}\left(a-b\right)^{\mu}\int_{0}^{1}\dd t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)
 \]
 
 \end_inset
@@ -17288,7 +17305,7 @@ salamu 形式
 \begin{align*}
 \mathcal{G}_{\phi}^{q}\left(x,x+a\right)\mathcal{D}_{\mu,x}\phi\left(x+a\right) & =\partial_{\mu,x+a}\phi\left(x+a\right)\\
  & +\left(-ie_{\phi}^{q}\right)\mathcal{A}_{\mu}\left(x+a\right)\phi\left(x+a\right)\\
- & +\left(-ie_{\phi}^{q}\right)a^{\mu}\int_{0}^{1}\dif t\mathcal{A}_{\mu}\left(x+at\right)\partial_{\mu,x+a}\phi\left(x+a\right)
+ & +\left(-ie_{\phi}^{q}\right)a^{\mu}\int_{0}^{1}\dd t\mathcal{A}_{\mu}\left(x+at\right)\partial_{\mu,x+a}\phi\left(x+a\right)
 \end{align*}
 
 \end_inset
@@ -17298,8 +17315,8 @@ salamu 形式
 \begin{align*}
  & {\color{blue}\mathcal{G}_{\phi}^{q}\left(x+b,x+a\right)}\left[\phi\left(x+a\right)\left(\mathcal{D}_{\mu,x+b}\phi\left(x+b\right)\right)^{\dagger}-\mathcal{D}_{\mu,x+a}\phi\left(x+a\right);\phi^{\dagger}\left(x+b\right)\right]\\
 = & \int_{ab}\left[\phi\left(x+a\right)\partial_{\mu,x+b}\phi^{\dagger}\left(x+b\right)-\partial_{\mu,x+a}\phi\left(x+a\right);\phi^{\dagger}\left(x+b\right)\right]\\
-+ & \int\dif^{4}a\int\dif^{4}b\left(ie_{\phi}^{q}\right)\left[\mathcal{A}_{\mu}\left(x+b\right)\phi\left(x+a\right)\phi^{\dagger}\left(x+b\right)+\mathcal{A}_{\mu}\left(x+a\right)\phi\left(x+a\right)\phi^{\dagger}\left(x+b\right)\right]\\
-+ & {\color{blue}\left(-ie_{\phi}^{q}\right)\left(a-b\right)^{\mu}\int_{0}^{1}\dif t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)}\left[\phi\left(x+a\right)\partial_{\mu,x+b}\phi^{\dagger}\left(x+b\right)-\partial_{\mu,x+a}\phi\left(x+a\right);\phi^{\dagger}\left(x+b\right)\right]
++ & \int\dd^{4}a\int\dd^{4}b\left(ie_{\phi}^{q}\right)\left[\mathcal{A}_{\mu}\left(x+b\right)\phi\left(x+a\right)\phi^{\dagger}\left(x+b\right)+\mathcal{A}_{\mu}\left(x+a\right)\phi\left(x+a\right)\phi^{\dagger}\left(x+b\right)\right]\\
++ & {\color{blue}\left(-ie_{\phi}^{q}\right)\left(a-b\right)^{\mu}\int_{0}^{1}\dd t\mathcal{A}_{\mu}\left(x+at+b\left(1-t\right)\right)}\left[\phi\left(x+a\right)\partial_{\mu,x+b}\phi^{\dagger}\left(x+b\right)-\partial_{\mu,x+a}\phi\left(x+a\right);\phi^{\dagger}\left(x+b\right)\right]
 \end{align*}
 
 \end_inset
@@ -17311,8 +17328,8 @@ salamu 形式
 规范链接部分的拉氏量，
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right) & =\int_{0}^{1}\dif t\int_{a}\left(-ie_{\phi}^{q}\right)\bar{p}\left(x\right)\left[\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\Theta^{\rho\nu}T_{\nu}\left(x\right)\right]F\left(a\right)a^{\mu}\mathcal{A}_{\mu}\left(x+at\right)\partial_{\rho}\phi\left(x+a\right)+\text{H.c}\\
- & +\int_{0}^{1}\dif t\int_{ab}\frac{e_{\phi}^{q}C_{\phi\phi^{\dagger}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\rho}p\left(x\right)F\left(a\right)F\left(b\right)\left(a-b\right)^{\mu}\mathcal{A}^{\mu}\left(x+at+b\left(1-t\right)\right)\\
+\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right) & =\int_{0}^{1}\dd t\int_{a}\left(-ie_{\phi}^{q}\right)\bar{p}\left(x\right)\left[\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\Theta^{\rho\nu}T_{\nu}\left(x\right)\right]F\left(a\right)a^{\mu}\mathcal{A}_{\mu}\left(x+at\right)\partial_{\rho}\phi\left(x+a\right)+\text{H.c}\\
+ & +\int_{0}^{1}\dd t\int_{ab}\frac{e_{\phi}^{q}C_{\phi\phi^{\dagger}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\rho}p\left(x\right)F\left(a\right)F\left(b\right)\left(a-b\right)^{\mu}\mathcal{A}^{\mu}\left(x+at+b\left(1-t\right)\right)\\
  & \times\left[\phi\left(x+a\right)\partial_{\rho}\phi^{\dagger}\left(x+b\right)-\partial_{\rho}\phi\left(x+a\right);\phi\left(x+b\right)^{\dagger}\right]
 \end{align*}
 
@@ -17321,9 +17338,9 @@ salamu 形式
 对应的额外流为
 \begin_inset Formula 
 \begin{align*}
-\delta J_{q}^{\mu}\left(x\right) & \equiv\frac{\delta\int\dif^{4}y\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
- & =\int_{0}^{1}\dif t\int_{a}F\left(a\right)\left(-ie_{\phi}^{q}\right)\bar{p}\left(x-at\right)\left[\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x-at\right)+\frac{C_{T\phi}}{f}\Theta^{\rho\nu}T_{\nu}\left(x-at\right)\right]a^{\mu}\partial_{\rho}\phi\left(x+a\left(1-t\right)\right)+\text{H.c}\\
- & +\int_{0}^{1}\dif t\int_{ab}\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\left(-ie_{\phi}^{q}\right)F\left(a\right)F\left(b\right)\left(a-b\right)^{\mu}\bar{p}\left(x-at-b\left(1-t\right)\right)\gamma^{\rho}p\left(x-at-b\left(1-t\right)\right)\\
+\delta J_{q}^{\mu}\left(x\right) & \equiv\frac{\delta\int\dd^{4}y\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(y\right)}{\delta\mathcal{A}_{\mu}\left(x\right)}\\
+ & =\int_{0}^{1}\dd t\int_{a}F\left(a\right)\left(-ie_{\phi}^{q}\right)\bar{p}\left(x-at\right)\left[\frac{C_{B\phi}}{f}\gamma^{\rho}\gamma^{5}B\left(x-at\right)+\frac{C_{T\phi}}{f}\Theta^{\rho\nu}T_{\nu}\left(x-at\right)\right]a^{\mu}\partial_{\rho}\phi\left(x+a\left(1-t\right)\right)+\text{H.c}\\
+ & +\int_{0}^{1}\dd t\int_{ab}\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\left(-ie_{\phi}^{q}\right)F\left(a\right)F\left(b\right)\left(a-b\right)^{\mu}\bar{p}\left(x-at-b\left(1-t\right)\right)\gamma^{\rho}p\left(x-at-b\left(1-t\right)\right)\\
  & \times\left[\phi\left(x+\left(a-b\right)\left(1-t\right)\right)\partial_{\rho}\phi^{\dagger}\left(x-\left(a-b\right)t\right)-\partial_{\rho}\phi\left(x+\left(a-b\right)\left(1-t\right)\right);\phi\left(x-\left(a-b\right)t\right)^{\dagger}\right]
 \end{align*}
 
@@ -17348,8 +17365,8 @@ terning 形式
  
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}_{\text{had}}^{\text{nonloc}}\left(x\right) & =\bar{p}\left(x\right)\left[\frac{C_{B\phi}}{f}\gamma^{\mu}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\Theta^{\mu\nu}T_{\nu}\left(x\right)\right]\int\dif^{4}yF\left(y-x\right)\partial_{\mu}\phi\left(y\right)+\text{H.c.}\\
- & +\frac{iC_{\phi\phi^{\dagger}}}{f}\bar{p}\left(x\right)\gamma^{\mu}p\left(x\right)\int\dif^{4}y\int\dif^{4}zF\left(y-x\right)F\left(z-x\right)\left[\phi\left(y\right)\partial_{\mu}\phi^{\dagger}\left(z\right)-\partial_{\mu}\phi\left(y\right);\phi^{\dagger}\left(z\right)\right]
+\mathcal{L}_{\text{had}}^{\text{nonloc}}\left(x\right) & =\bar{p}\left(x\right)\left[\frac{C_{B\phi}}{f}\gamma^{\mu}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\Theta^{\mu\nu}T_{\nu}\left(x\right)\right]\int\dd^{4}yF\left(y-x\right)\partial_{\mu}\phi\left(y\right)+\text{H.c.}\\
+ & +\frac{iC_{\phi\phi^{\dagger}}}{f}\bar{p}\left(x\right)\gamma^{\mu}p\left(x\right)\int\dd^{4}y\int\dd^{4}zF\left(y-x\right)F\left(z-x\right)\left[\phi\left(y\right)\partial_{\mu}\phi^{\dagger}\left(z\right)-\partial_{\mu}\phi\left(y\right);\phi^{\dagger}\left(z\right)\right]
 \end{align*}
 
 \end_inset
@@ -17359,8 +17376,8 @@ terning 形式
 \begin{align*}
 \mathcal{L}_{\text{em}}^{\text{nonloc}}\left(x\right) & =e_{\phi}^{q}\bar{B}\left(x\right)\gamma^{\mu}B\left(x\right)\mathcal{A}_{\mu}\left(x\right)+e_{T}^{q}\bar{T}_{\mu}\left(x\right)\gamma^{\mu\nu\alpha}T_{\nu}\left(x\right)\mathcal{A}_{\alpha}\left(x\right)\\
  & +ie_{\phi}^{q}\left[\partial^{\mu}\phi\left(x\right)\phi^{\dagger}\left(x\right)-\phi\left(x\right)\partial_{\mu}\phi\left(x\right)^{\dagger}\right]\mathcal{A}_{\mu}\left(x\right)\\
- & -ie_{\phi}^{q}\bar{p}\left(x\right)\left[\frac{C_{B\phi}}{f}\gamma^{\mu}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\Theta^{\mu\nu}T_{\nu}\left(x\right)\right]\int\dif^{4}yF\left(y-x\right)\phi\left(y\right)A^{\mu}\left(y\right)+\text{H.c}\\
- & -\frac{e_{\phi}^{q}C_{\phi\phi^{\dagger}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\mu}p\left(x\right)\int\dif^{4}y\int\dif^{4}z\,F\left(y-x\right)F\left(z-x\right)\phi\left(y\right)\phi^{\dagger}\left(z\right)\left[\mathcal{A}^{\mu}\left(y\right)+\mathcal{A}^{\mu}\left(z\right)\right]
+ & -ie_{\phi}^{q}\bar{p}\left(x\right)\left[\frac{C_{B\phi}}{f}\gamma^{\mu}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\Theta^{\mu\nu}T_{\nu}\left(x\right)\right]\int\dd^{4}yF\left(y-x\right)\phi\left(y\right)A^{\mu}\left(y\right)+\text{H.c}\\
+ & -\frac{e_{\phi}^{q}C_{\phi\phi^{\dagger}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\mu}p\left(x\right)\int\dd^{4}y\int\dd^{4}z\,F\left(y-x\right)F\left(z-x\right)\phi\left(y\right)\phi^{\dagger}\left(z\right)\left[\mathcal{A}^{\mu}\left(y\right)+\mathcal{A}^{\mu}\left(z\right)\right]
 \end{align*}
 
 \end_inset
@@ -17368,9 +17385,9 @@ terning 形式
 
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right) & =\left[\frac{C_{B\phi}}{f}\bar{p}\left(x\right)\gamma^{\rho}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\bar{p}\left(x\right)\Theta^{\rho\nu}T_{\nu}\left(x\right)\right]\int\dif^{4}yF\left[x-y\right]\int_{x}^{y}\left(-ie_{\phi}^{q}\right)\dif w^{\mu}\mathcal{A}_{\mu}\left(w\right)\partial_{\rho}\phi\left(y\right)+\text{H.c}\\
- & +\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\rho}p\left(x\right)\int\dif^{4}y\int\dif^{4}zF\left[x-y\right]F\left[x-z\right]\\
- & \times\left(\int_{z}^{x}\left(-ie_{\phi}^{q}\right)\dif w^{\mu}\mathcal{A}_{\mu}\left(w\right)+\int_{x}^{y}\left(-ie_{\phi}^{q}\right)\dif w^{\mu}\mathcal{A}_{\mu}\left(w\right)\right)\left[\phi\left(y\right)\partial_{\rho}\phi^{\dagger}\left(z\right)-\partial_{\rho}\phi\left(y\right);\phi\left(z\right)^{\dagger}\right]
+\mathcal{L}_{\text{link}}^{\text{nonloc}}\left(x\right) & =\left[\frac{C_{B\phi}}{f}\bar{p}\left(x\right)\gamma^{\rho}\gamma^{5}B\left(x\right)+\frac{C_{T\phi}}{f}\bar{p}\left(x\right)\Theta^{\rho\nu}T_{\nu}\left(x\right)\right]\int\dd^{4}yF\left[x-y\right]\int_{x}^{y}\left(-ie_{\phi}^{q}\right)\dd w^{\mu}\mathcal{A}_{\mu}\left(w\right)\partial_{\rho}\phi\left(y\right)+\text{H.c}\\
+ & +\frac{iC_{\phi\phi^{\dagger}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\rho}p\left(x\right)\int\dd^{4}y\int\dd^{4}zF\left[x-y\right]F\left[x-z\right]\\
+ & \times\left(\int_{z}^{x}\left(-ie_{\phi}^{q}\right)\dd w^{\mu}\mathcal{A}_{\mu}\left(w\right)+\int_{x}^{y}\left(-ie_{\phi}^{q}\right)\dd w^{\mu}\mathcal{A}_{\mu}\left(w\right)\right)\left[\phi\left(y\right)\partial_{\rho}\phi^{\dagger}\left(z\right)-\partial_{\rho}\phi\left(y\right);\phi\left(z\right)^{\dagger}\right]
 \end{align*}
 
 \end_inset
@@ -17408,7 +17425,7 @@ salamu d图的求解 PDF 时，由于
  其中d图–Kroll Ruderman 额外图的振幅为，
 \begin_inset Formula 
 \begin{align*}
- & \Gamma_{d}^{\mu}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(p^{\prime}-p-q\right)=\bra{p^{\prime}}\int\dif^{4}y\dif^{4}z{\color{blue}\delta J_{q}^{\mu}\left(y\right)}{\color{red}\left(i\right)}\mathcal{L}_{\text{had}\left(B\right)}^{\left(\text{nonloc}\right)}\left(z\right)+{\color{red}\left(i\right)}\mathcal{L}_{\text{had}\left(B\right)}^{\left(\text{nonloc}\right)}\left(y\right){\color{blue}\delta J_{q}^{\mu}\left(z\right)}\ket{p}\\
+ & \Gamma_{d}^{\mu}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(p^{\prime}-p-q\right)=\bra{p^{\prime}}\int\dd^{4}y\dd^{4}z{\color{blue}\delta J_{q}^{\mu}\left(y\right)}{\color{red}\left(i\right)}\mathcal{L}_{\text{had}\left(B\right)}^{\left(\text{nonloc}\right)}\left(z\right)+{\color{red}\left(i\right)}\mathcal{L}_{\text{had}\left(B\right)}^{\left(\text{nonloc}\right)}\left(y\right){\color{blue}\delta J_{q}^{\mu}\left(z\right)}\ket{p}\\
  & ={\color{red}\left(i\right)}\left\{ \int yzabt\right\} \times F\left(a\right)F\left(b\right)\left(-ia^{\mu}e_{\phi}^{q}\right)\frac{C_{B\phi}}{f}\bar{p}\left(y-at\right)\gamma^{\nu}\gamma^{5}B\left(y-at\right)\partial_{\nu}\phi\left(y+a\left(1-t\right)\right)\\
  & \times\frac{C_{B\phi}}{f}\bar{B}\left(z\right)\gamma^{\rho}\gamma^{5}p\left(z\right)\partial_{\rho}\phi^{\dagger}\left(z+b\right)\ket{p}\\
  & +{\color{red}\left(i\right)}\left\{ \int yzabt\right\} \times F\left(a\right)F\left(b\right)\bra{p^{\prime}}\frac{C_{B\phi}}{f}\bar{p}\left(y\right)\gamma^{\nu}\gamma^{5}B\left(y\right)\partial_{\nu}\phi\left(y+a\right)\\
@@ -17471,9 +17488,9 @@ e^{\left(-ip\left(-bt\right)+i\left(p^{\prime}-k\right)\left(-bt\right)+ik\left(
 进行积分：
 \begin_inset Formula 
 \begin{align*}
-\Gamma_{d}^{\mu} & ={\color{red}\left(i\right)}\left(e_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}{\color{blue}\frac{\partial_{k}^{\mu}}{q\cdot\partial_{k}}}\left(F\left(q+k\right)-F\left(k\right)\right);F\left(-k\right)\\
+\Gamma_{d}^{\mu} & ={\color{red}\left(i\right)}\left(e_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}{\color{blue}\frac{\partial_{k}^{\mu}}{q\cdot\partial_{k}}}\left(F\left(q+k\right)-F\left(k\right)\right);F\left(-k\right)\\
  & \times\bar{u}\left(p^{\prime}\right)\left(\slashed{k}\gamma^{5}\right)\frac{i\left[\left(\slashed{p}-\slashed{k}\right)+M_{B}\right]}{D_{B}\left(p-k\right)}\left(\slashed{k}\gamma^{5}\right)u\left(p\right)\\
- & +{\color{red}\left(i\right)}\left(e_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}{\color{blue}\frac{\partial_{k}^{\mu}}{-q\cdot\partial_{k}}}\left(F\left(q-k\right)-F\left(-k\right)\right);F\left(k\right)\\
+ & +{\color{red}\left(i\right)}\left(e_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}{\color{blue}\frac{\partial_{k}^{\mu}}{-q\cdot\partial_{k}}}\left(F\left(q-k\right)-F\left(-k\right)\right);F\left(k\right)\\
  & \times\bar{u}\left(p^{\prime}\right)\left(\slashed{k}\gamma^{5}\right)\frac{i\left[\left(\slashed{p}^{\prime}-\slashed{k}\right)+M_{B}\right]}{D_{B}\left(p^{\prime}-k\right)}\left(\slashed{k}\gamma^{5}\right)u\left(p\right)
 \end{align*}
 
@@ -17486,9 +17503,9 @@ e^{\left(-ip\left(-bt\right)+i\left(p^{\prime}-k\right)\left(-bt\right)+ik\left(
 
 \begin_inset Formula 
 \begin{align*}
-f_{\phi B}^{\left(\text{KR}\right)}\left(y\right) & ={\color{blue}\left(-1\right)}e_{\phi}^{q}\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}\tilde{F}\left(k+q\right)\tilde{F}\left(k\right)\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+f_{\phi B}^{\left(\text{KR}\right)}\left(y\right) & ={\color{blue}\left(-1\right)}e_{\phi}^{q}\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}\tilde{F}\left(k+q\right)\tilde{F}\left(k\right)\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
  & \times\bar{u}\left(p^{\prime}\right)i\left(\gamma^{+}\gamma^{5}\right)\frac{i\left[\left(\slashed{p}-\slashed{k}\right)+M_{B}\right]}{D_{B}\left(p-k\right)}\left(\slashed{k}\gamma^{5}\right)u\left(p\right)\\
- & {\color{blue}+\left(-1\right)}e_{\phi}^{q}\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}\tilde{F}\left(k-q\right)\tilde{F}\left(k\right)\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & {\color{blue}+\left(-1\right)}e_{\phi}^{q}\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{D_{\phi}\left(k\right)}\tilde{F}\left(k-q\right)\tilde{F}\left(k\right)\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
  & \times\bar{u}\left(p^{\prime}\right)\left(i\slashed{k}\gamma^{5}\right)\frac{i\left[\left(\slashed{p}^{\prime}-\slashed{k}\right)+M_{B}\right]}{D_{B}\left(p^{\prime}-k\right)}\gamma^{\mu}\gamma^{5}u\left(p\right)
 \end{align*}
 
