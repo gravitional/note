@@ -299,6 +299,6 @@ LINE:
 
 `BEGIN` 和 `END` 块可以用来在隐式循环之前或之后捕获控制(capture control), 就像在 `*awk*` 中一样.
 
-+ `-e *commandline*`; 可以用来输入一行程序. 
-如果给出了 `-e`, Perl 将不会在`argument`列表中寻找`filename`. 
++ `-e *commandline*`; 可以用来输入一行程序.
+如果给出了 `-e`, Perl 将不会在`argument`列表中寻找`filename`.
 多个 `-e` 命令可以用来建立一个多行的脚本. 请务必按照正常程序的规则使用`分号`.

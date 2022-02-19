@@ -827,10 +827,10 @@ rsync -a /images2/  /images/
 
 注意 `images2` 的尾部斜线, 否则 `rsync` 会复制到 `/images/images2`.
 
-如果两个目录中都存在同名的图像, 上面的命令将用 `/images2/某些/文件` 覆盖 `/images/某些/文件`. 
-如果你想只替换较早的文件, 请添加选项 `-u`. 
+如果两个目录中都存在同名的图像, 上面的命令将用 `/images2/某些/文件` 覆盖 `/images/某些/文件`.
+如果你想只替换较早的文件, 请添加选项 `-u`.
 如果你想总是保留 `/images` 中的版本, 添加选项 `--ignore-existing`.
 
-如果你想从 `/images2` 移动文件, 用 `rsync`, 你可以通过选项 `--remove-source-files`. 
+如果你想从 `/images2` 移动文件, 用 `rsync`, 你可以通过选项 `--remove-source-files`.
 然后 `rsync` 依次复制所有的文件, 完成后再删除每个文件.
 如果源目录和目的目录在同一个文件系统上, 这要比移动慢得多.
