@@ -7,81 +7,70 @@
 \textclass ctex-book
 \begin_preamble
 \usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
 \usepackage{geometry} % 整体页面设置
 \geometry{a4paper} %页面大小是A4纸
 \geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
-%++++++++++++++++++++++++++++++++++++++++++++++++
+%%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
-% This package makes it easy to add some picture commands to every page at ab-solute positions
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
 \usepackage{float}%使用[H]选项将浮动题放到确定的位置
-\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
-% xcolor package starts from the basic facilities of the 
-% color package, and provides easy driver-independent access
-%to several kinds of color tints, shades, tones, 
-%and mixes of arbitrary colors
-\usepackage{fontspec}
-\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
-\usepackage{amsmath,amsfonts} % 数学字体
-\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
-\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
-\usepackage{mathrsfs} % 提供了mathscr 命令
-%++++++++++++++++++++++++++++++++++++++++
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+% \usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+%\usepackage{tikz-feynman}  % 画费曼图用
+%\usepackage{tikz} %画矢量图用
+\usepackage{mathtools}% 定义配对的数学符号
+%%++++++++++++++++++++++++++++++++++++
 % 设置英文字体
 \setmainfont{Latin Modern Roman}
 \setsansfont{Latin Modern Sans}
 \setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
 %设置数学字体
-\usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
-%++++++++++++++++++++++++++++++++++++++++
-\usepackage{enumerate} 
-\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
-\usetikzlibrary{shapes.misc,animations}
-\usetikzlibrary{shapes.geometric}% tikz node 形状的库
-\usepackage{siunitx} % 国际单位制
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{simplewick} 
-% a simple means of drawing Wick contractions above and below expressions. 
-\usepackage{makeidx} 
-% Standard package for creating indexes
-\usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-\DeclareMathOperator{\sgn}{Sgn}
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res} %留数
-\DeclareMathOperator{\disc}{Disc} %函数间断
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
-\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\newcommand{\cola}[1]{{\color{blue}{#1}}} %颜色
-\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 %%%+++++++++++++++++++++++++++++++
-\usepackage{listings}
-% 在LaTex中添加代码高亮
-\usepackage{framed}
-% 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
-%定义各种颜色
-\definecolor{codegreen}{rgb}{0,0.6,0}
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{〈style name〉}{〈key=value list〉}
-%stores the key=value list
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
 \lstdefinestyle{codestyle1}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -100,6 +89,21 @@
     showtabs=false,                  
     tabsize=2
 }
+%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
@@ -389,7 +393,7 @@ literal "true"
 。
 \begin_inset Formula 
 \[
-\rho\left(\sbf{r}\right)=\int\dif^{3}\sbf{\Delta}e^{i\sbf{\Delta}\cdot\sbf{r}/\hbar}F\left(\sbf{\Delta}\right)
+\rho\left(\sbf{r}\right)=\int\dd^{3}\sbf{\Delta}e^{i\sbf{\Delta}\cdot\sbf{r}/\hbar}F\left(\sbf{\Delta}\right)
 \]
 
 \end_inset
@@ -432,7 +436,7 @@ Wigner 分布
 法是 部分傅立叶变换的密度矩阵，被称作 Wigner 准概率分布
 \begin_inset Formula 
 \[
-W\left(\sbf{r},\sbf{p}\right)=\int\frac{\dif^{3}\sbf{R}}{\left(2\pi\hbar\right)^{3}}e^{-i\sbf{p}\cdot\sbf{R}/\hbar}\psi^{*}\left(\sbf{r}-\frac{1}{2}\sbf{R}\right)\psi\left(\sbf{r}+\frac{1}{2}\sbf{R}\right)
+W\left(\sbf{r},\sbf{p}\right)=\int\frac{\dd^{3}\sbf{R}}{\left(2\pi\hbar\right)^{3}}e^{-i\sbf{p}\cdot\sbf{R}/\hbar}\psi^{*}\left(\sbf{r}-\frac{1}{2}\sbf{R}\right)\psi\left(\sbf{r}+\frac{1}{2}\sbf{R}\right)
 \]
 
 \end_inset
@@ -505,7 +509,7 @@ Wigner分布在一定程度上，可以看作是量子粒子的位置和动量�
 按照 Weyl 关联规则排序，然后对 Wigner 分布进行平均（如同它是经典分布），
 \begin_inset Formula 
 \[
-\langle\hat{\mathcal{O}}\rangle=\int\dif^{3}\sbf{p}\dif^{3}\sbf{r}W\left(\sbf{r},\sbf{p}\right)\mathcal{O}_{\text{Weyl}}\left(\sbf{r},\sbf{p}\right)
+\langle\hat{\mathcal{O}}\rangle=\int\dd^{3}\sbf{p}\dd^{3}\sbf{r}W\left(\sbf{r},\sbf{p}\right)\mathcal{O}_{\text{Weyl}}\left(\sbf{r},\sbf{p}\right)
 \]
 
 \end_inset
@@ -517,7 +521,7 @@ Wigner分布在一定程度上，可以看作是量子粒子的位置和动量�
 Wiger 函数的边缘投影就是我们熟悉的位置概率密度和动量概率密度，
 \begin_inset Formula 
 \[
-\int\dif^{3}\sbf{p}W\left(\sbf{r},\sbf{p}\right)=\rho\left(\sbf{r}\right),\quad\int\frac{\dif^{3}\sbf{r}}{\left(2\pi\hbar\right)^{3}}W\left(\sbf{r},\sbf{p}\right)=n\left(\sbf{p}\right)
+\int\dd^{3}\sbf{p}W\left(\sbf{r},\sbf{p}\right)=\rho\left(\sbf{r}\right),\quad\int\frac{\dd^{3}\sbf{r}}{\left(2\pi\hbar\right)^{3}}W\left(\sbf{r},\sbf{p}\right)=n\left(\sbf{p}\right)
 \]
 
 \end_inset
@@ -629,7 +633,7 @@ Q_{u}=Q_{c}=\frac{2}{3},\quad Q_{d}=Q_{s}=-\frac{1}{3}.
 时的电荷和磁矩算符（它们不随时间改变）
 \begin_inset Formula 
 \[
-Q\equiv\int\dif^{3}\sbf{r}j^{0}\left(\sbf{r}\right),\quad\sbf{\mu}\equiv\int\dif^{3}\sbf{r}\left[\sbf{r}\times\sbf{j}\left(\sbf{r}\right)\right]
+Q\equiv\int\dd^{3}\sbf{r}j^{0}\left(\sbf{r}\right),\quad\sbf{\mu}\equiv\int\dd^{3}\sbf{r}\left[\sbf{r}\times\sbf{j}\left(\sbf{r}\right)\right]
 \]
 
 \end_inset
@@ -732,7 +736,7 @@ Q\equiv\int\dif^{3}\sbf{r}j^{0}\left(\sbf{r}\right),\quad\sbf{\mu}\equiv\int\dif
 \end_inset
 
 也是合理的。
-\begin_inset Formula $\abs{\sbf{\Delta}}\ge M_{N}\sim\qty{1}{\GeV}$
+\begin_inset Formula $\abs{\sbf{\Delta}}\ge M_{N}\sim\SI{1}{\GeV}$
 \end_inset
 
 时的形状因子不能被单独的看成是核子内部结构的信息。
@@ -750,7 +754,7 @@ Breit 系中的形状因子和电荷分布
 的静态核子，
 \begin_inset Formula 
 \begin{equation}
-\ket{\sbf{R}}=\int\frac{\dif^{3}\sbf{p}}{\left(2\pi\right)^{3}}e^{i\sbf{p}\cdot\sbf{R}}\Psi\left(\sbf{p}\right)\ket{\sbf{p}}\label{eq:2.19}
+\ket{\sbf{R}}=\int\frac{\dd^{3}\sbf{p}}{\left(2\pi\right)^{3}}e^{i\sbf{p}\cdot\sbf{R}}\Psi\left(\sbf{p}\right)\ket{\sbf{p}}\label{eq:2.19}
 \end{equation}
 
 \end_inset
@@ -766,7 +770,7 @@ Breit 系中的形状因子和电荷分布
 按照相对论不变的方式归一化，则
 \begin_inset Formula 
 \[
-\int\frac{\dif^{3}\sbf{p}}{\left(2\pi\right)^{3}}\left(2E_{p}\right)\abs{\Psi\left(\sbf{p}\right)}^{2}=1
+\int\frac{\dd^{3}\sbf{p}}{\left(2\pi\right)^{3}}\left(2E_{p}\right)\abs{\Psi\left(\sbf{p}\right)}^{2}=1
 \]
 
 \end_inset
@@ -782,7 +786,7 @@ Breit 系中的形状因子和电荷分布
 不是自由哈密顿的本征态，所以随着时间进行，它会传播。特征弥散时间正比于
 \begin_inset Formula 
 \[
-t_{\text{char}}\sim\int\dif^{3}p\left(M_{N}/\sbf{p}^{2}\right){\Psi\left(\sbf{p}\right)}^{2}
+t_{\text{char}}\sim\int\dd^{3}p\left(M_{N}/\sbf{p}^{2}\right){\Psi\left(\sbf{p}\right)}^{2}
 \]
 
 \end_inset
@@ -825,8 +829,8 @@ noprefix "false"
 。取它的傅立叶变换，得到
 \begin_inset Formula 
 \begin{align*}
-F\left(\sbf{\Delta}\right) & \equiv\int\dif^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\rho\left(\sbf{r}\right)\\
- & =\int\frac{\dif^{3}\sbf{p}}{\left(2\pi\right)^{3}}\Psi^{*}\left(\sbf{p}-\frac{1}{2}\sbf{\Delta}\right)\Psi\left(\sbf{p}+\frac{1}{2}\sbf{\Delta}\right)\bra{\sbf{p}-\frac{1}{2}\sbf{\Delta}}j^{0}\left(0\right)\ket{\sbf{p}+\frac{1}{2}\sbf{\Delta}}
+F\left(\sbf{\Delta}\right) & \equiv\int\dd^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\rho\left(\sbf{r}\right)\\
+ & =\int\frac{\dd^{3}\sbf{p}}{\left(2\pi\right)^{3}}\Psi^{*}\left(\sbf{p}-\frac{1}{2}\sbf{\Delta}\right)\Psi\left(\sbf{p}+\frac{1}{2}\sbf{\Delta}\right)\bra{\sbf{p}-\frac{1}{2}\sbf{\Delta}}j^{0}\left(0\right)\ket{\sbf{p}+\frac{1}{2}\sbf{\Delta}}
 \end{align*}
 
 \end_inset
@@ -927,7 +931,7 @@ F\left(\sbf{\Delta}\right) & \equiv\int\dif^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf
 ，所以
 \begin_inset Formula 
 \[
-F\left(\sbf{\Delta}\right)=\int\frac{\dif^{3}\sbf{p}}{\left(2\pi\right)^{3}}\abs{\Psi\left(\sbf{p}\right)}^{2}\bra{\sbf{p}-\frac{1}{2}\sbf{\Delta}}j^{0}\left(0\right)\ket{\sbf{p}+\frac{1}{2}\sbf{\Delta}}
+F\left(\sbf{\Delta}\right)=\int\frac{\dd^{3}\sbf{p}}{\left(2\pi\right)^{3}}\abs{\Psi\left(\sbf{p}\right)}^{2}\bra{\sbf{p}-\frac{1}{2}\sbf{\Delta}}j^{0}\left(0\right)\ket{\sbf{p}+\frac{1}{2}\sbf{\Delta}}
 \]
 
 \end_inset
@@ -969,7 +973,7 @@ p_{1}=\left(E,\frac{1}{2}\sbf{\Delta}\right),\quad p_{2}=\left(E,-\frac{1}{2}\sb
 回忆起之前的定义，
 \begin_inset Formula 
 \[
-F\left(\sbf{\Delta}\right)\equiv\int\dif^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\rho\left(\sbf{r}\right)
+F\left(\sbf{\Delta}\right)\equiv\int\dd^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\rho\left(\sbf{r}\right)
 \]
 
 \end_inset
@@ -1039,7 +1043,7 @@ G_{M}\left(-\sbf{\Delta}^{2}\right)=F_{1}\left(-\sbf{\Delta}^{2}\right)+F_{2}\le
 在讨论中，我们多次提到了质子半径。这里指的是均方根半径，定义为
 \begin_inset Formula 
 \[
-R_{N}^{2}=\langle\sbf{r}^{2}\rangle_{E}\equiv\int\dif^{3}\sbf{r}\,\sbf{r}^{2}\rho\left(\sbf{r}\right)=-6\frac{\partial G_{E}\left(-\sbf{\Delta}^{2}\right)}{\partial\sbf{\Delta}^{2}}
+R_{N}^{2}=\langle\sbf{r}^{2}\rangle_{E}\equiv\int\dd^{3}\sbf{r}\,\sbf{r}^{2}\rho\left(\sbf{r}\right)=-6\frac{\partial G_{E}\left(-\sbf{\Delta}^{2}\right)}{\partial\sbf{\Delta}^{2}}
 \]
 
 \end_inset
@@ -1174,8 +1178,8 @@ L^{\mu}\left(k,k^{\prime}\right)=\frac{i}{q^{2}}\overline{u}\left(k^{\prime}\rig
 通过使用完备性关系对末态求和，
 \begin_inset Formula 
 \begin{align*}
-\sum_{n}\ket{n}\bra{n} & =\sum_{N}\sum_{\left\{ \alpha_{N}\right\} }\int\prod_{k=1}^{N}\frac{\dif^{3}\sbf p_{k}}{2E_{\sbf p_{k}}\left(2\pi\right)^{3}}\ket{p_{1},\cdots p_{k}}\bra{p_{1},\cdots p_{k}}=1.\\
-\frac{\dif^{3}\sbf p_{k}}{2E_{\sbf p_{k}}\left(2\pi\right)^{3}} & =\frac{\dif^{4}\sbf p_{k}}{\left(2\pi\right)^{3}}\left(2\pi\right)\delta_{+}\left(p_{k}^{2}-m_{k}^{2}\right)\equiv\frac{\dif^{4}\sbf p_{k}}{\left(2\pi\right)^{3}}\left(2\pi\right)\theta\left(p_{k}^{0}\right)\delta\left(p_{k}^{2}-m_{k}^{2}\right)
+\sum_{n}\ket{n}\bra{n} & =\sum_{N}\sum_{\left\{ \alpha_{N}\right\} }\int\prod_{k=1}^{N}\frac{\dd^{3}\sbf p_{k}}{2E_{\sbf p_{k}}\left(2\pi\right)^{3}}\ket{p_{1},\cdots p_{k}}\bra{p_{1},\cdots p_{k}}=1.\\
+\frac{\dd^{3}\sbf p_{k}}{2E_{\sbf p_{k}}\left(2\pi\right)^{3}} & =\frac{\dd^{4}\sbf p_{k}}{\left(2\pi\right)^{3}}\left(2\pi\right)\delta_{+}\left(p_{k}^{2}-m_{k}^{2}\right)\equiv\frac{\dd^{4}\sbf p_{k}}{\left(2\pi\right)^{3}}\left(2\pi\right)\theta\left(p_{k}^{0}\right)\delta\left(p_{k}^{2}-m_{k}^{2}\right)
 \end{align*}
 
 \end_inset
@@ -1183,7 +1187,7 @@ L^{\mu}\left(k,k^{\prime}\right)=\frac{i}{q^{2}}\overline{u}\left(k^{\prime}\rig
 引入了强子流张量，
 \begin_inset Formula 
 \begin{equation}
-W^{\mu\nu}=\frac{1}{4\pi}\int\dif^{4}ze^{iqz}\bra{p}j^{\mu}\left(z\right)j^{\nu}\left(0\right)\ket{p}.\label{eq:2.33}
+W^{\mu\nu}=\frac{1}{4\pi}\int\dd^{4}ze^{iqz}\bra{p}j^{\mu}\left(z\right)j^{\nu}\left(0\right)\ket{p}.\label{eq:2.33}
 \end{equation}
 
 \end_inset
@@ -1240,8 +1244,8 @@ q^{2}\equiv-\mathcal{Q}^{2},\quad x_{B}\equiv\frac{\mathcal{Q}^{2}}{2p\cdot q}.
 的振幅由夸克电磁流的编时乘积决定：
 \begin_inset Formula 
 \begin{align*}
- & W^{\mu\nu}=\frac{1}{2\pi}\im T^{\mu\nu}\\
- & T^{\mu\nu}=i\int\dif^{4}ze^{iqz}\bra{p}T\left\{ j^{\mu}\left(z\right)j^{\nu}\left(0\right)\right\} \ket{0}
+ & W^{\mu\nu}=\frac{1}{2\pi}\Im T^{\mu\nu}\\
+ & T^{\mu\nu}=i\int\dd^{4}ze^{iqz}\bra{p}T\left\{ j^{\mu}\left(z\right)j^{\nu}\left(0\right)\right\} \ket{0}
 \end{align*}
 
 \end_inset
@@ -1259,7 +1263,7 @@ q^{2}\equiv-\mathcal{Q}^{2},\quad x_{B}\equiv\frac{\mathcal{Q}^{2}}{2p\cdot q}.
 \end_inset
 
 的倒数，也就是说分辨率
-\begin_inset Formula $\approx\qty{0.2}{\femto\metre}/\mathcal{Q}$
+\begin_inset Formula $\approx\SI{0.2}{\femto\metre}/\mathcal{Q}$
 \end_inset
 
 ，其中
@@ -1271,7 +1275,7 @@ q^{2}\equiv-\mathcal{Q}^{2},\quad x_{B}\equiv\frac{\mathcal{Q}^{2}}{2p\cdot q}.
 \end_inset
 
 。由于核子的尺寸
-\begin_inset Formula $R_{N}\sim\qty{1}{\femto\metre}$
+\begin_inset Formula $R_{N}\sim\SI{1}{\femto\metre}$
 \end_inset
 
 ，可以推测
@@ -1367,7 +1371,7 @@ CD微扰理论替换成量子力学，使用带有散射势
 ，经过传播–相互作用–传播–相互作用的持续迭代，
 \begin_inset Formula 
 \[
-S_{m}=\int_{-\infty}^{+\infty}\dif\tau_{m}e^{-i\left(E_{m-1}-E_{m}\right)\tau_{m}}V_{m-1}\int_{-\infty}^{\tau_{m}}\dif\tau_{m-1}e^{-i\left(E_{m-2}-E_{m-1}\right)\tau_{m-1}}V_{m-2}\cdots V_{1}\int_{-\infty}^{\tau_{2}}\dif\tau_{1}e^{-i\left(E_{0}-E_{1}\right)\tau_{2}}.
+S_{m}=\int_{-\infty}^{+\infty}\dd\tau_{m}e^{-i\left(E_{m-1}-E_{m}\right)\tau_{m}}V_{m-1}\int_{-\infty}^{\tau_{m}}\dd\tau_{m-1}e^{-i\left(E_{m-2}-E_{m-1}\right)\tau_{m-1}}V_{m-2}\cdots V_{1}\int_{-\infty}^{\tau_{2}}\dd\tau_{1}e^{-i\left(E_{0}-E_{1}\right)\tau_{2}}.
 \]
 
 \end_inset
@@ -1385,7 +1389,7 @@ S_{m}=\int_{-\infty}^{+\infty}\dif\tau_{m}e^{-i\left(E_{m-1}-E_{m}\right)\tau_{m
 \end_inset
 
 也是自由粒子作用量：
-\begin_inset Formula $S=-\int\dif\tau H$
+\begin_inset Formula $S=-\int\dd\tau H$
 \end_inset
 
 。由此可以总结：
@@ -1440,7 +1444,7 @@ S_{m}=\int_{-\infty}^{+\infty}\dif\tau_{m}e^{-i\left(E_{m-1}-E_{m}\right)\tau_{m
 。根据光学定理（见附录 C），散射截面可以表示成真空极化的吸收部，
 \begin_inset Formula 
 \[
-\sigma_{\text{tot}}\left(q^{2}\right)=\frac{1}{\pi}\im i\int\dif z^{4}e^{iq\cdot z}\bra{0}T\left\{ j_{\mu}\left(z\right)j^{\mu}\left(0\right)\right\} \ket{0}
+\sigma_{\text{tot}}\left(q^{2}\right)=\frac{1}{\pi}\Im i\int\dd z^{4}e^{iq\cdot z}\bra{0}T\left\{ j_{\mu}\left(z\right)j^{\mu}\left(0\right)\right\} \ket{0}
 \]
 
 \end_inset
@@ -1477,7 +1481,7 @@ S_{m}=\int_{-\infty}^{+\infty}\dif\tau_{m}e^{-i\left(E_{m-1}-E_{m}\right)\tau_{m
 给出
 \begin_inset Formula 
 \begin{equation}
-i\int\dif^{4}ze^{iqz}\bra{0}T\left\{ j_{\mu}\left(z\right)j^{\mu}\left(0\right)\right\} \ket{0}=\int_{0}^{\infty}\dif M^{2}\frac{\sigma_{\text{tot}}\left(M^{2}\right)}{\mathcal{Q}^{2}+M^{2}},\label{eq:2.42}
+i\int\dd^{4}ze^{iqz}\bra{0}T\left\{ j_{\mu}\left(z\right)j^{\mu}\left(0\right)\right\} \ket{0}=\int_{0}^{\infty}\dd M^{2}\frac{\sigma_{\text{tot}}\left(M^{2}\right)}{\mathcal{Q}^{2}+M^{2}},\label{eq:2.42}
 \end{equation}
 
 \end_inset
@@ -1658,7 +1662,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
  & \sigma_{\text{DIS}}=\frac{\alpha_{\text{em}}^{2}}{4\pi}\sum_{n}\abs{\mathcal{A}_{n}}^{2}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(p+q-P_{n}\right)=\frac{\alpha_{\text{em}}^{2}}{q^{4}}L_{\mu}^{\dagger}L_{\nu}W^{\mu\nu},\\
- & W^{\mu\nu}=\frac{1}{4\pi}\int\dif^{4}ze^{iq\cdot z}\bra{p}j^{\mu}\left(z\right)j^{\nu}\left(0\right)\ket{p},
+ & W^{\mu\nu}=\frac{1}{4\pi}\int\dd^{4}ze^{iq\cdot z}\bra{p}j^{\mu}\left(z\right)j^{\nu}\left(0\right)\ket{p},
 \end{align*}
 
 \end_inset
@@ -1712,7 +1716,7 @@ z^{-}\sim\frac{1}{Mx_{B}},\quad z^{+}\sim\frac{Mx_{B}}{\mathcal{Q}^{2}}.
 
 \begin_layout Standard
 硬过程占据非常小的时空体积。另一方面，强子非微扰波函数信息涉及到的尺度要大的多，对应的典型强子能标为
-\begin_inset Formula $\qty{1}{\GeV}$
+\begin_inset Formula $\SI{1}{\GeV}$
 \end_inset
 
 。因此，看起来这两个能标无关，不会互相干扰。因此，尽管过程依赖于强子态，被散射部分子来自其中，但是强子态与硬过程基本没关系。此外，在深度非弹性散射中，所有末态相
@@ -1730,7 +1734,7 @@ noprefix "false"
 函数的因子化，
 \begin_inset Formula 
 \[
-F_{i}\left(x_{B},\mathcal{Q}^{2}\right)=\int_{x_{B}}^{1}\frac{\dif x}{x}C_{i}\left(x_{B}/x,\mathcal{Q}^{2}/\mu^{2}\right)q\left(x;\mu^{2}\right).
+F_{i}\left(x_{B},\mathcal{Q}^{2}\right)=\int_{x_{B}}^{1}\frac{\dd x}{x}C_{i}\left(x_{B}/x,\mathcal{Q}^{2}/\mu^{2}\right)q\left(x;\mu^{2}\right).
 \]
 
 \end_inset
@@ -1796,7 +1800,7 @@ noprefix "false"
 以及其它一些量子数守恒条件，
 \begin_inset Formula 
 \begin{equation}
-W^{\mu\nu}=\frac{1}{4\pi}\sum_{n}\int\prod_{k=1}^{n}\frac{\dif^{3}p_{k}}{2E_{p_{k}}\left(2\pi\right)^{3}}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(\sum_{l=1}^{n}p_{l}-p-q\right)\bra{p}j^{\mu}\left(0\right)\ket{p_{1},\cdots,p_{n}}\bra{p_{1},\cdots,p_{n}}j^{\nu}\left(0\right)\ket{p}\label{eq:2.49}
+W^{\mu\nu}=\frac{1}{4\pi}\sum_{n}\int\prod_{k=1}^{n}\frac{\dd^{3}p_{k}}{2E_{p_{k}}\left(2\pi\right)^{3}}\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(\sum_{l=1}^{n}p_{l}-p-q\right)\bra{p}j^{\mu}\left(0\right)\ket{p_{1},\cdots,p_{n}}\bra{p_{1},\cdots,p_{n}}j^{\nu}\left(0\right)\ket{p}\label{eq:2.49}
 \end{equation}
 
 \end_inset
@@ -1860,8 +1864,8 @@ noprefix "false"
 ，我们得到结构函数
 \begin_inset Formula 
 \begin{align}
-F_{1}\left(x_{B},\mathcal{Q}^{2}\right) & =\frac{1}{2}\int^{\mathcal{Q}^{2}}\dif^{2}k_{\perp}f^{q}\left(x_{B},\sbf{k_{\perp}}\right)\label{eq:2.51}\\
- & =\frac{1}{4}\int^{\mathcal{Q}^{2}}\dif^{2}k_{\perp}\int\frac{\dif z^{-}}{2\pi}\frac{\dif^{2}z_{\perp}}{\left(2\pi\right)^{2}}e^{ix_{B}p^{+}z^{-}-i\sbf{k_{\perp}z_{\perp}}}\bra{p}\bar{\psi}\left(0,\sbf{0}\right)\gamma^{+}\psi\left(z^{-},\sbf{z_{\perp}}\right)\ket{p}\nonumber 
+F_{1}\left(x_{B},\mathcal{Q}^{2}\right) & =\frac{1}{2}\int^{\mathcal{Q}^{2}}\dd^{2}k_{\perp}f^{q}\left(x_{B},\sbf{k_{\perp}}\right)\label{eq:2.51}\\
+ & =\frac{1}{4}\int^{\mathcal{Q}^{2}}\dd^{2}k_{\perp}\int\frac{\dd z^{-}}{2\pi}\frac{\dd^{2}z_{\perp}}{\left(2\pi\right)^{2}}e^{ix_{B}p^{+}z^{-}-i\sbf{k_{\perp}z_{\perp}}}\bra{p}\bar{\psi}\left(0,\sbf{0}\right)\gamma^{+}\psi\left(z^{-},\sbf{z_{\perp}}\right)\ket{p}\nonumber 
 \end{align}
 
 \end_inset
@@ -1909,7 +1913,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & \bra{p_{J},\bar{n}}j^{\nu}\left(0\right)\ket{p}_{\left(0\right)}=\bar{u}\left(p_{J}\right)\gamma^{\nu}\bra{\bar{n}}\psi\left(0\right)\ket{p}.\quad\text{对比0阶}\nonumber \\
- & \bra{p_{J},\bar{n}}j^{\nu}\left(0\right)\ket{p}_{\left(1\right)}=g\bar{u}\left(p_{J}\right)\int\frac{\dif^{4}k_{1}}{\left(2\pi\right)^{4}}\bra{\bar{n}}\slashed A\left(k_{1}\right)S\left(p_{J}-k_{1}\right)\gamma^{\nu}\psi\left(0\right)\ket{p}.\label{eq:2.52}
+ & \bra{p_{J},\bar{n}}j^{\nu}\left(0\right)\ket{p}_{\left(1\right)}=g\bar{u}\left(p_{J}\right)\int\frac{\dd^{4}k_{1}}{\left(2\pi\right)^{4}}\bra{\bar{n}}\sla A\left(k_{1}\right)S\left(p_{J}-k_{1}\right)\gamma^{\nu}\psi\left(0\right)\ket{p}.\label{eq:2.52}
 \end{align}
 
 \end_inset
@@ -1921,7 +1925,7 @@ noprefix "false"
  是自由夸克传播子，来自于一圈图。使用类似于 Appendix B.3 中定义的 Drell-Yan 坐标系是很方便的，我们观察夸克传播子的光锥展开
 \begin_inset Formula 
 \[
-S\left(p_{J}-k\right)\approx-\frac{p_{J}^{-}\gamma^{+}+\sbf{\slashed k_{\perp}}}{2p_{J}^{-}k^{+}+\sbf k_{\perp}^{2}-i\varepsilon}
+S\left(p_{J}-k\right)\approx-\frac{p_{J}^{-}\gamma^{+}+\sbf{\sla k_{\perp}}}{2p_{J}^{-}k^{+}+\sbf k_{\perp}^{2}-i\varepsilon}
 \]
 
 \end_inset
@@ -1965,8 +1969,8 @@ S\left(p_{J}-k\right)\approx-\frac{p_{J}^{-}\gamma^{+}+\sbf{\slashed k_{\perp}}}
 显然，第二项的贡献是反常的（anomalous）。因此，我们发现单胶子交换的振幅为
 \begin_inset Formula 
 \begin{align*}
-\bar{u}\left(p_{J}\right)\bra{\bar{n}}\slashed A\left(k\right)S\left(p_{J}-k\right)\gamma^{\nu}\psi\left(0\right)\ket{p} & \approx-\frac{1}{k^{+}-i0}\bar{u}\left(p_{J}\right)\gamma^{\nu}\bra{\bar{n}}A^{+}\psi\left(0\right)\ket{p}\\
- & +\bar{u}\left(p_{J}\right)\frac{\gamma_{\perp}^{\alpha}\sbf{\slashed k_{\perp}}\gamma^{\nu}}{\sbf k_{\perp}^{2}-i\varepsilon}\bra{\bar{n}}\sbf A_{\perp}^{\alpha}\left(k^{+}=0,\sbf k_{\perp}\right)\psi\left(0\right)\ket{p}
+\bar{u}\left(p_{J}\right)\bra{\bar{n}}\sla A\left(k\right)S\left(p_{J}-k\right)\gamma^{\nu}\psi\left(0\right)\ket{p} & \approx-\frac{1}{k^{+}-i0}\bar{u}\left(p_{J}\right)\gamma^{\nu}\bra{\bar{n}}A^{+}\psi\left(0\right)\ket{p}\\
+ & +\bar{u}\left(p_{J}\right)\frac{\gamma_{\perp}^{\alpha}\sbf{\sla k_{\perp}}\gamma^{\nu}}{\sbf k_{\perp}^{2}-i\varepsilon}\bra{\bar{n}}\sbf A_{\perp}^{\alpha}\left(k^{+}=0,\sbf k_{\perp}\right)\psi\left(0\right)\ket{p}
 \end{align*}
 
 \end_inset
@@ -1979,7 +1983,7 @@ S\left(p_{J}-k\right)\approx-\frac{p_{J}^{-}\gamma^{+}+\sbf{\slashed k_{\perp}}}
 。为了看出这一项的作用，我们使用横向场的下列表示，
 \begin_inset Formula 
 \[
-\sbf A_{\perp}^{\alpha}\left(\infty,z_{\perp}\right)=-\nabla_{\perp}^{\alpha}\int_{\sbf z_{\perp}}^{\infty}\dif\sbf z_{\perp}^{\prime}\cdot\sbf A_{\perp}\left(\infty,z_{\perp}^{\prime}\right)
+\sbf A_{\perp}^{\alpha}\left(\infty,z_{\perp}\right)=-\nabla_{\perp}^{\alpha}\int_{\sbf z_{\perp}}^{\infty}\dd\sbf z_{\perp}^{\prime}\cdot\sbf A_{\perp}\left(\infty,z_{\perp}^{\prime}\right)
 \]
 
 \end_inset
@@ -2027,7 +2031,7 @@ S\left(p_{J}-k\right)\approx-\frac{p_{J}^{-}\gamma^{+}+\sbf{\slashed k_{\perp}}}
 ，
 \begin_inset Formula 
 \[
-\left[{\color{blue}\infty,\sbf{z_{\perp}}};z^{-},\sbf{z_{\perp}}\right]=P\exp\left(ig\int_{z^{-}}^{\infty}\dif z^{\prime-}A^{+}\left(z^{\prime-},\sbf{z_{\perp}}\right)\right)
+\left[{\color{blue}\infty,\sbf{z_{\perp}}};z^{-},\sbf{z_{\perp}}\right]=P\exp\left(ig\int_{z^{-}}^{\infty}\dd z^{\prime-}A^{+}\left(z^{\prime-},\sbf{z_{\perp}}\right)\right)
 \]
 
 \end_inset
@@ -2043,7 +2047,7 @@ S\left(p_{J}-k\right)\approx-\frac{p_{J}^{-}\gamma^{+}+\sbf{\slashed k_{\perp}}}
 ，
 \begin_inset Formula 
 \[
-\left[\infty,\sbf{\infty};{\color{blue}\infty,\sbf{z_{\perp}}}\right]=P\exp\left(-ig\int_{\sbf{z_{\perp}}}^{\infty}\dif\sbf{z_{\perp}^{\prime}}\cdot\sbf{A}_{\perp}\left(\infty,\sbf{z_{\perp}}^{\prime}\right)\right)
+\left[\infty,\sbf{\infty};{\color{blue}\infty,\sbf{z_{\perp}}}\right]=P\exp\left(-ig\int_{\sbf{z_{\perp}}}^{\infty}\dd\sbf{z_{\perp}^{\prime}}\cdot\sbf{A}_{\perp}\left(\infty,\sbf{z_{\perp}}^{\prime}\right)\right)
 \]
 
 \end_inset
@@ -2065,7 +2069,7 @@ noprefix "false"
 取复共轭再相乘，就得到了规范不变的 横向动量依赖的部分子分布（TMD），
 \begin_inset Formula 
 \[
-f^{q}\left(x,\sbf k_{\perp}\right)=\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\frac{\dif^{2}z_{\perp}}{\left(2\pi\right)^{2}}e^{ixp^{+}z^{-}-i\sbf k_{\perp}\sbf z_{\perp}}\bra{p}\bar{\Psi}_{\infty}\left(0,\sbf0\right)\gamma^{+}\Psi_{\infty}\left(z^{-},\sbf z_{\perp}\right)\ket{p}
+f^{q}\left(x,\sbf k_{\perp}\right)=\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\frac{\dd^{2}z_{\perp}}{\left(2\pi\right)^{2}}e^{ixp^{+}z^{-}-i\sbf k_{\perp}\sbf z_{\perp}}\bra{p}\bar{\Psi}_{\infty}\left(0,\sbf0\right)\gamma^{+}\Psi_{\infty}\left(z^{-},\sbf z_{\perp}\right)\ket{p}
 \]
 
 \end_inset
@@ -2098,8 +2102,8 @@ f^{q}\left(x,\sbf k_{\perp}\right)=\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\frac{\
 MD）的积分
 \begin_inset Formula 
 \begin{align}
-f^{q}\left(x,\mu\right) & =\int^{\mu^{2}}\dif\sbf k_{\perp}f^{q}\left(x,\sbf k_{\perp}\right)\label{eq:2.62}\\
- & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p}\bar{\psi}\left(0,\sbf{0}\right)\gamma^{+}\left[0,\sbf{0};z^{-},\sbf{0}\right]\psi\left(z^{-},\sbf{0}\right)\ket{p}\nonumber 
+f^{q}\left(x,\mu\right) & =\int^{\mu^{2}}\dd\sbf k_{\perp}f^{q}\left(x,\sbf k_{\perp}\right)\label{eq:2.62}\\
+ & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p}\bar{\psi}\left(0,\sbf{0}\right)\gamma^{+}\left[0,\sbf{0};z^{-},\sbf{0}\right]\psi\left(z^{-},\sbf{0}\right)\ket{p}\nonumber 
 \end{align}
 
 \end_inset
@@ -2369,7 +2373,7 @@ boost 到质子动量无穷大坐标系，
 以看到的粒子，由于夸克禁闭。将方程 D.8 
 \begin_inset Formula 
 \[
-\psi_{+}\left(z^{-},\sbf{z}_{\perp},z^{+}=0\right)=\sum_{\lambda=\uparrow\downarrow}\int\frac{\dif k^{+}\dif^{2}\sbf{k}_{\perp}}{2k^{+}\left(2\pi\right)^{3}}\left\{ b_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(k\right)e^{-i\left(k^{+}z^{-}-\sbf{k}_{\perp}\cdot\sbf{z}_{\perp}\right)}+d_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(-k\right)e^{i\left(k^{+}z^{-}-\sbf{k}_{\perp}\cdot\sbf{z}_{\perp}\right)}\right\} 
+\psi_{+}\left(z^{-},\sbf{z}_{\perp},z^{+}=0\right)=\sum_{\lambda=\uparrow\downarrow}\int\frac{\dd k^{+}\dd^{2}\sbf{k}_{\perp}}{2k^{+}\left(2\pi\right)^{3}}\left\{ b_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(k\right)e^{-i\left(k^{+}z^{-}-\sbf{k}_{\perp}\cdot\sbf{z}_{\perp}\right)}+d_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(-k\right)e^{i\left(k^{+}z^{-}-\sbf{k}_{\perp}\cdot\sbf{z}_{\perp}\right)}\right\} 
 \]
 
 \end_inset
@@ -2377,7 +2381,7 @@ boost 到质子动量无穷大坐标系，
 
 \begin_inset Formula 
 \[
-\psi_{+}\left(z^{-}=0,\sbf{z}_{\perp}=0,z^{+}=0\right)=\sum_{\lambda=\uparrow\downarrow}\int\frac{\dif k^{+}\dif^{2}\sbf{k}_{\perp}}{2k^{+}\left(2\pi\right)^{3}}\left\{ b_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(k\right)+d_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(-k\right)\right\} 
+\psi_{+}\left(z^{-}=0,\sbf{z}_{\perp}=0,z^{+}=0\right)=\sum_{\lambda=\uparrow\downarrow}\int\frac{\dd k^{+}\dd^{2}\sbf{k}_{\perp}}{2k^{+}\left(2\pi\right)^{3}}\left\{ b_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(k\right)+d_{\lambda}\left(k^{+},\sbf{k}_{\perp}\right)u_{+\lambda}\left(-k\right)\right\} 
 \]
 
 \end_inset
@@ -2395,7 +2399,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-f^{q}\left(x,\mu\right)=\int^{\mu^{2}}\dif\sbf{k_{\perp}}f^{q}\left(x,\sbf{k_{\perp}}\right)=\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p}\bar{\psi}\left(0,\sbf{0}\right)\gamma^{+}\left[0,\sbf{0};z^{-},\sbf{0}\right]\psi\left(z^{-},\sbf{0}\right)\ket{p}
+f^{q}\left(x,\mu\right)=\int^{\mu^{2}}\dd\sbf{k_{\perp}}f^{q}\left(x,\sbf{k_{\perp}}\right)=\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p}\bar{\psi}\left(0,\sbf{0}\right)\gamma^{+}\left[0,\sbf{0};z^{-},\sbf{0}\right]\psi\left(z^{-},\sbf{0}\right)\ket{p}
 \]
 
 \end_inset
@@ -2403,8 +2407,8 @@ f^{q}\left(x,\mu\right)=\int^{\mu^{2}}\dif\sbf{k_{\perp}}f^{q}\left(x,\sbf{k_{\p
 给出
 \begin_inset Formula 
 \begin{align*}
- & \left.f^{q}\left(x\right)\right|_{x>0}=\frac{1}{2x}\sum_{\lambda=\uparrow\downarrow}\int\frac{\dif^{2}\sbf{k}_{\perp}}{\left(2\pi\right)^{3}}\frac{\bra{p}b_{\lambda}^{\dagger}\left(xp^{+},\sbf{k}_{\perp}\right)b_{\lambda}\left(xp^{+},\sbf{k}_{\perp}\right)\ket{p}}{\bra{p}\ket{p}},\\
- & \left.f^{q}\left(x\right)\right|_{x<0}=\frac{-1}{2x}\sum_{\lambda=\uparrow\downarrow}\int\frac{\dif^{2}\sbf{k}_{\perp}}{\left(2\pi\right)^{3}}\frac{\bra{p}d_{\lambda}^{\dagger}\left(xp^{+},\sbf{k}_{\perp}\right)d_{\lambda}\left(xp^{+},\sbf{k}_{\perp}\right)\ket{p}}{\bra{p}\ket{p}},
+ & \left.f^{q}\left(x\right)\right|_{x>0}=\frac{1}{2x}\sum_{\lambda=\uparrow\downarrow}\int\frac{\dd^{2}\sbf{k}_{\perp}}{\left(2\pi\right)^{3}}\frac{\bra{p}b_{\lambda}^{\dagger}\left(xp^{+},\sbf{k}_{\perp}\right)b_{\lambda}\left(xp^{+},\sbf{k}_{\perp}\right)\ket{p}}{\bra{p}\ket{p}},\\
+ & \left.f^{q}\left(x\right)\right|_{x<0}=\frac{-1}{2x}\sum_{\lambda=\uparrow\downarrow}\int\frac{\dd^{2}\sbf{k}_{\perp}}{\left(2\pi\right)^{3}}\frac{\bra{p}d_{\lambda}^{\dagger}\left(xp^{+},\sbf{k}_{\perp}\right)d_{\lambda}\left(xp^{+},\sbf{k}_{\perp}\right)\ket{p}}{\bra{p}\ket{p}},
 \end{align*}
 
 \end_inset
@@ -2538,7 +2542,7 @@ x=\frac{k^{0}+k^{z}}{M_{N}}.
 把相空间分布推广到相对论情形下，引入（光锥等时） Wigner 算符，
 \begin_inset Formula 
 \[
-\mathcal{W}^{q}\left(k^{+},\sbf{k_{\perp}};\sbf{r}\right)=\int\frac{\dif z^{-}}{2\pi}\frac{\dif^{2}\sbf{z_{\perp}}}{\left(2\pi\right)^{2}}e^{-i\left(k^{+}z^{-}-\sbf{k_{\perp}}\cdot\sbf{z_{\perp}}\right)}\bar{\psi}_{\infty}\left(\sbf{r}+z\right)\gamma^{+}\psi_{\infty}\left(\sbf{r}-z\right)
+\mathcal{W}^{q}\left(k^{+},\sbf{k_{\perp}};\sbf{r}\right)=\int\frac{\dd z^{-}}{2\pi}\frac{\dd^{2}\sbf{z_{\perp}}}{\left(2\pi\right)^{2}}e^{-i\left(k^{+}z^{-}-\sbf{k_{\perp}}\cdot\sbf{z_{\perp}}\right)}\bar{\psi}_{\infty}\left(\sbf{r}+z\right)\gamma^{+}\psi_{\infty}\left(\sbf{r}-z\right)
 \]
 
 \end_inset
@@ -2574,7 +2578,7 @@ W^{q}\left(x,\sbf{k_{\perp}};\sbf{r}\right)=\bra{\sbf R=0}\mathcal{W}^{q}\left(k
 的傅立叶变换给出 广义动量空间关联函数
 \begin_inset Formula 
 \[
-2M_{N}\int\frac{\dif^{3}\sbf{r}}{\left(2\pi\right)^{3}}e^{i\sbf{\Delta\cdot r}}W^{q}\left(x,\sbf{k_{\perp}};\sbf{r}\right)\equiv\mathcal{F}^{q}\left(x,\sbf{k_{\perp}};\eta,\sbf{\Delta_{\perp}}\right)
+2M_{N}\int\frac{\dd^{3}\sbf{r}}{\left(2\pi\right)^{3}}e^{i\sbf{\Delta\cdot r}}W^{q}\left(x,\sbf{k_{\perp}};\sbf{r}\right)\equiv\mathcal{F}^{q}\left(x,\sbf{k_{\perp}};\eta,\sbf{\Delta_{\perp}}\right)
 \]
 
 \end_inset
@@ -2590,7 +2594,7 @@ p_{1}=\left(E,\frac{1}{2}\sbf{\Delta}\right),\quad p_{2}=\left(E,-\frac{1}{2}\sb
 我们有
 \begin_inset Formula 
 \begin{equation}
-\mathcal{F}^{q}\left(x,\sbf{k_{\perp}};\eta,\sbf{\Delta_{\perp}}\right)=\int\frac{\dif z^{-}}{2\pi}\frac{\dif^{2}\sbf{z_{\perp}}}{\left(2\pi\right)^{2}}e^{ixz^{-}p^{+}-i\sbf{k_{\perp}}\cdot\sbf{z_{\perp}}}\langle-\frac{1}{2}\sbf{\Delta}\abs{\bar{\psi}_{\infty}\left(-z\right)\gamma^{+}\psi_{\infty}\left(z\right)}\frac{1}{2}\sbf{\Delta}\rangle.\label{eq:2.79}
+\mathcal{F}^{q}\left(x,\sbf{k_{\perp}};\eta,\sbf{\Delta_{\perp}}\right)=\int\frac{\dd z^{-}}{2\pi}\frac{\dd^{2}\sbf{z_{\perp}}}{\left(2\pi\right)^{2}}e^{ixz^{-}p^{+}-i\sbf{k_{\perp}}\cdot\sbf{z_{\perp}}}\langle-\frac{1}{2}\sbf{\Delta}\abs{\bar{\psi}_{\infty}\left(-z\right)\gamma^{+}\psi_{\infty}\left(z\right)}\frac{1}{2}\sbf{\Delta}\rangle.\label{eq:2.79}
 \end{equation}
 
 \end_inset
@@ -2651,7 +2655,7 @@ noprefix "false"
 积分）到GPDs (广义部分子分布)：
 \begin_inset Formula 
 \begin{equation}
-F^{q}\left(x,\eta,\Delta_{\perp}^{2}\right)=\int\dif^{2}\sbf k_{\perp}\mathcal{F}^{q}\left(x,\sbf{k_{\perp}};\eta,\sbf{\Delta_{\perp}}\right)\label{eq:2.82}
+F^{q}\left(x,\eta,\Delta_{\perp}^{2}\right)=\int\dd^{2}\sbf k_{\perp}\mathcal{F}^{q}\left(x,\sbf{k_{\perp}};\eta,\sbf{\Delta_{\perp}}\right)\label{eq:2.82}
 \end{equation}
 
 \end_inset
@@ -2776,7 +2780,7 @@ noprefix "false"
 它给出了强子内部每个组分的精确自旋，味道，纵向动量分数和横向动量。例如，上面提到的夸克分布，由质子波函数的绝对值平方给出，
 \begin_inset Formula 
 \[
-f^{q}\left(x\right)=\int\dif x^{\prime}\int\dif^{2}\sbf{k}\int\dif^{2}\sbf{k}^{\prime}\abs{\psi_{uud}^{*}\left(x,1-x-x^{\prime},x^{\prime};\sbf{k},\sbf{k^{\prime}},-\sbf{k}-\sbf{k^{\prime}}\right)}^{2}
+f^{q}\left(x\right)=\int\dd x^{\prime}\int\dd^{2}\sbf{k}\int\dd^{2}\sbf{k}^{\prime}\abs{\psi_{uud}^{*}\left(x,1-x-x^{\prime},x^{\prime};\sbf{k},\sbf{k^{\prime}},-\sbf{k}-\sbf{k^{\prime}}\right)}^{2}
 \]
 
 \end_inset
@@ -3129,16 +3133,11 @@ i\sigma^{+2}\\
 \end_layout
 
 \begin_layout Standard
-在bilocal 算符的off–forward 强子矩阵元的分解中，会遇到领头阶扭度的广义部分子分布函数。对于标量算符，
-\begin_inset Formula 
-\begin{align*}
- & F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}},\\
- & \bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}}=p^{+}\int_{-1}^{1}\dif x\,e^{-ixp^{+}z^{-}}H^{q}\left(x,\eta,\Delta^{2}\right).
-\end{align*}
+在bilocal 算符的off–forward 强子矩阵元的分解中，会遇到领头阶扭度的广义部分子分布函数。对于标量算符
+\begin_inset Foot
+status open
 
-\end_inset
-
-
+\begin_layout Plain Layout
 \begin_inset Formula $p^{+}$
 \end_inset
 
@@ -3146,11 +3145,47 @@ i\sigma^{+2}\\
 \begin_inset Formula $z$
 \end_inset
 
-方向上boost 不变性的要求。变量
+方向上boost 不变性的要求，见
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "subsec:3.2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+ & F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dd z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}},\\
+ & \bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}}=p^{+}\int_{-1}^{1}\dd x\,e^{-ixp^{+}z^{-}}H^{q}\left(x,\eta,\Delta^{2}\right).
+\end{align*}
+
+\end_inset
+
+考虑到
+\begin_inset Formula 
+\[
+\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)=\phi^{\dagger}\left(-z^{-}\right)\phi\left(z^{-}\right),\quad\dim\left[\phi\right]=1,\quad\dim\left[\ket{p}\right]=-1,
+\]
+
+\end_inset
+
+
+\begin_inset Formula $F^{\phi}\left(x,\eta,\Delta^{2}\right)$
+\end_inset
+
+是无量纲的。如同普通的部分子分布函数，变量
 \begin_inset Formula $x$
 \end_inset
 
-，如同普通的部分子分布函数那里的，是 Ioffe time 的傅立叶共轭。使用部分子的入射动量
+是 Ioffe time 的傅立叶共轭。使用部分子的入射动量
 \begin_inset Formula $k_{1}$
 \end_inset
 
@@ -3237,7 +3272,7 @@ k_{1}^{+}=Xp_{1}^{+},\quad k_{2}^{+}=\left(X-\zeta\right)p_{1}^{+}.
 中的场。以标量粒子为例，我们定义：
 \begin_inset Formula 
 \[
-F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}T\left\{ \phi^{\dagger}\left(-z^{-}\right)\phi\left(z^{-}\right)\right\} \ket{p_{1}}
+F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dd z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}T\left\{ \phi^{\dagger}\left(-z^{-}\right)\phi\left(z^{-}\right)\right\} \ket{p_{1}}
 \]
 
 \end_inset
@@ -3253,7 +3288,7 @@ F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+
 可以看成投影
 \begin_inset Formula 
 \[
-F^{\phi}\left(x,\eta,\Delta^{2}\right)=\int_{-\infty}^{+\infty}\dif k^{+}\dif^{2}\sbf{k_{\perp}}\delta\left(x-\frac{k^{+}}{p^{+}}\right)\int_{-\infty}^{+\infty}\dif k^{-}\mathcal{A}\left(k^{+},\sbf{k}\right)
+F^{\phi}\left(x,\eta,\Delta^{2}\right)=\int_{-\infty}^{+\infty}\dd k^{+}\dd^{2}\sbf{k_{\perp}}\delta\left(x-\frac{k^{+}}{p^{+}}\right)\int_{-\infty}^{+\infty}\dd k^{-}\mathcal{A}\left(k^{+},\sbf{k}\right)
 \]
 
 \end_inset
@@ -3265,7 +3300,7 @@ F^{\phi}\left(x,\eta,\Delta^{2}\right)=\int_{-\infty}^{+\infty}\dif k^{+}\dif^{2
 是一个格林函数
 \begin_inset Formula 
 \[
-\mathcal{A}\left(k\right)=\int\frac{\dif^{4}z}{\left(2\pi\right)^{4}}e^{ikz}\bra{p_{2}}T\left\{ \phi^{\dagger}\left(-z\right)\phi\left(z\right)\right\} \ket{p_{1}}
+\mathcal{A}\left(k\right)=\int\frac{\dd^{4}z}{\left(2\pi\right)^{4}}e^{ikz}\bra{p_{2}}T\left\{ \phi^{\dagger}\left(-z\right)\phi\left(z\right)\right\} \ket{p_{1}}
 \]
 
 \end_inset
@@ -3293,7 +3328,7 @@ for （离壳）部分子在强子上散射，
 的不连续积分。
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif k^{-}\mathcal{A}\left(k^{+},\sbf{k}\right)=\int_{-\infty}^{+\infty}\dif k^{-}\disc_{k^{-}}\mathcal{A}\left(k^{+},\sbf{k}\right)
+\int_{-\infty}^{+\infty}\dd k^{-}\mathcal{A}\left(k^{+},\sbf{k}\right)=\int_{-\infty}^{+\infty}\dd k^{-}\disc_{k^{-}}\mathcal{A}\left(k^{+},\sbf{k}\right)
 \]
 
 \end_inset
@@ -3307,6 +3342,13 @@ GPDs 计数
 
 \begin_layout Subsection
 GPDs 的boost不变性
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:3.2.3"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3386,7 +3428,7 @@ v_{\perp}\cdot u_{\perp}=-\sbf{v_{\perp}\cdot u_{\perp}}
 对于横向 Dirac 矩阵
 \begin_inset Formula 
 \[
-\sbf{\slashed{k}_{\perp}}=\sbf{\gamma_{\perp}\cdot k_{\perp}}=-\gamma_{\perp}\cdot k_{\perp}.
+\sbf{\sla k_{\perp}}=\sbf{\gamma_{\perp}\cdot k_{\perp}}=-\gamma_{\perp}\cdot k_{\perp}.
 \]
 
 \end_inset
@@ -3422,7 +3464,7 @@ k^{-}\to\varrho k^{-},\quad k^{+}\to\varrho^{-1}k^{+}.
 容易看出上面定义的GPDs满足这个性质，
 \begin_inset Formula 
 \[
-F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}}
+F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dd z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}}
 \]
 
 \end_inset
@@ -3521,10 +3563,10 @@ b=\left(M_{H_{2}}+M_{H_{1}}\right)\frac{h^{+}-e^{+}}{p^{+}},\quad\tilde{b}=-\lef
 因此，对于矢量和轴矢量算符，各有两种独立的狄拉克结构，对于最大螺旋度的夸克算符，有四种结构。特定算符的矩阵元分解为
 \begin_inset Formula 
 \begin{align}
-\bra{p_{2}}\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dif xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} \label{eq:3.38}\\
-\bra{p_{2}}\tilde{\mathcal{O}}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dif xe^{-ixp^{+}z^{-}}\left\{ \tilde{h}^{+}\tilde{H}^{q}\left(x,\eta,\Delta^{2}\right)+\tilde{e}^{+}\tilde{E}^{q}\left(x,\eta,\Delta^{2}\right)\right\} \nonumber \\
-\bra{p_{2}}\mathcal{T}_{\mu}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dif xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} \nonumber \\
- & =\int_{-1}^{1}\dif xe^{-ixp^{+}z^{-}}\Bigg\{ t_{\mu}^{+\perp}H_{T}^{q}\left(x,\eta,\Delta^{2}\right)+\frac{p^{+}e_{\mu}^{\perp}}{M_{N}}\tilde{H}_{T}^{q}\left(x,\eta,\Delta^{2}\right)\nonumber \\
+\bra{p_{2}}\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dd xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} \label{eq:3.38}\\
+\bra{p_{2}}\tilde{\mathcal{O}}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dd xe^{-ixp^{+}z^{-}}\left\{ \tilde{h}^{+}\tilde{H}^{q}\left(x,\eta,\Delta^{2}\right)+\tilde{e}^{+}\tilde{E}^{q}\left(x,\eta,\Delta^{2}\right)\right\} \nonumber \\
+\bra{p_{2}}\mathcal{T}_{\mu}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dd xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} \nonumber \\
+ & =\int_{-1}^{1}\dd xe^{-ixp^{+}z^{-}}\Bigg\{ t_{\mu}^{+\perp}H_{T}^{q}\left(x,\eta,\Delta^{2}\right)+\frac{p^{+}e_{\mu}^{\perp}}{M_{N}}\tilde{H}_{T}^{q}\left(x,\eta,\Delta^{2}\right)\nonumber \\
  & -\frac{1}{2M_{N}}\left(\Delta_{\mu}^{\perp}h^{+}-\Delta^{+}h_{\mu}^{\perp}\right)E_{T}^{q}\left(x,\eta,\Delta^{2}\right)-\frac{p^{+}h_{\mu}^{\perp}}{2M_{N}}\tilde{E}_{T}^{q}\left(x,\eta,\Delta^{2}\right)\Bigg\}\nonumber 
 \end{align}
 
@@ -3685,8 +3727,8 @@ GPDs 满足许多显著的约束，使得它们在某些运动学区域中“部
 对于自旋零的靶子，对于每个算符矩阵元，部分子分布由单个函数定义。领头twist 的密度是
 \begin_inset Formula 
 \begin{align*}
- & \bra{p}\mathcal{O}^{qq}\left(0,z^{-}\right)\ket{p}=2p^{+}\int_{0}^{1}\dif x\left\{ q\left(x\right)e^{-ixp^{+}z^{-}}-\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,\\
- & \bra{p}\mathcal{O}^{gg}\left(0,z^{-}\right)\ket{p}=\left(p^{+}\right)^{2}\int_{0}^{1}\dif x\left\{ e^{-ixp^{+}z^{-}}+e^{ixp^{+}z^{-}}\right\} xg\left(x\right).
+ & \bra{p}\mathcal{O}^{qq}\left(0,z^{-}\right)\ket{p}=2p^{+}\int_{0}^{1}\dd x\left\{ q\left(x\right)e^{-ixp^{+}z^{-}}-\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,\\
+ & \bra{p}\mathcal{O}^{gg}\left(0,z^{-}\right)\ket{p}=\left(p^{+}\right)^{2}\int_{0}^{1}\dd x\left\{ e^{-ixp^{+}z^{-}}+e^{ixp^{+}z^{-}}\right\} xg\left(x\right).
 \end{align*}
 
 \end_inset
@@ -3788,9 +3830,9 @@ H^{q}\left(x,0,0\right)=f^{q}\left(x\right)=q\left(x\right)\theta\left(x\right)-
  算符矩阵元的完整集合参数化如下：
 \begin_inset Formula 
 \begin{align*}
- & \bra{p}\mathcal{O}^{qq}\left(0,z^{-}\right)\ket{p}=2p^{+}\int_{0}^{1}\dif x\left\{ q\left(x\right)e^{-ixp^{+}z^{-}}-\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,\\
- & \bra{p}\tilde{\mathcal{O}}^{qq}\left(0,z^{-}\right)\ket{p}=2s^{+}\int_{0}^{1}\dif x\left\{ \Delta q\left(x\right)e^{-ixp^{+}z^{-}}+\Delta\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,\\
- & \bra{p}\mathcal{T}_{\mu}^{qq}\left(0,z^{-}\right)\ket{p}=2\tilde{s}_{\mu}^{\perp}\int_{0}^{1}\dif x\left\{ \delta q\left(x\right)e^{-ixp^{+}z^{-}}-\delta\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,
+ & \bra{p}\mathcal{O}^{qq}\left(0,z^{-}\right)\ket{p}=2p^{+}\int_{0}^{1}\dd x\left\{ q\left(x\right)e^{-ixp^{+}z^{-}}-\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,\\
+ & \bra{p}\tilde{\mathcal{O}}^{qq}\left(0,z^{-}\right)\ket{p}=2s^{+}\int_{0}^{1}\dd x\left\{ \Delta q\left(x\right)e^{-ixp^{+}z^{-}}+\Delta\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,\\
+ & \bra{p}\mathcal{T}_{\mu}^{qq}\left(0,z^{-}\right)\ket{p}=2\tilde{s}_{\mu}^{\perp}\int_{0}^{1}\dd x\left\{ \delta q\left(x\right)e^{-ixp^{+}z^{-}}-\delta\bar{q}\left(x\right)e^{ixp^{+}z^{-}}\right\} ,
 \end{align*}
 
 \end_inset
@@ -3875,8 +3917,8 @@ H^{q}\left(x,0,0\right)=f^{q}\left(x\right)=q\left(x\right)\theta\left(x\right)-
 胶子分布的定义为，
 \begin_inset Formula 
 \begin{align*}
- & \bra{p}\mathcal{O}^{gg}\left(0,z^{-}\right)\ket{p}=\left(p^{+}\right)^{2}\int_{0}^{1}\dif x\left\{ e^{-ixp^{+}z^{-}}+e^{ixp^{+}z^{-}}\right\} xg\left(x\right),\\
- & \bra{p}\tilde{\mathcal{O}}^{gg}\left(0,z^{-}\right)\ket{p}=s^{+}p^{+}\int_{0}^{1}\dif x\left\{ e^{-ixp^{+}z^{-}}-e^{ixp^{+}z^{-}}\right\} x\Delta g\left(x\right),
+ & \bra{p}\mathcal{O}^{gg}\left(0,z^{-}\right)\ket{p}=\left(p^{+}\right)^{2}\int_{0}^{1}\dd x\left\{ e^{-ixp^{+}z^{-}}+e^{ixp^{+}z^{-}}\right\} xg\left(x\right),\\
+ & \bra{p}\tilde{\mathcal{O}}^{gg}\left(0,z^{-}\right)\ket{p}=s^{+}p^{+}\int_{0}^{1}\dd x\left\{ e^{-ixp^{+}z^{-}}-e^{ixp^{+}z^{-}}\right\} x\Delta g\left(x\right),
 \end{align*}
 
 \end_inset
@@ -3998,7 +4040,7 @@ j_{q}^{5\mu}\left(z\right)=\bar{\psi}_{q}\left(z\right)\gamma^{\mu}\gamma^{5}\ps
 化简公式为
 \begin_inset Formula 
 \[
-\int_{-1}^{1}\dif xH^{q}\left(x,\eta,\Delta^{2}\right)=F^{q}\left(\Delta^{2}\right).
+\int_{-1}^{1}\dd xH^{q}\left(x,\eta,\Delta^{2}\right)=F^{q}\left(\Delta^{2}\right).
 \]
 
 \end_inset
@@ -4093,8 +4135,8 @@ noprefix "false"
 因此，twist–two GPDs的一阶矩等于对应的核子中的形状因子，
 \begin_inset Formula 
 \begin{align*}
- & \int_{-1}^{1}\dif xH^{q}\left(x,\eta,\Delta^{2}\right)=F_{1}^{q}\left(\Delta^{2}\right),\quad\int_{-1}^{1}\dif xE^{q}\left(x,\eta,\Delta^{2}\right)=F_{2}^{q}\left(\Delta^{2}\right),\\
- & \int_{-1}^{1}\dif x\tilde{H}^{q}\left(x,\eta,\Delta^{2}\right)=G_{A}^{q}\left(\Delta^{2}\right),\quad\int_{-1}^{1}\dif x\tilde{E}^{q}\left(x,\eta,\Delta^{2}\right)=G_{P}^{q}\left(\Delta^{2}\right),
+ & \int_{-1}^{1}\dd xH^{q}\left(x,\eta,\Delta^{2}\right)=F_{1}^{q}\left(\Delta^{2}\right),\quad\int_{-1}^{1}\dd xE^{q}\left(x,\eta,\Delta^{2}\right)=F_{2}^{q}\left(\Delta^{2}\right),\\
+ & \int_{-1}^{1}\dd x\tilde{H}^{q}\left(x,\eta,\Delta^{2}\right)=G_{A}^{q}\left(\Delta^{2}\right),\quad\int_{-1}^{1}\dd x\tilde{E}^{q}\left(x,\eta,\Delta^{2}\right)=G_{P}^{q}\left(\Delta^{2}\right),
 \end{align*}
 
 \end_inset
@@ -4399,7 +4441,7 @@ G_{E}^{i}\left(\Delta^{2}\right)=F_{1}^{i}\left(\Delta^{2}\right)+\frac{\Delta^{
 区域，可以用 dipole 形式参数化，
 \begin_inset Formula 
 \begin{align*}
- & G_{E}^{p}\left(\Delta^{2}\right)=\frac{1}{1+\kappa_{p}}G_{M}^{p}\left(\Delta\right)=\frac{1}{\kappa_{n}}G_{M}^{n}\left(\Delta\right)\equiv G_{D}\left(\Delta^{2}\right)=\left(1-\frac{\Delta^{2}}{\qty{0.71}{\square\GeV}}\right)^{-2}\\
+ & G_{E}^{p}\left(\Delta^{2}\right)=\frac{1}{1+\kappa_{p}}G_{M}^{p}\left(\Delta\right)=\frac{1}{\kappa_{n}}G_{M}^{n}\left(\Delta\right)\equiv G_{D}\left(\Delta^{2}\right)=\left(1-\frac{\Delta^{2}}{\SI{0.71}{\square\GeV}}\right)^{-2}\\
  & G_{E}^{n}\left(\Delta^{2}\right)=0.
 \end{align*}
 
@@ -4414,7 +4456,7 @@ G_{E}^{i}\left(\Delta^{2}\right)=F_{1}^{i}\left(\Delta^{2}\right)+\frac{\Delta^{
 \end_inset
 
 依赖的领头阶近似。得到的实验数据和这个简单的形式符合的非常好，当
-\begin_inset Formula $\abs{\Delta^{2}}\ge\qty{2}{\square\GeV}$
+\begin_inset Formula $\abs{\Delta^{2}}\ge\SI{2}{\square\GeV}$
 \end_inset
 
 时，会有一些偏差。注意到这里我们令中子的电形状因子为零，由于在小的
@@ -4476,7 +4518,7 @@ B_{\text{sea}}=\left.\frac{\partial F_{1}^{\text{sea}}}{\partial\Delta^{2}}\righ
 赝形状因子可以类似地给出
 \begin_inset Formula 
 \[
-G_{A}^{i,\text{val}}\left(\Delta^{2}\right)=\left(1-\frac{\Delta^{2}}{\qty{1.1}{\square\GeV}}\right)^{-2},\quad G_{A}^{\text{sea}}\left(\Delta^{2}\right)=\left(1-\frac{B_{A}}{3}\Delta^{2}\right)^{-3},
+G_{A}^{i,\text{val}}\left(\Delta^{2}\right)=\left(1-\frac{\Delta^{2}}{\SI{1.1}{\square\GeV}}\right)^{-2},\quad G_{A}^{\text{sea}}\left(\Delta^{2}\right)=\left(1-\frac{B_{A}}{3}\Delta^{2}\right)^{-3},
 \]
 
 \end_inset
@@ -4510,7 +4552,7 @@ G_{P}^{\left(3\right)}\approx\frac{4g_{A}^{\left(3\right)}M_{N}^{2}}{m_{\pi}^{2}
 \end_inset
 
 valid at 
-\begin_inset Formula $\abs{\Delta}\sim m_{\pi}\approx\qty{0.14}{\GeV}$
+\begin_inset Formula $\abs{\Delta}\sim m_{\pi}\approx\SI{0.14}{\GeV}$
 \end_inset
 
 ，pole 的留数正比于三重态 axial 常数
@@ -4577,7 +4619,7 @@ Polynomiality 和 skewness 依赖
 ，twist-two 算符刚好和经典的，夸克或胶子的 对称能量–动量张量一致（见 Appendix E），也就是
 \begin_inset Formula 
 \begin{align*}
- & \theta_{\mu_{1}\mu_{2}}^{q}=\frac{1}{2}\mathcal{R}_{\mu_{1}\mu_{2}}^{2,qq}\equiv\frac{i}{4}\bar{\psi}\left\{ \gamma_{\mu_{1}}\overset{\leftrightarrow}{\mathcal{D}}_{\mu_{2}}+\gamma_{\mu_{2}}\overset{\leftrightarrow}{\mathcal{D}}_{\mu_{1}}-\frac{1}{2}g_{\mu_{1}\mu_{2}}\overset{\leftrightarrow}{\slashed{\mathcal{D}}}\right\} \psi\\
+ & \theta_{\mu_{1}\mu_{2}}^{q}=\frac{1}{2}\mathcal{R}_{\mu_{1}\mu_{2}}^{2,qq}\equiv\frac{i}{4}\bar{\psi}\left\{ \gamma_{\mu_{1}}\overset{\leftrightarrow}{\mathcal{D}}_{\mu_{2}}+\gamma_{\mu_{2}}\overset{\leftrightarrow}{\mathcal{D}}_{\mu_{1}}-\frac{1}{2}g_{\mu_{1}\mu_{2}}\overset{\leftrightarrow}{\sla{\mathcal{D}}}\right\} \psi\\
  & \theta_{\mu_{1}\mu_{2}}^{g}=\frac{1}{2}\mathcal{R}_{\mu_{1}\mu_{2}}^{2,gg}\equiv\frac{1}{2}\left\{ F_{\mu_{1}\nu}^{a}F_{a\mu_{2}}^{\nu}+F_{\mu_{2}\nu}^{a}F_{a\mu_{1}}^{\nu}-\frac{1}{2}g_{\mu_{1}\mu_{2}}F_{\mu\nu}^{a}F_{a}^{\nu\mu}\right\} 
 \end{align*}
 
@@ -4642,7 +4684,7 @@ literal "false"
 ，
 \begin_inset Formula 
 \[
-x_{\alpha}\frac{\partial}{\partial x_{\alpha}}\varphi\left(ux\right)=u\frac{\dif}{\dif u}\varphi\left(ux\right)
+x_{\alpha}\frac{\partial}{\partial x_{\alpha}}\varphi\left(ux\right)=u\frac{\dd}{\dd u}\varphi\left(ux\right)
 \]
 
 \end_inset
@@ -4650,10 +4692,10 @@ x_{\alpha}\frac{\partial}{\partial x_{\alpha}}\varphi\left(ux\right)=u\frac{\dif
 
 \begin_inset Formula 
 \begin{align*}
-z^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right) & =\int_{-1}^{1}\dif u\,z^{\mu}\frac{\partial}{\partial z^{\mu}}\bar{\psi}\left(-uz\right){\color{blue}\slashed{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
- & =\int_{-1}^{1}\dif u\,u\frac{\dif}{\dif u}\bar{\psi}\left(-uz\right){\color{blue}\slashed{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
- & =\int_{-1}^{1}u\dif\bar{\psi}\left(-uz\right){\color{blue}\slashed{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
- & =\int_{-1}^{1}\bar{\psi}\left(-uz\right){\color{blue}\slashed{z}}\left[-uz,uz\right]\psi\left(uz\right)\dif u\,??
+z^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right) & =\int_{-1}^{1}\dd u\,z^{\mu}\frac{\partial}{\partial z^{\mu}}\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
+ & =\int_{-1}^{1}\dd u\,u\frac{\dd}{\dd u}\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
+ & =\int_{-1}^{1}u\dd\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
+ & =\int_{-1}^{1}\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\dd u\,??
 \end{align*}
 
 \end_inset
@@ -4763,7 +4805,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
  & \mathcal{O}^{qq}\left(-z^{-},z^{-}\right)=\sum_{j=0}^{\infty}{\color{blue}\frac{\left(-iz^{-}\right)^{j}}{j!}}{\color{brown}n^{\mu_{1}}n^{\mu_{2}}\cdots n^{\mu_{j+1}}}\mathcal{R}_{\mu_{1}\mu_{2}\cdots\mu_{j+1}}^{2,qq},\\
- & F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dif z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}},
+ & F^{\phi}\left(x,\eta,\Delta^{2}\right)=p^{+}\int\frac{\dd z^{-}}{2\pi}e^{ixp^{+}z^{-}}\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}},
 \end{align*}
 
 \end_inset
@@ -4771,8 +4813,8 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align*}
-\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =p^{+}\int_{-1}^{1}\dif x\,e^{-ixp^{+}z^{-}}H^{q}\left(x,\eta,\Delta^{2}\right)=p^{+}\int_{-1}^{1}\dif x\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}xp^{+}\right)^{j}H^{q}\left(x,\eta,\Delta^{2}\right)\\
- & =\int_{-1}^{1}\dif x\sum_{j=0}^{\infty}{\color{blue}\frac{\left(-iz^{-}\right)^{j}}{j!}}x^{j}{\color{brown}\left(p^{+}\right)^{j+1}}H^{q}\left(x,\eta,\Delta^{2}\right)
+\bra{p_{2}}\mathcal{O}^{\phi\phi}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =p^{+}\int_{-1}^{1}\dd x\,e^{-ixp^{+}z^{-}}H^{q}\left(x,\eta,\Delta^{2}\right)=p^{+}\int_{-1}^{1}\dd x\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}xp^{+}\right)^{j}H^{q}\left(x,\eta,\Delta^{2}\right)\\
+ & =\int_{-1}^{1}\dd x\sum_{j=0}^{\infty}{\color{blue}\frac{\left(-iz^{-}\right)^{j}}{j!}}x^{j}{\color{brown}\left(p^{+}\right)^{j+1}}H^{q}\left(x,\eta,\Delta^{2}\right)
 \end{align*}
 
 \end_inset
@@ -4792,7 +4834,7 @@ noprefix "false"
 ，结合以上方程，可以看出：
 \begin_inset Formula 
 \begin{equation}
-{\color{red}H_{j,k}^{q}\left(\Delta^{2}\right)}=\left.\frac{1}{k!}\frac{\dif^{k}}{\dif\eta^{k}}\right|_{\eta=0}\int_{-1}^{1}\dif x\,x^{j-1}H^{q}\left(x,\eta,\Delta^{2}\right),\label{eq:3.115}
+{\color{red}H_{j,k}^{q}\left(\Delta^{2}\right)}=\left.\frac{1}{k!}\frac{\dd^{k}}{\dd\eta^{k}}\right|_{\eta=0}\int_{-1}^{1}\dd x\,x^{j-1}H^{q}\left(x,\eta,\Delta^{2}\right),\label{eq:3.115}
 \end{equation}
 
 \end_inset
@@ -4943,7 +4985,7 @@ n_{\mu_{1}}\cdots n_{\mu_{j}}\underset{\mu\mu_{1}\cdots\mu_{j}}{\mathbf{S}}{\col
 
 \begin_inset Formula 
 \begin{equation}
-{\color{blue}n^{\mu_{1}}\cdots n^{\mu_{j}}}\bra{p_{2}}\mathcal{R}_{\mu{\color{blue}\mu_{1}\cdots\mu_{j}}}^{2,qq}\ket{p_{1}}=p_{\mu}\left(p^{+}\right)^{j}\left(1-\frac{\eta}{j+1}\frac{\dif}{\dif\eta}\right)H_{j+1}^{q}\left(\eta\right)+\frac{\left(p^{+}\right)^{j}}{j+1}\Delta_{\mu}\frac{\dif}{\dif\eta}H_{j+1}^{q}\left(\eta\right).\label{eq:3.117}
+{\color{blue}n^{\mu_{1}}\cdots n^{\mu_{j}}}\bra{p_{2}}\mathcal{R}_{\mu{\color{blue}\mu_{1}\cdots\mu_{j}}}^{2,qq}\ket{p_{1}}=p_{\mu}\left(p^{+}\right)^{j}\left(1-\frac{\eta}{j+1}\frac{\dd}{\dd\eta}\right)H_{j+1}^{q}\left(\eta\right)+\frac{\left(p^{+}\right)^{j}}{j+1}\Delta_{\mu}\frac{\dd}{\dd\eta}H_{j+1}^{q}\left(\eta\right).\label{eq:3.117}
 \end{equation}
 
 \end_inset
@@ -4971,7 +5013,7 @@ noprefix "false"
 \end_inset
 
 前面的微分算符
-\begin_inset Formula $\frac{\dif}{\dif\eta}$
+\begin_inset Formula $\frac{\dd}{\dd\eta}$
 \end_inset
 
 。
@@ -4985,7 +5027,7 @@ noprefix "false"
 阶Mellin 矩，
 \begin_inset Formula 
 \[
-H_{j+1}^{q}\left(\eta\right)=\int_{-1}^{1}\dif x\,x^{j}H^{q}\left(x,\eta\right)=\sum_{k=0}^{j+1}\eta^{k}H_{j+1,k}^{q},
+H_{j+1}^{q}\left(\eta\right)=\int_{-1}^{1}\dd x\,x^{j}H^{q}\left(x,\eta\right)=\sum_{k=0}^{j+1}\eta^{k}H_{j+1,k}^{q},
 \]
 
 \end_inset
@@ -5017,7 +5059,7 @@ H_{j+1}^{q}\left(\eta\right)=\int_{-1}^{1}\dif x\,x^{j}H^{q}\left(x,\eta\right)=
 分量得到。显然，
 \begin_inset Formula 
 \begin{align*}
-n^{\mu}{\color{blue}n^{\mu_{1}}\cdots n^{\mu_{j}}}\bra{p_{2}}\mathcal{R}_{\mu{\color{blue}\mu_{1}\cdots\mu_{j}}}^{2,qq}\ket{p_{1}} & =\left(p^{+}\right)^{j+1}\left(1-\frac{\eta}{j+1}\frac{\dif}{\dif\eta}\right)H_{j+1}^{q}\left(\eta\right)+\left(p^{+}\right)^{j+1}\frac{\eta}{j+1}\frac{\dif}{\dif\eta}H_{j+1}^{q}\left(\eta\right)\\
+n^{\mu}{\color{blue}n^{\mu_{1}}\cdots n^{\mu_{j}}}\bra{p_{2}}\mathcal{R}_{\mu{\color{blue}\mu_{1}\cdots\mu_{j}}}^{2,qq}\ket{p_{1}} & =\left(p^{+}\right)^{j+1}\left(1-\frac{\eta}{j+1}\frac{\dd}{\dd\eta}\right)H_{j+1}^{q}\left(\eta\right)+\left(p^{+}\right)^{j+1}\frac{\eta}{j+1}\frac{\dd}{\dd\eta}H_{j+1}^{q}\left(\eta\right)\\
  & =\left(p^{+}\right)^{j+1}H_{j+1}^{q}\left(\eta\right).
 \end{align*}
 
@@ -5055,8 +5097,8 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
  & \mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)=\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}\right)^{j}{\color{cyan}n^{\mu_{1}}\cdots n^{\mu_{j}}\mathcal{R}_{\mu\mu_{1}\cdots\mu_{j}}^{2,qq}},\\
- & {\color{cyan}n^{\mu_{1}}\cdots n^{\mu_{j}}\bra{p_{2}}\mathcal{R}_{\mu\mu_{1}\cdots\mu_{j}}^{2,qq}\ket{p_{1}}}=\left(p^{+}\right)^{j}\left[p_{\mu}{\color{blue}H_{j+1}^{q}\left(\eta\right)}+\left(\Delta_{\mu}-\eta p_{\mu}\right)\frac{1}{j+1}\frac{\dif}{\dif\eta}{\color{blue}H_{j+1}^{q}\left(\eta\right)},\right]\\
- & {\color{blue}H_{j+1}^{q}\left(\eta\right)}=\int_{-1}^{1}\dif x\,x^{j}H^{q}\left(x,\eta\right)=\sum_{k=0}^{j+1}\eta^{k}H_{j,k+1}^{q},\quad\Delta_{\mu}^{\perp}=\Delta_{\mu}-\eta p_{\mu}
+ & {\color{cyan}n^{\mu_{1}}\cdots n^{\mu_{j}}\bra{p_{2}}\mathcal{R}_{\mu\mu_{1}\cdots\mu_{j}}^{2,qq}\ket{p_{1}}}=\left(p^{+}\right)^{j}\left[p_{\mu}{\color{blue}H_{j+1}^{q}\left(\eta\right)}+\left(\Delta_{\mu}-\eta p_{\mu}\right)\frac{1}{j+1}\frac{\dd}{\dd\eta}{\color{blue}H_{j+1}^{q}\left(\eta\right)},\right]\\
+ & {\color{blue}H_{j+1}^{q}\left(\eta\right)}=\int_{-1}^{1}\dd x\,x^{j}H^{q}\left(x,\eta\right)=\sum_{k=0}^{j+1}\eta^{k}H_{j,k+1}^{q},\quad\Delta_{\mu}^{\perp}=\Delta_{\mu}-\eta p_{\mu}
 \end{align*}
 
 \end_inset
@@ -5064,7 +5106,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\bra{p_{2}}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dif xe^{-iz^{-}p^{+}x}\left(p_{\mu}H^{q}\left(x,\eta\right)+\Delta_{\mu}^{\perp}\int_{-1}^{1}\dif y\,W_{2}\left(x,y\right)\frac{\dif}{\dif\eta}H^{q}\left(y,\eta\right)\right),
+\bra{p_{2}}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dd xe^{-iz^{-}p^{+}x}\left(p_{\mu}H^{q}\left(x,\eta\right)+\Delta_{\mu}^{\perp}\int_{-1}^{1}\dd y\,W_{2}\left(x,y\right)\frac{\dd}{\dd\eta}H^{q}\left(y,\eta\right)\right),
 \]
 
 \end_inset
@@ -5095,7 +5137,7 @@ W_{2}\left(x,y\right)=\frac{1}{y}\theta\left(x\right)\theta\left(y-x\right)-\fra
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\bra{p_{2}}\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dif xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} 
+\bra{p_{2}}\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dd xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} 
 \]
 
 \end_inset
@@ -5183,8 +5225,8 @@ A_{j,2n+1}^{q}=B_{j,2n+1}^{q}=0.
 关系着 GPDs 的矩，
 \begin_inset Formula 
 \begin{align}
-\bar{u}\left(p_{2}\right)\gamma^{\mu}u\left(p_{1}\right):\quad & A_{j}^{q}\left(\eta\right)=\int_{-1}^{1}\dif x\,x^{j-1}A^{q}\left(x,\eta\right)=\sum_{k=0}^{j-1}\eta^{k}A_{j,k}^{q},\label{eq:3.122}\\
-\bar{u}\left(p_{2}\right)pu\left(p_{1}\right):\quad & B_{j}^{q}\left(\eta\right)=\int_{-1}^{1}\dif x\,x^{j-1}B^{q}\left(x,\eta\right)=\sum_{k=0}^{j-1}\eta^{k}B_{j,k}^{q}.
+\bar{u}\left(p_{2}\right)\gamma^{\mu}u\left(p_{1}\right):\quad & A_{j}^{q}\left(\eta\right)=\int_{-1}^{1}\dd x\,x^{j-1}A^{q}\left(x,\eta\right)=\sum_{k=0}^{j-1}\eta^{k}A_{j,k}^{q},\label{eq:3.122}\\
+\bar{u}\left(p_{2}\right)pu\left(p_{1}\right):\quad & B_{j}^{q}\left(\eta\right)=\int_{-1}^{1}\dd x\,x^{j-1}B^{q}\left(x,\eta\right)=\sum_{k=0}^{j-1}\eta^{k}B_{j,k}^{q}.
 \end{align}
 
 \end_inset
@@ -5254,8 +5296,8 @@ The reduced 矩阵元
 可以联系到偶宇称 夸克GPDs 的矩，
 \begin_inset Formula 
 \begin{align*}
- & \int_{-1}^{1}\dif x\,x^{j-1}H^{q}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-1}\eta^{k}H_{j,k}^{q}\left(\Delta^{2}\right)+\eta^{j}D_{j}^{q}\left(\Delta^{2}\right),\\
- & \int_{-1}^{1}\dif x\,x^{j-1}E^{q}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-1}\eta^{k}E_{j,k}^{q}\left(\Delta^{2}\right)-\eta^{j}D_{j}^{q}\left(\Delta^{2}\right).
+ & \int_{-1}^{1}\dd x\,x^{j-1}H^{q}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-1}\eta^{k}H_{j,k}^{q}\left(\Delta^{2}\right)+\eta^{j}D_{j}^{q}\left(\Delta^{2}\right),\\
+ & \int_{-1}^{1}\dd x\,x^{j-1}E^{q}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-1}\eta^{k}E_{j,k}^{q}\left(\Delta^{2}\right)-\eta^{j}D_{j}^{q}\left(\Delta^{2}\right).
 \end{align*}
 
 \end_inset
@@ -5309,8 +5351,8 @@ height "1pt"
 形状因子和胶子GPDs矩的关系为，
 \begin_inset Formula 
 \begin{align}
- & \frac{1}{2}\int_{-1}^{1}\dif x\,x^{j-2}H^{g}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-2}\eta^{k}H_{j,k}^{g}\left(\Delta^{2}\right)+\eta^{j}D_{j}^{g}\left(\Delta^{2}\right),\nonumber \\
- & \frac{1}{2}\int_{-1}^{1}\dif x\,x^{j-2}E^{g}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-2}\eta^{k}E_{j,k}^{g}\left(\Delta^{2}\right)-\eta^{j}D_{j}^{g}\left(\Delta^{2}\right).\label{eq:3.127}
+ & \frac{1}{2}\int_{-1}^{1}\dd x\,x^{j-2}H^{g}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-2}\eta^{k}H_{j,k}^{g}\left(\Delta^{2}\right)+\eta^{j}D_{j}^{g}\left(\Delta^{2}\right),\nonumber \\
+ & \frac{1}{2}\int_{-1}^{1}\dd x\,x^{j-2}E^{g}\left(x,\eta,\Delta^{2}\right)=\sum_{k=0}^{j-2}\eta^{k}E_{j,k}^{g}\left(\Delta^{2}\right)-\eta^{j}D_{j}^{g}\left(\Delta^{2}\right).\label{eq:3.127}
 \end{align}
 
 \end_inset
@@ -5365,8 +5407,8 @@ n_{\mu_{1}}\cdots n_{\mu_{j}}\underset{\mu\mu_{1}\cdots\mu_{j}}{\mathbf{S}}h^{\m
 与之对应的新结构为
 \begin_inset Formula 
 \begin{align*}
-n^{\mu_{1}}\cdots n^{\mu_{j}}\bra{p_{2}}\mathcal{R}_{\mu\mu_{1}\cdots\mu_{j}}^{2,qq}\ket{p_{1}} & =\frac{\left(p^{+}\right)^{j-1}}{j+1}\left(\left(j+1\right)p_{\mu}h^{+}+h_{\mu}-p_{\mu}h^{+}+\Delta_{\mu}^{\perp}h^{+}\frac{\dif}{\dif\eta}\right)A_{j+1}\left(\eta\right)\\
- & +\frac{b}{2M_{N}}\left\{ p_{\mu}\left(p^{+}\right)^{j}\left(1-\frac{\eta}{j+1}\frac{\dif}{\dif\eta}\right)+\Delta_{\mu}\left(p^{+}\right)^{j}\frac{1}{j+1}\frac{\dif}{\dif\eta}\right\} B_{j+1}^{q}\left(\eta\right).
+n^{\mu_{1}}\cdots n^{\mu_{j}}\bra{p_{2}}\mathcal{R}_{\mu\mu_{1}\cdots\mu_{j}}^{2,qq}\ket{p_{1}} & =\frac{\left(p^{+}\right)^{j-1}}{j+1}\left(\left(j+1\right)p_{\mu}h^{+}+h_{\mu}-p_{\mu}h^{+}+\Delta_{\mu}^{\perp}h^{+}\frac{\dd}{\dd\eta}\right)A_{j+1}\left(\eta\right)\\
+ & +\frac{b}{2M_{N}}\left\{ p_{\mu}\left(p^{+}\right)^{j}\left(1-\frac{\eta}{j+1}\frac{\dd}{\dd\eta}\right)+\Delta_{\mu}\left(p^{+}\right)^{j}\frac{1}{j+1}\frac{\dd}{\dd\eta}\right\} B_{j+1}^{q}\left(\eta\right).
 \end{align*}
 
 \end_inset
@@ -5378,8 +5420,8 @@ n^{\mu_{1}}\cdots n^{\mu_{j}}\bra{p_{2}}\mathcal{R}_{\mu\mu_{1}\cdots\mu_{j}}^{2
 ，最后得到方程
 \begin_inset Formula 
 \begin{align}
-\bra{p_{2}}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dif xe^{-ixz^{-}p^{+}}\int_{0}^{1}\dif y\Bigg\{\left(h_{\mu}-\frac{h^{+}}{p^{+}}p_{\mu}\right)W_{2}\left(x,y\right)\left(H+E\right)\left(y,\eta\right)\nonumber \\
- & +\left(p_{\mu}\delta\left(x-y\right)+\Delta_{\mu}^{\perp}W_{2}\left(x,y\right)\frac{\dif}{\dif\eta}\right)\left(\frac{h^{+}}{p^{+}}H+\frac{e^{+}}{p^{+}}E\right)\left(y,\eta\right)\Bigg\},\label{eq:3.130}
+\bra{p_{2}}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)\ket{p_{1}} & =\int_{-1}^{1}\dd xe^{-ixz^{-}p^{+}}\int_{0}^{1}\dd y\Bigg\{\left(h_{\mu}-\frac{h^{+}}{p^{+}}p_{\mu}\right)W_{2}\left(x,y\right)\left(H+E\right)\left(y,\eta\right)\nonumber \\
+ & +\left(p_{\mu}\delta\left(x-y\right)+\Delta_{\mu}^{\perp}W_{2}\left(x,y\right)\frac{\dd}{\dd\eta}\right)\left(\frac{h^{+}}{p^{+}}H+\frac{e^{+}}{p^{+}}E\right)\left(y,\eta\right)\Bigg\},\label{eq:3.130}
 \end{align}
 
 \end_inset
@@ -5459,7 +5501,7 @@ noprefix "false"
 中的形式。
 \begin_inset Formula 
 \[
-\bra{p_{2}}\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dif xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} ,\quad e^{\mu}=\frac{t^{\nu\mu}\Delta_{\nu}}{M_{H_{2}}+M_{H_{1}}}
+\bra{p_{2}}\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dd xe^{-ixp^{+}z^{-}}\left\{ h^{+}H^{q}\left(x,\eta,\Delta^{2}\right)+e^{+}E^{q}\left(x,\eta,\Delta^{2}\right)\right\} ,\quad e^{\mu}=\frac{t^{\nu\mu}\Delta_{\nu}}{M_{H_{2}}+M_{H_{1}}}
 \]
 
 \end_inset
@@ -5481,7 +5523,7 @@ noprefix "false"
 收缩，就能得到通常的 twist–two GPDs 的定义。
 \begin_inset Formula 
 \[
-\bra{p_{2}}n^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dif x\,e^{-ixz^{-}p^{+}}\left\{ h^{+}H\left(x,\eta\right)+e^{+}E\left(x,\eta\right)\right\} 
+\bra{p_{2}}n^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)\ket{p_{1}}=\int_{-1}^{1}\dd x\,e^{-ixz^{-}p^{+}}\left\{ h^{+}H\left(x,\eta\right)+e^{+}E\left(x,\eta\right)\right\} 
 \]
 
 \end_inset
@@ -5918,7 +5960,7 @@ Dirac 矩阵的形式为
 在 Dirac 表象下，
 \begin_inset Formula 
 \[
-\slashed{p}+m=\left(\begin{array}{cc}
+\sla p+m=\left(\begin{array}{cc}
 E+m & -\vec{p}\cdot\vec{\sigma}\\
 \vec{p}\cdot\vec{\sigma} & -E+m
 \end{array}\right)
@@ -6200,7 +6242,7 @@ s^{\mu}=2m\left(\begin{array}{cc}
 \end_inset
 
 方向的分量）。这两个关系都是对于 general 自旋状态成立的。利用密度矩阵平均值公式
-\begin_inset Formula $\langle A\rangle=\tr\left(A.\rho\right)$
+\begin_inset Formula $\langle A\rangle=\Tr\left(A.\rho\right)$
 \end_inset
 
 ，我们发现
@@ -6498,7 +6540,7 @@ Gordon 恒等式 (来自于Dirac 方程)
 \end_inset
 
 是Dirac 方程
-\begin_inset Formula $\left(\slashed{p}-m\right)u(p)=0$
+\begin_inset Formula $\left(\sla{p}-m\right)u(p)=0$
 \end_inset
 
 的解，则现有一任意矢量
@@ -6508,7 +6550,7 @@ Gordon 恒等式 (来自于Dirac 方程)
 
 \begin_inset Formula 
 \begin{align*}
-\slashed{k}u(p) & =\frac{1}{m}\slashed{k}\slashed{p}u(p)\\
+\sla{k}u(p) & =\frac{1}{m}\sla{k}\sla{p}u(p)\\
  & =\frac{1}{m}\left(k_{\mu}p_{\nu}\gamma^{\mu}\gamma^{\nu}\right)u(p)\\
  & =\frac{1}{m}k_{\mu}p_{\nu}\left(g^{\mu\nu}-i\sigma^{\mu\nu}\right)u(p)\\
  & =\frac{1}{m}\left(k\cdot p\right)u(p)-i\frac{1}{m}\sigma^{\mu\nu}k_{\mu}p_{\nu}u(p)
@@ -6535,7 +6577,7 @@ Gordon 恒等式 (来自于Dirac 方程)
 所以最后只剩下对称的一项：
 \begin_inset Formula 
 \[
-\slashed{k}u(p)=\frac{k\cdot p}{m}u(p)
+\sla{k}u(p)=\frac{k\cdot p}{m}u(p)
 \]
 
 \end_inset
@@ -6883,7 +6925,7 @@ W^{\mu}=-\frac{i}{2}\varepsilon^{\mu\nu\rho\sigma}S_{\rho\sigma}\partial_{\nu}
 的平均值:
 \begin_inset Formula 
 \[
-\langle A\rangle=\tr\left(A.\rho\right)
+\langle A\rangle=\Tr\left(A.\rho\right)
 \]
 
 \end_inset
@@ -6919,7 +6961,7 @@ W^{\mu}=-\frac{i}{2}\varepsilon^{\mu\nu\rho\sigma}S_{\rho\sigma}\partial_{\nu}
 的平均值的表达式相同:
 \begin_inset Formula 
 \[
-\langle A\rangle=\tr\left(A.\rho\right)
+\langle A\rangle=\Tr\left(A.\rho\right)
 \]
 
 \end_inset
@@ -6952,7 +6994,7 @@ W^{\mu}=-\frac{i}{2}\varepsilon^{\mu\nu\rho\sigma}S_{\rho\sigma}\partial_{\nu}
 \end{array}\right),\gamma^{5}=\left(\begin{array}{cc}
 0 & 1\\
 1 & 0
-\end{array}\right),\slashed{p}=\left(\begin{array}{cc}
+\end{array}\right),\sla{p}=\left(\begin{array}{cc}
 E & -\vec{p}\cdot\vec{\sigma}\\
 \vec{p}\cdot\vec{\sigma} & -E
 \end{array}\right)
@@ -6998,11 +7040,11 @@ ba^{\ast} & bb^{\ast}
 \end_inset
 
 按照对称性分解。（有迹的和无迹的）首先注意到
-\begin_inset Formula $\tr{w\otimes w^{\dagger}}=1$
+\begin_inset Formula $\Tr{w\otimes w^{\dagger}}=1$
 \end_inset
 
 （根据归一化条件），则
-\begin_inset Formula $\tr{w\otimes w^{\dagger}-\frac{1}{2}I}=0$
+\begin_inset Formula $\Tr{w\otimes w^{\dagger}-\frac{1}{2}I}=0$
 \end_inset
 
 。然后把
@@ -7020,7 +7062,7 @@ ba^{\ast} & bb^{\ast}
 个系数为
 \begin_inset Formula 
 \[
-\tr{(w\otimes w^{\dagger}-\frac{1}{2}I)\cdot\sigma_{i}}=\tr{(w\otimes w^{\dagger})\cdot\sigma}=w^{\dagger}\sigma_{i}w
+\Tr{(w\otimes w^{\dagger}-\frac{1}{2}I)\cdot\sigma_{i}}=\Tr{(w\otimes w^{\dagger})\cdot\sigma}=w^{\dagger}\sigma_{i}w
 \]
 
 \end_inset
@@ -7109,7 +7151,7 @@ w\otimes\left(w^{\dagger}\left(\vec{p}\cdot\vec{\sigma}\right)\right) & =\left(w
 
 \begin_layout Standard
 而
-\begin_inset Formula $\slashed{p}+m=$
+\begin_inset Formula $\sla{p}+m=$
 \end_inset
 
 
@@ -7227,8 +7269,8 @@ u(p)\otimes\bar{u}(p) & =\frac{1}{2}\left(m\gamma^{0}+m\right)\left(1-\gamma_{5}
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\bar{u}(p)\gamma^{\mu}u(p) & =\tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(1+\gamma_{5}\frac{s\cdot\gamma}{m}\right)\cdot\gamma^{\mu}\right)\\
- & =\tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(\gamma^{\mu}+\gamma_{5}\frac{s\cdot\gamma}{m}\gamma^{\mu}\right)\right)
+\bar{u}(p)\gamma^{\mu}u(p) & =\Tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(1+\gamma_{5}\frac{s\cdot\gamma}{m}\right)\cdot\gamma^{\mu}\right)\\
+ & =\Tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(\gamma^{\mu}+\gamma_{5}\frac{s\cdot\gamma}{m}\gamma^{\mu}\right)\right)
 \end{align*}
 
 \end_inset
@@ -7236,8 +7278,8 @@ u(p)\otimes\bar{u}(p) & =\frac{1}{2}\left(m\gamma^{0}+m\right)\left(1-\gamma_{5}
 
 \begin_inset Formula 
 \begin{align*}
-\bar{u}(p)\gamma^{\mu}\gamma^{5}u(p) & =\tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(1+\gamma_{5}\frac{s\cdot\gamma}{m}\right)\cdot\gamma^{\mu}\gamma^{5}\right),\\
- & =\tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(\gamma^{\mu}\gamma^{5}+\gamma_{5}\frac{s\cdot\gamma}{m}\gamma^{\mu}\gamma^{5}\right)\right)
+\bar{u}(p)\gamma^{\mu}\gamma^{5}u(p) & =\Tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(1+\gamma_{5}\frac{s\cdot\gamma}{m}\right)\cdot\gamma^{\mu}\gamma^{5}\right),\\
+ & =\Tr\left(\frac{1}{2}\left(\gamma\cdot p+m\right)\left(\gamma^{\mu}\gamma^{5}+\gamma_{5}\frac{s\cdot\gamma}{m}\gamma^{\mu}\gamma^{5}\right)\right)
 \end{align*}
 
 \end_inset
@@ -7283,7 +7325,7 @@ Weyl 表象中的左右旋量的解释非常直观。也就是说，取 Dirac �
 \end_inset
 
 ,那么方程
-\begin_inset Formula $(\slashed{p}-m)u(p)=0$
+\begin_inset Formula $(\sla{p}-m)u(p)=0$
 \end_inset
 
 变成：
@@ -7586,7 +7628,7 @@ z\cdot y\equiv z_{\mu}y^{\mu}=z^{+}y^{-}+z^{-}y^{+}-\sbf{z}_{\perp}\cdot\sbf{y}_
 是二维矢量。对于和狄拉克矩阵的收缩，我们使用约定
 \begin_inset Formula 
 \[
-\slashed{\sbf{k}}_{\perp}=\sbf{\gamma}_{\perp}\cdot\sbf{k}_{\perp}=-\gamma_{\perp}\cdot k_{\perp}.
+\sla{\sbf{k}}_{\perp}=\sbf{\gamma}_{\perp}\cdot\sbf{k}_{\perp}=-\gamma_{\perp}\cdot k_{\perp}.
 \]
 
 \end_inset

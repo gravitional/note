@@ -6,57 +6,71 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic} 
-% This package makes it easy to add some picture commands to every page at ab-solute positions
-\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
-% xcolor package starts from the basic facilities of the 
-% color package, and provides easy driver-independent access
-%to several kinds of color tints, shades, tones, 
-%and mixes of arbitrary colors
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % 提供了mathscr 命令
-% Required for specifying colors by name 
-\usepackage{enumerate} 
-
-\usepackage{hepunits} % hep units
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{simplewick} 
-% a simple means of drawing Wick contractions above and below expressions. 
-\usepackage{makeidx} 
-% Standard package for creating indexes
-\usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
-\usepackage{tikz-feynman}  % 画费曼图用
-\usepackage{tikz}
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-%\DeclareMathOperator{\re}{Re}
-%\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res}
-\DeclareMathOperator{\disc}{Disc}
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\newcommand{\cola}[1]{{\color{blue}{#1}}}
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
-\usepackage{listings}
-% 在LaTex中添加代码高亮
-\usepackage{framed}
-% 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
-%定义各种颜色
-\definecolor{codegreen}{rgb}{0,0.6,0}
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic}
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+% \usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+%\usepackage{tikz-feynman}  % 画费曼图用
+%\usepackage{tikz} %画矢量图用
+\usepackage{mathtools}% 定义配对的数学符号
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{XITS Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{〈style name〉}{〈key=value list〉}
-%stores the key=value list
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
 \lstdefinestyle{codestyle1}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -75,6 +89,21 @@
     showtabs=false,                  
     tabsize=2
 }
+%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
@@ -478,7 +507,7 @@ c。部分子不再由目标发射再吸收，取而代之的是放出 夸克–
 的最低阶，典型的积分是
 \begin_inset Formula 
 \[
-\int_{-1}^{1}\dif x\frac{f\left(x,\xi,t\right)}{x-\xi+i\varepsilon}=P\int_{-1}^{1}\dif x\frac{f\left(x,\xi,t\right)}{x-\xi}-i\pi f\left(\xi,\xi,t\right)
+\int_{-1}^{1}\dd x\frac{f\left(x,\xi,t\right)}{x-\xi+i\varepsilon}=P\int_{-1}^{1}\dd x\frac{f\left(x,\xi,t\right)}{x-\xi}-i\pi f\left(\xi,\xi,t\right)
 \]
 
 \end_inset
@@ -487,13 +516,13 @@ c。部分子不再由目标发射再吸收，取而代之的是放出 夸克–
 \begin_inset Formula 
 \begin{align*}
 \lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon} & =P\frac{1}{x}\mp i\pi\delta(x)\\
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f(x)\dif x}{x\pm i\varepsilon} & =P\int_{-\infty}^{+\infty}\frac{f(x)}{x}\dif x\mp i\pi f(0)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f(x)\dd x}{x\pm i\varepsilon} & =P\int_{-\infty}^{+\infty}\frac{f(x)}{x}\dd x\mp i\pi f(0)
 \end{align*}
 
 \end_inset
 
 其中
-\begin_inset Formula $P\int_{-1}^{1}\dif xf\left(x,\xi,t\right)\frac{1}{x-\xi}$
+\begin_inset Formula $P\int_{-1}^{1}\dd xf\left(x,\xi,t\right)\frac{1}{x-\xi}$
 \end_inset
 
 表示柯西主值积分。注意，由于时间反演不变性，GPDs 是实数量，硬散射kernel是复数，所以过程的 amplitude 最后有实部也有虚部。
@@ -749,7 +778,7 @@ w^{+}v^{-} & =vw|\left(0,0\right)+\left(0,3\right)-\left(3,0\right)-\left(3,3\ri
 
 \begin_layout Standard
 不变积分测度为
-\begin_inset Formula $\dif^{4}z=\dif z^{+}\dif z^{-}\dif^{2}\boldsymbol{z}$
+\begin_inset Formula $\dd^{4}z=\dd z^{+}\dd z^{-}\dd^{2}\boldsymbol{z}$
 \end_inset
 
 。沿着光锥方向的导数为
@@ -1106,9 +1135,9 @@ literal "false"
  的约定，我们定义 广义夸克分布，
 \begin_inset Formula 
 \begin{align}
-F^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
+F^{q} & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\left[H^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}u\left(p\right)+E^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{i\sigma^{+\alpha}\Delta_{\alpha}}{2m}u\left(p\right)\right]\nonumber \\
-\tilde{F}^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}\gamma^{5}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
+\tilde{F}^{q} & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}\gamma^{5}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\left[\tilde{H}^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}\gamma^{5}u\left(p\right)+\tilde{E}^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{\gamma^{5}\Delta_{\alpha}}{2m}u\left(p\right)\right]\label{eq:14}
 \end{align}
 
@@ -1133,10 +1162,10 @@ F^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\pr
 。为了看出这一点，我们把定义重新写成参考系无关的形式
 \begin_inset Formula 
 \begin{align}
-F^{q} & =\frac{1}{2}\int\frac{\dif\lambda}{2\pi}\left.e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\slashed{n}_{-}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z=\lambda n_{-}}\nonumber \\
-F^{q} & =\frac{1}{2}\int\frac{\dif z}{2\pi}e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\nonumber \\
-F^{q} & =\frac{1}{2}\int\frac{\dif\lambda}{2\pi}e^{ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\slashed{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\nonumber \\
-F^{q} & =\frac{1}{2\left(Pn_{-}\right)}\left[H^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\slashed{n}_{-}u\left(p\right)+E^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{i\sigma^{\alpha\beta}n_{-\alpha}\Delta_{\beta}}{2m}u\left(\beta\right)\right];\label{eq:diel15}
+F^{q} & =\frac{1}{2}\int\frac{\dd\lambda}{2\pi}\left.e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\sla{n}_{-}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z=\lambda n_{-}}\nonumber \\
+F^{q} & =\frac{1}{2}\int\frac{\dd z}{2\pi}e^{ix\left(Pz\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\nonumber \\
+F^{q} & =\frac{1}{2}\int\frac{\dd\lambda}{2\pi}e^{ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\sla{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\nonumber \\
+F^{q} & =\frac{1}{2\left(Pn_{-}\right)}\left[H^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\sla{n}_{-}u\left(p\right)+E^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{i\sigma^{\alpha\beta}n_{-\alpha}\Delta_{\beta}}{2m}u\left(\beta\right)\right];\label{eq:diel15}
 \end{align}
 
 \end_inset
@@ -1146,7 +1175,7 @@ F^{q} & =\frac{1}{2\left(Pn_{-}\right)}\left[H^{q}\left(x,\xi,t\right)\bar{u}\le
 \end_inset
 
 ，有类似的表达式。其中
-\begin_inset Formula $\slashed{n}_{-}$
+\begin_inset Formula $\sla{n}_{-}$
 \end_inset
 
 是任意类光矢量。GPDs 允许依赖于
@@ -1238,7 +1267,7 @@ noprefix "false"
  的两个场，
 \begin_inset Formula 
 \[
-W\left[a,b\right]=P\exp\left(ig\int_{b}^{a}\dif x^{-}A^{+}\left(x^{-}n_{-}\right)\right)
+W\left[a,b\right]=P\exp\left(ig\int_{b}^{a}\dd x^{-}A^{+}\left(x^{-}n_{-}\right)\right)
 \]
 
 \end_inset
@@ -1439,9 +1468,9 @@ noprefix "false"
 对于胶子我们定义
 \begin_inset Formula 
 \begin{align}
-F^{g} & =\frac{1}{P^{+}}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}G^{+\mu}\left(-\frac{1}{2}z\right)G_{\mu}^{+}\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
+F^{g} & =\frac{1}{P^{+}}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}G^{+\mu}\left(-\frac{1}{2}z\right)G_{\mu}^{+}\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\left[H^{g}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}u\left(p\right)+E^{g}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{i\sigma^{+\alpha}\Delta_{\alpha}}{2m}u\left(p\right)\right]\nonumber \\
-\tilde{F}^{g} & =-\frac{i}{P^{+}}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}G^{+\mu}\left(-\frac{1}{2}z\right)\tilde{G}_{\mu}^{+}\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
+\tilde{F}^{g} & =-\frac{i}{P^{+}}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}G^{+\mu}\left(-\frac{1}{2}z\right)\tilde{G}_{\mu}^{+}\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\left[\tilde{H}^{g}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}\gamma^{5}u\left(p\right)+\tilde{E}^{g}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{\gamma^{5}\Delta^{+}}{2m}u\left(p\right)\right]\label{eq:18}
 \end{align}
 
@@ -1540,8 +1569,8 @@ noprefix "false"
  may also be accessible experimentally, see Section 9.1.6）。可以定义；
 \begin_inset Formula 
 \begin{align*}
-H_{\pi}^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{\pi^{+}\left(p^{\prime}\right)}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{\pi^{+}\left(p\right)}\right|_{z^{+}=0,\boldsymbol{z}=0}\\
-H_{\pi}^{g}\left(x,\xi,t\right) & =\frac{1}{P^{+}}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{\pi^{+}\left(p^{\prime}\right)}G^{+\mu}\left(-\frac{1}{2}z\right)G_{\mu}^{+}\left(\frac{1}{2}z\right)\ket{\pi^{+}\left(p\right)}\right|_{z^{+}=0,\boldsymbol{z}=0}
+H_{\pi}^{q}\left(x,\xi,t\right) & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{\pi^{+}\left(p^{\prime}\right)}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{\pi^{+}\left(p\right)}\right|_{z^{+}=0,\boldsymbol{z}=0}\\
+H_{\pi}^{g}\left(x,\xi,t\right) & =\frac{1}{P^{+}}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{\pi^{+}\left(p^{\prime}\right)}G^{+\mu}\left(-\frac{1}{2}z\right)G_{\mu}^{+}\left(\frac{1}{2}z\right)\ket{\pi^{+}\left(p\right)}\right|_{z^{+}=0,\boldsymbol{z}=0}
 \end{align*}
 
 \end_inset
@@ -1704,9 +1733,9 @@ literal "true"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-F^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
+F^{q} & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\left[H^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}u\left(p\right)+E^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{i\sigma^{+\alpha}\Delta_{\alpha}}{2m}u\left(p\right)\right]\nonumber \\
-\tilde{F}^{q} & =\frac{1}{2}\int\frac{\dif z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}\gamma^{5}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
+\tilde{F}^{q} & =\frac{1}{2}\int\frac{\dd z^{-}}{2\pi}\left.e^{ixP^{+}z^{-}}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}z\right)\gamma^{+}\gamma^{5}q\left(\frac{1}{2}z\right)\ket{p}\right|_{z^{+}=0,\boldsymbol{z}=0}\nonumber \\
  & =\frac{1}{2P^{+}}\left[\tilde{H}^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\gamma^{+}\gamma^{5}u\left(p\right)+\tilde{E}^{q}\left(x,\xi,t\right)\bar{u}\left(p^{\prime}\right)\frac{\gamma^{5}\Delta_{\alpha}}{2m}u\left(p\right)\right]
 \end{align}
 
@@ -1878,8 +1907,173 @@ and
  对应于求差.
 \end_layout
 
+\begin_layout Section
+螺旋度结构
+\end_layout
+
 \begin_layout Standard
-EOF
+现在让我们仔细研究一下自旋 
+\begin_inset Formula $1/2$
+\end_inset
+
+ 目标的 GPDs 的自旋结构。自旋
+\begin_inset Formula $0$
+\end_inset
+
+目标的结构要简单得多，我们将在 Sect.3.5.4 末尾进行简要讨论。自旋
+\begin_inset Formula $1$
+\end_inset
+
+目标和具有不同自旋的强子态之间的转换，将在 Sect.3.14 和 3.15 中讨论。
+\end_layout
+
+\begin_layout Subsection
+光锥中的洛伦兹对称性
+\end_layout
+
+\begin_layout Standard
+部分子分布探测了强子结构的类光方向（light–like），该方向在物理上被 硬探针 挑出，在分布函数参与的过程中，在技术上体现为算子定义(14)和(18)中的
+类光间隔。GPDs的一个基本特征是，强子状态并不都是沿着轴线 “排列”的，因此在定义它们的螺旋度时，需要做出不简单的选择。作为我们选择的指南，我们将首先讨论光锥
+物理的一个重要对称性。
+\end_layout
+
+\begin_layout Standard
+我们已经看到了 plus 动量在 GPDs 定义中的特殊作用。使 plus 动量不变的洛伦兹变换是围绕
+\begin_inset Formula $z$
+\end_inset
+
+轴的旋转和所谓的 横向平动（transverse boosts），它根据以下公式变换四矢量
+\begin_inset Formula $k$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+k^{+}\to k^{+},\quad\sbf k\to\sbf k-k^{+}\sbf v,\label{eq:di50}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf v$
+\end_inset
+
+是参数化此变换的二维矢量。
+\begin_inset Formula $k^{-}$
+\end_inset
+
+的变换更加复杂，从而保持
+\begin_inset Formula $k^{2}$
+\end_inset
+
+不变。由于 GPDs 的洛伦兹平动不变性，它们只能依赖于
+\begin_inset Formula $p$
+\end_inset
+
+和
+\begin_inset Formula $p^{\prime}$
+\end_inset
+
+的横向动量，通过下列组合的横向分量：
+\begin_inset Formula 
+\begin{equation}
+D=\frac{p^{\prime}}{1-\xi}-\frac{p}{1+\xi}.\label{eq:di51}
+\end{equation}
+
+\end_inset
+
+在横向boost 下
+\begin_inset Formula $\sbf D$
+\end_inset
+
+保持不变，由于构造时保证了
+\begin_inset Formula $D^{+}=0$
+\end_inset
+
+。实际上，不变量
+\begin_inset Formula $t$
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\begin{equation}
+t=t^{0}-\left(1-\xi^{2}\right)\sbf D^{2},\label{eq:di52}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+t^{0}=-\frac{4\xi^{2}m^{2}}{1-\xi^{2}}\label{eq:di53}
+\end{equation}
+
+\end_inset
+
+它是给定
+\begin_inset Formula $\xi$
+\end_inset
+
+下
+\begin_inset Formula $t$
+\end_inset
+
+的最大值，注意这表示在给定
+\begin_inset Formula $t$
+\end_inset
+
+时，
+\begin_inset Formula $\xi$
+\end_inset
+
+存在上限 
+\begin_inset Formula $\xi\le\sqrt{-t}/\sqrt{4m^{2}-t}$
+\end_inset
+
+。只有在特定坐标系中
+\begin_inset Formula $\sbf D$
+\end_inset
+
+才平行于
+\begin_inset Formula $\sbf\Delta$
+\end_inset
+
+。例如对称情形，其中
+\begin_inset Formula $\sbf p^{\prime}=-\sbf p=\frac{1}{2}\sbf\Delta$
+\end_inset
+
+，则
+\begin_inset Formula $\sbf D=\left(1-\xi^{2}\right)^{-1}\sbf\Delta$
+\end_inset
+
+，或者当
+\begin_inset Formula $\sbf p=0$
+\end_inset
+
+，则
+\begin_inset Formula $\sbf D=\left(1-\xi\right)^{-1}\sbf\Delta$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+ref:洛伦兹变换
+\end_layout
+
+\begin_layout Standard
+矢量垂直于boost方向的分量，经过boost是不变的。沿某一个轴boost的洛伦兹矩阵为，
+\begin_inset Formula 
+\[
+\Lambda_{\phantom{\mu}\nu}^{\mu}=\left(\begin{array}{cc}
+\gamma & -\gamma v\\
+-\gamma v & \gamma
+\end{array}\right),\quad\gamma=1/\sqrt{1-v^{2}}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

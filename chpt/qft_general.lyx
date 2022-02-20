@@ -38,7 +38,7 @@
 \setmonofont{Latin Modern Roman}
 %设置数学字体
 \usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
@@ -2778,6 +2778,98 @@ F^{i0}=\sbf E,\quad F^{ij}=-\varepsilon^{ijk}B^{k}
 场的传播子
 \end_layout
 
+\begin_layout Standard
+ref: peskin, p23。
+\end_layout
+
+\begin_layout Enumerate
+拉氏量：
+\begin_inset Formula 
+\begin{align*}
+\mathcal{L} & =-\frac{1}{4}F_{\mu\nu}^{2}+D_{\mu}\phi\left(D^{\mu}\phi\right)^{*}-m^{2}\phi^{*}\phi,\quad\text{复标量场}\\
+\mathcal{L} & =\frac{1}{2}\partial_{\mu}\phi\partial^{\mu}\phi-\frac{1}{2}m^{2}\phi^{*}\phi,\quad\text{实标量场}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+等时对易关系：
+\begin_inset Formula 
+\begin{align*}
+ & \left[a_{\sbf p},a_{\sbf k}^{\dagger}\right]=\left(2\pi\right)^{3}\delta^{\left(3\right)}\left(\sbf p-\sbf k\right)\quad\sim\left[a,a^{\dagger}\right]=1,\;\text{谐振子}\\
+ & \left[\phi\left(\sbf x\right),\pi\left(\sbf y\right)\right]=i\delta^{\left(3\right)}\left(\sbf x-\sbf y\right)\quad\sim\left[x,p_{x}\right]=i\hbar
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+量子态的定义：
+\begin_inset Formula 
+\begin{align*}
+\bra{\sbf k}\ket{\sbf p} & =2E_{p}\left(2\pi\right)^{3}\delta^{\left(3\right)}\left(\sbf k-\sbf p\right),\quad\text{考虑到洛伦兹协变}\\
+\ket{\sbf p} & =\sqrt{2E_{\sbf p}}a^{\dagger}\left(\sbf p\right)\ket{0},\quad\text{单粒子动量本征态}\\
+\braket{0} & =1,\;\dim\left[\ket{0}\right]=0\quad\text{真空归一化}\\
+\symbb1 & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2E_{p}}\dyad{\sbf p}{\sbf p},\quad\text{完备集}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+场的定义：
+\begin_inset Formula 
+\begin{align*}
+\phi\left(x\right) & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2E_{p}}}\left(a_{p}e^{-ipx}+b_{p}^{\dagger}e^{+ipx}\right)\\
+\pi\left(x\right) & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\left(-i\right)\sqrt{\frac{E_{p}}{2}}\left(a_{p}e^{-ipx}-b_{p}^{\dagger}e^{+ipx}\right)
+\end{align*}
+
+\end_inset
+
+场作用在真空上，
+\begin_inset Formula 
+\begin{align*}
+\phi\left(\sbf x\right)\ket{0} & =\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{2E_{\sbf p}}e^{-i\sbf p\cdot\sbf x}\ket{\sbf p},\\
+\mel{0}{\phi\left(\sbf x\right)}{\sbf p} & =\expval{\int\frac{\dd^{3}p^{\prime}}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2E_{\sbf p^{\prime}}}}\left(a_{\sbf p^{\prime}}e^{+i\sbf p^{\prime}\cdot\sbf x}+b_{\sbf p^{\prime}}^{\dagger}e^{-i\sbf p^{\prime}\cdot\sbf x}\right)\sqrt{2E_{\sbf p}}a_{\sbf p}^{\dagger}}{0}=e^{i\sbf p\cdot\sbf x}
+\end{align*}
+
+\end_inset
+
+可以理解成量子力学中的
+\begin_inset Formula $\braket{\sbf x}{\sbf p}\propto e^{i\sbf p\cdot\sbf x}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+哈密顿量：
+\begin_inset Formula 
+\begin{align}
+ & H=\int\dd[3]{x}\pi^{*}\pi+\nabla\phi^{*}\cdot\nabla\phi+m^{2}\phi^{*}\phi\quad\text{经典场}\label{eq:peskin3.90}\\
+ & \hat{H}=\int\frac{\dd[3]{p}}{\left(2\pi\right)^{3}}\left(E_{\sbf p}a_{\sbf p}^{\dagger}a_{\sbf p}+E_{\sbf p}b_{\sbf p}^{\dagger}b_{\sbf p}\right).
+\end{align}
+
+\end_inset
+
+所以各单元的量纲为：
+\begin_inset Formula 
+\[
+\dim\left[\phi\left(x\right)\right]=1,\quad\dim\left[\ket{\sbf p}\right]=-1,\quad\dim\left[a\left(p\right)\right]=-\frac{3}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 实标量场各种传播子定义
 \end_layout
@@ -4312,17 +4404,14 @@ LSZ (Lehmann–Symanzik–Zimmermann) reduction formula
 \end_layout
 
 \begin_layout Standard
+场的定义：
 \begin_inset Formula 
 \[
-\phi(x)=\int\frac{\dd^{3}p}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{p}}}\left(a_{p}e^{-ipx}+b_{p}^{\dagger}e^{+ipx}\right)
+\phi\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2E_{p}}}\left(a_{p}e^{-ipx}+b_{p}^{\dagger}e^{+ipx}\right)
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 上面已经说明了，可以从格林函数中提取散射截面。在正则量子化中，格林函数是通过 Gell-mann-Low 公式计算的，
 \begin_inset Formula 
 \[
