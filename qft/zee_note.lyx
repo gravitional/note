@@ -7,6 +7,8 @@
 \textclass ctex-book
 \begin_preamble
 \usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
 \usepackage{geometry} % 整体页面设置
 \geometry{a4paper} %页面大小是A4纸
@@ -15,72 +17,61 @@
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
-%++++++++++++++++++++++++++++++++++++++++++++++++
+%%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
-% This package makes it easy to add some picture commands to every page at ab-solute positions
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
 \usepackage{float}%使用[H]选项将浮动题放到确定的位置
-\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
-% xcolor package starts from the basic facilities of the 
-% color package, and provides easy driver-independent access
-%to several kinds of color tints, shades, tones, 
-%and mixes of arbitrary colors
-\usepackage{fontspec}
-\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
-\usepackage{amsmath,amsfonts} % 数学字体
-\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
-\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
-\usepackage{mathrsfs} % 提供了mathscr 命令
-%++++++++++++++++++++++++++++++++++++++++
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{mathtools}% 定义配对的数学符号
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+\usepackage{physics} % 常用物理记号
+%%%+++++++++++++++++++++++++++++++
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+\usepackage{siunitx} % 国际单位制
+% \usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usetikzlibrary{shapes.misc,animations}
+\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+%%++++++++++++++++++++++++++++++++++++
 % 设置英文字体
 \setmainfont{Latin Modern Roman}
 \setsansfont{Latin Modern Sans}
 \setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
 %设置数学字体
-\usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
-%++++++++++++++++++++++++++++++++++++++++
-\usepackage{enumerate} 
-\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
-\usetikzlibrary{shapes.misc,animations}
-\usetikzlibrary{shapes.geometric}% tikz node 形状的库
-\usepackage{siunitx} % 国际单位制
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{simplewick} 
-% a simple means of drawing Wick contractions above and below expressions. 
-\usepackage{makeidx} 
-% Standard package for creating indexes
-\usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-\DeclareMathOperator{\sgn}{Sgn}
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res} %留数
-\DeclareMathOperator{\disc}{Disc} %函数间断
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
-\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\newcommand{\cola}[1]{{\color{blue}{#1}}} %颜色
-\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 %%%+++++++++++++++++++++++++++++++
-\usepackage{listings}
-% 在LaTex中添加代码高亮
-\usepackage{framed}
-% 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
-%定义各种颜色
-\definecolor{codegreen}{rgb}{0,0.6,0}
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+\usepackage{xcolor}
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{〈style name〉}{〈key=value list〉}
-%stores the key=value list
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
 \lstdefinestyle{codestyle1}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -99,9 +90,28 @@
     showtabs=false,                  
     tabsize=2
 }
+%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\Res}{Res} %复变函数的留数
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sla}{\slashed}% feynman slash
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+%%
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\sgn}{Sign} %符号函数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+\end_modules
 \maintain_unincluded_children false
 \language chinese-simplified
 \language_package none
@@ -221,14 +231,14 @@ Young
 通过高斯积分，最后得到
 \begin_inset Formula 
 \begin{align*}
-\bra{q_{f}}\exp\left(-iHt\right)\ket{q_{i}} & =\int Dq[t]\exp\left(i\int_{0}^{T}\dif t\mathcal{L}\left(\dot{q},q\right)\right)=\int Dq[t]\exp\left[i\int_{0}^{T}\dif t\mathcal{L}\left(\dot{q},q\right)\right]\\
- & =\int Dq[t]\exp\left[i\int_{0}^{T}\dif t\frac{1}{2}m\dot{q}^{2}-V\left[q\right]\right]
+\bra{q_{f}}\exp\left(-iHt\right)\ket{q_{i}} & =\int Dq[t]\exp\left(i\int_{0}^{T}\dd t\mathcal{L}\left(\dot{q},q\right)\right)=\int Dq[t]\exp\left[i\int_{0}^{T}\dd t\mathcal{L}\left(\dot{q},q\right)\right]\\
+ & =\int Dq[t]\exp\left[i\int_{0}^{T}\dd t\frac{1}{2}m\dot{q}^{2}-V\left[q\right]\right]
 \end{align*}
 
 \end_inset
 
 
-\begin_inset Formula $S=\int_{0}^{T}\dif t\mathcal{L}\left(\dot{q},q\right)$
+\begin_inset Formula $S=\int_{0}^{T}\dd t\mathcal{L}\left(\dot{q},q\right)$
 \end_inset
 
 ，被称作作用量
@@ -262,9 +272,9 @@ Young
 。
 \begin_inset Formula 
 \begin{align*}
-\bra{F}\exp\left(-iHt\right)\ket{I} & =\int\dif q_{F}\int\dif q_{I}\bra{F}\ket{q_{F}}\bra{q_{F}}\exp\left(-iHt\right)\ket{q_{I}}\bra{q_{I}}\ket{I}\\
- & =\int\dif q_{F}\int\dif q_{I}\Psi_{F}\left[q_{F}\right]^{\dagger}\bra{q_{F}}\exp\left(-iHt\right)\ket{q_{I}}\Psi_{I}\left[q_{I}\right]\\
- & =\int\dif q_{F}\int\dif q_{I}\Psi_{F}\left[q_{F}\right]^{\dagger}\Psi_{I}\left[q_{I}\right]\int Dq[t]\exp\left[i\int_{0}^{T}\dif t\mathcal{L}\left(\dot{q},q\right)\right]
+\bra{F}\exp\left(-iHt\right)\ket{I} & =\int\dd q_{F}\int\dd q_{I}\bra{F}\ket{q_{F}}\bra{q_{F}}\exp\left(-iHt\right)\ket{q_{I}}\bra{q_{I}}\ket{I}\\
+ & =\int\dd q_{F}\int\dd q_{I}\Psi_{F}\left[q_{F}\right]^{\dagger}\bra{q_{F}}\exp\left(-iHt\right)\ket{q_{I}}\Psi_{I}\left[q_{I}\right]\\
+ & =\int\dd q_{F}\int\dd q_{I}\Psi_{F}\left[q_{F}\right]^{\dagger}\Psi_{I}\left[q_{I}\right]\int Dq[t]\exp\left[i\int_{0}^{T}\dd t\mathcal{L}\left(\dot{q},q\right)\right]
 \end{align*}
 
 \end_inset
@@ -300,7 +310,7 @@ Young
 阶修正为
 \begin_inset Formula 
 \[
-\mathcal{M}=\frac{1}{2}\left(-i\lambda\right)^{2}i^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{2}}\frac{1}{k^{2}-m^{2}+i\varepsilon}\frac{1}{\left(K-k\right)^{2}-m^{2}+i\varepsilon}
+\mathcal{M}=\frac{1}{2}\left(-i\lambda\right)^{2}i^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{2}}\frac{1}{k^{2}-m^{2}+i\varepsilon}\frac{1}{\left(K-k\right)^{2}-m^{2}+i\varepsilon}
 \]
 
 \end_inset
@@ -314,11 +324,11 @@ Young
 \end_inset
 
 ，积分趋于
-\begin_inset Formula $\int\dif^{4}k/k^{4}$
+\begin_inset Formula $\int\dd^{4}k/k^{4}$
 \end_inset
 
 对数发散。对常规积分
-\begin_inset Formula $\int^{\infty}\dif r\,r^{n}$
+\begin_inset Formula $\int^{\infty}\dd r\,r^{n}$
 \end_inset
 
 ：
@@ -446,7 +456,7 @@ Young
 使用路径积分的语言描述，相当于：
 \begin_inset Formula 
 \[
-\int D\varphi\,\varphi\left(x_{1}\right)\varphi\left(x_{2}\right)\varphi\left(x_{3}\right)\varphi\left(x_{4}\right)e^{i\int\dif^{d}x\left\{ \frac{1}{2}\left[\left(\partial\varphi\right)^{2}-m^{2}\varphi^{2}\right]-\frac{1}{4!}\varphi^{4}\right\} }
+\int D\varphi\,\varphi\left(x_{1}\right)\varphi\left(x_{2}\right)\varphi\left(x_{3}\right)\varphi\left(x_{4}\right)e^{i\int\dd^{d}x\left\{ \frac{1}{2}\left[\left(\partial\varphi\right)^{2}-m^{2}\varphi^{2}\right]-\frac{1}{4!}\varphi^{4}\right\} }
 \]
 
 \end_inset
@@ -796,7 +806,7 @@ draw (1,0) to [controls=+(45:1.5) and +(135:1.5)] (1,0);}
 。费曼图的结果为：
 \begin_inset Formula 
 \[
--i\lambda\int^{\Lambda}\left[\frac{\dif^{4}q}{\left(2\pi\right)^{4}}\right]\left[\frac{i}{q^{2}-m^{2}+i\varepsilon}\right]
+-i\lambda\int^{\Lambda}\left[\frac{\dd^{4}q}{\left(2\pi\right)^{4}}\right]\left[\frac{i}{q^{2}-m^{2}+i\varepsilon}\right]
 \]
 
 \end_inset
@@ -839,7 +849,7 @@ draw (0.5,0) to [out=-90,in=-90,looseness=1.5] (1.5,0);}
 的结果为二重积分：
 \begin_inset Formula 
 \[
-I\left(k,m,\Lambda;\lambda\right)=\left(-i\lambda\right)^{2}\int^{\Lambda}\int^{\Lambda}\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{\dif^{4}q}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}\frac{i}{q^{2}-m^{2}+i\varepsilon}\frac{i}{\left(p+q+k\right)^{2}-m^{2}+i\varepsilon}
+I\left(k,m,\Lambda;\lambda\right)=\left(-i\lambda\right)^{2}\int^{\Lambda}\int^{\Lambda}\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{\dd^{4}q}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}+i\varepsilon}\frac{i}{q^{2}-m^{2}+i\varepsilon}\frac{i}{\left(p+q+k\right)^{2}-m^{2}+i\varepsilon}
 \]
 
 \end_inset
@@ -1222,7 +1232,7 @@ D=4-B_{E}.
 \end_inset
 
 为圈数，也就是
-\begin_inset Formula $\int\dif^{4}k/\left(2\pi\right)^{4}$
+\begin_inset Formula $\int\dd^{4}k/\left(2\pi\right)^{4}$
 \end_inset
 
 的数量。由于每个顶点有一个
@@ -1256,7 +1266,7 @@ L=B_{I}-V+1.
 \end_inset
 
 每一个圈有一个
-\begin_inset Formula $\int\dif^{4}k/\left(2\pi\right)^{4}$
+\begin_inset Formula $\int\dd^{4}k/\left(2\pi\right)^{4}$
 \end_inset
 
 ，每一条内线有
@@ -1503,7 +1513,7 @@ D=4L-F_{I}=4-\frac{3}{2}F_{E}+2V\label{eq:3.3.12}
 \end_inset
 
 ，毕竟每个圈带有一个
-\begin_inset Formula $\int\dif^{d}k$
+\begin_inset Formula $\int\dd^{d}k$
 \end_inset
 
 。
@@ -1611,7 +1621,7 @@ D=4L-2B_{I}-F_{I}=4-B_{E}-\frac{3}{2}F_{E}
 ，看起来费米子质量线性发散，但实际上在四维场论中不可能得到一个对截断的线性依赖。要说明这一点，查看练习 II.5.1 中的积分：
 \begin_inset Formula 
 \begin{equation}
-\left(if\right)^{2}i^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}}\frac{\slashed{p}+\slashed{k}+m}{\left(p+k\right)^{2}-m^{2}}\equiv A\left(p^{2}\right)\slashed{p}+B\left(p^{2}\right)\label{eq:3.3.14}
+\left(if\right)^{2}i^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}}\frac{\slashed{p}+\slashed{k}+m}{\left(p+k\right)^{2}-m^{2}}\equiv A\left(p^{2}\right)\slashed{p}+B\left(p^{2}\right)\label{eq:3.3.14}
 \end{equation}
 
 \end_inset
@@ -1629,7 +1639,7 @@ D=4L-2B_{I}-F_{I}=4-B_{E}-\frac{3}{2}F_{E}
 \end_inset
 
 很大时，积分趋于
-\begin_inset Formula $\int\dif^{4}k\,\slashed{k}/k^{4}$
+\begin_inset Formula $\int\dd^{4}k\,\slashed{k}/k^{4}$
 \end_inset
 
 ，似乎线性发散。但是由于
@@ -1783,11 +1793,11 @@ P=B_{I}-V=L-1
 这个公式可以从高斯积分开始，一步步推导得到：
 \begin_inset Formula 
 \begin{align*}
- & \int_{-\infty}^{\infty}\dif x\,e^{-x^{2}}=\sqrt{\pi},\text{ from }\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\dif x\dif y\,e^{-\left(x^{2}+y^{2}\right)}=\pi,\\
- & \int_{-\infty}^{\infty}\dif x\,e^{-ax^{2}+bx}=\sqrt{\frac{\pi}{a}}e^{\frac{b^{2}}{4a}},\\
- & \left(\Pi_{i}^{n}\int\dif x_{i}\right)e^{-x\cdot K\cdot x+J\cdot x}=\sqrt{\frac{\pi}{a}}e^{\frac{1}{4}J\cdot K^{-1}\cdot J},\\
- & \left(\Pi_{i}^{n}\int\dif x_{i}\right)e^{-x\cdot K\cdot x-V\left(x\right)+J\cdot x}=\sqrt{\frac{\pi}{a}}\exp\left[-V\left(\frac{\delta}{\delta J}\right)\right]e^{\frac{1}{4}J\cdot K^{-1}\cdot J},\\
- & \left(\Pi_{i}^{n}\int\dif x_{i}\right)e^{-\frac{1}{2}x\cdot K\cdot x-V\left(x\right)+J\cdot x}=\sqrt{\frac{\pi}{a}}\exp\left[-V\left(\frac{\delta}{\delta J}\right)\right]e^{\frac{1}{2}J\cdot K^{-1}\cdot J},
+ & \int_{-\infty}^{\infty}\dd x\,e^{-x^{2}}=\sqrt{\pi},\text{ from }\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\dd x\dd y\,e^{-\left(x^{2}+y^{2}\right)}=\pi,\\
+ & \int_{-\infty}^{\infty}\dd x\,e^{-ax^{2}+bx}=\sqrt{\frac{\pi}{a}}e^{\frac{b^{2}}{4a}},\\
+ & \left(\Pi_{i}^{n}\int\dd x_{i}\right)e^{-x\cdot K\cdot x+J\cdot x}=\sqrt{\frac{\pi}{a}}e^{\frac{1}{4}J\cdot K^{-1}\cdot J},\\
+ & \left(\Pi_{i}^{n}\int\dd x_{i}\right)e^{-x\cdot K\cdot x-V\left(x\right)+J\cdot x}=\sqrt{\frac{\pi}{a}}\exp\left[-V\left(\frac{\delta}{\delta J}\right)\right]e^{\frac{1}{4}J\cdot K^{-1}\cdot J},\\
+ & \left(\Pi_{i}^{n}\int\dd x_{i}\right)e^{-\frac{1}{2}x\cdot K\cdot x-V\left(x\right)+J\cdot x}=\sqrt{\frac{\pi}{a}}\exp\left[-V\left(\frac{\delta}{\delta J}\right)\right]e^{\frac{1}{2}J\cdot K^{-1}\cdot J},
 \end{align*}
 
 \end_inset
@@ -1853,7 +1863,7 @@ noprefix "false"
 没有逆呢？这可不是只在某些病态理论中才有的深奥现象，物理学最基本的作用量之一，麦克斯韦作用量：
 \begin_inset Formula 
 \[
-S\left(A\right)=\int\dif^{4}x\mathcal{L}=\int\dif^{4}x\left[\frac{1}{2}A_{\mu}\left(\partial^{2}g^{\mu\nu}-\partial^{\mu}\partial^{\nu}\right)A_{\nu}+A_{\mu}J^{\mu}\right]
+S\left(A\right)=\int\dd^{4}x\mathcal{L}=\int\dd^{4}x\left[\frac{1}{2}A_{\mu}\left(\partial^{2}g^{\mu\nu}-\partial^{\mu}\partial^{\nu}\right)A_{\nu}+A_{\mu}J^{\mu}\right]
 \]
 
 \end_inset
@@ -1918,7 +1928,7 @@ S\left(A\right)=\int\dif^{4}x\mathcal{L}=\int\dif^{4}x\left[\frac{1}{2}A_{\mu}\l
 规范固定问题本质上并不神秘，也不奇怪。我们考虑普通的积分
 \begin_inset Formula 
 \[
-\int_{-\infty}^{\infty}\dif Ae^{-A\cdot K\cdot A},
+\int_{-\infty}^{\infty}\dd Ae^{-A\cdot K\cdot A},
 \]
 
 \end_inset
@@ -1935,7 +1945,7 @@ S\left(A\right)=\int\dif^{4}x\mathcal{L}=\int\dif^{4}x\left[\frac{1}{2}A_{\mu}\l
 \end_inset
 
 ，是一个不可逆矩阵。相当于积分是
-\begin_inset Formula $\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\dif a\dif b\,e^{-a^{2}}$
+\begin_inset Formula $\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\dd a\dd b\,e^{-a^{2}}$
 \end_inset
 
 ，对
@@ -2060,7 +2070,7 @@ S\left(A\right)=\int\dif^{4}x\mathcal{L}=\int\dif^{4}x\left[\frac{1}{2}A_{\mu}\l
 \end_inset
 
 的函数。强调一下，没有什么神秘之处。例如积分
-\begin_inset Formula $I=\int\dif x\dif ye^{iS\left(x,y\right)}$
+\begin_inset Formula $I=\int\dd x\dd ye^{iS\left(x,y\right)}$
 \end_inset
 
 ，其中
@@ -2072,11 +2082,11 @@ S\left(A\right)=\int\dif^{4}x\mathcal{L}=\int\dif^{4}x\left[\frac{1}{2}A_{\mu}\l
 \end_inset
 
 的函数，若变换到极坐标，给出
-\begin_inset Formula $I=\left(\int\dif\theta\right)J=\left(2\pi\right)J$
+\begin_inset Formula $I=\left(\int\dd\theta\right)J=\left(2\pi\right)J$
 \end_inset
 
 ，其中
-\begin_inset Formula $J=\int\dif r\,re^{iS\left(r\right)}$
+\begin_inset Formula $J=\int\dd r\,re^{iS\left(r\right)}$
 \end_inset
 
  是一个只对径向坐标
@@ -2323,8 +2333,8 @@ I=\int\Dif Ae^{iS\left(A\right)}=\int\Dif Ae^{iS\left(A\right)}\delta\left(\part
 作泛函积分：
 \begin_inset Formula 
 \begin{align*}
-Z & =\int\Dif\sigma e^{-\frac{i}{2\xi}\int\dif^{4}x\,\sigma\left(x\right)^{2}}\int\Dif Ae^{iS\left(A\right)}\delta\left(\partial\cdot A-\sigma\right)\\
- & =\int\Dif Ae^{iS\left(A\right)-\frac{i}{2\xi}\int\dif^{4}x\,\left(\partial\cdot A\right)^{2}}
+Z & =\int\Dif\sigma e^{-\frac{i}{2\xi}\int\dd^{4}x\,\sigma\left(x\right)^{2}}\int\Dif Ae^{iS\left(A\right)}\delta\left(\partial\cdot A-\sigma\right)\\
+ & =\int\Dif Ae^{iS\left(A\right)-\frac{i}{2\xi}\int\dd^{4}x\,\left(\partial\cdot A\right)^{2}}
 \end{align*}
 
 \end_inset
@@ -2332,8 +2342,8 @@ Z & =\int\Dif\sigma e^{-\frac{i}{2\xi}\int\dif^{4}x\,\sigma\left(x\right)^{2}}\i
 最终的结果相当于作用量变成：
 \begin_inset Formula 
 \begin{align*}
-S & =S\left(A\right)-\frac{1}{2\xi}\int\dif^{4}x\,\left(\partial\cdot A\right)^{2}\\
- & =\int\dif^{4}x\left\{ \frac{1}{2}A_{\mu}\left[\partial^{2}g^{\mu\nu}-\left(1-\frac{1}{\xi}\right)\partial^{\mu}\partial^{\nu}\right]A_{\nu}+A_{\mu}J^{\mu}\right\} 
+S & =S\left(A\right)-\frac{1}{2\xi}\int\dd^{4}x\,\left(\partial\cdot A\right)^{2}\\
+ & =\int\dd^{4}x\left\{ \frac{1}{2}A_{\mu}\left[\partial^{2}g^{\mu\nu}-\left(1-\frac{1}{\xi}\right)\partial^{\mu}\partial^{\nu}\right]A_{\nu}+A_{\mu}J^{\mu}\right\} 
 \end{align*}
 
 \end_inset
@@ -2602,7 +2612,7 @@ noprefix "false"
 \end_inset
 
 积分并定义
-\begin_inset Formula $N\equiv\int\dif^{D}x\rho\left(t,\vec{x}\right)$
+\begin_inset Formula $N\equiv\int\dd^{D}x\rho\left(t,\vec{x}\right)$
 \end_inset
 
 为玻色子总数，我们就得到了凝聚态物理中最重要的关系之一
@@ -2677,8 +2687,8 @@ noprefix "false"
 写成
 \begin_inset Formula 
 \begin{align}
-Z & =\int\Dif\Phi\Dif\sigma\exp\left[i\int\dif^{4}x\left(\partial\Phi^{\dagger}\right)\left(\partial\Phi\right)-m^{2}\Phi^{\dagger}\Phi+2\sigma\left(\Phi^{\dagger}\Phi\right)+\left(1/\lambda\right)\sigma^{2}\right]\nonumber \\
- & =\int\Dif\Phi\exp\left[i\int\dif^{4}x\left(\partial\Phi^{\dagger}\right)\left(\partial\Phi\right)-m^{2}\Phi^{\dagger}\Phi+\left(\Phi^{\dagger}\Phi\right)\lambda\left(\Phi^{\dagger}\Phi\right)\right]\label{eq:3.5.10}
+Z & =\int\Dif\Phi\Dif\sigma\exp\left[i\int\dd^{4}x\left(\partial\Phi^{\dagger}\right)\left(\partial\Phi\right)-m^{2}\Phi^{\dagger}\Phi+2\sigma\left(\Phi^{\dagger}\Phi\right)+\left(1/\lambda\right)\sigma^{2}\right]\nonumber \\
+ & =\int\Dif\Phi\exp\left[i\int\dd^{4}x\left(\partial\Phi^{\dagger}\right)\left(\partial\Phi\right)-m^{2}\Phi^{\dagger}\Phi+\left(\Phi^{\dagger}\Phi\right)\lambda\left(\Phi^{\dagger}\Phi\right)\right]\label{eq:3.5.10}
 \end{align}
 
 \end_inset
@@ -3368,7 +3378,7 @@ end{tikzpicture}
 。应用费曼规则得到，
 \begin_inset Formula 
 \[
-\Gamma^{\mu}=\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{-i}{k^{2}}\left(ie\gamma^{\nu}\frac{i}{\slashed{p}^{\prime}+\slashed{k}-m}\gamma^{\mu}\frac{i}{\slashed{p}+\slashed{k}-m}ie\gamma_{\nu}\right)
+\Gamma^{\mu}=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{-i}{k^{2}}\left(ie\gamma^{\nu}\frac{i}{\slashed{p}^{\prime}+\slashed{k}-m}\gamma^{\mu}\frac{i}{\slashed{p}+\slashed{k}-m}ie\gamma_{\nu}\right)
 \]
 
 \end_inset
@@ -3376,7 +3386,7 @@ end{tikzpicture}
 计算细节如下：做简化我们得到了
 \begin_inset Formula 
 \[
-\Gamma^{\mu}=-ie^{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{N^{\mu}}{D},
+\Gamma^{\mu}=-ie^{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{N^{\mu}}{D},
 \]
 
 \end_inset
@@ -3392,7 +3402,7 @@ N^{\mu}=\gamma^{\nu}\left(\slashed{p}^{\prime}+\slashed{k}+m\right)\gamma^{\mu}\
 
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{D}=\frac{1}{(p^{\prime}+k)^{2}-m^{2}}\frac{1}{(p+k)^{2}-m^{2}}\frac{1}{k^{2}}=2\int\dif\alpha\dif\beta\frac{1}{\mathcal{D}}\label{eq:3.6.10}
+\frac{1}{D}=\frac{1}{(p^{\prime}+k)^{2}-m^{2}}\frac{1}{(p+k)^{2}-m^{2}}\frac{1}{k^{2}}=2\int\dd\alpha\dd\beta\frac{1}{\mathcal{D}}\label{eq:3.6.10}
 \end{equation}
 
 \end_inset
@@ -3408,8 +3418,8 @@ N^{\mu}=\gamma^{\nu}\left(\slashed{p}^{\prime}+\slashed{k}+m\right)\gamma^{\mu}\
 这里我们用了恒等式(D.16),
 \begin_inset Formula 
 \begin{align*}
-\frac{1}{xyz} & =2\int_{0}^{1}\int_{0}^{1}\int_{0}^{1}\dif\alpha\dif\beta\dif\gamma\,\delta(\alpha+\beta+\gamma-1)\frac{1}{(\alpha x+\beta y+\gamma z)^{3}}\\
- & =2\int\int_{\text{三角区域}}\dif\alpha\dif\beta\frac{1}{[z+\alpha(x-z)+\beta(y-z)]^{3}}
+\frac{1}{xyz} & =2\int_{0}^{1}\int_{0}^{1}\int_{0}^{1}\dd\alpha\dd\beta\dd\gamma\,\delta(\alpha+\beta+\gamma-1)\frac{1}{(\alpha x+\beta y+\gamma z)^{3}}\\
+ & =2\int\int_{\text{三角区域}}\dd\alpha\dd\beta\frac{1}{[z+\alpha(x-z)+\beta(y-z)]^{3}}
 \end{align*}
 
 \end_inset
@@ -3427,7 +3437,7 @@ N^{\mu}=\gamma^{\nu}\left(\slashed{p}^{\prime}+\slashed{k}+m\right)\gamma^{\mu}\
 \end_inset
 
 以凑成完全平方。现在对
-\begin_inset Formula $\dif^{4}l$
+\begin_inset Formula $\dd^{4}l$
 \end_inset
 
 进行动量积分。
@@ -3591,7 +3601,7 @@ m\left(\gamma^{\nu}\slashed{P}^{\prime}\gamma^{\mu}\gamma_{\nu}+\gamma^{\nu}\gam
 \end_inset
 
 的二次项：由洛伦兹不变性，我们可以把
-\begin_inset Formula $\int\dif^{4}l/(2\pi)^{2}$
+\begin_inset Formula $\int\dd^{4}l/(2\pi)^{2}$
 \end_inset
 
 内的
@@ -3698,13 +3708,13 @@ N^{\mu}\rightarrow2m(p^{\prime}+p)^{\mu}\left(\alpha+\beta\right)\left(1-\alpha-
 \begin_layout Standard
 现在我们可以用(D.
  11)式计算积分
-\begin_inset Formula $\int\left[\dif^{4}l/\left(2\pi\right)^{4}\right]\left(1/\mathcal{D}\right)$
+\begin_inset Formula $\int\left[\dd^{4}l/\left(2\pi\right)^{4}\right]\left(1/\mathcal{D}\right)$
 \end_inset
 
 了。
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{3}}=\frac{-i}{32\pi^{2}m^{2}}
+\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{3}}=\frac{-i}{32\pi^{2}m^{2}}
 \]
 
 \end_inset
@@ -3712,9 +3722,9 @@ N^{\mu}\rightarrow2m(p^{\prime}+p)^{\mu}\left(\alpha+\beta\right)\left(1-\alpha-
 最终得到
 \begin_inset Formula 
 \begin{align*}
-\Gamma^{\mu} & =-2ie^{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\int\dif\alpha\dif\beta\frac{N^{\mu}}{[l^{2}-(\alpha+\beta)^{2}m^{2}]^{3}+O(q^{2})},\\
- & =-2ie^{2}\int\dif\alpha\dif\beta\left(\frac{-i}{32\pi^{2}}\right)\frac{1}{(\alpha+\beta)^{2}m^{2}}N^{\mu}\\
- & =-2ie^{2}\int\dif\alpha\dif\beta\left(\frac{-i}{32\pi^{2}}\right)\frac{2m(p^{\prime}+p)^{\mu}\left(\alpha+\beta\right)\left(1-\alpha-\beta\right)}{(\alpha+\beta)^{2}m^{2}}\\
+\Gamma^{\mu} & =-2ie^{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\int\dd\alpha\dd\beta\frac{N^{\mu}}{[l^{2}-(\alpha+\beta)^{2}m^{2}]^{3}+O(q^{2})},\\
+ & =-2ie^{2}\int\dd\alpha\dd\beta\left(\frac{-i}{32\pi^{2}}\right)\frac{1}{(\alpha+\beta)^{2}m^{2}}N^{\mu}\\
+ & =-2ie^{2}\int\dd\alpha\dd\beta\left(\frac{-i}{32\pi^{2}}\right)\frac{2m(p^{\prime}+p)^{\mu}\left(\alpha+\beta\right)\left(1-\alpha-\beta\right)}{(\alpha+\beta)^{2}m^{2}}\\
  & =-\frac{e^{2}}{8\pi^{2}}\frac{1}{2m}(p^{\prime}+p)^{\mu}
 \end{align*}
 
@@ -4251,7 +4261,7 @@ e_{R}^{2}=e^{2}\frac{1}{1+e^{2}\Pi\left(0\right)}
 表出的具体形式，计算到最低阶：
 \begin_inset Formula 
 \begin{equation}
-i\Pi^{\mu\nu}\left(q\right)=\left(-\right)\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m}i\gamma^{\mu}\frac{i}{\slashed{p}-m}\right)\label{eq:3.7.6}
+i\Pi^{\mu\nu}\left(q\right)=\left(-\right)\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\Tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m}i\gamma^{\mu}\frac{i}{\slashed{p}-m}\right)\label{eq:3.7.6}
 \end{equation}
 
 \end_inset
@@ -4285,7 +4295,7 @@ noprefix "false"
 替换为
 \begin_inset Formula 
 \begin{equation}
-i\Pi^{\mu\nu}\left(q\right)=\left(-\right)\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m}i\gamma^{\mu}\frac{i}{\slashed{p}-m}\right)-\sum_{a}c_{a}\tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m_{a}}i\gamma^{\mu}\frac{i}{\slashed{p}-m_{a}}\right)\label{eq:3.7.8}
+i\Pi^{\mu\nu}\left(q\right)=\left(-\right)\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\Tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m}i\gamma^{\mu}\frac{i}{\slashed{p}-m}\right)-\sum_{a}c_{a}\Tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m_{a}}i\gamma^{\mu}\frac{i}{\slashed{p}-m_{a}}\right)\label{eq:3.7.8}
 \end{equation}
 
 \end_inset
@@ -4371,7 +4381,7 @@ noprefix "false"
 的幂次展开。
 \begin_inset Formula 
 \begin{align*}
-i\Pi^{\mu\nu}\left(q\right) & =\left(-\right)\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m}i\gamma^{\mu}\frac{i}{\slashed{p}-m}\right)\\
+i\Pi^{\mu\nu}\left(q\right) & =\left(-\right)\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\Tr\left(i\gamma^{\nu}\frac{i}{\slashed{p}+\slashed{q}-m}i\gamma^{\mu}\frac{i}{\slashed{p}-m}\right)\\
  & =\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\left[\Pi\left(0\right)+\cdots\right]
 \end{align*}
 
@@ -4459,19 +4469,19 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-i\Pi_{\mu\nu}\left(q\right)=-\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}\frac{N_{\mu\nu}}{D}
+i\Pi_{\mu\nu}\left(q\right)=-\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{N_{\mu\nu}}{D}
 \]
 
 \end_inset
 
 式中
-\begin_inset Formula $N_{\mu\nu}=\tr\left[\gamma^{\nu}\left(\slashed{p}+\slashed{q}+m\right)\gamma_{\mu}\left(\slashed{p}+m\right)\right]$
+\begin_inset Formula $N_{\mu\nu}=\Tr\left[\gamma^{\nu}\left(\slashed{p}+\slashed{q}+m\right)\gamma_{\mu}\left(\slashed{p}+m\right)\right]$
 \end_inset
 
 ，而
 \begin_inset Formula 
 \[
-\frac{1}{D}=\int_{0}^{1}\dif\alpha\frac{1}{\mathcal{D}}=\int_{0}^{1}\dif\alpha\frac{1}{\left[l^{2}+\alpha\left(1-\alpha\right)q^{2}-m^{2}+i\varepsilon\right]^{2}},\quad l=p+\alpha q
+\frac{1}{D}=\int_{0}^{1}\dd\alpha\frac{1}{\mathcal{D}}=\int_{0}^{1}\dd\alpha\frac{1}{\left[l^{2}+\alpha\left(1-\alpha\right)q^{2}-m^{2}+i\varepsilon\right]^{2}},\quad l=p+\alpha q
 \]
 
 \end_inset
@@ -4515,7 +4525,7 @@ noprefix "false"
 ，再明确写出正规子的贡献，
 \begin_inset Formula 
 \begin{equation}
-\Pi_{\mu\nu}\left(q\right)=\frac{-1}{4\pi^{2}}\int_{0}^{1}\dif\alpha\left[F_{\mu\nu}\left(m\right)-\sum_{a}c_{a}F_{\mu\nu}\left(m_{a}\right)\right]\label{eq:3.7.11}
+\Pi_{\mu\nu}\left(q\right)=\frac{-1}{4\pi^{2}}\int_{0}^{1}\dd\alpha\left[F_{\mu\nu}\left(m\right)-\sum_{a}c_{a}F_{\mu\nu}\left(m_{a}\right)\right]\label{eq:3.7.11}
 \end{equation}
 
 \end_inset
@@ -4568,7 +4578,7 @@ noprefix "false"
 的项会消失，还有一些项也会消失，最终得到
 \begin_inset Formula 
 \begin{align}
-\Pi_{\mu\nu}\left(q\right) & =-\frac{1}{2\pi^{2}}\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\nonumber \\
+\Pi_{\mu\nu}\left(q\right) & =-\frac{1}{2\pi^{2}}\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\nonumber \\
  & \phantom{=}\left\{ \log\left[m^{2}-\alpha\left(1-\alpha\right)q^{2}\right]-\sum_{a}c_{a}\log\left[m_{a}^{2}-\alpha\left(1-\alpha\right)q^{2}\right]\right\} \label{eq:3.7.13}
 \end{align}
 
@@ -4603,7 +4613,7 @@ noprefix "false"
 就得到，
 \begin_inset Formula 
 \begin{align}
-\Pi\left(q^{2}\right) & =\frac{1}{2\pi^{2}}\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\log\frac{M^{2}}{m^{2}-\alpha\left(1-\alpha\right)q^{2}}\label{eq:3.7.14}\\
+\Pi\left(q^{2}\right) & =\frac{1}{2\pi^{2}}\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\log\frac{M^{2}}{m^{2}-\alpha\left(1-\alpha\right)q^{2}}\label{eq:3.7.14}\\
  & =\frac{1}{18}\left(\frac{12m^{2}}{q^{2}}-\frac{6\sqrt{4m^{2}-q^{2}}\left(2m^{2}+q^{2}\right)\tan^{-1}\left(\frac{q}{\sqrt{4m^{2}-q^{2}}}\right)}{q^{3}}-6\log\left(\frac{m}{M}\right)+5\right),\quad2m>q.\nonumber 
 \end{align}
 
@@ -4624,7 +4634,7 @@ noprefix "false"
 ，
 \begin_inset Formula 
 \[
-\Pi\left(q^{2}\right)\approx\frac{1}{2\pi^{2}}\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\log\frac{M^{2}}{m^{2}}=\frac{1}{2\pi^{2}}\log\frac{M^{2}}{m^{2}}\left.\left(\frac{1}{2}\alpha^{2}-\frac{1}{3}\alpha^{3}\right)\right|_{0}^{1}=\frac{1}{12\pi^{2}}\log\frac{M^{2}}{m^{2}}
+\Pi\left(q^{2}\right)\approx\frac{1}{2\pi^{2}}\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\log\frac{M^{2}}{m^{2}}=\frac{1}{2\pi^{2}}\log\frac{M^{2}}{m^{2}}\left.\left(\frac{1}{2}\alpha^{2}-\frac{1}{3}\alpha^{3}\right)\right|_{0}^{1}=\frac{1}{12\pi^{2}}\log\frac{M^{2}}{m^{2}}
 \]
 
 \end_inset
@@ -5252,7 +5262,7 @@ noprefix "false"
  函数，
 \begin_inset Formula 
 \begin{align*}
-\Pi_{\mu\nu}\left(q\right) & =-\frac{1}{2\pi^{2}}\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\\
+\Pi_{\mu\nu}\left(q\right) & =-\frac{1}{2\pi^{2}}\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\\
  & \phantom{=}\left\{ \log\left[m^{2}-\alpha\left(1-\alpha\right)q^{2}\right]-\sum_{a}c_{a}\log\left[m_{a}^{2}-\alpha\left(1-\alpha\right)q^{2}\right]\right\} 
 \end{align*}
 
@@ -5289,7 +5299,7 @@ noprefix "false"
 3.7.2 研究由傅里叶积分
 \begin_inset Formula 
 \[
-\int\dif^{3}q\left\{ \frac{1}{\vec{q}^{2}}\left[1+e^{2}\Pi_{\mu\nu}\left(\vec{q}^{2}\right)\right]\right\} e^{i\vec{q}\cdot\vec{x}}
+\int\dd^{3}q\left\{ \frac{1}{\vec{q}^{2}}\left[1+e^{2}\Pi_{\mu\nu}\left(\vec{q}^{2}\right)\right]\right\} e^{i\vec{q}\cdot\vec{x}}
 \]
 
 \end_inset
@@ -5319,7 +5329,7 @@ noprefix "false"
 吧！
 \begin_inset Formula 
 \[
-\Pi\left(q^{2}\right)=\frac{1}{2\pi^{2}}\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\log\frac{\Lambda^{2}}{m^{2}-\alpha\left(1-\alpha\right)q^{2}-i\varepsilon}
+\Pi\left(q^{2}\right)=\frac{1}{2\pi^{2}}\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\log\frac{\Lambda^{2}}{m^{2}-\alpha\left(1-\alpha\right)q^{2}-i\varepsilon}
 \]
 
 \end_inset
@@ -5387,7 +5397,7 @@ noprefix "false"
 现在我们在复平面上定义一个函数：
 \begin_inset Formula 
 \[
-\Pi\left(z\right)\equiv\frac{1}{2\pi^{2}}\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\log\frac{\Lambda^{2}}{m^{2}-\alpha\left(1-\alpha\right)z-i\varepsilon}
+\Pi\left(z\right)\equiv\frac{1}{2\pi^{2}}\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\log\frac{\Lambda^{2}}{m^{2}-\alpha\left(1-\alpha\right)z-i\varepsilon}
 \]
 
 \end_inset
@@ -5413,7 +5423,7 @@ noprefix "false"
 \end_inset
 
 ，除去从实轴从
-\begin_inset Formula $z_{c}\sim+\infty$
+\begin_inset Formula $z_{c}\sim\infty$
 \end_inset
 
 部分的复平面，
@@ -5424,7 +5434,7 @@ noprefix "false"
 \begin_inset Formula $\alpha$
 \end_inset
 
-的积分把这些被积式的cuts抹成（smears）整个一条。
+的积分把这些被积式的cuts抹成（smears）一条线。
 \end_layout
 
 \begin_layout Standard
@@ -5546,7 +5556,7 @@ end{tikzpicture}
 \end_inset
 
 多了个虚部。你可能会猜测
-\begin_inset Formula $\im\Pi$
+\begin_inset Formula $\Im\Pi$
 \end_inset
 
 和衰变率是不是有啥关系，你这个物理直觉不赖啊。
@@ -5774,7 +5784,7 @@ status collapsed
 我们先考虑简单的情况。
 \begin_inset Formula 
 \[
-f\left(z\right)=\int_{0}^{1}\dif\alpha\frac{1}{z-\alpha}=\log\frac{z-1}{z}
+f\left(z\right)=\int_{0}^{1}\dd\alpha\frac{1}{z-\alpha}=\log\frac{z-1}{z}
 \]
 
 \end_inset
@@ -5812,18 +5822,70 @@ f\left(z\right)=\int_{0}^{1}\dif\alpha\frac{1}{z-\alpha}=\log\frac{z-1}{z}
 \end_inset
 
 。对这类解析函数而言，函数在割线两侧的不连续度（discontinuity）为
-\begin_inset Formula $\disc f\left(x\right)\equiv f\left(x+i\varepsilon\right)-f\left(x-i\varepsilon\right)=f\left(x+i\varepsilon\right)-f\left(x+i\varepsilon\right)^{*}=2i\im f\left(x+i\varepsilon\right)$
+\begin_inset Formula $\disc f\left(x\right)\equiv f\left(x+i\varepsilon\right)-f\left(x-i\varepsilon\right)=f\left(x+i\varepsilon\right)-f\left(x+i\varepsilon\right)^{*}=2i\Im f\left(x+i\varepsilon\right)$
 \end_inset
 
-。对图3.8.3所示围绕割线的积分环路
+。对图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:3.8.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示围绕割线的积分环路
 \begin_inset Formula $C$
 \end_inset
 
 应用柯西定理，得到：
 \begin_inset Formula 
 \[
-f\left(z\right)=\oint_{C}\frac{\dif z^{\prime}}{2\pi i}\frac{f\left(z^{\prime}\right)}{z^{\prime}-z}
+f\left(z\right)=\oint_{C}\frac{\dd z^{\prime}}{2\pi i}\frac{f\left(z^{\prime}\right)}{z^{\prime}-z}
 \]
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/zee_3.8.3.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+围绕割线的积分回路
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3.8.3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -5846,13 +5908,13 @@ f\left(z\right)=\oint_{C}\frac{\dif z^{\prime}}{2\pi i}\frac{f\left(z^{\prime}\r
 ，我们就能扔掉无穷远处大圆的贡献得到，
 \begin_inset Formula 
 \begin{equation}
-f\left(z\right)=\frac{1}{\pi}\int\dif\sigma\frac{\rho\left(\sigma\right)}{\sigma-z}\label{eq:3.8.3}
+f\left(z\right)=\frac{1}{\pi}\int\dd\sigma\frac{\rho\left(\sigma\right)}{\sigma-z}\label{eq:3.8.3}
 \end{equation}
 
 \end_inset
 
 其中我们定义了
-\begin_inset Formula $\rho\left(\sigma\right)=\im f\left(\sigma+i\varepsilon\right)$
+\begin_inset Formula $\rho\left(\sigma\right)=\Im f\left(\sigma+i\varepsilon\right)$
 \end_inset
 
 ，
@@ -5862,7 +5924,7 @@ f\left(z\right)=\frac{1}{\pi}\int\dif\sigma\frac{\rho\left(\sigma\right)}{\sigma
 是实数，积分区间沿着割线。我们可以用恒等式（1.2.14）来验证此式：
 \begin_inset Formula 
 \[
-\im f\left(x+i\varepsilon\right)=\frac{1}{\pi}\int\dif\sigma\,\rho\left(\sigma\right)\im\frac{1}{\sigma-x-i\varepsilon}=\frac{1}{\pi}\int\dif\sigma\,\rho\left(\sigma\right)\pi\delta\left(\sigma-x\right)=\rho\left(x\right)
+\Im f\left(x+i\varepsilon\right)=\frac{1}{\pi}\int\dd\sigma\,\rho\left(\sigma\right)\Im\frac{1}{\sigma-x-i\varepsilon}=\frac{1}{\pi}\int\dd\sigma\,\rho\left(\sigma\right)\pi\delta\left(\sigma-x\right)=\rho\left(x\right)
 \]
 
 \end_inset
@@ -5871,7 +5933,7 @@ f\left(z\right)=\frac{1}{\pi}\int\dif\sigma\frac{\rho\left(\sigma\right)}{\sigma
 \begin_inset Formula 
 \begin{align*}
 \text{1.2.14：} & \frac{1}{x+i\varepsilon}=\frac{x}{x^{2}+\varepsilon^{2}}+\frac{-i\varepsilon}{x^{2}+\varepsilon}=\mathcal{P}\frac{1}{x}-i\pi\delta\left(x\right)\\
-\text{积分主值：} & \int\dif x\mathcal{P}\frac{1}{x}f\left(x\right)=\lim_{\varepsilon\to0}\int\dif x\frac{x}{x^{2}+\varepsilon^{2}}f\left(x\right)
+\text{积分主值：} & \int\dd x\mathcal{P}\frac{1}{x}f\left(x\right)=\lim_{\varepsilon\to0}\int\dd x\frac{x}{x^{2}+\varepsilon^{2}}f\left(x\right)
 \end{align*}
 
 \end_inset
@@ -5880,19 +5942,39 @@ f\left(z\right)=\frac{1}{\pi}\int\dif\sigma\frac{\rho\left(\sigma\right)}{\sigma
 \begin_inset Formula $f$
 \end_inset
 
-在割线上值的虚部，就能够给出整个
+在割线上方的值的虚部，就能够给出整个
 \begin_inset Formula $f$
 \end_inset
 
-，自然也包括割线上和割线外的实部了。
+，自然也包括割线上和割线外的实部了：
 \begin_inset Formula 
 \[
-f\left(z\right)=\frac{1}{\pi}\int_{\text{cut}}\dif\sigma\frac{\im f\left(\sigma+i\varepsilon\right)}{\sigma-z}
+f\left(z\right)=\frac{1}{\pi}\int_{\text{cut}}\dd\sigma\frac{\Im f\left(\sigma+i\varepsilon\right)}{\sigma-z}
 \]
 
 \end_inset
 
 这类关系统称色散关系，至少可以追溯到 Kramers 与 可了Kronig 的光学工作，而且在各种物理学领域有相当多的应用，例如 7.4 章。
+\end_layout
+
+\begin_layout Conjecture
+即对于一般情况
+\begin_inset Formula 
+\begin{align*}
+ & \disc f\left(x\right)\equiv f\left(x+i\varepsilon\right)-f\left(x-i\varepsilon\right)=f\left(x+i\varepsilon\right)-f\left(x+i\varepsilon\right)^{*}=2i\Im f\left(x+i\varepsilon\right)\\
+ & f\left(z\right)=\frac{1}{2\pi i}\int_{\text{cut}}\dd\sigma\frac{f\left(x+i\varepsilon\right)-f\left(x-i\varepsilon\right)}{\sigma-z}=\frac{1}{2\pi i}\int_{\text{cut}}\dd\sigma\frac{\disc f\left(x\right)}{\sigma-z}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5905,15 +5987,15 @@ f\left(z\right)=\frac{1}{\pi}\int_{\text{cut}}\dif\sigma\frac{\im f\left(\sigma+
 \end_inset
 
 中
-\begin_inset Formula $f\left(0\right)=\frac{1}{\pi}\int\dif\sigma\frac{\im f\left(\sigma+i\varepsilon\right)}{\sigma}$
+\begin_inset Formula $f\left(0\right)=\frac{1}{\pi}\int\dd\sigma\frac{\Im f\left(\sigma+i\varepsilon\right)}{\sigma}$
 \end_inset
 
 
 \begin_inset Formula 
 \begin{align*}
-f\left(z\right) & =f\left(0\right)+\frac{1}{\pi}\int_{\text{cut}}\dif\sigma\left[\frac{\im f\left(\sigma+i\varepsilon\right)}{\sigma-z}-\frac{\im f\left(\sigma+i\varepsilon\right)}{\sigma}\right]\\
- & =f\left(0\right)+\frac{1}{\pi}\int_{\text{cut}}\dif\sigma\,\im f\left(\sigma+i\varepsilon\right)\frac{z}{\left(\sigma-z\right)\sigma}\\
- & =f\left(0\right)+\frac{z}{\pi}\int_{\text{cut}}\dif\sigma\frac{\im f\left(\sigma+i\varepsilon\right)/\sigma}{\left(\sigma-z\right)}
+f\left(z\right) & =f\left(0\right)+\frac{1}{\pi}\int_{\text{cut}}\dd\sigma\left[\frac{\Im f\left(\sigma+i\varepsilon\right)}{\sigma-z}-\frac{\Im f\left(\sigma+i\varepsilon\right)}{\sigma}\right]\\
+ & =f\left(0\right)+\frac{1}{\pi}\int_{\text{cut}}\dd\sigma\,\Im f\left(\sigma+i\varepsilon\right)\frac{z}{\left(\sigma-z\right)\sigma}\\
+ & =f\left(0\right)+\frac{z}{\pi}\int_{\text{cut}}\dd\sigma\frac{\Im f\left(\sigma+i\varepsilon\right)/\sigma}{\left(\sigma-z\right)}
 \end{align*}
 
 \end_inset
@@ -5965,7 +6047,7 @@ f\left(z\right) & =f\left(0\right)+\frac{1}{\pi}\int_{\text{cut}}\dif\sigma\left
 我们回到上一章真空极化的计算，
 \begin_inset Formula 
 \[
-\Pi_{\mu\nu}\left(q\right)=-\frac{1}{2\pi^{2}}\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\int_{0}^{1}\dif\alpha\,\alpha\left(1-\alpha\right)\left\{ \log\left[m^{2}-\alpha\left(1-\alpha\right)q^{2}\right]-\sum_{a}c_{a}\log\left[m_{a}^{2}-\alpha\left(1-\alpha\right)q^{2}\right]\right\} 
+\Pi_{\mu\nu}\left(q\right)=-\frac{1}{2\pi^{2}}\left(q_{\mu}q_{\nu}-g_{\mu\nu}q^{2}\right)\int_{0}^{1}\dd\alpha\,\alpha\left(1-\alpha\right)\left\{ \log\left[m^{2}-\alpha\left(1-\alpha\right)q^{2}\right]-\sum_{a}c_{a}\log\left[m_{a}^{2}-\alpha\left(1-\alpha\right)q^{2}\right]\right\} 
 \]
 
 \end_inset
@@ -6012,7 +6094,7 @@ iD^{p}\left(q\right) & =\frac{i}{q^{2}-M^{2}+i\varepsilon}+\frac{i}{q^{2}-M^{2}+
 阶有
 \begin_inset Formula 
 \begin{equation}
-i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}+i\varepsilon}\frac{1}{\left(q-k\right)^{2}-m^{2}+i\varepsilon}\label{eq:3.8.6}
+i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}+i\varepsilon}\frac{1}{\left(q-k\right)^{2}-m^{2}+i\varepsilon}\label{eq:3.8.6}
 \end{equation}
 
 \end_inset
@@ -6020,7 +6102,7 @@ i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\fra
 这里需要正规化积分，暂时省略。最后结果是
 \begin_inset Formula 
 \begin{equation}
-\Pi\left(z\right)=\frac{g^{2}}{16\pi^{2}}\int_{0}^{1}\dif\alpha\log\frac{\Lambda^{2}}{\alpha m^{2}+\left(1-\alpha\right)\mu^{2}-\alpha\left(1-\alpha\right)z}\label{eq:3.8.7}
+\Pi\left(z\right)=\frac{g^{2}}{16\pi^{2}}\int_{0}^{1}\dd\alpha\log\frac{\Lambda^{2}}{\alpha m^{2}+\left(1-\alpha\right)\mu^{2}-\alpha\left(1-\alpha\right)z}\label{eq:3.8.7}
 \end{equation}
 
 \end_inset
@@ -6068,8 +6150,8 @@ i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\fra
 成为复数。实际上
 \begin_inset Formula 
 \begin{align*}
-\im\Pi\left(\sigma+i\varepsilon\right) & =\frac{g^{2}}{16\pi^{2}}\int_{0}^{1}\dif\alpha\left(-\pi\right)\theta\left[\alpha\left(1-\alpha\right)\sigma-\sigma m^{2}-\left(1-\alpha\right)\mu^{2}\right]\\
- & =\frac{g^{2}}{16\pi^{2}}\int_{\alpha^{-}}^{\alpha^{+}}\dif\alpha\\
+\Im\Pi\left(\sigma+i\varepsilon\right) & =\frac{g^{2}}{16\pi^{2}}\int_{0}^{1}\dd\alpha\left(-\pi\right)\theta\left[\alpha\left(1-\alpha\right)\sigma-\sigma m^{2}-\left(1-\alpha\right)\mu^{2}\right]\\
+ & =\frac{g^{2}}{16\pi^{2}}\int_{\alpha^{-}}^{\alpha^{+}}\dd\alpha\\
  & =\frac{g^{2}}{16\pi\sigma}\sqrt{\left(\sigma-\left(m+\mu\right)^{2}\right)\left(\sigma-\left(m-\mu\right)^{2}\right)}
 \end{align*}
 
@@ -6189,8 +6271,8 @@ noprefix "false"
 的实部出现。
 \begin_inset Formula 
 \begin{align*}
-\Pi\left(z\right) & =\frac{g^{2}}{16\pi^{2}}\int_{0}^{1}\dif\alpha\log\frac{\Lambda^{2}}{\alpha m^{2}+\left(1-\alpha\right)\mu^{2}-\alpha\left(1-\alpha\right)z}\\
-\im\Pi\left(\sigma+i\varepsilon\right) & =\frac{g^{2}}{16\pi\sigma}\sqrt{\left(\sigma-\left(m+\mu\right)^{2}\right)\left(\sigma-\left(m-\mu\right)^{2}\right)}
+\Pi\left(z\right) & =\frac{g^{2}}{16\pi^{2}}\int_{0}^{1}\dd\alpha\log\frac{\Lambda^{2}}{\alpha m^{2}+\left(1-\alpha\right)\mu^{2}-\alpha\left(1-\alpha\right)z}\\
+\Im\Pi\left(\sigma+i\varepsilon\right) & =\frac{g^{2}}{16\pi\sigma}\sqrt{\left(\sigma-\left(m+\mu\right)^{2}\right)\left(\sigma-\left(m-\mu\right)^{2}\right)}
 \end{align*}
 
 \end_inset
@@ -6214,7 +6296,7 @@ noprefix "false"
 迁移到无关截断的
 \begin_inset Formula 
 \[
-\sqrt{M^{2}-i\im\Pi\left(M^{2}\right)}\approx M-i\im\frac{\Pi\left(M^{2}\right)}{2M},\quad E\to E-i\frac{1}{2}\Gamma.
+\sqrt{M^{2}-i\Im\Pi\left(M^{2}\right)}\approx M-i\Im\frac{\Pi\left(M^{2}\right)}{2M},\quad E\to E-i\frac{1}{2}\Gamma.
 \]
 
 \end_inset
@@ -6236,7 +6318,7 @@ noprefix "false"
 \end_inset
 
 阶的。因此
-\begin_inset Formula $\Gamma=\im\Pi\left(M^{2}\right)/\left(2M\right)$
+\begin_inset Formula $\Gamma=\Im\Pi\left(M^{2}\right)/\left(2M\right)$
 \end_inset
 
 和我们猜测的相同，给出了衰变率。我们有
@@ -6280,7 +6362,7 @@ noprefix "false"
 式的费曼积分中取虚部，
 \begin_inset Formula 
 \[
-i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}+i\varepsilon}\frac{1}{\left(q-k\right)^{2}-m^{2}+i\varepsilon}
+i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}+i\varepsilon}\frac{1}{\left(q-k\right)^{2}-m^{2}+i\varepsilon}
 \]
 
 \end_inset
@@ -6306,7 +6388,7 @@ noprefix "false"
 函数恢复动量守恒，从而
 \begin_inset Formula 
 \begin{equation}
-i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dif^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dif^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\left\{ \frac{1}{k_{\eta}^{2}-m_{\eta}^{2}+i\varepsilon}\frac{1}{k_{\xi}^{2}-m_{\xi}^{2}+i\varepsilon}\right\} \label{eq:3.8.10}
+i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dd^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dd^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\left\{ \frac{1}{k_{\eta}^{2}-m_{\eta}^{2}+i\varepsilon}\frac{1}{k_{\xi}^{2}-m_{\xi}^{2}+i\varepsilon}\right\} \label{eq:3.8.10}
 \end{equation}
 
 \end_inset
@@ -6330,7 +6412,7 @@ i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dif^{4}k_{\eta}}{\left
 ，取大括号内的实部就得到：
 \begin_inset Formula 
 \begin{equation}
-\im\Pi\left(q\right)=-g^{2}\int\dif\Phi\left(\mathcal{P}_{\eta}\mathcal{P}_{\xi}-\Delta_{\eta}\Delta_{\xi}\right)\label{eq:3.8.11}
+\Im\Pi\left(q\right)=-g^{2}\int\dd\Phi\left(\mathcal{P}_{\eta}\mathcal{P}_{\xi}-\Delta_{\eta}\Delta_{\xi}\right)\label{eq:3.8.11}
 \end{equation}
 
 \end_inset
@@ -6338,7 +6420,7 @@ i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dif^{4}k_{\eta}}{\left
 出于紧凑考虑，引入了记号；
 \begin_inset Formula 
 \[
-\dif\Phi=\frac{\dif^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dif^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right),\quad\mathcal{P}_{\eta}=\frac{1}{k_{\eta}^{2}-m_{\eta}^{2}},\quad\Delta_{\eta}=\pi\delta\left(k_{\eta}^{2}-m_{\eta}^{2}\right)
+\dd\Phi=\frac{\dd^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dd^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right),\quad\mathcal{P}_{\eta}=\frac{1}{k_{\eta}^{2}-m_{\eta}^{2}},\quad\Delta_{\eta}=\pi\delta\left(k_{\eta}^{2}-m_{\eta}^{2}\right)
 \]
 
 \end_inset
@@ -6719,7 +6801,7 @@ b 中，一个
 ）。时空振幅乘积的傅立叶变换给出
 \begin_inset Formula 
 \[
-i\Pi\left(q\right)=\left(ig\right)^{2}i^{2}\int\dif xe^{-iqx}D_{\eta}\left(x\right)D_{\xi}\left(x\right)
+i\Pi\left(q\right)=\left(ig\right)^{2}i^{2}\int\dd xe^{-iqx}D_{\eta}\left(x\right)D_{\xi}\left(x\right)
 \]
 
 \end_inset
@@ -6735,7 +6817,7 @@ i\Pi\left(q\right)=\left(ig\right)^{2}i^{2}\int\dif xe^{-iqx}D_{\eta}\left(x\rig
 ，
 \begin_inset Formula 
 \[
-D\left(x-y\right)=\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{e^{ik\left(x-y\right)}}{k^{2}-m^{2}+i\varepsilon}
+D\left(x-y\right)=\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{e^{ik\left(x-y\right)}}{k^{2}-m^{2}+i\varepsilon}
 \]
 
 \end_inset
@@ -6753,7 +6835,7 @@ noprefix "false"
 相同，
 \begin_inset Formula 
 \[
-i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dif^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dif^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\left\{ \frac{1}{k_{\eta}^{2}-m_{\eta}^{2}+i\varepsilon}\frac{1}{k_{\xi}^{2}-m_{\xi}^{2}+i\varepsilon}\right\} 
+i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dd^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dd^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\left\{ \frac{1}{k_{\eta}^{2}-m_{\eta}^{2}+i\varepsilon}\frac{1}{k_{\xi}^{2}-m_{\xi}^{2}+i\varepsilon}\right\} 
 \]
 
 \end_inset
@@ -6802,8 +6884,8 @@ i\Pi\left(q^{2}\right)=\left(ig\right)^{2}i^{2}\int\frac{\dif^{4}k_{\eta}}{\left
 复平面上，极点处于不同的半平面。因此
 \begin_inset Formula 
 \begin{align*}
-0 & =-ig^{2}\int\dif xe^{-iqx}D_{\eta,\text{adv}}\left(x\right)D_{\xi,\text{ret}}\left(x\right)\\
- & =\int\frac{\dif^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dif^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\left\{ \frac{1}{k_{\eta}^{2}-m_{\eta}^{2}-i\sigma_{\eta}\varepsilon}\frac{1}{k_{\xi}^{2}-m_{\xi}^{2}+i\sigma_{\xi}\varepsilon}\right\} 
+0 & =-ig^{2}\int\dd xe^{-iqx}D_{\eta,\text{adv}}\left(x\right)D_{\xi,\text{ret}}\left(x\right)\\
+ & =\int\frac{\dd^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dd^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\left\{ \frac{1}{k_{\eta}^{2}-m_{\eta}^{2}-i\sigma_{\eta}\varepsilon}\frac{1}{k_{\xi}^{2}-m_{\xi}^{2}+i\sigma_{\xi}\varepsilon}\right\} 
 \end{align*}
 
 \end_inset
@@ -6841,13 +6923,13 @@ noprefix "false"
 】
 \begin_inset Formula 
 \begin{equation}
-0=-g^{2}\int\dif\Phi\left(\mathcal{P}_{\eta}\mathcal{P}_{\xi}-\sigma_{\eta}\sigma_{\xi}\Delta_{\eta}\Delta_{\xi}\right)\label{eq:3.8.14}
+0=-g^{2}\int\dd\Phi\left(\mathcal{P}_{\eta}\mathcal{P}_{\xi}-\sigma_{\eta}\sigma_{\xi}\Delta_{\eta}\Delta_{\xi}\right)\label{eq:3.8.14}
 \end{equation}
 
 \end_inset
 
 
-\begin_inset Formula $\im\Pi\left(q\right)=-g^{2}\int\dif\Phi\left(\mathcal{P}_{\eta}\mathcal{P}_{\xi}-\Delta_{\eta}\Delta_{\xi}\right)$
+\begin_inset Formula $\Im\Pi\left(q\right)=-g^{2}\int\dd\Phi\left(\mathcal{P}_{\eta}\mathcal{P}_{\xi}-\Delta_{\eta}\Delta_{\xi}\right)$
 \end_inset
 
 减去
@@ -6867,8 +6949,8 @@ noprefix "false"
 项，最终得到：
 \begin_inset Formula 
 \begin{align}
-\im\Pi\left(q\right) & =+g^{2}\int\dif\Phi\left(1+\sigma_{\eta}\sigma_{\xi}\right)\left(\Delta_{\eta}\Delta_{\xi}\right)\label{eq:3.8.15}\\
- & =g^{2}\pi^{2}\int\frac{\dif^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dif^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right){\color{blue}\theta\left(k_{\eta}^{0}\right)\delta\left(k_{\eta}^{2}-m_{\eta}^{2}\right)}{\color{red}\theta\left(k_{\xi}^{0}\right)\delta\left(k_{\xi}^{2}-m_{\xi}^{2}\right)}\left(1+\sigma_{\eta}\sigma_{\xi}\right)\nonumber 
+\Im\Pi\left(q\right) & =+g^{2}\int\dd\Phi\left(1+\sigma_{\eta}\sigma_{\xi}\right)\left(\Delta_{\eta}\Delta_{\xi}\right)\label{eq:3.8.15}\\
+ & =g^{2}\pi^{2}\int\frac{\dd^{4}k_{\eta}}{\left(2\pi\right)^{4}}\frac{\dd^{4}k_{\xi}}{\left(2\pi\right)^{4}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right){\color{blue}\theta\left(k_{\eta}^{0}\right)\delta\left(k_{\eta}^{2}-m_{\eta}^{2}\right)}{\color{red}\theta\left(k_{\xi}^{0}\right)\delta\left(k_{\xi}^{2}-m_{\xi}^{2}\right)}\left(1+\sigma_{\eta}\sigma_{\xi}\right)\nonumber 
 \end{align}
 
 \end_inset
@@ -6918,7 +7000,7 @@ noprefix "false"
 \end_inset
 
 同号的时候不为零，所以要让
-\begin_inset Formula $\im\Pi\left(q\right)$
+\begin_inset Formula $\Im\Pi\left(q\right)$
 \end_inset
 
 不为零，
@@ -6952,13 +7034,13 @@ noprefix "false"
 我们得到
 \begin_inset Formula 
 \begin{equation}
-\im\Pi\left(q\right)=\frac{1}{2}g^{2}\int\frac{\dif^{3}k_{\eta}}{\left(2\pi\right)^{3}2\omega_{\eta}}\frac{\dif^{3}k_{\xi}}{\left(2\pi\right)^{3}2\omega_{\xi}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\label{eq:3.8.17}
+\Im\Pi\left(q\right)=\frac{1}{2}g^{2}\int\frac{\dd^{3}k_{\eta}}{\left(2\pi\right)^{3}2\omega_{\eta}}\frac{\dd^{3}k_{\xi}}{\left(2\pi\right)^{3}2\omega_{\xi}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)\label{eq:3.8.17}
 \end{equation}
 
 \end_inset
 
 我们看到（也出现在更一般的情形中）
-\begin_inset Formula $\im\Pi\left(q\right)$
+\begin_inset Formula $\Im\Pi\left(q\right)$
 \end_inset
 
 是对
@@ -7040,7 +7122,7 @@ noprefix "false"
 \end_inset
 
 就给出了
-\begin_inset Formula $2\im T=i\left(T^{\dagger}-T\right)=T^{\dagger}T$
+\begin_inset Formula $2\Im T=i\left(T^{\dagger}-T\right)=T^{\dagger}T$
 \end_inset
 
 。把此式夹在初末态之间并插入中间态完备集（
@@ -7050,7 +7132,7 @@ noprefix "false"
 ），就有
 \begin_inset Formula 
 \begin{equation}
-2\im T_{fi}=\sum_{n}T_{fn}^{\dagger}T_{ni}\label{eq:3.8.18}
+2\Im T_{fi}=\sum_{n}T_{fn}^{\dagger}T_{ni}\label{eq:3.8.18}
 \end{equation}
 
 \end_inset
@@ -7130,7 +7212,7 @@ T_{fi}=\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_
 态动量之和。使用这些记号，光学定理左侧变成
 \begin_inset Formula 
 \[
-2\im T_{fi}=2\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_{fi}\frac{1}{\rho}\right)\im\mathcal{F}\left(f\leftarrow i\right)
+2\Im T_{fi}=2\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_{fi}\frac{1}{\rho}\right)\Im\mathcal{F}\left(f\leftarrow i\right)
 \]
 
 \end_inset
@@ -7174,13 +7256,13 @@ T_{fi}=\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_
 ）。因此，推广的光学定理最终告诉我们
 \begin_inset Formula 
 \begin{equation}
-2\im\mathcal{F}\left(f\leftarrow i\right)=\sum_{n}\left(2\pi\right)^{4}\delta^{4}\left(P_{ni}\right)\left(\Pi_{n}\frac{1}{\rho^{2}}\right)\left(\mathcal{F}\left(n\leftarrow f\right)\right)^{*}\mathcal{F}\left(n\leftarrow i\right)\label{eq:3.8.19}
+2\Im\mathcal{F}\left(f\leftarrow i\right)=\sum_{n}\left(2\pi\right)^{4}\delta^{4}\left(P_{ni}\right)\left(\Pi_{n}\frac{1}{\rho^{2}}\right)\left(\mathcal{F}\left(n\leftarrow f\right)\right)^{*}\mathcal{F}\left(n\leftarrow i\right)\label{eq:3.8.19}
 \end{equation}
 
 \end_inset
 
 也就是说，费曼振幅
-\begin_inset Formula $\im\mathcal{F}\left(f\leftarrow i\right)$
+\begin_inset Formula $\Im\mathcal{F}\left(f\leftarrow i\right)$
 \end_inset
 
 的虚部由
@@ -7232,7 +7314,7 @@ T_{fi}=\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_
 \end_inset
 
 阶的
-\begin_inset Formula $\im\mathcal{F}\left(f\leftarrow i\right)$
+\begin_inset Formula $\Im\mathcal{F}\left(f\leftarrow i\right)$
 \end_inset
 
 ，然后我们就可以用色散关系给出精确到
@@ -7246,7 +7328,7 @@ T_{fi}=\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_
 了。
 \begin_inset Formula 
 \[
-\text{色散关系：}f\left(z\right)=\frac{1}{\pi}\int_{\text{cut}}\dif\sigma\frac{\im f\left(\sigma+i\varepsilon\right)}{\sigma-z}.
+\text{色散关系：}f\left(z\right)=\frac{1}{\pi}\int_{\text{cut}}\dd\sigma\frac{\Im f\left(\sigma+i\varepsilon\right)}{\sigma-z}.
 \]
 
 \end_inset
@@ -7288,7 +7370,7 @@ T_{fi}=\left(2\pi\right)^{4}\delta^{\left(4\right)}\left(P_{fi}\right)\left(\Pi_
 \end_inset
 
 对应于
-\begin_inset Formula $\int\frac{\dif^{3}k_{\eta}}{\left(2\pi\right)^{3}}\frac{\dif^{3}k_{\xi}}{\left(2\pi\right)^{3}}$
+\begin_inset Formula $\int\frac{\dd^{3}k_{\eta}}{\left(2\pi\right)^{3}}\frac{\dd^{3}k_{\xi}}{\left(2\pi\right)^{3}}$
 \end_inset
 
 ，因此光学定理
@@ -7304,7 +7386,7 @@ noprefix "false"
 说明
 \begin_inset Formula 
 \[
-\im\Pi\left(q\right)=\frac{1}{2}g^{2}\int\frac{\dif^{3}k_{\eta}}{\left(2\pi\right)^{3}2\omega_{\eta}}\frac{\dif^{3}k_{\xi}}{\left(2\pi\right)^{3}2\omega_{\xi}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)
+\Im\Pi\left(q\right)=\frac{1}{2}g^{2}\int\frac{\dd^{3}k_{\eta}}{\left(2\pi\right)^{3}2\omega_{\eta}}\frac{\dd^{3}k_{\xi}}{\left(2\pi\right)^{3}2\omega_{\xi}}\left(2\pi\right)^{4}\delta^{4}\left(k_{\eta}+k_{\xi}-q\right)
 \]
 
 \end_inset
@@ -7338,7 +7420,7 @@ noprefix "false"
 在这里用一种更直接的方法给出
 \begin_inset Formula 
 \begin{equation}
-i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}+i\varepsilon}\frac{1}{\left(q-k\right)^{2}-m^{2}+i\varepsilon}\label{eq:3.8.21}
+i\Pi\left(q^{2}\right)=i^{4}g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}-\mu^{2}+i\varepsilon}\frac{1}{\left(q-k\right)^{2}-m^{2}+i\varepsilon}\label{eq:3.8.21}
 \end{equation}
 
 \end_inset
@@ -7410,7 +7492,7 @@ k^{0}-\left(\varepsilon_{k}-i\varepsilon\right),\quad k^{0}+\left(\varepsilon_{k
 的极点，我们得到
 \begin_inset Formula 
 \[
-\Pi_{1}=-g^{2}\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{2\varepsilon_{k}\left(\varepsilon_{k}-M-E_{k}\right)\left(\varepsilon_{k}-M+E_{k}\right)}
+\Pi_{1}=-g^{2}\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\frac{1}{2\varepsilon_{k}\left(\varepsilon_{k}-M-E_{k}\right)\left(\varepsilon_{k}-M+E_{k}\right)}
 \]
 
 \end_inset
@@ -7422,7 +7504,7 @@ k^{0}-\left(\varepsilon_{k}-i\varepsilon\right),\quad k^{0}+\left(\varepsilon_{k
 的极点，我们得到
 \begin_inset Formula 
 \[
-\Pi_{2}=-g^{2}\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{2E_{k}\left(M+E_{k}-\varepsilon_{k}\right)\left(M+E_{k}+\varepsilon_{k}\right)}
+\Pi_{2}=-g^{2}\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\frac{1}{2E_{k}\left(M+E_{k}-\varepsilon_{k}\right)\left(M+E_{k}+\varepsilon_{k}\right)}
 \]
 
 \end_inset
@@ -7438,7 +7520,7 @@ k^{0}-\left(\varepsilon_{k}-i\varepsilon\right),\quad k^{0}+\left(\varepsilon_{k
 的函数：
 \begin_inset Formula 
 \[
-\Pi=-g^{2}\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\left(M+E_{k}-\varepsilon_{k}\right)}\left[\frac{1}{2\varepsilon_{k}\left(M-\varepsilon_{k}-E_{k}\right)}+\frac{1}{2E_{k}\left(M+E_{k}+\varepsilon_{k}-i\varepsilon\right)}\right]
+\Pi=-g^{2}\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\left(M+E_{k}-\varepsilon_{k}\right)}\left[\frac{1}{2\varepsilon_{k}\left(M-\varepsilon_{k}-E_{k}\right)}+\frac{1}{2E_{k}\left(M+E_{k}+\varepsilon_{k}-i\varepsilon\right)}\right]
 \]
 
 \end_inset
@@ -7492,9 +7574,9 @@ noprefix "false"
 ，并扔掉我们不关心的项，相当于
 \begin_inset Formula 
 \begin{align*}
-\Pi & =-g^{2}\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\left(M+E_{k}-\varepsilon_{k}\right)}\left[\frac{1}{2\varepsilon_{k}\left(M-\varepsilon_{k}-E_{k}\right)}+\frac{1}{2E_{k}\left(M+E_{k}+\varepsilon_{k}-i\varepsilon\right)}\right]\\
- & \Rightarrow-g^{2}\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}}\frac{1}{2\varepsilon_{k}\left(\varepsilon_{k}-M-E_{k}+i\varepsilon\right)\left(\varepsilon_{k}+E_{k}-M-i\varepsilon\right)}\\
- & \Rightarrow-2\pi g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\frac{1}{\left(M-\varepsilon_{k}+E_{k}-i\varepsilon\right)\left(M-\left(\varepsilon_{k}+E_{k}\right)+i\varepsilon\right)}
+\Pi & =-g^{2}\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\frac{1}{\left(M+E_{k}-\varepsilon_{k}\right)}\left[\frac{1}{2\varepsilon_{k}\left(M-\varepsilon_{k}-E_{k}\right)}+\frac{1}{2E_{k}\left(M+E_{k}+\varepsilon_{k}-i\varepsilon\right)}\right]\\
+ & \Rightarrow-g^{2}\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}}\frac{1}{2\varepsilon_{k}\left(\varepsilon_{k}-M-E_{k}+i\varepsilon\right)\left(\varepsilon_{k}+E_{k}-M-i\varepsilon\right)}\\
+ & \Rightarrow-2\pi g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\frac{1}{\left(M-\varepsilon_{k}+E_{k}-i\varepsilon\right)\left(M-\left(\varepsilon_{k}+E_{k}\right)+i\varepsilon\right)}
 \end{align*}
 
 \end_inset
@@ -7518,8 +7600,8 @@ noprefix "false"
 ，我们总是从上方接近割线，
 \begin_inset Formula 
 \begin{align*}
-\im\Pi & =2\pi^{2}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\frac{\delta\left(M-\left(\varepsilon_{k}+E_{k}\right)\right)}{\left(M-\varepsilon_{k}+E_{k}-i\varepsilon\right)}\\
- & =2\pi^{2}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\frac{\delta\left(M-\left(\varepsilon_{k}+E_{k}\right)\right)}{2E_{k}}
+\Im\Pi & =2\pi^{2}g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\frac{\delta\left(M-\left(\varepsilon_{k}+E_{k}\right)\right)}{\left(M-\varepsilon_{k}+E_{k}-i\varepsilon\right)}\\
+ & =2\pi^{2}g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\frac{\delta\left(M-\left(\varepsilon_{k}+E_{k}\right)\right)}{2E_{k}}
 \end{align*}
 
 \end_inset
@@ -7549,7 +7631,7 @@ noprefix "false"
 再次使用，我们得到
 \begin_inset Formula 
 \[
-\im\Pi=2\pi^{2}g^{2}\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\quad\theta\left(q^{0}-k^{0}\right)\delta\left(\left(q-k\right)^{2}-m^{2}\right)
+\Im\Pi=2\pi^{2}g^{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(k^{2}-\mu^{2}\right)\quad\theta\left(q^{0}-k^{0}\right)\delta\left(\left(q-k\right)^{2}-m^{2}\right)
 \]
 
 \end_inset
@@ -7672,8 +7754,8 @@ i\mathcal{D}\left(x\right)=\theta\left(x^{0}\right)\bra0e^{iPx}\mathcal{O}\left(
 。接下来，我们要用到阶跃函数的积分表达式
 \begin_inset Formula 
 \begin{align*}
-\theta\left(t\right) & =-i\int\frac{\dif\omega}{2\pi}\frac{e^{i\omega t}}{\omega-i\varepsilon}\\
-\theta\left(-t\right) & =i\int\frac{\dif\omega}{2\pi}\frac{e^{i\omega t}}{\omega+i\varepsilon}
+\theta\left(t\right) & =-i\int\frac{\dd\omega}{2\pi}\frac{e^{i\omega t}}{\omega-i\varepsilon}\\
+\theta\left(-t\right) & =i\int\frac{\dd\omega}{2\pi}\frac{e^{i\omega t}}{\omega+i\varepsilon}
 \end{align*}
 
 \end_inset
@@ -7681,7 +7763,7 @@ i\mathcal{D}\left(x\right)=\theta\left(x^{0}\right)\bra0e^{iPx}\mathcal{O}\left(
 还是那句话，不确定就微分一下，得到
 \begin_inset Formula 
 \[
-\frac{\dif}{\dif t}\theta\left(t\right)=-i\frac{\dif}{\dif t}\int\frac{\dif\omega}{2\pi}\frac{e^{i\omega t}}{\omega-i\varepsilon}=\int\frac{\dif\omega}{2\pi}e^{i\omega t}
+\frac{\dd}{\dd t}\theta\left(t\right)=-i\frac{\dd}{\dd t}\int\frac{\dd\omega}{2\pi}\frac{e^{i\omega t}}{\omega-i\varepsilon}=\int\frac{\dd\omega}{2\pi}e^{i\omega t}
 \]
 
 \end_inset
@@ -7691,7 +7773,7 @@ i\mathcal{D}\left(x\right)=\theta\left(x^{0}\right)\bra0e^{iPx}\mathcal{O}\left(
 \end_inset
 
 函数
-\begin_inset Formula $\delta\left(t\right)=\frac{\dif}{\dif t}\theta\left(t\right)$
+\begin_inset Formula $\delta\left(t\right)=\frac{\dd}{\dd t}\theta\left(t\right)$
 \end_inset
 
 的积分表达式。
@@ -7701,9 +7783,9 @@ i\mathcal{D}\left(x\right)=\theta\left(x^{0}\right)\bra0e^{iPx}\mathcal{O}\left(
 把这些放在一起就有
 \begin_inset Formula 
 \begin{align}
-i\mathcal{D}\left(q\right) & =\int\dif^{4}xe^{iq\cdot x}i\mathcal{D}\left(x\right)=\sum_{n}\int\dif^{4}x\,e^{iq\cdot x}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \theta\left(x^{0}\right)e^{-iP_{n}x}+\theta\left(-x^{0}\right)e^{+iP_{n}x}\right\} \nonumber \\
- & =\left(2\pi\right)^{3}\sum_{n}\int\dif x^{0}e^{iq^{0}x^{0}}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \theta\left(x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}-\vec{P}_{n}\right)e^{-iP_{n}^{0}x^{0}}+\theta\left(-x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}+\vec{P}_{n}\right)e^{+iP_{n}^{0}x^{0}}\right\} \nonumber \\
- & =-i\left(2\pi\right)^{3}\sum_{n}\int\dif\,ix^{0}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \theta\left(x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}-\vec{P}_{n}\right)e^{i\left(q^{0}-P_{n}^{0}\right)x^{0}}+\theta\left(-x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}+\vec{P}_{n}\right)e^{i\left(q^{0}+P_{n}^{0}\right)x^{0}}\right\} \nonumber \\
+i\mathcal{D}\left(q\right) & =\int\dd^{4}xe^{iq\cdot x}i\mathcal{D}\left(x\right)=\sum_{n}\int\dd^{4}x\,e^{iq\cdot x}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \theta\left(x^{0}\right)e^{-iP_{n}x}+\theta\left(-x^{0}\right)e^{+iP_{n}x}\right\} \nonumber \\
+ & =\left(2\pi\right)^{3}\sum_{n}\int\dd x^{0}e^{iq^{0}x^{0}}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \theta\left(x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}-\vec{P}_{n}\right)e^{-iP_{n}^{0}x^{0}}+\theta\left(-x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}+\vec{P}_{n}\right)e^{+iP_{n}^{0}x^{0}}\right\} \nonumber \\
+ & =-i\left(2\pi\right)^{3}\sum_{n}\int\dd\,ix^{0}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \theta\left(x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}-\vec{P}_{n}\right)e^{i\left(q^{0}-P_{n}^{0}\right)x^{0}}+\theta\left(-x^{0}\right)\delta^{\left(3\right)}\left(\vec{q}+\vec{P}_{n}\right)e^{i\left(q^{0}+P_{n}^{0}\right)x^{0}}\right\} \nonumber \\
  & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \delta^{\left(3\right)}\left(\vec{q}-\vec{P}_{n}\right)\left.\frac{e^{i\left(q^{0}-P_{n}^{0}{\color{red}+i\varepsilon}\right)x^{0}}}{-P_{n}^{0}+q^{0}+i\varepsilon}\right|_{0}^{\infty}+\delta^{\left(3\right)}\left(\vec{q}+\vec{P}_{n}\right)\left.\frac{e^{i\left(q^{0}+P_{n}^{0}{\color{red}-i\varepsilon}\right)x^{0}}}{q^{0}+P_{n}^{0}-i\varepsilon}\right|_{-\infty}^{0}\right\} \nonumber \\
 i\mathcal{D}\left(q\right) & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\left\{ \frac{\delta^{\left(3\right)}\left(\vec{q}-\vec{P}_{n}\right)}{P_{n}^{0}-q^{0}-i\varepsilon}+\frac{\delta^{\left(3\right)}\left(\vec{q}+\vec{P}_{n}\right)}{P_{n}^{0}+q^{0}-i\varepsilon}\right\} \label{eq:3.8.25}
 \end{align}
@@ -7711,7 +7793,7 @@ i\mathcal{D}\left(q\right) & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{
 \end_inset
 
 对
-\begin_inset Formula $\dif^{3}x$
+\begin_inset Formula $\dd^{3}x$
 \end_inset
 
 的积分给出了三维
@@ -7719,7 +7801,7 @@ i\mathcal{D}\left(q\right) & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{
 \end_inset
 
 函数，而对
-\begin_inset Formula $\dif x^{0}=\dif t$
+\begin_inset Formula $\dd x^{0}=\dd t$
 \end_inset
 
 的积分提取出阶跃函数积分表示的分母。
@@ -7729,7 +7811,7 @@ i\mathcal{D}\left(q\right) & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{
 现在我们用
 \begin_inset Formula 
 \[
-\im\frac{1}{P_{n}^{0}-q^{0}-i\varepsilon}=\pi\delta\left(q^{0}-P_{n}^{0}\right)
+\Im\frac{1}{P_{n}^{0}-q^{0}-i\varepsilon}=\pi\delta\left(q^{0}-P_{n}^{0}\right)
 \]
 
 \end_inset
@@ -7737,9 +7819,9 @@ i\mathcal{D}\left(q\right) & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{
 来取虚部，由此得到 
 \begin_inset Formula 
 \begin{align}
-2\im\mathcal{D}\left(q\right) & =2\im\left[i\int\dif^{4}x\,e^{iqx}\bra0T\left(\mathcal{O}\left(x\right)\mathcal{O}\left(0\right)\right)\ket0\right]\nonumber \\
+2\Im\mathcal{D}\left(q\right) & =2\Im\left[i\int\dd^{4}x\,e^{iqx}\bra0T\left(\mathcal{O}\left(x\right)\mathcal{O}\left(0\right)\right)\ket0\right]\nonumber \\
  & =\left(2\pi\right)^{4}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\left[\delta^{\left(4\right)}\left(q-P_{n}\right)+\delta^{\left(4\right)}\left(q+P_{n}\right)\right]\nonumber \\
-2\im\mathcal{D}\left(q\right) & =\left(2\pi\right)^{4}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\delta^{\left(4\right)}\left(q-P_{n}\right)\label{eq:3.8.26}
+2\Im\mathcal{D}\left(q\right) & =\left(2\pi\right)^{4}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\delta^{\left(4\right)}\left(q-P_{n}\right)\label{eq:3.8.26}
 \end{align}
 
 \end_inset
@@ -7831,7 +7913,7 @@ i\mathcal{D}\left(q\right) & =-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{
 
 \begin_inset Formula 
 \[
-\int\frac{\dif^{3}k}{\left(2\pi\right)^{3}2\omega_{k}}\Rightarrow\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(p^{2}-m^{2}\right)
+\int\frac{\dd^{3}k}{\left(2\pi\right)^{3}2\omega_{k}}\Rightarrow\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\theta\left(k^{0}\right)\delta\left(p^{2}-m^{2}\right)
 \]
 
 \end_inset
@@ -7933,7 +8015,7 @@ i\mathcal{D}\left(q\right)=-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{0n}
 \end_inset
 
 并注意到现在对单介子态的求和由
-\begin_inset Formula $\int\dif^{3}k\ket k\bra k$
+\begin_inset Formula $\int\dd^{3}k\ket k\bra k$
 \end_inset
 
 给出，并考虑到归一化因子
@@ -7947,7 +8029,7 @@ i\mathcal{D}\left(q\right)=-i\left(2\pi\right)^{3}\sum_{n}\abs*{\mathcal{O}_{0n}
 的贡献
 \begin_inset Formula 
 \begin{align*}
-i\mathcal{D}\left(q\right) & \approx-i\left(2\pi\right)^{3}\int\dif^{3}k\frac{Z}{\left(2\pi\right)^{3}2\omega_{k}}\left\{ \frac{\delta^{(3)}\left(\vec{q}-\vec{k}\right)}{\omega_{k}-q^{0}-i\varepsilon}+\left(q\rightarrow-q\right)\right\} \\
+i\mathcal{D}\left(q\right) & \approx-i\left(2\pi\right)^{3}\int\dd^{3}k\frac{Z}{\left(2\pi\right)^{3}2\omega_{k}}\left\{ \frac{\delta^{(3)}\left(\vec{q}-\vec{k}\right)}{\omega_{k}-q^{0}-i\varepsilon}+\left(q\rightarrow-q\right)\right\} \\
  & =-i\frac{Z}{2\omega_{q}}\left\{ \frac{-1}{q^{0}-\left(\omega_{q}-i\varepsilon\right)}+\frac{1}{q^{0}-\left(-\omega_{q}+i\varepsilon\right)}\right\} \\
  & \xRightarrow{\varepsilon\to0}\frac{iZ}{q_{0}^{2}-\left(\omega_{q}-i\varepsilon\right)^{2}}=\frac{iZ}{q^{2}-m^{2}+2\omega_{q}i\varepsilon-\varepsilon^{2}}\\
 i\mathcal{D}\left(q\right) & \approx\frac{iZ}{q^{2}-m^{2}+i\varepsilon}
@@ -7968,7 +8050,7 @@ i\mathcal{D}\left(q\right) & \approx\frac{iZ}{q^{2}-m^{2}+i\varepsilon}
 
 \begin_layout Standard
 我们还可以轻松算出单粒子态对
-\begin_inset Formula $-\im\mathcal{D}(q)$
+\begin_inset Formula $-\Im\mathcal{D}(q)$
 \end_inset
 
 的贡献，以作验证。 代入
@@ -7984,7 +8066,7 @@ noprefix "false"
 式，
 \begin_inset Formula 
 \[
-2\im\mathcal{D}\left(q\right)=\left(2\pi\right)^{4}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\delta^{\left(4\right)}\left(q-P_{n}\right),
+2\Im\mathcal{D}\left(q\right)=\left(2\pi\right)^{4}\sum_{n}\abs*{\mathcal{O}_{0n}}^{2}\delta^{\left(4\right)}\left(q-P_{n}\right),
 \]
 
 \end_inset
@@ -7996,7 +8078,7 @@ noprefix "false"
 情形， 有
 \begin_inset Formula 
 \[
-2\im\mathcal{D}\left(q\right)=2\pi Z\int\frac{\dif^{3}k}{2\omega_{k}}\delta^{4}\left(q-k\right)=\frac{2\pi Z}{2\omega_{q}}\delta\left(q^{0}-\omega_{q}\right)=2\pi Z\delta\left(q^{2}-m^{2}\right)
+2\Im\mathcal{D}\left(q\right)=2\pi Z\int\frac{\dd^{3}k}{2\omega_{k}}\delta^{4}\left(q-k\right)=\frac{2\pi Z}{2\omega_{q}}\delta\left(q^{0}-\omega_{q}\right)=2\pi Z\delta\left(q^{2}-m^{2}\right)
 \]
 
 \end_inset
@@ -8004,7 +8086,7 @@ noprefix "false"
  这里我们在最后一步用了1.8.14,16式。总结：
 \begin_inset Formula 
 \[
-i\mathcal{D}\left(q\right)\approx\frac{iZ}{q^{2}-m^{2}+i\varepsilon},\quad2\im\mathcal{D}\left(q\right)\approx2\pi Z\delta\left(q^{2}-m^{2}\right)
+i\mathcal{D}\left(q\right)\approx\frac{iZ}{q^{2}-m^{2}+i\varepsilon},\quad2\Im\mathcal{D}\left(q\right)\approx2\pi Z\delta\left(q^{2}-m^{2}\right)
 \]
 
 \end_inset
@@ -8084,7 +8166,7 @@ noprefix "false"
 式的色散关系。
 \begin_inset Formula 
 \[
-f\left(z\right)=\frac{1}{\pi}\int_{\text{割线}}\dif\sigma\frac{\im f\left(\sigma+i\varepsilon\right)}{\sigma-z}.
+f\left(z\right)=\frac{1}{\pi}\int_{\text{割线}}\dd\sigma\frac{\Im f\left(\sigma+i\varepsilon\right)}{\sigma-z}.
 \]
 
 \end_inset
@@ -8106,7 +8188,7 @@ noprefix "false"
 式足够长时间（参见练习III.8.3），你就会发现关系式
 \begin_inset Formula 
 \[
-\im\left(i\int\dif^{4}xe^{iqx}\bra0T\left[\mathcal{O}\left(x\right)\mathcal{O}\left(0\right)\right]\ket0\right)=\frac{1}{2}\int\dif^{4}xe^{iqx}\bra0\left[\mathcal{O}\left(x\right),\mathcal{O}\left(0\right)\right]\ket0
+\Im\left(i\int\dd^{4}xe^{iqx}\bra0T\left[\mathcal{O}\left(x\right)\mathcal{O}\left(0\right)\right]\ket0\right)=\frac{1}{2}\int\dd^{4}xe^{iqx}\bra0\left[\mathcal{O}\left(x\right),\mathcal{O}\left(0\right)\right]\ket0
 \]
 
 \end_inset
@@ -8120,7 +8202,7 @@ noprefix "false"
 \end_inset
 
 ， 那么此处讨论说明他的传播子
-\begin_inset Formula $\int\dif^{4}xe^{iqx}\bra0T\left[\eta\left(x\right)\eta\left(0\right)\right]\ket0$
+\begin_inset Formula $\int\dd^{4}xe^{iqx}\bra0T\left[\eta\left(x\right)\eta\left(0\right)\right]\ket0$
 \end_inset
 
 也同样在
@@ -8168,7 +8250,7 @@ name "sec:D"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif^{d}kF\left(k^{2}\right)=\frac{2\pi^{d/2}}{\Gamma\left(d/2\right)}\int_{0}^{\infty}\dif k\,k^{d-1}F\left(k^{2}\right)
+\int_{-\infty}^{+\infty}\dd^{d}kF\left(k^{2}\right)=\frac{2\pi^{d/2}}{\Gamma\left(d/2\right)}\int_{0}^{\infty}\dd k\,k^{d-1}F\left(k^{2}\right)
 \]
 
 \end_inset
@@ -8176,7 +8258,7 @@ name "sec:D"
 
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}=i\left(-\right)^{n}\int\frac{\dif_{E}^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+m^{2}\right)^{n}}=\frac{i\left(-\right)^{n}}{16\pi^{2}}\int_{0}^{\infty}\dif k^{2}\,k^{2}F\left(k^{2}\right)
+\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}=i\left(-\right)^{n}\int\frac{\dd_{E}^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+m^{2}\right)^{n}}=\frac{i\left(-\right)^{n}}{16\pi^{2}}\int_{0}^{\infty}\dd k^{2}\,k^{2}F\left(k^{2}\right)
 \]
 
 \end_inset
@@ -8184,7 +8266,7 @@ name "sec:D"
 
 \begin_inset Formula 
 \begin{equation}
-\int\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{3}}=\frac{-i}{32\pi^{2}m^{2}}\label{eq:d.11}
+\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{3}}=\frac{-i}{32\pi^{2}m^{2}}\label{eq:d.11}
 \end{equation}
 
 \end_inset
@@ -8192,7 +8274,7 @@ name "sec:D"
 
 \begin_inset Formula 
 \begin{equation}
-\int^{\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}=\frac{i}{16\pi^{2}}\left[\log\left(\frac{\Lambda^{2}}{m^{2}}\right)-1+\cdots\right]\label{eq:d.12}
+\int^{\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}=\frac{i}{16\pi^{2}}\left[\log\left(\frac{\Lambda^{2}}{m^{2}}\right)-1+\cdots\right]\label{eq:d.12}
 \end{equation}
 
 \end_inset
@@ -8200,7 +8282,7 @@ name "sec:D"
 
 \begin_inset Formula 
 \begin{equation}
-\int^{\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}=\frac{-i}{16\pi^{2}}\left[\Lambda^{2}-2m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)+m^{2}+\cdots\right]\label{eq:d.13}
+\int^{\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}=\frac{-i}{16\pi^{2}}\left[\Lambda^{2}-2m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)+m^{2}+\cdots\right]\label{eq:d.13}
 \end{equation}
 
 \end_inset
@@ -8208,7 +8290,7 @@ name "sec:D"
 计算过程：
 \begin_inset Formula 
 \begin{align*}
- & \int^{\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}=\int^{\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{1}}+{\color{blue}\frac{m^{2}}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}}\\
+ & \int^{\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{k^{2}}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}=\int^{\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{1}}+{\color{blue}\frac{m^{2}}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}}}\\
 = & \frac{i}{16\pi^{2}}\left[-\Lambda^{2}+m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)+{\color{blue}m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)-m^{2}}+\cdots\right]\\
 = & \frac{i}{16\pi^{2}}\left[-\Lambda^{2}+2m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)-m^{2}+\cdots\right]\\
 = & \frac{-i}{16\pi^{2}}\left[\Lambda^{2}-2m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)+m^{2}+\cdots\right]
@@ -8223,8 +8305,8 @@ name "sec:D"
 。
 \begin_inset Formula 
 \begin{align*}
-\int^{\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{1}} & =\int^{\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\left[\left(\int_{0}^{m^{2}}\frac{1}{\left(k^{2}-t+i\varepsilon\right)^{2}}\dif t\right)+\frac{1}{k^{2}}\right]\\
- & =\int_{0}^{m^{2}}\dif m^{2}\frac{i}{16\pi^{2}}\left[-\Lambda^{2}+\log\left(\frac{\Lambda^{2}}{m^{2}}\right)-1+\cdots\right]\\
+\int^{\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{1}} & =\int^{\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\left[\left(\int_{0}^{m^{2}}\frac{1}{\left(k^{2}-t+i\varepsilon\right)^{2}}\dd t\right)+\frac{1}{k^{2}}\right]\\
+ & =\int_{0}^{m^{2}}\dd m^{2}\frac{i}{16\pi^{2}}\left[-\Lambda^{2}+\log\left(\frac{\Lambda^{2}}{m^{2}}\right)-1+\cdots\right]\\
  & =\frac{i}{16\pi^{2}}\left[-\Lambda^{2}+m^{2}\log\Lambda^{2}-m^{2}-\left(m^{2}\log m^{2}-m^{2}\right)\right]\\
  & =\frac{i}{16\pi^{2}}\left[-\Lambda^{2}+m^{2}\log\left(\frac{\Lambda^{2}}{m^{2}}\right)\right]
 \end{align*}
@@ -8234,7 +8316,7 @@ name "sec:D"
 
 \begin_inset Formula 
 \[
-\int_{-\Lambda}^{+\Lambda}\frac{\dif^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}}=\frac{1}{\left(2\pi\right)^{4}}\int_{0}^{\Lambda^{2}}\dif k^{2}\,k^{2}\frac{1}{k^{2}}=\frac{-i}{16\pi^{2}}\Lambda^{2}
+\int_{-\Lambda}^{+\Lambda}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{k^{2}}=\frac{1}{\left(2\pi\right)^{4}}\int_{0}^{\Lambda^{2}}\dd k^{2}\,k^{2}\frac{1}{k^{2}}=\frac{-i}{16\pi^{2}}\Lambda^{2}
 \]
 
 \end_inset
