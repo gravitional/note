@@ -20,9 +20,9 @@ pdftoppm  -png -rx 300 -ry 300  input.pdf outputname
 
 ## ubuntu 自带截图
 
-`ubuntu` 自带截图程序叫做`gnome-serceenshot`
+[Ubuntu设置截图到剪贴板,像QQ一样截图](https://www.jianshu.com/p/7f453c144f9c)
 
-[Ubuntu设置截图到剪贴板,像QQ一样截图](https://www.jianshu.com/p/7f453c144f9c). 可以定义一个快捷键,保存到桌面文件
+`ubuntu` 自带截图程序叫做`gnome-serceenshot`, 可以定义快捷键, 保存到桌面文件
 
 ```bash
 gnome-screenshot -a --file=(~"/Desktop/$(date +%s).png")

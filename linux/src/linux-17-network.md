@@ -1110,4 +1110,3 @@ exec cinnamon-session-cinnamon &
 之后启动`vncserver`就不需要`sudo`了, 也不会`crash`.
 我猜缺少可执行文件会阻止 `vncserver` 启动, 但是使用 `sudo` 权限, 它设法从某些文件中提取的默认设置开始, 这些文件只能由 `sudoers` 访问.
 但在`ubuntu 20.04`上使用`gnome-session`能连接, 但是会有黑屏问题.
-

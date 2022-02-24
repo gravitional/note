@@ -352,3 +352,233 @@ sleep 2; echo -e `Time's up\a`
 ```bash
 sleep 2; echo `Time's up` /span>\a'
 ```
+
+## shell 语法
+
+### 空白字符
+
+[对C标准中空白字符的理解](https://blog.csdn.net/boyinnju/article/details/6877087)
+[Shell中去掉文件中的换行符简单方法](https://blog.csdn.net/Jerry_1126/java/article/details/85009615)
+
+`C`标准库里`<ctype.h>`中声明了一个函数:
+
+`int isspace(int c);`
+
+该函数判断字符`c`是否为一个空白字符.
+
+`C`标准中空白字符有六个:
+空格(`' '`), 换页(`'\f'`), 换行(`'\n'`), 回车(`'\r'`), 水平制表符(`'\t'`), 垂直制表符(`'\v'`)
+
+***
+空格: ASCII码为`0x20`,而不是`0x00`.`0x00`代表空(`NULL`)
+
+`0X00-0XFF` `16`进制一共`256`个,刚好是一个`bit`的范围.
+
+***
+回车('\r')效果是输出回到本行行首,结果可能会将这一行之前的输出覆盖掉,例如执行:
+
+```bash
+puts("hello world!\rxxx");
+#在终端输出的是:
+xxxlo world!
+```
+
+如果将上面的字符串写入文件中,例如执行:
+
+```bash
+char *s = "hello world!\rxxx";
+FILE *str = fopen("t.txt","r");
+fwrite(s, 16, 1, str);
+```
+
+用文本编辑器打开`t.txt`.显示的效果将由打开的编辑器所决定.
+vi将`\r`用`^M`代替,而记事本就没有显示该字符.
+
+***
+换行('\n')
+顾名思义,换行就是转到下一行输出.例如:
+
+```bash
+puts("hello\nworld!");
+#在终端中将输出
+hello
+world!
+```
+
+但需要注意的是,终端输出要达到换行效果用``\n``就可以,但要在文本文件输出中达到换行效果在各个系统中有所区别.
+在`*nix`系统中,每行的结尾是"`\n`",windows中则是"`\n\r`",mac则是"`\r`".
+
+***
+水平制表符('\t')
+
+相信大家对'\t'还是比较熟悉的.一般来说,其在终端和文件中的输出显示相当于按下键盘`TAB`键效果.
+一般系统中,显示水平制表符将占8列.同时水平制表符开始占据的初始位置是第`8*n`列(第一列的下标为0).例如:
+
+```bash
+puts("0123456\txx");
+puts("0123456t\txx");
+```
+
+***
+垂直制表符('\v')
+
+垂直制表符不常用.它的作用是让`'\v'`后面的字符从下一行开始输出,且开始的列数为``\v``前一个字符所在列后面一列.例如:
+
+```bash
+puts("01\v2345");
+```
+
+***
+换页('\f')
+
+换页符的在终端的中的效果相当于`*nix`中`clear`命令.
+终端在输出`'\f'`之后内容之前,会将整个终端屏幕清空空,然后在输出内容.给人的该觉是在`clear`命令后的输出字符串.
+
+最后我想说明一点,`\t \r, \v \f`也是控制字符,它们会控制字符的输出方式.
+它们在终端输出时会有上面的表现,但如果写入文本文件,一般文本编辑器(vi或记事本)对`\t \r, \v \f`的显示是没有控制效果的.
+
+### shell 换行
+
+把换行符注释掉,如果同时想插入注释,可以用`$()`或者两个`backtick`包裹注释
+
+```bash
+emcc -o ./dist/test.html `# 目标文件` \
+--shell-file ./tmp.html `# 模板文件` \
+--source-map-base dist `# source map 根路径` \
+-O3 `# 优化级别` \
+```
+
+### 删除换行符
+
+文件中每行都以`\n`结尾,如果要去掉换行符,使用`sed`命令
+
+```bash
+[root@host ~]# sed -i 's/\n//g' FileName
+```
+
+或者使用`tr`命令: tr - translate or delete characters
+
+```bash
+[root@host ~]# cat fileName | tr  -d '\n'
+```
+
+有一种简单的方法:
+
+`xargs` - build and execute command lines from standard input
+
+ ```bash
+cat FileName | xargs | echo -n   # 连文件末尾换行符也去掉
+# 或者
+cat FileName | xargs           # 会保留文件末尾的换行符
+ ```
+
+### eval
+
+[Shell 中eval的用法](https://blog.csdn.net/luliuliu1234/article/details/80994391)
+
+```bash
+eval command-line
+```
+
+其中`command-line`是在终端上键入的一条普通命令行.
+然而当在它前面放上`eval`时,其结果是`shell`在执行命令行之前扫描它两次.如:
+
+```bash
+$ pipe="|"
+$ eval ls $pipe wc -l
+1
+2
+3
+```
+
+shell第1次扫描命令行时,它替换出`pipe`的值`|`,接着`eval`使它再次扫描命令行,这时shell把`|`作为管道符号了.
+
+如果变量中包含任何需要`shell`直接在命令行中看到的字符,就可以使用eval.
+命令行结束符(`;  |  &`),I/o重定向符(`< >`)和引号就属于对shell具有特殊意义的符号,必须直接出现在命令行中.
+
+`eval echo \$$#`取得最后一个参数, 如:
+
+```bash
+$ cat last    #此处last是一个脚本文件,内容是下一行显示
+$  eval echo \$$#
+$ ./last one two three four
+
+four
+```
+
+第一遍扫描后,shell把反斜杠去掉了.当shell再次扫描该行时,它替换了`$4`的值,并执行echo命令
+
+***
+以下示意如何用`eval`命令创建指向变量的`指针`:
+
+```bash
+x=100
+ptrx=x
+eval echo \$$ptrx  #指向 ptrx,用这里的方法可以理解上面的例子
+eval $ptrx=50 #将 50 存到 ptrx 指向的变量中.
+echo $x
+```
+
+```bash
+# ptrx 指向x
+echo $ptrx
+x
+# \$ 转义之后,再跟 x 连成一个字符串
+echo \$$ptrx
+$x
+# eval 执行两次扫描,所以相当于 echo $x
+eval echo \$$ptrx
+```
+
+### chmod
+
+chmod - change file mode bits
+
+SYNOPSIS
+
+`chmod [OPTION]... MODE[,MODE]... FILE...`
+`chmod [OPTION]... OCTAL-MODE FILE...`
+`chmod [OPTION]... --reference=RFILE FILE...`
+
+DESCRIPTION
+
+chmod 后面可以接符号表示新的权限,也可以接八进制数字(octal) --表示新的 `模式位`(mode bits).
+
+符号 mode 的格式一般是`[ugoa...][[-+=][perms...]...]`,`perms`一般是`0`,或者`rwxXst`中的多个字符,
+或者`ugo`中的一个字符.多种符号mode可以给出,用逗号隔开.
+
+`ugoa`表示控制特定用户访问权限:
+
++ u:拥有它的用户
++ g:其他在文件的组中的用户
++ o:不在文件的组中的其他用户
++ a:所有用户
+如果没有给出,默认就是 a,but bits that are set in the umask are not affected.
+
+operator `+`添加权限,`-`删除权限,`=`设置为`xxx`,except that a directory's unmentioned set user and group ID bits are not affected.
+
+`rwxXst`表示mode bits,read (r), write (w), execute (or  search  for directories)  (x),
+execute/search  only if the file is a directory or already has execute permission for some user (X),
+set user or group ID on execution (s), restricted deletion flag or sticky bit (t)
+
+或者指定`ugo`中的一个,
+the permissions granted to the user who owns the file (u),
+the permissions granted to other users who are members of the file's group (g),
+and the permissions granted to users that are in neither of the two preceding categories (o).
+
++ 数字模式
+
+数字 `mode` 是1到4个八进制数字(0-7), 通过把相应的值 `4`, `2`, `1`加起来, 可以推导出权限.
+省略的数字被认为是前置的`0`.
+
+第一位数字选择用户组
+the set user ID (4) and
+set group  ID(2)  and
+restricted deletion or sticky (1) attributes.
+
+第二位数字选择权限
+read (4), write (2), and execute (1);
+
+第三位数字设定组中其他用户的权限
+
+第四位数字设定不在组中用户的权限
