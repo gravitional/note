@@ -185,7 +185,7 @@ You need to  maybe `reconfigure`  and restart LyX.
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}} % 手动定义一个垂直的微分符号
 ```
 
-## LyX 命令行
+## LyX 命令行, 转换格式
 
 概要: `lyx [ command-line switches ] [ name[.lyx] ... ]`
 
