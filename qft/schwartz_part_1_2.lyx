@@ -37,8 +37,7 @@
 \setmonofont{Latin Modern Roman}
 %设置数学字体
 \usepackage{unicode-math} %boldsymbol,blackboard
-\setmathfont{Latin Modern Math}
-%\setmathfont{XITSMath-Regular}
+\setmathfont{XITS Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
 % TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
@@ -48,10 +47,9 @@
 \usetikzlibrary{shapes.misc,animations}
 \usetikzlibrary{shapes.geometric}% tikz node 形状的库
 \usepackage{siunitx} % 国际单位制
-\usepackage{physics} % 物理包
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{physics} % 物理常用记号
 \usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{simplewick} 
+%\usepackage{simplewick} 
 % a simple means of drawing Wick contractions above and below expressions. 
 \usepackage{makeidx} 
 % Standard package for creating indexes
@@ -89,11 +87,9 @@
     tabsize=2
 }
 %%++++++++++++++++++++ 
+%*号版本可以把上下标放在符号的正上方/正下方
 %\DeclarePairedDelimiter\abs{\lvert}{\rvert}
 %\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-%\DeclareMathOperator{\re}{Re}
-%*号版本可以把上下标放在符号的正上方/正下方
-%\DeclareMathOperator{\Im}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
@@ -101,7 +97,6 @@
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
 %\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
 \newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
@@ -109,6 +104,9 @@
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+\end_modules
 \maintain_unincluded_children false
 \language chinese-simplified
 \language_package none
@@ -10981,7 +10979,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 费曼参数化基于一些简单的数学公式。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Example
 最简单的是
 \begin_inset Formula 
 \[
@@ -11017,7 +11015,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 ，
 \begin_inset Formula 
 \[
-\frac{1}{A^{2}}\int_{0}^{1}\dd x\dd y\delta\left(x+y-1\right)
+\frac{1}{A^{2}}\int_{0}^{1}\dd{x}\dd{y}\delta\left(x+y-1\right)
 \]
 
 \end_inset
@@ -11038,7 +11036,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 \begin_inset Formula $D$
 \end_inset
 
-的维度减少，这样我们需要知道降维的积分区域
+的维度减少，这样我们需要知道降维后的积分区域
 \begin_inset Formula $D^{\prime}$
 \end_inset
 
@@ -11065,53 +11063,60 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 ，所以
 \begin_inset Formula 
 \[
-\dd s=\sqrt{\abs{\frac{\partial x}{\partial x}}^{2}+\abs{\frac{\partial(1-x)}{\partial x}}^{2}}\dd x=\sqrt{2}\dd x
+\dd{s}=\sqrt{\abs{\frac{\partial x}{\partial x}}^{2}+\abs{\frac{\partial(1-x)}{\partial x}}^{2}}\dd x=\sqrt{2}\dd{x}
 \]
 
 \end_inset
 
-与原本低维的积分测度
+与一维的积分测度 
 \begin_inset Formula $\dd x=\dd y$
 \end_inset
 
-相比，放大了
+ 相比，具有 
 \begin_inset Formula $\sqrt{2}$
 \end_inset
 
-倍，因此回去的时候要乘以
-\begin_inset Formula $\frac{1}{\sqrt{2}}$
+ 因子，因此回到一维时候要乘以 
+\begin_inset Formula $1/\sqrt{2}$
 \end_inset
 
-，跟长度约掉，刚好为
+，结果为
 \begin_inset Formula $1$
 \end_inset
 
-。其实有一个更简单的考虑方法，这条线在
+，即这条线在 
 \begin_inset Formula $x$
 \end_inset
 
-轴 or 
+轴或 
 \begin_inset Formula $y$
 \end_inset
 
-轴的投影刚好为
+ 轴的投影为
 \begin_inset Formula $(0,1)$
 \end_inset
 
-。也就是说，满足条件的积分区域对原来低维测度的投影长度为
+。也就是说，满足条件的二维积分区域对一维的投影长度为
 \begin_inset Formula $1$
 \end_inset
 
-，所以直接得到积分区域的低维长度为
+，所以直接得到积分区域的一维测度为
 \begin_inset Formula $1$
 \end_inset
 
-。注意这个投影总是向原点的方向进行的。
+。注意这个投影朝原点的方向。
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 对于高维的情况，
-\begin_inset Formula $\delta\left(x+y+z+\cdots\right)=1$
+\begin_inset Formula $\delta\left(x+y+\cdots+z\right)=1$
 \end_inset
 
 。总的测度体积是
@@ -11125,7 +11130,15 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 函数的限制，可以写成 
 \begin_inset Formula 
 \[
-\int_{0}^{1}\dd x\int_{0}^{1}\dd y\int_{0}^{1}\dd z\cdots\delta\left(x+y+z+\cdots\right)\to\int_{0}^{1}\dd x\int_{0}^{1-x+\epsilon}\dd y\int_{0}^{1-x-y+\epsilon}\dd z\delta\left(x+y+z+\cdots\right)
+\int_{0}^{1}\dd{x}\int_{0}^{1}\dd{y}\cdots\int_{0}^{1}\dd{z}\delta\left(x+y+\cdots+z\right)\to\int_{0}^{1}\dd{x}\int_{0}^{1-x}\dd{y}\int_{0}^{1-x-y}\cdots\int_{0}^{1-x-y\cdots}\dd{z}
+\]
+
+\end_inset
+
+其中考虑了
+\begin_inset Formula 
+\[
+x+y\le1,\quad x+y+z\le1,\quad\cdots
 \]
 
 \end_inset
@@ -11135,13 +11148,13 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 \end_inset
 
 维单位锥体的体积（各边都相等），
-\begin_inset Formula $V=\frac{1}{(n-1)!}$
+\begin_inset Formula $V=\frac{1}{\left(n-1\right)!}$
 \end_inset
 
-。所以，一般有
+。再类似上面，推测一般情况下有：
 \begin_inset Formula 
 \[
-\frac{1}{A_{1}A_{2}\cdots A_{n}}=\int_{0}^{1}\dd x_{1}\cdots\dd x_{n}\delta\left(\sum x_{1}-1\right)\frac{\left(n-1\right)!}{\left[x_{1}A_{1}+\cdots+x_{n}A_{n}\right]^{n}}
+\frac{1}{A_{1}A_{2}\cdots A_{n}}=\int_{0}^{1}\dd{x_{1}}\cdots\int_{0}^{1}\dd{x_{n}}\delta\left(\sum x_{i}-1\right)\frac{\left(n-1\right)!}{\left[x_{1}A_{1}+\cdots+x_{n}A_{n}\right]^{n}}
 \]
 
 \end_inset
@@ -11149,7 +11162,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 类似地，
 \begin_inset Formula 
 \[
-\frac{1}{AB^{n}}=\int_{0}^{1}\dd x\dd y\delta\left(x+y-1\right)\frac{ny^{n-1}}{\left[xA+yB\right]^{n+1}}
+\frac{1}{AB^{n}}=\int_{0}^{1}\cdots\int_{0}^{1}\dd x\dd y\delta\left(x+y-1\right)\frac{ny^{n-1}}{\left[xA+yB\right]^{n+1}}
 \]
 
 \end_inset
@@ -11172,7 +11185,7 @@ x_{i}\left(q_{i}^{2}-m_{i}^{2}\right)=0 & \forall i\\
 
 \end_inset
 
-when 
+其中 
 \begin_inset Formula $\Delta=-p^{2}x(1-x)$
 \end_inset
 
@@ -11188,7 +11201,14 @@ when
 \end_layout
 
 \begin_layout Standard
-peskin书给出了更一般的形式，
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Peskin书给出了更一般的形式，
 \begin_inset Formula 
 \[
 \frac{1}{A_{1}^{m_{1}}A_{1}^{m_{2}}A_{n}^{m_{n}}}=\int_{0}^{1}\dd x_{1}\cdots\dd x_{n}\delta\left(\sum x_{i}-1\right)\frac{\prod x_{i}^{m_{i}-1}}{\left[\sum x_{i}A_{i}\right]^{\sum m_{i}}}\frac{\Gamma\left(m_{1}+\cdots+m_{n}\right)}{\Gamma\left(m_{1}\right)\cdots\Gamma\left(m_{n}\right)}
@@ -11196,7 +11216,66 @@ peskin书给出了更一般的形式，
 
 \end_inset
 
-比如，
+对积分上限可以做更加细致的处理，例如：
+\begin_inset Formula 
+\begin{align*}
+ & \int_{0}^{1}\dd{x}\int_{0}^{1}\dd{y}\int_{0}^{1}\dd{z}\delta\left(1-x-y-z\right)\\
+\text{考虑不等式约束}\Rightarrow & \left.\int_{0}^{1}\dd{x}\int_{0}^{1-x}\dd{y}\right|_{z=1-x-y}\\
+(x\leftrightarrow1-x)\Rightarrow & \left.\int_{0}^{1}\dd{x}\int_{0}^{x}\dd{y}\right|_{z=x-y}\\
+(y\leftrightarrow x-y)\Rightarrow & \left.\int_{0}^{1}\dd{x}\int_{0}^{x}\dd{y}\right|_{z=y}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+类似地，一般情况下可写成
+\begin_inset Formula 
+\[
+\frac{1}{A_{1}^{m_{1}}A_{1}^{m_{2}}A_{n}^{m_{n}}}=\int_{0}^{1}{\color{blue}\dd{x_{1}}}\int_{0}^{x_{1}}{\color{blue}\dd{x_{2}}}\cdots\int_{0}^{x_{n-2}}{\color{blue}\dd x_{n-1}}\frac{\prod{\color{blue}y_{i}^{m_{i}-1}}}{\left[\sum{\color{blue}y_{i}}A_{i}\right]^{\sum m_{i}}}\frac{\Gamma\left(m_{1}+\cdots+m_{n}\right)}{\Gamma\left(m_{1}\right)\cdots\Gamma\left(m_{n}\right)}
+\]
+
+\end_inset
+
+注意，被积式中已经去掉了
+\begin_inset Formula $\delta$
+\end_inset
+
+函数，并且
+\begin_inset Formula $n$
+\end_inset
+
+个独立传播子只需 
+\begin_inset Formula $n-1$
+\end_inset
+
+ 个费曼参数。其中：
+\begin_inset Formula 
+\begin{align*}
+y_{1}= & 1-x_{1}\\
+y_{2}= & \hspace{4ex}x_{1}-x_{2}\\
+y_{3}= & \hspace{9ex}x_{2}-x_{3}\\
+\cdots= & \cdots\\
+y_{n-1}= & \hspace{14ex}x_{n-2}-x_{n-1}\\
+y_{n}= & \hspace{21ex}x_{n-1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+应用到特定情形，例如：
 \begin_inset Formula 
 \[
 \frac{1}{A^{\alpha}B^{\beta}}=\int_{0}^{1}\dd z\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}
@@ -11204,10 +11283,14 @@ peskin书给出了更一般的形式，
 
 \end_inset
 
-可以这么证明它，通过变量代换：
+
+\end_layout
+
+\begin_layout Proof
+通过变量代换：
 \begin_inset Formula 
 \[
-z\equiv\frac{wA}{wA+\left(1-w\right)B},\quad\left(1-z\right)=\frac{\left(1-w\right)B}{wA+\left(1-w\right)B},\dd z-\frac{AB\dd w}{\left[wA+\left(1-w\right)B\right]^{2}}
+z\equiv\frac{wA}{wA+\left(1-w\right)B},\quad\left(1-z\right)=\frac{\left(1-w\right)B}{wA+\left(1-w\right)B},\quad\dd{z}=\frac{AB\dd{w}}{\left[wA+\left(1-w\right)B\right]^{2}}
 \]
 
 \end_inset
@@ -11240,7 +11323,7 @@ Schwinger 参数化
 时：
 \begin_inset Formula 
 \begin{equation}
-\frac{i}{A}=\int_{0}^{\infty}\dd se^{isA}\label{eq:b.5}
+\frac{i}{A}=\int_{0}^{\infty}\dd{s}e^{isA}\label{eq:b.5}
 \end{equation}
 
 \end_inset
@@ -12629,20 +12712,20 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-F^{\mu\nu}(\Delta)=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\Delta)^{n}}
+F^{\mu\nu}\left(\Delta\right)=\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\frac{k^{\mu}k^{\nu}}{\left(k^{2}-\Delta\right)^{n}}
 \]
 
 \end_inset
 
-它可以使用一个技巧化简。由于积分是 Lorentz 变换下的张量 只能依赖于标量 
+可以使用技巧化简它。由于积分是 Lorentz 变换下的张量，积分完它只能是标量 
 \begin_inset Formula $\Delta$
 \end_inset
 
-，它只能依赖于唯一可用的张量
+ 的函数；在张量基的角度，它只能依赖于唯一可用的张量
 \begin_inset Formula $g^{\mu\nu}$
 \end_inset
 
-。那么，仅仅由量纲分析我们就知道，把
+。那么仅仅由量纲分析就能知道，把
 \begin_inset Formula $k^{\mu}k^{\nu}$
 \end_inset
 
@@ -12650,7 +12733,7 @@ F^{\mu\nu}(\Delta)=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\
 \begin_inset Formula $ck^{2}g^{\mu\nu}$
 \end_inset
 
-，积分的结果也是一样的，对于特定的数
+，积分的结果相同，对于特定的数
 \begin_inset Formula $c$
 \end_inset
 
@@ -12658,22 +12741,35 @@ F^{\mu\nu}(\Delta)=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\
 \begin_inset Formula $g^{\mu\nu}$
 \end_inset
 
-进行收缩，我们得到
+进行收缩得到
 \begin_inset Formula $c=\frac{1}{4}$
 \end_inset
 
- or 一般的，
+ ，或者一般的
 \begin_inset Formula $c=\frac{1}{d}$
 \end_inset
 
-。所以
+。
+\begin_inset Formula 
+\begin{align*}
+\int\frac{\dd[d]{k}}{\left(2\pi\right)^{d}}\frac{k^{\mu}k^{\nu}}{\left(k^{2}-\Delta\right)^{n}} & =cg^{\mu\nu}\int\frac{\dd[d]{k}}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta\right)^{n}}\\
+\Rightarrow\int\frac{\dd[d]{k}}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta\right)^{n}} & =cd\int\frac{\dd[d]{k}}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta\right)^{n}}\quad\Rightarrow cd=1
+\end{align*}
+
+\end_inset
+
+立得：
 \begin_inset Formula 
 \[
-\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\Delta)^{n}}=\frac{1}{d}g^{\mu\nu}\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{k^{2}}{(k^{2}-\Delta)^{n}}
+\int\frac{\dd[d]{k}}{\left(2\pi\right)^{d}}\frac{k^{\mu}k^{\nu}}{\left(k^{2}-\Delta\right)^{n}}=\frac{1}{d}g^{\mu\nu}\int\frac{\dd[d]{k}}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta\right)^{n}}
 \]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 如果分母中只包含一个
 \begin_inset Formula $k^{\mu}$
 \end_inset
@@ -12681,7 +12777,7 @@ F^{\mu\nu}(\Delta)=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k^{\mu}k^{\nu}}{(k^{2}-\
 因子，比如
 \begin_inset Formula 
 \[
-F(p^{2})=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k\cdot p}{\left(k^{2}-p^{2}\right)^{4}}
+F(p^{2})=\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\frac{k\cdot p}{\left(k^{2}-p^{2}\right)^{4}}
 \]
 
 \end_inset
@@ -12694,11 +12790,13 @@ F(p^{2})=\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{k\cdot p}{\left(k^{2}-p^{2}\right)
 \begin_inset Formula $k$
 \end_inset
 
-进行积分，积分必须为零。所以我们只需要保留分子中
+进行积分，积分必须为零。
+\series bold
+所以我们只需要保留分子中
 \begin_inset Formula $k$
 \end_inset
 
-的偶数次方即可。
+的偶次方即可。
 \end_layout
 
 \begin_layout Section
