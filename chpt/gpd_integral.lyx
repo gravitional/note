@@ -4458,6 +4458,206 @@ V^{-}=\frac{i\pi}{p^{+}}\int_{0}^{p^{+}}\dd{k^{+}}\frac{k^{+}p^{-}}{D_{\text{LF}
 \end_layout
 
 \begin_layout Section
+Wick 转动
+\end_layout
+
+\begin_layout Standard
+普通的协变积分可以通过 Wick 转动，变换到欧几里得度规下，进行积分：
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}}={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dd^{4}k_{E}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
+\]
+
+\end_inset
+
+在这里我们试图在经过Wick 转动后，再变换到光锥坐标：
+\begin_inset Formula 
+\[
+\begin{cases}
+k^{+}=k^{0}+k^{1}\\
+k^{-}=k^{0}-k^{1}
+\end{cases}\Rightarrow\begin{cases}
+k^{0}=\frac{1}{2}\left(k^{+}+k^{-}\right)\\
+k^{-}=\frac{1}{2}\left(k^{+}-k^{-}\right)
+\end{cases},k^{0;2}+k^{1;2}=\frac{k^{+;2}+k^{-;2}}{2}
+\]
+
+\end_inset
+
+即：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\int_{-\infty}^{\infty}\dd[2]{k}\frac{1}{k^{2}-m^{2}+i\varepsilon}=\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{+}k^{-}-m^{2}+i\varepsilon}\\
+ & =i\left(-1\right)\frac{1}{2}\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\frac{1}{\left(k^{+;2}+k^{-;2}\right)/2+m^{2}-i\varepsilon}\\
+ & =\left(-i\right)\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{-;2}+\left(2m^{2}+k^{+;2}\right)-i\varepsilon}
+\end{align*}
+
+\end_inset
+
+将
+\begin_inset Formula $2m^{2}+k^{+;2}$
+\end_inset
+
+看作
+\begin_inset Formula $\Delta$
+\end_inset
+
+，使用维数正规化的中间公式，
+\begin_inset Formula 
+\[
+\int_{0}^{\infty}\dd k_{E}\frac{k_{E}^{a}}{\left(k_{E}^{2}+\Delta\right)^{b}}=\Delta^{\frac{a+1}{2}-b}\frac{\Gamma\left(\frac{a+1}{2}\right)\Gamma\left(b-\frac{a+1}{2}\right)}{2\Gamma\left(b\right)}
+\]
+
+\end_inset
+
+此处 
+\begin_inset Formula $a=0,b=1$
+\end_inset
+
+，对
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分得到（因子
+\begin_inset Formula $2$
+\end_inset
+
+来自于对
+\begin_inset Formula $k^{-}$
+\end_inset
+
+是偶函数）：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\left(-i\right)\int_{-\infty}^{\infty}\dd{k^{+}}\frac{2}{\sqrt{2m^{2}+k^{+;2}}}\frac{\Gamma\left(\frac{1}{2}\right)\Gamma\left(\frac{1}{2}\right)}{2\Gamma\left(1\right)},\quad\Gamma\left(\frac{1}{2}\right)=\sqrt{\pi}\\
+ & \Rightarrow\left(-i\pi\right)\int_{-\infty}^{\infty}\dd{k^{+}}\frac{1}{\sqrt{2m^{2}+k^{+;2}}},\quad\text{积分是\ensuremath{k^{+}}的偶函数}\\
+ & \Rightarrow2\left(-i\pi\right)\int_{0}^{\Lambda}\dd{k^{+}}\frac{1}{\sqrt{2m^{2}+k^{+;2}}},\quad\text{发散，取截断}\Lambda\\
+ & =2\left(-i\pi\right)\frac{1}{2}\ln\left(\frac{\Lambda\left(\Lambda+\sqrt{\Lambda^{2}+2m^{2}}\right)}{m^{2}}+1\right),\quad\Lambda\gg m\\
+ & \Rightarrow i\pi\ln\frac{m^{2}}{2\left(\Lambda^{2}+m^{2}\right)}
+\end{align*}
+
+\end_inset
+
+与前文的结果比较：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & \sim-i\pi\ln\left(R^{2}\right)-\frac{\pi^{2}}{2}+i\pi\ln\left(m^{2}\right)+\order{\frac{1}{R^{4}}},\\
+A_{0} & =-i\pi\left(\frac{1}{\epsilon}-\gamma+\ln4\pi-\ln\frac{m^{2}}{\mu^{2}}\right)+\order{\epsilon}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+对k+积分结果
+\end_layout
+
+\begin_layout Standard
+对于 tadpole 积分，使用 Wick 转动法给出
+\begin_inset Formula 
+\begin{align*}
+ & \frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{+}k^{-}-m^{2}+i\varepsilon}\\
+\Rightarrow & \lim_{\Lambda\to\infty}2\left(-i\pi\right)\int_{0}^{\Lambda}\dd{k^{+}}\frac{1}{\sqrt{k^{+;2}+2m^{2}-i\varepsilon}}=i\pi\ln\frac{m^{2}}{2\left(\Lambda^{2}+m^{2}\right)}
+\end{align*}
+
+\end_inset
+
+上文的 tadpole 法给出：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\left[-i\pi\frac{\theta\left(k^{+}\right)}{k^{+}+i\delta m^{2}}+i\pi\frac{\theta\left(-k^{+}\right)}{k^{+}-i\delta m^{2}}\right]\\
+ & =\lim_{\Lambda\to\infty}\int_{0}^{\Lambda}\dd{k^{+}}\frac{-i\pi}{k^{+}+i\delta m^{2}}=-i\pi\left(\ln\frac{\Lambda}{i\delta}-\ln m^{2}\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+如果回到
+\begin_inset Formula $d=4$
+\end_inset
+
+维，并使用标准坐标变换 
+\begin_inset Formula $k^{+}=\left(k^{0}+k^{3}\right)/\sqrt{2}$
+\end_inset
+
+，
+\begin_inset Formula $k^{-}=\left(k^{0}-k^{3}\right)/\sqrt{2}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\int_{-\infty}^{\infty}\dd[4]{k}\frac{1}{k^{2}-m^{2}+i\varepsilon}=\int\dd{k^{+}}\dd{k^{-}}\dd{\sbf k_{\perp}}\frac{1}{2k^{+}k^{-}-m^{2}+i\varepsilon}\\
+ & =\left(-i\right)\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\dd{\sbf k_{\perp}}\frac{1}{k^{-;2}+\left(k^{+;2}+k_{\perp}^{2}+m^{2}\right)-i\varepsilon}\\
+ & =\int_{-\infty}^{\infty}\dd{k^{+}}\dd{\sbf k_{\perp}}\frac{-i\pi}{\sqrt{k^{+;2}+k_{\perp}^{2}+m^{2}}}
+\end{align*}
+
+\end_inset
+
+对于分母幂次为
+\begin_inset Formula $n$
+\end_inset
+
+的情况，利用求导：
+\begin_inset Formula 
+\begin{align*}
+ & \partial_{m^{2}}^{n}\ln\left[-\left(k^{2}-m^{2}+i\varepsilon\right)\right]=\left(-1\right)^{n+1}\left[\left(-1\right)\left(-2\right)\cdots\left[-\left(n-1\right)\right]\right]\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\\
+ & =\left(-1\right)^{2n}\left(n-1\right)!\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\\
+\Rightarrow & \frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}=\frac{1}{\left(n-1\right)!}\partial_{m^{2}}^{n}\ln\left[-\left(k^{2}-m^{2}+i\varepsilon\right)\right]
+\end{align*}
+
+\end_inset
+
+结合上面推导的
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{2k^{+}k^{-}-m^{2}+i\varepsilon}=\frac{-i\pi}{\sqrt{k^{+;2}+k_{\perp}^{2}+m^{2}}}
+\]
+
+\end_inset
+
+可知，
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-m^{2}+i\varepsilon\right)^{n}}=\frac{-2\pi i}{\left(n-1\right)!}\partial_{m^{2}}^{n}\sqrt{k^{+;2}+k_{\perp}^{2}+m^{2}},\quad n\ge1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于分子上含有
+\begin_inset Formula $k^{2}$
+\end_inset
+
+的积分，仍把分子按照传播子进行展开：
+\begin_inset Formula 
+\begin{align*}
+ & \int_{-\infty}^{\infty}\dd[4]{k}\frac{\left(k^{2}\right)^{m}}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}}=\int_{-\infty}^{\infty}\dd[4]{k}\frac{\left(D+\Delta\right)^{m}}{D^{n}}\\
+= & \int_{-\infty}^{\infty}\dd[4]{k}\frac{\sum_{i=0}^{m}C_{m}^{i}D^{i}\Delta^{m-i}}{D^{n}}=\int_{-\infty}^{\infty}\dd[4]{k}\sum_{i=0}^{m}\frac{C_{m}^{i}\Delta^{m-i}}{D^{n-i}}\\
+= & \int\dd{k^{+}}\dd{\sbf k_{\perp}}\sum_{i=0}^{m}C_{m}^{i}\Delta^{m-i}\frac{-2\pi i}{\left(n-i-1\right)!}\partial_{\Delta}^{n-i}\sqrt{k^{+;2}+k_{\perp}^{2}+\Delta},\quad n\ge m+1
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 附录：使用光前柱坐标计算单点函数
 \end_layout
 
@@ -4621,7 +4821,15 @@ A_{0}\sim-i\pi\ln\left(R^{2}\right)-\frac{\pi^{2}}{2}+i\pi\ln\left(m^{2}\right)+
 
 \end_inset
 
+与维数正规化的结果比较[7]
+\begin_inset Formula 
+\[
+A_{0}=-i\pi\left(\frac{1}{\epsilon}-\gamma+\ln4\pi-\ln\frac{m^{2}}{\mu^{2}}\right)+\order{\epsilon}.
+\]
 
+\end_inset
+
+也能再现协变振幅中正确的质量依赖。 
 \end_layout
 
 \begin_layout Standard
