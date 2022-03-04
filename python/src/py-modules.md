@@ -13,17 +13,18 @@ ref: [这是小白的Python新手教程](https://www.liaoxuefeng.com/wiki/101695
 
 ### Pillow
 
-`PIL`: `Python Imaging Library`, 已经是Python平台事实上的图像处理标准库了. PIL功能非常强大, 但API却非常简单易用.
+`PIL`: `Python Imaging Library`, 已经是 `Python` 平台事实上的图像处理标准库了.
+`PIL` 功能非常强大, 但 `API` 却非常简单易用.
 
-由于`PIL`仅支持到`Python 2.7`, 加上年久失修, 于是一群志愿者在PIL的基础上创建了兼容的版本, 名字叫`Pillow`, 支持最新`Python 3.x`, 又加入了许多新特性, 因此, 我们可以直接安装使用`Pillow`.
+由于`PIL`仅支持到`Python 2.7`, 加上年久失修, 于是一群志愿者在PIL的基础上创建了兼容的版本,
+名字叫`Pillow`, 支持最新`Python 3.x`, 又加入了许多新特性, 因此, 我们可以直接安装使用`Pillow`.
 
 #### 安装Pillow
 
-如果安装了`Anaconda`, `Pillow`就已经可用了. 否则, 需要在命令行下通过pip安装:
+如果安装了`Anaconda`, `Pillow`就已经可用了. 否则, 需要在命令行下通过 `pip` 安装:
 
-```python
-$ pip install pillow
-None
+```bash
+pip install pillow
 ```
 
 如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
@@ -129,22 +130,19 @@ PIL提供了操作图像的强大功能, 可以通过简单的代码完成复杂
 
 #### 参考源码
 
-`https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_resize.py`
-
-`https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_blur.py`
-
-`https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_draw.py`
+    https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_resize.py
+    https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_blur.py
+    https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_draw.py
 
 ### requests-访问网络资源
 
-我们已经讲解了Python内置的`urllib`模块, 用于访问网络资源. 但是, 它用起来比较麻烦, 而且, 缺少很多实用的高级功能.
+我们已经讲解了 `Python` 内置的`urllib`模块, 用于访问网络资源. 但是, 它用起来比较麻烦, 而且, 缺少很多实用的高级功能.
 更好的方案是使用`requests`. 它是一个Python第三方库, 处理URL资源特别方便.
 安装`requests`
 如果安装了`Anaconda`, `requests`就已经可用了. 否则, 需要在命令行下通过pip安装:
 
-```python
-$ pip install requests
-None
+```bash
+pip install requests
 ```
 
 如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
@@ -260,19 +258,22 @@ r = requests.post(url, json=params) # 内部自动序列化为JSON
 
 #### chardet-检测编码
 
-字符串编码一直是令人非常头疼的问题, 尤其是我们在处理一些不规范的第三方网页的时候. 虽然Python提供了`Unicode`表示的`str`和`bytes`两种数据类型, 并且可以通过`encode()`和`decode()`方法转换, 但是, 在不知道编码的情况下, 对`bytes`做`decode()`不好做.
+字符串编码一直是令人非常头疼的问题, 尤其是我们在处理一些不规范的第三方网页的时候.
+虽然Python提供了`Unicode`表示的`str`和`bytes`两种数据类型, 并且可以通过`encode()`和`decode()`方法转换,
+但是, 在不知道编码的情况下, 对`bytes`做`decode()`不好做.
 
-对于未知编码的`bytes`, 要把它转换成`str`, 需要先"猜测"编码. 猜测的方式是先收集各种编码的特征字符, 根据特征字符判断, 就能有很大概率"猜对".
+对于未知编码的`bytes`, 要把它转换成`str`, 需要先"猜测"编码.
+猜测的方式是先收集各种编码的特征字符, 根据特征字符判断, 就能有很大概率"猜对".
 
-当然, 我们肯定不能从头自己写这个检测编码的功能, 这样做费时费力. `chardet`这个第三方库正好就派上了用场. 用它来检测编码, 简单易用.
+当然, 我们肯定不能从头自己写这个检测编码的功能, 这样做费时费力.
+`chardet`这个第三方库正好就派上了用场. 用它来检测编码, 简单易用.
 
 #### 安装chardet
 
 如果安装了`Anaconda`, `chardet`就已经可用了. 否则, 需要在命令行下通过`pip`安装:
 
-```python
-$ pip install chardet
-None
+```bash
+pip install chardet
 ```
 
 如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
@@ -287,7 +288,6 @@ None
 ```
 
 检测出的编码是`ascii`, 注意到还有个`confidence`字段, 表示检测的概率是`1.0`(即100%).
-
 我们来试试检测`GBK`编码的中文:
 
 ```python
@@ -296,7 +296,8 @@ None
 {'encoding': 'GB2312', 'confidence': 0.7407407407407407, 'language': 'Chinese'}
 ```
 
-检测的编码是`GB2312`, 注意到`GBK`是`GB2312`的超集, 两者是同一种编码, 检测正确的概率是74%, `language`字段指出的语言是`'Chinese'`.
+检测的编码是`GB2312`, 注意到`GBK`是`GB2312`的超集,
+两者是同一种编码, 检测正确的概率是74%, `language`字段指出的语言是`'Chinese'`.
 
 对`UTF-8`编码进行检测:
 
@@ -332,11 +333,10 @@ None
 
 #### 安装psutil
 
-如果安装了Anaconda, `psutil`就已经可用了. 否则, 需要在命令行下通过pip安装:
+如果安装了Anaconda, `psutil`就已经可用了. 否则, 需要在命令行下通过 `pip` 安装:
 
-```python
-$ pip install psutil
-None
+```bash
+pip install psutil
 ```
 
 如果遇到`Permission denied`安装失败, 请加上`sudo`重试.
@@ -525,9 +525,8 @@ Terminated: 15 <-- 自己把自己结束了
 
 `psutil`还提供了一个`test()`函数, 可以模拟出`ps`命令的效果:
 
-```python
-$
- sudo python3
+```bash
+sudo python3
 Password: ******
 Python 3.6.3 ... on darwin
 Type "help", ... for more information.
@@ -561,25 +560,23 @@ root          53  0.1 2500592    6132 ?             Nov18   00:02  configd
 
 首先, 我们用pip安装`virtualenv`:
 
-```python
-$ pip3 install virtualenv
-None
+```bash
+pip3 install virtualenv
 ```
 
 然后, 假定我们要开发一个新的项目, 需要一套独立的Python运行环境, 可以这么做:
 
 第一步, 创建目录:
 
-```python
-Mac:~ michael$ mkdir myproject
-Mac:~ michael$ cd myproject/
-Mac:myproject michael$
+```bash
+$ mkdir myproject
+$ cd myproject/
 ```
 
 第二步, 创建一个独立的Python运行环境, 命名为`venv`:
 
-```python
-Mac:myproject michael$ virtualenv --no-site-packages venv
+```bash
+$ virtualenv --no-site-packages venv
 Using base prefix '/usr/local/.../Python.framework/Versions/3.4'
 New python executable in venv/bin/python3.4
 Also creating executable in venv/bin/python
@@ -590,7 +587,7 @@ Installing setuptools, pip, wheel...done.
 
 新建的Python环境被放到当前目录下的`venv`目录. 有了`venv`这个Python环境, 可以用`source`进入该环境:
 
-```python
+```bash
 Mac:myproject michael$ source venv/bin/activate
 (venv)Mac:myproject michael$
 ```
@@ -599,7 +596,7 @@ Mac:myproject michael$ source venv/bin/activate
 
 下面正常安装各种第三方包, 并运行python命令:
 
-```python
+```bash
 (venv)Mac:myproject michael$ pip install jinja2
 ...
 Successfully installed jinja2-2.7.3 markupsafe-0.23
@@ -611,7 +608,7 @@ Successfully installed jinja2-2.7.3 markupsafe-0.23
 
 退出当前的`venv`环境, 使用`deactivate`命令:
 
-```python
+```bash
 (venv)Mac:myproject michael$ deactivate
 Mac:myproject michael$
 ```
@@ -624,4 +621,4 @@ virtualenv是如何创建"独立"的Python运行环境的呢? 原理很简单, �
 
 ### 小结-virtualenv
 
-`virtualenv`为应用提供了隔离的Python运行环境, 解决了不同应用间多版本的冲突问题.
+`virtualenv`为应用提供了隔离的 `Python` 运行环境, 解决了不同应用间多版本的冲突问题.

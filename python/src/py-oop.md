@@ -4,7 +4,7 @@ ref: [这是小白的Python新手教程][https://www.liaoxuefeng.com/wiki/101695
 
 ## 面向对象编程
 
-面向对象编程——Object Oriented Programming, 简称OOP, 是一种程序设计思想. OOP把对象作为程序的基本单元, 一个对象包含了数据和操作数据的函数.
+面向对象编程 -- Object Oriented Programming, 简称OOP, 是一种程序设计思想. OOP把对象作为程序的基本单元, 一个对象包含了数据和操作数据的函数.
 
 面向过程的程序设计把计算机程序视为一系列的命令集合, 即一组函数的顺序执行. 为了简化程序设计, 面向过程把函数继续切分为子函数, 即把大块函数通过切割成小块函数来降低系统的复杂度.
 
@@ -50,7 +50,7 @@ bart.print_score()
 lisa.print_score()
 ```
 
-面向对象的设计思想是从自然界中来的, 因为在自然界中, 类(Class)和实例(Instance)的概念是很自然的. Class是一种抽象概念, 比如我们定义的Class——Student, 是指学生这个概念, 而实例(Instance)则是一个个具体的Student, 比如, Bart Simpson和Lisa Simpson是两个具体的Student.
+面向对象的设计思想是从自然界中来的, 因为在自然界中, 类(Class)和实例(Instance)的概念是很自然的. Class是一种抽象概念, 比如我们定义的Class -- Student, 是指学生这个概念, 而实例(Instance)则是一个个具体的Student, 比如, Bart Simpson和Lisa Simpson是两个具体的Student.
 
 所以, 面向对象的设计思想是抽象出Class, 根据Class创建Instance.
 
@@ -527,7 +527,7 @@ Tortoise is running slowly...
 
 你会发现, 新增一个Animal的子类, 不必对`run_twice()`做任何修改, 实际上, 任何依赖Animal作为参数的函数或者方法都可以不加修改地正常运行, 原因就在于多态.
 
-多态的好处就是, 当我们需要传入Dog, Cat, Tortoise……时, 我们只需要接收Animal类型就可以了, 因为Dog, Cat, Tortoise……都是Animal类型, 然后, 按照Animal类型进行操作即可. 由于Animal类型有run()方法, 因此, 传入的任意类型, 只要是Animal类或者子类, 就会自动调用实际类型的`run()`方法, 这就是多态的意思:
+多态的好处就是, 当我们需要传入Dog, Cat, Tortoise... ... 时, 我们只需要接收Animal类型就可以了, 因为Dog, Cat, Tortoise... ... 都是Animal类型, 然后, 按照Animal类型进行操作即可. 由于Animal类型有run()方法, 因此, 传入的任意类型, 只要是Animal类或者子类, 就会自动调用实际类型的`run()`方法, 这就是多态的意思:
 
 对于一个变量, 我们只需要知道它是Animal类型, 无需确切地知道它的子类型, 就可以放心地调用`run()`方法, 而具体调用的`run()`方法是作用在Animal, Dog, Cat还是Tortoise对象上, 由运行时该对象的确切类型决定, 这就是多态真正的威力: 调用方只管调用, 不管细节, 而当我们新增一种Animal的子类时, 只要确保`run()`方法编写正确, 不用管原来的代码是如何调用的. 这就是著名的"开闭"原则:
 

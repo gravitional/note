@@ -6,7 +6,7 @@ ref: [这是小白的Python新手教程](https://www.liaoxuefeng.com/wiki/101695
 
 函数是Python内建支持的一种封装, 我们通过把大段代码拆成函数, 通过一层一层的函数调用, 就可以把复杂任务分解成简单的任务, 这种分解可以称之为面向过程的程序设计. 函数就是面向过程的程序设计的基本单元.
 
-而函数式编程(请注意多了一个"式"字)——Functional Programming,
+而函数式编程(请注意多了一个"式"字) -- Functional Programming,
 虽然也可以归结到面向过程的程序设计, 但其思想更接近数学计算.
 
 我们首先要搞明白计算机(Computer)和计算(Compute)的概念.
@@ -1345,7 +1345,7 @@ def greeting(name):
 
 注意: Mac或Linux上有可能并存Python 3.x和Python 2.x, 因此对应的pip命令是`pip3`.
 
-例如, 我们要安装一个第三方库——`Python Imaging Library`, 这是Python下非常强大的处理图像的工具库. 不过, PIL目前只支持到Python 2.7, 并且有年头没有更新了, 因此, 基于PIL的`Pillow`项目开发非常活跃, 并且支持最新的Python 3.
+例如, 我们要安装一个第三方库 -- `Python Imaging Library`, 这是Python下非常强大的处理图像的工具库. 不过, PIL目前只支持到Python 2.7, 并且有年头没有更新了, 因此, 基于PIL的`Pillow`项目开发非常活跃, 并且支持最新的Python 3.
 
 一般来说, 第三方库都会在Python官方的`pypi.python.org`网站注册, 要安装一个第三方库, 必须先知道该库的名称, 可以在官网或者pypi上搜索, 比如`Pillow`的名称叫`Pillow`, 因此, 安装`Pillow`的命令就是:
 
