@@ -889,37 +889,51 @@ umount /dev/sda5
 sudo apt install exfat-fuse exfat-utils
 ```
 
-***
-方法 1: 使用 `GNOME 磁盘工具`将磁盘格式化为 `exFAT`.
+### 方法1:使用`GNOME 磁盘工具`将磁盘格式化为 `exFAT`
 
 使用`GNOME 磁盘` 格式化驱动器是一项简单的工作. 它预装在许多 Linux 发行版中.
-插入外部 `USB` 盘. 在菜单中查找 `Disk`, 然后打开`GNOME 磁盘` 应用. 第一步, 选择要格式化的驱动器, 要使用 `exFAT`, 请选择 `其它`, 然后单击`下一步`.
+插入外部 `USB` 盘. 在菜单中查找 `Disk`, 然后打开`GNOME 磁盘` 应用. 
+第一步, 选择要格式化的驱动器, 要使用 `exFAT`, 请选择 `其它`, 然后单击`下一步`.
 
-***
-方法 2: 在 `Linux` 命令行中将磁盘格式化为 `exFAT`.
+### 方法2:在`Linux` 命令行中将磁盘格式化为`exFAT`
 
-插入外部硬盘, 然后在终端中输入以下命令`sudo fdisk -l`.通过列出的磁盘大小信息找出`USB`的标记, 假设`/dev/sdc1`.
-如果磁盘有多个分区, 想要管理, 可以使用`sudo fdisk /dev/sdc`进行分区的管理工作. 这里要输入`/dev/sdc`也就是整个`U`盘, 而不是`/dev/sdc1`.
+插入外部硬盘, 然后在终端中输入以下命令 `sudo fdisk -l`.
+通过列出的磁盘大小信息找出`USB`的标记, 假设 `/dev/sdc1`.
+如果磁盘有多个分区, 想要管理, 可以使用 
+
+```bash
+sudo fdisk /dev/sdc
+```
+
+进行分区的管理工作. 这里要输入 `/dev/sdc` 也就是整个`U`盘, 而不是 `/dev/sdc1`. 
 进入交互式分区工具:
 
-`m`提示可用的命令列表.
-`o`:创建新的`dos`分区表, `n`添加一个新的分区.
-`t`:更改分区类型, `dos` 类型的分区表, 如果要和`windows`格式化一致, 为`HPFS/NTFS/exFAT`, 就输入`7`.
-`w`:保存更改, `q`退出不保存更改.
++ `m`; 提示可用的命令列表.
++ `o`; 创建新的`dos`分区表, `n`添加一个新的分区.
++ `t`; 更改分区类型, `dos` 类型的分区表, 如果要和`windows`格式化一致, 为`HPFS/NTFS/exFAT`, 就输入`7`.
++ `w`; 保存更改, `q`退出不保存更改.
 
 在这里更改分区表保存后, 磁盘已经可用了. 如果保存原来的分区直接格式, 可以使用`mkfs.exfat`:
 
 + `mkfs.exfat`:格式化成`exfat`.
 + `mkfs.fat`:格式化成`fat32`.
 
-`man mkfs.exfat`会发现, `mkfs.exfat`的同义词`mkexfatfs`. 如果分区表是`MBR`类型的, 需要将文件系统类型设置为`0X07`(`NTFS/exFAT`), 否则其他操作系统可能会拒绝挂载.
-仍然假设U盘分区为`/dev/sdc1`, 使用以下命令将它格式化为 `exfat`.
+`man mkfs.exfat`会发现, `mkfs.exfat`的同义词`mkexfatfs`. 
+如果分区表是 `MBR`类型的, 需要将文件系统类型设置为 `0x07`(`NTFS/exFAT`), 否则其他操作系统可能会拒绝挂载.
+仍然假设U盘分区为 `/dev/sdc1`, 使用以下命令将它格式化为 `exfat`.
 
 ```bash
 sudo mkfs.exfat -i 0x07 -n udisk /dev/sdc1
 ```
 
-将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称. 可选地, 运行 `fsck` 检查`sudo fsck.exfat /dev/sdc1`, 以确保格式化正确, 享受 `exFAT` 盘吧.
+将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称. 
+可选地, 运行 `fsck` 检查
+
+```bash
+sudo fsck.exfat /dev/sdc1
+```
+
+以确保格式化正确, 享受 `exFAT` 盘吧.
 
 ## 查看文档首行末行
 

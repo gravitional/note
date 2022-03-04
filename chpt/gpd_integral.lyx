@@ -97,6 +97,7 @@
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
 \DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\DeclareMathOperator{\arctanh}{arctanh}
 %\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
 \renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
@@ -4542,7 +4543,85 @@ A_{0}=\frac{1}{2}\int_{0}^{\infty}\frac{\dd{r}}{r}\int_{C}\dd{z}\frac{2}{\left[z
 \begin_inset Formula $\infty$
 \end_inset
 
-，所以我们必须小心处理各种情况。
+，所以我们必须小心处理各种情况。当 
+\begin_inset Formula $0\le\beta\le1$
+\end_inset
+
+，注意到（暂不理会
+\begin_inset Formula $\epsilon$
+\end_inset
+
+），poles 位于上半平面的单位圆上，Espilon 将 poles 沿着正方向平移，即第一象限的pole现在位于积分回路外，而第二象限的pole现在位于积分
+回路内，完成积分给出
+\begin_inset Formula 
+\begin{equation}
+A_{0}\left(0\le\beta\le1\right)=\int_{0}^{\infty}\frac{\dd{r}}{r}\frac{-2\pi i}{\sqrt{1-\beta^{2}}}.\label{eq:beA5}
+\end{equation}
+
+\end_inset
+
+现令
+\begin_inset Formula $\beta>1$
+\end_inset
+
+，poles 移动到虚轴上。它们现在的位置是 
+\begin_inset Formula $i\left(\beta\pm\sqrt{\beta^{2}-1}\right)+\epsilon$
+\end_inset
+
+。由于 
+\begin_inset Formula $\beta>1$
+\end_inset
+
+，我们改写成
+\begin_inset Formula $\beta=1+\eta$
+\end_inset
+
+，代入极点给出 
+\begin_inset Formula $i\left(1+\eta\pm\sqrt{\eta^{2}+2\eta}\right)+\epsilon$
+\end_inset
+
+。改写成这种形式之后容易看出，带负号的 pole 落在单位圆内，而带正号的 pole 落在单位圆外。再次完成回路积分给出
+\begin_inset Formula 
+\begin{equation}
+A_{0}\left(\beta>1\right)=\int_{0}^{\infty}\frac{\dd{r}}{r}\frac{-2\pi i}{\sqrt{1-\beta^{2}}}.\label{eq:beA6}
+\end{equation}
+
+\end_inset
+
+所以，两种情况下
+\begin_inset Formula $A_{0}$
+\end_inset
+
+的结果相同。 
+\end_layout
+
+\begin_layout Standard
+将结果代回 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 的定义，继续 
+\begin_inset Formula $r$
+\end_inset
+
+ 的积分，得到：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =-2\pi i\int_{0}^{\infty}\dd{r}\frac{r}{\sqrt{r^{4}-4m^{4}}}=-2\pi i\lim_{R\to\infty}\int_{0}^{R}\dd{r}\frac{r}{\sqrt{r^{4}-4m^{4}}}\\
+ & =-i\pi\lim_{R\to\infty}\arctanh\left(\frac{R^{2}}{\sqrt{R^{4}-4m^{4}}}\right)=-i\pi\lim_{R\to\infty}\arctanh\left(\frac{R^{2}}{\sqrt{1-\left(4m^{4}/R^{4}\right)}}\right)
+\end{align*}
+
+\end_inset
+
+代入 hyperbolic arctangent 函数的级数展开得：
+\begin_inset Formula 
+\begin{equation}
+A_{0}\sim-i\pi\ln\left(R^{2}\right)-\frac{\pi^{2}}{2}+i\pi\ln\left(m^{2}\right)+\order{\frac{1}{R^{4}}}.\label{eq:beA8}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
