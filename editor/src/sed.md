@@ -114,7 +114,7 @@ s#评估#运算#g;
 
 [delete Unicode in some range](https://stackoverflow.com/questions/48162882/how-to-use-sed-delete-unicode-in-some-range)
 
-sed 中的 Unicode支持并没有很好的定义. 你可能最好使用命令行 `perl`
+sed 中的 Unicode 支持并没有很好的定义. 你可能最好使用命令行 `perl`
 
 ```bash
 echo "abcＡＢＣ123" | perl -CS -pe 's/[\x{FF21}-\x{FF3B}]+//g'

@@ -1147,7 +1147,7 @@ SyntaxError: invalid syntax
 [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
 ```
 
-`['key']`也用来从字典中取出值
+`['key']`也用来从字典中取出值. 
 `{'jack': 4098, 'sape': 4139, 'guido': 4127}['jack']`
 
 ### 小括号()
@@ -1159,7 +1159,7 @@ SyntaxError: invalid syntax
 
 ## python 邮件
 
-[解放双手,用Python实现自动发送邮件](https://zhuanlan.zhihu.com/p/89868804)
+[解放双手, 用Python实现自动发送邮件](https://zhuanlan.zhihu.com/p/89868804)
 
 Python有两个内置库: `smtplib`和`email`,能够实现邮件功能,`smtplib`库负责发送邮件,`email`库负责构造邮件格式和内容.
 

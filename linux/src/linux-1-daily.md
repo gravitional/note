@@ -430,6 +430,14 @@ rename -v 'y/-/_/' */* # 去掉 -n 选项, 执行操作
 + `-e  Expression`; 作用到文件名上的代码. 可以重复使用`-e expr1 -e expr2 ...`来构建代码, (like `perl -e`). 如果没有`-e`, 第一个参数被当成`code`
 + `-E Statement`; 类似于`-e`, 但需要`;`结束
 
+### perl 脚本开启 Unicode 模式
+
+```bash
+perl -C32 -S rename -n -v 's/[\(\)\[\]\(\)\<\> <>[],, ·\;; : ~～\:\=, \&\^\$\#\@\!\*\+]/-/g'  -- *
+```
+
+先使用 `-n` 选项查看输出结果, 没有大碍再进行更改.
+
 ## 获取绝对路径 realpath
 
 `realpath` - `print the resolved path`(打印已解析的路径)
@@ -892,20 +900,20 @@ sudo apt install exfat-fuse exfat-utils
 ### 方法1:使用`GNOME 磁盘工具`将磁盘格式化为 `exFAT`
 
 使用`GNOME 磁盘` 格式化驱动器是一项简单的工作. 它预装在许多 Linux 发行版中.
-插入外部 `USB` 盘. 在菜单中查找 `Disk`, 然后打开`GNOME 磁盘` 应用. 
+插入外部 `USB` 盘. 在菜单中查找 `Disk`, 然后打开`GNOME 磁盘` 应用.
 第一步, 选择要格式化的驱动器, 要使用 `exFAT`, 请选择 `其它`, 然后单击`下一步`.
 
 ### 方法2:在`Linux` 命令行中将磁盘格式化为`exFAT`
 
 插入外部硬盘, 然后在终端中输入以下命令 `sudo fdisk -l`.
 通过列出的磁盘大小信息找出`USB`的标记, 假设 `/dev/sdc1`.
-如果磁盘有多个分区, 想要管理, 可以使用 
+如果磁盘有多个分区, 想要管理, 可以使用
 
 ```bash
 sudo fdisk /dev/sdc
 ```
 
-进行分区的管理工作. 这里要输入 `/dev/sdc` 也就是整个`U`盘, 而不是 `/dev/sdc1`. 
+进行分区的管理工作. 这里要输入 `/dev/sdc` 也就是整个`U`盘, 而不是 `/dev/sdc1`.
 进入交互式分区工具:
 
 + `m`; 提示可用的命令列表.
@@ -918,7 +926,7 @@ sudo fdisk /dev/sdc
 + `mkfs.exfat`:格式化成`exfat`.
 + `mkfs.fat`:格式化成`fat32`.
 
-`man mkfs.exfat`会发现, `mkfs.exfat`的同义词`mkexfatfs`. 
+`man mkfs.exfat`会发现, `mkfs.exfat`的同义词`mkexfatfs`.
 如果分区表是 `MBR`类型的, 需要将文件系统类型设置为 `0x07`(`NTFS/exFAT`), 否则其他操作系统可能会拒绝挂载.
 仍然假设U盘分区为 `/dev/sdc1`, 使用以下命令将它格式化为 `exfat`.
 
@@ -926,7 +934,7 @@ sudo fdisk /dev/sdc
 sudo mkfs.exfat -i 0x07 -n udisk /dev/sdc1
 ```
 
-将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称. 
+将`/dev/sdc1` 替换为你的磁盘 `ID`. `udisk` 是你要为磁盘命名的名称.
 可选地, 运行 `fsck` 检查
 
 ```bash
