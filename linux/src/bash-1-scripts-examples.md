@@ -2,6 +2,12 @@
 
 [shell脚本中一些特殊符号](https://www.cnblogs.com/xuxm2007/archive/2011/10/20/2218846.html)
 
+## perl-rename, 替换文件名不规范字符
+
+```perl
+perl -C32 -S rename -v 's/[\(\)\[\]\（\）\<\> 《》【】\=、\&\^\$\#\@\!\*\+]/-/g'    * -n
+```
+
 ## 合并子文件到上层
 
 ```bash
