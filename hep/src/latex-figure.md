@@ -11,7 +11,8 @@
 
 这两个包的区别在于可选参数给出的形式不同. 参数名称和必选参数是相同的.
 
-插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置. `figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例.
+插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置.
+`figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例.
 
 ```latex
 \begin{figure}[htbp]
@@ -56,11 +57,11 @@
 
 ### 子页面宽度resizebox
 
-[一行代码解决LaTex表格过宽或过窄问题](https://blog.csdn.net/Rained_99/article/details/79389189#commentBox)
+[一行代码解决LaTex表格过宽或过窄问题](https://blog.csdn.net/Rained_99/article/details/79389189)
 
-若表格过宽,则使用
+若表格过宽, 则使用
 
-```bash
+```latex
 \begin{table}[htbp]
 \center
 \caption{ Example}
@@ -72,7 +73,7 @@
 \end{table}
 ```
 
-若表格过窄,则使用
+若表格过窄, 则使用
 
 ```bash
 \begin{table}[htbp]
@@ -99,23 +100,22 @@
 
 ### resizebox
 
-22.3.4 \resizebox
-
 [22.3.4 \resizebox](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ctabcolsep)
 
-Synopses:
++ 语法:
 
 ```latex
 \resizebox{horizontal length}{vertical length}{material}
 \resizebox*{horizontal length}{vertical length}{material}
 ```
 
-给定一个大小(例如`3`厘米),请转换`material`使其达到该大小.  如果水平长度或垂直长度是一个感叹号`!` 就进行等比缩放.
++ 给定一个大小(例如`3`厘米),请转换`material`使其达到该大小.
+如果水平长度或垂直长度是一个感叹号`!` 就进行等比缩放.
 
-此示例使图形的宽度为半英寸,并按相同的比例垂直缩放图形,以防止图形变形.
++ 此示例使图形的宽度为半英寸,并按相同的比例垂直缩放图形,以防止图形变形.
 
-```bash
-\ resizebox {0.5in} {!} {\ includegraphics {lion}}
+```latex
+\resizebox{0.5in}{!}{\includegraphics{lion}}
 ```
 
 未加星标形式 `\resizebox` 取垂直长度为`box`的高度,而带星标形式 `\resizebox*` 取其`height+depth`.
@@ -125,12 +125,9 @@ Synopses:
 您可以使用 `\depth`,`\height`,`\totalheight`和 `\width`来引用框的原始大小.
 因此,使用 `\resizebox{2in}{\height}{Two inch}`将文本设置为两英寸宽,但保留原始高度.
 
-***
-8.23 tabular
++ [8.23 tabular](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ctabcolsep)
 
-[8.23 tabular](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ctabcolsep)
-
-`\tabcolsep`
+`\tabcolsep`;
 
 长度是列之间间隔的一半.  默认值为`6pt`.  用 `\setlength`更改它.
 
@@ -139,7 +136,7 @@ Synopses:
 [LaTeX 对齐问题](https://blog.csdn.net/lvchaoshun/article/details/50518271)
 [latex23 doc](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ccentering)
 
-对齐的语法是 `{\centering 文字}`或者
+对齐的语法是 `{\centering 文字}` 或者
 
 ```latex
 \begin{group}
