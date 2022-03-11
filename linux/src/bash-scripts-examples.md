@@ -5,7 +5,7 @@
 ## perl-rename, 替换文件名不规范字符
 
 ```perl
-perl -C32 -S rename -v 's/[\(\)\[\]\（\）\<\> 《》【】\=、\&\^\$\#\@\!\*\+]/-/g'    * -n
+perl -C32 -S rename -v 's/[\(\)\[\]\(\)\<\> <>[]\=, \&\^\$\#\@\!\*\+]/-/g'    * -n
 ```
 
 ## 合并子文件到上层
@@ -126,7 +126,7 @@ texHere=${texArr[@]:0:5}
 echo2 "The first 5 .tex files here are:"
 ls --color=always -h $texHere
 
-# 如果有命令行参数，优先使用, 后面会去掉后缀名.
+# 如果有命令行参数, 优先使用, 后面会去掉后缀名.
 result=$(echo $texHere | grep -iP "main.tex")
 if [[ $texPath != "" ]]; then
  texHere=$texPath
@@ -140,10 +140,10 @@ elif [[ $texHere == "" ]]; then
 else
  echo2 "because there isn't a tex file named 'main.tex', so we just compile the, $texHere"
 fi
-# 开始循环，对每一个tex文件编译，并寻找错误
+# 开始循环, 对每一个tex文件编译, 并寻找错误
 # 可增加输出文件夹选项 -auxdir=temp -outdir=temp
 # 还有 -shell-escape 选项
-# 把下面这行加入到 ~/.latexmkrc，指定 pdf 查看程序
+# 把下面这行加入到 ~/.latexmkrc, 指定 pdf 查看程序
 # $pdf_previewer = 'evince %O %S';
 # -silent 选项可以抑制输出
 for t in $texHere; do
