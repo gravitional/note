@@ -1,8 +1,10 @@
 # 关联 Associations
 
-`Associations`具有属性`HoldAllComplete`. 直接对关联使用替换规则不会进行运算, 可以使用`Query`语法, 对关联的键和值进行替换.
++ `Associations` 具有属性 `HoldAllComplete`. 
+直接对关联使用替换规则不会进行运算, 可以使用`Query`语法, 对关联的键和值进行替换.
 
-+ `HoldAllComplete`: 不得以任何方式修改或查看函数的所有参数. 不展开`Sequence`, 不移除`Unevaluated`, 不使用`UpValue`, 内部`Evaluate`无效
++ `HoldAllComplete`: 不得以任何方式修改或查看函数的所有参数. 
+不展开`Sequence`, 不移除`Unevaluated`, 不使用`UpValue`, 内部`Evaluate`无效
 
 ```mathematica
 f[a] = 12; tea = <|a -> f[b]|>;

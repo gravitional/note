@@ -194,48 +194,42 @@ bibtex foo.aux
 
 ## bibtex 常见问题
 
-***
-我希望将一条文献展示在参考文献列表中,但不想在正文中用 `\cite` 命令引用,怎么办?
++ 我希望将一条文献展示在参考文献列表中,但不想在正文中用 `\cite` 命令引用,怎么办?
 
 首先,确保这条文献已经写入了 `bib` 文件.
 其次,可以在 `\bibliography` 命令之前,用 `\nocite{label}`提示 `BibTeX` 调取这条文献.
 我有很多条文献,都存在这样的情况. 每条文献逐一 `\nocite` 太繁琐了,有没有懒人适用的办法?
 有的. `\nocite{*}`.
 
-***
-每次都要编译四次,我感觉懒癌又要发作了,有没有办法治疗?
++ 每次都要编译四次,我感觉懒癌又要发作了,有没有办法治疗?
 
 有的. 可以尝试 `LaTeXmk`, `TeXify` 之类的自动化工具.
 
-***
-我对默认提供的 `bst` 文件的格式效果不满意,哪里能找到更多的 `bst` ?
++ 我对默认提供的 `bst` 文件的格式效果不满意,哪里能找到更多的 `bst` ?
 
 现代 TeX 发行版都提供了多种 `bst` 可供选择,每个 `bst` 文件的格式, 适用范围, 使用条件都不一样,需要仔细甄别.
 具体可以去安装目录下搜索试试.
 
-***
-有没有遵循国家标准的 `bst`?
++ 有没有遵循国家标准的 `bst`?
 
 有的
 
-***
-我找到的 bst,效果都不满意,怎么办?
++ 我找到的 bst,效果都不满意,怎么办?
 
 你可以在命令行执行 `latex makebst`,制作一个符合自己要求的 `bst` 文件.
 你需要回答大约 100 个关于参考文献列表效果的问题.
 
-***
-`bib` 文件怎么生成?
++ `bib` 文件怎么生成?
 
 你可以手写,或者用 `JabRef` 之类的文献工具生成. 具体请自行 Google 检索,篇幅所限就不展开了.
 
-***
-我听说还有一个名为 `biblatex` 的工具,能介绍一下吗?
++ 我听说还有一个名为 `biblatex` 的工具,能介绍一下吗?
 
 `BibLaTeX` 与 `BibTeX` 是不同的工具,超出了本文的范围.
 
-***
-[tamethebeast](https://www.ctan.org/tex-archive/info/bibtex/tamethebeast/)
+### 只添加不引用
+
++ [tamethebeast](https://www.ctan.org/tex-archive/info/bibtex/tamethebeast/)
 `texdoc latex-notes-zh-cn `: 包太雷的 latex 笔记
 
 如何在 `参考文献列表` 中添加 `条目` 而不在文件中引用它们?
@@ -245,6 +239,31 @@ bibtex foo.aux
 这个命令的一个变体是 ``nocite{*}`: 它相当于一次把整个书目写进去.
 这些参考文献会按照它们在 `.bib` 文件中出现的顺序包括在内, 除了那些在前面被引用过的文献.
 请注意,  `\cite{*}` 也是正确的, 但我不确定它是否有任何意义......
+
+### 引用讲义等其他文件类型
+
+[How to cite a lecture note](https://tex.stackexchange.com/questions/183472/how-to-cite-a-lecture-note)
+
+你想要的输出取决于你所使用的 `bibliographystyle{}`(`.bst`文件).
+尽管如此, 你总是可以尝试用 `misc` 表示条目. 例如:
+
+```bibtex
+@misc{Cunha13,
+  author        = {Jo{\~a}o Cunha},
+  title         = {Lecture notes in Computer Assisted Diagnosis},
+  month         = {February},
+  year          = {2013},
+  publisher={Faculdade de Engenharia da Universidade do Porto}
+}
+```
+
+### 参考文献类型
+
+[参考文献条目](https://www.jianshu.com/p/20461a21722d)
+
+参考 BibTeX reference, 可选的条目类型和它们的字段为:
+
+![bibitem必备与可选项列表](https://upload-images.jianshu.io/upload_images/1957089-6bddb79c07fb6497.PNG?imageMogr2/auto-orient/strip|imageView2/2/w/806/format/webp)
 
 ## cite,其他的参考文献包
 
