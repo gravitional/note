@@ -2,38 +2,46 @@
 
 [LaTeX技巧829:使用BibTeX生成参考文献列表](https://www.latexstudio.net/archives/5594)
 
-***
-bst 和 bib 格式简介
+## bst 和 bib 格式简介
 
 `BibTeX` 涉及到两种特有的辅助的文件格式: `bst` 和 `bib` .
 
-`bst` 是 (B)ibliography (ST)yle 的缩写. 顾名思义,和 `sty` 文件是 `style` 的缩写一样,`bst` 文件控制着参考文献列表的格式.
-在这里说的"格式",主要指参考文献列表中的编号, 排序规则, 对人名的处理(是否缩写), 月份的处理(是否缩写), 期刊名称的缩写等.
+`bst` 是 (B)ibliography (ST)yle 的缩写. 
+顾名思义,和 `sty` 文件是 `style` 的缩写一样,`bst` 文件控制着参考文献列表的格式.
+在这里说的"格式", 主要指参考文献列表中的编号, 排序规则, 
+对人名的处理(是否缩写), 月份的处理(是否缩写), 期刊名称的缩写等.
 
 `bib` 是 `BibTeX` 定义的"参考文献数据库".
-通常,我们会按照 `BibTeX` 规定的格式,向 bib 文件写入多条文献信息.
-在实际使用时,我们就可以根据 bib 文件中定义的文献标记(label),
-从数据库中调取文献信息,继而排版成参考文献列表.
-值得注意的是,bib 是一个数据库,其中的内容并不一定等于 LaTeX 排版参考文献列表时的内容. 也就是说,如果 bib 数据库中有 10 条文献信息,并不一定说 LaTeX 排版出来的 PDF 文件中,参考文献列表里也一定有 10 条.
-实际排版出来的参考文献列表中有多少条文献,实际是哪几条,具体由文中使用的 `\cite` 命令(以及 `\nocite` 命令)指定. 如果没有使用 `\cite` 命令调取文献信息,那么即使在 `bib` 文件中定义了文献信息,也不会展现在参考文献列表中.
-很多人对此误解甚深,于是经常有人问道"为什么我在 bib 文件里写的文献,不出现在参考文献中"之类的问题.
+通常,我们会按照 `BibTeX` 规定的格式, 向 bib 文件写入多条文献信息.
+在实际使用时, 我们就可以根据 bib 文件中定义的文献标记(label),
+从数据库中调取文献信息, 继而排版成参考文献列表.
 
-***
-BibTeX 的工作流程
+值得注意的是, `bib` 是一个数据库, 其中的内容并不一定等于 `LaTeX` 排版参考文献列表时的内容.
+也就是说, 如果 `bib` 数据库中有 10 条文献信息, 并不一定说 LaTeX 排版出来的 PDF 文件中, 参考文献列表里也一定有 `10` 条.
+实际排版出来的参考文献列表中有多少条文献, 实际是哪几条,
+具体由文中使用的 `\cite` 命令(以及 `\nocite` 命令)指定.
 
-介绍中提到,BibTeX 是一个参考文献格式化工具.
-这个定义,给 BibTeX 的用处做了良好的界定:BibTeX 不是用来排版参考文献的,更不是个排版工具,它只是根据需要,按照( `bst` 文件规定的)某种格式,将( `bib` 文件中包含的)参考文献信息,格式化 为 LaTeX 能够使用的列表信息.
+如果没有使用 `\cite` 命令调取文献信息,那么即使在 `bib` 文件中定义了文献信息, 也不会展现在参考文献列表中.
+很多人对此误解甚深,于是经常有人问道 "为什么我在 `bib` 文件里写的文献, 不出现在参考文献中"之类的问题.
 
-清楚了 `BibTeX` 需要做的事情(用软件工程的话说,就是清楚了 `BibTeX` 的 `API` ),我们就可以理清 `BibTeX` 的工作流程.
+## BibTeX 的工作流程
 
-***
-知道需要哪些参考文献信息
+介绍中提到,`BibTeX` 是一个参考文献格式化工具. 这个定义,给 `BibTeX` 的用处做了良好的界定: 
+`BibTeX` 不是用来排版参考文献的,更不是个排版工具,它只是根据需要,按照( `bst` 文件规定的)某种格式,
+将( `bib` 文件中包含的)参考文献信息,格式化 为 LaTeX 能够使用的列表信息.
 
-既然 `BibTeX` 会根据需要 格式化数据,那么首先要解决的问题就是:`BibTeX` 如何了解此处的"需求".  对 `BibTeX` 稍有了解的读者可能知道,运行 `BibTeX` 的命令行命令是:
+清楚了 `BibTeX` 需要做的事情(用软件工程的话说, 
+就是清楚了 `BibTeX` 的 `API` ),我们就可以理清 `BibTeX` 的工作流程.
+
+## 知道需要哪些参考文献信息
+
+既然 `BibTeX` 会根据需要 格式化数据, 那么首先要解决的问题就是:
+`BibTeX` 如何了解此处的"需求".  对 `BibTeX` 稍有了解的读者可能知道,运行 `BibTeX` 的命令行命令是:
 
 `bibtex foo.aux` # 其中后缀名 `.aux` 可以省略
 
-实际上,BibTeX 正是通过读取 `aux` 文件中的 `\citation{}` 标记,来确定用户需要哪些参考文献的.  举个例子,假设用户用 LaTeX 编译了以下代码:
+实际上,BibTeX 正是通过读取 `aux` 文件中的 `\citation{}` 标记,来确定用户需要哪些参考文献的.  
+举个例子,假设用户用 LaTeX 编译了以下代码:
 
 ```latex
 \documentclass{article}
@@ -53,8 +61,7 @@ bar\cite{baz}
 它说明了:用户需要标记为 `baz` 的参考文献信息.
 当 BibTeX 读入 `aux` 文件的时候,它就会记录下所有 `\citation` 命令中的内容(即文献标记 -- `label`),这样就知道了用户需要哪些参考文献信息.
 
-***
-了解文献列表格式以及读取文献数据库
+## 了解文献列表格式以及读取文献数据库
 
 当 BibTeX 清楚了用户需要哪些文献信息,接下来自然应该搞清楚用户想要什么样的格式.
 而知道了格式之后,就可以从数据库中抽取所需的文献信息,按照格式准备数据.
@@ -90,8 +97,7 @@ tex 文件中的 `\bibliographystyle` 指定了用户期待的参考文献列表
 `在这里,unsrt` 是 `unsort` 的缩写,它对应着 `unsrt.bst` 文件,是大多数 TeX发行版自带的标准格式文件之一;
 `foobar` 则对应着 `foobar.bib` 文件,该文件是用户自己编写或生成的参考文献数据库.
 
-***
-实际操作看看
+## 实际操作看看
 
 我们假设上述 `foobar.bib` 文件有如下内容:
 
@@ -240,7 +246,7 @@ bibtex foo.aux
 这些参考文献会按照它们在 `.bib` 文件中出现的顺序包括在内, 除了那些在前面被引用过的文献.
 请注意,  `\cite{*}` 也是正确的, 但我不确定它是否有任何意义......
 
-### 引用讲义等其他文件类型
+### misc:引用讲义等其他文件类型
 
 [How to cite a lecture note](https://tex.stackexchange.com/questions/183472/how-to-cite-a-lecture-note)
 
@@ -265,7 +271,9 @@ bibtex foo.aux
 
 ![bibitem必备与可选项列表](https://upload-images.jianshu.io/upload_images/1957089-6bddb79c07fb6497.PNG?imageMogr2/auto-orient/strip|imageView2/2/w/806/format/webp)
 
-## cite,其他的参考文献包
+## 其他的参考文献包
+
+### cite
 
 [cite – Improved citation handling in LaTeX](https://www.ctan.org/pkg/cite)
 
@@ -279,7 +287,7 @@ bibtex foo.aux
 
 `cite` and `natbib` 不能同时使用.
 
-## natbib
+### natbib
 
 [natbib – Flexible bibliography support ](https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/)
 
@@ -321,7 +329,8 @@ bibtex foo.aux
 \citep{jon90a,jon90b} --> [21, 32]
 ```
 
-***
+### natbib包的选项
+
 调用`\usepackage[options]{natbib}`的选项
 
 + `round` (默认)圆括号;

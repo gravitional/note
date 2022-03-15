@@ -59,7 +59,7 @@
 
 [一行代码解决LaTex表格过宽或过窄问题](https://blog.csdn.net/Rained_99/article/details/79389189)
 
-若表格过宽, 则使用
++ 若表格过宽, 则使用
 
 ```latex
 \begin{table}[htbp]
@@ -73,7 +73,7 @@
 \end{table}
 ```
 
-若表格过窄, 则使用
++ 若表格过窄, 则使用
 
 ```bash
 \begin{table}[htbp]
@@ -87,16 +87,18 @@
 \end{table}
 ```
 
-如果想在`LyX`中使用, 参考[extended features ofLYX/LATEX](https://johnrhudson.me.uk/computing/Tips_tricks_and_extended_features_of_LyX_LaTeX.pdf)
+如果想在`LyX`中使用, 参考[extended features ofLYX/LATEX][],
 在`Document->Settings->Modules`中添加`GraphicBoxes`模块, 然后就可以在菜单栏使用`Insert->Custom Insets->Resizebox`.
-第一个参数是宽度, 第二个是高度, 为了避免`LyX`把`\textwidth`中的`\`解析成`\textbackslash`, 可以按下`Ctrl+L`, 在源码环境中输入.
+第一个参数是宽度, 第二个是高度,
+为了避免`LyX`把`\textwidth`中的`\`解析成`\textbackslash`, 可以按下`Ctrl+L`, 在源码环境中输入.
 
-***
-同类型还有`\rotatebox`, `\rotatebox[旋转原点]{旋转角度}{框内容}`.
++ 同类型还有`\rotatebox`, `\rotatebox[旋转原点]{旋转角度}{框内容}`.
 
 其中原点指定为`c`, `l`, `r`, `b`, `t`或者使用它们的组合, 逆时针的旋转角度按度数表示.
 从`LYX 2.2`开始,  一旦你安装了`GraphicBoxes`模块, 选择`Insert.CustomInsets.Rotatebox`,
 在你想要旋转框出现的地方选择`Insert.Origin`来添加一个`Origin`选项.  在`Origin`盒子中输入`=c`, 在`Angle`盒子中输入`30`, 在`Angle`盒子后面输入文字.
+
+[extended features ofLYX/LATEX]: https://johnrhudson.me.uk/computing/Tips_tricks_and_extended_features_of_LyX_LaTeX.pdf
 
 ### resizebox
 
@@ -422,13 +424,16 @@ int main(){
 首先,这一切,都需要我们使用宏包geometry. 因此,首先,我们需要在导言区中写上`\usepackage{geometry}`.
 [geometry](https://www.ctan.org/pkg/geometry)
 
-该软件包提供了一个轻松灵活的用户界面来自定义页面布局,实现了自动居中和自动平衡机制,因此用户只需给出最少的页面布局描述即可.
-例如,如果您想将每个边距设置为`2cm`,而没有标题空间,则只需要`\usepackage[margin=2cm,nohead]{geometry}`.
+该软件包提供了一个轻松灵活的用户界面来自定义页面布局,
+实现了自动居中和自动平衡机制, 因此用户只需给出最少的页面布局描述即可.
+例如您想将每个边距设置为`2cm`, 而没有标题空间,
+则只需要`\usepackage[margin=2cm,nohead]{geometry}`.
 
 ### 页面大小设置
 
-我们常用的页面大小,就是`A4`纸.要实现这个,可以在导言区中写上`\geometry{a4paper}`
-如果我们不是用约定的纸张大小,而是想以数值形式指定纸张大小,比如说长`22厘米`,宽`10厘米`,那么,我们可以在导言区中写
+我们常用的页面大小,就是`A4`纸. 要实现这个,可以在导言区中写上`\geometry{a4paper}`
+如果我们不是用约定的纸张大小, 而是想以数值形式指定纸张大小, 比如说长`22厘米`, 宽`10厘米`,
+那么我们可以在导言区中写
 
 ```latex
 \geometry{paperheight=22cm, paperwidth=10cm}
@@ -460,4 +465,4 @@ int main(){
 \geometry{textheight=20cm}
 ```
 
-`geometry`宏包具有上述参数的图像描述
+`geometry` 宏包具有上述参数的图像描述

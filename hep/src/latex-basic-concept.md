@@ -1,4 +1,4 @@
-# latex basic
+# latex 基本概念
 
 ## 简单的规则
 

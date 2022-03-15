@@ -384,3 +384,73 @@ external_system_identifiers.schema:HEPData
 
 [INSPIRE REST API 文档]: https://github.com/inspirehep/rest-api-doc
 [feedback@inspirehep.net]: mailto:feedback@inspirehep.net
+
+## 所有搜索条目
+
+[Full listing of search terms ](https://help.inspirehep.net/knowledge-base/full-listing-of-search-terms/)
+
+The following table presents a list of all search terms in INSPIRE with minimalist examples. For starred (*) terms, more detailed information on using the search terms can be found on the search tips page.
+
+```inspire
+    Term/Abbrev     Interpretation     Example (simple)     Example (advanced)
+*     a, au, author     author name     a j smith     a:smith, j
+*     ac     author-count (number of authors in the paper)     ac 100+     authorcount:100+
+*     af, aff, affiliation     affiliation     af harvard u.     af:harvard u.
+    cn, collaboration     collaboration name     cn cms     cn:cms
+*     conference, cnum     conference number         publication_info.cnum:C20-09-07.3
+    documents     documents         documents.description:Article from SCOAP3
+*     d, date     date associated with a paper (when it was written, when it was published in a journal, etc.)     date 2013     date:2013
+    da, dadd     date added to INSPIRE     dadd 2013-01
+dadd today     dadd:2013-01
+dadd:today
+*     de     date paper first appeared     de 2013     de:2013
+    doi     doi     doi 10.1086/304059     doi:10.1086/304059
+    du,dupd     date updated in INSPIRE     du 2013-01
+du today     du:2013-01
+du:today
+    ea, exact-author     exact name of the author     ea ellis, john     ea:ellis, john
+    eprint     arXiv eprint number     eprint 1302.0137     eprint:1302.0137
+    exp, experiment, se     experiment number         accelerator_experiments.legacy_name:FNAL-E-0823
+*     external system identifiers     identifiers from other services         external_system_identifiers.schema:HEPData
+external_system_identifiers.value:2014PrPNP..75... 41P
+    fa, first-author     name of first author     fa thomas,a w     firstauthor:thomas, a w
+*     subject     field code, based on arXiv eprint categories     subject Theory-HEP     subject:Theory-HEP
+*     j, journal     journal publication     j phys.rev.,d34,1
+j phys.rev.d and vol 34     j:phys.rev.,d34,1
+j:phys.rev.d,34
+    jy, journal-year     year of publication in a journal     jy 2002     jy:2002
+    number_of_pages     length of paper         number_of_pages:40->100
+    k, keyword, kw     keyword, PACS, PDG codes     k unparticle
+k 11.10.Cd     k:unparticle
+k:11.10.Cd
+*     primarch     primary eprint archive category     primarch hep-ex     primarch:hep-ex
+    recid     INSPIRE record identifier     recid 1756201     recid:1756201
+*     r, report, report-num     report number     r fermilab-tm-2551-di     r:fermilab-tm-2551-di
+report_numbers.value.raw:CMS-*-10-*
+*     refersto     papers citing a paper or author     refersto a n.f.bell.1
+refersto recid 1262571     refersto:a:n.f.bell.1
+recid:1262571
+    t, ti, title     title word     t quark     t:quark
+    texkey     record key for LaTeX and BibTeX display     texkey Allison:1980vw     texkey:Allison:1980vw
+*     tc, type-code     type of work, document type     tc thesis     tc:thesis
+*     topcit, topcite, cited     number of citations     topcit 100+     cited:100->999999999 (999999999 is an arbitrary big number)
+```
+
+参照上面 2个例子 中使用的搜索条件:
+
+```spire
+" accelerator_experiments.legacy_name:FNAL-E-0823"
+"document.description:Article from SCOAP3"
+```
+
+`记录`元数据的任何`字段`都可以通过使用其路径进行搜索.
+路径是通过连接多层次`键`(用`.`分开), 然后是 `:`和要搜索的值来建立的, 如下所示.
+
+```spire
+"accelerator_experiments.legacy_name:FNAL-E-0823″
+"documents.description:Article from SCOAP3″
+```
+
+你可以参考 [INSPIRE的JSON模式][], 查看更多的 `JSON键/属性`, 以便在你的搜索中使用.
+
+[INSPIRE的JSON模式]: https://inspire-schemas.readthedocs.io/en/latest/schemas/index.html

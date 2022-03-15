@@ -122,7 +122,9 @@ Beamer-Template/-Color/-Font some beamer element
 + 请勿使用超过两个级别的`"subitemizing."`. `beamer`支持三个级别, 但您不应使用三层. 通常, 您甚至都不应该使用第二个. 请改用优质的图形.
 + 不要创建无尽的逐项`itemize`或`enumerate`列表.
 + 不要逐段显示列表.
-+ 强调是创建结构的重要组成部分. 使用`\alert`突出显示重要的内容. 适用对象可以是一个单词或整个句子. 但是, 不要过度使用突出显示, 因为这会抵消效果. 如 `\alert{prime number}`
++ 强调是创建结构的重要组成部分. 使用`\alert`突出显示重要的内容. 
+适用对象可以是一个单词或整个句子. 但是, 不要过度使用突出显示, 因为这会抵消效果. 如 `\alert{prime number}`
+
 + 使用列, 如下:
 
 ```latex
@@ -134,7 +136,8 @@ Beamer-Template/-Color/-Font some beamer element
 \end{columns}
  ```
 
-+ 切勿使用脚注(footnotes.). 他们不必要地打乱了阅读流程. 脚注中所说的如果重要, 应放在普通文本中; 或不重要, 应将其省略(尤其是演示文稿中).
++ 切勿使用脚注(footnotes.). 他们不必要地打乱了阅读流程. 
+脚注中所说的如果重要, 应放在普通文本中; 或不重要, 应将其省略(尤其是演示文稿中).
 + 使用`quote`或`quotation`排版引文.
 
 ```latex
