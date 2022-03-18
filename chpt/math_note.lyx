@@ -7,41 +7,68 @@
 \textclass ctex-book
 \begin_preamble
 \usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
-%\usepackage{xeCJK}% 可以用来实现中文断行
-\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
 \usepackage{geometry} % 整体页面设置
 \geometry{a4paper} %页面大小是A4纸
-\geometry{top=2cm} %设置版心顶部距离
 \geometry{top=2cm} %设置版心顶部距离
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
 %++++++++++++++++++++++++++++++++++++++++++++++++
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
-% 添加图片命令或者背景到每一页的绝对位置，
-% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+% This package makes it easy to add some picture commands to every page at ab-solute positions
 \usepackage{float}%使用[H]选项将浮动题放到确定的位置
-\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
-%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
-\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
+% xcolor package starts from the basic facilities of the 
+% color package, and provides easy driver-independent access
+%to several kinds of color tints, shades, tones, 
+%and mixes of arbitrary colors
+\usepackage{fontspec}%Advanced font selection in XeLaTeX and LuaLaTeX
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+%++++++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+%设置数学字体
+\usepackage{unicode-math} %boldsymbol,blackboard
+\setmathfont{Latin Modern Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%++++++++++++++++++++++++++++++++++++++++
+\usepackage{enumerate} 
+\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usetikzlibrary{shapes.misc,animations}
+\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{simplewick} 
+% a simple means of drawing Wick contractions above and below expressions. 
+\usepackage{makeidx} 
+% Standard package for creating indexes
+\usepackage{multirow}
+\usepackage{mathtools}% 定义配对的数学符号
 %%%+++++++++++++++++++++++++++++++
-\usepackage{xcolor} 
-% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
-% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
-%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
-%%%+++++++++++++++++++++++++++++++
-\usepackage{listings} % 在LaTex中添加代码高亮
-\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\usepackage{listings}
+% 在LaTex中添加代码高亮
+\usepackage{framed}
+% 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+%定义各种颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+%\lstdefinestyle{〈style name〉}{〈key=value list〉}
+%stores the key=value list
 \lstdefinestyle{codestyle1}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -60,61 +87,23 @@
     showtabs=false,                  
     tabsize=2
 }
-%%%+++++++++++++++++++++++++++++++
-\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
-%%%+++++++++++++++++++++++++++++++
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % \mathscr 命令，更花的花体
-\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
-% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
-%%%+++++++++++++++++++++++++++++++
-\usepackage{siunitx} % 国际单位制
-\usepackage{braket} % 狄拉克 bra-ket notation
-\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
-  %\bm 命令使参数变成粗体
-% Blackboard variants of Computer Modern fonts.
-\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
-\usepackage{makeidx}% 用来创建 indexes 的标准包
-\usepackage{multirow} % 创建具有多行的 tabular
-\usepackage{tikz-feynman}  % 画费曼图用
-\usepackage{tikz} %画矢量图用
-%%++++++++++++++++++++++++++++++++++++
-% 设置英文字体
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Roman}
-% 设置中文字体
-\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
-\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
-\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
-%设置数学字体
-\usepackage{unicode-math}%在其他字体包如amsmath之后调用
-\setmathfont{Latin Modern Math}
-%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
-%%++++++++++++++++++++++++++++++++++++++++
-% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
-% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
-% \setmathrm{Latin Modern Roman}
-%%++++++++++++++++++++++++++++++++++++++
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
+%%++++++++++++++++++++ 
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\Tr}{Tr} %矩阵求迹的符号
+%*号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\ree}{Re}
+\DeclareMathOperator{\imm}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 \newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
@@ -277,7 +266,7 @@ E_{1}^{\prime}=\frac{m_{1}^{2}c^{2}+E_{1}m_{2}}{\sqrt{m_{1}^{2}c^{2}+m_{2}^{2}c^
 \begin_inset Formula 
 \begin{align*}
  & C_{0}\left(s_{1},s_{2},s_{3};m_{2},m_{1},m_{0}\right)\\
- & =-\lim_{\varepsilon\to0^{+}}\int_{0}^{1}\dif y\int_{0}^{1-y}\dif z\frac{1}{\left(s_{1}y^{2}+s_{2}z^{2}+\left(s_{1}+s_{2}-s_{3}\right)yz+\left(-s_{1}+m_{1}^{2}-m_{0}^{2}\right)y+\left(-s_{2}+m_{2}^{2}-m_{0}^{2}\right)z+m_{0}^{2}-i\varepsilon\right)}
+ & =-\lim_{\varepsilon\to0^{+}}\int_{0}^{1}\dd y\int_{0}^{1-y}\dd z\frac{1}{\left(s_{1}y^{2}+s_{2}z^{2}+\left(s_{1}+s_{2}-s_{3}\right)yz+\left(-s_{1}+m_{1}^{2}-m_{0}^{2}\right)y+\left(-s_{2}+m_{2}^{2}-m_{0}^{2}\right)z+m_{0}^{2}-i\varepsilon\right)}
 \end{align*}
 
 \end_inset
@@ -1137,7 +1126,7 @@ H_{1}=T_{8},H_{2}=T_{3}
 是全反对称结构常数，
 \begin_inset Formula 
 \[
-f_{abc}=\frac{1}{4i}\tr\left(\left[\lambda_{a},\lambda_{b}\right]\lambda_{c}\right)
+f_{abc}=\frac{1}{4i}\Tr\left(\left[\lambda_{a},\lambda_{b}\right]\lambda_{c}\right)
 \]
 
 \end_inset
@@ -1163,7 +1152,7 @@ U=\exp\left(i*\frac{\phi}{F_{0}}\right)
 \end_inset
 
 
-\begin_inset Formula $\phi_{a}=\frac{1}{2}\tr\left(\lambda_{a}\phi\right)$
+\begin_inset Formula $\phi_{a}=\frac{1}{2}\Tr\left(\lambda_{a}\phi\right)$
 \end_inset
 
 。
@@ -1325,7 +1314,7 @@ literal "true"
 \begin_inset Formula 
 \begin{align*}
 \lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon} & =\text{P.V.}\frac{1}{x}\mp i\pi\delta\left(x\right)\\
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dif x}{x\pm i\varepsilon} & =\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dif x\mp i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x\pm i\varepsilon} & =\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dd x\mp i\pi f\left(0\right)
 \end{align*}
 
 \end_inset
@@ -1341,8 +1330,8 @@ Plus 函数
 plus-prescription：
 \begin_inset Formula 
 \begin{align*}
-\left[\frac{f\left(u\right)}{u}\right]_{+} & \equiv\frac{f\left(u\right)}{u}-\delta\left(u\right)\int_{0}^{1}\dif v\frac{f\left(v\right)}{v}\\
-\int_{0}^{1}\dif u\left[\frac{f\left(u\right)}{u}\right]_{+} & =\int_{0}^{1}\dif u\frac{f\left(u\right)}{u}-\int_{0}^{1}\dif v\frac{f\left(v\right)}{v}=0
+\left[\frac{f\left(u\right)}{u}\right]_{+} & \equiv\frac{f\left(u\right)}{u}-\delta\left(u\right)\int_{0}^{1}\dd v\frac{f\left(v\right)}{v}\\
+\int_{0}^{1}\dd u\left[\frac{f\left(u\right)}{u}\right]_{+} & =\int_{0}^{1}\dd u\frac{f\left(u\right)}{u}-\int_{0}^{1}\dd v\frac{f\left(v\right)}{v}=0
 \end{align*}
 
 \end_inset
@@ -1350,7 +1339,7 @@ plus-prescription：
 
 \begin_inset Formula 
 \[
-\int_{0}^{1}\dif x\frac{f\left(x\right)}{\left(1-x\right)_{+}}\equiv\int_{0}^{1}\dif x\frac{f\left(x\right)-f\left(1\right)}{1-x},\quad\int_{0}^{Q^{2}}\left(k_{T}^{2}\right)^{-\varepsilon-1}\dif k_{T}^{2}=\frac{1}{-\varepsilon}Q^{-2\varepsilon}
+\int_{0}^{1}\dd x\frac{f\left(x\right)}{\left(1-x\right)_{+}}\equiv\int_{0}^{1}\dd x\frac{f\left(x\right)-f\left(1\right)}{1-x},\quad\int_{0}^{Q^{2}}\left(k_{T}^{2}\right)^{-\varepsilon-1}\dd k_{T}^{2}=\frac{1}{-\varepsilon}Q^{-2\varepsilon}
 \]
 
 \end_inset
@@ -1773,7 +1762,7 @@ f_{n} & =\frac{(p+q)^{2n}-p^{2n}}{q^{2}+2q.p}
 
 \begin_layout Enumerate
 类型一：
-\begin_inset Formula $\int_{0}^{2\pi}R\left(\cos x,\sin x\right)\dif x$
+\begin_inset Formula $\int_{0}^{2\pi}R\left(\cos x,\sin x\right)\dd x$
 \end_inset
 
 。作自变量代换
@@ -1787,7 +1776,7 @@ z=e^{i\pi}
 新的积分回路为单位圆，逆时针绕原点一周。
 \begin_inset Formula 
 \[
-\cos x=\frac{1}{2}\left(z+z^{-}\right),\quad\sin x=\frac{1}{2i}\left(z-z^{-}\right),\quad\dif x=\frac{\dif z}{iz}
+\cos x=\frac{1}{2}\left(z+z^{-}\right),\quad\sin x=\frac{1}{2i}\left(z-z^{-}\right),\quad\dd x=\frac{\dd z}{iz}
 \]
 
 \end_inset
@@ -1797,7 +1786,7 @@ z=e^{i\pi}
 
 \begin_layout Enumerate
 类型二：
-\begin_inset Formula $\int_{-\infty}^{+\infty}f\left(x\right)\dif x$
+\begin_inset Formula $\int_{-\infty}^{+\infty}f\left(x\right)\dd x$
 \end_inset
 
 。积分区间是
@@ -1855,7 +1844,7 @@ z=e^{i\pi}
 ，
 \begin_inset Formula 
 \[
-\oint f\left(z\right)\dif z=\int_{-R}^{R}f\left(x\right)\dif x+\int_{C_{R}}f\left(z\right)\dif z
+\oint f\left(z\right)\dd z=\int_{-R}^{R}f\left(x\right)\dd x+\int_{C_{R}}f\left(z\right)\dd z
 \]
 
 \end_inset
@@ -1863,7 +1852,7 @@ z=e^{i\pi}
 根据留数定理，即
 \begin_inset Formula 
 \[
-2\pi i\sum_{\text{在\ensuremath{l}所围半圆}}\res f\left(z\right)=\int_{-R}^{R}f\left(x\right)\dif x+\int_{C_{R}}f\left(z\right)\dif z
+2\pi i\sum_{\text{在\ensuremath{l}所围半圆}}\res f\left(z\right)=\int_{-R}^{R}f\left(x\right)\dd x+\int_{C_{R}}f\left(z\right)\dd z
 \]
 
 \end_inset
@@ -1877,13 +1866,13 @@ z=e^{i\pi}
 \end_inset
 
 乘上上半平面所有留数之和，右边第一个积分趋于
-\begin_inset Formula $\int_{-\infty}^{+\infty}f\left(x\right)\dif x$
+\begin_inset Formula $\int_{-\infty}^{+\infty}f\left(x\right)\dd x$
 \end_inset
 
 ，第二个积分可证明趋于零；
 \begin_inset Formula 
 \begin{align*}
-\abs*{\int_{C_{R}}f\left(z\right)\dif z} & =\abs*{\int_{C_{R}}zf\left(z\right)\frac{\dif z}{z}}\le\int_{C_{R}}\abs*{zf\left(z\right)}\frac{\abs{\dif z}}{\abs{z}}\\
+\abs*{\int_{C_{R}}f\left(z\right)\dd z} & =\abs*{\int_{C_{R}}zf\left(z\right)\frac{\dd z}{z}}\le\int_{C_{R}}\abs*{zf\left(z\right)}\frac{\abs{\dd z}}{\abs{z}}\\
  & \le\max\abs{zf\left(z\right)}\frac{\pi R}{R}=\pi*\max\abs{zf\left(z\right)}\to0,
 \end{align*}
 
@@ -1904,7 +1893,7 @@ z=e^{i\pi}
 上的最大值。于是得到
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}f\left(x\right)\dif x=2\pi i\sum_{\text{上半平面}}\res f\left(z\right)
+\int_{-\infty}^{+\infty}f\left(x\right)\dd x=2\pi i\sum_{\text{上半平面}}\res f\left(z\right)
 \]
 
 \end_inset
@@ -1912,7 +1901,7 @@ z=e^{i\pi}
 如果不是高两次，比如
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif k^{-}\frac{1}{k^{+}k^{-}-\Omega_{\phi}+i\varepsilon}
+\int_{-\infty}^{+\infty}\dd k^{-}\frac{1}{k^{+}k^{-}-\Omega_{\phi}+i\varepsilon}
 \]
 
 \end_inset
@@ -1952,7 +1941,7 @@ z=e^{i\pi}
 上一致成立，则：
 \begin_inset Formula 
 \[
-\lim_{R\to\infty}\int_{\Gamma_{R}}\dif zg\left(z\right)e^{imz}=0,\qquad(m>0)
+\lim_{R\to\infty}\int_{\Gamma_{R}}\dd zg\left(z\right)e^{imz}=0,\qquad(m>0)
 \]
 
 \end_inset
@@ -1972,7 +1961,7 @@ z=e^{i\pi}
 都不在实轴上，则
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif zg(z)e^{imz}=2\pi i\sum_{\Im a_{k}>0}\res_{z=a_{k}}\left[g\left(z\right)e^{imz}\right]
+\int_{-\infty}^{+\infty}\dd zg(z)e^{imz}=2\pi i\sum_{\Im a_{k}>0}\res_{z=a_{k}}\left[g\left(z\right)e^{imz}\right]
 \]
 
 \end_inset
@@ -1984,8 +1973,8 @@ z=e^{i\pi}
 积分公式：
 \begin_inset Formula 
 \begin{align*}
- & \int_{0}^{\infty}\frac{\sin mx}{x}\dif x=\int_{0}^{\infty}\frac{\sin mx}{mx}\dif mx=\frac{\pi}{2},\quad\left(m>0\right)\\
- & \int_{0}^{\infty}\frac{\sin mx}{x}\dif x=-\int_{0}^{\infty}\frac{\sin\abs{x}}{x}\dif x=-\frac{\pi}{2},\quad\left(m<0\right)
+ & \int_{0}^{\infty}\frac{\sin mx}{x}\dd x=\int_{0}^{\infty}\frac{\sin mx}{mx}\dd mx=\frac{\pi}{2},\quad\left(m>0\right)\\
+ & \int_{0}^{\infty}\frac{\sin mx}{x}\dd x=-\int_{0}^{\infty}\frac{\sin\abs{x}}{x}\dd x=-\frac{\pi}{2},\quad\left(m<0\right)
 \end{align*}
 
 \end_inset
@@ -2022,7 +2011,7 @@ literal "true"
 柯西主值如下
 \begin_inset Formula 
 \[
-\text{P.V.}\int_{-\infty}^{+\infty}f\left(x\right)\dif x=\lim_{a\to+\infty}\int_{-a}^{+a}f\left(x\right)\dif x
+\text{P.V.}\int_{-\infty}^{+\infty}f\left(x\right)\dd x=\lim_{a\to+\infty}\int_{-a}^{+a}f\left(x\right)\dd x
 \]
 
 \end_inset
@@ -2063,7 +2052,7 @@ literal "true"
 \begin_inset Formula 
 \begin{align*}
 \lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon} & =\text{P.V.}\frac{1}{x}\mp i\pi\delta\left(x\right)\\
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f(x)\dif x}{x\pm i\varepsilon} & =\text{P.V.}\int_{-\infty}^{+\infty}\frac{f(x)}{x}\dif x\mp i\pi f(0)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f(x)\dd x}{x\pm i\varepsilon} & =\text{P.V.}\int_{-\infty}^{+\infty}\frac{f(x)}{x}\dd x\mp i\pi f(0)
 \end{align*}
 
 \end_inset
@@ -2075,8 +2064,8 @@ literal "true"
 Heaviside 函数的 fourier 变换
 \begin_inset Formula 
 \begin{align*}
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif x\left(\mp i\Theta\left(\mp x\right)e^{-ikx}\right) & =\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)\\
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif k\frac{1}{k\pm i\varepsilon}e^{ikx} & =\mp2\pi i\Theta\left(\mp x\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd x\left(\mp i\Theta\left(\mp x\right)e^{-ikx}\right) & =\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)\\
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd k\frac{1}{k\pm i\varepsilon}e^{ikx} & =\mp2\pi i\Theta\left(\mp x\right)
 \end{align*}
 
 \end_inset
@@ -2100,7 +2089,7 @@ log函数
 Cauchy principal value(柯西主值)
 \begin_inset Formula 
 \[
-\text{P.V.}\int_{-\infty}^{+\infty}\frac{f(x)\dif x}{x}=\lim_{\delta\to0^{\dagger}}\left\{ \int_{-\infty}^{-\delta}\frac{f(x)}{x}\dif x+\int_{\delta}^{\infty}\frac{f(x)}{x}\dif x\right\} .
+\text{P.V.}\int_{-\infty}^{+\infty}\frac{f(x)\dd x}{x}=\lim_{\delta\to0^{\dagger}}\left\{ \int_{-\infty}^{-\delta}\frac{f(x)}{x}\dd x+\int_{\delta}^{\infty}\frac{f(x)}{x}\dd x\right\} .
 \]
 
 \end_inset
@@ -2108,7 +2097,7 @@ Cauchy principal value(柯西主值)
 狄拉克在《量子力学原理》一书中提出了一个公式
 \begin_inset Formula 
 \[
-\frac{\dif}{\dif x}\ln x=\frac{1}{x}-i\pi\delta(x)
+\frac{\dd}{\dd x}\ln x=\frac{1}{x}-i\pi\delta(x)
 \]
 
 \end_inset
@@ -2169,7 +2158,7 @@ Cauchy principal value(柯西主值)
 \end_inset
 
 。所以，有
-\begin_inset Formula $\frac{\dif}{\dif x}\ln x=\frac{1}{x}-i\pi\delta(x)$
+\begin_inset Formula $\frac{\dd}{\dd x}\ln x=\frac{1}{x}-i\pi\delta(x)$
 \end_inset
 
 
@@ -2192,7 +2181,7 @@ literal "true"
 \begin_inset Formula 
 \begin{align*}
 \lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon} & =\text{P.V.}\frac{1}{x}\mp i\pi\delta\left(x\right)\\
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dif x}{x\pm i\varepsilon} & =\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dif x\mp i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x\pm i\varepsilon} & =\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dd x\mp i\pi f\left(0\right)
 \end{align*}
 
 \end_inset
@@ -2250,7 +2239,7 @@ name "fig:int_path"
 由此，
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{C_{\delta}}\frac{f\left(x\right)}{x}\dif x=f\left(0\right)\lim_{\varepsilon\to0}\int_{\pi}^{0}\frac{i\delta e^{i\theta}}{\delta e^{i\theta}}\dif\theta=-i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{C_{\delta}}\frac{f\left(x\right)}{x}\dd x=f\left(0\right)\lim_{\varepsilon\to0}\int_{\pi}^{0}\frac{i\delta e^{i\theta}}{\delta e^{i\theta}}\dd\theta=-i\pi f\left(0\right)
 \]
 
 \end_inset
@@ -2258,7 +2247,7 @@ name "fig:int_path"
 所以
 \begin_inset Formula 
 \[
-\int_{C}\frac{f\left(x\right)}{x}\dif x=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}-i\pi f\left(0\right)
+\int_{C}\frac{f\left(x\right)}{x}\dd x=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}-i\pi f\left(0\right)
 \]
 
 \end_inset
@@ -2278,7 +2267,7 @@ name "fig:int_path"
 ，所以有
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dif x}{x+i\varepsilon}=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}-i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x+i\varepsilon}=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}-i\pi f\left(0\right)
 \]
 
 \end_inset
@@ -2286,7 +2275,7 @@ name "fig:int_path"
 同理有
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dif x}{x-i\varepsilon}=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}+i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x-i\varepsilon}=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}+i\pi f\left(0\right)
 \]
 
 \end_inset
@@ -2294,7 +2283,7 @@ name "fig:int_path"
 相当于前式的复共轭。所以总的来说，
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dif x}{x\pm i\varepsilon}=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dif x\mp i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x\pm i\varepsilon}=\text{P.V.}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dd x\mp i\pi f\left(0\right)
 \]
 
 \end_inset
@@ -2314,7 +2303,7 @@ name "fig:int_path"
 
 \begin_inset Formula 
 \[
-\text{P.V.}\frac{1}{x}=\frac{\dif\ln\abs*{x}}{\dif x}
+\text{P.V.}\frac{1}{x}=\frac{\dd\ln\abs*{x}}{\dd x}
 \]
 
 \end_inset
@@ -2366,7 +2355,7 @@ name "fig:int_path"
 求导，立马得到 Sokhotski-Plemelj 公式
 \begin_inset Formula 
 \[
-\frac{\dif}{\dif x}\Theta\left(-x\right)=-\frac{\dif}{\dif x}\Theta\left(x\right)=-\delta\left(x\right)
+\frac{\dd}{\dd x}\Theta\left(-x\right)=-\frac{\dd}{\dd x}\Theta\left(x\right)=-\delta\left(x\right)
 \]
 
 \end_inset
@@ -2382,7 +2371,7 @@ name "fig:int_path"
 在推导中，使用了 complex 对数主值的公式
 \begin_inset Formula 
 \[
-\frac{\dif\ln z}{\dif z}=\frac{1}{z}
+\frac{\dd\ln z}{\dd z}=\frac{1}{z}
 \]
 
 \end_inset
@@ -2401,7 +2390,7 @@ name "fig:int_path"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{e^{ikx}}{x\pm i\varepsilon}\dif x=\mp2\pi i\Theta(\mp k)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{e^{ikx}}{x\pm i\varepsilon}\dd x=\mp2\pi i\Theta(\mp k)
 \]
 
 \end_inset
@@ -2412,8 +2401,8 @@ name "fig:int_path"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif x\left(\mp i\Theta\left(\mp x\right)e^{-i\left(k\pm i\varepsilon\right)x}\right) & =\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)\\
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif k\frac{1}{k\pm i\varepsilon}e^{i\left(k\pm i\varepsilon\right)x} & =\mp2\pi i\Theta\left(\mp x\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd x\left(\mp i\Theta\left(\mp x\right)e^{-i\left(k\pm i\varepsilon\right)x}\right) & =\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)\\
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd k\frac{1}{k\pm i\varepsilon}e^{i\left(k\pm i\varepsilon\right)x} & =\mp2\pi i\Theta\left(\mp x\right)
 \end{align*}
 
 \end_inset
@@ -2425,7 +2414,7 @@ name "fig:int_path"
 可以这么理解证明过程，我们知道
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif x\delta\left(x\right)=1,\quad\int_{-\infty}^{+\infty}\dif ke^{ikx}=2\pi\delta\left(k\right),\quad\int_{-\infty}^{+\infty}\dif k1=2\pi\delta\left(0\right)
+\int_{-\infty}^{+\infty}\dd x\delta\left(x\right)=1,\quad\int_{-\infty}^{+\infty}\dd ke^{ikx}=2\pi\delta\left(k\right),\quad\int_{-\infty}^{+\infty}\dd k1=2\pi\delta\left(0\right)
 \]
 
 \end_inset
@@ -2437,7 +2426,7 @@ name "fig:int_path"
 的傅里叶变换
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif x\left(i\Theta\left(x\right)e^{-ikx}\right)
+\int_{-\infty}^{+\infty}\dd x\left(i\Theta\left(x\right)e^{-ikx}\right)
 \]
 
 \end_inset
@@ -2453,7 +2442,7 @@ name "fig:int_path"
 ，
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif x\left(i\Theta\left(x\right)e^{-i\left(k-i\varepsilon\right)x}\right)=\lim_{\varepsilon\to0}\frac{1}{k-i\varepsilon}\left.\left(-e^{-ikx}\right)\right|_{x=0}^{x=+\infty}=\lim_{\varepsilon\to0}\frac{1}{k-i\varepsilon}
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd x\left(i\Theta\left(x\right)e^{-i\left(k-i\varepsilon\right)x}\right)=\lim_{\varepsilon\to0}\frac{1}{k-i\varepsilon}\left.\left(-e^{-ikx}\right)\right|_{x=0}^{x=+\infty}=\lim_{\varepsilon\to0}\frac{1}{k-i\varepsilon}
 \]
 
 \end_inset
@@ -2510,13 +2499,13 @@ P.V.
 ，代入一开始的积分表达式中，得到
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif x\left(i\Theta\left(x\right)e^{-i0x}\right)=\int_{-\infty}^{+\infty}\dif xi\Theta\left(x\right)=\int_{0}^{+\infty}\dif xi=i\pi\delta\left(0\right)
+\int_{-\infty}^{+\infty}\dd x\left(i\Theta\left(x\right)e^{-i0x}\right)=\int_{-\infty}^{+\infty}\dd xi\Theta\left(x\right)=\int_{0}^{+\infty}\dd xi=i\pi\delta\left(0\right)
 \]
 
 \end_inset
 
 这里考虑了
-\begin_inset Formula $\int_{-\infty}^{+\infty}\dif x1=2\pi\delta\left(0\right)$
+\begin_inset Formula $\int_{-\infty}^{+\infty}\dd x1=2\pi\delta\left(0\right)$
 \end_inset
 
 ，半个积分区间就是
@@ -2530,7 +2519,7 @@ P.V.
 把以上两种情况的取值加起来，我们得到（另一种符号的情形是类似的），
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif x\left(\mp i\Theta\left(\mp x\right)e^{-i\left(k\pm i\varepsilon\right)x}\right)=\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd x\left(\mp i\Theta\left(\mp x\right)e^{-i\left(k\pm i\varepsilon\right)x}\right)=\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)
 \]
 
 \end_inset
@@ -2542,7 +2531,7 @@ P.V.
 情形的简单公式，有助于记住符号，
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif x\mp i\Theta\left(\mp x\right)=\mp i\pi\delta\left(\mp0\right)
+\int_{-\infty}^{+\infty}\dd x\mp i\Theta\left(\mp x\right)=\mp i\pi\delta\left(\mp0\right)
 \]
 
 \end_inset
@@ -2616,7 +2605,7 @@ literal "true"
 ，再计算积分，形式为
 \begin_inset Formula 
 \[
-f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\right)\phi\left(x\right)
+f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dd xf\left(x\right)\phi\left(x\right)
 \]
 
 \end_inset
@@ -2650,7 +2639,7 @@ f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\r
 \end_inset
 
 也是局部可积的，它对应的线性泛函
-\begin_inset Formula $\int_{-\infty}^{\infty}\dif x\abs{x}\left[\cdots\right]$
+\begin_inset Formula $\int_{-\infty}^{\infty}\dd x\abs{x}\left[\cdots\right]$
 \end_inset
 
 存在。改写一下符号，我们取特殊的 Schwartz 函数
@@ -2660,7 +2649,7 @@ f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\r
 ，也就是下面的积分
 \begin_inset Formula 
 \[
-\int_{-\infty}^{\infty}\dif k\abs{k}e^{ikx}
+\int_{-\infty}^{\infty}\dd k\abs{k}e^{ikx}
 \]
 
 \end_inset
@@ -2704,8 +2693,8 @@ f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\r
 作乘法，
 \begin_inset Formula 
 \begin{align*}
- & \frac{1}{2\pi}\int_{-\infty}^{\infty}\dif x\frac{\dif f\left(x\right)}{\dif x}e^{-ikx}=\left.f\left(x\right)e^{-ikx}\right|_{-\infty}^{+\infty}-\frac{1}{2\pi}\int_{-\infty}^{\infty}\dif x\frac{\dif e^{-ikx}}{\dif x}f\left(x\right)\\
- & =\frac{1}{2\pi}\int_{-\infty}^{\infty}\dif x\,ikf\left(x\right)e^{-ikx}=ik\frac{1}{2\pi}\int_{-\infty}^{\infty}\dif x\,f\left(x\right)e^{-ikx}=ik\mathcal{F}\left(k\right)
+ & \frac{1}{2\pi}\int_{-\infty}^{\infty}\dd x\frac{\dd f\left(x\right)}{\dd x}e^{-ikx}=\left.f\left(x\right)e^{-ikx}\right|_{-\infty}^{+\infty}-\frac{1}{2\pi}\int_{-\infty}^{\infty}\dd x\frac{\dd e^{-ikx}}{\dd x}f\left(x\right)\\
+ & =\frac{1}{2\pi}\int_{-\infty}^{\infty}\dd x\,ikf\left(x\right)e^{-ikx}=ik\frac{1}{2\pi}\int_{-\infty}^{\infty}\dd x\,f\left(x\right)e^{-ikx}=ik\mathcal{F}\left(k\right)
 \end{align*}
 
 \end_inset
@@ -2729,10 +2718,10 @@ f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\r
 对于积分的情形，交换积分次序
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow\frac{1}{2\pi}\int_{-\infty}^{\infty}\dif x\,e^{-ikx}\int_{c}^{x}f\left(t\right)\dif t=\frac{1}{2\pi}\int_{c}^{\infty}\dif tf\left(t\right)\int_{t}^{\infty}\dif x\,e^{-ikx}\\
- & =\frac{1}{2\pi}\frac{1}{-ik}\int_{c}^{\infty}\dif tf\left(t\right)\left(e^{-ik\infty}-e^{-ikt}\right)\\
- & =\frac{1}{2\pi}\frac{1}{ik}\int_{c}^{\infty}\dif t\left(f\left(t\right)e^{-ikt}-f\left(t\right)e^{-ik\infty}\right)\\
- & =\frac{1}{2\pi}\frac{1}{ik}\int_{c}^{\infty}\dif tf\left(t\right)e^{-ikt}-\frac{1}{2\pi}\frac{1}{ik}e^{-ik\infty}\int_{c}^{\infty}\dif tf\left(t\right)
+ & \Rightarrow\frac{1}{2\pi}\int_{-\infty}^{\infty}\dd x\,e^{-ikx}\int_{c}^{x}f\left(t\right)\dd t=\frac{1}{2\pi}\int_{c}^{\infty}\dd tf\left(t\right)\int_{t}^{\infty}\dd x\,e^{-ikx}\\
+ & =\frac{1}{2\pi}\frac{1}{-ik}\int_{c}^{\infty}\dd tf\left(t\right)\left(e^{-ik\infty}-e^{-ikt}\right)\\
+ & =\frac{1}{2\pi}\frac{1}{ik}\int_{c}^{\infty}\dd t\left(f\left(t\right)e^{-ikt}-f\left(t\right)e^{-ik\infty}\right)\\
+ & =\frac{1}{2\pi}\frac{1}{ik}\int_{c}^{\infty}\dd tf\left(t\right)e^{-ikt}-\frac{1}{2\pi}\frac{1}{ik}e^{-ik\infty}\int_{c}^{\infty}\dd tf\left(t\right)
 \end{align*}
 
 \end_inset
@@ -2742,7 +2731,7 @@ f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\r
 \end_inset
 
 ，并且
-\begin_inset Formula $e^{-ik\infty}\int_{-\infty}^{\infty}\dif tf\left(t\right)$
+\begin_inset Formula $e^{-ik\infty}\int_{-\infty}^{\infty}\dd tf\left(t\right)$
 \end_inset
 
 这一项可以设法忽略掉，比如令
@@ -2752,7 +2741,7 @@ f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\r
 那么，
 \begin_inset Formula 
 \[
-\frac{1}{2\pi}\int_{-\infty}^{\infty}\dif x\,e^{-ikx}\int_{-\infty}^{\infty}f\left(t\right)\dif t=\frac{1}{2\pi}\frac{1}{ik}\int_{c}^{\infty}\dif tf\left(t\right)e^{-ikt}=\frac{1}{ik}\mathcal{F}\left[k\right]
+\frac{1}{2\pi}\int_{-\infty}^{\infty}\dd x\,e^{-ikx}\int_{-\infty}^{\infty}f\left(t\right)\dd t=\frac{1}{2\pi}\frac{1}{ik}\int_{c}^{\infty}\dd tf\left(t\right)e^{-ikt}=\frac{1}{ik}\mathcal{F}\left[k\right]
 \]
 
 \end_inset
@@ -2778,14 +2767,14 @@ Fourier 变换的乘法法则总是成立的。用线性泛函的话说，线性
 \end_inset
 
 ，如果
-\begin_inset Formula $f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dif xf\left(x\right)\phi\left(x\right)$
+\begin_inset Formula $f\Rightarrow\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}\dd xf\left(x\right)\phi\left(x\right)$
 \end_inset
 
 ，可以定义
 \begin_inset Formula 
 \begin{align*}
-\frac{\dif}{\dif x}f & \Rightarrow\mathcal{F}^{\prime}\left[\phi\right]=\int_{-\infty}^{\infty}\frac{\dif}{\dif x}f\left(x\right)\phi\left(x\right)=\left.f\left(x\right)\phi\left(x\right)\right|_{-\infty}^{+\infty}-\int_{-\infty}^{\infty}f\left(x\right)\frac{\dif}{\dif x}\phi\left(x\right)\\
- & =-\int_{-\infty}^{\infty}f\left(x\right)\frac{\dif}{\dif x}\phi\left(x\right)
+\frac{\dd}{\dd x}f & \Rightarrow\mathcal{F}^{\prime}\left[\phi\right]=\int_{-\infty}^{\infty}\frac{\dd}{\dd x}f\left(x\right)\phi\left(x\right)=\left.f\left(x\right)\phi\left(x\right)\right|_{-\infty}^{+\infty}-\int_{-\infty}^{\infty}f\left(x\right)\frac{\dd}{\dd x}\phi\left(x\right)\\
+ & =-\int_{-\infty}^{\infty}f\left(x\right)\frac{\dd}{\dd x}\phi\left(x\right)
 \end{align*}
 
 \end_inset
@@ -2850,7 +2839,7 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 。由傅立叶积分基本公式：
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif xe^{-ikx}=2\pi\delta\left(k\right),
+\int_{-\infty}^{+\infty}\dd xe^{-ikx}=2\pi\delta\left(k\right),
 \]
 
 \end_inset
@@ -2866,7 +2855,7 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 分情况讨论，可以得到：
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{1}{k}\dif\left(\mp ikx\right)\left[\Theta\left(\mp x\right)e^{-i\left(k\mp i\varepsilon\right)x}\right]=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)=\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{1}{k}\dd\left(\mp ikx\right)\left[\Theta\left(\mp x\right)e^{-i\left(k\mp i\varepsilon\right)x}\right]=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)=\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}
 \]
 
 \end_inset
@@ -2874,7 +2863,7 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 所以
 \begin_inset Formula 
 \begin{align*}
- & \frac{1}{\left(2\pi\right)}\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dif ki\pi\left(\Theta\left(k\right)-\Theta\left(-k\right)\right)e^{ikx}\\
+ & \frac{1}{\left(2\pi\right)}\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\dd ki\pi\left(\Theta\left(k\right)-\Theta\left(-k\right)\right)e^{ikx}\\
 = & \frac{1}{2}\left(\text{P.V.}\frac{1}{-x}-i\pi\delta\left(x\right)+\text{P.V.}\frac{1}{-x}+i\pi\delta\left(x\right)\right)=\text{P.V.}\frac{-1}{x}
 \end{align*}
 
@@ -2887,21 +2876,21 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 的 Fourier 逆变换是
 \begin_inset Formula 
 \[
-\frac{1}{\left(2\pi\right)}\int_{-\infty}^{+\infty}\dif k\left(-\pi\abs{k}e^{+ikx}\right)=\frac{\dif}{\dif x}\left(\text{P.V.}\frac{-1}{x}\right)=\text{P.V.}\frac{1}{x}\frac{\dif}{\dif x}
+\frac{1}{\left(2\pi\right)}\int_{-\infty}^{+\infty}\dd k\left(-\pi\abs{k}e^{+ikx}\right)=\frac{\dd}{\dd x}\left(\text{P.V.}\frac{-1}{x}\right)=\text{P.V.}\frac{1}{x}\frac{\dd}{\dd x}
 \]
 
 \end_inset
 
 
-\begin_inset Formula $\frac{\dif}{\dif x}\left(\text{P.V.}\frac{-1}{x}\right)$
+\begin_inset Formula $\frac{\dd}{\dd x}\left(\text{P.V.}\frac{-1}{x}\right)$
 \end_inset
 
 跟
-\begin_inset Formula $\frac{\dif}{\dif x}\left(\frac{-1}{x}\right)=\frac{1}{x^{2}}$
+\begin_inset Formula $\frac{\dd}{\dd x}\left(\frac{-1}{x}\right)=\frac{1}{x^{2}}$
 \end_inset
 
 是不同的，参看之前泛函积分兼容求导部分：
-\begin_inset Formula $\frac{\dif}{\dif x}\left(\text{P.V.}\frac{-1}{x}\right)$
+\begin_inset Formula $\frac{\dd}{\dd x}\left(\text{P.V.}\frac{-1}{x}\right)$
 \end_inset
 
 对应的泛函，其含义是，“给我一个 Schwartz 函数，先求导，再乘上
@@ -2931,7 +2920,7 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 定义成
 \begin_inset Formula 
 \[
-\frac{1}{x^{2}}:=\frac{\dif}{\dif x}\left(-\text{P.V.}\frac{1}{x}\right)=\text{P.V.}\frac{1}{x}\frac{\dif}{\dif x}
+\frac{1}{x^{2}}:=\frac{\dd}{\dd x}\left(-\text{P.V.}\frac{1}{x}\right)=\text{P.V.}\frac{1}{x}\frac{\dd}{\dd x}
 \]
 
 \end_inset
@@ -2947,9 +2936,9 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 ，有
 \begin_inset Formula 
 \begin{align*}
- & \frac{\dif}{\dif x}\left(-\text{P.V.}\frac{1}{x}\right)\left[\phi\right]=\text{P.V.}\int_{-\infty}^{+\infty}\dif x\frac{1}{x}\frac{\dif}{\dif x}\phi\left(x\right)\\
- & =\lim_{\varepsilon\to0^{+},R\to+\infty}\left(\int_{-R}^{-\varepsilon}\frac{1}{x}\phi^{\prime}\left(x\right)\dif x+\int_{\varepsilon}^{R}\frac{1}{x}\phi^{\prime}\left(x\right)\dif x\right)\\
- & =\lim_{\varepsilon\to0^{+},R\to+\infty}\left(\int_{-R}^{-\varepsilon}\frac{1}{x^{2}}\phi\left(x\right)\dif x-\frac{1}{\varepsilon}\phi\left(-\varepsilon\right)+\int_{\varepsilon}^{R}\frac{1}{x^{2}}\phi\left(x\right)\dif x-\frac{1}{\varepsilon}\phi\left(\varepsilon\right)\right)
+ & \frac{\dd}{\dd x}\left(-\text{P.V.}\frac{1}{x}\right)\left[\phi\right]=\text{P.V.}\int_{-\infty}^{+\infty}\dd x\frac{1}{x}\frac{\dd}{\dd x}\phi\left(x\right)\\
+ & =\lim_{\varepsilon\to0^{+},R\to+\infty}\left(\int_{-R}^{-\varepsilon}\frac{1}{x}\phi^{\prime}\left(x\right)\dd x+\int_{\varepsilon}^{R}\frac{1}{x}\phi^{\prime}\left(x\right)\dd x\right)\\
+ & =\lim_{\varepsilon\to0^{+},R\to+\infty}\left(\int_{-R}^{-\varepsilon}\frac{1}{x^{2}}\phi\left(x\right)\dd x-\frac{1}{\varepsilon}\phi\left(-\varepsilon\right)+\int_{\varepsilon}^{R}\frac{1}{x^{2}}\phi\left(x\right)\dd x-\frac{1}{\varepsilon}\phi\left(\varepsilon\right)\right)
 \end{align*}
 
 \end_inset
@@ -2969,8 +2958,8 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 两项抵消之后，有
 \begin_inset Formula 
 \begin{align*}
-\frac{\dif}{\dif x}\left(-\text{P.V.}\frac{1}{x}\right)\left[\phi\right] & =\lim_{\varepsilon\to0^{+},R\to+\infty}\left(\int_{-R}^{-\varepsilon}\frac{1}{x^{2}}\phi\left(x\right)\dif x+\int_{\varepsilon}^{R}\frac{1}{x^{2}}\phi\left(x\right)\dif x\right)\\
- & =\text{P.V.}\int_{-\infty}^{+\infty}\dif x\frac{1}{x^{2}}\phi\left(x\right)
+\frac{\dd}{\dd x}\left(-\text{P.V.}\frac{1}{x}\right)\left[\phi\right] & =\lim_{\varepsilon\to0^{+},R\to+\infty}\left(\int_{-R}^{-\varepsilon}\frac{1}{x^{2}}\phi\left(x\right)\dd x+\int_{\varepsilon}^{R}\frac{1}{x^{2}}\phi\left(x\right)\dd x\right)\\
+ & =\text{P.V.}\int_{-\infty}^{+\infty}\dd x\frac{1}{x^{2}}\phi\left(x\right)
 \end{align*}
 
 \end_inset
@@ -2990,7 +2979,7 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 ，这不改变它的导数，所以也不改变主值积分的值。所以一般地有
 \begin_inset Formula 
 \[
-\left(\text{P.V.}\frac{1}{x}\frac{\dif}{\dif x}\right)\left[\phi\right]=\text{P.V.}\int_{-\infty}^{+\infty}\dif x\frac{\phi\left(x\right)-\phi\left(0\right)}{x^{2}}
+\left(\text{P.V.}\frac{1}{x}\frac{\dd}{\dd x}\right)\left[\phi\right]=\text{P.V.}\int_{-\infty}^{+\infty}\dd x\frac{\phi\left(x\right)-\phi\left(0\right)}{x^{2}}
 \]
 
 \end_inset
@@ -3006,7 +2995,7 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 ，最后算 Cauchy 主值积分”，比如
 \begin_inset Formula 
 \[
-\text{P.V.}\int_{-\infty}^{+\infty}\frac{\cos x}{x^{2}}\dif x=\text{P.V.}\int_{-\infty}^{+\infty}\frac{\cos x-\cos0}{x^{2}}\dif x=-\pi
+\text{P.V.}\int_{-\infty}^{+\infty}\frac{\cos x}{x^{2}}\dd x=\text{P.V.}\int_{-\infty}^{+\infty}\frac{\cos x-\cos0}{x^{2}}\dd x=-\pi
 \]
 
 \end_inset
@@ -3019,38 +3008,82 @@ Mellin 变换
 \end_layout
 
 \begin_layout Section
-卷积
-\end_layout
-
-\begin_layout Standard
-卷积
-\begin_inset Formula 
-\[
-f\otimes g(T)=\int\dif\tau\,f(\tau)g(T-\tau)
-\]
-
-\end_inset
-
-卷积的物理意义是：具有响应函数
-\begin_inset Formula $g(\tau)$
-\end_inset
-
-的物理系统对连续的作用
-\begin_inset Formula $f(\tau)$
-\end_inset
-
-的响应的叠加，类似于时空中的传播子。
-\begin_inset Formula $g(\tau)$
-\end_inset
-
-只与时间差的绝对值有关。
-\end_layout
-
-\begin_layout Subsection
 希尔伯特变换
 \end_layout
 
 \begin_layout Standard
+希尔伯特变换，色散关系;数学物理方法–梁昆淼 Page 63
+\end_layout
+
+\begin_layout Example
+对于在上半平面处处解析的函数 
+\begin_inset Formula $f\left(z\right)$
+\end_inset
+
+，如果当 
+\begin_inset Formula $z\to\infty$
+\end_inset
+
+时，
+\begin_inset Formula $f\left(z\right)$
+\end_inset
+
+一致地
+\begin_inset Formula $\to0$
+\end_inset
+
+(
+\begin_inset Formula $0\le\mathrm{Arg}z\le\pi$
+\end_inset
+
+)，
+\begin_inset Formula $\alpha$
+\end_inset
+
+为一实数，则按照 （4.2.12）
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}f\left(x\right)\dd{x}=2\pi i\sum_{\text{上半平面}}\Res f\left(z\right)+\pi i\Res f\left(\alpha\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pv\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x-\alpha}\dd{x}=\pi i*\left\{ \frac{f\left(z\right)}{z-\alpha}\text{在\ensuremath{\alpha}的留数}\right\} =\pi if\left(\alpha\right).
+\]
+
+\end_inset
+
+分别写出实部和虚部：
+\begin_inset Formula 
+\begin{align*}
+ & \ree f\left(\alpha\right)=\frac{1}{\pi}\pv\int_{-\infty}^{+\infty}\frac{\imm f\left(x\right)}{x-\alpha}\dd{x}\\
+ & \imm f\left(\alpha\right)=-\frac{1}{\pi}\pv\int_{-\infty}^{+\infty}\frac{\ree f\left(x\right)}{x-\alpha}\dd{x}
+\end{align*}
+
+\end_inset
+
+这一对关系式在数学上称为 
+\series bold
+希尔伯特变换
+\series default
+（Hilbert,1862—1943），在物理上称为 
+\series bold
+色散关系
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 设有一个实值函数
 \begin_inset Formula $x\left(t\right)$
 \end_inset
@@ -3058,7 +3091,7 @@ f\otimes g(T)=\int\dif\tau\,f(\tau)g(T-\tau)
 ，其希尔伯特变换为
 \begin_inset Formula 
 \[
-\hat{x}\left(\tau\right)=H\left[x\left(t\right)\right]=\frac{1}{\pi}\int_{-\infty}^{+\infty}\frac{x\left(t\right)}{\tau-t}\dif t,
+\hat{x}\left(\tau\right)=H\left[x\left(t\right)\right]=\frac{1}{\pi}\int_{-\infty}^{+\infty}\frac{x\left(t\right)}{\tau-t}\dd t,
 \]
 
 \end_inset
@@ -3066,7 +3099,7 @@ f\otimes g(T)=\int\dif\tau\,f(\tau)g(T-\tau)
 逆变换为
 \begin_inset Formula 
 \[
-x\left(t\right)=-\frac{1}{\pi}\int_{-\infty}^{+\infty}\frac{\hat{x}\left(\tau\right)}{t-\tau}\dif\tau.
+x\left(t\right)=-\frac{1}{\pi}\int_{-\infty}^{+\infty}\frac{\hat{x}\left(\tau\right)}{t-\tau}\dd\tau.
 \]
 
 \end_inset
@@ -3086,7 +3119,7 @@ h\left(\tau\right)=\frac{1}{\pi\tau}.
 的傅立叶变换为，
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{1}{k}\dif\left(\mp ikx\right)\left[\Theta\left(\mp x\right)e^{-i\left(k\mp i\varepsilon\right)x}\right]=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)=\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{1}{k}\dd\left(\mp ikx\right)\left[\Theta\left(\mp x\right)e^{-i\left(k\mp i\varepsilon\right)x}\right]=\text{P.V.}\frac{1}{k}\mp i\pi\delta\left(k\right)=\lim_{\varepsilon\to0}\frac{1}{k\pm i\varepsilon}
 \]
 
 \end_inset
@@ -3131,16 +3164,44 @@ h\left(\tau\right)=\frac{1}{\pi\tau}.
 \end_layout
 
 \begin_layout Section
+卷积
+\end_layout
+
+\begin_layout Standard
+卷积
+\begin_inset Formula 
+\[
+f\otimes g(T)=\int\dd\tau\,f(\tau)g(T-\tau)
+\]
+
+\end_inset
+
+卷积的物理意义是：具有响应函数
+\begin_inset Formula $g(\tau)$
+\end_inset
+
+的物理系统对连续的作用
+\begin_inset Formula $f(\tau)$
+\end_inset
+
+的响应的叠加，类似于时空中的传播子。
+\begin_inset Formula $g(\tau)$
+\end_inset
+
+只与时间差的绝对值有关。
+\end_layout
+
+\begin_layout Section
 发散积分变量平移
 \end_layout
 
 \begin_layout Standard
 我们在计算积分的时候，常常用到变量平移，
-\begin_inset Formula $\int_{-\infty}^{+\infty}\dif pf\left(p+a\right)$
+\begin_inset Formula $\int_{-\infty}^{+\infty}\dd pf\left(p+a\right)$
 \end_inset
 
  和 
-\begin_inset Formula $\int_{-\infty}^{+\infty}\dif pf\left(p\right)$
+\begin_inset Formula $\int_{-\infty}^{+\infty}\dd pf\left(p\right)$
 \end_inset
 
 的差别为，
@@ -3149,7 +3210,7 @@ h\left(\tau\right)=\frac{1}{\pi\tau}.
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif p\left(a\frac{\dif}{\dif p}f\left(p\right)+\cdots\right)=a\left[f\left(+\infty\right)-f\left(-\infty\right)\right]+\cdots
+\int_{-\infty}^{+\infty}\dd p\left(a\frac{\dd}{\dd p}f\left(p\right)+\cdots\right)=a\left[f\left(+\infty\right)-f\left(-\infty\right)\right]+\cdots
 \]
 
 \end_inset
@@ -3215,7 +3276,7 @@ k^{2}=2k^{+}k^{-}-k_{\perp}^{2}
 \end_inset
 
 。
-\begin_inset Formula $\dif^{4}k=\dif k^{+}\dif k^{-}\dif^{2}k_{\perp}$
+\begin_inset Formula $\dd^{4}k=\dd k^{+}\dd k^{-}\dd^{2}k_{\perp}$
 \end_inset
 
 。
@@ -3255,7 +3316,7 @@ Jacobian 为
 \end_inset
 
 。
-\begin_inset Formula $\dif^{4}k=\frac{1}{2}\dif k^{+}\dif k^{-}\dif^{2}k_{\perp}$
+\begin_inset Formula $\dd^{4}k=\frac{1}{2}\dd k^{+}\dd k^{-}\dd^{2}k_{\perp}$
 \end_inset
 
 。
@@ -4271,7 +4332,7 @@ where
 
 \begin_layout Standard
 分裂函数中有一个
-\begin_inset Formula $\int\dif k^{+}\delta\left(y-\frac{k^{+}}{p^{+}}\right)$
+\begin_inset Formula $\int\dd k^{+}\delta\left(y-\frac{k^{+}}{p^{+}}\right)$
 \end_inset
 
 ，所以始终认为
@@ -4301,9 +4362,9 @@ where
 是自然数)。此类积分可以通过它们的留数求解：
 \begin_inset Formula 
 \begin{align*}
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)} & =\left(-2\pi i\right)\frac{1}{D_{\phi B}p^{+}\overline{y}}\\
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}D_{B}\left(p-k\right)} & =\frac{\partial}{\partial m_{\phi}^{2}}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\left(-2\pi i\right)\frac{1}{D_{\phi B}^{2}p^{+}\overline{y}}\\
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}D_{B}\left(p-k\right)^{2}} & =\frac{\partial}{\partial M_{B}^{2}}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\left(-2\pi i\right)\frac{y}{D_{\phi B}^{2}p^{+}\overline{y}^{2}}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)} & =\left(-2\pi i\right)\frac{1}{D_{\phi B}p^{+}\overline{y}}\\
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}D_{B}\left(p-k\right)} & =\frac{\partial}{\partial m_{\phi}^{2}}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\left(-2\pi i\right)\frac{1}{D_{\phi B}^{2}p^{+}\overline{y}}\\
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}D_{B}\left(p-k\right)^{2}} & =\frac{\partial}{\partial M_{B}^{2}}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\left(-2\pi i\right)\frac{y}{D_{\phi B}^{2}p^{+}\overline{y}^{2}}
 \end{align*}
 
 \end_inset
@@ -4311,8 +4372,8 @@ where
 一般地，
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)D_{\Lambda}^{b}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}\\
- & \int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{y}{\overline{y}}\frac{\left(-\pi i\right)}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
+ & \int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}\\
+ & \int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{y}{\overline{y}}\frac{\left(-\pi i\right)}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
 \end{align*}
 
 \end_inset
@@ -4344,8 +4405,8 @@ salamu
 以第一个积分为例，演示计算过程，
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\int\dif k^{-}\frac{1}{{\color{blue}\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}{\color{red}\left[\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\varepsilon\right]}}\\
-= & \int\dif k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}\right)}\left(p-k\right)^{+}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}
+ & \int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\int\dd k^{-}\frac{1}{{\color{blue}\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}{\color{red}\left[\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\varepsilon\right]}}\\
+= & \int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}\right)}\left(p-k\right)^{+}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}
 \end{align*}
 
 \end_inset
@@ -4357,7 +4418,7 @@ salamu
 函数，考虑到
 \begin_inset Formula 
 \[
-\int\dif k^{+}\delta\left(y-\frac{k^{+}}{p^{+}}\right)=\int\dif k^{+}\abs*{p^{+}}\delta\left(k^{+}-yp^{+}\right)
+\int\dd k^{+}\delta\left(y-\frac{k^{+}}{p^{+}}\right)=\int\dd k^{+}\abs*{p^{+}}\delta\left(k^{+}-yp^{+}\right)
 \]
 
 \end_inset
@@ -4365,9 +4426,9 @@ salamu
 继续化简，
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{-}\frac{1}{k^{+}\left(p-k\right)^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}\\
-\Rightarrow & \int\dif k^{-}\frac{-1}{yp^{+}\left(1-y\right)p^{+}\left({\color{blue}k^{-}-\frac{\Omega_{\phi}}{yp^{+}}+\frac{i\varepsilon}{yp^{+}}}\right)\left[{\color{red}k^{-}-\left(p^{-}-\frac{\Omega_{B}}{\left(1-y\right)p^{+}}\right)-\frac{i\varepsilon}{\left(1-y\right)p^{+}}}\right]}\\
-= & \int\dif k^{-}\frac{-1}{yp^{+}\left(1-y\right)p^{+}\left[{\color{blue}k^{-}-\left(\frac{\Omega_{\phi}}{yp^{+}}-\frac{i\varepsilon}{yp^{+}}\right)}\right]\left[{\color{red}k^{-}-\left(\frac{\left(1-y\right)M^{2}-\Omega_{B}}{\left(1-y\right)p^{+}}+\frac{i\varepsilon}{\left(1-y\right)p^{+}}\right)}\right]}
+ & \int\dd k^{-}\frac{1}{k^{+}\left(p-k\right)^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}\\
+\Rightarrow & \int\dd k^{-}\frac{-1}{yp^{+}\left(1-y\right)p^{+}\left({\color{blue}k^{-}-\frac{\Omega_{\phi}}{yp^{+}}+\frac{i\varepsilon}{yp^{+}}}\right)\left[{\color{red}k^{-}-\left(p^{-}-\frac{\Omega_{B}}{\left(1-y\right)p^{+}}\right)-\frac{i\varepsilon}{\left(1-y\right)p^{+}}}\right]}\\
+= & \int\dd k^{-}\frac{-1}{yp^{+}\left(1-y\right)p^{+}\left[{\color{blue}k^{-}-\left(\frac{\Omega_{\phi}}{yp^{+}}-\frac{i\varepsilon}{yp^{+}}\right)}\right]\left[{\color{red}k^{-}-\left(\frac{\left(1-y\right)M^{2}-\Omega_{B}}{\left(1-y\right)p^{+}}+\frac{i\varepsilon}{\left(1-y\right)p^{+}}\right)}\right]}
 \end{align*}
 
 \end_inset
@@ -4399,7 +4460,7 @@ salamu
 ，根据留数定理：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\left(-2\pi i\right)\res\left[\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\right]_{\text{顺时针下半平面}}\\
+ & \int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\left(-2\pi i\right)\res\left[\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\right]_{\text{顺时针下半平面}}\\
  & =\lim_{k^{-}\to\Omega_{\phi}/\left(yp^{+}\right)}\left(-2\pi i\right)\frac{\left({\color{blue}k^{-}-\left(\frac{\Omega_{\phi}}{yp^{+}}-\frac{i\varepsilon}{yp^{+}}\right)}\right)\left(-1\right)}{yp^{+}\left(1-y\right)p^{+}\left[{\color{blue}k^{-}-\left(\frac{\Omega_{\phi}}{yp^{+}}-\frac{i\varepsilon}{yp^{+}}\right)}\right]\left[{\color{red}k^{-}-\left(\frac{\left(1-y\right)M^{2}-\Omega_{B}}{\left(1-y\right)p^{+}}+\frac{i\varepsilon}{\left(1-y\right)p^{+}}\right)}\right]}\\
  & =\left(2\pi i\right)\frac{1}{yp^{+}\left(1-y\right)p^{+}\left[{\color{red}\frac{\Omega_{\phi}}{yp^{+}}-\left(\frac{\left(1-y\right)M^{2}-\Omega_{B}}{\left(1-y\right)p^{+}}\right)}\right]}\\
  & =\left(2\pi i\right)\frac{1}{\left(1-y\right)p^{+}\Omega_{\phi}-yp^{+}\left(1-y\right)M^{2}+yp^{+}\Omega_{B}}\\
@@ -4419,8 +4480,8 @@ remark
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\int\dif k^{-}\frac{1}{{\color{blue}\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}{\color{red}\left[\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\varepsilon\right]}}\\
-= & \int\dif k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}\right)}\left(p-k\right)^{+}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}
+ & \int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\int\dd k^{-}\frac{1}{{\color{blue}\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}{\color{red}\left[\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\varepsilon\right]}}\\
+= & \int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}\right)}\left(p-k\right)^{+}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}
 \end{align*}
 
 \end_inset
@@ -4470,8 +4531,8 @@ k^{2}-m_{\phi}^{2} & \Rightarrow k^{+}k^{-}-\cdots\\
 放到外面。
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}\right)}\left(p-k\right)^{+}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}\\
-\Rightarrow & \int\dif k^{-}\frac{1}{k^{+}\left[\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\varepsilon\right]}@\left(k^{-}\to\frac{\Omega_{\phi}-i\varepsilon}{k^{+}},k^{+}\to yp^{+}\right)
+ & \int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}\right)}\left(p-k\right)^{+}{\color{red}\left[\left(p-k\right)^{-}-\frac{\Omega_{B}-i\varepsilon}{\left(p-k\right)^{+}}\right]}}\\
+\Rightarrow & \int\dd k^{-}\frac{1}{k^{+}\left[\left(p-k\right)^{+}\left(p-k\right)^{-}-\Omega_{B}+i\varepsilon\right]}@\left(k^{-}\to\frac{\Omega_{\phi}-i\varepsilon}{k^{+}},k^{+}\to yp^{+}\right)
 \end{align*}
 
 \end_inset
@@ -4496,7 +4557,7 @@ k^{2}-m_{\phi}^{2} & \Rightarrow k^{+}k^{-}-\cdots\\
 ，即
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\frac{\left(-\pi i\right)}{k^{+}}\frac{y}{\overline{y}}\frac{-\overline{y}}{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi}^{2}}=\frac{1}{2}\int\dif k_{\perp}^{2}\frac{\left(-2\pi i\right)}{D_{\phi B}p^{+}\overline{y}}
+\int\dd^{4}k\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}=\frac{\left(-\pi i\right)}{k^{+}}\frac{y}{\overline{y}}\frac{-\overline{y}}{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi}^{2}}=\frac{1}{2}\int\dd k_{\perp}^{2}\frac{\left(-2\pi i\right)}{D_{\phi B}p^{+}\overline{y}}
 \]
 
 \end_inset
@@ -4520,7 +4581,7 @@ D_{\phi B}=\frac{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi
 对于三个传播子的情况，
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)D_{\Lambda}\left(k\right)}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)D_{\Lambda}\left(k\right)}
 \]
 
 \end_inset
@@ -4580,7 +4641,7 @@ D_{\phi B}=\frac{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)D_{\Lambda}\left(k\right)}\\
+ & \int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)D_{\Lambda}\left(k\right)}\\
  & =\left(-2\pi i\right)\left[\frac{1}{D_{\phi B}p^{+}\overline{y}\left(m_{\phi}^{2}-\Lambda^{2}\right)}+\frac{1}{D_{\Lambda B}p^{+}\overline{y}\left(\Lambda^{2}-m_{\phi}^{2}\right)}\right]=\frac{\left(-2\pi i\right)}{\left(m_{\phi}^{2}-\Lambda^{2}\right)p^{+}\overline{y}}\left(\frac{1}{D_{\phi B}}-\frac{1}{D_{\Lambda B}}\right)\\
  & =\frac{\left(-2\pi i\right)}{\left(m_{\phi}^{2}-\Lambda^{2}\right)p^{+}\overline{y}}\frac{D_{\Lambda B}-D_{\phi B}}{D_{\phi B}D_{\Lambda B}}=\frac{\left(-2\pi i\right)}{\left(m_{\phi}^{2}-\Lambda^{2}\right)p^{+}\overline{y}}\frac{m_{\phi}^{2}-\Lambda^{2}}{D_{\phi B}D_{\Lambda B}}
 \end{align*}
@@ -4590,7 +4651,7 @@ D_{\phi B}=\frac{k_{\perp}^{2}+yM_{B}^{2}-y\overline{y}M^{2}+\overline{y}m_{\phi
 i.e.
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)D_{\Lambda}\left(k\right)}=\frac{\left(-2\pi i\right)}{p^{+}\overline{y}}\frac{1}{D_{\phi B}D_{\Lambda B}}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)D_{\Lambda}\left(k\right)}=\frac{\left(-2\pi i\right)}{p^{+}\overline{y}}\frac{1}{D_{\phi B}D_{\Lambda B}}
 \]
 
 \end_inset
@@ -4646,7 +4707,7 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}+y\overline{y}M^{2}-\overline{y}m_{\ph
 所以
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}D_{B}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\frac{\left(-2\pi i\right)}{p^{+}\overline{y}}\frac{1}{D_{\phi B}^{2}D_{\Lambda B}^{4}}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}D_{B}\left(p-k\right)D_{\Lambda}^{4}\left(k\right)}=\frac{\left(-2\pi i\right)}{p^{+}\overline{y}}\frac{1}{D_{\phi B}^{2}D_{\Lambda B}^{4}}
 \]
 
 \end_inset
@@ -4678,7 +4739,7 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}+y\overline{y}M^{2}-\overline{y}m_{\ph
 。例如
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{y}{\overline{y}}\frac{\left(-\pi i\right)}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{y}{\overline{y}}\frac{\left(-\pi i\right)}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
 \]
 
 \end_inset
@@ -4693,10 +4754,10 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}+y\overline{y}M^{2}-\overline{y}m_{\ph
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)} & =\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-1}\\
-\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}} & =\frac{\left(2\pi i\right)}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-2}\\
-\int\dif k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)} & =\left(2\pi i\right)\left[\Omega_{\phi}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)-\Omega_{\phi}\right]\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-3}\\
-\int\dif k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}} & =\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-4}
+\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)} & =\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-1}\\
+\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}} & =\frac{\left(2\pi i\right)}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-2}\\
+\int\dd k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)} & =\left(2\pi i\right)\left[\Omega_{\phi}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)-\Omega_{\phi}\right]\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-3}\\
+\int\dd k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}} & =\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}\label{eq:yu-a5-4}
 \end{align}
 
 \end_inset
@@ -4704,7 +4765,7 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}+y\overline{y}M^{2}-\overline{y}m_{\ph
 以及非定域中的
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -4712,8 +4773,8 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}+y\overline{y}M^{2}-\overline{y}m_{\ph
 
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
-= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -4721,7 +4782,7 @@ D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}+y\overline{y}M^{2}-\overline{y}m_{\ph
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
 \]
 
 \end_inset
@@ -4742,7 +4803,7 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}$
+\begin_inset Formula $\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}$
 \end_inset
 
 的结果实际上丢掉了一个有限项，
@@ -4775,7 +4836,7 @@ P.V.
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}
 \]
 
 \end_inset
@@ -4787,7 +4848,7 @@ P.V.
 求偏导，
 \begin_inset Formula 
 \[
--k^{+}\frac{\partial}{\partial k^{+}}\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dif k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}
+-k^{+}\frac{\partial}{\partial k^{+}}\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}
 \]
 
 \end_inset
@@ -4833,7 +4894,7 @@ noprefix "false"
 应该等于
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
+\int\dd k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -4869,7 +4930,7 @@ noprefix "false"
 求偏导联系起来，
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\frac{\partial}{\partial\Omega_{\phi}}\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\frac{\partial}{\partial\Omega_{\phi}}\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -4901,7 +4962,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\frac{\partial}{\partial\Omega_{\phi}}\int\dif k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
+\int\dd k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\frac{\partial}{\partial\Omega_{\phi}}\int\dd k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -4909,7 +4970,7 @@ noprefix "false"
 但理论上积分的泛函是不唯一的，这里令
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=2\pi i\left[\Omega_{\phi}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)-\Omega_{\phi}\right]\frac{\delta\left(y\right)}{p^{+}}
+\int\dd k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=2\pi i\left[\Omega_{\phi}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)-\Omega_{\phi}\right]\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -4925,7 +4986,7 @@ noprefix "false"
 对于分母中包含两个传播子
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}
 \]
 
 \end_inset
@@ -4933,7 +4994,7 @@ noprefix "false"
 的情况，使用费曼参数化公式，
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{1}{A^{\alpha}B^{\beta}}=\int\dif^{4}k\int_{0}^{1}\dif z\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}
+\int\dd^{4}k\frac{1}{A^{\alpha}B^{\beta}}=\int\dd^{4}k\int_{0}^{1}\dd z\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}
 \]
 
 \end_inset
@@ -4941,7 +5002,7 @@ noprefix "false"
 以及
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\frac{1}{2}\int\dif k_{\perp}^{2}\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
+\int\dd^{4}k\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\frac{1}{2}\int\dd k_{\perp}^{2}\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -4951,10 +5012,10 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align}
- & \int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\label{eq: delta-feynman}\\
-= & \int_{0}^{1}\dif z\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left(1-z\right)^{a-1}z^{b-1}}{\left\{ k^{2}-\left[\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2}\right]+i\varepsilon\right\} ^{a+b}}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\\
-= & \frac{1}{\left(a+b-1\right)!}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left[k^{2}-\Omega+i\varepsilon\right]^{2}}\\
-= & \frac{1}{\left(a+b-1\right)!}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\frac{1}{2}\int\dif k_{\perp}^{2}\frac{\left(2\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+ & \int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\label{eq: delta-feynman}\\
+= & \int_{0}^{1}\dd z\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left(1-z\right)^{a-1}z^{b-1}}{\left\{ k^{2}-\left[\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2}\right]+i\varepsilon\right\} ^{a+b}}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\\
+= & \frac{1}{\left(a+b-1\right)!}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left[k^{2}-\Omega+i\varepsilon\right]^{2}}\\
+= & \frac{1}{\left(a+b-1\right)!}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\frac{1}{2}\int\dd k_{\perp}^{2}\frac{\left(2\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \end{align}
 
 \end_inset
@@ -4964,7 +5025,7 @@ noprefix "false"
 即
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
 \]
 
 \end_inset
@@ -4972,7 +5033,7 @@ noprefix "false"
 也可以进一步化简成
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}{\color{blue}\frac{\left[-\left(a+b-2\right)\right]!}{\left(a-1\right)!\left(b-1\right)!}}\frac{\left(1-z\right)^{a-1}z^{b-1}\left(\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{a+b-1}}
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}{\color{blue}\frac{\left[-\left(a+b-2\right)\right]!}{\left(a-1\right)!\left(b-1\right)!}}\frac{\left(1-z\right)^{a-1}z^{b-1}\left(\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{a+b-1}}
 \]
 
 \end_inset
@@ -5004,7 +5065,7 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 函数，
 \begin_inset Formula 
 \[
-\int\dif xf\left(x\right)\frac{\dif}{\dif x}\delta\left(x\right)=\int\dif x-\delta\left(x\right)\frac{\dif}{\dif x}f\left(x\right)
+\int\dd xf\left(x\right)\frac{\dd}{\dd x}\delta\left(x\right)=\int\dd x-\delta\left(x\right)\frac{\dd}{\dd x}f\left(x\right)
 \]
 
 \end_inset
@@ -5012,7 +5073,7 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 前面已经说明了，
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]}\propto\delta\left(k^{+}\right)
+\int\dd k^{-}\frac{1}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]}\propto\delta\left(k^{+}\right)
 \]
 
 \end_inset
@@ -5020,7 +5081,7 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 而
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]},
+\int\dd k^{-}\frac{k^{+}k^{-}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]},
 \]
 
 \end_inset
@@ -5028,7 +5089,7 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 相当于
 \begin_inset Formula 
 \[
-k^{+}\frac{\dif}{\dif k^{+}}\delta\left(k^{+}\right),
+k^{+}\frac{\dd}{\dd k^{+}}\delta\left(k^{+}\right),
 \]
 
 \end_inset
@@ -5083,7 +5144,7 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}
+\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}
 \]
 
 \end_inset
@@ -5107,8 +5168,8 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 ：
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & -k^{+}\frac{\partial}{\partial k^{+}}\int\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}=\int\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}\\
-= & \int\dif k^{-}\frac{-\ell\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}+\frac{n\left(k^{+}k^{-}\right)^{\ell+1}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n+1}}
+\Rightarrow & -k^{+}\frac{\partial}{\partial k^{+}}\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}=\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}\\
+= & \int\dd k^{-}\frac{-\ell\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}+\frac{n\left(k^{+}k^{-}\right)^{\ell+1}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n+1}}
 \end{align*}
 
 \end_inset
@@ -5116,7 +5177,7 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 所以
 \begin_inset Formula 
 \[
-\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell+1}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n+1}}=\frac{\ell+1}{n}\int\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}
+\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell+1}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n+1}}=\frac{\ell+1}{n}\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}
 \]
 
 \end_inset
@@ -5128,7 +5189,7 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 时：
 \begin_inset Formula 
 \[
-\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}=\frac{\ell!\left(n-1-\ell\right)!}{\left(n-1\right)!}\int\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{0}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n-\ell}}
+\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}=\frac{\ell!\left(n-1-\ell\right)!}{\left(n-1\right)!}\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{0}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n-\ell}}
 \]
 
 \end_inset
@@ -5136,7 +5197,7 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 例如
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{\left(k^{+}k^{-}\right)^{2}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{3}}=\int\dif k^{-}\frac{2!2!/0!}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]}
+\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{2}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{3}}=\int\dd k^{-}\frac{2!2!/0!}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]}
 \]
 
 \end_inset
@@ -5152,12 +5213,12 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 的求导降低分母的幂次：
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow\int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}\left(k^{2}-\Lambda^{2}+i\varepsilon\right)^{b}}\\
- & =\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\int_{0}^{1}\dif z\int\dif^{4}k\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b}}\left(1-z\right)^{a-1}z^{b-1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & =\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a+b-1\right)!}\int_{0}^{1}\dif z\int\dif^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & =\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a-1\right)!\left(b-1\right)!}\int_{0}^{1}\dif z\int\dif^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & =\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}/\partial\Omega}{\left(a+b-\ell-1\right)!}\int_{0}^{1}\dif z\int\dif^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \Rightarrow\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}\left(k^{2}-\Lambda^{2}+i\varepsilon\right)^{b}}\\
+ & =\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\int_{0}^{1}\dd z\int\dd^{4}k\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b}}\left(1-z\right)^{a-1}z^{b-1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a+b-1\right)!}\int_{0}^{1}\dd z\int\dd^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a-1\right)!\left(b-1\right)!}\int_{0}^{1}\dd z\int\dd^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}/\partial\Omega}{\left(a+b-\ell-1\right)!}\int_{0}^{1}\dd z\int\dd^{4}k\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -5165,10 +5226,10 @@ ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+
 类似地，对于孤立传播子的情况，
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow\int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}\\
- & =\frac{\ell!\left(a-1-\ell\right)!}{\left(a-1\right)!}\int\dif^{4}k\frac{1}{\left[k^{2}-\Omega_{\phi}+i\varepsilon\right]^{a-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & =\frac{\ell!\left(a-1-\ell\right)!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}/\partial\Omega}{\left(a-\ell-1\right)!}\int\dif^{4}k\frac{1}{\left[k^{2}-\Omega_{\phi}+i\varepsilon\right]}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
- & =\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+ & \Rightarrow\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}\\
+ & =\frac{\ell!\left(a-1-\ell\right)!}{\left(a-1\right)!}\int\dd^{4}k\frac{1}{\left[k^{2}-\Omega_{\phi}+i\varepsilon\right]^{a-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a-1-\ell\right)!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}/\partial\Omega}{\left(a-\ell-1\right)!}\int\dd^{4}k\frac{1}{\left[k^{2}-\Omega_{\phi}+i\varepsilon\right]}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -5180,7 +5241,7 @@ where
 。其中使用了发散积分的基本公式，
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{1}{k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon}=\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
+\int\dd^{4}k\frac{1}{k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon}=\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -5200,8 +5261,8 @@ where
 时有：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
-= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega^{a+b-\ell-1}}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & \int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega^{a+b-\ell-1}}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -5209,7 +5270,7 @@ where
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
 \]
 
 \end_inset
@@ -5229,7 +5290,7 @@ where
 ，完成求导，可以进一步化简成，
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\left(2ykp\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}{\color{blue}\frac{\left[-\left(a+b-3\right)\right]!}{\left(a-1\right)!\left(b-1\right)!}}\frac{\left(1-z\right)^{a-1}z^{b-1}\left(\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{a+b-2}}
+\int\dd^{4}k\frac{\left(2ykp\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}{\color{blue}\frac{\left[-\left(a+b-3\right)\right]!}{\left(a-1\right)!\left(b-1\right)!}}\frac{\left(1-z\right)^{a-1}z^{b-1}\left(\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{a+b-2}}
 \]
 
 \end_inset
@@ -5261,10 +5322,10 @@ where
 ，第四象限，
 \begin_inset Formula 
 \begin{align*}
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dif k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\\
- & =\left(-2\pi i\right)\res\left[\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\right]_{\text{下半平面}}-\int_{\text{弧}}\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}\\
- & =\left(-2\pi i\right)\frac{1}{k^{+}}-\int_{0}^{-\pi}\dif\theta\frac{i}{k^{+}}\frac{Re^{i\theta}}{\left(Re^{i\theta}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}\\
- & =\frac{-2\pi i}{k^{+}}+\int_{0}^{\pi}\dif\theta\frac{i}{k^{+}}\frac{1}{\left(1-\frac{\Omega_{\phi}}{k^{+}Re^{i\theta}}\right)}\sim\frac{-2\pi i}{k^{+}}+\frac{i}{k^{+}}\left(\pi+\frac{\Omega_{\phi}}{k^{+}R}\left(-2i\right)\right)\\
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\\
+ & =\left(-2\pi i\right)\res\left[\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\right]_{\text{下半平面}}-\int_{\text{弧}}\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}\\
+ & =\left(-2\pi i\right)\frac{1}{k^{+}}-\int_{0}^{-\pi}\dd\theta\frac{i}{k^{+}}\frac{Re^{i\theta}}{\left(Re^{i\theta}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}\\
+ & =\frac{-2\pi i}{k^{+}}+\int_{0}^{\pi}\dd\theta\frac{i}{k^{+}}\frac{1}{\left(1-\frac{\Omega_{\phi}}{k^{+}Re^{i\theta}}\right)}\sim\frac{-2\pi i}{k^{+}}+\frac{i}{k^{+}}\left(\pi+\frac{\Omega_{\phi}}{k^{+}R}\left(-2i\right)\right)\\
  & =\frac{-\pi i}{k^{+}}\left(1+\frac{\Omega_{\phi}}{k^{+}R\pi}\left(2i\right)\right)
 \end{align*}
 
@@ -5275,7 +5336,7 @@ where
 
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi}{k^{+}}+\frac{2\Omega_{\phi}}{k^{+;2}R}=\frac{-i\pi}{k^{+}-i\varepsilon\Omega_{\phi}},\quad k^{+}>0,\varepsilon>0
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi}{k^{+}}+\frac{2\Omega_{\phi}}{k^{+;2}R}=\frac{-i\pi}{k^{+}-i\varepsilon\Omega_{\phi}},\quad k^{+}>0,\varepsilon>0
 \]
 
 \end_inset
@@ -5283,7 +5344,7 @@ where
 
 \color inherit
 其中在圆弧上，作了变量替换，
-\begin_inset Formula $k^{-}=Re^{i\theta},\dif k^{-}=e^{i\theta}Ri\dif\theta$
+\begin_inset Formula $k^{-}=Re^{i\theta},\dd k^{-}=e^{i\theta}Ri\dd\theta$
 \end_inset
 
 ，并利用了
@@ -5293,7 +5354,7 @@ where
 的条件。这个结果和直接使用公式
 \begin_inset Formula 
 \[
-\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dif x}{x\pm i\varepsilon}=\mathcal{P}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dif x\mp i\pi f\left(0\right)
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x\pm i\varepsilon}=\mathcal{P}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dd x\mp i\pi f\left(0\right)
 \]
 
 \end_inset
@@ -5309,7 +5370,7 @@ where
  时，
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=\int\dif k^{-}\frac{1}{-\Omega_{\phi}+i\varepsilon}=\frac{1}{-\Omega_{\phi}+i\varepsilon}\int\dif k^{-}=0
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\int\dd k^{-}\frac{1}{-\Omega_{\phi}+i\varepsilon}=\frac{1}{-\Omega_{\phi}+i\varepsilon}\int\dd k^{-}=0
 \]
 
 \end_inset
@@ -5333,10 +5394,10 @@ where
 在第二象限，
 \begin_inset Formula 
 \begin{align*}
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dif k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\\
- & =\left(-2\pi i\right)\res\left[\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\right]_{\text{下半平面}}-\int_{\text{弧}}\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}\\
- & =-\int_{0}^{-\pi}\dif\theta\frac{i}{k^{+}}\frac{Re^{i\theta}}{\left(Re^{i\theta}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}\\
- & =\int_{0}^{\pi}\dif\theta\frac{i}{k^{+}}\frac{1}{\left(1-\frac{\Omega_{\phi}}{k^{+}Re^{i\theta}}\right)}\sim\frac{i}{k^{+}}\left(\pi+\frac{\Omega_{\phi}}{k^{+}R}\left(-2i\right)\right)\\
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\\
+ & =\left(-2\pi i\right)\res\left[\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\right]_{\text{下半平面}}-\int_{\text{弧}}\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}\\
+ & =-\int_{0}^{-\pi}\dd\theta\frac{i}{k^{+}}\frac{Re^{i\theta}}{\left(Re^{i\theta}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}\\
+ & =\int_{0}^{\pi}\dd\theta\frac{i}{k^{+}}\frac{1}{\left(1-\frac{\Omega_{\phi}}{k^{+}Re^{i\theta}}\right)}\sim\frac{i}{k^{+}}\left(\pi+\frac{\Omega_{\phi}}{k^{+}R}\left(-2i\right)\right)\\
  & =\frac{\pi i}{k^{+}}\left(1+\frac{\Omega_{\phi}}{k^{+}R\pi}\left(-2i\right)\right)
 \end{align*}
 
@@ -5347,7 +5408,7 @@ where
 
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{i\pi}{k^{+}-i\varepsilon\Omega_{\phi}},\quad k^{+}<0,\varepsilon>0
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{i\pi}{k^{+}-i\varepsilon\Omega_{\phi}},\quad k^{+}<0,\varepsilon>0
 \]
 
 \end_inset
@@ -5355,13 +5416,13 @@ where
 
 \color inherit
 综合三种情况，
-\begin_inset Formula $\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}$
+\begin_inset Formula $\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}$
 \end_inset
 
 可以写成
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi\theta\left(k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}+\frac{i\pi\theta\left(-k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}},\quad\varepsilon\to0^{+}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi\theta\left(k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}+\frac{i\pi\theta\left(-k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}},\quad\varepsilon\to0^{+}
 \]
 
 \end_inset
@@ -5369,7 +5430,7 @@ where
 也就是
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi\theta\left(k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}+\frac{i\pi\theta\left(-k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}=\frac{-\sign\left(k^{+}\right)i\pi}{k^{+}-i\varepsilon\Omega_{\phi}}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi\theta\left(k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}+\frac{i\pi\theta\left(-k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}=\frac{-\sign\left(k^{+}\right)i\pi}{k^{+}-i\varepsilon\Omega_{\phi}}
 \]
 
 \end_inset
@@ -5413,7 +5474,7 @@ where
 我们观察以下积分：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif k^{+}\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\int\dif k^{+}\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\frac{2\pi i}{\Omega_{\phi}}
+ & \int\dd k^{+}\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\int\dd k^{+}\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\frac{2\pi i}{\Omega_{\phi}}
 \end{align*}
 
 \end_inset
@@ -5425,8 +5486,8 @@ where
 ：
 \begin_inset Formula 
 \begin{align*}
-\int\frac{\dif^{d}k}{(2\pi)^{d}}\frac{1}{(k^{2}-\Delta+i\epsilon)^{2}} & =\frac{i}{(4\pi)^{d/2}}\frac{1}{\Delta^{2-\frac{d}{2}}}\Gamma\left(\frac{4-d}{2}\right)\\
-\int\frac{\dif^{2}k}{(2\pi)^{2}}\frac{1}{(k^{2}-\Delta+i\epsilon)^{2}} & =\frac{i}{\left(4\pi\right)}\frac{1}{\Delta}\Gamma\left(1\right)=\frac{i}{4\pi\Delta}
+\int\frac{\dd^{d}k}{(2\pi)^{d}}\frac{1}{(k^{2}-\Delta+i\epsilon)^{2}} & =\frac{i}{(4\pi)^{d/2}}\frac{1}{\Delta^{2-\frac{d}{2}}}\Gamma\left(\frac{4-d}{2}\right)\\
+\int\frac{\dd^{2}k}{(2\pi)^{2}}\frac{1}{(k^{2}-\Delta+i\epsilon)^{2}} & =\frac{i}{\left(4\pi\right)}\frac{1}{\Delta}\Gamma\left(1\right)=\frac{i}{4\pi\Delta}
 \end{align*}
 
 \end_inset
@@ -5442,10 +5503,10 @@ where
 ，是收敛的，可以交换积分次序或者平移积分变量，（积分在实轴附近的奇点在 wick 转动中被去掉了）
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & \int\dif k^{0}\int\dif k^{1}\frac{1}{\left(k^{0;2}-k^{1;2}-\Delta+i\epsilon\right)^{2}}=\frac{\pi i}{\Delta}\\
-\Rightarrow & \int_{-\infty}^{+\infty}\dif k^{1}\int_{-\infty}^{+\infty}\dif\left(k^{0}+k^{1}\right)\frac{1}{\left(2k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}=\frac{\pi i}{\Delta}\\
-\Rightarrow & \int_{-\infty}^{+\infty}\dif k^{1}\int_{-\infty}^{+\infty}\frac{1}{2}\dif\left(2k^{0}\right)\frac{1}{\left(2k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}=\frac{\pi i}{\Delta}\\
-\Rightarrow & \int_{-\infty}^{+\infty}\dif k^{1}\int_{-\infty}^{+\infty}\dif\left(k^{0}\right)\frac{1}{\left(k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}=\frac{2\pi i}{\Delta}
+\Rightarrow & \int\dd k^{0}\int\dd k^{1}\frac{1}{\left(k^{0;2}-k^{1;2}-\Delta+i\epsilon\right)^{2}}=\frac{\pi i}{\Delta}\\
+\Rightarrow & \int_{-\infty}^{+\infty}\dd k^{1}\int_{-\infty}^{+\infty}\dd\left(k^{0}+k^{1}\right)\frac{1}{\left(2k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}=\frac{\pi i}{\Delta}\\
+\Rightarrow & \int_{-\infty}^{+\infty}\dd k^{1}\int_{-\infty}^{+\infty}\frac{1}{2}\dd\left(2k^{0}\right)\frac{1}{\left(2k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}=\frac{\pi i}{\Delta}\\
+\Rightarrow & \int_{-\infty}^{+\infty}\dd k^{1}\int_{-\infty}^{+\infty}\dd\left(k^{0}\right)\frac{1}{\left(k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}=\frac{2\pi i}{\Delta}
 \end{align*}
 
 \end_inset
@@ -5457,7 +5518,7 @@ where
 时，协变积分满足
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\frac{1}{\left(k^{+}\right)^{2}}\int\dif k^{-}\frac{1}{\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)^{2}}=0
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\frac{1}{\left(k^{+}\right)^{2}}\int\dd k^{-}\frac{1}{\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)^{2}}=0
 \]
 
 \end_inset
@@ -5473,8 +5534,8 @@ where
 综上
 \begin_inset Formula 
 \begin{align*}
-\int\dif k^{+}\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}} & =\frac{2\pi i}{\Omega_{\phi}},\text{for }\forall k^{+}\\
-\int\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}} & =0,\text{ for }k^{+}\neq0
+\int\dd k^{+}\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}} & =\frac{2\pi i}{\Omega_{\phi}},\text{for }\forall k^{+}\\
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}} & =0,\text{ for }k^{+}\neq0
 \end{align*}
 
 \end_inset
@@ -5482,7 +5543,7 @@ where
 所以我们推测，
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\frac{2\pi i}{\Omega_{\phi}}\delta\left(k^{+}\right)=\frac{2\pi i}{\Omega_{\phi}}\delta\left(yp^{+}\right)=\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
+\int_{-\infty}^{+\infty}\dd k^{-}\frac{1}{D_{\phi}\left(k\right)^{2}}=\frac{2\pi i}{\Omega_{\phi}}\delta\left(k^{+}\right)=\frac{2\pi i}{\Omega_{\phi}}\delta\left(yp^{+}\right)=\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -5490,8 +5551,8 @@ where
 根据上式得到
 \begin_inset Formula 
 \begin{align*}
-\int_{-\infty}^{+\infty}\dif k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int_{-\infty}^{+\infty}\dif k^{-}\int_{\mu^{2}}^{\Omega_{\phi}}\dif\ell\frac{1}{\left(k^{+}k^{-}-\ell+i\varepsilon\right)^{2}}\text{ 交换积分次序}\\
- & =\int_{\mu^{2}}^{\Omega_{\phi}}\dif\ell\int_{-\infty}^{+\infty}\dif k^{-}\frac{1}{\left(k^{+}k^{-}-\ell+i\varepsilon\right)^{2}}=\int_{\mu^{2}}^{\Omega_{\phi}}\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
+\int_{-\infty}^{+\infty}\dd k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int_{-\infty}^{+\infty}\dd k^{-}\int_{\mu^{2}}^{\Omega_{\phi}}\dd\ell\frac{1}{\left(k^{+}k^{-}-\ell+i\varepsilon\right)^{2}}\text{ 交换积分次序}\\
+ & =\int_{\mu^{2}}^{\Omega_{\phi}}\dd\ell\int_{-\infty}^{+\infty}\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\ell+i\varepsilon\right)^{2}}=\int_{\mu^{2}}^{\Omega_{\phi}}\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
 \end{align*}
 
 \end_inset
@@ -5499,7 +5560,7 @@ where
 即
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\dif k^{-}\frac{1}{D_{\phi}\left(k\right)}=2\pi i\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
+\int_{-\infty}^{+\infty}\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=2\pi i\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -5542,7 +5603,7 @@ where
 \color none
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)}=\int\dif k^{-}\frac{k^{+}k^{-}}{k^{+}k^{-}-\Omega_{\phi}+i\varepsilon}
+\int\dd k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)}=\int\dd k^{-}\frac{k^{+}k^{-}}{k^{+}k^{-}-\Omega_{\phi}+i\varepsilon}
 \]
 
 \end_inset
@@ -5593,7 +5654,7 @@ where
 如果使用维数正规化方案计算，
 \begin_inset Formula 
 \[
-\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}}=-\frac{d}{2}\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{1-\frac{d}{2}}}\Gamma\left(\frac{2-d}{2}\right)
+\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}}=-\frac{d}{2}\frac{i}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{1-\frac{d}{2}}}\Gamma\left(\frac{2-d}{2}\right)
 \]
 
 \end_inset
@@ -5626,7 +5687,7 @@ where
 
 \begin_inset Formula 
 \begin{align*}
-\int\dif^{d}k\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =\left(-i\pi\right)\left(1-\varepsilon\right)\left(\pi\right)^{-\varepsilon}\Delta^{-\varepsilon}\Gamma\left(\varepsilon\right)\\
+\int\dd^{d}k\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =\left(-i\pi\right)\left(1-\varepsilon\right)\left(\pi\right)^{-\varepsilon}\Delta^{-\varepsilon}\Gamma\left(\varepsilon\right)\\
  & =\left(-i\pi\right)\left(1-\varepsilon\right)\left(1-\varepsilon\ln\pi\right)\left(1-\varepsilon\ln\Delta\right)\left[\frac{1}{\epsilon}-\gamma_{E}+\mathcal{O}\left(\varepsilon\right)\right]\\
  & =\left(-i\pi\right)\left(-1-\gamma_{E}+\frac{1}{\varepsilon}-\log\pi-\log\Delta\right)\\
  & =\left(i\pi\right)\left(-\frac{1}{\varepsilon}+\log\pi\Delta e^{1+\gamma_{E}}\right)
@@ -5640,9 +5701,9 @@ where
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\int\dif^{2}k\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =\int\dif k^{0}\int\dif k^{1}\frac{k^{0;2}-k^{1;2}}{\left(k^{0;2}-k^{1;2}-\Delta+i\epsilon\right)^{2}}\\
- & =\int\dif k^{0}\int\dif k^{1}\frac{2k^{0}k^{1}}{\left(2k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}\\
- & =\frac{1}{2}\int\dif k^{0}\int\dif k^{1}\frac{k^{0}k^{1}}{\left(k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}
+\int\dd^{2}k\frac{k^{2}}{\left(k^{2}-\Delta+i\epsilon\right)^{2}} & =\int\dd k^{0}\int\dd k^{1}\frac{k^{0;2}-k^{1;2}}{\left(k^{0;2}-k^{1;2}-\Delta+i\epsilon\right)^{2}}\\
+ & =\int\dd k^{0}\int\dd k^{1}\frac{2k^{0}k^{1}}{\left(2k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}\\
+ & =\frac{1}{2}\int\dd k^{0}\int\dd k^{1}\frac{k^{0}k^{1}}{\left(k^{0}k^{1}-\Delta+i\epsilon\right)^{2}}
 \end{align*}
 
 \end_inset
@@ -5650,7 +5711,7 @@ where
 所以，
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\left(2\pi i\right)\left(-\frac{1}{\varepsilon}+\log\Omega_{\phi}\pi e^{1+\gamma_{E}}\right)
+\int\dd k^{-}\frac{k^{+}k^{-}}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\left(2\pi i\right)\left(-\frac{1}{\varepsilon}+\log\Omega_{\phi}\pi e^{1+\gamma_{E}}\right)
 \]
 
 \end_inset
@@ -5662,7 +5723,7 @@ where
 。前面使用求导关系，得到的结果是，
 \begin_inset Formula 
 \[
-\int\dif k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
+\int\dd k^{-}\frac{k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
 \]
 
 \end_inset
@@ -5691,7 +5752,7 @@ where
 的传播子幂次较低，可能出现类似下面的负幂次项：
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{4}\left(k\right)D_{\phi}\left(k\right)^{-1}D_{B}\left(p-k\right)^{1}}=\int\dif^{4}k\frac{\left(k^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{4}\left(k\right)D_{B}\left(p-k\right)^{1}}
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{4}\left(k\right)D_{\phi}\left(k\right)^{-1}D_{B}\left(p-k\right)^{1}}=\int\dd^{4}k\frac{\left(k^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{4}\left(k\right)D_{B}\left(p-k\right)^{1}}
 \]
 
 \end_inset
@@ -5712,7 +5773,7 @@ where
 。则
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{a}\left(k\right)D_{\phi}\left(k\right)^{-b}D_{B}\left(p-k\right)^{c}}=\int\dif^{4}k\frac{\left(D_{\Lambda}+\overline{\Lambda}^{2}\right)^{b}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{a}\left(k\right)D_{B}\left(p-k\right)^{c}}
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{a}\left(k\right)D_{\phi}\left(k\right)^{-b}D_{B}\left(p-k\right)^{c}}=\int\dd^{4}k\frac{\left(D_{\Lambda}+\overline{\Lambda}^{2}\right)^{b}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{a}\left(k\right)D_{B}\left(p-k\right)^{c}}
 \]
 
 \end_inset
@@ -5736,7 +5797,7 @@ F\left[a,b,c\right]=\left(F\left[-1,0,0\right]+\overline{\Lambda}^{2}\right)^{-b
 收敛积分基本公式
 \begin_inset Formula 
 \[
-F\left[a,b,c\right]=\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{c}}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{\left(c-1\right)!}\frac{\partial^{c-1}}{\partial M_{B}^{2;c-1}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}},a+b\ge1,c\ge1
+F\left[a,b,c\right]=\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{c}}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{\left(c-1\right)!}\frac{\partial^{c-1}}{\partial M_{B}^{2;c-1}}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}},a+b\ge1,c\ge1
 \]
 
 \end_inset
@@ -5777,7 +5838,7 @@ F\left[a,b,c\right]=\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}
 ：
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dif k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{y}{\overline{y}}\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{y}{\overline{y}}\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
 \]
 
 \end_inset
@@ -5803,7 +5864,7 @@ height "1pt"
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}^{a}}=\left(\pi i\right)\frac{1}{\left(a-1\right)!}\frac{\partial^{a-1}}{\partial\Omega_{\phi}^{a-1}}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}^{a}}=\left(\pi i\right)\frac{1}{\left(a-1\right)!}\frac{\partial^{a-1}}{\partial\Omega_{\phi}^{a-1}}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
 \]
 
 \end_inset
@@ -5811,7 +5872,7 @@ height "1pt"
 
 \begin_inset Formula 
 \[
-F\left[a,b,0\right]=\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dif z\int\dif k_{\perp}^{2}}{\left(a-1\right)!\left(b-1\right)!}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right),a\ge1,b\ge1
+F\left[a,b,0\right]=\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}}{\left(a-1\right)!\left(b-1\right)!}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right),a\ge1,b\ge1
 \]
 
 \end_inset
@@ -5821,8 +5882,8 @@ F\left[a,b,0\right]=\int\dif^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}
 
 \begin_inset Formula 
 \begin{align*}
- & {\color{blue}G\left[a,b,0\right]}^{\ell}=\int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
- & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dif z\left(1-z\right)^{a-1}z^{b-1}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+ & {\color{blue}G\left[a,b,0\right]}^{\ell}=\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+ & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
 \end{align*}
 
 \end_inset
@@ -5838,7 +5899,7 @@ D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-
 
 \begin_inset Formula 
 \[
-\int\dif^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dif k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
 \]
 
 \end_inset
@@ -5858,8 +5919,8 @@ height "1pt"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-F\left[a,b,-n\right]= & \int\dif k^{+}\int\dif k^{-}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{-n}}\\
-= & \int\dif k^{+}\int\dif k^{-}\frac{\left(D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2ykp/y\right)^{n}}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+F\left[a,b,-n\right]= & \int\dd k^{+}\int\dd k^{-}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{-n}}\\
+= & \int\dd k^{+}\int\dd k^{-}\frac{\left(D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2ykp/y\right)^{n}}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
 = & \left(F\left[-1,0,0\right]+\left(m_{\phi}^{2}-\Delta\overline{M}\right)-\frac{1}{y}G\left[0,0,0\right]\right)^{n}@F\left[a,b,0\right]
 \end{align*}
 
@@ -5888,8 +5949,8 @@ F\left[a,b,-n\right]= & \int\dif k^{+}\int\dif k^{-}\frac{\delta\left(y-\frac{k^
 时：
 \begin_inset Formula 
 \begin{align*}
-F\left[a,b,-1\right]= & \int\dif k^{+}\int\dif k^{-}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{-1}}\\
-= & \int\dif k^{+}\int\dif k^{-}\frac{D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2kp}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+F\left[a,b,-1\right]= & \int\dd k^{+}\int\dd k^{-}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{-1}}\\
+= & \int\dd k^{+}\int\dd k^{-}\frac{D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2kp}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
 = & F\left[a-1,b,0\right]+\left(m_{\phi}^{2}-\Delta\overline{M}\right)F\left[a,b,0\right]-\frac{1}{y}G\left[a,b,0\right]
 \end{align*}
 
@@ -6108,7 +6169,7 @@ where
 \end_inset
 
 矩阵乘积的
-\begin_inset Formula $\tr$
+\begin_inset Formula $\Tr$
 \end_inset
 
 为零，基
@@ -6116,13 +6177,13 @@ where
 \end_inset
 
 在
-\begin_inset Formula $\tr$
+\begin_inset Formula $\Tr$
 \end_inset
 
 的意义下是正交的，
 \begin_inset Formula 
 \[
-\tr\left[\gamma^{\mu}\gamma_{\mu}\right]=4,\quad\tr\left[\left(p_{2}+p_{1}\right)^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=4\left(p_{1}+p_{2}\right)^{2},\quad\tr\left[\gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=0
+\Tr\left[\gamma^{\mu}\gamma_{\mu}\right]=4,\quad\Tr\left[\left(p_{2}+p_{1}\right)^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=4\left(p_{1}+p_{2}\right)^{2},\quad\Tr\left[\gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=0
 \]
 
 \end_inset
@@ -6209,7 +6270,7 @@ where
 令
 \begin_inset Formula 
 \begin{align*}
- & A=\tr\left[\Gamma^{\mu}\gamma_{\mu}\right]=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\frac{F_{2}\left(Q^{2}\right)}{2m}\tr\left[\left(p_{2}+p_{1}\right)^{\mu}\gamma_{\mu}\right]\\
+ & A=\Tr\left[\Gamma^{\mu}\gamma_{\mu}\right]=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\frac{F_{2}\left(Q^{2}\right)}{2m}\Tr\left[\left(p_{2}+p_{1}\right)^{\mu}\gamma_{\mu}\right]\\
  & A=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]
 \end{align*}
 
@@ -6218,7 +6279,7 @@ where
 令
 \begin_inset Formula 
 \begin{align*}
- & B=\tr\left[\Gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=\tr\left[\gamma\left(p_{2}+p_{1}\right)\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\left(p_{2}+p_{1}\right)^{2}\frac{F_{2}\left(Q^{2}\right)}{2m}\right]\\
+ & B=\Tr\left[\Gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=\Tr\left[\gamma\left(p_{2}+p_{1}\right)\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\left(p_{2}+p_{1}\right)^{2}\frac{F_{2}\left(Q^{2}\right)}{2m}\right]\\
  & B=-4\left(p_{2}+p_{1}\right)^{2}\frac{F_{2}\left(Q^{2}\right)}{2m}=-4\left(2m^{2}+Q^{2}+2m^{2}\right)\frac{F_{2}\left(Q^{2}\right)}{2m}\\
  & B=-2\left(4m^{2}+Q^{2}\right)\frac{F_{2}\left(Q^{2}\right)}{m}
 \end{align*}
@@ -6232,8 +6293,8 @@ where
 总结就是
 \begin_inset Formula 
 \begin{align*}
- & A=\tr\left[\Gamma^{\mu}\gamma_{\mu}\right]=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]\\
- & B=\tr\left[\Gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=-2\left(4m^{2}+Q^{2}\right)\frac{F_{2}\left(Q^{2}\right)}{m}
+ & A=\Tr\left[\Gamma^{\mu}\gamma_{\mu}\right]=4\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]\\
+ & B=\Tr\left[\Gamma^{\mu}\left(p_{2}+p_{1}\right)_{\mu}\right]=-2\left(4m^{2}+Q^{2}\right)\frac{F_{2}\left(Q^{2}\right)}{m}
 \end{align*}
 
 \end_inset
@@ -6262,8 +6323,8 @@ where
 令
 \begin_inset Formula 
 \begin{align*}
-A & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma_{\mu}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\gamma^{\mu}u\left(p_{2}\right)=\tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)\right]\\
- & =\tr\left[\left(F_{1}+F_{2}\right)\gamma_{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)-\frac{F_{2}}{2m}\left(p_{2}+p_{1}\right)^{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)\right]\\
+A & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma_{\mu}u\left(p_{1}\right)\bar{u}\left(p_{1}\right)\gamma^{\mu}u\left(p_{2}\right)=\Tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)\right]\\
+ & =\Tr\left[\left(F_{1}+F_{2}\right)\gamma_{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)-\frac{F_{2}}{2m}\left(p_{2}+p_{1}\right)^{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)\right]\\
  & =\left(F_{1}+F_{2}\right)\left(16m^{2}-8p_{1}p_{2}\right)-\frac{F_{2}}{2m}\left(8mp_{1}p_{2}+4mp_{1}^{2}+4mp_{2}^{2}\right)\\
  & =F_{1}\left(16m^{2}-8p_{1}p_{2}\right)+F_{2}\left(12m^{2}-12p_{1}p_{2}\right)
 \end{align*}
@@ -6285,8 +6346,8 @@ A=4F_{1}\left(2m^{2}-Q^{2}\right)-6Q^{2}F_{2}
 类似地，令
 \begin_inset Formula 
 \begin{align*}
-B & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma_{\mu}u\left(p_{1}\right)\bar{u}\left(p_{1}\right){\color{blue}\frac{\left(p_{2}+p_{1}\right)^{\mu}}{m}}u\left(p_{2}\right)=\tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\left(p_{2}+p_{1}\right)^{\mu}\right]\\
- & =\tr\left[\left(F_{1}+F_{2}\right)\gamma_{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\frac{\left(p_{2}+p_{1}\right)^{\mu}}{m}-\frac{F_{2}}{2m^{2}}\left(p_{2}+p_{1}\right)^{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\left(p_{2}+p_{1}\right)^{\mu}\right]\\
+B & =\sum_{\text{spin}}\bar{u}\left(p_{2}\right)\Gamma_{\mu}u\left(p_{1}\right)\bar{u}\left(p_{1}\right){\color{blue}\frac{\left(p_{2}+p_{1}\right)^{\mu}}{m}}u\left(p_{2}\right)=\Tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\left(p_{2}+p_{1}\right)^{\mu}\right]\\
+ & =\Tr\left[\left(F_{1}+F_{2}\right)\gamma_{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\frac{\left(p_{2}+p_{1}\right)^{\mu}}{m}-\frac{F_{2}}{2m^{2}}\left(p_{2}+p_{1}\right)^{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\left(p_{2}+p_{1}\right)^{\mu}\right]\\
  & =\left(F_{1}+F_{2}\right)\left(8p_{1}p_{2}+4p_{1}^{2}+4p_{2}^{2}\right)-\frac{F_{2}}{2m^{2}}4\left(2p_{1}p_{2}+p_{1}^{2}+p_{2}^{2}\right)\left(p_{1}p_{2}+m^{2}\right)\\
  & =\left(F_{1}+F_{2}\right)\left(4Q^{2}+16m^{2}\right)-\frac{F_{2}}{m^{2}}\left(2p_{1}p_{2}+2m^{2}\right)\left(2p_{1}p_{2}+2m^{2}\right)\\
  & =\left(F_{1}+F_{2}\right)\left({\color{blue}4Q^{2}+16m^{2}}\right)-\frac{F_{2}}{m^{2}}\left(Q^{2}+4m^{2}\right)^{2}\\
@@ -6303,8 +6364,8 @@ B & =F_{1}4\left(Q^{2}+4m^{2}\right)-F_{2}\frac{Q^{2}}{m^{2}}\left(4m^{2}+Q^{2}\
 总结就是
 \begin_inset Formula 
 \begin{align*}
- & A=\tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)\right]=4F_{1}\left(2m^{2}-Q^{2}\right)-6Q^{2}F_{2}\\
- & B=\tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\frac{\left(p_{2}+p_{1}\right)^{\mu}}{m}\right]=F_{1}4\left(Q^{2}+4m^{2}\right)-F_{2}\frac{Q^{2}}{m^{2}}\left(4m^{2}+Q^{2}\right)
+ & A=\Tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\gamma^{\mu}\left(\gamma p_{2}+m\right)\right]=4F_{1}\left(2m^{2}-Q^{2}\right)-6Q^{2}F_{2}\\
+ & B=\Tr\left[\Gamma_{\mu}\left(\gamma p_{1}+m\right)\left(\gamma p_{2}+m\right)\frac{\left(p_{2}+p_{1}\right)^{\mu}}{m}\right]=F_{1}4\left(Q^{2}+4m^{2}\right)-F_{2}\frac{Q^{2}}{m^{2}}\left(4m^{2}+Q^{2}\right)
 \end{align*}
 
 \end_inset
@@ -6340,8 +6401,8 @@ Higgs 玻色子对
 –loop QED 顶点的修正是
 \begin_inset Formula 
 \begin{align*}
-\bar{u}\delta\Gamma^{\mu}u\left(p\right) & =\left(\frac{i\lambda}{\sqrt{2}}\right)^{2}\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{i}{\left(k-p\right)^{2}-m_{h}^{2}}\bar{u}\left(p^{\prime}\right)\frac{i}{\sla k+\sla q-m}\gamma^{\mu}\frac{i}{\sla k-m}u\left(p\right)\\
- & =\frac{i\lambda^{2}}{2}\int_{0}^{1}\dif x\int_{0}^{1-x}\dif y\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{2\bar{u}\left(p^{\prime}\right)N^{\mu}u\left(p\right)}{\left(k^{\prime2}-\Delta\right)^{3}}
+\bar{u}\delta\Gamma^{\mu}u\left(p\right) & =\left(\frac{i\lambda}{\sqrt{2}}\right)^{2}\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{i}{\left(k-p\right)^{2}-m_{h}^{2}}\bar{u}\left(p^{\prime}\right)\frac{i}{\sla k+\sla q-m}\gamma^{\mu}\frac{i}{\sla k-m}u\left(p\right)\\
+ & =\frac{i\lambda^{2}}{2}\int_{0}^{1}\dd x\int_{0}^{1-x}\dd y\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{2\bar{u}\left(p^{\prime}\right)N^{\mu}u\left(p\right)}{\left(k^{\prime2}-\Delta\right)^{3}}
 \end{align*}
 
 \end_inset
@@ -6514,8 +6575,8 @@ noprefix "false"
 ，我们发现，
 \begin_inset Formula 
 \begin{align*}
-\delta F_{2}\left(q=0\right) & =2i\lambda^{2}m^{2}\int_{0}^{1}\dif x\int_{0}^{1-x}\dif y\int\frac{\dif^{d}k}{\left(2\pi\right)^{d}}\frac{1-x^{2}}{\left(k^{\prime2}-\Delta\right)^{3}}\\
- & =\frac{\lambda^{2}}{\left(4\pi\right)^{2}}\int_{0}^{1}\dif x\left[\frac{1}{1+x\left(m_{h}/m\right)^{2}}-\frac{1+x-x^{2}}{\left(m_{h}/m\right)^{2}}\right]\\
+\delta F_{2}\left(q=0\right) & =2i\lambda^{2}m^{2}\int_{0}^{1}\dd x\int_{0}^{1-x}\dd y\int\frac{\dd^{d}k}{\left(2\pi\right)^{d}}\frac{1-x^{2}}{\left(k^{\prime2}-\Delta\right)^{3}}\\
+ & =\frac{\lambda^{2}}{\left(4\pi\right)^{2}}\int_{0}^{1}\dd x\left[\frac{1}{1+x\left(m_{h}/m\right)^{2}}-\frac{1+x-x^{2}}{\left(m_{h}/m\right)^{2}}\right]\\
  & \simeq\frac{\lambda^{2}}{\left(4\pi\right)^{2}\left(m_{h}/m\right)^{2}}\left[\log\left(m_{h}^{2}/m^{2}\right)-\frac{7}{6}\right].
 \end{align*}
 
@@ -6540,8 +6601,8 @@ PDF 化简技术
 ，它在旋量之间的矩阵元为
 \begin_inset Formula 
 \begin{align*}
-\bar{u}\left(p\right)Qu\left(p\right) & =\bar{u}\left(p\right)_{i}Q_{ij}u\left(p\right)_{j}=u\left(p\right)_{j}\bar{u}\left(p\right)_{i}Q_{ij}=\tr\left[u\left(p\right)\bar{u}\left(p\right)Q\right]\\
-\bar{u}\left(p\right)Qu\left(p\right) & =\tr\left[\left(\gamma.p+M\right)Q\right]
+\bar{u}\left(p\right)Qu\left(p\right) & =\bar{u}\left(p\right)_{i}Q_{ij}u\left(p\right)_{j}=u\left(p\right)_{j}\bar{u}\left(p\right)_{i}Q_{ij}=\Tr\left[u\left(p\right)\bar{u}\left(p\right)Q\right]\\
+\bar{u}\left(p\right)Qu\left(p\right) & =\Tr\left[\left(\gamma.p+M\right)Q\right]
 \end{align*}
 
 \end_inset
@@ -6549,8 +6610,8 @@ PDF 化简技术
 从而，
 \begin_inset Formula 
 \begin{align*}
-\bar{u}\left(p\right)\gamma^{\mu}u\left(p\right) & =\tr\left[\left(\gamma.p+M\right)\gamma^{\mu}\right]=4p^{\mu}\\
-\text{做代换：} & =\tr\left[\left(\gamma.p+M\right)\frac{p^{\mu}}{M}\right]
+\bar{u}\left(p\right)\gamma^{\mu}u\left(p\right) & =\Tr\left[\left(\gamma.p+M\right)\gamma^{\mu}\right]=4p^{\mu}\\
+\text{做代换：} & =\Tr\left[\left(\gamma.p+M\right)\frac{p^{\mu}}{M}\right]
 \end{align*}
 
 \end_inset
@@ -6587,9 +6648,9 @@ PDF 化简技术
 光锥坐标中，积分测度与普通协变坐标的关系为
 \begin_inset Formula 
 \begin{align*}
-\int\dif^{4}k & =\frac{1}{2}\int\dif k^{+}\dif k^{-}\dif k_{x}\dif k_{y}\\
- & =\frac{1}{2}\int\dif k^{+}\dif k^{-}\int_{0}^{2\pi}k_{\perp}\dif k_{\perp}\dif\phi\\
-\text{积分掉}k_{\perp}\text{平面上的角度}\phi\quad & =\frac{\pi}{2}\int\dif k^{+}\dif k^{-}\dif k_{\perp}^{2}
+\int\dd^{4}k & =\frac{1}{2}\int\dd k^{+}\dd k^{-}\dd k_{x}\dd k_{y}\\
+ & =\frac{1}{2}\int\dd k^{+}\dd k^{-}\int_{0}^{2\pi}k_{\perp}\dd k_{\perp}\dd\phi\\
+\text{积分掉}k_{\perp}\text{平面上的角度}\phi\quad & =\frac{\pi}{2}\int\dd k^{+}\dd k^{-}\dd k_{\perp}^{2}
 \end{align*}
 
 \end_inset
@@ -6621,7 +6682,7 @@ page 185。
 一个电子在外部电磁场上散射，半经典的哈密顿量为
 \begin_inset Formula 
 \[
-\Delta H_{\text{int}}=\int\dif^{3}xeA_{\mu}^{\text{cl}}j^{\mu},
+\Delta H_{\text{int}}=\int\dd^{3}xeA_{\mu}^{\text{cl}}j^{\mu},
 \]
 
 \end_inset
@@ -7027,7 +7088,7 @@ g=2\left[F_{1}\left(0\right)+F_{2}\left(0\right)\right]=2+2F_{2}\left(0\right).
 方程的解为
 \begin_inset Formula 
 \[
-\psi\left(\sbf{r}\right)=\exp\left(i\sbf{k}\cdot\sbf{r}\right)-\frac{\mu}{2\pi\hbar^{2}}\int\dif^{3}r^{\prime}\frac{\exp\left(ik\abs{\sbf{r}-\sbf{r}^{\prime}}\right)}{\abs{\sbf{r}-\sbf{r}^{\prime}}}V\left(\sbf{r}^{\prime}\right)\psi\left(\sbf{r}^{\prime}\right)
+\psi\left(\sbf{r}\right)=\exp\left(i\sbf{k}\cdot\sbf{r}\right)-\frac{\mu}{2\pi\hbar^{2}}\int\dd^{3}r^{\prime}\frac{\exp\left(ik\abs{\sbf{r}-\sbf{r}^{\prime}}\right)}{\abs{\sbf{r}-\sbf{r}^{\prime}}}V\left(\sbf{r}^{\prime}\right)\psi\left(\sbf{r}^{\prime}\right)
 \]
 
 \end_inset
@@ -7051,7 +7112,7 @@ g=2\left[F_{1}\left(0\right)+F_{2}\left(0\right)\right]=2+2F_{2}\left(0\right).
 代替。此时
 \begin_inset Formula 
 \[
-\psi\left(\sbf{r}\right)\approx\exp\left(i\sbf{k}\cdot\sbf{r}\right)-\frac{\mu}{2\pi\hbar^{2}}\int\dif^{3}r^{\prime}\frac{\exp\left(ik\abs{\sbf{r}-\sbf{r}^{\prime}}\right)}{\abs{\sbf{r}-\sbf{r}^{\prime}}}V\left(\sbf{r}^{\prime}\right)\exp\left(i\sbf{k}\cdot\sbf{r}^{\prime}\right)
+\psi\left(\sbf{r}\right)\approx\exp\left(i\sbf{k}\cdot\sbf{r}\right)-\frac{\mu}{2\pi\hbar^{2}}\int\dd^{3}r^{\prime}\frac{\exp\left(ik\abs{\sbf{r}-\sbf{r}^{\prime}}\right)}{\abs{\sbf{r}-\sbf{r}^{\prime}}}V\left(\sbf{r}^{\prime}\right)\exp\left(i\sbf{k}\cdot\sbf{r}^{\prime}\right)
 \]
 
 \end_inset
@@ -7071,7 +7132,7 @@ g=2\left[F_{1}\left(0\right)+F_{2}\left(0\right)\right]=2+2F_{2}\left(0\right).
 时，
 \begin_inset Formula 
 \[
-\psi_{\text{sc}}\left(\sbf{r}\right)\stackrel{r\to\infty}{\longrightarrow}\frac{-\mu\exp\left(ikr\right)}{2\pi\hbar^{2}r}\int\dif^{3}r^{\prime}\exp\left[-i\left(\sbf{k}_{f}-\sbf{k}\right)\cdot\sbf{r}^{\prime}\right]V\left(\sbf{r}^{\prime}\right)
+\psi_{\text{sc}}\left(\sbf{r}\right)\stackrel{r\to\infty}{\longrightarrow}\frac{-\mu\exp\left(ikr\right)}{2\pi\hbar^{2}r}\int\dd^{3}r^{\prime}\exp\left[-i\left(\sbf{k}_{f}-\sbf{k}\right)\cdot\sbf{r}^{\prime}\right]V\left(\sbf{r}^{\prime}\right)
 \]
 
 \end_inset
@@ -7091,7 +7152,7 @@ g=2\left[F_{1}\left(0\right)+F_{2}\left(0\right)\right]=2+2F_{2}\left(0\right).
 。
 \begin_inset Formula 
 \[
-f\left(\theta,\varphi\right)=f\left(\sbf{k},\sbf{k}_{f}\right)=\frac{-\mu}{2\pi\hbar^{2}}\int\dif^{3}r^{\prime}\exp\left[i\sbf{q}\cdot\sbf{r}^{\prime}\right]V\left(\sbf{r}^{\prime}\right)
+f\left(\theta,\varphi\right)=f\left(\sbf{k},\sbf{k}_{f}\right)=\frac{-\mu}{2\pi\hbar^{2}}\int\dd^{3}r^{\prime}\exp\left[i\sbf{q}\cdot\sbf{r}^{\prime}\right]V\left(\sbf{r}^{\prime}\right)
 \]
 
 \end_inset
@@ -7123,7 +7184,7 @@ belitsky的证明
 的傅立叶变换，直接积分得到：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\bra{p_{2}}\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}=2\pi\delta\left(\sbf{p_{2}}-\sbf{p_{1}}+\sbf{\Delta}\right)\bra{p_{2}}\sbf{j}\left(\sbf{0}\right)\ket{p_{1}}\\
+ & \int\dd^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\bra{p_{2}}\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}=2\pi\delta\left(\sbf{p_{2}}-\sbf{p_{1}}+\sbf{\Delta}\right)\bra{p_{2}}\sbf{j}\left(\sbf{0}\right)\ket{p_{1}}\\
  & =2\pi\delta\left(\sbf{p_{2}}-\sbf{p_{1}}+\sbf{\Delta}\right)\bar{u}\left(p_{2}\right)\left\{ \sbf{\gamma}F_{1}\left(\Delta^{2}\right)+\frac{i\sbf{\sigma^{\nu k}}\sbf{\Delta_{k}}}{2M_{N}}F_{2}\left(\Delta^{2}\right)\right\} u\left(p_{1}\right)\\
  & =2\pi\delta\left(\sbf{p_{2}}-\sbf{p_{1}}+\sbf{\Delta}\right)\left[F_{1}\left(\Delta^{2}\right)+F_{2}\left(\Delta^{2}\right)\right]i\omega_{2}^{\dagger}\left(\sbf{\Delta}\times\sbf{\sigma}\right)\omega_{1}
 \end{align*}
@@ -7133,14 +7194,14 @@ belitsky的证明
 如果把指数展开到线性项,
 \begin_inset Formula 
 \begin{align*}
-\int\dif^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\bra{p_{2}}\sbf{j}\left(\sbf{r}\right)\ket{p_{1}} & \approx\bra{p_{2}}\int\dif^{3}\sbf{r}\left(1-i\sbf{\Delta}\cdot\sbf{r}\right)\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}\\
- & \approx\bra{p_{2}}\int\dif^{3}\sbf{r}\left(i\sbf{\Delta}\cdot\sbf{r}\right)\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}
+\int\dd^{3}\sbf{r}e^{-i\sbf{\Delta}\cdot\sbf{r}}\bra{p_{2}}\sbf{j}\left(\sbf{r}\right)\ket{p_{1}} & \approx\bra{p_{2}}\int\dd^{3}\sbf{r}\left(1-i\sbf{\Delta}\cdot\sbf{r}\right)\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}\\
+ & \approx\bra{p_{2}}\int\dd^{3}\sbf{r}\left(i\sbf{\Delta}\cdot\sbf{r}\right)\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}
 \end{align*}
 
 \end_inset
 
 后面会证明稳恒电场条件下
-\begin_inset Formula $\int_{V}\sbf{j}\left(\sbf{r}\right)\dif^{3}\sbf{r}=0$
+\begin_inset Formula $\int_{V}\sbf{j}\left(\sbf{r}\right)\dd^{3}\sbf{r}=0$
 \end_inset
 
 。
@@ -7148,7 +7209,7 @@ belitsky的证明
 
 \begin_layout Standard
 再来考虑
-\begin_inset Formula $\sbf{\mu}=\int\dif^{3}\sbf{r}\,\sbf{r}\times\sbf{j}$
+\begin_inset Formula $\sbf{\mu}=\int\dd^{3}\sbf{r}\,\sbf{r}\times\sbf{j}$
 \end_inset
 
 ，使用
@@ -7158,9 +7219,9 @@ belitsky的证明
 ，
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow-i\int\dif^{3}\sbf{r}\bra{p_{2}}\sbf{r}\times\sbf{j}\left(\sbf{r}\right)\times\sbf{\Delta}e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
- & =\int\dif^{3}\sbf{r}\bra{p_{2}}\left[\left(-i\sbf{\Delta}\cdot\sbf{r}\right)\sbf{j}+\sbf{r}\left(i\sbf{\Delta}\cdot\sbf{j}\right)\right]e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
- & =\int\dif^{3}\sbf{r}\bra{p_{2}}\left[-\sbf{j}\sbf{r}\cdot\nabla e^{i\sbf{\Delta}\cdot\sbf{r}}+\sbf{r}\left(\sbf{j}\cdot\nabla e^{i\sbf{\Delta}\cdot\sbf{r}}\right)\right]\ket{p_{1}}
+ & \Rightarrow-i\int\dd^{3}\sbf{r}\bra{p_{2}}\sbf{r}\times\sbf{j}\left(\sbf{r}\right)\times\sbf{\Delta}e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
+ & =\int\dd^{3}\sbf{r}\bra{p_{2}}\left[\left(-i\sbf{\Delta}\cdot\sbf{r}\right)\sbf{j}+\sbf{r}\left(i\sbf{\Delta}\cdot\sbf{j}\right)\right]e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
+ & =\int\dd^{3}\sbf{r}\bra{p_{2}}\left[-\sbf{j}\sbf{r}\cdot\nabla e^{i\sbf{\Delta}\cdot\sbf{r}}+\sbf{r}\left(\sbf{j}\cdot\nabla e^{i\sbf{\Delta}\cdot\sbf{r}}\right)\right]\ket{p_{1}}
 \end{align*}
 
 \end_inset
@@ -7183,15 +7244,15 @@ belitsky的证明
 \end_inset
 
 ，
-\begin_inset Formula $\int_{V}\sbf{j}\left(\sbf{r}\right)\dif^{3}\sbf{r}=0$
+\begin_inset Formula $\int_{V}\sbf{j}\left(\sbf{r}\right)\dd^{3}\sbf{r}=0$
 \end_inset
 
 ，可知第二项为零，只用考虑第一项，
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow-i\int\dif^{3}\sbf{r}\bra{p_{2}}\sbf{r}\times\sbf{j}\left(\sbf{r}\right)\times\sbf{\Delta}e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
- & =\int\dif^{3}\sbf{r}\bra{p_{2}}\sbf{j}\left(-i\sbf{\Delta}\cdot\sbf{r}\right)e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
- & =\int\dif^{3}\sbf{r}\bra{p_{2}}\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}
+ & \Rightarrow-i\int\dd^{3}\sbf{r}\bra{p_{2}}\sbf{r}\times\sbf{j}\left(\sbf{r}\right)\times\sbf{\Delta}e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
+ & =\int\dd^{3}\sbf{r}\bra{p_{2}}\sbf{j}\left(-i\sbf{\Delta}\cdot\sbf{r}\right)e^{i\sbf{\Delta}\cdot\sbf{r}}\ket{p_{1}}\\
+ & =\int\dd^{3}\sbf{r}\bra{p_{2}}\sbf{j}\left(\sbf{r}\right)\ket{p_{1}}
 \end{align*}
 
 \end_inset
@@ -7203,7 +7264,7 @@ belitsky的证明
 的极限下，
 \begin_inset Formula 
 \begin{align*}
--i\bra{p}\sbf{\mu}\ket{p}\times\sbf{\Delta} & =\int\dif^{3}\sbf{r}\bra{p}\sbf{j}\left(\sbf{r}\right)\ket{p}\\
+-i\bra{p}\sbf{\mu}\ket{p}\times\sbf{\Delta} & =\int\dd^{3}\sbf{r}\bra{p}\sbf{j}\left(\sbf{r}\right)\ket{p}\\
 -i\bra{p_{2}}\sbf{\mu}\ket{p_{1}}\times\sbf{\Delta} & =2\pi\delta\left(\sbf{0}\right)\left[F_{1}\left(0\right)+F_{2}\left(0\right)\right]i\omega_{2}^{\dagger}\left(\sbf{\Delta}\times\sbf{\sigma}\right)\omega_{1}\\
 \bra{p}\sbf{\mu}\ket{p} & =2\pi\delta\left(\sbf{0}\right)\left[F_{1}\left(0\right)+F_{2}\left(0\right)\right]2\sbf{s}
 \end{align*}
@@ -7256,8 +7317,8 @@ belitsky的证明
 
 \begin_inset Formula 
 \begin{align*}
-\partial_{t}\int_{V}\dif^{3}\sbf{r}\,\left(\sbf{r}j^{0}\right) & =\int_{V}\dif^{3}\sbf{r}\,\left(\nabla\cdot\sbf{j}\right)\sbf{r}=\int_{V}\dif^{3}\sbf{r}\,\left[\nabla\cdot\left(\sbf{j}\sbf{r}\right)-\sbf{j}\right]\\
- & =\oint_{S}\dif\sbf{S}\cdot\left(\sbf{j}\sbf{r}\right)-\int_{V}\dif^{3}\sbf{r}\,\sbf{j}
+\partial_{t}\int_{V}\dd^{3}\sbf{r}\,\left(\sbf{r}j^{0}\right) & =\int_{V}\dd^{3}\sbf{r}\,\left(\nabla\cdot\sbf{j}\right)\sbf{r}=\int_{V}\dd^{3}\sbf{r}\,\left[\nabla\cdot\left(\sbf{j}\sbf{r}\right)-\sbf{j}\right]\\
+ & =\oint_{S}\dd\sbf{S}\cdot\left(\sbf{j}\sbf{r}\right)-\int_{V}\dd^{3}\sbf{r}\,\sbf{j}
 \end{align*}
 
 \end_inset
@@ -7269,13 +7330,13 @@ belitsky的证明
 的收敛性足够好，第一项为零。则
 \begin_inset Formula 
 \[
-\int_{V}\sbf{j}\left(\sbf{r}\right)\dif^{3}\sbf{r}=-\partial_{t}\int_{V}\dif^{3}\sbf{r}\,\left(\sbf{r}j^{0}\right)=\frac{\dif}{\dif t}\sbf{p_{e}}
+\int_{V}\sbf{j}\left(\sbf{r}\right)\dd^{3}\sbf{r}=-\partial_{t}\int_{V}\dd^{3}\sbf{r}\,\left(\sbf{r}j^{0}\right)=\frac{\dd}{\dd t}\sbf{p_{e}}
 \]
 
 \end_inset
 
 电流的空间积分等于电偶极矩的变化率。我们假设是静电场，变化率为零，所以
-\begin_inset Formula $\int_{V}\sbf{j}\left(\sbf{r}\right)\dif^{3}\sbf{r}=0$
+\begin_inset Formula $\int_{V}\sbf{j}\left(\sbf{r}\right)\dd^{3}\sbf{r}=0$
 \end_inset
 
 。以及steady electromagnetic current 的条件

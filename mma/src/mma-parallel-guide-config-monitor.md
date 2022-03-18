@@ -52,7 +52,7 @@ Wolfram语言可以通过多种不同的方式运行` 并行 workers`, 在同一
 
 为了在这些不同的情况下进行并行计算, Wolfram Language 提供了许多不同的连接方法, 其中每一种都是专门针对特定的使用风格. 这里将介绍一些主要的连接方法.
 
-#### 局部内核
+#### 本地内核,Local Kernels
 
 `本地内核连接方法`, 用于在与 `主Wolfram语言` 相同的计算机上运行并行的`worker`s.
 它适用于多核环境, 是启动和运行并行计算的最简单方法.
@@ -64,20 +64,20 @@ $ProcessorCount
 Out[25]=2
 ```
 
-### 轻量级网格
+### 轻量级网格, LightWeight Grid
 
-`轻量级网格连接`方法用于, 从运行 `主Wolfram语言` 之外的计算机上运行并行的`worker`s.
+`轻量级网格连接`方法用于, 从运行 `主Wolfram语言` 之外的计算机上运行 `并行的 worker`s.
 它使用 Wolfram 轻量级网格技术, 来启动远程机器上的 Wolfram 语言.
 它适用于异质网络(heterogeneous network), 且没有管理技术的地方.
 
-#### 集群集成
+#### 集群集成,Cluster Integration
 
-`集群集成连接方法`用于, 从运行 `主Wolfram语言` 之外的计算机上运行并行的`worker`s.
+`集群集成连接方法` 用于, 从运行 `主Wolfram语言` 之外的计算机上运行 `并行的 worker`s.
 它与大量的 `第三方集群管理技术` 相整合.
 
-#### 远程内核
+#### 远程内核, Remote Kernels
 
-`远程内核连接方法`用于, 在 `主Wolfram Language` 之外的计算机上运行并行`worker`s.
+`远程内核连接方法`用于, 在 `主Wolfram Language` 之外的计算机上 `运行并行 worker`s.
 它依赖于使用 `远程 shell 调用` 技术来启动, 通常更难配置和维护.
 
 ### 特点
@@ -428,12 +428,14 @@ Out[3]=KernelObject[2, "local"]
 
 ### 轻量级网格
 
-`轻量级网格连接方法`用于在不同于主Wolfram语言所在的计算机上, 运行并行`workers`.
+`轻量级网格连接方法`用于, 在异于 `主Wolfram语言所在的计算机` 上, 运行 `并行workers`.
 
 它使用 Wolfram 轻量级网格技术在远程机器上启动 Wolfram 语言.
-它适用于异质网络和没有管理技术的地方.
+它适用于 `异质网络` 和没有管理技术的地方.
 
-`轻量级网格连接`方式的配置是通过`并行首选项`完成的.
+需要安装 gridMathematica Server 以及 Lightweight Grid Manager.
+
+`轻量级网格连接` 方式的配置是通过 `并行首选项` 完成的.
 配置面板看起来应该与下面类似.
 在这个设置中, 主内核找到了另外三台运行轻量级网格管理器的计算机,
 每台都被配置为运行两个内核.
@@ -470,12 +472,13 @@ Out[2]= {KernelObject[2, "octet"]}.
 
 ### 集群集成,Cluster Integration
 
-`集群集成连接`方法用于在不同于 `主Wolfram语言` 所在的计算机上运行并行`workers`.
+`集群集成连接` 方法用于在异于 `主Wolfram语言所在计算机` 上运行 `并行 worker`s.
 它与大量的第三方集群管理技术相整合.
 
 集群集成连接方法的配置是通过并行首选项完成的.
 配置面板应该类似于下面的样子.
-在这个设置中, 一个集群被配置为使用 `Windows Computer Cluster Server`, 头节点为 `clusterboss`. 每台机器都被设置为运行两个内核.
+在这个设置中, 一个集群被配置为使用 `Windows Computer Cluster Server`, 头节点为 `clusterboss`.
+每台机器都被设置为运行两个内核.
 
 `Wolfram Language` 支持以下集群管理技术.
 
@@ -519,20 +522,20 @@ Out[2]= {KernelObject[1, "winccs"], KernelObject[2, "winccs"] }
 
 ### 远程内核
 
-`轻量级网格连接方法`用于在不同于主Wolfram语言所在的计算机上, 运行并行`workers`.
+`远程内核`用于在 `异于主Wolfram语言所在计算机` 上运行 `并行worker`s.
 它依赖于使用远程 shell 调用技术来启动, 通常更难配置和维护.
 
-远程内核连接方法的配置是通过`并行首选项`完成的.
+远程内核连接方法的配置是通过 `并行首选项` 完成的.
 配置面板应该类似于下面的样子.
 在这个配置中, 两台远程机器被配置为各自提供四个并行内核.
 
-在Windows上, 默认设置是使用 `rsh` 来启动远程机器上的内核;其他平台使用 `ssh`.
+在Windows上, 默认设置是使用 `rsh` 来启动远程机器上的内核; 其他平台使用 `ssh`.
 这是因为 `ssh` 通常不适用于 `Windows`.
-当然, 任何机器都必须被配置为允许从`主机器上`进行 `远程shell调用`.
+当然, 任何机器都必须被配置为允许从 `主机器上` 进行 `远程shell调用`.
 
 你可以修改用于启动内核的启动命令.
 在命令中, 你可以使用一些参数, 这些参数在命令实际使用之前, 会被填充.
-例如, 参数 `` `1` ``是用来指正在使用的远程机器的名称.
+例如, 参数 `` `1` `` 是用来指正在使用的远程机器的名称.
 
 ```mathematica
 `1` ;   远程机器的名称
@@ -550,7 +553,7 @@ Out[2]= {KernelObject[1, "winccs"], KernelObject[2, "winccs"] }
 
 + `LaunchKernels[RemoteMachine[host]]`  ;在机器主机上启动一个远程内核
 + `LaunchKernels[RemoteMachine[host,num]]`  ;在机器主机上启动数个远程内核.
-+ `LaunchKernels[RemoteMachine[host,command,num]]`  ;使用command作为远程命令在机器主机上启动`n`个远程内核.
++ `LaunchKernels[RemoteMachine[host,command,num]]`; 使用 `command` 作为远程命令在机器 `host` 上启动`n`个远程内核.
 
 远程内核连接方法支持 `LaunchKernels` 直接启动远程内核.
 要做到这一点, 你必须首先加载`` RemoteKernels` ``包, 如下所示.
@@ -567,17 +570,18 @@ LaunchKernels[RemoteMachine["remote1.wolfram.com"]]
 OutPut[2]= KernelObject[1, "remote1.wolfram.com"]
 ```
 
-改变用于启动远程内核的命令可能更有用.
+改变用于启动 `远程内核` 的命令可能更有用.
 默认命令是由 `$RemoteCommand` 设置的, 它的典型设置如下.
 注意, `rsh` 只在 `Windows` 上使用, 在其他平台上使用 `ssh`.
 
 ```mathematica
 $RemoteCommand
-"ssh -x -f -l `3` `1` wolfram -wstp -linkmode Connect `4` -linkname \
+
+Out[19]= "ssh -x -f -l `3` `1` wolfram -wstp -linkmode Connect `4` -linkname \
 '`2`' -subkernel -noinit -pacletreadonly"
 ```
 
-注意, 远程命令的参数在上一节中已经描述过了.
+注意, `远程命令` 的参数在上一节中已经描述过了.
 用户名参数是由 `$RemoteUsername` 设置的, 它默认设置为 `$Username`.
 
 ```mathematica
@@ -588,10 +592,11 @@ Out[18]= "user"
 你可以将命令直接传入 `RemoteMachine`. 下面的内容适合于 Wolfram System 的非标准安装.
 
 ```mathematica
-LaunchKernels[
- RemoteMachine["remote1.wolfram.com",
-  "rsh `1` -n -l `3` \"D:\\Mathematica\math -mathlink -linkmode \
+LaunchKernels[RemoteMachine[
+  "remote1.wolfram.com",
+  "rsh `1` -n -l `3` \"D:\\Mathematica\\math -mathlink -linkmode \
 Connect `4` -linkname `2` -subkernel -noinit >& /dev/null &", 4]]
+
 Out[5]=KernelObject[2, "remote1.wolfram.com"]
 ```
 
@@ -599,12 +604,12 @@ Out[5]=KernelObject[2, "remote1.wolfram.com"]
 
 一旦你启动了并行内核, 那么就可以使用 Wolfram 语言的所有并行功能.
 
-### WSTPServer 内核
+### WSTPServer Kernels
 
 `远程内核连接方法`用于在与主Wolfram Language不同的计算机上运行并行`workers`.
 它可以连接到 `WSTPServer` 的运行实例, 并向这些服务器请求`内核`.
 
-启用 `WSTPServer内核连接方法`是通过 `并行首选项`完成的.
+启用 `WSTPServer内核连接方法`是通过 `并行首选项` 完成的.
 配置面板应该类似于下面的样子. 内核需要手动配置.
 
 #### 手动启动

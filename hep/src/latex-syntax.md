@@ -26,6 +26,8 @@
 \newcommand*{\cmd}[nargs][optargdefault]{defn}
 ```
 
+重定义已有命令
+
 ```latex
 \renewcommand{\cmd}[nargs]{defn}
 \renewcommand{\cmd}[nargs]{defn}
@@ -40,19 +42,29 @@
 
 ### 参数说明
 
-+ `cmd`:必选,命令名称. 用`\`开头. 且不能以`\end`开头,对于`\newcommand`,命令不能定义过.
-对于`\renewcommand`,命令必须已经定义过.
++ `cmd`:必选,命令名称. 用`\`开头. 且不能以`\end`开头,对于`\newcommand`, 命令不能定义过. 
++ 对于`\renewcommand`, 命令必须已经定义过.
 
-+ `nargs`:可选,一个从`0`到`9`的整数. 指定命令接受的参数个数,包括可选参数. 忽略这个参数相当于设定为`0`,
++ `nargs`:可选,一个从`0`到`9`的整数. 
+指定命令接受的参数个数,包括可选参数. 忽略这个参数相当于设定为`0`,
 意味着命令不接受参数. 如果重定义命令,新命令可以和旧命令的参数数目可以不一样.
 
-+ `optargdefault`:可选. 如果这个参数存在,`\cmd`的第一个参数将是可选参数(可以是空字符串). 如果这个参数不存在,`\cmd`不使用可选参数. 也就是说,如果用`\cmd[optval]{...}`调用,`#1`将会被设置成`optval`; 如果用`\cmd{...}`调用,`#1`将会被设置成`optargdefault`. 两种情况下,必选参数都从`#2`开始.
-忽略`[optargdefault]`与使用`[]`是不同的,前一种情况, `#1`被设置为`optargdefault`; 后一种情况,`#1`被设置为空字符串.
++ `optargdefault`:可选. 如果这个参数存在, `\cmd`的第一个参数将是可选参数(可以是空字符串). 
+如果这个参数不存在,`\cmd`不使用可选参数. 
+也就是说,如果用`\cmd[optval]{...}`调用, `#1`将会被设置成`optval`; 
+如果用`\cmd{...}`调用,`#1`将会被设置成`optargdefault`. 两种情况下,必选参数都从`#2`开始.
+忽略`[optargdefault]`与使用`[]`是不同的, 前一种情况, `#1`被设置为`optargdefault`; 后一种情况,`#1`被设置为空字符串.
 
-+ `defn`: 需要; 每次遇到`\cmd`就用`defn`替换. 参数`#1`,`#2`被替换成你提供的值. `Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`.
++ `defn`: 需要; 每次遇到`\cmd`就用`defn`替换. 
+参数`#1`,`#2`被替换成你提供的值. 
+`Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`.
 
-一个简单的定义新命令的例子:`\newcommand{\RS}{Robin Smith}`,文中的每个`\RS`会被`Robin Smith`替换.
-重定义命令是类似的`\renewcommand{\qedsymbol}{{\small QED}}`.
+一个简单的定义新命令的例子: 
+
+    \newcommand{\RS}{Robin Smith}
+
+文中的每个`\RS` 会被 `Robin Smith`替换.
+重定义命令是类似的 `\renewcommand{\qedsymbol}{{\small QED}}`.
 用`\newcommand`重定义命令,或者用`\renewcommand`定义新命令,都会报错.
 
 Here the first command definition has no arguments, and the second has one required argument.
