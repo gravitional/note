@@ -146,7 +146,8 @@
 \end{group}
 ```
 
-它使材料在其范围内(`scope`)居中.  它最常在诸如图形之类的环境中或在`parbox`中使用.
+它使材料在其范围内(`scope`)居中.
+它最常在诸如图形之类的环境中或在`parbox`中使用.
 常用来使插图居中:
 
 ```latex
@@ -466,3 +467,49 @@ int main(){
 ```
 
 `geometry` 宏包具有上述参数的图像描述
+
+## 图文混排 文字环绕
+
+[文字环绕](https://blog.csdn.net/z_feng12489/article/details/90750409)
+
+所用宏包; `\usepackage{wrapfig}`
+
+允许 figure 或 tables 周围有文本包裹.
+不能与 `list` 环境结合使用, 但可以在 `parbox` 或 `minipage` 中使用, 
+也可以使用 `twocolumn` 格式. 支持 `float` 包.
+
+### 命令解释
+
+```latex
+begin{wrapfigure}
+{行数}[位置][超出长度]{宽度}
+<图形>
+end{wrapfigure}
+```
+
++ 命令解释
+
++ `[r],[R]`; 表示图形位于文本的右边.
++ `[l],[L]`; 表示图形位于文本的左边.
++ `[i],[R]`; 表示图形位于页面靠里的一边(用在双面格式里).
++ `[o],[O]`; 表示图形位于页面靠外的一边.
+
+`超出长度` 是指图形超出文本边界的长度, 缺省为 `0pt`.
+`宽度` 则指图形的宽度. `wrapfig` 会自动计算图形的高度.
+
+### 应用示例
+
+```latex
+\begin{wrapfigure}{r}{4cm}%靠文字内容的右侧
+\centering
+\includegraphics[width=0.15\textwidth]{WeChatlogo-6.jpg}
+\caption{\footnotesize 运动健康}
+\end{wrapfigure}
+
+庆历四年春, 滕子京谪守巴陵郡. 
+越明年, 政通人和, 百废具兴. 乃重修岳阳楼, 增其旧制, 刻唐贤今人诗赋于其上. 属予作文以记之.
+予观夫巴陵胜状, 在洞庭一湖. 衔远山, 吞长江, 浩浩汤汤, 横无际涯; 朝晖夕阴, 气象万千. 
+此则岳阳楼之大观也, 前人之述备矣. 然则北通巫峡, 南极潇湘, 迁客骚人, 多会于此, 览物之情, 得无异乎?
+```
+
+![结果](https://img-blog.csdnimg.cn/20190603131029577.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pfZmVuZzEyNDg5,size_16,color_FFFFFF,t_70)
