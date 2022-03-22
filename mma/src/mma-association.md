@@ -307,3 +307,23 @@ Out[2]= False
 MatchQ[{a -> b}, KeyValuePattern[{}]]
 Out[3]=True
 ```
+
+## 对完全
+
+输入 `Assoc` 必须是 `完整数组`(full array), 
+`Assoc` 在某一层的所有部分都具有相同的 `Keys` 列表
+`Assoc` 的元素可以被认为, 填满了一个超矩形区域.
+
+```mathematica
+extractKeys[Others_] := {}
+extractKeys[Assoc_?AssociationQ] := {Keys@Assoc}~Join~
+  extractKeys@First@Assoc
+extractVal[Others_] := Others
+extractVal[Assoc_?AssociationQ] := extractValues /@ Values@Assoc
+assocTranspose[Assoc_?AssociationQ, perm_?PermutationListQ] := Module[
+  {keys = Permute[extractKeys@Assoc, perm],
+   vals = Transpose[extractVal@Assoc, perm]},
+  MapIndexed[keys[[Length@#2, Last@#2]] -> #1 &, vals, Infinity] /. 
+   List -> Association
+  ]
+```
