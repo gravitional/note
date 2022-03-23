@@ -308,22 +308,37 @@ MatchQ[{a -> b}, KeyValuePattern[{}]]
 Out[3]=True
 ```
 
-## 对完全
+## 矩形关联转置
 
-输入 `Assoc` 必须是 `完整数组`(full array), 
+输入 `Assoc` 必须是 `完整数组`(full array),
 `Assoc` 在某一层的所有部分都具有相同的 `Keys` 列表
 `Assoc` 的元素可以被认为, 填满了一个超矩形区域.
 
 ```mathematica
+(*提取关联的键*)
 extractKeys[Others_] := {}
 extractKeys[Assoc_?AssociationQ] := {Keys@Assoc}~Join~
   extractKeys@First@Assoc
+(*提取关联的值*)
 extractVal[Others_] := Others
-extractVal[Assoc_?AssociationQ] := extractValues /@ Values@Assoc
-assocTranspose[Assoc_?AssociationQ, perm_?PermutationListQ] := Module[
-  {keys = Permute[extractKeys@Assoc, perm],
-   vals = Transpose[extractVal@Assoc, perm]},
+extractVal[Assoc_?AssociationQ] := extractVal /@ Values@Assoc
+(*根据置换规则，重新构建关联*)
+
+assTranspose[Assoc_?AssociationQ, perm_?PermutationListQ] := 
+ Module[{keys = Permute[extractKeys@Assoc, perm], 
+   vals = Transpose[extractVal@Assoc, perm]}, 
   MapIndexed[keys[[Length@#2, Last@#2]] -> #1 &, vals, Infinity] /. 
-   List -> Association
-  ]
+   List -> Association]
+```
+
++ 测试功能, 生成嵌套关联:
+
+```mathematica
+f[range_] := AssociationThread[
+   range,   #   ] &
+
+(f[CharacterRange["a", "f"]] /*
+f[CharacterRange["\[Alpha]", "\[Zeta]"]] /*
+f[CharacterRange["U", "Z"]]
+  )@Range[6]
 ```

@@ -179,7 +179,7 @@ Out[2]= {f[{a, b}, {u, v}], f[{c, d}, {s, t}]}
 Out[3]= {{f[a, u], f[b, v]}, {f[c, s], f[d, t]}}
 ```
 
-### my MapIndexed 
+### my MapIndexed
 
 自己实现 `MapIndexed`:
 
