@@ -1,0 +1,725 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
+\usepackage{eso-pic}
+% This package makes it easy to add some picture commands to every page at ab-solute positions
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
+% xcolor package starts from the basic facilities of the 
+% color package, and provides easy driver-independent access
+%to several kinds of color tints, shades, tones, 
+%and mixes of arbitrary colors
+\usepackage{fontspec}%Advanced font selection in XeLaTeX and LuaLaTeX
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+%++++++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+%设置数学字体
+\usepackage{unicode-math} %boldsymbol,blackboard
+\setmathfont{XITS Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math,XITS Math
+%++++++++++++++++++++++++++++++++++++++++
+\usepackage{enumerate} 
+\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usetikzlibrary{shapes.misc,animations}
+\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{simplewick} 
+% a simple means of drawing Wick contractions above and below expressions. 
+\usepackage{makeidx} 
+% Standard package for creating indexes
+\usepackage{multirow}
+\usepackage{mathtools}% 定义配对的数学符号
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings}
+% 在LaTex中添加代码高亮
+\usepackage{framed}
+% 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+%定义各种颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{〈style name〉}{〈key=value list〉}
+%stores the key=value list
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%%++++++++++++++++++++ 
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+%*号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\ree}{Re}
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+%\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+graphicboxes
+theorems-ams-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+深度非弹性散射中的卷积方法
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Standard
+卷积法在描述深非弹性散射（DIS）方面发挥着重要作用。其根本原因是，在包括QCD在内的许多场理论中，结构函数的矩被分解成局部算子的系数函数和期望值。这一点可以用
+算子积扩展和重正化组方程来严格证明。等价地，一个其矩可以用乘积来写的分布，可以通过反梅林变换，用两个分布的卷积来表示。在DIS的情况下，在前导对数阶，这相当于将
+点状成分的硬散射过程的（可计算的、Q2和重正化尺度相关的）截面与（不可计算的、Q'独立的和重正化尺度相关的）质子的概率分布进行折叠，被称为Altarelli-P
+arisi公式。在二阶时，这导致了Bjorken缩放，而在一阶时，它引起了缓慢的对数缩放违反。
+\end_layout
+
+\begin_layout Standard
+卷积方法也被用于一些无法证明上述因子化的情况。例如，核EMC效应通常用核子中的夸克分布与核子分布的卷积来表示。最近，在最近关于戈特弗里德和规则的NMC数据的激励
+下，也有新的尝试，将卷积方法应用于由质子装扮的单核子中的夸克分布。在这里，人们将裸体成分（核子、质子、德尔塔等）中的夸克分布与这些成分在被包扎的核子中的分布进行
+折叠
+\end_layout
+
+\begin_layout Standard
+这些使用卷积方法的尝试绝不像QCD的情况那样有坚实的基础。它们的吸引力主要是由于其简单性。它是否合适已经在一些论文中讨论过了。关于EMC效应，Jaffe°[关于
+这一点的批评性讨论，见参考文献'°)]提出了启发式的论点，即由于两个子过程所涉及的时间尺度不同，考虑从合理的重目标（质量超过几百MeV）上的虚拟探针散射很可能是
+一个合理的近似，而对于较轻的目标，特别是质子，这个模型似乎没有什么理由。
+\end_layout
+
+\begin_layout Standard
+在讨论卷积模型时，通常会假定一种动力学形式。瞬间形式的使用意味着，一般来说，升力的生成器含有相互作用。因此，隐含在convo-lution模型中的单体电流的假设
+，在boosts下不是不变的。具有这种动力学形式的卷积模型已被使用和讨论，例如，在参考文献中。"`-2').
+ 该模型也被制定为使用空面动力学22-2°'"）。在这种情况下，一般的提升只涉及到Poincare群的运动学子群的元素，因此单体电流的假设在提升下是不变的。在这
+种动力学形式下，一般旋转的生成器包含相互作用，因此，一般来说，单体电流的假设在旋转下不是不变的。
+\end_layout
+
+\begin_layout Standard
+在本文中，我们将使用一个场论框架来讨论卷积模型的内部一致性，特别是确保和规则有效性的要求。因此，我们将不关心在任何特定的应用中，该模型在物理上是否合理的问题--
+这在上面提到的论文中已经做了。 同样，我们将尽量保持我们的计算简单，忽略任何不必要的复杂问题，如同位素。我们21-1，26）的方法中的许多成分。我们将看到，有可
+能以这样一种方式制定卷积方法，即自动满足与结构函数的矩和局部算子的期望值相关的规则。这决不是小事，事实上，在模型计算中通常会发现这些和规则被违反。通常这2'-2
+')]。
+\end_layout
+
+\begin_layout Standard
+现象上是不重要的，因此被忽略了[例如，见参考文献[1]。由于这些和规则的重要性，特别是它们允许人们将横截面与光锥动量分数的概率分布联系起来，这并不完全令人满意。
+此外，在有些情况下（当相互作用的粒子相对较轻时），对总规则的违反是很大的。在这种情况下，它不能只是被忽略。
+\end_layout
+
+\begin_layout Section
+Formalism
+\end_layout
+
+\begin_layout Standard
+在任意强子目标上的 Inclusive 弹性散射由张量 
+\begin_inset Formula $W_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+描述，
+\begin_inset Formula 
+\begin{align}
+2MW_{\mu\nu}\left(P,q\right) & =\frac{1}{2\pi}\sum_{n}\int\frac{\dd[3]{P_{n}}}{\left(2\pi\right)^{3}2E_{n}}\mel{P}{J_{\mu}^{\dagger}\left(0\right)}{P_{n}}\mel{P_{n}}{J_{\nu}^{\dagger}\left(0\right)}{P}\left(2\pi\right)^{4}\delta^{4}\left(P+q-P_{n}\right)\label{eq:mu1}\\
+ & =\frac{1}{2\pi}\int\dd[4]{x}\mel{P}{[J_{\mu}\left(x\right),J_{\nu}\left(0\right)]}{P}_{c}\label{eq:mu2}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\ket{P}$
+\end_inset
+
+是靶粒子动量本征态，质量为
+\begin_inset Formula $M$
+\end_inset
+
+，动量为
+\begin_inset Formula $P$
+\end_inset
+
+，
+\begin_inset Formula $q$
+\end_inset
+
+是探针的四动量。对于自旋无关的电磁过程，此张量可以用两个结构函数
+\begin_inset Formula $F_{1}$
+\end_inset
+
+和
+\begin_inset Formula $F_{2}$
+\end_inset
+
+表示，它们依赖于散射过程的不变量，
+\begin_inset Formula $\nu=P\cdot q/M$
+\end_inset
+
+ 和 
+\begin_inset Formula $Q^{2}=-q^{2}$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+2MW_{\mu\nu}\left(P,q\right)=\left(-g_{\mu\nu}+\frac{q_{\mu}q_{\nu}}{q^{2}}\right)2F_{1}\left(\nu,Q^{2}\right)+\tilde{P_{\mu}}\tilde{P_{\nu}}\frac{2}{M\nu}F_{2}\left(\nu,Q^{2}\right)\label{eq:mu3}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tilde{P_{\mu}}=P_{\mu}-\left(P\cdot q/q^{2}\right)q_{\mu}$
+\end_inset
+
+ ，所以
+\begin_inset Formula 
+\begin{align*}
+ & \tilde{P_{\mu}}q^{\mu}=0,\quad\tilde{P}^{2}=M^{2}\left(1+\nu^{2}/Q^{2}\right),\\
+ & \tilde{P_{\mu}}=P_{\mu}+\frac{1}{2x}q_{\mu}
+\end{align*}
+
+\end_inset
+
+即
+\begin_inset Formula $\tilde{P_{\mu}}$
+\end_inset
+
+与
+\begin_inset Formula $q_{\mu}$
+\end_inset
+
+垂直，
+\begin_inset Formula $\nu$
+\end_inset
+
+ 在强子静止系也就是 
+\begin_inset Formula $E$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+我们将对深度非弹性散射（Bjorken 极限）感兴趣，它由 
+\begin_inset Formula $Q^{2}\to\infty$
+\end_inset
+
+，
+\begin_inset Formula $\nu\to\infty$
+\end_inset
+
+给出，而比例 
+\begin_inset Formula $x=Q^{2}/2M\nu$
+\end_inset
+
+保持不变。更方便地是使用光锥坐标系，
+\begin_inset Formula $q^{\pm}=\frac{1}{\sqrt{2}}(q^{0}\pm q^{3})$
+\end_inset
+
+。则 Bjorken 极限表示（with 
+\begin_inset Formula $q^{3}<0$
+\end_inset
+
+，
+\begin_inset Formula $\sbf q^{\perp}=\sbf0$
+\end_inset
+
+）
+\begin_inset Formula $q^{-}\to\infty$
+\end_inset
+
+且
+\begin_inset Formula $q^{+}\to-xP^{+}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+ & Q^{2}=-2q^{+}q^{-},\quad\nu=\frac{P^{+}q^{-}+P^{-}q^{+}}{M}\\
+ & x=\frac{Q^{2}}{2M\nu}=\frac{-q^{+}q^{-}}{P^{+}q^{-}+P^{-}q^{+}}=\frac{-q^{+}}{P^{+}+P^{-}q^{+}/q^{-}}
+\end{align*}
+
+\end_inset
+
+由此可知，
+\begin_inset Formula $q^{+}$
+\end_inset
+
+有限，
+\begin_inset Formula $q^{-}\to\infty$
+\end_inset
+
+，所以
+\begin_inset Formula $x=-q^{+}/P^{+}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+此外为了方便，还可以引入 横向和纵向（相对于
+\begin_inset Formula $q^{\mu}$
+\end_inset
+
+）结构函数代替 
+\begin_inset Formula $F_{1}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 和
+\begin_inset Formula $F_{2}\left(\nu,Q^{2}\right)$
+\end_inset
+
+，其定义为：
+\begin_inset Formula 
+\begin{equation}
+F_{T}\left(\nu,Q^{2}\right)=F_{1}\left(\nu,Q^{2}\right),\quad F_{L}\left(\nu,Q^{2}\right)=-F_{1}\left(\nu,Q^{2}\right)+\left(1+\frac{Q^{2}}{\nu^{2}}\right)\frac{F_{2}\left(\nu,Q^{2}\right)}{2x},\label{eq:mu4}
+\end{equation}
+
+\end_inset
+
+强子张量对应地表示成：
+\begin_inset Formula 
+\begin{align}
+2MW_{\mu\nu}\left(P,q\right) & =\left(-g_{\mu\nu}+\frac{q_{\mu}q_{\nu}}{q^{2}}+\frac{\tilde{P}_{\mu}\tilde{P}_{\nu}}{\tilde{P}^{2}}\right)2F_{T}\left(\nu,Q^{2}\right)+\frac{\tilde{P}_{\mu}\tilde{P}_{\nu}}{\tilde{P}^{2}}2F_{L}\left(\nu,Q^{2}\right)\label{eq:mu5}\\
+ & =P_{\mu\nu}^{T}\left(P,q\right)2F_{T}\left(\nu,Q^{2}\right)+P_{\mu\nu}^{L}\left(P,q\right)2F_{L}\left(\nu,Q^{2}\right)\label{eq:mu6}
+\end{align}
+
+\end_inset
+
+在 Bjorken 极限下，如果光子散射的基本粒子自旋为 
+\begin_inset Formula $1/2$
+\end_inset
+
+，则纵向结构函数 
+\begin_inset Formula $F_{L}\left(\nu,Q^{2}\right)$
+\end_inset
+
+为零，如果粒子自旋为
+\begin_inset Formula $0$
+\end_inset
+
+，则 
+\begin_inset Formula $F_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 为零。注意到由于
+\begin_inset Formula $P^{T\mu\nu}P_{\mu\nu}^{L}=0$
+\end_inset
+
+，可以使用
+\begin_inset Formula $P^{T\mu\nu}$
+\end_inset
+
+ 和 
+\begin_inset Formula $P^{L\mu\nu}$
+\end_inset
+
+从 
+\begin_inset Formula $W_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+ 投影出 
+\begin_inset Formula $F_{L}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 和 
+\begin_inset Formula $F_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align}
+ & F_{L}\left(\nu,Q^{2}\right)=MP^{L\mu\nu}\left(P,q\right)W_{\mu\nu}\left(P,q\right)\label{eq:mu7}\\
+ & 2F_{T}\left(\nu,Q^{2}\right)=MP^{T\mu\nu}\left(P,q\right)W_{\mu\nu}\left(P,q\right)\label{eq:mu8}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+通过光学定理，可以把强子张量和 向前康普顿（forward Compton）振幅连接起来，
+\begin_inset Formula 
+\begin{equation}
+W_{\mu\nu}\left(P,q\right)=\frac{1}{\pi}\imm T_{\mu\nu}\left(P,q\right),\label{eq:mu9}
+\end{equation}
+
+\end_inset
+
+而
+\begin_inset Formula 
+\begin{equation}
+2MT_{\mu\nu}\left(P,q\right)=i\int\dd[4]{x}e^{iq\cdot x}\mel{P}{\mathcal{T}J_{\mu}\left(x\right)J_{\nu}\left(0\right)}{P}.\label{eq:mu10}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+此向前振幅 
+\begin_inset Formula $T_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+ 可以按函数 
+\begin_inset Formula $T_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 和 
+\begin_inset Formula $T_{L}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 展开，它们的定义类似 
+\begin_inset Formula $F_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 和 
+\begin_inset Formula $F_{L}\left(\nu,Q^{2}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+在固定的
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+，结构函数 
+\begin_inset Formula $F_{i}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 和振幅 
+\begin_inset Formula $T_{i}\left(\nu,Q^{2}\right)$
+\end_inset
+
+（
+\begin_inset Formula $i=L,T$
+\end_inset
+
+） 是 
+\begin_inset Formula $\nu$
+\end_inset
+
+（等价于
+\begin_inset Formula $x$
+\end_inset
+
+）的实值解析函数。康普顿振幅的 交叉对称性（crossing symmetry），
+\begin_inset Formula $T_{\mu\nu}\left(P,q\right)=T_{\mu\nu}\left(P,-q\right)$
+\end_inset
+
+，表明 
+\begin_inset Formula $T_{i}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 对于
+\begin_inset Formula $\nu$
+\end_inset
+
+ 是对称的，
+\begin_inset Formula $T_{i}\left(\nu,Q^{2}\right)=T_{i}\left(-\nu,Q^{2}\right)$
+\end_inset
+
+。强子张量
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中出现的矩阵元的平移不变性，表明 
+\begin_inset Formula $F_{i}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 对于 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 是反对称的，
+\begin_inset Formula $F_{i}\left(\nu,Q^{2}\right)=F_{i}\left(-\nu,Q^{2}\right)$
+\end_inset
+
+。容易证明这两个要求是自洽的。关于 Bjorken 变量 
+\begin_inset Formula $x$
+\end_inset
+
+ 的对称性和 
+\begin_inset Formula $x$
+\end_inset
+
+的对称性完全相同，即 
+\begin_inset Formula $F_{i}\left(x,Q^{2}\right)=-F_{i}\left(-x,Q^{2}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+光学定理，参考公式：
+\begin_inset Formula 
+\[
+W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+举个简单的例子：在质量为
+\begin_inset Formula $m$
+\end_inset
+
+的点状费米子上的散射，只考虑树图阶，这时候 
+\begin_inset Formula $T_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 和 
+\begin_inset Formula $F_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+ 都可以被显式计算。此情况下的振幅 
+\begin_inset Formula $T_{T}$
+\end_inset
+
+等于
+\begin_inset Formula 
+\begin{equation}
+2T_{T}\left(\nu,Q^{2}\right)=\frac{2m\nu}{2m\nu-Q^{2}}+\frac{2m\nu}{2m\nu+Q^{2}}=\frac{1}{1-x}+\frac{1}{1+x},\label{eq:mu11}
+\end{equation}
+
+\end_inset
+
+此处
+\begin_inset Formula 
+\begin{align*}
+ & 2m\nu-Q^{2}=2m\frac{P\cdot q}{m}-Q^{2}=\left(P+q\right)^{2}-m^{2}+i\varepsilon\\
+ & 2m\nu+Q^{2}=2m\frac{P\cdot q}{m}+Q^{2}=-\left(P-q\right)^{2}+m^{2}-i\varepsilon
+\end{align*}
+
+\end_inset
+
+它在复数 
+\begin_inset Formula $\nu$
+\end_inset
+
+–平面上沿着物理割线的虚部，是点状费米子的结构函数，
+\begin_inset Formula 
+\[
+2F_{T}\left(x,Q^{2}\right)=\delta\left(1-x\right)-\delta\left(1+x\right)
+\]
+
+\end_inset
+
+其中使用了
+\begin_inset Formula 
+\begin{equation}
+\lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon}=\text{P.V.}\frac{1}{x}\mp i\pi\delta\left(x\right)\label{eq:mu12}
+\end{equation}
+
+\end_inset
+
+如同要求的，
+\begin_inset Formula $T_{T}$
+\end_inset
+
+关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 是对称的，而
+\begin_inset Formula $F_{T}$
+\end_inset
+
+ 关于
+\begin_inset Formula $x$
+\end_inset
+
+是反对称的。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Compton-Point-Fermion.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+在领头阶，点状费米子的康普顿振幅
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+卷积模型,Convolution Model
+\end_layout
+
+\begin_layout Standard
+sdf
+\end_layout
+
+\end_body
+\end_document
