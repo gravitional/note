@@ -6,24 +6,48 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic} 
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%++++++++++++++++++++++++++++++++++++++++++++++++
+\usepackage{eso-pic}
 % This package makes it easy to add some picture commands to every page at ab-solute positions
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
 \usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
 %\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
 % xcolor package starts from the basic facilities of the 
 % color package, and provides easy driver-independent access
 %to several kinds of color tints, shades, tones, 
 %and mixes of arbitrary colors
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{fontspec}%Advanced font selection in XeLaTeX and LuaLaTeX
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
-% Required for specifying colors by name 
+%++++++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+%设置数学字体
+\usepackage{unicode-math} %boldsymbol,blackboard
+\setmathfont{XITS Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math,XITS Math
+%++++++++++++++++++++++++++++++++++++++++
 \usepackage{enumerate} 
-
-\usepackage{hepunits} % hep units
+\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
+\usetikzlibrary{shapes.misc,animations}
+\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
 \usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
 \usepackage{slashed} % also for slash notation: take your pick!
 \usepackage{simplewick} 
@@ -32,23 +56,13 @@
 % Standard package for creating indexes
 \usepackage{multirow}
 \usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr}
-%\DeclareMathOperator{\re}{Re}
-%\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\res}{Res}
-\DeclareMathOperator{\disc}{Disc}
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\newcommand{\cola}[1]{{\color{blue}{#1}}}
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
 \usepackage{framed}
 % 在对象周围添加方框，阴影等等，允许跨页
-% 定义阴影的颜色
-\definecolor{shadecolor}{rgb}{0.9412,1,1}
-%定义代码高亮的各种颜色
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+%定义各种颜色
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -73,6 +87,24 @@
     showtabs=false,                  
     tabsize=2
 }
+%%++++++++++++++++++++ 
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+%*号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\ree}{Re}
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+%\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
@@ -159,7 +191,7 @@ Young
 完备性关系
 \begin_inset Formula 
 \[
-\symbb{1}=\sum_{x}\int\dif\Pi_{x}\ket{X}\bra{X}
+\symbb{1}=\sum_{x}\int\dd\Pi_{x}\ket{X}\bra{X}
 \]
 
 \end_inset
@@ -169,13 +201,13 @@ Young
 \end_inset
 
 进行，多粒子态的积分是
-\begin_inset Formula $\dif^{3}p_{1}\dif^{3}p_{2}\cdots\dif^{3}p_{n}$
+\begin_inset Formula $\dd^{3}p_{1}\dd^{3}p_{2}\cdots\dd^{3}p_{n}$
 \end_inset
 
 
 \begin_inset Formula 
 \[
-\dif\Pi_{x}\equiv\prod_{j\in X}\frac{\dif^{3}p_{j}}{(2\pi)^{3}}\frac{1}{2E_{j}}
+\dd\Pi_{x}\equiv\prod_{j\in X}\frac{\dd^{3}p_{j}}{(2\pi)^{3}}\frac{1}{2E_{j}}
 \]
 
 \end_inset
@@ -189,7 +221,7 @@ Young
 \end_inset
 
 的粒子的洛伦兹不变的相空间积分，
-\begin_inset Formula $\dif\prod_{\text{LIPS}}=(2\pi)^{4}\delta^{4}(\sum p)\dif\Pi_{x}$
+\begin_inset Formula $\dd\prod_{\text{LIPS}}=(2\pi)^{4}\delta^{4}(\sum p)\dd\Pi_{x}$
 \end_inset
 
 。
@@ -278,7 +310,7 @@ sum_{X}
 \backslash
 int
 \backslash
-dif
+dd
 \backslash
 Pi_{x}(2
 \backslash
@@ -335,7 +367,7 @@ end{shaded}
 。那么，
 \begin_inset Formula 
 \[
-2i\Im\mathcal{M}(A\to A)=i\sum_{X}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs*{\mathcal{M}(A\to X)}^{2}
+2i\imm\mathcal{M}(A\to A)=i\sum_{X}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs*{\mathcal{M}(A\to X)}^{2}
 \]
 
 \end_inset
@@ -347,7 +379,7 @@ end{shaded}
 是单粒子态，衰变率是
 \begin_inset Formula 
 \[
-\Gamma(A\to X)=\frac{1}{2m_{A}}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs*{\mathcal{M}(A\to X)}^{2}
+\Gamma(A\to X)=\frac{1}{2m_{A}}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs*{\mathcal{M}(A\to X)}^{2}
 \]
 
 \end_inset
@@ -355,7 +387,7 @@ end{shaded}
 所以，
 \begin_inset Formula 
 \begin{equation}
-\Im\mathcal{M}(A\to A)=m_{A}\sum_{X}\Gamma(A\to X)=m_{A}\Gamma_{\text{tot}}\label{eq:24.13}
+\imm\mathcal{M}(A\to A)=m_{A}\sum_{X}\Gamma(A\to X)=m_{A}\Gamma_{\text{tot}}\label{eq:24.13}
 \end{equation}
 
 \end_inset
@@ -375,7 +407,7 @@ end{shaded}
 是两粒子态，衰变率是
 \begin_inset Formula 
 \[
-\sigma(A\to X)=\frac{1}{4E_{\text{CM}}\abs*{\vec{p}_{i}}}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs*{\mathcal{M}(A\to X)}^{2}
+\sigma(A\to X)=\frac{1}{4E_{\text{CM}}\abs*{\vec{p}_{i}}}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs*{\mathcal{M}(A\to X)}^{2}
 \]
 
 \end_inset
@@ -402,7 +434,7 @@ begin{shaded}
 
 
 \backslash
-Im
+imm
 \backslash
 mathcal{M}(A
 \backslash
@@ -529,7 +561,7 @@ Cutting rules
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\Im\frac{1}{p^{2}-m^{2}+i\varepsilon}=\frac{1}{2i}\left(\frac{1}{p^{2}-m^{2}+i\varepsilon}-\frac{1}{p^{2}-m^{2}-i\varepsilon}\right)=\frac{-\varepsilon}{(p^{2}-m^{2})^{2}+\varepsilon^{2}}
+\imm\frac{1}{p^{2}-m^{2}+i\varepsilon}=\frac{1}{2i}\left(\frac{1}{p^{2}-m^{2}+i\varepsilon}-\frac{1}{p^{2}-m^{2}-i\varepsilon}\right)=\frac{-\varepsilon}{(p^{2}-m^{2})^{2}+\varepsilon^{2}}
 \]
 
 \end_inset
@@ -549,7 +581,7 @@ Cutting rules
 积分，我们发现
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\dif p^{2}\frac{-\varepsilon}{\left(p^{2}-m^{2}\right)^{2}+\varepsilon^{2}}=-\left.\arctan\left(\frac{p^{2}-m^{2}}{\varepsilon}\right)\right\vert _{0}^{\infty}=-\pi
+\int_{0}^{\infty}\dd p^{2}\frac{-\varepsilon}{\left(p^{2}-m^{2}\right)^{2}+\varepsilon^{2}}=-\left.\arctan\left(\frac{p^{2}-m^{2}}{\varepsilon}\right)\right\vert _{0}^{\infty}=-\pi
 \]
 
 \end_inset
@@ -576,7 +608,7 @@ begin{shaded}
 
 
 \backslash
-Im
+imm
 \backslash
 frac{1}{p^{2}-m^{2}+i
 \backslash
@@ -616,7 +648,7 @@ end{shaded}
 \begin_inset Formula 
 \begin{align*}
  & \frac{1}{k^{0}-\omega_{k}+i\varepsilon}-\frac{1}{k^{0}-\omega_{k}-i\varepsilon}=\frac{-2i\varepsilon}{\left(k^{0}-\omega_{k}\right)^{2}+\varepsilon^{2}}\\
- & \int_{0}^{\infty}\dif k_{0}\frac{-2i\varepsilon}{\left(k^{0}-\omega_{k}\right)^{2}+\varepsilon^{2}}=-2i\left.\arctan\left(\frac{k^{0}-\omega_{k}}{\varepsilon}\right)\right\vert _{0}^{\infty}=-2i\pi\\
+ & \int_{0}^{\infty}\dd k_{0}\frac{-2i\varepsilon}{\left(k^{0}-\omega_{k}\right)^{2}+\varepsilon^{2}}=-2i\left.\arctan\left(\frac{k^{0}-\omega_{k}}{\varepsilon}\right)\right\vert _{0}^{\infty}=-2i\pi\\
  & \frac{1}{k^{0}-\omega_{k}+i\varepsilon}-\frac{1}{k^{0}-\omega_{k}-i\varepsilon}=-2\pi i\delta\left(k^{0}-\omega_{k}\right)
 \end{align*}
 
@@ -672,8 +704,8 @@ where the retarded propagator is
 \begin_inset Formula 
 \begin{align*}
  & i\mathcal{M}_{\text{loop}}(p^{2})=\text{标量粒子单圈图}\\
- & =\frac{(i\lambda)^{2}}{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\frac{i}{(k-p)^{2}-m^{2}+i\varepsilon}\frac{i}{k^{2}-m^{2}+i\varepsilon}\\
- & =-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\left[\Pi_{R}(k-p)+\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\right]\left[\Pi_{R}(k)+\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})\right]
+ & =\frac{(i\lambda)^{2}}{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\frac{i}{(k-p)^{2}-m^{2}+i\varepsilon}\frac{i}{k^{2}-m^{2}+i\varepsilon}\\
+ & =-\frac{\lambda^{2}}{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\left[\Pi_{R}(k-p)+\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\right]\left[\Pi_{R}(k)+\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})\right]
 \end{align*}
 
 \end_inset
@@ -735,7 +767,7 @@ where the retarded propagator is
 无法同时满足。丢掉这些为零的项，得到：
 \begin_inset Formula 
 \[
-i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\left[\Pi_{F}(k-p)\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})+\Pi_{F}(k)\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\right]
+i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\left[\Pi_{F}(k-p)\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})+\Pi_{F}(k)\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\right]
 \]
 
 \end_inset
@@ -745,13 +777,13 @@ i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\
 \end_inset
 
 函数为实数，所以虚部之可能来自于费曼传播子。因此，计算
-\begin_inset Formula $\Im\mathcal{M}_{\text{loop}}(p^{2})$
+\begin_inset Formula $\imm\mathcal{M}_{\text{loop}}(p^{2})$
 \end_inset
 
  相当于
 \begin_inset Formula 
 \begin{align*}
-\Im\mathcal{M}_{\text{loop}}(p^{2}) & =-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\Bigg[\pi\delta\left((k-p)^{2}-m^{2}\right)\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})\\
+\imm\mathcal{M}_{\text{loop}}(p^{2}) & =-\frac{\lambda^{2}}{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\Bigg[\pi\delta\left((k-p)^{2}-m^{2}\right)\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})\\
  & +\pi\delta\left(k^{2}-m^{2}\right)\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\Bigg]
 \end{align*}
 
@@ -770,13 +802,13 @@ i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\
 \end_inset
 
 并由于
-\begin_inset Formula $\int\dif k^{0}\delta\left((p-k)^{2}-m^{2}\right)\delta(k^{0}+\omega_{k})=0$
+\begin_inset Formula $\int\dd k^{0}\delta\left((p-k)^{2}-m^{2}\right)\delta(k^{0}+\omega_{k})=0$
 \end_inset
 
 ，最终写成一个简单的形式
 \begin_inset Formula 
 \begin{equation}
-2\Im\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\left(-2\pi i\right)\delta\left((k-p)^{2}-m^{2}\right)\left(-2\pi i\right)\delta\left(k^{2}-m^{2}\right)\label{eq:24.33}
+2\imm\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\left(-2\pi i\right)\delta\left((k-p)^{2}-m^{2}\right)\left(-2\pi i\right)\delta\left(k^{2}-m^{2}\right)\label{eq:24.33}
 \end{equation}
 
 \end_inset
@@ -872,7 +904,7 @@ cutting rules。
 
 \begin_layout Enumerate
 结果就是图的 discontinuity，where 
-\begin_inset Formula $\disc\left(i\mathcal{M}\right)=-2\Im\mathcal{M}$
+\begin_inset Formula $\disc\left(i\mathcal{M}\right)=-2\imm\mathcal{M}$
 \end_inset
 
 
@@ -882,7 +914,7 @@ cutting rules。
 省略一个例子。。。
 \begin_inset Formula 
 \begin{equation}
-\int\frac{\dif^{4}q}{(2\pi)^{4}}2\pi\delta(q^{2}-m^{2})\theta(q_{0})=\int\frac{\dif^{3}q}{(2\pi)^{3}}\frac{1}{2\omega_{q}}\label{eq:24.35}
+\int\frac{\dd^{4}q}{(2\pi)^{4}}2\pi\delta(q^{2}-m^{2})\theta(q_{0})=\int\frac{\dd^{3}q}{(2\pi)^{3}}\frac{1}{2\omega_{q}}\label{eq:24.35}
 \end{equation}
 
 \end_inset
@@ -902,7 +934,7 @@ cutting rules。
 振幅的不连续意味着，当粒子能量被赋予一个很小的正虚部或负虚部时，振幅的变化。也就是
 \begin_inset Formula 
 \[
-\disc i\mathcal{M}(p^{0})=i\mathcal{M}(p^{0}+i\varepsilon)-i\mathcal{M}(p^{0}-i\varepsilon)=-2\Im\mathcal{M}(p^{0})
+\disc i\mathcal{M}(p^{0})=i\mathcal{M}(p^{0}+i\varepsilon)-i\mathcal{M}(p^{0}-i\varepsilon)=-2\imm\mathcal{M}(p^{0})
 \]
 
 \end_inset
@@ -910,7 +942,7 @@ cutting rules。
 顺便，你可能注意到
 \begin_inset Formula 
 \[
-i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\pi)^{4}}\left[\Pi_{F}(k-p)\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})+\Pi_{F}(k)\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\right]
+i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dd^{4}k}{(2\pi)^{4}}\left[\Pi_{F}(k-p)\frac{\pi}{\omega_{k}}\delta(k^{0}-\omega_{k})+\Pi_{F}(k)\frac{\pi}{\omega_{k-p}}\delta(k^{0}-p^{0}-\omega_{k-p})\right]
 \]
 
 \end_inset
@@ -966,7 +998,7 @@ i\mathcal{M}_{\text{loop}}(p^{2})=-\frac{\lambda^{2}}{2}\int\frac{\dif^{4}k}{(2\
 ，我们发现
 \begin_inset Formula 
 \[
-\Gamma\left(\phi\to\bar{\psi}\psi\right)=\sum_{s,s^{\prime}}\frac{\lambda^{2}}{2M}\int\frac{\dif^{3}q_{1}}{(2\pi)^{3}2\omega_{q_{1}}}\int\frac{\dif^{3}q_{2}}{(2\pi)^{3}2\omega_{q_{2}}}\bar{v}_{s^{\prime}}(q_{1})u_{s}(q_{2})\bar{u}_{s}(q_{2})v_{s^{\prime}}(q_{1})
+\Gamma\left(\phi\to\bar{\psi}\psi\right)=\sum_{s,s^{\prime}}\frac{\lambda^{2}}{2M}\int\frac{\dd^{3}q_{1}}{(2\pi)^{3}2\omega_{q_{1}}}\int\frac{\dd^{3}q_{2}}{(2\pi)^{3}2\omega_{q_{2}}}\bar{v}_{s^{\prime}}(q_{1})u_{s}(q_{2})\bar{u}_{s}(q_{2})v_{s^{\prime}}(q_{1})
 \]
 
 \end_inset
@@ -984,7 +1016,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\int\frac{\dif^{4}q}{(2\pi)^{4}}2\pi\delta(q^{2}-m^{2})\theta(q_{0})=\int\frac{\dif^{3}q}{(2\pi)^{3}}\frac{1}{2\omega_{q}}
+\int\frac{\dd^{4}q}{(2\pi)^{4}}2\pi\delta(q^{2}-m^{2})\theta(q_{0})=\int\frac{\dd^{3}q}{(2\pi)^{3}}\frac{1}{2\omega_{q}}
 \]
 
 \end_inset
@@ -992,8 +1024,8 @@ noprefix "false"
 得到：
 \begin_inset Formula 
 \begin{align*}
-\Gamma & =\frac{\lambda^{2}}{2M}\int\frac{\dif^{4}q_{2}}{(2\pi)^{4}}\int\frac{\dif^{4}q_{1}}{(2\pi)^{4}}(2\pi)^{4}\delta^{4}(p-q_{1}-q_{2})\\
- & \times2\pi\delta\left(q_{1}^{2}-m^{2}\right)2\pi\delta\left(q_{2}^{2}-m^{2}\right)\tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]
+\Gamma & =\frac{\lambda^{2}}{2M}\int\frac{\dd^{4}q_{2}}{(2\pi)^{4}}\int\frac{\dd^{4}q_{1}}{(2\pi)^{4}}(2\pi)^{4}\delta^{4}(p-q_{1}-q_{2})\\
+ & \times2\pi\delta\left(q_{1}^{2}-m^{2}\right)2\pi\delta\left(q_{2}^{2}-m^{2}\right)\Tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]
 \end{align*}
 
 \end_inset
@@ -1002,7 +1034,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 i\mathcal{M}_{\text{loop}} & =\text{单圈Yukawa}\\
- & =\lambda^{2}\int\frac{\dif^{4}q_{2}}{(2\pi)^{4}}\int\frac{\dif^{4}q_{1}}{(2\pi)^{4}}\frac{\tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]}{\left[q_{1}^{2}-m^{2}+i\varepsilon\right]\left[q_{2}^{2}-m^{2}+i\varepsilon\right]}(2\pi)^{4}\delta^{4}(p-q_{1}-q_{2})
+ & =\lambda^{2}\int\frac{\dd^{4}q_{2}}{(2\pi)^{4}}\int\frac{\dd^{4}q_{1}}{(2\pi)^{4}}\frac{\Tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]}{\left[q_{1}^{2}-m^{2}+i\varepsilon\right]\left[q_{2}^{2}-m^{2}+i\varepsilon\right]}(2\pi)^{4}\delta^{4}(p-q_{1}-q_{2})
 \end{align*}
 
 \end_inset
@@ -1016,7 +1048,7 @@ i\mathcal{M}_{\text{loop}} & =\text{单圈Yukawa}\\
 \end_inset
 
 替代，如同之前标量场的粒子。分子不受影响，仍然是
-\begin_inset Formula $\tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]$
+\begin_inset Formula $\Tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]$
 \end_inset
 
 。最后得到，cut loop amplitude 等于 
@@ -1028,7 +1060,7 @@ i\mathcal{M}_{\text{loop}} & =\text{单圈Yukawa}\\
 
 \begin_layout Standard
 然而注意，衰变率中的
-\begin_inset Formula $\tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]$
+\begin_inset Formula $\Tr\left[\left(\slashed{q}_{2}+m\right)\left(\slashed{q}_{1}-m\right)\right]$
 \end_inset
 
 来自于对物理在壳的末态求和，而 loop 中这个因子来自于传播子的分子。所以，光学定理的成立要求：
@@ -1201,9 +1233,9 @@ iG(p^{2})=\frac{i}{p^{2}-m_{R}^{2}+\Sigma(p^{2})+i\varepsilon}\label{eq:24.47}
 会有一个虚部，pole 质量的定义需要修改。为了看出这一点，由光学定理
 \begin_inset Formula 
 \begin{align}
-\Gamma_{\text{tot}} & =\frac{1}{m_{P}}\Im\left(\text{自能修正}\right)\nonumber \\
- & =\frac{1}{m_{P}}\Im\left(\text{IPI 几何级数}\right)\nonumber \\
- & =\frac{1}{m_{P}}\Im\Sigma\left(m_{P}^{2}\right)+\cdots\label{eq:24.48}
+\Gamma_{\text{tot}} & =\frac{1}{m_{P}}\imm\left(\text{自能修正}\right)\nonumber \\
+ & =\frac{1}{m_{P}}\imm\left(\text{IPI 几何级数}\right)\nonumber \\
+ & =\frac{1}{m_{P}}\imm\Sigma\left(m_{P}^{2}\right)+\cdots\label{eq:24.48}
 \end{align}
 
 \end_inset
@@ -1217,11 +1249,11 @@ iG(p^{2})=\frac{i}{p^{2}-m_{R}^{2}+\Sigma(p^{2})+i\varepsilon}\label{eq:24.47}
 \end_inset
 
 ，也就是在耦合很弱的理论中，那么其余项会被耦合常数的额外因子压低，可以被忽略。因此，
-\begin_inset Formula $\Im\Sigma\left(m_{P}^{2}\right)=m_{P}\Gamma_{\text{tot}}$
+\begin_inset Formula $\imm\Sigma\left(m_{P}^{2}\right)=m_{P}\Gamma_{\text{tot}}$
 \end_inset
 
 ，对于不稳定粒子，
-\begin_inset Formula $\Im\Sigma\left(m_{P}^{2}\right)\neq0$
+\begin_inset Formula $\imm\Sigma\left(m_{P}^{2}\right)\neq0$
 \end_inset
 
 。
@@ -1231,7 +1263,7 @@ iG(p^{2})=\frac{i}{p^{2}-m_{R}^{2}+\Sigma(p^{2})+i\varepsilon}\label{eq:24.47}
 一个自然的方式是保持质量为实数，所以要修改 pole mass 的定义
 \begin_inset Formula 
 \begin{equation}
-m_{P}^{2}-m_{R}^{2}+\Re\sum(m_{P}^{2})=0\label{eq:24.49}
+m_{P}^{2}-m_{R}^{2}+\ree\sum(m_{P}^{2})=0\label{eq:24.49}
 \end{equation}
 
 \end_inset
@@ -1360,7 +1392,7 @@ name "fig:24.1"
 –函数，它的系数由 Breit–Wigner 分布的积分给出：
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\dif x\frac{1}{x^{2}+\varepsilon^{2}}=\frac{1}{\varepsilon}\left.\arctan\left(\frac{x}{\varepsilon}\right)\right\vert _{0}^{\infty}=\frac{1}{\varepsilon}\pi
+\int_{0}^{\infty}\dd x\frac{1}{x^{2}+\varepsilon^{2}}=\frac{1}{\varepsilon}\left.\arctan\left(\frac{x}{\varepsilon}\right)\right\vert _{0}^{\infty}=\frac{1}{\varepsilon}\pi
 \]
 
 \end_inset
@@ -1488,7 +1520,7 @@ of
 \end_inset
 
 ，由于
-\begin_inset Formula $\Gamma\sim\Im\left(i\Sigma\right)\sim g^{2}$
+\begin_inset Formula $\Gamma\sim\imm\left(i\Sigma\right)\sim g^{2}$
 \end_inset
 
 ，因此在共振附近，约掉了一个
@@ -1504,7 +1536,7 @@ of
 \end_inset
 
 –pole （
-\begin_inset Formula $E_{\text{CM}}=91\GeV$
+\begin_inset Formula $E_{\text{CM}}=\SI{91}{\GeV}$
 \end_inset
 
 ）对撞电子。在
@@ -1584,7 +1616,7 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset Formula $m_{P}^{2}-m_{R}^{2}+\Re\sum(m_{P}^{2})=0$
+\begin_inset Formula $m_{P}^{2}-m_{R}^{2}+\ree\sum(m_{P}^{2})=0$
 \end_inset
 
 转换成 pole 质量。对于没有构成渐近态，所以不能被识别为共振态的粒子，例如夸克，
@@ -1604,7 +1636,7 @@ noprefix "false"
 
 \begin_layout Standard
 光学定理的另一个结果是散射振幅不能无限大。从概率守恒可以推断，幺正极限必然存在：出来的不应该大于进入的。粗略地说，光学定理表明
-\begin_inset Formula $\Im\mathcal{M}\le\abs{M}^{2}$
+\begin_inset Formula $\imm\mathcal{M}\le\abs{M}^{2}$
 \end_inset
 
 暗示了
@@ -1636,13 +1668,13 @@ noprefix "false"
 \end_inset
 
 。质心系中此过程的总散射截面是（将 eq.5.32 中的一般公式对 
-\begin_inset Formula $\dif\phi$
+\begin_inset Formula $\dd\phi$
 \end_inset
 
  积分）
 \begin_inset Formula 
 \begin{equation}
-\sigma_{\text{tot}}\left(AB\to AB\right)=\frac{1}{32\pi E_{\text{CM}}^{2}}\int\dif\cos\theta\abs*{\mathcal{M}\left(\theta\right)}^{2}\label{eq:24.54}
+\sigma_{\text{tot}}\left(AB\to AB\right)=\frac{1}{32\pi E_{\text{CM}}^{2}}\int\dd\cos\theta\abs*{\mathcal{M}\left(\theta\right)}^{2}\label{eq:24.54}
 \end{equation}
 
 \end_inset
@@ -1666,7 +1698,7 @@ where
  and
 \begin_inset Formula 
 \begin{equation}
-\int_{-1}^{1}P_{j}\left(\cos\theta\right)P_{k}\left(\cos\theta\right)\dif\cos\theta=\frac{2}{2j+1}\delta_{jk}\label{eq:24.56}
+\int_{-1}^{1}P_{j}\left(\cos\theta\right)P_{k}\left(\cos\theta\right)\dd\cos\theta=\frac{2}{2j+1}\delta_{jk}\label{eq:24.56}
 \end{equation}
 
 \end_inset
@@ -1704,7 +1736,7 @@ noprefix "false"
 ，和总截面联系起来：
 \begin_inset Formula 
 \begin{align*}
-\Im\mathcal{M}\left(AB\to AB\text{ at }\theta=0\right) & =2E_{\text{CM}}\abs*{\vec{p}_{i}}\sum_{X}\sigma_{\text{tot}}\left(AB\to X\right)\\
+\imm\mathcal{M}\left(AB\to AB\text{ at }\theta=0\right) & =2E_{\text{CM}}\abs*{\vec{p}_{i}}\sum_{X}\sigma_{\text{tot}}\left(AB\to X\right)\\
  & \ge2E_{\text{CM}}\abs*{\vec{p}_{i}}\sigma_{\text{tot}}\left(AB\to AB\right)
 \end{align*}
 
@@ -1721,13 +1753,13 @@ noprefix "false"
 。则
 \begin_inset Formula 
 \begin{equation}
-\sum_{j=0}^{\infty}\left(2j+1\right)\Im\left(a_{j}\right)\ge\frac{2\abs*{\vec{p}_{i}}}{E_{\text{CM}}}\sum_{j=0}^{\infty}\left(2j+1\right)\abs*{a_{j}}^{2}\label{eq:24.59}
+\sum_{j=0}^{\infty}\left(2j+1\right)\imm\left(a_{j}\right)\ge\frac{2\abs*{\vec{p}_{i}}}{E_{\text{CM}}}\sum_{j=0}^{\infty}\left(2j+1\right)\abs*{a_{j}}^{2}\label{eq:24.59}
 \end{equation}
 
 \end_inset
 
 由于
-\begin_inset Formula $\abs{a_{j}}\ge\Im\left(a_{j}\right)$
+\begin_inset Formula $\abs{a_{j}}\ge\imm\left(a_{j}\right)$
 \end_inset
 
 ，这个方程表示
@@ -1741,7 +1773,7 @@ noprefix "false"
 的求和实际可以去掉，see [Itzykson and Zuber, 1980, Section 5.3]。
 \begin_inset Formula 
 \[
-\Im\left(a_{j}\right)\ge\frac{2\abs*{\vec{p}_{i}}}{E_{\text{CM}}}\abs*{a_{j}}^{2}
+\imm\left(a_{j}\right)\ge\frac{2\abs*{\vec{p}_{i}}}{E_{\text{CM}}}\abs*{a_{j}}^{2}
 \]
 
 \end_inset
@@ -1772,7 +1804,7 @@ noprefix "false"
 变成
 \begin_inset Formula 
 \[
-\Im\left(a_{j}\right)=\abs*{a_{j}}^{2}
+\imm\left(a_{j}\right)=\abs*{a_{j}}^{2}
 \]
 
 \end_inset
@@ -1807,7 +1839,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-\begin_inset Formula $\Im\left(a_{j}\right)=\abs*{a_{j}}^{2}$
+\begin_inset Formula $\imm\left(a_{j}\right)=\abs*{a_{j}}^{2}$
 \end_inset
 
 的Argand 图，对应复平面上的圆。
@@ -1838,7 +1870,7 @@ name "fig:24.2"
 
 \begin_inset Formula 
 \begin{equation}
-\abs{a_{j}}\le1,\quad0\le\Im\left(a_{j}\right)\le1,\quad\abs*{a_{j}}\le\frac{1}{2}\label{eq:24.61}
+\abs{a_{j}}\le1,\quad0\le\imm\left(a_{j}\right)\le1,\quad\abs*{a_{j}}\le\frac{1}{2}\label{eq:24.61}
 \end{equation}
 
 \end_inset
@@ -1940,7 +1972,7 @@ must
 \end_inset
 
 玻色子散射的振幅在
-\begin_inset Formula $\sim1\TeV$
+\begin_inset Formula $\sim\SI{1}{\TeV}$
 \end_inset
 
 的时候将违反幺正极限。而 Higgs 玻色子将恢复微扰幺正性，我们会在 Section 29.2 看到。
