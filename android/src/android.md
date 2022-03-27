@@ -6,22 +6,22 @@
 
 Android 调试桥 (`adb`) 是一种功能多样的命令行工具, 可让您与设备进行通信.
 `adb` 命令可用于执行各种设备操作(例如安装和调试应用), 并提供对 `Unix shell`(可用来在设备上运行各种命令)的访问权限.
-它是一种客户端-服务器程序, 包括以下三个组件: 
+它是一种客户端-服务器程序, 包括以下三个组件:
 
 + 客户端: 用于发送命令. 客户端在开发机器上运行. 您可以通过发出 `adb` 命令从命令行终端调用客户端.
 + 守护程序 (`adbd`): 用于在设备上运行命令. 守护程序在每个设备上作为后台进程运行.
 + 服务器: 用于管理客户端与守护程序之间的通信. 服务器在开发机器上作为后台进程运行.
 
-`adb` 包含在 `Android SDK` 平台工具软件包中. 
+`adb` 包含在 `Android SDK` 平台工具软件包中.
 您可以使用 `SDK 管理器`下载此软件包, 该管理器会将其安装在 `android_sdk/platform-tools/` 下.
-或者, 如果您需要独立的 `Android SDK` 平台工具软件包, 
+或者, 如果您需要独立的 `Android SDK` 平台工具软件包,
 也可以[点击此处进行下载](https://developer.android.google.cn/studio/releases/platform-tools?hl=zh-cn).
 
 如需了解如何连接设备以使用 `ADB`, 包括如何使用 Connection Assistant 对常见问题进行排查, 请参阅在[硬件设备上运行应用](https://developer.android.google.cn/studio/run/device?hl=zh-cn).
 
 ### 针对开发设置设备
 
-您必须先决定要使用 `USB` 线还是 `WLAN` 连接设备, 才能在设备上开始调试. 然后执行以下操作: 
+您必须先决定要使用 `USB` 线还是 `WLAN` 连接设备, 才能在设备上开始调试. 然后执行以下操作:
 
 在设备上, 打开设置应用, 选择开发者选项, 然后启用 USB 调试(如果有).
 注意: 如果您未看到开发者选项, 请按照相关说明启用开发者选项.
@@ -38,17 +38,17 @@ Android 调试桥 (`adb`) 是一种功能多样的命令行工具, 可让您与�
 sudo usermod -aG plugdev $LOGNAME
 ```
 
-请注意, 组只会在您登录时更新, 因此您需要退出后重新登录, 此更改才能生效. 
+请注意, 组只会在您登录时更新, 因此您需要退出后重新登录, 此更改才能生效.
 当您重新登录后, 可以使用 `id` 检查自己现在是否已在 `plugdev` 组中.
 
-+ `udev` 规则: `android-sdk-platform-tools-common` 软件包中包含一组适用于 `Android` 设备并由社区维护的默认 `udev` 规则. 
-请使用以下命令添加这些规则: 
++ `udev` 规则: `android-sdk-platform-tools-common` 软件包中包含一组适用于 `Android` 设备并由社区维护的默认 `udev` 规则.
+请使用以下命令添加这些规则:
 
 ```bash
 apt-get install android-sdk-platform-tools-common
 ```
 
-+ `Windows`: 为 `ADB` 安装 `USB` 驱动程序(如适用). 
++ `Windows`: 为 `ADB` 安装 `USB` 驱动程序(如适用).
 如需安装指南和 `OEM` 驱动程序的链接, 请参阅安装[OEM USB 驱动程序文档](https://developer.android.google.cn/studio/run/oem-usb?hl=zh-cn).
 
 ### adb 的工作原理
@@ -58,7 +58,7 @@ apt-get install android-sdk-platform-tools-common
 
 然后, 服务器会与所有正在运行的设备建立连接. 它通过扫描 `5555` 到 `5585` 之间(该范围供前 `16` 个模拟器使用)的奇数号端口查找模拟器.
 服务器一旦发现 `adb` 守护程序 (`adbd`), 便会与相应的端口建立连接.
-请注意, 每个模拟器都使用一对按顺序排列的端口 - 用于控制台连接的`偶数号`端口和用于 `adb` 连接的`奇数号`端口. 例如: 
+请注意, 每个模拟器都使用一对按顺序排列的端口 - 用于控制台连接的`偶数号`端口和用于 `adb` 连接的`奇数号`端口. 例如:
 
 + 模拟器 1, 控制台: 5554
 + 模拟器 1, adb: 5555
@@ -89,12 +89,12 @@ apt-get install android-sdk-platform-tools-common
 `Android 11` 及更高版本支持使用 `Android 调试桥 (adb)` 从工作站以无线方式部署和调试应用.
 例如, 您可以将可调试应用部署到多台远程设备, 而无需通过 `USB` 实际连接设备. 这样就可以避免常见的 `USB` 连接问题, 例如驱动程序安装方面的问题.
 
-如需使用无线调试, 您需要使用配对码将您的设备与工作站配对. 您的工作站和设备必须连接到同一无线网络. 如需连接到您的设备, 请按以下步骤操作: 
+如需使用无线调试, 您需要使用配对码将您的设备与工作站配对. 您的工作站和设备必须连接到同一无线网络. 如需连接到您的设备, 请按以下步骤操作:
 
 + 在您的工作站上, 更新到最新版本的 `SDK 平台工具`.
 + 在设备上启用`开发者选项`.
 + 启用`无线调试`选项.
-+ 在询问`要允许通过此网络进行无线调试吗？`的对话框中, 点击`允许`.
++ 在询问`要允许通过此网络进行无线调试吗? `的对话框中, 点击`允许`.
 + 选择使用`配对码配对设备`. 记下设备上显示的`配对码`, `IP 地址`和`端口号`.
 + 在工作站上, 打开一个终端并导航到 `android_sdk/platform-tools`.
 + 运行 `adb pair ipaddr:port`.  使用第 5 步中的 `IP 地址`和`端口号`.
@@ -131,10 +131,10 @@ adb connect 10.0.0.102
 adb devices -l
 ```
 
-作为回应, `adb` 会针对每个设备输出以下状态信息: 
+作为回应, `adb` 会针对每个设备输出以下状态信息:
 
 + 序列号: 由 `adb` 创建的字符串, 用于通过`端口号`唯一标识设备.  下面是一个序列号示例: `emulator-5554`
-+ 状态: 设备的连接状态可以是以下几项之一: 
++ 状态: 设备的连接状态可以是以下几项之一:
     + `offline`: 设备未连接到 adb 或没有响应.
     + `device`: 设备现已连接到 `adb` 服务器. 请注意, 此状态并不表示 `Android` 系统已完全启动并可正常运行, 因为在设备连接到 `adb` 时系统仍在启动. 不过, 在启动后, 这将是设备的正常运行状态.
     + no device: 未连接任何设备.
@@ -152,7 +152,7 @@ emulator-5554 device product:sdk_google_phone_x86 model:Android_SDK_built_for_x8
 
 ### 模拟器未列出
 
-`adb devices` 命令的极端命令序列会导致正在运行的模拟器不显示在 `adb devices` 输出中(即使在您的桌面上可以看到该模拟器). 当满足以下所有条件时, 就会发生这种情况: 
+`adb devices` 命令的极端命令序列会导致正在运行的模拟器不显示在 `adb devices` 输出中(即使在您的桌面上可以看到该模拟器). 当满足以下所有条件时, 就会发生这种情况:
 
 + adb 服务器未在运行,
 + 您在使用 `emulator` 命令时, 将 `-port` 或 `-ports` 选项的端口值设为 `5554` 到 `5584` 之间的奇数,
@@ -174,7 +174,7 @@ $ adb devices
 
 + 示例 2: 在下面的命令序列中, `adb devices` 显示了设备列表, 因为先启动了 `adb` 服务器.
 
-如果想在 `adb devices` 输出中看到模拟器, 请停止 `adb` 服务器, 然后在使用 `emulator` 命令之后, 使用 `adb devices` 命令之前, 重新启动该服务器, 如下所示: 
+如果想在 `adb devices` 输出中看到模拟器, 请停止 `adb` 服务器, 然后在使用 `emulator` 命令之后, 使用 `adb devices` 命令之前, 重新启动该服务器, 如下所示:
 
 ```bash
 $ adb kill-server
@@ -211,7 +211,7 @@ $ adb -s emulator-5555 install helloWorld.apk
 
 ### 安装应用
 
-您可以使用 `adb` 的 `install` 命令在模拟器或连接的设备上安装 `APK`: 
+您可以使用 `adb` 的 `install` 命令在模拟器或连接的设备上安装 `APK`:
 
 ```powershell
 adb install path_to_apk
@@ -225,13 +225,13 @@ adb install path_to_apk
 
 ### 设置端口转发
 
-您可以使用 `forward` 命令设置任意端口转发, 将特定主机端口上的请求转发到设备上的其他端口. 以下示例设置了主机端口 `6100 `到设备端口 `7100` 的转发: 
+您可以使用 `forward` 命令设置任意端口转发, 将特定主机端口上的请求转发到设备上的其他端口. 以下示例设置了主机端口 `6100 `到设备端口 `7100` 的转发:
 
 ```bash
 adb forward tcp:6100 tcp:7100
 ```
 
-以下示例设置了主机端口 `6100` 到 `local:logd` 的转发: 
+以下示例设置了主机端口 `6100` 到 `local:logd` 的转发:
 
 ```bash
 adb forward tcp:6100 local:logd
@@ -242,19 +242,19 @@ adb forward tcp:6100 local:logd
 您可以使用 `pull` 和 `push` 命令将文件复制到设备或从设备复制文件.
 与 `install` 命令(仅将 APK 文件复制到特定位置)不同, 使用 `pull` 和 `push` 命令可将任意目录和文件复制到设备中的任何位置.
 
-如需从设备中复制某个文件或目录(及其子目录), 请使用以下命令: 
+如需从设备中复制某个文件或目录(及其子目录), 请使用以下命令:
 
 ```bash
 adb pull remote local
 ```
 
-如需将某个文件或目录(及其子目录)复制到设备, 请使用以下命令: 
+如需将某个文件或目录(及其子目录)复制到设备, 请使用以下命令:
 
 ```bash
 adb push local remote
 ```
 
-将 `local` 和 `remote` 替换为`开发机器`(本地)和`设备`(远程)上的目标文件/目录的路径. 例如: 
+将 `local` 和 `remote` 替换为`开发机器`(本地)和`设备`(远程)上的目标文件/目录的路径. 例如:
 
 ```bash
 adb push foo.txt /sdcard/foo.txt
@@ -297,7 +297,7 @@ done
 
 ### 发出 adb 命令
 
-您可以从开发机器上的命令行发出 `adb` 命令, 也可以通过脚本发出. 用法如下: 
+您可以从开发机器上的命令行发出 `adb` 命令, 也可以通过脚本发出. 用法如下:
 
 ```bash
 adb [-d | -e | -s serial_number] command
@@ -306,7 +306,7 @@ adb [-d | -e | -s serial_number] command
 如果只有一个模拟器在运行或者只连接了一个设备, 系统会默认将 `adb` 命令发送至该设备.
 如果有多个模拟器正在运行并且/或者连接了多个设备, 您需要使用 `-d`, `-e` 或 `-s` 选项指定应向其发送命令的目标设备.
 
-您可以使用以下命令来查看所有支持的 `adb` 命令的详细列表: 
+您可以使用以下命令来查看所有支持的 `adb` 命令的详细列表:
 
 ```bash
 adb --help
@@ -332,19 +332,19 @@ sync a local build from `$ANDROID_PRODUCT_OUT` to the device (default all)
 
 ### 发出 shell 命令
 
-您可以使用 `shell` 命令通过 `adb` 发出设备命令, 也可以启动交互式 `shell`. 如需发出单个命令, 请使用 `shell` 命令, 如下所示: 
+您可以使用 `shell` 命令通过 `adb` 发出设备命令, 也可以启动交互式 `shell`. 如需发出单个命令, 请使用 `shell` 命令, 如下所示:
 
 ```bash
 adb [-d |-e | -s serial_number] shell shell_command
 ```
 
-要在设备上启动交互式 `shell`, 请使用 `shell` 命令, 如下所示: 
+要在设备上启动交互式 `shell`, 请使用 `shell` 命令, 如下所示:
 
 ```bash
 adb [-d | -e | -s serial_number] shell
 ```
 
-要退出交互式 `shell`, 请按 `Ctrl+D` 键或输入 `exit`. Android 提供了大多数常见的 `Unix` 命令行工具. 如需查看可用工具的列表, 请使用以下命令: 
+要退出交互式 `shell`, 请按 `Ctrl+D` 键或输入 `exit`. Android 提供了大多数常见的 `Unix` 命令行工具. 如需查看可用工具的列表, 请使用以下命令:
 
 ```bash
 adb shell ls /system/bin
@@ -383,7 +383,7 @@ adb logcat -s MainActivity #查看 Tag 为 MainActivity的日志信息
 adb logcat MainActivity:V *:S # 查看 Tag 为 MainActivity 的, 日志等级不低于 V的日志信息
 ```
 
-优先级是下面的字符, 顺序是从低到高: 
+优先级是下面的字符, 顺序是从低到高:
 
 + `V`: 明细 verbose(最低优先级)
 + `D`: 调试 debug
@@ -402,13 +402,13 @@ adb logcat MainActivity:V *:S  >> ~/Desktop/AtestLog.txt
 ### 调用 Activity 管理器 (am)
 
 在 `adb shell` 中, 您可以使用 `Activity` 管理器 (am) 工具发出命令以执行各种系统操作, 如启动 `Activity`, 强行停止进程, 广播 intent, 修改设备屏幕属性, 等等.
-在 `shell` 中, 相应的语法为: 
+在 `shell` 中, 相应的语法为:
 
 ```bash
 am command
 ```
 
-您也可以直接从 `adb` 发出 `Activity` 管理器命令, 无需进入远程 `shell`. 例如: 
+您也可以直接从 `adb` 发出 `Activity` 管理器命令, 无需进入远程 `shell`. 例如:
 
 ```bash
 adb shell am start -a android.intent.action.VIEW
@@ -416,13 +416,13 @@ adb shell am start -a android.intent.action.VIEW
 
 ### 调用软件包管理器 (pm)
 
-在 `adb shell` 中, 您可以使用软件包管理器 (pm) 工具发出命令, 以对设备上安装的应用软件包执行操作和查询. 在 `shell` 中, 相应的语法为: 
+在 `adb shell` 中, 您可以使用软件包管理器 (pm) 工具发出命令, 以对设备上安装的应用软件包执行操作和查询. 在 `shell` 中, 相应的语法为:
 
 ```bash
 pm command
 ```
 
-您也可以直接从 `adb` 发出软件包管理器命令, 无需进入远程 `shell`. 例如: 
+您也可以直接从 `adb` 发出软件包管理器命令, 无需进入远程 `shell`. 例如:
 
 ```bash
 adb shell pm uninstall com.example.MyApp
@@ -436,19 +436,19 @@ adb shell pm uninstall com.example.MyApp
 
 ### 截取屏幕截图
 
-`screencap` 命令是一个用于对设备显示屏截取屏幕截图的 `shell` 实用程序. 在 `shell` 中, 语法如下: 
+`screencap` 命令是一个用于对设备显示屏截取屏幕截图的 `shell` 实用程序. 在 `shell` 中, 语法如下:
 
 ```bash
 screencap filename
 ```
 
-如需从命令行使用 `screencap`, 请输入以下命令: 
+如需从命令行使用 `screencap`, 请输入以下命令:
 
 ```bash
 adb shell screencap /sdcard/screen.png
 ```
 
-以下屏幕截图会话示例展示了如何使用 `adb shell` 截取屏幕截图, 以及如何使用 `pull` 命令从设备下载屏幕截图文件: 
+以下屏幕截图会话示例展示了如何使用 `adb shell` 截取屏幕截图, 以及如何使用 `pull` 命令从设备下载屏幕截图文件:
 
 ```bash
 $ adb shell
@@ -462,21 +462,21 @@ $ adb pull /sdcard/screen.png
 `screenrecord` 命令是一个用于录制设备(搭载 `Android 4.4`(API 级别 19)及更高版本)显示屏的 `shell` 实用程序.
 该实用程序将屏幕 `Activity` 录制为 `MPEG-4` 文件. 您可以使用此文件创建宣传视频或培训视频, 或将其用于调试或测试.
 
-在 `shell` 中, 使用以下语法: 
+在 `shell` 中, 使用以下语法:
 
 ```bash
 screenrecord [options] filename
 ```
 
-如需从命令行使用 `screenrecord`, 请输入以下命令: 
+如需从命令行使用 `screenrecord`, 请输入以下命令:
 
 ```bash
 adb shell screenrecord /sdcard/demo.mp4
 ```
 
-按 `Ctrl + C` 键(在 `Mac` 上, 按 `Command + C` 键)可停止屏幕录制；如果不手动停止, 到三分钟或 `--time-limit` 设置的时间限制时, 录制将会自动停止.
+按 `Ctrl + C` 键(在 `Mac` 上, 按 `Command + C` 键)可停止屏幕录制; 如果不手动停止, 到三分钟或 `--time-limit` 设置的时间限制时, 录制将会自动停止.
 
-如需开始录制设备屏幕, 请运行 `screenrecord` 命令以录制视频. 然后, 运行 `pull` 命令以将视频从设备下载到主机. 下面是一个录制会话示例: 
+如需开始录制设备屏幕, 请运行 `screenrecord` 命令以录制视频. 然后, 运行 `pull` 命令以将视频从设备下载到主机. 下面是一个录制会话示例:
 
 ```bash
 $ adb shell
@@ -488,7 +488,7 @@ $ adb pull /sdcard/demo.mp4
 
 `screenrecord` 实用程序能以您要求的任何支持的分辨率和比特率进行录制, 同时保持设备显示屏的宽高比. 默认情况下, 该实用程序以本机显示分辨率和屏幕方向进行录制, 时长不超过三分钟.
 
-`screenrecord` 实用程序的局限性: 
+`screenrecord` 实用程序的局限性:
 
 + 音频不与视频文件一起录制.
 + 无法在搭载 `Wear OS` 的设备上录制视频.
@@ -499,8 +499,8 @@ $ adb pull /sdcard/demo.mp4
 选项   说明
 
 + `--help`: 显示命令语法和选项
-+ `--size widthxheight`: 设置视频大小: `1280x720`. 默认值为设备的本机显示屏分辨率(如果支持)；如果不支持, 则为 `1280x720`. 为获得最佳效果, 请使用设备的 `Advanced Video Coding (AVC)` 编码器支持的大小.
-+ `--bit-rate rate`: 设置视频的视频比特率(以 `MB/秒`为单位). 默认值为 `4Mbps`. 您可以增加比特率以提升视频品质, 但这样做会导致视频文件变大. 下面的示例将录制比特率设为 `6Mbps`: 
++ `--size widthxheight`: 设置视频大小: `1280x720`. 默认值为设备的本机显示屏分辨率(如果支持); 如果不支持, 则为 `1280x720`. 为获得最佳效果, 请使用设备的 `Advanced Video Coding (AVC)` 编码器支持的大小.
++ `--bit-rate rate`: 设置视频的视频比特率(以 `MB/秒`为单位). 默认值为 `4Mbps`. 您可以增加比特率以提升视频品质, 但这样做会导致视频文件变大. 下面的示例将录制比特率设为 `6Mbps`:
 
 ```bash
 screenrecord --bit-rate 6000000 /sdcard/demo.mp4
@@ -548,7 +548,7 @@ python payload_dumper.py payload.bin
 就可以提取出`payload.bin`文件中的镜像到你所在的输出文件夹.
 
 + 把`boot.img`推送到手机上, 下载并安装最新的`Magisk`应用程序, 打开`Magisk`, 进入`安装>安装>修补启动镜像文件`.
-`Magisk`将修补 `boot` 镜像, 并将其存储在你的手机上. 
+`Magisk`将修补 `boot` 镜像, 并将其存储在你的手机上.
 把这个文件复制到电脑上, 重命名为`boot_patched.img`
 
 ***
@@ -580,7 +580,7 @@ fastboot flash boot_b boot_patched.img
 
 + SafetyNet 无法通过
 
-刷了 `Magisk` 后, `SafetyNet` 检测就无法通过. 
+刷了 `Magisk` 后, `SafetyNet` 检测就无法通过.
 无法通过的话, `Google Play` 保证机制就无法通过, 有些游戏就下载不了.
 
 解决方法是: 使用下面这两个模块
@@ -597,11 +597,11 @@ Play 商店的话, 清除数据就行. 注意开启 `magisk hide`.
 [Magisk Frequently Asked Questions](https://topjohnwu.github.io/Magisk/faq.html).
 [Magisk 核心功能和翻车自救指南 ](https://sspai.com/post/68071)
 
-安装模块后手机出现应用闪退, 显示错误和无法开机等种种异常, 大概率是使用的某个模块出了问题. 针对不同情况, 目前有五种比较简单的自救方式: 
+安装模块后手机出现应用闪退, 显示错误和无法开机等种种异常, 大概率是使用的某个模块出了问题. 针对不同情况, 目前有五种比较简单的自救方式:
 
 + 如果还能访问 `Magisk App`, 在模块界面中, `移除` 出问题的模块, 然后重启以完全卸载此模块.
 + 如果已经无法打开 `Magisk App`, 但能使用 `adb`, 用数据线连接电脑, 输入 `adb wait-for-device shell magisk --remove-modules`, 这会删除所有模块并重启.
-+ 如果连 `adb` 都不能访问, 那么请尝试进入安全模式. 不同机型安全模式启用方式不同: 开机状态下, 比较常见的启用方式是按住电源键呼出的重启按钮；
++ 如果连 `adb` 都不能访问, 那么请尝试进入安全模式. 不同机型安全模式启用方式不同: 开机状态下, 比较常见的启用方式是按住电源键呼出的重启按钮;
 关机状态下, 一般能通过特定的实体按键激活. 进入安全模式后, `Magisk` 会自动禁用所有模块. 再重启一次, 模块禁用的状态会被保留, 设备应当能恢复正常.
 在开机出logo之后,长按 `volume减`(别撒手)可以进入安全模式, 适用于循环引导的情况.
 + 如果装有第三方 `Recovery`, 利用 `Recovey` 的文件管理功能(`高级` > `文件管理`), 定位到`/data/adb/modules`, 将其中的问题模块重命名为`remove`,
@@ -748,12 +748,12 @@ fastboot oem reboot-recovery
 首先需要准备好刷机包, 可以是自己编译的, 也可以是从别处拷贝的, 但一定要确保刷机包适用于你的 `Android` 设备.
 然后解压刷机包, 解压后我们可以得到 `boot.img`, `recovery.img`, `system.img`, `bootloader` 文件, 正是这些文件构成了 `Android` 设备的系统.
 
-线刷需要让设备进入 `fastboot` 环境. 有`2`种方法: 
+线刷需要让设备进入 `fastboot` 环境. 有`2`种方法:
 
 + 执行命令 `adb  reboot  fastboot`
 + 或者同时按住 `增加音量` 和 `电源` 键开机.
 
-在设备进入到 `fastboot` 环境后, 根据具体需求,执行下面的命令进行刷机: 
+在设备进入到 `fastboot` 环境后, 根据具体需求,执行下面的命令进行刷机:
 
 ```bash
 fastboot  flashing  unlock # 设备解锁, 开始刷机
@@ -787,7 +787,7 @@ fastboot flash recovery twrp.img
 fastboot boot twrp.img
 ```
 
-当显示`OKEY`说明安装成功. 接着输入以下命令进入`TWRP`界面: 
+当显示`OKEY`说明安装成功. 接着输入以下命令进入`TWRP`界面:
 
 ```bash
 fastboot oem reboot-recovery
@@ -864,7 +864,7 @@ tar zcvf ~/sdkman-backup_$(date +%F-%kh%M).tar.gz -C ~/ .sdkman
 $ rm -rf ~/.sdkman
 ```
 
-然后从`.bashrc`, `.bash_profile` 或 `.profile`文件中编辑和删除初始化代码片段. 如果您使用`ZSH`, 请将其从`.zshrc`文件中删除. 要删除的代码片段如下所示: 
+然后从`.bashrc`, `.bash_profile` 或 `.profile`文件中编辑和删除初始化代码片段. 如果您使用`ZSH`, 请将其从`.zshrc`文件中删除. 要删除的代码片段如下所示:
 
 ```bash
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
@@ -925,16 +925,16 @@ sdk selfupdate force
 + 你的设备必须解锁 `bootloader`.
 + 如果你还打算安装自定义`内核`, 请在 `Magisk` 之后安装.
 
-下载并安装最新的[Magisk应用程序](https://github.com/topjohnwu/Magisk/releases). 程序会收集设备的一些信息. 
+下载并安装最新的[Magisk应用程序](https://github.com/topjohnwu/Magisk/releases). 程序会收集设备的一些信息.
 在主屏幕上, 应该能看到`magisk`和`app`的安装信息.
 
 ![img](https://topjohnwu.github.io/Magisk/images/device_info.png)
 
 请特别注意 `Ramdisk` 信息, 它决定了你的设备在`boot`分区中是否有`Ramdisk`.
 
-> 不幸的是, 也有例外, 因为有些设备的引导程序接受 `ramdisk`, 即使它做不到. 
+> 不幸的是, 也有例外, 因为有些设备的引导程序接受 `ramdisk`, 即使它做不到.
 > 在这种情况下, 你需要假装启动分区确实有`ramdisk`, 继续按照指示进行操作.
-> 除了实际尝试, 没有办法检测到这一点. 
+> 除了实际尝试, 没有办法检测到这一点.
 > 幸运的是, 据我们所知, 只有一些小米设备有这个属性, 所以大多数人可以简单地忽略这条信息).
 
 + 如果你的设备没有 `boot ramdisk`, 请在安装前阅读`恢复分区的Magisk`部分. 该部分的信息是非常重要的!
@@ -979,7 +979,7 @@ fastboot flash recovery "magisk_patched.img的路径" # 如果是刷入 recovery
 在网上快速搜索应该很容易得到这个信息. 一旦你按下组合键, 设备就会振动并出现`splash`屏幕, 释放所有按钮, 将启动到`Magisk`.
 如果你决定启动到实际的恢复模式, 长按`音量加`直到你看到`recovery`界面.
 
-作为总结, 在恢复模式下安装Magisk后, 从关机开始: 
+作为总结, 在恢复模式下安装Magisk后, 从关机开始:
 
 + 正常开机 ->(没有Magisk的系统)
 + `recovery`组合键 -> 闪屏 -> 释放所有按键 -> 有Magisk的系统
@@ -1024,13 +1024,13 @@ adb pull /sdcard/Download/magisk_patched_[random_strings].tar
 
 不要使用`MTP`, 因为它会损坏大文件.
 
-+ 重新启动到`下载模式`. 在你的电脑上打开`Odin`, 将`Magisk_patched.tar`作为`AP`刷入, 
++ 重新启动到`下载模式`. 在你的电脑上打开`Odin`, 将`Magisk_patched.tar`作为`AP`刷入,
 同时刷入原始固件中的`BL`, `CP`, `CSC`(不是`HOME_CSC`, 因为我们要擦除数据). 这可能需要一些时间(>10分钟).
 + 一旦`Odin`完成刷入, 你的设备应该自动重启. 如果有提示, 请同意进行出厂重置.
 + 如果你的设备没有`boot ramdisk`, 现在重启到`recovery`, 启用`Magisk`(原因在`恢复区的Magisk中`说明).
 + 安装最新的`Magisk`应用程序并启动. 它应该会显示对话框, 要求进行额外设置. 让它继续完成工作, 应用程序将自动重启你的设备.
 
-走你！享受Magisk吧 😃
+走你! 享受Magisk吧 😃
 
 ### 升级操作系统
 
@@ -1040,7 +1040,7 @@ adb pull /sdcard/Download/magisk_patched_[random_strings].tar
 
 重要说明
 
-> 永远不要试图将`boot`或`recovery`分区恢复到原始状态！你可能会得到一块板砖.唯一的方法是做一个完整的`Odin`恢复, 并且要擦除数据.
+> 永远不要试图将`boot`或`recovery`分区恢复到原始状态! 你可能会得到一块板砖.唯一的方法是做一个完整的`Odin`恢复, 并且要擦除数据.
 > 当用新的固件升级你的设备时, 千万不要直接使用固件中的`AP` tar文件, 原因如上所述. 一定要在Magisk应用程序中修补`AP`, 并使用它来代替.
 > 不要只刷入`AP`, 否则`Odin`可能会缩小你的`/data`文件系统. 在升级时, 要刷入`AP+BL+CP+HOME_CSC`.
 
