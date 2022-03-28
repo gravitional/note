@@ -93,6 +93,8 @@
 %*号版本可以把上下标放在符号的正上方/正下方
 \DeclareMathOperator{\ree}{Re}
 \DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\erfc}{erfc}%误差函数填补
+\DeclareMathOperator{\sineint}{Si}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
@@ -3004,7 +3006,1695 @@ pf\Rightarrow p\mathcal{F}\left[\phi\right]=\int_{-\infty}^{\infty}p\left(x\righ
 \end_layout
 
 \begin_layout Section
-Mellin 变换
+梅林变换 Mellin
+\end_layout
+
+\begin_layout Enumerate
+函数 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ 的 Mellin 变换定义为
+\begin_inset Formula 
+\begin{align*}
+ & \phi\left(z\right)=\int_{0}^{\infty}f\left(x\right)x^{z-1}\dd{x},\quad f\left(x\right)\to\mathcal{M}\left[f\right]\left(z\right)\\
+ & f\left(x\right)=\frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}x^{-z}\phi\left(z\right)\dd{z}
+\end{align*}
+
+\end_inset
+
+我们观察连续函数基 
+\begin_inset Formula $\delta\left(x-a\right)$
+\end_inset
+
+ 在 Mellin 变换下的行为：
+\begin_inset Formula 
+\begin{align*}
+\mathcal{M}\left[\delta\right] & =\int_{0}^{\infty}\delta\left(x-a\right)x^{z-1}=a^{z-1}
+\end{align*}
+
+\end_inset
+
+所以逆变换：
+\begin_inset Formula 
+\begin{align*}
+\mathcal{M}^{-1}\mathcal{M}\left[\delta\right] & =\frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}x^{-z}a^{z-1}\dd{z}\stackrel{?}{=}\delta\left(x-a\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+x^{-z}a^{z-1} & =e^{-z\ln x}\,e^{\left(z-1\right)\ln a}\\
+ & =e^{z\left(\ln a-\ln x\right)-\ln a}
+\end{align*}
+
+\end_inset
+
+当 
+\begin_inset Formula $z$
+\end_inset
+
+ 在 
+\begin_inset Formula $\left(c-i\infty\right)\to\left(c+i\infty\right)$
+\end_inset
+
+直线上游动时，可以写成 
+\begin_inset Formula $z=c+ik$
+\end_inset
+
+的形式，因此被积函数相当于
+\begin_inset Formula 
+\[
+\Rightarrow a^{-1}e^{c\left(\ln a-\ln x\right)}\,e^{ik\left(\ln a-\ln x\right)}
+\]
+
+\end_inset
+
+最后使用
+\begin_inset Formula $\int_{-\infty}^{+\infty}e^{ikx}\dd{x}=2\pi\delta\left(x\right)$
+\end_inset
+
+，可知逆变换的确回到 
+\begin_inset Formula $\delta\left(a-x\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+函数 
+\begin_inset Formula $f\left(x_{1},x_{2},\cdots\right)$
+\end_inset
+
+ 的多维 Mellin 变换为
+\begin_inset Formula 
+\[
+\phi\left(z_{1},z_{2}\right)=\int_{0}^{\infty}\int_{0}^{\infty}\cdots f\left(x_{1},x_{2},\cdots\right)x_{1}^{z_{1}-1}x_{2}^{z_{2}-1}\cdots\dd{x_{1}}\dd{x_{2}}\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ 的 Mellin 变换只对特定复值 
+\begin_inset Formula $s$
+\end_inset
+
+存在，例如 
+\begin_inset Formula $\alpha\le\ree\left(s\right)<\beta$
+\end_inset
+
+。在一些情况下，带状的定义域可以拓展到半平面。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/MellinTrans-1.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/MellinTrans-2.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/MellinTrans-3.pdf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+ref 
+\begin_inset CommandInset href
+LatexCommand href
+name "MellinTransform"
+target "https://mathworld.wolfram.com/MellinTransform.html"
+literal "false"
+
+\end_inset
+
+。变换 
+\begin_inset Formula $\phi\left(z\right)$
+\end_inset
+
+存在，若对于某 
+\begin_inset Formula $k>0$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{0}^{\infty}\abs{f\left(x\right)}x^{k-1}\dd{x}
+\]
+
+\end_inset
+
+是有界的（bounded），此时逆 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+存在，对于 
+\begin_inset Formula $c>k$
+\end_inset
+
+。函数 
+\begin_inset Formula $\phi\left(z\right)$
+\end_inset
+
+ 和 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ 被称为 Mellin 变换对儿，知道了其中一个，可以计算另一个。
+\end_layout
+
+\begin_layout Enumerate
+下面的表格列出了常见函数的 Mellin 变换（
+\begin_inset CommandInset href
+LatexCommand href
+name "Bracewell 1999, p. 255"
+target "http://www.amazon.com/exec/obidos/ASIN/0073039381/ref=nosim/ericstreasuretro"
+literal "false"
+
+\end_inset
+
+）。其中 
+\begin_inset Formula $\delta$
+\end_inset
+
+ 是 狄拉克 
+\begin_inset CommandInset href
+LatexCommand href
+name "delta 函数"
+target "https://mathworld.wolfram.com/DeltaFunction.html"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset Formula $H\left(x\right)$
+\end_inset
+
+ 是 
+\begin_inset CommandInset href
+LatexCommand href
+name "Heaviside 阶跃函数"
+target "https://mathworld.wolfram.com/HeavisideStepFunction.html"
+literal "false"
+
+\end_inset
+
+， 
+\begin_inset Formula $\Gamma\left(z\right)$
+\end_inset
+
+ 是 
+\begin_inset CommandInset href
+LatexCommand href
+name "gamma 函数"
+target "https://mathworld.wolfram.com/GammaFunction.html"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset Formula $B\left(z;a,b\right)$
+\end_inset
+
+是 
+\begin_inset CommandInset href
+LatexCommand href
+name "incomplete beta 函数"
+target "https://mathworld.wolfram.com/IncompleteBetaFunction.html"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset Formula $\erfc z$
+\end_inset
+
+是complementary error function 
+\begin_inset CommandInset href
+LatexCommand href
+name "erfc"
+target "https://mathworld.wolfram.com/Erfc.html"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset Formula $\sineint$
+\end_inset
+
+是 
+\begin_inset CommandInset href
+LatexCommand href
+name "sine积分"
+target "https://mathworld.wolfram.com/SineIntegral.html"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="20" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f\left(t\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi\left(z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+收敛域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(t-a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a^{z-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $H\left(t-a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-\frac{a^{z}}{z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a>0,z<0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $H\left(a-t\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{a^{z}}{z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a>0,z>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}H\left(t-a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-\frac{a^{n+z}}{n+z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a>0,\ree\left[z+n\right]<0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}H\left(a-t\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{a^{n+z}}{n+z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a>0,\ree\left[n+z\right]>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $e^{-at}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a^{-z}\Gamma\left(z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[a\right],\ree\left[z\right]>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $e^{-t^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}\Gamma\left(\frac{1}{2}z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[z\right]>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sin t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Gamma\left(z\right)\sin\left(\frac{1}{2}\pi z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-1<\ree\left[z\right]<1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cos t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Gamma\left(z\right)\cos\left(\frac{1}{2}\pi z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0<\ree\left[z\right]<1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{1+t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\pi\csc\left(\pi z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0<\ree\left[z\right]<1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\left(1+t\right)^{a}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{\Gamma\left(a-z\right)\Gamma\left(z\right)}{\Gamma\left(a\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[a-z\right]>0,\ree\left[z\right]>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{1+t^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}\pi\csc\left(\frac{1}{2}\pi z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0<\ree\left[z\right]<2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(1-t\right)^{a-1}H\left(1-t\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{\Gamma\left(a\right)\Gamma\left(z\right)}{\Gamma\left(a+z\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[a\right],\ree\left[z\right]>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(t-1\right)^{-a}H\left(t-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{\Gamma\left(1-a\right)\Gamma\left(a-z\right)}{\Gamma\left(1-z\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[a-z\right]>0,\ree\left[a\right]<1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ln\left(1+t\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{\pi\csc\left(\pi z\right)}{z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-1<\ree\left[z\right]<0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}\pi-\tan^{-1}t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{\pi\sec\left(\frac{1}{2}\pi z\right)}{2z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0<\ree\left[z\right]<1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\erfc t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{\Gamma\left(\frac{1}{2}\left(1+z\right)\right)}{\sqrt{\pi}z}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[z\right]>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sineint\left(t\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-\frac{1}{z}\Gamma\left(z\right)\sin\left(\frac{1}{2}\pi z\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ree\left[z\right]>-1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{t^{a}}{1-t}H\left(t-a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-B\left(a^{-1};1-a-z;0\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a>1,\ree\left[a+z\right]<1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+另一个 Mellin 变换的例子： 
+\begin_inset CommandInset href
+LatexCommand href
+name "Riemann 函数"
+target "https://mathworld.wolfram.com/RiemannFunction.html"
+literal "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ 与 
+\begin_inset CommandInset href
+LatexCommand href
+name "Riemann zeta 函数"
+target "https://mathworld.wolfram.com/RiemannZetaFunction.html"
+literal "false"
+
+\end_inset
+
+ 的关系，
+\begin_inset Formula 
+\begin{align*}
+ & f\left(x\right)=\lim_{T\to\infty}\frac{1}{2\pi i}\int_{2-iT}^{2+iT}\frac{x^{s}}{s}\ln\zeta\left(s\right)\dd{s}\\
+ & \frac{\ln\zeta\left(s\right)}{s}=\int_{1}^{\infty}f\left(x\right)x^{-s-1}\dd{x}.
+\end{align*}
+
+\end_inset
+
+相关 mellin 对 被用在 
+\begin_inset CommandInset href
+LatexCommand href
+name "质数定理"
+target "https://mathworld.wolfram.com/PrimeNumberTheorem.html"
+literal "false"
+
+\end_inset
+
+ 的一个证明中（
+\begin_inset CommandInset href
+LatexCommand href
+name "Titchmarsh 1987"
+target "http://www.amazon.com/exec/obidos/ASIN/0198533691/ref=nosim/ericstreasuretro"
+literal "false"
+
+\end_inset
+
+, pp.
+ 51-54 and equation 3.7.2）
+\end_layout
+
+\begin_layout Subsection
+Fourier 变换到 Mellin 变换
+\end_layout
+
+\begin_layout Standard
+ref:
+\begin_inset CommandInset href
+LatexCommand href
+name "Mellin变换"
+target "https://zhuanlan.zhihu.com/p/151753864"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+傅立叶变换及其逆变换公式为：
+\begin_inset Formula 
+\begin{align*}
+ & \tilde{f}\left(\omega\right)=\left\{ \mathcal{F}f\right\} \left(w\right)=\int_{-\infty}^{+\infty}e^{-i\omega t}f\left(t\right)\dd{t}\\
+ & f\left(t\right)=\left\{ \mathcal{F}^{-1}\tilde{f}\right\} \left(t\right)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}e^{+i\omega t}\tilde{f}\left(\omega\right)\dd{\omega}
+\end{align*}
+
+\end_inset
+
+接下来作变量代换，令 
+\begin_inset Formula 
+\begin{align*}
+ & s=c-i\omega,\quad\dd{\omega}=i\dd{s}\\
+ & \omega=i\left(s-c\right),\quad-i\omega=s-c,
+\end{align*}
+
+\end_inset
+
+则有：
+\begin_inset Formula 
+\begin{align*}
+ & \tilde{f}\left[i\left(s-c\right)\right]=\int_{-\infty}^{+\infty}e^{-\left(c-s\right)t}f\left(t\right)\dd{t}=\int_{-\infty}^{+\infty}e^{st}\left[e^{-ct}f\left(t\right)\right]\dd{t}\\
+ & f\left(t\right)=\frac{i}{2\pi}\int_{c+i\infty}^{c-i\infty}e^{\left(c-s\right)t}\tilde{f}\left[i\left(s-c\right)\right]\dd{s}=\frac{e^{ct}}{2\pi i}\int_{c-i\infty}^{c+i\infty}e^{-st}\tilde{f}\left[i\left(s-c\right)\right]\dd{s}
+\end{align*}
+
+\end_inset
+
+接下来再令 
+\begin_inset Formula $t=\ln x$
+\end_inset
+
+，
+\begin_inset Formula $\dd{t}=x^{-1}\dd{x}$
+\end_inset
+
+，的：
+\begin_inset Formula 
+\begin{align*}
+ & \tilde{f}\left[i\left(s-c\right)\right]=\int_{0}^{+\infty}x^{s-1}\left[x^{-c}f\left(\ln x\right)\right]\dd{x}\\
+ & f\left(\ln x\right)=\frac{x^{c}}{2\pi i}\int_{c-i\infty}^{c+i\infty}x^{-s}\tilde{f}\left[i\left(s-c\right)\right]\dd{s}
+\end{align*}
+
+\end_inset
+
+改写一下形式，令
+\begin_inset Formula $g\left(x\right)=x^{-c}f\left(\ln x\right)$
+\end_inset
+
+，
+\begin_inset Formula $G\left(s\right)=\tilde{f}\left[i\left(s-c\right)\right]$
+\end_inset
+
+，得：
+\begin_inset Formula 
+\begin{align*}
+ & G\left(s\right)=\int_{0}^{+\infty}x^{s-1}g\left(x\right)\dd{x}\\
+ & g\left(x\right)=\frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}x^{-s}G\left(s\right)\dd{s}
+\end{align*}
+
+\end_inset
+
+之所以逆变换公式中有实数 
+\begin_inset Formula $c$
+\end_inset
+
+，是因为这样可以避免积分路径中出现极点（pole）。
+\end_layout
+
+\begin_layout Subsection
+梅林变换与 Gamma 函数
+\end_layout
+
+\begin_layout Standard
+Gamma 函数的定义为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma\left(s\right)=\int_{0}^{\infty}x^{s-1}e^{-x}\dd{x}=\left\{ \mathcal{M}e^{-x}\right\} \left(s\right)
+\]
+
+\end_inset
+
+很明显，Gamma 函数是指数函数的梅林变换。将其代入到逆变换公式中，可得：
+\begin_inset Formula 
+\[
+e^{-x}=\left\{ \mathcal{M}^{-1}\Gamma\left(s\right)\right\} \left(x\right)=\frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}x^{-s}\Gamma\left(s\right)\dd{s}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+梅林卷积 MellinConvolve
+\end_layout
+
+\begin_layout Enumerate
+函数
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+和
+\begin_inset Formula $g\left(x\right)$
+\end_inset
+
+的梅林卷积定义为
+\begin_inset Formula 
+\[
+\left(f*_{M}g\right)\left(y\right)=\int_{0}^{\infty}f\left(x\right)\frac{g\left(y/x\right)}{x}\dd{x}
+\]
+
+\end_inset
+
+多维 Mellin 卷积定义为
+\begin_inset Formula 
+\[
+\int_{0}^{\infty}\int_{0}^{\infty}\cdots f\left(x_{1},x_{2},\cdots\right)\frac{g\left(y_{1}/x_{1},y_{2}/x_{2},\cdots\right)}{x_{1}x_{2}\cdots}\dd{x_{1}}\dd{x_{2}}\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+以下用
+\begin_inset Formula $*$
+\end_inset
+
+表示卷积，Scaling:
+\begin_inset Formula 
+\[
+\left(af*g\right)\left(y\right)=\left(f*ag\right)\left(y\right)=a\left(f*g\right)\left(y\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+交换律（Commutativity）：
+\begin_inset Formula 
+\[
+\left(f*g\right)\left(y\right)=\left(g*f\right)\left(y\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+分配律：
+\begin_inset Formula 
+\begin{align*}
+ & \left[h*\left(i+j\right)\right]\left(y\right)=\left(h*i\right)\left(y\right)+\left(h*j\right)\left(y\right)\\
+ & \left[\left(h+i\right)*j\right]\left(y\right)=\left(h*j\right)\left(y\right)+\left(i*j\right)\left(y\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+与 DiracDelta 卷积：
+\begin_inset Formula 
+\[
+\left[f*\delta\left(x-a\right)\right]\left(y\right)=\frac{f\left(y/a\right)}{a}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+与 DiracDelta 导数的卷积：
+\begin_inset Formula 
+\begin{align*}
+ & \left[f*\delta^{\prime}\left(x-1\right)\right]\left(y\right)=f\left(y\right)+yf^{\prime}\left(y\right)\\
+ & \left[f*\delta^{\prime\prime}\left(x-1\right)\right]\left(y\right)=2f\left(y\right)+4yf^{\prime}\left(y\right)+y^{2}f^{\prime\prime}\left(y\right)
+\end{align*}
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+两函数先作 Mellin 卷积，再作 Mellin 变换，等于先单独作 Mellin 变换再相乘：
+\begin_inset Formula 
+\[
+\mathcal{M}\left[f*g\right]=\mathcal{M}\left[f\right]\mathcal{M}\left[g\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Mellin 卷积的导数：
+\begin_inset Formula 
+\[
+\partial_{y}\left[f_{x}*g_{x}\right]\left(y\right)=\left[\frac{f\left(x\right)}{x}*g^{\prime}\left(x\right)\right]\left(y\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Mellin卷积，Mellin变换，Mellin逆变换的关系：
+\begin_inset Formula 
+\[
+\left[f_{x}*g_{x}\right]\left(y\right)=\mathcal{M}_{y}^{-1}\left[\mathcal{M}_{s}\left[f_{x}\right]\mathcal{M}_{s}\left[g_{x}\right]\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\mathcal{M}_{s}\left[f_{x}\right]=\text{梅林变换}\left[f\left(x\right),x\to s\right],\quad\mathcal{M}_{y}^{-1}\left[\tilde{f}_{s}\right]=\text{梅林逆变换}\left[\tilde{f}\left(s\right),s\to y\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+狄利克雷卷积
+\end_layout
+
+\begin_layout Standard
+refs:
+\begin_inset CommandInset href
+LatexCommand href
+name "狄利克雷卷积与幺半群"
+target "https://zhuanlan.zhihu.com/p/151302308"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+众所周知，在数学分析中，卷积被定义为 
+\begin_inset Formula 
+\[
+\left(f*g\right)\left(t\right)=\int_{0}^{t}f\left(\tau\right)g\left(t-\tau\right)\dd{\tau}.
+\]
+
+\end_inset
+
+然而，类似的运算也出现在其他领域。其中在数论中，我们也有类似的 狄利克雷卷积（Dirichlet convolution）：定义两个数论函数 
+\begin_inset Formula $f\left(n\right)$
+\end_inset
+
+，
+\begin_inset Formula $g\left(n\right)$
+\end_inset
+
+，其狄利克雷卷积为：
+\begin_inset Formula 
+\[
+\left(f*g\right)\left(n\right)=\sum_{d|n}f\left(d\right)g\left(n/d\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $d|n$
+\end_inset
+
+ 表示 
+\begin_inset Formula $d$
+\end_inset
+
+整除 
+\begin_inset Formula $n$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+狄利克雷卷积满足交换律与结合律：
+\begin_inset Formula 
+\begin{align*}
+ & \left(f*g\right)\left(n\right)=\left(g*f\right)\left(n\right)\\
+ & \left(\left(f*g\right)*h\right)\left(n\right)=\left(f*\left(g*h\right)\right)\left(n\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+拉普拉斯变换 Laplace
+\end_layout
+
+\begin_layout Standard
+拉普拉斯变换是一种 
+\begin_inset CommandInset href
+LatexCommand href
+name "积分变换"
+target "https://mathworld.wolfram.com/IntegralTransform.html"
+literal "false"
+
+\end_inset
+
+，其在解决物理问题方面的作用也许仅次于 
+\begin_inset CommandInset href
+LatexCommand href
+name "傅里叶变换"
+target "https://mathworld.wolfram.com/FourierTransform.html"
+literal "false"
+
+\end_inset
+
+。拉普拉斯变换在解决 
+\begin_inset CommandInset href
+LatexCommand href
+name "线性常微分方程"
+target "https://mathworld.wolfram.com/OrdinaryDifferentialEquation.html"
+literal "false"
+
+\end_inset
+
+ 方面特别有用，例如在分析电子电路时产生的那些方程。
+\end_layout
+
+\begin_layout Enumerate
+单边(unilateral)拉普拉斯变换
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+的定义是(不要与 
+\begin_inset CommandInset href
+LatexCommand href
+name "李导数"
+target "https://mathworld.wolfram.com/LieDerivative.html"
+literal "false"
+
+\end_inset
+
+ 混淆，通常也用
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+表示):
+\begin_inset Formula 
+\[
+\mathcal{L}_{t}\left[f\left(t\right)\right]\left(s\right)=\int_{0}^{\infty}f\left(t\right)e^{-st}\dd{t},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $f\left(t\right)$
+\end_inset
+
+ 在 
+\begin_inset Formula $t\ge0$
+\end_inset
+
+ 上定义( 
+\begin_inset CommandInset href
+LatexCommand href
+name "Abramowitz和Stegun 1972"
+target "http://www.amazon.com/exec/obidos/ASIN/0486612724/ref=nosim/ericstreasuretro"
+literal "false"
+
+\end_inset
+
+)。拉普拉斯变换几乎总是指“单边拉普拉斯变换”，尽管有时也定义 
+\begin_inset CommandInset href
+LatexCommand href
+name "双边拉普拉斯变换"
+target "https://mathworld.wolfram.com/BilateralLaplaceTransform.html"
+literal "false"
+
+\end_inset
+
+(
+\begin_inset CommandInset href
+LatexCommand href
+name "Oppenheim等"
+target "http://www.amazon.com/exec/obidos/ASIN/0138147574/ref=nosim/ericstreasuretro"
+literal "false"
+
+\end_inset
+
+，1997)：
+\begin_inset Formula 
+\[
+\mathcal{L}_{t}^{\left(2\right)}\left[f\left(t\right)\right]\left(s\right)=\int_{0}^{\infty}f\left(t\right)e^{-st}\dd{t},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+单边拉普拉斯变换 
+\begin_inset Formula $\mathcal{L}_{t}\left[f\left(t\right)\right]\left(s\right)$
+\end_inset
+
+ 在Wolfram语言中实现为
+\begin_inset Formula $\text{LaplaceTransform}[f[t],t,s]$
+\end_inset
+
+，逆拉普拉斯变换为 
+\begin_inset CommandInset href
+LatexCommand href
+name "InverseRadonTransform"
+target "http://reference.wolfram.com/language/ref/InverseRadonTransform.html"
+literal "false"
+
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\mathcal{L}_{t}^{-1}=\frac{1}{2\pi i}\int_{\gamma-i\infty}^{\gamma+i\infty}F\left(s\right)e^{st}\dd{s}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+逆拉普拉斯变换被称为 
+\begin_inset CommandInset href
+LatexCommand href
+name "Bromwich积分"
+target "https://mathworld.wolfram.com/BromwichIntegral.html"
+literal "false"
+
+\end_inset
+
+，有时也被称为 Fourier-Mellin 积分（参见相关的 
+\begin_inset CommandInset href
+LatexCommand href
+name "Duhamel卷积原理"
+target "https://mathworld.wolfram.com/DuhamelsConvolutionPrinciple.html"
+literal "false"
+
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+下面给出了几个重要的单边拉普拉斯变换的表格。
+\end_layout
+
+\begin_layout Enumerate
+函数 
+\begin_inset Formula $f\left(t\right)$
+\end_inset
+
+ 的 Laplace 变换定义为
+\begin_inset Formula 
+\begin{align*}
+ & \tilde{f}\left(s\right)=\int_{0}^{\infty}f\left(t\right)e^{-st}\dd{t}\\
+ & f\left(t\right)=\frac{1}{2\pi i}\int_{\gamma-i\infty}^{\gamma+i\infty}F\left(s\right)e^{st}\dd{s}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\gamma$
+\end_inset
+
+是一个任意正值常数，为了使积分回路避开 
+\begin_inset Formula $F\left(s\right)$
+\end_inset
+
+ 的所有奇点。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/LaplaceTrans-1.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/InverseLaplaceTrans-1.pdf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+多维 Laplace 变换定义为
+\begin_inset Formula 
+\[
+\tilde{f}\left(s_{1},s_{2},\cdots\right)=\int_{0}^{\infty}\int_{0}^{\infty}\cdots f\left(t_{1},t_{2},\cdots\right)e^{-\left(s_{1}t_{1}+s_{2}t_{2}+\cdots\right)}\dd{t}\dd{t}\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+对于某函数
+\begin_inset Formula $f\left(t\right)$
+\end_inset
+
+，它的拉普拉斯变换只对复值
+\begin_inset Formula $s$
+\end_inset
+
+的半平面存在，表示为 
+\begin_inset Formula $\ree\left(s\right)>\alpha$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Enumerate
+积分下限等效于取 
+\begin_inset Formula $0_{-}$
+\end_inset
+
+，以使得 Dirac delta 函数 
+\begin_inset Formula $\delta\left(t\right)$
+\end_inset
+
+的拉普拉斯变换等于
+\begin_inset Formula $1$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Section

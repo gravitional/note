@@ -93,6 +93,8 @@
 %*号版本可以把上下标放在符号的正上方/正下方
 \DeclareMathOperator{\ree}{Re}
 \DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\erfc}{erfc}%误差函数填补
+\DeclareMathOperator{\sineint}{Si}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
@@ -192,10 +194,41 @@ Young
 \end_layout
 
 \begin_layout Standard
-卷积法在描述深非弹性散射（DIS）方面发挥着重要作用。其根本原因是，在包括QCD在内的许多场理论中，结构函数的矩被分解成局部算子的系数函数和期望值。这一点可以用
-算子积扩展和重正化组方程来严格证明。等价地，一个其矩可以用乘积来写的分布，可以通过反梅林变换，用两个分布的卷积来表示。在DIS的情况下，在前导对数阶，这相当于将
-点状成分的硬散射过程的（可计算的、Q2和重正化尺度相关的）截面与（不可计算的、Q'独立的和重正化尺度相关的）质子的概率分布进行折叠，被称为Altarelli-P
-arisi公式。在二阶时，这导致了Bjorken缩放，而在一阶时，它引起了缓慢的对数缩放违反。
+卷积法在描述 
+\series bold
+深度非弹性散射
+\series default
+（DIS）方面发挥着重要作用。其根本原因是，在包括QCD在内的许多 场论中，
+\series bold
+结构函数的矩
+\series default
+（moments）被分解成 系数函数 和 定域算符期望值 的乘积。这一点可以用 
+\series bold
+算符乘积展开
+\series default
+ 和
+\series bold
+重正化群方程
+\series default
+来严格证明。等价地，如果一个 
+\series bold
+分布的矩
+\series default
+ 可以写成乘积的形式，通过反梅林变换，就可以表示成两个分布的卷积。对于 DIS 的情况，在领头对数阶，这相当于将 在点状组分（constituents）上的
+ 
+\series bold
+硬散射过程
+\series default
+的（可计算的、
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+ 和 重正化标度依赖的）截面与（不可计算的、
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+独立、重正化标度依赖的）部分子的概率分布进行折叠（folding），被称为 Altarelli-Parisi 公式。在零阶时，这导致了 Bjorken
+ 标度不变性（Bjorken scaling），而在一阶时，它引起了缓慢的对数标度破坏（scaling violations）。
 \end_layout
 
 \begin_layout Standard
@@ -234,7 +267,7 @@ Formalism
 \end_layout
 
 \begin_layout Standard
-在任意强子目标上的 Inclusive 弹性散射由张量 
+在任意强子目标上的 Inclusive 弹性散射（截面）由张量 
 \begin_inset Formula $W_{\mu\nu}\left(P,q\right)$
 \end_inset
 
@@ -425,7 +458,7 @@ F_{T}\left(\nu,Q^{2}\right)=F_{1}\left(\nu,Q^{2}\right),\quad F_{L}\left(\nu,Q^{
 
 \end_inset
 
-在 Bjorken 极限下，如果光子散射的基本粒子自旋为 
+在 Bjorken 极限下，如果被光子散射的基本粒子自旋为 
 \begin_inset Formula $1/2$
 \end_inset
 
@@ -738,7 +771,11 @@ status open
 \end_layout
 
 \begin_layout Standard
-卷及模型的假设，体现在振幅的折叠过程中：即光子在组分（constituent）
+
+\series bold
+卷积模型
+\series default
+的假设体现在振幅的折叠（folding）过程中：即光子在组分（constituent）
 \begin_inset Formula $h$
 \end_inset
 
@@ -750,19 +787,19 @@ status open
 \begin_inset Formula $t_{ij}^{\mu\nu}\left(k,q\right)$
 \end_inset
 
-描述），和 向前 
+描述），和 
 \begin_inset Formula $\overline{h}$
 \end_inset
 
-–target 在靶粒子
+ 在靶粒子
 \begin_inset Formula $H$
 \end_inset
 
 上的 
 \series bold
-未截腿散射振幅
+未截腿向前散射振幅
 \series default
- 的折叠（folding），
+ 的折叠，
 \begin_inset Formula 
 \begin{equation}
 2MT^{\mu\nu}\left(P,q\right)=\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\chi_{ji}\left(k,P\right)t_{ij}^{\mu\nu}\left(k,q\right).\label{eq:mu13}
@@ -786,12 +823,10 @@ noprefix "false"
 
  表示为
 \begin_inset Formula 
-\begin{equation}
-\chi_{ji}\left(k,P\right)=\begin{cases}
-\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\Phi_{i}^{\dagger}\left(x\right)\Phi_{j}\left(0\right)}{P} & \left(\text{h\ensuremath{=}玻色子}\right)\\
-\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\overline{\Psi}_{i}\left(x\right)\Psi_{j}\left(0\right)}{P} & \left(\text{h\ensuremath{=}费米子}\right)
-\end{cases}\label{eq:mu14}
-\end{equation}
+\begin{align}
+ & \chi_{ji}\left(k,P\right)=\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\Phi_{i}^{\dagger}\left(x\right)\Phi_{j}\left(0\right)}{P}=\left(\text{h\ensuremath{=}玻色子}\right)\label{eq:mu14}\\
+ & \chi_{ji}\left(k,P\right)=\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\overline{\Psi}_{i}\left(x\right)\Psi_{j}\left(0\right)}{P},\quad\left(\text{h\ensuremath{=}费米子}\right)\label{eq:mu15}
+\end{align}
 
 \end_inset
 
@@ -896,7 +931,7 @@ name "fig:mu2"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:mu16"
@@ -906,20 +941,27 @@ noprefix "false"
 
 \end_inset
 
-表示了卷积模型方法的一般假设，即它忽略了末态相互作用和干涉效应ref[5]。为了把上述结果改写成更熟悉的光锥动量分布的卷积，必须对 
+表示了卷积模型方法的一般假设，即它忽略了末态相互作用和干涉效应ref[5]。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了把上述结果改写成更熟悉的光锥动量分布的卷积，必须对 
 \begin_inset Formula $w_{ij}^{\mu\nu}\left(k,q\right)$
 \end_inset
 
- 的形式作进一步假设。为说明这点，让我们考虑虚光子在基本点粒子上的散射。我们将在 sect.3.1 见到，考虑 包含基本费米子的 强子的 横向结构函数
- 
+ 的形式作进一步假设。为说明这点，让我们考虑虚光子在点状基本粒子上的散射。我们将在 sect.3.1 见到，如果认为强子只包含 点状费米子，则在 Bjorken
+ 极限下，对横向结构函数 
 \begin_inset Formula $2F_{T}$
 \end_inset
 
-，在 Bjorken 极限下，对 
-\begin_inset Formula $2F_{T}$
-\end_inset
-
- 有贡献的项可以写成
+ 的贡献可以写成
 \begin_inset Formula 
 \begin{equation}
 \frac{1}{2}P_{\mu\nu}^{T}\left(P,q\right)w_{ij}^{\mu\nu}\left(k,q\right)=O_{ij}\left(k^{+}\right)\left[f_{q/h}\left(z\right)+f_{\overline{q}/h}\left(z\right)\right],\label{eq:mu17}
@@ -939,7 +981,7 @@ noprefix "false"
 \begin_inset Formula $y=k^{+}/P^{+}$
 \end_inset
 
-）。推导可以继续前进，如果我们
+）。对于具有内部结构的复合粒子，如果我们
 \series bold
 假设
 \series default
@@ -947,15 +989,15 @@ noprefix "false"
 \begin_inset Formula $w_{ij}^{\mu\nu}\left(k,q\right)$
 \end_inset
 
- 对于任意的组分，也能写成这种形式，对于具有内部结构的复合粒子。（如果被探针打中的粒子的自旋为零，只需作类似的假设也能写出同类表达式。只不过在这种情况下，点状基
-本粒子的极限不是特别有用，因为横向函数消失了。）这里的假设是：
+ 对于任意的组分也能写成这种形式，推导可以继续前进。（如果被探针打中的粒子的自旋为零，只需作类似的假设也能写出同类表达式。只不过在这种情况下，基本粒子的点状极限
+不是特别有用，因为横向函数为零）这里的假设是：
 \end_layout
 
 \begin_layout Enumerate
 \begin_inset Formula $w_{ij}^{\mu\nu}\left(k,q\right)$
 \end_inset
 
- 所有的洛伦兹结构都包含在 
+ 的所有洛伦兹结构都包含在 
 \begin_inset Formula $O_{ij}$
 \end_inset
 
@@ -986,11 +1028,11 @@ noprefix "false"
 \begin_inset Formula $h$
 \end_inset
 
- 中，找到光锥动量分数处于区间
+ 中，找到光锥动量分数在
 \begin_inset Formula $z\sim z+\dd{z}$
 \end_inset
 
-的夸克 
+区间的夸克 
 \begin_inset Formula $q$
 \end_inset
 
@@ -1049,7 +1091,11 @@ f_{\overline{h}/H}\left(y\right) & =y\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}
 
 \end_inset
 
-对玻色子也有类似的表达式（
+这里乘上的
+\begin_inset Formula $y$
+\end_inset
+
+因子，是为了凑成下面的 Mellin 卷积形式，对玻色子也有类似的表达式（
 \begin_inset Formula $\Psi\to\Phi$
 \end_inset
 
@@ -1066,6 +1112,18 @@ f_{\overline{h}/H}\left(y\right) & =y\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}
 \begin{equation}
 2F_{T}\left(x\right)=MP^{T\mu\nu}\left(P,q\right){\color{red}W_{\mu\nu}\left(P,q\right)}=f_{q/H}\left(x\right)+f_{\overline{q}/H}\left(x\right),\label{eq:mu20}
 \end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & MP^{T\mu\nu}\left(P,q\right)W_{\mu\nu}\left(P,q\right)=f_{q/H}\left(x\right)+f_{\overline{q}/H}\left(x\right)\\
+ & =\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\chi_{ji}\left(k,P\right)P_{\mu\nu}^{T}\left(P,q\right)w_{ij}^{\mu\nu}\left(k,q\right)\sign\left(k^{+}\right)\\
+ & =\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\chi_{ji}\left(k,P\right){\color{blue}O_{ij}\left(k^{+}\right)}\int\dd{z}\delta\left(x-yz\right)\left[f_{q/h}\left(z\right)+f_{\overline{q}/h}\left(z\right)\right],\\
+ & =\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}{\color{blue}\int\dd{y}\chi_{ji}\left(k,P\right)O_{ij}\left(yM\right)\delta\left(y-\frac{k^{+}}{M}\right)}\int\dd{z}\delta\left(x-yz\right)\left[f_{q/h}\left(z\right)+f_{\overline{q}/h}\left(z\right)\right]\\
+ & =\int\dd{y}{\color{blue}\frac{f_{\overline{h}/H}\left(y\right)}{y}}\int\dd{z}\delta\left(x-yz\right)\left[f_{q/h}\left(z\right)+f_{\overline{q}/h}\left(z\right)\right]
+\end{align*}
 
 \end_inset
 
@@ -1087,12 +1145,12 @@ height_special "totalheight"
 thickness "0.4pt"
 separation "3pt"
 shadowsize "4pt"
-framecolor "blue"
+framecolor "black"
 backgroundcolor "white"
 status open
 
 \begin_layout Remark
-这里联合考虑了
+这里联立了以下式子：
 \begin_inset Formula 
 \begin{align*}
  & 2MT^{\mu\nu}\left(P,q\right)=\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\chi_{ji}\left(k,P\right)t_{ij}^{\mu\nu}\left(k,q\right),\quad W^{\mu\nu}\left(P,q\right)=\frac{1}{\pi}\imm T^{\mu\nu}\left(P,q\right)\\
@@ -1103,23 +1161,43 @@ status open
 \end_inset
 
 
+\begin_inset Formula $w_{ij}^{\mu\nu}\left(k,q\right)$
+\end_inset
+
+ 是 
+\begin_inset Formula $t_{ij}^{\mu\nu}\left(k,q\right)$
+\end_inset
+
+ 在 
+\begin_inset Formula $x+i\varepsilon=\left(-q^{+}/k^{+}\right)+i\varepsilon$
+\end_inset
+
+ 的虚部
 \end_layout
 
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Standard
-而
+其中
 \begin_inset Formula $f_{q/H}\left(x\right)$
 \end_inset
 
-是卷积：
+可以表示成 Mellin卷积：
 \begin_inset Formula 
 \begin{equation}
 f_{q/H}\left(x\right)=\int_{-\infty}^{+\infty}\dd{y}\int_{-\infty}^{+\infty}\dd{z}f_{h/H}\left(y\right)f_{q/h}\left(z\right)\delta\left(x-yz\right).\label{eq:mu21}
 \end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+e^{i\ell\left(x-yz\right)}
+\]
 
 \end_inset
 
@@ -1160,6 +1238,42 @@ noprefix "false"
 \end_inset
 
 的横向投影。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Mellin卷积的定义：
+\begin_inset Formula 
+\[
+M\left[f*g\right]\left(x\right)=\int_{0}^{\infty}f\left(y\right)\frac{g\left(x/y\right)}{y}\dd{y}=\int_{0}^{\infty}\int_{0}^{\infty}\dd{y}\dd{z}f\left(y\right)g\left(z\right)\delta\left(x-yz\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1233,7 +1347,7 @@ height_special "totalheight"
 thickness "0.4pt"
 separation "3pt"
 shadowsize "4pt"
-framecolor "blue"
+framecolor "black"
 backgroundcolor "white"
 status open
 
@@ -1512,10 +1626,10 @@ w^{\mu\nu}\left(k,q\right)=\gamma^{\mu}\left(\sla k+\sla q+m\right)\gamma^{\nu}\
 \end_inset
 
  的虚部。
-\begin_inset Formula $\delta\left[\right]$
+\begin_inset Formula $\delta[\cdots]$
 \end_inset
 
- 可以认为来自 Cutting Rule。还使用了公式： 
+ 可以理解成来自 Cutting Rule。还使用了公式： 
 \begin_inset Formula 
 \[
 \delta\left[f\left(x\right)\right]=\sum_{x_{i}}\frac{1}{\abs{f\left(x_{i}\right)}}\delta\left(x-x_{i}\right),\quad x_{i}\text{是\ensuremath{f\left(x\right)=0}\text{的零点}}.
@@ -1733,7 +1847,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename inset/mu-diquark-pdf.png
-	scale 60
+	scale 55
 
 \end_inset
 
