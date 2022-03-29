@@ -6,7 +6,7 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8, 为兼容旧的字体包
 %\usepackage{xeCJK}% 可以用来实现中文断行
 \usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
@@ -18,10 +18,6 @@
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
 %++++++++++++++++++++++++++++++++++++++++++++++++
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
 % 添加图片命令或者背景到每一页的绝对位置，
 % 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
@@ -64,8 +60,11 @@
 \usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
 \definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
 %%%+++++++++++++++++++++++++++++++
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
 \usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
 % 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
 %%%+++++++++++++++++++++++++++++++
@@ -92,31 +91,33 @@
 %设置数学字体
 \usepackage{mathtools}% 定义配对的数学符号,在 unicode-math之前调用
 \usepackage{unicode-math}%在其他字体包如amsmath之后调用
-\setmathfont{Latin Modern Math}
+\setmathfont{STIX Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, 
+% STIX Math, XITS Math, STIX Two Math
 %%++++++++++++++++++++++++++++++++++++++++
-% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
-% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
-% \setmathrm{Latin Modern Roman}
-%%++++++++++++++++++++++++++++++++++++++
+%amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令,
+% 可以用于定义新的算符名称, *号版本可以把上下标放在符号的正上方/正下方
 %\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
-%\DeclareMathOperator{\tr}{tr} %矩阵求迹的符号
-%\DeclareMathOperator{\re}{Re}
-%\DeclareMathOperator{\im}{Im}
-%\DeclareMathOperator{\Res}{Res} %复变函数的留数
-%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\ree}{Re}
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\erfc}{erfc}%误差函数填补
+\DeclareMathOperator{\sineint}{Si}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 \newcommand*{\sla}{\slashed}% feynman slash
+% ++++++++++++++++
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true

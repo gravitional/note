@@ -4,14 +4,14 @@
 
 ## Nginx 解析 PHP
 
-Termux 下的 `Nginx` 解析 `PHP` 这里单独拿出一级标题来叙述, 
+Termux 下的 `Nginx` 解析 `PHP` 这里单独拿出一级标题来叙述,
 成功解析的话,下面安装 `wordpress` 等 `PHP` 网站就会轻松很多.
 
 ## 安装 php-fpm
 
-`Nginx` 本身不能处理 `PHP`, 它只是个 `Web` 服务器, 
-当接收到 `PHP` 请求后发给 `PHP` 解释器处理. 
-`Nginx` 一般是把请求转发给 `fastcgi` 管理进程处理, 
+`Nginx` 本身不能处理 `PHP`, 它只是个 `Web` 服务器,
+当接收到 `PHP` 请求后发给 `PHP` 解释器处理.
+`Nginx` 一般是把请求转发给 `fastcgi` 管理进程处理,
 `PHP-FPM` 是一个 `PHP FastCGI` 管理器, 所以这里得先安装它:
 
 ```bash
@@ -22,7 +22,7 @@ pkg install php-fpm
 
 ### 配置 php-fpm
 
-编辑 php-fpm 的配置文件 www.conf:
+编辑 `php-fpm` 的配置文件 `www.conf`:
 
 ```bash
 vim $PREFIX/etc/php-fpm.d/www.conf

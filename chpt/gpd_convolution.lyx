@@ -6,69 +6,38 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8, 为兼容旧的字体包
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
 \usepackage{geometry} % 整体页面设置
 \geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
 \geometry{top=2cm} %设置版心顶部距离
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
 %++++++++++++++++++++++++++++++++++++++++++++++++
 \usepackage{eso-pic}
-% This package makes it easy to add some picture commands to every page at ab-solute positions
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
 \usepackage{float}%使用[H]选项将浮动题放到确定的位置
-\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
-% xcolor package starts from the basic facilities of the 
-% color package, and provides easy driver-independent access
-%to several kinds of color tints, shades, tones, 
-%and mixes of arbitrary colors
-\usepackage{fontspec}%Advanced font selection in XeLaTeX and LuaLaTeX
-\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
-\usepackage{amsmath,amsfonts} % 数学字体
-\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
-\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
-\usepackage{mathrsfs} % 提供了mathscr 命令
-%++++++++++++++++++++++++++++++++++++++++
-% 设置英文字体
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Roman}
-%设置数学字体
-\usepackage{unicode-math} %boldsymbol,blackboard
-\setmathfont{XITS Math}
-%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math,XITS Math
-%++++++++++++++++++++++++++++++++++++++++
-\usepackage{enumerate} 
-\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
-\usetikzlibrary{shapes.misc,animations}
-\usetikzlibrary{shapes.geometric}% tikz node 形状的库
-\usepackage{siunitx} % 国际单位制
-\usepackage{physics} % 物理包
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{simplewick} 
-% a simple means of drawing Wick contractions above and below expressions. 
-\usepackage{makeidx} 
-% Standard package for creating indexes
-\usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
 %%%+++++++++++++++++++++++++++++++
-\usepackage{listings}
-% 在LaTex中添加代码高亮
-\usepackage{framed}
-% 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
-%定义各种颜色
-\definecolor{codegreen}{rgb}{0,0.6,0}
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{〈style name〉}{〈key=value list〉}
-%stores the key=value list
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
 \lstdefinestyle{codestyle1}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -87,10 +56,51 @@
     showtabs=false,                  
     tabsize=2
 }
-%%++++++++++++++++++++ 
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+%\bm 命令使参数变成粗体
+% Blackboard variants of Computer Modern fonts.
+%\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+\usepackage{tikz-feynman}  % 画费曼图用
+\usepackage{tikz} %画矢量图用
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{mathtools}% 定义配对的数学符号,在 unicode-math之前调用
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{STIX Two Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, 
+% Latin Modern Math, STIX Math, XITS Math, STIX Two Math, Libertinus Math
+%%++++++++++++++++++++++++++++++++++++++++
+%amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令,
+% 可以用于定义新的算符名称, *号版本可以把上下标放在符号的正上方/正下方
 %\DeclarePairedDelimiter\abs{\lvert}{\rvert}
 %\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-%*号版本可以把上下标放在符号的正上方/正下方
 \DeclareMathOperator{\ree}{Re}
 \DeclareMathOperator{\imm}{Im}
 \DeclareMathOperator{\erfc}{erfc}%误差函数填补
@@ -100,13 +110,14 @@
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
 \DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-%\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
 \newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 \newcommand*{\sla}{\slashed}% feynman slash
+% ++++++++++++++++
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
@@ -264,6 +275,10 @@ Young
 
 \begin_layout Section
 Formalism
+\end_layout
+
+\begin_layout Subsection
+PRELIMINARIES
 \end_layout
 
 \begin_layout Standard
@@ -766,7 +781,7 @@ status open
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 卷积模型,Convolution Model
 \end_layout
 
@@ -1082,7 +1097,15 @@ noprefix "false"
 \begin_inset Formula $H$
 \end_inset
 
- 中的光锥动量分布，
+ 中的光锥动量分布，对玻色子也有类似的表达式（
+\begin_inset Formula $\Psi\to\Phi$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\Psi}\to\Phi^{\dagger}$
+\end_inset
+
+）。
 \begin_inset Formula 
 \begin{align}
 f_{\overline{h}/H}\left(y\right) & =y\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\chi_{ji}^{\overline{h}H\to\overline{h}H}\left(k,P\right)O_{ij}\left(k^{+}\right)\delta\left(y-\frac{k^{+}}{M}\right)\label{eq:mu18}\\
@@ -1095,27 +1118,7 @@ f_{\overline{h}/H}\left(y\right) & =y\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}
 \begin_inset Formula $y$
 \end_inset
 
-因子，是为了凑成下面的 Mellin 卷积形式，对玻色子也有类似的表达式（
-\begin_inset Formula $\Psi\to\Phi$
-\end_inset
-
-，
-\begin_inset Formula $\overline{\Psi}\to\Phi^{\dagger}$
-\end_inset
-
-）。使用此定义，可以将结构函数 
-\begin_inset Formula $2F_{T}\left(x\right)=2F_{1}\left(x\right)$
-\end_inset
-
- 使用 靶粒子的夸克分布表示：
-\begin_inset Formula 
-\begin{equation}
-2F_{T}\left(x\right)=MP^{T\mu\nu}\left(P,q\right){\color{red}W_{\mu\nu}\left(P,q\right)}=f_{q/H}\left(x\right)+f_{\overline{q}/H}\left(x\right),\label{eq:mu20}
-\end{equation}
-
-\end_inset
-
-
+因子，是为了凑成下面的 Mellin 卷积形式，
 \begin_inset Formula 
 \begin{align*}
  & MP^{T\mu\nu}\left(P,q\right)W_{\mu\nu}\left(P,q\right)=f_{q/H}\left(x\right)+f_{\overline{q}/H}\left(x\right)\\
@@ -1150,7 +1153,7 @@ backgroundcolor "white"
 status open
 
 \begin_layout Remark
-这里联立了以下式子：
+联立了以下式子：
 \begin_inset Formula 
 \begin{align*}
  & 2MT^{\mu\nu}\left(P,q\right)=\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\chi_{ji}\left(k,P\right)t_{ij}^{\mu\nu}\left(k,q\right),\quad W^{\mu\nu}\left(P,q\right)=\frac{1}{\pi}\imm T^{\mu\nu}\left(P,q\right)\\
@@ -1177,10 +1180,22 @@ status open
 
 \end_inset
 
- 
+
 \end_layout
 
 \begin_layout Standard
+使用此定义，可以将结构函数 
+\begin_inset Formula $2F_{T}\left(x\right)=2F_{1}\left(x\right)$
+\end_inset
+
+ 使用 靶粒子的夸克分布表示：
+\begin_inset Formula 
+\begin{equation}
+2F_{T}\left(x\right)=MP^{T\mu\nu}\left(P,q\right){\color{red}W_{\mu\nu}\left(P,q\right)}=f_{q/H}\left(x\right)+f_{\overline{q}/H}\left(x\right),\label{eq:mu20}
+\end{equation}
+
+\end_inset
+
 其中
 \begin_inset Formula $f_{q/H}\left(x\right)$
 \end_inset
@@ -1190,14 +1205,6 @@ status open
 \begin{equation}
 f_{q/H}\left(x\right)=\int_{-\infty}^{+\infty}\dd{y}\int_{-\infty}^{+\infty}\dd{z}f_{h/H}\left(y\right)f_{q/h}\left(z\right)\delta\left(x-yz\right).\label{eq:mu21}
 \end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-e^{i\ell\left(x-yz\right)}
-\]
 
 \end_inset
 
@@ -1352,7 +1359,7 @@ backgroundcolor "white"
 status open
 
 \begin_layout Remark
-这里的负号，可以从 
+负号可以从 
 \begin_inset Formula $yM=k^{+}$
 \end_inset
 
@@ -1481,16 +1488,27 @@ noprefix "false"
 似的模型，例如 ref14，由于他们不满足以上对称性，只是近似满足 求和规则。
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 SUM RULES
 \end_layout
 
 \begin_layout Standard
-asdfa 
+从形式表达式（formal expressions）中可以直接推导出结构函数的 sum rule。公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的 光锥动量分布 的结果直接导致了
 \begin_inset Formula 
-\begin{equation}
-\int_{-1}^{+1}\dd{y}y^{n-1}f_{h/H}\left(y\right)=\mel{P}{\overline{\Psi}_{i}\left(0\right)O_{ij}\left(-i\partial^{+}\right)\left(\partial^{+}/iM\right)^{n}\Psi_{j}\left(0\right)}{P}\label{eq:mu26}
-\end{equation}
+\begin{align}
+ & f_{\overline{h}/H}\left(y\right)=\frac{yM}{2\pi}{\color{red}\int\dd{z}e^{-iyMz}}\left.\mel{P}{\overline{\Psi}_{i}^{\dagger}\left(\xi\right)O_{ij}\left(yM\right)\Psi_{j}\left(0\right)}{P}\right|_{\xi=\left\{ z,0,0,-z\right\} }\nonumber \\
+ & \int_{-1}^{+1}\dd{y}y^{n-1}f_{h/H}\left(y\right)=\mel{P}{\overline{\Psi}_{i}\left(0\right)O_{ij}\left(-i\partial^{+}\right)\left(\partial^{+}/iM\right)^{n}\Psi_{j}\left(0\right)}{P}\label{eq:mu26}
+\end{align}
 
 \end_inset
 
@@ -1498,43 +1516,34 @@ asdfa
 \begin_inset Formula $q\left(x\right)=-\overline{q}\left(-x\right)$
 \end_inset
 
-。
-\begin_inset Formula 
-\begin{equation}
-F_{q/H}\left(n\right)=\int_{0}^{1}\dd{x}x^{n-1}f_{q/H}\left(x\right),\quad F_{\overline{q}/H}\left(n\right)=\int_{0}^{1}\dd{x}x^{n-1}f_{\overline{q}/H}\left(x\right),\label{eq:mu27}
-\end{equation}
-
+，其中作了替换 
+\begin_inset Formula $yM\to-i\partial_{z}^{+}=-i\partial/\partial z^{-}$
 \end_inset
 
-由此
-\begin_inset Formula 
-\begin{equation}
-\int_{-1}^{+1}\dd{x}x^{n-1}f_{q/H}\left(x\right)=F_{q/H}\left(n\right)+\left(-\right)^{n}F_{\overline{q}/H}\left(n\right)\label{eq:mu28}
-\end{equation}
-
-\end_inset
-
-即只有即粒子和反粒子分布的差（例如费米子数）的奇次 moments，以及粒子和反粒子分部的和（例如动量）的偶次 moments，对应定域算符的期望值。对于
- 
-\begin_inset Formula $f_{h/H}\left(x\right)$
-\end_inset
-
- 和 
-\begin_inset Formula $f_{q/h}\left(x\right)$
-\end_inset
-
- 也有类似的表达式。
+。分布函数的这一结果恰好与另一种推导得到的相同：通过在强子张量中插入 自由费米子流，代替 流算符的对易子 [ref5]。
 \end_layout
 
 \begin_layout Standard
+此外，在 pointlike fermionic constituents（即核子中的夸克）情况下，sum rule
 \begin_inset Formula 
 \begin{equation}
-2F_{T}\left(x\right)=\int_{0}^{1}\dd{y}\int_{-1}^{1}\dd{z}f_{q/N}\left(y\right)\left[\delta\left(1-z\right)-\delta\left(1+z\right)\right]\delta\left(x-yz\right),\label{eq:mu36}
+\int_{-1}^{+1}\dd{x}x^{n-1}f_{q/N}\left(x\right)=\frac{1}{2M}\mel{P}{\overline{\psi}\left(0\right)\gamma^{+}\left(\partial^{+}/iM\right)^{n-1}\psi_{j}\left(0\right)}{P},\label{eq:mu33}
 \end{equation}
 
 \end_inset
 
+将 first moment 和 矢量流的 
+\begin_inset Formula $+$
+\end_inset
 
+ 分量联系起来，second moment 和 自由费米子能动量张量 的 
+\begin_inset Formula $++$
+\end_inset
+
+ 分量联系起来。
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -1551,7 +1560,14 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-在 diquark spectator 模型中计算核子的结构函数
+在 diquark spectator 模型中计算核子的结构函数,
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mu3"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1566,6 +1582,154 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+卷积费曼图中 微扰QCD无法计算的部分是 向前 antiquark–nucleon 振幅 
+\begin_inset Formula $\chi_{ji}\left(k,P\right)$
+\end_inset
+
+。一个满足 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的 support 约束的模型计算的实例是， 核子结构函数的 diquark spectator 模型[ref28]。在这种情况下，向前 反夸克–核子振幅
+ 通过形式为 
+\begin_inset Formula $ig\overline{\Psi}\left(x\right)\psi\left(x\right)\phi\left(x\right)$
+\end_inset
+
+ 的 核子–夸克–双夸克顶点被 双夸克耦合所饱和（saturated，图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:mu3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+），导致振幅中出现一个标量 diquark：
+\begin_inset Formula 
+\begin{equation}
+i\chi\left(k,P\right)=-\frac{g^{2}\left(k^{2}\right)\left(\sla k+m\right)U\left(P\right)\overline{U}\left(P\right)\left(\sla k+m\right)}{\left(k^{2}-m^{2}+i\varepsilon\right)^{2}\left[\left(P-k\right)^{2}-M_{R}^{2}+i\varepsilon\right]}.\label{eq:mu34}
+\end{equation}
+
+\end_inset
+
+此处 
+\begin_inset Formula $\overline{U}\left(P\right)$
+\end_inset
+
+标记动量为
+\begin_inset Formula $P$
+\end_inset
+
+ 的核子旋量，
+\begin_inset Formula $m$
+\end_inset
+
+ 和 
+\begin_inset Formula $k$
+\end_inset
+
+ 是夸克的质量和动量，
+\begin_inset Formula $M_{R}$
+\end_inset
+
+是旁观 diquark 的质量。当然，原则上可以考虑所有可能的中间态，包括非标量的谱，结构函数也可以依赖于 
+\begin_inset Formula $\left(P-k\right)^{2}$
+\end_inset
+
+。然而如同引言中提到了，我们只关注最简单的情形，避免不必要的麻烦。将振幅与 狄拉克矩阵
+\begin_inset Formula $\gamma^{+}/2k^{+}$
+\end_inset
+
+[
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+]结合得到：
+\begin_inset Formula 
+\begin{equation}
+\frac{i}{2k^{+}}\Tr\left(\gamma^{+}\chi\right)=-\frac{g^{2}\left(k^{2}\right)\left[\left(2k\cdot P+2mM\right)k^{+}-\left(k^{2}-m^{2}\right)P^{+}\right]}{k^{+}\left(k^{2}-m^{2}+i\varepsilon\right)^{2}\left[\left(P-k\right)^{2}-M_{R}^{2}+i\varepsilon\right]}\label{eq:mu35}
+\end{equation}
+
+\end_inset
+
+在这里 
+\begin_inset Formula $M$
+\end_inset
+
+ 是核子质量。使用方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到横向结构函数为：
+\begin_inset Formula 
+\begin{equation}
+2F_{T}\left(x\right)=\int_{0}^{1}\dd{y}\int_{-1}^{1}\dd{z}f_{q/N}\left(y\right)\left[\delta\left(1-z\right)-\delta\left(1+z\right)\right]\delta\left(x-yz\right),\label{eq:mu36}
+\end{equation}
+
+\end_inset
+
+对玻色子有类似的结果。注意到，若使用通常的 粒子和反粒子分布的 moments ，
+\begin_inset Formula 
+\begin{equation}
+F_{q/H}\left(n\right)=\int_{0}^{1}\dd{x}x^{n-1}f_{q/H}\left(x\right),\quad F_{\overline{q}/H}\left(n\right)=\int_{0}^{1}\dd{x}x^{n-1}f_{\overline{q}/H}\left(x\right),\label{eq:mu27}
+\end{equation}
+
+\end_inset
+
+则表示成：
+\begin_inset Formula 
+\begin{equation}
+\int_{-1}^{+1}\dd{x}x^{n-1}f_{q/H}\left(x\right)=F_{q/H}\left(n\right)+\left(-\right)^{n}F_{\overline{q}/H}\left(n\right)\label{eq:mu28}
+\end{equation}
+
+\end_inset
+
+其中使用了
+\begin_inset Formula $f_{h/H}\left(y\right)=-f_{\overline{h}/H}\left(-y\right)$
+\end_inset
+
+。上式说明，只有即粒子和反粒子分布的差（例如费米子数）的奇次 moments，以及粒子和反粒子分部的和（例如动量）的偶次 moments，对应定域算符的期望值。
+对于 
+\begin_inset Formula $f_{h/H}\left(x\right)$
+\end_inset
+
+ 和 
+\begin_inset Formula $f_{q/h}\left(x\right)$
+\end_inset
+
+ 也有类似的表达式。
 \end_layout
 
 \begin_layout Section
@@ -1593,11 +1757,11 @@ w^{\mu\nu}\left(k,q\right)=\gamma^{\mu}\left(\sla k+\sla q+m\right)\gamma^{\nu}\
 
 \end_inset
 
-容易直接计算出贡献到 
+容易直接计算出它对
 \begin_inset Formula $W^{\mu\nu}\left(P,q\right)$
 \end_inset
 
- 横向投影的部分。在 
+ 横向投影的贡献，在 
 \begin_inset Formula $q^{-}\to\infty$
 \end_inset
 
@@ -1611,7 +1775,23 @@ w^{\mu\nu}\left(k,q\right)=\gamma^{\mu}\left(\sla k+\sla q+m\right)\gamma^{\nu}\
 \end_inset
 
 
-\end_layout
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
 \begin_layout Remark
 \begin_inset Formula $w_{ij}^{\mu\nu}\left(k,q\right)$
@@ -1638,13 +1818,10 @@ w^{\mu\nu}\left(k,q\right)=\gamma^{\mu}\left(\sla k+\sla q+m\right)\gamma^{\nu}\
 \end_inset
 
 
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
 考虑到 
 \begin_inset Formula $z$
 \end_inset
@@ -1662,7 +1839,7 @@ w^{\mu\nu}\left(k,q\right)=\gamma^{\mu}\left(\sla k+\sla q+m\right)\gamma^{\nu}\
 \end_inset
 
 。因此对于费米型基本例子，有
-\begin_inset Formula $O_{ij}\left(k\right)=\left(\gamma^{+}\right)_{ij}2k^{+}$
+\begin_inset Formula $O_{ij}\left(k\right)=\left(\gamma^{+}\right)_{ij}/2k^{+}$
 \end_inset
 
 ，由此并使用方程
@@ -1675,7 +1852,7 @@ noprefix "false"
 
 \end_inset
 
-可以得到：
+可以得到夸克在核子中的分布：
 \begin_inset Formula 
 \begin{align*}
 f_{\overline{h}/H}\left(y\right)=\frac{yM}{2\pi}{\color{red}\int\dd{z}e^{-iyMz}}\left.\mel{P}{\overline{\Psi}_{i}^{\dagger}\left(\xi\right)O_{ij}\left(yM\right)\Psi_{j}\left(0\right)}{P}\right|_{\xi=\left\{ z,0,0,-z\right\} }
@@ -1686,16 +1863,106 @@ f_{\overline{h}/H}\left(y\right)=\frac{yM}{2\pi}{\color{red}\int\dd{z}e^{-iyMz}}
 
 \begin_inset Formula 
 \begin{align}
- & q\left(x\right)=\frac{1}{4\pi}\int\dd{z}e^{-ixMz}\left.\mel{P}{\overline{\Psi}\left(\xi\right)\gamma^{+}\Psi\left(0\right)}{P}\right|_{\xi=\left\{ z,0,0,-z\right\} },\label{eq:mu31}\\
- & \overline{q}\left(x\right)=\frac{-1}{4\pi}\int\dd{z}e^{+ixMz}\left.\mel{P}{\overline{\Psi}\left(0\right)\gamma^{+}\Psi\left(\xi\right)}{P}\right|_{\xi=\left\{ z,0,0,-z\right\} },\label{eq:mu32}
+ & q\left(x\right)=\frac{1}{2k^{+}}\frac{xM}{2\pi}\int\dd{z}e^{-ixMz}\left.\mel{P}{\overline{\Psi}\left(\xi\right)\gamma^{+}\Psi\left(0\right)}{P}\right|_{\xi=\left\{ z,0,0,-z\right\} },\label{eq:mu31}\\
+ & \overline{q}\left(x\right)=\frac{1}{2k^{+}}\frac{-xM}{2\pi}\int\dd{z}e^{+ixMz}\left.\mel{P}{\overline{\Psi}\left(0\right)\gamma^{+}\Psi\left(\xi\right)}{P}\right|_{\xi=\left\{ z,0,0,-z\right\} },\label{eq:mu32}
 \end{align}
 
 \end_inset
 
-并且
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Remark
+靶粒子中的 constituent 分布满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu23"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f_{h/H}\left(y\right)=-f_{\overline{h}/H}\left(-y\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/diquark-model.png
+	scale 70
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 1
+use_makebox 0
+width "48text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+ & P^{\mu}=\left(\frac{M}{\sqrt{2}},\frac{M}{\sqrt{2}},\sbf0\right),\quad k^{\mu}=\left(\frac{yM}{\sqrt{2}},k^{-},\sbf k_{\perp}\right)\\
+ & P_{R}^{\mu}=\left(\frac{\left(1-y\right)M}{\sqrt{2}},\frac{M}{\sqrt{2}}-k^{-},-\sbf k_{\perp}\right),\quad P_{R}^{2}=M_{R}^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with
 \begin_inset Formula 
 \begin{align}
-f_{q/N}\left(y\right) & =\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\frac{g^{2}(k^{2})}{\left(k^{2}-m^{2}\right)^{2}}\left[\left(2k\cdot P+2mN\right)y-\left(k^{2}-m^{2}\right)\right]\nonumber \\
+f_{q/N}\left(y\right) & =\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\frac{g^{2}(k^{2})}{\left(k^{2}-m^{2}\right)^{2}}\left[\left(2k\cdot P+2mM\right)y-\left(k^{2}-m^{2}\right)\right]\nonumber \\
  & \times\left(2\pi\right)\delta\left[\left(P-k\right)^{2}-M_{R}^{2}\right]\theta\left(k^{+}\right)\theta\left(M-k^{+}\right)\delta\left(y-\frac{k^{+}}{M}\right)\nonumber \\
  & =\frac{\theta\left(y\right)\theta\left(1-y\right)}{16\pi^{2}}\int_{t_{\text{min}}}^{\infty}\dd{t}g^{2}(-t)\left[\frac{y\left[\left(M+m\right)^{2}-M_{R}^{2}\right]}{\left(m^{2}+t\right)^{2}}+\frac{1-y}{m^{2}+t}\right]\nonumber \\
  & =\frac{\theta\left(y\right)\theta\left(1-y\right)}{16\pi^{2}\left(1-y\right)}\int_{0}^{\infty}\dd{k_{\perp}^{2}}g^{2}(-t)\frac{\left(k^{+}+m\right)^{2}+k_{\perp}^{2}}{\left(m^{2}+t\right)^{2}},\label{eq:mu37}
@@ -1715,16 +1982,16 @@ t_{\text{min}}=\frac{y}{1-y}\left[M_{R}^{2}-\left(1-y\right)M^{2}\right].\label{
 
 \end_inset
 
-此结果可以通过在  
+为得到此精确结果，需要在 
 \begin_inset Formula $P_{R}^{-}$
 \end_inset
 
- 复平面上计算积分得到，
+ 复平面上求解积分，其中
 \begin_inset Formula $P_{R}$
 \end_inset
 
- 是 旁观 diquark 的动量。顶点函数中的任何 奇点或者被忽略(25,29)，或者 通过在它们的分母上加上一个小的虚部来吸收（incorporated）。
-表达式中的 
+ 是 旁观 diquark 的动量。顶点函数中的任何 奇点或者被忽略[ref25,29]，或者 通过在它们的分母上加上一个小的虚部来吸收（incorporate
+d）。表达式中的 
 \begin_inset Formula $\theta$
 \end_inset
 
@@ -1797,7 +2064,7 @@ noprefix "false"
 \begin_inset Formula $g\left(k^{2}\right)\propto1/\left(k^{2}-\Lambda^{2}\right)$
 \end_inset
 
-作为顶点函数的显式例子见于图
+作为顶点函数的显式计算的例子，见于图
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:mu4"
@@ -1827,11 +2094,11 @@ noprefix "false"
 \begin_inset Formula $\overline{q}\left(x\right)$
 \end_inset
 
- 为零，即在物理区域没有反夸克（antiquarks）。所有在 sect.2 中推导和提到的对称性都满足。注意到 
+ 为零，即在物理区域没有反夸克（antiquarks）。所有在 sect.2 中推导和提到的对称性都满足。值的注意并不要求 
 \begin_inset Formula $x=0$
 \end_inset
 
- 并不要求 
+ 时
 \begin_inset Formula $q\left(x\right)=0$
 \end_inset
 
@@ -1908,6 +2175,432 @@ name "fig:mu4"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Example
+在此处可以提出一个关于 
+\series bold
+规范不变性
+\series default
+ 的有趣观察。原则上，用于计算 
+\begin_inset Formula $\chi_{ji}\left(k,P\right)$
+\end_inset
+
+ 的模型，在与 
+\begin_inset Formula $W_{ij}^{\mu\nu}\left(k,q\right)$
+\end_inset
+
+ 收缩产生张量 
+\begin_inset Formula $W^{\mu\nu}\left(P,q\right)$
+\end_inset
+
+时，必须产生 规范不变 的结果。为了弄清楚 流守恒 的最低要求是什么，写出最一般的 gauge–variant 强子张量：
+\begin_inset Formula 
+\begin{equation}
+MW_{\mu\nu}\left(P,q\right)=MW_{\mu\nu}^{0}\left(P,q\right)+P_{\mu\nu}^{Q}\left(P,q\right)F_{Q}\left(\nu,Q^{2}\right)+P_{\mu\nu}^{QL}\left(P,q\right)F_{QL}\left(\nu,Q^{2}\right),\label{eq:mu39}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+P_{\mu\nu}^{Q}\left(P,q\right)=\frac{q_{\mu}q_{\nu}}{q^{2}},\quad P_{\mu\nu}^{QL}\left(P,q\right)=\frac{1}{\sqrt{-q^{2}\tilde{P}^{2}}}\left(\tilde{P}_{\mu}q_{\nu}+\tilde{P}_{\nu}q_{\mu}\right).\label{eq:mu40}
+\end{equation}
+
+\end_inset
+
+而 
+\begin_inset Formula $W_{\mu\nu}^{0}\left(P,q\right)$
+\end_inset
+
+ 是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+规范不变的部分。值得注意的是，采用以上定义，可以用 
+\begin_inset Formula $P^{T\mu\nu}\left(P,q\right)$
+\end_inset
+
+，
+\begin_inset Formula $P^{L\mu\nu}\left(P,q\right)$
+\end_inset
+
+，
+\begin_inset Formula $P_{\mu\nu}^{Q}\left(P,q\right)$
+\end_inset
+
+，
+\begin_inset Formula $P_{\mu\nu}^{QL}\left(P,q\right)$
+\end_inset
+
+ 从强子张量 
+\begin_inset Formula $W_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+ 中，分别投影出 
+\begin_inset Formula $2F_{T}\left(\nu,Q^{2}\right)$
+\end_inset
+
+，
+\begin_inset Formula $F_{L}\left(\nu,Q^{2}\right)$
+\end_inset
+
+，
+\begin_inset Formula $F_{Q}\left(\nu,Q^{2}\right)$
+\end_inset
+
+和 
+\begin_inset Formula $-2F_{QL}\left(\nu,Q^{2}\right)$
+\end_inset
+
+。此外，这些投影算符是使用 
+\begin_inset Formula $P^{\mu}$
+\end_inset
+
+，
+\begin_inset Formula $P^{\nu}$
+\end_inset
+
+，
+\begin_inset Formula $q^{\mu}$
+\end_inset
+
+，
+\begin_inset Formula $q^{\nu}$
+\end_inset
+
+和 
+\begin_inset Formula $g^{\mu\nu}$
+\end_inset
+
+能构造出的所有算符（除了trivial 的整体常数），这与 ref21 中的处理不同，在那里投影算符 only fixed up to factors
+ involving 
+\begin_inset Formula $q^{\mu}$
+\end_inset
+
+ or 
+\begin_inset Formula $q^{\nu}$
+\end_inset
+
+，因为那里没有定义 规范变化 的项。
+\begin_inset Formula $P^{T\mu\nu}\left(P,q\right)$
+\end_inset
+
+ 与 费米子 constituent's 张量 
+\begin_inset Formula $w_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+ 收缩的结果已展示在 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。另外三个结构函数的同等收缩也可以作类似推导，在 Bjorken 极限下，它们表示为
+\begin_inset Formula 
+\begin{align}
+ & P^{T\mu\nu}\left(P,q\right)w_{\mu\nu}\left(k,q\right)=\left(1-z\right)\frac{\gamma^{+}}{2Mx}\delta\left(1-z\right)-\left[z\leftrightarrow-z\right],\nonumber \\
+ & P^{Q\mu\nu}\left(P,q\right)w_{\mu\nu}\left(k,q\right)=\left(z-1\right)\frac{\gamma^{+}}{2Mx}\delta\left(1-z\right)-\left[z\leftrightarrow-z\right],\label{eq:mu41}\\
+ & P^{QL\mu\nu}\left(P,q\right)w_{\mu\nu}\left(k,q\right)=\left(1-z\right)\frac{\gamma^{+}}{Mx}\delta\left(1-z\right)+\left[z\leftrightarrow-z\right].\nonumber 
+\end{align}
+
+\end_inset
+
+由于 
+\begin_inset Formula $1-z$
+\end_inset
+
+ 处的 
+\begin_inset Formula $\delta$
+\end_inset
+
+–函数，这些贡献消失了。因此，我们得到的结果是，在 Bjorken 极限中强子张量是 规范不变的，而与用来计算 
+\begin_inset Formula $\chi_{ji}\left(k,P\right)$
+\end_inset
+
+ 的模型无关。
+\end_layout
+
+\begin_layout Subsection
+在 dressed 核子上的散射
+\end_layout
+
+\begin_layout Example
+The Sullivan process.
+ 在 Sullivan 过程中[ref30]，当探针在 dressed 核子的 pion 上散射时，存在一个 核子（也可能是 
+\begin_inset Formula $\Delta$
+\end_inset
+
+粒子）spectator。相关的振幅画在 图.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:mu5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a，动量的定义类似前文。假设 核子–核子–介子耦合具有标准形式 
+\begin_inset Formula $g_{\pi NN}\overline{\Psi}\left(x\right)\gamma_{5}\Psi\left(x\right)\pi\left(x\right)$
+\end_inset
+
+（我们无需担心 isospin 结构，因为与这里的论证无关），卷积方法中需要的向前 pion–nucleon 振幅为：
+\begin_inset Formula 
+\begin{align}
+i\chi\left(k,P\right) & =\frac{g_{\pi NN}^{2}\left(k^{2}\right)}{\left(k^{2}-m_{\pi}^{2}+i\varepsilon\right)^{2}}\frac{\overline{U}\left(P\right)\gamma_{5}\left(\sla P-\sla k+M\right)\gamma_{5}U\left(P\right)}{\left(P-k\right)^{2}-M^{2}+i\varepsilon}+\left(k\leftrightarrow-k\right)\nonumber \\
+ & =\frac{g_{\pi NN}^{2}\left(k^{2}\right)}{\left(k^{2}-m_{\pi}^{2}+i\varepsilon\right)^{2}}\frac{2k\cdot P}{\left(P-k\right)^{2}-M^{2}+i\varepsilon}+\left(k\leftrightarrow-k\right).\label{eq:mu42}
+\end{align}
+
+\end_inset
+
+如前所述，我们不考虑顶点函数
+\begin_inset Formula $g$
+\end_inset
+
+对
+\begin_inset Formula $\left(k-P\right)^{2}$
+\end_inset
+
+的依赖，同时也忽略更重的 spectator 态的贡献。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/mu-forward-pion-nucleon.png
+	scale 45
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $N\to\pi+N$
+\end_inset
+
+过程的向前 pion–nucleon 振幅
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mu5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+现在我们需要知道 
+\begin_inset Formula $W_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+的横向投影，我们照常假设 constituent 张量 
+\begin_inset Formula $w_{\mu\nu}\left(k,q\right)$
+\end_inset
+
+ 的结构等同 
+\series bold
+在壳结构
+\series default
+，在此假设下，
+\begin_inset Formula $w_{\mu\nu}^{\pi}\left(k,q\right)$
+\end_inset
+
+ 对
+\begin_inset Formula $W_{\mu\nu}\left(P,q\right)$
+\end_inset
+
+横向投影的贡献为：
+\begin_inset Formula 
+\begin{align}
+\frac{1}{2}P^{T\mu\nu}\left(P,q\right)w_{\mu\nu}\left(k,q\right) & =\frac{1}{2}P^{T\mu\nu}\left(P,q\right)P^{T\mu\nu}\left(k,q\right)\left[f_{q/\pi}\left(z\right)+f_{\overline{q}/\pi}\left(z\right)\right]\nonumber \\
+ & \stackrel{q^{-}\to\infty}{=}f_{q/\pi}\left(z\right)+f_{\overline{q}/\pi}\left(z\right),\label{eq:mu43}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+2MW_{\mu\nu}\left(P,q\right) & =\left({\color{blue}-g_{\mu\nu}+\frac{q_{\mu}q_{\nu}}{q^{2}}+\frac{\tilde{P}_{\mu}\tilde{P}_{\nu}}{\tilde{P}^{2}}}\right)2F_{T}\left(\nu,Q^{2}\right)+{\color{blue}\frac{\tilde{P}_{\mu}\tilde{P}_{\nu}}{\tilde{P}^{2}}}2F_{L}\left(\nu,Q^{2}\right)\\
+ & ={\color{blue}P_{\mu\nu}^{T}\left(P,q\right)}2F_{T}\left(\nu,Q^{2}\right)+{\color{blue}P_{\mu\nu}^{L}\left(P,q\right)}2F_{L}\left(\nu,Q^{2}\right)\\
+\tilde{P_{\mu}} & =P_{\mu}-\frac{P\cdot q}{q^{2}}q_{\mu},\quad\nu=\frac{P\cdot q}{M},\quad x=\frac{Q^{2}}{2M\nu}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+其中我们使用了，在 
+\begin_inset Formula $q^{-}\to\infty$
+\end_inset
+
+极限下，
+\begin_inset Formula $P^{T\mu\nu}\left(P,q\right)P^{T\mu\nu}\left(k,q\right)\to2$
+\end_inset
+
+，而与 
+\begin_inset Formula $P^{L\mu\nu}\left(P,q\right)$
+\end_inset
+
+的收缩为零，与 
+\begin_inset Formula $P^{Q\mu\nu}\left(P,q\right)$
+\end_inset
+
+和 
+\begin_inset Formula $P^{QL\mu\nu}\left(P,q\right)$
+\end_inset
+
+的收缩也消失。因此对于 pion 
+\begin_inset Formula $O_{ij}\left(k^{+}\right)=1_{ij}$
+\end_inset
+
+，所以可以把 
+\begin_inset Formula $2F_{T}\left(x\right)$
+\end_inset
+
+写成： pion 在核子中光锥动量分布，卷积上 夸克（和反夸克）在 pion 中的分布。结果是：
+\begin_inset Formula 
+\begin{align}
+f_{\pi/N}\left(y\right) & =y\int\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\Bigg[\frac{(-k^{2})g_{\pi NN}^{2}\left(k^{2}\right)}{\left(k^{2}-m_{\pi}^{2}\right)^{2}}2\pi\delta\left(2P\cdot k-k^{2}\right)\theta\left(k^{+}\right)\theta\left(M-k^{+}\right)\nonumber \\
+ & +\left(k\leftrightarrow-k\right)\Bigg]\delta\left(y-\frac{k^{+}}{M}\right)\nonumber \\
+ & =\frac{y}{16\pi^{2}\left(1-y\right)}\int_{t_{\text{min}}}^{x}\dd{t}\frac{tg_{\pi NN}^{2}\left(-t\right)}{\left(t+m_{\pi}^{2}\right)^{2}}\theta\left(y\right)\theta\left(1-y\right)-\left(y\leftrightarrow-y\right),\label{eq:mu44}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $t$
+\end_inset
+
+积分的下限为
+\begin_inset Formula 
+\begin{equation}
+t_{\text{min}}=\frac{y^{2}}{1-y}M^{2}.\label{eq:mu45}
+\end{equation}
+
+\end_inset
+
+pion （类空）不变质量平方的运动学最小值，是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu38"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的特殊情况，其中 spectator 质量 
+\begin_inset Formula $M_{R}$
+\end_inset
+
+取核子质量
+\begin_inset Formula $M$
+\end_inset
+
+ 。
+\begin_inset Formula 
+\[
+t_{\text{min}}=\frac{y}{1-y}\left[M_{R}^{2}-\left(1-y\right)M^{2}\right].
+\]
+
+\end_inset
+
+注意到 
+\begin_inset Formula $f_{\pi/N}\left(y\right)$
+\end_inset
+
+ 关于
+\begin_inset Formula $y$
+\end_inset
+
+反对称，因为我们认为 pions 是 selfconjugate 粒子，所以 
+\begin_inset Formula $f_{\pi/N}\left(y\right)=-f_{\overline{\pi}/N}\left(y\right)=-f_{\pi/N}\left(-y\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+要将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu44"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+文献中的通常结果比较[30,31,15]，应该加上同位旋。结果将会大
+\begin_inset Formula $3$
+\end_inset
+
+倍，即
+\begin_inset Formula 
+\[
+f_{\pi^{0}/p}\left(y\right)=\frac{1}{3}f_{\pi/p}\left(y\right),\quad f_{\pi^{+}/p}\left(y\right)=\frac{2}{3}f_{\pi/p}\left(y\right),
+\]
+
+\end_inset
+
+与
+\begin_inset Formula $N\to N\pi$
+\end_inset
+
+耦合的相关 Clebsch–Gordan 系数一致。还应该注意的是，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mu44"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中显式表明了 
+\begin_inset Formula $f_{\pi/p}\left(y\right)$
+\end_inset
+
+ 的 support 性质。
 \end_layout
 
 \begin_layout Section

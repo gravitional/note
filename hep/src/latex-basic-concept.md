@@ -350,6 +350,13 @@ kpsewhich latinmodern-math.otf
 \XeTeXlinebreakskip = 0pt plus 1p
 ```
 
+## 免费数学字体
+
+[free-math-font-survey](https://www.ctan.org/pkg/free-math-font-survey)
+
+本文件是对可用于TeX和LaTeX的免费数学字体的调查.
+文中提供了每种字体的例子, 获取字体的链接, 以及加载相关LaTeX软件包的命令.
+
 ## fontenc
 
 [fontenc –selecting font encodings](https://www.ctan.org/pkg/fontenc)
@@ -357,9 +364,11 @@ kpsewhich latinmodern-math.otf
 
 `fontenc`指定字体编码(确定使用哪种字体),而不是输入编码.
 
-`TeX`的默认字体编码(`OT1`)为`7`位,并使用具有`128`个字形的字体,因此不包括带重音符号的字符作为单个字形. 因此,通过在现有的`o`字形上添加一个重音来制作字母`ö`.
+`TeX`的默认字体编码(`OT1`)为`7`位,并使用具有`128`个字形的字体,
+因此不包括带重音符号的字符作为单个字形. 因此,通过在现有的`o`字形上添加一个重音来制作字母`ö`.
 `T1`字体编码是一种8位编码,并使用具有`256`个字形的字体. 因此,`ö`是字体中的实际单个字形.
-许多较早的字体也为它们设计了`T1`变体,并且许多较新的字体仅在`T1`中可用. 我认为`Computer Modern`字体最初是`OT1`,而`Latin Modern`是T1.
+许多较早的字体也为它们设计了`T1`变体,并且许多较新的字体仅在`T1`中可用.
+我认为`Computer Modern`字体最初是`OT1`,而`Latin Modern`是T1.
 
 如果您不使用`\usepackage[T1]{fontenc}`,
 
@@ -374,3 +383,189 @@ kpsewhich latinmodern-math.otf
 
 另外,`Document Settings`--`Language`中可设置语言,以及`xeTeX,utf-8`编码.
 可以在`Insert`菜单栏中插入`beamer`特有的格式.
+
+## XeTeX和LuaTeX的系统字体配置
+
+[3.4.4 System font conﬁguration for XeTeX and LuaTeX](https://www.tug.org/texlive/doc/texlive-en/texlive-en.html)
+
+手动安装 `TexLive` 时, 也许需要配置环境变量和缓存, 才能让 `TeX` 引擎找到已安装的字体.
+
+`XeTeX` 和 `LuaTeX` 可以使用系统上安装的任何字体, 而不仅仅是 `TeX树` 中的字体.
+它们通过相关但不完全相同的方法来完成这些工作.
+
+在 `Windows` 上, 与 `TeX Live` 一起安装的字体会自动通过 `字体名称` 提供给 `XeTeX` 使用.
+在 `Mac OS X` 上, 支持字体名称查询需要额外的步骤; 请参见 [MacTeX网页](https://tug.org/mactex).
+对于其他 `Unix` 系统, 能够通过字体名称找到 `TeX Live` 提供的字体的程序如下.
+
+为了便于操作, 在安装 `xetex` 软件包时(无论是初始安装还是后来),
+脚本会在 `TEXMFSYSVAR/fonts/conf/texlive-fontconfig.conf` 中创建必要的配置文件.
+`TEXMFSYSVAR` 变量可通过 `tlmgr conf` 命令 查看.
+
+设置 `TeX Live` 字体供全系统使用(假设你有 `root` 权限), 步骤如下.
+
++ 将 `texlive-fontconfig.conf` 文件复制到 `/etc/fonts/conf.d/09-texlive.conf`.
++ 运行 `fc-cache -fsv`.
+
+如果你没有root 权限来执行上述步骤, 或者你想让 `TeX Live` 字体只对某个用户可用, 你可以做以下事情.
+
++ 将 `texlive-fontconfig.conf` 文件复制到 `~/.fonts.conf`, 其中 `~` 是你的主目录.
++ 运行 `fc-cache -fv`.
+
+你可以运行 `fc-list` 来查看系统字体的名称.
+咒语 `fc-list : family style file spacing`(所有参数都是字面字符串)显示一些广泛的有趣信息.
+
+## 预设的 texmf 树概述
+
+[2.3 Overview of the predeﬁned texmf trees](https://www.tug.org/texlive/doc/texlive-en/texlive-en.html)
+
+本节列出了 预设的 变量,
+这些变量指定了系统使用的 `texmf树` 和它们的目的, 以及 `TeX Live` 的默认布局.
+
+`tlmgr conf` 命令将显示这些变量的值, 这样你就可以很容易地找出它们与对应的具体目录.
+
+所有的 `目录树`, 包括个人的, 都应该遵循 `TeX目录结构`,
+[TDS](https://tug.org/tds), 及其所有的子目录, 否则可能找不到文件.
+
+第3.4.6节(第41页)对此有更详细的描述.
+这里的顺序与搜索树的顺序相反, 也就是说, 列表中 较晚的树 `覆盖` 较早的树.
+
++ `TEXMFDIST`;
+
+这棵树几乎保存了原发行版中所有的文件--`配置文件`, `脚本`, `软件包`, `字体` 等
+(主要的例外是每个平台的可执行文件, 它们被保存在一个同级目录 `bin/` 中).
+
++ `TEXMFSYSVAR`;
+
+`texconfig-sys`, `updmap-sys` 和 `fmtutil-sys` 以及 `tlmgr` 使用的(site-wide)树,
+用来存储(缓存)运行时数据, 如 `格式文件` 和生成的 `map 文件`.
+
++ `TEXMFSYSCONFIG`;
+`texconfig-sys`, `updmap-sys` 和 `fmtutil-sys` 等工具所使用的(site-wide)树, 用来存储修改后的配置数据.
+
++ `TEXMFLOCAL`;
+
+管理员可以用来在全系统安装额外的或更新的 `宏`, `字体` 等的树.
+
++ `TEXMFHOME`;
+
+用户可以用来安装额外的或更新的 `宏`, `字体` 等的树.
+这个变量展开时将动态调整, 为每个用户找到他们自己的单独目录.
+
++ `TEXMFVAR`;
+
+`texconfig`, `updmap-user` 和 `fmtutil-user` 使用的(个人)树,
+用于存储(缓存)运行时数据, 如格式文件和生成的地图文件.
+
++ `TEXMFCONFIG`
+
+`texconfig`, `updmap-sys` 和 `fmtutil-sys` 等工具所使用的(个人)树,
+用于存储修改后的配置数据.
+
++ `TEXMFCACHE`
+
+`ConTeXt MkIV` 和 `LuaLaTeX` 用来存储(缓存)运行时数据的树;
+默认为 `TEXMFSYSVAR`, 或者(如果它不可写), `TEXMFVAR`.
+
+### 默认的布局
+
+```yaml
+全系统根目录
+可以跨越多个 TeX Live 版本( Unix 上默认为 /usr/local/texlive).
+
+2020: 以前的版本.
+2021: 当前的版本.
+        bin:
+            i386-linux:
+                GNU/Linux二进制文件(32位)
+            ...
+            universal-darwin:
+                Mac OS X二进制文件
+            x86_64-linux:
+                GNU/Linux二进制文件(64位)
+            win32:
+                Windows二进制文件
+        texmf-dist:
+            TEXMFDIST 和 TEXMFMAIN
+        texmf-var:
+            texmfsysvar, texmfcache
+        texmf-config:
+            TEXMFSYSCONFIG
+texmf-local:
+    TEXMFLOCAL, 打算从一个版本保留到另一个版本.
+
+用户的主目录:
+    (`$HOME` 或 `%USERPROFILE%`)
+    .texlive2020:
+        为以前的版本私人生成和配置的数据.
+    .texlive2021:
+        当前版本的私人生成和配置数据.
+        texmf-var:
+            TEXMFVAR, TEXMFCACHE
+        texmf-config:
+            TEXMFCONFIG
+    texmf:
+        TEXMFHOME 个人宏, 等等.
+```
+
+## ubuntu texlive 手动配置字体位置
+
+[font not found](https://tex.stackexchange.com/questions/132888/fontawesome-font-not-found)
+
+如果你创建一些 `符号链接`,
+就可以避免在安装新版 `TeX Live` 时重复更新配置文件.
+
+作为管理你的 `TeX` 安装的用户(可能指 `root` 或 `sudo`).
+
+```bash
+cd /usr/local/texlive
+ln -s 2022 current.2022
+ln -s current.2022 current
+```
+
+配置文件 `09-texlive-fonts.conf` 应该位于 `/etc/fonts/conf.avail` 中,
+并在 `/etc/fonts/conf.d` 中建立符号链接.
+因此, 作为 `root` 或 `sudo`, 创建 `/etc/fonts/conf.avail/09-texlive-fonts.conf`, 内容如下:
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <dir>/usr/share/texlive/texmf-dist/fonts/opentype</dir>
+  <dir>/usr/share/texlive/texmf-dist/fonts/truetype</dir>
+  <dir>/usr/share/texlive/texmf-dist/fonts/type1</dir>
+</fontconfig>
+```
+
+如果你也想让 `TEXMFLOCAL` 中的字体可用:
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <dir>/usr/share/texlive/texmf-dist/fonts/opentype</dir>
+  <dir>/usr/share/texlive/texmf-dist/fonts/truetype</dir>
+  <dir>/usr/share/texlive/texmf-dist/fonts/type1</dir>
+  <dir>/usr/local/texlive/texmf-local/fonts/opentype</dir>
+  <dir>/usr/local/texlive/texmf-local/fonts/truetype</dir>
+  <dir>/usr/local/texlive/texmf-local/fonts/type1</dir>
+</fontconfig>
+```
+
+然后以 `root` 身份或以 `sudo` 身份:
+
+```bash
+cd /etc/fonts/conf.d
+# 创建符号链接, 指向 conf.avail 中的配置文件
+ln -s .../conf.avail/09-texlive-fonts.conf
+fc-cache -s
+```
+
+如果你更新了 `TeX Live` 或者安装了新的版本, 你可以简单地调整符号链接并运行 `fc-cache -fs`.
+事实上, 在许多情况下, 即使你不运行 `fc-cache`, 缓存也会相对快速地得到更新,
+因为当你更新系统时, 你会安装一些 `字体包`, 或其他由 `发行版包管理器` 更新的软件包.
+请注意, 对于某些应用程序, 你还需要运行 `mkfontscale` 和 `mkfontdir`.
+所以简单来说就是:
+
+```bash
+sudo mkfontscale && mkfontdir && fc-cache -fv
+```
