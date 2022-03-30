@@ -69,8 +69,8 @@
 % 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
 %%%+++++++++++++++++++++++++++++++
 \usepackage{siunitx} % 国际单位制
-\usepackage{physics} % 物理包
-\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{physics} % 物理包,braket,dd
+%\usepackage{braket} % 狄拉克 bra-ket notation
 \usepackage{slashed} % 费曼 slash 记号 \slashed{k}
 %\bm 命令使参数变成粗体
 % Blackboard variants of Computer Modern fonts.
@@ -285,6 +285,48 @@ tas 等）中的夸克分布 与 这些成分在 dressed nucleons 中的分布�
 Formalism
 \end_layout
 
+\begin_layout Standard
+总的来说：
+\end_layout
+
+\begin_layout Enumerate
+inclusive DIS 散射截面的参数化
+\end_layout
+
+\begin_layout Enumerate
+光学定理，
+\series bold
+DIS 散射截面
+\series default
+ 可以表示成向前康普顿
+\series bold
+振幅
+\series default
+的虚部
+\series bold
+。
+\end_layout
+
+\begin_layout Enumerate
+康普顿振幅可以表示成两部分的折叠（folding），光子–介子 耦合截腿振幅，折叠上介子–核子散射振幅。
+\end_layout
+
+\begin_layout Enumerate
+进一步假设，光子耦合部分可以因子化成，介子中的夸克分布 
+\begin_inset Formula $f_{q/h}$
+\end_inset
+
+，乘上算符 
+\begin_inset Formula $O_{ij}$
+\end_inset
+
+。算符
+\begin_inset Formula $O_{ij}$
+\end_inset
+
+又可以归入 介子–核子振幅的部分 ，最后写成 bilocal 算符。
+\end_layout
+
 \begin_layout Subsection
 PRELIMINARIES
 \end_layout
@@ -353,8 +395,9 @@ PRELIMINARIES
  ，所以
 \begin_inset Formula 
 \begin{align*}
- & \tilde{P_{\mu}}q^{\mu}=0,\quad\tilde{P}^{2}=M^{2}\left(1+\nu^{2}/Q^{2}\right),\\
- & \tilde{P_{\mu}}=P_{\mu}+\frac{1}{2x}q_{\mu}
+ & \tilde{P_{\mu}}q^{\mu}=0,\quad\tilde{P}^{2}=\tilde{P}\cdot P=M^{2}\left(1+\frac{\nu^{2}}{Q^{2}}\right),\\
+ & \tilde{P_{\mu}}=P_{\mu}+\frac{1}{2x}q_{\mu}\\
+ & \nu=\frac{P\cdot q}{M},\quad x=\frac{Q^{2}}{2M\nu}=\frac{Q^{2}}{2P\cdot q}
 \end{align*}
 
 \end_inset
@@ -375,7 +418,7 @@ PRELIMINARIES
 \begin_inset Formula $E$
 \end_inset
 
-。
+（探针能量损失）。
 \end_layout
 
 \begin_layout Standard
@@ -411,11 +454,30 @@ PRELIMINARIES
 \begin_inset Formula $q^{+}\to-xP^{+}$
 \end_inset
 
-：
+。
 \end_layout
 
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
 \begin_layout Remark
-考虑：
+考虑
 \begin_inset Formula 
 \begin{align*}
  & Q^{2}=-2q^{+}q^{-},\quad\nu=\frac{P^{+}q^{-}+P^{-}q^{+}}{M}\\
@@ -424,17 +486,6 @@ PRELIMINARIES
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 由此可知，
 \begin_inset Formula $q^{+}$
 \end_inset
@@ -448,6 +499,11 @@ PRELIMINARIES
 \end_inset
 
 。
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -471,7 +527,7 @@ F_{T}\left(\nu,Q^{2}\right)=F_{1}\left(\nu,Q^{2}\right),\quad F_{L}\left(\nu,Q^{
 
 \end_inset
 
-强子张量对应地表示成：
+对应地，把强子张量表示成：
 \begin_inset Formula 
 \begin{align}
 2MW_{\mu\nu}\left(P,q\right) & =\left({\color{blue}-g_{\mu\nu}+\frac{q_{\mu}q_{\nu}}{q^{2}}+\frac{\tilde{P}_{\mu}\tilde{P}_{\nu}}{\tilde{P}^{2}}}\right)2F_{T}\left(\nu,Q^{2}\right)+{\color{blue}\frac{\tilde{P}_{\mu}\tilde{P}_{\nu}}{\tilde{P}^{2}}}2F_{L}\left(\nu,Q^{2}\right)\label{eq:mu5}\\
@@ -641,23 +697,123 @@ noprefix "false"
 \end_inset
 
  是反对称的，
-\begin_inset Formula $F_{i}\left(\nu,Q^{2}\right)=F_{i}\left(-\nu,Q^{2}\right)$
+\begin_inset Formula $F_{i}\left(\nu,Q^{2}\right)=-F_{i}\left(-\nu,Q^{2}\right)$
 \end_inset
 
-。容易证明这两个要求是自洽的。关于 Bjorken 变量 
+。
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+场论体系一般都具有时空平移对称性，令
+\begin_inset Formula $\hat{P}=e^{iP\cdot y}$
+\end_inset
+
+，
+\begin_inset Formula $P^{\mu}=\left(H,\sbf P\right)$
+\end_inset
+
+算符是场的平移生成元
+\begin_inset Formula 
+\begin{align*}
+ & \mel{P}{\mathcal{T}J_{\mu}\left(x\right)J_{\nu}\left(0\right)}{P}\Rightarrow\mel{P}{\mathcal{T}\;\hat{P}J_{\mu}\left(x\right)\hat{P}\;\hat{P}^{-1}J_{\nu}\left(0\right)\hat{P}}{P}\\
+ & =\mel{P}{\mathcal{T}J_{\mu}\left(x+y\right)J_{\nu}\left(y\right)}{P}
+\end{align*}
+
+\end_inset
+
+即
+\begin_inset Formula $\ev{\cdots}$
+\end_inset
+
+的值只与相对距离有关，我们选取
+\begin_inset Formula $y=-x$
+\end_inset
+
+，则有： 
+\begin_inset Formula 
+\[
+\mel{P}{\mathcal{T}J_{\mu}\left(x\right)J_{\nu}\left(0\right)}{P}=\mel{P}{\mathcal{T}J_{\mu}\left(0\right)J_{\nu}\left(-x\right)}{P}
+\]
+
+\end_inset
+
+这很合理 doge。
+\begin_inset Formula $q\to-q$
+\end_inset
+
+的变换可以用 
+\begin_inset Formula $x\to-x$
+\end_inset
+
+抵消，最后相当于交换指标
+\begin_inset Formula $\mu\nu$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+容易证明这两个要求是自洽的。Bjorken 变量 
 \begin_inset Formula $x$
 \end_inset
 
  的对称性和 
-\begin_inset Formula $x$
+\begin_inset Formula $\nu$
 \end_inset
 
-的对称性完全相同，即 
+如出一辙，即 
 \begin_inset Formula $F_{i}\left(x,Q^{2}\right)=-F_{i}\left(-x,Q^{2}\right)$
 \end_inset
 
 。
 \end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
 \begin_layout Remark
 光学定理，参考公式：
@@ -665,6 +821,11 @@ noprefix "false"
 \[
 W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -703,31 +864,14 @@ W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\n
 
 \end_inset
 
-此处
-\begin_inset Formula 
-\begin{align*}
- & 2m\nu-Q^{2}=2m\frac{P\cdot q}{m}-Q^{2}=\left(P+q\right)^{2}-m^{2}+i\varepsilon\\
- & 2m\nu+Q^{2}=2m\frac{P\cdot q}{m}+Q^{2}=-\left(P-q\right)^{2}+m^{2}-i\varepsilon
-\end{align*}
-
-\end_inset
-
 它在复数 
 \begin_inset Formula $\nu$
 \end_inset
 
 –平面上沿着物理割线的虚部，是点状费米子的结构函数，
 \begin_inset Formula 
-\[
-2F_{T}\left(x,Q^{2}\right)=\delta\left(1-x\right)-\delta\left(1+x\right)
-\]
-
-\end_inset
-
-其中使用了公式：
-\begin_inset Formula 
 \begin{equation}
-\lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon}=\text{P.V.}\frac{1}{x}\mp i\pi\delta\left(x\right)\label{eq:mu12}
+2F_{T}\left(x,Q^{2}\right)=\delta\left(1-x\right)-\delta\left(1+x\right)\label{eq:mu12}
 \end{equation}
 
 \end_inset
@@ -749,6 +893,59 @@ W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\n
 \end_inset
 
 是反对称的。
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+分母上的表达式其实是传播子，
+\begin_inset Formula 
+\begin{align*}
+ & 2m\nu-Q^{2}=2m\frac{P\cdot q}{m}-Q^{2}=\left(P+q\right)^{2}-m^{2}+i\varepsilon\\
+ & 2m\nu+Q^{2}=2m\frac{P\cdot q}{m}+Q^{2}=-\left(P-q\right)^{2}+m^{2}-i\varepsilon
+\end{align*}
+
+\end_inset
+
+从 
+\begin_inset Formula $T_{T}$
+\end_inset
+
+到 
+\begin_inset Formula $F_{T}$
+\end_inset
+
+ 求虚部时，使用了公式：
+\begin_inset Formula 
+\[
+\lim_{\varepsilon\to0}\frac{1}{x\pm i\varepsilon}=\text{P.V.}\frac{1}{x}\mp i\pi\delta\left(x\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Example
@@ -847,7 +1044,7 @@ noprefix "false"
  表示为
 \begin_inset Formula 
 \begin{align}
- & \chi_{ji}\left(k,P\right)=\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\Phi_{i}^{\dagger}\left(x\right)\Phi_{j}\left(0\right)}{P}=\left(\text{h\ensuremath{=}玻色子}\right)\label{eq:mu14}\\
+ & \chi_{ji}\left(k,P\right)=\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\Phi_{i}^{\dagger}\left(x\right)\Phi_{j}\left(0\right)}{P},\quad\left(\text{h\ensuremath{=}玻色子}\right)\label{eq:mu14}\\
  & \chi_{ji}\left(k,P\right)=\int\dd[4]{x}e^{ik\cdot x}\mel{P}{\mathcal{T}\overline{\Psi}_{i}\left(x\right)\Psi_{j}\left(0\right)}{P},\quad\left(\text{h\ensuremath{=}费米子}\right)\label{eq:mu15}
 \end{align}
 
@@ -878,7 +1075,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename inset/convolution-of-forward-compton-amplitude.png
-	scale 60
+	scale 55
 
 \end_inset
 
@@ -1528,7 +1725,7 @@ noprefix "false"
 \begin_inset Formula $yM\to-i\partial_{z}^{+}=-i\partial/\partial z^{-}$
 \end_inset
 
-。分布函数的这一结果恰好与另一种推导得到的相同：通过在强子张量中插入 自由费米子流，代替 流算符的对易子 [ref5]。
+。此处得到的分布函数的结果，恰好和另一推导中的相同：在强子张量中，以自由费米子流 代入 流算符对易子[ref5]。
 \end_layout
 
 \begin_layout Standard
