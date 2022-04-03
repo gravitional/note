@@ -186,7 +186,9 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:~/bin:$PATH
 
 2. 切换shell为/bin/sh
 
-`# chsh -s /bin/sh`
+```bash
+sudo chsh -s /bin/sh
+```
 
 ## 重启x-org
 
