@@ -204,6 +204,10 @@ theorems-ams-chap-bytype
 Young
 \end_layout
 
+\begin_layout Section
+introduction
+\end_layout
+
 \begin_layout Standard
 卷积法在描述 
 \series bold
@@ -225,7 +229,7 @@ Young
 \series bold
 分布的矩
 \series default
- 可以写成乘积的形式，则通过反梅林变换，这个分布就可以表示成另两个分布的卷积。对于 DIS 的情况，在领头对数阶（leading logarithmic
+ 可以写成乘积的形式，则通过 梅林逆变换，这个分布就可以表示成另两个分布的卷积。对于 DIS 的情况，在领头对数阶（leading logarithmic
  order），这相当于将 在 
 \series bold
 点状组分
@@ -234,20 +238,24 @@ Young
 \series bold
 硬散射过程
 \series default
-截面（可计算的、依赖
-\begin_inset Formula $Q^{2}$
-\end_inset
-
- 和 重正化标度）与（不可计算的、独立于
-\begin_inset Formula $Q^{2}$
-\end_inset
-
-、依赖重正化标度）
+ 截面与 
 \series bold
 部分子的概率分布
 \series default
- 进行折叠（folding），被称为 Altarelli-Parisi 规则。在零阶时，这导致了 Bjorken 标度不变性（Bjorken scaling），
-而在一阶时，它引起了缓慢的对数的标度破坏（scaling violations）。
+ 进行折叠（folding）；前者是 可计算的、依赖
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+ 和 重正化标度，后者是不可微扰计算的、独立于
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+、依赖重正化标度。
+\end_layout
+
+\begin_layout Standard
+被称为 Altarelli-Parisi 规则。在零阶时，这导致了 Bjorken 标度不变性（Bjorken scaling），而在一阶时，它引起了缓慢的对数
+的标度破坏（scaling violations）。
 \end_layout
 
 \begin_layout Standard
@@ -258,27 +266,38 @@ tas 等）中的夸克分布 与 这些成分在 dressed nucleons 中的分布�
 \end_layout
 
 \begin_layout Standard
-这些使用卷积方法的尝试绝不像QCD的情况那样有坚实的基础。它们的吸引力主要是由于其简单性。它是否合适已经在一些论文中讨论过了。关于EMC效应，Jaffe[关于这
-一点的批评性讨论，见参考文献]提出了启发式的论点，即由于两个子过程所涉及的时间尺度不同，考虑从合理的重目标（质量超过几百MeV）上的虚拟探针散射很可能是一个合理
-的近似，而对于较轻的目标，特别是质子，这个模型似乎没有什么理由。
+这些使用 卷积方法 的尝试绝不像 QCD 的情况那样具有坚实的基础。它们的吸引力主要是由于其简单性。它是否合适已经在一些论文中讨论过了。关于 EMC
+ 效应，Jaffe【关于这一点的批评性讨论，见参考文献10】提出了启发式的论点，即由于两个子过程所涉及的时间尺度不同，考虑从合理的重目标（质量超过几百
+ 
+\begin_inset Formula $\si{\MeV}$
+\end_inset
+
+）上的虚探针（virtual，指离壳）散射很可能是一个合理的近似；而对于较轻的目标，特别是 pion，这个模型似乎没啥道理。
 \end_layout
 
 \begin_layout Standard
-在讨论卷积模型时，通常会假定一种动力学形式。瞬间形式的使用意味着，一般来说，升力的生成器含有相互作用。因此，隐含在convo-lution模型中的单体电流的假设
-，在boosts下不是不变的。具有这种动力学形式的卷积模型已被使用和讨论，例如，在参考文献中。).
- 该模型也被制定为使用空面动力学22-2）。在这种情况下，一般的提升只涉及到Poincare群的运动学子群的元素，因此单体电流的假设在提升下是不变的。在这种动力
-学形式下，一般旋转的生成器包含相互作用，因此，一般来说，单体电流的假设在旋转下不是不变的。
+在讨论卷积模型时，通常会假定一种动力学形式。instant form 的使用一般意味着，boosts 的 生成元 包含相互作用。因此，隐含在卷积模型中的
+ single–body currents 的假设，在 boosts 下是改变的。具有这种动力学形式的卷积模型已被使用和讨论，例如，在参考文献【18-21】。该
+模型也被制定为使用 null–plane dynamics[21,22-24]。在这种情况下，general boost 只涉及到 Poincare
+ 群的 运动学子群 的元素，因此 single–body currents 的假设在 boost 下是不变的。在这种动力学形式下，一般转动的生成元包含相互作用，
+因此，single–body currents 的假设在旋转下是改变的。
 \end_layout
 
 \begin_layout Standard
-在本文中，我们将使用一个场论框架来讨论卷积模型的内部一致性，特别是确保和规则有效性的要求。因此，我们将不关心在任何特定的应用中，该模型在物理上是否合理的问题--
-这在上面提到的论文中已经做了。 同样，我们将尽量保持我们的计算简单，忽略任何不必要的复杂问题，如同位素。我们21-1，26）的方法中的许多成分。我们将看到，有可
-能以这样一种方式制定卷积方法，即自动满足与结构函数的矩和局部算子的期望值相关的规则。这决不是小事，事实上，在模型计算中通常会发现这些和规则被违反。通常这)]。
+在本文中，我们将使用 场论框架 来讨论 卷积模型 的内部一致性，特别是确保 求和规则 有效性的要求。因此，我们将不关心在任何特定的应用中，该模型在
+\series bold
+物理上
+\series default
+是否合理的问题 — 这在上面提到的论文中已经做了。 同样，我们将尽量保持我们的计算简单，忽略任何不必要的复杂性，如同位旋（isospin）。此方法中的许多要素可
+以在各种文献中找到，特别是【5,25,26】。我们将看到，有可能以这样的方式制定卷积方法：使得 sum rules 自动满足，sum rules
+ 将联系 结构函数的矩（moments）与 定域算符的期望值。这不是平庸的，事实上，在模型计算中通常会发现这些 sum rules 被违反。在唯象上这通常是不重
+要的，因此被忽略了【例如，见参考文献 21，27】。由于这些 sum rules 的重要性，特别是，它们允许人们将 散射截面 与 光锥动量分数
+ 的概率分布联系起来，这并不完全令人满意。此外，在有些情况下（当相互作用的粒子相对较轻时），对 sum rules 的违背是很大的。在这种情况下，它不能只是被忽
+略。
 \end_layout
 
 \begin_layout Standard
-现象上是不重要的，因此被忽略了[例如，见参考文献[1]。由于这些和规则的重要性，特别是它们允许人们将横截面与光锥动量分数的概率分布联系起来，这并不完全令人满意。
-此外，在有些情况下（当相互作用的粒子相对较轻时），对总规则的违反是很大的。在这种情况下，它不能只是被忽略。
+Sect.2 是 卷及模型的 general formalism，sect.3 是一些模型中的计算，sect.4 是结论。
 \end_layout
 
 \begin_layout Section
