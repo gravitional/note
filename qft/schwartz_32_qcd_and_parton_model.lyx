@@ -7,41 +7,71 @@
 \textclass ctex-book
 \begin_preamble
 \usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
-%\usepackage{xeCJK}% 可以用来实现中文断行
-\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
 \usepackage{geometry} % 整体页面设置
 \geometry{a4paper} %页面大小是A4纸
-\geometry{top=2cm} %设置版心顶部距离
 \geometry{top=2cm} %设置版心顶部距离
 %\geometry{textheight=22cm}  %设置版心长度
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
 %++++++++++++++++++++++++++++++++++++++++++++++++
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
-% 添加图片命令或者背景到每一页的绝对位置，
-% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+% This package makes it easy to add some picture commands to every page at ab-solute positions
 \usepackage{float}%使用[H]选项将浮动题放到确定的位置
-\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
-%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
-\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
+% xcolor package starts from the basic facilities of the 
+% color package, and provides easy driver-independent access
+%to several kinds of color tints, shades, tones, 
+%and mixes of arbitrary colors
+\usepackage{fontspec}
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{amscd} % ams 画交换图
+\usepackage{mathtools}% 定义配对的数学符号,在 unicode-math 之前调用
+\usepackage{ytableau} % Young tableaux and diagrams
+%++++++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+%设置数学字体
+\usepackage{unicode-math}
+\setmathfont{STIX Two Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Two Math
+%++++++++++++++++++++++++++++++++++++++++
+\usepackage{enumerate} 
+\usepackage{tikz}% 费曼图及其他作图
+\usetikzlibrary{cd}%commutative diagram交换图
+%\usetikzlibrary{shapes.misc,animations}
+%\usetikzlibrary{shapes.geometric}% tikz node 形状的库
+\usepackage{physics} % 物理包
+\usepackage{siunitx} % 国际单位制
+%\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{slashed} % also for slash notation: take your pick!
+\usepackage{simplewick} 
+% a simple means of drawing Wick contractions above and below expressions. 
+\usepackage{makeidx} 
+% Standard package for creating indexes
+\usepackage{multirow}
 %%%+++++++++++++++++++++++++++++++
-\usepackage{xcolor} 
-% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
-% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
-%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
-%%%+++++++++++++++++++++++++++++++
-\usepackage{listings} % 在LaTex中添加代码高亮
-\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\usepackage{listings}
+% 在LaTex中添加代码高亮
+\usepackage{framed}
+% 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+%定义各种颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+%\lstdefinestyle{〈style name〉}{〈key=value list〉}
+%stores the key=value list
 \lstdefinestyle{codestyle1}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -60,64 +90,30 @@
     showtabs=false,                  
     tabsize=2
 }
-%%%+++++++++++++++++++++++++++++++
-\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
-%%%+++++++++++++++++++++++++++++++
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % \mathscr 命令，更花的花体
-\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
-% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
-%%%+++++++++++++++++++++++++++++++
-\usepackage{siunitx} % 国际单位制
-\usepackage{braket} % 狄拉克 bra-ket notation
-\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
-  %\bm 命令使参数变成粗体
-% Blackboard variants of Computer Modern fonts.
-\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
-\usepackage{makeidx}% 用来创建 indexes 的标准包
-\usepackage{multirow} % 创建具有多行的 tabular
-\usepackage{tikz-feynman}  % 画费曼图用
-\usepackage{tikz} %画矢量图用
-%%++++++++++++++++++++++++++++++++++++
-% 设置英文字体
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Roman}
-% 设置中文字体
-\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
-\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
-\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
-%设置数学字体
-\usepackage{unicode-math}%在其他字体包如amsmath之后调用
-\setmathfont{Latin Modern Math}
-%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
-%%++++++++++++++++++++++++++++++++++++++++
-% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
-% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
-% \setmathrm{Latin Modern Roman}
-%%++++++++++++++++++++++++++++++++++++++
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
+%%++++++++++++++++++++ 
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\Tr}{Tr} %矩阵求迹的符号
+%\DeclareMathOperator{\re}{Re}
+% * 号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\imm}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
-\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\DD}{\mathop{}\!\mathrm{D}}%泛函变分
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
 \newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+\end_modules
 \maintain_unincluded_children false
 \language chinese-simplified
 \language_package none
@@ -256,7 +252,7 @@ Young
 的两个点粒子散射的截面为
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\frac{E^{\prime}}{E}\left(\cos^{2}\frac{\theta}{2}-\frac{q^{2}}{2m_{p}^{2}}\sin^{2}\frac{\theta}{2}\right)
+\left(\frac{\dd\sigma}{\dd\Omega}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\frac{E^{\prime}}{E}\left(\cos^{2}\frac{\theta}{2}-\frac{q^{2}}{2m_{p}^{2}}\sin^{2}\frac{\theta}{2}\right)
 \]
 
 \end_inset
@@ -365,7 +361,7 @@ q^{2}=-2k\cdot k^{\prime}=-\left(4E^{\prime}E\sin^{2}\frac{\theta}{2}\right)_{\t
 对应的树图阶的散射截面为，
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\frac{E^{\prime}}{E}\left\{ \left(F_{1}^{2}-\frac{q^{2}}{4m_{p}^{2}}F_{2}^{2}\right)\cos^{2}\frac{\theta}{2}-\frac{q^{2}}{2m_{p}^{2}}\left(F_{1}+F_{2}\right)^{2}\sin^{2}\frac{\theta}{2}\right\} 
+\left(\frac{\dd\sigma}{\dd\Omega}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\frac{E^{\prime}}{E}\left\{ \left(F_{1}^{2}-\frac{q^{2}}{4m_{p}^{2}}F_{2}^{2}\right)\cos^{2}\frac{\theta}{2}-\frac{q^{2}}{2m_{p}^{2}}\left(F_{1}+F_{2}\right)^{2}\sin^{2}\frac{\theta}{2}\right\} 
 \]
 
 \end_inset
@@ -417,13 +413,13 @@ F_{1}(q_{1}^{2})-F_{1}(q_{2}^{2})\approx-\frac{e^{2}}{16\pi^{2}}\ln\frac{q_{1}^{
 和实验测量到的一致。但是对于proton，行为非常不同，从1960s开始的实验开始。形状因子符合表达式
 \begin_inset Formula 
 \[
-F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\qty{0.71}{\GeV^{2}}}\right)^{2}}
+F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\SI{0.71}{\GeV^{2}}}\right)^{2}}
 \]
 
 \end_inset
 
 其中出现了一个确定的能标 
-\begin_inset Formula $\qty{0.71}{\GeV^{2}}$
+\begin_inset Formula $\SI{0.71}{\GeV^{2}}$
 \end_inset
 
 ，即使在
@@ -435,7 +431,7 @@ F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\qty{0.71}{\GeV^{2}}}\right)^{2}}
 
 \begin_layout Standard
 形状因子对应于散射势的傅立叶变换，通过 Born 近似（section 5.2）。up to 一些运动学因子和归一化
-\begin_inset Formula $F_{1}(q)^{2}=\int\dif^{3}xe^{i\vec{q}\cdot\vec{x}}V(x)$
+\begin_inset Formula $F_{1}(q)^{2}=\int\dd^{3}xe^{i\vec{q}\cdot\vec{x}}V(x)$
 \end_inset
 
 ，which leads to 
@@ -447,7 +443,7 @@ F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\qty{0.71}{\GeV^{2}}}\right)^{2}}
 \end_inset
 
 ，特征长度
-\begin_inset Formula $r_{0}\sim\left(\qty{0.84}{\unit{\GeV}}\right)^{-1}\sim\qty{1}{\femto\metre}$
+\begin_inset Formula $r_{0}\sim\left(\SI{0.84}{\unit{\GeV}}\right)^{-1}\sim\SI{1}{\femto\metre}$
 \end_inset
 
 。
@@ -455,7 +451,7 @@ F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\qty{0.71}{\GeV^{2}}}\right)^{2}}
 
 \begin_layout Standard
 结论是质子的特征长度量级为
-\begin_inset Formula $\qty{1}{\femto\metre}$
+\begin_inset Formula $\SI{1}{\femto\metre}$
 \end_inset
 
 ，这个长度并不使人感到意外，它就是质子的 Compton 波长。使人意外的是这里居然真有一个能标(scale)。在电子散射tauons的实验中，我们只会看到一个
@@ -472,7 +468,7 @@ F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\qty{0.71}{\GeV^{2}}}\right)^{2}}
 
 \begin_layout Standard
 为了进一步了解质子结构，必须提高能量。在能量
-\begin_inset Formula $\abs*{q^{2}}>\qty{1}{\GeV^{2}}$
+\begin_inset Formula $\abs*{q^{2}}>\SI{1}{\GeV^{2}}$
 \end_inset
 
 的时候，你或许会期待
@@ -499,7 +495,7 @@ F_{1}(q^{2})\sim\frac{1}{\left(1-\frac{q^{2}}{\qty{0.71}{\GeV^{2}}}\right)^{2}}
 \begin_inset Formula $m_{p}$
 \end_inset
 
-，proton开始分裂。比如
+，核子开始分裂。比如
 \begin_inset Formula $e^{-}p^{+}\to e^{-}p^{+}\pi^{0}$
 \end_inset
 
@@ -574,8 +570,7 @@ name "fig:32.1"
 \begin_inset Formula $\bar{u}(p^{\prime})\sigma^{\mu\nu}q_{\mu}u(p)$
 \end_inset
 
-。但是当质子分裂的时候，在 deep inelastic scattering (DIS)中，这种参数化就不再适用了。Instead，我们需要参数化
- photon–proton-
+。但是当质子分裂的时候，在 深度非弹性散射(DIS)中，这种参数化就不再适用了。Instead，我们需要参数化 photon–proton-
 \begin_inset Formula $X$
 \end_inset
 
@@ -622,7 +617,7 @@ name "fig:32.1"
 是向前散射。散射截面可以写成
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4\pi m_{p}q^{4}}\frac{E^{\prime}}{E}L^{\mu\nu}W_{\mu\nu}
+\left(\frac{\dd\sigma}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4\pi m_{p}q^{4}}\frac{E^{\prime}}{E}L^{\mu\nu}W_{\mu\nu}
 \]
 
 \end_inset
@@ -631,11 +626,11 @@ name "fig:32.1"
 \begin_inset Formula $L_{\mu\nu}$
 \end_inset
 
-是 leptonic tensor，其中编码了电子的极化信息（或者等价地，off-shell 光子的）.
+是轻子张量，其中编码了电子的极化信息（或者等价地，离壳光子的极化）.
  在 Chapter 20 中讨论 IR 发散的时候，我们已经使用过这样的参数化。对于非极化散射，轻子张量为
 \begin_inset Formula 
 \[
-L_{\mu\nu}=\frac{1}{2}\tr\left[\slashed{k}^{\prime}\gamma^{\mu}\slashed{k}\gamma^{\nu}\right]=2\left(k^{\prime\mu}k^{\nu}+k^{\prime\nu}k^{\mu}-k\cdot k^{\prime}g^{\mu\nu}\right)
+L_{\mu\nu}=\frac{1}{2}\Tr\left[\slashed{k}^{\prime}\gamma^{\mu}\slashed{k}\gamma^{\nu}\right]=2\left(k^{\prime\mu}k^{\nu}+k^{\prime\nu}k^{\mu}-k\cdot k^{\prime}g^{\mu\nu}\right)
 \]
 
 \end_inset
@@ -644,7 +639,7 @@ L_{\mu\nu}=\frac{1}{2}\tr\left[\slashed{k}^{\prime}\gamma^{\mu}\slashed{k}\gamma
 \begin_inset Formula $\vec{k}$
 \end_inset
 
- and 
+ ， 
 \begin_inset Formula $\vec{k}^{\prime}$
 \end_inset
 
@@ -660,18 +655,18 @@ L_{\mu\nu}=\frac{1}{2}\tr\left[\slashed{k}^{\prime}\gamma^{\mu}\slashed{k}\gamma
 \end_layout
 
 \begin_layout Standard
-The hadronic tensor 
+强子张量
 \begin_inset Formula $W^{\mu\nu}$
 \end_inset
 
  包含了对所有末态粒子相空间的积分。它给出
-\begin_inset Formula $\gamma^{\star}p^{+}\to\text{anything}$
+\begin_inset Formula $\gamma^{\star}p^{+}\to\text{任何态}$
 \end_inset
 
-的散射率:
+ 的散射率:
 \begin_inset Formula 
 \[
-e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spins}}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
+e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spins}}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
 \]
 
 \end_inset
@@ -680,7 +675,7 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spi
 \begin_inset Formula $\epsilon_{\mu}$
 \end_inset
 
-是 off-shell 光子的极化。由于末态被积分，
+是 离壳光子 的极化。由于末态被积分，
 \begin_inset Formula $W_{\mu\nu}$
 \end_inset
 
@@ -688,7 +683,7 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spi
 \begin_inset Formula $P^{\mu}$
 \end_inset
 
- and 
+和
 \begin_inset Formula $q^{\mu}$
 \end_inset
 
@@ -700,11 +695,11 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spi
 \begin_inset Formula $L_{\mu\nu}$
 \end_inset
 
-就是对称的）。也必须满足
+就是对称的）。由于相互作用仅通过光子传递，也必须满足
 \begin_inset Formula $q_{\mu}W^{\mu\nu}=0$
 \end_inset
 
- by the Ward identity(Chapter 14)，由于相互作用仅仅通过一个光子。因此，最一般的参数化为
+ 即 Ward 恒等式(Chapter 14)。因此，最一般的参数化为
 \begin_inset Formula 
 \[
 W^{\mu\nu}=W_{1}\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+W_{2}\left(P^{\mu}-\frac{P\cdot q}{q^{2}}q^{\mu}\right)\left(P^{\nu}-\frac{P\cdot q}{q^{2}}q^{\nu}\right)
@@ -716,15 +711,19 @@ W^{\mu\nu}=W_{1}\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+W_{2}\left
 \begin_inset Formula $W_{1}$
 \end_inset
 
-and 
+ 和
 \begin_inset Formula $W_{2}$
 \end_inset
 
- 可以依赖于 Lorentz 标量
-\begin_inset Formula $P^{2}=m_{p}^{2},q^{2}$
+ 可以依赖于 洛伦兹标量
+\begin_inset Formula $P^{2}=m_{p}^{2}$
 \end_inset
 
- and 
+，
+\begin_inset Formula $q^{2}$
+\end_inset
+
+ 和 
 \begin_inset Formula $P\cdot q$
 \end_inset
 
@@ -744,7 +743,7 @@ and
 \begin_inset Formula $\nu$
 \end_inset
 
-是一个洛伦兹不变量。在质子静止系中，约化到电子的能量损失。还有一个可选择的是无量纲比率
+是洛伦兹标量，在质子静止系中，约化到电子的能量损失。还有一个可选的是无量纲比率
 \begin_inset Formula 
 \[
 x\equiv\frac{Q^{2}}{2P\cdot q}
@@ -808,14 +807,14 @@ Bjorken
 \begin_inset Formula $L_{\mu\nu}$
 \end_inset
 
- and 
+ 和
 \begin_inset Formula $W_{\mu\nu}$
 \end_inset
 
  进行缩并，得到散射截面为
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{8\pi E^{2}\sin^{4}\frac{\theta}{2}}\left[\frac{m_{p}}{2}W_{2}(x,Q)\cos^{2}\frac{\theta}{2}+\frac{1}{m_{p}}W_{1}(x,Q)\sin^{2}\frac{\theta}{2}\right]
+\left(\frac{\dd\sigma}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{8\pi E^{2}\sin^{4}\frac{\theta}{2}}\left[\frac{m_{p}}{2}W_{2}(x,Q)\cos^{2}\frac{\theta}{2}+\frac{1}{m_{p}}W_{1}(x,Q)\sin^{2}\frac{\theta}{2}\right]
 \]
 
 \end_inset
@@ -828,7 +827,7 @@ Bjorken
 \begin_inset Formula $W_{1}$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $W_{2}$
 \end_inset
 
@@ -836,24 +835,24 @@ Bjorken
 \end_layout
 
 \begin_layout Standard
-由费曼提出的，关于 
+由费曼提出的，部分子模型（
 \series bold
 partion model
 \series default
- 的典型假设是，质子中的部分子本质上是自由的。当联系QCD，我们知道部分子指的是夸克，胶子，反夸克，光子（标准模型中可能出现的任何粒子）。现在，我们仅仅假设质子
-中存在部分子，其中有些带电。为了检验部分子模型，我们需要决定电子跟质量为
+）的典型假设是，质子中的部分子本质上是自由的。当联系QCD，我们知道部分子指的是夸克，胶子，反夸克，光子（标准模型中可能出现的任何粒子）。现在，我们仅仅假设质子
+中存在部分子，其中有些带电。为了检验部分子模型，我们需要决定电子在质量为
 \begin_inset Formula $m_{q}$
 \end_inset
 
-的部分子散射的形状因子
+的部分子上散射的形状因子
 \begin_inset Formula $W_{1}$
 \end_inset
 
- and 
+ 和
 \begin_inset Formula $W_{2}$
 \end_inset
 
-。看起来像Fig.
+，看起来像Fig.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:32.17"
@@ -904,7 +903,7 @@ name "fig:32.17"
 \end_layout
 
 \begin_layout Standard
-设被散射的部分子出没动量为
+设被散射的部分子初末动量为
 \begin_inset Formula $p_{i}^{\mu},p_{f}^{\mu}$
 \end_inset
 
@@ -914,16 +913,12 @@ name "fig:32.17"
 
 （动量守恒）。两边平方得到，
 \begin_inset Formula 
-\[
-m_{q}^{2}+2p_{i}\cdot q+q^{2}=m_{q}^{2}\Rightarrow\frac{Q^{2}}{2p_{i}\cdot q}=1
-\]
+\begin{equation}
+m_{q}^{2}+2p_{i}\cdot q+q^{2}=m_{q}^{2}\Rightarrow\frac{Q^{2}}{2p_{i}\cdot q}=1.\label{eq:scz-1}
+\end{equation}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 不幸的是，部分子的动量是无法测量的。但是我们可以假设它占质子动量的分数为
 \begin_inset Formula $\xi$
 \end_inset
@@ -932,7 +927,7 @@ m_{q}^{2}+2p_{i}\cdot q+q^{2}=m_{q}^{2}\Rightarrow\frac{Q^{2}}{2p_{i}\cdot q}=1
 \begin_inset Formula $p_{i}^{\mu}=\xi P^{\mu}$
 \end_inset
 
-。那么
+，则
 \begin_inset Formula 
 \[
 x=\frac{Q^{2}}{2P\cdot q}=\frac{\xi Q^{2}}{2p_{i}\cdot q}=\xi
@@ -940,15 +935,11 @@ x=\frac{Q^{2}}{2P\cdot q}=\frac{\xi Q^{2}}{2p_{i}\cdot q}=\xi
 
 \end_inset
 
-（
+特别的，如果部分子模型是对的，那么通过测量
 \begin_inset Formula $x$
 \end_inset
 
-反映了动量转移中有多少对质子进行了输出, up to some constants。）特别的，如果部分子模型是对的，那么通过测量
-\begin_inset Formula $x$
-\end_inset
-
-，我们就能够测量在部分子层次上有多少质子的动量参与了散射。
+我们就能够测量，在部分子层次上质子有多少动量参与了散射。
 \end_layout
 
 \begin_layout Standard
@@ -956,7 +947,7 @@ x=\frac{Q^{2}}{2P\cdot q}=\frac{\xi Q^{2}}{2p_{i}\cdot q}=\xi
 \begin_inset Formula $e^{-}q\to e^{-}q$
 \end_inset
 
-弹性散射。我们期望形状因子only weak, logarithmic dependence on 
+弹性散射。我们期望形状因子 弱依赖，对数依赖于
 \begin_inset Formula $Q^{2}$
 \end_inset
 
@@ -964,7 +955,7 @@ x=\frac{Q^{2}}{2P\cdot q}=\frac{\xi Q^{2}}{2p_{i}\cdot q}=\xi
 \begin_inset Formula $e^{-}\mu^{-}\to e^{-}\mu^{-}$
 \end_inset
 
-散射那样）。当初态部分子动量确定，也就是
+散射那样）。当初态部分子动量确定，即 
 \begin_inset Formula $x$
 \end_inset
 
@@ -980,8 +971,8 @@ Bjorken scaling
 \end_layout
 
 \begin_layout Standard
-部分子模型中的另一味佐料是经典概率
-\begin_inset Formula $f_{i}(\xi)\dif\xi$
+部分子模型中的另一个成分是经典概率
+\begin_inset Formula $f_{i}(\xi)\dd\xi$
 \end_inset
 
 ：光子撞到类别为
@@ -1000,19 +991,19 @@ Bjorken scaling
 \series bold
 Parton distribution function
 \series default
-（PDFs,部分子分布函数）。物理图像是，proton中咣当来咣当去的动量，时间scales
+（PDFs,部分子分布函数）。物理上对它的支持是，质子中的成分，来回传递动量的时间尺度（scales）
 \begin_inset Formula $\sim\Lambda_{\text{QCD}}^{-1}\sim m_{p}^{-1}$
 \end_inset
 
-。它比光子探针
+，它比光子探针
 \begin_inset Formula $\sim Q^{-1}$
 \end_inset
 
-的时间scales 慢的多。能标
+ 的时间尺度大得多。
 \begin_inset Formula $Q\gg\Lambda_{\text{QCD}}$
 \end_inset
 
-的分离，使我们可以认为部分子的波函数是不相干的，给出了概率诠释。要确切证实这种不相干性，相当于证明 
+ 能标是分离的，我们可以认为质子中的部分子波函数是退相干的（decoherent），给出了概率诠释。要确切证实这种不相干性，相当于证明 
 \emph on
 factorization。
 \emph default
@@ -1020,7 +1011,7 @@ factorization。
 \end_layout
 
 \begin_layout Standard
-部分子模型假设，我们可以通过计算
+使用 PDFs，我们可以更精确地预言较弱的互作用体系的截面。部分子模型假设，我们可以通过计算
 \begin_inset Formula $e^{-}p_{i}\to e^{-}X$
 \end_inset
 
@@ -1043,7 +1034,7 @@ factorization。
 进行积分，我们得到
 \begin_inset Formula 
 \[
-\sigma(e^{-}P^{+}\to e^{-}X)=\sum_{i}\int_{0}^{1}\dif\xi f_{i}(\xi)\hat{\sigma}(e^{-}p_{i}\to e^{-}X)
+\sigma(e^{-}P^{+}\to e^{-}X)=\sum_{i}\int_{0}^{1}\dd\xi f_{i}(\xi)\hat{\sigma}(e^{-}p_{i}\to e^{-}X)
 \]
 
 \end_inset
@@ -1052,7 +1043,7 @@ factorization。
 \begin_inset Formula $\hat{\,}$
 \end_inset
 
-，比如
+（circumflexes），比如
 \begin_inset Formula $\hat{\sigma}$
 \end_inset
 
@@ -1060,15 +1051,15 @@ factorization。
 \end_layout
 
 \begin_layout Standard
-假设部分子除了QED相互作用之外是自由的，电子之和夸克相互作用。对于一个给定的夸克动量
+假设部分子除了QED相互作用之外是自由的，电子只和（带电的）夸克相互作用。对于给定的夸克动量
 \begin_inset Formula $p_{i}$
 \end_inset
 
-，散射截面跟QED中其他点粒子的截面并没有什么不同。由Rosenbluth formula 给出，并取
+，散射截面跟 QED 中其他点粒子的截面并没有什么不同。由 Rosenbluth formula 给出，并取
 \begin_inset Formula $F_{1}=1$
 \end_inset
 
- and 
+ 和 
 \begin_inset Formula $F_{2}=0$
 \end_inset
 
@@ -1079,13 +1070,13 @@ factorization。
 积分之前，截面是
 \begin_inset Formula 
 \begin{equation}
-\left(\frac{\dif\hat{\sigma}(e^{-}q\to e^{-}q)}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}C_{i}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\left[\cos^{2}\frac{\theta}{2}+\frac{Q^{2}}{2m_{q}^{2}}\sin^{2}\frac{\theta}{2}\right]\delta\left(E-E^{\prime}-\frac{Q^{2}}{2m_{q}}\right)\label{eq:32.19}
+\left(\frac{\dd\hat{\sigma}(e^{-}q\to e^{-}q)}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}Q_{e,i}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\left[\cos^{2}\frac{\theta}{2}+\frac{Q^{2}}{2m_{q}^{2}}\sin^{2}\frac{\theta}{2}\right]\delta\left(E-E^{\prime}-\frac{Q^{2}}{2m_{q}}\right)\label{eq:32.19}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $C_{i}$
+\begin_inset Formula $Q_{e,i}$
 \end_inset
 
 是夸克的电荷。考虑到动量守恒的限制
@@ -1108,15 +1099,7 @@ factorization。
 \begin_inset Formula $F_{2}=0$
 \end_inset
 
-），
-\begin_inset Formula 
-\begin{equation}
-\left(\frac{\dif\sigma}{\dif\Omega}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\frac{E^{\prime}}{E}\left\{ \left(F_{1}^{2}-\frac{q^{2}}{4m_{p}^{2}}F_{2}^{2}\right)\cos^{2}\frac{\theta}{2}-\frac{q^{2}}{2m_{p}^{2}}\left(F_{1}+F_{2}\right)^{2}\sin^{2}\frac{\theta}{2}\right\} \label{eq:32.7}
-\end{equation}
-
-\end_inset
-
-注意如果我们没有假设夸克是自由的，
+），注意如果我们没有假设夸克是自由的，
 \begin_inset Formula $\cos^{2}\frac{\theta}{2},\sin^{2}\frac{\theta}{2}$
 \end_inset
 
@@ -1124,7 +1107,7 @@ factorization。
 \begin_inset Formula $G_{1}(Q^{2}),G_{2}(Q^{2})$
 \end_inset
 
-这样的形状因子。就像上面式子
+这样的形状因子，如式 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:32.7"
@@ -1134,11 +1117,19 @@ noprefix "false"
 
 \end_inset
 
-中的那样。这样的项会破坏 Bjorken 标度，它们的缺失本质上就是部分子模型对 DIS 过程的预言。
+ 中的那样。这样的项会破坏 Bjorken 标度，本质上，没有它们就是部分子模型对 DIS 过程的预言。
+\begin_inset Formula 
+\begin{equation}
+\left(\frac{\dd\sigma}{\dd\Omega}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\frac{E^{\prime}}{E}\left\{ \left(F_{1}^{2}-\frac{q^{2}}{4m_{p}^{2}}F_{2}^{2}\right)\cos^{2}\frac{\theta}{2}-\frac{q^{2}}{2m_{p}^{2}}\left(F_{1}+F_{2}\right)^{2}\sin^{2}\frac{\theta}{2}\right\} \label{eq:32.7}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-为了得到DIS过程的散射截面，我们必须对入射夸克动量积分。由于
+为了得到DIS过程的散射截面，我们必须对入射夸克的动量积分。由于
 \begin_inset Formula $p_{i}^{\mu}=\xi P^{\mu}$
 \end_inset
 
@@ -1150,7 +1141,7 @@ noprefix "false"
 \begin_inset Formula $\nu\equiv\frac{P\cdot q}{m_{p}}=(E-E^{\prime})_{\text{lab}}$
 \end_inset
 
-,
+，
 \begin_inset Formula $x=\frac{Q^{2}}{2P\cdot q}=\frac{\xi Q^{2}}{2p_{i}\cdot q}=\xi$
 \end_inset
 
@@ -1161,23 +1152,11 @@ noprefix "false"
 ，所以
 \begin_inset Formula 
 \[
-\delta\left(E-E^{\prime}-\frac{Q^{2}}{2m_{q}}\right)=\delta\left(\frac{Q^{2}}{2m_{p}x}-\frac{Q^{2}}{2m_{p}\xi}\right)=\frac{2m_{p}}{Q^{2}}x^{2}\delta(\xi-x)
+\delta\left(E-E^{\prime}-\frac{Q^{2}}{2m_{q}}\right)=\delta\left(\frac{Q^{2}}{2m_{p}x}-\frac{Q^{2}}{2m_{p}\xi}\right)=\frac{2m_{p}}{Q^{2}}x^{2}\delta(\xi-x).
 \]
 
 \end_inset
 
-对
-\begin_inset Formula $\xi$
-\end_inset
-
-还是
-\begin_inset Formula $x$
-\end_inset
-
-都成立。
-\end_layout
-
-\begin_layout Standard
 所以，使用
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1191,7 +1170,7 @@ noprefix "false"
 ，我们得到
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma(e^{-}P^{+}\to e^{-}X)}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\sum_{i}f_{i}(x)\frac{\alpha_{e}^{2}C_{i}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\left[\frac{2m_{p}}{Q^{2}}x^{2}\cos^{2}\frac{\theta}{2}+\frac{1}{m_{p}}\sin^{2}\frac{\theta}{2}\right]
+\left(\frac{\dd\sigma(e^{-}P^{+}\to e^{-}X)}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\sum_{i}f_{i}(x)\frac{\alpha_{e}^{2}Q_{e,i}^{2}}{4E^{2}\sin^{4}\frac{\theta}{2}}\left[\frac{2m_{p}}{Q^{2}}x^{2}\cos^{2}\frac{\theta}{2}+\frac{1}{m_{p}}\sin^{2}\frac{\theta}{2}\right]
 \]
 
 \end_inset
@@ -1199,7 +1178,7 @@ noprefix "false"
 与之前参数化的结果相比,
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{8\pi E^{2}\sin^{4}\frac{\theta}{2}}\left[\frac{m_{p}}{2}W_{2}(x,Q)\cos^{2}\frac{\theta}{2}+\frac{1}{m_{p}}W_{1}(x,Q)\sin^{2}\frac{\theta}{2}\right]
+\left(\frac{\dd\sigma}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{8\pi E^{2}\sin^{4}\frac{\theta}{2}}\left[\frac{m_{p}}{2}W_{2}(x,Q)\cos^{2}\frac{\theta}{2}+\frac{1}{m_{p}}W_{1}(x,Q)\sin^{2}\frac{\theta}{2}\right]
 \]
 
 \end_inset
@@ -1207,8 +1186,8 @@ noprefix "false"
 我们立马得到
 \begin_inset Formula 
 \begin{align}
-W_{1}(x,Q) & =2\pi\sum_{i}C_{i}^{2}f_{i}(x)\nonumber \\
-W_{2}(x,Q) & =8\pi\frac{x^{2}}{Q^{2}}\sum_{i}C_{i}^{2}f_{i}(x)\label{eq:32.24}
+W_{1}(x,Q) & =2\pi\sum_{i}Q_{e,i}^{2}f_{i}(x)\nonumber \\
+W_{2}(x,Q) & =8\pi\frac{x^{2}}{Q^{2}}\sum_{i}Q_{e,i}^{2}f_{i}(x)\label{eq:32.24}
 \end{align}
 
 \end_inset
@@ -1355,7 +1334,7 @@ Callan-Gross relation。
 \end_inset
 
 ，
-\begin_inset Formula $\dif\Omega=-2\pi\dif\cos\theta$
+\begin_inset Formula $\dd\Omega=-2\pi\dd\cos\theta$
 \end_inset
 
 :
@@ -1370,13 +1349,13 @@ x=\frac{EE^{\prime}}{(E-E^{\prime})m_{p}}(1-2\cos\theta) & \cos\theta=\frac{1}{2
 \end_inset
 
 则
-\begin_inset Formula $\dif E^{\prime}\dif\Omega=\frac{2m_{p}E}{E^{\prime}}\pi y\dif x\dif y$
+\begin_inset Formula $\dd E^{\prime}\dd\Omega=\frac{2m_{p}E}{E^{\prime}}\pi y\dd x\dd y$
 \end_inset
 
 ，（这里是一个 Jaccobi）那么（忽略电子和质子质量）
 \begin_inset Formula 
 \[
-\frac{\dif\sigma(e^{-}P\to e^{-}X)}{\dif x\dif y}=\frac{2\pi\alpha^{2}}{Q^{4}}s\left(1+(1-y)^{2}\right)\sum_{i}C_{i}^{2}xf_{i}(x)
+\frac{\dd\sigma(e^{-}P\to e^{-}X)}{\dd x\dd y}=\frac{2\pi\alpha^{2}}{Q^{4}}s\left(1+(1-y)^{2}\right)\sum_{i}Q_{e,i}^{2}xf_{i}(x)
 \]
 
 \end_inset
@@ -1405,14 +1384,14 @@ x=\frac{EE^{\prime}}{(E-E^{\prime})m_{p}}(1-2\cos\theta) & \cos\theta=\frac{1}{2
 \begin_inset Formula 
 \begin{align*}
 W_{1}(x,Q) & =\frac{Q^{2}}{4x^{2}}W_{2}(x,Q),\text{ for }Q\gg m_{p}\\
-W_{1}(x,Q) & =2\pi\sum_{i}C_{i}^{2}f_{i}(x)\\
-W_{2}(x,Q) & =8\pi\frac{x^{2}}{Q^{2}}\sum_{i}C_{i}^{2}f_{i}(x)
+W_{1}(x,Q) & =2\pi\sum_{i}Q_{e,i}^{2}f_{i}(x)\\
+W_{2}(x,Q) & =8\pi\frac{x^{2}}{Q^{2}}\sum_{i}Q_{e,i}^{2}f_{i}(x)
 \end{align*}
 
 \end_inset
 
 Callan-Gross 关系变成
-\begin_inset Formula $\mathcal{F}_{1}(x)\equiv\frac{1}{2x}\mathcal{F}_{2}(x)=\frac{1}{2}\sum_{i}C_{i}^{2}f_{i}(x)$
+\begin_inset Formula $\mathcal{F}_{1}(x)\equiv\frac{1}{2x}\mathcal{F}_{2}(x)=\frac{1}{2}\sum_{i}Q_{e,i}^{2}f_{i}(x)$
 \end_inset
 
 。注意不要将
@@ -1436,13 +1415,13 @@ Sum Rules
 
 \begin_layout Standard
 由于 PDFs 代表概率，所以必须满足一些限制。比如，如果质子刚好只含一个下夸克，那么下夸克必然包含一些动量，所以有
-\begin_inset Formula $\int\dif\xi f_{d}(\xi)=1$
+\begin_inset Formula $\int\dd\xi f_{d}(\xi)=1$
 \end_inset
 
 。现实中，质子中会有virtual down-antidown 夸克对，所以会有超过一个下夸克。然而，由于下夸克数守恒（in QED and QCD）我们有
 \begin_inset Formula 
 \[
-\int\dif\xi\left(f_{d}(\xi)-f_{\bar{d}}(\xi)\right)=1
+\int\dd\xi\left(f_{d}(\xi)-f_{\bar{d}}(\xi)\right)=1
 \]
 
 \end_inset
@@ -1459,7 +1438,7 @@ Sum Rules
 ，and zero strange-quark number:
 \begin_inset Formula 
 \[
-\int\dif\xi\left(f_{u}(\xi)-f_{\bar{u}}(\xi)\right)=2\quad\text{and}\quad\int\dif\xi\left(f_{s}(\xi)-f_{\bar{s}}(\xi)\right)=0
+\int\dd\xi\left(f_{u}(\xi)-f_{\bar{u}}(\xi)\right)=2\quad\text{and}\quad\int\dd\xi\left(f_{s}(\xi)-f_{\bar{s}}(\xi)\right)=0
 \]
 
 \end_inset
@@ -1472,7 +1451,7 @@ Sum Rules
 没有相联系的求和规则。另外
 \begin_inset Formula 
 \[
-\sum_{j}\int\dif\xi\left[\xi f_{j}(\xi)\right]=1
+\sum_{j}\int\dd\xi\left[\xi f_{j}(\xi)\right]=1
 \]
 
 \end_inset
@@ -1483,7 +1462,7 @@ Sum Rules
 \begin_layout Standard
 这个sum rules 来自于动量守恒（见问题32.2）。每一个 sum rule 对应一个经典守恒流（up, down, strange number
  or momentum）。数值地，实验证明
-\begin_inset Formula $\int\dif\xi\xi\left[f_{u}(\xi)+f_{d}(\xi)\right]\approx0.38$
+\begin_inset Formula $\int\dd\xi\xi\left[f_{u}(\xi)+f_{d}(\xi)\right]\approx0.38$
 \end_inset
 
 。因此，质子动量中只有大约
@@ -1495,7 +1474,7 @@ Sum Rules
 valence quarks
 \series default
 （u and d）。质子中的胶子成分, given by 
-\begin_inset Formula $\int\dif\xi\,\xi f_{g}(\xi)$
+\begin_inset Formula $\int\dd\xi\,\xi f_{g}(\xi)$
 \end_inset
 
 ，ranges from 
@@ -1597,8 +1576,7 @@ DGLAP 方程
 \end_layout
 
 \begin_layout Standard
-我们已经看到了DIS的定性结论，比如 Bjorken scaling and the Callan-Gross relation， 可以从parton
- model 中得到。然而，可以看到 Fig.
+我们已经看到了DIS的定性结论，比如 Bjorken 标度 和 Callan-Gross 关系，它们可以从 部分子模型 得到。然而可以看到 Fig.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:图32.2"
@@ -1608,7 +1586,7 @@ noprefix "false"
 
 \end_inset
 
- 中 Bjorken scaling 不是完美成立–在结构函数中，可以看到一点对于
+ 中 Bjorken 标度并不是完美成立 – 在结构函数中，可以看到一点对于
 \begin_inset Formula $Q^{2}$
 \end_inset
 
@@ -1620,18 +1598,18 @@ noprefix "false"
 \begin_inset Formula $e^{-}p^{+}$
 \end_inset
 
-散射截面有部分子散射 rates 的求和给出，其中初态部分子的能量由经典概率分布函数
+散射截面由 部分子散射率 的求和得到，其中初态部分子的能量 由经典概率分布函数
 \begin_inset Formula $f_{i}(\xi)$
 \end_inset
 
-给出。在下一节中，我们会讨论withinQCD 中，部分子模型能成立到什么程度。
+ 给出。在下一节我们会讨论在 QCD 框架中，部分子模型 在多大程度上是可信的。
 \end_layout
 
 \begin_layout Standard
 在 EQ.32.10中，
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4\pi m_{p}q^{4}}\frac{E^{\prime}}{E}L^{\mu\nu}W_{\mu\nu}
+\left(\frac{\dd\sigma}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4\pi m_{p}q^{4}}\frac{E^{\prime}}{E}L^{\mu\nu}W_{\mu\nu}
 \]
 
 \end_inset
@@ -1652,39 +1630,80 @@ noprefix "false"
 \begin_inset Formula $\hat{W}^{\mu\nu}(z,Q)$
 \end_inset
 
-为部分子版本的
+ 为部分子版本的
 \begin_inset Formula $W^{\mu\nu}(x,Q)$
 \end_inset
 
-，given by 
-\begin_inset Formula $\abs*{\gamma^{\star}q\to X}$
+，
+\begin_inset Formula $\hat{W}^{\mu\nu}$
 \end_inset
 
-对末态积分。这里
+由
+\begin_inset Formula $\abs*{\mathcal{M}(\gamma^{\star}q\to X)}$
+\end_inset
+
+（
+\begin_inset Formula $q$
+\end_inset
+
+表示夸克）对末态积分得到，其中 
 \begin_inset Formula $z$
 \end_inset
 
-是部分子版本的
+ 是部分子版本的 
 \begin_inset Formula $x$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-x\equiv\frac{Q^{2}}{2P\cdot q},\qquad z\equiv\frac{Q^{2}}{2p_{i}\cdot q}
+x\equiv\frac{Q^{2}}{2P\cdot q},\qquad z\equiv\frac{Q^{2}}{2p_{i}\cdot q},\quad p_{i}=\xi P\quad\Rightarrow z=\frac{x}{\xi}
 \]
 
 \end_inset
 
-这里的部分子散射也是非弹性散射，所以没有类似于
+
+\end_layout
+
+\begin_layout Remark
+这里对部分子的散射不作具体假设，认为也可以非弹性散射，所以没有类似于
 \begin_inset Formula $(p_{f}-q)^{2}=p_{i}^{2}$
 \end_inset
 
-的关系，所以
+的关系，因此
 \begin_inset Formula $z$
 \end_inset
 
-的值也是不确定的。
+的值不确定为
+\begin_inset Formula $1$
+\end_inset
+
+。如果假设了部分子是点粒子（例如夸克），发生了弹性散射，前面的
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:scz-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出 
+\begin_inset Formula $z=1$
+\end_inset
+
+。这里可以一般地理解成，部分子（如介子）中有多少动量参与了散射，所以类似地，
+\begin_inset Formula $0\le x\le1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1700,12 +1719,12 @@ x\equiv\frac{Q^{2}}{2P\cdot q},\qquad z\equiv\frac{Q^{2}}{2p_{i}\cdot q}
 \begin_inset Formula $f_{i}(\xi)$
 \end_inset
 
-，也就是说动量为
+，也就是说动量为 
 \begin_inset Formula $p_{i}^{\mu}=\xi P^{\mu}$
 \end_inset
 
-的parton被散射的概率为
-\begin_inset Formula $f_{i}(\xi)\dif\xi$
+ 的 部分子 被散射的概率为
+\begin_inset Formula $f_{i}(\xi)\dd\xi$
 \end_inset
 
 ，截面为
@@ -1727,7 +1746,7 @@ x\equiv\frac{Q^{2}}{2P\cdot q},\qquad z\equiv\frac{Q^{2}}{2p_{i}\cdot q}
 的每一个部分子都有可能被散射)。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 \begin_inset Formula $W$
 \end_inset
 
@@ -1787,6 +1806,13 @@ x\equiv\frac{Q^{2}}{2P\cdot q}=\frac{Q^{2}}{-2Q.P_{z}}=-\frac{Q}{2.P_{z}}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 现在
 \begin_inset Formula $0\leq\xi\leq1$
 \end_inset
@@ -1794,38 +1820,45 @@ x\equiv\frac{Q^{2}}{2P\cdot q}=\frac{Q^{2}}{-2Q.P_{z}}=-\frac{Q}{2.P_{z}}
 所以有
 \begin_inset Formula 
 \begin{align}
-W^{\mu\nu}(x,Q) & =\sum_{i}\int_{0}^{1}\dif z\int_{0}^{1}\dif\xi f_{i}(\xi)\hat{W}^{\mu\nu}(z,Q)\delta(x-z\xi)\nonumber \\
- & =\sum_{i}\int_{x}^{1}\frac{\dif\xi}{\xi}f_{i}(\xi)\hat{W}^{\mu\nu}(\frac{x}{\xi},Q)\label{eq:32.31}
+W^{\mu\nu}\left(x,Q\right) & =\sum_{i}\int_{0}^{1}\dd{\xi}f_{i}\left(\xi\right){\color{blue}\int_{0}^{1}\dd{z}\delta\left(x-z\xi\right)\hat{W}^{\mu\nu}\left(z,Q\right)}\nonumber \\
+ & =\sum_{i}\int_{x}^{1}\dd{\xi}f_{i}\left(\xi\right){\color{blue}\frac{1}{\xi}\hat{W}^{\mu\nu}\left(\frac{x}{\xi},Q\right)}\label{eq:32.31}
 \end{align}
 
 \end_inset
 
 
-\begin_inset Formula $\delta(x-z\xi)$
+\begin_inset Formula $\delta\left(x-z\xi\right)$
 \end_inset
 
-表示发生了散射，所以
+ 时才发生散射，因为
+\begin_inset Formula $0\le z\le1$
+\end_inset
+
+ 即 
+\begin_inset Formula $0\le\frac{x}{\xi}\le1$
+\end_inset
+
+，所以 
 \begin_inset Formula $\xi$
 \end_inset
 
-的积分范围被改变。
+ 的积分范围被改变。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 
 \series bold
-补充：
 \begin_inset Formula $\delta$
 \end_inset
 
-函数计算.
+函数公式：
 \series default
 
 \begin_inset Formula $\delta$
 \end_inset
 
 函数积分公式
-\begin_inset Formula $\int_{-\infty}^{x}\delta(t)\dif t=\theta(x)$
+\begin_inset Formula $\int_{-\infty}^{x}\delta(t)\dd t=\theta(x)$
 \end_inset
 
 ,其中
@@ -1863,7 +1896,7 @@ W^{\mu\nu}(x,Q) & =\sum_{i}\int_{0}^{1}\dif z\int_{0}^{1}\dif\xi f_{i}(\xi)\hat{
 。
 \begin_inset Formula 
 \begin{align}
-\int_{0}^{1}\dif z\delta(x-z\xi) & =\frac{1}{\xi}\theta(z-\frac{x}{\xi})\rvert_{0}^{1}=\frac{1}{\xi}\left(\theta(1-\frac{x}{\xi})-\theta(-\frac{x}{\xi})\right)\\
+\int_{0}^{1}\dd z\delta(x-z\xi) & =\frac{1}{\xi}\theta(z-\frac{x}{\xi})\rvert_{0}^{1}=\frac{1}{\xi}\left(\theta(1-\frac{x}{\xi})-\theta(-\frac{x}{\xi})\right)\\
  & =\frac{1}{\xi}\left(\theta(1-\frac{x}{\xi})\right)\nonumber 
 \end{align}
 
@@ -1897,12 +1930,18 @@ W^{\mu\nu}(x,Q) & =\sum_{i}\int_{0}^{1}\dif z\int_{0}^{1}\dif\xi f_{i}(\xi)\hat{
 \end_layout
 
 \begin_layout Standard
-我们来检查 leading-order QCD.
- At order 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们查看领头阶 QCD。在
 \begin_inset Formula $\mathcal{O}(\alpha_{s}^{0})$
 \end_inset
 
-，对
+阶，对
 \begin_inset Formula $W^{\mu\nu}$
 \end_inset
 
@@ -1910,21 +1949,25 @@ W^{\mu\nu}(x,Q) & =\sum_{i}\int_{0}^{1}\dif z\int_{0}^{1}\dif\xi f_{i}(\xi)\hat{
 \begin_inset Formula $\gamma^{\star}q\to q$
 \end_inset
 
-，那么，
+，用
+\begin_inset Formula $p_{i}^{\mu}$
+\end_inset
+
+表示初态动量，
 \begin_inset Formula $p_{f}^{\mu}=p_{i}^{\mu}+q^{\mu}$
 \end_inset
 
-初末态动量，我们有
+表示末态动量，则有
 \begin_inset Formula 
 \begin{align}
-\hat{W}^{\mu\nu}(z,Q) & =\frac{C_{i}^{2}}{2}\int\frac{\dif^{3}\vec{p}_{f}}{(2\pi)^{3}}\frac{1}{2E_{f}}\tr\left[\gamma^{\mu}\slashed{p}_{i}\gamma^{\nu}\slashed{p}_{f}\right](2\pi)^{4}\delta(p_{i}+q-p_{f})\nonumber \\
- & =2\pi C_{i}^{2}\left[\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+\frac{4z}{Q^{2}}\left(p_{i}^{\mu}-\frac{p_{i}\cdot q}{q^{2}}q^{\mu}\right)\left(p_{i}^{\nu}-\frac{p_{i}\cdot q}{q^{2}}q^{\nu}\right)\right]\delta(1-z)\label{eq:32.32}
+\hat{W}^{\mu\nu}(z,Q) & =\frac{Q_{e,i}^{2}}{2}\int\frac{\dd^{3}\vec{p}_{f}}{(2\pi)^{3}}\frac{1}{2E_{f}}\Tr\left[\gamma^{\mu}\sla p_{i}\gamma^{\nu}\sla p_{f}\right](2\pi)^{4}\delta(p_{i}+q-p_{f})\nonumber \\
+ & =2\pi Q_{e,i}^{2}\left[\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+\frac{4z}{Q^{2}}\left(p_{i}^{\mu}-\frac{p_{i}\cdot q}{q^{2}}q^{\mu}\right)\left(p_{i}^{\nu}-\frac{p_{i}\cdot q}{q^{2}}q^{\nu}\right)\right]\delta(1-z)\label{eq:32.32}
 \end{align}
 
 \end_inset
 
-我们发现
-\begin_inset Formula $\hat{W}_{1}=2\pi C_{i}^{2}\delta(1-z)=\frac{Q^{2}}{4z}\hat{W}_{2}$
+其中只考虑了 QED 顶点。我们发现
+\begin_inset Formula $\hat{W}_{1}=2\pi Q_{e,i}^{2}\delta(1-z)=\frac{Q^{2}}{4z}\hat{W}_{2}$
 \end_inset
 
 ，在领头阶验证了 Callan-Gross 关系。把领头阶
@@ -1942,17 +1985,535 @@ noprefix "false"
 \end_inset
 
 ，我们得到
-\begin_inset Formula $W_{2}(x,Q)=8\pi\frac{x^{2}}{Q^{2}}\sum_{i}C_{i}^{2}f_{i}(x)$
+\begin_inset Formula $W_{2}(x,Q)=8\pi\frac{x^{2}}{Q^{2}}\sum_{i}Q_{e,i}^{2}f_{i}(x)$
 \end_inset
 
-。验证了归一化。
+。验证了 normalization。
+\end_layout
+
+\begin_layout Remark
 \begin_inset Formula 
 \begin{align*}
- & \sum_{i}\int_{x}^{1}\frac{\dif\xi}{\xi}f_{i}(\xi)\hat{W}^{\mu\nu}(\frac{x}{\xi},Q)\\
-\Rightarrow & \sum_{i}\int_{x}^{1}\frac{\dif\xi}{\xi}f_{i}(\xi)2\pi C_{i}^{2}\delta(1-z)\frac{4z}{Q^{2}}\\
-= & \sum_{i}\frac{x}{x}f_{i}(x)2\pi C_{i}^{2}\frac{4}{Q^{2}}=8\pi\frac{4}{Q^{2}}\sum_{i}C_{i}^{2}f_{i}(x)
+ & \sum_{i}\int_{x}^{1}\frac{\dd\xi}{\xi}f_{i}(\xi)\hat{W}^{\mu\nu}(\frac{x}{\xi},Q)\\
+\Rightarrow & \sum_{i}\int_{x}^{1}\frac{\dd\xi}{\xi}f_{i}(\xi)2\pi Q_{e,i}^{2}\delta(1-z)\frac{4z}{Q^{2}}\\
+= & \sum_{i}\frac{x}{x}f_{i}(x)2\pi Q_{e,i}^{2}\frac{4}{Q^{2}}=8\pi\frac{4}{Q^{2}}\sum_{i}Q_{e,i}^{2}f_{i}(x)
 \end{align*}
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了简化，查看形状因子
+\begin_inset Formula $W_{0}\equiv-g^{\mu\nu}W_{\mu\nu}$
+\end_inset
+
+，对于强子张量，
+\begin_inset Formula 
+\begin{equation}
+W_{0}\left(x,Q\right)\equiv-g^{\mu\nu}W_{\mu\nu}=3W_{1}\left(x,Q\right)-W_{2}\left(x,Q\right)\left(m_{p}^{2}+\frac{Q^{2}}{4x^{2}}\right).\label{eq:sc32.33}
+\end{equation}
+
+\end_inset
+
+当
+\begin_inset Formula $Q\gg m_{p}$
+\end_inset
+
+，化简到
+\begin_inset Formula $W_{0}=3W_{1}-\frac{Q^{2}}{4x^{2}}W_{2}$
+\end_inset
+
+，在领头阶也就是 
+\begin_inset Formula $W_{0}=2W_{1}$
+\end_inset
+
+，特别地
+\begin_inset Formula 
+\begin{equation}
+W_{0}\left(x,Q\right)=4\pi\sum_{i}Q_{e,i}^{2}f_{i}\left(x\right).\label{eq:sc32.34}
+\end{equation}
+
+\end_inset
+
+此方程促使我们想在领头阶之外，将 
+\begin_inset Formula $W_{0}$
+\end_inset
+
+ 作为 PDFs 的
+\series bold
+valid 定义
+\series default
+。我们将看到，如此定义 PDFs 则可以计算它对 
+\begin_inset Formula $Q$
+\end_inset
+
+的依赖。特别地，我们现在可以忘记这些迷惑人的结构函数，集中注意力到 
+\begin_inset Formula $W_{0}$
+\end_inset
+
+，它基本上就是 
+\begin_inset Formula $\gamma^{*}p^{+}\to X$
+\end_inset
+
+ 的非极化散射截面。
+\end_layout
+
+\begin_layout Standard
+在部分子水平，在领头阶，
+\begin_inset Formula $\hat{W}_{0}^{\text{LO}}=4\pi Q_{e,i}^{2}\delta(1-z)$
+\end_inset
+
+。在 QCD的 部分子模型 的次领头阶，会有 virtual 
+\begin_inset Formula $\gamma^{*}q\to q$
+\end_inset
+
+图，和 
+\begin_inset Formula $s$
+\end_inset
+
+道、
+\begin_inset Formula $t$
+\end_inset
+
+道 
+\begin_inset Formula $\gamma^{*}q\to qg$
+\end_inset
+
+图：
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/schwartz-32.25.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+这些图本质上就是 Chap.20 中 
+\begin_inset Formula $\gamma^{*}\to\mu^{+}\mu^{-}\left(+\gamma\right)$
+\end_inset
+
+ 图的交叉（crossings），我们假设读者已经熟悉了相关的计算，这里不再重复细节。
+\end_layout
+
+\begin_layout Standard
+使用 Chap.20 中相同的计数，我们计算 NLO阶 的 virtual 贡献（见 Eq.20.A.101）。
+\begin_inset Formula $d=4-\varepsilon$
+\end_inset
+
+维下，领头阶和上面的圈图的干涉项给出
+\begin_inset Formula 
+\begin{equation}
+\hat{W}_{0}^{V}=4\pi Q_{ei}^{2}\frac{\alpha_{s}}{2\pi}C_{F}\left(\frac{4\pi\mu^{2}}{Q^{2}}\right)^{\varepsilon/2}\frac{\Gamma\left(1-\frac{\varepsilon}{2}\right)}{\Gamma\left(1-\varepsilon\right)}\left(-\frac{8}{\varepsilon^{2}}-\frac{6}{\varepsilon}-8-\frac{\pi^{2}}{3}\right)\delta\left(1-z\right).\label{eq:sc32.36}
+\end{equation}
+
+\end_inset
+
+其中去掉了在
+\begin_inset Formula $\varepsilon\to0$
+\end_inset
+
+时不贡献的项。在展开中，已经使用 抵消项 去掉了 UV 发散，所以式中的 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 都是 
+\begin_inset Formula $\varepsilon_{\text{IR}}$
+\end_inset
+
+。对于 real emission 图，计算更加费劲，但是仍然可以用 chap.20 的技巧对付。结果是[Altarelli et al, 1979]
+\begin_inset Formula 
+\begin{align}
+\hat{W}_{0}^{R} & =4\pi Q_{ei}^{2}\frac{\alpha_{s}}{2\pi}C_{F}\left(\frac{4\pi\mu^{2}}{Q^{2}}\right)^{\varepsilon/2}\frac{\Gamma\left(1-\varepsilon/2\right)}{\Gamma\left(1-\varepsilon\right)}\nonumber \\
+ & \times\left\{ 3z+z^{\varepsilon/2}\left(1-z\right)^{-\varepsilon/2}\left(-\frac{2}{\varepsilon}\frac{1+z^{2}}{1-z}+3-z-\frac{3}{2}\frac{1}{1-z}-\frac{7}{4}\frac{\varepsilon}{1-z}\right)\right\} .\label{eq:sc32.37}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+猛地一看，
+\begin_inset Formula $\hat{W}_{0}^{V}$
+\end_inset
+
+有 
+\begin_inset Formula $1/\varepsilon^{2}$
+\end_inset
+
+ 双极点 而 
+\begin_inset Formula $\hat{W}_{0}^{R}$
+\end_inset
+
+ 没有，好像这些 pole 不会抵消掉。然而事实上 
+\begin_inset Formula $\hat{W}_{0}^{R}$
+\end_inset
+
+ 存在 
+\begin_inset Formula $1/\varepsilon^{2}$
+\end_inset
+
+ 极点，来自于 
+\begin_inset Formula $\frac{1}{1-z}\left(1-z\right)^{-\varepsilon/2}$
+\end_inset
+
+项。我们需要使用 fact，
+\begin_inset Formula $\left(1-z\right)^{-1-\varepsilon}$
+\end_inset
+
+在
+\begin_inset Formula $\varepsilon=0$
+\end_inset
+
+附近展开给出一个分布。相关的等式为
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\left(1-z\right)^{1+\varepsilon}}=\frac{-1}{\varepsilon}\delta\left(1-z\right)+\frac{1}{\left[1-z\right]_{+}}-\varepsilon\left[\frac{\ln\left(1-z\right)}{1-z}\right]_{+}+\sum_{n=2}^{\infty}\frac{\left(-\varepsilon\right)^{n}}{n!}\left[\frac{\ln^{n}\left(1-z\right)}{1-z}\right]_{+},\label{eq:sc32.38}
+\end{equation}
+
+\end_inset
+
+你可以在 问题32.3 中推导。这里的 plus 函数的定义满足
+\begin_inset Formula 
+\begin{equation}
+\int_{0}^{1}\dd{z}\frac{f\left(z\right)}{\left[1-z\right]_{+}}\equiv\int_{0}^{1}\dd{z}\frac{f\left(z\right)-f\left(1\right)}{1-z}\label{eq:sc32.39}
+\end{equation}
+
+\end_inset
+
+以及当 
+\begin_inset Formula $z\neq1$
+\end_inset
+
+时，
+\begin_inset Formula $\frac{1}{\left[1-z\right]_{+}}=\frac{1}{1-z}$
+\end_inset
+
+。这两个条件唯一地确定了此分布，for any limits of integration。另一个 plus 函数的定义是类似的：
+\begin_inset Formula 
+\begin{equation}
+\int_{0}^{1}\dd{z}f\left(z\right)\left[\frac{\ln^{n}\left(1-z\right)}{1-z}\right]_{+}\equiv\int_{0}^{1}\dd{z}\left(f\left(z\right)-f\left(1\right)\right)\frac{\ln^{n}\left(1-z\right)}{1-z},\label{eq:sc32.40}
+\end{equation}
+
+\end_inset
+
+且当 
+\begin_inset Formula $z\neq1$
+\end_inset
+
+时，
+\begin_inset Formula $\left[\frac{\ln^{n}\left(1-z\right)}{1-z}\right]_{+}=\frac{\ln^{n}\left(1-z\right)}{1-z}$
+\end_inset
+
+。然后我们发现
+\begin_inset Formula 
+\begin{align}
+\hat{W}_{0}^{R} & =4\pi Q_{ei}^{2}\frac{\alpha_{s}}{2\pi}C_{F}\left(\frac{4\pi\mu^{2}}{Q^{2}}\right)^{\varepsilon/2}\frac{\Gamma\left(1-\varepsilon/2\right)}{\Gamma\left(1-\varepsilon\right)}\Bigg\{3+2z-\frac{1+z^{2}}{1-z}\ln z\nonumber \\
+ & +\left(\frac{8}{\varepsilon^{2}}+\frac{3}{\varepsilon}+\frac{7}{2}\right)\delta\left(1-z\right)-\left(2\frac{1+z^{2}}{\varepsilon}+\frac{3}{2}\right)\left[\frac{1}{1-z}\right]_{+}+\left(1+z^{2}\right)\left[\frac{\ln^{n}\left(1-z\right)}{1-z}\right]_{+}\Bigg\},\label{eq:sc32.41}
+\end{align}
+
+\end_inset
+
+所以，在次领头阶
+\begin_inset Formula 
+\begin{align}
+\hat{W} & =\hat{W}^{\text{LO}}+\hat{W}^{V}+\hat{W}^{R}=4\pi Q_{ei}^{2}\Bigg\{\left[\delta\left(1-z\right)-\frac{1}{\varepsilon}\frac{\alpha_{s}}{\pi}P_{qq}\left(z\right)\left(\frac{4\pi\mu^{2}}{Q^{2}}\right)^{\varepsilon/2}\frac{\Gamma\left(1-\varepsilon/2\right)}{\Gamma\left(1-\varepsilon\right)}\right]\nonumber \\
+ & +\frac{\alpha_{s}}{2\pi}C_{F}\Bigg[\left(1+z^{2}\right)\left[\frac{\ln\left(1-z\right)}{1-z}\right]_{+}-\frac{3}{2}\left[\frac{1}{1-z}\right]_{+}\nonumber \\
+ & \quad-\frac{1+z^{2}}{1-z}\ln z+3+2z-\left(\frac{9}{2}+\frac{1}{3}\pi^{2}\right)\delta\left(1-z\right)\Bigg]\Bigg\},\label{eq:sc32.42}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+P_{qq}\left(z\right)=C_{F}\left[\left(1+z^{2}\right)\left[\frac{1}{1-z}\right]_{+}+\frac{3}{2}\delta\left(1-z\right)\right].\label{eq:sc32.43}
+\end{equation}
+
+\end_inset
+
+分布 
+\begin_inset Formula $P_{qq}\left(z\right)$
+\end_inset
+
+ 称为 DGLAP 分裂函数，以 Dokshitzer, Gribov, Lipatov, Altarelli 和 Parisi 命名。
+\end_layout
+
+\begin_layout Standard
+现在，所有的 双极点 都抵消了，但散射截面中还有单极点 
+\begin_inset Formula $1/\varepsilon$
+\end_inset
+
+，它的留数正比于 
+\begin_inset Formula $P_{qq}\left(z\right)$
+\end_inset
+
+。在 部分子水平的散射截面有 极点 并不要紧，只要它不出现在物理预言中即可。我们着重处理这个极点，把 
+\begin_inset Formula $\hat{W}^{0}$
+\end_inset
+
+ 插入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:32.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+W_{0}^{\mu\nu}\left(x,Q\right)=4\pi\sum_{i}Q_{e,i}^{2}\int_{x}^{1}\frac{\dd{\xi}}{\xi}f_{i}\left(\xi\right)\left[\delta\left(1-\frac{x}{\xi}\right)-\frac{\alpha_{s}}{2\pi}P_{qq}\left(\frac{x}{\xi}\right)\left(\frac{2}{\varepsilon}+\ln\frac{\tilde{\mu}^{2}}{Q^{2}}\right)+\text{有限值}\right].
+\]
+
+\end_inset
+
+现在使用 plus 函数的定义，我们发现
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc32.43"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的分裂函数满足
+\begin_inset Formula 
+\begin{equation}
+\int_{0}^{1}P_{qq}\left(z\right)\dd{z}=0.\label{eq:sc32.45}
+\end{equation}
+
+\end_inset
+
+因此，如果我们将 
+\begin_inset Formula $W_{0}^{\mu\nu}\left(x,Q\right)$
+\end_inset
+
+ 对 
+\begin_inset Formula $x$
+\end_inset
+
+积分，去计算在给定 
+\begin_inset Formula $Q$
+\end_inset
+
+ 的 
+\series bold
+总
+\series default
+ DIS 散射截面，
+\begin_inset Formula $1/\varepsilon$
+\end_inset
+
+ 极点总是会消失。
+\end_layout
+
+\begin_layout Standard
+在固定
+\begin_inset Formula $x$
+\end_inset
+
+值，
+\begin_inset Formula $1/\varepsilon$
+\end_inset
+
+极点不会抵消，
+\begin_inset Formula $W_{0}^{\mu\nu}\left(x,Q\right)$
+\end_inset
+
+ 是发散的。然而如同许多其他例子（见 chap.16），我们需要取散射截面的差，以得到有限值，在相同
+\begin_inset Formula $x$
+\end_inset
+
+不同能标
+\begin_inset Formula $Q$
+\end_inset
+
+和 
+\begin_inset Formula $Q_{0}$
+\end_inset
+
+时 
+\begin_inset Formula $W_{0}^{\mu\nu}\left(x,Q\right)$
+\end_inset
+
+ 的差是
+\begin_inset Formula 
+\begin{equation}
+W_{0}^{\mu\nu}\left(x,Q\right)-W_{0}^{\mu\nu}\left(x,Q_{0}\right)=4\pi\sum_{i}Q_{e,i}^{2}\int_{x}^{1}\frac{\dd{\xi}}{\xi}f_{i}\left(\xi\right)\left[\frac{\alpha_{s}}{2\pi}P_{qq}\left(\frac{x}{\xi}\right)\ln\frac{Q^{2}}{Q_{0}^{2}}\right].\label{eq:sc32.46}
+\end{equation}
+
+\end_inset
+
+差是有限积分。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc32.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的有限部分不出现在差值中，但部分子水平散射截面的 
+\begin_inset Formula $1/\varepsilon$
+\end_inset
+
+ 极点给出物理的量子预言，强子的散射截面对数依赖于
+\begin_inset Formula $Q$
+\end_inset
+
+（
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc32.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的有限部分不出现在结构函数的差值中[Altarelli et al.,1979; Sterman, 1993].）
+\end_layout
+
+\begin_layout Standard
+为啥非得计算差值呢？
+\begin_inset Formula $W_{0}^{\mu\nu}\left(x,Q\right)$
+\end_inset
+
+ 难道不是观测量吗，所以不用再重正化应该也是有限的，因为 QCD 是可重正的呀？有两个回答。首先如果我们使用 full QCD 计算，IR 发散会被一些物理能标
+截断，例如夸克质量 
+\begin_inset Formula $m_{q}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\Lambda_{\text{QCD}}$
+\end_inset
+
+。事实上，QED 的 Compton 散射中存在相同的发散，然后它被电子质量截断。然而，这么解释就错过了重点。使用带质量夸克计算，将把对数替换成
+ 
+\begin_inset Formula $\ln\frac{m_{q}}{Q}$
+\end_inset
+
+，当 
+\begin_inset Formula $Q\gg m_{q}$
+\end_inset
+
+时会变得很大。因此第二个答案更直白：
+\begin_inset Formula $W_{0}^{\mu\nu}\left(x,Q\right)$
+\end_inset
+
+ 在两能标之差是更切实可算的量，这样我们能在微扰理论中得到可以检验的量。确实，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc32.46"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的对数依赖正好解释了 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:图32.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中 Bjorken 标度的破坏。
+\end_layout
+
+\begin_layout Standard
+正如我们多次看到的那样，重正化让我们用 重正化观测值的计算值 来代替 差的计算值。在这里，我们需要定义重整化的 PDFs。我们认为
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc32.34"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+精确定义了 在某参考能标
+\begin_inset Formula $Q_{0}$
+\end_inset
+
+的
+\begin_inset Formula $W_{0}$
+\end_inset
+
+。由于 
+\begin_inset Formula $Q_{0}$
+\end_inset
+
+是任意的，散射截面对 
+\begin_inset Formula $Q_{0}$
+\end_inset
+
+ 的无关性应该引出一个重正化群方程。在预期与 RG 的联系中，我们定义
+\begin_inset Formula 
+\begin{equation}
+W_{0}\left(x,Q\right)\equiv4\pi\sum_{i}Q_{ei}^{2}f_{i}\left(x,\mu=Q\right),\label{eq:sc32.47}
+\end{equation}
+
+\end_inset
+
+对每个能标
+\begin_inset Formula $Q$
+\end_inset
+
+。为使此方程与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc32.46"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+一致我们需要
+\begin_inset Formula 
+\begin{equation}
+f_{i}\left(x,\mu_{1}\right)=f_{i}\left(x,\mu\right)+\frac{\alpha_{s}}{2\pi}\int_{x}^{1}\frac{\dd{\xi}}{\xi}f_{i}\left(\xi,\mu_{1}\right)P_{qq}\left(\frac{x}{\xi}\right)\ln\frac{\mu_{1}^{2}}{\mu^{2}},\label{eq:sc32.48}
+\end{equation}
+
+\end_inset
+
+它蕴含了
+\begin_inset Formula 
+\begin{equation}
+\mu\frac{\dd}{\dd{\mu}}f_{i}\left(x,\mu\right)=\frac{\alpha_{s}}{2\pi}\int_{x}^{1}\frac{\dd{\xi}}{\xi}f_{i}\left(\xi,\mu_{1}\right)P_{qq}\left(\frac{x}{\xi}\right).\label{eq:sc32.49}
+\end{equation}
+
+\end_inset
+
+它被称为 DGLAP 演化方程。这允许我们将结构函数中的 大对数项 重求和（resum）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -2108,7 +2669,7 @@ J^{\mu}\left(x\right)J^{\nu}\left(y\right)=\sum_{n}C_{n}\left(x-y\right)\mathcal
 玻色子积分掉，我们会得到一个非定域拉氏量：
 \begin_inset Formula 
 \[
-\mathcal{L}_{W}=g^{2}\int\dif^{4}x\dif^{4}y\bar{\psi}\left(x\right)\gamma^{\mu}\psi\left(x\right)D_{\mu\nu}\left(x,y\right)\bar{\psi}\left(y\right)\gamma^{\nu}\psi\left(y\right)
+\mathcal{L}_{W}=g^{2}\int\dd^{4}x\dd^{4}y\bar{\psi}\left(x\right)\gamma^{\mu}\psi\left(x\right)D_{\mu\nu}\left(x,y\right)\bar{\psi}\left(y\right)\gamma^{\nu}\psi\left(y\right)
 \]
 
 \end_inset
@@ -2116,7 +2677,7 @@ J^{\mu}\left(x\right)J^{\nu}\left(y\right)=\sum_{n}C_{n}\left(x-y\right)\mathcal
 where
 \begin_inset Formula 
 \[
-D_{\mu\nu}(x,y)=\int\frac{\dif^{4}p}{(2\pi)^{4}}\frac{-g_{\mu\nu}}{p^{2}-m_{W}^{2}}e^{ip(x-y)}=\frac{g^{\mu\nu}}{\square_{x}+m_{W}^{2}}\int\frac{\dif^{4}p}{\left(2\pi\right)^{4}}e^{ip\left(x-y\right)}
+D_{\mu\nu}(x,y)=\int\frac{\dd^{4}p}{(2\pi)^{4}}\frac{-g_{\mu\nu}}{p^{2}-m_{W}^{2}}e^{ip(x-y)}=\frac{g^{\mu\nu}}{\square_{x}+m_{W}^{2}}\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}e^{ip\left(x-y\right)}
 \]
 
 \end_inset
@@ -2148,7 +2709,7 @@ with
 。所以
 \begin_inset Formula 
 \[
-\mathcal{L}_{W}\sim G_{F}\int\dif^{4}x\left[\bar{\psi}\gamma^{\mu}\psi\bar{\psi}\gamma_{\mu}\psi-\bar{\psi}\gamma^{\mu}\psi\frac{\square}{m_{W}^{2}}\bar{\psi}\gamma_{\mu}\psi+\bar{\psi}\gamma^{\mu}\psi\frac{\square^{2}}{m_{W}^{4}}\bar{\psi}\gamma_{\mu}\psi\right]
+\mathcal{L}_{W}\sim G_{F}\int\dd^{4}x\left[\bar{\psi}\gamma^{\mu}\psi\bar{\psi}\gamma_{\mu}\psi-\bar{\psi}\gamma^{\mu}\psi\frac{\square}{m_{W}^{2}}\bar{\psi}\gamma_{\mu}\psi+\bar{\psi}\gamma^{\mu}\psi\frac{\square^{2}}{m_{W}^{4}}\bar{\psi}\gamma_{\mu}\psi\right]
 \]
 
 \end_inset
@@ -2249,7 +2810,7 @@ with
 OPE的实用形式是
 \begin_inset Formula 
 \[
-\int\dif^{4}xe^{iqx}\mathcal{O}(x)\mathcal{O}(0)=\sum_{n}C_{n}(q)\mathcal{O}_{n}(0)
+\int\dd^{4}xe^{iqx}\mathcal{O}(x)\mathcal{O}(0)=\sum_{n}C_{n}(q)\mathcal{O}_{n}(0)
 \]
 
 \end_inset
@@ -2337,7 +2898,7 @@ OPE的实用形式是
 定义(32.12)为：
 \begin_inset Formula 
 \[
-e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spins}}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
+e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spins}}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
 \]
 
 \end_inset
@@ -2377,8 +2938,8 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spi
  的定义，我们发现
 \begin_inset Formula 
 \begin{align*}
-W_{\mu\nu}\left(\omega,Q\right) & =\sum_{X}\int\dif\Pi_{X}\left(2\pi\right)^{4}\delta^{4}\left(q^{\mu}+P^{\mu}-p_{X}^{\mu}\right)\bra{P}J_{\mu}(0)\ket{X}\bra{X}J_{\nu}(0)\ket{P}\\
- & =\sum_{x}\int\dif\Pi_{X}\int\dif^{4}xe^{i(q+P-p_{X})x}\bra{P}J_{\mu}(0)\ket{X}\bra{X}J_{\nu}(0)\ket{P}
+W_{\mu\nu}\left(\omega,Q\right) & =\sum_{X}\int\dd\Pi_{X}\left(2\pi\right)^{4}\delta^{4}\left(q^{\mu}+P^{\mu}-p_{X}^{\mu}\right)\bra{P}J_{\mu}(0)\ket{X}\bra{X}J_{\nu}(0)\ket{P}\\
+ & =\sum_{x}\int\dd\Pi_{X}\int\dd^{4}xe^{i(q+P-p_{X})x}\bra{P}J_{\mu}(0)\ket{X}\bra{X}J_{\nu}(0)\ket{P}
 \end{align*}
 
 \end_inset
@@ -2426,8 +2987,8 @@ W_{\mu\nu}\left(\omega,Q\right) & =\sum_{X}\int\dif\Pi_{X}\left(2\pi\right)^{4}\
 是产生平移的动量算符。它给出
 \begin_inset Formula 
 \begin{align*}
-W_{\mu\nu}\left(\omega,Q\right) & =\sum_{x}\int\dif\Pi_{X}\int\dif^{4}xe^{iq\cdot x}\bra{P}J_{\mu}(x)\ket{X}\bra{X}J_{\nu}(0)\ket{P}\\
-W_{\mu\nu}\left(\omega,Q\right) & =\int\dif^{4}xe^{iq\cdot x}\bra{P}J_{\mu}(x)J_{\nu}(0)\ket{P}
+W_{\mu\nu}\left(\omega,Q\right) & =\sum_{x}\int\dd\Pi_{X}\int\dd^{4}xe^{iq\cdot x}\bra{P}J_{\mu}(x)\ket{X}\bra{X}J_{\nu}(0)\ket{P}\\
+W_{\mu\nu}\left(\omega,Q\right) & =\int\dd^{4}xe^{iq\cdot x}\bra{P}J_{\mu}(x)J_{\nu}(0)\ket{P}
 \end{align*}
 
 \end_inset
@@ -2534,8 +3095,8 @@ W_{\mu\nu}\left(\omega,Q\right) & =\int\dif^{4}xe^{iq\cdot x}\bra{P}J_{\mu}(x)J_
 向前散射rate 的虚部给出。使用 Eq.(32.12) and (24.11)，
 \begin_inset Formula 
 \begin{align*}
-2i\im\mathcal{M}(A & \to A)=i\sum_{X}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs{\mathcal{M}(A\to X)}^{2}\\
-e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu} & =\frac{1}{2}\sum_{X,\text{spins}}\int\dif\Pi_{X}(2\pi)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
+2i\imm\mathcal{M}(A & \to A)=i\sum_{X}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}(p_{A}-p_{X})\abs{\mathcal{M}(A\to X)}^{2}\\
+e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu} & =\frac{1}{2}\sum_{X,\text{spins}}\int\dd\Pi_{X}(2\pi)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
 \end{align*}
 
 \end_inset
@@ -2543,7 +3104,7 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu} & =\frac{1}{2}\sum_{X,\text{
 可得
 \begin_inset Formula 
 \[
-W^{\mu\nu}=2\im T^{\mu\nu}
+W^{\mu\nu}=2\imm T^{\mu\nu}
 \]
 
 \end_inset
@@ -2571,7 +3132,7 @@ forward Compton amplitude
 写成
 \begin_inset Formula 
 \[
-T_{\mu\nu}\left(\omega,Q\right)=i\int\dif^{4}xe^{iq\cdot x}\bra{P}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} \ket{P}
+T_{\mu\nu}\left(\omega,Q\right)=i\int\dd^{4}xe^{iq\cdot x}\bra{P}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} \ket{P}
 \]
 
 \end_inset
@@ -2602,11 +3163,11 @@ T^{\mu\nu}(\omega,Q)=T_{1}\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+
 \end_inset
 
 DIS 结构函数变成
-\begin_inset Formula $W_{1}=2\im T_{1}$
+\begin_inset Formula $W_{1}=2\imm T_{1}$
 \end_inset
 
  and 
-\begin_inset Formula $W_{2}=4\im\frac{1}{\omega Q^{2}}T_{2}$
+\begin_inset Formula $W_{2}=4\imm\frac{1}{\omega Q^{2}}T_{2}$
 \end_inset
 
 。在因子化分析的时候，习惯上也使用形状因子
@@ -2622,11 +3183,11 @@ DIS 结构函数变成
 \end_inset
 
 则
-\begin_inset Formula $\mathcal{F}_{1,2}=\frac{1}{2\pi}\im(T_{1,2})$
+\begin_inset Formula $\mathcal{F}_{1,2}=\frac{1}{2\pi}\imm(T_{1,2})$
 \end_inset
 
 。因此，我们希望在领头阶
-\begin_inset Formula $\im T_{2}=2\pi\sum_{i}C_{i}^{2}xf_{i}(x)$
+\begin_inset Formula $\imm T_{2}=2\pi\sum_{i}Q_{e,i}^{2}xf_{i}(x)$
 \end_inset
 
 ，可以让我们匹配到部分子模型，一旦计算出
@@ -2752,7 +3313,7 @@ DIS 结构函数变成
 ，这个cut对应电子在反质子上的深度非弹性散射。然后我们就可以使用套路，具有cut的函数的虚部由穿过cut时的不连续值给出：
 \begin_inset Formula 
 \begin{equation}
-W_{\mu\nu}\left(\omega,Q\right)=2\im T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)\label{eq:32.83}
+W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)\label{eq:32.83}
 \end{equation}
 
 \end_inset
@@ -2770,7 +3331,7 @@ W_{\mu\nu}\left(\omega,Q\right)=2\im T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu
 \end_inset
 
 。对这类解析函数而言，函数在割线两侧的不连续度（discontinuity）为
-\begin_inset Formula $\disc f\left(x\right)\equiv f\left(x+i\varepsilon\right)-f\left(x-i\varepsilon\right)=f\left(x+i\varepsilon\right)-f\left(x+i\varepsilon\right)^{*}=2i\im f\left(x+i\varepsilon\right)$
+\begin_inset Formula $\disc f\left(x\right)\equiv f\left(x+i\varepsilon\right)-f\left(x-i\varepsilon\right)=f\left(x+i\varepsilon\right)-f\left(x+i\varepsilon\right)^{*}=2i\imm f\left(x+i\varepsilon\right)$
 \end_inset
 
 。其中
@@ -2917,10 +3478,10 @@ name "fig:fig.32.4"
 \begin_inset Formula 
 \begin{align*}
  & e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}T^{\mu\nu}(\omega,Q)=\mathcal{M}\left(\gamma^{*}p^{+}\to\gamma^{*}p^{+}\right)\\
- & T_{\mu\nu}(\omega,Q)=i\int\dif^{4}xe^{iq\cdot x}\bra{P}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} \ket{P}\\
- & W_{\mu\nu}\left(\omega,Q\right)=2\im T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)\\
+ & T_{\mu\nu}(\omega,Q)=i\int\dd^{4}xe^{iq\cdot x}\bra{P}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} \ket{P}\\
+ & W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)\\
  & T^{\mu\nu}(\omega,Q)=T_{1}(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}})+\frac{T_{2}}{P\cdot q}\left(P^{\mu}-\frac{P\cdot q}{q^{2}}q^{\mu}\right)\left(P^{\nu}-\frac{P\cdot q}{q^{2}}q^{\nu}\right)\\
- & W_{1}=2\im T_{1},\quad W_{2}=4\im\frac{1}{\omega Q^{2}}T_{2}
+ & W_{1}=2\imm T_{1},\quad W_{2}=4\imm\frac{1}{\omega Q^{2}}T_{2}
 \end{align*}
 
 \end_inset
@@ -2953,7 +3514,7 @@ T\left\{ J^{\mu}\left(x\right)J^{\nu}\left(y\right)\right\} =\sum_{n}C_{n}\left(
 中的向前散射矩阵元一样，只需要去掉光子极化并且令光子动量不在壳。在微扰理论的领头阶，结果是
 \begin_inset Formula 
 \begin{align}
- & i\int\dif^{4}xe^{iqx}\bra{p}T\left\{ J^{\mu}(x)J^{\nu}(0)\right\} \ket{p}\nonumber \\
+ & i\int\dd^{4}xe^{iqx}\bra{p}T\left\{ J^{\mu}(x)J^{\nu}(0)\right\} \ket{p}\nonumber \\
  & =-\bar{u}(p)\frac{\gamma^{\mu}(\slashed{p}+\slashed{q})\gamma^{\nu}}{(p+q)^{2}+i\varepsilon}u(p)-\bar{u}(p)\frac{\gamma^{\nu}(\slashed{p}-\slashed{q})\gamma^{\mu}}{(p-q)^{2}+i\varepsilon}u(p)\label{eq:32.85}
 \end{align}
 
@@ -3004,7 +3565,7 @@ noprefix "false"
 所以，
 \begin_inset Formula 
 \begin{align}
- & i\int\dif^{4}xe^{iqx}\bra{p}T\left\{ J^{\mu}(x)J^{\nu}(0)\right\} \ket{p}=\frac{1}{Q^{2}}\bar{u}(p)\gamma^{\mu}(\slashed{p}+\slashed{q})\gamma^{\nu}u(p)\sum_{0}^{\infty}\left(\frac{2p\cdot q+p^{2}}{Q^{2}}\right)^{n}\nonumber \\
+ & i\int\dd^{4}xe^{iqx}\bra{p}T\left\{ J^{\mu}(x)J^{\nu}(0)\right\} \ket{p}=\frac{1}{Q^{2}}\bar{u}(p)\gamma^{\mu}(\slashed{p}+\slashed{q})\gamma^{\nu}u(p)\sum_{0}^{\infty}\left(\frac{2p\cdot q+p^{2}}{Q^{2}}\right)^{n}\nonumber \\
  & +\frac{-1}{Q^{2}}\bar{u}(p)\gamma^{\nu}(\slashed{p}-\slashed{q})\gamma^{\mu}u(p)\sum_{0}^{\infty}\left(\frac{2p\cdot q+p^{2}}{-Q^{2}}\right)^{n}\label{eq:32.87}
 \end{align}
 
@@ -3220,7 +3781,7 @@ noprefix "false"
 压低的项我们得到
 \begin_inset Formula 
 \begin{align}
- & i\int\dif^{4}xe^{iqx}\bra{p}T\left\{ J^{\mu}(x)J^{\nu}(0)\right\} \ket{p}=\frac{2}{Q^{2}}\bar{u}(p)\left(p^{\mu}\gamma^{\nu}+\gamma^{\mu}p^{\nu}\right)\sum_{n=0,2,\cdots}^{\infty}\left(\frac{2q\cdot p}{Q^{2}}\right)^{n}u(p)\label{eq:32.89}\\
+ & i\int\dd^{4}xe^{iqx}\bra{p}T\left\{ J^{\mu}(x)J^{\nu}(0)\right\} \ket{p}=\frac{2}{Q^{2}}\bar{u}(p)\left(p^{\mu}\gamma^{\nu}+\gamma^{\mu}p^{\nu}\right)\sum_{n=0,2,\cdots}^{\infty}\left(\frac{2q\cdot p}{Q^{2}}\right)^{n}u(p)\label{eq:32.89}\\
  & +\frac{2}{Q^{2}}\bar{u}(p)\left(\gamma^{\mu}q^{\nu}+q^{\mu}\gamma^{\nu}-g^{\mu\nu}\slashed{q}\right)\sum_{n=1,3,\cdots}^{\infty}\left(\frac{2q\cdot p}{Q^{2}}\right)^{n}u(p).\nonumber 
 \end{align}
 
@@ -3533,7 +4094,7 @@ QCD 中所有扭度比
  的算符，
 \begin_inset Formula 
 \begin{align*}
- & i\int\dif^{4}xe^{iq\cdot x}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} =\sum_{q}Q_{q}^{2}\left\{ \#\right\} \\
+ & i\int\dd^{4}xe^{iq\cdot x}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} =\sum_{q}Q_{q}^{2}\left\{ \#\right\} \\
 \# & =\sum_{n=2,4,\cdots}^{\infty}\frac{(2q^{\mu_{1}})\cdots(2q^{\mu_{n}})}{Q^{2n}}\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)\hat{\mathcal{O}}_{q}^{\mu_{1}\cdots\mu_{n}}\\
  & +4\sum_{n=2,4,\cdots}^{\infty}\frac{\left(2q^{\mu_{3}}\right)\cdots\left(2q^{\mu_{n}}\right)}{Q^{2n-2}}\left(g^{\mu\mu_{1}}+\frac{q^{\mu}q^{\mu_{1}}}{q^{2}}\right)\left(g^{\nu\mu_{2}}+\frac{q^{\nu}q^{\mu_{2}}}{q^{2}}\right)\hat{\mathcal{O}}_{q}^{\mu_{1}\cdots\mu_{n}}
 \end{align*}
@@ -3640,11 +4201,11 @@ T_{1}=\frac{\omega}{2}T_{2}=\sum_{q}Q_{q}^{2}\left[\sum_{n=2,4,\cdots}\omega^{n}
 \end_inset
 
 特别地，由于
-\begin_inset Formula $\mathcal{F}_{1}=\frac{1}{2\pi}\im T_{1}$
+\begin_inset Formula $\mathcal{F}_{1}=\frac{1}{2\pi}\imm T_{1}$
 \end_inset
 
  and 
-\begin_inset Formula $\mathcal{F}_{2}=\frac{1}{2\pi}\im T_{2}$
+\begin_inset Formula $\mathcal{F}_{2}=\frac{1}{2\pi}\imm T_{2}$
 \end_inset
 
  我们重新推导出了 Callan-Gross relation 
@@ -3658,9 +4219,9 @@ T_{1}=\frac{\omega}{2}T_{2}=\sum_{q}Q_{q}^{2}\left[\sum_{n=2,4,\cdots}\omega^{n}
  可知
 \begin_inset Formula 
 \begin{align}
- & 2\mathcal{F}_{1}=\frac{1}{\pi}\im T_{1}=\frac{1}{\pi}\im\sum_{q}Q_{q}^{2}\left[\sum_{n=2,4,\cdots}\omega^{n}\mathcal{A}_{q}^{n}\right]\nonumber \\
+ & 2\mathcal{F}_{1}=\frac{1}{\pi}\imm T_{1}=\frac{1}{\pi}\imm\sum_{q}Q_{q}^{2}\left[\sum_{n=2,4,\cdots}\omega^{n}\mathcal{A}_{q}^{n}\right]\nonumber \\
  & 2\mathcal{F}_{1}=\sum_{q}Q_{q}^{2}f_{1}\left(x\right)\nonumber \\
- & f_{q}(x)=\frac{1}{\pi}\sum_{n=2,4,\cdots}x^{-n}\im\mathcal{A}_{q}^{n}\label{eq:32.101}
+ & f_{q}(x)=\frac{1}{\pi}\sum_{n=2,4,\cdots}x^{-n}\imm\mathcal{A}_{q}^{n}\label{eq:32.101}
 \end{align}
 
 \end_inset
@@ -3678,7 +4239,7 @@ PDFs 的矩
 
 \begin_layout Standard
 有了 PDFs 的 算符定义，我们就可以检查 PDFs 满足 section 32.1.4 里面用物理参数推导出的求和规则了。比如，
-\begin_inset Formula $\int\dif xf_{q}(x)$
+\begin_inset Formula $\int\dd xf_{q}(x)$
 \end_inset
 
 应该给出特定种类价夸克的总数。
@@ -3692,7 +4253,7 @@ sum rules 一般的形式是
 乘上 the PDFs，然后积分
 \begin_inset Formula 
 \begin{equation}
-C_{q}^{m}=\int_{0}^{1}\dif xx^{m-1}f_{q}(x)\label{eq:32.102}
+C_{q}^{m}=\int_{0}^{1}\dd xx^{m-1}f_{q}(x)\label{eq:32.102}
 \end{equation}
 
 \end_inset
@@ -3714,7 +4275,7 @@ noprefix "false"
  得到
 \begin_inset Formula 
 \[
-C_{q}^{m}=\im\frac{1}{\pi}\int_{1}^{\infty}\dif\omega\sum_{n}\omega^{n-m-1}\mathcal{A}_{q}^{n}
+C_{q}^{m}=\imm\frac{1}{\pi}\int_{1}^{\infty}\dd\omega\sum_{n}\omega^{n-m-1}\mathcal{A}_{q}^{n}
 \]
 
 \end_inset
@@ -3736,7 +4297,7 @@ noprefix "false"
  中那样，我们得到
 \begin_inset Formula 
 \[
-C_{q}^{m}=\sum_{n}\frac{1}{2\pi i}\int\frac{\dif\omega}{\omega^{m-1}}\omega^{n-2}\mathcal{A}_{q}^{n}=\mathcal{A}_{q}^{m}
+C_{q}^{m}=\sum_{n}\frac{1}{2\pi i}\int\frac{\dd\omega}{\omega^{m-1}}\omega^{n-2}\mathcal{A}_{q}^{n}=\mathcal{A}_{q}^{m}
 \]
 
 \end_inset
@@ -3801,7 +4362,7 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset Formula $C_{q}^{m}=\int_{0}^{1}\dif xx^{m-1}f_{q}(x)$
+\begin_inset Formula $C_{q}^{m}=\int_{0}^{1}\dd xx^{m-1}f_{q}(x)$
 \end_inset
 
  with 
@@ -3829,13 +4390,13 @@ noprefix "false"
 我们得到
 \begin_inset Formula 
 \[
-\sum_{j}\int_{0}^{1}\dif xxf_{j}(x)=1
+\sum_{j}\int_{0}^{1}\dd xxf_{j}(x)=1
 \]
 
 \end_inset
 
 因此算符分析证明了动量诠释：
-\begin_inset Formula $\int_{0}^{1}\dif xxf_{j}(x)=\langle x\rangle_{j}$
+\begin_inset Formula $\int_{0}^{1}\dd xxf_{j}(x)=\langle x\rangle_{j}$
 \end_inset
 
 是种类
@@ -3881,7 +4442,7 @@ noprefix "false"
 的乘积，
 \begin_inset Formula 
 \[
-\left(\frac{\dif\sigma}{\dif\Omega\dif E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4\pi m_{p}q^{4}}\frac{E^{\prime}}{E}L^{\mu\nu}W^{\mu\nu}\left(x,Q^{2}\right)
+\left(\frac{\dd\sigma}{\dd\Omega\dd E^{\prime}}\right)_{\text{lab}}=\frac{\alpha_{e}^{2}}{4\pi m_{p}q^{4}}\frac{E^{\prime}}{E}L^{\mu\nu}W^{\mu\nu}\left(x,Q^{2}\right)
 \]
 
 \end_inset
@@ -3901,7 +4462,7 @@ W^{\mu\nu}=W_{1}\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+W_{2}\left
 ，
 \begin_inset Formula 
 \[
-e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spins}}\int\dif\Pi_{X}\left(2\pi\right)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
+e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spins}}\int\dd\Pi_{X}\left(2\pi\right)^{4}\delta^{4}\left(q+P-p_{X}\right)\abs*{\mathcal{M}(\gamma^{\star}p^{+}\to X)}^{2}
 \]
 
 \end_inset
@@ -3909,8 +4470,8 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spi
 利用光学定理，
 \begin_inset Formula 
 \begin{align*}
- & W_{\mu\nu}\left(\omega,Q\right)=2\im T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)\\
- & W_{1}=2\im T_{1},\quad W_{2}=4\im\frac{1}{\omega Q^{2}}T_{2}
+ & W_{\mu\nu}\left(\omega,Q\right)=2\imm T_{\mu\nu}\left(\omega,Q\right)=-iT_{\mu\nu}\left(\omega+i\varepsilon,Q\right)+iT_{\mu\nu}\left(\omega-i\varepsilon,Q\right)=\text{Disc}\left(-iT_{\mu\nu}\right)\\
+ & W_{1}=2\imm T_{1},\quad W_{2}=4\imm\frac{1}{\omega Q^{2}}T_{2}
 \end{align*}
 
 \end_inset
@@ -3918,7 +4479,7 @@ e^{2}\epsilon_{\mu}\epsilon_{\nu}^{\star}W^{\mu\nu}=\frac{1}{2}\sum_{X,\text{spi
 其中编时乘积的流流算符
 \begin_inset Formula 
 \begin{align*}
-T_{\mu\nu}\left(\omega,Q\right) & =i\int\dif^{4}xe^{iq\cdot x}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} =\sum_{q}Q_{q}^{2}\left\{ \#\right\} \\
+T_{\mu\nu}\left(\omega,Q\right) & =i\int\dd^{4}xe^{iq\cdot x}T\left\{ J_{\mu}(x)J_{\nu}(0)\right\} =\sum_{q}Q_{q}^{2}\left\{ \#\right\} \\
 T^{\mu\nu}(\omega,Q) & =T_{1}\left(-g^{\mu\nu}+\frac{q^{\mu}q^{\nu}}{q^{2}}\right)+\frac{T_{2}}{P\cdot q}\left(P^{\mu}-\frac{P\cdot q}{q^{2}}q^{\mu}\right)\left(P^{\nu}-\frac{P\cdot q}{q^{2}}q^{\nu}\right)
 \end{align*}
 
@@ -3969,7 +4530,7 @@ where
 。PDFs 的定义为
 \begin_inset Formula 
 \[
-f_{q}\left(x,Q\right)=\frac{1}{\pi}\sum_{n=2,4,\cdots}x^{-n}\im\mathcal{A}_{q}^{n}\left(Q\right)
+f_{q}\left(x,Q\right)=\frac{1}{\pi}\sum_{n=2,4,\cdots}x^{-n}\imm\mathcal{A}_{q}^{n}\left(Q\right)
 \]
 
 \end_inset
@@ -4094,8 +4655,8 @@ DIS PDF scheme.
 的混淆）。我们知道在量子力学（或者量子场论）中概率是什么：它们是矩阵元的平方。因此，我们应该能这么写
 \begin_inset Formula 
 \begin{align}
-f\left(\xi\right) & =\sum_{X}\int\dif\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\left(\xi P^{\mu}-p^{\mu}\right)\label{eq:32.108}\\
- & =\sum_{X}\int\dif\Pi_{X}\bra{P}\psi^{\dagger}\ket{X}\bra{X}\psi\ket{P}\delta\left(\xi P^{\mu}-p^{\mu}\right)\\
+f\left(\xi\right) & =\sum_{X}\int\dd\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\left(\xi P^{\mu}-p^{\mu}\right)\label{eq:32.108}\\
+ & =\sum_{X}\int\dd\Pi_{X}\bra{P}\psi^{\dagger}\ket{X}\bra{X}\psi\ket{P}\delta\left(\xi P^{\mu}-p^{\mu}\right)\\
  & =\bra{P}\psi^{\dagger}\psi\ket{P}\delta\left(\xi P^{\mu}-p^{\mu}\right)
 \end{align}
 
@@ -4336,8 +4897,8 @@ noprefix "false"
 精确成立。我们得到
 \begin_inset Formula 
 \begin{align*}
-f\left(\xi\right) & =\sum_{X}\int\dif\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\left(\xi n\cdot P-n\cdot p\right)\\
- & =\sum_{X}\int\dif\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\left(\xi P^{+}-p^{+}\right)
+f\left(\xi\right) & =\sum_{X}\int\dd\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\left(\xi n\cdot P-n\cdot p\right)\\
+ & =\sum_{X}\int\dd\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\left(\xi P^{+}-p^{+}\right)
 \end{align*}
 
 \end_inset
@@ -4359,7 +4920,7 @@ f\left(\xi\right) & =\sum_{X}\int\dif\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\l
 \end_inset
 
  是质子中任何其他东西的动量。插入一个
-\begin_inset Formula $\int\dif^{4}p\,\delta^{4}\left(P-p-p_{X}\right)$
+\begin_inset Formula $\int\dd^{4}p\,\delta^{4}\left(P-p-p_{X}\right)$
 \end_inset
 
 因子我们得到（
@@ -4373,11 +4934,11 @@ f\left(\xi\right) & =\sum_{X}\int\dif\Pi_{X}\abs{\bra{X}\psi\ket{P}}^{2}\delta\l
 即可）
 \begin_inset Formula 
 \begin{align*}
-f\left(\xi\right) & =\int\dif^{4}p_{i}\sum_{X}\int\dif\Pi_{X}\delta^{4}\left(P^{\mu}-p^{\mu}-p_{X}^{\mu}\right)\delta\left(\xi n\cdot P-n\cdot p\right)\abs{\bra{X}\psi\left(0\right)\ket{P}}^{2}\\
- & =\sum_{X}\dif\Pi_{X}\delta\left[n\cdot\left(\xi P-\left(P-p_{X}\right)\right)\right]\abs{\bra{X}\psi\left(0\right)\ket{P}}^{2}\quad\text{对}\ensuremath{\delta^{4}\left(\cdots\right)}\text{函数积分}\\
- & =\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}\sum_{X}\int\dif\Pi_{X}e^{-itn\cdot\left(\xi P-P+p_{X}\right)}\abs{\bra{X}\psi\left(0\right)\ket{P}}^{2}\quad\text{重新写成积分形式}\\
- & =\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}\sum_{X}\int\dif\Pi_{X}e^{-i\xi tn\cdot P}\bra{P}e^{+i\left(n\hat{\mathcal{P}}\right)t}\psi^{\dagger}(0)e^{-i\left(n\hat{\mathcal{P}}\right)t}\ket{X}\bra{X}\psi\left(0\right)\ket{P}\quad\text{利用平移对称性}\\
- & =\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}e^{-it\xi\left(n\cdot P\right)}\bra{P}\bar{\psi}\left(tn^{\mu}\right)\gamma^{0}\psi\left(0\right)\ket{P}
+f\left(\xi\right) & =\int\dd^{4}p_{i}\sum_{X}\int\dd\Pi_{X}\delta^{4}\left(P^{\mu}-p^{\mu}-p_{X}^{\mu}\right)\delta\left(\xi n\cdot P-n\cdot p\right)\abs{\bra{X}\psi\left(0\right)\ket{P}}^{2}\\
+ & =\sum_{X}\dd\Pi_{X}\delta\left[n\cdot\left(\xi P-\left(P-p_{X}\right)\right)\right]\abs{\bra{X}\psi\left(0\right)\ket{P}}^{2}\quad\text{对}\ensuremath{\delta^{4}\left(\cdots\right)}\text{函数积分}\\
+ & =\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}\sum_{X}\int\dd\Pi_{X}e^{-itn\cdot\left(\xi P-P+p_{X}\right)}\abs{\bra{X}\psi\left(0\right)\ket{P}}^{2}\quad\text{重新写成积分形式}\\
+ & =\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}\sum_{X}\int\dd\Pi_{X}e^{-i\xi tn\cdot P}\bra{P}e^{+i\left(n\hat{\mathcal{P}}\right)t}\psi^{\dagger}(0)e^{-i\left(n\hat{\mathcal{P}}\right)t}\ket{X}\bra{X}\psi\left(0\right)\ket{P}\quad\text{利用平移对称性}\\
+ & =\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}e^{-it\xi\left(n\cdot P\right)}\bra{P}\bar{\psi}\left(tn^{\mu}\right)\gamma^{0}\psi\left(0\right)\ket{P}
 \end{align*}
 
 \end_inset
@@ -4409,7 +4970,7 @@ f\left(\xi\right) & =\int\dif^{4}p_{i}\sum_{X}\int\dif\Pi_{X}\delta^{4}\left(P^{
 Then,
 \begin_inset Formula 
 \[
-f\left(\xi\right)=\frac{1}{2}\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}e^{-it\xi(n\cdot P)}\bra{P}\bar{\psi}\left(tn^{\mu}\right)\slashed{n}\psi\left(0\right)\ket{P}
+f\left(\xi\right)=\frac{1}{2}\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}e^{-it\xi(n\cdot P)}\bra{P}\bar{\psi}\left(tn^{\mu}\right)\slashed{n}\psi\left(0\right)\ket{P}
 \]
 
 \end_inset
@@ -4425,7 +4986,7 @@ f\left(\xi\right)=\frac{1}{2}\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}e^{-it\xi
  的 Wilson line (see Section 25.2)，也就是夸克场取值的两个点：
 \begin_inset Formula 
 \[
-W_{n}=\mathrm{P}\exp\left\{ ig_{s}\,n_{\nu}\int_{0}^{t}\dif s\,\mathcal{A}^{\nu}\left(sn^{\mu}\right)\right\} 
+W_{n}=\mathrm{P}\exp\left\{ ig_{s}\,n_{\nu}\int_{0}^{t}\dd s\,\mathcal{A}^{\nu}\left(sn^{\mu}\right)\right\} 
 \]
 
 \end_inset
@@ -4433,7 +4994,7 @@ W_{n}=\mathrm{P}\exp\left\{ ig_{s}\,n_{\nu}\int_{0}^{t}\dif s\,\mathcal{A}^{\nu}
 最后， 我们得到
 \begin_inset Formula 
 \begin{align}
-f_{q}\left(\xi\right)=\int_{-\infty}^{\infty}\frac{\dif t}{2\pi}e^{-it\xi\left(n\cdot P\right)}\bra{P}\bar{\psi}_{q}\left(tn^{\mu}\right)\frac{\slashed{n}}{2}W_{n}\psi_{q}\left(0\right)\ket{P}\label{eq:32.117}
+f_{q}\left(\xi\right)=\int_{-\infty}^{\infty}\frac{\dd t}{2\pi}e^{-it\xi\left(n\cdot P\right)}\bra{P}\bar{\psi}_{q}\left(tn^{\mu}\right)\frac{\slashed{n}}{2}W_{n}\psi_{q}\left(0\right)\ket{P}\label{eq:32.117}
 \end{align}
 
 \end_inset
@@ -4506,8 +5067,8 @@ noprefix "false"
 对于广义部分子分布函数，也就是初末态质子的动量不相等，也会有类似的分析，将符号做一些替换有：
 \begin_inset Formula 
 \begin{align*}
-F^{q}\left(x\right) & =\frac{1}{2}\int\frac{\dif\lambda}{2\pi}e^{ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\slashed{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\\
- & =\frac{1}{2}\int\frac{\dif\lambda}{2\pi}e^{-ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(\frac{1}{2}\lambda n_{-}\right)\slashed{n}_{-}q\left(-\frac{1}{2}\lambda n_{-}\right)\ket{p}
+F^{q}\left(x\right) & =\frac{1}{2}\int\frac{\dd\lambda}{2\pi}e^{ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(-\frac{1}{2}\lambda n_{-}\right)\slashed{n}_{-}q\left(\frac{1}{2}\lambda n_{-}\right)\ket{p}\\
+ & =\frac{1}{2}\int\frac{\dd\lambda}{2\pi}e^{-ix\left(\lambda P^{+}\right)}\bra{p^{\prime}}\bar{q}\left(\frac{1}{2}\lambda n_{-}\right)\slashed{n}_{-}q\left(-\frac{1}{2}\lambda n_{-}\right)\ket{p}
 \end{align*}
 
 \end_inset
@@ -4527,11 +5088,11 @@ e^{+iPx}\phi\left(0\right)e^{-iPx}=\phi\left(x\right)\qquad e^{+iPx}\phi\left(0\
 
 \begin_inset Formula 
 \begin{align*}
-F_{q}\left(x\right) & =\frac{1}{2}\int_{-\infty}^{\infty}\frac{\dif\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\bra{P^{\prime}}\bar{q}\left(\frac{\lambda}{2}n_{-}\right)\slashed{n}_{-}q\left(-\frac{\lambda}{2}n_{-}\right)\ket{P}\\
- & =\frac{1}{2}*2\int_{-\infty}^{\infty}\frac{\dif\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\bra{P^{\prime}}\bar{q}\left(\frac{\lambda}{2}n_{-}\right)\gamma^{0}q\left(-\frac{\lambda}{2}n_{-}\right)\ket{P}\\
- & =\int_{-\infty}^{\infty}\frac{\dif\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\bra{P^{\prime}}q^{\dagger}\left(\frac{\lambda}{2}n_{-}\right)q\left(-\frac{\lambda}{2}n_{-}\right)\ket{P}\\
- & =\int_{-\infty}^{\infty}\frac{\dif\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\exp\left(-in_{-}\frac{\lambda}{2}\left(P^{\prime}-P\right)\right)\bra{P^{\prime}}q^{\dagger}\left(0\right)q\left(0\right)\ket{P}\\
- & =\int_{-\infty}^{\infty}\frac{\dif\lambda}{2\pi}\exp\left(-in_{-}\lambda\left(xP+\frac{P^{\prime}-P}{2}\right)\right)\bra{P^{\prime}}q^{\dagger}\left(0\right)q\left(0\right)\ket{P}\\
+F_{q}\left(x\right) & =\frac{1}{2}\int_{-\infty}^{\infty}\frac{\dd\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\bra{P^{\prime}}\bar{q}\left(\frac{\lambda}{2}n_{-}\right)\slashed{n}_{-}q\left(-\frac{\lambda}{2}n_{-}\right)\ket{P}\\
+ & =\frac{1}{2}*2\int_{-\infty}^{\infty}\frac{\dd\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\bra{P^{\prime}}\bar{q}\left(\frac{\lambda}{2}n_{-}\right)\gamma^{0}q\left(-\frac{\lambda}{2}n_{-}\right)\ket{P}\\
+ & =\int_{-\infty}^{\infty}\frac{\dd\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\bra{P^{\prime}}q^{\dagger}\left(\frac{\lambda}{2}n_{-}\right)q\left(-\frac{\lambda}{2}n_{-}\right)\ket{P}\\
+ & =\int_{-\infty}^{\infty}\frac{\dd\lambda}{2\pi}e^{-i\lambda x\left(n_{-}\cdot P\right)}\exp\left(-in_{-}\frac{\lambda}{2}\left(P^{\prime}-P\right)\right)\bra{P^{\prime}}q^{\dagger}\left(0\right)q\left(0\right)\ket{P}\\
+ & =\int_{-\infty}^{\infty}\frac{\dd\lambda}{2\pi}\exp\left(-in_{-}\lambda\left(xP+\frac{P^{\prime}-P}{2}\right)\right)\bra{P^{\prime}}q^{\dagger}\left(0\right)q\left(0\right)\ket{P}\\
  & =\bra{P^{\prime}}\bar{q}\left(0\right)\gamma^{0}q\left(0\right)\ket{P}\delta\left(xP^{+}+\frac{P^{\prime+}-P^{+}}{2}\right)
 \end{align*}
 
