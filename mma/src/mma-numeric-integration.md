@@ -174,3 +174,102 @@ Out[36]=
 ## 用户可扩展性
 
 内置方法可作为对专用积分进行高效构建的构件块, 并可以添加用户定义的积分规则, 积分策略和预处理策略.
+
+## 可能的问题
+
+定义函数, 对给定的参数进行数值积分:
+
+```mathematica
+f1[a_] := NIntegrate[(x - a)^2, {x, 0, 10}]
+```
+
+计算 `参数2` 的值:
+
+```mathematica
+f1[2]
+Out[2]= 173.333
+```
+
+将该函数应用于 `符号参数`, 会产生来自 `NIntegrate` 的消息:
+
+```mathematica
+f1[q]
+
+During evaluation of In[3]:= NIntegrate::inumr: The integrand (-q+x)^2 has evaluated to non-numerical values for all sampling points in the region with boundaries {{0,10}}.
+Out[3]= NIntegrate[(x - q)^2, {x, 0, 10}]
+```
+
+当该函数与其他数值函数(如 `NMinimize` )一起使用时, 这也会导致警告.
+
+```mathematica
+NMinimize[f1[a], a]
+
+During evaluation of In[4]:= NIntegrate::inumr: The integrand (-a+x)^2 has evaluated to non-numerical values for all sampling points in the region with boundaries {{0,10}}.
+...
+Out[4]= {83.3333, {a -> 5.}}
+```
+
+定义 `只有当其参数为数值` 时才进行计算的函数, 以避免这些信息:
+
+```mathematica
+f2[a_?NumericQ] := NIntegrate[(x - a)^2, {x, 0, 10}]
+```
+
+代入数值进行计算:
+
+```mathematica
+f2[\[Pi]]
+Out[6]= 117.87
+```
+
+当其参数为非数字时, 该函数不计算:
+
+```mathematica
+f2[q]
+Out[7]= f2[q]
+```
+
+该函数现在可以与其他 numerical 函数如 `NMinimize` 一起使用:
+
+```mathematica
+In[8]:= NMinimize[f2[a], a]
+Out[8]= {83.3333, {a -> 5.}}
+```
+
+## FindRoot 数值积分 Bug
+
+以下数值积分将会报错.
+原因是 `NIntegrate` 试图解析地分析 `tef` 的结果,
+然而`tef` 中的 `FindRoot[expr, {x, x0}]` 是个数值函数, 如果出了 `x` 之外还含有未知数,
+它求不出零点, 将会报错并返回 `{x -> 0.}`.
+这时候 `NIntegrate` 就会"聪明地认为" 这个函数恒等于 `0`, mdzz
+
+```mathematica
+ClearAll[tef];
+tef[c1_, c3_] := Last@First@EchoLabel["find"]@FindRoot[
+      EchoLabel["expr"][c3*var^3 + var^2 + c1 var + 50]
+      , {var, 0}];
+points = First@Last@Reap@Echo@NIntegrate[
+      tef[c1, c3]
+      , {c1, 1, 3}
+      , {c3, 1, 3}
+      , EvaluationMonitor :> Sow[{c1, c3}]
+      , Method -> {Automatic, "SymbolicProcessing" -> None}
+      ]
+```
+
+解决的方法就是, 给 `tef` 的形参加上 `PatternTest`,
+规定只有在输入数值参数时, 才进行计算即可:
+
+```mathematica
+ClearAll[tef];
+tef[c1_?NumericQ, c3_?NumericQ] :=
+  Last@First@FindRoot[c3*var^3 + var^2 + c1 var + 50, {var, 0}];
+points = First@Last@Reap@Echo@NIntegrate[
+      tef[c1, c3]
+      , {c1, 1, 5}
+      , {c3, 1, 5}
+      , EvaluationMonitor :> Sow[{c1, c3}]
+      , Method -> {Automatic}
+      ]
+```

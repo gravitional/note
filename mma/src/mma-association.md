@@ -322,12 +322,12 @@ extractKeys[Assoc_?AssociationQ] := {Keys@Assoc}~Join~
 (*提取关联的值*)
 extractVal[Others_] := Others
 extractVal[Assoc_?AssociationQ] := extractVal /@ Values@Assoc
-(*根据置换规则，重新构建关联*)
+(*根据置换规则, 重新构建关联*)
 
-assTranspose[Assoc_?AssociationQ, perm_?PermutationListQ] := 
- Module[{keys = Permute[extractKeys@Assoc, perm], 
-   vals = Transpose[extractVal@Assoc, perm]}, 
-  MapIndexed[keys[[Length@#2, Last@#2]] -> #1 &, vals, Infinity] /. 
+assTranspose[Assoc_?AssociationQ, perm_?PermutationListQ] :=
+ Module[{keys = Permute[extractKeys@Assoc, perm],
+   vals = Transpose[extractVal@Assoc, perm]},
+  MapIndexed[keys[[Length@#2, Last@#2]] -> #1 &, vals, Infinity] /.
    List -> Association]
 ```
 
