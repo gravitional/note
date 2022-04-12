@@ -125,7 +125,7 @@ kpsewhich latinmodern-math.otf
 
 设置 `TeX Live` 字体供全系统使用(假设你有 `root` 权限), 步骤如下.
 
-+ 将 `texlive-fontconfig.conf` 文件复制到 `/etc/fonts/conf.d/09-texlive.conf`.
++ 将 `texlive-fontconfig.conf` 文件复制到 `/etc/fonts/conf.d/50-texlive.conf`.
 + 运行 `fc-cache -fsv`.
 
 如果你没有root 权限来执行上述步骤, 或者你想让 `TeX Live` 字体只对某个用户可用, 你可以做以下事情.
@@ -151,9 +151,10 @@ ln -s 2022 current.2022
 ln -s current.2022 current
 ```
 
-配置文件 `09-texlive-fonts.conf` 应该位于 `/etc/fonts/conf.avail` 中,
+配置文件 `50-texlive-fonts.conf` 应该位于 `/etc/fonts/conf.avail` 中,
+其中 开头的数字 表示优先级
 并在 `/etc/fonts/conf.d` 中建立符号链接.
-因此, 作为 `root` 或 `sudo`, 创建 `/etc/fonts/conf.avail/09-texlive-fonts.conf`, 内容如下:
+因此, 作为 `root` 或 `sudo`, 创建 `/etc/fonts/conf.avail/50-texlive-fonts.conf`, 内容如下:
 
 ```xml
 <?xml version="1.0"?>
@@ -185,7 +186,7 @@ ln -s current.2022 current
 ```bash
 cd /etc/fonts/conf.d
 # 创建符号链接, 指向 conf.avail 中的配置文件
-ln -s .../conf.avail/09-texlive-fonts.conf
+ln -s .../conf.avail/50-texlive-fonts.conf
 fc-cache -s
 ```
 
@@ -198,3 +199,25 @@ fc-cache -s
 ```bash
 sudo mkfontscale && mkfontdir && fc-cache -fv
 ```
+
+## linxu 字体配置 conf.d/README
+
+这个目录中的每个文件都是一个 `fontconfig` 配置文件.
+`Fontconfig` 扫描这个目录, 加载所有形式为 `[0-9][0-9]*.conf` 的文件.
+这些文件通常被安装在 `/usr/share/fontconfig/conf.avail`
+然后在这里建立 `符号链接`, 使它们可以很容易地被安装,  然后通过调整 `符号链接` 来 启用/禁用.
+
+这些文件是按 `数字顺序` 加载的, 配置的结构 导致了以下的使用约定
+
+以...开头的文件:    包含:
+
++ 00 到 09;   字体目录
++ 10 到 19;   系统渲染默认值(AA, 等).
++ 20 到 29;   字体渲染选项
++ 30 到 39;  字体族替换(family substitution)
++ 40 到 49; 通用识别, 映射 族->通用 (generic identification, map family->generic)
++ 50-59;   alternate config file loading
++ 60-69;   generic aliases, map generic->family
++ 70-79;    select font (adjust which fonts are available)
++ 80-89;    match target="scan" (modify scanned patterns)
++ 90到99;  font synthesis
