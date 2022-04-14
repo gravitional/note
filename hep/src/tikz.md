@@ -1512,14 +1512,20 @@ ref: [为 node 自动添加名称标签](https://zhuanlan.zhihu.com/p/429321732)
 用 `tikz` 绘图, 经常定义 `named node`/`coordinate`.
 但 node 多了之后, 对着输出结果尝试调整绘图时, 难以快速知道某个图形对应的 `node` 的名字.
 
-`tikz-auto-mark-nodes.tex` 提供了 在 node 斜上方自动添加 node 名称的功能 .
+`tikz-auto-mark-nodes.tex` 提供了 在 `node` 斜上方自动添加 `node` 名称的功能 .
 源码见项目 [muzimuzhi/latex-examples](https://github.com/muzimuzhi/latex-examples).
 
 ### 应用示例 1
 
 把它应用于同项目下例子 `tikz-example-flowchar2-fit-a4paper.tex` 的效果:
 
-+ 在导言区添加 `\input tikz-auto-mark-nodes`, 然后给 `tikzpicture` 添加选项 `auto mark`:
++ 在导言区添加
+
+    ```latex
+    \input tikz-auto-mark-nodes 
+    ```
+    
+    然后给 `tikzpicture` 环境添加选项 `auto mark`:
 
     ![流程图](https://pic3.zhimg.com/80/v2-5a0f823ea8c81967a77b258eacbdc9de_720w.jpg)
 
