@@ -95,6 +95,7 @@
 %\DeclareMathOperator{\Tr}{Tr} %矩阵求迹的符号
 %\DeclareMathOperator{\re}{Re}
 % * 号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\ree}{Re}
 \DeclareMathOperator{\imm}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
 \DeclareMathOperator{\res}{Res} %复变函数的留数
@@ -2905,7 +2906,7 @@ Parton showers
  的散射截面是 IR 发散的，但是发散可以被吸收到 renormalized PDFs。这一节中，我们会追踪 IR 发散的起源，讨论它的普遍性
  (universality)，并展示如何将此普遍性应用到一个重要的半经典近似中——它称为 
 \series bold
-parton shower。
+parton shower（部分子花洒）。
 \end_layout
 
 \begin_layout Standard
@@ -3026,7 +3027,7 @@ noprefix "false"
 \begin_inset Formula $\theta\to0$
 \end_inset
 
-时存在奇点。也就是说它是共线奇点（collinear singularity）。在QED 的 Compton 散射中存在相同的共线奇点，如 Sect
+时存在奇点，也就是说它是共线奇点（collinear singularity）。在QED 的 Compton 散射中存在相同的共线奇点，如 Sect
  13.5.4 和 Sect.20.3.2 中讨论的。
 \end_layout
 
@@ -3331,7 +3332,7 @@ noprefix "false"
 \begin_inset Formula $m^{2}$
 \end_inset
 
-或者 
+ 或者 
 \begin_inset Formula $p_{T}^{2}$
 \end_inset
 
@@ -3355,7 +3356,7 @@ noprefix "false"
 \series bold
 分裂函数
 \series default
- 解释为 离壳 部分子分支（branch）的概率。这些概率随着 
+ 解释为 离壳 部分子出现分支（branch）的概率。这些概率随着 
 \begin_inset Formula $1/t$
 \end_inset
 
@@ -3364,7 +3365,238 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
- 中按马尔科夫（Markov）过程演化。
+ 中按马尔科夫（Markov）过程演化。我们可以把按 
+\begin_inset Formula $t$
+\end_inset
+
+ 的演化，看作是从碰撞时刻开始按时间演化，或者是从碰撞点开始按距离演化。
+\end_layout
+
+\begin_layout Standard
+说得更具体些，让我们对 
+\begin_inset Formula $z=\frac{E_{\text{daughter}}}{E_{\text{mother}}}$
+\end_inset
+
+ 积分。在共线近似是有效的某固定小
+\begin_inset Formula $t$
+\end_inset
+
+下，
+\begin_inset Formula $z$
+\end_inset
+
+可以很小，但不是零。
+\begin_inset Formula $z$
+\end_inset
+
+ 的下限和上限取决于为 
+\begin_inset Formula $t$
+\end_inset
+
+ 选择的变量（
+\begin_inset Formula $m^{2}$
+\end_inset
+
+，
+\begin_inset Formula $p_{T}^{2}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\theta Q^{2}$
+\end_inset
+
+），但由于在严格的共线极限下，这些都归于零，所以下限是
+\begin_inset Formula $z\gtrsim c\frac{t}{Q^{2}}$
+\end_inset
+
+，对于某常数
+\begin_inset Formula $c$
+\end_inset
+
+。因此当
+\begin_inset Formula $t\ll Q^{2}$
+\end_inset
+
+，在能标
+\begin_inset Formula $t$
+\end_inset
+
+找到
+\series bold
+任何 
+\series default
+胶子的概率近似为
+\begin_inset Formula 
+\begin{equation}
+R\left(t\right)=\frac{\alpha_{s}}{2\pi}C_{F}\frac{1}{t}\int_{z_{\text{min}}\left(t,Q\right)}^{z_{\text{max}}\left(t,Q\right)}\dd{z}\frac{1+z^{2}}{1-z}\approx\frac{\alpha_{s}}{2\pi}C_{F}\frac{1}{t}\left(\ln\frac{Q^{2}}{t}+\order{1}\right).\label{eq:sc32.63}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $z_{\text{min}}$
+\end_inset
+
+ 和 
+\begin_inset Formula $z_{\text{max}}$
+\end_inset
+
+对应在固定
+\begin_inset Formula $t$
+\end_inset
+
+时，胶子可具有的最小和最大能量。对于
+\begin_inset Formula $t=p_{T}^{2}$
+\end_inset
+
+，
+\begin_inset Formula $z_{\text{min}}\left(t,Q\right)=1-z_{\text{max}}\left(t,Q\right)=\sqrt{\frac{t}{Q^{2}}}$
+\end_inset
+
+，你可以在 Problem 32.6 中验算。
+\end_layout
+
+\begin_layout Standard
+然后我们 
+\series bold
+Sudakov factor
+\series default
+ 
+\begin_inset Formula $\Delta\left(t_{0},t\right)$
+\end_inset
+
+ 作为在能标 
+\begin_inset Formula $t$
+\end_inset
+
+ 和 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ 之间找不到胶子的概率。我们来计算 
+\begin_inset Formula $\Delta$
+\end_inset
+
+，注意到对于小的平移，
+\begin_inset Formula 
+\begin{equation}
+\Delta\left(t_{0},t+\delta t\right)=\Delta\left(t_{0},t\right)\left(1-\int_{t}^{t+\delta t}\dd{t^{\prime}}R\left(t^{\prime}\right)\right)=\Delta\left(t_{0},t\right)-R\left(t\right)\delta\Delta\left(t_{0},t\right).\label{eq:sc32.64}
+\end{equation}
+
+\end_inset
+
+这应当与泰勒展开 
+\begin_inset Formula $\Delta\left(t_{0},t+\delta t\right)=\Delta\left(t_{0},t\right)+\delta t\frac{\dd}{\dd{t}}\Delta\left(t_{0},t\right)$
+\end_inset
+
+一致。所以
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd}{\dd{t}}\Delta\left(t_{0},t\right)=-R\left(t\right)\Delta\left(t_{0},t\right).\label{eq:sc32.65}
+\end{equation}
+
+\end_inset
+
+此微分方程在 
+\begin_inset Formula $t_{0}=Q^{2}$
+\end_inset
+
+ 的解是
+\begin_inset Formula 
+\begin{equation}
+\Delta\left(Q,t\right)=\exp\left(-\int_{t}^{Q^{2}}R\left(t^{\prime}\right)\dd{t^{\prime}}\right)\approx\exp\left(-\frac{\alpha_{s}}{4\pi}C_{F}\ln^{2}\frac{Q^{2}}{t}\right).\label{eq:sc32.66}
+\end{equation}
+
+\end_inset
+
+该表达式中的 
+\begin_inset Formula $\ln^{2}\frac{Q^{2}}{t}$
+\end_inset
+
+ ，与我们之前遇到的表征
+\begin_inset space ~
+\end_inset
+
+软共线红外发散
+\begin_inset space ~
+\end_inset
+
+的 Sudakov双对数 相同（比较 Eq.20.23）。
+\end_layout
+
+\begin_layout Standard
+因此，若
+\series bold
+最硬
+\series default
+（hardest）的胶子从能标
+\begin_inset Formula $Q$
+\end_inset
+
+ 开始，对应的截面是
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{\sigma}}{\dd{t}\dd{z}}=\Delta\left(Q,t\right)\frac{1}{t}\frac{\alpha_{s}}{2\pi}P_{qq}\left(z\right)\approx\exp\left(-\frac{\alpha_{s}}{4\pi}C_{F}\ln^{2}\frac{Q^{2}}{t}+\cdots\right)\frac{1}{t}\frac{\alpha_{s}}{2\pi}C_{F}\frac{1+z^{2}}{1-z},\label{eq:sc32.67}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\cdots$
+\end_inset
+
+表示小
+\begin_inset Formula $t$
+\end_inset
+
+时的次领头阶。此 Sudakov 因子等价于在 QCD 的首个非平庸阶进行 resummation（领头对数重求和）。它具有重要的定性效果，即把
+\begin_inset Formula $t=0$
+\end_inset
+
+时产生胶子的截面从 
+\begin_inset Formula $\sigma=\infty$
+\end_inset
+
+ 移动到 
+\begin_inset Formula $\sigma=0$
+\end_inset
+
+：夸克必须（概率为
+\begin_inset Formula $1$
+\end_inset
+
+） 在演化到 
+\begin_inset Formula $t=0$
+\end_inset
+
+之前
+\begin_inset space ~
+\end_inset
+
+branch。如果我们取 
+\begin_inset Formula $t=m^{2}=\left(p_{q}+p_{g}\right)^{2}$
+\end_inset
+
+，那么此公式告诉我们，一个 branching 的最大不变质量的 rate，很好地近似于 jet 的不变质量，不应该太小，也不能太大。换句话说，Sudakov
+ 因子解释了 jets 的存在。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/sc-32.59.png
+	scale 55
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/schwartz-sudakov.pdf
+	scale 30
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

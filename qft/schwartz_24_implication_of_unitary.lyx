@@ -24,38 +24,41 @@
 % color package, and provides easy driver-independent access
 %to several kinds of color tints, shades, tones, 
 %and mixes of arbitrary colors
-\usepackage{fontspec}%Advanced font selection in XeLaTeX and LuaLaTeX
+\usepackage{fontspec}
 \usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
 \usepackage{amsmath,amsfonts} % 数学字体
 \usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
 \usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
 \usepackage{mathrsfs} % 提供了mathscr 命令
+\usepackage{amscd} % ams 画交换图
+\usepackage{mathtools}% 定义配对的数学符号,在 unicode-math 之前调用
+\usepackage{ytableau} % Young tableaux and diagrams
 %++++++++++++++++++++++++++++++++++++++++
 % 设置英文字体
 \setmainfont{Latin Modern Roman}
 \setsansfont{Latin Modern Sans}
 \setmonofont{Latin Modern Roman}
 %设置数学字体
-\usepackage{unicode-math} %boldsymbol,blackboard
-\setmathfont{XITS Math}
+\usepackage{unicode-math}
+\setmathfont{STIX Two Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math,XITS Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Two Math
 %++++++++++++++++++++++++++++++++++++++++
 \usepackage{enumerate} 
-\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
-\usetikzlibrary{shapes.misc,animations}
-\usetikzlibrary{shapes.geometric}% tikz node 形状的库
-\usepackage{siunitx} % 国际单位制
+\usepackage{tikz}% 费曼图及其他作图
+\usetikzlibrary{cd}%commutative diagram交换图
+%\usetikzlibrary{shapes.misc,animations}
+%\usetikzlibrary{shapes.geometric}% tikz node 形状的库
 \usepackage{physics} % 物理包
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
+\usepackage{siunitx} % 国际单位制
+%\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
 \usepackage{slashed} % also for slash notation: take your pick!
 \usepackage{simplewick} 
 % a simple means of drawing Wick contractions above and below expressions. 
 \usepackage{makeidx} 
 % Standard package for creating indexes
 \usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
 %%%+++++++++++++++++++++++++++++++
 \usepackage{listings}
 % 在LaTex中添加代码高亮
@@ -89,8 +92,9 @@
 }
 %%++++++++++++++++++++ 
 %\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\Tr}{Tr} %矩阵求迹的符号
+%\DeclareMathOperator{\re}{Re}
+% * 号版本可以把上下标放在符号的正上方/正下方
 \DeclareMathOperator{\ree}{Re}
 \DeclareMathOperator{\imm}{Im}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
@@ -98,9 +102,9 @@
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
 \DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-%\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
-\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\DD}{\mathop{}\!\mathrm{D}}%泛函变分
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
 \newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
@@ -180,7 +184,7 @@
 \begin_body
 
 \begin_layout Title
-幺正性的暗示
+幺正性的隐喻
 \end_layout
 
 \begin_layout Author
@@ -190,9 +194,9 @@ Young
 \begin_layout Standard
 完备性关系
 \begin_inset Formula 
-\[
-\symbb{1}=\sum_{x}\int\dd\Pi_{x}\ket{X}\bra{X}
-\]
+\begin{equation}
+\symbb{1}=\sum_{x}\int\dd\Pi_{x}\ket{X}\bra{X}\label{eq:sc24.1}
+\end{equation}
 
 \end_inset
 
@@ -277,76 +281,40 @@ S=\symbb{1}+i\mathcal{T}
 
 \begin_layout Standard
 广义光学定理：
-\begin_inset ERT
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-begin{shaded}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-mathcal{M}(i
-\backslash
-to f)-
-\backslash
-mathcal{M}^{*}(f
-\backslash
-to i)=i
-\backslash
-sum_{X}
-\backslash
-int
-\backslash
-dd
-\backslash
-Pi_{x}(2
-\backslash
-pi)^{4}
-\backslash
-delta^{4}(p_{i}-p_{X})
-\backslash
-mathcal{M}(i
-\backslash
-to X)
-\backslash
-mathcal{M}^{*}(f
-\backslash
-to X)
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{shaded}
-\end_layout
+\begin_inset Formula 
+\[
+\mathcal{M}(i\to f)-\mathcal{M}^{*}(f\to i)=i\sum_{X}\int\dd\Pi_{x}(2\pi)^{4}\delta^{4}(p_{i}-p_{X})\mathcal{M}(i\to X)\mathcal{M}^{*}(f\to X)
+\]
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
 这个广义的光学定理必须在微绕论中逐阶成立。 但是，它的左边是矩阵元，右边是矩阵元的平方。 这意味着，在某个耦合常数
 \begin_inset Formula $\lambda^{2}$
 \end_inset
@@ -413,58 +381,33 @@ end{shaded}
 \end_inset
 
 所以
-\begin_inset ERT
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\imm\mathcal{M}(A\to A)=2E_{\text{CM}}\abs*{\vec{p}_{i}}\sum_{X}\sigma(A\to X)\label{eq:sc24.13}
+\end{equation}
+
+\end_inset
 
 
-\backslash
-begin{shaded}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-imm
-\backslash
-mathcal{M}(A
-\backslash
-to A)=2E_{
-\backslash
-text{CM}}
-\backslash
-abs*{
-\backslash
-vec{p}_{i}}
-\backslash
-sum_{X}
-\backslash
-sigma(A
-\backslash
-to X)
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{shaded}
 \end_layout
 
 \end_inset
@@ -587,50 +530,33 @@ Cutting rules
 \end_inset
 
 暗示了
-\begin_inset ERT
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\imm\frac{1}{p^{2}-m^{2}+i\varepsilon}=-\pi\delta(p^{2}-m^{2})\label{eq:sc24.25}
+\end{equation}
+
+\end_inset
 
 
-\backslash
-begin{shaded}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-imm
-\backslash
-frac{1}{p^{2}-m^{2}+i
-\backslash
-varepsilon}=-
-\backslash
-pi
-\backslash
-delta(p^{2}-m^{2})
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{shaded}
 \end_layout
 
 \end_inset
@@ -1268,7 +1194,15 @@ m_{P}^{2}-m_{R}^{2}+\ree\sum(m_{P}^{2})=0\label{eq:24.49}
 
 \end_inset
 
-这个定义有时被称为 real pole mass or the Breit–Wigner mass。通过
+这个定义有时被称为 
+\series bold
+real pole mass
+\series default
+ or the 
+\series bold
+Breit–Wigner mass
+\series default
+。通过
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:24.49"
@@ -1979,20 +1913,542 @@ must
 \end_layout
 
 \begin_layout Standard
-重要的一点是，bound 并不意味着在某个 scale 之上能标会被违反。它表明了，unitary 
-\emph on
-would be
-\emph default
- violated if we could trust perturbation theory, which we cannot。标准的方法是在微扰失效的能标之
-上引入新粒子，或者寻找 UV completion 。
+重要的一点是，bound 并不意味着在某个 scale 之上能标会被违反。它表明了，如果我们继续相信微扰理论，幺正性会被违反，实际上我们不能再相信了。标准的方法
+是在微扰失效的能标之上引入新粒子，或者在微扰失效的能标之上寻找 UV 补全（completion） 。
 \end_layout
 
 \begin_layout Section
 谱分解
 \end_layout
 
+\begin_layout Standard
+场是量子场论的一个关键成分。在自由理论（或在任何固定时间的相互作用理论）中，我们从创造和湮灭算符中构建了一组场，产生湮灭算符能在希尔伯特空间的态中增加或删除粒子
+。从创造和湮灭算符中构建场有很多优点：
+\end_layout
+
+\begin_layout Enumerate
+它能顺利地连接经典场论和量子力学；
+\end_layout
+
+\begin_layout Enumerate
+它能自然地导致一个定义明确的微扰展开；
+\end_layout
+
+\begin_layout Enumerate
+它能保证集团（cluster）分解原理的成立。
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+回顾第7.3.2节，集团分解要求 
+\begin_inset Formula $S$
+\end_inset
+
+矩阵的连通部分中 没有 
+\begin_inset Formula $\delta$
+\end_inset
+
+–函数 奇点。由于连通的费曼图最多只有极点或支割线（branch cuts），集团分解在微扰理论中是自动的。我们也可以在没有费曼图的情况下定义
+\begin_inset Formula $S$
+\end_inset
+
+矩阵的连通部分（见[Eden et al., 1966]）。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+然而，我们也可以考虑广义的场的概念，它不一定与创造和湮灭算子相联系。
+\end_layout
+
+\begin_layout Standard
+场
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ 是作用在希尔伯特空间上的算符，它是时空的函数。某些场与粒子相关，意味着它们与某些单粒子状态具有非零矩阵元：
+\begin_inset Formula 
+\begin{equation}
+\mel{\Omega}{\phi(x)}{\sbf p}=Ne^{-ipx},\label{eq:sc24.64}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\ket{\sbf p}$
+\end_inset
+
+是一些动量为 
+\begin_inset Formula $p^{\mu}$
+\end_inset
+
+的单粒子态，
+\begin_inset Formula $\ket{\Omega}$
+\end_inset
+
+为真空。归一化常数
+\begin_inset Formula $N$
+\end_inset
+
+是个数字。一个特殊情况是，
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+是由产生湮灭算符构造出的归一化的相互作用场，由构造过程
+\begin_inset Formula $N=1$
+\end_inset
+
+。零一个特殊情况是裸场 
+\begin_inset Formula $\phi_{0}\left(x\right)$
+\end_inset
+
+，它出现在 裸 拉氏量中，通过 
+\begin_inset Formula $\phi_{0}(x)=\sqrt{Z}\phi(x)$
+\end_inset
+
+联系到重正化的场，其中
+\begin_inset Formula $Z$
+\end_inset
+
+是场强重正化，对于它们，
+\begin_inset Formula $N=\sqrt{Z}$
+\end_inset
+
+。另一个例子是 pions，它在 Chap28 中扮演重要角色，它是质量
+\begin_inset Formula $m_{\pi}\sim\SI{140}{\MeV}$
+\end_inset
+
+的复合粒子。中性 pion 态 
+\begin_inset Formula $\ket{\pi^{0}}$
+\end_inset
+
+ 与流 
+\begin_inset Formula $J^{\mu5}=\bar{\psi}\left(x\right)\gamma^{\mu}\gamma^{5}\psi\left(x\right)$
+\end_inset
+
+有非零矩阵元，显式为
+\begin_inset Formula 
+\[
+\mel{\Omega}{J_{\mu}^{5}\left(x\right)}{\pi^{0}\left(p\right)}=ie^{ipx}p_{\mu}F_{\pi}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $F_{\pi}=\SI{92}{\MeV}$
+\end_inset
+
+（这里忽略了一些同位旋因子）。
+\end_layout
+
+\begin_layout Standard
+方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.64"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+不在乎场是 
+\series bold
+基本的
+\series default
+（elementary，出现在拉氏量中），还是 
+\series bold
+复合的
+\series default
+，例如由夸克组成的 pion。事实上，在 基本符号 和 复合符号 之间来回穿梭是有效场理论的思想，这是一种强大的技术，将在第四和第五部分发挥重要作用。在这一节中
+，我们展示了如何在不使用产生湮灭算子的情况下，将粒子的存在理解为格林函数的极点。
+\end_layout
+
+\begin_layout Standard
+广义场 
+\begin_inset Formula $\phi\left(x\right)$
+\end_inset
+
+ 是作用在希尔伯特空间上的海森堡绘景的算符。因此它们用 
+\begin_inset Formula $e^{-i\hat{P}x}\phi\left(x\right)e^{+i\hat{P}x}=\phi\left(0\right)$
+\end_inset
+
+ 平移到原点。如果我们有一个动量为
+\begin_inset Formula $p^{\mu}$
+\end_inset
+
+的态 
+\begin_inset Formula $\ket{X}$
+\end_inset
+
+，则 
+\begin_inset Formula $\hat{P}^{\mu}\ket{X}=p^{\mu}\ket{X}$
+\end_inset
+
+，因此我们有
+\begin_inset Formula 
+\begin{equation}
+\mel{\Omega}{\phi(x)}{X}=\mel{\Omega}{e^{i\hat{P}x}e^{-i\hat{P}x}\phi(x)e^{i\hat{P}x}e^{-i\hat{P}x}}{X}=e^{-ipx}\mel{\Omega}{\phi(0)}{X},\label{eq:sc24.65}
+\end{equation}
+
+\end_inset
+
+其中使用了 
+\begin_inset Formula $\bra{\Omega}\hat{P}=0$
+\end_inset
+
+，由于真空的动量为零。类似地
+\begin_inset Formula 
+\[
+\mel{X}{\phi(x)}{\Omega}=e^{+ipx}\mel{X}{\phi(x)}{\Omega}
+\]
+
+\end_inset
+
+这种代数技巧将让我们得到一些，对格林函数的非平庸约束。
+\end_layout
+
 \begin_layout Subsection
 两点函数
+\end_layout
+
+\begin_layout Standard
+考虑两点函数
+\begin_inset Formula $\mel{\Omega}{\phi(x)\phi(y)}{\Omega}$
+\end_inset
+
+（无编时乘积）。考虑到 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的完备性关系，使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.65"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+写成：
+\begin_inset Formula 
+\begin{align}
+\mel{\Omega}{\phi(x)\phi(y)}{\Omega} & =\sum_{x}\int\dd{\Pi_{X}}e^{-ip_{X}\left(x-y\right)}\mel{\Omega}{e^{-i\hat{P}x}\phi\left(x\right)e^{i\hat{P}x}}{X}\mel{X}{e^{-i\hat{P}y}\phi\left(y\right)e^{i\hat{P}y}}{\Omega}\nonumber \\
+ & =\sum_{x}\int\dd{\Pi_{X}}e^{-ip_{X}\left(x-y\right)}\abs*{\mel{\Omega}{\phi(0)}{X}}^{2}\nonumber \\
+ & =\int\frac{\dd[4]{p}}{\left(2\pi\right)^{4}}e^{-ip\left(x-y\right)}\left\{ \sum_{x}\int\dd{\Pi_{X}}\left(2\pi\right)^{4}\delta^{4}\left(p-p_{X}\right)\abs*{\mel{\Omega}{\phi(0)}{X}}^{2}\right\} ,\label{eq:sc24.66}
+\end{align}
+
+\end_inset
+
+其中最后一行插入了
+\begin_inset Formula $\delta$
+\end_inset
+
+函数。现在 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.66"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+花括号中的量是洛伦兹标量，所以它只能依赖于
+\begin_inset Formula $p^{2}$
+\end_inset
+
+，由于态
+\begin_inset Formula $\ket{X}$
+\end_inset
+
+是希尔伯特空间中物理的，在壳态，它们的动量
+\begin_inset Formula $p_{X}^{\mu}$
+\end_inset
+
+满足
+\begin_inset Formula $p_{X}^{2}\ge0$
+\end_inset
+
+且能量为正，因此类似地 
+\begin_inset Formula $p^{2}\ge0$
+\end_inset
+
+ ，
+\begin_inset Formula $p^{0}>0$
+\end_inset
+
+，所以有
+\begin_inset Formula 
+\begin{equation}
+\sum_{x}\int\dd{\Pi_{X}}\left(2\pi\right)^{4}\delta^{4}\left(p-p_{X}\right)\abs*{\mel{\Omega}{\phi(0)}{X}}^{2}=2\pi\theta\left(p^{0}\right)\rho\left(p^{2}\right),\label{eq:sc24.67}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\rho\left(p^{2}\right)$
+\end_inset
+
+被称为 
+\series bold
+谱密度
+\series default
+（spectral density）。从次方程可以推导出 
+\begin_inset Formula $\rho\left(p^{2}\right)$
+\end_inset
+
+是实数，且对于所有
+\begin_inset Formula $p^{2}>0$
+\end_inset
+
+由 
+\begin_inset Formula $\rho\left(p^{2}\right)\ge0$
+\end_inset
+
+，若 
+\begin_inset Formula $p^{2}\le0$
+\end_inset
+
+则
+\begin_inset Formula $\rho\left(p^{2}\right)=0$
+\end_inset
+
+。正如我们将看到的，频谱函数是非负的，这具有重要的意义。
+\end_layout
+
+\begin_layout Standard
+两点函数可以写成
+\begin_inset Formula 
+\begin{equation}
+\mel{\Omega}{\phi(x)\phi(y)}{\Omega}=\int\frac{\dd[4]{p}}{\left(2\pi\right)^{3}}e^{-ip\left(x-y\right)}\theta\left(p^{0}\right)\rho\left(p^{2}\right).\label{eq:sc24.68}
+\end{equation}
+
+\end_inset
+
+为了进一步简化我们定义
+\begin_inset Formula 
+\begin{align}
+D\left(x,y,m^{2}\right) & \equiv\int\frac{\dd[3]{p}}{\left(2\pi\right)^{3}}\frac{1}{2\omega_{p}}e^{-ip\left(x-y\right)},\quad\omega_{p}=\sqrt{\vec{p}^{2}+m^{2}}\nonumber \\
+ & =\int\frac{\dd[4]{p}}{\left(2\pi\right)^{3}}e^{-ip\left(x-y\right)}\theta\left(p^{0}\right)\delta\left(p^{2}-m^{2}\right),\label{eq:sc24.69}
+\end{align}
+
+\end_inset
+
+因此能写成
+\begin_inset Formula 
+\begin{equation}
+\mel{\Omega}{\phi(x)\phi(y)}{\Omega}=\int_{0}^{\infty}\dd{q^{2}}\rho\left(q^{2}\right)D\left(x,y,q^{2}\right).\label{eq:sc24.70}
+\end{equation}
+
+\end_inset
+
+对于自由标量场，
+\begin_inset Formula 
+\[
+D\left(x,y,m^{2}\right)=\mel{\Omega}{\phi_{0}(x)\phi_{0}(y)}{\Omega}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\rho\left(q^{2}\right)=\delta\left(q^{2}-m^{2}\right)$
+\end_inset
+
+。然而，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.70"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 没有做围绕自由理论展开的假设。
+\begin_inset Formula $D\left(x,y,m^{2}\right)$
+\end_inset
+
+只是由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.69"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出的数学表达式，所以
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.70"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在任何相互作用理论中成立。
+\end_layout
+
+\begin_layout Standard
+为了联系到 
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元，我们需要将谱函数联系到编时乘积，这很容易：
+\begin_inset Formula 
+\begin{align}
+\mel{\Omega}{T\left\{ \phi(x)\phi(y)\right\} }{\Omega} & =\mel{\Omega}{\phi(x)\phi(y)}{\Omega}\theta\left(x^{0}-y^{0}\right)+\mel{\Omega}{\phi(y)\phi(x)}{\Omega}\theta\left(y^{0}-x^{0}\right)\nonumber \\
+ & =\int_{0}^{\infty}\dd{q^{2}}\rho\left(q^{2}\right)\left[D\left(x,y,q^{2}\right)\theta\left(x^{0}-y^{0}\right)+D\left(y,x,q^{2}\right)\theta\left(y^{0}-x^{0}\right)\right].\label{eq:sc24.71}
+\end{align}
+
+\end_inset
+
+现在，第6.2节中费曼传播子的计算涉及到下列数学等式：
+\begin_inset Formula 
+\begin{equation}
+D\left(x,y,q^{2}\right)\theta\left(x^{0}-y^{0}\right)+D\left(y,x,q^{2}\right)\theta\left(y^{0}-x^{0}\right)=\int\frac{\dd[4]{p}}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-q^{2}+i\varepsilon}e^{ip\left(x-y\right)}.\label{eq:sc24.72}
+\end{equation}
+
+\end_inset
+
+因此我们得到
+\begin_inset Formula 
+\begin{equation}
+\mel{\Omega}{T\left\{ \phi(x)\phi(y)\right\} }{\Omega}=\int\frac{\dd[4]{p}}{\left(2\pi\right)^{4}}e^{ip\left(x-y\right)}i\Pi\left(p^{2}\right),\label{eq:sc24.73}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+\Pi\left(p^{2}\right)\equiv\int_{0}^{\infty}\dd{q^{2}}\frac{\rho\left(q^{2}\right)}{p^{2}-q^{2}+i\varepsilon}\label{eq:sc24.74}
+\end{equation}
+
+\end_inset
+
+被称为两点函数的 
+\series bold
+谱表示
+\series default
+或 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+K
+\backslash
+
+\begin_inset Quotes erd
+\end_inset
+
+all
+\backslash
+'en--Lehmann 
+\end_layout
+
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+明确地说，我们用 谱密度 推导出了准确的非微扰两点函数的傅里叶变换的表达式--没有使用动力学，我们也没有以任何方式围绕自由理论进行展开。事实上，我们几乎没有使用
+量子场论：公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.73"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中没有提到产生和湮灭算符。我们可以对费米子或规范玻色子的两点函数做同样的分析，而不会有任何不寻常的复杂情况；然而，为了简单起见，我们在这里坚持使用标量情况（见
+问题 24.2）。
+\end_layout
+
+\begin_layout Standard
+谱密度里面有很多信息。基本上，它告诉我们理论中所有在壳中间态的情况。它是可观测的（原则上），因为它只是基于（原则上）可观测的格林函数，
+\begin_inset Formula $\mel{\Omega}{T\left\{ \phi(x)\phi(y)\right\} }{\Omega}$
+\end_inset
+
+。对于自由理论：
+\begin_inset Formula 
+\begin{equation}
+\Pi\left(p^{2}\right)=\frac{1}{p^{2}-m^{2}+i\varepsilon}\label{eq:sc24.75}
+\end{equation}
+
+\end_inset
+
+则 
+\begin_inset Formula $\rho\left(q^{2}\right)=\delta\left(q^{2}-m^{2}\right)$
+\end_inset
+
+。对于相互作用理论，谱函数将在物理的，重正化例子质量以及其它物理阈值（thresholds）处有奇点。由于 
+\begin_inset Formula $\rho\left(q^{2}\right)$
+\end_inset
+
+ 是实数且 
+\begin_inset Formula $\rho\left(q^{2}\right)>0$
+\end_inset
+
+，我们可以使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sc24.25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+从两点函数计算它，
+\begin_inset Formula 
+\[
+\imm\frac{1}{p^{2}-m^{2}+i\varepsilon}=-\pi\delta(p^{2}-m^{2})
+\]
+
+\end_inset
+
+取 
+\begin_inset Formula $\Pi\left(p^{2}\right)$
+\end_inset
+
+ 的虚部：
+\begin_inset Formula 
+\begin{equation}
+\rho\left(q^{2}\right)=-\frac{1}{\pi}\imm\left[\Pi\left(p^{2}\right)\right].\label{eq:sc24.76}
+\end{equation}
+
+\end_inset
+
+正如我们已经观察到的，在幺正理论中，只有当 cut 可以令中间粒子在壳时，
+\begin_inset Formula $\Pi\left(p^{2}\right)$
+\end_inset
+
+才会有虚部。因此，谱密度包含了理论中粒子的信息。特别是，不管拉格朗日中是否有与之对应的基本场，它都可以告诉我们这些粒子的情况。
 \end_layout
 
 \begin_layout Subsection
