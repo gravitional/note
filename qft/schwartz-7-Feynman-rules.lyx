@@ -1,0 +1,1601 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{schwartz-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+graphicboxes
+theorems-ams-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+费曼规则
+\end_layout
+
+\begin_layout Standard
+在上一章中，我们看到散射截面可以自然地表示成场的编时乘积，
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的形式为
+\begin_inset Formula 
+\[
+\bra{f}S\ket{i}\sim\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)\right\} \ket{\Omega}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\ket{\Omega}$
+\end_inset
+
+是相互作用理论的基态/真空。表达式中的场不是自由场而是全相互作用的量子场。我们也知道在自由理论中，两个场的编时乘积是费曼传播子：
+\begin_inset Formula 
+\[
+D_{F}\left(x,y\right)\equiv\bra{0}T\left\{ \phi_{0}\left(x\right)\phi_{0}\left(y\right)\right\} \ket{0}=\lim_{\varepsilon\to0}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{k^{2}-m^{2}+i\varepsilon}e^{ik\left(x-y\right)}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\ket{0}$
+\end_inset
+
+是自由理论的真空。
+\end_layout
+
+\begin_layout Standard
+在本章中，我们会发展一种使用微扰论计算编时乘积的方法，通过对各种各样的费曼传播子进行积分。围绕展开有一种美妙的图形化表示，联系相应的费曼规则。有位置空间的费曼规
+则，用来计算编时乘积，也有动量空间的费曼规则，用来计算
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元。动量空间的费曼规则更加重要–它们提供了一种非常有效率的建立计算的手段，用来在量子场论中计算物理的结果。动量空间的费曼规则是 Part
+ I的主要结果。
+\end_layout
+
+\begin_layout Standard
+我们将首先使用 Lagrangian formulation of time evoluation and quantization 推导费曼规则。这是把费曼图
+和经典场理论联系起来最快的方法。然后我们使用时间以来的微扰理论再次推导费曼规则，基于full 相互作用理论哈密顿量在自由哈密顿量附近的展开。While
+ the Hamiltonia-based calculation is significantly more involved，它有截然不同的优势，那就是把时
+间演化直接和厄米的哈密顿量联系起来，因此时间演化一定是幺正的。两种方法推导出的费曼规则是相同的，所以两种方法是等价的。以后我们会遇到更多样的粒子，带有不同的自旋
+，相互作用更复杂，幺正性和哈密顿量厄米的要求将会扮演重要角色（see chapter 24）。第三种推导费曼规则的方法是路径积分（chapter
+ 14）
+\end_layout
+
+\begin_layout Section
+拉格朗日方法下的推导
+\end_layout
+
+\begin_layout Standard
+在 Section2.3 中我们证明自由场论满足
+\begin_inset Formula 
+\begin{align}
+ & \left[\phi\left(t,\vec{x}\right),\phi\left(t,\vec{x}^{\prime}\right)\right]=0\nonumber \\
+ & \left[\phi\left(t,\vec{x}\right),\partial_{t}\phi\left(t,\vec{x}^{\prime}\right)\right]=i\hbar\delta^{3}\left(\vec{x}-\vec{x}^{\prime}\right)\label{eq:7.3}
+\end{align}
+
+\end_inset
+
+我们假设在相互作用理论中，场算符仍然满足欧拉–拉格朗日方程，同时还满足上面两个方程。前一个是因果性的要求，同一时刻的两个场应该可以同时观测，并且可以对易，否则表
+示会有超光速信息交换。后一个对应于正则对易关系，一个量和它的导数无法同时观测到–正是不确定性原理的特征。
+\end_layout
+
+\begin_layout Standard
+利用这些前提，可以推导出 Schwinger-Dyson 方程
+\begin_inset Formula 
+\begin{align*}
+\left(\square_{x}+m^{2}\right)\langle\phi_{x}\phi_{1}\cdots\phi_{n}\rangle & =\langle\mathcal{L}_{\text{int}}^{\prime}\left[\phi_{x}\right]\phi_{1}\cdots\phi_{n}\rangle\\
+ & -i\hbar\sum_{j}\delta^{4}\left(x-x_{j}\right)\langle\phi_{1}\cdots\phi_{j-1}\phi_{j+1}\cdots\phi_{n}\rangle
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi_{x}\equiv\phi\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi_{j}\equiv\phi\left(x_{j}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+施温格–戴森方程编码了经典理论和量子理论的区别。推导过程中并不涉及相互作用的细节，只假设了正则对易关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:7.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。量子理论和经典理论的区别就在于 接触项 ( 
+\series bold
+contact interactions
+\series default
+)。接触项允许虚粒子被创建或湮灭，允许在费曼图展开中形成圈图。
+\end_layout
+
+\begin_layout Subsection
+位置空间的费曼规则
+\end_layout
+
+\begin_layout Standard
+为简洁起见，令
+\begin_inset Formula $\delta_{xi}=\delta^{4}\left(x-x_{i}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $D_{ij}=D_{ji}=D_{F}\left(x_{i},x_{j}\right)$
+\end_inset
+
+。假设
+\begin_inset Formula $m=0$
+\end_inset
+
+来简化运算（
+\begin_inset Formula $m\neq0$
+\end_inset
+
+的情形是 trivil 的推广），and 
+\begin_inset Formula $\hbar=1$
+\end_inset
+
+。使用这些记号，费曼传播子的格林函数方程可以写成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\square_{x}D_{x1}=-i\delta_{x1}
+\]
+
+\end_inset
+
+使用这个公式，两点函数可以写成
+\begin_inset Formula 
+\[
+\langle\phi_{1}\phi_{2}\rangle=\int\dd^{4}x\delta_{x1}\langle\phi_{x}\phi_{2}\rangle=i\int\dd^{4}x\left(\square_{x}D_{x1}\right)\langle\phi_{x}\phi_{2}\rangle=i\int\dd^{4}x\left(D_{x1}\square_{x}\right)\langle\phi_{x}\phi_{2}\rangle
+\]
+
+\end_inset
+
+最后使用了分部积分。
+\begin_inset Formula $\square_{x}\langle\phi_{x}\phi_{2}\rangle$
+\end_inset
+
+可以进一步用施温格–戴森方程化简。
+\end_layout
+
+\begin_layout Standard
+在自由理论中，
+\begin_inset Formula $\mathcal{L}_{\text{int}}=0$
+\end_inset
+
+。
+\begin_inset Formula $2$
+\end_inset
+
+–点函数可以使用施温格–戴森方程计算，
+\begin_inset Formula $\square_{x}\langle\phi_{x}\phi_{y}\rangle=-i\delta_{xy}$
+\end_inset
+
+，给出
+\begin_inset Formula 
+\[
+\langle\phi_{1}\phi_{2}\rangle=i\int\dd^{4}x\left(D_{x1}\square_{x}\right)\langle\phi_{x}\phi_{2}\rangle=i\int\dd^{4}xD_{x1}\left(-i\delta_{x2}\right)=D_{12}
+\]
+
+\end_inset
+
+如同我们期望的。对于
+\begin_inset Formula $4$
+\end_inset
+
+–点函数，展开是类似的：
+\begin_inset Formula 
+\begin{align*}
+\langle\phi_{1}\phi_{2}\phi_{3}\phi_{4}\rangle & =i\int\dd^{4}xD_{x1}\square_{x}\langle\phi_{x}\phi_{2}\phi_{3}\phi_{4}\rangle\\
+ & =\int\dd^{4}xD_{x1}\left\{ \delta_{x2}\langle\phi_{3}\phi_{4}\rangle+\delta_{x3}\langle\phi_{2}\phi_{4}\rangle+\delta_{x4}\langle\phi_{2}\phi_{3}\rangle\right\} 
+\end{align*}
+
+\end_inset
+
+将
+\begin_inset Formula $\delta$
+\end_inset
+
+函数积分掉，可以得到：
+\begin_inset Formula 
+\[
+\langle\phi_{1}\phi_{2}\phi_{3}\phi_{4}\rangle=D_{12}D_{34}+D_{13}D_{24}+D_{14}D_{23}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+几何对称因子，每个图要除以它的几何对称因子。
+\end_layout
+
+\begin_layout Standard
+考虑相互作用时，比如
+\begin_inset Formula $\mathcal{L}=-\frac{1}{2}\phi\square\phi+\frac{g}{3!}\phi^{3}$
+\end_inset
+
+。类似地
+\begin_inset Formula 
+\[
+\langle\phi_{1}\phi_{2}\rangle=i\int\dd^{4}xD_{x1}\square_{x}\langle\phi_{x}\phi_{2}\rangle
+\]
+
+\end_inset
+
+现在
+\begin_inset Formula $\mathcal{L}_{\text{int}}^{\prime}\left[\phi\right]=\frac{g}{2}\phi^{2}$
+\end_inset
+
+，所以我们得到
+\begin_inset Formula 
+\[
+\langle\phi_{1}\phi_{2}\rangle=i\int\dd^{4}xD_{x1}\left(\frac{g}{2}\langle\phi_{x}^{2}\phi_{2}\rangle-i\delta_{x2}\right)
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula $\delta_{2y}=i\square_{y}D_{y2}$
+\end_inset
+
+和分部积分，再引入一个内点
+\begin_inset Formula $y$
+\end_inset
+
+，内点应该被积分掉：
+\begin_inset Formula 
+\begin{align*}
+\langle\phi_{1}\phi_{2}\rangle & =D_{12}+\frac{g}{2}i\int\dd^{4}x\int\dd^{4}yD_{x1}\delta_{2y}\langle\phi_{x}^{2}\phi_{y}\rangle\\
+ & =D_{12}-\frac{g}{2}\int\dd^{4}x\int\dd^{4}yD_{x1}D_{y2}{\color{red}\square_{y}\langle\phi_{x}^{2}\phi_{y}\rangle}\\
+ & =D_{12}-\frac{g^{2}}{4}\int\dd^{4}x\int\dd^{4}yD_{x1}D_{2y}\square_{y}\langle\phi_{x}^{2}\phi_{y}^{2}\rangle\\
+ & +{\color{red}i\frac{g}{2}\int\dd^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle+i\frac{g}{2}\int\dd^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle}\\
+ & =D_{12}-\frac{g^{2}}{4}\int\dd^{4}x\int\dd^{4}yD_{x1}D_{2y}\square_{y}\langle\phi_{x}^{2}\phi_{y}^{2}\rangle+ig\int\dd^{4}xD_{1x}D_{2x}\langle\phi_{x}\rangle
+\end{align*}
+
+\end_inset
+
+其中红色的是接触项。
+\begin_inset Formula $\langle\phi_{x}^{2}\phi_{y}\rangle$
+\end_inset
+
+中有两个
+\begin_inset Formula $\phi_{x}$
+\end_inset
+
+,所以接触项有
+\begin_inset Formula $2$
+\end_inset
+
+个，刚好跟
+\begin_inset Formula $\frac{1}{\left(3-1\right)!}$
+\end_inset
+
+抵消。
+\end_layout
+
+\begin_layout Standard
+如果我们只对
+\begin_inset Formula $g^{2}$
+\end_inset
+
+阶感兴趣，
+\begin_inset Formula $\langle\phi_{x}^{2}\phi_{y}^{2}\rangle$
+\end_inset
+
+项可以使用自由场的施温格–戴森方程替换，结果是
+\begin_inset Formula 
+\[
+\langle\phi_{x}^{2}\phi_{y}^{2}\rangle=2D_{xy}^{2}+D_{xx}D_{yy}+\mathcal{O}\left(g\right)
+\]
+
+\end_inset
+
+注意这里
+\begin_inset Formula $D_{xy}^{2}$
+\end_inset
+
+前面有个
+\begin_inset Formula $2$
+\end_inset
+
+，
+\begin_inset Formula $D_{xx}D_{yy}$
+\end_inset
+
+前面是
+\begin_inset Formula $1$
+\end_inset
+
+。想象
+\begin_inset Formula $\langle\phi_{x}^{2}\phi_{y}^{2}\rangle$
+\end_inset
+
+的收缩方式，
+\begin_inset Formula $x$
+\end_inset
+
+与
+\begin_inset Formula $y$
+\end_inset
+
+收缩的话，有两种可能性，而
+\begin_inset Formula $x,x$
+\end_inset
+
+自己收缩的话，留下两个
+\begin_inset Formula $y$
+\end_inset
+
+自行了断，只有一种可能性。也就是说，坐标的内部对称性越高，对应的项数反而会越少，这是可以理解的，因为组合排列的总数是一定的，内部的对称性越高，总体能提供的花样就
+越少。也就是说，具有几何对称性的费曼图，要除以它的对称因子。不过，对于复标量场的费曼图，一般没有对称性。因为复标量场有电荷流（粒子数流）方向，对内部
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\langle\phi_{x}\rangle$
+\end_inset
+
+项可以用 S-D 方程再次展开
+\begin_inset Formula 
+\[
+\langle\phi_{x}\rangle=i\int\dd^{4}yD_{xy}\square_{y}\langle\phi_{y}\rangle=i\frac{g}{2}\int\dd^{4}yD_{xy}\langle\phi_{y}^{2}\rangle=i\frac{g}{2}\int\dd^{4}yD_{xy}D_{yy}+\mathcal{O}\left(g^{2}\right)
+\]
+
+\end_inset
+
+注意这里
+\begin_inset Formula $\langle\phi_{y}^{2}\rangle\approx D_{yy}$
+\end_inset
+
+只有一项，没有约掉前面的
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+。另外由于在自由场论中，类似
+\begin_inset Formula $\langle\phi_{x}^{2}\phi_{y}\rangle$
+\end_inset
+
+的奇次方项为零，所以用自由场替换时，要展开到偶次项再替换，所以展开式中只有偶次方项。最终的结果是
+\begin_inset Formula 
+\begin{align*}
+\langle\phi_{1}\phi_{2}\rangle & =D_{12}-g^{2}\int\dd^{4}x\int\dd^{4}y\Big(\frac{1}{2}D_{1x}D_{xy}^{2}D_{y2}+\frac{1}{4}D_{1x}D_{xx}D_{yy}D_{y2}\\
+ & +\frac{1}{2}D_{1x}D_{2x}D_{xy}D_{yy}\Big)
+\end{align*}
+
+\end_inset
+
+这便是施温格的套路。由于
+\begin_inset Formula $\langle\cdots\phi_{1}\cdots\rangle=\int\dd^{4}y\delta_{1y}\langle\cdots\phi_{y}\cdots\rangle=\int\dd^{4}yi\square_{y}D_{y1}\langle\cdots\phi_{y}\cdots\rangle=i\int\dd^{4}yD_{1y}\square_{y}\langle\cdots\phi_{y}\cdots\rangle$
+\end_inset
+
+。右边可以使用 SD 方程迭代到更高的阶，会产生耦合系数的幂次展开，也就是微扰。由于相互作用项一般是
+\begin_inset Formula $\phi^{3}$
+\end_inset
+
+或更高，所以场的数目会再加，另一方面，由于接触项相互作用，场的数目还会减少，就会形成圈图。
+\end_layout
+
+\begin_layout Standard
+一般来说，我们令顶点的样式为
+\begin_inset Formula 
+\[
+\mathcal{L}_{\text{int}}=\frac{\lambda}{4!}\phi^{4}
+\]
+
+\end_inset
+
+这样，S-D方程右边，通过
+\begin_inset Formula $\frac{\partial\mathcal{L}_{\text{int}}}{\partial\phi}$
+\end_inset
+
+，因子将变成
+\begin_inset Formula $1/\left(n-1\right)!$
+\end_inset
+
+，这个因子随后被每个顶点出射连线的置换对称性
+\begin_inset Formula $\left(n-1\right)!$
+\end_inset
+
+抵消，不包括入射那根线，因为已经被我们固定了。参考
+\begin_inset Formula 
+\[
+\langle\phi_{x}\rangle=i\int\dd^{4}yD_{xy}\square_{y}\langle\phi_{y}\rangle=i\frac{g}{2}\int\dd^{4}yD_{xy}\langle\phi_{y}^{2}\rangle
+\]
+
+\end_inset
+
+这样，
+\begin_inset Formula $n!$
+\end_inset
+
+ 因子全部消去了。最终图只会有
+\begin_inset Formula $\lambda$
+\end_inset
+
+这样来自相互作用的系数。
+\end_layout
+
+\begin_layout Standard
+但是，在一些情况下，比如理论中由实标量场，有些置换会给出相同的振幅。比如，如果形成一个圈，（参考
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:eq.7.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中第一个圈图）两条腿的交换给出相同的积分。在这种情况下，将会有一个
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+因子无法消去。所以最后需要将图的结果除以
+\begin_inset Formula $2$
+\end_inset
+
+。所以每个图要除以它的几何对称因子（保持外点不变，对内点变形）。所谓几何对称因子，就是保持外点不变，内点进行交换的对称性。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/pasted15.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/pasted16.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+eq.7.17
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:eq.7.17"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+哈密顿方法下的推导
+\end_layout
+
+\begin_layout Standard
+这部分和 peskin 类似，在相互作用表象中，得到戴森级数
+\begin_inset Formula 
+\[
+U\left(t,t_{0}\right)=T\left\{ \exp\left[-i\int_{t_{0}}^{t}\dd t^{\prime}V_{I}\left(t^{\prime}\right)\right]\right\} 
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $T$
+\end_inset
+
+是编时乘积。对于任何时间顺序，它满足
+\begin_inset Formula 
+\[
+U_{31}U_{12}=U_{32},\quad U_{21}\equiv U\left(t_{2},t_{1}\right)=T\left\{ \exp\left[-i\int_{t_{1}}^{t_{2}}\dd t^{\prime}V_{I}\left(t^{\prime}\right)\right]\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+相互作用表象中的场的演化由
+\begin_inset Formula $H_{0}$
+\end_inset
+
+决定。
+\begin_inset Formula 
+\[
+\phi\left(t,\vec{x}\right)=e^{-iH_{0}\left(t-t_{0}\right)}\phi\left(\vec{x}\right)e^{iH_{0}\left(t-t_{0}\right)}=\int\frac{\dd^{3}p}{\left(2\pi^{3}\right)}\frac{1}{\sqrt{2\omega_{p}}}\left(a_{p}e^{-ipx}+a_{p}^{\dagger}e^{+ipx}\right)
+\]
+
+\end_inset
+
+full 理论中场的演化由
+\begin_inset Formula $i\partial_{t}\phi\left(x\right)=\left[\phi,H\right]$
+\end_inset
+
+决定，令
+\begin_inset Formula $S\left(t,t_{0}\right)$
+\end_inset
+
+是时间演化算符（time-evolution operator），则
+\begin_inset Formula 
+\begin{align*}
+\phi\left(t,\vec{x}\right) & =S\left(t,t_{0}\right)^{\dagger}\phi\left(\vec{x}\right)S\left(t,t_{0}\right)\\
+i\partial_{t}S\left(t,t_{0}\right) & =H\left(t\right)S\left(t,t_{0}\right)
+\end{align*}
+
+\end_inset
+
+所有的时间演化行为被包含在
+\begin_inset Formula $\phi\left(t,\vec{x}\right)$
+\end_inset
+
+中。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\phi\left(\vec{x}\right)$
+\end_inset
+
+是薛定谔绘景下的场，不随时间改变。由于希尔伯特空间并不会变化，我们约定，在某一时刻
+\begin_inset Formula $t_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\phi\left(\vec{x}\right)=\phi_{\text{full}}\left(t,\vec{x}\right)=\phi_{\text{free}}\left(t,\vec{x}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+能够得到
+\begin_inset Formula 
+\[
+\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)\right\} \ket{\Omega}=\lim_{T\to\infty\left(1-i\varepsilon\right)}\frac{\bra{0}T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)\exp\left(i\int_{-\infty}^{+\infty}\dd^{4}x\mathcal{L}_{\text{int}}\left[\phi_{0}\right]\right)\right\} \ket{0}}{\bra{0}T\left\{ \exp\left(i\int_{-\infty}^{+\infty}\dd^{4}x\mathcal{L}_{\text{int}}\left[\phi_{0}\right]\right)\right\} \ket{0}}
+\]
+
+\end_inset
+
+形式非常简洁并且是洛伦兹不变的。
+\end_layout
+
+\begin_layout Subsection
+编时乘积和收缩
+\end_layout
+
+\begin_layout Subsection
+位置空间的费曼规则
+\end_layout
+
+\begin_layout Standard
+我们展示了，在哈密顿方法和拉格朗日方法下，会出现相同的一套费曼图：
+\begin_inset Formula $n$
+\end_inset
+
+–点函数
+\begin_inset Formula $\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)\right\} \ket{\Omega}$
+\end_inset
+
+中的每个点
+\begin_inset Formula $x_{i}$
+\end_inset
+
+对应一个外点，每个相互作用给出一个新的顶点，它应该在全空间积分，它的系数就是拉格朗日中的系数。
+\end_layout
+
+\begin_layout Standard
+只要顶点根据适当的置换因子归一化，as in eq7.24，如同我们在例子中看到的，组合因子的机制是类似的。在拉格朗日方法中，我们看到图的系数是耦合常数乘以几何对
+称因子的倒数。对于哈密顿方法也是成立的：
+\end_layout
+
+\begin_layout Enumerate
+指数展开
+\begin_inset Formula $\exp\left(i\mathcal{L}_{\text{int}}\right)=\sum\frac{1}{m!}\left(i\mathcal{L}_{\text{int}}\right)^{m}$
+\end_inset
+
+ 中会出现一个
+\begin_inset Formula $\frac{1}{m!}$
+\end_inset
+
+因子。如果我们展开到
+\begin_inset Formula $m$
+\end_inset
+
+阶，每个图中会出现
+\begin_inset Formula $m$
+\end_inset
+
+个全同顶点。我们可以交换这些顶点，保持图形不变。如果我们在最后的求和中只计算一次，来自于置换的
+\begin_inset Formula $m!$
+\end_inset
+
+将会和来自指数展开的
+\begin_inset Formula $\frac{1}{m!}$
+\end_inset
+
+因子抵消掉。在拉格朗日方法中，这些因子不会出现，因为内部顶点来自于外线的分裂，没有含糊不清的，从一开始就没有指数。
+\end_layout
+
+\begin_layout Enumerate
+如果相互作用按照 7.24 归一化，对于
+\begin_inset Formula $j$
+\end_inset
+
+个全同粒子的相互作用，将会有一个
+\begin_inset Formula $\frac{1}{j!}$
+\end_inset
+
+因子。这个
+\begin_inset Formula $\frac{1}{j!}$
+\end_inset
+
+因子将会被同一个顶点发出的
+\begin_inset Formula $j$
+\end_inset
+
+条线之间的置换对称性
+\begin_inset Formula $j!$
+\end_inset
+
+抵消。在拉格朗日方法中，一条线已经被确定，所以因子是
+\begin_inset Formula $\left(j-1\right)!$
+\end_inset
+
+，少了的那个
+\begin_inset Formula $j$
+\end_inset
+
+来自于使用
+\begin_inset Formula $\mathcal{L}_{\text{int}}^{\prime}\left[\phi\right]$
+\end_inset
+
+代替
+\begin_inset Formula $\mathcal{L}_{\text{int}}\left[\phi\right]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+结果是费曼规则和用拉格朗日方法推导出的相同。在两种情况下，如果有几何对称性，必须添加一个对称因子（
+\begin_inset Formula $<1$
+\end_inset
+
+）。但是在复数场的理论，比如QED中，这种情况很罕见。两种情况中，都不用管包含泡泡（bubble）的图（具有不跟任何外点相连的子图）。
+\end_layout
+
+\begin_layout Section
+动量空间的费曼规则
+\end_layout
+
+\begin_layout Standard
+上两个 section 推导的位置空间的费曼规则，可以用来在微扰论中计算编时乘积。现在我们来看看，在将编时乘积转换成
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元时，如果完成相空间对传播子的积分，编时乘积将会被如何简化。
+\end_layout
+
+\begin_layout Standard
+考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:eq.7.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 第一个圈图
+\begin_inset Formula 
+\[
+\mathcal{T}_{1}=\text{one loop}=-\frac{g^{2}}{2}\int\dd^{4}x\int\dd^{4}yD_{1x}D_{xy}^{2}D_{y2}
+\]
+
+\end_inset
+
+为了计算这个图，先将传播子的动量空间形式写出来（假设
+\begin_inset Formula $m=0$
+\end_inset
+
+以简化）：
+\begin_inset Formula 
+\[
+D_{xy}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^{ip\left(x-y\right)}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}+i\varepsilon}e^{-ip\left(y-x\right)}
+\]
+
+\end_inset
+
+这样将会有四个
+\begin_inset Formula $\dd^{4}p$
+\end_inset
+
+积分，所有的位置坐标只出现在指数里。所以
+\begin_inset Formula 
+\begin{align*}
+\mathcal{T}_{1} & =-\frac{g^{2}}{2}\int\dd^{4}x\int\dd^{4}y\int\frac{\dd^{4}p_{1}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{2}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{3}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{4}}{\left(2\pi\right)^{4}}\\
+ & \times e^{ip_{1}\left(x_{1}-x\right)}e^{ip_{2}\left(y-x_{2}\right)}e^{ip_{3}\left(x-y\right)}e^{ip_{4}\left(x-y\right)}\frac{i}{p_{1}^{2}+i\varepsilon}\frac{i}{p_{2}^{2}+i\varepsilon}\frac{i}{p_{3}^{2}+i\varepsilon}\frac{i}{p_{4}^{2}+i\varepsilon}
+\end{align*}
+
+\end_inset
+
+现在我们可以先对
+\begin_inset Formula $x$
+\end_inset
+
+和
+\begin_inset Formula $y$
+\end_inset
+
+积分，分别产生
+\begin_inset Formula $\left(2\pi\right)^{4}\delta^{4}\left(-p_{1}+p_{3}+p_{4}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(2\pi\right)^{4}\delta^{4}\left(p_{2}-p_{3}-p_{4}\right)$
+\end_inset
+
+，对应于在顶点
+\begin_inset Formula $x$
+\end_inset
+
+和顶点
+\begin_inset Formula $y$
+\end_inset
+
+动量分别守恒。如果我们对
+\begin_inset Formula $p_{3}$
+\end_inset
+
+积分,由于存在
+\begin_inset Formula $\delta^{4}\left(-p_{1}+p_{3}+p_{4}\right)$
+\end_inset
+
+，可以得到
+\begin_inset Formula $p_{3}=p_{1}-p_{4}$
+\end_inset
+
+，第二个
+\begin_inset Formula $\delta$
+\end_inset
+
+函数变成
+\begin_inset Formula $\delta^{4}\left(p_{1}-p_{2}\right)$
+\end_inset
+
+。然后我们把
+\begin_inset Formula $p_{4}$
+\end_inset
+
+标记为
+\begin_inset Formula $k$
+\end_inset
+
+，则
+\begin_inset Formula 
+\begin{align*}
+\mathcal{T}_{1} & =-\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{1}}{\left(2\pi\right)^{4}}\int\frac{\dd^{4}p_{2}}{\left(2\pi\right)^{4}}e^{ip_{1}x_{1}}e^{-ip_{2}x_{2}}\\
+ & \times\frac{i}{p_{1}^{2}+i\varepsilon}\frac{i}{p_{2}^{2}+i\varepsilon}\frac{i}{\left(p_{1}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{1}-p_{2}\right)
+\end{align*}
+
+\end_inset
+
+这里只剩下了外线动量
+\begin_inset Formula $p_{1},p_{2}$
+\end_inset
+
+，内线动量
+\begin_inset Formula $k$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+下一步，我们使用 LSZ 公式，将上式转化成对
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元的贡献
+\begin_inset Formula 
+\[
+\bra{f}S\ket{i}=\left[i\int\dd^{4}x_{1}e^{-ip_{i}x_{1}}\left(-p_{i}^{2}\right)\right]\left[i\int\dd^{4}x_{2}e^{ip_{f}x_{2}}\left(-p_{f}^{2}\right)\right]\bra{\Omega}T\left\{ \phi\left(x_{1}\right)\phi\left(x_{2}\right)\right\} \ket{\Omega}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $p_{i}^{\mu}$
+\end_inset
+
+and 
+\begin_inset Formula $p_{f}^{\mu}$
+\end_inset
+
+分别是初态和末态动量。所以这幅图的贡献为
+\begin_inset Formula 
+\[
+\bra{f}S\ket{i}=\left(-1\right)\int\dd^{4}x_{1}e^{-ip_{i}x_{1}}\left(p_{i}^{2}\right)\int\dd^{4}x_{2}e^{ip_{f}x_{2}}\left(p_{f}^{2}\right)\mathcal{T}_{1}+\cdots
+\]
+
+\end_inset
+
+现在我们注意到对
+\begin_inset Formula $x_{1}$
+\end_inset
+
+的积分给出
+\begin_inset Formula $\left(2\pi\right)^{4}\delta^{4}\left(p_{1}-p_{i}\right)$
+\end_inset
+
+ and 对 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+的积分给出
+\begin_inset Formula $\left(2\pi\right)^{4}\delta^{4}\left(p_{2}-p_{f}\right)$
+\end_inset
+
+。所以我们现在可以完成对
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ 的积分，给出
+\begin_inset Formula 
+\begin{align*}
+\bra{f}S\ket{i} & =\left(-1\right)\left(-1\right)\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{\left(p_{i}^{2}\right)i}{p_{i}^{2}+i\varepsilon}\frac{\left(p_{f}^{2}\right)i}{p_{f}^{2}+i\varepsilon}\frac{i}{\left(p_{1}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{i}-p_{f}\right)\\
+ & =\left(-1\right)\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{\left(p_{i}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}\left(2\pi\right)^{4}\delta^{4}\left(p_{i}-p_{f}\right)+\cdots
+\end{align*}
+
+\end_inset
+
+注意到开头的两个外线传播子被抵消掉了。对于外腿总是这样的–LSZ公式的要点就在于强迫外线粒子在壳。顺便说一下，这个积分是发散的；本书的Part
+ III致力于理解这些无穷。
+\end_layout
+
+\begin_layout Standard
+最后，结果中的
+\begin_inset Formula $\delta^{4}\left(p_{i}-p_{f}\right)$
+\end_inset
+
+项保证了整体的动量守恒，它将总是在计算中出现。但是如同在把微分散射振幅和
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元联系起来那里，我们总是将它分离出来，
+\begin_inset Formula 
+\[
+\mathcal{S}=\symbb{1}+\left(2\pi\right)^{4}\delta\left(\sum p_{i}\right)i\mathcal{M}
+\]
+
+\end_inset
+
+所以
+\begin_inset Formula 
+\[
+i\mathcal{M}=-\frac{g^{2}}{2}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{i}{\left(p_{i}-k\right)^{2}+i\varepsilon}\frac{i}{k^{2}+i\varepsilon}+\cdots
+\]
+
+\end_inset
+
+我们可以把上面的步骤总结成 动量空间的费曼规则。使用费曼规则可以直接从图像中计算出
+\begin_inset Formula $i\mathcal{M}$
+\end_inset
+
+，简直可以忘掉之前学的了呢，呵呵呵。
+\end_layout
+
+\begin_layout Standard
+关于费曼规则的一些note。对费曼规则有贡献的，费曼图的组合因子，只需要考虑图的几何对称因子就够了。全同粒子已经在 Wick 定理中考虑了；移动
+\begin_inset Formula $a_{p}$
+\end_inset
+
+and 
+\begin_inset Formula $a_{p}^{\dagger}$
+\end_inset
+
+ 的时候，已经考虑了全同粒子的代数。唯一需要对全同粒子进行额外考虑的时候是，我们无法区分被散射的粒子的时候，这只对末态会发生，因为我们在建立实验的时候会区分初态
+。所以，当末态有
+\begin_inset Formula $n$
+\end_inset
+
+个全同粒子产生的时候，要将散射截面除以
+\begin_inset Formula $n!$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+动量空间的费曼规则
+\end_layout
+
+\begin_layout Enumerate
+内线（没有跟外点相连的）对应传播子
+\begin_inset Formula $\frac{i}{p^{2}-m^{2}+i\varepsilon}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+顶点来自于 Lagrangian 的相互作用。会得到 耦合常数
+\begin_inset Formula $\times i$
+\end_inset
+
+ 的因子。
+\end_layout
+
+\begin_layout Enumerate
+跟外点相连的线不对应传播子（它们的传播子被 LSZ中的项抵消）
+\end_layout
+
+\begin_layout Enumerate
+动量在每个顶点都守恒。
+\end_layout
+
+\begin_layout Enumerate
+对未确定的
+\begin_inset Formula $4$
+\end_inset
+
+–动量进行积分（
+\begin_inset Formula $4$
+\end_inset
+
+–动量的分量不再满足在壳关系）。
+\end_layout
+
+\begin_layout Enumerate
+对所有可能的图进行求和。
+\end_layout
+
+\begin_layout Subsection
+动量的符号
+\end_layout
+
+\begin_layout Standard
+对于动量的方向并没有标准的约定。对于外线动量，比较合理的做法是分配它们的物理值，即能量分量应该为正数。动量守恒变成
+\begin_inset Formula 
+\[
+\sum p_{i}=\sum p_{f}
+\]
+
+\end_inset
+
+在
+\begin_inset Formula $\delta$
+\end_inset
+
+函数中为
+\begin_inset Formula $\delta^{4}\left(\sum p_{i}-\sum p_{f}\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+对于内线动量，由于我们对动量积分，所以使用
+\begin_inset Formula $k^{\mu}$
+\end_inset
+
+或者
+\begin_inset Formula $-k^{\mu}$
+\end_inset
+
+都可以。still，追踪每个动量的方向还是很重要的，以便于所有顶点的
+\begin_inset Formula $\delta$
+\end_inset
+
+函数也是
+\begin_inset Formula $\sum p_{\text{in}}-p_{\text{out}}$
+\end_inset
+
+。我们在粒子线附近画上箭头来表示动量的流向：示意图
+\end_layout
+
+\begin_layout Standard
+有时我们也在线上画上重叠的箭头，as 。箭头的方向和粒子的动量方向相同，和反粒子的动量方向相反。我们会在 chapter 9更详细地讨论 粒子流箭头
+ (particle flow arrows)
+\end_layout
+
+\begin_layout Standard
+有时费曼图也会按照时间朝上的方向画，特别是在描述强子碰撞的时候。
+\end_layout
+
+\begin_layout Subsection
+非连通图
+\end_layout
+
+\begin_layout Standard
+非连通图会有额外的
+\begin_inset Formula $\delta$
+\end_inset
+
+函数：
+\begin_inset Formula $\mathcal{M}_{\text{disconnected}}=\delta^{4}\left(\sum_{\text{subset}}p\right)\left(\cdots\right)$
+\end_inset
+
+。连通的矩阵元是对传播子的积分，如同费曼规则指出的。这样的积分之可能有 poles or possibly branch cuts，但是除此之外，它是外动量的解
+析函数。它们不可能产生像是
+\begin_inset Formula $\delta$
+\end_inset
+
+函数这么强的奇点。（The same decoherence is also relevant for meta-stable particles
+ produced in collisions, sector 24.1.4）。所以，非连通振幅总是 infinitely larger than
+ 连通的，它们之间的干涉为零。
+\end_layout
+
+\begin_layout Standard
+更基本的，连通图中不可能有超过一个的
+\begin_inset Formula $\delta$
+\end_inset
+
+函数跟一个广义的原理有关，成为集团分解原理，有时也被认为是量子场的 axiom 之一。集团分解原理表示 experiments well-separated
+ in space cannot influen ce each other。更精确地说，当一个子集中的位置和另一个字集中的位置 become
+ well-separated 的时候，连通的 
+\begin_inset Formula $S$
+\end_inset
+
+–矩阵元应该为零。使用基于产生湮灭算符的场构建的定域理论可以保证集团分解原理。但是否只有这样构建的理论才满足集团分解原理，还不清楚。
+\end_layout
+
+\begin_layout Standard
+且不谈关于集团分解原理的技术细节，本节实用的结果是，对于散射过程，我们唯一需要计算的是；
+\begin_inset Formula 
+\[
+\bra{0}T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)\right\} \ket{0}_{\text{connected}}
+\]
+
+\end_inset
+
+connected 指的是外部顶点之间两两能够互相连通，通过某种路径。任何其他的东西都被 factored out or normalized
+ away。bubble 偶尔出现在真空能的讨论中；不连通图从来都不重要。
+\end_layout
+
+\begin_layout Section
+例子
+\end_layout
+
+\begin_layout Subsection
+Mandelstam 变量
+\end_layout
+
+\begin_layout Subsection
+导数耦合
+\end_layout
+
+\begin_layout Standard
+假设我们有一个含有导数的相互作用，比如
+\begin_inset Formula 
+\[
+\mathcal{L}_{\text{int}}=\lambda\phi_{1}\left(\partial_{\mu}\phi_{2}\right)\left(\partial^{\mu}\phi_{3}\right)
+\]
+
+\end_inset
+
+其中清晰起见，使用了三个不同的标量场。在动量空间，
+\begin_inset Formula $\partial_{\mu}$
+\end_inset
+
+给出动量因子。由于
+\begin_inset Formula 
+\[
+\phi\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}\left(a_{p}e^{-ipx}+a_{p}^{\dagger}e^{ipx}\right)
+\]
+
+\end_inset
+
+所以，粒子产生（从顶点发出）对应
+\begin_inset Formula $ip_{\mu}$
+\end_inset
+
+，粒子湮灭（进入顶点）对应
+\begin_inset Formula $-ip_{\mu}$
+\end_inset
+
+。所以，我们对于进入的动量得到一个负号，对于出射的动量得到一个正号。
+\end_layout
+
+\begin_layout Standard
+分部积分不影响矩阵元，可以通过这个相互作用举例证明。它也可以写成
+\begin_inset Formula 
+\[
+\mathcal{L}_{\text{int}}=-\lambda\phi_{3}\left[\left(\partial_{\mu}\phi_{1}\right)\left(\partial^{\mu}\phi_{2}\right)+\phi_{1}\square\phi_{2}\right]
+\]
+
+\end_inset
+
+最后，应用动量守恒之后，得到的矩阵元表达式是一样的。
+\begin_inset Formula 
+\[
+\mathcal{M}=-i\lambda^{2}\frac{\left[p_{2}\cdot p_{1}+\left(p_{2}\right)^{2}\right]\left[p_{2}^{\prime}\cdot p_{1}^{\prime}+\left(p_{2}^{\prime}\right)^{2}\right]}{\left(p_{1}+p_{2}\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了更一般地说明分部积分不影响矩阵元，证明全导数项对矩阵元没有贡献即可。假如我们有一项
+\begin_inset Formula 
+\[
+\mathcal{L}_{\text{int}}=\partial_{\mu}\left(\phi_{1}\cdots\phi_{n}\right)
+\]
+
+\end_inset
+
+其中包含任意数目的场。它将给出偏导数作用到各个场上面的贡献。所以如果不带偏导数，顶点会是
+\begin_inset Formula $V$
+\end_inset
+
+，那么加上偏导数之后，将会是
+\begin_inset Formula 
+\[
+\left(\sum_{\text{incoming}}p_{\mu}^{i}-\sum_{\text{outgoing}}p_{\mu}^{j}\right)V
+\]
+
+\end_inset
+
+由于每个顶点处都有动量守恒，进入的动量等于出去的动量，所以全导数项没有贡献。
+\end_layout
+
+\begin_layout Standard
+更精确地说，全导数项对微扰理论没有贡献。下面的项
+\begin_inset Formula 
+\[
+\varepsilon^{\mu\nu\alpha\beta}F_{\mu\nu}F_{\alpha\beta}=4\partial_{\mu}\left(\varepsilon^{\mu\nu\alpha\beta}A_{\alpha}\partial_{\beta}A_{\nu}\right)
+\]
+
+\end_inset
+
+是一个全导数项。如果我们把
+\begin_inset Formula $\theta\varepsilon^{\mu\nu\alpha\beta}F_{\mu\nu}F_{\alpha\beta}$
+\end_inset
+
+添加到拉氏量中，对微扰理论没有影响。可以证明，这一项对应一些真实的效应，但永远不会在费曼图中出现。它们具有物理结果。For example, if
+ this term appeared in the Lagrangian with anything but an exponentially
+ small coefficients, it would lead to an observale electric dipole moment
+ for the neutron。未观测到这样的 moment 被称为强 CP 问题（see section 29.5.3）。一个跟全导数项密切相关的效应是
+\begin_inset Formula $\eta^{\prime}$
+\end_inset
+
+的质量，比没有全导数项的情况大的多（section 30.5.3）。两种情况下的物理效应都来自于非微扰的强相互作用。
+\end_layout
+
+\begin_layout Section
+正规乘积和威克定理
+\end_layout
+
+\begin_layout Standard
+在这个附录中，我们会证明，自由场的编时乘积的真空矩阵元由所有可能的 full contractions 给出，这个结果被称为 Wick's theory。
+\end_layout
+
+\begin_layout Subsection
+正规乘积
+\end_layout
+
+\begin_layout Standard
+我们称所有湮灭算符靠右的序列是正规乘积的。就是所有
+\begin_inset Formula $a_{p}^{\dagger}$
+\end_inset
+
+靠左，
+\begin_inset Formula $a_{p}$
+\end_inset
+
+靠右。比如
+\begin_inset Formula 
+\[
+:\left(a_{p}^{\dagger}+a_{p}\right)\left(a_{k}^{\dagger}+a_{k}\right):=a_{k}^{\dagger}a_{p}+a_{p}^{\dagger}a_{k}+a_{p}a_{k}+a_{p}^{\dagger}a_{k}^{\dagger}
+\]
+
+\end_inset
+
+当你作正规乘积的时候，你只是把算符挑出来，移到正确的位置，而不管对易关系，跟在作编时乘积的时候一样。所以没有
+\begin_inset Formula $\left(2\pi\right)^{3}\delta^{3}\left(p-k\right)$
+\end_inset
+
+项。
+\end_layout
+
+\begin_layout Standard
+正规乘积的要点是，场的正规乘积的真空矩阵元为零：
+\begin_inset Formula 
+\[
+\bra{0}:\phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right):\ket{0}=0
+\]
+
+\end_inset
+
+经过正规乘积，真空矩阵元不为零的唯一表达式是
+\begin_inset Formula $c$
+\end_inset
+
+–数函数。比如一个函数满足
+\begin_inset Formula 
+\[
+\bra{0}:f:\ket{0}=f
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+正规乘积的好处在于，我们可以使用它来指定算符关系。比如
+\begin_inset Formula 
+\[
+T\left\{ \phi_{0}\left(x\right)\phi_{0}\left(y\right)\right\} =:\phi_{0}\left(x\right)\phi_{0}\left(y\right)+D_{F}\left(x,y\right):
+\]
+
+\end_inset
+
+取真空矩阵元的时候，显然成立，由于
+\begin_inset Formula $D_{F}\left(x,y\right)=\bra{0}T\left\{ \phi_{0}\left(x\right)\phi_{0}\left(y\right)\right\} \ket{0}$
+\end_inset
+
+,而正规乘积的真空矩阵元为零。但是它在算符层次也成立，我们下面会看到。要点是，经过正规乘积的表达式，我们可以立即看出当取真空矩阵元的时候，会发生什么，并且不丢失
+任何信息。
+\end_layout
+
+\begin_layout Subsection
+威克定理
+\end_layout
+
+\begin_layout Standard
+威克定理把场的编时乘积和正规乘积以及场的收缩联系起来。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)=:\phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)+\text{all possible contraction}:\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+场的收缩（contraction）意思是，从序列中任意两个地方挑选出
+\begin_inset Formula $\phi_{0}\left(x_{i}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi_{0}\left(x_{j}\right)$
+\end_inset
+
+，把它们替换成
+\begin_inset Formula $D_{F}\left(x_{i},x_{j}\right)$
+\end_inset
+
+，对于每一对都是如此。“所有可能的收缩”包括了含有一个收缩的，两个收缩的，等等，涉及到所有的场。但是每个场只能收缩一次。由于正规乘积的真空期望值为零，除非场全部
+被收缩，这暗示了编时乘积的结果是所有 全收缩 的求和，实际上就是我们用来产生费曼规则操作。
+\end_layout
+
+\begin_layout Standard
+通过把场分成产生和湮灭部分来证明Wick 定理最简单。
+\begin_inset Formula $\phi_{0}\left(x\right)=\phi_{+}\left(x\right)+\phi_{-}\left(x\right)$
+\end_inset
+
+，其中
+\begin_inset Formula 
+\[
+\phi_{+}\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}a_{p}^{\dagger}e^{ipx},\quad\phi_{-}\left(x\right)=\int\frac{\dd^{3}p}{\left(2\pi\right)^{3}}\frac{1}{\sqrt{2\omega_{p}}}a_{p}e^{-ipx}
+\]
+
+\end_inset
+
+由于
+\begin_inset Formula $\left[a_{k},a_{p}^{\dagger}\right]=\left(2\pi\right)^{3}\delta^{3}\left(\vec{p}-\vec{k}\right)$
+\end_inset
+
+，这些算符的对易子只是函数。实际上，费曼传播子可以写成
+\begin_inset Formula 
+\begin{align*}
+D_{F}\left(x_{1},x_{2}\right) & =\bra{0}T\left\{ \phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)\right\} \ket{0}\\
+ & =\left[\phi_{-}\left(x_{1}\right),\phi_{+}\left(x_{2}\right)\right]\theta\left(t_{1}-t_{2}\right)+\left[\phi_{-}\left(x_{2}\right),\phi_{+}\left(x_{1}\right)\right]\theta\left(t_{2}-t_{1}\right)
+\end{align*}
+
+\end_inset
+
+这个特别的组合，代表了一个收缩。
+\end_layout
+
+\begin_layout Standard
+对于两个场，Wick 定理是成立的。假设
+\begin_inset Formula $t_{1}>t_{2}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T\left\{ \phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)\right\} =\phi_{+}\left(x_{1}\right)\phi_{+}\left(x_{2}\right)+\phi_{+}\left(x_{1}\right)\phi_{-}\left(x_{2}\right)+\phi_{-}\left(x_{1}\right)\phi_{+}\left(x_{2}\right)+\phi_{-}\left(x_{1}\right)\phi_{-}\left(x_{2}\right)
+\]
+
+\end_inset
+
+所有的项都是正规排序的，除了
+\begin_inset Formula $\phi_{-}\left(x_{1}\right)\phi_{+}\left(x_{2}\right)$
+\end_inset
+
+，所以
+\begin_inset Formula 
+\begin{align*}
+T\left\{ \phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)\right\}  & =:\phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right):+\phi_{-}\left(x_{1}\right)\phi_{+}\left(x_{2}\right)-\phi_{+}\left(x_{2}\right)\phi_{-}\left(x_{1}\right)\\
+ & =:\phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right):+\left[\phi_{-}\left(x_{1}\right),\phi_{+}\left(x_{2}\right)\right],\quad t_{1}>t_{2}
+\end{align*}
+
+\end_inset
+
+对于
+\begin_inset Formula $t_{2}>t_{1}$
+\end_inset
+
+，表达式是相同的，只需要作替换
+\begin_inset Formula $x_{1}\leftrightarrow x_{2}$
+\end_inset
+
+。所以，
+\begin_inset Formula 
+\[
+T\left\{ \phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)\right\} =:\phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right):+D_{F}\left(x_{1},x_{2}\right)
+\]
+
+\end_inset
+
+正是 Wick 定理要求的。
+\end_layout
+
+\begin_layout Standard
+完全的证明可以通过标准的数学归纳法。我们已经证明了对于两个场是成立的。假设它对于
+\begin_inset Formula $n-1$
+\end_inset
+
+个场成立。不失一般性的，令
+\begin_inset Formula $t_{1}$
+\end_inset
+
+为
+\begin_inset Formula $n$
+\end_inset
+
+个场中时间最晚的。那么
+\begin_inset Formula 
+\[
+T\left\{ \phi_{0}\left(x_{1}\right)\phi_{0}\left(x_{2}\right)\cdots\phi_{0}\left(x_{n}\right)\right\} =\left[\phi_{+}\left(x_{1}\right)+\phi_{-}\left(x_{1}\right)\left(:\phi_{0}\left(x_{2}\right)\cdots\phi_{0}\left(x_{n}\right)+\text{所有可能的收缩}:\right)\right]
+\]
+
+\end_inset
+
+由于
+\begin_inset Formula $\phi_{+}\left(x_{1}\right)$
+\end_inset
+
+已经位于左边，并且包含
+\begin_inset Formula $a_{p}^{\dagger}$
+\end_inset
+
+算符，就是正规排序的。而
+\begin_inset Formula $\phi_{-}\left(x_{1}\right)$
+\end_inset
+
+必须移动到最右边。每次它移过一个正规乘积中的
+\begin_inset Formula $\phi_{+}\left(x_{i}\right)$
+\end_inset
+
+场，就会产生一个收缩
+\begin_inset Formula 
+\[
+\phi_{-}\left(x_{1}\right)\phi_{+}\left(x_{i}\right)=\phi_{+}\left(x_{i}\right)\phi_{-}\left(x_{1}\right)+\left[\phi_{-}\left(x_{1}\right),\phi_{+}\left(x_{i}\right)\right]
+\]
+
+\end_inset
+
+这是一个算符恒等式。最后的结果是
+\begin_inset Formula $n$
+\end_inset
+
+个场的正规乘积，加上
+\begin_inset Formula $\phi_{-}\left(x_{1}\right)$
+\end_inset
+
+与
+\begin_inset Formula $\left(n-1\right)$
+\end_inset
+
+情形中所有项中的任一
+\begin_inset Formula $\phi_{+}\left(x_{i}\right)$
+\end_inset
+
+的收缩。这刚好就是
+\begin_inset Formula $n$
+\end_inset
+
+个场所有可能的收缩。Wick 定理得证。
+\end_layout
+
+\begin_layout Standard
+Wick定理的结果是，编时乘积的结果由一堆收缩加上正规乘积给出。由于正规乘积的真空矩阵元为零，编时乘积的真空矩阵元留下的只有费曼传播子。
+\end_layout
+
+\begin_layout Standard
+对于费米子，在编时乘积和正规乘积的定义中，都考虑算符交换产生的额外负号，协调一致的话，Wick 定理仍然成立
+\begin_inset Formula 
+\[
+T\left\{ \psi\left(x\right)\bar{\psi}\left(y\right)\right\} =\begin{cases}
+\psi\left(x\right)\bar{\psi}\left(y\right) & \text{for }x^{0}>y^{0}\\
+-\bar{\psi}\left(y\right)\psi\left(x\right) & \text{for }x^{0}<y^{0}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\bra{0}T\psi\left(x\right)\bar{\psi}\left(y\right)\ket{0}=\int\frac{\dd^{4}p}{\left(2\pi\right)^{4}}\frac{i\left(\sla{p}+m\right)}{p^{2}-m^{2}+i\varepsilon}e^{-ip\cdot\left(x-y\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T\left(\psi_{1}\psi_{2}\psi_{3}\psi_{4}\right)=\left(-1\right)^{3}\psi_{3}\psi_{1}\psi_{4}\psi_{2},\quad\text{if }x_{3}^{0}>x_{1}^{0}>x_{4}^{0}>x_{2}^{0}
+\]
+
+\end_inset
+
+场的收缩
+\begin_inset Formula 
+\[
+\text{收缩}\psi\left(x\right)\bar{\psi}\left(y\right)\equiv\begin{cases}
+\left\{ \psi^{-}\left(x\right),\bar{\psi}^{+}\left(y\right)\right\}  & \text{for }x^{0}>y^{0}\\
+\left\{ \psi^{-}\left(y\right),\bar{\psi}^{+}\left(x\right)\right\}  & \text{for }x^{0}<y^{0}
+\end{cases}=S_{F}\left(x-y\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\text{收缩}\psi\left(x\right)\psi\left(y\right)=\bar{\psi}\left(x\right)\bar{\psi}\left(y\right)=0
+\]
+
+\end_inset
+
+总之，相对于玻色场，费米子场在收缩的时候，需要额外注意交换场的次序产生的负号，其他的不变。所以费米子圈相当于求迹并加上一个负号。
+\begin_inset Formula 
+\[
+T\left\{ \phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)=:\phi_{0}\left(x_{1}\right)\cdots\phi_{0}\left(x_{n}\right)+\text{all possible contraction}:\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

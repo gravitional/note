@@ -427,7 +427,7 @@ Categories: FAQ, Multipart
     然而, 它们在某些方面有所不同, 有一些优点和缺点.
 
     区别:
-    `include` 可以开始一个新的页面, 而input则不能. 
+    `include` 可以开始一个新的页面, 而 `input` 则不能. 
     这在某些情况下可能是一个优势, 在其他情况下是一个劣势.
 
     `include` 的优点
@@ -446,7 +446,7 @@ Categories: FAQ, Multipart
     `共享导言`允许你配置许多文档设置, 并使它们在所有相关的文档中保持一致.
     
     首先将序言复制到一个文本文件中, 例如 `preamble.tex`, 
-    然后用 `input{preamble}` 替换现有 导言.
+    然后用 `\input{preamble}` 替换现有 导言.
 
 + 如何对整个多部分文档使用一个 `主bib`, 而在各章单独编译时使用单独的`bib`?
 
