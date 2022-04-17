@@ -4,9 +4,9 @@
 
 [Latex导入文件/input和/include方式](https://blog.csdn.net/OOFFrankDura/article/details/89644373)
 
-`\input`命令可以改为`include`,
+`\input`命令可以改为 `\include`,
 区别在于,`input`可以放在导言区和正文区,包含的内容不另起一页;
-而`include`只能放在正文区,包含的内容另起一页.
+而 `include` 只能放在正文区,包含的内容另起一页.
 
 另外`CJK`中还有`CJKinput`和`CJKinclude`命令.
 
