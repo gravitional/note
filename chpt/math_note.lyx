@@ -8398,6 +8398,226 @@ chpt转移磁矩
 
 \end_layout
 
+\begin_layout Section
+正规子的形状
+\end_layout
+
+\begin_layout Standard
+考虑简化的二维情形：
+\begin_inset Formula 
+\[
+F\left(k^{\mu}\right)=\frac{\left(\Lambda^{2}-m^{2}\right)^{2}}{\left(k^{2}-\Lambda^{2}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F\left(E,k\right)=\frac{\left(\Lambda^{2}-m^{2}\right)^{2}}{\left(E^{2}-k^{2}-\Lambda^{2}\right)^{2}}
+\]
+
+\end_inset
+
+按照场论经典的 
+\begin_inset Formula $e^{-ikx}$
+\end_inset
+
+平面波约定，将此傅立叶变换写成
+\begin_inset Formula 
+\begin{align*}
+f\left(t,z\right) & =\frac{1}{2\pi}\iint\dd{E}\dd{k}F\left(E,k\right)e^{-ikx}\\
+ & =\frac{1}{2\pi}\iint\dd{E}\dd{k}F\left(E,k\right)e^{-iEt+ikz}\\
+F\left(E,k\right) & =\frac{1}{2\pi}\iint\dd{t}\dd{z}f\left(t,z\right)e^{iEt-ikz}
+\end{align*}
+
+\end_inset
+
+对比标准的傅立叶平面波因子，可以约定这里的 
+\begin_inset Formula $f,F$
+\end_inset
+
+ 与标准的 
+\begin_inset Formula $f_{s},F_{s}$
+\end_inset
+
+的关系为
+\begin_inset Formula 
+\[
+F\left(E,k\right)=F_{s}\left(E,k\right),\quad f\left(t,z\right)=f_{s}\left(-t,z\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+temp
+\end_layout
+
+\begin_layout Standard
+正规子在动量空间的表达式为
+\begin_inset Formula 
+\[
+F\left(k\right)=\frac{\left(\Lambda^{2}-m^{2}\right)^{2}}{\left(k^{2}-\Lambda^{2}\right)^{2}}
+\]
+
+\end_inset
+
+抛开分子上的常数 
+\begin_inset Formula $\left(\Lambda^{2}-m^{2}\right)^{2}$
+\end_inset
+
+，分母就是传播子二次幂的形式
+\begin_inset Formula 
+\[
+D\left(x-y\right)=\bra{0}\phi\left(x\right)\phi\left(y\right)\ket{0}=\int\frac{\dd[3]p}{\left(2\pi\right)^{3}}\frac{1}{2E_{\vec{p}}}e^{-ip\cdot\left(x-y\right)}=\int\frac{\dd[4]p}{\left(2\pi\right)^{4}}\frac{i}{p^{2}-m^{2}}e^{-ip\cdot\left(x-y\right)}.
+\]
+
+\end_inset
+
+可以通过傅立叶变换，将它变换回位置空间，与对传播子的操作是类似的。值得注意的是，当 
+\begin_inset Formula $k^{2}=\Lambda^{2}$
+\end_inset
+
+时，
+\begin_inset Formula $F\left(k\right)$
+\end_inset
+
+变成常数，积分是发散的，所以不能 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+na
+\backslash
+
+\begin_inset Quotes erd
+\end_inset
+
+ive 
+\end_layout
+
+\end_inset
+
+地应用留数定理，认为傅立叶逆变换的积分为零：
+\begin_inset Formula 
+\[
+\int\frac{\dd[4]k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Lambda^{2}\right)^{2}}e^{-ip\cdot\left(x-y\right)}\neq0
+\]
+
+\end_inset
+
+注意到
+\begin_inset Formula 
+\[
+\partial_{\Lambda}\frac{1}{k^{2}-\Lambda^{2}}=\frac{2\Lambda}{\left(k^{2}-\Lambda^{2}\right)^{2}}
+\]
+
+\end_inset
+
+因此可以利用已知的，传播子傅立叶逆变换的结果：
+\begin_inset Formula 
+\[
+D\left(x-y\right)=\begin{cases}
+\frac{1}{4\pi^{2}}\frac{-imK_{1}\left[imt\right]}{t}\approx\left(-A\sqrt{\frac{im}{t^{3}}}-B\sqrt{\frac{1}{imt^{5}}}+O\left(\frac{1}{t^{3}}\right)\right)e^{-imt} & \text{类时}\\
+\frac{1}{4\pi^{2}r}mK_{1}\left[mr\right]\approx\left(A\sqrt{\frac{m}{r^{3}}}+B\sqrt{\frac{1}{mr^{5}}}+O\left(\frac{1}{r^{3}}\right)\right)e^{-mr} & \text{类空}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\approx$
+\end_inset
+
+ 表示，当 
+\begin_inset Formula $t$
+\end_inset
+
+或 
+\begin_inset Formula $r$
+\end_inset
+
+较大时作级数展开。因此通过偏导关系得到
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+tea = 1/(4 
+\backslash
+[Pi]^2)* D[(-I 
+\backslash
+[CapitalLambda] BesselK[1, I 
+\backslash
+[CapitalLambda] t])/ t, 
+\backslash
+[CapitalLambda]]*1/(2 
+\backslash
+[CapitalLambda]) // Simplify; teb = (Series[tea, {t, 
+\backslash
+[Infinity], 1}] // Normal) /.
+ {
+\backslash
+[CapitalLambda] -> 1}; ReImPlot[teb, {t, 0, 20} , ImageSize -> Medium ,
+ PlotLabels -> Automatic , PlotLabel -> "TimeLike"]
+\end_layout
+
+\begin_layout Plain Layout
+tea = 1/(4 
+\backslash
+[Pi]^2 r)* D[ 
+\backslash
+[CapitalLambda] BesselK[ 1, 
+\backslash
+[CapitalLambda] r], 
+\backslash
+[CapitalLambda]]*1/( 2 
+\backslash
+[CapitalLambda]) // Simplify; teb = (Series[tea, {r, 
+\backslash
+[Infinity], 1}] // Normal) /.
+ {
+\backslash
+[CapitalLambda] -> 1}; ReImPlot[teb, {r, 0.1, 5} , ImageSize -> Medium ,
+ PlotLabels -> Automatic , PlotRange -> Full , PlotLabel -> "SpaceLike"]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F\left(x-y\right)=\begin{cases}
+-\frac{\Lambda tK_{0}\left(it\Lambda\right)+2iK_{1}\left(it\Lambda\right)+\Lambda tK_{2}\left(it\Lambda\right)}{16\pi^{2}\Lambda t}\approx\left(\frac{-1}{8\pi\sqrt{2\pi i\Lambda t}}+O\left(\frac{1}{t^{3/2}}\right)\right)e^{-i\Lambda t} & \text{类时}\\
+-\frac{\Lambda rK_{0}\left(\Lambda r\right)-2K_{1}\left(\Lambda r\right)+\Lambda rK_{2}\left(\Lambda r\right)}{16\pi^{2}\Lambda r}\approx\left(\frac{-1}{8\pi\sqrt{2\pi\Lambda r}}+O\left(\frac{1}{r^{3/2}}\right)\right)e^{-\Lambda r} & \text{类空}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/regulator1.pdf
+	scale 30
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/regulator2.pdf
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 EOF
 \end_layout
