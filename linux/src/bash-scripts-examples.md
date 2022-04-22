@@ -32,7 +32,7 @@ IFS=$(echo -en "\n\b")
 declare -a archs=($(find . -mindepth 1 -maxdepth 1 -type f -iname '*.zip' -print0 | xargs --null basename -s '.zip'))
 declare -p archs
 totalNum=${#archs[@]}
-teNum=0
+teNum=1
 for i in ${archs[@]}; do
     echo -e "\033[1;44m\033[1;37m Processing number $((teNum++)) of ${totalNum} \033[0;0m"
     7z x "$i.zip" -o$i
