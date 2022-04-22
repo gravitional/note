@@ -5604,8 +5604,8 @@ T\left\{ \exp\left(i\int_{-\infty}^{+\infty}\dd^{4}x\mathcal{L}_{\text{int}}\lef
 \begin_layout Standard
 \begin_inset CommandInset href
 LatexCommand href
-name "https://zhuanlan.zhihu.com/p/422978333"
-target "施瓦兹反射原理"
+name "東雲正樹"
+target "https://zhuanlan.zhihu.com/p/422978333"
 literal "false"
 
 \end_inset
@@ -5613,7 +5613,603 @@ literal "false"
 
 \end_layout
 
+\begin_layout Standard
+总之关联函数与 
+\begin_inset Formula $S$
+\end_inset
+
+ 矩阵元在复 平面上的解析性是上世纪五十年代就开始研究的了，解析性的证明与进一步导出的色散关系可以说是公理化 QFT 的重要成就之一。其中证明解析性的关键是要利
+用微观因果性假定，也就是光锥外的玻色场算符对易子为零且费米场的反对易子为零，不过具体的证明不在这里给出，本文直接默认关联函数存在解析性。
+\end_layout
+
+\begin_layout Quote
+所谓解析函数可以认为就是复变函数版本的无穷阶可导函数。
+\end_layout
+
 \begin_layout Subsection
+两点关联函数的色散关系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mel{\Omega}{T\left[\mathcal{O}\left(x\right)\bar{\mathcal{O}}\left(y\right)\right]}{\Omega}=-i\int\frac{\dd[4]{p}}{\left(2\pi\right)^{4}}e^{ip\cdot\left(x-y\right)}\Pi\left(p^{2}\right),
+\]
+
+\end_inset
+
+ 其中 
+\begin_inset Formula $\Pi\left(p^{2}\right)\equiv\int_{0}^{\infty}\dd{m^{2}}\frac{\rho\left(m^{2}\right)}{p^{2}-m^{2}+i\varepsilon}$
+\end_inset
+
+，而 
+\begin_inset Formula $\rho\left(m^{2}\right)$
+\end_inset
+
+被称为物理质量谱密度。然后使用等式
+\begin_inset Formula 
+\[
+\imm\frac{1}{p^{2}-m^{2}+i\varepsilon}=\pi\delta\left(p^{2}-m^{2}\right)
+\]
+
+\end_inset
+
+就一波给出来了：对定义式 
+\begin_inset Formula $\Pi\left(p^{2}\right)$
+\end_inset
+
+ 使用恒等式得，
+\begin_inset Formula 
+\begin{align*}
+\imm\Pi\left(p^{2}\right) & \equiv\int_{0}^{\infty}\dd{m^{2}}\imm\frac{\rho\left(m^{2}\right)}{p^{2}-m^{2}+i\varepsilon}\\
+ & =\int_{0}^{\infty}\dd{m^{2}}\frac{\rho\left(m^{2}\right)}{p^{2}-m^{2}+i\varepsilon}\delta\left(p^{2}-m^{2}\right)=\pi\rho\left(p^{2}\right),\\
+\Rightarrow\Pi\left(p^{2}\right) & =\frac{1}{\pi}\int_{0}^{\infty}\dd{m^{2}}\frac{\imm\Pi\left(m^{2}\right)}{p^{2}-m^{2}+i\varepsilon}.
+\end{align*}
+
+\end_inset
+
+即为所求证的色散关系.
+ 
+\end_layout
+
+\begin_layout Subsection
+从解析性得到色散关系
+\end_layout
+
+\begin_layout Standard
+首先由留数定理可得恒等式 
+\begin_inset Formula $\Pi\left(p^{2}\right)=\frac{1}{2\pi i}\oint_{\Gamma}\dd{m^{2}}\frac{\Pi\left(m^{2}\right)}{m^{2}-p^{2}}$
+\end_inset
+
+，其中的积分路径
+\begin_inset Formula $\Gamma$
+\end_inset
+
+如图：
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/int-contour.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+动量关联函数的色散关系的积分回路。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+路径长这样是因为关联函数仅在实轴的物理区域上
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+也就是实轴上谱密度不平庸的部分, 物理区域的起点是基态物理质量的平方, 在这之前恒为零.
+ 
+\end_layout
+
+\end_inset
+
+有乱七八糟的物理, 然后除此之外在整个复平面都是解析函数。进一步地，可以将积分区域拆为半径为
+\begin_inset Formula $R$
+\end_inset
+
+的圆与紧贴正实轴的两条水平线，其中
+\begin_inset Formula $R\to\infty$
+\end_inset
+
+： 
+\begin_inset Formula 
+\begin{align*}
+\Pi\left(p^{2}\right) & =\frac{1}{2\pi i}\oint_{\Gamma}\dd{m^{2}}\frac{\Pi\left(m^{2}\right)}{m^{2}-p^{2}}\\
+ & =\frac{1}{2\pi i}\left[\oint_{\abs{m^{2}}=R}\right]\dd{m^{2}}\frac{\Pi\left(m^{2}\right)}{m^{2}-p^{2}}+\int_{m_{0}^{2}}^{R}\dd{m^{2}}\frac{\Pi\left(m^{2}+i\varepsilon\right)-\Pi\left(m^{2}-i\varepsilon\right)}{m^{2}-p^{2}}
+\end{align*}
+
+\end_inset
+
+若 
+\begin_inset Formula $\Pi\left(m^{2}\right)$
+\end_inset
+
+ 能在 
+\begin_inset Formula $\abs{m^{2}}\to\infty$
+\end_inset
+
+ 时足够快地趋于零则第一项贡献为零
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+利用谱表示得到色散关系的过程中对关联函数的收敛性要求似乎推卸给谱密度了
+\end_layout
+
+\end_inset
+
+，由于 
+\begin_inset Formula $\Pi\left(m^{2}\right)$
+\end_inset
+
+ 是复 
+\begin_inset Formula $m^{2}$
+\end_inset
+
+ 平面上的解析函数，所以此时可以由 Schwarz 反射原理 得到: 
+\begin_inset Formula 
+\begin{align*}
+\Pi\left(p^{2}\right) & =\frac{1}{2\pi i}\int_{m_{0}^{2}}^{R}\dd{m^{2}}\frac{\Pi\left(m^{2}+i\varepsilon\right)-\Pi\left(m^{2}-i\varepsilon\right)}{m^{2}-p^{2}}\\
+ & =\frac{1}{2\pi i}\int_{m_{0}^{2}}^{R}\dd{m^{2}}\frac{2i\imm\Pi\left(m^{2}+i\varepsilon\right)}{m^{2}-p^{2}}=\frac{1}{\pi}\int_{m_{0}^{2}}^{R}\dd{m^{2}}\frac{\imm\Pi\left(m^{2}\right)}{m^{2}-p^{2}-i\varepsilon}.
+\end{align*}
+
+\end_inset
+
+最后进行了平移
+\begin_inset Formula $m^{2}\to m^{2}-i\varepsilon$
+\end_inset
+
+，由此就得到了色散关系, 其中积分的起点写 
+\begin_inset Formula $0$
+\end_inset
+
+ 与写基态物理质量的效果是一样的。因为反正在 
+\begin_inset Formula $0$
+\end_inset
+
+ 到基态质量之间的谱密度是 
+\begin_inset Formula $0$
+\end_inset
+
+，这是运动学过程保证的
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+比如说你总不能俩粒子有质量的粒子 somehow 合成了一个无质量的粒子吧.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Schwarz 反射原理
+\end_layout
+
+\begin_layout Subsection
+Schwarz 反射原理的用途
+\end_layout
+
+\begin_layout Standard
+其实 Schwarz 反射原理是用来搞复变函数的解析延拓的，反射原理指出对于一个定义在上半复平面或下半复平面的区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 上的解析函数 
+\begin_inset Formula $f\left(z\right)$
+\end_inset
+
+，若满足半复平面上的定义域 
+\begin_inset Formula $D$
+\end_inset
+
+ 能连续过渡到实轴且在实轴上有着良定义的实函数值的话，我们就可以将其定义域 
+\begin_inset Formula $D$
+\end_inset
+
+ 关于实轴对称的另外半个复平面上的区域 
+\begin_inset Formula $D^{*}$
+\end_inset
+
+ 也纳入定义域内，这样定义域就延拓到了原来两倍的大小了。
+\end_layout
+
+\begin_layout Standard
+解析函数 
+\begin_inset Formula $f\left(z\right)$
+\end_inset
+
+ 延拓后定义域 
+\begin_inset Formula $D\cup D^{*}$
+\end_inset
+
+ 关于实轴对称, 且总满足 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+，也就是说当自变量取共轭的时候，得到的函数值也会取共轭。
+\end_layout
+
+\begin_layout Standard
+而上一节用到的关系式 
+\begin_inset Formula $\Pi\left(m^{2}+i\varepsilon\right)-\Pi\left(m^{2}-i\varepsilon\right)=2i\imm2i\imm\Pi\left(m^{2}+i\varepsilon\right)$
+\end_inset
+
+ 就源于此。
+\end_layout
+
+\begin_layout Subsection
+如何理解 Schwarz 反射原理
+\end_layout
+
+\begin_layout Standard
+反射原理听起来是不是很像是强行把定义在半复平面上的函数按照要求 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+ 给延拓到全平面了？就听起来像是一个相当人为相当不自然的操作，这就难免会引人反问为啥就非得这么延拓呢？
+\end_layout
+
+\begin_layout Standard
+但其实这是一个十分自然的延拓选择，实际上即便是一开始就定义在全复平面上的解析函数
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+或者定义域关于实轴对称且能连续过渡到实轴的解析函数。
+\end_layout
+
+\end_inset
+
+只要其在实轴上有着良定义的实函数值, 那它就必然会满足 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+ 这个关系式，这也是为啥这个延拓操作能被称之为原理, 下面我们将证明这一点：
+\end_layout
+
+\begin_layout Standard
+首先给出我们的对象, 定义在全复平面上的解析函数 
+\begin_inset Formula $f\left(z\right)$
+\end_inset
+
+，且满足实轴实值条件.
+ 我们将 
+\begin_inset Formula $f\left(z\right)$
+\end_inset
+
+ 放在实轴上 Laurent 进行展开得到 
+\begin_inset Formula $f\left(z\right)=\sum_{n}c_{n}z^{n}$
+\end_inset
+
+。由于实数轴上函数值都是实的, 所以不难理解展开系数 
+\begin_inset Formula $c_{n},n\in\mathbb{Z}$
+\end_inset
+
+ 也必须全都是实数。然后函数的解析性保证展开式 
+\begin_inset Formula $f\left(z\right)=\sum_{n}c_{n}z^{n}$
+\end_inset
+
+ 适用于整个定义域。于是就很自然地得到了我们想要的那个关系式: 
+\begin_inset Formula 
+\begin{align*}
+F\left(z^{*}\right) & =\sum_{n}c_{n}\;\left(z^{*}\right)^{n}=\sum_{n}c_{n}\;\left[\left(\abs{z}e^{i\theta}\right)^{*}\right]^{n}\\
+ & =\sum_{n}c_{n}\abs{z}^{n}e^{-i\theta n}=\left(\sum_{n}c_{n}\abs{z}^{n}e^{i\theta n}\right)^{*}=F\left(z\right)^{*}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+所以总的来说呢, 就是这么回事：
+\begin_inset Newline newline
+\end_inset
+
+因为满足实轴实值条件的全复平面上的解析函数很自然地会满足 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+，所以满足实轴实值条件的半复平面上的解析函数要想延拓到全平面上，最自然的延拓选择就是按照要求 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+ 来延拓。这就是传说中的 Schwarz 反射原理。
+\end_layout
+
+\begin_layout Subsection
+反射原理与对数函数
+\end_layout
+
+\begin_layout Standard
+前面我们在这篇介绍 
+\begin_inset CommandInset href
+LatexCommand href
+name "多值函数与 Riemann 面"
+target "https://zhuanlan.zhihu.com/p/422338793"
+literal "false"
+
+\end_inset
+
+ 的 note 里展示了对数函数 
+\begin_inset Formula $\ln z$
+\end_inset
+
+ 的奇妙冒险, 见证了它从根本没资格被称为函数的多值函数进化到了 Riemann 面上的解析函数的过程。 然后现在又要搬出这个话题了, 因为实际上在
+ Feynman 参数化里, 我们会得到一个对数因子, 而关联函数在实轴上下方的不连续性就由其描述，这一项具体表现为 
+\begin_inset Formula 
+\[
+\ln\left[\frac{m^{2}x\left(1-x\right)s}{\Lambda^{2}}\right],
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $x\in\left[0,1\right]$
+\end_inset
+
+ 为实 Feynman 参数。
+\end_layout
+
+\begin_layout Standard
+那么我们实际上可以认为关联函数在物理区域上的割缝就是由这样一个对数函数提供的, 对数函数在割缝上下具有不连续性，而关联函数的这个不连续性正是幺正切割那一块儿的主
+角，至于割缝的来源则在这篇介绍 
+\begin_inset CommandInset href
+LatexCommand href
+name "多值函数与 Riemann 面"
+target "https://zhuanlan.zhihu.com/p/422338793"
+literal "false"
+
+\end_inset
+
+ 的 note 里已经讲的很清楚了。 在各大文献包括 MMA 里都默认了下面这个主值取法：
+\begin_inset Formula 
+\begin{align*}
+\ln\left(-x+i\varepsilon\right) & =\ln x+i\pi,\quad\ln\left(-x-i\varepsilon\right)=\ln x-i\pi;\\
+ & x\in\mathbb{R},\quad\text{无穷小}\,\varepsilon\in\mathbb{R}.
+\end{align*}
+
+\end_inset
+
+具体而言就是先选择正实轴的函数值的虚部为 
+\begin_inset Formula $0$
+\end_inset
+
+ 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+而非 
+\begin_inset Formula $2nπ$
+\end_inset
+
+，
+\begin_inset Formula $n\neq0$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+的那一叶, 然后再在负实轴处做割线, 你会发现这样选就正好能满足 Schwarz 反射原理。
+\end_layout
+
+\begin_layout Standard
+但如果一次性接收到包括多值函数、Riemann 面、Schwarz 反射原理在内的这么多信息难免会一下子搞不清之间的因果关系, 所以我这里帮你捋一捋：
+\end_layout
+
+\begin_layout Enumerate
+Schwarz 反射原理指出任何实轴实值的解析函数都将满足 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+。 
+\end_layout
+
+\begin_layout Enumerate
+动量空间关联函数 
+\begin_inset Formula $\Pi\left(p^{2}\right)$
+\end_inset
+
+ 是解析函数且围道 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+就是第一节的那个积分路径 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 内实轴实值，所以有 
+\begin_inset Formula $\Pi\left(s^{*}\right)=\Pi\left(s\right)^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+关联函数 
+\begin_inset Formula $\Pi\left(p^{2}\right)$
+\end_inset
+
+ 的不连续性在 Feynman 参数化中由对数函数给出.
+ 
+\end_layout
+
+\begin_layout Enumerate
+对数函数是 Riemann 面上的解析函数, 在有割缝的复平面
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+就是取出 Riemann 面的其中一叶制成的复平面。
+\end_layout
+
+\end_inset
+
+ 上也仍是解析函数.
+\end_layout
+
+\begin_layout Enumerate
+虽然对数函数始终是解析函数, 但它并不一定会满足 Schwarz 反射定理.
+ 
+\end_layout
+
+\begin_layout Enumerate
+若取正实轴的函数值虚部为 
+\begin_inset Formula $0$
+\end_inset
+
+ 那一叶, 则能使对数函数在一定区域内满足反射定理.
+ 
+\end_layout
+
+\begin_layout Enumerate
+当割缝取在负半轴的时候, 对数函数能在除了负半轴的整个复平面上都满足反射定理.
+ 
+\end_layout
+
+\begin_layout Standard
+所以, 我们之所以要这样切割 Riemann 面, 就是为了使得对数函数获得最好的性质以描述关联函数在物理区域的割缝.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+为啥物理区域在正半轴我们却把割线取在负半轴? 因为将来遇到的对数因子实际上一般都是 
+\begin_inset Formula $\ln\left(-p^{2}-i\varepsilon\right)$
+\end_inset
+
+ 这样的, 所以正好差个负号.
+
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+最后就是谈谈第 6 条, 稍微解释一下什么叫做在一定区域内满足反射定理: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/schwartz-reflection.pdf
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ln$
+\end_inset
+
+函数的割线
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如上图的复平面所示, 如果我将割线取在棕线处的话, 则白色区域将无法满足 Schwarz 反射定理的关系式 
+\begin_inset Formula $f\left(z^{*}\right)=f\left(z\right)^{*}$
+\end_inset
+
+，而剩余的灰绿色区域则都能满足, 所以当 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ 时是最好的情况, 也就是大家都默认的情况。
+\end_layout
+
+\begin_layout Standard
+至于为啥会这样，例如把 
+\begin_inset Formula $\ln z$
+\end_inset
+
+ 函数的割线设置在 
+\begin_inset Formula $\frac{3}{4}\pi$
+\end_inset
+
+（从
+\begin_inset Formula $x$
+\end_inset
+
+轴正向开始计），则从
+\begin_inset Formula $x$
+\end_inset
+
+轴正向开始分别按正逆时针开始绕，除割线之外相位的可能取值为
+\begin_inset Formula 
+\begin{align*}
+\text{逆时针：} & \left[0,\frac{3}{4}\pi\right]\\
+\text{正时针：} & \left[0,-\frac{5}{4}\pi\right]
+\end{align*}
+
+\end_inset
+
+则逆时针方向的 
+\begin_inset Formula $\left(-\frac{3}{4}\pi,-\frac{5}{4}\pi\right)$
+\end_inset
+
+范围内的相位，是不存在复共轭相位的，这样就不满足 Schwartz 反射原理。
+\end_layout
+
+\begin_layout Section
 深度非弹性散射
 \end_layout
 
@@ -5621,7 +6217,7 @@ literal "false"
 参考文献：
 \begin_inset CommandInset href
 LatexCommand href
-name "https://www.fzu.cz/~chyla/lectures/text.pdf"
+name "chyla-lectures"
 target "https://www.fzu.cz/~chyla/lectures/text.pdf"
 literal "false"
 
@@ -6258,7 +6854,7 @@ y & \equiv\frac{q\cdot P}{k\cdot P}=\frac{E_{p}(E-E^{\prime})+\vec{k}(\vec{k}-\v
 \end_layout
 
 \begin_layout Section
-Landau singularity
+Landau 奇点
 \end_layout
 
 \begin_layout Standard
