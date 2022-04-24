@@ -1234,12 +1234,32 @@ S^{\mathcal{W}_\Lambda}\otimes T    @>j>>       T\\
 ## 可延展箭头
 
 [amsmath](https://www.ctan.org/pkg/amsmath)
+[Extending arrows with overset text](https://tex.stackexchange.com/questions/5225/extending-arrows-with-overset-text)
 
 `amsmath`包中提供了可延展/伸缩的箭头, 见 chapt 4.9; page15; Extensible arrows.
 
 `\xleftarrow` and `\xrightarrow` 产生可以自动适应上下文字长度的箭头.
 这些命令接受一个可选参数作为下标, 一个必须参数作为上标, 可以为空.
 类似有`\xLeftarrow`, `xRightarrow`.
+
+可以提供可选参数, 将放在箭头下方:
+
+```latex
+\documentclass{article}
+\usepackage{mathtools}
+\begin{document}
+\[
+    \xrightleftharpoons[k_2]{\,k_1\,}
+\]
+\end{document}
+```
+
++ 类似的支持可扩展箭头的软件包:
+
+amsmath ( `\xleftarrow` 等, 新的命令也可以类似地创建)
+extarrows
+extpfeil
+mathtools
 
 ## 下划线,中划线
 
