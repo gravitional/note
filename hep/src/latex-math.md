@@ -1,5 +1,25 @@
 # latex 数学相关
 
+## 数学符号
+
+[16.2 Math symbols](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Math-symbols)
+
+LaTeX几乎提供了 任何人 使用的 任何 数学或技术符号.
+例如, 如果你在你的源文件中包括 `$pi$`, 你将得到符号 $\pi$ .
+见 ["综合LaTeX符号列表"包 ](https://ctan.org/pkg/comprehensive).
+
+这里有常用符号的列表, 它决不是详尽的.
+每个符号都有简短的描述, 它的符号类别, 在括号里给出, 类别决定了它周围的间距.
+除非另有说明, 这些符号的命令只能在数学模式下使用.
+要重新定义一个命令, 使其可以在任何当前 mode 下使用, 请参见 `\ensuremath`.
+
++ `\Prime`
+`Prime`, 或时间表达式中的分(minute), (ordinary).
+通常作为上标使用. 例如`$f^\prime$`;
+`$f^\prime$` 和 `$f'$` 产生相同的结果,
+第二种方法的优点是 `$f'''$`能产生所需的符号, 即与 `$f^{prime\prime\prime}$` 的结果相同, 但使用的打字量比较少.
+你只能在数学模式下使用 `\prime`, 在文本模式下使用右单引号 `'` 会产生不同的字符(撇号, apostrophe).
+
 ## 方程排版
 
 + 子方程

@@ -4,7 +4,7 @@
 
 [23.5 Accents](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#Accents)
 
-LaTeX对世界上的许多脚本和语言都有广泛的支持,
+LaTeX 对世界上的许多脚本和语言都有广泛的支持,
 通过核心的 `babel` 包提供, 它支持 `pdfLaTeX`, `XeLaTeX` 和 `LuaLaTeX`.
 `polyglossia` 包对后两种引擎提供类似的支持.
 
