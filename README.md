@@ -1,6 +1,6 @@
 # note-on-physics
 
-捡垃圾茨德. 收录物理, 计算机相关的笔记.
+收录物理, 计算机相关的笔记.
 
 Some note on Physics and Computing.
 
@@ -13,12 +13,15 @@ Some note on Physics and Computing.
 
 目前收录的内容有:
 
-+ Chiral perturbation Theory
-+ 粒子物理
-+ 场论
-+ 电动力学
-+ 群论
-+ LaTeX, Tikz,
++ /adobe: adobe 系列软件的note
++ /chpt: 手征微扰理论
++ /editor: 各种编辑器的使用, vim, emacs, sed, vscode, markdown
++ /git: git 版本管理软件的使用
++ /hep: 工作相关的软件: latex, beamer, tikz, lyx, Physics Review D 格式
++ /java/src: java note
++ /mac: mac 平台软件的安装使用
++ /python: python 程序设计语言的 note.
+
 + Mathematica,
 + Linux, Ubuntu, Windows, Mac, Android
 + Java, Perl, Python, C++, Bash, Powershell,
