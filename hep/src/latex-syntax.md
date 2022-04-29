@@ -59,9 +59,11 @@
 参数`#1`,`#2`被替换成你提供的值.
 `Tex`会忽略跟在`\cmd`后面的空白. 如果你想要一个空白,使用`\cmd{}`或者使用显式的控制序列`'\cmd\ '`.
 
-一个简单的定义新命令的例子:
+定义新命令的简单例子:
 
-    \newcommand{\RS}{Robin Smith}
+```latex
+\newcommand{\RS}{Robin Smith}
+```
 
 文中的每个`\RS` 会被 `Robin Smith`替换.
 重定义命令是类似的 `\renewcommand{\qedsymbol}{{\small QED}}`.
@@ -106,6 +108,38 @@ The \shipname{Monitor} met the \shipname{Merrimac}.
 \newcommand{\shipname}[1]{{\it #1}}
 ```
 
+### \providecommand
+
+[12.2 \providecommand](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005cprovidecommand)
+
+简洁, 使用下列形式之一:
+
+```latex
+\providecommand{\cmd}{defn}
+\providecommand{\cmd}[nargs]{defn}
+\providecommand{\cmd}[nargs][optargdefault]{defn}
+\providecommand*{\cmd}{defn}
+\providecommand*{\cmd}[nargs]{defn}
+\providecommand*{\cmd}[nargs][optargdefault]{defn}
+```
+
+定义 `命令`, 只要没有这个名字的 `命令` 存在.
+如果没有这个名字的命令存在, 那么这个定义的效果与 `newcommand` 相同.
+如果这个名字的命令已经存在, 那么这个定义不做任何事情.
+在文件可能被多次加载时, 这特别有用, 比如 `style` 文件.
+参见 `\newcommand` & `\renewcommand` , 了解参数的描述.
+
+这个例子
+
+```latex
+\providecommand{\myaffiliation}{Saint Michael's College}
+\providecommand{\myaffiliation}{Lyc\'ee Henri IV}
+From \myaffiliation.
+```
+
+输出 `From Saint Michael's College`.
+与 `newcommand` 不同, 重复使用 `\providecommand` 不会出现错误.
+
 ### \DeclareRobustCommand
 
 ```latex
@@ -115,7 +149,8 @@ The \shipname{Monitor} met the \shipname{Merrimac}.
 
 就像 `\newcommand` 和 `\newcommand* ` (见 \newcommand & \renewcommand ),
 但是它们声明 `健壮的命令`(robust), 即使定义中的一些代码是脆弱的.
-(关于健壮的和脆弱的命令的讨论, 请参见 \protect. )
+(关于健壮的和脆弱的命令的讨论, 请参见 `\protect`. )
+
 使用这个命令来定义新的健壮的命令, 或重新定义现有的命令并使其 `健壮`.
 与 `\newcommand` 不同的是, 如果宏 `cmd` 已经存在, 它们不会报错;
 相反, 如果命令被重新定义, `日志信息` 会被放入 `transcript` 文件.
@@ -127,8 +162,9 @@ The \shipname{Monitor} met the \shipname{Merrimac}.
 以及命令 `\renewrobustcmd`, `\renewrobustcmd*`,
 和命令 `\providerobustcmd`, 和`\providerobustcmd*`.
 
-这些命令类似于 `\newcommand`, `\newcommand*`, `\renewcommand`, `\renewcommand*`, `\providecommand`, and `\providecommand*`,
-定义了健壮的 `cmd`, 但与 `\DeclareRobustCommand` 相比, 有两个优点.
+这些命令类似于 `\newcommand`, `\newcommand*`, `\renewcommand`,
+`\renewcommand*`, `\providecommand`, and `\providecommand*`,
+定义了健壮的 命令, 但与 `\DeclareRobustCommand` 相比, 有两个优点.
 
 它们使用低级别的 `e-TeX` 保护机制, 而不是高级别的 LaTeX `\protect` 机制, 所以它们不会产生上面提到的性能的轻微损失,
 并且它们在 `\new...`, `\renew...`, 和 `\provide...` 之间的区分, 与标准命令相同,
