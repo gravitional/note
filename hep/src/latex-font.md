@@ -221,3 +221,108 @@ sudo mkfontscale && mkfontdir && fc-cache -fv
 + 70-79;    select font (adjust which fonts are available)
 + 80-89;    match target="scan" (modify scanned patterns)
 + 90到99;  font synthesis
+
+## 编译 The TeX Book
+
+[Electronic version of Knuth TeXbook](https://tex.stackexchange.com/questions/110836/electronic-version-of-knuths-texbook)
+[texbook.tex 编译](https://blog.csdn.net/virhuiai/article/details/7796097)
+
+CTAN 上有 Knuth [TheTeXBook](https://www.ctan.org/pkg/texbook) 的源代码,
+可以下载下来编译. 注意版权问题, 不要随便传播
+
+>The source has "protection" against use to produce a document:
+>such use is only allowed with the permission of the Copyright holder and of the publisher (Addison-Wesley).
+
+直接编译不能通过, 要修改前四行
+
+```latex
+\loop\iftrue
+  \errmessage{This manual is copyrighted and should not be TeXed}\repeat
+\pausing1 \input manmac
+\ifproofmode\message{Proof mode is on!}\pausing1\fi
+```
+
+注释成
+
+```latex
+%\loop\iftrue
+%  \errmessage{This manual is copyrighted and should not be TeXed}\repeat
+\input manmac
+%\ifproofmode\message{Proof mode is on!}\pausing1\fi
+```
+
+用 `tex` 或 `etex` 命令编译, 编译过程可能遇到几个坑.
+
+### 字体问题
+
+第一个坑是字体, `tex` 可能找不到 `Arial` 字体,
+参考 [安装 TeX 字体](https://www.tug.org/fonts/fontinstall.html),
+
+使用脚本 [getnonfreefonts](https://www.tug.org/fonts/getnonfreefonts/)  安装字体
+
+```bash
+getnonfreefonts  --sys --lsfonts
+```
+
+`--sys` 和 `--user` 分别表示安装到系统(全局)或者只安装到当前 `用户`
+例如 ubuntu 如果使用的是 `apt` 里的 texlive, 需要使用 `sudo` 运行这个脚本.
+
+```bash
+wget https://www.tug.org/fonts/getnonfreefonts/install-getnonfreefonts
+sudo texlua install-getnonfreefonts
+```
+
+安装完成之后:
+
+```bash
+getnonfreefonts --sys --help # 显示帮助
+getnonfreefonts --sys -a # 安装所有字体
+```
+
+如果不想使用别人的脚本, 也可以手动安装: [Installing TeX fonts](https://www.tug.org/fonts/fontinstall.html)
+
++ 安装完成后, 查看安装位置
+
+```bash
+sudo getnonfreefonts --sys -l
+# 例如 ubuntu 上输出
+----------------------------------------------
+Installation directory: /usr/local/share/texmf
+----------------------------------------------
+```
+
+然后 对应目录中的  `.tfm` font metric 文件:
+
+```bash
+ls /usr/local/share/texmf/fonts/tfm/urw/arial
+# 例如 ubuntu 上输出
+ua1b8a.tfm  ua1b8r.tfm  ua1bi8a.tfm  ...
+```
+
+打开 `texbook.tex` 源码, 搜索
+
+    \font\pearsonkluj=arial at 9pt
+
+这一行, 将 `arial` 改成安装好的字体, 例如 `ua1r8a`,
+名称的含义可以在 宏包的 `README` 中找到: [urw-arial](https://www.ctan.org/pkg/urw-arial)
+`ua1`是名称, `r` 表示 `regular`, `8` 表示点数等等.
+
+改好之后保存, 重新用
+
+```bash
+tex texbook.tex  #编译文档
+sudo dvipdfmx texbook # dvi转换成pdf
+```
+
+如果失败可能是没有加 `sudo`, 权限不够
+
+### 其他参考书
+
+[tex书籍](https://tex.stackexchange.com/a/121405)
+
+除了 `TeXbook` 之外, 还有一些合法的 `pdf` , 其中有类似的内容:
+
++ [TeX for the Impatient](ftp://tug.org/tex/impatient/book.pdf)
++ [TeX by Topic](http://eijkhout.net/texbytopic/texbytopic.html)
++ [Making TeX Work](http://makingtexwork.sourceforge.net/mtw/)
++ A Gentle Introduction to TeX by Michael Doob: texdoc gentle.
