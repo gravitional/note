@@ -1,0 +1,67 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tikz-feynman}
+\usetikzlibrary{graphs}
+\begin{document}
+
+\begin{tikzpicture}
+	\begin{feynman}
+		%% fig a
+		\vertex (a1) at (0,0){x};
+		\vertex[right =1cm  of a1] (a2);
+		\vertex[right =2cm  of a1] (a3);
+		\vertex[right =3cm  of a1] (a4);
+		\vertex[right =4cm  of a1] (a5){0};
+		% 对各个顶点连线
+		\diagram*{
+		{ [edge=fermion]
+		(a1) --[momentum'={\scriptsize \(p\)}]  (a5),
+		},
+		};
+	\end{feynman}
+	\begin{feynman}[xshift=5cm]
+		%% fig a
+		\vertex (a1) at (0,0){x};
+		\vertex[right =1cm  of a1] (a2);
+		\vertex[right =2cm  of a1] (a3);
+		\vertex[right =3cm  of a1] (a4);
+		\vertex[right =4cm  of a1] (a5){0};
+		% 对各个顶点连线
+		\diagram*{
+		{ [edge=fermion]
+		(a1) --[reversed momentum'={\scriptsize \(p\)}]  (a5),
+		},
+		};
+	\end{feynman}
+	\begin{feynman}[xshift=0cm,yshift=-1.5cm,]
+		%% fig a
+		\vertex (a1) at (0,0){0};
+		\vertex[right =1cm  of a1] (a2);
+		\vertex[right =2cm  of a1] (a3);
+		\vertex[right =3cm  of a1] (a4);
+		\vertex[right =4cm  of a1] (a5){x};
+		% 对各个顶点连线
+		\diagram*{
+		{ [edge=fermion]
+		(a1) --[momentum'={\scriptsize \(p\)}]  (a5),
+		},
+		};
+	\end{feynman}
+	\begin{feynman}[xshift=5cm,yshift=-1.5cm]
+		%% fig a
+		\vertex (a1) at (0,0){0};
+		\vertex[right =1cm  of a1] (a2);
+		\vertex[right =2cm  of a1] (a3);
+		\vertex[right =3cm  of a1] (a4);
+		\vertex[right =4cm  of a1] (a5){x};
+		% 对各个顶点连线
+		\diagram*{
+		{ [edge= fermion]
+		(a1) --[reversed momentum'={\scriptsize \(p\)}]  (a5),
+		},
+		};
+	\end{feynman}
+\end{tikzpicture}
+
+\end{document}

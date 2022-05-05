@@ -185,7 +185,7 @@ You need to  maybe `reconfigure`  and restart LyX.
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}} % 手动定义一个垂直的微分符号
 ```
 
-## LyX 命令行
+## LyX 命令行, 转换格式
 
 概要: `lyx [ command-line switches ] [ name[.lyx] ... ]`
 
@@ -330,3 +330,219 @@ open -a app-name # 或 open -a 'Application Name'  如果应用名称有空格
 ### 拼写检查器
 
 从 `LyX/Mac 2.0` 开始, 默认包括拼写检查支持.
+
+## lyx 错误处理
+
+### ibus 输入法
+
+[SDB:在 Wayland 中启用输入法]: https://zh.opensuse.org/SDB:%E5%9C%A8_Wayland_%E4%B8%AD%E5%90%AF%E7%94%A8%E8%BE%93%E5%85%A5%E6%B3%95
+
+如果桌面环境使用`Gnome`默认, 也就是`Wayland`协议, 默认`ibus`输入法在`lyx`下无法使用. 报错为
+
+```bash
+Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway.
+```
+
+按照 [SDB:在 Wayland 中启用输入法][] 操作仍然不行.
+
+进入 `KDE` 或 `GNOME` 的 `Wayland` 会话之后, 您可能会发现输入法(`Fcitx` 或 `iBus`)无法使用.
+最新的稳定版 `Fcitx` 和 `iBus` 都已经了基本的 `Wayland` 支持, 通过 `X` 的协议转接实现.
+`Wayland` 读取的环境配置文件是`/etc/environment` 而不是 `X` 所读取的环境变量文件.
+因此对 `X` 有效的输入法配置在 `Wayland` 上不起效果了. 以管理员权限编辑它:
+
+```bash
+sudo vi /etc/environment
+```
+
+这个文件应该是空的, 只有几行注释. 添加下面几行, 以 `Fcitx` 为例:
+
+```bash
+INPUT_METHOD=fcitx
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+```
+
+如果您使用 `iBus` 的话, 那么应该添加这几行:
+
+```bash
+INPUT_METHOD=ibus
+GTK_IM_MODULE=ibus
+QT_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+```
+
+之后请重启您的系统.
+
+### 找不到文档类等等
+
+参考 [LYX Manuals](https://wiki.lyx.org/uploads//LyX/Manuals/1.6.4//Manuals.pdf)
+
+有时安装好了texlive,也安装好了`lyx`,却仍然报错,这个时候一般是因为路径(`$PATH`)没有配置好,
+`lyx` 没有检测到 `texlive` 的各种文件.
+
+`LYX` 的一些功能可以从 `LYX` 内部进行配置, 而无需重新配置文件.
+首先, `LYX` 能够检查您的系统, 以查看可以使用哪些程序, `LATEX` 文档类和 `LATEX` 软件包.
+
+它使用此知识为多个 `Preferences` 设置提供合理的默认值.
+尽管在系统上安装 `LYX` 时已经完成了此配置,但是您可能需要在本地安装一些项目,
+新的 `LATEX` 类,而 `LYX` 看不到这种变化.
+要强制 `LYX` 重新检查系统, 您应该使用 `Tools->Reconfigure`.
+然后,您应该重新启动 `LYX` 以确保考虑到更改.
+
+添加 `tex` 文件的路径到 `$PATH` 中的时候,注意尽量把新的 `tex` 路径添加到`$PATH`前面,
+以防止之前安装的残留掩盖新的路径. 即:
+
+```bash
+if [[ $SHELL == "/bin/zsh" ]] ;then
+echo "\n# add texlive paths" >> ~/.zshrc
+echo "export MANPATH=your_texlive_path/texmf-dist/doc/man:${MANPATH}" >> ~/.zshrc
+echo "export INFOPATH=your_texlive_path/texmf-dist/doc/info:${INFOPATH}" >> ~/.zshrc
+echo "export PATH=your_texlive_path/bin/x86_64-linux:${PATH}" >> ~/.zshrc
+fi
+```
+
+最简单的, 直接使用 ubuntu `apt` 仓库安装的 `texlive` 套装和 `lyx` 一般没有问题.
+
+## lyx 默认pdf 浏览器
+
+在`tools->preferences->File Handling->File Formats`
+
+在 `Format` 一栏中选中`PDF(XeTex)`  或者其他想要更改的格式,然后在 `Viewer`中更改程序,或者自定义程序位置.
+
+## 多文件
+
+[Multidoc](https://wiki.lyx.org/FAQ/Multidoc)
+
+Categories: FAQ, Multipart
+
+关于处理多文件和多部分文件的常见问题:
+
++ 我怎样才能将其他文件包括在一个多部分文档中, 使其不在新的一页上开始?
+    使用选项 `input` 而不是 `include`.
+
++ `input` 和 `include` 的区别是什么?
+
+    `input` 和 `include` 都可以包括一个子文件(例如, 你的书的一个章节). 
+    然而, 它们在某些方面有所不同, 有一些优点和缺点.
+
+    区别:
+    `include` 可以开始一个新的页面, 而 `input` 则不能. 
+    这在某些情况下可能是一个优势, 在其他情况下是一个劣势.
+
+    `include` 的优点
+    你可以在输出时 `禁用` 选定的子文件, 同时保留原始页码和参考文献. 
+    从 `LyX 2.0` 开始, 这个功能是通过 `Document→Settings...→Child documents` 来提供的(这个 窗格 只有在你实际包含子文档时才可见).
+
+    `input` 的优势
+    被 `input` 的文档可以包含另一个 `input` 语句,
+    一个 `included `的文件不能包含另一个 `included` 的文件.
+
++ 多部分文件中使用哪个 `preamble`?
+    一般来说, 对于多部分文件, 在你编译的时候只使用 `主文件` 的 导言(preamble). 
+    只有当你 `单独编译` 从属文件时, 才会使用该文件的 导言.
+
++ 我怎样才能在不同的 `LyX`(子)文件中共享相同的 导言?
+    `共享导言`允许你配置许多文档设置, 并使它们在所有相关的文档中保持一致.
+    
+    首先将序言复制到 文本文件 中, 例如 `preamble.tex`, 
+    然后用 `\input{preamble}` 替换现有 导言.
+
++ 如何对整个多部分文档使用一个 `主bib`, 而在各章单独编译时使用单独的`bib`?
+
+    对于 `主文档`, 你只需在必须出现 `主bib`的地方(在主文件内或在子文件内)插入一个`bibliography inset`.
+    在 `子文档` 中, 在 `子文档` 单独编辑时, 在书目应该出现的地方插入书目插页, 
+    但要把它们插入到 `分支` 中(`Insert→Branch→Insert New Branch...`), 
+    例如, 叫做 `Childonly`.
+    在 `子文档` 中, 激活该分支(`Document→Settings...→Branches`).
+    在 `主文档` 中, 取消激活该分支(`Document→Settings...→Branches`).
+
++ 我怎样才能把包含在 `LyX文档` 中的所有文件打包?
+
+    试着使用 [ConvertFilesIntoArchive页面][] 上描述的脚本.
+
+[ConvertFilesIntoArchive页面]: https://wiki.lyx.org/Tips/ConvertFilesIntoArchive
+
+脚本: lyx_pak.sh
+
+```bash
+#!/bin/sh
+# This script creates archive with lyx file and all included files (graphics 
+# and so on). It can make plain tar archive or compress it with bz2 or gz
+#
+# Author: Marcin Bukat
+# email : wodz@netlandia.pl
+# Ths script is a FREE software
+# Use at Your own risk
+
+function usage
+#Prints usage instructions
+{
+        echo "Usage: lyx_pak.sh [OPTONS] [FULL PATH TO LYX FILE]"
+        echo " OPTIONS:"
+        echo "-j        compress with bzip2"
+        echo "-z        compress with gzip"
+        exit
+}
+
+function archive
+#Creates archive
+{
+ARCHNAME=`basename $LYXFILENAME lyx`tar
+       case "$1" in
+        -j)
+        COMPRESS="bzip2 $ARCHNAME"
+        ;;
+        -z)
+        COMPRESS="gzip $ARCHNAME"
+        ;;
+        *)
+        COMPRESS=""
+        esac
+
+cd $WORKDIR
+
+tar cvf $ARCHNAME $LYXFILENAME `cat $LYXFILENAME|grep filename|cut -d " " -f 2` "`cat $LYXFILENAME|grep BibTeX|cut -d { -f2|tr -d '}'`.bib"
+$COMPRESS
+
+if [ $? -eq 0 ]; then
+        echo "Lyx archive created successfully"
+else
+        exit 1
+fi
+}
+#Main part starts here
+
+#Check if there is any parameter
+if [ $# -gt 0 ]; then
+        #Ok we got two parameters so first is a commpress switch
+        if [ $# -eq 2 ]; then
+                if [ "$1" = "-j" ] || [ "$1" = "-z" ]; then
+                        PARAM=$1
+                        LYXFILENAME=`basename $2`
+                        WORKDIR=`dirname $2`
+                        if [ -f $2 ] && [ -d `dirname $2` ]; then
+                        #parameters are correct so make archive
+                        archive $PARAM
+                        else
+                        usage
+                        fi
+                else
+                usage
+                fi
+        else
+                #One parameter - only path to the file
+                PARAM="-"
+                LYXFILENAME=`basename $1`
+                WORKDIR=`dirname $1`
+                if [ -f "$1" ] && [ -d "`dirname $1`" ]; then
+                #parameters are correct so make archive
+                archive $PARAM
+                else
+                usage
+                fi
+        fi
+else
+usage
+fi
+```

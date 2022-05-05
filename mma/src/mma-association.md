@@ -1,8 +1,10 @@
 # 关联 Associations
 
-`Associations`具有属性`HoldAllComplete`. 直接对关联使用替换规则不会进行运算, 可以使用`Query`语法, 对关联的键和值进行替换.
++ `Associations` 具有属性 `HoldAllComplete`.
+直接对关联使用替换规则不会进行运算, 可以使用`Query`语法, 对关联的键和值进行替换.
 
-+ `HoldAllComplete`: 不得以任何方式修改或查看函数的所有参数. 不展开`Sequence`, 不移除`Unevaluated`, 不使用`UpValue`, 内部`Evaluate`无效
++ `HoldAllComplete`: 不得以任何方式修改或查看函数的所有参数.
+不展开`Sequence`, 不移除`Unevaluated`, 不使用`UpValue`, 内部`Evaluate`无效
 
 ```mathematica
 f[a] = 12; tea = <|a -> f[b]|>;
@@ -304,4 +306,39 @@ Out[2]= False
 
 MatchQ[{a -> b}, KeyValuePattern[{}]]
 Out[3]=True
+```
+
+## 矩形关联转置
+
+输入 `Assoc` 必须是 `完整数组`(full array),
+`Assoc` 在某一层的所有部分都具有相同的 `Keys` 列表
+`Assoc` 的元素可以被认为, 填满了一个超矩形区域.
+
+```mathematica
+(*提取关联的键*)
+extractKeys[Others_] := {}
+extractKeys[Assoc_?AssociationQ] := {Keys@Assoc}~Join~
+  extractKeys@First@Assoc
+(*提取关联的值*)
+extractVal[Others_] := Others
+extractVal[Assoc_?AssociationQ] := extractVal /@ Values@Assoc
+(*根据置换规则, 重新构建关联*)
+
+assTranspose[Assoc_?AssociationQ, perm_?PermutationListQ] :=
+ Module[{keys = Permute[extractKeys@Assoc, perm],
+   vals = Transpose[extractVal@Assoc, perm]},
+  MapIndexed[keys[[Length@#2, Last@#2]] -> #1 &, vals, Infinity] /.
+   List -> Association]
+```
+
++ 测试功能, 生成嵌套关联:
+
+```mathematica
+f[range_] := AssociationThread[
+   range,   #   ] &
+
+(f[CharacterRange["a", "f"]] /*
+f[CharacterRange["\[Alpha]", "\[Zeta]"]] /*
+f[CharacterRange["U", "Z"]]
+  )@Range[6]
 ```

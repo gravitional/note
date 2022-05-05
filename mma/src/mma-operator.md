@@ -1,6 +1,7 @@
 # 算符优先级
 
-tutorial/OperatorInputForms.  具有内置定义的运算符. 下面是常用算符的优先级, 同一优先级的放到一组:
+tutorial/OperatorInputForms.
+具有内置定义的运算符. 下面是常用算符的优先级, 同一优先级的放到一组:
 
 大部分算符序列从`右边往左边`依次结合, 再作用到参数上.
 
@@ -70,10 +71,10 @@ exp1/;exp2,    (e/;e)/;e
 `PlusMinus`
 `MinusPlus`
 ***
-`exp1/exp2`,exp1 (exp2)^-1, 除法, 左结合
+`exp1/exp2`, exp1 (exp2)^-1, 除法, 左结合
 ***
-`exp1 exp2 exp3`,Times, 乘法
-`exp1*exp2*exp3`,Times
+`exp1 exp2 exp3`, Times, 乘法
+`exp1*exp2*exp3`, Times
 ***
 `exp1+exp2+exp3`,Plus, 加法
 `exp1-exp2`,exp1+(-exp2), 减法

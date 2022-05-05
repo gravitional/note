@@ -118,7 +118,7 @@ Python内置的`Tkinter`可以满足基本的GUI程序的要求, 如果是非常
 
 ### 海龟绘图
 
-在1966年, Seymour Papert和Wally Feurzig发明了一种专门给儿童学习编程的语言——`LOGO`语言, 它的特色就是通过编程指挥一个小海龟(turtle)在屏幕上绘图.
+在1966年, Seymour Papert和Wally Feurzig发明了一种专门给儿童学习编程的语言 -- `LOGO`语言, 它的特色就是通过编程指挥一个小海龟(turtle)在屏幕上绘图.
 
 海龟绘图(`Turtle Graphics`)后来被移植到各种高级语言中, Python内置了`turtle`库, 基本上100%复制了原始的`Turtle Graphics`的所有功能.
 

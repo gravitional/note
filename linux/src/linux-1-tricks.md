@@ -8,26 +8,40 @@
 
 + 学习 `Bash` .你可以`man bash`来看看`bash`的东西,并不复杂也并不长.
 你用别的shell也行,但是bash是很强大的并且也是系统默认的.(学习zsh或tsch只会让你在很多情况下受到限制)
+
 + 学习 `vim` . 在Linux下,基本没有什么可与之竞争的编译辑器(就算你是一个Emacs或Eclipse的重度用户).
 你可以看看`<简明vim攻略>`和 `<Vim的冒险游戏>`以及 `<给程序员的Vim速查卡>` 还有 `<把Vim变成一个编程的IDE>` 等等.
+
 + 了解 `ssh`.明白不需要口令的用户认证(通过`ssh-agent`, `ssh-add`),学会用`ssh`翻墙,用`scp`而不是`ftp`传文件,等等.
 你知道吗? `scp` 远端的时候, 你可以按`tab`键来查看远端的目录和文件(当然,需要无口令的用户认证),这都是 bash 的功劳.
+
 + 熟悉`bash`的作业管理,如: `&`, `Ctrl-Z`, `Ctrl-C`, `jobs`, `fg`, `bg`, `kill`, 等等.
 当然,你也要知道`Ctrl+\`(SIGQUIT)和`Ctrl+C` (SIGINT)的区别.
+
 + 简单的文件管理 :  `ls` 和 `ls -l` (你最好知道 `ls -l` 的每一列的意思),
 `less`, `head`, `tail` 和 `tail -f`, `ln` 和 `ln -s` (你知道明白`hard link`和`soft link`的不同和优缺点),
 `chown`, `chmod`, `du` (如果你想看看磁盘的大小 `du -sk *`), `df`, `mount`,`find`
 + 基础的网络管理:  `ip` 或 `ifconfig`, `dig`,`netstat`, `ping`, `traceroute`, 等
+
 + 理解正则表达式,还有`grep`/`egrep`的各种选项.比如:  `-o`, `-A`, 和 `-B` 这些选项是很值得了解的.
-+ 学习使用 `apt-get` 和 `yum` 来查找和安装软件(前者的经典分发包是Ubuntu,后者的经典分发包是Redhat),我还建议你试着从源码编译安装软件.
+
++ 学习使用 `apt-get` 和 `yum` 来查找和安装软件(前者的经典分发包是Ubuntu,
+后者的经典分发包是Redhat),我还建议你试着从源码编译安装软件.
 
 ### 日常
 
 + 在 `bash` 里,使用 `Ctrl-R` 而不是上下光标键来查找历史命令.
-+ 在 `bash` 里,使用 `Ctrl-W` 来删除最后一个单词,使用 `Ctrl-U` 来删除一行.请`man bash`后查找`Readline Key Bindings`一节来看看`bash`的默认热键,比如: `Alt-.` 把上一次命令的最后一个参数打出来,而`Alt-*` 则列出你可以输入的命令.
+
++ 在 `bash` 里,使用 `Ctrl-W` 来删除最后一个单词,使用 `Ctrl-U` 来删除一行.
+请`man bash`后查找`Readline Key Bindings`一节来看看`bash`的默认热键,
+比如: `Alt-.` 把上一次命令的最后一个参数打出来,而`Alt-*` 则列出你可以输入的命令.
+
 + 回到上一次的工作目录:  `cd –`  (回到`home`是` cd ~`)
-+ 使用 `xargs`.这是一个很强大的命令.你可以使用`-L`来限定有多少个命令,也可以用`-P`来指定并行的进程数.
-如果你不知道你的命令会变成什么样,你可以使用`xargs echo`来看看会是什么样.当然, `-I{}` 也很好用.示例:
+
++ 使用 `xargs`.这是一个很强大的命令.
+你可以使用`-L`来限定有多少个命令,也可以用`-P`来指定并行的进程数.
+如果你不知道你的命令会变成什么样,你可以使用`xargs echo`来看看会是什么样.
+当然, `-I{}` 也很好用.示例:
 
 ```bash
 find . -name \*.py | xargs grep some_function
@@ -36,11 +50,18 @@ cat hosts | xargs -I{} ssh root@{} hostname
 
 + `pstree -p` 可以帮你显示进程树.
 + 使用 `pgrep` 和 `pkill` 来找到或是`kill`某个名字的进程. (`-f` 选项很有用).
-+ 了解可以发给进程的信号.例如: 要挂起一个进程,使用 `kill -STOP [pid]`. 使用 `man 7 signal` 来查看各种信号,使用`kill -l` 来查看数字和信号的对应表
+
++ 了解可以发给进程的信号.例如: 要挂起一个进程,使用 `kill -STOP [pid]`.
+使用 `man 7 signal` 来查看各种信号,使用`kill -l` 来查看数字和信号的对应表
+
 + 使用 `nohup` 或  `disown` 如果你要让某个进程运行在后台.
 + 使用`netstat -lntp`来看看有侦听在网络某端口的进程.当然,也可以使用`lsof`.
-+ 在`bash`的脚本中,你可以使用`set -x`来debug输出.使用 `set -e` 来当有错误发生的时候`abort`执行.考虑使用 `set -o pipefail` 来限制错误.还可以使用`trap`来截获信号(如截获`ctrl+c`).
-+ 在bash 脚本中,`subshells` (写在圆括号里的) 是一个很方便的方式来组合一些命令.一个常用的例子是临时地到另一个目录中,例如:
++ 在`bash`的脚本中,你可以使用`set -x`来debug输出.
+使用 `set -e` 来当有错误发生的时候`abort`执行.考虑使用 `set -o pipefail` 来限制错误.
+还可以使用`trap`来截获信号(如截获`ctrl+c`).
+
++ 在bash 脚本中,`subshells` (写在圆括号里的) 是一个很方便的方式来组合一些命令.
+一个常用的例子是临时地到另一个目录中,例如:
 
 ```bash
 # do something in current dir
@@ -48,7 +69,7 @@ cat hosts | xargs -I{} ssh root@{} hostname
 # continue in original dir
 ```
 
-+ 在 bash 中有很多**变量展开**.如: 检查一个变量是否存在: `${name:?error message}`.
++ 在 bash 中有很多**变量展开**. 如: 检查一个变量是否存在: `${name:?error message}`.
 比如脚本参数的表达式:  `input_file=${1:?usage: $0 input_file}`.
 计算表达式:  `i=$(( (i + 1) % 5 ))`.
 一个序列:  `{1..10}`.
@@ -57,17 +78,22 @@ cat hosts | xargs -I{} ssh root@{} hostname
 
 + 通过 `<(some command)` 可以把某命令当成一个文件.
 示例: 比较一个本地文件和远程文件` /etc/hosts`:  `diff /etc/hosts <(ssh somehost cat /etc/hosts)`
-+ 了解什么叫 "here documents" ,就是诸如 `cat <<EOF` 这样的东西.
++ 了解什么叫 `here documents` ,就是诸如 `cat <<EOF` 这样的东西.
+
 + 在 bash中,使用重定向到标准输出和标准错误.如:  `some-command >logfile 2>&1`.
 另外,要确认某命令没有把某个打开了的文件句柄重定向给标准输入,最佳实践是加上 `</dev/null`,把`/dev/null`重定向到标准输入.
 + 使用 `man ascii` 来查看 `ASCII` 表.
+
 + 在远端的 ssh 会话里,使用 `screen` 或 `dtach` 来保存你的会话.
-+ 若要`debug Web`,试试`curl` 和 `curl -I` 或是 `wget` .(我觉得debug Web的利器是`firebug`,`curl`和`wget`是用来抓网页的.)
++ 若要`debug Web`,试试`curl` 和 `curl -I` 或是 `wget` .
+(我觉得debug Web的利器是`firebug`,`curl`和`wget`是用来抓网页的.)
+
 + 把 `HTML` 转成文本: `lynx -dump -stdin`
 + 如果你要处理`XML`,使用 `xmlstarlet`
 + 对于 `Amazon S3`, `s3cmd` 是一个很方便的命令(还有点不成熟)
 + 在`ssh`中,知道怎么来使用`ssh`隧道.通过 `-L` or `-D` (还有`-R`) ,翻墙神器.
-+ 你还可以对你的 `ssh` 做点优化.比如,`.ssh/config` 包含着一些配置: 避免链接被丢弃,链接新的`host`时不需要确认,转发认证,以前使用压缩(如果你要使用scp传文件):
++ 你还可以对你的 `ssh` 做点优化.比如,`.ssh/config` 包含着一些配置: 
+避免链接被丢弃,链接新的`host`时不需要确认,转发认证,以前使用压缩(如果你要使用scp传文件):
 
 ```bash
 TCPKeepAlive=yes
@@ -78,7 +104,8 @@ Compression=yes
 ForwardAgent=yes
 ```
 
-+ 如果你输入了一行命令,但你改变注意了,又不想删除它,因为你要在历史命令中找到它,但你也不想执行它.
++ 如果你输入了一行命令,但你改变注意了,又不想删除它,
+因为你要在历史命令中找到它,但你也不想执行它.
 那么,你可以按下 `Alt-#` ,于是这个命令关就被加了一个`#`字符,于是就被注释掉了.
 
 ### 数据处理
@@ -86,7 +113,8 @@ ForwardAgent=yes
 + 了解 `sort` 和 `uniq` 命令 (包括 `uniq` 的 `-u` 和 `-d` 选项).
 + 了解用 `cut`, `paste`, 和 `join` 命令来操作文本文件.很多人忘了在`cut`前使用`join`.
 + 如果你知道怎么用`sort`/`uniq`来做集合交集,并集,差集能很大地促进你的工作效率.
-假设有两个文本文件`a`和`b`已经被 `uniq`了,那么,用`sort`/`uniq`会是最快的方式,无论这两个文件有多大(`sort`不会被内存所限,你甚至可以使用`-T`选项,如果你的`/tmp`目录很小)
+假设有两个文本文件`a`和`b`已经被 `uniq`了,那么,用`sort`/`uniq`会是最快的方式,
+无论这两个文件有多大(`sort`不会被内存所限,你甚至可以使用`-T`选项,如果你的`/tmp`目录很小)
 
 ```bash
 cat a b | sort | uniq > c   # c is a union b 并集
@@ -96,34 +124,65 @@ cat a b b | sort | uniq -u > c   # c is set difference a - b 差集
 
 + 了解和字符集相关的命令行工具,包括排序和性能.
 很多的Linux安装程序都会设置`LANG `或是其它和字符集相关的环境变量.
-这些东西可能会让一些命令(如: `sort`)的执行性能慢N多倍(注: 就算是你用`UTF-8`编码文本文件,你也可以很安全地使用`ASCII`来对其排序).
-如果你想`Disable`那个`i18n` 并使用传统的基于`byte`的排序方法,那就设置`export LC_ALL=C` (实际上,你可以把其放在 `.bashrc`).
+这些东西可能会让一些命令(如: `sort`)的执行性能慢N多倍
+(注: 就算是你用`UTF-8`编码文本文件,你也可以很安全地使用`ASCII`来对其排序).
+如果你想`Disable`那个`i18n` 并使用传统的基于`byte`的排序方法,
+那就设置`export LC_ALL=C` (实际上,你可以把其放在 `.bashrc`).
 如果这设置这个变量,你的`sort`命令很有可能会是错的.
-+ 了解 `awk` 和 `sed` ,并用他们来做一些简单的数据修改操作.例如: 求第`3`列的数字之和:  `awk '{ x += $3 } END { print x }'`.这可能会比Python快`3`倍,并比Python的代码少`3`倍.
+
++ 了解 `awk` 和 `sed` ,并用他们来做一些简单的数据修改操作.
+例如: 求第`3`列的数字之和:  `awk '{ x += $3 } END { print x }'`.这可能会比Python快`3`倍,并比Python的代码少`3`倍.
+
 + 使用 `shuf` 来打乱一个文件中的行或是选择文件中一个随机的行.
 + 了解`sort`命令的选项.了解`key`是什么(`-t`和`-k`).具体说来,你可以使用`-k1,1`来对第一列排序,`-k1`来对全行排序.
 + `sort -s` 会很有用.
 例如: 如果你想对两列排序,先对第二列,再对第一列,那么你可以这样:  `sort -k1,1 | sort -s -k2,2`
+
 + 我们知道,在`bash`命令行下,`Tab`键是用来做目录文件自动完成的事的.
-但是如果你想输入一个`Tab`字符(比如: 你想在`sort -t`选项后输入`<tab>`字符),你可以先按`Ctrl-V`,然后再按`Tab`键,就可以输入`<tab>`字符了.当然,你也可以使用`\t`.
-+ 如果你想查看二进制文件,你可以使用`hd`命令(在CentOS下是`hexdump`命令),如果你想编译二进制文件,你可以使用`bvi`命令(http://bvi.sourceforge.net/ 墙)
+但是如果你想输入一个`Tab`字符(比如: 你想在`sort -t`选项后输入`<tab>`字符),
+你可以先按`Ctrl-V`,然后再按`Tab`键,就可以输入`<tab>`字符了.当然,你也可以使用`\t`.
+
++ 如果你想查看二进制文件,你可以使用`hd`命令(在CentOS下是`hexdump`命令),
+如果你想编译二进制文件,你可以使用`bvi`命令(http://bvi.sourceforge.net/ 墙)
+
 + 另外,对于二进制文件,你可以使用`strings`(配合`grep`等)来查看二进制中的文本.
 + 对于文本文件转码,你可以试一下` iconv`.或是试试更强的 `uconv` 命令(这个命令支持更高级的Unicode编码)
 + 如果你要分隔一个大文件,你可以使用`split`命令(split by size)和`csplit`命令(split by a pattern).
 
 ### 系统调试
 
-+ 如果你想知道磁盘,CPU,或网络状态,你可以使用 `iostat`, `netstat`, `top` (或更好的 `htop`), 还有 `dstat` 命令.你可以很快地知道你的系统发生了什么事.关于这方面的命令,还有`iftop`, `iotop`等(参看<28个Unix/Linux的命令行神器>)
-+ 要了解内存的状态,你可以使用`free`和`vmstat`命令.具体来说,你需要注意 `"cached"` 的值,这个值是`Linux`内核占用的内存.还有`free`的值.
-+ Java 系统监控有一个小的技巧是,你可以使用`kill -3 <pid>` 发一个`SIGQUIT`的信号给`JVM`,可以把堆栈信息(包括垃圾回收的信息)`dump`到`stderr/logs`.
++ 如果你想知道磁盘,CPU,或网络状态,你可以使用 `iostat`, `netstat`, 
+`top` (或更好的 `htop`), 还有 `dstat` 命令.你可以很快地知道你的系统发生了什么事.
+关于这方面的命令,还有`iftop`, `iotop`等(参看<28个Unix/Linux的命令行神器>)
+
++ 要了解内存的状态,你可以使用`free`和`vmstat`命令.
+具体来说,你需要注意 `"cached"` 的值,这个值是`Linux`内核占用的内存.还有`free`的值.
+
++ Java 系统监控有一个小的技巧是,你可以使用`kill -3 <pid>` 发一个`SIGQUIT`的信号给`JVM`,
+可以把堆栈信息(包括垃圾回收的信息)`dump`到`stderr/logs`.
+
 + 使用 `mtr `会比使用 `traceroute` 要更容易定位一个网络问题.
 + 如果你要找到哪个`socket`或进程在使用网络带宽,你可以使用 `iftop` 或 `nethogs`.
-+ `Apache`的一个叫 `ab` 的工具是一个很有用的,用`quick-and-dirty`的方式来测试网站服务器的性能负载的工作.如果你需要更为复杂的测试,你可以试试 `siege`.
+
++ `Apache`的一个叫 `ab` 的工具是一个很有用的,
+用`quick-and-dirty`的方式来测试网站服务器的性能负载的工作.
+如果你需要更为复杂的测试,你可以试试 `siege`.
+
 + 如果你要抓网络包的话,试试 `wireshark` 或 `tshark.`
-+ 了解 `strace` 和 `ltrace`.这两个命令可以让你查看进程的系统调用,这有助于你分析进程的hang在哪了,怎么crash和failed的.你还可以用其来做性能`profile`,使用 `-c` 选项,你可以使用`-p`选项来`attach`上任意一个进程.
+
++ 了解 `strace` 和 `ltrace`.这两个命令可以让你查看进程的系统调用,
+这有助于你分析进程的hang在哪了,怎么crash和failed的.
+你还可以用其来做性能`profile`,使用 `-c` 选项,你可以使用`-p`选项来`attach`上任意一个进程.
+
 + 了解用`ldd`命令来检查相关的动态链接库.注意: `ldd`的安全问题
-+ 使用`gdb`来调试一个正在运行的进程或分析`core dump`文件.参看我写的<GDB中应该知道的几个调试方法>
-+ 学会到 `/proc` 目录中查看信息.这是一个Linux内核运行时记录的整个操作系统的运行统计和信息,比如:  `/proc/cpuinfo`, `/proc/xxx/cwd`, `/proc/xxx/exe`, `/proc/xxx/fd/`, `/proc/xxx/smaps`.
+
++ 使用`gdb`来调试一个正在运行的进程或分析`core dump`文件. 
+参看我写的 [GDB中应该知道的几个调试方法]
+
++ 学会到 `/proc` 目录中查看信息.
+这是一个Linux内核运行时记录的整个操作系统的运行统计和信息,
+比如:  `/proc/cpuinfo`, `/proc/xxx/cwd`, `/proc/xxx/exe`, `/proc/xxx/fd/`, `/proc/xxx/smaps`.
+
 + 如果你调试某个东西为什么出错时,`sar`命令会有用.它可以让你看看 CPU, 内存, 网络, 等的统计信息.
 + 使用 `dmesg` 来查看一些硬件或驱动程序的信息或问题.
 
@@ -131,13 +190,12 @@ cat a b b | sort | uniq -u > c   # c is set difference a - b 差集
 
 [https://www.jianshu.com/p/36fb9eed82a3](https://www.jianshu.com/p/36fb9eed82a3)
 
-***
-进入`TTY`终端. `Ctrl+Alt+F1`进入`TTY1`终端字符界面, 输入用户名和密码以登录,
++ 进入`TTY`终端. `Ctrl+Alt+F1`进入`TTY1`终端字符界面, 输入用户名和密码以登录,
 也可能是`Ctrl+Alt+F2`,`Ctrl+Alt+F3`等等, 不同系统可能有点点区别.
 输入`top`命令, 找到可能造成假死的进程, 用`kill`命令结束掉进程. 然后`Ctrl+Alt+F7`回到桌面
 
-***
-直接注销用户: `Ctrl+Alt+F1`进入`TTY1`终端字符界面, 输入用户名和密码以登录. 然后执行以下的任意一个命令注销桌面重新登录.
++ 直接注销用户: `Ctrl+Alt+F1`进入`TTY1`终端字符界面, 输入用户名和密码以登录.
+然后执行以下的任意一个命令注销桌面重新登录.
 
 ```bash
 sudo pkill Xorg
@@ -145,13 +203,14 @@ sudo pkill Xorg
 sudo restart lightdm
 ```
 
-***
-底层方法: 如果上面两种方法不成功, 那有可能是比较底层的软件出现问题. 可以试试 :**reisub 方法**.
++ 底层方法: 如果上面两种方法不成功, 那有可能是比较底层的软件出现问题. 可以试试 :**reisub 方法**.
 
-说具体一点, 是一种系统请求, 直接交给内核处理. 键盘上一般都有一个键`SysRq`, 和`PrtSc`(PrintScreen,截屏)在一个键位上, 这就是系统请求的键.
+说具体一点, 是一种系统请求, 直接交给内核处理.
+键盘上一般都有一个键 `SysRq`, 和`PrtSc`(PrintScreen,截屏)在一个键位上, 这就是系统请求的键.
 这个方法可以在死机的情况下安全地重启计算机, 数据不会丢失.
 
-其实 `SysRq`是一种叫做系统请求的东西, 按住`Alt-PrtSc` 的时候就相当于按住了`SysRq`键, 这个时候输入的一切都会直接由 `Linux` 内核来处理, 它可以进行许多低级操作.
+其实 `SysRq`是一种叫做 `系统请求` 的东西, 按住`Alt-PrtSc` 的时候就相当于按住了`SysRq`键,
+这个时候输入的一切都会直接由 `Linux` 内核来处理, 它可以进行许多低级操作.
 这个时候 `reisub` 中的每一个字母都是一个独立操作, 分别表示:
 
 + `r` : `unRaw` 将键盘控制从 `X Server` 那里抢回来
@@ -164,7 +223,8 @@ sudo restart lightdm
 如果某一天你的 `Linux` 死机了, 键盘不听使唤了, `Ctrl+Alt+F1` 已经没有任何反应, 该怎么办呢?
 使用'魔法键': `Alt+SysRq + r,e,i,s,u,b`(确实很好背, 就是单词 `busier`的倒写).
 
-首先, 你的系统要支持这个功能, 接下来就是操作: 同时按下`<Alt>+<SysRq>`不行, 只会蹦出来一个屏幕截图窗口. 所以, 真正的做法应该是:
+首先, 你的系统要支持这个功能, 接下来就是操作:
+同时按下`<Alt>+<SysRq>`不行, 只会蹦出来一个屏幕截图窗口. 所以, 真正的做法应该是:
 
 + 伸出你的左手, 同时按住`<Ctrl>+<Alt>`键, 下面几步时, 一直不松开
 + 右手先按一下`<SysRq>`or`PrcSc`, 左手别松开, 等`1`秒,
@@ -173,8 +233,8 @@ sudo restart lightdm
 + 右手依次按下`I`,`S`,`U`,`B`,左手别松开. 每按一次都等那么几秒种, 你会发现每按一次, 屏幕上信息都会有所变化.
 最后按下`B`时, 屏幕显示`reset`, 这时你的左手可以松开了, 等几秒钟, 计算机就会安全重启.
 
-***
-开启`SysRq`功能: [Linux中的SysRq魔术键](https://blog.csdn.net/jasonchen_gbd/article/details/79080576). 幸运的是: `Ubuntu` 默认已经开启了这个功能.
++ 开启`SysRq`功能: [Linux中的SysRq魔术键](https://blog.csdn.net/jasonchen_gbd/article/details/79080576).
+幸运的是: `Ubuntu` 默认已经开启了这个功能.
 
 首先要确保内核打开了`CONFIG_MAGIC_SYSRQ`配置项, 这样`SysRq`的底层处理才可用.
 另外内核中有一个宏定义`SYSRQ_DEFAULT_ENABLE`, 表示系统默认情况下是否启用`SysRq`功能键.
@@ -189,7 +249,8 @@ echo 1 > /proc/sys/kernel/sysrq
 sysctl -w kernel.sysrq=1
 ```
 
-实际上`sysctl`这条命令就是通过修改`/proc/sys/kernel/sysrq`来生效的. 可以把`kernel.sysrq=1`设置到`/etc/sysctl.conf`中, 使`SysRq`在下次系统重启仍生效.
+实际上`sysctl`这条命令就是通过修改`/proc/sys/kernel/sysrq`来生效的.
+可以把`kernel.sysrq=1`设置到`/etc/sysctl.conf`中, 使`SysRq`在下次系统重启仍生效.
 [Ryzen随机卡死问题](https://mrswolf.github.io/zh-cn/2019/05/24/manjaro%E8%B8%A9%E5%9D%91%E8%AE%B0/\)
 
 ```bash
@@ -199,9 +260,11 @@ sudo nano /etc/sysctl.d/99-sysctl.conf
 kernel.sysrq = 1
 ```
 
-`0`表示完全关闭`SysRq`, `1`表示使能`SysRq`的所有功能, 还可以设置成其他数字来选择开启部分功能, 可参考内核里的`Documentation/sysrq.txt`.
+`0`表示完全关闭`SysRq`, `1`表示使能`SysRq`的所有功能,
+还可以设置成其他数字来选择开启部分功能, 可参考内核里的`Documentation/sysrq.txt`.
 
-我们可以直接通过按键的方式或者通过写`/proc/sysrq-trigger`的方式来触发`SysRq`的操作. `SysRq`支持的操作可参考下面的HELP输出:
+我们可以直接通过按键的方式或者通过写`/proc/sysrq-trigger`的方式来触发`SysRq`的操作.
+`SysRq`支持的操作可参考下面的HELP输出:
 即`SysRq键+一个字母`来触发一个操作, 例如`SysRq+t`打印所有任务的状态.
 
 也可以不通过按键, 而是写`/proc/sysrq-trigger`的方式, 用法形如:
@@ -210,7 +273,8 @@ kernel.sysrq = 1
 echo c > /proc/sysrq-trigger
 ```
 
-即向`sysrq-trigger`写入相应的字母即可. 并且, 无论`/proc/sys/kernel/sysrq`是什么值, 这种方式都是可用的.
+即向`sysrq-trigger`写入相应的字母即可.
+并且, 无论`/proc/sys/kernel/sysrq`是什么值, 这种方式都是可用的.
 
 ### transmission 屏蔽Ipv4
 
@@ -233,7 +297,7 @@ echo c > /proc/sysrq-trigger
 ***
 `dstat` & `sar`
 
-`iostat`, `vmstat`, `ifstat` 三合一的工具,用来查看系统性能(我在<性能调优攻略>中提到过那三个xxstat工具).
+`iostat`, `vmstat`, `ifstat` 三合一的工具, 用来查看系统性能(我在<性能调优攻略>中提到过那三个xxstat工具).
 
 官方网站: http://dag.wieers.com/rpm/packages/dstat/
 

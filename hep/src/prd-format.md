@@ -549,8 +549,9 @@ The proper markup is
 
 为了减少敲键盘次数,作者也可以自定义宏 . 但是不要调用上下文依赖的命令比如 `\if `.
 
-`LATEX2e` 提供了三种声明新命令的宏: `\providecommand`, `\newcommand`, and `\renewcommand`, 以及带星号的版本(`*`versions)
-不要用 `TEX` 的底层命令,如 `\def`, `\edef`, and `\gdef`.
+`LATEX2e` 提供了三种声明新命令的宏: `\providecommand`, `\newcommand`, 
+and `\renewcommand`, 以及带星号的版本(`*`versions)
+不要用 `TEX` 的底层命令, 如 `\def`, `\edef`, and `\gdef`.
 
 ## 总结
 

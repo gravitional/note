@@ -526,9 +526,9 @@ STDOUT->autoflush();
 
 Invoking Class Methods
 
-Because Perl allows you to use barewords for package names and subroutine names, it sometimes interprets a bareword's meaning incorrectly. 
-For example, the construct "Class->new()" can be interpreted as either "'Class'->new()" or "Class()->new()". 
-In English, that second interpretation reads as "call a subroutine named Class(), then call new() as a method on the return value of Class()". 
+Because Perl allows you to use barewords for package names and subroutine names, it sometimes interprets a bareword's meaning incorrectly.
+For example, the construct "Class->new()" can be interpreted as either "'Class'->new()" or "Class()->new()".
+In English, that second interpretation reads as "call a subroutine named Class(), then call new() as a method on the return value of Class()".
 If there is a subroutine named "Class()" in the current namespace, Perl will always interpret "Class->new()" as the second alternative: a call to "new()" on the object returned by a call to "Class()"
 
 You can force Perl to use the first interpretation (i.e. as a method call on the class named "Class") in two ways. First, you can append a "::" to the class name:

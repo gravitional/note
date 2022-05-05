@@ -8,10 +8,11 @@ shell 提供了各种执行字符串操作的参数展开功能.
 
 ## 字符串总结
 
-parameter 前面可能出现的保留字,`!`, `#`
-parameter 后面可能接的保留字,`:` `#` `%` `/`
++ parameter 前面可能出现的保留字: `!`, `#`
++ parameter 后面可能接的保留字, `:` `#` `%` `/`
 
-+ 返回变量名的参数展开
+### 返回变量名的参数展开
+
 + `${!prefix*}` :这种展开会返回以 `prefix` 开头的已有变量名
 + `${#parameter}` :展开成由 parameter 所包含的字符串的长度.
 + 空变量的展开
@@ -23,10 +24,10 @@ parameter 后面可能接的保留字,`:` `#` `%` `/`
 + `${parameter:offset}` :从 `parameter` 所包含的字符串中提取一部分字符,到结尾
 + `${parameter:offset:length}` :从 `parameter` 所包含的字符串中提取一部分字符,`length`制定长度
 + 字符串修剪
-+ `${parameter#pattern}` :从 `paramter` 所包含的字符串中清除开头的`pattern`
-+ `${parameter##pattern}` :## 模式清除最长的匹配结果.
-+ `${parameter%pattern}` :清除 `parameter` 末尾所包含的`pattern`
-+ `${parameter%%pattern}` :%% 模式清除最长的匹配结果.
++ `${parameter#pattern}` : 从 `paramter` 所包含的字符串中清除开头的`pattern`
++ `${parameter##pattern}` : `##` 模式清除最长的匹配结果.
++ `${parameter%pattern}` : 清除 `parameter` 末尾所包含的`pattern`
++ `${parameter%%pattern}` : %% 模式清除最长的匹配结果.
 + 字符串查找和替换操作 `parameter`必须是一个变量 `pattern` 和 `string` 可以不加引号
 + `${parameter/pattern/string}` :如果找到了匹配通配符 `pattern` 的文本, 则用 `string` 的内容替换它.
 + `${parameter//pattern/string}` : `//` 形式下,所有的匹配项都会被替换掉
@@ -35,34 +36,35 @@ parameter 后面可能接的保留字,`:` `#` `%` `/`
 
 ## 参数展开
 
-尽管参数展开在第七章中出现过, 但我们并没有详尽地介绍它, 因为大多数的参数展开会用在脚本中, 而不是命令行中.
+尽管参数展开在第七章中出现过,
+但我们并没有详尽地介绍它, 因为大多数的参数展开会用在脚本中, 而不是命令行中.
 我们已经使用了一些形式的参数展开, 例如: `shell 变量`, shell 提供了更多方式.
 
-## 基本参数展开
+### 基本参数展开
 
 最简单的参数展开形式反映在平常使用的变量上.
 
 在这个例子中,我们试图创建一个文件名,通过把字符串 `_file` 附加到变量 `a` 的值的后面.
 
 ```bash
-[me@linuxbox ~]$ a="foo"
-[me@linuxbox ~]$ echo "$a_file"
+$ a="foo"
+$ echo "$a_file"
 ```
 
 如果我们执行这个序列,没有任何输出结果,因为 `shell` 会试着展开一个称为 `a_file` 的变量,而不是 `a`.通过添加花括号可以解决这个问题:
 
 ```bash
-[me@linuxbox ~]$ echo "${a}_file"
+$ echo "${a}_file"
 foo_file
 ```
 
 我们已经知道通过把数字包裹在花括号中,可以访问大于`9`的位置参数. 例如,访问第十一个位置参数,我们可以这样做: `${11}`
 
-## 管理空变量的展开
+### 管理空变量的展开
 
-`null`
-`undefined`
-`defined`
++ `null`
++ `undefined`
++ `defined`
 
 几种用来处理 `不存在` 和 `空变量` 的参数展开形式.
 这些展开形式对于解决丢失的 `位置参数` 和给参数指定 `默认值` 的情况很方便.
@@ -147,44 +149,45 @@ ${!prefix@}
 这里,我们列出了所有以 `BASH` 开头的环境变量名:
 
 ```bash
-[me@linuxbox ~]$ echo ${!BASH*}
+$ echo ${!BASH*}
 BASH BASH_ARGC BASH_ARGV BASH_COMMAND BASH_COMPLETION
 ...
 ```
 
-## 字符串展开
+### 字符串展开
 
-有大量的展开形式可用于操作 `字符串`. 其中许多展开形式尤其适用于 `路径名` 的展开.
+有大量的展开形式可用于操作 `字符串`.
+其中许多展开形式尤其适用于 `路径名` 的展开.
+
++ 展开成由 `parameter` 所包含的字符串的长度.
 
 ```bash
 ${#parameter}
 ```
 
-展开成由 `parameter` 所包含的字符串的长度.
-
-通常,`parameter` 是一个字符串;然而,如果 `parameter` 是 `@`或者是 `*` 的话, 则展开结果是位置参数的个数.
+通常,`parameter` 是一个字符串;
+然而,如果 `parameter` 是 `@`或者是 `*` 的话, 则展开结果是位置参数的个数.
 
 ```bash
-[me@linuxbox ~]$ foo="This string is long."
-[me@linuxbox ~]$ echo "'$foo' is ${#foo} characters long."
+$ foo="This string is long."
+$ echo "'$foo' is ${#foo} characters long."
 'This string is long.' is 20 characters long.
 ```
 
-***
++ 这些展开用来从 `parameter` 所包含的字符串中提取一部分字符.
 
 ```bash
 ${parameter:offset}
 ${parameter:offset:length}
 ```
 
-这些展开用来从 `parameter` 所包含的字符串中提取一部分字符.
 提取的字符始于第 `offset` 个字符(从字符串开头算起)直到字符串的末尾,除非指定提取的长度.
 
 ```bash
-[me@linuxbox ~]$ foo="This string is long."
-[me@linuxbox ~]$ echo ${foo:5}
+$ foo="This string is long."
+$ echo ${foo:5}
 string is long.
-[me@linuxbox ~]$ echo ${foo:5:6}
+$ echo ${foo:5:6}
 string
 ```
 
@@ -193,50 +196,50 @@ string
 如果 `parameter` 是 `@`,展开结果是 `length` 个位置参数,从第 offset 个位置参数开始.
 
 ```bash
-[me@linuxbox ~]$ foo="This string is long."
-[me@linuxbox ~]$ echo ${foo: -5}
+$ foo="This string is long."
+$ echo ${foo: -5}
 long.
-[me@linuxbox ~]$ echo ${foo: -5:2}
+$ echo ${foo: -5:2}
 lo
 ```
 
-***
++ 这些展开会从 `paramter` 所包含的字符串中清除开头一部分文本,
+这些字符要匹配定义的 `patten` .
 
 ```bash
 ${parameter#pattern}
 ${parameter##pattern}
 ```
 
-这些展开会从 `paramter` 所包含的字符串中清除开头一部分文本,这些字符要匹配定义的 `patten` .
-pattern 是通配符模式,就如那些用在路径名展开中的模式.
-这两种形式的差异之处是该 `#` 形式清除最短的匹配结果, 而该`##` 模式清除最长的匹配结果.
+`pattern` 是 `通配符模式`, 就如那些用在路径名展开中的 `模式`.
+这两种形式的差异之处是, `#` 形式清除最短的匹配结果,
+而`##` 模式清除最长的匹配结果.
 
 ```bash
-[me@linuxbox ~]$ foo=file.txt.zip
-[me@linuxbox ~]$ echo ${foo#*.}
+$ foo=file.txt.zip
+$ echo ${foo#*.}
 txt.zip
-[me@linuxbox ~]$ echo ${foo##*.}
+$ echo ${foo##*.}
 zip
 ```
 
-***
++ 这些展开和上面的 `#` 和 `##` 展开一样,
+除了它们清除的文本从 `parameter` 所包含字符串的末尾开始,而不是开头.
 
 ```bash
 ${parameter%pattern}
 ${parameter%%pattern}
 ```
 
-这些展开和上面的 `#` 和 `##` 展开一样,除了它们清除的文本从 `parameter` 所包含字符串的末尾开始,而不是开头.
-
 ```bash
-[me@linuxbox ~]$ foo=file.txt.zip
-[me@linuxbox ~]$ echo ${foo%.*}
+$ foo=file.txt.zip
+$ echo ${foo%.*}
 file.txt
-[me@linuxbox ~]$ echo ${foo%%.*}
+$ echo ${foo%%.*}
 file
 ```
 
-***
++ 这种形式的展开对 `parameter` 的内容执行查找和替换操作:
 
 ```bash
 ${parameter/pattern/string}
@@ -245,8 +248,6 @@ ${parameter/#pattern/string}
 ${parameter/%pattern/string}
 ```
 
-这种形式的展开对 `parameter` 的内容执行查找和替换操作.
-
 如果找到了匹配通配符 `pattern` 的文本, 则用 `string` 的内容替换它.
 在正常形式下,只有第一个匹配项会被替换掉.在 `//` 形式下,所有的匹配项都会被替换掉.
 ` /# `要求匹配项出现在字符串的开头,而 `/%` 要求匹配项出现在字符串的末尾.
@@ -254,7 +255,7 @@ ${parameter/%pattern/string}
 
 ```bash
 [me@linuxbox~]$ foo=JPG.JPG
-[me@linuxbox ~]$ echo ${foo/JPG/jpg}
+$ echo ${foo/JPG/jpg}
 jpg.JPG
 [me@linuxbox~]$ echo ${foo//JPG/jpg}
 jpg.jpg
@@ -264,7 +265,8 @@ jpg.JPG
 JPG.jpg
 ```
 
-知道 `参数展开` 是件很好的事情. `字符串展开` 操作可以用来替换其它常见命令比方说 `sed` 和 `cut`.
+知道 `参数展开` 是件很好的事情.
+`字符串展开` 操作可以用来替换其它常见命令比方说 `sed` 和 `cut`.
 通过减少使用外部程序,展开提高了脚本的效率.
 
 举例说明, 我们将修改在之前章节中讨论的 `longest-word` 程序,
@@ -295,12 +297,12 @@ done
 下一步,我们将使用 `time` 命令来比较这两个脚本版本的效率:
 
 ```bash
-[me@linuxbox ~]$ time longest-word2 dirlist-usr-bin.txt
+$ time longest-word2 dirlist-usr-bin.txt
 dirlist-usr-bin.txt: 'scrollkeeper-get-extended-content-list' (38 characters)
 real 0m3.618s
 user 0m1.544s
 sys 0m1.768s
-[me@linuxbox ~]$ time longest-word3 dirlist-usr-bin.txt
+$ time longest-word3 dirlist-usr-bin.txt
 dirlist-usr-bin.txt: 'scrollkeeper-get-extended-content-list' (38 characters)
 real 0m0.060s
 user 0m0.056s

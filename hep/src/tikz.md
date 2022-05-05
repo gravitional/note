@@ -100,25 +100,40 @@ p32, `tikz`中, `path`就是一连串的坐标, 在路径的开头可以选择:
 路径构建命令和绘画命令相分离, 与路径构建的选项, 都在路径命令中指定;
 与实际描绘相关的选项, 都在`\draw`,`\fill`等命令的选项中指定.
 
-曲线 33
-`\draw (0,0) .. controls (1,1) and (2,1) .. (2,0);`
++ 曲线 33
 
-圆形
-`(1,1) circle [radius=2pt]`
-`ellipse [x radius=20pt, y radius=10pt]`
+```latex
+\draw (0,0) .. controls (1,1) and (2,1) .. (2,0);
+```
 
-方形
-`\draw (0,0) rectangle (0.5,0.5);`
-`\draw[step=.5cm] (-1.4,-1.4) grid (1.4,1.4);`
++ 圆形:
 
-自定义格式, \tikzset,p35
+```latex
+(1,1) circle [radius=2pt]
+ellipse [x radius=20pt, y radius=10pt]
+```
+
++ 方形:
+
+```latex
+\draw (0,0) rectangle (0.5,0.5);
+\draw[step=.5cm] (-1.4,-1.4) grid (1.4,1.4);
+```
+
+### 自定义格式
+
+\tikzset,p35
 
 ```latex
 help lines/.style={color=blue!50,very thin} %在环境内部任意地方定义格式, 后面可以调用
+
 \tikzset{help lines/.style=very thin} %在文档开头, 定义全局格式
 \tikzset{Karl's grid/.style={help lines,color=blue!50}} %格式可以嵌套
+
 \draw[step=.5cm,gray,very thin] (-1.4,-1.4) grid (1.4,1.4); % 使用 grid 绘制 参考格子
 ```
+
+`\tikzset` 容纳 `<key=value>`列表, 其中不能有空行.
 
 ### 颜色线型等
 
@@ -623,10 +638,12 @@ Decoration markings
 ```
 
 如果我们将此代码用作路径上`2cm`处的`marking`, 则会发生以下情况:
-`pgf`先确定沿路径`2cm`的位置.  然后将坐标系平移到此处并旋转它, 使`x`轴正向与路径相切.  然后创建一个保护用的`scope`, 在内部执行上述代码--最后路径上出现一个叉叉.
+`pgf`先确定沿路径`2cm`的位置.  然后将坐标系平移到此处并旋转它, 使`x`轴正向与路径相切.
+然后创建一个保护用的`scope`, 在内部执行上述代码--最后路径上出现一个叉叉.
 
-`marking`允许在路径上放置一个或多个装饰. 除了后面讲的少数情况, `decoration`摧毁路径输入, 也就是说, 计算完成, 作完装饰之后, 路径就消失了. 一般需要`postaction`来添加装饰.
-`postaction` 表示完成路径绘制之后再进行操作.
+`marking`允许在路径上放置一个或多个装饰.
+除了后面讲的少数情况, `decoration`摧毁路径输入, 也就是说, 计算完成, 作完装饰之后, 路径就消失了.
+一般需要`postaction`来添加装饰, `postaction` 表示完成路径绘制之后再进行操作.
 
 ```latex
 \begin{tikzpicture}[decoration={
@@ -647,7 +664,8 @@ Decoration markings
 
 ### Pics:复用图形组件
 
-p263, `pic`是`picture`的简称. 通过预先定义的图片名字, 可以在指定的地方复用图形. 例如先定义一个海鸥的形状:
+p263, `pic`是`picture`的简称.
+通过预先定义的图片名字, 可以在指定的地方复用图形. 例如先定义一个海鸥的形状:
 
 ```latex
 \tikzset{
@@ -700,13 +718,12 @@ seagull/.pic={
 ```
 
 此`handler`只能对带有`/tikz/`前缀的`key`一起使用, 因此通常应将其用作`TikZ`命令或`\tikzset`命令的选项.
-它使用`<key>`的路径, 并把其中的`/tikz/`替换为`/tikz/pics/`. 最终得到一个`style`, 能够执行`code = some code`.
-大多数情况下, `.pic`handler足以设置`keys`.  但是, 在某些情况下确实需要使用第一个版本:
+它使用`<key>`的路径, 并把其中的`/tikz/`替换为`/tikz/pics/`.
+最终得到一个`style`, 能够执行`code = some code`. 大多数情况下, `.pic`handler足以设置`keys`.
+但是, 在某些情况下确实需要使用第一个版本:
 
 + 当您的图片类型需要设置`foreground`或`background`代码时.
-+ 如果给`key`提供了复杂的参数
-
-例如:
++ 如果给`key`提供了复杂的参数. 例如:
 
 ```latex
 \tikzset{
@@ -719,7 +736,11 @@ seagull/.pic={
 
 这里给`my circle`使用了参数.
 
-+ `<key>/.code n args={<m>}{<代码>}`:传入`m`个参数`{#1}{#2}{#3}...`, `m`为`0~9`, 不能多也不能少, 空格也可以作为参数.
+```latex
+<key>/.code n args={<m>}{<代码>}
+```
+
+传入`m`个参数`{#1}{#2}{#3}...`, `m`为`0~9`, 不能多也不能少, 空格也可以作为参数.
 
 ## 19 Specifying Graphs
 
@@ -941,7 +962,7 @@ page 841 75.4 Loops
     ```latex
     \draw (a3) to [controls=+(45:1.5) and +(135:1.5)] (a3);
     ```
-    
+
     上面使用`+(角度:距离)`的方式指定控制点的坐标, `and`左右的坐标采用相对坐标的形式, 分别相对于路径的`起点`和`终点`.
 
 + 参考 page 33, 可以使用`to`的简称, 即`..`语法以 `曲线` 方式延伸路径:
@@ -1491,14 +1512,20 @@ ref: [为 node 自动添加名称标签](https://zhuanlan.zhihu.com/p/429321732)
 用 `tikz` 绘图, 经常定义 `named node`/`coordinate`.
 但 node 多了之后, 对着输出结果尝试调整绘图时, 难以快速知道某个图形对应的 `node` 的名字.
 
-`tikz-auto-mark-nodes.tex` 提供了 在 node 斜上方自动添加 node 名称的功能 .
+`tikz-auto-mark-nodes.tex` 提供了 在 `node` 斜上方自动添加 `node` 名称的功能 .
 源码见项目 [muzimuzhi/latex-examples](https://github.com/muzimuzhi/latex-examples).
 
 ### 应用示例 1
 
 把它应用于同项目下例子 `tikz-example-flowchar2-fit-a4paper.tex` 的效果:
 
-+ 在导言区添加 `\input tikz-auto-mark-nodes`, 然后给 `tikzpicture` 添加选项 `auto mark`:
++ 在导言区添加
+
+    ```latex
+    \input tikz-auto-mark-nodes 
+    ```
+    
+    然后给 `tikzpicture` 环境添加选项 `auto mark`:
 
     ![流程图](https://pic3.zhimg.com/80/v2-5a0f823ea8c81967a77b258eacbdc9de_720w.jpg)
 
@@ -1538,7 +1565,9 @@ every auto coordinate mark/.style={
 ```
 
 + `pin` 里的文字由 `\tikzAutoMarkText` 控制, 初始定义为 `\tikzNodeName`
-+ 在 `every ... auto mark` 这类选项和 `\tikzAutoMarkText` 的定义中, 可以使用 `\tikzNodeShape` 和 `\tikzNodeName` 来表示/代替当前 `node` 的形状和名称.
+
++ 在 `every ... auto mark` 这类选项和 `\tikzAutoMarkText` 的定义中, 
+可以使用 `\tikzNodeShape` 和 `\tikzNodeName` 来表示/代替当前 `node` 的形状和名称.
 
 ### 应用示例 2
 

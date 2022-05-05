@@ -1,0 +1,5059 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage{xeCJK}% 可以用来实现中文断行
+\usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
+%%%+++++++++++++++++++++++++++++++
+\usepackage{geometry} % 整体页面设置
+\geometry{a4paper} %页面大小是A4纸
+\geometry{top=2cm} %设置版心顶部距离
+\geometry{top=2cm} %设置版心顶部距离
+%\geometry{textheight=22cm}  %设置版心长度
+%\geometry{centering} % 水平、竖直均居中
+\geometry{textwidth=17cm} 
+%%%%%%%%%%%%%%%%%+++++++++++
+\usepackage{eso-pic}
+% 添加图片命令或者背景到每一页的绝对位置，
+% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
+\usepackage{float}%使用[H]选项将浮动题放到确定的位置
+\usepackage{hyperref} %处理交叉引用，在生成的文档中插入超链接
+%\usepackage[colorlinks,linkcolor=blue]{hyperref} 
+\usepackage{graphicx} %插入图片，基于graphics，给 \includegraphics 命令提供了key-value 形式的接口，比 graphics 更好用
+%%%+++++++++++++++++++++++++++++++
+\usepackage{amsmath,amssymb,amsfonts} % 数学字体
+\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
+% 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
+%%%+++++++++++++++++++++++++++++++
+\usepackage{siunitx} % 国际单位制
+\usepackage{physics} % 物理包
+\usepackage{braket} % 狄拉克 bra-ket notation
+\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
+% \usepackage{simplewick} % 在式子上下画 Wick 收缩的包
+\usepackage{makeidx}% 用来创建 indexes 的标准包
+\usepackage{multirow} % 创建具有多行的 tabular
+%\usepackage{tikz-feynman}  % 画费曼图用
+%\usepackage{tikz} %画矢量图用
+\usepackage{mathtools}% 定义配对的数学符号
+%%++++++++++++++++++++++++++++++++++++
+% 设置英文字体
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Roman}
+% 设置中文字体
+\setCJKmainfont[Mapping=tex-text]{Noto Serif CJK SC}
+\setCJKsansfont[Scale=0.7,Mapping=tex-text]{Noto Sans CJK SC}
+\setCJKmonofont[Scale=0.7]{Noto Sans Mono CJK SC}
+%设置数学字体
+\usepackage{unicode-math}%在其他字体包如amsmath之后调用
+\setmathfont{XITS Math}
+%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
+% DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+%%%+++++++++++++++++++++++++++++++
+\usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
+\usepackage{xcolor} 
+% xcolor 包从 color 包的基本实现开始，提供了独立于驱动的接口，可以设置 color tints, shades, tones, 或者任意颜色的混合
+% 可以用名字指定颜色，颜色可以混合, \color{red!30!green!40!blue}
+%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
+%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
+%%%+++++++++++++++++++++++++++++++
+\usepackage{listings} % 在LaTex中添加代码高亮
+\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色，给代码着色用
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
+\lstdefinestyle{codestyle1}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
+%*号版本可以把上下标放在符号的正上方/正下方
+%\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\DeclareMathOperator{\arctanh}{arctanh}
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\newcommand*{\sla}{\slashed}% feynman slash
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+gpd light–cone integral
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Section
+光锥动量参数化
+\end_layout
+
+\begin_layout Subsection
+PDF 模型
+\end_layout
+
+\begin_layout Standard
+在光锥坐标中,动量的各分量定义为:
+\begin_inset Formula 
+\[
+k^{\pm}=\frac{1}{\sqrt{2}}\left(k^{0}\pm k^{3}\right),\quad\boldsymbol{k}_{\perp}=\left(k_{1},k_{2}\right)
+\]
+
+\end_inset
+
+两个四矢量的不变内积为
+\begin_inset Formula 
+\[
+kp=k^{+}p^{-}+k^{-}p^{+}-k_{\perp}p_{\perp}
+\]
+
+\end_inset
+
+四矢量模方为
+\begin_inset Formula 
+\[
+k^{2}=2k^{+}k^{-}-k_{\perp}^{2}
+\]
+
+\end_inset
+
+这样 Jacobian 因子为 
+\begin_inset Formula $1$
+\end_inset
+
+。
+\begin_inset Formula $\dd^{4}k=\dd k^{+}\dd k^{-}\dd^{2}k_{\perp}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+salamu 使用的光锥坐标记号像差
+\begin_inset Formula $1/\sqrt{2}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+k^{\pm}=\left(k^{0}\pm k^{3}\right),\quad\boldsymbol{k}_{\perp}=\left(k_{1},k_{2}\right)
+\]
+
+\end_inset
+
+内积为
+\begin_inset Formula 
+\[
+kp=\frac{1}{2}\left(k^{+}p^{-}+k^{-}p^{+}\right)-k_{\perp}p_{\perp}
+\]
+
+\end_inset
+
+四矢量模方为
+\begin_inset Formula 
+\[
+k^{2}=k^{+}k^{-}-k_{\perp}^{2}
+\]
+
+\end_inset
+
+Jacobian 因子为
+\begin_inset Formula $1/2$
+\end_inset
+
+。
+\begin_inset Formula $\dd^{4}k=\frac{1}{2}\dd k^{+}\dd k^{-}\dd^{2}k_{\perp}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+GPD对称参数化
+\end_layout
+
+\begin_layout Standard
+GPD中 歪斜度（skewness）不等于 
+\begin_inset Formula $0$
+\end_inset
+
+ 时，
+\begin_inset Formula $\Delta$
+\end_inset
+
+为类空矢量，
+\begin_inset Formula 
+\[
+\Delta=p-p^{\prime},\quad t=\Delta^{2},\quad Q^{2}=-q^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/pasted5.png
+	scale 35
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/pasted6.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+GPD动量的两种参数化
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算出各动量在光锥坐标下的表达式，如果使用对称化参数
+\begin_inset Formula $\left(x,\xi\right)$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+0<\xi=\frac{\left(p-p\right)^{+}}{\left(p+p\right)^{+}}<1
+\]
+
+\end_inset
+
+初末态动量的具体形式为：
+\begin_inset Formula 
+\begin{align*}
+ & \Delta\equiv\left(\xi\left(2P^{+}\right),\frac{t+\sbf\Delta_{\perp}^{2}}{4\xi P^{+}},\sbf\Delta_{\perp}\right)\\
+ & p\equiv\left(\left(1+\xi\right)P^{+},\frac{M^{2}+\sbf\Delta_{\perp}^{2}/4}{2\left(1+\xi\right)P^{+}},\frac{\sbf\Delta_{\perp}}{2}\right)\\
+ & k\equiv\left(\left(y+\xi\right)P^{+},k^{-},\sbf k_{\perp}+\frac{\sbf\Delta_{\perp}}{2}\right),\\
+ & p^{\prime}\equiv\left(\left(1-\xi\right)P^{+},\frac{M^{2}+\sbf\Delta_{\perp}^{2}/4}{2\left(1-\xi\right)P^{+}},-\frac{\sbf\Delta_{\perp}}{2}\right)\\
+ & k^{\prime}\equiv\left(\left(y-\xi\right)P^{+},k^{\prime-},\sbf k_{\perp}-\frac{\sbf\Delta_{\perp}}{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+t & =\frac{-4\xi^{2}M^{2}}{1-\xi^{2}}+\frac{-\sbf\Delta_{T}^{2}}{1-\xi^{2}}\\
+\sbf\Delta_{\perp}^{2} & =-4M^{2}\xi^{2}+\left(1-\xi^{2}\right)\left(-t\right)
+\end{align*}
+
+\end_inset
+
+在卷积模型中，要求中间态粒子 在壳，即 
+\begin_inset Formula $0<k^{+}<p^{+}$
+\end_inset
+
+，也就是 
+\begin_inset Formula $-\xi<y<1$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Example
+对于 Meson Rainbow 图：传播子的形式为 
+\begin_inset Formula $1/\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)$
+\end_inset
+
+，
+\begin_inset Formula $k^{-}$
+\end_inset
+
+的零点为
+\begin_inset Formula 
+\[
+k^{-}=\frac{\sbf k_{\perp}^{2}+m_{\phi}^{2}-i\varepsilon}{2k^{+}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $k^{-}$
+\end_inset
+
+ 复平面上， 极点处于
+\begin_inset Formula $x$
+\end_inset
+
+轴上方还是下方，取决于 
+\begin_inset Formula $k^{-}$
+\end_inset
+
+前的系数，
+\begin_inset Formula 
+\begin{align*}
+k^{2} & \Rightarrow2\left(y+\xi\right)P^{+}k^{-}\\
+\left(k-\Delta\right)^{2} & \Rightarrow2\left(y-\xi\right)P^{+}k^{-}\\
+\left(p-k\right)^{2} & \Rightarrow2\left(1-y\right)P^{+}k^{-}
+\end{align*}
+
+\end_inset
+
+所以 y 的取值区间分为
+\begin_inset Formula $\left(-\xi,1\right)$
+\end_inset
+
+。积分的奇异点在传播子同时取 pole 的地方，即
+\begin_inset Formula 
+\[
+\begin{cases}
+y+\xi=y-\xi=1-y=0 & \quad\Rightarrow\text{无解}\\
+y+\xi=y-\xi=0 & \quad\Rightarrow\left\{ y=0,\xi=0\right\} \\
+y+\xi=1-y=0 & \quad\Rightarrow\left\{ y=1,\xi=-1\right\} \\
+y-\xi=1-y=0 & \quad\Rightarrow\left\{ y=1,\xi=1\right\} 
+\end{cases}
+\]
+
+\end_inset
+
+所以极点的位置是 
+\begin_inset Formula $\delta\left(y\right)\delta\left(\xi\right)$
+\end_inset
+
+，
+\begin_inset Formula $\delta\left(1-y\right)\delta\left(1-\xi\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于费曼图：光子落在重子中间态上，即彩虹图 F1，F2，此时介子作为旁观部分子，参数化时选择介子动量为 
+\begin_inset Formula $k^{+}=\left(1-y\right)P^{+}$
+\end_inset
+
+，则：
+\begin_inset Formula 
+\begin{align*}
+k^{+}k^{-} & \Rightarrow\left(1-y\right)P^{+}k^{-}\\
+\left(p-k\right)^{2} & \Rightarrow\left(y+\xi\right)P^{+}k^{-}\\
+\left(p^{\prime}-k\right)^{2} & \Rightarrow\left(y-\xi\right)P^{+}k^{-}
+\end{align*}
+
+\end_inset
+
+所以 
+\begin_inset Formula $y$
+\end_inset
+
+ 的取值区间也是 
+\begin_inset Formula $\left(-\xi,1\right)$
+\end_inset
+
+。类似地，积分的奇点在 
+\begin_inset Formula $\delta\left(y\right)\delta\left(\xi\right)$
+\end_inset
+
+ 或 
+\begin_inset Formula $\delta\left(1-y\right)\delta\left(1-\xi\right)$
+\end_inset
+
+ 处。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+传播子极点的位置：
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/pasted9.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+动量分数
+\begin_inset Formula $x$
+\end_inset
+
+或
+\begin_inset Formula $y$
+\end_inset
+
+在不同区间的部分子诠释。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+传播子
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+系数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+区间
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y+\xi\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-\xi\right]P\left[\xi\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(k-\Delta\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y-\xi\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-\xi\right]M\left[\xi\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(p-k\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-\xi\right]M\left[\xi\right]M\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+传播子
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+系数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+区间
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y+\xi\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-\xi\right]P\left[1-2\xi\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(k+\Delta\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y+3\xi\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-3\xi\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(p-k\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-\xi\right]M\left[1-2\xi\right]M\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(p^{\prime}-k\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(y+2\xi-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[-\xi\right]M\left[1-2\xi\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+设
+\begin_inset Formula $0<\xi<1$
+\end_inset
+
+，在分裂函数的区间中，传播子中
+\begin_inset Formula $k^{-}$
+\end_inset
+
+的系数。pole 相对于横轴的位置取决于 
+\begin_inset Formula $\frac{-i\varepsilon}{\text{系数}}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+对于分裂函数，
+\begin_inset Formula $\left(y+\xi\right)>0$
+\end_inset
+
+，即只用考虑后面两个区间，
+\begin_inset Formula $\left(-\xi,\xi\right)$
+\end_inset
+
+，
+\begin_inset Formula $\left(\xi,1\right)$
+\end_inset
+
+。传播子
+\begin_inset Formula $\left(p^{\prime}-k\right)^{2}$
+\end_inset
+
+的系数
+\begin_inset Formula $\left(y+2\xi-1\right)$
+\end_inset
+
+的区间为
+\begin_inset Formula $\left(-\xi,1-2\xi\right)$
+\end_inset
+
+，
+\begin_inset Formula $\left(1-2\xi,1\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+非对称参数化
+\end_layout
+
+\begin_layout Standard
+ref:
+\begin_inset CommandInset href
+LatexCommand href
+name "arXiv:2101.01826"
+target "https://arxiv.org/abs/2101.01826"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/gpd-parton-diagram-asymmetric.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+非对称参数化
+\begin_inset Formula $\left(y,\zeta\right)$
+\end_inset
+
+为，
+\begin_inset Formula 
+\begin{align*}
+ & p_{1}\equiv\left(p_{1}^{+},\frac{M^{2}}{2p_{1}^{+}},0\right)\\
+ & k_{1}\equiv\left(Yp_{1}^{+},k^{-},\sbf k_{\perp}\right),\\
+ & p_{2}\equiv\left(\left(1-\zeta\right)p_{1}^{+},\frac{M^{2}+\sbf\Delta_{\perp}^{2}}{2p_{1}^{+}\left(1-\zeta\right)},-\sbf\Delta_{\perp}\right)\\
+ & k_{2}\equiv\left(\left(Y-\zeta\right)p_{1}^{+},k^{-}-\frac{t+\sbf\Delta_{\perp}^{2}}{2\zeta p_{1}^{+}},\sbf k_{\perp}-\sbf\Delta_{\perp}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Delta & \equiv\left(\zeta p_{1}^{+},\frac{t+\sbf\Delta_{\perp}^{2}}{2\zeta p_{1}^{+}},\sbf\Delta_{T}\right)\\
+\sbf\Delta_{\perp}^{2} & =-\left[\zeta^{2}M^{2}+\left(1-\zeta\right)t\right]\\
+t & =\frac{-1}{1-\zeta}\left(\zeta^{2}M^{2}+\sbf\Delta_{T}^{2}\right)
+\end{align*}
+
+\end_inset
+
+传播子的表达式为：
+\end_layout
+
+\begin_layout Example
+介子传播子
+\begin_inset Formula $k$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+k^{2}-m_{\phi}^{2}+i\varepsilon=2k^{+}k^{-}-\sbf k_{\perp}^{2}-m_{\phi}^{2}=2k^{-}Yp_{1}^{+}-\left(\sbf k_{\perp}^{2}+m_{\phi}^{2}\right)+i\varepsilon
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+k^{-}=\frac{\sbf k_{\perp}^{2}+m_{\phi}^{2}-i\varepsilon}{2Yp_{1}^{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+介子传播子
+\begin_inset Formula $k-\Delta$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+k-\Delta & =\left(\left(Y-\zeta\right)p_{1}^{+},k^{-}-\frac{t+\sbf\Delta_{\perp}^{2}}{2\zeta p_{1}^{+}},\sbf k_{\perp}-\sbf\Delta_{\perp}\right)\\
+\left(k-\Delta\right)^{2}-m_{\phi}^{2}+i\varepsilon & =2\left(Y-\zeta\right)p_{1}^{+}\left(k^{-}-\frac{t+\sbf\Delta_{\perp}^{2}}{2\zeta p_{1}^{+}}\right)-\left(\sbf k_{\perp}-\sbf\Delta_{\perp}\right)^{2}-m_{\phi}^{2}\\
+ & =2\left(Y-\zeta\right)p_{1}^{+}k^{-}-2\left(Y-\zeta\right)\frac{t+\sbf\Delta_{\perp}^{2}}{2\zeta}-\sbf k_{\perp}^{2}-\sbf\Delta_{\perp}^{2}+2\sbf k_{\perp}\cdot\sbf\Delta_{\perp}-m_{\phi}^{2}\\
+ & =2\left(Y-\zeta\right)p_{1}^{+}k^{-}-\left(Y-\zeta\right)\left(\zeta M^{2}-t\right)-\sbf k_{\perp}^{2}-\sbf\Delta_{\perp}^{2}+2\sbf k_{\perp}\cdot\sbf\Delta_{\perp}-m_{\phi}^{2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+k^{-}=\frac{\cdots-i\varepsilon}{2\left(Y-\zeta\right)p_{1}^{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+重子传播子
+\begin_inset Formula $p-k$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+p-k & =\left(\left(1-Y\right)p_{1}^{+},\frac{M^{2}}{2p_{1}^{+}}-k^{-},-\sbf k_{\perp}\right)\\
+\left(p-k\right)^{2}-M_{B}^{2}+i\varepsilon & =2\left(1-Y\right)p_{1}^{+}\left(\frac{M^{2}}{2p_{1}^{+}}-k^{-}\right)-\sbf k_{\perp}^{2}-M_{B}^{2}\\
+ & =-2\left(1-Y\right)p_{1}^{+}k^{-}+\left(1-Y\right)M^{2}-\sbf k_{\perp}^{2}-M_{B}^{2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+k^{-}=\frac{\cdots-i\varepsilon}{2\left(Y-1\right)p_{1}^{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+重子传播子
+\begin_inset Formula $p^{\prime}-k$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+p^{\prime}-k & =\left(\left(1-Y-\zeta\right)p_{1}^{+},\frac{M^{2}+\sbf\Delta_{\perp}^{2}}{2p_{1}^{+}\left(1-\zeta\right)}-k^{-},-\sbf k_{\perp}-\sbf\Delta_{\perp}\right)\\
+\left(p-k\right)^{2}-M_{B}^{2}+i\varepsilon & =2\left(1-Y-\zeta\right)p_{1}^{+}\left(\frac{M^{2}+\sbf\Delta_{\perp}^{2}}{2p_{1}^{+}\left(1-\zeta\right)}-k^{-}\right)-\left(\sbf k_{\perp}+\sbf\Delta_{\perp}\right)^{2}-M_{B}^{2}\\
+ & =-2\left(1-Y-\zeta\right)p_{1}^{+}k^{-}+\left(1-Y-\zeta\right)\left(\left(1+\zeta\right)M^{2}-t\right)-\sbf k_{\perp}^{2}-\sbf\Delta_{\perp}^{2}-2\sbf k_{\perp}\cdot\sbf\Delta_{\perp}-M_{B}^{2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+k^{-}=\frac{\cdots-i\varepsilon}{2\left(Y+\zeta-1\right)p_{1}^{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+传播子极点的位置：
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+传播子
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+系数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+区间
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Y$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[0\right]P\left[\zeta\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(k-\Delta\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(Y-\zeta\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[0\right]M\left[\zeta\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(p-k\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(Y-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[0\right]M\left[\zeta\right]M\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+传播子
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+系数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+区间
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Y$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[0\right]P\left[1-\zeta\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(p-k\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(Y-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[0\right]M\left[1-\zeta\right]M\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(p^{\prime}-k\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(Y+\zeta-1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[-1\right]M\left[0\right]M\left[1-\zeta\right]P\left[1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+设
+\begin_inset Formula $0<\zeta<1$
+\end_inset
+
+，在分裂函数的区间中，传播子中
+\begin_inset Formula $k^{-}$
+\end_inset
+
+系数的正负。pole 相对于横轴的位置取决于 
+\begin_inset Formula $\frac{-i\varepsilon}{\text{系数}}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+广义部分子分布
+\end_layout
+
+\begin_layout Section
+动量代换关系
+\end_layout
+
+\begin_layout Example
+质量组合：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & M_{S}=M_{N}+M_{B},\quad M_{D}=M_{B}-M_{N}\\
+ & M_{N}=\left(M_{S}-M_{D}\right)/2,\quad M_{B}=\left(M_{S}+M_{D}\right)/2,\\
+ & M_{N}M_{B}=\frac{1}{4}\left(M_{S}^{2}-M_{D}^{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+将动量内积用传播子表示：
+\begin_inset Formula 
+\begin{align*}
+ & \Delta=p-p^{\prime},\quad P=\frac{p+p^{\prime}}{2}\\
+ & \Delta^{+}=\xi2P^{+},\quad p^{+}=\left(1+\xi\right)P^{+},\quad k^{+}=\left(y+\xi\right)P^{+}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & k^{2}=D_{\phi}+m_{\phi}^{2},\\
+ & 2kp=k^{2}-\left[\left(p-k\right)^{2}-M_{N}^{2}\right]=D_{\phi}\left(k\right)+m_{\phi}^{2}-\left[D_{B}\left(p-k\right)+M_{B}^{2}-M_{N}^{2}\right]\\
+ & 2kp^{\prime}=k^{2}-\left[\left(p^{\prime}-k\right)^{2}-M_{N}^{2}\right]=D_{\phi}\left(k\right)+m_{\phi}^{2}-\left[D_{B}\left(p^{\prime}-k\right)+M_{B}^{2}-M_{N}^{2}\right]\\
+ & 2k\Delta=D_{\phi}\left(k\right)-\left[D_{\phi}\left(k-\Delta\right)-\Delta^{2}\right]=\left[D_{\phi}\left(k+\Delta\right)-\Delta^{2}\right]-D_{\phi}\left(k\right)
+\end{align*}
+
+\end_inset
+
+考虑到我们加入了正规子
+\begin_inset Formula $D_{\Lambda}$
+\end_inset
+
+，并且
+\begin_inset Formula $D_{\Lambda}$
+\end_inset
+
+一般次数比较高，所以将分子中的动量内积优先与
+\begin_inset Formula $D_{\Lambda}$
+\end_inset
+
+消去。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+以 
+\begin_inset Formula $D_{\Lambda}\left(k\right),D_{\Lambda}\left(k-\Delta\right),D_{B}\left(p-k\right)$
+\end_inset
+
+ 为基，
+\begin_inset Formula 
+\begin{align*}
+ & 2k\Delta=D_{\phi}\left(k\right)-\left[D_{\phi}\left(k-\Delta\right)-\Delta^{2}\right]\\
+ & 2kp=D_{\Lambda}\left(k\right)+\Lambda^{2}-\left[D_{B}\left(p-k\right)+M_{B}^{2}-M_{N}^{2}\right]\\
+ & 2kp^{\prime}=D_{\Lambda}\left(k-\Delta\right)+\Lambda^{2}-\Delta^{2}-\left[D_{B}\left(p-k\right)+M_{B}^{2}-M_{N}^{2}\right]
+\end{align*}
+
+\end_inset
+
+以
+\begin_inset Formula $D_{\Lambda}\left(k\right),D_{B}\left(p-k\right),D_{B}\left(p^{\prime}-k\right)$
+\end_inset
+
+为基，
+\begin_inset Formula 
+\begin{align*}
+ & 2k\Delta=D_{B}\left(p^{\prime}-k\right)-D_{B}\left(p-k\right)\\
+ & 2kp=D_{\Lambda}\left(k\right)+\Lambda^{2}-\left[D_{B}\left(p-k\right)+M_{B}^{2}-M_{N}^{2}\right]\\
+ & 2kp^{\prime}=D_{\Lambda}\left(k\right)+\Lambda^{2}-\left[D_{B}\left(p^{\prime}-k\right)+M_{B}^{2}-M_{N}^{2}\right]
+\end{align*}
+
+\end_inset
+
+以
+\begin_inset Formula $D_{\Lambda}\left(k\right),D_{\Lambda}\left(k+\Delta\right),D_{B}\left(p^{\prime}-k\right)$
+\end_inset
+
+为基，
+\begin_inset Formula 
+\begin{align*}
+ & 2k\Delta=\left[D_{\Lambda}\left(k+\Delta\right)-\Delta^{2}\right]-D_{\Lambda}\left(k\right)\\
+ & 2kp^{\prime}=D_{\Lambda}\left(k\right)+\Lambda^{2}-\left[D_{B}\left(p^{\prime}-k\right)+M_{B}^{2}-M_{N}^{2}\right]\\
+ & 2kp=D_{\Lambda}\left(k+\Delta\right)+\Lambda^{2}-\Delta^{2}-\left[D_{B}\left(p^{\prime}-k\right)+M_{B}^{2}-M_{N}^{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+k,k+q,p-k
+\end_layout
+
+\begin_layout Example
+积分在
+\begin_inset Formula $\left\{ \Lambda,\phi\right\} $
+\end_inset
+
+处的留数：
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\Lambda}\left(k\right)D_{\Lambda}\left(k+q\right)D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)D_{B}\left(p-k\right)}@\left\{ \Lambda\right\} 
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Res=\frac{8\left(y+\xi\right)^{2}}{P^{+}\left(\Lambda^{2}-m_{\phi}^{2}\right)}\frac{1}{ABC}
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula 
+\begin{align*}
+A & =4k_{\perp}^{2}\xi-4y\Delta_{\perp}k_{\perp}+\xi\left[4{\color{blue}\Lambda^{2}}-4y^{2}M_{N}^{2}+\Delta^{2}\left(y^{2}-1\right)\right]\\
+B & =4k_{\perp}^{2}\xi-4y\Delta_{\perp}k_{\perp}+\xi\left[4{\color{blue}\Lambda^{2}}-4y^{2}M_{N}^{2}+\Delta^{2}\left(y^{2}-1\right)\right]-2\left(y+\xi\right)\left({\color{blue}\Lambda^{2}}-m_{\phi}^{2}\right)\\
+-C & =4k_{\perp}^{2}\left(1+\xi\right)+4\overline{y}\Delta_{\perp}k_{\perp}+4M_{B}^{2}\left(y+\xi\right)+\overline{y}\left[\overline{y}\overline{\xi}\left(4M_{N}^{2}-\Delta^{2}\right)+4\left({\color{blue}\Lambda^{2}}-M_{N}^{2}\right)\right]
+\end{align*}
+
+\end_inset
+
+同理，在
+\begin_inset Formula $\Lambda$
+\end_inset
+
+处的留数只需作代换 
+\begin_inset Formula $m_{\phi}\leftrightarrow\Lambda$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+A & =4k_{\perp}^{2}\xi-4y\Delta_{\perp}k_{\perp}+\xi\left[4{\color{blue}m_{\phi}^{2}}-4y^{2}M_{N}^{2}+\Delta^{2}\left(y^{2}-1\right)\right]\\
+-B & =4k_{\perp}^{2}\xi-4y\Delta_{\perp}k_{\perp}+\xi\left[4{\color{blue}m_{\phi}^{2}}-4y^{2}M_{N}^{2}+\Delta^{2}\left(y^{2}-1\right)\right]+2\left(y+\xi\right)\left(\Lambda^{2}-{\color{blue}m_{\phi}^{2}}\right)\\
+-C & =4k_{\perp}^{2}\left(1+\xi\right)+4\overline{y}\Delta_{\perp}k_{\perp}+4M_{B}^{2}\left(y+\xi\right)+\overline{y}\left[\overline{y}\overline{\xi}\left(4M_{N}^{2}-\Delta^{2}\right)+4\left({\color{blue}m_{\phi}^{2}}-M_{N}^{2}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+fasdf
+\begin_inset Formula 
+\[
+\frac{y^{2}\zeta^{4}}{\left(-2p^{+}\right)\left(\overline{\Lambda}^{2}\right)}\left(\frac{-1}{\overline{y}D_{\Lambda B}\Omega_{B\Lambda t}\Omega_{B\Lambda t}^{\prime}}+\frac{1}{\overline{y}D_{\phi B}\Omega_{B\phi t}\Omega_{B\phi t}^{\prime}}\right)
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula 
+\begin{align*}
+ & \overline{\Lambda}^{2}=\Lambda^{2}-m_{\phi}^{2},\quad\Omega_{\Lambda}^{2}=\Lambda^{2}+k_{\perp}^{2},\quad\Omega_{\phi}^{2}=m_{\phi}^{2}+k_{\perp}^{2}\\
+ & D_{\phi B}=\frac{yM_{B}^{2}+k_{\perp}^{2}-2yk_{\perp}p_{\perp}+\left(1-y\right)m_{\phi}^{2}+y\left(y-1\right)M_{N}^{2}+y^{2}p_{\perp}^{2}}{-\overline{y}}
+\end{align*}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{align*}
+ & \Omega_{B\phi\perp}=2\left(p^{+}\right)^{2}y\left(1-\zeta y\right)+\zeta\left(m_{\phi}^{2}+k_{\perp}^{2}\right)\\
+ & \Omega_{B\Lambda\perp}=2\left(p^{+}\right)^{2}y\left(1-\zeta y\right)+\zeta\left(\Lambda^{2}+k_{\perp}^{2}\right)\\
+ & \Omega_{B\phi\perp}^{\prime}=2\left(p^{+}\right)^{2}y\left(1-\zeta y\right)+\zeta\left(m_{\phi}^{2}+k_{\perp}^{2}\right)-y\zeta^{2}\left(m_{\phi}^{2}-\Lambda^{2}\right)\\
+ & \Omega_{B\Lambda\perp}^{\prime}=2\left(p^{+}\right)^{2}y\left(1-\zeta y\right)+\zeta\left(\Lambda^{2}+k_{\perp}^{2}\right)-y\zeta^{2}\left(\Lambda^{2}-m_{\phi}^{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+积分在
+\begin_inset Formula $\left\{ B\right\} $
+\end_inset
+
+处的留数之和
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\Lambda}\left(k\right)D_{\Lambda}\left(k+q\right)D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)D_{B}\left(p-k\right)}@\left\{ B\right\} 
+\]
+
+\end_inset
+
+用留数定理得到积分结果是，
+\begin_inset Formula 
+\[
+\frac{-\zeta^{4}\overline{y}}{2p^{+}D_{\Lambda B}D_{\phi B}D_{B\phi\perp}D_{B\Lambda\perp}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & D_{B\phi\perp}=-\left(2\overline{y}\overline{\zeta y}\left(p^{+}\right)^{2}+\zeta\overline{\zeta y}M_{B}^{2}+\zeta\left(\overline{y}\overline{\zeta y}M_{N}^{2}-\zeta\overline{y}m_{\phi}^{2}+\overline{\zeta}k_{\perp}^{2}-2\overline{\zeta y}k_{\perp}p_{\perp}+y\overline{\zeta y}p_{\perp}^{2}\right)\right)\\
+ & D_{B\Lambda\perp}=-\left(2\overline{y}\overline{\zeta y}\left(p^{+}\right)^{2}+\zeta\overline{\zeta y}M_{B}^{2}+\zeta\left(\overline{y}\overline{\zeta y}M_{N}^{2}-\zeta\overline{y}\Lambda^{2}+\overline{\zeta}k_{\perp}^{2}-2\overline{\zeta y}k_{\perp}p_{\perp}+y\overline{\zeta y}p_{\perp}^{2}\right)\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{y}=1-y$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\zeta}=1-\zeta$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\zeta y}=1-\zeta y$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+k,k+q
+\end_layout
+
+\begin_layout Example
+积分在
+\begin_inset Formula $\left\{ \Lambda,\phi\right\} $
+\end_inset
+
+处的留数之和
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\Lambda}\left(k\right)D_{\Lambda}\left(k+q\right)D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)}@\left\{ \Lambda,\phi\right\} 
+\]
+
+\end_inset
+
+结果是
+\begin_inset Formula 
+\[
+\frac{\zeta^{5}y\overline{\zeta y}\left(-\zeta\left(\Omega\Lambda^{2}+\Omega\phi^{2}\right)-4\left(p^{+}\right)^{2}y\overline{\zeta y}\right)}{\left(2p^{+}\right)\Omega_{B\Lambda t}\Omega_{B\Lambda t}^{\prime}\Omega_{B\phi t}\Omega_{B\phi t}^{\prime}}
+\]
+
+\end_inset
+
+与上面积分
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\Lambda}\left(k\right)D_{\Lambda}\left(k+q\right)D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)D_{B}\left(p-k\right)}@\left\{ \Lambda,\phi\right\} 
+\]
+
+\end_inset
+
+在
+\begin_inset Formula $D_{\Lambda B}\to0$
+\end_inset
+
+，
+\begin_inset Formula $D_{\phi B}\to0$
+\end_inset
+
+的结果相差为
+\begin_inset Formula $-y/\overline{y}$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+ & \frac{y^{2}\zeta^{4}}{\left(-2p^{+}\right)\left(\overline{\Lambda}^{2}\right)}\left(\frac{-1}{\overline{y}D_{\Lambda B}\Omega_{B\Lambda t}\Omega_{B\Lambda t}^{\prime}}+\frac{1}{\overline{y}D_{\phi B}\Omega_{B\phi t}\Omega_{B\phi t}^{\prime}}\right)\\
+= & \frac{y}{-\overline{y}}\frac{\zeta^{5}y\overline{\zeta y}\left(-\zeta\left(\Omega\Lambda^{2}+\Omega\phi^{2}\right)-4\left(p^{+}\right)^{2}y\overline{\zeta y}\right)}{\left(2p^{+}\right)\Omega_{B\Lambda t}\Omega_{B\Lambda t}^{\prime}\Omega_{B\phi t}\Omega_{B\phi t}^{\prime}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \int\dd k^{-}\frac{1}{D_{\Lambda}\left(k\right)D_{\Lambda}\left(k+q\right)D_{B}\left(p-k\right)}@\left\{ \Lambda\right\} =\frac{-\zeta^{2}}{\left(2p^{+}\right)\Omega_{B\Lambda\perp}}\frac{y}{\overline{y}D_{\Lambda B}}\\
+ & \int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)D_{B}\left(p-k\right)}@\left\{ \phi\right\} =\frac{-\zeta^{2}}{\left(2p^{+}\right)\Omega_{B\phi\perp}}\frac{y}{\overline{y}D_{\phi B}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+积分在 
+\begin_inset Formula $\Lambda,\phi$
+\end_inset
+
+ 处的留数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \int\dd k^{-}\frac{1}{D_{\Lambda}\left(k\right)D_{\Lambda}\left(k+q\right)}@\left\{ \Lambda\right\} =\frac{-\zeta^{2}}{\left(2p^{+}\right)\Omega_{B\Lambda\perp}}\\
+ & \int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)}@\left\{ \phi\right\} =\frac{-\zeta^{2}}{\left(2p^{+}\right)\Omega_{B\phi\perp}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \Omega_{B\phi\perp}=2\left(p^{+}\right)^{2}y\left(\zeta y-1\right)-\zeta\left(m_{\phi}^{2}+k_{\perp}^{2}\right)\\
+ & \Omega_{B\Lambda\perp}=2\left(p^{+}\right)^{2}y\left(\zeta y-1\right)-\zeta\left(\Lambda^{2}+k_{\perp}^{2}\right)\\
+ & \Omega_{B\phi\perp}^{\prime}=2\left(p^{+}\right)^{2}y\left(\zeta y-1\right)-\zeta\left(m_{\phi}^{2}+k_{\perp}^{2}\right)+y\zeta^{2}\left(m_{\phi}^{2}-\Lambda^{2}\right)\\
+ & \Omega_{B\Lambda\perp}^{\prime}=2\left(p^{+}\right)^{2}y\left(\zeta y-1\right)-\zeta\left(\Lambda^{2}+k_{\perp}^{2}\right)+y\zeta^{2}\left(\Lambda^{2}-m_{\phi}^{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+部分子分布
+\end_layout
+
+\begin_layout Section
+光锥收敛项
+\end_layout
+
+\begin_layout Subsection
+奇异性分析
+\end_layout
+
+\begin_layout Standard
+首先我们推导了公式，
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\int\dd k^{-}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right)
+\]
+
+\end_inset
+
+这个式子理解为，当
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+时，被积式变成
+\begin_inset Formula $-\Omega_{\phi}+i\varepsilon$
+\end_inset
+
+，积分区间无穷大，结果是发散的。而对于
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)}=\int\dd k^{-}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)\left[2\left(k^{+}+q^{+}\right)\left(k^{-}+q^{-}\right)-\Omega_{q\phi}+i\varepsilon\right]}
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $k^{+}$
+\end_inset
+
+等于零时，积分变成，
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{\left(-\Omega_{\phi}+i\varepsilon\right)\left[2q^{+}k^{-}-\Omega_{q\phi}^{\prime}+i\varepsilon\right]}
+\]
+
+\end_inset
+
+可看到类似的结构。按照上面的公式，这个积分的结果大约是
+\begin_inset Formula 
+\[
+\sim\left(\pi i\right)\log\left(\frac{\Omega_{q\phi}^{\prime}}{\mu^{2}}\right)\delta\left(q^{+}\right)
+\]
+
+\end_inset
+
+我们假设
+\begin_inset Formula $q^{+}\neq0$
+\end_inset
+
+，所以这个积分是等于零的。也就是当
+\begin_inset Formula $q^{+}\neq0$
+\end_inset
+
+时，这个积分不会产生正比于
+\begin_inset Formula $\delta\left(k^{+}\right)$
+\end_inset
+
+的项。所以它不会发散。或者简单地说，两个传播子的
+\begin_inset Formula $\delta$
+\end_inset
+
+的位置不一样，一个是
+\begin_inset Formula $\delta\left(k^{+}\right)$
+\end_inset
+
+，一个是
+\begin_inset Formula $\delta\left(k^{+}+q^{+}\right)$
+\end_inset
+
+，只要
+\begin_inset Formula $q^{+}\neq0$
+\end_inset
+
+，就无法同时满足，所以不会产生
+\begin_inset Formula $\delta$
+\end_inset
+
+项。所以在提取
+\begin_inset Formula $\delta$
+\end_inset
+
+项的时候，只需要查看具有重叠
+\begin_inset Formula $\delta$
+\end_inset
+
+位置的传播子结构。所以只能是
+\begin_inset Formula 
+\[
+\frac{1}{D_{\Lambda}\left(k\right)D_{\phi}\left(k\right)},\quad\frac{1}{D_{\Lambda}\left(k+q\right)D_{\phi}\left(k+q\right)}
+\]
+
+\end_inset
+
+这种类型的。
+\series bold
+其他的收敛的情形直接用留数定理计算，发散的项目留数为零，会自动略去，所以只需要提取出正比于
+\begin_inset Formula $\delta$
+\end_inset
+
+的项即可。
+\end_layout
+
+\begin_layout Standard
+首先把分子上的动量标量积换成传播子的线性组合，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & 2kp=-\left(p-k\right)^{2}+M_{N}^{2}+k^{2}=D_{\phi}\left(k\right)-D_{B}\left(p-k\right)+m_{\phi}^{2}-M_{B}^{2}+M_{N}^{2}\\
+ & 2kp^{\prime}=-\left(p^{\prime}-k\right)^{2}+M_{N}^{2}+k^{2}=D_{\phi}\left(k\right)-D_{B}\left(p^{\prime}-k\right)+m_{\phi}^{2}-M_{B}^{2}+M_{N}^{2}\\
+ & 2kq=\left(k+q\right)^{2}-k^{2}+Q^{2}=D_{\phi}\left(k+q\right)-D_{\phi}\left(k\right)+Q^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+光锥delta项
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\int\dd{k^{-}}\frac{1}{D_{\phi}\left(k\right)}=\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)} & =\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right)\label{eq:yu5.1}\\
+\int\dd{k^{-}}\frac{1}{D_{\phi}\left(k\right)^{2}}=\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}} & =\frac{\left(\pi i\right)}{\Omega_{\phi}}\delta\left(k^{+}\right)\label{eq:yu5.2}\\
+\int\dd{k^{-}}\frac{2k^{+}k^{-}}{D_{\phi}\left(k\right)}=\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)} & =\left(\pi i\right)\Omega_{\phi}\left[\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)-1\right]\delta\left(k^{+}\right)\label{eq:yu5.3}\\
+\int\dd{k^{-}}\frac{2k^{+}k^{-}}{D_{\phi}\left(k\right)^{2}}=\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}} & =\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right)\label{eq:yu5.4}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Omega_{\phi}=k_{\perp}^{2}+m_{\phi}^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+量纲分析
+\end_layout
+
+\begin_layout Standard
+提取出一个
+\begin_inset Formula $\delta\left(k^{+}\right)$
+\end_inset
+
+之后，数幂次可知在表观上，它们分别是对数发散，收敛，平方发散，对数发散的，发散的积分不是良好定义的。
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{D_{\phi}\left(k\right)}=\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}
+\]
+
+\end_inset
+
+另一方面，这几个积分的结果可以通过求导相互联系。
+\end_layout
+
+\begin_layout Example
+将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的被积式对
+\begin_inset Formula $k^{+}$
+\end_inset
+
+求偏导
+\begin_inset Formula 
+\[
+-k^{+}\frac{\partial}{\partial k^{+}}\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}
+\]
+
+\end_inset
+
+能得到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中积分的形式。假设可以使用分部积分，
+\begin_inset Formula 
+\[
+-k^{+}\frac{\partial}{\partial k^{+}}\left[\left(2\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right)\right]={\color{blue}\underset{\Rightarrow1}{\left(\frac{\partial}{\partial k^{+}}k^{+}\right)}}\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right).
+\]
+
+\end_inset
+
+因此若要求这几个积分的结果在偏导下一致，则
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+化简
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，也可以考虑
+\begin_inset Formula 
+\begin{align*}
+ & \int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\int\dd{k^{-}}\frac{2k^{+}k^{-}-\Omega_{\phi}+\Omega_{\phi}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}\\
+ & =\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}+\frac{\Omega_{\phi}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}\\
+ & =\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right)+\left(\pi i\right)\delta\left(k^{+}\right)\\
+ & =\left(\pi i\right)\delta\left(k^{+}\right)\left[\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)+1\right]=\left(\pi i\right)\delta\left(k^{+}\right)\left[\log\left(\frac{\Omega_{\phi}}{\mu^{2}/e}\right)\right]
+\end{align*}
+
+\end_inset
+
+也能得到类似地结果
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+通过对
+\begin_inset Formula $\Omega_{\phi}$
+\end_inset
+
+求偏导，可以将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 联系起来，
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\frac{\partial}{\partial\Omega_{\phi}}\int\dd{k^{-}}\frac{1}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\frac{\pi i}{\Omega_{\phi}}\delta\left(k^{+}\right)
+\]
+
+\end_inset
+
+类似地，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对
+\begin_inset Formula $\Omega_{\phi}$
+\end_inset
+
+求偏导应该等于
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:yu5.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial\Omega_{\phi}}\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\left(\pi i\right)\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(k^{+}\right)
+\]
+
+\end_inset
+
+对函数求不定积分，结果不是唯一的，这里选取
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{2k^{+}k^{-}}{\left(2k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\left(\pi i\right)\Omega_{\phi}\left[\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)-1\right]\delta\left(k^{+}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+多传播子
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd{z}\int\dd{k_{\perp}^{2}}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\]
+
+\end_inset
+
+和
+\begin_inset Formula 
+\begin{align*}
+ & \int\dd[4]{k}\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+= & \frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd{z}\left(1-z\right)^{a-1}z^{b-1}\int\dd{k_{\perp}^{2}}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega^{a-\ell-1}}\int\dd{k_{\perp}^{2}}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left\{ a,b,n\right\} \ge1$
+\end_inset
+
+。两个公式都已经考虑了 salamu 约定下的 Jacobian 行列式。
+\begin_inset Formula 
+\[
+D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-\Lambda^{2},\quad\Omega\equiv\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+纯传播子积分
+\end_layout
+
+\begin_layout Standard
+对于分母中包含两个传播子
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}
+\]
+
+\end_inset
+
+的情况，使用费曼参数化公式，
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{1}{A^{\alpha}B^{\beta}}=\int\dd[4]{k}\int_{0}^{1}\dd{z}\frac{w^{\alpha-1}\left(1-w\right)^{\beta-1}}{\left[wA+\left(1-w\right)B\right]^{\alpha+\beta}}\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}
+\]
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)^{2}}=\frac{1}{2}\int\dd{k_{\perp}^{2}}\frac{2\pi i}{\Omega_{\phi}}\frac{\delta\left(y\right)}{p^{+}}
+\]
+
+\end_inset
+
+得到
+\size small
+
+\begin_inset Formula 
+\begin{align}
+ & \int\dd[4]{k}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\label{eq: delta-feynman}\\
+= & \int_{0}^{1}\dd{z}\int\dd[4]{k}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)\left(1-z\right)^{a-1}z^{b-1}}{\left\{ k^{2}-\left[\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2}\right]+i\varepsilon\right\} ^{a+b}}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\\
+= & \frac{1}{\left(a+b-1\right)!}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd{z}\int\dd[4]{k}\frac{\left(1-z\right)^{a-1}z^{b-1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left[k^{2}-\Omega+i\varepsilon\right]^{2}}\\
+= & \frac{1}{\left(a+b-1\right)!}\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd{z}\frac{1}{2}\int\dd{k_{\perp}^{2}}\frac{\left(2\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\end{align}
+
+\end_inset
+
+
+\size default
+即
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{1}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd{z}\int\dd{k_{\perp}^{2}}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right)
+\]
+
+\end_inset
+
+也可以进一步化简成
+\begin_inset Formula 
+\[
+\int\dd[4]{k}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\int_{0}^{1}\dd{z}\int\dd{k_{\perp}^{2}}{\color{blue}\frac{\left[-\left(a+b-2\right)\right]!}{\left(a-1\right)!\left(b-1\right)!}}\frac{\left(1-z\right)^{a-1}z^{b-1}\left(\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{a+b-1}}
+\]
+
+\end_inset
+
+这里已经考虑了坐标变换的 Jacobian 
+\begin_inset Formula $1/2$
+\end_inset
+
+。where 
+\begin_inset Formula 
+\[
+D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-\Lambda^{2},\quad\Omega\equiv\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+分子上为ykp
+\end_layout
+
+\begin_layout Remark
+在部分子分布函数的模型中，我们认为初末态质子横动量为
+\begin_inset Formula $0$
+\end_inset
+
+，
+\begin_inset Formula $p^{2}=p^{+}p^{-}=M^{2}$
+\end_inset
+
+。如果是在标准的光锥坐标系中，即
+\begin_inset Formula $k^{+}=\frac{1}{\sqrt{2}}\left(k^{0}+k^{3}\right),p_{\perp}=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+ykp=y\left(k^{+}p^{-}+k^{-}p^{+}+k_{\perp}p_{\perp}\right)=\left(y^{2}M^{2}+k^{+}k^{-}\right)
+\]
+
+\end_inset
+
+因为最后这积分是正比于
+\begin_inset Formula $\delta\left(y\right)$
+\end_inset
+
+的，所以
+\begin_inset Formula $y^{2}M^{2}\Rightarrow y^{2}M^{2}\delta\left(y\right)$
+\end_inset
+
+，认为这一项是零，只关注后一项的贡献。也就是
+\begin_inset Formula $ykp\Rightarrow k^{+}k^{-}$
+\end_inset
+
+。在 salamu 使用的光锥记号中，
+\begin_inset Formula $2ykp\Rightarrow k^{+}k^{-}$
+\end_inset
+
+；此外还要考虑积分测度的Jacobian为
+\begin_inset Formula $1/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+积分：
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}
+\]
+
+\end_inset
+
+注意在光锥坐标下，分母
+\begin_inset Formula $\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{2}$
+\end_inset
+
+并不是
+\begin_inset Formula $k^{-}$
+\end_inset
+
+的偶函数，所以这个积分并不 trivally 为零。一般的，代入 
+\begin_inset Formula $ykp=k^{+}k^{-}$
+\end_inset
+
+，分子上为
+\begin_inset Formula $\left(k^{+}k^{-}\right)^{\ell}$
+\end_inset
+
+，
+\begin_inset Formula $0\le\ell\le n$
+\end_inset
+
+。计算可知：
+\begin_inset Formula 
+\begin{align*}
+ & -k^{+}\frac{\partial}{\partial k^{+}}\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}=\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}\quad\text{分部积分}\\
+ & =\int\dd{k^{-}}\frac{-\ell\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}+\frac{n\left(k^{+}k^{-}\right)^{\ell+1}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n+1}}\quad\text{直接作用}
+\end{align*}
+
+\end_inset
+
+整理一下，
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{\ell+1}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n+1}}=\frac{\ell+1}{n}\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}
+\]
+
+\end_inset
+
+从递推关系式得到，当
+\begin_inset Formula $0\le l\le n$
+\end_inset
+
+时：
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n}}=\frac{\ell!\left(n-1-\ell\right)!}{\left(n-1\right)!}\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{0}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{n-\ell}}
+\]
+
+\end_inset
+
+例如
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{\left(k^{+}k^{-}\right)^{2}}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]^{3}}=\int\dd{k^{-}}\frac{1}{\left[k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon\right]}\frac{2!0!}{2!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+类似地，使用费曼参数化合并分母中的传播子，并利用对
+\begin_inset Formula $\Omega$
+\end_inset
+
+的求导降低分母的幂次：
+\begin_inset Formula 
+\begin{align*}
+ & \Rightarrow\int\dd[4]{k}\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}\left(k^{2}-\Lambda^{2}+i\varepsilon\right)^{b}}\\
+ & =\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\int_{0}^{1}\dd z\int\dd[4]{k}\frac{\left(k^{+}k^{-}\right)^{\ell}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b}}\left(1-z\right)^{a-1}z^{b-1}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\Gamma\left(a+b\right)}{\Gamma\left(a\right)\Gamma\left(b\right)}\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a+b-1\right)!}\int_{0}^{1}\dd z\int\dd[4]{k}\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a-1\right)!\left(b-1\right)!}\int_{0}^{1}\dd z\int\dd[4]{k}\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]^{a+b-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a+b-1-\ell\right)!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial_{\Omega}^{a+b-\ell-1}}{\left(a+b-\ell-1\right)!}\int_{0}^{1}\dd z\int\dd[4]{k}\frac{\left(1-z\right)^{a-1}z^{b-1}}{\left[k^{2}-\Omega+i\varepsilon\right]}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\left(\frac{\partial}{\partial\Omega}\right)^{a+b-\ell-1}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+类似地，对于单个传播子的情况，
+\begin_inset Formula 
+\begin{align*}
+ & \Rightarrow\int\dd[4]{k}\frac{\left(2ykp\right)^{\ell}}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a-1-\ell\right)!}{\left(a-1\right)!}\int\dd[4]{k}\frac{1}{\left[k^{2}-\Omega_{\phi}+i\varepsilon\right]^{a-\ell}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!\left(a-1-\ell\right)!}{\left(a-1\right)!}\frac{\partial_{\Omega}^{a-\ell-1}}{\left(a-\ell-1\right)!}\int\dd[4]{k}\frac{1}{\left[k^{2}-\Omega_{\phi}+i\varepsilon\right]}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+ & =\frac{\ell!}{\left(a-1\right)!}\left(\frac{\partial}{\partial\Omega}\right)^{a-\ell-1}\int\dd{k_{\perp}^{2}}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Omega\equiv\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2}$
+\end_inset
+
+。其中使用了发散积分的基本公式，
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{1}{k^{+}k^{-}-k_{\perp}^{2}-\Omega+i\varepsilon}=\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\frac{\delta\left(y\right)}{p^{+}}
+\]
+
+\end_inset
+
+而
+\begin_inset Formula $\mu$
+\end_inset
+
+ 是与动量无关的常数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+综合以上，当
+\begin_inset Formula $n\ge1$
+\end_inset
+
+时有：
+\begin_inset Formula 
+\begin{align*}
+\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}} & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\left(\frac{\partial}{\partial\Omega}\right)^{a+b-\ell-1}\\
+ & \times\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)\\
+\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}} & =\frac{\ell!}{\left(a-1\right)!}\left(\frac{\partial}{\partial\Omega}\right)^{a-\ell-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\left(2\pi i\right)\Rightarrow\left(\pi i\right)$
+\end_inset
+
+是由于 Jacobian 因子。
+\end_layout
+
+\begin_layout Standard
+例如
+\begin_inset Formula $n=1$
+\end_inset
+
+，完成求导，可以进一步化简成，
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{\left(2ykp\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}{\color{blue}\frac{\left[-\left(a+b-3\right)\right]!}{\left(a-1\right)!\left(b-1\right)!}}\frac{\left(1-z\right)^{a-1}z^{b-1}\left(\pi i\right)\delta\left(y\right)}{\left(k_{\perp}^{2}+\Omega\right)^{a+b-2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+salamu note
+\end_layout
+
+\begin_layout Standard
+上述正比于
+\begin_inset Formula $\delta$
+\end_inset
+
+的积分只有一个奇点，以
+\begin_inset Formula $\frac{1}{D_{\phi}\left(k\right)}$
+\end_inset
+
+为例，当
+\begin_inset Formula $k^{+}>0$
+\end_inset
+
+时，极点在
+\begin_inset Formula $\left(\Omega_{\phi}-i\varepsilon\right)/k^{+}$
+\end_inset
+
+，第四象限，
+\begin_inset Formula 
+\begin{align*}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\\
+ & =\left(-2\pi i\right)\res\left[\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\right]_{\text{下半平面}}-\int_{\text{弧}}\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}\\
+ & =\left(-2\pi i\right)\frac{1}{k^{+}}-\int_{0}^{-\pi}\dd\theta\frac{i}{k^{+}}\frac{Re^{i\theta}}{\left(Re^{i\theta}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}\\
+ & =\frac{-2\pi i}{k^{+}}+\int_{0}^{\pi}\dd\theta\frac{i}{k^{+}}\frac{1}{\left(1-\frac{\Omega_{\phi}}{k^{+}Re^{i\theta}}\right)}\sim\frac{-2\pi i}{k^{+}}+\frac{i}{k^{+}}\left(\pi+\frac{\Omega_{\phi}}{k^{+}R}\left(-2i\right)\right)\\
+ & =\frac{-\pi i}{k^{+}}\left(1+\frac{\Omega_{\phi}}{k^{+}R\pi}\left(2i\right)\right)
+\end{align*}
+
+\end_inset
+
+
+\color blue
+
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi}{k^{+}}+\frac{2\Omega_{\phi}}{k^{+;2}R}=\frac{-i\pi}{k^{+}-i\varepsilon\Omega_{\phi}},\quad k^{+}>0,\varepsilon>0
+\]
+
+\end_inset
+
+
+\color inherit
+其中在圆弧上，作了变量替换，
+\begin_inset Formula $k^{-}=Re^{i\theta},\dd k^{-}=e^{i\theta}Ri\dd\theta$
+\end_inset
+
+，并利用了
+\begin_inset Formula $R\to+\infty$
+\end_inset
+
+的条件。这个结果和直接使用公式
+\begin_inset Formula 
+\[
+\lim_{\varepsilon\to0}\int_{-\infty}^{+\infty}\frac{f\left(x\right)\dd x}{x\pm i\varepsilon}=\mathcal{P}\int_{-\infty}^{+\infty}\frac{f\left(x\right)}{x}\dd x\mp i\pi f\left(0\right)
+\]
+
+\end_inset
+
+是一样的。
+\end_layout
+
+\begin_layout Standard
+当 
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+ 时，
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\int\dd k^{-}\frac{1}{-\Omega_{\phi}+i\varepsilon}=\frac{1}{-\Omega_{\phi}+i\varepsilon}\int\dd k^{-}=0
+\]
+
+\end_inset
+
+无标度奇幂次积分，认为是零。
+\end_layout
+
+\begin_layout Standard
+类似于
+\begin_inset Formula $k^{+}>0$
+\end_inset
+
+，当 
+\begin_inset Formula $k^{+}<0$
+\end_inset
+
+ 时，极点
+\begin_inset Formula $\frac{\Omega_{\phi}}{k^{+}}-\frac{i\varepsilon}{k^{+}}$
+\end_inset
+
+在第二象限，
+\begin_inset Formula 
+\begin{align*}
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)} & =\int\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}=\int\dd k^{-}\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\\
+ & =\left(-2\pi i\right)\res\left[\frac{1}{k^{+}{\color{blue}\left(k^{-}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}}\right]_{\text{下半平面}}-\int_{\text{弧}}\dd k^{-}\frac{1}{\left(k^{+}k^{-}-\Omega_{\phi}+i\varepsilon\right)}\\
+ & =-\int_{0}^{-\pi}\dd\theta\frac{i}{k^{+}}\frac{Re^{i\theta}}{\left(Re^{i\theta}-\frac{\Omega_{\phi}}{k^{+}}+\frac{i\varepsilon}{k^{+}}\right)}\\
+ & =\int_{0}^{\pi}\dd\theta\frac{i}{k^{+}}\frac{1}{\left(1-\frac{\Omega_{\phi}}{k^{+}Re^{i\theta}}\right)}\sim\frac{i}{k^{+}}\left(\pi+\frac{\Omega_{\phi}}{k^{+}R}\left(-2i\right)\right)\\
+ & =\frac{\pi i}{k^{+}}\left(1+\frac{\Omega_{\phi}}{k^{+}R\pi}\left(-2i\right)\right)
+\end{align*}
+
+\end_inset
+
+
+\color blue
+
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{i\pi}{k^{+}-i\varepsilon\Omega_{\phi}},\quad k^{+}<0,\varepsilon>0
+\]
+
+\end_inset
+
+
+\color inherit
+综合三种情况，
+\begin_inset Formula $\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}$
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi\theta\left(k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}+\frac{i\pi\theta\left(-k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}},\quad\varepsilon\to0^{+}
+\]
+
+\end_inset
+
+也就是
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{D_{\phi}\left(k\right)}=\frac{-i\pi\theta\left(k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}+\frac{i\pi\theta\left(-k^{+}\right)}{k^{+}-i\varepsilon\Omega_{\phi}}=\frac{-\sign\left(k^{+}\right)i\pi}{k^{+}-i\varepsilon\Omega_{\phi}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\theta\left(k^{+}\right)$
+\end_inset
+
+是阶跃函数。值得注意的是，
+\begin_inset Formula $1/D_{\phi}\left(k\right)$
+\end_inset
+
+与
+\begin_inset Formula $1/\left(D_{\phi}\left(k\right)^{n}D_{\phi}\left(k\right)^{m}\right)$
+\end_inset
+
+不同，
+\begin_inset Formula $1/D_{\phi}\left(k\right)$
+\end_inset
+
+在大圆弧上的积分值不为零，另一方面圆弧半径不是固定的。在以上计算中，我们忽略了奇点的不稳定性，即
+\begin_inset Formula $k^{-}=\frac{\Omega_{\phi}-i\varepsilon}{k^{+}}$
+\end_inset
+
+中
+\begin_inset Formula $k^{-}$
+\end_inset
+
+ pole 的位置随
+\begin_inset Formula $k^{+}$
+\end_inset
+
+的变化而变化，所以不能用柯西定理求出其积分值。
+\end_layout
+
+\begin_layout Section
+负幂次项
+\end_layout
+
+\begin_layout Standard
+使用动量关系
+\begin_inset Formula 
+\begin{align*}
+ & M=\left(\overline{M}-\Delta\right)/2,\quad M_{B}=\left(\overline{M}+\Delta\right)/2,\quad MM_{B}=\left(\overline{M}^{2}-\Delta^{2}\right)/4\\
+ & k^{2}=D_{\phi}+m_{\phi}^{2},\quad2kp=k^{2}-\left(p-k\right)^{2}+M^{2}=D_{\phi}-D_{B}+m_{\phi}^{2}-\Delta\overline{M}
+\end{align*}
+
+\end_inset
+
+化简过程中，由于
+\begin_inset Formula $D_{\phi}$
+\end_inset
+
+的传播子幂次较低，可能出现类似下面的负幂次项：
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{4}\left(k\right)D_{\phi}\left(k\right)^{-1}D_{B}\left(p-k\right)^{1}}=\int\dd^{4}k\frac{\left(k^{2}-m_{\phi}^{2}\right)\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{4}\left(k\right)D_{B}\left(p-k\right)^{1}}
+\]
+
+\end_inset
+
+这可以按如下处理：
+\begin_inset Formula 
+\begin{align*}
+ & D_{\phi}=k^{2}-m_{\phi}^{2}=D_{\Lambda}+\Lambda^{2}-m_{\phi}^{2}=D_{\Lambda}+\overline{\Lambda}^{2}\\
+ & D_{\Lambda}=D_{\phi}-\overline{\Lambda}^{2}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\overline{\Lambda}^{2}=\Lambda^{2}-m_{\phi}^{2}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{a}\left(k\right)D_{\phi}\left(k\right)^{-b}D_{B}\left(p-k\right)^{c}}=\int\dd^{4}k\frac{\left(D_{\Lambda}+\overline{\Lambda}^{2}\right)^{b}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\Lambda}^{a}\left(k\right)D_{B}\left(p-k\right)^{c}}
+\]
+
+\end_inset
+
+可以形式化地写成：
+\begin_inset Formula 
+\[
+F\left[a,b,c\right]=\left(F\left[-1,0,0\right]+\overline{\Lambda}^{2}\right)^{-b}F\left(a,0,c\right),b<0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+积分表格
+\end_layout
+
+\begin_layout Example
+收敛积分基本公式
+\begin_inset Formula 
+\begin{align*}
+F\left[a,b,c\right] & =\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{c}}\\
+ & =\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{1}{\left(c-1\right)!}\left(\frac{\partial}{\partial M_{B}^{2}}\right)^{c-1}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}},\quad a+b\ge1,c\ge1
+\end{align*}
+
+\end_inset
+
+注意这里的阶乘，其中
+\begin_inset Formula 
+\begin{align*}
+ & D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{B}\left(p-k\right)=\left(p-k\right)^{2}-M_{B}^{2}\\
+ & D_{\phi B}=\frac{-k_{\perp}^{2}-yM_{B}^{2}-\overline{y}m_{\phi}^{2}+y\overline{y}M^{2}}{\overline{y}},\quad\overline{y}=1-y
+\end{align*}
+
+\end_inset
+
+对于求导来说，只需要关心主要跟
+\begin_inset Formula $m_{\phi}^{2}$
+\end_inset
+
+，
+\begin_inset Formula $M_{B}^{2}$
+\end_inset
+
+有关的结构。根据上面
+\begin_inset Formula $D_{\phi B}$
+\end_inset
+
+的表达式，
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial M_{B}^{2}}\right)^{c-1}\frac{1}{D_{\phi B}^{a}D_{\Lambda B}^{b}}\Rightarrow\left(\frac{\partial^{c-1}}{\partial H^{c-1}}\frac{1}{\left(D_{\phi B}-y/\overline{y}H\right)^{a}\left(D_{\Lambda B}-y/\overline{y}H\right)^{b}}\right)/.H\to0
+\]
+
+\end_inset
+
+举个例子，当
+\begin_inset Formula $D_{B}\left(p-k\right)$
+\end_inset
+
+幂次为
+\begin_inset Formula $2$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{B}\left(p-k\right)^{2}D_{\Lambda}^{b}\left(k\right)}=\int\dd k_{\perp}^{2}\frac{\left(-\pi i\right)}{\overline{y}}\frac{y}{\overline{y}}\left(\frac{a}{D_{\phi B}^{a+1}D_{\Lambda B}^{b}}+\frac{y}{\overline{y}}\frac{b}{D_{\phi B}^{a}D_{\Lambda B}^{b+1}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+发散积分基本公式:
+\size small
+
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}^{a}}=\left(\pi i\right)\frac{1}{\left(a-1\right)!}\frac{\partial^{a-1}}{\partial\Omega_{\phi}^{a-1}}\log\left(\frac{\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F\left[a,b,0\right]=\int\dd^{4}k\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}=\frac{\frac{\partial^{a+b-2}}{\partial\Omega^{a+b-2}}\int_{0}^{1}\dd z\int\dd k_{\perp}^{2}}{\left(a-1\right)!\left(b-1\right)!}\frac{\left(\pi i\right)\left(1-z\right)^{a-1}z^{b-1}}{\left(k_{\perp}^{2}+\Omega\right)}\delta\left(y\right),a\ge1,b\ge1
+\]
+
+\end_inset
+
+
+\size default
+
+\begin_inset Formula 
+\begin{align*}
+ & {\color{blue}G\left[a,b,0\right]}^{\ell}=\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}\left(k\right)^{b}}\\
+ & =\frac{\ell!}{\left(a-1\right)!\left(b-1\right)!}\frac{\partial^{a+b-\ell-1}}{\partial\Omega}\int_{0}^{1}\dd z\left(1-z\right)^{a-1}z^{b-1}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega}{\mu^{2}}\right)\delta\left(y\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+D_{\phi}\left(k\right)=k^{2}-m_{\phi}^{2},\quad D_{\Lambda}\left(k\right)=k^{2}-\Lambda^{2},\quad\Omega\equiv\left(1-z\right)m_{\phi}^{2}+z\Lambda^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int\dd^{4}k\frac{\left(2ykp\right)^{\ell}\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{\left(k^{2}-m_{\phi}^{2}+i\varepsilon\right)^{a}}=\frac{\ell!}{\left(a-1\right)!}\frac{\partial^{a-\ell-1}}{\partial\Omega_{\phi}^{a-\ell-1}}\int\dd k_{\perp}^{2}\left(\pi i\right)\log\left(\frac{k_{\perp}^{2}+\Omega_{\phi}}{\mu^{2}}\right)\delta\left(y\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+形式化表述：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+F\left[a,b,-n\right]= & \int\dd k^{+}\int\dd k^{-}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{-n}}\\
+= & \int\dd k^{+}\int\dd k^{-}\frac{\left(D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2ykp/y\right)^{n}}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+= & \left(F\left[-1,0,0\right]+\left(m_{\phi}^{2}-\Delta\overline{M}\right)-\frac{1}{y}G\left[0,0,0\right]\right)^{n}@F\left[a,b,0\right]
+\end{align*}
+
+\end_inset
+
+这里的运算规则是，
+\begin_inset Formula $F\left[-1,0,0\right],G\left[0,0,0\right]$
+\end_inset
+
+相当于算符：
+\begin_inset Formula $F\left[-1,0,0\right]*F\left[a,b,0\right]=F\left[a-1,b,0\right]$
+\end_inset
+
+，
+\begin_inset Formula $G\left[0,0,0\right]*F\left[a,b,0\right]=G\left[a,b,0\right]$
+\end_inset
+
+。当
+\begin_inset Formula $D_{B}\left(p-k\right)$
+\end_inset
+
+幂次为
+\begin_inset Formula $-1$
+\end_inset
+
+时：
+\begin_inset Formula 
+\begin{align*}
+F\left[a,b,-1\right]= & \int\dd k^{+}\int\dd k^{-}\frac{\delta\left(y-\frac{k^{+}}{p^{+}}\right)}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)D_{B}\left(p-k\right)^{-1}}\\
+= & \int\dd k^{+}\int\dd k^{-}\frac{D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2kp}{D_{\phi}\left(k\right)^{a}D_{\Lambda}^{b}\left(k\right)}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\\
+= & F\left[a-1,b,0\right]+\left(m_{\phi}^{2}-\Delta\overline{M}\right)F\left[a,b,0\right]-\frac{1}{y}G\left[a,b,0\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+可能会用到关系：
+\begin_inset Formula 
+\[
+2kp=D_{\phi}+m_{\phi}^{2}-D_{B}-\Delta\overline{M},\quad D_{B}=D_{\phi}+m_{\phi}^{2}-\Delta\overline{M}-2kp
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+D_{\phi B}+m_{\phi}^{2}-\Delta^{2}=\frac{k_{\perp}^{2}+\left(yM+\Delta\right)^{2}}{-\overline{y}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+光锥形式和协变形式
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Phys.Rev.D63,074014"
+target "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.63.074014"
+literal "false"
+
+\end_inset
+
+。这里使用的约定是 
+\begin_inset Formula $k^{+}=k^{0}+k^{3}$
+\end_inset
+
+，
+\begin_inset Formula $k^{-}=k^{0}-k^{3}$
+\end_inset
+
+，积分测度会有 
+\begin_inset Formula $1/2$
+\end_inset
+
+ 的 Jacobian 因子。
+\end_layout
+
+\begin_layout Section
+介绍 
+\end_layout
+
+\begin_layout Standard
+众所周知，在光前（light-front）计算中会出现虚假的发散，而在标准的 等时量子化框架中 计算相同的振幅时却不会出现。这被认为，意味着 光前
+ 和 显式协变形式 之间的等价关系并不完全。这些发散已经用各种方法进行了正规化，包括 主值方法（principal-value prescription），
+ Mandelstam-Leibbrandt 处方, Cutoff, （涂抹）Smearing，以及 类似BPHZ 的微分和重积分。在我们以前的工作中，我们遇到
+了这样一个发散的例子[1]。在那里，在 赝标量（和标量）弹性形式因子的（
+\begin_inset Formula $1+1$
+\end_inset
+
+）维计算中出现了 端点奇异性（end-point singularity）。计算形式因子的方法是首先写下单圈三角费曼图，然后用 留数法 对 光前能量进行积分。当
+使用 守恒流 的plus分量时，形状因子是有限的，并且与协变形式的结果想等。然而，当使用 守恒流 的 minus 分量时，结果中出现了端点奇异点。一旦手动去掉这
+个奇点，剩下的振幅就等于显式协变的结果。在随后的一篇论文[2]中表明，这个端点奇异性可以通过涂抹光子顶点来消除，这就引入了截断参数
+\begin_inset Formula $\Lambda$
+\end_inset
+
+。在
+\begin_inset Formula $\Lambda$
+\end_inset
+
+有限以及
+\begin_inset Formula $\Lambda\to\infty$
+\end_inset
+
+的极限下，这个奇异性被消除。
+\end_layout
+
+\begin_layout Standard
+然而，进一步的研究表明，当这种 光前算式 被正确处理时，假发散不会出现在最终结果中，也不需要任何 正规化手续。到目前为止，这种发散的出现是由于圈积分处理不当，我
+们只是简单地拾取了留数，而忽略了无穷远处大圆弧的贡献，后者用于闭合积分回路。在普通的等时（或 instant 形式）哈密顿 形式中，这种程序是安全的，除非利用一
+种常见的技巧来减少分母的数量，因为 传播子 的结构是这样的：当能量 
+\begin_inset Formula $k^{0}$
+\end_inset
+
+ 趋于无穷时，积分总是足够快地趋于零。因此在无穷远圆弧的贡献为零，全部结果只是由留数之和给出。然而，在光前形式中有些情况，当光前能量 
+\begin_inset Formula $k^{-}$
+\end_inset
+
+ 趋于无穷大时，被积式并没有足够快地趋于零。那么，圆弧的贡献是不为零的，必须包括在内，以获得正确的结果。此外，我们在这项工作中表明，当 
+\begin_inset Formula $k$
+\end_inset
+
+ 平面上的 积分回路 穿过 移动的奇点（moving singularity）时，会出现 点贡献（point contributions）。
+\end_layout
+
+\begin_layout Standard
+在一篇专门讨论光前（LF）和 协变QED等价性的论文中，Misra 和 Warawdekar [3] 也发现了“无穷远处的极点”，在这里我们称为原
+ 弧贡献 和 点贡献。他们的处理方法基于文献[4]，完全恢复了 单圈水平上的等价性。我们也注意到在 光纤哈密顿中 寻找 抵消项（counterterms）的类似
+考虑。在引入 离散化光锥量子化（DLCQ）的经典论文[5] 中，当考虑到 正规排序的 哈密顿时，发现了自诱导的惰性（self-induced inertias）
+。后来，Burkardt[6] 约束了有效光前哈密顿中 非协变抵消项 的有限部分。
+\end_layout
+
+\begin_layout Standard
+在这项工作中，为了不掩盖主要问题，我们将研究如何计算 
+\begin_inset Formula $(1+1)$
+\end_inset
+
+维下的，简单的矢量两点函数（第二节）和 赝标量电荷形状因子（第三节）。对 
+\begin_inset Formula $(3+1)$
+\end_inset
+
+ 维计算的推广是直截了当的。在 二A 中，我们将展示，忽略无限远处的圆弧上的贡献，如何导致在 两点函数 的 minus 分量中 出现 端点奇异性。我们还将表明，
+计算这些 圆弧贡献 并不是件容易的事。计算涉及到一个微妙的极限，应该谨慎对待。因此，在 二B 和 二C 中，我们将介绍不同的计算积分的方法，其考虑了圆弧贡献，但
+不要求明确计算它们。每一种方法都涉及到将
+\begin_inset Formula $n$
+\end_inset
+
+点函数还原为
+\begin_inset Formula $m$
+\end_inset
+
+点函数的组合，其中
+\begin_inset Formula $m<n$
+\end_inset
+
+[7]，每一种方法都消除了 端点奇异性，恢复了 显式协变 和 光前结果 之间的等价关系。在 二D 部分，我们将展示这些方法与张量方法之间的相似性，张量方法将一般
+的积分化简为标量 
+\begin_inset Formula $n$
+\end_inset
+
+ 点函数之和。在第三节中，我们将展示如何将 二B 和 二C 的每种方法应用于 赝标量电荷形状因子 的计算，恢复从 守恒流的负分量得到的形状因子，与以显式协变方式
+得到的形状因子之间的等价关系。最后，我们将把我们的发现与以前的 抵消项 考虑联系起来[5,6]，并在第四节中总结评价。在附录中，我们将介绍 二B
+ 中使用的计算细节。
+\end_layout
+
+\begin_layout Section
+矢量两点函数
+\end_layout
+
+\begin_layout Subsection
+端点发散性的起源
+\end_layout
+
+\begin_layout Standard
+为了演示端点发散性是如何产生的，以及如何解决，我们使用简单的例子，
+\begin_inset Formula $(1+1)$
+\end_inset
+
+维的矢量两点函数，
+\begin_inset Formula 
+\[
+V_{k_{1}\left(k-p\right)_{2}}^{\mu}=\int\dd[2]{k}\frac{k^{\mu}}{\left[k^{2}-m_{1}^{2}+i\varepsilon\right]\left[\left(k-p\right)^{2}-m_{2}^{2}+i\varepsilon\right]}.
+\]
+
+\end_inset
+
+这种两点函数会在计算，例如费米子的自能修正
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fig1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+时遇到。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/bernard-fig1.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+自能修正图
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fig1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+积分后我们会得到
+\begin_inset Formula $V_{k\left(k-p\right)}^{\mu}=Ip^{\mu}$
+\end_inset
+
+。使用费曼参数
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $I$
+\end_inset
+
+的显式协变结果可写成：
+\begin_inset Formula 
+\begin{equation}
+I_{\text{cov}}=-i\pi\int_{0}^{1}\dd{x}\frac{x}{D_{\text{cov}}},\label{eq:be2}
+\end{equation}
+
+\end_inset
+
+其中协变分母函数是：
+\begin_inset Formula 
+\[
+D_{\text{cov}}=x\left(1-x\right)p^{2}-\left(1-x\right)m_{1}^{2}-xm_{2}^{2}.
+\]
+
+\end_inset
+
+若要在光前形式中计算相同的积分，则把上式用光前能量 
+\begin_inset Formula $\left(k^{-}=k^{0}-k^{-}\right)$
+\end_inset
+
+和动量 
+\begin_inset Formula $\left(k^{+}=k^{0}+k^{1}\right)$
+\end_inset
+
+表示。则
+\begin_inset Formula $k^{2}=k^{+}k^{-}$
+\end_inset
+
+，所以
+\begin_inset Formula 
+\begin{equation}
+V_{k_{1}\left(k-p\right)_{2}}^{\mu}=\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{k^{\mu}}{D_{1}D_{2}},\label{eq:be4}
+\end{equation}
+
+\end_inset
+
+其中使用的分母是
+\begin_inset Formula 
+\begin{align}
+D_{1} & =k^{2}-m_{1}^{2}+i\varepsilon=k^{+}k^{-}-m_{1}^{2}+i\varepsilon=k^{+}\left(k^{-}-k_{1}^{-}\right),\nonumber \\
+D_{2} & =\left(k-p\right)^{2}-m_{2}^{2}+i\varepsilon=\left(k^{+}-p^{+}\right)\left(k^{-}-p^{-}\right)-m_{2}^{2}+i\varepsilon\nonumber \\
+ & =\left(k^{+}-p^{+}\right)\left(k^{-}-k_{2}^{-}\right),\label{eq:be5}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+k_{1}=\frac{m_{1}^{2}-i\varepsilon}{k^{+}},\quad k_{2}=p^{-}+\frac{m_{2}^{2}-i\varepsilon}{k^{+}-p^{+}}.
+\]
+
+\end_inset
+
+首先观察下 plus 动量
+\begin_inset Formula $\left(\mu=+\right)$
+\end_inset
+
+。由于两极点的位置依赖于
+\begin_inset Formula $k^{+}$
+\end_inset
+
+的值，我们必须将将
+\begin_inset Formula $k^{+}$
+\end_inset
+
+的积分范围分段讨论： 
+\end_layout
+
+\begin_layout Enumerate
+对于
+\begin_inset Formula $k^{+}<0$
+\end_inset
+
+，
+\begin_inset Formula $k_{1}^{-}$
+\end_inset
+
+ 和 
+\begin_inset Formula $k_{2}^{-}$
+\end_inset
+
+ 都位于上半平面（
+\begin_inset Formula $p^{+}$
+\end_inset
+
+是在壳粒子的 plus 分量，所以
+\begin_inset Formula $p^{+}>0$
+\end_inset
+
+。）
+\end_layout
+
+\begin_layout Enumerate
+对于 
+\begin_inset Formula $0\le k^{+}\le p^{+}$
+\end_inset
+
+，
+\begin_inset Formula $k_{1}^{-}$
+\end_inset
+
+移动到下半平面，
+\begin_inset Formula $k_{2}^{-}$
+\end_inset
+
+ 仍在上半平面
+\end_layout
+
+\begin_layout Enumerate
+对于
+\begin_inset Formula $k^{+}>p^{+}$
+\end_inset
+
+，两极点都位于下半平面。
+\end_layout
+
+\begin_layout Standard
+对于 
+\begin_inset Formula $k^{+}<0$
+\end_inset
+
+，
+\begin_inset Formula $k^{+}>p^{+}$
+\end_inset
+
+ 区域，我们可以分别在下，上平面闭合回路，则积分结果为零。因此只需要考虑第二个区域 
+\begin_inset Formula $0\le k^{+}\le p^{+}$
+\end_inset
+
+，如果我们拾取
+\begin_inset Formula $k^{-}$
+\end_inset
+
+极点的留数，对应的光前结果为：
+\begin_inset Formula 
+\[
+I_{\text{LF}^{+}}=-i\pi\int_{0}^{1}\dd{x}\frac{x}{D_{\text{cov}}}.
+\]
+
+\end_inset
+
+这里我们定义了
+\begin_inset Formula $k^{+}=xp^{+}$
+\end_inset
+
+，因为选择了
+\begin_inset Formula $0\le k^{+}\le p^{+}$
+\end_inset
+
+ 区域，总可以用一个
+\begin_inset Formula $x$
+\end_inset
+
+参数化
+\begin_inset Formula $k^{+}$
+\end_inset
+
+，
+\begin_inset Formula $0\le x\le1$
+\end_inset
+
+。这与 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的显式协变结果想等。
+\end_layout
+
+\begin_layout Standard
+对于 minus 分量（
+\begin_inset Formula $\mu=-$
+\end_inset
+
+）的积分，积分有点狡猾。如果我们 naively 按处理 plus 分量的方法，我们会认为在一三区域积分为零。在第二个区域，如果我们选取 
+\begin_inset Formula $k_{1}^{-}$
+\end_inset
+
+ 极点的留数，将得到（也使用 
+\begin_inset Formula $k^{+}=xp^{+}$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{align}
+I_{\text{LF}^{+}}^{\text{residue}} & =\frac{-i\pi}{p^{2}}\int_{0}^{1}\dd{x}\frac{m_{1}^{2}}{x\left[x\left(1-x\right)p^{2}+x\left(m_{1}^{2}-m_{2}^{2}\right)-m_{1}^{2}\right]}\nonumber \\
+ & =\frac{-i\pi}{p^{2}}\int_{0}^{1}\dd{x}\frac{\left(1-x\right)p^{2}+m_{1}^{2}-m_{2}^{2}}{D_{\text{cov}}}+\frac{i\pi}{p^{2}}\int_{0}^{1}\frac{\dd{x}}{x},\label{eq:be7}
+\end{align}
+
+\end_inset
+
+而它与 
+\begin_inset Formula $I_{\text{cov}}$
+\end_inset
+
+ 以及 
+\begin_inset Formula $I_{\text{LF}^{+}}$
+\end_inset
+
+ 显然不相等。事实上，此结果包含
+\begin_inset Formula $x=0$
+\end_inset
+
+ 处的 端点发散。在第二行中，我们显式地把奇异部分分离出来。如果我们在之前选择了 
+\begin_inset Formula $k_{2}^{-}$
+\end_inset
+
+ 极点的留数，而不是
+\begin_inset Formula $k_{1}^{-}$
+\end_inset
+
+，那么分母中会有一个
+\begin_inset Formula $\left(1-x\right)$
+\end_inset
+
+整体因子，端点发散将位于
+\begin_inset Formula $x=1$
+\end_inset
+
+。然而，迄今为止我们只考虑了留数的贡献，而没有考虑当
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+时，用来闭合积分回路的大圆弧的贡献。为了说明此贡献不是简单为零，考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，注意到
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+时，积分的行为是
+\begin_inset Formula $1/k^{-}$
+\end_inset
+
+。因此，
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分是对数发散的（logarithmically divergent）。当 
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+，被积式不能足够快地趋于零，以保证圆弧上的贡献为零。因此，在
+\begin_inset Formula $k^{+}$
+\end_inset
+
+积分的三个区域中，圆弧都有不为零的贡献。在计算 plus 分量的，不会存在这种情况，是由于那时在分母上
+\begin_inset Formula $k^{-}$
+\end_inset
+
+的次幂足够高，以保证无穷远圆弧的贡献为零。
+\end_layout
+
+\begin_layout Standard
+为了使 矢量两点函数的 minus 分量 能回到协变形式下的结果，好像只要简单计入无穷远圆弧的贡献即可。然而不幸的是，计算一般情形下圆弧的贡献并不容易。通常的做
+法是，对
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 minus 分量引入
+\begin_inset Formula $k^{-}=Re^{i\phi}$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{equation}
+V_{\text{arc}}^{-}=\lim_{R\to\infty}\left[\frac{1}{2}\int\frac{\dd{k^{+}}}{k^{+}\left(k^{+}-p^{+}\right)}\int\dd{\phi}\left(iRe^{i\phi}\right)\frac{Re^{i\phi}}{\left(Re^{i\phi}-k_{1}^{-}\right)\left(Re^{i\phi}-k_{2}^{-}\right)}\right],\label{eq:be8}
+\end{equation}
+
+\end_inset
+
+其中，若积分回路在上半平面闭合，
+\begin_inset Formula $\phi$
+\end_inset
+
+ 从 
+\begin_inset Formula $0\to\pi$
+\end_inset
+
+，如果从下半平面闭合，
+\begin_inset Formula $\phi$
+\end_inset
+
+从
+\begin_inset Formula $0\to-\pi$
+\end_inset
+
+。
+\begin_inset Formula $\phi$
+\end_inset
+
+的积分并不容易计算。仅有的直接方法是，当
+\begin_inset Formula $R\to\infty$
+\end_inset
+
+时忽略
+\begin_inset Formula $k_{1}^{-}$
+\end_inset
+
+和
+\begin_inset Formula $k_{2}^{-}$
+\end_inset
+
+，则对 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的积分十分简单。然而，存在一些特殊点（
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $k^{+}=p^{+}$
+\end_inset
+
+），在其上
+\begin_inset Formula $k_{1}^{-}$
+\end_inset
+
+和
+\begin_inset Formula $k_{2}^{-}$
+\end_inset
+
+自身趋于无穷，此时忽略它们无法保证安全。为了说明的确如此，我们首先按直接方法计算。在
+\begin_inset Formula $k^{+}$
+\end_inset
+
+的三个区域上，圆弧的贡献为
+\begin_inset Formula 
+\begin{align}
+ & k^{+}<0:I_{\text{LF}^{-}}^{\text{arc}1}=\frac{i\pi}{2p^{2}}\int_{-\infty}^{0}\frac{\dd{x}}{x\left(1-x\right)},\label{eq:be9}\\
+ & 0\le k^{+}\le p^{+}:I_{\text{LF}^{-}}^{\text{arc}2}=\frac{i\pi}{2p^{2}}\int_{0}^{1}\frac{\dd{x}}{x\left(1-x\right)},\label{eq:be10}\\
+ & k^{+}>p^{+}:I_{\text{LF}^{-}}^{\text{arc}3}=\frac{-i\pi}{2p^{2}}\int_{0}^{1}\frac{\dd{x}}{x\left(1-x\right)},\label{eq:be11}
+\end{align}
+
+\end_inset
+
+由于 
+\begin_inset Formula $\int_{-\infty}^{+\infty}+\int_{\text{arc}}=\sum\left(\text{留数}\right)$
+\end_inset
+
+，需要从留数之和中减去圆弧的贡献，来得到最终结果。方便起见，我们在 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 令 
+\begin_inset Formula $x\to\left(1-x\right)$
+\end_inset
+
+ ，再与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+相加，这两项相消，所以只剩下
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。这一项可以改写成：
+\begin_inset Formula 
+\begin{align}
+I_{\text{LF}^{-}}^{\text{arc}2} & =\frac{i\pi}{2p^{2}}\int_{0}^{1}\frac{\dd{x}}{x\left(1-x\right)}=\frac{i\pi}{2p^{2}}\int_{0}^{1}\dd{x}\left(\frac{1}{x}+\frac{1}{1-x}\right)\nonumber \\
+ & =\frac{i\pi}{2p^{2}}\int_{0}^{1}\dd{x}\left(\frac{1}{x}+\frac{1}{x}\right)=\frac{i\pi}{p^{2}}\int_{0}^{1}\frac{\dd{x}}{x}.\label{eq:be12}
+\end{align}
+
+\end_inset
+
+注意到它正好和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的奇异部分相等。从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中减去
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的圆弧贡献给出
+\begin_inset Formula 
+\begin{equation}
+I_{\text{LF}^{-}}^{\text{arc方法}}=\frac{-i\pi}{p^{2}}\int_{0}^{1}\dd{x}\frac{\left(1-x\right)p^{2}+m_{1}^{2}-m_{2}^{2}}{D_{\text{cov}}}\label{eq:be13}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+此积分与协变结果
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的差别是
+\begin_inset Formula $\frac{i\pi}{p^{2}}\ln\frac{m_{1}^{2}}{m_{2}^{2}}$
+\end_inset
+
+。所以直接计算，并不能恢复光前形式和显式协变计算的等价性。它显然忽略了
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+和
+\begin_inset Formula $k^{+}=p^{+}$
+\end_inset
+
+两点的贡献，以至于无法恢复等价性。有趣的是，在
+\begin_inset Formula $m_{1}=m_{2}$
+\end_inset
+
+的特殊情形下，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 确实会回到协变结果（即
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，当 
+\begin_inset Formula $m_{1}=m_{2}$
+\end_inset
+
+）。后文会解释原因。现在我们只能说，在最一般的情况下，直接计算圆弧贡献的方法，在
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+ 的时候忽略 pole 极点项，这种方法是行不通的。
+\end_layout
+
+\begin_layout Standard
+由于这些困难，人们可能会认为 矢量两点函数的负分量 在光前形式下 没有 良好定义。然而，值得注意的是，所有与计算这个函数有关的问题在交换积分次序后都会消失。如果
+首先在
+\begin_inset Formula $k^{+}$
+\end_inset
+
+复平面上进行积分，然后再进行
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分，就可以毫无困难地得到显式协变的结果。如果积分对于一个积分顺序来说良好定义的，我们认为它对于相反的次序也必须是良好定义的。因此，问题并不在于整个积分在某种程
+度上是模糊的。困难也不一定是由于存在圆弧贡献造成的。矢量两点函数的负分量 的真正困难似乎在于积分在 
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $k^{+}=p^{+}$
+\end_inset
+
+ 附近的行为。由于分子中 
+\begin_inset Formula $k^{-}$
+\end_inset
+
+ 项的存在，
+\begin_inset Formula $k^{-}$
+\end_inset
+
+ 的积分已经是对数发散的了。然而，当 
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+ 或 
+\begin_inset Formula $k^{+}=p^{+}$
+\end_inset
+
+ 时，
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分变成线性发散。我们必须找到某种方法来处理这些强发散，并计算来自这些特殊点的贡献。
+\end_layout
+
+\begin_layout Section
+渐进方法 Asymptotic method
+\end_layout
+
+\begin_layout Standard
+我们将采取另一种方法，即直接处理 
+\begin_inset Formula $k^{+}\to0$
+\end_inset
+
+ 或 
+\begin_inset Formula $k^{+}\to p^{+}$
+\end_inset
+
+ 时的线性发散，而不是试图显式地计算 矢量两点函数负分量 的圆弧贡献。通过识别积分在 
+\begin_inset Formula $k^{-}$
+\end_inset
+
+ 的渐进值时的行为，我们将发散的部分分离出来。因此被称为 “Asymptotic method”。为了详细说明如何在这种方法中计算 
+\begin_inset Formula $I_{\text{LF}^{-}}$
+\end_inset
+
+，我们现在将回到矢量两点函数的负分量，
+\begin_inset Formula 
+\begin{equation}
+V_{k_{1}\left(k-p\right)_{2}}^{-}=\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{k^{-}}{D_{1}D_{2}},\label{eq:be14}
+\end{equation}
+
+\end_inset
+
+注意到，当
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+，且 
+\begin_inset Formula $k^{+}\to0$
+\end_inset
+
+ 或 
+\begin_inset Formula $k^{+}\to p^{+}$
+\end_inset
+
+ 时，积分是线性发散的。让我们分离出每种情形下的发散部分。首先令 
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+ 且
+\begin_inset Formula $k^{+}\to0$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align}
+V_{k_{1}\left(k-p\right)_{2}}^{-}\to\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{k^{-}}{D_{1}\left(-p^{+}k^{-}\right)}=-\frac{1}{2p^{2}}\int\dd{k^{+}}\dd{k^{-}}\frac{p^{-}}{D_{1}}\equiv V_{\text{asy}1}^{-}.\label{eq:be15}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+D_{1} & =k^{2}-m_{1}^{2}+i\varepsilon=k^{+}k^{-}-m_{1}^{2}+i\varepsilon=k^{+}\left(k^{-}-k_{1}^{-}\right),\\
+D_{2} & =\left(k-p\right)^{2}-m_{2}^{2}+i\varepsilon=\left(k^{+}-p^{+}\right)\left(k^{-}-p^{-}\right)-m_{2}^{2}+i\varepsilon\\
+ & =\left(k^{+}-p^{+}\right)\left(k^{-}-k_{2}^{-}\right),
+\end{align*}
+
+\end_inset
+
+其次，令
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+ 且
+\begin_inset Formula $k^{+}\to p^{+}$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align}
+V_{k_{1}\left(k-p\right)_{2}}^{-}\to\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{k^{-}}{\left(p^{+}k^{-}\right)D_{2}}=\frac{1}{2p^{2}}\int\dd{k^{+}}\dd{k^{-}}\frac{p^{-}}{D_{2}}\equiv V_{\text{asy}2}^{-}.\label{eq:be16}
+\end{align}
+
+\end_inset
+
+然后从矢量两点函数中减除这两个奇异部分，再补上它们，得到：
+\begin_inset Formula 
+\begin{align*}
+V_{k_{1}\left(k-p\right)_{2}}^{-} & =\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{k^{-}}{D_{1}D_{2}}-V_{\text{asy}1}^{-}-V_{\text{asy}2}^{-}+V_{\text{asy}1}^{-}+V_{\text{asy}2}^{-}\\
+ & =\frac{p^{-}}{2p^{2}}\int\dd{k^{+}}\dd{k^{-}}\left[\frac{p^{+}k^{-}}{D_{1}D_{2}}+\frac{1}{D_{1}}-\frac{1}{D_{2}}\right]+V_{\text{asy}1}^{-}+V_{\text{asy}2}^{-}\\
+ & =\frac{p^{-}}{2p^{2}}\int\dd{k^{+}}\dd{k^{-}}\left[\frac{p^{+}k^{-}+D_{2}-D_{1}}{D_{1}D_{2}}\right]+V_{\text{asy}1}^{-}+V_{\text{asy}2}^{-}\\
+ & =\frac{p^{-}}{2p^{2}}\int\dd{k^{+}}\dd{k^{-}}\left[\frac{-k^{+}p^{-}+p^{2}+m_{1}^{2}-m_{2}^{2}}{D_{1}D_{2}}\right]+V_{\text{asy}1}^{-}+V_{\text{asy}2}^{-}
+\end{align*}
+
+\end_inset
+
+注意到现在方括号内的项是正常的（regular）。分子中之前的
+\begin_inset Formula $k^{-}$
+\end_inset
+
+被消去，替换成
+\begin_inset Formula $k^{+}$
+\end_inset
+
+。结果是，当
+\begin_inset Formula $k^{-}\to\infty$
+\end_inset
+
+时，被积式足够快地趋于零。对此表达式进行极点积分很直接，
+\begin_inset Formula 
+\begin{equation}
+V_{k_{1}\left(k-p\right)_{2}}^{-}=\frac{-i\pi p^{-}}{p^{2}}\int_{0}^{1}\dd{x}\frac{\left(1-x\right)p^{2}+m_{1}^{2}-m_{2}^{2}}{D_{\text{cov}}}+V_{\text{asy}1}^{-}+V_{\text{asy}2}^{-}\label{eq:be18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+现在，剩下的问题是计算两奇异部分，
+\begin_inset Formula $V_{\text{asy}1}^{-}$
+\end_inset
+
+和
+\begin_inset Formula $V_{\text{asy}2}^{-}$
+\end_inset
+
+。一些在矢量两点函数中遇到的困难，在这些单点函数（tadpoles）中也存在。首先，这些 tadpoles 也有自己的圆弧贡献。其次，当 
+\begin_inset Formula $V_{\text{asy}1}^{-}$
+\end_inset
+
+ 中的
+\begin_inset Formula $k^{+}\to0$
+\end_inset
+
+，或者 
+\begin_inset Formula $V_{\text{asy}2}^{-}$
+\end_inset
+
+中的 
+\begin_inset Formula $k^{+}\to p^{+}$
+\end_inset
+
+，积分线性发散。因此，我们不用标准的 极点积分 来计算这些 tadpole 的贡献，而是用 光前柱坐标 重写它们：
+\begin_inset Formula $k^{+}=R\cos\phi$
+\end_inset
+
+ 和 
+\begin_inset Formula $k^{-}=R\sin\phi$
+\end_inset
+
+。执行这种类型的 变量代换 总是安全的，因为尽管单独的积分是发散的，但它们的总和是有限的。首先在有限的区域（
+\begin_inset Formula $R=\text{有限}$
+\end_inset
+
+）内计算这些积分，然后取极限 
+\begin_inset Formula $R\to\infty$
+\end_inset
+
+，得到的结果与在显式协变形式中的一致。关于这些计算的全部细节见附录。在此总结下最后的结果：
+\begin_inset Formula 
+\begin{align}
+V_{\text{asy}1}^{-} & \sim\frac{p^{-}}{p^{2}}\left[i\pi\ln\left(R^{2}\right)+\frac{\pi^{2}}{2}-i\pi\ln\left(m_{1}^{2}\right)-\order{\frac{1}{R^{4}}}\right],\label{eq:be19}\\
+V_{\text{asy}2}^{-} & \sim\frac{p^{-}}{p^{2}}\left[-i\pi\ln\left(R^{2}\right)-\frac{\pi^{2}}{2}+i\pi\ln\left(m_{2}^{2}\right)+\order{\frac{1}{R^{4}}}\right].\nonumber 
+\end{align}
+
+\end_inset
+
+加上 
+\begin_inset Formula $V_{\text{asy}1}^{-}$
+\end_inset
+
+和
+\begin_inset Formula $V_{\text{asy}2}^{-}$
+\end_inset
+
+，常数项和依赖
+\begin_inset Formula $R$
+\end_inset
+
+的项抵消，给出
+\begin_inset Formula 
+\begin{equation}
+V_{\text{asy}1}^{-}+V_{\text{asy}2}^{-}=\frac{-i\pi p^{-}}{p^{2}}\ln\left(\frac{m_{1}^{2}}{m_{2}^{2}}\right)\label{eq:be20}
+\end{equation}
+
+\end_inset
+
+所以将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，并除以
+\begin_inset Formula $p^{-}$
+\end_inset
+
+得到：
+\begin_inset Formula 
+\begin{equation}
+I_{\text{LF}^{-}}^{\text{asy方法}}=\frac{-i\pi}{p^{2}}\int_{0}^{1}\dd{x}\frac{\left(1-x\right)p^{2}+m_{1}^{2}-m_{2}^{2}}{D_{\text{cov}}}+\frac{i\pi}{p^{2}}\ln\left(\frac{m_{1}^{2}}{m_{2}^{2}}\right).\label{eq:be21}
+\end{equation}
+
+\end_inset
+
+请注意，这个结果的第一项与公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 相同，后者是用直接计算圆弧贡献的方法得到的。正如在公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 下面已经提到的，带有显式对数的项使得这个结果与公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的显式协变结果相同。上述结果中的显式对数项给出了来自
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+和
+\begin_inset Formula $k^{+}=p^{+}$
+\end_inset
+
+ 两点的贡献。我们将这些称为对 矢量两点函数的 “点贡献”。因此，这种替代方法已经考虑到了所有被 naive 的极点积分技术所忽略的贡献，而这些贡献对于证明
+ 光前 和 显式协变 的结果之间的等价性是必要的。有趣的是，出现了对数修正，类似于 Burkardt 的 动质量（kinetic mass counterter
+m）抵消项[6]。然而，由于我们使用拉格朗日中出现的质量，而不引入动能和顶点质量，我们在微扰计算中没有使用抵消项。尽管如此，我们发现的修正还是以与
+ Burkardt 研究中的动能质量抵消项相同的方式，恢复协变性（covariance）。
+\end_layout
+
+\begin_layout Standard
+记得在 二A 中，我们表明，在传播子质量相等的特殊情况下，直接计算圆弧贡献足以恢复光前和显式协变形式之间的等价性。我们现在可以看到为什么会这样。考虑传播子质量相
+等的情况（
+\begin_inset Formula $m_{1}=m_{2}\equiv m$
+\end_inset
+
+），公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的自然对数项消失，导致公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 化简到公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ ，
+\begin_inset Formula $I_{\text{LF}^{-}}$
+\end_inset
+
+ 的结果是通过直接计算圆弧贡献的方式得到的。在这种特殊情况下，来自 
+\begin_inset Formula $k^{+}=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $k^{+}=p^{+}$
+\end_inset
+
+ 两点的贡献完全抵消。因此，直接计算圆弧贡献即可恢复光前和显式协变形式间的等价性。当前尚不清楚这种相消是否总会发生，而在此情况下发生的事实应该被看作巧合。处理类
+似 光前积分 最安全的方法是像我们在这里所做的那样，明确地处理 
+\series bold
+点贡献
+\series default
+。
+\end_layout
+
+\begin_layout Section
+Tadpole 方法
+\end_layout
+
+\begin_layout Standard
+我们可以通过使用 分布理论（distribution theory）[8]中一些著名的结果来完全避免圆弧贡献。我们选择的具体方法是由 Ligterink[4]
+ 开创的。这个方法再现了 Yan[9] 的一个著名结果。此外，它还重现了 文献[7] 给出的蝌蚪图的对数部分。
+\end_layout
+
+\begin_layout Standard
+首先我们解释一下 Ligterink 的方法。考虑单点函数
+\begin_inset Formula 
+\begin{equation}
+A_{0}=\int\dd[2]{k}\frac{1}{k^{2}-m^{2}+i\varepsilon}.\label{eq:be22}
+\end{equation}
+
+\end_inset
+
+如果人们以天真的方式将 留数定理 应用于 光前计算，这个式子将完全为零，尽管 维数正规化 给出了明确的结果[7]。使用维数正规化公式，
+\color blue
+
+\begin_inset Formula 
+\[
+\int\frac{\dd[d]k}{\left(2\pi\right)^{d}}\frac{k^{2a}}{\left(k^{2}-\Delta\right)^{b}}=i\left(-1\right)^{a-b}\frac{1}{\left(4\pi\right)^{d/2}}\frac{1}{\Delta^{b-a-\frac{d}{2}}}\frac{\Gamma\left(a+\frac{d}{2}\right)\Gamma\left(b-a-\frac{d}{2}\right)}{\Gamma\left(b\right)\Gamma\left(\frac{d}{2}\right)}
+\]
+
+\end_inset
+
+
+\color inherit
+令
+\begin_inset Formula $d=2-2\varepsilon$
+\end_inset
+
+，得：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =i\left(-1\right)^{-1}\left(2\pi\right)^{2-2\varepsilon}\frac{1}{\left(4\pi\right)^{1-\varepsilon}}\frac{1}{\left(m^{2}\right)^{\varepsilon}}\frac{\Gamma\left(1\right)\Gamma\left(\varepsilon\right)}{\Gamma\left(1\right)\Gamma\left(1\right)}=\left(-i\right)\frac{1}{\left(m^{2}\right)^{\varepsilon}}\Gamma\left(\varepsilon\right),\\
+\Gamma\left(\epsilon\right) & =\frac{1}{\epsilon}-\gamma_{E}+\order{\epsilon}+\cdots,\quad\left(m^{2}\right)^{\varepsilon}=1-\varepsilon\ln m^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们进行以下操作：
+\begin_inset Formula 
+\begin{align}
+A_{0} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\dd{k^{-}}\frac{1}{k^{+}k^{-}-m^{2}+i\varepsilon}\nonumber \\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\frac{\dd{u}}{u}\frac{1}{k^{+}-u\left(m^{2}-i\varepsilon\right)}\nonumber \\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\dd{u}\frac{1}{2}\left(\frac{1}{u+i\delta}+\frac{1}{u-i\delta}\right)\frac{1}{k^{+}-\left(m^{2}-i\varepsilon\right)u}\label{eq:be23}
+\end{align}
+
+\end_inset
+
+在第二行中，我们进行变量代换 
+\begin_inset Formula 
+\[
+u=\frac{1}{k^{-}},\quad\dd{u}=\frac{-1}{k^{-;2}}\dd{k^{-}},\quad\dd{k^{-}}=-\frac{\dd{u}}{u^{2}},
+\]
+
+\end_inset
+
+在最后一行，将分母 
+\begin_inset Formula $1/u$
+\end_inset
+
+分离成
+\begin_inset Formula $u$
+\end_inset
+
+实轴上下的两个 pole。
+\begin_inset Formula 
+\[
+\frac{1}{2}\left(\frac{1}{u+i\delta}+\frac{1}{u-i\delta}\right)=\frac{u}{u^{2}+\delta^{2}}
+\]
+
+\end_inset
+
+这个分离将产生正确的结果，后文将看到。在将此形式应用到我们的积分之前，我们还需要对 tadpole 再处理下。可以放心的用留数定理对
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分，因为积分对
+\begin_inset Formula $u$
+\end_inset
+
+是收敛的，但随后对
+\begin_inset Formula $k^{+}$
+\end_inset
+
+的积分必须正规化。我们使用有限截断处理。积分结果是
+\begin_inset Formula 
+\begin{align}
+A_{0} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\left[-i\pi\frac{\theta\left(k^{+}\right)}{k^{+}+i\delta m^{2}}+i\pi\frac{\theta\left(-k^{+}\right)}{k^{+}-i\delta m^{2}}\right]\nonumber \\
+ & =\lim_{\Lambda\to\infty}\int_{0}^{\Lambda}\dd{k^{+}}\frac{-i\pi}{k^{+}+i\delta m^{2}}=-i\pi\left(\ln\frac{\Lambda}{i\delta}-\ln m^{2}\right).\label{eq:be24}
+\end{align}
+
+\end_inset
+
+可与维数正规化的结果比较[7]
+\begin_inset Formula 
+\begin{equation}
+A_{0}=-i\pi\left(\frac{1}{\epsilon}-\gamma+\ln4\pi-\ln\frac{m^{2}}{\mu^{2}}\right)+\order{\epsilon}.\label{eq:be25}
+\end{equation}
+
+\end_inset
+
+显然，LF 计算再现了协变振幅中正确的质量依赖。 
+\end_layout
+
+\begin_layout Standard
+为了说明此方法也适用于
+\begin_inset Formula $V^{+}$
+\end_inset
+
+，我们按如下方式再次计算：
+\begin_inset Formula 
+\begin{align}
+V^{+} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\dd{k^{-}}\frac{k^{+}}{k^{+}\left(k^{-}-k_{1}^{-}\right)\left(k^{+}-p^{+}\right)\left(k^{-}-k_{2}^{-}\right)}\nonumber \\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{k^{+}}{k^{+}\left(k^{+}-p^{+}\right)}\frac{1}{k_{1}^{-}-k_{2}^{-}}\int_{-\infty}^{+\infty}\dd{k^{-}}\left[\frac{1}{k^{-}-k_{1}^{-}}-\frac{1}{k^{-}-k_{2}^{-}}\right]\label{eq:be26}\\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{1}{k_{1}^{-}-k_{2}^{-}}\int_{-\infty}^{+\infty}\dd{k^{-}}\left[{\color{blue}\frac{k^{+}}{k^{+}-p^{+}}\frac{1}{k^{+}k^{-}-m_{1}^{2}+i\epsilon}}-\frac{1}{\left(k^{+}-p^{+}\right)\left(k^{-}-p^{-}\right)-m_{2}^{2}+i\epsilon}\right]\nonumber 
+\end{align}
+
+\end_inset
+
+现在我们插入
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:be24"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中
+\begin_inset Formula $u$
+\end_inset
+
+积分的结果。现在由于第一个
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分前面有
+\begin_inset Formula $k^{+}$
+\end_inset
+
+因子（与 pole 约掉），它可以化简到有限值：
+\begin_inset Formula 
+\begin{equation}
+V_{\text{tad}1}^{+}=\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{k^{+}}{\left(k^{+}-p^{+}\right)}\frac{1}{k_{1}^{-}-k_{2}^{-}}\left(-i\pi\right)\left[\frac{\theta\left(k^{+}\right)}{k^{+}+i\delta m_{1}^{2}}-\frac{\theta\left(-k^{+}\right)}{k^{+}-i\delta m_{1}^{2}}\right].\label{eq:be27}
+\end{equation}
+
+\end_inset
+
+当
+\begin_inset Formula $k^{+}\to p^{+}$
+\end_inset
+
+，
+\begin_inset Formula $k_{2}\to\infty$
+\end_inset
+
+，此积分是非奇异的（nonsingular）。最终结果是
+\begin_inset Formula 
+\begin{equation}
+V_{\text{tad}1}^{+}=\frac{-i\pi}{2}\left\{ \int_{-\infty}^{0}\dd{k^{+}}\frac{-k^{+}}{D_{\text{LF}}}+\int_{0}^{\infty}\dd{k^{+}}\frac{k^{+}}{D_{\text{LF}}}\right\} .\label{eq:be28}
+\end{equation}
+
+\end_inset
+
+函数 
+\begin_inset Formula $D_{\text{LF}}$
+\end_inset
+
+的定义为：
+\begin_inset Formula 
+\begin{align}
+D_{\text{LF}} & =k^{+}\left(p^{+}-k^{+}\right)p^{-}-\left(p^{+}-k^{+}\right)m_{1}^{2}-k^{+}m_{2}^{2}\nonumber \\
+ & =p^{+}D_{\text{cov}}\label{eq:be29}
+\end{align}
+
+\end_inset
+
+其中：
+\begin_inset Formula 
+\begin{align*}
+k_{1} & =\frac{m_{1}^{2}-i\varepsilon}{k^{+}},\quad k_{2}=p^{-}+\frac{m_{2}^{2}-i\varepsilon}{k^{+}-p^{+}},\\
+k_{1}-k_{2} & =\frac{k^{+}\left(p^{+}-k^{+}\right)p^{-}-\left(p^{+}-k^{+}\right)m_{1}^{2}-k^{+}m_{2}^{2}}{k^{+}\left(k^{+}-p^{+}\right)}\\
+D_{\text{cov}} & =x\left(1-x\right)p^{2}-\left(1-x\right)m_{1}^{2}-xm_{2}^{2}.
+\end{align*}
+
+\end_inset
+
+类似地，可以计算第二部分：
+\begin_inset Formula 
+\begin{align}
+V_{\text{tad}2}^{+} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{k^{+}\left(k^{+}-p^{+}\right)}{D_{\text{LF}}}\left(-i\pi\right)\left[\frac{\theta\left(k^{+}-p^{+}\right)}{k^{+}-p^{+}+i\delta m_{2}^{2}}-\frac{\theta\left(p^{+}-k^{+}\right)}{k^{+}-p^{+}-i\delta m_{2}^{2}}\right]\nonumber \\
+ & =\frac{-i\pi}{2}\left\{ \int_{-\infty}^{p^{+}}\dd{k^{+}}\frac{-k^{+}}{D_{\text{LF}}}+\int_{p^{+}}^{\infty}\dd{k^{+}}\frac{k^{+}}{D_{\text{LF}}}\right\} .\label{eq:be30}
+\end{align}
+
+\end_inset
+
+我们看到两部分贡献中的积分，在区间
+\begin_inset Formula $\left(-\infty,0\right)$
+\end_inset
+
+和 
+\begin_inset Formula $\left(p^{+},\infty\right)$
+\end_inset
+
+ 上分别相消，这很合理，它应该和基于留数定理的标准方法一致。总的结果是：
+\begin_inset Formula 
+\begin{align}
+V^{+} & =V_{\text{tad}1}^{+}-V_{\text{tad}2}^{+}=-i\pi\int_{0}^{p^{+}}\dd{k^{+}}\frac{k^{+}}{D_{\text{LF}}}\nonumber \\
+ & =-\pi\int_{0}^{1}\dd{x}\frac{x}{D_{\text{cov}}}.\label{eq:be31}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于在
+\begin_inset Formula $V^{+}$
+\end_inset
+
+情况下的
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分是非奇异的，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:be23"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中分解的威力没有完全展现。现在我们计算
+\begin_inset Formula $V^{-}$
+\end_inset
+
+，我们将看到此方法产生协变结果，并杀死区间
+\begin_inset Formula $\left(-\infty,0\right)$
+\end_inset
+
+和 
+\begin_inset Formula $\left(p^{+},\infty\right)$
+\end_inset
+
+ 上的积分：
+\begin_inset Formula 
+\begin{align}
+V^{-} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\dd{k^{-}}\frac{k^{+}}{k^{+}\left(k^{-}-k_{1}^{-}\right)\left(k^{+}-p^{+}\right)\left(k^{-}-k_{2}^{-}\right)}\nonumber \\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{1}{k^{+}\left(k^{+}-p^{+}\right)}\int_{-\infty}^{+\infty}\dd{k^{-}}\frac{k^{-}}{\left(k^{-}-k_{1}^{-}\right)\left(k^{-}-k_{2}^{-}\right)}\nonumber \\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{1}{D_{\text{LF}}}\int_{-\infty}^{+\infty}\dd{k^{-}}\left[\frac{k_{1}^{-}}{k^{-}-k_{1}^{-}}-\frac{k_{2}^{-}}{k^{-}-k_{2}^{-}}\right]\label{eq:be32}
+\end{align}
+
+\end_inset
+
+与之前相同
+\begin_inset Formula 
+\[
+D_{\text{LF}}=k^{+}\left(p^{+}-k^{+}\right)p^{-}-\left(p^{+}-k^{+}\right)m_{1}^{2}-k^{+}m_{2}^{2}=p^{+}D_{\text{cov}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+使用和之前相同的步骤，我们计算
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分：
+\begin_inset Formula 
+\begin{align*}
+V_{\text{tad}1}^{-} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{m_{1}^{2}}{D_{\text{LF}}}\left(-i\pi\right)\left[\frac{\theta\left(k^{+}\right)}{k^{+}+i\delta m_{1}^{2}}-\frac{\theta\left(-k^{+}\right)}{k^{+}-i\delta m_{1}^{2}}\right],\\
+V_{\text{tad}2}^{-} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{{\color{blue}\left(k^{+}-p^{+}\right)p^{-}}+m_{2}^{2}}{D_{\text{LF}}}\left(-i\pi\right)\left[\frac{\theta\left(k^{+}-p^{+}\right)}{k^{+}-p^{+}+i\delta m_{2}^{2}}-\frac{\theta\left(p^{+}-k^{+}\right)}{k^{+}-p^{+}-i\delta m_{2}^{2}}\right],
+\end{align*}
+
+\end_inset
+
+包含因子 
+\begin_inset Formula $\left(k^{+}-p^{+}\right)p^{-}$
+\end_inset
+
+ 的部分是 regular，可以直接计算：
+\begin_inset Formula 
+\begin{equation}
+V_{\text{tad}2p^{-}}^{-}=\frac{-i\pi}{2}p^{-}\left[\int_{-\infty}^{p^{+}}\dd{k^{+}}\frac{-1}{D_{\text{LF}}}+\int_{p^{+}}^{\infty}\dd{k^{+}}\frac{1}{D_{\text{LF}}}\right].\label{eq:be34}
+\end{equation}
+
+\end_inset
+
+把其它贡献中的奇异部分 分离出来，通过
+\begin_inset Formula 
+\begin{align}
+\frac{1}{D_{\text{LF}}} & =\left[\frac{1}{D_{\text{LF}}}+\frac{1}{m_{1}^{2}p^{+}}\right]-\frac{1}{m_{1}^{2}p^{+}}=k^{+}\frac{\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}}{m_{1}^{2}p^{+}D_{\text{LF}}}-\frac{1}{m_{1}^{2}p^{+}}\nonumber \\
+ & =\left[\frac{1}{D_{\text{LF}}}+\frac{1}{m_{2}^{2}p^{+}}\right]-\frac{1}{m_{2}^{2}p^{+}}=\left(p^{+}-k^{+}\right)\frac{k^{+}p^{-}-m_{1}^{2}+m_{2}^{2}}{m_{2}^{2}p^{+}D_{\text{LF}}}-\frac{1}{m_{2}^{2}p^{+}}.\label{eq:be35}
+\end{align}
+
+\end_inset
+
+将前文剩下的积分如此分解。使用显然的记号（remaining）
+\begin_inset Formula 
+\begin{align}
+V_{\text{tad}1R}^{-} & =\frac{-i\pi}{2}m_{1}^{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\frac{\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}}{m_{1}^{2}p^{+}D_{\text{LF}}}\left[\frac{k^{+}\theta\left(k^{+}\right)}{k^{+}+i\delta m_{1}^{2}}-\frac{k^{+}\theta\left(-k^{+}\right)}{k^{+}-i\delta m_{1}^{2}}\right]\label{eq:be36}\\
+ & =\frac{-i\pi}{2}\frac{1}{p^{+}}\left[-\int_{-\infty}^{0}\dd{k^{+}}\frac{\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}+\int_{0}^{\infty}\dd{k^{+}}\frac{\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}\right]\nonumber 
+\end{align}
+
+\end_inset
+
+另一个是
+\begin_inset Formula 
+\begin{equation}
+V_{\text{tad}2R}^{-}=\frac{-i\pi}{2}\frac{1}{p^{+}}\left[-\int_{-\infty}^{p^{+}}\dd{k^{+}}\frac{-k^{+}p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}+\int_{p^{+}}^{\infty}\dd{k^{+}}\frac{-k^{+}p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}\right].\label{eq:be37}
+\end{equation}
+
+\end_inset
+
+奇异积分是
+\begin_inset Formula 
+\begin{align}
+V_{\text{tad}1S}^{-} & =\frac{i\pi}{2}\frac{1}{p^{+}}\int_{-\infty}^{+\infty}\dd{k^{+}}\left[\frac{\theta\left(k^{+}\right)}{k^{+}+i\delta m_{1}^{2}}-\frac{\theta\left(-k^{+}\right)}{k^{+}-i\delta m_{1}^{2}}\right],\nonumber \\
+V_{\text{tad}2S}^{-} & =\frac{i\pi}{2}\frac{1}{p^{+}}\int_{-\infty}^{+\infty}\dd{k^{+}}\left[\frac{\theta\left(k^{+}-p^{+}\right)}{k^{+}-p^{+}+i\delta m_{2}^{2}}-\frac{\theta\left(p^{+}-k^{+}\right)}{k^{+}-p^{+}-i\delta m_{2}^{2}}\right].\label{eq:be38}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+现在把所有贡献求和。即
+\begin_inset Formula $V^{-}=V_{\text{tad}1R}^{-}+V_{\text{tad}1S}^{+}-V_{\text{tad}2p^{-}}^{-}-V_{\text{tad}2R}^{-}-V_{\text{tad}2S}^{-}$
+\end_inset
+
+。我们把不同区间上的 regular 部分加起来：(i)
+\begin_inset Formula $k^{+}<0$
+\end_inset
+
+，(ii)
+\begin_inset Formula $0<k^{+}<p^{+}$
+\end_inset
+
+，(iii)
+\begin_inset Formula $k^{+}>p^{+}$
+\end_inset
+
+。然后得到：
+\begin_inset Formula 
+\begin{align*}
+V_{\text{tad(i)}R}^{-} & =\frac{-i\pi}{2p^{+}}\int_{-\infty}^{0}\dd{k^{+}}\frac{-p^{+}p^{-}+\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}+k^{+}p^{-}-m_{1}^{2}+m_{2}^{2}}{D_{\text{LF}}}=0,\\
+V_{\text{tad(iii)}R}^{-} & =\frac{-i\pi}{2p^{+}}\int_{p^{+}}^{0}\dd{k^{+}}\frac{p^{+}p^{-}-\left(p^{+}-k^{+}\right)p^{-}-m_{1}^{2}+m_{2}^{2}-k^{+}p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}=0.
+\end{align*}
+
+\end_inset
+
+显然，只剩下区域（ii）中的 regular 贡献加上 奇异贡献。前者为
+\begin_inset Formula 
+\begin{equation}
+V_{\text{tad}R}^{-}=\frac{-i\pi}{p^{+}}\int_{0}^{p^{+}}\dd{k^{+}}\frac{\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}.\label{eq:be40}
+\end{equation}
+
+\end_inset
+
+后者使用推导 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be24"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的技术，得到
+\begin_inset Formula 
+\begin{align*}
+V_{\text{tad}1S}^{-} & =\frac{i\pi}{p^{+}}\int_{0}^{+\infty}\dd{k^{+}}\frac{1}{k^{+}+i\delta m_{1}^{2}}=\frac{i\pi}{p^{+}}\left[\ln\frac{\Lambda}{i\delta}-\ln m_{1}^{2}\right],\\
+V_{\text{tad}2S}^{-} & =\frac{i\pi}{p^{+}}\int_{p^{+}}^{+\infty}\dd{k^{+}}\frac{1}{k^{+}-p^{+}+i\delta m_{2}^{2}}=\frac{i\pi}{p^{+}}\left[\ln\frac{\Lambda}{i\delta}-\ln m_{2}^{2}\right].
+\end{align*}
+
+\end_inset
+
+奇异部分求和是
+\begin_inset Formula 
+\begin{equation}
+V_{\text{tad}S}^{-}=\frac{i\pi}{p^{+}}\ln\frac{m_{2}^{2}}{m_{1}^{2}}.\label{eq:be42}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+现在我们可以检查，regular 加上 singular 部分是否等于协变结果。为此，我们考虑积分
+\begin_inset Formula 
+\begin{align}
+I & =\frac{i\pi}{p^{+}}\int_{0}^{p^{+}}\dd{k^{+}}\frac{\left(p^{+}-k^{+}\right)p^{-}+m_{1}^{2}-m_{2}^{2}}{D_{\text{LF}}}\nonumber \\
+ & =\frac{i\pi}{p^{+}}\int_{0}^{p^{+}}\dd{k^{+}}\frac{\dd{D_{\text{LF}}}/\dd{k^{+}}}{D_{\text{LF}}}=\frac{i\pi}{p^{+}}\ln\frac{m_{2}^{2}}{m_{1}^{2}}.\label{eq:be43}
+\end{align}
+
+\end_inset
+
+如此，使用
+\begin_inset Formula $I$
+\end_inset
+
+的等式，求和
+\begin_inset Formula $V_{\text{tad}R}^{-}$
+\end_inset
+
+，
+\begin_inset Formula $V_{\text{tad}S}^{-}$
+\end_inset
+
+得到：
+\begin_inset Formula 
+\begin{equation}
+V^{-}=\frac{i\pi}{p^{+}}\int_{0}^{p^{+}}\dd{k^{+}}\frac{k^{+}p^{-}}{D_{\text{LF}}}=-i\pi p^{-}\int_{0}^{1}\dd{x}\frac{x}{D_{\text{cov}}}.\label{eq:be44}
+\end{equation}
+
+\end_inset
+
+它的确等于协变结果。
+\end_layout
+
+\begin_layout Standard
+对比 tadpole 法和 渐近法。我们看到，后者以更简单的方式，成功地计算了 圆弧 和 点 的贡献，因为 相比于
+\begin_inset Formula $V_{\text{tad}1,2}$
+\end_inset
+
+，
+\begin_inset Formula $V_{\text{asy}1,2}$
+\end_inset
+
+ 部将这些贡献以更有效的方式结合了起来。
+\end_layout
+
+\begin_layout Section
+Wick 转动
+\end_layout
+
+\begin_layout Standard
+普通的协变积分可以通过 Wick 转动，变换到欧几里得度规下，进行积分：
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}}={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dd^{4}k_{E}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
+\]
+
+\end_inset
+
+在这里我们试图在经过Wick 转动后，再变换到光锥坐标：
+\begin_inset Formula 
+\[
+\begin{cases}
+k^{+}=k^{0}+k^{1}\\
+k^{-}=k^{0}-k^{1}
+\end{cases}\Rightarrow\begin{cases}
+k^{0}=\frac{1}{2}\left(k^{+}+k^{-}\right)\\
+k^{-}=\frac{1}{2}\left(k^{+}-k^{-}\right)
+\end{cases},k^{0;2}+k^{1;2}=\frac{k^{+;2}+k^{-;2}}{2}
+\]
+
+\end_inset
+
+即：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\int_{-\infty}^{\infty}\dd[2]{k}\frac{1}{k^{2}-m^{2}+i\varepsilon}=\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{+}k^{-}-m^{2}+i\varepsilon}\\
+ & =i\left(-1\right)\frac{1}{2}\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\frac{1}{\left(k^{+;2}+k^{-;2}\right)/2+m^{2}-i\varepsilon}\\
+ & =\left(-i\right)\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{-;2}+\left(2m^{2}+k^{+;2}\right)-i\varepsilon}
+\end{align*}
+
+\end_inset
+
+将
+\begin_inset Formula $2m^{2}+k^{+;2}$
+\end_inset
+
+看作
+\begin_inset Formula $\Delta$
+\end_inset
+
+，使用维数正规化的中间公式，
+\begin_inset Formula 
+\[
+\int_{0}^{\infty}\dd k_{E}\frac{k_{E}^{a}}{\left(k_{E}^{2}+\Delta\right)^{b}}=\Delta^{\frac{a+1}{2}-b}\frac{\Gamma\left(\frac{a+1}{2}\right)\Gamma\left(b-\frac{a+1}{2}\right)}{2\Gamma\left(b\right)}
+\]
+
+\end_inset
+
+此处 
+\begin_inset Formula $a=0,b=1$
+\end_inset
+
+，对
+\begin_inset Formula $k^{-}$
+\end_inset
+
+积分得到（因子
+\begin_inset Formula $2$
+\end_inset
+
+来自于对
+\begin_inset Formula $k^{-}$
+\end_inset
+
+是偶函数）：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\left(-i\right)\int_{-\infty}^{\infty}\dd{k^{+}}\frac{2}{\sqrt{2m^{2}+k^{+;2}}}\frac{\Gamma\left(\frac{1}{2}\right)\Gamma\left(\frac{1}{2}\right)}{2\Gamma\left(1\right)},\quad\Gamma\left(\frac{1}{2}\right)=\sqrt{\pi}\\
+ & \Rightarrow\left(-i\pi\right)\int_{-\infty}^{\infty}\dd{k^{+}}\frac{1}{\sqrt{2m^{2}+k^{+;2}}},\quad\text{积分是\ensuremath{k^{+}}的偶函数}\\
+ & \Rightarrow2\left(-i\pi\right)\int_{0}^{\Lambda}\dd{k^{+}}\frac{1}{\sqrt{2m^{2}+k^{+;2}}},\quad\text{发散，取截断}\Lambda\\
+ & =2\left(-i\pi\right)\frac{1}{2}\ln\left(\frac{\Lambda\left(\Lambda+\sqrt{\Lambda^{2}+2m^{2}}\right)}{m^{2}}+1\right),\quad\Lambda\gg m\\
+ & \Rightarrow i\pi\ln\frac{m^{2}}{2\left(\Lambda^{2}+m^{2}\right)}
+\end{align*}
+
+\end_inset
+
+与前文的结果比较：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & \sim-i\pi\ln\left(R^{2}\right)-\frac{\pi^{2}}{2}+i\pi\ln\left(m^{2}\right)+\order{\frac{1}{R^{4}}},\\
+A_{0} & =-i\pi\left(\frac{1}{\epsilon}-\gamma+\ln4\pi-\ln\frac{m^{2}}{\mu^{2}}\right)+\order{\epsilon}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+对k+积分结果
+\end_layout
+
+\begin_layout Example
+对于 tadpole 积分，使用 Wick 转动法给出
+\begin_inset Formula 
+\begin{align*}
+ & \frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{+}k^{-}-m^{2}+i\varepsilon}\\
+\Rightarrow & \lim_{\Lambda\to\infty}2\left(-i\pi\right)\int_{0}^{\Lambda}\dd{k^{+}}\frac{1}{\sqrt{k^{+;2}+2m^{2}-i\varepsilon}}=i\pi\ln\frac{m^{2}}{2\left(\Lambda^{2}+m^{2}\right)}
+\end{align*}
+
+\end_inset
+
+上文的 tadpole 法给出：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\left[-i\pi\frac{\theta\left(k^{+}\right)}{k^{+}+i\delta m^{2}}+i\pi\frac{\theta\left(-k^{+}\right)}{k^{+}-i\delta m^{2}}\right]\\
+ & =\lim_{\Lambda\to\infty}\int_{0}^{\Lambda}\dd{k^{+}}\frac{-i\pi}{k^{+}+i\delta m^{2}}=-i\pi\left(\ln\frac{\Lambda}{i\delta}-\ln m^{2}\right).
+\end{align*}
+
+\end_inset
+
+通过截断 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ 正规化，我们知道，
+\begin_inset Formula 
+\[
+\int_{0}^{\Lambda}\dd{k^{+}}\frac{-i\pi}{k^{+}+i\delta m^{2}}\propto\left(i\pi\right)\ln\frac{i\delta m^{2}}{\Lambda+i\delta m^{2}}\sim\left(i\pi\right)\ln\frac{i\delta m^{2}}{\Lambda}
+\]
+
+\end_inset
+
+综上，我们合理推测，
+\begin_inset Formula 
+\[
+\frac{-i\pi}{k^{+}+i\delta m^{2}}\Rightarrow\left(i\pi\right)\ln\left(\frac{m^{2}}{\Lambda}\right)\delta\left(k^{+}\right)
+\]
+
+\end_inset
+
+即 salamu 公式，
+\begin_inset Formula 
+\[
+\int\dd k^{-}\frac{1}{\left(2k^{+}k^{-}-m^{2}+i\varepsilon\right)}=\left(i\pi\right)\ln\left(\frac{m^{2}}{\Lambda}\right)\delta\left(k^{+}\right).
+\]
+
+\end_inset
+
+一般情形中分母幂次
+\begin_inset Formula $\ge1$
+\end_inset
+
+，对应使用
+\begin_inset Formula $\partial_{m^{2}}$
+\end_inset
+
+求导：
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\Rightarrow\frac{\left(-i\pi\right)}{\left(n-1\right)!}\partial_{m^{2}}^{n}\left[m^{2}\ln\left(\frac{\Lambda}{m^{2}}\right)+m^{2}\right]\delta\left(k^{+}\right),\quad n\ge1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于一般情况下的分母幂次 
+\begin_inset Formula $n$
+\end_inset
+
+，作变量代换
+\begin_inset Formula $k^{-}=1/u$
+\end_inset
+
+，以及
+\begin_inset Formula $1/u$
+\end_inset
+
+的 pole 分解， 
+\begin_inset Formula 
+\[
+\frac{1}{2}\left(\frac{1}{u+i\delta}+\frac{1}{u-i\delta}\right)=\frac{u}{u^{2}+\delta^{2}}
+\]
+
+\end_inset
+
+使用 tadpole 方法，
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\dd{k^{-}}\frac{1}{\left(k^{+}k^{-}-m^{2}+i\varepsilon\right)^{n}}\\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\frac{\dd{u}}{u}\frac{u^{n-1}}{\left[k^{+}-u\left(m^{2}-i\varepsilon\right)\right]^{n}}\\
+ & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\int_{-\infty}^{+\infty}\dd{u}\frac{1}{2}\left(\frac{1}{u+i\delta}+\frac{1}{u-i\delta}\right)\frac{1}{k^{+}-u\left(m^{2}-i\varepsilon\right)}\left(\frac{u}{k^{+}-um^{2}}\right)^{n-1}
+\end{align*}
+
+\end_inset
+
+极点的位置分别在
+\begin_inset Formula 
+\[
+u\to-i\delta,\quad u\to i\delta\quad u\to\frac{k^{+}}{m^{2}-i\varepsilon}\approx\frac{k^{+}}{m^{2}}+\frac{k^{+}}{m^{4}}i\varepsilon
+\]
+
+\end_inset
+
+根据
+\begin_inset Formula $k^{+}$
+\end_inset
+
+的取值，得到：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\frac{1}{2}\int_{-\infty}^{+\infty}\dd{k^{+}}\left[-i\pi\frac{\theta\left(k^{+}\right)\left(-i\delta\right)^{n-1}}{\left(k^{+}+i\delta m^{2}\right)^{n}}+i\pi\frac{\theta\left(-k^{+}\right)\left(i\delta\right)^{n-1}}{\left(k^{+}-i\delta m^{2}\right)^{n}}\right]\\
+ & =\lim_{\Lambda\to\infty}\int_{0}^{\Lambda}\dd{k^{+}}\frac{\left(-i\pi\right)\left(-i\delta\right)^{n-1}}{\left(k^{+}+i\delta m^{2}\right)^{n}}=\frac{\left(i\pi\right)\left(-1\right)^{n}}{\left(n-1\right)\left(m^{2}\right)^{n-1}},\quad n\ge2
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+另一方面，参考下文，如果从偏导关系出发，
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\Rightarrow\frac{\left(-i\pi\right)}{\left(n-1\right)!}\partial_{m^{2}}^{n}\frac{\ln\left[k^{+}+i\delta m^{2}\right]}{i\delta},\quad n\ge1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+如果回到
+\begin_inset Formula $d=4$
+\end_inset
+
+维，并使用标准光锥坐标 
+\begin_inset Formula $k^{+}=\left(k^{0}+k^{3}\right)/\sqrt{2}$
+\end_inset
+
+，
+\begin_inset Formula $k^{-}=\left(k^{0}-k^{3}\right)/\sqrt{2}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\dd[4]{k}}{\left(2\pi\right)^{4}}\frac{1}{\left(k^{2}-\Delta+i\varepsilon\right)^{n}}={\color{red}i\left(-1\right)^{n}}\int_{-\infty}^{+\infty}\frac{\dd[4]{k_{E}}}{\left(2\pi\right)^{4}}\frac{1}{\left(k_{E}^{2}+\Delta-i\varepsilon\right)^{n}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =\int_{-\infty}^{\infty}\dd[4]{k}\frac{1}{k^{2}-m^{2}+i\varepsilon}\\
+ & =\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\dd{\sbf k_{\perp}}\frac{1}{2k^{+}k^{-}-m^{2}+i\varepsilon}\\
+ & =\left(-i\right)\int_{-\infty}^{\infty}\dd{k^{+}}\dd{k^{-}}\dd{\sbf k_{\perp}}\frac{1}{k^{-;2}+\left(k^{+;2}+k_{\perp}^{2}+m^{2}\right)-i\varepsilon}\\
+ & =\int_{-\infty}^{\infty}\dd{k^{+}}\dd{\sbf k_{\perp}}\frac{-i\pi}{\sqrt{k^{+;2}+k_{\perp}^{2}+m^{2}}}
+\end{align*}
+
+\end_inset
+
+对于分母幂次为
+\begin_inset Formula $n$
+\end_inset
+
+的情况，利用求导：
+\begin_inset Formula 
+\begin{align*}
+ & \partial_{-m^{2}}^{n}\ln\left[\left(k^{2}-m^{2}+i\varepsilon\right)\right]=\left[\left(-1\right)\left(-2\right)\cdots\left[-\left(n-1\right)\right]\right]\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\\
+\Rightarrow & \left(-1\right)^{n-1}\left(-1\right)^{n}\partial_{m^{2}}^{n}\ln\left[\left(k^{2}-m^{2}+i\varepsilon\right)\right]=\left(n-1\right)!\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}
+\end{align*}
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\begin{align*}
+ & \int\dd{k^{-}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\\
+ & =\int\dd{k^{-}}\frac{-1}{\left(n-1\right)!}\partial_{m^{2}}^{n}\ln\left[\left(k^{2}-m^{2}+i\varepsilon\right)\right]\\
+ & =\int\dd{k^{-}}\frac{-1}{\left(n-1\right)!}\partial_{m^{2}}^{n}\int^{m^{2}}\dd{u^{2}}{\color{blue}\frac{-1}{\left(k^{2}-u^{2}+i\varepsilon\right)}}
+\end{align*}
+
+\end_inset
+
+上面已推导出
+\begin_inset Formula 
+\[
+\int\dd k^{-}{\color{blue}\frac{1}{\left(2k^{+}k^{-}-m^{2}+i\varepsilon\right)}}=\left(i\pi\right)\ln\left(\frac{m^{2}}{\Lambda}\right)\delta\left(k^{+}\right).
+\]
+
+\end_inset
+
+交换 
+\begin_inset Formula $\int\dd{k^{-}}\int\dd{u^{2}}$
+\end_inset
+
+ 的积分次序即可得到，
+\begin_inset Formula 
+\[
+\int\dd{k^{-}}\frac{1}{\left(k^{2}-m^{2}+i\varepsilon\right)^{n}}\Rightarrow\frac{-i\pi}{\left(n-1\right)!}\partial_{\Omega^{2}}^{n}\left[\Omega^{2}\ln\left(\frac{\Lambda}{\Omega^{2}}\right)+\Omega^{2}\right]\delta\left(k^{+}\right),\quad n\ge1
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Omega^{2}=m^{2}+\sbf k_{\perp}^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于分子上含有
+\begin_inset Formula $k^{2}$
+\end_inset
+
+的积分，仍把分子按照传播子进行展开：
+\begin_inset Formula 
+\begin{align*}
+ & \int_{-\infty}^{\infty}\dd[4]{k}\frac{\left(k^{2}\right)^{m}}{\left(k^{2}-\beta+i\varepsilon\right)^{n}}=\int_{-\infty}^{\infty}\dd[4]{k}\frac{\left(D+\beta\right)^{m}}{D^{n}}\\
+= & \int_{-\infty}^{\infty}\dd[4]{k}\frac{\sum_{i=0}^{m}C_{m}^{i}D^{i}\beta^{m-i}}{D^{n}}=\int_{-\infty}^{\infty}\dd[4]{k}\sum_{i=0}^{m}\frac{C_{m}^{i}\beta^{m-i}}{D^{n-i}}\\
+= & \int\dd{k^{+}}\dd{\sbf k_{\perp}}\sum_{i=0}^{m}C_{m}^{i}\beta^{m-i}\frac{-i\pi}{\left(n-i-1\right)!}\partial_{\Omega^{2}}^{n-i}\left[\Omega^{2}\ln\left(\frac{\Lambda}{\Omega^{2}}\right)+\Omega^{2}\right]\delta\left(k^{+}\right),\quad n\ge m+1
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Omega^{2}=\beta+\sbf k_{\perp}^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+附录：使用光前柱坐标计算单点函数
+\end_layout
+
+\begin_layout Standard
+光前坐标中的单点函数为
+\begin_inset Formula 
+\begin{equation}
+A_{0}=\frac{1}{2}\int\dd{k^{+}}\dd{k^{-}}\frac{1}{k^{+}k^{-}-m^{2}+i\varepsilon}.\label{eq:beA1}
+\end{equation}
+
+\end_inset
+
+等价于 
+\begin_inset Formula $k^{+}=\left(k^{0}+k^{3}\right)/\sqrt{2}$
+\end_inset
+
+，
+\begin_inset Formula $k^{-}=\left(k^{0}-k^{3}\right)/\sqrt{2}$
+\end_inset
+
+ 约定下的
+\begin_inset Formula 
+\[
+A_{0}=\int\dd{k^{+}}\dd{k^{-}}\frac{1}{2k^{+}k^{-}-m^{2}+i\varepsilon}.
+\]
+
+\end_inset
+
+如果我们转换到光前柱坐标，则有
+\begin_inset Formula $k^{+}=r\cos\phi$
+\end_inset
+
+，
+\begin_inset Formula $k^{-}=r\sin\phi$
+\end_inset
+
+，则
+\begin_inset Formula $A_{0}$
+\end_inset
+
+变成
+\begin_inset Formula 
+\begin{align}
+A_{0} & =\frac{1}{2}\int_{0}^{\infty}\int_{0}^{2\pi}r\dd{r}\dd{\phi}\frac{1}{r^{2}\sin\phi\cos\phi-m^{2}+i\varepsilon}\nonumber \\
+ & =\frac{1}{2}\int_{0}^{\infty}\frac{\dd{r}}{r}\int_{0}^{2\pi}\dd{\phi}\frac{1}{\sin\phi\cos\phi-m^{2}/r^{2}+i\varepsilon}.\label{eq:beA2}
+\end{align}
+
+\end_inset
+
+注意到
+\begin_inset Formula $2\sin\phi\cos\phi=\sin\left(2\phi\right)$
+\end_inset
+
+，作变量代换
+\begin_inset Formula $\theta=2\phi$
+\end_inset
+
+ 则
+\begin_inset Formula 
+\begin{equation}
+A_{0}=\frac{1}{2}\int_{0}^{\infty}\frac{\dd{r}}{r}\int_{0}^{2\pi}\dd{\theta}\frac{1}{\sin\theta-2m^{2}/r^{2}+i\varepsilon}.\label{eq:beA3}
+\end{equation}
+
+\end_inset
+
+然后在复平面进行积分。令
+\begin_inset Formula $z=e^{i\theta}$
+\end_inset
+
+ ，并定义
+\begin_inset Formula $\beta=2m^{2}/r^{2}$
+\end_inset
+
+，积分变成
+\begin_inset Formula 
+\begin{equation}
+A_{0}=\frac{1}{2}\int_{0}^{\infty}\frac{\dd{r}}{r}\int_{C}\dd{z}\frac{2}{\left[z-\left(i\beta+\sqrt{1-\beta^{2}}+\epsilon\right)\right]\left[z-\left(i\beta-\sqrt{1-\beta^{2}}+\epsilon\right)\right]},\label{eq:beA4}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $C$
+\end_inset
+
+表示沿着单位圆的积分，逆时针方向。
+\end_layout
+
+\begin_layout Standard
+由于
+\begin_inset Formula $\beta$
+\end_inset
+
+的值可能从
+\begin_inset Formula $0$
+\end_inset
+
+取到
+\begin_inset Formula $\infty$
+\end_inset
+
+，所以我们必须小心处理各种情况。当 
+\begin_inset Formula $0\le\beta\le1$
+\end_inset
+
+，注意到（暂不理会
+\begin_inset Formula $\epsilon$
+\end_inset
+
+），poles 位于上半平面的单位圆上，Espilon 将 poles 沿着正方向平移，即第一象限的pole现在位于积分回路外，而第二象限的pole现在位于积分
+回路内，完成积分给出
+\begin_inset Formula 
+\begin{equation}
+A_{0}\left(0\le\beta\le1\right)=\int_{0}^{\infty}\frac{\dd{r}}{r}\frac{-2\pi i}{\sqrt{1-\beta^{2}}}.\label{eq:beA5}
+\end{equation}
+
+\end_inset
+
+现令
+\begin_inset Formula $\beta>1$
+\end_inset
+
+，poles 移动到虚轴上。它们现在的位置是 
+\begin_inset Formula $i\left(\beta\pm\sqrt{\beta^{2}-1}\right)+\epsilon$
+\end_inset
+
+。由于 
+\begin_inset Formula $\beta>1$
+\end_inset
+
+，我们改写成
+\begin_inset Formula $\beta=1+\eta$
+\end_inset
+
+，代入极点给出 
+\begin_inset Formula $i\left(1+\eta\pm\sqrt{\eta^{2}+2\eta}\right)+\epsilon$
+\end_inset
+
+。改写成这种形式之后容易看出，带负号的 pole 落在单位圆内，而带正号的 pole 落在单位圆外。再次完成回路积分给出
+\begin_inset Formula 
+\begin{equation}
+A_{0}\left(\beta>1\right)=\int_{0}^{\infty}\frac{\dd{r}}{r}\frac{-2\pi i}{\sqrt{1-\beta^{2}}}.\label{eq:beA6}
+\end{equation}
+
+\end_inset
+
+所以，两种情况下
+\begin_inset Formula $A_{0}$
+\end_inset
+
+的结果相同。 
+\end_layout
+
+\begin_layout Standard
+将结果代回 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 的定义，继续 
+\begin_inset Formula $r$
+\end_inset
+
+ 的积分，得到：
+\begin_inset Formula 
+\begin{align*}
+A_{0} & =-2\pi i\int_{0}^{\infty}\dd{r}\frac{r}{\sqrt{r^{4}-4m^{4}}}=-2\pi i\lim_{R\to\infty}\int_{0}^{R}\dd{r}\frac{r}{\sqrt{r^{4}-4m^{4}}}\\
+ & =-i\pi\lim_{R\to\infty}\arctanh\left(\frac{R^{2}}{\sqrt{R^{4}-4m^{4}}}\right)=-i\pi\lim_{R\to\infty}\arctanh\left(\frac{R^{2}}{\sqrt{1-\left(4m^{4}/R^{4}\right)}}\right)
+\end{align*}
+
+\end_inset
+
+代入 hyperbolic arctangent 函数的级数展开得：
+\begin_inset Formula 
+\begin{equation}
+A_{0}\sim-i\pi\ln\left(R^{2}\right)-\frac{\pi^{2}}{2}+i\pi\ln\left(m^{2}\right)+\order{\frac{1}{R^{4}}}.\label{eq:beA8}
+\end{equation}
+
+\end_inset
+
+与维数正规化的结果比较[7]
+\begin_inset Formula 
+\[
+A_{0}=-i\pi\left(\frac{1}{\epsilon}-\gamma+\ln4\pi-\ln\frac{m^{2}}{\mu^{2}}\right)+\order{\epsilon}.
+\]
+
+\end_inset
+
+也能再现协变振幅中正确的质量依赖。 
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xxxxx
+\end_layout
+
+\end_body
+\end_document

@@ -9,7 +9,7 @@
 在计算机上安装`Jupyter Notebook`后, 即可运行笔记本服务器.
 您可以通过运行以下命令从命令行(在`Mac / Linux`上使用`Terminal`, 在Windows上使用`Command Prompt`)启动笔记本服务器.
 
-```
+```bash
 jupyter notebook
 ```
 

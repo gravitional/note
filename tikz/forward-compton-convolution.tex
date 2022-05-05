@@ -1,0 +1,68 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary {arrows.meta}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\tikzset{
+% 画三重线的代码
+pics/tripleLine/.style n args={3}{
+%%-----subpicture 代码
+code={
+\draw ($ #1+(0,#3) $) -- ($ #2 + (0,#3) $);
+\draw ($ #1 - (0,#3) $) -- ($ #2 -(0,#3) $);
+\draw ($ #1+(0,0) $) -- ($ #2 + (0,0) $);
+\draw[-{Latex[length=3mm]}]  #1 --($ #1!.55!#2 $);
+}},
+}
+
+\begin{tikzpicture}
+    \begin{feynman}
+        %% 上面的 blob
+        \vertex (a0) at (0,0){a0};
+        %% 下面的 blob
+        \vertex[above right =-2.3 and 0 of a0] (b0){};
+        %%
+        \vertex[above right =0.2  and -0.6 of a0] (a1){};
+        \vertex[above right =0.2  and +0.6 of a0] (a2){};
+        \vertex[above right =1.6  and 2.5 of a0] (a3){};
+        \vertex[above right =1.6  and -2.5 of a0] (a4){};
+        %% 介子 blob
+        \vertex[above right =-0.2  and -0.6 of a0] (a1d){a1d};
+        \vertex[above right =-0.2  and +0.6 of a0] (a2d){a2d};
+        % 重子blob 内部
+        \vertex[above right =0.3  and -0.6 of b0] (b1u){};
+        \vertex[above right =0.3  and +0.6 of b0] (b2u){};
+        %%
+        \vertex[above right =0 and -1.7 of b0] (ba1){};
+        \vertex[above right =0 and +1.7 of b0] (ba2){};
+        % 重子线左右
+        \vertex[above right =0  and -3 of b0] (b1){};
+        \vertex[above right =0  and +3 of b0] (b2){};
+        % 对各个顶点连线
+        \diagram*{
+        (b1) --[opacity=1,momentum'=\(P\)] (ba1);
+        (ba2)--[opacity=1,momentum'=\(P\)](b2);
+        { [edge= fermion]
+        (b1u) --[momentum=\(k\),edge label'=\(i\)] (a1d),
+        (a2d)--[momentum=\(k\),edge label'=\(j\)](b2u),
+        };
+        % 光子线
+        {[edge=photon]
+        (a4) --[momentum=\(q\)] (a1)--(a2)--[momentum=\(q\)](a3),
+        };
+        };
+        % 画椭圆 blob
+        \filldraw[fill=blue!12,draw=black] (a0)ellipse[x radius=1.7,y radius=0.6,anchor=center];
+        \filldraw[fill=blue!12,draw=black] (b0)ellipse[x radius=1.7,y radius=0.6,anchor=center];
+        % 文字
+        \node[above right =0  and 0 of a0] (t1){$t_{ij}^{\mu\nu}(k,q)$};
+        \node[above right =0  and 0 of b0] (t2){$\chi_{ij}(k,P)$};
+        %
+        \pic {tripleLine = {(b1)}{(ba1)}{2pt}};
+        \pic {tripleLine = {(ba2)}{(b2)}{2pt}};
+    \end{feynman}
+\end{tikzpicture}
+\end{document}

@@ -11,7 +11,8 @@
 
 这两个包的区别在于可选参数给出的形式不同. 参数名称和必选参数是相同的.
 
-插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置. `figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例.
+插图和表格通常需要占据大块空间,所以在文字处理软件中我们经常需要调整他们的位置.
+`figure` 和 `table` 环境可以自动完成这样的任务; 这种自动调整位置的环境称作浮动体(`float`). 我们以 `figure` 为例.
 
 ```latex
 \begin{figure}[htbp]
@@ -56,11 +57,11 @@
 
 ### 子页面宽度resizebox
 
-[一行代码解决LaTex表格过宽或过窄问题](https://blog.csdn.net/Rained_99/article/details/79389189#commentBox)
+[一行代码解决LaTex表格过宽或过窄问题](https://blog.csdn.net/Rained_99/article/details/79389189)
 
-若表格过宽,则使用
++ 若表格过宽, 则使用
 
-```bash
+```latex
 \begin{table}[htbp]
 \center
 \caption{ Example}
@@ -72,7 +73,7 @@
 \end{table}
 ```
 
-若表格过窄,则使用
++ 若表格过窄, 则使用
 
 ```bash
 \begin{table}[htbp]
@@ -86,36 +87,37 @@
 \end{table}
 ```
 
-如果想在`LyX`中使用, 参考[extended features ofLYX/LATEX](https://johnrhudson.me.uk/computing/Tips_tricks_and_extended_features_of_LyX_LaTeX.pdf)
+如果想在`LyX`中使用, 参考[extended features ofLYX/LATEX][],
 在`Document->Settings->Modules`中添加`GraphicBoxes`模块, 然后就可以在菜单栏使用`Insert->Custom Insets->Resizebox`.
-第一个参数是宽度, 第二个是高度, 为了避免`LyX`把`\textwidth`中的`\`解析成`\textbackslash`, 可以按下`Ctrl+L`, 在源码环境中输入.
+第一个参数是宽度, 第二个是高度,
+为了避免`LyX`把`\textwidth`中的`\`解析成`\textbackslash`, 可以按下`Ctrl+L`, 在源码环境中输入.
 
-***
-同类型还有`\rotatebox`, `\rotatebox[旋转原点]{旋转角度}{框内容}`.
++ 同类型还有`\rotatebox`, `\rotatebox[旋转原点]{旋转角度}{框内容}`.
 
 其中原点指定为`c`, `l`, `r`, `b`, `t`或者使用它们的组合, 逆时针的旋转角度按度数表示.
 从`LYX 2.2`开始,  一旦你安装了`GraphicBoxes`模块, 选择`Insert.CustomInsets.Rotatebox`,
 在你想要旋转框出现的地方选择`Insert.Origin`来添加一个`Origin`选项.  在`Origin`盒子中输入`=c`, 在`Angle`盒子中输入`30`, 在`Angle`盒子后面输入文字.
 
-### resizebox
+[extended features ofLYX/LATEX]: https://johnrhudson.me.uk/computing/Tips_tricks_and_extended_features_of_LyX_LaTeX.pdf
 
-22.3.4 \resizebox
+### resizebox
 
 [22.3.4 \resizebox](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ctabcolsep)
 
-Synopses:
++ 语法:
 
 ```latex
 \resizebox{horizontal length}{vertical length}{material}
 \resizebox*{horizontal length}{vertical length}{material}
 ```
 
-给定一个大小(例如`3`厘米),请转换`material`使其达到该大小.  如果水平长度或垂直长度是一个感叹号`!` 就进行等比缩放.
++ 给定一个大小(例如`3`厘米),请转换`material`使其达到该大小.
+如果水平长度或垂直长度是一个感叹号`!` 就进行等比缩放.
 
-此示例使图形的宽度为半英寸,并按相同的比例垂直缩放图形,以防止图形变形.
++ 此示例使图形的宽度为半英寸,并按相同的比例垂直缩放图形,以防止图形变形.
 
-```bash
-\ resizebox {0.5in} {!} {\ includegraphics {lion}}
+```latex
+\resizebox{0.5in}{!}{\includegraphics{lion}}
 ```
 
 未加星标形式 `\resizebox` 取垂直长度为`box`的高度,而带星标形式 `\resizebox*` 取其`height+depth`.
@@ -125,12 +127,9 @@ Synopses:
 您可以使用 `\depth`,`\height`,`\totalheight`和 `\width`来引用框的原始大小.
 因此,使用 `\resizebox{2in}{\height}{Two inch}`将文本设置为两英寸宽,但保留原始高度.
 
-***
-8.23 tabular
++ [8.23 tabular](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ctabcolsep)
 
-[8.23 tabular](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ctabcolsep)
-
-`\tabcolsep`
+`\tabcolsep`;
 
 长度是列之间间隔的一半.  默认值为`6pt`.  用 `\setlength`更改它.
 
@@ -139,7 +138,7 @@ Synopses:
 [LaTeX 对齐问题](https://blog.csdn.net/lvchaoshun/article/details/50518271)
 [latex23 doc](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#index-_005ccentering)
 
-对齐的语法是 `{\centering 文字}`或者
+对齐的语法是 `{\centering 文字}` 或者
 
 ```latex
 \begin{group}
@@ -147,7 +146,8 @@ Synopses:
 \end{group}
 ```
 
-它使材料在其范围内(`scope`)居中.  它最常在诸如图形之类的环境中或在`parbox`中使用.
+它使材料在其范围内(`scope`)居中.
+它最常在诸如图形之类的环境中或在`parbox`中使用.
 常用来使插图居中:
 
 ```latex
@@ -425,13 +425,16 @@ int main(){
 首先,这一切,都需要我们使用宏包geometry. 因此,首先,我们需要在导言区中写上`\usepackage{geometry}`.
 [geometry](https://www.ctan.org/pkg/geometry)
 
-该软件包提供了一个轻松灵活的用户界面来自定义页面布局,实现了自动居中和自动平衡机制,因此用户只需给出最少的页面布局描述即可.
-例如,如果您想将每个边距设置为`2cm`,而没有标题空间,则只需要`\usepackage[margin=2cm,nohead]{geometry}`.
+该软件包提供了一个轻松灵活的用户界面来自定义页面布局,
+实现了自动居中和自动平衡机制, 因此用户只需给出最少的页面布局描述即可.
+例如您想将每个边距设置为`2cm`, 而没有标题空间,
+则只需要`\usepackage[margin=2cm,nohead]{geometry}`.
 
 ### 页面大小设置
 
-我们常用的页面大小,就是`A4`纸.要实现这个,可以在导言区中写上`\geometry{a4paper}`
-如果我们不是用约定的纸张大小,而是想以数值形式指定纸张大小,比如说长`22厘米`,宽`10厘米`,那么,我们可以在导言区中写
+我们常用的页面大小,就是`A4`纸. 要实现这个,可以在导言区中写上`\geometry{a4paper}`
+如果我们不是用约定的纸张大小, 而是想以数值形式指定纸张大小, 比如说长`22厘米`, 宽`10厘米`,
+那么我们可以在导言区中写
 
 ```latex
 \geometry{paperheight=22cm, paperwidth=10cm}
@@ -463,4 +466,50 @@ int main(){
 \geometry{textheight=20cm}
 ```
 
-`geometry`宏包具有上述参数的图像描述
+`geometry` 宏包具有上述参数的图像描述
+
+## 图文混排 文字环绕
+
+[文字环绕](https://blog.csdn.net/z_feng12489/article/details/90750409)
+
+所用宏包; `\usepackage{wrapfig}`
+
+允许 figure 或 tables 周围有文本包裹.
+不能与 `list` 环境结合使用, 但可以在 `parbox` 或 `minipage` 中使用,
+也可以使用 `twocolumn` 格式. 支持 `float` 包.
+
+### 命令解释
+
+```latex
+begin{wrapfigure}
+{行数}[位置][超出长度]{宽度}
+<图形>
+end{wrapfigure}
+```
+
++ 命令解释
+
++ `[r],[R]`; 表示图形位于文本的右边.
++ `[l],[L]`; 表示图形位于文本的左边.
++ `[i],[R]`; 表示图形位于页面靠里的一边(用在双面格式里).
++ `[o],[O]`; 表示图形位于页面靠外的一边.
+
+`超出长度` 是指图形超出文本边界的长度, 缺省为 `0pt`.
+`宽度` 则指图形的宽度. `wrapfig` 会自动计算图形的高度.
+
+### 应用示例
+
+```latex
+\begin{wrapfigure}{r}{4cm}%靠文字内容的右侧
+\centering
+\includegraphics[width=0.15\textwidth]{WeChatlogo-6.jpg}
+\caption{\footnotesize 运动健康}
+\end{wrapfigure}
+
+庆历四年春, 滕子京谪守巴陵郡.
+越明年, 政通人和, 百废具兴. 乃重修岳阳楼, 增其旧制, 刻唐贤今人诗赋于其上. 属予作文以记之.
+予观夫巴陵胜状, 在洞庭一湖. 衔远山, 吞长江, 浩浩汤汤, 横无际涯; 朝晖夕阴, 气象万千.
+此则岳阳楼之大观也, 前人之述备矣. 然则北通巫峡, 南极潇湘, 迁客骚人, 多会于此, 览物之情, 得无异乎?
+```
+
+![结果](https://img-blog.csdnimg.cn/20190603131029577.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pfZmVuZzEyNDg5,size_16,color_FFFFFF,t_70)

@@ -6,104 +6,13 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
-%%%+++++++++++++++++++++++++++++++
-\usepackage{geometry} % 整体页面设置
-\geometry{a4paper} %页面大小是A4纸
-\geometry{top=2cm} %设置版心顶部距离
-%\geometry{textheight=22cm}  %设置版心长度
-%\geometry{centering} % 水平、竖直均居中
-\geometry{textwidth=17cm} 
-%++++++++++++++++++++++++++++++++++++++++++++++++
-\usepackage{eso-pic}
-% This package makes it easy to add some picture commands to every page at ab-solute positions
-\usepackage{float}%使用[H]选项将浮动题放到确定的位置
-\usepackage{hyperref,graphicx,xcolor} %超链接，图形包，图片
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色
-% xcolor package starts from the basic facilities of the 
-% color package, and provides easy driver-independent access
-%to several kinds of color tints, shades, tones, 
-%and mixes of arbitrary colors
-\usepackage{fontspec}
-\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
-\usepackage{amsmath,amsfonts} % 数学字体
-\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
-\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
-\usepackage{mathrsfs} % 提供了mathscr 命令
-%++++++++++++++++++++++++++++++++++++++++
-% 设置英文字体
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Roman}
-%设置数学字体
-\usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
-%开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
-% DejaVu Math TeX Gyre, Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
-%++++++++++++++++++++++++++++++++++++++++
-\usepackage{enumerate} 
-\usepackage{tikz,tikz-feynman}% 费曼图及其他作图
-\usetikzlibrary{shapes.misc,animations}
-\usetikzlibrary{shapes.geometric}% tikz node 形状的库
-\usepackage{siunitx} % 国际单位制
-\usepackage{braket} % Dirac bra-ket notation% useful for Feynman slash notation
-\usepackage{slashed} % also for slash notation: take your pick!
-\usepackage{simplewick} 
-% a simple means of drawing Wick contractions above and below expressions. 
-\usepackage{makeidx} 
-% Standard package for creating indexes
-\usepackage{multirow}
-\usepackage{mathtools}% 定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%%%+++++++++++++++++++++++++++++++
-\usepackage{listings}
-% 在LaTex中添加代码高亮
-\usepackage{framed}
-% 在对象周围添加方框，阴影等等，允许跨页
-\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
-%定义各种颜色
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{〈style name〉}{〈key=value list〉}
-%stores the key=value list
-\lstdefinestyle{codestyle1}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
-%%++++++++++++++++++++ 
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\im}{Im}
-\DeclareMathOperator{\diag}{diag} %对角矩阵
-\DeclareMathOperator{\res}{Res} %复变函数的留数
-\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\DeclareMathOperator{\sign}{Sign} %符号函数
-\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%普通微分
-\newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
-\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
-\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+\input{chpt-preamble}
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+\end_modules
 \maintain_unincluded_children false
 \language chinese-simplified
 \language_package none
@@ -231,19 +140,15 @@ V_{\mu}\left(x\right) & =V_{\mu}^{\prime}\left(x\right)+\partial_{\mu}\alpha\lef
 \end_layout
 
 \begin_layout Standard
-可以用一种新方法去获得这个结果，新的方法更容易推广到non-local 的情形。path exponential introduced by Bloch,
- and path-ordered exponential introduced by Wilson
-\end_layout
-
-\begin_layout Standard
-path ordering 对于电磁规范场来说并不必要，因为
+可以用一种新方法去获得这个结果，新的方法更容易推广到 nonlocal 的情形。Bloch 引入的路径指数（path exponential ）,和
+ Wilson 引入的排序路径指数（path-ordered exponential） 。Path ordering 对于电磁规范场来说并不必要，因为
 \begin_inset Formula $U(1)$
 \end_inset
 
 是Abelian 群，但是对于引入外部的弱相互作用规范场来说是必需的。
 \begin_inset Formula 
 \[
-\int\dif x\frac{\partial}{\partial x}\delta(x)f(x)=\int\dif x\frac{\partial}{\partial x}(\delta(x)f(x))-\int\dif x\frac{\partial}{\partial x}f(x)=-\int\dif x\delta(x)\frac{\partial}{\partial x}f(x)
+\int\dd x\frac{\partial}{\partial x}\delta(x)f(x)=\int\dd x\frac{\partial}{\partial x}(\delta(x)f(x))-\int\dd x\frac{\partial}{\partial x}f(x)=-\int\dd x\delta(x)\frac{\partial}{\partial x}f(x)
 \]
 
 \end_inset
@@ -255,8 +160,8 @@ path ordering 对于电磁规范场来说并不必要，因为
 考虑自由夸克的作用量，
 \begin_inset Formula 
 \begin{align*}
-S & =\int\dif^{4}x\bar{\psi}(x)\gamma.\partial_{x}.\psi(x)=\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\delta^{4}(x-y)\gamma.\partial_{y}.\psi(y)\\
- & =\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\left(-\gamma.\partial_{y}\delta^{4}(x-y)\right).\psi(y)
+S & =\int\dd^{4}x\bar{\psi}(x)\gamma.\partial_{x}.\psi(x)=\iint\dd^{4}x\dd^{4}y\bar{\psi}(x)\delta^{4}(x-y)\gamma.\partial_{y}.\psi(y)\\
+ & =\iint\dd^{4}x\dd^{4}y\bar{\psi}(x)\left(-\gamma.\partial_{y}\delta^{4}(x-y)\right).\psi(y)
 \end{align*}
 
 \end_inset
@@ -277,7 +182,7 @@ literal "false"
  定义的规范变换下，指数因子的变换为
 \begin_inset Formula 
 \[
-\exp\left(-ieQ\int_{x}^{y}\dif\omega_{\nu}V^{\nu}\right)=\left(1+i\alpha(x)Q\right)\exp\left(-ieQ\int_{x}^{y}\dif\omega_{\nu}V^{\prime\nu}\right)\left(1-i\alpha(y)Q\right)
+\exp\left(-ieQ\int_{x}^{y}\dd\omega_{\nu}V^{\nu}\right)=\left(1+i\alpha(x)Q\right)\exp\left(-ieQ\int_{x}^{y}\dd\omega_{\nu}V^{\prime\nu}\right)\left(1-i\alpha(y)Q\right)
 \]
 
 \end_inset
@@ -293,8 +198,8 @@ literal "false"
 项，规范不变的拉氏量为
 \begin_inset Formula 
 \begin{align*}
-S & =\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\left(-\gamma.\partial_{y}\delta^{4}(x-y)\right).\exp\left(-ieQ\int_{x}^{y}\dif\omega_{\nu}V^{\nu}\right)\psi(y)\\
- & =\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\delta^{4}(x-y)\gamma.\partial_{y}\left(\exp\left(-ieQ\int_{x}^{y}\dif\omega_{\nu}V^{\nu}\right)\psi(y)\right)
+S & =\iint\dd^{4}x\dd^{4}y\bar{\psi}(x)\left(-\gamma.\partial_{y}\delta^{4}(x-y)\right).\exp\left(-ieQ\int_{x}^{y}\dd\omega_{\nu}V^{\nu}\right)\psi(y)\\
+ & =\iint\dd^{4}x\dd^{4}y\bar{\psi}(x)\delta^{4}(x-y)\gamma.\partial_{y}\left(\exp\left(-ieQ\int_{x}^{y}\dd\omega_{\nu}V^{\nu}\right)\psi(y)\right)
 \end{align*}
 
 \end_inset
@@ -302,7 +207,7 @@ S & =\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\left(-\gamma.\partial_{y}\delta^{4}(x-
 路径积分的导数需要一个良好的定义，following Mandelstam[5]我们引入以下记号，
 \begin_inset Formula 
 \[
-I\left(x,y;p\right)\equiv\int_{x}^{y}\dif\omega^{\nu}V_{\nu}
+I\left(x,y;p\right)\equiv\int_{x}^{y}\dd\omega^{\nu}V_{\nu}
 \]
 
 \end_inset
@@ -434,7 +339,7 @@ name "fig:1"
 收缩到一个点，而不是一个闭合回路，那么，
 \begin_inset Formula 
 \[
-S[g]=\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\delta(x-y)\gamma^{\mu}(\partial_{\mu}-ieQV_{\mu})\psi(y)
+S[g]=\iint\dd^{4}x\dd^{4}y\bar{\psi}(x)\delta(x-y)\gamma^{\mu}(\partial_{\mu}-ieQV_{\mu})\psi(y)
 \]
 
 \end_inset
@@ -450,10 +355,10 @@ S[g]=\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\delta(x-y)\gamma^{\mu}(\partial_{\mu}-
 \begin_inset Formula 
 \begin{align*}
  & V_{\mu}(x)=V_{\mu}^{\prime}(x)+\frac{1}{e}\partial_{\mu}\alpha(x)\\
- & \exp\left(-ieQ\int_{x}^{y}\dif\omega_{\nu}V^{\nu}\right)\to\exp\left(-ieQ\int_{x}^{y}\dif\omega^{\nu}\left(V_{\nu}^{\prime}(\omega)+\frac{1}{e}\partial_{\nu}\alpha(\omega)\right)\right)\\
- & =\exp\left(-ieQ\left(\frac{1}{e}\int_{x}^{x_{0}}\dif\omega^{\nu}\partial_{\nu}\alpha(\omega)+\int_{x}^{y}\dif\omega^{\nu}V_{\nu}^{\prime}(\omega)+\frac{1}{e}\int_{y_{0}}^{y}\dif\omega^{\nu}\partial_{\nu}\alpha(\omega)\right)\right)\\
- & =\exp\left(-ieQ\left(-\frac{1}{e}\left(\alpha(x)-\alpha(x_{0})\right)+\int_{x}^{y}\dif\omega^{\nu}V_{\nu}^{\prime}(\omega)+\frac{1}{e}\left(\alpha(y)-\alpha(y_{0})\right)\right)\right)\\
- & =\exp\left(-ieQ\left(-\frac{1}{e}\alpha(x)+\int_{x}^{y}\dif\omega^{\nu}V_{\nu}^{\prime}(\omega)+\frac{1}{e}\alpha(y)\right)\right)*\exp\left(-ieQ\left(-\frac{1}{e}\alpha(x_{0})+\frac{1}{e}\alpha(y_{0})\right)\right)
+ & \exp\left(-ieQ\int_{x}^{y}\dd\omega_{\nu}V^{\nu}\right)\to\exp\left(-ieQ\int_{x}^{y}\dd\omega^{\nu}\left(V_{\nu}^{\prime}(\omega)+\frac{1}{e}\partial_{\nu}\alpha(\omega)\right)\right)\\
+ & =\exp\left(-ieQ\left(\frac{1}{e}\int_{x}^{x_{0}}\dd\omega^{\nu}\partial_{\nu}\alpha(\omega)+\int_{x}^{y}\dd\omega^{\nu}V_{\nu}^{\prime}(\omega)+\frac{1}{e}\int_{y_{0}}^{y}\dd\omega^{\nu}\partial_{\nu}\alpha(\omega)\right)\right)\\
+ & =\exp\left(-ieQ\left(-\frac{1}{e}\left(\alpha(x)-\alpha(x_{0})\right)+\int_{x}^{y}\dd\omega^{\nu}V_{\nu}^{\prime}(\omega)+\frac{1}{e}\left(\alpha(y)-\alpha(y_{0})\right)\right)\right)\\
+ & =\exp\left(-ieQ\left(-\frac{1}{e}\alpha(x)+\int_{x}^{y}\dd\omega^{\nu}V_{\nu}^{\prime}(\omega)+\frac{1}{e}\alpha(y)\right)\right)*\exp\left(-ieQ\left(-\frac{1}{e}\alpha(x_{0})+\frac{1}{e}\alpha(y_{0})\right)\right)
 \end{align*}
 
 \end_inset
@@ -465,7 +370,7 @@ S[g]=\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\delta(x-y)\gamma^{\mu}(\partial_{\mu}-
 ,cancel 掉这两个边界项,得到
 \begin_inset Formula 
 \[
-\exp\left(i\alpha(x)Q\right)\exp\left(-ieQ\int_{x}^{y}\dif\omega^{\nu}V_{\nu}^{\prime}(\omega)\right)\exp\left(-i\alpha(y)Q\right)
+\exp\left(i\alpha(x)Q\right)\exp\left(-ieQ\int_{x}^{y}\dd\omega^{\nu}V_{\nu}^{\prime}(\omega)\right)\exp\left(-i\alpha(y)Q\right)
 \]
 
 \end_inset
@@ -477,7 +382,7 @@ S[g]=\iint\dif^{4}x\dif^{4}y\bar{\psi}(x)\delta(x-y)\gamma^{\mu}(\partial_{\mu}-
 是小量，将指数函数展开
 \begin_inset Formula 
 \[
-\left(1+i\alpha(x)Q\right)\exp\left(-ieQ\int_{x}^{y}\dif\omega^{\nu}V_{\nu}^{\prime}(\omega)\right)\left(1-i\alpha(y)Q\right)
+\left(1+i\alpha(x)Q\right)\exp\left(-ieQ\int_{x}^{y}\dd\omega^{\nu}V_{\nu}^{\prime}(\omega)\right)\left(1-i\alpha(y)Q\right)
 \]
 
 \end_inset
@@ -572,8 +477,8 @@ GB 场包含在矩阵中
 项的规范相互作用为，
 \begin_inset Formula 
 \begin{align*}
-S_{g} & =\int\dif^{4}x\,\bar{\psi}\left(x\right)\gamma^{\mu}\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\psi\left(x\right)\\
- & +\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(x-y\right)\exp\left(-ieQ\int_{x}^{y}\mathcal{A}_{\nu}\dif\omega^{\nu}\right)\psi\left(y\right)
+S_{g} & =\int\dd^{4}x\,\bar{\psi}\left(x\right)\gamma^{\mu}\left(\partial_{\mu}-ieQ\mathcal{A}_{\mu}\right)\psi\left(x\right)\\
+ & +\iint\dd^{4}x\dd^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(x-y\right)\exp\left(-ieQ\int_{x}^{y}\mathcal{A}_{\nu}\dd\omega^{\nu}\right)\psi\left(y\right)
 \end{align*}
 
 \end_inset
@@ -621,7 +526,7 @@ ie\Gamma_{\text{L}}^{\mu}\left(p,q,p+q\right)=ieQ\gamma^{\mu}
 进行导数展开，令：
 \begin_inset Formula 
 \[
-F(x,y)=\exp\left(-ieQ\int_{x}^{y}\mathcal{A}^{\nu}\left(\omega\right)\dif\omega_{\nu}\right)\,\psi\left(y\right)
+F(x,y)=\exp\left(-ieQ\int_{x}^{y}\mathcal{A}^{\nu}\left(\omega\right)\dd\omega_{\nu}\right)\,\psi\left(y\right)
 \]
 
 \end_inset
@@ -629,8 +534,8 @@ F(x,y)=\exp\left(-ieQ\int_{x}^{y}\mathcal{A}^{\nu}\left(\omega\right)\dif\omega_
 进行傅立叶变换，把
 \begin_inset Formula 
 \begin{align*}
-S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(x-y\right)\,\exp\left[-ieQ\int_{x}^{y}\dif\omega^{\nu}\mathcal{A}_{\nu}\left(\omega\right)\right]\psi\left(y\right)\\
- & =\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(x-y\right)\,F\left(x,y\right)
+S_{\text{NL}} & =\iint\dd^{4}x\dd^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(x-y\right)\,\exp\left[-ieQ\int_{x}^{y}\dd\omega^{\nu}\mathcal{A}_{\nu}\left(\omega\right)\right]\psi\left(y\right)\\
+ & =\iint\dd^{4}x\dd^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(x-y\right)\,F\left(x,y\right)
 \end{align*}
 
 \end_inset
@@ -642,7 +547,7 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(x\right)\,\Sigma\left(
 变成
 \begin_inset Formula 
 \[
-S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(k\right)\tilde{\Sigma}\left(p\right)F\left(k-p,p\right)
+S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dd^{4}x\dd^{4}y\,\bar{\psi}\left(k\right)\tilde{\Sigma}\left(p\right)F\left(k-p,p\right)
 \]
 
 \end_inset
@@ -651,16 +556,16 @@ S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(k\rig
 \end_layout
 
 \begin_layout Subsection
-部分傅里叶变换
+正规子的算符展开
 \end_layout
 
 \begin_layout Standard
 假设作用量中的各个场或函数均存在傅立叶变换，写出作用量在动量空间的形式：
 \begin_inset Formula 
 \begin{align*}
-\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(x\right)\Sigma\left(x-y\right)F\left(x,y\right) & =\frac{1}{\left(2\pi\right)^{4}}\dif^{4}k\,\bar{\psi}\left(k\right)\,\exp\left({\color{red}+}ik.x\right)\\
- & \times\frac{1}{\left(2\pi\right)^{4}}\dif^{4}p\,\tilde{\Sigma}\left(p\right)\,\exp\left[{\color{red}-}ip\left(x-y\right)\right]\\
- & \times\frac{1}{\left(2\pi\right)^{8}}\dif^{4}k_{3}\dif^{4}k_{4}\,F\left(k_{3},k_{4}\right)\,\exp\left[{\color{red}-}ik_{3}.x{\color{red}-}ik_{4}.y\right]
+\iint\dd^{4}x\dd^{4}y\,\bar{\psi}\left(x\right)\Sigma\left(x-y\right)F\left(x,y\right) & =\frac{1}{\left(2\pi\right)^{4}}\dd^{4}k\,\bar{\psi}\left(k\right)\,\exp\left({\color{red}+}ik.x\right)\\
+ & \times\frac{1}{\left(2\pi\right)^{4}}\dd^{4}p\,\tilde{\Sigma}\left(p\right)\,\exp\left[{\color{red}-}ip\left(x-y\right)\right]\\
+ & \times\frac{1}{\left(2\pi\right)^{8}}\dd^{4}k_{3}\dd^{4}k_{4}\,F\left(k_{3},k_{4}\right)\,\exp\left[{\color{red}-}ik_{3}.x{\color{red}-}ik_{4}.y\right]
 \end{align*}
 
 \end_inset
@@ -676,7 +581,7 @@ S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(k\rig
  函数：
 \begin_inset Formula 
 \[
-\frac{1}{\left(2\pi\right)^{4}}\int\dif^{4}x\,\exp\left(ik.x-ip.x-ik_{3}.x\right)\to\delta\left(k-p-k_{3}\right)
+\frac{1}{\left(2\pi\right)^{4}}\int\dd^{4}x\,\exp\left(ik.x-ip.x-ik_{3}.x\right)\to\delta\left(k-p-k_{3}\right)
 \]
 
 \end_inset
@@ -688,7 +593,7 @@ S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(k\rig
 积分，
 \begin_inset Formula 
 \[
-\frac{1}{\left(2\pi\right)^{4}}\int\dif^{4}y\,\exp\left(ip.y-ik_{4}.y\right)\to\delta\left(p-k_{4}\right)
+\frac{1}{\left(2\pi\right)^{4}}\int\dd^{4}y\,\exp\left(ip.y-ik_{4}.y\right)\to\delta\left(p-k_{4}\right)
 \]
 
 \end_inset
@@ -708,7 +613,7 @@ S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(k\rig
  函数将保证动量守恒，限制自由动量的数目，我们得到
 \begin_inset Formula 
 \[
-\frac{1}{\left(2\pi\right)^{8}}\dif^{4}k\dif^{4}p\,\bar{\psi}\left(k\right)\,{\color{blue}\Sigma\left(p\right)}\,F\left(k-p,p\right)
+\frac{1}{\left(2\pi\right)^{8}}\dd^{4}k\dd^{4}p\,\bar{\psi}\left(k\right)\,{\color{blue}\Sigma\left(p\right)}\,F\left(k-p,p\right)
 \]
 
 \end_inset
@@ -724,7 +629,7 @@ S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\,\bar{\psi}\left(k\rig
 处作泰勒展开，
 \begin_inset Formula 
 \[
-S_{\text{NL}}=\frac{1}{\left(2\pi\right)^{8}}\iint\dif^{4}k\dif^{4}p\,\bar{\psi}\left(k\right)\left[\sum_{n=0}^{\infty}\frac{1}{n!}\tilde{\Sigma}\left(n,0\right)\left(p^{2}\right)^{n}\right]F\left(k-p,p\right)
+S_{\text{NL}}=\frac{1}{\left(2\pi\right)^{8}}\iint\dd^{4}k\dd^{4}p\,\bar{\psi}\left(k\right)\left[\sum_{n=0}^{\infty}\frac{1}{n!}\tilde{\Sigma}\left(n,0\right)\left(p^{2}\right)^{n}\right]F\left(k-p,p\right)
 \]
 
 \end_inset
@@ -907,9 +812,9 @@ S_{\text{NL}}=\frac{1}{\left(2\pi\right)^{8}}\iint\dif^{4}k\dif^{4}p\,\bar{\psi}
 不变回位置空间：
 \begin_inset Formula 
 \begin{align*}
-S_{\text{NL}} & =\frac{1}{\left(2\pi\right)^{8}}\iint\dif^{4}k\dif^{4}p\,\bar{\psi}\left(k\right)\left[\sum_{n=0}^{\infty}\frac{1}{n!}\tilde{\Sigma}\left(n,0\right)\left({\color{blue}p^{2}}\right)^{n}\right]F\left(k-p,p\right)\\
-\bar{\psi}\left(k\right) & =\int\dif^{4}x\,\bar{\psi}\left(x\right)\,e^{-ixk}\\
-\tilde{F}\left(k-p,p\right) & =\int\dif^{4}z\dif^{4}y\,F\left(z,y\right)\,\exp\left[iz\left(k-p\right)\right]\,e^{ipy}\\
+S_{\text{NL}} & =\frac{1}{\left(2\pi\right)^{8}}\iint\dd^{4}k\dd^{4}p\,\bar{\psi}\left(k\right)\left[\sum_{n=0}^{\infty}\frac{1}{n!}\tilde{\Sigma}\left(n,0\right)\left({\color{blue}p^{2}}\right)^{n}\right]F\left(k-p,p\right)\\
+\bar{\psi}\left(k\right) & =\int\dd^{4}x\,\bar{\psi}\left(x\right)\,e^{-ixk}\\
+\tilde{F}\left(k-p,p\right) & =\int\dd^{4}z\dd^{4}y\,F\left(z,y\right)\,\exp\left[iz\left(k-p\right)\right]\,e^{ipy}\\
 \sum_{n=0}^{\infty}\frac{1}{n!}\tilde{\Sigma}\left(n,0\right)\left(p^{2}\right)^{n} & \Rightarrow\sum_{n=0}^{\infty}\frac{1}{n!}\tilde{\Sigma}\left(n,0\right)\,\left({\color{blue}-\partial_{y}^{2}}\right)^{n}\,e^{ipy}=\tilde{\Sigma}\left(-\partial_{y}^{2}\right)\,e^{ipy}
 \end{align*}
 
@@ -1030,7 +935,7 @@ S_{\text{NL}}=\frac{1}{\left(2\pi\right)^{8}}\int_{xyzkp}\exp\left[iz\left(k-p\r
  函数：
 \begin_inset Formula 
 \begin{align*}
-S_{\text{NL}} & =\frac{1}{(2\pi)^{8}}\int_{xy}\delta\left(x-y\right)\bar{\psi}\left(x\right)\,\left[\tilde{\Sigma}\left(-\partial_{y}^{2}\right)\exp\left(ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right)\,\psi\left(y\right)\right]
+S_{\text{NL}} & =\frac{1}{(2\pi)^{8}}\int_{xy}\delta\left(x-y\right)\bar{\psi}\left(x\right)\,\left[\tilde{\Sigma}\left(-\partial_{y}^{2}\right)\exp\left(ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right)\,\psi\left(y\right)\right]
 \end{align*}
 
 \end_inset
@@ -1042,14 +947,14 @@ S_{\text{NL}} & =\frac{1}{(2\pi)^{8}}\int_{xy}\delta\left(x-y\right)\bar{\psi}\l
 总结：
 \begin_inset Formula 
 \begin{align*}
-S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,\Sigma\left(x-y\right){\color{blue}\,\exp\left[ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]}\,\psi\left(y\right)\\
- & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,\delta\left(x-y\right)\,\tilde{\Sigma}\left({\color{blue}-\partial_{y}^{2}}\right)\,\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]\,{\color{blue}\psi\left(y\right)}
+S_{\text{NL}} & =\iint\dd^{4}x\dd^{4}y\,B\left(x\right)\,\Sigma\left(x-y\right){\color{blue}\,\exp\left[ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]}\,\psi\left(y\right)\\
+ & =\iint\dd^{4}x\dd^{4}y\,B\left(x\right)\,\delta\left(x-y\right)\,\tilde{\Sigma}\left({\color{blue}-\partial_{y}^{2}}\right)\,\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]\,{\color{blue}\psi\left(y\right)}
 \end{align*}
 
 \end_inset
 
 注意，在规范链接的标准形式下 ，
-\begin_inset Formula $I_{x,y}=\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]$
+\begin_inset Formula $I_{x,y}=\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]$
 \end_inset
 
  ，偏导数作用在路径的起点
@@ -1057,6 +962,103 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,\Sigma\left(x-y\right
 \end_inset
 
 上（积分下限）。
+\end_layout
+
+\begin_layout Subsection
+简单的证明
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\text{级数展开}\quad & \Sigma\left(x-y\right)=\Sigma\left(x\right)+\left(-y\right)\frac{\Sigma^{(1)}\left(x\right)}{1!}+\left(-y\right)^{2}\frac{\Sigma^{(2)}\left(x\right)}{2!}+\cdots\\
+\text{算符指数化}\quad & =\left.e^{\left(-y\right)\partial_{z}}{\color{blue}\Sigma\left(z\right)}\right|_{z=x}\\
+\text{傅立叶变换}\quad & =\frac{1}{\left(2\pi\right)^{4}}\left.e^{\left(-y\right)\partial_{z}}\int\dd[4]{k}{\color{blue}\tilde{\Sigma}\left(k\right)e^{ikz}}\right|_{z=x}\\
+\text{算符替换}k\leftrightarrow-i\partial_{z}\quad & =\frac{1}{\left(2\pi\right)^{4}}\left.\tilde{\Sigma}\left(-i\partial_{z}\right)\int\dd[4]{k}e^{ikz-iky}\right|_{z=x}\\
+\delta\text{函数的性质}\quad & =\frac{1}{\left(2\pi\right)^{4}}\left.\tilde{\Sigma}\left(-i\partial_{z}\right)\delta\left(z-y\right)\right|_{z=x}\\
+ & =\frac{1}{\left(2\pi\right)^{4}}\tilde{\Sigma}\left(-i\partial_{x}\right)\delta\left(x-y\right)
+\end{align*}
+
+\end_inset
+
+考虑到
+\begin_inset Formula $\delta(x)$
+\end_inset
+
+是偶函数，
+\begin_inset Formula $\partial_{-x}\delta(x)=\frac{\dd{\delta(-x)}}{\dd{(-x)}}=-\partial_{x}\delta(x)$
+\end_inset
+
+，所以
+\begin_inset Formula 
+\[
+\Sigma\left(x-y\right)=\frac{1}{\left(2\pi\right)^{4}}\tilde{\Sigma}\left(-i\partial_{x}\right)\delta\left(x-y\right)=\frac{1}{\left(2\pi\right)^{4}}\tilde{\Sigma}\left(i\partial_{y}\right)\delta\left(x-y\right)
+\]
+
+\end_inset
+
+完全类似地，可以得到
+\begin_inset Formula 
+\[
+\tilde{\Sigma}\left(k-q\right)=\Sigma\left(i\partial_{k}\right)\delta\left(k-q\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+使用
+\begin_inset Formula $\delta(x)$
+\end_inset
+
+函数的公式
+\begin_inset Formula $\int\partial_{x}^{n}\delta\left(x\right)f\left(x\right)\dd{x}=\int\delta\left(x\right)(-\partial_{x})^{n}f\left(x\right)\dd{x}$
+\end_inset
+
+，化简成
+\begin_inset Formula 
+\[
+\Sigma\left(x-y\right)f\left(x,y\right)=\frac{1}{\left(2\pi\right)^{4}}\delta\left(x-y\right)\tilde{\Sigma}\left(i\partial_{x}\right)f\left(x,y\right)=\frac{1}{\left(2\pi\right)^{4}}\delta\left(x-y\right)\tilde{\Sigma}\left(-i\partial_{y}\right)f\left(x,y\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+使用此公式，并考虑到
+\begin_inset Formula $\Sigma\left(x-y\right)$
+\end_inset
+
+只依赖于
+\begin_inset Formula $x-y$
+\end_inset
+
+的偶次项，立即可得：
+\begin_inset Formula 
+\begin{align*}
+S_{\text{NL}} & =\iint\dd[4]{x}\dd[4]{y}B\left(x\right)\,\Sigma\left(x-y\right){\color{blue}\,\exp\left[ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dd{w^{\nu}}\right]}\,\psi\left(y\right)\\
+ & =\iint\dd[4]{x}\dd[4]{y}B\left(x\right)\,\delta\left(x-y\right)\,\tilde{\Sigma}\left({\color{blue}-\partial_{y}^{2}}\right)\,\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dd{w^{\nu}}\right]\,{\color{blue}\psi\left(y\right)}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tilde{\Sigma}\left(k^{2}\right)$
+\end_inset
+
+是 
+\begin_inset Formula $\Sigma\left(x-y\right)$
+\end_inset
+
+的傅立叶镜像，它只是标量 
+\begin_inset Formula $k^{2}$
+\end_inset
+
+ 的函数。
 \end_layout
 
 \begin_layout Subsection
@@ -1071,8 +1073,8 @@ salamu 形式
 形式下，作用量为
 \begin_inset Formula 
 \begin{align*}
- & \iint\dif^{4}x\dif^{4}y\,B\left(x\right)F\left(y-x\right)I\left(x,y\right)\,\phi\left(y\right)\\
- & I\left(x,y\right)=\exp\left[+ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]=\exp\left[-ieQ\int_{x}^{y}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]
+ & \iint\dd^{4}x\dd^{4}y\,B\left(x\right)F\left(y-x\right)I\left(x,y\right)\,\phi\left(y\right)\\
+ & I\left(x,y\right)=\exp\left[+ieQ\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]=\exp\left[-ieQ\int_{x}^{y}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]
 \end{align*}
 
 \end_inset
@@ -1084,8 +1086,8 @@ salamu 的形式，相当于对积分变量平移，令
 ，得到
 \begin_inset Formula 
 \begin{align*}
- & \iint\dif^{4}x\dif^{4}a\,B\left(x\right)\,F\left(a\right)I\left(x,x+a\right)\,\phi\left(x+a\right)\\
- & I\left(x,x+a\right)=\exp\left[ieQ\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]=\exp\left[-ieQ\int_{x}^{x+a}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]
+ & \iint\dd^{4}x\dd^{4}a\,B\left(x\right)\,F\left(a\right)I\left(x,x+a\right)\,\phi\left(x+a\right)\\
+ & I\left(x,x+a\right)=\exp\left[ieQ\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]=\exp\left[-ieQ\int_{x}^{x+a}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]
 \end{align*}
 
 \end_inset
@@ -1093,8 +1095,8 @@ salamu 的形式，相当于对积分变量平移，令
 对上面讨论的过程，同样进行变量平移，得到
 \begin_inset Formula 
 \begin{align*}
-S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}a\,B\left(x\right)\,{\color{blue}F\left(a\right)\,}\exp\left[ieQ\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]\,\phi\left(x+a\right)\\
- & =\iint\dif^{4}x\dif^{4}a\,B\left(x\right)\,{\color{blue}\delta\left(a\right)\,\tilde{\Sigma}\left(-\partial_{x+a}^{2}\right)}\exp\left[ieQ\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]\,\phi\left(x+a\right)
+S_{\text{NL}} & =\iint\dd^{4}x\dd^{4}a\,B\left(x\right)\,{\color{blue}F\left(a\right)\,}\exp\left[ieQ\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]\,\phi\left(x+a\right)\\
+ & =\iint\dd^{4}x\dd^{4}a\,B\left(x\right)\,{\color{blue}\delta\left(a\right)\,\tilde{\Sigma}\left(-\partial_{x+a}^{2}\right)}\exp\left[ieQ\int_{x+a}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]\,\phi\left(x+a\right)
 \end{align*}
 
 \end_inset
@@ -1118,7 +1120,7 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}a\,B\left(x\right)\,{\color{blue}F\left(a
 场的表达式为：
 \begin_inset Formula 
 \begin{align*}
-\bar{\psi}(x) & =\int\frac{\dif^{3}p}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{p}}}\sum_{s}\left(a_{p}^{s\dagger}\bar{u}^{s}(p)\exp(ip\cdot x)+b_{p}^{s}\bar{v}^{s}(p)\exp(-ip\cdot x)\right)\\
+\bar{\psi}(x) & =\int\frac{\dd^{3}p}{(2\pi)^{3}}\frac{1}{\sqrt{2E_{p}}}\sum_{s}\left(a_{p}^{s\dagger}\bar{u}^{s}(p)\exp(ip\cdot x)+b_{p}^{s}\bar{v}^{s}(p)\exp(-ip\cdot x)\right)\\
 \bar{\psi}_{p} & =\frac{1}{\sqrt{2E_{p}}}\sum_{s}\left(a_{p}^{s\dagger}\bar{u}^{s}(p)\exp(ip\cdot x)+b_{p}^{s}\bar{v}^{s}(p)\exp(-ip\cdot x)\right)
 \end{align*}
 
@@ -1143,14 +1145,14 @@ ie\Gamma_{\text{NL}}^{\mu}(y^{\prime},x^{\prime},z)=-\frac{\delta^{3}S_{\text{NL
 所以，
 \begin_inset Formula 
 \begin{align*}
- & S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dif^{4}x\dif^{4}y\delta(x-y)\bar{\psi}(x)\times\\
- & \left(\Big(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\exp\left(-ieQ\int_{x}^{y}V^{\nu}(\omega)\dif\omega_{\nu}\right)\psi(y)\Big)\right)\\
- & {\color{red}\text{对}\bar{\psi}(z)\text{,\psi(y^{\prime})求导}}\Rightarrow-\iint\dif^{4}x\dif^{4}y\delta(x-y)\delta(x-z)\\
- & \times\left(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\exp\left(-ieQ\int_{x}^{y}V^{\nu}(\omega)\dif\omega_{\nu}\right)\delta(y-y^{\prime})\right)\\
- & {\color{red}\text{对}V_{\mu}(x^{\prime})\text{求导},\text{并\text{且令}}V_{\mu}(x^{\prime})=0}\Rightarrow-\iint\dif^{4}x\dif^{4}y\delta(x-y)\delta(x-z)\\
- & \times\left(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\left(-ieQ\int_{x}^{y}\delta(x^{\prime}-\omega)\dif\omega^{\mu}\right)\delta(y-y^{\prime})\right)\\
+ & S_{\text{NL}}=\frac{1}{(2\pi)^{8}}\iint\dd^{4}x\dd^{4}y\delta(x-y)\bar{\psi}(x)\times\\
+ & \left(\Big(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\exp\left(-ieQ\int_{x}^{y}V^{\nu}(\omega)\dd\omega_{\nu}\right)\psi(y)\Big)\right)\\
+ & {\color{red}\text{对}\bar{\psi}(z)\text{,\psi(y^{\prime})求导}}\Rightarrow-\iint\dd^{4}x\dd^{4}y\delta(x-y)\delta(x-z)\\
+ & \times\left(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\exp\left(-ieQ\int_{x}^{y}V^{\nu}(\omega)\dd\omega_{\nu}\right)\delta(y-y^{\prime})\right)\\
+ & {\color{red}\text{对}V_{\mu}(x^{\prime})\text{求导},\text{并\text{且令}}V_{\mu}(x^{\prime})=0}\Rightarrow-\iint\dd^{4}x\dd^{4}y\delta(x-y)\delta(x-z)\\
+ & \times\left(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\left(-ieQ\int_{x}^{y}\delta(x^{\prime}-\omega)\dd\omega^{\mu}\right)\delta(y-y^{\prime})\right)\\
  & {\color{red}\text{对}x\text{进行积分}}\\
- & \Rightarrow(ieQ)\int\dif^{4}y\delta(z-y)*\left(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\left(\int_{z}^{y}\delta(x^{\prime}-\omega)\dif\omega^{\mu}\right)\delta(y-y^{\prime})\right)\\
+ & \Rightarrow(ieQ)\int\dd^{4}y\delta(z-y)*\left(\sum_{n=0}^{\infty}\frac{1}{n!}\Sigma(n,0)*\left(-\partial_{y}^{2}\right)^{n}\left(\int_{z}^{y}\delta(x^{\prime}-\omega)\dd\omega^{\mu}\right)\delta(y-y^{\prime})\right)\\
  & \Rightarrow ieQ\sum_{n=0}^{\infty}\Gamma_{\text{NL}}^{\mu,n}(y^{\prime},x^{\prime},z)
 \end{align*}
 
@@ -1197,13 +1199,13 @@ f_{0}=0,f_{n+1}=f_{n}(q+p)^{2}+p^{2n}
 \end_inset
 
 ,则
-\begin_inset Formula $\left(\int_{z}^{y}\delta(x^{\prime}-\omega)\dif\omega^{\mu}\right)=0$
+\begin_inset Formula $\left(\int_{z}^{y}\delta(x^{\prime}-\omega)\dd\omega^{\mu}\right)=0$
 \end_inset
 
 ，但这并不意味着整个式子就是零，因为前面有导数作用，也就是说,
 \begin_inset Formula 
 \[
-\int\dif^{4}x\delta(x)\left(\frac{\dif}{\dif x}f(x)\right)\neq\frac{\dif}{\dif x}\int\dif^{4}x\delta(x)f(x)
+\int\dd^{4}x\delta(x)\left(\frac{\dd}{\dd x}f(x)\right)\neq\frac{\dd}{\dd x}\int\dd^{4}x\delta(x)f(x)
 \]
 
 \end_inset
@@ -1211,8 +1213,8 @@ f_{0}=0,f_{n+1}=f_{n}(q+p)^{2}+p^{2n}
 因为事实上，
 \begin_inset Formula 
 \begin{align*}
- & \frac{\dif}{\dif x}\int\dif^{4}x\left(f(x)\delta(x)\right)=\int\dif^{4}x\frac{\dif}{\dif x}\left(f(x)\delta(x)\right)\\
- & {\color{red}=\int\dif^{4}x\delta(x)\left(\frac{\dif}{\dif x}f(x)\right)}+\int\dif^{4}xf(x)\left(\frac{\dif}{\dif x}\delta(x)\right)
+ & \frac{\dd}{\dd x}\int\dd^{4}x\left(f(x)\delta(x)\right)=\int\dd^{4}x\frac{\dd}{\dd x}\left(f(x)\delta(x)\right)\\
+ & {\color{red}=\int\dd^{4}x\delta(x)\left(\frac{\dd}{\dd x}f(x)\right)}+\int\dd^{4}xf(x)\left(\frac{\dd}{\dd x}\delta(x)\right)
 \end{align*}
 
 \end_inset
@@ -1220,7 +1222,7 @@ f_{0}=0,f_{n+1}=f_{n}(q+p)^{2}+p^{2n}
 或者说，
 \begin_inset Formula 
 \[
-\int\dif^{4}x\delta(x)\left(\frac{\dif}{\dif x}f(x)\right)=\int\dif^{4}x\delta(x)\lim_{\Delta x\to0}\left(\frac{f(x+\Delta x)-f(x)}{\Delta x}\right)
+\int\dd^{4}x\delta(x)\left(\frac{\dd}{\dd x}f(x)\right)=\int\dd^{4}x\delta(x)\lim_{\Delta x\to0}\left(\frac{f(x+\Delta x)-f(x)}{\Delta x}\right)
 \]
 
 \end_inset
@@ -1268,7 +1270,7 @@ Ivanov方法
 ，注意是对积分下限求导，或者说对规范链接积分路径的起点求导。这是由物理内容决定的，由于我们希望把导数作用在介子上，
 \begin_inset Formula 
 \[
-S_{\text{NL}}=\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,\delta\left(x-y\right)\,\tilde{\Sigma}\left({\color{blue}-\partial_{y}^{2}}\right)\,\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]\,{\color{blue}\psi\left(y\right)}
+S_{\text{NL}}=\iint\dd^{4}x\dd^{4}y\,B\left(x\right)\,\delta\left(x-y\right)\,\tilde{\Sigma}\left({\color{blue}-\partial_{y}^{2}}\right)\,\exp\left[ieQ\int_{{\color{blue}y}}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]\,{\color{blue}\psi\left(y\right)}
 \]
 
 \end_inset
@@ -1297,8 +1299,8 @@ literal "false"
 。
 \begin_inset Formula 
 \begin{align*}
- & I\left(y,x,P\right)=\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}\\
-\text{端点变分：}\quad & \lim_{\dif y_{\mu}\to0}\dif y_{\mu}\frac{\partial}{\partial y^{\mu}}I\left(y,x,P\right)=\lim_{\dif y_{\mu}\to0}\left[I\left(y+\dif y,x,p^{\prime}\right)-I\left(y,x,P\right)\right]
+ & I\left(y,x,P\right)=\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}\\
+\text{端点变分：}\quad & \lim_{\dd y_{\mu}\to0}\dd y_{\mu}\frac{\partial}{\partial y^{\mu}}I\left(y,x,P\right)=\lim_{\dd y_{\mu}\to0}\left[I\left(y+\dd y,x,p^{\prime}\right)-I\left(y,x,P\right)\right]
 \end{align*}
 
 \end_inset
@@ -1338,7 +1340,7 @@ literal "false"
 \end_inset
 
 加上变动
-\begin_inset Formula $\dif x$
+\begin_inset Formula $\dd x$
 \end_inset
 
 得到的。使用这个定义能得到
@@ -1437,7 +1439,7 @@ F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right)=\sum_{n=0}^{\infty}\left(-
 \begin_inset Formula 
 \begin{align*}
 \left(\mathcal{D}_{y}^{2}\right)^{n}I\left(y,x,P\right) & =\sum_{k=0}^{n-1}\left(\mathcal{D}_{y}^{2}\right)^{n-1-k}\left(-p^{2}\right)^{k}L\left(\mathcal{A}\right)+\left(-p^{2}\right)^{n}I\left(y,x,P\right)\\
- & =\left[n\int_{0}^{1}\dif t\left[\mathcal{D}_{y}^{2}t-p^{2}\left(1-t\right)\right]^{n-1}L\left(\mathcal{A}\right)\right]+\left(-p^{2}\right)^{n}I\left(y,x,P\right)
+ & =\left[n\int_{0}^{1}\dd t\left[\mathcal{D}_{y}^{2}t-p^{2}\left(1-t\right)\right]^{n-1}L\left(\mathcal{A}\right)\right]+\left(-p^{2}\right)^{n}I\left(y,x,P\right)
 \end{align*}
 
 \end_inset
@@ -1445,7 +1447,7 @@ F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right)=\sum_{n=0}^{\infty}\left(-
 这里使用了公式
 \begin_inset Formula 
 \begin{align*}
-\sum_{k=0}^{m}A^{m-l}B^{l} & =\left(m+1\right)\int_{0}^{1}\dif t\left[At+B\left(1-t\right)\right]^{m}\\
+\sum_{k=0}^{m}A^{m-l}B^{l} & =\left(m+1\right)\int_{0}^{1}\dd t\left[At+B\left(1-t\right)\right]^{m}\\
  & =\frac{\left[At+B\left(1-t\right)\right]^{m+1}}{A-B}|_{0}^{1}=\frac{\left(A\right)^{m+1}-\left(B\right)^{m+1}}{A-B}
 \end{align*}
 
@@ -1470,19 +1472,19 @@ F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right)=\sum_{n=0}^{\infty}\left(-
 最后，我们得到
 \begin_inset Formula 
 \begin{align*}
-F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right) & =\left(\sum_{n=0}^{\infty}\left(-1\right)^{n}\frac{F^{\left(n\right)}\left(0\right)}{n!}n\int_{0}^{1}\dif t\left[\mathcal{D}_{y}^{2}t-p^{2}\left(1-t\right)\right]^{n-1}L\left(\mathcal{A}\right)\right)\\
+F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right) & =\left(\sum_{n=0}^{\infty}\left(-1\right)^{n}\frac{F^{\left(n\right)}\left(0\right)}{n!}n\int_{0}^{1}\dd t\left[\mathcal{D}_{y}^{2}t-p^{2}\left(1-t\right)\right]^{n-1}L\left(\mathcal{A}\right)\right)\\
  & +\sum_{n=0}^{\infty}\left(-1\right)^{n}\frac{F^{\left(n\right)}\left(0\right)}{n!}\left(-p^{2}\right)^{n}I\left(y,x,P\right)\\
- & \Rightarrow\left[\int_{0}^{1}\dif tF^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\mathcal{A}\right)\right]+F\left(p^{2}\right)I\left(y,x,P\right)
+ & \Rightarrow\left[\int_{0}^{1}\dd tF^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\mathcal{A}\right)\right]+F\left(p^{2}\right)I\left(y,x,P\right)
 \end{align*}
 
 \end_inset
 
 其中
-\begin_inset Formula $F^{\prime}=\frac{\dif F(x)}{\dif x}$
+\begin_inset Formula $F^{\prime}=\frac{\dd F(x)}{\dd x}$
 \end_inset
 
 ，代入
-\begin_inset Formula $\mathcal{A}_{\mu}\left(x\right)=\int\dif^{4}q\,\exp\left(-iqx\right)\mathcal{A}_{\mu}\left(q\right)$
+\begin_inset Formula $\mathcal{A}_{\mu}\left(x\right)=\int\dd^{4}q\,\exp\left(-iqx\right)\mathcal{A}_{\mu}\left(q\right)$
 \end_inset
 
 ,以及
@@ -1492,8 +1494,8 @@ F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right) & =\left(\sum_{n=0}^{\inft
 得到，
 \begin_inset Formula 
 \begin{align*}
-F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right) & =\int\dif^{4}q\,\mathcal{A}_{\mu}\left(q\right)\Big\{\left(q^{\mu}+2p^{\mu}\right)e^{-iqy}\int_{0}^{1}\dif tF^{\prime}\left[\left(p+q\right)^{2}t+p^{2}\left(1-t\right)\right]\\
- & +{\color{blue}F\left(p^{2}\right)\int_{x}^{y}\dif w^{\mu}\,e^{-iqz}}\Big\}
+F\left(-\mathcal{D}_{y}^{2}\right)I\left(y,x,P\right) & =\int\dd^{4}q\,\mathcal{A}_{\mu}\left(q\right)\Big\{\left(q^{\mu}+2p^{\mu}\right)e^{-iqy}\int_{0}^{1}\dd tF^{\prime}\left[\left(p+q\right)^{2}t+p^{2}\left(1-t\right)\right]\\
+ & +{\color{blue}F\left(p^{2}\right)\int_{x}^{y}\dd w^{\mu}\,e^{-iqz}}\Big\}
 \end{align*}
 
 \end_inset
@@ -1517,8 +1519,8 @@ ChPT拉氏量变换
 ChPT 非定域拉氏量经过部分傅里叶变换之后，形式为，
 \begin_inset Formula 
 \begin{align*}
-S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\left(x-y\right)\,\exp\left[+ieQ\int_{y}^{x}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}\right]}\,\phi\left(y\right)\\
- & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\delta\left(x-y\right)\,\tilde{\Sigma}\left(-\partial_{y}^{2}\right)\exp\left[+ieQ\int_{y}^{x}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}\right]}\,\phi\left(y\right)
+S_{\text{NL}} & =\iint\dd^{4}x\dd^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\left(x-y\right)\,\exp\left[+ieQ\int_{y}^{x}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}\right]}\,\phi\left(y\right)\\
+ & =\iint\dd^{4}x\dd^{4}y\,B\left(x\right)\,{\color{blue}\delta\left(x-y\right)\,\tilde{\Sigma}\left(-\partial_{y}^{2}\right)\exp\left[+ieQ\int_{y}^{x}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}\right]}\,\phi\left(y\right)
 \end{align*}
 
 \end_inset
@@ -1530,8 +1532,8 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 表示某些重子场的组合，事实上它们可以是任意场。变分法给出的顶点表达式为，
 \begin_inset Formula 
 \begin{align*}
- & ieQ\iiiint\dif^{4}x\dif^{4}y^{\prime}\dif^{4}z\dif^{4}y\exp\left(ip^{\prime}\cdot z-ip\cdot y^{\prime}-iq\cdot x\right)\\
- & \times\delta\left(z-y\right)\left\{ \sum_{n=0}^{\infty}\frac{1}{n!}\Sigma\left(n,0\right)\left(-\partial_{y}^{2}\right)^{n}\left[+ieQ\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right]\delta\left(y^{\prime}-y\right)\right\} 
+ & ieQ\iiiint\dd^{4}x\dd^{4}y^{\prime}\dd^{4}z\dd^{4}y\exp\left(ip^{\prime}\cdot z-ip\cdot y^{\prime}-iq\cdot x\right)\\
+ & \times\delta\left(z-y\right)\left\{ \sum_{n=0}^{\infty}\frac{1}{n!}\Sigma\left(n,0\right)\left(-\partial_{y}^{2}\right)^{n}\left[+ieQ\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right]\delta\left(y^{\prime}-y\right)\right\} 
 \end{align*}
 
 \end_inset
@@ -1555,8 +1557,8 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 积分,
 \begin_inset Formula 
 \begin{align*}
- & ieQ\iiiint\dif^{4}x\dif^{4}y^{\prime}\dif^{4}z\dif^{4}y\exp\left(ip^{\prime}\cdot z-iq\cdot x\right)\\
- & \times\delta\left(z-y\right)\left\{ \sum_{n=0}^{\infty}\frac{1}{n!}\Sigma\left(n,0\right)\left(-\partial_{y}^{2}\right)^{n}\left(+ieQ\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right)\exp\left(-ipy^{\prime}\right)\delta\left(y^{\prime}-y\right)\right\} 
+ & ieQ\iiiint\dd^{4}x\dd^{4}y^{\prime}\dd^{4}z\dd^{4}y\exp\left(ip^{\prime}\cdot z-iq\cdot x\right)\\
+ & \times\delta\left(z-y\right)\left\{ \sum_{n=0}^{\infty}\frac{1}{n!}\Sigma\left(n,0\right)\left(-\partial_{y}^{2}\right)^{n}\left(+ieQ\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right)\exp\left(-ipy^{\prime}\right)\delta\left(y^{\prime}-y\right)\right\} 
 \end{align*}
 
 \end_inset
@@ -1572,19 +1574,19 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 ，表达式变成，
 \begin_inset Formula 
 \[
-\Rightarrow\exp\left(ip^{\prime}\cdot z-iq\cdot x\right)\delta\left(z-y\right)\left[\Sigma\left[-\partial_{y}^{2}\right]e^{-ipy}\left(\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right)\right]
+\Rightarrow\exp\left(ip^{\prime}\cdot z-iq\cdot x\right)\delta\left(z-y\right)\left[\Sigma\left[-\partial_{y}^{2}\right]e^{-ipy}\left(\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right)\right]
 \]
 
 \end_inset
 
 仿照上面的过程，定义
-\begin_inset Formula $I^{\mu}\left(y,z,P\right)=\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}$
+\begin_inset Formula $I^{\mu}\left(y,z,P\right)=\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}$
 \end_inset
 
 ，
 \begin_inset Formula 
 \[
-\Sigma\left[-\partial_{y}^{2}\right]e^{-ipy}\left(\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right)=e^{-ipy}\,{\color{blue}\Sigma\left[-\mathcal{D}_{y}^{2}\right]\left(\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right)}
+\Sigma\left[-\partial_{y}^{2}\right]e^{-ipy}\left(\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right)=e^{-ipy}\,{\color{blue}\Sigma\left[-\mathcal{D}_{y}^{2}\right]\left(\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right)}
 \]
 
 \end_inset
@@ -1608,7 +1610,7 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 ，类似地，
 \begin_inset Formula 
 \[
-{\color{blue}\Sigma\left[-\mathcal{D}_{y}^{2}\right]\left(\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right)}=\int_{0}^{1}\dif t\Sigma^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\delta\right)+\Sigma\left(p^{2}\right)I^{\mu}\left(y,z,P\right)
+{\color{blue}\Sigma\left[-\mathcal{D}_{y}^{2}\right]\left(\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right)}=\int_{0}^{1}\dd t\Sigma^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\delta\right)+\Sigma\left(p^{2}\right)I^{\mu}\left(y,z,P\right)
 \]
 
 \end_inset
@@ -1620,7 +1622,7 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 会消除第二项，我们得到
 \begin_inset Formula 
 \[
-{\color{blue}\Sigma\left[-\mathcal{D}_{y}^{2}\right]\left(\int_{z}^{y}\delta\left(x-\omega\right)\dif\omega^{\mu}\right)}=\int_{0}^{1}\dif t\Sigma^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\delta\right)
+{\color{blue}\Sigma\left[-\mathcal{D}_{y}^{2}\right]\left(\int_{z}^{y}\delta\left(x-\omega\right)\dd\omega^{\mu}\right)}=\int_{0}^{1}\dd t\Sigma^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\delta\right)
 \]
 
 \end_inset
@@ -1632,11 +1634,11 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 ,代回原式得，
 \begin_inset Formula 
 \begin{align*}
- & \Rightarrow\exp\left(ip^{\prime}\cdot z-iq\cdot x\right)\delta\left(z-y\right)e^{-ipy}\int_{0}^{1}\dif tF^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\delta\right)\\
- & \Rightarrow\exp\left(ip^{\prime}\cdot y-iq\cdot x-ip\cdot y\right)\int_{0}^{1}\dif t\Sigma^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]\left[\partial_{y}^{\mu}\delta\left(x-y\right)-2ip^{\mu}\delta\left(x-y\right)\right]\\
- & \Rightarrow\exp\left(ip^{\prime}\cdot y-iq\cdot x-ip\cdot y\right)\int_{0}^{1}\dif t\Sigma^{\prime}\left[-\left(-iq-ip\right){}^{2}t+p^{2}\left(1-t\right)\right]\left(-iq-2ip\right)^{\mu}\delta\left(x-y\right)\\
- & \Rightarrow-i\exp\left(ip^{\prime}\cdot y-iq\cdot y-ip\cdot y\right)\int_{0}^{1}\dif t\Sigma^{\prime}\left[\left(q+p\right)^{2}t+p^{2}\left(1-t\right)\right]\left(q+2p\right)^{\mu}\\
- & \Rightarrow-i\exp\left(ip^{\prime}\cdot y-iq\cdot y-ip\cdot y\right)\int_{0}^{1}\dif t\Sigma^{\prime}\left[\left(q+p\right)^{2}t+p^{2}\left(1-t\right)\right]\left(q+2p\right)^{\mu}\\
+ & \Rightarrow\exp\left(ip^{\prime}\cdot z-iq\cdot x\right)\delta\left(z-y\right)e^{-ipy}\int_{0}^{1}\dd tF^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]L\left(\delta\right)\\
+ & \Rightarrow\exp\left(ip^{\prime}\cdot y-iq\cdot x-ip\cdot y\right)\int_{0}^{1}\dd t\Sigma^{\prime}\left[-\mathcal{D}_{y}^{2}t+p^{2}\left(1-t\right)\right]\left[\partial_{y}^{\mu}\delta\left(x-y\right)-2ip^{\mu}\delta\left(x-y\right)\right]\\
+ & \Rightarrow\exp\left(ip^{\prime}\cdot y-iq\cdot x-ip\cdot y\right)\int_{0}^{1}\dd t\Sigma^{\prime}\left[-\left(-iq-ip\right){}^{2}t+p^{2}\left(1-t\right)\right]\left(-iq-2ip\right)^{\mu}\delta\left(x-y\right)\\
+ & \Rightarrow-i\exp\left(ip^{\prime}\cdot y-iq\cdot y-ip\cdot y\right)\int_{0}^{1}\dd t\Sigma^{\prime}\left[\left(q+p\right)^{2}t+p^{2}\left(1-t\right)\right]\left(q+2p\right)^{\mu}\\
+ & \Rightarrow-i\exp\left(ip^{\prime}\cdot y-iq\cdot y-ip\cdot y\right)\int_{0}^{1}\dd t\Sigma^{\prime}\left[\left(q+p\right)^{2}t+p^{2}\left(1-t\right)\right]\left(q+2p\right)^{\mu}\\
  & \Rightarrow-i\left(2\pi\right)^{4}\delta\left(p^{\prime}-q-p\right)\frac{\Sigma\left(q+p\right)-\Sigma\left(p\right)}{2p\cdot q+q^{2}}\left(q+2p\right)^{\mu}
 \end{align*}
 
@@ -1665,7 +1667,7 @@ S_{\text{NL}} & =\iint\dif^{4}x\dif^{4}y\,B\left(x\right)\,{\color{blue}\Sigma\l
 写成矩阵的形式，处理起来更统一，下面的约定可能会有一些负号的差别，不过问题不大。令
 \begin_inset Formula 
 \[
-I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
+I\left(y,x,P\right)=\int_{x}^{y}\dd w_{\mu}A^{\mu}\left(w\right)
 \]
 
 \end_inset
@@ -1710,7 +1712,7 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 在我们用的作用量中，会有类似下面的项：
 \begin_inset Formula 
 \[
-\int\dif y\int\dif x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P\right)\,\phi\left(x\right).
+\int\dd y\int\dd x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P\right)\,\phi\left(x\right).
 \]
 
 \end_inset
@@ -1718,7 +1720,7 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 也可以通过平移积分变量，改写成
 \begin_inset Formula 
 \[
-\int\dif y\int_{-\infty}^{+\infty}\dif a\,B\left(y\right)F\left(a\right)I\left(y,y-a,P\right)\,\phi\left(y-a\right)
+\int\dd y\int_{-\infty}^{+\infty}\dd a\,B\left(y\right)F\left(a\right)I\left(y,y-a,P\right)\,\phi\left(y-a\right)
 \]
 
 \end_inset
@@ -1742,7 +1744,7 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 可以写成
 \begin_inset Formula 
 \[
-\int\dif x\int\dif y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{y}^{2}\right)I\left(y,x,P\right)\,\phi\left(x\right)
+\int\dd x\int\dd y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{y}^{2}\right)I\left(y,x,P\right)\,\phi\left(x\right)
 \]
 
 \end_inset
@@ -1801,8 +1803,8 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 的情况，
 \begin_inset Formula 
 \begin{align*}
- & \int\dif x\int\dif y\,B\left(y\right)F\left(y-x\right)\,\phi\left(x\right)\\
-\Rightarrow & \int\dif x\int\dif y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{y}^{2}\right)\,\phi\left(x\right)\neq0
+ & \int\dd x\int\dd y\,B\left(y\right)F\left(y-x\right)\,\phi\left(x\right)\\
+\Rightarrow & \int\dd x\int\dd y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{y}^{2}\right)\,\phi\left(x\right)\neq0
 \end{align*}
 
 \end_inset
@@ -1826,8 +1828,8 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 拉氏量的形式为
 \begin_inset Formula 
 \begin{align*}
- & \int\dif y\int\dif x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P\right)\,\phi\left(x\right)\\
-\Rightarrow & \int\dif x\int\dif y\,B\left(y\right)\,\delta\left(y-x\right)\tilde{F}\left(-\partial_{y}^{2}\right){\color{blue}I\left(y,x,P\right)\,\phi\left(x\right)}
+ & \int\dd y\int\dd x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P\right)\,\phi\left(x\right)\\
+\Rightarrow & \int\dd x\int\dd y\,B\left(y\right)\,\delta\left(y-x\right)\tilde{F}\left(-\partial_{y}^{2}\right){\color{blue}I\left(y,x,P\right)\,\phi\left(x\right)}
 \end{align*}
 
 \end_inset
@@ -1949,8 +1951,8 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 我们需要处理的对象可以写成下面的形式：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif x\int\dif y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{x}^{2}\right)e^{-ikx}\,I\left(y,x,P\right)\,\phi\left(x\right)\\
-= & \int\dif x\int\dif y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{x}^{2}\right)e^{-ikx}\,I\left(y,x,P\right)\,\phi\left(x\right)
+ & \int\dd x\int\dd y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{x}^{2}\right)e^{-ikx}\,I\left(y,x,P\right)\,\phi\left(x\right)\\
+= & \int\dd x\int\dd y\,B\left(y\right)\delta\left(y-x\right)\tilde{F}\left(-\partial_{x}^{2}\right)e^{-ikx}\,I\left(y,x,P\right)\,\phi\left(x\right)
 \end{align*}
 
 \end_inset
@@ -2025,13 +2027,13 @@ I\left(y,x,P\right)=\int_{x}^{y}\dif w_{\mu}A^{\mu}\left(w\right)
 
 \begin_inset Formula 
 \begin{align*}
-{\color{blue}D_{\mu,x}}\,I_{y,x} & ={\color{blue}\left(\partial_{\mu,y}-ik_{\mu}\right)}I=\left(-ie_{\phi}\right)A_{\mu}\left(y\right)-ik_{\mu}\,I_{y,x}
+{\color{blue}D_{\mu,x}}\,I_{y,x} & ={\color{blue}\left(\partial_{\mu,x}-ik_{\mu}\right)}I=\left(-ie_{\phi}\right)A_{\mu}\left(x\right)-ik_{\mu}\,I_{y,x}
 \end{align*}
 
 \end_inset
 
 路径积分为
-\begin_inset Formula $I\left(y,x,P\right)=ie_{\phi}\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}$
+\begin_inset Formula $I\left(y,x,P\right)=ie_{\phi}\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}$
 \end_inset
 
 ，其中
@@ -2355,7 +2357,7 @@ a^{n} & \frac{a^{n}-c^{n}}{a-c}b\\
 综上所述，对于形式如下的作用量，
 \begin_inset Formula 
 \[
-S_{\text{nl}}=\int\dif y\int\dif x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P\right)\,\phi\left(x\right)
+S_{\text{nl}}=\int\dd y\int\dd x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P\right)\,\phi\left(x\right)
 \]
 
 \end_inset
@@ -2369,7 +2371,7 @@ S_{\text{nl}}=\int\dif y\int\dif x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P
 \end_inset
 
 是任意两个场。路径积分为
-\begin_inset Formula $I\left(y,x,P\right)=+ie_{\phi}\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}$
+\begin_inset Formula $I\left(y,x,P\right)=+ie_{\phi}\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}$
 \end_inset
 
 ，其中
@@ -2395,7 +2397,7 @@ S_{\text{nl}}=\int\dif y\int\dif x\,B\left(y\right)F\left(y-x\right)I\left(y,x,P
 ，可以变形为，
 \begin_inset Formula 
 \[
-S_{\text{nl}}=\int\dif y\int\dif x\,B\left(y\right)\delta\left(y-x\right)\,\tilde{F}\left(-\partial_{x}^{2}\right)I\left(y,x,P\right)\,\phi\left(x\right)
+S_{\text{nl}}=\int\dd y\int\dd x\,B\left(y\right)\delta\left(y-x\right)\,\tilde{F}\left(-\partial_{x}^{2}\right)I\left(y,x,P\right)\,\phi\left(x\right)
 \]
 
 \end_inset
@@ -2433,7 +2435,7 @@ S_{\text{nl}}=\int\dif y\int\dif x\,B\left(y\right)\delta\left(y-x\right)\,\tild
 
 \begin_layout Itemize
 其中
-\begin_inset Formula $I\left(y,x,P\right)=+ie_{\phi}\int_{x}^{y}\dif w_{\nu}\,\mathcal{A}^{\nu}\left(w\right)=-ie_{\phi}\int_{y}^{x}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}$
+\begin_inset Formula $I\left(y,x,P\right)=+ie_{\phi}\int_{x}^{y}\dd{w_{\nu}}\mathcal{A}^{\nu}\left(w\right)=-ie_{\phi}\int_{y}^{x}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}$
 \end_inset
 
 ；
@@ -2519,9 +2521,9 @@ salamu 形式做了变量平移
 ：
 \begin_inset Formula 
 \begin{align*}
- & \int\dif x\int\dif y\,B\left(y\right)\,F\left(y-x\right)\exp\left[ieQ\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dif w_{\nu}\right]\,\phi\left(x\right)\\
-= & \iint\dif^{4}x\dif^{4}a\,B\left(x+a\right)\,F\left(a\right)\,I\left(x+a,x,P\right)\,\phi\left(x\right)\\
-= & \iint\dif^{4}x\dif^{4}a\,B\left(x+a\right)\,\delta\left(a\right)\,\tilde{F}\left(-\partial_{x}^{2}\right)\,I\left(x+a,x,P\right)\,e^{-ikx}\phi_{x}^{-}
+ & \int\dd x\int\dd y\,B\left(y\right)\,F\left(y-x\right)\exp\left[ieQ\int_{x}^{y}\mathcal{A}^{\nu}\left(w\right)\dd w_{\nu}\right]\,\phi\left(x\right)\\
+= & \iint\dd^{4}x\dd^{4}a\,B\left(x+a\right)\,F\left(a\right)\,I\left(x+a,x,P\right)\,\phi\left(x\right)\\
+= & \iint\dd^{4}x\dd^{4}a\,B\left(x+a\right)\,\delta\left(a\right)\,\tilde{F}\left(-\partial_{x}^{2}\right)\,I\left(x+a,x,P\right)\,e^{-ikx}\phi_{x}^{-}
 \end{align*}
 
 \end_inset
@@ -2720,13 +2722,13 @@ C_{21} & =2A^{2}\left(-p^{2}\right)\left(D_{x}^{2}\right)^{n+1}+\left(-p^{2}\rig
 \begin_inset Formula 
 \begin{align}
  & \frac{C_{B\phi}}{f}\bar{p}\left(x\right)\gamma^{\mu}\gamma^{5}B\left(x\right)\mathcal{D}_{\mu,x}\phi\left(x\right)+\text{H.c.}\nonumber \\
- & \frac{C_{B\phi}}{f}\bar{p}\left(x\right)\gamma^{\mu}\gamma^{5}B\left(x\right)\int\dif^{4}a\,{\color{blue}\mathcal{G}_{\phi}^{q}\left(x,x+a\right)F\left(a\right)}\,\mathcal{D}_{\mu,x+a}\phi\left(x+a\right)+\text{H.c.}\label{eq: nonlocal-exp}
+ & \frac{C_{B\phi}}{f}\bar{p}\left(x\right)\gamma^{\mu}\gamma^{5}B\left(x\right)\int\dd^{4}a\,{\color{blue}\mathcal{G}_{\phi}^{q}\left(x,x+a\right)F\left(a\right)}\,\mathcal{D}_{\mu,x+a}\phi\left(x+a\right)+\text{H.c.}\label{eq: nonlocal-exp}
 \end{align}
 
 \end_inset
 
 其中 
-\begin_inset Formula $\mathcal{G}_{\phi}^{q}\left(y,x\right)=\exp\left[ie_{\phi}^{q}\int_{x}^{y}\dif w^{\mu}\mathcal{A}_{\mu}\left(w\right)\right]$
+\begin_inset Formula $\mathcal{G}_{\phi}^{q}\left(y,x\right)=\exp\left[ie_{\phi}^{q}\int_{x}^{y}\dd w^{\mu}\mathcal{A}_{\mu}\left(w\right)\right]$
 \end_inset
 
 。作一个
@@ -2822,7 +2824,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 U_{\phi}\left(x\right) & =\exp\left[+ie_{\phi}^{q}\theta\left(x\right)\right],\quad\text{逆变换矩阵}\\
-\mathcal{G}_{\phi}^{q}\left(y,x\right) & =\exp\left[+ie_{\phi}^{q}\int_{x}^{y}\dif w^{\mu}\mathcal{A}_{\mu}\left(w\right)\right]\\
+\mathcal{G}_{\phi}^{q}\left(y,x\right) & =\exp\left[+ie_{\phi}^{q}\int_{x}^{y}\dd w^{\mu}\mathcal{A}_{\mu}\left(w\right)\right]\\
 \mathcal{G}_{\phi}^{q}\left(y,x\right) & =U_{\phi}\left(y\right)\mathcal{G}_{\phi}^{q,\prime}\left(y,x\right)U_{\phi}^{\dagger}\left(x\right)
 \end{align*}
 
@@ -2873,7 +2875,7 @@ U_{\phi}\left(x\right) & =\exp\left[+ie_{\phi}^{q}\theta\left(x\right)\right],\q
 如果令规范链接为
 \begin_inset Formula 
 \[
-\mathcal{G}_{\phi}^{q}\left(y,x\right)=\exp\left[+ie_{\phi}^{q}\int_{x}^{y}\dif w^{\nu}\mathcal{A}_{\nu}\left(w\right)\right]=\exp\left[-ie_{\phi}^{q}\int_{y}^{x}\dif w^{\nu}\mathcal{A}_{\nu}\left(w\right)\right]
+\mathcal{G}_{\phi}^{q}\left(y,x\right)=\exp\left[+ie_{\phi}^{q}\int_{x}^{y}\dd w^{\nu}\mathcal{A}_{\nu}\left(w\right)\right]=\exp\left[-ie_{\phi}^{q}\int_{y}^{x}\dd w^{\nu}\mathcal{A}_{\nu}\left(w\right)\right]
 \]
 
 \end_inset
@@ -2950,14 +2952,14 @@ D_{\mu,x}\phi\left(x\right) & =\left[\partial_{\mu,x}-ie_{\phi}^{q}\mathcal{A}_{
 \begin{align*}
 \text{逆变换：}\phi\left(x\right) & =e^{+ie_{\phi}^{q}\theta\left(x\right)}\phi^{\prime}\left(x\right),\quad U_{\phi}\left(x\right)=e^{+ie_{\phi}^{q}\theta\left(x\right)}\\
 \text{正变换：}\phi^{\prime}\left(x\right) & =e^{-ie_{\phi}^{q}\theta\left(x\right)}\phi\left(x\right),\\
-\mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right) & =e^{+ie_{\phi}^{q}\theta\left({\color{blue}y}\right)}\mathcal{G}_{\phi}^{q,\prime}\left({\color{blue}y},x\right)e^{-ie_{\phi}^{q}\theta\left(x\right)},\quad\mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right)=\exp\left[+ie_{\phi}^{q}\int_{x}^{{\color{blue}y}}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]\\
+\mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right) & =e^{+ie_{\phi}^{q}\theta\left({\color{blue}y}\right)}\mathcal{G}_{\phi}^{q,\prime}\left({\color{blue}y},x\right)e^{-ie_{\phi}^{q}\theta\left(x\right)},\quad\mathcal{G}_{\phi}^{q}\left({\color{blue}y},x\right)=\exp\left[+ie_{\phi}^{q}\int_{x}^{{\color{blue}y}}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]\\
 D_{\mu,x}\phi\left(x\right) & =\left[\partial_{\mu,x}-ie_{\phi}^{q}\mathcal{A}_{\mu}\left(x\right)\right]\phi\left(x\right),\quad\mathcal{A}_{\mu}=\mathcal{A}_{\mu}^{\prime}+\partial_{x,\mu}\theta
 \end{align*}
 
 \end_inset
 
 交换积分上下限出负号：
-\begin_inset Formula $\mathcal{G}_{\phi}^{q}\left(y,x\right)=\exp\left[-ie_{\phi}^{q}\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dif w^{\nu}\right]$
+\begin_inset Formula $\mathcal{G}_{\phi}^{q}\left(y,x\right)=\exp\left[-ie_{\phi}^{q}\int_{y}^{x}\mathcal{A}_{\nu}\left(w\right)\dd w^{\nu}\right]$
 \end_inset
 
 。
@@ -2971,8 +2973,8 @@ D_{\mu,x}\phi\left(x\right) & =\left[\partial_{\mu,x}-ie_{\phi}^{q}\mathcal{A}_{
 这里的约定和 Terning 约定是相同的：
 \begin_inset Formula 
 \begin{align*}
-S_{g} & =\int\dif^{4}x\,\bar{\psi}\left(x\right)\gamma^{\mu}\left(\partial_{\mu}-ieA_{\mu}\right)\psi\left(x\right)\\
- & +\int\dif^{4}x\dif^{4}y\,\bar{\psi}\left(x\right)\Sigma\left(x-y\right)\exp\left(-ie\int_{x}^{y}A_{\nu}\dif\omega^{\nu}\right)\psi\left(y\right)
+S_{g} & =\int\dd^{4}x\,\bar{\psi}\left(x\right)\gamma^{\mu}\left(\partial_{\mu}-ieA_{\mu}\right)\psi\left(x\right)\\
+ & +\int\dd^{4}x\dd^{4}y\,\bar{\psi}\left(x\right)\Sigma\left(x-y\right)\exp\left(-ie\int_{x}^{y}A_{\nu}\dd\omega^{\nu}\right)\psi\left(y\right)
 \end{align*}
 
 \end_inset
@@ -2995,8 +2997,8 @@ S_{g} & =\int\dif^{4}x\,\bar{\psi}\left(x\right)\gamma^{\mu}\left(\partial_{\mu}
 非定域 chPT 的拉氏量：
 \begin_inset Formula 
 \begin{align*}
-S_{\text{oct}} & =\int\dif^{4}x\dif^{4}y\,\bar{\Xi}^{0}\left(x\right)\gamma^{\mu}\gamma_{5}\Sigma^{+}\left(x\right)\left(\partial_{x,\mu}+ie\int\dif aA_{\mu}\left(x-a\right)F\left(a\right)\right)\\
- & \times F\left(x-y\right)\mathrm{exp}\left[ie\int_{x}^{y}\left(\int\dif aA^{\nu}\left(z-a\right)F\left(a\right)\right)\dif z_{\nu}\right]K^{-}\left(y\right)
+S_{\text{oct}} & =\int\dd^{4}x\dd^{4}y\,\bar{\Xi}^{0}\left(x\right)\gamma^{\mu}\gamma_{5}\Sigma^{+}\left(x\right)\left(\partial_{x,\mu}+ie\int\dd aA_{\mu}\left(x-a\right)F\left(a\right)\right)\\
+ & \times F\left(x-y\right)\mathrm{exp}\left[ie\int_{x}^{y}\left(\int\dd aA^{\nu}\left(z-a\right)F\left(a\right)\right)\dd z_{\nu}\right]K^{-}\left(y\right)
 \end{align*}
 
 \end_inset
@@ -3004,9 +3006,9 @@ S_{\text{oct}} & =\int\dif^{4}x\dif^{4}y\,\bar{\Xi}^{0}\left(x\right)\gamma^{\mu
 非定域规范变换：
 \begin_inset Formula 
 \begin{align*}
-\Sigma^{+}\left(x\right)\to\Sigma^{+\prime}\left(x\right) & =\left[1+ie\left(\int\dif a^{\mu}\,\beta\left(x-a\right)F\left(a\right)\right)\right]\Sigma^{+}\left(x\right)\\
-K^{-}\left(y\right)\to K^{-\prime}\left(y\right) & =\left[1-ie\left(\int\dif a^{\mu}\,\beta\left(x-a\right)F\left(a\right)\right)\right]K^{-}\left(y\right)\\
-\int\dif aA_{\mu}\left(x-a\right)F\left(a\right)\to\left(\cdots\right)^{\prime} & =\int\dif aA_{\mu}\left(x-a\right)F\left(a\right)+\frac{1}{e}\partial_{\mu}\int\dif a\,\beta\left(x-a\right)F\left(a\right)
+\Sigma^{+}\left(x\right)\to\Sigma^{+\prime}\left(x\right) & =\left[1+ie\left(\int\dd a^{\mu}\,\beta\left(x-a\right)F\left(a\right)\right)\right]\Sigma^{+}\left(x\right)\\
+K^{-}\left(y\right)\to K^{-\prime}\left(y\right) & =\left[1-ie\left(\int\dd a^{\mu}\,\beta\left(x-a\right)F\left(a\right)\right)\right]K^{-}\left(y\right)\\
+\int\dd aA_{\mu}\left(x-a\right)F\left(a\right)\to\left(\cdots\right)^{\prime} & =\int\dd aA_{\mu}\left(x-a\right)F\left(a\right)+\frac{1}{e}\partial_{\mu}\int\dd a\,\beta\left(x-a\right)F\left(a\right)
 \end{align*}
 
 \end_inset

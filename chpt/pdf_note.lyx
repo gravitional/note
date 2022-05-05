@@ -6,7 +6,7 @@
 \origin unavailable
 \textclass ctex-book
 \begin_preamble
-\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8
+%\usepackage[T1]{fontenc} % 字体的编码，不是 input 的编码utf-8, 为兼容旧的字体包
 %\usepackage{xeCJK}% 可以用来实现中文断行
 \usepackage{ctex} % 中文排版通用框架，汉字，标点，字体字号，标题，版式，数字日期转换
 %%%+++++++++++++++++++++++++++++++
@@ -18,10 +18,6 @@
 %\geometry{centering} % 水平、竖直均居中
 \geometry{textwidth=17cm} 
 %++++++++++++++++++++++++++++++++++++++++++++++++
-% 如果没有这一句命令，XeTeX会出错，原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
 \usepackage{eso-pic}
 % 添加图片命令或者背景到每一页的绝对位置，
 % 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
@@ -64,8 +60,11 @@
 \usepackage{framed} % 在对象周围添加方框，阴影等等，允许跨页
 \definecolor{shadecolor}{rgb}{0.96,0.96,0.93} %定义阴影颜色 shaded环境使用
 %%%+++++++++++++++++++++++++++++++
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % \mathscr 命令，更花的花体
+\usepackage{esint} %使用Computer Modern字体时,esint软件包增加额外的积分符号，例如\oiint.
+\usepackage{amsmath,amsfonts} % 数学字体
+\usepackage{amsbsy} %产生粗体数学符号, 通过宏\boldsymbol 使用
+\usepackage{amssymb} %定义ams 字体包msam和msbm中所有数学符号的名称
+\usepackage{mathrsfs} % 提供了mathscr 命令
 \usepackage{enumitem} % 提供了对三种基本列表环境： enumerate, itemize and description 的用户控制。
 % 取代  enumerate and mdwlist 包，对它们功能有 well-structured 的替代。
 %%%+++++++++++++++++++++++++++++++
@@ -92,31 +91,33 @@
 %设置数学字体
 \usepackage{mathtools}% 定义配对的数学符号,在 unicode-math之前调用
 \usepackage{unicode-math}%在其他字体包如amsmath之后调用
-\setmathfont{Latin Modern Math}
+\setmathfont{STIX Math}
 %开源数学字体见 http://www.gust.org.pl/projects/e-foundry/lm-math
 % DejaVu Math TeX Gyre,  Latin Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, TeX Gyre Schola Math
-% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, STIX Math
+% TeX Gyre Bonum Math, Noto Sans Math, TeX Gyre DejaVu Math, 
+% STIX Math, XITS Math, STIX Two Math
 %%++++++++++++++++++++++++++++++++++++++++
-% \usepackage{mathspec} %这个包也能改字体，但是跟 fontspec 好像冲突
-% \setmathsfont(Digits,Latin,Greek){Latin Modern Math}
-% \setmathrm{Latin Modern Roman}
-%%++++++++++++++++++++++++++++++++++++++
+%amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令,
+% 可以用于定义新的算符名称, *号版本可以把上下标放在符号的正上方/正下方
 %\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-%amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令，可以用于定义新的算符名称
-%\DeclareMathOperator{\tr}{tr} %矩阵求迹的符号
-%\DeclareMathOperator{\re}{Re}
-%\DeclareMathOperator{\im}{Im}
-%\DeclareMathOperator{\Res}{Res} %复变函数的留数
-%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+%\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
+\DeclareMathOperator{\ree}{Re}
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\erfc}{erfc}%误差函数填补
+\DeclareMathOperator{\siint}{Si}
 \DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\res}{Res} %复变函数的留数
 \DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\DeclareMathOperator{\sign}{Sign}
+\DeclareMathOperator{\sign}{Sign} %符号函数
 \DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
 \newcommand*{\Dif}{\mathop{}\!\mathrm{D}}%泛函变分
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
 \newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
 \newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
-\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
 \newcommand*{\sla}{\slashed}% feynman slash
+% ++++++++++++++++
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
 \end_preamble
 \options UTF8,dvipsnames,svgnames,x11names
 \use_default_options true
@@ -396,8 +397,8 @@ noprefix "false"
  的两项互为厄米共轭，
 \begin_inset Formula 
 \begin{align*}
- & +\frac{iC_{\phi\phi^{+}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\mu}p\left(x\right){\color{red}\int_{ab}F\left(a\right)F\left(b\right)\mathcal{G}_{\phi}^{q}\left(x+b,x+a\right)}\phi\left(x+a\right)\left(\mathcal{D}_{\mu,x+b}\phi\left(x+b\right)\right)^{\dagger}\\
- & -\frac{iC_{\phi\phi^{+}}}{2f^{2}}\bar{p}\left(x\right)\gamma^{\mu}p\left(x\right){\color{red}\int_{ab}F\left(a\right)F\left(b\right)\mathcal{G}_{\phi}^{q}\left(x+a,x+b\right)}\mathcal{D}_{\mu,x+b}\phi\left(x+b\right);\phi\left(x+a\right)^{\dagger}
+ & +\frac{iC_{\phi\phi^{+}}}{2f^{2}}\overline{p}\left(x\right)\gamma^{\mu}p\left(x\right){\color{red}\int_{ab}F\left(a\right)F\left(b\right)\mathcal{G}_{\phi}^{q}\left(x+b,x+a\right)}\phi\left(x+a\right)\left(\mathcal{D}_{\mu,x+b}\phi\left(x+b\right)\right)^{\dagger}\\
+ & -\frac{iC_{\phi\phi^{+}}}{2f^{2}}\overline{p}\left(x\right)\gamma^{\mu}p\left(x\right){\color{red}\int_{ab}F\left(a\right)F\left(b\right)\mathcal{G}_{\phi}^{q}\left(x+a,x+b\right)}\mathcal{D}_{\mu,x+b}\phi\left(x+b\right);\phi\left(x+a\right)^{\dagger}
 \end{align*}
 
 \end_inset
@@ -2859,8 +2860,8 @@ F_{1}^{p}\left(k^{2}\right)=\frac{\overline{\Lambda}^{4}}{\left(k^{2}-\Lambda^{2
 ，
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}^{\text{tr}} & =ie\frac{C_{BT}^{\text{m}}}{4M_{B}}\mathcal{F}^{\mu\nu}\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\\
- & =ie\frac{C_{BT}^{\text{m}}}{4M_{B}}\mathcal{A}^{\mu}q^{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]
+\mathcal{L}^{\text{trans}} & =ie\frac{C_{BT}^{m}}{4M_{B}}\mathcal{F}_{\mu\nu}\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\\
+ & =ie\frac{C_{BT}^{m}}{4M_{B}}\mathcal{A}_{\mu}q_{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]
 \end{align*}
 
 \end_inset
@@ -2868,8 +2869,8 @@ F_{1}^{p}\left(k^{2}\right)=\frac{\overline{\Lambda}^{4}}{\left(k^{2}-\Lambda^{2
 简单地对光子进行非定域化，
 \begin_inset Formula 
 \begin{align*}
-\mathcal{L}^{\text{tr,nl}} & =ie\frac{C_{BT}^{\text{m}}}{4M_{B}}{\color{blue}\int_{c}\mathcal{A}^{\mu}\left(x+c\right)F\left(c\right)}\,q^{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]\\
- & =ie\frac{C_{BT}^{\text{m}}}{4M_{B}}{\color{blue}\mathcal{A}^{\mu}\left(x\right)\tilde{F}\left(q\right)}\,q^{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]
+\mathcal{L}^{\text{trans,nl}} & =ie\frac{C_{BT}^{m}}{4M_{B}}{\color{blue}\int_{c}\mathcal{A}_{\mu}\left(x+c\right)F\left(c\right)}\,q_{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]\\
+ & =ie\frac{C_{BT}^{m}}{4M_{B}}{\color{blue}\mathcal{A}_{\mu}\left(x\right)\tilde{F}\left(q\right)}\,q_{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]
 \end{align*}
 
 \end_inset
@@ -2877,7 +2878,7 @@ F_{1}^{p}\left(k^{2}\right)=\frac{\overline{\Lambda}^{4}}{\left(k^{2}-\Lambda^{2
 所以转移磁矩对应的电磁流为，
 \begin_inset Formula 
 \[
-J^{\text{tr}}\left(x\right)=ie\frac{C_{BT}^{\text{m}}}{4M_{B}}\tilde{F}\left(q\right)\,q^{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]
+J^{\text{trans},\mu}\left(x\right)=ie\frac{C_{BT}^{m}}{4M_{B}}\tilde{F}\left(q\right)\,q_{\nu}\left[\left(\overline{p}\gamma^{\nu}\gamma^{5}\Delta^{+\mu}-\overline{\Delta^{+\mu}}\gamma^{\nu}\gamma^{5}p\right)-\left(\overline{p}\gamma^{\mu}\gamma^{5}\Delta^{+\nu}-\overline{\Delta^{+\nu}}\gamma^{\mu}\gamma^{5}p\right)\right]
 \]
 
 \end_inset
@@ -3245,27 +3246,28 @@ iZ_{1}^{-1}\sla q=iZ_{2}^{-1}\sla q\quad\Rightarrow\quad Z_{1}=Z_{2}
 \end_layout
 
 \begin_layout Standard
-我们把电磁形状因子的表达式写成：
-\begin_inset Formula 
-\[
-\frac{\Gamma^{\mu}\left(p^{\prime},p\right)}{1+\delta F_{1}\left(0\right)/Q}=\gamma^{\mu}\delta F_{1}\left(q^{2}\right)+\frac{i\sigma^{\mu\nu}q_{\nu}}{2m}\delta F_{2}\left(q^{2}\right)
-\]
+非定域手征有效理论同样满足 Ward–Takahashi 恒等式（
+\begin_inset CommandInset href
+LatexCommand href
+name "Terning,Page3"
+target "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.44.887"
+literal "false"
 
 \end_inset
 
-其中
-\begin_inset Formula $\Gamma^{\mu}\left(p^{\prime},p\right)$
+），因此我们可以从手征圈图的结果，反推出费米子外腿的波函数重正化常数
+\begin_inset Formula $Z_{2}=1+\delta F_{1}\left(0\right)$
 \end_inset
 
-是截腿的电子–光子顶角图的求和。
-\begin_inset Formula $Q$
+，其中
+\begin_inset Formula $\delta F_{1}\left(0\right)$
 \end_inset
 
-是粒子的电荷，
-\begin_inset Formula $F_{1}\left(q^{2}\right)$
+是圈图对
+\begin_inset Formula $F_{1}$
 \end_inset
 
-是圈图修正。在我们的计算中，
+的贡献。在我们的计算中，
 \begin_inset Formula $Z_{1}=Z_{2}<1$
 \end_inset
 
@@ -3323,11 +3325,7 @@ literal "true"
 \begin_inset Formula $k\to-k$
 \end_inset
 
-是不变的，所以如果被积式为奇函数，积分等于零。所以下面积分式中可以差任意
-\begin_inset Formula $k$
-\end_inset
-
-的奇次方项。以下为了简洁，我们用
+是不变的，所以如果被积式为奇函数，积分等于零。以下为了简洁，我们用
 \begin_inset Formula $\int_{k}$
 \end_inset
 
@@ -3381,8 +3379,8 @@ salamu 的结果中省略了电磁耦合常数
 的项，参考
 \begin_inset CommandInset href
 LatexCommand href
-name "Bernard2005"
-target "https://journals.aps.org/prd/pdf/10.1103/PhysRevD.72.076005"
+name "Bernard05"
+target "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.72.076005"
 literal "false"
 
 \end_inset
@@ -3391,7 +3389,7 @@ literal "false"
 \begin_inset CommandInset href
 LatexCommand href
 name "Chueng2011"
-target "https://link.springer.com/content/pdf/10.1007/s00601-011-0270-5.pdf"
+target "https://doi.org/10.1007/s00601-011-0270-5"
 literal "false"
 
 \end_inset
@@ -3436,12 +3434,12 @@ T不变性
 \begin_inset Formula 
 \begin{align*}
 \bra{u\left(p^{\prime}\right)}\Gamma^{\mu}\ket{u\left(p\right)} & =\bra{u\left(p^{\prime}\right)}\gamma^{\mu}F_{1}\left(Q^{2}\right)+\frac{i\sigma^{\mu\nu}q_{\nu}}{2m}F_{2}\left(Q^{2}\right)\ket{u\left(p\right)}\\
-\text{运动方程：} & =\bra{u\left(p^{\prime}\right)}\gamma^{\mu}\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\left(p+p^{\prime}\right)^{\mu}\frac{F_{2}\left(Q^{2}\right)}{2m}\ket{u\left(p\right)}
+\text{Gordon恒等式：} & =\bra{u\left(p^{\prime}\right)}\gamma^{\mu}\left[F_{1}\left(Q^{2}\right)+F_{2}\left(Q^{2}\right)\right]-\left(p+p^{\prime}\right)^{\mu}\frac{F_{2}\left(Q^{2}\right)}{2m}\ket{u\left(p\right)}
 \end{align*}
 
 \end_inset
 
-也就是说，最终的洛伦兹结构不依赖于线性项
+因此，振幅的洛伦兹结构不依赖于线性项
 \begin_inset Formula $q^{\mu}=p^{\prime\mu}-p^{\mu}$
 \end_inset
 
@@ -3472,7 +3470,7 @@ T不变性
 考虑到
 \begin_inset Formula 
 \[
-\dim\left[\psi\left(x\right)\right]=\frac{3}{2},\quad\dim\left[\ket{p,\beta}\right]=-1,\quad\dim\left[a^{s}\left(p\right)\right]=-\frac{3}{2},\quad\dim\left[u^{s}\left(p\right)\right]=\frac{1}{2}
+\dim\left[\psi\left(x\right)\right]=\frac{3}{2},\quad\dim\left[\ket{p,s}\right]=-1,\quad\dim\left[a^{s}\left(p\right)\right]=-\frac{3}{2},\quad\dim\left[u^{s}\left(p\right)\right]=\frac{1}{2}
 \]
 
 \end_inset
@@ -4708,7 +4706,7 @@ f_{a}^{+}\left(y\right) & ={\color{red}\left(i\right)^{2}}{\color{blue}\left(e_{
 \begin_inset Formula 
 \begin{align*}
 f_{a}^{+}\left(y\right) & =\left(ie_{\phi}^{q}\right)\frac{C_{B\phi}^{2}}{f^{2}}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right)H^{+}u\left(p\right),\\
-H^{\mu} & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k+q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\left(k+q\right).\gamma\gamma^{5}\left[\gamma.\left(p-k\right)+M_{B}\right]\left(k.\gamma\gamma^{5}\right)}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)D_{B}\left(p-k\right)},\\
+H^{\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k+q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\left(k+q\right).\gamma\gamma^{5}\left[\gamma.\left(p-k\right)+M_{B}\right]\left(k.\gamma\gamma^{5}\right)}{D_{\phi}\left(k+q\right)D_{\phi}\left(k\right)D_{B}\left(p-k\right)},\\
 \overline{\Lambda} & =\Lambda-m_{\phi}.
 \end{align*}
 
@@ -4725,8 +4723,8 @@ H^{\mu} & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k+q\right)^{2}D_{\Lamb
 ：
 \begin_inset Formula 
 \begin{align*}
-H^{\mu} & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k-q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{{\color{blue}\left(2k-q\right)^{\mu}}\left(\sla k-\sla q\right)\gamma^{5}\left[\left(\sla p^{\prime}-\sla k\right)+M_{B}\right]\left(\sla k\gamma^{5}\right)}{D_{\phi}\left(k-q\right)D_{\phi}\left(k\right)D_{B}\left(p^{\prime}-k\right)}\\
-k\to k+q & =\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{2}D_{\Lambda}\left(k+q\right)^{2}}\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\sla k\gamma^{5}\left[\left(\sla p-\sla k\right)+M_{B}\right]\left(\sla k+\sla q\right)\gamma^{5}}{D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)D_{B}\left(p-k\right)}
+H^{\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k-q\right)^{2}D_{\Lambda}\left(k\right)^{2}}\frac{{\color{blue}\left(2k-q\right)^{\mu}}\left(\sla k-\sla q\right)\gamma^{5}\left[\left(\sla p^{\prime}-\sla k\right)+M_{B}\right]\left(\sla k\gamma^{5}\right)}{D_{\phi}\left(k-q\right)D_{\phi}\left(k\right)D_{B}\left(p^{\prime}-k\right)}\\
+k\to k+q & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{2}D_{\Lambda}\left(k+q\right)^{2}}\frac{{\color{blue}\left(2k+q\right)^{\mu}}\sla k\gamma^{5}\left[\left(\sla p-\sla k\right)+M_{B}\right]\left(\sla k+\sla q\right)\gamma^{5}}{D_{\phi}\left(k\right)D_{\phi}\left(k+q\right)D_{B}\left(p-k\right)}
 \end{align*}
 
 \end_inset
@@ -4963,8 +4961,8 @@ H^{2;\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\L
 对于B型，
 \begin_inset Formula 
 \begin{align*}
-H^{1;\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{{\color{blue}\left(\gamma^{\mu}\gamma^{5}\right)}\left[\left(p-k\right)\gamma+M_{B}\right]\left(k.\gamma\gamma^{5}\right)}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\\
-H^{2;\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left(k.\gamma\gamma^{5}\right)\left[\left(p^{\prime}-k\right)\gamma+M_{B}\right]{\color{blue}\left(\gamma^{\mu}\gamma^{5}\right)}}{D_{\phi}\left(k\right)D_{B}\left(p^{\prime}-k\right)}
+H^{1;\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{{\color{blue}\left(\gamma^{\mu}\gamma^{5}\right)}\left[\left(p-k\right)\gamma+M_{B}\right]\left(\sla k\gamma^{5}\right)}{D_{\phi}\left(k\right)D_{B}\left(p-k\right)}\\
+H^{2;\mu} & =\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left(\sla k\gamma^{5}\right)\left[\left(p^{\prime}-k\right)\gamma+M_{B}\right]{\color{blue}\left(\gamma^{\mu}\gamma^{5}\right)}}{D_{\phi}\left(k\right)D_{B}\left(p^{\prime}-k\right)}
 \end{align*}
 
 \end_inset
@@ -5229,6 +5227,14 @@ SpinorUBar[p
  GA5 .
  SpinorU[p, mE] // DiracSimplify // Simplify
 \end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{R}^{\mu}\left(k,q\right)=\frac{\left(\Lambda^{2}-m_{\phi}^{2}\right)^{2}\left[k^{2}+\left(k+q\right)^{2}-2\Lambda^{2}\right]}{D_{\Lambda}\left(k\right)^{2}D_{\Lambda}\left(k+q\right)^{2}}\left(-1\right)\left(2k+q\right)^{\mu}
+\]
 
 \end_inset
 
@@ -6859,8 +6865,8 @@ Transition maget
 \begin_inset Formula 
 \begin{align*}
  & f^{+}\left(y\right)={\color{blue}\left(ie\frac{C_{BT}^{\text{m}}}{M_{B}}\right)}\frac{C_{B\phi}}{f}\frac{C_{T\phi}}{f}\int\frac{\dd^{4}k}{\left(2\pi\right)^{4}}\frac{M}{P^{+}}\delta\left(y-\frac{k^{+}}{p^{+}}\right)\bar{u}\left(p^{\prime}\right){\color{blue}\left(H^{1,+}+H^{2,+}\right)}u\left(p\right)\\
- & H^{1,\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left[k_{\alpha}\Theta^{\alpha\beta}\right]q_{\nu}\left[S_{T}^{\beta\nu}\gamma^{\mu}\gamma^{5}-S_{T}^{\beta\mu}\gamma^{\nu}\gamma^{5}\right]_{p^{\prime}-k}\left[\gamma.\left(p-k\right)+M_{B}\right]\left[k.\gamma\gamma^{5}\right]}{D_{\phi}\left(k\right)D_{T}\left(p^{\prime}-k\right)D_{B}\left(p-k\right)}\\
- & H^{2,\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left[k.\gamma\gamma^{5}\right]\left[\gamma.\left(p^{\prime}-k\right)+M_{B}\right]q_{\nu}\left[\gamma^{\nu}\gamma^{5}S_{T}^{\mu\beta}-\gamma^{\mu}\gamma^{5}S_{T}^{\nu\beta}\right]_{p-k}\left[\Theta^{\beta\alpha}k_{\alpha}\right]}{D_{\phi}\left(k\right)D_{T}\left(p-k\right)D_{B}\left(p^{\prime}-k\right)}
+ & H^{1,\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left[k_{\alpha}\Theta^{\alpha\beta}\right]q_{\nu}\left[S_{T}^{\beta\nu}\gamma^{\mu}\gamma^{5}-S_{T}^{\beta\mu}\gamma^{\nu}\gamma^{5}\right]_{p^{\prime}-k}\left[\gamma.\left(p-k\right)+M_{B}\right]\left[\sla k\gamma^{5}\right]}{D_{\phi}\left(k\right)D_{T}\left(p^{\prime}-k\right)D_{B}\left(p-k\right)}\\
+ & H^{2,\mu}=\frac{\Lambda^{4}}{D_{\Lambda}\left(q\right)^{2}}\frac{\overline{\Lambda}^{8}}{D_{\Lambda}\left(k\right)^{4}}\frac{\left[\sla k\gamma^{5}\right]\left[\gamma.\left(p^{\prime}-k\right)+M_{B}\right]q_{\nu}\left[\gamma^{\nu}\gamma^{5}S_{T}^{\mu\beta}-\gamma^{\mu}\gamma^{5}S_{T}^{\nu\beta}\right]_{p-k}\left[\Theta^{\beta\alpha}k_{\alpha}\right]}{D_{\phi}\left(k\right)D_{T}\left(p-k\right)D_{B}\left(p^{\prime}-k\right)}
 \end{align*}
 
 \end_inset
@@ -7113,7 +7119,7 @@ f_{j}^{+}={\color{blue}\left(-ie_{\phi}^{q}\right)}\frac{C_{T\phi}^{2}}{f^{2}}\f
 。salamu PDF 论文中最后的比例因子为 
 \begin_inset Formula 
 \[
-\underbrace{\left(2\pi\right)^{-4}}_{\text{协变积分}}*\underbrace{\left(\pi\right)}_{\text{未知}}*\underbrace{\frac{1}{2}}_{\text{Jacobian}}*\underbrace{\left(2\pi\right)}_{\text{留数定理}}=\left(4\pi\right)^{-2}
+\underbrace{\left(2\pi\right)^{-4}}_{\text{协变积分}}*\underbrace{\left(\pi\right)}_{k_{\perp}\text{角积分}}*\underbrace{\frac{1}{2}}_{\text{Jacobian}}*\underbrace{\left(2\pi\right)}_{\text{留数定理}}=\left(4\pi\right)^{-2}
 \]
 
 \end_inset

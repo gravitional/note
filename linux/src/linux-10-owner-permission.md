@@ -407,34 +407,35 @@ User me may run the following commands on this host:
 
 ### chown - 更改文件所有者和用户组
 
-`chown` 命令被用来更改文件或目录的所有者和用户组.使用这个命令需要超级用户权限.
+`chown` 命令被用来更改文件或目录的 `所有者` 和 `用户组`.使用这个命令需要超级用户权限.
 `chown` 命令 的语法看起来像这样:
 
 ```bash
 chown [owner][:[group]] file...
 ```
 
-`chown `命令可以更改文件所有者和/或文件用户组,依据于这个命令的第一个参数.这里有 一些例子:
+`chown ` 命令可以更改文件所有者和/或文件用户组,
+依据于这个命令的第一个参数. 这里有 一些例子:
 
 ***
 参数 结果
 
 + `bob` 把文件所有者从当前属主更改为用户`bob`
-+ `bob:users` 把文件所有者改为用户 `bob`,文件用户组改为用户组 `users`.
-+ `:admins` 把文件用户组改为组 `admins`,文件所有者不变.
-+ `bob:` 文件所有者改为用户 `bob`,文件用户组改为`bob` 登录系统时所属的用户组.
++ `bob:users` 把文件所有者改为用户 `bob`, 文件用户组改为用户组 `users`.
++ `:admins` 把文件用户组改为组 `admins`, 文件所有者不变.
++ `bob:` 文件所有者改为用户 `bob`, 文件用户组改为`bob` 登录系统时所属的用户组.
 
-比方说,我们有两个用户: `janet`(拥有超级用户访问权限),`tony`(没有).
+比方说, 我们有两个用户: `janet`(拥有超级用户访问权限),`tony`(没有).
 
 用户`janet`想要从 她的家目录复制一个文件到用户 `tony` 的家目录.
 因为用户 `janet` 想要 `tony`能够编辑这个文件, `janet` 把这个文件的所有者更改为`tony`:
 
 ```bash
-[janet@linuxbox ~]$ sudo cp myfile.txt ~tony
-[janet@linuxbox ~]$ sudo ls -l ~tony/myfile.txt
+$ sudo cp myfile.txt ~tony
+$ sudo ls -l ~tony/myfile.txt
 -rw-r--r-- 1 root root 8031 2008-03-20 14:30 /home/tony/myfile.txt
-[janet@linuxbox ~]$ sudo chown tony: ~tony/myfile.txt
-[janet@linuxbox ~]$ sudo ls -l ~tony/myfile.txt
+$ sudo chown tony: ~tony/myfile.txt
+$ sudo ls -l ~tony/myfile.txt
 -rw-r--r-- 1 tony tony 8031 2008-03-20 14:30 /home/tony/myfile.txt
 ```
 
@@ -447,20 +448,22 @@ chown [owner][:[group]] file...
 
 ### chgrp - 更改用户组所有权
 
-在旧版 Unix 系统中,`chown` 命令只能更改文件所有权,而不是用户组所有权.
-为了达到目的, 使用一个独立的命令,`chgrp` 来完成.除了限制多一点之外,`chgrp` 命令与 `chown` 命令使用起来很相似.
+在旧版 Unix 系统中,`chown` 命令只能更改文件所有权, 而不是用户组所有权.
+为了达到目的, 使用一个独立的命令, `chgrp` 来完成.
+除了限制多一点之外, `chgrp` 命令与 `chown` 命令使用起来很相似.
 
 ### 练习使用权限
 
 我们将展示一个常见问题的解决方案,这个问题是如何设置一个共享目录.
-假想我们有两个用户, 他们分别是 `bill` 和 `karen`.他们都有音乐 CD 收藏品,也愿意设置一个共享目录.
+假想我们有两个用户, 他们分别是 `bill` 和 `karen`. 他们都有音乐 CD 收藏品,也愿意设置一个共享目录.
 在这个共享目录中,他们分别以 `Ogg Vorbis` 或 `MP3` 的格式来存储他们的音乐文件.
 通过 `sudo` 命令, 用户 `bill` 具有超级用户访问权限.
 
 我们需要做的第一件事,是创建一个以 `bill` 和 `karen` 为成员的用户组.
 下一步,`bill` 创建了存储音乐文件的目录:`sudo mkdir /usr/local/share/Music`
 
-因为 `bill` 正在他的家目录之外操作文件,所以需要超级用户权限.这个目录创建之后,它具有以下所有权和权限:
+因为 `bill` 正在他的家目录之外操作文件,所以需要超级用户权限.
+这个目录创建之后,它具有以下所有权和权限:
 
 ```bash
 ls -ld /usr/local/share/Music
@@ -680,7 +683,7 @@ passwd 选项 用户名
 
 如果默认用户名,则修改当前用户的口令.
 
-例如,假设当前用户是`sam`,则下面的命令修改该用户自己的口令:
+例如,假设当前用户是`sam`, 则下面的命令修改该用户自己的口令:
 
 ```bash
 $ passwd
