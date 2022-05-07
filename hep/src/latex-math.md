@@ -1188,7 +1188,7 @@ $\limsup\limits_{x\rightarrow0}$ vs $\lim\sup\limits_{x\rightarrow0}$
 
 So you will want to use `\limsup`.
 
-### 多行上下标
+### 多行上下标,substack
 
 amsmath; chap 7.1, page21;
 
@@ -1200,7 +1200,8 @@ amsmath; chap 7.1, page21;
 0<j<n}} P(i,j)
 ```
 
-稍微通用的形式是 `subarray` 环境, 它允许你指定每一行应该是`左对齐`而不是`居中`, 就像这里:
+稍微通用的形式是 `subarray` 环境, 
+它允许你指定每一行应该是`左对齐`而不是`居中`, 就像这里:
 
 ```latex
 \sum_{\begin{subarray}{l}
