@@ -46,6 +46,20 @@ done
 IFS=$SAVEIFS
 ```
 
+## aaaaaaaaaaaaaaaaa
+
+```bash
+declare -a archs=($(find . -mindepth 1 -maxdepth 1 -type f -iname '*.eps' -print0 | xargs -0 basename -s '.eps'))
+declare -p archs
+totalNum=${#archs[@]}
+teNum=1
+for i in ${archs[@]}; do
+    echo -e "\033[1;44m\033[1;37m Processing number $((teNum++)) of ${totalNum} \033[0;0m"
+    echo  "$i.eps" 
+    gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pdfwrite  -sOutputFile="$i.pdf" "$i.eps"
+done
+```
+
 ## formfactor 脚本
 
 复制结果的脚本
