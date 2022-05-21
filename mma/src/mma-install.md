@@ -1,5 +1,10 @@
 # mathematica 安装,维护
 
+## Mathematica 的安装、激活、入门、常见问题
+
+[tieba mma 激活指南](https://tiebamma.github.io/InstallTutorial/)
+[Mathematica Key Generator Online ](https://ibug.io/blog/2019/05/mathematica-keygen/)
+
 ## linux mathematica 只打开单个前端
 
 定义一个别名,用`singleLaunch`选项

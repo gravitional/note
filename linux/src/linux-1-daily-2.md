@@ -642,7 +642,8 @@ sudo tail -f /var/log/kern.log
 
 [ubnuntu SwapFaq](https://help.ubuntu.com/community/SwapFaq)
 
-**
+### 查看分区状况
+
 如果想要确认是否有`swap`分区, 使用`parted`查看所有分区
 
 ```bash
@@ -653,22 +654,22 @@ sudo parted --list
 
     5      236GB   256GB   20.0GB  linux-swap(v1)
 
-***
-增加交换分区大小并将其用于休眠
+### 增加交换分区大小并将其用于休眠
 
 + 创建交换分区
 + 激活交换分区
 + 使新的交换分区适用于休眠状态(可选)
 
-***
-创建交换分区
+### 创建交换分区
 
-使用`Ubuntu`安装介质如U盘开机, 选择`立即运行Ubuntu`.
-打开`GParted`分区编辑器: 删除原先的`swap`, `resize`主分区大小, 留出合适的空白空间用作`swap`.可以直接在`"free space following"`一项中设置想要的`swap`分区大小.
-在新的空白空间中, 选择`new`, 输入`linux-swap`, 如果喜欢,可以起个名`swap`到`Partition name`中, 然后点击`Apply`应用.  完成后, 重新启动原先硬盘上的`Ubuntu`系统.
++ 使用`Ubuntu`安装介质如U盘开机, 选择`立即运行Ubuntu`.
++ 打开`GParted`分区编辑器: 删除原先的`swap`, `resize`主分区大小, 
++ 留出合适的空白空间用作`swap`.可以直接在`"free space following"`一项中设置想要的`swap`分区大小.
++ 在新的空白空间中, 选择`new`, 输入`linux-swap`, 
++ 如果喜欢可以起个名`swap`到`Partition name`中, 然后点击`Apply`应用.  
++ 完成后, 重新启动原先硬盘上的`Ubuntu`系统.
 
-***
-激活交换分区
+### 激活交换分区
 
 如果交换位于主硬盘驱动器上, 则无需在此处做任何事情.
 现在, 您需要查找`swap`所在的`分区`及其`UUID`, Universally Unique IDentifier, 它是该分区的通用唯一身份, 即使由于添加磁盘, 重启之后分区挂载点改变, `UUID`也不会改变.
@@ -702,8 +703,7 @@ Filename                                Type            Size  Used    Priority
 
 接着可以重启查看交换分区能否被正确激活.
 
-***
-使交换分区用于休眠(可选)
+### 使交换分区用于休眠(可选)
 
 运行`cat /proc/swaps`, 可以看到`swap`分区的路径. 找到它的`UUID`. 使用
 
@@ -726,8 +726,9 @@ Filename                                Type            Size  Used    Priority
 如果不使用`swap`, 这里的设置应该是`resume=none`,保存文件.
  然后运行`sudo update-initramfs -u`. 重启. 现在应该可以休眠了.
 
-***
-启用未生效的交换分区: 如果你已经有交换分区, 则有几种启用它的方法. 首先查看`fstab`
+### 启用未生效的交换分区
+
+如果你已经有交换分区, 则有几种启用它的方法. 首先查看`fstab`
 
     cat /etc/fstab
 
@@ -743,10 +744,11 @@ sudo /sbin/mkswap /dev/sdb5
 sudo swapon -a
 ```
 
-***
-什么是`swappiness`, 我该如何更改?
+### swappiness,如何更改?
 
-`swappiness`参数控制内核使用`swap`的倾向. 因为磁盘要比`RAM`慢得多, 所以如果进程经常主动地移出内存, 可能导致系统和应用程序的响应时间变慢.
+`swappiness`参数控制内核使用`swap`的倾向. 
+因为磁盘要比`RAM`慢得多, 所以如果进程经常主动地移出内存, 
+可能导致系统和应用程序的响应时间变慢.
 
 + `swappiness` 的值可以在`0`到`100`之间
 + `swappiness=0`告诉内核尽可能避免将进程从物理内存中交换出来
