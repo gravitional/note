@@ -4730,34 +4730,42 @@ literal "false"
 \end_inset
 
  中的恒等式(5.5)可以得到这个形式，可以对光锥算符进行泰勒展开来验证，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+文献中的恒等式 5.5 为
 \begin_inset Formula 
-\[
-\mathcal{O}^{qq}\left(-z^{-},z^{-}\right)=\bar{\psi}\left(-z^{-}\right)\left[-z^{-},z^{-}\right]\gamma^{+}\psi\left(z^{-}\right)=\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}\right)^{j}{\color{brown}n^{\mu_{1}}n^{\mu_{2}}\cdots n^{\mu_{j+1}}}\mathcal{R}_{{\color{blue}\mu_{1}\mu_{2}\cdots\mu_{j+1}}}^{2,qq},
-\]
+\begin{align}
+\left[\overline{\psi}(x)\gamma_{\alpha}\psi(-x)\right]_{\text{sym}} & \equiv\sum_{n=0}^{\infty}\frac{x_{\mu_{1}}\cdots x_{\mu_{n}}}{n!}\overline{\psi}\left(\frac{1}{n+1}\overleftrightarrow{\nabla}_{\mu_{1}}\cdots\overleftrightarrow{\nabla}_{\mu_{n}}\gamma_{\alpha}+\frac{n}{n+1}\overleftrightarrow{\nabla}_{\alpha}\overleftrightarrow{\nabla}_{\mu_{1}}\cdots\overleftrightarrow{\nabla}_{\mu_{n-1}}\gamma_{\mu_{n}}\right)\psi\nonumber \\
+\left[\overline{\psi}(x)\gamma_{\alpha}\psi(-x)\right]_{\text{sym}} & =\int_{0}^{1}\dd{u}\frac{\partial}{\partial x_{\alpha}}\overline{\psi}\left(ux\right)x^{\mu}\gamma_{\mu}\psi\left(-ux\right).\label{eq:balitsky5.5}
+\end{align}
 
 \end_inset
 
-相当于多维的平移算符 —— 
-\begin_inset Formula $\sum x^{j}\partial_{x}^{j}/j!$
-\end_inset
-
- 。
-\begin_inset Formula 
-\begin{equation}
-\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right)=\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}\right)^{j}{\color{brown}n^{\mu_{1}}\cdots n^{\mu_{j}}}\mathcal{R}_{{\color{blue}\mu\mu_{1}\cdots\mu_{j}}}^{2,qq}.\label{eq:3.112}
-\end{equation}
-
-\end_inset
-
-式子右边
-\begin_inset Formula $z^{\mu}=z^{-}n^{\mu}$
-\end_inset
-
-，注意指标数量的变化。利用分部积分以及等式，对任意函数
+证明此等式的过程要用到中使用到恒等式，对任意形如
 \begin_inset Formula $\varphi\left(ux^{\mu}\right)$
 \end_inset
 
-，
+的函数
 \begin_inset Formula 
 \[
 x_{\alpha}\frac{\partial}{\partial x_{\alpha}}\varphi\left(ux\right)=u\frac{\dd}{\dd u}\varphi\left(ux\right)
@@ -4765,18 +4773,187 @@ x_{\alpha}\frac{\partial}{\partial x_{\alpha}}\varphi\left(ux\right)=u\frac{\dd}
 
 \end_inset
 
+将 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:balitsky5.5"
+plural "false"
+caps "false"
+noprefix "false"
 
+\end_inset
+
+ 式右边与
+\begin_inset Formula $x_{\alpha}$
+\end_inset
+
+缩并，并凑成 
+\begin_inset Formula $ux$
+\end_inset
+
+ 的函数：
 \begin_inset Formula 
 \begin{align*}
-z^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right) & =\int_{-1}^{1}\dd u\,z^{\mu}\frac{\partial}{\partial z^{\mu}}\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
- & =\int_{-1}^{1}\dd u\,u\frac{\dd}{\dd u}\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
- & =\int_{-1}^{1}u\dd\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\\
- & =\int_{-1}^{1}\bar{\psi}\left(-uz\right){\color{blue}\sla{z}}\left[-uz,uz\right]\psi\left(uz\right)\dd u\,??
+ & \int_{0}^{1}\dd{u}{\color{brown}x_{\alpha}\frac{\partial}{\partial x_{\alpha}}}\overline{\psi}\left(ux\right){\color{blue}\frac{1}{u}u}\hat{x}\psi\left(-ux\right)=\int_{0}^{1}\dd{u}{\color{blue}\frac{1}{u}}{\color{brown}x_{\alpha}\frac{\partial}{\partial x_{\alpha}}}\overline{\psi}\left(ux\right){\color{blue}u}\hat{x}\psi\left(-ux\right)\\
+ & =\int_{0}^{1}\dd{u}{\color{blue}\frac{1}{u}}{\color{brown}u\frac{\dd}{\dd{u}}}\overline{\psi}\left(ux\right){\color{blue}u}\hat{x}\psi\left(-ux\right)=\int_{0}^{1}\dd{\overline{\psi}\left(ux\right){\color{blue}u}\hat{x}\psi\left(-ux\right)}\\
+ & =\overline{\psi}\left(x\right)\hat{x}\psi\left(-x\right)=\overline{\psi}\left(x\right)x_{\alpha}\gamma^{\alpha}\psi\left(-x\right).\quad\text{其中}\hat{x}=x^{\mu}\gamma_{\mu}
 \end{align*}
 
 \end_inset
 
-显然
+结果等于
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:balitsky5.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 左边乘上 
+\begin_inset Formula $x_{\alpha}$
+\end_inset
+
+（然而没有看出 sym 体现在哪里，也许指标的 sym 只在 
+\begin_inset Formula $\overline{\psi}\left(ux\right)\hat{x}\psi\left(-ux\right)$
+\end_inset
+
+ 作展开时才有定义）。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "ref230"
+target "https://www.sciencedirect.com/science/article/pii/0550321389901685?via%3Dihub"
+literal "false"
+
+\end_inset
+
+ 中的 (5.6) 式推导：一方面，
+\begin_inset Formula 
+\begin{align*}
+\int_{0}^{1}\dd{u}x_{\xi}{\color{blue}\frac{\partial}{\partial x_{\xi}}}\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right) & =\int_{0}^{1}\dd{u}{\color{blue}u\frac{\dd}{\dd{u}}}\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right)\\
+ & =\int_{0}^{1}u\dd{\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right)}\\
+ & ={\color{red}\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right)}-{\color{brown}\int_{0}^{1}\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right)\dd{u}}
+\end{align*}
+
+\end_inset
+
+另一方面，
+\begin_inset Formula 
+\begin{align*}
+\int_{0}^{1}\dd{u}x_{\xi}{\color{blue}\frac{\partial}{\partial x_{\alpha}}}\overline{\psi}\left(ux\right)\gamma^{\xi}\psi\left(-ux\right)= & {\color{red}\int_{0}^{1}\dd{u}\frac{\partial}{\partial x_{\alpha}}\overline{\psi}\left(ux\right)x_{\xi}\gamma^{\xi}\psi\left(-ux\right)}\\
+ & {\color{brown}-\int_{0}^{1}\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right)\dd{u}}
+\end{align*}
+
+\end_inset
+
+所以显然有：
+\begin_inset Formula 
+\begin{align*}
+ & {\color{red}\overline{\psi}\left(ux\right)\gamma^{\alpha}\psi\left(-ux\right)}-{\color{red}\int_{0}^{1}\dd{u}\frac{\partial}{\partial x_{\alpha}}\overline{\psi}\left(ux\right)x_{\xi}\gamma^{\xi}\psi\left(-ux\right)}\\
+= & \int_{0}^{1}\dd{u}x_{\xi}\left[{\color{blue}\frac{\partial}{\partial x_{\xi}}}\overline{\psi}\left(ux\right){\color{blue}\gamma^{\alpha}}\psi\left(-ux\right)-{\color{blue}\frac{\partial}{\partial x_{\alpha}}}\overline{\psi}\left(ux\right){\color{blue}\gamma^{\xi}}\psi\left(-ux\right)\right]
+\end{align*}
+
+\end_inset
+
+按照上文的理解，第一个红色项是普通算符，第二个是指标对称化（sym）的算符。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\mathcal{O}^{qq}\left(-z^{-},z^{-}\right) & =\bar{\psi}\left(-z^{-}\right)\left[-z^{-},z^{-}\right]\gamma^{+}\psi\left(z^{-}\right)\\
+ & =\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}\right)^{j}{\color{brown}n^{\mu_{1}}n^{\mu_{2}}\cdots n^{\mu_{j+1}}}\mathcal{R}_{{\color{blue}\mu_{1}\mu_{2}\cdots\mu_{j+1}}}^{2,qq},
+\end{align*}
+
+\end_inset
+
+这里的展开，相当于使用了多维的平移算符 —— 
+\begin_inset Formula $\sum x^{j}\partial_{x}^{j}/j!$
+\end_inset
+
+ 。
+\begin_inset Formula $\mathcal{R}$
+\end_inset
+
+中多出的一个下标对应 
+\begin_inset Formula $\gamma^{\mu_{1}}$
+\end_inset
+
+ 矩阵。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+于是可以定义一个生成函数（母函数）：
+\begin_inset Formula 
+\begin{align}
+\mathcal{R}_{{\color{red}\mu}}^{2,qq}\left(-z^{-},z^{-}\right) & =\int_{-1}^{+1}\dd{u}\frac{\partial}{\partial z^{\mu}}\bar{\psi}\left(-uz\right)\sla z\left[-uz,uz\right]\psi\left(uz\right)\nonumber \\
+ & =\sum_{j=0}^{\infty}\frac{1}{j!}\left(-iz^{-}\right)^{j}{\color{brown}n^{\mu_{1}}\cdots n^{\mu_{j}}}\mathcal{R}_{{\color{red}\mu}{\color{blue}\mu_{1}\cdots\mu_{j}}}^{2,qq}.\label{eq:3.112}
+\end{align}
+
+\end_inset
+
+式子右边
+\begin_inset Formula $z^{\mu}=z^{-}n^{\mu}$
+\end_inset
+
+，注意下标的写法。显然
 \begin_inset Formula 
 \[
 \mathcal{O}^{qq}\left(-z^{-},z^{-}\right)={\color{blue}n^{\mu}}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right).
@@ -4784,6 +4961,67 @@ z^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right) & =\int_{-1}^{1}\dd u\,
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.112"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的证明类似于
+\begin_inset Formula 
+\[
+\left[\overline{\psi}(x)\gamma_{\alpha}\psi(-x)\right]_{\text{sym}}=\int_{0}^{1}\dd{u}\frac{\partial}{\partial x_{\alpha}}\overline{\psi}\left(ux\right)x^{\mu}\gamma_{\mu}\psi\left(-ux\right).
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+z^{\mu}\mathcal{R}_{\mu}^{2,qq}\left(-z^{-},z^{-}\right) & =\int_{-1}^{1}\dd u\,{\color{brown}z^{\mu}\frac{\partial}{\partial z^{\mu}}}\bar{\psi}\left(-uz\right)\sla{z}\left[-uz,uz\right]\psi\left(uz\right)\\
+ & =\int_{-1}^{1}\dd u{\color{blue}\frac{1}{u}}\,{\color{brown}z^{\mu}\frac{\partial}{\partial z^{\mu}}}\bar{\psi}\left(-uz\right){\color{blue}u}\sla{z}\left[-uz,uz\right]\psi\left(uz\right)\\
+ & =\int_{-1}^{1}\dd u\,{\color{blue}\frac{1}{u}}{\color{brown}u\frac{\dd}{\dd u}}\bar{\psi}\left(-uz\right){\color{blue}u}\sla{z}\left[-uz,uz\right]\psi\left(uz\right)\\
+ & =\left.\bar{\psi}\left(-uz\right){\color{blue}u}\sla{z}\left[-uz,uz\right]\psi\left(uz\right)\right|_{-1}^{+1}\\
+ & =\bar{\psi}\left(-z\right)\sla{z}\left[-z,z\right]\psi\left(z\right)-\cdots
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 胶子算符的推广是很直接的。引入了定域 Wilson 算符之后，我们就可以讨论 GPDs Mellin矩的 polynomiality 性质，Mellin矩联系着
 算符的强子矩阵元。
 \end_layout

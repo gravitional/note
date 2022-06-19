@@ -27,3 +27,5 @@ Some note on Physics and Computing.
 + Java, Perl, Python, C++, Bash, Powershell,
 + Regex, Vim, VSCode, 
 + racket, rust
+
+如果 LyX 文档无法编译，可能是缺少字体，例如 [stix2-otf](https://www.ctan.org/tex-archive/fonts/stix2-otf)
