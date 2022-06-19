@@ -1,5 +1,15 @@
 # scripts examples
 
+## 批量重命名
+
+[Rename-Item](https://docs.microsoft.com/zh-cn/powershell/module/Microsoft.PowerShell.Management/Rename-Item?view=powershell-7)
+
+```powershell
+Get-ChildItem *.txt | Rename-Item -NewName { $_.Name -replace '.txt','.log' }
+```
+
+使用 `-WhatIf` 预览替换结果, 而不真正执行替换.
+
 ## 查找空文件夹
 
 [如何使用Powershell查找空文件夹](如何使用Powershell查找空文件夹)
