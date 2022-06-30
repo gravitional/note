@@ -59,7 +59,7 @@ vim $PREFIX/etc/nginx/nginx.conf
 /data/data/com.termux/files/usr/share/nginx/html
 ```
 
-如果想要修改默认路径的话 只需要在配置文件中 替换2处出现的这个路径即可
+如果想要修改默认路径的话 只需要在配置文件中 替换 `2处` 出现的这个路径即可
 下面贴一份完整的配置文件:
 
 ```nginx
@@ -133,3 +133,60 @@ nginx
 浏览器访问 `http://127.0.0.1:8080/info.php` 来看看刚刚新建的测试文件是否解析了:
 
 哇哦~ awesome
+
+## termux 备份
+
+[Backing up Termux](https://wiki.termux.com/wiki/Backing_up_Termux)
+
+### 备份
+
+在这个例子中, 将显示 `home` 和 `sysroot` 的备份.
+产生的 `备份存档` 将存储在你的共享存储器(`/sdcard`)上, 并用 `gzip` 进行压缩.
+
+1. 确保授予存储权限.
+
+    ```bash
+    termux-setup-storage
+    ```
+
+2. 备份文件.
+
+    ```bash
+    tar -zcf /sdcard/termux-backup.tar.gz -C /data/data/com.termux/files ./home ./usr
+    ```
+
+`备份` 应该在没有任何报错的情况下完成.
+应该不会有任何 `权限拒绝`, 除非用户滥用了root权限.
+如果你收到一些关于 `socket` 文件的警告, 请忽略它们.
+
+警告: 不要把备份存放在 Termux 的私有目录中. 它们的路径可能看起来像.
+
+`/data/data/com.termux` - 内部存储中的Termux私有目录
+`/sdcard/Android/data/com.termux `- 共享存储器上的私有Termux目录
+`/storage/XXXX-XXXX/Android/data/com.termux` - 外部存储器上的私有Termux目录, XXXX-XXXX是你的微型SD卡的UUID.
+`${HOME}/storage/external-1` - micro-sd上Termux私有目录的别名.
+
+一旦你从设置中清除 `Termux` 数据, 这些目录也会被清除.
+
+### 复原
+
+这里假设你已把 `home` 和 `usr` 目录备份到同一个存档中.
+请注意, 在这个过程中, 所有文件都会被覆盖.
+
+1. 确保存储权限已被授予.
+
+    ```bash
+    termux-setup-storage
+    ```
+
+2. 提取 `home` 和 `usr`, 覆盖所有文件. 
+通过 `--recursive-unlink` 来删除任何垃圾和无主的文件. 
+通过 `--preserve-permissions` 来设置文件权限, 
+如同存档时一样, 忽略 `umask`值. 
+通过结合这些额外的选项, 你将得到与归档文件中完全一样的安装状态.
+
+```bash
+tar -zxf /sdcard/termux-backup.tar.gz -C /data/data/com.termux/files --recursive-unlink --preserve-permissions
+```
+
+现在用通知中的 `exit` 按钮关闭 `Termux`, 然后再次打开它.

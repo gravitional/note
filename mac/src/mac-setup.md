@@ -4,20 +4,24 @@
 
 [在 Mac 上使用全局键盘快捷键](https://support.apple.com/zh-cn/guide/mac-help/mchlp2262/10.15/mac/10.15)
 您只能为现有菜单命令创建键盘快捷键. 您不能为通用任务定义键盘快捷键, 例如: 打开一个 `App` 或在 `App` 之间切换.
+[在macOS上微调音量](https://sspai.com/post/38531)
 
-妙控键盘的控制键顺序是 `contrl`,`option`,`command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改:
+妙控键盘的控制键顺序是 `contrl`, `option`, `command`, 把键位更改成这个顺序, 大部分使用默认的快捷键, 加上少部分修改:
 
-+ 切换输入为`opt+space`
++ 切换输入为 `CapsLock`
 + `spotlight`的快捷键为`opt+s`
 + `Show launchpad`的快捷键改成`F12`
 + `显示桌面`为`F11`,在`设置-调度中心`修改.
 + 切换全屏的快捷键为`^+cmd+F`: `Enter Full Screen`, `Exit Full Screen`
 + 锁定屏幕快捷键`^+cmd+Q`
 
-***
-`vscode`常用的快捷键,
++ 在调整音量时，同时按住 `Shift + option` 可以做更细微的调整，
+    + 调低 1/4 格音量：shift + option + F11
+    + 调高 1/4 格音量：shift + option + F12
 
-+ 插入多个光标变成`cmd+option+up`, 可以在`Selection`里面选择鼠标插入的修饰键`alt`or`ctrl`
+### vscode 常用的快捷键
+
++ 插入多个光标变成`cmd+option+up`, 可以在`Selection`里面选择鼠标插入的修饰键`alt` or `ctrl`
 + 把`markdown`切换代码环境--`toggle code block`的快捷键设置为`^+k ^+b`
 + 把补全提示--`trigger Suggest`的快捷键设置为`^+space`.
 + `go last`->`cmd+end`
@@ -25,17 +29,18 @@
 
 [Keyboard shortcuts for macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf)
 
-***
-mathematica
+### mathematica
 
 查找帮助的快捷键: `Find Selected Function`--`F1`
 清除所有输出的快捷键: `Delete All Output`--`^+L`
 
-***
+### 终端
+
 `终端` or `iterm2` 中大部分常用的快捷键,移动,清屏等等与`linux` 相同, 是在`readline`库中约定的.
 [Bash 行操作](https://wangdoc.com/bash/readline.html)
 
-***
+### Finder
+
 Finder中显示隐藏文件`Cmd+Shift+.`
 
 `mac` 中询问窗口, 焦点的移动方式仍然是按下`tab`, 但是取消操作需要按下`space`,不管在什么情况下, `enter`都是确定.
