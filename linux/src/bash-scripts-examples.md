@@ -46,7 +46,7 @@ done
 IFS=$SAVEIFS
 ```
 
-## aaaaaaaaaaaaaaaaa
+## eps to pdf converter
 
 ```bash
 declare -a archs=($(find . -mindepth 1 -maxdepth 1 -type f -iname '*.eps' -print0 | xargs -0 basename -s '.eps'))

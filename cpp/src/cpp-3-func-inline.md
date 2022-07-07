@@ -50,4 +50,3 @@ constexpr函数举例
 constexpr int get_size() { return 20; }
 
 constexpr int foo = get_size();  //正确: foo是一个常量表达式
-

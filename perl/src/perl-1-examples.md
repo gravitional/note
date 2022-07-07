@@ -55,3 +55,49 @@ foreach my $dir (@dir_paths) {
     rmdir $dir or warn "cannot rmdir $dir: $!\n";
 }
 ```
+
+## 提取结构化数据
+
+```perl
+#! /usr/bin/perl -w
+use v5.32;
+use File::Find;
+use File::Spec;
+use File::Basename;
+use Term::ANSIColor;
+use autodie;
+
+open my $mesh_fh, '<', 'mesh.dat';
+
+my @tagList  = ();
+my @tagStart = ();
+my @parse    = ();
+my %parse    = ();
+my $term;
+my $termOrd = 0;
+
+say "let's find out the data!\n";
+while (<$mesh_fh>) {
+
+    given ($_) {
+        when (/(\w+) +\{/) {
+            $term = $1 . "$termOrd";
+            ++$termOrd;
+            say "find: `$term' @ $.";
+            push @tagList,  $term;
+            push @tagStart, $.;
+        }
+        when (/\}/) {
+            say "find: `}'  that end `$term' @ $.";
+            push @parse, ( pop @tagList, [ pop @tagStart, $. ] )
+        }
+    }
+}
+close $mesh_fh;
+
+%parse = @parse;
+
+while ( my ( $k, $v ) = each %parse ) {
+    say "key: $k, v: @$v";
+}
+```
