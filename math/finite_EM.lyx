@@ -1,0 +1,2306 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+数学笔记
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+4.二维有限元分析
+\end_layout
+
+\begin_layout Standard
+page 57
+\end_layout
+
+\begin_layout Section
+边值问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sbf\nabla\left(\alpha\cdot\sbf\nabla\phi\right)+\beta\phi=f
+\]
+
+\end_inset
+
+在二维情况下，边值问题即为
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial}{\partial x}\left(\alpha_{x}\frac{\partial\phi}{\partial x}\right)+\frac{\partial}{\partial y}\left(\alpha_{y}\frac{\partial\phi}{\partial y}\right)+\beta\phi=f,\quad\left(x,y\right)\in\Omega.\label{eq:4.1}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 是未知函数，参数
+\begin_inset Formula $\alpha_{x}$
+\end_inset
+
+
+\begin_inset Formula $\alpha_{y}$
+\end_inset
+
+
+\begin_inset Formula $\beta$
+\end_inset
+
+与待求区域的物理性质有关；
+\begin_inset Formula $f$
+\end_inset
+
+是源或者激励函数（excitation function）。通常的二维 Laplace 方程，Poisson 方程，或 Helmholtz 方程可以看作
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的特殊形式。
+\end_layout
+
+\begin_layout Standard
+需要考虑的边界条件为
+\begin_inset Formula 
+\begin{equation}
+\phi=p\quad\text{on}\quad\Gamma_{1}\quad\text{essential}\label{eq:4.2}
+\end{equation}
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\begin{equation}
+\left(\alpha_{x}\frac{\partial\phi}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi}{\partial y}\hat{y}\right)\cdot\hat{n}+\gamma\phi=q\quad\text{on}\quad\Gamma_{2}\quad\text{natural}\label{eq:4.3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\sbf{\hat{r}}\cdot\sbf\alpha\sbf\nabla\phi\right)\cdot\sbf n+\gamma\phi=q
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Gamma\left(=\Gamma_{1}+\Gamma_{2}\right)$
+\end_inset
+
+标记回路，它闭合区域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+当 
+\begin_inset Formula $\gamma=q=0$
+\end_inset
+
+，称为 homogeneous Neumann 边界条件。
+\begin_inset Formula 
+\[
+\left(\alpha_{x}\frac{\partial\phi}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi}{\partial y}\hat{y}\right)\cdot\hat{n}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Variational formulation
+\end_layout
+
+\begin_layout Section
+有限元分析
+\end_layout
+
+\begin_layout Subsection
+4.3.2 单元插值
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\phi^{e}\left(x,y\right)=\sum_{j=1}^{3}N_{j}^{e}\left(x,y\right)\phi_{j}^{e}\label{eq:4.23}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+N_{j}^{e}\left(x,y\right)=\frac{1}{2\Delta^{e}}\left(a_{j}^{e}+b_{j}^{e}x+c_{j}^{e}y\right),\quad j=1,2,3\label{eq:4.24}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $L_{j}^{e}$
+\end_inset
+
+是线性三角形单元的插值函数。其中
+\begin_inset Formula 
+\begin{align}
+ & a_{1}^{e}=x_{2}^{e}y_{3}^{e}-y_{2}^{e}x_{3}^{e}; &  & b_{1}^{e}=y_{2}^{e}-y_{3}^{e}; &  & c_{1}^{e}=x_{3}^{e}-x_{2}^{e}\nonumber \\
+ & a_{2}^{e}=x_{3}^{e}y_{1}^{e}-y_{3}^{e}x_{1}^{e}; &  & b_{2}^{e}=y_{3}^{e}-y_{1}^{e}; &  & c_{2}^{e}=x_{1}^{e}-x_{3}^{e}\label{eq:4.24-1}\\
+ & a_{3}^{e}=x_{1}^{e}y_{2}^{e}-y_{1}^{e}x_{2}^{e}; &  & b_{3}^{e}=y_{1}^{e}-y_{2}^{e}; &  & c_{3}^{e}=x_{2}^{e}-x_{1}^{e}\nonumber 
+\end{align}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\[
+\Delta^{e}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right|=\frac{1}{2}\left(b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\right)=\text{第}e\text{个单元的面积}.
+\]
+
+\end_inset
+
+容易证明，插值函数具有性质
+\begin_inset Formula 
+\begin{equation}
+N_{i}^{e}\left(x_{i}^{e},y_{j}^{e}\right)=\delta_{ij}=\begin{cases}
+1 & i=j\\
+0 & i\neq j.
+\end{cases}\label{eq:4.25}
+\end{equation}
+
+\end_inset
+
+因此在节点
+\begin_inset Formula $i$
+\end_inset
+
+上，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.23"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $\phi^{e}$
+\end_inset
+
+回到它的节点值 
+\begin_inset Formula $\phi_{i}^{e}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+上述表达式的另一种形式为：考虑三角单元中的一点
+\begin_inset Formula $P:\left(x,y\right)$
+\end_inset
+
+，与节点
+\begin_inset Formula $2$
+\end_inset
+
+和
+\begin_inset Formula $3$
+\end_inset
+
+定义的三角形的面积
+\begin_inset Formula 
+\begin{align}
+\Delta_{1} & =\frac{1}{2}\left|\begin{array}{ccc}
+1 & x & y\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right|\nonumber \\
+ & =\frac{1}{2}\left[\left(x_{2}^{e}y_{3}^{e}-x_{3}^{e}y_{2}^{e}\right)+x\left(y_{2}^{e}-y_{3}^{e}\right)+y\left(x_{3}^{e}-x_{2}^{e}\right)\right].\label{eq:4.155-1}
+\end{align}
+
+\end_inset
+
+使用前文
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.24-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 定义的 
+\begin_inset Formula $a_{j}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $b_{j}^{e}$
+\end_inset
+
+和
+\begin_inset Formula $c_{j}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta_{1}$
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\begin{equation}
+\Delta_{1}=\frac{1}{2}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right).\label{eq:4.156-1}
+\end{equation}
+
+\end_inset
+
+与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.24"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+比较，容易看出
+\begin_inset Formula 
+\begin{align*}
+ & L_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right),\\
+ & L_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y\right),\\
+ & L_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+4.3.3Ritz 方法的公式
+\end_layout
+
+\begin_layout Standard
+矩阵 
+\begin_inset Formula $\left[K^{e}\right]$
+\end_inset
+
+ 的元素为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+K_{ij}^{e}=\iint_{\Omega^{e}}\left(\alpha_{x}\frac{\partial N_{i}^{e}}{\partial x}\frac{\partial N_{j}^{e}}{\partial x}+\alpha_{y}\frac{\partial N_{i}^{e}}{\partial y}\frac{\partial N_{j}^{e}}{\partial y}+\beta N_{i}^{e}N_{j}^{e}\right)\dd{x}\dd{y},\quad i,j=1,2,3\label{eq:4.30}
+\end{equation}
+
+\end_inset
+
+而矢量 
+\begin_inset Formula $\left\{ b^{e}\right\} $
+\end_inset
+
+则表示为
+\begin_inset Formula 
+\begin{equation}
+b_{i}^{e}=\iint_{\Omega^{e}}fN_{i}^{e}\dd{x}\dd{y},\quad i,j=1,2,3\label{eq:4.31}
+\end{equation}
+
+\end_inset
+
+显然 
+\begin_inset Formula $\left[K^{e}\right]$
+\end_inset
+
+ 是对称矩阵。现在假设系数 
+\begin_inset Formula $\alpha_{x}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{y}$
+\end_inset
+
+，
+\begin_inset Formula $\beta$
+\end_inset
+
+和源函数
+\begin_inset Formula $f$
+\end_inset
+
+在每个单元是常数，分别表示为 
+\begin_inset Formula $\alpha_{x}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{y}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\beta^{e}$
+\end_inset
+
+和 
+\begin_inset Formula $f^{e}$
+\end_inset
+
+，则
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以解析计算。特别地，注意到公式[1]
+\begin_inset Formula 
+\begin{equation}
+\iint_{\Omega^{e}}\left(N_{1}^{e}\right)^{l}\left(N_{2}^{e}\right)^{m}\left(N_{3}^{e}\right)^{n}\dd{x}\dd{y}=\frac{l!m!n!}{\left(l+m+n+2\right)!}2\Delta^{e}.\label{eq:4.32}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+变成
+\begin_inset Formula 
+\begin{align}
+K_{ij}^{e} & =\frac{1}{4\Delta^{e}}\left(\alpha_{x}^{e}b_{i}^{e}b_{j}^{e}+\alpha_{y}^{e}c_{i}^{e}c_{j}^{e}\right)+\frac{\Delta^{e}}{12}\beta^{e}\left(1+\delta_{ij}\right)\label{eq:4.33}\\
+b_{i}^{e} & =\frac{\Delta^{e}}{3}f^{e}.\label{4.34}
+\end{align}
+
+\end_inset
+
+另一方面，如果 
+\begin_inset Formula $\alpha_{x}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{y}$
+\end_inset
+
+，
+\begin_inset Formula $\beta$
+\end_inset
+
+和 
+\begin_inset Formula $f$
+\end_inset
+
+ 在单元内不是常熟，我们还是可以使用上面的结果，只需把 
+\begin_inset Formula $\alpha_{x}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{y}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\beta^{e}$
+\end_inset
+
+和 
+\begin_inset Formula $f^{e}$
+\end_inset
+
+替换成单元上的平均值。也可以数值计算 
+\begin_inset Formula $K_{ij}^{e}$
+\end_inset
+
+ 和 
+\begin_inset Formula $b_{i}^{e}$
+\end_inset
+
+，通常单元已经划分的足够小从而不必用数值方法，使用前一种方法就足够了。
+\end_layout
+
+\begin_layout Exercise
+本练习的目的是推导
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.32"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。第一步，证明变换
+\begin_inset Formula 
+\[
+\begin{cases}
+\xi=N_{1}^{e}\left(x,y\right)\\
+\eta=N_{2}^{e}\left(x,y\right)
+\end{cases}
+\]
+
+\end_inset
+
+将 图4.3 的三角形映射到 
+\begin_inset Formula $\xi\eta$
+\end_inset
+
+–平面的直角三角形。第二步，证明
+\begin_inset Formula 
+\[
+N_{3}^{e}\left(x,y\right)=1-\xi-\eta,\quad\dd{x}\dd{y}=2\Delta^{e}\dd{\xi}\dd{\eta}.
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\iint_{\Omega^{e}}\left(N_{1}^{e}\right)^{l}\left(N_{2}^{e}\right)^{m}\left(N_{3}^{e}\right)^{n}\dd{x}\dd{y}=2\Delta^{e}\int_{0}^{1}\xi^{l}\int_{0}^{1-\xi}\eta^{m}\left(1-\xi-\eta\right)^{n}\dd{\xi}\dd{\eta}.
+\]
+
+\end_inset
+
+计算此积分即得到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.32"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Solution
+代入
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=\xi,\\
+ & N_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y}{2}=\eta,\\
+ & N_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y}{2}=1-\xi-\eta.
+\end{align*}
+
+\end_inset
+
+以及逆变换矩阵
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.161-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} =\left[\begin{array}{ccc}
+1 & 1 & 1\\
+x_{1}^{e} & x_{2}^{e} & x_{3}^{e}\\
+y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+\xi\\
+\eta\\
+1-\xi-\eta
+\end{array}\right\} .
+\]
+
+\end_inset
+
+得到：
+\begin_inset Formula 
+\begin{align*}
+x & =x_{1}^{e}\xi+x_{2}^{e}\eta+x_{3}^{e}\left(1-\xi-\eta\right)=\xi\left(x_{1}^{e}-x_{3}^{e}\right)+\eta\left(x_{2}^{e}-x_{3}^{e}\right)+x_{3}^{e}\\
+ & =c_{2}^{e}\xi-c_{1}^{e}\eta+x_{3}^{e}\\
+y & =y_{1}^{e}\xi+y_{2}^{e}\eta+y_{3}^{e}\left(1-\xi-\eta\right)=\cdots\\
+ & =-b_{2}^{e}\xi+b_{1}^{e}\eta+y_{3}^{e}
+\end{align*}
+
+\end_inset
+
+所以 Jacobi 矩阵为
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)} & =\left[\begin{array}{cc}
+x_{1}^{e}-x_{3}^{e} & x_{2}^{e}-x_{3}^{e}\\
+y_{1}^{e}-y_{3}^{e} & y_{2}^{e}-y_{3}^{e}
+\end{array}\right]=\left[\begin{array}{cc}
+c_{2}^{e} & -c_{1}^{e}\\
+-b_{2}^{e} & b_{1}^{e}
+\end{array}\right]=b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\\
+\det J & =2{\color{blue}\frac{1}{2}\left(b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\right)}=2\Delta^{e}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+从 
+\begin_inset Formula $\left(x,y\right)\to\left(\xi,\eta\right)$
+\end_inset
+
+，如果代入三个顶点的坐标 ：
+\begin_inset Formula $\left(x_{1},y_{1}\right)\cdots$
+\end_inset
+
+ ，则结果为
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+a1 = x2 y3 - y2 x3; a2 = x3 y1 - y3 x1; a3 = x1 y2 - y1 x2; (*------------*)
+ b1 = y2 - y3; b2 = y3 - y1; b3 = y1 - y2; (*------------*) c1 = x3 - x2;
+ c2 = x1 - x3; c3 = x2 - x1; 
+\backslash
+[CapitalDelta]e = 1/2 (b1 c2 - b2 c1); (*coordinate transformation*) toxy[
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := {{c2, -c1}, {-b2, b1}} .
+ {
+\backslash
+[Xi], 
+\backslash
+[Eta]} + {x3, y3}; to
+\backslash
+[Xi]
+\backslash
+[Eta][x_, y_] := {{b1, c1}, {b2, c2}} .
+ {x, y} + {a1, a2}; (*test*) 2 
+\backslash
+[CapitalDelta]e // Simplify to
+\backslash
+[Xi]
+\backslash
+[Eta][x1, y1] // Simplify to
+\backslash
+[Xi]
+\backslash
+[Eta][x2, y2] // Simplify to
+\backslash
+[Xi]
+\backslash
+[Eta][x3, y3] // Simplify
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \left(x_{1},y_{1}\right)\to\left(\xi=1,\eta=0\right)\\
+ & \left(x_{2},y_{2}\right)\to\left(\xi=0,\eta=1\right)\\
+ & \left(x_{3},y_{3}\right)\to\left(\xi=0,\eta=0\right)
+\end{align*}
+
+\end_inset
+
+即二维三角元经过坐标变换后，变成了标准直角三角形，直角位于坐标远点。
+\end_layout
+
+\begin_layout Solution
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+总结
+\begin_inset Formula 
+\begin{align*}
+ & \left[\begin{array}{c}
+x\\
+y
+\end{array}\right]=\left[\begin{array}{cc}
+c_{2}^{e} & -c_{1}^{e}\\
+-b_{2}^{e} & b_{1}^{e}
+\end{array}\right]\left[\begin{array}{c}
+\xi\\
+\eta
+\end{array}\right]+\left[\begin{array}{c}
+x_{3}^{e}\\
+y_{3}^{e}
+\end{array}\right],\\
+ & \left[\begin{array}{c}
+\xi\\
+\eta
+\end{array}\right]=\frac{1}{2\Delta^{e}}\left\{ \left[\begin{array}{cc}
+b_{1}^{e} & c_{1}^{e}\\
+b_{2}^{e} & c_{2}^{e}
+\end{array}\right]\left[\begin{array}{c}
+x\\
+y
+\end{array}\right]+\left[\begin{array}{c}
+a_{1}^{e}\\
+a_{2}^{e}
+\end{array}\right]\right\} ,\\
+ & \frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=2\Delta^{e}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Quadratic 三角单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/quadratic-triangular.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+quadratic triangular element 的 elemental matrix 是 
+\begin_inset Formula $6\times6$
+\end_inset
+
+ 矩阵，它的元素是
+\begin_inset Formula 
+\begin{align}
+K_{ij} & =\iint_{\Omega^{e}}\left(\alpha_{x}\frac{\partial N_{i}^{e}}{\partial x}\frac{\partial N_{j}^{e}}{\partial x}+\alpha_{y}\frac{\partial N_{i}^{e}}{\partial y}\frac{\partial N_{j}^{e}}{\partial y}+\beta N_{i}^{e}N_{j}^{e}\right)\dd{x}\dd{y}\nonumber \\
+ & i,j=1,2,3,\cdots6.\label{eq:4.151}
+\end{align}
+
+\end_inset
+
+类似地，列 
+\begin_inset Formula $\left\{ b^{e}\right\} $
+\end_inset
+
+ 的元素为
+\begin_inset Formula 
+\begin{equation}
+b_{i}^{e}=\iint_{\Omega^{e}}fN_{i}^{e}\dd{x}\dd{y},\quad i,j=1,2,3,\cdots6.\label{eq:4.152}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+4.7.1 Quadratic Triangular Elements
+\end_layout
+
+\begin_layout Standard
+page 83
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+L_{j}^{e}\left(x,y\right)=\frac{1}{2\Delta^{e}}\left(a_{j}^{e}+b_{j}^{e}x+c_{j}^{e}y\right),\quad j=1,2,3\label{eq:4.149}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{j}^{e}$
+\end_inset
+
+
+\begin_inset Formula $b_{j}^{e}$
+\end_inset
+
+
+\begin_inset Formula $c_{j}^{e}$
+\end_inset
+
+和 
+\begin_inset Formula $\Delta^{e}$
+\end_inset
+
+的定义和（4.24）中的相同。
+\end_layout
+
+\begin_layout Subsection
+4.7.2 构建插值函数
+\end_layout
+
+\begin_layout Standard
+page 84
+\end_layout
+
+\begin_layout Standard
+上述的方法可以用于构建任意阶单元的插值函数，然而有必要寻找一种简单的方法。下面的方法基于 Lagrangian interpolation polynomial
+s。再次观察
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.149"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中定义的 
+\begin_inset Formula $L_{j}^{e}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/FEMEM-4.28.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑三角单元中的一点
+\begin_inset Formula $P$
+\end_inset
+
+，由点
+\begin_inset Formula $P$
+\end_inset
+
+和节点
+\begin_inset Formula $2$
+\end_inset
+
+和
+\begin_inset Formula $3$
+\end_inset
+
+定义的三角形的面积为
+\begin_inset Formula 
+\begin{align}
+\Delta_{1} & =\frac{1}{2}\left|\begin{array}{ccc}
+1 & x & y\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right|\nonumber \\
+ & =\frac{1}{2}\left[\left(x_{2}^{e}y_{3}^{e}-x_{3}^{e}y_{2}^{e}\right)+x\left(y_{2}^{e}-y_{3}^{e}\right)+y\left(x_{3}^{e}-x_{2}^{e}\right)\right].\label{eq:4.155}
+\end{align}
+
+\end_inset
+
+使用前文
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.24-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 定义的 
+\begin_inset Formula $a_{j}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $b_{j}^{e}$
+\end_inset
+
+和
+\begin_inset Formula $c_{j}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta_{1}$
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\begin{equation}
+\Delta_{1}=\frac{1}{2}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right).\label{eq:4.156}
+\end{equation}
+
+\end_inset
+
+与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.149"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+L_{j}^{e}\left(x,y\right)=\frac{1}{2\Delta^{e}}\left(a_{j}^{e}+b_{j}^{e}x+c_{j}^{e}y\right),\quad j=1,2,3
+\]
+
+\end_inset
+
+比较，容易看出
+\begin_inset Formula 
+\begin{equation}
+L_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right).\label{eq:4.157}
+\end{equation}
+
+\end_inset
+
+类似地，我们发现
+\begin_inset Formula 
+\begin{equation}
+L_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y\right).\label{eq:4.158}
+\end{equation}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{equation}
+L_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y\right).\label{eq:4.159}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta_{2}$
+\end_inset
+
+标记由点
+\begin_inset Formula $P$
+\end_inset
+
+和节点
+\begin_inset Formula $3$
+\end_inset
+
+，节点
+\begin_inset Formula $1$
+\end_inset
+
+定义的三角形，
+\begin_inset Formula $\Delta_{3}$
+\end_inset
+
+标记由点
+\begin_inset Formula $P$
+\end_inset
+
+和节点
+\begin_inset Formula $1,2$
+\end_inset
+
+定义的三角形。由于点
+\begin_inset Formula $P$
+\end_inset
+
+的选取完全确定了
+\begin_inset Formula $L_{1}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $L_{2}^{e}$
+\end_inset
+
+和
+\begin_inset Formula $L_{3}^{e}$
+\end_inset
+
+，所以也可以反过来，用后者定义一个唯一点
+\begin_inset Formula $P$
+\end_inset
+
+。由此也把 
+\begin_inset Formula $\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)$
+\end_inset
+
+ 成为面积坐标。在文献中，它们也被称为自然或单形坐标（simplex coordinates）。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.157"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:4.159"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以紧凑地写成
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} =\frac{1}{2\Delta^{e}}\left[\begin{array}{ccc}
+a_{1}^{e} & b_{1}^{e} & c_{1}^{e}\\
+a_{2}^{e} & b_{2}^{e} & c_{2}^{e}\\
+a_{3}^{e} & b_{3}^{e} & c_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} \label{eq:4.160}
+\end{equation}
+
+\end_inset
+
+
+\color blue
+
+\begin_inset Formula $L_{j}^{e}$
+\end_inset
+
+正好是线性三角形单元的插值函数。
+\color inherit
+易得逆变换矩阵
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} =\left[\begin{array}{ccc}
+1 & 1 & 1\\
+x_{1}^{e} & x_{2}^{e} & x_{3}^{e}\\
+y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} .\label{eq:4.161}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} =\left[\begin{array}{ccc}
+1 & 1 & 1\\
+x_{1}^{e} & x_{2}^{e} & x_{3}^{e}\\
+y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+\xi\\
+\eta\\
+1-\xi-\eta
+\end{array}\right\} .\label{eq:4.161-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+4.7.3 数值积分
+\end_layout
+
+\begin_layout Standard
+ref: The finite element method in electromagnetics; JianMing Jin; 4.7.3 page
+ 148 (87)
+\end_layout
+
+\begin_layout Standard
+此外， 可以借助数值积分方法。经常使用的数值积分方案是 Gauss quadrature，在 Sect 3.6 中讨论了一维积分的方法。对于在三角形单元上的积分，
+文献[9]中证明了
+\begin_inset Formula 
+\begin{equation}
+\iint_{\Omega^{e}}F\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)\dd{x}\dd{y}=\sum_{i=1}^{m}W_{i}F\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)\Delta^{e}\label{eq:4.164}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)$
+\end_inset
+
+ 表示采样点（sampling points），
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ 表示权重，在表 4.1中给出。记北极函数的 polynomial degree 为 
+\begin_inset Formula $p$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $p\le1$
+\end_inset
+
+，当 
+\begin_inset Formula $m=1$
+\end_inset
+
+ 即可积出精确值。
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $p\le2$
+\end_inset
+
+，当 
+\begin_inset Formula $m=3$
+\end_inset
+
+ 即可积出精确值。
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $p\le3$
+\end_inset
+
+，当 
+\begin_inset Formula $m=4$
+\end_inset
+
+ 即可积出精确值。
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $p\le4$
+\end_inset
+
+，当 
+\begin_inset Formula $m=7$
+\end_inset
+
+ 即可积出精确值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p$
+\end_inset
+
+直到20，都可以应用 Gauss quadrature 规则。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="8">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+图
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $L_{1i}^{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $L_{2i}^{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $L_{3i}^{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $W_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+重心采点 
+\begin_inset Formula $(1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.00000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+边心采点 
+\begin_inset Formula $(3)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.500000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.500000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.00000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.00000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.500000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.500000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.500000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.00000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.500000000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+重心+内部 
+\begin_inset Formula $(4)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.33333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-0.56250000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.73333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.13333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.13333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.52083333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.13333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.73333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.13333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.52083333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.13333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.13333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.73333333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.52083333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+三角形的 Gauss Quadrature 的采样点和权重
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xx
+\end_layout
+
+\end_body
+\end_document
