@@ -1,0 +1,993 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+数学笔记
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+线性代数
+\end_layout
+
+\begin_layout Section
+范德蒙德行列式
+\end_layout
+
+\begin_layout Standard
+ref: 
+\begin_inset CommandInset href
+LatexCommand href
+name "范德蒙行列式"
+target "https://zhuanlan.zhihu.com/p/161300510"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+范德蒙德行列式的形式：
+\begin_inset Formula 
+\[
+D=\left[\begin{array}{ccccc}
+1 & 1 & 1 & \cdots & 1\\
+x_{1} & x_{2} & x_{3} & \cdots & x_{n}\\
+x_{1}^{2} & x_{2}^{2} & x_{3}^{2} & \cdots & x_{n}^{2}\\
+\cdots & \cdots & \cdots & \cdots & \cdots\\
+x_{1}^{n-2} & x_{2}^{n-2} & \cdots & \cdots & x_{n}^{n-2}\\
+x_{1}^{n-1} & x_{2}^{n-1} & \cdots & \cdots & x_{n}^{n-1}
+\end{array}\right]
+\]
+
+\end_inset
+
+遇到类似于上式的行列式时，可以使用范德蒙行列式公式计算：
+\begin_inset Formula 
+\[
+\prod_{n\ge i\ge j\ge1}=(x_{i}-x_{j})
+\]
+
+\end_inset
+
+即行列式
+\begin_inset Formula $D$
+\end_inset
+
+的值为所有
+\begin_inset Formula $(x_{i}-x_{j})$
+\end_inset
+
+ 的乘积，其中
+\begin_inset Formula $i>j$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+例如
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & 1 & 1\\
+x_{1} & x_{2} & x_{3}\\
+x_{1}^{2} & x_{2}^{2} & x_{3}^{2}
+\end{array}\right]=\left(x_{2}-x_{1}\right)\left(x_{3}-x_{1}\right)\left(x_{3}-x_{2}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+证明范德蒙行列式
+\end_layout
+
+\begin_layout Standard
+通过观察范德蒙行列式，拿行列式的第一列来说，相邻的两个元素，上面的元素比下面的元素少乘一次 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+。根据这一特征，可以试着从第 
+\begin_inset Formula $n$
+\end_inset
+
+ 行开始，每个元素都减去前一行元素的 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 倍，则可以提取出公因式
+\begin_inset Formula 
+\[
+\left(x_{2}-x_{1}\right)\left(x_{3}-x_{1}\right)\cdots\left(x_{n}-x_{1}\right)\times\left[\begin{array}{cccc}
+1 & 1 & \cdots & 1\\
+x_{2} & x_{3} & \cdots & x_{n}\\
+\cdots & \cdots & \cdots & \cdots\\
+x_{2}^{n-3} & \cdots & \cdots & x_{n}^{n-3}\\
+x_{2}^{n-2} & \cdots & \cdots & x_{n}^{n-2}
+\end{array}\right]
+\]
+
+\end_inset
+
+于是又产生了范德蒙德行列式，可以递归进行下去。因此得到公式
+\begin_inset Formula 
+\[
+D=\prod_{n\ge i\ge j\ge1}=(x_{i}-x_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+有限元中的Lagrange插值与Gauss积分
+\end_layout
+
+\begin_layout Standard
+ref:
+\begin_inset CommandInset href
+LatexCommand href
+name "Lagrange插值与Gauss积分"
+target "https://zhuanlan.zhihu.com/p/37768842"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lagrange插值与Gauss积分是在学习FEM中不可回避的两部分，虽然说是两部分，其实在Gauss积分中，构造多项式的被积函数时，也用到了Lagrange插
+值多项式，所以在讲关于参数单元刚度矩阵求积分的时候，在数值积分中一起提出。
+\begin_inset Formula 
+\begin{equation}
+\int_{a}^{b}f\left(x\right)\dd{x}\approx\int_{a}^{b}P\left(x\right)\dd{x}\label{eq:5.145}
+\end{equation}
+
+\end_inset
+
+以上表达式是说，对于比较难以积分的函数
+\begin_inset Formula $f$
+\end_inset
+
+，我们找到了与之相似度很高的多项式函数
+\begin_inset Formula $P$
+\end_inset
+
+，用
+\begin_inset Formula $P$
+\end_inset
+
+的积分来代替f的积分，那么现在的问题就是如何找到多项式
+\begin_inset Formula $P$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+Newton–Cotes 数值积分
+\end_layout
+
+\begin_layout Standard
+基于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个点（
+\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
+\end_inset
+
+），将多项式取为 Lagrange 插值多项式，即
+\begin_inset Formula 
+\[
+\varphi\left(\xi\right)=a_{0}+a_{1}\xi+\cdots+a_{n-1}\xi^{n-1}=\sum_{i=1}^{n}l_{i}^{(n-1)}\left(\xi\right)f\left(\xi_{i}\right).
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+，
+\begin_inset Formula $a$
+\end_inset
+
+，
+\begin_inset Formula $\cdots$
+\end_inset
+
+，
+\begin_inset Formula $a_{n-1}$
+\end_inset
+
+为常数，
+\begin_inset Formula $l_{i}^{(n-1)}$
+\end_inset
+
+为
+\begin_inset Formula $n-1$
+\end_inset
+
+阶 Lagrange 插值函数，即
+\begin_inset Formula 
+\[
+l_{i}^{(n-1)}\left(\xi\right)=\frac{\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots{\color{blue}\left(\xi-\xi_{i-1}\right)\left(\xi-\xi_{i+1}\right)}\cdots\left(\xi-\xi_{n}\right)}{\left(\xi_{i}-\xi_{1}\right)\left(\xi_{i}-\xi_{2}\right)\cdots{\color{blue}\left(\xi_{i}-\xi_{i-1}\right)\left(\xi_{i}-\xi_{i+1}\right)}\cdots\left(\xi_{i}-\xi_{n}\right)}=\prod_{\substack{j=1\\
+j\neq i
+}
+}^{n}\frac{\left(\xi-\xi_{j}\right)}{\left(\xi_{i}-\xi_{j}\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lagrange插值的定义: 如果已知 
+\begin_inset Formula $n$
+\end_inset
+
+ 个点的数值，那么可以构造一个
+\begin_inset Formula $n-1$
+\end_inset
+
+阶的多项式，通过待定系数的方式，使得这个多项式在这
+\begin_inset Formula $n$
+\end_inset
+
+个点的值就等于原本函数在这
+\begin_inset Formula $n$
+\end_inset
+
+个点的数值。关于待定系数的求解，刚好是一个范德蒙德多项式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+1 & x_{1} & x_{1}^{2} & \cdots & x_{1}^{n-1}\\
+1 & x_{2} & x_{2}^{2} & \cdots & x_{2}^{n-1}\\
+\cdots & \cdots & \cdots & \cdots & \cdots\\
+1 & x_{n} & x_{n}^{2} & \cdots & x_{n}^{n-1}
+\end{array}\right]\left(\begin{array}{c}
+a_{0}\\
+a_{1}\\
+\cdots\\
+a_{n-1}
+\end{array}\right)=\left(\begin{array}{c}
+f\left(x_{1}\right)\\
+f\left(x_{2}\right)\\
+\cdots\\
+f\left(x_{n}\right)
+\end{array}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+，
+\begin_inset Formula $a_{n-1}$
+\end_inset
+
+ 是拟合多项式中的各个系数。例如给三个点，得到的插值多项式形如：
+\begin_inset Formula 
+\[
+y=l_{1}^{(2)}\left(x\right)y_{1}+l_{2}^{(2)}\left(x\right)y_{2}+l_{3}^{(2)}\left(x\right)y_{3}
+\]
+
+\end_inset
+
+容易看出
+\begin_inset Formula $f_{i}(x_{j})=\delta_{ij}$
+\end_inset
+
+，即在所有要插值的点，多项式插值的结果与原来的函数相等。因此 Lagrange 插值的一般表达式为
+\begin_inset Formula 
+\[
+P\left(x\right)=\sum_{i=1}^{n}\left[\prod_{\substack{j=1\\
+i\neq j
+}
+}\frac{\left(x-x_{j}\right)}{\left(x_{i}-x_{j}\right)}y_{i}\right].
+\]
+
+\end_inset
+
+从而引出了 Newton–Cotes 数值积分公式
+\begin_inset Formula 
+\begin{align*}
+I & =\int_{-1}^{1}f\left(\xi\right)\dd{\xi}\approx\int_{-1}^{1}\varphi\left(\xi\right)\dd{\xi}\\
+ & =\sum_{i=1}^{n}{\color{blue}\left(\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}\right)}f\left(\xi_{i}\right)\\
+ & =\sum_{i=1}^{n}A_{i}f\left(\xi_{i}\right)
+\end{align*}
+
+\end_inset
+
+Newton-Cotes 数值积分将原积分转化为 
+\series bold
+权函数
+\series default
+ 与 
+\series bold
+原函数值
+\series default
+ 的线性组合（在离散点上）。
+\end_layout
+
+\begin_layout Subsection
+Gauss积分, Gauss quadrature
+\end_layout
+
+\begin_layout Standard
+然后，就是 FEM 里常用的 Gauss 积分了：
+\end_layout
+
+\begin_layout Standard
+首先谈一下我的理解，上面的Newton-Cotes数值积分，是将 
+\series bold
+函数
+\series default
+ 转换为 
+\series bold
+多项式
+\series default
+，采用的多项式是Lagrange插值多项式，对采用的n个点没有特殊的要求；下面的Gauss积分，就是要挑选优化过的积分点，同时确定积分点函数值的权函数。
+\end_layout
+
+\begin_layout Standard
+如果调整 
+\begin_inset Formula $n$
+\end_inset
+
+ 个插值点的位置（
+\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
+\end_inset
+
+），使 
+\begin_inset Formula $\varphi\left(\xi\right)$
+\end_inset
+
+作为 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 次多项式对
+\begin_inset Formula $f(\xi)$
+\end_inset
+
+ 进行逼近，则可以大大提高积分精度；也就是调整插值点 
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ 的位置，使其达到一个最优的组合，这种最优的位置点叫做 Gauss 积分点。
+\end_layout
+
+\begin_layout Standard
+由函数逼近理论，可构造 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $\varphi\left(\xi\right)$
+\end_inset
+
+ 为
+\begin_inset Formula 
+\begin{equation}
+\varphi\left(\xi\right)=\sum_{i=1}^{n}l_{i}^{(n-1)}(\xi)f(\xi_{i})+\sum_{i=0}^{n-1}\beta_{i}\xi^{i}P\left(\xi\right)\label{eq:5.149}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $l_{i}^{(n-1)}(\xi)$
+\end_inset
+
+ 是 
+\begin_inset Formula $\left(n-1\right)$
+\end_inset
+
+ 次 Lagrange插值函数，
+\begin_inset Formula $\beta_{i}$
+\end_inset
+
+ 为系数，
+\begin_inset Formula $P\left(\xi\right)$
+\end_inset
+
+ 为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式，即
+\begin_inset Formula 
+\begin{equation}
+P\left(\xi\right)=\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots\left(\xi-\xi_{n}\right)=\prod_{i=1}^{n}\left(\xi-\xi_{i}\right).\label{eq:5.150}
+\end{equation}
+
+\end_inset
+
+（
+\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
+\end_inset
+
+）积分点由以下条件确定
+\begin_inset Formula 
+\begin{equation}
+\int_{-1}^{1}\xi^{i}P\left(\xi\right)\dd{\xi}=0,\quad i=0,1,\cdots,n-1\label{eq:5.151}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Gauss积分的定义
+\end_layout
+
+\begin_layout Standard
+可以看出，构造的高斯积分的函数虽然阶次提高到了
+\begin_inset Formula $2n-1$
+\end_inset
+
+，它的两项中的第一项仍然为
+\begin_inset Formula $n-1$
+\end_inset
+
+阶，并且就是之前的拉格朗日插值多项式，只是在后面添加了一个“辅助项”。其实为什么这么构造我是不清楚的，但是毋庸置疑的是：
+\end_layout
+
+\begin_layout Enumerate
+辅助项在所有积分点处的值为零，即 
+\begin_inset Formula $P\left(\xi_{i}\right)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+整个多项式的阶次被提高到 
+\begin_inset Formula $2n-1$
+\end_inset
+
+次，相比于牛顿积分更精确；
+\end_layout
+
+\begin_layout Enumerate
+利用上述的积分条件（共
+\begin_inset Formula $n$
+\end_inset
+
+个），可以用来确定
+\begin_inset Formula $n$
+\end_inset
+
+个积分点（采样点）的位置。
+\end_layout
+
+\begin_layout Standard
+则积分
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.145"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+为，
+\begin_inset Formula 
+\begin{align}
+I & =\int_{-1}^{1}f\left(\xi\right)\dd{\xi}\approx\int_{-1}^{1}\varphi\left(\xi\right)\dd{\xi}\nonumber \\
+ & =\sum_{i=1}^{n}\left[\left({\color{blue}\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}}\right)f\left(\xi_{i}\right)\right]+\sum_{i=0}^{n-1}\int_{-1}^{1}\beta_{i}\xi^{i}P\left(\xi\right)\dd{\xi}=\sum_{i=1}^{n}Af\left(\xi_{i}\right)\label{eq:5.152}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+A_{i}={\color{blue}\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}}\label{eq:5.153}
+\end{equation}
+
+\end_inset
+
+注意这时 
+\begin_inset Formula $\varphi\left(\xi\right)$
+\end_inset
+
+ 为 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 次多项式，
+\color blue
+
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+的位置由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.151"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式确定
+\color inherit
+，因而整个积分的精度具有 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 阶。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那项已经保证了至少
+\begin_inset Formula $n$
+\end_inset
+
+的精确度，后面的项则把精确度提高到
+\begin_inset Formula $2n-1$
+\end_inset
+
+。精确度跟多项式的次数应当是没有关系的。而是跟特殊的取点有关系。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+有限元上的积分
+\end_layout
+
+\begin_layout Standard
+平面单元的空间坐标
+\begin_inset Formula $\left\{ x,y\right\} $
+\end_inset
+
+，通过形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+和顶点坐标映射到 等参坐标 
+\begin_inset Formula $\left\{ \xi,\eta\right\} $
+\end_inset
+
+ 平面
+\begin_inset Formula 
+\begin{align*}
+ & x=N_{i}^{e}\left(\xi,\eta\right)x_{i}\\
+ & y=N_{i}^{e}\left(\xi,\eta\right)y_{i}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+ 表示某个元中，第
+\begin_inset Formula $i$
+\end_inset
+
+个节点对应的形函数，对重复指标进行求和。积分测度的变换为
+\begin_inset Formula 
+\[
+\dd{x}\dd{y}=\det J\left(\xi,\eta\right)\dd{\xi}\dd{\eta}
+\]
+
+\end_inset
+
+其中 Jacobi 矩阵定义为
+\begin_inset Formula 
+\begin{align}
+J\left(\xi,\eta\right) & =\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}\label{eq:jacobi}\\
+ & =\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)\left(\begin{array}{cc}
+x_{i} & y_{i}\end{array}\right)\nonumber 
+\end{align}
+
+\end_inset
+
+形函数梯度的计算，可以通过 Jacobi 矩阵和形函数对等参坐标的偏导计算（这里是二维形式）
+\begin_inset Formula 
+\begin{align*}
+\nabla N_{i}^{e} & =\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial x}\\
+\frac{\partial N_{i}^{e}}{\partial y}
+\end{array}\right)=\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial x}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial x}\\
+\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial y}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial y}
+\end{array}\right)\\
+ & =\left(\begin{array}{cc}
+\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\\
+\frac{\partial\xi}{\partial y} & \frac{\partial\eta}{\partial y}
+\end{array}\right)\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $J\left(\xi,\eta\right)$
+\end_inset
+
+正是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+定义的雅可比矩阵。因此在平面单元上进行的积分可以先映射到等参坐标平面，再通过高斯积分（Gauss quadrature）计算
+\begin_inset Formula 
+\begin{align*}
+\int_{\Delta}P\left(x,y\right)\dd{x}\dd{y} & =\int{\color{blue}P\left(\xi,\eta\right)\det J\left(\xi,\eta\right)}\dd{\xi}\dd{\eta}\\
+ & =\sum_{m}{\color{blue}P\left(\xi_{m},\eta_{m}\right)\det J\left(\xi_{m},\eta_{m}\right)}\;W\left(\xi_{m},\eta_{m}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $W\left(\xi_{m},\eta_{m}\right)$
+\end_inset
+
+ 是高斯数值积分中的权函数。
+\end_layout
+
+\begin_layout Subsection
+刚度矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sbf\nabla\left(\alpha\cdot\sbf\nabla\phi\right)+\beta\phi=f,\quad\left(x,y\right)\in\Omega.
+\]
+
+\end_inset
+
+对于刚度矩阵
+\begin_inset Formula 
+\begin{align*}
+ & K_{ij}^{e}=\iint_{\Omega^{e}}\left(\nabla N_{i}^{e}\cdot\alpha\nabla N_{j}^{e}+\beta N_{i}^{e}N_{j}^{e}\right)\dd{x}\dd{y},\\
+ & b_{i}^{e}=\iint_{\Omega^{e}}fN_{i}^{e}\dd{x}\dd{y},\quad i,j=1,2,3
+\end{align*}
+
+\end_inset
+
+代入上述讨论中的公式
+\begin_inset Formula 
+\[
+K_{ij}^{e}=\iint_{\Omega^{e}}\left(G_{i}^{T}.J^{-1,T}\cdot\alpha J^{-1}.G_{j}+\beta N_{i}^{e}N_{j}^{e}\right){\color{blue}\det\left[J\right]}\dd{\xi}\dd{\eta}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $G_{i}=\left[\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right]$
+\end_inset
+
+，是梯度矢量。
+\end_layout
+
+\begin_layout Example
+对于一阶线性单元，代入形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+的定义
+\begin_inset Formula 
+\begin{align*}
+ & J\left(\xi,\eta\right)=\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)\left(\begin{array}{cc}
+x_{i} & y_{i}\end{array}\right)=\left(\begin{array}{cc}
+x_{1}-x_{3} & y_{1}-y_{3}\\
+x_{2}-x_{3} & y_{2}-y_{3}
+\end{array}\right)=\left(\begin{array}{cc}
+x_{1}-x_{3} & y_{1}-y_{3}\\
+x_{2}-x_{3} & y_{2}-y_{3}
+\end{array}\right)=\left[\begin{array}{cc}
+c_{2}^{e} & -b_{2}^{e}\\
+-c_{1}^{e} & b_{1}^{e}
+\end{array}\right]\\
+ & J^{-1}\left(\xi,\eta\right)=\frac{1}{2\Delta^{e}}\left[\begin{array}{cc}
+b_{1}^{e} & b_{2}^{e}\\
+c_{1}^{e} & c_{2}^{e}
+\end{array}\right],\quad J^{-1,T}\left(\xi,\eta\right)=\frac{1}{2\Delta^{e}}\left[\begin{array}{cc}
+b_{1}^{e} & c_{1}^{e}\\
+b_{2}^{e} & c_{2}^{e}
+\end{array}\right],\quad J^{-1,T}\cdot J^{-1}=\frac{1}{4\Delta^{e,2}}\left[\begin{array}{cc}
+b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e}\\
+b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{2}^{e,2}+c_{2}^{e,2}
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+以及梯度矢量：
+\begin_inset Formula 
+\[
+G_{i}=\left(\begin{array}{c}
+1\\
+0
+\end{array}\right),\left(\begin{array}{c}
+0\\
+1
+\end{array}\right),\left(\begin{array}{c}
+-1\\
+-1
+\end{array}\right),\quad\text{for }j=1,2,3
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+为对称阵：
+\begin_inset Formula 
+\begin{align*}
+K= & \frac{\alpha}{2\Delta^{e}}\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{ccc}
+b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{1}^{e}b_{3}^{e}+c_{1}^{e}c_{3}^{e}\\
+ & b_{2}^{e,2}+c_{2}^{e,2} & b_{2}^{e}b_{3}^{e}+c_{2}^{e}c_{3}^{e}\\
+ &  & b_{3}^{e,2}+c_{3}^{e,2}
+\end{array}\right]\\
+ & +2\Delta^{e}\beta\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{ccc}
+\xi^{2} & \xi\eta & \xi\left(1-\xi-\eta\right)\\
+ & \eta^{2} & \eta\left(1-\xi-\eta\right)\\
+ &  & \left(1-\xi-\eta\right)^{2}
+\end{array}\right]\Bigg\}
+\end{align*}
+
+\end_inset
+
+以及常数矢量： 
+\begin_inset Formula 
+\[
+b_{i}^{e}=2\Delta^{e}f\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{c}
+\xi\\
+\eta\\
+1-\xi-\eta
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+以上用到了： 
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=\xi,\\
+ & N_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y}{2}=\eta,\\
+ & N_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y}{2}=1-\xi-\eta.
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & a_{1}^{e}=x_{2}^{e}y_{3}^{e}-y_{2}^{e}x_{3}^{e}; &  & b_{1}^{e}=y_{2}^{e}-y_{3}^{e}; &  & c_{1}^{e}=x_{3}^{e}-x_{2}^{e}\nonumber \\
+ & a_{2}^{e}=x_{3}^{e}y_{1}^{e}-y_{3}^{e}x_{1}^{e}; &  & b_{2}^{e}=y_{3}^{e}-y_{1}^{e}; &  & c_{2}^{e}=x_{1}^{e}-x_{3}^{e}\label{eq:4.24-1}\\
+ & a_{3}^{e}=x_{1}^{e}y_{2}^{e}-y_{1}^{e}x_{2}^{e}; &  & b_{3}^{e}=y_{1}^{e}-y_{2}^{e}; &  & c_{3}^{e}=x_{2}^{e}-x_{1}^{e}\nonumber 
+\end{align}
+
+\end_inset
+
+满足 
+\begin_inset Formula $\sum b_{i}=0$
+\end_inset
+
+，
+\begin_inset Formula $\sum c_{i}=0$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\Delta^{e}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right|=\frac{1}{2}\left(b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\right)=\text{第}e\text{个单元的面积}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\det J=2{\color{blue}\frac{1}{2}\left(b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\right)}=2\Delta^{e}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xx
+\end_layout
+
+\end_body
+\end_document

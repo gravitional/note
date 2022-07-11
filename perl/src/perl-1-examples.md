@@ -78,10 +78,9 @@ my $termOrd = 0;
 
 say "let's find out the data!\n";
 while (<$mesh_fh>) {
-
     given ($_) {
         when (/(\w+) +\{/) {
-            $term = $1 . "$termOrd";
+            $term = $1 . ".$termOrd";
             ++$termOrd;
             say "find: `$term' @ $.";
             push @tagList,  $term;
@@ -94,10 +93,22 @@ while (<$mesh_fh>) {
     }
 }
 close $mesh_fh;
-
 %parse = @parse;
 
-while ( my ( $k, $v ) = each %parse ) {
-    say "key: $k, v: @$v";
+# foreach迭代遍历key, 打开 输出Handle
+foreach my $k ( sort keys %parse ) {
+    open my $data_fh, '>', "$k.txt";
+
+    # 从 mesh.dat 中提取数据
+    open my $mesh_fh, '<', 'mesh.dat';
+    while (<$mesh_fh>) {
+        if ( $. > $parse{$k}->[0] && $. < $parse{$k}->[1] ) {
+            $_ =~ s#[\[\],]#  #g;
+            $_ =~ s#^\s+##g;
+            print {$data_fh} $_;
+        }
+    }
+    close $mesh_fh;
+    close $data_fh;
 }
 ```
