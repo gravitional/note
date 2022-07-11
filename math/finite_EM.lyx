@@ -617,7 +617,7 @@ noprefix "false"
 
 \end_inset
 
-以及逆变换矩阵
+以及坐标变换矩阵
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:4.161-1"
@@ -642,6 +642,18 @@ y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
 \xi\\
 \eta\\
 1-\xi-\eta
+\end{array}\right\} ,\quad\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} =\frac{1}{2\Delta^{e}}\left[\begin{array}{ccc}
+a_{1}^{e} & b_{1}^{e} & c_{1}^{e}\\
+a_{2}^{e} & b_{2}^{e} & c_{2}^{e}\\
+a_{3}^{e} & b_{3}^{e} & c_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+1\\
+x\\
+y
 \end{array}\right\} .
 \]
 
@@ -690,11 +702,11 @@ c_{2}^{e} & -c_{1}^{e}\\
 status collapsed
 
 \begin_layout Plain Layout
-a1 = x2 y3 - y2 x3; a2 = x3 y1 - y3 x1; a3 = x1 y2 - y1 x2; (*------------*)
- b1 = y2 - y3; b2 = y3 - y1; b3 = y1 - y2; (*------------*) c1 = x3 - x2;
- c2 = x1 - x3; c3 = x2 - x1; 
+a1 := x2 y3 - y2 x3; a2 := x3 y1 - y3 x1; a3 := x1 y2 - y1 x2; (*------------*)
+ b1 := y2 - y3; b2 := y3 - y1; b3 := y1 - y2; (*------------*) c1 := x3
+ - x2; c2 := x1 - x3; c3 := x2 - x1; 
 \backslash
-[CapitalDelta]e = 1/2 (b1 c2 - b2 c1); (*coordinate transformation*) toxy[
+[CapitalDelta]e := 1/2 (b1 c2 - b2 c1); (*coordinate transformation*) toxy[
 \backslash
 [Xi]_, 
 \backslash
@@ -708,21 +720,21 @@ a1 = x2 y3 - y2 x3; a2 = x3 y1 - y3 x1; a3 = x1 y2 - y1 x2; (*------------*)
 [Xi]
 \backslash
 [Eta][x_, y_] := {{b1, c1}, {b2, c2}} .
- {x, y} + {a1, a2}; (*test*) 2 
+ {x, y} + {a1, a2}; (*test*) {2 
 \backslash
-[CapitalDelta]e // Simplify to
-\backslash
-[Xi]
-\backslash
-[Eta][x1, y1] // Simplify to
+[CapitalDelta]e, to
 \backslash
 [Xi]
 \backslash
-[Eta][x2, y2] // Simplify to
+[Eta][x1, y1], to
 \backslash
 [Xi]
 \backslash
-[Eta][x3, y3] // Simplify
+[Eta][x2, y2], to
+\backslash
+[Xi]
+\backslash
+[Eta][x3, y3] } // Simplify // TableForm
 \end_layout
 
 \end_inset
