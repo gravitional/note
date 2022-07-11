@@ -3,6 +3,7 @@
 ## 日常
 
 [你应该知道的 Windows 环境变量](https://zhuanlan.zhihu.com/p/67726501)
+[系统变量 %USERPROFILE%](https://www.cnblogs.com/nio-nio/p/9345750.html)
 
 + `ComSpec` 变量: 规定 http://CMD.COM 文件的位置.运行 http://cmd.com 可直接打开 "命令提示符" 窗口.
 + `NUMBER_OF_PROCESSORS` 变量: 代表用户电脑中处理器的数量.
@@ -15,6 +16,44 @@
 + `PROCESSOR_REVISION` 变量: 表明用户处理器的版本.
 + `TEMP`/`TMP` 变量: 规定系统运行或安装程序时用来存储临时文件的目录.
 + `windir` 变量: 规定操作系统的系统目录的路径.
+
+可以用CMD的SET命令来查看现有的系统变量, "="前的部分用%括起来就是.
+
++ 常用:
+
+```cmd
+%USERPROFILE% =C:\Users\用户名
+%SystemRoot% =C:\WINDOWS
+%SystemDrive% =C:
+%APPDATA% =C:\Users\用户名\AppData\Roaming
+%LOCALAPPDATA% =C:\Users\用户名\AppData\Local
+%windir% =C:\WINDOWS
+%Path% =C:\Windows\system32;C:\Windows;
+%ProgramData% =C:\ProgramData
+%ProgramFiles% =C:\Program Files
+%ProgramFiles(x86)% =C:\Program Files (x86)
+```
+
++ 其他:
+
+```cmd
+%ALLUSERSPROFILE% =C:\ProgramData
+%CommonProgramFiles% =C:\Program Files\Common Files
+%CommonProgramFiles(x86)% =C:\Program Files (x86)\Common Files
+%CommonProgramW6432% =C:\Program Files\Common Files
+%COMPUTERNAME% =MyPC
+%ComSpec% =C:\WINDOWS\system32\cmd.exe
+%HOMEDRIVE% =C:
+%HOMEPATH% =\Users\用户名
+%LOGONSERVER% =\\MicrosoftAccount
+%OS% =Windows_NT
+%ProgramW6432% =C:\Program Files
+%PUBLIC% =C:\Users\Public
+%TEMP% =C:\Users\用户名\AppData\Local\Temp
+%TMP% =C:\Users\用户名\AppData\Local\Temp
+%USERDOMAIN% =MyPC
+%USERNAME% =用户名
+```
 
 + `set` 查看所有环境变量
 + `set xxx` 查看特定环境变量`xxx`的值.
