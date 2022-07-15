@@ -666,7 +666,7 @@ Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那�
 有限元上的积分
 \end_layout
 
-\begin_layout Standard
+\begin_layout Example
 平面单元的空间坐标
 \begin_inset Formula $\left\{ x,y\right\} $
 \end_inset
@@ -681,10 +681,10 @@ Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那�
 
  平面
 \begin_inset Formula 
-\begin{align*}
- & x=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)x_{i}\\
- & y=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)y_{i}
-\end{align*}
+\begin{align}
+ & x=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)x_{i}\label{eq:coord}\\
+ & y=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)y_{i}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -692,11 +692,128 @@ Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那�
 \begin_inset Formula $N_{i}^{e}$
 \end_inset
 
- 表示某个元中，第
+ 表示某个单元中，第
 \begin_inset Formula $i$
 \end_inset
 
-个节点对应的形函数，对重复指标进行求和。积分测度的变换为
+个节点对应的形函数，对重复指标进行求和。实际计算中，如果取单元插值点的形式为
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}\\
+x_{3} & y_{3}\\
+\cdots & \cdots
+\end{array}\right]
+\]
+
+\end_inset
+
+为一
+\begin_inset Formula $\left[n,2\right]$
+\end_inset
+
+矩阵。并将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:coord"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表示为矩阵乘法的形式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+x\\
+y
+\end{array}\right]=\left[\begin{array}{cccc}
+x_{1} & x_{2} & x_{3} & \cdots\\
+y_{1} & y_{2} & y_{3} & \cdots
+\end{array}\right]\left[\begin{array}{c}
+N_{1}\\
+N_{2}\\
+N_{3}\\
+\cdots
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+或者用指标表示，则坐标矢量为
+\color blue
+
+\begin_inset Formula 
+\[
+X_{d}=\overline{X}_{j\alpha}N_{\alpha}
+\]
+
+\end_inset
+
+
+\color inherit
+其中 
+\begin_inset Formula $X=\left(x,y\right)$
+\end_inset
+
+ 表示单元内点的坐标，
+\begin_inset Formula $\overline{X}_{j\alpha}$
+\end_inset
+
+ 表示插值点，
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+ 表示形函数。
+\begin_inset Formula $j\in\left\{ 1,2\right\} $
+\end_inset
+
+ 是空间的维数，
+\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\end_inset
+
+是插值点的数目。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+积分测度的变换为
 \begin_inset Formula 
 \[
 \dd{x}\dd{y}=\det J\left(\xi,\eta\right)\dd{\xi}\dd{\eta}
@@ -708,15 +825,114 @@ Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那�
 \begin_inset Formula 
 \begin{align}
 J\left(\xi,\eta\right) & =\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}\label{eq:jacobi}\\
- & =\left(\begin{array}{c}
+ & =\sum_{i}\left(\begin{array}{c}
 \frac{\partial N_{i}^{e}}{\partial\xi}\\
 \frac{\partial N_{i}^{e}}{\partial\eta}
 \end{array}\right)\left(\begin{array}{cc}
-x_{i} & y_{i}\end{array}\right)\nonumber 
+x_{i} & y_{i}\end{array}\right)\nonumber \\
+\text{例如}i\in\left\{ 1,2,3\right\} \quad & =\left(\begin{array}{ccc}
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
+\end{array}\right)\left(\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}\\
+x_{3} & y_{3}
+\end{array}\right)
 \end{align}
 
 \end_inset
 
+如果是高阶单元，插值点增多，但公式是类似的，都可以表示成 
+\begin_inset Formula $[2,n]\times[n,2]$
+\end_inset
+
+ 的矩阵乘积，最后结果是 
+\begin_inset Formula $[2,2]$
+\end_inset
+
+ 矩阵。
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+雅可比矩阵 
+\begin_inset Formula $\partial\left(x,y\right)/\partial\left(\xi,\eta\right)$
+\end_inset
+
+为
+\color blue
+
+\begin_inset Formula 
+\[
+J_{ki}=\tilde{\partial}_{k}N_{\alpha}\overline{X}_{\alpha i}
+\]
+
+\end_inset
+
+
+\color inherit
+
+\begin_inset Formula $k,i\in\left\{ 1,2\right\} $
+\end_inset
+
+是空间的维数或等参坐标个数；
+\begin_inset Formula $\overline{X}_{\alpha i}$
+\end_inset
+
+ 表示插值点，
+\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\end_inset
+
+是插值点的数目；
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+ 表示形函数，
+\begin_inset Formula $\tilde{\partial}$
+\end_inset
+
+表示对 
+\begin_inset Formula $\xi$
+\end_inset
+
+，
+\begin_inset Formula $\eta$
+\end_inset
+
+ 求偏导。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 形函数梯度的计算，可以通过 Jacobi 矩阵和形函数对等参坐标的偏导计算（这里是二维形式）
 \begin_inset Formula 
 \begin{align*}
@@ -741,6 +957,18 @@ x_{i} & y_{i}\end{array}\right)\nonumber
 
 \end_inset
 
+类似地，如果写成矩阵形式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\nabla N_{1}^{e} & \nabla N_{2}^{e} & \nabla N_{3}^{e}\end{array}\right]=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{ccc}
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
+\end{array}\right)
+\]
+
+\end_inset
+
 
 \begin_inset Formula $J\left(\xi,\eta\right)$
 \end_inset
@@ -755,7 +983,86 @@ noprefix "false"
 
 \end_inset
 
-定义的雅可比矩阵。因此在平面单元上进行的积分可以先映射到等参坐标平面，再通过高斯积分（Gauss quadrature）计算
+定义的雅可比矩阵。
+\begin_inset Formula $\left[2,2\right]\times\left[2,n\right]\rightarrow\left[2,n\right]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+形函数的梯度为：
+\color blue
+
+\begin_inset Formula 
+\[
+\partial_{i}N_{\alpha}^{e}=\left(J^{-1}\right)_{ij}\tilde{\partial}_{j}N_{\alpha}^{e}
+\]
+
+\end_inset
+
+
+\color inherit
+
+\begin_inset Formula $i,j\in\left\{ 1,2\right\} $
+\end_inset
+
+是空间的维数，
+\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\end_inset
+
+是插值点的数目；
+\begin_inset Formula $\partial$
+\end_inset
+
+表示对单元内点坐标 
+\begin_inset Formula $\left\{ x,y\right\} $
+\end_inset
+
+ 求导，
+\begin_inset Formula $\tilde{\partial}$
+\end_inset
+
+表示对等参坐标 
+\begin_inset Formula $\left\{ \xi,\eta\right\} $
+\end_inset
+
+ 求偏导。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+因此在平面单元上进行的积分可以先映射到等参坐标平面，再通过高斯积分（Gauss quadrature）计算
 \begin_inset Formula 
 \begin{align*}
 \int_{\Delta}P\left(x,y\right)\dd{x}\dd{y} & =\int{\color{blue}P\left(\xi,\eta\right)\det J\left(\xi,\eta\right)}\dd{\xi}\dd{\eta}\\
@@ -828,7 +1135,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-刚度矩阵
+刚度矩阵的计算
 \end_layout
 
 \begin_layout Standard
@@ -931,13 +1238,13 @@ G_{i}=\left(\begin{array}{c}
 \begin{align*}
 K= & \frac{\alpha}{2\Delta^{e}}\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{ccc}
 b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{1}^{e}b_{3}^{e}+c_{1}^{e}c_{3}^{e}\\
- & b_{2}^{e,2}+c_{2}^{e,2} & b_{2}^{e}b_{3}^{e}+c_{2}^{e}c_{3}^{e}\\
- &  & b_{3}^{e,2}+c_{3}^{e,2}
+\cdots & b_{2}^{e,2}+c_{2}^{e,2} & b_{2}^{e}b_{3}^{e}+c_{2}^{e}c_{3}^{e}\\
+\cdots & \cdots & b_{3}^{e,2}+c_{3}^{e,2}
 \end{array}\right]\\
  & +2\Delta^{e}\beta\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{ccc}
-\xi^{2} & \xi\eta & \xi\left(1-\xi-\eta\right)\\
- & \eta^{2} & \eta\left(1-\xi-\eta\right)\\
- &  & \left(1-\xi-\eta\right)^{2}
+\left(1-\xi-\eta\right)^{2} & \xi\left(1-\xi-\eta\right) & \eta\left(1-\xi-\eta\right)\\
+\cdots & \xi^{2} & \xi\eta\\
+\cdots & \cdots & \eta^{2}
 \end{array}\right]\Bigg\}
 \end{align*}
 
@@ -947,9 +1254,9 @@ b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{1}^{e}b_{3}
 \begin_inset Formula 
 \[
 b_{i}^{e}=2\Delta^{e}f\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{c}
+1-\xi-\eta\\
 \xi\\
-\eta\\
-1-\xi-\eta
+\eta
 \end{array}\right]
 \]
 
@@ -981,9 +1288,9 @@ status open
 以上用到了： 
 \begin_inset Formula 
 \begin{align*}
- & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=\xi,\\
- & N_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y}{2}=\eta,\\
- & N_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y}{2}=1-\xi-\eta.
+ & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=1-\xi-\eta,\\
+ & N_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y}{2}=\xi,\\
+ & N_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y}{2}=\eta.
 \end{align*}
 
 \end_inset
@@ -1013,7 +1320,7 @@ status open
 1 & x_{1}^{e} & y_{1}^{e}\\
 1 & x_{2}^{e} & y_{2}^{e}\\
 1 & x_{3}^{e} & y_{3}^{e}
-\end{array}\right|=\frac{1}{2}\left(b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\right)=\text{第}e\text{个单元的面积}
+\end{array}\right|=\frac{1}{2}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)=\text{第}e\text{个单元的面积}
 \]
 
 \end_inset
@@ -1025,29 +1332,29 @@ status open
 x\\
 y
 \end{array}\right]=\left[\begin{array}{cc}
-c_{2}^{e} & -c_{1}^{e}\\
--b_{2}^{e} & b_{1}^{e}
+c_{3}^{e} & -c_{2}^{e}\\
+-b_{3}^{e} & b_{2}^{e}
 \end{array}\right]\left[\begin{array}{c}
 \xi\\
 \eta
 \end{array}\right]+\left[\begin{array}{c}
-x_{3}^{e}\\
-y_{3}^{e}
+x_{1}^{e}\\
+y_{1}^{e}
 \end{array}\right],\\
  & \left[\begin{array}{c}
 \xi\\
 \eta
 \end{array}\right]=\frac{1}{2\Delta^{e}}\left\{ \left[\begin{array}{cc}
-b_{1}^{e} & c_{1}^{e}\\
-b_{2}^{e} & c_{2}^{e}
+b_{2}^{e} & c_{2}^{e}\\
+b_{3}^{e} & c_{3}^{e}
 \end{array}\right]\left[\begin{array}{c}
 x\\
 y
 \end{array}\right]+\left[\begin{array}{c}
-a_{1}^{e}\\
-a_{2}^{e}
+a_{2}^{e}\\
+a_{3}^{e}
 \end{array}\right]\right\} ,\\
- & \frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\det J=\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}={\color{blue}\left(b_{1}^{e}c_{2}^{e}-b_{2}^{e}c_{1}^{e}\right)}=2\Delta^{e}.
+ & \frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\det J={\color{blue}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)}=2{\color{blue}\Delta^{e}}.
 \end{align*}
 
 \end_inset
@@ -1060,15 +1367,114 @@ a_{2}^{e}
 
 \end_layout
 
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "ref61"
-literal "true"
+\begin_layout Section
+有限元中的Galerkin 方法
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sbf D & =\rho\\
+\sbf D & =\sbf D\left(\sbf E\right)\\
+\sbf E & =-\nabla\phi
+\end{align*}
 
 \end_inset
 
-xx
+
+\end_layout
+
+\begin_layout Standard
+令 residual error 为
+\begin_inset Formula 
+\begin{align}
+R^{e}\left(N_{e}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:error}\\
+\text{IBP} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
+\text{Gauss Div} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
+ & =0\nonumber 
+\end{align}
+
+\end_inset
+
+上面使用了分部积分，和高斯散度定理。
+\end_layout
+
+\begin_layout Standard
+然后考虑待求物理量 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+ 和 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的变分
+\begin_inset Formula 
+\begin{align*}
+\sbf D & =\sbf D^{0}+\frac{\partial D}{\partial E}\delta\sbf E=\sbf D^{0}-\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\\
+\phi & =\phi^{0}+\delta\phi
+\end{align*}
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得：
+\begin_inset Formula 
+\begin{align*}
+\Rightarrow & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Omega}\\
+ & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+移项得
+\begin_inset Formula 
+\begin{align*}
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Gamma}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+再代入 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的插值展开，
+\begin_inset Formula $\delta\phi=N_{j}^{e}\delta\phi_{j}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\begin{align*}
+ & \left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\nabla N_{j}^{e}\right)}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\left(\frac{\partial D}{\partial E}\nabla N_{j}^{e}\right)}\dd{\Gamma}\right]\delta\phi_{j}\\
+ & =\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+如果不考虑边界的两项是，
+\begin_inset Formula 
+\[
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\nabla N_{j}^{e}\right)}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EOF
 \end_layout
 
 \end_body
