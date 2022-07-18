@@ -339,3 +339,27 @@ Tango Light
 必要性:  可选
 接受:  `"graceful", "always", "never", true, false`
 默认值:  `"graceful"`
+
+## 编码为UTF-8
+
+[cmd,power shell设置默认编码为UTF-8](https://www.zhihu.com/question/54724102/answer/140852198)
+
+注: 以下内容在非Windows平台上写的, 可能会有拼写错误, 如果有, 请指正, 我会尽快修正.
+可以用Powershell的配置文件($PROFILE)来实现. $PROFILE默认文件不存在, 需要创建.
+
+```Powershell
+New-Item $PROFILE -ItemType File -Force此时会在文档下产生一个ps1文件,
+```
+
+该文件会在Powershell启动的时候加载. 在这个配置文件里加上一句:
+
+```Powershell
+[System.Console]::OutputEncoding=[System.Text.Encoding]::GetEncoding(65001)
+```
+
+当然, 这里就涉及到了Powershell的执行策略(Execution Policy)的问题,
+你需要设置允许 Powershell执行脚本, 我是用的Unrestricted 策略:
+
+```Powershell
+Set-ExecutionPolicy Unrestricted
+```
