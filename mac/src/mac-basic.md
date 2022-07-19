@@ -492,3 +492,24 @@ Resizing to full size (fit to fill)
 $ sudo umount /Volumes/UNTITLED
 $ sudo mount -t ntfs -o rw,auto,nobrowse /dev/disk3s1 ~/ntfs-volume
 ```
+
+## 更新命令行工具
+
+Error: Your Command Line Tools are too outdated.
+Update them from Software Update in System Preferences or run:
+
+```bash
+softwareupdate --all --install --force
+```
+
+If that doesn't show you any updates, run:
+
+```bash
+sudo rm -rf /Library/Developer/CommandLineTools
+sudo xcode-select --install
+```
+
+Alternatively, manually download them from:
+[https://developer.apple.com/download/all/](https://developer.apple.com/download/all/).
+
+You should download the Command Line Tools for Xcode 13.4.
