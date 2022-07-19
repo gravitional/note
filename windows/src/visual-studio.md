@@ -2,6 +2,10 @@
 
 ## 快捷键
 
+`Ctrl+F4`: 关闭窗口.
+
+### 调试
+
 + `C+A+C`: Call Stack
 + `C+A+B`: BreakPoint
 + `C+A+V,A`: 自动变量窗口
@@ -10,6 +14,9 @@
 + `C+S+E`: 资源视图
 + `C+A+W`: 监视1
 + `C+A+K`: 调用层次窗口
++ `` c+` ``: 终端
+
+`Ctrl+F9`: 禁用断点
 
 ### 书签
 
@@ -28,11 +35,6 @@
 `c+k,c+\`; 删除水平空白
 
 `c+A+o`: 输出
-`` c+` ``: 终端
-
-### 断点
-
-`Ctrl+F9`: 禁用断点
 
 ## notes
 
@@ -40,3 +42,13 @@
 类和函数为大驼峰.
 
 `compElement.h` 中有较多的注释.
+
+## VAssistX
+
+寻找符号: S+A+S
+寻找引用: S+A+F
+Goto Implementation Alt+G
+Goto Related: S+A+G
+列出所有 Method: Alt+M
+打开对应的 .h/.cpp Alt+O
+打开解决方案中的文件 S+A+O
