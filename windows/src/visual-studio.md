@@ -2,7 +2,18 @@
 
 ## 快捷键
 
-`Ctrl+F4`: 关闭窗口.
+`Ctrl+F4`: 关闭当前窗口.
+`Ctrl+Alt+F12`: 查找符号结果.
+`Ctrl+.`/`Alt+Enter`; 快速操作
+
+### intelliSense
+
+C+J 列出成员
+C+S+Space 参数信息
+C+K,C+I 快速信息(手动控制弹出信息框)
+C+Space, 完成单词 
+C+k, C+S; 外侧代码
+C+K,C+X; 插入片段
 
 ### 调试
 
