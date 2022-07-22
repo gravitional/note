@@ -6,14 +6,18 @@
 `Ctrl+Alt+F12`: 查找符号结果.
 `Ctrl+.`/`Alt+Enter`; 快速操作
 
-### intelliSense
+### 解决方案资源管理器
 
-C+J 列出成员
-C+S+Space 参数信息
-C+K,C+I 快速信息(手动控制弹出信息框)
-C+Space, 完成单词 
-C+k, C+S; 外侧代码
-C+K,C+X; 插入片段
+`Ctrl+[,s`; 与活动文档同步
+
+### VS IntelliSense
+
+`C+J`; 列出成员
+`C+S+Space`; 参数信息
+`C+K,C+I`; 快速信息(手动控制弹出信息框)
+`C+Space`; 完成单词 
+`C+k, C+S`; 外侧代码
+`C+K,C+X`; 插入片段
 
 ### 调试
 
