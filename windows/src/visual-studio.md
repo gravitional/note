@@ -1,10 +1,12 @@
 # Visual studio
 
-## 快捷键
+## 编辑
 
 `Ctrl+F4`: 关闭当前窗口.
 `Ctrl+Alt+F12`: 查找符号结果.
 `Ctrl+.`/`Alt+Enter`; 快速操作
+`Ctrl+D`; 复制行
+`Ctrl+L`; 删除行
 
 ### 解决方案资源管理器
 
