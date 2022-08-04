@@ -21,10 +21,18 @@
 `C+k, C+S`; 外侧代码
 `C+K,C+X`; 插入片段
 
+### 生成;Build
+
++ `Ctrl+B`; 生成当前项目
++ `Ctrl+Shift+B`; 生成解决方案
+
 ### 调试
 
-+ `C+A+C`: Call Stack
-+ `C+A+B`: BreakPoint
++ `Alt+*(小键盘)`; 将编辑器窗口切换到运行位置.
++ `F7`; 切换到代码窗口.
+
++ `C+A+C`: 切换到调用堆栈(Call Stack)工具窗口
++ `C+A+B`: 断点窗口(BreakPoint)
 + `C+A+V,A`: 自动变量窗口
 + `C+A+V,L`: 局域变量窗口
 + `C+A+L`:解决方案资源管理器
