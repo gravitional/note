@@ -272,6 +272,18 @@ STL 中顺序容器的特性比较
 |任意位置插入(`insert`)|越靠近头部越慢, 若容量扩展, 3失效;否则变动点之后3失效|越接近中间越慢, 3失效|快, 不失效|快|
 |任意位置删除(`erase`)|越接近头部越慢, 只会使变动点之后3失效|越接近中间越慢, 所有3失效|快, 只有被删除元素3失效||
 
+`insert` 操作的声明为 `iterator insert(insert pos, const T& value)`,
+在 pos 位置插入后, 返回的是新插入元素的迭代器, 即可以实现在当前位置不断插入新元素:
+
+```cpp
+string word;
+list<string> words;
+auto it_begin=words.begin()
+while(cin>>word) it_begin=words.insert(it_begin,word);
+```
+
+此代码的功能是, 对列表容器 words, 通过 insert 功能不断在头部插入新的元素.
+
 ### 顺序容器的插入迭代器
 
 ### 顺序容器的适配器
