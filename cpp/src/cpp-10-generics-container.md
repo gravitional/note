@@ -272,7 +272,7 @@ STL 中顺序容器的特性比较
 |任意位置插入(`insert`)|越靠近头部越慢, 若容量扩展, 3失效;否则变动点之后3失效|越接近中间越慢, 3失效|快, 不失效|快|
 |任意位置删除(`erase`)|越接近头部越慢, 只会使变动点之后3失效|越接近中间越慢, 所有3失效|快, 只有被删除元素3失效||
 
-`insert` 操作的声明为 `iterator insert(insert pos, const T& value)`,
++ `insert` 操作的声明为 `iterator insert(insert pos, const T& value)`,
 在 pos 位置插入后, 返回的是新插入元素的迭代器, 即可以实现在当前位置不断插入新元素:
 
 ```cpp
@@ -286,12 +286,94 @@ while(cin>>word) it_begin=words.insert(it_begin,word);
 
 ### 顺序容器的插入迭代器
 
+在顺序容器中插入元素, 除了使用 insert, push_front, push_back,
+还可以通过 插入迭代器.
+
+插入迭代器是一种适配器, 使用它可以通过 输出迭代器(write 迭代器)的接口来向指定元素的指定位置插入元素.
+在调用 STL 算法时使用输出迭代器, 可以将结果顺序插入到容器的指定位置, 而无需覆盖已有的元素.
+输出迭代器有3种:
+
+```cpp
+template<class Container>class front_insert_iterator;
+template<class Container>class back_insert_iterator;
+template<class Container>class insert_iterator;
+```
+
+它们把容器类型作为模板参数, 分别用于指定容器头部, 尾部和中间某个指定位置插入元素.
+其中 `front_insert_iterator` 只适用于前插顺序容器(双端队列和列表),
+而 `back_iterator` 和 `insert_iterator` 适用于所有 `顺序容器`.
+
+插入迭代器的 `实例` 可以通过 构造函数 来构造,
+但实际使用时, 一般通过辅助函数:
+
+```cpp
+template<class Container>
+front_insert_iterator<Container> front_inserter(Container& s);
+
+template<class Container>
+back_insert_iterator<Container> back_inserter(Container& s);
+
+template<class Container>
+insert_iterator<Container> inserter(Container& s, Iterator i);
+```
+
+`辅助函数` 可以自动 推导类型, 无需显式给出, 从而使代码更简短.
+例如从 `标准输入` 得到整数, 插入 `容器s` 的末尾:
+
+```cpp
+copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(s));
+```
+
 ### 顺序容器的适配器
 
-## 关联容器
+STL 提供了容器适配器 栈和队列 (stack and queue), 它们是对顺序容器的封装.
+栈和队列是两个类模板, :
 
-### 集合
+```cpp
+template <class T, class Container=deque<T>> class stack;
+template <class T, class Container=deque<T>> class queue;
+```
 
-### 映射
+`T` 表示元素类型, 第二个模板参数表示 基础的容器类型,
+栈可以用任意顺序容器作为基础容器,
+而队列只允许用 前插顺序容器作为基础容器,
+默认使用双端队列.
 
-### 多重集合和多重映射
+下面给出它们所共同支持的操作, 设 S 是一种容器适配器类型,
+设 s1, s2 是S的两个实例,  t 是T类型的一个实例, 下面是栈和队列所支持的操作:
+
+`s1 op s2`; 这里op可以是 `==  !=, <, <=, >, >=` 之一, 它会对两个容器适配器之间的元素按字典序进行比较
+`s.size()`; 返回 s 的元素个数
+`s.empty()`; 返回 s 的元素是否为空.
+`s.push(t)`; 将元素 t 压入 s 中.
+`s.pop`; 将元素从 s 中弹出;对于栈而言是最后压入的元素;对于队列, 是最先被压入的元素.
+
+容器适配器不支持迭代器,
+对于栈来说, 只有栈顶的元素是可以访问到的:
+`s.top()`; 返回栈顶元素的引用.
+
+对于队列来说, 只有 队头 和 队尾 的元素是可以访问到的:
+
++ `s.front()`; 获得队头元素的引用.
++ `s.back()`; 获得队尾元素的引用
+
+`string` 类其实也是一种随机访问容器,
+`vector<char>` 具有的大部分功能它都具有(除了 pop_back 以外),
+因此也可以使用 迭代器 对它进行遍历.
+
+### 优先级队列
+
+除了 栈和队列 外,  STL 还提供了 优先级队列(priority_queue):
+
+```cpp
+dtemplate<class T, class Container=vector<T>> class priority_queue;
+```
+
+优先级队列的基础容器必须是 随机访问的顺序容器(vector or deque), 默认为向量容器,
+优先级队列弹出元素的顺序 与 元素的大小有关, 每次弹出容器中"最大的"元素,
+因此必须定义 `<` 运算符, 优先级队列在默认情况下使用 `<` 决定元素的大小.
+
+栈和队列的 `size`, `empty`, `push`, `pop` 它都支持, 但不支持比较操作.
+优先级队列也有 `top` 函数, 可以获得下一个即将被弹出元素(最大的元素)的 `引用`.
+
+优先级队列常常用于按照时间顺序来模拟一些事件.
