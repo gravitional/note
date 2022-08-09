@@ -7,6 +7,11 @@
 `Ctrl+.`/`Alt+Enter`; 快速操作
 `Ctrl+D`; 复制行
 `Ctrl+L`; 删除行
+`Alt+Shift+]`; 选中块结构
+
+## 视图
+
+`ctrl+shift+,/.`; 放大缩小编辑器字体
 
 ### 解决方案资源管理器
 
