@@ -205,3 +205,55 @@ shell:recyclebinfolder
 ## 安装 windows 11
 
 [下载 Windows 11](https://www.microsoft.com/zh-cn/software-download/windows11?)
+
+## 激活Windows
+
+[Windows 激活——MAS](https://www.liyangjie.cn/posts/hobby/windows-activation/)
+
+[microsoft-activation-scripts][https://gitlab.com/massgrave/microsoft-activation-scripts/-/releases]
+
+下载后, 使用图中所示解压密码进行解压, 得到 MAS_1.5 目录. 目录结构如下:
+
+```log
+MAS_1.5
+├─ All-In-One-Version
+└─ Separate-Files-Version
+```
+
+其中, `All-In-One-Version` 目录中为集成脚本, 提供了所有激活方法的快捷操作入口.
+而 `Separate-Files-Version` 为具体的各个激活方法的独立脚本, 用户可以根据需要自行选择执行.
+剩余 `ReadMe.html` 为说明文档,
+V`erify_Files-Clear_Zone.Identifier-68.cmd` 校验文件并对时区进行清理,
+防止 SmartScreen 警告.
+
+作为小白用户, 这里当然推荐直接使用集成脚本,
+进入 `All-In-One-Version` 目录, 直接双击执行该目录下的执行脚本
+(这里 1.5 版本为 `MAS_1.5_AIO_CRC32_21D20776.cmd`),
+根据提示的选项, 输入具体的数字进行进行激活即可:
+
++ 1: HWID 激活(永久, 支持 Win 10-11).
++ 2: KMS38 激活(有效期至 2038年, 适用于 Win10-11-Server).
++ 3: Online KMS 激活(有效期 180 天, 支持 Win7 以上和 Office).
++ 4: 查看当前激活状态(vbs).
++ 5: 查看当前激活状态(wmi).
++ 6: 其他功能选项(如预激活镜像制作等).
++ 7: 说明文档, 详细介绍了每种激活方法支持的 Windows 产品, 使用方法等.
++ 8: 退出.
+
+当然, 最重要的就是其中的 `1-3` 这三个选项了, 分别使用 3 种不同的方式进行激活.
+对于 `Win10, 11`, 这里推荐使用 `1: HWID` 进行激活,
+而对于 `Win7` 只能选择 `3: Online KMS` 进行激活,
+`3: Online KMS` 同样支持 `Office` 的激活, 但不推荐使用.
+对于 `Office` 这里推荐一个从安装到激活的 Office 一站式部署工具
+[Office Tool Plus](https://otp.landian.vip/).
+
+这里以 `1: HWID` 为例进行演示:
+
++ 首先在主界面输入 1, 即可进入 `HWID` 激活界面:
++ 在上述界面中, 再次输入 1, 开始进行 `Windows` 激活, 完成后, 提示 `Successful`.
+
+激活成功后, 使用如下命令查看激活状态:
+
+```cmd
+slmgr.vbs -xpr
+```

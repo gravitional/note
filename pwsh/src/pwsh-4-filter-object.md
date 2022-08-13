@@ -12,7 +12,7 @@
 例如, 选择在某个日期之后创建的文件, 具有特定ID的事件, 或者使用特定版本Windows的计算机.
 
 + `ForEach-Object`: `foreach`, 对输入对象集合中的每个项目执行操作.
-输入对象可以通过管道进入`cmdlet`, 也可以通过使用 `InputObject` 参数指定.
+输入对象可以通过管道进入 `cmdlet`, 也可以通过使用 `InputObject` 参数指定.
 
 + `Get-Uinque`: `gu`, 从排序过的列表中返回不重复的对象.
 + `Select-Object -Index`: 根据 `index` 从数组中选择对象.
