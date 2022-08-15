@@ -55,6 +55,8 @@ pair<string, int>string_int_pair={"first", 2};
 
 非自反性; `<` 传递性;`==` 传递性.
 
+## 容器的操作
+
 用 S 表示容器类型名, 用 s 表示 S 类型的实例,
 用 T 表示 S 容器的元素类型,  用 t 表示 T 类型的实例,
 用 K 表示 S 容器 的键类型, 用 k 表示 K 的实例,
@@ -95,12 +97,12 @@ pair<string, int>string_int_pair={"first", 2};
 
 ### 基于键的查找和计数
 
-+ `s.find(k)`; 找到任意一个 键 为 k 的元素, 返回该元素的迭代器, 如果没有, 则返回 `s.end()`;
-+ `s.lower_bound(k)`; 得到 s 中的第一个 `键值 >= k` 的元素的迭代器.
-+ `s.upper_bound(k)`; 得到 s 中的第一个 `键值 >k` 的元素的迭代器.
++ `s.find(k)`; 找到任意一个键为 `k` 的元素, 返回该元素的迭代器, 如果没有, 则返回 `s.end()`;
++ `s.lower_bound(k)`; 得到 `s` 中的第一个 `键值 >= k` 的元素的迭代器.
++ `s.upper_bound(k)`; 得到 `s` 中的第一个 `键值 >k` 的元素的迭代器.
 + `s.equal_range(k)`; 得到一个用 `pair<S::iterator, S::iterator>` 表示的区间, 记为 `[p1, p2)`;
-该区间刚好包含所有键为 k 的元素, `p1==s.lower_bound(k)`, `p2==s.upper_bound(k)`.
-+ `s.count(k)`; 得到 s 容器中 键为 k 的元素个数.
+该区间刚好包含所有键为 `k` 的元素, `p1==s.lower_bound(k)`, `p2==s.upper_bound(k)`.
++ `s.count(k)`; 得到 `s` 容器中 键为 `k` 的元素个数.
 
 ### 关联容器的列表初始化
 
@@ -149,9 +151,9 @@ pair<T1, T2>make_pair(T1 v1, T2 v2){return pair<T1, T2>(v1, v2);}
 
 + 通过迭代器删除元素的效率更高, (不必先根据键找到迭代器):  `courses.erase(name);`
 
-除了 insert 和 find, 映射还提供了 `[]` 运算符用于插入和查找元素.
+除了 `insert` 和 `find`, 映射还提供了 `[]` 运算符用于插入和查找元素.
 
-+ `s[k]` 获取键为 k 的元素, 如果存在, 返回它的附加数据的引用;
++ `s[k]` 获取键为 `k` 的元素, 如果存在, 返回它的附加数据的引用;
 如果不存在, 插入 `新元素` 并返回引用, 初值为 `V()`, V 是附加数据的类型
 + `s[k]=v`; 查找键为 k 的元素, 并赋值为 v.
 
