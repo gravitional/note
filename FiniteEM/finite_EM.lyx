@@ -154,8 +154,643 @@ R_{i}=\int_{\Omega}w_{i}r\dd{\Omega}=0\label{2.14}
 Galerkin 方法的解, 2.2.3, p 26
 \end_layout
 
+\begin_layout Section
+一个简单的例子
+\end_layout
+
+\begin_layout Section
+有限元方法的基本步骤
+\end_layout
+
+\begin_layout Standard
+边值问题的有限元分析应包括下列基本步骤：
+\end_layout
+
+\begin_layout Enumerate
+区域的离散或子域划分；
+\end_layout
+
+\begin_layout Enumerate
+插值函数的选择
+\end_layout
+
+\begin_layout Enumerate
+方程组的建立
+\end_layout
+
+\begin_layout Enumerate
+方程组的求解。
+\end_layout
+
+\begin_layout Subsection
+区域离散
+\end_layout
+
+\begin_layout Standard
+全域被划分成许多小区域，用 
+\begin_inset Formula $\Omega^{e}\left(e=1,2,3,\cdots,M\right)$
+\end_inset
+
+表示，这里 
+\begin_inset Formula $M$
+\end_inset
+
+ 表示子域总数，这些子域通常被称为单元。
+\end_layout
+
+\begin_layout Standard
+基本单元：
+\end_layout
+
+\begin_layout Itemize
+一维：线性单元
+\end_layout
+
+\begin_layout Itemize
+二维：三角形单元
+\end_layout
+
+\begin_layout Itemize
+三维：四面体单元
+\end_layout
+
+\begin_layout Standard
+在多数有限元解中，问题是用与单元有关的 
+\color blue
+结点上的未知函数 
+\begin_inset Formula $\Phi$
+\end_inset
+
+
+\color inherit
+ 表达的。例如线性单元有两个结点，每端点一个；线性三角形单元有三个结点，各顶点上一个。一个结点的完整描述应该包括：它的坐标值，局部编码，全局编码。局部编码表示它
+在单元中的位置，全局编码表示它在整个系统中的位置。
+\end_layout
+
+\begin_layout Standard
+有限元公式通常得到带状矩阵，其带宽由一个单元中两个结点的全局编码之差的最大值决定。通过适当的结点编码使得带宽最小，可以减少计算机的存储量和运算时间。
+\end_layout
+
+\begin_layout Subsection
+插值函数的选择
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\tilde{\Phi}^{e}=\sum_{j=1}^{n}N_{j}^{e}\Phi_{j}^{e}=\left\{ N^{e}\right\} ^{T}\left\{ \Phi^{e}\right\} =\left\{ \Phi^{e}\right\} ^{T}\left\{ N^{e}\right\} \label{eq:jm2.51}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n$
+\end_inset
+
+是单元中的结点数；
+\begin_inset Formula $\Phi_{j}^{e}$
+\end_inset
+
+ 是单元中 
+\begin_inset Formula $j$
+\end_inset
+
+ 结点的
+\begin_inset Formula $\Phi$
+\end_inset
+
+值；
+\begin_inset Formula $N_{j}^{e}$
+\end_inset
+
+ 是插值函数，通常也称为展开函数或基函数。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N_{j}^{e}$
+\end_inset
+
+ 的最高阶被称为单元的阶。例如，若 
+\begin_inset Formula $N_{j}^{e}$
+\end_inset
+
+ 是线性函数，则单元 
+\begin_inset Formula $e$
+\end_inset
+
+ 是线性单元。
+\end_layout
+
+\begin_layout Itemize
+函数
+\begin_inset Formula $N_{j}^{e}$
+\end_inset
+
+ 的重要特征是：
+\color blue
+它们只有在单元 
+\begin_inset Formula $e$
+\end_inset
+
+ 内才不为零，而在单元 
+\begin_inset Formula $e$
+\end_inset
+
+ 外均为零。
+\end_layout
+
+\begin_layout Subsection
+方程组公式的建立
+\end_layout
+
+\begin_layout Subsubsection
+Ritz 方法的求解公式
+\end_layout
+
+\begin_layout Subsubsection
+Galerkin 方法的求解公式
+\end_layout
+
+\begin_layout Standard
+有两类边界条件经常出现：一是狄利克雷（Dirichlet）边界条件，像 eq2.23 那样，它给出了边界处的 
+\begin_inset Formula $\Phi$
+\end_inset
+
+值；
+\begin_inset Formula 
+\[
+\left.\Phi\right|_{x=0}=0,\quad\left.\Phi\right|_{x=1}=1.
+\]
+
+\end_inset
+
+另一类是齐次诺伊曼（Neumann）边界条件，它要求边界处 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 的法向导数为零。第一类边界是必要（essential）边界条件，它必须显式地强加在计算中；第二类边界条件通常在求解过程中隐含的自动满足，因此通常被称为
+ 自然边界条件（natural boundary condition）。
+\end_layout
+
+\begin_layout Standard
+可以看出一般有三个步骤：
+\end_layout
+
+\begin_layout Itemize
+首先应用 Ritz 或 Galerkin 方法写出单元方程 2.55 or 2.69 式。
+\end_layout
+
+\begin_layout Itemize
+其次，将单元方程对所有单元求和，得到方程组，这个过程叫做组合。
+\end_layout
+
+\begin_layout Itemize
+最后，应用边界条件来得到方程组地最终形式。
+\end_layout
+
+\begin_layout Remark
+注意：在计算机实现此计算的过程中，这三个步骤通常不是分立的，相反，他们相互交织在一起。单元矩阵的生成和边界条件的强加通常发生在组合过程中。
+\end_layout
+
+\begin_layout Subsection
+方程组的求解
+\end_layout
+
+\begin_layout Section
+有限元公式的另一种表示
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\tilde{\Phi}=\sum_{e=1}^{M}\sum_{j=1}^{n}N_{j}^{e}\Phi_{j}^{e}.\label{eq:2.74}
+\end{equation}
+
+\end_inset
+
+应用局部和全局编码间的关系，我们至少在原理上可将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.74"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+重新写成
+\begin_inset Formula 
+\begin{equation}
+\tilde{\Phi}=\sum_{j=1}^{N}N_{j}^{g}\Phi_{j}\label{eq:2.75}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+式中 
+\begin_inset Formula $N$
+\end_inset
+
+ 表示结点总数；
+\begin_inset Formula $N_{j}^{g}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\Phi_{j}$
+\end_inset
+
+ 的展开函数，这里用商标 
+\begin_inset Formula $g$
+\end_inset
+
+ 强调有关下标 
+\begin_inset Formula $j$
+\end_inset
+
+ 是全局编码。
+\end_layout
+
+\begin_layout Itemize
+显然，只有在与结点
+\begin_inset Formula $j$
+\end_inset
+
+ 相连的单元中，
+\begin_inset Formula $N_{j}^{g}$
+\end_inset
+
+ 才不为零。
+\end_layout
+
+\begin_layout Itemize
+需要把 
+\begin_inset Formula $N_{j}^{e}$
+\end_inset
+
+ 展开到全域上，需要通过索引矩阵，将局部编码转换到全局编码。
+\end_layout
+
+\begin_layout Standard
+本节公式和上节公式的主要差别在于应用局部和全局编码关系的阶段不同。在商界的公式推导中，他应用在组合过程中；而在本节公式的推导中，它应用在求给定结点的
+ 
+\begin_inset Formula $N_{j}^{g}$
+\end_inset
+
+ 的过程中。
+\end_layout
+
 \begin_layout Chapter
-4.二维有限元分析
+一维有限元分析
+\end_layout
+
+\begin_layout Section
+边值问题
+\end_layout
+
+\begin_layout Section
+变分公式
+\end_layout
+
+\begin_layout Section
+有限元分析
+\end_layout
+
+\begin_layout Subsection
+离散化和插值
+\end_layout
+
+\begin_layout Subsection
+用 Ritz 方法建立公式
+\end_layout
+
+\begin_layout Subsubsection
+狄利克雷边界条件的强加
+\end_layout
+
+\begin_layout Standard
+所以，我们只需在 
+\begin_inset Formula $x=0$
+\end_inset
+
+ 处加上狄利克雷边界条件：
+\begin_inset Formula $\left.\Phi\right|_{x=0}p$
+\end_inset
+
+。只要用 
+\begin_inset Formula $\Phi_{1}=p$
+\end_inset
+
+ 代替从 
+\begin_inset Formula $\partial F/\partial\Phi_{1}=0$
+\end_inset
+
+ 得出的第一个方程，即可简单实现边界条件的强加，或等价地令
+\begin_inset Formula 
+\begin{equation}
+K_{11}=1,\quad b_{1}=p,\quad K_{1j}=0,\quad j=2,\cdots3,\cdots4,\cdots N\label{eq:3.60}
+\end{equation}
+
+\end_inset
+
+这样替换后，上述例子中的新方程组变为
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cccc}
+1 & 0 & 0 & 0\\
+K_{21} & K_{22} & K_{23} & K_{24}\\
+K_{31} & K_{32} & K_{33} & K_{34}\\
+K_{41} & K_{42} & K_{43} & K_{44}
+\end{array}\right]\left\{ \begin{array}{c}
+\Phi_{1}\\
+\Phi_{2}\\
+\Phi_{3}\\
+\Phi_{4}
+\end{array}\right\} =\left\{ \begin{array}{c}
+p\\
+b_{2}\\
+b_{3}\\
+b_{4}
+\end{array}\right\} \label{eq:3.61}
+\end{equation}
+
+\end_inset
+
+这种新方程组显然不再具有对称性。然而对称性可以减小计算机的内存需求和运行时间，为了恢复对称性，我们可以进一步修正
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.61"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式为：
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cccc}
+1 & 0 & 0 & 0\\
+0 & K_{22} & K_{23} & K_{24}\\
+0 & K_{32} & K_{33} & K_{34}\\
+0 & K_{42} & K_{43} & K_{44}
+\end{array}\right]\left\{ \begin{array}{c}
+\Phi_{1}\\
+\Phi_{2}\\
+\Phi_{3}\\
+\Phi_{4}
+\end{array}\right\} =\left\{ \begin{array}{c}
+p\\
+b_{2}-K_{21}p\\
+b_{3}-K_{31}p\\
+b_{4}-K_{41}p
+\end{array}\right\} \label{eq:3.62}
+\end{equation}
+
+\end_inset
+
+实际上就是方程组的移项。从数值角度看，这等价于令
+\begin_inset Formula 
+\begin{equation}
+b_{i}=b_{i}-K_{i1}p,\quad K_{i1}=0,\quad i=2,\cdots3,\cdots4,\cdots N\label{eq:3.63}
+\end{equation}
+
+\end_inset
+
+可以看出，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.62"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中确实已恢复了对称性，而方程组的解并不受影响，方程组也可以写成
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+K_{22} & K_{23} & K_{24}\\
+K_{32} & K_{33} & K_{34}\\
+K_{42} & K_{43} & K_{44}
+\end{array}\right]\left\{ \begin{array}{c}
+\Phi_{2}\\
+\Phi_{3}\\
+\Phi_{4}
+\end{array}\right\} =\left\{ \begin{array}{c}
+b_{2}-K_{21}p\\
+b_{3}-K_{31}p\\
+b_{4}-K_{41}p
+\end{array}\right\} \label{eq:3.64}
+\end{equation}
+
+\end_inset
+
+这就是说，能够处理较小的方程组来得到相同的解。尤其在三维情况下，这种优点非常明显，因为这样可以消除许多方程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+ref JMJin P104：一般情况下，假设 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ 上有 
+\begin_inset Formula $N_{1}$
+\end_inset
+
+ 个结点，把结点它们的 全局编号 存储在矢量
+\begin_inset Formula $\mathcal{B}(i)$
+\end_inset
+
+中；把给定的边界值存储在矢量 
+\begin_inset Formula $p(i)$
+\end_inset
+
+ 中。对线性方程组 施加第一类边界条件 的操作如下：
+\end_layout
+
+\begin_layout Itemize
+对涉及边界结点的方程，即
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+的第
+\begin_inset Formula $\mathcal{B}(i)$
+\end_inset
+
+行（
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+对称，所以也相当于列），处理成 平庸方程 
+\begin_inset Formula $1*\Phi_{\mathcal{B}(i)}=p(i)$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{\mathcal{B}(i)}=p\left(i\right),\quad K_{\mathcal{B}(i),\mathcal{B}(i)}=1,\quad K_{\mathcal{B}(i),j}=0,\quad\text{for}\quad j\neq\mathcal{B}(i).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对其他不属于边界结点的方程进行移项，恢复对称性；把本行中 
+\color blue
+所有边界结点项
+\color inherit
+ 移到右边的 
+\begin_inset Formula $b$
+\end_inset
+
+ 上：
+\begin_inset Formula 
+\[
+b_{j}\to b_{j}-K_{j,\mathcal{B}(i)}p_{i}\left(i\right),\quad K_{j,\mathcal{B}(i)}=0\quad\text{for}\quad j\neq\mathcal{B}(i)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $i=1,2,3,\cdots,N_{1}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+用 Galerkin 方法建立公式
+\end_layout
+
+\begin_layout Subsection
+方程组的求解
+\end_layout
+
+\begin_layout Section
+金属衬底介质片对平面波的反射
+\end_layout
+
+\begin_layout Section
+光滑凸形阻抗柱的散射
+\end_layout
+
+\begin_layout Section
+高阶单元
+\end_layout
+
+\begin_layout Standard
+线性单元（一阶形函数单元）的优点在于公式简单和方程组的带窄。主要缺点是精度差，对于一定的单元或结点数，解的收敛较慢。增加单元/结点数可以提高精度，但将牺牲计算时
+间和内存。
+\end_layout
+
+\begin_layout Standard
+获得较高精度而不增加结点数的另一种方法是应用高阶插值函数或给高阶单元。这种方法已被证明是非常有效的。高阶单元的主要缺点是：
+\end_layout
+
+\begin_layout Enumerate
+公式复杂；
+\end_layout
+
+\begin_layout Enumerate
+方程组的带宽增加。
+\end_layout
+
+\begin_layout Subsection
+二次单元
+\end_layout
+
+\begin_layout Standard
+高斯–勒让德求积（Gauss–Legendre quadrature）公式：
+\begin_inset Formula 
+\begin{equation}
+\int_{-1}^{1}P\left(\xi\right)\dd{\xi}=\sum_{i=1}^{n}W_{i}P\left(\xi_{i}\right)\label{eq:3.123}
+\end{equation}
+
+\end_inset
+
+可容易且精确地积分求出 3.120 和 3.121 式。式中 
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ 表示取样点， 
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ 是相关加权数。
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.123"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的一个重要性质在于：如果多项式 
+\begin_inset Formula $P\left(\xi\right)$
+\end_inset
+
+的次数 
+\begin_inset Formula $\le p$
+\end_inset
+
+，那么若 
+\begin_inset Formula $n\ge\left(p+1\right)/2$
+\end_inset
+
+，则可精确求出积分。因此对 3.120 和 3.121 中的积分，用 
+\begin_inset Formula $n=3$
+\end_inset
+
+ 即可得到精确结果，除非 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 在单元内剧烈变化。
+\end_layout
+
+\begin_layout Subsection
+三次单元
+\end_layout
+
+\begin_layout Chapter
+二维有限元分析
 \end_layout
 
 \begin_layout Standard
