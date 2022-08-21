@@ -8,7 +8,9 @@
 [nullptr详解](https://blog.csdn.net/u010983763/article/details/53667468)
 [C++11 nullptr: 初始化空指针](http://c.biancheng.net/view/7887.html)
 
-+ ZhengLi,P84 `默认参数` 需要在原型声明中给出, 定义中不能再出现 `默认形参值`
+[如何系统学习C++](https://mp.weixin.qq.com/s/WW_X12bTm94iaCgWBgYtJw)
+
++ ZhengLi,P84; `默认参数` 需要在原型声明中给出, 定义中不能再出现 `默认形参值`
 
 + ZhengLi,P35; 运算符优先级, 最高的是
 
@@ -40,23 +42,16 @@ void f(int p[3]);
 void f(int *p);
 ```
 
-+ 定义类型别名, `typedef` 的不同用法, p54, p213
+## 虚表和虚表指针
 
-```cpp
-typedef double Area,Volume;
-typedef int Natural;
-Natural i1, i2;
-Area a;
-Volume v;
-```
+virtual Table, vptr, P342
 
-```cpp
-typedef int (*DoubleIntFunc)(double);
-DoubleIntFunc funcPtr;
-```
+## auto类型推导
 
-声明了名称为 `funcPtr`, 类型为 `DoubleIntFunc` 的函数,
-具体的类型就是 `DoubleIntFunc` 所处位置对应的类型.
-`typedef` 会推导出他的类型.
+[auto类型推导](https://www.cnblogs.com/0xfffffff0/p/10285472.html)
+[auto&&、万能引用和完美转发](https://zhuanlan.zhihu.com/p/435689642?utm_id=0)
 
-+ 虚表和虚表指针,  virtual Table, vptr, P342
+## C 库函数 - memcpy()
+
+[C 库函数 - memcpy()](https://www.runoob.com/cprogramming/c-function-memcpy.html)
+[C函数之memcpy()函数用法](https://blog.csdn.net/tigerjibo/article/details/6841531)

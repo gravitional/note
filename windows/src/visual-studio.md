@@ -2,13 +2,15 @@
 
 ## 编辑
 
+[代码编辑器功能](https://docs.microsoft.com/zh-cn/visualstudio/ide/writing-code-in-the-code-and-text-editor?view=vs-2022)
+
 `Ctrl+F4`: 关闭当前窗口.
 `Ctrl+Alt+F12`: 查找符号结果.
 `Ctrl+.`/`Alt+Enter`; 快速操作
 `Ctrl+D`; 复制行
 `Ctrl+L`; 删除行
 `Alt+Shift+]`; 选中块结构
-`Shift+F10`; 展开上下文菜单（光翼展开doge）
+`Shift+F10`; 展开上下文菜单(光翼展开doge)
 
 ## 视图
 
@@ -23,7 +25,7 @@
 `C+J`; 列出成员
 `C+S+Space`; 参数信息
 `C+K,C+I`; 快速信息(手动控制弹出信息框)
-`C+Space`; 完成单词 
+`C+Space`; 完成单词
 `C+k, C+S`; 外侧代码
 `C+K,C+X`; 插入片段
 
@@ -84,3 +86,114 @@
 + 列出所有 Method; `Alt+M`
 + 打开对应的 .h/.cpp; `Alt+O`
 + 打开解决方案中的文件; `S+A+O`
+
+## XML注释
+
+[注释 (C++)](https://docs.microsoft.com/zh-cn/cpp/cpp/comments-cpp?view=msvc-170)
+[Visual Studio可以自动生成注释](https://cloud.tencent.com/developer/news/601818)
+[为文档生成项插入 XML 注释](https://docs.microsoft.com/zh-cn/visualstudio/ide/reference/generate-xml-documentation-comments?view=vs-2022)
+[XML 文档注释](https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/xmldoc/)
+
+如果你正在使用 `Doxygen` 或者 `XML` 文档注释,
+那么Visual Studio v16.6 Preview 2 了一项称之为 `注释自动生成`(automatic comment stub generation)的新特性,
+这项特性将和现有的快速参考(QuickInfo),
+参数帮助(Parameter Help)和成员列表提示(Member List tooltip)等特性一起,
+为开发者提供流畅的编码体验.
+
+### 自动生成注释的基本骨架
+
+在XML文档注释中, 有一些每次都必须要输入的关键字, 例如 `summary`, `param` 等.
+Visual Studio可以通过一种十分自然的方式来自动生成注释骨架,
+开发者只需要在注释骨架上填写相应的内容即可.
+
+在默认情况下, 注释自动生成只会在 `XML` 文档注释上起作用.
+开发者在为一个函数编写注释的时候,
+可以通过输入三个斜杠(`///`)或者使用快捷键(`Ctrl + /`)来产生注释骨架.
+
+![有图有真相](https://ask.qcloudimg.com/http-save/developer-news/g12ddmld1g.gif)
+
+如果我使用 `Doxygen` 呢?
+
+如果你不使用 `XML注释`, 而是 `Doxygen`, 那么也不用太担心,
+Visual Studio已经为你安排的明明白白了.
+可以在 `Visual Studio` 的设置里自由切换你喜欢的注释系统类型,
+具体的设置路径: `[工具/选项/文本编辑器/C/C++/编码风格/常规]`.
+当然, 你也可以直接通过快捷键(`Ctrl + Q`)来唤醒搜索框, 并输入关键字 `Doxygen` 来快速定位.
+设置界面如下图所示:
+
+![img](https://ask.qcloudimg.com/http-save/developer-news/9rhcryy5yy.jpeg?imageView2/2/w/1620)
+
+你可以在上面的设置界面选项触发自动生成注释的代码,
+比如可以选择三个斜杠(`///`)或者 `/**`, 这完全跟随你的喜好来定.
+当然, 快捷键(`Ctrl+/`)也会一直存在, 如果你是一个快捷键达人, 那么你应该挺喜欢这种方式.
+
+同时, 还可以通过修改 `[.editorconfig]` 配置文件,
+来在文件夹级别或者文件级别上来指定注释系统的各项配置参数,
+下图是可以添加到 `[.editorconfig]` 的配置项:
+
+![img](https://ask.qcloudimg.com/http-save/developer-news/vjjqnekc6j.jpeg?imageView2/2/w/1620)
+
+为了得到一个 `[.editorconfig]` 配置文件, 你可以在上面的设置界面,
+点击按钮 `[Generate .editorconfig file from settings]`,
+那么Visual Studio将会基于现有的配置来生成一个新的配置文件,
+然后你就可以自由的修改这个配置文件了.
+这种方式的好处是, 你可以为不同的文件夹或者文件设置不一样的注释风格,
+这非常适合于不同开发团队之间的代码风格兼容.
+
++ 自动生成Doxygen注释
+
+![img](https://ask.qcloudimg.com/http-save/developer-news/zvxq13zp9n.gif)
+
+写注释的一个好处
+有些人可能会问, 为什么要辛辛苦苦的写那些没用的注释呢?请先看看下图:
+
+![img](https://ask.qcloudimg.com/http-save/developer-news/liui6nu6zl.gif)
+
+有感觉了吗?你编写的XML或者Doxygen注释, Visual Studio已经可以自动识别到了,
+并且在你调用某个函数的时自动给你信息提示. 这项特性, 非常适合那些写完一个函数就忘记怎么调用的人, 比如我.
+
+## 任务列表
+
+[使用任务列表](https://docs.microsoft.com/zh-cn/visualstudio/ide/using-the-task-list?view=vs-2022)
+
+### 使用任务列表
+
+使用 `任务列表`  跟踪使用 TODO 和 HACK 或自定义令牌等令牌的代码注释,
+还能管理直接导向代码中的预定义位置的快捷方式.  单击列表中的项以转到其在源代码中的位置.
+
+### 任务列表窗口
+
+当 `任务列表` 打开后, 它将显示在应用程序窗口的底部.
+
+若要打开 任务列表, 请选择 `查看>任务列表`, 或从键盘按 `Ctrl+\, T`.
+
+![Task List window](https://docs.microsoft.com/zh-cn/visualstudio/ide/media/vs2015_task_list.png?view=vs-2022)
+
+要更改列表的排序顺序, 请选择任意列的标头.
+若要进一步优化搜索结果, 请按住 Shift 键单击另一个列标头.
+另一种方法是, 在快捷菜单上选择"排序方式" , 然后选择一个标头.
+若要进一步优化搜索结果, 请按住 Shift 并选择另一个标头.
+
+要显示或隐藏列, 在快捷菜单上选择 `显示列` .  选择要显示或隐藏的列.
+要更改列的顺序, 请将任意列标头拖动到所需的位置.
+
+### 自定义令牌
+
+默认情况下, Visual Studio 包含以下令牌:
+
+    HACK, TODO, UNDONE 和 UnresolvedMergeConflict.
+
+令牌不区分大小写.  你也可以创建自己的自定义令牌.
+创建自定义令牌:
+
++ 在 "工具" 菜单上, 选择 "选项" .
++ 打开 "环境" 文件夹, 然后选择 "任务列表".
++ 将显示"任务列表"选项页.
+    ![Visual Studio Task List](https://docs.microsoft.com/zh-cn/visualstudio/ide/media/vs2015_task_list_options.png?view=vs-2022)
+
++ 在"名称" 文本框中, 输入令牌名称, 如"BUG".
++ 在 "优先级别" 下拉列表中, 为新令牌选择默认优先级别.
++ 选择"添加".
+
+>提示
+>输入名称后将启用"添加"按钮.  必须先输入名称, 然后再单击"添加".
