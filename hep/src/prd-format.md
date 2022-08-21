@@ -1,7 +1,8 @@
 # aps 格式
 
-如果安装了`TeXLive`发行版, 不管`Linux`,`Windows`,`Mac`, 直接在命令行运行`texdoc apsguide4`查看`aps`期刊的`Author Guide`,
-或者运行`texdoc -l revtex`进行更详细的选择.
+如果安装了 `TeXLive` 发行版, 不管`Linux`,`Windows`,`Mac`, 
+直接在命令行运行 `texdoc apsguide4`查看`aps`期刊的`Author Guide`,
+或者运行 `texdoc -l revtex` 进行更详细的选择.
 
 ## 三种格式
 
@@ -13,7 +14,7 @@
 
 + `REVTEX 4.2` 设计成自动切换单双栏,只需在设置中更改选项.
 + `preprint` 做三件事: 增加字号到`12 pt`, 增加行距,改变格式到单栏.
-+ 手稿提交到 APS 时,应该使用 letter size paper.
++ 手稿提交到 `APS` 时,应该使用 `letter size paper`.
 
 ## FRONT MATTER 前置段落
 
@@ -63,7 +64,8 @@ Authors, affiliations, and collaborations
 
 #### 摘要- Abstract
 
-摘要需要通过 `abstract` 环境指定, `abstract` 必须出现在 `\maketitle` 命令之前. `revtex4.2 `现在支持结构性摘要,用法如下:
+摘要需要通过 `abstract` 环境指定, `abstract` 必须出现在 `\maketitle` 命令之前. 
+`revtex4.2 `现在支持结构性摘要,用法如下:
 
 ```latex
 \begin{abstract}
@@ -89,6 +91,7 @@ Authors, affiliations, and collaborations
 1. 使用 `\cite` and `\bibitem` 宏创建和引用 参考文献,
 2. `revtex4.2`提供一种新的语法,组合多个引用到一个条目中,或者在参考文献前或后放入额外文字.
 脚注用 `\footnote` 宏指定, `revtex4.2`把脚注放在 `bibliography` 中.需要运行 `BibTEX` 让 `footnotes` 出现
+
 3. 不要用自定义的 `\footnotemark` 或者 `\footnotetex`
 4. 参考文献风格应该满足 `Physical Review Style Guide`,若使用 `BibTEX` 则能自动保证.
 5. `eprint`标识符应该使用`\eprint`宏引入,如果有`eprint`域,`BibTEX` 会自动处理好.
@@ -98,12 +101,13 @@ Authors, affiliations, and collaborations
 
 ### bibtex 用法
 
-`bibtex` 一般附在 Latex 发行版如`TeXLive`中,用于辅助制作参考文献.
-
++ `bibtex` 一般附在 Latex 发行版如`TeXLive`中,用于辅助制作参考文献.
 + 使用`bibtex`, 需要你先准备一个`.bib`文件, 它是参考文献条目的集合.
-+ 还有一个控制参考文献格式的文件 --- `.bst` (bibtex style file). 它控制如何把`.bib`转换成 `latex` 标准的 `\bibitem` 格式,可以修改成适应不同的杂志.
 
-在文章 `class` 中设置合适的选项,会自动从 `revtex4.2` 中选择合适的 `.bst` 文件, 也就是类似下面的`aps,prd`
++ 还有一个控制参考文献格式的文件 --- `.bst` (bibtex style file). 
+它控制如何把`.bib`转换成 `latex` 标准的 `\bibitem` 格式,可以修改成适应不同的杂志.
+
++ 在文章 `class` 中设置合适的选项,会自动从 `revtex4.2` 中选择合适的 `.bst` 文件, 也就是类似下面的`aps,prd`
 
 ```latex
 \documentclass[aps,prd,superscriptaddress]{revtex4-2}

@@ -8,15 +8,15 @@
 [nullptr详解](https://blog.csdn.net/u010983763/article/details/53667468)
 [C++11 nullptr: 初始化空指针](http://c.biancheng.net/view/7887.html)
 
-+ ZhengLi,P84 默认参数需要在原型声明中给出, 定义中不能再出现默认形参值
++ ZhengLi,P84 `默认参数` 需要在原型声明中给出, 定义中不能再出现 `默认形参值`
 
-+ ZhengLi,P35;运算符优先级, 最高的是
++ ZhengLi,P35; 运算符优先级, 最高的是
 
 ```cpp
 [] () . -> 后置++ 后置--
 ```
 
-最低的是`,`.
+最低的是 `,`.
 
 + ZhengLi,P261 保护继承; 保护成员可以被派生类访问, 但不能被类外部的代码访问.
 
