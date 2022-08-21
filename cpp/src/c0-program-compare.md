@@ -30,7 +30,7 @@ Python 中的分号可以省略, 主要通过 `换行` 来识别语句的结束.
 
 [Python 3.8新特性--赋值表达式](https://zhuanlan.zhihu.com/p/90992431)
 
-page 38;
+ZhengLI, page 38;
 
 + c++ 没有赋值语句, 也没有函数调用语句,
 赋值与函数调用功能都是通过表达式来实现的.
@@ -59,4 +59,3 @@ c++ 和 Lisp 中, 逗号运算符 `,` 的作用相同,
 
 C++; push, pop
 MMA; Append
-

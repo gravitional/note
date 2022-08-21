@@ -122,7 +122,7 @@ virtual 函数类型 函数名(参数表)=0;
 
 [C++typename的由来和用法](https://zhuanlan.zhihu.com/p/335777990)
 
-那么问题来了, 什么情况下, class定义之后, 编译不能通过呢?
+那么问题来了, 什么情况下, `class` 定义之后, 编译不能通过呢?
 
 ```cpp
 template<typename T>
@@ -153,7 +153,7 @@ typename    T::const_iterator it(proto.begin());
 这样编译器就可以确定 `T::const_iterator` 是 type,
 而不再需要等到实例化时期才能确定, 因此消除了前面提到的歧义.
 
-嵌套从属类型
+### 嵌套从属类型
 
 事实上类型 `T::const_iterator` 依赖于 `模板参数T`,
 模板中依赖于 `模板参数` 的名称称为 `从属名称`(dependent name),
