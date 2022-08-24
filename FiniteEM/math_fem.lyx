@@ -212,6 +212,1064 @@ D=\prod_{n\ge i\ge j\ge1}=(x_{i}-x_{j}).
 
 \end_layout
 
+\begin_layout Section
+线搜索方法 Line search
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "线搜索(line search)方法"
+target "https://www.cnblogs.com/kemaswill/p/3416231.html"
+literal "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Standard
+Numerical Optimization, Chapter 3, p35-p42.
+ J.
+ Nocedal, S.Wright.
+\end_layout
+
+\begin_layout Standard
+在机器学习中, 通常需要求某个函数的最值(比如 最大似然中 需要求的 似然的最大值)。线搜索(line search)是求得一个函数
+\begin_inset Formula $f(x)$
+\end_inset
+
+的最值的两种常用迭代方法之一(另外一个是 trust region)。其思想是首先求得一个下降方向,在这个方向上
+\begin_inset Formula $f(x)$
+\end_inset
+
+会下降，然后是求得
+\begin_inset Formula $f(x)$
+\end_inset
+
+在这个方向上下降的步长。求下降方向的方法有很多，比如梯度下降，牛顿方法 和 Quasi-Newton 方法, 而步长可以是固定值，也可以通过诸如回溯线搜索来求得
+。
+\end_layout
+
+\begin_layout Subsection
+线搜索
+\end_layout
+
+\begin_layout Standard
+线搜索 是一种迭代的求得某个函数的最值的方法。 对于每次迭代, 线搜索会计算得到搜索的方向 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ 以及沿这个方向移动的步长 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+。迭代过程可以表示为
+\begin_inset Formula 
+\begin{equation}
+x_{k+1}=x_{k}+\alpha_{k}p_{k},\label{eq:w3.1}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 是正值标量，称为步长（step length）。线搜索的成功取决于方向 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ 和 步长 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 的有效选择。
+\end_layout
+
+\begin_layout Standard
+大多数的线搜索方法都会要求 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ 是下降方向(descent direction)，亦即需要满足以下条件： 
+\begin_inset Formula 
+\[
+p_{k}^{T}\nabla f_{k}<0.
+\]
+
+\end_inset
+
+，这样就能够保证函数f(x)沿着这个方向是下降的。一般来说, 搜索方向的形式为
+\begin_inset Formula 
+\begin{equation}
+p_{k}=-B_{k}^{-1}\nabla f_{k},\label{eq:w3.2}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $B_{k}$
+\end_inset
+
+ 是对称的非奇异矩阵。在最陡下降(steepest descent)方法中，
+\begin_inset Formula $B_{k}$
+\end_inset
+
+是单位矩阵
+\begin_inset Formula $I$
+\end_inset
+
+, 在牛顿方法(Newton)中
+\begin_inset Formula $B_{k}$
+\end_inset
+
+ 则是海森(Hessian)矩阵
+\begin_inset Formula $\nabla^{2}f\left(x_{k}\right)$
+\end_inset
+
+，在 Quasi-Newton方法中通过迭代求得 Hessian 矩阵的近似矩阵。
+\end_layout
+
+\begin_layout Standard
+当 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ 由上式定义, 且 
+\begin_inset Formula $B_{k}$
+\end_inset
+
+ 是正定矩阵时：
+\begin_inset Formula 
+\[
+p_{k}^{T}\nabla f_{k}=-\nabla f_{k}^{T}B_{k}^{-1}\nabla f_{k}<0
+\]
+
+\end_inset
+
+所以 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ 是下降方向(descent direction)。
+\end_layout
+
+\begin_layout Subsection
+步长
+\end_layout
+
+\begin_layout Standard
+步长 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 应该最小化下列函数
+\begin_inset Formula 
+\begin{equation}
+\phi\left(\alpha\right)=f\left(x_{k}+\alpha p_{k}\right),\quad\alpha>0\label{eq:w3.3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/wright-fig-3.2.png
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+在 
+\begin_inset Formula $f$
+\end_inset
+
+ 上不充分的下降。
+\begin_inset Formula $f\left(x_{k}\right)=5/k$
+\end_inset
+
+, 
+\begin_inset Formula $k=0,1,\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+但是 全局最小值对应的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 比较困难，且计算量比较大，实际常用的方法是在可接受的计算量的情况下尽可能的求得较大的步长， 以使得 
+\begin_inset Formula $\phi\left(\alpha\right)$
+\end_inset
+
+尽可能的降低。经典的线搜索方法通过迭代来求得
+\begin_inset Formula $\alpha$
+\end_inset
+
+，直至达到某个停止条件。一般的线搜索方法都包含以下两个步骤：
+\end_layout
+
+\begin_layout Enumerate
+bracketing: 求得一个包含 理想步长 的区间 
+\end_layout
+
+\begin_layout Enumerate
+二分法或者插值法：在这个区间内使用二分法或者插值法来求得步长。
+\end_layout
+
+\begin_layout Subsection
+对于凸函数的二分搜索算法
+\end_layout
+
+\begin_layout Standard
+如果 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 是一个可微分的凸函数, 则我们的目标是求得 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, 使得 
+\begin_inset Formula 
+\[
+\alpha=\mathrm{arg}\min_{\lambda>0}f\left(x+\lambda p\right)
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $\phi(\alpha)=f\left(x_{k}+\alpha p_{k}\right)$
+\end_inset
+
+，其中 
+\begin_inset Formula $\phi(\alpha)$
+\end_inset
+
+ 是 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的凸函数, 所以问题转化为求: 
+\begin_inset Formula 
+\[
+\overline{\alpha}=\mathrm{arg}\min_{\alpha>0}\phi\left(\alpha\right)
+\]
+
+\end_inset
+
+因为 
+\begin_inset Formula $\phi(\alpha)$
+\end_inset
+
+ 是凸函数, 所以 
+\begin_inset Formula $\phi'(\overline{\alpha})=0$
+\end_inset
+
+。可以得到 
+\begin_inset Formula $\phi'(\alpha)=\nabla f\left(x+\alpha p\right)^{T}p$
+\end_inset
+
+，因为
+\begin_inset Formula $p$
+\end_inset
+
+是梯度下降方向，所以 
+\begin_inset Formula $\phi'(0)<0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+假设我们知道一个 
+\begin_inset Formula $\hat{\alpha}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\phi'(\hat{\alpha})>0$
+\end_inset
+
+，那么使得 
+\begin_inset Formula $\phi'(\overline{\alpha})=0$
+\end_inset
+
+ 的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 肯定位于 
+\begin_inset Formula $(0,\hat{\alpha})$
+\end_inset
+
+ 区间内。然后我们可以使用以下二分查找算法来求解 
+\begin_inset Formula $\phi'(\alpha)\approx0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+令 
+\begin_inset Formula $k=0$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{l}\coloneqq0$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{r}:=\hat{\alpha}$
+\end_inset
+
+；即 
+\begin_inset Formula $\phi'(\alpha_{l})<0$
+\end_inset
+
+，
+\begin_inset Formula $\phi'(\alpha_{r})>0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+令 
+\begin_inset Formula $\tilde{\alpha}=\frac{\alpha_{l}+\alpha_{r}}{2}$
+\end_inset
+
+，然后计算 
+\begin_inset Formula $\phi'(\tilde{\alpha})$
+\end_inset
+
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\phi'(\tilde{\alpha})>0$
+\end_inset
+
+，则令 
+\begin_inset Formula $\alpha_{r}\coloneqq\tilde{\alpha}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{l}$
+\end_inset
+
+不变，令 
+\begin_inset Formula $k\to k+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\phi'(\tilde{\alpha})<0$
+\end_inset
+
+，则令 
+\begin_inset Formula $\alpha_{l}\coloneqq\tilde{\alpha}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{r}$
+\end_inset
+
+不变，令 
+\begin_inset Formula $k\to k+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\phi'(\tilde{\alpha})=0$
+\end_inset
+
+, 停止迭代。
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+回溯线搜索 backtracking line search
+\end_layout
+
+\begin_layout Standard
+使用二分查找法来求步长的计算复杂度很高，因为在最小化 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 的每次迭代中我们都需要执行一次线搜索,，而每次线搜索都要用上述的二分查找算法。我们可以在牺牲一定的精度的条件下来加快计算速度，回溯线搜索是一种近似线搜索算法。
+\end_layout
+
+\begin_layout Standard
+首先，我们要求每次的步长 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 都使得
+\begin_inset Formula $f(x)$
+\end_inset
+
+充分的降低：
+\begin_inset Formula 
+\begin{equation}
+f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+c_{1}\alpha_{k}\nabla f_{k}^{T}p_{k}\label{eq:w3.4}
+\end{equation}
+
+\end_inset
+
+上述条件称作充分下降条件，其中 
+\begin_inset Formula $c_{1}\in(0,1)$
+\end_inset
+
+，一般来说 
+\begin_inset Formula $c_{1}=10^{-4}$
+\end_inset
+
+。亦即 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 的下降应该至少和 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 以及 
+\begin_inset Formula $\nabla f_{k}^{T}p_{k}$
+\end_inset
+
+ 成正比。如下图所示, 上式的右边 
+\begin_inset Formula $f(x_{k})+c_{1}\alpha\nabla f_{k}^{T}p_{k}$
+\end_inset
+
+ 是线性函数, 可以表示为 
+\begin_inset Formula $\ell(\alpha)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/wright-fig-3.3.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+充分下降条件
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:w3.3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+充分下降条件规定只有使得 
+\begin_inset Formula $\phi(\alpha)\le\ell(\alpha)$
+\end_inset
+
+ 的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 才满足条件。其区间如上图所示。
+\end_layout
+
+\begin_layout Standard
+单独只有充分下降条件是不够的，因为如上图，所有充分小的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 都满足上述条件，但是 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 太小会导致下降不充分, 为了排除这些小的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+，我们引入了第二个要求，亦即曲率条件(curvature condition)：
+\begin_inset Formula 
+\[
+\nabla f(x_{k}+\alpha p_{k})^{T}p_{k}\ge c_{2}\nabla f_{k}^{T}p_{k}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $c_{2}\in\left(c_{1},1\right)$
+\end_inset
+
+。上式的左边就是 
+\begin_inset Formula $\phi'(\alpha_{k})$
+\end_inset
+
+，右边则是 
+\begin_inset Formula $\phi'(0)$
+\end_inset
+
+，即上式相当于
+\begin_inset Formula 
+\[
+\phi'(\alpha_{k})\ge c_{2}\phi'(0).
+\]
+
+\end_inset
+
+这是因为如果 
+\begin_inset Formula $\phi'(\alpha)$
+\end_inset
+
+ 是很小的负数（下降得非常陡峭），则我们可以在这个方向上继续使得 
+\begin_inset Formula $f(x)$
+\end_inset
+
+下降更多.
+ 如下图所示
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/wright-fig-3.4.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+曲率条件（curvature condition）
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:w3.4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Typical values of 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ are 
+\begin_inset Formula $0.9$
+\end_inset
+
+ when the search direction 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ is chosen by a Newton or quasi-Newton method, and 
+\begin_inset Formula $0.1$
+\end_inset
+
+ when 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ is obtained from a nonlinear conjugate gradient method。上述两个条件合起来称作 Wolfe
+ 条件：
+\begin_inset Formula 
+\begin{align}
+ & f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+c_{1}\alpha_{k}\nabla f_{k}^{T}p_{k},\label{eq:w3.6a}\\
+ & \nabla f(x_{k}+\alpha p_{k})^{T}p_{k}\ge c_{2}\nabla f_{k}^{T}p_{k},\label{eq:w3.6b}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $0<c_{1}<c_{2}<1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/wright-fig-3.5.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+满足 Wolfe 条件的步长。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:w-3.5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+满足 Wolfe 条件的 步长 不一定离 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的极值点很近，如 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:w-3.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。但是可以修改 curvature condition，来让 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 至少位于 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的 local minimizer 或 stationary point 附近。strong Wolfe condition 要求 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 满足：
+\begin_inset Formula 
+\begin{align}
+ & f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+c_{1}\alpha_{k}\nabla f_{k}^{T}p_{k},\label{eq:w3.7a}\\
+ & \nabla f(x_{k}+\alpha p_{k})^{T}p_{k}\ge c_{2}\nabla f_{k}^{T}p_{k},\label{eq:w3.7b}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $0<c_{1}<c_{2}<1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+It is not difficult to prove that there exist step lengths that satisfy
+ the Wolfe conditions for every function f that is smooth and bounded below。
+\end_layout
+
+\begin_layout Lemma
+Suppose that 
+\begin_inset Formula $f:\symbb R^{n}\to\symbb R$
+\end_inset
+
+ is continuously differentiable.
+ Let pk be a descent direction at xk, and assume that f is bounded below
+ along the ray 
+\begin_inset Formula $\left\{ x_{k}+\alpha p_{k}|\alpha>0\right\} $
+\end_inset
+
+。Then if 
+\begin_inset Formula $0<c1<c2<1$
+\end_inset
+
+, there exist intervals of step lengths satisfying the Wolfe conditions
+ (3.6) and the strong Wolfe conditions 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:w3.7a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+The Wolfe conditions are scale-invariant in a broad sense: Multiplying the
+ objective function by a constant or making an affine change of variables
+ does not alter them.
+ They can be used in most line search methods, and are particularly important
+ in the implementation of quasi-Newton methods, as we see in Chapter 6.
+\end_layout
+
+\begin_layout Subsection
+Goldstein 条件
+\end_layout
+
+\begin_layout Standard
+Like the Wolfe conditions, the Goldstein conditions ensure that the step
+ length 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ achieves sufficient decrease but is not too short.
+ The Goldstein conditions can also be stated as a pair of inequalities,
+ in the following way：
+\begin_inset Formula 
+\begin{equation}
+f(x_{k})+(1-c)\alpha_{k}\nabla f_{k}^{T}p_{k}\le f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+c\alpha_{k}\nabla f_{k}^{T}p_{k},\label{eq:w3.11}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $0<c<1/2$
+\end_inset
+
+。第二个不等式正是充分下降条件
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:w3.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，并引入第一个不等式来控制 步长的下限。见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:w3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/wright-fig-3.6.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The Goldstein conditions.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:w3.6"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A disadvantage of the Goldstein conditions vis-a-vis the Wolfe conditions
+ is that the first inequality in (3.11) may exclude all minimizers of 
+\begin_inset Formula $\phi$
+\end_inset
+
+。 However, the Goldstein and Wolfe conditions have much in common, and their
+ convergence theories are quite similar.
+ The Goldstein conditions are often used in Newton-type methods but are
+ not well suited for quasi-Newton methods that maintain a positive definite
+ Hessian approximation。
+\end_layout
+
+\begin_layout Standard
+充分下降条件和回溯算法(BACKTRACKING)
+\end_layout
+
+\begin_layout Standard
+我们已经提到，仅仅是充分减少条件
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:w3.6a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 并不足以确保，算法沿着给定的搜索方向取得合理的下降。 然而，如果 线搜索 算法适当地选择其候选步长，通过使用所谓的 回溯方法（backtracking
+ approach），我们可以省去 额外的条件
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:w3.6b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，只使用 充分下降条件 来终止 线搜索 程序。在其最基本的形式中，回溯法的过程如下。
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+算法3.1
+\end_layout
+
+\end_inset
+
+ Backtracking Line Search
+\end_layout
+
+\begin_layout Enumerate
+选取 
+\begin_inset Formula $\overline{\alpha}>0$
+\end_inset
+
+，
+\begin_inset Formula ${\color{blue}\rho\in(0,1)}$
+\end_inset
+
+，
+\begin_inset Formula ${\color{brown}c\in(0,1)}$
+\end_inset
+
+；令 
+\begin_inset Formula $\alpha\leftarrow\overline{\alpha}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+repeat 
+\series default
+until 
+\begin_inset Formula $f(x_{k}+\alpha p_{k})\le f(x_{k})+{\color{brown}c}\,\alpha\nabla f_{k}^{T}p_{k}$
+\end_inset
+
+ （满足充分下降条件）
+\begin_inset Formula 
+\[
+\alpha\leftarrow{\color{blue}\rho}\,\alpha;
+\]
+
+\end_inset
+
+
+\series bold
+end(repeat)
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+返回 
+\begin_inset Formula $\alpha_{k}=\alpha$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+在这个过程中，初始步长 
+\begin_inset Formula $\overline{\alpha}$
+\end_inset
+
+ 在牛顿和 quasi- Newton 方法中被选择为 
+\begin_inset Formula $1$
+\end_inset
+
+，但在其他算法中可以有不同的值，如 最陡峭下降法（steepest descent） 或 共轭梯度法（conjugate gradient）。在有限次数的试验后
+，能找到一个可接受的步长，因为 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 最终会变得足够小，以至于充分下降条件成立（见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:w3.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。在实践中，允许在直线搜索的每个迭代中，改变 收缩因子
+\begin_inset Formula $\rho$
+\end_inset
+
+。例如，它可以通过保障性插值（safeguarded interpolation）来选择，我们将在后面介绍。我们只需要确保在每次迭代中，我们有
+ 
+\begin_inset Formula $\rho\in[\rho_{\text{low}},\rho_{\text{high}}]$
+\end_inset
+
+，对于某些固定常数 
+\begin_inset Formula $0<\rho_{\text{low}}<\rho_{\text{high}}<1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+回溯方法 确保所选择的步长 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 要么是某固定值（初始选择
+\begin_inset Formula $\overline{\alpha}$
+\end_inset
+
+），否则就是足够短以满足充分下降条件，但又不会太短。后一种说法成立，是因为 被接受值 
+\begin_inset Formula $\alpha_{k}$
+\end_inset
+
+ 相比于前一试验值（trial value，
+\begin_inset Formula $\alpha_{k}/\rho$
+\end_inset
+
+）要乘上系数 
+\begin_inset Formula $\rho$
+\end_inset
+
+；而前个值因违反 充分下降条件 被拒绝，也就是太长。
+\end_layout
+
+\begin_layout Standard
+这种简单而流行的 终止线搜索 的策略很适合 牛顿法，但不太适合准牛顿和共轭梯度方法。
+\end_layout
+
 \begin_layout Chapter
 有限元方法
 \end_layout
