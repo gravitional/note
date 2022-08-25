@@ -1179,7 +1179,7 @@ until
 \begin_inset Formula $f(x_{k}+\alpha p_{k})\le f(x_{k})+{\color{brown}c}\,\alpha\nabla f_{k}^{T}p_{k}$
 \end_inset
 
- （满足充分下降条件）
+ （直到满足充分下降条件）
 \begin_inset Formula 
 \[
 \alpha\leftarrow{\color{blue}\rho}\,\alpha;
@@ -1268,6 +1268,356 @@ noprefix "false"
 
 \begin_layout Standard
 这种简单而流行的 终止线搜索 的策略很适合 牛顿法，但不太适合准牛顿和共轭梯度方法。
+\end_layout
+
+\begin_layout Chapter
+电动力学
+\end_layout
+
+\begin_layout Section
+静电场的能量
+\end_layout
+
+\begin_layout Standard
+目录:p18; Jackson p68/43; sec1.11
+\end_layout
+
+\begin_layout Standard
+静电场能的两种表示方式：
+\begin_inset Formula 
+\begin{align}
+ & W=\frac{1}{2}\int\rho(\sbf x)\Phi(\sbf x)\dd[3]{x},\quad W=\frac{1}{8\pi\epsilon_{0}}\sum_{i}\sum_{j}\frac{q_{i}q_{j}}{\abs{\sbf x_{i}-\sbf x_{j}}}\label{eq:j1.53}\\
+ & W=\frac{\epsilon_{0}}{2}\int\abs{\sbf E}^{2}\dd[3]{x}.\label{eq:j1.54}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第一行的公式分别是连续和离散情形。双求和忽略了 
+\begin_inset Formula $i=j$
+\end_inset
+
+ 的项，即“自能项”。
+\end_layout
+
+\begin_layout Enumerate
+两种公式的物理图像分别为：电荷之间的相互作用能；电场中存储的能量。
+\end_layout
+
+\begin_layout Enumerate
+电场的能量是正定的；相互作用能可能是负值。
+\end_layout
+
+\begin_layout Standard
+考虑两个点电荷 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+，
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ 组成的体系，空间一点
+\begin_inset Formula $\sbf x$
+\end_inset
+
+处的电势和静电能分别为：
+\begin_inset Formula 
+\begin{align}
+ & \sbf E=\frac{1}{4\pi\epsilon_{0}}\frac{q_{1}(\sbf x-\sbf x_{1})}{\abs{\sbf x-\sbf x_{1}}^{3}}+\frac{1}{4\pi\epsilon_{0}}\frac{q_{2}(\sbf x-\sbf x_{2})}{\abs{\sbf x-\sbf x_{2}}^{3}},\nonumber \\
+ & 32\pi^{2}\epsilon_{0}w=\frac{q_{1}^{2}}{\abs{\sbf x-\sbf x_{1}}^{4}}+\frac{q_{2}^{2}}{\abs{\sbf x-\sbf x_{2}}^{4}}+2\frac{q_{1}q_{2}(\sbf x-\sbf x_{1})\cdot(\sbf x-\sbf x_{2})}{\abs{\sbf x-\sbf x_{1}}^{3}\abs{\sbf x-\sbf x_{2}}^{3}}.\label{eq:j1.56}
+\end{align}
+
+\end_inset
+
+前两项是两个点电荷的自能，后一项是相互作用能。
+\end_layout
+
+\begin_layout Subsection
+电容矩阵
+\end_layout
+
+\begin_layout Standard
+在含有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个导体的系统中，第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个导体上的电荷
+\begin_inset Formula $Q_{i}$
+\end_inset
+
+ 可以用所有导体上的电势
+\begin_inset Formula $V_{j}$
+\end_inset
+
+，以及一些几何参数，共同表出：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Q_{i}=\sum_{j=1}^{n}C_{ij}V_{j},\quad i=1,2,\cdots,n\label{eq:j1.61}
+\end{equation}
+
+\end_inset
+
+系数 
+\begin_inset Formula $C_{ii}$
+\end_inset
+
+ 被称为电容（capacities or capacitances），非对角元
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+被称为互感系数。
+\end_layout
+
+\begin_layout Enumerate
+导体的电容，等于它带单位电势时的电荷，同时保持其他导体电势为零。
+\end_layout
+
+\begin_layout Enumerate
+电容矩阵 
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+ 是对称矩阵，表示两个导体间的电荷相互作用是对等的。
+\end_layout
+
+\begin_layout Enumerate
+非对角元 
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+ 对应两个导体间的互作用能量。
+\begin_inset Formula 
+\[
+C_{ij}V_{i}V_{j}=\int_{\Omega}\sbf E_{i}\cdot\sbf D_{j}\dd{\Omega},\quad i,j\,\text{不求和}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+导体系统的 静电能 可以表示为
+\begin_inset Formula 
+\begin{equation}
+W=\frac{1}{2}\sum_{i=1}^{n}Q_{i}V_{i}=\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}C_{ij}V_{i}V_{j}.\label{eq:j1.62}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $C_{ii}V_{i}^{2}$
+\end_inset
+
+是正定的，对应电荷的“自能”（self energy）；
+\begin_inset Formula $C_{ij}V_{i}V_{j}$
+\end_inset
+
+对应相互作用能 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j1.53"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+电介质中的静电能
+\end_layout
+
+\begin_layout Standard
+p190; sec 4.7 
+\end_layout
+
+\begin_layout Standard
+见 Sec1.11，自由空间电荷系统的能量为：
+\begin_inset Formula 
+\begin{equation}
+W=\frac{1}{2}\int\rho(\sbf x)\Phi(\sbf x)\dd[3]{x}.\label{eq:j4.83}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+存在电介质的情况下，静电能的微小变分为：
+\begin_inset Formula 
+\begin{equation}
+\delta W=\int\delta\rho(\sbf x)\Phi(\sbf x)\dd[3]{x}.\label{eq:j4.84}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Phi(\sbf x)$
+\end_inset
+
+ 是由于已存在电荷密度 
+\begin_inset Formula $\rho(\sbf x)$
+\end_inset
+
+产生的电势。考虑到 
+\begin_inset Formula $\nabla\cdot\sbf D=\rho$
+\end_inset
+
+，我们可以作替换
+\begin_inset Formula 
+\begin{equation}
+\delta\rho=\nabla\cdot(\delta\sbf D).\label{eq:j4.85}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot(\Phi\delta\sbf D) & =(\nabla\phi)\cdot\delta\sbf D+\Phi\nabla\cdot\delta\sbf D\\
+ & =-\sbf E\cdot\delta\sbf D+\Phi\delta\rho
+\end{align*}
+
+\end_inset
+
+如果电荷分布在有限空间内，则 
+\begin_inset Formula $\nabla\cdot(\Phi\delta\sbf D)$
+\end_inset
+
+ 在全空间的积分为零（应用高斯散度定理）。因此可以把静电能的变分写成：
+\begin_inset Formula 
+\begin{equation}
+\delta W=\int\sbf E\cdot\delta\sbf D\dd[3]{x}.\label{eq:j4.86}
+\end{equation}
+
+\end_inset
+
+因此当
+\begin_inset Formula $\sbf D$
+\end_inset
+
+从初始值
+\begin_inset Formula $0$
+\end_inset
+
+变化到最终值时，在形式上可以把静电能写成：
+\begin_inset Formula 
+\begin{equation}
+W=\int\dd[3]x\int_{0}^{D}\sbf E\cdot\delta\sbf D.\label{eq:j4.87}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果介质是 
+\emph on
+线性的
+\emph default
+，则
+\begin_inset Formula 
+\begin{equation}
+\sbf E\cdot\delta\sbf D=\frac{1}{2}\delta\left(\sbf E\cdot\sbf D\right).\label{eq:4.88}
+\end{equation}
+
+\end_inset
+
+总能量可以写成
+\begin_inset Formula 
+\begin{equation}
+W=\frac{1}{2}\int\sbf E\cdot\sbf D\dd[3]{x}.\label{eq:j4.89}
+\end{equation}
+
+\end_inset
+
+如果假设 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 是线性相关的，通过 
+\begin_inset Formula $\sbf E=-\nabla\Phi$
+\end_inset
+
+ 和 
+\begin_inset Formula $\nabla\cdot\sbf D=\rho$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.89"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可以回到
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.83"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+或
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.84"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 。因此，
+\emph on
+只有当行为是线性的，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.83"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在宏观上才成立。
+\emph default
+否则，只能使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.87"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+计算，最终的 静电能 依赖于极化历史。
 \end_layout
 
 \begin_layout Chapter
@@ -3088,18 +3438,14 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \begin_inset Formula $\phi$
 \end_inset
 
- 的变分，令 
-\begin_inset Formula $k=\frac{\partial D}{\partial E}$
-\end_inset
-
-，对于一般材料 
-\begin_inset Formula $k$
+ 的变分，对于一般材料，
+\begin_inset Formula $\frac{\partial D}{\partial E}$
 \end_inset
 
  有可能是张量。
 \begin_inset Formula 
 \begin{align*}
-\sbf D & =\sbf D^{0}+k\delta\sbf E=\sbf D^{0}-k\sbf\nabla\delta\phi\\
+\sbf D & =\sbf D^{0}+{\color{blue}\frac{\partial D}{\partial E}}\delta\sbf E=\sbf D^{0}-{\color{blue}\frac{\partial D}{\partial E}}\sbf\nabla\delta\phi\\
 \phi & =\phi^{0}+\delta\phi
 \end{align*}
 
