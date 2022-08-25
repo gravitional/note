@@ -1620,6 +1620,30 @@ noprefix "false"
 计算，最终的 静电能 依赖于极化历史。
 \end_layout
 
+\begin_layout Section
+非线性材料的电容矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\delta W & =\int\sbf E\cdot\delta\sbf D\dd[3]{x}\\
+ & =\frac{1}{2}V_{i}\delta Q_{i}=\frac{1}{2}V_{i}C_{ij}\delta V_{j}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 有限元方法
 \end_layout
@@ -3412,25 +3436,41 @@ N_{i}^{e(2)}=N_{i}^{e(1)}-\frac{1}{2}\sum_{g}N_{g}^{(2)}.
 \begin{align}
 R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:error}\\
 \text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
-\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
- & =0\nonumber 
+\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}=0\nonumber 
 \end{align}
 
 \end_inset
 
-上面使用了分部积分，和高斯散度定理。可令 
-\begin_inset Formula $N_{i}^{e}\to\lambda^{-1}N_{i}^{e}$
+上面使用了分部积分，和高斯散度定理；通过分部积分引入了边界条件：
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\]
+
 \end_inset
 
-，
-\begin_inset Formula $\lambda^{-1}\gg1$
+例如对于线性导体 
+\begin_inset Formula $\sbf D=\epsilon\sbf E$
 \end_inset
 
-，得到更强的压迫性。
+，上式又可以写成：
+\begin_inset Formula 
+\begin{align*}
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\epsilon\nabla\phi\right)}\dd{\Omega} & =-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\\
+\Rightarrow\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\phi_{j} & =\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+微扰展开
 \end_layout
 
 \begin_layout Enumerate
-然后考虑待求物理量 
+如果考虑待求物理量 
 \begin_inset Formula $\sbf D$
 \end_inset
 
@@ -3438,11 +3478,7 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \begin_inset Formula $\phi$
 \end_inset
 
- 的变分，对于一般材料，
-\begin_inset Formula $\frac{\partial D}{\partial E}$
-\end_inset
-
- 有可能是张量。
+ 的微小变分：
 \begin_inset Formula 
 \begin{align*}
 \sbf D & =\sbf D^{0}+{\color{blue}\frac{\partial D}{\partial E}}\delta\sbf E=\sbf D^{0}-{\color{blue}\frac{\partial D}{\partial E}}\sbf\nabla\delta\phi\\
@@ -3451,7 +3487,11 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 
 \end_inset
 
-代入 
+对于一般材料，
+\begin_inset Formula $\frac{\partial D}{\partial E}$
+\end_inset
+
+ 有可能是张量。代入 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:error"
@@ -3488,14 +3528,14 @@ noprefix "false"
 \end_inset
 
  的插值展开，
-\begin_inset Formula $\delta\phi=N_{j}^{e}\delta\phi_{j}$
+\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
 \end_inset
 
  得
 \begin_inset Formula 
 \begin{align*}
- & \left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Gamma}\right]\delta\phi_{j}\\
- & =\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}
+\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
+ & =\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right\} 
 \end{align*}
 
 \end_inset
@@ -3527,7 +3567,7 @@ noprefix "false"
 对于求解区域内部的点，去掉边界的两项是，
 \begin_inset Formula 
 \[
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}.
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .
 \]
 
 \end_inset
