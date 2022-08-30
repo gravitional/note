@@ -1341,6 +1341,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+FEM-Gerard; page 31/47; sec 1.3.8.8 
+\end_layout
+
+\begin_layout Standard
 在含有 
 \begin_inset Formula $n$
 \end_inset
@@ -1827,6 +1831,248 @@ C_{ij}=\frac{1}{\delta U_{i}\delta U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\
 \[
 C_{ij}=\frac{1}{U_{i}U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega}.
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+虚功法
+\end_layout
+
+\begin_layout Standard
+FEM-Gerard; sec 38/54;
+\end_layout
+
+\begin_layout Standard
+刚体上的力和力矩（torque）也可以使用虚功原理（virtual work theorem）计算。在微小位移
+\begin_inset Formula $\delta u$
+\end_inset
+
+下，装置的内能（internal energy）的变化 
+\begin_inset Formula $\delta W_{e}$
+\end_inset
+
+，等于 外源（external sources）输入的电能，加上力 
+\begin_inset Formula $-F_{u}$
+\end_inset
+
+（牛顿第三定律）的功：
+\begin_inset Formula 
+\begin{equation}
+\delta W_{e}=\sum V_{k}\delta Q_{k}-F_{u}\delta u=\sum\frac{\partial W_{e}}{\partial Q_{k}}\delta Q_{k}+\frac{\partial W_{e}}{\partial u}\delta u.\label{eq:g1.117}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在实验一中，装置与外界电源隔离。电极上的电荷总量不变，即 
+\begin_inset Formula $\delta Q_{k}=0$
+\end_inset
+
+，因此给出
+\begin_inset Formula 
+\begin{align}
+ & F_{u}=-\frac{\partial W_{e}}{\partial u}.\label{eq:g1.118}\\
+ & C_{\omega}=-\frac{\partial W_{e}}{\partial\theta}.\label{eq:g1.119}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{\omega}$
+\end_inset
+
+ 表示绕旋转轴 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 的力矩。求偏导时，保持 electric state variable（电极上的电荷）不变。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在实验二中，把装置连接到 恒压源，电极上的电势 
+\begin_inset Formula $V_{k}$
+\end_inset
+
+ 保持不变，而电极上的电荷可能会变化 
+\begin_inset Formula $\delta Q_{k}$
+\end_inset
+
+。现在，更适合用系统的共能（coenergy）去分析。
+\begin_inset Formula 
+\begin{align}
+ & \sum V_{k}\delta Q_{k}-\sum\delta\left(V_{k}Q_{k}\right)-F_{u}\delta u=\delta W_{e}-\sum\delta\left(V_{k}Q_{k}\right).\label{eq:g1.120}\\
+\Rightarrow & -\sum Q_{k}\delta V_{k}-F_{u}\delta u=-\delta W_{c}=-\sum\frac{\partial W_{c}}{\partial V_{k}}\delta V_{k}-\frac{\partial W_{c}}{\partial u}\delta u.\label{eq:g1.121}
+\end{align}
+
+\end_inset
+
+现在，力和力矩可以用 共能 的偏导表示，
+\begin_inset Formula 
+\begin{align}
+ & F_{u}=\frac{\partial W_{c}}{\partial u},\label{eq:g1.122}\\
+ & C_{\omega}=\frac{\partial W_{c}}{\partial\theta}.\label{eq:g1.123}
+\end{align}
+
+\end_inset
+
+求偏导时保持 electric state variable（电极上的电压）不变。
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+page 20/36;
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial W_{c}}{\partial v_{i}}=-\iint D\cdot\mathrm{grad}\varphi_{i}h\dd{x}\dd{y}-\iint\rho\varphi_{i}h\dd{x}\dd{y}=0\quad\text{for}\quad i=1,2,\cdots,N_{L}\label{eq:g1.52-1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ 表示节点上的值，一共有 
+\begin_inset Formula $N_{L}$
+\end_inset
+
+个。
+\end_layout
+
+\begin_layout Plain Layout
+page 14/30;
+\begin_inset Formula 
+\begin{equation}
+W_{c}=\iint\left[\int_{0}^{-\nabla v}D\dd{E}-\rho v\right]h\dd{x}\dd{y}\label{eq:g1.35-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+当电极上的电势保持常数时，coenergy 的有限元近似只是位移 
+\begin_inset Formula $u$
+\end_inset
+
+ 的函数，或者通过 
+\color blue
+节点的坐标直接依赖
+\color inherit
+，或者通过 
+\color brown
+节点电势间接依赖
+\color inherit
+：
+\begin_inset Formula 
+\begin{equation}
+W_{c}=W_{c}\left[{\color{brown}v_{1}(u),v_{2}(u),\cdots,v_{N_{L}}(u)},{\color{blue}u}\right]=W_{c}(u).\label{eq:g1.126}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+F_{u}=\frac{\dd{W_{c}}}{\dd{u}}=\sum_{j=1}^{N_{L}}\frac{\partial W_{c}}{\partial v_{j}}\frac{\dd{v_{j}}}{\dd{u}}+\frac{\partial W_{c}}{\partial u}.\label{eq:g1.127}
+\end{equation}
+
+\end_inset
+
+根据
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:g1.52-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，共能对 节点电势的偏导为零，因此
+\begin_inset Formula 
+\begin{equation}
+F_{u}=\frac{\partial W_{c}}{\partial u}.\label{eq:g1.128}
+\end{equation}
+
+\end_inset
+
+求偏导时保持 节点电势不变。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/Gerard-1.11.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是刚体单元。空心节点表示能够运动。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -3602,7 +3848,132 @@ N_{i}^{e(2)}=N_{i}^{e(1)}-\frac{1}{2}\sum_{g}N_{g}^{(2)}.
 \end_layout
 
 \begin_layout Section
+雅可比矩阵等式
+\end_layout
+
+\begin_layout Standard
+三维直角坐标系的雅可比矩阵为：
+\begin_inset Formula 
+\[
+\left[J\right]=\left[\begin{array}{ccc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}\\
+\frac{\partial x}{\partial\zeta} & \frac{\partial y}{\partial\zeta} & \frac{\partial z}{\partial\zeta}
+\end{array}\right]=-\left[\begin{array}{ccc}
+x_{12} & y_{12} & z_{12}\\
+x_{13} & y_{13} & z_{13}\\
+x_{14} & y_{14} & z_{14}
+\end{array}\right].
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $x_{12}=x_{1}-x_{2}$
+\end_inset
+
+，其他类似。其逆矩阵为
+\begin_inset Formula 
+\[
+\left[J^{-1}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
+b_{2} & b_{3} & b_{4}\\
+c_{2} & c_{3} & c_{4}\\
+d_{2} & d_{3} & d_{4}
+\end{array}\right].
+\]
+
+\end_inset
+
+等参坐标 和 几何坐标 之间的变换关系为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+1\\
+x\\
+y\\
+z
+\end{array}\right]=\left[\begin{array}{cccc}
+1 & 1 & 1 & 1\\
+x_{1} & x_{2} & x_{3} & x_{4}\\
+y_{1} & y_{2} & y_{3} & y_{4}\\
+z_{1} & z_{2} & z_{3} & z_{4}
+\end{array}\right]\left[\begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}\\
+L_{4}^{e}
+\end{array}\right],\quad\left[\begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}\\
+L_{4}^{e}
+\end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{cccc}
+a_{1} & b_{1} & c_{1} & d_{1}\\
+a_{2} & b_{2} & c_{2} & d_{2}\\
+a_{3} & b_{3} & c_{3} & d_{3}\\
+a_{4} & b_{4} & c_{4} & d_{4}
+\end{array}\right]\left[\begin{array}{c}
+1\\
+x\\
+y\\
+z
+\end{array}\right]
+\]
+
+\end_inset
+
+简记为：
+\begin_inset Formula 
+\begin{align*}
+ & X_{\alpha}=T_{\alpha\beta}L_{\beta},\quad L_{\alpha}=T_{\alpha\beta}^{-1}X_{\beta}\\
+ & X=\left[\begin{array}{c}
+1\\
+x\\
+y\\
+z
+\end{array}\right],\quad L=\left[\begin{array}{c}
+1-\xi-\eta-\zeta\\
+\xi\\
+\eta\\
+\zeta
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\nabla L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha j}\sbf e_{j}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial\det[J]}{\partial r_{\alpha j}}={\color{blue}M_{\alpha j}}=\det[J]\,\partial_{j}L_{\alpha}^{e}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{ij}^{-1}}{\partial\sbf r_{\beta}}=-\partial_{i}L_{\beta}^{e}\sbf e_{k}J_{kj}^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 有限元中的Galerkin 方法
+\end_layout
+
+\begin_layout Standard
+FEM-Gerard;p45/61;sec 1.3.11
 \end_layout
 
 \begin_layout Standard
@@ -4707,6 +5078,30 @@ noprefix "false"
 
 \begin_layout Section
 各种自由度记号
+\end_layout
+
+\begin_layout Enumerate
+AXIS2：表示轴对称系统，取柱坐标系计算。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+NdNum()；节点数目。
+\end_layout
+
+\begin_layout Enumerate
+DofNum()：自由度数目，取决于体系，例如每个单元中，自由度就是节点上的电势。
+\end_layout
+
+\begin_layout Enumerate
+GSNum()，GsNumKe()，GsNumFe()，GsNumVe()：高斯点数目；对于阶数不同的多项式，需要的采样点数目不同，因此 Gauss
+ 点数目可能不同。
 \end_layout
 
 \begin_layout Standard
