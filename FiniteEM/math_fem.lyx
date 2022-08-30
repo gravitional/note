@@ -1625,19 +1625,208 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}.
-\]
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+g1 = Plot[x^(3/5), {x, 0, 5} , AxesLabel -> {"D", "E"} , ImageSize -> Small];
+ g2 = Plot[Log[x + 1], {x, 0, 5} , AxesLabel -> {"Q", "U"} , ImageSize ->
+ Small]; GraphicsRow[{g1, g2}]
+\end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/capacitance-curve.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $E-D$
+\end_inset
+
+曲线与
+\begin_inset Formula $U-Q$
+\end_inset
+
+曲线，静电能的等价表示形式为
+\begin_inset Formula $\delta w=E\delta D$
+\end_inset
+
+，
+\begin_inset Formula $\delta w=U\delta Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+follow XuLei，两张图中，曲线上的点是一一对应的，根据对应关系有：
 \begin_inset Formula 
 \begin{align*}
-\delta W & =\int\sbf E\cdot\delta\sbf D\dd[3]{x}\\
- & =\frac{1}{2}V_{i}\delta Q_{i}=\frac{1}{2}V_{i}C_{ij}\delta V_{j}
+\frac{1}{2}\delta\sbf E\cdot\delta\sbf D & =\frac{1}{2}\delta U\delta fQ\\
+ & =\frac{1}{2}\delta U\;C\delta U
 \end{align*}
+
+\end_inset
+
+假设由边值问题
+\begin_inset Formula $\alpha$
+\end_inset
+
+，求解出了电场结果 
+\begin_inset Formula $\beta$
+\end_inset
+
+。在确定的几何点
+\begin_inset Formula $P$
+\end_inset
+
+，和电场 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 下，
+\begin_inset Formula $\epsilon=\partial D/\partial E$
+\end_inset
+
+，
+\begin_inset Formula $C=\partial Q/\partial U$
+\end_inset
+
+ 都是确定的。这时候作完全线性化，完全按照线性系统处理，取 
+\begin_inset Formula $\delta U=\SI{1}{V}$
+\end_inset
+
+，给出
+\begin_inset Formula 
+\[
+C=\delta\sbf E\cdot\delta\sbf D.
+\]
+
+\end_inset
+
+这个式子的含义是：
+\end_layout
+
+\begin_layout Enumerate
+体系此时的电容，可以由 
+\begin_inset Formula $\delta U=\SI{1}{V}$
+\end_inset
+
+ 条件定出的电场得到；
+\end_layout
+
+\begin_layout Enumerate
+在使用 Galerkin 方程计算过程中，认定 
+\begin_inset Formula $\epsilon=\partial D/\partial E$
+\end_inset
+
+ 为常数，
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的每一几何点的具体值，由之前边值问题的解 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 提供；材料性质的影响体现在此处。
+\end_layout
+
+\begin_layout Enumerate
+而 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+与 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 的关系，由材料在当前 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 下的电介质数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 决定。非线性材料的 电介质数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 与 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 的关系可能比较复杂，但在当前一点可以当成常数。
+\end_layout
+
+\begin_layout Enumerate
+并且对于多导体系统，还类似地定义电容矩阵：
+\begin_inset Formula 
+\[
+C_{ij}=\frac{1}{\delta U_{i}\delta U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega},
+\]
+
+\end_inset
+
+积分区域是全系统空间，实际上还取了 
+\begin_inset Formula $\delta U_{i}=\delta U_{j}=\SI{1}{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+体系的电容 
+\begin_inset Formula $C$
+\end_inset
+
+ 与体系的几何构型，以及材料的电介质数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 相关。以上方法实际上就是：
+\color blue
+在点的局域上，把 非线性材料 权当成 线性材料 处理
+\color inherit
+。线性材料的互容矩阵实际上就是
+\begin_inset Formula 
+\[
+C_{ij}=\frac{1}{U_{i}U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega}.
+\]
 
 \end_inset
 
