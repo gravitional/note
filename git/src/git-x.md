@@ -45,16 +45,18 @@ Git 提供了一个叫做 `git config` 的工具, 专门用来配置或读取相
 
 + 用户信息配置
 
-第一个要配置的是你个人的用户名称和电子邮件地址,说明是谁提交了更新, 会随更新内容一起被永久纳入历史记录:
+第一个要配置的是你个人的用户名称和电子邮件地址,
+说明是谁提交了更新, 会随更新内容一起被永久纳入历史记录:
 
 ```bash
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@example.com
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
 ```
 
 + 文本编辑器配置
 
-接下来要设置的是默认使用的文本编辑器. `Git` 需要你输入一些额外消息的时候, 会自动调用一个外部文本编辑器给你用.
+接下来要设置的是默认使用的文本编辑器. 
+`Git` 需要你输入一些额外消息的时候, 会自动调用一个外部文本编辑器给你用.
 如果你有其他偏好, 比如 `Emacs` 的话, 可以重新设置:
 
 ```bash

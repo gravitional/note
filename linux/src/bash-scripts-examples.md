@@ -46,6 +46,26 @@ done
 IFS=$SAVEIFS
 ```
 
+## 自动合并归档
+
+```bash
+#!/usr/bin/env bash
+
+cd ~/Download
+dir="manga$(date +%m%d)"
+mkdir $dir
+mv -i *.zip *.mht $dir
+# 移动文件
+mv -i $dir ~/1haha
+cd  ~/1haha/"$dir"
+cp  ~/1haha/unzip.sh  ~/1haha/perl_rename.sh .
+# 解压,压缩,重命名
+bash perl_rename.sh
+bash unzip.sh
+rm *.zip unzip.sh perl_rename.sh
+cd ..
+```
+
 ## eps to pdf converter
 
 ```bash

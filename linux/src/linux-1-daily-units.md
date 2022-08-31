@@ -10,7 +10,8 @@
 安装和启动 `Dash to Panel` 扩展会禁用 Ubuntu Dock,因此你无需执行其它任何操作.
 你可以从 extensions.gnome.org 来安装 [Dash to Panel](https://extensions.gnome.org/extension/1160/dash-to-panel/).
 
-如果你改变主意并希望重新使用 Ubuntu Dock,那么你可以使用 Gnome Tweaks 应用程序禁用 Dash to Panel,或者通过单击以下网址旁边的 X 按钮完全移除 `Dash to Panel`: https://extensions.gnome.org/local/ .
+如果你改变主意并希望重新使用 Ubuntu Dock,
+那么你可以使用 Gnome Tweaks 应用程序禁用 Dash to Panel,或者通过单击以下网址旁边的 X 按钮完全移除 `Dash to Panel`: https://extensions.gnome.org/local/ .
 
 ## oh-my-zsh
 
@@ -62,7 +63,8 @@ git pull
 
 ## Powerline 状态条
 
-`Powerline` 是一个极棒的 `Vim` 编辑器的状态行插件,这个插件是使用 Python 开发的,主要用于显示状态行和提示信息,适用于很多软件,比如 `bash`, `zsh`, `tmux` 等等.
+`Powerline` 是一个极棒的 `Vim` 编辑器的状态行插件,这个插件是使用 Python 开发的,
+主要用于显示状态行和提示信息,适用于很多软件,比如 `bash`, `zsh`, `tmux` 等等.
 [使用Powerline为VIM和Bash注入强劲动力](https://linux.cn/article-8118-1.html)
 
 首次安装`pip`,即python包管理器,在 Debian, Ubuntu 和 Linux Mint 中安装 `pip`
@@ -79,7 +81,8 @@ pip3 install git+git://github.com/powerline/powerline
 
 ### 安装 Powerline 的字体
 
-`Powerline` 使用特殊的符号来为开发者显示特殊的箭头效果和符号内容.因此你的系统中必须要有符号字体或者补丁过的字体.
+`Powerline` 使用特殊的符号来为开发者显示特殊的箭头效果和符号内容.
+因此你的系统中必须要有符号字体或者补丁过的字体.
 通过下面的 `wget` 命令下载最新的系统字体及字体配置文件.
 
 ```bash
@@ -87,7 +90,8 @@ wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.ot
 wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
 ```
 
-然后你将下载的字体放到字体目录下 `/usr/share/fonts` 或者 `/usr/local/share/fonts`,或者你可以通过 `xset q` 命令找到一个有效的字体目录.
+然后你将下载的字体放到字体目录下 `/usr/share/fonts` 或者 `/usr/local/share/fonts`,
+或者你可以通过 `xset q` 命令找到一个有效的字体目录.
 
 ```bash
 mv PowerlineSymbols.otf /usr/share/fonts/
@@ -160,9 +164,11 @@ pip3 install --user tldr
 `X`窗口系统(使GUI工作的底层引擎)内建了一种机制,支持快速拷贝和粘贴技巧.
 
 按下鼠标左键,沿着文本拖动鼠标(或者双击一个单词)高亮了一些文本,
-那么这些高亮的文本就被拷贝到了一个由X管理的缓冲区里面.然后按下鼠标中键,这些文本就被粘贴到光标所在的位置.
+那么这些高亮的文本就被拷贝到了一个由X管理的缓冲区里面.
+然后按下鼠标中键,这些文本就被粘贴到光标所在的位置.
 
->`ctrl-c` and `ctrl-v`,这两个控制代码对于Shell 有不同的含义,它们在早于Microsoft Windows许多年之前就赋予了不同的意义.
+>`ctrl-c` and `ctrl-v`,这两个控制代码对于Shell 有不同的含义,
+>它们在早于Microsoft Windows许多年之前就赋予了不同的意义.
 
 可以把聚焦策略设置为"跟随鼠标",这样鼠标移动到的窗口,就可以接受输入
 
@@ -245,7 +251,9 @@ shell: [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh)
 themes: [vimix-gtk-themes](https://github.com/vinceliuice/vimix-gtk-themes)
 icon: [vimix-icon-theme/](https://github.com/vinceliuice/vimix-icon-theme/)
 
-`sudo apt install gnome-shell-extensions`
+```bash
+sudo apt install gnome-shell-extensions
+```
 
 extensions: `Blyr `,`Dash to panel`,`User themes`,`openweather`
 
