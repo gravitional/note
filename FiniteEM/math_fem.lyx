@@ -1271,7 +1271,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Chapter
-电动力学
+静电场
 \end_layout
 
 \begin_layout Section
@@ -3551,6 +3551,14 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 
 \end_layout
 
+\begin_layout Chapter
+形函数
+\end_layout
+
+\begin_layout Section
+等参单元形函数
+\end_layout
+
 \begin_layout Standard
 下面附上一些常用的等参单元的 shape function。
 \end_layout
@@ -3744,10 +3752,11 @@ N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3
 \end_layout
 
 \begin_layout Section
-形函数-XuLei
+二维形函数二阶
 \end_layout
 
 \begin_layout Standard
+XuLei：
 \begin_inset Formula 
 \begin{align*}
  & N_{1}^{(2)}=\left(1-\xi-\eta\right)\left(1-2\xi-2\eta\right)\\
@@ -3760,10 +3769,6 @@ N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 与一阶单元形函数 
 \begin_inset Formula $N^{e(1)}$
 \end_inset
@@ -3840,6 +3845,71 @@ N_{i}^{e(2)}=N_{i}^{e(1)}-\frac{1}{2}\sum_{g}N_{g}^{(2)}.
 
 \end_layout
 
+\begin_layout Section
+三维形函数
+\end_layout
+
+\begin_layout Standard
+三维 四面体有限元 四个顶点的一阶 形函数定义为：
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=\frac{V_{1}}{V^{e}},\quad N_{2}^{(1)}=\frac{V_{2}}{V^{e}},\quad N_{3}^{(1)}=\frac{V_{3}}{V^{e}},\quad N_{4}^{(1)}=\frac{V_{4}}{V^{e}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+V^{e}=\frac{1}{6}\det\left[\begin{array}{cccc}
+1 & x_{1}^{e} & y_{1}^{e} & z_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e} & z_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e} & z_{3}^{e}\\
+1 & x_{4}^{e} & y_{4}^{e} & z_{4}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+仿照二维情况，可以计算出 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+。例如
+\begin_inset Formula 
+\[
+V_{1}=\frac{1}{6}\det\left[\begin{array}{cccc}
+1 & x & y & z\\
+1 & x_{2}^{e} & y_{2}^{e} & z_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e} & z_{3}^{e}\\
+1 & x_{4}^{e} & y_{4}^{e} & z_{4}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+三维形函数等参坐标取值范围 
+\begin_inset Formula $\xi,\eta,\zeta\in\left[0,1\right]$
+\end_inset
+
+，一阶形函数可以用等参坐标表示为：
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=1-\xi-\eta-\zeta\\
+ & N_{2}^{(1)}=\xi\\
+ & N_{3}^{(1)}=\eta\\
+ & N_{4}^{(1)}=\zeta
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -3847,44 +3917,8 @@ N_{i}^{e(2)}=N_{i}^{e(1)}-\frac{1}{2}\sum_{g}N_{g}^{(2)}.
 
 \end_layout
 
-\begin_layout Section
-雅可比矩阵等式
-\end_layout
-
-\begin_layout Standard
-三维直角坐标系的雅可比矩阵为：
-\begin_inset Formula 
-\[
-\left[J\right]=\left[\begin{array}{ccc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
-\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}\\
-\frac{\partial x}{\partial\zeta} & \frac{\partial y}{\partial\zeta} & \frac{\partial z}{\partial\zeta}
-\end{array}\right]=-\left[\begin{array}{ccc}
-x_{12} & y_{12} & z_{12}\\
-x_{13} & y_{13} & z_{13}\\
-x_{14} & y_{14} & z_{14}
-\end{array}\right].
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $x_{12}=x_{1}-x_{2}$
-\end_inset
-
-，其他类似。其逆矩阵为
-\begin_inset Formula 
-\[
-\left[J^{-1}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
-b_{2} & b_{3} & b_{4}\\
-c_{2} & c_{3} & c_{4}\\
-d_{2} & d_{3} & d_{4}
-\end{array}\right].
-\]
-
-\end_inset
-
-等参坐标 和 几何坐标 之间的变换关系为：
+\begin_layout Example
+等参坐标 和 几何坐标 之间的变换关系，正变换为：
 \begin_inset Formula 
 \[
 \left[\begin{array}{c}
@@ -3907,6 +3941,28 @@ L_{1}^{e}\\
 L_{2}^{e}\\
 L_{3}^{e}\\
 L_{4}^{e}
+\end{array}\right]=\left[\begin{array}{c}
+1-\xi-\eta-\zeta\\
+\xi\\
+\eta\\
+\zeta
+\end{array}\right]
+\]
+
+\end_inset
+
+这里按照常用的记号约定，也引入了 
+\begin_inset Formula $L_{i}^{e}$
+\end_inset
+
+ 表示等参坐标。对应的 逆变换 为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}\\
+L_{4}^{e}
 \end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{cccc}
 a_{1} & b_{1} & c_{1} & d_{1}\\
 a_{2} & b_{2} & c_{2} & d_{2}\\
@@ -3922,29 +3978,661 @@ z
 
 \end_inset
 
+其中各系数的值为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+b_{1} & c_{1} & d_{1}\\
+b_{2} & c_{2} & d_{2}\\
+b_{3} & c_{3} & d_{3}\\
+b_{4} & c_{4} & d_{4}
+\end{array}\right]=\left[\begin{array}{ccc}
+y_{42}z_{32}-y_{32}z_{42} & x_{32}z_{42}-x_{42}z_{32} & x_{42}y_{32}-x_{32}y_{42}\\
+y_{31}z_{43}-y_{34}z_{13} & x_{43}z_{31}-x_{31}z_{43} & x_{31}y_{43}-x_{43}y_{31}\\
+y_{24}z_{14}-y_{14}z_{24} & x_{14}z_{24}-x_{24}z_{14} & x_{24}y_{14}-x_{14}y_{24}\\
+y_{13}z_{21}-y_{21}z_{13} & x_{21}z_{13}-x_{13}z_{21} & x_{13}y_{21}-x_{21}y_{13}
+\end{array}\right]
+\]
+
+\end_inset
+
+第一列的值为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+a_{1}\\
+a_{2}\\
+a_{3}\\
+a_{4}
+\end{array}\right]=\left[\begin{array}{c}
+x_{2}\left(y_{3}z_{4}-y_{4}z_{3}\right)+x_{3}\left(y_{4}z_{2}-y_{2}z_{4}\right)+x_{4}\left(y_{2}z_{3}-y_{3}z_{2}\right)\\
+x_{1}\left(y_{4}z_{3}-y_{3}z_{4}\right)+x_{3}\left(y_{1}z_{4}-y_{4}z_{1}\right)+x_{4}\left(y_{3}z_{1}-y_{1}z_{3}\right)\\
+x_{1}\left(y_{2}z_{4}-y_{4}z_{2}\right)+x_{2}\left(y_{4}z_{1}-y_{1}z_{4}\right)+x_{4}\left(y_{1}z_{2}-y_{2}z_{1}\right)\\
+x_{1}\left(y_{3}z_{2}-y_{2}z_{3}\right)+x_{2}\left(y_{1}z_{3}-y_{3}z_{1}\right)+x_{3}\left(y_{2}z_{1}-y_{1}z_{2}\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\det\left[J\right]=6V^{e}=x_{21}\left(y_{23}z_{34}-y_{34}z_{23}\right)+x_{32}\left(y_{34}z_{12}-y_{12}z_{34}\right)+x_{43}\left(y_{12}z_{23}-y_{23}z_{12}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+由坐标的逆变换矩阵，可以计算形函数的梯度
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\nabla L_{1}^{e}\\
+\nabla L_{2}^{e}\\
+\nabla L_{3}^{e}\\
+\nabla L_{4}^{e}
+\end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
+b_{1} & c_{1} & d_{1}\\
+b_{2} & c_{2} & d_{2}\\
+b_{3} & c_{3} & d_{3}\\
+b_{4} & c_{4} & d_{4}
+\end{array}\right]\left[\begin{array}{c}
+\sbf e_{x}\\
+\sbf e_{y}\\
+\sbf e_{z}
+\end{array}\right]
+\]
+
+\end_inset
+
+约定：
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M=\left[b_{i},c_{i},d_{i}\right]$
+\end_inset
+
+矩阵；希腊字母表示
+\begin_inset Formula $\{1,2,3,4\}$
+\end_inset
+
+，对应节点数；
+\end_layout
+
+\begin_layout Enumerate
+拉丁字母表示 
+\begin_inset Formula $\{1,2,3\}$
+\end_inset
+
+，对应三维空间坐标
+\begin_inset Formula $x,y,z$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Standard
+则 
+\begin_inset Formula $\nabla L^{e}$
+\end_inset
+
+ 的各分量形式为：
+\begin_inset Formula 
+\begin{equation}
+\partial_{i}L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha i}}\label{eq:shapeGrad}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+雅可比矩阵等式
+\end_layout
+
+\begin_layout Example
+从几何坐标和等参坐标的变换矩阵，可以计算出在三维直角坐标系中，雅可比矩阵为：
+\begin_inset Formula 
+\begin{equation}
+\left[J\right]=\left[\begin{array}{ccc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}\\
+\frac{\partial x}{\partial\zeta} & \frac{\partial y}{\partial\zeta} & \frac{\partial z}{\partial\zeta}
+\end{array}\right]=-\left[\begin{array}{ccc}
+x_{12} & y_{12} & z_{12}\\
+x_{13} & y_{13} & z_{13}\\
+x_{14} & y_{14} & z_{14}
+\end{array}\right].\label{eq:jacobi3d}
+\end{equation}
+
+\end_inset
+
+其中记号约定为： 
+\begin_inset Formula $x_{12}=x_{1}-x_{2}$
+\end_inset
+
+，其他类似。雅可比矩阵的逆矩阵为
+\begin_inset Formula 
+\[
+\left[J^{-1}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
+b_{2} & b_{3} & b_{4}\\
+c_{2} & c_{3} & c_{4}\\
+d_{2} & d_{3} & d_{4}
+\end{array}\right].
+\]
+
+\end_inset
+
 简记为：
 \begin_inset Formula 
 \begin{align*}
- & X_{\alpha}=T_{\alpha\beta}L_{\beta},\quad L_{\alpha}=T_{\alpha\beta}^{-1}X_{\beta}\\
- & X=\left[\begin{array}{c}
-1\\
-x\\
-y\\
-z
-\end{array}\right],\quad L=\left[\begin{array}{c}
-1-\xi-\eta-\zeta\\
-\xi\\
-\eta\\
-\zeta
+ & X_{\alpha}=T_{\alpha\beta}L_{\beta},\\
+ & L_{\alpha}=T_{\alpha\beta}^{-1}X_{\beta}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $X=\left(1,x,y,z\right),$
+\end_inset
+
+
+\begin_inset Formula $L=\left(1-\xi-\eta-\zeta,\xi,\eta,\zeta\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+令 
+\begin_inset Formula $r_{\alpha j}$
+\end_inset
+
+ 表示四面体单元中，节点的坐标矩阵，
+\begin_inset Formula 
+\[
+r_{\alpha j}=\left[\begin{array}{ccc}
+x_{1} & y_{1} & z_{1}\\
+x_{2} & y_{2} & z_{2}\\
+x_{3} & y_{3} & z_{3}\\
+x_{4} & y_{4} & z_{4}
 \end{array}\right]
+\]
+
+\end_inset
+
+根据 雅可比矩阵 的表达式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可以计算出：
+\begin_inset Formula 
+\[
+\frac{\partial\det[J]}{\partial r_{\alpha j}}={\color{blue}M_{\alpha j}},\quad{\color{blue}M_{\alpha j}}=\left[\begin{array}{ccc}
+b_{1} & c_{1} & d_{1}\\
+b_{2} & c_{2} & d_{2}\\
+b_{3} & c_{3} & d_{3}\\
+b_{4} & c_{4} & d_{4}
+\end{array}\right]
+\]
+
+\end_inset
+
+ 考虑到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:shapeGrad"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，因此有
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\det[J]}{\partial r_{\alpha j}}=\det[J]\,\partial_{j}L_{\alpha}^{e}\label{eq:xl6.7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，计算出雅可比逆矩阵的偏导
+\begin_inset Formula 
+\[
+\frac{\partial[J^{-1}]}{\partial\sbf r_{\alpha}}=-[J^{-1}]\frac{\partial J}{\partial\sbf r_{\alpha}}[J^{-1}]=-\frac{1}{\det[J]}\left[\begin{array}{c}
+b_{\alpha}\\
+c_{\alpha}\\
+d_{\alpha}
+\end{array}\right]\left[\begin{array}{ccc}
+\sbf e_{x} & \sbf e_{y} & \sbf e_{z}\end{array}\right][J^{-1}]
+\]
+
+\end_inset
+
+同样引入 节点坐标矩阵 
+\begin_inset Formula $r_{\alpha j}=\left[\begin{array}{ccc}
+x_{1} & y_{1} & z_{1}\\
+x_{2} & y_{2} & z_{2}\\
+x_{3} & y_{3} & z_{3}\\
+x_{4} & y_{4} & z_{4}
+\end{array}\right]$
+\end_inset
+
+，可以写成分量形式
+\begin_inset Formula 
+\begin{align}
+\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}=-\partial_{k}L_{\alpha}^{e}\;J_{ij}^{-1}.\label{eq:xl6.8}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+推导是在三维直角坐标系中进行的，即
+\begin_inset Formula 
+\[
+\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}\sbf e_{i}=-\partial_{k}L_{\alpha}^{e}\;\sbf e_{i}J_{ij}^{-1},\quad\sbf e_{i}=(\sbf e_{x},\sbf e_{y},\sbf e_{z}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+有限元下计算电磁力
+\end_layout
+
+\begin_layout Section
+虚功法计算磁力
+\end_layout
+
+\begin_layout Standard
+假设导线中的电流从 
+\begin_inset Formula $0$
+\end_inset
+
+ 开始，在时间
+\begin_inset Formula $t$
+\end_inset
+
+的时候达到 
+\begin_inset Formula $I$
+\end_inset
+
+。那么在这个过程中，导线中存储的此能为：
+\begin_inset Formula 
+\begin{equation}
+\mathcal{U}=-\int_{0}^{t}\mathcal{E}I\dd{t'}=-\int_{0}^{t}\frac{\dd{\Psi}}{\dd{t'}}I\dd{t'}=\int_{0}^{\Psi}I\dd{\Psi}.\label{eq:x6.1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+螺旋与磁通成右手螺旋。
+\end_layout
+
+\begin_layout Standard
+此外通过场源关系，磁能也可以表示成：
+\begin_inset Formula 
+\[
+\mathcal{U}=\int_{\Omega}\left[\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right]\dd{\Omega}
+\]
+
+\end_inset
+
+是用与线性和非线性情况，不包括永磁体材料。
+\end_layout
+
+\begin_layout Standard
+根据磁能还可以定义 磁共能（coenergy）：
+\begin_inset Formula 
+\[
+\mathcal{U}_{\text{co}}=I\Psi-\mathcal{U}=\int_{0}^{I}\Psi\dd{I'}
+\]
+
+\end_inset
+
+在坐标平面上，具有明显的几何意义；
+\begin_inset Formula $\mathcal{U}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\mathcal{U}_{\text{co}}$
+\end_inset
+
+ 分别对应 
+\begin_inset Formula $I$
+\end_inset
+
+–
+\begin_inset Formula $\Psi$
+\end_inset
+
+ 曲线两侧的面积。
+\begin_inset Formula $\mathcal{U}_{\text{co}}$
+\end_inset
+
+ 同样可以用场表示成
+\begin_inset Formula 
+\[
+\mathcal{U}_{\text{co}}=\int_{\Omega}\sbf H\cdot\sbf B\dd{\Omega}-\mathcal{U}=\int_{\Omega}\left(\int_{0}^{H}\sbf B\cdot\dd{\sbf H'}\right)\dd{\Omega}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据使用 磁能 
+\begin_inset Formula $\mathcal{U}$
+\end_inset
+
+ 还是 磁共能 
+\begin_inset Formula $\mathcal{U}_{\text{co}}$
+\end_inset
+
+的计算思路，还有取 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ 或 
+\begin_inset Formula $I$
+\end_inset
+
+ 作为 
+\begin_inset Formula $x$
+\end_inset
+
+ 之外的独立变量，可以得到磁力的四种表达式：
+\begin_inset Formula 
+\begin{align*}
+F & =-\frac{\partial\mathcal{U}\left(\Psi,x\right)}{\partial x}\\
+ & =-\frac{\partial\mathcal{U}\left(I,x\right)}{\partial x}+I\frac{\partial\Psi\left(I,x\right)}{\partial x}\\
+ & =\frac{\partial\mathcal{U}_{\text{co}}\left(\Psi,x\right)}{\partial x}-\Psi\frac{\partial I\left(\Psi,x\right)}{\partial x}\\
+ & =\frac{\partial\mathcal{U}_{\text{co}}\left(I,x\right)}{\partial x}
 \end{align*}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+计算磁力
+\end_layout
+
+\begin_layout Standard
+在有限元框架下，通过场的形式，将磁能表示成：
+\begin_inset Formula 
+\begin{align}
+\mathcal{U} & =\sum_{e}\int_{\Omega^{e}}\left(\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right)\dd{\Omega},\nonumber \\
+\mathcal{U}_{\text{co}} & =\sum_{e}\int_{\Omega^{e}}\left[\sbf H\cdot\sbf B-\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right]\dd{\Omega}.\label{eq:fem-uco}
+\end{align}
+
+\end_inset
+
+节点 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 上的磁力，可以表示成 磁共能 
+\begin_inset Formula $\mathcal{U}_{\text{co}}$
+\end_inset
+
+ 对节点 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的坐标的导数（保持激励 
+\begin_inset Formula $I$
+\end_inset
+
+ 不变）：
 \begin_inset Formula 
 \[
-\nabla L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha j}\sbf e_{j}}
+\sbf F_{\alpha}=-\frac{\partial\mathcal{U}_{\text{co}}(I,x)}{\partial\sbf r_{\alpha}}
+\]
+
+\end_inset
+
+考虑到微分
+\begin_inset Formula $\dd{\Omega}=\dd{x}\dd{y}\dd{z}=\det[J]\dd{\xi}\dd{\eta}\dd{\zeta}$
+\end_inset
+
+，记 
+\begin_inset Formula $\dd{\hat{\Omega}}=\dd{\xi}\dd{\eta}\dd{\zeta}$
+\end_inset
+
+，则根据磁共能式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fem-uco"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[\big(-\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\big)\frac{\partial\det[J]}{\partial\sbf r_{\alpha}}+\big(\sbf H\cdot\frac{\partial\sbf B}{\partial\sbf r_{\alpha}}\big)\det[J]\right]\dd{\hat{\Omega}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+一方面节点坐标的改变，会影响到积分测度；
+\end_layout
+
+\begin_layout Enumerate
+另一方面，会影响到空间场 
+\begin_inset Formula $\sbf B$
+\end_inset
+
+ 的分布；而 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+只由 
+\begin_inset Formula $I$
+\end_inset
+
+ 决定，是求偏导过程中的不变量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+B_{j}=A_{i}\varepsilon_{jk\ell}\partial_{k}N_{i}^{e}\left(\hat{e}_{z}\right)_{\ell}=\varepsilon_{jk3}\,A_{i}\partial_{k}N_{i}^{e}\label{eq:xl6.11}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\hat{e}_{z}$
+\end_inset
+
+ 是
+\begin_inset Formula $z$
+\end_inset
+
+方向坐标基矢，所以 
+\begin_inset Formula $\left(\hat{e}_{z}\right)_{\ell}=\delta_{z\ell}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+也可以把
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 写成另一种形式，两边同乘 
+\begin_inset Formula $\varepsilon_{jk3}$
+\end_inset
+
+ 得：
+\begin_inset Formula 
+\begin{align*}
+ & \varepsilon_{jk3}A_{i}\partial_{k}N_{i}^{e}=B_{j}\\
+\Rightarrow\quad & \varepsilon_{jk3}\;\varepsilon_{jk3}A_{i}\partial_{k}N_{i}^{e}=\varepsilon_{jk3}\;B_{j}
+\end{align*}
+
+\end_inset
+
+即
+\begin_inset Formula 
+\begin{equation}
+A_{i}\partial_{k}N_{i}^{e}=\varepsilon_{jk3}\,B_{j}\label{eq:xl6.11-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Levi–Civita 符号
+\end_layout
+
+\begin_layout Standard
+ref：
+\begin_inset CommandInset href
+LatexCommand href
+name "Levi-Civita符号"
+target "https://www.zhihu.com/question/445700749"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\varepsilon^{123}=1$
+\end_inset
+
+，上标相同则为零，交换两个指标出负号。有等式：
+\begin_inset Formula 
+\[
+\varepsilon^{abc}\varepsilon^{def}=\left[\begin{array}{ccc}
+\delta^{ad} & \delta^{ae} & \delta^{af}\\
+\delta^{bd} & \delta^{be} & \delta^{bf}\\
+\delta^{cd} & \delta^{ce} & \delta^{cf}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+特殊情况一：单个指标求和，
+\begin_inset Formula 
+\[
+\varepsilon^{abc}\varepsilon^{aef}=\left[\begin{array}{ccc}
+1 & 0 & 0\\
+0 & \delta^{be} & \delta^{bf}\\
+0 & \delta^{ce} & \delta^{cf}
+\end{array}\right]=\left[\begin{array}{cc}
+\delta^{be} & \delta^{bf}\\
+\delta^{ce} & \delta^{cf}
+\end{array}\right]=\delta^{be}\delta^{cf}-\delta^{bf}\delta^{ce}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+特殊情况二：双指标求和，
+\begin_inset Formula 
+\[
+\varepsilon^{abc}\varepsilon^{dbc}=\left[\begin{array}{ccc}
+\delta^{ad} & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{array}\right]=\delta^{ad}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+计算电力
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q=\iint_{S}\sbf E\cdot\dd{\sbf S}=\iiint\rho\dd{V}
 \]
 
 \end_inset
@@ -3952,7 +4640,7 @@ z
 
 \begin_inset Formula 
 \[
-\frac{\partial\det[J]}{\partial r_{\alpha j}}={\color{blue}M_{\alpha j}}=\det[J]\,\partial_{j}L_{\alpha}^{e}
+\mathcal{U}=\int_{0}^{Q}V\dd{Q'}=\int_{\Omega}\left(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\right)\dd{\Omega}
 \]
 
 \end_inset
@@ -3960,12 +4648,255 @@ z
 
 \begin_inset Formula 
 \[
-\frac{\partial J_{ij}^{-1}}{\partial\sbf r_{\beta}}=-\partial_{i}L_{\beta}^{e}\sbf e_{k}J_{kj}^{-1}
+\int_{0}^{\Psi}I\dd{\Psi'}\quad\Leftrightarrow\quad\int_{0}^{Q}V\dd{Q'}
+\]
+
+\end_inset
+
+所以 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ 对应 
+\begin_inset Formula $Q$
+\end_inset
+
+，
+\begin_inset Formula $I$
+\end_inset
+
+ 对应 
+\begin_inset Formula $V$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+\mathcal{U}_{\text{co}} & =VQ-\mathcal{U}=\int_{0}^{V}Q\dd{V'}\\
+ & =\int_{\Omega}\left(\int_{0}^{E}\sbf D\cdot\dd{\sbf E'}\right)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+类似磁力的计算，？？
+\begin_inset Formula 
+\[
+\mathcal{U}=\sum_{e}\int_{\Omega^{e}}{\color{blue}\big(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\big)\det[J]}\dd{\hat{\Omega}}
 \]
 
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[{\color{blue}\big(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\big)\frac{\partial\det[J]}{\partial\sbf r_{\alpha}}}+{\color{brown}\big(\sbf D\cdot\frac{\partial\sbf E}{\partial\sbf r_{\alpha}}\big)\det[J]}\right]\dd{\hat{\Omega}}
+\]
+
+\end_inset
+
+求导时保持 
+\begin_inset Formula $Q$
+\end_inset
+
+ 不变，因此 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+ 不变
+\begin_inset Formula 
+\[
+F_{\alpha}^{e}=-\frac{\partial\mathcal{U}\left(Q,x\right)}{\partial x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $\partial\det[J]/\partial r_{\alpha j}=\det[J]\,\partial_{j}L_{\alpha}^{e}$
+\end_inset
+
+，第一项的贡献表示为，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+{\color{blue}\big(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\big)\partial_{j}L_{\alpha}^{e}\,\dd{\Omega}}
+\]
+
+\end_inset
+
+注意积分测度的变化。
+\begin_inset Formula 
+\[
+F_{\alpha,1}=\big(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\big)\nabla L_{\alpha}^{e}\,\dd{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+再考虑第二项的贡献
+\begin_inset Formula 
+\begin{equation}
+{\color{brown}\big(\sbf D\cdot\frac{\partial\sbf E}{\partial\sbf r_{\alpha}}\big)\det[J]}\Rightarrow D_{i}\frac{\partial E_{i}}{\partial r_{\alpha j}}\,\det[J]\label{eq:e-force2}
+\end{equation}
+
+\end_inset
+
+右边是对应的分量形式。写出 
+\begin_inset Formula $\sbf E=-\nabla\phi$
+\end_inset
+
+ 的分量形式：
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+E_{i}=-\partial_{i}\phi=-{\color{blue}\partial_{i}N_{\beta}^{e}\;\phi_{\beta}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\phi_{\beta}$
+\end_inset
+
+ 是节点上的电势，为常数。将对等参坐标的偏导数记作 
+\begin_inset Formula $\hat{\partial}_{i}=\left(\frac{\partial}{\partial\xi},\frac{\partial}{\partial\eta},\frac{\partial}{\partial\zeta}\right)$
+\end_inset
+
+，考虑雅可比矩阵得
+\begin_inset Formula 
+\[
+E_{i}=-{\color{brown}J_{ik}^{-1}}\;{\color{blue}\hat{\partial}_{k}N_{\beta}^{e}\;\phi_{\beta}}
+\]
+
+\end_inset
+
+其中只有 
+\begin_inset Formula ${\color{brown}J_{ik}^{-1}}$
+\end_inset
+
+ 含有对节点坐标的依赖。代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $\frac{\partial J_{12}^{-1}}{\partial r_{\alpha3}}=-\partial_{1}L_{\alpha}^{e}\;J_{32}^{-1}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial E_{i}}{\partial r_{\alpha j}} & =-({\color{brown}-\partial_{i}L_{\alpha}^{e}\;J_{jk}^{-1}})\,{\color{blue}\hat{\partial}_{k}N_{\beta}^{e}\;\phi_{\beta}}\\
+ & =\partial_{i}L_{\alpha}^{e}\;{\color{blue}J_{jk}^{-1}\,\hat{\partial}_{k}N_{\beta}^{e}\;\phi_{\beta}}\\
+ & ={\color{blue}(-E_{j})}\;\partial_{i}L_{\alpha}^{e}\quad\Rightarrow\frac{\partial\sbf E}{\partial\sbf r_{\alpha}}=-\sbf E\;\nabla L_{\alpha}^{e}
+\end{align*}
+
+\end_inset
+
+因此代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:e-force2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+D_{i}\frac{\partial E_{i}}{\partial r_{\alpha j}}=-E_{j}\;D_{i}\,\partial_{i}L_{\alpha}^{e}
+\]
+
+\end_inset
+
+写成矢量形式是
+\begin_inset Formula 
+\[
+F_{\alpha,2}={\color{brown}\big(\sbf D\cdot\frac{\partial\sbf E}{\partial\sbf r_{\alpha}}\big)\det[J]}\dd{\Omega'}\Rightarrow-\sbf E\,(\sbf D\cdot\nabla L_{\alpha}^{e})\dd{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+dsaf
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F_{\alpha}=\sum_{\langle e\rangle}\int_{\Omega^{e}}\left[\big(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\big)\nabla L_{\alpha}^{e}-\sbf E\,(\sbf D\cdot\nabla L_{\alpha}^{e})\right]\dd{\Omega}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+F_{\alpha} & =\sum_{\langle e\rangle}\int_{\Omega^{e}}\frac{\sbf E\cdot\sbf D}{2}\nabla L_{\alpha}^{e}\dd{\Omega}-\sum_{\langle e\rangle}\int_{\Omega^{e}}\left(\sbf D\cdot\nabla L_{\alpha}^{e}\right)\sbf E\dd{\Omega}\\
+ & +\sum_{\langle e\rangle}\int_{\Omega^{e}}\frac{\sbf B\cdot\sbf H}{2}\nabla L_{\alpha}^{e}\dd{\Omega}-\sum_{\langle e\rangle}\int_{\Omega^{e}}\left(\sbf B\cdot\nabla L_{\alpha}^{e}\right)\sbf H\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+在上面的表达式中，
+\begin_inset Formula $\langle e\rangle$
+\end_inset
+
+ 表示仅对最近邻单元进行求和。将目标区域的节点上的电磁力进行求和，可以得到该目标区域所受到的总的电磁力。
+\end_layout
+
+\begin_layout Standard
+另外根据力矩的计算公式，也可以得到各个节点上所受到的力矩，即
+\begin_inset Formula 
+\[
+\sbf T_{k}=\left(\sbf r_{k}-\sbf r_{0}\right)\times\sbf F_{k}
+\]
+
+\end_inset
+
+ 其中 
+\begin_inset Formula $\sbf r_{0}$
+\end_inset
+
+ 为转轴的坐标，对目标区域的节点上的力矩进行求和，同样可以得到总的电磁力矩。
+\end_layout
+
+\begin_layout Chapter
+有限元矩阵方程
 \end_layout
 
 \begin_layout Section
