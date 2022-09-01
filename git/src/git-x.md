@@ -104,9 +104,11 @@ $ git config --global merge.tool vimdiff
 
 ### windows 图形界面
 
-[git scm book](https://git-scm.com/book/zh/v2/), 附录A: 在其他环境中使用 Git - 图形界面
+[git scm book](https://git-scm.com/book/zh/v2/), 
+附录A: 在其他环境中使用 Git - 图形界面
 
-两个常用的图形工具 `gitk ` and `git-gui`, 安装 Github 客户端, 会提供`git-gui`
+两个常用的图形工具 `gitk ` 和 `git-gui`, 
+安装 Github 客户端, 会提供`git-gui`
 
 `GitHub`客户端将许多操作整合成一个功能, 比如点击同步的时候, 实际上会执行
 
