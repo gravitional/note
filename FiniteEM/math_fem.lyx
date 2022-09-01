@@ -4865,6 +4865,29 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Subsection
+三维电磁力计算
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[\left(-\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right)\nabla L_{\alpha}^{e}-\left(\sbf H\cdot\frac{\partial\sbf B}{\partial\sbf r_{\alpha}}\right)\right]\dd{\Omega}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[\frac{\sbf B\cdot\sbf B}{2\mu_{0}\mu_{r}}\nabla L_{\alpha}^{e}-\frac{\sbf B\left(\nabla L_{\alpha}^{e}\cdot\sbf B\right)}{\mu_{0}\mu_{r}}\right]\dd{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 计算电力
 \end_layout
@@ -6319,7 +6342,335 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-开域边界条件
+电场的开域问题
+\end_layout
+
+\begin_layout Standard
+有限元方法只能处理有限大的空间，因此对于电场的开域问题，需要在边界上施加适当的边界条件来模拟边界的性质。首先根据麦克斯韦方程组，可以得到开域情况下电势满足的积分
+方程：
+\begin_inset Formula 
+\[
+\Phi\left(\sbf r\right)=\frac{1}{4\pi\varepsilon_{0}}\int\dd[3]{r'}\frac{1}{\abs{r-r'}}\left[\rho\left(\sbf r'\right)-\nabla'\cdot\sbf P\left(\sbf r'\right)\right]
+\]
+
+\end_inset
+
+由于源都是局域的，因此在远离源的位置可以做如下展开：
+\begin_inset Formula 
+\[
+\frac{1}{\abs{\sbf r-\sbf r'}}=\frac{1}{\abs{\sbf r}}+\frac{\sbf r\cdot\sbf r'}{\abs{\sbf r}^{3}}+\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+取决于源的分布情况，电势在远离源的位置可能是以 
+\begin_inset Formula $r^{-1}$
+\end_inset
+
+，或 
+\begin_inset Formula $r^{-2}$
+\end_inset
+
+的形式衰减到零。在忽略高阶项的情况下，可以在远离源的位置将电势近似为
+\begin_inset Formula 
+\begin{equation}
+\Phi=\frac{a}{r^{n}},\label{eq:xl2.6}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $a$
+\end_inset
+
+ 是与 
+\begin_inset Formula $r$
+\end_inset
+
+ 无关的量；
+\begin_inset Formula $n$
+\end_inset
+
+ 可以由电荷的分布情况决定，对于同种电荷 
+\begin_inset Formula $n$
+\end_inset
+
+ 一般取
+\begin_inset Formula $1$
+\end_inset
+
+，对于电偶极子
+\begin_inset Formula $n$
+\end_inset
+
+一般取
+\begin_inset Formula $2$
+\end_inset
+
+。在有限元模型边界上可以采用截断法来模拟开域边界，即取 
+\begin_inset Formula $\Phi=0$
+\end_inset
+
+，或 
+\begin_inset Formula $\nabla\Phi=0$
+\end_inset
+
+。两种处理方式分别对应 第一、二类边界条件，理论上的计算精度分别为 
+\begin_inset Formula $\order{r^{-n}}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\order{r^{-n-1}}$
+\end_inset
+
+。另外使用 
+\begin_inset Formula $\nabla\frac{1}{r}=\frac{1}{r^{2}}\sbf e_{r}=\frac{1}{r^{2}}\frac{\sbf r}{r}$
+\end_inset
+
+，从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到： 
+\begin_inset Formula 
+\begin{equation}
+\nabla\Phi=-na\frac{1}{r^{n+1}}\frac{\sbf r}{r}=-n\frac{\Phi}{r}\frac{\sbf r}{r}.\label{eq:xl2.7}
+\end{equation}
+
+\end_inset
+
+如果在边界上采用 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 处理模型边界上的电势，那么理论上的计算精度可以达到 
+\begin_inset Formula $\order{r^{-n-2}}$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示的条件即为 渐近边界条件（Asymptotic boundary condition），对应有限元计算中的第三类边界条件。
+\end_layout
+
+\begin_layout Example
+在泛函积分式(2.2)
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}.\label{eq:xl2.2}
+\end{equation}
+
+\end_inset
+
+中添加一个表面项得到新的泛函积分
+\begin_inset Formula 
+\[
+\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}+\int_{\Gamma}\epsilon_{r}\frac{n}{r}\frac{\Phi\epsilon_{r}\Phi}{2}\dd{\Gamma}.
+\]
+
+\end_inset
+
+对上式做变分可以得到（使用分部积分）
+\begin_inset Formula 
+\[
+\delta\mathcal{F}\left(\Phi\right)=-\int_{\Omega}\left(\nabla\cdot\epsilon_{r}\nabla\Phi+\frac{\rho}{\epsilon_{0}}\right)\delta\Phi\dd{\Omega}+\int_{\Gamma}\left(\sbf e_{n}\cdot\epsilon_{r}\nabla\Phi+\frac{n}{r}\epsilon_{r}\Phi\right)\delta\Phi\dd{\Gamma}.
+\]
+
+\end_inset
+
+从方程中的第二项可得
+\begin_inset Formula 
+\[
+\sbf e_{n}\cdot\nabla\Phi=-n\frac{\Phi}{r}
+\]
+
+\end_inset
+
+即相当于前文的
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $\nabla\Phi=-n\frac{\Phi}{r}\frac{\sbf r}{r}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+对比第三类边界条件的标准形式：
+\begin_inset Formula 
+\[
+\left(\alpha\nabla\Phi\right)\cdot\sbf n=q-\gamma\Phi
+\]
+
+\end_inset
+
+相当于取 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+，
+\begin_inset Formula $q=0$
+\end_inset
+
+，
+\begin_inset Formula $-\gamma=-\frac{n}{r}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于球形边界，垂直边界的矢量 
+\begin_inset Formula $\sbf e_{n}=\frac{\sbf r}{r}$
+\end_inset
+
+，所以
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示的渐近边界条件可以通过在泛函积分中添加相应的表面项来处理。对于非球形边界，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+近似成立。这一项会在原来的 
+\begin_inset Formula $\left[K_{ij}^{e}\right]$
+\end_inset
+
+ 矩阵中增加表面项的贡献
+\begin_inset Formula 
+\begin{equation}
+K_{ij}^{s}=\int_{\Gamma^{e}}\epsilon_{r}\frac{n}{r}N_{i}^{e}N_{j}^{e}\dd{\Gamma}.\label{eq:xl2.8}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于 
+\begin_inset Formula $r$
+\end_inset
+
+ 在球形边界是定值，可以直接提取到积分外面；即使对于非圆形边界，
+\begin_inset Formula $1/r$
+\end_inset
+
+ 在边界处表面单元中变换不大，所以依然可以提到积分号外面。下面分二维，轴对称和三位情况分别计算 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+三维有限元的边界为一平面，采用高斯积分法计算的表达式为
+\begin_inset Formula 
+\[
+K_{ij}^{s}=\epsilon_{r}\frac{n}{r}\Delta^{s}\sum_{\alpha}N_{i}^{s}\left(\xi_{\alpha},\eta_{\alpha}\right)\,N_{j}^{s}\left(\xi_{\alpha},\eta_{\alpha}\right)\,W\left(\xi_{\alpha},\eta_{\alpha}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Delta^{s}$
+\end_inset
+
+ 为边界单元的面积。
+\end_layout
+
+\begin_layout Remark
+ref：郭硕鸿 p63/77
+\begin_inset Formula 
+\[
+f\left(\sbf x-\sbf x'\right)=f\left(\sbf x\right)-\sbf x'\cdot\nabla f@\sbf x+\frac{1}{2!}\left(\sbf x'\cdot\nabla\right)^{2}f@\sbf x+\cdots
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\varphi\left(x\right)=\frac{1}{4\pi\varepsilon_{0}}\left(\frac{Q}{R}-\sbf p\cdot\nabla\frac{1}{R}+\frac{1}{6}\sum_{i,j}\mathcal{D}_{ij}\partial_{i}\partial_{j}\frac{1}{R}+\cdots\right)\label{eq:g6.7}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+Q & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
+\sbf p & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
+\mathcal{D}_{ij} & =\int_{V}3x'_{i}x'_{j}\,\rho\left(\sbf x'\right)\dd{V'}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $R=\sqrt{x^{2}+y^{2}+z^{2}}$
+\end_inset
+
+，表示原点到场点 
+\begin_inset Formula $P$
+\end_inset
+
+ 的距离。
 \end_layout
 
 \begin_layout Section
