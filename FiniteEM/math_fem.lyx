@@ -6547,19 +6547,100 @@ noprefix "false"
 \end_inset
 
 。
-\begin_inset Newline newline
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
+\end_layout
+
+\begin_layout Example
+综上，开域边界条件相当于
+\begin_inset Formula 
+\[
+-\nabla\Phi=\frac{n}{r}\Phi\,\sbf e_{r}
+\]
+
+\end_inset
+
+取上式的变分得（变分和微分交换次序）
+\begin_inset Formula 
+\[
+-\nabla\delta\Phi=\frac{n}{r}\delta\Phi\,\sbf e_{r}
+\]
+
+\end_inset
+
+考虑 Galerkin 方程中边界项的贡献
 \begin_inset Formula 
 \begin{align*}
-\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
- & =\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right\} 
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
 \end{align*}
 
 \end_inset
 
+其中
+\begin_inset Formula 
+\[
+{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(-\sbf\nabla\delta\phi)}\Rightarrow N_{i}^{e}\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\;\frac{n}{r}\delta\Phi
+\]
 
+\end_inset
+
+同理，若代入微扰展开 
+\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
+\end_inset
+
+，相当于在刚度矩阵中添加一项
+\begin_inset Formula 
+\[
+N_{i}^{e}\;\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\frac{n}{r}\;N_{j}^{e}
+\]
+
+\end_inset
+
+或者写成
+\begin_inset Formula 
+\[
+\sbf r\cdot\frac{\partial D}{\partial E}\cdot\sbf r\;\frac{n}{r^{3}}\;N_{i}^{e}N_{j}^{e}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $N_{i}^{e}N_{j}^{e}$
+\end_inset
+
+ 可以理解为 
+\begin_inset Formula $N_{i1}^{e}N_{1j}^{e}=\left(N^{e}.N^{e,T}\right)_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $N_{i1}^{e}$
+\end_inset
+
+为列矩阵。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $r=\sqrt{x^{2}+y^{2}+z^{2}}$
+\end_inset
+
+，表示原点到场点 
+\begin_inset Formula $P$
+\end_inset
+
+ 的距离。
+\end_layout
+
+\begin_layout Enumerate
+程序中，要求开域边界条件的几何边界总是球形或圆形。
 \end_layout
 
 \begin_layout Standard
@@ -6648,7 +6729,7 @@ K_{ij}^{s}=\epsilon_{r}\frac{n}{r}\Delta^{s}\sum_{\alpha}N_{i}^{s}\left(\xi_{\al
 \end_layout
 
 \begin_layout Remark
-ref：郭硕鸿 p63/77
+ref：郭硕鸿 p63/77。电多级展开：
 \begin_inset Formula 
 \[
 f\left(\sbf x-\sbf x'\right)=f\left(\sbf x\right)-\sbf x'\cdot\nabla f@\sbf x+\frac{1}{2!}\left(\sbf x'\cdot\nabla\right)^{2}f@\sbf x+\cdots
@@ -6683,6 +6764,220 @@ Q & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
 \end_inset
 
  的距离。
+\end_layout
+
+\begin_layout Section
+外加电场
+\end_layout
+
+\begin_layout Example
+ref: 郭硕鸿 p51/65；均匀介质球的极化，球外为真空，半径为 
+\begin_inset Formula $R_{0}$
+\end_inset
+
+，均匀外电场为 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+。
+\begin_inset CommandInset label
+LatexCommand label
+name "ref:g51"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Graphics
+	filename inset/GuoShuoHong-2.5.png
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+取 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+ 的方向为球坐标系 
+\begin_inset Formula $z$
+\end_inset
+
+ 轴，并过球心
+\begin_inset Formula 
+\begin{align}
+\text{球外解：} & \varphi_{1}=-E_{0}R\cos\theta+\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}\frac{E_{0}R_{0}^{3}\cos\theta}{R^{2}}\nonumber \\
+\text{球内解：} & \varphi_{2}=-\frac{3\epsilon_{0}}{\epsilon+2\epsilon_{0}}E_{0}R\cos\theta.\label{eq:g3.21}
+\end{align}
+
+\end_inset
+
+球内是均匀电场，球内束缚电荷激发的场与原外场反向，使总电场减弱。在球内总电场作用下，介质的极化强度为
+\begin_inset Formula 
+\begin{equation}
+\sbf P=\chi_{e}\epsilon_{0}\sbf E=\left(\epsilon-\epsilon_{0}\right)\sbf E=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}3\epsilon_{0}\sbf E_{0}\label{eq:g3.22}
+\end{equation}
+
+\end_inset
+
+ 介质球的总电偶极矩为
+\begin_inset Formula 
+\begin{equation}
+\sbf p=\frac{4\pi}{3}R_{0}^{3}\sbf P=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}4\pi\epsilon_{0}R_{0}^{3}\sbf E_{0}\label{eq:g3.23}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的第二项正是此电偶极矩所产生的电势
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{4\pi\epsilon_{0}}\frac{\sbf p\cdot\sbf R}{R^{3}}=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}\frac{E_{0}R_{0}^{3}\cos\theta}{R^{2}}\label{eq:g3.24}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在有限元框架下求解外加电场的问题，外加电场 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+ 的影响体现在 两个边界项中。观察 Galerkin 方程
+\begin_inset Formula 
+\begin{align*}
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}$
+\end_inset
+
+这一项体现的是背景场（即
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+ ）的贡献；而 
+\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}$
+\end_inset
+
+ 则类似于开域边界条件。
+\end_layout
+
+\begin_layout Example
+参考 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "ref:g51"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，在外加电场影响下，极化电荷在边界处的电势形如
+\begin_inset Formula 
+\[
+\Phi=a\frac{\cos\theta}{R^{n}},
+\]
+
+\end_inset
+
+对于电偶极子 
+\begin_inset Formula $n=2$
+\end_inset
+
+，其中 
+\begin_inset Formula $\cos\theta=\sbf E_{0}\cdot\sbf e_{R}$
+\end_inset
+
+。考察边界上的电势法向量，
+\begin_inset Formula 
+\[
+-\nabla\Phi=a\frac{\cos\theta}{R^{n}}\frac{n}{R}\sbf e_{R}+a\frac{\sin\theta}{R^{n}}\frac{1}{R}\sbf e_{\theta}
+\]
+
+\end_inset
+
+对应的变分是
+\begin_inset Formula 
+\[
+-\sbf\nabla\delta\phi=\frac{n}{R}\sbf e_{R}\delta\Phi+(\cdots)\sbf e_{\theta}
+\]
+
+\end_inset
+
+Galerkin 方程边界项的贡献是
+\begin_inset Formula 
+\[
+-N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf\nabla\delta\phi}=N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf e_{R}\,\frac{n}{R}\delta\Phi}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+其中使用了球坐标下的梯度表达式
+\begin_inset Formula 
+\[
+\nabla\psi=\sbf e_{r}\partial_{r}\psi+\frac{1}{r}\sbf e_{\theta}\partial_{\theta}\psi+\frac{1}{r\sin\theta}\partial_{\phi}\sbf e_{\phi}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+程序中实际把 
+\begin_inset Formula $-N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf\nabla\delta\phi}$
+\end_inset
+
+ 这一项的贡献归入到 载荷（Load）中；并且规定开域问题的边界总是球形，且介质是线性的，
+\begin_inset Formula 
+\[
+N_{i}\left[\sbf e_{n}\cdot\epsilon\cdot\sbf E_{0}+\sbf e_{n}\cdot\epsilon\cdot{\color{brown}n\sbf e_{R}\left(\sbf E_{0}\cdot\sbf e_{R}\right)}\right]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
