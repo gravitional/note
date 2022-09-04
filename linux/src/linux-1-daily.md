@@ -32,14 +32,20 @@ bash -c 'ls;echo;uptime'
 命令可以是下面四种形式之一:
 
 1. 是一个可执行程序,就像我们所看到的位于目录`/usr/bin` 中的文件一样.
-属于这一类的程序,可以编译成二进制文件,诸如用 `C` 和 `C++`语言写成的程序, 也可以是由脚本语言写成的程序,比如说 `shell`,`perl`,`python`,`ruby`,等等.
-2. 是一个内建于 `shell` 自身的命令.bash 支持若干命令,内部叫做 shell 内部命令 `(builtins`).例如,`cd` 命
-令,就是一个 `shell` 内部命令.
-3. 是一个 `shell` 函数.这些是小规模的 `shell` 脚本,它们混合到环境变量中. 在后续的章节里,我们将讨论配
-置环境变量以及书写 shell 函数.但是现在, 仅仅意识到它们的存在就可以了.
+属于这一类的程序,可以编译成二进制文件,诸如用 `C` 和 `C++`语言写成的程序,
+也可以是由脚本语言写成的程序,比如说 `shell`,`perl`,`python`,`ruby`,等等.
+
+2. 是一个内建于 `shell` 自身的命令.bash 支持若干命令,内部叫做 shell 内部命令 `(builtins`).
+例如,`cd` 命令,就是一个 `shell` 内部命令.
+
+3. 是一个 `shell` 函数.这些是小规模的 `shell` 脚本,它们混合到环境变量中.
+在后续的章节里,我们将讨论配置环境变量以及书写 shell 函数.
+但是现在, 仅仅意识到它们的存在就可以了.
+
 4. 是一个命令别名.我们可以定义自己的命令,建立在其它命令之上
 
-***
+### oh my zsh
+
 [oh_my_zsh](https://ohmyz.sh/#install)
 
 查看或设置主题
@@ -55,8 +61,7 @@ _omz::theme set agnoster
 _omz::update
 ```
 
-***
-powerline
+### powerline
 
 [Powerline is a statusline plugin](https://github.com/powerline/powerline)
 [Installation on Linux](https://powerline.readthedocs.io/en/latest/installation/linux.html)
