@@ -113,3 +113,48 @@ mount -t minix -o loop ./disk.img ./disk_test
 
 [如何阅读和使用崩溃报告](https://askubuntu.com/questions/346953/how-to-read-and-use-crash-reports)有一些有趣的答案.
 它有一个示例崩溃报告和一种跟踪崩溃的方法.
+
+## 双系统时间差异, UTC, 时区设置
+
+[微软Windows中的UTC](https://wiki.archlinux.org/title/System_time#UTC_in_Microsoft_Windows)
+
+要与 Windows 双启动, 建议将 Windows 配置为使用UTC,
+而不是将 Linux 配置为使用本地时间.
+Windows 默认使用 [本地时间](https://devblogs.microsoft.com/oldnewthing/20040902-00/?p=37983).
+
+这可以通过一个简单的注册表修复来完成.
+打开 `regedit`, 在注册表的以下位置, 添加一个十六进制值为 `1` 的 `DWORD` 值.
+
+```reg
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\RealTimeIsUniversal
+```
+
+等价于用 管理员命令行 运行以下命令:
+
+```cmd
+reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
+```
+
+或者创建具有以下内容的 `*.reg` 文件(在桌面上),
+然后双击它, 将其导入注册表中.
+
+```reg
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation]
+"RealTimeIsUniversal"=dword:00000001
+```
+
+如果Windows由于夏令时的变化而要求更新时钟, 让它来吧.
+它将使时钟保持在预期的 `UTC状态`, 只是纠正显示的时间.
+
+设置此值后,  [硬件时钟][] 和 [系统时钟][] 时间可能需要更新.
+
+如果你在时间偏移方面有问题, 可以尝试重新安装 `tzdata`, 然后重新设置你的时区.
+
+```bash
+timedatectl set-timezone America/Los_Angeles
+```
+
+[硬件时钟]: https://wiki.archlinux.org/title/System_time#Hardware_clock
+[系统时钟]: https://wiki.archlinux.org/title/System_time#System_clock
