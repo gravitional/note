@@ -22,7 +22,8 @@
 
 `oh-my-zsh`的 github 地址在国内可能用不了, 可以考虑使用`gitee`的镜像.
 
-首先需要安装`zsh`, 可以直接用`sudo apt install zsh`.  然后安装`oh-my-zsh`, 下载[码云安装脚本install.sh](https://gitee.com/mirrors/oh-my-zsh)
+首先需要安装`zsh`, 可以直接用`sudo apt install zsh`.
+然后安装`oh-my-zsh`, 下载[码云安装脚本install.sh](https://gitee.com/mirrors/oh-my-zsh)
 
 ```bash
 wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
