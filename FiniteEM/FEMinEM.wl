@@ -208,3 +208,47 @@ jacobi:=2\[CapitalDelta]e
 
 (*\[CapitalDelta]e \:662f\:539f x-y \:7a7a\:95f4\:4e0b\:4e09\:89d2\:5143\:7684\:9762\:79ef*)
 gaussSum[7][tefn2]*\[CapitalDelta]e
+
+
+(* ::Chapter:: *)
+(*\:5750\:6807\:53d8\:6362*)
+
+
+(* ::Input:: *)
+(*vecX={1,x,y,z};*)
+(*vecL={L0,L1,L2,L3};*)
+(*mat={*)
+(*{1,1,1,1},*)
+(*{x1,x2,x3,x4},*)
+(*{y1,y2,y3,y4},*)
+(*{z1,z2,z3,z4}*)
+(*};*)
+(*matInv=Inverse[mat];*)
+(*equ=MapThread[Equal,{*)
+(*vecX,mat . vecL*)
+(*}]*)
+
+
+(* ::Section:: *)
+(*inverse*)
+
+
+(* ::Input:: *)
+(*Det[mat]*matInv//Simplify//TableForm*)
+
+
+(* ::Section:: *)
+(*Jacobi*)
+
+
+(* ::Input:: *)
+(*Lzeta={L1,L2,L3};*)
+(*Transpose@D[Rest[mat . vecL/.{L0->1-Total@Lzeta}],{Lzeta}]//TableForm*)
+
+
+(* ::Input:: *)
+(**)
+
+
+(* ::Input:: *)
+(*(y4-y2)(z3-z2)-(y3-y2)(z4-z2)//Simplify*)
