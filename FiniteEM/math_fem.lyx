@@ -3826,6 +3826,42 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 形函数
 \end_layout
 
+\begin_layout Standard
+在有限元中，求解区域被划分成小单元。每个小单元内的点，包括边界，也使用形函数插值得到：
+\begin_inset Formula 
+\[
+X=\sum_{i}N_{i}^{e}\left(\xi_{1},\cdots\xi_{n}\right)X_{i}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ 是节点坐标，
+\begin_inset Formula $X$
+\end_inset
+
+ 是单元 
+\begin_inset Formula $e$
+\end_inset
+
+ 的内点，对应于等参平面上的点 
+\begin_inset Formula $(\xi_{1},\cdots\xi_{n})$
+\end_inset
+
+ 。如果区域不是平面/直线，例如对于圆弧边界，插值得到的
+\begin_inset Formula $X$
+\end_inset
+
+ 将作为精确点 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ 的近似。
+\end_layout
+
 \begin_layout Section
 等参单元形函数
 \end_layout
@@ -7152,6 +7188,14 @@ B[s]
 平面的速率。和 曲线的主单位法向量
 \end_layout
 
+\begin_layout Standard
+三维曲面的边界为一空间曲线，计算其边界的主法线方向需要曲率 
+\begin_inset Formula $\kappa\neq0$
+\end_inset
+
+；但是在线性单元的近似下，边界上的曲率为零，所以无法计算其主法线方向。
+\end_layout
+
 \begin_layout Section
 曲面上的泊松方程
 \end_layout
@@ -7517,7 +7561,7 @@ e_{1} & e_{2} & e_{3}\\
 \end_layout
 
 \begin_layout Enumerate
-局域物理坐标对等参坐标的 雅可比矩阵：
+局域几何坐标 对 等参坐标的 雅可比矩阵：
 \begin_inset Formula 
 \begin{equation}
 L_{pq}=\hat{\partial}_{p}x_{q}^{\prime}=\left[\begin{array}{cc}
@@ -7568,7 +7612,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-形函数对局域物理坐标的梯度
+形函数 对 局域几何坐标 的梯度
 \begin_inset Formula 
 \[
 {\color{blue}\partial_{p}^{\prime}}\,N_{\alpha}={\color{blue}L_{pq}^{-1}\,\hat{\partial}_{q}}N_{\alpha},\quad[2,N]
