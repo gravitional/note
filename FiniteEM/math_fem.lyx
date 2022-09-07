@@ -5668,10 +5668,10 @@ noprefix "false"
 
 移项得
 \begin_inset Formula 
-\begin{align*}
- & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
- & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
-\end{align*}
+\begin{align}
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}\label{eq:Galerkin}
+\end{align}
 
 \end_inset
 
@@ -6069,6 +6069,38 @@ JMJin page 90: Neumann 边界条件，相当于在第三类边界条件中取
 \end_layout
 
 \begin_layout Section
+各种自由度记号
+\end_layout
+
+\begin_layout Enumerate
+AXIS2：表示轴对称系统，取柱坐标系计算。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+NdNum()；节点数目。
+\end_layout
+
+\begin_layout Enumerate
+DofNum()：自由度数目，取决于体系，例如每个单元中，自由度就是节点上的电势。
+\end_layout
+
+\begin_layout Enumerate
+GSNum()，GsNumKe()，GsNumFe()，GsNumVe()：高斯点数目；对于阶数不同的多项式，需要的采样点数目不同，因此 Gauss
+ 点数目可能不同。
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Chapter
 电场的开域问题
 \end_layout
 
@@ -6203,7 +6235,11 @@ noprefix "false"
  所示的条件即为 渐近边界条件（Asymptotic boundary condition），对应有限元计算中的第三类边界条件。
 \end_layout
 
-\begin_layout Example
+\begin_layout Section
+表面项
+\end_layout
+
+\begin_layout Standard
 在泛函积分式(2.2)
 \begin_inset Formula 
 \begin{equation}
@@ -6273,13 +6309,6 @@ noprefix "false"
 。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Example
 综上，开域边界条件相当于
 \begin_inset Formula 
@@ -6327,10 +6356,37 @@ N_{i}^{e}\;\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\frac{n}{r
 \end_inset
 
 或者写成
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \sbf r\cdot\frac{\partial D}{\partial E}\cdot\sbf r\;\frac{n}{r^{3}}\;N_{i}^{e}N_{j}^{e}
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -6367,14 +6423,11 @@ N_{i}^{e}\;\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\frac{n}{r
 程序中，要求开域边界条件的几何边界总是球形或圆形。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+\begin_layout Section
+边界形状和误差
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
 对于球形边界，垂直边界的矢量 
 \begin_inset Formula $\sbf e_{n}=\frac{\sbf r}{r}$
 \end_inset
@@ -6494,7 +6547,11 @@ Q & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
 外加电场
 \end_layout
 
-\begin_layout Example
+\begin_layout Subsection
+解析解的例子
+\end_layout
+
+\begin_layout Standard
 ref: 郭硕鸿 p51/65；均匀介质球的极化，球外为真空，半径为 
 \begin_inset Formula $R_{0}$
 \end_inset
@@ -6513,7 +6570,7 @@ name "ref:g51"
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
 \begin_inset Graphics
 	filename inset/GuoShuoHong-2.5.png
 	lyxscale 50
@@ -6524,7 +6581,7 @@ name "ref:g51"
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
 取 
 \begin_inset Formula $\sbf E_{0}$
 \end_inset
@@ -6579,14 +6636,125 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Subsection
+有限元中的处理
+\end_layout
+
 \begin_layout Standard
-\begin_inset Separator plain
+在程序实现中，规定 
+\color blue
+外加电场
+\color inherit
+ 总是配合 
+\color blue
+开域边界
+\color inherit
+ 一同使用，且边界应当是球形，介质是线性的。令外加电场为 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+，除去它的影响之后，令 有限区域电荷产生的电势为 
+\begin_inset Formula $\Phi$
+\end_inset
+
+，令总电势为 
+\begin_inset Formula $\Phi_{t}=\Phi-\sbf E_{0}\cdot\sbf r$
+\end_inset
+
+， 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 应该满足 开域边界条件 的性质，即
+\begin_inset Formula 
+\begin{equation}
+{\color{brown}-\nabla\Phi=\frac{n}{r}\Phi\,\sbf e_{r}}\label{eq:phi-local}
+\end{equation}
+
+\end_inset
+
+代入 
+\begin_inset Formula $\Phi={\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}$
+\end_inset
+
+， 
+\begin_inset Formula 
+\[
+-\nabla\left({\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}\right)=\frac{n}{r}\left({\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}\right)\sbf e_{r}
+\]
+
+\end_inset
+
+略微化简给出
+\begin_inset Formula 
+\begin{equation}
+{\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}+\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{r}\right)\sbf e_{r}\label{eq:phi-global}
+\end{equation}
+
+\end_inset
+
+可以看到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phi-global"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 与 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phi-local"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的区别是多了后面两项。代入Galerkin 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Galerkin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+边界项 
+\begin_inset Formula $N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(\sbf\nabla\delta\phi)$
+\end_inset
+
+：并把 
+\begin_inset Formula ${\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}$
+\end_inset
+
+ 的贡献归入刚度矩阵 
+\begin_inset Formula $K_{ij}^{e}$
+\end_inset
+
+；把 
+\begin_inset Formula $\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{r}\right)\sbf e_{r}$
+\end_inset
+
+ 的贡献归入 载荷（Load），载荷项的形式为
+\begin_inset Formula 
+\[
+-N_{i}\,\sbf e_{n}\cdot\epsilon\cdot\left[\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{R}\right)\sbf e_{R}\right].
+\]
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Subsection
+backup
+\end_layout
+
+\begin_layout Standard
 在有限元框架下求解外加电场的问题，外加电场 
 \begin_inset Formula $\sbf E_{0}$
 \end_inset
@@ -6615,7 +6783,7 @@ noprefix "false"
  则类似于开域边界条件。
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
 参考 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -6681,87 +6849,12 @@ Galerkin 方程边界项的贡献是
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-程序中实际把 
-\begin_inset Formula $-N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf\nabla\delta\phi}$
-\end_inset
-
- 这一项的贡献归入到 载荷（Load）中；并且规定开域问题的边界总是球形，且介质是线性的，
-\begin_inset Formula 
-\[
-N_{i}\left[\sbf e_{n}\cdot\epsilon\cdot\sbf E_{0}+\sbf e_{n}\cdot\epsilon\cdot{\color{brown}n\sbf e_{R}\left(\sbf E_{0}\cdot\sbf e_{R}\right)}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial\Phi}{\partial r}+n\frac{\Phi}{r}=0
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Phi=\Phi_{t}-\sbf E\cdot\sbf r
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial\Phi}{\partial r}=\frac{n\Phi_{t}}{r}+E\cos\theta\left(1+n\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-各种自由度记号
-\end_layout
-
-\begin_layout Enumerate
-AXIS2：表示轴对称系统，取柱坐标系计算。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-NdNum()；节点数目。
-\end_layout
-
-\begin_layout Enumerate
-DofNum()：自由度数目，取决于体系，例如每个单元中，自由度就是节点上的电势。
-\end_layout
-
-\begin_layout Enumerate
-GSNum()，GsNumKe()，GsNumFe()，GsNumVe()：高斯点数目；对于阶数不同的多项式，需要的采样点数目不同，因此 Gauss
- 点数目可能不同。
-\end_layout
-
-\begin_layout Standard
-EOF
-\end_layout
-
-\begin_layout Section
+\begin_layout Chapter
 三维空间曲面
+\end_layout
+
+\begin_layout Section
+仿射变换，局域坐标系
 \end_layout
 
 \begin_layout Standard
@@ -6782,7 +6875,15 @@ EOF
 
 \end_inset
 
-也可以写成
+其中
+\begin_inset Formula $\sbf r_{n}$
+\end_inset
+
+是第
+\begin_inset Formula $n$
+\end_inset
+
+个单元的参考点。也可以写成
 \begin_inset Formula 
 \[
 \left[\begin{array}{c}
@@ -6806,13 +6907,13 @@ S & \sbf r_{n}\\
 为
 \begin_inset Formula 
 \[
-S_{ij}=\sbf c_{i}\cdot{\color{blue}\sbf e_{j}}.
+S_{ij}=\sbf d_{i}\cdot{\color{blue}\sbf e_{j}}.
 \]
 
 \end_inset
 
 式中 
-\begin_inset Formula $\sbf c_{i}$
+\begin_inset Formula $\sbf d_{i}$
 \end_inset
 
  表示笛卡尔坐标基矢， 
@@ -6830,21 +6931,21 @@ S_{ij}=\sbf c_{i}\cdot{\color{blue}\sbf e_{j}}.
  在原坐标系中的分量表示。这里的约定是
 \begin_inset Formula 
 \[
-\sbf e_{1}=\left(\begin{array}{c}
-e_{1,x}=\sbf e_{1}\cdot\sbf c_{1}\\
-e_{1,y}=\cdots\\
-e_{1,z}=\cdots
-\end{array}\right),\quad\sbf e_{1}\,\text{是列向量}.
+\left[e_{1}\right]=\left(\begin{array}{c}
+e_{1,x}=\sbf d_{1}\cdot\sbf e_{1}\\
+e_{1,y}=\sbf d_{2}\cdot\sbf e_{1}\\
+e_{1,z}=\sbf d_{3}\cdot\sbf e_{1}
+\end{array}\right),\quad\sbf e_{1}\,\text{分量形式为列向量}.
 \]
 
 \end_inset
 
-
+用黑体表示矢量，普通字体表示矢量的分量数组，拉丁下标表示具体的分量。
 \end_layout
 
 \begin_layout Corollary
 当 
-\begin_inset Formula $\sbf c_{i}$
+\begin_inset Formula $\sbf d_{i}$
 \end_inset
 
 ，
@@ -6871,20 +6972,20 @@ X\\
 Y\\
 Z
 \end{array}\right]=\left[\begin{array}{c}
-\sbf e_{1}^{T}\\
-\sbf e_{2}^{T}\\
-\sbf e_{3}^{T}
-\end{array}\right].\left(\sbf r-\sbf r_{n}\right)
+e_{1}^{T}\\
+e_{2}^{T}\\
+e_{3}^{T}
+\end{array}\right].\left([r]-[r_{n}]\right)
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\sbf r$
+\begin_inset Formula $[r]$
 \end_inset
 
 ，
-\begin_inset Formula $\sbf r_{n}$
+\begin_inset Formula $[r_{n}]$
 \end_inset
 
  均为列向量。在局域坐标的小范围中，如果将 
@@ -6894,9 +6995,9 @@ Z
  当作常矢量，则有
 \begin_inset Formula 
 \begin{align*}
- & \dd{X}=\sbf e_{1}^{T}\cdot\dd{r}\\
- & \dd{Y}=\sbf e_{2}^{T}\cdot\dd{r}\\
- & \dd{Z}=\sbf e_{3}^{T}\cdot\dd{r}
+ & \dd{X}=[e_{1}^{T}]\cdot\dd{[r]}\\
+ & \dd{Y}=[e_{2}^{T}]\cdot\dd{[r]}\\
+ & \dd{Z}=[e_{3}^{T}]\cdot\dd{[r]}
 \end{align*}
 
 \end_inset
@@ -6911,11 +7012,15 @@ Z
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Section
+曲面上的泊松方程
+\end_layout
+
+\begin_layout Standard
 三维曲面上的泊松方程
 \begin_inset Formula 
 \[
--\nabla_{t}\cdot\epsilon\nabla_{t}\phi=\rho
+-\nabla_{t}\cdot\epsilon\cdot\nabla_{t}\phi=\rho
 \]
 
 \end_inset
@@ -6924,7 +7029,7 @@ Z
 \begin_inset Formula $\nabla_{t}$
 \end_inset
 
-表示在曲面切平面上的梯度。有限元方程中的系数矩阵为
+ 表示沿着曲面切平面的梯度。对应的有限元方程中的系数矩阵为
 \begin_inset Formula 
 \[
 K_{ij}^{e}=\int_{\Omega^{e}}\nabla_{t}N_{i}^{e}\cdot\epsilon\cdot\nabla_{t}N_{j}^{e}\dd{\Omega}.
@@ -7069,7 +7174,7 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 约定和总结
 \end_layout
 
@@ -7171,7 +7276,7 @@ noprefix "false"
 J_{pj}=\hat{\partial}_{p}{\color{blue}r_{j}}=\left[\begin{array}{ccc}
 \frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
 \frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}
-\end{array}\right]=\hat{\partial}_{p}\,{\color{blue}N_{\alpha}\,\overline{x}_{\alpha j}}\label{eq:jacobi9}
+\end{array}\right]=\hat{\partial}_{p}\,{\color{blue}N_{\alpha}\,\overline{x}_{\alpha j}},\quad[2,3]\label{eq:jacobi9}
 \end{equation}
 
 \end_inset
@@ -7206,7 +7311,7 @@ J_{pj}=\hat{\partial}_{p}{\color{blue}r_{j}}=\left[\begin{array}{ccc}
 
 \end_inset
 
-之所以这样构造，是为了保证 
+之所以按此序列构造，是为了保证 
 \begin_inset Formula $\sbf e_{1}$
 \end_inset
 
@@ -7240,8 +7345,8 @@ noprefix "false"
 \begin_inset Formula $\left\{ \sbf e_{j}\right\} $
 \end_inset
 
-写成矩阵，将 
-\begin_inset Formula $\sbf e_{i}$
+的分量写成数组形式（矩阵）。分量数组用普通字体表示，将 
+\begin_inset Formula $[e_{i}]$
 \end_inset
 
 分别填入
@@ -7252,24 +7357,23 @@ noprefix "false"
 \begin_inset Formula 
 \begin{equation}
 E_{ij}=\left[\begin{array}{ccc}
-\sbf e_{1} & \sbf e_{2} & \sbf e_{3}\end{array}\right]\label{eq:unitVector}
+\vdots & \vdots & \vdots\\
+e_{1} & e_{2} & e_{3}\\
+\vdots & \vdots & \vdots
+\end{array}\right],\quad[3,3]\label{eq:unitVector}
 \end{equation}
 
 \end_inset
 
-则行指标（指标
+则 指标
 \begin_inset Formula $1$
 \end_inset
 
-）索引基矢的分量，列指标（指标
+索引 基矢的分量，指标
 \begin_inset Formula $2$
 \end_inset
 
-）索引基矢的编号，维数是 
-\begin_inset Formula $\left[3\times3\right]$
-\end_inset
-
-。
+索引 基矢的编号。
 \end_layout
 
 \begin_layout Enumerate
@@ -7285,6 +7389,10 @@ L_{pq}=\hat{\partial}_{p}x_{q}^{\prime}=\left[\begin{array}{cc}
 \end_inset
 
 
+\begin_inset Formula $p,q\in\{1,2\}$
+\end_inset
+
+， 
 \begin_inset Formula $J$
 \end_inset
 
@@ -7312,15 +7420,11 @@ noprefix "false"
 
 \end_inset
 
- 中求出，因此 
-\begin_inset Formula $L$
-\end_inset
-
- 也可以求得。此处 
+ 中求出，注意使用 
 \begin_inset Formula $E$
 \end_inset
 
- 只取前两列。
+ 时只取了前两列。
 \end_layout
 
 \begin_layout Enumerate
@@ -7332,11 +7436,15 @@ noprefix "false"
 
 \end_inset
 
-其中，
+其中
+\begin_inset Formula $N$
+\end_inset
+
+是节点的数目，
 \begin_inset Formula $L^{-1}$
 \end_inset
 
-是上面 
+是 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:jacobi3"
@@ -7346,15 +7454,59 @@ noprefix "false"
 
 \end_inset
 
- 中 
-\begin_inset Formula $L$
-\end_inset
-
  的逆。至此，
 \begin_inset Formula $\nabla_{t}N_{i}^{e}$
 \end_inset
 
 已经求出。
+\end_layout
+
+\begin_layout Enumerate
+计算均在等参坐标平面进行，即坐标变换步骤为 全局系的曲面
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+局域系的平面
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+等参系的平面。最后需要在 
+\begin_inset Formula $\xi$
+\end_inset
+
+–
+\begin_inset Formula $\eta$
+\end_inset
+
+ 等参系平面，用高斯积分法计算积分：
+\begin_inset Formula 
+\[
+\iint_{\Omega^{\prime e}}F\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)\dd{X}\dd{Y}=\sum_{i=1}^{m}F\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)W_{i}^{\prime}\det[J]
+\]
+
+\end_inset
+
+与平直面元的区别是，现在 
+\begin_inset Formula $\det[J]$
+\end_inset
+
+=
+\begin_inset Formula $\frac{\partial(X,Y)}{\partial\left(\xi,\eta\right)}$
+\end_inset
+
+ 在每个高斯点上可以不同。
+\begin_inset Formula $\det[J]$
+\end_inset
+
+ 在几何上等于局域基矢 
+\begin_inset Formula $\{\frac{\partial\sbf r}{\partial\xi},\frac{\partial\sbf r}{\partial\eta}\}$
+\end_inset
+
+ 架设的四边形的面积；在程序中此面积可直接用 
+\begin_inset Formula $\frac{\partial\sbf r}{\partial\xi}\times\frac{\partial\sbf r}{\partial\eta}$
+\end_inset
+
+ 计算。
 \end_layout
 
 \begin_layout Standard
