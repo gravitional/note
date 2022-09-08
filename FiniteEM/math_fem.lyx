@@ -1510,880 +1510,6 @@ f_{1,3}
 \end_layout
 
 \begin_layout Chapter
-静电场
-\end_layout
-
-\begin_layout Section
-轴对称电场
-\end_layout
-
-\begin_layout Standard
-柱坐标 
-\begin_inset Formula $(r,\phi,z)$
-\end_inset
-
- 下的 
-\begin_inset Formula $\nabla^{2}$
-\end_inset
-
- 算子：
-\begin_inset Formula 
-\[
-\nabla^{2}\psi=\frac{1}{r}\partial_{r}\left(r\,\partial_{r}\psi\right)+\frac{1}{r^{2}}\partial_{\phi}^{2}\psi+\partial_{z}^{2}\psi
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-轴对称情况下，电场方程 
-\begin_inset Formula $-\epsilon\nabla^{2}\Phi=\rho$
-\end_inset
-
- 在柱坐标系下可以写成：
-\begin_inset Formula 
-\[
--\frac{1}{r}\partial_{r}\left(\epsilon_{r}\,r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}
-\]
-
-\end_inset
-
-将方程化简成如下形式
-\begin_inset Formula 
-\[
--\partial_{r}\left(\epsilon_{r}r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}r\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}r
-\]
-
-\end_inset
-
-如果作替换
-\begin_inset Formula 
-\begin{align*}
- & r\to x,\quad z\to y,\\
- & \epsilon_{r}r\to\tilde{\epsilon}(x),\quad\rho r\to\tilde{\rho}(x)
-\end{align*}
-
-\end_inset
-
-则原方程可以写作
-\begin_inset Formula 
-\[
--\partial_{x}\left[\tilde{\epsilon}(x)\,\partial_{x}\Phi\right]-\partial_{y}\left[\tilde{\epsilon}(x)\,\partial_{y}\Phi\right]=\tilde{\rho}(x)
-\]
-
-\end_inset
-
-此方程的求解和二维情况完全相同。
-\end_layout
-
-\begin_layout Section
-静电场的能量
-\end_layout
-
-\begin_layout Standard
-目录:p18; Jackson p68/43; sec1.11
-\end_layout
-
-\begin_layout Standard
-静电场能的两种表示方式：
-\begin_inset Formula 
-\begin{align}
- & W=\frac{1}{2}\int\rho(\sbf x)\Phi(\sbf x)\dd[3]{x},\quad W=\frac{1}{8\pi\epsilon_{0}}\sum_{i}\sum_{j}\frac{q_{i}q_{j}}{\abs{\sbf x_{i}-\sbf x_{j}}}\label{eq:j1.53}\\
- & W=\frac{\epsilon_{0}}{2}\int\abs{\sbf E}^{2}\dd[3]{x}.\label{eq:j1.54}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-第一行的公式分别是连续和离散情形。双求和忽略了 
-\begin_inset Formula $i=j$
-\end_inset
-
- 的项，即“自能项”。
-\end_layout
-
-\begin_layout Enumerate
-两种公式的物理图像分别为：电荷之间的相互作用能；电场中存储的能量。
-\end_layout
-
-\begin_layout Enumerate
-电场的能量是正定的；相互作用能可能是负值。
-\end_layout
-
-\begin_layout Standard
-考虑两个点电荷 
-\begin_inset Formula $q_{1}$
-\end_inset
-
-，
-\begin_inset Formula $q_{2}$
-\end_inset
-
- 组成的体系，空间一点
-\begin_inset Formula $\sbf x$
-\end_inset
-
-处的电势和静电能分别为：
-\begin_inset Formula 
-\begin{align}
- & \sbf E=\frac{1}{4\pi\epsilon_{0}}\frac{q_{1}(\sbf x-\sbf x_{1})}{\abs{\sbf x-\sbf x_{1}}^{3}}+\frac{1}{4\pi\epsilon_{0}}\frac{q_{2}(\sbf x-\sbf x_{2})}{\abs{\sbf x-\sbf x_{2}}^{3}},\nonumber \\
- & 32\pi^{2}\epsilon_{0}w=\frac{q_{1}^{2}}{\abs{\sbf x-\sbf x_{1}}^{4}}+\frac{q_{2}^{2}}{\abs{\sbf x-\sbf x_{2}}^{4}}+2\frac{q_{1}q_{2}(\sbf x-\sbf x_{1})\cdot(\sbf x-\sbf x_{2})}{\abs{\sbf x-\sbf x_{1}}^{3}\abs{\sbf x-\sbf x_{2}}^{3}}.\label{eq:j1.56}
-\end{align}
-
-\end_inset
-
-前两项是两个点电荷的自能，后一项是相互作用能。
-\end_layout
-
-\begin_layout Subsection
-电容矩阵
-\end_layout
-
-\begin_layout Standard
-FEM-Gerard; page 31/47; sec 1.3.8.8 
-\end_layout
-
-\begin_layout Standard
-在含有 
-\begin_inset Formula $n$
-\end_inset
-
- 个导体的系统中，第 
-\begin_inset Formula $i$
-\end_inset
-
- 个导体上的电荷
-\begin_inset Formula $Q_{i}$
-\end_inset
-
- 可以用所有导体上的电势
-\begin_inset Formula $V_{j}$
-\end_inset
-
-，以及一些几何参数，共同表出：
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-Q_{i}=\sum_{j=1}^{n}C_{ij}V_{j},\quad i=1,2,\cdots,n\label{eq:j1.61}
-\end{equation}
-
-\end_inset
-
-系数 
-\begin_inset Formula $C_{ii}$
-\end_inset
-
- 被称为电容（capacities or capacitances），非对角元
-\begin_inset Formula $C_{ij}$
-\end_inset
-
-被称为互感系数。
-\end_layout
-
-\begin_layout Enumerate
-导体的电容，等于它带单位电势时的电荷，同时保持其他导体电势为零。
-\end_layout
-
-\begin_layout Enumerate
-电容矩阵 
-\begin_inset Formula $C_{ij}$
-\end_inset
-
- 是对称矩阵，表示两个导体间的电荷相互作用是对等的。
-\end_layout
-
-\begin_layout Enumerate
-非对角元 
-\begin_inset Formula $C_{ij}$
-\end_inset
-
- 对应两个导体间的互作用能量。
-\begin_inset Formula 
-\[
-C_{ij}V_{i}V_{j}=\int_{\Omega}\sbf E_{i}\cdot\sbf D_{j}\dd{\Omega},\quad i,j\,\text{不求和}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-导体系统的 静电能 可以表示为
-\begin_inset Formula 
-\begin{equation}
-W=\frac{1}{2}\sum_{i=1}^{n}Q_{i}V_{i}=\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}C_{ij}V_{i}V_{j}.\label{eq:j1.62}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $C_{ii}V_{i}^{2}$
-\end_inset
-
-是正定的，对应电荷的“自能”（self energy）；
-\begin_inset Formula $C_{ij}V_{i}V_{j}$
-\end_inset
-
-对应相互作用能 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:j1.53"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Section
-电介质中的静电能
-\end_layout
-
-\begin_layout Standard
-p190; sec 4.7 
-\end_layout
-
-\begin_layout Standard
-见 Sec1.11，自由空间电荷系统的能量为：
-\begin_inset Formula 
-\begin{equation}
-W=\frac{1}{2}\int\rho(\sbf x)\Phi(\sbf x)\dd[3]{x}.\label{eq:j4.83}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-存在电介质的情况下，静电能的微小变分为：
-\begin_inset Formula 
-\begin{equation}
-\delta W=\int\delta\rho(\sbf x)\Phi(\sbf x)\dd[3]{x}.\label{eq:j4.84}
-\end{equation}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\Phi(\sbf x)$
-\end_inset
-
- 是由于已存在电荷密度 
-\begin_inset Formula $\rho(\sbf x)$
-\end_inset
-
-产生的电势。考虑到 
-\begin_inset Formula $\nabla\cdot\sbf D=\rho$
-\end_inset
-
-，我们可以作替换
-\begin_inset Formula 
-\begin{equation}
-\delta\rho=\nabla\cdot(\delta\sbf D).\label{eq:j4.85}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-\nabla\cdot(\Phi\delta\sbf D) & =(\nabla\phi)\cdot\delta\sbf D+\Phi\nabla\cdot\delta\sbf D\\
- & =-\sbf E\cdot\delta\sbf D+\Phi\delta\rho
-\end{align*}
-
-\end_inset
-
-如果电荷分布在有限空间内，则 
-\begin_inset Formula $\nabla\cdot(\Phi\delta\sbf D)$
-\end_inset
-
- 在全空间的积分为零（应用高斯散度定理）。因此可以把静电能的变分写成：
-\begin_inset Formula 
-\begin{equation}
-\delta W=\int\sbf E\cdot\delta\sbf D\dd[3]{x}.\label{eq:j4.86}
-\end{equation}
-
-\end_inset
-
-因此当
-\begin_inset Formula $\sbf D$
-\end_inset
-
-从初始值
-\begin_inset Formula $0$
-\end_inset
-
-变化到最终值时，在形式上可以把静电能写成：
-\begin_inset Formula 
-\begin{equation}
-W=\int\dd[3]x\int_{0}^{D}\sbf E\cdot\delta\sbf D.\label{eq:j4.87}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-如果介质是 
-\emph on
-线性的
-\emph default
-，则
-\begin_inset Formula 
-\begin{equation}
-\sbf E\cdot\delta\sbf D=\frac{1}{2}\delta\left(\sbf E\cdot\sbf D\right).\label{eq:4.88}
-\end{equation}
-
-\end_inset
-
-总能量可以写成
-\begin_inset Formula 
-\begin{equation}
-W=\frac{1}{2}\int\sbf E\cdot\sbf D\dd[3]{x}.\label{eq:j4.89}
-\end{equation}
-
-\end_inset
-
-如果假设 
-\begin_inset Formula $\rho$
-\end_inset
-
- 和 
-\begin_inset Formula $\Phi$
-\end_inset
-
- 是线性相关的，通过 
-\begin_inset Formula $\sbf E=-\nabla\Phi$
-\end_inset
-
- 和 
-\begin_inset Formula $\nabla\cdot\sbf D=\rho$
-\end_inset
-
-，
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:j4.89"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 可以回到
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:j4.83"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-或
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:j4.84"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 。因此，
-\emph on
-只有当行为是线性的，
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:j4.83"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-在宏观上才成立。
-\emph default
-否则，只能使用
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:j4.87"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-计算，最终的 静电能 依赖于极化历史。
-\end_layout
-
-\begin_layout Section
-非线性材料的电容矩阵
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-g1 = Plot[x^(3/5), {x, 0, 5} , AxesLabel -> {"D", "E"} , ImageSize -> Small];
- g2 = Plot[Log[x + 1], {x, 0, 5} , AxesLabel -> {"Q", "U"} , ImageSize ->
- Small]; GraphicsRow[{g1, g2}]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/capacitance-curve.pdf
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset Formula $E-D$
-\end_inset
-
-曲线与
-\begin_inset Formula $U-Q$
-\end_inset
-
-曲线，静电能的等价表示形式为
-\begin_inset Formula $\delta w=E\delta D$
-\end_inset
-
-，
-\begin_inset Formula $\delta w=U\delta Q$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-follow XuLei，两张图中，曲线上的点是一一对应的，根据对应关系有：
-\begin_inset Formula 
-\begin{align*}
-\frac{1}{2}\delta\sbf E\cdot\delta\sbf D & =\frac{1}{2}\delta U\delta fQ\\
- & =\frac{1}{2}\delta U\;C\delta U
-\end{align*}
-
-\end_inset
-
-假设由边值问题
-\begin_inset Formula $\alpha$
-\end_inset
-
-，求解出了电场结果 
-\begin_inset Formula $\beta$
-\end_inset
-
-。在确定的几何点
-\begin_inset Formula $P$
-\end_inset
-
-，和电场 
-\begin_inset Formula $\sbf E$
-\end_inset
-
- 下，
-\begin_inset Formula $\epsilon=\partial D/\partial E$
-\end_inset
-
-，
-\begin_inset Formula $C=\partial Q/\partial U$
-\end_inset
-
- 都是确定的。这时候作完全线性化，完全按照线性系统处理，取 
-\begin_inset Formula $\delta U=\SI{1}{V}$
-\end_inset
-
-，给出
-\begin_inset Formula 
-\[
-C=\delta\sbf E\cdot\delta\sbf D.
-\]
-
-\end_inset
-
-这个式子的含义是：
-\end_layout
-
-\begin_layout Enumerate
-体系此时的电容，可以由 
-\begin_inset Formula $\delta U=\SI{1}{V}$
-\end_inset
-
- 条件定出的电场得到；
-\end_layout
-
-\begin_layout Enumerate
-在使用 Galerkin 方程计算过程中，认定 
-\begin_inset Formula $\epsilon=\partial D/\partial E$
-\end_inset
-
- 为常数，
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 的每一几何点的具体值，由之前边值问题的解 
-\begin_inset Formula $\beta$
-\end_inset
-
- 提供；材料性质的影响体现在此处。
-\end_layout
-
-\begin_layout Enumerate
-而 
-\begin_inset Formula $\sbf D$
-\end_inset
-
-与 
-\begin_inset Formula $\sbf E$
-\end_inset
-
- 的关系，由材料在当前 
-\begin_inset Formula $\sbf E$
-\end_inset
-
- 下的电介质数 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 决定。非线性材料的 电介质数 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 与 
-\begin_inset Formula $\sbf E$
-\end_inset
-
- 的关系可能比较复杂，但在当前一点可以当成常数。
-\end_layout
-
-\begin_layout Enumerate
-并且对于多导体系统，还类似地定义电容矩阵：
-\begin_inset Formula 
-\[
-C_{ij}=\frac{1}{\delta U_{i}\delta U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega},
-\]
-
-\end_inset
-
-积分区域是全系统空间，实际上还取了 
-\begin_inset Formula $\delta U_{i}=\delta U_{j}=\SI{1}{V}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Remark
-体系的电容 
-\begin_inset Formula $C$
-\end_inset
-
- 与体系的几何构型，以及材料的电介质数 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 相关。以上方法实际上就是：
-\color blue
-在点的局域上，把 非线性材料 权当成 线性材料 处理
-\color inherit
-。线性材料的互容矩阵实际上就是
-\begin_inset Formula 
-\[
-C_{ij}=\frac{1}{U_{i}U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-虚功法
-\end_layout
-
-\begin_layout Standard
-FEM-Gerard; sec 38/54;
-\end_layout
-
-\begin_layout Standard
-刚体上的力和力矩（torque）也可以使用虚功原理（virtual work theorem）计算。在微小位移
-\begin_inset Formula $\delta u$
-\end_inset
-
-下，装置的内能（internal energy）的变化 
-\begin_inset Formula $\delta W_{e}$
-\end_inset
-
-，等于 外源（external sources）输入的电能，加上力 
-\begin_inset Formula $-F_{u}$
-\end_inset
-
-（牛顿第三定律）的功：
-\begin_inset Formula 
-\begin{equation}
-\delta W_{e}=\sum V_{k}\delta Q_{k}-F_{u}\delta u=\sum\frac{\partial W_{e}}{\partial Q_{k}}\delta Q_{k}+\frac{\partial W_{e}}{\partial u}\delta u.\label{eq:g1.117}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-在实验一中，装置与外界电源隔离。电极上的电荷总量不变，即 
-\begin_inset Formula $\delta Q_{k}=0$
-\end_inset
-
-，因此给出
-\begin_inset Formula 
-\begin{align}
- & F_{u}=-\frac{\partial W_{e}}{\partial u}.\label{eq:g1.118}\\
- & C_{\omega}=-\frac{\partial W_{e}}{\partial\theta}.\label{eq:g1.119}
-\end{align}
-
-\end_inset
-
-其中 
-\begin_inset Formula $C_{\omega}$
-\end_inset
-
- 表示绕旋转轴 
-\begin_inset Formula $\omega$
-\end_inset
-
- 的力矩。求偏导时，保持 electric state variable（电极上的电荷）不变。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-在实验二中，把装置连接到 恒压源，电极上的电势 
-\begin_inset Formula $V_{k}$
-\end_inset
-
- 保持不变，而电极上的电荷可能会变化 
-\begin_inset Formula $\delta Q_{k}$
-\end_inset
-
-。现在，更适合用系统的共能（coenergy）去分析。
-\begin_inset Formula 
-\begin{align}
- & \sum V_{k}\delta Q_{k}-\sum\delta\left(V_{k}Q_{k}\right)-F_{u}\delta u=\delta W_{e}-\sum\delta\left(V_{k}Q_{k}\right).\label{eq:g1.120}\\
-\Rightarrow & -\sum Q_{k}\delta V_{k}-F_{u}\delta u=-\delta W_{c}=-\sum\frac{\partial W_{c}}{\partial V_{k}}\delta V_{k}-\frac{\partial W_{c}}{\partial u}\delta u.\label{eq:g1.121}
-\end{align}
-
-\end_inset
-
-现在，力和力矩可以用 共能 的偏导表示，
-\begin_inset Formula 
-\begin{align}
- & F_{u}=\frac{\partial W_{c}}{\partial u},\label{eq:g1.122}\\
- & C_{\omega}=\frac{\partial W_{c}}{\partial\theta}.\label{eq:g1.123}
-\end{align}
-
-\end_inset
-
-求偏导时保持 electric state variable（电极上的电压）不变。
-\end_layout
-
-\begin_layout Example
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-page 20/36;
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial W_{c}}{\partial v_{i}}=-\iint D\cdot\mathrm{grad}\varphi_{i}h\dd{x}\dd{y}-\iint\rho\varphi_{i}h\dd{x}\dd{y}=0\quad\text{for}\quad i=1,2,\cdots,N_{L}\label{eq:g1.52-1}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $v_{i}$
-\end_inset
-
- 表示节点上的值，一共有 
-\begin_inset Formula $N_{L}$
-\end_inset
-
-个。
-\end_layout
-
-\begin_layout Plain Layout
-page 14/30;
-\begin_inset Formula 
-\begin{equation}
-W_{c}=\iint\left[\int_{0}^{-\nabla v}D\dd{E}-\rho v\right]h\dd{x}\dd{y}\label{eq:g1.35-1}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-当电极上的电势保持常数时，coenergy 的有限元近似只是位移 
-\begin_inset Formula $u$
-\end_inset
-
- 的函数，或者通过 
-\color blue
-节点的坐标直接依赖
-\color inherit
-，或者通过 
-\color brown
-节点电势间接依赖
-\color inherit
-：
-\begin_inset Formula 
-\begin{equation}
-W_{c}=W_{c}\left[{\color{brown}v_{1}(u),v_{2}(u),\cdots,v_{N_{L}}(u)},{\color{blue}u}\right]=W_{c}(u).\label{eq:g1.126}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-F_{u}=\frac{\dd{W_{c}}}{\dd{u}}=\sum_{j=1}^{N_{L}}\frac{\partial W_{c}}{\partial v_{j}}\frac{\dd{v_{j}}}{\dd{u}}+\frac{\partial W_{c}}{\partial u}.\label{eq:g1.127}
-\end{equation}
-
-\end_inset
-
-根据
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:g1.52-1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，共能对 节点电势的偏导为零，因此
-\begin_inset Formula 
-\begin{equation}
-F_{u}=\frac{\partial W_{c}}{\partial u}.\label{eq:g1.128}
-\end{equation}
-
-\end_inset
-
-求偏导时保持 节点电势不变。
-\end_layout
-
-\begin_layout Example
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/Gerard-1.11.png
-	lyxscale 50
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是刚体单元。空心节点表示能够运动。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
 有限元方法
 \end_layout
 
@@ -3882,6 +3008,1161 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 
 \begin_layout Standard
 \begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+静电场
+\end_layout
+
+\begin_layout Section
+轴对称电场
+\end_layout
+
+\begin_layout Standard
+柱坐标 
+\begin_inset Formula $(r,\phi,z)$
+\end_inset
+
+ 下的 
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+ 算子：
+\begin_inset Formula 
+\[
+\nabla^{2}\psi=\frac{1}{r}\partial_{r}\left(r\,\partial_{r}\psi\right)+\frac{1}{r^{2}}\partial_{\phi}^{2}\psi+\partial_{z}^{2}\psi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+轴对称情况下，电场方程 
+\begin_inset Formula $-\epsilon\nabla^{2}\Phi=\rho$
+\end_inset
+
+ 在柱坐标系下可以写成：
+\begin_inset Formula 
+\[
+-\frac{1}{r}\partial_{r}\left(\epsilon_{r}\,r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}
+\]
+
+\end_inset
+
+将方程化简成如下形式
+\begin_inset Formula 
+\[
+-\partial_{r}\left(\epsilon_{r}r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}r\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}r
+\]
+
+\end_inset
+
+如果作替换
+\begin_inset Formula 
+\begin{align*}
+ & r\to x,\quad z\to y,\\
+ & \epsilon_{r}r\to\tilde{\epsilon}(x),\quad\rho r\to\tilde{\rho}(x)
+\end{align*}
+
+\end_inset
+
+则原方程可以写作
+\begin_inset Formula 
+\[
+-\partial_{x}\left[\tilde{\epsilon}(x)\,\partial_{x}\Phi\right]-\partial_{y}\left[\tilde{\epsilon}(x)\,\partial_{y}\Phi\right]=\tilde{\rho}(x)
+\]
+
+\end_inset
+
+此方程的求解和二维情况完全相同。
+\end_layout
+
+\begin_layout Section
+静电场的能量
+\end_layout
+
+\begin_layout Standard
+目录:p18; Jackson p68/43; sec1.11
+\end_layout
+
+\begin_layout Standard
+静电场能的两种表示方式：
+\begin_inset Formula 
+\begin{align}
+ & W=\frac{1}{2}\int\rho(\sbf x)\Phi(\sbf x)\dd[3]{x},\quad W=\frac{1}{8\pi\epsilon_{0}}\sum_{i}\sum_{j}\frac{q_{i}q_{j}}{\abs{\sbf x_{i}-\sbf x_{j}}}\label{eq:j1.53}\\
+ & W=\frac{\epsilon_{0}}{2}\int\abs{\sbf E}^{2}\dd[3]{x}.\label{eq:j1.54}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第一行的公式分别是连续和离散情形。双求和忽略了 
+\begin_inset Formula $i=j$
+\end_inset
+
+ 的项，即“自能项”。
+\end_layout
+
+\begin_layout Enumerate
+两种公式的物理图像分别为：电荷之间的相互作用能；电场中存储的能量。
+\end_layout
+
+\begin_layout Enumerate
+电场的能量是正定的；相互作用能可能是负值。
+\end_layout
+
+\begin_layout Standard
+考虑两个点电荷 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+，
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ 组成的体系，空间一点
+\begin_inset Formula $\sbf x$
+\end_inset
+
+处的电势和静电能分别为：
+\begin_inset Formula 
+\begin{align}
+ & \sbf E=\frac{1}{4\pi\epsilon_{0}}\frac{q_{1}(\sbf x-\sbf x_{1})}{\abs{\sbf x-\sbf x_{1}}^{3}}+\frac{1}{4\pi\epsilon_{0}}\frac{q_{2}(\sbf x-\sbf x_{2})}{\abs{\sbf x-\sbf x_{2}}^{3}},\nonumber \\
+ & 32\pi^{2}\epsilon_{0}w=\frac{q_{1}^{2}}{\abs{\sbf x-\sbf x_{1}}^{4}}+\frac{q_{2}^{2}}{\abs{\sbf x-\sbf x_{2}}^{4}}+2\frac{q_{1}q_{2}(\sbf x-\sbf x_{1})\cdot(\sbf x-\sbf x_{2})}{\abs{\sbf x-\sbf x_{1}}^{3}\abs{\sbf x-\sbf x_{2}}^{3}}.\label{eq:j1.56}
+\end{align}
+
+\end_inset
+
+前两项是两个点电荷的自能，后一项是相互作用能。
+\end_layout
+
+\begin_layout Subsection
+电容矩阵
+\end_layout
+
+\begin_layout Standard
+FEM-Gerard; page 31/47; sec 1.3.8.8 
+\end_layout
+
+\begin_layout Standard
+在含有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个导体的系统中，第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个导体上的电荷
+\begin_inset Formula $Q_{i}$
+\end_inset
+
+ 可以用所有导体上的电势
+\begin_inset Formula $V_{j}$
+\end_inset
+
+，以及一些几何参数，共同表出：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Q_{i}=\sum_{j=1}^{n}C_{ij}V_{j},\quad i=1,2,\cdots,n\label{eq:j1.61}
+\end{equation}
+
+\end_inset
+
+系数 
+\begin_inset Formula $C_{ii}$
+\end_inset
+
+ 被称为电容（capacities or capacitances），非对角元
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+被称为互感系数。
+\end_layout
+
+\begin_layout Enumerate
+导体的电容，等于它带单位电势时的电荷，同时保持其他导体电势为零。
+\end_layout
+
+\begin_layout Enumerate
+电容矩阵 
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+ 是对称矩阵，表示两个导体间的电荷相互作用是对等的。
+\end_layout
+
+\begin_layout Enumerate
+非对角元 
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+ 对应两个导体间的互作用能量。
+\begin_inset Formula 
+\[
+C_{ij}V_{i}V_{j}=\int_{\Omega}\sbf E_{i}\cdot\sbf D_{j}\dd{\Omega},\quad i,j\,\text{不求和}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+导体系统的 静电能 可以表示为
+\begin_inset Formula 
+\begin{equation}
+W=\frac{1}{2}\sum_{i=1}^{n}Q_{i}V_{i}=\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}C_{ij}V_{i}V_{j}.\label{eq:j1.62}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $C_{ii}V_{i}^{2}$
+\end_inset
+
+是正定的，对应电荷的“自能”（self energy）；
+\begin_inset Formula $C_{ij}V_{i}V_{j}$
+\end_inset
+
+对应相互作用能 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j1.53"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+电介质中的静电能
+\end_layout
+
+\begin_layout Standard
+p190; sec 4.7 
+\end_layout
+
+\begin_layout Standard
+见 Sec1.11，自由空间电荷系统的能量为：
+\begin_inset Formula 
+\begin{equation}
+W=\frac{1}{2}\int\rho(\sbf x)\Phi(\sbf x)\dd[3]{x}.\label{eq:j4.83}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+存在电介质的情况下，静电能的微小变分为：
+\begin_inset Formula 
+\begin{equation}
+\delta W=\int\delta\rho(\sbf x)\Phi(\sbf x)\dd[3]{x}.\label{eq:j4.84}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Phi(\sbf x)$
+\end_inset
+
+ 是由于已存在电荷密度 
+\begin_inset Formula $\rho(\sbf x)$
+\end_inset
+
+产生的电势。考虑到 
+\begin_inset Formula $\nabla\cdot\sbf D=\rho$
+\end_inset
+
+，我们可以作替换
+\begin_inset Formula 
+\begin{equation}
+\delta\rho=\nabla\cdot(\delta\sbf D).\label{eq:j4.85}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot(\Phi\delta\sbf D) & =(\nabla\phi)\cdot\delta\sbf D+\Phi\nabla\cdot\delta\sbf D\\
+ & =-\sbf E\cdot\delta\sbf D+\Phi\delta\rho
+\end{align*}
+
+\end_inset
+
+如果电荷分布在有限空间内，则 
+\begin_inset Formula $\nabla\cdot(\Phi\delta\sbf D)$
+\end_inset
+
+ 在全空间的积分为零（应用高斯散度定理）。因此可以把静电能的变分写成：
+\begin_inset Formula 
+\begin{equation}
+\delta W=\int\sbf E\cdot\delta\sbf D\dd[3]{x}.\label{eq:j4.86}
+\end{equation}
+
+\end_inset
+
+因此当
+\begin_inset Formula $\sbf D$
+\end_inset
+
+从初始值
+\begin_inset Formula $0$
+\end_inset
+
+变化到最终值时，在形式上可以把静电能写成：
+\begin_inset Formula 
+\begin{equation}
+W=\int\dd[3]x\int_{0}^{D}\sbf E\cdot\delta\sbf D.\label{eq:j4.87}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果介质是 
+\emph on
+线性的
+\emph default
+，则
+\begin_inset Formula 
+\begin{equation}
+\sbf E\cdot\delta\sbf D=\frac{1}{2}\delta\left(\sbf E\cdot\sbf D\right).\label{eq:4.88}
+\end{equation}
+
+\end_inset
+
+总能量可以写成
+\begin_inset Formula 
+\begin{equation}
+W=\frac{1}{2}\int\sbf E\cdot\sbf D\dd[3]{x}.\label{eq:j4.89}
+\end{equation}
+
+\end_inset
+
+如果假设 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 是线性相关的，通过 
+\begin_inset Formula $\sbf E=-\nabla\Phi$
+\end_inset
+
+ 和 
+\begin_inset Formula $\nabla\cdot\sbf D=\rho$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.89"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可以回到
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.83"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+或
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.84"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 。因此，
+\emph on
+只有当行为是线性的，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.83"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在宏观上才成立。
+\emph default
+否则，只能使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:j4.87"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+计算，最终的 静电能 依赖于极化历史。
+\end_layout
+
+\begin_layout Section
+非线性材料的电容矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+g1 = Plot[x^(3/5), {x, 0, 5} , AxesLabel -> {"D", "E"} , ImageSize -> Small];
+ g2 = Plot[Log[x + 1], {x, 0, 5} , AxesLabel -> {"Q", "U"} , ImageSize ->
+ Small]; GraphicsRow[{g1, g2}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/capacitance-curve.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $E-D$
+\end_inset
+
+曲线与
+\begin_inset Formula $U-Q$
+\end_inset
+
+曲线，静电能的等价表示形式为
+\begin_inset Formula $\delta w=E\delta D$
+\end_inset
+
+，
+\begin_inset Formula $\delta w=U\delta Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+follow XuLei，两张图中，曲线上的点是一一对应的，根据对应关系有：
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{2}\delta\sbf E\cdot\delta\sbf D & =\frac{1}{2}\delta U\delta fQ\\
+ & =\frac{1}{2}\delta U\;C\delta U
+\end{align*}
+
+\end_inset
+
+假设由边值问题
+\begin_inset Formula $\alpha$
+\end_inset
+
+，求解出了电场结果 
+\begin_inset Formula $\beta$
+\end_inset
+
+。在确定的几何点
+\begin_inset Formula $P$
+\end_inset
+
+，和电场 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 下，
+\begin_inset Formula $\epsilon=\partial D/\partial E$
+\end_inset
+
+，
+\begin_inset Formula $C=\partial Q/\partial U$
+\end_inset
+
+ 都是确定的。这时候作完全线性化，完全按照线性系统处理，取 
+\begin_inset Formula $\delta U=\SI{1}{V}$
+\end_inset
+
+，给出
+\begin_inset Formula 
+\[
+C=\delta\sbf E\cdot\delta\sbf D.
+\]
+
+\end_inset
+
+这个式子的含义是：
+\end_layout
+
+\begin_layout Enumerate
+体系此时的电容，可以由 
+\begin_inset Formula $\delta U=\SI{1}{V}$
+\end_inset
+
+ 条件定出的电场得到；
+\end_layout
+
+\begin_layout Enumerate
+在使用 Galerkin 方程计算过程中，认定 
+\begin_inset Formula $\epsilon=\partial D/\partial E$
+\end_inset
+
+ 为常数，
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的每一几何点的具体值，由之前边值问题的解 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 提供；材料性质的影响体现在此处。
+\end_layout
+
+\begin_layout Enumerate
+而 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+与 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 的关系，由材料在当前 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 下的电介质数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 决定。非线性材料的 电介质数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 与 
+\begin_inset Formula $\sbf E$
+\end_inset
+
+ 的关系可能比较复杂，但在当前一点可以当成常数。
+\end_layout
+
+\begin_layout Enumerate
+并且对于多导体系统，还类似地定义电容矩阵：
+\begin_inset Formula 
+\[
+C_{ij}=\frac{1}{\delta U_{i}\delta U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega},
+\]
+
+\end_inset
+
+积分区域是全系统空间，实际上还取了 
+\begin_inset Formula $\delta U_{i}=\delta U_{j}=\SI{1}{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+体系的电容 
+\begin_inset Formula $C$
+\end_inset
+
+ 与体系的几何构型，以及材料的电介质数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 相关。以上方法实际上就是：
+\color blue
+在点的局域上，把 非线性材料 权当成 线性材料 处理
+\color inherit
+。线性材料的互容矩阵实际上就是
+\begin_inset Formula 
+\[
+C_{ij}=\frac{1}{U_{i}U_{j}}\int_{\Omega}\sbf D_{i}\cdot\sbf E_{j}\dd{\Omega}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+虚功法
+\end_layout
+
+\begin_layout Standard
+FEM-Gerard; sec 38/54;
+\end_layout
+
+\begin_layout Standard
+刚体上的力和力矩（torque）也可以使用虚功原理（virtual work theorem）计算。在微小位移
+\begin_inset Formula $\delta u$
+\end_inset
+
+下，装置的内能（internal energy）的变化 
+\begin_inset Formula $\delta W_{e}$
+\end_inset
+
+，等于 外源（external sources）输入的电能，加上力 
+\begin_inset Formula $-F_{u}$
+\end_inset
+
+（牛顿第三定律）的功：
+\begin_inset Formula 
+\begin{equation}
+\delta W_{e}=\sum V_{k}\delta Q_{k}-F_{u}\delta u=\sum\frac{\partial W_{e}}{\partial Q_{k}}\delta Q_{k}+\frac{\partial W_{e}}{\partial u}\delta u.\label{eq:g1.117}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在实验一中，装置与外界电源隔离。电极上的电荷总量不变，即 
+\begin_inset Formula $\delta Q_{k}=0$
+\end_inset
+
+，因此给出
+\begin_inset Formula 
+\begin{align}
+ & F_{u}=-\frac{\partial W_{e}}{\partial u}.\label{eq:g1.118}\\
+ & C_{\omega}=-\frac{\partial W_{e}}{\partial\theta}.\label{eq:g1.119}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{\omega}$
+\end_inset
+
+ 表示绕旋转轴 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 的力矩。求偏导时，保持 electric state variable（电极上的电荷）不变。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在实验二中，把装置连接到 恒压源，电极上的电势 
+\begin_inset Formula $V_{k}$
+\end_inset
+
+ 保持不变，而电极上的电荷可能会变化 
+\begin_inset Formula $\delta Q_{k}$
+\end_inset
+
+。现在，更适合用系统的共能（coenergy）去分析。
+\begin_inset Formula 
+\begin{align}
+ & \sum V_{k}\delta Q_{k}-\sum\delta\left(V_{k}Q_{k}\right)-F_{u}\delta u=\delta W_{e}-\sum\delta\left(V_{k}Q_{k}\right).\label{eq:g1.120}\\
+\Rightarrow & -\sum Q_{k}\delta V_{k}-F_{u}\delta u=-\delta W_{c}=-\sum\frac{\partial W_{c}}{\partial V_{k}}\delta V_{k}-\frac{\partial W_{c}}{\partial u}\delta u.\label{eq:g1.121}
+\end{align}
+
+\end_inset
+
+现在，力和力矩可以用 共能 的偏导表示，
+\begin_inset Formula 
+\begin{align}
+ & F_{u}=\frac{\partial W_{c}}{\partial u},\label{eq:g1.122}\\
+ & C_{\omega}=\frac{\partial W_{c}}{\partial\theta}.\label{eq:g1.123}
+\end{align}
+
+\end_inset
+
+求偏导时保持 electric state variable（电极上的电压）不变。
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+page 20/36;
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial W_{c}}{\partial v_{i}}=-\iint D\cdot\mathrm{grad}\varphi_{i}h\dd{x}\dd{y}-\iint\rho\varphi_{i}h\dd{x}\dd{y}=0\quad\text{for}\quad i=1,2,\cdots,N_{L}\label{eq:g1.52-1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ 表示节点上的值，一共有 
+\begin_inset Formula $N_{L}$
+\end_inset
+
+个。
+\end_layout
+
+\begin_layout Plain Layout
+page 14/30;
+\begin_inset Formula 
+\begin{equation}
+W_{c}=\iint\left[\int_{0}^{-\nabla v}D\dd{E}-\rho v\right]h\dd{x}\dd{y}\label{eq:g1.35-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+当电极上的电势保持常数时，coenergy 的有限元近似只是位移 
+\begin_inset Formula $u$
+\end_inset
+
+ 的函数，或者通过 
+\color blue
+节点的坐标直接依赖
+\color inherit
+，或者通过 
+\color brown
+节点电势间接依赖
+\color inherit
+：
+\begin_inset Formula 
+\begin{equation}
+W_{c}=W_{c}\left[{\color{brown}v_{1}(u),v_{2}(u),\cdots,v_{N_{L}}(u)},{\color{blue}u}\right]=W_{c}(u).\label{eq:g1.126}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+F_{u}=\frac{\dd{W_{c}}}{\dd{u}}=\sum_{j=1}^{N_{L}}\frac{\partial W_{c}}{\partial v_{j}}\frac{\dd{v_{j}}}{\dd{u}}+\frac{\partial W_{c}}{\partial u}.\label{eq:g1.127}
+\end{equation}
+
+\end_inset
+
+根据
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:g1.52-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，共能对 节点电势的偏导为零，因此
+\begin_inset Formula 
+\begin{equation}
+F_{u}=\frac{\partial W_{c}}{\partial u}.\label{eq:g1.128}
+\end{equation}
+
+\end_inset
+
+求偏导时保持 节点电势不变。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/Gerard-1.11.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是刚体单元。空心节点表示能够运动。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+静磁场
+\end_layout
+
+\begin_layout Standard
+根据 
+\begin_inset Formula $\sbf B$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 的本构关系 
+\begin_inset Formula $\sbf B(\sbf H)$
+\end_inset
+
+，可以分线性材料，永磁体 和 非线性材料 三种来计算静磁场。
+\end_layout
+
+\begin_layout Standard
+下面先以最简单的线性材料为例，用有限元方法来计算静磁场，之后再讨论永磁铁和更复杂的非线性情况。首先磁场强度矢量 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 满足方程
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\sbf H=\sbf J\label{eq:xl3.1}
+\end{equation}
+
+\end_inset
+
+在线性介质中，磁感应强度 
+\begin_inset Formula $\sbf B$
+\end_inset
+
+ 和 磁场强度 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 之间的关系为：
+\begin_inset Formula 
+\[
+\sbf H=\frac{1}{\mu_{0}\mu_{r}}\sbf B
+\]
+
+\end_inset
+
+相对磁导率 
+\begin_inset Formula $\mu_{r}$
+\end_inset
+
+ 是不随磁场变化的常数（但可以随空间坐标变化）。由于 
+\begin_inset Formula $\nabla\cdot\sbf B=0$
+\end_inset
+
+，因此磁感应强度可以用矢势 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 表示为
+\begin_inset Formula 
+\[
+\sbf B=\nabla\times\sbf A
+\]
+
+\end_inset
+
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可以得到 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 满足的方程
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J\label{eq:xl3.2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 对应的泛函积分为
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}(\sbf A)=\int_{\Omega}\dd{\Omega}\left[\frac{1}{\mu_{r}}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\left(\nabla\times\sbf A\right)-\mu_{0}\,\sbf J\cdot\sbf A\right]\label{eq:xl3.3}
+\end{equation}
+
+\end_inset
+
+计算 
+\begin_inset Formula $\mathcal{F}(\sbf A)$
+\end_inset
+
+ 的变分得：
+\begin_inset Formula 
+\[
+\mathcal{F}(\sbf A)=\int_{\Omega}\dd{\Omega}\left[\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\cdot\left(\nabla\times\delta\sbf A\right)-\mu_{0}\,\sbf J\cdot\delta\sbf A\right]
+\]
+
+\end_inset
+
+根据公式 
+\begin_inset Formula $\nabla\cdot(\sbf a\times\sbf b)=\sbf b\cdot(\nabla\times\sbf a)-\sbf a\cdot(\nabla\times\sbf b)$
+\end_inset
+
+， 并使用高斯定理可以得到
+\begin_inset Formula 
+\begin{align*}
+\delta\mathcal{F}(\sbf A) & =\int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{\Omega}+\int_{\Gamma}\sbf e_{n}\cdot\left[\delta\sbf A\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\right]\dd{\Gamma}\\
+ & =\int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{\Omega}-\int_{\Gamma}\delta\sbf A\cdot\left[\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\right]\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+第一项可以给出矢势 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 满足的方程，即
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。第二项给出矢势
+\begin_inset Formula $\sbf A$
+\end_inset
+
+的自然边界条件：
+\begin_inset Formula 
+\[
+\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=0
+\]
+
+\end_inset
+
+将计算的区域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 划分有限单元后，
+\begin_inset Formula $\mathcal{F}(\sbf A)$
+\end_inset
+
+ 可以表示为
+\begin_inset Formula 
+\[
+\mathcal{F}(\sbf A)=\sum_{e}\mathcal{F}^{e}(\sbf A)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}^{e}(\sbf A^{e})=\frac{1}{2}\int_{\Omega^{e}}\frac{1}{\mu_{r}}\left(\nabla\times\sbf A^{e}\right)\cdot\left(\nabla\times\sbf A^{e}\right)\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf A^{e}\dd{\Omega}\label{eq:xl6.5}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于磁场，二维，轴对称和 三维问题 所采用的单元略有不同。首先是二维情况，电流是垂直二维平面流过的，
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 也只有垂直二维平面的分量。即 
+\begin_inset Formula $\sbf J=J_{z}\sbf e_{z}$
+\end_inset
+
+，有限元中的矢势可以用形函数和节点上定义的 
+\begin_inset Formula $A_{z,i}$
+\end_inset
+
+ 表示为：
+\begin_inset Formula 
+\[
+\sbf A^{e}(x,y)=\sum_{i=1}^{n_{e}}N_{i}^{e}(x,y)A_{z,i}\sbf e_{z},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+然后是 磁感应
+\begin_inset Formula $\sbf B$
+\end_inset
+
+ 轴对称情况，
+\begin_inset Formula 
+\[
+\nabla\times f=\left(\frac{1}{r}\partial_{\phi}f_{z}-\partial_{z}f_{\phi}\right)\sbf e_{r}+\left(\partial_{z}f_{r}-\partial_{r}f_{z}\right)\sbf e_{\phi}+\left[\frac{1}{r}\partial_{r}\left(rf_{\phi}\right)-\frac{1}{r}\partial_{\phi}f_{r}\right]\sbf e_{z}
+\]
+
+\end_inset
+
+轴对称意味着 
+\begin_inset Formula $\sbf e_{\phi}$
+\end_inset
+
+ 方向分量为零。
+\end_layout
+
+\begin_layout Example
+如果取 对称轴为柱坐标系下的 
+\begin_inset Formula $\sbf e_{z}$
+\end_inset
+
+ 坐标轴，那么电流 
+\begin_inset Formula $\sbf J=J_{\varphi}\sbf e_{\varphi}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf A=A_{\varphi}\sbf e_{\varphi}$
+\end_inset
+
+。有限元中的矢势可以用形函数 和节点上定义的 
+\begin_inset Formula $A_{\varphi,i}$
+\end_inset
+
+ 表示为：
+\begin_inset Formula 
+\[
+\sbf A
+\]
+
 \end_inset
 
 
