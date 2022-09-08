@@ -1514,6 +1514,71 @@ f_{1,3}
 \end_layout
 
 \begin_layout Section
+轴对称电场
+\end_layout
+
+\begin_layout Standard
+柱坐标 
+\begin_inset Formula $(r,\phi,z)$
+\end_inset
+
+ 下的 
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+ 算子：
+\begin_inset Formula 
+\[
+\nabla^{2}\psi=\frac{1}{r}\partial_{r}\left(r\,\partial_{r}\psi\right)+\frac{1}{r^{2}}\partial_{\phi}^{2}\psi+\partial_{z}^{2}\psi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+轴对称情况下，电场方程 
+\begin_inset Formula $-\epsilon\nabla^{2}\Phi=\rho$
+\end_inset
+
+ 在柱坐标系下可以写成：
+\begin_inset Formula 
+\[
+-\frac{1}{r}\partial_{r}\left(\epsilon_{r}\,r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}
+\]
+
+\end_inset
+
+将方程化简成如下形式
+\begin_inset Formula 
+\[
+-\partial_{r}\left(\epsilon_{r}r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}r\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}r
+\]
+
+\end_inset
+
+如果作替换
+\begin_inset Formula 
+\begin{align*}
+ & r\to x,\quad z\to y,\\
+ & \epsilon_{r}r\to\tilde{\epsilon}(x),\quad\rho r\to\tilde{\rho}(x)
+\end{align*}
+
+\end_inset
+
+则原方程可以写作
+\begin_inset Formula 
+\[
+-\partial_{x}\left[\tilde{\epsilon}(x)\,\partial_{x}\Phi\right]-\partial_{y}\left[\tilde{\epsilon}(x)\,\partial_{y}\Phi\right]=\tilde{\rho}(x)
+\]
+
+\end_inset
+
+此方程的求解和二维情况完全相同。
+\end_layout
+
+\begin_layout Section
 静电场的能量
 \end_layout
 
@@ -4059,11 +4124,470 @@ N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3
 \end_layout
 
 \begin_layout Section
-二维形函数二阶
+一维形函数
 \end_layout
 
 \begin_layout Standard
-XuLei：
+一维有限元单元为连接节点 
+\begin_inset Formula $x_{1}^{e}$
+\end_inset
+
+ 和 
+\begin_inset Formula $x_{2}^{e}$
+\end_inset
+
+ 的线段。两个节点上的一阶形函数为：
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=\frac{x_{2}^{e}-x}{x_{2}^{e}-x_{1}^{e}}\\
+ & N_{2}^{(1)}=\frac{x-x_{1}^{e}}{x_{2}^{e}-x_{1}^{e}}
+\end{align*}
+
+\end_inset
+
+或用等参表示为
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=\frac{1-\xi}{2}\\
+ & N_{2}^{(1)}=\frac{1+\xi}{2}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 的取值范围是 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+，与坐标的转换关系为：
+\begin_inset Formula 
+\[
+\xi=\frac{x-(x_{1}^{e}+x_{2}^{e})/2}{(x_{2}^{e}-x_{1}^{e})/2}
+\]
+
+\end_inset
+
+单元中某个内点的坐标 
+\begin_inset Formula $x$
+\end_inset
+
+ 可以用形函数，以及相应的节点坐标 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 表示为：
+\begin_inset Formula 
+\begin{equation}
+x=\sum_{i=1}^{n_{e}}N_{i}^{e}(\xi)x_{i}=\sum_{i=1}^{n_{e}}N_{i}^{e\prime}(x,y)x_{i}\label{eq:interp1d}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+一阶单元是纯线性单元。例如 某线段的曲线参数是横坐标
+\begin_inset Formula $x$
+\end_inset
+
+，两节点的纵坐标分别是 
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $2$
+\end_inset
+
+。有限元插值
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:interp1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出的内点落在一条直线上。
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+nShape[1, 
+\backslash
+[Xi]_] := (1 - 
+\backslash
+[Xi])/2; nShape[2, 
+\backslash
+[Xi]_] := (1 + 
+\backslash
+[Xi])/2; xi = {1, 2}; coord[
+\backslash
+[Xi]_] := Sum[xi[[n]]*nShape[n, 
+\backslash
+[Xi]], {n, 2}]; Plot[coord[
+\backslash
+[Xi]], {
+\backslash
+[Xi], -1, 1}, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-o1-regionInterp.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+二阶一维形函数
+\end_layout
+
+\begin_layout Standard
+在一维有限元单元上添加中点，可以构造二阶形函数。二阶形函数可以由一阶形函数直接生成。首先，边中点形函数 
+\begin_inset Formula $N_{3}^{(2)}$
+\end_inset
+
+ 可以由两个节点的一阶形函数生成，即
+\begin_inset Formula 
+\[
+N_{3}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}
+\]
+
+\end_inset
+
+节点的二阶形函数可以由 节点的一阶形函数，和中点的二阶形函数生成，即
+\begin_inset Formula 
+\[
+N_{i}^{(2)}=N_{i}^{(1)}-\frac{1}{2}N_{3}^{(2)},\quad i\in\{1,2\}
+\]
+
+\end_inset
+
+最后得到二阶形函数的表达式：
+\begin_inset Formula 
+\begin{align*}
+\text{端点形函数：} & N_{1}^{(2)}=\frac{\xi(\xi-1)}{2}\\
+\text{端点形函数：} & N_{2}^{(2)}=\frac{\xi(\xi+1)}{2}\\
+\text{中点形函数：} & N_{3}^{(2)}=(1+\xi)(1-\xi)
+\end{align*}
+
+\end_inset
+
+类似地，单元内点由插值得到
+\begin_inset Formula 
+\begin{equation}
+x=\sum_{i=1}^{n_{e}}N_{i}^{(2)}(\xi)x_{i},\quad\xi\in[-1,1]\label{eq:interp2d}
+\end{equation}
+
+\end_inset
+
+对内点的二阶形函数插值，给出二阶单元，二阶单元可以精确拟合二次曲线。例如下图，两端点纵坐标都是
+\begin_inset Formula $1$
+\end_inset
+
+，中点纵坐标是 
+\begin_inset Formula $2$
+\end_inset
+
+，二阶单元给出的插值曲线为：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+nShape[1, 
+\backslash
+[Xi]_] := (
+\backslash
+[Xi] (
+\backslash
+[Xi] - 1))/2; nShape[2, 
+\backslash
+[Xi]_] := (
+\backslash
+[Xi] (
+\backslash
+[Xi] + 1))/2; nShape[3, 
+\backslash
+[Xi]_] := (1 + 
+\backslash
+[Xi]) (1 - 
+\backslash
+[Xi]); xi = {1, 1, 2}; coord[
+\backslash
+[Xi]_] := Sum[xi[[n]]*nShape[n, 
+\backslash
+[Xi]], {n, 3}]; Plot[coord[
+\backslash
+[Xi]], {
+\backslash
+[Xi], -1, 1}, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-o2-regionInterp.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算中经常会用到 几何坐标 和 等参坐标之间的转换，即
+\begin_inset Formula 
+\[
+J=\frac{\partial x}{\partial\xi}=\frac{\partial N_{i}^{e}}{\partial\xi}x_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+二维形函数
+\end_layout
+
+\begin_layout Standard
+由二维三角形单元顶点的三个坐标可以定义相应的一阶形函数：
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right),\\
+ & N_{2}^{(1)}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y\right),\\
+ & N_{3}^{(1)}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y\right).
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula 
+\[
+\Delta^{e}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Delta_{1}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x & y\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right],\quad\Delta_{1}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x & y\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right],\quad\Delta_{3}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x & y
+\end{array}\right]
+\]
+
+\end_inset
+
+二维形函数的等参坐标取值为 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+，一阶形函数可以用等参坐标表示为：
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=1-\xi-\eta,\\
+ & N_{2}^{(1)}=\xi\\
+ & N_{3}^{(1)}=\eta
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+一阶形函数变换可以写成矩阵形式：
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} =\frac{1}{2\Delta^{e}}\left[\begin{array}{ccc}
+x_{2}y_{3}-x_{3}y_{2} & y_{2}-y_{3} & x_{3}-x_{2}\\
+x_{3}y_{1}-x_{1}y_{3} & y_{3}-y_{1} & x_{1}-x_{3}\\
+x_{1}y_{2}-x_{2}y_{1} & y_{1}-y_{2} & x_{2}-x_{1}
+\end{array}\right]\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} \label{eq:4.160}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+2\Delta^{e}=\det[J]=(y_{2}-y_{3})(x_{1}-x_{3})-(y_{3}-y_{1})(x_{3}-x_{2})
+\]
+
+\end_inset
+
+
+\begin_inset Formula $L_{j}^{e}$
+\end_inset
+
+ 就是一阶三角形单元的形函数。逆变换矩阵为
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} =\left[\begin{array}{ccc}
+1 & 1 & 1\\
+x_{1}^{e} & x_{2}^{e} & x_{3}^{e}\\
+y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} .\label{eq:4.161}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+雅可比矩阵可以给出 几何坐标 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 与 等参坐标 
+\begin_inset Formula $(\xi,\eta)$
+\end_inset
+
+ 之间，微分的变换关系：
+\begin_inset Formula 
+\[
+[J]=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right]=\left[\begin{array}{cc}
+-x_{1}+x_{2} & -y_{1}+y_{2}\\
+-x_{1}+x_{3} & -y_{1}+y_{3}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)=[J]\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial x}\\
+\frac{\partial N_{i}^{e}}{\partial y}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+二阶二维形函数
+\end_layout
+
+\begin_layout Standard
+在三角形单元各个边中点增加一个节点之后，可以构造出相应的二阶形函数，
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Graphics[{ Line[{{-1, 0}, {1, 0}, {0, Sqrt[3]}, {-1, 0}}], PointSize[0.03],
+ Point[{{0, 0}, {0.5, Sqrt[3]/2}, {-0.5, Sqrt[3]/2}}], Style[Text["1", {-1.1,
+ 0}], 16], Style[Text["4", {0, -0.16}], 16], Style[Text["2", {1.1, 0}], 16],
+ Style[Text["5", {0.62, Sqrt[3]/2}], 16], Style[Text["3", {0, Sqrt[3] + 0.1}],
+ 16], Style[Text["6", {-0.62, Sqrt[3]/2}], 16] }, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-Tri6.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+边中点形函数 
+\begin_inset Formula $N_{i}^{(2)}$
+\end_inset
+
+ 可以由两个节点的一阶形函数生成，即
+\begin_inset Formula 
+\begin{align*}
+ & N_{4}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}\\
+ & N_{5}^{(2)}=4N_{3}^{(1)}N_{2}^{(1)}\\
+ & N_{6}^{(2)}=4N_{1}^{(1)}N_{3}^{(1)}
+\end{align*}
+
+\end_inset
+
+顶点的二阶形函数，可以由顶点的一阶形函数，和 邻接边中点的二阶形函数生成
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(2)}=N_{1}^{(1)}-\frac{1}{2}[N_{4}^{(1)}+N_{6}^{(1)}]\\
+ & N_{2}^{(2)}=N_{2}^{(1)}-\frac{1}{2}[N_{4}^{(1)}+N_{5}^{(1)}]\\
+ & N_{3}^{(2)}=N_{3}^{(1)}-\frac{1}{2}[N_{5}^{(1)}+N_{6}^{(1)}]
+\end{align*}
+
+\end_inset
+
+最后可以得到
 \begin_inset Formula 
 \begin{align*}
  & N_{1}^{(2)}=\left(1-\xi-\eta\right)\left(1-2\xi-2\eta\right)\\
@@ -4076,76 +4600,147 @@ XuLei：
 
 \end_inset
 
-与一阶单元形函数 
-\begin_inset Formula $N^{e(1)}$
-\end_inset
-
- 的关系为：
-\end_layout
-
-\begin_layout Enumerate
-对于三角形边上中点的形函数，假设中点的节点编号为 
-\begin_inset Formula $g$
-\end_inset
-
-，
-\begin_inset Formula $g$
-\end_inset
-
- 连接的两个三角形顶点为 
-\begin_inset Formula $(j,k)$
-\end_inset
-
-，则 
-\begin_inset Formula $g$
-\end_inset
-
- 的形函数为
-\begin_inset Formula 
-\[
-N_{g}^{e(2)}=4N_{j}^{e(1)}N_{k}^{e(1)}
-\]
-
-\end_inset
-
 
 \end_layout
 
-\begin_layout Enumerate
-对于顶点处的形函数，假设顶点编号为 
-\begin_inset Formula $i$
-\end_inset
-
-，它连接的两个中点记作
-\begin_inset Formula $g=\{g_{1},g_{2}\}$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-N_{i}^{e(2)}=N_{i}^{e(1)}-\frac{1}{2}\sum_{g}N_{g}^{(2)}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-单元中的坐标 
+\begin_layout Standard
+单元内点的坐标 
 \begin_inset Formula $(x,y)$
 \end_inset
 
- 可以用形函数以及节点处的坐标 
+ ，可以用 形函数 以及 节点处的坐标 
 \begin_inset Formula $\left(x_{i},y_{i}\right)$
 \end_inset
 
- 来表示
+ 表示为
 \begin_inset Formula 
 \begin{align*}
  & x=\sum_{i}N_{i}^{e}\left(x,y\right)x_{i}\\
  & y=\sum_{i}N_{i}^{e}\left(x,y\right)y_{i}
 \end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如图，对于曲线边界的几何区域，使用二阶形函数插值能给出贴合得更好的单元
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+nShape[1][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := (1 - 
+\backslash
+[Xi] - 
+\backslash
+[Eta]) (1 - 2 
+\backslash
+[Xi] - 2 
+\backslash
+[Eta]); nShape[2][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 
+\backslash
+[Xi] (2 
+\backslash
+[Xi] - 1); nShape[3][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 
+\backslash
+[Eta] (2 
+\backslash
+[Eta] - 1);
+\end_layout
+
+\begin_layout Plain Layout
+nShape[4][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 4 (1 - 
+\backslash
+[Xi] - 
+\backslash
+[Eta]) 
+\backslash
+[Xi]; nShape[5][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 4 
+\backslash
+[Xi] 
+\backslash
+[Eta]; nShape[6][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 4 (1 - 
+\backslash
+[Xi] - 
+\backslash
+[Eta]) 
+\backslash
+[Eta]; 
+\backslash
+[Delta] = 0.1;(*midpoint offset*) xi = { {-1, 0}, {1, 0}, {0, Sqrt[3]}, {0,
+ 0 - 
+\backslash
+[Delta]}, {0.5 - 
+\backslash
+[Delta], Sqrt[3]/2}, {-(0.5 + 
+\backslash
+[Delta]), Sqrt[3]/2} }; coord[
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := Sum[xi[[n]]*nShape[n][
+\backslash
+[Xi], 
+\backslash
+[Eta]], {n, 6}]; ParametricPlot[ coord[
+\backslash
+[Xi], 
+\backslash
+[Eta]], {
+\backslash
+[Xi], 0, 1}, {
+\backslash
+[Eta], 0, 1 - 
+\backslash
+[Xi]}, ImageSize -> Tiny]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-tri6-RegionIntep.png
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有限元计算中，经常用到下面公式所示的形函数积分性质：
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}(L_{1}^{e})^{\ell}(L_{2}^{e})^{m}(L_{3}^{e})^{n}\dd{x}\dd{y}=\frac{\ell!m!n!}{(\ell+m+n+2)!}2\Delta^{e}
+\]
 
 \end_inset
 
@@ -4676,6 +5271,47 @@ x_{4} & y_{4} & z_{4}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Edge单元
+\end_layout
+
+\begin_layout Standard
+在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
+在棱边 
+\begin_inset Formula $i$
+\end_inset
+
+ 上可以定义形函数：
+\begin_inset Formula 
+\[
+\sbf N_{i}^{e}=\left(L_{i_{1}}^{e}\nabla L_{i_{2}}^{e}-L_{i_{2}}^{e}\nabla L_{i_{1}}^{e}\right)\ell_{i}^{e}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $i_{1}$
+\end_inset
+
+与 
+\begin_inset Formula $i_{2}$
+\end_inset
+
+为与棱边
+\begin_inset Formula $i$
+\end_inset
+
+ 邻接的两个顶点。
+\begin_inset Formula $\ell_{i}^{e}$
+\end_inset
+
+ 的绝对值等于棱边的长度，正负号由节点的总体编号决定。形函数 
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
 \end_layout
 
 \begin_layout Chapter
@@ -5230,17 +5866,139 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+三维磁场可以用棱边性函数表示为：
 \begin_inset Formula 
 \[
-\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[\left(-\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right)\nabla L_{\alpha}^{e}-\left(\sbf H\cdot\frac{\partial\sbf B}{\partial\sbf r_{\alpha}}\right)\right]\dd{\Omega}
+\sbf B=(\nabla\times\sbf N_{\alpha}^{e})A_{\alpha}=2A_{\alpha}\ell_{\alpha}^{e}\nabla L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $\sbf N_{\alpha}^{e}=(L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\times\nabla L_{\alpha(1)}^{e})\ell_{\alpha}^{e}$
+\end_inset
 
+。分量形式为：
+\begin_inset Formula 
+\begin{align*}
+B_{j} & =2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\;{\color{blue}\partial_{k}L_{\alpha(1)}^{e}}\;{\color{brown}\partial_{m}L_{\alpha(2)}^{e}}\\
+ & =2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\;{\color{blue}J_{kf}^{-1}\hat{\partial}_{f}L_{\alpha(1)}^{e}}\;{\color{brown}J_{mg}^{-1}\hat{\partial}_{g}L_{\alpha(2)}^{e}}
+\end{align*}
+
+\end_inset
+
+上式中的 Jacobi 矩阵和四面体棱边的长度 
+\begin_inset Formula $\ell_{i}^{e}$
+\end_inset
+
+ 均为 
+\begin_inset Formula $\sbf r_{\alpha}$
+\end_inset
+
+ 的函数，但在用棱边形函数进行有限元计算时，待求的独立变量应该是 
+\begin_inset Formula $A_{i}\ell_{i}$
+\end_inset
+
+ 而不是 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+；每条边上的 
+\begin_inset Formula $A_{i}\ell_{i}$
+\end_inset
+
+ 不变，也是保证四面体某个面上磁通不变的条件。因此在计算 
+\begin_inset Formula $B_{j}$
+\end_inset
+
+ 偏导的时候，只需计算 Jacobi 矩阵对 
+\begin_inset Formula $\sbf r_{\alpha}$
+\end_inset
+
+ 的导数。利用式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $\frac{\partial J_{12}^{-1}}{\partial r_{\alpha3}}=-\partial_{1}L_{\alpha}^{e}\;J_{32}^{-1}$
+\end_inset
+
+可得
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial B_{j}}{\partial r_{\alpha h}} & =2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\left({\color{blue}\frac{\partial J_{kf}^{-1}}{\partial r_{\alpha h}}\hat{\partial}_{f}L_{\alpha(1)}^{e}}\;{\color{brown}J_{mg}^{-1}}+{\color{blue}J_{kf}^{-1}\hat{\partial}_{f}L_{\alpha(1)}^{e}}\;{\color{brown}\frac{J_{mg}^{-1}}{\partial r_{\alpha h}}}\right){\color{brown}\hat{\partial}_{g}L_{\alpha(2)}^{e}}\\
+ & =2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}(-)\left({\color{blue}\partial_{k}L_{\alpha}^{e}\;J_{hf}^{-1}\hat{\partial}_{f}L_{\alpha(1)}^{e}}\;{\color{brown}J_{mg}^{-1}}+{\color{blue}J_{kf}^{-1}\hat{\partial}_{f}L_{\alpha(1)}^{e}}\;{\color{brown}\partial_{m}L_{\alpha}^{e}\;J_{hg}^{-1}}\right){\color{brown}\hat{\partial}_{g}L_{\alpha(2)}^{e}}\\
+ & =-2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\left(\partial_{k}L_{\alpha}^{e}\;{\color{red}J_{hf}^{-1}\hat{\partial}_{f}}\;L_{\alpha(1)}^{e}\;{\color{red}J_{mg}^{-1}\hat{\partial}_{g}}\;L_{\alpha(2)}^{e}+{\color{red}J_{kf}^{-1}\hat{\partial}_{f}}\;L_{\alpha(1)}^{e}\;\partial_{m}L_{\alpha}^{e}\;{\color{red}J_{hg}^{-1}\hat{\partial}_{g}}\;L_{\alpha(2)}^{e}\right)\\
+ & =-2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\left(\partial_{k}L_{\alpha}^{e}\;{\color{red}\partial_{h}}\;L_{\alpha(1)}^{e}\;{\color{red}\partial_{m}}\;L_{\alpha(2)}^{e}+{\color{red}\partial_{k}}\;L_{\alpha(1)}^{e}\;\partial_{m}L_{\alpha}^{e}\;{\color{red}\partial_{h}}\;L_{\alpha(2)}^{e}\right)\\
+ & =-2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\partial_{k}L_{\alpha}^{e}\left({\color{red}\partial_{h}}L_{\alpha(1)}^{e}\;{\color{red}\partial_{m}}L_{\alpha(2)}^{e}-{\color{red}\partial_{m}}L_{\alpha(1)}^{e}\;{\color{red}\partial_{h}}L_{\alpha(2)}^{e}\right)
+\end{align*}
+
+\end_inset
+
+代入恒等式
 \begin_inset Formula 
 \[
-\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[\frac{\sbf B\cdot\sbf B}{2\mu_{0}\mu_{r}}\nabla L_{\alpha}^{e}-\frac{\sbf B\left(\nabla L_{\alpha}^{e}\cdot\sbf B\right)}{\mu_{0}\mu_{r}}\right]\dd{\Omega}
+{\color{red}\partial_{h}}L_{\alpha(1)}^{e}\;{\color{red}\partial_{m}}L_{\alpha(2)}^{e}-{\color{red}\partial_{m}}L_{\alpha(1)}^{e}\;{\color{red}\partial_{h}}L_{\alpha(2)}^{e}=\varepsilon_{bhm}\left(\nabla L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}\right)_{b}\quad\text{反对称}
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial B_{j}}{\partial r_{\alpha h}} & =-2A_{\alpha}\ell_{\alpha}^{e}\;\varepsilon_{jkm}\partial_{k}L_{\alpha}^{e}\;\varepsilon_{bhm}\left(\nabla L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}\right)_{b}\\
+ & =-2A_{\alpha}\ell_{\alpha}^{e}\left[\begin{array}{cc}
+\delta_{jb} & \delta_{jh}\\
+\delta_{kb} & \delta_{kh}
+\end{array}\right]\partial_{k}L_{\alpha}^{e}\left(\nabla L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}\right)_{b}\\
+ & =-2A_{\alpha}\ell_{\alpha}^{e}\left[\partial_{h}L_{\alpha}^{e}\left(\nabla L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}\right)_{j}-\delta_{jh}\partial_{k}L_{\alpha}^{e}\left(\nabla L_{\alpha(1)}^{e}\times\nabla L_{\alpha(2)}^{e}\right)_{k}\right]\\
+ & =-B_{j}\;\partial_{h}L_{\alpha}^{e}+\delta_{jh}\;B_{k}\,\partial_{k}L_{\alpha}^{e}
+\end{align*}
+
+\end_inset
+
+写成矢量形式是
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\partial/\partial r_{\alpha1}\\
+\partial/\partial r_{\alpha2}\\
+\partial/\partial r_{\alpha3}
+\end{array}\right]B_{j}=-B_{j}\nabla L_{\alpha}^{e}+\sbf e_{j}\left(\nabla L_{\alpha}^{e}\cdot\sbf B\right)
+\]
+
+\end_inset
+
+因此虚功法的磁力表达式
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\dd{\Omega}\left[\left(-\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right)\nabla L_{\alpha}^{e}-\sbf H\cdot\frac{\partial\sbf B}{\partial\sbf r_{k}}\right]
+\]
+
+\end_inset
+
+给出
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\dd{\Omega}\left[\left(-\int_{0}^{B}\sbf H\cdot\dd{\sbf B'}\right)\nabla L_{\alpha}^{e}+\nabla L_{\alpha}^{e}\left(\sbf H\cdot\sbf B\right)-\left(\sbf B\cdot\nabla L_{\alpha}^{e}\right)\sbf H\right]
+\]
+
+\end_inset
+
+对于线性材料 
+\begin_inset Formula $\sbf B=\mu\mu_{0}\sbf H$
+\end_inset
+
+，结果化简为：
+\begin_inset Formula 
+\[
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\dd{\Omega}\left[\frac{\sbf B\cdot\sbf B}{2\mu_{0}\mu_{r}}\nabla L_{\alpha}^{e}-\frac{\sbf B\left(\nabla L_{\alpha}^{e}\cdot\sbf B\right)}{\mu_{0}\mu_{r}}\right]
 \]
 
 \end_inset
