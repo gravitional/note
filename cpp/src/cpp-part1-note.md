@@ -282,8 +282,14 @@ enum Weekday {SUN,MON,TUE,WED,THU,FRI,SAT}
 
 ### auto, decltype 类型
 
-`auto `: 编译器通过初始值自动推断变量的类型. 例如: `auto val=val1+ val2`.
-如果都是`int`, 则`val` is `int`. 如果有一个`double`, 则`val`是`doule`类型.
+`auto `: 编译器通过初始值自动推断变量的类型. 例如: 
+
+```cpp
+auto val=val1+ val2
+```
+
+如果都是`int`, 则`val` is `int`. 
+如果有一个`double`, 则`val`是`doule`类型.
 
 `decltype(cls) j =2`:表示`j`的初始值为`2`, 但类型与`cls`一致.
 

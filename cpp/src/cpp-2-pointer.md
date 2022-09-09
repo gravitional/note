@@ -618,7 +618,7 @@ double average(const vector<double> &arr)
 }
 ```
 
-+ 基于范围的 for 循环配合 auto 举例
++ 基于范围的 for 循环配合 `auto` 举例
 
 ```cpp
 #include <vector>

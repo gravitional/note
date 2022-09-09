@@ -11,8 +11,9 @@
 \options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
 \use_default_options true
 \begin_modules
-theorems-ams-chap-bytype
 graphicboxes
+theorems-std
+theorems-chap
 \end_modules
 \maintain_unincluded_children false
 \language chinese-simplified
@@ -98,12 +99,1742 @@ Young
 求解方程
 \end_layout
 
+\begin_layout Standard
+(数值分析–Timothy Sauer)
+\end_layout
+
 \begin_layout Section
 二分法
 \end_layout
 
+\begin_layout Subsection
+把根括住
+\end_layout
+
+\begin_layout Definition
+如果 
+\begin_inset Formula $f(r)=0$
+\end_inset
+
+，函数 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 在 
+\begin_inset Formula $x=r$
+\end_inset
+
+ 时有一个 
+\series bold
+根
+\series default
+。
+\end_layout
+
+\begin_layout Theorem
+令 
+\begin_inset Formula $f$
+\end_inset
+
+ 是区间 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的连续函数，满足 
+\begin_inset Formula $f(a)f(b)<0$
+\end_inset
+
+，则 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $a$
+\end_inset
+
+ 和 
+\begin_inset Formula $b$
+\end_inset
+
+ 之间存在一个根，也就是说，存在数字 
+\begin_inset Formula $r$
+\end_inset
+
+，满足 
+\begin_inset Formula $a<r<b$
+\end_inset
+
+，以及 
+\begin_inset Formula $f(r)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Theorem
+page23/24：二分法程序。
+\end_layout
+
+\begin_layout Definition
+如果误差小于 
+\begin_inset Formula $0.5\times10^{-p}$
+\end_inset
+
+，解精确到小数点后 
+\begin_inset Formula $p$
+\end_inset
+
+ 位。
+\end_layout
+
 \begin_layout Section
 不动点迭代
+\end_layout
+
+\begin_layout Definition
+当 
+\begin_inset Formula $g(r)=r$
+\end_inset
+
+，实数 
+\begin_inset Formula $r$
+\end_inset
+
+ 是函数 
+\begin_inset Formula $g$
+\end_inset
+
+ 的 
+\series bold
+不动点
+\series default
+。
+\end_layout
+
+\begin_layout Definition
+例如，数字 
+\begin_inset Formula $r=0.739\,085\,133\,2$
+\end_inset
+
+ 是函数 
+\begin_inset Formula $g(x)=\cos x$
+\end_inset
+
+ 的近似不动点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+不动点迭代
+\begin_inset Formula 
+\begin{align*}
+ & x_{0}=\text{初始估计}\\
+ & x_{i+1}=g(x_{i}),\quad\text{其中}i=0,1,2,\cdots
+\end{align*}
+
+\end_inset
+
+因此，
+\begin_inset Formula 
+\begin{align*}
+ & x_{1}=g(x_{0})\\
+ & x_{2}=g(x_{1})\\
+ & x_{3}=g(x_{2})\\
+ & \vdots
+\end{align*}
+
+\end_inset
+
+根据连续函数的极限定理 (0.5)，
+\begin_inset Formula 
+\begin{equation}
+g(r)=g(\lim_{i\to\infty}x_{i})=\lim_{i\to\infty}g(x_{i})=\lim_{i\to\infty}x_{i+1}=r\label{eq:1.3}
+\end{equation}
+
+\end_inset
+
+mat代码，page28。
+\end_layout
+
+\begin_layout Definition
+不动点迭代的几何图示被称作 cobweb 图。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+令 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ 表示迭代过程中第 
+\begin_inset Formula $i$
+\end_inset
+
+ 步时的误差，如果
+\begin_inset Formula 
+\[
+\lim_{i\to\infty}\frac{e_{i+1}}{e_{i}}=S<1,\quad e_{i}=\abs{r-x_{i}}
+\]
+
+\end_inset
+
+该方法被称为满足 
+\series bold
+线性收敛
+\series default
+，收敛速度为 
+\begin_inset Formula $S$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition
+假设函数 
+\begin_inset Formula $g$
+\end_inset
+
+ 是连续可微函数，
+\begin_inset Formula $g(r)=r$
+\end_inset
+
+，
+\begin_inset Formula $S=\abs{g'(r)}<1$
+\end_inset
+
+，则不动点迭代对于一个足够接近 
+\begin_inset Formula $r$
+\end_inset
+
+ 的初始估计，以速度 
+\begin_inset Formula $S$
+\end_inset
+
+ 线性收敛到不动点 
+\begin_inset Formula $r$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+如果迭代方法对于一个足够接近 
+\begin_inset Formula $r$
+\end_inset
+
+ 的初值能收敛到 
+\begin_inset Formula $r$
+\end_inset
+
+，该迭代方法被称为 
+\series bold
+局部收敛
+\series default
+ 到 
+\begin_inset Formula $r$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition
+换句话说， 如果存在近邻区间 
+\begin_inset Formula $(r-\varepsilon,r+\varepsilon)$
+\end_inset
+
+，其中 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+，使得近邻区间中所有的初始估计都可以收敛到
+\begin_inset Formula $r$
+\end_inset
+
+，则该方法局部收敛到
+\begin_inset Formula $r$
+\end_inset
+
+。定理1.6 的结论是当 
+\begin_inset Formula $\abs{g'(r)}<1$
+\end_inset
+
+ 时 不动点迭代 局部收敛。
+\end_layout
+
+\begin_layout Example
+使用 FPI 计算 
+\begin_inset Formula $\sqrt{2}$
+\end_inset
+
+。从 
+\begin_inset Formula $x^{2}=2$
+\end_inset
+
+转化
+\begin_inset Formula 
+\begin{align*}
+ & 2x^{2}=x^{2}+2\\
+\Rightarrow & x=\frac{x+2/x}{2}
+\end{align*}
+
+\end_inset
+
+令 
+\begin_inset Formula $g(x)=\frac{x+\frac{2}{x}}{2}$
+\end_inset
+
+，所使用的 FPI 如下：
+\begin_inset Formula 
+\[
+x_{i+1}=\frac{x_{i}+\frac{2}{x_{i}}}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+终止条件
+\end_layout
+
+\begin_layout Standard
+FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测的。必须决定何时终止算法，这成为 
+\series bold
+终止条件
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+绝对 终止条件
+\begin_inset Formula 
+\begin{equation}
+\abs{x_{i+1}-x_{i}}<\text{TOL}\label{eq:1.16}
+\end{equation}
+
+\end_inset
+
+或者当解不在 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近，使用相对误差条件
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\text{TOL}\label{eq:1.17}
+\end{equation}
+
+\end_inset
+
+还有混合 绝对/相对误差 终止条件：
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\text{TOL}\label{eq:1.18}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+，常常用于 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
+\end_layout
+
+\begin_layout Standard
+牛顿方法是 FPI 的一种改善方法，其中 
+\begin_inset Formula $S$
+\end_inset
+
+ 被设计为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+精度的极限
+\end_layout
+
+\begin_layout Subsection
+前向与后向误差
+\end_layout
+
+\begin_layout Example
+使用二分法计算函数 
+\begin_inset Formula $f(x)=x^{3}-2x^{2}+\frac{4}{3}x-\frac{8}{27}=\left(x-\frac{2}{3}\right)^{3}$
+\end_inset
+
+的根，精确到小数点后
+\begin_inset Formula $6$
+\end_inset
+
+位。
+\end_layout
+
+\begin_layout Definition
+假设 
+\begin_inset Formula $f$
+\end_inset
+
+ 是一个函数，
+\begin_inset Formula $r$
+\end_inset
+
+ 是一个根，意味着满足 
+\begin_inset Formula $f(r)=0$
+\end_inset
+
+。假设 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+ 是 
+\begin_inset Formula $r$
+\end_inset
+
+ 的近似值。对于根求值问题，近似 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+ 的 
+\series bold
+后向误差
+\series default
+（backwards） 是 
+\begin_inset Formula $\abs{f(x_{a})}$
+\end_inset
+
+，
+\series bold
+前向误差
+\series default
+（forwards）是 
+\begin_inset Formula $\abs{r-x_{a}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+“后向” 和 “前向”的使用可能需要一些解释。我们认为 寻找根 的过程在中间，问题是输入，解是输出：
+\begin_inset Formula 
+\[
+\text{定义问题的数据}\to\left[\text{求解过程}\right]\to\text{解}
+\]
+
+\end_inset
+
+在本章中，“问题”是单变量的方程，“求解过程”是求解方程的算法：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{方程}\to\left[\text{方程求解器}\right]\to\text{解}
+\]
+
+\end_inset
+
+后向误差在左边或者输入一侧（问题数据）。这是我们需要对于问题（函数
+\begin_inset Formula $f$
+\end_inset
+
+）改变的量，使得方程平衡并输出近似解 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+。这个量是 
+\begin_inset Formula $\abs{f(x_{a})}$
+\end_inset
+
+。前向误差是右边或者输出一侧（问题求解）。这是我们对于近似解要做的修正，该误差是 
+\begin_inset Formula $\abs{r-x_{a}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+例1.7 是一个非常特殊的例子，函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $r=2/3$
+\end_inset
+
+ 具有三阶根。注意到
+\begin_inset Formula 
+\[
+f(x)=x^{3}-2x^{2}+\frac{4}{3}x-\frac{8}{27}=\left(x-\frac{2}{3}\right)^{3}
+\]
+
+\end_inset
+
+在根的位置具有 重根。后向误差接近 
+\begin_inset Formula $\varepsilon_{\text{mach}}\approx2.2\times10^{-16}$
+\end_inset
+
+，而前向误差大约 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+。双精度数不能在机器精度的相对误差下可靠计算，因为后向误差不能被可靠降低，同时前向误差也不能减小。
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:1.9"
+
+\end_inset
+
+假设 
+\begin_inset Formula $r$
+\end_inset
+
+ 是可微函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 的根；也就是说，假设 
+\begin_inset Formula $f(r)=0$
+\end_inset
+
+。则如果 
+\begin_inset Formula $0=f(r)=f'(r)=f''(r)=\cdots f^{(m-1)}(r)$
+\end_inset
+
+，但是 
+\begin_inset Formula $f^{(m)}(r)\neq0$
+\end_inset
+
+，我们说函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在点 
+\begin_inset Formula $r$
+\end_inset
+
+ 具有 
+\begin_inset Formula $m$
+\end_inset
+
+ 
+\series bold
+重根
+\series default
+。当多重性大于
+\begin_inset Formula $1$
+\end_inset
+
+，我们说函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $r$
+\end_inset
+
+ 点具有 
+\series bold
+重根
+\series default
+。当多重性等于 
+\begin_inset Formula $1$
+\end_inset
+
+时，根被称为 
+\series bold
+单根
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+由于函数在 多根附近 十分平缓，前向和后向 误差之间在 近似解的附近存在很大的不一致。后向误差在垂直方向进行度量，通常比在水平方向度量的前向误差要小得多。
+\end_layout
+
+\begin_layout Standard
+例如 
+\begin_inset Formula $f(x)=\sin x-x$
+\end_inset
+
+ 在 
+\begin_inset Formula $r=0$
+\end_inset
+
+ 处有三重根，近似根在 
+\begin_inset Formula $x_{a}=0.001$
+\end_inset
+
+处的前向误差为 
+\begin_inset Formula $\text{FE}=\abs{r-x_{a}}=10\textasciicircum-3$
+\end_inset
+
+。后向误差是一个常数，需要加到 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 上，使 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+ 称为根，即 
+\begin_inset Formula $\text{BE}=\abs{f(x_{a})}=\abs{\sin(0.001)-0.001}\approx1.6667\times10^{-10}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+多重根问题只是冰山一角。没有多重根问题时也可能会出现问题，正如下一节将要讲述的问题。
+\end_layout
+
+\begin_layout Subsection
+威尔金森多项式
+\end_layout
+
+\begin_layout Standard
+一个难以进行数值求解的单根例子在 威尔金森[1994] 的论著中进行了讨论。
+\series bold
+威尔金森多项式
+\series default
+ 是
+\begin_inset Formula 
+\begin{equation}
+W(x)=(x-1)(x-2)\cdots(x-20)\label{eq:1.19}
+\end{equation}
+
+\end_inset
+
+输入 
+\begin_inset Formula $x=16$
+\end_inset
+
+ 作为初始估计，令人惊讶的是，MATLAB 不能返回第二个正确的小数位。
+\end_layout
+
+\begin_layout Subsection
+根搜索的敏感性
+\end_layout
+
+\begin_layout Standard
+如果在输入中是一个小误差，在这种情况下对问题进行求解，造成输出中的大问题，这样的问题被称为 
+\series bold
+敏感性
+\series default
+ 问题。在本节中我们将量化误差，对引入误差放大因子 和 条件数改变。
+\end_layout
+
+\begin_layout Standard
+假设问题是找到 
+\begin_inset Formula $f(x)=0$
+\end_inset
+
+ 的根
+\begin_inset Formula $r$
+\end_inset
+
+，但是对输入做了一个小变化 
+\begin_inset Formula $\varepsilon g(x)$
+\end_inset
+
+，其中 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 很小。令 
+\begin_inset Formula $\Delta r$
+\end_inset
+
+ 是对应根中的变化，因而
+\begin_inset Formula 
+\[
+f(r+\Delta r)+\varepsilon g(r+\Delta r)=0
+\]
+
+\end_inset
+
+作泰勒展开得到
+\begin_inset Formula 
+\[
+\Delta r\left[f'(r)+\varepsilon g'(r)\right]\approx-f(r)-\varepsilon g(r)=-\varepsilon g(r)
+\]
+
+\end_inset
+
+或者
+\begin_inset Formula 
+\[
+\Delta r\approx\frac{-\varepsilon g(r)}{f'(r)+\varepsilon g'(r)}\approx-\varepsilon\frac{g(r)}{f'(r)}
+\]
+
+\end_inset
+
+假设相比于 
+\begin_inset Formula $f'(r)$
+\end_inset
+
+，
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 很小，并且 
+\begin_inset Formula $f'(r)\neq0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+根的敏感公式
+\end_layout
+
+\begin_layout Plain Layout
+假设 
+\begin_inset Formula $r$
+\end_inset
+
+ 是函数 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 的根，并且 
+\begin_inset Formula $r+\Delta r$
+\end_inset
+
+ 是 
+\begin_inset Formula $f(x)+\varepsilon g(x)$
+\end_inset
+
+ 的根，则当
+\begin_inset Formula $\varepsilon\ll f'(r)$
+\end_inset
+
+时，
+\begin_inset Formula 
+\begin{equation}
+\Delta r\approx-\varepsilon\frac{g(r)}{f'(r)}\label{eq:1.21}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:1.9"
+
+\end_inset
+
+估计 
+\begin_inset Formula $P(x)=(x-1)(x-2)(x-3)(x-4)(x-5)(x-6)-10^{-6}x^{7}$
+\end_inset
+
+ 的最大根。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于一个一般算法生成的近似 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+，我们定义它的
+\begin_inset Formula 
+\[
+\text{误差放大因子}=\frac{\text{相对前向误差}}{\text{相对后向误差}}
+\]
+
+\end_inset
+
+前向误差指的是解的变化，该变化可以使得 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+ 准确，在根求解问题中前向误差对应 
+\begin_inset Formula $\abs{x_{a}-r}$
+\end_inset
+
+，后向误差指的是输入中的变化，该变化使得 
+\begin_inset Formula $x_{a}$
+\end_inset
+
+ 是正确的解。对于前向误差和后向误差有大量可以选择的方式，这依赖于我们想探索哪一种敏感性。用 
+\begin_inset Formula $\abs{f(x_{a})}$
+\end_inset
+
+ 改变常数项是一种选择，并在这一界的前面使用过，在敏感公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中对应于 
+\begin_inset Formula $g(x)=1$
+\end_inset
+
+ 的项。更一般地，任何输入数据的变化都可以用于后向误差，诸如在例1.9中选择 
+\begin_inset Formula $g(x)=x^{7}$
+\end_inset
+
+。在求解根过程中的误差放大因子如下
+\begin_inset Formula 
+\begin{equation}
+\text{误差放大因子}=\abs{\frac{\Delta r/r}{\varepsilon g(r)/g(r)}}=\abs{\frac{-\varepsilon g(r)/\left(rf'(r)\right)}{\varepsilon}}=\frac{\abs{g(r)}}{\abs{rf'(r)}}\label{eq:1.22}
+\end{equation}
+
+\end_inset
+
+其中在 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:1.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中为 
+\begin_inset Formula $6^{7}/(5!6)=388.8$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+用根的敏感公式，研究在威尔金森多项式中，
+\begin_inset Formula $x^{15}$
+\end_inset
+
+项中的变化对于根 
+\begin_inset Formula $r=16$
+\end_inset
+
+的影响。并对这个问题找出误差放大因子。
+\begin_inset Formula 
+\begin{equation}
+\Delta r\approx\frac{16^{15}1\,672\,280\,820\varepsilon}{15!4!}\approx6.1432\times10^{13}\varepsilon\label{eq:1.23}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+条件：这是 
+\series bold
+条件数
+\series default
+ 第一次出现，条件数 也是误差放大度量的一种方式。数值分析是对算法的研究，算法把定义问题的数据作为输入，对应地结果作为输出。条件数指的是理论问题本身所带来的误差
+放大部分，和用于求解问题的特定算法无关。
+\end_layout
+
+\begin_layout Plain Layout
+注意到条件数仅仅度量由于问题本身带来的误差放大，这点很重要。和条件一起，还有一个平行概念，即 
+\series bold
+稳定
+\series default
+，稳定指的是由于算法小的输入误差造成的放大，而不是问题本身。如果一个算法在小的后向误差存在的时候，总能给出一个近似解，则称该算法是稳定的。如果问题的条件好，算法
+稳定，我们可以期望同时具有小的后向误差和前向误差。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+前面的误差放大例子表明根求解过程对于特定的输入变化的敏感性。问题可能或多或少地敏感，依赖于如何设计输入的变化。问题的 
+\series bold
+条件数
+\series default
+ 定义为所有输入变化，或者至少规定类型的变化所造成地最大误差放大。条件数高的问题称为 
+\series bold
+病态
+\series default
+ 问题，条件数在 
+\begin_inset Formula $1$
+\end_inset
+
+ 附近的问题称为 
+\series bold
+良态
+\series default
+ 问题。在第2章中讨论矩阵问题时，我们将返回这个问题。
+\end_layout
+
+\begin_layout Section
+牛顿方法
+\end_layout
+
+\begin_layout Standard
+牛顿方法，也被称为 牛顿–拉夫逊方法，通常比我们看到的线性收敛方法快得多。
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+f[x_] := -2 (x + 1) (x - 2); tef = Plot[{ f[x], f[-1/2] + (D[f[
+\backslash
+[Xi]], 
+\backslash
+[Xi]] /.
+ {
+\backslash
+[Xi] -> -1/2}) (x + 1/2) }, {x, -2, 2} , PlotRange -> {{-1.5, 0.2}, {-1.5,
+ 5}}, AxesOrigin -> {0, 0}, AxesLabel -> {"x", "y"}, ImageSize -> Small];
+ Show[{tef, Graphics[{ PointSize -> 0.05, Point[{-0.5, f[-0.5]}], Text["
+\backslash
+!
+\backslash
+(
+\backslash
+*SubscriptBox[
+\backslash
+(x
+\backslash
+), 
+\backslash
+(0
+\backslash
+)]
+\backslash
+)", {-0.5, 0.5}], Text["
+\backslash
+!
+\backslash
+(
+\backslash
+*SubscriptBox[
+\backslash
+(x
+\backslash
+), 
+\backslash
+(1
+\backslash
+)]
+\backslash
+)", {-1.1, 0.8}] }] }]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/cs-f1.8.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+牛顿方法中的第一步，从 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+开始，画出函数 
+\begin_inset Formula $y=f(x)$
+\end_inset
+
+的切线。和 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴的交点记作 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+，这是对于函数根的下一个近似。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+从几何图像中可以推导出牛顿方法的公式。切线的斜率方程是
+\begin_inset Formula 
+\[
+y-f(x_{0})=f'(x_{0})\left(x-x_{0}\right),
+\]
+
+\end_inset
+
+因而它与
+\begin_inset Formula $x$
+\end_inset
+
+ 轴的交点为：
+\begin_inset Formula 
+\[
+x=x_{0}-\frac{f(x_{0})}{f'(x_{0})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+牛顿方法
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+ & x_{0}=\text{初始估计}\\
+ & x_{i+1}=x_{i}-\frac{f(x_{i})}{f'(x_{i})},\quad i=0,1,2,\cdots
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:1.11"
+
+\end_inset
+
+找出用于方程 
+\begin_inset Formula $x^{3}+x-1=0$
+\end_inset
+
+ 的牛顿方法公式。
+\begin_inset Formula 
+\[
+x_{i+1}=x_{i}-\frac{x_{i}^{3}+x_{i}-1}{3x_{i}^{2}+1}=\frac{2x_{i}^{3}+1}{3x_{i}^{2}+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+一旦确定收敛，
+\begin_inset Formula $x_{i}$
+\end_inset
+
+中正确的数位在每一步中近似翻倍。我们在后面会看到，这就是“二次收敛”方法的一个特征。
+\end_layout
+
+\begin_layout Subsection
+牛顿方法的二次收敛
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:1.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的二次收敛，比我们前面在二分法和不动点迭代中看到的线性收敛速度要快。现在需要如下一个新的定义。
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:1.10"
+
+\end_inset
+
+令 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+表示一个迭代方法第
+\begin_inset Formula $i$
+\end_inset
+
+步后得到的误差。该迭代是 
+\series bold
+二次收敛
+\series default
+，如果满足下式
+\begin_inset Formula 
+\[
+M=\lim_{i\to\infty}\frac{e_{i+1}}{e_{i}^{2}}<\infty
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:1.11"
+
+\end_inset
+
+令 
+\begin_inset Formula $f$
+\end_inset
+
+ 是二阶连续可微函数，
+\begin_inset Formula $f(r)=0$
+\end_inset
+
+。如果 
+\begin_inset Formula $f'(r)\neq0$
+\end_inset
+
+，则牛顿方法局部二次收敛到
+\begin_inset Formula $r$
+\end_inset
+
+。第
+\begin_inset Formula $i$
+\end_inset
+
+步的误差
+\begin_inset Formula $e_{i}$
+\end_inset
+
+满足
+\begin_inset Formula 
+\[
+\lim_{i\to\infty}\frac{e_{i+1}}{e_{i}^{2}}=M=\frac{f''(r)}{2f'(r)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+使用泰勒展开可以证明，
+\begin_inset Formula 
+\begin{equation}
+e_{i+1}=e_{i}^{2}\abs{\frac{f''(c_{i})}{2f'(x_{i})}}\label{eq:1.24}
+\end{equation}
+
+\end_inset
+
+或者写成
+\begin_inset Formula 
+\begin{equation}
+e_{i+1}\approx e_{i}^{2}M\label{eq:1.25}
+\end{equation}
+
+\end_inset
+
+而线性误差的收敛行为是
+\begin_inset Formula 
+\[
+e_{i+1}=e_{i}S
+\]
+
+\end_inset
+
+FPI方法中 
+\begin_inset Formula $S=\abs{g'(r)}$
+\end_inset
+
+，二分法中 
+\begin_inset Formula $S=1/2$
+\end_inset
+
+。尽管 
+\begin_inset Formula $S$
+\end_inset
+
+ 的值对于线性收敛方法很关键，但是 
+\begin_inset Formula $M$
+\end_inset
+
+ 的值并不是那么重要，这是由于误差公式中包含了上一步误差的平方。一旦误差远小于
+\begin_inset Formula $1$
+\end_inset
+
+，平方会带来进一步的减小；只要
+\begin_inset Formula $M$
+\end_inset
+
+不是太大，根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可知，误差也会进一步下降。
+\end_layout
+
+\begin_layout Standard
+例如对于平方根计算，令 
+\begin_inset Formula $f(x)=x^{2}-a$
+\end_inset
+
+。对于任意
+\begin_inset Formula $a$
+\end_inset
+
+，迭代如下
+\begin_inset Formula 
+\begin{equation}
+x_{i+1}=x_{i}-\frac{f(x_{i})}{f'(x_{i})}=x_{i}-\frac{x_{i}^{2}-a}{2x_{i}}=\frac{x_{i}+\frac{a}{x_{i}}}{2}.\label{eq:1.26}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+牛顿方法的线性收敛
+\end_layout
+
+\begin_layout Standard
+定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:1.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 并不意味着牛顿方法总能二次收敛。因为公式中需要除去 
+\begin_inset Formula $f'(x)$
+\end_inset
+
+ 得到二次收敛。这个假设十分重要。下面的例子展示了牛顿法不能二次收敛的例子。
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:1.12"
+
+\end_inset
+
+使用牛顿方法找到 
+\begin_inset Formula $f(x)=x^{2}$
+\end_inset
+
+的实根。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{i+1}=x_{i}-\frac{f(x_{i})}{f'(x_{i})}=x_{i}-\frac{x_{i}^{2}}{2x_{i}}=\frac{x_{i}}{2}
+\]
+
+\end_inset
+
+令人惊讶的是，牛顿法被简化到仅仅每步除以
+\begin_inset Formula $2$
+\end_inset
+
+。线性收敛到
+\begin_inset Formula $r=0$
+\end_inset
+
+，收敛速度和常数 
+\begin_inset Formula $S=1/2$
+\end_inset
+
+ 成比例。
+\end_layout
+
+\begin_layout Standard
+对于 
+\begin_inset Formula $x^{m}$
+\end_inset
+
+也有类似地结果，其中 
+\begin_inset Formula $m$
+\end_inset
+
+ 是正整数，如下面例子所示。
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:1.13"
+
+\end_inset
+
+使用牛顿法寻找 
+\begin_inset Formula $f(x)=x^{m}$
+\end_inset
+
+ 的一个根。
+\end_layout
+
+\begin_layout Example
+牛顿公式如下：
+\begin_inset Formula 
+\[
+x_{i+1}=x_{i}-\frac{x_{i}^{m}}{mx_{i}^{m-1}}=\frac{m-1}{m}x_{i}
+\]
+
+\end_inset
+
+唯一根为 
+\begin_inset Formula $r=0$
+\end_inset
+
+，因而定义 
+\begin_inset Formula $e_{i}=\abs{x_{i}-r}=x_{i}$
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+e_{i+1}=Se_{i}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $S=(m-1)/m$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+这是 牛顿法在多重根上一般情形的例子。注意到多重根定义
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "def:1.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 
+\begin_inset Formula $f(r)=f'(r)=0$
+\end_inset
+
+ 等价。正好在这种情况下，牛顿法的误差公式中的导数失去了效力。对于多重根有不同的误差公式，我们已经见到的单项式的多重根模式代表了一般情况，下面的定理
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:1.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 对此进行总结。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:1.12"
+
+\end_inset
+
+假设在区间 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上，
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ 阶连续可微函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在
+\begin_inset Formula $r$
+\end_inset
+
+ 点有一个
+\begin_inset Formula $m$
+\end_inset
+
+阶多重根，则牛顿方法局部收敛到
+\begin_inset Formula $r$
+\end_inset
+
+，第
+\begin_inset Formula $i$
+\end_inset
+
+步误差
+\begin_inset Formula $e_{i}$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{equation}
+\lim_{i\to\infty}\frac{e_{i+1}}{e_{i}}=S=\frac{m-1}{m}\label{eq:1.29}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:1.13"
+
+\end_inset
+
+如果在 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 区间上 
+\begin_inset Formula $f$
+\end_inset
+
+ 是 
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ 阶连续函数，包含 
+\begin_inset Formula $m>1$
+\end_inset
+
+ 的多重根，则 
+\series bold
+改进的牛顿方法
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+x_{i+1}=x_{i}-\frac{mf(x_{i})}{f'(x_{i})}\label{eq:1.32}
+\end{equation}
+
+\end_inset
+
+收敛到
+\begin_inset Formula $r$
+\end_inset
+
+，并具有二次收敛速度。
+\end_layout
+
+\begin_layout Standard
+之前的迭代公式为
+\begin_inset Formula 
+\[
+x_{i+1}=x_{i}-\frac{x_{i}^{m}}{mx_{i}^{m-1}}=\frac{m-1}{m}x_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:1.15"
+
+\end_inset
+
+牛顿方法如同 FPI，可能不会收敛到根。例如，对函数 
+\begin_inset Formula $f(x)=4x^{4}-6x^{2}-11/4$
+\end_inset
+
+ 使用牛顿方法，初始估计 
+\begin_inset Formula $x_{0}=1/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+由于函数是连续函数，在 
+\begin_inset Formula $x=0$
+\end_inset
+
+ 时取负值，并且对于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的大正数和大负数则取无穷大的正值，因此一定存在根。但是如图1.10所示，对于初始估计 
+\begin_inset Formula $x_{0}=1/2$
+\end_inset
+
+ 则找不到根。牛顿公式
+\begin_inset Formula 
+\begin{equation}
+x_{i+1}=x_{i}-\frac{4x_{i}^{4}-6x_{i}^{2}-\frac{11}{4}}{16x_{i}^{3}-12x_{i}}\label{eq:1.33}
+\end{equation}
+
+\end_inset
+
+ 通过迭代得到 
+\begin_inset Formula $x_{1}=-1/2$
+\end_inset
+
+，进一步 
+\begin_inset Formula $x_{2}=1/2$
+\end_inset
+
+。牛顿法在这个例子中，迭代的结果在 
+\begin_inset Formula $1/2$
+\end_inset
+
+ 和 
+\begin_inset Formula $-1/2$
+\end_inset
+
+ 之间变化，但二者都不是根，所以求解根的过程失败。
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+f[x_] := 4 x^4 - 6 x^2 - 11/4; line[f_, x0_][x_] := f[x0] + Derivative[1][f]@x0*
+(x - x0); tef = Plot[{ f[x], line[f, 1/2][x], line[f, -1/2][x] } , {x, -3,
+ 3} , AxesOrigin -> {0, 0} , AxesLabel -> {"x", "y"} , AspectRatio -> Automatic
+ , PlotRange -> {Automatic, {-5, 1}} , PlotStyle -> {Dashing[{}], Dashed,
+ Dashed} , ImageSize -> Small ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/cs-f1.10.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+例
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:1.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中牛顿法求解失败。迭代在
+\begin_inset Formula $1/2$
+\end_inset
+
+和
+\begin_inset Formula $-1/2$
+\end_inset
+
+之间变化，并不能收敛到根。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+牛顿法还有其他可能失败的方式。如果在任何迭代中出现 
+\begin_inset Formula $f'(x_{i})=0$
+\end_inset
+
+，显然该方法就不能继续。还有其他的例子中迭代会发散到无穷（习题6）或者模仿随机数生成（编程问题13）。尽管不是所有的初始值都会收敛到根，Thm
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:1.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 Thm
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:1.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 保证在每个根近邻中的初始估计收敛到根。
 \end_layout
 
 \begin_layout Chapter
