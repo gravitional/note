@@ -1510,6 +1510,2050 @@ f_{1,3}
 \end_layout
 
 \begin_layout Chapter
+泛函分析
+\end_layout
+
+\begin_layout Section
+变分法
+\end_layout
+
+\begin_layout Standard
+ref:
+\begin_inset CommandInset href
+LatexCommand href
+name "变分法简介Part 1"
+target "https://zhuanlan.zhihu.com/p/20718489"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "变分法简介Part 2"
+target "https://zhuanlan.zhihu.com/p/20727402"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+泛函数 (Functionals)
+\end_layout
+
+\end_inset
+
+ 简而言之，泛函数是 函数 的函数，即它的输入是函数，输出是实数。而这个输出值取决于一个或多个函数（输入）在一整个路径上的积分，而非像一般函数一样取决于离散的变
+量。
+\end_layout
+
+\begin_layout Standard
+通常在变分法中，泛函数是一个积分，记做
+\begin_inset Formula $I$
+\end_inset
+
+，例如
+\begin_inset Formula 
+\[
+I=\int_{x_{1}}^{x^{2}}F\dd{x}.
+\]
+
+\end_inset
+
+其中我们想要通过 选择被积函数 
+\begin_inset Formula $F$
+\end_inset
+
+ 来最大化或最小化泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的值。同时我们称 
+\begin_inset Formula $F$
+\end_inset
+
+ 为拉格朗日函数(Lagrange function)。
+\begin_inset Formula $F$
+\end_inset
+
+ 可以是函数 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 和 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 各阶导数的函数(以下 
+\begin_inset Formula $y(x)$
+\end_inset
+
+均简写成 
+\begin_inset Formula $y$
+\end_inset
+
+)。
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:extreme"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+泛函数的极值
+\end_layout
+
+\end_inset
+
+ 泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 在区间 
+\begin_inset Formula $[x_{1},x_{2}]$
+\end_inset
+
+ 上的值取决于积分路径的选择，即取决于函数 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 的选择。我们有理由假设存在一个这样的 
+\begin_inset Formula $y(x)$
+\end_inset
+
+，可以使得泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 取到极值。而在这个 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 附近的任意路径我们记做 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+。另外，我们假设 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 两阶可微。通过引入一个微小量 
+\begin_inset Formula $\epsilon\ll1$
+\end_inset
+
+ 和一个任意可微函数 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，我们可以用 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=y(x)+\epsilon\eta(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+这样做的好处是对于一个给定的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，我们可以通过改变的 
+\begin_inset Formula $\eta$
+\end_inset
+
+ 值来得到无穷多的路径，同时对于任何 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，当 
+\begin_inset Formula $\epsilon(x)=0$
+\end_inset
+
+ 的时候，
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 和 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 重合。图像直观表示如下图：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/fanhan-1.png
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于在边界条件的限制，需要要求 
+\begin_inset Formula $\eta(x_{1})=\eta(x_{2})=0$
+\end_inset
+
+。这样就能保证 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 可以通过两个固定端点。这时我们可以说，
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 所对应的泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的值是泛函数 
+\begin_inset Formula $\tilde{I}=\int_{x_{1}}^{x^{2}}F\left(\tilde{y},\tilde{y}';x\right)\dd{x}$
+\end_inset
+
+ 的极值。我们可以进一步用 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{I}=\int_{x_{1}}^{x^{2}}F(\tilde{y},\tilde{y}';x)\dd{x}=\int_{x_{1}}^{x^{2}}F\left(y+\epsilon\eta,y'+\epsilon\eta';x\right)\dd{x}
+\]
+
+\end_inset
+
+虽然 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 未知，但是根据之前的合理假设，
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 是一个存在的确定函数。所以根据上式，如果给定一个特定的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 的变化只取决于 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的变化。所以我们现在可以把 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 看做是 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的函数。用泰勒展开公式将 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 在
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ 处展开得到：
+\begin_inset Formula 
+\[
+\tilde{I}(\epsilon)=\left.\tilde{I}\right|_{\epsilon=0}+\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon+\left.(\frac{\dd[2]{\tilde{I}}}{\dd{\epsilon^{2}}})\right|_{\epsilon=0}\cdot\frac{\epsilon^{2}}{2!}+\cdots=\tilde{I}_{0}+\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
+\]
+
+\end_inset
+
+很明显，当 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ 时，
+\begin_inset Formula $\left.\tilde{I}\right|_{\epsilon=0}=I$
+\end_inset
+
+，代入上式可得到：
+\begin_inset Formula 
+\[
+\tilde{I}-I=\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
+\]
+
+\end_inset
+
+这里我们记 
+\begin_inset Formula $\delta I=\tilde{I}_{1}\epsilon=\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon$
+\end_inset
+
+，并称之为一阶变分。同理二阶变分为 
+\begin_inset Formula $\delta I^{2}=\tilde{I}_{2}\epsilon^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+这里插一句变分和微分的区别。变分在上图的直观解释是
+\begin_inset Formula $\tilde{y}$
+\end_inset
+
+和 
+\begin_inset Formula $y$
+\end_inset
+
+ 在竖直方向上的距离，称之为 
+\begin_inset Formula $\delta y$
+\end_inset
+
+，所以这个差是在同一个 
+\begin_inset Formula $x$
+\end_inset
+
+ 上计算的。而微分则是由于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的微小变动引起的 
+\begin_inset Formula $y$
+\end_inset
+
+ 的变动。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+然后我们可以类比求函数极值时的做法。求函数极值时，我们会令函数的一阶导数为零。这里同样，为了求泛函数 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 的极值，我们令一阶变分 
+\begin_inset Formula $\delta I=0$
+\end_inset
+
+。计算 
+\begin_inset Formula $\delta I$
+\end_inset
+
+，并通过分部积分得到
+\begin_inset Formula 
+\[
+\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\delta y\dd{x}+\left.\frac{\partial F}{\partial y'}\delta y\right|_{x_{1}}^{x_{2}}
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $\delta I=0$
+\end_inset
+
+ 就能解得最小化泛函数的 
+\begin_inset Formula $y$
+\end_inset
+
+。由于 
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 是任意地，所以要想使上式等于零，需要
+\begin_inset Formula 
+\[
+\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}=0,\quad x_{1}\le x\le x_{2}
+\]
+
+\end_inset
+
+即 欧拉–拉格朗日方程（Euler–Lagrange equation）。而第二部分等于零则是边界条件。
+\end_layout
+
+\begin_layout Standard
+对于边界条件：
+\end_layout
+
+\begin_layout Enumerate
+如果在边界 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 
+\begin_inset Formula $\frac{\partial F}{\partial y'}$
+\end_inset
+
+ 等于零，那么我们称在 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 满足 
+\series bold
+Natural Boundary Condition
+\series default
+。
+\end_layout
+
+\begin_layout Enumerate
+对应的，如果在边界 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 等于零，我们就称 在 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 满足 
+\series bold
+Essential Boundary condition
+\series default
+。
+\begin_inset Formula $\delta y=0$
+\end_inset
+
+ 是一个比较模糊的概念，不好判断，所以我们把它等价转化一下。如果
+\begin_inset Formula $y$
+\end_inset
+
+在某一点处的变分为零，说明它在这点的值是确定不变的。换句话说如果 
+\begin_inset Formula $y$
+\end_inset
+
+ 在边界上是确定的值(specified)，那么我们称这个是 essential boundary condition。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+当然上述问题中，
+\begin_inset Formula $F$
+\end_inset
+
+ 只是
+\begin_inset Formula $y$
+\end_inset
+
+和
+\begin_inset Formula $y'$
+\end_inset
+
+的函数，但是
+\begin_inset Formula $F$
+\end_inset
+
+完全还可能是
+\begin_inset Formula $y''$
+\end_inset
+
+甚至更高阶导数的函数。这时候我们用上节所说的设 
+\begin_inset Formula $\tilde{y}=y(x)+\epsilon\eta(x)$
+\end_inset
+
+ 的方法就有点麻烦了（但是也可行）。这里我们提供一个更高效的方法，直接对泛函数求变分。假如泛函数 
+\begin_inset Formula $I=\int_{x_{1}}^{x^{2}}F(\tilde{y},\tilde{y}',y'';x)\dd{x}$
+\end_inset
+
+，那么它的一阶变分为：
+\begin_inset Formula 
+\[
+\delta I=\int_{x_{1}}^{x^{2}}\frac{\partial F}{\partial y}\delta y+\frac{\partial F}{\partial y'}\delta y'+\frac{\partial F}{\partial y''}\delta y''\dd{x}
+\]
+
+\end_inset
+
+然后再进行分部积分得到：
+\begin_inset Formula 
+\[
+\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}+\frac{\dd[2]}{\dd{x^{2}}}\frac{\partial F}{\partial y''}\delta\right)\delta y\dd{x}+\frac{\partial F}{\partial y''}\delta y'+\left.\left[\frac{\partial F}{\partial y'}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y''}\right]\delta y\right|_{x_{1}}^{x_{2}}=0
+\]
+
+\end_inset
+
+同样我们可以得到欧拉-拉格朗日方程：
+\begin_inset Formula 
+\[
+\text{E-L:}\,\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}+\frac{\dd[2]}{\dd{x^{2}}}\frac{\partial F}{\partial y''}=0
+\]
+
+\end_inset
+
+以及边界条件：
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial F}{\partial y''}=0,\;\text{(Natural)}\quad & \text{or}\quad\delta y'=0\;\text{(Essential)}\\
+\frac{\partial F}{\partial y'}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y''}=0,\;\text{(Natural)}\quad & \text{or}\quad y=0\;\text{(Essential)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+约束条件（拉格朗日乘数）
+\end_layout
+
+\begin_layout Standard
+现在我们来讨论下如果我们需要求在满足一定条件下求泛函数的极值，应该如何求解。
+\end_layout
+
+\begin_layout Standard
+举个简单的例子，如果给定一个区域的边界长度，我们想最大化该边界所围的区域。这类问题我们需要引进拉格朗日乘数(
+\begin_inset Formula $\lambda$
+\end_inset
+
+)。
+\end_layout
+
+\begin_layout Standard
+假设约束条件为：
+\begin_inset Formula $J(y)=\int_{x_{1}}^{x_{2}}G(y,y';x)=\text{const.}$
+\end_inset
+
+那我们引入拉格朗日乘数在原泛函数的基础上构建新的泛函数：
+\begin_inset Formula 
+\[
+I^{*}=I+\lambda J=\int_{x_{1}}^{x_{2}}(F+\lambda G)\dd{x}=\int_{x_{1}}^{x_{2}}F^{*}(y,y';x)\dd{x}
+\]
+
+\end_inset
+
+然后我们就可以转化成之前的问题来解了。还是用刚才提到的最大化面积问题为例来阐述下这个过程：
+\end_layout
+
+\begin_layout Enumerate
+面积：
+\begin_inset Formula $A=\int_{x_{1}}^{x_{2}}y\dd{x}$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Enumerate
+边界长度约束：
+\begin_inset Formula $S=\int_{x_{1}}^{x_{2}}\sqrt{1+(y')}^{2}\dd{x}=\text{const.}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+则：
+\begin_inset Formula $I^{*}=\int_{x_{1}}^{x_{2}}[y+\lambda\sqrt{1+(y')}^{2}]\dd{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+令一阶变分为零（
+\begin_inset Formula $\delta I^{*}=0$
+\end_inset
+
+）：
+\begin_inset Formula 
+\[
+\int_{x_{1}}^{x_{2}}[\delta y+\lambda\frac{y'}{\sqrt{1+(y')}^{2}}\delta y']\dd{x}=0
+\]
+
+\end_inset
+
+依旧老朋友分部积分：
+\begin_inset Formula 
+\[
+\delta I^{*}=\int_{x_{1}}^{x_{2}}[1-\lambda\frac{\dd}{\dd{x}}\frac{y'}{\sqrt{1+(y')}^{2}}]\delta y\dd{x}+\text{B.C.term}=0
+\]
+
+\end_inset
+
+这里图方便我就将边界条件项用 B.C.term 代替啦。然后欧拉-拉格朗日方程为：
+\begin_inset Formula 
+\[
+\text{E-L:}\,1-\lambda\frac{\dd}{\dd{x}}\frac{y'}{\sqrt{1+(y')}^{2}}=0,\quad x\in(x_{1},x_{2})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+现在我们可以解一下E-L方程：
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd{x}}\frac{y'}{\sqrt{1+(y')}^{2}}=\frac{1}{\lambda}\quad\Rightarrow\quad\frac{y''}{(1+y^{\prime2})^{3/2}}=\frac{1}{\lambda}.
+\]
+
+\end_inset
+
+也就是说边界是曲率恒为 
+\begin_inset Formula $\frac{1}{\lambda}$
+\end_inset
+
+ 的曲线，即半径为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的圆，这也和我们常识一致。
+\end_layout
+
+\begin_layout Standard
+上文说到了用 
+\emph on
+最小化泛函数
+\emph default
+ 的方法求解问题，最终可以将问题转化为求解一个带有边界条件的偏微分方程（PDE）。但是实际上并不是所有的 PDE 都像上次那个两点间最短距离问题中的PDE那么好
+解，这也就是为什么我们要有有限元方法，因为有限元可以避开求解复杂偏微分方程，用相对简单的方法来求解其近似解。一般有三种近似方法，分别是 
+\series bold
+Rayleigh-Ritz method
+\series default
+，
+\series bold
+Strong Form Galerkin
+\series default
+ (SFG) 和 
+\series bold
+Weak Form Galerkin
+\series default
+ (WFG)。后两者就是我们常听说的貌似比较高大上的 
+\series bold
+强形式
+\series default
+ 和 
+\series bold
+弱形式
+\series default
+。后面会分别介绍和比较这三种方法。以后的文章会介绍如何将他们运用于有限元方法。
+\end_layout
+
+\begin_layout Standard
+在最开始，首先要理清一个非常重要的思路。那就是通过变分法最小化泛函数得到的 PDE 和 原泛函数 之间的关系。如果理清了这个关系，上述三种方法的基本思想就算是掌
+握了，剩下的就是一些数学而已了。它们之间的关系是：PDE 的解是能将原泛函数最小化的函数。
+\end_layout
+
+\begin_layout Standard
+这层关系给我们提供了两条路走：
+\end_layout
+
+\begin_layout Enumerate
+直接从泛函数出发，找出可以最小化它的函数。
+\end_layout
+
+\begin_layout Enumerate
+通过变分法得到PDE，然后求解PDE（近似求解），这样得到的PDE的解（或近似解）就是方法1中所要求的函数。
+\end_layout
+
+\begin_layout Standard
+上面提到的三种方法就是顺着这两条路走的。Rayleigh-Ritz 对应于第一条路，强弱形式对应于后一条路。看上去 Rayleigh-Ritz
+ 法和求解微分方程并没有什么关系，因为它跳过了通过变分法得到 PDE 这个步骤，但是根据上面提到的关系，我们可以把思维逆转过来，即 能够将 泛函数最小化的函数，
+是使用变分法后得到的PDE的解。这样我们也可以强行把 Rayleigh-Ritz 法看成是近似求解微分方程的方法。
+\end_layout
+
+\begin_layout Section
+Rayleigh-Ritz Method
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Rayleigh-Ritz Method"
+target "https://zhuanlan.zhihu.com/p/20882021"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+第一条路看似是更直接的捷径，但是世界上有无穷种函数，直接找出可以最小化一个泛函数的函数谈何容易。但是如果我们先假设一下这个函数的形式，那么未知的就只是一些系数了
+，再将这个假设的函数代入 原泛函数，就可以将泛函数转化为未知系数的函数，而最小化函数对我们而言是轻而易举的（对未知系数求导等于零），解出未知系数后代入假设的函数
+，就得到了最小化泛函数的近似解。这就是 Rayleigh-Ritz Method 的基本思想。一般来说，我们会将近似函数的形式设为多项式(polynomial)
+，例如，这也是有限元里常用的形式。话不多说，看个简单的例子：
+\end_layout
+
+\begin_layout Example
+如图，拉伸一个横截面积为 
+\begin_inset Formula $A$
+\end_inset
+
+，长为 
+\begin_inset Formula $L$
+\end_inset
+
+，杨氏模量为 
+\begin_inset Formula $E$
+\end_inset
+
+ 的杆，最右端的力为 
+\begin_inset Formula $P$
+\end_inset
+
+，位移为 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+。我们想要用最小势能原理解出其位移场 
+\begin_inset Formula $u(x)$
+\end_inset
+
+。虽然很明显精确解是 
+\begin_inset Formula $u(x)=\frac{u_{0}}{L}x$
+\end_inset
+
+，但是就像之前的两点间直线最短的例子一样，例子虽然简单，但是可以帮助我们感受下这个方法的过程。
+\end_layout
+
+\begin_layout Example
+\begin_inset Graphics
+	filename inset/fanhan-2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们可以写出系统势能（具体为什么是这个式子之后的文章会解释，这次着重于介绍方法的思想）：
+\begin_inset Formula $\Pi=\frac{1}{2}\int_{0}^{L}EA\,u^{\prime2}\dd{x}-Pu_{0}$
+\end_inset
+
+。由于左端固定，右端位移已知，所以有两个 Essential Boundary Conditions: 
+\begin_inset Formula $\left.u\right|_{x=0}=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $\left.u\right|_{x=L}=u_{0}$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Standard
+根据上文的思路，我们设待求函数 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 的形式为多项式。这里姑且先设成二次形式。一般来说，设的次数越高，近似解越精确，但是由于本例精确解就是个一次线性方程，所以只要设的函数高于
+\begin_inset Formula $1$
+\end_inset
+
+次，近似解就和精确解相同。另一个需要注意的是，使用 Rayleigh-Ritz 法时，设的近似方程（如本例中的
+\begin_inset Formula $\tilde{u}(x)$
+\end_inset
+
+ ）必须满足 Essential Boundary Conditions(不必须满足Natural Boundary Condition)。遵循这点，我们可以得
+出两个等式：
+\begin_inset Formula 
+\[
+\tilde{u}(0)=0,\quad\text{and}\quad\tilde{u}(L)=0,
+\]
+
+\end_inset
+
+由上述两式可以解出 
+\begin_inset Formula $a_{0}=0$
+\end_inset
+
+ 以及 
+\begin_inset Formula 
+\[
+a_{1}L+a_{2}L^{2}=u_{0}\Rightarrow a_{2}=\frac{u_{0}-a_{1}L}{L^{2}},
+\]
+
+\end_inset
+
+将这两个结果代入 
+\begin_inset Formula $\tilde{u}(x)$
+\end_inset
+
+ 整理下得到：
+\begin_inset Formula 
+\[
+\tilde{u}(x)=\frac{u_{0}}{L^{2}}x^{2}+a_{1}(x-\frac{x^{2}}{L}).
+\]
+
+\end_inset
+
+也就是说我们只有 
+\begin_inset Formula $1$
+\end_inset
+
+ 个未知参数 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+通常我们会将 
+\begin_inset Formula $\tilde{u}(x)$
+\end_inset
+
+ 写成 
+\begin_inset Formula $\tilde{u}(x)=\phi_{0}(x)+\sum_{j=1}^{n}c_{j}\phi_{j}(x)$
+\end_inset
+
+ 的形式。对应这个例子
+\begin_inset Formula 
+\[
+\phi_{0}=\frac{u_{0}}{L^{2}}x^{2},\quad c_{1}=a_{1},\quad\phi_{1}=\frac{x}{L}(L-x),
+\]
+
+\end_inset
+
+如果有更多未知参数，则会有更高阶项。
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+ 有个 
+\series bold
+重要性质
+\series default
+：从 
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+ 开始，所有的 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+ 在 Essential Boundary Condition 处都等于零。比如这个例子中，在 
+\begin_inset Formula $x=0$
+\end_inset
+
+和
+\begin_inset Formula $x=L$
+\end_inset
+
+处有 Essential Boundary Condition，那么
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+ 在
+\begin_inset Formula $x=0$
+\end_inset
+
+和
+\begin_inset Formula $x=L$
+\end_inset
+
+处必须等于零。我们可以发现确实满足，如果有更高阶项 
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+，
+\begin_inset Formula $\phi_{3}$
+\end_inset
+
+ 等等，同样应该满足。这个性质可以帮助我们检查假设的 近似函数是否正确。现在需要做的就是把 
+\begin_inset Formula $\tilde{u}(x)$
+\end_inset
+
+ 代入到原泛函数中，即用 
+\begin_inset Formula $\tilde{u}(x)$
+\end_inset
+
+ 取代 
+\begin_inset Formula $u(x)$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+ & \tilde{u}'(x)=\frac{2u_{0}}{L^{2}}x+c_{1}(1-\frac{2x}{L})\\
+ & \Pi=\frac{1}{2}\int_{0}^{L}EA\,\tilde{u}'(x)^{2}\dd{x}-Pu_{0}=\frac{EA}{2}(\frac{4u_{0}^{2}}{3L}+\frac{c_{1}^{2}L}{3}-\frac{2u_{0}c_{1}}{3})-Pu_{0}
+\end{align*}
+
+\end_inset
+
+这样 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ 就仅是 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ 的函数而已，那么最小化就非常简单了，即令
+\begin_inset Formula $\frac{\dd{\Pi}}{\dd{c_{1}}}=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\frac{\dd{\Pi}}{\dd{c_{1}}}=\frac{2}{3}c_{1}L-\frac{2}{3}u_{0}=0,
+\]
+
+\end_inset
+
+解得 
+\begin_inset Formula $c_{1}=\frac{u_{0}}{L}$
+\end_inset
+
+。代入
+\begin_inset Formula $\tilde{u}(x)$
+\end_inset
+
+ 得到 
+\begin_inset Formula $\tilde{u}(x)=\frac{u_{0}}{L}x$
+\end_inset
+
+。可以看到这和精确解一致，这是由于所设的近似方程的形式恰巧和精确解方程的形式一样，但是大多数问题中，精确解一般都不是多项式，所以如果将近似函数设为多项式，则会产
+生误差，得出的结果则是近似解。
+\end_layout
+
+\begin_layout Standard
+上面这个例子并不能令人感到兴奋，因为本身就是一眼就能看出精确解的问题硬生生算了半天，感觉很傻，所以再举个稍微复杂点的例子感受下。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:2.2"
+
+\end_inset
+
+泛函为
+\begin_inset Formula 
+\[
+I[y(x);x]=\int_{0}^{2}\left[0.5(y'')^{2}+5(y')^{2}+2y^{2}+y\right]\dd{x}-10y(0),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Essential Boundary Conditions: 
+\begin_inset Formula $y(2)=0$
+\end_inset
+
+；
+\begin_inset Formula $y'(0)=-2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+Natural Boundary Conditions: ; 
+\begin_inset Formula $y'''(0)=-10$
+\end_inset
+
+；
+\begin_inset Formula $y''(2)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+有兴趣的可以用 Rayleigh-Ritz方法求解下，可以最小化泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的近似解函数 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+Strong Form Galerkin
+\end_layout
+
+\begin_layout Standard
+上文介绍了 Rayleigh-Ritz 法。一句话概括下就是：将 
+\series bold
+泛函数
+\series default
+ 中的待求函数设成带有 
+\series bold
+未知系数
+\series default
+ 的已知形式（如多项式），并将其带入 原泛函数，从而将 
+\series bold
+最小化泛函数
+\series default
+ 的问题简化成我们熟悉的 
+\series bold
+最小化函数
+\series default
+ 问题来求解未知系数，最后就得出了待求函数的近似解。而这次文章以及下次文章要说到的强形式和弱形式（Strong form & Weak form
+ Galerkin）法是从求解 PDE 出发的。类似于 Rayleigh-Ritz 法的思路，我们可以把PDE的解近似为一系列基函数的叠加（需要满足边界条件）。
+例如如果我们要解这样一个PDE：
+\begin_inset Formula 
+\[
+A[w(x)]-f=0,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $A[w(x)]$
+\end_inset
+
+ 代表对待求函数 
+\begin_inset Formula $w(x)$
+\end_inset
+
+ 的任意微分运算，例如 
+\begin_inset Formula $A[w(x)]=\frac{\partial^{2}w}{\partial x^{2}}$
+\end_inset
+
+。那么我们可以用公式写出这个PDE 的近似解为：
+\begin_inset Formula 
+\[
+\tilde{w}(x)=\phi_{0}(x)+\sum_{j=1}^{n}c_{j}\phi_{j}(x)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\phi_{j}(x)$
+\end_inset
+
+ 是已知的基函数(basis functions)，
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ 是待解的未知系数。
+\begin_inset Formula $\phi_{0}(x)$
+\end_inset
+
+ 是用来满足非其次边界条件的，下面会结合例子说明。
+\end_layout
+
+\begin_layout Standard
+很显然，除非精确解恰巧和我们设的近似解形式相同，不然近似解是和精确解有偏差的。换句话说，如果我们把近似解 
+\begin_inset Formula $\tilde{w}(x)$
+\end_inset
+
+ 代入原PDE，那么将不会等于
+\begin_inset Formula $0$
+\end_inset
+
+，会带来一些 
+\series bold
+残差
+\series default
+ 或余量。用公式表示就是 
+\begin_inset Formula 
+\[
+A[\tilde{w}(x)]-f=R\neq0.
+\]
+
+\end_inset
+
+这样问题就转化为求解出 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ 使得余量 
+\begin_inset Formula $R$
+\end_inset
+
+ 在求解域上尽可能小（尽可能接近
+\begin_inset Formula $0$
+\end_inset
+
+），这样我们的近似解越逼近于精确解。
+\end_layout
+
+\begin_layout Standard
+这时候我们需要使用 加权余量法(Method of Weighted Residual)。这种方法的基本思想是，既然不能找到准确解使余量
+\begin_inset Formula $R$
+\end_inset
+
+在整个求解域上都完全等于零，那么我们至少要找到一个近似解使余量
+\begin_inset Formula $R$
+\end_inset
+
+在求解域上的某种平均等于零。说到某种平均第一反应会是将
+\begin_inset Formula $R$
+\end_inset
+
+在求解域上积分，即令 
+\begin_inset Formula $\int R\dd{x}=0$
+\end_inset
+
+，但这其实是个比较糟糕的想法，满足这个式子的有无穷种可能性，根本不可解。合理的做法是令
+\begin_inset Formula $R$
+\end_inset
+
+的加权积分为零，写成公式即：
+\begin_inset Formula 
+\[
+\int R(x)\Phi_{i}(x)\dd{x}=0,\quad i=1,\cdots,n
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Phi_{i}$
+\end_inset
+
+ 是 
+\series bold
+权函数
+\series default
+(weighted function)。权函数的选择有多种方法，这里介绍的同时也是有限元中常用的一种即 Galerkin method。该方法将近似解中的
+ 
+\series bold
+基函数
+\series default
+ 直接当做 权函数(一个用大写的 
+\begin_inset Formula $\Phi_{i}$
+\end_inset
+
+ 一个用小写的 
+\begin_inset Formula $\phi$
+\end_inset
+
+，有没有一种钦定的感觉)。这样做的好处是，独立等式的数量（即
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+的数量）和待解
+\begin_inset Formula $c_{j}$
+\end_inset
+
+的数量相同，这样就能确保未知系数唯一且可解。解出后代入就可以得到近似解啦。
+\end_layout
+
+\begin_layout Standard
+以上面的 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 为例，这次使用 Strong Form Galerkin，这里仅用一个未知系数。
+\end_layout
+
+\begin_layout Solution
+首先大家可以用变分法证明下，能够最小化泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的解和下面这个PDE的解是等价的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''''-10y''+4y+1=0,\quad0<x<2
+\]
+
+\end_inset
+
+加上上述题目中的边界条件。
+\end_layout
+
+\begin_layout Standard
+基本思路是写出 
+\begin_inset Formula $I$
+\end_inset
+
+ 的一阶变分
+\begin_inset Formula 
+\begin{equation}
+\delta I=\int_{0}^{2}\left[y''\delta(y'')+10y'\delta(y')+4y\delta y+\delta y\right]\dd{x},\label{eq:variation1}
+\end{equation}
+
+\end_inset
+
+然后再分部积分，即可得到 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rem1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\delta I=\int_{0}^{2}\left(y''''-10y''+4y+1\right)\delta y\dd{x}+\text{Boundary terms}.\label{eq:var-bound}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+总之现在问题就变成使用 Strong Form Galerkin求解一个带有边界条件的PDE。回顾下文章开头，第一步是设出PDE的近似解，我们一般采用多项式形式
+。这里要注意，使用 Strong Form Galerkin 的时候，设的近似解既要满足 Essential boundary condition
+ 又要满足 Natural Boundary condition。也就是说在本例中，四个边界条件都需要满足。假设我们只用一个未知系数，那么这个多项式必须要是四次
+的，即：
+\begin_inset Formula 
+\[
+\tilde{y}=a_{1}x^{4}+a_{2}x^{3}+a_{3}x^{2}+a_{4}x+a_{5}.
+\]
+
+\end_inset
+
+因为若要满足边界条件，我们需要列出四个等式，然后上式有五个未知系数，等于最终我们只有一个未知系数。现在我们将边界条件带入近似解：
+\begin_inset Formula 
+\[
+\tilde{y}(2)=0;\quad\tilde{y}'(0)=-2;\quad\tilde{y}'''(0)=-10;\quad\tilde{y}''(2)=0.
+\]
+
+\end_inset
+
+可以解得：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=-\frac{5}{3}x^{3}+10x^{2}-2x-\frac{68}{3}+a_{4}(x^{4}-24x^{2}+80),
+\]
+
+\end_inset
+
+上式中， 
+\begin_inset Formula $-\frac{5}{3}x^{3}+10x^{2}-2x-\frac{68}{3}$
+\end_inset
+
+ 是
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+，然后 
+\begin_inset Formula $a_{4}$
+\end_inset
+
+是
+\begin_inset Formula $c_{1}$
+\end_inset
+
+; 最后 
+\begin_inset Formula $(x^{4}-24x^{2}+80)$
+\end_inset
+
+是
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+接着计算残差或者余量：
+\begin_inset Formula 
+\[
+R=\tilde{y}''''-10\tilde{y}''+4\tilde{y}+1,
+\]
+
+\end_inset
+
+可见
+\begin_inset Formula $R$
+\end_inset
+
+ 是
+\begin_inset Formula $a_{4}$
+\end_inset
+
+和
+\begin_inset Formula $x$
+\end_inset
+
+的函数。最后计算加权积分：
+\begin_inset Formula 
+\[
+\int_{0}^{2}\left[(\tilde{y}''''-10\tilde{y}''+4\tilde{y}+1)(x^{4}-24x^{2}+80)\right]\dd{x}=0.
+\]
+
+\end_inset
+
+上式仅有一个未知数 
+\begin_inset Formula $a_{4}$
+\end_inset
+
+，可以解得其值为 
+\begin_inset Formula $0.2985$
+\end_inset
+
+，所以最终求得的近似解是：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=-\frac{5}{3}x^{3}+10x^{2}-2x-\frac{68}{3}+0.2985(x^{4}-24x^{2}+80),
+\]
+
+\end_inset
+
+我用Matlab简单画了下上述近似解和精确解的比较，有没有很失望啊。这是由于我们只用了一个未知系数，如果用两个甚至更多的话，近似解是十分逼近精确解的，有兴趣的可
+以自行尝试~
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/fanhan-3.png
+	lyxscale 45
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem1"
+
+\end_inset
+
+下面两个等式是由分部积分得来的：
+\begin_inset Formula 
+\begin{align*}
+ & \int_{0}^{2}[y''\delta y'']\dd{x}=\int_{0}^{2}[y''''\delta y]\dd{x}-\left.y'''\delta y\right|_{0}^{2}+\left.y''\delta y'\right|_{0}^{2}\\
+ & \int_{0}^{2}[10y'\delta y']\dd{x}=10(-\int_{0}^{2}[y''\delta y]\dd{x}+\left.y'\delta y\right|_{0}^{2})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:var-bound"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 是把所有积分项合并，然后其余边界项统一称为 Boundary terms 得到的。
+\end_layout
+
+\begin_layout Section
+Weak Form Galerkin
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+弱形式
+\series default
+ 是应用最广也是被应用于有限元的方法。弱形式和强形式的本质是一致的，其实可以通过 
+\series bold
+分部积分
+\series default
+ 将 强形式 转化为弱形式。强形式的主要缺点在于，所设的近似解函数需要有非常高阶的可微性。以 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 为例，待解的微分方程含有四阶导数项
+\begin_inset Formula $y''''$
+\end_inset
+
+，所以所设的近似解函数需要保证四阶导数不为零，如果使用多项式形式的话，则最高次项至少要是四次。这和上文提到的由于四个边界条件都要满足，所以至少要是四次的结论是一
+致的。
+\end_layout
+
+\begin_layout Standard
+对应的，
+\series bold
+弱形式的优点在于可以通过分部积分将要求的可微次数减半，并且近似解函数只需满足 Essential boundary condition，不必满足
+ Natural boundary condition
+\series default
+。直接说这个结论比较难以理解，还是结合一个简单的例子说明。
+\end_layout
+
+\begin_layout Standard
+假设我们现在要解这样一个带边界条件的微分方程：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''-y-1=0;\quad\text{B.C.:}\;y(0)=1,\quad y'(1)=0
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $y(0)=1$
+\end_inset
+
+ 是 Essential boundary condition，
+\begin_inset Formula $y'(1)=0$
+\end_inset
+
+ 是Natural boundary condition。根据上一篇文章中强形式的思路，我们会将微分方程乘以一个 
+\series bold
+权函数
+\series default
+（基函数），然后令加权积分为零。在弱形式中，我们将乘的这个函数称为 
+\series bold
+检验函数
+\series default
+(test function)，用 
+\begin_inset Formula $v(x)$
+\end_inset
+
+ 表示。（后文会谈到这个 
+\begin_inset Formula $v(x)$
+\end_inset
+
+ 和待解函数的变分 
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 不可告人的关系）。现在我们得到了下式：
+\begin_inset Formula 
+\[
+\int_{0}^{1}\left[(y''-y-1)v\right]\dd{x}=\int_{0}^{1}y''v\dd{x}-\int_{0}^{1}yv\dd{x}-\int_{0}^{1}v\dd{x}=0.
+\]
+
+\end_inset
+
+我们可以发现第二项积分内 
+\begin_inset Formula $y$
+\end_inset
+
+ 和 
+\begin_inset Formula $v$
+\end_inset
+
+ 的微分次数是一样的（都是零次微分），但是第一项积分内是二次微分而检验函数是零次微分。如果使用分部积分，就可以将一次微分转移到检验函数 
+\begin_inset Formula $v$
+\end_inset
+
+上，
+\series bold
+这样 
+\begin_inset Formula $y$
+\end_inset
+
+ 的近似解函数只需是一阶线性的而不用是二次的了(对应上文提到的将要求的可微分次数减半)
+\series default
+。通过分部积分可得：
+\begin_inset Formula 
+\[
+\int_{0}^{1}y''v\dd{x}=-\int_{0}^{1}y'v'\dd{x}+\left.y'v\right|_{0}^{1}
+\]
+
+\end_inset
+
+这样积分内 
+\begin_inset Formula $y$
+\end_inset
+
+ 和 
+\begin_inset Formula $v$
+\end_inset
+
+ 的微分次数就一样了，看上去很舒服，处女座的福音啊，没错我就是。想起小学数学老师说的，数学是应该有美感的。不小心扯远了。。
+\end_layout
+
+\begin_layout Standard
+现在我们来处理边界项 
+\begin_inset Formula $\left.y'v\right|_{0}^{1}$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\left.y'v\right|_{0}^{1}=\left.y'v\right|_{x=1}-\left.y'v\right|_{x=0}=y'(1)v(1)-y'(0)v(0)
+\]
+
+\end_inset
+
+由边界条件可知，
+\begin_inset Formula $y'(1)=0$
+\end_inset
+
+ 。另外由于在 
+\begin_inset Formula $x=0$
+\end_inset
+
+ 处有 Essential boundary condition 
+\begin_inset Formula $y(0)=1$
+\end_inset
+
+ ，所以 
+\begin_inset Formula $v(0)=0$
+\end_inset
+
+。（这是基函数的性质，即在有Essential boundary condition 的点处为零，后面会从另一个角度阐述这个性质）)。将 
+\begin_inset Formula $y'(1)=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $v(0)=0$
+\end_inset
+
+ 代入边界项可得出边界项为零。当然这种情况只是巧合，一般情况下边界项不必是零。
+\end_layout
+
+\begin_layout Standard
+现在，我们最初的加权积分等式被化简为了：
+\begin_inset Formula 
+\[
+\int_{0}^{1}y'v'+yv+v\dd{x}=0.
+\]
+
+\end_inset
+
+其实上式就已经是原微分方程的 
+\series bold
+弱形式
+\series default
+(Weak Form)了。
+\end_layout
+
+\begin_layout Standard
+这里我希望大家能去变分法 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "def:extreme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 那里 复习一下微分方程和原泛函数的关系。通过令 泛函数的一阶变分为零，经过分部积分的化简，可以得到积分内的微分方程。上文中我们从微分方程开始得到了弱形式，现在
+可以继续反推到原泛函数。这么做的目的是为了显示泛函数和其对应的微分方程的可逆关系。具体步骤如下：
+\end_layout
+
+\begin_layout Enumerate
+首先弱形式积分中的前两项(
+\begin_inset Formula $y'v'$
+\end_inset
+
+ 和 
+\begin_inset Formula $yv$
+\end_inset
+
+ )中 
+\begin_inset Formula $y$
+\end_inset
+
+ 和
+\begin_inset Formula $v$
+\end_inset
+
+（或者 
+\begin_inset Formula $y^{(n)}$
+\end_inset
+
+和
+\begin_inset Formula $v^{(n)}$
+\end_inset
+
+，上标
+\begin_inset Formula $n$
+\end_inset
+
+代表
+\begin_inset Formula $n$
+\end_inset
+
+次导数）都是线性的，而第三项只有线性的
+\begin_inset Formula $v$
+\end_inset
+
+。所以我们定义：
+\begin_inset Formula 
+\[
+B(y,v)=\int_{0}^{1}y'v'+yv\dd{x},\quad l(v)=\int_{0}^{1}v\dd{x}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $B(y,v)$
+\end_inset
+
+ 称为双线性项(
+\begin_inset Formula $y$
+\end_inset
+
+和
+\begin_inset Formula $v$
+\end_inset
+
+或其微分都是线性的)，
+\begin_inset Formula $l(v)$
+\end_inset
+
+ 称为线性项。
+\end_layout
+
+\begin_layout Enumerate
+这样，我们就可以得到对应微分方程的原泛函数是：
+\begin_inset Formula 
+\[
+I(y)=\frac{1}{2}B(y,y)+l(y)=\frac{1}{2}\int_{0}^{1}(y')^{2}+y^{2}+2y\dd{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有兴趣的可以试着用变分法将这个泛函数化为一开始的微分方程，可以发现是一致的。从弱形式到泛函数的过程中，实际上我们做了一个 
+\begin_inset Formula $v\to\delta y$
+\end_inset
+
+ 的替换。如果将弱形式中 
+\begin_inset Formula $v$
+\end_inset
+
+ 的替换成 
+\begin_inset Formula $\delta y$
+\end_inset
+
+，则可以得到：
+\begin_inset Formula 
+\[
+\int_{0}^{1}y'\delta y'+y\delta y+\delta y\dd{x}=0
+\]
+
+\end_inset
+
+这个式子实际上就是泛函数 的一阶变分。一切都联系在一起了。如果将 
+\begin_inset Formula $v$
+\end_inset
+
+ 和 
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 看成是等价，我们可以从另一个角度解释为什么 
+\begin_inset Formula $v(x)$
+\end_inset
+
+ 在 Essential boundary condition 的地方等于零。比如有 
+\begin_inset Formula $y(0)=1$
+\end_inset
+
+ 这个Essential B.C.，说明 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 在 
+\begin_inset Formula $x=0$
+\end_inset
+
+ 处是确定或固定的，只能等于
+\begin_inset Formula $1$
+\end_inset
+
+，因此自然其变分
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 在 
+\begin_inset Formula $x=0$
+\end_inset
+
+ 是等于零的，因为是确定的值没有变动的空间。
+\end_layout
+
+\begin_layout Standard
+从弱形式还原到原泛函数 这段算是额外的内容，让我们回到如何用Weak Form Galerkin求解近似解。还是用那个大家已经看过两遍的 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的例子，方便和其余方法比较。
+\end_layout
+
+\begin_layout Standard
+泛函为
+\begin_inset Formula 
+\[
+I[y(x);x]=\int_{0}^{2}\left[0.5(y'')^{2}+5(y')^{2}+2y^{2}+y\right]\dd{x}-10y(0),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Essential Boundary Conditions: 
+\begin_inset Formula $y(2)=0$
+\end_inset
+
+；
+\begin_inset Formula $y'(0)=-2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+Natural Boundary Conditions: ; 
+\begin_inset Formula $y'''(0)=-10$
+\end_inset
+
+；
+\begin_inset Formula $y''(2)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+求解最小化泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的近似解函数 
+\begin_inset Formula $y(x)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Solution
+和Strong Form Galerkin（SFG）一样， 我们从泛函数对应的微分方程开始：
+\end_layout
+
+\begin_layout Solution
+\begin_inset Formula 
+\[
+y''''-10y''+4y+1=0,\quad0<x<2\quad\text{（加上上述题目中的边界条件）}
+\]
+
+\end_inset
+
+第一步也和SFG类似，将微分方程乘以检验函数然后求积分:
+\begin_inset Formula 
+\[
+\int_{0}^{2}y''''v-10y''v+4yv+v\dd{x}=0
+\]
+
+\end_inset
+
+然后通过 分部积分 平衡微分，将 
+\begin_inset Formula $y''''$
+\end_inset
+
+ 中的两撇分给
+\begin_inset Formula $v$
+\end_inset
+
+，
+\begin_inset Formula $y''$
+\end_inset
+
+中的一撇分给 
+\begin_inset Formula $v$
+\end_inset
+
+，可以得到：
+\begin_inset Formula 
+\[
+\int_{0}^{2}y''v''+10y'v'+4yv+v\dd{x}+\left.(y'''-10y')v\right|_{0}^{2}-\left.y''v'\right|_{0}^{2}=0
+\]
+
+\end_inset
+
+展开一下积分外的边界项：
+\begin_inset Formula 
+\[
+\left[y'''(2)-10y'(2)\right]v(2)-\left[y'''[0]-10y'(0)\right]v(0)-y''(2)v'(2)+y''(0)v'(0)
+\]
+
+\end_inset
+
+由于 
+\begin_inset Formula $y(2)=0$
+\end_inset
+
+ 和 
+\begin_inset Formula $y'(0)=-2$
+\end_inset
+
+ 这两个 Essential B.C, 可以得到 
+\begin_inset Formula $v(2)=0$
+\end_inset
+
+ 以及 
+\begin_inset Formula $v'(0)=0$
+\end_inset
+
+。再加上那两个Natural B.C，边界项可最终化简为 
+\begin_inset Formula $-10v(0)$
+\end_inset
+
+。
+\series bold
+注意 Natural B.C.
+ 正是被考虑在这里，所以近似函数直须满足 Essential B.C.
+\series default
+。这样整个式子就被化简为：
+\begin_inset Formula 
+\[
+H(y,v)=\int_{0}^{2}y''v''+10y'v'+4yv+v\dd{x}-10v(0)=0.
+\]
+
+\end_inset
+
+也就是弱形式。
+\end_layout
+
+\begin_layout Solution
+和SFG一样，想要求解近似解，我们也需要先将其设成一个已知形式，这里我们依然使用多项式。这里弱形式的优势就显现出来了，现在多项式只需要保证二次导数不为零，同时只
+有两个 Essential B.C.
+ 需要满足，因此多项式最少是二次的。如果设一个二次多项式，那么一共会有三个系数，为了满足两个 Essential B.C,最终只剩下一个未知待解系数。为了得到更精
+确的解，这里我们设一个三次多项式，即含有两个未知系数。
+\begin_inset Formula 
+\[
+\tilde{y}(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}
+\]
+
+\end_inset
+
+
+\series bold
+代入两个Essential B.C.解得
+\series default
+：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=4-2x+a_{2}(x^{2}-4)+a_{3}(x^{3}-8)
+\]
+
+\end_inset
+
+对比表标准形式 
+\begin_inset Formula $\phi_{0}+\sum_{i}c_{i}\phi_{i}$
+\end_inset
+
+ ，发现上式中 
+\begin_inset Formula $4-2x$
+\end_inset
+
+是 
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+；
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ 是 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+，
+\begin_inset Formula $x^{2}-4$
+\end_inset
+
+ 是 
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+；
+\begin_inset Formula $a_{3}$
+\end_inset
+
+ 是 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+，
+\begin_inset Formula $x^{3}-8$
+\end_inset
+
+ 是
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+。这样就可以把 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 统一成 
+\begin_inset Formula $\tilde{y}(x)=\phi_{0}+c_{i}\phi_{i}$
+\end_inset
+
+的形式。
+\end_layout
+
+\begin_layout Solution
+现在我们将弱形式 
+\begin_inset Formula $H(y,v)$
+\end_inset
+
+ 中的所有 
+\begin_inset Formula $y$
+\end_inset
+
+ 替换成 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+, 所有 
+\begin_inset Formula $v$
+\end_inset
+
+ 替换成 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+(不包括
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+)。这样我们可以得到两个式子：
+\begin_inset Formula 
+\begin{align*}
+ & H[\tilde{y}(x),\phi_{1}]=0\\
+ & H[\tilde{y}(x),\phi_{2}]=0
+\end{align*}
+
+\end_inset
+
+这两个方程中仅有 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+，
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ 两个未知量，是可解的。最终解得 
+\begin_inset Formula $c_{1}=1.0682$
+\end_inset
+
+，
+\begin_inset Formula $c_{2}=-0.2341$
+\end_inset
+
+。所以通过Weak Form Galerkin得到的近似解为：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=-0.234x^{3}+1.068x^{2}-2x+1.600.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+同样，用Matlab将这次结果和精确解以及上一篇文章中的SFG的结果进行对比。可以发现这次逼近了精确解很多。这是由于这次使用了两个未知系数而上次SFG只用了一个
+。我试过如果SFG也用两个未知系数，其结果会比WFG更精确（对于这个例子）。但是我们仍然可以看出弱形式的优势，对于这个例子，弱形式在使用更低次的多项式的情况下，
+依然比强形式的结果逼近精确解（弱形式使用了三次多项式，强形式使用了四次多项式）。
+\end_layout
+
+\begin_layout Solution
+\begin_inset Graphics
+	filename inset/fanhan-4.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 有限元方法
 \end_layout
 

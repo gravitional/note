@@ -52,7 +52,7 @@ IFS=$SAVEIFS
 #!/usr/bin/env bash
 
 cd ~/Download
-dir="manga$(date +%m%d)"
+dir="manga$(date '+%m%d-%H%M%S')"
 mkdir $dir
 mv -i *.zip *.mht $dir
 # 移动文件
