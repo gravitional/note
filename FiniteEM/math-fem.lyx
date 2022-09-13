@@ -1510,7 +1510,7 @@ f_{1,3}
 \end_layout
 
 \begin_layout Chapter
-泛函分析
+泛函与弱形式
 \end_layout
 
 \begin_layout Section
@@ -5935,6 +5935,10 @@ Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是�
 静磁场
 \end_layout
 
+\begin_layout Section
+磁场的基本理论
+\end_layout
+
 \begin_layout Standard
 根据 
 \begin_inset Formula $\sbf B$
@@ -6025,7 +6029,146 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+毕奥–萨伐尔定律
+\end_layout
+
+\end_inset
+
+ref:郭硕鸿 p77/91，若取 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+满足规范条件 
+\begin_inset Formula $\nabla\cdot\sbf A=0$
+\end_inset
+
+，得矢势
+\begin_inset Formula $\sbf A$
+\end_inset
+
+的微分方程：
+\begin_inset Formula 
+\begin{equation}
+\nabla^{2}\sbf A=-\mu\sbf J\label{eq:g3.1.8}
+\end{equation}
+
+\end_inset
+
+矢势方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.1.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的特解： 
+\begin_inset Formula 
+\begin{equation}
+\sbf A(\sbf x)=\frac{\mu}{4\pi}\int_{V}\frac{\sbf J(\sbf x')\dd{V'}}{r}\label{eq:g3.1.9}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\sbf x'$
+\end_inset
+
+ 是源点，
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 是长点，
+\begin_inset Formula $r$
+\end_inset
+
+ 为由 
+\begin_inset Formula $\sbf x'$
+\end_inset
+
+ 到 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+的距离。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.1.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 满足 
+\begin_inset Formula $\nabla\cdot\sbf A=0$
+\end_inset
+
+。取旋度可求出
+\begin_inset Formula $\sbf B$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+\sbf B & =\nabla\times\sbf A=\frac{\mu}{4\pi}\nabla\times\int_{V}\frac{\sbf J(\sbf x')\dd{V}}{r}\\
+ & =\frac{\mu}{4\pi}\int_{V}(\nabla\frac{1}{r})\times\sbf J(\sbf x')\dd{V'}\\
+ & =\frac{\mu}{4\pi}\int_{V}\frac{\sbf J\times\sbf r}{r^{3}}\dd{V'}
+\end{align*}
+
+\end_inset
+
+过渡到线电流情形，设
+\begin_inset Formula $I$
+\end_inset
+
+ 为导线上电流的大小，作代换 
+\begin_inset Formula $\sbf J\dd{V'}\to I\dd{\sbf l}$
+\end_inset
+
+得
+\begin_inset Formula 
+\begin{equation}
+\sbf B=\frac{\mu}{4\pi}\oint_{L}\frac{I\dd{\sbf l}\times\sbf r}{r^{3}}\label{eq:g3.1.11}
+\end{equation}
+
+\end_inset
+
+这就是 毕奥–萨伐尔 定律。
+\begin_inset Formula 
+\[
+\nabla\times\sbf A=\left(\frac{1}{r}\partial_{\phi}A_{z}-\partial_{z}A_{\phi}\right)\sbf e_{r}+\left(\partial_{z}A_{r}-\partial_{r}A_{z}\right)\sbf e_{\phi}+\left[\frac{1}{r}\partial_{r}\left(rA_{\phi}\right)-\frac{1}{r}\partial_{\phi}A_{r}\right]\sbf e_{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+磁矢势的泛函
+\end_layout
+
+\end_inset
+
 与
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -6034,6 +6177,10 @@ plural "false"
 caps "false"
 noprefix "false"
 
+\end_inset
+
+ 
+\begin_inset Formula $\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J$
 \end_inset
 
  对应的泛函积分为
@@ -6118,12 +6265,12 @@ noprefix "false"
 其中
 \begin_inset Formula 
 \begin{equation}
-\mathcal{F}^{e}(\sbf A^{e})=\frac{1}{2}\int_{\Omega^{e}}\frac{1}{\mu_{r}}\left(\nabla\times\sbf A^{e}\right)\cdot\left(\nabla\times\sbf A^{e}\right)\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf A^{e}\dd{\Omega}\label{eq:xl6.5}
+\mathcal{F}^{e}(\sbf A^{e})=\frac{1}{2}\int_{\Omega^{e}}\frac{1}{\mu_{r}}\left(\nabla\times\sbf A^{e}\right)\cdot\left(\nabla\times\sbf A^{e}\right)\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf A^{e}\dd{\Omega}\label{eq:xl3.5}
 \end{equation}
 
 \end_inset
 
-
+对于磁场，二维，轴对称和 三维问题 所采用的单元略有不同。
 \end_layout
 
 \begin_layout Standard
@@ -6134,7 +6281,16 @@ noprefix "false"
 \end_layout
 
 \begin_layout Example
-对于磁场，二维，轴对称和 三维问题 所采用的单元略有不同。首先是二维情况，电流是垂直二维平面流过的，
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+二维情况
+\end_layout
+
+\end_inset
+
+ 电流是垂直二维平面流过的，
 \begin_inset Formula $\sbf A$
 \end_inset
 
@@ -6165,32 +6321,73 @@ noprefix "false"
 \end_layout
 
 \begin_layout Example
-然后是 磁感应
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+轴对称情况
+\end_layout
+
+\end_inset
+
+ 然后是磁感应强度 
 \begin_inset Formula $\sbf B$
 \end_inset
 
- 轴对称情况，
+ 轴对称情况，从毕奥–萨伐尔定律
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.1.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
-\nabla\times f=\left(\frac{1}{r}\partial_{\phi}f_{z}-\partial_{z}f_{\phi}\right)\sbf e_{r}+\left(\partial_{z}f_{r}-\partial_{r}f_{z}\right)\sbf e_{\phi}+\left[\frac{1}{r}\partial_{r}\left(rf_{\phi}\right)-\frac{1}{r}\partial_{\phi}f_{r}\right]\sbf e_{z}
+\sbf B=\frac{\mu}{4\pi}\oint_{L}\frac{I\dd{\sbf l}\times\sbf r}{r^{3}}
 \]
 
 \end_inset
 
-轴对称意味着 
-\begin_inset Formula $\sbf e_{\phi}$
-\end_inset
-
- 方向分量为零。
-\end_layout
-
-\begin_layout Example
-如果取 对称轴为柱坐标系下的 
+取对称轴为柱坐标系下的 
 \begin_inset Formula $\sbf e_{z}$
 \end_inset
 
- 坐标轴，那么电流 
+ 坐标轴，如果电流
+\begin_inset Formula $I\dd{l}$
+\end_inset
+
+只沿着
+\begin_inset Formula $\sbf e_{\phi}$
+\end_inset
+
+方向，则
+\begin_inset Formula $\sbf B$
+\end_inset
+
+将没有 
+\begin_inset Formula $\sbf e_{\phi}$
+\end_inset
+
+方向的分量，并且其他方向分量也不依赖于 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 坐标。因此令电流 
 \begin_inset Formula $\sbf J=J_{\varphi}\sbf e_{\varphi}$
+\end_inset
+
+，对应地由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.1.9"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
 ，
@@ -6204,8 +6401,144 @@ noprefix "false"
  表示为：
 \begin_inset Formula 
 \[
-\sbf A
+\sbf A^{e}(\rho,z)=\sum_{i=1}^{n_{e}}N_{i}^{e}(\rho,z)A_{\varphi,i}\sbf e_{\varphi}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+三维磁场
+\end_layout
+
+\end_inset
+
+ 对于三维磁场问题，采用的是棱边单元，相应的形函数是矢量。有限元中的矢势可以用形函数和棱边上定义的 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+ 表示为：
+\begin_inset Formula 
+\[
+\sbf A^{e}(x,y,z)=\sum_{i=1}^{n_{e}}\sbf N_{i}^{e}(x,y,z)A_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+有限元矩阵
+\end_layout
+
+\begin_layout Standard
+对于任一种情况，单元内的矢量势均可以统一表示为一种形式，即
+\begin_inset Formula 
+\begin{equation}
+\sbf A^{e}=\sum_{i=1}^{n_{e}}\sbf N_{i}^{e}A_{i}\label{eq:xl3.6}
+\end{equation}
+
+\end_inset
+
+例如二位情况下，
+\begin_inset Formula $\sbf N_{i}^{e}=N_{i}^{e}(x,y)\sbf e_{z}$
+\end_inset
+
+，
+\begin_inset Formula $A_{i}=A_{z,i}$
+\end_inset
+
+；轴对称情况下 
+\begin_inset Formula $\sbf N_{i}^{e}=N_{i}^{e}(\rho,z)\sbf e_{\varphi}$
+\end_inset
+
+，
+\begin_inset Formula $A_{i}=A_{\varphi,i}$
+\end_inset
+
+。然后将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，代入式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到
+\begin_inset Formula 
+\[
+\mathcal{F}^{e}(\sbf A^{e})=\frac{1}{2}\int_{\Omega^{e}}\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{i}^{e}A_{i}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{j}^{e}A_{j}\right)\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}A_{i}\dd{\Omega}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算 
+\begin_inset Formula $\mathcal{F}^{e}(\sbf A^{e})$
+\end_inset
+
+ 对 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+ 的导数，并根据 
+\begin_inset Formula $\delta\mathcal{F}(\sbf A)=0$
+\end_inset
+
+，可以得到
+\begin_inset Formula $A_{i}$
+\end_inset
+
+所满足的矩阵方程
+\begin_inset Formula 
+\begin{equation}
+\sum_{e=1}^{M}[K_{ij}^{e}]\{A_{j}\}=\sum_{e=1}^{M}\{b_{i}^{e}\}\label{eq:xl3.7}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align}
+K_{ij}^{e} & =\int_{\Omega^{e}}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega}\label{eq:xl3.8}\\
+b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}\label{eq:xl3.9}
+\end{align}
 
 \end_inset
 
