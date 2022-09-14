@@ -6585,6 +6585,210 @@ X=\sum_{i}N_{i}^{e}\left(\xi_{1},\cdots\xi_{n}\right)X_{i}
  的近似。
 \end_layout
 
+\begin_layout Standard
+形函数具有支撑性质 
+\begin_inset Formula $N_{i}^{e}(x_{j})=\delta_{ij}$
+\end_inset
+
+，也就是 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 点上定义的形函数，只在这一点的邻域不为零，在单元的其它点上都为零。这一性质保证了插值出的结果在单元边界上至少是 
+\begin_inset Formula $C^{0}$
+\end_inset
+
+ 连续的。例如下左图的两个三角形单元，
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+documentclass[tikz,border=10pt]{standalone} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+usepackage{tikz} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+usetikzlibrary{positioning} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+begin{document}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+begin{tikzpicture}[scale=1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=left:$1$](A) at (0,0); 
+\backslash
+coordinate [label=right:$2$] (B) at (2,0); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=above:$3$] (C) at (1.5,1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=above:$4$] (D) at (3,1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+draw (A) -- (B)--(C)--cycle; 
+\backslash
+draw (B) -- (C)--(D)--cycle; 
+\backslash
+node at (3.5, .5) {$
+\backslash
+Rightarrow$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=left:$1$](A) at (4,0); 
+\backslash
+coordinate [label=below:$2$] (B) at (5,0); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=above:$3$] (C) at (5,1); 
+\backslash
+coordinate [label=right:$4$] (D) at (6,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+draw (A) -- (B)--(C)--cycle; 
+\backslash
+draw (B) -- (C)--(D)--cycle;
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+end{document} 
+\end_layout
+
+\end_inset
+
+它们具有公共边 
+\begin_inset Formula $2$
+\end_inset
+
+–
+\begin_inset Formula $3$
+\end_inset
+
+，经过等参坐标变换，所有单元都变成标准单元–边长为
+\begin_inset Formula $1$
+\end_inset
+
+的直角三角形，即右图。在等参坐标系中，两个单元的形状完全相同。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/ele-tri3-2.pdf
+	lyxscale 150
+	scale 80
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+某个单元内的场量的插值，在等参坐标系下写作：
+\begin_inset Formula 
+\[
+\phi\left(\xi,\eta\right)=\sum_{i=1}^{n}N_{i}^{e}\left(\xi,\eta\right)\phi_{i}
+\]
+
+\end_inset
+
+公共边上的场量即可以用单元
+\begin_inset Formula $1$
+\end_inset
+
+表示，也可以用单元
+\begin_inset Formula $2$
+\end_inset
+
+表示，即
+\begin_inset Formula 
+\[
+\phi=\sum_{i=1}^{n}N_{i}^{(1)}\left(\xi,\eta\right)\phi_{i}^{(1)}=\sum_{i=1}^{n}N_{i}^{(2)}\left(\xi,\eta\right)\phi_{i}^{(2)}
+\]
+
+\end_inset
+
+公共边在两个单元中的等参坐标 
+\begin_inset Formula $(\xi,\eta)$
+\end_inset
+
+ 是相同的，形函数在两个单元中也取相同的形式，因此唯一的差别在于顶点 
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $4$
+\end_inset
+
+ 上 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+的取值，而它们的值一般不相等。因此两个单元对公共边上的场给出不同的插值，解决冲突的办法之一就是要求形函数满足 
+\begin_inset Formula $N_{i}^{e}(x_{j})=\delta_{ij}$
+\end_inset
+
+，这样公共边上的值只取决于节点 
+\begin_inset Formula $2$
+\end_inset
+
+，
+\begin_inset Formula $3$
+\end_inset
+
+，所以至少是
+\begin_inset Formula $C^{0}$
+\end_inset
+
+连续的。
+\end_layout
+
 \begin_layout Section
 等参单元形函数
 \end_layout
