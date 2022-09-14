@@ -628,44 +628,45 @@ page 1013; 91 Page Management
 
 ## Latex 单字命令
 
-已经预定义的字母
+已经定义过的字母
 
-\a (tabbing); tabbing
-\b (bar-under accent); Accents
-\c (cedilla accent); Accents
-\d (dot-under accent); Accents
++ `\a`; (tabbing); tabbing
++ `\b`; (bar-under accent); Accents
++ `\c`; (cedilla accent); Accents
++ `\d`; (dot-under accent); Accents
 
-\H (Hungarian umlaut accent); Accents
-\i (dotless i); Accents
-\j (dotless j); Accents
-\k \capitalogonek, Ogonek. Not available in the OT1 encoding.
-\l (ł); Additional Latin letters
-\L (Ł); Additional Latin letters
-\o (ø); Additional Latin letters
-\O (Ø); Additional Latin letters
-\P,\textparagraph; ¶ Paragraph sign (pilcrow).
-\r; \capitalring; o* Ring accent.
++ `\H`; (Hungarian umlaut accent); Accents
++ `\i`; (dotless i); Accents
++ `\j`; (dotless j); Accents
++ `\k`; \capitalogonek, Ogonek. Not available in the OT1 encoding.
++ `\l`; (ł); Additional Latin letters
++ `\L`; (Ł); Additional Latin letters
++ `\o`; (ø); Additional Latin letters
++ `\O`; (Ø); Additional Latin letters
++ `\P`; \textparagraph; ¶ Paragraph sign (pilcrow).
++ `\r`; \capitalring; o* Ring accent.
 
-\t, \capitaltie, \newtie, \capitalnewtie
-Tie-after accent (used for transliterating from Cyrillic, such as in the ALA-LC romanization). 
+`\t`, `\capitaltie`, `\newtie`, `\capitalnewtie`
+Tie-after accent (used for transliterating from Cyrillic, 
+such as in the ALA-LC romanization). 
 It expects that the argument has two characters. 
 The \newtie form is centered in its box.
 
-\u, \capitalbreve; ŏ Breve accent.
-\v, \capitalcaron; ǒ Háček (check, caron) accent.
++ `\u`; \capitalbreve; ŏ Breve accent.
++ `\v`; \capitalcaron; ǒ Háček (check, caron) accent.
 
 未占用的字母
 
-\e
-\f
-\g
-\h
-\m
-\n
-\p
-\q
-\s
-\w
-\x
-\y
-\z
++ `\e`;
++ `\f`;
++ `\g`;
++ `\h`;
++ `\m`;
++ `\n`;
++ `\p`;
++ `\q`;
++ `\s`;
++ `\w`;
++ `\x`;
++ `\y`;
++ `\z`;
