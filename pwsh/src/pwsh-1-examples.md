@@ -204,3 +204,32 @@ Function Merge-ChildItem {
     END {}
 }
 ```
+
+### 批量拉取文件,abd
+
+```powershell
+function Receive-adb {
+    [CmdletBinding()]
+    # 参数模板
+    param(
+        # 非必须参数, 位置 1
+        [Parameter(
+            Mandatory = $False,
+            Position = 0
+        )]
+        [string] $Paths,
+        #字符串类型,
+        [Parameter(
+            Mandatory = $True,
+            Position = 1
+        )]
+
+        [string] $Prefix
+    )
+    # 解析字符串
+    $files = @( $Paths -split "\s+")
+    foreach ($f in $files) { 
+        adb pull ( -join ($Prefix, "/", $f)) 
+    }
+}
+```
