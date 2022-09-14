@@ -802,6 +802,16 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:4"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 page 57
 \end_layout
 
@@ -878,7 +888,7 @@ and
 
 \begin_inset Formula 
 \[
-\left(\sbf{\hat{r}}\cdot\sbf\alpha\sbf\nabla\phi\right)\cdot\sbf n+\gamma\phi=q
+\left(\hat{\sbf r}\cdot\sbf\alpha\nabla\phi\right)\cdot\sbf n+\gamma\phi=q
 \]
 
 \end_inset
@@ -3824,6 +3834,532 @@ g_{i}^{e}=\oint_{S^{e}}N_{i}^{e}\sbf D\cdot\hat{n}^{e}\dd{S}\cdot\label{eq:5.44}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Chapter
+电磁学的变分原理
+\end_layout
+
+\begin_layout Chapter
+本征值问题–波导和腔体
+\end_layout
+
+\begin_layout Chapter
+矢量有限元
+\end_layout
+
+\begin_layout Section
+二维棱边元
+\end_layout
+
+\begin_layout Subsection
+矩阵单元
+\end_layout
+
+\begin_layout Standard
+考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:8.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示的矩阵单元，它在 
+\begin_inset Formula $x$
+\end_inset
+
+ 方向 和 
+\begin_inset Formula $y$
+\end_inset
+
+ 方向的边长分别是 
+\begin_inset Formula $\ell_{x}^{e}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\ell_{y}^{e}$
+\end_inset
+
+，它的中心在 
+\begin_inset Formula $(x_{c}^{e},y_{c}^{e})$
+\end_inset
+
+。如果单元每边被赋予一个不变的切向场分量，那么，该单元中的场可展开为：
+\begin_inset Formula 
+\begin{align}
+ & E_{x}^{e}=\frac{1}{\ell_{y}^{e}}\left[\left(\frac{\ell_{y}^{e}}{2}+{\color{blue}y_{c}^{e}-y}\right)E_{x1}^{e}+\left(\frac{\ell_{y}^{e}}{2}+{\color{blue}y-y_{c}^{e}}\right)\right]E_{x2}^{e}\label{eq:8.1}\\
+ & E_{y}^{e}=\frac{1}{\ell_{x}^{e}}\left[\left(\frac{\ell_{x}^{e}}{2}+x_{c}^{e}-x\right)E_{x1}^{e}+\left(\frac{\ell_{x}^{e}}{2}+x-x_{c}^{e}\right)\right]E_{y2}^{e}\label{eq:8.2}
+\end{align}
+
+\end_inset
+
+从表达式可以看出，
+\begin_inset Formula $E_{x1}^{e}$
+\end_inset
+
+表示沿棱边 
+\begin_inset Formula $(1,2)$
+\end_inset
+
+ 的
+\begin_inset Formula $E_{x}$
+\end_inset
+
+分量，类似地，
+\begin_inset Formula $E_{x2}^{e}$
+\end_inset
+
+是沿棱边
+\begin_inset Formula $(4,3)$
+\end_inset
+
+的
+\begin_inset Formula $E_{x}$
+\end_inset
+
+分量。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+d
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+图8.1矩阵棱边单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+按照
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:8.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中定义的棱边编号（
+\begin_inset Formula $1,2,3,4$
+\end_inset
+
+），则 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以写成：
+\begin_inset Formula 
+\begin{equation}
+\sbf E^{e}=\sum_{i=1}^{4}\sbf N_{i}^{e}E_{i}^{e}\label{eq:8.3}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $E_{i}^{e}$
+\end_inset
+
+表示沿第
+\begin_inset Formula $i$
+\end_inset
+
+ 个棱边的切向场，
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+是矢量插值函数或基函数，它们由下列式子给出：
+\begin_inset Formula 
+\begin{align}
+ & N_{1}^{e}=\frac{1}{\ell_{y}^{e}}\left(\frac{\ell_{y}^{e}}{2}+{\color{blue}y_{c}^{e}-y}\right)\hat{\sbf x}\label{eq:8.4}\\
+ & N_{2}^{e}=\frac{1}{\ell_{y}^{e}}\left(\frac{\ell_{y}^{e}}{2}+{\color{blue}y-y_{c}^{e}}\right)\hat{\sbf x}\label{eq:8.5}\\
+ & N_{3}^{e}=\frac{1}{\ell_{x}^{e}}\left(\frac{\ell_{x}^{e}}{2}+{\color{blue}x_{c}^{e}-x}\right)\hat{\sbf y}\label{eq:8.6}\\
+ & N_{4}^{e}=\frac{1}{\ell_{x}^{e}}\left(\frac{\ell_{x}^{e}}{2}+{\color{blue}x-x_{c}^{e}}\right)\hat{\sbf y}\label{eq:8.7}
+\end{align}
+
+\end_inset
+
+这些基函数的一个很重要的特性是：
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+ 只在第 
+\begin_inset Formula $i$
+\end_inset
+
+ 边上有切向分量，而在其它所有边上都没有切向分量。因此，通过所有单元棱边的切向场的连续性得到保证。
+\end_layout
+
+\begin_layout Enumerate
+这些函数的另一个特殊性质是，每个函数在单元范围内满足散度条件 
+\begin_inset Formula $\nabla\cdot\sbf N_{i}^{e}=0$
+\end_inset
+
+。因此，在无源区域中，用它们来表达矢量场是理想的。
+\end_layout
+
+\begin_layout Enumerate
+而且，这些函数的旋度可以很容易地找到：
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\times\sbf N_{1}^{e}=\frac{1}{\ell_{y}^{e}}\hat{\sbf z},\quad\nabla\times\sbf N_{2}^{e}=\frac{-1}{\ell_{y}^{e}}\hat{\sbf z}\\
+ & \nabla\times\sbf N_{3}^{e}=-\frac{1}{\ell_{x}^{e}}\hat{\sbf z},\quad\nabla\times\sbf N_{4}^{e}=\frac{1}{\ell_{x}^{e}}\hat{\sbf z}
+\end{align*}
+
+\end_inset
+
+显然它们是非零常数。
+\end_layout
+
+\begin_layout Standard
+顺便指出，以上矢量基函数，是为了建立场表达式中切向量的连续性而提出的。用 
+\begin_inset Formula $\hat{\sbf z}$
+\end_inset
+
+叉乘这些函数，我们得到另一组适量函数 
+\begin_inset Formula $\hat{\sbf z}\times\sbf N_{i}^{e}$
+\end_inset
+
+，它们保证了法向连续性。与 
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 相比，函数 
+\begin_inset Formula $\hat{\sbf z}\times\sbf N_{i}^{e}$
+\end_inset
+
+ 有零旋度和非零散度，因而用来表达面电流密度是理想的。在电磁学中，这些函数被称为 屋顶基函数，被并广泛应用于积分方程的 矩量法求解中。
+\end_layout
+
+\begin_layout Subsection
+三角形单元
+\end_layout
+
+\begin_layout Standard
+如前所述，矩阵单元适用于有限类的几何结构。当处理不规则集合形状的问题时，有必要使用三角形单元。
+\end_layout
+
+\begin_layout Standard
+三角形单元的 矢量基函数 可以从 必备特性导出。首先考虑 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "chap:4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 讨论的单元面积坐标 
+\begin_inset Formula $(L_{1}^{e},L_{2}^{e},L_{3}^{e})$
+\end_inset
+
+，它们是单元的线性插值函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+d
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+三角形棱边单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑下列矢量函数
+\begin_inset Formula 
+\begin{equation}
+\sbf W_{12}=L_{1}^{e}\nabla L_{2}^{e}-L_{2}^{e}\nabla L_{1}^{e}.\label{eq:8.8}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+首先可以看出
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\sbf W_{12}=\nabla\cdot\left(L_{1}^{e}\nabla L_{2}^{e}\right)-\nabla\cdot\left(L_{2}^{e}\nabla L_{1}^{e}\right)=0\label{eq:8.9}
+\end{equation}
+
+\end_inset
+
+上式使用了 
+\begin_inset Formula $\nabla\cdot(\varphi\sbf f)=(\nabla\varphi)\cdot\sbf f+\varphi\nabla\cdot\sbf f$
+\end_inset
+
+。以及
+\begin_inset Formula 
+\[
+\nabla\times\sbf W_{12}=\nabla\times\left(L_{1}^{e}\nabla L_{2}^{e}\right)-\nabla\times\left(L_{2}^{e}\nabla L_{1}^{e}\right)=2\nabla L_{1}^{e}\times\nabla L_{2}^{e}
+\]
+
+\end_inset
+
+上式使用了 
+\begin_inset Formula $\nabla\times(\varphi\sbf f)=(\nabla\varphi)\times\sbf f+\varphi\nabla\times\sbf f$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+其次，设 
+\begin_inset Formula $\sbf e_{1}$
+\end_inset
+
+是从节点
+\begin_inset Formula $1$
+\end_inset
+
+指向节点
+\begin_inset Formula $2$
+\end_inset
+
+ 的单位矢量。因为
+\begin_inset Formula $L_{1}^{e}$
+\end_inset
+
+是一个线性函数，从节点
+\begin_inset Formula $1$
+\end_inset
+
+到节点
+\begin_inset Formula $2$
+\end_inset
+
+，它的值从
+\begin_inset Formula $1$
+\end_inset
+
+变化到
+\begin_inset Formula $0$
+\end_inset
+
+；
+\begin_inset Formula $L_{2}^{e}$
+\end_inset
+
+ 类似，从 节点
+\begin_inset Formula $2$
+\end_inset
+
+的
+\begin_inset Formula $1$
+\end_inset
+
+变化到节点
+\begin_inset Formula $1$
+\end_inset
+
+处的
+\begin_inset Formula $0$
+\end_inset
+
+，所以我们有
+\begin_inset Formula 
+\begin{align}
+ & \sbf e_{1}\cdot\nabla L_{1}^{e}=-\frac{1}{\ell_{1}^{e}},\quad\sbf e_{1}\cdot\nabla L_{2}^{e}=\frac{1}{\ell_{1}^{e}},\nonumber \\
+\Rightarrow\quad & \sbf e_{1}\cdot\sbf W_{12}=\frac{L_{1}^{e}+L_{2}^{e}}{\ell_{1}^{e}}=\frac{1}{\ell_{1}^{e}}\label{eq:8.11}
+\end{align}
+
+\end_inset
+
+这里 
+\begin_inset Formula $\ell_{1}^{e}$
+\end_inset
+
+ 表示连接节点
+\begin_inset Formula $1$
+\end_inset
+
+和节点
+\begin_inset Formula $2$
+\end_inset
+
+的棱边的长度。换句话说， 
+\begin_inset Formula $\sbf W_{12}$
+\end_inset
+
+沿棱边
+\begin_inset Formula $(1,2)$
+\end_inset
+
+有一不变的切向分量。并且因为 
+\begin_inset Formula $L_{1}^{e}$
+\end_inset
+
+沿棱边
+\begin_inset Formula $(2,3)$
+\end_inset
+
+为零，
+\begin_inset Formula $L_{2}^{e}$
+\end_inset
+
+沿棱边
+\begin_inset Formula $(1,3)$
+\end_inset
+
+为零，所以 
+\begin_inset Formula $\sbf W_{12}$
+\end_inset
+
+沿这两个棱边没有切向分量。
+\end_layout
+
+\begin_layout Standard
+因此，
+\begin_inset Formula $\sbf W_{12}$
+\end_inset
+
+具有作为与棱边
+\begin_inset Formula $(1,2)$
+\end_inset
+
+相联系的棱边场的矢量基函数所需的所有特性。如果我们定义棱边
+\begin_inset Formula $(1,2)$
+\end_inset
+
+为棱边
+\begin_inset Formula $1$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{1}^{e}=\sbf W_{12}\ell_{1}^{e}=(L_{1}^{e}\nabla L_{2}^{e}-L_{2}^{e}\nabla L_{1}^{e})\ell_{1}^{e}\label{eq:8.12}
+\end{equation}
+
+\end_inset
+
+这里 
+\begin_inset Formula $\ell_{1}^{e}$
+\end_inset
+
+ 用来使 
+\begin_inset Formula $\sbf N_{1}^{e}$
+\end_inset
+
+ 归一，并使 
+\begin_inset Formula $\sbf N_{1}^{e}$
+\end_inset
+
+ 无量纲。类似地，能构造棱边 
+\begin_inset Formula $(2,3)$
+\end_inset
+
+ 和 
+\begin_inset Formula $(3,1)$
+\end_inset
+
+ 的适当矢量基函数为：
+\begin_inset Formula 
+\begin{align}
+ & \sbf N_{2}^{e}=\sbf W_{23}\ell_{2}^{e}=(L_{2}^{e}\nabla L_{3}^{e}-L_{3}^{e}\nabla L_{2}^{e})\ell_{2}^{e}\label{eq:8.13}\\
+ & \sbf N_{3}^{e}=\sbf W_{31}\ell_{3}^{e}=(L_{3}^{e}\nabla L_{1}^{e}-L_{1}^{e}\nabla L_{3}^{e})\ell_{3}^{e}\label{eq:8.14}
+\end{align}
+
+\end_inset
+
+因此，该单元内的矢量场可展开为
+\begin_inset Formula 
+\begin{equation}
+\sbf E^{e}=\sum_{i=1}^{3}\sbf N_{i}^{e}E_{i}^{e}\label{eq:8.15}
+\end{equation}
+
+\end_inset
+
+这里，
+\begin_inset Formula $E_{i}^{e}$
+\end_inset
+
+ 表示沿着第
+\begin_inset Formula $i$
+\end_inset
+
+个棱边的切向场。
 \end_layout
 
 \begin_layout Standard

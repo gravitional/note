@@ -31,7 +31,27 @@ Instead of "What You See Is What You Get," the LyX model is "What You See Is Wha
 
 脚注可以复制粘贴,通过点击工具栏上的按钮, 可以把普通文字变成脚注. 也可以把脚注变成普通文字,通过 `backspace` 或者 `delete`, 去掉脚注框.
 
-### 数学
+## 数学
+
+## 数学宏
+
+可以使用 LyX 自带的数学宏(Math Macro)功能, 
+能够自定义新的命令，同时改变 LyX 主界面的预览效果.
+例如以下定义，分别定义了 粗体符号 和 费曼 slash
+
+```latex
+\begin_layout Standard
+
+\begin_inset FormulaMacro
+\newcommand{\sbf}[1]{\symbfit{#1}}
+{\boldsymbol{#1}}
+\end_inset
+\begin_inset FormulaMacro
+\newcommand{\sla}{\slashed}
+{/}
+\end_inset
+\end_layout
+```
 
 ### 杂项
 

@@ -625,3 +625,47 @@ page 1013; 91 Page Management
 
 这种机制允许你直接在`LaTeX`内部创建"一页两面"的文档版本, 而不需要使用任何外部程序.
 然而, `pgfpages`的作用远不止这些. 你可以用它来在页面上添加`标识`和`水印`, 在一页上最多打印`16`面, 为页面添加边框, 等等.
+
+## Latex 单字命令
+
+已经预定义的字母
+
+\a (tabbing); tabbing
+\b (bar-under accent); Accents
+\c (cedilla accent); Accents
+\d (dot-under accent); Accents
+
+\H (Hungarian umlaut accent); Accents
+\i (dotless i); Accents
+\j (dotless j); Accents
+\k \capitalogonek, Ogonek. Not available in the OT1 encoding.
+\l (ł); Additional Latin letters
+\L (Ł); Additional Latin letters
+\o (ø); Additional Latin letters
+\O (Ø); Additional Latin letters
+\P,\textparagraph; ¶ Paragraph sign (pilcrow).
+\r; \capitalring; o* Ring accent.
+
+\t, \capitaltie, \newtie, \capitalnewtie
+Tie-after accent (used for transliterating from Cyrillic, such as in the ALA-LC romanization). 
+It expects that the argument has two characters. 
+The \newtie form is centered in its box.
+
+\u, \capitalbreve; ŏ Breve accent.
+\v, \capitalcaron; ǒ Háček (check, caron) accent.
+
+未占用的字母
+
+\e
+\f
+\g
+\h
+\m
+\n
+\p
+\q
+\s
+\w
+\x
+\y
+\z

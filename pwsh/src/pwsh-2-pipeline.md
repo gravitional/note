@@ -3,12 +3,12 @@
 [about_Pipelines](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines)
 
 + 简要说明
-在PowerShell中把命令组合成 管道(pipelines)
+在PowerShell中把命令组合成 `管道`(pipelines)
 
 + 长描述
 
-管道是一系列由管道操作符(`|`)(ASCII 124)连接的命令.
-每个 管道运算符 都会将前一命令的结果发送到下个命令.
+`管道` 是一系列由 `管道操作符`(`|`)(ASCII 124)连接的命令.
+每个 `管道运算符` 都会将前一命令的结果发送到下个命令.
 
 第一条命令的输出可以作为第二条命令的输入被送去处理.
 而这个输出又可以被发送到另一个命令.
@@ -123,45 +123,48 @@ Get-Help Start-Service -Full
 Get-Help Start-Service -Parameter *(参数).
 ```
 
-Start-Service cmdlet的帮助显示, 只有InputObject和Name参数接受管道输入.
+`Start-Service` cmdlet的帮助显示, 只有InputObject和Name参数接受管道输入.
 
-
-当你通过管道向Start-Service发送对象时, PowerShell会尝试将对象与InputObject和Name参数相关联.
+当你通过管道向 `Start-Service` 发送对象时, PowerShell会尝试将对象与InputObject和Name参数相关联.
 
 ## 接受管道输入的方法
 
 Cmdlets参数可以以两种不同的方式之一接受管道输入.
 
-+ ByValue. 该参数接受符合预期的.NET类型或可转换为该类型的值.
++ `ByValue`. 该参数接受符合预期的.NET类型或可转换为该类型的值.
 
-    例如, Start-Service的Name参数接受管道输入的值. 它可以接受字符串对象或可以转换为字符串的对象.
+    例如, `Start-Service` 的Name参数接受管道输入的值. 它可以接受字符串对象或可以转换为字符串的对象.
 
-+ ByPropertyName. 该参数只接受输入对象具有与该参数同名的属性时的输入.
++ `ByPropertyName`. 该参数只接受输入对象具有与该参数同名的属性时的输入.
 
-    例如, Start-Service的Name参数可以接受具有Name属性的对象. 要列出一个对象的属性, 请用管道输入Get-Member.
+    例如, `Start-Service` 的Name参数可以接受具有Name属性的对象. 要列出一个对象的属性, 请用管道输入Get-Member.
 
 一些参数可以通过值或属性名称接受对象, 使之更容易从管道中获取输入.
 
 ## 参数绑定
 
-当你把对象从一个命令输送到另一个命令时, PowerShell会尝试把输送的对象与接收的cmdlet的一个参数联系起来.
+当你把对象从一个命令输送到另一个命令时,
+PowerShell会尝试把输送的对象与接收的cmdlet的一个参数联系起来.
+PowerShell 的参数绑定组件根据以下标准将输入对象与cmdlet参数联系起来.
 
-PowerShell的参数绑定组件根据以下标准将输入对象与cmdlet参数联系起来.
+  该参数必须接受来自管道的输入.
+  该参数必须接受被发送对象的类型或可以转换为预期类型的类型.
+  该参数没有在命令中使用.
 
-    该参数必须接受来自管道的输入.
-    该参数必须接受被发送对象的类型或可以转换为预期类型的类型.
-    该参数没有在命令中使用.
+例如, `Start-Service` cmdlet有许多参数, 但只有两个, `Name` 和 `InputObject` 接受管道输入.
+`Name` 参数接受字符串, `InputObject` 参数接受服务对象.
+因此, 你可以用管道输入字符串, `服务对象` 以及具有可转换为 字符串 或 服务对象 的属性的对象.
 
-例如, Start-Service cmdlet有许多参数, 但只有两个, Name和InputObject接受管道输入. Name参数接受字符串, InputObject参数接受服务对象. 因此, 你可以用管道输入字符串, 服务对象以及具有可转换为字符串或服务对象的属性的对象.
-
-PowerShell尽可能有效地管理参数绑定. 你不能建议或强迫PowerShell绑定到一个特定的参数. 如果PowerShell不能绑定管道对象, 则命令失败.
+PowerShell尽可能有效地管理参数绑定.
+你不能建议或强迫PowerShell绑定到一个特定的参数.
+如果PowerShell不能绑定管道对象, 则命令失败.
 
 有关排除绑定错误的更多信息, 请参阅本文后面的调查管道错误.
 
 ## 逐一处理
 
-将对象管道化到一个命令中, 很像使用命令的一个参数来提交对象. 
-让我们看看一个管道的例子. 在这个例子中, 
+将对象管道化到一个命令中, 很像使用命令的一个参数来提交对象.
+让我们看看一个管道的例子. 在这个例子中,
 我们用一个管道来显示一个服务对象的表格.
 
 ```PowerShell
@@ -182,16 +185,16 @@ Format-Table -InputObject $services -Property Name, DependentServices
 Format-Table -InputObject (Get-Service) -Property Name, DependentServices
 ```
 
-然而, 有一个重要的区别. 当你用管道将多个对象输送到一个命令时, 
-PowerShell会将对象一个一个地发送到命令中. 当你使用一个命令参数时, 
+然而, 有一个重要的区别. 当你用管道将多个对象输送到一个命令时,
+PowerShell会将对象一个一个地发送到命令中. 当你使用一个命令参数时,
 这些对象会作为一个单一的数组对象被发送. 这个微小的差别有很大的影响.
 
-当执行管道时, PowerShell会自动枚举任何实现IEnumerable接口的类型, 
-并通过管道一个一个地发送成员. 
+当执行管道时, PowerShell会自动枚举任何实现IEnumerable接口的类型,
+并通过管道一个一个地发送成员.
 但 `[hashtable]` 是个例外, 它需要调用 `GetEnumerator()` 方法.
 
-在下面的例子中, 一个数组和一个hashtable被输送到Measure-Object cmdlet, 
-以计算从管道收到的对象的数量. 
+在下面的例子中, 一个数组和一个hashtable被输送到Measure-Object cmdlet,
+以计算从管道收到的对象的数量.
 数组有多个成员, 而hashtable有多个键值对. 每次只对数组进行枚举.
 
 ```PowerShell
@@ -211,7 +214,7 @@ out:
 ...
 ```
 
-同样, 如果你从Get-Process cmdlet向Get-Member cmdlet输送多个进程对象, PowerShell会将每个进程对象, 一次一个, 发送到Get-Member. 
+同样, 如果你从Get-Process cmdlet向Get-Member cmdlet输送多个进程对象, PowerShell会将每个进程对象, 一次一个, 发送到Get-Member.
 Get-Member显示进程对象的.NET类(类型), 以及它们的属性和方法.
 
 ```PowerShell
@@ -228,8 +231,8 @@ Handles   AliasProperty  Handles = Handlecount
 >注意事项
 >Get-Member可以消除重复, 所以如果对象都是同一类型, 它只显示一种对象类型.
 
-然而, 如果你使用Get-Member的InputObject参数, 
-那么Get-Member会接收一个System.Diagnostics.Process对象的数组作为一个单元. 
+然而, 如果你使用Get-Member的InputObject参数,
+那么Get-Member会接收一个System.Diagnostics.Process对象的数组作为一个单元.
 它显示一个数组对象的属性. (注意System.Object类型名称后面的数组符号([])).
 比如说
 
@@ -244,7 +247,7 @@ Clone              Method        System.Object Clone()
 ...
 ```
 
-这个结果可能不是你想的那样. 但是在你理解之后, 你可以使用它. 
+这个结果可能不是你想的那样. 但是在你理解之后, 你可以使用它.
 例如, 所有数组对象都有一个Count属性. 你可以用它来计算计算机上运行的进程的数量.
 比如说.
 
@@ -266,7 +269,7 @@ PowerShell允许你在管道中包含本地外部命令. 然而, 需要注意的
 
 当PowerShell不能将管道对象与接收cmdlet的参数联系起来时, 命令就会失败.
 
-在下面的例子中, 我们试图将一个注册表项从一个注册表键移动到另一个注册表键. 
+在下面的例子中, 我们试图将一个注册表项从一个注册表键移动到另一个注册表键.
 Get-Item cmdlet获得目标路径, 然后将其输送到Move-ItemProperty cmdlet. Move-ItemProperty命令指定了要移动的注册表项的当前路径和名称.
 
 ```PowerShell
@@ -276,26 +279,31 @@ Move-ItemProperty -Path HKLM:\Software\MyCompany\design -Name product
 
 该命令失败了, PowerShell显示以下错误信息.
 
-输出
-
+```output
 Move-ItemProperty: 输入对象不能被绑定到命令的任何参数上.
 因为该命令不接受管道输入, 或者该输入和它的属性不匹配.
 输入和它的属性与任何接受管道输入的参数不一致.
 管道输入的参数.
 在第1行char:23
 + $a | Move-ItemProperty <<<< -Path HKLM:\Software\MyCompany\design -Name p
+```
 
-为了调查, 使用Trace-Command cmdlet来追踪PowerShell的参数绑定组件. 下面的例子是在管道执行时跟踪参数绑定. PSHost参数在控制台中显示跟踪结果, FilePath参数将跟踪结果发送到debug.txt文件中供以后参考.
-PowerShell
+为了调查, 使用Trace-Command cmdlet来追踪PowerShell的参数绑定组件.
+下面的例子是在管道执行时跟踪参数绑定.
+PSHost参数在控制台中显示跟踪结果,
+FilePath参数将跟踪结果发送到debug.txt文件中供以后参考.
 
+```PowerShell
 Trace-Command -Name ParameterBinding -PSHost -FilePath debug.txt -Expression {
   Get-Item -Path HKLM:\Software\MyCompany\sales !
     Move-ItemProperty -Path HKLM:\Software\MyCompany\design -Name product
 }
+```
 
-追踪的结果很冗长, 但它们显示了被绑定到Get-Item cmdlet的值, 然后是被绑定到Move-ItemProperty cmdlet的命名值.
-输出
+追踪的结果很冗长, 但它们显示了被绑定到Get-Item cmdlet的值,
+然后是被绑定到Move-ItemProperty cmdlet的命名值.
 
+```output
 ...
 BIND NAMED cmd行args [`Move-ItemProperty`]
 BIND arg [HKLM:\Software\MyCompany\design]到参数[Path].
@@ -304,10 +312,11 @@ BIND arg [product]到参数[Name]
 ...
 BIND POSITIONAL cmd line args [`Move-ItemProperty`] ...
 ...
+```
 
 最后, 它显示将路径与Move-ItemProperty的Destination参数绑定的尝试失败了.
-输出
 
+```output
 ...
 绑定PIPELINE对象到参数. [`Move-ItemProperty`]].
 PIPELINE对象类型=[Microsoft.Win32.RegistryKey]
@@ -317,22 +326,26 @@ PIPELINE对象类型=[Microsoft.Win32.RegistryKey]
 参数[凭证] PIPELINE INPUT ValueFromPipelineByPropertyName NO
 许可证
 ...
+```
 
-使用Get-Help cmdlet查看目的地参数的属性.
-输出
+使用 `Get-Help` cmdlet 查看 Destination 参数的属性.
 
+```output
 Get-Help Move-ItemProperty -Parameter Destination
 
--目的地<字符串
-    指定到目标位置的路径.
+-Destination <string>
 
-    需要吗?
-    位置?                   1
-    默认值 无
-    接受管道输入?      true (ByPropertyName)
-    接受通配符? false
+    Required?                    true
+    Position?                    1
+    Accept pipeline input?       true (ByPropertyName)
+    Parameter set name           (All)
+    Aliases                      None
+    Dynamic?                     false
+    Accept wildcard characters?  false
+```
 
-结果显示, Destination只接受管道输入 "通过属性名称". 因此, 管道输入的对象必须有一个名为Destination的属性.
+结果显示, Destination只接受管道输入 "通过属性名称".
+因此, 管道输入的对象必须有一个名为Destination的属性.
 
 使用Get-Member来查看来自Get-Item的对象的属性.
 
@@ -340,7 +353,7 @@ Get-Help Move-ItemProperty -Parameter Destination
 Get-Item -Path HKLM:\Software\MyCompany\sales | Get-Member
 ```
 
-输出显示, 该项目是一个Microsoft.Win32.RegistryKey对象, 
+输出显示, 该项目是一个Microsoft.Win32.RegistryKey对象,
 没有Destination属性. 这解释了为什么命令失败.
 
 Path参数接受管道输入的名称或值.
@@ -387,7 +400,7 @@ Command-1 |
 
 后面几行的前导空格并不重要. 缩进增强了可读性.
 
-PowerShell 7增加了对管道延续的支持, 管道字符在行的开头. 
+PowerShell 7增加了对管道延续的支持, 管道字符在行的开头.
 下面的例子显示了你如何使用这个新功能.
 
 ```PowerShell
@@ -405,8 +418,8 @@ Get-Process | Where-Object CPU | Where-Object Path
 ```
 
 >重要提示
->当在 shell 中 交互式 工作时, 只有在使用 `Ctrl+V` 粘贴时, 
->才能粘贴 在 `行的开头带有管道` 的代码. 
->而 使用 右键单击 进行 粘贴时, 一次插入一行. 
->由于该行没有以管道字符结束, PowerShell 认为输入已经完成, 
+>当在 shell 中 交互式 工作时, 只有在使用 `Ctrl+V` 粘贴时,
+>才能粘贴 在 `行的开头带有管道` 的代码.
+>而 使用 右键单击 进行 粘贴时, 一次插入一行.
+>由于该行没有以管道字符结束, PowerShell 认为输入已经完成,
 >并按输入的内容执行该行.

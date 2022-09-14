@@ -116,3 +116,46 @@ pdfcrop --clip --bbox '60 660 516 775' moban.pdf moban_crop.pdf && evince moban_
 
     1 point = 0.3527 mm = 1/72 inch
     A4纸张 210mm * 297mm = 595.4 point * 842.1 point
+
+## bundledoc打包LaTeX宏包
+
+[使用bundledoc打包LaTeX宏包依赖](https://lttt.vanabel.cn/2018/06/01/shiyongbundledocdabaolatexhongbaoyilai.html)
+
+脚本的使用.
+新建test.tex文档如下:
+
+```latex
+\RequirePackage{snapshot}
+Hello world!
+```
+
+这里的关键是需要第一行的 `\RequirePackage{snapshot}` 
+产生宏包依赖列表 `test.dep`. 
+例如上面的代码产生的宏包依赖列表为:
+
+```latex
+\RequireVersions{
+  *{application}{TeX}     {1990/03/25 v3.x}
+  *{format} {LaTeX2e}     {2017-04-15 v2.e}
+  *{package}{snapshot}    {2002/03/05 v1.14}
+...
+}
+```
+
+接着, 我们需要在 `test.tex` 同目录下创建 `bundledoc` 配置文件 `bundledoc.cfg`
+
+```conf
+# basic config file for use of arlatex + bundledoc
+bundle: (arlatex --document=$BDBASE.tex $BDINPUTS | tar -cvf - $BDINPUTS | gzip --best > $BDBASE-all.tar.gz )
+sink:   > /dev/null 2>&1
+find:   kpsewhich -progname=latex $BDINPUTS
+```
+
+最后, 如果你使用修改后的脚本的话, 运行
+
+```bash
+bundledoc --config=bundledoc.cfg --verbose test.dep
+```
+
+则得到打包后的压缩文件 `test-all.tar.gz`
+需要注意的是, 我们需要压缩文件的软件 `tar` 与 `gzip`.
