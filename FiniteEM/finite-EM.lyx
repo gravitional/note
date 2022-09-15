@@ -4079,6 +4079,30 @@ noprefix "false"
  有零旋度和非零散度，因而用来表达面电流密度是理想的。在电磁学中，这些函数被称为 屋顶基函数，被并广泛应用于积分方程的 矩量法求解中。
 \end_layout
 
+\begin_layout Remark
+电流满足连续性方程 
+\begin_inset Formula $\nabla\cdot\sbf J=-\frac{\partial\rho}{\partial t}$
+\end_inset
+
+，对于稳恒电流即 
+\begin_inset Formula $\nabla\cdot\sbf J=0$
+\end_inset
+
+，在界面上对应
+\begin_inset Formula 
+\[
+\sbf n\cdot\sbf J=0,\quad\Rightarrow\quad\sbf n_{1}\cdot\sbf J_{1}-\sbf n_{1}\cdot\sbf J_{1}=0
+\]
+
+\end_inset
+
+上式考虑了界面两侧的法线 
+\begin_inset Formula $\sbf n_{2}=-\sbf n_{1}$
+\end_inset
+
+。上述条件即要求在五电荷累积的界面上，电流的法向分量连续。
+\end_layout
+
 \begin_layout Subsection
 三角形单元
 \end_layout
@@ -4360,6 +4384,591 @@ name "fig:8.2"
 \end_inset
 
 个棱边的切向场。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+f
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+三角形单元的矢量基函数
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $(a)N_{1}^{e}$
+\end_inset
+
+；
+\begin_inset Formula $(b)N_{2}^{e}$
+\end_inset
+
+；
+\begin_inset Formula $(c)N_{3}^{e}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:8.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 给出了典型单元中矢量基函数的图形表示。正如前文所述，矢量基函数仅在所相关的棱边上有一个切向分量。从图形中可以猜测，如果定义一个柱坐标系
+\begin_inset Formula $(\rho,\varphi)$
+\end_inset
+
+ ，其坐标原点在点
+\begin_inset Formula $3$
+\end_inset
+
+上，角坐标从
+\begin_inset Formula $3$
+\end_inset
+
+–
+\begin_inset Formula $1$
+\end_inset
+
+ 开始逆时针增加，那么 
+\begin_inset Formula $\sbf N_{1}^{e}$
+\end_inset
+
+ 可表示为：
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{1}^{e}=\frac{\rho}{h_{3}^{e}}\hat{\sbf\varphi}.\label{eq:8.16}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $h_{3}^{e}$
+\end_inset
+
+ 表示节点
+\begin_inset Formula $3$
+\end_inset
+
+与棱
+\begin_inset Formula $1$
+\end_inset
+
+–
+\begin_inset Formula $2$
+\end_inset
+
+的铅锤距离（三角形的高）。其它两个函数满足类似的表达式，这些表达式可以通过坐标变换证明。
+\end_layout
+
+\begin_layout Standard
+最后，与矩形单元类似，容易验证 
+\begin_inset Formula $\hat{\sbf z}\times\sbf N_{i}^{e}$
+\end_inset
+
+ 是满足 
+\series bold
+法向连续性
+\series default
+ 的基函数，它们有 
+\series bold
+零旋度
+\series default
+ 和 
+\series bold
+非零散度
+\series default
+。在上面定义的柱坐标系中，
+\begin_inset Formula $\hat{\sbf z}\times\sbf N_{1}^{e}$
+\end_inset
+
+可以写为
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf z}\times\sbf N_{1}^{e}=-\frac{\rho}{h_{3}^{e}}\hat{\sbf\rho}.\label{eq:8.17}
+\end{equation}
+
+\end_inset
+
+在电磁学中，这些矢量基函数可以用来表示 任意形状导体 的表面电流。
+\end_layout
+
+\begin_layout Exercise
+引用坐标变换证明 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式等价。
+\end_layout
+
+\begin_layout Subsection
+四边形单元
+\end_layout
+
+\begin_layout Standard
+给定一个特定区域和单元棱边的最大长度，三角形单元比矩形单元多包含大约 
+\begin_inset Formula $1/3$
+\end_inset
+
+ 条边（也就是未知量）。这里引入四边形单元（quadrilateral），它可以看作变形的矩形。
+\end_layout
+
+\begin_layout Standard
+首先引入一种坐标变换，它能把 
+\begin_inset Formula $xy$
+\end_inset
+
+平面上的四边形单元变换成 
+\begin_inset Formula $\xi\eta$
+\end_inset
+
+ 平面内的正方形单元。设它的一般形式为，
+\begin_inset Formula 
+\begin{equation}
+x=a+b\xi+c\eta+d\xi\eta,\quad y=a'+b'\eta+c'\eta+d'\xi\eta\label{eq:8.18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+f
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+图8.4(a)
+\begin_inset Formula $xy$
+\end_inset
+
+平面内的四边形单元；(b)变换成
+\begin_inset Formula $\xi\eta$
+\end_inset
+
+平面内的正方形单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将四个顶点在两种坐标系下一一对应 
+\begin_inset Formula $(\xi,\eta)\in[-1,1]$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+ & x_{1}=a-b-c+d,\quad y_{1}=a'-b'-c'+d',\\
+ & x_{2}=a+b-c-d,\quad y_{1}=a'+b'-c'-d',\\
+ & x_{3}=a+b+c+d,\quad y_{1}=a'+b'+c'+d',\\
+ & x_{4}=a-b+c-d,\quad y_{1}=a'-b'+c'-d'.
+\end{align*}
+
+\end_inset
+
+求解出待定系数，并把它们代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得：
+\begin_inset Formula 
+\begin{equation}
+x=\sum_{i=1}^{4}N_{i}^{e}(\xi,\eta)x_{i}^{e},\quad y=\sum_{i=1}^{4}N_{i}^{e}(\xi,\eta)y_{i}^{e},\label{eq:8.19}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{e}=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\\
+ & N_{2}^{e}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\\
+ & N_{3}^{e}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
+ & N_{4}^{e}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)
+\end{align*}
+
+\end_inset
+
+也可以统一写成
+\begin_inset Formula 
+\[
+N_{i}^{e}=\frac{1}{4}\left(1+\xi_{i}\xi\right)\left(1+\eta_{i}\xi\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left(\xi_{i},\eta_{i}\right)$
+\end_inset
+
+表示第
+\begin_inset Formula $i$
+\end_inset
+
+个节点的坐标。从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式也可以反过来，把 
+\begin_inset Formula $\xi,\eta$
+\end_inset
+
+ 表示成 
+\begin_inset Formula $x,y$
+\end_inset
+
+ 的函数，然而并不需要，因为直接用 
+\begin_inset Formula $\xi,\eta$
+\end_inset
+
+ 来表示基函数并执行所需的数值积分是很简单的。
+\end_layout
+
+\begin_layout Standard
+现在按 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:8.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 约定棱边的编号。在棱边
+\begin_inset Formula $1$
+\end_inset
+
+上，
+\begin_inset Formula $\eta=-1$
+\end_inset
+
+，代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到局域关系：
+\begin_inset Formula 
+\begin{equation}
+x=\frac{1}{2}\left(1-\xi\right)x_{1}^{e}+\frac{1}{2}\left(1+\xi\right)x_{2}^{e}\label{eq:8.20}
+\end{equation}
+
+\end_inset
+
+解出 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 得到：
+\begin_inset Formula 
+\begin{equation}
+\xi=\frac{2x-x_{1}^{e}-x_{2}^{e}}{x_{2}^{e}-x_{1}^{e}}\label{eq:8.21}
+\end{equation}
+
+\end_inset
+
+假设 
+\begin_inset Formula $s$
+\end_inset
+
+ 为 边
+\begin_inset Formula $1$
+\end_inset
+
+–
+\begin_inset Formula $2$
+\end_inset
+
+ 的归一化距离，那么 
+\begin_inset Formula $x=(1-s)x_{1}^{e}+sx_{2}^{e}$
+\end_inset
+
+。当它被带入到 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式时，有
+\begin_inset Formula 
+\[
+\xi=2s-1
+\]
+
+\end_inset
+
+它表示
+\begin_inset Formula $\xi$
+\end_inset
+
+沿棱边
+\begin_inset Formula $1$
+\end_inset
+
+线性变化。类似地可以证明
+\begin_inset Formula $\xi$
+\end_inset
+
+沿棱边
+\begin_inset Formula $2$
+\end_inset
+
+也线性变化。因为在棱边
+\begin_inset Formula $3,4$
+\end_inset
+
+ 上 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 是常数，因此求 
+\begin_inset Formula $\nabla\xi$
+\end_inset
+
+ 得到的矢量函数，在棱边 
+\begin_inset Formula $1,2$
+\end_inset
+
+ 上给出常数切向分量，在棱边 
+\begin_inset Formula $3,4$
+\end_inset
+
+ 上给出
+\begin_inset Formula $0$
+\end_inset
+
+。因此可以建立棱边
+\begin_inset Formula $1$
+\end_inset
+
+的矢量基函数为：
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{1}^{e}=\frac{\ell_{1}^{e}}{4}\left(1-\eta\right)\nabla\xi\label{eq:8.22}
+\end{equation}
+
+\end_inset
+
+棱边
+\begin_inset Formula $2$
+\end_inset
+
+的矢量基函数为
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{2}^{e}=\frac{\ell_{2}^{e}}{4}\left(1+\eta\right)\nabla\xi\label{eq:8.23}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\ell_{i}^{e}$
+\end_inset
+
+表示棱边
+\begin_inset Formula $i$
+\end_inset
+
+的长度。显然，这样建立的基函数满足矢量基的基本特性，即沿相关棱边有常切向分量，而沿其他棱边则无切向分量。类似地，我们可以建立沿棱边
+\begin_inset Formula $3$
+\end_inset
+
+的矢量基函数为
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{3}^{e}=\frac{\ell_{3}^{e}}{4}\left(1-\xi\right)\nabla\eta\label{eq:8.24}
+\end{equation}
+
+\end_inset
+
+以及棱边
+\begin_inset Formula $4$
+\end_inset
+
+的矢量基函数为
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{4}^{e}=\frac{\ell_{4}^{e}}{4}\left(1+\xi\right)\nabla\eta\label{eq:8.25}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上面建立的矢量基函数用图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:8.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表示，以说明它们的基本特性。四边形单元的矢量基函数的主要缺点是：
+\end_layout
+
+\begin_layout Enumerate
+首先矩阵元素通常没有简单的解析解，而其他两种单元则有，因此总需要数值积分。
+\end_layout
+
+\begin_layout Enumerate
+其次不同于三角形单元和矩阵单元，四边形单元的矢量基函数 不是无散的。
+\end_layout
+
+\begin_layout Standard
+不过四边形单元基函数同样具有建立场表达式所需的切向连续性。所以在大多数应用中，和前面两种单元同样有用。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+f
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+四边形单元的矢量基函数（这里仅给出 a:
+\begin_inset Formula $\sbf N_{1}^{e}$
+\end_inset
+
+和 b:
+\begin_inset Formula $\sbf N_{4}^{e}$
+\end_inset
+
+，因为其它两个基函数有相似的特性）
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
