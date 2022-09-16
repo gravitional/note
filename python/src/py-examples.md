@@ -13,7 +13,7 @@ import numpy as np
 def main():
     # ===========================================================================
     # 本地保存文件的名称
-    file_name: str = "h5py.h5"
+    file_name: str = "result.h5"
     # Read HDF5 file.
     f = h5py.File(file_name, "r")  # mode = {'w', 'r', 'value'}
 
@@ -32,16 +32,21 @@ def my_iter(name_str, d, count):
     if dataq(d):  # 如果是 dataset 类型
         print("{}{} is Dataset:".format("--" * count, name_str))  # 打印当前节点名称
         print("  " * count, d[:])  # 打印数据详情
-        print("{}{}'s attributes are:".format("--" * (count + 1), name_str))
-        for key in d.attrs.keys():  # 打印属性
-            print("--" * (count + 1), key, ":", d.attrs[key])
+        if len(d.attrs.keys()) > 0:
+            print("{}{} has attributes:".format(
+                "--" * (count + 1), name_str))
+            for key in d.attrs.keys():  # 打印属性
+                print("--" * (count + 1), key, ":", d.attrs[key])
+        else:
+            print("{}{} has No attributes".format(
+                "--" * (count + 1), name_str))
         print()
     elif hasattr(d, "keys") and len(d.keys()) > 0:  # 如果是 group 类型递归调用
-        print("{}{} is Group, it has:".format("<<" * count, name_str))
+        print("\n{}{} is Group, it has:".format("<<" * count, name_str))
         for key in d.keys():
             my_iter("{}/{}".format(d.name, key), d[key], count + 1)
     else:
-        print("{}{} is Group, it has nothing".format("<<" * count, name_str))
+        print("\n{}{} is Group, it has Nothing".format("<<" * count, name_str))
 
 
 def dataq(data):
