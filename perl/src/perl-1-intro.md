@@ -77,16 +77,16 @@ cpanm Module::Name
 ### 工具
 
 [App::cpanminus]: https://metacpan.org/release/App-cpanminus
-[cpanm]: https://metacpan.org/dist/App-cpanminus/view/bin/cpanm
 [安装说明]: https://metacpan.org/pod/App::cpanminus#INSTALLATION
 [cpan-outdated]: https://metacpan.org/dist/cpan-outdated/view/script/cpan-outdated
 [pm-uninstall]: https://metacpan.org/dist/App-pmuninstall/view/bin/pm-uninstall
 [cpan-listchanges]: https://metacpan.org/dist/cpan-listchanges/view/script/cpan-listchanges
 [App::perlbrew]: https://metacpan.org/dist/App-perlbrew
-[CPAN]: https://metacpan.org/dist/CPAN
-[cpan]: https://metacpan.org/dist/CPAN/view/scripts/cpan
 [cpanp]: https://metacpan.org/dist/CPANPLUS/view/bin/cpanp
 [CPANPLUS]: https://metacpan.org/dist/CPANPLUS
+[cpanm]: https://metacpan.org/dist/App-cpanminus/view/bin/cpanm
+[CPAN]: https://metacpan.org/dist/CPAN
+[cpan]: https://metacpan.org/dist/CPAN/view/scripts/cpan
 
 帮助你安装和管理你的模块.
 
@@ -94,10 +94,10 @@ cpanm Module::Name
 关于如何开始, 请看[引导技术](https://metacpan.org/pod/local::lib#The-bootstrapping-technique).
 你可以为每个用户/项目/公司创建一个目录, 并通过`复制`该目录部署到其他服务器(只要你在同一个操作系统和 `perl版本`).
 
-来自 [App::cpanminus][] 的 `cpanm` 是从 CPAN `获取`, `解包`, `构建` 和 `安装` 模块的脚本.
+来自 [App::cpanminus][] 的 [cpanm][] 是从 CPAN `获取`, `解包`, `构建` 和 `安装` 模块的脚本.
 它是无依赖的(可以自己启动, bootstrap), 并且不需要配置([安装说明][]).
 
-它可以自动完成 `CPAN` 上大多数模块的整个构建过程, 并且与 `local::lib` 和 `perlbrew` 配合得很好.
+它可以自动完成 [CPAN][] 上大多数模块的整个构建过程, 并且与 `local::lib` 和 `perlbrew` 配合得很好.
 许多有经验的Perl开发者把它作为他们的首选工具.
 相关工具: [cpan-outdated][], [pm-uninstall][], [cpan-listchanges][].
 
@@ -107,7 +107,8 @@ cpanm Module::Name
 你可以在不同的项目中使用多个版本的 `Perl`(也许随着你的升级).
 与系统 `Perl` 的分离使得服务器的维护更加容易, 而且你对你的项目的设置更加有信心. 目前不支持Windows.
 
-[CPAN][] 中的 [cpan] 从1997年(5.004)开始与Perl一起发布. 它比 `cpanm` 有更多的选项, 它也更 verbose.
+[CPAN][] 中的 [cpan][] 从1997年(5.004)开始与Perl一起发布.
+它比 `cpanm` 有更多的选项, 它也更 verbose.
 
 [CPANPLUS][] 的 [cpanp][] 从5.10(2007)到5.20(2014)一直随Perl发布.
 它提供了比 `cpanm` 或 `cpan` 更多的选项, 并且可以像 `cpanminus` 一样安装.
@@ -126,7 +127,8 @@ cpanm Module::Name
 
 ### Mac OSX上的Perl
 
-为了建立和安装你自己的模块, 你需要安装 `Command Line Tools for XCode` 或  `XCode` 软件包--详情见我们的[ports page](https://www.cpan.org/ports/binaries.html#mac_osx).
+为了建立和安装你自己的模块, 你需要安装 `Command Line Tools for XCode` 或  `XCode` 软件包
+--详情见我们的[ports page](https://www.cpan.org/ports/binaries.html#mac_osx).
 一旦你完成了这些, 你就可以使用上面提到的所有工具.
 
 ### 在其他类似Unix的操作系统上使用Perl
@@ -196,3 +198,7 @@ sudo apt-get install libperl-dev
 ```
 
 再次运行 `cpanm Perl::LanguageServer` 解决, 如果不行的话, 可以加 `sudo` 试试.
+
+## ActiveState Perl, Strawberry Perl
+
+[ActiveState Perl, Strawberry Perl 与 DWIM Perl 有什么区别](https://www.zhihu.com/question/31408723/answer/59819082)

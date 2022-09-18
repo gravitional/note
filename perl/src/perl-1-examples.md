@@ -43,7 +43,7 @@ sub wanted {
     }
 }
 
-# 调用 find 函数, 不 cd 到子目录下，此时 $_ == $File::Find::name
+# 调用 find 函数, 不 cd 到子目录下, 此时 $_ == $File::Find::name
 find( { no_chdir => 1, wanted => \&wanted }, @dir_paths );
 
 # print the change
@@ -131,7 +131,7 @@ while (<$nameList>) {
     my @lines = split /<sep>/, $_;
     ( my $old_name = $lines[0] ) =~ s/ +$//;
     ( my $new_name = $lines[1] ) =~
-s/[\\\/\(\)\[\]\（\）\<\> "\“\”《》【】·。，,，\;；：~～\:\=\-、\&\^\$\#\@\!！\?？\*\+]/_/g;
+s/[\\\/\(\)\[\]\(\)\<\> "\"\"<>[]·. , ,, \;;: ~～\:\=\-, \&\^\$\#\@\!!\??\*\+]/_/g;
     $new_name =~ s/^_+//;
     $new_name =~ s/$/.mp4/;
     chomp($new_name);
