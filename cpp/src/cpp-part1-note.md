@@ -295,7 +295,7 @@ auto val=val1+ val2
 
 ### struct
 
-`struct`把一组相互关联的数据整合在一起. 例如:
+`struct` 把一组相互关联的数据整合在一起. 例如:
 
 ```c++
 struct MyTimeStruct

@@ -3640,6 +3640,16 @@ S=\frac{1}{2}\det[J]
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:5"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 所考虑的边值问题，可以用二阶微分方程表述
 \begin_inset Formula 
 \begin{equation}
@@ -4969,6 +4979,1039 @@ name "fig:8.5"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+单元矩阵的计算
+\end_layout
+
+\begin_layout Standard
+上面建立的矢量基函数，可以用于表示 矢量波动方程 中的矢量场或势，这是需要考虑与之相关的单元矩阵的计算。从矢量波动方程离散而产生的典型单元矩阵包含下面两种形式的
+积分：
+\begin_inset Formula 
+\begin{align}
+ & E_{ij}^{e}=\iint_{\Omega^{e}}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega}\label{eq:8.26}\\
+ & F_{ij}^{e}=\iint_{\Omega^{e}}\sbf N_{i}^{e}\cdot\sbf N_{j}^{e}\dd{\Omega}\label{eq:8.27}
+\end{align}
+
+\end_inset
+
+对矩形单元和三角形单元，这两个积分可以解析计算。但对四边形单元，必须对它们进行数值计算 。因为其形状不规则，在
+\begin_inset Formula $xy$
+\end_inset
+
+ 平面直接进行积分是困难的。为了避免这个困难，我们在
+\begin_inset Formula $\xi\eta$
+\end_inset
+
+平面上进行积分，在 
+\begin_inset Formula $\xi\eta$
+\end_inset
+
+平面上，该单元是正方形。为此，首先要把面元 
+\begin_inset Formula $\dd{\Omega}$
+\end_inset
+
+ 表示为 
+\begin_inset Formula $\dd{\xi}\dd{\eta}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\dd{\Omega}=\dd{x}\dd{y}=\det[J]\dd{\xi}\dd{\xi}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\det[J]$
+\end_inset
+
+ 是如下定义的行列式
+\begin_inset Formula 
+\[
+[J]=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right].
+\]
+
+\end_inset
+
+因此，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.26"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.27"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 两式可写成：
+\begin_inset Formula 
+\begin{align}
+ & E_{ij}^{e}=c\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\left(\nabla\times\sbf N_{j}^{e}\right)\,\det[J]\dd{\xi}\dd{\xi}\label{eq:8.28}\\
+ & F_{ij}^{e}=\int_{-1}^{1}\int_{-1}^{1}\sbf N_{i}^{e}\cdot\sbf N_{j}^{e}\,\det[J]\dd{\xi}\dd{\xi}\label{eq:8.29}
+\end{align}
+
+\end_inset
+
+其次，也需要把被积函数用 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 和 
+\begin_inset Formula $\eta$
+\end_inset
+
+ 表示。因为
+\begin_inset Formula 
+\[
+\nabla\times\sbf N_{i}=\frac{\ell_{i}^{e}}{4}\begin{cases}
+\nabla\xi\times\nabla\eta & i=1,3\\
+\nabla\eta\times\nabla\xi & i=2,4
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\nabla$
+\end_inset
+
+ 表示对
+\begin_inset Formula $x,y$
+\end_inset
+
+ 求梯度，则我们需要把 
+\begin_inset Formula $\nabla\xi,\nabla\eta$
+\end_inset
+
+ 表示成 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 和 
+\begin_inset Formula $\eta$
+\end_inset
+
+ 的形式。为此考虑任意函数
+\begin_inset Formula $f$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\frac{\partial f}{\partial\xi}\\
+\frac{\partial f}{\partial\eta}
+\end{array}\right]=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right]\left[\begin{array}{c}
+\frac{\partial f}{\partial x}\\
+\frac{\partial f}{\partial y}
+\end{array}\right].
+\]
+
+\end_inset
+
+逆变换
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\frac{\partial f}{\partial x}\\
+\frac{\partial f}{\partial y}
+\end{array}\right]=\frac{1}{\det[J]}\left[\begin{array}{cc}
+\frac{\partial y}{\partial\eta} & -\frac{\partial y}{\partial\xi}\\
+-\frac{\partial x}{\partial\eta} & \frac{\partial x}{\partial\xi}
+\end{array}\right]\left[\begin{array}{c}
+\frac{\partial f}{\partial\xi}\\
+\frac{\partial f}{\partial\eta}
+\end{array}\right].
+\]
+
+\end_inset
+
+由此得到
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\nabla\xi & \nabla\eta\end{array}\right]=\frac{1}{\det[J]}\left[\begin{array}{cc}
+\frac{\partial y}{\partial\eta} & -\frac{\partial y}{\partial\xi}\\
+-\frac{\partial x}{\partial\eta} & \frac{\partial x}{\partial\xi}
+\end{array}\right]
+\]
+
+\end_inset
+
+使用此式，以及
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $x=\sum_{i=1}^{4}N_{i}^{e}(\xi,\eta)x_{i}^{e},\quad y=\sum_{i=1}^{4}N_{i}^{e}(\xi,\eta)y_{i}^{e}$
+\end_inset
+
+，可以将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的被积函数完全用 
+\begin_inset Formula $\xi,\eta$
+\end_inset
+
+ 表示。因此，通过应用下式给出的二维高斯积分公式
+\begin_inset Formula 
+\[
+\int_{-1}^{1}\int_{-1}^{1}f\left(\xi,\eta\right)\dd{\xi}\dd{\xi}=\sum_{i=1}^{n_{1}}\sum_{j=1}^{n_{2}}W_{i}W_{j}f(\xi_{i},\eta_{i})
+\]
+
+\end_inset
+
+可以数值求解出 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的积分。上式中 
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ 和
+\begin_inset Formula $W_{j}$
+\end_inset
+
+是权重因子，
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\eta_{i}$
+\end_inset
+
+ 表示高斯积分点，这些数据见表格3.1。其中 
+\begin_inset Formula $n_{1}$
+\end_inset
+
+表示沿 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 的积分点数，
+\begin_inset Formula $n_{2}$
+\end_inset
+
+表示沿 
+\begin_inset Formula $\eta$
+\end_inset
+
+ 轴的积分点数。如果北极函数的多项式次数 
+\begin_inset Formula $\le3$
+\end_inset
+
+，选择 
+\begin_inset Formula $n_{1}=n_{2}=2$
+\end_inset
+
+ 就够了。
+\end_layout
+
+\begin_layout Remark
+对于
+\begin_inset Formula $2\times2$
+\end_inset
+
+矩阵，
+\begin_inset Formula $A^{-1}=I^{\prime}T^{\prime}A/\det[A]$
+\end_inset
+
+，
+\begin_inset Formula $I'$
+\end_inset
+
+ 表示副对角线相反数，
+\begin_inset Formula $T^{\prime}$
+\end_inset
+
+表示副对角线转置。
+\begin_inset Formula 
+\[
+M=\left[\begin{array}{cc}
+a & b\\
+c & d
+\end{array}\right]\quad\Rightarrow\quad\frac{1}{\det[M]}\left[\begin{array}{cc}
+d & -b\\
+-c & a
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+波导问题的再讨论
+\end_layout
+
+\begin_layout Section
+三维棱边元
+\end_layout
+
+\begin_layout Standard
+二维公式可直接推广到三维情形。
+\end_layout
+
+\begin_layout Subsection
+矩阵块单元
+\end_layout
+
+\begin_layout Standard
+考虑图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:8.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示的矩阵块单元，它的边长分别为 
+\begin_inset Formula $\ell_{x}^{e}$
+\end_inset
+
+、
+\begin_inset Formula $\ell_{y}^{e}$
+\end_inset
+
+、
+\begin_inset Formula $\ell_{z}^{e}$
+\end_inset
+
+，其中心位于 
+\begin_inset Formula $(x_{c}^{e},y_{c}^{e},z_{c}^{e})$
+\end_inset
+
+。类似于二维情形，通过分配常切向量场给单元的每条边，单元内场分量可表示为
+\begin_inset Formula 
+\begin{equation}
+E_{x}^{e}=\sum_{i=1}^{4}N_{x,i}^{e}E_{x,i}^{e},\quad E_{y}^{e}=\sum_{i=1}^{4}N_{y,i}^{e}E_{y,i}^{e},\quad E_{z}^{e}=\sum_{i=1}^{4}N_{z,i}^{e}E_{z,i}^{e}.\label{eq:8.50}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+f
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+矩形块单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.7"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula 
+\begin{align*}
+ & N_{x1}^{e}=\frac{1}{\ell_{y}^{e}\ell_{x}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y_{c}^{e}-y\right)\left(\frac{\ell_{z}^{e}}{2}+z_{c}^{e}-z\right),\quad N_{x3}^{e}=\frac{1}{\ell_{y}^{e}\ell_{x}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y_{c}^{e}-y\right)\left(\frac{\ell_{z}^{e}}{2}+z-z_{c}^{e}\right),\\
+ & N_{x2}^{e}=\frac{1}{\ell_{y}^{e}\ell_{z}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y-y_{c}^{e}\right)\left(\frac{\ell_{z}^{e}}{2}+z_{c}^{e}-z\right),\quad N_{x4}^{e}=\frac{1}{\ell_{y}^{e}\ell_{x}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y-y_{c}^{e}\right)\left(\frac{\ell_{z}^{e}}{2}+z-z_{c}^{e}\right),
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & N_{y1}^{e}=\frac{1}{\ell_{z}^{e}\ell_{x}^{e}}\left(\frac{\ell_{y}^{e}}{2}+z_{c}^{e}-y\right)\left(\frac{\ell_{z}^{e}}{2}+z_{c}^{e}-z\right),\quad N_{y3}^{e}=\frac{1}{\ell_{y}^{e}\ell_{x}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y_{c}^{e}-y\right)\left(\frac{\ell_{z}^{e}}{2}+z-z_{c}^{e}\right),\\
+ & N_{y2}^{e}=\frac{1}{\ell_{y}^{e}\ell_{z}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y-y_{c}^{e}\right)\left(\frac{\ell_{z}^{e}}{2}+z_{c}^{e}-z\right),\quad N_{y4}^{e}=\frac{1}{\ell_{y}^{e}\ell_{x}^{e}}\left(\frac{\ell_{y}^{e}}{2}+y-y_{c}^{e}\right)\left(\frac{\ell_{z}^{e}}{2}+z-z_{c}^{e}\right),
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+四面体单元
+\end_layout
+
+\begin_layout Standard
+第
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "chap:5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+章中导出了四面体单元的线性插值函数，在此可记为
+\begin_inset Formula $(L_{1}^{e},L_{2}^{e},L_{3}^{e},L_{4}^{e})$
+\end_inset
+
+。类似于三角形单元，让我们考察矢量函数
+\begin_inset Formula 
+\begin{equation}
+\sbf W_{12}=L_{1}^{e}\nabla L_{2}^{e}-L_{2}^{e}\nabla L_{1}^{e}\label{eq:8.53}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+它满足
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\sbf W_{12}=0,\quad\nabla\times\sbf W_{12}=2\nabla L_{1}^{e}\times\nabla L_{2}^{e}\label{eq:8.54}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\sbf W_{12}$
+\end_inset
+
+ 沿着棱边 
+\begin_inset Formula $(1,2)$
+\end_inset
+
+ 有一个常数切向分量，沿另外五条棱没有切向分量。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\sbf W_{12}$
+\end_inset
+
+ 只在包含棱边 
+\begin_inset Formula $(1,2)$
+\end_inset
+
+ 的单元小平面有切向分量，即在 
+\begin_inset Formula $(1,2,3)$
+\end_inset
+
+ 和 
+\begin_inset Formula $(1,2,4)$
+\end_inset
+
+ 上。而在 
+\begin_inset Formula $(1,3,4)$
+\end_inset
+
+ 和 
+\begin_inset Formula $(2,3,4)$
+\end_inset
+
+ 上没有切向分量。
+\end_layout
+
+\begin_layout Standard
+因此 
+\begin_inset Formula $\sbf W_{12}$
+\end_inset
+
+ 具有作为与棱边
+\begin_inset Formula $(1,2)$
+\end_inset
+
+ 相关的棱边场的矢量基函数所需的所有特性。如果定义该边为棱边
+\begin_inset Formula $1$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{1}^{e}=\sbf W_{12}\ell_{1}^{e}=\left(L_{1}^{e}\nabla L_{2}^{e}-L_{2}^{e}\nabla L_{1}^{e}\right)\ell_{1}^{e}\label{eq:8.56}
+\end{equation}
+
+\end_inset
+
+类似地得到棱边
+\begin_inset Formula $i$
+\end_inset
+
+的矢量基函数为
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{i}^{e}=\sbf W_{i_{1}i_{2}}\ell_{i}^{e}=\left(L_{i_{1}}^{e}\nabla L_{i_{2}}^{e}-L_{i_{2}}^{e}\nabla L_{i_{1}}^{e}\right)\ell_{i}^{e}\label{eq:8.57}
+\end{equation}
+
+\end_inset
+
+其中棱边编号及相关节点 
+\begin_inset Formula $i_{1}$
+\end_inset
+
+和
+\begin_inset Formula $i_{2}$
+\end_inset
+
+ 定义在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:8.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "48col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+f
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+四面体单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.8"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "48col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+棱边
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+节点
+\begin_inset Formula $i_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+节点
+\begin_inset Formula $i_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+四面体单元的棱边定义
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:8.2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 的另一种表达式在文献[8]中到处，它们是
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{7-i}^{e}=\begin{cases}
+\sbf f_{7-i}^{e}+\sbf g_{7-i}^{e}\times\sbf r, & \sbf r\,\text{在四面体内}\\
+0, & \text{其他}
+\end{cases}\label{eq:8.58}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+\sbf f_{7-i}^{e}=\frac{\ell_{7-i}^{e}}{6V^{e}}\sbf r_{i_{1}}^{e}\times\sbf r_{i_{2}}^{e},\quad\sbf g_{7-i}^{e}=\frac{\ell_{i}^{e}\ell_{7-i}^{e}\sbf e_{i}}{6V^{e}}\label{eq:8.59}
+\end{equation}
+
+\end_inset
+
+式中 
+\begin_inset Formula $i=1,2,\cdots,6$
+\end_inset
+
+，
+\begin_inset Formula $V^{e}$
+\end_inset
+
+是四面体单元的体积，
+\begin_inset Formula $\sbf e_{i}=\left(\sbf r_{i_{2}}^{e}-\sbf r_{i_{1}}^{e}\right)/\ell_{i}^{e}$
+\end_inset
+
+ 是第
+\begin_inset Formula $i$
+\end_inset
+
+个棱边的单位矢量，且 
+\begin_inset Formula $\ell_{i}^{e}=\abs{\sbf r_{i_{2}}^{e}-\sbf r_{i_{1}}^{e}}$
+\end_inset
+
+ 是第
+\begin_inset Formula $i$
+\end_inset
+
+个棱边的长度，
+\begin_inset Formula $\sbf r_{i_{1}}^{e}$
+\end_inset
+
+和 
+\begin_inset Formula $\sbf r_{i_{2}}^{e}$
+\end_inset
+
+表示第
+\begin_inset Formula $e$
+\end_inset
+
+ 个单元的 
+\begin_inset Formula $i_{1}$
+\end_inset
+
+和
+\begin_inset Formula $i_{2}$
+\end_inset
+
+节点的位置。
+\end_layout
+
+\begin_layout Subsection
+六面体单元
 \end_layout
 
 \begin_layout Standard
