@@ -5414,9 +5414,9 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 
 将方程化简成如下形式
 \begin_inset Formula 
-\[
--\partial_{r}\left(\epsilon_{r}r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}r\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}r
-\]
+\begin{equation}
+-\partial_{r}\left(\epsilon_{r}r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}r\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}r\label{eq:xl2.5-1}
+\end{equation}
 
 \end_inset
 
@@ -5431,13 +5431,155 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 
 则原方程可以写作
 \begin_inset Formula 
+\begin{equation}
+-\partial_{x}\left[\tilde{\epsilon}(x)\,\partial_{x}\Phi\right]-\partial_{y}\left[\tilde{\epsilon}(x)\,\partial_{y}\Phi\right]=\tilde{\rho}(x)\label{eq:xl2.5}
+\end{equation}
+
+\end_inset
+
+此方程的求解和二维情况完全相同，即它对应的泛函和通常的二维情况相同。
+\begin_inset Formula 
 \[
--\partial_{x}\left[\tilde{\epsilon}(x)\,\partial_{x}\Phi\right]-\partial_{y}\left[\tilde{\epsilon}(x)\,\partial_{y}\Phi\right]=\tilde{\rho}(x)
+\mathcal{F}^{e}\left(\Phi\right)=\frac{1}{2}\int_{\Omega^{e}}\left(\nabla N_{i}^{e}\cdot\epsilon_{r}\cdot\nabla N_{j}^{e}\right)\Phi_{i}\Phi_{j}\dd{\Omega}-\int_{\Omega^{e}}\frac{\rho}{\epsilon_{0}}N_{i}^{e}\Phi_{i}\dd{\Omega}.
 \]
 
 \end_inset
 
-此方程的求解和二维情况完全相同。
+对上式的泛函变分时，自由度是电势
+\begin_inset Formula $\Phi_{i}$
+\end_inset
+
+，因此与 
+\begin_inset Formula ${\color{blue}\epsilon}$
+\end_inset
+
+ 是否依赖于空间坐标无关。仍然给出泊松方程
+\begin_inset Formula 
+\[
+\nabla\cdot\epsilon_{r}\cdot\nabla\Phi=-\frac{\rho}{\epsilon_{0}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+类似地，对于 Galerkin 方程，推导步骤也是相同的。只不过把其中的 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+，
+\begin_inset Formula $\rho$
+\end_inset
+
+ 替换成相应的波浪线版本。
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\tilde{\rho}\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\tilde{\epsilon}\right)\cdot\nabla\phi}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+在 Simdroid 中，UI界面的对称轴是 
+\begin_inset Formula $y$
+\end_inset
+
+ 轴，不同于上述推导中的
+\begin_inset Formula $z$
+\end_inset
+
+轴。但 
+\begin_inset Formula $z$
+\end_inset
+
+ or 
+\begin_inset Formula $y$
+\end_inset
+
+ 只是一个标志，实际是什么无所谓。对于方程
+\begin_inset Formula 
+\[
+-\frac{1}{r}\partial_{r}\left(\epsilon_{r}\,r\,\partial_{r}\Phi\right)-\partial_{z}\left(\epsilon_{r}\,\partial_{z}\Phi\right)=\frac{\rho}{\epsilon_{0}}
+\]
+
+\end_inset
+
+重要的是 
+\begin_inset Formula $r,z$
+\end_inset
+
+ 坐标的相对次序，即
+\begin_inset Formula $r$
+\end_inset
+
+ 是坐标
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $z$
+\end_inset
+
+ 是坐标
+\begin_inset Formula $2$
+\end_inset
+
+。在随后的符号重排
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，
+\begin_inset Formula $\tilde{\epsilon}(r)=\epsilon_{r}\,r$
+\end_inset
+
+，
+\begin_inset Formula $\tilde{\rho}(r)=\rho\,r$
+\end_inset
+
+，即
+\begin_inset Formula $\tilde{\epsilon}$
+\end_inset
+
+，
+\begin_inset Formula $\tilde{\rho}$
+\end_inset
+
+ 是坐标
+\begin_inset Formula $1$
+\end_inset
+
+ 的函数。由于轴对称边值问题被转化为 
+\begin_inset Formula $x,y$
+\end_inset
+
+ 平面上的问题，只要在求解算法中保持坐标次序即可，即将 
+\begin_inset Formula $x$
+\end_inset
+
+ 乘到 
+\begin_inset Formula $\epsilon,\rho$
+\end_inset
+
+ 上。
 \end_layout
 
 \begin_layout Section
@@ -9607,13 +9749,17 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
  的微小变分：
 \begin_inset Formula 
 \begin{align*}
-\sbf D & =\sbf D^{0}+{\color{blue}\frac{\partial D}{\partial E}}\delta\sbf E=\sbf D^{0}-{\color{blue}\frac{\partial D}{\partial E}}\sbf\nabla\delta\phi\\
+\sbf D & =\sbf D^{0}+{\color{blue}\epsilon}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\epsilon}\,\sbf\nabla\delta\phi\\
 \phi & =\phi^{0}+\delta\phi
 \end{align*}
 
 \end_inset
 
-对于一般材料，
+其中 
+\begin_inset Formula $\epsilon=\frac{\partial D}{\partial E}$
+\end_inset
+
+，对于一般材料 
 \begin_inset Formula $\frac{\partial D}{\partial E}$
 \end_inset
 
@@ -9630,7 +9776,7 @@ noprefix "false"
  得：
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
+\Rightarrow & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
  & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \end{align*}
 
@@ -9639,7 +9785,7 @@ noprefix "false"
 移项得
 \begin_inset Formula 
 \begin{align}
- & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
  & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}\label{eq:Galerkin}
 \end{align}
 
@@ -9660,7 +9806,7 @@ noprefix "false"
  得
 \begin_inset Formula 
 \begin{align*}
-\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
+\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
  & =\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right\} 
 \end{align*}
 
@@ -9693,7 +9839,7 @@ noprefix "false"
 对于求解区域内部的点，去掉边界的两项是，
 \begin_inset Formula 
 \[
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .
 \]
 
 \end_inset
