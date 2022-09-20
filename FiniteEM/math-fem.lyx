@@ -3554,7 +3554,7 @@ H(y,v)=\int_{0}^{2}y''v''+10y'v'+4yv+v\dd{x}-10v(0)=0.
 \end_layout
 
 \begin_layout Chapter
-边界条件
+介质交界面的边界条件
 \end_layout
 
 \begin_layout Standard
@@ -3867,8 +3867,56 @@ name "fig:g1.14-15"
  法向连续。
 \end_layout
 
+\begin_layout Subsection
+电场线平行，垂直
+\end_layout
+
+\begin_layout Standard
+电场线垂直，例如在边界
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+上 
+\begin_inset Formula $\sbf E_{t}=0$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\sbf e_{t}\cdot\nabla\phi=0\quad\Rightarrow\quad\sbf e_{n}\times\nabla\Phi=0
+\]
+
+\end_inset
+
+所以边界
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+为等势面，电势为常数。相当于第一类（狄利赫雷）边界条件。
+\end_layout
+
+\begin_layout Standard
+电场线平行， 例如在边界 
+\begin_inset Formula $\Gamma_{2}$
+\end_inset
+
+上 
+\begin_inset Formula $\sbf E_{n}=0$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\sbf e_{n}\cdot\nabla\phi=0
+\]
+
+\end_inset
+
+对应第二类（诺伊曼）边界条件，如果泛函中没有非齐次项，是自动满足的，被称为自然边界条件（Natural Boundary condition）。
+\end_layout
+
 \begin_layout Chapter
-有限元方法
+插值和高斯积分
 \end_layout
 
 \begin_layout Section
@@ -4353,8 +4401,8 @@ S=\frac{1}{2}\det[J]
 
 \end_layout
 
-\begin_layout Section
-有限元上的积分
+\begin_layout Chapter
+有限元等参坐标方法
 \end_layout
 
 \begin_layout Example
@@ -4871,7 +4919,7 @@ status open
  表示下：使用坐标变换方程，或者微分的使用链式法则。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 刚度矩阵的计算
 \end_layout
 
@@ -5002,27 +5050,15 @@ b_{i}^{e}=2\Delta^{e}f\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{c}
 
 \end_layout
 
-\begin_layout Example
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
 
-\begin_layout Plain Layout
-以上用到了： 
+
+\end_layout
+
+\begin_layout Remark
+以上使用了： 
 \begin_inset Formula 
 \begin{align*}
  & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=1-\xi-\eta,\\
@@ -5093,11 +5129,6 @@ a_{3}^{e}
 \end{array}\right]\right\} ,\\
  & \frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\det J={\color{blue}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)}=2{\color{blue}\Delta^{e}}.
 \end{align*}
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -5372,6 +5403,1859 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 \end_layout
 
 \begin_layout Chapter
+形函数
+\end_layout
+
+\begin_layout Standard
+在有限元中，求解区域被划分成小单元。每个小单元内的点，包括边界，也使用形函数插值得到：
+\begin_inset Formula 
+\[
+X=\sum_{i}N_{i}^{e}\left(\xi_{1},\cdots\xi_{n}\right)X_{i}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ 是节点坐标，
+\begin_inset Formula $X$
+\end_inset
+
+ 是单元 
+\begin_inset Formula $e$
+\end_inset
+
+ 的内点，对应于等参平面上的点 
+\begin_inset Formula $(\xi_{1},\cdots\xi_{n})$
+\end_inset
+
+ 。如果区域不是平面/直线，例如对于圆弧边界，插值得到的
+\begin_inset Formula $X$
+\end_inset
+
+ 将作为精确点 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ 的近似。
+\end_layout
+
+\begin_layout Standard
+形函数具有支撑性质 
+\begin_inset Formula $N_{i}^{e}(x_{j})=\delta_{ij}$
+\end_inset
+
+，也就是 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 点上定义的形函数，只在这一点的邻域不为零，在单元的其它点上都为零。这一性质保证了插值出的结果在单元边界上至少是 
+\begin_inset Formula $C^{0}$
+\end_inset
+
+ 连续的。例如下左图的两个三角形单元，
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+documentclass[tikz,border=10pt]{standalone} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+usepackage{tikz} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+usetikzlibrary{positioning} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+begin{document}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+begin{tikzpicture}[scale=1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=left:$1$](A) at (0,0); 
+\backslash
+coordinate [label=right:$2$] (B) at (2,0); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=above:$3$] (C) at (1.5,1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=above:$4$] (D) at (3,1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+draw (A) -- (B)--(C)--cycle; 
+\backslash
+draw (B) -- (C)--(D)--cycle; 
+\backslash
+node at (3.5, .5) {$
+\backslash
+Rightarrow$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=left:$1$](A) at (4,0); 
+\backslash
+coordinate [label=below:$2$] (B) at (5,0); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+coordinate [label=above:$3$] (C) at (5,1); 
+\backslash
+coordinate [label=right:$4$] (D) at (6,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+draw (A) -- (B)--(C)--cycle; 
+\backslash
+draw (B) -- (C)--(D)--cycle;
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+end{document} 
+\end_layout
+
+\end_inset
+
+它们具有公共边 
+\begin_inset Formula $2$
+\end_inset
+
+–
+\begin_inset Formula $3$
+\end_inset
+
+，经过等参坐标变换，所有单元都变成标准单元–边长为
+\begin_inset Formula $1$
+\end_inset
+
+的直角三角形，即右图。在等参坐标系中，两个单元的形状完全相同。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/ele-tri3-2.pdf
+	lyxscale 150
+	scale 80
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+某个单元内的场量的插值，在等参坐标系下写作：
+\begin_inset Formula 
+\[
+\phi\left(\xi,\eta\right)=\sum_{i=1}^{n}N_{i}^{e}\left(\xi,\eta\right)\phi_{i}
+\]
+
+\end_inset
+
+公共边上的场量即可以用单元
+\begin_inset Formula $1$
+\end_inset
+
+表示，也可以用单元
+\begin_inset Formula $2$
+\end_inset
+
+表示，即
+\begin_inset Formula 
+\[
+\phi=\sum_{i=1}^{n}N_{i}^{(1)}\left(\xi,\eta\right)\phi_{i}^{(1)}=\sum_{i=1}^{n}N_{i}^{(2)}\left(\xi,\eta\right)\phi_{i}^{(2)}
+\]
+
+\end_inset
+
+公共边在两个单元中的等参坐标 
+\begin_inset Formula $(\xi,\eta)$
+\end_inset
+
+ 是相同的，形函数在两个单元中也取相同的形式，因此唯一的差别在于顶点 
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $4$
+\end_inset
+
+ 上 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+的取值，而它们的值一般不相等。因此两个单元对公共边上的场给出不同的插值，解决冲突的办法之一就是要求形函数满足 
+\begin_inset Formula $N_{i}^{e}(x_{j})=\delta_{ij}$
+\end_inset
+
+，这样公共边上的值只取决于节点 
+\begin_inset Formula $2$
+\end_inset
+
+，
+\begin_inset Formula $3$
+\end_inset
+
+，所以至少是
+\begin_inset Formula $C^{0}$
+\end_inset
+
+连续的。
+\end_layout
+
+\begin_layout Section
+等参单元形函数
+\end_layout
+
+\begin_layout Standard
+下面附上一些常用的等参单元的 shape function。
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename inset/triangle-ele.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics[{ Line[{ {0, 0}, {0, 1}, {1, 0}, {0, 0} }] , FontSize
+ -> 13 , Text[1, {1, +3 delta}] , Text[2, {0 - 4 delta, 1 + delta}] , Text[3,
+ {-6 delta, 2 delta}] } , Axes -> True, AxesOrigin -> {0, 0} , AxesStyle
+ -> Arrowheads[{0.07}] , AxesLabel -> {"
+\backslash
+[Xi]_1", "
+\backslash
+[Xi]_2"} , PlotRangePadding -> { {Scaled[0], Scaled[.1]}, {Scaled[0], Scaled[.1]}}
+ , ImageSize -> Small ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+N^{(1)}=\xi_{1},\quad N^{(2)}=\xi_{2},\quad N^{(3)}=1-\xi_{1}-\xi_{2},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename inset/rectangle-ele.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics[{ Line[{ {-1, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1,
+ -1} }] , FontSize -> 13 , Text[1, {-1 - 3 delta, -1 - 3 delta}] , Text[2,
+ {1 + 3 delta, -1 - 3 delta}] , Text[3, {1 + 3 delta, 1 + 3 delta}] , Text[4,
+ {-1 - 3 delta, 1 + 3 delta}] } , Axes -> True, AxesOrigin -> {0, 0} , AxesStyle
+ -> Arrowheads[{0.07}] , AxesLabel -> {"
+\backslash
+[Xi]_1", "
+\backslash
+[Xi]_2"} , PlotRangePadding -> { {Scaled[.1], Scaled[.1]}, {Scaled[.1], Scaled[.1]}}
+ , ImageSize -> Small ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Formula 
+\begin{align*}
+N^{(1)} & =\frac{1}{4}\left(1-\xi_{1}\right)\left(1-\xi_{2}\right),\\
+N^{(2)} & =\frac{1}{4}\left(1+\xi_{1}\right)\left(1-\xi_{2}\right),\\
+N^{(3)} & =\frac{1}{4}\left(1+\xi_{1}\right)\left(1+\xi_{2}\right),\\
+N^{(4)} & =\frac{1}{4}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename inset/Pyramid-ele.pdf
+	lyxscale 50
+	scale 55
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics3D[{ Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0,
+ 0}}], Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}], Line[{{0, 0, 1}, {0, 0,
+ 0}}], , FontSize -> 13 , Text[1, {1 + 3 delta, 2 delta, 0}] , Text[2, {2
+ delta, 1 + 3 delta, 0}] , Text[3, {2 delta, 2 delta, 1 + 3 delta}] , Text[4,
+ {+3 delta, -delta, +3 delta}] } , Axes -> True, AxesOrigin -> {0, 0, 0}
+ , AxesStyle -> Arrowheads[{0.07}] , AxesLabel -> {"
+\backslash
+[Xi]_1", "
+\backslash
+[Xi]_2", "
+\backslash
+[Xi]_3"} , PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]} , ImageSize
+ -> Medium , Boxed -> False ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Formula 
+\begin{align*}
+ & N^{(1)}=\xi_{1},\quad N^{(2)}=\xi_{2},\quad N^{(3)}=\xi_{3},\\
+ & N^{(4)}=1-\xi_{1}-\xi_{2}-\xi_{3},
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename inset/cuboid-ele.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics3D[{ Line[{{-1, -1, -1}, {1, -1, -1}, {1, 1, -1}, {-1,
+ 1, -1}, {-1, -1, -1}}], Line[{{-1, -1, 1}, {1, -1, 1}, {1, 1, 1}, {-1,
+ 1, 1}, {-1, -1, 1}}], Line[{{-1, -1, -1}, {-1, -1, 1}}], Line[{{1, -1,
+ -1}, {1, -1, 1}}], Line[{{1, 1, -1}, {1, 1, 1}}], Line[{{-1, 1, -1}, {-1,
+ 1, 1} }], Line[{{0, 0, 1}, {0, 0, 0}}] , FontSize -> 13 , Text[1, {-1 -
+ 3 delta, -1 - 3 delta, -1 - 3 delta}], Text[5, {-1 - 3 delta, -1 - 3 delta,
+ 1 + 3 delta}] , Text[2, {1 + 3 delta, -1 - 3 delta, -1 - 3 delta}], Text[6,
+ {1 + 3 delta, -1 - 3 delta, 1 + 3 delta}] , Text[3, {1 + 3 delta, 1 + 3
+ delta, -1 - 3 delta}], Text[7, {1 + 3 delta, 1 + 3 delta, 1 + 3 delta}]
+ , Text[4, {-1 - 3 delta, 1 + 3 delta, -1 - 3 delta}], Text[8, {-1 - 3 delta,
+ 1 + 3 delta, 1 + 3 delta}] } , Axes -> True, AxesOrigin -> {0, 0, 0} ,
+ AxesStyle -> Arrowheads[{0.07}] , AxesLabel -> {"
+\backslash
+[Xi]_1", "
+\backslash
+[Xi]_2", "
+\backslash
+[Xi]_3"} , PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]} , ImageSize
+ -> Medium , Boxed -> False ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Formula 
+\begin{align*}
+N^{(1)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1-\xi_{2}\right)\left(1-\xi_{3}\right),\\
+N^{(2)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1-\xi_{2}\right)\left(1-\xi_{3}\right),\\
+N^{(3)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1+\xi_{2}\right)\left(1-\xi_{3}\right),\\
+N^{(4)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1-\xi_{3}\right),\\
+N^{(5)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1-\xi_{2}\right)\left(1+\xi_{3}\right),\\
+N^{(6)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1-\xi_{2}\right)\left(1+\xi_{3}\right),\\
+N^{(7)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3}\right),\\
+N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3}\right),
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+一维形函数：直线元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-line2.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+v1 = {0, 0}; v2 = {1, 0}; d1 = {0, 0.05}; Graphics[{ Line[{v1, v2}], PointSize[.04
+], Point[{v1, v2}], Text["1", v1 + d1], Text["2", v2 + d1] } , ImageSize
+ -> Small ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+一维有限元单元为连接节点 
+\begin_inset Formula $x_{1}^{e}$
+\end_inset
+
+ 和 
+\begin_inset Formula $x_{2}^{e}$
+\end_inset
+
+ 的线段。两个节点上的一阶形函数为：
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=\frac{x_{2}^{e}-x}{x_{2}^{e}-x_{1}^{e}},\quad N_{2}^{(1)}=\frac{x-x_{1}^{e}}{x_{2}^{e}-x_{1}^{e}}.
+\]
+
+\end_inset
+
+或用等参表示为
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=\frac{1-\xi}{2},\quad N_{2}^{(1)}=\frac{1+\xi}{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 的取值范围是 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+，与坐标的转换关系为：
+\begin_inset Formula 
+\[
+\xi=\frac{x-(x_{1}^{e}+x_{2}^{e})/2}{(x_{2}^{e}-x_{1}^{e})/2}
+\]
+
+\end_inset
+
+单元中某个内点的坐标 
+\begin_inset Formula $x$
+\end_inset
+
+ 可以用形函数，以及相应的节点坐标 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 表示为：
+\begin_inset Formula 
+\begin{equation}
+x=\sum_{i=1}^{n_{e}}N_{i}^{e}(\xi)x_{i}=\sum_{i=1}^{n_{e}}N_{i}^{e\prime}(x,y)x_{i}\label{eq:interp1d}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+一阶单元是 
+\series bold
+线性单元
+\series default
+。例如把曲线的参数取为横坐标
+\begin_inset Formula $x$
+\end_inset
+
+，两节点的纵坐标分别是 
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $2$
+\end_inset
+
+。有限元插值
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:interp1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出的内点落在一条直线上。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/ele-o1-regionInterp.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+nShape[1, 
+\backslash
+[Xi]_] := (1 - 
+\backslash
+[Xi])/2; nShape[2, 
+\backslash
+[Xi]_] := (1 + 
+\backslash
+[Xi])/2; xi = {1, 2}; coord[
+\backslash
+[Xi]_] := Sum[xi[[n]]*nShape[n, 
+\backslash
+[Xi]], {n, 2}]; Plot[coord[
+\backslash
+[Xi]], {
+\backslash
+[Xi], -1, 1}, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $N_{1}^{(1)}$
+\end_inset
+
+形函数在 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+处为零，即满足 
+\begin_inset Formula $N_{i}^{e}\left(x_{j}\right)=\delta_{ij}$
+\end_inset
+
+。但
+\begin_inset Formula 
+\[
+\partial_{x}N_{1}^{(1)}=\frac{-1}{\ell},\quad\partial_{x}N_{2}^{(1)}=\frac{1}{\ell},
+\]
+
+\end_inset
+
+在整个单元上为常数。如右图 
+\begin_inset Formula $1,2$
+\end_inset
+
+组成单元
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $2,3$
+\end_inset
+
+为单元
+\begin_inset Formula $B$
+\end_inset
+
+，
+\begin_inset Graphics
+	filename inset/ele-line-pair.pdf
+	lyxscale 80
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[{
+ Line[{v1, v2, v3}], PointSize[.04], Point[{v1, v2, v3}], Text["1", v1 +
+ d1], Text["2", v2 + d1], Text["3", v3 + d1], Text["A", v1 + d2], Text["B",
+ v2 + d2] } , ImageSize -> Small ]
+\end_layout
+
+\end_inset
+
+。 点 
+\begin_inset Formula $2$
+\end_inset
+
+是单元
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+ 的公共点，
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+单元分别在点
+\begin_inset Formula $2$
+\end_inset
+
+ 有形函数，记作
+\begin_inset Formula $N_{2}^{A}$
+\end_inset
+
+，
+\begin_inset Formula $N_{2}^{B}$
+\end_inset
+
+ ，它们对点
+\begin_inset Formula $2$
+\end_inset
+
+ 的 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 贡献相同，但是它们对点 
+\begin_inset Formula $2$
+\end_inset
+
+ 的梯度（一阶导数）的贡献是不同的，因为
+\begin_inset Formula $\nabla\phi=\sum\phi_{\alpha}\nabla N_{\alpha}$
+\end_inset
+
+，通过考虑全局编号和局部编号关系可知 
+\begin_inset Formula $N_{2}^{A}=\frac{1}{\ell}$
+\end_inset
+
+，
+\begin_inset Formula $N_{2}^{A}=\frac{-1}{\ell}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+一维二阶形函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-line3.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[{
+ Line[{v1, v2, v3}], PointSize[.04], Point[{v1, v2, v3}], Text["1", v1 +
+ d1], Text["2", v2 + d1], Text["3", v3 + d1] } , ImageSize -> Small ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在一维有限元单元上添加中点，可以构造二阶形函数。二阶形函数可以由一阶形函数直接生成。首先，边中点形函数 
+\begin_inset Formula $N_{3}^{(2)}$
+\end_inset
+
+ 可以由两个节点的一阶形函数生成，即
+\begin_inset Formula 
+\[
+N_{3}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}
+\]
+
+\end_inset
+
+节点的二阶形函数可以由 节点的一阶形函数，和中点的二阶形函数生成，即
+\begin_inset Formula 
+\[
+N_{i}^{(2)}=N_{i}^{(1)}-\frac{1}{2}N_{3}^{(2)},\quad i\in\{1,2\}
+\]
+
+\end_inset
+
+最后得到二阶形函数的表达式：
+\begin_inset Formula 
+\begin{align*}
+\text{端点形函数：} & N_{1}^{(2)}=\frac{\xi(\xi-1)}{2}\\
+\text{端点形函数：} & N_{2}^{(2)}=\frac{\xi(\xi+1)}{2}\\
+\text{中点形函数：} & N_{3}^{(2)}=(1+\xi)(1-\xi)
+\end{align*}
+
+\end_inset
+
+类似地，单元内点由插值得到
+\begin_inset Formula 
+\begin{equation}
+x=\sum_{i=1}^{n_{e}}N_{i}^{(2)}(\xi)x_{i},\quad\xi\in[-1,1]\label{eq:interp2d}
+\end{equation}
+
+\end_inset
+
+对内点的二阶形函数插值，给出二阶单元，二阶单元可以精确拟合二次曲线。例如下图，两端点纵坐标都是
+\begin_inset Formula $1$
+\end_inset
+
+，中点纵坐标是 
+\begin_inset Formula $2$
+\end_inset
+
+，二阶单元给出的插值曲线为：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+nShape[1, 
+\backslash
+[Xi]_] := (
+\backslash
+[Xi] (
+\backslash
+[Xi] - 1))/2; nShape[2, 
+\backslash
+[Xi]_] := (
+\backslash
+[Xi] (
+\backslash
+[Xi] + 1))/2; nShape[3, 
+\backslash
+[Xi]_] := (1 + 
+\backslash
+[Xi]) (1 - 
+\backslash
+[Xi]); xi = {1, 1, 2}; coord[
+\backslash
+[Xi]_] := Sum[xi[[n]]*nShape[n, 
+\backslash
+[Xi]], {n, 3}]; Plot[coord[
+\backslash
+[Xi]], {
+\backslash
+[Xi], -1, 1}, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-o2-regionInterp.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算中经常会用到 几何坐标 和 等参坐标 微分之间的转换，即
+\begin_inset Formula 
+\[
+J=\frac{\partial x}{\partial\xi}=\frac{\partial N_{i}^{e}}{\partial\xi}x_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+二维形函数：三角元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-tri3.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+v1 = {-1, 0}; v2 = {1, 0}; v3 = {0, Sqrt[3]}; Graphics[{Line[{v1, v2, v3,
+ v1}], PointSize[0.03], Point[{v1, v2, v3}], FontSize -> 14, Text["1", {-1.1,
+ 0}], Text["2", {1.1, 0}], Text["3", {0, Sqrt[3] + 0.1}] }, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由二维三角形单元顶点的三个坐标可以定义相应的一阶形函数：
+\begin_inset Formula 
+\begin{align}
+ & N_{1}^{(1)}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right),\label{eq:shape-2-1}\\
+ & N_{2}^{(1)}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y\right),\nonumber \\
+ & N_{3}^{(1)}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y\right).\nonumber 
+\end{align}
+
+\end_inset
+
+二维形函数的等参坐标取值为 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+，一阶形函数可以用等参坐标表示为：
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=1-\xi-\eta,\\
+ & N_{2}^{(1)}=\xi\\
+ & N_{3}^{(1)}=\eta
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:shape-2-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中系数的定义为
+\begin_inset Formula 
+\begin{align*}
+ & a_{1}^{e}=x_{2}^{e}y_{3}^{e}-y_{2}^{e}x_{3}^{e}; &  & b_{1}^{e}=y_{2}^{e}-y_{3}^{e}; &  & c_{1}^{e}=x_{3}^{e}-x_{2}^{e}\\
+ & a_{2}^{e}=x_{3}^{e}y_{1}^{e}-y_{3}^{e}x_{1}^{e}; &  & b_{2}^{e}=y_{3}^{e}-y_{1}^{e}; &  & c_{2}^{e}=x_{1}^{e}-x_{3}^{e}\\
+ & a_{3}^{e}=x_{1}^{e}y_{2}^{e}-y_{1}^{e}x_{2}^{e}; &  & b_{3}^{e}=y_{1}^{e}-y_{2}^{e}; &  & c_{3}^{e}=x_{2}^{e}-x_{1}^{e}
+\end{align*}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\[
+\Delta^{e}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Delta_{1}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x & y\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right],\quad\Delta_{2}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x & y\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right],\quad\Delta_{3}=\frac{1}{2}\det\left[\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x & y
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+矩阵形式
+\end_layout
+
+\begin_layout Standard
+一阶形函数变换可以写成矩阵形式：
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} =\frac{1}{2\Delta^{e}}\left[\begin{array}{ccc}
+x_{2}y_{3}-x_{3}y_{2} & y_{2}-y_{3} & x_{3}-x_{2}\\
+x_{3}y_{1}-x_{1}y_{3} & y_{3}-y_{1} & x_{1}-x_{3}\\
+x_{1}y_{2}-x_{2}y_{1} & y_{1}-y_{2} & x_{2}-x_{1}
+\end{array}\right]\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} \label{eq:4.160}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+2\Delta^{e}=\det[J]=(y_{2}-y_{3})(x_{1}-x_{3})-(y_{3}-y_{1})(x_{3}-x_{2})
+\]
+
+\end_inset
+
+
+\begin_inset Formula $L_{j}^{e}$
+\end_inset
+
+ 就是一阶三角形单元的形函数。逆变换矩阵为
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{c}
+1\\
+x\\
+y
+\end{array}\right\} =\left[\begin{array}{ccc}
+1 & 1 & 1\\
+x_{1}^{e} & x_{2}^{e} & x_{3}^{e}\\
+y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}
+\end{array}\right\} .\label{eq:4.161}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+雅可比矩阵
+\end_layout
+
+\begin_layout Standard
+雅可比矩阵可以给出 几何坐标 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 与 等参坐标 
+\begin_inset Formula $(\xi,\eta)$
+\end_inset
+
+ 之间，微分的变换关系：
+\begin_inset Formula 
+\[
+[J]=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right]=\left[\begin{array}{cc}
+-x_{1}+x_{2} & -y_{1}+y_{2}\\
+-x_{1}+x_{3} & -y_{1}+y_{3}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)=[J]\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial x}\\
+\frac{\partial N_{i}^{e}}{\partial y}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+二维二阶形函数
+\end_layout
+
+\begin_layout Standard
+在三角形单元各个边中点增加一个节点之后，可以构造出相应的二阶形函数，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-Tri6.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Graphics[{ Line[{{-1, 0}, {1, 0}, {0, Sqrt[3]}, {-1, 0}}], PointSize[0.03],
+ Point[{{0, 0}, {0.5, Sqrt[3]/2}, {-0.5, Sqrt[3]/2}}], Style[Text["1", {-1.1,
+ 0}], 16], Style[Text["4", {0, -0.16}], 16], Style[Text["2", {1.1, 0}], 16],
+ Style[Text["5", {0.62, Sqrt[3]/2}], 16], Style[Text["3", {0, Sqrt[3] + 0.1}],
+ 16], Style[Text["6", {-0.62, Sqrt[3]/2}], 16] }, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+边中点形函数 
+\begin_inset Formula $N_{i}^{(2)}$
+\end_inset
+
+ 可以由两个节点的一阶形函数生成，即
+\begin_inset Formula 
+\begin{align*}
+ & N_{4}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}\\
+ & N_{5}^{(2)}=4N_{3}^{(1)}N_{2}^{(1)}\\
+ & N_{6}^{(2)}=4N_{1}^{(1)}N_{3}^{(1)}
+\end{align*}
+
+\end_inset
+
+顶点的二阶形函数，可以由顶点的一阶形函数，和 邻接边中点的二阶形函数生成
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(2)}=N_{1}^{(1)}-\frac{1}{2}[N_{4}^{(1)}+N_{6}^{(1)}]\\
+ & N_{2}^{(2)}=N_{2}^{(1)}-\frac{1}{2}[N_{4}^{(1)}+N_{5}^{(1)}]\\
+ & N_{3}^{(2)}=N_{3}^{(1)}-\frac{1}{2}[N_{5}^{(1)}+N_{6}^{(1)}]
+\end{align*}
+
+\end_inset
+
+最后可以得到
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(2)}=\left(1-\xi-\eta\right)\left(1-2\xi-2\eta\right)\\
+ & N_{2}^{(2)}=\xi\left(2\xi-1\right)\\
+ & N_{3}^{(2)}=\eta\left(2\eta-1\right)\\
+ & N_{4}^{(2)}=4\left(1-\xi-\eta\right)\xi\\
+ & N_{5}^{(2)}=4\xi\eta\\
+ & N_{6}^{(2)}=4\left(1-\xi-\eta\right)\eta
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+单元内点的坐标 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ ，可以用 形函数 以及 节点处的坐标 
+\begin_inset Formula $\left(x_{i},y_{i}\right)$
+\end_inset
+
+ 表示为
+\begin_inset Formula 
+\begin{align*}
+ & x=\sum_{i}N_{i}^{e}\left(x,y\right)x_{i}\\
+ & y=\sum_{i}N_{i}^{e}\left(x,y\right)y_{i}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如图，对于曲线边界的几何区域，使用二阶形函数插值能给出贴合得更好的单元
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+nShape[1][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := (1 - 
+\backslash
+[Xi] - 
+\backslash
+[Eta]) (1 - 2 
+\backslash
+[Xi] - 2 
+\backslash
+[Eta]); nShape[2][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 
+\backslash
+[Xi] (2 
+\backslash
+[Xi] - 1); nShape[3][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 
+\backslash
+[Eta] (2 
+\backslash
+[Eta] - 1);
+\end_layout
+
+\begin_layout Plain Layout
+nShape[4][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 4 (1 - 
+\backslash
+[Xi] - 
+\backslash
+[Eta]) 
+\backslash
+[Xi]; nShape[5][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 4 
+\backslash
+[Xi] 
+\backslash
+[Eta]; nShape[6][
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := 4 (1 - 
+\backslash
+[Xi] - 
+\backslash
+[Eta]) 
+\backslash
+[Eta]; 
+\backslash
+[Delta] = 0.1;(*midpoint offset*) xi = { {-1, 0}, {1, 0}, {0, Sqrt[3]}, {0,
+ 0 - 
+\backslash
+[Delta]}, {0.5 - 
+\backslash
+[Delta], Sqrt[3]/2}, {-(0.5 + 
+\backslash
+[Delta]), Sqrt[3]/2} }; coord[
+\backslash
+[Xi]_, 
+\backslash
+[Eta]_] := Sum[xi[[n]]*nShape[n][
+\backslash
+[Xi], 
+\backslash
+[Eta]], {n, 6}]; ParametricPlot[ coord[
+\backslash
+[Xi], 
+\backslash
+[Eta]], {
+\backslash
+[Xi], 0, 1}, {
+\backslash
+[Eta], 0, 1 - 
+\backslash
+[Xi]}, ImageSize -> Tiny]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ele-tri6-RegionIntep.png
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有限元计算中，经常用到下面公式所示的形函数积分性质：
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}(L_{1}^{e})^{\ell}(L_{2}^{e})^{m}(L_{3}^{e})^{n}\dd{x}\dd{y}=\frac{\ell!m!n!}{(\ell+m+n+2)!}2\Delta^{e}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+三维形函数：四面体
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset Graphics
+	filename inset/Pyramid-ele.pdf
+	lyxscale 50
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+三维 四面体有限元 四个顶点的一阶 形函数定义为：
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=\frac{V_{1}}{V^{e}},\quad N_{2}^{(1)}=\frac{V_{2}}{V^{e}},\quad N_{3}^{(1)}=\frac{V_{3}}{V^{e}},\quad N_{4}^{(1)}=\frac{V_{4}}{V^{e}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+V^{e}=\frac{1}{6}\det\left[\begin{array}{cccc}
+1 & x_{1}^{e} & y_{1}^{e} & z_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e} & z_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e} & z_{3}^{e}\\
+1 & x_{4}^{e} & y_{4}^{e} & z_{4}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+仿照二维情况，可以计算出 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+。例如
+\begin_inset Formula 
+\[
+V_{1}=\frac{1}{6}\det\left[\begin{array}{cccc}
+1 & x & y & z\\
+1 & x_{2}^{e} & y_{2}^{e} & z_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e} & z_{3}^{e}\\
+1 & x_{4}^{e} & y_{4}^{e} & z_{4}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+三维形函数等参坐标取值范围 
+\begin_inset Formula $\xi,\eta,\zeta\in\left[0,1\right]$
+\end_inset
+
+，一阶形函数可以用等参坐标表示为：
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{(1)}=1-\xi-\eta-\zeta\\
+ & N_{2}^{(1)}=\xi\\
+ & N_{3}^{(1)}=\eta\\
+ & N_{4}^{(1)}=\zeta
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+等参坐标 和 几何坐标 之间的变换关系，正变换为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+1\\
+x\\
+y\\
+z
+\end{array}\right]=\left[\begin{array}{cccc}
+1 & 1 & 1 & 1\\
+x_{1} & x_{2} & x_{3} & x_{4}\\
+y_{1} & y_{2} & y_{3} & y_{4}\\
+z_{1} & z_{2} & z_{3} & z_{4}
+\end{array}\right]\left[\begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}\\
+L_{4}^{e}
+\end{array}\right],\quad\left[\begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}\\
+L_{4}^{e}
+\end{array}\right]=\left[\begin{array}{c}
+1-\xi-\eta-\zeta\\
+\xi\\
+\eta\\
+\zeta
+\end{array}\right]
+\]
+
+\end_inset
+
+这里按照常用的记号约定，也引入了 
+\begin_inset Formula $L_{i}^{e}$
+\end_inset
+
+ 表示等参坐标。对应的 逆变换 为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+L_{1}^{e}\\
+L_{2}^{e}\\
+L_{3}^{e}\\
+L_{4}^{e}
+\end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{cccc}
+a_{1} & b_{1} & c_{1} & d_{1}\\
+a_{2} & b_{2} & c_{2} & d_{2}\\
+a_{3} & b_{3} & c_{3} & d_{3}\\
+a_{4} & b_{4} & c_{4} & d_{4}
+\end{array}\right]\left[\begin{array}{c}
+1\\
+x\\
+y\\
+z
+\end{array}\right]
+\]
+
+\end_inset
+
+简记为：
+\begin_inset Formula 
+\begin{align*}
+ & X_{\alpha}=T_{\alpha\beta}L_{\beta},\\
+ & L_{\alpha}=T_{\alpha\beta}^{-1}X_{\beta}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $X=\left(1,x,y,z\right),$
+\end_inset
+
+
+\begin_inset Formula $L=\left(1-\xi-\eta-\zeta,\xi,\eta,\zeta\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+其中各系数的值为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+b_{1} & c_{1} & d_{1}\\
+b_{2} & c_{2} & d_{2}\\
+b_{3} & c_{3} & d_{3}\\
+b_{4} & c_{4} & d_{4}
+\end{array}\right]=\left[\begin{array}{ccc}
+y_{42}z_{32}-y_{32}z_{42} & x_{32}z_{42}-x_{42}z_{32} & x_{42}y_{32}-x_{32}y_{42}\\
+y_{31}z_{43}-y_{34}z_{13} & x_{43}z_{31}-x_{31}z_{43} & x_{31}y_{43}-x_{43}y_{31}\\
+y_{24}z_{14}-y_{14}z_{24} & x_{14}z_{24}-x_{24}z_{14} & x_{24}y_{14}-x_{14}y_{24}\\
+y_{13}z_{21}-y_{21}z_{13} & x_{21}z_{13}-x_{13}z_{21} & x_{13}y_{21}-x_{21}y_{13}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula $T$
+\end_inset
+
+ 的第一列的值为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+a_{1}\\
+a_{2}\\
+a_{3}\\
+a_{4}
+\end{array}\right]=\left[\begin{array}{c}
+x_{2}\left(y_{3}z_{4}-y_{4}z_{3}\right)+x_{3}\left(y_{4}z_{2}-y_{2}z_{4}\right)+x_{4}\left(y_{2}z_{3}-y_{3}z_{2}\right)\\
+x_{1}\left(y_{4}z_{3}-y_{3}z_{4}\right)+x_{3}\left(y_{1}z_{4}-y_{4}z_{1}\right)+x_{4}\left(y_{3}z_{1}-y_{1}z_{3}\right)\\
+x_{1}\left(y_{2}z_{4}-y_{4}z_{2}\right)+x_{2}\left(y_{4}z_{1}-y_{1}z_{4}\right)+x_{4}\left(y_{1}z_{2}-y_{2}z_{1}\right)\\
+x_{1}\left(y_{3}z_{2}-y_{2}z_{3}\right)+x_{2}\left(y_{1}z_{3}-y_{3}z_{1}\right)+x_{3}\left(y_{2}z_{1}-y_{1}z_{2}\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\det\left[J\right]=6V^{e}=x_{21}\left(y_{23}z_{34}-y_{34}z_{23}\right)+x_{32}\left(y_{34}z_{12}-y_{12}z_{34}\right)+x_{43}\left(y_{12}z_{23}-y_{23}z_{12}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+由坐标的逆变换矩阵，可以计算形函数的梯度
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\nabla L_{1}^{e}\\
+\nabla L_{2}^{e}\\
+\nabla L_{3}^{e}\\
+\nabla L_{4}^{e}
+\end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
+b_{1} & c_{1} & d_{1}\\
+b_{2} & c_{2} & d_{2}\\
+b_{3} & c_{3} & d_{3}\\
+b_{4} & c_{4} & d_{4}
+\end{array}\right]\left[\begin{array}{c}
+\sbf e_{x}\\
+\sbf e_{y}\\
+\sbf e_{z}
+\end{array}\right]
+\]
+
+\end_inset
+
+约定：
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M=\left[b_{i},c_{i},d_{i}\right]$
+\end_inset
+
+矩阵；希腊字母表示
+\begin_inset Formula $\{1,2,3,4\}$
+\end_inset
+
+，对应节点数；
+\end_layout
+
+\begin_layout Enumerate
+拉丁字母表示 
+\begin_inset Formula $\{1,2,3\}$
+\end_inset
+
+，对应三维空间坐标
+\begin_inset Formula $x,y,z$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Standard
+则 
+\begin_inset Formula $\nabla L^{e}$
+\end_inset
+
+ 的各分量形式为：
+\begin_inset Formula 
+\begin{equation}
+\partial_{i}L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha i}}\label{eq:shapeGrad}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+雅可比矩阵等式
+\end_layout
+
+\begin_layout Standard
+在每个单元上，根据 单元顶点的坐标组，定义了 
+\color blue
+几何坐标
+\color inherit
+（物理时空坐标）和 
+\color blue
+等参坐标
+\color inherit
+ 之间的变换关系。
+\end_layout
+
+\begin_layout Enumerate
+等参坐标组 
+\begin_inset Formula $\left\{ \xi\right\} $
+\end_inset
+
+，对每个单元形式上相同，实际上依赖于 全局几何坐标 
+\begin_inset Formula $\{X\}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+对于确定类型的单元，坐标变换矩阵 
+\begin_inset Formula $T$
+\end_inset
+
+ 由单元决定，而单元由顶点决定，因此通过 顶点坐标
+\begin_inset Formula $\{X_{i}\}$
+\end_inset
+
+，可以参数出 雅可比矩阵 
+\begin_inset Formula $[J]=\partial X/\partial\xi$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+单元内点的几何坐标总是参数化成 
+\begin_inset Formula $X=\sum_{i}N_{i}^{e}\left(x,y\right)X_{i}$
+\end_inset
+
+，形函数 
+\begin_inset Formula $\{N_{i}^{e}\}$
+\end_inset
+
+ 可以取不同 order，则对应的雅可比 
+\begin_inset Formula $[J]$
+\end_inset
+
+ 取不同的形式。
+\end_layout
+
+\begin_layout Enumerate
+对于确定 order 的形函数 
+\begin_inset Formula $\{N_{i}^{e}\}$
+\end_inset
+
+，除了顶点坐标组 
+\begin_inset Formula $\{X_{i}\}$
+\end_inset
+
+ 带来的区别，
+\begin_inset Formula $[J]$
+\end_inset
+
+ 中其它系数是固定的，只和 
+\begin_inset Formula $\{N_{i}^{e}\}$
+\end_inset
+
+ 在等参系中的函数形式有关。
+\end_layout
+
+\begin_layout Standard
+因此变换的 雅可比矩阵 可以通过 各个顶点
+\end_layout
+
+\begin_layout Standard
+可以计算出在三维直角坐标系中，雅可比矩阵为：
+\begin_inset Formula 
+\begin{equation}
+\left[J\right]=\left[\begin{array}{ccc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}\\
+\frac{\partial x}{\partial\zeta} & \frac{\partial y}{\partial\zeta} & \frac{\partial z}{\partial\zeta}
+\end{array}\right]=-\left[\begin{array}{ccc}
+x_{12} & y_{12} & z_{12}\\
+x_{13} & y_{13} & z_{13}\\
+x_{14} & y_{14} & z_{14}
+\end{array}\right].\label{eq:jacobi3d}
+\end{equation}
+
+\end_inset
+
+其中记号约定为： 
+\begin_inset Formula $x_{12}=x_{1}-x_{2}$
+\end_inset
+
+，其他类似。雅可比矩阵的逆矩阵为
+\begin_inset Formula 
+\[
+\left[J^{-1}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
+b_{2} & b_{3} & b_{4}\\
+c_{2} & c_{3} & c_{4}\\
+d_{2} & d_{3} & d_{4}
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+令 
+\begin_inset Formula $r_{\alpha j}$
+\end_inset
+
+ 表示四面体单元中，节点的坐标矩阵，
+\begin_inset Formula 
+\[
+r_{\alpha j}=\left[\begin{array}{ccc}
+x_{1} & y_{1} & z_{1}\\
+x_{2} & y_{2} & z_{2}\\
+x_{3} & y_{3} & z_{3}\\
+x_{4} & y_{4} & z_{4}
+\end{array}\right]
+\]
+
+\end_inset
+
+根据 雅可比矩阵 的表达式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可以计算出：
+\begin_inset Formula 
+\[
+\frac{\partial\det[J]}{\partial r_{\alpha j}}={\color{blue}M_{\alpha j}},\quad{\color{blue}M_{\alpha j}}=\left[\begin{array}{ccc}
+b_{1} & c_{1} & d_{1}\\
+b_{2} & c_{2} & d_{2}\\
+b_{3} & c_{3} & d_{3}\\
+b_{4} & c_{4} & d_{4}
+\end{array}\right]
+\]
+
+\end_inset
+
+ 考虑到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:shapeGrad"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $\partial_{i}L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha i}}$
+\end_inset
+
+，因此有
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\det[J]}{\partial r_{\alpha j}}=\det[J]\,\partial_{j}L_{\alpha}^{e}\label{eq:xl6.7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，计算出雅可比逆矩阵的偏导
+\begin_inset Formula 
+\[
+\frac{\partial[J^{-1}]}{\partial\sbf r_{\alpha}}=-[J^{-1}]\frac{\partial J}{\partial\sbf r_{\alpha}}[J^{-1}]=-\frac{1}{\det[J]}\left[\begin{array}{c}
+b_{\alpha}\\
+c_{\alpha}\\
+d_{\alpha}
+\end{array}\right]\left[\begin{array}{ccc}
+\sbf e_{x} & \sbf e_{y} & \sbf e_{z}\end{array}\right][J^{-1}]
+\]
+
+\end_inset
+
+同样引入 节点坐标矩阵 
+\begin_inset Formula $r_{\alpha j}=\left[\begin{array}{ccc}
+x_{1} & y_{1} & z_{1}\\
+x_{2} & y_{2} & z_{2}\\
+x_{3} & y_{3} & z_{3}\\
+x_{4} & y_{4} & z_{4}
+\end{array}\right]$
+\end_inset
+
+，可以写成分量形式
+\begin_inset Formula 
+\begin{align}
+\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}=-\partial_{k}L_{\alpha}^{e}\;J_{ij}^{-1}.\label{eq:xl6.8}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+推导是在 三维直角坐标系 中进行的，即
+\begin_inset Formula 
+\[
+\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}\sbf e_{i}=-\partial_{k}L_{\alpha}^{e}\;\sbf e_{i}J_{ij}^{-1},\quad\sbf e_{i}=(\sbf e_{x},\sbf e_{y},\sbf e_{z}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Edge单元
+\end_layout
+
+\begin_layout Standard
+在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
+在棱边 
+\begin_inset Formula $i$
+\end_inset
+
+ 上可以定义形函数：
+\begin_inset Formula 
+\[
+\sbf N_{i}^{e}=\left(L_{i_{1}}^{e}\nabla L_{i_{2}}^{e}-L_{i_{2}}^{e}\nabla L_{i_{1}}^{e}\right)\ell_{i}^{e}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $i_{1}$
+\end_inset
+
+与 
+\begin_inset Formula $i_{2}$
+\end_inset
+
+为与棱边
+\begin_inset Formula $i$
+\end_inset
+
+ 邻接的两个顶点。
+\begin_inset Formula $\ell_{i}^{e}$
+\end_inset
+
+ 的绝对值等于棱边的长度，正负号由节点的总体编号决定。形函数 
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
+\end_layout
+
+\begin_layout Chapter
 静电场
 \end_layout
 
@@ -5461,7 +7345,15 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 
 \end_inset
 
+只不过由于对称性，泛函的积分可以直接把 
+\begin_inset Formula $\phi$
+\end_inset
 
+ 积掉，给出 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 因子。
 \end_layout
 
 \begin_layout Standard
@@ -6598,6 +8490,17 @@ noprefix "false"
 \end_inset
 
 这就是 毕奥–萨伐尔 定律。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+柱坐标下的旋度：
 \begin_inset Formula 
 \[
 \nabla\times\sbf A=\left(\frac{1}{r}\partial_{\phi}A_{z}-\partial_{z}A_{\phi}\right)\sbf e_{r}+\left(\partial_{z}A_{r}-\partial_{r}A_{z}\right)\sbf e_{\phi}+\left[\frac{1}{r}\partial_{r}\left(rA_{\phi}\right)-\frac{1}{r}\partial_{\phi}A_{r}\right]\sbf e_{z}
@@ -6857,7 +8760,7 @@ noprefix "false"
  表示为：
 \begin_inset Formula 
 \[
-\sbf A^{e}(\rho,z)=\sum_{i=1}^{n_{e}}N_{i}^{e}(\rho,z)A_{\varphi,i}\sbf e_{\varphi}
+\sbf A^{e}(\rho,z)=\sum_{\alpha=1}^{n_{e}}N_{\alpha}^{e}(\rho,z)A_{\varphi,\alpha}\sbf e_{\varphi}
 \]
 
 \end_inset
@@ -6883,13 +8786,13 @@ status open
 \end_inset
 
  对于三维磁场问题，采用的是棱边单元，相应的形函数是矢量。有限元中的矢势可以用形函数和棱边上定义的 
-\begin_inset Formula $A_{i}$
+\begin_inset Formula $A_{\alpha}$
 \end_inset
 
  表示为：
 \begin_inset Formula 
 \[
-\sbf A^{e}(x,y,z)=\sum_{i=1}^{n_{e}}\sbf N_{i}^{e}(x,y,z)A_{i}
+\sbf A^{e}(x,y,z)=\sum_{\alpha=1}^{n_{e}}\sbf N_{\alpha}^{e}(x,y,z)A_{\alpha}
 \]
 
 \end_inset
@@ -6912,25 +8815,25 @@ status open
 对于任一种情况，单元内的矢量势均可以统一表示为一种形式，即
 \begin_inset Formula 
 \begin{equation}
-\sbf A^{e}=\sum_{i=1}^{n_{e}}\sbf N_{i}^{e}A_{i}\label{eq:xl3.6}
+\sbf A^{e}=\sum_{\alpha=1}^{n_{e}}\sbf N_{\alpha}^{e}A_{\alpha}\label{eq:xl3.6}
 \end{equation}
 
 \end_inset
 
-例如二位情况下，
-\begin_inset Formula $\sbf N_{i}^{e}=N_{i}^{e}(x,y)\sbf e_{z}$
+例如二维情况下，
+\begin_inset Formula $\sbf N_{\alpha}^{e}=N_{\alpha}^{e}(x,y)\sbf e_{z}$
 \end_inset
 
 ，
-\begin_inset Formula $A_{i}=A_{z,i}$
+\begin_inset Formula $A_{\alpha}=A_{z,\alpha}$
 \end_inset
 
 ；轴对称情况下 
-\begin_inset Formula $\sbf N_{i}^{e}=N_{i}^{e}(\rho,z)\sbf e_{\varphi}$
+\begin_inset Formula $\sbf N_{\alpha}^{e}=N_{\alpha}^{e}(\rho,z)\sbf e_{\varphi}$
 \end_inset
 
 ，
-\begin_inset Formula $A_{i}=A_{\varphi,i}$
+\begin_inset Formula $A_{\alpha}=A_{\varphi,\alpha}$
 \end_inset
 
 。然后将 
@@ -6956,7 +8859,7 @@ noprefix "false"
 可以得到
 \begin_inset Formula 
 \[
-\mathcal{F}^{e}(\sbf A^{e})=\frac{1}{2}\int_{\Omega^{e}}\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{i}^{e}A_{i}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{j}^{e}A_{j}\right)\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}A_{i}\dd{\Omega}.
+\mathcal{F}^{e}(\sbf A^{e})=\frac{1}{2}\int_{\Omega^{e}}\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{\alpha}^{e}A_{\alpha}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{\beta}^{e}A_{\beta}\right)\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{\alpha}^{e}A_{\alpha}\dd{\Omega}.
 \]
 
 \end_inset
@@ -6970,7 +8873,7 @@ noprefix "false"
 \end_inset
 
  对 
-\begin_inset Formula $A_{i}$
+\begin_inset Formula $A_{\alpha}$
 \end_inset
 
  的导数，并根据 
@@ -6984,7 +8887,7 @@ noprefix "false"
 所满足的矩阵方程
 \begin_inset Formula 
 \begin{equation}
-\sum_{e=1}^{M}[K_{ij}^{e}]\{A_{j}\}=\sum_{e=1}^{M}\{b_{i}^{e}\}\label{eq:xl3.7}
+\sum_{e=1}^{M}[K_{\alpha\beta}^{e}]\{A_{\beta}\}=\sum_{e=1}^{M}\{b_{\alpha}^{e}\}\label{eq:xl3.7}
 \end{equation}
 
 \end_inset
@@ -6992,8 +8895,8 @@ noprefix "false"
 其中
 \begin_inset Formula 
 \begin{align}
-K_{ij}^{e} & =\int_{\Omega^{e}}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega}\label{eq:xl3.8}\\
-b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}\label{eq:xl3.9}
+K_{\alpha\beta}^{e} & =\int_{\Omega^{e}}\left(\nabla\times\sbf N_{\alpha}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{\beta}^{e}\right)\dd{\Omega}\label{eq:xl3.8}\\
+b_{\alpha}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{\alpha}^{e}\dd{\Omega}\label{eq:xl3.9}
 \end{align}
 
 \end_inset
@@ -7001,799 +8904,92 @@ b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}\label{
 
 \end_layout
 
-\begin_layout Chapter
-形函数
+\begin_layout Section
+二维静磁场
 \end_layout
 
 \begin_layout Standard
-在有限元中，求解区域被划分成小单元。每个小单元内的点，包括边界，也使用形函数插值得到：
-\begin_inset Formula 
-\[
-X=\sum_{i}N_{i}^{e}\left(\xi_{1},\cdots\xi_{n}\right)X_{i}
-\]
-
+二维静磁问题中的电流是垂直二维平面流过的，
+\begin_inset Formula $\sbf A$
 \end_inset
 
-其中 
-\begin_inset Formula $X_{i}$
-\end_inset
-
- 是节点坐标，
-\begin_inset Formula $X$
-\end_inset
-
- 是单元 
-\begin_inset Formula $e$
-\end_inset
-
- 的内点，对应于等参平面上的点 
-\begin_inset Formula $(\xi_{1},\cdots\xi_{n})$
-\end_inset
-
- 。如果区域不是平面/直线，例如对于圆弧边界，插值得到的
-\begin_inset Formula $X$
-\end_inset
-
- 将作为精确点 
-\begin_inset Formula $X_{0}$
-\end_inset
-
- 的近似。
-\end_layout
-
-\begin_layout Standard
-形函数具有支撑性质 
-\begin_inset Formula $N_{i}^{e}(x_{j})=\delta_{ij}$
-\end_inset
-
-，也就是 
-\begin_inset Formula $x_{i}$
-\end_inset
-
- 点上定义的形函数，只在这一点的邻域不为零，在单元的其它点上都为零。这一性质保证了插值出的结果在单元边界上至少是 
-\begin_inset Formula $C^{0}$
-\end_inset
-
- 连续的。例如下左图的两个三角形单元，
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-
-\backslash
-documentclass[tikz,border=10pt]{standalone} 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-usepackage{tikz} 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-usetikzlibrary{positioning} 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-begin{document}
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-begin{tikzpicture}[scale=1] 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-coordinate [label=left:$1$](A) at (0,0); 
-\backslash
-coordinate [label=right:$2$] (B) at (2,0); 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-coordinate [label=above:$3$] (C) at (1.5,1); 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-coordinate [label=above:$4$] (D) at (3,1); 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-draw (A) -- (B)--(C)--cycle; 
-\backslash
-draw (B) -- (C)--(D)--cycle; 
-\backslash
-node at (3.5, .5) {$
-\backslash
-Rightarrow$}; 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-coordinate [label=left:$1$](A) at (4,0); 
-\backslash
-coordinate [label=below:$2$] (B) at (5,0); 
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-coordinate [label=above:$3$] (C) at (5,1); 
-\backslash
-coordinate [label=right:$4$] (D) at (6,0);
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-draw (A) -- (B)--(C)--cycle; 
-\backslash
-draw (B) -- (C)--(D)--cycle;
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-end{tikzpicture}
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-end{document} 
-\end_layout
-
-\end_inset
-
-它们具有公共边 
-\begin_inset Formula $2$
-\end_inset
-
-–
-\begin_inset Formula $3$
-\end_inset
-
-，经过等参坐标变换，所有单元都变成标准单元–边长为
-\begin_inset Formula $1$
-\end_inset
-
-的直角三角形，即右图。在等参坐标系中，两个单元的形状完全相同。
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Graphics
-	filename inset/ele-tri3-2.pdf
-	lyxscale 150
-	scale 80
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-某个单元内的场量的插值，在等参坐标系下写作：
-\begin_inset Formula 
-\[
-\phi\left(\xi,\eta\right)=\sum_{i=1}^{n}N_{i}^{e}\left(\xi,\eta\right)\phi_{i}
-\]
-
-\end_inset
-
-公共边上的场量即可以用单元
-\begin_inset Formula $1$
-\end_inset
-
-表示，也可以用单元
-\begin_inset Formula $2$
-\end_inset
-
-表示，即
-\begin_inset Formula 
-\[
-\phi=\sum_{i=1}^{n}N_{i}^{(1)}\left(\xi,\eta\right)\phi_{i}^{(1)}=\sum_{i=1}^{n}N_{i}^{(2)}\left(\xi,\eta\right)\phi_{i}^{(2)}
-\]
-
-\end_inset
-
-公共边在两个单元中的等参坐标 
-\begin_inset Formula $(\xi,\eta)$
-\end_inset
-
- 是相同的，形函数在两个单元中也取相同的形式，因此唯一的差别在于顶点 
-\begin_inset Formula $1$
+只有垂直二维平面的分量。即 
+\begin_inset Formula $\sbf J=J_{z}\sbf e_{z}$
 \end_inset
 
 ，
-\begin_inset Formula $4$
+\begin_inset Formula $\sbf N_{i}^{e}=N_{i}^{e}\left(x,y\right)\sbf e_{z}$
 \end_inset
 
- 上 
-\begin_inset Formula $\phi_{i}$
-\end_inset
+，将其代入式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.8"
+plural "false"
+caps "false"
+noprefix "false"
 
-的取值，而它们的值一般不相等。因此两个单元对公共边上的场给出不同的插值，解决冲突的办法之一就是要求形函数满足 
-\begin_inset Formula $N_{i}^{e}(x_{j})=\delta_{ij}$
-\end_inset
-
-，这样公共边上的值只取决于节点 
-\begin_inset Formula $2$
-\end_inset
-
-，
-\begin_inset Formula $3$
-\end_inset
-
-，所以至少是
-\begin_inset Formula $C^{0}$
-\end_inset
-
-连续的。
-\end_layout
-
-\begin_layout Section
-等参单元形函数
-\end_layout
-
-\begin_layout Standard
-下面附上一些常用的等参单元的 shape function。
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename inset/triangle-ele.pdf
-	scale 70
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-delta = 0.05; Graphics[{ Line[{ {0, 0}, {0, 1}, {1, 0}, {0, 0} }] , FontSize
- -> 13 , Text[1, {1, +3 delta}] , Text[2, {0 - 4 delta, 1 + delta}] , Text[3,
- {-6 delta, 2 delta}] } , Axes -> True, AxesOrigin -> {0, 0} , AxesStyle
- -> Arrowheads[{0.07}] , AxesLabel -> {"
-\backslash
-[Xi]_1", "
-\backslash
-[Xi]_2"} , PlotRangePadding -> { {Scaled[0], Scaled[.1]}, {Scaled[0], Scaled[.1]}}
- , ImageSize -> Small ]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-N^{(1)}=\xi_{1},\quad N^{(2)}=\xi_{2},\quad N^{(3)}=1-\xi_{1}-\xi_{2},
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename inset/rectangle-ele.pdf
-	scale 70
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-delta = 0.05; Graphics[{ Line[{ {-1, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1,
- -1} }] , FontSize -> 13 , Text[1, {-1 - 3 delta, -1 - 3 delta}] , Text[2,
- {1 + 3 delta, -1 - 3 delta}] , Text[3, {1 + 3 delta, 1 + 3 delta}] , Text[4,
- {-1 - 3 delta, 1 + 3 delta}] } , Axes -> True, AxesOrigin -> {0, 0} , AxesStyle
- -> Arrowheads[{0.07}] , AxesLabel -> {"
-\backslash
-[Xi]_1", "
-\backslash
-[Xi]_2"} , PlotRangePadding -> { {Scaled[.1], Scaled[.1]}, {Scaled[.1], Scaled[.1]}}
- , ImageSize -> Small ]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Formula 
-\begin{align*}
-N^{(1)} & =\frac{1}{4}\left(1-\xi_{1}\right)\left(1-\xi_{2}\right),\\
-N^{(2)} & =\frac{1}{4}\left(1+\xi_{1}\right)\left(1-\xi_{2}\right),\\
-N^{(3)} & =\frac{1}{4}\left(1+\xi_{1}\right)\left(1+\xi_{2}\right),\\
-N^{(4)} & =\frac{1}{4}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right).
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename inset/Pyramid-ele.pdf
-	lyxscale 50
-	scale 55
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-delta = 0.05; Graphics3D[{ Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0,
- 0}}], Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}], Line[{{0, 0, 1}, {0, 0,
- 0}}], , FontSize -> 13 , Text[1, {1 + 3 delta, 2 delta, 0}] , Text[2, {2
- delta, 1 + 3 delta, 0}] , Text[3, {2 delta, 2 delta, 1 + 3 delta}] , Text[4,
- {+3 delta, -delta, +3 delta}] } , Axes -> True, AxesOrigin -> {0, 0, 0}
- , AxesStyle -> Arrowheads[{0.07}] , AxesLabel -> {"
-\backslash
-[Xi]_1", "
-\backslash
-[Xi]_2", "
-\backslash
-[Xi]_3"} , PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]} , ImageSize
- -> Medium , Boxed -> False ]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Formula 
-\begin{align*}
- & N^{(1)}=\xi_{1},\quad N^{(2)}=\xi_{2},\quad N^{(3)}=\xi_{3},\\
- & N^{(4)}=1-\xi_{1}-\xi_{2}-\xi_{3},
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename inset/cuboid-ele.pdf
-	lyxscale 50
-	scale 50
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-delta = 0.05; Graphics3D[{ Line[{{-1, -1, -1}, {1, -1, -1}, {1, 1, -1}, {-1,
- 1, -1}, {-1, -1, -1}}], Line[{{-1, -1, 1}, {1, -1, 1}, {1, 1, 1}, {-1,
- 1, 1}, {-1, -1, 1}}], Line[{{-1, -1, -1}, {-1, -1, 1}}], Line[{{1, -1,
- -1}, {1, -1, 1}}], Line[{{1, 1, -1}, {1, 1, 1}}], Line[{{-1, 1, -1}, {-1,
- 1, 1} }], Line[{{0, 0, 1}, {0, 0, 0}}] , FontSize -> 13 , Text[1, {-1 -
- 3 delta, -1 - 3 delta, -1 - 3 delta}], Text[5, {-1 - 3 delta, -1 - 3 delta,
- 1 + 3 delta}] , Text[2, {1 + 3 delta, -1 - 3 delta, -1 - 3 delta}], Text[6,
- {1 + 3 delta, -1 - 3 delta, 1 + 3 delta}] , Text[3, {1 + 3 delta, 1 + 3
- delta, -1 - 3 delta}], Text[7, {1 + 3 delta, 1 + 3 delta, 1 + 3 delta}]
- , Text[4, {-1 - 3 delta, 1 + 3 delta, -1 - 3 delta}], Text[8, {-1 - 3 delta,
- 1 + 3 delta, 1 + 3 delta}] } , Axes -> True, AxesOrigin -> {0, 0, 0} ,
- AxesStyle -> Arrowheads[{0.07}] , AxesLabel -> {"
-\backslash
-[Xi]_1", "
-\backslash
-[Xi]_2", "
-\backslash
-[Xi]_3"} , PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]} , ImageSize
- -> Medium , Boxed -> False ]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Formula 
-\begin{align*}
-N^{(1)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1-\xi_{2}\right)\left(1-\xi_{3}\right),\\
-N^{(2)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1-\xi_{2}\right)\left(1-\xi_{3}\right),\\
-N^{(3)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1+\xi_{2}\right)\left(1-\xi_{3}\right),\\
-N^{(4)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1-\xi_{3}\right),\\
-N^{(5)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1-\xi_{2}\right)\left(1+\xi_{3}\right),\\
-N^{(6)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1-\xi_{2}\right)\left(1+\xi_{3}\right),\\
-N^{(7)} & =\frac{1}{8}\left(1+\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3}\right),\\
-N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3}\right),
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-一维形函数
-\end_layout
-
-\begin_layout Standard
-一维有限元单元为连接节点 
-\begin_inset Formula $x_{1}^{e}$
 \end_inset
 
  和 
-\begin_inset Formula $x_{2}^{e}$
-\end_inset
-
- 的线段。两个节点上的一阶形函数为：
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{(1)}=\frac{x_{2}^{e}-x}{x_{2}^{e}-x_{1}^{e}}\\
- & N_{2}^{(1)}=\frac{x-x_{1}^{e}}{x_{2}^{e}-x_{1}^{e}}
-\end{align*}
-
-\end_inset
-
-或用等参表示为
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{(1)}=\frac{1-\xi}{2}\\
- & N_{2}^{(1)}=\frac{1+\xi}{2}
-\end{align*}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\xi$
-\end_inset
-
- 的取值范围是 
-\begin_inset Formula $[-1,1]$
-\end_inset
-
-，与坐标的转换关系为：
-\begin_inset Formula 
-\[
-\xi=\frac{x-(x_{1}^{e}+x_{2}^{e})/2}{(x_{2}^{e}-x_{1}^{e})/2}
-\]
-
-\end_inset
-
-单元中某个内点的坐标 
-\begin_inset Formula $x$
-\end_inset
-
- 可以用形函数，以及相应的节点坐标 
-\begin_inset Formula $x_{i}$
-\end_inset
-
- 表示为：
-\begin_inset Formula 
-\begin{equation}
-x=\sum_{i=1}^{n_{e}}N_{i}^{e}(\xi)x_{i}=\sum_{i=1}^{n_{e}}N_{i}^{e\prime}(x,y)x_{i}\label{eq:interp1d}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-一阶单元是纯线性单元。例如 某线段的曲线参数是横坐标
-\begin_inset Formula $x$
-\end_inset
-
-，两节点的纵坐标分别是 
-\begin_inset Formula $1$
-\end_inset
-
-，
-\begin_inset Formula $2$
-\end_inset
-
-。有限元插值
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:interp1d"
+reference "eq:xl3.9"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-给出的内点落在一条直线上。
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-nShape[1, 
-\backslash
-[Xi]_] := (1 - 
-\backslash
-[Xi])/2; nShape[2, 
-\backslash
-[Xi]_] := (1 + 
-\backslash
-[Xi])/2; xi = {1, 2}; coord[
-\backslash
-[Xi]_] := Sum[xi[[n]]*nShape[n, 
-\backslash
-[Xi]], {n, 2}]; Plot[coord[
-\backslash
-[Xi]], {
-\backslash
-[Xi], -1, 1}, ImageSize -> Small]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename inset/ele-o1-regionInterp.pdf
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-二阶一维形函数
-\end_layout
-
-\begin_layout Standard
-在一维有限元单元上添加中点，可以构造二阶形函数。二阶形函数可以由一阶形函数直接生成。首先，边中点形函数 
-\begin_inset Formula $N_{3}^{(2)}$
-\end_inset
-
- 可以由两个节点的一阶形函数生成，即
-\begin_inset Formula 
-\[
-N_{3}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}
-\]
-
-\end_inset
-
-节点的二阶形函数可以由 节点的一阶形函数，和中点的二阶形函数生成，即
-\begin_inset Formula 
-\[
-N_{i}^{(2)}=N_{i}^{(1)}-\frac{1}{2}N_{3}^{(2)},\quad i\in\{1,2\}
-\]
-
-\end_inset
-
-最后得到二阶形函数的表达式：
+，可以得到
 \begin_inset Formula 
 \begin{align*}
-\text{端点形函数：} & N_{1}^{(2)}=\frac{\xi(\xi-1)}{2}\\
-\text{端点形函数：} & N_{2}^{(2)}=\frac{\xi(\xi+1)}{2}\\
-\text{中点形函数：} & N_{3}^{(2)}=(1+\xi)(1-\xi)
+ & K_{\alpha\beta}^{e}=\frac{1}{\mu_{r}}\int_{\Omega^{e}}\left(\frac{\partial N_{\alpha}^{e}}{\partial x}\frac{\partial N_{\beta}^{e}}{\partial x}+\frac{\partial N_{\alpha}^{e}}{\partial y}\frac{\partial N_{\beta}^{e}}{\partial y}\right)\dd{\Omega}\\
+ & b_{\alpha}^{e}=\mu_{0}\int_{\Omega^{e}}J_{z}N_{\alpha}^{e}\dd{\Omega}
 \end{align*}
 
 \end_inset
 
-类似地，单元内点由插值得到
-\begin_inset Formula 
-\begin{equation}
-x=\sum_{i=1}^{n_{e}}N_{i}^{(2)}(\xi)x_{i},\quad\xi\in[-1,1]\label{eq:interp2d}
-\end{equation}
-
-\end_inset
-
-对内点的二阶形函数插值，给出二阶单元，二阶单元可以精确拟合二次曲线。例如下图，两端点纵坐标都是
-\begin_inset Formula $1$
-\end_inset
-
-，中点纵坐标是 
-\begin_inset Formula $2$
-\end_inset
-
-，二阶单元给出的插值曲线为：
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-nShape[1, 
-\backslash
-[Xi]_] := (
-\backslash
-[Xi] (
-\backslash
-[Xi] - 1))/2; nShape[2, 
-\backslash
-[Xi]_] := (
-\backslash
-[Xi] (
-\backslash
-[Xi] + 1))/2; nShape[3, 
-\backslash
-[Xi]_] := (1 + 
-\backslash
-[Xi]) (1 - 
-\backslash
-[Xi]); xi = {1, 1, 2}; coord[
-\backslash
-[Xi]_] := Sum[xi[[n]]*nShape[n, 
-\backslash
-[Xi]], {n, 3}]; Plot[coord[
-\backslash
-[Xi]], {
-\backslash
-[Xi], -1, 1}, ImageSize -> Small]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename inset/ele-o2-regionInterp.pdf
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-计算中经常会用到 几何坐标 和 等参坐标之间的转换，即
-\begin_inset Formula 
-\[
-J=\frac{\partial x}{\partial\xi}=\frac{\partial N_{i}^{e}}{\partial\xi}x_{i}
-\]
-
-\end_inset
-
-
+二维静磁场方程的形式和二维静电场方程的形式一样。
 \end_layout
 
 \begin_layout Section
-二维形函数
+轴对称静磁场
 \end_layout
 
 \begin_layout Standard
-由二维三角形单元顶点的三个坐标可以定义相应的一阶形函数：
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{(1)}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y\right),\\
- & N_{2}^{(1)}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y\right),\\
- & N_{3}^{(1)}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{2\Delta^{e}}\left(a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y\right).
-\end{align*}
-
+如果所研究的问题具有旋转对称性，可以沿着对称轴取一个截面在柱坐标下求解相应的电磁方程，即 
+\begin_inset Formula $r,z$
 \end_inset
 
-其中 
+ 平面。轴对称情况下，矢势在柱坐标下只有
+\begin_inset Formula $A_{\varphi}$
+\end_inset
+
+分量，相应的磁场可以用矢势表示为
 \begin_inset Formula 
 \[
-\Delta^{e}=\frac{1}{2}\det\left[\begin{array}{ccc}
-1 & x_{1}^{e} & y_{1}^{e}\\
-1 & x_{2}^{e} & y_{2}^{e}\\
-1 & x_{3}^{e} & y_{3}^{e}
-\end{array}\right]
+\sbf B=\nabla\times\sbf A=-\partial_{z}f_{\phi}\sbf e_{r}+\frac{1}{r}\partial_{r}\left(rf_{\phi}\right)\sbf e_{z}
 \]
 
 \end_inset
 
-
-\begin_inset Formula 
-\[
-\Delta_{1}=\frac{1}{2}\det\left[\begin{array}{ccc}
-1 & x & y\\
-1 & x_{2}^{e} & y_{2}^{e}\\
-1 & x_{3}^{e} & y_{3}^{e}
-\end{array}\right],\quad\Delta_{1}=\frac{1}{2}\det\left[\begin{array}{ccc}
-1 & x_{1}^{e} & y_{1}^{e}\\
-1 & x & y\\
-1 & x_{3}^{e} & y_{3}^{e}
-\end{array}\right],\quad\Delta_{3}=\frac{1}{2}\det\left[\begin{array}{ccc}
-1 & x_{1}^{e} & y_{1}^{e}\\
-1 & x_{2}^{e} & y_{2}^{e}\\
-1 & x & y
-\end{array}\right]
-\]
-
+如上所述，磁感应
+\begin_inset Formula $\sbf B$
 \end_inset
 
-二维形函数的等参坐标取值为 
-\begin_inset Formula $[0,1]$
+分布在
+\begin_inset Formula $r,z$
 \end_inset
 
-，一阶形函数可以用等参坐标表示为：
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{(1)}=1-\xi-\eta,\\
- & N_{2}^{(1)}=\xi\\
- & N_{3}^{(1)}=\eta
-\end{align*}
-
-\end_inset
-
-
+平面。
 \end_layout
 
-\begin_layout Example
-一阶形函数变换可以写成矩阵形式：
+\begin_layout Remark
+柱坐标下的旋度表示
 \begin_inset Formula 
 \begin{equation}
-\left\{ \begin{array}{c}
-L_{1}^{e}\\
-L_{2}^{e}\\
-L_{3}^{e}
-\end{array}\right\} =\frac{1}{2\Delta^{e}}\left[\begin{array}{ccc}
-x_{2}y_{3}-x_{3}y_{2} & y_{2}-y_{3} & x_{3}-x_{2}\\
-x_{3}y_{1}-x_{1}y_{3} & y_{3}-y_{1} & x_{1}-x_{3}\\
-x_{1}y_{2}-x_{2}y_{1} & y_{1}-y_{2} & x_{2}-x_{1}
-\end{array}\right]\left\{ \begin{array}{c}
-1\\
-x\\
-y
-\end{array}\right\} \label{eq:4.160}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-2\Delta^{e}=\det[J]=(y_{2}-y_{3})(x_{1}-x_{3})-(y_{3}-y_{1})(x_{3}-x_{2})
-\]
-
-\end_inset
-
-
-\begin_inset Formula $L_{j}^{e}$
-\end_inset
-
- 就是一阶三角形单元的形函数。逆变换矩阵为
-\begin_inset Formula 
-\begin{equation}
-\left\{ \begin{array}{c}
-1\\
-x\\
-y
-\end{array}\right\} =\left[\begin{array}{ccc}
-1 & 1 & 1\\
-x_{1}^{e} & x_{2}^{e} & x_{3}^{e}\\
-y_{1}^{e} & y_{2}^{e} & y_{3}^{e}
-\end{array}\right]\left\{ \begin{array}{c}
-L_{1}^{e}\\
-L_{2}^{e}\\
-L_{3}^{e}
-\end{array}\right\} .\label{eq:4.161}
+\nabla\times\sbf A=\left(\frac{1}{r}\partial_{\phi}A_{z}-\partial_{z}A_{\phi}\right)\sbf e_{r}+\left(\partial_{z}A_{r}-\partial_{r}A_{z}\right)\sbf e_{\phi}+\left[\frac{1}{r}\partial_{r}\left(rA_{\phi}\right)-\frac{1}{r}\partial_{\phi}A_{r}\right]\sbf e_{z}\label{eq:curl-cylin}
 \end{equation}
 
 \end_inset
@@ -7808,234 +9004,39 @@ L_{3}^{e}
 
 \end_layout
 
-\begin_layout Example
-雅可比矩阵可以给出 几何坐标 
-\begin_inset Formula $(x,y)$
+\begin_layout Standard
+另外需要注意的是，虽然在截面上划分的单元和二维情况下的划分完全一样。但实际上处理的有限元单元并不是一个平面单元，而是平面单元沿对称轴旋转 
+\begin_inset Formula $360$
 \end_inset
 
- 与 等参坐标 
-\begin_inset Formula $(\xi,\eta)$
-\end_inset
-
- 之间，微分的变换关系：
-\begin_inset Formula 
-\[
-[J]=\left[\begin{array}{cc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
-\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
-\end{array}\right]=\left[\begin{array}{cc}
--x_{1}+x_{2} & -y_{1}+y_{2}\\
--x_{1}+x_{3} & -y_{1}+y_{3}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\\
-\frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right)=[J]\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial x}\\
-\frac{\partial N_{i}^{e}}{\partial y}
-\end{array}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-二阶二维形函数
+ 度所形成的圆环，如图 3.1所示。
 \end_layout
 
 \begin_layout Standard
-在三角形单元各个边中点增加一个节点之后，可以构造出相应的二阶形函数，
-\begin_inset Note Note
-status collapsed
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
 
 \begin_layout Plain Layout
-Graphics[{ Line[{{-1, 0}, {1, 0}, {0, Sqrt[3]}, {-1, 0}}], PointSize[0.03],
- Point[{{0, 0}, {0.5, Sqrt[3]/2}, {-0.5, Sqrt[3]/2}}], Style[Text["1", {-1.1,
- 0}], 16], Style[Text["4", {0, -0.16}], 16], Style[Text["2", {1.1, 0}], 16],
- Style[Text["5", {0.62, Sqrt[3]/2}], 16], Style[Text["3", {0, Sqrt[3] + 0.1}],
- 16], Style[Text["6", {-0.62, Sqrt[3]/2}], 16] }, ImageSize -> Small]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename inset/ele-Tri6.pdf
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-边中点形函数 
-\begin_inset Formula $N_{i}^{(2)}$
-\end_inset
-
- 可以由两个节点的一阶形函数生成，即
-\begin_inset Formula 
-\begin{align*}
- & N_{4}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}\\
- & N_{5}^{(2)}=4N_{3}^{(1)}N_{2}^{(1)}\\
- & N_{6}^{(2)}=4N_{1}^{(1)}N_{3}^{(1)}
-\end{align*}
-
-\end_inset
-
-顶点的二阶形函数，可以由顶点的一阶形函数，和 邻接边中点的二阶形函数生成
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{(2)}=N_{1}^{(1)}-\frac{1}{2}[N_{4}^{(1)}+N_{6}^{(1)}]\\
- & N_{2}^{(2)}=N_{2}^{(1)}-\frac{1}{2}[N_{4}^{(1)}+N_{5}^{(1)}]\\
- & N_{3}^{(2)}=N_{3}^{(1)}-\frac{1}{2}[N_{5}^{(1)}+N_{6}^{(1)}]
-\end{align*}
-
-\end_inset
-
-最后可以得到
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{(2)}=\left(1-\xi-\eta\right)\left(1-2\xi-2\eta\right)\\
- & N_{2}^{(2)}=\xi\left(2\xi-1\right)\\
- & N_{3}^{(2)}=\eta\left(2\eta-1\right)\\
- & N_{4}^{(2)}=4\left(1-\xi-\eta\right)\xi\\
- & N_{5}^{(2)}=4\xi\eta\\
- & N_{6}^{(2)}=4\left(1-\xi-\eta\right)\eta
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-单元内点的坐标 
-\begin_inset Formula $(x,y)$
-\end_inset
-
- ，可以用 形函数 以及 节点处的坐标 
-\begin_inset Formula $\left(x_{i},y_{i}\right)$
-\end_inset
-
- 表示为
-\begin_inset Formula 
-\begin{align*}
- & x=\sum_{i}N_{i}^{e}\left(x,y\right)x_{i}\\
- & y=\sum_{i}N_{i}^{e}\left(x,y\right)y_{i}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-如图，对于曲线边界的几何区域，使用二阶形函数插值能给出贴合得更好的单元
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-nShape[1][
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := (1 - 
-\backslash
-[Xi] - 
-\backslash
-[Eta]) (1 - 2 
-\backslash
-[Xi] - 2 
-\backslash
-[Eta]); nShape[2][
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := 
-\backslash
-[Xi] (2 
-\backslash
-[Xi] - 1); nShape[3][
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := 
-\backslash
-[Eta] (2 
-\backslash
-[Eta] - 1);
+f
 \end_layout
 
 \begin_layout Plain Layout
-nShape[4][
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := 4 (1 - 
-\backslash
-[Xi] - 
-\backslash
-[Eta]) 
-\backslash
-[Xi]; nShape[5][
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := 4 
-\backslash
-[Xi] 
-\backslash
-[Eta]; nShape[6][
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := 4 (1 - 
-\backslash
-[Xi] - 
-\backslash
-[Eta]) 
-\backslash
-[Eta]; 
-\backslash
-[Delta] = 0.1;(*midpoint offset*) xi = { {-1, 0}, {1, 0}, {0, Sqrt[3]}, {0,
- 0 - 
-\backslash
-[Delta]}, {0.5 - 
-\backslash
-[Delta], Sqrt[3]/2}, {-(0.5 + 
-\backslash
-[Delta]), Sqrt[3]/2} }; coord[
-\backslash
-[Xi]_, 
-\backslash
-[Eta]_] := Sum[xi[[n]]*nShape[n][
-\backslash
-[Xi], 
-\backslash
-[Eta]], {n, 6}]; ParametricPlot[ coord[
-\backslash
-[Xi], 
-\backslash
-[Eta]], {
-\backslash
-[Xi], 0, 1}, {
-\backslash
-[Eta], 0, 1 - 
-\backslash
-[Xi]}, ImageSize -> Tiny]
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+轴对称单元对网格剖分的对应关系
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -8044,592 +9045,94 @@ nShape[4][
 \end_layout
 
 \begin_layout Standard
-\begin_inset Graphics
-	filename inset/ele-tri6-RegionIntep.png
-	scale 65
-
+在某个单元上的有限元泛函为（为了后续处理方便，
+\begin_inset Formula $\mathcal{F}^{e}$
 \end_inset
 
+的表达式右边乘了系数
+\begin_inset Formula $1/2\pi$
+\end_inset
 
-\end_layout
-
-\begin_layout Standard
-有限元计算中，经常用到下面公式所示的形函数积分性质：
+）
 \begin_inset Formula 
 \[
-\int_{\Omega^{e}}(L_{1}^{e})^{\ell}(L_{2}^{e})^{m}(L_{3}^{e})^{n}\dd{x}\dd{y}=\frac{\ell!m!n!}{(\ell+m+n+2)!}2\Delta^{e}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-三维形函数
-\end_layout
-
-\begin_layout Standard
-三维 四面体有限元 四个顶点的一阶 形函数定义为：
-\begin_inset Formula 
-\[
-N_{1}^{(1)}=\frac{V_{1}}{V^{e}},\quad N_{2}^{(1)}=\frac{V_{2}}{V^{e}},\quad N_{3}^{(1)}=\frac{V_{3}}{V^{e}},\quad N_{4}^{(1)}=\frac{V_{4}}{V^{e}},
+\mathcal{F}^{e}\left(\sbf A^{e}\right)=\frac{1}{2\pi}\int_{\Omega^{e}}\dd{\Omega}\left[\frac{1}{2}\frac{1}{\mu_{r}}\left(\nabla\times\sbf A^{e}\right)\cdot\left(\nabla\times\sbf A^{e}\right)-\mu_{0}\,\sbf J\cdot\sbf A^{e}\right]
 \]
 
 \end_inset
 
 其中
+\begin_inset Formula $\dd{\Omega}=r\dd{r}\dd{z}\dd{\varphi}$
+\end_inset
+
+，关于 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ 的积分给出
+\begin_inset Formula $2\pi$
+\end_inset
+
+因子，与前面的系数
+\begin_inset Formula $1/2\pi$
+\end_inset
+
+ 互相抵消。将 
+\begin_inset Formula $\sbf A^{e}=N_{i}^{e}A_{i}\sbf e_{\varphi}$
+\end_inset
+
+，电流 
+\begin_inset Formula $\sbf J=J_{\varphi}\sbf e_{\varphi}$
+\end_inset
+
+代入，
 \begin_inset Formula 
 \[
-V^{e}=\frac{1}{6}\det\left[\begin{array}{cccc}
-1 & x_{1}^{e} & y_{1}^{e} & z_{1}^{e}\\
-1 & x_{2}^{e} & y_{2}^{e} & z_{2}^{e}\\
-1 & x_{3}^{e} & y_{3}^{e} & z_{3}^{e}\\
-1 & x_{4}^{e} & y_{4}^{e} & z_{4}^{e}
-\end{array}\right]
+\mathcal{F}^{e}\left(\sbf A^{e}\right)=\sum_{i,j}^{n_{e}}\int_{\Omega^{e}}\dd{r}\dd{z}\left[\frac{1}{2}\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{\alpha}^{e}A_{\alpha}\right)\cdot\left(\nabla\times\sbf N_{\beta}^{e}A_{\beta}\right)-\mu_{0}\,\sbf J\cdot\sbf N_{\gamma}^{e}A_{\gamma}\right]
 \]
 
 \end_inset
 
-仿照二维情况，可以计算出 
-\begin_inset Formula $V_{i}$
+轴对称情况下，形函数 
+\begin_inset Formula $\sbf N_{i}^{e}=N_{i}^{e}(\rho,z)\sbf e_{\varphi}$
 \end_inset
 
-。例如
+，计算可以得到
 \begin_inset Formula 
 \[
-V_{1}=\frac{1}{6}\det\left[\begin{array}{cccc}
-1 & x & y & z\\
-1 & x_{2}^{e} & y_{2}^{e} & z_{2}^{e}\\
-1 & x_{3}^{e} & y_{3}^{e} & z_{3}^{e}\\
-1 & x_{4}^{e} & y_{4}^{e} & z_{4}^{e}
-\end{array}\right]
+\nabla\times\sbf N_{i}^{e}=-\partial_{z}N_{i}^{e}\sbf e_{r}+\frac{1}{r}\partial_{r}(rN_{i}^{e})\sbf e_{z}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Example
-三维形函数等参坐标取值范围 
-\begin_inset Formula $\xi,\eta,\zeta\in\left[0,1\right]$
+相应的 
+\begin_inset Formula $K_{ij}^{e}$
 \end_inset
 
-，一阶形函数可以用等参坐标表示为：
+ 矩阵和列向量 
+\begin_inset Formula $b_{i}^{e}$
+\end_inset
+
+ 可以分别表示为
 \begin_inset Formula 
 \begin{align*}
- & N_{1}^{(1)}=1-\xi-\eta-\zeta\\
- & N_{2}^{(1)}=\xi\\
- & N_{3}^{(1)}=\eta\\
- & N_{4}^{(1)}=\zeta
+ & K_{\alpha\beta}^{e}=\int_{\Gamma^{e}}\frac{1}{\mu_{r}}r\left[\partial_{z}N_{\alpha}^{e}\,\partial_{z}N_{\beta}^{e}+\left(\frac{N_{\alpha}^{e}}{r}+\partial_{r}N_{\alpha}^{e}\right)\left(\frac{N_{\beta}^{e}}{r}+\partial_{r}N_{\beta}^{e}\right)\right]\dd{r}\dd{z}\\
+ & b_{\alpha}^{e}=\mu_{0}J_{\varphi}\int_{\Gamma^{e}}N_{\alpha}^{e}r\dd{r}\dd{z}
 \end{align*}
 
 \end_inset
 
+柱坐标下的旋度见
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:curl-cylin"
+plural "false"
+caps "false"
+noprefix "false"
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-等参坐标 和 几何坐标 之间的变换关系，正变换为：
-\begin_inset Formula 
-\[
-\left[\begin{array}{c}
-1\\
-x\\
-y\\
-z
-\end{array}\right]=\left[\begin{array}{cccc}
-1 & 1 & 1 & 1\\
-x_{1} & x_{2} & x_{3} & x_{4}\\
-y_{1} & y_{2} & y_{3} & y_{4}\\
-z_{1} & z_{2} & z_{3} & z_{4}
-\end{array}\right]\left[\begin{array}{c}
-L_{1}^{e}\\
-L_{2}^{e}\\
-L_{3}^{e}\\
-L_{4}^{e}
-\end{array}\right],\quad\left[\begin{array}{c}
-L_{1}^{e}\\
-L_{2}^{e}\\
-L_{3}^{e}\\
-L_{4}^{e}
-\end{array}\right]=\left[\begin{array}{c}
-1-\xi-\eta-\zeta\\
-\xi\\
-\eta\\
-\zeta
-\end{array}\right]
-\]
-
-\end_inset
-
-这里按照常用的记号约定，也引入了 
-\begin_inset Formula $L_{i}^{e}$
-\end_inset
-
- 表示等参坐标。对应的 逆变换 为：
-\begin_inset Formula 
-\[
-\left[\begin{array}{c}
-L_{1}^{e}\\
-L_{2}^{e}\\
-L_{3}^{e}\\
-L_{4}^{e}
-\end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{cccc}
-a_{1} & b_{1} & c_{1} & d_{1}\\
-a_{2} & b_{2} & c_{2} & d_{2}\\
-a_{3} & b_{3} & c_{3} & d_{3}\\
-a_{4} & b_{4} & c_{4} & d_{4}
-\end{array}\right]\left[\begin{array}{c}
-1\\
-x\\
-y\\
-z
-\end{array}\right]
-\]
-
-\end_inset
-
-简记为：
-\begin_inset Formula 
-\begin{align*}
- & X_{\alpha}=T_{\alpha\beta}L_{\beta},\\
- & L_{\alpha}=T_{\alpha\beta}^{-1}X_{\beta}
-\end{align*}
-
-\end_inset
-
-其中 
-\begin_inset Formula $X=\left(1,x,y,z\right),$
-\end_inset
-
-
-\begin_inset Formula $L=\left(1-\xi-\eta-\zeta,\xi,\eta,\zeta\right)$
 \end_inset
 
 。
-\end_layout
-
-\begin_layout Example
-其中各系数的值为：
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccc}
-b_{1} & c_{1} & d_{1}\\
-b_{2} & c_{2} & d_{2}\\
-b_{3} & c_{3} & d_{3}\\
-b_{4} & c_{4} & d_{4}
-\end{array}\right]=\left[\begin{array}{ccc}
-y_{42}z_{32}-y_{32}z_{42} & x_{32}z_{42}-x_{42}z_{32} & x_{42}y_{32}-x_{32}y_{42}\\
-y_{31}z_{43}-y_{34}z_{13} & x_{43}z_{31}-x_{31}z_{43} & x_{31}y_{43}-x_{43}y_{31}\\
-y_{24}z_{14}-y_{14}z_{24} & x_{14}z_{24}-x_{24}z_{14} & x_{24}y_{14}-x_{14}y_{24}\\
-y_{13}z_{21}-y_{21}z_{13} & x_{21}z_{13}-x_{13}z_{21} & x_{13}y_{21}-x_{21}y_{13}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula $T$
-\end_inset
-
- 的第一列的值为：
-\begin_inset Formula 
-\[
-\left[\begin{array}{c}
-a_{1}\\
-a_{2}\\
-a_{3}\\
-a_{4}
-\end{array}\right]=\left[\begin{array}{c}
-x_{2}\left(y_{3}z_{4}-y_{4}z_{3}\right)+x_{3}\left(y_{4}z_{2}-y_{2}z_{4}\right)+x_{4}\left(y_{2}z_{3}-y_{3}z_{2}\right)\\
-x_{1}\left(y_{4}z_{3}-y_{3}z_{4}\right)+x_{3}\left(y_{1}z_{4}-y_{4}z_{1}\right)+x_{4}\left(y_{3}z_{1}-y_{1}z_{3}\right)\\
-x_{1}\left(y_{2}z_{4}-y_{4}z_{2}\right)+x_{2}\left(y_{4}z_{1}-y_{1}z_{4}\right)+x_{4}\left(y_{1}z_{2}-y_{2}z_{1}\right)\\
-x_{1}\left(y_{3}z_{2}-y_{2}z_{3}\right)+x_{2}\left(y_{1}z_{3}-y_{3}z_{1}\right)+x_{3}\left(y_{2}z_{1}-y_{1}z_{2}\right)
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\det\left[J\right]=6V^{e}=x_{21}\left(y_{23}z_{34}-y_{34}z_{23}\right)+x_{32}\left(y_{34}z_{12}-y_{12}z_{34}\right)+x_{43}\left(y_{12}z_{23}-y_{23}z_{12}\right).
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-由坐标的逆变换矩阵，可以计算形函数的梯度
-\begin_inset Formula 
-\[
-\left[\begin{array}{c}
-\nabla L_{1}^{e}\\
-\nabla L_{2}^{e}\\
-\nabla L_{3}^{e}\\
-\nabla L_{4}^{e}
-\end{array}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
-b_{1} & c_{1} & d_{1}\\
-b_{2} & c_{2} & d_{2}\\
-b_{3} & c_{3} & d_{3}\\
-b_{4} & c_{4} & d_{4}
-\end{array}\right]\left[\begin{array}{c}
-\sbf e_{x}\\
-\sbf e_{y}\\
-\sbf e_{z}
-\end{array}\right]
-\]
-
-\end_inset
-
-约定：
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $M=\left[b_{i},c_{i},d_{i}\right]$
-\end_inset
-
-矩阵；希腊字母表示
-\begin_inset Formula $\{1,2,3,4\}$
-\end_inset
-
-，对应节点数；
-\end_layout
-
-\begin_layout Enumerate
-拉丁字母表示 
-\begin_inset Formula $\{1,2,3\}$
-\end_inset
-
-，对应三维空间坐标
-\begin_inset Formula $x,y,z$
-\end_inset
-
-：
-\end_layout
-
-\begin_layout Standard
-则 
-\begin_inset Formula $\nabla L^{e}$
-\end_inset
-
- 的各分量形式为：
-\begin_inset Formula 
-\begin{equation}
-\partial_{i}L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha i}}\label{eq:shapeGrad}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-雅可比矩阵等式
-\end_layout
-
-\begin_layout Standard
-在每个单元上，根据 单元顶点的坐标组，定义了 
-\color blue
-几何坐标
-\color inherit
-（物理时空坐标）和 
-\color blue
-等参坐标
-\color inherit
- 之间的变换关系。
-\end_layout
-
-\begin_layout Enumerate
-等参坐标组 
-\begin_inset Formula $\left\{ \xi\right\} $
-\end_inset
-
-，对每个单元形式上相同，实际上依赖于 全局几何坐标 
-\begin_inset Formula $\{X\}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-对于确定类型的单元，坐标变换矩阵 
-\begin_inset Formula $T$
-\end_inset
-
- 由单元决定，而单元由顶点决定，因此通过 顶点坐标
-\begin_inset Formula $\{X_{i}\}$
-\end_inset
-
-，可以参数出 雅可比矩阵 
-\begin_inset Formula $[J]=\partial X/\partial\xi$
-\end_inset
-
-；
-\end_layout
-
-\begin_layout Enumerate
-单元内点的几何坐标总是参数化成 
-\begin_inset Formula $X=\sum_{i}N_{i}^{e}\left(x,y\right)X_{i}$
-\end_inset
-
-，形函数 
-\begin_inset Formula $\{N_{i}^{e}\}$
-\end_inset
-
- 可以取不同 order，则对应的雅可比 
-\begin_inset Formula $[J]$
-\end_inset
-
- 取不同的形式。
-\end_layout
-
-\begin_layout Enumerate
-对于确定 order 的形函数 
-\begin_inset Formula $\{N_{i}^{e}\}$
-\end_inset
-
-，除了顶点坐标组 
-\begin_inset Formula $\{X_{i}\}$
-\end_inset
-
- 带来的区别，
-\begin_inset Formula $[J]$
-\end_inset
-
- 中其它系数是固定的，只和 
-\begin_inset Formula $\{N_{i}^{e}\}$
-\end_inset
-
- 在等参系中的函数形式有关。
-\end_layout
-
-\begin_layout Standard
-因此变换的 雅可比矩阵 可以通过 各个顶点
-\end_layout
-
-\begin_layout Standard
-可以计算出在三维直角坐标系中，雅可比矩阵为：
-\begin_inset Formula 
-\begin{equation}
-\left[J\right]=\left[\begin{array}{ccc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
-\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}\\
-\frac{\partial x}{\partial\zeta} & \frac{\partial y}{\partial\zeta} & \frac{\partial z}{\partial\zeta}
-\end{array}\right]=-\left[\begin{array}{ccc}
-x_{12} & y_{12} & z_{12}\\
-x_{13} & y_{13} & z_{13}\\
-x_{14} & y_{14} & z_{14}
-\end{array}\right].\label{eq:jacobi3d}
-\end{equation}
-
-\end_inset
-
-其中记号约定为： 
-\begin_inset Formula $x_{12}=x_{1}-x_{2}$
-\end_inset
-
-，其他类似。雅可比矩阵的逆矩阵为
-\begin_inset Formula 
-\[
-\left[J^{-1}\right]=\frac{1}{\det\left[J\right]}\left[\begin{array}{ccc}
-b_{2} & b_{3} & b_{4}\\
-c_{2} & c_{3} & c_{4}\\
-d_{2} & d_{3} & d_{4}
-\end{array}\right].
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-令 
-\begin_inset Formula $r_{\alpha j}$
-\end_inset
-
- 表示四面体单元中，节点的坐标矩阵，
-\begin_inset Formula 
-\[
-r_{\alpha j}=\left[\begin{array}{ccc}
-x_{1} & y_{1} & z_{1}\\
-x_{2} & y_{2} & z_{2}\\
-x_{3} & y_{3} & z_{3}\\
-x_{4} & y_{4} & z_{4}
-\end{array}\right]
-\]
-
-\end_inset
-
-根据 雅可比矩阵 的表达式 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:jacobi3d"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，可以计算出：
-\begin_inset Formula 
-\[
-\frac{\partial\det[J]}{\partial r_{\alpha j}}={\color{blue}M_{\alpha j}},\quad{\color{blue}M_{\alpha j}}=\left[\begin{array}{ccc}
-b_{1} & c_{1} & d_{1}\\
-b_{2} & c_{2} & d_{2}\\
-b_{3} & c_{3} & d_{3}\\
-b_{4} & c_{4} & d_{4}
-\end{array}\right]
-\]
-
-\end_inset
-
- 考虑到
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:shapeGrad"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 
-\begin_inset Formula $\partial_{i}L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha i}}$
-\end_inset
-
-，因此有
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial\det[J]}{\partial r_{\alpha j}}=\det[J]\,\partial_{j}L_{\alpha}^{e}\label{eq:xl6.7}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-根据
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:jacobi3d"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，计算出雅可比逆矩阵的偏导
-\begin_inset Formula 
-\[
-\frac{\partial[J^{-1}]}{\partial\sbf r_{\alpha}}=-[J^{-1}]\frac{\partial J}{\partial\sbf r_{\alpha}}[J^{-1}]=-\frac{1}{\det[J]}\left[\begin{array}{c}
-b_{\alpha}\\
-c_{\alpha}\\
-d_{\alpha}
-\end{array}\right]\left[\begin{array}{ccc}
-\sbf e_{x} & \sbf e_{y} & \sbf e_{z}\end{array}\right][J^{-1}]
-\]
-
-\end_inset
-
-同样引入 节点坐标矩阵 
-\begin_inset Formula $r_{\alpha j}=\left[\begin{array}{ccc}
-x_{1} & y_{1} & z_{1}\\
-x_{2} & y_{2} & z_{2}\\
-x_{3} & y_{3} & z_{3}\\
-x_{4} & y_{4} & z_{4}
-\end{array}\right]$
-\end_inset
-
-，可以写成分量形式
-\begin_inset Formula 
-\begin{align}
-\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}=-\partial_{k}L_{\alpha}^{e}\;J_{ij}^{-1}.\label{eq:xl6.8}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-推导是在 三维直角坐标系 中进行的，即
-\begin_inset Formula 
-\[
-\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}\sbf e_{i}=-\partial_{k}L_{\alpha}^{e}\;\sbf e_{i}J_{ij}^{-1},\quad\sbf e_{i}=(\sbf e_{x},\sbf e_{y},\sbf e_{z}).
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Edge单元
-\end_layout
-
-\begin_layout Standard
-在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
-在棱边 
-\begin_inset Formula $i$
-\end_inset
-
- 上可以定义形函数：
-\begin_inset Formula 
-\[
-\sbf N_{i}^{e}=\left(L_{i_{1}}^{e}\nabla L_{i_{2}}^{e}-L_{i_{2}}^{e}\nabla L_{i_{1}}^{e}\right)\ell_{i}^{e}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $i_{1}$
-\end_inset
-
-与 
-\begin_inset Formula $i_{2}$
-\end_inset
-
-为与棱边
-\begin_inset Formula $i$
-\end_inset
-
- 邻接的两个顶点。
-\begin_inset Formula $\ell_{i}^{e}$
-\end_inset
-
- 的绝对值等于棱边的长度，正负号由节点的总体编号决定。形函数 
-\begin_inset Formula $\sbf N_{i}^{e}$
-\end_inset
-
- 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
 \end_layout
 
 \begin_layout Chapter
