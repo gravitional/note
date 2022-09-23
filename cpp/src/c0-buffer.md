@@ -10,7 +10,7 @@
 
 [如何系统学习C++](https://mp.weixin.qq.com/s/WW_X12bTm94iaCgWBgYtJw)
 
-+ ZhengLi,P84; `默认参数` 需要在原型声明中给出, 定义中不能再出现 `默认形参值`
++ ZhengLi,P84; `默认参数` 需要在 `原型声明` 中给出, `定义` 中不能再出现 `默认形参值`
 
 + ZhengLi,P35; 运算符优先级, 最高的是
 
