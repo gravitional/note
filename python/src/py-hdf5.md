@@ -14,17 +14,17 @@ HDF5 拥有一系列的优异特性, 使其特别适合进行大量科学数据�
 
 ## HDF5 结构
 
-`HDF5` 文件一般以 .h5 或者 .hdf5 作为后缀名, 需要专门的软件才能打开预览文件的内容.
-HDF5 文件结构中有 2 primary objects: Groups 和 Datasets.
+`HDF5` 文件一般以 `.h5` 或者 `.hdf5` 作为后缀名, 需要专门的软件才能打开预览文件的内容.
+`HDF5` 文件结构中有 2 primary objects: `Groups` 和 `Datasets`.
 
-+ Groups 就类似于文件夹, 每个 HDF5 文件其实就是根目录 (root) group'/',
++ `Groups` 就类似于文件夹, 每个 `HDF5` 文件其实就是根目录 (root) group `/`,
 可以看成目录的容器, 其中可以包含一个或多个 dataset 及其它的 group.
-+ Datasets 类似于 NumPy 中的数组 array, 可以当作数组的数据集合 .
++ `Datasets` 类似于 `NumPy` 中的数组 `array`, 可以当作数组的数据集合 .
 
-每个 dataset 可以分成两部分: 
+每个 `dataset` 可以分成两部分: 
 
-+ 原始数据 (raw) data values 和 
-+ 元数据 metadata (a set of data that describes and gives information about other data => raw data).
++ `原始数据` (raw) data values 和 
++ `元数据` metadata (a set of data that describes and gives information about other data => raw data).
 
 ```c
 +-- Dataset

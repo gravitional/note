@@ -209,8 +209,8 @@ xvalue
 根据这两个特性, 可以将表达式分成 4 类:
 
 + 唯一, 不能移动 - 这类表达式在 C++ 中被称为 `lvalue`.
-+ 唯一, 可以移动 - 这类表达式在 C++ 中被成为 xvalue(expiring value).
-+ 不唯一, 不可移动 - 这类表达式在 C++ 中被成为 prvalue(pure rvalue).
++ 唯一, 可以移动 - 这类表达式在 C++ 中被成为 `xvalue`(expiring value).
++ 不唯一, 不可移动 - 这类表达式在 C++ 中被成为 `prvalue`(pure rvalue).
 + 不唯一, 不可移动 -C++ 中不存在这类表达式.
 
 简单总结一下这些 value categories 之间的关系:
