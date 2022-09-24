@@ -1,13 +1,15 @@
 # 工厂方法
 
+设计模式中的工厂方法
+
 [工厂方法](https://www.liaoxuefeng.com/wiki/1252599548343744/1281319170474017)
 
->定义一个用于创建对象的 `接口`(interface), 让子类决定实例化哪一个类.
->Factory Method使一个类的实例化延迟到其子类.
+>定义一个用于创建对象的 `接口`(interface), 让 `子类` 决定实例化哪一个`类`.
+>Factory Method 使一个类的 `实例化` 延迟到其 `子类`.
 
-工厂方法即Factory Method, 是一种对象创建型模式.
-
-工厂方法的目的是使得创建对象和使用对象是分离的, 并且客户端总是引用抽象工厂和抽象产品:
+工厂方法即 Factory Method, 是一种 `对象创建型` 模式.
+工厂方法的目的是使得 `创建对象` 和 `使用对象` 是分离的,
+并且客户端总是引用 `抽象工厂` 和 `抽象产品`:
 
 <pre class="ascii"><code class="language-ascii"
 style="font-family: JetBrainsMono, &quot;Courier New&quot;, Consolas, monospace;">
@@ -21,13 +23,16 @@ style="font-family: JetBrainsMono, &quot;Courier New&quot;, Consolas, monospace;
 └─────────────┘      └─────────────┘
 </code></pre>
 
-我们以具体的例子来说: 假设我们希望实现一个解析字符串到Number的Factory, 可以定义如下:
+我们以具体的例子来说: 假设我们希望实现一个解析 `字符串` 到 `Number` 的Factory,
+可以定义如下:
 
 ```java
-public interface NumberFactory { Number parse(String s); }
+public interface NumberFactory {
+    Number parse(String s);
+    }
 ```
 
-有了工厂接口, 再编写一个工厂的实现类:
+有了工厂接口, 再编写一个工厂的 `实现类`:
 
 ```java
 public class NumberFactoryImpl implements NumberFactory {
@@ -64,20 +69,18 @@ Number result = factory.parse("123.456");
 这样做的好处是允许创建产品的代码 `独立地变换`, 而不会影响到 `调用方`.
 
 有的童鞋会问: 一个简单的 `parse()` 需要写这么复杂的工厂吗?
-实际上大多数情况下我们并不需要 `抽象工厂`,
-而是通过 `静态方法` 直接返回产品, 即:
+实际上大多数情况下我们并不需要 `抽象工厂`, 而是通过 `静态方法` 直接返回产品, 即:
 
 ```java
 public class NumberFactory {
     public static Number parse(String s) {
-        return new
-    BigDecimal(s);
+        return new BigDecimal(s);
     }
 }
 ```
 
 这种简化的使用 `静态方法` 创建产品的方式称为 `静态工厂方法`(Static Factory Method).
-静态工厂方法广泛地应用在Java标准库中. 例如:
+静态工厂方法广泛地应用在 Java 标准库中. 例如:
 
 ```java
 Integer n = Integer.valueOf(100);
