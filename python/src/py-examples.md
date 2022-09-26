@@ -9,7 +9,6 @@
 import h5py
 import numpy as np
 
-
 def main():
     # ===========================================================================
     # 本地保存文件的名称
@@ -26,8 +25,7 @@ def main():
     # Save and exit the file
     f.close()
 
-
-# 递归函数， 遍历所有节点
+# 递归函数,  遍历所有节点
 def my_iter(name_str, d, count):
     if dataq(d):  # 如果是 dataset 类型
         print("{}{} is Dataset:".format("--" * count, name_str))  # 打印当前节点名称
@@ -48,10 +46,8 @@ def my_iter(name_str, d, count):
     else:
         print("\n{}{} is Group, it has Nothing".format("<<" * count, name_str))
 
-
 def dataq(data):
     return hasattr(data, "size")
-
 
 if __name__ == "__main__":
     main()
