@@ -1,6 +1,6 @@
 # mpi 对等模式
 
-[对等模式（实现Jacobi迭代的并行计算）](https://zhuanlan.zhihu.com/p/358530365)
+[对等模式(实现Jacobi迭代的并行计算)](https://zhuanlan.zhihu.com/p/358530365)
 
 本部分内容将分为两章介绍两种基本的并行程序设计模式, 对等模式和主从模式. 顾名思义, 对等模式
 即在设计算法时将各进程的地位视为相等, 主从模式则把各进程的地位视作不相等, 有主进程和从进程
@@ -12,7 +12,7 @@
 
 由于时间原因, 本文的伪代码是使用Fortran写的, 之后会补充上C的版本. 本文尽量使用最常规的语法
 规则去写, 因此不论更擅长哪门编程语言, 应该都能在伪代码中看到其并行算法的思想. 如果你更擅长
-使用C语言, 可以尝试参考结尾的Fortran代码用C语言进行改写. 
+使用C语言, 可以尝试参考结尾的Fortran代码用C语言进行改写.
 
 ## Jacobi迭代算法介绍
 
@@ -44,7 +44,7 @@ program Jacobi
 ```
 
 上述的伪代码可以看出, 在同一轮迭代中, 计算任意一点之间都是相互独立的, 代码的局部性很好, 在
-这种情况下, 就很适合把代码改成并行来提速. 下文将一步步从串行代码改写为并行代码. 
+这种情况下, 就很适合把代码改成并行来提速. 下文将一步步从串行代码改写为并行代码.
 
 ## MPI编写Jacobi迭代算法
 
@@ -61,22 +61,22 @@ program Jacobi
 的可读性, 在每一块的左右边界各加上一列.
 
 ```fortran
-! 进程0-2向右侧的邻居接收数据 
-if(myid<3) then 
-    call MPI_RECV(A(1,mysize+2),totalsize,MPI_REAL,myid+1,10,MPI_COMM_WORLD,status,ierr) 
-end if 
-! 进程1-3向左侧的邻居发送数据 
-if(myid>0) then 
-    call MPI_SEND(A(1,2),totalsize,MPI_REAL,myid-1,10,MPI_COMM_WORLD,ierr) 
-end if 
-! 进程0-2向右侧的邻居发送数据 
-if(myid<3) then 
-    call MPI_SEND(A(1,mysize+1),totalsize,MPI_REAL,myid+1,10,MPI_COMM_WORLD,ierr) 
-end if 
-! 进程1-3向左侧的邻居接收数据 
-if(myid>0) then 
-    call MPI_RECV(A(1,1),totalsize,MPI_REAL,myid-1,10,MPI_COMM_WORLD,status,ierr) 
-end if 
+! 进程0-2向右侧的邻居接收数据
+if(myid<3) then
+    call MPI_RECV(A(1,mysize+2),totalsize,MPI_REAL,myid+1,10,MPI_COMM_WORLD,status,ierr)
+end if
+! 进程1-3向左侧的邻居发送数据
+if(myid>0) then
+    call MPI_SEND(A(1,2),totalsize,MPI_REAL,myid-1,10,MPI_COMM_WORLD,ierr)
+end if
+! 进程0-2向右侧的邻居发送数据
+if(myid<3) then
+    call MPI_SEND(A(1,mysize+1),totalsize,MPI_REAL,myid+1,10,MPI_COMM_WORLD,ierr)
+end if
+! 进程1-3向左侧的邻居接收数据
+if(myid>0) then
+    call MPI_RECV(A(1,1),totalsize,MPI_REAL,myid-1,10,MPI_COMM_WORLD,status,ierr)
+end if
 ```
 
 其中, MPI_RECV和MPI_SEND的第一个参数是所接收或传递的数组的起始位置, 而第二个参数是数组的长
@@ -136,12 +136,12 @@ end if
 程3的情况, 该部分通信可写成如下形式.
 
 ```fortran
-do i=1,steps 
-! 从左向右传递数据 
-    call MPI_SENDRECV(A(1,mysize+1),totalsize,MPI_REAL,myid+1,10,A(1,1),totalsize,MPI_REAL,MYID-1,10,MPI_COMM_WORLD,status,ierr) 
-! 从右向左传递数据 
-    call MPI_SENDRECV(A(1,2),totalsize,MPI_REAL,myid-1,10,A(1,mysize+2),totalsize,MPI_REAL,myid+1,10,MPI_COMM_WORLD,status,ierr) 
-end do 
+do i=1,steps
+! 从左向右传递数据
+    call MPI_SENDRECV(A(1,mysize+1),totalsize,MPI_REAL,myid+1,10,A(1,1),totalsize,MPI_REAL,MYID-1,10,MPI_COMM_WORLD,status,ierr)
+! 从右向左传递数据
+    call MPI_SENDRECV(A(1,2),totalsize,MPI_REAL,myid-1,10,A(1,mysize+2),totalsize,MPI_REAL,myid+1,10,MPI_COMM_WORLD,status,ierr)
+end do
 ```
 
 能看出来代码的简洁程度立刻就提升了, 然而我们还需要处理进程0和进程3这两个特殊情况. 有两种思
@@ -156,20 +156,20 @@ MPI_PROC_NULL是一个假想的进程, 其存在有助于编写时的方便. 当
 边进行记录.
 
 ```fortran
-if(myid > 0) then 
-    left=myid-1 
-else 
-    left=MPI_PROC_NULL 
-end if 
-if(myid < 3) then 
-    right=myid+1 
-else 
-    right=MPI_PROC_NULL 
-end if 
-do i=1,steps 
-    call MPI_SENDRECV(A(1,mysize+1),totalsize,MPI_REAL,right,tag1,A(1,1),totalsize,MPI_REAL,left,tag1,MPI_COMM_WORLD,status,ierr) 
-    call MPI_SENDRECV(A(1,2),totalsize,MPI_REAL,left,tag2,A(1,mysize+2),totalsize,MPI_REAL,right,tag2,MPI_COMM_WORLD,status,ierr) 
-end do 
+if(myid > 0) then
+    left=myid-1
+else
+    left=MPI_PROC_NULL
+end if
+if(myid < 3) then
+    right=myid+1
+else
+    right=MPI_PROC_NULL
+end if
+do i=1,steps
+    call MPI_SENDRECV(A(1,mysize+1),totalsize,MPI_REAL,right,tag1,A(1,1),totalsize,MPI_REAL,left,tag1,MPI_COMM_WORLD,status,ierr)
+    call MPI_SENDRECV(A(1,2),totalsize,MPI_REAL,left,tag2,A(1,mysize+2),totalsize,MPI_REAL,right,tag2,MPI_COMM_WORLD,status,ierr)
+end do
 ```
 
 ## 总结
@@ -181,86 +181,86 @@ MPI_SENDRECV函数, 并介绍了虚拟进程的概念. 初学者可以试着结�
 通过实践, 我们会发现下面的代码在输出结果时, 各进程输出各自的矩阵A, 在时间顺序上是不确定的,
 打印出来的矩阵A是乱序的. 因为各进程计算的速度是不确定的, 先计算完的进程就先执行输出语句.
 若想按顺序完整的输出最终的矩阵A, 需要将各个进程中的结果汇总到一个进程中, 由一个进程负责输
-出, 这就涉及到了主从进程的思想, 下一章将用矩阵相乘这一简单的例子来讲解主从模式.  
+出, 这就涉及到了主从进程的思想, 下一章将用矩阵相乘这一简单的例子来讲解主从模式.
 
 ## 附录
 
-用Fortran90实现的完整代码 
+用Fortran90实现的完整代码
 
 ```fortran
-program main 
-    use mpi 
-    implicit none 
-    integer,parameter :: steps = 10 
-    integer,parameter :: totalsize = 16 
-    integer,parameter :: mysize = 4 
-    integer :: n,myid,numprocs,i,j,rc 
-    integer :: left,right,tag1,tag2 
-    real :: A(totalsize,mysize+2),B(totalsize,mysize+2) 
-    integer :: begin_col,end_col,ierr 
-    integer :: status(MPI_STATUS_SIZE) 
-    call MPI_INIT(ierr) 
-    call MPI_COMM_RANK(MPI_COMM_WORLD,myid,ierr) 
-    call MPI_COMM_SIZE(MPI_COMM_WORLD,numprocs,ierr) 
-    print *, "Process ", myid,"of ",numprocs,"is alive!" 
-    do j=1,mysize+2 
-        do i=1,totalsize 
-            A(i,j)=0.0 
-        end do 
-    end do 
-    if(myid==0) then 
-        do i=1,totalsize 
-            A(i,2)=8.0 
-        end do 
-    end if 
-    if(myid==3) then 
-        do i=1,totalsize 
-            A(i,mysize+1)=8.0 
-        end do 
-    end if 
-    do i=1,mysize+2 
-        A(1,i)=8.0 
-        A(totalsize,i)=8.0 
-    end do 
-    if(myid > 0) then 
-        left=myid-1 
-    else 
-        left=MPI_PROC_NULL 
-    end if 
-    if(myid < 3) then 
-        right=myid+1 
-    else 
-        right=MPI_PROC_NULL 
-    end if 
-    tag1=3 
-    tag2=4 
-    do n=1,steps 
-        call MPI_SENDRECV(A(1,mysize+1),totalsize,MPI_REAL,right,tag1,& 
-                    A(1,1),totalsize,MPI_REAL,left,tag1,MPI_COMM_WORLD,status,ierr) 
-        call MPI_SENDRECV(A(1,2),totalsize,MPI_REAL,left,tag2,& 
-                    A(1,mysize+2),totalsize,MPI_REAL,right,tag2,MPI_COMM_WORLD,status,ierr) 
-        begin_col=2 
-        end_col=mysize+1 
-        if(myid==0) then 
-            begin_col=3 
-        end if 
-        if(myid==3) then 
-            end_col=mysize 
-        end if 
-        do j=begin_col,end_col 
-            do i=2,totalsize-1 
-                B(i,j)=(A(i,j+1)+A(i,j-1)+A(i+1,j)+A(i-1,j))*0.25 
-            end do 
-        end do 
-        do j=begin_col,end_col 
-            do i=2,totalsize-1 
-                A(i,j)=B(i,j) 
-            end do 
-        end do 
-    end do 
-    do i=2,totalsize-1 
-        print *, myid,(a(i,j),j=begin_col,end_col) 
-    end do 
-    call MPI_FINALIZE(rc) 
+program main
+    use mpi
+    implicit none
+    integer,parameter :: steps = 10
+    integer,parameter :: totalsize = 16
+    integer,parameter :: mysize = 4
+    integer :: n,myid,numprocs,i,j,rc
+    integer :: left,right,tag1,tag2
+    real :: A(totalsize,mysize+2),B(totalsize,mysize+2)
+    integer :: begin_col,end_col,ierr
+    integer :: status(MPI_STATUS_SIZE)
+    call MPI_INIT(ierr)
+    call MPI_COMM_RANK(MPI_COMM_WORLD,myid,ierr)
+    call MPI_COMM_SIZE(MPI_COMM_WORLD,numprocs,ierr)
+    print *, "Process ", myid,"of ",numprocs,"is alive!"
+    do j=1,mysize+2
+        do i=1,totalsize
+            A(i,j)=0.0
+        end do
+    end do
+    if(myid==0) then
+        do i=1,totalsize
+            A(i,2)=8.0
+        end do
+    end if
+    if(myid==3) then
+        do i=1,totalsize
+            A(i,mysize+1)=8.0
+        end do
+    end if
+    do i=1,mysize+2
+        A(1,i)=8.0
+        A(totalsize,i)=8.0
+    end do
+    if(myid > 0) then
+        left=myid-1
+    else
+        left=MPI_PROC_NULL
+    end if
+    if(myid < 3) then
+        right=myid+1
+    else
+        right=MPI_PROC_NULL
+    end if
+    tag1=3
+    tag2=4
+    do n=1,steps
+        call MPI_SENDRECV(A(1,mysize+1),totalsize,MPI_REAL,right,tag1,&
+                    A(1,1),totalsize,MPI_REAL,left,tag1,MPI_COMM_WORLD,status,ierr)
+        call MPI_SENDRECV(A(1,2),totalsize,MPI_REAL,left,tag2,&
+                    A(1,mysize+2),totalsize,MPI_REAL,right,tag2,MPI_COMM_WORLD,status,ierr)
+        begin_col=2
+        end_col=mysize+1
+        if(myid==0) then
+            begin_col=3
+        end if
+        if(myid==3) then
+            end_col=mysize
+        end if
+        do j=begin_col,end_col
+            do i=2,totalsize-1
+                B(i,j)=(A(i,j+1)+A(i,j-1)+A(i+1,j)+A(i-1,j))*0.25
+            end do
+        end do
+        do j=begin_col,end_col
+            do i=2,totalsize-1
+                A(i,j)=B(i,j)
+            end do
+        end do
+    end do
+    do i=2,totalsize-1
+        print *, myid,(a(i,j),j=begin_col,end_col)
+    end do
+    call MPI_FINALIZE(rc)
 end program
 ```

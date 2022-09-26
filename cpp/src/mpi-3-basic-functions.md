@@ -1,6 +1,6 @@
 # MPI的6个基本函数
 
-[两小时入门MPI与并行计算（三）：MPI的6个基本函数](https://zhuanlan.zhihu.com/p/357551507)
+[两小时入门MPI与并行计算(三): MPI的6个基本函数](https://zhuanlan.zhihu.com/p/357551507)
 
 本章讲解MPI的6个基本函数, 掌握了这六个基本函数, 就能开始写一个MPI程序了. 考虑到读者可能有
 人擅长C++, 有人擅长Fortran. 因此在讲这些函数接口时, 我会将两种语言的接口和参数类型都附上.
@@ -22,9 +22,9 @@ Fortran版本调用时不用加任何参数, 而C和C++需要将main函数里的
 数的主程序时, 应该加上这两个形参.
 
 ```cpp
-int main(int *argc,char* argv[]) 
-{ 
-    MPI_Init(&argc,&argv); 
+int main(int *argc,char* argv[])
+{
+    MPI_Init(&argc,&argv);
 }
 ```
 
@@ -36,14 +36,14 @@ int main(int *argc,char* argv[])
 
 ```cpp
 call MPI_Finalize(ierr) # Fortran
-MPI_Finalize() //C++ 
+MPI_Finalize() //C++
 ```
 
 ## MPI_COMM_RANK
 
 ```cpp
-call MPI_COMM_RANK(comm, rank) 
-int MPI_Comm_Rank(MPI_Comm comm, int *rank) 
+call MPI_COMM_RANK(comm, rank)
+int MPI_Comm_Rank(MPI_Comm comm, int *rank)
 ```
 
 该函数是获得当前进程的进程标识, 如进程0在执行该函数时, 可以获得返回值0. 可以看出该函数接口
@@ -58,61 +58,62 @@ int MPI_Comm_Rank(MPI_Comm comm, int *rank)
 比如, 让 `进程0` 输出 `Hello`, 让 `进程1` 输出 `Hi` 就可以写成如下方式.
 
 ```fortran
-Program main 
+Program main
     use mpi
-    implicit none 
-    integer :: myid 
-    MPI_INIT() 
-    call MPI_COMM_RANK(MPI_COMM_WOLRD,myid) 
-    if (myid==0) then 
-        print *, "Hello!" 
-    end if 
-    if (myid==1) 
-        print *, "Hi!" 
-    end if 
-    MPI_FINALIZE() 
+    implicit none
+    integer :: myid
+    MPI_INIT()
+    call MPI_COMM_RANK(MPI_COMM_WOLRD,myid)
+    if (myid==0) then
+        print *, "Hello!"
+    end if
+    if (myid==1)
+        print *, "Hi!"
+    end if
+    MPI_FINALIZE()
 end Program
 ```
 
 C和C++版本如下
 
 ```cpp
-#include "mpi.h"
-int main(int *argc,char* argv[]) 
-{ 
-    int myid; 
-    MPI_Init(&argc,&argv); 
-    MPI_Comm_Rank(MPI_COMM_WORLD,&myid); 
-    if(myid==0) 
-    { 
-        printf("Hello!"); 
-    } 
-    if(myid==1) 
-    { 
-        printf("Hi!"); 
-    } 
-    MPI_Finalize(); 
-} 
+#include <iostream>
+#include <mpi.h>
+int main(int argc, char* argv[])
+{
+    int myid;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &myid);
+    if (myid == 0)
+    {
+        printf("Hello!");
+    }
+    if (myid == 1)
+    {
+        printf("Hi!");
+    }
+    MPI_Finalize();
+}
 ```
 
 ## MPI_COMM_SIZE
 
-该函数是获取该通信域内的总进程数, 
+该函数是获取该通信域内的总进程数,
 如果通信域为MP_COMM_WORLD, 即获取总进程数, 使用方法和MPI_COMM_RANK相近.
 
 ```cpp
-MPI_COMM_SIZE(comm, size) 
-int MPI_Comm_Size(MPI_Comm, int *size) 
+MPI_COMM_SIZE(comm, size)
+int MPI_Comm_Size(MPI_Comm, int *size)
 ```
 
 ## MPI_SEND
 
-该函数为发送函数, 用于进程间发送消息, 
+该函数为发送函数, 用于进程间发送消息,
 如进程0计算得到的结果A, 需要传给进程1, 就需要调用该函数.
 
 ```cpp
-call MPI_SEND(buf, count, datatype, dest, tag, comm) 
-int MPI_Send(type* buf, int count, MPI_Datatype, int dest, int tag, MPI_Comm comm) 
+call MPI_SEND(buf, count, datatype, dest, tag, comm)
+int MPI_Send(type* buf, int count, MPI_Datatype, int dest, int tag, MPI_Comm comm)
 ```
 
 该函数参数过多, 不过这些参数都很有必要存在.
@@ -129,11 +130,11 @@ int MPI_Send(type* buf, int count, MPI_Datatype, int dest, int tag, MPI_Comm com
 该函数为MPI的接收函数, 需要和MPI_SEND成对出现.
 
 ```cpp
-call MPI_RECV(buf, count, datatype, source, tag, comm，status) 
-int MPI_Recv(type* buf, int count, MPI_Datatype, int source, int tag, MPI_Comm comm, MPI_Status *status) 
+call MPI_RECV(buf, count, datatype, source, tag, comm, status)
+int MPI_Recv(type* buf, int count, MPI_Datatype, int source, int tag, MPI_Comm comm, MPI_Status *status)
 ```
 
-参数和MPI_SEND大体相同, 不同的是source这一参数, 这一参数标明从哪个进程接收消息. 
+参数和MPI_SEND大体相同, 不同的是source这一参数, 这一参数标明从哪个进程接收消息.
 最后多一个用于返回状态信息的参数status.
 
 在C和C++中, status的变量类型为MPI_Status, 分别有三个域, 可以通过
@@ -144,7 +145,7 @@ status.MPI_SOURCE, status.MPI_TAG和status.MPI_ERROR的方式调用这三个信�
 status(MPI_SOURCE), status(MPI_TAG)和status(MPI_ERROR)来调用.
 
 SEND和RECV需要成对出现, 若两进程需要相互发送消息时, 对调用的顺序也有要求, 不然可能会出现死
-锁或内存溢出等比较严重的问题, 具体在之后的对等模式这一章中详细介绍.  
+锁或内存溢出等比较严重的问题, 具体在之后的对等模式这一章中详细介绍.
 
 ## Example
 
@@ -152,40 +153,52 @@ SEND和RECV需要成对出现, 若两进程需要相互发送消息时, 对调�
 后, 再来看本系列第一章提到的一个简单的例子, 这个例子就把这六个函数都使用上了.
 
 ```cpp
-//第一章提到的案例，具体描述可以回看第一章
-MPI_Init(&argc,&argv);
-MPI_Comm_rank(MPI_COMM_WORLD,&myid);        //得到的变量myid即为当前的进程号
-//假设要求和的数组为A={[1,1,1,1],[2,2,2,2]}
-if(myid==0)
+//第一章提到的案例, 具体描述可以回看第一章
+int main(int argc, char* argv[])
 {
-    memset(A,1,sizeof(int));   //将数组A全赋值为1
+    //第一章提到的案例, 具体描述可以回看第一章
+    MPI_Init(&argc, &argv);
+    int myid;
+    int s{ 0 };
+    int s1{ 0 };
+    int A[4] = { 0 };
+    int comm_tag = 99;
+    MPI_Status status;
+    MPI_Comm_rank(MPI_COMM_WORLD, &myid);        //得到的变量myid即为当前的进程号
+    //假设要求和的数组为A={[1,1,1,1],[2,2,2,2]}
+    if (myid == 0)
+    {
+        memset(A, 1, sizeof(int));   //将数组A全赋值为1
+    }
+    else if (myid != 0)
+    {
+        memset(A, 2, sizeof(int));   //将数组A全赋值为2
+    }
+    //以上部分是将数组的两行分别存储到进程0和进程1上
+    for (int i = 0; i < 4; i++)
+    {
+
+        s = s + A[i];
+    }
+    if (myid == 1)
+    {
+        MPI_Send(&s, 1, MPI_INT, 0, comm_tag, MPI_COMM_WORLD);
+        //将求和结果s发送到进程0
+    }
+    if (myid == 0)
+    {
+        MPI_Recv(&s1, 1, MPI_INT, 1, comm_tag, MPI_COMM_WORLD, &status);
+        //用s1这个变量来存储从进程1发送来的求和结果
+        s = s + s1;
+    }
+    printf("now the s is: %d\n", s);
+    MPI_Finalize();
 }
-else if (myid==1)
-{
-    memset(A,2,sizeof(int));   //将数组A全赋值为2
-}
-//以上部分是将数组的两行分别存储到进程0和进程1上
-for(int i=0;i<4;i++)
-{
-    s=s+A[i];
-}
-if(myid==1)
-{
-    MPI_Send(s,1,MPI_INT,0,99,MPI_COMM_WORLD);
-    //将求和结果s发送到进程0
-}
-if(myid==0)
-{
-    MPI_Recv(s1,1,MPI_INT,1,99,MPI_COMM_WORLD,&status);
-    //用s1这个变量来存储从进程1发送来的求和结果
-    s=s+s1;
-}
-printf("%d",&s);
-MPI_Finalize();
 ```
 
 ## 总结
 
-这一章主要介绍了MPI的最基本的六大接口, 理解了这六个函数接口, 就可以写一个最基本的MPI并行程
-序了, 下一章详细讲解如何写一个MPI的基本程序, 通过编程实践, 将会进一步加深对这些函数接口的
-理解.  
+这一章主要介绍了MPI的最基本的六大接口, 理解了这六个函数接口,
+就可以写一个最基本的MPI并行程序了,
+下一章详细讲解如何写一个MPI的基本程序, 通过编程实践,
+将会进一步加深对这些函数接口的理解.

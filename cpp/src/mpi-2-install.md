@@ -142,3 +142,7 @@ mpirun -np 4 ./hello
 ```
 
 若可运行说明顺利完成安装.
+
+## VisualStudio2019配置MPI
+
+[VisualStudio2019配置MPI](https://blog.csdn.net/Jacamox/article/details/112563361)
