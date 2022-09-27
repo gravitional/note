@@ -2,14 +2,14 @@
 
 ## 1 让自己习惯C++
 
-#### 1view C++ as a federation of languages
+### 01 view C++ as a federation of languages
 
 + `C`
 + `Object-Oriented C++`; 带类的 `C`
 + `Template C++`; 泛型编程
 + `STL`; 标准模板库, 容器，迭代器，算法，函数对象`
 
-#### 2Prefer consts, enums, and inlines to `#define`
+### 02 Prefer consts, enums, and inlines to `#define`
 
 宁可以编译器替换预处理器
 

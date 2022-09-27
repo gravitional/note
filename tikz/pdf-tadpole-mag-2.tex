@@ -1,0 +1,35 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tikz-feynman}
+\begin{document}
+
+\begin{tikzpicture}
+    \begin{feynman}
+        %% fig h
+        \vertex (h1) at (0,0);
+        \vertex[right =1cm  of h1] (h2);
+        \vertex[right =2cm  of h1, anchor=center] (h3){};
+        \vertex[right =3cm  of h1] (h4);
+        \vertex[right =4cm  of h1] (h5);
+        \vertex[above =-1.4cm  of h3] (h6);
+        \node[above =0.5cm  of h5] {};
+        % 对各个顶点连线
+        \diagram*{
+            { [edge= fermion]
+                    (h1) --  (h3)--(h5),
+                },
+            % 介子连线
+            % { [edge= charged scalar]
+            % (h3) --[half left ](h6)--[half left](h3),
+            % }
+        };
+        \draw  (h3) edge [anti charged scalar,loop, min distance=3.5cm] (h3);
+        % 画 magnet 顶点
+        \node at (h3) [draw,fill=black!20,shape=rectangle] {};
+    \end{feynman}
+
+\end{tikzpicture}
+
+
+\end{document}

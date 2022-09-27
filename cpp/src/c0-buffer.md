@@ -56,7 +56,7 @@ virtual Table, vptr, P342
 ```cpp
 using namespace std;
 namespace common{
-    
+
 }
 ```
 
@@ -64,22 +64,22 @@ namespace common{
 
 `static` 变量在类内声明(.h 文件)
 在类外 定义(.cpp)
-声明时并不分配内存，只有定义时才分配，所以可以递归定义
+声明时并不分配内存, 只有定义时才分配, 所以可以递归定义
 例如一个表示单位量纲的类:
 
 ```cpp
 class Dimension{
 public:
-    Dimension(int mass, int length, int time); // 构造函数, 表示 质量，长度，时间的幂次
+    Dimension(int mass, int length, int time); // 构造函数, 表示 质量, 长度, 时间的幂次
     ...
-    static const Dimension Less; //声明 static 常量，无量纲
+    static const Dimension Less; //声明 static 常量, 无量纲
     static const Dimension Mass; //质量量纲
 }
 ```
 
-看起来是递归的，声明 `Less` or `Mass` 时, 
-class `Dimension` 还没有构造完成，
-但实际上, 对于 static 变量, `.h` 中只是给出声明，
+看起来是递归的, 声明 `Less` or `Mass` 时,
+class `Dimension` 还没有构造完成,
+但实际上, 对于 static 变量, `.h` 中只是给出声明,
 在下面的 `.cpp` 文件 才实际进行分配内存的操作.
 所以上面的写法是合法的.
 
