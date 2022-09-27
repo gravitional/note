@@ -1004,7 +1004,7 @@ class ListMetaclass(type):
         return type.__new__(cls, name, bases, attrs)
 ```
 
-有了 `ListMetaclass`, 我们在定义 `类` 的时候, 
+有了 `ListMetaclass`, 我们在定义 `类` 的时候,
 还要指示使用 `ListMetaclass` 来定制类, 传入关键字参数 `metaclass`:
 
 ```python
@@ -1012,8 +1012,8 @@ class MyList(list, metaclass=ListMetaclass):
     pass
 ```
 
-当我们传入关键字参数 `metaclass` 时, 魔术就生效了, 
-它指示 `Python` 解释器在创建 `MyList` 时, 要通过`ListMetaclass.__new__()`来创建, 
+当我们传入关键字参数 `metaclass` 时, 魔术就生效了,
+它指示 `Python` 解释器在创建 `MyList` 时, 要通过`ListMetaclass.__new__()`来创建,
 在此我们可以修改 `类的定义`, 比如加上新的方法, 然后返回修改后的定义.
 
 `__new__()`方法接收到的参数依次是:

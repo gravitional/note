@@ -283,6 +283,26 @@ LastWriteTime     Property   datetime LastWriteTime {get;set;}
 LastWriteTimeUtc  Property   datetime LastWriteTimeUtc {get;set;}
 ```
 
+### `Where()`
+
+[关于数组的各项须知内容](https://learn.microsoft.com/zh-cn/powershell/scripting/learn/deep-dives/everything-about-arrays)
+[PowerShell过滤数组中的空值](https://www.pstips.net/remove-null-from-array.html)
+
+数组中有一个 `Where()` 方法, 允许你为筛选器指定一个 `scriptblock`.
+
+```PowerShell
+$data.Where({$_.FirstName -eq 'Kevin'})
+```
+
+由于 `$null` 会被默认转型成 `False`, 所以从数组中过滤空元素可以写成
+
+```powershell
+$array="abc",3,8,$null,10
+$array=$array | Where-Object { $_ -ne $null }
+# 或者简写成; PowerShell 4.0 以上
+$array.Where( {$_ })
+```
+
 ## 哈希表
 
 [about_Hash_Tables](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_hash_tables)
@@ -320,10 +340,10 @@ LastWriteTimeUtc  Property   datetime LastWriteTimeUtc {get;set;}
 + 将哈希表放在大括号中`{}`.
 + 为哈希表的内容输入一个或多个键/值对, 使用等号 (`=`) 将每个键与其值分隔开.
 + 使用分号 (`;`) 或 `换行符` 分隔键/值对.
-+ 包含空格的键必须用引号引起来.  
++ 包含空格的键必须用引号引起来.
 值必须是有效的 PowerShell 表达式.  字符串必须用引号引起来, 即使它们不包含空格.
 + 若要管理哈希表, 请将它保存在变量中.
-+ 将有序哈希表分配给变量时, 请将 `[ordered]` 属性置于`@`符号之前.  
++ 将有序哈希表分配给变量时, 请将 `[ordered]` 属性置于`@`符号之前.
 如果将其放在 `变量名称` 之前, 则该命令是无效的.
 
 若要使`$hash`变量的值为空的哈希表, 请键入:

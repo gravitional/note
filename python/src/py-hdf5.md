@@ -21,9 +21,9 @@ HDF5 拥有一系列的优异特性, 使其特别适合进行大量科学数据�
 可以看成目录的容器, 其中可以包含一个或多个 dataset 及其它的 group.
 + `Datasets` 类似于 `NumPy` 中的数组 `array`, 可以当作数组的数据集合 .
 
-每个 `dataset` 可以分成两部分: 
+每个 `dataset` 可以分成两部分:
 
-+ `原始数据` (raw) data values 和 
++ `原始数据` (raw) data values 和
 + `元数据` metadata (a set of data that describes and gives information about other data => raw data).
 
 ```c

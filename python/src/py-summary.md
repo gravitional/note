@@ -1147,7 +1147,7 @@ SyntaxError: invalid syntax
 [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
 ```
 
-`['key']`也用来从字典中取出值. 
+`['key']`也用来从字典中取出值.
 `{'jack': 4098, 'sape': 4139, 'guido': 4127}['jack']`
 
 ### 小括号()
