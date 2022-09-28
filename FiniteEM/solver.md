@@ -49,8 +49,12 @@ void GetCompPtrs<PostAnalysisBaseEF>(std::vector<PostAnalysisBaseEF*> &ptrs)
 
 + 动态信息(存储少量的全局常量)
 
+### idObjects()
+
+ID对象管理类, 0-base
+
 ## Util 类
 
 一个工具类, 具有
 array, algebra, geometry, quick sort, allocate,
-class type 等函数模板
+class type 等函数模板.
