@@ -58,3 +58,8 @@ ID对象管理类, 0-base
 一个工具类, 具有
 array, algebra, geometry, quick sort, allocate,
 class type 等函数模板.
+
+## VarValue
+
+常数或函数参数类,
+保存用户自定义 py 函数

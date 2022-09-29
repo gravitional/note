@@ -36,7 +36,7 @@ using Volume = double;
 enum  枚举类型名  {变量值列表};
 ```
 
-例: 
+例:
 
 ```cpp
 enum Weekday {SUN, MON, TUE, WED, THU, FRI, SAT};
@@ -73,13 +73,13 @@ enum Weekday{SUN=7,MON=1,TUE,WED, THU,FRI,SAT};
 
 + 枚举值可以进行关系运算.
 
-+ 整数值不能直接赋给枚举变量, 
++ 整数值不能直接赋给枚举变量,
 如需要将整数赋值给枚举变量, 应进行强制类型转换.
 
 ### 枚举值可以赋给整型变量
 
 例2-11
-设某次体育比赛的结果有四种可能: 
+设某次体育比赛的结果有四种可能:
 胜(WIN), 负(LOSE), 平局(TIE), 比赛取消(CANCEL), 编写程序顺序输出这四种情况.
 
 分析: 比赛结果只有四种可能, 可以声明一个枚举类型.
@@ -116,7 +116,7 @@ int main() {
 + 如果val1+val2是double类型, 则val是double类型.
 
 decltype: 定义一个变量与某一表达式的类型相同, 但并不用该表达式初始化变量
-例如: 
+例如:
 
 ```cpp
 decltype(i) j = 2;
