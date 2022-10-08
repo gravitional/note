@@ -53,6 +53,14 @@ void GetCompPtrs<PostAnalysisBaseEF>(std::vector<PostAnalysisBaseEF*> &ptrs)
 
 ID对象管理类, 0-base
 
+### resultManip()
+
+结果操纵类
+
+### controlReader()
+
+读取 control 文件的类
+
 ## Util 类
 
 一个工具类, 具有

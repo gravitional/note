@@ -9,7 +9,8 @@
 
 django==1.8.11
 
-使用 pip freeze 会输出所有在本地已安装的包(但不包括 pip, wheel, setuptools 等自带包), 若需要输出内容与 pip list 一致, 需使用 pip freeze -all.
+使用 pip freeze 会输出所有在本地已安装的包(但不包括 pip, wheel, setuptools 等自带包), 
+若需要输出内容与 pip list 一致, 需使用 `pip freeze --all`.
 
 使用方法:
 
@@ -22,7 +23,9 @@ pip freeze > requirements.txt
 3.2 将所有包下载到目标目录中
 例如: 想将包放在\home\packs目录下
 
+```bash
 pip download -d \home\packs -r requirement.txt
+```
 
 ​​​​​​​3.3 将文件打包后放到离线服务器上, 并进行解压缩
 pip install --no-index --find-links=\home\packs -r requirements.txt
