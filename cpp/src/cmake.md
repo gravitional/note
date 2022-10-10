@@ -5,3 +5,5 @@
 
 [Visual Studio 中的 CMake 项目](https://learn.microsoft.com/zh-cn/cpp/build/cmake-projects-in-visual-studio?view=msvc-160)
 [在 Visual Studio 中创建 C++ 跨平台项目](https://learn.microsoft.com/zh-cn/cpp/build/get-started-linux-cmake?source=recommendations&view=msvc-170)
+
+[Modern CMake 简体中文版](https://modern-cmake-cn.github.io/Modern-CMake-zh_CN/)
