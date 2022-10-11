@@ -12,6 +12,8 @@
 [ttroy50/cmake-examples](https://github.com/ttroy50/cmake-examples)
 [cmake-examples-Chinese](https://sfumecjf.github.io/cmake-examples-Chinese/)
 
+[cmake(13)：构建时设置预处理宏定义以及add_compile_definitions命令详解](https://blog.csdn.net/rangfei/article/details/125651845)
+
 ## GUI界面中有 `配置` 和 `生成` 两个按钮
 
 [two buttons in GUI Configure and Generate](https://microeducate.tech/why-there-are-two-buttons-in-gui-configure-and-generate-when-cli-does-all-in-one-command/)
