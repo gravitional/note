@@ -18,7 +18,7 @@ target_include_directories(hello_library
     ${PROJECT_SOURCE_DIR}/include
 )
 
-# 添加编译
+# 添加编译属性, 在 windows 上，需要指定 EXPORTS 导出标志
 add_compile_definitions(Hello_EXPORTS)
 # ###########################################################
 # Create an executable
