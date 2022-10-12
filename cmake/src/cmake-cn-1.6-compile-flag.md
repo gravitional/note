@@ -68,3 +68,4 @@ target_compile_definitions(cmake_examples_compile_flags
 #命令的具体解释在二  CMake解析中, 这里的注释只说明注释后每一句的作用
 ```
 
+[warning C4530: 使用了 C++ 异常处理程序, 但未启用展开语义](https://blog.csdn.net/wu10188/article/details/124706627)
