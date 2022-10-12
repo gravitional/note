@@ -6,9 +6,6 @@
 [Visual Studio 中的 CMake 项目](https://learn.microsoft.com/zh-cn/cpp/build/cmake-projects-in-visual-studio?view=msvc-160)
 [在 Visual Studio 中创建 C++ 跨平台项目](https://learn.microsoft.com/zh-cn/cpp/build/get-started-linux-cmake?source=recommendations&view=msvc-170)
 
-<<<<<<< HEAD
-[Modern CMake 简体中文版](https://modern-cmake-cn.github.io/Modern-CMake-zh_CN/)
-=======
 [Cmake 实践](http://file.ncnynl.com/ros/CMake%20Practice.pdf)
 [CMake Primer](https://llvm.org/docs/CMakePrimer.html)
 [Effective Modern CMake 实践](https://zhjwpku.com/category/2020/04/04/effective-modern-cmake-practice.html)
@@ -57,4 +54,3 @@ configure或自CMake GUI启动以来(如果这是第一次运行configure)改变
 [生成器表达式]: https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html
 [这个答案]: https://stackoverflow.com/a/24470998/1938798
 [这个帖子]: https://stackoverflow.com/q/36084785/1938798
->>>>>>> 59036dba0e955eb36686bc0c9dd808afd1596824
