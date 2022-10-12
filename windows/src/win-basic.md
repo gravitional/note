@@ -209,8 +209,7 @@ shell:recyclebinfolder
 ## 激活Windows
 
 [Windows 激活——MAS](https://www.liyangjie.cn/posts/hobby/windows-activation/)
-
-[microsoft-activation-scripts][https://gitlab.com/massgrave/microsoft-activation-scripts/-/releases]
+[microsoft-activation-scripts](https://gitlab.com/massgrave/microsoft-activation-scripts/-/releases)
 
 下载后, 使用图中所示解压密码进行解压, 得到 MAS_1.5 目录. 目录结构如下:
 
@@ -257,3 +256,22 @@ V`erify_Files-Clear_Zone.Identifier-68.cmd` 校验文件并对时区进行清理
 ```cmd
 slmgr.vbs -xpr
 ```
+
+## 命令行查看wifi密码
+
+[cmd命令行查看wifi密码](https://blog.csdn.net/qq_43574776/article/details/91958234)
+
+查询本机存储 `WIFI` 信息
+
+```powershell
+netsh wlan show profiles
+```
+
+在给出的曾经使用过的 `WiFi连接` 中选择你想查询的连接名称,
+然后输入套入如下命令中查询密码:
+
+```powershell
+netsh wlan show profile name="连接名" key=clear
+```
+
+这里把 `连接名` 替换为我们要查询的wifi名称, 安全设置里的 `关键内容` 就是WiFi的密码啦~
