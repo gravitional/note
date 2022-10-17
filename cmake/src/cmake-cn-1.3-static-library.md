@@ -2,6 +2,116 @@
 
 [CMake(三)Static Library](https://sfumecjf.github.io/cmake-examples-Chinese/01-basic/1.3%20%20Static%20Library.html)
 
+本文自己创建库的操作, 应该暂时用不到. 但是关于如何添加路径, 链接库的命令, 还是需要掌握的.
+
+## 文件树
+
+```bash
+├── CMakeLists.txt
+├── include
+│   └── static
+│       └── Hello.h
+└── src
+    ├── Hello.cpp
+    └── main.cpp
+```
+
+### 1.1 Hello.h
+
+```cpp
+/*声明了Hello类, Hello的方法是print(),*/
+
+#ifndef __HELLO_H__
+#define __HELLO_H__
+
+class Hello
+{
+public:
+    void print();
+};
+
+#endif
+```
+
+### 1.2 Hello.cpp
+
+```cpp
+/*实现了Hello::print()*/
+#include <iostream>
+
+#include "static/Hello.h"
+
+void Hello::print()
+{
+    std::cout << "Hello Static Library!" << std::endl;
+}
+```
+
+### 1.3 main.cpp
+
+```cpp
+#include "static/Hello.h"
+
+int main(int argc, char *argv[])
+{
+    Hello hi;
+    hi.print();
+    return 0;
+}
+```
+
+### 1.4 CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.5)
+project(hello_library)
+############################################################
+# Create a library
+############################################################
+#库的源文件Hello.cpp生成静态库hello_library
+add_library(hello_library STATIC
+    src/Hello.cpp
+)
+target_include_directories(hello_library
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/include
+)
+# target_include_directories为一个目标(可能是一个库library也可能是可执行文件)添加头文件路径.
+############################################################
+# Create an executable
+############################################################
+# Add an executable with the above sources
+#指定用哪个源文件生成可执行文件
+add_executable(hello_binary
+    src/main.cpp
+)
+#链接可执行文件和静态库
+target_link_libraries( hello_binary
+    PRIVATE
+        hello_library
+)
+#链接库和包含头文件都有关于scope这三个关键字的用法.
+```
+
+## CMake解析
+
+### 2.1 创建静态库
+
+`add_library()` 函数用于从某些源文件创建一个库, 默认生成在构建文件夹.
+写法如下:
+
+```cmake
+add_library(hello_library STATIC
+    src/Hello.cpp
+)
+```
+
+在 `add_library` 调用中包含了源文件, 用于创建名称为 `libhello_library.a` 的静态库.
+
+>NOTE
+>如前面的示例所述, 将源文件直接传递给 `add_library` 调用, 这是 modern CMake 的建议.
+>(而不是先把 `Hello.cpp` 赋给一个变量)
+
 ## 2.2 添加头文件所在的目录
 
 使用 `target_include_directories()` 添加了一个 `目录`,
@@ -106,3 +216,16 @@ An example of this being called by the compiler is
 所以设置这个属性, 主要是针对当前工程被其它工程 link(引用)的设置,
 
 对于 `hello_binary`, 它不是库, 所以不会被链接. 直接 `private`, 自己用这个库就行.
+
+三 构建示例
+
+```bash
+$ mkdir build
+$ cd build
+$ cmake ..
+
+$ make
+$ ls
+CMakeCache.txt  CMakeFiles  cmake_install.cmake  hello_binary  libhello_library.a  Makefile
+$ ./hello_binary
+```

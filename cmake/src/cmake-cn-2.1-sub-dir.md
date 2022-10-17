@@ -46,9 +46,9 @@ $ tree
 + `sublibrary2/include/sublib2/sublib2.h` - 头文件
 
 >提示
->在此示例中, 我已将头文件移至每个项目include目录下的子文件夹,
->而将 target `include` 保留为根include文件夹.
->这是防止文件名冲突的一个好主意, 因为您必须包括以下文件:
+>在此示例中, 我已将每个项目 的头文件移至 `include` 目录下的子文件夹,
+>而 target 的 `include` 文件夹作为根目录.
+>这是防止文件名冲突的一个好主意, 因为在 使用的时候名称是
 >
 >```cpp
 >#include "sublib1/sublib1.h"`
@@ -58,7 +58,7 @@ $ tree
 
 ## 添加子目录
 
-`CMakeLists.txt` 文件可以 `包含` 和 `调用`
+`CMakeLists.txt` 文件可以 `add` 和 `调用`
 其他包含 `CMakeLists.txt` 文件的子目录.
 
 ```cmake
@@ -69,38 +69,39 @@ add_subdirectory(subbinary)
 
 ## 引用子项目目录
 
-使用project()命令创建项目时, CMake将自动创建许多变量,
+使用 `project()` 命令创建项目时, `CMake` 将自动创建许多变量,
 这些变量可用于引用有关该项目的详细信息.
-这些变量然后可以由其他子项目或主项目使用.
-例如, 要引用您可以使用的其他项目的源目录.
+这些变量然后可以由其他 `子项目` 或 `主项目` 使用.
+例如, 要引用其他项目的源目录(当前可用的).
 
 ```cmake
 ${sublibrary1_SOURCE_DIR}
 ${sublibrary2_SOURCE_DIR}
 ```
 
-CMake中有一些变量会自动创建:
+`CMake` 中有一些变量会自动创建:
 
 Variable    Info
 
-PROJECT_NAME        当前project()设置的项目的名称.
-CMAKE_PROJECT_NAME  由project()命令设置的第一个项目的名称, 即顶层项目.
-PROJECT_SOURCE_DIR  当前项目的源文件目录.
-PROJECT_BINARY_DIR  当前项目的构建目录.
-name_SOURCE_DIR     在此示例中, 创建的源目录为 sublibrary1_SOURCE_DIR, sublibrary2_SOURCE_DIR, and subbinary_SOURCE_DIR
-name_BINARY_DIR     本工程的二进制目录是sublibrary1_BINARY_DIR, sublibrary2_BINARY_DIR,和 subbinary_BINARY_DIR
++ `PROJECT_NAME`;        当前 `project()` 设置的项目的名称.
++ `CMAKE_PROJECT_NAME`;  由 `project()` 命令设置的第一个项目的名称, 即 `顶层项目`.
++ `PROJECT_SOURCE_DIR`;  当前项目的 `源文件` 目录.
++ `PROJECT_BINARY_DIR`;  当前项目的 `构建` 目录.
++ `name_SOURCE_DIR`;     在此示例中, 创建的源目录为 `sublibrary1_SOURCE_DIR`, `sublibrary2_SOURCE_DIR`, 和 `subbinary_SOURCE_DIR`
++ `name_BINARY_DIR`;     本工程的二进制目录是 `sublibrary1_BINARY_DIR`, `sublibrary2_BINARY_DIR`,和 `subbinary_BINARY_DIR`
 
 ## Header only Libraries
 
-如果您有一个库被创建为仅头文件的库, 则cmake支持INTERFACE目标,
-以允许创建没有任何构建输出的目标.  可以从here找到更多详细信息
+如果您有一个库被创建为 `仅头文件` 的库, 则 `cmake` 支持 `INTERFACE` 目标,
+以允许创建没有 `任何build输出` 的目标.  可以[从here找到更多详细信息](https://cmake.org/cmake/help/v3.4/command/add_library.html#interface-libraries)
 
 ```cmake
 add_library(${PROJECT_NAME} INTERFACE)
 ```
 
-创建目标时, 您还可以使用INTERFACE范围包含该目标的目录.
-INTERFACE范围用于制定在链接此目标的任何库中使用的目标需求, 但在目标本身的编译中不使用.
+创建目标时, 您还可以使用 `INTERFACE` 范围包含该目标的 `目录`.
+`INTERFACE` 范围用于指定, 链接到 `此目标` 的其他目标需要依赖 `此目录`,
+但编译 `此目标` 本身不需要显式指定此目录(可能本身就在一起).
 
 ```cmake
 target_include_directories(${PROJECT_NAME}
@@ -111,9 +112,9 @@ target_include_directories(${PROJECT_NAME}
 
 ## 引用子项目中的库
 
-如果子项目创建了一个库,
-则其他项目可以通过在target_link_libraries()命令中调用该项目的名称来引用该库.
-这意味着您不必引用新库的完整路径, 而是将其添加为依赖项.
+如果子项目创建了一个 `库`(library),
+则其他项目可以通过在 `target_link_libraries()` 命令中调用该 `项目的名称` 来引用该库.
+这意味着您不必引用新库的完整路径, 而是将其添加为 `依赖项`.
 
 ```cmake
 target_link_libraries(subbinary
@@ -122,7 +123,7 @@ target_link_libraries(subbinary
 )
 ```
 
-或者, 您可以创建一个别名目标, 该目标允许您在上下文(其实就是某个目标的绰号)中引用该目标.
+或者, 您可以创建 `别名目标`, 该目标允许您在上下文(其实就是某个目标的绰号)中引用该目标.
 
 ```cmake
 add_library(sublibrary2)
@@ -137,14 +138,31 @@ target_link_libraries(subbinary
 )
 ```
 
+`别名` 可以将多个功能相关的 `目标` 进行组织.
+
 ## 包含子项目中的目录
 
-从cmake v3开始从子项目添加库时, 无需将项目include目录添加到二进制文件的include目录中.
+从 cmake v3 开始从子项目添加库时, 无需将项目 `include` 目录添加到二进制文件的 `include` 目录中.
 
-创建库时, 这由target_include_directories()命令中的作用域控制.
-在此示例中, 因为子二进制可执行文件链接了sublibrary1和sublibrary2库,
-所以当它们与库的PUBLIC和INTERFACE范围一起导出时,
-它将自动包含 `${sublibrary1_SOURCE_DIR}/inc` 和 `${sublibrary2_SOURCE_DIR}/inc` 文件夹.
+创建库时, 这由 `target_include_directories()` 命令中的作用域控制.
+
+```cmake
+target_include_directories(${PROJECT_NAME}
+    PUBLIC ${PROJECT_SOURCE_DIR}/include
+)
+```
+
+在此示例中, 因为子二进制可执行文件链接了 `sublibrary1` 和 `sublibrary2` 库,
+
+```cmake
+target_link_libraries(${PROJECT_NAME}
+    sub::lib1
+    sub::lib2
+)
+```
+
+当库使用 `PUBLIC` 或 `INTERFACE` 范围导出时,
+将自动包含 `${sublibrary1_SOURCE_DIR}/include` 和 `${sublibrary2_SOURCE_DIR}/include` 文件夹.
 (这个地方涉及到 `PUBLIC` 和 `INTERFACE` 的使用, 本电子书的 `CMake-scope` 是讲这个的)
 
 ## 构建示例
