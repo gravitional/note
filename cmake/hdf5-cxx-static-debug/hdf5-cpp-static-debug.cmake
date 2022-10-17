@@ -15,6 +15,5 @@ else ()
 endif ()
 INCLUDE_DIRECTORIES (${HDF5_INCLUDE_DIR})
 
-
 add_executable (runapp writedata.cpp)
 target_link_libraries (runapp PRIVATE ${LINK_LIBS})

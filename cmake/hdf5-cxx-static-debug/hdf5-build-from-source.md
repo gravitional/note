@@ -1,9 +1,9 @@
 # 如何用cmake链接 Windows上的 静态运行库 STATIC RUNTIME LIBRARY
 
-用户可能希望在 Windows 上链接到静态运行时库, 以避免链接器错误和与其他库不兼容.
-链接到  static runtime library 意味着 runtime  被链接到最终的exe中.
+用户可能希望在 Windows 上链接到 `static runtime library`, 以避免 链接器错误, 以及与其他库不兼容.
+链接到  `静态运行时库` 意味着 runtime  被链接到 最终的 `exe` 中.
 
-你必须用 CMake 从源码(source) 构建才能做到这一点.
+你必须用 `CMake` 从源码(source) 构建才能做到这一点.
 见[用CMake构建HDF5或用CMake构建HDF4](https://portal.hdfgroup.org/display/support/Building+HDF4+with+CMake).
 
 在构建前对源代码做如下修改.
@@ -48,8 +48,8 @@ INCLUDE(path_to_file/WINDOWS_MT.cmake)
 
 + 在目录路径名称中不能使用空白的空格, 因为这将导致构建失败.
 
-+ (可选)在Windows上, 应该安装NSIS或WiX, 以便用CPack创建一个安装镜像.
-NSIS将创建一个.exe的安装程序. WiX将创建一个.msi安装程序.
++ (可选)在 `Windows` 上, 应该安装 `NSIS` 或 `WiX`, 以便用 `CPack` 创建安装镜像.
+`NSIS`将创建`.exe` 的安装程序. `WiX` 将创建 `.msi` 安装程序.
 
 [Downloads页面]: https://portal.hdfgroup.org/display/support/Downloads
 

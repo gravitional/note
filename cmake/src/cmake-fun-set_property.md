@@ -1,6 +1,6 @@
 # set_property
 
-在给定的 scope 内设置一个命名的属性(property).
+在给定的 `scope` 内设置一个命名的属性(property).
 
 ```cmake
 set_property(<GLOBAL                      |

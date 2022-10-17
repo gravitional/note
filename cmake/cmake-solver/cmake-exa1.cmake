@@ -1,4 +1,4 @@
-# 
+#
 set(LIB_NAME "Electrics")
 add_compile_definitions()
 

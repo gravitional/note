@@ -6,10 +6,10 @@ These instructions use the HDF5 source code that is packaged with CMake
 
 BUILD HDF5:
 
- Build HDF5 according to the instructions on the "Building HDF5 with CMake" page: 
+ Build HDF5 according to the instructions on the "Building HDF5 with CMake" page:
 
      https://portal.hdfgroup.org/display/support/Building+HDF5+with+CMake
-    
+
  If you encounter any issues with building, edit the build script and change -V to -VV.
 
 CREATE A WORKING SPACE AND BUILD THE APPLICATION
@@ -19,7 +19,7 @@ CREATE A WORKING SPACE AND BUILD THE APPLICATION
 
       Unix:
        The HDF5-1.N.N-Linux.tar.gz file is created in the CMake-hdf5-1.N.N directory when HDF5 is
-       built on Linux with CMake. Uncompress the file, and  you will find that it contains the 
+       built on Linux with CMake. Uncompress the file, and  you will find that it contains the
        the share/cmake/hdf5/ directory. Set the HDF5_DIR environment variable to the location
        of this directory:
 
@@ -29,13 +29,13 @@ CREATE A WORKING SPACE AND BUILD THE APPLICATION
        The HDF5-1.N.N-win64.zip is created in the CMake-hdf5-1.N.N directory when HDF5 is built
        on Windows 64-bit. Uncompress the file, and you will find that it contains a directory
        with cmake files in share\cmake\hdf5. Set the HDF5_DIR environment variable to the location
-       of this directory. 
+       of this directory.
 
        On Windows 7, left click on Start at the bottom left and then right-click on
        Computer and select Properties from the menu that pops up. The Control Panel Home window
        opens. Select "Advanced system settings" on the left to bring up the "System Properties".
        Select the "Environment Variables" button near the bottom, where you add User and System
-       variables. 
+       variables.
 
     NOTE: You can also set the HDF5_DIR environment variable within a CMake application.
 
