@@ -34,10 +34,10 @@ def my_iter(name_str, d, count):
             print("{}{} has attributes:".format(
                 "--" * (count + 1), name_str))
             for key in d.attrs.keys():  # 打印属性
-                print("--" * (count + 1), key, ":", d.attrs[key])
+                print("**" * (count + 1), key, ":", d.attrs[key])
         else:
             print("{}{} has No attributes".format(
-                "--" * (count + 1), name_str))
+                "**" * (count + 1), name_str))
         print()
     elif hasattr(d, "keys") and len(d.keys()) > 0:  # 如果是 group 类型递归调用
         print("\n{}{} is Group, it has:".format("<<" * count, name_str))

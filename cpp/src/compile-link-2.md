@@ -33,6 +33,8 @@ gcc/g++在执行编译工作的时候, 总共需要4步
 + `-E`; 只运行 C 预编译器.
 + `-g`; 生成调试信息. GNU 调试器可利用该信息.
 
+头文件/库
+
 + `-IDIRECTORY`; 指定额外的 `头文件搜索路径的目录`. 大写 `-I`, `Inclue`.
 + `-LDIRECTORY`; 指定额外的 `函数库搜索路径的目录`. 大写 `-L`, `Library directory`.
 + `-lLIBRARY`; 连接时搜索指定的 `函数库` `lIBRARY`. 小写 `-l`, `libraray`.
