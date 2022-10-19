@@ -5,7 +5,8 @@ project(h5test CXX)
 
 set(FIND_HDF_COMPONENTS CXX shared)
 
-find_package(HDF5 NAMES "hdf5" COMPONENTS ${FIND_HDF_COMPONENTS} PATHS "C:/Program Files/HDF_Group/HDF5")
+# find_package(HDF5 NAMES "hdf5" COMPONENTS ${FIND_HDF_COMPONENTS} HINTS "C:/Program Files/HDF_Group/HDF5/1.12.2")
+find_package(HDF5 NAMES "hdf5" COMPONENTS ${FIND_HDF_COMPONENTS})
 
 if(HDF5_FOUND)
     message(" HDF5 find")
@@ -25,7 +26,11 @@ message("<< FIND_HDF_COMPONENTS: " ${FIND_HDF_COMPONENTS})
 # Add your application HERE
 add_executable(h5test1 "Possion1.cpp")
 
+# # 另一个inlucde 目录
+set(myinclude "C:/cppLib/inlucde")
 target_include_directories(h5test1 PRIVATE ${HDF5_INCLUDE_DIR})
-target_compile_options(h5test1 PRIVATE "-I ${HDF5_INCLUDE_DIR}")
+target_compile_options(h5test1 PRIVATE
+    "/I${HDF5_INCLUDE_DIR}") # 第一个include
+    #"/I${myinclude}") # 第二个include
 
 target_link_libraries(h5test1 PUBLIC ${LINK_LIBS})

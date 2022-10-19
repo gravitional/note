@@ -5,7 +5,7 @@
 
 using namespace H5;
 
-const H5std_string FILE_NAME("C:/Users/yd/test/hdf5-cpp/src/result.h5");
+const H5std_string FILE_NAME("C:/SimCases/d22915-capacitance3d/capacitance3d/Solving/SolvingDomain/result/result.h5");
 const H5std_string GROUP_NAME("Post");
 const H5std_string GROUP_NAME2("Force");
 const H5std_string GROUP_NAME3("Post1_F");
