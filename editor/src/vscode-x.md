@@ -3,6 +3,20 @@
 [code.visualstudio.com/docs](https://code.visualstudio.com/docs)
 [codebasics](https://code.visualstudio.com/docs/editor/codebasics)
 
+[vscode 下载加速方法](https://blog.csdn.net/qq_42074368/article/details/120410816)
+
+官方的下载链接例如下:
+
+```url
+https://  az764295.vo.msecnd.net  /stable/83bd43bc519d15e50c4272c6cf5c1479df196a4d/code_1.60.1-1631294805_amd64.deb
+```
+
+将 `az764295.vo.msecnd.net` 替换为 `vscode.cdn.azure.cn`, 镜像下载快的飞起.
+
+```url
+https://vscode.cdn.azure.cn/stable/83bd43bc519d15e50c4272c6cf5c1479df196a4d/code_1.60.1-1631294805_amd64.deb
+```
+
 ## 按文件名搜索文件
 
 按快捷键`ctrl+p`可以弹出一个小窗, 在上面的输入框输入文件名, 下拉框点击一个文件.
