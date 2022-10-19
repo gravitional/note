@@ -1,32 +1,46 @@
-
-## Path Conversion
+# Path Conversion
 
 ```cmake
-file(REAL_PATH <path> <out-var> [BASE_DIRECTORY <dir>] [EXPAND_TILDE])
+file(REAL_PATH <path> <out-var> [BASE_DIRECTORY <dir>] [EXPAND_TILDE] )
 ```
 
-New in version 3.19.
+*3.19版的新功能.*
+计算现有文件或目录的 `绝对路径`, 并解析 `符号链接`.
 
-Compute the absolute path to an existing file or directory with symlinks resolved.
++ `BASE_DIRECTORY <dir>`
+如果提供的 `<path>` 是相对路径, 则相对于给定的基础目录 `<dir>`进行计算.
+如果没有提供基础目录, 默认的基础目录将是 [CMAKE_CURRENT_SOURCE_DIR][].
 
-BASE_DIRECTORY <dir>
-If the provided <path> is a relative path, it is evaluated relative to the given base directory <dir>. If no base directory is provided, the default base directory will be CMAKE_CURRENT_SOURCE_DIR.
++ `EXPAND_TILDE`
+*在3.21版本中新增.*
+如果 `<path>` 是 `~` 或者以 `~/` 开头, 那么 `~` 将被用户的主目录取代.
+主目录的路径从 `环境变量` 中获得.
+在 `Windows` 上, 使用 `USERPROFILE` 环境变量,
+如果 `USERPROFILE` 没有定义, 则fallback 到 `HOME` 环境变量.
+在所有其他平台上, 只使用 `HOME`.
 
-EXPAND_TILDE
-New in version 3.21.
++ 计算从 `<directory>` 到 `<file>` 的相对路径, 并将其存储在 `<变variable量>` 中.
 
-If the <path> is ~ or starts with ~/, the ~ is replaced by the user's home directory. The path to the home directory is obtained from environment variables. On Windows, the USERPROFILE environment variable is used, falling back to the HOME environment variable if USERPROFILE is not defined. On all other platforms, only HOME is used.
-
+```cmake
 file(RELATIVE_PATH <variable> <directory> <file>)
-Compute the relative path from a <directory> to a <file> and store it in the <variable>.
+```
 
++ `TO_CMAKE_PATH` 模式将原生的 `<path>` 转换为
+带有 `正斜杠`(`/`)的 `cmake-style` 路径, 存入 `<variable>`.
+输入可以是单独的路径, 也可以是 `系统搜索路径`, 比如 `$ENV{PATH}`.
+搜索路径将被转换为 cmake-风格的列表, 它以 `;` 字符分隔.
+
+```camke
 file(TO_CMAKE_PATH "<path>" <variable>)
 file(TO_NATIVE_PATH "<path>" <variable>)
-The TO_CMAKE_PATH mode converts a native <path> into a cmake-style path with forward-slashes (/). The input can be a single path or a system search path like $ENV{PATH}. A search path will be converted to a cmake-style list separated by ; characters.
+```
 
-The TO_NATIVE_PATH mode converts a cmake-style <path> into a native path with platform-specific slashes (\ on Windows hosts and / elsewhere).
+`TO_NATIVE_PATH` 模式将 cmake-style `<path>` 转换为带有平台特定斜线的 `本地路径`.
+(在 Windows 主机上为 `\`, 其他平台为 `/`).
 
-Always use double quotes around the <path> to be sure it is treated as a single argument to this command.
+记得总在 `<path>` 周围使用双引号, 以确保它被当作这个命令的 `单个参数`.
+
+[CMAKE_CURRENT_SOURCE_DIR]: https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_SOURCE_DIR.html#variable:CMAKE_CURRENT_SOURCE_DIR
 
 ## Transfer
 

@@ -16,6 +16,10 @@ set(FIND_HDF_COMPONENTS CXX shared)
 # find_package(HDF5 NAMES "hdf5" COMPONENTS ${FIND_HDF_COMPONENTS} HINTS "C:/Program Files/HDF_Group/HDF5/1.12.2")
 find_package(HDF5 NAMES "hdf5" COMPONENTS ${FIND_HDF_COMPONENTS})
 
+# 可以用 file 命令转换 windows 平台的路径分隔符, 但还是要先转义 \, 替换成 \\
+#file(TO_CMAKE_PATH "C:\\Program Files\\HDF_Group\\HDF5\\1.12.2" myhdfpath)
+#message("<< The converted path: " ${myhdfpath})
+
 # 如果找到了 HDF5 库
 if(HDF5_FOUND)
     message(" HDF5 find")

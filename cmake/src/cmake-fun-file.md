@@ -78,6 +78,8 @@ file(ARCHIVE_EXTRACT INPUT <archive> [...])
 
 ## Filesystem
 
+### glob匹配
+
 ```cmake
 file(GLOB <variable>
      [LIST_DIRECTORIES true|false] [RELATIVE <path>] [CONFIGURE_DEPENDS]
@@ -112,64 +114,101 @@ Globbing 表达式类似于正则表达式, 但要简单得多.
 即使 `CONFIGURE_DEPENDS` 能够可靠地工作,
 在每次 `rebuild` 时执行检查仍然是有代价的.
 
-globbing表达式的例子包括.
+`globbing` 表达式的例子包括:
 
-*.cxx - 匹配所有扩展名为 cxx 的文件
-*.vt?      - 匹配所有以vta,...,vtz为扩展名的文件
-f[3-5].txt - 匹配文件f3.txt, f4.txt, f5.txt
-GLOB_RECURSE模式将遍历匹配目录的所有子目录并匹配文件.
-只有在给出FOLLOW_SYMLINKS或策略CMP0009没有设置为NEW的情况下, 才会遍历属于符号链接的子目录.
++ `*.cxx` - 匹配所有扩展名为 `cxx` 的文件
++ `*.vt?`      - 匹配所有以`vta,...,vtz` 为扩展名的文件
++ `f[3-5].txt` - 匹配文件 `f3.txt`, `f4.txt`, `f5.txt`
 
-3.3版中的新内容: 默认情况下, GLOB_RECURSE从结果列表中省略目录--将LIST_DIRECTORIES设置为 "true "会将目录加入结果列表.
-如果给出了FOLLOW_SYMLINKS或者策略CMP0009没有设置为NEW, 那么LIST_DIRECTORIES会将符号链接视为目录.
+`GLOB_RECURSE` 模式将遍历 `匹配目录` 的所有 `子目录` 并匹配文件.
+只有在给出 `FOLLOW_SYMLINKS` 或策略 [CMP0009][] 没有设置为 `NEW` 的情况下,
+才会遍历 `符号链接`(symbol links)类型 的子目录.
 
-递归球化的例子包括.
+>3.3版中的新内容: 默认情况下, `GLOB_RECURSE` 从结果列表中省略目录--
+>将 `LIST_DIRECTORIES` 设置为 `true` 会将 `目录` 加入结果列表.
+>如果给出了 `FOLLOW_SYMLINKS` 或者策略 [CMP0009][] 没有设置为 `NEW`,
+>那么 `LIST_DIRECTORIES` 会将 `符号链接` 视为 `目录`.
 
-/dir/*.py - 匹配/dir和子目录中的所有python文件
+递归 globbing 的例子包括:
+
+```cmake
+/dir/*.py #匹配 `/dir` 和子目录中的所有 python 文件
+```
+
+### 目录CRUD操作
+
++ 根据需要创建给定的 `目录` 和它们的 父目录.
+
+```cmake
 file(MAKE_DIRECTORY [<directories>...])
-根据需要创建给定的目录和它们的父目录.
+```
 
++ 删除给定的文件.
+
+```cmake
 file(REMOVE [<files>...])
 file(REMOVE_RECURSE [<files>...])
-删除给定的文件. REMOVE_RECURSE模式将删除给定的文件和目录, 也包括非空的目录. 如果给定的文件不存在, 则不会产生错误. 相对的输入路径是相对于当前源目录进行计算的.
+```
 
-Changed in version 3.15: Empty input paths are ignored with a warning. Previous versions of CMake interpreted empty strings as a relative path with respect to the current directory and removed its contents.
+`REMOVE_RECURSE` 模式将删除给定的文件和目录, 也包括 `非空的目录`.
+如果给定的文件不存在, 则不会产生错误.
+`相对路径` 是相对于当前源目录进行计算的.
 
+>3.15版中的变化: `空的输入路径` 被忽略, 并发出`警告`.
+>先前版本的 `CMake` 将 `空字符串` 解释为相对于 `当前目录` 的相对路径, 并删除其内容.
+
++ 将文件系统中的文件或目录从 `<oldname>` 移动到 `<newname>`,
+原子地(atomically)替换目标.
+
+```cmake
 file(RENAME <oldname> <newname>
      [RESULT <result>]
      [NO_REPLACE])
-Move a file or directory within a filesystem from <oldname> to <newname>, replacing the destination atomically.
+```
 
-The options are:
+选项是:
 
-RESULT <result>
-New in version 3.21.
+`RESULT <result>`
+>在3.21版本中新增.
 
-Set <result> variable to 0 on success or an error message otherwise. If RESULT is not specified and the operation fails, an error is emitted.
+成功时将 `<result>`变量设为 `0`, 否则为错误信息.
+如果没有指定 `RESULT`, 并且操作失败, 会发出错误信息.
 
-NO_REPLACE
-New in version 3.21.
+`NO_REPLACE`
+>3.21版中的新内容.
 
-If the <newname> path already exists, do not replace it. If RESULT <result> is used, the result variable will be set to NO_REPLACE. Otherwise, an error is emitted.
+如果 `<newname>` 路径已经存在, 不要替换它.
+如果使用 `RESULT <result>`, 结果变量将被设置为 `NO_REPLACE`.
+否则, 会发出一个错误.
 
++ 从 `<oldname>` 复制文件到 `<newname>`. 不支持目录.
+忽略 `符号链接`, `<oldfile>` 的内容被读取并作为一个新文件写入 `<newname>`.
+
+```cmake
 file(COPY_FILE <oldname> <newname>
      [RESULT <result>]
      [ONLY_IF_DIFFERENT])
-New in version 3.21.
+```
 
-Copy a file from <oldname> to <newname>. Directories are not supported. Symlinks are ignored and <oldfile>'s content is read and written to <newname> as a new file.
+>3.21版中的新内容.
+选项是:
 
-The options are:
+`RESULT <result>`
+成功时将 `<result>` 变量设置为 `0`, 否则设置错误信息.
+如果没有指定 `RESULT`, 并且操作失败, 将发出一个错误信息.
 
-RESULT <result>
-Set <result> variable to 0 on success or an error message otherwise. If RESULT is not specified and the operation fails, an error is emitted.
+`only_if_different`
+如果 `<newname>` 路径已经存在, 如果文件的内容已经与 `<oldname>` 相同,
+就不要替换它(这样可以避免更新 `<newname>` 的时间戳).
 
-ONLY_IF_DIFFERENT
-If the <newname> path already exists, do not replace it if the file's contents are already the same as <oldname> (this avoids updating <newname>'s timestamp).
+这个子命令与带有 `COPYONLY` 选项的 `configure_file()` 有一些相似之处.
+一个重要的区别是 `configure_file()` 创建了对源文件的依赖性,
+因此如果源文件发生变化, `CMake` 将被重新运行.
+`file(COPY_FILE)` 子命令不会创建这种依赖关系.
 
-This sub-command has some similarities to configure_file() with the COPYONLY option. An important difference is that configure_file() creates a dependency on the source file, so CMake will be re-run if it changes. The file(COPY_FILE) sub-command does not create such a dependency.
+也请看下面的 `file(COPY)` 子命令, 它提供了进一步的文件拷贝功能.
 
-See also the file(COPY) sub-command just below which provides further file-copying capabilities.
+### 进阶操作
 
 ```cmake
 file(<COPY|INSTALL> <files>... DESTINATION <dir>
@@ -182,94 +221,139 @@ file(<COPY|INSTALL> <files>... DESTINATION <dir>
       [EXCLUDE] [PERMISSIONS <permissions>...]] [...])
 ```
 
-Note For a simple file copying operation, the file(COPY_FILE) sub-command just above may be easier to use.
-The COPY signature copies files, directories, and symlinks to a destination folder. Relative input paths are evaluated with respect to the current source directory, and a relative destination is evaluated with respect to the current build directory. Copying preserves input file timestamps, and optimizes out a file if it exists at the destination with the same timestamp. Copying preserves input permissions unless explicit permissions or NO_SOURCE_PERMISSIONS are given (default is USE_SOURCE_PERMISSIONS).
+>注意 对于简单的文件复制操作, 刚才的 `file(COPY_FILE)` 子命令可能更容易使用.
 
-New in version 3.15: If FOLLOW_SYMLINK_CHAIN is specified, COPY will recursively resolve the symlinks at the paths given until a real file is found, and install a corresponding symlink in the destination for each symlink encountered. 
-For each symlink that is installed, the resolution is stripped of the directory, leaving only the filename, meaning that the new symlink points to a file in the same directory as the symlink. This feature is useful on some Unix systems, 
-where libraries are installed as a chain of symlinks with version numbers, with less specific versions pointing to more specific versions. FOLLOW_SYMLINK_CHAIN will install all of these symlinks and the library itself into the destination directory. For example, if you have the following directory structure:
+`COPY` 签名将 `文件`, `目录` 和 `符号链接` 复制到 `目标文件夹`.
+`相对输入路径` 是相对于当前的 `源目录` 进行计算的,
+而 `相对目标` 是相对于当前的 `构建目录` 进行计算的.
+复制保留了 `输入文件` 的 `时间戳`, 如果一个文件在目的地存在相同的时间戳, 则将其优化掉.
+除非给出明确的权限或 `NO_SOURCE_PERMISSIONS` (默认为 `USE_SOURCE_PERMISSIONS`),
+否则复制会保留 `输入权限`.
 
+*3.15版中的新内容*: 如果指定了 `FOLLOW_SYMLINK_CHAIN`,
+`COPY` 将递归地解析所给路径上的 `符号链接`, 直到找到真正的文件,
+并为遇到的每个 `符号链接` 在 `目标文件` 中安装相应的 `符号链接`.
+对于每个被安装的 `符号链接`, 解析时都会剥离目录, 只留下文件名,
+这意味着新的符号链接指向与符号链接相同目录下的文件.
+这个特性在一些 `Unix` 系统上很有用.
+在这些系统中, 库被安装成带有 `版本号` 的符号链接链, `较粗略` 的版本指向 `更详细` 的版本.
+`FOLLOW_SYMLINK_CHAIN` 将安装所有这些 `符号链接` 和 `库本身` 到目标目录中.
+例如, 如果你有以下的目录结构.
+
+```bash
 /opt/foo/lib/libfoo.so.1.2.3
-
 /opt/foo/lib/libfoo.so.1.2 -> libfoo.so.1.2.3
-
-/opt/foo/lib/libfoo.so.1 -> libfoo.so.1.2
-
+/opt/foo/lib/libfoo.so.1-->libfoo.so.1.2
 /opt/foo/lib/libfoo.so -> libfoo.so.1
+```
 
-and you do:
+然后令
 
+```cmake
 file(COPY /opt/foo/lib/libfoo.so DESTINATION lib FOLLOW_SYMLINK_CHAIN)
-This will install all of the symlinks and libfoo.so.1.2.3 itself into lib.
+```
 
-See the install(DIRECTORY) command for documentation of permissions, FILES_MATCHING, PATTERN, REGEX, and EXCLUDE options. Copying directories preserves the structure of their content even if options are used to select a subset of files.
+这将把所有的符号链接和 `libfoo.so.1.2.3` 本身安装到 `lib` 中.
 
-The INSTALL signature differs slightly from COPY: it prints status messages, and NO_SOURCE_PERMISSIONS is default.
+关于 `权限`, `FILES_MATCHING`, `PATTERN`, `REGEX` 和 `EXCLUDE` 选项的文档,
+请参见 [install(DIRECTORY)][] 命令.
+复制目录会保留其 `内容的结构`, 即使是使用 `选项` 来选择 文件的 `子集`.
 
-Installation scripts generated by the install() command use this signature (with some undocumented options for internal use).
+命令的 `INSTALL` 签名重载 与 `COPY` 略有不同:
+它打印状态信息, 并且默认为 `NO_SOURCE_PERMISSIONS`.
 
-Changed in version 3.22: The environment variable CMAKE_INSTALL_MODE can override the default copying behavior of file(INSTALL).
+由 [install()][] 命令生成的 `安装脚本` 使用这个签名
+(有一些未归档的选项供内部使用).
 
-file(SIZE <filename> <variable>)
-New in version 3.14.
+*3.22版中的改变*:
+环境变量 [CMAKE_INSTALL_MODE][] 可以覆盖 `file(INSTALL)` 的默认复制行为.
 
-Determine the file size of the <filename> and put the result in <variable> variable. Requires that <filename> is a valid path pointing to a file and is readable.
+### 其他操作
 
++ 确定 `<filename>` 的文件大小并将结果放入 `<variable>` 变量.
+要求 `<filename>` 是指向文件的 `有效路径`, 并且是 `可读的`.
+*3.14版中新增.*
+
+```cmake
+file(SIZE <filename>    <variable>)
+```
+
++ 该子命令查询符号链接 `<linkname>`, 并在结果 `<variable>` 中存储其指向的路径.
+如果<linkname>不存在或者不是 `符号链接`, CMake 会发出 `致命的错误`.
+*3.14版中新增.*
+
+```cmake
 file(READ_SYMLINK <linkname> <variable>)
-New in version 3.14.
+```
 
-This subcommand queries the symlink <linkname> and stores the path it points to in the result <variable>. If <linkname> does not exist or is not a symlink, CMake issues a fatal error.
+注意, 这个命令返回 `raw符号链接路径`, 并不解析 `相对路径`.
+下面是一个关于如何确保获得绝对路径的例子:
 
-Note that this command returns the raw symlink path and does not resolve a relative path. The following is an example of how to ensure that an absolute path is obtained:
-
+```cmake
 set(linkname "/path/to/foo.sym")
 file(READ_SYMLINK "${linkname}" result)
 if(NOT IS_ABSOLUTE "${result}")
   get_filename_component(dir "${linkname}" DIRECTORY)
   set(result "${dir}/${result}")
 endif()
+```
+
++ 创建指向 `<original>` 的链接 `<linkname>`.
+默认情况下, 它将是 `硬链接`, 但提供 `SYMBOLIC` 选项的结果是符号链接.
+硬链接要求 `original` 存在并且是文件, 而不是一个目录.
+如果 `<linkname>` 已经存在, 它将被覆盖.
+*3.14版中的新内容*
+
+```cmake
 file(CREATE_LINK <original> <linkname>
      [RESULT <result>] [COPY_ON_ERROR] [SYMBOLIC])
-New in version 3.14.
+```
 
-Create a link <linkname> that points to <original>. It will be a hard link by default, but providing the SYMBOLIC option results in a symbolic link instead. Hard links require that original exists and is a file, not a directory. If <linkname> already exists, it will be overwritten.
+如果指定了 `<result>` 变量, 则接收操作的状态.
+成功时它被设置为0, 否则就是错误信息.
+如果没有指定 `RESULT`, 并且操作失败, 将发出致命的错误.
 
-The <result> variable, if specified, receives the status of the operation. It is set to 0 upon success or an error message otherwise. If RESULT is not specified and the operation fails, a fatal error is emitted.
+如果 创建链接失败, 指定 `COPY_ON_ERROR` 可以将 `复制文件` 作为后备措施(fallback).
+这对于处理诸如 `<original>` 和 `<linkname>` 在不同的驱动器或挂载点上的情况很有用,
+这将使它们无法形成 `硬链接`.
 
-Specifying COPY_ON_ERROR enables copying the file as a fallback if creating the link fails. It can be useful for handling situations such as <original> and <linkname> being on different drives or mount points, which would make them unable to support a hard link.
++ 为指定的 `<files>...` 和 `<directories>...` 设置权限.
+*3.19版的新内容*
 
-file(CHMOD <files>... <directories>...
-    [PERMISSIONS <permissions>...]
-    [FILE_PERMISSIONS <permissions>...]
+```cmake
+file(CHMOD <files>... <目录>...
+    [PERMISSIONS <permissions>...］
+    [FILE_PERMISSIONS <permissions>...］
     [DIRECTORY_PERMISSIONS <permissions>...])
-New in version 3.19.
+```
 
-Set the permissions for the <files>... and <directories>... specified. Valid permissions are OWNER_READ, OWNER_WRITE, OWNER_EXECUTE, GROUP_READ, GROUP_WRITE, GROUP_EXECUTE, WORLD_READ, WORLD_WRITE, WORLD_EXECUTE, SETUID, SETGID.
+有效的权限是:
+`OWNER_READ`, `OWNER_WRITE`, `OWNER_EXECUTE`,
+`GROUP_READ`, `GROUP_WRITE`, `GROUP_EXECUTE`,
+`WORLD_READ`, `WORLD_WRITE`, `WORLD_EXECUTE`,
+`SETUID`, `SETGID`.
 
-Valid combination of keywords are:
+关键字的有效组合是:
 
-PERMISSIONS
-All items are changed.
++ `PERMISSIONS`;    所有项目都被改变.
++ `FILE_PERMISSIONS`;   只有文件被改变.
++ `DIRECTORY_PERMISSIONS`;  只有目录被改变.
++ `PERMISSIONS` 和 `FILE_PERMISSIONS`; `FILE_PERMISSIONS` 覆盖了文件的 `PERMISSIONS`.
++ `PERMISSIONS` and `DIRECTORY_PERMISSIONS`; `DIRECTORY_PERMISSIONS` 覆盖 目录的 `PERMISSIONS`
++ `FILE_PERMISSIONS` and `DIRECTORY_PERMISSIONS`;
+对文件使用 `FILE_PERMISSIONS`, 对目录使用 `DIRECTORY_PERMISSIONS`.
 
-FILE_PERMISSIONS
-Only files are changed.
++ 与 `CHMOD` 相同, 但递归地改变 `<directories>...` 中存在的文件和目录的 `权限`.
+*3.19版中的新功能.*
 
-DIRECTORY_PERMISSIONS
-Only directories are changed.
-
-PERMISSIONS and FILE_PERMISSIONS
-FILE_PERMISSIONS overrides PERMISSIONS for files.
-
-PERMISSIONS and DIRECTORY_PERMISSIONS
-DIRECTORY_PERMISSIONS overrides PERMISSIONS for directories.
-
-FILE_PERMISSIONS and DIRECTORY_PERMISSIONS
-Use FILE_PERMISSIONS for files and DIRECTORY_PERMISSIONS for directories.
-
+```cmake
 file(CHMOD_RECURSE <files>... <directories>...
      [PERMISSIONS <permissions>...]
      [FILE_PERMISSIONS <permissions>...]
      [DIRECTORY_PERMISSIONS <permissions>...])
-New in version 3.19.
+```
 
-Same as CHMOD, but change the permissions of files and directories present in the <directories>... recursively.
+[CMP0009]: https://cmake.org/cmake/help/latest/policy/CMP0009.html#policy:CMP0009
+[install(DIRECTORY)]: https://cmake.org/cmake/help/latest/command/install.html#command:install
+[install()]: https://cmake.org/cmake/help/latest/command/install.html#command:install
+[CMAKE_INSTALL_MODE]: https://cmake.org/cmake/help/latest/envvar/CMAKE_INSTALL_MODE.html#envvar:CMAKE_INSTALL_MODE
