@@ -154,12 +154,12 @@ Option   Purpose
 + `/openmp:experimental` 启用OpenMP 2.0语言扩展, 并选择OpenMP 3.0+语言扩展.
 + `/openmp:llvm` 使用LLVM运行时间的OpenMP语言扩展.
 + `/permissive[-]` 设置标准一致性模式.
-+ `/std:c++14` C++14标准ISO/IEC 14882:2014(默认).
-+ `/std:c++17` C++17标准ISO/IEC 14882:2017.
-+ `/std:c++20` C++20标准 ISO/IEC 14882:2020.
++ `/std:c++14` C++14标准 `ISO/IEC` 14882:2014(默认).
++ `/std:c++17` C++17标准 `ISO/IEC` 14882:2017.
++ `/std:c++20` C++20标准 `ISO/IEC` 14882:2020.
 + `/std:c++latest` 最新的C++标准草案预览功能.
-+ `/std:c11` C11标准ISO/IEC 9899:2011.
-+ `/std:c17` C17标准ISO/IEC 9899:2018.
++ `/std:c11` C11标准 `ISO/IEC` 9899:2011.
++ `/std:c17` C17标准 `ISO/IEC` 9899:2018.
 + `/vd{0|1|2}`   抑制或启用隐藏的vtordisp类成员.
 + `/vmb` 对成员的指针使用最佳基础.
 + `/vmg` 对成员的指针使用完全通用性.
