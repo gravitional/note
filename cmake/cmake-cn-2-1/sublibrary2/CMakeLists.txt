@@ -9,3 +9,5 @@ target_include_directories(${PROJECT_NAME}
     INTERFACE
     ${PROJECT_SOURCE_DIR}/include
 )
+
+message("//: " ${CMAKE_CURRENT_SOURCE_DIR})

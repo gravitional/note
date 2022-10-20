@@ -100,24 +100,28 @@ message (">>> in parent , value = ${val}")
 set(<variable> <value>... CACHE <type> <docstring> [FORCE])
 ```
 
-+ 首先什么是CACHE变量, 就是在运行cmake的时候,
++ 首先什么是 CACHE 变量, 就是在运行cmake的时候,
 变量的值可能会被缓存到一份文件里即build命令下的CMakeCache.txt,
 当你重新运行cmake的时候, 那些变量会默认使用这个缓存里的值.
-这个变量是全局变量, 整个CMake工程都可以使用该变量.
+这个变量是 `全局变量`, 整个 CMake 工程都可以使用该变量.
 
-+ 在这个文件里, 只要运行 `cmake ..` 命令, 自动会出现一些值, 比如 CMAKE_INSTALL_PREFIX ,
-如果设置set(CMAKE_INSTALL_PREFIX "/usr") ,
-虽然CACHE缓存文件里还有这个CMAKE_INSTALL_PREFIX 变量,
-但是因为我们显示得设置了一个名为CMAKE_INSTALL_PREFIX 的 `正常变量, `
-所以之后使用CMAKE_INSTALL_PREFIX , 值是我们设置的 `正常变量` 的值.
++ 在这个文件里, 只要运行 `cmake ..` 命令, 会自动出现一些值,
+比如 `CMAKE_INSTALL_PREFIX` , 如果设置
 
-+ 如果加上CACHE关键字, 则设置的这个变量会被写入缓存文件中
+    set(CMAKE_INSTALL_PREFIX "/usr")
+
+虽然 `CACHE缓存` 文件里还有这个 `CMAKE_INSTALL_PREFIX` 变量,
+但是因为我们显式设置了名为 `CMAKE_INSTALL_PREFIX` 的 `正常变量`,
+所以之后引用 `CMAKE_INSTALL_PREFIX`, 指向我们设置的 `正常变量` 的值.
+
++ 如果加上 `CACHE` 关键字, 则设置的这个变量会被写入 `缓存文件` 中
 (但如果本身缓存文件中有这个变量, 则不会覆盖缓存中的变量).
-只有加上FORCE关键字, 这个被写入文件的值会覆盖之前文件中存在的同名变量.
+只有加上 `FORCE` 关键字, `缓存文件` 中的值才会在每次运行中被更新.
 
 >[Set Cache Entry](https://cmake.org/cmake/help/latest/command/set.html)
 >设置给定的缓存<变量>(缓存条目).
->由于缓存条目是为了提供用户可设置的值, 所以默认情况下不会覆盖现有的缓存条目. 使用FORCE选项来覆盖现有条目.
+>由于缓存条目是为了提供用户可设置的值, 所以默认情况下不会覆盖现有的缓存条目.
+>使用 `FORCE` 选项来覆盖现有条目.
 
 + 加上 `CACHE` 关键字时, `<type>` 和 `<docstring>` 是必需的.
 

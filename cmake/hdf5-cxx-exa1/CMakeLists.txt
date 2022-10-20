@@ -17,8 +17,8 @@ set(FIND_HDF_COMPONENTS CXX shared)
 find_package(HDF5 NAMES "hdf5" COMPONENTS ${FIND_HDF_COMPONENTS})
 
 # 可以用 file 命令转换 windows 平台的路径分隔符, 但还是要先转义 \, 替换成 \\
-#file(TO_CMAKE_PATH "C:\\Program Files\\HDF_Group\\HDF5\\1.12.2" myhdfpath)
-#message("<< The converted path: " ${myhdfpath})
+# file(TO_CMAKE_PATH "C:\\Program Files\\HDF_Group\\HDF5\\1.12.2" myhdfpath)
+# message("<< The converted path: " ${myhdfpath})
 
 # 如果找到了 HDF5 库
 if(HDF5_FOUND)
@@ -56,3 +56,17 @@ target_compile_options(h5test1 PRIVATE "/I${HDF5_INCLUDE_DIR}")
 # 添加 链接库 Library 的位置, PUBLIC, PRIVATE 是属性声明
 # 见https://sfumecjf.github.io/cmake-examples-Chinese/01-basic/1.3%20%20Static%20Library.html
 target_link_libraries(h5test1 PUBLIC ${LINK_LIBS})
+
+# 添加宏
+macro(SetCurrentIncludeDirs DIRS)
+    set(${DIRS} ${CMAKE_SOURCE_DIR})
+    file(GLOB_RECURSE PATHS LIST_DIRECTORIES true *)
+
+    foreach(PATH ${PATHS})
+        if(IS_DIRECTORY ${PATH})
+            list(APPEND ${DIRS} ${PATH})
+        endif()
+    endforeach()
+
+    set(${DIRS} ${${DIRS}} CACHE INTERNAL "")
+endmacro()

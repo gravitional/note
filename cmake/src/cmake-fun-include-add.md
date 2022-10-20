@@ -1,4 +1,30 @@
-# dffd
+# cmake add include 类指令
+
+## include()
+
+从 `文件` 或 `模块` 中加载和运行CMake代码.
+
+```cmake
+include(<file|module> [OPTIONAL] [RESULT_VARIABLE <var>]
+                      [NO_POLICY_SCOPE])
+```
+
+从给定的文件中加载并运行 `CMake` 代码.
+
+变量的读写遵从调用者的 scope(dynamic scoping).
+如果存在 `OPTIONAL`, 找不到文件不会报错.
+
+如果给出 `RESULT_VARIABLE` 选项,
+`<var>`将被设置为 被引入文件的绝对路径, 如果没有找到, 则设置为 `NOTFOUND`.
+
+如果指定了 `模块` 而不是 `文件`,
+首先在 `CMAKE_MODULE_PATH` 中搜索名称为 `<modulename>.cmake` 的文件, 然后在 `CMake` 模块目录中搜索.
+
+这有一个例外: 如果调用 `include()` 的文件本身位于CMake内置模块目录中,
+那么首先搜索CMake内置模块目录, 然后搜索 `CMAKE_MODULE_PATH`.
+另请参见策略 [CMP0017][].
+
+[CMP0017]: https://cmake.org/cmake/help/latest/policy/CMP0017.html#policy:CMP0017
 
 ## add_compile_definitions()
 
@@ -229,3 +255,40 @@ add_definitions(-DFOO -DBAR ...)
 [directory]: https://cmake.org/cmake/help/latest/prop_dir/COMPILE_DEFINITIONS.html#prop_dir:COMPILE_DEFINITIONS
 [target]: https://cmake.org/cmake/help/latest/prop_tgt/COMPILE_DEFINITIONS.html#prop_tgt:COMPILE_DEFINITIONS
 [source file]: https://cmake.org/cmake/help/latest/prop_sf/COMPILE_DEFINITIONS.html#prop_sf:COMPILE_DEFINITIONS
+
+## add_subdirectory()
+
+在 `build` 中添加一个 `子目录`.
+
+```cmake
+add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL] [SYSTEM])
+```
+
+在构建中添加 `子目录`.
+`source_dir` 指定了源 `CMakeLists.txt` 和 `代码文件` 所在的目录.
+如果它是 `相对路径`, 它将被计算为与当前目录有关(典型用法), 但它也可以是 `绝对路径`.
+
+`binary_dir` 指定了放置输出文件的目录. 如果它是相对路径,
+它将被计算为与当前输出目录有关, 但它也可以是绝对路径.
+
+如果没有指定 `binary_dir`, 在扩展任何相对路径之前,
+将使用 `source_dir` 的值(典型用法).
+在当前 `输入文件`(父目录 CMakeList.txt) 的处理进行到 `add_subdirectory`命令时,
+CMake 将立即处理指定目录中的 `CMakeLists.txt` 文件,
+接着再处理父目录 CMakeList.txt 中`add_subdirectory` 后面的语句.
+
+如果提供了 `EXCLUDE_FROM_ALL` 参数,
+那么子目录中的目标将默认不包括在父目录的 `ALL目标` 中,
+并且将被排除在 `IDE工程文件` 之外. 用户必须明确地在子目录中构建目标.
+
+这是用来, 当子目录包含项目中 `有用` 但 `不必要` 的独立部分时使用, 如一组 `用例`.
+通常情况下, 子目录应该包含它自己的 `project()` 命令调用,
+这样将在子目录中生成 `完整的构建系统`(比如VS IDE的解决方案文件).
+
+请注意, `目标间的依赖关系`(inter-target dependencies)可以超越这种排除指定.
+如果父项目构建的目标依赖于子目录中的目标,
+被依赖的目标将被包含在父项目的 `构建系统` 中以满足 `依赖关系`.
+
+如果提供了 `SYSTEM` 参数, 子目录的 `SYSTEM 目录属性` 将被设置为真.
+这个属性被用来初始化, 在该 `子目录下`创建的每个 target 的 `SYSTEM属性`.
+在编译 consumers 时, `SYSTEM` 设置为 `true` 的 target 的 `include目录` 将被视为 `SYSTEM`.
