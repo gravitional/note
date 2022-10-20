@@ -3,21 +3,20 @@
 
 int main(int argc, char *argv[])
 {
-    int steps = 10;                        // 迭代次数
-    const int totalsize = 16;              // 矩阵维度
-    const int mysize = 4;                  // MPI 分块数目, 4 个 processes
-    double A[totalsize][mysize + 2] = {0}; // all proc data matrix
-    double B[totalsize][mysize + 2] = {0}; // all proc buffer matrix
-    int begin_col = 1;                     // all proc 矩阵的起始列
-    int end_col = mysize + 1;              // all proc 矩阵的结束列
-    int myid = 0, numprocs = 0;
-    int left = 0, right = 0;
-    int tag1 = 3, tag2 = 4; // MPI 发送接收 tag
-    MPI_Status status;      // MPI 状态
-    MPI_Init(&argc, &argv);
+    int steps = 10;                  // 迭代次数
+    const int totalsize = 16;        // 矩阵维度
+    const int mysize = 4;            // MPI 分块数目, 4 个 processes
+    double A[totalsize][mysize + 2]; // all proc data matrix
+    double B[totalsize][mysize + 2]; // all proc buffer matrix
+    // all proc 矩阵的起始列，结束列
+    int begin_col = 1;
+    int end_col = mysize + 1;
+    MPI_Status status; // MPI 状态
     // MPI 初始化
+    MPI_Init(&argc, &argv);
     //	int thread_support = 0;
     // MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &thread_support);
+    int myid = 0, numprocs = 0;
     // 获取rank
     MPI_Comm_rank(
         MPI_COMM_WORLD /*MPI_Comm comm*/,
@@ -29,7 +28,7 @@ int main(int argc, char *argv[])
         &numprocs       /* int* size */
     );
     // 打印进程信息
-    std::cout << "Process " << myid << " of " << numprocs << "is alive!" << std::endl;
+    std::cout << "Process " << myid << "of " << numprocs << "is alive!";
     // 4 proc 矩阵赋初值, 左右额外两列用于交换
     for (int j = 0; j < mysize + 2; j++)
     {
@@ -57,6 +56,7 @@ int main(int argc, char *argv[])
         A[totalsize - 1][i] = 8.0;
     }
     // 计算相邻 proc 矩阵
+    int left = 0, right = 0;
     if (myid > 0)
     {
         left = myid - 1;
@@ -73,6 +73,8 @@ int main(int argc, char *argv[])
     {
         right = MPI_PROC_NULL;
     }
+    // MPI 发送接收 tag
+    int tag1 = 3, tag2 = 4;
     // 雅可比迭代 整体步数
     for (int i = 0; i < steps; i++)
     {
@@ -137,12 +139,12 @@ int main(int argc, char *argv[])
         }
     }
     // 打印迭代结果
-    for (int row = 1; row < totalsize - 1; row++)
+    for (int i = 1; i < totalsize - 1; i++)
     {
         std::cout << "process(" << myid << "): ";
-        for (int col = begin_col; col < end_col; col++)
+        for (int j = begin_col; j < end_col; i++)
         {
-            std::cout << A[row][col] << "\t\t";
+            std::cout << A[i][j];
         }
         std::cout << std::endl;
     }
