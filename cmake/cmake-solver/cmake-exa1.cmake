@@ -4,7 +4,7 @@ set(LIB_NAME "Electrics")
 # 添加 preprocessor 定义
 add_compile_definitions()
 
-# 自定义 macro
+# 自定义 macro, 将所有子目录存入变量
 SetCurrentIncludeDirs(ELECTRICS_INCLUDE_DIR)
 
 # 添加到本 txt 所有 target 的 INCLUDE_DIRECTORIES 属性, 用于编译器搜索 include 文件
@@ -33,7 +33,8 @@ target_link_libraries(${LIB_NAME} PRIVATE ${COMMON_LIBS} finiteelement embase)
 # 设置目标属性, 输出名称
 set_target_properties(${LIB_NAME} PROPERTIES OUTPUT_NAME "electrics")
 
-# 在 顶层 targets 之间添加 依赖关系; add_dependencies(T  T的依赖项...)
+# 在 顶层 targets 之间添加 依赖关系, 影响 build 次序;
+# add_dependencies(T  T的依赖项...)
 add_dependencies(${LIB_NAME} EMBase)
 
 # 在编译源文件时添加 `-D` define flags, deprecated

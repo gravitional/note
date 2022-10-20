@@ -332,8 +332,9 @@ find_package() #查找CMAKE_FRAMEWORK_PATH对应的库aux_source_directory() #�
 
 ### find_package模式
 
-find_package()有Module模式(基本用法)和Config模式(完全用法), 其中Module模式是基础, Config
-模式则提供复杂高级功能.  find_package是否使用Config模式可以通过下列条件判断:
+find_package() 有 Module模式(基本用法)和Config模式(完全用法), 
+其中Module模式是基础, Config 模式则提供复杂高级功能.
+find_package是否使用Config模式可以通过下列条件判断:
 (1)find_package()中指定CONFIG关键字(2)find_package()中指定NO_MODULE关键字
 (3)find_package()中使用了不再Module模式下所有支持配置的关键字
 
@@ -449,5 +450,5 @@ ENDIF(HELLO_FOUND)
 
 ## 参考
 
-[](https://chenxiaowei.gitbook.io/cmake-cookbook/preface-chinese)
-[](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
+[cmake-cookbook](https://chenxiaowei.gitbook.io/cmake-cookbook/preface-chinese)
+[cmake-tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)

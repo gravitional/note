@@ -98,7 +98,7 @@ h5dump -a /attr1 -a /attr2 foo.h5 #正确
 
 `file`; 要检查的文件.
 
-### 上面列出的选项参数定义如下
+### 选项参数定义
 
 + `D`;
 在打开文件时使用哪个文件驱动.
@@ -216,7 +216,7 @@ h5ls(1), h5diff(1), h5repart(1), h5import(1), gif2h5(1), h52gif(1), h5perf(1)
 + [HDF5 XML Schema](http://hdf.ncsa.uiuc.edu/DTDs/HDF5-File.xsd)
 + [HDF5 XML information ](http://hdf.ncsa.uiuc.edu/HDF5/XML/)
 
-## Pages related to h5dump
+## h5dump相关页面
 
 + h5diff (1) - Compares two HDF5 files and reports the differences.
 + h5c++ (1) - Helper script to compile HDF5 C++ applications.

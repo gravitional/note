@@ -153,3 +153,36 @@ MPI_Finalize();
 之后将一步一步讲解如何用Fortran和C++写一个MPI程序的全部过程.
 
 > 参考资料; 都志辉. 高性能计算并行编程技术:MPI并行程序设计[M]. 清华大学出版社, 2001.
+
+## Windows mpiexec help
+
+在多个主机上启动一个应用程序. 使用方法:
+
+```Compares
+mpiexec [options] executable [args] [ : [options] exe [args] : ... ]
+mpiexec -configfile <file name>
+```
+
+常用选项:
+
++ `-n <num_processes> `
++ `-env <env_var>`
++ `-env <env_var_name> <env_var_value>`
++ `-wdir <working_directory>`
++ `-hosts n host1 [m1] host2 [m2] ... hostn [mn]`
++ `-cores <num_cores_per_host> `
++ `-lines`
++ `-debug [0-3]`
++ `-logfile <log file>`
+
+例子:
+
+```powershell
+mpiexec -n 4 pi.exe
+mpiexec -hosts 1 server1 master : -n 8 worker
+```
+
+对于完整的选项列表, 运行 `mpiexec -help2`
+关于环境变量的列表, 请运行 `mpiexec -help3`
+
+你可以通过电子邮件联系微软MPI团队: askmpi@microsoft.com
