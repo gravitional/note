@@ -1,5 +1,6 @@
 #include "mpi.h"
 #include <iostream>
+#include <iomanip>
 
 int main(int argc, char *argv[])
 {
@@ -14,22 +15,22 @@ int main(int argc, char *argv[])
     int left = 0, right = 0;
     int tag1 = 3, tag2 = 4; // MPI 发送接收 tag
     MPI_Status status;      // MPI 状态
-    MPI_Init(&argc, &argv);
+    //----------------------------------
     // MPI 初始化
-    //	int thread_support = 0;
-    // MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &thread_support);
+    MPI_Init(&argc, &argv);
     // 获取rank
     MPI_Comm_rank(
-        MPI_COMM_WORLD /*MPI_Comm comm*/,
-        &myid /*int* size*/
+        MPI_COMM_WORLD // MPI_Comm comm,
+        & myid         // int* size
     );
     //获取进程数
     MPI_Comm_size(
-        MPI_COMM_WORLD, /*MPI_Comm comm*/
-        &numprocs       /* int* size */
+        MPI_COMM_WORLD, // MPI_Comm comm
+        &numprocs       // int* size
     );
     // 打印进程信息
-    std::cout << "Process " << myid << " of " << numprocs << "is alive!" << std::endl;
+    std::cout << "Process " << myid << " of " << numprocs << " is alive!" << std::endl;
+    //----------------------------------
     // 4 proc 矩阵赋初值, 左右额外两列用于交换
     for (int j = 0; j < mysize + 2; j++)
     {
@@ -139,10 +140,12 @@ int main(int argc, char *argv[])
     // 打印迭代结果
     for (int row = 1; row < totalsize - 1; row++)
     {
-        std::cout << "process(" << myid << "): ";
+        std::cout << "proc (" << myid << "):  ";
         for (int col = begin_col; col < end_col; col++)
         {
-            std::cout << A[row][col] << "\t\t";
+            std::cout << std::setiosflags(std::ios_base::left)
+                      << std::setw(15) << A[row][col]
+                      << std::resetiosflags(std::ios_base::left);
         }
         std::cout << std::endl;
     }

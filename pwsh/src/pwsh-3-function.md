@@ -393,7 +393,7 @@ End:   The input is 1 2 4
 ```
 
 当 `Begin` 语句运行时, 该函数没有来自管道的输入.
-`End` 语句在函数拥有这些`值`后运行.
+`End` 语句在函数拥有这些 `值` 后运行.
 
 如果函数有 `Process` 关键字, `$input` 中的每个对象都会从 `$input` 中删除, 并分配给 `$_`.
 下面的例子有 `Process` 语句列表:
@@ -408,7 +408,7 @@ function Get-PipelineInput
 
 在这个例子中, 每个被输送到 `函数` 的 `对象` 都被送到 `Process` 语句列表中.
 `Process` 语句在每个对象上运行, 每次一个对象.
-当函数到达 `End` 关键字时, `$input` 自动变量为 空.
+当函数到达 `End` 关键字时, `$input` 自动变量为 `空`.
 
 ```PowerShell
 1,2,4 | Get-PipelineInput
@@ -420,9 +420,9 @@ Processing:  4
 End:   The input is:
 ```
 
-欲了解更多信息, 请参见[Using Enumerators][]
+欲了解更多信息, 请参见 [Using Enumerators][]
 
-[Using Enumerators] :https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables?view=powershell-7.2#using-enumerators
+[Using Enumerators]: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables
 
 ## 过滤器,Filters
 
