@@ -36,9 +36,9 @@ include(<file|module> [OPTIONAL] [RESULT_VARIABLE <var>]
 add_compile_definitions(<definition> ...)
 ```
 
-将预处理器定义添加到 `编译器命令行` 中.
+将 `预处理器定义` 添加到 `编译器命令行` 中.
 
-预处理器定义被添加到当前 `CMakeLists` 文件的 [COMPILE_DEFINITIONS][] 目录属性中.
+`预处理器定义` 被添加到当前 `CMakeLists` 文件的 [COMPILE_DEFINITIONS][] 目录属性中.
 它们也被添加到当前 `CMakeLists` 文件中每个 `target` 的 [COMPILE_DEFINITIONS][] 目标属性中.
 
 定义用 `VAR` 或 `VAR=value` 语法指定.不支持函数式定义.

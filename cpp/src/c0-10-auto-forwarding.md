@@ -4,6 +4,37 @@
 [auto&&, 万能引用和完美转发](https://zhuanlan.zhihu.com/p/435689642?utm_id=0)
 [C++(二): 如何确定表达式的值类型](https://zhuanlan.zhihu.com/p/435605194)
 
+### 左值 or 右值
+
+到底什么时候是左值?什么时候是右值?是不是有点混乱?
+在 C++ 中, 每个表达式(expression)都有两个特性:
+
++ has identity? —— 是否有唯一标识, 比如 `地址`, `指针`.
+有唯一标识的表达式在 C++ 中被称为 `glvalue`(generalized lvalue),
+为了方便记忆, 不妨称之为 `符号值`(symbol value).
+
++ can be moved from? —— 是否可以安全地移动(编译器), 既能够转移 `所有权`.
+可以安全地移动的表达式在 C++ 中被成为 `rvalue`(右值).
+可以通过等号(`=`), 转移所有权给左边变量.
+
+根据这两个特性, 可以将表达式分成 4 类:
+
++ 唯一, 不能移动 - 这类表达式在 C++ 中被称为 `lvalue`.
++ 唯一, 可以移动 - 这类表达式在 C++ 中被成为 `xvalue`(expiring value).
++ 不唯一, 可以移动 - 这类表达式在 C++ 中被成为 `prvalue`(pure rvalue).
++ 不唯一, 不可移动 -C++ 中不存在这类表达式.
+
+简单总结一下这些 value categories 之间的关系:
+
+可以移动的值都叫 `rvalue`, 包括 `xvalue` 和 `prvalue`.
+有唯一标识的值都叫 `glvalue`, 包括 `lvalue` 和  `xvalue`.
+`std::move` 的作用就是将 `lvalue` 转换成 `xvalue`.
+
+![C-expression](https://ask.qcloudimg.com/http-save/7176906/t89kd9ja5y.png?imageView2/2/w/1620)
+
+对于一个变量 `A`, `A` 的类型是 C++ 语言中解析的类型,
+`A` 的值类型是 `A` 的底层实现类型, 如 `int&`.
+
 ## auto&&,万能引用和完美转发
 
 >我们在考虑表达式的 `值类型` 是什么时, 真的是在关心它的 `value type`吗?
@@ -16,7 +47,7 @@
 对于一个 `纯右值` 而言, 它的生存周期只有 `一行代码`,
 为了延长它的生存周期, 我们可以用一个 `右值引用` 将其绑定,
 一旦绑定它就变成了一个左值, 虽然类型为 `T&&`.
-这样就产生了一个疑问, 函数重载是依据 `value type` 还是 `arg type`(声明类型)?
+这样就产生了一个疑问, 函数重载是依据 `value type` 还是 `argument type`(声明类型)?
 也就是实参类型, 还是 形参类型?
 
 ```cpp
@@ -304,18 +335,21 @@ int main() {
 }
 ```
 
-简单封装了一个类 Foo, 重点是实现:
+简单封装了一个类 `Foo`, 重点是实现:
 
-拷贝语意: 拷贝构造函数 Foo(const Foo&) , 拷贝赋值操作符 Foo& operator=(const Foo&) .
-移动语意: 移动构造函数 Foo(Foo&&)  , 移动赋值操作符 Foo& operator=(Foo&&) .
-拷贝语意相信大部分人都比较熟悉了, 也比较好理解. 在这个例子中, 每次都会拷贝 s_ 和 v_ 两个成员, 最后 cf1, cf2, cf3 三个对象的内容都是一样的.
+拷贝语意: 拷贝构造函数 `Foo(const Foo&)`, 拷贝赋值操作符 `Foo& operator=(const Foo&)`.
+移动语意: 移动构造函数 `Foo(Foo&&)`, 移动赋值操作符 `Foo& operator=(Foo&&)`.
+拷贝语意相信大部分人都比较熟悉了, 也比较好理解.
+在这个例子中, 每次都会拷贝 `s_` 和 `v_` 两个成员, 最后 `cf1`, `cf2`, `cf3` 三个对象的内容都是一样的.
 
-每次执行移动语意, 是分别调用 s_ 和 v_ 的移动语意函数——理论上只需要对内部指针进行修改, 所以效率较高.
-执行移动语意的代码片段了出现了一个标准库中的函数 std::move —— 它可以将参数强制转换成一个右值.
-本质上是告诉编译器, 我想要 move 这个参数——最终能不能 move 是另一回事——可能对应的类型没有实现移动语意, 可能参数是 const 的.
+每次执行移动语意, 是分别调用 `s_` 和 `v_` 的移动语意函数——理论上只需要对内部指针进行修改, 所以效率较高.
+执行移动语意的代码片段了出现了一个标准库中的函数 `std::move` —— 它可以将参数强制转换成一个右值.
+本质上是告诉编译器, 我想要 `move` 这个参数——
+最终能不能 `move` 是另一回事——可能对应的类型没有实现移动语意, 可能参数是 `const` 的.
 
-有一些场景可能拿到的值直接就是右值, 不需要通过 std::move 强制转换, 比如:
+有一些场景可能拿到的值直接就是右值, 不需要通过 `std::move` 强制转换, 比如:
 
+```cpp
 Foo GetFoo() {
   return Foo("GetFoo", std::vector<int>(11));
 }
@@ -323,20 +357,22 @@ Foo GetFoo() {
 Foo f3("world", v3);
 ....
 f3 = GetFoo(); // GetFoo 返回的是一个右值, 调用移动赋值操作符
+```
 
 ### 完美转发
 
-C++ 通过了一个叫 std::forward 的函数模板来实现完美转发.
-这里直接使用 Effective Modern C++ 中的例子作为说明. 在前面的例子上, 我们增加如下的代码:
+C++ 通过了一个叫 `std::forward `的函数模板来实现完美转发.
+这里直接使用 Effective Modern C++ 中的例子作为说明.
+在前面的例子上, 我们增加如下的代码:
 
 ```cpp
-// 接受一个 const 左值引用
+// 重载判断: 接受 const 左值引用
 void Process(const Foo& f) {
   std::cout << "lvalue reference" << std::endl;
   // ...
 }
 
-// 接受一个右值引用
+// 重载判断: 接受右值引用
 void Process(Foo&& f) {
   std::cout << "rvalue reference" << std::endl;
   // ...
@@ -351,45 +387,19 @@ void LogAndProcessNotForward(T&& a) {
 template <typename T>
 void LogAndProcessWithForward(T&& a) {
   std::cout << a.Info() << std::endl;
-  Process(std::forward<T>(a));
+  Process(std::forward<T>(a)); // 区别在于调用了 std::forward
 }
 
- LogAndProcessNotForward(f3);                         // 输出 lvalue reference
- LogAndProcessNotForward(std::move(f3));  // 输出 lvalue reference
+LogAndProcessNotForward(f3);             // 输出 lvalue reference
+LogAndProcessNotForward(std::move(f3));  // 输出 lvalue reference
 
- LogAndProcessWithForward(f3);                        // 输出 lvalue reference
- LogAndProcessWithForward(std::move(f3));  // 输出 rvalue reference
+LogAndProcessWithForward(f3);            // 输出 lvalue reference
+LogAndProcessWithForward(std::move(f3)); // 输出 rvalue reference
 ```
 
- LogAndProcessNotForward(f3); 和 LogAndProcessWithForward(f3);
- 都输出 "lvalue reference", 这一点都不意外, 因为 f3 本来就是一个左值.
- LogAndProcessNotForward(std::move(f3));
- 输出 "lvalue reference" 是因为虽然参数 a 绑定到一个右值, 但是参数 a 本身是一个左值.
- LogAndProcessWithForward(std::move(f3));
- 使用了 std::forward 对参数进行转发,
- std::forward 的作用就是: 当参数是绑定到一个右值时, 就将参数转换成一个右值.
-
-### 左值 or 右值
-
-到底什么时候是左值?什么时候是右值?是不是有点混乱?
-在 C++ 中, 每个表达式(expression)都有两个特性:
-
-+ has identity? —— 是否有唯一标识, 比如 `地址`, `指针`.
-有唯一标识的表达式在 C++ 中被称为 glvalue(generalized lvalue).
-+ can be moved from? —— 是否可以安全地移动(编译器).
-可以安全地移动的表达式在 C++ 中被成为 rvalue.
-
-根据这两个特性, 可以将表达式分成 4 类:
-
-+ 唯一, 不能移动 - 这类表达式在 C++ 中被称为 `lvalue`.
-+ 唯一, 可以移动 - 这类表达式在 C++ 中被成为 `xvalue`(expiring value).
-+ 不唯一, 不可移动 - 这类表达式在 C++ 中被成为 `prvalue`(pure rvalue).
-+ 不唯一, 不可移动 -C++ 中不存在这类表达式.
-
-简单总结一下这些 value categories 之间的关系:
-
-可以移动的值都叫 `rvalue`, 包括 `xvalue` 和 `prvalue`.
-有唯一标识的值都叫 `glvalue`, 包括 `lvalue` 和  `xvalue`.
-`std::move` 的作用就是将 `lvalue` 转换成 `xvalue`.
-
-![C-expression](https://ask.qcloudimg.com/http-save/7176906/t89kd9ja5y.png?imageView2/2/w/1620)
++ `LogAndProcessNotForward(f3);` 和 `LogAndProcessWithForward(f3);` 都输出 `lvalue reference`,
+这一点都不意外, 因为 `f3` 本来就是左值.
++ `LogAndProcessNotForward(std::move(f3));` 输出 `lvalue reference` 是因为,
+虽然参数 `a` 绑定到右值, 但是参数 `a` 本身是左值.
++ `LogAndProcessWithForward(std::move(f3));` 使用了 `std::forward` 对参数进行转发,
+`std::forward` 的作用就是: 当参数绑定到 `右值` 时, 就将参数转换成 `右值`.
