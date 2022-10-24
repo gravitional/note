@@ -4,9 +4,9 @@
 [auto&&, 万能引用和完美转发](https://zhuanlan.zhihu.com/p/435689642?utm_id=0)
 [C++(二): 如何确定表达式的值类型](https://zhuanlan.zhihu.com/p/435605194)
 
-### 左值 or 右值
+## 左值 or 右值
 
-到底什么时候是左值?什么时候是右值?是不是有点混乱?
+到底什么时候是 `左值`? 什么时候是 `右值`?是不是有点混乱?
 在 C++ 中, 每个表达式(expression)都有两个特性:
 
 + has identity? —— 是否有唯一标识, 比如 `地址`, `指针`.
@@ -35,6 +35,41 @@
 对于一个变量 `A`, `A` 的类型是 C++ 语言中解析的类型,
 `A` 的值类型是 `A` 的底层实现类型, 如 `int&`.
 
+### 表达式类型和值类型
+
+在编程语言中, 变量 `a`(标识符) 可以 `绑定`(bind) 到另一个的表达式上 `expr`
+(可以简单也可以复杂), 例如:
+
+```cpp
+int a=10;
+const int& b=10;
+std::string a= "Hello, world";
+
+const int &b = 5; // 指向常量的 左值引用
+int &&c = 5; // 指向右值的 右值引用
+c=10; // c 指向的内容变成 10
+
+void g() {}; //定义一个函数
+void (&a)() = g; //指向函数的 左值引用
+void (&&a)() = g; //指向函数的 右值引用
+```
+
++ 变量 `a` 的 `表达式类型`(expr type), 指的是 `a` 绑定的内容(指向的目标)的类型, 例如:
+    + `int a=10;`, `a` 的 expr type 是 `int`;
+    + `const int& b=10`,  `b` 的 expr type 是 `const int&`;
+    + `int&& c = 5;`, `c` 的 expr type 是 `int&&`.
+
++ 而变量 `a`  的 `值类型`(value type), 指的是变量 `a` 本身的 `lvalue`, `rvalue`, `xvlaue` 分类.
+    + `引用`(reference) 可以看成 `变量的别名`, 反过来, 普通变量也可以看成是 `引用`.
+    只不过 `解引用` 过程是编译器通过 `符号表` 自动完成的.
+    + `引用` 的底层是通过 `指针`(pointer) 实现的, `指针` 是存储内存地址的数据类型,
+    通常定义的 `指针` 具有唯一标识符, 不可移动, 所以是 `lvalue`,
+    + 所以 `普通变量`,  `指针`, `引用` 的 `值类型` 都是  `lvalue`.
+
++ 函数的 `左值引用` 和 `右值引用` 重载, 依赖的是 `函数参数`(argument) 的 `值类型`, 而不是 `表达式类型`.
+其中 `rvalue` 被隐含地转换成 `xvalue`(唯一标识符+可以改变所有权),
+所以参数类型要么是 `lvalue`, 要么是 `xvalue`.
+
 ## auto&&,万能引用和完美转发
 
 >我们在考虑表达式的 `值类型` 是什么时, 真的是在关心它的 `value type`吗?
@@ -44,19 +79,18 @@
 在上一篇文章中, 介绍了C++中一共有三种值类型,
 它们分别为 `左值`, `纯右值` 和 `将亡值`.
 
-对于一个 `纯右值` 而言, 它的生存周期只有 `一行代码`,
-为了延长它的生存周期, 我们可以用一个 `右值引用` 将其绑定,
+对于一个 `纯右值` 而言, 它的 `生存周期` 只有 `一行代码`,
+为了延长它的 `生存周期`, 我们可以用一个 `右值引用` 将其绑定,
 一旦绑定它就变成了一个左值, 虽然类型为 `T&&`.
-这样就产生了一个疑问, 函数重载是依据 `value type` 还是 `argument type`(声明类型)?
-也就是实参类型, 还是 形参类型?
+这样就产生了一个疑问, 函数重载是依据 `value type` 还是 `expr type`(表达式类型)?
 
 ```cpp
 void f(int &&a) { //右值引用重载
-    std::cout << "rvalue" << std::endl;
+    std::cout << "overload: rvalue" << std::endl;
 }
 
 void f(int &a) { //左值引用重载
-    std::cout << "lvalue" << std::endl;
+    std::cout << "overload: lvalue" << std::endl;
 }
 
 void g(int &&a) {
@@ -66,13 +100,14 @@ void g(int &&a) {
     f(a);
 }
 
+// a 的 expr 类型是 int&&, 但 int&& 本身的 value type 还是 lvalue
 g(10);
 
 //输出:
 
 The type of a : int&&
 The value type of a is lvalue : true
-lvalue
+overload: lvalue
 ```
 
 从上述输出中可以看出, 函数的 `左值引用` 和 `右值引用` 重载,
@@ -86,22 +121,20 @@ lvalue
 接下来的任务, 就是区分出传入的表达式, 是 `左值` 还是 `将亡值`, 一共有三方法:
 
 + 上述例子中函数的 `左值引用` 和 `右值引用` 重载
-+ 模板方法+万能引用+完美转发
-+ `auto&&` + 完美转发
++ `模板方法` + `万能引用` + `完美转发`
++ `auto&&` + `完美转发`
 
 ### 模板方法+万能引用+完美转发
 
-有了上述一的方法,
-很自然的我们可以想到模板的方法, 将两个重载函数合为一个函数模板.
+有了上述一的方法, 很自然的我们可以想到模板的方法,
+将两个重载函数合为一个函数模板.
 
-+ 第一步; 合并两个重载函数变为 `函数模板`, 并引入万能引用`T&&`.
-万能引用中的 `T`, 推导的是 `argument expr` 的 `value type`,
-当传入 `左值` 时, `T` 推导为 `T&`, 并且函数体中 `a` 的 `type` 变为 `T&`;
-当传入 `将亡值` 时, `T` 推导为 `T&&`, 并且函数体中 `a` 的类型变为 `T&&`.
-
-+ 所以最后 `a` 的类型只与传入表达式的 `value type` 有关,
-但是不管传入表达式的 `值类型` 是什么, `a` 的值类型都会变为 `左值`.
-即使 `参数a` 绑定到右值, 但是 `参数a` 本身是左值.
++ 第一步; 合并两个重载函数变为一个函数模板, 并引入万能引用T&&.
+万有引用中的T, 推导的是表达式的值类型,
+当传入左值时, T推导为T&, 并且a的类型变为T&;
+当传入一个将亡值时, T推导为T&&, 并且a的类型变为T&&.
+所以最后a的类型只与传入表达式的值类型有关,
+但是不管传入表达式的值类型是什么, a的值类型都会变为左值.
 
 + 这其中会有一个 `引用折叠`, 即如果传入的 `a`本身就是左值/右值引用,
 则 `& &&` 会变为 `&`; `&& &&` 会变为 `&&`, 因此最终不会产生引用的引用.
@@ -110,9 +143,9 @@ lvalue
 template<typename T>
 void f(T&& a) {
     if constexpr(is_lvalue<decltype((a))>){
-        std::cout << "lvalue" << std::endl;
+        std::cout << "overload: lvalue" << std::endl;
     }else if constexpr(is_xvalue<decltype((a))>){
-        std::cout << "xvalue" << std::endl;
+        std::cout << "overload: xvalue" << std::endl;
     }
 }
 ```
@@ -122,28 +155,25 @@ void f(T&& a) {
 ```out
 The type of a : int&&
 The value type of a is lvalue : true
-lvalue
+overload: lvalue
 ```
 
-+ 第二步; 使 `a` 的 `arg type` 同步为 `value type`,
-在第一步中我们已经知道, `a` 的 `type` 是传入的表达式的 `value type`.
-那么我们就可以利用 `decltype` 来获 `value type`,
-并且利用 `static_cast<decltype(a)>(a)` 来将 `a` 的类型转化为 `a` 的值类型.
-即确保 形参的类型 等于 实参的类型.
++ 第二步 将a的值类型与表达式的值类型进行同步, 在第一步中, 我们已经知道, 传入的表达式的值类型变为了a的类型.
+那么我们就可以利用decltype来获取值类型, 并且利用static_cast<decltype(a)>(a)来将a的类型转化为a的值类型.
 
 ```cpp
 template<typename T>
 void f(T&& a) {
     if constexpr(is_lvalue<
         decltype((
-            static_cast<decltype(a)>(a) // 根据传给 a 实参 type, 更新 a 的type
+            static_cast<decltype(a)>(a) // 根据 a 的 expr type, 更新 a 的type
             ))>){
-        std::cout << "lvalue" << std::endl;
+        std::cout << "overload: lvalue" << std::endl;
     }else if constexpr(is_xvalue<
                 decltype((
                     static_cast<decltype(a)>(a) // decltype 见 ZhengLi,P55, 用于编译期获取expr类型
                     ))>){
-        std::cout << "xvalue" << std::endl;
+        std::cout << "overload: xvalue" << std::endl;
     }
 }
 ```
@@ -152,15 +182,15 @@ void f(T&& a) {
 
 ```cpp
 int a = 20;
-    f(10);
-    f(a);
+f(10);
+f(a);
 // 输出:
-xvalue
-lvalue
+overload: xvalue
+overload: lvalue
 ```
 
-到此, 我们得到了想要的结果. 其中 `static_cast<decltype(a)>(a)` 和
-标准库中的完美转发函数 `std::forward<T>(a)` 的原理是一样的.
+到此, 我们得到了想要的结果. 其中 `static_cast<decltype(a)>(a)`
+和标准库中的 完美转发函数 `std::forward<T>(a)` 的原理是一样的.
 
 ```cpp
 template<typename T>

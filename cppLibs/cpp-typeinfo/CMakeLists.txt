@@ -11,3 +11,5 @@ add_executable(typeinfo typeinfo.cpp my_type_info.h)
 # 指定生成目标
 add_executable(valuetype value_type.cpp my_type_info.h)
 
+# 指定生成目标
+add_executable(lrvalue lrvalue.cpp my_type_info.h)

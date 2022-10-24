@@ -4,17 +4,17 @@
 
 ![type](https://pic4.zhimg.com/80/v2-40f626aa77172dac408c0c0644c07aef_720w.webp)
 
-C++本来只有左值和右值, 但是为了能充分利用右值, 减少内存的分配, 从而引入了将亡值.
-左值可以通过std::move()转换成将亡值, 右值也可以通过std::move()或者隐式类型转换变为将亡值.
-将亡值仅仅是个标记, 表示该表达式所持有的资源, 可以被偷取.
+C++本来只有 `左值` 和 `右值`, 但是为了能充分利用右值, 减少内存的分配, 从而引入了 `将亡值`.
+左值可以通过 `std::move()`转换成将亡值, 右值也可以通过`std::move()`或者`隐式类型转换`变为将亡值.
+`将亡值` 仅仅是个标记, 表示该表达式所持有的资源, 可以被 `偷取`(转移所有权).
 
 ```cpp
 // C++中如何打印类型信息?
 // typeid的局限性
 int a;
 // class type_info
-std::cout << typeid(a).name() << std::endl;
-std::cout << typeid(decltype(a)).name() << std::endl;
+std::cout << typeid(a).name() << std::endl; // int
+std::cout << typeid(decltype(a)).name() << std::endl; //int
 
 int &b = a;
 // type_info
@@ -236,9 +236,8 @@ int& f() {
     return *a;
 }
 
-void g() {
+void g() {}
 
-}
 int main()
 {
     std::cout << std::boolalpha;
