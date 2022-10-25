@@ -4,6 +4,39 @@
 [auto&&, 万能引用和完美转发](https://zhuanlan.zhihu.com/p/435689642?utm_id=0)
 [C++(二): 如何确定表达式的值类型](https://zhuanlan.zhihu.com/p/435605194)
 
+## 常见左值右值总结
+
+### 左值lvalue
+
++ 普通变量; `int a=10;`
++ 函数; `main()`
++ 对象的成员变量; `p.age`, 其中 `p` 是 `Person`类的对象
++ 字符类型的字面量; `"hello world"`
++ 函数返回的 `左值引用`; 即`f()->int&`, 则 `f()` 是左值
++ 指向函数的 `左值引用` 或者 `右值引用`
+
+```cpp
+void g() {}; //定义一个函数
+void (&g1)() = g; //指向函数的 左值引用语法, g1 是左值
+void (&&g2)() = g; //指向函数的 右值引用语法, g2 是左值
+```
+
+### 右值rvalue
+
++ 除raw字符串以外的其他字面量; `10`
++ 普通函数返回值; `main()`
++ 临时对象; `Person{}`,其中 `Person`是类or结构体
++ 取地址符; `&main`
++ lambda 表达式; `[](){}`
+
+## 将亡值xvalue
+
++ `std::move`; std::move(10)
++ `static_cast<T&&>`; `static_cast<T&&>(10)`
++ 函数返回`右值引用`; 即`h()->int&&`, 则 `h()` 是 `xvalue`.
++ rvalue 对象的非静态成员; `Person{}.age`, `std::move(p).age`
+其中 `Person`是类or结构体, `p` 是 `Person` 类的对象
+
 ## 左值 or 右值
 
 到底什么时候是 `左值`? 什么时候是 `右值`?是不是有点混乱?
@@ -28,30 +61,40 @@
 
 可以移动的值都叫 `rvalue`, 包括 `xvalue` 和 `prvalue`.
 有唯一标识的值都叫 `glvalue`, 包括 `lvalue` 和  `xvalue`.
-`std::move` 的作用就是将 `lvalue` 转换成 `xvalue`.
+`std::move` 的作用就是将 `lvalue` 或者 `prvalue` 转换成 `xvalue`.
 
 ![C-expression](https://ask.qcloudimg.com/http-save/7176906/t89kd9ja5y.png?imageView2/2/w/1620)
 
-对于一个变量 `A`, `A` 的类型是 C++ 语言中解析的类型,
-`A` 的值类型是 `A` 的底层实现类型, 如 `int&`.
+### expr type 和 value type;表达式类型和值类型
 
-### 表达式类型和值类型
+对于变量 `A`, `A` 的 `expr类型` 是 C++语言通常类型论中的 type, 如 `int`, `int&`, `int&&`
+`A` 的 `value type` 是符号 `A` 内存的底层基本类型, 只有 `lvalue`, `prvalue`, `xvalue`,
+用来区分这块内存是否 `有唯一标识`, 是否 `可以移动`.
 
-在编程语言中, 变量 `a`(标识符) 可以 `绑定`(bind) 到另一个的表达式上 `expr`
-(可以简单也可以复杂), 例如:
+所谓 `右值引用` 语法, 就是给 `rvalue`(prvalue, xvlaue)重新分配所有权,
+或者说重新给这块内存起一个变量名.
+
+```cpp
+int a = 10; // a的 expr type 为 int, a 是 lvalue, 不可移动
+int &&c=10; // 正确, 右值引用 绑定到纯右值, prvalue 可以移动
+int &&d = a; //错误, 右值引用不能绑定到左值, lvalue 不能移动
+int &&d = std::move(a); //正确, 右值引用 绑定到xvalue, xvalue 可以移动
+```
+
+可以归纳为:
+`non-const左值引用` 只能绑定到 `non-const左值` 上, 简称 `左值引用绑左值`
+`const左值引用` 可以绑定到 `non-const左值`, `const左值`, `non-const右值`, `常量右值` 等所有的值类型.
+简称 `const 引用` 绑一切.
 
 ```cpp
 int a=10;
-const int& b=10;
-std::string a= "Hello, world";
-
-const int &b = 5; // 指向常量的 左值引用
-int &&c = 5; // 指向右值的 右值引用
+const int &b = 10; // 指向常量的 左值引用语法
+int &&c = 10; // 指向右值的 右值引用语法
 c=10; // c 指向的内容变成 10
 
 void g() {}; //定义一个函数
-void (&a)() = g; //指向函数的 左值引用
-void (&&a)() = g; //指向函数的 右值引用
+void (&g1)() = g; //指向函数的 左值引用语法
+void (&&g2)() = g; //指向函数的 右值引用语法
 ```
 
 + 变量 `a` 的 `表达式类型`(expr type), 指的是 `a` 绑定的内容(指向的目标)的类型, 例如:
@@ -72,12 +115,18 @@ void (&&a)() = g; //指向函数的 右值引用
 
 ## auto&&,万能引用和完美转发
 
+[C++11右值引用](https://zhuanlan.zhihu.com/p/141412154)
+
+对于一个函数, 由于每个参数的 `value type` 可能是 左值引用 或 右值引用,
+针对所有可能的左右值引用组合, 特化所有模板是不现实的.
+为解决这个问题, 有时候符号 `&&` 并不一定代表 `右值引用`, 它也可能是 `左值引用`,
+这叫做 `通用引用`(universal reference), 不过这种情况仅发生在 `模板参数类型` 或 `auto推导`.
+
 >我们在考虑表达式的 `值类型` 是什么时, 真的是在关心它的 `value type`吗?
 >不, 我们并不需要关心它的 `value type`.
 >真正需要关注的, 是这个表达式所持有的资源, 能不能被偷取.
 
-在上一篇文章中, 介绍了C++中一共有三种值类型,
-它们分别为 `左值`, `纯右值` 和 `将亡值`.
+C++中一共有三种 `value type`, 它们分别为 `左值`, `纯右值` 和 `将亡值`.
 
 对于一个 `纯右值` 而言, 它的 `生存周期` 只有 `一行代码`,
 为了延长它的 `生存周期`, 我们可以用一个 `右值引用` 将其绑定,
@@ -129,15 +178,16 @@ overload: lvalue
 有了上述一的方法, 很自然的我们可以想到模板的方法,
 将两个重载函数合为一个函数模板.
 
-+ 第一步; 合并两个重载函数变为一个函数模板, 并引入万能引用T&&.
-万有引用中的T, 推导的是表达式的值类型,
-当传入左值时, T推导为T&, 并且a的类型变为T&;
-当传入一个将亡值时, T推导为T&&, 并且a的类型变为T&&.
-所以最后a的类型只与传入表达式的值类型有关,
-但是不管传入表达式的值类型是什么, a的值类型都会变为左值.
++ 第一步; 合并两个 `重载函数` 变为 `函数模板`, 并引入万能引用 `T&&`.
+万有引用中的 `T`, 推导的是 `传入表达式` 的 `值类型`,
+当传入 `左值` 时, `T` 推导为 `T&`, 并且 `a` 的 expr类型 变为 `T&`(左值);
+当传入 `将亡值` 时, `T` 推导为 `T&&`, 并且 `a` 的 expr类型 变为 `T&&`(右值).
+所以最后 `a的类型` 只与 `传入表达式` 的 `value type` 有关,
+但是不管传入表达式的值类型是什么, `a` 的 `value type` 都会变为 lvalue(左值).
 
-+ 这其中会有一个 `引用折叠`, 即如果传入的 `a`本身就是左值/右值引用,
-则 `& &&` 会变为 `&`; `&& &&` 会变为 `&&`, 因此最终不会产生引用的引用.
++ 这其中会有一个 `引用折叠`, 即如果传入的 `a`本身就是 `左值`/`右值引用`,
+则 `& &&` 会变为 `&`; `&& &&` 会变为 `&&`, 因此最终不会产生 `引用的引用`,
+后者在 C++ 中是不允许存在的.
 
 ```cpp
 template<typename T>
@@ -158,15 +208,17 @@ The value type of a is lvalue : true
 overload: lvalue
 ```
 
-+ 第二步 将a的值类型与表达式的值类型进行同步, 在第一步中, 我们已经知道, 传入的表达式的值类型变为了a的类型.
-那么我们就可以利用decltype来获取值类型, 并且利用static_cast<decltype(a)>(a)来将a的类型转化为a的值类型.
++ 第二步; 将 `a` 的 `值类型` 与 `a`的 expr type(即传入表达式的 value type)进行同步,
+在第一步中, 我们已经知道, `传入表达式的值类型` 变为了 `a` 的 expr类型.
+那么我们就可以利用 `decltype` 来获取 `a`的 expr类型,
+并且利用 `static_cast<decltype(a)>(a)` 来将 `a` 的 `值类型` 同步到 `a` 的 `expr type`.
 
 ```cpp
 template<typename T>
 void f(T&& a) {
     if constexpr(is_lvalue<
         decltype((
-            static_cast<decltype(a)>(a) // 根据 a 的 expr type, 更新 a 的type
+            static_cast<decltype(a)>(a) // 用a的 expr type, 更新a的 value type
             ))>){
         std::cout << "overload: lvalue" << std::endl;
     }else if constexpr(is_xvalue<
@@ -189,8 +241,10 @@ overload: xvalue
 overload: lvalue
 ```
 
-到此, 我们得到了想要的结果. 其中 `static_cast<decltype(a)>(a)`
-和标准库中的 完美转发函数 `std::forward<T>(a)` 的原理是一样的.
+到此, 我们得到了想要的结果. 其中 `static_cast<decltype(a)>(a)` 和标准库中的
+完美转发函数 `std::forward<T>(a)` 的原理是一样的.
+
+### `std::forward<T>(a)`
 
 ```cpp
 template<typename T>
@@ -213,8 +267,8 @@ void f1(T&& a) {
 static_cast<T&&>(a)
 ```
 
-这个 `T` 和就是模板中的 `T`, 我们知道 `T` 中保存的是传入表达式的 `值类型`,
-所以, `static_cast<T&&>(a)` 的作用就是将 `a` 的值类型转化为传入表达式的 `值类型`.
+这个 `T` 就是上面模板中的 `T`, 我们知道 `T` 中保存的是 `传入表达式` 的 `value type`,
+所以, `static_cast<T&&>(a)` 的作用就是将 `a` 的 `value type` 转化为 `传入表达式` 的 `value type`.
 这与表达式 `static_cast<decltype(a)>(a)` 所做的是同一件事.
 
 ### auto&& + 完美转发
@@ -225,30 +279,30 @@ static_cast<T&&>(a)
 ```cpp
 void g() {
     auto&& a = 10;
-    std::cout << type_to_string<
-        decltype(a) // a的 类型, int&&
+    std::cout << "The expr type of a: " << type_to_string<
+        decltype(a) // a的 expr type, int&&
         >() << std::endl;
-    std::cout << type_to_string<
-        decltype((a)) // a的 值类型, int&
+    std::cout << "The value type of a: " << type_to_string<
+        decltype((a)) // a的 value type, int&
         >() << std::endl;
     if constexpr(is_lvalue<decltype(
         (static_cast<decltype(a)>(a)) //
         )>){
-        std::cout << "lvalue" << std::endl;
+        std::cout << "overload: lvalue" << std::endl;
     }else if constexpr(is_xvalue<decltype(
         (static_cast<decltype(a)>(a))
         )>){
-        std::cout << "xvalue" << std::endl;
+        std::cout << "overload: xvalue" << std::endl;
     }
 }
-输出
 
-// a的类型
-int&&
-// a的值类型为lvalue
-int&
-// 经过完美转发后a的值类型重新变为了xvalue
-xvalue
+输出:
+
+```bahs
+The expr type of a: int&&
+The value type of a:  int&
+// 经过完美转发后 a的value type重新变成xvalue, 后续重载和 输入表达式10相同
+overload: xvalue
 ```
 
 ## 确定表达式的值类型
@@ -433,3 +487,55 @@ LogAndProcessWithForward(std::move(f3)); // 输出 rvalue reference
 虽然参数 `a` 绑定到右值, 但是参数 `a` 本身是左值.
 + `LogAndProcessWithForward(std::move(f3));` 使用了 `std::forward` 对参数进行转发,
 `std::forward` 的作用就是: 当参数绑定到 `右值` 时, 就将参数转换成 `右值`.
+
+## R字符串原始字面量
+
+[C++11 R字符串原始字面量](https://blog.csdn.net/sandrew0916/article/details/109525562)
+
+`原始字符串字面量` 的定义为:
+
+```cpp
+R "xxx(raw string)xxx"
+```
+
+其中, 原始字符串必须用括号 `()` 括起来,
+括号的前后可以加其他字符串 `xxx`, 所加的字符串会被忽略,
+并且 `xxx` 必须在括号两边同时出现.
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+    // 一个普通的字符串, '\n'被当作是转义字符, 表示一个换行符.
+    std::string normal_str = "First line.\nSecond line.\nEnd of message.\n";
+    //---输出:
+    First line.
+    Second line.
+    End of message.
+
+    // 一个raw string, '\'不会被转义处理. 因此, "\n"表示两个字符: 字符反斜杠 和 字母n.
+    std::string raw_str = R"(First line.\nSecond line.\nEnd of message.\n)";
+    //---输出:
+    //First line.\nSecond line.\nEnd of message.\n
+
+    std::cout << normal_str << std::endl;
+    std::cout << raw_str << std::endl;
+    std::cout << R"foo(Hello, world!)foo" << std::endl;
+    //---输出:
+    //Hello, world!
+
+    // raw string可以跨越多行, 其中的空白和换行符都属于字符串的一部分.
+    std::cout <<R"(
+                   Hello,
+                   world!
+                   )" << std::endl;
+    //---输出:
+
+    //              Hello,
+    //              world!
+
+    return 0;
+}
+```

@@ -5,7 +5,7 @@
 ![type](https://pic4.zhimg.com/80/v2-40f626aa77172dac408c0c0644c07aef_720w.webp)
 
 C++本来只有 `左值` 和 `右值`, 但是为了能充分利用右值, 减少内存的分配, 从而引入了 `将亡值`.
-左值可以通过 `std::move()`转换成将亡值, 右值也可以通过`std::move()`或者`隐式类型转换`变为将亡值.
+左值可以通过 `std::move()` 转换成将亡值, 右值也可以通过`std::move()`或者`隐式类型转换`变为将亡值.
 `将亡值` 仅仅是个标记, 表示该表达式所持有的资源, 可以被 `偷取`(转移所有权).
 
 ```cpp
@@ -26,7 +26,7 @@ std::cout << std::boolalpha;
 std::cout << (typeid(a) == typeid(b)) << std::endl;
 ```
 
-如何打印表达式的类型信息?
+### 如何打印表达式的类型信息?
 
 ```cpp
 template<typename T>
@@ -61,7 +61,7 @@ std::string type_to_string() {
 ```cpp
 int a = 10;
 // decltype可以推导出一个表达式的类型
-std::cout << "The type of a : " << type_to_string<decltype(a)>()
+std::cout << "The expr type of a : " << type_to_string<decltype(a)>()
           << std::endl;
 // 如果多加一个括号可以得到值类型
 std::cout << "The value type of a : " << type_to_string<decltype((a))>()
@@ -69,7 +69,7 @@ std::cout << "The value type of a : " << type_to_string<decltype((a))>()
 std::cout << "The value type of std::move(a) : " << type_to_string<decltype((std::move(a)))>()
           << std::endl;
 
-std::cout << "The type of 10 : " << type_to_string<decltype(10)>()
+std::cout << "The expr type of 10 : " << type_to_string<decltype(10)>()
           << std::endl;
 std::cout << "The value type of 10 : " << type_to_string<decltype((10))>()
             << std::endl;
@@ -79,14 +79,14 @@ std::cout << "The value type of 10 : " << type_to_string<decltype((10))>()
 
 ```cpp
 // a的类型
-The type of a : int
+The expr type of a : int
 // a的值类型
 The value type of a : int&
 // std::move(a)的值类型
 The value type of a : int&&
 
 // 10的类型
-The type of 10 : int
+The expr type of 10 : int
 // 10的值类型
 The value type of 10 : int
 ```
@@ -174,8 +174,8 @@ std::move(a) is rvalue : true
 std::move(a) is glvalue : true
 ```
 
-10是个纯右值, 同时也属于右值;
-a是左值, 同时也属于 `glvalue`;
+`10` 是个纯右值, 同时也属于右值;
+`a` 是左值, 同时也属于 `glvalue`;
 `std::move(a)` 是一个将亡值, 所以他也属于rvalue和glvalue.
 
 为什么上面的例子要使用 `std::move(a)`, 而不直接使用一个 `右值引用` 类型的变量呢?
@@ -259,33 +259,36 @@ int main()
 
     // 4. 字符类型的字面量
     std::cout << R"("hello world" is lvalue : )" << is_lvalue<decltype(("hello world"))> << std::endl;
-    std::cout << R"(The type of "hello world" : )" << type_to_string<decltype("hello world")>() << std::endl;
+    std::cout << R"(The expr type of "hello world" : )" << type_to_string<decltype("hello world")>() << std::endl;
     // "hello world" is lvalue : true
-    // The type of "hello world" : const char (&)[12]
+    // The expr type of "hello world" : const char (&)[12]
 
     // 5. 左值引用类型的函数返回值
     std::cout << "f()->int& is lvalue : " << is_lvalue<decltype((f()))> << std::endl;
     // f()->int& is lvalue : true
 
     // 6. 函数不管怎么变都是左值
-    std::cout << R"(The type of g : )" << type_to_string<decltype(g)>() << std::endl;
-    // The type of f : int()
+    std::cout << R"(The expr type of g : )" << type_to_string<decltype(g)>() << std::endl;
+    std::cout << "====================== void(&g1)() = g" << std::endl;
     void(&g1)() = g;
-    std::cout << R"(The type of g1 : )" << type_to_string<decltype(g1)>() << std::endl;
+    std::cout << R"(The expr type of g1 : )" << type_to_string<decltype(g1)>() << std::endl;
     std::cout << R"(&g is lvalue : )" << is_lvalue<decltype((g1))> << std::endl;
-    // The type of g1 : void (&)()
+    // The expr type of g1 : void (&)()
     // &g is lvalue : true
 
+    std::cout << "====================== void(&&g2)() = g" << std::endl;
     void(&&g2)() = g;
-    std::cout << R"(The type of g2 : )" << type_to_string<decltype(g2)>() << std::endl;
+    std::cout << R"(The expr type of g2 : )" << type_to_string<decltype(g2)>() << std::endl;
     std::cout << R"(&&g is lvalue : )" << is_lvalue<decltype((g2))> << std::endl;
-    // The type of g2 : void (&&)()
+    // The expr type of g2 : void (&&)()
     // &&g is lvalue : true
 
-    std::cout << R"(The type of std::move(g) : )" << type_to_string<decltype(std::move(g))>() << std::endl;
-    std::cout << R"(std::move(g) is lvalue : )" << is_lvalue<decltype((std::move(g)))> << std::endl;
-    // The type of std::move(g) : void (&)()
-    // std::move(g) is lvalue : true
+    // 函数 std::move 后变成右值
+    std::cout << "============================ std::move(g)" << std::endl;
+    std::cout << R"(The expr type of std::move(g) : )" << type_to_string<decltype(std::move(g))>() << std::endl;
+    std::cout << R"(std::move(g) is rvalue : )" << is_rvalue<decltype((std::move(g)))> << std::endl;
+    // The expr type of std::move(g) : void(__cdecl&&)(void)
+    // std::move(g) is rvalue : true
 }
 ```
 
@@ -342,6 +345,7 @@ int main()
     std::cout << "std::move(a) is xvalue : " << is_xvalue<decltype((std::move(a)))> << std::endl;
     // std::move(10) is xvalue : true
     // std::move(a) is xvalue : true
+
     // 2. static_cast<T&&>
     std::cout << "static_cast<T&&>(10) is xvalue : " << is_xvalue<decltype((static_cast<int&&>(10)))> << std::endl;
     std::cout << "static_cast<T&&>(a) is xvalue : " << is_xvalue<decltype((static_cast<int&&>(a)))> << std::endl;
@@ -351,8 +355,8 @@ int main()
     // h()->int&& is xvalue : true
 
     // 4. rvalue 对象的非静态成员
-    Person p;
     std::cout << "Person{}.age is xvalue : " << is_xvalue<decltype((Person{}.age))> << std::endl;
+    Person p;
     std::cout << "std::move(p).age is xvalue : " << is_xvalue<decltype((std::move(p).age))> << std::endl;
     // Person{}.age is xvalue : true
     // std::move(p).age is xvalue : true
@@ -405,10 +409,10 @@ std::move(p).name is rvalue : false
 std::move(p).name is glvalue : true
 ```
 
-从上述输出, 可以看出 `std::move(p).age是个xvalue;`
+从上述输出, 可以看出 `std::move(p).age` 是个 `xvalue;`
 `std::move(p).weight` 和 `std::move(p).name` 都是 `lvalue`.
 也就是说, `weight` 和 `name` 都不是 `Person` 类的一部分, `Person` 类对于这两个成员变量没有所有权.
-应改为 `std::move(p.weight)` 和 `std::move(p.name)`,如果希望改变它们的值类型的话.
+如果希望改变它们的值类型, 应改为 `std::move(p.weight)` 和 `std::move(p.name)`,
 
 ```cpp
 std::cout << std::boolalpha;
@@ -440,4 +444,4 @@ std::move(p.name) is rvalue : true
 std::move(p.name) is glvalue : true
 ```
 
-这样, 三个成员变量都变成了xvalue.
+这样, 三个成员变量都变成了 `xvalue`.
