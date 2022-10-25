@@ -80,3 +80,14 @@ class type 等函数模板.
 + 设置分析步序号,
 + 设置工况号,取工况号
 + 设置分析名称, 取分析名
+
+## 12.5 各种自由度记号
+
++ `AXIS2`: 表示轴对称系统, 取柱坐标系计算.
++ `NdNum()`;节点数目.
++ `DofNum()`: 自由度数目, 取决于体系, 例如每个单元中, 自由度就是节点上的电势.
++ `GSNum()`, `GsNumKe()`, `GsNumFe()`, `GsNumVe()`: 高斯点数目;对于阶数不同的多项式, 需要的采样点数目不同, 因此 Gauss 点数目可能不同. 
+
+`GsNumVe()`: 用于计算 `ElementFin()`, `MutualMatrix()`, `NodeVirtualForce()`, `SubJobFv()`
+`GsNumKe()`; 用于计算 `ElementMatrixKe()`, 
+`GsNumFe()`; 用于计算 `AssembleFVByDisCharge()`; `GetGeometryFeature3D()`,也就是体积.
