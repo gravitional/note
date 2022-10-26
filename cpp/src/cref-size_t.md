@@ -5,10 +5,78 @@
 [size_t 数据类型](https://blog.csdn.net/bzhxuexi/article/details/19899803)
 [C/C++ size_t详解](https://blog.csdn.net/qq_34018840/article/details/100884317)
 
+## std::size_t
+
++ Header
+
+`<cstddef>`
+`<cstdio>`
+`<cstdlib>`
+`<cstring>`
+`<ctime>`
+`<cuchar>` (C++17 起)
+`<cwchar>`
+
+```cpp
+typedef /* 由实现定义 */ size_t;
+```
+
++ `std::size_t` 是 `sizeof` 运算符, 还有 `sizeof...` 运算符
+及 `alignof` 运算符 (C++11 起)的`结果`, 所拥有的 `无符号整数` 类型.
++ `std::size_t` 的 `宽度`(bit width)不小于 16 位. (C++11 起)
+
+### Notes
+
+`std::size_t` 可以存放下理论上可能存在的对象的最大大小, 该对象可以是任何类型(包括数组).
+大小无法以 `std::size_t` 表示的类型是非良构的.
+在许多平台上(使用分段寻址的系统除外), `std::size_t` 可以存放任何 `非成员指针` 的值,
+此时它与 `std::uintptr_t` 同义.
+
+`std::size_t` 通常用于数组索引和循环计数.
+使用其他类型来进行数组索引操作的程序可能会在某些情况下出错,
+例如在 64 位系统中使用 `unsigned int` 进行索引时,
+如果索引号超过 [UINT_MAX](https://zh.cppreference.com/w/cpp/types/climits)
+或者依赖于 32 位取模运算的话, 程序就会出错.
+
+在对诸如 `std::string`, `std::vector` 等 C++ 容器进行索引操作时,
+正确的类型是该容器的成员 `typedef size_type`,
+而该类型通常被定义为与 `std::size_t` 相同.
+
+`std::size_t` 的整数字面量后缀是 `z` 或 `z` 与 `u` 或 `U` 的任何组合
+(即 zu, zU, Zu, ZU, uz, uZ, Uz 或 UZ).(C++23 起)
+
+### 示例
+
+```cpp
+#include <cstddef>
+#include <iostream>
+#include <array>
+
+int main()
+{
+    std::array<std::size_t, 10> a;
+
+    // 使用 C++23 size_t 字面量的例子, for循环改成
+    //for (auto i = 0uz; i != a.size(); ++i)
+    // 使用 C++11 size_t 字面量的例子
+    for (decltype(a)::size_type i = 0; i != a.size(); ++i)
+        std::cout << (a[i] = i) << ' ';
+    std::cout << '\n';
+
+    // 自减循环的例子
+    for (std::size_t i = a.size(); i--;)
+        std::cout << a[i] << ' ';
+
+    // 注意以下自减循环的简单实现：
+    //  for (std::size_t i = a.size() - 1; i >= 0; --i) ...
+    // 是无限循环，因为无符号数不会是负数
+}
+```
+
 ## `size_t`
 
 `size_t` 是一些 C/C++ 标准在 `stddef.h` 中定义的,
-`size_t` 类型表示 C中任何对象所能达到的 `最大长度`, 它是无符号整数.
+`size_t` 类型表示 C 中任何 `对象` 所能达到的 `最大长度`, 它是 `无符号整数`.
 
 它是为了方便系统之间的移植而定义的, 不同的系统上, 定义 `size_t` 可能不一样.
 `size_t` 在 `32位` 系统上定义为 `unsigned int`, 也就是 `32位无符号整型`.
@@ -19,7 +87,7 @@
 例如, `size_t` 用做 `sizeof` 操作符的 `返回值类型`,
 同时也是很多函数的参数类型, 包括 `malloc` 和 `strlen`.
 
-在声明诸如 `字符数` 或者 `数组索引` 这样的长度变量时， 使用 `size_t` 是好的做法.
+在声明诸如 `字符数` 或者 `数组索引` 这样的长度变量时,  使用 `size_t` 是好的做法.
 它经常用于 `循环计数器`, `数组索引`, 有时候还用在 `指针算术运算` 上.
 `size_t` 的声明是实现相关的. 它出现在一个或多个标准头文件中,
 比如 `stdio.h` 和 `stblib.h`, 典型的定义如下:
@@ -84,18 +152,15 @@ printf("%zu\n",sizet); // 显示5
 
 ## C语言编程需要注意的64位和32机器的区别
 
-     char    short    int    long    long long    指针
-16 位 平台    1Byte 8位    2Byte 16位    2Byte 16位    4Byte 32位         2 Byte
-32 位 平台
-
-1Byte 8位
-    2Byte 16位    4Byte 32位    4Byte 32位    8 Byte 64位    4 Byte
-64 位 平台    1Byte    2Byte    4Byte    8Byte    8Byte    8Byte
+        char;   short    int    long    long long    指针
+16位平台; `1Byte 8位`; `2Byte 16位`; `2Byte 16位`; `4Byte 32位`; `  `; `2 Byte`
+`32位平台`; `1Byte 8位`; `2Byte 16位`; `4Byte 32位`;  `4Byte 32位`;  `8 Byte 64位`; `4 Byte`
+`64位平台`; `1Byte`; `2Byte`; `4Byte`;  `8Byte`;  `8Byte`; `8Byte`
 
 ## 编程注意事项
 
 为了保证平台的通用性, 程序中尽量不要使用 `long` 数据库型.
-可以使用固定大小的数据类型宏定义, 这些宏定义需要引用 `stdint.h` 头文件:
+可以使用固定大小的 数据类型  宏定义, 这些宏定义需要引用 `stdint.h` 头文件:
 
 ```cpp
 typedef signed char int8_t

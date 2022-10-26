@@ -227,3 +227,18 @@ CL /I \include /I\my\include main.c
 + `/W` 设置警告等级.
 + `/w` 禁用所有警告.
 + `/WL` 在从命令行编译 C++ 源代码时启用错误消息和警告消息的单行诊断.
+
+## /std 指定C++ std版本
+
+[/std](https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version)
+
+启用指定版本的 C或C++语言标准 中支持的C和C++语言功能.
+
+### 语法
+
++ `/std:c++14`
++ `/std:c++17`
++ `/std:c++20`
++ `/std:c++latest`
++ `/std:c11`
++ `/std:c17`

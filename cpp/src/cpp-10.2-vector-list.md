@@ -238,17 +238,17 @@ p 是指向 s1 元素的迭代器, q1 和 q2 是指向 s2 元素的迭代器, �
 
 ### 单向链表和数组
 
-forward_list 和 array, 是 C++11 标准新增的两个顺序容器,
-forward_list 的设计目标是达到最好的单向链表结构的性能, 不支持 size 操作.
-array 是对内置数组的封装, 提供了更安全, 更方便地使用数组的方式,
+`forward_list` 和 `array`, 是 C++11 标准新增的两个顺序容器,
+`forward_list` 的设计目标是达到最好的单向链表结构的性能, 不支持 size 操作.
+`array` 是对内置数组的封装, 提供了更安全, 更方便地使用数组的方式,
 仍然是固定大小的, 定义时需要指定元素类型和容器大小.
 
 单向链表增删元素时, 需要从前一位元素下手,
-因此 forward_list 没有定义 insert, emplace, erase  操作,
-而是定义了 insert_after, emplace_after, erase_after,
+因此 `forward_list` 没有定义 `insert`, `emplace`, `erase`  操作,
+而是定义了 `insert_after`, `emplace_after`, `erase_after`,
 所有操作都是对迭代器之后的位置进行的.
 
-数组不能该表大小
+数组不能改变大小
 
 ```cpp
 array<int, 10>arr; // arr 为保存 10 个 int 类型的数组

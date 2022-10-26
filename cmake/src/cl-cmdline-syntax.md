@@ -5,7 +5,7 @@
 `CL` 命令行使用以下语法:
 
 ```powershell
-CL [option...]      file...     [option | file]...      [lib...]    [@command-file]     [/link link-opt...]
+CL [option...]  file... [option | file]...  [lib...]    [@command-file]   [/link link-opt...]
 ```
 
 下表描述了 `CL` 命令的输入.
