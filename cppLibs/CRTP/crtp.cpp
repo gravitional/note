@@ -13,14 +13,14 @@ struct D1 : public Base1<D1>
 {
     void impl()
     {
-        std::cout << "D1::impl()\n";
+        std::cout << "D1::impl()" << std::endl;
     }
 };
 struct D2 : public Base1<D2>
 {
     void impl()
     {
-        std::cout << "D2::impl()\n";
+        std::cout << "D2::impl()" << std::endl;
     }
 };
 
@@ -32,8 +32,9 @@ public:
     void PrintType() const
     {
         std::string_view name = typeid(Derived).name();
-        std::cout << name.substr(1, name.size() - 1) << "\n";
+        std::cout << name.substr(0, name.size() - 1) << std::endl;
     }
+    Derived* a{};
 };
 
 class Derived1 : public Base2<Derived1>
@@ -45,7 +46,7 @@ class Derived2 : public Base2<Derived2>
 
 int main()
 {
-    //---------- example 1
+    std::cout << "======================= example 1" << std::endl;
     Base1<D1> b1;
     b1.name();
     Base1<D2> b2;
@@ -55,7 +56,7 @@ int main()
     d1.name();
     D2 d2;
     d2.name();
-    std::cout << "===================================" << std::endl;
+    std::cout << "======================= example 2" << std::endl;
     //---------- example 2
     Derived1 derived1;
     Derived2 derived2;

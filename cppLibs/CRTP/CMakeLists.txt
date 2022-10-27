@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 # 项目信息
-project(Test)
+project(crtp)
 add_compile_options("/std:c++latest")
 
 # 指定生成目标

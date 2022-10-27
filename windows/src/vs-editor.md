@@ -1,5 +1,14 @@
 # Visual studio
 
+## 自定义快捷键
+
+[快速切换 头/源文件 (.h/.cpp)](https://blog.csdn.net/woloveguojia/article/details/122364839)
+
+菜单栏>`工具`>`选项`>`环境`>`键盘`,
+在下面 "显示命令包含" 里面输入关键字 : `编辑器上下文菜单.代码窗口.切换标题代码文件`
+最后在 `按快捷键` 中输入按下自己的组合键,
+可以选择配置 `全局属性`, 或者限定快捷键的生效范围.
+
 ## 编辑
 
 [代码编辑器功能](https://docs.microsoft.com/zh-cn/visualstudio/ide/writing-code-in-the-code-and-text-editor?view=vs-2022)

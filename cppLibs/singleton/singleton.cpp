@@ -1,20 +1,24 @@
 #include "singleton.h"
 #include <iostream>
-class Te : public Singleton<Te>
+#include<initializer_list>
+
+class A : public Singleton<A>
 {
 public:
-	Te() : hold(0) {};
-	~Te() = default;
+	A() = default;
+	~A() = default;
 	int get()
 	{
 		return hold;
 	}
 
 private:
-	int hold;
+	int hold = 1;
 };
-inline  Te* getTe() {
-	return &Te::GetInstance();
+// 定义全局函数, 用于获取单例
+inline A* getTe()
+{
+	return &A::GetInstance();
 }
 
 int main(int* argc, char* argv[])
