@@ -11,6 +11,8 @@ CompElementEF* GetElement<CompElementEF>(int id);
 void GetCompPtrs<PostAnalysisBaseEF>(std::vector<PostAnalysisBaseEF*> &ptrs)
 ```
 
+## Singleton.h
+
 ## 全局函数
 
 这些函数作为全局函数, 对应的类使用单例模式,
@@ -61,6 +63,21 @@ ID对象管理类, 0-base
 
 读取 control 文件的类
 
+### args()
+
+Argument 类, 命令行参数解析类
+
+### anlsCtrl()
+
+AnalysisControl, 分析管理类
+
++ 许可证
++ 分析
++ 当前分析信息
++ 计时器
++ 输出变量控制
++ temp 分析步名称
+
 ## Util 类
 
 一个工具类, 具有
@@ -86,8 +103,27 @@ class type 等函数模板.
 + `AXIS2`: 表示轴对称系统, 取柱坐标系计算.
 + `NdNum()`;节点数目.
 + `DofNum()`: 自由度数目, 取决于体系, 例如每个单元中, 自由度就是节点上的电势.
-+ `GSNum()`, `GsNumKe()`, `GsNumFe()`, `GsNumVe()`: 高斯点数目;对于阶数不同的多项式, 需要的采样点数目不同, 因此 Gauss 点数目可能不同. 
++ `GSNum()`, `GsNumKe()`, `GsNumFe()`, `GsNumVe()`: 高斯点数目;对于阶数不同的多项式, 需要的采样点数目不同, 因此 Gauss 点数目可能不同.
 
 `GsNumVe()`: 用于计算 `ElementFin()`, `MutualMatrix()`, `NodeVirtualForce()`, `SubJobFv()`
-`GsNumKe()`; 用于计算 `ElementMatrixKe()`, 
+`GsNumKe()`; 用于计算 `ElementMatrixKe()`,
 `GsNumFe()`; 用于计算 `AssembleFVByDisCharge()`; `GetGeometryFeature3D()`,也就是体积.
+
+## C++编码风格
+
++ 命名空间: 小驼峰(受单词首字母小写,其余单词首字母大写,不用下划线),尽量用工程名, 各个单词或缩写
++ 类: 大驼峰(全部单词首字母大写, 不用下划线)
++ 类函数: 大驼峰
++ 类数据: 下划线+小驼峰
++ 全局函数: 小驼峰
++ 全局变量: 小驼峰, 尽量少使用
++ 常量: 全大写, 下划线连接
++ 枚举值: 全大写, 下划线连接
+
+## exec
+
+```cpp
+main(int argc, char* argv[])
+->common::Control().Execute(argc, argv); // 总流程控制类, 管理 Impl 资源
+->
+
