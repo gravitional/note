@@ -152,8 +152,9 @@ Load(...); 加载动态库
 ## 求解器调用栈,静电场
 
 ```cpp
+//solver/main.cpp
 main(int argc, char* argv[]);
-    common::Control().Execute(argc, argv); // 总流程控制类, 管理 Impl 资源
+    common::Control().Execute(argc, argv); // 总流程控制类, 管理 Impl 资源, /Common/Control/Control.cpp
         args(); //解析命令行参数
         _pIml->Initialize(argc, argv); // 初始化 Blas, mpi, cuda, thread, hypre, petsc, profiler(分析器)
         anlsCtrl()->TestLicense(); //检查许可证
@@ -166,22 +167,22 @@ main(int argc, char* argv[]);
 
             memTracker()->SnapShot("CreateModel"); //分析内存
             unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建 solver model
-            creator->Create(); // 创建网格和模型
+            creator->Create(); // 创建网格和模型, /Common/Model/ModelCreator.cpp
                 CreateMesh(); // 创建网格
-                CreateModel(); //创建模型
-                    CreateFunction();
-                    CreateCoordSys();
-                    CreateMonitor();
+                CreateModel(); //创建模型 /FiniteElement/Model/FeModelCreator.cpp
+                    CreateFunction(); //自定义函数
+                    CreateCoordSys(); //自定义坐标系
+                    CreateMonitor(); //
                     CreateNode();
                     CreateElement(data);
                     CreateMaterial(data);
                     CreateInitialField(data);
-                    CreateMisc(data);
+                    CreateMisc(data); //创建各场的特有数据, /Electrics/Model/ModelCreatorEF.cpp
                         CreateInfo(data);
                             data.ReadValue("Thickness2D"...) //读取厚度
                             data.ReadValue("Sector"...) //读取模型分数
                         CreateConstraint(data) // 创建约束, 即边界条件
-                    CreateAnalysis(); // 创建分析
+                    CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         for(分析类型){
                             AnalysisBase *analysis =NewAnalysis(type);
                             analysis->Read();
@@ -190,7 +191,7 @@ main(int argc, char* argv[]);
                             anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
                         }
 
-                    Initialize(); // 各个场自己的特定初始化
+                    Initialize(); // 各个场自己的特定初始化, /Electrics/Model/ModelCreatorEF.cpp
                         model()->CopyThreadsMaterial(); //复制线程私有材料对象
                         ApplyConstraint(); // 施加约束
                         ArrangeEquationNo(); // 数据自由度排序
@@ -201,20 +202,20 @@ main(int argc, char* argv[]);
                         globalInfo()->SetDouble("Penalty",1e60)// 罚系数确定
                         WriteGeoInfo(); //写出网格信息
 
-            memTracker()->SnapShot("CreateModel"); //分析内存
+            memTracker()->SnapShot("CreateModel"); //分析内存,
 
-        _pIml->AnalyzeModel(); //运行模型分析
+        _pIml->AnalyzeModel(); //运行模型分析, /Common/Control/Control.cpp
             //迭代每个分析
             while(true){
                 auto analysis = anlsCtrl()->GetNextAnalysis();
                 memTracker();timeTracker(); // 记录内存, 时间占用
-                analysis->Run(); // 运行每个分析
-                    Analyze();
+                analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
+                    Analyze(); // 运行时分析, /Electrics/Analysis/AnalysisStaticEF.cpp
                         InitBeforeJobLoop(); // 静态电场分析初始化
                         analyze_EM_Field_Nonlinear(); //非线性迭代
                 memTracker();timeTracker(); // 记录内存, 时间占用
             }
-        _pIml->Finalize(); // 计算收尾
+        _pIml->Finalize(); // 计算收尾, /Common/Control/Control.cpp
             ThreadUtil::WaitAll(); // async
             timeTracker();memTracker(); //profiler
             objects()->Clear(); // objects
