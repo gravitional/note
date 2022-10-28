@@ -1,7 +1,5 @@
 # Solver
 
-`model()`; 单例模式
-
 ```cpp
 //通过id 获取某类存储组件的指针.
 FieldConstraintEF* GetComponent<FieldConstraintEF>(int id);
@@ -11,7 +9,51 @@ CompElementEF* GetElement<CompElementEF>(int id);
 void GetCompPtrs<PostAnalysisBaseEF>(std::vector<PostAnalysisBaseEF*> &ptrs)
 ```
 
-## Singleton.h
+## 设计模式
+
+单例模式
+
+工厂模式
+
+```cpp
+// FiniteElement/FeModelCreator.cpp
+AnalysisBase *analysis=NewAnalysis(type);
+```
+
+## 工具类
+
+### Util 类
+
+一个工具类, 具有
+array, algebra, geometry, quick sort, allocate,
+class type 等函数模板.
+
+### VarValue
+
+常数或函数参数类,
+保存用户自定义 py 函数
+
+### AnalysisBase 类
+
+运行分析: `Run()`
+取可输出变量;
+
++ 设置分析步序号,
++ 设置工况号,取工况号
++ 设置分析名称, 取分析名
+
+### ModelCtreator
+
+模型创建类:
+
++ 生成网格和模型
++ 生成全局信息
++ 生成函数
++ 生成坐标系
+
+### Singleton.h
+
+单例模式
 
 ## 全局函数
 
@@ -19,6 +61,8 @@ void GetCompPtrs<PostAnalysisBaseEF>(std::vector<PostAnalysisBaseEF*> &ptrs)
 返回一个指向唯一实例的指针.
 
 ### model()
+
+单例模式
 
 持有模型数据,
 构件,
@@ -78,25 +122,10 @@ AnalysisControl, 分析管理类
 + 输出变量控制
 + temp 分析步名称
 
-## Util 类
+### lib()
 
-一个工具类, 具有
-array, algebra, geometry, quick sort, allocate,
-class type 等函数模板.
-
-## VarValue
-
-常数或函数参数类,
-保存用户自定义 py 函数
-
-## AnalysisBase 类
-
-运行分析: `Run()`
-取可输出变量;
-
-+ 设置分析步序号,
-+ 设置工况号,取工况号
-+ 设置分析名称, 取分析名
+Library, 动态库管理类
+Load(...); 加载动态库
 
 ## 12.5 各种自由度记号
 
@@ -120,10 +149,79 @@ class type 等函数模板.
 + 常量: 全大写, 下划线连接
 + 枚举值: 全大写, 下划线连接
 
-## exec
+## 求解器调用栈,静电场
 
 ```cpp
-main(int argc, char* argv[])
-->common::Control().Execute(argc, argv); // 总流程控制类, 管理 Impl 资源
-->
+main(int argc, char* argv[]);
+    common::Control().Execute(argc, argv); // 总流程控制类, 管理 Impl 资源
+        args(); //解析命令行参数
+        _pIml->Initialize(argc, argv); // 初始化 Blas, mpi, cuda, thread, hypre, petsc, profiler(分析器)
+        anlsCtrl()->TestLicense(); //检查许可证
+        _pIml->SetWorkingPath(); //设置工作路径
+        _pIml->PrintHeader(); //打印日志头, 成刷版本, 进程数目等.
+        _pIml->CreateModel(); //创建模型
+            reader=controlReader(); // read control and solver, 从 control.json
+            anlsCtrl()->TestLicense(solver); //
+            lib()->Load(Str::ToLower(solver)); // load solver dll
 
+            memTracker()->SnapShot("CreateModel"); //分析内存
+            unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建 solver model
+            creator->Create(); // 创建网格和模型
+                CreateMesh(); // 创建网格
+                CreateModel(); //创建模型
+                    CreateFunction();
+                    CreateCoordSys();
+                    CreateMonitor();
+                    CreateNode();
+                    CreateElement(data);
+                    CreateMaterial(data);
+                    CreateInitialField(data);
+                    CreateMisc(data);
+                        CreateInfo(data);
+                            data.ReadValue("Thickness2D"...) //读取厚度
+                            data.ReadValue("Sector"...) //读取模型分数
+                        CreateConstraint(data) // 创建约束, 即边界条件
+                    CreateAnalysis(); // 创建分析
+                        for(分析类型){
+                            AnalysisBase *analysis =NewAnalysis(type);
+                            analysis->Read();
+                                auto job =NewJob(); //任务工厂方法
+                                job->Create(*reader); //创建 new job
+                            anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
+                        }
+
+                    Initialize(); // 各个场自己的特定初始化
+                        model()->CopyThreadsMaterial(); //复制线程私有材料对象
+                        ApplyConstraint(); // 施加约束
+                        ArrangeEquationNo(); // 数据自由度排序
+                        PartitionMesh(); // 剖分网格
+                        AdjustRankComponent(); // 调整构件所属MPI 节点
+                        CreateElementList(); // 生成单元列表
+                        RemoveOtherRankComponent(); //删除其他MPI 节点上的对象
+                        globalInfo()->SetDouble("Penalty",1e60)// 罚系数确定
+                        WriteGeoInfo(); //写出网格信息
+
+            memTracker()->SnapShot("CreateModel"); //分析内存
+
+        _pIml->AnalyzeModel(); //运行模型分析
+            //迭代每个分析
+            while(true){
+                auto analysis = anlsCtrl()->GetNextAnalysis();
+                memTracker();timeTracker(); // 记录内存, 时间占用
+                analysis->Run(); // 运行每个分析
+                    Analyze();
+                        InitBeforeJobLoop(); // 静态电场分析初始化
+                        analyze_EM_Field_Nonlinear(); //非线性迭代
+                memTracker();timeTracker(); // 记录内存, 时间占用
+            }
+        _pIml->Finalize(); // 计算收尾
+            ThreadUtil::WaitAll(); // async
+            timeTracker();memTracker(); //profiler
+            objects()->Clear(); // objects
+            Pyutil::Finalize(); //python
+            PetscUtil::Finalize(); //petsc
+            HypreUtil::Finalize(); //hypre
+            AmgxUtil::Finalize(); //amgx
+            MPIUtil::Finalize(); //mpi
+            CUDAUtil::Finalize(); //gpu
+```
