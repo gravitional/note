@@ -373,11 +373,6 @@ float (* (*fp2) (int, int, float)) (int);
 简言之, `fp2` 是指向函数的 `指针`, 该函数接受三个参数 `(int, int, float)`,
 且返回指向函数的 `指针`, 该函数接受 `整型参数` 并返回 `float`.
 
-```cpp
-typedef double (* (* (*fp3) ()) [10]) ();
-fp3 a;
-```
-
 ### exa3
 
 如果创建许多复杂的定义, 可以使用 `typedef`.
