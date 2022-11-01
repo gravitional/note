@@ -2,6 +2,7 @@
 
 [Vim 插件管理器 – dein.vim](https://www.codenong.com/js0874e6be9d74/)
 [Vim 插件管理器 - dein.vim](https://www.jianshu.com/p/0874e6be9d74)
+[vim有哪些插件管理程序？都有些什么特点](https://www.zhihu.com/question/24294358)
 
 ## 前言
 
