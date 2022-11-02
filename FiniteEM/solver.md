@@ -55,6 +55,22 @@ class type 等函数模板.
 
 单例模式
 
+### ResultIO
+
+相关类; DataIO, Hdf5IO
+
+结果 input, output 类,
+读写 resutl.h5 文件
+
+### AnalysisFe
+
+```cpp
+AnalysisFe:public AnalysisBase{...}
+```
+
+创建 FiniteElement 分析任务, 
+成员函数 Read() 分配任务号, `_jobID`.
+
 ## 全局函数
 
 这些函数作为全局函数, 对应的类使用单例模式,
@@ -185,9 +201,17 @@ main(int argc, char* argv[]);
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         for(分析类型){
                             AnalysisBase *analysis =NewAnalysis(type);
-                            analysis->Read();
+                            analysis->AnalysisFe::Read(); // 动态多态, 转向 AnalysisFe::Read()
+                                auto reader=controlReader(); // control.json 单例
                                 auto job =NewJob(); //任务工厂方法
-                                job->Create(*reader); //创建 new job
+                                _jobID=model()->AddComponentGenID(job); //分配 jobID, 即 工况号
+                                _name=reader->GetCurrentNode(); // 获取有限元分析名称
+                                // 设置 jobID 对应的名称, 存入 unordered_map<string, int> _nameMap, 不同 reader 共享
+                                reader->SetIDByName(_name,_jobID); 
+                                job->Create(*reader); //virtual, 创建 new job
+                                    非线性迭代 // /Electrics/Analysis/LoadJobEF.cpp
+                                    载荷
+                                    int id=model()->AddComponentGenID(_PostAnalysis); // 添加后处理分析任务
                             anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
                         }
 
@@ -210,7 +234,7 @@ main(int argc, char* argv[]);
                 auto analysis = anlsCtrl()->GetNextAnalysis();
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
-                    Analyze(); // 运行时分析, /Electrics/Analysis/AnalysisStaticEF.cpp
+                    Analyze(); // virtual, /Electrics/Analysis/AnalysisStaticEF.cpp
                         InitBeforeJobLoop(); // 静态电场分析初始化
                         analyze_EM_Field_Nonlinear(); //非线性迭代
                 memTracker();timeTracker(); // 记录内存, 时间占用
@@ -225,4 +249,13 @@ main(int argc, char* argv[]);
             AmgxUtil::Finalize(); //amgx
             MPIUtil::Finalize(); //mpi
             CUDAUtil::Finalize(); //gpu
+```
+
+### 重要的数字标记
+
+```cpp
+int AnalysisBase::_jobID // 工况号. 
+int AnalysisBase::_stepID // 分析步序号
+std::string AnalysisBase::_name // 分析名
+bool AnalysisBase::_restart // 是否续算
 ```
