@@ -86,16 +86,6 @@
 
 + `compElement.h` 中有较多的注释.
 
-## VAssistX
-
-+ 寻找符号; `S+A+S`
-+ 寻找引用; `S+A+F`
-+ Goto Implementation; `Alt+G`
-+ Goto Related; `S+A+G`
-+ 列出所有 Method; `Alt+M`
-+ 打开对应的 .h/.cpp; `Alt+O`
-+ 打开解决方案中的文件; `S+A+O`
-
 ## XML注释
 
 [注释 (C++)](https://docs.microsoft.com/zh-cn/cpp/cpp/comments-cpp?view=msvc-170)

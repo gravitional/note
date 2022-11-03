@@ -237,6 +237,8 @@ main(int argc, char* argv[]);
                     Analyze(); // virtual, /Electrics/Analysis/AnalysisStaticEF.cpp
                         InitBeforeJobLoop(); // 静态电场分析初始化
                         analyze_EM_Field_Nonlinear(); //非线性迭代
+                            AlgPostAnalysisEF analysis; // 新建Post分析对象
+                            analysis.Run(); // 运行后处理分析, 电磁力, 力矩, 电容
                 memTracker();timeTracker(); // 记录内存, 时间占用
             }
         _pIml->Finalize(); // 计算收尾, /Common/Control/Control.cpp

@@ -154,5 +154,5 @@ module.exports = {
 npm run serve
 ```
 
-在浏览器中打开: http://localhost:8080/
+在浏览器中打开: `http://localhost:8080/`
 修改代码, 直接可以看到修改后的效果: 不需要手动进行任何刷新
