@@ -9437,6 +9437,222 @@ noprefix "false"
 可以证明
 \end_layout
 
+\begin_layout Section
+永磁材料
+\end_layout
+
+\begin_layout Standard
+在永磁材料中存在不为零的磁化强度，
+\begin_inset Formula $\sbf B$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 的本构关系可以写为
+\begin_inset Formula 
+\[
+\sbf H=\frac{1}{\mu_{0}}\sbf B-\sbf M
+\]
+
+\end_inset
+
+硬体磁体中的 
+\begin_inset Formula $\sbf M$
+\end_inset
+
+ 几乎不随外磁场变化，可以当作常矢量（vary on 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+）处理。如果考虑更一般的情况，可以认为磁化强度 
+\begin_inset Formula $\sbf M$
+\end_inset
+
+随磁场线性变化，即
+\begin_inset Formula 
+\[
+\sbf M=\sbf M_{0}+\chi\sbf H.
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+ 是没有外场情况下，永磁材料中的磁化强度，是常矢量。这样可以得到
+\begin_inset Formula 
+\begin{align*}
+\sbf H & =\frac{1}{\mu_{0}\mu_{r}}\sbf B-\frac{1}{\mu_{r}}\sbf M_{0}\\
+\mu_{r} & =1+\chi
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算的区域
+\begin_inset Formula $\Omega$
+\end_inset
+
+存在永磁区域 
+\begin_inset Formula $\Omega_{m}$
+\end_inset
+
+，可以得到静磁场方程：
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J+\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}\label{eq:xl3.10}
+\end{equation}
+
+\end_inset
+
+以及相应的泛函积分
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}\left(\sbf A\right)=\int_{\Omega}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega}\left(\sbf J+\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}\right)\cdot\sbf A\dd{\Omega}\label{eq:xl3.11}
+\end{equation}
+
+\end_inset
+
+同样，
+\begin_inset Formula $\mathcal{F}\left(\sbf A\right)$
+\end_inset
+
+可以表示为各个有限元单元中 
+\begin_inset Formula $\mathcal{F}^{e}\left(\sbf A\right)$
+\end_inset
+
+ 的和
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}\left(\sbf A\right)=\sum_{e}\mathcal{F}^{e}\left(\sbf A\right)\label{eq:xl3.12}
+\end{equation}
+
+\end_inset
+
+如果单元积分区域属于线性材料区，
+\begin_inset Formula $\Omega_{e}\in\Omega_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\mathcal{F}^{e}\left(\sbf A\right)$
+\end_inset
+
+ 的表达式和之前相同；如果单元积分区域实在永磁铁区，即 
+\begin_inset Formula $\Omega_{e}\in\Omega_{m}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\begin{align}
+\mathcal{F}^{e}\left(\sbf A\right) & =\int_{\Omega_{e}}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf A\dd{\Omega}\label{eq:3.13}\\
+ & -\left({\color{blue}\int_{\Omega_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf A\dd{\Omega}-\int_{\Gamma_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\hat{\sbf e}_{n}\times\sbf M_{0}\right)\cdot\sbf A\dd{\Gamma}}\right)\label{eq:xl3.14}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+在 
+\begin_inset Formula $\mathcal{F}^{e}\left(\sbf A\right)$
+\end_inset
+
+ 的表达式中，
+\begin_inset Formula $\Gamma_{e}$
+\end_inset
+
+ 是单元的表面，最后一项是在单元表面的积分，
+\begin_inset Formula $\sbf\hat{e}_{n}$
+\end_inset
+
+是垂直表面的单位矢量。
+\end_layout
+
+\begin_layout Enumerate
+表面积分出现的原因是将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+改写为
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+之后必然出现的（体减去外壳）。式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中 
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+ 对积分的贡献，完全来自 
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+ 在空间中的变化，即 
+\begin_inset Formula $\nabla\times\sbf M_{0}$
+\end_inset
+
+。将积分的区域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 划分有限元网格之后，在计算
+\begin_inset Formula $\mathcal{F}^{e}\left(\sbf A\right)$
+\end_inset
+
+ 时，如果不考虑各个单元的表面积分，那么相邻单元边界处的 
+\begin_inset Formula $\nabla\times\sbf M_{0}$
+\end_inset
+
+ 会被忽视。
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+ 是一个常矢量（on 空间坐标），那么相邻单元在公共边处的 
+\begin_inset Formula $\sbf\hat{e}_{n}$
+\end_inset
+
+ 符号刚好相反，可以互相抵消，最后只留下永磁体区域 
+\begin_inset Formula $\Omega_{m}$
+\end_inset
+
+ 边界处 
+\begin_inset Formula $\Gamma_{m}$
+\end_inset
+
+ 的表面积分，这一项就是电流密度。
+\end_layout
+
 \begin_layout Chapter
 有限元下计算电磁力
 \end_layout
