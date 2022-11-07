@@ -1,10 +1,65 @@
 # vim-x.md
 
+## 指定编码
+
+[vim 用指定编码保存文件](https://blog.csdn.net/dengxu11/article/details/6763765)
+
+Vim编码配置里面有3个选项,
+分别是 `encoding`, `fileencodings`, `fileencoding`,
+简写分别对应为 `enc`, `fencs`, `fenc`.
+
++ `encoding`(`enc`): 向 `stdout` 输出的编码. 此项目配置的是vim 的默认 `显示编码`,
+如果你打开的 `文件编码` 与该属性配置的编码不同, 那么Vim会将编码 `自动转换` 到这种编码然后再显示,
+如果如果这2种编码,集合完全对应, 那么很有可能出现坏块也就是没转换成功然后从列表
+(下面就讲到, 实际上就是 `fencs`)中搜寻下一个编码, 也就是出现我们所说的乱码.
+
+>验证上述结论: 用vim打开一个文件, 输入 `:set encoding`,
+>vim 会自动把encoding的值打印出来.
+
++ `fileencodings`(`fencs`):
+此项目配置的是一个 `编码列表`, `Vim` 在读取文件的时候, 会根据这里的编码自动检测,
+如果检测失败则尝试下一个, 直到检测成功为止.
+如果一直没有转换成功, 则此值会为空, 也就是上述 `encoding` 的枚举,
+你可以重新调整循序来调整优先级. (需要在 `.vimrc` 中修改)
+
+>验证上述结论: 同上, 打印 `fencs` 的值(fencs 就是 fileencodings)
+
++ `fileencoding`(`fenc`):这个东西尤其重要.
+它配置的是 `新建文件` 和 `保存文件` 时文件的编码,
+如果它的值与 `encoding(enc)` 不一样, 那么保存的时候 `Vim` 会自动把文件内容,
+由 `encoding` 的编码转换为 `fileencoding` 配置的编码再保存.
+而读取文件的时候, 该选项的值会自动同步为 `fileencodings:` 配置的有效编码.
+(实际上就是上面说的转换规则)
+
+例如:
+
+如果我们是如下配置
+
+```viml
+encoding(enc):utf-8
+fileencodings(fencs):utf-8, gbk
+fileencoding(fenc):gbk
+```
+
+那么我们打开一个 `gbk` 编码的文件,
+Vim会将内容转换为 `utf-8` 格式来显示, 但是保存的时候文件的编码却依然是 `gbk`
+
+如果我的工作环境主要是编辑 `utf-8`, 偶尔会修改一下 `gbk` 的编码, 我们该怎么配置呢?
+
+首先我们可以把 `fileencoding` 留空,
+然后只配置 `fencs:utf-8,gbk,ucs-bom,cp936`
+(这个需要在 `.vimrc` 中配置, 不然下一次打开不会改变, 而且这个列表是打开后不能改的, 改了也没效果)
+
+按照上面的规则, `Vim` 就会自动把文件保存为 `gbk` 的编码了
+如果我编辑了一个 `utf-8` 文件, 想把它以 `gbk` 的格式保存, 该怎么办呢?
+在命令行模式输入 `:set fenc=gbk` 然后保存文件即可,
+保存之后再输入 `:set fenc=utf-8` 就可以继续编辑其他 `utf-8` 文件了
+
 ## 概念
 
-`buffer`是内存中的文本文件.
-`window`是`buffer`的`viewport`.
-`tab`是`windows`的集合.
+`buffer`(缓冲区)是内存中的文本文件.
+`window`(窗口)是`buffer`的`viewport`.
+`tab`(标签页)是`windows`的集合.
 
 ***
 Vim 寄存器

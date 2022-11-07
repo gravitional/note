@@ -68,7 +68,7 @@ class type 等函数模板.
 AnalysisFe:public AnalysisBase{...}
 ```
 
-创建 FiniteElement 分析任务, 
+创建 FiniteElement 分析任务,
 成员函数 Read() 分配任务号, `_jobID`.
 
 ## 全局函数
@@ -207,7 +207,7 @@ main(int argc, char* argv[]);
                                 _jobID=model()->AddComponentGenID(job); //分配 jobID, 即 工况号
                                 _name=reader->GetCurrentNode(); // 获取有限元分析名称
                                 // 设置 jobID 对应的名称, 存入 unordered_map<string, int> _nameMap, 不同 reader 共享
-                                reader->SetIDByName(_name,_jobID); 
+                                reader->SetIDByName(_name,_jobID);
                                 job->Create(*reader); //virtual, 创建 new job
                                     非线性迭代 // /Electrics/Analysis/LoadJobEF.cpp
                                     载荷
@@ -239,6 +239,11 @@ main(int argc, char* argv[]);
                         analyze_EM_Field_Nonlinear(); //非线性迭代
                             AlgPostAnalysisEF analysis; // 新建Post分析对象
                             analysis.Run(); // 运行后处理分析, 电磁力, 力矩, 电容
+                                FieldWriterEF* writer=objects()->GetUniPtr<FieldWriterEF>();
+                                writer->Write(_job, "Static"); // 写入场量到 result.h5
+                                    WriteField(); // 写入到 hdf5
+                                    SetTestFieldData(); // 写入到 ensight
+
                 memTracker();timeTracker(); // 记录内存, 时间占用
             }
         _pIml->Finalize(); // 计算收尾, /Common/Control/Control.cpp
@@ -256,8 +261,19 @@ main(int argc, char* argv[]);
 ### 重要的数字标记
 
 ```cpp
-int AnalysisBase::_jobID // 工况号. 
+int AnalysisBase::_jobID // 工况号.
 int AnalysisBase::_stepID // 分析步序号
 std::string AnalysisBase::_name // 分析名
 bool AnalysisBase::_restart // 是否续算
+```
+
+## 命令习惯
+
+函数命名, 计算代价从小到大
+
+```cpp
+get(), set()
+search()
+find()
+calc()
 ```

@@ -10625,7 +10625,7 @@ noprefix "false"
 中添加一个表面项得到新的泛函积分
 \begin_inset Formula 
 \[
-\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}+\int_{\Gamma}\epsilon_{r}\frac{n}{r}\frac{\Phi\epsilon_{r}\Phi}{2}\dd{\Gamma}.
+\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}+{\color{blue}\int_{\Gamma}\epsilon_{r}\frac{n}{r}\frac{\Phi\epsilon_{r}\Phi}{2}}\dd{\Gamma}.
 \]
 
 \end_inset
@@ -10633,7 +10633,7 @@ noprefix "false"
 对上式做变分可以得到（使用分部积分）
 \begin_inset Formula 
 \[
-\delta\mathcal{F}\left(\Phi\right)=-\int_{\Omega}\left(\nabla\cdot\epsilon_{r}\nabla\Phi+\frac{\rho}{\epsilon_{0}}\right)\delta\Phi\dd{\Omega}+\int_{\Gamma}\left(\sbf e_{n}\cdot\epsilon_{r}\nabla\Phi+\frac{n}{r}\epsilon_{r}\Phi\right)\delta\Phi\dd{\Gamma}.
+\delta\mathcal{F}\left(\Phi\right)=-\int_{\Omega}\left(\nabla\cdot\epsilon_{r}\nabla\Phi+\frac{\rho}{\epsilon_{0}}\right)\delta\Phi\dd{\Omega}+\int_{\Gamma}\left({\color{blue}\sbf e_{n}\cdot\epsilon_{r}\nabla\Phi+\frac{n}{r}\epsilon_{r}\Phi}\right)\delta\Phi\dd{\Gamma}.
 \]
 
 \end_inset
@@ -10646,7 +10646,7 @@ noprefix "false"
 
 \end_inset
 
-即相当于前文的
+它等价于
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:xl2.7"
@@ -10709,7 +10709,7 @@ noprefix "false"
 
 \end_inset
 
-其中
+其中（在开放边界足够大，渐近于球形的近似下）
 \begin_inset Formula 
 \[
 {\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(-\sbf\nabla\delta\phi)}\Rightarrow N_{i}^{e}\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\;\frac{n}{r}\delta\Phi
@@ -10772,7 +10772,7 @@ status open
 \end_inset
 
  可以理解为 
-\begin_inset Formula $N_{i1}^{e}N_{1j}^{e}=\left(N^{e}.N^{e,T}\right)_{ij}$
+\begin_inset Formula $N_{i1}^{e}N_{1j}^{e}=\left(N^{e}\cdot N^{e,T}\right)_{ij}$
 \end_inset
 
 ，
@@ -10786,7 +10786,11 @@ status open
 \begin_inset Formula $r=\sqrt{x^{2}+y^{2}+z^{2}}$
 \end_inset
 
-，表示原点到场点 
+，表示原点
+\begin_inset Formula $O$
+\end_inset
+
+ 到场点 
 \begin_inset Formula $P$
 \end_inset
 
@@ -10794,7 +10798,7 @@ status open
 \end_layout
 
 \begin_layout Enumerate
-程序中，要求开域边界条件的几何边界总是球形或圆形。
+为了保证计算精度，程序中要求开域边界条件的几何边界尽量为球形或圆形。
 \end_layout
 
 \begin_layout Section

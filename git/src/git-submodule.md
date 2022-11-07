@@ -286,3 +286,56 @@ git commit -m "delete submodule sub1"
 
 本篇文章简单介绍了 `git submodule` 的添加和删除,
 以及项目开发过程中主项目与子模块不同状态时刻的操作方式.
+
+## xxxx
+
++ 初始化仓库
+
+```bash
+
+git clone http://... --recursive --branch develop .
+
+git submodule update --recursive --init src/common
+git submodule update --recursive --init src/structure
+
+git submodule foreach --recursive 'git checkout develop || true'
+git config --local http.proxy http://...
+```
+
++ 更新代码
+
+```bash
+git pull
+git submodule foreach --recursive 'git pull || true'
+```
+
++ 切换分支xxx(位于主仓库)
+
+```bash
+git checkout xxx
+git submodule foreach --recursive 'git checkout xxx || true'
+```
+
+solver 为主仓库，管理一级仓库(版本信息)；
+thirdparty 为第三方 sdk;
+common, structure, fluid, electromagnetics, multibody 为一级子仓库，管理二级子仓库(版本信息)；
+其余为二级子仓库，管理代码。
+
+各组员 在二级仓库提交代码后，若涉及不同仓库则必须在相应的一级子仓库中提交对应更新（二级子仓库的版本信息），二者需时刻保持一致。
+
++ 提交子仓库
+
+```bash
+git add <子仓库路径>
+git commit -m 'log message'
+git push
+```
+
++ 回退版本(建议另开一个文件夹只用于回退版本, 不做任何修改)
+
+```bash
+git checkout xxx(主仓库solver 或一级仓库的commit号,并位于相应位置)
+git submodule update <path子模块1>
+git submodule update <path子模块2>
+...
+```
