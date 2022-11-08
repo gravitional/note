@@ -205,3 +205,30 @@ Type    this
 + `func(...args)`;  `window`
 + `func(...args)` ES5严格模式;  `undefined`
 + `path.to.obj.func(...args)`;  `path.to.obj`
+
+## PS: I Cheated
+
+在一些地方, 我根据规范的确切措辞简化了现实.
+最重要的作弊方式可能是我把 func.call 称为 `原语`.
+实际上, 规范中有一个基元(内部称为 `[[Call]]`),
+`func.call` 和 `[obj.]func()` 都调用它.
+
+然而, 看看 `func.call` 的定义吧.
+
++ 如果 `IsCallable(func)` 为假, 那么抛出 `TypeError异常`.
++ 让argList是一个空的List.
++ 如果这个方法被调用时有多个参数, 那么按照从左到右的顺序, 从arg1开始, 将每个参数追加为argList的最后一个元素.
++ 返回调用 `func` 的 `[[Call]]` 内部方法的结果, 提供thisArg作为this值, argList作为参数的列表.
+
+正如你所看到的, 这个定义本质上是一个非常简单的JavaScript语言
+与原始的 `[[Call]]`操作的绑定.
+
+如果你看一下调用函数的定义, 前七步设置了 `thisValue` 和 `argList`,
+最后一步是. "返回调用func的 `[[Call]]`内部方法的结果,
+提供thisValue作为this值, 提供argList列表作为参数值. "
+
+这基本上是相同的措辞, 一旦 `argList` 和 `thisValue` 被确定下来.
+在把 `call` 称为原语这点, 我有点作弊,
+但其含义与我在本文开始时拿出规范, 并逐章逐节引用的含义基本相同.
+
+还有一些额外的情况(最明显的是涉及 `with`), 我在这里没有涉及.

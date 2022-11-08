@@ -295,15 +295,15 @@ x_{k+1}=x_{k}+\alpha_{k}p_{k},\label{eq:w3.1}
  是下降方向(descent direction)，亦即需要满足以下条件： 
 \begin_inset Formula 
 \[
-p_{k}^{T}\nabla f_{k}<0.
+p_{k}^{T}.\nabla f_{k}<0,
 \]
 
 \end_inset
 
-，这样就能够保证函数f(x)沿着这个方向是下降的。一般来说, 搜索方向的形式为
+这样就能够保证函数f(x)沿着这个方向是下降的。一般来说, 搜索方向的形式为
 \begin_inset Formula 
 \begin{equation}
-p_{k}=-B_{k}^{-1}\nabla f_{k},\label{eq:w3.2}
+p_{k}=-B_{k}^{-1}.\nabla f_{k},\label{eq:w3.2}
 \end{equation}
 
 \end_inset
@@ -343,7 +343,7 @@ p_{k}=-B_{k}^{-1}\nabla f_{k},\label{eq:w3.2}
  是正定矩阵时：
 \begin_inset Formula 
 \[
-p_{k}^{T}\nabla f_{k}=-\nabla f_{k}^{T}B_{k}^{-1}\nabla f_{k}<0
+p_{k}^{T}\nabla f_{k}=-\nabla f_{k}^{T}.B_{k}^{-1}.\nabla f_{k}<0
 \]
 
 \end_inset
@@ -445,11 +445,64 @@ bracketing: 求得一个包含 理想步长 的区间
 \end_layout
 
 \begin_layout Standard
+ref：
+\begin_inset CommandInset href
+LatexCommand href
+name "凸函数定义"
+target "https://zhuanlan.zhihu.com/p/56876303"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 如果 
 \begin_inset Formula $f(x)$
 \end_inset
 
- 是一个可微分的凸函数, 则我们的目标是求得 
+ 是一个可微分的凸函数, 即
+\end_layout
+
+\begin_layout Enumerate
+函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 的定义域 
+\begin_inset Formula $\mathrm{dom}f$
+\end_inset
+
+ 是一个凸集；
+\end_layout
+
+\begin_layout Enumerate
+满足 
+\begin_inset Formula $f\left[\theta x+\left(1-\theta\right)y\right]\le\theta f\left(x\right)+\left(1-\theta\right)f\left(y\right),\quad\theta\in\left(0,1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其函数图像类似 
+\begin_inset Formula $x^{2}$
+\end_inset
+
+，定义域中任意两点连线组成的线段都在这两点的函数曲线上方。如果 
+\begin_inset Formula $f(\vec{x})$
+\end_inset
+
+ 是凸函数，则函数 
+\begin_inset Formula $g(t)=f(\vec{x}+t\vec{v})$
+\end_inset
+
+ 也是其定义域内的凸函数。
+\end_layout
+
+\begin_layout Standard
+我们的目标是求得 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -461,11 +514,19 @@ bracketing: 求得一个包含 理想步长 的区间
 
 \end_inset
 
-令 
+在每一步迭代中我们令 
 \begin_inset Formula $\phi(\alpha)=f\left(x_{k}+\alpha p_{k}\right)$
 \end_inset
 
-，其中 
+，
+\begin_inset Formula $x_{k}$
+\end_inset
+
+是搜索起点，
+\begin_inset Formula $p_{k}$
+\end_inset
+
+是梯度下降方向。其中 
 \begin_inset Formula $\phi(\alpha)$
 \end_inset
 
@@ -481,23 +542,35 @@ bracketing: 求得一个包含 理想步长 的区间
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
 因为 
 \begin_inset Formula $\phi(\alpha)$
 \end_inset
 
- 是凸函数, 所以 
+ 是凸函数，所以 
 \begin_inset Formula $\phi'(\overline{\alpha})=0$
 \end_inset
 
-。可以得到 
-\begin_inset Formula $\phi'(\alpha)=\nabla f\left(x+\alpha p\right)^{T}p$
+。
+\end_layout
+
+\begin_layout Itemize
+可以得到 
+\begin_inset Formula $\phi'(\alpha)=\left[\nabla f\left(x+\alpha p\right)\right]^{T}.p$
 \end_inset
 
 ，因为
 \begin_inset Formula $p$
 \end_inset
 
-是梯度下降方向，所以 
+是梯度下降方向，满足 
+\begin_inset Formula $p_{k}^{T}.\nabla f_{k}<0$
+\end_inset
+
+，所以 
 \begin_inset Formula $\phi'(0)<0$
 \end_inset
 
@@ -506,11 +579,11 @@ bracketing: 求得一个包含 理想步长 的区间
 
 \begin_layout Standard
 假设我们知道一个 
-\begin_inset Formula $\hat{\alpha}$
+\begin_inset Formula $\beta$
 \end_inset
 
  使得 
-\begin_inset Formula $\phi'(\hat{\alpha})>0$
+\begin_inset Formula $\phi'(\beta)>0$
 \end_inset
 
 ，那么使得 
@@ -522,7 +595,7 @@ bracketing: 求得一个包含 理想步长 的区间
 \end_inset
 
  肯定位于 
-\begin_inset Formula $(0,\hat{\alpha})$
+\begin_inset Formula $(0,\beta)$
 \end_inset
 
  区间内。然后我们可以使用以下二分查找算法来求解 
@@ -538,15 +611,15 @@ bracketing: 求得一个包含 理想步长 的区间
 \end_inset
 
 ，
-\begin_inset Formula $\alpha_{l}\coloneqq0$
+\begin_inset Formula $\alpha_{\ell}\coloneqq0$
 \end_inset
 
 ，
-\begin_inset Formula $\alpha_{r}:=\hat{\alpha}$
+\begin_inset Formula $\alpha_{r}:=\beta$
 \end_inset
 
 ；即 
-\begin_inset Formula $\phi'(\alpha_{l})<0$
+\begin_inset Formula $\phi'(\alpha_{\ell})<0$
 \end_inset
 
 ，
@@ -558,7 +631,7 @@ bracketing: 求得一个包含 理想步长 的区间
 
 \begin_layout Enumerate
 令 
-\begin_inset Formula $\tilde{\alpha}=\frac{\alpha_{l}+\alpha_{r}}{2}$
+\begin_inset Formula $\overline{\alpha}=\frac{\alpha_{\ell}+\alpha_{r}}{2}$
 \end_inset
 
 ，然后计算 
@@ -571,15 +644,15 @@ bracketing: 求得一个包含 理想步长 的区间
 \begin_deeper
 \begin_layout Enumerate
 如果 
-\begin_inset Formula $\phi'(\tilde{\alpha})>0$
+\begin_inset Formula $\phi'(\overline{\alpha})>0$
 \end_inset
 
 ，则令 
-\begin_inset Formula $\alpha_{r}\coloneqq\tilde{\alpha}$
+\begin_inset Formula $\alpha_{r}\coloneqq\overline{\alpha}$
 \end_inset
 
 ，
-\begin_inset Formula $\alpha_{l}$
+\begin_inset Formula $\alpha_{\ell}$
 \end_inset
 
 不变，令 
@@ -591,11 +664,11 @@ bracketing: 求得一个包含 理想步长 的区间
 
 \begin_layout Enumerate
 如果 
-\begin_inset Formula $\phi'(\tilde{\alpha})<0$
+\begin_inset Formula $\phi'(\overline{\alpha})<0$
 \end_inset
 
 ，则令 
-\begin_inset Formula $\alpha_{l}\coloneqq\tilde{\alpha}$
+\begin_inset Formula $\alpha_{\ell}\coloneqq\overline{\alpha}$
 \end_inset
 
 ，
@@ -611,7 +684,7 @@ bracketing: 求得一个包含 理想步长 的区间
 
 \begin_layout Enumerate
 如果 
-\begin_inset Formula $\phi'(\tilde{\alpha})=0$
+\begin_inset Formula $\phi'(\overline{\alpha})=0$
 \end_inset
 
 , 停止迭代。
@@ -960,8 +1033,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-It is not difficult to prove that there exist step lengths that satisfy
- the Wolfe conditions for every function f that is smooth and bounded below。
+对于任意光滑且有下界（smooth and bounded below）函数
+\begin_inset Formula $f$
+\end_inset
+
+，不难证明存在满足 Wolfre 条件的步长。
 \end_layout
 
 \begin_layout Lemma
@@ -994,11 +1070,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The Wolfe conditions are scale-invariant in a broad sense: Multiplying the
- objective function by a constant or making an affine change of variables
- does not alter them.
- They can be used in most line search methods, and are particularly important
- in the implementation of quasi-Newton methods, as we see in Chapter 6.
+Wolfe条件 在广义上是标度不变的（scale-invariant）。将目标函数乘以常数，或对变量进行仿射变换（affine）都不会改变它们。它们可以用在大多
+数线搜索方法中，而且在实现准牛顿方法中特别重要，正如我们在第六章中看到的那样。
 \end_layout
 
 \begin_layout Subsection
@@ -1006,17 +1079,14 @@ Goldstein 条件
 \end_layout
 
 \begin_layout Standard
-Like the Wolfe conditions, the Goldstein conditions ensure that the step
- length 
+与 Wolfe条件 一样，Goldstein条件 确保步长 
 \begin_inset Formula $\alpha$
 \end_inset
 
- achieves sufficient decrease but is not too short.
- The Goldstein conditions can also be stated as a pair of inequalities,
- in the following way：
+ 足够小，但不会太短。Goldstein条件 也可以被表述为一对不等式，具体方式如下：
 \begin_inset Formula 
 \begin{equation}
-f(x_{k})+(1-c)\alpha_{k}\nabla f_{k}^{T}p_{k}\le f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+c\alpha_{k}\nabla f_{k}^{T}p_{k},\label{eq:w3.11}
+f(x_{k})+{\color{blue}(1-c)\alpha_{k}}\nabla f_{k}^{T}p_{k}\le f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+{\color{blue}c\alpha_{k}}\nabla f_{k}^{T}p_{k},\label{eq:w3.11}
 \end{equation}
 
 \end_inset
@@ -1027,7 +1097,7 @@ f(x_{k})+(1-c)\alpha_{k}\nabla f_{k}^{T}p_{k}\le f(x_{k}+\alpha_{k}p_{k})\le f(x
 
 。第二个不等式正是充分下降条件
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:w3.4"
 plural "false"
 caps "false"
@@ -1086,29 +1156,31 @@ name "fig:w3.6"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-A disadvantage of the Goldstein conditions vis-a-vis the Wolfe conditions
- is that the first inequality in (3.11) may exclude all minimizers of 
+Goldstein条件 相对于Wolfe条件 的一个缺点是，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:w3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的第一个不等式可能会排除 
 \begin_inset Formula $\phi$
 \end_inset
 
-。 However, the Goldstein and Wolfe conditions have much in common, and their
- convergence theories are quite similar.
- The Goldstein conditions are often used in Newton-type methods but are
- not well suited for quasi-Newton methods that maintain a positive definite
- Hessian approximation。
+ 的所有极小值点（minimizers）。 然而，Goldstein和Wolfe条件有很多共同点，它们的收敛理论也非常相似。Goldstein条件
+ 经常用于牛顿型方法，但不太适合于保持 正定Hessian近似 的 准牛顿方法。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 充分下降条件和回溯算法(BACKTRACKING)
 \end_layout
 
@@ -1147,7 +1219,7 @@ status open
 
 \end_inset
 
- Backtracking Line Search
+ 回溯线搜索Backtracking Line Search
 \end_layout
 
 \begin_layout Enumerate
@@ -9550,7 +9622,7 @@ noprefix "false"
 ，则
 \begin_inset Formula 
 \begin{align}
-\mathcal{F}^{e}\left(\sbf A\right) & =\int_{\Omega_{e}}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf A\dd{\Omega}\label{eq:3.13}\\
+\mathcal{F}^{e}\left(\sbf A\right) & =\int_{\Omega_{e}}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf A\dd{\Omega}\label{eq:xl3.13}\\
  & -\left({\color{blue}\int_{\Omega_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf A\dd{\Omega}-\int_{\Gamma_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\hat{\sbf e}_{n}\times\sbf M_{0}\right)\cdot\sbf A\dd{\Gamma}}\right)\label{eq:xl3.14}
 \end{align}
 
@@ -9686,6 +9758,556 @@ b_{i}^{e}=\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}+\frac{\mu
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+非线性材料
+\end_layout
+
+\begin_layout Standard
+非线性材料中 
+\begin_inset Formula $\sbf B$
+\end_inset
+
+和 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 的本构关系比较复杂，一般无法写出关于 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 的显式方程，但可以通过逐步迭代逼近的方法将 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 求解出来。介质中的静磁场方程最一般的表达式为：
+\begin_inset Formula 
+\begin{align*}
+ & \sbf B=\sbf B\left(\sbf H\right)\\
+ & \nabla\times\sbf H=\sbf J
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果可以先确定出 
+\begin_inset Formula $\sbf B$
+\end_inset
+
+，那么根据 BH 曲线就可以确定出 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+，得到的 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 应该满足方程 
+\begin_inset Formula $\nabla\times\sbf H=\sbf J$
+\end_inset
+
+。可以首先取 
+\begin_inset Formula $\sbf B^{0}$
+\end_inset
+
+ 作为方程的试探解，根据 BH 曲线可以得到 
+\begin_inset Formula $\sbf H^{0}=\sbf H(\sbf B^{0})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $\sbf H^{0}$
+\end_inset
+
+满足方程 
+\begin_inset Formula $\nabla\times\sbf H^{0}=\sbf J$
+\end_inset
+
+，那么取 
+\begin_inset Formula $\sbf B^{0}$
+\end_inset
+
+和 
+\begin_inset Formula $\sbf H^{0}$
+\end_inset
+
+ 就应该是所求的解。
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $\sbf H^{0}$
+\end_inset
+
+不满足方程 
+\begin_inset Formula $\nabla\times\sbf H^{0}=\sbf J$
+\end_inset
+
+，说明目前的 
+\begin_inset Formula $\sbf B^{0}$
+\end_inset
+
+ 值不正确，需要对 
+\begin_inset Formula $\sbf B^{0}$
+\end_inset
+
+做修正。修正后 
+\begin_inset Formula $\sbf B=\sbf B^{0}+\delta\sbf B$
+\end_inset
+
+。相应的 
+\begin_inset Formula $\sbf H=\sbf H^{0}+\delta\sbf H$
+\end_inset
+
+，其中
+\begin_inset Formula 
+\[
+\delta\sbf H=\frac{\partial H}{\partial B}\delta B
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果是各向异性的情况，式中的 
+\begin_inset Formula $\partial H/\partial B$
+\end_inset
+
+ 就是张量。修正后 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 应该满足方程
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\sbf H=\nabla\times\left(\sbf H^{0}+\frac{\partial H}{\partial B}\delta\sbf B\right)=\sbf J\label{eq:xl3.17}
+\end{equation}
+
+\end_inset
+
+方程中只有 
+\begin_inset Formula $\delta B$
+\end_inset
+
+ 是未知量。由于 
+\begin_inset Formula $\sbf B=\nabla\times\sbf A$
+\end_inset
+
+，因此 
+\begin_inset Formula $\delta\sbf B=\nabla\times\delta\sbf A$
+\end_inset
+
+，代入式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+\nabla\times\left(\sbf H^{0}+\frac{\partial H}{\partial B}\nabla\times\delta\sbf A\right)=\sbf J
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+施加相应的边界条件，就可以解出 
+\begin_inset Formula $\delta\sbf A$
+\end_inset
+
+，进而得到 
+\begin_inset Formula $\delta\sbf B$
+\end_inset
+
+和 
+\begin_inset Formula $\delta\sbf H$
+\end_inset
+
+，最后得到修正的
+\begin_inset Formula $\sbf B$
+\end_inset
+
+和
+\begin_inset Formula $\sbf H$
+\end_inset
+
+。如果修正后的 
+\begin_inset Formula $\sbf H$
+\end_inset
+
+ 仍然不满足方程 
+\begin_inset Formula $\nabla\times\sbf H=\sbf J$
+\end_inset
+
+，那么就把修正后的
+\begin_inset Formula $\sbf B$
+\end_inset
+
+和
+\begin_inset Formula $\sbf H$
+\end_inset
+
+作为初始值，重复上面的步骤，直到 
+\begin_inset Formula $\sbf B$
+\end_inset
+
+和
+\begin_inset Formula $\sbf H$
+\end_inset
+
+趋近方程的真实解。每一步迭代所求解的方程为：
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\left(\frac{\partial H}{\partial B}\nabla\times\delta\sbf A\right)=\sbf J-\nabla\times\sbf H^{0}\label{eq:xl3.18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+首先采用泛函积分的 Ritz 法来构造有限元计算流程。根据式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以写出关于 
+\begin_inset Formula $\delta\sbf A$
+\end_inset
+
+ 的泛函
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}\left(\delta\sbf A\right)=\mu_{0}\int_{\Omega}\frac{1}{2}\left(\nabla\times\delta\sbf A\right)\cdot\frac{\partial H}{\partial B}\left(\nabla\times\delta\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega}\left(\sbf J-\nabla\times\sbf H^{0}\right)\cdot\delta\sbf A\dd{\Omega}\label{eq:xl3.19}
+\end{equation}
+
+\end_inset
+
+然后有
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}\left(\delta\sbf A\right)=\sum_{e}\mathcal{F}^{e}\left(\delta\sbf A\right),\label{eq:xl3.19b}
+\end{equation}
+
+\end_inset
+
+在单个有限元单元中
+\begin_inset Formula 
+\begin{align}
+\mathcal{F}^{e}\left(\delta\sbf A\right)= & \mu_{0}\int_{\Omega^{e}}\frac{1}{2}\left(\nabla\times\delta\sbf A\right)\cdot\frac{\partial H}{\partial B}\left(\nabla\times\delta\sbf A\right)\dd{\Omega}\label{eq:xl3.20}\\
+ & -\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\delta\sbf A\dd{\Omega}+\mu_{0}\int_{\Omega^{e}}\left(\nabla\times\sbf H^{0}\right)\cdot\delta\sbf A\dd{\Omega}\label{eq:xl3.21}\\
+ & +\mu_{0}\int_{\Gamma^{e}}\left(\sbf H^{0}\times\hat{\sbf e}_{n}\right)\cdot\delta\sbf A\dd{\Gamma}\label{eq:xl3.22}
+\end{align}
+
+\end_inset
+
+式中最后一项是单元表面的积分。这一项出现的原因和永磁体一样，都是因为将原来的积分区域
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 划分成网格后，利用式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.19b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+计算 
+\begin_inset Formula $\mathcal{F}\left(\delta\sbf A\right)$
+\end_inset
+
+ 造成的。经过类似的处理，去掉边界项给出
+\begin_inset Formula 
+\begin{align}
+\mathcal{F}^{e}\left(\delta\sbf A\right)= & \mu_{0}\int_{\Omega^{e}}\frac{1}{2}\left(\nabla\times\delta\sbf A\right)\cdot\frac{\partial H}{\partial B}\left(\nabla\times\delta\sbf A\right)\dd{\Omega}\label{eq:xl3.23}\\
+ & -\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\delta\sbf A\dd{\Omega}+\mu_{0}\int_{\Omega^{e}}\sbf H^{0}\cdot\left(\nabla\times\delta\sbf A\right)\dd{\Omega}\label{eq:xl3.24}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+取 
+\begin_inset Formula $\delta\sbf A=\sbf N_{j}^{e}\delta A_{j}$
+\end_inset
+
+，代入 
+\begin_inset Formula $\mathcal{F}^{e}\left(\delta\sbf A\right)$
+\end_inset
+
+ 中，可以得到
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial\mathcal{F}}{\partial\delta\sbf A_{i}}= & \mu_{0}\int_{\Omega^{e}}\frac{1}{2}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\frac{\partial H}{\partial B}\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega}\delta A_{j}\\
+ & -\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}+\mu_{0}\int_{\Omega^{e}}\sbf H^{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+由于 
+\begin_inset Formula $\mathcal{F}\left(\delta\sbf A\right)$
+\end_inset
+
+ 满足极值条件 
+\begin_inset Formula $\mathcal{F}\left(\delta\sbf A\right)=0$
+\end_inset
+
+，最后可以得到矩阵方程
+\begin_inset Formula 
+\[
+\left\{ \frac{\partial\mathcal{F}}{\partial\delta\sbf A_{i}}\right\} =\sum_{e=1}^{M}\left[K_{ij}^{e}\right]\left\{ \delta A_{j}\right\} -\sum_{e=1}^{M}\left\{ b_{i}^{e}\right\} =\left\{ 0\right\} 
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+K_{ij}^{e} & =\mu_{0}\int_{\Omega^{e}}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\frac{\partial H}{\partial B}\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega}\\
+b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf H^{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于线性材料，
+\begin_inset Formula $\sbf H=\sbf B/(\mu_{0}\mu_{r})$
+\end_inset
+
+，
+\begin_inset Formula $\partial H/\partial B=1/(\mu_{0}\mu_{r})$
+\end_inset
+
+；对于永磁体，
+\begin_inset Formula $\sbf H=\frac{1}{\mu_{0}\mu_{r}}\sbf B-\frac{1}{\mu_{r}}\sbf M_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\partial H/\partial B=1/(\mu_{0}\mu_{r})$
+\end_inset
+
+。将积分的区域
+\begin_inset Formula $\Omega$
+\end_inset
+
+根据材料类型分为线性材料区域 
+\begin_inset Formula $\Omega_{0}$
+\end_inset
+
+，永磁体材料区域 
+\begin_inset Formula $\Omega_{m}$
+\end_inset
+
+ 和非线性材料区域 
+\begin_inset Formula $\Omega_{n}$
+\end_inset
+
+。则
+\begin_inset Formula 
+\[
+K_{ij}^{e}=\begin{cases}
+\frac{1}{\mu_{r}}\int_{\Omega^{e}}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega} & \Omega^{e}\in\Omega_{0}+\Omega_{m}\\
+\mu_{0}\int_{\Omega^{e}}\frac{\partial H}{\partial B}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega} & \Omega^{e}\in\Omega_{n}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Ritz 方法
+\end_layout
+
+\begin_layout Standard
+根据式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\nabla\times\left(\frac{\partial H}{\partial B}\nabla\times\delta\sbf A\right)=\sbf J-\nabla\times\sbf H^{0}
+\]
+
+\end_inset
+
+采用 Galerkin 法也可以得到和 Ritz 法相同的结果。首先以 
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 为加权函数计算相应的余数
+\begin_inset Formula 
+\begin{align*}
+R_{i}^{e}= & \mu_{0}\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\left(\frac{\partial H}{\partial B}\nabla\times\delta\sbf A\right)-\sbf J+\nabla\times\sbf H^{0}\right]\dd{\Omega}\\
+ & +\mu_{0}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\left(\sbf H^{0}\times\hat{\sbf e}_{n}\right)\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+边界积分来源于单元的“表面电流” 
+\begin_inset Formula $\sbf H^{0}\times\hat{\sbf e}_{n}$
+\end_inset
+
+，经过分部积分可得：
+\begin_inset Formula 
+\begin{align*}
+R_{i}^{e}= & \mu_{0}\int_{\Omega^{e}}\frac{\partial H}{\partial B}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\left(\nabla\times\delta\sbf A\right)\dd{\Omega}+\mu_{0}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\left[\hat{\sbf e}_{n}\times\frac{\partial H}{\partial B}\left(\nabla\times\delta\sbf A\right)\right]\dd{\Gamma}\\
+ & -\mu_{0}\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\sbf J\dd{\Omega}+\mu_{0}\int_{\Omega^{e}}\sbf H^{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+式中的边界积分中，相邻单元的贡献在边界上互相抵消，最后只留下 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 边界上的积分，
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 边界上的约束条件可以抵消掉该边界积分的贡献，因此表面积分可以去掉。最后将 
+\begin_inset Formula $\delta\sbf A=\sbf N_{j}^{e}\delta A_{j}$
+\end_inset
+
+代入上式，可以得到矩阵形式下 
+\begin_inset Formula $R_{i}^{e}$
+\end_inset
+
+ 的表达式：
+\begin_inset Formula 
+\[
+R_{i}^{e}=K_{ij}^{e}\delta A_{j}-b_{i}^{e}
+\]
+
+\end_inset
+
+并且
+\begin_inset Formula 
+\[
+\sum_{e=1}^{M}\left\{ R_{i}^{e}\right\} =\sum_{e=1}^{M}\left[K_{ij}^{e}\right]\left\{ \delta\sbf A_{j}\right\} -\sum_{e=1}^{M}\left\{ b_{i}^{e}\right\} =\left\{ 0\right\} 
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+K_{ij}^{e} & =\mu_{0}\int_{\Omega^{e}}\frac{\partial H}{\partial B}\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\left(\nabla\times\sbf N_{j}^{e}\right)\dd{\Omega}\\
+b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\sbf J\dd{\Omega}-\mu_{0}\int_{\Omega^{e}}\sbf H^{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+和Ritz法得到的结果完全相同。
+\end_layout
+
+\begin_layout Section
+磁场的开域问题
+\end_layout
+
+\begin_layout Standard
+由于很少有材料可以屏蔽磁场，所以磁场的问题几乎都是开域问题。和静电场类似，磁场的开域问题也可以采用截断法或者精度更高的渐近边界条件来处理。首先矢势可以表示为
+\begin_inset Formula 
+\[
+\sbf A\left(\sbf r\right)=\frac{\mu_{0}}{4\pi}\int\dd[3]{r'}\frac{\sbf J\left(\sbf r'\right)+\nabla'\times\sbf M\left(\sbf r'\right)}{\abs{\sbf r-\sbf r'}}
+\]
+
+\end_inset
+
+同样在远离源的地方
+\begin_inset Formula 
+\[
+\frac{1}{\abs{\sbf r-\sbf r'}}=\frac{1}{\abs{\sbf r}}+\frac{\sbf r\cdot\sbf r'}{\abs{\sbf r}^{3}}+\cdots
+\]
+
+\end_inset
+
+这样可以得到最低阶的近似表达式：
+\begin_inset Formula 
+\begin{equation}
+\sbf A=\frac{\sbf a}{r^{n}}\label{eq:xl3.25}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\sbf a$
+\end_inset
+
+ 是与
+\begin_inset Formula $r$
+\end_inset
+
+无关的矢量。采用截断法处理边界处的矢势，即取 
+\begin_inset Formula $\sbf A=0$
+\end_inset
+
+ 或 
+\begin_inset Formula $\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=0$
+\end_inset
+
+，计算精度分别为 
+\begin_inset Formula $\mathcal{O}\left(r^{-n}\right)$
+\end_inset
+
+和 
+\begin_inset Formula $\mathcal{O}\left(r^{-n-1}\right)$
+\end_inset
+
+。根据式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula $\sbf A$
+\end_inset
+
+满足的渐近边界条件：
 \end_layout
 
 \begin_layout Chapter
