@@ -23,7 +23,7 @@
 
 ## 使用流程
 
-[main]: https://github.com/username/main.git
+[main]: https://gitee.com/mirrors_trending/OpenSSL-2022.git
 [sub1]: https://github.com/username/sub1.git
 
 假定我们有两个项目: `main` 和 `sub1`,
@@ -37,95 +37,110 @@
 
 ### 创建 submodule
 
-使用 `git submodule add <submodule_url>` 命令可以在项目中创建一个子模块.
-进入项目 `main` , 输入:
++ 使用 `git submodule add <submodule_url>` 命令可以在项目中创建 `子模块`.
+演示:
 
-```bash
-➜ main git:(master) git submodule add https://github.com/username/sub1.git
-正克隆到 '/path/to/main/sub1'...
-remote: Enumerating objects: 3, done.
-remote: Counting objects: 100% (3/3), done.
-remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-展开对象中: 100% (3/3), 完成.
-```
+    ```bash
+    # 创建根项目 OpenSSL,  并进入根目录
+    git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git; cd  OpenSSL-2022
+    # 添加子项目依赖
+    git submodule add https://gitee.com/mirrors/tinyre.git
+    ```
 
-此时项目仓库中会多出两个文件: `.gitmodules` 和 `sub1` .
++ 此时项目仓库中会多出两个文件: `.gitmodules` 和 `tinyre` .
+`.gitmodules` 就是子模块的相关信息;
 
-前者就是子模块的相关信息;
-而后者保存的是子模块当前版本的 `版本号` 信息.
+    ```conf
+    文件<.gitmodules>
+    [submodule "tinyre"]
+            path = tinyre
+            url = https://gitee.com/mirrors/tinyre.git
+    ```
 
-```conf
-[submodule "sub1"]
-path = sub1
-url = https://github.com/username/sub1.git
-```
+    如果此前项目中已经存在 `.gitmodules` 文件, 则会在文件内容中多出上述三行记录.
+    事实上, 此时在 `.git/config` 文件中也会多出一些信息,
+    在 `.git/modules` 文件夹下也会多出一份内容.
 
-如果此前项目中已经存在 `.gitmodules` 文件,
-则会在文件内容中多出上述三行记录.
++ 如果使用 `git diff` 查看, 会有类似下面的输出
 
-事实上, 此时在 `.git/config` 文件中也会多出一些信息,
-在 `.git/modules` 文件夹下也会多出一份内容.
+    ```diff
+    diff --git a/.gitmodules b/.gitmodules
+    ...
 
-通常此时可以使用 `git commit -m "add submodule xxx"` 提交一次,
-表示引入了某个子模块.
-提交后, 在主项目仓库中, 会显示出 `子模块文件夹`, 并带上其所在仓库的 `版本号`.
+    diff --git a/tinyre b/tinyre
+    ...
+    -Subproject commit 485d194331eba4c97f9d8aa46deff88939ed8910
+    ```
 
-![img](https://pic3.zhimg.com/v2-8b77b08acc39bfc9cb569116ff6905e2_r.jpg)
+    `Subproject commit ...` 是 git 根据 `commit` 哈希自动生成的,
+    子模块当前版本的 `版本号` 信息, 不对应实际的文件.
+
++ 通常此时可以使用
+
+    ```bash
+    git commit -m "add submodule tinyre"
+    ```
+
+    提交一次, 表示引入了某个子模块.
+    提交后在主项目仓库中, 会显示出 `子模块文件夹`, 并带上其所在仓库的 `版本号`.
+
+    ![img](https://pic3.zhimg.com/v2-8b77b08acc39bfc9cb569116ff6905e2_r.jpg)
 
 ### 获取 submodule
 
-上述步骤在创建子模块的过程中, 会自动将相关代码克隆到对应路径,
-但对于后续使用者而言,
-对于主项目使用普通的 `clone` 操作 `并不会` 拉取到子模块中的实际代码.
+上述步骤在创建 `子模块` 的过程中, 会自动将相关代码克隆到 `对应路径`,
+但对于后续使用者而言, 对于主项目使用普通的 `clone` 操作,
+`并不会` 拉取到子模块中的实际代码.
 
-使用以下命令进行克隆, 完成后 `main/sub1` 文件夹是空的:
++ 使用以下命令进行克隆, 完成后 `OpenSSL-2022/tinyre` 文件夹是空的:
 
-```bash
-cd /path/to/temp
-git clone https://github.com/username/main.git
-```
+    ```bash
+    cd test;
+    git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git
+    ```
 
-如果希望子模块代码也获取到,
++ 如果也希望拉取 `子模块代码`,
 一种方式是在克隆主项目的时候带上参数 `--recurse-submodules`,
 这样会递归地将项目中所有子模块的代码拉取.
 
-```bash
-cd /path/to/temp2
-git clone https://github.com/username/main.git --recurse-submodules
-```
+    ```bash
+    cd /path/to/temp2
+    git clone  --recurse-submodules  https://gitee.com/mirrors_trending/OpenSSL-2022.git
+    ```
 
-此时 `main/sub1` 文件夹是有内容的, 并且固定在某个 `Git` 提交的版本上.
+    此时 `OpenSSL-2022/tinyre` 文件夹是有内容的, 并且固定在某个 `Git` 提交的版本上.
 
-另外一种可行的方式是, 在当前 `主项目` 中执行:
++ 另外一种可行的方式是, 在当前 `主项目` 中执行:
 
-```bash
-git submodule init
-git submodule update
-```
+    ```bash
+    git submodule init
+    git submodule update
+    ```
 
-则会根据 `主项目` 的配置信息, `拉取` 更新子模块中的代码.
+    则会根据 `主项目` 的配置信息, `拉取` 更新子模块中的代码.
 
 ## 子模块内容的更新
 
 对于 `子模块` 而言, 并不需要知道引用自己的 `主项目` 的存在.
 对于自身来讲, 子模块就是一个完整的 `Git` 仓库,
-按照正常的 Git 代码管理规范操作即可.
+按照正常的 `Git` 代码管理规范操作即可.
 
-对于主项目而言, 子模块的内容发生变动时, 通常有三种情况:
+对于 `主项目` 而言, 子模块的内容发生变动时, 通常有三种情况:
 
-1. 当前项目下子模块文件夹内的内容发生了未跟踪的内容变动;
-1. 当前项目下子模块文件夹内的内容发生了版本变化;
-1. 当前项目下子模块文件夹内的内容没变, 远程有更新;
+1. 当前项目下, 子模块文件夹内的内容发生了 `未追踪的` 内容变动;
+1. 当前项目下, 子模块文件夹内的内容发生了 `版本变化`;
+1. 当前项目下, 子模块文件夹内的内容没变,  `远程有更新`;
 
 ### 情况1: 子模块有未跟踪的内容变动
 
 对于第1种情况, 通常是在开发环境中, `直接修改` 子模块文件夹中的代码导致的.
 
 此时在主项目中使用 `git status` 能够看到关于 `子模块尚未暂存` 以备提交的变更,
-但是于主项目而言是无能为力的, 使用 `git add/commit` 对其也不会产生影响.
+但是 `主项目` 不负责管理子模块的更新, 使用 `git add/commit` 对其也不会对子模块产生影响.
 
 ```bash
-➜ main git:(master) git status
+$ git status
+
 位于分支 master
 您的分支与上游分支 'origin/master' 一致.
 尚未暂存以备提交的变更:
@@ -140,14 +155,15 @@ git submodule update
 按照子模块内部的版本控制体系 `提交代码`.
 
 当提交完成后, 主项目的状态则进入了 `情况2`,
-即当前项目下子模块文件夹内的内容发生了版本变化.
+即当前项目下子模块文件夹内的内容发生了 `版本变化`.
 
 ### 情况2: 子模块有版本变化
 
 当子模块版本变化时, 在主项目中使用 `git status` 查看仓库状态时, 会显示子模块有新的提交:
 
 ```bash
-➜ main git:(master) ✗ git status
+$ git status
+
 位于分支 master
 您的分支与上游分支 'origin/master' 一致.
 尚未暂存以备提交的变更:

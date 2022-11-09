@@ -256,10 +256,11 @@ $page = [XML] @"
 [about_Regular_Expressions](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_regular_expressions)
 
 正则表达式是一种用于匹配文本的模式.  它可以由文本字符, 运算符和其他构造组成.
-`PowerShell` 具有多个使用正则表达式的运算符和 cmdlet.  可以在以下链接中阅读有关其语法和用法的详细信息.
+`PowerShell` 具有多个使用正则表达式的运算符和 cmdlet.  
+可以在以下链接中阅读有关其语法和用法的详细信息.
 
 + `Select-String`
-+ `-match` 和 `-replace` 运算符
++ `-match` 和 `-replace` 运算符, `-notmatch`
 + `-split`
 + 带 `-regex` 选项的 `switch` 语句
 
@@ -460,7 +461,7 @@ $a -gt 'a'
 
 #### -match,-notmatch
 
-`-match`和`-notmatch`使用正则表达式来搜索左侧值中的模式.
+`-match` 和 `-notmatch` 使用正则表达式来搜索左侧值中的模式.
 正则表达式可以匹配复杂的模式, 如电子邮件地址, UNC路径, 或格式化的电话号码.
 右侧的字符串必须遵守正则表达式的规则.
 
@@ -589,9 +590,10 @@ Out: Hello
 
 ### 包含运算符
 
-包含运算符(`-contains`, `-notcontains`, `-in`, 和 `-notin`)与`equality `运算符相似, 只是它们总是返回一个布尔值, 即使输入是一个集合.
+包含运算符(`-contains`, `-notcontains`, `-in`, 和 `-notin`)与`equality `运算符相似, 
+只是它们总是返回一个布尔值, 即使输入是一个集合.
 这些运算符在检测到第一个匹配时就停止比较, 而`equality `运算符则是计算所有输入的成员.
-在一个非常大的集合中, 这些运算符比`equality `运算符返回得更快.
+在一个非常大的集合中, 这些运算符比 `equality ` 运算符返回得更快.
 
 #### -contains,-notcontains
 
@@ -622,7 +624,7 @@ $a, "ghi" -contains $a           # Output: True
 
 #### -in and -notin
 
-`PowerShell 3`中引入了`-in`和`-notin`操作符, 作为`-contains`和`-notcontains`操作符的反向语法.
+`PowerShell 3`中引入了 `-in` 和 `-notin` 操作符, 作为`-contains`和`-notcontains`操作符的反向语法.
 当左边的`<test-object>`与集合中的某个元素匹配时, `-in`返回`True`, `-notin`则返回`False`.
 当测试对象是一个集合时, 这些运算符使用`reference equality`来检查集合中的元素是否是测试对象的同一个实例.
 
