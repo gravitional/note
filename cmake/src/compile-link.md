@@ -118,7 +118,7 @@ $ cpp test.c -I./inc -o test.i
 编译的指定如下:
 
 ```bash
-$ gcc -S -I./inc test.c -o test.s
+gcc -S -I./inc test.c -o test.s
 ```
 
 上述命令中-S让编译器在编译之后停止, 不进行后续过程.
@@ -176,7 +176,7 @@ main:
 这一步产生的文件叫做目标文件, 是二进制格式. gcc汇编过程通过 `as` 命令完成:
 
 ```bash
-$ as test.s -o test.o
+as test.s -o test.o
 ```
 
 等价于:
@@ -194,7 +194,7 @@ gcc -c test.s -o test.o
 命令大致如下:
 
 ```bash
-$ ld -o test.out test.o inc/mymath.o ...libraries...
+ld -o test.out test.o inc/mymath.o ...libraries...
 ```
 
 上面可以看到最终连接依赖了两个文件, `mymath.o test.o`, 还有其他一些依赖库
