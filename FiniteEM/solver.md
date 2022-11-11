@@ -277,3 +277,18 @@ search()
 find()
 calc()
 ```
+
+## solver.exe 运行参数
+
+CASE_PATH; 工程路径
+--help; -h; 打印帮助信息
+--threads; -p; 并行线程数目，调试建议为1
+--cuda; -c; 启用 cuda;
+--no-warning; -w; 不输入日志中的 warning 信息
+--debug; -d; 会输出日志中的debug信息, 平时建议加上
+--test; -t; 会输出日志中的 test 信息，用于自动化测试，平时建议加上
+--profile; -f; 会额外打印时间内存信息
+--restart -r; 续算
+--ensight -e; 会输出 ensight 格式结果, 平时建议加上.
+--license-server-ip; license服务器IP
+--license-server-port; license服务器端口
