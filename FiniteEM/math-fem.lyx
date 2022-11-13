@@ -7546,6 +7546,635 @@ Edge单元
 \end_layout
 
 \begin_layout Chapter
+有限元的矩阵方程
+\end_layout
+
+\begin_layout Section
+有限元中的Galerkin 方法
+\end_layout
+
+\begin_layout Standard
+FEM-Gerard;p45/61;sec 1.3.11
+\end_layout
+
+\begin_layout Standard
+首先基础的公式是 ：
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sbf D & =\rho\\
+\sbf D & =\sbf D\left(\sbf E\right)\\
+\sbf E & =-\nabla\phi
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+令 加权的残差（residual error）和 为
+\begin_inset Formula 
+\begin{align}
+R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:error}\\
+\text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
+\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}=0\nonumber 
+\end{align}
+
+\end_inset
+
+上面使用了分部积分，和高斯散度定理；通过分部积分引入了边界条件项 
+\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}$
+\end_inset
+
+。稍微整理下
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\]
+
+\end_inset
+
+例如对于线性导体 
+\begin_inset Formula $\sbf D=\epsilon\sbf E$
+\end_inset
+
+，上式可以写成：
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\epsilon\nabla\phi\right)}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\]
+
+\end_inset
+
+对于齐次第二类（natural）边界条件 
+\begin_inset Formula $\left(\alpha\nabla\phi\right)\cdot\sbf n=0$
+\end_inset
+
+（电位移线平行），可以直接去掉 
+\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
+\end_inset
+
+ 项。
+\end_layout
+
+\begin_layout Subsection
+微扰展开
+\end_layout
+
+\begin_layout Enumerate
+如果考虑待求物理量 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+ 和 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的微小变分：
+\begin_inset Formula 
+\begin{align*}
+\sbf D & =\sbf D^{0}+{\color{blue}\epsilon}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\epsilon}\,\sbf\nabla\delta\phi\\
+\phi & =\phi^{0}+\delta\phi
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\epsilon=\frac{\partial D}{\partial E}$
+\end_inset
+
+，对于一般材料 
+\begin_inset Formula $\frac{\partial D}{\partial E}$
+\end_inset
+
+ 有可能是张量。代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得：
+\begin_inset Formula 
+\begin{align*}
+\Rightarrow & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
+ & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+移项得
+\begin_inset Formula 
+\begin{align}
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}\label{eq:Galerkin}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+再代入 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的插值展开，
+\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\begin{align*}
+\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
+ & =\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right\} 
+\end{align*}
+
+\end_inset
+
+此即 Galerkin 方法的迭代展开式。左边正比于 
+\begin_inset Formula $N_{i}^{e}N_{j}^{e}$
+\end_inset
+
+，右边正比于 
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+，因此在 尺度（scale）变换下，
+\begin_inset Formula 
+\[
+\left[\cdots\right]\delta\phi_{j}=\lambda\left\{ \cdots\right\} ,\quad\lambda<1.
+\]
+
+\end_inset
+
+相当于 
+\begin_inset Formula $\delta\phi_{j}$
+\end_inset
+
+ 获得更小的步长。
+\end_layout
+
+\begin_layout Enumerate
+对于第一类（essential）边界条件，在边界上 
+\begin_inset Formula $\delta\phi_{j}=0$
+\end_inset
+
+；对于齐次第二类（natural）边界条件，
+\begin_inset Formula $n\cdot\sbf D^{0}=0$
+\end_inset
+
+；两种情况下边界项都可以不考虑，此时方程简化为，
+\begin_inset Formula 
+\begin{equation}
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .\label{eq:Galerkin-2}
+\end{equation}
+
+\end_inset
+
+只有第三类边界条件，例如开放边界，或外加电场时需要考虑边界项。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+工作区变量
+\end_layout
+
+\begin_layout Standard
+下面列出
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Galerkin-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的部件，在程序中对应的变量。 
+\begin_inset Formula $W(\xi_{i})$
+\end_inset
+
+ 是高斯积分的权重因子，
+\begin_inset Formula $\det[J]$
+\end_inset
+
+ 是雅可比矩阵的行列式。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $K$
+\end_inset
+
+：Sparse::GetMatrix<double>(
+\begin_inset Quotes eld
+\end_inset
+
+K
+\begin_inset Quotes erd
+\end_inset
+
+)，刚度矩阵，Galerkin 方程左侧的稀疏矩阵。
+\begin_inset Formula 
+\[
+K=\nabla N^{T}\cdot\epsilon\cdot\nabla N*W*\det[J]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $F_{\text{in}}$
+\end_inset
+
+：Fin，“内力”，Galerkin 方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Galerkin-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，
+\begin_inset Formula $\sbf D^{0}$
+\end_inset
+
+ 引发的贡献
+\begin_inset Formula 
+\[
+F_{\text{in}}=\nabla N^{T}\cdot\sbf D^{0}\cdot\left(-\det[J]*W\right)/\epsilon_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $F_{v}$
+\end_inset
+
+：Fv，“力”矢量，其实是电荷（电荷密度，或者外加电场）的贡献
+\begin_inset Formula 
+\[
+F_{v}=N*\rho*\det[J]*W
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+P_GFv_T 是 Global Fv，即 Fv 在所有单元上累加的结果；Fv vector中，的元素的存储次序，与全局/局域编号有关。
+\end_layout
+
+\begin_layout Enumerate
+P_GFinAccum 是 Global Fin，即 Fin 在所有单元上累加的结果。
+\end_layout
+
+\begin_layout Enumerate
+P_GRt，
+\begin_inset Formula $\mathrm{P\_GRt}=\mathrm{P\_GFv\_T}-\mathrm{P\_GFinAccum}$
+\end_inset
+
+，两部分“力”的求和。 
+\end_layout
+
+\begin_layout Section
+第一类边界条件
+\end_layout
+
+\begin_layout Standard
+Dirichlet 边界条件定义为：
+\begin_inset Formula 
+\begin{equation}
+\phi=p\quad\text{on}\quad\Gamma_{1}.\label{eq:bound1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ 是边界上的一部分。JMJin P104：假设 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ 上有 
+\begin_inset Formula $N_{1}$
+\end_inset
+
+ 个节点，如果把它们的 全局节点编号 存储在一矢量中，例如 
+\begin_inset Formula $\text{nd}(i)$
+\end_inset
+
+；把给定的边界值存储在矢量 
+\begin_inset Formula $p(i)$
+\end_inset
+
+ 中。对线性方程组的下述操作 相当于施加第一类边界条件：
+\begin_inset Formula 
+\begin{equation}
+b_{\text{nd}(i)}=p\left(i\right),\quad K_{\text{nd}\left(i\right),\text{nd}\left(i\right)}=1,\quad K_{\text{nd}\left(i\right),j}=0,\quad\text{for}\quad j\neq\text{nd}(i).\label{eq:jm4.60}
+\end{equation}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\[
+b_{j}\to b_{j}-K_{j,\text{nd}(i)}p\left(i\right),\quad K_{j,\text{nd}\left(i\right)}=0\quad\text{for}\quad j\neq\text{nd}(i).
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $i=1,2,3,\cdots,N_{1}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+对于 Galerkin 迭代法，在位于 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ 的节点上，
+\begin_inset Formula $\phi$
+\end_inset
+
+为定值，则 
+\begin_inset Formula $\delta\phi=0$
+\end_inset
+
+。套用上述处理手段，只需要：
+\end_layout
+
+\begin_layout Enumerate
+在 
+\begin_inset Formula $K$
+\end_inset
+
+ 矩阵中， 把涉及 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ 节点 的行和列去除；
+\end_layout
+
+\begin_layout Enumerate
+而 
+\begin_inset Formula $b_{j}$
+\end_inset
+
+ 不需要做改动，因为此时 
+\begin_inset Formula $p\left(i\right)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+第三类边界条件
+\end_layout
+
+\begin_layout Standard
+Robbin 边界条件：
+\begin_inset Formula 
+\begin{align}
+ & \left(\alpha\nabla\phi\right)\cdot\sbf n+\gamma\phi=q\nonumber \\
+\text{即}\quad & \sbf D\cdot\sbf n=q-\gamma\phi\label{eq:bound3}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+这里的约定是，电位移矢量 
+\begin_inset Formula $\sbf D=\alpha_{x}\frac{\partial\phi}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi}{\partial z}\hat{z}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+注意对于线性材料，通常定义 
+\begin_inset Formula $\sbf E=-\nabla\phi$
+\end_inset
+
+，
+\begin_inset Formula $\sbf D=\alpha\sbf E$
+\end_inset
+
+，也就是有一个负号，所以上面的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 为负数。
+\end_layout
+
+\begin_layout Standard
+对于上面定义的加权残差，现在不展开 
+\begin_inset Formula $\sbf n\cdot\sbf D$
+\end_inset
+
+ 项：
+\begin_inset Formula 
+\[
+R^{e}\left[N_{i}^{e}\right]=\frac{-1}{\varepsilon_{0}}\left[\left(\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\right]
+\]
+
+\end_inset
+
+残差 
+\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]$
+\end_inset
+
+ 趋于零给出的方程是
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Omega}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\]
+
+\end_inset
+
+代入势场展开 
+\begin_inset Formula $\delta\phi=N_{j}^{e}\delta\phi_{j}$
+\end_inset
+
+，以及 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bound3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\nabla N_{j}^{e}\right)}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\left(q-\gamma\phi\right)}\dd{\Gamma}
+\]
+
+\end_inset
+
+仍然进行迭代求解。
+\end_layout
+
+\begin_layout Section
+第二类边界条件
+\end_layout
+
+\begin_layout Standard
+JMJin page 90: Neumann 边界条件，相当于在第三类边界条件中取 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & \left(\alpha\nabla\phi\right)\cdot\sbf n=q\nonumber \\
+\text{即}\quad & \sbf D\cdot\sbf n=q\label{eq:bound2}
+\end{align}
+
+\end_inset
+
+此外还有齐次诺伊曼边界条件（homogeneous Neumann），相当于在第三类边界条件中取 
+\begin_inset Formula $\gamma=q=0$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\alpha\nabla\phi\right)\cdot\sbf n=0\quad\text{即}\quad\sbf D\cdot\sbf n=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+界面连续性条件
+\end_layout
+
+\begin_layout Standard
+如果在两种介质的交界面上：
+\end_layout
+
+\begin_layout Itemize
+材料性质参数例如 
+\begin_inset Formula $\alpha_{x}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{y}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{z}$
+\end_inset
+
+ 有突变（不连续）；
+\end_layout
+
+\begin_layout Itemize
+并且假设在界面上没有任何表面源（surface source）。
+\end_layout
+
+\begin_layout Standard
+则
+\begin_inset Formula $\phi$
+\end_inset
+
+还应该满足连续性条件：
+\begin_inset Formula 
+\begin{equation}
+\phi^{+}=\phi^{-},\quad\text{on}\quad\Gamma_{d}.\label{eq:jm4.4}
+\end{equation}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{equation}
+\left(\alpha_{x}\frac{\partial\phi^{+}}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi^{+}}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi^{+}}{\partial z}\hat{z}\right)\cdot\hat{n}=\left(\alpha_{x}\frac{\partial\phi^{-}}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi^{-}}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi^{-}}{\partial z}\hat{z}\right)\cdot\hat{n}\quad\text{on}\quad\Gamma_{d}.\label{eq:jm4.5}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+即电势连续，电位移矢量 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+连续。
+\end_layout
+
+\begin_layout Section
+各种自由度记号
+\end_layout
+
+\begin_layout Enumerate
+AXIS2：表示轴对称系统，取柱坐标系计算。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+NdNum()；节点数目。
+\end_layout
+
+\begin_layout Enumerate
+DofNum()：自由度数目，取决于体系，例如每个单元中，自由度就是节点上的电势。
+\end_layout
+
+\begin_layout Enumerate
+GSNum()，GsNumKe()，GsNumFe()，GsNumVe()：高斯点数目；对于阶数不同的多项式，需要的采样点数目不同，因此 Gauss
+ 点数目可能不同。
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Chapter
 静电场
 \end_layout
 
@@ -8563,6 +9192,771 @@ Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是�
 \begin_layout Plain Layout
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+电场的开域问题
+\end_layout
+
+\begin_layout Standard
+有限元方法只能处理有限大的空间，因此对于电场的开域问题，需要在边界上施加适当的边界条件来模拟边界的性质。首先根据麦克斯韦方程组，可以得到开域情况下电势满足的积分
+方程：
+\begin_inset Formula 
+\[
+\Phi\left(\sbf r\right)=\frac{1}{4\pi\varepsilon_{0}}\int\dd[3]{r'}\frac{1}{\abs{r-r'}}\left[\rho\left(\sbf r'\right)-\nabla'\cdot\sbf P\left(\sbf r'\right)\right]
+\]
+
+\end_inset
+
+由于源都是局域的，因此在远离源的位置可以做如下展开：
+\begin_inset Formula 
+\[
+\frac{1}{\abs{\sbf r-\sbf r'}}=\frac{1}{\abs{\sbf r}}+\frac{\sbf r\cdot\sbf r'}{\abs{\sbf r}^{3}}+\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+取决于源的分布情况，电势在远离源的位置可能是以 
+\begin_inset Formula $r^{-1}$
+\end_inset
+
+，或 
+\begin_inset Formula $r^{-2}$
+\end_inset
+
+的形式衰减到零。在忽略高阶项的情况下，可以在远离源的位置将电势近似为
+\begin_inset Formula 
+\begin{equation}
+\Phi=\frac{a}{r^{n}},\label{eq:xl2.6}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $a$
+\end_inset
+
+ 是与 
+\begin_inset Formula $r$
+\end_inset
+
+ 无关的量；
+\begin_inset Formula $n$
+\end_inset
+
+ 可以由电荷的分布情况决定，对于同种电荷 
+\begin_inset Formula $n$
+\end_inset
+
+ 一般取
+\begin_inset Formula $1$
+\end_inset
+
+，对于电偶极子
+\begin_inset Formula $n$
+\end_inset
+
+一般取
+\begin_inset Formula $2$
+\end_inset
+
+。在有限元模型边界上可以采用截断法来模拟开域边界，即取 
+\begin_inset Formula $\Phi=0$
+\end_inset
+
+，或 
+\begin_inset Formula $\nabla\Phi=0$
+\end_inset
+
+。两种处理方式分别对应 第一、二类边界条件，理论上的计算精度分别为 
+\begin_inset Formula $\order{r^{-n}}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\order{r^{-n-1}}$
+\end_inset
+
+。另外使用 
+\begin_inset Formula $\nabla\frac{1}{r}=\frac{1}{r^{2}}\sbf e_{r}=\frac{1}{r^{2}}\frac{\sbf r}{r}$
+\end_inset
+
+，从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到： 
+\begin_inset Formula 
+\begin{equation}
+\nabla\Phi=-na\frac{1}{r^{n+1}}\frac{\sbf r}{r}=-n\frac{\Phi}{r}\frac{\sbf r}{r}.\label{eq:xl2.7}
+\end{equation}
+
+\end_inset
+
+如果在边界上采用 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 处理模型边界上的电势，那么理论上的计算精度可以达到 
+\begin_inset Formula $\order{r^{-n-2}}$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示的条件即为 渐近边界条件（Asymptotic boundary condition），对应有限元计算中的第三类边界条件。
+\end_layout
+
+\begin_layout Section
+表面项
+\end_layout
+
+\begin_layout Standard
+在泛函积分式(2.2)
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}.\label{eq:xl2.2}
+\end{equation}
+
+\end_inset
+
+中添加一个表面项得到新的泛函积分
+\begin_inset Formula 
+\[
+\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}+{\color{blue}\int_{\Gamma}\epsilon_{r}\frac{n}{r}\frac{\Phi\epsilon_{r}\Phi}{2}}\dd{\Gamma}.
+\]
+
+\end_inset
+
+对上式做变分可以得到（使用分部积分）
+\begin_inset Formula 
+\[
+\delta\mathcal{F}\left(\Phi\right)=-\int_{\Omega}\left(\nabla\cdot\epsilon_{r}\nabla\Phi+\frac{\rho}{\epsilon_{0}}\right)\delta\Phi\dd{\Omega}+\int_{\Gamma}\left({\color{blue}\sbf e_{n}\cdot\epsilon_{r}\nabla\Phi+\frac{n}{r}\epsilon_{r}\Phi}\right)\delta\Phi\dd{\Gamma}.
+\]
+
+\end_inset
+
+从方程中的第二项可得
+\begin_inset Formula 
+\[
+\sbf e_{n}\cdot\nabla\Phi=-n\frac{\Phi}{r}
+\]
+
+\end_inset
+
+它等价于
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $\nabla\Phi=-n\frac{\Phi}{r}\frac{\sbf r}{r}$
+\end_inset
+
+。对比第三类边界条件的标准形式：
+\begin_inset Formula 
+\[
+\left(\alpha\nabla\Phi\right)\cdot\sbf n=q-\gamma\Phi
+\]
+
+\end_inset
+
+相当于取 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+，
+\begin_inset Formula $q=0$
+\end_inset
+
+，
+\begin_inset Formula $-\gamma=-\frac{n}{r}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+综上，开域边界条件相当于
+\begin_inset Formula 
+\[
+-\nabla\Phi=\frac{n}{r}\Phi\,\sbf e_{r}
+\]
+
+\end_inset
+
+取上式的变分得（变分和微分交换次序）
+\begin_inset Formula 
+\[
+-\nabla\delta\Phi=\frac{n}{r}\delta\Phi\,\sbf e_{r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于Galerkin 方法，保持残差函数不变
+\begin_inset Formula 
+\[
+R^{e}\left[N_{i}^{e}\right]=\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}
+\]
+
+\end_inset
+
+推导中的分部积分会自然地引入边界条件的贡献。考察 Galerkin 方程中地边界项
+\begin_inset Formula 
+\begin{align*}
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+其中（在开放边界足够大，渐近于球形的近似下）
+\begin_inset Formula 
+\[
+{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(-\sbf\nabla\delta\phi)}\Rightarrow N_{i}^{e}\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\;\frac{n}{r}\delta\Phi
+\]
+
+\end_inset
+
+同理，若代入微扰展开 
+\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
+\end_inset
+
+，相当于在刚度矩阵中添加一项
+\begin_inset Formula 
+\begin{equation}
+N_{i}^{e}\;\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\frac{n}{r}\;N_{j}^{e}\label{eq:el-open}
+\end{equation}
+
+\end_inset
+
+或者写成
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\sbf r\cdot\frac{\partial D}{\partial E}\cdot\sbf r\;\frac{n}{r^{3}}\;N_{i}^{e}N_{j}^{e}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $N_{i}^{e}N_{j}^{e}$
+\end_inset
+
+ 可以理解为 
+\begin_inset Formula $N_{i1}^{e}N_{1j}^{e}=\left(N^{e}\cdot N^{e,T}\right)_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $N_{i1}^{e}$
+\end_inset
+
+为列矩阵。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $r=\sqrt{x^{2}+y^{2}+z^{2}}$
+\end_inset
+
+，表示原点
+\begin_inset Formula $O$
+\end_inset
+
+ 到场点 
+\begin_inset Formula $P$
+\end_inset
+
+ 的距离。
+\end_layout
+
+\begin_layout Enumerate
+为了保证计算精度，程序中要求开域边界条件的几何边界尽量为球形或圆形。
+\end_layout
+
+\begin_layout Section
+边界形状和误差
+\end_layout
+
+\begin_layout Standard
+对于球形边界，垂直边界的矢量 
+\begin_inset Formula $\sbf e_{n}=\frac{\sbf r}{r}$
+\end_inset
+
+，所以
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示的渐近边界条件可以通过在泛函积分中添加相应的表面项来处理。对于非球形边界，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+近似成立。这一项会在原来的 
+\begin_inset Formula $\left[K_{ij}^{e}\right]$
+\end_inset
+
+ 矩阵中增加表面项的贡献
+\begin_inset Formula 
+\begin{equation}
+K_{ij}^{s}=\int_{\Gamma^{e}}\epsilon_{r}\frac{n}{r}N_{i}^{e}N_{j}^{e}\dd{\Gamma}.\label{eq:xl2.8}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于 
+\begin_inset Formula $r$
+\end_inset
+
+ 在球形边界是定值，可以直接提取到积分外面；即使对于非圆形边界，
+\begin_inset Formula $1/r$
+\end_inset
+
+ 在边界处表面单元中变换不大，所以依然可以提到积分号外面。下面分二维，轴对称和三位情况分别计算 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl2.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+三维有限元的边界为一平面，采用高斯积分法计算的表达式为
+\begin_inset Formula 
+\[
+K_{ij}^{s}=\epsilon_{r}\frac{n}{r}\Delta^{s}\sum_{\alpha}N_{i}^{s}\left(\xi_{\alpha},\eta_{\alpha}\right)\,N_{j}^{s}\left(\xi_{\alpha},\eta_{\alpha}\right)\,W\left(\xi_{\alpha},\eta_{\alpha}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Delta^{s}$
+\end_inset
+
+ 为边界单元的面积。
+\end_layout
+
+\begin_layout Remark
+ref：郭硕鸿 p63/77。电多级展开：
+\begin_inset Formula 
+\[
+f\left(\sbf x-\sbf x'\right)=f\left(\sbf x\right)-\sbf x'\cdot\nabla f@\sbf x+\frac{1}{2!}\left(\sbf x'\cdot\nabla\right)^{2}f@\sbf x+\cdots
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\varphi\left(x\right)=\frac{1}{4\pi\varepsilon_{0}}\left(\frac{Q}{R}-\sbf p\cdot\nabla\frac{1}{R}+\frac{1}{6}\sum_{i,j}\mathcal{D}_{ij}\partial_{i}\partial_{j}\frac{1}{R}+\cdots\right)\label{eq:g6.7}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+Q & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
+\sbf p & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
+\mathcal{D}_{ij} & =\int_{V}3x'_{i}x'_{j}\,\rho\left(\sbf x'\right)\dd{V'}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $R=\sqrt{x^{2}+y^{2}+z^{2}}$
+\end_inset
+
+，表示原点到场点 
+\begin_inset Formula $P$
+\end_inset
+
+ 的距离。
+\end_layout
+
+\begin_layout Section
+外加电场
+\end_layout
+
+\begin_layout Subsection
+解析解的例子
+\end_layout
+
+\begin_layout Standard
+ref: 郭硕鸿 p51/65；均匀介质球的极化，球外为真空，半径为 
+\begin_inset Formula $R_{0}$
+\end_inset
+
+，均匀外电场为 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+。
+\begin_inset CommandInset label
+LatexCommand label
+name "ref:g51"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/GuoShuoHong-2.5.png
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+取 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+ 的方向为球坐标系 
+\begin_inset Formula $z$
+\end_inset
+
+ 轴，并过球心
+\begin_inset Formula 
+\begin{align}
+\text{球外解：} & \varphi_{1}=-E_{0}R\cos\theta+\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}\frac{E_{0}R_{0}^{3}\cos\theta}{R^{2}}\nonumber \\
+\text{球内解：} & \varphi_{2}=-\frac{3\epsilon_{0}}{\epsilon+2\epsilon_{0}}E_{0}R\cos\theta.\label{eq:g3.21}
+\end{align}
+
+\end_inset
+
+球内是均匀电场，球内束缚电荷激发的场与原外场反向，使总电场减弱。在球内总电场作用下，介质的极化强度为
+\begin_inset Formula 
+\begin{equation}
+\sbf P=\chi_{e}\epsilon_{0}\sbf E=\left(\epsilon-\epsilon_{0}\right)\sbf E=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}3\epsilon_{0}\sbf E_{0}\label{eq:g3.22}
+\end{equation}
+
+\end_inset
+
+ 介质球的总电偶极矩为
+\begin_inset Formula 
+\begin{equation}
+\sbf p=\frac{4\pi}{3}R_{0}^{3}\sbf P=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}4\pi\epsilon_{0}R_{0}^{3}\sbf E_{0}\label{eq:g3.23}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的第二项正是此电偶极矩所产生的电势
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{4\pi\epsilon_{0}}\frac{\sbf p\cdot\sbf R}{R^{3}}=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}\frac{E_{0}R_{0}^{3}\cos\theta}{R^{2}}\label{eq:g3.24}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+有限元中的处理
+\end_layout
+
+\begin_layout Standard
+在程序实现中，规定 
+\color blue
+外加电场
+\color inherit
+ 总是配合 
+\color blue
+开域边界
+\color inherit
+ 一同使用，且边界应当是球形，介质是线性的。令外加电场为 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+，除去它的影响之后，令 有限区域电荷产生的电势为 
+\begin_inset Formula $\Phi$
+\end_inset
+
+，令总电势为 
+\begin_inset Formula $\Phi_{t}=\Phi-\sbf E_{0}\cdot\sbf r$
+\end_inset
+
+， 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 应该满足 开域边界条件 的性质，即
+\begin_inset Formula 
+\begin{equation}
+{\color{brown}-\nabla\Phi=\frac{n}{r}\Phi\,\sbf e_{r}}\label{eq:phi-local}
+\end{equation}
+
+\end_inset
+
+代入 
+\begin_inset Formula $\Phi={\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}$
+\end_inset
+
+， 
+\begin_inset Formula 
+\[
+-\nabla\left({\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}\right)=\frac{n}{r}\left({\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}\right)\sbf e_{r}
+\]
+
+\end_inset
+
+略微化简给出
+\begin_inset Formula 
+\begin{equation}
+{\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}+\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{r}\right)\sbf e_{r}\label{eq:phi-global}
+\end{equation}
+
+\end_inset
+
+可以看到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phi-global"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 与 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phi-local"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的区别是多了后面两项。代入Galerkin 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Galerkin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+边界项 
+\begin_inset Formula $N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(\sbf\nabla\delta\phi)$
+\end_inset
+
+：并把 
+\begin_inset Formula ${\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}$
+\end_inset
+
+ 的贡献归入刚度矩阵 
+\begin_inset Formula $K_{ij}^{e}$
+\end_inset
+
+；把 
+\begin_inset Formula $\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{r}\right)\sbf e_{r}$
+\end_inset
+
+ 的贡献归入 载荷（Load），载荷项的形式为
+\begin_inset Formula 
+\[
+-N_{i}\,\sbf e_{n}\cdot\epsilon\cdot\left[\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{R}\right)\sbf e_{R}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+backup
+\end_layout
+
+\begin_layout Standard
+在有限元框架下求解外加电场的问题，外加电场 
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+ 的影响体现在 两个边界项中。观察 Galerkin 方程
+\begin_inset Formula 
+\begin{align*}
+ & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}$
+\end_inset
+
+这一项体现的是背景场（即
+\begin_inset Formula $\sbf E_{0}$
+\end_inset
+
+ ）的贡献；而 
+\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}$
+\end_inset
+
+ 则类似于开域边界条件。
+\end_layout
+
+\begin_layout Standard
+参考 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "ref:g51"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，在外加电场影响下，极化电荷在边界处的电势形如
+\begin_inset Formula 
+\[
+\Phi=a\frac{\cos\theta}{R^{n}},
+\]
+
+\end_inset
+
+对于电偶极子 
+\begin_inset Formula $n=2$
+\end_inset
+
+，其中 
+\begin_inset Formula $\cos\theta=\sbf E_{0}\cdot\sbf e_{R}$
+\end_inset
+
+。考察边界上的电势法向量，
+\begin_inset Formula 
+\[
+-\nabla\Phi=a\frac{\cos\theta}{R^{n}}\frac{n}{R}\sbf e_{R}+a\frac{\sin\theta}{R^{n}}\frac{1}{R}\sbf e_{\theta}
+\]
+
+\end_inset
+
+对应的变分是
+\begin_inset Formula 
+\[
+-\sbf\nabla\delta\phi=\frac{n}{R}\sbf e_{R}\delta\Phi+(\cdots)\sbf e_{\theta}
+\]
+
+\end_inset
+
+Galerkin 方程边界项的贡献是
+\begin_inset Formula 
+\[
+-N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf\nabla\delta\phi}=N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf e_{R}\,\frac{n}{R}\delta\Phi}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+其中使用了球坐标下的梯度表达式
+\begin_inset Formula 
+\[
+\nabla\psi=\sbf e_{r}\partial_{r}\psi+\frac{1}{r}\sbf e_{\theta}\partial_{\theta}\psi+\frac{1}{r\sin\theta}\partial_{\phi}\sbf e_{\phi}.
+\]
 
 \end_inset
 
@@ -10240,7 +11634,7 @@ b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\sbf J\dd{\Omega}-\mu_{0
 和Ritz法得到的结果完全相同。
 \end_layout
 
-\begin_layout Section
+\begin_layout Chapter
 磁场的开域问题
 \end_layout
 
@@ -10308,6 +11702,445 @@ noprefix "false"
 \end_inset
 
 满足的渐近边界条件：
+\begin_inset Formula 
+\[
+\nabla\times\sbf A=\frac{-n}{r^{2}}\sbf r\times\sbf A
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+线性材料的开域问题
+\end_layout
+
+\begin_layout Standard
+对于线性材料，在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示的关于
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 的泛函积分中添加表面项的贡献，即
+\begin_inset Formula 
+\begin{align}
+\mathcal{F}(\sbf A) & =\frac{1}{2}\int_{\Omega}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega}\sbf J\cdot\sbf A\dd{\Omega}\nonumber \\
+ & +\int_{\Gamma}\frac{n}{2r^{3}}\left(\sbf r\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\sbf r\times\sbf A\right)\dd{\Gamma}\label{eq:xl3.25b}
+\end{align}
+
+\end_inset
+
+对上式做变分可以得到：
+\begin_inset Formula 
+\begin{align*}
+\delta\mathcal{F}(\sbf A)= & \int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\\
+ & -\int_{\Gamma}\left[\hat{\sbf e}_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)+\frac{n}{r^{3}}\sbf r\times\frac{1}{\mu_{r}}\left(\sbf r\times\sbf A\right)\right]\cdot\delta\sbf A\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+推导过程使用了
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\left[\sbf f\times\sbf g\right]=\left(\nabla\times f\right)\cdot g-f\cdot\left(\nabla\times g\right)\\
+ & \left(\nabla\times\delta\sbf A\right)\cdot\left(\nabla\times\sbf A\right)=\nabla\cdot\left[\delta\sbf A\times\left(\nabla\times\sbf A\right)\right]+\delta\sbf A\cdot\left(\nabla\times\nabla\times\sbf A\right)
+\end{align*}
+
+\end_inset
+
+以及混合积在轮换下不变：
+\begin_inset Formula 
+\[
+\sbf a\cdot\left(\sbf b\times\sbf c\right)=\sbf c\cdot\left(\sbf a\times\sbf b\right)
+\]
+
+\end_inset
+
+还有高斯散度定理。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可以看到上式第二项给出
+\begin_inset Formula 
+\[
+\hat{\sbf e}_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\frac{-n}{r^{3}}\sbf r\times\frac{1}{\mu_{r}}\left(\sbf r\times\sbf A\right)
+\]
+
+\end_inset
+
+在圆形边界，上式即为关于
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 的渐近边界条件，表面积分对矩阵方程的贡献为：
+\begin_inset Formula 
+\[
+\sum_{e=1}^{M}\left(\left[K_{ij}^{e}\right]+\left[K_{ij}^{s}\right]\right)\left\{ \sbf A_{j}\right\} =\sum_{e=1}^{M}\left\{ b_{i}^{e}\right\} 
+\]
+
+\end_inset
+
+其中（这个式子的形式实际上参考自
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.25b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）
+\begin_inset Formula 
+\[
+K_{ij}^{s}=\frac{n}{r^{3}}\int_{\Gamma}\left(\sbf r\times\sbf N_{i}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\sbf r\times\sbf N_{j}^{e}\right)\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+二维情况和电场的形式完全一样，二维形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+在边界上退化为一维形函数
+\begin_inset Formula $N_{i}^{s}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+K_{ij}^{s}=\frac{n}{r}\int_{\Gamma}\frac{N_{i}^{s}N_{j}^{s}}{\mu_{r}}\dd{\Gamma}
+\]
+
+\end_inset
+
+这里的形式可以参考电场的结果：
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:el-open"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+轴对称情况下，矢势在柱坐标下只有 
+\begin_inset Formula $A_{\varphi}$
+\end_inset
+
+ 分量，进而得到边单元对 
+\begin_inset Formula $K$
+\end_inset
+
+ 矩阵的贡献（这里和前面保持一致，前面乘上系数 
+\begin_inset Formula $1/2\pi$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{equation}
+K_{ij}^{s}=\frac{1}{2\pi}\frac{n}{r}\int_{\Gamma}\frac{N_{i}^{e}N_{j}^{e}}{\mu_{r}}\dd{\Gamma}\label{eq:xl3.26}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+上面的积分涉及边界上单元面积的积分，边界元形状如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:xl3.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a)所示，其中的剖面见图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:xl3.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b)。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/capacitance-curve.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+边界单元(a)及剖面(b)。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:xl3.3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+图中的 
+\begin_inset Formula $(\rho_{1},z_{1})$
+\end_inset
+
+ 和 
+\begin_inset Formula $(\rho_{2},z_{2})$
+\end_inset
+
+ 是边单元剖面的两个端点。左图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:xl3.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a)所示的边单元上下底面的周长分别是 
+\begin_inset Formula $2\pi\rho_{1}$
+\end_inset
+
+，
+\begin_inset Formula $2\pi\rho_{2}$
+\end_inset
+
+，边单元面积可以表示为 
+\begin_inset Formula $(2\pi\rho_{1}+2\pi\rho_{2})L_{s}/2$
+\end_inset
+
+，其中 
+\begin_inset Formula $L_{s}$
+\end_inset
+
+ 为端点
+\begin_inset Formula $(\rho_{1},z_{1})$
+\end_inset
+
+ 和 
+\begin_inset Formula $(\rho_{2},z_{2})$
+\end_inset
+
+ 之间的长度。将点 
+\begin_inset Formula $(\rho_{1},z_{1})$
+\end_inset
+
+ 到 
+\begin_inset Formula $(\rho,z_{2})$
+\end_inset
+
+ 之间的长度记为 
+\begin_inset Formula $\ell_{s}$
+\end_inset
+
+，那么
+\begin_inset Formula $\rho$
+\end_inset
+
+可以用
+\begin_inset Formula $\ell_{s}$
+\end_inset
+
+表示为
+\begin_inset Formula 
+\[
+\rho=\rho_{1}+\frac{\rho_{2}-\rho_{1}}{L_{s}}\ell_{s}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\begin{align*}
+\dd{\Gamma} & =\frac{1}{2}\left[2\pi\rho+2\pi\left(\rho+\dd{\rho}\right)\right]\dd{\ell_{s}}\\
+ & =2\pi\rho\dd{\ell_{s}}+\order{\epsilon^{2}}\\
+ & =2\pi\left(\rho_{1}+\frac{\rho_{2}-\rho_{1}}{L_{s}}\ell_{s}\right)\dd{\ell_{s}}
+\end{align*}
+
+\end_inset
+
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.26"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的积分可以表示为
+\begin_inset Formula 
+\[
+K_{ij}^{s}=\frac{1}{2\pi}\int_{0}^{L_{s}}\frac{1}{r}\frac{N_{i}^{e}N_{j}^{e}}{\mu_{r}}2\pi\left(\rho_{1}+\frac{\rho_{2}-\rho_{1}}{L_{s}}\ell_{s}\right)\dd{\ell_{s}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+由于
+\begin_inset Formula $r$
+\end_inset
+
+在面单元内变换不大，可以提到积分外面，二维形函数 
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+ 在边界上退化为一维形函数
+\begin_inset Formula $N_{i}^{s}$
+\end_inset
+
+。然后取 
+\begin_inset Formula $\eta=\ell_{s}/L_{s}$
+\end_inset
+
+，可以得到
+\begin_inset Formula 
+\[
+K_{ij}^{s}=\frac{1}{r}\frac{1}{\mu_{r}}L_{s}\int_{0}^{1}N_{i}^{e}N_{j}^{e}\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\eta\right]\dd{\eta}
+\]
+
+\end_inset
+
+一维形函数等参的取值范围是从 
+\begin_inset Formula $-1$
+\end_inset
+
+ 到 
+\begin_inset Formula $1$
+\end_inset
+
+，下面再做变量代换
+\begin_inset Formula 
+\[
+\eta=\frac{\xi+1}{2}
+\]
+
+\end_inset
+
+可以得到
+\begin_inset Formula 
+\begin{align*}
+K_{ij}^{s} & =\frac{n}{r}\frac{1}{\mu_{r}}\frac{L_{s}}{2}\int_{-1}^{+1}N_{i}^{s}N_{j}^{s}\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\frac{\xi+1}{2}\right]\dd{\eta}\\
+ & =\frac{n}{r}\frac{1}{\mu_{r}}\frac{L_{s}}{2}\sum_{\alpha}N_{i}^{s}\left(\xi_{\alpha}\right)N_{j}^{s}\left(\xi_{\alpha}\right)\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\frac{\xi_{\alpha}+1}{2}\right]W\left(\xi_{\alpha}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+三维情况下的静磁问题采用的是棱边形函数，
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+是一个三维矢量，因此
+\begin_inset Formula 
+\begin{align*}
+K_{ij}^{s} & =\frac{n}{r^{3}}\int_{\Gamma}\left(\sbf r\times\sbf N_{i}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\sbf r\times\sbf N_{j}^{e}\right)\dd{\Gamma}\\
+ & =\frac{n}{r^{3}}
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -11345,1388 +13178,6 @@ F_{\alpha} & =\sum_{\langle e\rangle}\int_{\Omega^{e}}\frac{\sbf E\cdot\sbf D}{2
 \end_inset
 
  为转轴的坐标，对目标区域的节点上的力矩进行求和，同样可以得到总的电磁力矩。
-\end_layout
-
-\begin_layout Chapter
-电场的开域问题
-\end_layout
-
-\begin_layout Standard
-有限元方法只能处理有限大的空间，因此对于电场的开域问题，需要在边界上施加适当的边界条件来模拟边界的性质。首先根据麦克斯韦方程组，可以得到开域情况下电势满足的积分
-方程：
-\begin_inset Formula 
-\[
-\Phi\left(\sbf r\right)=\frac{1}{4\pi\varepsilon_{0}}\int\dd[3]{r'}\frac{1}{\abs{r-r'}}\left[\rho\left(\sbf r'\right)-\nabla'\cdot\sbf P\left(\sbf r'\right)\right]
-\]
-
-\end_inset
-
-由于源都是局域的，因此在远离源的位置可以做如下展开：
-\begin_inset Formula 
-\[
-\frac{1}{\abs{\sbf r-\sbf r'}}=\frac{1}{\abs{\sbf r}}+\frac{\sbf r\cdot\sbf r'}{\abs{\sbf r}^{3}}+\cdots
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-取决于源的分布情况，电势在远离源的位置可能是以 
-\begin_inset Formula $r^{-1}$
-\end_inset
-
-，或 
-\begin_inset Formula $r^{-2}$
-\end_inset
-
-的形式衰减到零。在忽略高阶项的情况下，可以在远离源的位置将电势近似为
-\begin_inset Formula 
-\begin{equation}
-\Phi=\frac{a}{r^{n}},\label{eq:xl2.6}
-\end{equation}
-
-\end_inset
-
-其中 
-\begin_inset Formula $a$
-\end_inset
-
- 是与 
-\begin_inset Formula $r$
-\end_inset
-
- 无关的量；
-\begin_inset Formula $n$
-\end_inset
-
- 可以由电荷的分布情况决定，对于同种电荷 
-\begin_inset Formula $n$
-\end_inset
-
- 一般取
-\begin_inset Formula $1$
-\end_inset
-
-，对于电偶极子
-\begin_inset Formula $n$
-\end_inset
-
-一般取
-\begin_inset Formula $2$
-\end_inset
-
-。在有限元模型边界上可以采用截断法来模拟开域边界，即取 
-\begin_inset Formula $\Phi=0$
-\end_inset
-
-，或 
-\begin_inset Formula $\nabla\Phi=0$
-\end_inset
-
-。两种处理方式分别对应 第一、二类边界条件，理论上的计算精度分别为 
-\begin_inset Formula $\order{r^{-n}}$
-\end_inset
-
- 和 
-\begin_inset Formula $\order{r^{-n-1}}$
-\end_inset
-
-。另外使用 
-\begin_inset Formula $\nabla\frac{1}{r}=\frac{1}{r^{2}}\sbf e_{r}=\frac{1}{r^{2}}\frac{\sbf r}{r}$
-\end_inset
-
-，从
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.6"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-可以得到： 
-\begin_inset Formula 
-\begin{equation}
-\nabla\Phi=-na\frac{1}{r^{n+1}}\frac{\sbf r}{r}=-n\frac{\Phi}{r}\frac{\sbf r}{r}.\label{eq:xl2.7}
-\end{equation}
-
-\end_inset
-
-如果在边界上采用 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 处理模型边界上的电势，那么理论上的计算精度可以达到 
-\begin_inset Formula $\order{r^{-n-2}}$
-\end_inset
-
-，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 所示的条件即为 渐近边界条件（Asymptotic boundary condition），对应有限元计算中的第三类边界条件。
-\end_layout
-
-\begin_layout Section
-表面项
-\end_layout
-
-\begin_layout Standard
-在泛函积分式(2.2)
-\begin_inset Formula 
-\begin{equation}
-\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}.\label{eq:xl2.2}
-\end{equation}
-
-\end_inset
-
-中添加一个表面项得到新的泛函积分
-\begin_inset Formula 
-\[
-\mathcal{F}\left(\Phi\right)=\frac{1}{2}\int_{\Omega}\nabla\Phi\cdot\epsilon_{r}\nabla\Phi\dd{\Omega}-\int\frac{\rho}{\epsilon_{0}}\Phi\dd{\Omega}+{\color{blue}\int_{\Gamma}\epsilon_{r}\frac{n}{r}\frac{\Phi\epsilon_{r}\Phi}{2}}\dd{\Gamma}.
-\]
-
-\end_inset
-
-对上式做变分可以得到（使用分部积分）
-\begin_inset Formula 
-\[
-\delta\mathcal{F}\left(\Phi\right)=-\int_{\Omega}\left(\nabla\cdot\epsilon_{r}\nabla\Phi+\frac{\rho}{\epsilon_{0}}\right)\delta\Phi\dd{\Omega}+\int_{\Gamma}\left({\color{blue}\sbf e_{n}\cdot\epsilon_{r}\nabla\Phi+\frac{n}{r}\epsilon_{r}\Phi}\right)\delta\Phi\dd{\Gamma}.
-\]
-
-\end_inset
-
-从方程中的第二项可得
-\begin_inset Formula 
-\[
-\sbf e_{n}\cdot\nabla\Phi=-n\frac{\Phi}{r}
-\]
-
-\end_inset
-
-它等价于
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 
-\begin_inset Formula $\nabla\Phi=-n\frac{\Phi}{r}\frac{\sbf r}{r}$
-\end_inset
-
-。对比第三类边界条件的标准形式：
-\begin_inset Formula 
-\[
-\left(\alpha\nabla\Phi\right)\cdot\sbf n=q-\gamma\Phi
-\]
-
-\end_inset
-
-相当于取 
-\begin_inset Formula $\alpha=1$
-\end_inset
-
-，
-\begin_inset Formula $q=0$
-\end_inset
-
-，
-\begin_inset Formula $-\gamma=-\frac{n}{r}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Example
-综上，开域边界条件相当于
-\begin_inset Formula 
-\[
--\nabla\Phi=\frac{n}{r}\Phi\,\sbf e_{r}
-\]
-
-\end_inset
-
-取上式的变分得（变分和微分交换次序）
-\begin_inset Formula 
-\[
--\nabla\delta\Phi=\frac{n}{r}\delta\Phi\,\sbf e_{r}
-\]
-
-\end_inset
-
-考虑 Galerkin 方程中边界项的贡献
-\begin_inset Formula 
-\begin{align*}
- & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
- & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-其中（在开放边界足够大，渐近于球形的近似下）
-\begin_inset Formula 
-\[
-{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(-\sbf\nabla\delta\phi)}\Rightarrow N_{i}^{e}\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\;\frac{n}{r}\delta\Phi
-\]
-
-\end_inset
-
-同理，若代入微扰展开 
-\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
-\end_inset
-
-，相当于在刚度矩阵中添加一项
-\begin_inset Formula 
-\[
-N_{i}^{e}\;\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\frac{n}{r}\;N_{j}^{e}
-\]
-
-\end_inset
-
-或者写成
-\end_layout
-
-\begin_layout Example
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\sbf r\cdot\frac{\partial D}{\partial E}\cdot\sbf r\;\frac{n}{r^{3}}\;N_{i}^{e}N_{j}^{e}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $N_{i}^{e}N_{j}^{e}$
-\end_inset
-
- 可以理解为 
-\begin_inset Formula $N_{i1}^{e}N_{1j}^{e}=\left(N^{e}\cdot N^{e,T}\right)_{ij}$
-\end_inset
-
-，
-\begin_inset Formula $N_{i1}^{e}$
-\end_inset
-
-为列矩阵。
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $r=\sqrt{x^{2}+y^{2}+z^{2}}$
-\end_inset
-
-，表示原点
-\begin_inset Formula $O$
-\end_inset
-
- 到场点 
-\begin_inset Formula $P$
-\end_inset
-
- 的距离。
-\end_layout
-
-\begin_layout Enumerate
-为了保证计算精度，程序中要求开域边界条件的几何边界尽量为球形或圆形。
-\end_layout
-
-\begin_layout Section
-边界形状和误差
-\end_layout
-
-\begin_layout Standard
-对于球形边界，垂直边界的矢量 
-\begin_inset Formula $\sbf e_{n}=\frac{\sbf r}{r}$
-\end_inset
-
-，所以
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 所示的渐近边界条件可以通过在泛函积分中添加相应的表面项来处理。对于非球形边界，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-近似成立。这一项会在原来的 
-\begin_inset Formula $\left[K_{ij}^{e}\right]$
-\end_inset
-
- 矩阵中增加表面项的贡献
-\begin_inset Formula 
-\begin{equation}
-K_{ij}^{s}=\int_{\Gamma^{e}}\epsilon_{r}\frac{n}{r}N_{i}^{e}N_{j}^{e}\dd{\Gamma}.\label{eq:xl2.8}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-由于 
-\begin_inset Formula $r$
-\end_inset
-
- 在球形边界是定值，可以直接提取到积分外面；即使对于非圆形边界，
-\begin_inset Formula $1/r$
-\end_inset
-
- 在边界处表面单元中变换不大，所以依然可以提到积分号外面。下面分二维，轴对称和三位情况分别计算 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:xl2.8"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-三维有限元的边界为一平面，采用高斯积分法计算的表达式为
-\begin_inset Formula 
-\[
-K_{ij}^{s}=\epsilon_{r}\frac{n}{r}\Delta^{s}\sum_{\alpha}N_{i}^{s}\left(\xi_{\alpha},\eta_{\alpha}\right)\,N_{j}^{s}\left(\xi_{\alpha},\eta_{\alpha}\right)\,W\left(\xi_{\alpha},\eta_{\alpha}\right)
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\Delta^{s}$
-\end_inset
-
- 为边界单元的面积。
-\end_layout
-
-\begin_layout Remark
-ref：郭硕鸿 p63/77。电多级展开：
-\begin_inset Formula 
-\[
-f\left(\sbf x-\sbf x'\right)=f\left(\sbf x\right)-\sbf x'\cdot\nabla f@\sbf x+\frac{1}{2!}\left(\sbf x'\cdot\nabla\right)^{2}f@\sbf x+\cdots
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\varphi\left(x\right)=\frac{1}{4\pi\varepsilon_{0}}\left(\frac{Q}{R}-\sbf p\cdot\nabla\frac{1}{R}+\frac{1}{6}\sum_{i,j}\mathcal{D}_{ij}\partial_{i}\partial_{j}\frac{1}{R}+\cdots\right)\label{eq:g6.7}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-Q & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
-\sbf p & =\int_{V}\rho\left(\sbf x'\right)\dd{V'}\\
-\mathcal{D}_{ij} & =\int_{V}3x'_{i}x'_{j}\,\rho\left(\sbf x'\right)\dd{V'}
-\end{align*}
-
-\end_inset
-
-其中
-\begin_inset Formula $R=\sqrt{x^{2}+y^{2}+z^{2}}$
-\end_inset
-
-，表示原点到场点 
-\begin_inset Formula $P$
-\end_inset
-
- 的距离。
-\end_layout
-
-\begin_layout Section
-外加电场
-\end_layout
-
-\begin_layout Subsection
-解析解的例子
-\end_layout
-
-\begin_layout Standard
-ref: 郭硕鸿 p51/65；均匀介质球的极化，球外为真空，半径为 
-\begin_inset Formula $R_{0}$
-\end_inset
-
-，均匀外电场为 
-\begin_inset Formula $\sbf E_{0}$
-\end_inset
-
-。
-\begin_inset CommandInset label
-LatexCommand label
-name "ref:g51"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename inset/GuoShuoHong-2.5.png
-	lyxscale 50
-	scale 40
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-取 
-\begin_inset Formula $\sbf E_{0}$
-\end_inset
-
- 的方向为球坐标系 
-\begin_inset Formula $z$
-\end_inset
-
- 轴，并过球心
-\begin_inset Formula 
-\begin{align}
-\text{球外解：} & \varphi_{1}=-E_{0}R\cos\theta+\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}\frac{E_{0}R_{0}^{3}\cos\theta}{R^{2}}\nonumber \\
-\text{球内解：} & \varphi_{2}=-\frac{3\epsilon_{0}}{\epsilon+2\epsilon_{0}}E_{0}R\cos\theta.\label{eq:g3.21}
-\end{align}
-
-\end_inset
-
-球内是均匀电场，球内束缚电荷激发的场与原外场反向，使总电场减弱。在球内总电场作用下，介质的极化强度为
-\begin_inset Formula 
-\begin{equation}
-\sbf P=\chi_{e}\epsilon_{0}\sbf E=\left(\epsilon-\epsilon_{0}\right)\sbf E=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}3\epsilon_{0}\sbf E_{0}\label{eq:g3.22}
-\end{equation}
-
-\end_inset
-
- 介质球的总电偶极矩为
-\begin_inset Formula 
-\begin{equation}
-\sbf p=\frac{4\pi}{3}R_{0}^{3}\sbf P=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}4\pi\epsilon_{0}R_{0}^{3}\sbf E_{0}\label{eq:g3.23}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:g3.21"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 中的第二项正是此电偶极矩所产生的电势
-\begin_inset Formula 
-\begin{equation}
-\frac{1}{4\pi\epsilon_{0}}\frac{\sbf p\cdot\sbf R}{R^{3}}=\frac{\epsilon-\epsilon_{0}}{\epsilon+2\epsilon_{0}}\frac{E_{0}R_{0}^{3}\cos\theta}{R^{2}}\label{eq:g3.24}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-有限元中的处理
-\end_layout
-
-\begin_layout Standard
-在程序实现中，规定 
-\color blue
-外加电场
-\color inherit
- 总是配合 
-\color blue
-开域边界
-\color inherit
- 一同使用，且边界应当是球形，介质是线性的。令外加电场为 
-\begin_inset Formula $\sbf E_{0}$
-\end_inset
-
-，除去它的影响之后，令 有限区域电荷产生的电势为 
-\begin_inset Formula $\Phi$
-\end_inset
-
-，令总电势为 
-\begin_inset Formula $\Phi_{t}=\Phi-\sbf E_{0}\cdot\sbf r$
-\end_inset
-
-， 
-\begin_inset Formula $\Phi$
-\end_inset
-
- 应该满足 开域边界条件 的性质，即
-\begin_inset Formula 
-\begin{equation}
-{\color{brown}-\nabla\Phi=\frac{n}{r}\Phi\,\sbf e_{r}}\label{eq:phi-local}
-\end{equation}
-
-\end_inset
-
-代入 
-\begin_inset Formula $\Phi={\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}$
-\end_inset
-
-， 
-\begin_inset Formula 
-\[
--\nabla\left({\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}\right)=\frac{n}{r}\left({\color{blue}\Phi_{t}+\sbf E_{0}\cdot\sbf r}\right)\sbf e_{r}
-\]
-
-\end_inset
-
-略微化简给出
-\begin_inset Formula 
-\begin{equation}
-{\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}+\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{r}\right)\sbf e_{r}\label{eq:phi-global}
-\end{equation}
-
-\end_inset
-
-可以看到
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:phi-global"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 与 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:phi-local"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 的区别是多了后面两项。代入Galerkin 方程 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Galerkin"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-边界项 
-\begin_inset Formula $N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot(\sbf\nabla\delta\phi)$
-\end_inset
-
-：并把 
-\begin_inset Formula ${\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}$
-\end_inset
-
- 的贡献归入刚度矩阵 
-\begin_inset Formula $K_{ij}^{e}$
-\end_inset
-
-；把 
-\begin_inset Formula $\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{r}\right)\sbf e_{r}$
-\end_inset
-
- 的贡献归入 载荷（Load），载荷项的形式为
-\begin_inset Formula 
-\[
--N_{i}\,\sbf e_{n}\cdot\epsilon\cdot\left[\sbf E_{0}+n\left(\sbf E_{0}\cdot\sbf e_{R}\right)\sbf e_{R}\right].
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-backup
-\end_layout
-
-\begin_layout Standard
-在有限元框架下求解外加电场的问题，外加电场 
-\begin_inset Formula $\sbf E_{0}$
-\end_inset
-
- 的影响体现在 两个边界项中。观察 Galerkin 方程
-\begin_inset Formula 
-\begin{align*}
- & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
- & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf e_{n}\cdot\sbf D^{0}}$
-\end_inset
-
-这一项体现的是背景场（即
-\begin_inset Formula $\sbf E_{0}$
-\end_inset
-
- ）的贡献；而 
-\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf e_{n}\cdot\frac{\partial D}{\partial E}\cdot\sbf\nabla\delta\phi}$
-\end_inset
-
- 则类似于开域边界条件。
-\end_layout
-
-\begin_layout Standard
-参考 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "ref:g51"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，在外加电场影响下，极化电荷在边界处的电势形如
-\begin_inset Formula 
-\[
-\Phi=a\frac{\cos\theta}{R^{n}},
-\]
-
-\end_inset
-
-对于电偶极子 
-\begin_inset Formula $n=2$
-\end_inset
-
-，其中 
-\begin_inset Formula $\cos\theta=\sbf E_{0}\cdot\sbf e_{R}$
-\end_inset
-
-。考察边界上的电势法向量，
-\begin_inset Formula 
-\[
--\nabla\Phi=a\frac{\cos\theta}{R^{n}}\frac{n}{R}\sbf e_{R}+a\frac{\sin\theta}{R^{n}}\frac{1}{R}\sbf e_{\theta}
-\]
-
-\end_inset
-
-对应的变分是
-\begin_inset Formula 
-\[
--\sbf\nabla\delta\phi=\frac{n}{R}\sbf e_{R}\delta\Phi+(\cdots)\sbf e_{\theta}
-\]
-
-\end_inset
-
-Galerkin 方程边界项的贡献是
-\begin_inset Formula 
-\[
--N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf\nabla\delta\phi}=N_{i}^{e}\sbf e_{n}\cdot\epsilon\cdot{\color{brown}\sbf e_{R}\,\frac{n}{R}\delta\Phi}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-其中使用了球坐标下的梯度表达式
-\begin_inset Formula 
-\[
-\nabla\psi=\sbf e_{r}\partial_{r}\psi+\frac{1}{r}\sbf e_{\theta}\partial_{\theta}\psi+\frac{1}{r\sin\theta}\partial_{\phi}\sbf e_{\phi}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-有限元的矩阵方程
-\end_layout
-
-\begin_layout Section
-有限元中的Galerkin 方法
-\end_layout
-
-\begin_layout Standard
-FEM-Gerard;p45/61;sec 1.3.11
-\end_layout
-
-\begin_layout Standard
-首先基础的公式是 ：
-\begin_inset Formula 
-\begin{align*}
-\nabla\cdot\sbf D & =\rho\\
-\sbf D & =\sbf D\left(\sbf E\right)\\
-\sbf E & =-\nabla\phi
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-令 加权的残差（residual error）和 为
-\begin_inset Formula 
-\begin{align}
-R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:error}\\
-\text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
-\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}=0\nonumber 
-\end{align}
-
-\end_inset
-
-上面使用了分部积分，和高斯散度定理；通过分部积分引入了边界条件项 
-\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}$
-\end_inset
-
-。稍微整理下
-\begin_inset Formula 
-\[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
-\]
-
-\end_inset
-
-例如对于线性导体 
-\begin_inset Formula $\sbf D=\epsilon\sbf E$
-\end_inset
-
-，上式可以写成：
-\begin_inset Formula 
-\[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\epsilon\nabla\phi\right)}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
-\]
-
-\end_inset
-
-对于齐次第二类（natural）边界条件 
-\begin_inset Formula $\left(\alpha\nabla\phi\right)\cdot\sbf n=0$
-\end_inset
-
-（电位移线平行），可以直接去掉 
-\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
-\end_inset
-
- 项。
-\end_layout
-
-\begin_layout Subsection
-微扰展开
-\end_layout
-
-\begin_layout Enumerate
-如果考虑待求物理量 
-\begin_inset Formula $\sbf D$
-\end_inset
-
- 和 
-\begin_inset Formula $\phi$
-\end_inset
-
- 的微小变分：
-\begin_inset Formula 
-\begin{align*}
-\sbf D & =\sbf D^{0}+{\color{blue}\epsilon}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\epsilon}\,\sbf\nabla\delta\phi\\
-\phi & =\phi^{0}+\delta\phi
-\end{align*}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\epsilon=\frac{\partial D}{\partial E}$
-\end_inset
-
-，对于一般材料 
-\begin_inset Formula $\frac{\partial D}{\partial E}$
-\end_inset
-
- 有可能是张量。代入 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:error"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 得：
-\begin_inset Formula 
-\begin{align*}
-\Rightarrow & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
- & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-移项得
-\begin_inset Formula 
-\begin{align}
- & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
- & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}\label{eq:Galerkin}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-再代入 
-\begin_inset Formula $\phi$
-\end_inset
-
- 的插值展开，
-\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
-\end_inset
-
- 得
-\begin_inset Formula 
-\begin{align*}
-\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
- & =\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right\} 
-\end{align*}
-
-\end_inset
-
-此即 Galerkin 方法的迭代展开式。左边正比于 
-\begin_inset Formula $N_{i}^{e}N_{j}^{e}$
-\end_inset
-
-，右边正比于 
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
-，因此在 尺度（scale）变换下，
-\begin_inset Formula 
-\[
-\left[\cdots\right]\delta\phi_{j}=\lambda\left\{ \cdots\right\} ,\quad\lambda<1.
-\]
-
-\end_inset
-
-相当于 
-\begin_inset Formula $\delta\phi_{j}$
-\end_inset
-
- 获得更小的步长。
-\end_layout
-
-\begin_layout Enumerate
-对于第一类（essential）边界条件，在边界上 
-\begin_inset Formula $\delta\phi_{j}=0$
-\end_inset
-
-；对于齐次第二类（natural）边界条件，
-\begin_inset Formula $n\cdot\sbf D^{0}=0$
-\end_inset
-
-；两种情况下边界项都可以不考虑，此时方程简化为，
-\begin_inset Formula 
-\begin{equation}
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .\label{eq:Galerkin-2}
-\end{equation}
-
-\end_inset
-
-只有第三类边界条件，例如开放边界，或外加电场时需要考虑边界项。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-工作区变量
-\end_layout
-
-\begin_layout Standard
-下面列出
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Galerkin-2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的部件，在程序中对应的变量。 
-\begin_inset Formula $W(\xi_{i})$
-\end_inset
-
- 是高斯积分的权重因子，
-\begin_inset Formula $\det[J]$
-\end_inset
-
- 是雅可比矩阵的行列式。
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $K$
-\end_inset
-
-：Sparse::GetMatrix<double>(
-\begin_inset Quotes eld
-\end_inset
-
-K
-\begin_inset Quotes erd
-\end_inset
-
-)，刚度矩阵，Galerkin 方程左侧的稀疏矩阵。
-\begin_inset Formula 
-\[
-K=\nabla N^{T}\cdot\epsilon\cdot\nabla N*W*\det[J]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $F_{\text{in}}$
-\end_inset
-
-：Fin，“内力”，Galerkin 方程
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Galerkin-2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中，
-\begin_inset Formula $\sbf D^{0}$
-\end_inset
-
- 引发的贡献
-\begin_inset Formula 
-\[
-F_{\text{in}}=\nabla N^{T}\cdot\sbf D^{0}\cdot\left(-\det[J]*W\right)/\epsilon_{0}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $F_{v}$
-\end_inset
-
-：Fv，“力”矢量，其实是电荷（电荷密度，或者外加电场）的贡献
-\begin_inset Formula 
-\[
-F_{v}=N*\rho*\det[J]*W
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-P_GFv_T 是 Global Fv，即 Fv 在所有单元上累加的结果；Fv vector中，的元素的存储次序，与全局/局域编号有关。
-\end_layout
-
-\begin_layout Enumerate
-P_GFinAccum 是 Global Fin，即 Fin 在所有单元上累加的结果。
-\end_layout
-
-\begin_layout Enumerate
-P_GRt，
-\begin_inset Formula $\mathrm{P\_GRt}=\mathrm{P\_GFv\_T}-\mathrm{P\_GFinAccum}$
-\end_inset
-
-，两部分“力”的求和。 
-\end_layout
-
-\begin_layout Section
-第一类边界条件
-\end_layout
-
-\begin_layout Standard
-Dirichlet 边界条件定义为：
-\begin_inset Formula 
-\begin{equation}
-\phi=p\quad\text{on}\quad\Gamma_{1}.\label{eq:bound1}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $\Gamma_{1}$
-\end_inset
-
- 是边界上的一部分。JMJin P104：假设 
-\begin_inset Formula $\Gamma_{1}$
-\end_inset
-
- 上有 
-\begin_inset Formula $N_{1}$
-\end_inset
-
- 个节点，如果把它们的 全局节点编号 存储在一矢量中，例如 
-\begin_inset Formula $\text{nd}(i)$
-\end_inset
-
-；把给定的边界值存储在矢量 
-\begin_inset Formula $p(i)$
-\end_inset
-
- 中。对线性方程组的下述操作 相当于施加第一类边界条件：
-\begin_inset Formula 
-\begin{equation}
-b_{\text{nd}(i)}=p\left(i\right),\quad K_{\text{nd}\left(i\right),\text{nd}\left(i\right)}=1,\quad K_{\text{nd}\left(i\right),j}=0,\quad\text{for}\quad j\neq\text{nd}(i).\label{eq:jm4.60}
-\end{equation}
-
-\end_inset
-
-以及
-\begin_inset Formula 
-\[
-b_{j}\to b_{j}-K_{j,\text{nd}(i)}p\left(i\right),\quad K_{j,\text{nd}\left(i\right)}=0\quad\text{for}\quad j\neq\text{nd}(i).
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $i=1,2,3,\cdots,N_{1}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-对于 Galerkin 迭代法，在位于 
-\begin_inset Formula $\Gamma_{1}$
-\end_inset
-
- 的节点上，
-\begin_inset Formula $\phi$
-\end_inset
-
-为定值，则 
-\begin_inset Formula $\delta\phi=0$
-\end_inset
-
-。套用上述处理手段，只需要：
-\end_layout
-
-\begin_layout Enumerate
-在 
-\begin_inset Formula $K$
-\end_inset
-
- 矩阵中， 把涉及 
-\begin_inset Formula $\Gamma_{1}$
-\end_inset
-
- 节点 的行和列去除；
-\end_layout
-
-\begin_layout Enumerate
-而 
-\begin_inset Formula $b_{j}$
-\end_inset
-
- 不需要做改动，因为此时 
-\begin_inset Formula $p\left(i\right)=0$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-第三类边界条件
-\end_layout
-
-\begin_layout Standard
-Robbin 边界条件：
-\begin_inset Formula 
-\begin{align}
- & \left(\alpha\nabla\phi\right)\cdot\sbf n+\gamma\phi=q\nonumber \\
-\text{即}\quad & \sbf D\cdot\sbf n=q-\gamma\phi\label{eq:bound3}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-这里的约定是，电位移矢量 
-\begin_inset Formula $\sbf D=\alpha_{x}\frac{\partial\phi}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi}{\partial z}\hat{z}$
-\end_inset
-
-；
-\end_layout
-
-\begin_layout Itemize
-注意对于线性材料，通常定义 
-\begin_inset Formula $\sbf E=-\nabla\phi$
-\end_inset
-
-，
-\begin_inset Formula $\sbf D=\alpha\sbf E$
-\end_inset
-
-，也就是有一个负号，所以上面的 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 为负数。
-\end_layout
-
-\begin_layout Standard
-对于上面定义的加权残差，现在不展开 
-\begin_inset Formula $\sbf n\cdot\sbf D$
-\end_inset
-
- 项：
-\begin_inset Formula 
-\[
-R^{e}\left[N_{i}^{e}\right]=\frac{-1}{\varepsilon_{0}}\left[\left(\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\right]
-\]
-
-\end_inset
-
-残差 
-\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]$
-\end_inset
-
- 趋于零给出的方程是
-\begin_inset Formula 
-\[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Omega}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
-\]
-
-\end_inset
-
-代入势场展开 
-\begin_inset Formula $\delta\phi=N_{j}^{e}\delta\phi_{j}$
-\end_inset
-
-，以及 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bound3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\nabla N_{j}^{e}\right)}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\left(q-\gamma\phi\right)}\dd{\Gamma}
-\]
-
-\end_inset
-
-仍然进行迭代求解。
-\end_layout
-
-\begin_layout Section
-第二类边界条件
-\end_layout
-
-\begin_layout Standard
-JMJin page 90: Neumann 边界条件，相当于在第三类边界条件中取 
-\begin_inset Formula $\gamma=0$
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align}
- & \left(\alpha\nabla\phi\right)\cdot\sbf n=q\nonumber \\
-\text{即}\quad & \sbf D\cdot\sbf n=q\label{eq:bound2}
-\end{align}
-
-\end_inset
-
-此外还有齐次诺伊曼边界条件（homogeneous Neumann），相当于在第三类边界条件中取 
-\begin_inset Formula $\gamma=q=0$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left(\alpha\nabla\phi\right)\cdot\sbf n=0\quad\text{即}\quad\sbf D\cdot\sbf n=0
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-界面连续性条件
-\end_layout
-
-\begin_layout Standard
-如果在两种介质的交界面上：
-\end_layout
-
-\begin_layout Itemize
-材料性质参数例如 
-\begin_inset Formula $\alpha_{x}$
-\end_inset
-
-，
-\begin_inset Formula $\alpha_{y}$
-\end_inset
-
-，
-\begin_inset Formula $\alpha_{z}$
-\end_inset
-
- 有突变（不连续）；
-\end_layout
-
-\begin_layout Itemize
-并且假设在界面上没有任何表面源（surface source）。
-\end_layout
-
-\begin_layout Standard
-则
-\begin_inset Formula $\phi$
-\end_inset
-
-还应该满足连续性条件：
-\begin_inset Formula 
-\begin{equation}
-\phi^{+}=\phi^{-},\quad\text{on}\quad\Gamma_{d}.\label{eq:jm4.4}
-\end{equation}
-
-\end_inset
-
-以及
-\begin_inset Formula 
-\begin{equation}
-\left(\alpha_{x}\frac{\partial\phi^{+}}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi^{+}}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi^{+}}{\partial z}\hat{z}\right)\cdot\hat{n}=\left(\alpha_{x}\frac{\partial\phi^{-}}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi^{-}}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi^{-}}{\partial z}\hat{z}\right)\cdot\hat{n}\quad\text{on}\quad\Gamma_{d}.\label{eq:jm4.5}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-即电势连续，电位移矢量 
-\begin_inset Formula $\sbf D$
-\end_inset
-
-连续。
-\end_layout
-
-\begin_layout Section
-各种自由度记号
-\end_layout
-
-\begin_layout Enumerate
-AXIS2：表示轴对称系统，取柱坐标系计算。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-NdNum()；节点数目。
-\end_layout
-
-\begin_layout Enumerate
-DofNum()：自由度数目，取决于体系，例如每个单元中，自由度就是节点上的电势。
-\end_layout
-
-\begin_layout Enumerate
-GSNum()，GsNumKe()，GsNumFe()，GsNumVe()：高斯点数目；对于阶数不同的多项式，需要的采样点数目不同，因此 Gauss
- 点数目可能不同。
-\end_layout
-
-\begin_layout Standard
-EOF
 \end_layout
 
 \begin_layout Chapter

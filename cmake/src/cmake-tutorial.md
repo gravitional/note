@@ -297,10 +297,16 @@ modern cmake是围绕着target这一概念而成, 不再是过程式配置, 更�
 
 ### 配置构建对象
 
-target_sources() #设置源码文件target_include_directories() #设置引用目录
-target_compile_definitions() #设置预定义target_compile_features() #设置编译功能
-target_compile_options() #设置编译选项target_link_libraries() #设置链接库
-target_link_directories() #设置链接目录target_link_options() #设置链接选项
+```cmake
+target_sources() #设置源码文件
+target_include_directories() #设置引用目录
+target_compile_definitions() #设置预定义
+target_compile_features() #设置编译功能
+target_compile_options() #设置编译选项
+target_link_libraries() #设置链接库
+target_link_directories() #设置链接目录
+target_link_options() #设置链接选项
+```
 
 ### 构建对象固有属性
 
@@ -332,7 +338,7 @@ find_package() #查找CMAKE_FRAMEWORK_PATH对应的库aux_source_directory() #�
 
 ### find_package模式
 
-find_package() 有 Module模式(基本用法)和Config模式(完全用法), 
+find_package() 有 Module模式(基本用法)和Config模式(完全用法),
 其中Module模式是基础, Config 模式则提供复杂高级功能.
 find_package是否使用Config模式可以通过下列条件判断:
 (1)find_package()中指定CONFIG关键字(2)find_package()中指定NO_MODULE关键字
