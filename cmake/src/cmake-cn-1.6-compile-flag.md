@@ -85,7 +85,7 @@ target_compile_definitions(cmake_examples_compile_flags
 
 注意, 本语句使用了 `PRIVATE`, 所以编译选项不会传递.
 
-对于编译器选项, 还可以使用 `target_compile_options()` 函数.
+对于 `编译器选项`, 还可以使用 `target_compile_options()` 函数.
 此处谢谢github用户[HamsterCoderSim的更正](https://github.com/HamsterCoderSim).
 
 ```cmake

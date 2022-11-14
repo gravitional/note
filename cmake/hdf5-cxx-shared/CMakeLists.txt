@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.10.2)
-project (myproj C CXX Fortran)
+project (myproj C CXX)
 
 set (FIND_HDF_COMPONENTS C CXX shared)
 
@@ -20,3 +20,4 @@ INCLUDE_DIRECTORIES (${HDF5_INCLUDE_DIR})
 add_executable (runapp h5_write.c)
 
 target_link_libraries (runapp PRIVATE ${LINK_LIBS})
+target_compile_options(runapp PRIVATE "/utf-8")
