@@ -95,7 +95,7 @@ Young
 \end_layout
 
 \begin_layout Chapter
-线性代数
+预备知识
 \end_layout
 
 \begin_layout Section
@@ -1681,6 +1681,146 @@ literal "false"
 \end_inset
 
  平面
+\end_layout
+
+\begin_layout Section
+格林公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "从格林公式到柯西公式"
+target "https://zhuanlan.zhihu.com/p/86297231"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+关于曲线积分符号的规定，是由于物理界盛行右手定则，可能对数学符号规定方面造成了一定影响。所以对于曲线积分的符号做如下规定：当沿着区域的边界移动时，区域内部在你的
+左侧，则符号为正。所以如果是环状结构的区域，外圈逆时针积分为正，内圈顺时针积分为正。所有没有标注顺时针还是逆时针的积分曲线（主要是公式中），默认取正方向。
+\end_layout
+
+\begin_layout Standard
+格林公式为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\oint_{C}P\dd{x}+Q\dd{y}=\iint_{D}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dd{x}\dd{y}
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula $D$
+\end_inset
+
+ 是一单连通区域， 
+\begin_inset Formula $C$
+\end_inset
+
+ 是该区域的边界。它说一个闭区域边界上的曲线积分，等于被积函数经过一种操作以后在面积上积分。下面我们讨论两点：
+\end_layout
+
+\begin_layout Enumerate
+因为要将原被积函数
+\begin_inset Formula $f$
+\end_inset
+
+实现在
+\begin_inset Formula $D$
+\end_inset
+
+上的积分，并且出现了导数结构，自然要求原被积函数
+\begin_inset Formula $f$
+\end_inset
+
+需要在
+\begin_inset Formula $D$
+\end_inset
+
+上定义，各偏导数都存在，且偏导数与函数在
+\begin_inset Formula $D$
+\end_inset
+
+上都连续。
+\end_layout
+
+\begin_layout Enumerate
+这个式子只能在单连通区域(没有“洞”)成立，所以对于复连通区域(有“洞”)，这个“洞”也叫奇点，就是不满足条件1的点。可以给奇点外面加一个边界形成一个新的、具有
+两个边界的复连通区域，就像这样：
+\begin_inset CommandInset href
+LatexCommand href
+name "region"
+target "https://pic2.zhimg.com/80/v2-2d2a90cfd2925bb1b17def74806a8aa5_720w.webp"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+二维散度定理
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "2D Divergence Theorem [KhanAcademy]"
+target "https://www.bilibili.com/video/BV15k4y1r7Uq?p=2&vd_source=a7a8fe02bc1634566f069ff312b17c99"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+假设 
+\begin_inset Formula $\sbf v$
+\end_inset
+
+ 是一矢量场，
+\begin_inset Formula $C$
+\end_inset
+
+ 是单连通区域
+\begin_inset Formula $D$
+\end_inset
+
+的边界曲线，则
+\begin_inset Formula $\sbf v$
+\end_inset
+
+沿逆时针对曲线法向单位矢量
+\begin_inset Formula $\sbf n$
+\end_inset
+
+的内积的线积分： 
+\begin_inset Formula 
+\begin{align*}
+\oint_{C}\sbf v\cdot\sbf n\dd{\ell} & =\oint_{C}\sbf v\cdot\frac{\left(\dd{y},-\dd{x}\right)}{\dd\ell}\\
+ & =\oint_{C}v_{x}\dd{y}-v_{y}\dd{x}\\
+\text{by Green Theorem}\; & =\iint_{D}\left(\frac{\partial v_{x}}{\partial x}+\frac{\partial v_{y}}{\partial y}\right)\dd{x}\dd{y}
+\end{align*}
+
+\end_inset
+
+即二维情形的散度定理：
+\begin_inset Formula $\oint_{C}\sbf v\cdot\sbf n\dd{\ell}=\iint_{D}\nabla\cdot\sbf v\dd{A}$
+\end_inset
+
+。以上使用了曲线法向的表达式 
+\begin_inset Formula $\left(\dd{y},-\dd{x}\right)/\dd{\ell}$
+\end_inset
+
+和格林环路定理。
 \end_layout
 
 \begin_layout Chapter
@@ -7549,8 +7689,152 @@ Edge单元
 有限元的矩阵方程
 \end_layout
 
+\begin_layout Standard
+在很多情况下，电磁方程可以化为如下形式
+\begin_inset Formula 
+\begin{equation}
+-\nabla\cdot\left(\alpha\nabla\phi\right)+\beta\phi=f\label{eq:xl1.27}
+\end{equation}
+
+\end_inset
+
+一般有边界条件
+\begin_inset Formula 
+\begin{align}
+\phi & =p\quad\text{on}\quad\Gamma_{1}\label{eq:xl1.28}\\
+\left(\alpha\nabla\phi\right)\cdot\sbf e_{n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}\label{eq:xl1.29}
+\end{align}
+
+\end_inset
+
+式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xl1.27"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xl1.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xl1.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所对应的方程等价于
+\begin_inset Formula 
+\begin{align}
+ & \delta\mathcal{F}(\phi)=0\label{eq:xl1.30}\\
+ & \phi=p\quad\text{on}\quad\Gamma_{1}\nonumber 
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\mathcal{F}(\phi)$
+\end_inset
+
+ 的构造见下文。
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xl1.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对应的边界条件在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xl1.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中自动满足，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xl1.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对应的边界条件可以通过适当的方式在有限元计算中添加。
+\end_layout
+
 \begin_layout Section
-有限元中的Galerkin 方法
+Ritz方法
+\end_layout
+
+\begin_layout Standard
+在有限元框架下，
+\begin_inset Formula $\mathcal{F}(\phi)$
+\end_inset
+
+ 可以表示为
+\begin_inset Formula 
+\[
+\mathcal{F}(\phi)=\sum_{e=1}^{M}\mathcal{F}^{e}\left(\phi^{e}\right)+\sum_{s=1}^{N}\mathcal{F}^{s}\left(\phi^{s}\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $M$
+\end_inset
+
+是总的有限元单元数，
+\begin_inset Formula $N$
+\end_inset
+
+ 为表面边界单元的数目。而
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[\nabla\phi^{e}\cdot\alpha\nabla\phi^{e}+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\\
+\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+泛函变分方程
+\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
+\end_inset
+
+给出对应的电势场方程和边界条件
+\begin_inset Formula 
+\begin{align*}
+-\nabla\cdot\left(\alpha\nabla\phi\right)+\beta\phi & =f\\
+\left(\alpha\nabla\phi\right)\cdot\sbf e_{n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Galerkin 方法
 \end_layout
 
 \begin_layout Standard
@@ -7747,7 +8031,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-工作区变量
+程序变量
 \end_layout
 
 \begin_layout Standard
@@ -8019,7 +8303,7 @@ R^{e}\left[N_{i}^{e}\right]=\frac{-1}{\varepsilon_{0}}\left[\left(\int_{\Omega^{
  趋于零给出的方程是
 \begin_inset Formula 
 \[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\sbf\nabla\delta\phi\right)}\dd{\Omega}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
+\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
 \]
 
 \end_inset
@@ -8041,12 +8325,81 @@ noprefix "false"
 
 \begin_inset Formula 
 \[
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(\frac{\partial D}{\partial E}\nabla N_{j}^{e}\right)}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\left(q-\gamma\phi\right)}\dd{\Gamma}
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\left(q-\gamma\phi\right)}\dd{\Gamma}
 \]
 
 \end_inset
 
-仍然进行迭代求解。
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+其中
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula ${\color{brown}\phi=\phi_{0}+N_{j}\delta\phi_{j}}$
+\end_inset
+
+，
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+是目前的累积解
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+，全按形函数展开就是：
+\begin_inset Formula 
+\begin{align*}
+\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j} & +{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]}\delta\phi_{j}\\
+ & =\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}q}\dd{\Gamma}+{\color{brown}\int_{\Gamma^{e}}\left(-\gamma N_{i}^{e}N_{j}^{e}\right)\dd{\Gamma}}\phi_{0;j}
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -13995,8 +14348,12 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 介电屏蔽条件
+\end_layout
+
+\begin_layout Subsection
+一般曲线坐标系
 \end_layout
 
 \begin_layout Standard
@@ -14147,7 +14504,15 @@ noprefix "false"
 
 \end_inset
 
- 设 
+
+\end_layout
+
+\begin_layout Subsection
+介电屏蔽边界条件
+\end_layout
+
+\begin_layout Standard
+设 
 \begin_inset Formula $\dd{\ell_{1}}=\dd{u},\quad\dd{\ell_{2}}=\dd{v},\quad\dd{\ell_{3}}=\alpha\dd{w}$
 \end_inset
 
@@ -14165,6 +14530,150 @@ noprefix "false"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Enumerate
+在高
+\begin_inset Formula $\epsilon$
+\end_inset
+
+介质表面求解电势分布，在界面附近，假设 
+\begin_inset Formula $\sbf D_{n}$
+\end_inset
+
+ 变化不大，在 
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+算子中忽略法向的贡献，只关注切向的变化。
+\end_layout
+
+\begin_layout Enumerate
+表面微元上的面电荷密度是 
+\begin_inset Formula $\sbf n\cdot\sbf D$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\sbf n\cdot\sbf D=-\nabla_{t}\cdot\left(d\,\epsilon_{0}\epsilon_{r}\cdot\nabla_{t}\phi\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Ritz方法
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sbf e_{n}\cdot\sbf D+\nabla_{t}\cdot\left(d\sbf D_{t}\right)=0
+\]
+
+\end_inset
+
+泛函
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[\nabla\phi^{e}\cdot\epsilon\nabla\phi^{e}+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\\
+\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\nabla_{t}\cdot\left(d\epsilon\nabla_{t}\phi\right)\right]\phi\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+变分
+\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
+\end_inset
+
+给出对应的电势场方程和边界条件为
+\begin_inset Formula 
+\begin{align*}
+-\nabla\cdot\left(\epsilon\nabla\phi\right)+\beta\phi & =f\\
+\sbf e_{n}\cdot\left(\epsilon\nabla\phi\right)+\nabla_{t}\cdot\left(d\epsilon\nabla_{t}\phi\right) & =0\quad\text{on}\quad\Gamma_{2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\mathcal{F}^{s}\left(\phi^{s}\right)$
+\end_inset
+
+ 可以通过分部积分写成：
+\begin_inset Formula 
+\[
+\int_{C^{e}}\sbf\tau_{n}\cdot\phi\,d\epsilon\,\nabla_{t}\phi\dd{\ell}-\int_{\Gamma^{e}}\left(\nabla_{t}\phi\right)d\epsilon\left(\nabla_{t}\phi\right)\dd{\Gamma}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C^{e}$
+\end_inset
+
+ 是界面单元 
+\begin_inset Formula $\Gamma^{e}$
+\end_inset
+
+ 的边界曲线。
+\end_layout
+
+\begin_layout Section
+Galerkin方法
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D=0
+\]
+
+\end_inset
+
+对比标准方程 
+\begin_inset Formula $\nabla\cdot\left(\sbf D\right)-\rho=0$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+R^{e}\left[N_{i}^{e}\right]=\int_{\Omega^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left(\alpha\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D\right]\dd{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于三维问题，介质界面是二维 
+\begin_inset Formula $\Omega^{e}\to\Gamma^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\Gamma^{e}\to L^{e}$
+\end_inset
+
+，做分部积分，再使用散度定理：
+\begin_inset Formula 
+\[
+\int_{\Gamma^{e}}{\color{blue}\left(\nabla_{t}N_{i}^{e}\right)\cdot\alpha\,\sbf D_{t}}\dd{\Gamma}=\int_{L^{e}}{\color{brown}N_{i}^{e}\alpha\,\sbf D_{t}\cdot\sbf\tau_{n}}\dd{\ell}+\int_{\Gamma^{e}}N_{i}^{e}\sbf e_{n}\cdot\sbf D\dd{\Gamma}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf e_{n}$
+\end_inset
+
+是二维单元的法向单位矢量，
+\begin_inset Formula $\sbf\tau_{n}$
+\end_inset
+
+ 是二维单元的环路的法向单位矢量。
 \end_layout
 
 \end_body

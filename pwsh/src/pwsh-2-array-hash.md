@@ -3,6 +3,7 @@
 ## 数组
 
 [about_Arrays](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_arrays)
+[Everything you wanted to know about arrays](https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays)
 
 数组是一种数据结构, 用于存储项的集合.  `项` 可以是同一类型, 也可以是 `不同类型`.
 若要创建名为 `$A` 的数组, 该数组包含七个数值 (`int`) 值, 请键入:
@@ -26,6 +27,32 @@ $C = 5..8
 
 如果未指定数据类型, 则 `PowerShell` 会创建`object`的数组 (`system.object []`) .
 若要确定数组的数据类型, 请使用 `GetType ()` 方法.  例如, `$A.GetType()`.
+
+We can create an array and seed it with values just by placing them in the @() parentheses.
+
+```PowerShell
+$data = @('Zero','One','Two','Three')
+$data.count
+$data
+```
+
+This array has 4 items. When we call the $data variable,
+we see the list of our items. If it's an array of strings, then we get one line per string.
+
+We can declare an array on multiple lines. The comma is optional in this case and generally left out.
+
+```PowerShell
+$data = @(
+    'Zero'
+    'One'
+    'Two'
+    'Three'
+)
+```
+
+I prefer to declare my arrays on multiple lines like that.
+Not only does it get easier to read when you have multiple items,
+it also makes it easier to compare to previous versions when using source control.
 
 若要创建强类型数组(即只包含特定类型值的数组), 请将该变量强制转换为数组类型, 如 `string[]`, `long[]`, or `int32[]`.
 若要强制转换数组, 请在变量名称之前加上`[类型]`.  例如, 若要创建`32`位整数数组, 请键入:
