@@ -62,6 +62,15 @@ git remote set-url origin https://gitee.com/mirrors/oh-my-zsh.git
 git pull
 ```
 
+### 从gitee安装的方式
+
+[Gitee 极速下载/oh-my-zsh 的 评论 ](https://gitee.com/colo9)
+
+```bash
+REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
+sh -c "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"
+```
+
 ## Powerline 状态条
 
 `Powerline` 是一个极棒的 `Vim` 编辑器的状态行插件,这个插件是使用 Python 开发的,
