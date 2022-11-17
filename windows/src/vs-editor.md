@@ -9,7 +9,7 @@
 最后在 `按快捷键` 中输入按下自己的组合键,
 可以选择配置 `全局属性`, 或者限定快捷键的生效范围.
 
-## 编辑
+### 编辑
 
 [代码编辑器功能](https://docs.microsoft.com/zh-cn/visualstudio/ide/writing-code-in-the-code-and-text-editor?view=vs-2022)
 
@@ -21,7 +21,7 @@
 `Alt+Shift+]`; 选中块结构
 `Shift+F10`; 展开上下文菜单(光翼展开doge)
 
-## 视图
+### 视图
 
 `ctrl+shift+,/.`; 放大缩小编辑器字体
 
@@ -60,6 +60,8 @@
 
 + `Ctrl+F9`: 禁用断点
 + `C+S+F9`; 禁用所有断点
+
++ `C+A+F2`; 显示诊断工具, 查看内存,CPU占用,以及运行时间
 
 ### 书签
 

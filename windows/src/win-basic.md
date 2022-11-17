@@ -275,3 +275,59 @@ netsh wlan show profile name="连接名" key=clear
 ```
 
 这里把 `连接名` 替换为我们要查询的wifi名称, 安全设置里的 `关键内容` 就是WiFi的密码啦~
+
+## powershell 默认编码
+
+[win10下,cmd,power shell设置默认编码为'UTF-8'](https://www.zhihu.com/question/54724102)
+[Using UTF-8 Encoding (CHCP 65001)](https://stackoverflow.com/questions/57131654/using-utf-8-encoding-chcp-65001-in-command-prompt-windows-powershell-window)
+
+Note: The caveat re legacy console applications mentioned above equally applies here.
+If running legacy console applications is important to you, see eryksun's recommendations in the comments.
+
+For PowerShell (both editions), add the following line to your $PROFILE (current user only)
+or $PROFILE.AllUsersCurrentHost (all users) file, which is the equivalent of chcp 65001, supplemented with setting preference variable $OutputEncoding to instruct PowerShell to send data to external programs via the pipeline in UTF-8:
+
+Note that running chcp 65001 from inside a PowerShell session is not effective,
+because .NET caches the console's output encoding on startup
+and is unaware of later changes made with chcp;
+additionally, as stated, Windows PowerShell requires $OutputEncoding to be set - see this answer for details.
+
+```ps1
+$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+```
+
+For example, here's a quick-and-dirty approach to add this line to `$PROFILE` programmatically:
+
+```ps1
+'$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding =
+New-Object System.Text.UTF8Encoding' + [Environment]::Newline + (Get-Content -Raw $PROFILE -ErrorAction SilentlyContinue) |
+Set-Content -Encoding utf8 $PROFILE
+```
+
+For cmd.exe, define an `auto`-run command via the registry,
+in value `AutoRun` of key
+`HKEY_CURRENT_USER\Software\Microsoft\Command Processor` (current user only) or
+`HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor` (all users):
+
+For instance, you can use PowerShell to create this value for you:
+
+```ps1
+# Auto-execute `chcp 65001` whenever the current user opens a `cmd.exe` console
+# window (including when running a batch file):
+Set-ItemProperty 'HKCU:\Software\Microsoft\Command Processor' AutoRun 'chcp 65001 >NUL'
+```
+
+In PowerShell, if you never call external programs,
+you needn't worry about the system locale (active code pages):
+PowerShell-native commands and .NET calls always communicate via UTF-16 strings (native .NET strings)
+and on file I/O apply default encodings that are independent of the system locale.
+Similarly, because the Unicode versions of the Windows API functions are used to print to and read from the console,
+non-ASCII characters always print correctly (within the rendering limitations of the console).
+
+In cmd.exe, by contrast, the system locale matters for file I/O (with < and > redirections,
+but notably including what encoding to assume for batch-file source code),
+not just for communicating with external programs in-memory (such as when reading program output in a for /f loop).
+
+[2] In PowerShell v4-, where the static ::new() method isn't available,
+use `$OutputEncoding = (New-Object System.Text.UTF8Encoding).psobject.BaseObject`.
+See GitHub issue #5763 for why the .psobject.BaseObject part is needed.
