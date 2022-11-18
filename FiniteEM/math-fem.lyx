@@ -14905,17 +14905,17 @@ fdsaads
 
 \end_inset
 
-代入边界条件，边界1–2：
+代入边界条件，边界条件1–2：
 \begin_inset Formula 
-\begin{align*}
-n=0:\quad & 0=b_{0}+\frac{c_{0}}{R_{1}},\quad\varepsilon_{2}\frac{-c_{0}}{R_{1}}=0\\
-n\ge1:\quad & a_{n}R_{1}^{2n+1}=b_{n}R_{1}^{2n+1}+c_{n}\\
-n\ge1:\quad & a_{n}R_{1}^{2n+1}=\frac{\varepsilon_{2}}{\varepsilon_{1}}\left(b_{n}R_{1}^{2n+1}+\frac{-(n+1)}{n}c_{n}\right)
-\end{align*}
+\begin{align}
+n=0:\quad & 0=b_{0}+\frac{c_{0}}{R_{1}},\quad\varepsilon_{2}\frac{-c_{0}}{R_{1}}=0\nonumber \\
+n\ge1:\quad & a_{n}R_{1}^{2n+1}=b_{n}R_{1}^{2n+1}+c_{n}\label{eq:my1}\\
+n\ge1:\quad & a_{n}R_{1}^{2n+1}=\frac{\varepsilon_{2}}{\varepsilon_{1}}\left(b_{n}R_{1}^{2n+1}+\frac{-(n+1)}{n}c_{n}\right)\nonumber 
+\end{align}
 
 \end_inset
 
-
+容易看出
 \begin_inset Formula 
 \[
 a_{0}=b_{0}=c_{0}=0
@@ -14923,7 +14923,7 @@ a_{0}=b_{0}=c_{0}=0
 
 \end_inset
 
-边界2–3
+边界条件2–3：
 \begin_inset Formula 
 \begin{align*}
 n=0:\quad & d_{0}+\frac{e_{0}}{R_{2}}=0,\quad\epsilon_{3}\frac{-e_{0}}{R_{2}^{2}}=0\\
@@ -14934,33 +14934,267 @@ n=1:\quad & ,b_{1}R_{2}+\frac{c_{1}}{R_{2}^{2}}=-E_{0}R_{2}+\frac{e_{1}}{R_{2}^{
 
 
 \begin_inset Formula 
-\begin{align*}
-n\ge2:\quad & b_{n}R_{2}^{2n+1}+c_{n}=e_{n}\\
-n\ge2:\quad & b_{n}R_{2}^{2n+1}+\frac{-\left(n+1\right)}{n}c_{n}=\frac{\epsilon_{3}}{\epsilon_{2}}\frac{-\left(n+1\right)}{n}e_{n}
-\end{align*}
+\begin{align}
+n\ge2:\quad & b_{n}R_{2}^{2n+1}+c_{n}=e_{n}\label{eq:my2}\\
+n\ge2:\quad & b_{n}R_{2}^{2n+1}+\frac{-\left(n+1\right)}{n}c_{n}=\frac{\epsilon_{3}}{\epsilon_{2}}\frac{-\left(n+1\right)}{n}e_{n}\nonumber 
+\end{align}
 
 \end_inset
 
+容易看出
+\begin_inset Formula 
+\[
+d_{0}=e_{0}=0
+\]
 
-\end_layout
+\end_inset
 
-\begin_layout Standard
-equ
+联立
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出，当 
+\begin_inset Formula $n\ge2$
+\end_inset
+
+时：
 \begin_inset Note Note
 status collapsed
 
 \begin_layout Plain Layout
-equ = { an*R1^(2 n + 1) == bn*R1^(2 n + 1) + cn, an*R1^( 2 n + 1) == 
+equ = { an*R1^(2 n + 1) == bn*R1^(2 n + 1) + cn, an*R1^(2 n + 1) == 
 \backslash
 [CurlyEpsilon]2/
 \backslash
-[CurlyEpsilon]1 (bn*R1^( 2 n + 1) + (-n - 1)/n cn), bn*R2^(2 n + 1) + cn
+[CurlyEpsilon]1 (bn* R1^(2 n + 1) + (-n - 1)/n cn), bn*R2^(2 n + 1) + cn
  == en, bn*R2^(2 n + 1) + (-n - 1)/ n cn == 
 \backslash
 [CurlyEpsilon]3/
 \backslash
 [CurlyEpsilon]2 ((-n - 1)/n en) }; Solve[equ, {an, bn, cn, en}]
 \end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a_{n}=0,\quad b_{n}=0,\quad c_{n}=0,\quad e_{n}=0,\quad n\ge2
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $n=1$
+\end_inset
+
+时：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+equ = { a1*R1^3 == b1*R1^3 + c1, a1*R1^3 == 
+\backslash
+[Epsilon]2/
+\backslash
+[Epsilon]1 (b1*R1^3 + (-2) c1), b1*R2 + c1/R2^2 == -Subscript[
+\backslash
+[CapitalEpsilon], 0] R2 + e1/R2^2, b1 + (-2 c1)/ R2^3 == 
+\backslash
+[Epsilon]3/
+\backslash
+[Epsilon]2 (-Subscript[
+\backslash
+[CapitalEpsilon], 0] + (-2 e1)/R2^3) }; ans = First@Solve[equ, {a1, b1,
+ c1, e1}] // Simplify; rule = {R2 -> Subscript[R, 2], R1 -> Subscript[R,
+ 1], 
+\backslash
+[Epsilon]2 -> Subscript[
+\backslash
+[Epsilon], 2], 
+\backslash
+[Epsilon]1 -> Subscript[
+\backslash
+[Epsilon], 1], 
+\backslash
+[Epsilon]3 -> Subscript[
+\backslash
+[Epsilon], 3]}; ans /.
+ rule
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & a_{1}=-\frac{9R_{2}^{3}\epsilon_{2}\epsilon_{3}}{2R_{1}^{3}\left(\epsilon_{1}-\epsilon_{2}\right)\left(\epsilon_{2}-\epsilon_{3}\right)+R_{2}^{3}\left(\epsilon_{1}+2\epsilon_{2}\right)\left(\epsilon_{2}+2\epsilon_{3}\right)}E_{0},\\
+ & b_{1}=-\frac{3R_{2}^{3}\left(\epsilon_{1}+2\epsilon_{2}\right)\epsilon_{3}}{2R_{1}^{3}\left(\epsilon_{1}-\epsilon_{2}\right)\left(\epsilon_{2}-\epsilon_{3}\right)+R_{2}^{3}\left(\epsilon_{1}+2\epsilon_{2}\right)\left(\epsilon_{2}+2\epsilon_{3}\right)}E_{0},\\
+ & c_{1}=\frac{3R_{1}^{3}R_{2}^{3}\left(\epsilon_{1}-\epsilon_{2}\right)\epsilon_{3}}{2R_{1}^{3}\left(\epsilon_{1}-\epsilon_{2}\right)\left(\epsilon_{2}-\epsilon_{3}\right)+R_{2}^{3}\left(\epsilon_{1}+2\epsilon_{2}\right)\left(\epsilon_{2}+2\epsilon_{3}\right)}E_{0},\\
+ & e_{1}=\frac{R_{2}^{3}\left(R_{1}^{3}\left(\epsilon_{1}-\epsilon_{2}\right)\left(2\epsilon_{2}+\epsilon_{3}\right)+R_{2}^{3}\left(\epsilon_{1}+2\epsilon_{2}\right)\left(\epsilon_{2}-\epsilon_{3}\right)\right)}{2R_{1}^{3}\left(\epsilon_{1}-\epsilon_{2}\right)\left(\epsilon_{2}-\epsilon_{3}\right)+R_{2}^{3}\left(\epsilon_{1}+2\epsilon_{2}\right)\left(\epsilon_{2}+2\epsilon_{3}\right)}E_{0}
+\end{align*}
+
+\end_inset
+
+如果令 
+\begin_inset Formula $\epsilon_{1}=\epsilon_{3}$
+\end_inset
+
+，即球壳内外具有相同的
+\begin_inset Formula $\epsilon$
+\end_inset
+
+，则化简为：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(ans2 = Simplify[ans /.
+ {
+\backslash
+[Epsilon]3 -> 
+\backslash
+[Epsilon]1}]) /.
+ rule; (ans3 = Simplify[ ans2 /.
+ {
+\backslash
+[Epsilon]2 -> (S + 
+\backslash
+[CapitalDelta]), 
+\backslash
+[Epsilon]1 -> (S 
+\backslash
+ - 
+\backslash
+[CapitalDelta])}]) /.
+ rule
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & a_{1}=-\frac{9E_{0}R_{2}^{3}(S-\Delta)(\Delta+S)}{R_{2}^{3}\left(9S^{2}-\Delta^{2}\right)-8\Delta^{2}R_{1}^{3}},\\
+ & b_{1}=-\frac{3E_{0}R_{2}^{3}(S-\Delta)(\Delta+3S)}{R_{2}^{3}\left(9S^{2}-\Delta^{2}\right)-8\Delta^{2}R_{1}^{3}},\\
+ & c_{1}=\frac{6\Delta E_{0}R_{1}^{3}R_{2}^{3}(S-\Delta)}{8\Delta^{2}R_{1}^{3}+R_{2}^{3}\left(\Delta^{2}-9S^{2}\right)},\\
+ & e_{1}=-\frac{2\Delta E_{0}R_{2}^{3}\left(R_{2}^{3}-R_{1}^{3}\right)(\Delta+3S)}{8\Delta^{2}R_{1}^{3}+R_{2}^{3}\left(\Delta^{2}-9S^{2}\right)},
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $S=(\epsilon_{1}+\epsilon_{2})/2$
+\end_inset
+
+， 
+\begin_inset Formula $\Delta=(\epsilon_{2}-\epsilon_{1})/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如果进一步取 
+\begin_inset Formula $\delta=\epsilon_{1}/\epsilon_{2}\rightarrow0$
+\end_inset
+
+ 的极限：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify[Normal@ Series[Values@ ans2 /.
+ {
+\backslash
+[Epsilon]1 -> 
+\backslash
+[Delta]*
+\backslash
+[Epsilon]2}, {
+\backslash
+[Delta], 0, 1}] /.
+ rule]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+a_{1} & =\frac{9\delta E_{0}R_{2}^{3}}{2R_{1}^{3}-2R_{2}^{3}},\\
+b_{1} & =\frac{3\delta E_{0}R_{2}^{3}}{R_{1}^{3}-R_{2}^{3}},\quad c_{1}=\frac{3\delta E_{0}R_{1}^{3}R_{2}^{3}}{2\left(R_{1}^{3}-R_{2}^{3}\right)},\\
+e_{1} & =\frac{1}{2}E_{0}R_{2}^{3}\left(\frac{3\delta\left(R_{1}^{3}+2R_{2}^{3}\right)}{R_{1}^{3}-R_{2}^{3}}+2\right)
+\end{align*}
+
+\end_inset
+
+代入电势的表达式得到：
+\begin_inset Formula 
+\begin{align*}
+ & \varphi_{1}\left(r\right)=a_{1}r\cos\theta\\
+ & \varphi_{2}\left(r\right)=\left(b_{1}r+c_{1}\frac{1}{r^{2}}\right)\cos\theta\\
+ & \varphi_{3}\left(r\right)=\left(-E_{0}r+e_{1}\frac{1}{r^{2}}\right)\cos\theta
+\end{align*}
+
+\end_inset
+
+如果令
+\begin_inset Formula $R_{2}=\left(1+t\right)R_{1}$
+\end_inset
+
+，展开到
+\begin_inset Formula $\left(\delta^{1},t^{1}\right)$
+\end_inset
+
+和
+\begin_inset Formula $\left(\delta^{1},t^{0}\right)$
+\end_inset
+
+阶的结果分别是
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify[Normal@ Series[Values@ans2 /.
+ {
+\backslash
+[Epsilon]1 -> 
+\backslash
+[Delta]*
+\backslash
+[Epsilon]2, R2 -> R1 (1 + t)} , {
+\backslash
+[Delta], 0, 1}, {t, 0, 0} ] /.
+ rule]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+a_{1} & =-\frac{\delta E_{0}\left(2t^{2}+6t+3\right)}{2t}\approx-\frac{3\delta E_{0}(2t+1)}{2t},\\
+b_{1} & =-\frac{\delta E_{0}\left(2t^{2}+6t+3\right)}{3t}\approx-\frac{\delta E_{0}(2t+1)}{t}\\
+c_{1} & =-\frac{\delta E_{0}R_{1}^{3}\left(2t^{2}+6t+3\right)}{6t}\approx-\frac{\delta E_{0}R_{1}^{3}(2t+1)}{2t},\\
+e_{1} & =\frac{E_{0}R_{1}^{3}\left(-3\delta+(6-20\delta)t^{2}+(2-12\delta)t\right)}{2t}\approx-\frac{E_{0}R_{1}^{3}(3\delta+2(6\delta-1)t)}{2t}
+\end{align*}
 
 \end_inset
 
