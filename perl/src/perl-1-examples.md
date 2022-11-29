@@ -58,60 +58,7 @@ foreach my $dir (@dir_paths) {
 
 ## 提取结构化数据
 
-```perl
-#! /usr/bin/perl -w
-use v5.32;
-use File::Find;
-use File::Spec;
-use File::Basename;
-use Term::ANSIColor;
-use autodie;
-
-open my $mesh_fh, '<', 'mesh.dat';
-
-my @tagList  = ();
-my @tagStart = ();
-my @parse    = ();
-my %parse    = ();
-my $term;
-my $termOrd = 0;
-
-say "let's find out the data!\n";
-while (<$mesh_fh>) {
-    given ($_) {
-        when (/(\w+) +\{/) {
-            $term = $1 . ".$termOrd";
-            ++$termOrd;
-            say "find: `$term' @ $.";
-            push @tagList,  $term;
-            push @tagStart, $.;
-        }
-        when (/\}/) {
-            say "find: `}'  that end `$term' @ $.";
-            push @parse, ( pop @tagList, [ pop @tagStart, $. ] )
-        }
-    }
-}
-close $mesh_fh;
-%parse = @parse;
-
-# foreach迭代遍历key, 打开 输出Handle
-foreach my $k ( sort keys %parse ) {
-    open my $data_fh, '>', "$k.txt";
-
-    # 从 mesh.dat 中提取数据
-    open my $mesh_fh, '<', 'mesh.dat';
-    while (<$mesh_fh>) {
-        if ( $. > $parse{$k}->[0] && $. < $parse{$k}->[1] ) {
-            $_ =~ s#[\[\],]#  #g;
-            $_ =~ s#^\s+##g;
-            print {$data_fh} $_;
-        }
-    }
-    close $mesh_fh;
-    close $data_fh;
-}
-```
+[提取mesh.data中的结构化数据](my-extract.pl)
 
 ## 重命名文件
 
