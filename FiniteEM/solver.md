@@ -292,3 +292,12 @@ calc()
 + `--ensight`; `-e`; 会输出 ensight 格式结果, 平时建议加上.
 + `--license-server-ip`; license服务器IP
 + `--license-server-port`; license服务器端口
+
+## 求解器报错
+
+### 分解过程错误
+
+    [Warning] 分解过程错误：-9，
+    
+网格匹配要和周期边界主从一致
+网格的 `网格匹配` 的 `主从顺序`, 要和 `周期边界` 那边的设置一致
