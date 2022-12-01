@@ -3026,7 +3026,7 @@ Natural Boundary Conditions: ;
 \end_layout
 
 \begin_layout Section
-Strong Form Galerkin
+强形式Galerkin
 \end_layout
 
 \begin_layout Standard
@@ -3404,7 +3404,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Weak Form Galerkin
+弱形式Galerkin
 \end_layout
 
 \begin_layout Standard
@@ -8071,7 +8071,11 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \begin_inset Formula $\left(\alpha\nabla\phi\right)\cdot\sbf n=0$
 \end_inset
 
-（电位移线平行），可以直接去掉 
+（电位移 
+\begin_inset Formula $\sbf D$
+\end_inset
+
+ 平行于边界），可以直接去掉 
 \begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
 \end_inset
 
@@ -14719,14 +14723,6 @@ noprefix "false"
  指向界面两侧。
 \end_layout
 
-\begin_layout Subsection
-静电屏蔽例子
-\end_layout
-
-\begin_layout Standard
-三层的
-\end_layout
-
 \begin_layout Section
 Ritz方法
 \end_layout
@@ -14739,7 +14735,19 @@ Ritz方法
 
 \end_inset
 
-泛函
+设求解区域为 
+\begin_inset Formula $\Omega$
+\end_inset
+
+，区域边界
+\begin_inset Formula $\Gamma=\partial\Omega$
+\end_inset
+
+，边界的边界
+\begin_inset Formula $C=\partial\Gamma$
+\end_inset
+
+。泊松方程对应的泛函修改为：
 \begin_inset Formula 
 \begin{align*}
 \mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[\nabla\phi^{e}\cdot\epsilon\nabla\phi^{e}+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\\
@@ -14788,7 +14796,8 @@ Ritz方法
 Galerkin方法
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
+边界条件为
 \begin_inset Formula 
 \[
 \nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D=0
@@ -14796,14 +14805,38 @@ Galerkin方法
 
 \end_inset
 
-对比标准方程 
+
+\end_layout
+
+\begin_layout Enumerate
+求解区域为 
+\begin_inset Formula $\Omega$
+\end_inset
+
+，区域边界
+\begin_inset Formula $\Gamma=\partial\Omega$
+\end_inset
+
+，边界的边界
+\begin_inset Formula $C=\partial\Gamma$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+仿照Galerkin方法通常情况的微分方程 
 \begin_inset Formula $\nabla\cdot\left(\sbf D\right)-\rho=0$
 \end_inset
 
-，
+，给出介电屏蔽条件对应的残差；在求解区域的边界
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上，加上残差项：
 \begin_inset Formula 
 \[
-R^{e}\left[N_{i}^{e}\right]=\int_{\Omega^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left(\alpha\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D\right]\dd{\Omega}
+R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D\right]\dd{\Gamma}
 \]
 
 \end_inset
@@ -14811,19 +14844,23 @@ R^{e}\left[N_{i}^{e}\right]=\int_{\Omega^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left
 
 \end_layout
 
-\begin_layout Standard
-对于三维问题，介质界面是二维 
-\begin_inset Formula $\Omega^{e}\to\Gamma^{e}$
+\begin_layout Enumerate
+例如对于三维问题，不同介质交界面是二维 
+\begin_inset Formula $\Gamma^{e}$
 \end_inset
 
-，
-\begin_inset Formula $\Gamma^{e}\to L^{e}$
+，边界的边界是曲线
+\begin_inset Formula $C^{e}$
 \end_inset
 
-，做分部积分，再使用散度定理：
+；类似地，先用分部积分转移
+\begin_inset Formula $\nabla$
+\end_inset
+
+，再使用二维情况下的散度定理，最终得到：
 \begin_inset Formula 
 \[
-\int_{\Gamma^{e}}{\color{blue}\left(\nabla_{t}N_{i}^{e}\right)\cdot\alpha\,\sbf D_{t}}\dd{\Gamma}=\int_{L^{e}}{\color{brown}N_{i}^{e}\alpha\,\sbf D_{t}\cdot\sbf\tau_{n}}\dd{\ell}+\int_{\Gamma^{e}}N_{i}^{e}\sbf e_{n}\cdot\sbf D\dd{\Gamma}
+\int_{\Gamma^{e}}{\color{blue}\left(\nabla_{t}N_{i}^{e}\right)\cdot d\,\sbf D_{t}}\dd{\Gamma}=\int_{C^{e}}{\color{brown}N_{i}^{e}d\,\sbf D_{t}\cdot\sbf s_{n}}\dd{C}+\int_{\Gamma^{e}}N_{i}^{e}\sbf\,e_{n}\cdot\sbf D\dd{\Gamma}
 \]
 
 \end_inset
@@ -14832,11 +14869,19 @@ R^{e}\left[N_{i}^{e}\right]=\int_{\Omega^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left
 \begin_inset Formula $\sbf e_{n}$
 \end_inset
 
-是二维单元的法向单位矢量，
-\begin_inset Formula $\sbf\tau_{n}$
+是 
+\begin_inset Formula $\Gamma^{e}$
 \end_inset
 
- 是二维单元的环路的法向单位矢量。
+（二维单元）的法向单位矢量，
+\begin_inset Formula $\sbf s_{n}$
+\end_inset
+
+ 是
+\begin_inset Formula $C^{e}$
+\end_inset
+
+（一维单元）的法向单位矢量。
 \end_layout
 
 \begin_layout Section
