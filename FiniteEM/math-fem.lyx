@@ -377,7 +377,7 @@ p_{k}^{T}\nabla f_{k}=-\nabla f_{k}^{T}.B_{k}^{-1}.\nabla f_{k}<0
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -755,7 +755,7 @@ f(x_{k}+\alpha_{k}p_{k})\le f(x_{k})+c_{1}\alpha_{k}\nabla f_{k}^{T}p_{k}\label{
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -866,7 +866,7 @@ name "fig:w3.3"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -947,7 +947,7 @@ Typical values of
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1122,7 +1122,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1211,7 +1211,7 @@ noprefix "false"
 
 \begin_layout Example
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 算法3.1
@@ -2032,7 +2032,7 @@ literal "false"
 
 \begin_layout Definition
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 泛函数 (Functionals)
@@ -2101,7 +2101,7 @@ name "def:extreme"
 
 
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 泛函数的极值
@@ -2365,9 +2365,9 @@ status open
 
 ，并通过分部积分得到
 \begin_inset Formula 
-\[
-\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\delta y\dd{x}+\left.\frac{\partial F}{\partial y'}\delta y\right|_{x_{1}}^{x_{2}}
-\]
+\begin{equation}
+\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\delta y\dd{x}+\left.{\color{blue}\frac{\partial F}{\partial y'}\delta y}\right|_{x_{1}}^{x_{2}}\label{eq:EL-equ}
+\end{equation}
 
 \end_inset
 
@@ -2408,7 +2408,7 @@ status open
 \end_inset
 
  处 
-\begin_inset Formula $\frac{\partial F}{\partial y'}$
+\begin_inset Formula ${\color{blue}\frac{\partial F}{\partial y'}}$
 \end_inset
 
  等于零，那么我们称在 
@@ -2419,11 +2419,11 @@ status open
 \begin_inset Formula $x_{2}$
 \end_inset
 
- 处 满足 
+ 处 满足自然边界条件（
 \series bold
 Natural Boundary Condition
 \series default
-。
+）。
 \end_layout
 
 \begin_layout Enumerate
@@ -2436,7 +2436,7 @@ Natural Boundary Condition
 \end_inset
 
  处 
-\begin_inset Formula $\delta y$
+\begin_inset Formula ${\color{blue}\delta y}$
 \end_inset
 
  等于零，我们就称 在 
@@ -2466,11 +2466,8 @@ Essential Boundary condition
  在边界上是确定的值(specified)，那么我们称这个是 essential boundary condition。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+\begin_layout Subsection
+含有高阶导数
 \end_layout
 
 \begin_layout Standard
@@ -2513,7 +2510,7 @@ Essential Boundary condition
 然后再进行分部积分得到：
 \begin_inset Formula 
 \[
-\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}+\frac{\dd[2]}{\dd{x^{2}}}\frac{\partial F}{\partial y''}\delta\right)\delta y\dd{x}+\frac{\partial F}{\partial y''}\delta y'+\left.\left[\frac{\partial F}{\partial y'}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y''}\right]\delta y\right|_{x_{1}}^{x_{2}}=0
+\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}+\frac{\dd[2]}{\dd{x^{2}}}\frac{\partial F}{\partial y''}\delta\right)\delta y\dd{x}+\left.\frac{\partial F}{\partial y''}\delta y'+\left[\frac{\partial F}{\partial y'}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y''}\right]\delta y\right|_{x_{1}}^{x_{2}}=0
 \]
 
 \end_inset
@@ -4045,6 +4042,1110 @@ H(y,v)=\int_{0}^{2}y''v''+10y'v'+4yv+v\dd{x}-10v(0)=0.
 \end_layout
 
 \begin_layout Chapter
+再议变分
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "变分法中的欧拉方程的细致讲解&详细推导"
+target "https://www.cnblogs.com/jiangongyuxiao/p/15088070.html"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+变分学基本引理
+\end_layout
+
+\begin_layout Standard
+因为整个变分中都会大量用到这个引理，所以书中将其提出来单独作为一个引理。
+\end_layout
+
+\begin_layout Standard
+当然，这个引理也是相当直观的，直观上，如果一个函数 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 和任一高阶可微的函数 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+ 正交，那么这个函数理应满足 
+\begin_inset Formula $f(x)\equiv0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Lemma
+如果 
+\begin_inset Formula $f(x)$
+\end_inset
+
+在 
+\begin_inset Formula $[x_{1},x_{2}]$
+\end_inset
+
+ 上连续，
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+ 是在 
+\begin_inset Formula $[x_{1},x_{2}]$
+\end_inset
+
+上 
+\begin_inset Formula $N$
+\end_inset
+
+ 次可微的任意函数（ 
+\begin_inset Formula $N$
+\end_inset
+
+ 可为任意自然数）。如果对于任意的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，都恒有
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{1}}^{x_{2}}f(x)\eta(x)\dd{x}=0\label{eq:j1.1}
+\end{equation}
+
+\end_inset
+
+则必有
+\begin_inset Formula 
+\[
+f(x)\equiv0,\quad\forall x\in[x_{1},x_{2}]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+单方程,单变量,欧拉方程
+\end_layout
+
+\begin_layout Subsection
+单方程,单变量,一阶导
+\end_layout
+
+\begin_layout Theorem
+设泛函
+\begin_inset Formula 
+\begin{equation}
+I\left[y(\cdot)\right]=\int_{x_{1}}^{x_{2}}F(x,y,y')\dd{x}\label{eq:j2.1}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $F$
+\end_inset
+
+是有着三个独立变量的已知函数，且具有二阶连续偏导数，其可取函数集为
+\begin_inset Formula 
+\begin{equation}
+\mathbb{Y}_{1,1,1}=\left\{ y(x)\left|\begin{array}{c}
+y(x)\in C_{[x_{1},x_{2}]}^{(2)}\\
+y(x_{1})=y_{1},\;y(x_{2})=y_{2}
+\end{array}\right.\right\} \label{eq:j2.2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $Y(x)\in\mathbb{Y}_{1,1,1}$
+\end_inset
+
+使泛函
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+取得极小值的必要条件是：
+\begin_inset Formula $Y(x)$
+\end_inset
+
+是下列微分方程的解
+\begin_inset Formula 
+\begin{equation}
+F_{y}-\frac{\dd}{\dd{x}}F_{y'}=0\label{eq:j2.3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $F_{y}=\partial F/\partial y=F_{2}^{\prime}$
+\end_inset
+
+，
+\begin_inset Formula $F_{y}^{\prime}=\partial F/\partial y'=F_{3}^{\prime}$
+\end_inset
+
+（下标的数字表示变量的槽位）。
+\end_layout
+
+\begin_layout Remark
+\begin_inset Formula $\mathbb{Y}_{1,1,1}$
+\end_inset
+
+的含义是单方程，单变量，一阶导数。
+\begin_inset Formula $C_{[x_{1},x_{2}]}^{(2)}$
+\end_inset
+
+ 表示
+\begin_inset Formula $2$
+\end_inset
+
+阶连续。
+\begin_inset Formula $y(x_{1})=y_{1}$
+\end_inset
+
+，
+\begin_inset Formula $y(x_{2})=y_{2}$
+\end_inset
+
+ 是边界条件。
+\end_layout
+
+\begin_layout Proof
+对于我们期望的极值函数
+\begin_inset Formula $Y(x)$
+\end_inset
+
+，它应当满足这样的性质——我们将其叠加上一个任意的函数
+\begin_inset Formula $\alpha\cdot\eta(x)$
+\end_inset
+
+，只要能使得 
+\begin_inset Formula $y(x)=Y(x)+\alpha\cdot\eta(x)$
+\end_inset
+
+满足边界条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，就有 
+\begin_inset Formula $\left.\left[\frac{\dd{I(Y+\alpha\eta)}}{\dd{\alpha}}\right]\right|_{\alpha=0}=0$
+\end_inset
+
+。 其中 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 是一个充分小的实数，我们期望它的行为类似于 
+\begin_inset Formula $\dd{x}$
+\end_inset
+
+，
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+ 是满足下列条件的任意函数
+\begin_inset Formula 
+\begin{equation}
+\mathbb{Y}_{1,1,1}^{(0)}=\left\{ \eta(x)\left|\begin{array}{c}
+\eta(x)\in C_{[x_{1},x_{2}]}^{(2)}\\
+\eta(x_{1})=0,\;\eta(x_{2})=0_{2}
+\end{array}\right.\right\} \label{eq:j2.4}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status collapsed
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 理论上可以是任意实数，但实际上我们只会用到 
+\begin_inset Formula $\left.\left[\frac{\dd{I[y(\cdot)]}}{\dd{\alpha}}\right]\right|_{\alpha=0}$
+\end_inset
+
+，所以我们可以把 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 当作类似于 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 的工具人。 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\eta$
+\end_inset
+
+ 满足的 
+\begin_inset Formula $\mathbb{Y}_{1,1,1}^{(0)}$
+\end_inset
+
+ 和 
+\begin_inset Formula $y$
+\end_inset
+
+ 满足的 
+\begin_inset Formula $\mathbb{Y}_{1,1,1}$
+\end_inset
+
+唯一区别就在于边界条件为零，这是为了确保 
+\begin_inset Formula $Y,y\in\mathbb{Y}_{1,1,1}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+证明过程中，需要用到分部积分，即
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{\dd{I(Y+\alpha\eta)}}{\dd{\alpha}}\right|_{\alpha=0} & =\int_{x_{1}}^{x_{2}}\eta\left(\frac{\partial F}{\partial y}+\eta'\frac{\partial F}{\partial y'}\right)\dd{x}\\
+ & ={\color{blue}\left.\left(\eta\frac{\partial F}{\partial y'}\right)\right|_{x_{1}}^{x_{2}}}+\int_{x_{1}}^{x_{2}}\eta\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\dd{x}
+\end{align*}
+
+\end_inset
+
+有限元中公式中，这个边界项不一定能丢掉（若不满足 
+\begin_inset Formula $\delta y=0$
+\end_inset
+
+ 或 
+\begin_inset Formula $\frac{\partial F}{\partial y'}=0$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Subsection
+单方程,单变量,高阶导
+\end_layout
+
+\begin_layout Standard
+实际上， 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 很容易向高次情形推广。如果约定 
+\begin_inset Formula $\dd[0]{y}/\dd{x}^{0}=y$
+\end_inset
+
+ ， 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可以改写为
+\begin_inset Formula 
+\begin{equation}
+\sum_{k=0}^{n}(-1)^{k}\left(\frac{\dd[k]}{\dd{x}^{k}}\frac{\partial F}{\partial y^{(k)}}\right)=0.\label{eq:j2.10}
+\end{equation}
+
+\end_inset
+
+当泛函中最高含有
+\begin_inset Formula $n$
+\end_inset
+
+阶导数时。
+\end_layout
+
+\begin_layout Theorem
+设泛函
+\begin_inset Formula 
+\begin{equation}
+I\left[y(\cdot)\right]=\int_{x_{1}}^{x_{2}}F(x,y,y',y'',\cdots,y^{(n)})\dd{x}\label{eq:j2.11}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $F$
+\end_inset
+
+是以
+\begin_inset Formula $x,y$
+\end_inset
+
+以及
+\begin_inset Formula $y$
+\end_inset
+
+各阶导数做为独立变量的已知函数，且具有
+\begin_inset Formula $n$
+\end_inset
+
+阶连续偏导数，其可取函数集为
+\begin_inset Formula 
+\begin{equation}
+\mathbb{Y}_{1,1,n}=\left\{ y(x)\left|\begin{array}{c}
+y(x)\in C_{[x_{1},x_{2}]}^{(2n)}\\
+y^{(k)}(x_{1})=y_{1}^{(k)},\;y^{(k)}(x_{2})=y_{2}^{(k)},\;k=0,1,\cdots,r
+\end{array}\right.\right\} \label{eq:j2.12}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $Y(x)\in\mathbb{Y}_{1,1,n}$
+\end_inset
+
+使泛函
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+取得极小值的必要条件是：
+\begin_inset Formula $Y(x)$
+\end_inset
+
+是下列微分方程的解
+\begin_inset Formula 
+\begin{equation}
+F_{y}-\frac{\dd}{\dd{x}}F_{y'}+\frac{\dd[2]}{\dd{x}^{2}}F_{y''}+\cdots+(-1)^{n}\frac{\dd[n]}{\dd{x}^{n}}F_{y^{(n)}}=0\label{eq:j2.13}
+\end{equation}
+
+\end_inset
+
+或者采用求和的形式记录之，则为
+\begin_inset Formula 
+\[
+\sum_{k=0}^{n}(-1)^{k}\left(\frac{\dd[k]}{\dd{x}^{k}}\frac{\partial F}{\partial y^{(k)}}\right)=0.
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\frac{\partial F}{\partial y^{(k)}}=F_{y^{(k)}}$
+\end_inset
+
+，表示
+\begin_inset Formula $F$
+\end_inset
+
+的偏导数，对于
+\begin_inset Formula $y$
+\end_inset
+
+的
+\begin_inset Formula $n$
+\end_inset
+
+阶导数
+\begin_inset Formula $y^{(k)}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+定理的理解与证明。该证明的核心就在于将
+\begin_inset Formula $\eta(n)$
+\end_inset
+
+转化为
+\begin_inset Formula $\eta$
+\end_inset
+
+，然后用变分学基本引理进行证明。回忆一下： 
+\begin_inset Formula $1$
+\end_inset
+
+阶情形的证明方式是进行
+\begin_inset Formula $1$
+\end_inset
+
+次分部积分。因此，我们不难想象
+\begin_inset Formula $n$
+\end_inset
+
+阶的证明也是基于
+\begin_inset Formula $n$
+\end_inset
+
+次分部积分。我们不加证明（事实上，证明只需对函数进行 
+\begin_inset Formula $n$
+\end_inset
+
+ 次分部积分即可，十分显明）地引入 
+\begin_inset Formula $n$
+\end_inset
+
+ 次分部积分的
+\series bold
+引理
+\series default
+——
+\begin_inset Newline newline
+\end_inset
+
+若
+\begin_inset Formula $\eta^{(k)}(x_{1})=0$
+\end_inset
+
+，
+\begin_inset Formula $\eta^{(k)}(x_{2})=0$
+\end_inset
+
+ ，
+\begin_inset Formula $\forall k=0,1,\cdots,n-1$
+\end_inset
+
+，则
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{1}}^{x_{2}}\eta^{(n)}\frac{\partial F}{\partial y^{(n)}}\dd{x}=(-1)^{n}\int_{x_{1}}^{x_{2}}\eta\left(\frac{\dd[n]}{\dd{x}^{n}}\frac{\partial F}{\partial y^{(n)}}\right)\dd{x}\label{eq:j2.15}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+后续的证明仿照 2.9 其实就水到渠成了。
+\begin_inset Formula 
+\[
+\left.\frac{\dd{I(Y+\alpha\eta)}}{\dd{\alpha}}\right|_{\alpha=0}=\int_{x_{1}}^{x_{2}}\left(\eta\frac{\partial F}{\partial y}+\eta'\frac{\partial F}{\partial y'}+\cdots+\eta^{(n)}\frac{\partial F}{\partial y^{(n)}}\right)\dd{x}
+\]
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+如果不丢掉边界项：
+\begin_inset Formula 
+\begin{align*}
+\int_{x_{1}}^{x_{2}}\eta^{(k)}\,f\dd{x} & ={\color{blue}\left.(-1)^{0}\left(\eta^{(k-1)}f\right)\right|_{x_{1}}^{x_{2}}}+(-1)^{1}\int_{x_{1}}^{x_{2}}\eta^{(k-1)}\frac{\dd}{\dd{x}}f\dd{x}\\
+ & ={\color{blue}\cdots+(-1)^{1}\left.\left(\eta^{(k-2)}\frac{\dd}{\dd{x}}f\right)\right|_{x_{1}}^{x_{2}}}+(-1)^{2}\int_{x_{1}}^{x_{2}}\eta^{(k-2)}\frac{\dd[2]}{\dd{x}^{2}}f\dd{x}\\
+ & ={\color{blue}\cdots\cdots}
+\end{align*}
+
+\end_inset
+
+前面的推导中只不过是令
+\begin_inset Formula $f=\partial F/\partial y^{(k)}$
+\end_inset
+
+。容易总结出含有边界项的一般形式：
+\begin_inset Formula 
+\[
+\int_{x_{1}}^{x_{2}}\eta^{(k)}f\dd{x}={\color{blue}\sum_{\ell=0}^{k-1}\left.(-1)^{\ell}\left(\eta^{(k-1-\ell)}\frac{\dd[\ell]}{\dd{x}^{\ell}}f\right)\right|_{x_{1}}^{x_{2}}}+(-1)^{k}\int_{x_{1}}^{x_{2}}\eta\left(\frac{\dd[k]}{\dd{x}^{k}}f\right)\dd{x}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\frac{\dd[0]}{\dd{x}^{0}}f=f$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+应用到上面的
+\begin_inset Formula $F(x,y,y',y'',\cdots,y^{(n)})$
+\end_inset
+
+，如果不丢掉边界项，
+\begin_inset Formula $\delta F=0$
+\end_inset
+
+给出的方程应该是
+\begin_inset Formula 
+\begin{align*}
+\delta F(y,\cdots) & =F_{y}\\
+ & +{\color{blue}\left.\eta^{(0)}\,F_{y'}\right|_{x_{1}}^{x_{2}}}-\dd{F_{y'}}\\
+ & +{\color{blue}\left.\eta^{(1)}\,F_{y^{(2)}}\right|_{x_{1}}^{x_{2}}-\left.\eta^{(0)}\,\dd{F_{y^{(2)}}}\right|_{x_{1}}^{x_{2}}}+\dd[2]{F_{y^{(2)}}}\\
+ & +{\color{blue}\left.\eta^{(2)}\,F_{y^{(3)}}\right|_{x_{1}}^{x_{2}}-\left.\eta^{(1)}\,\dd{F_{y^{(3)}}}\right|_{x_{1}}^{x_{2}}+\left.\eta^{(0)}\,\dd[2]{F_{y^{(3)}}}\right|_{x_{1}}^{x_{2}}}-\dd[3]{F_{y^{(3)}}}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $F_{y'}=\partial F/\partial y'$
+\end_inset
+
+，
+\begin_inset Formula $\dd{F_{y'}}$
+\end_inset
+
+是
+\begin_inset Formula $\frac{\dd{F_{y'}}}{\dd{x}}$
+\end_inset
+
+的简写，其他类似。
+\end_layout
+
+\begin_layout Section
+多方程单变量欧拉方程
+\end_layout
+
+\begin_layout Standard
+在实际问题中，我们可能遇到多个独立变元一起出现的约束极值问题，例如给出两个变元
+\begin_inset Formula $y_{1}(x)$
+\end_inset
+
+和
+\begin_inset Formula $y_{2}(x)$
+\end_inset
+
+，并令 
+\begin_inset Formula $F=y_{1}^{\prime2}+y_{2}^{\prime2}+2y_{1}y_{2}$
+\end_inset
+
+，求泛函 
+\begin_inset Formula $I[y_{1}(\cdot),y_{2}(\cdot)]=\int_{x_{1}}^{x_{2}}F(x,y_{1},y_{2};y_{1}^{\prime},y_{2}^{\prime})\dd{x}$
+\end_inset
+
+ 的极值。
+\end_layout
+
+\begin_layout Subsection
+两方程单变量一阶导
+\end_layout
+
+\begin_layout Standard
+先考虑两方程情形，令 
+\begin_inset Formula $y=Y_{k}+\alpha\eta_{k}$
+\end_inset
+
+，
+\begin_inset Formula $k=1,2$
+\end_inset
+
+，并令
+\begin_inset Formula 
+\begin{align*}
+\Phi(\alpha) & =I[y_{1}(\cdot),y_{2}(\cdot)]\\
+ & =\int_{x_{1}}^{x_{2}}F(x,Y_{1}+\alpha\eta_{1},y_{2}+\alpha\eta_{2};Y_{1}^{\prime}+\alpha\eta_{1}^{\prime},Y_{2}^{\prime}+\alpha\eta_{2}^{\prime})\dd{x}
+\end{align*}
+
+\end_inset
+
+则函数组
+\begin_inset Formula $Y_{k}$
+\end_inset
+
+使得泛函取得极值的必要条件为
+\begin_inset Formula $\Phi'(0)=0$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\int_{x_{1}}^{x_{2}}\left(\eta_{1}\frac{\partial F}{\partial y_{1}}+\eta_{1}^{\prime}\frac{\partial F}{\partial y_{1}^{\prime}}\right)\dd{x}+\int_{x_{1}}^{x_{2}}\left(\eta_{2}\frac{\partial F}{\partial y_{2}}+\eta_{2}^{\prime}\frac{\partial F}{\partial y_{2}^{\prime}}\right)\dd{x}=0.
+\]
+
+\end_inset
+
+应用分部积分引理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到
+\begin_inset Formula 
+\[
+\int_{x_{1}}^{x_{2}}\eta_{1}\left(\frac{\partial F}{\partial y_{1}}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y_{1}^{\prime}}\right)\dd{x}+\int_{x_{1}}^{x_{2}}\eta_{2}\left(\frac{\partial F}{\partial y_{2}}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y_{2}^{\prime}}\right)\dd{x}=0.
+\]
+
+\end_inset
+
+根据变分学基本引理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，以及
+\begin_inset Formula $\eta_{1}$
+\end_inset
+
+，
+\begin_inset Formula $\eta_{2}$
+\end_inset
+
+的任意性，自然得到：
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\frac{\partial F}{\partial y_{1}}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y_{1}^{\prime}}=0\\
+\frac{\partial F}{\partial y_{2}}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y_{2}^{\prime}}=0
+\end{cases}\label{eq:j3.4}
+\end{equation}
+
+\end_inset
+
+也就是说，对于两方程情形，对应泛函取到极值的必要条件为上式。
+\end_layout
+
+\begin_layout Subsection
+多方程单变量高阶导
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\sum_{n=0}^{N_{1}}(-1)^{n}\frac{\dd[n]}{\dd{x}^{n}}\frac{\partial F}{\partial y_{1}^{(n)}}=0\\
+\sum_{n=0}^{N_{2}}(-1)^{n}\frac{\dd[n]}{\dd{x}^{n}}\frac{\partial F}{\partial y_{2}^{(n)}}=0\\
+\vdots\\
+\sum_{n=0}^{N_{M}}(-1)^{n}\frac{\dd[n]}{\dd{x}^{n}}\frac{\partial F}{\partial y_{M}^{(n)}}=0
+\end{cases}\label{eq:3.8}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+多方程多变量的欧拉方程
+\end_layout
+
+\begin_layout Standard
+通常来说，因为我们现实世界是三维的，所以我们会遇到多变量的函数。例如电场强度函数可能就是一个三维 
+\begin_inset Formula $(x,y,z)$
+\end_inset
+
+函数，也就是三变量的函数。对于它的极值问题，我们依然可以类似地方法进行求解。
+\end_layout
+
+\begin_layout Subsection
+分部积分向高维的推广
+\end_layout
+
+\begin_layout Standard
+我们将
+\begin_inset Formula $\eta'$
+\end_inset
+
+转换为
+\begin_inset Formula $\eta$
+\end_inset
+
+中用到了一个重要的公式——分部积分公式。而分部积分公式基于
+\begin_inset Quotes erd
+\end_inset
+
+牛顿莱布尼茨公式
+\begin_inset Quotes erd
+\end_inset
+
+。
+\series bold
+而接下来我们要处理的函数，将是多变量的函数，此时我们就需要一个
+\begin_inset Quotes erd
+\end_inset
+
+高维的牛顿莱布尼茨公式
+\begin_inset Quotes erd
+\end_inset
+
+
+\series default
+。幸运的是，我们高数学的
+\begin_inset Quotes erd
+\end_inset
+
+格林公式
+\begin_inset Quotes erd
+\end_inset
+
+和 
+\begin_inset Quotes erd
+\end_inset
+
+高斯公式
+\begin_inset Quotes erd
+\end_inset
+
+正是
+\begin_inset Quotes erd
+\end_inset
+
+牛顿莱布尼茨公式
+\begin_inset Quotes erd
+\end_inset
+
+向高维的推广，它们的推广被称为
+\begin_inset Quotes erd
+\end_inset
+
+广义斯托克斯公式
+\begin_inset Quotes erd
+\end_inset
+
+。如果有对“广义斯托克斯公式”感兴趣的同学，可以看文章
+\begin_inset CommandInset href
+LatexCommand href
+name "广义斯托克斯公式-MamiyaHasaki的博客"
+target "https://blog.csdn.net/MamiyaHasaki/article/details/119297305"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+二维：假设函数
+\begin_inset Formula $\eta(x,y)$
+\end_inset
+
+定义在区域 
+\begin_inset Formula $D$
+\end_inset
+
+上，区域 
+\begin_inset Formula $D$
+\end_inset
+
+的边界 
+\begin_inset Formula $\partial D=L$
+\end_inset
+
+，并满足边界条件：
+\begin_inset Formula $\left.\eta\right|_{L}=0$
+\end_inset
+
+。高数讲的格林公式是：
+\begin_inset Formula 
+\begin{equation}
+\int_{D}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dd{x}\dd{y}=\oint_{L}P\dd{x}+Q\dd{y}\label{eq:j4.1}
+\end{equation}
+
+\end_inset
+
+将
+\begin_inset Formula $Q=\eta\cdot f$
+\end_inset
+
+，
+\begin_inset Formula $P=0$
+\end_inset
+
+代入，考虑到
+\begin_inset Formula ${\color{blue}\left.\eta\right|_{L}=0}$
+\end_inset
+
+，得
+\begin_inset Formula 
+\begin{align}
+ & \int_{D}\frac{\partial(\eta\cdot f)}{\partial x}\dd{x}\dd{y}={\color{blue}\oint_{L}\eta}(f\dd{y})=0\label{eq:j4.2}\\
+\Rightarrow & \int_{D}(\frac{\partial\eta}{\partial x})f\cdot\dd{x}\dd{y}=-\int_{D}\eta(\frac{\partial f}{\partial x})\cdot\dd{x}\dd{y}\label{eq:j4.3}
+\end{align}
+
+\end_inset
+
+如果我们假设
+\begin_inset Formula $\left.\eta\right|_{L}$
+\end_inset
+
+ 满足 
+\begin_inset Formula $n−1$
+\end_inset
+
+ 阶导的边界条件，即 
+\begin_inset Formula $\left.\eta\right|_{L}=0$
+\end_inset
+
+，
+\begin_inset Formula $\left.\frac{\partial\eta}{\partial x}\right|_{L}=0$
+\end_inset
+
+，
+\begin_inset Formula $\cdots$
+\end_inset
+
+，
+\begin_inset Formula $\left.\frac{\partial^{n-1}\eta}{\partial x^{n-1}}\right|_{L}=0$
+\end_inset
+
+，那么就可以得到二维的 
+\begin_inset Formula $n$
+\end_inset
+
+ 次分部积分公式
+\begin_inset Formula 
+\begin{equation}
+\int_{D}\left(\frac{\partial^{n}\eta}{\partial x^{n}}\right)f\cdot\dd{x}\dd{y}=(-1)^{n}\int_{D}\eta\left(\frac{\partial^{n}f}{\partial x^{n}}\right)\cdot\dd{x}\dd{y}.\label{eq:j4.4}
+\end{equation}
+
+\end_inset
+
+同理，令 
+\begin_inset Formula $P=-\eta\cdot f$
+\end_inset
+
+，
+\begin_inset Formula $Q=0$
+\end_inset
+
+代入
+\begin_inset Formula 
+\begin{equation}
+\int_{D}\left(\frac{\partial^{n}\eta}{\partial y^{n}}\right)f\cdot\dd{x}\dd{y}=(-1)^{n}\int_{D}\eta\left(\frac{\partial^{n}f}{\partial y^{n}}\right)\cdot\dd{x}\dd{y}.\label{eq:j4.5}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+三维情形也是同理，我们采用 
+\series bold
+高斯公式
+\series default
+：
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)\dd{V}=\oint_{\partial\Omega}\left(P\cos\alpha+Q\cos\beta+R\cos\gamma\right)\dd{S}\label{eq:j4.6}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha$
+\end_inset
+
+，
+\begin_inset Formula $\beta$
+\end_inset
+
+，
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 是曲线法向与笛卡尔系的
+\begin_inset Formula $\sbf e_{x}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf e_{y}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf e_{z}$
+\end_inset
+
+所成的夹角。考虑区域
+\begin_inset Formula $\Omega$
+\end_inset
+
+上的边界条件为
+\begin_inset Formula $\left.\eta\right|_{\partial\Omega}=0$
+\end_inset
+
+，代入
+\begin_inset Formula $P=\eta\cdot f$
+\end_inset
+
+，
+\begin_inset Formula $Q=0$
+\end_inset
+
+，
+\begin_inset Formula $R=0$
+\end_inset
+
+，等式右端为
+\begin_inset Formula $0$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\frac{\partial(\eta\cdot f)}{\partial x}\dd{V}=0\label{eq:j4.7}
+\end{equation}
+
+\end_inset
+
+进行分部积分得到：
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\left(\frac{\partial\eta}{\partial x}\right)f\dd{V}=-\int_{\Omega}\eta\left(\frac{\partial f}{\partial x}\right)\dd{V}.\label{eq:j4.8}
+\end{equation}
+
+\end_inset
+
+仿照格林公式的方式，可以推广到每个维度的 
+\begin_inset Formula $n$
+\end_inset
+
+阶导数
+\begin_inset Formula 
+\[
+\int_{\Omega}\left(\frac{\partial^{n}\eta}{\partial x^{n}}\right)f\cdot\dd{V}=(-1)^{n}\int_{\Omega}\eta\left(\frac{\partial^{n}f}{\partial x^{n}}\right)\cdot\dd{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+三维问题的边界项
+\end_layout
+
+\begin_layout Example
+矢量场 
+\begin_inset Formula $\varphi\,\sbf f$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{\Omega}\nabla\cdot\left(\varphi\,\sbf f\right)\dd{V}=\oint_{\partial\Omega}(\varphi\,\sbf f)\dd{\sbf S}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\begin{align*}
+ & \int_{\Omega}\left[(\nabla\varphi)\cdot\sbf f+\varphi\nabla\cdot\sbf f\right]\dd{V}=\oint_{\partial\Omega}(\varphi\,\sbf f)\dd{\sbf S}\\
+\Rightarrow & \int_{\Omega}\left(\varphi\nabla\cdot\sbf f\right)\dd{V}=-\int_{\Omega}\left[(\nabla\varphi)\cdot\sbf f\right]\dd{V}+\oint_{\partial\Omega}(\varphi\,\sbf f)\dd{\sbf S}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+标量场 
+\begin_inset Formula $\varphi\,\psi$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{\Omega}\nabla\cdot\nabla\left(\varphi\,\psi\right)\dd{V}=\oint_{\partial\Omega}\nabla\left(\varphi\,\psi\right)\dd{\sbf S}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\int_{\Omega}\left[\nabla\cdot\left(\varphi\nabla\psi+\psi\nabla\varphi\right)\right]\dd{V}=\int_{\Omega}\left[\varphi\nabla^{2}\psi+\psi\nabla^{2}\varphi+2(\nabla\psi\cdot\nabla\varphi)\right]\dd{V}
+\]
+
+\end_inset
+
+如果
+\begin_inset Formula $\psi=\varphi=\phi$
+\end_inset
+
+，给出
+\begin_inset Formula 
+\[
+\int_{\Omega}\phi\nabla^{2}\phi\dd{V}=\oint_{\partial\Omega}\phi\nabla\phi\dd{\sbf S}-\int_{\Omega}\nabla\phi\cdot\nabla\phi\dd{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+广义斯托克斯公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "广义斯托克斯公式"
+target "https://blog.csdn.net/MamiyaHasaki/article/details/119297305"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 电磁场单位
 \end_layout
 
@@ -4384,7 +5485,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -4993,7 +6094,7 @@ Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那�
 \begin_inset Formula $J$
 \end_inset
 
- 表示几何坐标对等参坐标的雅可比矩阵，
+ 表示物理坐标对等参坐标的雅可比矩阵，
 \begin_inset Formula $\det[J]$
 \end_inset
 
@@ -5005,11 +6106,15 @@ S=\frac{1}{2}\det[J]
 
 \end_inset
 
-在计算程序中，这个几何常数被吸收进 权重因子 
+在 Solver程序中，这个几何因子（
+\begin_inset Formula $1/2$
+\end_inset
+
+）被吸收进 权重因子 
 \begin_inset Formula $W_{i}$
 \end_inset
 
- 中。因此程序中高斯积分法的形式为：
+ 中。因此 Solver程序中高斯积分法的公式写作：
 \begin_inset Formula 
 \[
 \iint_{\Omega^{e}}F\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)\dd{x}\dd{y}=\sum_{i=1}^{m}F\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)W_{i}^{\prime}\det[J]
@@ -5021,1008 +6126,7 @@ S=\frac{1}{2}\det[J]
 \end_layout
 
 \begin_layout Chapter
-有限元等参坐标方法
-\end_layout
-
-\begin_layout Example
-平面单元的空间坐标
-\begin_inset Formula $\left\{ x,y\right\} $
-\end_inset
-
-，通过形函数
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
-和顶点坐标映射到 等参坐标 
-\begin_inset Formula $\left\{ \xi,\eta\right\} $
-\end_inset
-
- 平面
-\begin_inset Formula 
-\begin{align}
- & x=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)x_{i}\label{eq:coord}\\
- & y=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)y_{i}\nonumber 
-\end{align}
-
-\end_inset
-
-其中 
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
- 表示某个单元中，第
-\begin_inset Formula $i$
-\end_inset
-
-个节点对应的形函数，对重复指标进行求和。实际计算中，如果取单元插值点的形式为
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-x_{1} & y_{1}\\
-x_{2} & y_{2}\\
-x_{3} & y_{3}\\
-\cdots & \cdots
-\end{array}\right]
-\]
-
-\end_inset
-
-为一
-\begin_inset Formula $\left[n,2\right]$
-\end_inset
-
-矩阵。并将
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:coord"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-表示为矩阵乘法的形式：
-\begin_inset Formula 
-\[
-\left[\begin{array}{c}
-x\\
-y
-\end{array}\right]=\left[\begin{array}{cccc}
-x_{1} & x_{2} & x_{3} & \cdots\\
-y_{1} & y_{2} & y_{3} & \cdots
-\end{array}\right]\left[\begin{array}{c}
-N_{1}\\
-N_{2}\\
-N_{3}\\
-\cdots
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-或者用指标表示，则坐标矢量为
-\color blue
-
-\begin_inset Formula 
-\[
-X_{d}=\overline{X}_{j\alpha}N_{\alpha}
-\]
-
-\end_inset
-
-
-\color inherit
-其中 
-\begin_inset Formula $X=\left(x,y\right)$
-\end_inset
-
- 表示单元内点的坐标，
-\begin_inset Formula $\overline{X}_{j\alpha}$
-\end_inset
-
- 表示插值点，
-\begin_inset Formula $N_{\alpha}$
-\end_inset
-
- 表示形函数。
-\begin_inset Formula $j\in\left\{ 1,2\right\} $
-\end_inset
-
- 是空间的维数，
-\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
-\end_inset
-
-是插值点的数目。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-积分测度的变换为
-\begin_inset Formula 
-\[
-\dd{x}\dd{y}=\det J\left(\xi,\eta\right)\dd{\xi}\dd{\eta}
-\]
-
-\end_inset
-
-其中 Jacobi 矩阵定义为
-\begin_inset Formula 
-\begin{align}
-J\left(\xi,\eta\right) & =\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}=\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\left[\begin{array}{cc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
-\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
-\end{array}\right]\label{eq:jacobi}\\
- & =\sum_{i}\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\\
-\frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right)\left(\begin{array}{cc}
-x_{i} & y_{i}\end{array}\right)\nonumber \\
-\text{例如}i\in\left\{ 1,2,3\right\} \quad & =\left(\begin{array}{ccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\\
-\frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
-\end{array}\right)\left(\begin{array}{cc}
-x_{1} & y_{1}\\
-x_{2} & y_{2}\\
-x_{3} & y_{3}
-\end{array}\right)
-\end{align}
-
-\end_inset
-
-如果是高阶单元，插值点增多，但公式是类似的，都可以表示成 
-\begin_inset Formula $[2,n]\times[n,2]$
-\end_inset
-
- 的矩阵乘积，最后结果是 
-\begin_inset Formula $[2,2]$
-\end_inset
-
- 矩阵。
-\end_layout
-
-\begin_layout Example
-雅可比矩阵就是微分的变换
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-\dd{x} & \dd{y}\end{array}\right]=\left[\begin{array}{cc}
-\dd{\xi} & \dd{\eta}\end{array}\right]\left[\begin{array}{cc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
-\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
-\end{array}\right]
-\]
-
-\end_inset
-
-所以对应的逆变换为，
-\begin_inset Formula 
-\begin{align}
-\left[\begin{array}{cc}
-\dd{\xi} & \dd{\eta}\end{array}\right] & =\left[\begin{array}{cc}
-\dd{x} & \dd{y}\end{array}\right]\left[\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}\right]^{-1}\nonumber \\
- & =\left[\begin{array}{cc}
-\dd{x} & \dd{y}\end{array}\right]\left[\begin{array}{cc}
-\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\\
-\frac{\partial\xi}{\partial y} & \frac{\partial\eta}{\partial y}
-\end{array}\right]\label{eq:jacobi2}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-雅可比矩阵 
-\begin_inset Formula $\partial\left(x,y\right)/\partial\left(\xi,\eta\right)$
-\end_inset
-
-为
-\color blue
-
-\begin_inset Formula 
-\[
-J_{ki}=\tilde{\partial}_{k}N_{\alpha}\overline{X}_{\alpha i}
-\]
-
-\end_inset
-
-
-\color inherit
-
-\begin_inset Formula $k,i\in\left\{ 1,2\right\} $
-\end_inset
-
-是空间的维数或等参坐标个数；
-\begin_inset Formula $\overline{X}_{\alpha i}$
-\end_inset
-
- 表示插值点，
-\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
-\end_inset
-
-是插值点的数目；
-\begin_inset Formula $N_{\alpha}$
-\end_inset
-
- 表示形函数，
-\begin_inset Formula $\tilde{\partial}$
-\end_inset
-
-表示对 
-\begin_inset Formula $\xi$
-\end_inset
-
-，
-\begin_inset Formula $\eta$
-\end_inset
-
- 求偏导。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-形函数梯度的计算，可以通过 Jacobi 矩阵和形函数对等参坐标的偏导计算（这里是二维形式）
-\begin_inset Formula 
-\begin{align*}
-\nabla N_{i}^{e} & =\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial x}\\
-\frac{\partial N_{i}^{e}}{\partial y}
-\end{array}\right)=\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial x}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial x}\\
-\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial y}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial y}
-\end{array}\right)\\
- & =\left(\begin{array}{cc}
-\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\\
-\frac{\partial\xi}{\partial y} & \frac{\partial\eta}{\partial y}
-\end{array}\right)\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\\
-\frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right)=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\\
-\frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right).
-\end{align*}
-
-\end_inset
-
-类似地，如果写成矩阵形式：
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccc}
-\nabla N_{1}^{e} & \nabla N_{2}^{e} & \nabla N_{3}^{e}\end{array}\right]=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{ccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\\
-\frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
-\end{array}\right).
-\]
-
-\end_inset
-
-维数变换是 
-\begin_inset Formula $\left[2,2\right]\times\left[2,n\right]\rightarrow\left[2,n\right]$
-\end_inset
-
-。
-\begin_inset Formula $J\left(\xi,\eta\right)$
-\end_inset
-
-正是
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:jacobi"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-定义的雅可比矩阵：
-\begin_inset Formula 
-\[
-J\left(\xi,\eta\right)=\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}=\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\left[\begin{array}{cc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
-\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
-\end{array}\right].
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-形函数的梯度为：
-\color blue
-
-\begin_inset Formula 
-\[
-\partial_{i}N_{\alpha}^{e}=\left(J^{-1}\right)_{ij}\tilde{\partial}_{j}N_{\alpha}^{e}
-\]
-
-\end_inset
-
-
-\color inherit
-
-\begin_inset Formula $i,j\in\left\{ 1,2\right\} $
-\end_inset
-
-是空间的维数，
-\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
-\end_inset
-
-是插值点的数目；
-\begin_inset Formula $\partial$
-\end_inset
-
-表示对单元内点坐标 
-\begin_inset Formula $\left\{ x,y\right\} $
-\end_inset
-
- 求导，
-\begin_inset Formula $\tilde{\partial}$
-\end_inset
-
-表示对等参坐标 
-\begin_inset Formula $\left\{ \xi,\eta\right\} $
-\end_inset
-
- 求偏导。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-因此在平面单元上进行的积分可以先映射到等参坐标平面，再通过高斯积分（Gauss quadrature）计算
-\begin_inset Formula 
-\begin{align*}
-\int_{\Delta}P\left(x,y\right)\dd{x}\dd{y} & =\int{\color{blue}P\left(\xi,\eta\right)\det J\left(\xi,\eta\right)}\dd{\xi}\dd{\eta}\\
- & =\sum_{m}{\color{blue}P\left(\xi_{m},\eta_{m}\right)\det J\left(\xi_{m},\eta_{m}\right)}\;W\left(\xi_{m},\eta_{m}\right)
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula $W\left(\xi_{m},\eta_{m}\right)$
-\end_inset
-
- 是高斯数值积分中的权函数。
-\end_layout
-
-\begin_layout Standard
-实际应用中，一般先构造 
-\begin_inset Formula $N_{i}^{e}\left(\xi,\eta\right)$
-\end_inset
-
- 的形式：
-\end_layout
-
-\begin_layout Enumerate
-由于节点坐标 
-\begin_inset Formula $x_{i}$
-\end_inset
-
-，
-\begin_inset Formula $y_{i}$
-\end_inset
-
-视为已知常数，则能计算出 
-\begin_inset Formula $J\left(\xi,\eta\right)=\partial\left(x,y\right)/\partial\left(\xi,\eta\right)$
-\end_inset
-
-，
-\begin_inset Formula $\det J$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-高斯积分法的采样点 
-\begin_inset Formula $\left\{ m\right\} $
-\end_inset
-
-，与权函数 
-\begin_inset Formula $W\left(\xi_{m},\eta_{m}\right)$
-\end_inset
-
- ，可以通过查表获得，通常使用等参坐标 
-\begin_inset Formula $\left(\xi,\eta\right)$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Enumerate
-将被积函数 
-\begin_inset Formula $P\left(x_{m},y_{m}\right)$
-\end_inset
-
- 转换到 
-\begin_inset Formula $P\left(\xi_{m},\eta_{m}\right)$
-\end_inset
-
- 表示下：使用坐标变换方程，或者微分的使用链式法则。
-\end_layout
-
-\begin_layout Section
-刚度矩阵的计算
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\sbf\nabla\left(\alpha\cdot\sbf\nabla\phi\right)+\beta\phi=f,\quad\left(x,y\right)\in\Omega.
-\]
-
-\end_inset
-
-对于刚度矩阵
-\begin_inset Formula 
-\begin{align*}
- & K_{ij}^{e}=\iint_{\Omega^{e}}\left(\nabla N_{i}^{e}\cdot\alpha\nabla N_{j}^{e}+\beta N_{i}^{e}N_{j}^{e}\right)\dd{x}\dd{y},\\
- & b_{i}^{e}=\iint_{\Omega^{e}}fN_{i}^{e}\dd{x}\dd{y},\quad i,j=1,2,3
-\end{align*}
-
-\end_inset
-
-代入上述讨论中的公式
-\begin_inset Formula 
-\[
-K_{ij}^{e}=\iint_{\Omega^{e}}\left(G_{i}^{T}.J^{-1,T}\cdot\alpha J^{-1}.G_{j}+\beta N_{i}^{e}N_{j}^{e}\right){\color{blue}\det\left[J\right]}\dd{\xi}\dd{\eta}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $G_{i}=\left[\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\\
-\frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right]$
-\end_inset
-
-，是梯度矢量。
-\end_layout
-
-\begin_layout Example
-对于一阶线性单元，代入形函数
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
-的定义
-\begin_inset Formula 
-\begin{align*}
- & J\left(\xi,\eta\right)=\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\\
-\frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right)\left(\begin{array}{cc}
-x_{i} & y_{i}\end{array}\right)=\left(\begin{array}{cc}
-x_{1}-x_{3} & y_{1}-y_{3}\\
-x_{2}-x_{3} & y_{2}-y_{3}
-\end{array}\right)=\left(\begin{array}{cc}
-x_{1}-x_{3} & y_{1}-y_{3}\\
-x_{2}-x_{3} & y_{2}-y_{3}
-\end{array}\right)=\left[\begin{array}{cc}
-c_{2}^{e} & -b_{2}^{e}\\
--c_{1}^{e} & b_{1}^{e}
-\end{array}\right]\\
- & J^{-1}\left(\xi,\eta\right)=\frac{1}{2\Delta^{e}}\left[\begin{array}{cc}
-b_{1}^{e} & b_{2}^{e}\\
-c_{1}^{e} & c_{2}^{e}
-\end{array}\right],\quad J^{-1,T}\left(\xi,\eta\right)=\frac{1}{2\Delta^{e}}\left[\begin{array}{cc}
-b_{1}^{e} & c_{1}^{e}\\
-b_{2}^{e} & c_{2}^{e}
-\end{array}\right],\quad J^{-1,T}\cdot J^{-1}=\frac{1}{4\Delta^{e,2}}\left[\begin{array}{cc}
-b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e}\\
-b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{2}^{e,2}+c_{2}^{e,2}
-\end{array}\right]
-\end{align*}
-
-\end_inset
-
-以及梯度矢量：
-\begin_inset Formula 
-\[
-G_{i}=\left(\begin{array}{c}
-1\\
-0
-\end{array}\right),\left(\begin{array}{c}
-0\\
-1
-\end{array}\right),\left(\begin{array}{c}
--1\\
--1
-\end{array}\right),\quad\text{for }j=1,2,3
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Formula $K_{ij}$
-\end_inset
-
-为对称阵：
-\begin_inset Formula 
-\begin{align*}
-K= & \frac{\alpha}{2\Delta^{e}}\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{ccc}
-b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{1}^{e}b_{3}^{e}+c_{1}^{e}c_{3}^{e}\\
-\cdots & b_{2}^{e,2}+c_{2}^{e,2} & b_{2}^{e}b_{3}^{e}+c_{2}^{e}c_{3}^{e}\\
-\cdots & \cdots & b_{3}^{e,2}+c_{3}^{e,2}
-\end{array}\right]\\
- & +2\Delta^{e}\beta\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{ccc}
-\left(1-\xi-\eta\right)^{2} & \xi\left(1-\xi-\eta\right) & \eta\left(1-\xi-\eta\right)\\
-\cdots & \xi^{2} & \xi\eta\\
-\cdots & \cdots & \eta^{2}
-\end{array}\right]\Bigg\}
-\end{align*}
-
-\end_inset
-
-以及常数矢量： 
-\begin_inset Formula 
-\[
-b_{i}^{e}=2\Delta^{e}f\iint_{\Omega^{e}}\dd{\xi}\dd{\eta}\left[\begin{array}{c}
-1-\xi-\eta\\
-\xi\\
-\eta
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-以上使用了： 
-\begin_inset Formula 
-\begin{align*}
- & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=1-\xi-\eta,\\
- & N_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y}{2}=\xi,\\
- & N_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y}{2}=\eta.
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align}
- & a_{1}^{e}=x_{2}^{e}y_{3}^{e}-y_{2}^{e}x_{3}^{e}; &  & b_{1}^{e}=y_{2}^{e}-y_{3}^{e}; &  & c_{1}^{e}=x_{3}^{e}-x_{2}^{e}\nonumber \\
- & a_{2}^{e}=x_{3}^{e}y_{1}^{e}-y_{3}^{e}x_{1}^{e}; &  & b_{2}^{e}=y_{3}^{e}-y_{1}^{e}; &  & c_{2}^{e}=x_{1}^{e}-x_{3}^{e}\label{eq:4.24-1}\\
- & a_{3}^{e}=x_{1}^{e}y_{2}^{e}-y_{1}^{e}x_{2}^{e}; &  & b_{3}^{e}=y_{1}^{e}-y_{2}^{e}; &  & c_{3}^{e}=x_{2}^{e}-x_{1}^{e}\nonumber 
-\end{align}
-
-\end_inset
-
-满足 
-\begin_inset Formula $\sum b_{i}=0$
-\end_inset
-
-，
-\begin_inset Formula $\sum c_{i}=0$
-\end_inset
-
-。
-\begin_inset Formula 
-\[
-\Delta^{e}=\frac{1}{2}\left|\begin{array}{ccc}
-1 & x_{1}^{e} & y_{1}^{e}\\
-1 & x_{2}^{e} & y_{2}^{e}\\
-1 & x_{3}^{e} & y_{3}^{e}
-\end{array}\right|=\frac{1}{2}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)=\text{第}e\text{个单元的面积}
-\]
-
-\end_inset
-
-普通坐标和等参坐标之间的变换为：
-\begin_inset Formula 
-\begin{align*}
- & \left[\begin{array}{c}
-x\\
-y
-\end{array}\right]=\left[\begin{array}{cc}
-c_{3}^{e} & -c_{2}^{e}\\
--b_{3}^{e} & b_{2}^{e}
-\end{array}\right]\left[\begin{array}{c}
-\xi\\
-\eta
-\end{array}\right]+\left[\begin{array}{c}
-x_{1}^{e}\\
-y_{1}^{e}
-\end{array}\right],\\
- & \left[\begin{array}{c}
-\xi\\
-\eta
-\end{array}\right]=\frac{1}{2\Delta^{e}}\left\{ \left[\begin{array}{cc}
-b_{2}^{e} & c_{2}^{e}\\
-b_{3}^{e} & c_{3}^{e}
-\end{array}\right]\left[\begin{array}{c}
-x\\
-y
-\end{array}\right]+\left[\begin{array}{c}
-a_{2}^{e}\\
-a_{3}^{e}
-\end{array}\right]\right\} ,\\
- & \frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\det J={\color{blue}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)}=2{\color{blue}\Delta^{e}}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-有限元中的等参单元
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-name "有限元中什么是等参单元"
-target "https://www.zhihu.com/question/29564930/answer/77635688"
-literal "false"
-
-\end_inset
-
-，
-\begin_inset CommandInset href
-LatexCommand href
-name "邱小白"
-target "https://www.zhihu.com/question/29564930/answer/77582890"
-literal "false"
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Example
-对于场函数，例如位移场，我们可以通过 
-\color blue
-节点场值
-\color inherit
- 与 
-\color blue
-插值函数
-\color inherit
- 来表示场内各点的场值。设结点数为
-\begin_inset Formula $n$
-\end_inset
-
-。一般而言，此公式是表示在局部坐标下的。
-\begin_inset Formula 
-\[
-u=\sum_{i=1}^{n}N_{i}u_{i}
-\]
-
-\end_inset
-
-将单元从规则的 局部坐标系（如面积坐标系）转化到 全局坐标系 中，我们需要建立两个坐标系之间的变换关系。同理，通过 全局坐标系 表示的 
-\color blue
-结点坐标
-\color inherit
- 与 局部坐标 表示的 插值函数， 可以表示 单元内 各点的 
-\color blue
-全局坐标
-\color inherit
-。设 节点数为 
-\begin_inset Formula $m$
-\end_inset
-
-。
-\begin_inset Formula 
-\[
-x=\sum_{i=1}^{m}N_{i}^{\prime}x_{i}
-\]
-
-\end_inset
-
-如果，场函数插值 所用节点数 与 坐标变换所用节点数 相等时，即 
-\begin_inset Formula $n=m$
-\end_inset
-
-，而且两者采用相同的插值函数，即 
-\begin_inset Formula $N_{i}^{\prime}=N_{i}$
-\end_inset
-
-。那么，我们称这种变换叫 
-\color blue
-等参变换
-\color inherit
-，这种单元叫 
-\color blue
-等参单元
-\color inherit
-。
-\end_layout
-
-\begin_layout Enumerate
-如果 
-\begin_inset Formula $n<m$
-\end_inset
-
-，我们称为 超参变换，单元为超参单元；
-\end_layout
-
-\begin_layout Enumerate
-如果 
-\begin_inset Formula $n>m$
-\end_inset
-
-，我们称为亚参变换，单元为亚参单元。
-\end_layout
-
-\begin_layout Enumerate
-为什么会出现等参单元，因为方便。局部坐标系下的单元是很规则的单元，我们可以很容易通过 Lagrange 插值、划线法、Hermite插值来构造
- 单元内场的插值函数。而且，如果单元是等参单元的话，坐标变换也可以运用场的插值函数，把局部坐标系下的规则单元变换为笛卡尔坐标系、极坐标、球坐标下的各种离奇形状的
-单元。即使这么做，对于刚度矩阵、力向量的积分上也不会很困难，所以我们很热爱等参单元。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-很多时候划分网格后的单元是很不规则的，造成的结果是每个 element 都要用不同的 shape function，非常麻烦。于是有的哥们就思考能不能将单元标准
-化，即把单元都 mapping 成同一个单元，这样不就简单了吗。拿简单的一维问题为例，如下图：
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Graphics
-	filename inset/element-mapping.png
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-目标是将局部坐标系(local coordinates) 映射成范围是 
-\begin_inset Formula $-1$
-\end_inset
-
- 到 
-\begin_inset Formula $1$
-\end_inset
-
- 的自然坐标系(natural coordinates)。可是如何做到呢，于是这个哥们深入思考发现：如果场函数插值(比如例子中的位移场)，和单元
- 局部坐标系 到 自然坐标系 的变换使用同一个 shape function 不就行了吗？这样说可能比较抽象，下面的公式比较直观：
-\begin_inset Formula 
-\begin{align*}
- & x\left(\xi\right)=N_{i}\left(\xi\right)x_{i},\\
- & u\left(\xi\right)=N_{i}\left(\xi\right)u_{i}.
-\end{align*}
-
-\end_inset
-
-其中 
-\begin_inset Formula $x$
-\end_inset
-
- 是局部坐标系坐标，
-\begin_inset Formula $x_{i}$
-\end_inset
-
- 是结点的局部坐标，
-\begin_inset Formula $u_{i}$
-\end_inset
-
- 是节点在局部坐标系下的位移，
-\begin_inset Formula $u$
-\end_inset
-
- 则是插值后的位移场。
-\end_layout
-
-\begin_layout Enumerate
-举个例子，对于结点 
-\begin_inset Formula $1$
-\end_inset
-
-(
-\begin_inset Formula $i=1$
-\end_inset
-
-)，
-\begin_inset Formula 
-\[
-N_{1}(-1)=1,N_{2}(-1)=0,
-\]
-
-\end_inset
-
- 所以 
-\begin_inset Formula $x\left(-1\right)=x_{1}$
-\end_inset
-
-，
-\begin_inset Formula $u(-1)=u_{1}$
-\end_inset
-
-，两个插值使用同一个shape function。mapping 到 
-\begin_inset Formula $\left[-1,1\right]$
-\end_inset
-
- 的另一个好处是积分方便，通常可以使用如下近似方程（以二维为例）：
-\begin_inset Formula 
-\[
-\int_{-1}^{1}\int_{-1}^{1}\phi(\xi,\eta)\dd{\xi}\dd{\eta}\approx\phi(1/\sqrt{3},1/\sqrt{3})+\phi(-1/\sqrt{3},-1/\sqrt{3})+\phi(-1/\sqrt{3},1/\sqrt{3})+\phi(1/\sqrt{3},-1/\sqrt{3}).
-\]
-
-\end_inset
-
-当然，由于 shape function 
-\begin_inset Formula $N_{i}$
-\end_inset
-
- 现在是 
-\begin_inset Formula $\xi$
-\end_inset
-
- 的函数，而积分时需要的经常是 
-\begin_inset Formula $\partial N_{i}/\partial x$
-\end_inset
-
-，所以需要引入雅可比 
-\begin_inset Formula $J$
-\end_inset
-
-(Jacobian)，即 
-\begin_inset Formula $\dd{x}\dd{\xi}$
-\end_inset
-
- 。这样就可以通过链式法则：
-\begin_inset Formula $\frac{\partial N_{i}}{\partial\xi}=\frac{\partial N_{i}}{\partial x}\frac{\dd{x}}{\dd{\xi}}$
-\end_inset
-
- 得出 
-\begin_inset Formula $\frac{\partial N_{i}}{\partial x}=\frac{1}{J}\frac{\partial N_{i}}{\partial\xi}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-同理，对于三角形单元，可以将其 mapping 成直角边为 
-\begin_inset Formula $1$
-\end_inset
-
- 的等腰直角三角形；对于四边形单元，可以将其 mapping 成顶点分别为 
-\begin_inset Formula $(-1,-1)$
-\end_inset
-
-，
-\begin_inset Formula $(-1,1)$
-\end_inset
-
-, 
-\begin_inset Formula $(1,-1)$
-\end_inset
-
-, 
-\begin_inset Formula $(1,1)$
-\end_inset
-
- 的正方形，等等。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-形函数
+单元上的形函数
 \end_layout
 
 \begin_layout Standard
@@ -7818,14 +7922,10 @@ x_{4} & y_{4} & z_{4}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Example
 推导是在 三维直角坐标系 中进行的，即
 \begin_inset Formula 
 \[
-\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}\sbf e_{i}=-\partial_{k}L_{\alpha}^{e}\;\sbf e_{i}J_{ij}^{-1},\quad\sbf e_{i}=(\sbf e_{x},\sbf e_{y},\sbf e_{z}).
+\frac{\partial J_{kj}^{-1}}{\partial r_{\alpha i}}\sbf e_{i}=-\partial_{k}L_{\alpha}^{e}\;\sbf e_{i}\,J_{ij}^{-1},\quad\sbf e_{i}=(\sbf e_{x},\sbf e_{y},\sbf e_{z}).
 \]
 
 \end_inset
@@ -7872,6 +7972,1462 @@ Edge单元
 \end_inset
 
  为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
+\end_layout
+
+\begin_layout Section
+为什么叫做等参单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "有限元中什么是等参单元"
+target "https://www.zhihu.com/question/29564930/answer/77635688"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "邱小白"
+target "https://www.zhihu.com/question/29564930/answer/77582890"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+对于场函数，例如位移场，我们可以通过 
+\color blue
+节点的场值
+\color inherit
+ 与 
+\color blue
+插值函数
+\color inherit
+ 来表示场内各点的场值。设节点数为
+\begin_inset Formula $n$
+\end_inset
+
+。一般而言，此公式是表示在局域坐标下的：
+\begin_inset Formula 
+\[
+u=\sum_{i=1}^{n}N_{i}^{e}(\xi_{1}\cdots)u_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+将单元从规则的 局域坐标系（如面积坐标系）转化到 全局坐标系 中，我们需要建立两个坐标系之间的变换关系。坐标变换 和场变换类似，通过 全局坐标系
+ 下的 
+\color blue
+结点坐标
+\color inherit
+，和用 局部坐标 表示的 插值函数， 可以表出 单元内动点 的
+\color blue
+全局坐标
+\color inherit
+。设 节点数为
+\begin_inset Formula $m$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+x=\sum_{i=1}^{m}N_{i}^{e\prime}(\xi_{1}\cdots)x_{i}
+\]
+
+\end_inset
+
+注意形函数
+\begin_inset Formula $N_{i}^{e\prime}(\xi_{1}\cdots)$
+\end_inset
+
+对局域参数
+\begin_inset Formula $\{\xi_{1}\cdots\}$
+\end_inset
+
+的依赖的具体系数，实际上和众
+\begin_inset Formula $\{x_{i}\}$
+\end_inset
+
+也有关系；也就是坐标变换特定于每个单元。如果 场函数插值 所用节点数，与 坐标变换所用节点数 相等时，即 
+\begin_inset Formula $n=m$
+\end_inset
+
+，而且两者采用相同的插值函数，即 
+\begin_inset Formula $N_{i}^{e\prime}=N_{i}^{e}$
+\end_inset
+
+。那么，我们称这种变换叫 
+\color blue
+等参变换
+\color inherit
+，这种单元叫 
+\color blue
+等参单元
+\color inherit
+。
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $n<m$
+\end_inset
+
+，即 场展开节点数
+\begin_inset Formula $<$
+\end_inset
+
+坐标展开节点数，我们称为 超参变换，单元为超参单元；
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $n>m$
+\end_inset
+
+，即 场展开节点数
+\begin_inset Formula $>$
+\end_inset
+
+坐标展开节点数，我们称为亚参变换，单元为亚参单元。
+\end_layout
+
+\begin_layout Enumerate
+为什么会出现等参单元，因为方便。局部坐标系下的单元是很规则的单元，我们可以很容易通过 Lagrange 插值、划线法、Hermite插值来构造
+ 单元内场的插值函数。而且，如果单元是等参单元的话，坐标变换也可以运用场的插值函数，把局部坐标系下的规则单元变换为笛卡尔坐标系、极坐标、球坐标下的各种离奇形状的
+单元。即使这么做，对于刚度矩阵、力向量的积分上也不会很困难，所以我们很热爱等参单元。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+很多时候划分网格后的单元是很不规则的，造成的结果是每个 element 都要用不同的 shape function，非常麻烦。于是有的哥们就思考能不能将单元标准
+化，即把单元都 mapping 成同一个单元，这样不就简单了吗。拿简单的一维问题为例，如下图：
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/element-mapping.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+目标是将局部坐标系(local coordinates) 映射成范围是 
+\begin_inset Formula $-1$
+\end_inset
+
+ 到 
+\begin_inset Formula $1$
+\end_inset
+
+ 的自然坐标系(natural coordinates)。可是如何做到呢，于是这个哥们深入思考发现：如果场函数插值(比如例子中的位移场)，和单元
+ 局部坐标系 到 自然坐标系 的变换使用同一个 shape function 不就行了吗？这样说可能比较抽象，下面的公式比较直观：
+\begin_inset Formula 
+\begin{align*}
+ & x\left(\xi\right)=N_{i}\left(\xi\right)x_{i},\\
+ & u\left(\xi\right)=N_{i}\left(\xi\right)u_{i}.
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $x$
+\end_inset
+
+ 是局部坐标系坐标，
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 是结点的局部坐标，
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ 是节点在局部坐标系下的位移，
+\begin_inset Formula $u$
+\end_inset
+
+ 则是插值后的位移场。
+\end_layout
+
+\begin_layout Enumerate
+举个例子，对于结点 
+\begin_inset Formula $1$
+\end_inset
+
+(
+\begin_inset Formula $i=1$
+\end_inset
+
+)，
+\begin_inset Formula 
+\[
+N_{1}(-1)=1,N_{2}(-1)=0,
+\]
+
+\end_inset
+
+ 所以 
+\begin_inset Formula $x\left(-1\right)=x_{1}$
+\end_inset
+
+，
+\begin_inset Formula $u(-1)=u_{1}$
+\end_inset
+
+，两个插值使用同一个shape function。mapping 到 
+\begin_inset Formula $\left[-1,1\right]$
+\end_inset
+
+ 的另一个好处是积分方便，通常可以使用如下近似方程（以二维为例）：
+\begin_inset Formula 
+\[
+\int_{-1}^{1}\int_{-1}^{1}\phi(\xi,\eta)\dd{\xi}\dd{\eta}\approx\phi(1/\sqrt{3},1/\sqrt{3})+\phi(-1/\sqrt{3},-1/\sqrt{3})+\phi(-1/\sqrt{3},1/\sqrt{3})+\phi(1/\sqrt{3},-1/\sqrt{3}).
+\]
+
+\end_inset
+
+当然，由于 shape function 
+\begin_inset Formula $N_{i}$
+\end_inset
+
+ 现在是 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 的函数，而积分时需要的经常是 
+\begin_inset Formula $\partial N_{i}/\partial x$
+\end_inset
+
+，所以需要引入雅可比 
+\begin_inset Formula $J$
+\end_inset
+
+(Jacobian)，即 
+\begin_inset Formula $\dd{x}\dd{\xi}$
+\end_inset
+
+ 。这样就可以通过链式法则：
+\begin_inset Formula $\frac{\partial N_{i}}{\partial\xi}=\frac{\partial N_{i}}{\partial x}\frac{\dd{x}}{\dd{\xi}}$
+\end_inset
+
+ 得出 
+\begin_inset Formula $\frac{\partial N_{i}}{\partial x}=\frac{1}{J}\frac{\partial N_{i}}{\partial\xi}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+同理，对于三角形单元，可以将其 mapping 成直角边为 
+\begin_inset Formula $1$
+\end_inset
+
+ 的等腰直角三角形；对于四边形单元，可以将其 mapping 成顶点分别为 
+\begin_inset Formula $(-1,-1)$
+\end_inset
+
+，
+\begin_inset Formula $(-1,1)$
+\end_inset
+
+, 
+\begin_inset Formula $(1,-1)$
+\end_inset
+
+, 
+\begin_inset Formula $(1,1)$
+\end_inset
+
+ 的正方形，等等。
+\end_layout
+
+\begin_layout Chapter
+有限元的等参坐标方法
+\end_layout
+
+\begin_layout Section
+物理坐标与参数坐标
+\end_layout
+
+\begin_layout Enumerate
+通过使用形函数
+\begin_inset Formula $\{N_{i}^{e}\}$
+\end_inset
+
+，可以将 求解区域上的小单元（称作 
+\series bold
+物理单元
+\series default
+），一一映射到 等参坐标空间的小单元（称作 
+\series bold
+参数单元
+\series default
+）。
+\end_layout
+
+\begin_layout Enumerate
+对于两个一一映射的 
+\series bold
+物理单元
+\series default
+ 与 
+\series bold
+参数单元
+\series default
+，当 
+\begin_inset Formula $\left\{ \xi,\eta\right\} $
+\end_inset
+
+ 在取值范围内变动时，勾勒出等参空间的标准单元形状（例如等腰直角三角形）；对应的 
+\begin_inset Formula $\{x,y\}$
+\end_inset
+
+ 将在物理空间变动，勾勒出物理空间的单元（即一般的三角形）。注意我们统一使用 
+\begin_inset Formula $\left\{ \xi,\eta\right\} $
+\end_inset
+
+表示等参坐标，但是
+\series bold
+具体的坐标变换 对于不同的单元是不同的，也就是每个坐标变换局域于它的单元上
+\series default
+。具体来说，坐标变换的 
+\series bold
+系数
+\series default
+ 依赖于 
+\series bold
+节点
+\series default
+ 的物理坐标。
+\end_layout
+
+\begin_layout Enumerate
+如果真实的求解区域是平面，物理单元中某点
+\begin_inset Formula $(x_{0},y_{0})$
+\end_inset
+
+的邻域
+\begin_inset Formula $\left\{ x_{0}+\dd{x},y_{0}+\dd{y}\right\} $
+\end_inset
+
+可以 精确对应到等参单元中的邻域 
+\begin_inset Formula $\left\{ \xi_{0}+\dd{\xi},\eta_{0}+\dd{\xi}\right\} $
+\end_inset
+
+，因为单元都是线性的。
+\end_layout
+
+\begin_layout Enumerate
+如果真实的求解区域是曲面，物理单元中某点
+\begin_inset Formula $(x_{0},y_{0})$
+\end_inset
+
+的邻域，只是近似对应等参单元中的邻域。因为如果形函数是线性的，插值出来的只能是平面，不能还原出真实的曲面性质（只有节点处是精确的）。要想尽量贴合原先的单元，需要
+采用更高阶的形函数，模拟出曲面的弯曲。
+\end_layout
+
+\begin_layout Standard
+物理坐标与等参坐标的 变换式（映射关系）为：
+\begin_inset Formula 
+\begin{align}
+ & x=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)x_{i}\label{eq:coord}\\
+ & y=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)y_{i}\nonumber 
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+ 表示某个单元中，第
+\begin_inset Formula $i$
+\end_inset
+
+个节点对应的形函数，对重复指标进行求和。实际计算中，如果取节点（单元插值点）的形式为
+\begin_inset Formula 
+\[
+\overline{X}_{j\alpha}=\left[\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}\\
+x_{3} & y_{3}\\
+\cdots & \cdots
+\end{array}\right]
+\]
+
+\end_inset
+
+为一
+\begin_inset Formula $\left[n,2\right]$
+\end_inset
+
+矩阵。并将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:coord"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表示为矩阵乘法的形式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+x\\
+y
+\end{array}\right]=\left[\begin{array}{cccc}
+x_{1} & x_{2} & x_{3} & \cdots\\
+y_{1} & y_{2} & y_{3} & \cdots
+\end{array}\right]\left[\begin{array}{c}
+N_{1}\\
+N_{2}\\
+N_{3}\\
+\cdots
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+总结：用指标表示，则小单元中动点的物理坐标是
+\color blue
+
+\begin_inset Formula 
+\[
+X_{j}=\overline{X}_{j\alpha}N_{\alpha}
+\]
+
+\end_inset
+
+
+\color inherit
+其中 
+\begin_inset Formula $X=\left(x,y\right)$
+\end_inset
+
+ 表示动点的 
+\series bold
+参数单元
+\series default
+ 坐标，
+\begin_inset Formula $\overline{X}_{j\alpha}$
+\end_inset
+
+ 表示节点物理坐标，
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+ 表示形函数。
+\begin_inset Formula $j\in\left\{ 1,2\right\} $
+\end_inset
+
+ 是空间的维数，
+\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\end_inset
+
+是节点的数目。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+积分测度与雅可比矩阵
+\end_layout
+
+\begin_layout Standard
+在等参坐标的方法中，独立物理坐标的个数和独立参数的个数相等，例如对于二维都是
+\begin_inset Formula $2$
+\end_inset
+
+。物理坐标与参数坐标微分的变换式是：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dd{x}\dd{y}=\det[J]\left(\xi,\eta\right)\dd{\xi}\dd{\eta}
+\]
+
+\end_inset
+
+其中引入了 Jacobi 矩阵 
+\begin_inset Formula $J$
+\end_inset
+
+ （对于
+\begin_inset Formula $2$
+\end_inset
+
+维是
+\begin_inset Formula $2\times2$
+\end_inset
+
+矩阵），并定义为
+\begin_inset Formula 
+\begin{align}
+J\left(\xi,\eta\right) & =\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}=\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right]\label{eq:jacobi}\\
+ & =\sum_{i}\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)\left(\begin{array}{cc}
+x_{i} & y_{i}\end{array}\right)\nonumber 
+\end{align}
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+注意到
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $J$
+\end_inset
+
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+的定义中，参数
+\begin_inset Formula $\xi$
+\end_inset
+
+充当行指标，物理坐标
+\begin_inset Formula $x$
+\end_inset
+
+充当列指标。例如当 
+\begin_inset Formula $i=1,2,3$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula 
+\[
+J\left(\xi,\eta\right)=\left(\begin{array}{ccc}
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
+\end{array}\right)\left(\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}\\
+x_{3} & y_{3}
+\end{array}\right)
+\]
+
+\end_inset
+
+如果是高阶单元则节点数目增加，但公式类似，都表示成 
+\begin_inset Formula $[2,n]\times[n,2]$
+\end_inset
+
+ 的矩阵乘积，最后的结果是 
+\begin_inset Formula $[2,2]$
+\end_inset
+
+ 矩阵。
+\end_layout
+
+\begin_layout Remark
+雅可比矩阵 
+\begin_inset Formula $J$
+\end_inset
+
+ 就是坐标微分的变换式
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\dd{x} & \dd{y}\end{array}\right]=\left[\begin{array}{cc}
+\dd{\xi} & \dd{\eta}\end{array}\right]\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula $J$
+\end_inset
+
+ 对应的逆变换矩阵，就是 
+\begin_inset Formula $J$
+\end_inset
+
+ 的逆矩阵（
+\begin_inset Formula $J^{-1}$
+\end_inset
+
+ ）：
+\begin_inset Formula 
+\begin{align}
+\left[\begin{array}{cc}
+\dd{\xi} & \dd{\eta}\end{array}\right] & =\left[\begin{array}{cc}
+\dd{x} & \dd{y}\end{array}\right]\left[\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}\right]^{-1}\nonumber \\
+ & =\left[\begin{array}{cc}
+\dd{x} & \dd{y}\end{array}\right]\left[\begin{array}{cc}
+\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\\
+\frac{\partial\xi}{\partial y} & \frac{\partial\eta}{\partial y}
+\end{array}\right]\label{eq:jacobi2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+总结：雅可比矩阵 
+\begin_inset Formula $\partial\left(x,y\right)/\partial\left(\xi,\eta\right)$
+\end_inset
+
+为
+\color blue
+
+\begin_inset Formula 
+\[
+J_{ki}=(\tilde{\partial}_{k}\,N_{\alpha})\,\overline{X}_{\alpha i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $k,i\in\left\{ 1,2\right\} $
+\end_inset
+
+是自由度数目（
+\begin_inset Formula $\xi$
+\end_inset
+
+对应行指标，
+\begin_inset Formula $x$
+\end_inset
+
+对应列指标）；
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\overline{X}_{\alpha i}$
+\end_inset
+
+ 表示节点坐标；
+\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\end_inset
+
+是插值点的数目；
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+ 表示形函数，
+\begin_inset Formula $\tilde{\partial}$
+\end_inset
+
+表示对 
+\begin_inset Formula $\xi$
+\end_inset
+
+，
+\begin_inset Formula $\eta$
+\end_inset
+
+ 求偏导。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+计算形函数的梯度
+\end_layout
+
+\begin_layout Standard
+我们来计算 形函数 对物理坐标的梯度 
+\begin_inset Formula $\nabla N_{i}^{e}$
+\end_inset
+
+，它可以通过 Jacobi 矩阵，和形函数对等参坐标（
+\begin_inset Formula $\xi$
+\end_inset
+
+）的梯度表示（以二维为例）
+\begin_inset Formula 
+\begin{align*}
+\nabla N_{i}^{e} & =\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial x}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial y}
+\end{array}\right)=\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial x}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial x}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial y}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial y}
+\end{array}\right)\\
+ & =\left(\begin{array}{cc}
+\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\vspace{1ex}\\
+\frac{\partial\xi}{\partial y} & \frac{\partial\eta}{\partial y}
+\end{array}\right)\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right).
+\end{align*}
+
+\end_inset
+
+例如对于 
+\begin_inset Formula $i\in\{1,2,3\}$
+\end_inset
+
+，可以写成矩阵形式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\nabla N_{1}^{e} & \nabla N_{2}^{e} & \nabla N_{3}^{e}\end{array}\right]=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{ccc}
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\vspace{1ex}\\
+\frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
+\end{array}\right).
+\]
+
+\end_inset
+
+维数变换是 
+\begin_inset Formula $\left[2,2\right]\times\left[2,n\right]\rightarrow\left[2,n\right]$
+\end_inset
+
+。
+\begin_inset Formula $J\left(\xi,\eta\right)$
+\end_inset
+
+正是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+定义的雅可比矩阵：
+\begin_inset Formula 
+\[
+J\left(\xi,\eta\right)=\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}=\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\vspace{1ex}\\
+\frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+总结：在单元内动点
+\begin_inset Formula $p$
+\end_inset
+
+处，形函数的物理梯度 
+\begin_inset Formula $\nabla N_{i}^{e}$
+\end_inset
+
+ 可以表出为
+\color blue
+
+\begin_inset Formula 
+\begin{equation}
+\partial_{i}N_{\alpha}^{e}=\left(J^{-1}\right)_{ij}\tilde{\partial}_{j}N_{\alpha}^{e}.\label{eq:gradient}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $i,j\in\left\{ 1,2\right\} $
+\end_inset
+
+是自由度数目，
+\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\end_inset
+
+是插值点的数目；
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\partial$
+\end_inset
+
+ 表示对物理坐标 
+\begin_inset Formula $\left\{ x,y\right\} $
+\end_inset
+
+ 求偏导，
+\begin_inset Formula $\tilde{\partial}$
+\end_inset
+
+表示对等参坐标 
+\begin_inset Formula $\left\{ \xi,\eta\right\} $
+\end_inset
+
+ 求偏导。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+单元上的积分
+\end_layout
+
+\begin_layout Subsection
+数值计算，高斯积分法
+\end_layout
+
+\begin_layout Standard
+在计算有限元单元上的积分时，一般先通过坐标变换，将被积表达式从物理单元 映射到 等参单元，然后通过高斯积分法（Gauss quadrature）作数值估计。假设
+小单元是三角形的，被积函数是 
+\begin_inset Formula $P(x,y)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\int_{\Delta}P\left(x,y\right)\,\dd{x}\dd{y} & =\int{\color{blue}P\left(\xi,\eta\right)\,\det[J\left(\xi,\eta\right)]}\dd{\xi}\dd{\eta}\label{eq:gauss-quad}\\
+ & =\sum_{m}{\color{blue}P\left(\xi_{m},\eta_{m}\right)\,\det[J\left(\xi_{m},\eta_{m}\right)]}\;W\left(\xi_{m},\eta_{m}\right)\nonumber 
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $W\left(\xi_{m},\eta_{m}\right)$
+\end_inset
+
+ 是高斯积分法中的权函数（Weight）。在实际使用中，一般
+\begin_inset Formula $N_{i}^{e}\left(\xi,\eta\right)$
+\end_inset
+
+ 的具体形式事先已经确定 ：
+\end_layout
+
+\begin_layout Enumerate
+由于节点坐标 
+\begin_inset Formula $\{x_{i},y_{i}\}$
+\end_inset
+
+ 是已知常数，再加上知晓 
+\begin_inset Formula $N_{i}^{e}\left(\xi,\eta\right)$
+\end_inset
+
+的具体形式，所以能算出雅可比矩阵 
+\begin_inset Formula $J(\xi,\eta)=\partial x/\partial\xi$
+\end_inset
+
+，以及行列式
+\begin_inset Formula $\det J(\xi,\eta)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+至于高斯积分法的采样点 
+\begin_inset Formula $\left\{ p_{m}\right\} $
+\end_inset
+
+，与权函数
+\begin_inset Formula $W\left(\xi_{m},\eta_{m}\right)$
+\end_inset
+
+ ，可以通过查表获取，这些结果都使用等参坐标 
+\begin_inset Formula $\left(\xi,\eta\right)$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Enumerate
+将被积函数 
+\begin_inset Formula $P\left(x_{m},y_{m}\right)$
+\end_inset
+
+ 变换到 
+\begin_inset Formula $P\left(\xi_{m},\eta_{m}\right)$
+\end_inset
+
+ 表示：对坐标的依赖使用 坐标变换，对微分 的依赖使用雅可比矩阵 和链式法则。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\det[J]$
+\end_inset
+
+正比于几何区域的面积，例如线性三角形单元的面积
+\begin_inset Formula $\Delta^{e}=\frac{1}{2}\det[J]$
+\end_inset
+
+。在 Solver程序中，这个几何因子（
+\begin_inset Formula $1/2$
+\end_inset
+
+）被吸收进 权重因子 
+\begin_inset Formula $W_{i}^{\prime}$
+\end_inset
+
+，因此 Solver程序中高斯积分法的公式写作：
+\begin_inset Formula 
+\[
+\iint_{\Omega^{e}}P\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)\dd{x}\dd{y}=\sum_{i=1}^{m}P\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)W_{i}^{\prime}\det[J]
+\]
+
+\end_inset
+
+这里的
+\begin_inset Formula $L_{i}^{e}$
+\end_inset
+
+只是
+\begin_inset Formula $\{1-\xi-\eta,\xi,\eta\}$
+\end_inset
+
+的另一种写法。
+\end_layout
+
+\begin_layout Subsection
+解析计算
+\end_layout
+
+\begin_layout Standard
+参考金建铭4.3.3.1。线性三角形单元上的一阶形函数积分满足下式
+\begin_inset Formula 
+\begin{equation}
+\iint_{\Omega^{e}}\left(N_{1}^{e}\right)^{l}\left(N_{2}^{e}\right)^{m}\left(N_{3}^{e}\right)^{n}\dd{x}\dd{y}=\frac{l!m!n!}{\left(l+m+n+2\right)!}2\Delta^{e}.\label{eq:jm4.32}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta^{e}$
+\end_inset
+
+是三角形的面积，
+\begin_inset Formula $\Delta^{e}=\frac{1}{2}\det[J]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+计算刚度矩阵
+\end_layout
+
+\begin_layout Standard
+再次列出静电场的泊松方程：
+\begin_inset Formula 
+\[
+\sbf\nabla\left(\alpha\cdot\sbf\nabla\phi\right)+\beta\phi=f,\quad\left(x,y\right)\in\Omega.
+\]
+
+\end_inset
+
+它对应的刚度矩阵是
+\begin_inset Formula 
+\begin{align*}
+ & K_{ij}^{e}=\iint_{\Omega^{e}}\left[(\nabla N_{i}^{e})\cdot\alpha\cdot(\nabla N_{j}^{e})+\beta N_{i}^{e}N_{j}^{e}\right]\dd{x}\dd{y},\\
+ & b_{i}^{e}=\iint_{\Omega^{e}}fN_{i}^{e}\dd{x}\dd{y},\quad i,j=1,2,3
+\end{align*}
+
+\end_inset
+
+代入前文讨论中的公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gradient"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gauss-quad"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到
+\begin_inset Formula 
+\[
+K_{ij}^{e}=\iint_{\Omega^{e}}\left[\left(\tilde{\nabla}N\right)_{i}^{\mathrm{T}}\cdot J^{-1,\mathrm{T}}\cdot\alpha J^{-1}\cdot\left(\tilde{\nabla}N\right)_{j}+\beta N_{i}^{e}N_{j}^{e}\right]{\color{blue}\det\left[J\right]}\,\dd{\xi}\dd{\eta}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left(\tilde{\nabla}N\right)_{i}=\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)$
+\end_inset
+
+，是单元上第
+\begin_inset Formula $i$
+\end_inset
+
+个形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+ 对
+\begin_inset Formula $\xi$
+\end_inset
+
+的梯度；上标中的
+\begin_inset Formula $\,^{\mathrm{T}}$
+\end_inset
+
+表示矩阵转置。
+\end_layout
+
+\begin_layout Example
+对于二维的一阶三角形（线性）单元，代入形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+的定义，得到雅可比矩阵 
+\begin_inset Formula $[\partial X/\partial\xi]$
+\end_inset
+
+ 为：
+\begin_inset Formula 
+\[
+J\left(\xi,\eta\right)=\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\eta}
+\end{array}\right)\left(\begin{array}{cc}
+x_{i} & y_{i}\end{array}\right)=\left(\begin{array}{cc}
+x_{1}-x_{3} & y_{1}-y_{3}\\
+x_{2}-x_{3} & y_{2}-y_{3}
+\end{array}\right)=\left(\begin{array}{cc}
+x_{1}-x_{3} & y_{1}-y_{3}\\
+x_{2}-x_{3} & y_{2}-y_{3}
+\end{array}\right)=\left[\begin{array}{cc}
+c_{2}^{e} & -b_{2}^{e}\\
+-c_{1}^{e} & b_{1}^{e}
+\end{array}\right]
+\]
+
+\end_inset
+
+因此对应的逆矩阵
+\begin_inset Formula $J^{-1}$
+\end_inset
+
+，以及 
+\begin_inset Formula $J^{-1,\mathrm{T}}\cdot J^{-1}$
+\end_inset
+
+为，
+\begin_inset Formula 
+\begin{align}
+ & J^{-1}\left(\xi,\eta\right)=\frac{1}{2\Delta^{e}}\left[\begin{array}{cc}
+b_{1}^{e} & b_{2}^{e}\\
+c_{1}^{e} & c_{2}^{e}
+\end{array}\right],\quad J^{-1,T}\left(\xi,\eta\right)=\frac{1}{2\Delta^{e}}\left[\begin{array}{cc}
+b_{1}^{e} & c_{1}^{e}\\
+b_{2}^{e} & c_{2}^{e}
+\end{array}\right],\nonumber \\
+ & J^{-1,\mathrm{T}}\cdot J^{-1}=\frac{1}{4\Delta^{e,2}}\left[\begin{array}{cc}
+b_{1}^{e,2}+c_{1}^{e,2} & b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e}\\
+b_{1}^{e}b_{2}^{e}+c_{1}^{e}c_{2}^{e} & b_{2}^{e,2}+c_{2}^{e,2}
+\end{array}\right]\label{eq:my-JJ}
+\end{align}
+
+\end_inset
+
+列出二维一阶形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+的表达式：
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=1-\xi-\eta,\quad N_{2}^{(1)}=\xi,\quad N_{3}^{(1)}=\eta
+\]
+
+\end_inset
+
+
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+对
+\begin_inset Formula $\xi$
+\end_inset
+
+的梯度为
+\begin_inset Formula 
+\begin{equation}
+\left(\tilde{\nabla}N\right)_{i}=\left(\begin{array}{ccc}
+-1 & 1 & 0\\
+-1 & 0 & 1
+\end{array}\right),\label{eq:my-gradN}
+\end{equation}
+
+\end_inset
+
+其中参数
+\begin_inset Formula $\xi$
+\end_inset
+
+作为行指标，形函数编号
+\begin_inset Formula $i$
+\end_inset
+
+作为列指标。
+\end_layout
+
+\begin_layout Example
+从表达式易知，
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+为对称阵，
+\begin_inset Formula 
+\[
+K_{ij}^{e}=\iint_{\Omega^{e}}\left[\left(\tilde{\nabla}N\right)_{i}^{\mathrm{T}}\cdot J^{-1,\mathrm{T}}\cdot\alpha J^{-1}\cdot\left(\tilde{\nabla}N\right)_{j}+\beta N_{i}^{e}N_{j}^{e}\right]\,\dd{x}\dd{y}
+\]
+
+\end_inset
+
+从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my-JJ"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my-gradN"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知，
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+被积式第一项为常数，使用解析公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jm4.32"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到积分结果是 
+\begin_inset Formula $\frac{1}{4\Delta^{e}}\left(\alpha_{x}^{e}b_{i}^{e}b_{j}^{e}+\alpha_{y}^{e}c_{i}^{e}c_{j}^{e}\right)$
+\end_inset
+
+（这里还考虑了更一般地，
+\begin_inset Formula $\alpha$
+\end_inset
+
+非各向同性）。同理，使用解析公式，被积式第二项的积分结果是
+\begin_inset Formula $\frac{\Delta^{e}}{12}\beta^{e}(1+\delta_{ij})$
+\end_inset
+
+。
+\begin_inset Formula $b_{i}^{e}$
+\end_inset
+
+的积分也可套公式得出。综合起来便是
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align}
+ & K_{ij}^{e}=\frac{1}{4\Delta^{e}}\left(\alpha_{x}^{e}b_{i}^{e}b_{j}^{e}+\alpha_{y}^{e}c_{i}^{e}c_{j}^{e}\right)+\frac{\Delta^{e}}{12}\beta^{e}\left(1+\delta_{ij}\right)\label{eq:jm4.33}\\
+ & b_{i}^{e}=\frac{\Delta^{e}}{3}f^{e}\label{eq:jm4.34}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+以上使用了： 
+\begin_inset Formula 
+\begin{align*}
+ & N_{1}^{e}=\frac{\Delta_{1}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{1}^{e}+b_{1}^{e}x+c_{1}^{e}y}{2}=1-\xi-\eta,\\
+ & N_{2}^{e}=\frac{\Delta_{2}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{2}^{e}+b_{2}^{e}x+c_{2}^{e}y}{2}=\xi,\\
+ & N_{3}^{e}=\frac{\Delta_{3}}{\Delta^{e}}=\frac{1}{\Delta^{e}}\frac{a_{3}^{e}+b_{3}^{e}x+c_{3}^{e}y}{2}=\eta.
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & a_{1}^{e}=x_{2}^{e}y_{3}^{e}-y_{2}^{e}x_{3}^{e}; &  & b_{1}^{e}=y_{2}^{e}-y_{3}^{e}; &  & c_{1}^{e}=x_{3}^{e}-x_{2}^{e}\nonumber \\
+ & a_{2}^{e}=x_{3}^{e}y_{1}^{e}-y_{3}^{e}x_{1}^{e}; &  & b_{2}^{e}=y_{3}^{e}-y_{1}^{e}; &  & c_{2}^{e}=x_{1}^{e}-x_{3}^{e}\label{eq:4.24-1}\\
+ & a_{3}^{e}=x_{1}^{e}y_{2}^{e}-y_{1}^{e}x_{2}^{e}; &  & b_{3}^{e}=y_{1}^{e}-y_{2}^{e}; &  & c_{3}^{e}=x_{2}^{e}-x_{1}^{e}\nonumber 
+\end{align}
+
+\end_inset
+
+满足 
+\begin_inset Formula $\sum b_{i}=0$
+\end_inset
+
+，
+\begin_inset Formula $\sum c_{i}=0$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\Delta^{e}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x_{1}^{e} & y_{1}^{e}\\
+1 & x_{2}^{e} & y_{2}^{e}\\
+1 & x_{3}^{e} & y_{3}^{e}
+\end{array}\right|=\frac{1}{2}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)=\text{第}e\text{个单元的面积}
+\]
+
+\end_inset
+
+普通坐标和等参坐标之间的变换为：
+\begin_inset Formula 
+\begin{align*}
+ & \left[\begin{array}{c}
+x\\
+y
+\end{array}\right]=\left[\begin{array}{cc}
+c_{3}^{e} & -c_{2}^{e}\\
+-b_{3}^{e} & b_{2}^{e}
+\end{array}\right]\left[\begin{array}{c}
+\xi\\
+\eta
+\end{array}\right]+\left[\begin{array}{c}
+x_{1}^{e}\\
+y_{1}^{e}
+\end{array}\right],\\
+ & \left[\begin{array}{c}
+\xi\\
+\eta
+\end{array}\right]=\frac{1}{2\Delta^{e}}\left\{ \left[\begin{array}{cc}
+b_{2}^{e} & c_{2}^{e}\\
+b_{3}^{e} & c_{3}^{e}
+\end{array}\right]\left[\begin{array}{c}
+x\\
+y
+\end{array}\right]+\left[\begin{array}{c}
+a_{2}^{e}\\
+a_{3}^{e}
+\end{array}\right]\right\} ,\\
+ & \frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\det J={\color{blue}\left(b_{2}^{e}c_{3}^{e}-b_{3}^{e}c_{2}^{e}\right)}=2{\color{blue}\Delta^{e}}.
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -8000,7 +9556,7 @@ Ritz方法
  为表面边界单元的数目。而
 \begin_inset Formula 
 \begin{align*}
-\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[\nabla\phi^{e}\cdot\alpha\nabla\phi^{e}+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\\
+\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[(\nabla\phi^{e})\cdot\alpha(\nabla\phi^{e})+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\\
 \mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}
 \end{align*}
 
@@ -8020,6 +9576,107 @@ Ritz方法
 \end_inset
 
 
+\end_layout
+
+\begin_layout Remark
+对于形如 
+\begin_inset Formula $\mathcal{F}(\phi)=\frac{1}{2}\int_{\Omega}\left[(\nabla\phi)\cdot(\nabla\phi)\right]\dd{V}$
+\end_inset
+
+的泛函，由于存在高斯定理
+\begin_inset Formula 
+\begin{align}
+\mathcal{F}(\phi) & =\frac{1}{2}\int_{\Omega}\left[(\nabla\phi)\cdot(\nabla\phi)\right]\dd{V}\label{eq:ym1}\\
+ & =\frac{1}{2}\oint_{\partial\Omega}(\phi\nabla\phi)\cdot\dd{\sbf S}-\frac{1}{2}\int_{\Omega}\phi\nabla^{2}\phi\dd{V}\label{eq:ym2}
+\end{align}
+
+\end_inset
+
+考虑欧拉–拉格朗日方程：
+\begin_inset Formula 
+\[
+\frac{\partial\mathcal{F}}{\partial\phi}=\partial_{\mu}\frac{\partial\mathcal{F}}{\partial(\partial_{\mu}\phi)},
+\]
+
+\end_inset
+
+注意到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ym1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是
+\begin_inset Formula ${\color{blue}\nabla\phi}$
+\end_inset
+
+的二次型，代入E–L 方程求偏导时会有系数
+\begin_inset Formula $2$
+\end_inset
+
+（刚好用来抵消
+\begin_inset Formula $1/2$
+\end_inset
+
+）；相应地，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ym2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 
+\begin_inset Formula $\phi\nabla^{2}\phi$
+\end_inset
+
+ 应该看作 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的二次型，其中的
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+应该看作类似 二次型的系数矩阵，只不过这里是无穷维线性空间，所以变成了算符
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+。只有这样，在使用高斯定理前后，E–L方程左右才能平衡，并给出相同的结果。另一方面，在推导 E–L 方程一开始就假设泛函 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+的依赖形式是
+\begin_inset Formula $\mathcal{F}(\phi,\nabla\phi)$
+\end_inset
+
+，即泛函依赖不包括 
+\begin_inset Formula $\nabla^{2}\phi$
+\end_inset
+
+。从这个角度，我们也只能把 
+\begin_inset Formula $\nabla^{2}\phi$
+\end_inset
+
+ 看作是
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+作用在
+\begin_inset Formula $\phi$
+\end_inset
+
+上，而不是把
+\begin_inset Formula $\nabla^{2}\phi$
+\end_inset
+
+当作独立依赖。
 \end_layout
 
 \begin_layout Section
@@ -8205,7 +9862,21 @@ noprefix "false"
 \begin_inset Formula $n\cdot\sbf D^{0}=0$
 \end_inset
 
-；两种情况下边界项都可以不考虑，此时方程简化为，
+；回忆推导欧拉–拉格朗日方程时
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EL-equ"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，边界项是 
+\begin_inset Formula $\left.{\color{blue}\frac{\partial F}{\partial y'}\delta y}\right|_{x_{1}}^{x_{2}}$
+\end_inset
+
+ ，在这两种情况下边界项都分别为零。因此在两种情况下都可以不考虑边界项，此时方程简化为，
 \begin_inset Formula 
 \begin{equation}
 \left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .\label{eq:Galerkin-2}
@@ -9312,7 +10983,7 @@ g1 = Plot[x^(3/5), {x, 0, 5} , AxesLabel -> {"D", "E"} , ImageSize -> Small];
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -9613,7 +11284,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 page 20/36;
@@ -9709,7 +11380,7 @@ F_{u}=\frac{\partial W_{c}}{\partial u}.\label{eq:g1.128}
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -9745,7 +11416,7 @@ Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是�
 \end_layout
 
 \begin_layout Chapter
-电场的开域问题
+静电场的开域问题
 \end_layout
 
 \begin_layout Standard
@@ -10031,7 +11702,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Formula 
@@ -10609,7 +12280,7 @@ noprefix "false"
 
 \begin_layout Theorem
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 毕奥–萨伐尔定律
@@ -10750,7 +12421,7 @@ noprefix "false"
 
 \begin_layout Example
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 磁矢势的泛函
@@ -10871,7 +12542,7 @@ noprefix "false"
 
 \begin_layout Example
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 二维情况
@@ -10911,7 +12582,7 @@ status open
 
 \begin_layout Example
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 轴对称情况
@@ -11007,7 +12678,7 @@ noprefix "false"
 
 \begin_layout Example
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
 三维磁场
@@ -11247,7 +12918,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 f
@@ -12315,7 +13986,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 推导过程使用了
@@ -12474,7 +14145,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -14151,7 +15822,17 @@ B[s]
 \end_layout
 
 \begin_layout Standard
-三维曲面上的泊松方程
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:curve3D"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+三维曲面上的泊松方程为
 \begin_inset Formula 
 \[
 -\nabla_{t}\cdot\epsilon\cdot\nabla_{t}\phi=\rho
@@ -14175,7 +15856,7 @@ K_{ij}^{e}=\int_{\Omega^{e}}\nabla_{t}N_{i}^{e}\cdot\epsilon\cdot\nabla_{t}N_{j}
 \end_layout
 
 \begin_layout Example
-三位曲面四边形单元的雅可比矩阵（对于某一确定单元 
+三维中的曲面的四边形单元上的雅可比矩阵（对于某一确定单元 
 \begin_inset Formula $e$
 \end_inset
 
@@ -14183,18 +15864,18 @@ K_{ij}^{e}=\int_{\Omega^{e}}\nabla_{t}N_{i}^{e}\cdot\epsilon\cdot\nabla_{t}N_{j}
 \begin_inset Formula 
 \begin{align*}
 \left[J\right] & =\left[{\color{blue}\begin{array}{c}
-\frac{\partial\sbf r}{\partial\xi}\\
+\frac{\partial\sbf r}{\partial\xi}\vspace{1ex}\\
 \frac{\partial\sbf r}{\partial\eta}
 \end{array}}\right]=\left[\begin{array}{ccc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\\
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi} & \frac{\partial z}{\partial\xi}\vspace{1ex}\\
 \frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta} & \frac{\partial z}{\partial\eta}
 \end{array}\right]\\
  & =\left[\begin{array}{ccc}
-\frac{\partial N_{i}^{e}}{\partial\xi}x_{i} & \frac{\partial N_{i}^{e}}{\partial\xi}y_{i} & \frac{\partial N_{i}^{e}}{\partial\xi}z_{i}\\
+\frac{\partial N_{i}^{e}}{\partial\xi}x_{i} & \frac{\partial N_{i}^{e}}{\partial\xi}y_{i} & \frac{\partial N_{i}^{e}}{\partial\xi}z_{i}\vspace{1ex}\\
 \frac{\partial N_{i}^{e}}{\partial\eta}x_{i} & \frac{\partial N_{i}^{e}}{\partial\eta}y_{i} & \frac{\partial N_{i}^{e}}{\partial\eta}z_{i}
 \end{array}\right],\quad\text{重复指标求和}\\
  & =\left[\begin{array}{cccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\vspace{1ex}\\
 \frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta} & \frac{\partial N_{4}^{e}}{\partial\eta}
 \end{array}\right]\left[\begin{array}{ccc}
 x_{1} & y_{1} & z_{1}\\
@@ -14216,15 +15897,27 @@ x_{4} & y_{4} & z_{4}
 
 \end_inset
 
+注意曲面上的两切线
+\begin_inset Formula $\frac{\partial\sbf r}{\partial\xi}$
+\end_inset
 
+，
+\begin_inset Formula $\frac{\partial\sbf r}{\partial\eta}$
+\end_inset
+
+ 不一定是正交的；网格剖分时单元面积不为零，保证了 
+\begin_inset Formula $\frac{\partial\sbf r}{\partial\xi}\times\frac{\partial\sbf r}{\partial\eta}\neq0$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Example
-根据局域坐标系 
-\begin_inset Formula $\overleftrightarrow{T}=\overleftrightarrow{T}\left(\sbf e_{1},\sbf e_{2},\sbf e_{3}\right)$
+使用局域坐标系 
+\begin_inset Formula $T^{ab}=T^{ab}\left(\sbf e_{1},\sbf e_{2},\sbf e_{3}\right)$
 \end_inset
 
- 实现全局坐标 
+ ，实现全局坐标 
 \begin_inset Formula $\sbf r=\left(x,y,z\right)$
 \end_inset
 
@@ -14232,10 +15925,10 @@ x_{4} & y_{4} & z_{4}
 \begin_inset Formula $\sbf R\left(X,Y\right)$
 \end_inset
 
-的变换
+的转换
 \begin_inset Formula 
 \[
-\sbf R=\overleftrightarrow{T}\sbf r
+\sbf R=T^{ab}\cdot\sbf r
 \]
 
 \end_inset
@@ -14252,7 +15945,11 @@ x_{4} & y_{4} & z_{4}
 
 \end_inset
 
-系数矩阵计算需要的形函数的切向梯度可以在二维平面局域坐标 
+其中
+\begin_inset Formula $\sbf r_{n}$
+\end_inset
+
+是局域原点的全局坐标。系数矩阵计算需要的形函数的切向梯度可以在二维平面局域坐标 
 \begin_inset Formula $\sbf R\left(X,Y\right)$
 \end_inset
 
@@ -14270,42 +15967,46 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 \left[\begin{array}{cccc}
-\frac{\partial N_{1}^{e}}{\partial X} & \frac{\partial N_{2}^{e}}{\partial X} & \frac{\partial N_{3}^{e}}{\partial X} & \frac{\partial N_{4}^{e}}{\partial X}\\
+\frac{\partial N_{1}^{e}}{\partial X} & \frac{\partial N_{2}^{e}}{\partial X} & \frac{\partial N_{3}^{e}}{\partial X} & \frac{\partial N_{4}^{e}}{\partial X}\vspace{1ex}\\
 \frac{\partial N_{1}^{e}}{\partial Y} & \frac{\partial N_{2}^{e}}{\partial Y} & \frac{\partial N_{3}^{e}}{\partial Y} & \frac{\partial N_{4}^{e}}{\partial Y}
 \end{array}\right] & =\left[\begin{array}{cc}
-\frac{\partial\xi}{\partial X} & \frac{\partial\eta}{\partial X}\\
+\frac{\partial\xi}{\partial X} & \frac{\partial\eta}{\partial X}\vspace{1ex}\\
 \frac{\partial\xi}{\partial Y} & \frac{\partial\eta}{\partial Y}
 \end{array}\right]\left[\begin{array}{cccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\vspace{1ex}\\
 \frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta} & \frac{\partial N_{4}^{e}}{\partial\eta}
 \end{array}\right]\\
  & =\left[\begin{array}{cc}
-\frac{\partial X}{\partial\xi} & \frac{\partial Y}{\partial\xi}\\
+\frac{\partial X}{\partial\xi} & \frac{\partial Y}{\partial\xi}\vspace{1ex}\\
 \frac{\partial X}{\partial\eta} & \frac{\partial Y}{\partial\eta}
 \end{array}\right]^{-1}\left[\begin{array}{cccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\vspace{1ex}\\
 \frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta} & \frac{\partial N_{4}^{e}}{\partial\eta}
 \end{array}\right]\\
  & =\left[\begin{array}{cc}
-\frac{\partial\sbf r}{\partial\xi}\cdot\sbf e_{1} & \frac{\partial\sbf r}{\partial\xi}\cdot\sbf e_{2}\\
+\frac{\partial\sbf r}{\partial\xi}\cdot\sbf e_{1} & \frac{\partial\sbf r}{\partial\xi}\cdot\sbf e_{2}\vspace{1ex}\\
 \frac{\partial\sbf r}{\partial\eta}\cdot\sbf e_{1} & \frac{\partial\sbf r}{\partial\eta}\cdot\sbf e_{2}
 \end{array}\right]^{-1}\left[\begin{array}{cccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\vspace{1ex}\\
 \frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta} & \frac{\partial N_{4}^{e}}{\partial\eta}
 \end{array}\right]\\
  & =\left(\left[\begin{array}{c}
-\frac{\partial\sbf r}{\partial\xi}\\
+\frac{\partial\sbf r}{\partial\xi}\vspace{1ex}\\
 \frac{\partial\sbf r}{\partial\eta}
 \end{array}\right]\left[\begin{array}{cc}
 \sbf e_{1} & \sbf e_{2}\end{array}\right]\right)^{-1}\left[\begin{array}{cccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\\
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi} & \frac{\partial N_{4}^{e}}{\partial\xi}\vspace{1ex}\\
 \frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta} & \frac{\partial N_{4}^{e}}{\partial\eta}
 \end{array}\right]
 \end{align*}
 
 \end_inset
 
+其中使用了
+\begin_inset Formula $\dd{r}=\dd{X}\sbf e_{1}+\dd{Y}\sbf e_{2}$
+\end_inset
 
+，即矢径的微元等于切矢的微元。
 \end_layout
 
 \begin_layout Section
@@ -14654,7 +16355,7 @@ noprefix "false"
 介电屏蔽条件
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 介电屏蔽边界条件
 \end_layout
 
@@ -14767,7 +16468,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-选取适当的曲面坐标系，令曲线微分的表达式形如
+选取适当的曲面坐标系，令曲线微元的表达式形如
 \begin_inset Formula 
 \[
 \dd{\ell_{1}}=1\dd{u_{1}},\quad\dd{\ell_{2}}=1\dd{u_{2}},\quad\dd{\ell_{3}}=d\dd{u_{3}},
@@ -14832,7 +16533,7 @@ noprefix "false"
 因此有
 \begin_inset Formula 
 \[
-\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf n\cdot\sbf D=0
+\nabla_{t}\cdot\left(d\epsilon_{0}\sbf E_{t}\right)+\sbf n\cdot\epsilon_{0}\sbf E=0
 \]
 
 \end_inset
@@ -14841,168 +16542,23 @@ noprefix "false"
 \begin_inset Formula $\sbf n$
 \end_inset
 
- 指向界面两侧。
+ 指向界面两侧，
+\begin_inset Formula $\epsilon_{0}$
+\end_inset
+
+是低介电材料的常数。
 \end_layout
 
-\begin_layout Section
-Ritz方法
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\sbf e_{n}\cdot\sbf D+\nabla_{t}\cdot\left(d\sbf D_{t}\right)=0
-\]
-
-\end_inset
-
-设求解区域为 
-\begin_inset Formula $\Omega$
-\end_inset
-
-，区域边界
-\begin_inset Formula $\Gamma=\partial\Omega$
-\end_inset
-
-，边界的边界
-\begin_inset Formula $C=\partial\Gamma$
-\end_inset
-
-。泊松方程对应的泛函修改为：
-\begin_inset Formula 
-\begin{align*}
-\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[\nabla\phi^{e}\cdot\epsilon\nabla\phi^{e}+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\\
-\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\nabla_{t}\cdot\left(d\epsilon\nabla_{t}\phi\right)\right]\phi\dd{\Gamma}
-\end{align*}
-
-\end_inset
-
-变分
-\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
-\end_inset
-
-给出对应的电势场方程和边界条件为
-\begin_inset Formula 
-\begin{align*}
--\nabla\cdot\left(\epsilon\nabla\phi\right)+\beta\phi & =f\\
-\sbf e_{n}\cdot\left(\epsilon\nabla\phi\right)+\nabla_{t}\cdot\left(d\epsilon\nabla_{t}\phi\right) & =0\quad\text{on}\quad\Gamma_{2}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula $\mathcal{F}^{s}\left(\phi^{s}\right)$
-\end_inset
-
- 可以通过分部积分写成：
-\begin_inset Formula 
-\[
-\int_{C^{e}}\sbf\tau_{n}\cdot\phi\,d\epsilon\,\nabla_{t}\phi\dd{\ell}-\int_{\Gamma^{e}}\left(\nabla_{t}\phi\right)d\epsilon\left(\nabla_{t}\phi\right)\dd{\Gamma}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $C^{e}$
-\end_inset
-
- 是界面单元 
-\begin_inset Formula $\Gamma^{e}$
-\end_inset
-
- 的边界曲线。
-\end_layout
-
-\begin_layout Section
-Galerkin方法
+\begin_layout Subsection
+存在的问题
 \end_layout
 
 \begin_layout Enumerate
-边界条件为
-\begin_inset Formula 
-\[
-\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D=0
-\]
-
-\end_inset
-
-
+推导过程需要用到 分部积分/高斯公式，对于曲面，或者曲线上的场，公式是否仍然成立，正确的形式是什么。
 \end_layout
 
 \begin_layout Enumerate
-求解区域为 
-\begin_inset Formula $\Omega$
-\end_inset
-
-，区域边界
-\begin_inset Formula $\Gamma=\partial\Omega$
-\end_inset
-
-，边界的边界
-\begin_inset Formula $C=\partial\Gamma$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-仿照Galerkin方法通常情况的微分方程 
-\begin_inset Formula $\nabla\cdot\left(\sbf D\right)-\rho=0$
-\end_inset
-
-，给出介电屏蔽条件对应的残差；在求解区域的边界
-\begin_inset Formula $\Gamma$
-\end_inset
-
-上，加上残差项：
-\begin_inset Formula 
-\[
-R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D\right]\dd{\Gamma}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-例如对于三维问题，不同介质交界面是二维 
-\begin_inset Formula $\Gamma^{e}$
-\end_inset
-
-，边界的边界是曲线
-\begin_inset Formula $C^{e}$
-\end_inset
-
-；类似地，先用分部积分转移
-\begin_inset Formula $\nabla$
-\end_inset
-
-，再使用二维情况下的散度定理，最终得到：
-\begin_inset Formula 
-\[
-\int_{\Gamma^{e}}{\color{blue}\left(\nabla_{t}N_{i}^{e}\right)\cdot d\,\sbf D_{t}}\dd{\Gamma}=\int_{C^{e}}{\color{brown}N_{i}^{e}d\,\sbf D_{t}\cdot\sbf s_{n}}\dd{C}+\int_{\Gamma^{e}}N_{i}^{e}\sbf\,e_{n}\cdot\sbf D\dd{\Gamma}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\sbf e_{n}$
-\end_inset
-
-是 
-\begin_inset Formula $\Gamma^{e}$
-\end_inset
-
-（二维单元）的法向单位矢量，
-\begin_inset Formula $\sbf s_{n}$
-\end_inset
-
- 是
-\begin_inset Formula $C^{e}$
-\end_inset
-
-（一维单元）的法向单位矢量。
+对于封闭的边界，如封闭曲面，或者封闭曲线，找不到边界，该如何应用分部积分，或者高斯公式。
 \end_layout
 
 \begin_layout Section
@@ -15161,7 +16717,7 @@ noprefix "false"
 
 时：
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 equ = { an*R1^(2 n + 1) == bn*R1^(2 n + 1) + cn, an*R1^(2 n + 1) == 
@@ -15192,7 +16748,7 @@ a_{n}=0,\quad b_{n}=0,\quad c_{n}=0,\quad e_{n}=0,\quad n\ge2
 
 时：
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 equ = { a1*R1^3 == b1*R1^3 + c1, a1*R1^3 == 
@@ -15256,7 +16812,7 @@ equ = { a1*R1^3 == b1*R1^3 + c1, a1*R1^3 ==
 
 ，则化简为：
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 (ans2 = Simplify[ans /.
@@ -15311,7 +16867,7 @@ status open
 
  的极限：
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Simplify[Normal@ Series[Values@ ans2 /.
@@ -15363,7 +16919,7 @@ e_{1} & =\frac{1}{2}E_{0}R_{2}^{3}\left(\frac{3\delta\left(R_{1}^{3}+2R_{2}^{3}\
 
 阶的结果分别是
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Simplify[Normal@ Series[Values@ans2 /.
@@ -15402,7 +16958,7 @@ e_{1} & =\frac{E_{0}R_{1}^{3}\left(-3\delta+(6-20\delta)t^{2}+(2-12\delta)t\righ
 \begin_layout Standard
 电势的图像如下，可以看到中心处的电势接近于零。
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 (*dielectric, radius*) 
@@ -15479,10 +17035,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename inset/jieDianPingBi1.png
 	scale 80
@@ -15576,6 +17129,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename inset/jieDianPingBi2.png
 	scale 80
@@ -15604,6 +17158,971 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Ritz方法
+\end_layout
+
+\begin_layout Standard
+综上，当存在介电常数相差较大的两种材料，高
+\begin_inset Formula $\epsilon$
+\end_inset
+
+的材料形成一个薄层。则在高
+\begin_inset Formula $\epsilon$
+\end_inset
+
+壳的表面，应满足以下边界条件：
+\begin_inset Formula 
+\[
+\sbf e_{n}\cdot\sbf D+\nabla_{t}\cdot\left(d\sbf D_{t}\right)=0,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $d$
+\end_inset
+
+是界面薄层的厚度，
+\begin_inset Formula $\sbf D=\epsilon\sbf E$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+考虑三维情形。设求解区域为
+\begin_inset Formula $\Omega$
+\end_inset
+
+，
+\begin_inset Formula $\Omega$
+\end_inset
+
+的边界曲面记作
+\begin_inset Formula $\Gamma=\partial\Omega$
+\end_inset
+
+，
+\begin_inset Formula $\Gamma$
+\end_inset
+
+的边界曲线记作
+\begin_inset Formula $C=\partial\Gamma$
+\end_inset
+
+。通常情况下，静电场的泊松方程的泛函写作
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[(\nabla\phi^{e})\cdot\epsilon_{0}\cdot(\nabla\phi^{e})+\beta\phi^{e;2}-f\phi^{e}\right]\dd{\Omega}\\
+ & =\frac{1}{2}\int_{\Omega^{e}}\left[-\phi^{e}\cdot(\epsilon_{0}\nabla^{2})\phi^{e}+\beta\phi^{e;2}-f\phi^{e}\right]\dd{\Omega}+{\color{blue}\int_{\Gamma^{s}}\phi^{s}\,\sbf e_{n}\cdot(\epsilon_{0}\cdot\nabla\phi^{s})\dd{\Gamma}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula ${\color{blue}\int_{\Gamma^{e}}\cdots\dd{\Gamma}}$
+\end_inset
+
+ 给出边界条件项，
+\begin_inset Formula $\phi^{s}$
+\end_inset
+
+表示边界曲面
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上的场。为了加上介电屏蔽条件，在边界曲面
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上添加一项：
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{s}\left(\phi^{s}\right) & =-\frac{1}{2}\int_{\Gamma^{s}}\left[(\nabla_{t}\phi^{s})\cdot d\epsilon\cdot(\nabla_{t}\phi^{s})\right]\dd{\Gamma}\\
+ & ={\color{blue}\frac{1}{2}\int_{\Gamma^{s}}\left[\phi^{s}\,(\nabla_{t}\cdot d\epsilon_{0}\nabla_{t})\,\phi^{s}\right]\dd{\Gamma}}-{\color{brown}\int_{C^{\ell}}\phi^{\ell}\,\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})\dd{C}}
+\end{align*}
+
+\end_inset
+
+其中：
+\begin_inset Formula $\nabla_{t}$
+\end_inset
+
+表示沿着曲面切向的导数，即曲面上的局部坐标基矢
+\begin_inset Formula $(\partial_{x},\partial_{y})$
+\end_inset
+
+；
+\begin_inset Formula $\sbf e_{n}^{\ell}$
+\end_inset
+
+ 是曲线
+\begin_inset Formula $C$
+\end_inset
+
+的法向单位矢量。此外，上式使用了“曲面上的格林公式”
+\begin_inset Formula $\int_{\Gamma}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dd{x}\dd{y}=\oint_{C}P\dd{x}+Q\dd{y}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+如此，
+\begin_inset Formula $\mathcal{F}^{e}\left(\phi^{e}\right)+\mathcal{F}^{s}\left(\phi^{s}\right)$
+\end_inset
+
+ 的变分，将给出对应的电势场方程和边界条件为
+\begin_inset Formula 
+\begin{align*}
+-\nabla\cdot\left(\epsilon_{0}\nabla\phi\right)+\beta\phi=f\\
+{\color{blue}\sbf e_{n}\cdot(\epsilon_{0}\cdot\nabla\phi^{s})+(\nabla_{t}\cdot d\epsilon_{0}\nabla_{t})\,\phi^{s}=0} & \quad\text{在交界曲面上}\\
+\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})=0 & \quad\text{在曲面的边界上}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})=0$
+\end_inset
+
+ 类似于自然边界条件，物理含义是：在交界面的某边界线
+\begin_inset Formula $C$
+\end_inset
+
+上，电位移
+\begin_inset Formula $\sbf D$
+\end_inset
+
+沿曲线的法向分量为零（此法线平行主法线
+\begin_inset Formula $\sbf N$
+\end_inset
+
+，后者指向曲线的转动方向）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+考虑二维情形。设求解区域为
+\begin_inset Formula $\Gamma$
+\end_inset
+
+，
+\begin_inset Formula $\Gamma$
+\end_inset
+
+的边界曲线记作
+\begin_inset Formula $C=\partial\Gamma$
+\end_inset
+
+，
+\begin_inset Formula $C$
+\end_inset
+
+的两个端点记作
+\begin_inset Formula $p_{1}$
+\end_inset
+
+，
+\begin_inset Formula $p_{2}$
+\end_inset
+
+。通常情况下，静电场的泊松方程的泛函写作
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{s}\left(\phi^{s}\right) & =\frac{1}{2}\int_{\Gamma^{s}}\left[(\nabla\phi^{s})\cdot\epsilon_{0}\cdot(\nabla\phi^{s})+\beta\phi^{s;2}-f\phi^{s}\right]\dd{\Gamma}\\
+ & =\frac{1}{2}\int_{\Gamma^{s}}\left[-\phi^{s}\cdot(\epsilon_{0}\nabla^{2})\phi^{s}+\beta\phi^{s;2}-f\phi^{s}\right]\dd{\Gamma}+{\color{blue}\int_{C^{\ell}}\phi^{\ell}\,\sbf e_{n}^{\ell}\cdot(\epsilon_{0}\cdot\nabla\phi^{\ell})\dd{C}}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\nabla=(\partial_{x},\partial_{y})$
+\end_inset
+
+是二维平面上的梯度算符。
+\begin_inset Formula ${\color{blue}\int_{C^{\ell}}\cdots\dd{C}}$
+\end_inset
+
+ 给出边界条件项，
+\begin_inset Formula $\phi^{\ell}$
+\end_inset
+
+表示边界曲线
+\begin_inset Formula $C$
+\end_inset
+
+上的场，
+\begin_inset Formula $\sbf e_{n}^{\ell}$
+\end_inset
+
+ 是曲线
+\begin_inset Formula $C$
+\end_inset
+
+的法向单位矢量。为了加上介电屏蔽条件，在边界曲线
+\begin_inset Formula $C$
+\end_inset
+
+上添加一项：
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{\ell}\left(\phi^{\ell}\right) & =-\frac{1}{2}\int_{C^{\ell}}\left[(\partial_{t}\phi^{\ell})\cdot d\epsilon_{0}\cdot(\partial_{t}\phi^{\ell})\right]\dd{C}\\
+ & ={\color{blue}\frac{1}{2}\int_{C^{\ell}}\left[\phi^{\ell}\,\left(\partial_{t}\cdot d\epsilon_{0}\,\partial_{t}\right)\,\phi^{\ell}\right]\dd{C}}-{\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}
+\end{align*}
+
+\end_inset
+
+其中：
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+表示沿曲线
+\begin_inset Formula $C$
+\end_inset
+
+切向的导数，
+\begin_inset Formula $\partial_{t}\phi^{\ell}$
+\end_inset
+
+为实数。若曲线
+\begin_inset Formula $C=C(t)$
+\end_inset
+
+（即以
+\begin_inset Formula $t$
+\end_inset
+
+为参数），则
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}\phi^{\ell}=\frac{\dd{x^{\mu}(t)}}{\dd{t}}\frac{\partial}{\partial x^{\mu}}\phi^{\ell},\quad x^{\mu}=x,y.
+\]
+
+\end_inset
+
+表达式
+\begin_inset Formula $\int_{C^{\ell}}\cdots\dd{C}$
+\end_inset
+
+可以参数化为对
+\begin_inset Formula $t$
+\end_inset
+
+的积分。所以通过分部积分，多出一个端点项。
+\end_layout
+
+\begin_layout Example
+如此，
+\begin_inset Formula $\mathcal{F}^{s}\left(\phi^{s}\right)+\mathcal{F}^{\ell}\left(\phi^{\ell}\right)$
+\end_inset
+
+ 的变分，将给出对应的电势场方程和边界条件为
+\begin_inset Formula 
+\begin{align*}
+-\nabla\cdot\left(\epsilon_{0}\nabla\phi\right)+\beta\phi=f\\
+{\color{blue}\sbf e_{n}^{\ell}\cdot(\epsilon_{0}\cdot\nabla\phi^{\ell})+\left(\partial_{t}\cdot d\epsilon_{0}\,\partial_{t}\right)\,\phi^{\ell}=0} & \quad\text{在交界曲线上}\\
+{\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}=0 & \quad\text{在曲线的端点}
+\end{align*}
+
+\end_inset
+
+如果曲线
+\begin_inset Formula $C$
+\end_inset
+
+是闭合的，则认为
+\begin_inset Formula ${\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}=0$
+\end_inset
+
+总是满足的？
+\end_layout
+
+\begin_layout Section
+具体公式–二维
+\end_layout
+
+\begin_layout Standard
+所以综上，需要在交界面的泛函 
+\begin_inset Formula $\mathcal{F}^{\ell}\left(\phi^{\ell}\right)$
+\end_inset
+
+ 中添加一项 
+\begin_inset Formula $-\frac{1}{2}\int_{C^{\ell}}\left[(\partial_{t}\phi^{\ell})\cdot d\epsilon_{0}\cdot(\partial_{t}\phi^{\ell})\right]\dd{C}$
+\end_inset
+
+。其中 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ 表示沿曲线切向的方向导数。对应的有限元方程中的系数矩阵为（
+\begin_inset Formula $1/2$
+\end_inset
+
+在作变分时去掉）
+\begin_inset Formula 
+\[
+K_{ij}^{\ell}=-\int_{C^{\ell}}(\partial_{t}N_{i}^{\ell})\cdot d\epsilon_{0}\cdot(\partial_{t}N_{j}^{\ell})\dd{C}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+雅可比矩阵
+\end_layout
+
+\begin_layout Example
+参考
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "sec:curve3D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。以二维平面中的曲线的线性单元为例，雅可比矩阵
+\begin_inset Formula $J$
+\end_inset
+
+为（对于某一确定单元 
+\begin_inset Formula $e$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{align*}
+\left[J\right]_{1\times2} & =\left[{\color{blue}\begin{array}{c}
+\frac{\dd{\sbf r}}{\dd{\xi}}\end{array}}\right]=\left[\begin{array}{cc}
+\frac{\dd{x}}{\dd{\xi}} & \frac{\dd{y}}{\dd{\xi}}\end{array}\right]\\
+ & =\left[\begin{array}{cc}
+\frac{\dd{N_{i}^{e}}}{\dd{\xi}}x_{i} & \frac{\dd{N_{i}^{e}}}{\dd{\xi}}y_{i}\end{array}\right],\quad\text{重复指标求和}\\
+ & =\left[\begin{array}{cc}
+\frac{\dd{N_{1}^{e}}}{\dd{\xi}} & \frac{\dd{N_{2}^{e}}}{\dd{\xi}}\end{array}\right]\left[\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+注意 
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $y$
+\end_inset
+
+并不是独立的，因为曲线是一维的。代入一阶单元表达式
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=\frac{1-\xi}{2},\quad N_{2}^{(1)}=\frac{1+\xi}{2},
+\]
+
+\end_inset
+
+ 得到
+\begin_inset Formula 
+\begin{align*}
+\left[J\right]_{1\times2} & =\frac{1}{2}\left[\begin{array}{cc}
+-1 & 1\end{array}\right]\left[\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}
+\end{array}\right]\\
+ & =\frac{1}{2}\left[\begin{array}{cc}
+-x_{1}+x_{2} & -y_{1}+y_{2}\end{array}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+局域坐标系
+\end_layout
+
+\begin_layout Example
+从雅可比矩阵可以定义出局域坐标的三个方向（正交归一基），
+\begin_inset Formula 
+\begin{align*}
+ & \sbf e_{1}=\frac{\dd{\sbf r}}{\dd{\xi}}/\abs{\frac{\dd{\sbf r}}{\dd{\xi}}}\\
+ & \sbf e_{3}=\sbf e_{z}=(0,0,1)\\
+ & \sbf e_{2}=\sbf e_{3}\times\sbf e_{1}
+\end{align*}
+
+\end_inset
+
+约定基矢
+\begin_inset Formula $\{\sbf e_{i}\}$
+\end_inset
+
+的分量写成列矩阵形式。
+\end_layout
+
+\begin_layout Example
+使用局域坐标系 
+\begin_inset Formula $T^{ab}=T^{ab}\left(\sbf e_{1},\sbf e_{2}\right)$
+\end_inset
+
+，实现全局坐标 
+\begin_inset Formula $\sbf r=\left(x,y\right)$
+\end_inset
+
+ 到二维平面局域坐标 
+\begin_inset Formula $\sbf R\left(X,Y\right)$
+\end_inset
+
+的转换
+\begin_inset Formula 
+\[
+\sbf R=T^{ab}\sbf r
+\]
+
+\end_inset
+
+坐标分量的变换式为：
+\begin_inset Formula 
+\[
+\sbf R=S^{-1}.\left(\sbf r-\sbf r_{n}\right),\quad S^{-1}=\left[\begin{array}{c}
+\sbf e_{1}^{\mathrm{T}}\\
+\sbf e_{2}^{\mathrm{T}}
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf r_{n}$
+\end_inset
+
+是局域原点的全局坐标，
+\begin_inset Formula $\sbf e_{1}^{\mathrm{T}}$
+\end_inset
+
+表示分量矩阵的转置。计算
+\begin_inset Formula $K_{ij}^{\ell}$
+\end_inset
+
+ 矩阵需要的形函数的切向导数 
+\begin_inset Formula $\frac{\dd{N_{i}^{e}}}{\dd{X}}$
+\end_inset
+
+（况且形函数也只在切线上定义）。在二维平面局域坐标 
+\begin_inset Formula $\sbf R\left(X,Y\right)$
+\end_inset
+
+下计算（参考
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jacobi2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{cc}
+\frac{\dd{N_{1}^{e}}}{\dd{X}} & \frac{\dd{N_{2}^{e}}}{\dd{X}}\end{array}\right] & =\left[\begin{array}{c}
+\frac{\dd{\xi}}{\dd{X}}\end{array}\right]\left[\begin{array}{cc}
+\frac{\dd{N_{1}^{e}}}{\dd{\xi}} & \frac{\dd{N_{2}^{e}}}{\dd{\xi}}\end{array}\right]\\
+ & =\left[\begin{array}{c}
+\frac{\dd{X}}{\dd{\xi}}\end{array}\right]^{-1}\left[\begin{array}{cc}
+\frac{\dd{N_{1}^{e}}}{\dd{\xi}} & \frac{\dd{N_{2}^{e}}}{\dd{\xi}}\end{array}\right]\\
+ & =\left[\begin{array}{c}
+\frac{\dd{r}}{\dd{\xi}}\cdot\sbf e_{1}\end{array}\right]^{-1}\left[\begin{array}{cc}
+\frac{\dd{N_{1}^{e}}}{\dd{\xi}} & \frac{\dd{N_{2}^{e}}}{\dd{\xi}}\end{array}\right]\\
+ & =\left(\left[\begin{array}{cc}
+\frac{\dd{x}}{\dd{\xi}} & \frac{\dd{y}}{\dd{\xi}}\end{array}\right]\left[\begin{array}{c}
+\sbf e_{1}\end{array}\right]_{2\times1}\right)^{-1}\left[\begin{array}{cc}
+\frac{\dd{N_{1}^{e}}}{\dd{\xi}} & \frac{\dd{N_{2}^{e}}}{\dd{\xi}}\end{array}\right]
+\end{align*}
+
+\end_inset
+
+其中使用了 
+\begin_inset Formula $\dd{\sbf r}=\dd{X}\sbf e_{1}+\dd{Y}\sbf e_{2}$
+\end_inset
+
+，即矢径微元等于切线微元。
+\end_layout
+
+\begin_layout Subsection
+约定和总结
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $r_{j}$
+\end_inset
+
+ ：表示全局坐标，二维空间自由度 
+\begin_inset Formula $j\in\left\{ 1,2\right\} $
+\end_inset
+
+，
+\begin_inset Formula $\partial_{j}$
+\end_inset
+
+ 表示对全局坐标求偏导。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\overline{x}_{\alpha}$
+\end_inset
+
+： 表示有限元中的采样点（node）， 
+\begin_inset Formula $\alpha\in{1,2,\cdots,N}$
+\end_inset
+
+（希腊字母），线性单元
+\begin_inset Formula $2$
+\end_inset
+
+个，二阶单元
+\begin_inset Formula $3$
+\end_inset
+
+个等等。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $x_{p}^{\prime}$
+\end_inset
+
+ ：表示单元中二维平面的局域物理坐标 
+\begin_inset Formula $\sbf R=\left(X,Y\right)$
+\end_inset
+
+，
+\begin_inset Formula $p\in\left\{ 1,2\right\} $
+\end_inset
+
+，
+\begin_inset Formula $\partial_{x}^{\prime}$
+\end_inset
+
+ 表示沿曲线切向求导。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\xi$
+\end_inset
+
+ ：表示曲线参数（自由度）；
+\begin_inset Formula $\partial_{\xi}$
+\end_inset
+
+ 表示对 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 求导。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+全局物理坐标对等参坐标的雅可比行列式
+\begin_inset Formula 
+\begin{equation}
+J_{1i}=\partial_{\xi}{\color{blue}r_{i}}=\left[\begin{array}{cc}
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\end{array}\right]=\partial_{\xi}\,{\color{blue}N_{\alpha}\,\overline{x}_{\alpha i}},\quad[1,2]\label{eq:j-2d}
+\end{equation}
+
+\end_inset
+
+其中 ，对于选定的单元
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+ 形式已知，
+\begin_inset Formula $\overline{x}_{\alpha j}$
+\end_inset
+
+ 是节点坐标为已知常量，所以可直接求得
+\begin_inset Formula $J_{j}$
+\end_inset
+
+ ，维数是 
+\begin_inset Formula $1\times2$
+\end_inset
+
+。对于一阶单元
+\begin_inset Formula 
+\[
+[J]_{1\times2}=\frac{1}{2}\left[\begin{array}{cc}
+\Delta x & \Delta y\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta x=x_{2}-x_{1}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta y$
+\end_inset
+
+类似。
+\end_layout
+
+\begin_layout Enumerate
+局域物理坐标的三个单位正交基
+\begin_inset Formula 
+\begin{align*}
+\sbf e_{1} & =J_{1\cdot}/\abs{J_{1\cdot}},\quad\text{点表示取整列}\\
+\sbf e_{3} & =(0,0,1)\\
+\sbf e_{2} & =\sbf e_{3}\times\sbf e_{1}.
+\end{align*}
+
+\end_inset
+
+之所以按此序列构造，是为了保证 
+\begin_inset Formula $\sbf e_{1}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf e_{2}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf e_{3}$
+\end_inset
+
+ 是相互垂直的。求出
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j-2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 
+\begin_inset Formula $J_{j}$
+\end_inset
+
+，即可求出每个单元所属的 
+\begin_inset Formula $\sbf e_{j}$
+\end_inset
+
+。可以把 
+\begin_inset Formula $\left\{ \sbf e_{j}\right\} $
+\end_inset
+
+的分量写成数组形式（矩阵），分量用普通字体表示，将 
+\begin_inset Formula $[e_{i}]$
+\end_inset
+
+分别填入
+\color blue
+每列
+\color inherit
+，这里只用到左上的
+\begin_inset Formula $2\times2$
+\end_inset
+
+的子矩阵。
+\begin_inset Formula 
+\begin{equation}
+E_{ij}=\left[\begin{array}{ccc}
+{\color{blue}e_{1x}} & {\color{blue}e_{2x}} & \vdots\\
+{\color{blue}e_{1y}} & {\color{blue}e_{2y}} & e_{3}\\
+\vdots & \vdots & \vdots
+\end{array}\right],\quad[3,3]\label{eq:unitV-2D}
+\end{equation}
+
+\end_inset
+
+则 指标
+\begin_inset Formula $1$
+\end_inset
+
+索引 某
+\begin_inset Formula $e$
+\end_inset
+
+的分量，指标
+\begin_inset Formula $2$
+\end_inset
+
+索引 
+\begin_inset Formula $e_{1},e_{2},e_{3}$
+\end_inset
+
+。对于一阶单元
+\begin_inset Formula 
+\[
+E_{ij}=\frac{1}{\Delta\ell}\left[\begin{array}{cc}
+{\color{blue}\Delta x} & {\color{blue}-\Delta y}\\
+{\color{blue}\Delta y} & {\color{blue}\Delta x}
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta_{\ell}=\sqrt{\Delta x^{2}+\Delta y^{2}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+局域物理坐标 对 参数坐标的 雅可比矩阵：
+\begin_inset Formula 
+\begin{equation}
+L_{1q}=\partial_{\xi}\,x_{q}^{\prime}=\left[\begin{array}{cc}
+\frac{\partial X}{\partial\xi} & \frac{\partial Y}{\partial\xi}\end{array}\right]=J_{1j}\,E_{jq},\quad[1,2]\label{eq:j-loc-2D}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $j,q=1,2$
+\end_inset
+
+， 
+\begin_inset Formula $J$
+\end_inset
+
+ 和 
+\begin_inset Formula $E$
+\end_inset
+
+ 分别在 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j-2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unitV-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中求出，注意 
+\begin_inset Formula $E$
+\end_inset
+
+ 只取用 前
+\begin_inset Formula $2\times2$
+\end_inset
+
+。对于一阶单元
+\begin_inset Formula 
+\[
+L_{1q}=\frac{1}{2}\left[\begin{array}{cc}
+\Delta\ell & 0\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+形函数 对 局域几何坐标 的梯度
+\begin_inset Formula 
+\[
+{\color{blue}\partial_{X}^{\prime}}\,N_{\alpha}={\color{blue}L_{11}^{-1}\,\partial_{\xi}}N_{\alpha},\quad[1,N]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $N$
+\end_inset
+
+是节点的数目，
+\begin_inset Formula $L^{-1}$
+\end_inset
+
+是 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j-loc-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的逆，这里只需元素
+\begin_inset Formula $[1,1]$
+\end_inset
+
+。对于一阶单元
+\begin_inset Formula 
+\[
+{\color{blue}\partial_{X}^{\prime}}\,N_{\alpha}=\frac{1}{\Delta\ell}\left[\begin{array}{cc}
+-1 & 1\end{array}\right]
+\]
+
+\end_inset
+
+至此，
+\begin_inset Formula $\partial_{t}N_{i}^{\ell}$
+\end_inset
+
+ 已求出。
+\end_layout
+
+\begin_layout Enumerate
+计算均在等参坐标平面进行，即坐标变换步骤为：全局系的曲面
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+局域系的平面
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+等参系的平面。最后需要在 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 参数轴线上积分：
+\begin_inset Formula 
+\begin{align*}
+K_{ij}^{\ell} & =-\int_{C^{\ell}}(\partial_{t}N_{i}^{\ell})\cdot d\epsilon_{0}\cdot(\partial_{t}N_{j}^{\ell})\dd{C}\\
+ & =-\int_{-1}^{1}\frac{d\epsilon_{0}}{\Delta\ell^{2}}\left[\begin{array}{cc}
+1 & -1\\
+-1 & 1
+\end{array}\right]\,\frac{\Delta\ell}{2}\dd{\xi}\\
+ & =\frac{-d\epsilon_{0}}{\Delta\ell}\left[\begin{array}{cc}
+1 & -1\\
+-1 & 1
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Galerkin方法
+\end_layout
+
+\begin_layout Enumerate
+边界条件为
+\begin_inset Formula 
+\[
+\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+求解区域为 
+\begin_inset Formula $\Omega$
+\end_inset
+
+，区域边界
+\begin_inset Formula $\Gamma=\partial\Omega$
+\end_inset
+
+，边界的边界
+\begin_inset Formula $C=\partial\Gamma$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+仿照Galerkin方法通常情况的微分方程 
+\begin_inset Formula $\nabla\cdot\left(\sbf D\right)-\rho=0$
+\end_inset
+
+，给出介电屏蔽条件对应的残差；在求解区域的边界
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上，加上残差项：
+\begin_inset Formula 
+\[
+R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left(d\sbf D_{t}\right)+\sbf e_{n}\cdot\sbf D\right]\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+例如对于三维问题，不同介质交界面是二维 
+\begin_inset Formula $\Gamma^{e}$
+\end_inset
+
+，边界的边界是曲线
+\begin_inset Formula $C^{e}$
+\end_inset
+
+；类似地，先用分部积分转移
+\begin_inset Formula $\nabla$
+\end_inset
+
+，再使用二维情况下的散度定理，最终得到：
+\begin_inset Formula 
+\[
+\int_{\Gamma^{e}}{\color{blue}\left(\nabla_{t}N_{i}^{e}\right)\cdot d\,\sbf D_{t}}\dd{\Gamma}=\int_{C^{e}}{\color{brown}N_{i}^{e}d\,\sbf D_{t}\cdot\sbf s_{n}}\dd{C}+\int_{\Gamma^{e}}N_{i}^{e}\sbf\,e_{n}\cdot\sbf D\dd{\Gamma}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf e_{n}$
+\end_inset
+
+是 
+\begin_inset Formula $\Gamma^{e}$
+\end_inset
+
+（二维单元）的法向单位矢量，
+\begin_inset Formula $\sbf s_{n}$
+\end_inset
+
+ 是
+\begin_inset Formula $C^{e}$
+\end_inset
+
+（一维单元）的法向单位矢量。
 \end_layout
 
 \end_body

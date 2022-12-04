@@ -121,6 +121,8 @@ f(n) = \begin{cases} n/2 &\mbox{if } n \equiv 0 \\
 
 ## 矩阵模板
 
+ref amsdoc_4.1_矩阵
+
 ```latex
 \begin{equation}\begin{aligned}
 %%\label{eq.6.1.2}
@@ -132,15 +134,13 @@ f(n) = \begin{cases} n/2 &\mbox{if } n \equiv 0 \\
 \end{aligned}\end{equation}
 ```
 
-参考 amsdoc_4.1_矩阵
-
-除了LATEX的基本阵列环境外,amsmath软件包还为矩阵提供了一些环境.
+除了 LaTeX 的基本 array 环境外, amsmath 软件包还为矩阵提供了一些环境.
 `pmatrix`,`bmatrix`,`Bmatrix`,`vmatrix`和`Vmatrix`
 分别具有`()`,`[]`,`{}`,`|`,`||`分隔符.
-为了命名一致性,有一个`matrix`环境,没有定界符.
+为了命名一致性, 还有一个`matrix`环境, 没有分隔符.
 
-对于`array`环境,这并不是完全多余的.`matrix`环境都`array`环境的水平间距更经济.
-另外,与阵列环境不同,您不必为任何`matrix`环境提供`column specifications`;
+对于`array`环境,这并不是完全多余的. `matrix`环境比`array`环境的水平间距更经济.
+另外, 与 `array` 环境不同, 您不必为任何`matrix`环境提供`column specifications`;
 默认情况下,您最多可以有`10`个居中的列. (如果需要以一列或其他特殊格式左对齐或右对齐,则必须诉诸`array`.)
 
 为了产生适用于文本的小矩阵,需要有一个`smallmatrix`环境,它比普通矩阵更适合于单个文本行.
@@ -849,8 +849,10 @@ LaTeX 不会把数学模式中的黑体全搞成 poor man's bold,
 更多的时候我们只希望加粗个别符号. 这当然还是一个字体选择的问题.
 LaTeX 并不允许在数学公式内部直接设置 `\mathversion`, 即在公式内使用 `\boldmath` 是无效的.
 为此, `amsmath` 宏包(更确切地说是子包 `amsbsy`)提供了 `\boldsymbol` 命令,
-使用 `\boldsymbol{符号}` 的效果大约就是临时切换到文本模式, 设置 `\boldmath`, 然后里面嵌套一个小数学公式, 输出加粗符号.
-除此以外宏包也用一些代码处理了数学间距和大小的变化情况. 最后用起来的效果就是只加粗了参数里面的符号. 如:
+使用 `\boldsymbol{符号}` 的效果大约就是临时切换到文本模式,
+设置 `\boldmath`, 然后里面嵌套一个小数学公式, 输出加粗符号.
+除此以外宏包也用一些代码处理了数学间距和大小的变化情况.
+最后用起来的效果就是只加粗了参数里面的符号. 如:
 
 ```latex
 \documentclass{article}
@@ -1200,7 +1202,7 @@ amsmath; chap 7.1, page21;
 0<j<n}} P(i,j)
 ```
 
-稍微通用的形式是 `subarray` 环境, 
+稍微通用的形式是 `subarray` 环境,
 它允许你指定每一行应该是`左对齐`而不是`居中`, 就像这里:
 
 ```latex
@@ -1323,4 +1325,67 @@ mathtools
     0 < j < n
   \end{subarray}} P(i, j)
 \end{gather}
+```
+
+### 行间公式间距, display style
+
+[Latex中调整多行公式间距的方法](https://blog.csdn.net/dongle0224/article/details/88820170)
+[Latex中调整多行公式间距的方法](https://blog.csdn.net/LeleHEU/article/details/118438407)
+
++ 公式过于紧凑, 使得排版不美观.
+这个时候我们可以在第一列的最后加上 `\vspace{1ex}`
+(大括号内的数字表示行间距大小, 可以自行设置)
+
+```latex
+\begin{array}{l}
+ M = M.*Y{A^T}./MA{A^T}\vspace{1ex}, \\
+ A = A.*{M^T}Y./{M^T}MA.
+ \end{array}
+```
+
++ 调整方法2. 公式换行的时候, 加上参数 `\\[1mm]`, 例如
+
+```latex
+\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt \\[5mm]
+\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt
+```
+
+### LaTeX 调整行内公式的行距
+
+[LaTeX 中如何调整行内公式的行距](https://www.zhihu.com/question/388815628)
+
+试试设置更大的 `\lineskip` 和 `\lineskiplimit`.  它们的作用是:
+
++ 当相邻行的 `纵向间距` 小于 `\lineskiplimit` 时, 额外插入高度为 `\lineskip` 的间距.
+详见书籍 TeX by Topic[1], chap 15.
++ 另见刘海洋的知乎回答
+    + [对于固定格式的文档, latex相对于word来说还有什么优势? ](https://www.zhihu.com/question/58100147/answer/155635456)
+    + [LaTeX 设置的行距与 Word 的行距如何对应?](https://www.zhihu.com/question/62327906/answer/197899935)
+
+从一致性的角度, 应注意避免行间距不一致.
+减小行内公式的高度(使用 m/2 代替 \frac{m}{2})和 复杂程度,
+在合适时使用行间公式都是可行的方面. 可依据习惯和个人偏好选用.
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\newcommand\test{\par
+  \noindent
+  \texttt{\textbackslash lineskip = \the\lineskip,
+          \textbackslash lineskiplimit = \the\lineskiplimit}\par
+  text text text text text text text text text \\
+  text text text text $\frac1{\frac nm} + \dfrac1{\frac nm}$ text text text text\\
+  text text text text text text text text text text \\
+  text text text text text text text text text text \par\bigskip
+}
+
+\test
+
+\setlength{\lineskip}{2.5pt}
+\setlength{\lineskiplimit}{2.5pt}
+\test
+\end{document}
 ```
