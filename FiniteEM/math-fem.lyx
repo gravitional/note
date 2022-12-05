@@ -5350,14 +5350,49 @@ literal "false"
 
 \end_inset
 
+其中
+\begin_inset Formula $\sbf e_{2}$
+\end_inset
 
+从介质
+\begin_inset Formula $1$
+\end_inset
+
+指向介质
+\begin_inset Formula $2$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename inset/GuoShuoHong-1.12.png
 	lyxscale 70
 	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+法向分量的跃变
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -16540,9 +16575,9 @@ noprefix "false"
 
 因此有
 \begin_inset Formula 
-\[
-\nabla_{t}\cdot\left(d\epsilon_{0}\sbf E_{t}\right)+\sbf n\cdot\epsilon_{0}\sbf E=0
-\]
+\begin{equation}
+\nabla_{t}\cdot\left(d\epsilon_{0}\sbf E_{t}\right)+\sbf n\cdot\epsilon_{0}\sbf E=0\label{eq:screen}
+\end{equation}
 
 \end_inset
 
@@ -16552,12 +16587,12 @@ noprefix "false"
 \begin_inset Formula $\sbf n$
 \end_inset
 
- 是法线方向，从低
-\begin_inset Formula $\epsilon$
+ 是法线方向，从高
+\begin_inset Formula $\epsilon_{r}$
 \end_inset
 
-介质指向高
-\begin_inset Formula $\epsilon$
+介质指向低
+\begin_inset Formula $\epsilon_{0}$
 \end_inset
 
 介质
@@ -17255,18 +17290,30 @@ Ritz方法
 \end_inset
 
 上的场。
+\color blue
+
 \begin_inset Formula $\sbf e_{n}$
 \end_inset
 
- 是法线方向，指向求解区域外侧。为了加上介电屏蔽条件，在边界曲面
+ 是法线方向，指向求解区域外侧
+\color inherit
+（从低
+\begin_inset Formula $\epsilon$
+\end_inset
+
+指向高
+\begin_inset Formula $\epsilon$
+\end_inset
+
+）。为了加上介电屏蔽条件，在边界曲面
 \begin_inset Formula $\Gamma$
 \end_inset
 
 上添加一项：
 \begin_inset Formula 
 \begin{align*}
-\mathcal{F}^{s}\left(\phi^{s}\right) & =-\frac{1}{2}\int_{\Gamma^{s}}\left[(\nabla_{t}\phi^{s})\cdot d\epsilon\cdot(\nabla_{t}\phi^{s})\right]\dd{\Gamma}\\
- & ={\color{blue}\frac{1}{2}\int_{\Gamma^{s}}\left[\phi^{s}\,(\nabla_{t}\cdot d\epsilon_{0}\nabla_{t})\,\phi^{s}\right]\dd{\Gamma}}-{\color{brown}\int_{C^{\ell}}\phi^{\ell}\,\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})\dd{C}}
+\mathcal{F}^{s}\left(\phi^{s}\right) & =\frac{1}{2}\int_{\Gamma^{s}}\left[(\nabla_{t}\phi^{s})\cdot d\epsilon\cdot(\nabla_{t}\phi^{s})\right]\dd{\Gamma}\\
+ & ={\color{blue}-\frac{1}{2}\int_{\Gamma^{s}}\left[\phi^{s}\,(\nabla_{t}\cdot d\epsilon_{0}\nabla_{t})\,\phi^{s}\right]\dd{\Gamma}}+{\color{brown}\int_{C^{\ell}}\phi^{\ell}\,\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})\dd{C}}
 \end{align*}
 
 \end_inset
@@ -17301,15 +17348,35 @@ Ritz方法
 
  的变分，将给出对应的电势场方程和边界条件为
 \begin_inset Formula 
-\begin{align*}
--\nabla\cdot\left(\epsilon_{0}\nabla\phi\right)+\beta\phi=f\\
-{\color{blue}\sbf e_{n}\cdot(\epsilon_{0}\cdot\nabla\phi^{s})+(\nabla_{t}\cdot d\epsilon_{0}\nabla_{t})\,\phi^{s}=0} & \quad\text{在交界曲面上}\\
-\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})=0 & \quad\text{在曲面的边界上}
-\end{align*}
+\begin{align}
+-\nabla\cdot\left(\epsilon_{0}\nabla\phi\right)+\beta\phi=f\nonumber \\
+{\color{blue}\sbf e_{n}\cdot(\epsilon_{0}\cdot\nabla\phi^{s})-(\nabla_{t}\cdot d\epsilon_{0}\nabla_{t})\,\phi^{s}=0} & \quad\text{在交界曲面上}\label{eq:di-screen3}\\
+\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})=0 & \quad\text{在曲面的边界上}\nonumber 
+\end{align}
 
 \end_inset
 
-其中 
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:di-screen3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的负号，是由于约定与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:screen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+相反；
 \begin_inset Formula $\sbf e_{n}^{\ell}\cdot(d\epsilon_{0}\cdot\nabla_{t}\phi^{\ell})=0$
 \end_inset
 
@@ -17395,7 +17462,7 @@ Ritz方法
 
 的法向单位矢量，
 \color blue
-指向被求解区域外侧
+指向求解区域外侧
 \color inherit
 （从低
 \begin_inset Formula $\epsilon$
@@ -17412,8 +17479,8 @@ Ritz方法
 上添加一项：
 \begin_inset Formula 
 \begin{align*}
-\mathcal{F}^{\ell}\left(\phi^{\ell}\right) & =-\frac{1}{2}\int_{C^{\ell}}\left[(\partial_{t}\phi^{\ell})\cdot d\epsilon_{0}\cdot(\partial_{t}\phi^{\ell})\right]\dd{C}\\
- & ={\color{blue}\frac{1}{2}\int_{C^{\ell}}\left[\phi^{\ell}\,\left(\partial_{t}\cdot d\epsilon_{0}\,\partial_{t}\right)\,\phi^{\ell}\right]\dd{C}}-{\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}
+\mathcal{F}^{\ell}\left(\phi^{\ell}\right) & =\frac{1}{2}\int_{C^{\ell}}\left[(\partial_{t}\phi^{\ell})\cdot d\epsilon_{0}\cdot(\partial_{t}\phi^{\ell})\right]\dd{C}\\
+ & =-{\color{blue}\frac{1}{2}\int_{C^{\ell}}\left[\phi^{\ell}\,\left(\partial_{t}\cdot d\epsilon_{0}\,\partial_{t}\right)\,\phi^{\ell}\right]\dd{C}}+{\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}
 \end{align*}
 
 \end_inset
@@ -17464,15 +17531,35 @@ Ritz方法
 
  的变分，将给出对应的电势场方程和边界条件为
 \begin_inset Formula 
-\begin{align*}
--\nabla\cdot\left(\epsilon_{0}\nabla\phi\right)+\beta\phi=f\\
-{\color{blue}\sbf e_{n}^{\ell}\cdot(\epsilon_{0}\cdot\nabla\phi^{\ell})+\left(\partial_{t}\cdot d\epsilon_{0}\,\partial_{t}\right)\,\phi^{\ell}=0} & \quad\text{在交界曲线上}\\
-{\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}=0 & \quad\text{在曲线的端点}
-\end{align*}
+\begin{align}
+-\nabla\cdot\left(\epsilon_{0}\nabla\phi\right)+\beta\phi=f\nonumber \\
+{\color{blue}\sbf e_{n}^{\ell}\cdot(\epsilon_{0}\cdot\nabla\phi^{\ell})-\left(\partial_{t}\cdot d\epsilon_{0}\,\partial_{t}\right)\,\phi^{\ell}=0} & \quad\text{在交界曲线上}\label{eq:di-screen2}\\
+{\color{brown}\left.\phi^{\ell}\left(d\epsilon_{0}\cdot\partial_{t}\phi^{\ell}\right)\right|_{p_{1}}^{p_{2}}}=0 & \quad\text{在曲线的端点}\nonumber 
+\end{align}
 
 \end_inset
 
-如果曲线
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:di-screen2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的负号，是由于约定与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:screen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+相反。如果曲线
 \begin_inset Formula $C$
 \end_inset
 

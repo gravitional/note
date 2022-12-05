@@ -149,7 +149,7 @@ for nl = 1:SurfaceSize(1)
         tmp_vec=diff([nodex nodey]);
         Delta_l=norm(tmp_vec);%边界线单元的长度
         %%单元内的Ke矩阵
-        Ke_ij = -screen_d*eps_out/Delta_l*const_ij;
+        Ke_ij = screen_d*eps_out/Delta_l*const_ij;
         for ni = 1:2
             for nj = 1:2
                 %单元Ke在全局Ke中的位置
