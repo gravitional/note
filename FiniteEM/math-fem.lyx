@@ -14553,7 +14553,7 @@ K_{ij}^{s}=\frac{n\ell_{i}^{e}\ell_{j}^{e}}{r^{3}\mu_{r}}\frac{\Delta_{e}}{12} &
 ，另外一部分是电场诱导出的电流，即
 \begin_inset Formula 
 \[
-\sbf J_{\text{tot}}=\sbf J(t)+\sigma\sbf E
+\sbf J_{\text{tot}}=\sbf J_{\text{ex}}(t)+\sigma\sbf E
 \]
 
 \end_inset
@@ -14565,7 +14565,7 @@ K_{ij}^{s}=\frac{n\ell_{i}^{e}\ell_{j}^{e}}{r^{3}\mu_{r}}\frac{\Delta_{e}}{12} &
 电场和磁场满足麦克斯韦方程
 \begin_inset Formula 
 \[
-\nabla\times\sbf H-\frac{\partial\sbf D}{\partial t}=\sbf J(t)+\sigma\sbf E
+\nabla\times\sbf H-\frac{\partial\sbf D}{\partial t}=\sbf J_{\text{ex}}(t)+\sigma\sbf E
 \]
 
 \end_inset
@@ -14577,7 +14577,7 @@ K_{ij}^{s}=\frac{n\ell_{i}^{e}\ell_{j}^{e}}{r^{3}\mu_{r}}\frac{\Delta_{e}}{12} &
 ，因此
 \begin_inset Formula 
 \begin{equation}
-\nabla\times\sbf H=\sbf J(t)+\sigma\sbf E\label{eq:xl4.3}
+\nabla\times\sbf H=\sbf J_{\text{ex}}(t)+\sigma\sbf E\label{eq:xl4.3}
 \end{equation}
 
 \end_inset
@@ -14626,7 +14626,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-对于时谐磁场，外加电流可以写为
+对于时谐磁场，可以做傅立叶展开，将外加电流写成
 \begin_inset Formula $\sbf J(t)=\sbf J_{0}\cos(\omega t+\varphi)$
 \end_inset
 
@@ -14657,7 +14657,7 @@ noprefix "false"
 ），
 \begin_inset Formula 
 \begin{align*}
-\sbf J(t) & =\sbf J_{0}e^{-i(\omega t+\varphi)}\\
+\sbf J_{\text{ex}}(t) & =\sbf J_{0\text{ex}}e^{-i(\omega t+\varphi)}\\
 \sbf A & =\sbf A_{\omega}e^{-i\omega t}\\
 \sbf\Phi & =\sbf\Phi_{\omega}e^{-i\omega t}
 \end{align*}
@@ -14732,7 +14732,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 \nabla\cdot\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right) & =0\\
-\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right) & =\sbf J_{0}e^{-i\varphi}+\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)
+\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right) & =\sbf J_{0\text{ex}}e^{-i\varphi}+\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)
 \end{align*}
 
 \end_inset
@@ -14820,7 +14820,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 {\color{blue}K_{ij}^{e}} & =\int_{\Omega^{e}}\left[\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf N_{j}^{e}\right)-i\omega\sigma\sbf N_{i}^{e}\cdot\sbf N_{j}^{e}\right]\dd{\Omega}\\
-b_{i}^{e} & =\int_{\Omega^{e}}\sbf J_{0}e^{-i\varphi}\cdot\sbf N_{i}^{e}\dd{\Omega}\\
+b_{i}^{e} & =\int_{\Omega^{e}}\sbf J_{0\text{ex}}e^{-i\varphi}\cdot\sbf N_{i}^{e}\dd{\Omega}\\
 {\color{red}C_{im}^{e}=C_{mi}^{e}} & =\int_{\Omega^{e}}\nabla\cdot(L_{m}^{e}\sigma\sbf N_{i}^{e})\dd{\Omega}\\
 {\color{brown}D_{mn}^{e}} & =\int_{\Omega^{e}}\frac{i}{\omega}(\nabla L_{n}^{e})\cdot\sigma(\nabla L_{m}^{e})\dd{\Omega}
 \end{align*}
@@ -14849,6 +14849,120 @@ b_{i}^{e} & =\int_{\Omega^{e}}\sbf J_{0}e^{-i\varphi}\cdot\sbf N_{i}^{e}\dd{\Ome
 
 \begin_layout Section
 暂态磁场
+\end_layout
+
+\begin_layout Standard
+如果将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl4.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl4.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+直接代入式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl4.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl4.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sigma\left(\nabla\Phi+\frac{\partial\sbf A}{\partial t}\right) & =0\\
+\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right) & =\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}+\sbf J_{\text{ex}}+\sigma\left(-\nabla\Phi-\frac{\partial\sbf A}{\partial t}\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf M_{0}$
+\end_inset
+
+为零外加磁场下，永磁材料中的磁化强度。
+\end_layout
+
+\begin_layout Remark
+这里使用了电磁场方程和永磁体的本构关系，即 
+\begin_inset Formula 
+\[
+\sbf B=\nabla\times\sbf A,\quad\sbf E=-\nabla\phi-\frac{\partial\sbf A}{\partial t}
+\]
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\times\sbf H=\sbf J_{\text{ex}}+\sigma\sbf E\\
+ & \sbf B=\mu_{0}\mu_{r}\sbf H+\mu_{0}\sbf M_{0}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+取 
+\begin_inset Formula $\Phi=\frac{\partial W}{\partial t}$
+\end_inset
+
+ 可以得到
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)=0,\\
+ & \nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)=\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}+\sbf J_{\text{ex}}-\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)
+\end{align*}
+
+\end_inset
+
+分别以
+\begin_inset Formula $\sbf N_{i}$
+\end_inset
+
+和
+\begin_inset Formula $L_{m}^{e}$
+\end_inset
+
+作为加权函数，计算对应的残差可以得到
+\begin_inset Formula 
+\begin{align*}
+R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)-\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}-\sbf J_{\text{ex}}+\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\\
+ & \quad-\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\frac{1}{\mu_{r}}\left(\sbf M_{0}\times\sbf e_{n}\right)\dd{\Gamma}\\
+ & =\int_{\Omega^{e}}\dd{\Omega}\Big[(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)-\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}\\
+ & \quad-\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})+\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\Big]
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -18608,6 +18722,120 @@ R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left
 
 \begin_layout Section
 电流场中的介电屏蔽条件
+\end_layout
+
+\begin_layout Chapter
+网格
+\end_layout
+
+\begin_layout Standard
+过任意三个不共线的点
+\begin_inset Formula $(x_{i},y_{i})$
+\end_inset
+
+，
+\begin_inset Formula $i=1,2,3$
+\end_inset
+
+的圆，其圆心
+\begin_inset Formula $(x_{0},y_{0})$
+\end_inset
+
+ 和半径平方
+\begin_inset Formula $r^{2}$
+\end_inset
+
+为
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
+ 0])^2 == r2, (Subscript[x, 2] - Subscript[x, 0])^2 + (Subscript[y, 2] -
+ Subscript[y, 0])^2 == r2, (Subscript[x, 3] - Subscript[x, 0])^2 + (Subscript[y,
+ 3] - Subscript[y, 0])^2 == r2}; ans = Simplify[ First@Solve[equ, {Subscript[x,
+ 0], Subscript[y, 0], r2}], r2 > 0 ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & x_{0}=\frac{x_{1}^{2}y_{23}+x_{2}^{2}y_{31}+x_{3}^{2}y_{12}+y_{23}y_{12}y_{13}}{a},\\
+ & y_{0}=\frac{x_{1}b_{23}+x_{2}b_{31}+x_{3}b_{12}}{a},\\
+ & r^{2}=\frac{\left(x_{12}^{2}+y_{12}^{2}\right)\left(x_{13}^{2}+y_{13}^{2}\right)\left(x_{23}^{2}+y_{23}^{2}\right)}{a^{2}}
+\end{align*}
+
+\end_inset
+
+其中定义了 
+\begin_inset Formula $a$
+\end_inset
+
+，
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $x_{ij}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+ & a=2(x_{3}y_{12}+x_{1}y_{23}+x_{2}y_{31})\\
+ & b_{ij}=x_{i}^{2}+y_{i}^{2}-x_{j}^{2}-y_{j}^{2}\\
+ & x_{ij}=x_{i}-x_{j}\text{，}y_{ij}=y_{i}-y_{j}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+讨论特殊情况：上面的解假设了三点不共线。给定任意三点，不妨通过坐标系转动使得
+\begin_inset Formula $x_{1}=x_{2}$
+\end_inset
+
+且
+\begin_inset Formula $y_{1}\neq y_{2}$
+\end_inset
+
+（非同一点），令
+\begin_inset Formula $a=0$
+\end_inset
+
+，解得 
+\begin_inset Formula $x_{1}=x_{3}$
+\end_inset
+
+，则 
+\begin_inset Formula $x_{1}=x_{2}=x_{3}$
+\end_inset
+
+，表明只有三点共线，才会令分母
+\begin_inset Formula $a=0$
+\end_inset
+
+。同样，如果我们令
+\begin_inset Formula $y_{1}=y_{2}$
+\end_inset
+
+且
+\begin_inset Formula $x_{1}\neq x_{2}$
+\end_inset
+
+，
+\begin_inset Formula $a=0$
+\end_inset
+
+ 将迫使
+\begin_inset Formula $y_{1}=y_{2}=y_{3}$
+\end_inset
+
+。结论就是，只要三点不共线，上面的解始终适用。
 \end_layout
 
 \end_body
