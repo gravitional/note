@@ -13886,6 +13886,10 @@ b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\sbf J\dd{\Omega}-\mu_{0
 和Ritz法得到的结果完全相同。
 \end_layout
 
+\begin_layout Section
+计算电感
+\end_layout
+
 \begin_layout Chapter
 磁场的开域问题
 \end_layout
@@ -14956,8 +14960,128 @@ noprefix "false"
 \begin{align*}
 R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)-\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}-\sbf J_{\text{ex}}+\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\\
  & \quad-\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\frac{1}{\mu_{r}}\left(\sbf M_{0}\times\sbf e_{n}\right)\dd{\Gamma}\\
- & =\int_{\Omega^{e}}\dd{\Omega}\Big[(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)-\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}\\
- & \quad-\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})+\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\Big]
+ & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{blue}(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)}-\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}\\
+ & \quad-\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})+{\color{brown}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\nabla W}+{\color{magenta}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+和
+\begin_inset Formula 
+\begin{align*}
+R^{e}(\sbf L_{m}^{e}) & =-\int_{\Omega^{e}}\left[L_{m}^{e}\nabla\cdot\sigma\frac{\partial}{\partial t}(\nabla W+\sbf A)\right]\dd{\Omega}+\int_{\Gamma^{e}}\sbf e_{n}\cdot\left(L_{m}^{e}\sigma\frac{\partial}{\partial t}(\nabla W+\sbf A)\right)\dd{\Gamma}\\
+ & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{red}\nabla L_{m}^{e}\cdot\sigma\frac{\partial}{\partial t}\nabla W}+{\color{brown}\nabla L_{m}^{e}\cdot\sigma\frac{\partial}{\partial t}\sbf A}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+作展开 
+\begin_inset Formula $\sbf A=\sbf N_{i}^{e}A_{i}$
+\end_inset
+
+，
+\begin_inset Formula $W=L_{m}^{e}W_{m}$
+\end_inset
+
+，代入上述方程可得
+\begin_inset Formula 
+\begin{align*}
+R^{e}(\sbf N_{i}^{e}) & ={\color{blue}K_{ij}^{e}}\,A_{j}-b_{i}^{e}+{\color{brown}C_{im}^{e}}\frac{\partial W_{m}}{\partial t}+{\color{magenta}M_{ij}^{e}}\frac{\partial A_{j}}{\partial t}\\
+R^{e}(L_{m}^{e}) & ={\color{red}D_{mn}^{e}}\frac{\partial W_{n}}{\partial t}+{\color{brown}C_{mj}^{e}}\frac{\partial A_{j}}{\partial t}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+K_{ij}^{e} & =\int_{\Omega^{e}}\left[{\color{blue}(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)}\right]\dd{\Omega}\\
+b_{i}^{e} & =\int_{\Omega^{e}}\left[\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}+\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})\right]\dd{\Omega}\\
+C_{im}^{e}=C_{mi}^{e} & =\int_{\Omega^{e}}{\color{brown}\sigma\nabla L_{m}^{e}\cdot\sbf N_{i}^{e}}\dd{\Omega}\\
+M_{ij}^{e} & =\int_{\Omega^{e}}{\color{magenta}\sigma\sbf N_{i}^{e}\cdot\sbf N_{j}^{e}}\dd{\Omega}\\
+D_{mn}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{m}^{e}\cdot\nabla L_{n}^{e}\right)}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+最后可以得到两个矩阵方程
+\begin_inset Formula 
+\begin{align*}
+ & \{R^{e}(\sbf N_{i}^{e})\}=[{\color{blue}K_{ij}^{e}}]\{A_{j}\}-\{b_{i}^{e}\}+[{\color{brown}C_{im}^{e}}]\frac{\partial\{W_{m}\}}{\partial t}+[{\color{magenta}M_{ij}^{e}}]\frac{\partial\{A_{j}\}}{\partial t}=\{0\}\\
+ & \{R^{e}(L_{m}^{e})\}=[{\color{red}D_{mn}^{e}}]\frac{\partial\{W_{n}\}}{\partial t}+[{\color{brown}C_{mj}^{e}}]\frac{\partial\{A_{j}\}}{\partial t}=\{0\}
+\end{align*}
+
+\end_inset
+
+整理之后可得
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+[0] & [0]\\{}
+[0] & [{\color{blue}K_{ij}^{e}}]
+\end{array}\right]\left\{ \begin{array}{c}
+\{W_{n}\}\\
+\{A_{j}\}
+\end{array}\right\} +\left[\begin{array}{cc}
+[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
+[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
+\end{array}\right]\frac{\partial}{\partial t}\left\{ \begin{array}{c}
+\{W_{n}\}\\
+\{A_{j}\}
+\end{array}\right\} =\left\{ \begin{array}{c}
+\{0\}\\
+\{b_{i}^{e}\}
+\end{array}\right\} 
+\]
+
+\end_inset
+
+将时间微分离散化
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+[0] & [0]\\{}
+[0] & [{\color{blue}K_{ij}^{e}}]
+\end{array}\right]\left\{ \begin{array}{c}
+\{W_{n}\}\\
+\{A_{j}\}
+\end{array}\right\} +\left[\begin{array}{cc}
+[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
+[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
+\end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
+\{W_{n}^{t+\Delta t}\}-\{W_{n}\}\\
+\{A_{j}^{t+\Delta t}\}-\{A_{j}\}
+\end{array}\right\} =\left\{ \begin{array}{c}
+\{0\}\\
+\{b_{i}^{e}\}
+\end{array}\right\} 
+\]
+
+\end_inset
+
+最后得到
+\begin_inset Formula 
+\begin{align*}
+ & \Bigg(\left[\begin{array}{cc}
+[0] & [0]\\{}
+[0] & [{\color{blue}K_{ij}^{e}}]
+\end{array}\right]+\frac{1}{\Delta t}\left[\begin{array}{cc}
+[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
+[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
+\end{array}\right]\Bigg)\left\{ \begin{array}{c}
+\{W_{n}^{t+\Delta t}\}\\
+\{A_{j}^{t+\Delta t}\}
+\end{array}\right\} \\
+ & \qquad=\left\{ \begin{array}{c}
+\{0\}\\
+\{b_{i}^{e}\}
+\end{array}\right\} +\frac{1}{\Delta t}\left[\begin{array}{cc}
+[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
+[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
+\end{array}\right]\left\{ \begin{array}{c}
+\{W_{n}\}\\
+\{A_{j}\}
+\end{array}\right\} 
 \end{align*}
 
 \end_inset
@@ -16000,6 +16124,276 @@ F_{\alpha} & =\sum_{\langle e\rangle}\int_{\Omega^{e}}\frac{\sbf E\cdot\sbf D}{2
 \end_inset
 
  为转轴的坐标，对目标区域的节点上的力矩进行求和，同样可以得到总的电磁力矩。
+\end_layout
+
+\begin_layout Section
+麦克斯韦协强张量法
+\end_layout
+
+\begin_layout Standard
+麦克斯韦协强张量法通常用来计算被真空包围的磁体在磁场作用下受到的合力。从洛伦兹力表达式
+\begin_inset Formula 
+\begin{equation}
+\sbf F=\int_{V}\sbf J\times\sbf B\dd{V}\label{eq:xl6.18}
+\end{equation}
+
+\end_inset
+
+出发，根据
+\begin_inset Formula $\nabla\times\sbf B=\mu_{0}\sbf J$
+\end_inset
+
+ 和 
+\begin_inset Formula $\nabla\cdot\sbf B=\sbf0$
+\end_inset
+
+，可以得到
+\begin_inset Formula 
+\[
+\sbf F=\int_{V}\frac{(\nabla\times\sbf B)\times\sbf B+(\nabla\cdot\sbf B)\sbf B}{\mu_{0}}\dd{V}
+\]
+
+\end_inset
+
+分量形式下
+\begin_inset Formula 
+\begin{equation}
+F_{a}=\int_{V}\frac{-(\partial_{a}B_{b})B_{b}+(\partial_{b}B_{a})B_{b}+B_{a}(\partial_{b}B_{b})}{\mu_{0}}\dd{V}\label{eq:xl6.19}
+\end{equation}
+
+\end_inset
+
+在没有电场的情况下，麦克斯韦协强张量定义为
+\begin_inset Formula 
+\begin{equation}
+\mathcal{T}_{ab}=\frac{1}{\mu_{0}}B_{a}B_{b}-\frac{B_{c}B_{c}}{2\mu_{0}}\delta_{ab}\label{eq:xl6.20}
+\end{equation}
+
+\end_inset
+
+ 计算可以得到
+\begin_inset Formula 
+\begin{align*}
+\partial_{b}\mathcal{T}_{ab} & =\frac{1}{\mu_{0}}\partial_{b}(B_{a}B_{b})-\frac{\partial_{b}(B_{c}B_{c})}{2\mu_{0}}\delta_{ab}\\
+ & =\frac{(\partial_{b}B_{a})B_{b}+B_{a}(\partial_{b}B_{b})}{\mu_{0}}-\frac{(\partial_{a}B_{b})B_{b}}{\mu_{0}}
+\end{align*}
+
+\end_inset
+
+所以
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示的洛伦兹力可以用麦克斯韦协强张量表示为：
+\begin_inset Formula 
+\[
+F_{a}=\int_{V}\dd{V}\partial_{b}\,\mathcal{T}_{ab}=\oint_{S}\dd{S}\sbf n_{b}\,\mathcal{T}_{ab}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+存在表面电流的情况下
+\begin_inset Formula 
+\[
+\sbf F=\iint_{S}\sbf J_{s}\times\frac{\sbf B^{+}+\sbf B^{-}}{2}\dd{S}
+\]
+
+\end_inset
+
+根据边界条件 
+\begin_inset Formula $\sbf n\cdot(\sbf B^{+}+\sbf B^{-})=0$
+\end_inset
+
+以及
+\begin_inset Formula $\sbf n\times(\sbf B^{+}-\sbf B^{-})=\mu_{0}\sbf J_{s}$
+\end_inset
+
+，可以将洛伦兹力分量形式用磁场表示为
+\begin_inset Formula 
+\[
+F_{a}=\iint_{s}\frac{2n_{b}B_{a}^{+}B_{b}^{-}-n_{a}B_{b}^{+}B_{b}^{+}+n_{a}B_{b}^{-}B_{b}^{-}-2n_{b}B_{a}^{-}B_{b}^{+}}{2\mu_{0}}\dd{S}
+\]
+
+\end_inset
+
+另外根据式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示的麦克斯韦协强张量的定义可得
+\begin_inset Formula 
+\[
+n_{b}\left(\mathcal{T}_{ab}^{+}-\mathcal{T}_{ab}^{-}\right)=\frac{2n_{b}B_{a}^{+}B_{b}^{-}-n_{a}B_{b}^{+}B_{b}^{+}+n_{a}B_{b}^{-}B_{b}^{-}-2n_{b}B_{a}^{-}B_{b}^{+}}{2\mu_{0}}
+\]
+
+\end_inset
+
+因此可以将表面电流下的洛伦兹力表示为
+\begin_inset Formula 
+\[
+F_{a}=\iint_{S}n_{b}\left(\mathcal{T}_{ab}^{+}-\mathcal{T}_{ab}^{-}\right)\dd{S}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+等价电流法
+\end_layout
+
+\begin_layout Standard
+根据洛伦兹力的表达式，在静磁学中，一个局域电流分布受到的力为：
+\begin_inset Formula 
+\[
+\sbf F=\int_{V}\sbf J(\sbf r')\times\sbf B(\sbf r')\dd[3]{r'}
+\]
+
+\end_inset
+
+假设电流分布局域在原点附近，将外磁场在原点附近展开：
+\begin_inset Formula $\sbf B(\sbf r')=\sbf B(\sbf0)+(\sbf r'\cdot\nabla)\sbf B(\sbf0)+\cdots$
+\end_inset
+
+，然后代入上式可得
+\begin_inset Formula 
+\[
+F_{a}=\varepsilon_{abc}\int_{V}J_{b}(B_{c}+r_{d}^{\prime}\partial_{d}B_{c})\dd[3]{r'}
+\]
+
+\end_inset
+
+第一项包含
+\begin_inset Formula $\int\sbf J(\sbf r')\dd[3]{r'}$
+\end_inset
+
+，其值等于零（全空间稳恒电流守恒方程）；另外由等式
+\begin_inset Formula $\int_{V}\partial_{a}(J_{a}r_{b}^{\prime}r_{c}^{\prime})\dd[3]{r'}=0$
+\end_inset
+
+，可知 
+\begin_inset Formula $\int_{V}J_{b}r_{c}^{\prime}\dd[3]{r'}$
+\end_inset
+
+为反对称张量。所以
+\begin_inset Formula 
+\begin{align*}
+F_{a} & =\frac{\varepsilon_{abc}}{2}\int_{V}\left(J_{b}r_{d}^{\prime}-J_{d}r_{b}^{\prime}\right)\partial_{d}B_{c}\dd[3]{r'}\\
+ & =\frac{-\varepsilon_{abc}}{2}\int_{V}\varepsilon_{bed}\left(\sbf J\times r^{\prime}\right)_{e}\partial_{d}B_{c}\dd[3]{r'}
+\end{align*}
+
+\end_inset
+
+定义
+\begin_inset Formula 
+\[
+\sbf m=\frac{1}{2}\int_{V}\sbf r'\times\sbf J(\sbf r')\dd[3]{r'}
+\]
+
+\end_inset
+
+并根据
+\begin_inset Formula $\nabla\cdot\sbf B=0$
+\end_inset
+
+，最后可以得到
+\begin_inset Formula 
+\[
+F_{a}=m_{b}\partial_{a}B_{b}
+\]
+
+\end_inset
+
+如果材料里面有连续分布的磁化强度，则合力的表达式为：
+\begin_inset Formula 
+\[
+\sbf F=\int_{\Omega}\sbf M\cdot(\nabla\sbf B)\dd{\Omega}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\nabla\sbf B$
+\end_inset
+
+的结果是一个张量。
+\end_layout
+
+\begin_layout Remark
+\begin_inset Formula $\int_{V}\dd[3]{r'}\partial_{a}(J_{a}r_{b}^{\prime}r_{c}^{\prime})=\oint_{S}\dd{\sbf S}\cdot(\sbf Jr_{b}^{\prime}r_{c}^{\prime})=0$
+\end_inset
+
+（考虑到电流分布是局域的），另一方面
+\begin_inset Formula 
+\begin{align*}
+\int_{V}\partial_{a}(J_{a}r_{b}^{\prime}r_{c}^{\prime})\dd[3]{r'} & =\int_{V}\left[(\partial_{a}J_{a})r_{b}^{\prime}r_{c}^{\prime}+J_{b}r_{c}^{\prime}+J_{c}r_{b}^{\prime}\right]\dd[3]{r'}\\
+ & =\int_{V}(J_{b}r_{c}^{\prime}+J_{c}r_{b}^{\prime})\dd[3]{r'}=0
+\end{align*}
+
+\end_inset
+
+所以说
+\begin_inset Formula $\int_{V}\,J_{b}r_{c}^{\prime}\dd[3]{r'}$
+\end_inset
+
+是反对称的。
+\end_layout
+
+\begin_layout Remark
+若
+\begin_inset Formula $W_{c}=\varepsilon_{abc}U_{a}V_{b}=\sbf U\times\sbf V$
+\end_inset
+
+，定义
+\begin_inset Formula 
+\[
+T_{ab}=\varepsilon_{ab{\color{blue}c}}W_{{\color{blue}c}}
+\]
+
+\end_inset
+
+根据
+\begin_inset Formula $\varepsilon_{abc}\varepsilon_{abd}=\delta_{cd}$
+\end_inset
+
+，逆变换是
+\begin_inset Formula 
+\[
+W_{{\color{blue}d}}=\varepsilon_{ab{\color{blue}d}}T_{ab}
+\]
+
+\end_inset
+
+则根据迷向张量恒等式 
+\begin_inset Formula $\varepsilon_{abc}\varepsilon_{ade}=\delta_{bd}\delta_{ce}-\delta_{be}\delta_{cd}$
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+T_{de}=\varepsilon_{dea}\varepsilon_{abc}U_{b}V_{c}=U_{d}V_{e}-U_{e}V_{d}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
