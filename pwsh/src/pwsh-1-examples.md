@@ -8,9 +8,11 @@
 Get-ChildItem *.txt | Rename-Item -NewName { $_.Name -replace '.txt','.log' }
 ```
 
+## ls 查找
+
 使用 `-WhatIf` 预览替换结果, 而不真正执行替换.
 
-## 查找空文件夹
+### 查找空文件夹
 
 [如何使用Powershell查找空文件夹](如何使用Powershell查找空文件夹)
 
@@ -23,6 +25,12 @@ Get-ChildItem *.txt | Rename-Item -NewName { $_.Name -replace '.txt','.log' }
 + [查找空文件夹](Get-EmptyDirectory.ps1)
 + [合并子文件到上层](Merge-ChildItem.ps1)
 + [批量拉取文件](receive-adb.ps1)
+
+### 查找特定名称的文件夹
+
+```powershell
+ls  -Recurse -Filter 'SolvingDomain'
+```
 
 ## Copy-Item
 
@@ -53,7 +61,7 @@ Copy-Item -Path C:\temp\tree -Filter *.txt -Recurse -Container:$false
 (Get-ChildItem . -Recurse).FullName
 ```
 
-+ 使用 `Get-ChildItem -Recurse -Filter` 和管道, Merge 复制, 把过滤出的文件复制到同一目录下
++ 使用 `Get-ChildItem -Recurse -Filter` 和 `管道`, Merge 复制, 把过滤出的文件复制到同一目录下
 
 ```powershell
 D:\temp\out> Get-ChildItem -Path D:\temp\tree -Recurse -Filter ex* | Copy-Item

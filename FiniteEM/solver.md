@@ -209,8 +209,9 @@ main(int argc, char* argv[]);
                                 // 设置 jobID 对应的名称, 存入 unordered_map<string, int> _nameMap, 不同 reader 共享
                                 reader->SetIDByName(_name,_jobID);
                                 job->Create(*reader); //virtual, 创建 new job
-                                    非线性迭代 // /Electrics/Analysis/LoadJobEF.cpp
-                                    载荷
+                                    NonlinearPara.Create(data) //非线性迭代; /Electrics/Analysis/LoadJobEF.cpp
+                                    couple // 耦合
+                                    load // 创建载荷
                                     int id=model()->AddComponentGenID(_PostAnalysis); // 添加后处理分析任务
                             anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
                         }
@@ -218,6 +219,8 @@ main(int argc, char* argv[]);
                     Initialize(); // 各个场自己的特定初始化, /Electrics/Model/ModelCreatorEF.cpp
                         model()->CopyThreadsMaterial(); //复制线程私有材料对象
                         ApplyConstraint(); // 施加约束
+                            ExpandCons2Ele();//施加约束到单元上
+                            BuildMstSlvDofConnection();// 建立主从约束
                         ArrangeEquationNo(); // 数据自由度排序
                         PartitionMesh(); // 剖分网格
                         AdjustRankComponent(); // 调整构件所属MPI 节点
@@ -234,9 +237,17 @@ main(int argc, char* argv[]);
                 auto analysis = anlsCtrl()->GetNextAnalysis();
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
-                    Analyze(); // virtual, /Electrics/Analysis/AnalysisStaticEF.cpp
+                    Analyze(); // 虚函数, /Electrics/Analysis/AnalysisStaticEF.cpp
                         InitBeforeJobLoop(); // 静态电场分析初始化
                         analyze_EM_Field_Nonlinear(); //非线性迭代
+                            AssembleGlobleFv(p_GFv_T); //组装总体载荷列向量(力矢量)
+                            CalculateTotalForce(); //计算total force, 存入 p_GRt
+                            AssembleGlobleK(K); //组装总体刚度矩阵
+                                CalcuElementMatrixKe(Ke);//组装单元上的局域刚度矩阵, 迭代所有单元, 包括体单元, 面单元, 线单元.
+                            CallSolver_T(K,p_GRt.data(),p_Solu_T.data());//求解方程
+                            LineSearch();//回溯线搜索
+                            p_resultHadle->CopySoluData(STP_SEARCH,_jobID,1);//复制解到 线搜索存储空间
+                            p_resultHadle->AccumSoluData(STEPBEG_ACCUM,STP_SEARCH); // 将结果累加
                             AlgPostAnalysisEF analysis; // 新建Post分析对象
                             analysis.Run(); // 运行后处理分析, 电磁力, 力矩, 电容
                                 FieldWriterEF* writer=objects()->GetUniPtr<FieldWriterEF>();
@@ -282,11 +293,11 @@ calc()
 
 + `CASE_PATH`; 工程路径
 + `--help`; `-h`; 打印帮助信息
-+ `--threads`; `-p`; 并行线程数目，调试建议为1
++ `--threads`; `-p`; 并行线程数目, 调试建议为1
 + `--cuda`; `-c`; 启用 cuda;
 + `--no-warning`; `-w`; 不输入日志中的 warning 信息
 + `--debug`; `-d`; 会输出日志中的debug信息, 平时建议加上
-+ `--test`; `-t`; 会输出日志中的 test 信息，用于自动化测试，平时建议加上
++ `--test`; `-t`; 会输出日志中的 test 信息, 用于自动化测试, 平时建议加上
 + `--profile`; `-f`; 会额外打印时间内存信息
 + `--restart`; `-r`; 续算
 + `--ensight`; `-e`; 会输出 ensight 格式结果, 平时建议加上.
@@ -297,7 +308,13 @@ calc()
 
 ### 分解过程错误
 
-    [Warning] 分解过程错误：-9，
-    
+    [Warning] 分解过程错误: -9,
+
 网格匹配要和周期边界主从一致
 网格的 `网格匹配` 的 `主从顺序`, 要和 `周期边界` 那边的设置一致
+
+## 打印机使用
+
+ibesupport, 8888
+添加用户名和地址.
+待扫描文件放到顶端 `斜坡输入口`, 选择 `扫描后发送` 功能

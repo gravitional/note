@@ -1749,11 +1749,11 @@ noprefix "false"
 \end_inset
 
  加到 
-\begin_inset Formula $K_{n(i,e),n(j,e)}$
+\begin_inset Formula $K_{{\color{blue}n(i,e)},n(j,e)}$
 \end_inset
 
 上，
-\begin_inset Formula $n(i,e)$
+\begin_inset Formula ${\color{blue}n(i,e)}$
 \end_inset
 
  表示索引转换矩阵。
@@ -1803,7 +1803,7 @@ K_{23}^{(1)} & K_{21}^{(1)} & 0 & K_{22}^{(1)} & 0 & 0\\
 \end_layout
 
 \begin_layout Enumerate
-将计算所得 单元局域刚度矩阵 存储在 Ke 变量中；
+将计算所得 单元的局域刚度矩阵 存储在 Ke 变量中；
 \end_layout
 
 \begin_layout Enumerate
@@ -1817,11 +1817,72 @@ noprefix "false"
 
 \end_inset
 
- 易知，每个单元需要一个长度为 单元结点数 的数组，存放全局编号，对应程序中的变量 LV。
+ 易知，每个单元需要一个长度为 
+\begin_inset Formula $N$
+\end_inset
+
+（单元节点总数） 的数组，存放全局编号，对应程序中的变量 LV。
 \end_layout
 
 \begin_layout Enumerate
 使用 SparseMat<double>::InsertSymMatrix(LV,Ke) 进行组装。
+\end_layout
+
+\begin_layout Enumerate
+索引转换矩阵
+\begin_inset Formula ${\color{blue}n(i,e)}$
+\end_inset
+
+的信息，可以从 网格文件 mesh.dat 中拿到。例如对于 Tri3 （线性三角形）单元，Tri3单元列表形如：
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+0 & \{0 & 5 & 6\}\\
+1 & \{1 & 4 & 8\}\\
+2 & \{2 & 8 & 7\}\\
+3 & \{5 & 8 & 2\}
+\end{array}
+\]
+
+\end_inset
+
+左边一列是单元编号，即
+\begin_inset Formula ${\color{blue}n(i,e)}$
+\end_inset
+
+ 中的
+\begin_inset Formula $e$
+\end_inset
+
+；右边的第
+\begin_inset Formula $1,2,3$
+\end_inset
+
+（即
+\begin_inset Formula ${\color{blue}n(i,e)}$
+\end_inset
+
+ 中的
+\begin_inset Formula $i$
+\end_inset
+
+）个编号按固定次序，分别是三角形三个顶点的全局编号，即
+\begin_inset Formula ${\color{blue}n(i,e)}$
+\end_inset
+
+ 中的
+\begin_inset Formula $n$
+\end_inset
+
+。所以若迭代单元编号，再迭代单元的局域
+\begin_inset Formula $i,j$
+\end_inset
+
+指标（局域节点编号），通过 单元列表，即可求出 
+\begin_inset Formula $n(i,e)$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsubsection
