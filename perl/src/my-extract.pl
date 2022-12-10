@@ -20,14 +20,14 @@ say "let's find out the data!\n";
 while (<$mesh_fh>) {
     given ($_) {
         when (/(\w+) +\{/) {    # 若匹配到 xxx {, 例如 node {
-            $term = $1 . ".$termOrd";    # $1: 匹配到的正则分组1, 例如 node
+            $term = $1 . "-$termOrd";    # $1: 匹配到的正则分组1, 例如 node
             ++$termOrd;
             say "find: `$term' @ $.";    # $. 表示读取到的文件中的行号
             push @tagList,  $term;       # 记录起始标志node, 压入列表顶端
             push @tagStart, $.;          # 记录起始行号
         }
         when (/\}/) {                    # 若匹配到结束符 }
-            say "find: `}'  that end `$term' @ $.";
+            say "find: `}'  that end `$tagList[-1] @ $.";
 
             # 制作映射表, {node => [开始行数，结束行数]}
             push @parse, ( pop @tagList, [ pop @tagStart, $. ] )
