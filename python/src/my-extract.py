@@ -28,10 +28,11 @@ with open(mesh_data, 'r') as mesh_fh:
 parseh = dict(parse)    # 转换成 python dict
 
 # for 迭代遍历key, 打开 输出Handle
-for node, range in parseh.items():
-    with open(f'{node}.txt', 'w') as res_fh:  # 存储结果的 txt
-        with open(mesh_data, 'r') as mesh_fh:     # 从 mesh.dat 中提取数据
-            lnum = 0
+with open(mesh_data, 'r') as mesh_fh:     # 从 mesh.dat 中提取数据
+    for node, range in parseh.items():
+        lnum = 0  # 初始化行数
+        mesh_fh.seek(0)  # 初始化流位置
+        with open(f'{node}.txt', 'w') as res_fh:  # 存储结果的 txt
             for line in mesh_fh:
                 if lnum > range[0] and lnum < range[1]:
                     line = re.sub(r'[\[\],]', '', line)  # 删除多余的字符
