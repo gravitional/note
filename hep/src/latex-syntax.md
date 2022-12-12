@@ -317,6 +317,10 @@ And this is the best squash, \verb+literally!+
 
 使用`quote`,`quotation`环境.
 
+`quotation` 和 `quote` 都是LaTeX中的引用环境,
+当文章是引用其他文献的内容可以使用该环境, 主要表现为引用内容的左右边距比正文要大,
+`quote` 是没有缩进的, `quotation` 是在 `quote` 的基础上增加了缩进 `1.5em`.
+
 ## 标注, callout
 
 可以使用[callouts 包](https://www.ctan.org/pkg/callouts)
@@ -647,9 +651,9 @@ page 1013; 91 Page Management
 + `\r`; \capitalring; o* Ring accent.
 
 `\t`, `\capitaltie`, `\newtie`, `\capitalnewtie`
-Tie-after accent (used for transliterating from Cyrillic, 
-such as in the ALA-LC romanization). 
-It expects that the argument has two characters. 
+Tie-after accent (used for transliterating from Cyrillic,
+such as in the ALA-LC romanization).
+It expects that the argument has two characters.
 The \newtie form is centered in its box.
 
 + `\u`; \capitalbreve; ŏ Breve accent.
