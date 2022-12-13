@@ -382,8 +382,9 @@ Move-ItemProperty -Destination HKLM:\Software\MyCompany\sales -Name product
 
 ## 本质上的行延续
 
-正如已经讨论过的, 流水线是由流水线操作符(|)连接的一系列命令, 通常写在一行. 然而, 为了可读性, PowerShell允许你将流水线分成多行. 当管道操作符是该行的最后一个标记时, PowerShell解析器会将下一行与当前命令连接起来, 继续构建管道.
-
+正如已经讨论过的, 流水线是由流水线操作符(|)连接的一系列命令, 通常写在一行. 
+然而, 为了可读性, PowerShell允许你将流水线分成多行. 
+当管道操作符是该行的最后一个标记时, PowerShell解析器会将下一行与当前命令连接起来, 继续构建管道.
 例如, 下面的单行管道.
 
 ```PowerShell

@@ -5446,6 +5446,359 @@ literal "false"
 
 \end_layout
 
+\begin_layout Standard
+下面从数值方法的角度来说说。
+\end_layout
+
+\begin_layout Quote
+
+\series bold
+所有求解方程的数值方法第一核心是插值算子 
+\end_layout
+
+\begin_layout Standard
+简单的说：
+\end_layout
+
+\begin_layout Enumerate
+有
+\begin_inset Formula $N$
+\end_inset
+
+个插值点 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+, 上面给定了函数值
+\begin_inset Formula $u_{i}$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+ 。插值算子
+\begin_inset Formula $I$
+\end_inset
+
+就是一个映射：把 
+\begin_inset Formula $(u_{i},x_{i})$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+ 映射成给定域上的
+\begin_inset Formula $u(x)$
+\end_inset
+
+函数。 
+\end_layout
+
+\begin_layout Enumerate
+另外，从实现方便的角度，通常这个
+\series bold
+插值为线性的
+\series default
+，也就是这样：
+\begin_inset Formula 
+\[
+u(x)=\sum_{i}u_{i}*\phi_{i}(x)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+是用来展开的函数基。有了插值算子，同时插值又是线性的，我们就可以求出微分算子和积分算子。 比如： 
+\begin_inset Formula 
+\begin{align*}
+\text{微分算子：}\quad & u'(x)=\sum_{i}u_{i}*\phi_{i}^{\prime}(x)\\
+\text{积分算子：}\quad & \int u(x)\dd{x}=\sum_{i}u_{i}*\int\phi_{i}(x)\dd{x}
+\end{align*}
+
+\end_inset
+
+若要求解的方程是 
+\begin_inset Formula $L[u]=b$
+\end_inset
+
+的形式， 
+\begin_inset Formula $L$
+\end_inset
+
+是微分算子（不一定是线性的），把上述微积分算子给倒腾进去，就可以得到：
+\begin_inset Formula 
+\[
+L[\sum_{i}u_{i}*\phi_{i}(x)]=b
+\]
+
+\end_inset
+
+形式的方程。
+\end_layout
+
+\begin_layout Standard
+这样，要求的连续解
+\begin_inset Formula $u(x)$
+\end_inset
+
+我们就可以用一堆离散的系数
+\begin_inset Formula $u_{i}$
+\end_inset
+
+表示出来了。
+\series bold
+只要我们把
+\begin_inset Formula $u_{i}$
+\end_inset
+
+求对了，问题就解决了
+\series default
+。而对应的
+\begin_inset Formula $\phi_{i}(x)$
+\end_inset
+
+就是所谓的基函数 basis function 或形函数 shape function，这些基函数所张成的
+\begin_inset Formula $n$
+\end_inset
+
+维线性空间就是我们所能求出来的解可能存在的空间，是
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 实际可能存在的无穷维空间的一个子集，这个近似程度就是通常所说的
+\begin_inset Formula $n$
+\end_inset
+
+阶精度。
+\end_layout
+
+\begin_layout Standard
+推广一点：
+\end_layout
+
+\begin_layout Enumerate
+这个空间点
+\begin_inset Formula $x_{i}$
+\end_inset
+
+可以是在求解的几何区域上的空间点，也可以是某个频率空间上的一个频率；函数值
+\begin_inset Formula $u_{i}$
+\end_inset
+
+可以是该店的函数值
+\begin_inset Formula $u(x=x_{i})$
+\end_inset
+
+，也可以是这点的导数（紧致格式？）或者谱空间的系数。
+\end_layout
+
+\begin_layout Enumerate
+另外需要注意，
+\series bold
+方程的不同项，插值方法可以不一样
+\series default
+。根据不同项的特点，可以选取不同的插值方法取得更好的效果；FVM为例，Fluent 和 OpenFOAM 的FVM，把点放在网格中心位置，可以认为采用的基函数是
+一阶线性的大平板，这样只要有中心点的值和中心点的梯度，就能重构出单元内的解，但是对于对流项和扩散项，可以采用其他的格式。
+\end_layout
+
+\begin_layout Enumerate
+类似地，
+\series bold
+不同的离散单元，插值方法也可以不一样
+\series default
+。比如上风格式 upwind scheme，当地速度方向不一样，采用的插值点也不一样。
+\end_layout
+
+\begin_layout Enumerate
+同样的，
+\series bold
+不同维度的插值方法也可以不一样
+\series default
+，比如时间和空间，不过文献里一般先对空间进行离散，时间算子 
+\begin_inset Formula $\frac{\partial}{\partial t}$
+\end_inset
+
+先不离散，把空间的问题搞清楚了，就成了一个超大型 ODEs 常微分方程组，接下来再用 Euler，龙格库塔，隐式等问题。FVM 和 FEM 都是空间离散方法。F
+DM 可以离散时间。
+\end_layout
+
+\begin_layout Enumerate
+甚至，
+\series bold
+多个计算步骤的插值方法也不一样
+\series default
+，插值算法也不一定能显式地描述出来（Fluent 的最小二乘法求梯度）。
+\end_layout
+
+\begin_layout Standard
+总之，只要是想得到你手里没有的值，有没有函数可以算，就得插一下。
+\end_layout
+
+\begin_layout Standard
+上面只是达成
+\series bold
+解的离散
+\series default
+，
+\series bold
+方程
+\series default
+还是连续的，计算机还是没法解。下面要把方程也给离散了，计算机才会玩。这涉及到数值方法的另一个核心：
+\series bold
+投影
+\series default
+，搞FEM的人叫加权余量法，玩FDM和FVM的我感觉还没想这么深入。其实就是把方程和一个
+\series bold
+试探函数
+\series default
+test function 即 
+\begin_inset Formula $\psi_{j}(x)$
+\end_inset
+
+ 进行积分，得到一个数字，然后令其为
+\begin_inset Formula $0$
+\end_inset
+
+：逼格高点儿的说法是把高维问题投影成一系列低维问题去解：
+\begin_inset Formula 
+\[
+\int L[\sum_{i}u_{i}*\phi_{i}(x)]*\psi_{j}(x)\dd{x}=\int b*\psi_{j}(x)\dd{x},\quad j=1\cdots M
+\]
+
+\end_inset
+
+这样就可以把一个连续的方程，变成
+\begin_inset Formula $M$
+\end_inset
+
+个代数形式的方程，每个方程有
+\begin_inset Formula $N$
+\end_inset
+
+个未定的系数
+\begin_inset Formula $u_{i}$
+\end_inset
+
+。下面是一些细节：
+\end_layout
+
+\begin_layout Enumerate
+假设
+\begin_inset Formula $L$
+\end_inset
+
+算子是线性的，
+\begin_inset Formula $u_{i}$
+\end_inset
+
+可以提出来，最终形式差不多是 
+\begin_inset Formula $A*u=b$
+\end_inset
+
+ 的线性代数矩阵形式。如果是非线性的，会有 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ 的交叉相乘项，很麻烦。 
+\end_layout
+
+\begin_layout Enumerate
+如果
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+是正交的，并且
+\begin_inset Formula $L$
+\end_inset
+
+是线性的，那么
+\begin_inset Formula $A$
+\end_inset
+
+就是对角矩阵（
+\begin_inset Formula $3$
+\end_inset
+
+对角、
+\begin_inset Formula $5$
+\end_inset
+
+对角之类的）。
+\begin_inset Formula $u$
+\end_inset
+
+直接可以求出来。所以正交性一大好处是交叉项莫名其妙没有了。理论上，如果
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+取相同，对于自伴算子
+\begin_inset Formula $(A^{+}=A)$
+\end_inset
+
+，矩阵
+\begin_inset Formula $A$
+\end_inset
+
+能搞成对称的；如果
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+能搞成自伴算子
+\begin_inset Formula $L$
+\end_inset
+
+的
+\series bold
+特征函数
+\series default
+，貌似可以达到 
+\begin_inset Formula $A=I\Rightarrow x=b$
+\end_inset
+
+，无需求解方程。
+\end_layout
+
+\begin_layout Enumerate
+如果试探函数和基函数取成一样，那么这类方法叫Galerkin方法，好处是可以重复使用基函数。
+\end_layout
+
+\begin_layout Standard
+例子：最简单的FDM，方程只要在 
+\begin_inset Formula $x=x_{i}$
+\end_inset
+
+ 这些插值点上成立即可，
+\begin_inset Formula $\psi_{j}(x)=\delta(x)$
+\end_inset
+
+，也就是狄拉克函数，这种方法又叫配点法，老简单了；但是注意，对于配点法，
+\series bold
+投影点和插值点可以不一样
+\series default
+！
+\end_layout
+
 \begin_layout Section
 有限元法 v.s.
  有限体积法

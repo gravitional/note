@@ -63,7 +63,8 @@ it also makes it easier to compare to previous versions when using source contro
 
 `$ia` 数组只能包含整数.
 
-可以创建强制转换为 `.NET` 中任何受支持的类型的数组.  例如,  `Get-Process` 检索以表示进程的对象属于 `system.object` 类型.  若要创建进程对象的强类型数组:
+可以创建强制转换为 `.NET` 中任何受支持的类型的数组.
+例如,  `Get-Process` 检索以表示进程的对象属于 `system.object` 类型.  若要创建进程对象的强类型数组:
 
 ```powershell
 [Diagnostics.Process[]]$zz = Get-Process
@@ -218,7 +219,8 @@ $a = @(0..4)
 $a += 5
 ```
 
-备注: 使用`+=`运算符时,  `PowerShell` 实际上会创建一个新数组.  如果多次重复操作或数组太大, 则可能会导致性能问题.
+备注: 使用`+=`运算符时,  `PowerShell` 实际上会创建一个新数组.
+如果多次重复操作或数组太大, 则可能会导致性能问题.
 
 从数组中删除元素并不简单, 但可以创建 `新数组`, 该数组仅包含现有数组的选定元素.
 例如, 若要创建不包含元素 `2` 的新数组,请键入:
