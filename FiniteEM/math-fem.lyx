@@ -9757,6 +9757,97 @@ x_{4} & y_{4} & z_{4}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+设矩阵
+\begin_inset Formula $g_{\mu\lambda}$
+\end_inset
+
+，它的行列式为
+\begin_inset Formula $g$
+\end_inset
+
+，
+\begin_inset Formula $g$
+\end_inset
+
+可以按第
+\begin_inset Formula $\mu$
+\end_inset
+
+行展开为
+\begin_inset Formula $g=g_{\mu\lambda}A^{\mu\lambda}$
+\end_inset
+
+，只对
+\begin_inset Formula $\lambda$
+\end_inset
+
+求和，其中
+\begin_inset Formula $A^{\mu\lambda}$
+\end_inset
+
+是
+\begin_inset Formula $g_{\mu\lambda}$
+\end_inset
+
+的代数余子式。所以
+\begin_inset Formula $\partial g/\partial g_{\mu\lambda}=A^{\mu\lambda}$
+\end_inset
+
+。而
+\begin_inset Formula $g_{\mu\lambda}$
+\end_inset
+
+的逆矩阵写作
+\begin_inset Formula $g^{\lambda\mu}=A^{\mu\lambda}/g$
+\end_inset
+
+，所以有
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial g}{\partial g_{\mu\lambda}}=A^{\mu\lambda}=gg^{\lambda\mu}.\label{eq:mat-eq}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $g^{\lambda\mu}$
+\end_inset
+
+ 是 
+\begin_inset Formula $g_{\mu\lambda}$
+\end_inset
+
+ 对应的逆矩阵，并注意指标的变化。可以看到，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mat-eq"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl6.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+具有类似的形式。
+\end_layout
+
 \begin_layout Section
 Edge单元
 \end_layout
@@ -9770,17 +9861,17 @@ Edge单元
  上可以定义形函数：
 \begin_inset Formula 
 \[
-\sbf N_{i}^{e}=\left(L_{i_{1}}^{e}\nabla L_{i_{2}}^{e}-L_{i_{2}}^{e}\nabla L_{i_{1}}^{e}\right)\ell_{i}^{e}
+\sbf N_{i}^{e}=\left(L_{i(1)}^{e}\nabla L_{i(2)}^{e}-L_{i(2)}^{e}\nabla L_{i(1)}^{e}\right)\ell_{i}^{e}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $i_{1}$
+\begin_inset Formula $i(1)$
 \end_inset
 
 与 
-\begin_inset Formula $i_{2}$
+\begin_inset Formula $i(2)$
 \end_inset
 
 为与棱边
@@ -9791,11 +9882,59 @@ Edge单元
 \begin_inset Formula $\ell_{i}^{e}$
 \end_inset
 
- 的绝对值等于棱边的长度，正负号由节点的总体编号决定。形函数 
+ 的绝对值等于棱边的长度，正负号由节点的总体编号决定。
+\begin_inset Formula $\nabla\cdot\sbf N_{i}^{e}=0$
+\end_inset
+
+，此性质只取决于上式的构造，不依赖于
+\begin_inset Formula $L_{i(1)}^{e}$
+\end_inset
+
+和
+\begin_inset Formula $L_{i(2)}^{e}$
+\end_inset
+
+的具体表达式。形函数 
 \begin_inset Formula $\sbf N_{i}^{e}$
 \end_inset
 
  为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/xl-1.2.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维三角形单元，相邻单元同一条棱边上形函数的矢量图分布。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -10510,7 +10649,7 @@ x_{3} & y_{3}
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
 \begin_inset Box Boxed
 position "t"
 hor_pos "c"
@@ -11529,7 +11668,7 @@ Galerkin 方法
 \end_layout
 
 \begin_layout Standard
-FEM-Gerard;p45/61;sec 1.3.11
+ref: FEM-Gerard;p45/61;sec 1.3.11
 \end_layout
 
 \begin_layout Standard
@@ -11543,11 +11682,7 @@ FEM-Gerard;p45/61;sec 1.3.11
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Enumerate
-令 加权的残差（residual error）和 为
+在每个单元上，令加权的残差（residual error）和 为
 \begin_inset Formula 
 \begin{align}
 R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:error}\\
@@ -21044,6 +21179,283 @@ equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
 \end_inset
 
 。结论就是，只要三点不共线，上面的解始终适用。
+\end_layout
+
+\begin_layout Chapter
+Mortor单元法
+\end_layout
+
+\begin_layout Section
+拉格朗日乘子
+\end_layout
+
+\begin_layout Section
+Mortor连续条件
+\end_layout
+
+\begin_layout Standard
+Mortar元法(mortar element method, MEM)是一种新型区域分解算法，它允许将求解区域分解为多个子域，在各个区域以最适合子域特征的方式
+离散。在各个区域的交界面上，
+\series bold
+边界节点不要求逐点匹配
+\series default
+，而是通过建立加权积分形式的 Mortar条件使得交界面上的传递条件在分布意义上满足。 Mortar有限元法(mortar finite element
+ method, MFEM)将 MEM 和有限元法(finite element method, FEM)相结合，在各区域中分别使用 FEM 网格离散，区域的交
+界面上通过施加 Mortar条件实现区域间的自由度连续。根据子域网格位置关系的不同，MFEM 也可以分为重叠型 和非重叠型两种，本文只讨论非重叠
+ MFEM(non- overlapping mortar finite element method, NO-MFEM)的基本原理和实现。
+\end_layout
+
+\begin_layout Standard
+与传统 FEM 不同，MFEM 将求解区域分为多个子域，若 2 个子域的交集仅为以下情况之一：空集、 2 个区域的顶点、为整条边(面)，则称这种区域分解
+ 是几何协调的，否则是几何非协调的，如 图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mortor1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fem-mortor1.png
+	lyxscale 80
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+左边是几何协调分解；右边是几何非协调分解。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mortor1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在几何协调的情况下，具体到网格时，又可以分成
+\series bold
+网格协调
+\series default
+和
+\series bold
+网格非协调
+\series default
+。网格协调是指不同区域间的公共面/边上，网格的节点是重合的，也就是共节点的概念。相应地，非协调是指两区域的公共面/边上，网格节点可以不重合，如图
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mortor2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fem-mortor2.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+左边是协调网格；右边是非协调网格。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mortor2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mortor2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b)中的非协调网格，需要用各个子域的解逼近全域解，关键是解决 内交界面 上节点自由度的连续问题。在 NO-MFEM 中，交界面的连续条件通过选择非
+ Mortar 侧（从边）的有限元空间在交界面上的迹空间作为拉格朗日乘子空间，强制满足 Mortar 条件。例如对于图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mortor2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b)所示的区域 
+\begin_inset Formula $m$
+\end_inset
+
+ 的网格
+\begin_inset Formula $\mathcal{T}_{m}$
+\end_inset
+
+和区 域 
+\begin_inset Formula $n$
+\end_inset
+
+ 的网格
+\begin_inset Formula $\mathcal{T}_{n}$
+\end_inset
+
+，两套网格节点自由度在区域交界面
+\begin_inset Formula $\Gamma_{mn}$
+\end_inset
+
+上满足
+\begin_inset Formula 
+\begin{equation}
+\int_{\Gamma_{mn}^{-}}\mu\,u\,\dd{\Gamma}=\int_{\Gamma_{mn}^{-}}\mu\,v\,\dd{\Gamma}\label{eq:mo8}
+\end{equation}
+
+\end_inset
+
+式中：
+\begin_inset Formula $u$
+\end_inset
+
+ 表示非 Mortar边（从边）的未知函数；
+\begin_inset Formula $v$
+\end_inset
+
+ 表示 Mortar 边（主边）的未知函数；
+\begin_inset Formula $\mu$
+\end_inset
+
+表示试探函数。对
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mo8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+离散可得矩阵形式的 Mortar连续条件，即 
+\begin_inset Formula 
+\begin{equation}
+Cu=Dv\label{eq:mo9}
+\end{equation}
+
+\end_inset
+
+将非Mortar边的节点自由度
+\begin_inset Formula $u$
+\end_inset
+
+作为从节点自由 度，用 Mortar 边的主节点自由度 
+\begin_inset Formula $v$
+\end_inset
+
+表示，即 
+\begin_inset Formula 
+\begin{equation}
+u=C^{-1}D\,v=Qv\label{eq:mo10}
+\end{equation}
+
+\end_inset
+
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mo9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mo10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中：系数矩阵 
+\begin_inset Formula $C$
+\end_inset
+
+、
+\begin_inset Formula $D$
+\end_inset
+
+ 为中间矩阵；
+\begin_inset Formula $Q$
+\end_inset
+
+ 为 MEM 交界面连续条件矩阵。
 \end_layout
 
 \end_body
