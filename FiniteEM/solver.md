@@ -304,6 +304,12 @@ calc()
 + `--license-server-ip`; license服务器IP
 + `--license-server-port`; license服务器端口
 
+调用示例
+
+```powershell
+C:\Sim-dev\Release\bin\Solver\IBECAE\solver.exe --ensight --debug --test --threads=4 xxx\BianYaQi\Solving\SolvingDomain
+```
+
 ## 求解器报错
 
 ### 分解过程错误
@@ -318,3 +324,7 @@ calc()
 ibesupport, 8888
 添加用户名和地址.
 待扫描文件放到顶端 `斜坡输入口`, 选择 `扫描后发送` 功能
+
+## 批量运行工程, 测试solver
+
+[测试 solver 的脚本](solver-test.ps1)

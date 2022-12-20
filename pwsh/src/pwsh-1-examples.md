@@ -36,20 +36,25 @@ ls  -Recurse -Filter 'SolvingDomain'
 
 [Copy-Item](https://learn.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Management/Copy-Item)
 
+### 复制文件, 但不包括自己
+
+默认情况下, 会把 path 复制到 `Destination` 下层.
+通过使用 `xxx\*` 的格式, 把 `C:\Logfiles` 目录的内容复制到现有的 `C:\Drawings` 目录.
+而不复制 `Logfiles` 目录本身.
+如果 `Logfiles` 目录在子目录下有文件, 这些子目录被复制, 其文件树保持不变.
+默认情况下, 容器参数被设置为 "True", 它保留了目录结构.
+
+```powershell
+Copy-Item -Path "C:\Logfiles\*" -Destination "C:\Drawings" -Recurse
+```
+
 ### 单层copy
 
-+ `-Include -Recurse`; `-Include` 只做用到 `-Path` 给出的顶层目录上, 不审核子文件
++ `-Include xxx -Recurse`; `-Include` 只做用到 `-Path` 给出的顶层目录上, 不审核子文件
 
 ```powershell
 D:\temp\out> Copy-Item -Path D:\temp\tree\* -Include ex* -Recurse
 D:\temp\out> (Get-ChildItem -Recurse).FullName
-D:\temp\out\examples
-D:\temp\out\example.ps1
-D:\temp\out\example.txt
-D:\temp\out\examples\subfolder
-D:\temp\out\examples\example_1.txt
-D:\temp\out\examples\example_2.txt
-D:\temp\out\examples\subfolder\test.txt
 ```
 
 ### Merge copy

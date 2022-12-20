@@ -91,7 +91,7 @@ graphicboxes
 \end_layout
 
 \begin_layout Author
-Young
+Yang
 \end_layout
 
 \begin_layout Chapter
@@ -100,6 +100,1798 @@ Young
 
 \begin_layout Section
 CAE仿真求解：有限元（重点描述） 边界元 有限体积 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "FDM,FEM,FVM三者的比较"
+target "https://blog.sina.com.cn/s/blog_48c735630100qva7.html"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+FDM 
+\end_layout
+
+\begin_layout Subsubsection
+概念 
+\end_layout
+
+\begin_layout Standard
+有限差分方法(FDM)是计算机数值模拟最早采用的方法，至今仍被广泛运用。该方法将求解域划分为差分网格，用有限个网格节点代替连续的求解域。有限差分法以Taylor
+级数展开等方法，把控制方程中的导数用网格节点上的函数值的差商代替进行离散，从而建立以网格节点上的值为未知数的代数方程组。该方法是一种直接将微分问题变为代数问题的
+近似数值解法，数学概念直观，表达简单，是发展较早且比较成熟的数值方法。
+\end_layout
+
+\begin_layout Subsubsection
+差分格式 
+\end_layout
+
+\begin_layout Enumerate
+从格式的精度来划分，有一阶格式、二阶格式和高阶格式。
+\end_layout
+
+\begin_layout Enumerate
+从差分的空间形式来考虑，可分为中心格式和逆风格式。 
+\end_layout
+
+\begin_layout Enumerate
+考虑时间因子的影响，差分格式还可以分为显格式、隐格式、显隐交替格式等。
+\end_layout
+
+\begin_layout Standard
+目前常见的差分格式，主要是上述几种形式的组合，不同的组合构成不同的差分格式。差分方法主要适用于有结构网格，网格的步长一般根据实际地形的情况和柯朗稳定条件来决定。
+\end_layout
+
+\begin_layout Subsubsection
+构造差分的方法 
+\end_layout
+
+\begin_layout Standard
+构造差分的方法有多种形式，目前主要采用的是泰勒级数展开方法。其基本的差分表达式主要有三种形式：一阶向前差分、一阶向后差分、一阶中心差分和二阶中心差分等，其中前两
+种格式为一阶计算精度，后两种格式为二阶计算精度。通过对时间和空间这几种不同差分格式的组合，可以组合成不同的差分计算格式。
+\end_layout
+
+\begin_layout Subsection
+FEM
+\end_layout
+
+\begin_layout Standard
+《有限元分析及应用 曾攀著》
+\end_layout
+
+\begin_layout Subsubsection
+概述 
+\end_layout
+
+\begin_layout Standard
+有限元方法（FEM）的基础是变分原理和加权余量法，其基本求解思想是把计算域划分为有限个互不重叠的单元，在每个单元内，选择一些合适的节点作为求解函数的插值点，将微
+分方程中的变量改写成由各变量或其导数的节点值与所选用的插值函数组成的线性表达式（形函数），借助于变分原理或加权余量法，将微分方程离散求解。采用不同的
+\color blue
+权函数
+\color inherit
+和
+\color blue
+插值函数
+\color inherit
+形式，便构成不同的有限元方法。
+\end_layout
+
+\begin_layout Subsubsection
+原理 
+\end_layout
+
+\begin_layout Standard
+有限元方法最早应用于结构力学，后来随着计算机的发展慢慢用于流体力学、土力学的数值模拟。在有限元方法中，把计算域离散剖分为有限个互不重叠且相互连接的单元，在每个单
+元内选择基函数，用单元基函数的线形组合来逼近单元中的真解，整个计算域上总体的基函数可以看为由每个单元基函数组成的，则整个计算域内的解可以看作是由所有单元上的近似
+解构成。在河道数值模拟中，常见的有限元计算方法是由变分法和加权余量法发展而来的里兹法和伽辽金法、最小二乘法等。
+\end_layout
+
+\begin_layout Standard
+根据所采用的权函数和插值函数的不同，有限元方法也分为多种计算格式。
+\end_layout
+
+\begin_layout Enumerate
+从权函数的选择来说，有配置法、矩量法、最小二乘法和伽辽金法；
+\end_layout
+
+\begin_layout Enumerate
+从计算单元网格的形状来划分，有三角形网格、四边形网格和多边形网格；
+\end_layout
+
+\begin_layout Enumerate
+从插值函数的精度来划分，又分为线性插值函数和高次插值函数等。 不同的组合同样构成不同的有限元计算格式。
+\end_layout
+
+\begin_layout Standard
+对于权函数，伽辽金(Galerkin)法是将权函数取为逼近函数中的基函数；最小二乘法是令权函数等于余量本身，而内积的极小值则为对代求系数的平方误差最小；在配置法
+（collection）中，先在计算域内选取N个配置点。令近似解在选定的N个配置点上严格满足微分方程，即在配置点上令方程余量为
+\begin_inset Formula $0$
+\end_inset
+
+。插值函数一般由不同次幂的多项式组成，但也有采用三角函数或指数函数组成的乘积表示，但最常用的多项式插值函数。
+\end_layout
+
+\begin_layout Standard
+有限元插值函数分为两大类，一类只要求插值多项式本身在插值点取问题给定值，称为拉格朗日(Lagrange)多项式插值；另一种不仅要求插值多项式本身，还要求它的导数
+值在插值点取给定值，称为埃尔米特(Hermite)多项式插值。单元坐标有笛卡尔直角坐标系和 
+\color blue
+无量纲自然坐标
+\color inherit
+，有对称和不对称等。常采用的 无量纲坐标是一种局部坐标系，它的定义取决于单元的几何形状，一维看作长度比，二维看作面积比，三维看作体积比。在二维有限元中，三角形单
+元应用的最早，近来四边形等参元的应用也越来越广。对于二维三角形和四边形单元，常采用的插值函数有Lagrange插值，直角坐标系中的线性插值函数及二阶或更高阶插值
+函数、面积坐标系中的线性插值函数、二阶或更高阶插值函数等。
+\end_layout
+
+\begin_layout Subsubsection
+基本原理与解题步骤 
+\end_layout
+
+\begin_layout Standard
+对于有限元方法，其基本思路和解题步骤可归纳为：
+\end_layout
+
+\begin_layout Enumerate
+建立积分方程，根据
+\color blue
+变分原理
+\color inherit
+或
+\color blue
+方程余量与权函数正交化
+\color inherit
+原理，建立与微分方程初边值问题等价的积分表达式，这是有限元法的出发点。
+\end_layout
+
+\begin_layout Enumerate
+区域单元剖分，根据求解区域的形状及实际问题的物理特点，将区域剖分为若干相互连接、不重叠的单元。区域单元划分是采用有限元方法的前期准备工作，这部分工作量比较大，除
+了给计算单元和节点进行编号和确定相互之间的关系之外，还要表示节点的位置坐标，同时还需要列出自然边界（Natural）和本质（essential）边界的节点序号和
+相应的边界值。
+\end_layout
+
+\begin_layout Enumerate
+确定单元基函数，根据单元中节点数目及对近似解精度的要求，选择满足一定插值条件的插值函数作为单元基函数。有限元方法中的基函数是在单元中选取的，由于各单元具有规则的
+几何形状，在选取基函数时可遵循一定的法则。
+\end_layout
+
+\begin_layout Enumerate
+单元分析：将各个单元中的求解函数用单元基函数的线性组合表达式进行逼近；再将近似函数代入积分方程，并对单元区域进行积分，可获得含有待定系数(即单元中各节点的参数值
+)的代数方程组，称为单元有限元方程。
+\end_layout
+
+\begin_layout Enumerate
+总体合成：在得出单元有限元方程之后，将区域中所有单元有限元方程按一定法则进行累加，形成总体有限元方程。
+\end_layout
+
+\begin_layout Enumerate
+边界条件的处理：一般边界条件有三种形式，分为本质边界条件(狄里克雷边界条件)、自然边界条件(黎曼边界条件)、混合边界条件(柯西边界条件)。对于自然边界条件，一般
+在积分表达式中可自动得到满足。对于本质边界条件和混合边界条件，需按一定法则对总体有限元方程进行修正满足。
+\end_layout
+
+\begin_layout Enumerate
+解有限元方程：根据边界条件修正的总体有限元方程组，是含所有待定未知量的封闭方程组，采用适当的数值计算方法求解，可求得各节点的函数值。
+\end_layout
+
+\begin_layout Subsection
+FVM
+\end_layout
+
+\begin_layout Standard
+有限体积法（FiniteVolumeMethod）又称为控制体积法。其基本思路是：将计算区域划分为一系列不重复的控制体积，并使每个网格点周围有一个
+\color blue
+控制体积
+\color inherit
+；将待解的微分方程对每一个控制体积积分，便得出一组离散方程。其中的未知数是
+\color blue
+网格点上的因变量的数值
+\color inherit
+。为了求出控制体积的积分，必须假定值在网格点之间的变化规律，即假设值的分段的分布的分布剖面。
+\end_layout
+
+\begin_layout Standard
+从积分区域的选取方法看来，有限体积法属于加权剩余法中的子区域法；从未知解的近似方法看来，有限体积法属于采用局部近似的离散方法。简言之，子区域法属于有限体积法的基
+本方法。有限体积法的基本思路易于理解，并能得出直接的物理解释。离散方程的物理意义，就是因变量在有限大小的控制体积中的守恒原理，如同微分方程表示，因变量在无限小的
+控制体积中的守恒原理一样。有限体积法得出的离散方程，要求因变量的积分守恒对任意一组控制体积都得到满足，对整个计算区域，自然也得到满足。这是有限体积法吸引人的优点
+。有一些离散方法，例如有限差分法，仅当网格极其细密时，离散方程才满足积分守恒；而有限体积法即使在粗网格情况下，也显示出准确的积分守恒。
+\end_layout
+
+\begin_layout Standard
+就离散方法而言，有限体积法可视作有限单元法和有限差分法的中间物。有限单元法必须假定值在网格点之间的变化规律（既插值函数），并将其作为近似解。有限差分法只考虑网格
+点上的数值而不考虑值在网格点之间如何变化。有限体积法只寻求节点的的值，这与有限差分法相类似；但有限体积法在寻求控制体积的积分时，必须假定值在网格点之间的分布，这
+又与有限单元法相类似。在有限体积法中，插值函数只用于计算控制体积的积分，得出离散方程之后，便可忘掉插值函数；如果需要的话，可以对微分方程中不同的项采取不同的插值
+函数。
+\end_layout
+
+\begin_layout Section
+比较分析 
+\end_layout
+
+\begin_layout Itemize
+有限差分法（FDM）：直观，理论成熟，精度可选。但是不规则区域处理繁琐，虽然网格生成可以使FDM应用于不规则区域，但是对区域的连续性等要求较严。使用FDM的好处
+在于易于编程，易于并行。 
+\end_layout
+
+\begin_layout Itemize
+有限元方法（FEM）：适合处理复杂区域，精度可选。缺憾在于内存和计算量巨大。并行不如FDM和FVM直观。不过FEM的并行是当前和将来应用的一个不错的方向。
+ 
+\end_layout
+
+\begin_layout Itemize
+有限容积法 (FVM) ：适于流体计算，可以应用于不规则网格，适于并行。但是精度基本上只能是二阶了。FVM的优势正逐渐显现出来，FVM在应力应变，高频电磁场方面
+的特殊的优点正在被人重视。
+\end_layout
+
+\begin_layout Standard
+比较一下：
+\end_layout
+
+\begin_layout Itemize
+有限容积法和有限差分法：一个区别就是有限容积法的截差是不定的（跟取的相邻点有关，积分方法离散方程），而有限差分法就可以直接知道截差（微分方法离散方程）。有限容积
+法和有限差分法最本质的区别是，前者是根据积分方程推导出来的（即对每个控制体积分），后者直接根据微分方程推导出来，所以前者的精度不但取决于积分时的精度，还取决与对
+导数处理的精度，一般有限容积法总体的精度为二阶，因为积分的精度限制，当然有限容积法对于守恒型方程导出的离散方程可以保持守恒型；而后者直接由微分方程导出，不涉及积
+分过程，各种导数的微分借助Taylor展开，直接写出离散方程，当然不一定有守恒性，精度也和有限容积法不一样，一般有限差分法可以使精度更高一些。
+ 当然二者有联系，有时导出的形式一样，但是概念上是不一样的。
+\end_layout
+
+\begin_layout Itemize
+至于有限容积法和有限元法相比，有限元法在复杂区域的适应性对有限容积法是毫无优势可言的，至于有限容积的守恒性，物理概念明显的这些特点，有限元是没有的。目前有限容积
+在精度方面与有限元法有些差距。 
+\end_layout
+
+\begin_layout Itemize
+有限元方法比有限差分法优越的方面主要在能适应不规则区域，但是这只是指的是传统意义上的有限差分，现在发展的一些有限差分已经能适应不规则区域。对于椭圆型方程，如果区
+域规则，传统有限差分和有限元都能解，在求解效率，这里主要指编程复杂度和收敛快慢、内存需要，肯定有限差分有优势。
+\end_layout
+
+\begin_layout Subsection
+其他参考1
+\end_layout
+
+\begin_layout Standard
+楼主：我最先学了FVM的方法，感觉计算流动主要是计算通过单元边界的数值，后来看到FEM，它计算流动主要是计算单元节点的值，我不明白除了物理意义明确以外，FVM做
+流动计算的优势在于什么地方，因为现在看到Ansys大力推广用FEM方法计算流动和传热，对于简单的例子看不出什么区别，哪位高手感兴趣，一起讨论一下
+\end_layout
+
+\begin_layout Enumerate
+FEM得好处是能够方便的提高精度，二阶三阶多项式逼近都是小菜，谱元搞到十几阶逼近。FVM和传统的FEM相比的优势在于：1 FVM守恒性能够保证，FEM里面不是那
+么直接2 FVM保证双曲守恒方程计算的TVD/TVB性质(总差减小或者总差有界)、或者ENO性质，FEM的多项式逼近则不能保证。上述2点对于双曲守恒方程（如可压
+缩流）是非常重要的，对椭圆或者抛物方程（不可压缩流）没有太大意义。所以FEM在不可压用得不错，但可压缩流领域不那么流行。因为这两点不保证，逼近精度提高也是扯淡。
+ FVM的精度提高比较麻烦，所以目前流行的都不过是2阶格式。高阶的ENO/WENO还没有真正进入实用阶段。为了保证以上2点的情况下提高精度也是花了不少力气，使得
+格式变得比较复杂（特别是在多维情况下）。 不过自从出了Discontinuous Galerkin Method（DGM:间断伽辽金法）之后(注：无网格伽辽金法
+中的不连续问题)， 看来是FEM要把FVM变成它的一个特例了（不是太明白这里哦）。DGM能够保证守恒、TVD或者TVB，又能达到高精度。（注：ENO:Essen
+tially Non-scillatory;WENO:Weighted ENO） 
+\end_layout
+
+\begin_layout Enumerate
+从加权余量法的角度看，FDM 是point collocation method, FVM是 domain collocation method,
+ 而一般提到的FEM是 galerkin method 现在FEM类的方法好像的确在不可压流动模拟中应用越来越多啊，而且可以上来就按照统一的方法套，在非牛顿流，
+和生物力学或者比较交叉的学科中很有优势的样子。而且在流动稳定性和湍流等传统项目上也后劲很足。工业实际应用中，FVM似乎还是占主导地位。不过随着流固耦合计算推广，
+FEM还是很有前途的。
+\end_layout
+
+\begin_layout Standard
+加权残差法、虚功原理、最小势能原理以及变分法之间的关系 最小势能原理和虚功原理的提法为物理提法，它们有相应的物理量表达和物理意义。加权残差法是一种数学提法，它基
+于试函数来求取对原始方程的最佳逼近。变分方法提法完全是从纯数学的角度来描述的，只是用方程、泛函（复合函数）、极值等术语来进行表达和推导，而没有考虑背后的物理含义
+。从上可知，它们是相互关联的。
+\end_layout
+
+\begin_layout Standard
+在某种意义上说，这几种方法是可以相互转换的，如变分法的泛函极值表达式，如果给予相应的物理含义，它就是最小势能原理；同样在证明过程中直接对泛函极值表达式取极值得到
+的是虚功原理；同样变分法实际上就是加权残差意义下对平衡方程和边界条件的逼近。 当然，这几种方法有各自的特点，当能够写出系统的泛函时，一般可直接采用最小势能原理，
+如果不能写出泛函，可以针对原方程使用加权残差法，但对试函数的连续性要求也更苛刻一些。
+\end_layout
+
+\begin_layout Subsection
+其他参考2
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "FDM、FVM、FEM之间到底有没有联系"
+target "https://www.zhihu.com/question/26247876"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+下面从数值方法的角度来说说。
+\end_layout
+
+\begin_layout Quote
+
+\series bold
+所有求解方程的数值方法第一核心是插值算子 
+\end_layout
+
+\begin_layout Standard
+简单的说：
+\end_layout
+
+\begin_layout Enumerate
+有
+\begin_inset Formula $N$
+\end_inset
+
+个插值点 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+, 上面给定了函数值
+\begin_inset Formula $u_{i}$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+ 。插值算子
+\begin_inset Formula $I$
+\end_inset
+
+就是一个映射：把 
+\begin_inset Formula $(u_{i},x_{i})$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+ 映射成给定域上的
+\begin_inset Formula $u(x)$
+\end_inset
+
+函数。 
+\end_layout
+
+\begin_layout Enumerate
+另外，从实现方便的角度，通常这个
+\series bold
+插值为线性的
+\series default
+，也就是这样：
+\begin_inset Formula 
+\[
+u(x)=\sum_{i}u_{i}*\phi_{i}(x)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+是用来展开的函数基。有了插值算子，同时插值又是线性的，我们就可以求出微分算子和积分算子。 比如： 
+\begin_inset Formula 
+\begin{align*}
+\text{微分算子：}\quad & u'(x)=\sum_{i}u_{i}*\phi_{i}^{\prime}(x)\\
+\text{积分算子：}\quad & \int u(x)\dd{x}=\sum_{i}u_{i}*\int\phi_{i}(x)\dd{x}
+\end{align*}
+
+\end_inset
+
+若要求解的方程是 
+\begin_inset Formula $L[u]=b$
+\end_inset
+
+的形式， 
+\begin_inset Formula $L$
+\end_inset
+
+是微分算子（不一定是线性的），把上述微积分算子给倒腾进去，就可以得到：
+\begin_inset Formula 
+\[
+L[\sum_{i}u_{i}*\phi_{i}(x)]=b
+\]
+
+\end_inset
+
+形式的方程。
+\end_layout
+
+\begin_layout Standard
+这样，要求的连续解
+\begin_inset Formula $u(x)$
+\end_inset
+
+我们就可以用一堆离散的系数
+\begin_inset Formula $u_{i}$
+\end_inset
+
+表示出来了。
+\series bold
+只要我们把
+\begin_inset Formula $u_{i}$
+\end_inset
+
+求对了，问题就解决了
+\series default
+。而对应的
+\begin_inset Formula $\phi_{i}(x)$
+\end_inset
+
+就是所谓的基函数 basis function 或形函数 shape function，这些基函数所张成的
+\begin_inset Formula $n$
+\end_inset
+
+维线性空间就是我们所能求出来的解可能存在的空间，是
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 实际可能存在的无穷维空间的一个子集，这个近似程度就是通常所说的
+\begin_inset Formula $n$
+\end_inset
+
+阶精度。
+\end_layout
+
+\begin_layout Standard
+推广一点：
+\end_layout
+
+\begin_layout Enumerate
+这个空间点
+\begin_inset Formula $x_{i}$
+\end_inset
+
+可以是在求解的几何区域上的空间点，也可以是某个频率空间上的一个频率；函数值
+\begin_inset Formula $u_{i}$
+\end_inset
+
+可以是该店的函数值
+\begin_inset Formula $u(x=x_{i})$
+\end_inset
+
+，也可以是这点的导数（紧致格式？）或者谱空间的系数。
+\end_layout
+
+\begin_layout Enumerate
+另外需要注意，
+\series bold
+方程的不同项，插值方法可以不一样
+\series default
+。根据不同项的特点，可以选取不同的插值方法取得更好的效果；FVM为例，Fluent 和 OpenFOAM 的FVM，把点放在网格中心位置，可以认为采用的基函数是
+一阶线性的大平板，这样只要有中心点的值和中心点的梯度，就能重构出单元内的解，但是对于对流项和扩散项，可以采用其他的格式。
+\end_layout
+
+\begin_layout Enumerate
+类似地，
+\series bold
+不同的离散单元，插值方法也可以不一样
+\series default
+。比如上风格式 upwind scheme，当地速度方向不一样，采用的插值点也不一样。
+\end_layout
+
+\begin_layout Enumerate
+同样的，
+\series bold
+不同维度的插值方法也可以不一样
+\series default
+，比如时间和空间，不过文献里一般先对空间进行离散，时间算子 
+\begin_inset Formula $\frac{\partial}{\partial t}$
+\end_inset
+
+先不离散，把空间的问题搞清楚了，就成了一个超大型 ODEs 常微分方程组，接下来再用 Euler，龙格库塔，隐式等问题。FVM 和 FEM 都是空间离散方法。F
+DM 可以离散时间。
+\end_layout
+
+\begin_layout Enumerate
+甚至，
+\series bold
+多个计算步骤的插值方法也不一样
+\series default
+，插值算法也不一定能显式地描述出来（Fluent 的最小二乘法求梯度）。
+\end_layout
+
+\begin_layout Standard
+总之，只要是想得到你手里没有的值，有没有函数可以算，就得插一下。
+\end_layout
+
+\begin_layout Standard
+上面只是达成
+\series bold
+解的离散
+\series default
+，
+\series bold
+方程
+\series default
+还是连续的，计算机还是没法解。下面要把方程也给离散了，计算机才会玩。这涉及到数值方法的另一个核心：
+\series bold
+投影
+\series default
+，搞FEM的人叫加权余量法，玩FDM和FVM的我感觉还没想这么深入。其实就是把方程和一个
+\series bold
+试探函数
+\series default
+test function 即 
+\begin_inset Formula $\psi_{j}(x)$
+\end_inset
+
+ 进行积分，得到一个数字，然后令其为
+\begin_inset Formula $0$
+\end_inset
+
+：逼格高点儿的说法是把高维问题投影成一系列低维问题去解：
+\begin_inset Formula 
+\[
+\int L[\sum_{i}u_{i}*\phi_{i}(x)]*\psi_{j}(x)\dd{x}=\int b*\psi_{j}(x)\dd{x},\quad j=1\cdots M
+\]
+
+\end_inset
+
+这样就可以把一个连续的方程，变成
+\begin_inset Formula $M$
+\end_inset
+
+个代数形式的方程，每个方程有
+\begin_inset Formula $N$
+\end_inset
+
+个未定的系数
+\begin_inset Formula $u_{i}$
+\end_inset
+
+。下面是一些细节：
+\end_layout
+
+\begin_layout Enumerate
+假设
+\begin_inset Formula $L$
+\end_inset
+
+算子是线性的，
+\begin_inset Formula $u_{i}$
+\end_inset
+
+可以提出来，最终形式差不多是 
+\begin_inset Formula $A*u=b$
+\end_inset
+
+ 的线性代数矩阵形式。如果是非线性的，会有 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ 的交叉相乘项，很麻烦。 
+\end_layout
+
+\begin_layout Enumerate
+如果
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+是正交的，并且
+\begin_inset Formula $L$
+\end_inset
+
+是线性的，那么
+\begin_inset Formula $A$
+\end_inset
+
+就是对角矩阵（
+\begin_inset Formula $3$
+\end_inset
+
+对角、
+\begin_inset Formula $5$
+\end_inset
+
+对角之类的）。
+\begin_inset Formula $u$
+\end_inset
+
+直接可以求出来。所以正交性一大好处是交叉项莫名其妙没有了。理论上，如果
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+取相同，对于自伴算子
+\begin_inset Formula $(A^{+}=A)$
+\end_inset
+
+，矩阵
+\begin_inset Formula $A$
+\end_inset
+
+能搞成对称的；如果
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+能搞成自伴算子
+\begin_inset Formula $L$
+\end_inset
+
+的
+\series bold
+特征函数
+\series default
+，貌似可以达到 
+\begin_inset Formula $A=I\Rightarrow x=b$
+\end_inset
+
+，无需求解方程。
+\end_layout
+
+\begin_layout Enumerate
+如果试探函数和基函数取成一样，那么这类方法叫Galerkin方法，好处是可以重复使用基函数。
+\end_layout
+
+\begin_layout Standard
+例子：最简单的FDM，方程只要在 
+\begin_inset Formula $x=x_{i}$
+\end_inset
+
+ 这些插值点上成立即可，
+\begin_inset Formula $\psi_{j}(x)=\delta(x)$
+\end_inset
+
+，也就是狄拉克函数，这种方法又叫配点法，老简单了；但是注意，对于配点法，
+\series bold
+投影点和插值点可以不一样
+\series default
+！
+\end_layout
+
+\begin_layout Standard
+对于FVM，
+\begin_inset Formula $\psi_{i}=1\cdots$
+\end_inset
+
+。对于FEM，需要涉及各种积分。
+\end_layout
+
+\begin_layout Subsubsection
+通量重构问题
+\end_layout
+
+\begin_layout Standard
+上述所谓讨论的都是一个单元的情况，对于单纯的FDM，反正玩配点，配遍整个计算域，把方程个数搞够就行。但流体力学方程的三个基本性质导致CFD有额外的问题：
+\end_layout
+
+\begin_layout Enumerate
+非线性，动量方程对于速度
+\begin_inset Formula $u$
+\end_inset
+
+存在
+\begin_inset Formula $u*\nabla u$
+\end_inset
+
+ 非线性，会出激波；
+\end_layout
+
+\begin_layout Enumerate
+对流性，密度温度等物性随着速度跑来跑去，跟下游没啥关系； 
+\end_layout
+
+\begin_layout Enumerate
+守恒性，单元界面进出应该一样。 
+\end_layout
+
+\begin_layout Standard
+方程进行体积分之后，利用Gauss公式可以把通量项精确地化为面积分，大家一般认为体积分难算，面积分好算，所以就都这么干了。可惜这么干的时候暴露了一个问题，
+\series bold
+两个单元分别计算出的同一个公共界面的积分通量是不一样的
+\series default
+，这与守恒性是矛盾的。所以要进行界面通量的重构。
+\end_layout
+
+\begin_layout Standard
+对于不那么纯粹的FDM，也有类似的问题，计算导数时插值点可以从上游多取几个，也可以从下游多取几个，同样的，从计算的对流通量 
+\begin_inset Formula $f(u)$
+\end_inset
+
+，去构造方程中通量的微分
+\begin_inset Formula $df(u)/\dd{x}$
+\end_inset
+
+时又可以进行插值的选择，搞得大家头大得不行。对于FEM和FVM而言，情况还简单点儿，一个界面两侧只有两个单元，所以只要重构一个
+\begin_inset Formula $Q^{*}=F(Q^{-},Q^{+})$
+\end_inset
+
+就行了（对于 FDM，还可以搞得更复杂）。这还对这个通量提出一个对称性要求 
+\begin_inset Formula $Q^{*}=F(Q^{-},Q^{+})=F(Q^{+},Q^{-})$
+\end_inset
+
+。一个简单方法是两边平均一下算了，但是波形会被拉宽，精度不高；而且由于非线性，这东西很不好搞。然后有大神就搞出一堆重构通量的格式和Riemann求解器之类的玩意
+儿。总之要把它搞对，并使得到的解的发展满足一定的数学物理限制，比如很有名的TVD，单调，保单调等概念，就是对解的发展的一种限制：后面的速度再快也不能穿越跑到前面
+去。
+\end_layout
+
+\begin_layout Standard
+回到题主的CFD算法的区别和联系，不同的数值方法教科书上的推导方法千奇百怪，但是可以归结到这样的框架下。
+\end_layout
+
+\begin_layout Enumerate
+先看方程
+\series bold
+每一步算法
+\series default
+用是怎么
+\series bold
+插值
+\series default
+的。
+\end_layout
+
+\begin_layout Enumerate
+再看用了什么样的
+\series bold
+投影
+\series default
+，用了什么
+\series bold
+试函数
+\series default
+。
+\end_layout
+
+\begin_layout Enumerate
+对于CFD问题，还要看怎么
+\series bold
+重构对流通量
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+比如Fluent，
+\end_layout
+
+\begin_layout Itemize
+它用的FVM，投影的
+\series bold
+试函数
+\series default
+是
+\begin_inset Formula $1$
+\end_inset
+
+。而 “非稳恒项”在时间上根据阶数取不同阶的多项式，空间上应该是取的线性基函数；
+\end_layout
+
+\begin_layout Itemize
+后面的对流项首先也是假设基函数为线性，基于标量的Green-Gauss定理，用边界面上的值重构出中心点的梯度，（但是此时边界的标量值还不知道呢，又要通过边界周围
+的单元中心点插值来构造）得到了中心点梯度之后，单元内就搞清楚了；
+\end_layout
+
+\begin_layout Itemize
+再用界面两侧单元的中心点值和梯度，构造边界的值，这个梯度在使用的时候还会受到Limiter的限制。构造完边界的值之后，还要根据规则构造出通量Flux，最后代入到
+方程里计算。
+\end_layout
+
+\begin_layout Standard
+总结一下关键特点，
+\end_layout
+
+\begin_layout Itemize
+FDM基函数是多项式，插值点是网格点，试函数是Dirac函数，投影点一般在半网格点；
+\end_layout
+
+\begin_layout Itemize
+FVM通常形函数是线性的，但是额外有梯度限制器，试函数是
+\begin_inset Formula $1$
+\end_inset
+
+，通量还有重构；
+\end_layout
+
+\begin_layout Itemize
+FEM最广义，啥都有；FEM还可以搞带曲线/曲面边界的问题，比如等参元把基函数当单元的变形形函数再用一遍
+\end_layout
+
+\begin_layout Standard
+同时还有个额外的特点，FVM和FEM的空间剖分是不重合的很多单元，但是FDM如果按照包含的点来计算，是交错的。所以并行需要用Ghost cell，交换的数据量大
+。另外参考 cfd online wiki，
+\begin_inset CommandInset href
+LatexCommand href
+name "FLUENT Theory Guide"
+target "https://www.docin.com/p-663567957.html"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+Comsol: FEM v.s.
+ FVM
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "有限元法（FEM）vs. 有限体积法（FVM）"
+target "https://zhuanlan.zhihu.com/p/116757646"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有限元法被数值分析界广泛用于研究流体流动的数值方法。在相关科学出版物中，有大量关于 CFD 和有限元法的描述，以及节点间断伽辽金（DG）法的最新研究，后者是一种
+采用不连续基函数的有限元法。
+\end_layout
+
+\begin_layout Subsection
+数学模型和数值模型
+\end_layout
+
+\begin_layout Standard
+我们先来看一个通用的数学模型：
+\begin_inset Formula 
+\begin{align}
+ & P(\frac{\partial}{\partial x},\frac{\partial}{\partial t})u=F\label{eq:c1}\\
+ & u=f,\quad\text{初始条件}\label{eq:c2}\\
+ & Bu=g,\quad\text{边界条件}\nonumber 
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $P$
+\end_inset
+
+ 表示微分算子，
+\begin_inset Formula $u$
+\end_inset
+
+表示因变量（解变量），
+\begin_inset Formula $F$
+\end_inset
+
+表示源，
+\begin_inset Formula $f$
+\end_inset
+
+ 是描述初始条件的函数。
+\begin_inset Formula $B$
+\end_inset
+
+是一个算子，
+\begin_inset Formula $g$
+\end_inset
+
+是边界上的函数。在本例中，空间坐标
+\begin_inset Formula $x$
+\end_inset
+
+指代所有三个方向
+\begin_inset Formula $(x,y,z)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+数学模型可以描述流体流动等物理现象。在这种情况下，模型可以表示空间和时间中动量和质量的守恒。幸运的是，源于这种守恒定律的数学模型，加上初始值和适当的边界条件后往
+往运行良好。这意味着存在唯一解，此解在给定多个数据（例如初始值、源项或边界条件）的情况下始终成立。
+\end_layout
+
+\begin_layout Standard
+尽管问题存在唯一且稳定的解，但通常很难或者说几乎不可能解析化地找到这样的解，也就是说很难用便于计算的算子（+、-、x、÷）描述解析表达式。那么我们必须建立一个接
+近数学模型的
+\series bold
+数值模型
+\series default
+，然后使用可在计算机程序中实现的数值方法 来求解数值模型方程。
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+有限元法
+\series default
+和
+\series bold
+有限体积法
+\series default
+是对模型方程空间离散化的数值方法。对于常微分方程，时间离散化通常采用某种时间步格式来实现。上面定义的数学模型给出了如下数值模型：
+\begin_inset Formula 
+\begin{align}
+ & P_{h}u_{h}=F\label{eq:c3}\\
+ & u_{h}=f_{h},\quad\text{初始条件}\label{eq:c4}\\
+ & B_{h}u_{h}=g_{h},\quad\text{边界条件}\nonumber 
+\end{align}
+
+\end_inset
+
+其中， 
+\begin_inset Formula $h$
+\end_inset
+
+ 表示离散化参数，比如有限元法，或有限体积法中的网格单元或单元大小。
+\end_layout
+
+\begin_layout Quote
+请注意，网格中的构建块在有限元法中称为element，在有限体积法中称为cell。 
+\end_layout
+
+\begin_layout Standard
+误差有多个源
+\series bold
+：
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+截断误差
+\series default
+ 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 可以帮助我们辨别数值模型与数学模型的近似程度：
+\begin_inset Formula 
+\begin{equation}
+\tau=(P-P_{h})u\label{eq:c5}
+\end{equation}
+
+\end_inset
+
+数值模型的 
+\series bold
+精确度
+\series default
+ 揭示截断误差随着
+\begin_inset Formula $h$
+\end_inset
+
+ 的减小而减小的速度。这意味着单元大小越小，数值模型与数学模型之间的差异就应该越小。如果截断误差随 
+\begin_inset Formula $h$
+\end_inset
+
+ 减小，则数值模型是
+\series bold
+一致的
+\series default
+。
+\end_layout
+
+\begin_layout Enumerate
+解的离散化误差 为模型方程的
+\series bold
+精确解
+\series default
+与
+\series bold
+数值解
+\series default
+之差：
+\begin_inset Formula 
+\begin{equation}
+e=\left\Vert u-u_{h}\right\Vert \label{eq:c6}
+\end{equation}
+
+\end_inset
+
+如果数值解随着
+\begin_inset Formula $h$
+\end_inset
+
+减小而接近精确解，则可以认为数值方法收敛：
+\begin_inset Formula 
+\begin{equation}
+\left\Vert u-u_{h}\right\Vert \to0,\text{as}\quad h\to0\label{eq:c7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+离散化的精确度 
+\begin_inset Formula $p$
+\end_inset
+
+ 揭示数值解随着 
+\begin_inset Formula $h$
+\end_inset
+
+ 减小收敛为精确解的速度。
+\begin_inset Formula 
+\begin{equation}
+e(h)\le C_{1}h^{p},\quad C_{1}\text{为常数}\label{eq:c8}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p$
+\end_inset
+
+ 值越大，近似值收敛得越快。 那么，有限元法与有限体积法在精确度上有什么内在的区别吗？通过增加基函数的阶数，理论上我们可以用有限元法达到任意精确度（在实践中，还
+有其他限制因素）。最常见的有限元法是二阶至三阶精度，而有限体积法是一阶至二阶精度。
+\end_layout
+
+\begin_layout Subsection
+两者有哪些相同点和不同点
+\end_layout
+
+\begin_layout Standard
+我们来看一个通量平衡方程，它是流体流动数学模型的基础：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial u}{\partial t}+\nabla\cdot\Gamma=F\quad\text{in}\quad\Omega\label{eq:c9}
+\end{equation}
+
+\end_inset
+
+在这个方程中， 
+\begin_inset Formula $u$
+\end_inset
+
+表示守恒物理量，如动量或质量；
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 表示该量的通量，比如单位面积和单位时间内流过控制面的动量。
+\end_layout
+
+\begin_layout Standard
+有限元法首先建立一个积分方程，方程用试探函数
+\begin_inset Formula $\varphi$
+\end_inset
+
+加权，然后通过对模型域积分求平均值：
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\frac{\partial u}{\partial t}\varphi\dd{V}+\int_{\Omega}(\nabla\cdot\Gamma)\varphi\dd{V}=\int_{\Omega}F\varphi\dd{V}\label{eq:c10}
+\end{equation}
+
+\end_inset
+
+通过分部积分得到
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\frac{\partial u}{\partial t}\varphi\dd{V}-\int_{\Omega}\Gamma\cdot\nabla\varphi\dd{V}+\int_{\partial\Omega}\Gamma\cdot\sbf n\,\varphi\dd{S}=\int_{\Omega}F\varphi\dd{V}\label{eq:c15}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\partial\Omega$
+\end_inset
+
+表示域
+\begin_inset Formula $\Omega$
+\end_inset
+
+的边界，
+\begin_inset Formula $\sbf n$
+\end_inset
+
+表示域边界的法矢，这就是所谓的弱形式。左边的第三项对 
+\begin_inset Formula $u$
+\end_inset
+
+，
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 在域边界
+\begin_inset Formula $\partial\Omega$
+\end_inset
+
+ 上的通量进行积分。我们认为若弱形式对大量的试函数
+\begin_inset Formula $\varphi$
+\end_inset
+
+都成立，则它只与物理模型有关。常见的一种选择是使用多项式，但也可以是其他类型的函数。一个特例是常数试函数，例如 
+\begin_inset Formula $\varphi=1$
+\end_inset
+
+。则上面的
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+变为：
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\frac{\partial u}{\partial t}\varphi\dd{V}+\int_{\partial\Omega}\Gamma\cdot\sbf n\dd{S}=\int_{\Omega}F\dd{V}\label{eq:c16}
+\end{equation}
+
+\end_inset
+
+这个关系式是有限体积法的基础。
+\end_layout
+
+\begin_layout Standard
+至此，有限元法与有限体积法没有区别。如上所述，有限体积法的公式方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 只是有限元法中使用的一般弱形式方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的特例。不同之处在于
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的离散化。
+\end_layout
+
+\begin_layout Itemize
+有限元法的依据是，选取有限数量的测试函数
+\begin_inset Formula $\varphi=\varphi_{h}$
+\end_inset
+
+，并要求
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对所有函数都成立。
+\end_layout
+
+\begin_layout Itemize
+有限体积法的依据是，选取有限数量的
+\series bold
+控制体积
+\series default
+ 
+\begin_inset Formula $\Omega=\Omega_{h}$
+\end_inset
+
+，并要求
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 对所有控制体积都成立。
+\end_layout
+
+\begin_layout Standard
+如果我们使用三角剖分法作为这两种方法的基础，图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+分别显示了有限元和有限体积公式可能的离散形式。element在边界上可能具有面（三维）或边（二维），把图中浅蓝色的单元称作边界element。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/comsol1.jpg
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+内部element（白色和灰色）和边界element的域贡献。灰色六边形中间节点的基函数在所有周围element中（灰色element中）都有支撑；边界上节点的
+基函数在浅蓝色element中有支撑，在与边界共点的任何element（如浅绿色element）中也有支撑；通量的积分仅从边界上有边的element（浅蓝色el
+ement）获得贡献。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:c1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们观察最常见的有限元法会发现，
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+试函数
+\series default
+仅在节点（局部支撑函数，support）附近是非零的，这意味着只需对这附近的element（此处为三角形）计算积分。比如fig
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中突出显示的
+\series bold
+域节点
+\series default
+及其附近的灰色element。
+\end_layout
+
+\begin_layout Itemize
+计算边界通量的贡献（
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左边第三项）只需考虑边界element，这是因为在求解区域内部的element间的边界上，连续基函数的贡献互相抵消（法矢量刚好相反）。
+\end_layout
+
+\begin_layout Itemize
+fig
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 显示了如何为域中的内部element（白色、灰色和绿色），以及边界element（浅蓝色）建立方程。对于fig
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 域中突出显示的节点，只有周围的灰色element对
+\begin_inset Formula $\Omega$
+\end_inset
+
+域积分有贡献。对于边界上突出显示的节点，只有两个相邻的浅蓝色element对
+\begin_inset Formula $\partial\Omega$
+\end_inset
+
+积分有边界通量贡献；而这两个浅蓝色element和浅绿色element对
+\begin_inset Formula $\Omega$
+\end_inset
+
+域积分都有贡献。
+\end_layout
+
+\begin_layout Itemize
+描述离散通量的域表达式 
+\begin_inset Formula $\Gamma_{h}$
+\end_inset
+
+ ，根据通量的本构关系得出。对流扩散方程（流体流动方程中的扩散项是动量传递的粘性项）就是一个例子。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中通量的边界表达式根据特定模型的边界条件得出。然后我们将这些表达式作为对上面fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中边界单元（浅蓝色）的贡献。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/comsol2.jpg
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+对所有cell面（三维）或边（二维），包括内部cell和边界cell上的通量求积分。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:c2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们再观察常见的有限体积法，即cell中心法，会发现每个cell（三角形）都被视为一个
+\series bold
+单独的域
+\series default
+。通量的边界项（
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左边第二项）对所有 cell（包括内部 cell 和边界cell）进行积分。通量的本构关系用于域的面或边，而边界条件用于边界上的面或边；参见图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+那么我们如何用两种不同的方法来表达
+\begin_inset Formula $u$
+\end_inset
+
+和
+\begin_inset Formula $\Gamma$
+\end_inset
+
+呢？
+\end_layout
+
+\begin_layout Itemize
+有限元法通常采用与
+\series bold
+试探函数
+\series default
+相同的 
+\series bold
+基函数
+\series default
+ 来近似求解。只要解的近似值有次数
+\begin_inset Formula $\ge0$
+\end_inset
+
+的多项式，并且一阶导数可以近似导出，就不需要特别处理对流和扩散产生的通量。通量矢量也是一个局部多项式函数。
+\end_layout
+
+\begin_layout Itemize
+相反，在有限体积法离散化中，边界上的解没有很好地定义。该方法仅为每个cell定义解的值，通常解释为 cell 中心的值。因此，有限体积法需要通过某种重建方法来给
+出解。通常，在考虑相邻 cell 值的情况下，使用局部插值方法；见图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:c3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的示例。为了得到 解（
+\begin_inset Formula $u$
+\end_inset
+
+）和通量（
+\begin_inset Formula $\Gamma$
+\end_inset
+
+）的高阶插值，需要考虑更多的 cell 值，这不仅非常复杂，而且会降低局域性。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/comsol2.jpg
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+在以cell为中心的有限体积法中，通量矢量通过在以cell为中心的点之间插值来构建。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:c3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据有限元法中采用的基函数和有限体积法中采用的通量构建类型，我们可以实现不同的精度。采用二阶精度法的粗化网格比采用一阶精度法的细化网格得到的解更精确。
+\end_layout
+
+\begin_layout Standard
+有限元法的线性试函数和基函数通常需要采用二阶精度的方法。有限元法在离散化方面有较大的灵活性。例如，使用二次基函数相当简单，也不需要对解进行重建或插值。该方法本质
+上是非常对称的，边界上的通量边界条件可以通过自然、直接的方式施加。
+\end_layout
+
+\begin_layout Standard
+有限元法的一个缺点是，对于连续试函数和基函数，没有局部守恒性，只能保证全局守恒。换句话说，只能保证域边界上的净通量是平衡的。另一个缺点是无法控制局部通量，这意味
+着稳定对流占主导地位的流动的离散化并不简单。在这种情况下，稳定意味着消除离散化产生的非物理振荡。对流占主导地位的流动的局部守恒和稳定性问题都可以通过直接或间接修
+改试函数，也就是修改弱形式来解决。不过，这些方法的计算量可能非常大。
+\end_layout
+
+\begin_layout Standard
+如上文所述，有限体积法对应于分段常数有限元基函数，可能对通量采用高阶插值方案，这需要采用一阶或二阶精度方法。有限体积法的局部表述可以实现局部守恒，这是该方法极具
+吸引力的一个特征。这意味着每个 cell 的净通量都保证是平衡的，进而能够以自然、直接的方法来稳定对流占主导的流动问题的离散化。通过修改 cell
+ 间边界上的通量可以自然地实现所谓的逆风稳定和其他稳定。逆风在对流通量方向的离散化中产生非对称性。
+\end_layout
+
+\begin_layout Standard
+有限元法的好处是能够为不同阶数的基函数制定方法。高阶基函数给出了高阶、精确的方法，这有助于提高给定网格的精度。有限体积法采用零阶基函数，但可以对通量使用高阶插值
+方案，这也提高了精度。当使用高阶方法时，得到的系统变得更大，相同网格的求解时间增加，不过，精度也更高。因此，我们在比较性能时，必须在给定的精度条件下进行比较。用
+不同的方法以相同的精度测量解决流体流动问题所需的 CPU 时间和内存是比较不同方法性能的正确方式，而不是比较 cell 或 element 的数量。
+\end_layout
+
+\begin_layout Section
+CFD的五大类数值方法
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "计算流体力学常用的五大类数值方法简介"
+target "https://zhuanlan.zhihu.com/p/147782525"
+literal "false"
+
+\end_inset
+
+。本文摘录自华南理工大学交通学院李志印、熊小辉、吴家鸣撰写的《计算流体力学常用数值方法简介》一文，该文发表于《广东造船》2004年第3期。
+\end_layout
+
+\begin_layout Standard
+流体力学数值方法有很多种，其数学原理各不相同，但有二点是所有方法都具备的，即离散化和代数化。总的来说其基本思想是：将原来连续的求解区域划分成网格或单元子区域，在
+其中设置有限个离散点(称为节点)，将求解区域中的连续函数离散为这些节点上的函数值；通过某种数学原理，将作为 
+\series bold
+控制方程
+\series default
+ 的偏微分方程转化为，联系节点上待求函数值之间关系的 
+\series bold
+代数方程
+\series default
+(离散方程)，求解所建立起来的代数方程以获得所求函数的节点值。
+\end_layout
+
+\begin_layout Standard
+不同的数值方法，其主要区别在于
+\emph on
+ 
+\series bold
+\emph default
+求解区域
+\series default
+ 的离散方式和
+\emph on
+ 
+\series bold
+\emph default
+控制方程
+\series default
+ 的离散方式上。在流体力学数值方法中，应用比较广泛的是有限差分法、有限元法、边界元法、有限体积法和有限分析法，现简述如下。
+\end_layout
+
+\begin_layout Subsection
+有限差分法FDM
+\end_layout
+
+\begin_layout Standard
+这是最早采用的数值方法，它是将求解区域划分为
+\series bold
+矩形或正交曲线网格
+\series default
+，在网格线交点(即节点)上，将控制方程中的微商用差商来代替，从而将连续函数的微分方程离散为网格节点上定义的差分方程，每个方程中包含了本节点及其附近一些节点上的待
+求函数值，通过求解这些代数方程就可获得所需的数值解。
+\end_layout
+
+\begin_layout Standard
+有限差分法的优点是它建立在经典的数学逼近理论的基础上，容易为人们理解和接受；有限差分法的主要缺点是对于复杂流体区域的边界形状处理不方便，处理得不好将影响计算精度
+。
+\end_layout
+
+\begin_layout Subsection
+有限元法 FEM
+\end_layout
+
+\begin_layout Standard
+有限元法的基本原理是把适定的微分问题的解域进行离散化，将其剖分成相连结又互不重叠的具有一定规则几何形状的有限个子区域(如：在二维问题中可以划分为三角形或四边形；
+在三维问题中可以划分为四面体或六面体等)，这些子区域称之为单元，单元之间以节点相联结。函数值被定义在节点上，在单元中选择
+\series bold
+基函数
+\series default
+(又称插值函数)，以
+\begin_inset Formula $\sum\phi_{i}N_{i}(\xi)$
+\end_inset
+
+ （基函数线性组合，节点函数值作为系数）作为单元的近似解来逼近单元中的真实解。
+\end_layout
+
+\begin_layout Standard
+利用古典变分方法(里兹法或伽辽金法)从单元分析建立单元的有限元方程，然后组合成 全局有限元方程，考虑边界条件后进而求解。由于单元的几何形状是规则的，因此在单元上
+构造基函数可以遵循相同的法则，每个单元的有限元方程都具有相同的形式，可以用标准化的格式表示，其求解步骤也就变得很规范，即使是求解域剖分各单元的尺寸大小不一样，其
+求解步骤也不用改变，这就为利用计算机编制通用程序进行求解带来了方便。
+\end_layout
+
+\begin_layout Standard
+有限元法的主要优点是对于求解区域的单元剖分没有特别的限制，因此特别适合处理具有复杂边界流场的区域。
+\end_layout
+
+\begin_layout Subsection
+边界元法 BEM
+\end_layout
+
+\begin_layout Standard
+边界元法是在经典 
+\series bold
+积分方程
+\series default
+ 和有限元法基础上发展起来的求解微分方程的数值方法，其基本思想是：将微分方程相应的基本解作为
+\series bold
+权函数
+\series default
+，应用加权余量法并应用格林函数导出，联系 
+\series bold
+解域中待求函数值
+\series default
+ 与 
+\series bold
+边界上的函数值
+\series default
+ 与 法向导数值 之间关系的积分方程；令积分方程在边界上成立，获得边界积分方程，该方程表述了
+\series bold
+函数值和法向导数值
+\series default
+在边界上的积分关系，而在这些边界值中，一部份是在边界条件中给定的，另一部份是待求的未知量，边界元法就是以边界积分方程作为求解的出发点，求出边界上的未知量；在所导
+出的边界积分方程基础上利用有限元的离散化思想，把边界离散化，建立边界元代数方程组，求解后可获得边界上全部节点的函数值和法向导数值；将全部边界值代入积分方程中，即
+可获得内点函数值的计算表达式，它可以表示成边界节点值的线性组合。
+\end_layout
+
+\begin_layout Standard
+边界元法的优点是：
+\end_layout
+
+\begin_layout Enumerate
+将全解域的计算化为解域边界上的计算，使求解问题的维数降低了一维，减少了计算工作量；
+\end_layout
+
+\begin_layout Enumerate
+能够方便地处理无界区域问题。例如对于势流等的无限区域问题，使用边界元法求解时，由于基本解满足无穷远处边界条件，在无穷远处边界上的积分恒等于零。因此对于无限区域问
+题，例如具有无穷远边界的势流问题，无需确定外边界，只需在内边界上进行离散即可；
+\end_layout
+
+\begin_layout Enumerate
+边界元法的精度一般高于有限元法。边界元法的主要缺点是，边界元方程组的系数矩阵是不对称的满阵，该方法目前只适用于线性问题。
+\end_layout
+
+\begin_layout Subsection
+有限体积法 FVM
+\end_layout
+
+\begin_layout Standard
+有限体积法又称为控制体积法，其导出离散方程的基本思路是：
+\end_layout
+
+\begin_layout Enumerate
+将计算区域划分为一系列不重复的控制体积，每一个控制体积都有一个节点作代表，将待求的守恒型微分方程在任一控制体积及一定时间间隔内对空间与时间作积分；
+\end_layout
+
+\begin_layout Enumerate
+对待求函数及其导数对时间及空间的变化型线或插值方式作出假设；
+\end_layout
+
+\begin_layout Enumerate
+对步骤1中各项按选定的型线作出积分，并整理成一组关于节点上未知量的离散方程。有限体积法着重从物理观点来构造离散方程，每一个离散方程都是有限大小体积上某种物理量守
+恒的表示式，推导过程物理概念清晰，离散方程系数具有一定的物理意义，并可保证离散方程具有守恒特性，这是有限体积法的主要优点。
+\end_layout
+
+\begin_layout Standard
+就离散方法而言，有限体积法可视作有限元法和有限差分法的中间物，该方法的主要缺点是不便对离散方程进行数学特性分析。
+\end_layout
+
+\begin_layout Subsection
+有限分析法 FAM
+\end_layout
+
+\begin_layout Standard
+有限分析法在某种意义上说是在有限元法基础上发展起来的一种数值方法，其基本思想是：
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+将求解区域划分成矩形网格
+\series default
+，网格线的交点为计算节点，每个节点与相邻的四个网格组成一个计算单元，即一个计算单元由一个中心节点与
+\begin_inset Formula $8$
+\end_inset
+
+个相邻节点组成；
+\end_layout
+
+\begin_layout Itemize
+在每个单元中函数的近似解不是像有限元方法那样，采用单元基函数的线性组合来表达，而是以单元中未知函数的 
+\series bold
+解析解
+\series default
+ 来表达；为了获得单元中的解析解，单元边界条件采用插值函数来逼近，在单元中把控制方程中非线性项局部线性化(如N-S方程中的对流项中认为其流速为已知，并对单元中待
+求函数的组合形式作出假设，找出其系数用单元边界节点上待求函数值表达的解析解；
+\end_layout
+
+\begin_layout Itemize
+利用单元分析解确定单元中心节点与
+\begin_inset Formula $8$
+\end_inset
+
+个相邻节点间待求函数值之间关系的代数方程，称为单元有限分析方程；将所有内点上的单元有限分析方程联立，就构成总体有限分析方程，通过代数方程组求解，即可获得求解区域
+中全部离散点的函数值。
+\end_layout
+
+\begin_layout Standard
+虽然有限分析解获得的是求解区域中离散点的函数值，但是由于每个单元内部都有与其中心节点对应的解析解表达式，因此有限解析解在每一个节点的局部区域内都是连续可微的，这
+对于需要计算求解函数导数的计算流体力学问题具有明显的优势。
+\end_layout
+
+\begin_layout Standard
+该计算方法与有限元、有限差分法比较具有较高的精度。此外，有限分析法具有自动迎风特性，能准确地模拟对流项，同时不存在数值振荡失真问题。有限分析法的缺点是对复杂形状
+的求解区域适应性较差。
 \end_layout
 
 \begin_layout Section
