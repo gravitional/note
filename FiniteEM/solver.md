@@ -76,19 +76,6 @@ AnalysisFe:public AnalysisBase{...}
 这些函数作为全局函数, 对应的类使用单例模式,
 返回一个指向唯一实例的指针.
 
-### model()
-
-单例模式
-
-持有模型数据,
-构件,
-节点, 边,  单元, 单元组,
-材料, 自定义集合
-
-`GetAllNodeIDs()`; 获取所有 Node ID
-`GetAllEdgeIDs()`; 获取所有 Edge ID
-`GetAllElementIDs()`; 获取所有 Ele ID
-
 ### fieldInfo()
 
 物理场信息类,包括量纲和角标
