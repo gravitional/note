@@ -99,6 +99,412 @@ Yang
 \end_layout
 
 \begin_layout Section
+理论方程
+\end_layout
+
+\begin_layout Subsection
+电解质域控制方程
+\end_layout
+
+\begin_layout Standard
+Nernst–Einstein 方程，
+\begin_inset Formula $u_{i}=D_{i}/RT$
+\end_inset
+
+，其中 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+为迁移率（单位 
+\begin_inset Formula $\mathrm{s\cdot mol/Kg}$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{equation}
+j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)\,\nabla\varphi(x)}+C_{i}(x)\,u(x)\label{eq:2}
+\end{equation}
+
+\end_inset
+
+带时间项的质量守恒关系， Nernst–Planck 方程，一般情况下，电化学腐蚀过程中，电解质内部无化学反应发生，只存在物质传递过程，
+\begin_inset Formula $R_{i}=0$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial C_{i}(x)}{\partial t}=-\nabla\cdot\sbf j_{i}(x)+R_{i}\label{eq:3}
+\end{equation}
+
+\end_inset
+
+电解质中的净电流密度矢量（
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+），可用所有离子的总通量描述
+\begin_inset Formula 
+\begin{equation}
+\sbf i(t,x)=F\sum z_{i}\,\sbf j_{i}(t,x)\label{eq:4}
+\end{equation}
+
+\end_inset
+
+电解质满足电荷守恒方程，即
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho}{\partial t}+\nabla\cdot\sbf i=0\label{eq:5}
+\end{equation}
+
+\end_inset
+
+电流密度
+\begin_inset Formula $i$
+\end_inset
+
+与电解质中的电场
+\begin_inset Formula $-\nabla\varphi$
+\end_inset
+
+ 满足一定的关系。满足为了准确描述电流体在电场环境下的传质过程，需要考虑荷电物质浓度分布的变化对电场的反作用，即要耦合 Poisson 方程：
+\begin_inset Formula 
+\begin{align}
+\nabla^{2}\varphi(x)=\frac{\rho}{\varepsilon}=\frac{z_{i}e}{\varepsilon}C_{i}(x)\label{eq:6}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在电解质中，自由离子满足电中性（当考察的范围大于几个纳米长度时）
+\begin_inset Formula 
+\begin{equation}
+\sum z_{i}C_{i}(x)=0\label{eq:7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+方程简化
+\end_layout
+
+\begin_layout Standard
+由
+\series bold
+电荷守恒
+\series default
+方程，和
+\series bold
+欧姆定律
+\series default
+ 
+\begin_inset Formula $\sbf i=\sigma\sbf E$
+\end_inset
+
+ 给出
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sbf i & =-\frac{\partial\rho(t,x)}{\partial t}\\
+\nabla\cdot(\sigma\nabla\varphi) & =\frac{\partial\rho(t,x)}{\partial t}
+\end{align*}
+
+\end_inset
+
+其中电荷密度
+\begin_inset Formula $\rho$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho(t,x)=F\sum_{i}z_{i}C_{i}(t,x)
+\]
+
+\end_inset
+
+而静电场的泊松方程给出
+\begin_inset Formula 
+\[
+\nabla\cdot(\nabla\varphi)=\frac{-\rho(t,x)}{\varepsilon_{0}\varepsilon_{r}}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\frac{\partial\rho(t,x)}{\partial t}=-\frac{\sigma}{\varepsilon_{0}\varepsilon_{r}}\rho(t,x)
+\]
+
+\end_inset
+
+显然
+\begin_inset Formula 
+\[
+\rho(t,x)=\rho_{0}(x)\exp(-\frac{\sigma t}{\varepsilon_{0}\varepsilon_{r}})
+\]
+
+\end_inset
+
+对于一般的金属良导体，
+\begin_inset Formula $\sigma/(\varepsilon_{0}\varepsilon_{r})>10^{17}$
+\end_inset
+
+，衰减特征时间 
+\begin_inset Formula $\tau\sim\varepsilon_{0}\varepsilon_{r}/\sigma\approx10^{-17}\mathrm{s}$
+\end_inset
+
+。总结：对于满足欧姆定律的良导体，内部电荷总是很快地衰减到零，可以认为内部没有净余电荷，电荷只分布在表面上。对于电解质溶液，认为其近似满足良导体条件。
+\end_layout
+
+\begin_layout Enumerate
+电场： 在很多腐蚀工况下，电解质内含有大量其他离子，电导率基本上是恒定的。电化学反应、电迁移使得离子（生成或消耗）浓度发生变化，流速等因素对电导率影响较小时，电
+流密度可写成欧姆定律相同形式： 
+\begin_inset Formula 
+\begin{align*}
+ & \sbf i=-\sigma\nabla\varphi(x)\\
+ & \nabla\cdot\left[-\sigma\nabla\varphi(x)\right]=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+物质传递： 在很多腐蚀工况下，电解质中无需考虑对流
+\begin_inset Formula $u(x)$
+\end_inset
+
+。离子流和电荷流定义 
+\begin_inset Formula 
+\begin{align*}
+\text{离子流：}\quad & j_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(t,x)\,\nabla\varphi(x)}\\
+\text{电流：}\quad & \sbf i(x)=F\sum z_{i}\,\sbf j_{i}(t,x),\quad\text{求和消去时间依赖}
+\end{align*}
+
+\end_inset
+
+离子流守恒方程
+\begin_inset Formula 
+\begin{align*}
+\text{离子流守恒：} & \frac{\partial C_{i}(t,x)}{\partial t}=-\nabla\cdot\sbf j_{i}(t,x)+R_{i}(t,x)\\
+\text{电中性：}\quad & \sum z_{i}C_{i}(t,x)=0\\
+\text{稳恒电场：}\quad & \nabla\cdot\left[-\sigma\nabla\varphi(x)\right]=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+在很多腐蚀工况下，电解质中无需考虑对流
+\begin_inset Formula $u(x)$
+\end_inset
+
+、无电场迁移 
+\begin_inset Formula $C_{i}(x)\nabla\varphi(x)$
+\end_inset
+
+，离子流量简化为：
+\begin_inset Formula 
+\begin{align*}
+ & j_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}\\
+ & \frac{\partial C_{i}(t,x)}{\partial t}=-\nabla\cdot\sbf j_{i}(t,x)+R_{i}(t,x)\\
+ & \sum z_{i}C_{i}(t,x)=0\\
+ & \nabla\cdot(\sigma\nabla\varphi)=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+电极域控制方程
+\end_layout
+
+\begin_layout Subsection
+边界条件
+\end_layout
+
+\begin_layout Section
+腐蚀仿真求解
+\end_layout
+
+\begin_layout Subsection
+数值分析简介
+\end_layout
+
+\begin_layout Subsection
+有限元法数值分析腐蚀求解器
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\varphi(x)}\\
+ & \quad+{\color{blue}z_{i}u_{i}F\,C_{i}(t,x)\,\nabla^{2}\varphi(x)}+R_{i}(t,x)
+\end{align*}
+
+\end_inset
+
+其中使用了 
+\begin_inset Formula $\nabla\cdot(\varphi\sbf f)=(\nabla\varphi)\cdot\sbf f+\varphi\nabla\cdot\sbf f$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+如果
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+随空间坐标变化，则
+\begin_inset Formula 
+\[
+\nabla\cdot\left[\sigma(x)\,\nabla\varphi(x)\right]=\nabla\sigma(x)\cdot\nabla\varphi(x)+\sigma(x)\nabla^{2}\varphi(x)=0
+\]
+
+\end_inset
+
+应该代入
+\begin_inset Formula 
+\[
+\nabla^{2}\varphi(x)=-\frac{\nabla\sigma(x)\cdot\nabla\varphi(x)}{\sigma}
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\varphi(x)}\\
+ & \quad-{\color{blue}\frac{z_{i}u_{i}F}{\sigma(x)}C_{i}(t,x)\,\nabla\sigma(x)\cdot\nabla\varphi(x)}+R_{i}(t,x)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+如果
+\begin_inset Formula $\sigma(x)=\sigma$
+\end_inset
+
+ 是空间上的常数，则
+\begin_inset Formula 
+\[
+\nabla\cdot\left[\sigma(x)\,\nabla\varphi(x)\right]=\sigma\nabla^{2}\varphi=0
+\]
+
+\end_inset
+
+即直接代入 
+\begin_inset Formula $\nabla^{2}\varphi=0$
+\end_inset
+
+，得到
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\nabla\varphi=0\\
+ & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\varphi(x)}+R_{i}(t,x)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+sdfas
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}(\varphi,C) & =\frac{1}{2}\int_{\Omega}\nabla\phi\cdot(\sigma\nabla\phi)\dd{\Omega}+\int_{\Gamma}\phi\sbf e_{n}\cdot(\sigma\nabla\phi)\dd{\Gamma}\\
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+变分给出的边界项为
+\begin_inset Formula $\int_{\Gamma}\phi\sbf e_{n}\cdot(\sigma\nabla\phi)\dd{\Gamma}$
+\end_inset
+
+。泛函变分方程
+\begin_inset Formula $\delta\mathcal{F}(\varphi)=0$
+\end_inset
+
+给出对应的电势场方程和边界条件
+\begin_inset Formula 
+\begin{align*}
+-\nabla\cdot\left(\sigma\nabla\phi\right) & =f\\
+\left(\sigma\nabla\phi\right)\cdot\sbf e_{n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+约束条件和算法
+\end_layout
+
+\begin_layout Subsection
+腐蚀仿真材料库
+\end_layout
+
+\begin_layout Section
+后处理计算 
+\end_layout
+
+\begin_layout Section
+求解器技术重难点及未来发展方向
+\end_layout
+
+\begin_layout Standard
+输出什么结果 有限元方法做后处理计算 
+\end_layout
+
+\begin_layout Chapter
+参考资料
+\end_layout
+
+\begin_layout Section
 CAE仿真求解：有限元（重点描述） 边界元 有限体积 
 \end_layout
 
@@ -1892,30 +2298,6 @@ literal "false"
 \begin_layout Standard
 该计算方法与有限元、有限差分法比较具有较高的精度。此外，有限分析法具有自动迎风特性，能准确地模拟对流项，同时不存在数值振荡失真问题。有限分析法的缺点是对复杂形状
 的求解区域适应性较差。
-\end_layout
-
-\begin_layout Section
-腐蚀主控方程 有限元离散 
-\end_layout
-
-\begin_layout Subsection
-静态的 
-\end_layout
-
-\begin_layout Subsection
-含时间的
-\end_layout
-
-\begin_layout Section
-腐蚀求解器重难点及未来发展方向
-\end_layout
-
-\begin_layout Section
-后处理计算 
-\end_layout
-
-\begin_layout Standard
-输出什么结果 有限元方法做后处理计算 
 \end_layout
 
 \end_body
