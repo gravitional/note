@@ -3911,6 +3911,283 @@ g_{i}^{e}=\oint_{S^{e}}N_{i}^{e}\sbf D\cdot\hat{n}^{e}\dd{S}\cdot\label{eq:5.44}
 电磁学的变分原理
 \end_layout
 
+\begin_layout Standard
+变分方法是通常用于建立有限元求解公式的两种方法之一。它的优点在于：有牢固的数理基础，其公式也有明确的物理解释。另一个优点在于：通过变分过程，我们能够清楚地说明必
+要边界条件和自然边界条件之间的区别，其他优点包括方便和公式优雅。
+\end_layout
+
+\begin_layout Section
+标准变分原理
+\end_layout
+
+\begin_layout Standard
+标准变分原理复述如下：对下式微分方程定义的边值问题：
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}\Phi=f\label{eq:j6.1}
+\end{equation}
+
+\end_inset
+
+如果算符是自伴的，即
+\begin_inset Formula 
+\begin{equation}
+\langle\mathcal{L}\Phi,\psi\rangle=\langle\Phi,\mathcal{L}\psi\rangle\label{eq:j6.2}
+\end{equation}
+
+\end_inset
+
+ 并且 
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+ 是正定的，即
+\begin_inset Formula 
+\begin{equation}
+\langle\mathcal{L}\Phi,\Phi\rangle\begin{cases}
+>0 & \Phi\neq0\\
+=0 & \Phi=0
+\end{cases}\label{eq:j6.3}
+\end{equation}
+
+\end_inset
+
+那么，通过求下式泛函的极小值
+\begin_inset Formula 
+\begin{equation}
+F(\Phi)=\frac{1}{2}\langle\mathcal{L}\Phi,\Phi\rangle-\frac{1}{2}\langle\mathcal{L}\Phi,f\rangle-\frac{1}{2}\langle f,\Phi\rangle\label{eq:j6.4}
+\end{equation}
+
+\end_inset
+
+即可求出
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式的解。
+\end_layout
+
+\begin_layout Standard
+在上面的几个式子中，
+\begin_inset Formula $\psi$
+\end_inset
+
+表示与
+\begin_inset Formula $\Phi$
+\end_inset
+
+满足相同边界条件的任意函数。
+\series bold
+尖括号表示如下定义的内积
+\series default
+
+\begin_inset Formula 
+\[
+\langle\Phi,\psi\rangle=\int_{\Omega}\Phi\psi^{*}\dd{\Omega}
+\]
+
+\end_inset
+
+式中，
+\begin_inset Formula $\Omega$
+\end_inset
+
+表示问题的区域，它可以是一维、二维和三维的；星号表示复共轭。为了证明这个变分原理，我们首先需要证明：
+\end_layout
+
+\begin_layout Enumerate
+微分方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是当泛函
+\begin_inset Formula $F$
+\end_inset
+
+驻定时（即当
+\begin_inset Formula $\delta F=0$
+\end_inset
+
+时）的必然结果。
+\end_layout
+
+\begin_layout Enumerate
+然后，我们需要证明驻点是泛函
+\begin_inset Formula $F$
+\end_inset
+
+的极小值点。这等价于证明
+\begin_inset Formula $\delta(\delta F)>0$
+\end_inset
+
+。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\delta F & =\frac{1}{2}\langle\mathcal{L}\delta\Phi,\Phi\rangle+\frac{1}{2}\langle\mathcal{L}\Phi,\delta\Phi\rangle-\frac{1}{2}\langle\delta\Phi,f\rangle-\frac{1}{2}\langle f,\delta\Phi\rangle\label{eq:j6.6}\\
+ & =\frac{1}{2}\langle\delta\Phi,\mathcal{L}\Phi-f\rangle+\frac{1}{2}\langle\mathcal{L}\Phi-f,\delta\Phi\rangle\label{eq:j6.8}\\
+ & =\ree\langle\delta\Phi,\mathcal{L}\Phi-f\rangle\label{eq:j6.9}
+\end{align}
+
+\end_inset
+
+上式已使用了自伴性质 
+\begin_inset Formula $\langle\mathcal{L}\delta\Phi,\Phi\rangle=\langle\delta\Phi,\mathcal{L}\Phi\rangle$
+\end_inset
+
+。由于
+\begin_inset Formula $\delta\Phi$
+\end_inset
+
+是任意变分，所以从
+\begin_inset Formula $\ree\langle\delta\Phi,\mathcal{L}\Phi-f\rangle=0$
+\end_inset
+
+可以出的
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 必须满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+即 
+\begin_inset Formula $\mathcal{L}\Phi=f$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+这里把复合微分算子
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+看作类似系数矩阵的东西，把 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ 看作自由度，因此不考虑
+\begin_inset Formula $F(\Phi)$
+\end_inset
+
+ 对
+\begin_inset Formula $\partial_{\mu}\phi$
+\end_inset
+
+ 以及更高阶偏导的依赖，因为对 
+\begin_inset Formula $\partial_{\mu}\phi$
+\end_inset
+
+ 的依赖也已经考虑到算子
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+中了，故写作
+\begin_inset Formula $F(\phi)$
+\end_inset
+
+。在这种框架下，欧拉–拉格朗日方程取简化形式 
+\begin_inset Formula $\frac{\partial\mathcal{L}}{\partial\phi}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+对于论点
+\begin_inset Formula $2$
+\end_inset
+
+，即
+\begin_inset Formula $\delta(\delta F)>0$
+\end_inset
+
+，再取 
+\begin_inset Formula $\delta F$
+\end_inset
+
+的第一变分，得到
+\begin_inset Formula 
+\begin{equation}
+\delta(\delta F)=\delta F(\Phi+\delta\Phi)-\delta F(\Phi)=\ree\langle\delta\Phi,\mathcal{L}\delta\Phi\rangle\label{eq:j6.11}
+\end{equation}
+
+\end_inset
+
+既然
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+是正定的。那么对于非零的
+\begin_inset Formula $\delta\Phi$
+\end_inset
+
+，可从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式得到
+\begin_inset Formula $\delta(\delta F)>0$
+\end_inset
+
+。因此，驻点确实是
+\begin_inset Formula $F$
+\end_inset
+
+的极小值点。
+\end_layout
+
+\begin_layout Subsection
+标准变分原理的例子
+\end_layout
+
+\begin_layout Example
+泊松方程 
+\begin_inset Formula 
+\begin{equation}
+-\nabla\cdot(\varepsilon\nabla\Phi)=\rho\label{eq:j6.12}
+\end{equation}
+
+\end_inset
+
+显然这个方程的算符为
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}=-\nabla\cdot(\varepsilon\nabla)\label{eq:j6.13}
+\end{equation}
+
+\end_inset
+
+ 
+\end_layout
+
 \begin_layout Chapter
 本征值问题–波导和腔体
 \end_layout

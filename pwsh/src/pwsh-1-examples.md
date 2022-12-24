@@ -32,7 +32,7 @@ Get-ChildItem *.txt | Rename-Item -NewName { $_.Name -replace '.txt','.log' }
 ls  -Recurse -Filter 'SolvingDomain'
 ```
 
-## Copy-Item
+## Copy-Item 复制文件
 
 [Copy-Item](https://learn.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Management/Copy-Item)
 
@@ -86,3 +86,7 @@ D:\temp\out\example.txt
 Copy-Item -Path C:\temp\tree -Filter *.txt -Recurse -Container:$true
 (Get-ChildItem . -Recurse).FullName
 ```
+
+## 使用 ffmpeg 合并目录中的 mp4 文件
+
+[合并mp4文件](my-merge-mp4.ps1)
