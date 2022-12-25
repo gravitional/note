@@ -14,8 +14,13 @@
 
 ## 基本剪切方法
 
+### 根据 开始时间, 持续时长 切割视频
+
 ```bash
-ffmpeg -i test.mp4 -ss 10 -t 15 -codec copy cut.mp4
+# 使用 hour:minute:seconds
+ffmpeg  -ss 00:01:00  -t 00:02:00 -i input.mp4  -codec copy -avoid_negative_ts 1 out.mp4
+# 使用 seconds
+ffmpeg -ss 10 -t 15 -i input.mp4 -codec copy -avoid_negative_ts 1 out.mp4
 ```
 
 参数说明:
@@ -41,7 +46,7 @@ ffmpeg -i test.mp4 -ss 10 -t 15 -codec copy cut.mp4
 `输入文件` 会逐帧解码, 直到 `-ss` 设置的时间点为止, 这么操作会很慢,
 虽然时间点是准确的, 但是很容易出现黑屏问题.
 
-## 根据开始时间结束时间切割视频
+### 根据 开始时间, 结束时间 切割视频
 
 [ffmpeg时间有关的操作](https://www.cnblogs.com/yongfengnice/p/7156952.html)
 [ffmpeg根据开始时间结束时间切割视频](https://blog.csdn.net/fjh1997/article/details/106037265)
@@ -53,16 +58,7 @@ ffmpeg -i test.mp4 -ss 10 -t 15 -codec copy cut.mp4
 ffmpeg  -i input.mp4 -ss 00:01:00 -to 00:02:00 -codec copy output1.mp4
 ```
 
-根据时长切割视频
-
-```bash
-# 使用 hour:minute:seconds
-ffmpeg  -ss 00:01:00  -t 00:02:00 -i input.mp4  -codec copy -avoid_negative_ts 1 out.mp4
-# 使用 seconds
-ffmpeg -ss 10 -t 15 -i input.mp4 -codec copy -avoid_negative_ts 1 out.mp4
-```
-
-## 参数优化
+### 参数优化
 
 + 将 `-ss`,  `-t` 参数放在 `-i` 参数之前
 
@@ -87,13 +83,13 @@ PS: `accurate_seek` 必须放在 `-i` 参数之前
 如果编码格式采用的 `copy` 最好加上 `-avoid_negative_ts 1` 参数
 
 ```bash
-ffmpeg -ss 10 -t 15 -accurate_seek -i test.mp4 -codec copy -avoid_negative_ts 1 cut.mp4
+ffmpeg -ss 10 -t 15 -accurate_seek -i test.mp4 -codec copy -avoid_negative_ts 1 out.mp4
 ```
 
 也可以尝试下面的命令
 
 ```bash
-ffmpeg -ss 10 -t 15 -i test.mp4 -c:v libx264 -c:a aac -strict experimental -b:a 98k cut.mp4 -y
+ffmpeg  -y -ss 10 -t 15 -i test.mp4 -c:v libx264 -c:a aac -strict experimental -b:a 98k out.mp4
 ```
 
 ## 合并多个视频
