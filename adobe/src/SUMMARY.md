@@ -2,4 +2,4 @@
 
 - [audition](audition.md)
 - [after-effects](after-effects.md)
-- [premiere](premiere.md)
+- [premiere basic](pr-basic.md)
