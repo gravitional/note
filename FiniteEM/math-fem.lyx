@@ -1830,7 +1830,7 @@ literal "false"
 和格林环路定理。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 一般曲线坐标系
 \end_layout
 
@@ -2001,6 +2001,45 @@ literal "false"
 \[
 \nabla^{2}\psi=\frac{1}{h_{3}}\left[\partial_{1}\left(h_{3}\partial_{1}\psi\right)+\partial_{2}\left(h_{3}\partial_{2}\psi\right)+\partial_{3}\left(\frac{1}{h_{3}}\partial_{3}\psi\right)\right]
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+柱坐标下：
+\begin_inset Formula 
+\[
+\nabla^{2}\psi=\frac{1}{r}\partial_{r}\left(r\partial_{r}\psi\right)+\frac{1}{r^{2}}\partial_{\phi}^{2}\psi+\partial_{z}^{2}\psi
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\sbf f=\left(\frac{1}{r}\partial_{\phi}f_{z}-\partial_{z}f_{\phi}\right)\sbf e_{r}+\left(\partial_{z}f_{r}-\partial_{r}f_{z}\right)\sbf e_{\phi}+\frac{1}{r}\left[\partial_{r}(rf_{\phi})-\partial_{\phi}f_{r}\right]\sbf e_{z}\label{eq:gI.36}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+球坐标下：
+\begin_inset Formula 
+\begin{align}
+\nabla\times\sbf f=\frac{1}{r\sin\theta}\left[\partial_{\theta}(\sin\theta f_{\phi})-\partial_{\phi}f_{\theta}\right]\sbf e_{r}+\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_{\phi}f_{r}-\partial_{r}(rf_{\phi})\right]\sbf e_{\theta}+\frac{1}{r}\left[\partial_{r}(rf_{\theta})-\partial_{\theta}f_{r}\right]\sbf e_{\phi}\label{eq:gI.41}
+\end{align}
 
 \end_inset
 
@@ -14337,7 +14376,7 @@ name "fig:xl3.2"
 ，可以得到静磁场方程：
 \begin_inset Formula 
 \begin{equation}
-\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J+\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}\label{eq:xl3.10}
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J+\frac{\mu_{0}}{\mu_{r}}{\color{red}\nabla\times\sbf M_{0}}\label{eq:xl3.10}
 \end{equation}
 
 \end_inset
@@ -14382,7 +14421,7 @@ name "fig:xl3.2"
 \begin_inset Formula 
 \begin{align}
 \mathcal{F}^{e}\left(\sbf A\right) & =\int_{\Omega_{e}}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf A\dd{\Omega}\label{eq:xl3.13}\\
- & -\left({\color{blue}\int_{\Omega_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf A\dd{\Omega}-\int_{\Gamma_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\hat{\sbf e}_{n}\times\sbf M_{0}\right)\cdot\sbf A\dd{\Gamma}}\right)\label{eq:xl3.14}
+ & -\left({\color{blue}\int_{\Omega_{e}}\frac{\mu_{0}}{\mu_{r}}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf A\dd{\Omega}}{\color{red}-\frac{\mu_{0}}{\mu_{r}}\int_{\Gamma_{e}}\left(\sbf M_{0}\times\sbf e_{n}\right)\cdot\sbf A\dd{\Gamma}}\right)\label{eq:xl3.14}
 \end{align}
 
 \end_inset
@@ -14400,7 +14439,7 @@ name "fig:xl3.2"
 \end_inset
 
  是单元的表面，最后一项是在单元表面的积分，
-\begin_inset Formula $\hat{\sbf e}_{n}$
+\begin_inset Formula $\sbf e_{n}$
 \end_inset
 
 是垂直表面的单位矢量。
@@ -14420,14 +14459,14 @@ noprefix "false"
 改写为
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:xl3.11"
+reference "eq:xl3.12"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-之后必然出现的（体减去外壳）。式
+之后必然出现的。式
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:xl3.11"
@@ -14461,7 +14500,17 @@ noprefix "false"
 \begin_inset Formula $\nabla\times\sbf M_{0}$
 \end_inset
 
- 会被忽视。
+ 会被忽视，见下文注
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rem2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Enumerate
@@ -14481,7 +14530,11 @@ noprefix "false"
 \begin_inset Formula $\Gamma_{m}$
 \end_inset
 
- 的表面积分，这一项就是电流密度。
+ 的表面积分，这一项就是
+\series bold
+面电流密度
+\series default
+。
 \end_layout
 
 \begin_layout Standard
@@ -14503,7 +14556,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
 \mathcal{F}^{e}\left(\sbf A\right) & =\int_{\Omega_{e}}\frac{1}{2}\left(\nabla\times\sbf A\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\dd{\Omega}-\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf A\dd{\Omega}\label{eq:xl3.15}\\
- & -\frac{\mu_{0}}{\mu_{r}}\int_{\Omega_{e}}\sbf M_{0}\cdot\left(\nabla\times\sbf A\right)\dd{\Omega}\label{eq:xl3.16}
+ & -{\color{blue}\frac{\mu_{0}}{\mu_{r}}\int_{\Omega_{e}}\sbf M_{0}\cdot\left(\nabla\times\sbf A\right)\dd{\Omega}}\label{eq:xl3.16}
 \end{align}
 
 \end_inset
@@ -14511,12 +14564,125 @@ noprefix "false"
 因此在永磁材料中，激励向量会多出一项永磁体的贡献
 \begin_inset Formula 
 \[
-b_{i}^{e}=\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}+\frac{\mu_{0}}{\mu_{r}}\int_{\Omega_{e}}\sbf M_{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}
+b_{i}^{e}=\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}+{\color{blue}\frac{\mu_{0}}{\mu_{r}}\int_{\Omega_{e}}\sbf M_{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem2"
+
+\end_inset
+
+考虑一个沿着
+\begin_inset Formula $z$
+\end_inset
+
+方向均匀极化的永磁体球 
+\begin_inset Formula $\sbf M=M_{0}\sbf e_{z}$
+\end_inset
+
+，代入球坐标系下的旋度公式；
+\begin_inset Formula 
+\[
+\nabla\times\sbf f=\frac{1}{r\sin\theta}\left[\partial_{\theta}(\sin\theta f_{\phi})-\partial_{\phi}f_{\theta}\right]\sbf e_{r}+\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_{\phi}f_{r}-\partial_{r}(rf_{\phi})\right]\sbf e_{\theta}+\frac{1}{r}\left[\partial_{r}(rf_{\theta})-\partial_{\theta}f_{r}\right]\sbf e_{\phi}
+\]
+
+\end_inset
+
+并考虑到
+\begin_inset Formula $\sbf e_{z}=\cos\theta\sbf e_{r}-\sin\theta\sbf e_{\theta}$
+\end_inset
+
+，可得在永磁体内部的连续区域
+\begin_inset Formula 
+\begin{align*}
+\nabla\times\sbf M & =M_{0}\frac{1}{r}\left[\partial_{r}(-r\sin\theta)-\partial_{\theta}\cos\theta\right]\sbf e_{\phi}\\
+ & =\frac{M_{0}}{r}\left[-\sin\theta+\sin\theta\right]\sbf e_{\phi}=0
+\end{align*}
+
+\end_inset
+
+此外在永磁体的边界上 
+\begin_inset Formula $\sbf M\times\sbf e_{n}=\sin\theta\sbf e_{\phi}$
+\end_inset
+
+，此即表面电流的物理图像：
+\series bold
+均匀磁化的永磁体的磁场，可以看作是磁体表面环形电流产生的磁场的叠加
+\series default
+。因此，在永磁体内部，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+微分方程中的中
+\begin_inset Formula ${\color{red}\nabla\times\sbf M_{0}}$
+\end_inset
+
+项等于零，无法体现永磁体的贡献；在数学上，常数项
+\begin_inset Formula $\sbf M$
+\end_inset
+
+对
+\begin_inset Formula $\sbf B$
+\end_inset
+
+的微分没有影响。而
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula ${\color{red}-\int_{\Gamma_{e}}\left(\sbf M_{0}\times\sbf e_{n}\right)\cdot\sbf A\dd{\Gamma}}$
+\end_inset
+
+项则体现了永磁体表面等效电流的贡献；在数学上，此项出现在
+\begin_inset Formula $B$
+\end_inset
+
+的矢势
+\begin_inset Formula $\sbf A$
+\end_inset
+
+的方程中，也只有在积分场（原函数）的边界上，常数项
+\begin_inset Formula $\sbf M$
+\end_inset
+
+的意义才会体现。此外，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:xl3.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中表面电流项的负号是因为它是激励，即有限元中的
+\begin_inset Formula $\{b_{i}\}$
+\end_inset
+
+项，类似于
+\begin_inset Formula $\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf A\dd{\Omega}$
+\end_inset
+
+前面也有负号。
 \end_layout
 
 \begin_layout Section
