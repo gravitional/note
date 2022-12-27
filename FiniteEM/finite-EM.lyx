@@ -3928,7 +3928,7 @@ name "sec:6.1"
 \end_layout
 
 \begin_layout Standard
-标准变分原理复述如下：对下式微分方程定义的边值问题：
+page 128。标准变分原理复述如下：对下式微分方程定义的边值问题：
 \begin_inset Formula 
 \begin{equation}
 \mathcal{L}\Phi=f\label{eq:j6.1}
@@ -4052,8 +4052,18 @@ noprefix "false"
 
 \end_inset
 
-上式已使用了自伴性质 
+上式已使用了厄米性质 
 \begin_inset Formula $\langle\mathcal{L}\delta\Phi,\Phi\rangle=\langle\delta\Phi,\mathcal{L}\Phi\rangle$
+\end_inset
+
+以及内积的定义
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.5"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
 。由于
@@ -4171,7 +4181,182 @@ noprefix "false"
 的极小值点。
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
+多场耦合
+\end_layout
+
+\begin_layout Standard
+考虑两个场 
+\begin_inset Formula $\phi_{1},\phi_{2}$
+\end_inset
+
+ 耦合的简单模型
+\begin_inset Formula 
+\begin{align*}
+F(\phi_{i})= & \sum_{i=1,2}\frac{1}{2}\langle\phi_{i},\mathcal{L}_{i}\phi_{i}\rangle-\frac{1}{2}\langle\phi_{i},f_{i}\rangle-\frac{1}{2}\langle f_{i},\phi_{i}\rangle\\
+ & +\frac{1}{2}\langle\phi_{1},\mathcal{L}_{12}\phi_{2}\rangle+\frac{1}{2}\langle\phi_{2},\mathcal{L}_{21}\phi_{1}\rangle
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\delta F= & \sum_{i=1,2}\frac{1}{2}\langle\mathcal{L}_{i}\delta\phi_{i},\phi_{i}\rangle+\frac{1}{2}\langle\mathcal{L}_{i}\phi_{i},\delta\phi_{i}\rangle-\frac{1}{2}\langle\delta\phi_{i},f_{i}\rangle-\frac{1}{2}\langle f_{i},\delta\phi_{i}\rangle\\
+ & +\frac{1}{2}{\color{blue}\langle\delta\phi_{1},\mathcal{L}_{12}\phi_{2}\rangle}+\frac{1}{2}{\color{brown}\langle\phi_{1},\mathcal{L}_{12}\delta\phi_{2}\rangle}+\frac{1}{2}{\color{blue}\langle\delta\phi_{2},\mathcal{L}_{21}\phi_{1}\rangle}+\frac{1}{2}{\color{brown}\langle\phi_{2},\mathcal{L}_{21}\delta\phi_{1}\rangle}\\
+= & \frac{1}{2}\langle\delta\phi_{1},\mathcal{L}_{1}\phi_{1}-f_{1}+{\color{blue}\mathcal{L}_{12}\phi_{2}}\rangle+\frac{1}{2}\langle\mathcal{L}_{1}\phi_{1}-f_{1}+{\color{brown}\mathcal{L}_{21}\phi_{2}},\delta\phi_{1}\rangle\\
+ & +\frac{1}{2}\langle\delta\phi_{2},\mathcal{L}_{2}\phi_{2}-f_{2}+{\color{blue}\mathcal{L}_{21}\phi_{1}}\rangle+\frac{1}{2}\langle\mathcal{L}_{2}\phi_{2}-f_{2}+{\color{brown}\mathcal{L}_{12}\phi_{1}},\delta\phi_{2}\rangle\\
+= & \ree\langle\delta\phi_{1},\mathcal{L}_{1}\phi_{1}-f_{1}+{\color{blue}\mathcal{L}_{12}\phi_{2}}\rangle+\ree\langle\delta\phi_{2},\mathcal{L}_{2}\phi_{2}-f_{2}+{\color{blue}\mathcal{L}_{21}\phi_{1}}\rangle
+\end{align*}
+
+\end_inset
+
+上面已经使用了厄米性质 
+\begin_inset Formula $\langle\mathcal{L}\delta\phi_{i},\phi_{j}\rangle=\langle\delta\phi_{i},\mathcal{L}\phi_{j}\rangle$
+\end_inset
+
+以及内积的定义
+\begin_inset Formula $\langle\Phi,\psi\rangle=\int_{\Omega}\Phi\psi^{*}\dd{\Omega}$
+\end_inset
+
+，以及 
+\begin_inset Formula $\mathcal{L}_{12}^{*}=\mathcal{L}_{21}$
+\end_inset
+
+。由于
+\begin_inset Formula $\delta\phi_{i}$
+\end_inset
+
+是任意变分，所以从
+\begin_inset Formula $\ree\langle\cdots\rangle=0$
+\end_inset
+
+ 可以出的
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+ 必须满足的方程
+\begin_inset Formula 
+\begin{align*}
+ & \mathcal{L}_{1}\phi_{1}-f_{1}+{\color{blue}\mathcal{L}_{12}\phi_{2}}=0\\
+ & \mathcal{L}_{2}\phi_{2}-f_{2}+{\color{blue}\mathcal{L}_{21}\phi_{1}}=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上面的式子可以简洁地写成矩阵的形式：
+\begin_inset Formula 
+\[
+F\left[\phi_{i}\right]=\frac{1}{2}\left[\begin{array}{cc}
+\phi_{1} & \phi_{2}\end{array}\right]^{*}\left[\begin{array}{cc}
+\mathcal{L}_{1} & \mathcal{L}_{12}\\
+\mathcal{L}_{21} & \mathcal{L}_{2}
+\end{array}\right]\left[\begin{array}{c}
+\phi_{1}\\
+\phi_{2}
+\end{array}\right]-\frac{1}{2}\left[\begin{array}{cc}
+\phi_{1} & \phi_{2}\end{array}\right]^{*}\left[\begin{array}{c}
+f_{1}\\
+f_{2}
+\end{array}\right]-\frac{1}{2}\left[\begin{array}{cc}
+f_{1} & f_{2}\end{array}\right]^{*}\left[\begin{array}{c}
+\phi_{1}\\
+\phi_{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\mathcal{L}_{1} & \mathcal{L}_{12}\\
+\mathcal{L}_{21} & \mathcal{L}_{2}
+\end{array}\right]\left[\begin{array}{c}
+\phi_{1}\\
+\phi_{2}
+\end{array}\right]=\left[\begin{array}{c}
+f_{1}\\
+f_{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+或者
+\begin_inset Formula 
+\[
+F\left[\phi_{i}\right]=\frac{1}{2}\phi_{i}^{*}\mathcal{L}_{ij}\phi_{j}-\frac{1}{2}\phi_{i}^{*}f_{i}-\frac{1}{2}f_{i}^{*}\phi_{i}
+\]
+
+\end_inset
+
+对应的方程为
+\begin_inset Formula 
+\[
+\mathcal{L}_{ij}\phi_{j}=f_{i}
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+其中要求
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+ 是厄米矩阵，
+\begin_inset Formula $\mathcal{L}_{ji}^{*}=\mathcal{L}_{ij}$
+\end_inset
+
+：对于对角元素，相当于要求它作用在
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+上是厄米的；对于非对角元素，相当于要求它对
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+内积是对称的。
+\end_layout
+
+\begin_layout Subsubsection
 标准变分原理的例子
 \end_layout
 
@@ -4192,7 +4377,25 @@ noprefix "false"
 
 \end_inset
 
-根据内积的定义，
+
+\end_layout
+
+\begin_layout Example
+首先来验证
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，即厄米条件。根据内积的定义，
 \begin_inset Formula $\mathcal{L}$
 \end_inset
 
@@ -4204,7 +4407,133 @@ noprefix "false"
 
 \end_inset
 
- 
+使用第一标量格林定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jA.20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}+u(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}a{\color{blue}u\frac{\partial b}{\partial n}}\dd{S}
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{equation}
+\langle\mathcal{L}\Phi,\psi\rangle=\int_{V}\Phi[-\nabla\cdot(\varepsilon\nabla\psi^{*})]\dd{V}-\oint_{S}\varepsilon\left(\psi^{*}\frac{\partial\Phi}{\partial n}-\Phi\frac{\partial\psi^{*}}{\partial n}\right)\dd{S}\label{eq:j6.15}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\hat{\sbf n}$
+\end_inset
+
+是
+\begin_inset Formula $S$
+\end_inset
+
+的外法向单位矢量。如果
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+是实数或实函数，则上式右边第一项可写成
+\begin_inset Formula $\langle\Phi,\mathcal{L}\psi\rangle$
+\end_inset
+
+。第二项是免积分，如果
+\begin_inset Formula $\Phi$
+\end_inset
+
+和
+\begin_inset Formula $\psi$
+\end_inset
+
+均满足齐次狄利克雷边界条件（满足其一即可）
+\begin_inset Formula 
+\begin{equation}
+\Phi=0,\quad\text{在}S_{1}\text{上}\label{eq:j6.16}
+\end{equation}
+
+\end_inset
+
+以及第三类齐次边界条件
+\begin_inset Formula 
+\begin{equation}
+\varepsilon\frac{\partial\Phi}{\partial n}+\gamma\Phi=0,\quad\text{在}S_{2}\text{上}\label{eq:j6.17}
+\end{equation}
+
+\end_inset
+
+那么，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式右边第二项为零。上式中的
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+和
+\begin_inset Formula $\gamma$
+\end_inset
+
+是实数，而
+\begin_inset Formula $S_{1}+S_{2}=S$
+\end_inset
+
+。在条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式下， 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+变成
+\begin_inset Formula 
+\begin{equation}
+\langle\mathcal{L}\Phi,\psi\rangle=\langle\Phi,\mathcal{L}\psi\rangle\label{eq:j6.18}
+\end{equation}
+
+\end_inset
+
+即算符
 \begin_inset Formula $\mathcal{L}$
 \end_inset
 
@@ -4223,20 +4552,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-边界条件是齐次的。如果
-\begin_inset Formula $\Phi$
-\end_inset
-
-和
-\begin_inset Formula 
-\begin{align}
-\Phi & =0,\quad\text{在}S_{1}\text{上}\label{eq:j6.16}\\
-\varepsilon\frac{\partial\Phi}{\partial n}+\gamma\Phi & =0,\quad\text{在}S_{2}\text{上}\label{eq:j6.17}
-\end{align}
-
-\end_inset
-
-
+边界条件是齐次的。
 \end_layout
 
 \begin_layout Standard
@@ -4532,7 +4848,7 @@ noprefix "false"
 \begin_inset Formula $q$
 \end_inset
 
-是一直参数。由前面的例子可见，这个问题是非厄米的，然而只要引进新的未知函数
+是已知参数。由前面的例子可见，这个问题是非厄米的，然而只要引进新的未知函数
 \begin_inset Formula $\Phi'=\Phi-u$
 \end_inset
 
@@ -4605,7 +4921,7 @@ F(\Phi) & =\frac{1}{2}\langle\mathcal{L}(\Phi-u),(\Phi-u)\rangle-\frac{1}{2}\lan
 \begin_inset Formula $\Phi$
 \end_inset
 
-取变分，那么我们可丢到不含
+取变分，那么我们可以丢掉不含
 \begin_inset Formula $\Phi$
 \end_inset
 
@@ -4614,6 +4930,341 @@ F(\Phi) & =\frac{1}{2}\langle\mathcal{L}(\Phi-u),(\Phi-u)\rangle-\frac{1}{2}\lan
 \begin{equation}
 F(\Phi)=\frac{1}{2}\langle\mathcal{L}\Phi,\Phi\rangle-\frac{1}{2}\langle\mathcal{L}\Phi,u\rangle+\frac{1}{2}\langle\Phi,\mathcal{L}u\rangle-\frac{1}{2}\langle\Phi,f\rangle-\frac{1}{2}\langle f,\Phi\rangle\label{eq:j6.40}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在下面的例子中将会看出，上式右边的第二项和第三项通常可转化成边界积分或边界项，其中
+\begin_inset Formula $u$
+\end_inset
+
+在应用边界条件后消失。我们称上面描述的结果为 
+\series bold
+修正变分原理
+\series default
+，在此重述如下：给定边值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式，如果算符
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+在齐次边界条件下是厄米的，那么其解可通过求泛函
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.40"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式的驻点而得到，其中
+\begin_inset Formula $u$
+\end_inset
+
+是满足给定非齐次边界条件的任意函数。
+\end_layout
+
+\begin_layout Standard
+现在，让我们用上节中的例子来说明修正变分原理的应用。考虑泊松方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式所定义的问题以及下列边界条件：
+\begin_inset Formula 
+\begin{align}
+ & -\nabla\cdot(\varepsilon\nabla\Phi)=\rho\nonumber \\
+ & \Phi=p,\quad\text{on}\quad S_{1}\label{eq:j6.41}\\
+ & \varepsilon\frac{\partial\Phi}{\partial n}+\gamma\Phi=q,\quad\text{on}\quad S_{2}\label{eq:j6.42}
+\end{align}
+
+\end_inset
+
+式中
+\begin_inset Formula $p$
+\end_inset
+
+和
+\begin_inset Formula $q$
+\end_inset
+
+是已知参数。正如在上节中所证明的那样，只要
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+和
+\begin_inset Formula $\gamma$
+\end_inset
+
+是实数或实函数，算符
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+在齐次边界条件下就是厄米的。因此将
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+和
+\begin_inset Formula $f$
+\end_inset
+
+ 代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.40"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式，即可得到该问题的泛函
+\begin_inset Formula $F(\Phi)$
+\end_inset
+
+为
+\begin_inset Formula 
+\begin{align}
+F(\Phi)= & \frac{1}{2}\int_{V}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\Phi^{*}\dd{V}-\frac{1}{2}\int_{V}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]u^{*}\dd{V}\nonumber \\
+ & +\frac{1}{2}\int_{V}\Phi\left[-\nabla\cdot(\varepsilon\nabla u)\right]^{*}\dd{V}-\frac{1}{2}\int_{V}\left(\Phi\rho^{*}+\rho\Phi^{*}\right)\dd{V}\label{eq:j6.43}
+\end{align}
+
+\end_inset
+
+式中
+\begin_inset Formula $u$
+\end_inset
+
+是满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式的任意函数。应用第二标量格林定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jA.20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式
+\begin_inset Formula 
+\[
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}-b\nabla\cdot{\color{brown}(u\nabla a)}\right]\dd{V}=\oint_{S}u({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{align}
+F(\Phi)= & \frac{1}{2}\int_{V}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\Phi^{*}\dd{V}-\frac{1}{2}\int_{V}\left(\Phi\rho^{*}+\rho\Phi^{*}\right)\dd{V}\nonumber \\
+ & +\frac{1}{2}\oint_{S}\varepsilon\left(u^{*}\frac{\partial\Phi}{\partial n}-\Phi\frac{\partial u^{*}}{\partial n}\right)\dd{S}\label{eq:j6.44}
+\end{align}
+
+\end_inset
+
+因为
+\begin_inset Formula $\Phi$
+\end_inset
+
+和
+\begin_inset Formula $u$
+\end_inset
+
+均满足边界条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式，将它们应用于上式得到
+\begin_inset Formula 
+\begin{align}
+F(\Phi)= & \frac{1}{2}\int_{V}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\Phi^{*}\dd{V}-\frac{1}{2}\int_{V}\left(\Phi\rho^{*}+\rho\Phi^{*}\right)\dd{V}\nonumber \\
+ & +\frac{1}{2}\int_{S_{1}}\varepsilon\left(p^{*}\frac{\partial\Phi}{\partial n}-p\frac{\partial u^{*}}{\partial n}\right)\dd{S}+\frac{1}{2}\int_{S_{2}}\varepsilon\left(u^{*}q-\Phi q^{*}\right)\dd{S}\label{eq:j6.45}
+\end{align}
+
+\end_inset
+
+丢掉不包含
+\begin_inset Formula $\Phi$
+\end_inset
+
+的项，上式可写成
+\begin_inset Formula 
+\begin{align}
+F(\Phi)= & \frac{1}{2}\int_{V}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\Phi^{*}\dd{V}-\frac{1}{2}\int_{V}\left(\Phi\rho^{*}+\rho\Phi^{*}\right)\dd{V}\nonumber \\
+ & +\frac{1}{2}\int_{S_{1}}\varepsilon p^{*}\frac{\partial\Phi}{\partial n}\dd{S}-\frac{1}{2}\int_{S_{2}}\Phi q^{*}\dd{S}\label{eq:j6.46}
+\end{align}
+
+\end_inset
+
+应用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jA.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}+u(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}a{\color{blue}u\frac{\partial b}{\partial n}}\dd{S},
+\]
+
+\end_inset
+
+以及
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的边界条件，代入中间等式
+\begin_inset Formula 
+\begin{align*}
+\int_{V}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\Phi^{*}\dd{V} & =\varepsilon\abs{\nabla\Phi}^{2}-\oint_{S_{1}+S_{2}}\varepsilon\Phi^{*}\frac{\partial\Phi}{\partial n}\dd{S}\\
+\gamma\abs{\Phi}^{2}-q\Phi^{*} & =-\varepsilon\Phi^{*}\frac{\partial\Phi}{\partial n},\quad\text{on}\quad S_{2}
+\end{align*}
+
+\end_inset
+
+上式可写成对称形式
+\begin_inset Formula 
+\begin{align}
+F(\Phi)= & \frac{1}{2}\int_{V}\varepsilon\abs{\nabla\Phi}^{2}\dd{V}-\frac{1}{2}\int_{V}\left(\Phi\rho^{*}+\rho\Phi^{*}\right)\dd{V}\nonumber \\
+ & +\frac{1}{2}\int_{S_{2}}\left(\gamma\abs{\Phi}^{2}-\Phi q^{*}-q\Phi^{*}\right)\dd{S}\label{eq:j6.47}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $S_{1}$
+\end_inset
+
+上的积分已经被消除。为了方便，再次列出对应的方程和边界条件：
+\begin_inset Formula 
+\begin{align*}
+ & -\nabla\cdot(\varepsilon\nabla\Phi)=\rho\\
+ & \Phi=p,\quad\text{on}\quad S_{1}\\
+ & \varepsilon\frac{\partial\Phi}{\partial n}+\gamma\Phi=q,\quad\text{on}\quad S_{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+多场耦合
+\end_layout
+
+\begin_layout Standard
+单场
+\begin_inset Formula $\phi$
+\end_inset
+
+的泛函
+\begin_inset Formula $F(\phi)$
+\end_inset
+
+写作
+\begin_inset Formula 
+\[
+F(\phi)=\frac{1}{2}\langle\mathcal{L}\phi,\phi\rangle-\frac{1}{2}\langle\mathcal{L}\phi,u\rangle+\frac{1}{2}\langle\phi,\mathcal{L}u\rangle-\frac{1}{2}\langle\phi,f\rangle-\frac{1}{2}\langle f,\phi\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F(\phi)=\frac{1}{2}\phi\mathcal{L}\phi-\frac{1}{2}\phi^{*}\mathcal{L}u+\frac{1}{2}\phi^{*}\mathcal{L}u-\frac{1}{2}\phi^{*}f-\frac{1}{2}f^{*}\phi
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $u$
+\end_inset
+
+ 和 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 均满足非齐次边界条件：
+\begin_inset Formula 
+\begin{align*}
+ & \Phi=p,\quad\text{on}\quad S_{1}\\
+ & \varepsilon\frac{\partial\Phi}{\partial n}+\gamma\Phi=q,\quad\text{on}\quad S_{2}
+\end{align*}
 
 \end_inset
 
@@ -8146,6 +8797,295 @@ noprefix "false"
 \end_inset
 
 就足够了。 
+\end_layout
+
+\begin_layout Chapter
+时域有限元
+\end_layout
+
+\begin_layout Section
+有限元公式
+\end_layout
+
+\begin_layout Section
+时域离散
+\end_layout
+
+\begin_layout Subsection
+前向差分
+\end_layout
+
+\begin_layout Subsection
+后向差分
+\end_layout
+
+\begin_layout Subsection
+中心差分
+\end_layout
+
+\begin_layout Subsection
+Newmark方法
+\end_layout
+
+\begin_layout Standard
+page 280/534
+\end_layout
+
+\begin_layout Standard
+另一种直接积分方法被称作 Newmark 方法。在这种方法中[48]，函数
+\begin_inset Formula $u(t)$
+\end_inset
+
+和它的导数
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+被近似为
+\begin_inset Formula 
+\begin{align}
+u(t+\Delta t)= & u(t)+\Delta(t)\frac{\dd{u(t)}}{\dd{t}}+(\frac{1}{2}-\beta)(\Delta t)^{2}\frac{\dd[2]{u(t)}}{\dd{t^{2}}}+\beta(\Delta t)^{2}\frac{\dd[2]{u(t+\Delta t)}}{\dd{t^{2}}}\label{eq:j12.30}\\
+\frac{\dd{u(t+\Delta t)}}{\dd{t}}= & \frac{\dd{u(t)}}{\dd{t}}+(1-\gamma)\Delta t\frac{\dd[2]{u(t)}}{\dd{t^{2}}}+\gamma\Delta t\frac{\dd[2]{u(t+\Delta t)}}{\dd{t^{2}}}\label{eq:j12.31}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\beta$
+\end_inset
+
+和
+\begin_inset Formula $\gamma$
+\end_inset
+
+是两个参数，通过选择它们，可以控制 时间推进过程（time–marching process）的精度和稳定性（accuracy and stability）。
+\end_layout
+
+\begin_layout Chapter
+附录A：矢量恒等式和积分定理
+\end_layout
+
+\begin_layout Standard
+page 304.
+\end_layout
+
+\begin_layout Section
+矢量恒等式
+\end_layout
+
+\begin_layout Enumerate
+混合积的轮换不变性：
+\begin_inset Formula 
+\begin{equation}
+\sbf a\cdot(\sbf b\times\sbf c)=\sbf b\cdot(\sbf c\times\sbf a)=\sbf c\cdot(\sbf a\times\sbf b)\label{eq:jA.1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+积分定理
+\end_layout
+
+\begin_layout Standard
+下面用 
+\begin_inset Formula $\sbf n$
+\end_inset
+
+ 表示
+\begin_inset Formula $S$
+\end_inset
+
+的单位法向矢量，
+\begin_inset Formula $S$
+\end_inset
+
+可以是封闭曲面或未封闭面。在后一种情形下，
+\begin_inset Formula $\hat{\sbf l}\dd{\ell}$
+\end_inset
+
+表示与
+\begin_inset Formula $S$
+\end_inset
+
+面和包围
+\begin_inset Formula $S$
+\end_inset
+
+面的轮廓
+\begin_inset Formula $C$
+\end_inset
+
+都相切的线元。
+\end_layout
+
+\begin_layout Enumerate
+梯度定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\dd{V}\nabla\phi=\oint_{S}\dd{\sbf S}\phi\label{eq:jA.13}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+散度定理（高斯定理）：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\dd{V}\nabla\cdot\sbf A=\oint_{S}\dd{\sbf S}\cdot\sbf A\label{eq:jA.14}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+旋度定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\dd{V}\nabla\times\sbf A=\oint_{S}\dd{\sbf S}\times\sbf A\label{eq:jA.15}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+叉乘–梯度定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{S}\dd{\sbf S}\times\nabla\phi=\oint_{C}\dd{\ell}\hat{\sbf l}\,\phi\label{eq:jA.16}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+斯托克斯（stokes）定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{S}\dd{\sbf S}\cdot\nabla\times\sbf A=\oint_{C}\dd{\ell}\hat{\sbf l}\cdot\sbf A\label{eq:jA.17}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+叉乘–nabla–叉乘定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{S}\dd{\sbf S}\times\nabla\times\sbf A=\oint_{C}\dd{\ell}\hat{\sbf l}\times\sbf A\label{eq:jA.18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第一标量格林定理
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}+u(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}a{\color{blue}u\frac{\partial b}{\partial n}}\dd{S}\label{eq:jA.19}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a{\color{blue}(\nabla^{2}b)}+(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}a{\color{blue}\frac{\partial b}{\partial n}}\dd{S}\label{eq:jA.19b}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第二标量格林定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}-b\nabla\cdot{\color{brown}(u\nabla a)}\right]\dd{V}=\oint_{S}u({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}\label{eq:jA.20}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a{\color{blue}(\nabla^{2}b)}-b{\color{brown}(\nabla^{2}a)}\right]\dd{V}=\oint_{S}({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}\label{eq:jA.20b}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第一矢量格林定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[u{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}u\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}\label{eq:jA.21}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}\label{eq:jA.21b}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第二矢量格林定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[\sbf b\cdot(\nabla\times u{\color{blue}\nabla\times\sbf a})-\sbf a\cdot(\nabla\times u{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u(\sbf a\times{\color{brown}\nabla\times\sbf b}-\sbf b\times{\color{blue}\nabla\times\sbf a})\cdot\sbf n\dd{S}\label{eq:jA.22}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[\sbf b\cdot(\nabla\times{\color{blue}\nabla\times\sbf a})-\sbf a\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,(\sbf a\times{\color{brown}\nabla\times\sbf b}-\sbf b\times{\color{blue}\nabla\times\sbf a})\cdot\sbf n\dd{S}\label{eq:jA.22b}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
