@@ -4,7 +4,7 @@
 
 + `CASE_PATH`; 工程路径
 + `--help`; `-h`; 打印帮助信息
-+ `--threads`; `-p`; 并行线程数目, 调试建议为1
++ `--threads`; `-p`; 并行线程数目, 调试时建议为`1`
 + `--cuda`; `-c`; 启用 cuda;
 + `--no-warning`; `-w`; 不输入日志中的 warning 信息
 + `--debug`; `-d`; 会输出日志中的debug信息, 平时建议加上
