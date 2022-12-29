@@ -251,12 +251,12 @@ $page = [XML] @"
 
 `Here-strings`也是`ConvertFrom-StringData` 的一种方便的输入格式, 此命令将 `Here-strings` 转换为哈希表.
 
-### 正则表达式
+## 正则表达式
 
 [about_Regular_Expressions](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_regular_expressions)
 
-正则表达式是一种用于匹配文本的模式.  它可以由文本字符, 运算符和其他构造组成.
-`PowerShell` 具有多个使用正则表达式的运算符和 cmdlet.  
+正则表达式是一种用于匹配文本的模式. 它可以由文本字符, 运算符和其他构造组成.
+`PowerShell` 具有多个使用正则表达式的运算符和 cmdlet.
 可以在以下链接中阅读有关其语法和用法的详细信息.
 
 + `Select-String`
@@ -272,17 +272,17 @@ $page = [XML] @"
 + switch 语句     使用 `-casesensitive` 选项
 + 运算符     前缀为 `c` (`-cmatch`, `-csplit`, 或 `-creplace`)
 
-#### 查找字符串
-
-`Select-String `: 查找字符串和文件中的文本. 别名为`sls`.
+### 查找字符串
 
 [Select-String](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.utility/select-string)
+
+`Select-String `: 查找字符串和文件中的文本. 别名为`sls`.
 
 + `-InputObject`; 指定要搜索的文本. 输入一个包含该文本的变量, 或者输入命令或表达式.
 
 使用`InputObject`参数与通过管道向`Select-String`发送字符串是不同的.
-
-当你用管道向`Select-String cmdlet`发送一系列字符串时, 它在每个字符串中搜索指定的文本, 并返回包含搜索文本的每个字符串.
+当你用管道向`Select-String cmdlet`发送一系列字符串时,
+它在每个字符串中搜索指定的文本, 并返回包含搜索文本的每个字符串.
 当你使用`InputObject`参数来提交一个字符串的集合时, `Select-String`将该集合视为一个组合字符串.
 如果`Select-String`在任何一个字符串中搜索到指定文本, 它会将这些字符串作为一个单元返回.
 
@@ -292,55 +292,6 @@ $page = [XML] @"
 ```powershell
 Select-String -Path .\*.txt -Pattern 'Get-'
 ```
-
-+ `-AllMatches`; 表示在每行文本中搜索一个以上的匹配. 如果没有这个参数, `Select-String` 在每行文本中只寻找第一个匹配.
-当 `Select-String` 在一行文本中找到多个匹配项时, 对这一行它仍然只发出一个 `MatchInfo` 对象, 该对象的 `Matches` 属性包含所有匹配项.
-
-备注:
-
-当与 `SimpleMatch` 参数一起使用时, 这个参数被忽略.
-如果你希望返回所有的匹配结果, 并且你要搜索的模式包含正则表达式字符, 你必须转义这些字符, 而不是使用`SimpleMatch`.
-关于转义正则表达式的更多信息, 见about_Regular_Expressions.
-
-+ `-Context` ; 捕获匹配模式的行前后的指定行数.
-
-如果你输入一个数字作为这个参数的值, 同时作为匹配之前和之后捕获的行数.
-如果输入两个数字, 第一个数字决定了匹配前的行数, 第二个数字决定了匹配后的行数. 例如, `-Context 2,3`.
-
-在默认显示中, 匹配成功的行在第一列中用直角括号表示(`>`, ASCII 62), 未标记的行是上下文.
-
-上下文参数不会改变 `Select-String` 生成的对象的数量.
-`Select-String` 为每个匹配生成一个 `MatchInfo` 对象. 上下文作为一个字符串数组存储在对象的 `Context` 属性中.
-
-当 `Select-String` 命令的输出被管道向另一个 `Select-String` 命令时, 接收的命令只搜索`匹配行`中的文本.
-匹配的行是 `MatchInfo` 对象的 `Line` 属性的值, 而不是`context `中的文本. 因此, 对管道后面的`Select-String` 命令使用`-Context` 参数是无效的
-
-当上下文包括匹配时, 每个匹配的 `MatchInfo` 对象包括所有上下文行, 但重叠的行在显示中只出现一次.
-
-+ `-Encoding`; 指定目标文件的编码类型. 默认值是 `utf8NoBOM`.  这个参数的可接受值如下.
-
-+ `ascii` ;  使用`ASCII(7位)`字符集的编码.
-+ `bigendianunicode` ;  使用`big-endian`字节顺序的`UTF-16`格式进行编码.
-+ `oem` ;  使用`MS-DOS`和控制台程序的默认编码.
-+ `unicode` ;  以`UTF-16`格式编码, 使用`little-endian`的字节顺序.
-+ `utf7` ;  以`UTF-7`格式编码.
-+ `utf8` ;  以`UTF-8`格式编码.
-+ `utf8BOM` ;  以`UTF-8`格式编码, 使用BOM(Byte Order Mark, 字节顺序标记).
-+ `utf8NoBOM` ;  以`UTF-8`格式编码, 没有BOM.
-+ `utf32` ; 以`UTF-32` 格式编码.
-
-从`PowerShell 6.2`开始, `-Encoding`参数还允许注册代码页的`数字ID`, 如`-Encoding 1251`.
-或注册代码页的字符串名称, 如 `-Encoding "windows-1251"` . 欲了解更多信息, 请参见`Encoding.CodePage`的`.NET`文档.
-
-+ `-List` ; 在每个输入文件中只返回匹配文本的第一个实例. 这是检索匹配正则表达式内容的文件列表的最有效方式.
-默认情况下, `Select-String` 为它找到的每个匹配项返回一个 `MatchInfo` 对象.
-+ `-Quiet` ; 返回一个布尔值(`True`或`False`), 而不是 `MatchInfo` 对象.
-+ `-SimpleMatch`; 使用简单匹配而不是正则表达式匹配. 在简单匹配中, `Select-String` 在输入中搜索 `Pattern` 参数中的文本.
-它不把 `Pattern` 参数的值解释为正则表达式语句. 另外, 当使用 `SimpleMatch` 时, 返回的 `MatchInfo` 对象的 `Matches` 属性是空的.
-+ `-LiteralPath` ; 指定要搜索的文件的路径. `LiteralPath` 参数的值将完全按照输入的内容使用.
-字符不会被解释为通配符. 如果路径包括转义字符, 请用单引号将其括起来. 单引号告诉`PowerShell`不要把任何字符解释为转义序列.
-欲了解更多信息, 请参见about_Quoting_Rules.
-+ `-NotMatch` ; 查找与指定模式不匹配的文本.
 
 ### -eq,equality运算符
 
@@ -431,7 +382,7 @@ $a -gt 'a'
 # Output: Nothing
 ```
 
-### match运算符
+## match运算符
 
 匹配运算符(`-like, -notlike, -match, -notmatch`)可以找到符合或不符合指定模式的元素.
 `-like`和`-notlike`的模式是通配符表达式(包含`*`, `?`和`[ ]`), 而`-match`和`-notmatch`接受正则表达式`Regex`.语法是,
@@ -446,7 +397,7 @@ $a -gt 'a'
 当这些运算符的输入是标量值时, 它们返回布尔值. 当输入的是值的集合时, 运算符返回任何匹配的成员.
 如果在集合中没有匹配的成员, 运算符会返回空数组.
 
-#### -like,-notlike
+### -like,-notlike
 
 ```powershell
 "PowerShell" -like    "*shell"           # Output: True
@@ -459,7 +410,7 @@ $a -gt 'a'
 "PowerShell", "Server" -notlike "*shell" # Output: Server
 ```
 
-#### -match,-notmatch
+### -match,-notmatch
 
 `-match` 和 `-notmatch` 使用正则表达式来搜索左侧值中的模式.
 正则表达式可以匹配复杂的模式, 如电子邮件地址, UNC路径, 或格式化的电话号码.
@@ -505,7 +456,7 @@ if ("<version>1.0.0</version>" -match '<version>(.*?)</version>') {
 }
 ```
 
-### -replace
+## -replace
 
 + `<input> -replace <正则表达式>, <目标>` ; 使用正则表达式匹配特定模式, 然后替换成目标.
 默认情况下,  `-replace` 运算符不区分大小写. 若要使其区分大小写, 请使用 `-creplace`. 若要使其显式不区分大小写, 请使用 `-ireplace`.
@@ -521,7 +472,7 @@ if ("<version>1.0.0</version>" -match '<version>(.*?)</version>') {
 Get-ChildItem *.txt | Rename-Item -NewName { $_.name -replace '\.txt$','.log' }
 ```
 
-#### 捕获组
+### 捕获组
 
 也可以使用使用正则表达式的捕获组, 来动态地替换文本. 捕获组可以在`<替换>`字符串中使用, 用`$`加`group identifier`的形式引用.
 
@@ -558,7 +509,7 @@ Regex中的`$$`表示一个字面的`$`. 在替换字符串中的`$$`产生一�
 '5.72' -replace '(.+)', '$$1'  # Output: $1
 ```
 
-#### 替换集合
+### 替换集合
 
 当`-replace`的`<input>`是一个集合时, `PowerShell`会将替换应用到集合中的每个值. 比如说
 
@@ -571,7 +522,7 @@ a4
 a5
 ```
 
-#### 用脚本块替换
+### 用脚本块替换
 
 在`PowerShell 6`及以后的版本中, `-replace`操作符也接受一个执行替换的`脚本块`. 每一次匹配成功, 脚本块都会运行一次. 语法:
 
@@ -588,14 +539,14 @@ a5
 Out: Hello
 ```
 
-### 包含运算符
+## 包含运算符
 
-包含运算符(`-contains`, `-notcontains`, `-in`, 和 `-notin`)与`equality `运算符相似, 
+包含运算符(`-contains`, `-notcontains`, `-in`, 和 `-notin`)与`equality `运算符相似,
 只是它们总是返回一个布尔值, 即使输入是一个集合.
 这些运算符在检测到第一个匹配时就停止比较, 而`equality `运算符则是计算所有输入的成员.
 在一个非常大的集合中, 这些运算符比 `equality ` 运算符返回得更快.
 
-#### -contains,-notcontains
+### -contains,-notcontains
 
 测试集合中是否包括某个元素. 当右侧(测试对象)与集合中的一个元素相匹配时, `-contains` 返回 `True`. `-notcontains`则返回`False`.
 当测试对象是一个集合时, 这些运算符使用`reference equality`, 也就是说, 它们检查集合中是否有某个元素, 是测试对象的同一个实例.
@@ -622,7 +573,7 @@ $a = "abc", "def"
 $a, "ghi" -contains $a           # Output: True
 ```
 
-#### -in and -notin
+### -in and -notin
 
 `PowerShell 3`中引入了 `-in` 和 `-notin` 操作符, 作为`-contains`和`-notcontains`操作符的反向语法.
 当左边的`<test-object>`与集合中的某个元素匹配时, `-in`返回`True`, `-notin`则返回`False`.
@@ -648,7 +599,7 @@ $a -in "abc", "def", "ghi" # Output: False
 $a -in $a, "ghi"           # Output: True
 ```
 
-### 类型比较,-is
+## 类型比较,-is
 
 `Powershell`和`.NET`平台绑定, 所以它是一门强类型的脚本. 类型比较运算符, `-is`和`-isnot`用于确定对象是否属于特定的类型.
 类型需要写到方括号中, 这里的类型可以是所有合适的`.NET`类型. Syntax:
