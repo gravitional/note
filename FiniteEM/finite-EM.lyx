@@ -4200,7 +4200,7 @@ noprefix "false"
  耦合的简单模型
 \begin_inset Formula 
 \begin{align*}
-F(\phi_{i})= & \sum_{i=1,2}\frac{1}{2}\langle\phi_{i},\mathcal{L}_{i}\phi_{i}\rangle-\frac{1}{2}\langle\phi_{i},f_{i}\rangle-\frac{1}{2}\langle f_{i},\phi_{i}\rangle\\
+\mathcal{F}(\phi_{i})= & \sum_{i=1,2}\frac{1}{2}\langle\phi_{i},\mathcal{L}_{i}\phi_{i}\rangle-\frac{1}{2}\langle\phi_{i},f_{i}\rangle-\frac{1}{2}\langle f_{i},\phi_{i}\rangle\\
  & +\frac{1}{2}\langle\phi_{1},\mathcal{L}_{12}\phi_{2}\rangle+\frac{1}{2}\langle\phi_{2},\mathcal{L}_{21}\phi_{1}\rangle
 \end{align*}
 
@@ -4209,7 +4209,7 @@ F(\phi_{i})= & \sum_{i=1,2}\frac{1}{2}\langle\phi_{i},\mathcal{L}_{i}\phi_{i}\ra
 
 \begin_inset Formula 
 \begin{align*}
-\delta F= & \sum_{i=1,2}\frac{1}{2}\langle\mathcal{L}_{i}\delta\phi_{i},\phi_{i}\rangle+\frac{1}{2}\langle\mathcal{L}_{i}\phi_{i},\delta\phi_{i}\rangle-\frac{1}{2}\langle\delta\phi_{i},f_{i}\rangle-\frac{1}{2}\langle f_{i},\delta\phi_{i}\rangle\\
+\delta\mathcal{F}= & \sum_{i=1,2}\frac{1}{2}\langle\mathcal{L}_{i}\delta\phi_{i},\phi_{i}\rangle+\frac{1}{2}\langle\mathcal{L}_{i}\phi_{i},\delta\phi_{i}\rangle-\frac{1}{2}\langle\delta\phi_{i},f_{i}\rangle-\frac{1}{2}\langle f_{i},\delta\phi_{i}\rangle\\
  & +\frac{1}{2}{\color{blue}\langle\delta\phi_{1},\mathcal{L}_{12}\phi_{2}\rangle}+\frac{1}{2}{\color{brown}\langle\phi_{1},\mathcal{L}_{12}\delta\phi_{2}\rangle}+\frac{1}{2}{\color{blue}\langle\delta\phi_{2},\mathcal{L}_{21}\phi_{1}\rangle}+\frac{1}{2}{\color{brown}\langle\phi_{2},\mathcal{L}_{21}\delta\phi_{1}\rangle}\\
 = & \frac{1}{2}\langle\delta\phi_{1},\mathcal{L}_{1}\phi_{1}-f_{1}+{\color{blue}\mathcal{L}_{12}\phi_{2}}\rangle+\frac{1}{2}\langle\mathcal{L}_{1}\phi_{1}-f_{1}+{\color{brown}\mathcal{L}_{21}\phi_{2}},\delta\phi_{1}\rangle\\
  & +\frac{1}{2}\langle\delta\phi_{2},\mathcal{L}_{2}\phi_{2}-f_{2}+{\color{blue}\mathcal{L}_{21}\phi_{1}}\rangle+\frac{1}{2}\langle\mathcal{L}_{2}\phi_{2}-f_{2}+{\color{brown}\mathcal{L}_{12}\phi_{1}},\delta\phi_{2}\rangle\\
@@ -4946,6 +4946,13 @@ F(\Phi)=\frac{1}{2}\langle\Phi,\mathcal{L}\Phi\rangle-\frac{1}{2}\langle u,\math
 
 \begin_layout Subsection
 边界条件的影响
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:bnd"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5426,7 +5433,7 @@ noprefix "false"
 的边界条件，代入中间等式
 \begin_inset Formula 
 \begin{align*}
-\int_{V}\Phi^{*}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\dd{V} & =\varepsilon\abs{\nabla\Phi}^{2}-\oint_{S_{1}+S_{2}}{\color{brown}\varepsilon\Phi^{*}\frac{\partial\Phi}{\partial n}}\dd{S}\\
+\int_{V}\Phi^{*}\left[-\nabla\cdot(\varepsilon\nabla\Phi)\right]\dd{V} & =\int_{V}\varepsilon\abs{\nabla\Phi}^{2}\dd{V}-\oint_{S_{1}+S_{2}}{\color{brown}\varepsilon\Phi^{*}\frac{\partial\Phi}{\partial n}}\dd{S}\\
 \gamma\abs{\Phi}^{2}-q\Phi^{*} & =-{\color{brown}\varepsilon\Phi^{*}\frac{\partial\Phi}{\partial n}},\quad\text{on}\quad S_{2}
 \end{align*}
 
@@ -5435,7 +5442,7 @@ noprefix "false"
 边界项的变形为：
 \begin_inset Formula 
 \begin{align*}
- & \frac{1}{2}\left[{\color{blue}\int_{S_{1}}}\varepsilon p^{*}\frac{\partial\Phi}{\partial n}\dd{S}-{\color{blue}\int_{S_{2}}}q^{*}\Phi\dd{S}\right]\\
+ & \frac{1}{2}\left[{\color{blue}\int_{S_{1}}}\varepsilon p^{*}\frac{\partial\Phi}{\partial n}\dd{S}-{\color{blue}\int_{S_{2}}}q^{*}\Phi\dd{S}\right]-\oint_{S_{1}+S_{2}}\cdots\dd{S}\\
 \Rightarrow & \frac{1}{2}\left[{\color{blue}\int_{S_{1}}}\varepsilon(p^{*}-\Phi^{*})\frac{\partial\Phi}{\partial n}\dd{S}-{\color{blue}\int_{S_{2}}}q^{*}\Phi+\varepsilon\Phi^{*}\frac{\partial\Phi}{\partial n}\dd{S}\right]
 \end{align*}
 
@@ -5581,24 +5588,150 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 F\left[\phi_{i}\right] & =\frac{1}{2}\left(\phi_{i}-u_{i}\right)^{*}\mathcal{L}_{ij}\left(\phi_{j}-u_{j}\right)-\frac{1}{2}\left(\phi_{i}-u_{i}\right)^{*}\left(f_{i}-\mathcal{L}_{ij}u_{j}\right)-\frac{1}{2}\left(f_{i}-\mathcal{L}_{ij}u_{j}\right)^{*}\left(\phi_{i}-u_{i}\right)\\
- & =\frac{1}{2}\left[\phi_{i}^{*}\mathcal{L}_{ij}\phi_{j}{\color{blue}-u_{i}^{*}\mathcal{L}_{ij}\phi_{j}+u_{i}^{*}\mathcal{L}_{ji}^{*}}\phi_{j}-\phi_{i}^{*}f_{i}-f_{i}^{*}\phi_{i}\right]
+ & =\frac{1}{2}\left[\phi_{i}^{*}\mathcal{L}_{ij}\phi_{j}{\color{blue}-u_{i}^{*}\mathcal{L}_{ij}\phi_{j}+\phi_{j}\mathcal{L}_{ji}^{*}u_{i}^{*}}-\phi_{i}^{*}f_{i}-f_{i}^{*}\phi_{i}\right]
 \end{align*}
 
 \end_inset
 
-由于考虑的非齐次边界条件，
-\begin_inset Formula $\mathcal{L}_{ij}$
+如同
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "subsec:bnd"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-未必等于
+那里所讨论的，由于考虑的非齐次边界条件，
+\begin_inset Formula $u_{i}^{*}\mathcal{L}_{ij}\phi_{j}$
+\end_inset
+
+ 未必等于
+\begin_inset Formula $\phi_{j}\mathcal{L}_{ji}^{*}u_{i}^{*}$
+\end_inset
+
+，也就是 
 \begin_inset Formula $\mathcal{L}_{ji}^{*}$
 \end_inset
 
-，也就是未必厄米，
+ 在此环境下未必厄米，至少前面已经证明了单场对应的对角项 
+\begin_inset Formula $u_{i}^{*}\mathcal{L}_{ii}\phi_{i}$
+\end_inset
+
+ 非厄米。
+\end_layout
+
+\begin_layout Standard
+对于
+\begin_inset Formula $\mathcal{L}_{ij}f=-\nabla\cdot(c\nabla f)$
+\end_inset
+
+的情况，使用第一标量格林定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:jA.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+\int_{V}c(\nabla\phi_{1})\cdot(\nabla\phi_{2})\dd{V} & =\int_{V}\left[\phi_{1}\nabla\cdot(-c\nabla\phi_{2})\right]\dd{V}+\oint_{S}\,\phi_{1}c\frac{\partial\phi_{2}}{\partial n}\dd{S}\\
+ & =\int_{V}\left[\phi_{2}\nabla\cdot(-c\nabla\phi_{1})\right]\dd{V}+\oint_{S}\,\phi_{2}c\frac{\partial\phi_{1}}{\partial n}\dd{S}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{2}\int_{V}\left[\phi_{1}\nabla\cdot(-c\nabla\phi_{2})+\phi_{2}\nabla\cdot(-c\nabla\phi_{1})\right]\dd{V}= & \int_{V}c(\nabla\phi_{1})\cdot(\nabla\phi_{2})\dd{V}\\
+ & -\frac{1}{2}\oint_{S}\left(\phi_{1}c\frac{\partial\phi_{2}}{\partial n}+\phi_{2}c\frac{\partial\phi_{1}}{\partial n}\right)\dd{S}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \frac{1}{2}\int_{V}\varepsilon(\nabla\Phi)\cdot(\nabla\Phi)\dd{V}+\frac{1}{2}\int_{S_{2}}\left(\gamma\Phi^{2}-2q\Phi\right)\dd{S}\\
+\Rightarrow & \frac{1}{2}\int_{V}\Phi[-\nabla\cdot(\varepsilon\nabla\Phi)]\dd{V}+\int_{S_{2}}\left(\frac{\varepsilon}{2}\Phi\frac{\partial}{\partial n}\Phi+\frac{1}{2}\gamma\Phi^{2}-q\Phi\right)\dd{S}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+sdafadsf
+\end_layout
+
+\begin_layout Standard
+假设耦合算符 
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{2}\int_{V}\nabla\cdot\left(\phi_{1}^{2}u\nabla\phi_{2}\right)\dd{V} & =\frac{1}{2}\int_{S}\phi_{1}^{2}u\frac{\partial}{\partial n}\phi_{2}\dd{S}\\
+ & =\int_{V}\phi_{1}(\nabla\phi_{1})\cdot u(\nabla\phi_{2})\dd{V}+\frac{1}{2}\int_{V}\phi_{1}^{2}\nabla\cdot(u\nabla\phi_{2})\dd{V}
+\end{align*}
+
+\end_inset
+
+整理形式
 \begin_inset Formula 
 \[
-\mathcal{L}_{ij}\phi_{j}=f_{i}
+\frac{1}{2}\int_{V}\phi_{1}^{2}\nabla\cdot(u\nabla\phi_{2})\dd{V}=-\int_{V}\phi_{1}(\nabla\phi_{1})\cdot u(\nabla\phi_{2})\dd{V}+\frac{1}{2}\int_{S}\phi_{1}^{2}u\frac{\partial}{\partial n}\phi_{2}\dd{S}
 \]
+
+\end_inset
+
+
+\begin_inset Formula $\frac{1}{2}\int_{V}\phi_{1}^{2}\nabla\cdot(u\nabla\phi_{2})\dd{V}$
+\end_inset
+
+对
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+变分给出
+\begin_inset Formula 
+\begin{align*}
+ & \int_{V}\delta\phi_{1}\left[\phi_{1}\nabla\cdot(u\nabla\phi_{2})\right]\dd{V}\\
+= & -\int_{V}\nabla(\phi_{1}\delta\phi_{1})\cdot u(\nabla\phi_{2})\dd{V}+\int_{S}\phi_{1}\delta\phi_{1}u\frac{\partial}{\partial n}\phi_{2}\dd{S}\\
+= & -\int_{V}\delta\phi_{1}(\nabla\phi_{1})\cdot u(\nabla\phi_{2})\dd{V}-\int_{V}\phi_{1}(\nabla\delta\phi_{1})\cdot u(\nabla\phi_{2})\dd{V}+\int_{S}\phi_{1}\delta\phi_{1}u\frac{\partial}{\partial n}\phi_{2}\dd{S}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\phi^{1}\left(\nabla\right)\mathcal{L}_{ij}f=-\nabla\cdot(c\nabla f)
+\]
+
+\end_inset
+
+。类似上一节考虑修正变分原理的应用。考虑泊松方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j6.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+式所定义的问题以及下列边界条件：
+\begin_inset Formula 
+\begin{align}
+ & -\nabla\cdot(\varepsilon\nabla\phi_{i})=\rho_{i}\nonumber \\
+ & \{\phi_{i}\}=\{p_{i}\},\quad\text{on}\quad S_{1}\label{eq:j6.41-1}\\
+ & \varepsilon\{\frac{\partial\phi_{i}}{\partial n}\}+2\gamma\{\phi_{i}\}=\{q_{i}\},\quad\text{on}\quad S_{2}\label{eq:j6.42-1}
+\end{align}
 
 \end_inset
 
@@ -5610,7 +5743,7 @@ F\left[\phi_{i}\right] & =\frac{1}{2}\left(\phi_{i}-u_{i}\right)^{*}\mathcal{L}_
 \end_layout
 
 \begin_layout Standard
-上节给出的修正变分原理能够用来列出几乎所有无耗媒质的电磁学问题的计算公式。但是它不能用于有耗媒质，因为这些问题的有关酸腐蚀复数或复函数。正如在
+上节给出的修正变分原理能够用来列出几乎所有无耗媒质的电磁学问题的计算公式。但是它不能用于有耗媒质，因为这些问题的有关算符是复数或复函数。正如在
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "sec:6.1"
