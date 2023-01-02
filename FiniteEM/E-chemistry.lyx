@@ -190,7 +190,7 @@ j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 方程简化
 \end_layout
 
@@ -260,7 +260,35 @@ j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)
 \begin_inset Formula $\tau\sim\varepsilon_{0}\varepsilon_{r}/\sigma\approx10^{-17}\mathrm{s}$
 \end_inset
 
-。总结：对于满足欧姆定律的良导体，内部电荷总是很快地衰减到零，可以认为内部没有净余电荷，电荷只分布在表面上。对于电解质溶液，认为其近似满足良导体条件。
+。
+\end_layout
+
+\begin_layout Standard
+总结：
+\end_layout
+
+\begin_layout Enumerate
+对于满足欧姆定律的良导体，内部电荷总是很快地衰减到零，可以认为内部没有净余电荷，电荷只分布在表面上。对于电解质溶液，认为其近似满足良导体条件。
+\end_layout
+
+\begin_layout Enumerate
+对于导体中的直流场，它受到欧姆定律的控制：
+\begin_inset Formula $\sbf i=-\sigma\sbf E$
+\end_inset
+
+。稳定的电流场分布满足 
+\begin_inset Formula $\nabla\cdot\sbf i=0$
+\end_inset
+
+，结合两个公式可以看出：不同于静电场
+\series bold
+，在直流场的情形，导体不必是等势体
+\series default
+——因为存在电阻，沿着电流线的方向存在电压降，而遇到恒压源时电压被抬升。
+\end_layout
+
+\begin_layout Subsection
+控制方程总结
 \end_layout
 
 \begin_layout Enumerate
@@ -339,11 +367,11 @@ j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)
 腐蚀仿真求解
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 数值分析简介
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 有限元法数值分析腐蚀求解器
 \end_layout
 
@@ -433,23 +461,413 @@ j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)
 
 \end_inset
 
-将第一标量格林定理
+此方程不易使用变分原理建立泛函，可以转而使用 Galerkin 方法。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+电极域控制方程。腐蚀反应中的电极基本上为金属，电导率较大，将欧姆定律和电流守恒定律 应用于电极内部
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\sbf i=\partial\rho/\partial t\\
+ & \sbf i=-\sigma\nabla\varphi
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf i$
+\end_inset
+
+为电流密度；
+\begin_inset Formula $\partial\rho/\partial t$
+\end_inset
+
+为源项，一般为零。
+\end_layout
+
+\begin_layout Section
+边界条件
+\end_layout
+
+\begin_layout Subsection
+绝缘边界，溶液
+\end_layout
+
+\begin_layout Standard
+腐蚀反应中无电化学反应、无法向电流、无离子穿过边界，均视为粒子流平行边界，即绝缘。边界上无电流流出、无离子流出，满足如下方程
+\begin_inset Formula 
+\begin{align*}
+ & n\cdot\sbf i=0\\
+ & n\cdot\sbf j_{i}=0
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf i$
+\end_inset
+
+是电流，
+\begin_inset Formula $\sbf j_{i}$
+\end_inset
+
+是离子流。
+\end_layout
+
+\begin_layout Subsection
+界面上的电流电势，溶液–电极
+\end_layout
+
+\begin_layout Standard
+电极-电解液界面区是腐蚀反应中的最重要部分，在此处发生了电子到离子的转变。在原电池中，发生氧化反应的电极为阳极，发生还原反应的电极为阴极。
+\end_layout
+
+\begin_layout Standard
+在界面边界上存在两个过度，一是电势、二是电流。
+\end_layout
+
+\begin_layout Subsubsection
+电流连续
+\end_layout
+
+\begin_layout Standard
+电化学反应均匀地发生在界面处，化学反应电流之和作为电极和电解液域之间边界上的电流密度条件：
+\begin_inset Formula 
+\begin{equation}
+\sum\sbf i_{m}=\sbf n\cdot\sbf i_{l}=-\sbf n\cdot i_{s}\label{eq:e13}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $i_{m}$
+\end_inset
+
+为反应
+\begin_inset Formula $m$
+\end_inset
+
+在界面上产生的局部电流（单位
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+），
+\begin_inset Formula $\sbf i_{l}$
+\end_inset
+
+为溶液的电流密度，
+\begin_inset Formula $\sbf i_{s}$
+\end_inset
+
+为电极表面的电流密度。
+\end_layout
+
+\begin_layout Subsubsection
+电势不连续
+\end_layout
+
+\begin_layout Standard
+当金属和电解液发生反应时，两者之间会因化学反应存在一定的电位差， 
+\begin_inset Formula 
+\begin{equation}
+E_{\text{eq}}=\varphi_{s}-\varphi_{l},\quad E_{\text{eq}}>0\label{eq:vdiff}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $E_{\text{eq}}$
+\end_inset
+
+为界面反应的平衡电位，
+\begin_inset Formula $\varphi_{s}$
+\end_inset
+
+为电极电位，
+\begin_inset Formula $\varphi_{l}$
+\end_inset
+
+为电解质电位。若考虑界面区域温度
+\begin_inset Formula $T$
+\end_inset
+
+、反应离子浓度
+\begin_inset Formula $C$
+\end_inset
+
+变化对平衡电位的影响，此时能斯特方程可写为（假设反应计量系数为
+\begin_inset Formula $1$
+\end_inset
+
+）：
 \begin_inset Formula 
 \[
-\int_{V}\left[a(\nabla^{2}b)+(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}a\frac{\partial b}{\partial n}\dd{S}
+E_{\text{eq}}=E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C_{R}/C_{R,\text{ref}}}{C_{o}/C_{o,\text{ref}}}
+\]
+
+\end_inset
+
+由于反应势能的存在，大部分情况下界面间的电势差会高于平衡电位，高出的部分称之为过电位
+\begin_inset Formula $\eta>0$
+\end_inset
+
+，方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:vdiff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+被修正为，
+\begin_inset Formula 
+\[
+\eta+E_{\text{eq}}=\varphi_{s}-\varphi_{l}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Enumerate
+过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+并不是一个常数，它与界面反应的电流数值
+\begin_inset Formula $\sbf i$
+\end_inset
+
+ 有关，可用所谓的 
+\series bold
+极化曲线
+\series default
+ 或 
+\series bold
+电极反应动力学
+\series default
+ 公式表达。
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+极化曲线
+\series default
+ 包含了电化学动力学所有信息，可以判断电极反应的特征及控制步骤，也可以通过处理得到金属在给定体系下可能发生的反应速率，故以极化曲线及其处理得到的动力学参数，作为
+电极界面边界条件理论上是必需的。
+\end_layout
+
+\begin_layout Enumerate
+描述电化学反应电流和过电势的关系的动力学公式有很多，如Butler-Volmer公式、Tafel公式、线性Butler-Volmer公式，和浓度依赖动力学公式等
+。
+\end_layout
+
+\begin_layout Subsubsection
+小结 
+\end_layout
+
+\begin_layout Standard
+综上所述，电极-电解液界面边界条件为（当溶液中只有一种电化学反应
+\begin_inset Formula $m$
+\end_inset
+
+时）：
+\begin_inset Formula 
+\begin{align*}
+\eta+E_{\text{eq}} & =\varphi_{s}-\varphi_{l}\\
+\sbf i_{m} & =\sbf n\cdot\left(-\sigma\nabla\varphi_{l}\right)\\
+i_{m} & =i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
+\end{align*}
+
+\end_inset
+
+其中法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从溶液指向电极，
+\begin_inset Formula $-\nabla\varphi_{l}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf n$
+\end_inset
+
+方向相同对应电流流出（原电池anode），方向相反对应电流流入（原电池cathode）。
+\end_layout
+
+\begin_layout Standard
+综合以上方程，
 \begin_inset Formula 
 \[
-\int\overrightarrow{\nabla}f=\int-\overleftarrow{\nabla}f+\frac{\partial f}{\partial n}
+\sigma\,\frac{\partial}{\partial n}\left(\eta+E_{\text{eq}}-\varphi_{s}\right)=i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
 \]
 
 \end_inset
 
-代入
+第三类边界条件 
+\begin_inset Formula $\alpha\frac{\partial\varphi}{\partial n}+\gamma\varphi=q$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+界面上的浓度，溶液–电极
+\end_layout
+
+\begin_layout Standard
+电极-溶液 界面发生传质、反应等一系列过程，例如下面的反应（原电池）
+\begin_inset Formula 
+\[
+\sum\alpha B^{+}+n_{e}e^{-}\to\beta A^{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/EChemstry-nongdu.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+电化学反应示意图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在反应过程中，
+\begin_inset Formula $B^{+}$
+\end_inset
+
+ 离子减少，
+\begin_inset Formula $\alpha<0$
+\end_inset
+
+；
+\begin_inset Formula $A^{+}$
+\end_inset
+
+离子增加，
+\begin_inset Formula $\beta>0$
+\end_inset
+
+。反应使得电解液域内离子的浓度变化，需要在 电极–溶液 界面上施加边界条件，即界面上的反应速率与离子反应产生的电流遵循法拉第定律，
+\begin_inset Formula 
+\begin{align*}
+-\sbf n\cdot\sbf j_{i} & =J_{0}=-\frac{\beta i_{m}}{n_{e}F}\\
+\sbf j_{i}(x) & ={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)\nabla\varphi(x)}+C_{i}(x)\,u(x)
+\end{align*}
+
+\end_inset
+
+其中法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从溶液指向电极；
+\begin_inset Formula $J_{0}$
+\end_inset
+
+为表面反应速率；单位
+\begin_inset Formula $\mathrm{mol/(m^{2}*s)}$
+\end_inset
+
+；
+\begin_inset Formula $\beta$
+\end_inset
+
+为产物化学计量系数；
+\begin_inset Formula $n_{e}$
+\end_inset
+
+ 为反应转移电子数。
+\end_layout
+
+\begin_layout Standard
+忽略对流项
+\begin_inset Formula $C_{i}(x)\,u(x)$
+\end_inset
+
+，综合两个方程给出：
+\begin_inset Formula 
+\begin{equation}
+{\color{red}D_{i}\frac{\partial C_{i}(x)}{\partial n}}+{\color{blue}z_{i}u_{i}F\frac{\partial\varphi(x)}{\partial n}C_{i}(x)}=\frac{\beta\sigma}{n_{e}F}\frac{\partial\varphi(x)}{\partial n},\label{eq:bnd-con}
+\end{equation}
+
+\end_inset
+
+即第三类边界条件的形式
+\begin_inset Formula 
+\[
+{\color{red}D_{i}\frac{\partial C_{i}}{\partial n}}+{\color{blue}\gamma C_{i}}=q.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Galerkin法
+\end_layout
+
+\begin_layout Standard
+使用Galerkin法求解浓度场
+\begin_inset Formula $C_{i}(t,x)$
+\end_inset
+
+的分布。分别在单元内部以
+\begin_inset Formula $L_{m}^{e}$
+\end_inset
+
+（体形函数）、在边界上以
+\begin_inset Formula $L_{m}^{s}$
+\end_inset
+
+（面形函数）作为加权函数，计算 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:concen"
@@ -459,11 +877,59 @@ noprefix "false"
 
 \end_inset
 
-得到
+对应的残差可得
 \begin_inset Formula 
 \begin{align*}
-\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\left[-\varphi(x)\nabla^{2}C_{i}(t,x)+\oint_{S}\varphi(x){\color{blue}\frac{\partial C_{i}(t,x)}{\partial n}}\dd{S}\right]}+R_{i}\left(t,x\right)\\
- & ={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\left[-C_{i}(t,x)\nabla^{2}\varphi(x)+\oint_{S}C_{i}(t,x){\color{blue}\frac{\partial\varphi(x)}{\partial n}}\dd{S}\right]}+R_{i}\left(t,x\right)
+R^{e}(L_{m})= & \int_{\Omega^{e}}L_{m}^{e}\left[{\color{red}D_{i}\,\nabla^{2}C_{i}}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\varphi}+R_{i}-\frac{\partial C_{i}}{\partial t}\right]\dd{\Omega}\\
+= & \int_{\Omega^{e}}\left[{\color{red}-D_{i}\,(\nabla L_{m}^{e})\cdot(\nabla C_{i})}-{\color{blue}z_{i}u_{i}F\,L_{m}^{e}C_{i}\nabla^{2}\varphi}+L_{m}^{e}R_{i}-L_{m}^{e}\frac{\partial C_{i}}{\partial t}\right]\dd{\Omega}\\
+ & +\int_{\Gamma^{s}}{\color{red}L_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}z_{i}u_{i}FL_{m}^{s}C_{i}\frac{\partial\varphi}{\partial n}}\dd{\Gamma}\\
+= & \int_{\Omega^{s}}\left[{\color{red}-D_{i}\,(\nabla L_{m}^{e})\cdot(\nabla C_{i})}+L_{m}^{e}R_{i}-L_{m}^{e}\frac{\partial C_{i}}{\partial t}\right]\dd{\Omega}\\
+ & +\int_{\Gamma^{s}}{\color{red}L_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z_{i}u_{i}F\,L_{m}^{s}C_{i}\frac{\partial\varphi}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
+\end{align*}
+
+\end_inset
+
+其中已经使用了 
+\begin_inset Formula $\nabla^{2}\varphi=0$
+\end_inset
+
+，以及第一标量格林定理，法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从溶液指向电极（或容器壁）。代入展开式
+\begin_inset Formula $\varphi=L_{m}^{e}\varphi_{m}$
+\end_inset
+
+，
+\begin_inset Formula $C_{i}=C_{n,i}L_{n}^{e}$
+\end_inset
+
+可得
+\begin_inset Formula 
+\begin{align*}
+R^{e}(L_{m}^{e})= & {\color{red}K_{mn}^{e}C_{n,i}}+b_{m}^{e}+Y_{mn}^{e}\,\partial_{t}C_{n,i}\\
+ & +{\color{red}K_{mn}^{s}C_{n,i}+b_{m}^{s}}+{\color{blue}M_{mn}^{s}C_{n,i}}
+\end{align*}
+
+\end_inset
+
+在单元内部：
+\begin_inset Formula 
+\begin{align*}
+{\color{red}K_{mn}^{e}} & =\int_{\Omega^{e}}-D_{i}\,(\nabla L_{m}^{e})\cdot(\nabla L_{n}^{e})\dd{\Omega}\\
+b_{m}^{e} & =\int_{\Omega^{e}}L_{m}^{e}R_{i}\dd{\Omega}\\
+Y_{mn}^{e} & =\int_{\Omega^{e}}-L_{m}^{e}L_{n}^{e}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+以及在边界上：
+\begin_inset Formula 
+\begin{align*}
+{\color{red}K_{mn}^{s}}= & \int_{\Gamma^{s}}L_{m}^{s}L_{n}^{s}\left(-z_{i}u_{i}F\frac{\partial\varphi}{\partial n}\right)\dd{\Gamma}\\
+{\color{red}b_{m}^{s}}= & \int_{\Gamma^{s}}L_{m}^{s}\frac{\beta\sigma}{n_{e}F}\frac{\partial\varphi}{\partial n}\dd{\Gamma}\\
+{\color{blue}M_{mn}^{s}}= & \int_{\Gamma^{e}}L_{m}^{s}L_{n}^{s}\left(z_{i}u_{i}F\frac{\partial\varphi}{\partial n}\right)\dd{\Gamma}
 \end{align*}
 
 \end_inset
@@ -471,66 +937,122 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_layout Enumerate
+当浓度场
+\begin_inset Formula $C_{i}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Example
-sdfas
+满足第一类和第二类边界条件时
 \begin_inset Formula 
 \begin{align*}
-\mathcal{F}(\varphi,C) & =\frac{1}{2}\int_{\Omega}\nabla\phi\cdot(\sigma\nabla\phi)\dd{\Omega}+\int_{\Gamma}\phi\sbf e_{n}\cdot(\sigma\nabla\phi)\dd{\Gamma}\\
+ & C_{i}=p_{i},\quad\text{on}\;\Gamma_{1}\\
+ & D_{i}\frac{\partial C_{i}}{\partial n}+\gamma C_{i}=0,\quad\text{on}\;\Gamma_{2}
 \end{align*}
 
 \end_inset
 
 
-\begin_inset Formula 
-\begin{align*}
-\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}
-\end{align*}
-
+\begin_inset Formula $K_{mn}^{s}$
 \end_inset
 
-变分给出的边界项为
-\begin_inset Formula $\int_{\Gamma}\phi\sbf e_{n}\cdot(\sigma\nabla\phi)\dd{\Gamma}$
+，
+\begin_inset Formula $b_{m}^{s}$
 \end_inset
 
-。泛函变分方程
-\begin_inset Formula $\delta\mathcal{F}(\varphi)=0$
+两项的贡献都是零，
+\series bold
+只用考虑 
+\begin_inset Formula ${\color{blue}M_{mn}^{s}}$
 \end_inset
 
-给出对应的电势场方程和边界条件
-\begin_inset Formula 
-\begin{align*}
--\nabla\cdot\left(\sigma\nabla\phi\right) & =f\\
-\left(\sigma\nabla\phi\right)\cdot\sbf e_{n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}
-\end{align*}
-
-\end_inset
-
-
+ 的贡献
+\series default
+。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_layout Enumerate
+当浓度场
+\begin_inset Formula $C_{i}$
 \end_inset
 
+满足第三类边界条件时
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd-con"
+plural "false"
+caps "false"
+noprefix "false"
 
-\end_layout
+\end_inset
 
-\begin_layout Example
-标准变分原理：
+，代入
+\begin_inset Formula $D_{i}\frac{\partial C_{i}}{\partial n}=q_{i}-\gamma C_{i}$
+\end_inset
+
+，可知
+\begin_inset Formula $K_{mn}^{s}$
+\end_inset
+
+，
+\begin_inset Formula $b_{m}^{s}$
+\end_inset
+
+ 不为零，可以看到
+\begin_inset Formula $K_{mn}^{s}$
+\end_inset
+
+和
+\begin_inset Formula $M_{mn}^{s}$
+\end_inset
+
+刚好约掉，
+\series bold
+只用考虑 
+\begin_inset Formula ${\color{red}b_{m}^{s}}$
+\end_inset
+
+ 的贡献。
 \end_layout
 
 \begin_layout Subsection
+时间差分Newmark
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & [K_{mn}^{e}]\{C_{n,i}\}+\{b_{m}^{e}\}+\{Y_{mn}^{e}\}\,\partial_{t}\{C_{n,i}\}\\
+ & +[K_{mn}^{s}]\{C_{n,i}\}+\{b_{m}^{s}\}+[M_{mn}^{s}]\{C_{n,i}\}=0
+\end{align*}
+
+\end_inset
+
+代入Newmark 差分格式
+\begin_inset Formula 
+\begin{align*}
+u_{n+1}^{\prime} & =\frac{\gamma}{\beta\Delta t}\left(u_{n+1}-u_{n}\right)+\left(1-\frac{\gamma}{\beta}\right)u{}_{n}^{\prime}+\left(1-\frac{\gamma}{2\beta}\right)\Delta_{t}u_{n}^{\prime\prime}\\
+u_{n+1}^{\prime\prime} & =\frac{1}{\beta(\Delta t)^{2}}\left(u_{n+1}-u_{n}\right)-\frac{1}{\beta\Delta t}u_{n}^{\prime}+\left(1-\frac{1}{2\beta}\right)\Delta_{t}u_{n}^{\prime\prime}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & [K_{mn}^{e}]\{C_{n,i}^{y+1}\}+\{b_{m}^{e,y+1}\}+\{Y_{mn}^{e}\}\,\left[\frac{\gamma}{\beta\Delta t}\left(C_{n,i}^{y+1}-C_{n,i}^{y}\right)+\left(1-\frac{\gamma}{\beta}\right)C{}_{n,i}^{\prime y}+\left(1-\frac{\gamma}{2\beta}\right)\Delta_{t}C_{n,i}^{\prime\prime,y}\right]\\
+ & +[K_{mn}^{s}]\{C_{n,i}^{y+1}\}+\{b_{m}^{s}\}+[M_{mn}^{s}]\{C_{n,i}^{y+1}\}=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
 约束条件和算法
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 腐蚀仿真材料库
 \end_layout
 

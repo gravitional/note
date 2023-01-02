@@ -9274,20 +9274,545 @@ noprefix "false"
 有限元公式
 \end_layout
 
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+[T]\frac{\dd[2]{\{u\}}}{\dd{t^{2}}}+\left([R]+[Q]\right)\frac{\dd{\{u\}}}{\dd{t}}+[S]\{u\}+\{f\}=\{0\}.\label{eq:12.5}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 时域离散
+\end_layout
+
+\begin_layout Standard
+在这一节我们采用几种有限差分方案，在时域上（time domain）离散化（discretize）
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。为此，首先把时间轴均匀分成多份，从而将时间变量
+\begin_inset Formula $t$
+\end_inset
+
+写成
+\begin_inset Formula $t=n\Delta t$
+\end_inset
+
+，其中
+\begin_inset Formula $\Delta t$
+\end_inset
+
+叫做时间步（time step）。为了简洁，我们经常把
+\begin_inset Formula $u(n\Delta t)$
+\end_inset
+
+写作
+\begin_inset Formula $u^{n}$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsection
 前向差分
 \end_layout
 
+\begin_layout Standard
+函数
+\begin_inset Formula $(u+\Delta t)$
+\end_inset
+
+ 可以写成
+\begin_inset Formula $t$
+\end_inset
+
+ 的泰勒级数
+\begin_inset Formula 
+\begin{equation}
+u(t+\Delta t)=u(\Delta t)+\frac{\dd{u}}{\dd{t}}\Delta t+\frac{\dd[2]{u}}{\dd{t^{2}}}\frac{(\Delta t)^{2}}{2!}+\mathcal{O}[(\Delta t)^{3}]\label{eq:12.11}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\mathcal{O}[(\Delta t)^{3}]$
+\end_inset
+
+表示其余包含 
+\begin_inset Formula $(\Delta t)^{p}$
+\end_inset
+
+且
+\begin_inset Formula $p\ge3$
+\end_inset
+
+的项之和，从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{u}}{\dd{t}}=\frac{u(t+\Delta t)-u(t)}{\Delta t}+\mathcal{O}[(\Delta t)^{2}]\label{eq:12.12}
+\end{equation}
+
+\end_inset
+
+或者写成
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{u}}{\dd{t}}\approx\frac{u(t+\Delta t)-u(t)}{\Delta t}\label{eq:12.13}
+\end{equation}
+
+\end_inset
+
+这就是向前差分格式（representation），它是一阶精度（accurate），截断误差包含
+\begin_inset Formula $(\Delta t)^{p}$
+\end_inset
+
+，
+\begin_inset Formula $p>1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+使用记号 
+\begin_inset Formula $u(t)=u(n\Delta t)=u^{n}$
+\end_inset
+
+，可以把
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+写成
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{u}}{\dd{t}}\approx\frac{u^{n+1}-u^{n}}{\Delta t}.\label{eq:12.14}
+\end{equation}
+
+\end_inset
+
+如果把向前差分应用到
+\begin_inset Formula $\dd{u}/\dd{t}$
+\end_inset
+
+，可以得到二阶导数的向前差分格式
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd[2]{u}}{\dd{t^{2}}}\approx\frac{u^{n+2}-2u^{n+1}+u^{n}}{(\Delta t)^{2}}.\label{eq:12.15}
+\end{equation}
+
+\end_inset
+
+它是一阶精度的(accurate)。
+\end_layout
+
+\begin_layout Standard
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可得
+\begin_inset Formula 
+\begin{align}
+\frac{1}{(\Delta t)^{2}}[T]\{u\}^{n+1}= & \left\{ \frac{2}{(\Delta t)^{2}}[T]-\frac{1}{\Delta t}[T_{\sigma}]\right\} \{u\}^{n}\nonumber \\
+ & -\left\{ \frac{1}{(\Delta t)^{2}}[T]-\frac{1}{\Delta t}[T_{\sigma}]+[S]\right\} \{u\}^{n-1}-\{f\}^{n-1}\label{eq:12.16}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $[T_{\sigma}]=[R]+[Q]$
+\end_inset
+
+。显然，当给出输入
+\begin_inset Formula $\{f\}^{n}$
+\end_inset
+
+和初值
+\begin_inset Formula $\{u\}^{(0)}$
+\end_inset
+
+和
+\begin_inset Formula $\{u\}^{(1)}$
+\end_inset
+
+，可以使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+解出
+\begin_inset Formula $\{u\}^{(2)}$
+\end_inset
+
+，
+\begin_inset Formula $\{u\}^{(3)}$
+\end_inset
+
+等等。这个过程称为
+\series bold
+时间推进
+\series default
+（time marching）。不行的是，后面将证明
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的时间推进是数值不稳定的，因此目前
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的用处不大。
+\end_layout
+
 \begin_layout Subsection
 后向差分
 \end_layout
 
+\begin_layout Standard
+函数
+\begin_inset Formula $(u-\Delta t)$
+\end_inset
+
+的泰勒展开
+\begin_inset Formula 
+\begin{equation}
+u(t-\Delta t)=u(\Delta t)+\frac{\dd{u}}{\dd{t}}\Delta t+\frac{\dd[2]{u}}{\dd{t^{2}}}\frac{(\Delta t)^{2}}{2!}+\mathcal{O}[(\Delta t)^{3}]\label{eq:12.17}
+\end{equation}
+
+\end_inset
+
+可以得到后向差分，
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{u}}{\dd{t}}\approx\frac{u^{n}-u^{n-1}}{\Delta t}.\label{eq:12.20}
+\end{equation}
+
+\end_inset
+
+它是一阶精度的。
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd[2]{u}}{\dd{t^{2}}}\approx\frac{u^{n}-2u^{n-1}+u^{n-2}}{(\Delta t)^{2}}.\label{eq:12.21}
+\end{equation}
+
+\end_inset
+
+也是一阶精度。
+\end_layout
+
+\begin_layout Standard
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可得
+\begin_inset Formula 
+\begin{align}
+\left\{ \frac{1}{(\Delta t)^{2}}[T]+\frac{1}{\Delta t}[T_{\sigma}]+[S]\right\} \{u\}^{n+1}= & \left\{ \frac{2}{(\Delta t)^{2}}[T]+\frac{1}{\Delta t}[T_{\sigma}]\right\} \{u\}^{n}\nonumber \\
+ & -\frac{1}{(\Delta t)^{2}}[T]\{u\}^{n-1}-\{f\}^{n+1}\label{eq:12.22}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $[T_{\sigma}]=[R]+[Q]$
+\end_inset
+
+。同理，当给出输入
+\begin_inset Formula $\{f\}^{n}$
+\end_inset
+
+和初值
+\begin_inset Formula $\{u\}^{(0)}$
+\end_inset
+
+和
+\begin_inset Formula $\{u\}^{(1)}$
+\end_inset
+
+，可以使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.22"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+解出
+\begin_inset Formula $\{u\}^{(2)}$
+\end_inset
+
+，
+\begin_inset Formula $\{u\}^{(3)}$
+\end_inset
+
+等等。这个方法被称为
+\series bold
+隐式方案
+\series default
+（implicit scheme），因为在每个时间步，它需要求解包含
+\begin_inset Formula $[S]$
+\end_inset
+
+ 的矩阵方程。后面会看到，不管怎样选取
+\begin_inset Formula $\Delta t$
+\end_inset
+
+，这个方法总是稳定的（stable），或者说是它无条件稳定的。
+\end_layout
+
 \begin_layout Subsection
 中心差分
+\end_layout
+
+\begin_layout Standard
+用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+减去
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+u(t+\Delta t) & =u(\Delta t)+\frac{\dd{u}}{\dd{t}}\Delta t+\frac{\dd[2]{u}}{\dd{t^{2}}}\frac{(\Delta t)^{2}}{2!}+\mathcal{O}[(\Delta t)^{3}]\\
+u(t-\Delta t) & =u(\Delta t)+\frac{\dd{u}}{\dd{t}}\Delta t+\frac{\dd[2]{u}}{\dd{t^{2}}}\frac{(\Delta t)^{2}}{2!}+\mathcal{O}[(\Delta t)^{3}]
+\end{align*}
+
+\end_inset
+
+得到中心差分
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{u}}{\dd{t}}=\frac{u^{n+1}-u^{n-1}}{2\Delta t}+\mathcal{O}[(\Delta t)^{3}].\label{eq:12.27}
+\end{equation}
+
+\end_inset
+
+用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+加上
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到二阶导数的近似表达式
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd[2]{u}}{\dd{t^{2}}}=\frac{u^{n+1}-2u^{n-1}+u^{n-1}}{(\Delta t)^{2}}+\mathcal{O}[(\Delta t)^{3}].\label{eq:12.28}
+\end{equation}
+
+\end_inset
+
+它们都是二阶精度的。
+\end_layout
+
+\begin_layout Standard
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.27"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可得
+\begin_inset Formula 
+\begin{align}
+\left\{ \frac{1}{(\Delta t)^{2}}[T]+\frac{1}{2\Delta t}[T_{\sigma}]\right\} \{u\}^{n+1}= & \left\{ \frac{2}{(\Delta t)^{2}}[T]-[S]\right\} \{u\}^{n}\nonumber \\
+ & -\left\{ \frac{1}{(\Delta t)^{2}}[T]-\frac{1}{2\Delta t}[T_{\sigma}]\right\} \{u\}^{n-1}-\{f\}^{n}\label{eq:12.29}
+\end{align}
+
+\end_inset
+
+只要给定
+\begin_inset Formula $\{f\}^{n}$
+\end_inset
+
+和初值
+\begin_inset Formula $\{u\}^{(0)}$
+\end_inset
+
+，
+\begin_inset Formula $\{u\}^{(1)}$
+\end_inset
+
+，就能逐步求出
+\begin_inset Formula $\{u\}^{n}$
+\end_inset
+
+。相比于
+\series bold
+隐式方案
+\series default
+，此方法被称为
+\series bold
+显式方案
+\series default
+，因为每个时间步要求解的矩阵不涉及
+\begin_inset Formula $[S]$
+\end_inset
+
+。后面会证明，只要
+\begin_inset Formula $\Delta t$
+\end_inset
+
+足够小，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的时间推进过程就是稳定的。
 \end_layout
 
 \begin_layout Subsection
@@ -9295,28 +9820,53 @@ Newmark方法
 \end_layout
 
 \begin_layout Standard
-page 280/534
+ref: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Newmark-Beta求解振动方程"
+target "https://zhuanlan.zhihu.com/p/451555272"
+literal "false"
+
+\end_inset
+
+，page 280/534。
 \end_layout
 
 \begin_layout Standard
-另一种直接积分方法被称作 Newmark 方法。在这种方法中[48]，函数
-\begin_inset Formula $u(t)$
-\end_inset
-
-和它的导数
+另一种直接积分方法被称作 Newmark 方法。在这种方法中[48]，在
 \begin_inset Formula $t+\Delta t$
 \end_inset
 
-被近似为
+时刻的函数
+\begin_inset Formula $u(t)$
+\end_inset
+
+与其导数被近似为
 \begin_inset Formula 
 \begin{align}
-u(t+\Delta t)= & u(t)+\Delta(t)\frac{\dd{u(t)}}{\dd{t}}+(\frac{1}{2}-\beta)(\Delta t)^{2}\frac{\dd[2]{u(t)}}{\dd{t^{2}}}+\beta(\Delta t)^{2}\frac{\dd[2]{u(t+\Delta t)}}{\dd{t^{2}}}\label{eq:j12.30}\\
-\frac{\dd{u(t+\Delta t)}}{\dd{t}}= & \frac{\dd{u(t)}}{\dd{t}}+(1-\gamma)\Delta t\frac{\dd[2]{u(t)}}{\dd{t^{2}}}+\gamma\Delta t\frac{\dd[2]{u(t+\Delta t)}}{\dd{t^{2}}}\label{eq:j12.31}
+u(t+\Delta t)= & u(t)+\Delta(t)\,u'(t)+(\frac{1}{2}-\beta)(\Delta t)^{2}\,u''(t)+\beta(\Delta t)^{2}\,u''(t+\Delta t)\label{eq:j12.30}\\
+u'(t+\Delta t)= & u'(t)+(1-\gamma)\Delta t\,u''(t)+\gamma\Delta t\,u''(t+\Delta t)\label{eq:j12.31}
 \end{align}
 
 \end_inset
 
 其中
+\begin_inset Formula $u'$
+\end_inset
+
+和
+\begin_inset Formula $u''$
+\end_inset
+
+分别表示
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $2$
+\end_inset
+
+阶导数，
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -9324,7 +9874,236 @@ u(t+\Delta t)= & u(t)+\Delta(t)\frac{\dd{u(t)}}{\dd{t}}+(\frac{1}{2}-\beta)(\Del
 \begin_inset Formula $\gamma$
 \end_inset
 
-是两个参数，通过选择它们，可以控制 时间推进过程（time–marching process）的精度和稳定性（accuracy and stability）。
+是两个参数，通过选择它们，可以控制 时间推进过程 的精度和稳定性（accuracy and stability）。将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+时刻的二阶偏微分方程，可以导出 
+\begin_inset Formula $u''(t+\Delta t)$
+\end_inset
+
+用 
+\begin_inset Formula $u(t)$
+\end_inset
+
+，
+\begin_inset Formula $u'(t)$
+\end_inset
+
+和
+\begin_inset Formula $u''(t)$
+\end_inset
+
+表示的表达式，将结果回代到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，就分别得到了 
+\begin_inset Formula $u(t+\Delta t)$
+\end_inset
+
+ 和 
+\begin_inset Formula $u'(t+\Delta t)$
+\end_inset
+
+ 的表达式。
+\end_layout
+
+\begin_layout Standard
+将Newmark 方法用于离散
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{align}
+\left\{ \frac{1}{(\Delta t)^{2}}[T]+\frac{\gamma}{\Delta t}[T_{\sigma}]+\beta[S]\right\} \{u\}^{n+1}= & \left\{ \frac{2}{(\Delta t)^{2}}[T]-\frac{(1-2\gamma)}{\Delta t}[T_{\sigma}]-(\frac{1}{2}+\gamma-2\beta)[S]\right\} \{u\}^{n}\nonumber \\
+ & -\left\{ \frac{1}{(\Delta t)^{2}}[T]-\frac{1-\gamma}{\Delta t}[T_{\sigma}]+(\frac{1}{2}-\gamma+\beta)[S]\right\} \{u\}^{n-1}\nonumber \\
+ & -\left[\beta\{f\}^{n+1}+(\frac{1}{2}+\gamma-2\beta)\{f\}^{n}+(\frac{1}{2}-\gamma+\beta)\{f\}^{n-1}\right].\label{eq:12.32}
+\end{align}
+
+\end_inset
+
+Newmark 方法最有用的版本是令
+\begin_inset Formula $\gamma=\frac{1}{2}$
+\end_inset
+
+，也被称为 Newmark–
+\begin_inset Formula $\beta$
+\end_inset
+
+方法，在这里
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.32"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+将变成
+\begin_inset Formula 
+\begin{align}
+\left\{ \frac{1}{(\Delta t)^{2}}[T]+\frac{1}{2\Delta t}[T_{\sigma}]+\beta[S]\right\} \{u\}^{n+1}= & \left\{ \frac{2}{(\Delta t)^{2}}[T]-(1-2\beta)[S]\right\} \{u\}^{n}\nonumber \\
+ & -\left\{ \frac{1}{(\Delta t)^{2}}[T]-\frac{1}{2\Delta t}[T_{\sigma}]+\beta[S]\right\} \{u\}^{n-1}\nonumber \\
+ & -\left[\beta\{f\}^{n+1}+(1-2\beta)\{f\}^{n}+\beta\{f\}^{n-1}\right].\label{eq:12.33}
+\end{align}
+
+\end_inset
+
+显然，如果令
+\begin_inset Formula $\beta=0$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.33"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+就回到中心差分格式。如果令
+\begin_inset Formula $\beta=0.25$
+\end_inset
+
+，Newmark–
+\begin_inset Formula $\beta$
+\end_inset
+
+回到著名的梯形规则（trapezoidal rule）。可以证明，当
+\begin_inset Formula $\beta\ge0.25$
+\end_inset
+
+时，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.33"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的时间推进总是无条件稳定的，对应的方法是
+\series bold
+隐式方案
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+当
+\begin_inset Formula $\gamma\ge1/2$
+\end_inset
+
+，
+\begin_inset Formula $\beta\ge\frac{1}{4}(\frac{1}{2}+\gamma)^{2}$
+\end_inset
+
+时，Newmark–
+\begin_inset Formula $\beta$
+\end_inset
+
+法是无条件稳定的。
+\end_layout
+
+\begin_layout Standard
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可给出
+\begin_inset Formula $u''(t+\Delta t)$
+\end_inset
+
+，和
+\begin_inset Formula $u'(t+\Delta t)$
+\end_inset
+
+用 
+\begin_inset Formula $u(t)$
+\end_inset
+
+，
+\begin_inset Formula $u'(t)$
+\end_inset
+
+和
+\begin_inset Formula $u''(t)$
+\end_inset
+
+表示的表达式，即
+\begin_inset Formula 
+\begin{align*}
+u_{n+1}^{\prime} & =\frac{\gamma}{\beta\Delta t}\left(u_{n+1}-u_{n}\right)+\left(1-\frac{\gamma}{\beta}\right)u{}_{n}^{\prime}+\left(1-\frac{\gamma}{2\beta}\right)\Delta_{t}u_{n}^{\prime\prime}\\
+u_{n+1}^{\prime\prime} & =\frac{1}{\beta(\Delta t)^{2}}\left(u_{n+1}-u_{n}\right)-\frac{1}{\beta\Delta t}u_{n}^{\prime}+\left(1-\frac{1}{2\beta}\right)\Delta_{t}u_{n}^{\prime\prime}
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
