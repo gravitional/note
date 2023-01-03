@@ -136,13 +136,13 @@ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ```
 
-安装[`autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions): 记住你之前使用过的命令
++ 安装[`autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions): 记住你之前使用过的命令
 
 ```bash
 git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 ```
 
-安装incr: (需要注意的是这个插件会拖慢`zsh`的速度, 新手入门可以试试)
++ 安装 `incr`: (需要注意的是这个插件会拖慢`zsh`的速度, 新手入门可以试试)
 
 ```bash
 git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr
