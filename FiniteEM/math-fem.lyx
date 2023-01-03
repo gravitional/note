@@ -95,7 +95,7 @@ Young
 \end_layout
 
 \begin_layout Chapter
-预备知识
+数学与数值基础
 \end_layout
 
 \begin_layout Section
@@ -1343,6 +1343,492 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
+有限元中的Lagrange插值与Gauss积分
+\end_layout
+
+\begin_layout Standard
+ref:
+\begin_inset CommandInset href
+LatexCommand href
+name "Lagrange插值与Gauss积分"
+target "https://zhuanlan.zhihu.com/p/37768842"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lagrange插值与Gauss积分是在学习FEM中不可回避的两部分，虽然说是两部分，其实在Gauss积分中，构造多项式的被积函数时，也用到了Lagrange插
+值多项式，所以在讲关于参数单元刚度矩阵求积分的时候，在数值积分中一起提出。
+\begin_inset Formula 
+\begin{equation}
+\int_{a}^{b}f\left(x\right)\dd{x}\approx\int_{a}^{b}P\left(x\right)\dd{x}\label{eq:5.145}
+\end{equation}
+
+\end_inset
+
+以上表达式是说，对于比较难以积分的函数
+\begin_inset Formula $f$
+\end_inset
+
+，我们找到了与之相似度很高的多项式函数
+\begin_inset Formula $P$
+\end_inset
+
+，用
+\begin_inset Formula $P$
+\end_inset
+
+的积分来代替f的积分，那么现在的问题就是如何找到多项式
+\begin_inset Formula $P$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+Newton–Cotes 数值积分
+\end_layout
+
+\begin_layout Standard
+基于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个点（
+\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
+\end_inset
+
+），将多项式取为 Lagrange 插值多项式，即
+\begin_inset Formula 
+\[
+\varphi\left(\xi\right)=a_{0}+a_{1}\xi+\cdots+a_{n-1}\xi^{n-1}=\sum_{i=1}^{n}l_{i}^{(n-1)}\left(\xi\right)f\left(\xi_{i}\right).
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+，
+\begin_inset Formula $a$
+\end_inset
+
+，
+\begin_inset Formula $\cdots$
+\end_inset
+
+，
+\begin_inset Formula $a_{n-1}$
+\end_inset
+
+为常数，
+\begin_inset Formula $l_{i}^{(n-1)}$
+\end_inset
+
+为
+\begin_inset Formula $n-1$
+\end_inset
+
+阶 Lagrange 插值函数，即
+\begin_inset Formula 
+\[
+l_{i}^{(n-1)}\left(\xi\right)=\frac{\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots{\color{blue}\left(\xi-\xi_{i-1}\right)\left(\xi-\xi_{i+1}\right)}\cdots\left(\xi-\xi_{n}\right)}{\left(\xi_{i}-\xi_{1}\right)\left(\xi_{i}-\xi_{2}\right)\cdots{\color{blue}\left(\xi_{i}-\xi_{i-1}\right)\left(\xi_{i}-\xi_{i+1}\right)}\cdots\left(\xi_{i}-\xi_{n}\right)}=\prod_{\substack{j=1\\
+j\neq i
+}
+}^{n}\frac{\left(\xi-\xi_{j}\right)}{\left(\xi_{i}-\xi_{j}\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lagrange插值的定义: 如果已知 
+\begin_inset Formula $n$
+\end_inset
+
+ 个点的数值，那么可以构造一个
+\begin_inset Formula $n-1$
+\end_inset
+
+阶的多项式，通过待定系数的方式，使得这个多项式在这
+\begin_inset Formula $n$
+\end_inset
+
+个点的值就等于原本函数在这
+\begin_inset Formula $n$
+\end_inset
+
+个点的数值。关于待定系数的求解，刚好是一个范德蒙德多项式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+1 & x_{1} & x_{1}^{2} & \cdots & x_{1}^{n-1}\\
+1 & x_{2} & x_{2}^{2} & \cdots & x_{2}^{n-1}\\
+\cdots & \cdots & \cdots & \cdots & \cdots\\
+1 & x_{n} & x_{n}^{2} & \cdots & x_{n}^{n-1}
+\end{array}\right]\left(\begin{array}{c}
+a_{0}\\
+a_{1}\\
+\cdots\\
+a_{n-1}
+\end{array}\right)=\left(\begin{array}{c}
+f\left(x_{1}\right)\\
+f\left(x_{2}\right)\\
+\cdots\\
+f\left(x_{n}\right)
+\end{array}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+，
+\begin_inset Formula $a_{n-1}$
+\end_inset
+
+ 是拟合多项式中的各个系数。例如给三个点，得到的插值多项式形如：
+\begin_inset Formula 
+\[
+y=l_{1}^{(2)}\left(x\right)y_{1}+l_{2}^{(2)}\left(x\right)y_{2}+l_{3}^{(2)}\left(x\right)y_{3}
+\]
+
+\end_inset
+
+容易看出
+\begin_inset Formula $f_{i}(x_{j})=\delta_{ij}$
+\end_inset
+
+，即在所有要插值的点，多项式插值的结果与原来的函数相等。因此 Lagrange 插值的一般表达式为
+\begin_inset Formula 
+\[
+P\left(x\right)=\sum_{i=1}^{n}\left[\prod_{\substack{j=1\\
+i\neq j
+}
+}\frac{\left(x-x_{j}\right)}{\left(x_{i}-x_{j}\right)}y_{i}\right].
+\]
+
+\end_inset
+
+从而引出了 Newton–Cotes 数值积分公式
+\begin_inset Formula 
+\begin{align*}
+I & =\int_{-1}^{1}f\left(\xi\right)\dd{\xi}\approx\int_{-1}^{1}\varphi\left(\xi\right)\dd{\xi}\\
+ & =\sum_{i=1}^{n}{\color{blue}\left(\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}\right)}f\left(\xi_{i}\right)\\
+ & =\sum_{i=1}^{n}A_{i}f\left(\xi_{i}\right)
+\end{align*}
+
+\end_inset
+
+Newton-Cotes 数值积分将原积分转化为 
+\series bold
+权函数
+\series default
+ 与 
+\series bold
+原函数值
+\series default
+ 的线性组合（在离散点上）。
+\end_layout
+
+\begin_layout Subsection
+Gauss积分, Gauss quadrature
+\end_layout
+
+\begin_layout Standard
+然后，就是 FEM 里常用的 Gauss 积分了：
+\end_layout
+
+\begin_layout Standard
+首先谈一下我的理解，上面的Newton-Cotes数值积分，是将 
+\series bold
+函数
+\series default
+ 转换为 
+\series bold
+多项式
+\series default
+，采用的多项式是Lagrange插值多项式，对采用的n个点没有特殊的要求；下面的Gauss积分，就是要挑选优化过的积分点，同时确定积分点函数值的权函数。
+\end_layout
+
+\begin_layout Standard
+如果调整 
+\begin_inset Formula $n$
+\end_inset
+
+ 个插值点的位置（
+\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
+\end_inset
+
+），使 
+\begin_inset Formula $\varphi\left(\xi\right)$
+\end_inset
+
+作为 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 次多项式对
+\begin_inset Formula $f(\xi)$
+\end_inset
+
+ 进行逼近，则可以大大提高积分精度；也就是调整插值点 
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ 的位置，使其达到一个最优的组合，这种最优的位置点叫做 Gauss 积分点。
+\end_layout
+
+\begin_layout Standard
+由函数逼近理论，可构造 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $\varphi\left(\xi\right)$
+\end_inset
+
+ 为
+\begin_inset Formula 
+\begin{equation}
+\varphi\left(\xi\right)=\sum_{i=1}^{n}l_{i}^{(n-1)}(\xi)f(\xi_{i})+\sum_{i=0}^{n-1}\beta_{i}\xi^{i}P\left(\xi\right)\label{eq:5.149}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $l_{i}^{(n-1)}(\xi)$
+\end_inset
+
+ 是 
+\begin_inset Formula $\left(n-1\right)$
+\end_inset
+
+ 次 Lagrange插值函数，
+\begin_inset Formula $\beta_{i}$
+\end_inset
+
+ 为系数，
+\begin_inset Formula $P\left(\xi\right)$
+\end_inset
+
+ 为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式，即
+\begin_inset Formula 
+\begin{equation}
+P\left(\xi\right)=\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots\left(\xi-\xi_{n}\right)=\prod_{i=1}^{n}\left(\xi-\xi_{i}\right).\label{eq:5.150}
+\end{equation}
+
+\end_inset
+
+（
+\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
+\end_inset
+
+）积分点由以下条件确定
+\begin_inset Formula 
+\begin{equation}
+\int_{-1}^{1}\xi^{i}P\left(\xi\right)\dd{\xi}=0,\quad i=0,1,\cdots,n-1\label{eq:5.151}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Gauss积分的定义
+\end_layout
+
+\begin_layout Standard
+可以看出，构造的高斯积分的函数虽然阶次提高到了
+\begin_inset Formula $2n-1$
+\end_inset
+
+，它的两项中的第一项仍然为
+\begin_inset Formula $n-1$
+\end_inset
+
+阶，并且就是之前的拉格朗日插值多项式，只是在后面添加了一个“辅助项”。其实为什么这么构造我是不清楚的，但是毋庸置疑的是：
+\end_layout
+
+\begin_layout Enumerate
+辅助项在所有积分点处的值为零，即 
+\begin_inset Formula $P\left(\xi_{i}\right)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+整个多项式的阶次被提高到 
+\begin_inset Formula $2n-1$
+\end_inset
+
+次，相比于牛顿积分更精确；
+\end_layout
+
+\begin_layout Enumerate
+利用上述的积分条件（共
+\begin_inset Formula $n$
+\end_inset
+
+个），可以用来确定
+\begin_inset Formula $n$
+\end_inset
+
+个积分点（采样点）的位置。
+\end_layout
+
+\begin_layout Standard
+则积分
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.145"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+为，
+\begin_inset Formula 
+\begin{align}
+I & =\int_{-1}^{1}f\left(\xi\right)\dd{\xi}\approx\int_{-1}^{1}\varphi\left(\xi\right)\dd{\xi}\nonumber \\
+ & =\sum_{i=1}^{n}\left[\left({\color{blue}\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}}\right)f\left(\xi_{i}\right)\right]+\sum_{i=0}^{n-1}\int_{-1}^{1}\beta_{i}\xi^{i}P\left(\xi\right)\dd{\xi}=\sum_{i=1}^{n}Af\left(\xi_{i}\right)\label{eq:5.152}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+A_{i}={\color{blue}\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}}\label{eq:5.153}
+\end{equation}
+
+\end_inset
+
+注意这时 
+\begin_inset Formula $\varphi\left(\xi\right)$
+\end_inset
+
+ 为 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 次多项式，
+\color blue
+
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+的位置由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.151"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式确定
+\color inherit
+，因而整个积分的精度具有 
+\begin_inset Formula $\left(2n-1\right)$
+\end_inset
+
+ 阶。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那项已经保证了至少
+\begin_inset Formula $n$
+\end_inset
+
+的精确度，后面的项则把精确度提高到
+\begin_inset Formula $2n-1$
+\end_inset
+
+。精确度跟多项式的次数应当是没有关系的。而是跟特殊的取点有关系。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+令 
+\begin_inset Formula $J$
+\end_inset
+
+ 表示物理坐标对等参坐标的雅可比矩阵，
+\begin_inset Formula $\det[J]$
+\end_inset
+
+正比于几何区域的面积，例如对于三角形
+\begin_inset Formula 
+\[
+S=\frac{1}{2}\det[J]
+\]
+
+\end_inset
+
+在 Solver程序中，这个几何因子（
+\begin_inset Formula $1/2$
+\end_inset
+
+）被吸收进 权重因子 
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ 中。因此 Solver程序中高斯积分法的公式写作：
+\begin_inset Formula 
+\[
+\iint_{\Omega^{e}}F\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)\dd{x}\dd{y}=\sum_{i=1}^{m}F\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)W_{i}^{\prime}\det[J]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 局域坐标系和转动变换
 \end_layout
 
@@ -2040,6 +2526,230 @@ literal "false"
 \begin{align}
 \nabla\times\sbf f=\frac{1}{r\sin\theta}\left[\partial_{\theta}(\sin\theta f_{\phi})-\partial_{\phi}f_{\theta}\right]\sbf e_{r}+\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_{\phi}f_{r}-\partial_{r}(rf_{\phi})\right]\sbf e_{\theta}+\frac{1}{r}\left[\partial_{r}(rf_{\theta})-\partial_{\theta}f_{r}\right]\sbf e_{\phi}\label{eq:gI.41}
 \end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+广义斯托克斯公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "广义斯托克斯公式"
+target "https://blog.csdn.net/MamiyaHasaki/article/details/119297305"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+梯度定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\dd{V}\nabla\phi=\oint_{S}\dd{\sbf S}\phi\label{eq:jA.13}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+散度定理（高斯定理）：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\dd{V}\nabla\cdot\sbf A=\oint_{S}\dd{\sbf S}\cdot\sbf A\label{eq:jA.14}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+旋度定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\dd{V}\nabla\times\sbf A=\oint_{S}\dd{\sbf S}\times\sbf A\label{eq:jA.15}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+叉乘–梯度定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{S}\dd{\sbf S}\times\nabla\phi=\oint_{C}\dd{\sbf\ell}\,\phi\label{eq:jA.16}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+斯托克斯（stokes）定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{S}\dd{\sbf S}\nabla\times\sbf A=\oint_{C}\dd{\sbf\ell}\cdot\sbf A\label{eq:jA.17}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+叉乘–nabla–叉乘定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{S}\dd{\sbf S}\times\nabla\times\sbf A=\oint_{C}\dd{\sbf\ell}\times\sbf A\label{eq:jA.18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第一标量格林定理
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}+u(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}\,a{\color{blue}u\frac{\partial b}{\partial n}}\dd{S}\label{eq:jA.19}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a{\color{blue}(\nabla^{2}b)}+(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}\,a{\color{blue}\frac{\partial b}{\partial n}}\dd{S}\label{eq:jA.19b}
+\end{equation}
+
+\end_inset
+
+简记：
+\begin_inset Formula $\nabla\cdot(a\nabla b)$
+\end_inset
+
+ 展开会得到
+\begin_inset Formula $a{\color{blue}(\nabla^{2}b)}+(\nabla a)\cdot(\nabla b)$
+\end_inset
+
+ 两项，它的体积分等于 
+\begin_inset Formula $a{\color{blue}\frac{\partial b}{\partial n}}$
+\end_inset
+
+ 的面积分，即高斯定理或分部积分；还可以加上调料
+\begin_inset Formula $u$
+\end_inset
+
+，一般就对应介电常数
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+。通过此等式，可以转移
+\begin_inset Formula $\nabla$
+\end_inset
+
+算符。
+\end_layout
+
+\begin_layout Enumerate
+第二标量格林定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}-b\nabla\cdot{\color{brown}(u\nabla a)}\right]\dd{V}=\oint_{S}\,u({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}\label{eq:jA.20}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[a{\color{blue}(\nabla^{2}b)}-b{\color{brown}(\nabla^{2}a)}\right]\dd{V}=\oint_{S}\,({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}\label{eq:jA.20b}
+\end{equation}
+
+\end_inset
+
+简记：
+\begin_inset Formula $a{\color{blue}(\nabla^{2}b)}-b{\color{brown}(\nabla^{2}a)}$
+\end_inset
+
+是个对易式，它的体积分等于 
+\begin_inset Formula ${\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}}$
+\end_inset
+
+ 的面积分，后者也是个对易式；还可以加上调料
+\begin_inset Formula $u$
+\end_inset
+
+，一般就对应介电常数
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+第一矢量格林定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[u{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}u\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}\label{eq:jA.21}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}\label{eq:jA.21b}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第二矢量格林定理：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[\sbf b\cdot(\nabla\times u{\color{blue}\nabla\times\sbf a})-\sbf a\cdot(\nabla\times u{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u(\sbf a\times{\color{brown}\nabla\times\sbf b}-\sbf b\times{\color{blue}\nabla\times\sbf a})\cdot\sbf n\dd{S}\label{eq:jA.22}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u=1$
+\end_inset
+
+的简化形式为：
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[\sbf b\cdot(\nabla\times{\color{blue}\nabla\times\sbf a})-\sbf a\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,(\sbf a\times{\color{brown}\nabla\times\sbf b}-\sbf b\times{\color{blue}\nabla\times\sbf a})\cdot\sbf n\dd{S}\label{eq:jA.22b}
+\end{equation}
 
 \end_inset
 
@@ -5176,230 +5886,10 @@ literal "false"
 \end_layout
 
 \begin_layout Chapter
-广义斯托克斯公式
+电磁场基础理论
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-name "广义斯托克斯公式"
-target "https://blog.csdn.net/MamiyaHasaki/article/details/119297305"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-梯度定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\dd{V}\nabla\phi=\oint_{S}\dd{\sbf S}\phi\label{eq:jA.13}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-散度定理（高斯定理）：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\dd{V}\nabla\cdot\sbf A=\oint_{S}\dd{\sbf S}\cdot\sbf A\label{eq:jA.14}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-旋度定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\dd{V}\nabla\times\sbf A=\oint_{S}\dd{\sbf S}\times\sbf A\label{eq:jA.15}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-叉乘–梯度定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{S}\dd{\sbf S}\times\nabla\phi=\oint_{C}\dd{\sbf\ell}\,\phi\label{eq:jA.16}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-斯托克斯（stokes）定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{S}\dd{\sbf S}\nabla\times\sbf A=\oint_{C}\dd{\sbf\ell}\cdot\sbf A\label{eq:jA.17}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-叉乘–nabla–叉乘定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{S}\dd{\sbf S}\times\nabla\times\sbf A=\oint_{C}\dd{\sbf\ell}\times\sbf A\label{eq:jA.18}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-第一标量格林定理
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}+u(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}\,a{\color{blue}u\frac{\partial b}{\partial n}}\dd{S}\label{eq:jA.19}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $u=1$
-\end_inset
-
-的简化形式为：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[a{\color{blue}(\nabla^{2}b)}+(\nabla a)\cdot(\nabla b)\right]\dd{V}=\oint_{S}\,a{\color{blue}\frac{\partial b}{\partial n}}\dd{S}\label{eq:jA.19b}
-\end{equation}
-
-\end_inset
-
-简记：
-\begin_inset Formula $\nabla\cdot(a\nabla b)$
-\end_inset
-
- 展开会得到
-\begin_inset Formula $a{\color{blue}(\nabla^{2}b)}+(\nabla a)\cdot(\nabla b)$
-\end_inset
-
- 两项，它的体积分等于 
-\begin_inset Formula $a{\color{blue}\frac{\partial b}{\partial n}}$
-\end_inset
-
- 的面积分，即高斯定理或分部积分；还可以加上调料
-\begin_inset Formula $u$
-\end_inset
-
-，一般就对应介电常数
-\begin_inset Formula $\varepsilon$
-\end_inset
-
-。通过此等式，可以转移
-\begin_inset Formula $\nabla$
-\end_inset
-
-算符。
-\end_layout
-
-\begin_layout Enumerate
-第二标量格林定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[a\nabla\cdot{\color{blue}(u\nabla b)}-b\nabla\cdot{\color{brown}(u\nabla a)}\right]\dd{V}=\oint_{S}\,u({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}\label{eq:jA.20}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $u=1$
-\end_inset
-
-的简化形式为：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[a{\color{blue}(\nabla^{2}b)}-b{\color{brown}(\nabla^{2}a)}\right]\dd{V}=\oint_{S}\,({\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}})\dd{S}\label{eq:jA.20b}
-\end{equation}
-
-\end_inset
-
-简记：
-\begin_inset Formula $a{\color{blue}(\nabla^{2}b)}-b{\color{brown}(\nabla^{2}a)}$
-\end_inset
-
-是个对易式，它的体积分等于 
-\begin_inset Formula ${\color{blue}a\frac{\partial b}{\partial n}}{\color{brown}-b\frac{\partial a}{\partial n}}$
-\end_inset
-
- 的面积分，后者也是个对易式；还可以加上调料
-\begin_inset Formula $u$
-\end_inset
-
-，一般就对应介电常数
-\begin_inset Formula $\varepsilon$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-第一矢量格林定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[u{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}u\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}\label{eq:jA.21}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $u=1$
-\end_inset
-
-的简化形式为：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}\label{eq:jA.21b}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-第二矢量格林定理：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[\sbf b\cdot(\nabla\times u{\color{blue}\nabla\times\sbf a})-\sbf a\cdot(\nabla\times u{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u(\sbf a\times{\color{brown}\nabla\times\sbf b}-\sbf b\times{\color{blue}\nabla\times\sbf a})\cdot\sbf n\dd{S}\label{eq:jA.22}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $u=1$
-\end_inset
-
-的简化形式为：
-\begin_inset Formula 
-\begin{equation}
-\int_{V}\left[\sbf b\cdot(\nabla\times{\color{blue}\nabla\times\sbf a})-\sbf a\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,(\sbf a\times{\color{brown}\nabla\times\sbf b}-\sbf b\times{\color{blue}\nabla\times\sbf a})\cdot\sbf n\dd{S}\label{eq:jA.22b}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
+\begin_layout Section
 电磁场单位
 \end_layout
 
@@ -5525,10 +6015,6 @@ literal "false"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Chapter
-电磁场基础理论
 \end_layout
 
 \begin_layout Section
@@ -6277,496 +6763,6 @@ noprefix "false"
 \end_inset
 
 。
-\end_layout
-
-\begin_layout Chapter
-插值和高斯积分
-\end_layout
-
-\begin_layout Section
-有限元中的Lagrange插值与Gauss积分
-\end_layout
-
-\begin_layout Standard
-ref:
-\begin_inset CommandInset href
-LatexCommand href
-name "Lagrange插值与Gauss积分"
-target "https://zhuanlan.zhihu.com/p/37768842"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Lagrange插值与Gauss积分是在学习FEM中不可回避的两部分，虽然说是两部分，其实在Gauss积分中，构造多项式的被积函数时，也用到了Lagrange插
-值多项式，所以在讲关于参数单元刚度矩阵求积分的时候，在数值积分中一起提出。
-\begin_inset Formula 
-\begin{equation}
-\int_{a}^{b}f\left(x\right)\dd{x}\approx\int_{a}^{b}P\left(x\right)\dd{x}\label{eq:5.145}
-\end{equation}
-
-\end_inset
-
-以上表达式是说，对于比较难以积分的函数
-\begin_inset Formula $f$
-\end_inset
-
-，我们找到了与之相似度很高的多项式函数
-\begin_inset Formula $P$
-\end_inset
-
-，用
-\begin_inset Formula $P$
-\end_inset
-
-的积分来代替f的积分，那么现在的问题就是如何找到多项式
-\begin_inset Formula $P$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Subsection
-Newton–Cotes 数值积分
-\end_layout
-
-\begin_layout Standard
-基于 
-\begin_inset Formula $n$
-\end_inset
-
- 个点（
-\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
-\end_inset
-
-），将多项式取为 Lagrange 插值多项式，即
-\begin_inset Formula 
-\[
-\varphi\left(\xi\right)=a_{0}+a_{1}\xi+\cdots+a_{n-1}\xi^{n-1}=\sum_{i=1}^{n}l_{i}^{(n-1)}\left(\xi\right)f\left(\xi_{i}\right).
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $a_{0}$
-\end_inset
-
-，
-\begin_inset Formula $a$
-\end_inset
-
-，
-\begin_inset Formula $\cdots$
-\end_inset
-
-，
-\begin_inset Formula $a_{n-1}$
-\end_inset
-
-为常数，
-\begin_inset Formula $l_{i}^{(n-1)}$
-\end_inset
-
-为
-\begin_inset Formula $n-1$
-\end_inset
-
-阶 Lagrange 插值函数，即
-\begin_inset Formula 
-\[
-l_{i}^{(n-1)}\left(\xi\right)=\frac{\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots{\color{blue}\left(\xi-\xi_{i-1}\right)\left(\xi-\xi_{i+1}\right)}\cdots\left(\xi-\xi_{n}\right)}{\left(\xi_{i}-\xi_{1}\right)\left(\xi_{i}-\xi_{2}\right)\cdots{\color{blue}\left(\xi_{i}-\xi_{i-1}\right)\left(\xi_{i}-\xi_{i+1}\right)}\cdots\left(\xi_{i}-\xi_{n}\right)}=\prod_{\substack{j=1\\
-j\neq i
-}
-}^{n}\frac{\left(\xi-\xi_{j}\right)}{\left(\xi_{i}-\xi_{j}\right)}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Lagrange插值的定义: 如果已知 
-\begin_inset Formula $n$
-\end_inset
-
- 个点的数值，那么可以构造一个
-\begin_inset Formula $n-1$
-\end_inset
-
-阶的多项式，通过待定系数的方式，使得这个多项式在这
-\begin_inset Formula $n$
-\end_inset
-
-个点的值就等于原本函数在这
-\begin_inset Formula $n$
-\end_inset
-
-个点的数值。关于待定系数的求解，刚好是一个范德蒙德多项式：
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccccc}
-1 & x_{1} & x_{1}^{2} & \cdots & x_{1}^{n-1}\\
-1 & x_{2} & x_{2}^{2} & \cdots & x_{2}^{n-1}\\
-\cdots & \cdots & \cdots & \cdots & \cdots\\
-1 & x_{n} & x_{n}^{2} & \cdots & x_{n}^{n-1}
-\end{array}\right]\left(\begin{array}{c}
-a_{0}\\
-a_{1}\\
-\cdots\\
-a_{n-1}
-\end{array}\right)=\left(\begin{array}{c}
-f\left(x_{1}\right)\\
-f\left(x_{2}\right)\\
-\cdots\\
-f\left(x_{n}\right)
-\end{array}\right)
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $a_{0}$
-\end_inset
-
-，
-\begin_inset Formula $a_{1}$
-\end_inset
-
-，
-\begin_inset Formula $a_{n-1}$
-\end_inset
-
- 是拟合多项式中的各个系数。例如给三个点，得到的插值多项式形如：
-\begin_inset Formula 
-\[
-y=l_{1}^{(2)}\left(x\right)y_{1}+l_{2}^{(2)}\left(x\right)y_{2}+l_{3}^{(2)}\left(x\right)y_{3}
-\]
-
-\end_inset
-
-容易看出
-\begin_inset Formula $f_{i}(x_{j})=\delta_{ij}$
-\end_inset
-
-，即在所有要插值的点，多项式插值的结果与原来的函数相等。因此 Lagrange 插值的一般表达式为
-\begin_inset Formula 
-\[
-P\left(x\right)=\sum_{i=1}^{n}\left[\prod_{\substack{j=1\\
-i\neq j
-}
-}\frac{\left(x-x_{j}\right)}{\left(x_{i}-x_{j}\right)}y_{i}\right].
-\]
-
-\end_inset
-
-从而引出了 Newton–Cotes 数值积分公式
-\begin_inset Formula 
-\begin{align*}
-I & =\int_{-1}^{1}f\left(\xi\right)\dd{\xi}\approx\int_{-1}^{1}\varphi\left(\xi\right)\dd{\xi}\\
- & =\sum_{i=1}^{n}{\color{blue}\left(\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}\right)}f\left(\xi_{i}\right)\\
- & =\sum_{i=1}^{n}A_{i}f\left(\xi_{i}\right)
-\end{align*}
-
-\end_inset
-
-Newton-Cotes 数值积分将原积分转化为 
-\series bold
-权函数
-\series default
- 与 
-\series bold
-原函数值
-\series default
- 的线性组合（在离散点上）。
-\end_layout
-
-\begin_layout Subsection
-Gauss积分, Gauss quadrature
-\end_layout
-
-\begin_layout Standard
-然后，就是 FEM 里常用的 Gauss 积分了：
-\end_layout
-
-\begin_layout Standard
-首先谈一下我的理解，上面的Newton-Cotes数值积分，是将 
-\series bold
-函数
-\series default
- 转换为 
-\series bold
-多项式
-\series default
-，采用的多项式是Lagrange插值多项式，对采用的n个点没有特殊的要求；下面的Gauss积分，就是要挑选优化过的积分点，同时确定积分点函数值的权函数。
-\end_layout
-
-\begin_layout Standard
-如果调整 
-\begin_inset Formula $n$
-\end_inset
-
- 个插值点的位置（
-\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
-\end_inset
-
-），使 
-\begin_inset Formula $\varphi\left(\xi\right)$
-\end_inset
-
-作为 
-\begin_inset Formula $\left(2n-1\right)$
-\end_inset
-
- 次多项式对
-\begin_inset Formula $f(\xi)$
-\end_inset
-
- 进行逼近，则可以大大提高积分精度；也就是调整插值点 
-\begin_inset Formula $\xi_{i}$
-\end_inset
-
- 的位置，使其达到一个最优的组合，这种最优的位置点叫做 Gauss 积分点。
-\end_layout
-
-\begin_layout Standard
-由函数逼近理论，可构造 
-\begin_inset Formula $\left(2n-1\right)$
-\end_inset
-
- 次多项式 
-\begin_inset Formula $\varphi\left(\xi\right)$
-\end_inset
-
- 为
-\begin_inset Formula 
-\begin{equation}
-\varphi\left(\xi\right)=\sum_{i=1}^{n}l_{i}^{(n-1)}(\xi)f(\xi_{i})+\sum_{i=0}^{n-1}\beta_{i}\xi^{i}P\left(\xi\right)\label{eq:5.149}
-\end{equation}
-
-\end_inset
-
-其中 
-\begin_inset Formula $l_{i}^{(n-1)}(\xi)$
-\end_inset
-
- 是 
-\begin_inset Formula $\left(n-1\right)$
-\end_inset
-
- 次 Lagrange插值函数，
-\begin_inset Formula $\beta_{i}$
-\end_inset
-
- 为系数，
-\begin_inset Formula $P\left(\xi\right)$
-\end_inset
-
- 为 
-\begin_inset Formula $n$
-\end_inset
-
- 次多项式，即
-\begin_inset Formula 
-\begin{equation}
-P\left(\xi\right)=\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots\left(\xi-\xi_{n}\right)=\prod_{i=1}^{n}\left(\xi-\xi_{i}\right).\label{eq:5.150}
-\end{equation}
-
-\end_inset
-
-（
-\begin_inset Formula $\xi,\:i=1,2,\cdots,n$
-\end_inset
-
-）积分点由以下条件确定
-\begin_inset Formula 
-\begin{equation}
-\int_{-1}^{1}\xi^{i}P\left(\xi\right)\dd{\xi}=0,\quad i=0,1,\cdots,n-1\label{eq:5.151}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Gauss积分的定义
-\end_layout
-
-\begin_layout Standard
-可以看出，构造的高斯积分的函数虽然阶次提高到了
-\begin_inset Formula $2n-1$
-\end_inset
-
-，它的两项中的第一项仍然为
-\begin_inset Formula $n-1$
-\end_inset
-
-阶，并且就是之前的拉格朗日插值多项式，只是在后面添加了一个“辅助项”。其实为什么这么构造我是不清楚的，但是毋庸置疑的是：
-\end_layout
-
-\begin_layout Enumerate
-辅助项在所有积分点处的值为零，即 
-\begin_inset Formula $P\left(\xi_{i}\right)=0$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-整个多项式的阶次被提高到 
-\begin_inset Formula $2n-1$
-\end_inset
-
-次，相比于牛顿积分更精确；
-\end_layout
-
-\begin_layout Enumerate
-利用上述的积分条件（共
-\begin_inset Formula $n$
-\end_inset
-
-个），可以用来确定
-\begin_inset Formula $n$
-\end_inset
-
-个积分点（采样点）的位置。
-\end_layout
-
-\begin_layout Standard
-则积分
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:5.145"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-为，
-\begin_inset Formula 
-\begin{align}
-I & =\int_{-1}^{1}f\left(\xi\right)\dd{\xi}\approx\int_{-1}^{1}\varphi\left(\xi\right)\dd{\xi}\nonumber \\
- & =\sum_{i=1}^{n}\left[\left({\color{blue}\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}}\right)f\left(\xi_{i}\right)\right]+\sum_{i=0}^{n-1}\int_{-1}^{1}\beta_{i}\xi^{i}P\left(\xi\right)\dd{\xi}=\sum_{i=1}^{n}Af\left(\xi_{i}\right)\label{eq:5.152}
-\end{align}
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\begin{equation}
-A_{i}={\color{blue}\int_{-1}^{1}l_{i}^{(n-1)}\left(\xi\right)\dd{\xi}}\label{eq:5.153}
-\end{equation}
-
-\end_inset
-
-注意这时 
-\begin_inset Formula $\varphi\left(\xi\right)$
-\end_inset
-
- 为 
-\begin_inset Formula $\left(2n-1\right)$
-\end_inset
-
- 次多项式，
-\color blue
-
-\begin_inset Formula $\xi_{i}$
-\end_inset
-
-的位置由
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:5.151"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 式确定
-\color inherit
-，因而整个积分的精度具有 
-\begin_inset Formula $\left(2n-1\right)$
-\end_inset
-
- 阶。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那项已经保证了至少
-\begin_inset Formula $n$
-\end_inset
-
-的精确度，后面的项则把精确度提高到
-\begin_inset Formula $2n-1$
-\end_inset
-
-。精确度跟多项式的次数应当是没有关系的。而是跟特殊的取点有关系。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-令 
-\begin_inset Formula $J$
-\end_inset
-
- 表示物理坐标对等参坐标的雅可比矩阵，
-\begin_inset Formula $\det[J]$
-\end_inset
-
-正比于几何区域的面积，例如对于三角形
-\begin_inset Formula 
-\[
-S=\frac{1}{2}\det[J]
-\]
-
-\end_inset
-
-在 Solver程序中，这个几何因子（
-\begin_inset Formula $1/2$
-\end_inset
-
-）被吸收进 权重因子 
-\begin_inset Formula $W_{i}$
-\end_inset
-
- 中。因此 Solver程序中高斯积分法的公式写作：
-\begin_inset Formula 
-\[
-\iint_{\Omega^{e}}F\left(L_{1}^{e},L_{2}^{e},L_{3}^{e}\right)\dd{x}\dd{y}=\sum_{i=1}^{m}F\left(L_{1i}^{e},L_{2i}^{e},L_{3i}^{e}\right)W_{i}^{\prime}\det[J]
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Chapter
@@ -9063,10 +9059,6 @@ N_{1}(-1)=1,N_{2}(-1)=0,
  的正方形，等等。
 \end_layout
 
-\begin_layout Chapter
-有限元的等参坐标方法
-\end_layout
-
 \begin_layout Section
 物理坐标与参数坐标
 \end_layout
@@ -10235,11 +10227,11 @@ a_{3}^{e}
 \end_layout
 
 \begin_layout Chapter
-有限元的矩阵方程
+矩阵方程与边界条件
 \end_layout
 
 \begin_layout Standard
-在很多情况下，电磁方程可以化为如下形式
+以静电场方程为例，在很多情况它下它可以化为如下形式
 \begin_inset Formula 
 \begin{equation}
 -\nabla\cdot\left(\alpha\nabla\phi\right)+\beta\phi=f\label{eq:xl1.27}
@@ -10511,26 +10503,21 @@ Galerkin 方法
 \end_layout
 
 \begin_layout Standard
-ref: FEM-Gerard;p45/61;sec 1.3.11
-\end_layout
-
-\begin_layout Standard
-首先基础的公式是 ：
+ref: FEM-Gerard;p45/61;sec 1.3.11。静电场的基础公式是 ：
 \begin_inset Formula 
 \begin{align*}
-\nabla\cdot\sbf D & =\rho\\
-\sbf D & =\sbf D\left(\sbf E\right)\\
-\sbf E & =-\nabla\phi
+ & \nabla\cdot\sbf D=\rho,\quad\sbf D=-\epsilon\cdot\nabla\phi\\
+ & -\nabla\cdot\left(\epsilon\cdot\nabla\phi\right)=\rho
 \end{align*}
 
 \end_inset
 
-在每个单元上，令加权的残差（residual error）和 为
+全局残差可以表示成每个单元的残差之和。在每个单元上，令加权的残差（residual error）和 为
 \begin_inset Formula 
 \begin{align}
-R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:error}\\
+R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:residue}\\
 \text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
-\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}=0\nonumber 
+\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber 
 \end{align}
 
 \end_inset
@@ -10539,11 +10526,23 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \begin_inset Formula ${\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}$
 \end_inset
 
-。稍微整理下
+。电势
+\begin_inset Formula $\phi$
+\end_inset
+
+（电场
+\begin_inset Formula $\sbf E$
+\end_inset
+
+）的稳态分布应该满足
+\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]=0$
+\end_inset
+
+，即
 \begin_inset Formula 
-\[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
-\]
+\begin{equation}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\label{eq:gal1}
+\end{equation}
 
 \end_inset
 
@@ -10553,9 +10552,9 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 
 ，上式可以写成：
 \begin_inset Formula 
-\[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\epsilon\nabla\phi\right)}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
-\]
+\begin{equation}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\epsilon\nabla\phi\right)}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\label{eq:gal2}
+\end{equation}
 
 \end_inset
 
@@ -10575,19 +10574,47 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \end_layout
 
 \begin_layout Subsection
-微扰展开
+微扰迭代求解
 \end_layout
 
-\begin_layout Enumerate
-如果考虑待求物理量 
-\begin_inset Formula $\sbf D$
+\begin_layout Standard
+静电场达到稳态时应该满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal1"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- 和 
-\begin_inset Formula $\phi$
+。设初始电势分布
+\begin_inset Formula $\phi_{0}$
 \end_inset
 
- 的微小变分：
+不满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，即
+\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]\neq0$
+\end_inset
+
+，问如何选取电势的虚位移
+\begin_inset Formula $\delta\phi$
+\end_inset
+
+才能使
+\begin_inset Formula $\phi_{0}+\delta\phi$
+\end_inset
+
+重新回到平衡状态。写成表达式即
 \begin_inset Formula 
 \begin{align*}
 \sbf D & =\sbf D^{0}+{\color{blue}\epsilon}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\epsilon}\,\sbf\nabla\delta\phi\\
@@ -10600,34 +10627,38 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \begin_inset Formula $\epsilon=\frac{\partial D}{\partial E}$
 \end_inset
 
-，对于一般材料 
-\begin_inset Formula $\frac{\partial D}{\partial E}$
+，一般材料的
+\begin_inset Formula $\epsilon$
 \end_inset
 
- 有可能是张量。代入 
+可以非线性（也可能是张量）。代入
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:error"
+reference "eq:residue"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 得：
+，令
+\begin_inset Formula $\phi+\delta\phi$
+\end_inset
+
+对应的残差为零得
 \begin_inset Formula 
 \begin{align*}
-\Rightarrow & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
+0= & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
  & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \end{align*}
 
 \end_inset
 
-移项得
+整理得
 \begin_inset Formula 
 \begin{align}
- & \int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
- & =\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}\label{eq:Galerkin}
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & =\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
 \end{align}
 
 \end_inset
@@ -10636,24 +10667,68 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-再代入 
-\begin_inset Formula $\phi$
+方程左边组成
+\begin_inset Formula $\delta\phi$
 \end_inset
 
- 的插值展开，
+的“
+\series bold
+刚度矩阵
+\series default
+”，由体单元和表面单元两部分的贡献组成；
+\end_layout
+
+\begin_layout Enumerate
+方程右边的总和称为“
+\series bold
+激励向量
+\series default
+”（也叫“力向量”），
+\begin_inset Formula $[\cdots]$
+\end_inset
+
+中的项是所谓的“
+\series bold
+内力项
+\series default
+”，反映了当前体系偏离平衡态的程度，也由体单元和表面单元两部分组成。
+\end_layout
+
+\begin_layout Enumerate
+最后一项
+\begin_inset Formula $\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}$
+\end_inset
+
+ 称为“
+\series bold
+外力项
+\series default
+”，是外源对场的激励，在对
+\begin_inset Formula $\delta\phi$
+\end_inset
+
+的多次迭代中保持不变。
+\end_layout
+
+\begin_layout Standard
+根据常规做法，代入 
+\begin_inset Formula $\delta\phi$
+\end_inset
+
+ 的插值展开 
 \begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
 \end_inset
 
  得
 \begin_inset Formula 
-\begin{align*}
-\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\\
- & =\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right\} 
-\end{align*}
+\begin{align}
+\bigg[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
+ & =\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} \label{eq:gal4}
+\end{align}
 
 \end_inset
 
-此即 Galerkin 方法的迭代展开式。左边正比于 
+此即 Galerkin 方法的迭代展开式。方程左边正比于 
 \begin_inset Formula $N_{i}^{e}N_{j}^{e}$
 \end_inset
 
@@ -10661,7 +10736,11 @@ noprefix "false"
 \begin_inset Formula $N_{i}^{e}$
 \end_inset
 
-，因此在 尺度（scale）变换下，
+，因此在形函数
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+的尺度变换（rescale）下，
 \begin_inset Formula 
 \[
 \left[\cdots\right]\delta\phi_{j}=\lambda\left\{ \cdots\right\} ,\quad\lambda<1.
@@ -10669,165 +10748,101 @@ noprefix "false"
 
 \end_inset
 
-相当于 
-\begin_inset Formula $\delta\phi_{j}$
+
+\begin_inset Formula $\lambda$
 \end_inset
 
- 获得更小的步长。
+可以用来控制步长，即每次
+\begin_inset Formula $\delta\phi$
+\end_inset
+
+对
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+进行修正时，
+\begin_inset Formula $\lambda$
+\end_inset
+
+可以控制修正的大小，它相当于对场进行一个全局的放缩，所以
+\begin_inset Formula $\lambda$
+\end_inset
+
+对于每个单元是相同的。
 \end_layout
 
 \begin_layout Enumerate
-对于第一类（essential）边界条件，在边界上 
+对于
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+上的第一类（essential）边界条件，
+\begin_inset Formula $\phi$
+\end_inset
+
+取给定值，因此
 \begin_inset Formula $\delta\phi_{j}=0$
 \end_inset
 
-；对于齐次第二类（natural）边界条件，
-\begin_inset Formula $n\cdot\sbf D^{0}=0$
+，从方程中直接删除相应的刚度矩阵和激励向量。
+\end_layout
+
+\begin_layout Enumerate
+对于对于
+\begin_inset Formula $\Gamma_{2}$
 \end_inset
 
-；回忆推导欧拉–拉格朗日方程时
+上的齐次第二类（natural）边界条件，
+\begin_inset Formula $\sbf n\cdot\left(-\epsilon\nabla\phi\right)=0$
+\end_inset
+
+。在做迭代展开之前，就可以去掉
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:EL-equ"
+reference "eq:gal2"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-，边界项是 
-\begin_inset Formula $\left.{\color{blue}\frac{\partial F}{\partial y'}\delta y}\right|_{x_{1}}^{x_{2}}$
+中的
+\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
 \end_inset
 
- ，在这两种情况下边界项都分别为零。因此在两种情况下都可以不考虑边界项，此时方程简化为，
+项，因此也不必考虑边界项的贡献。
+\end_layout
+
+\begin_layout Standard
+总之，
+\series bold
+第一类和齐次第二类边界条件
+\series default
+ 对刚度矩阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
 \begin_inset Formula 
 \begin{equation}
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}\right\} .\label{eq:Galerkin-2}
+\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
 \end{equation}
 
 \end_inset
 
-只有第三类边界条件，例如开放边界，或外加电场时需要考虑边界项。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-程序变量
-\end_layout
-
-\begin_layout Standard
-下面列出
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Galerkin-2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的部件，在程序中对应的变量。 
-\begin_inset Formula $W(\xi_{i})$
-\end_inset
-
- 是高斯积分的权重因子，
-\begin_inset Formula $\det[J]$
-\end_inset
-
- 是雅可比矩阵的行列式。
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $K$
-\end_inset
-
-：Sparse::GetMatrix<double>(
-\begin_inset Quotes eld
-\end_inset
-
-K
-\begin_inset Quotes erd
-\end_inset
-
-)，刚度矩阵，Galerkin 方程左侧的稀疏矩阵。
-\begin_inset Formula 
-\[
-K=\nabla N^{T}\cdot\epsilon\cdot\nabla N*W*\det[J]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $F_{\text{in}}$
-\end_inset
-
-：Fin，“内力”，Galerkin 方程
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Galerkin-2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中，
-\begin_inset Formula $\sbf D^{0}$
-\end_inset
-
- 引发的贡献
-\begin_inset Formula 
-\[
-F_{\text{in}}=\nabla N^{T}\cdot\sbf D^{0}\cdot\left(-\det[J]*W\right)/\epsilon_{0}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $F_{v}$
-\end_inset
-
-：Fv，“力”矢量，其实是电荷（电荷密度，或者外加电场）的贡献
-\begin_inset Formula 
-\[
-F_{v}=N*\rho*\det[J]*W
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-P_GFv_T 是 Global Fv，即 Fv 在所有单元上累加的结果；Fv vector中，的元素的存储次序，与全局/局域编号有关。
-\end_layout
-
-\begin_layout Enumerate
-P_GFinAccum 是 Global Fin，即 Fin 在所有单元上累加的结果。
-\end_layout
-
-\begin_layout Enumerate
-P_GRt，
-\begin_inset Formula $\mathrm{P\_GRt}=\mathrm{P\_GFv\_T}-\mathrm{P\_GFinAccum}$
-\end_inset
-
-，两部分“力”的求和。 
-\end_layout
-
-\begin_layout Enumerate
-从单元的局域刚度矩阵, 组装全局矩阵的过程，见 金建铭note 4.3.3.2。
+边界项的贡献只出现在 
+\series bold
+非齐次第二类
+\series default
+ 或 
+\series bold
+第三类边界条件
+\series default
+ 时（例如
+\series bold
+开放边界
+\series default
+，或
+\series bold
+外加电场
+\series default
+）。
 \end_layout
 
 \begin_layout Section
@@ -10970,8 +10985,8 @@ ref: JMJin P104, Sec 4.3.3。Dirichlet 边界条件定义为：
 Robbin 边界条件：
 \begin_inset Formula 
 \begin{align}
- & \left(\alpha\nabla\phi\right)\cdot\sbf n+\gamma\phi=q\nonumber \\
-\text{即}\quad & \sbf D\cdot\sbf n=q-\gamma\phi\label{eq:bound3}
+ & \left(\epsilon\nabla\phi\right)\cdot\sbf n+\gamma\phi=q\label{eq:bnd3}\\
+\text{or}\quad & -\sbf D_{0}\cdot\sbf n=q,\quad\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi=-\gamma\delta\phi\label{eq:bnd3c}
 \end{align}
 
 \end_inset
@@ -10981,7 +10996,7 @@ Robbin 边界条件：
 
 \begin_layout Itemize
 这里的约定是，电位移矢量 
-\begin_inset Formula $\sbf D=\alpha_{x}\frac{\partial\phi}{\partial x}\hat{x}+\alpha_{y}\frac{\partial\phi}{\partial y}\hat{y}+\alpha_{z}\frac{\partial\phi}{\partial z}\hat{z}$
+\begin_inset Formula $\sbf D=\epsilon_{x}\frac{\partial\phi}{\partial x}\hat{x}+\epsilon_{y}\frac{\partial\phi}{\partial y}\hat{y}+\epsilon_{z}\frac{\partial\phi}{\partial z}\hat{z}$
 \end_inset
 
 ；
@@ -10993,49 +11008,41 @@ Robbin 边界条件：
 \end_inset
 
 ，
-\begin_inset Formula $\sbf D=\alpha\sbf E$
+\begin_inset Formula $\sbf D=\epsilon\sbf E$
 \end_inset
 
-，也就是有一个负号，所以上面的 
-\begin_inset Formula $\alpha$
+，也就是有一个负号，所以形式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 
+\begin_inset Formula $\epsilon$
 \end_inset
 
  为负数。
 \end_layout
 
 \begin_layout Standard
-对于上面定义的加权残差，现在不展开 
-\begin_inset Formula $\sbf n\cdot\sbf D$
-\end_inset
-
- 项：
-\begin_inset Formula 
-\[
-R^{e}\left[N_{i}^{e}\right]=\frac{-1}{\varepsilon_{0}}\left[\left(\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\right]
-\]
-
-\end_inset
-
-残差 
-\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]$
-\end_inset
-
- 趋于零给出的方程是
-\begin_inset Formula 
-\[
-\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}
-\]
-
-\end_inset
-
-代入势场展开 
-\begin_inset Formula $\delta\phi=N_{j}^{e}\delta\phi_{j}$
-\end_inset
-
-，以及 
+将
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:bound3"
+reference "eq:bnd3c"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入到Galerkin迭代方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal3"
 plural "false"
 caps "false"
 noprefix "false"
@@ -11044,82 +11051,53 @@ noprefix "false"
 
 
 \begin_inset Formula 
-\[
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\left(q-\gamma\phi\right)}\dd{\Gamma}
-\]
-
-\end_inset
-
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-其中
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
-\begin_inset Formula ${\color{brown}\phi=\phi_{0}+N_{j}\delta\phi_{j}}$
-\end_inset
-
-，
-\begin_inset Formula $\phi_{0}$
-\end_inset
-
- 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-是目前的累积解
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-，全按形函数展开就是：
-\begin_inset Formula 
 \begin{align*}
-\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j} & +{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]}\delta\phi_{j}\\
- & =\int_{\Omega^{e}}\left({\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}+N_{i}^{e}\rho\right)\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}q}\dd{\Gamma}+{\color{brown}\int_{\Gamma^{e}}\left(-\gamma N_{i}^{e}N_{j}^{e}\right)\dd{\Gamma}}\phi_{0;j}
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
+ & =\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \end{align*}
 
 \end_inset
 
+得到第三类边界条件对应的Galerkin迭代方程
+\begin_inset Formula 
+\begin{align}
+ & \frac{1}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}+\frac{1}{\varepsilon_{0}}{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]}\delta\phi_{j}\nonumber \\
+ & \qquad=\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\frac{q}{\varepsilon_{0}}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal-bnd3}
+\end{align}
 
+\end_inset
+
+可以看到，
+\series bold
+第三类边界条件对刚度矩阵和激励向量都有贡献
+\series default
+。
+\end_layout
+
+\begin_layout Remark
+对比Ritz法。参考JianMingJin 6.2.2，第三类边界条件对应的泛函是
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}(\Phi)= & \frac{1}{2}\int_{V}\varepsilon(\nabla\Phi)\cdot\varepsilon(\nabla\Phi)\dd{V}-\int_{V}\Phi\rho\dd{V}+\int_{S_{2}}\left(\frac{1}{2}\gamma\Phi^{2}-q\Phi\right)\dd{S}\\
+= & \frac{1}{2}\int_{V}\Phi[-\nabla\cdot(\varepsilon\nabla\Phi)]\dd{V}-\int_{V}\Phi\rho\dd{V}\\
+ & +\int_{S_{2}}\left(\frac{\varepsilon}{2}\Phi\frac{\partial}{\partial n}\Phi+\frac{1}{2}\gamma\Phi^{2}-q\Phi\right)\dd{S}
+\end{align*}
+
+\end_inset
+
+这里的
+\begin_inset Formula $1/2$
+\end_inset
+
+因子是由于Ritz法得到矩阵方程之前还要对
+\begin_inset Formula $\Phi$
+\end_inset
+
+求偏导；而Galerkin法直接给出矩阵方程，所以没有
+\begin_inset Formula $1/2$
+\end_inset
+
+。两种方法最终给出的矩阵方程是相同的。
 \end_layout
 
 \begin_layout Section
@@ -11134,12 +11112,43 @@ JMJin page 90: Neumann 边界条件，相当于在第三类边界条件中取
 
 \begin_inset Formula 
 \begin{align}
- & \left(\alpha\nabla\phi\right)\cdot\sbf n=q\nonumber \\
-\text{即}\quad & \sbf D\cdot\sbf n=q\label{eq:bound2}
+ & \left(\epsilon\nabla\phi\right)\cdot\sbf n=q\nonumber \\
+\text{or}\quad & -\sbf D\cdot\sbf n=q\label{eq:bound2}
 \end{align}
 
 \end_inset
 
+在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal-bnd3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的方程取
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+得到第二类边界条件下，Galerkin法的迭代方程
+\begin_inset Formula 
+\begin{align*}
+ & \frac{1}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}\\
+ & \qquad=\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\frac{q}{\varepsilon_{0}}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\series bold
+第二类边界条件对激励向量有贡献
+\series default
+。
+\end_layout
+
+\begin_layout Standard
 此外还有齐次诺伊曼边界条件（homogeneous Neumann），相当于在第三类边界条件中取 
 \begin_inset Formula $\gamma=q=0$
 \end_inset
@@ -11153,6 +11162,10 @@ JMJin page 90: Neumann 边界条件，相当于在第三类边界条件中取
 \end_inset
 
 
+\series bold
+自然边界条件对刚度矩阵和激励都没有贡献
+\series default
+，与Ritz法的结论相同。
 \end_layout
 
 \begin_layout Subsection
@@ -11243,8 +11256,204 @@ GSNum()，GsNumKe()，GsNumFe()，GsNumVe()：高斯点数目；对于阶数不�
  点数目可能不同。
 \end_layout
 
+\begin_layout Subsection
+程序变量
+\end_layout
+
 \begin_layout Standard
-EOF
+下面列出
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的部件，在程序中对应的变量。 
+\begin_inset Formula $W(\xi_{i})$
+\end_inset
+
+ 是高斯积分的权重因子，
+\begin_inset Formula $\det[J]$
+\end_inset
+
+ 是雅可比矩阵的行列式。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $K$
+\end_inset
+
+：Sparse::GetMatrix<double>(
+\begin_inset Quotes eld
+\end_inset
+
+K
+\begin_inset Quotes erd
+\end_inset
+
+)，刚度矩阵，Galerkin 方程左侧的稀疏矩阵。
+\begin_inset Formula 
+\[
+K=\nabla N^{T}\cdot\epsilon\cdot\nabla N*W*\det[J]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $F_{\text{in}}$
+\end_inset
+
+：Fin，“内力”，Galerkin 方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，
+\begin_inset Formula $\sbf D^{0}$
+\end_inset
+
+ 引发的贡献
+\begin_inset Formula 
+\[
+F_{\text{in}}=\nabla N^{T}\cdot\sbf D^{0}\cdot\left(-\det[J]*W\right)/\epsilon_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $F_{v}$
+\end_inset
+
+：Fv，“力”矢量，其实是电荷（电荷密度，或者外加电场）的贡献
+\begin_inset Formula 
+\[
+F_{v}=N*\rho*\det[J]*W
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+P_GFv_T 是 Global Fv，即 Fv 在所有单元上累加的结果；Fv vector中，的元素的存储次序，与全局/局域编号有关。
+\end_layout
+
+\begin_layout Enumerate
+P_GFinAccum 是 Global Fin，即 Fin 在所有单元上累加的结果。
+\end_layout
+
+\begin_layout Enumerate
+P_GRt，
+\begin_inset Formula $\mathrm{P\_GRt}=\mathrm{P\_GFv\_T}-\mathrm{P\_GFinAccum}$
+\end_inset
+
+，两部分“力”的求和，注意这里的负号。
+\end_layout
+
+\begin_layout Enumerate
+从单元的局域刚度矩阵, 组装全局矩阵的过程，见 金建铭note 4.3.3.2。
+\end_layout
+
+\begin_layout Section
+非线性处理
+\end_layout
+
+\begin_layout Subsection
+非线性材料
+\end_layout
+
+\begin_layout Standard
+非线性材料：
+\begin_inset Formula 
+\[
+\frac{\partial D}{\partial E}=\epsilon(E)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+复杂边界条件
+\end_layout
+
+\begin_layout Standard
+通常的第三类边界条件写作
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \left(\epsilon\nabla\phi\right)\cdot\sbf n+\gamma\phi=q\\
+\text{or}\quad & -\sbf D_{0}\cdot\sbf n=q,\quad\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi=-\gamma\delta\phi
+\end{align*}
+
+\end_inset
+
+非线性边界条件的一般形式为
+\begin_inset Formula 
+\[
+\left(\epsilon\nabla\phi\right)\cdot\sbf n=f(\phi)
+\]
+
+\end_inset
+
+但是按照迭代法的思想，在
+\begin_inset Formula $\phi=\phi_{0}+\delta\phi$
+\end_inset
+
+附近作线性化，把它写成
+\begin_inset Formula 
+\[
+-\sbf D_{0}\cdot\sbf n=f(\phi_{0}),\quad\sbf n\cdot\epsilon\cdot\sbf\nabla\delta\phi=f'(\phi)\delta\phi
+\]
+
+\end_inset
+
+相当于取
+\begin_inset Formula 
+\[
+q=f(\phi_{0}),\quad\gamma=-f'(\phi)
+\]
+
+\end_inset
+
+代入第三类边界条件的Galerkin迭代方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal-bnd3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{align*}
+ & \frac{1}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\epsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}+\frac{1}{\varepsilon_{0}}{\color{brown}\left[\int_{\Gamma^{e}}-f'(\phi)N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]}\delta\phi_{j}\\
+ & \qquad=\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\frac{f(\phi_{0})}{\varepsilon_{0}}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+可以看到，一般对刚度矩阵和激励向量都有贡献。
 \end_layout
 
 \begin_layout Chapter
@@ -12236,7 +12445,7 @@ F_{u}=\frac{\partial W_{c}}{\partial u}.\label{eq:g1.128}
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -12271,7 +12480,7 @@ Virtual deformation of the meshing。浅灰色的是弹性单元。白色的是�
 
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 静电场的开域问题
 \end_layout
 
@@ -12516,7 +12725,7 @@ R^{e}\left[N_{i}^{e}\right]=\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\
 推导中的分部积分会自然地引入边界条件的贡献。考察 Galerkin 方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:Galerkin"
+reference "eq:gal3"
 plural "false"
 caps "false"
 noprefix "false"
@@ -12918,7 +13127,7 @@ noprefix "false"
  的区别是多了后面两项。代入Galerkin 方程 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:Galerkin"
+reference "eq:gal3"
 plural "false"
 caps "false"
 noprefix "false"
@@ -15280,7 +15489,7 @@ b_{i}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\sbf J\dd{\Omega}-\mu_{0
 计算电感
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 磁场的开域问题
 \end_layout
 
