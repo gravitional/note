@@ -130,7 +130,7 @@ Nernst–Einstein 方程，
 
 \begin_inset Formula 
 \begin{equation}
-\sbf j_{i}(x)={\color{red}\sbf j_{d}}(x)+{\color{blue}\sbf j_{m}(x)}+\sbf j_{c}(x)\label{eq:eq2b}
+\sbf j_{i}(x)={\color{red}\sbf j_{c}}(x)+{\color{blue}\sbf j_{\varphi}(x)}+\sbf j_{u}(x)\label{eq:eq2b}
 \end{equation}
 
 \end_inset
@@ -1365,6 +1365,479 @@ E_{\text{eq}} & =E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}
 \end_layout
 
 \begin_layout Section
+泛函简介
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status collapsed
+
+\begin_layout Plain Layout
+泛函数 (Functionals)
+\end_layout
+
+\end_inset
+
+ 简而言之，
+\series bold
+泛函是 函数的函数
+\series default
+，即它的输入是函数，输出是实数。而此输出值取决于函数（输入）在一整个路径上的积分，而非像一般函数那样取决于离散的变量。在变分法中，泛函数通常是一个积分，记做
+\begin_inset Formula $I$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+I=\int_{x_{1}}^{x^{2}}F\dd{x}.
+\]
+
+\end_inset
+
+我们想通过选择被积函数 
+\begin_inset Formula $F$
+\end_inset
+
+ 来最大化或最小化泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的值，称 
+\begin_inset Formula $F$
+\end_inset
+
+ 为拉格朗日函数(Lagrangian)。
+\begin_inset Formula $F$
+\end_inset
+
+可以依赖于
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 和它的各阶导数
+\begin_inset Formula $y^{(n)}(x)$
+\end_inset
+
+ (以下 
+\begin_inset Formula $y(x)$
+\end_inset
+
+均简写成 
+\begin_inset Formula $y$
+\end_inset
+
+)。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:extreme"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status collapsed
+
+\begin_layout Plain Layout
+泛函数的极值
+\end_layout
+
+\end_inset
+
+ 泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 在区间 
+\begin_inset Formula $[x_{1},x_{2}]$
+\end_inset
+
+ 上的值取决于积分路径的选择，即取决于函数
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 的形式。我们假设存在一个这样的 
+\begin_inset Formula $y(x)$
+\end_inset
+
+，可以使得泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 取到极值。而在
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 附近的任意路径我们记做
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+。另外，我们假设 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 两阶可微。通过引入一个微小量 
+\begin_inset Formula $\epsilon\ll1$
+\end_inset
+
+ 和一个任意可微函数 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，我们可以用 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=y(x)+\epsilon\eta(x).
+\]
+
+\end_inset
+
+这样做的好处是对于一个给定的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，我们可以通过改变
+\begin_inset Formula $\eta$
+\end_inset
+
+ 值来得到无穷多的路径，同时对于任何 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，当 
+\begin_inset Formula $\epsilon(x)=0$
+\end_inset
+
+ 的时候，
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 和 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 重合。图像直观表示如下图：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fanhan-1.png
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+路径变分示意图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于边界条件的限制，要求 
+\begin_inset Formula $\eta(x_{1})=\eta(x_{2})=0$
+\end_inset
+
+，这样能保证 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 经过两个固定端点。可以认为
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 所对应的泛函数
+\begin_inset Formula $I$
+\end_inset
+
+ 的值等于泛函数 
+\begin_inset Formula $\tilde{I}=\int_{x_{1}}^{x^{2}}F\left(\tilde{y},\tilde{y}';x\right)\dd{x}$
+\end_inset
+
+ 的极值。我们可以进一步用 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{I}=\int_{x_{1}}^{x^{2}}F(\tilde{y},\tilde{y}';x)\dd{x}=\int_{x_{1}}^{x^{2}}F\left(y+\epsilon\eta,y'+\epsilon\eta';x\right)\dd{x}
+\]
+
+\end_inset
+
+根据上式，如果给定一个特定的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 的变化只取决于 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的变化。所以我们现在可以把 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 看做是 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的（普通）函数。用泰勒展开公式将 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 在
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ 处展开得到：
+\begin_inset Formula 
+\[
+\tilde{I}(\epsilon)=\left.\tilde{I}\right|_{\epsilon=0}+\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon+\left.(\frac{\dd[2]{\tilde{I}}}{\dd{\epsilon^{2}}})\right|_{\epsilon=0}\cdot\frac{\epsilon^{2}}{2!}+\cdots=\tilde{I}_{0}+\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
+\]
+
+\end_inset
+
+很明显，当 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ 时，
+\begin_inset Formula $\left.\tilde{I}\right|_{\epsilon=0}=I$
+\end_inset
+
+，代入上式可得到：
+\begin_inset Formula 
+\[
+\tilde{I}-I=\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
+\]
+
+\end_inset
+
+这里我们记 
+\begin_inset Formula $\delta I=\tilde{I}_{1}\epsilon=\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon$
+\end_inset
+
+，并称之为一阶变分。同理二阶变分为 
+\begin_inset Formula $\delta I^{2}=\tilde{I}_{2}\epsilon^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+变分和微分的区别：变分在上图的直观解释是
+\begin_inset Formula $\tilde{y}$
+\end_inset
+
+和 
+\begin_inset Formula $y$
+\end_inset
+
+ 在竖直方向上的距离，称之为 
+\begin_inset Formula $\delta y$
+\end_inset
+
+，所以这个差是在同一个 
+\begin_inset Formula $x$
+\end_inset
+
+ 上计算的。而微分则是由于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的微小变动引起的 
+\begin_inset Formula $y$
+\end_inset
+
+ 的变动。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+然后我们可以类比求函数极值时的做法，为了求泛函数 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 的极值，我们令一阶变分 
+\begin_inset Formula $\delta I=0$
+\end_inset
+
+，计算 
+\begin_inset Formula $\delta I$
+\end_inset
+
+，并通过分部积分得到
+\begin_inset Formula 
+\begin{equation}
+\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\delta y\dd{x}+\left.{\color{blue}\frac{\partial F}{\partial y'}\delta y}\right|_{x_{1}}^{x_{2}}\label{eq:EL-equ}
+\end{equation}
+
+\end_inset
+
+令 
+\begin_inset Formula $\delta I=0$
+\end_inset
+
+ 就能解得最小化泛函的
+\begin_inset Formula $y(x)$
+\end_inset
+
+。由于 
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 是任意的，所以使上式等于零必然有
+\begin_inset Formula 
+\[
+\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}=0,\quad x_{1}\le x\le x_{2}
+\]
+
+\end_inset
+
+此即欧拉–拉格朗日方程（Euler–Lagrange equation）。而
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EL-equ"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中第二项等于零则作为边界条件，边界条件还可以细分讨论：
+\end_layout
+
+\begin_layout Enumerate
+如果在边界 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 
+\begin_inset Formula ${\color{blue}\frac{\partial F}{\partial y'}}$
+\end_inset
+
+ 等于零，那么我们称在 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 满足自然边界条件（
+\series bold
+Natural Boundary Condition
+\series default
+）。
+\end_layout
+
+\begin_layout Enumerate
+如果在边界 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 
+\begin_inset Formula ${\color{blue}\delta y}$
+\end_inset
+
+ 等于零，我们就称 在 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 满足必要边界条件（
+\series bold
+Essential Boundary condition
+\series default
+）。
+\begin_inset Formula $\delta y=0$
+\end_inset
+
+ 的具体含义是：就是如果
+\begin_inset Formula $y$
+\end_inset
+
+在某一点处的变分为零，说明它在这点的值是确定不变的。因此如果
+\begin_inset Formula $y$
+\end_inset
+
+ 在边界上是确定的值，我们称这个是必要边界条件。
+\end_layout
+
+\begin_layout Enumerate
+此外，有限元中还常用到第三类边界条件，也称为混合边界条件，其形式为
+\begin_inset Formula $y'+\gamma(x)y=q(x)$
+\end_inset
+
+，它将贡献到边界上的方程中。
+\end_layout
+
+\begin_layout Section
 FEM求解流程
 \end_layout
 
@@ -1453,7 +1926,7 @@ R=\sum_{e}R^{e}\left[N_{i}^{e}\right]\label{eq:res1}
 \begin_inset Formula 
 \begin{align}
 R^{e}\left[N_{i}^{e}\right] & =\int_{\Omega^{e}}N_{i}^{e}\left[\nabla\cdot(-\sigma\nabla\phi)+\beta\phi-f\right]\dd{\Omega}\nonumber \\
- & =-\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf j\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}N_{i}^{e}\,\sbf n\cdot\sbf j\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\left(\beta\phi-f\right)\dd{\Omega}\label{eq:res2}
+ & =-\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf j\dd{\Omega}+\int_{\Gamma^{e}}N_{i}^{e}\,\sbf n\cdot\sbf j\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\left(\beta\phi-f\right)\dd{\Omega}\label{eq:res2}
 \end{align}
 
 \end_inset
@@ -1515,8 +1988,8 @@ noprefix "false"
 \end_inset
 
 被称作形函数，它用来模拟真实场量在微小范围（单元）内的变化趋势。有限元中常使用分片连续的多项式形函数，它紧支撑（compact support
- ）于节点周围的单元，即节点上的形函数仅仅在周围的单元内不为零。这反映了真实物理场的定域性质（某一点的场值可以完全由它邻域内的场决定），也因此最终得到的方程的系
-数矩阵往往是稀疏的带状矩阵。
+ ）于节点周围的单元，即节点上的形函数仅仅在周围的单元内不为零。这反映了真实物理场的定域性质（某一点的场值可以完全由它邻域内的场决定），也因此最终得到的系数矩阵
+往往是稀疏的带状矩阵。
 \end_layout
 
 \begin_layout Section
@@ -1529,7 +2002,7 @@ noprefix "false"
 \end_inset
 
 相对于真实状态
-\begin_inset Formula $\phi^{0}$
+\begin_inset Formula $\phi_{0}$
 \end_inset
 
 有一个微小的偏移
@@ -1628,17 +2101,25 @@ noprefix "false"
 满足
 \begin_inset Formula 
 \begin{align}
-\bigg[\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sigma\cdot & \nabla N_{j}^{e}\dd{\Omega}\bigg]\delta\phi_{j}-\bigg[\int_{\Gamma^{e}}N_{i}^{e}\,\sigma\frac{\partial}{\partial n}\delta\phi\dd{\Gamma}\bigg]\nonumber \\
- & =\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf i_{0}\dd{\Omega}-\int_{\Gamma^{e}}N_{i}^{e}\,\sbf n\cdot\sbf i_{0}\dd{\Gamma}\label{eq:fem1}
+\bigg[\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot & \nabla N_{n}^{e}\dd{\Omega}\bigg]\delta\phi_{n}-\bigg[\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial}{\partial n}\delta\phi\right)\dd{\Gamma}\bigg]\nonumber \\
+ & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{0}}{\partial n}\dd{\Omega}+\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{0}}{\partial n}\dd{\Gamma}\label{eq:fem1}
 \end{align}
 
 \end_inset
 
 其中
-\begin_inset Formula $\sbf i=-\sigma\nabla\phi=\sbf i_{0}+\delta\sbf i$
+\begin_inset Formula $\frac{\partial\phi_{0}}{\partial n}$
 \end_inset
 
-。浓度场
+表示迭代基
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+的法向偏导。
+\end_layout
+
+\begin_layout Standard
+浓度场
 \begin_inset Formula $C$
 \end_inset
 
@@ -1646,24 +2127,19 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & \quad\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}\delta C_{n}\nonumber \\
- & +\left[\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\,D\,(\nabla N_{n}^{e})}\dd{\Omega}\right]\delta C_{n}-\left[\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\,D\,\frac{\partial}{\partial n}\delta C_{n}}\dd{\Gamma}\right]\nonumber \\
- & -\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\right]\delta C_{n}-\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\,\frac{\partial}{\partial n}\delta\phi}\dd{\Gamma}\right]\nonumber \\
-= & -\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}C_{n0}+\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot\sbf j_{c,0}}\dd{\Omega}+\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}\nonumber \\
- & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\,\sbf n\cdot\sbf j_{c,0}}\dd{\Gamma}-\int_{\Gamma^{e}}{\color{blue}N_{m}^{s}\,\sbf n\cdot\sbf j_{\phi,0}}\dd{\Gamma}\label{eq:fem2}
+ & +\left[\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\right]\delta C_{n}-\left[\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial}{\partial n}\delta C_{n}\right)}\dd{\Gamma}\right]\nonumber \\
+ & -\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\right]\delta C_{n}-\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\left(\frac{\partial}{\partial n}\delta\phi\right)}\dd{\Gamma}\right]\nonumber \\
+= & -\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}C_{n0}-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}\nonumber \\
+ & +\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{0}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\label{eq:fem2}
 \end{align}
 
 \end_inset
 
-其中定义了
-\begin_inset Formula 
-\begin{align*}
- & \sbf j_{c}=-D\,\nabla C(x),\quad\sbf j_{\phi}=-z\,u\,F\,C(x)\,\nabla\phi(x),\\
- & \sbf j_{c,0}=-D\,\nabla C_{0}(x),\quad\sbf j_{\phi,0}=-z\,u\,F\,C_{0}(x)\,\nabla\phi_{0}(x).
-\end{align*}
-
+其中积分域
+\begin_inset Formula $\Gamma^{s}$
 \end_inset
 
-通过使用电极–电解质边界条件
+遍历所有边界单元。通过使用电极–电解质边界条件
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:bnd15b"
@@ -1694,6 +2170,97 @@ noprefix "false"
 \end_inset
 
 联立求解。
+\end_layout
+
+\begin_layout Section
+抽象表示
+\end_layout
+
+\begin_layout Standard
+下面分别整理出在体单元或者表面单元上，电势和浓度对应的刚度矩阵和激励。
+\end_layout
+
+\begin_layout Standard
+体单元，电势
+\begin_inset Formula 
+\begin{align*}
+K_{1,mn}^{e} & =\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot\nabla N_{n}^{e}\dd{\Omega}\\
+b_{1,m}^{e} & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{0}}{\partial n}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+边界单元，电势
+\begin_inset Formula 
+\begin{align*}
+M_{1,mn}^{s} & =-\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial}{\partial n}\delta\phi\right)\dd{\Gamma}\\
+b_{2,m}^{s} & =\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{0}}{\partial n}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+体单元，浓度
+\begin_inset Formula 
+\begin{align*}
+Y_{mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
+K_{2,mn}^{e} & =\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\\
+b_{3,m}^{e} & =-\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
+b_{4,m}^{e} & =-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{0}}\dd{\Omega}\\
+b_{5,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+边界单元，浓度
+\begin_inset Formula 
+\begin{align*}
+M_{2,mn}^{s}= & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial}{\partial n}\delta C_{n}\right)}\dd{\Gamma}\\
+M_{3,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\\
+M_{4,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\left(\frac{\partial}{\partial n}\delta\phi\right)}\dd{\Gamma}\\
+b_{6,m}^{s}= & \int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{0}}{\partial n}}\dd{\Gamma}\\
+b_{7,m}^{s}= & \int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+使用以上记号，将两组方程简写为
+\begin_inset Formula 
+\begin{align}
+K_{1,mn}^{e}{\color{blue}\delta\phi_{n}}+M_{a,mn}{\color{blue}\delta\phi_{n}}+M_{b,mn}{\color{red}\delta C_{n}}+=b_{1,m}^{e}+b_{2,m}^{s}\label{eq:eq10}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & Y_{mn}^{e}\,{\color{brown}\partial_{t}C_{n}}+K_{2,mn}^{e}{\color{red}\delta C_{n}}+M_{c,mn}{\color{blue}\delta\phi_{n}}+M_{d,mn}{\color{red}\delta C_{n}}\label{eq:eq11}\\
+ & \quad=b_{3,m}^{e}+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}\nonumber 
+\end{align}
+
+\end_inset
+
+由于两个方程存在耦合，需要联立求解。其中
+\begin_inset Formula $M_{\{a,b,c,d\},mn}$
+\end_inset
+
+描述
+\begin_inset Formula $\delta C_{n}$
+\end_inset
+
+和
+\begin_inset Formula $\delta\phi_{n}$
+\end_inset
+
+的耦合，它们由
+\begin_inset Formula $M_{\{1,2,3,4\},mn}^{s}$
+\end_inset
+
+作线性组合得到。
 \end_layout
 
 \begin_layout Section
@@ -3624,9 +4191,9 @@ literal "false"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-R_{2}^{e}(L_{m})= & \int_{\Omega^{e}}L_{m}^{e}\left[{\color{red}D_{i}\,\nabla^{2}C_{i}}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}+R_{i}-\partial_{t}C_{i}\right]\dd{\Omega}\\
-= & \int_{\Omega^{e}}\left[{\color{red}-D_{i}\,(\nabla L_{m}^{e})\cdot(\nabla C_{i})}-{\color{blue}z_{i}u_{i}F\,L_{m}^{e}C_{i}\nabla^{2}\phi}+L_{m}^{e}R_{i}-L_{m}^{e}\partial_{t}C_{i}\right]\dd{\Omega}\\
- & +\int_{\Gamma^{s}}{\color{red}L_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}z_{i}u_{i}FL_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}
+R_{2}^{e}(N_{m})= & \int_{\Omega^{e}}N_{m}^{e}\left[{\color{red}D_{i}\,\nabla^{2}C_{i}}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}+R_{i}-\partial_{t}C_{i}\right]\dd{\Omega}\\
+= & \int_{\Omega^{e}}\left[{\color{red}-D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}-{\color{blue}z_{i}u_{i}F\,N_{m}^{e}C_{i}\nabla^{2}\phi}+N_{m}^{e}R_{i}-N_{m}^{e}\partial_{t}C_{i}\right]\dd{\Omega}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}z_{i}u_{i}FN_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}
 \end{align*}
 
 \end_inset
@@ -3650,8 +4217,8 @@ R_{2}^{e}(L_{m})= & \int_{\Omega^{e}}L_{m}^{e}\left[{\color{red}D_{i}\,\nabla^{2
 得到
 \begin_inset Formula 
 \begin{align*}
-R^{e}(L_{m})= & \int_{\Omega^{s}}\left[{\color{red}-D_{i}\,(\nabla L_{m}^{e})\cdot(\nabla C_{i})}+L_{m}^{e}R_{i}-L_{m}^{e}\partial_{t}C_{i}\right]\dd{\Omega}\quad\text{体方程}\\
- & +\int_{\Gamma^{s}}{\color{red}L_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z_{i}u_{i}F\,L_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
+R^{e}(N_{m})= & \int_{\Omega^{s}}\left[{\color{red}-D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}+N_{m}^{e}R_{i}-N_{m}^{e}\partial_{t}C_{i}\right]\dd{\Omega}\quad\text{体方程}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z_{i}u_{i}F\,N_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
 \end{align*}
 
 \end_inset
@@ -3670,7 +4237,7 @@ R^{e}(L_{m})= & \int_{\Omega^{s}}\left[{\color{red}-D_{i}\,(\nabla L_{m}^{e})\cd
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-R^{e}(L_{m})= & \int_{\Omega^{e}}\left[{\color{red}-D\,(\nabla N_{m}^{e})\cdot(\nabla C)}+N_{m}^{e}R-N_{m}^{e}\partial_{t}C\right]\dd{\Omega}\\
+R^{e}(N_{m})= & \int_{\Omega^{e}}\left[{\color{red}-D\,(\nabla N_{m}^{e})\cdot(\nabla C)}+N_{m}^{e}R(x)-N_{m}^{e}\partial_{t}C\right]\dd{\Omega}\\
  & +\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\,D\,\frac{\partial C}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}C\frac{\partial\phi}{\partial n}}\dd{\Gamma}
 \end{align*}
 
@@ -3719,7 +4286,7 @@ R^{e}(L_{m})= & \int_{\Omega^{e}}\left[{\color{red}-D\,(\nabla N_{m}^{e})\cdot(\
 \begin_inset Formula 
 \begin{align*}
 Y_{mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
-{\color{red}K_{mn}^{e}} & =\int_{\Omega^{e}}\,(\nabla L_{m}^{e})\cdot D\cdot(\nabla L_{n}^{e})\dd{\Omega}\\
+{\color{red}K_{mn}^{e}} & =\int_{\Omega^{e}}\,(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})\dd{\Omega}\\
 b_{m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
 \end{align*}
 

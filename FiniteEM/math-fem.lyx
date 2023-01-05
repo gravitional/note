@@ -2756,6 +2756,305 @@ literal "false"
 
 \end_layout
 
+\begin_layout Section
+拉格朗日乘子法与罚方法
+\end_layout
+
+\begin_layout Standard
+ref：
+\begin_inset CommandInset href
+LatexCommand href
+name "拉格朗日乘子法和罚方法"
+target "https://zhuanlan.zhihu.com/p/114555696"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+有限元编程中，处理含有线性约束方程常用的有两种方法：拉格朗日乘子法和罚方法。
+\end_layout
+
+\begin_layout Standard
+例如考虑下列线性方程组：
+\begin_inset Formula 
+\begin{equation}
+K\phi=f\label{eq:mat1}
+\end{equation}
+
+\end_inset
+
+有限元计算中，组装完总刚度矩阵和载荷向量，并消去必要边界条件，就得到类似
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mat1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的方程。当
+\begin_inset Formula $\det[K]\neq0$
+\end_inset
+
+时，方程的解为
+\begin_inset Formula 
+\[
+\phi=K^{-1}f.
+\]
+
+\end_inset
+
+如果希望在模型的自由度之间施加一些额外约束，例如线性约束
+\begin_inset Formula 
+\begin{equation}
+Q^{T}\phi=\phi^{T}Q=c,\label{eq:mat2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $Q^{T}$
+\end_inset
+
+是表示约束的行向量，
+\begin_inset Formula $c$
+\end_inset
+
+是常数。这时候就可以采用拉格朗日乘子法，或者罚方法来施加约束。此时求出的解是满足约束方程条件下的势能泛函的极值点，也被称为拉格朗日条件极值。
+\end_layout
+
+\begin_layout Subsection
+拉氏乘子法
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mat1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对应的泛函显然为，
+\begin_inset Formula 
+\[
+\mathcal{L}(\phi)=\frac{1}{2}\phi^{T}.K.\phi-\phi^{T}f
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi,f$
+\end_inset
+
+是自由度和激励列向量，
+\begin_inset Formula $K$
+\end_inset
+
+是刚度矩阵。根据微积分求约束极值的思路，添加乘子项
+\begin_inset Formula 
+\[
+\mathcal{L}(\phi)=\frac{1}{2}\phi^{T}.K.\phi-\phi^{T}f+\lambda\left(\phi^{T}Q-c\right)
+\]
+
+\end_inset
+
+并且把
+\begin_inset Formula $\lambda$
+\end_inset
+
+也当作自由度，求极值
+\begin_inset Formula $\frac{\partial\mathcal{L}}{\partial\phi^{T}}$
+\end_inset
+
+和
+\begin_inset Formula $\frac{\partial\mathcal{L}}{\partial\lambda}$
+\end_inset
+
+得到新方程组：
+\begin_inset Formula 
+\begin{align}
+K.\phi+\lambda Q & =f\nonumber \\
+Q^{T}\phi & =c\label{eq:mat3}
+\end{align}
+
+\end_inset
+
+由于现在把
+\begin_inset Formula $\lambda$
+\end_inset
+
+也当成独立自由度，可以考虑合并
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mat3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的两个方程
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cc}
+K & Q\\
+Q^{T} & 0
+\end{array}\right]\left[\begin{array}{c}
+\phi\\
+\lambda
+\end{array}\right]=\left[\begin{array}{c}
+f\\
+c
+\end{array}\right]\label{eq:mat3b}
+\end{equation}
+
+\end_inset
+
+这样又化归到简单形式：
+\begin_inset Formula 
+\[
+K'.\phi'=f'
+\]
+
+\end_inset
+
+可以用之前的方法求解。
+\end_layout
+
+\begin_layout Subsection
+罚系数方法
+\end_layout
+
+\begin_layout Standard
+罚系数法的思想是，通过引入系数
+\begin_inset Formula $p$
+\end_inset
+
+，且
+\begin_inset Formula $p$
+\end_inset
+
+远大于刚度矩阵最大元素，将约束方程增幅后添加到原方程中。由于
+\begin_inset Formula $p$
+\end_inset
+
+的存在，原先方程中的约束关系变得可以忽略。再写出约束条件
+\begin_inset Formula 
+\[
+Q^{T}\phi=c
+\]
+
+\end_inset
+
+但它左右都是数字，为了能够写成
+\begin_inset Formula $Ax=b$
+\end_inset
+
+的形式，与原方程
+\begin_inset Formula $K\phi=f$
+\end_inset
+
+相加，做变换
+\begin_inset Formula 
+\begin{equation}
+QQ^{T}\phi=cQ\label{eq:mat4}
+\end{equation}
+
+\end_inset
+
+并且乘上罚系数
+\begin_inset Formula $p$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+pQQ^{T}\phi=cpQ\label{eq:mat5}
+\end{equation}
+
+\end_inset
+
+这样可以把
+\begin_inset Formula $pQQ^{T}$
+\end_inset
+
+理解成对刚度矩阵的修正，
+\begin_inset Formula $cpQ$
+\end_inset
+
+理解成对激励向量的修正，
+\begin_inset Formula 
+\begin{equation}
+\left(K+pQQ^{T}\right)\phi=f+cpQ\label{eq:mat6}
+\end{equation}
+
+\end_inset
+
+同样去求解，得到的解也满足约束条件。
+\end_layout
+
+\begin_layout Standard
+设
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mat3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+求出的解是
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+，罚系数求出的解是
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+，对方程稍作整理，得到它们满足的关系
+\begin_inset Formula 
+\begin{align*}
+ & K\phi_{0}=f-\lambda_{0}Q\\
+ & K\phi_{1}=f-pQ\left(Q^{T}\phi_{1}-c\right)
+\end{align*}
+
+\end_inset
+
+由于罚方法得到的解只是近似的满足约束方程，设
+\begin_inset Formula $Q^{T}\phi_{1}-c=pgQ$
+\end_inset
+
+，其中
+\begin_inset Formula $g\neq0$
+\end_inset
+
+描述罚系数结果对约束条件的微小偏离。 则显然有
+\begin_inset Formula 
+\[
+pg=\lambda_{0}
+\]
+
+\end_inset
+
+即罚系数，误差和拉氏乘子值的关系。这里认为
+\begin_inset Formula $K\phi_{0}$
+\end_inset
+
+和
+\begin_inset Formula $K\phi_{1}$
+\end_inset
+
+的差距是更高阶的。
+\end_layout
+
 \begin_layout Chapter
 泛函与弱形式
 \end_layout
@@ -2796,7 +3095,7 @@ status collapsed
 
 \end_inset
 
- 简而言之，泛函数是 函数 的函数，即它的输入是函数，输出是实数。而这个输出值取决于一个或多个函数（输入）在一整个路径上的积分，而非像一般函数一样取决于离散的变
+ 简而言之，泛函数是 函数 的函数，即它的输入是函数，输出是实数。而这个输出值取决于一个或多个函数（输入）在一整个路径上的积分，而非像一般函数那样取决于离散的变
 量。
 \end_layout
 
@@ -2825,7 +3124,7 @@ I=\int_{x_{1}}^{x^{2}}F\dd{x}.
 \begin_inset Formula $F$
 \end_inset
 
- 为拉格朗日函数(Lagrange function)。
+ 为拉格朗日函数(Lagrangian)。
 \begin_inset Formula $F$
 \end_inset
 
@@ -2929,7 +3228,7 @@ status collapsed
 \begin_inset Formula $\eta(x)$
 \end_inset
 
-，我们可以通过改变的 
+，我们可以通过改变 
 \begin_inset Formula $\eta$
 \end_inset
 
@@ -2964,7 +3263,7 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
-由于在边界条件的限制，需要要求 
+由于存在边界条件的限制，需要要求 
 \begin_inset Formula $\eta(x_{1})=\eta(x_{2})=0$
 \end_inset
 
