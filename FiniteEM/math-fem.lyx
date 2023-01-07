@@ -3055,6 +3055,507 @@ pg=\lambda_{0}
 的差距是更高阶的。
 \end_layout
 
+\begin_layout Section
+欧拉方法
+\end_layout
+
+\begin_layout Standard
+最简单的数值微商公式为：向前差商公式、向后差商公式以及中心差商公式。对应地，我们有求常微分方程数值解的向前Euler格式、向后Euler格式以及中心差分格式。一
+阶常微分方程初值问题为
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\frac{\dd{y}}{\dd{x}}=f(x,y), & a\le x\le b\\
+y(a)=y_{0}
+\end{cases}\label{eq:eu1}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $f$
+\end_inset
+
+是
+\begin_inset Formula $x$
+\end_inset
+
+和
+\begin_inset Formula $y$
+\end_inset
+
+的已知函数，
+\begin_inset Formula $y_{0}$
+\end_inset
+
+是给定的初值。
+\end_layout
+
+\begin_layout Subsection
+向前欧拉法
+\end_layout
+
+\begin_layout Standard
+Euler方法是最简单的一种显式单步法。对于方程
+\begin_inset Formula 
+\[
+\frac{\dd{y}}{\dd{x}}=f(x,y)
+\]
+
+\end_inset
+
+自变量被离散成
+\begin_inset Formula 
+\[
+x_{n}=x_{0}+nh,\quad n=0,1,2,\cdots
+\]
+
+\end_inset
+
+用差商代替导数则得到方程的近似为：
+\begin_inset Formula 
+\begin{equation}
+y_{n+1}\approx y_{n}+hf(x_{n},y_{n})\label{eq:eu2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $y_{n}=y(x_{0}+nh)$
+\end_inset
+
+。具体计算时由
+\begin_inset Formula $x_{0}$
+\end_inset
+
+出发，根据初值，逐步递推而得到系列离散数值。
+\end_layout
+
+\begin_layout Standard
+若将函数
+\begin_inset Formula $y(x)$
+\end_inset
+
+在
+\begin_inset Formula $x_{n+1}$
+\end_inset
+
+处展开，
+\begin_inset Formula 
+\begin{equation}
+y(x_{n+1})=y(x_{n})+hf\left(x_{n+1},y(x_{n+1})\right)-\frac{h^{2}}{2!}y''(\xi_{n})\label{eq:eu3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $x_{n}\le\xi_{n}\le x_{n+1}$
+\end_inset
+
+，略去高阶项得到 
+\series bold
+向后欧格式（方法）
+\begin_inset Formula 
+\begin{equation}
+y_{n+1}=y_{n}+hf\left(x_{n+1},y_{n+1}\right),\quad n=0,1,\cdots,N-1\label{eq:eu4}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+改进的欧拉法
+\end_layout
+
+\begin_layout Standard
+Euler法计算量小，但是精度不高，为此可构造梯形公式：
+\begin_inset Formula 
+\[
+\begin{cases}
+y_{n+1}+\frac{h}{2}\left[f(x_{n},y_{n})+f(x_{n+1},y_{n+1})\right]\\
+y_{0}=\eta
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $h=(b-a)/n$
+\end_inset
+
+。这是一个二阶方法，比 Euler法精度高。但是方程两边都有待求量 
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+，因而是隐式差分方程。但可以用迭代法计算
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+，初值由前向欧拉法
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+提供，一般而言迭代一两次即可。
+\begin_inset Formula 
+\[
+\begin{cases}
+y_{n+1}^{(0)}=y_{n}+\frac{h}{2}f\left(x_{n},y_{n}\right),\\
+y_{n+1}^{(k+1)}=y_{n}+\frac{h}{2}\left[f\left(x_{n},y_{n}\right)+f\left(x_{n+1},y_{n+1}^{(k)}\right)\right]. & k=0,1,2,\cdots
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $y_{n+1}^{(k+1)}$
+\end_inset
+
+表示在
+\begin_inset Formula $n+1$
+\end_inset
+
+时刻
+\begin_inset Formula $y$
+\end_inset
+
+的
+\begin_inset Formula $k+1$
+\end_inset
+
+阶修正的解。这实际上是一种预估–校正方法，改进的 Euler 方法又称为 Heun 方法。
+\end_layout
+
+\begin_layout Section
+龙格–库塔方法,Runge–Kutta方法
+\end_layout
+
+\begin_layout Standard
+ref：数值分析–张平文
+\end_layout
+
+\begin_layout Subsection
+Runge–Kutta方法的基本思想
+\end_layout
+
+\begin_layout Standard
+设显式单步法的一般形式为
+\begin_inset Formula 
+\begin{equation}
+y_{n+1}=y_{n}+h\varphi\left(x_{n},y_{n},f,h\right)\label{eq:eu5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\varphi$
+\end_inset
+
+是理想斜率，用函数
+\begin_inset Formula $f(x,y)$
+\end_inset
+
+ 在
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 邻近一些点来组合
+\begin_inset Formula $\varphi\left(x_{n},y_{n},f,h\right)$
+\end_inset
+
+，得到的相应的单步方法称为 
+\series bold
+Runge–Kutta 方法
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+取两个点 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+，
+\begin_inset Formula $(x+a_{2}h,y+b_{21}hf(x,y))$
+\end_inset
+
+，作线性组合：
+\begin_inset Formula 
+\begin{equation}
+\varphi\left(x_{n},y_{n},f,h\right)=c_{1}f(x,y)+c_{2}f\left(x+a_{2}h,y+b_{21}hf(x,y)\right),\label{eq:eu6}
+\end{equation}
+
+\end_inset
+
+ 其中系数
+\begin_inset Formula $c_{1}$
+\end_inset
+
+，
+\begin_inset Formula $c_{2}$
+\end_inset
+
+，
+\begin_inset Formula $a_{2}$
+\end_inset
+
+，
+\begin_inset Formula $b_{21}$
+\end_inset
+
+待定。这些数据的选取原则为，尽可能使 
+\begin_inset Formula $y_{n}+h\varphi\left(x_{n},y_{n},f,h\right)$
+\end_inset
+
+与
+\begin_inset Formula $y(x+h)$
+\end_inset
+
+在
+\begin_inset Formula $x$
+\end_inset
+
+的 Taylor 展开有相同的项。
+\end_layout
+
+\begin_layout Standard
+将
+\begin_inset Formula $\varphi\left(x_{n},y_{n},f,h\right)$
+\end_inset
+
+和
+\begin_inset Formula $y(x+h)$
+\end_inset
+
+同时在
+\begin_inset Formula $x$
+\end_inset
+
+作Taylor展开，比较
+\begin_inset Formula $h$
+\end_inset
+
+的同阶项，可以得到系数的约束方程
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+c_{1}+c_{2}=1\\
+a_{2}c_{2}=1/2\\
+c_{2}b_{21}=1/2
+\end{cases}\label{eq:eu7}
+\end{equation}
+
+\end_inset
+
+方程组
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+有无穷多组解。若取
+\begin_inset Formula $c_{1}=c_{2}=1/2$
+\end_inset
+
+，
+\begin_inset Formula $a_{2}=1$
+\end_inset
+
+，
+\begin_inset Formula $b_{21}=1$
+\end_inset
+
+，对应的二阶（指截断误差）单步方法为
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+y_{n+1}=y_{n}+\frac{h}{2}\left(K_{1}+K_{2}\right),\\
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+h,y_{n}+hK_{1}\right),
+\end{cases}\label{eq:eu8}
+\end{equation}
+
+\end_inset
+
+称之为 
+\series bold
+改进的Euler公式
+\series default
+；若取方程组
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的另一组解
+\begin_inset Formula 
+\[
+c_{1}=\frac{1}{4},\quad c_{2}=\frac{3}{4},\quad a_{2}=\frac{2}{3},\quad b_{21}=\frac{2}{3},
+\]
+
+\end_inset
+
+对应的二阶单步方法为
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+\frac{2}{3}h,y_{n}+\frac{2}{3}hK_{1}\right),\\
+y_{n+1}=y_{n}+\frac{h}{4}\left(K_{1}+3K_{2}\right),
+\end{cases}\label{eq:eu9}
+\end{equation}
+
+\end_inset
+
+称之为 
+\series bold
+Huen公式
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+改进的Euler公式和Heun公式是典型的二阶Runge–Kutta方法。一般
+\begin_inset Formula $m$
+\end_inset
+
+阶Runge–Kutta方法可仿照二阶方法构造。
+\end_layout
+
+\begin_layout Subsection
+显式Runge–Kutta方法及稳定性
+\end_layout
+
+\begin_layout Standard
+直接使用Taylor展开式来建立高阶差分公式时，差分方程比较复杂，也不适合实际的应用。为此 Runge（1895）提出了间接使用Taylor展开式来构造高精度数
+值方法的思想：首先用函数
+\begin_inset Formula $f$
+\end_inset
+
+在
+\begin_inset Formula $m$
+\end_inset
+
+个点上的值的
+\series bold
+线性组合
+\series default
+来代替
+\begin_inset Formula $y$
+\end_inset
+
+的导数，然后按Taylor级数展开，确定其中的组合系数，这样即可避免计算
+\begin_inset Formula $y$
+\end_inset
+
+的高阶导数，又可保证差分方法具有较高精度。方法描述如下：
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+6.3.1
+\end_layout
+
+\end_inset
+
+设
+\begin_inset Formula $m$
+\end_inset
+
+是一个正整数，代表使用函数值
+\begin_inset Formula $f$
+\end_inset
+
+的个数，
+\begin_inset Formula $a_{i}$
+\end_inset
+
+，
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+（
+\begin_inset Formula $i=2,3,\cdots,m$
+\end_inset
+
+；
+\begin_inset Formula $j=1,2,\cdots,i-1$
+\end_inset
+
+）和
+\begin_inset Formula $c_{i}$
+\end_inset
+
+（
+\begin_inset Formula $i=1,2,\cdots,m$
+\end_inset
+
+）是一些待定的权因子（为实数），方法
+\begin_inset Formula 
+\begin{equation}
+y_{n+1}=y_{n}+h\left(c_{1}K_{1}+\cdots+c_{m}K_{m}\right)\label{eq:eu10}
+\end{equation}
+
+\end_inset
+
+被称为初值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的
+\series bold
+
+\begin_inset Formula $m$
+\end_inset
+
+级显式Runge–Kutta方法
+\series default
+，其中
+\begin_inset Formula $K_{i}$
+\end_inset
+
+（
+\begin_inset Formula $i=1,2,\cdots,m$
+\end_inset
+
+）满足下列方程：
+\begin_inset Formula 
+\begin{align}
+ & K_{1}=f\left(x_{n},y_{n}\right),\nonumber \\
+ & K_{2}=f\left(x_{n}+a_{2}h,y_{n}+hb_{21}K_{1}\right),\nonumber \\
+ & \cdots\nonumber \\
+ & K_{m}=f\left(x_{n}+a_{m}h,y_{n}+h\sum_{i=1}^{m-1}b_{mi}K_{i}\right).\label{eq:eu11}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 泛函与弱形式
 \end_layout
@@ -6311,6 +6812,50 @@ literal "false"
 
 ：
 \begin_inset Formula $\mathrm{A}\cdot\mathrm{s}\cdot\mathrm{m}^{-1}\cdot\mathrm{V}^{-1}=\mathrm{A}^{2}\cdot\mathrm{s}^{4}\cdot\mathrm{m}^{-3}\cdot\mathrm{Kg}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+电导（
+\begin_inset Formula $G=1/R$
+\end_inset
+
+）：
+\begin_inset Formula $\mathrm{S}=\mathrm{A}/\mathrm{V}=\mathrm{s}^{3}\cdot\mathrm{A}^{2}\cdot\mathrm{Kg}^{-1}\cdot\mathrm{m}^{-2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+电导率（
+\begin_inset Formula $\sigma$
+\end_inset
+
+）：
+\begin_inset Formula $\mathrm{S}/\mathrm{m}=\mathrm{s}^{3}\cdot\mathrm{A}^{2}\cdot\mathrm{Kg}^{-1}\cdot\mathrm{m}^{-3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+介电常数
+\begin_inset Formula $\varepsilon_{0}$
+\end_inset
+
+：
+\begin_inset Formula $\mathrm{A}\cdot\mathrm{s}\cdot\mathrm{m}^{-1}\cdot\mathrm{V}^{-1}=\mathrm{A}^{2}\cdot\mathrm{s}^{4}\cdot\mathrm{m}^{-3}\cdot\mathrm{Kg}^{-1}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\varepsilon=\varepsilon_{0}{\color{blue}\varepsilon_{r}}
+\]
+
 \end_inset
 
 
