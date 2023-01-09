@@ -493,48 +493,23 @@ noprefix "false"
 
 \end_inset
 
+
+\begin_inset Formula 
+\begin{align}
+D_{i}\frac{\partial C_{i}}{\partial n}=-z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\partial n}=0\label{eq:bnd2}
+\end{align}
+
+\end_inset
+
 它是
 \begin_inset Formula $\phi$
 \end_inset
 
-的自然边界条件，无需特殊处理；
-\begin_inset Formula 
-\begin{align}
-D_{i}\frac{\partial C_{i}}{\partial n}=-z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\partial n}\label{eq:bnd2}
-\end{align}
-
-\end_inset
-
-在迭代法中展开为：
-\begin_inset Formula 
-\begin{align}
- & D_{i}\frac{\partial C_{i,0}}{\partial n}=-z_{i}u_{i}F\,C_{i,0}\frac{\partial\phi_{0}}{\partial n}\label{eq:bnd2a}\\
- & D_{i}\frac{\partial}{\partial n}\delta C_{i}=-z_{i}u_{i}F\left(\frac{\partial\phi_{0}}{\partial n}\delta C_{i}+C_{i,0}\frac{\partial}{\partial n}\delta\phi\right)\label{eq:bnd2b}
-\end{align}
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd2a"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
 和
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd2b"
-plural "false"
-caps "false"
-noprefix "false"
-
+\begin_inset Formula $C_{i}$
 \end_inset
 
-分别贡献到激励向量和刚度矩阵中。
+的自然边界条件，无需特殊处理；
 \end_layout
 
 \begin_layout Subsection
@@ -750,7 +725,7 @@ i_{m} & =i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta
 需要满足的边界条件
 \begin_inset Formula 
 \begin{align}
- & \sigma_{l}\frac{\partial}{\partial n}\phi_{l}=f\left(\phi_{l},C\right)\label{eq:bnd13}\\
+ & \sigma_{l}\frac{\partial\phi_{l}}{\partial n}=f\left(\phi_{l},C\right)\label{eq:bnd13}\\
 \Rightarrow\quad & f\left(\phi_{l},C\right)=-i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\nonumber \\
 \text{代入}\quad & \eta=\phi_{s}-\phi_{l}-E_{\text{eq}}\nonumber \\
 \text{以及}\quad & E_{\text{eq}}=E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}/C_{0,\text{ref}}}\nonumber 
@@ -799,8 +774,8 @@ noprefix "false"
  附近作线性展开得到
 \begin_inset Formula 
 \begin{align}
- & \frac{\partial\varphi_{l,0}}{\partial n}=f\left(\phi_{l,0},C_{0}\right),\label{eq:bnd15a}\\
- & \sigma\frac{\partial}{\partial n}\delta\phi=f_{1}\left(\phi_{l,0},C_{0}\right)\delta\phi_{l}+f_{2}\left(\phi_{l,0},C_{0}\right)\delta C\label{eq:bnd15b}
+ & \sigma_{l}\frac{\partial\phi_{l,0}}{\partial n}=f\left(\phi_{l,0},C_{0}\right),\label{eq:bnd15a}\\
+ & \sigma_{l}\frac{\partial\delta\phi}{\partial n}=f_{1}\left(\phi_{l,0},C_{0}\right)\delta\phi_{l}+f_{2}\left(\phi_{l,0},C_{0}\right)\delta C\label{eq:bnd15b}
 \end{align}
 
 \end_inset
@@ -969,16 +944,36 @@ D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\part
 在迭代法中，展开为
 \begin_inset Formula 
 \begin{align}
- & D_{i}\frac{\partial C_{i,0}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,0}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}C_{i,0}\label{eq:bnd5a}\\
- & D_{i}\frac{\partial}{\partial n}\delta C_{i}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,0}\right)\frac{\partial}{\partial n}\delta\phi_{l}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}\delta C_{i}\label{eq:bnd5b}
+ & D_{i}\frac{\partial C_{i,0}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,0}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}C_{i,0}\label{eq:bnd16a}\\
+ & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,0}\right)\frac{\partial\delta\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}\delta C_{i}\label{eq:bnd16b}
 \end{align}
 
 \end_inset
 
-
+其中
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:bnd5a"
+reference "eq:bnd16b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+还需结合
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd15b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+再次展开，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd16a"
 plural "false"
 caps "false"
 noprefix "false"
@@ -988,7 +983,7 @@ noprefix "false"
 和
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:bnd5b"
+reference "eq:bnd16b"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2127,8 +2122,8 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & \quad\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}\delta C_{n}\nonumber \\
- & +\left[\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\right]\delta C_{n}-\left[\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial}{\partial n}\delta C_{n}\right)}\dd{\Gamma}\right]\nonumber \\
- & -\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\right]\delta C_{n}-\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\left(\frac{\partial}{\partial n}\delta\phi\right)}\dd{\Gamma}\right]\nonumber \\
+ & +\left[\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\right]\delta C_{n}-\left[\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\right]\nonumber \\
+ & -\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\right]\delta C_{n}-\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\right]\nonumber \\
 = & -\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}C_{n0}-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}\nonumber \\
  & +\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{0}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\label{eq:fem2}
 \end{align}
@@ -2193,7 +2188,7 @@ b_{1,m}^{e} & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{0}}
 边界单元，电势
 \begin_inset Formula 
 \begin{align*}
-M_{1,mn}^{s} & =-\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial}{\partial n}\delta\phi\right)\dd{\Gamma}\\
+M_{1,mn}^{s} & =-\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial\delta\phi}{\partial n}\right)\dd{\Gamma}\\
 b_{2,m}^{s} & =\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{0}}{\partial n}\dd{\Gamma}
 \end{align*}
 
@@ -2214,9 +2209,9 @@ b_{5,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
 边界单元，浓度
 \begin_inset Formula 
 \begin{align*}
-M_{2,mn}^{s}= & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial}{\partial n}\delta C_{n}\right)}\dd{\Gamma}\\
+M_{2,mn}^{s}= & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\\
 M_{3,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\\
-M_{4,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\left(\frac{\partial}{\partial n}\delta\phi\right)}\dd{\Gamma}\\
+M_{4,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\\
 b_{6,m}^{s}= & \int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{0}}{\partial n}}\dd{\Gamma}\\
 b_{7,m}^{s}= & \int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{0}\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}
 \end{align*}
