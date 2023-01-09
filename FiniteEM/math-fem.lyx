@@ -95,7 +95,7 @@ Young
 \end_layout
 
 \begin_layout Chapter
-数学与数值基础
+数学基础
 \end_layout
 
 \begin_layout Section
@@ -2756,6 +2756,10 @@ literal "false"
 
 \end_layout
 
+\begin_layout Chapter
+数值基础
+\end_layout
+
 \begin_layout Section
 拉格朗日乘子法与罚方法
 \end_layout
@@ -3067,7 +3071,7 @@ pg=\lambda_{0}
 \begin{cases}
 \frac{\dd{y}}{\dd{x}}=f(x,y), & a\le x\le b\\
 y(a)=y_{0}
-\end{cases}\label{eq:eu1}
+\end{cases}\label{eq:eu1.1}
 \end{equation}
 
 \end_inset
@@ -3096,7 +3100,11 @@ y(a)=y_{0}
 \end_layout
 
 \begin_layout Standard
-Euler方法是最简单的一种显式单步法。对于方程
+
+\series bold
+向前Euler法
+\series default
+ 是最简单的一种显式单步法。对于方程
 \begin_inset Formula 
 \[
 \frac{\dd{y}}{\dd{x}}=f(x,y)
@@ -3129,6 +3137,10 @@ y_{n+1}\approx y_{n}+hf(x_{n},y_{n})\label{eq:eu2}
 \end_inset
 
 出发，根据初值，逐步递推而得到系列离散数值。
+\end_layout
+
+\begin_layout Subsection
+向后欧拉法
 \end_layout
 
 \begin_layout Standard
@@ -3166,15 +3178,19 @@ y_{n+1}=y_{n}+hf\left(x_{n+1},y_{n+1}\right),\quad n=0,1,\cdots,N-1\label{eq:eu4
 \end_layout
 
 \begin_layout Subsection
-改进的欧拉法
+改进欧拉法
 \end_layout
 
 \begin_layout Standard
-Euler法计算量小，但是精度不高，为此可构造梯形公式：
+Euler法计算量小，但是精度不高，为此可构造
+\series bold
+梯形公式
+\series default
+：
 \begin_inset Formula 
 \[
 \begin{cases}
-y_{n+1}+\frac{h}{2}\left[f(x_{n},y_{n})+f(x_{n+1},y_{n+1})\right]\\
+y_{n+1}=y_{n}+\frac{h}{2}\left[f(x_{n},y_{n})+f(x_{n+1},y_{n+1})\right]\\
 y_{0}=\eta
 \end{cases}
 \]
@@ -3230,7 +3246,31 @@ y_{n+1}^{(k+1)}=y_{n}+\frac{h}{2}\left[f\left(x_{n},y_{n}\right)+f\left(x_{n+1},
 \begin_inset Formula $k+1$
 \end_inset
 
-阶修正的解。这实际上是一种预估–校正方法，改进的 Euler 方法又称为 Heun 方法。
+阶修正的解。这实际上是一种预估–校正方法，改进的Euler法又称为 
+\series bold
+Heun方法
+\series default
+。参见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:RK1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:pc1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Section
@@ -3243,6 +3283,13 @@ ref：数值分析–张平文
 
 \begin_layout Subsection
 Runge–Kutta方法的基本思想
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:RK1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3392,7 +3439,11 @@ K_{2}=f\left(x_{n}+h,y_{n}+hK_{1}\right),
 \series bold
 改进的Euler公式
 \series default
-；若取方程组
+。
+\end_layout
+
+\begin_layout Standard
+若取方程组
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:eu7"
@@ -3511,7 +3562,7 @@ status open
 ）是一些待定的权因子（为实数），方法
 \begin_inset Formula 
 \begin{equation}
-y_{n+1}=y_{n}+h\left(c_{1}K_{1}+\cdots+c_{m}K_{m}\right)\label{eq:eu10}
+y_{n+1}=y_{n}+h\left(c_{1}K_{1}+\cdots+c_{m}K_{m}\right)\label{eq:eu3.6}
 \end{equation}
 
 \end_inset
@@ -3519,7 +3570,7 @@ y_{n+1}=y_{n}+h\left(c_{1}K_{1}+\cdots+c_{m}K_{m}\right)\label{eq:eu10}
 被称为初值问题
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:eu10"
+reference "eq:eu3.6"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3548,12 +3599,2210 @@ noprefix "false"
  & K_{1}=f\left(x_{n},y_{n}\right),\nonumber \\
  & K_{2}=f\left(x_{n}+a_{2}h,y_{n}+hb_{21}K_{1}\right),\nonumber \\
  & \cdots\nonumber \\
- & K_{m}=f\left(x_{n}+a_{m}h,y_{n}+h\sum_{i=1}^{m-1}b_{mi}K_{i}\right).\label{eq:eu11}
+ & K_{m}=f\left(x_{n}+a_{m}h,y_{n}+h\sum_{i=1}^{m-1}b_{mi}K_{i}\right).\label{eq:eu3.7}
 \end{align}
 
 \end_inset
 
 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的系数可以这样确定：设问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu1.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的解
+\begin_inset Formula $y(x)$
+\end_inset
+
+和右端函数
+\begin_inset Formula $f(x,y)$
+\end_inset
+
+充分光滑。首先将式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的左端和右端各项在点
+\begin_inset Formula $x_{n}$
+\end_inset
+
+处展成关于
+\begin_inset Formula $h$
+\end_inset
+
+的Taylor级数，然后比较左、右两端
+\begin_inset Formula $h$
+\end_inset
+
+的幂次，一直比较到幂次
+\begin_inset Formula $p$
+\end_inset
+
+，建立等式关系，就得到确定
+\begin_inset Formula $m$
+\end_inset
+
+级显式 Runge–Kutta方法中的系数满足的代数方程组，求出代数方程组的解也就得到
+\begin_inset Formula $m$
+\end_inset
+
+阶Runge–Kutta方法，且精度为
+\begin_inset Formula $p$
+\end_inset
+
+阶，称之为
+\begin_inset Formula $m$
+\end_inset
+
+级（
+\begin_inset Formula $m$
+\end_inset
+
+个组合点）
+\begin_inset Formula $p$
+\end_inset
+
+阶（展开到
+\begin_inset Formula $h^{p}$
+\end_inset
+
+）Runge–Kutta方法。显式Runge–Kutta公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+又可以写成如表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:Butcher"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+既直观又简洁的阵列形式（称为Butcher表）
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{21}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{31}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{m1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{m2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{m(m-1)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{m-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Butcher表
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Butcher"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+对于
+\begin_inset Formula $m=3,4$
+\end_inset
+
+的情形，可类似地推导出相应的高阶显式Runge–Kutta方法，这里仅列举几个常用的公式：
+\end_layout
+
+\begin_layout Enumerate
+三级三阶显式Kutta 公式
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+{\color{blue}\frac{1}{2}}h,y_{n}+{\color{blue}\frac{1}{2}}hK_{1}\right),\\
+K_{3}=f\left(x_{n}+{\color{blue}1}h,y_{n}{\color{blue}-1}hK_{1}+{\color{blue}2}hK_{2}\right),\\
+y_{n+1}=y_{n}+\frac{h}{6}\left({\color{blue}1}K_{1}+{\color{blue}4}K_{2}+{\color{blue}1}K_{3}\right);
+\end{cases}\label{eq:eu3.8}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+三级三阶显式Heun 公式
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+{\color{blue}\frac{1}{3}}h,y_{n}+{\color{blue}\frac{1}{3}}hK_{1}\right),\\
+K_{3}=f\left(x_{n}+{\color{blue}\frac{2}{3}}h,y_{n}+{\color{blue}\frac{2}{3}}hK_{2}\right),\\
+y_{n+1}=y_{n}+\frac{h}{4}\left({\color{blue}1}K_{1}+{\color{blue}3}K_{2}\right);
+\end{cases}\label{eq:eu3.9}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+四级四阶古典显式Runge–Kutta 公式
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+{\color{blue}\frac{1}{2}}h,y_{n}+{\color{blue}\frac{1}{2}}hK_{1}\right),\\
+K_{3}=f\left(x_{n}+{\color{blue}\frac{1}{2}}h,y_{n}+{\color{blue}\frac{1}{2}}hK_{2}\right),\\
+K_{4}=f\left(x_{n}+{\color{blue}1}h,y_{n}+{\color{blue}1}hK_{3}\right),\\
+y_{n+1}=y_{n}+\frac{h}{6}\left({\color{blue}1}K_{1}+{\color{blue}2}K_{2}+{\color{blue}2}K_{3}+{\color{blue}1}K_{4}\right);
+\end{cases}\label{eq:eu3.10}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+四级四阶显式Runge–Kutta 公式
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+{\color{blue}\frac{1}{3}}h,y_{n}+{\color{blue}\frac{1}{3}}hK_{1}\right),\\
+K_{3}=f\left(x_{n}+{\color{blue}\frac{2}{3}}h,y_{n}{\color{blue}-\frac{1}{3}}hK_{1}+{\color{blue}h}K_{2}\right),\\
+K_{4}=f\left(x_{n}+{\color{blue}1}h,y_{n}+{\color{blue}1}hK_{1}{\color{blue}-1}hK_{2}+{\color{blue}1}hK_{3}\right),\\
+y_{n+1}=y_{n}+\frac{h}{8}\left({\color{blue}1}K_{1}+{\color{blue}3}K_{2}+{\color{blue}3}K_{3}+{\color{blue}1}K_{4}\right);
+\end{cases}\label{eq:eu3.11}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+四级四阶显式 Gill 公式
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{1}=f\left(x_{n},y_{n}\right),\\
+K_{2}=f\left(x_{n}+{\color{blue}\frac{1}{2}}h,y_{n}+{\color{blue}\frac{1}{2}}hK_{1}\right),\\
+K_{3}=f\left(x_{n}+{\color{blue}\frac{1}{2}}h,y_{n}+{\color{blue}\frac{\sqrt{2}-1}{2}}hK_{1}+{\color{blue}\left(1-\frac{\sqrt{2}}{2}\right)}hK_{2}\right),\\
+K_{4}=f\left(x_{n}+{\color{blue}1}h,y_{n}{\color{blue}-\frac{\sqrt{2}}{2}}hK_{2}+{\color{blue}\left(1+\frac{\sqrt{2}}{2}\right)}hK_{3}\right),\\
+y_{n+1}=y_{n}+\frac{h}{6}\left[{\color{blue}1}K_{1}+{\color{blue}\left(2-\sqrt{2}\right)}K_{2}+{\color{blue}\left(2+\sqrt{2}\right)}K_{3}+{\color{blue}1}K_{4}\right];
+\end{cases}\label{eq:eu3.12}
+\end{equation}
+
+\end_inset
+
+Gill公式有减少舍入误差的优点。最常用的 Runge–Kutta公式是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+一般地，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的系数满足
+\begin_inset Formula 
+\[
+\sum_{j=1}^{m}c_{j}=1;\quad a_{i}=\sum_{j=1}^{i-1}b_{ij},\quad i=2,3,\cdots,m
+\]
+
+\end_inset
+
+表6.3是Butcher（1965）做出的各级显式 Runge–Kutta 方法最高精度的结果。从表6.3中可以看出，Runge–Kutta方法的级数从
+\begin_inset Formula $4$
+\end_inset
+
+变成
+\begin_inset Formula $5$
+\end_inset
+
+时，精度的阶数并没有相应地从
+\begin_inset Formula $4$
+\end_inset
+
+提高到
+\begin_inset Formula $5$
+\end_inset
+
+.这就是为什么
+\begin_inset Formula $4$
+\end_inset
+
+级以上的 Runge–Kutta方法很少被采用的原因。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="9">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+级数
+\begin_inset Formula $m$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m\ge8$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+精度阶数
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\le m-2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+各级显式Runge–Kutta方法最高精度
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m$
+\end_inset
+
+阶Runge–Kunta方法的绝对稳定域为
+\begin_inset Formula 
+\[
+\abs{1+\lambda h+\frac{1}{2!}\left(\lambda h\right)^{2}+\cdots+\frac{1}{m!}\left(\lambda h\right)^{m}}<1,
+\]
+
+\end_inset
+
+即同阶的不同格式具有相同的绝对稳定域。图6.2给出了各阶 Runge–Kutta 方法的显式绝对稳定域，值得注意的是三、四阶 Runge–Kutta方法的显式绝对
+稳定域包含了一段虚轴。
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+[Lambda]h := x + y I fn1 := 1 + 
+\backslash
+[Lambda]h; fn2 := 1 + 
+\backslash
+[Lambda]h + 1/2 
+\backslash
+[Lambda]h^2; fn3 := 1 + 
+\backslash
+[Lambda]h + 1/2 
+\backslash
+[Lambda]h^2 + 1/3! 
+\backslash
+[Lambda]h^3; fn4 := 1 + 
+\backslash
+[Lambda]h + 1/2 
+\backslash
+[Lambda]h^2 + 1/3! 
+\backslash
+[Lambda]h^3 + 1/4! 
+\backslash
+[Lambda]h^4; RegionPlot[ { Abs@fn1 <= 1, Abs@fn2 <= 1, Abs@fn3 <= 1, Abs@fn4
+ <= 1 }, {x, -3, 1}, {y, -3, 3}, PlotLabels -> {1, 2, 3, 4}, ImageSize ->
+ Medium ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/Runge-Kutta1.png
+	lyxscale 80
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+显式 Runge–Kutta方法的绝对稳定域。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+隐式Runge–Kutta方法
+\end_layout
+
+\begin_layout Definition
+设
+\begin_inset Formula $a_{i}$
+\end_inset
+
+，
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $c_{i}$
+\end_inset
+
+（
+\begin_inset Formula $i,j=1,2,\cdots,m$
+\end_inset
+
+）是一些实数，称方法
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+K_{i}=f\left(x_{n}+a_{i}h,y_{n}+h\sum_{j=1}^{m}b_{ij}K_{j}\right),\\
+y_{n+1}=y_{n}+h\sum_{i=1}^{m}c_{i}K_{i};\\
+(i=1,2,\cdots,m;\quad m=0,1,2,\cdots)
+\end{cases}\label{eq:eu3.19}
+\end{equation}
+
+\end_inset
+
+是初值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu1.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的一个
+\begin_inset Formula $m$
+\end_inset
+
+级隐式 Runge–Kutta方法。
+\end_layout
+
+\begin_layout Definition
+类似于显式 Runge–Kutta 公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+也可表示成 Butcher 表，即表6.7。隐式Runge–Kutta公式中参量
+\begin_inset Formula $a_{i}$
+\end_inset
+
+，
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $c_{i}$
+\end_inset
+
+的确定通常有两种方法。第一种方法是将方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的右端和左端分别在点
+\begin_inset Formula $x_{n}$
+\end_inset
+
+处作Taylor展开，类似前面显式Runge–Kutta方法中系数的确定，比较左、右级数就可以确定出诸参数；另一种方法类似例6.3.1中显式三级Kutta方法系数的
+确定，将微分方程化为等价的积分方程，取阶数较高的数值积分公式计算右端的积分式，对于每个 Runge–Kutta方法，相应地用
+\begin_inset Formula $a_{i}$
+\end_inset
+
+，
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+和
+\begin_inset Formula $c_{i}$
+\end_inset
+
+所确定的积分公式是一个 Gauss型数值积分公式，由此可以给出
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+的一个计算表达式，把它与公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+右端的Taylor展式作比较，则可以确定出诸参数。
+\end_layout
+
+\begin_layout Definition
+Kuntzmann（1961）和Butcher（1964）已经发现对所有的
+\begin_inset Formula $m$
+\end_inset
+
+阶方法均存在
+\begin_inset Formula $2m$
+\end_inset
+
+阶隐式 Runge–Kutta方法，这显然要比显式Runge–Kunta方法优越。对
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu3.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的推导这里不作进一步的介绍，仅列出几个典型的隐式 Runge–Kutta 公式作为参考。
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{1m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{m1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{mm}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{3-\sqrt{3}}{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{3-2\sqrt{3}}{12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{3+\sqrt{3}}{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{3+2\sqrt{3}}{12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Butcher表；隐式中点公式（
+\begin_inset Formula $m=1$
+\end_inset
+
+，
+\begin_inset Formula $p=2$
+\end_inset
+
+）；隐式Runge–Kutta公式（
+\begin_inset Formula $m=2$
+\end_inset
+
+，
+\begin_inset Formula $p=4$
+\end_inset
+
+）
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{5-\sqrt{15}}{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{5}{36}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{10-3\sqrt{15}}{45}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{25-6\sqrt{15}}{180}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{10+3\sqrt{15}}{72}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{2}{9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{10-23\sqrt{15}}{72}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{5+\sqrt{15}}{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{25+6\sqrt{15}}{180}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{10+3\sqrt{15}}{45}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{5}{36}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{5}{18}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{4}{9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{5}{18}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Kuntzmann和Butcher公式（
+\begin_inset Formula $m=3$
+\end_inset
+
+，
+\begin_inset Formula $p=6$
+\end_inset
+
+）
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+对于同级的 Runge–Kutta公式，隐式公式的精确度要比显式公式的高，且又有较高的数值稳定性，这些优点对于求解下面 S6.7 中的刚性方程组是非常有用的。
+ 但是在隐式 Runge–Kutta公式中，由于每个
+\begin_inset Formula $K_{i}$
+\end_inset
+
+的表达式都含有
+\begin_inset Formula $K_{1}$
+\end_inset
+
+，
+\begin_inset Formula $\cdots$
+\end_inset
+
+，
+\begin_inset Formula $K_{m}$
+\end_inset
+
+，因而在使用时，往往需要解非线性方程（组），这也给计算带来很大的不变和开销。例如隐式中点公式明确写出是，
+\begin_inset Formula 
+\[
+\begin{cases}
+K_{1}=f\left(x_{n}+\frac{1}{2}h,y_{n}+\frac{1}{2}hK_{1}\right),\\
+y_{n+1}=y_{n}+hK_{1}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+线性多步法与预估–校正格式
+\end_layout
+
+\begin_layout Standard
+常微分方程初值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eu1.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的数值解法中，除了像Runge–Kutta型公式等单步法之外，还有另一种类型的解法–多步法。多步法的基本思想是：某一步解的公式不仅与前一步解的值有关，而且与前若
+干步解的值有关，利用前面多步的信息预测下一步的值，可以期望获得较高的精度。构造多步法有多种途径，下面先讨论基于数值积分的方法。
+\end_layout
+
+\begin_layout Subsection
+显示格式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y_{n+1}=y_{n-p}+h\sum_{j=0}^{q}\alpha_{j}f\left(x_{n-j},y_{n-j}\right),\label{eq:zl6.4.4}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $p$
+\end_inset
+
+控制回溯起点（几步），
+\begin_inset Formula $q$
+\end_inset
+
+控制积分点数（影响精度）。
+\begin_inset Formula 
+\[
+\alpha_{j}=\frac{1}{h}\int_{x_{n-p}}^{x_{n+1}}l_{j}(t)\dd{t},
+\]
+
+\end_inset
+
+这里
+\begin_inset Formula $l_{j}(t)$
+\end_inset
+
+是关于节点
+\begin_inset Formula $x_{n}$
+\end_inset
+
+，
+\begin_inset Formula $x_{n-1}$
+\end_inset
+
+，
+\begin_inset Formula $\cdots$
+\end_inset
+
+，
+\begin_inset Formula $x_{n-q}$
+\end_inset
+
+的 Lagrange 基函数。
+\end_layout
+
+\begin_layout Standard
+当
+\begin_inset Formula $p=1,q=2$
+\end_inset
+
+时，可得三步三阶显式格式
+\begin_inset Formula 
+\[
+y_{n+1}=y_{n-1}+\frac{h}{3}\left[7f(x_{n},y_{n})-2f(x_{n-1},y_{n-1})+f(x_{n-2},y_{n-2})\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+隐式格式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y_{n+1}=y_{n-p}+h\sum_{j=0}^{q}\beta_{j}f\left(x_{n+1-j},y_{n+1-j}\right),\label{eq:zl6.4.5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\beta_{j}=\frac{1}{h}\int_{x_{n-p}}^{x_{n+1}}l_{j}(t)\dd{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+当
+\begin_inset Formula $p=2,q=2$
+\end_inset
+
+时，可得三步三阶隐式格式
+\begin_inset Formula 
+\[
+y_{n+1}=y_{n-2}+\frac{h}{4}\left[3f(x_{n+1},y_{n+1})+9f(x_{n-1},y_{n-1})\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上述方法中若
+\begin_inset Formula $p=0$
+\end_inset
+
+，则相应的格式（方法）称为 
+\series bold
+Adams格式
+\series default
+，其中
+\begin_inset Formula $q=0$
+\end_inset
+
+时称为Euler格式；
+\begin_inset Formula $q=1$
+\end_inset
+
+时，二步显式 Adams格式为
+\begin_inset Formula 
+\[
+y_{n+1}=y_{n}+\frac{h}{2}\left[3f(x_{n},y_{n})-f(x_{n-1},y_{n-1})\right],
+\]
+
+\end_inset
+
+二步隐式Adams格式为
+\begin_inset Formula 
+\[
+y_{n+1}=y_{n}+\frac{h}{2}\left[f(x_{n+1},y_{n+1})+f(x_{n},y_{n})\right].
+\]
+
+\end_inset
+
+这个格式也称为梯形公式。
+\end_layout
+
+\begin_layout Standard
+利用插值多项式的余项，可以求出Adams方法的局部截断误差。当然也可以从得到的显式和隐式Adams格式，由局部截断误差的定义来求出方法的局部截断误差。
+\end_layout
+
+\begin_layout Subsection
+预估–校正格式
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:pc1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+隐式格式与同类显式格式相比，有较小的截断误差，更好的稳定性。但是在隐式格式中，
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+不能通过简单的算术运算得到，一般需要通过迭代方法才能得到
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+的近似值，这必然大大地增加运算量。若用一个恰当的显式格式求出的
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+作为隐式格式的预估值，再用显式格式对预估值做校正，然后以这个校正的值作为格点函数
+\begin_inset Formula $y_{n+1}$
+\end_inset
+
+，则我们称这样的格式为 
+\series bold
+预估–校正格式
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+用Euler公式作为预估，梯形公式作校正构成的预估–校正公式为
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+y_{n+1}^{(0)}=y_{n}+hf(x_{n},y_{n})\\
+y_{n+1}^{(k+1)}=y_{n}+\frac{h}{2}\left[f(x_{n},y_{n})+f(x_{n+1},y_{n+1}^{(k)})\right]
+\end{cases}\label{eq:pc1}
+\end{equation}
+
+\end_inset
+
+这个公式就是改进的Euler公式。
+\end_layout
+
+\begin_layout Standard
+常用的预估–校正公式还有
+\series bold
+三点Milne公式
+\series default
+
+\begin_inset Formula 
+\[
+\begin{cases}
+y_{n+1}^{(0)}=y_{n-3}+\frac{h}{3}\left[8f(x_{n},y_{n})-4f(x_{n-1},y_{n-1})+8f(x_{n-2},y_{n-2})\right],\\
+y_{n+1}^{(k+1)}=y_{n-1}+\frac{h}{3}\left[f(x_{n+1},y_{n+1}^{(0)})+4f(x_{n},y_{n})+f(x_{n-1},y_{n-1})\right].
+\end{cases}
+\]
+
+\end_inset
+
+和改进的 
+\series bold
+四点Adams公式
+\series default
+
+\begin_inset Formula 
+\[
+\begin{cases}
+y_{n+1}^{(0)}=y_{n}+\frac{h}{24}\left[{\color{blue}55}f(x_{n},y_{n}){\color{blue}-59}f(x_{n-1},y_{n-1})+{\color{blue}37}f(x_{n-2},y_{n-2}){\color{blue}-9}f(x_{n-3},y_{n-3})\right],\\
+y_{n+1}^{(k+1)}=y_{n}+\frac{h}{24}\left[{\color{blue}9}f(x_{n+1},y_{n+1}^{(0)})+{\color{blue}19}f(x_{n},y_{n}){\color{blue}-5}f(x_{n-1},y_{n-1})+{\color{blue}1}f(x_{n-2},y_{n-2})\right].
+\end{cases}
+\]
+
+\end_inset
+
+值得一提的是，线性多步方法都具有较好的稳定性。
 \end_layout
 
 \begin_layout Chapter
@@ -12364,6 +14613,145 @@ noprefix "false"
 \end_inset
 
 可以看到，一般对刚度矩阵和激励向量都有贡献。
+\end_layout
+
+\begin_layout Section
+方程组
+\end_layout
+
+\begin_layout Standard
+ref：《计算物理基础》P352。
+\end_layout
+
+\begin_layout Standard
+对于方程组而言，狄利克雷边界条件是
+\begin_inset Formula 
+\begin{align*}
+ & h_{11}\phi_{1}+h_{12}\phi_{2}=p_{1}\\
+ & h_{21}\phi_{1}+h_{22}\phi_{2}=p_{2}
+\end{align*}
+
+\end_inset
+
+简写为 
+\begin_inset Formula 
+\[
+h.\phi=p
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $h$
+\end_inset
+
+，
+\begin_inset Formula $p$
+\end_inset
+
+均为矩阵。
+\end_layout
+
+\begin_layout Standard
+第三类边界条件是
+\begin_inset Formula 
+\begin{align*}
+ & c_{11}\frac{\partial\phi_{1}}{\partial n}+c_{12}\frac{\partial\phi_{2}}{\partial n}+\gamma_{11}\phi_{1}+\gamma_{12}\phi_{2}=q_{1}\\
+ & c_{21}\frac{\partial\phi_{1}}{\partial n}+c_{22}\frac{\partial\phi_{2}}{\partial n}+\gamma_{21}\phi_{1}+\gamma_{22}\phi_{2}=q_{2}
+\end{align*}
+
+\end_inset
+
+写成矩阵的形式 
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+c_{11} & c_{12}\\
+c_{21} & c_{22}
+\end{array}\right]\left[\begin{array}{c}
+\frac{\partial\phi_{1}}{\partial n}\\
+\frac{\partial\phi_{2}}{\partial n}
+\end{array}\right]=\left[\begin{array}{c}
+q_{1}\\
+q_{2}
+\end{array}\right]-\left[\begin{array}{cc}
+\gamma_{11} & \gamma_{12}\\
+\gamma_{21} & \gamma_{22}
+\end{array}\right]\left[\begin{array}{c}
+\phi_{1}\\
+\phi_{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+求解方程，可以把
+\begin_inset Formula $\partial\phi_{i}/\partial n$
+\end_inset
+
+用
+\begin_inset Formula $q_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+表出，代入边界的刚度矩阵和激励向量。
+\end_layout
+
+\begin_layout Standard
+混合边界条件则是
+\begin_inset Formula 
+\begin{align*}
+ & h_{11}\phi_{1}+h_{12}\phi_{2}=p_{1}\\
+ & c_{11}\frac{\partial\phi_{1}}{\partial n}+c_{12}\frac{\partial\phi_{2}}{\partial n}+\gamma_{11}\phi_{1}+\gamma_{12}\phi_{2}=q_{1}-h_{11}u\\
+ & c_{21}\frac{\partial\phi_{1}}{\partial n}+c_{22}\frac{\partial\phi_{2}}{\partial n}+\gamma_{21}\phi_{1}+\gamma_{22}\phi_{2}=q_{2}-h_{12}u
+\end{align*}
+
+\end_inset
+
+把
+\begin_inset Formula $u$
+\end_inset
+
+也引入为自由度，整理成矩阵形式：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+c_{11} & c_{12} & 0\\
+c_{21} & c_{22} & 0\\
+0 & 0 & 1
+\end{array}\right]\left[\begin{array}{c}
+\frac{\partial\phi_{1}}{\partial n}\\
+\frac{\partial\phi_{2}}{\partial n}\\
+\frac{\partial u}{\partial n}
+\end{array}\right]=\left[\begin{array}{c}
+q_{1}\\
+q_{2}\\
+p_{1}
+\end{array}\right]-\left[\begin{array}{ccc}
+\gamma_{11} & \gamma_{12} & h_{11}\\
+\gamma_{21} & \gamma_{22} & h_{12}\\
+h_{11} & h_{12} & 0
+\end{array}\right]\left[\begin{array}{c}
+\phi_{1}\\
+\phi_{2}\\
+u
+\end{array}\right]
+\]
+
+\end_inset
+
+并要求
+\begin_inset Formula $u$
+\end_inset
+
+满足
+\begin_inset Formula $\frac{\partial u}{\partial n}=0$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Chapter
@@ -21840,10 +24228,6 @@ equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
 
 \begin_layout Chapter
 Mortor单元法
-\end_layout
-
-\begin_layout Section
-拉格朗日乘子
 \end_layout
 
 \begin_layout Section
