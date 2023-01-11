@@ -9092,7 +9092,7 @@ literal "false"
 
 \begin_layout Standard
 介电常数
-\begin_inset Formula $\varepsilon_{0}$
+\begin_inset Formula $\varepsilon_{0}=8.8541\,8781\,7620\,3898\,51×10^{-12}\,\mathrm{F/m}$
 \end_inset
 
 ：
@@ -19484,10 +19484,14 @@ K_{ij}^{s}=\frac{n\ell_{i}^{e}\ell_{j}^{e}}{r^{3}\mu_{r}}\frac{\Delta_{e}}{12} &
 \end_inset
 
  另外，电流要满足守恒方程
-\begin_inset Formula $\nabla\cdot\sbf J=0$
+\begin_inset Formula $\nabla\cdot\sbf J_{\text{tot}}=0$
 \end_inset
 
-，而外加电流总是满足守恒方程的，因此
+（忽略电荷累积
+\begin_inset Formula $\partial\rho/\partial t$
+\end_inset
+
+），而外加电流总是满足守恒方程的，因此
 \begin_inset Formula 
 \begin{equation}
 \nabla\cdot\sigma\left(-\nabla\Phi-\frac{\partial\sbf A}{\partial t}\right)=0.\label{eq:xl4.4}
@@ -19969,7 +19973,27 @@ R^{e}(L_{m}^{e}) & =-\int_{\Omega^{e}}\left[L_{m}^{e}\nabla\cdot\sigma\frac{\par
 \begin_inset Formula $\int_{\Gamma^{e}}\sbf e_{n}\cdot\cdots\dd{\Gamma}$
 \end_inset
 
- 也抵消了边界项，表面电荷。作展开 
+ 也抵消了边界项。这里的
+\begin_inset Formula $R^{e}(L_{m}^{e})$
+\end_inset
+
+ 用物理场表示是
+\begin_inset Formula 
+\[
+R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\Omega}+\int_{\Gamma^{e}}L_{m}^{e}\left(-\sbf e_{n}\cdot\sigma\sbf E\right)\dd{\Gamma}
+\]
+
+\end_inset
+
+第一项是电荷堆积速率的残差；第二项是经由表面流入求解域的电流。
+\end_layout
+
+\begin_layout Subsection
+总结
+\end_layout
+
+\begin_layout Standard
+作展开 
 \begin_inset Formula $\sbf A=\sbf N_{i}^{e}A_{i}$
 \end_inset
 
@@ -20935,13 +20959,13 @@ f_{\alpha,1}=-\left(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\right){\color{blue}\part
 ：
 \begin_inset Formula 
 \[
-\frac{\partial D_{i}}{\partial r_{\alpha j}}=\mathcal{T}_{ik}\frac{\partial E_{k}}{\partial r_{\alpha j}},\quad\mathcal{T}_{ik}=\frac{\partial D_{i}}{\partial E_{k}}
+\frac{\partial D_{i}}{\partial r_{\alpha j}}=\mathcal{\varepsilon}_{ik}\frac{\partial E_{k}}{\partial r_{\alpha j}},\quad\mathcal{\varepsilon}_{ik}=\frac{\partial D_{i}}{\partial E_{k}}
 \]
 
 \end_inset
 
 
-\begin_inset Formula $T_{ik}$
+\begin_inset Formula $\mathcal{\varepsilon}_{ik}$
 \end_inset
 
  是材料的介电张量。写出 
@@ -20970,7 +20994,7 @@ E_{k}=-\partial_{k}\phi=-{\color{blue}\partial_{k}N_{\beta}^{e}\;\phi_{\beta}}
 ，考虑雅可比矩阵得
 \begin_inset Formula 
 \begin{equation}
-E_{k}=-{\color{brown}J_{k\ell}^{-1}}\;{\color{blue}\hat{\partial}_{\ell}N_{\beta}^{e}\;\phi_{\beta}}\label{eq:elec-field}
+E_{k}=-{\color{brown}J_{k\ell}^{-1}}\;{\color{blue}\hat{\partial}_{\ell}N_{\beta}^{e}\,\phi_{\beta}}\label{eq:elec-field}
 \end{equation}
 
 \end_inset
@@ -21044,7 +21068,7 @@ noprefix "false"
  得
 \begin_inset Formula 
 \[
--E_{i}\frac{\partial D_{i}}{\partial r_{\alpha j}}=-E_{i}\mathcal{T}_{ik}\left(-E_{j}\right)\partial_{k}L_{\alpha}^{e}
+-E_{i}\frac{\partial D_{i}}{\partial r_{\alpha j}}=-E_{i}\,\mathcal{\varepsilon}_{ik}\left(-E_{j}\right)\partial_{k}L_{\alpha}^{e}
 \]
 
 \end_inset
@@ -21052,13 +21076,13 @@ noprefix "false"
 写成矢量形式是
 \begin_inset Formula 
 \[
-f_{\alpha,2}=\sbf E\;\left(\sbf E\cdot\mathcal{T}\cdot\nabla L_{\alpha}^{e}\right)\dd{\Omega}
+f_{\alpha,2}=\sbf E\;\left(\sbf E\cdot\varepsilon\cdot\nabla L_{\alpha}^{e}\right)\dd{\Omega}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\mathcal{T}=\partial D/\partial E$
+\begin_inset Formula $\varepsilon=\partial D/\partial E$
 \end_inset
 
 ，是材料的介电张量。
@@ -21068,7 +21092,7 @@ f_{\alpha,2}=\sbf E\;\left(\sbf E\cdot\mathcal{T}\cdot\nabla L_{\alpha}^{e}\righ
 综合两项的贡献得到：
 \begin_inset Formula 
 \[
-\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[-\left(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\right)\nabla L_{\alpha}^{e}+\sbf E\;\left(\sbf E\cdot\mathcal{T}\cdot\nabla L_{\alpha}^{e}\right)\right]\dd{\Omega}
+\sbf F_{\alpha}=\sum_{e}\int_{\Omega^{e}}\left[-\left(\int_{0}^{D}\sbf E\cdot\dd{\sbf D'}\right)\nabla L_{\alpha}^{e}+\sbf E\,\left(\sbf E\cdot\varepsilon\cdot\nabla L_{\alpha}^{e}\right)\right]\dd{\Omega}
 \]
 
 \end_inset

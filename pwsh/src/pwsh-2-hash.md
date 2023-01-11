@@ -1,5 +1,4 @@
-
-## 哈希表
+# 哈希表
 
 [about_Hash_Tables](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_hash_tables)
 
@@ -28,7 +27,7 @@
 [ordered]@{ <name> = <value>; [<name> = <value> ] ...}
 ```
 
-### 创建哈希表
+## 创建哈希表
 
 若要创建哈希表, 请遵循以下准则:
 
@@ -61,7 +60,7 @@ $hash = [ordered]@{ Number = 1; Shape = "Square"; Color = "Blue"}
 $hash
 ```
 
-### 显示哈希表
+## 显示哈希表
 
 若要显示保存在变量中的哈希表, 请键入变量名称.  默认情况下, 哈希表显示为一个表, 其中包含一个键列和一个用于值的列.
 
@@ -103,7 +102,7 @@ $hash.count
 $hash["Number"]
 ```
 
-### 添加和删除键和值
+## 添加和删除键和值
 
 若要将键和值添加到哈希表, 请使用以下命令格式.
 
@@ -151,7 +150,7 @@ $hash.Remove("Time")
 
 可以在 PowerShell 中使用哈希表对象的所有属性和方法, 包括 `Contains`, `Clear``, Clone` 和 `CopyTo`.  有关哈希表对象的详细信息, 请参阅[System.Collections.Hashtable](https://docs.microsoft.com/en-us/dotnet/api/system.collections.hashtable?view=net-5.0).
 
-### 哈希表中的对象类型
+## 哈希表中的对象类型
 
 哈希表中的键和值可具有任何 `.NET` 对象类型, 单个哈希表可以具有多个类型的键和值.
 
@@ -203,7 +202,7 @@ $p.Hash2
 $p.Hash2.b
 ```
 
-### 对键和值进行排序
+## 对键和值进行排序
 
 哈希表中的项在本质上是无序的.  每次显示键/值对时, 它们的显示顺序可能不同.
 
@@ -219,7 +218,7 @@ $p.GetEnumerator() | Sort-Object -Property key
 $p.getenumerator() | Sort-Object -Property Value -Descending
 ```
 
-### 从哈希表创建对象
+## 从哈希表创建对象
 
 从 PowerShell 3.0 开始, 可以从`属性`和`属性值`组成的哈希表创建对象. 语法如下:
 
@@ -232,7 +231,7 @@ $p.getenumerator() | Sort-Object -Property Value -Descending
 
 此方法仅适用于具有 `null` 构造函数的类(即没有参数的构造函数).  对象属性必须是`public`且可设置的(`settable`). 有关详细信息, 请参阅 about_Object_Creation.
 
-### ConvertFrom-StringData
+## ConvertFrom-StringData
 
 `ConvertFrom-StringData` Cmdlet 将一个包含`键/值`对的`string`或者`here-string`转换为哈希表.
 
