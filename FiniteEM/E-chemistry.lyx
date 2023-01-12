@@ -529,7 +529,7 @@ D_{i}\frac{\partial C_{i}}{\partial n}=-z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\p
 电化学反应均匀地发生在界面处，化学反应电流之和作为电极和电解液域之间边界上的电流密度条件：
 \begin_inset Formula 
 \begin{equation}
-\sum\sbf i_{m}=\sbf n\cdot\sbf i_{l}=-\sbf n\cdot i_{s}\label{eq:bnd3}
+i_{\text{total}}=\sbf n\cdot\sbf i_{l}=-\sbf n\cdot i_{s}=\sum_{m}\sbf i_{\text{loc},m}\label{eq:bnd3}
 \end{equation}
 
 \end_inset
@@ -683,6 +683,192 @@ noprefix "false"
 \begin_layout Enumerate
 描述电化学反应电流和过电势的关系的动力学公式有很多，如Butler-Volmer公式、Tafel公式、线性Butler-Volmer公式，和浓度依赖动力学公式等
 。
+\end_layout
+
+\begin_layout Example
+Bulter–Volmer方程。当电极表面反应过程由活化极化步骤控制时，电极表面的粒子浓度与溶液本体的浓度相等，则电极反应过程的过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+与电流密度
+\begin_inset Formula $i_{\text{loc}}$
+\end_inset
+
+之间的关系可用Bulter-Volmer方程表示。
+\begin_inset Formula 
+\[
+i_{\text{loc},m}=i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $i_{\text{loc},m}$
+\end_inset
+
+为电流密度（
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+）；
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $i_{0}$
+\end_inset
+
+为交换电流密度（平衡态下的电流密度，
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+）；
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\alpha_{a}$
+\end_inset
+
+为阳极（anode）传递系数，
+\begin_inset Formula $\alpha_{c}$
+\end_inset
+
+为阴极（cathode）传递系数，均为无量纲常数。
+\begin_inset Formula $\alpha_{a}+\alpha_{c}=n$
+\end_inset
+
+，
+\begin_inset Formula $n$
+\end_inset
+
+为物质
+\begin_inset Formula $m$
+\end_inset
+
+的电极反应的电子数；
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\eta$
+\end_inset
+
+为过电位，即电极电位与平衡电位之差（
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+）；
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $F$
+\end_inset
+
+为法拉第常数，
+\begin_inset Formula $96485\,\mathrm{C/mol}$
+\end_inset
+
+；
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $R$
+\end_inset
+
+为气体常数，
+\begin_inset Formula $8.314\,\mathrm{J/(mol\cdot K)}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+线性Bulter–Volmer方程。当电极表面电流密度较小，例如电镀或电化学阻抗谱，动力学可以简化为
+\begin_inset Formula 
+\[
+i_{\text{loc},m}=i_{0}\frac{(\alpha_{a}+\alpha_{c})F}{RT}\eta
+\]
+
+\end_inset
+
+当过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+超过
+\begin_inset Formula $RT/F$
+\end_inset
+
+（室温下约为
+\begin_inset Formula $25\,\mathrm{mV}$
+\end_inset
+
+）时，此简化方程是不准确的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Tafel方程。当电极电流密度相比于交换电流大的多，或者过电位较大，Bulter–Volmer方程可以简化为Tafel公式。
+\begin_inset Formula 
+\begin{align*}
+\text{阳极Tafel方程} & i_{\text{loc},m}=i_{0}\,10^{\eta/A_{a}}\\
+\text{阴极Tafel方程} & i_{\text{loc},m}=-i_{0}\,10^{\eta/A_{c}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $A_{a}>0$
+\end_inset
+
+为阳极Tafel斜率，单位为
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+，
+\begin_inset Formula $A_{c}<0$
+\end_inset
+
+为阴极Tafel斜率，单位为
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+与浓度有关的 Bulter–Volmer公式。当考虑浓度分布不均匀时，即考虑扩散控制，则 Bulter–Volmer 公式可写为：
+\begin_inset Formula 
+\[
+i_{\text{loc},m}=i_{0}\left[c_{R}\exp(\frac{\alpha_{a}F\eta}{RT})-c_{0}\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
