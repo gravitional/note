@@ -35,7 +35,16 @@ curl -fsSL https://www.preining.info/rsa.asc | tlmgr key add -
 
 ## 查看ip地址
 
-使用`ip`命令
+[What apt package installs "ip addr" command?](https://askubuntu.com/questions/1212555/what-apt-package-installs-ip-addr-command)
+
+`ip` 命令来自软件包 `iproute2`, 可以使用下列命令安装
+
+```bash
+sudo apt update
+sudo apt install iproute2 -y
+```
+
+调用 `ip`命令
 
 ```bash
 ip addr show
@@ -45,16 +54,16 @@ ip link show #查看 MAC 地址
 ## 安装额外解码器
 
 如果你刚刚安装了 Ubuntu 或其他 Ubuntu 特色版本 如 Kubuntu,Lubuntu 等,你会注意到系统无法播放某些音频或视频文件.
-
-对于视频文件,你可以在 Ubuntu 上安装 `VLC`.`VLC` 是 Linux 上的最佳视频播放器之一,它几乎可以播放任何视频文件格式.但你仍然会遇到无法播放音频和 `flash` 的麻烦.
+对于视频文件,你可以在 Ubuntu 上安装 `VLC`.`VLC` 是 Linux 上的最佳视频播放器之一,
+它几乎可以播放任何视频文件格式.但你仍然会遇到无法播放音频和 `flash` 的麻烦.
 
 好消息是 Ubuntu 提供了一个软件包来安装所有基本的媒体编解码器:`ubuntu-restricted-extras`.
-
-ubuntu-restricted-extras 是一个包含各种基本软件,如 `Flash` 插件,`unrar` ,`gstreamer`,`mp4`,`Ubuntu` 中的 `Chromium` 浏览器的编解码器等的软件包.
-
-由于这些软件不是开源软件,并且其中一些涉及软件专利,因此 Ubuntu 默认情况下不会安装它们.你必须使用 `multiverse` 仓库,它是 Ubuntu 专门为用户提供非开源软件而创建的仓库.
-
-由于 `ubuntu-restrcited-extras` 软件包在 `multiverse` 仓库中,因此你应验证系统上已启用 `multiverse` 仓库:
+ubuntu-restricted-extras 是一个包含各种基本软件,如 `Flash` 插件,
+`unrar` ,`gstreamer`,`mp4`,`Ubuntu` 中的 `Chromium` 浏览器的编解码器等的软件包.
+由于这些软件不是开源软件,并且其中一些涉及软件专利,因此 Ubuntu 默认情况下不会安装它们.
+你必须使用 `multiverse` 仓库,它是 Ubuntu 专门为用户提供非开源软件而创建的仓库.
+由于 `ubuntu-restrcited-extras` 软件包在 `multiverse` 仓库中,
+因此你应验证系统上已启用 `multiverse` 仓库:
 
 ```bash
 sudo add-apt-repository multiverse
@@ -74,9 +83,7 @@ sudo apt install ubuntu-restricted-extras
 [Ubuntu如何使用source命令执行文件](http://www.xitongzhijia.net/xtjc/20150714/52870.html)
 
 `Ubuntu source` 命令的作用就是将设置在文件中的配置信息马上生效,而不需要经过重启.
-
 Ubuntu如何使用`source`命令执行文件
-
 source命令用法:
 `source filename` 或 `. filename`
 
@@ -663,10 +670,10 @@ sudo parted --list
 ### 创建交换分区
 
 + 使用`Ubuntu`安装介质如U盘开机, 选择`立即运行Ubuntu`.
-+ 打开`GParted`分区编辑器: 删除原先的`swap`, `resize`主分区大小, 
++ 打开`GParted`分区编辑器: 删除原先的`swap`, `resize`主分区大小,
 + 留出合适的空白空间用作`swap`.可以直接在`"free space following"`一项中设置想要的`swap`分区大小.
-+ 在新的空白空间中, 选择`new`, 输入`linux-swap`, 
-+ 如果喜欢可以起个名`swap`到`Partition name`中, 然后点击`Apply`应用.  
++ 在新的空白空间中, 选择`new`, 输入`linux-swap`,
++ 如果喜欢可以起个名`swap`到`Partition name`中, 然后点击`Apply`应用.
 + 完成后, 重新启动原先硬盘上的`Ubuntu`系统.
 
 ### 激活交换分区
@@ -746,8 +753,8 @@ sudo swapon -a
 
 ### swappiness,如何更改?
 
-`swappiness`参数控制内核使用`swap`的倾向. 
-因为磁盘要比`RAM`慢得多, 所以如果进程经常主动地移出内存, 
+`swappiness`参数控制内核使用`swap`的倾向.
+因为磁盘要比`RAM`慢得多, 所以如果进程经常主动地移出内存,
 可能导致系统和应用程序的响应时间变慢.
 
 + `swappiness` 的值可以在`0`到`100`之间
