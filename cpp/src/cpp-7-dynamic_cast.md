@@ -50,31 +50,7 @@ base2.Show();
 与指针不同的是并 `不存在空引用`,
 所以引用的 `dynamic_cast`检测失败时会抛出一个 `bad_cast`异常:
 
-```cpp
-int main()
-{
-    //第一种情况, 转换成功
-    Derived b ;
-    Base &base1= b;
-    Derived &der1 = dynamic_cast<Derived&>(base1);
-    cout<<"第一种情况: ";
-    der1.Show();
-    cout<<endl;
-
-    //第二种情况
-    Base a ;
-    Base &base = a ;
-    cout<<"第二种情况: ";
-    try{
-        Derived & der = dynamic_cast<Derived&>(base);
-    }
-    catch(bad_cast)
-    {
-        cout<<"转化失败,抛出bad_cast异常"<<endl;
-    }
-    system("pause");
-}
-```
+代码见 [dy_cast](../exa1-dynamica_cast/dy_cast.cpp)
 
 ## 用dynamic_cast转换的Base类至少带有一个虚函数
 
