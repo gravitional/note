@@ -3069,7 +3069,7 @@ pg=\lambda_{0}
 \begin_inset Formula 
 \begin{equation}
 \begin{cases}
-\frac{\dd{y}}{\dd{x}}=f(x,y), & a\le x\le b\\
+y'(x)=f(x,y), & a\le x\le b\\
 y(a)=y_{0}
 \end{cases}\label{eq:eu1.1}
 \end{equation}
@@ -3107,7 +3107,7 @@ y(a)=y_{0}
  是最简单的一种显式单步法。对于方程
 \begin_inset Formula 
 \[
-\frac{\dd{y}}{\dd{x}}=f(x,y)
+y'(x)=f(x,y)
 \]
 
 \end_inset
@@ -3279,6 +3279,17 @@ noprefix "false"
 
 \begin_layout Standard
 ref：数值分析–张平文
+\begin_inset Formula 
+\[
+\begin{cases}
+y'(x)=f(x,y), & a\le x\le b\\
+y(a)=y_{0}
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -9862,6 +9873,10 @@ noprefix "false"
 单元上的形函数
 \end_layout
 
+\begin_layout Section
+势函数连续条件
+\end_layout
+
 \begin_layout Standard
 在有限元中，求解区域被划分成小单元。每个小单元内的点，包括边界，也使用形函数插值得到：
 \begin_inset Formula 
@@ -13965,10 +13980,30 @@ ref: FEM-Gerard;p45/61;sec 1.3.11。静电场的基础公式是 ：
 
 \end_inset
 
-全局残差可以表示成每个单元的残差之和。在每个单元上，令加权的残差（residual error）和 为
+类似Ritz方法中的泛函
+\begin_inset Formula $\mathcal{F}(\phi)$
+\end_inset
+
+，全局残差
+\begin_inset Formula $R(\phi)$
+\end_inset
+
+同样满足
+\series bold
+线性律
+\series default
+，可以表示成单元残差的线性和
+\begin_inset Formula 
+\begin{equation}
+R(\phi)=\sum_{e}R^{e}\left(\phi;N_{i}^{e}\right).\label{eq:gal0}
+\end{equation}
+
+\end_inset
+
+在每个单元上，令加权的残差（residual error）和 为
 \begin_inset Formula 
 \begin{align}
-R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:residue}\\
+R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:gal00}\\
 \text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
 \text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber 
 \end{align}
@@ -13988,7 +14023,7 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \end_inset
 
 ）的稳态分布应该满足
-\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]=0$
+\begin_inset Formula $R^{e}\left(\phi;N_{i}^{e}\right)=0$
 \end_inset
 
 ，即
@@ -14027,7 +14062,222 @@ R^{e}\left[N_{i}^{e}\right] & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{
 \end_layout
 
 \begin_layout Subsection
-微扰迭代求解
+迭代过程
+\end_layout
+
+\begin_layout Standard
+对于线性材料，
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+是不依赖于
+\begin_inset Formula $E$
+\end_inset
+
+（等价于
+\begin_inset Formula $\phi$
+\end_inset
+
+）的常数，因此刚度矩阵的元素不依赖于
+\begin_inset Formula $\phi$
+\end_inset
+
+，方程是线性的。但对于一般的问题，
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+可能依赖于
+\begin_inset Formula $E$
+\end_inset
+
+，方程是非线性的，形如 
+\begin_inset Formula $K_{ij}[\phi]\,\phi_{j}-b_{i}=0$
+\end_inset
+
+，属于非线性方程组的求根问题。
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+对于非线性问题，需要使用迭代法求解
+\series default
+。假设材料的
+\begin_inset Formula $D$
+\end_inset
+
+–
+\begin_inset Formula $E$
+\end_inset
+
+曲线性质足够好，例如光滑性和单调性等；并假设所求的边值问题有稳定和唯一的解。由于材料的
+\begin_inset Formula $D$
+\end_inset
+
+–
+\begin_inset Formula $E$
+\end_inset
+
+曲线是连续的，并且最终在达到稳定解
+\begin_inset Formula $\phi$
+\end_inset
+
+时，满足
+\begin_inset Formula $D=\varepsilon(E)\,E$
+\end_inset
+
+，
+\begin_inset Formula $\kappa=\partial D/\partial E$
+\end_inset
+
+（对于各向同性材料）。可以设想从
+\begin_inset Formula $\phi=0$
+\end_inset
+
+，
+\begin_inset Formula $\varepsilon=\varepsilon_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\kappa=\kappa_{0}$
+\end_inset
+
+开始，让
+\begin_inset Formula $\phi$
+\end_inset
+
+缓慢增加，系统状态沿着
+\begin_inset Formula $D$
+\end_inset
+
+–
+\begin_inset Formula $E$
+\end_inset
+
+曲线缓缓移动，最终到达符合给定边界条件的稳定态。写成式子是
+\begin_inset Formula 
+\begin{align}
+K[\phi]\,\phi & =b\label{eq:gal2a}\\
+K[\phi_{0}]\phi_{0}+K[\sum_{i=0}^{1}\phi_{i}]\phi_{1}+K[\sum_{i=0}^{2}\phi_{i}]\phi_{2}+\cdots & =b_{0}+\lambda_{1}b_{1}+\lambda_{2}b_{2}+\cdots\label{eq:gal2b}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $K\phi$
+\end_inset
+
+展开为
+\begin_inset Formula $\{K_{0}\phi_{0},K_{1}\phi_{1},K_{2}\phi_{2},\cdots\}$
+\end_inset
+
+，残差展开为
+\begin_inset Formula $b_{0},\lambda_{1}b_{1},\lambda_{2}b_{2},\cdots$
+\end_inset
+
+，它们都是逐渐收敛于零的数列；最终状态下
+\begin_inset Formula $\phi$
+\end_inset
+
+应该满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal2a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal2b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表示按微扰论逐级匹配的思想，一级一级迭代，
+\begin_inset Formula 
+\begin{align}
+K[0]\phi_{0} & =b_{0}\nonumber \\
+K[\phi_{0}]\phi_{1} & =\lambda_{1}b_{1}=b-K[0]\phi_{0}-\cdots\label{eq:gal2c}\\
+K[\phi_{0}+\phi_{1}]\phi_{2} & =\lambda_{2}b_{2}=b-K[0]\phi_{0}-K[\phi_{0}]\phi_{1}-\cdots\nonumber 
+\end{align}
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal2c"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，考虑到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal2b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左边系数
+\begin_inset Formula $K[\sum\phi_{i}]$
+\end_inset
+
+中含有同级别的
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+，这样方程是隐式的，为了方便求解，每次都只累加到
+\begin_inset Formula $\phi_{i-1}$
+\end_inset
+
+，由此产生的误差应该是更高阶的，或者假设材料随
+\begin_inset Formula $\phi$
+\end_inset
+
+的变化足够平缓，因此能做这种替换。在
+\begin_inset Formula $\lambda_{i}b_{i}$
+\end_inset
+
+中，显式写出系数
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+是为了说明，当材料曲边变化剧烈，或者收敛状况不佳的时候，可以手动把
+\begin_inset Formula $\lambda$
+\end_inset
+
+调节的更小，获得更小的试探步长，这样解出更小的
+\begin_inset Formula $\norm{\phi_{i}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+迭代终止的信号是
+\begin_inset Formula $\phi_{n}\approx0$
+\end_inset
+
+，或者说等效激励 
+\begin_inset Formula $b-K[0]\phi_{0}-K[\phi_{0}]\phi_{1}-\cdots\approx0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+具体方程
 \end_layout
 
 \begin_layout Standard
@@ -14070,24 +14320,24 @@ noprefix "false"
 重新回到平衡状态。写成表达式即
 \begin_inset Formula 
 \begin{align*}
-\sbf D & =\sbf D^{0}+{\color{blue}\varepsilon}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\varepsilon}\,\sbf\nabla\delta\phi\\
+\sbf D & =\sbf D^{0}+{\color{blue}\kappa}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\kappa}\,\sbf\nabla\delta\phi\\
 \phi & =\phi^{0}+\delta\phi
 \end{align*}
 
 \end_inset
 
 其中 
-\begin_inset Formula $\varepsilon=\frac{\partial D}{\partial E}$
+\begin_inset Formula $\kappa=\frac{\partial D}{\partial E}$
 \end_inset
 
 ，一般材料的
-\begin_inset Formula $\varepsilon$
+\begin_inset Formula $\kappa$
 \end_inset
 
-可以非线性（也可能是张量）。代入
+ 可以非线性（也可能是张量）。代入
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:residue"
+reference "eq:gal00"
 plural "false"
 caps "false"
 noprefix "false"
@@ -14101,8 +14351,8 @@ noprefix "false"
 对应的残差为零得
 \begin_inset Formula 
 \begin{align*}
-0= & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
- & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+0= & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
+ & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \end{align*}
 
 \end_inset
@@ -14110,7 +14360,7 @@ noprefix "false"
 整理得
 \begin_inset Formula 
 \begin{align}
- & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
  & =\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
 \end{align}
 
@@ -14175,53 +14425,13 @@ noprefix "false"
  得
 \begin_inset Formula 
 \begin{align}
-\bigg[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\varepsilon\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
+\bigg[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
  & =\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} \label{eq:gal4}
 \end{align}
 
 \end_inset
 
-此即 Galerkin 方法的迭代展开式。方程左边正比于 
-\begin_inset Formula $N_{i}^{e}N_{j}^{e}$
-\end_inset
-
-，右边正比于 
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
-，因此在形函数
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
-的尺度变换（rescale）下，
-\begin_inset Formula 
-\[
-\left[\cdots\right]\delta\phi_{j}=\lambda\left\{ \cdots\right\} ,\quad\lambda<1.
-\]
-
-\end_inset
-
-
-\begin_inset Formula $\lambda$
-\end_inset
-
-可以用来控制步长，即每次
-\begin_inset Formula $\delta\phi$
-\end_inset
-
-对
-\begin_inset Formula $\phi_{0}$
-\end_inset
-
-进行修正时，
-\begin_inset Formula $\lambda$
-\end_inset
-
-可以控制修正的大小，它相当于对场进行一个全局的放缩，所以
-\begin_inset Formula $\lambda$
-\end_inset
-
-对于每个单元是相同的。
+此即 Galerkin 方法的迭代展开式。
 \end_layout
 
 \begin_layout Enumerate
@@ -14274,7 +14484,7 @@ noprefix "false"
  对刚度矩阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
 \begin_inset Formula 
 \begin{equation}
-\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
+\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
 \end{equation}
 
 \end_inset
