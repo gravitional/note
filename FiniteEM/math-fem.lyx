@@ -13626,6 +13626,331 @@ noprefix "false"
 当作独立依赖。
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+系统的泛函
+\begin_inset Formula $\mathcal{F}(\phi)$
+\end_inset
+
+可以做局域分解，表示成线性和
+\series default
+，这一点十分重要：
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}(\phi)=\sum_{e=1}^{M}\mathcal{F}^{e}(\phi)\label{eq:global-fl}
+\end{equation}
+
+\end_inset
+
+单元中的
+\begin_inset Formula $\phi$
+\end_inset
+
+可以用每个单元的形函数和单元节点上的
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+表示为
+\begin_inset Formula 
+\[
+\phi=\sum_{\alpha}N_{\alpha}^{e}\phi_{\alpha},
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\alpha$
+\end_inset
+
+是节点编号。因此
+\begin_inset Formula $\mathcal{F}^{e}(\phi)$
+\end_inset
+
+可以表示为
+\begin_inset Formula 
+\[
+\mathcal{F}^{e}(\phi)=\frac{1}{2}\int_{\Omega^{e}}\left(\nabla N_{i}^{e}\cdot\varepsilon_{r}\cdot\nabla N_{j}^{e}\right)\phi_{i}\phi_{j}\dd{\Omega}-\int_{\Omega^{e}}\frac{\rho}{\varepsilon_{0}}N_{i}^{e}\phi_{i}\dd{\Omega}.
+\]
+
+\end_inset
+
+在这一步中，不可数自由度的连续体系被离散为有限自由度体系，自由度为
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+。计算
+\begin_inset Formula $\mathcal{F}^{e}$
+\end_inset
+
+对
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+的导数可以得到
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\mathcal{F}^{e}(\phi)}{\partial\phi_{i}}=K_{ij}^{e}\phi_{j}-b_{i}^{e}\label{eq:ritz2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align}
+K_{ij}^{e} & =\int_{\Omega^{e}}\left(\nabla N_{i}^{e}\cdot\varepsilon_{r}\cdot\nabla N_{j}^{e}\right)\dd{\Omega},\label{eq:ritz0}\\
+b_{i}^{e} & =\int_{\Omega^{e}}\frac{\rho}{\varepsilon_{0}}N_{i}^{e}\dd{\Omega}\nonumber 
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $i,j$
+\end_inset
+
+表示单元上的局域节点编号。二阶偏导转化成二次型，一次项转化成常数项。根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:global-fl"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的
+\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
+\end_inset
+
+，可以得到矩阵方程
+\begin_inset Formula 
+\begin{equation}
+\sum_{e}\left\{ \frac{\partial\mathcal{F}^{e}}{\partial\phi_{i}}\right\} =\sum_{e=1}^{M}[K_{ij}^{e}]\{\phi_{j}\}-\sum_{e=1}^{M}\{b_{i}^{e}\}=\{0\}.\label{eq:ritz1}
+\end{equation}
+
+\end_inset
+
+这里仍然使用了
+\series bold
+线性律
+\series default
+，
+\begin_inset Formula $\delta\mathcal{F}(\phi)=\delta\sum\mathcal{F}^{e}(\phi)$
+\end_inset
+
+。其中
+\begin_inset Formula $i,j$
+\end_inset
+
+ 表示全局节点编号，为求简便没有和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+区分符号。除了
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+之外，还要加上必要边界条件才能完全确定所有
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+通过
+\series bold
+线性律
+\series default
+，泛函导数
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的计算可以在单元上迭代，即在每个单元上独立进行，方便于编程实现。但泛函极值条件
+\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
+\end_inset
+
+或
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+需要在全局意义上满足。因为本身微分方程就是描述大块求解区域而不是独立单元的，不同单元的相邻节点之间存在约束，通过约束关系最终给定所有节点的值。所以中间还需要一个
+\series bold
+组合
+\series default
+的过程。具体来说，需要将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz0"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的局域矩阵 
+\begin_inset Formula $K_{ij}^{e},b_{i}^{e}$
+\end_inset
+
+，例如
+\begin_inset Formula $3\times3$
+\end_inset
+
+（每个单元的节点总数）；通过填
+\begin_inset Formula $0$
+\end_inset
+
+扩充成全局矩阵，例如
+\begin_inset Formula $100\times100$
+\end_inset
+
+（全局节点总数）。然后将扩充得到的稀疏矩阵全部相加，最终给出稀疏的带状矩阵。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+为什么是稀疏的带状矩阵：单元上的局域
+\begin_inset Formula $K_{ij}^{e}$
+\end_inset
+
+描述单元内节点的相互作用，例如三角形三个节点上电势的约束关系
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/ele-tri3-2.pdf
+	lyxscale 150
+	scale 80
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+K_{ij}^{(1)}=\left[\begin{array}{ccc}
+K_{11}^{(1)} & K_{12}^{(1)} & K_{13}^{(1)}\\
+K_{21}^{(1)} & K_{22}^{(1)} & K_{23}^{(1)}\\
+K_{31}^{(1)} & K_{32}^{(1)} & K_{33}^{(1)}
+\end{array}\right],\quad K_{ij}^{(2)}={\color{blue}\left[\begin{array}{ccc}
+K_{44}^{(2)} & K_{42}^{(2)} & K_{43}^{(2)}\\
+K_{24}^{(2)} & K_{22}^{(2)} & K_{23}^{(2)}\\
+K_{34}^{(2)} & K_{32}^{(2)} & K_{33}^{(2)}
+\end{array}\right]}
+\]
+
+\end_inset
+
+上标
+\begin_inset Formula $(1)$
+\end_inset
+
+表示单元
+\begin_inset Formula $(1)$
+\end_inset
+
+；
+\begin_inset Formula $K_{11}^{(1)}$
+\end_inset
+
+描述单元
+\begin_inset Formula $(1)$
+\end_inset
+
+中节点
+\begin_inset Formula $1$
+\end_inset
+
+的“动能项”；
+\begin_inset Formula $K_{12}^{(1)}$
+\end_inset
+
+描述节点
+\begin_inset Formula $1,2$
+\end_inset
+
+的相互作用，并且
+\begin_inset Formula $K_{12}^{(1)}=K_{21}^{(1)}$
+\end_inset
+
+，其余类似。为了方便示意，在
+\begin_inset Formula $K_{ij}^{(2)}$
+\end_inset
+
+中直接使用了节点的全局编号。全局节点一共
+\begin_inset Formula $4$
+\end_inset
+
+个，所以组合过程是
+\begin_inset Formula 
+\[
+[K_{ij}^{(1)}]+[K_{ij}^{(2)}]=\left[\begin{array}{cccc}
+K_{11}^{(1)} & K_{12}^{(1)} & K_{13}^{(1)} & 0\\
+K_{21}^{(1)} & K_{22}^{(1)}+{\color{blue}K_{22}^{(2)}} & K_{23}^{(1)}+{\color{blue}K_{23}^{(2)}} & {\color{blue}K_{24}^{(2)}}\\
+K_{31}^{(1)} & K_{32}^{(1)}+{\color{blue}K_{32}^{(2)}} & K_{33}^{(1)}+{\color{blue}K_{33}^{(2)}} & {\color{blue}K_{34}^{(2)}}\\
+0 & {\color{blue}K_{42}^{(2)}} & {\color{blue}K_{43}^{(2)}} & {\color{blue}K_{44}^{(2)}}
+\end{array}\right]
+\]
+
+\end_inset
+
+上式以不同颜色标示了，两个局域单元的矩阵如何“混杂”到全局矩阵中，这些元素均可明确计算出。
+\begin_inset Formula $1,4$
+\end_inset
+
+节点没有直接相互作用，因此全局矩阵
+\begin_inset Formula $(1,4)$
+\end_inset
+
+，
+\begin_inset Formula $(4,1)$
+\end_inset
+
+位置为零。其中的混合项 
+\begin_inset Formula $K_{22}^{(1)}+{\color{blue}K_{22}^{(2)}}$
+\end_inset
+
+，
+\begin_inset Formula $K_{33}^{(1)}+{\color{blue}K_{33}^{(2)}}$
+\end_inset
+
+，
+\begin_inset Formula $K_{23}^{(1)}+{\color{blue}K_{23}^{(2)}}$
+\end_inset
+
+是由于边（2–3）是公共边，这些项描述了一个单元中的值如何“过渡”到另一个单元中。
+\end_layout
+
 \begin_layout Section
 Galerkin 方法
 \end_layout
@@ -14411,8 +14736,8 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-以Ritz方法为例，我们关注刚度矩阵的部分，静电场的泛函经过分部积分可以给出边界项：
+\begin_layout Example
+有限元中界面连续性的保证。以Ritz方法为例，我们关注刚度矩阵的部分，静电场的泛函经过分部积分可以给出边界项：
 \begin_inset Formula 
 \begin{align*}
 \mathcal{F}(\phi)= & \frac{1}{2}\int_{V}(\nabla\phi)\cdot\varepsilon\cdot(\nabla\phi)\dd{V}\\
@@ -14423,10 +14748,10 @@ noprefix "false"
 
 考虑两个相邻的单元，它们总的泛函写作
 \begin_inset Formula 
-\begin{align*}
-\sum_{e}\mathcal{F}_{e}(\phi) & =\frac{1}{2}\sum_{e}\int_{V^{e}}(\nabla\phi_{e})\cdot\varepsilon_{e}\cdot(\nabla\phi_{e})\dd{V},\\
- & =\frac{1}{2}\sum_{e}\int_{V^{e}}\phi_{e}[-\nabla\cdot(\varepsilon_{e}\nabla\phi_{e})]\dd{V}+\sum_{e}{\color{blue}\int_{\Gamma^{e}}\left(\frac{\varepsilon_{e}}{2}\phi_{e}\frac{\partial}{\partial n_{e}}\phi_{e}\right)\dd{\Gamma}}
-\end{align*}
+\begin{align}
+\sum_{e}\mathcal{F}_{e}(\phi) & =\frac{1}{2}\sum_{e}\int_{V^{e}}(\nabla\phi_{e})\cdot\varepsilon_{e}\cdot(\nabla\phi_{e})\dd{V},\label{eq:ritz6}\\
+ & =\frac{1}{2}\sum_{e}\int_{V^{e}}\phi_{e}[-\nabla\cdot(\varepsilon_{e}\nabla\phi_{e})]\dd{V}+\sum_{e}{\color{blue}\int_{\Gamma^{e}}\left(\frac{\varepsilon_{e}}{2}\phi_{e}\frac{\partial}{\partial n_{e}}\phi_{e}\right)\dd{\Gamma}}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -14434,31 +14759,27 @@ noprefix "false"
 \begin_inset Formula $e=1,2$
 \end_inset
 
-，每个单元可以有多段边界，并且相邻单元必有公共边界
-\begin_inset Formula $\Gamma^{c}\in\{\Gamma^{e}\}$
-\end_inset
-
-，两个单元对
+，每个单元可以有多段边界。把相邻单元的公共边界记作
 \begin_inset Formula $\Gamma^{c}$
 \end_inset
 
-的贡献将累加， 
+，累加两个单元对
+\begin_inset Formula $\Gamma^{c}$
+\end_inset
+
+的贡献， 
 \begin_inset Formula 
 \begin{equation}
-{\color{blue}\int_{\Gamma^{c}}\left(\frac{\varepsilon_{1}}{2}\phi_{1}\frac{\partial}{\partial n_{e}}\phi_{1}\right)\dd{\Gamma}+\int_{\Gamma^{c}}\left(\frac{\varepsilon_{2}}{2}\phi_{2}\frac{\partial}{\partial n_{e}}\phi_{2}\right)\dd{\Gamma}}\label{eq:bnd5}
+{\color{blue}\int_{\Gamma^{c}}\left(\frac{\varepsilon_{1}}{2}\phi_{1}\frac{\partial}{\partial n_{1}}\phi_{1}\right)\dd{\Gamma}+\int_{\Gamma^{c}}\left(\frac{\varepsilon_{2}}{2}\phi_{2}\frac{\partial}{\partial n_{2}}\phi_{2}\right)\dd{\Gamma}}\label{eq:bnd5}
 \end{equation}
 
 \end_inset
 
-以下图为例，电势被表示成插值
-\begin_inset Formula $\text{\ensuremath{\phi=\sum_{\alpha}\phi_{\alpha}N_{\alpha}}}$
-\end_inset
 
-；
 \begin_inset Formula $\varepsilon_{1,2}$
 \end_inset
 
-分别表示两种介质的相对介电常数；
+表示两种相对介电常数；
 \begin_inset Formula $n_{1,2}$
 \end_inset
 
@@ -14466,51 +14787,66 @@ noprefix "false"
 \begin_inset Formula $(1,2)$
 \end_inset
 
-在边界（2–3） 上的法线，它们是平行反向的。
-\end_layout
+在边界（2–3） 上的法线，它们是平行反向的。根据
+\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
+\end_inset
 
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/ele-tri3-2.pdf
-	lyxscale 150
-	scale 80
+列出有限元全局方程时，我们会写出单元的体方程
+\begin_inset Formula 
+\begin{equation}
+-\nabla\cdot(\varepsilon_{e}\nabla\phi_{e})=\frac{\rho}{\varepsilon_{0}}\quad\Leftrightarrow\quad\sum_{e}[K_{ij}^{e}]\{\phi_{j}\}=\sum_{e}b_{i}^{e}\label{eq:ritz7}
+\end{equation}
 
 \end_inset
 
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-相邻单元对公共边界的贡献图示
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:ele-trans-1"
-
-\end_inset
-
-
-\end_layout
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz6"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
+，要想让
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz7"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
+中两式完全等价还需满足
+\begin_inset Formula 
+\begin{align*}
+ & \varepsilon_{1}\frac{\partial}{\partial n_{1}}\phi_{1}=\varepsilon_{2}\frac{\partial}{\partial n_{1}}\phi_{2},\\
+\text{离散形式：}\quad & \sum_{s}[S_{ij}^{e}]\{\phi_{j}\}=0
+\end{align*}
 
-\end_layout
+\end_inset
 
-\begin_layout Standard
-在边界上 （2–3）上，
+即法向电位移连续，其中使用了
+\begin_inset Formula $n_{1}=-n_{2}$
+\end_inset
+
+。也就是泛函法
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ritz6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+内蕴了界面连续条件
+\begin_inset Formula $D_{n1}=D_{n2}$
+\end_inset
+
+。在实际工作中
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:bnd5"
@@ -14520,7 +14856,56 @@ noprefix "false"
 
 \end_inset
 
-的极值条件导致如下方程：
+的贡献从不显式写出。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+以下图为例，在边界上 （2–3）上，电势被表示成插值
+\begin_inset Formula $\text{\ensuremath{\phi=\sum_{\alpha}\phi_{\alpha}N_{\alpha}}}$
+\end_inset
+
+，插值节点是
+\begin_inset Formula $\{2,3\}$
+\end_inset
+
+，相当于忽略了
+\begin_inset Formula $(1,4)$
+\end_inset
+
+节点的影响。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/ele-tri3-2.pdf
+	lyxscale 150
+	scale 80
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对刚度矩阵的贡献为：
 \begin_inset Formula 
 \[
 S_{ij}^{e}=\int_{\Gamma^{c}}\varepsilon_{e}N_{i}\frac{\partial N_{j}}{\partial n_{e}}\dd{\Gamma}
@@ -14531,22 +14916,22 @@ S_{ij}^{e}=\int_{\Gamma^{c}}\varepsilon_{e}N_{i}\frac{\partial N_{j}}{\partial n
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{cccc}
-S_{11}^{(1)} & S_{12}^{(1)} & S_{13}^{(1)} & 0\\
-S_{21}^{(1)} & S_{22}^{(1)}+S_{22}^{(2)} & S_{23}^{(1)}+S_{23}^{(2)} & S_{24}^{(2)}\\
-S_{31}^{(1)} & S_{32}^{(1)}+S_{32}^{(2)} & S_{33}^{(1)}+S_{33}^{(2)} & S_{34}^{(2)}\\
-0 & S_{42}^{(2)} & S_{43}^{(2)} & S_{44}^{(2)}
+\left[\begin{array}{cc}
+S_{22}^{(1)}+{\color{blue}S_{22}^{(2)}} & S_{23}^{(1)}+{\color{blue}S_{23}^{(2)}}\\
+S_{32}^{(1)}+{\color{blue}S_{32}^{(2)}} & S_{33}^{(1)}+{\color{blue}S_{33}^{(2)}}
 \end{array}\right]\left[\begin{array}{c}
-\phi_{1}\\
 \phi_{2}\\
-\phi_{3}\\
-\phi_{4}
+\phi_{3}
 \end{array}\right]=0
 \]
 
 \end_inset
 
+这就是
+\begin_inset Formula $\varepsilon_{1}\frac{\partial}{\partial n_{1}}\phi_{1}=\varepsilon_{2}\frac{\partial}{\partial n_{1}}\phi_{2}$
+\end_inset
 
+的离散矩阵形式，当然在实际工作中它从不显式出现在有限元矩阵方程中，常规的体方程已经内蕴了此条件。
 \end_layout
 
 \begin_layout Section
