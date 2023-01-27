@@ -5,11 +5,15 @@
 mpv是一个自由开源的跨平台媒体播放器, 具有轻量, 兼容性好, 播放性能优秀, 简洁无广告等特点.
 [mpv官网](https://mpv.io):
 
-mpv默认快捷键方案
+## mpv默认快捷键方案
 
 ![img](https://i0.hdslb.com/bfs/article/33d07afd7cd75dc52f4c2c03e3d895314da2b05f.jpg@942w_606h_progressive.webp)
 
-以下是mpv.conf和input.conf的简化版, 只写了最基础常用的快捷键功能.
+`m` 静音
+
+## 配置文件
+
+以下是 `mpv.conf` 和 `input.conf` 的简化版, 只写了最基础常用的快捷键功能.
 更丰富的配置见 [自用MPV播放器input.conf, mpv.conf(修订版)](https://www.bilibili.com/read/cv13479755)
 
 使用方法:

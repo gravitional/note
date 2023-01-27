@@ -119,7 +119,7 @@ ffmpeg  -ss 01:26:03  -t 00:33:49  -i  `
 'output.mp4'
 ```
 
-也可以直接使用命令合并
++ 也可以直接使用命令合并
 
 ```bash
 ffmpeg -y -safe 0 -i "concat:i1.mp4 | i2.mp4 | i3.mp4" -codec copy output.mp4
