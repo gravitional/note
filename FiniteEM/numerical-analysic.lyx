@@ -304,7 +304,11 @@ fn = -1/2 # + 3/2 &; pts = cobs[fn, 0, 10]; alist = Table[Arrow[{pts[[i]],
 
 \end_inset
 
-；
+；迭代回路的水平线和垂直线是等长的，长度为
+\begin_inset Formula $\Delta x_{i+1}=x_{i+1}-x_{i}$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -778,7 +782,7 @@ k(x_{i}-r) & =g(x_{i})-g(r)\\
 \Rightarrow k(x_{i}-r) & =\frac{x_{i+1}-\overline{\lambda}_{i}x_{i}}{\lambda_{i}}-r\\
 \lambda_{i}k(x_{i}-r) & =x_{i+1}-\overline{\lambda}_{i}x_{i}-\lambda_{i}r\\
 \lambda_{i}k(x_{i}-r)+\overline{\lambda}_{i}x_{i} & =x_{i+1}-\lambda_{i}r\\
-\lambda_{i}k(x_{i}-r)+\overline{\lambda}_{i}x_{i}-\overline{\lambda}_{i}r & =x_{i+1}-r
+\lambda_{i}k(x_{i}-r)+\overline{\lambda}_{i}(x_{i}-r) & =x_{i+1}-r
 \end{align*}
 
 \end_inset
@@ -790,13 +794,13 @@ k(x_{i}-r) & =g(x_{i})-g(r)\\
 ，稍作整理
 \begin_inset Formula 
 \begin{equation}
-e_{i+1}=P\,e_{i}\label{eq:my5}
+e_{i+1}=P_{i}\,e_{i}\label{eq:my5}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $P=\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}$
+\begin_inset Formula $P=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}$
 \end_inset
 
 。我们选取的
@@ -822,7 +826,7 @@ e_{i+1}=P\,e_{i}\label{eq:my5}
 附近必然存在充分小的区域满足
 \begin_inset Formula 
 \[
-P=\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}<1,\quad0<\lambda\le1
+P_{i}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}<1,\quad0<\lambda\le1
 \]
 
 \end_inset
@@ -850,11 +854,11 @@ noprefix "false"
 \end_inset
 
 给出了误差的收敛域，即满足
-\begin_inset Formula $0\le P<1$
+\begin_inset Formula $0\le P_{i}<1$
 \end_inset
 
 的区域。其中横轴是
-\begin_inset Formula $\lambda$
+\begin_inset Formula $\lambda_{i}$
 \end_inset
 
 ，取值范围是
@@ -940,6 +944,270 @@ name "fig:fpi2"
 \end_layout
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于不动点问题
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+，其中
+\begin_inset Formula $g(x)=-3/2x+5/2$
+\end_inset
+
+，由于
+\begin_inset Formula $\abs{g(c_{i})}=3/2>1$
+\end_inset
+
+，使用普通的FPI不会收敛，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a。但使用改进的FPI，并令
+\begin_inset Formula $\lambda=0.7$
+\end_inset
+
+，此时
+\begin_inset Formula $P=0.75$
+\end_inset
+
+，则迭代收敛，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b。可以看到对于改进的FPI，迭代点
+\begin_inset Formula $x_{i+1}$
+\end_inset
+
+并不落在
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+曲线上，而是落在
+\begin_inset Formula $y=x$
+\end_inset
+
+ 和 
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+两条曲线之间，即图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b中的红色曲线，它就是修正曲线。当迭代序列到达根
+\begin_inset Formula $r$
+\end_inset
+
+附近时，三条曲线是相交的，所以不会影响最终结果的正确性。可以看到，在改进的FPI中，迭代回路的水平或垂直线段长度
+\begin_inset Formula $\Delta x_{i+1}=x_{i+1}-x_{i}$
+\end_inset
+
+变小，得到了有效的控制。但是
+\begin_inset Formula $\lambda$
+\end_inset
+
+也不能取得过小，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c，此时虽然收敛性好，但是收敛速率下降，需要更多步才能找到根。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi3a.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fpi[f_, x0_, n_] := NestList[f, x0, n]; cobs[f_, x0_, 0] := {{x0, 0}, {x0,
+ f@x0}}; cobs[f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi[f,
+ x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1; r4 = Rest@tmp;
+ Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*) fn = -3/2 #
+ + 5/2 &; pts = cobs[fn, 0.7, 10]; alist = Table[Arrow[{pts[[i]], pts[[i
+ + 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, -7.2, 9.5}, PlotRange
+ -> Automatic, Frame -> True, ImageSize -> Medium, AspectRatio -> Automatic];
+ f2 = Graphics[Prepend[alist, Arrowheads[{{.018, 1}}]]]; Show[f1, f2]
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fpi3b.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fpi2[
+\backslash
+[Lambda]_, f_, x0_, 0] := {x0}; fpi2[
+\backslash
+[Lambda]_, f_, x0_, n_] := Module[{tmp, last}, tmp = fpi2[
+\backslash
+[Lambda], f, x0, n - 1]; last = Last@tmp; Append[tmp, 
+\backslash
+[Lambda]*f@last + (1 - 
+\backslash
+[Lambda])*last] ]; cobs2[
+\backslash
+[Lambda]_, f_, x0_, 0] := {{x0, 0}, {x0, 
+\backslash
+[Lambda]*f@x0 + (1 - 
+\backslash
+[Lambda])*x0}}; cobs2[
+\backslash
+[Lambda]_, f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi2[
+\backslash
+[Lambda], f, x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1;
+ r4 = Rest@tmp; Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*)
+ fn = -3/2 # + 5/2 &; 
+\backslash
+[Lambda] = 0.7; (*回旋路径*)pts = cobs2[
+\backslash
+[Lambda], fn, 0.7, 12]; cowList = Table[Arrow[{pts[[i]], pts[[i + 1]]}],
+ {i, 1, Length@pts - 1}]; (*迭代路径*)fpiList = pts[[2 ;; All ;; 2]]; f1 = Plot[{x,
+ fn@x}, {x, 0.62, 1.3} , PlotRange -> Automatic, Frame -> True , ImageSize
+ -> Medium, AspectRatio -> Automatic]; f2 = Graphics[Prepend[cowList, Arrowheads
+[{{.018, 1}}]]]; f3 = ListLinePlot[fpiList, PlotStyle -> {Red, AbsoluteThickness[
+1]}]; Show[f1, f2, f3]
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fpi3c.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fpi2[
+\backslash
+[Lambda]_, f_, x0_, 0] := {x0}; fpi2[
+\backslash
+[Lambda]_, f_, x0_, n_] := Module[{tmp, last}, tmp = fpi2[
+\backslash
+[Lambda], f, x0, n - 1]; last = Last@tmp; Append[tmp, 
+\backslash
+[Lambda]*f@last + (1 - 
+\backslash
+[Lambda])*last] ]; cobs2[
+\backslash
+[Lambda]_, f_, x0_, 0] := {{x0, 0}, {x0, 
+\backslash
+[Lambda]*f@x0 + (1 - 
+\backslash
+[Lambda])*x0}}; cobs2[
+\backslash
+[Lambda]_, f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi2[
+\backslash
+[Lambda], f, x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1;
+ r4 = Rest@tmp; Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*)
+ fn = -3/2 # + 5/2 &; 
+\backslash
+[Lambda] = 0.1; rnds = 14; (*回旋路径*)pts = cobs2[
+\backslash
+[Lambda], fn, 0.7, rnds]; cowList = Table[Arrow[{pts[[i]], pts[[i + 1]]}],
+ {i, 1, Length@pts - 1}]; (*迭代路径*)fpiList = pts[[2 ;; All ;; 2]]; f1 = Plot[{x,
+ fn@x}, {x, 0.65, 1.05} , PlotRange -> {Automatic, {0.6, 1.2}}, Frame -> True
+ , ImageSize -> Medium, AspectRatio -> Automatic]; f2 = Graphics[Prepend[cowList
+, Arrowheads[{{.018, 1}}]]]; f3 = ListLinePlot[fpiList, PlotStyle -> {Red,
+ AbsoluteThickness[1]}]; Show[f1, f2, f3]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi3"
+
+\end_inset
+
+图a：FPI；图b：改进的FPI，
+\begin_inset Formula $\lambda=0.7$
+\end_inset
+
+；图c：改进的FPI，但
+\begin_inset Formula $\lambda=0.1$
+\end_inset
+
+取值过小。
+\end_layout
+
+\end_inset
+
 
 \end_layout
 

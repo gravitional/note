@@ -14239,12 +14239,16 @@ cobweb图，方程
 等材料属性也可当成常数，从而采用线性材料的算法处理。
 \end_layout
 
+\begin_layout Subsection
+改进的FPI
+\end_layout
+
 \begin_layout Standard
-求解器中使用改进的FPI迭代，
+求解器中使用改进的不动点迭代，
 \begin_inset Formula 
 \begin{align}
  & x_{0}=\text{初始估计}\nonumber \\
- & x_{i+1}=\lambda_{i}g(x_{i})+\overline{\lambda}_{i}x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:fpi2}
+ & x_{i+1}=\lambda_{i}g(x_{i})+\overline{\lambda}_{i}x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my3}
 \end{align}
 
 \end_inset
@@ -14257,7 +14261,49 @@ cobweb图，方程
 \begin_inset Formula $\overline{\lambda}_{i}=1-\overline{\lambda}$
 \end_inset
 
-。设
+。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+也可以写成
+\begin_inset Formula 
+\begin{align*}
+ & x_{0}=\text{初始估计}\\
+ & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\\
+\text{with}\quad & \Delta x_{i+1}=x_{i+1}-x_{i},\quad\Delta g(x_{i})=g(x_{i})-x_{i}
+\end{align*}
+
+\end_inset
+
+这里的
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta g(x_{i})$
+\end_inset
+
+都是有限值，参考图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+设
 \begin_inset Formula $r$
 \end_inset
 
@@ -14265,14 +14311,18 @@ cobweb图，方程
 \begin_inset Formula $x=g(x)$
 \end_inset
 
-的一个根。定义前向误差
+的一个根，假设迭代的初始值在
+\begin_inset Formula $r$
+\end_inset
+
+附近，定义前向误差
 \begin_inset Formula $e_{i}=\abs{x_{i}-r}$
 \end_inset
 
 ，从
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:fpi2"
+reference "eq:my3"
 plural "false"
 caps "false"
 noprefix "false"
@@ -14282,20 +14332,20 @@ noprefix "false"
 可以得到
 \begin_inset Formula 
 \begin{equation}
-e_{i+1}=P\,e_{i}\label{eq:my5}
+e_{i+1}=P_{i}\,e_{i}\label{eq:my5}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $P=\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}$
+\begin_inset Formula $P_{i}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}$
 \end_inset
 
-，
+，而
 \begin_inset Formula $c_{i}\in\left[x_{i},r\right]$
 \end_inset
 
-。我们选取的
+。工作中我们选取的
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -14314,11 +14364,11 @@ noprefix "false"
 \end_inset
 
 给出了误差的收敛域，即满足
-\begin_inset Formula $0\le P<1$
+\begin_inset Formula $0\le P_{i}<1$
 \end_inset
 
 的区域。其中横轴是
-\begin_inset Formula $\lambda$
+\begin_inset Formula $\lambda_{i}$
 \end_inset
 
 ，取值范围是
@@ -14341,11 +14391,11 @@ noprefix "false"
 \begin_inset Formula $\lambda$
 \end_inset
 
-需要相应缩小，以满足误差收敛条件。也就是说通过在每次迭代中调节
+的取值范围需要缩短，以满足误差收敛条件。也就是说通过在迭代步中调节
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
-，可以使得原本在FPI中发散的求解序列获得更好的收敛性。
+，可以使原本在FPI中发散的迭代序列获得收敛。
 \end_layout
 
 \begin_layout Standard
