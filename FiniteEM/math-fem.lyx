@@ -14062,7 +14062,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 \end_layout
 
 \begin_layout Subsection
-迭代过程
+不动点迭代
 \end_layout
 
 \begin_layout Standard
@@ -14071,7 +14071,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 \end_inset
 
 是不依赖于
-\begin_inset Formula $E$
+\begin_inset Formula $\sbf E$
 \end_inset
 
 （等价于
@@ -14087,197 +14087,325 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 \end_inset
 
 可能依赖于
-\begin_inset Formula $E$
+\begin_inset Formula $\sbf E$
 \end_inset
 
-，方程是非线性的，形如 
-\begin_inset Formula $K_{ij}[\phi]\,\phi_{j}-b_{i}=0$
+，方程组是
+\series bold
+非线性的
+\series default
+，形如 
+\begin_inset Formula $K_{ij}[\phi]\,\phi_{j}-b_{i}[\phi]=0$
 \end_inset
 
-，属于非线性方程组的求根问题。
-\end_layout
-
-\begin_layout Standard
-
+。
 \series bold
 对于非线性问题，需要使用迭代法求解
 \series default
-。不动点迭代。
+。
 \end_layout
 
 \begin_layout Standard
-假设材料的
-\begin_inset Formula $D$
+参考《ref：数值分析–Timothyp27/42，不动点迭代》。先考虑类似问题的简化版本，即一维情形。以下
+\begin_inset Formula $k(\phi)$
 \end_inset
 
-–
-\begin_inset Formula $E$
+是单变量函数，
+\begin_inset Formula $b$
 \end_inset
 
-曲线性质足够好，例如光滑性和单调性等；并假设所求的边值问题有稳定和唯一的解。由于材料的
-\begin_inset Formula $D$
-\end_inset
-
-–
-\begin_inset Formula $E$
-\end_inset
-
-曲线是连续的，并且最终在达到稳定解
+是数，
 \begin_inset Formula $\phi$
 \end_inset
 
-时，满足
-\begin_inset Formula $D=\varepsilon(E)\,E$
+是普通变量：
+\begin_inset Formula 
+\[
+k(\phi)\phi=b\quad\Rightarrow\quad\phi=k^{-1}(\phi)b
+\]
+
 \end_inset
 
-，
-\begin_inset Formula $\kappa=\partial D/\partial E$
+实际上就是方程
+\begin_inset Formula $x=g(x)$
 \end_inset
 
-（对于各向同性材料）。可以设想从
-\begin_inset Formula $\phi=0$
+的一个特例，此类方程可以使用
+\series bold
+不动点迭代
+\series default
+（FPI）求解。
+\begin_inset Formula 
+\[
+\begin{cases}
+x_{0}=\text{初始估计}\\
+x_{i+1}=g(x_{i}), & \text{其中}i=0,1,2,\cdots
+\end{cases}
+\]
+
 \end_inset
 
-，
-\begin_inset Formula $\varepsilon=\varepsilon_{0}$
+如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-，
-\begin_inset Formula $\kappa=\kappa_{0}$
+。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/cobweb2.pdf
+	lyxscale 50
+	scale 35
+
 \end_inset
 
-开始，让
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fn = -1/5 #^2 + 3/2 &; pts = cobs[fn, 0.9, 8]; alist = Table[Arrow[{pts[[i]],
+ pts[[i + 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, 0.8, 1.4}
+ , PlotRange -> Automatic , Frame -> True , ImageSize -> Medium , AspectRatio
+ -> Automatic]; f2 = Graphics[ Prepend[alist, Arrowheads[{{.018, 1}}]] ];
+ Show[f1, f2]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi"
+
+\end_inset
+
+cobweb图，方程
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+不动点迭代过程的示意图。黄色曲线表示
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+，蓝色直线是
+\begin_inset Formula $y=x$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在迭代过程的每一步中，
 \begin_inset Formula $\phi$
 \end_inset
 
-缓慢增加，系统状态沿着
-\begin_inset Formula $D$
+，
+\begin_inset Formula $\sbf E$
 \end_inset
 
-–
-\begin_inset Formula $E$
+，
+\begin_inset Formula $\sbf D$
 \end_inset
 
-曲线缓缓移动，最终到达符合给定边界条件的稳定态。写成式子是
+保持为常量，对应cobweb图中的直线走法。所以相应地，每一步迭代中
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+等材料属性也可当成常数，从而采用线性材料的算法处理。
+\end_layout
+
+\begin_layout Standard
+求解器中使用改进的FPI迭代，
 \begin_inset Formula 
 \begin{align}
-K[\phi]\,\phi & =b\label{eq:gal2a}\\
-K[\phi_{0}]\phi_{0}+K[\sum_{i=0}^{1}\phi_{i}]\phi_{1}+K[\sum_{i=0}^{2}\phi_{i}]\phi_{2}+\cdots & =b_{0}+\lambda_{1}b_{1}+\lambda_{2}b_{2}+\cdots\label{eq:gal2b}
+ & x_{0}=\text{初始估计}\nonumber \\
+ & x_{i+1}=\lambda_{i}g(x_{i})+\overline{\lambda}_{i}x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:fpi2}
 \end{align}
 
 \end_inset
 
 其中
-\begin_inset Formula $K\phi$
+\begin_inset Formula $0<\lambda_{i}\le1$
 \end_inset
 
-展开为
-\begin_inset Formula $\{K_{0}\phi_{0},K_{1}\phi_{1},K_{2}\phi_{2},\cdots\}$
+，
+\begin_inset Formula $\overline{\lambda}_{i}=1-\overline{\lambda}$
 \end_inset
 
-，残差展开为
-\begin_inset Formula $b_{0},\lambda_{1}b_{1},\lambda_{2}b_{2},\cdots$
+。设
+\begin_inset Formula $r$
 \end_inset
 
-，它们都是逐渐收敛于零的数列；最终状态下
-\begin_inset Formula $\phi$
+为方程
+\begin_inset Formula $x=g(x)$
 \end_inset
 
-应该满足
+的一个根。定义前向误差
+\begin_inset Formula $e_{i}=\abs{x_{i}-r}$
+\end_inset
+
+，从
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:gal2a"
+reference "eq:fpi2"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-。
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:gal2b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-表示按微扰论逐级匹配的思想，一级一级迭代，
+可以得到
 \begin_inset Formula 
-\begin{align}
-K[0]\phi_{0} & =b_{0}\nonumber \\
-K[\phi_{0}]\phi_{1} & =\lambda_{1}b_{1}=b-K[0]\phi_{0}-\cdots\label{eq:gal2c}\\
-K[\phi_{0}+\phi_{1}]\phi_{2} & =\lambda_{2}b_{2}=b-K[0]\phi_{0}-K[\phi_{0}]\phi_{1}-\cdots\nonumber 
-\end{align}
+\begin{equation}
+e_{i+1}=P\,e_{i}\label{eq:my5}
+\end{equation}
 
 \end_inset
 
-在
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:gal2c"
-plural "false"
-caps "false"
-noprefix "false"
-
+其中
+\begin_inset Formula $P=\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}$
 \end_inset
 
-中，考虑到
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:gal2b"
-plural "false"
-caps "false"
-noprefix "false"
-
+，
+\begin_inset Formula $c_{i}\in\left[x_{i},r\right]$
 \end_inset
 
-左边系数
-\begin_inset Formula $K[\sum\phi_{i}]$
-\end_inset
-
-中含有同级别的
-\begin_inset Formula $\phi_{i}$
-\end_inset
-
-，这样方程是隐式的，为了方便求解，每次都只累加到
-\begin_inset Formula $\phi_{i-1}$
-\end_inset
-
-，由此产生的误差应该是更高阶的，或者假设材料随
-\begin_inset Formula $\phi$
-\end_inset
-
-的变化足够平缓，因此能做这种替换。在
-\begin_inset Formula $\lambda_{i}b_{i}$
-\end_inset
-
-中，显式写出系数
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
-是为了说明，当材料曲边变化剧烈，或者收敛状况不佳的时候，可以手动把
+。我们选取的
 \begin_inset Formula $\lambda$
 \end_inset
 
-调节的更小，获得更小的试探步长，这样解出更小的
-\begin_inset Formula $\norm{\phi_{i}}$
+满足
+\begin_inset Formula $0<\lambda_{i}\le1$
 \end_inset
 
-。
+，图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出了误差的收敛域，即满足
+\begin_inset Formula $0\le P<1$
+\end_inset
+
+的区域。其中横轴是
+\begin_inset Formula $\lambda$
+\end_inset
+
+，取值范围是
+\begin_inset Formula $(0,1]$
+\end_inset
+
+，纵轴为
+\begin_inset Formula $g'(c_{i})$
+\end_inset
+
+，取值范围是
+\begin_inset Formula $(-\infty,1]$
+\end_inset
+
+，当
+\begin_inset Formula $g'(c_{i})$
+\end_inset
+
+沿着纵轴下降时，
+\begin_inset Formula $\lambda$
+\end_inset
+
+需要相应缩小，以满足误差收敛条件。也就是说通过在每次迭代中调节
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+，可以使得原本在FPI中发散的求解序列获得更好的收敛性。
 \end_layout
 
 \begin_layout Standard
-迭代终止的信号是
-\begin_inset Formula $\phi_{n}\approx0$
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi2.pdf
+	lyxscale 70
+	scale 48
+
 \end_inset
 
-，或者说等效激励 
-\begin_inset Formula $b-K[0]\phi_{0}-K[\phi_{0}]\phi_{1}-\cdots\approx0$
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+RegionPlot[ 0 <= Abs[
+\backslash
+[Lambda]*gc + 1 - 
+\backslash
+[Lambda]] < 1, {
+\backslash
+[Lambda], 0, 1}, {gc, -5, 1.1} , BoundaryStyle -> Dashed, PlotStyle -> Automatic
+ , FrameLabel -> {"
+\backslash
+[Lambda]", "gc"}, ImageSize -> Medium]
+\end_layout
+
 \end_inset
 
-。
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
