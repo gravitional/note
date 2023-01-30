@@ -14041,7 +14041,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 ，上式可以写成：
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\varepsilon\nabla\phi\right)}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\label{eq:gal2}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\varepsilon\nabla\phi\right)}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal2}
 \end{equation}
 
 \end_inset
@@ -14273,11 +14273,11 @@ noprefix "false"
 
 也可以写成
 \begin_inset Formula 
-\begin{align*}
- & x_{0}=\text{初始估计}\\
- & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\\
-\text{with}\quad & \Delta x_{i+1}=x_{i+1}-x_{i},\quad\Delta g(x_{i})=g(x_{i})-x_{i}
-\end{align*}
+\begin{align}
+ & x_{0}=\text{初始估计}\nonumber \\
+ & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\label{eq:my4}\\
+\text{with}\quad & \Delta x_{i+1}=x_{i+1}-x_{i},\quad\Delta g(x_{i})=g(x_{i})-x_{i}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -14458,97 +14458,259 @@ name "fig:fpi2"
 
 \end_layout
 
+\begin_layout Example
+对于不动点问题
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+，其中
+\begin_inset Formula $g(x)=-3/2x+5/2$
+\end_inset
+
+，由于
+\begin_inset Formula $\abs{g(c_{i})}=3/2>1$
+\end_inset
+
+，使用普通的FPI不会收敛，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a。但使用改进的FPI，并令
+\begin_inset Formula $\lambda=0.7$
+\end_inset
+
+，此时
+\begin_inset Formula $P=0.75$
+\end_inset
+
+，则迭代收敛，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b。可以看到对于改进的FPI，迭代点
+\begin_inset Formula $x_{i+1}$
+\end_inset
+
+并不落在
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+曲线上，而是落在
+\begin_inset Formula $y=x$
+\end_inset
+
+ 和 
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+两条曲线之间，即图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b中的红色曲线，它就是修正曲线。当迭代序列到达根
+\begin_inset Formula $r$
+\end_inset
+
+附近时，三条曲线是相交的，所以不会影响最终结果的正确性。可以看到，在改进的FPI中，迭代回路的水平或垂直线段长度
+\begin_inset Formula $\Delta x_{i+1}=x_{i+1}-x_{i}$
+\end_inset
+
+变小，得到了有效的控制。但是
+\begin_inset Formula $\lambda$
+\end_inset
+
+也不能取得过小，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c，此时虽然收敛性好，但是收敛速率下降，需要更多步才能找到根。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi3a.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fpi3b.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fpi3c.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi3"
+
+\end_inset
+
+图a：FPI；图b：改进的FPI，
+\begin_inset Formula $\lambda=0.7$
+\end_inset
+
+；图c：改进的FPI，但
+\begin_inset Formula $\lambda=0.1$
+\end_inset
+
+取值过小。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 具体方程
 \end_layout
 
 \begin_layout Standard
-静电场达到稳态时应该满足
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:gal1"
+reference "eq:my4"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-。设初始电势分布
-\begin_inset Formula $\phi_{0}$
+中已经给出了改进FPI的迭代步骤，应用到非线性矩阵方程
+\begin_inset Formula $KD=b$
 \end_inset
 
-不满足
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:gal1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，即
-\begin_inset Formula $R^{e}\left[N_{i}^{e}\right]\neq0$
-\end_inset
-
-，问如何选取电势的虚位移
-\begin_inset Formula $\delta\phi$
-\end_inset
-
-才能使
-\begin_inset Formula $\phi_{0}+\delta\phi$
-\end_inset
-
-重新回到平衡状态。写成表达式即
+得
 \begin_inset Formula 
 \begin{align*}
-\sbf D & =\sbf D^{0}+{\color{blue}\kappa}\,\delta\sbf E=\sbf D^{0}-{\color{blue}\kappa}\,\sbf\nabla\delta\phi\\
-\phi & =\phi^{0}+\delta\phi
+ & D_{0}=\text{初始估计}\\
+ & \Delta D_{i+1}=\lambda_{i}\left[K^{-1}(D_{i})\,b(D_{i})-D_{i}\right].
 \end{align*}
 
 \end_inset
 
+这里以电位移
+\begin_inset Formula $D$
+\end_inset
+
+作为待求变量。左右同乘刚度矩阵
+\begin_inset Formula $K$
+\end_inset
+
+，写成通常的形式
+\begin_inset Formula 
+\begin{align}
+ & D_{0}=\text{初始估计},\nonumber \\
+ & K(D_{i})\,\Delta D_{i+1}=\lambda_{i}\left[b(D_{i})-K(D_{i})\,\phi_{i}\right].\label{eq:gal3a}
+\end{align}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中给出了静电场问题的方程
+\begin_inset Formula 
+\[
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot D}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot D}\dd{\Gamma}=-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $D=D(E)$
+\end_inset
+
+ 是材料的非线性曲线。迭代序列在根附近收敛，可作近似
+\begin_inset Formula $\Delta D\approx\kappa(E^{0})\Delta E$
+\end_inset
+
+，于是立马给出
+\begin_inset Formula 
+\begin{align}
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & =-\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
+\end{align}
+
+\end_inset
+
 其中 
-\begin_inset Formula $\kappa=\frac{\partial D}{\partial E}$
+\begin_inset Formula $\kappa=\partial D/\partial E$
 \end_inset
 
 ，一般材料的
 \begin_inset Formula $\kappa$
 \end_inset
 
- 可以非线性（也可能是张量）。代入
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:gal00"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，令
-\begin_inset Formula $\phi+\delta\phi$
-\end_inset
-
-对应的残差为零得
-\begin_inset Formula 
-\begin{align*}
-0= & -\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Omega}\\
- & +\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D^{0}}\dd{\Gamma}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-整理得
-\begin_inset Formula 
-\begin{align}
- & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
- & =\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
-\end{align}
-
-\end_inset
-
-
+ 可以非线性（也可能是张量）。
 \end_layout
 
 \begin_layout Enumerate
@@ -14607,8 +14769,8 @@ noprefix "false"
  得
 \begin_inset Formula 
 \begin{align}
-\bigg[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
- & =\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} \label{eq:gal4}
+\bigg[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
+ & =\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal4}
 \end{align}
 
 \end_inset
