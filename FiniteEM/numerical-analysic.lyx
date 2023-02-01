@@ -736,7 +736,7 @@ x_{i+1}=\frac{x_{i}+\frac{2}{x_{i}}}{2}
 \begin_inset Formula 
 \begin{align}
  & x_{0}=\text{初始估计}\nonumber \\
- & x_{i+1}=\lambda_{i}g(x_{i})+\overline{\lambda}_{i}x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my1}
+ & x_{i+1}=\lambda_{i}\,g(x_{i})+\overline{\lambda}_{i}\,x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my1}
 \end{align}
 
 \end_inset
@@ -950,6 +950,88 @@ name "fig:fpi2"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Remark
+牛顿法求解
+\begin_inset Formula $f(x)=0$
+\end_inset
+
+的迭代公式是
+\begin_inset Formula 
+\begin{align*}
+ & x_{0}=\text{初始估计}\\
+ & x_{i+1}=x_{i}-\frac{f(x_{i})}{f'(x_{i})},\quad i=0,1,2,\cdots
+\end{align*}
+
+\end_inset
+
+代入
+\begin_inset Formula $f(x)=x-g(x)$
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+x_{i+1}=g(x_{i})\frac{1}{1-g'(x_{i})}+x_{i}\frac{-g'(x_{i})}{1-g'(x_{i})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+割线方法求解
+\begin_inset Formula $f(x)=0$
+\end_inset
+
+的迭代公式是
+\begin_inset Formula 
+\begin{align*}
+ & x_{0},x_{1}=\text{初始估计}\\
+ & x_{i+1}=x_{i}-\frac{f(x_{i})(x_{i}-x_{i-1})}{f(x_{i})-f(x_{i-1})},\quad i=1,2,3,\cdots
+\end{align*}
+
+\end_inset
+
+代入
+\begin_inset Formula $f(x)=x-g(x)$
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+x_{i+1}=g_{i}\frac{\Delta x_{i}}{\Delta x_{i}-\Delta g_{i}}+x_{i}\frac{-\Delta g_{i}}{\Delta x_{i}-\Delta g_{i}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta x_{i}=x_{i}-x_{i-1}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta g_{i}=g(x_{i})-g(x_{i-1})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+可以看到，两种方法的迭代公式都可以写成以下形式
+\begin_inset Formula 
+\[
+x_{i+1}=\lambda_{i}\,g(x_{i})+\overline{\lambda}_{i}\,x_{i}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\lambda_{i}+\overline{\lambda}_{i}=1$
+\end_inset
+
+，改进FPI可以看作两种方法的推广。
 \end_layout
 
 \begin_layout Example
@@ -1217,11 +1299,23 @@ name "fig:fpi3"
 \end_layout
 
 \begin_layout Subsection
+回溯线搜索
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Subsection
 终止条件
 \end_layout
 
 \begin_layout Standard
-FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测的。必须决定何时终止算法，这成为 
+FPI 收敛到给定
+\series bold
+容差
+\series default
+（TOL）的步数无法事先预测，必须决定何时终止算法，即
 \series bold
 终止条件
 \series default
@@ -1232,7 +1326,7 @@ FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测�
 绝对 终止条件
 \begin_inset Formula 
 \begin{equation}
-\abs{x_{i+1}-x_{i}}<\text{TOL}\label{eq:1.16}
+\abs{x_{i+1}-x_{i}}<\mathrm{TOL}\label{eq:1.16}
 \end{equation}
 
 \end_inset
@@ -1244,7 +1338,7 @@ FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测�
  附近，使用相对误差条件
 \begin_inset Formula 
 \begin{equation}
-\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\text{TOL}\label{eq:1.17}
+\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\mathrm{TOL}\label{eq:1.17}
 \end{equation}
 
 \end_inset
@@ -1252,7 +1346,7 @@ FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测�
 还有混合 绝对/相对误差 终止条件：
 \begin_inset Formula 
 \begin{equation}
-\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\text{TOL}\label{eq:1.18}
+\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\mathrm{TOL}\label{eq:1.18}
 \end{equation}
 
 \end_inset
@@ -1265,11 +1359,47 @@ FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测�
 \begin_inset Formula $0$
 \end_inset
 
- 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
+ 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。终止条件的讨论很重要，并将在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "sec:1.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+节中讨论前向和后向误差的时候以更加复杂的形式出现。
 \end_layout
 
 \begin_layout Standard
-牛顿方法是 FPI 的一种改善方法，其中 
+二分法可以保证线性收敛。不动点迭代仅仅是局部收敛，当不动点迭代收敛时，其线性收敛。两种方法在每一步中仅仅需要进行一次函数求值。二分法在每一步中可以去掉
+\begin_inset Formula $1/2$
+\end_inset
+
+的不确定性，而在FPI中，不确定性每步会乘上
+\begin_inset Formula $S=\abs{g'(r)}$
+\end_inset
+
+。因而不动点迭代可能比二分法更快或更慢，这依赖于
+\begin_inset Formula $S$
+\end_inset
+
+比
+\begin_inset Formula $1/2$
+\end_inset
+
+更大还是小。在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "sec:1.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+节中，我们将学习牛顿方法，它是FPI 的一种改善方法，其中 
 \begin_inset Formula $S$
 \end_inset
 
@@ -1282,6 +1412,13 @@ FPI 收敛到事先给定的容差所要求进行的步数事先是不可预测�
 
 \begin_layout Section
 精度的极限
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:1.3"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1854,6 +1991,13 @@ status open
 
 \begin_layout Section
 牛顿方法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:1.4"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

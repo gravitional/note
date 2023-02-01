@@ -14041,7 +14041,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 ，上式可以写成：
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\left(-\varepsilon\nabla\phi\right)}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal2}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal2}
 \end{equation}
 
 \end_inset
@@ -14136,12 +14136,12 @@ k(\phi)\phi=b\quad\Rightarrow\quad\phi=k^{-1}(\phi)b
 \series default
 （FPI）求解。
 \begin_inset Formula 
-\[
+\begin{equation}
 \begin{cases}
 x_{0}=\text{初始估计}\\
 x_{i+1}=g(x_{i}), & \text{其中}i=0,1,2,\cdots
-\end{cases}
-\]
+\end{cases}\label{eq:my3a}
+\end{equation}
 
 \end_inset
 
@@ -14248,7 +14248,7 @@ cobweb图，方程
 \begin_inset Formula 
 \begin{align}
  & x_{0}=\text{初始估计}\nonumber \\
- & x_{i+1}=\lambda_{i}g(x_{i})+\overline{\lambda}_{i}x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my3}
+ & x_{i+1}=\lambda_{i}\,g(x_{i})+\overline{\lambda}_{i}\,x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my3}
 \end{align}
 
 \end_inset
@@ -14258,7 +14258,7 @@ cobweb图，方程
 \end_inset
 
 ，
-\begin_inset Formula $\overline{\lambda}_{i}=1-\overline{\lambda}$
+\begin_inset Formula $\overline{\lambda}_{i}=1-\lambda_{i}$
 \end_inset
 
 。
@@ -14409,7 +14409,7 @@ status open
 \begin_inset Graphics
 	filename inset/fpi2.pdf
 	lyxscale 70
-	scale 48
+	scale 40
 
 \end_inset
 
@@ -14442,6 +14442,197 @@ RegionPlot[ 0 <= Abs[
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:fpi2"
+
+\end_inset
+
+改进FPI的收敛域
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+结合式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\label{eq:my4b}\\
+ & e_{i+1}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}e_{i}\label{eq:my5b}
+\end{align}
+
+\end_inset
+
+对于普通FPI中发散的问题，即
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+将疯狂膨胀，通过在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my4b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+引入
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+调节，可以使步长
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+变小，从而使迭代回路有机会收敛到根。但是另一方面，如果
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+取得过小，由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my5b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知此时
+\begin_inset Formula $e_{i+1}\approx e_{i}$
+\end_inset
+
+，也就是前向误差的收敛速度会变慢，没有两全其美的事。图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:fpi-err"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中给出了
+\begin_inset Formula $P$
+\end_inset
+
+随
+\begin_inset Formula $\lambda$
+\end_inset
+
+的变化，每根曲线对应不同的
+\begin_inset Formula $g'(c_{i})$
+\end_inset
+
+。欲令迭代收敛，
+\begin_inset Formula $P$
+\end_inset
+
+应该比较小，从图中看到， 随着
+\begin_inset Formula $\lambda$
+\end_inset
+
+从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $0$
+\end_inset
+
+，
+\begin_inset Formula $P$
+\end_inset
+
+先变小，然后开始逐渐回升到
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi-err.pdf
+	lyxscale 90
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fn[
+\backslash
+[Lambda]_, g_] := Abs[
+\backslash
+[Lambda] (g - 1) + 1]; lst = {1, 0.5, 0.0, -0.5, -1.0, -1.5, -2}; lst2 = ("g="
+ <> ToString[#] &) /@ lst; Plot[Evaluate[fn[
+\backslash
+[Lambda], #] & /@ lst] , {
+\backslash
+[Lambda], 0, 1} , PlotLabels -> lst2 , AxesLabel -> {"
+\backslash
+[Lambda]", "P"} , ImageSize -> Medium ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi-err"
 
 \end_inset
 
@@ -14560,7 +14751,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename inset/fpi3a.pdf
-	lyxscale 70
+	lyxscale 50
 	scale 40
 
 \end_inset
@@ -14572,7 +14763,7 @@ status open
 
 \begin_inset Graphics
 	filename inset/fpi3b.pdf
-	lyxscale 70
+	lyxscale 50
 	scale 40
 
 \end_inset
@@ -14584,7 +14775,7 @@ status open
 
 \begin_inset Graphics
 	filename inset/fpi3c.pdf
-	lyxscale 70
+	lyxscale 50
 	scale 40
 
 \end_inset
@@ -14628,6 +14819,7 @@ name "fig:fpi3"
 \end_layout
 
 \begin_layout Standard
+式
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:my4"
@@ -14651,7 +14843,7 @@ noprefix "false"
 \end_inset
 
 这里以电位移
-\begin_inset Formula $D$
+\begin_inset Formula $D=-\varepsilon\cdot\nabla\phi$
 \end_inset
 
 作为待求变量。左右同乘刚度矩阵
@@ -14689,28 +14881,40 @@ noprefix "false"
 \begin_inset Formula $D=D(E)$
 \end_inset
 
- 是材料的非线性曲线。迭代序列在根附近收敛，可作近似
-\begin_inset Formula $\Delta D\approx\kappa(E^{0})\Delta E$
+ 是材料的非线性曲线（一般情况下也可各向异性）。当
+\begin_inset Formula $D_{i}$
 \end_inset
 
-，于是立马给出
+序列收敛到根附近时，必然满足
+\begin_inset Formula $\Delta D\approx\frac{\partial D}{\partial E}\Delta E$
+\end_inset
+
+，于是得到
 \begin_inset Formula 
 \begin{align}
- & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla\delta\phi}\dd{\Gamma}\nonumber \\
  & =-\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
 \end{align}
 
 \end_inset
 
 其中 
-\begin_inset Formula $\kappa=\partial D/\partial E$
+\begin_inset Formula $\kappa(E)=\partial D/\partial E$
 \end_inset
 
-，一般材料的
-\begin_inset Formula $\kappa$
+，
+\begin_inset Formula $\varepsilon(E)=D/E$
 \end_inset
 
- 可以非线性（也可能是张量）。
+，在几何上分别对应材料曲线的切线斜率和截线斜率。在迭代初期
+\begin_inset Formula $\Delta D_{i+1}$
+\end_inset
+
+与
+\begin_inset Formula $\frac{\partial D}{\partial E}\Delta E$
+\end_inset
+
+虽然偏离较大，但只要能收敛到根即可，即只需在渐近意义上成立。
 \end_layout
 
 \begin_layout Enumerate
@@ -14769,7 +14973,7 @@ noprefix "false"
  得
 \begin_inset Formula 
 \begin{align}
-\bigg[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
+\frac{1}{\varepsilon_{0}}\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
  & =\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal4}
 \end{align}
 
@@ -14783,7 +14987,11 @@ noprefix "false"
 \begin_inset Formula $\Gamma_{1}$
 \end_inset
 
-上的第一类（essential）边界条件，
+上的
+\series bold
+第一类
+\series default
+（essential）边界条件，
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -14791,7 +14999,7 @@ noprefix "false"
 \begin_inset Formula $\delta\phi_{j}=0$
 \end_inset
 
-，从方程中直接删除相应的刚度矩阵和激励向量。
+，从方程中直接删除对应的刚度矩阵和激励向量。
 \end_layout
 
 \begin_layout Enumerate
@@ -14799,7 +15007,11 @@ noprefix "false"
 \begin_inset Formula $\Gamma_{2}$
 \end_inset
 
-上的齐次第二类（natural）边界条件，
+上的
+\series bold
+齐次第二类
+\series default
+（natural）边界条件，
 \begin_inset Formula $\sbf n\cdot\left(-\varepsilon\nabla\phi\right)=0$
 \end_inset
 
@@ -14821,11 +15033,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-总之，
-\series bold
-第一类和齐次第二类边界条件
-\series default
- 对刚度矩阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
+总之，第一类和齐次第二类边界条件对刚度矩阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
 \begin_inset Formula 
 \begin{equation}
 \left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
@@ -14850,6 +15058,90 @@ noprefix "false"
 外加电场
 \series default
 ）。
+\end_layout
+
+\begin_layout Subsection
+终止条件
+\end_layout
+
+\begin_layout Standard
+FPI 收敛到给定
+\series bold
+容差
+\series default
+（TOL）的步数无法事先预测，必须决定何时终止算法，即
+\series bold
+终止条件
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+绝对终止条件是
+\begin_inset Formula 
+\begin{equation}
+\abs{x_{i+1}-x_{i}}<\mathrm{TOL}\label{eq:1.16}
+\end{equation}
+
+\end_inset
+
+或者当解不在 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近，使用相对误差条件
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\mathrm{TOL}\label{eq:1.17}
+\end{equation}
+
+\end_inset
+
+还有混合 绝对/相对误差 终止条件：
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\mathrm{TOL}\label{eq:1.18}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+，常常用于 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
+\end_layout
+
+\begin_layout Standard
+对应到有限元方程的迭代法，
+\begin_inset Formula 
+\[
+K'\,\delta\phi_{j}=b'
+\]
+
+\end_inset
+
+相当于要求 
+\begin_inset Formula $\delta\phi_{j}<\mathrm{TOL}$
+\end_inset
+
+，而
+\begin_inset Formula $\delta\phi_{j}$
+\end_inset
+
+的充分条件是 
+\begin_inset Formula $b'\to0$
+\end_inset
+
+，所以可把
+\begin_inset Formula $\norm{b}\to0$
+\end_inset
+
+，即残差趋于零当成算法终止条件。
 \end_layout
 
 \begin_layout Section
