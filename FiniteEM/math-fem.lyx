@@ -14061,7 +14061,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
  项。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 不动点迭代
 \end_layout
 
@@ -14815,6 +14815,90 @@ name "fig:fpi3"
 \end_layout
 
 \begin_layout Subsection
+终止条件
+\end_layout
+
+\begin_layout Standard
+FPI 收敛到给定
+\series bold
+容差
+\series default
+（TOL）的步数无法事先预测，必须决定何时终止算法，即
+\series bold
+终止条件
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+绝对终止条件是
+\begin_inset Formula 
+\begin{equation}
+\abs{x_{i+1}-x_{i}}<\mathrm{TOL}\label{eq:1.16}
+\end{equation}
+
+\end_inset
+
+或者当解不在 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近，使用相对误差条件
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\mathrm{TOL}\label{eq:1.17}
+\end{equation}
+
+\end_inset
+
+还有混合 绝对/相对误差 终止条件：
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\mathrm{TOL}\label{eq:1.18}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+，常常用于 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
+\end_layout
+
+\begin_layout Standard
+对应到有限元方程的迭代法，
+\begin_inset Formula 
+\[
+K'\,\delta\phi_{j}=b'
+\]
+
+\end_inset
+
+相当于要求 
+\begin_inset Formula $\delta\phi_{j}<\mathrm{TOL}$
+\end_inset
+
+，而
+\begin_inset Formula $\delta\phi_{j}$
+\end_inset
+
+的充分条件是 
+\begin_inset Formula $b'\to0$
+\end_inset
+
+，所以可把
+\begin_inset Formula $\norm{b}\to0$
+\end_inset
+
+，即残差趋于零当成算法终止条件。
+\end_layout
+
+\begin_layout Section
 具体方程
 \end_layout
 
@@ -14854,7 +14938,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & D_{0}=\text{初始估计},\nonumber \\
- & K(D_{i})\,\Delta D_{i+1}=\lambda_{i}\left[b(D_{i})-K(D_{i})\,\phi_{i}\right].\label{eq:gal3a}
+ & K(D_{i})\,\Delta D_{i+1}=\lambda_{i}\left[b(D_{i})-K(D_{i})\,D_{i}\right].\label{eq:gal3a}
 \end{align}
 
 \end_inset
@@ -15058,90 +15142,6 @@ noprefix "false"
 外加电场
 \series default
 ）。
-\end_layout
-
-\begin_layout Subsection
-终止条件
-\end_layout
-
-\begin_layout Standard
-FPI 收敛到给定
-\series bold
-容差
-\series default
-（TOL）的步数无法事先预测，必须决定何时终止算法，即
-\series bold
-终止条件
-\series default
-。
-\end_layout
-
-\begin_layout Standard
-绝对终止条件是
-\begin_inset Formula 
-\begin{equation}
-\abs{x_{i+1}-x_{i}}<\mathrm{TOL}\label{eq:1.16}
-\end{equation}
-
-\end_inset
-
-或者当解不在 
-\begin_inset Formula $0$
-\end_inset
-
- 附近，使用相对误差条件
-\begin_inset Formula 
-\begin{equation}
-\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\mathrm{TOL}\label{eq:1.17}
-\end{equation}
-
-\end_inset
-
-还有混合 绝对/相对误差 终止条件：
-\begin_inset Formula 
-\begin{equation}
-\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\mathrm{TOL}\label{eq:1.18}
-\end{equation}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\theta>0$
-\end_inset
-
-，常常用于 
-\begin_inset Formula $0$
-\end_inset
-
- 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
-\end_layout
-
-\begin_layout Standard
-对应到有限元方程的迭代法，
-\begin_inset Formula 
-\[
-K'\,\delta\phi_{j}=b'
-\]
-
-\end_inset
-
-相当于要求 
-\begin_inset Formula $\delta\phi_{j}<\mathrm{TOL}$
-\end_inset
-
-，而
-\begin_inset Formula $\delta\phi_{j}$
-\end_inset
-
-的充分条件是 
-\begin_inset Formula $b'\to0$
-\end_inset
-
-，所以可把
-\begin_inset Formula $\norm{b}\to0$
-\end_inset
-
-，即残差趋于零当成算法终止条件。
 \end_layout
 
 \begin_layout Section
