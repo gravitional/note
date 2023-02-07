@@ -14921,7 +14921,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
  & D_{0}=\text{初始估计}\\
- & \Delta D_{i+1}=\lambda_{i}\left[K^{-1}(D_{i})\,b(D_{i})-D_{i}\right].
+ & \Delta D_{i+1}=\lambda_{i}\left[K^{-1}\,b-D_{i}\right].
 \end{align*}
 
 \end_inset
@@ -14930,7 +14930,19 @@ noprefix "false"
 \begin_inset Formula $D=-\varepsilon\cdot\nabla\phi$
 \end_inset
 
-作为待求变量。左右同乘刚度矩阵
+作为待求变量，其中
+\begin_inset Formula $K$
+\end_inset
+
+，
+\begin_inset Formula $b$
+\end_inset
+
+都可能依赖于
+\begin_inset Formula $D$
+\end_inset
+
+的值。左右同乘刚度矩阵
 \begin_inset Formula $K$
 \end_inset
 
@@ -14938,7 +14950,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & D_{0}=\text{初始估计},\nonumber \\
- & K(D_{i})\,\Delta D_{i+1}=\lambda_{i}\left[b(D_{i})-K(D_{i})\,D_{i}\right].\label{eq:gal3a}
+ & K\,\Delta D_{i+1}=\lambda_{i}\left[b-K\,D_{i}\right].\label{eq:gal3a}
 \end{align}
 
 \end_inset
@@ -21305,8 +21317,8 @@ noprefix "false"
  可以得到
 \begin_inset Formula 
 \begin{align}
- & \nabla\cdot\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)=0,\quad\sbf E=-\partial_{t}\left(\nabla W+\sbf A\right)\label{eq:tot-div}\\
- & \nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)=\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}+\sbf J_{\text{ex}}-\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\nonumber 
+ & \nabla\cdot\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)=0,\quad\sbf E=-\partial_{t}\left(\nabla W+\sbf A\right)\label{eq:my18}\\
+ & \nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)=\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}+\sbf J_{\text{ex}}-\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\label{eq:my19}
 \end{align}
 
 \end_inset
@@ -21315,22 +21327,28 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-分别以
+以
 \begin_inset Formula $\sbf N_{i}$
 \end_inset
 
-和
-\begin_inset Formula $L_{m}^{e}$
+作为权函数，计算
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my19"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-作为加权函数，计算对应的残差可以得到
+对应的加权残差得
 \begin_inset Formula 
-\begin{align*}
-R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right){\color{red}-\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}}-\sbf J_{\text{ex}}+\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\\
- & \quad+{\color{red}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\frac{1}{\mu_{r}}\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}\\
- & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{blue}(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)}-\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}\\
- & \quad-\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})+{\color{brown}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\nabla W}+{\color{magenta}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}
-\end{align*}
+\begin{align}
+R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right){\color{red}-\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}}-\sbf J_{\text{ex}}+\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\nonumber \\
+ & \quad+{\color{red}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\frac{1}{\mu_{r}}\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}\nonumber \\
+ & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{blue}(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)}-\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}\label{eq:my20}\\
+ & \quad-\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})+{\color{brown}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\nabla W}+{\color{magenta}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -21338,11 +21356,21 @@ R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\
 \end_layout
 
 \begin_layout Remark
-这里使用了公式
+在推导
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+时使用了公式
 \begin_inset Formula 
 \begin{align*}
- & -\nabla\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right)={\color{red}-\left(\nabla\times\sbf M_{0}\right)\cdot\sbf N_{i}^{e}}+\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\sbf M_{0}\\
- & -\int\dd{\Omega}\nabla\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right)=-\int\dd{\Gamma}\sbf e_{n}\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right)=-{\color{red}\int\dd{\Gamma}\sbf N_{i}^{e}\cdot\left(\sbf e_{n}\times\sbf M_{0}\right)}
+\nabla\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right) & ={\color{red}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf N_{i}^{e}}-\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\sbf M_{0}\\
+\text{and}\;\int_{\Omega^{e}}\dd{\Omega}\nabla\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right) & =\int_{\Gamma^{e}}\sbf e_{n}\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right)\dd{\Gamma}={\color{red}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}
 \end{align*}
 
 \end_inset
@@ -21365,32 +21393,74 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-类似地，
-\begin_inset Formula 
-\begin{align*}
-R^{e}(L_{m}^{e}) & =-\int_{\Omega^{e}}\left[L_{m}^{e}\nabla\cdot\sigma\frac{\partial}{\partial t}(\nabla W+\sbf A)\right]\dd{\Omega}+\int_{\Gamma^{e}}\sbf e_{n}\cdot\left(L_{m}^{e}\sigma\frac{\partial}{\partial t}(\nabla W+\sbf A)\right)\dd{\Gamma}\\
- & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{red}\nabla L_{m}^{e}\cdot\sigma\frac{\partial}{\partial t}\nabla W}+{\color{brown}\nabla L_{m}^{e}\cdot\sigma\frac{\partial}{\partial t}\sbf A}\dd{\Omega}
-\end{align*}
+类似地，以
+\begin_inset Formula $L_{m}^{e}$
+\end_inset
+
+作为权函数，计算
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my18"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-这里的
+对应的加权残差得
+\begin_inset Formula 
+\begin{align}
+R^{e}(L_{m}^{e}) & =-\int_{\Omega^{e}}\left[L_{m}^{e}\nabla\cdot\sigma\,\partial_{t}(\nabla W+\sbf A)\right]\dd{\Omega}+\int_{\Gamma^{e}}\left[L_{m}^{e}\sbf e_{n}\cdot\sigma\,\partial_{t}(\nabla W+\sbf A)\right]\dd{\Gamma}\label{eq:my21}\\
+ & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{red}\nabla L_{m}^{e}\cdot\sigma\,\partial_{t}\nabla W}+{\color{brown}\nabla L_{m}^{e}\cdot\sigma\,\partial_{t}\sbf A}\Big]\dd{\Omega}\nonumber 
+\end{align}
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中我们手动添加了 
 \begin_inset Formula $\int_{\Gamma^{e}}\sbf e_{n}\cdot\cdots\dd{\Gamma}$
 \end_inset
 
- 也抵消了边界项。这里的
-\begin_inset Formula $R^{e}(L_{m}^{e})$
+ ，它抵消掉了边界项。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- 用物理场表示是
+中的两项用
+\begin_inset Formula $\rho$
+\end_inset
+
+，
+\begin_inset Formula $\sbf J=\sigma\sbf E$
+\end_inset
+
+ 表示
 \begin_inset Formula 
 \[
-R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\Omega}+\int_{\Gamma^{e}}L_{m}^{e}\left(-\sbf e_{n}\cdot\sigma\sbf E\right)\dd{\Gamma}
+R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\Omega}+\int_{\Gamma^{e}}L_{m}^{e}\left(-\sbf e_{n}\cdot\sbf J\right)\dd{\Gamma}
 \]
 
 \end_inset
 
-第一项是电荷堆积速率的残差；第二项是经由表面流入求解域的电流。
+第一项是求解域内部电荷堆积速率；第二项是经由求解域表面灌入电荷的速率，对于匀强
+\begin_inset Formula $\sbf J$
+\end_inset
+
+，第二项为零。
 \end_layout
 
 \begin_layout Subsection
@@ -21463,20 +21533,20 @@ D_{mn}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{m}^{e}\cdot\nab
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
-[0] & [0]\\{}
-[0] & [{\color{blue}K_{ij}^{e}}]
+0 & 0\\
+0 & {\color{blue}K_{ij}^{e}}
 \end{array}\right]\left\{ \begin{array}{c}
-\{W_{n}\}\\
-\{A_{j}\}
+W_{n}^{t+\Delta t}\\
+A_{j}^{t+\Delta t}
 \end{array}\right\} +\left[\begin{array}{cc}
-[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
-[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
+{\color{red}D_{mn}^{e}} & {\color{brown}C_{mj}^{e}}\\
+{\color{brown}C_{in}^{e}} & {\color{magenta}M_{ij}^{e}}
 \end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
-\{W_{n}^{t+\Delta t}\}-\{W_{n}\}\\
-\{A_{j}^{t+\Delta t}\}-\{A_{j}\}
+W_{n}^{t+\Delta t}-W_{n}^{t}\\
+A_{j}^{t+\Delta t}-A_{j}^{t}
 \end{array}\right\} =\left\{ \begin{array}{c}
-\{0\}\\
-\{b_{i}^{e}\}
+0\\
+b_{i}^{e}
 \end{array}\right\} 
 \]
 
@@ -21484,32 +21554,58 @@ D_{mn}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{m}^{e}\cdot\nab
 
 最后得到
 \begin_inset Formula 
-\begin{align*}
- & \Bigg(\left[\begin{array}{cc}
-[0] & [0]\\{}
-[0] & [{\color{blue}K_{ij}^{e}}]
+\begin{align}
+\Bigg(\left[\begin{array}{cc}
+0 & 0\\
+0 & {\color{blue}K_{ij}^{e}}
 \end{array}\right]+\frac{1}{\Delta t}\left[\begin{array}{cc}
-[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
-[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
-\end{array}\right]\Bigg)\left\{ \begin{array}{c}
-\{W_{n}^{t+\Delta t}\}\\
-\{A_{j}^{t+\Delta t}\}
-\end{array}\right\} \\
+{\color{red}D_{mn}^{e}} & {\color{brown}C_{mj}^{e}}\\
+{\color{brown}C_{in}^{e}} & {\color{magenta}M_{ij}^{e}}
+\end{array}\right]\Bigg) & \left\{ \begin{array}{c}
+W_{n}^{t+\Delta t}\\
+A_{j}^{t+\Delta t}
+\end{array}\right\} \label{eq:my22}\\
  & \qquad=\left\{ \begin{array}{c}
-\{0\}\\
-\{b_{i}^{e}\}
+0\\
+b_{i}^{e}
 \end{array}\right\} +\frac{1}{\Delta t}\left[\begin{array}{cc}
-[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
-[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
+{\color{red}D_{mn}^{e}} & {\color{brown}C_{mj}^{e}}\\
+{\color{brown}C_{in}^{e}} & {\color{magenta}M_{ij}^{e}}
 \end{array}\right]\left\{ \begin{array}{c}
-\{W_{n}\}\\
-\{A_{j}\}
-\end{array}\right\} 
-\end{align*}
+W_{n}^{t}\\
+A_{j}^{t}
+\end{array}\right\} \nonumber 
+\end{align}
 
 \end_inset
 
 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my22"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左边是
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+时刻的场，右边是
+\begin_inset Formula $t$
+\end_inset
+
+时刻的场；以
+\begin_inset Formula $\{W_{n}^{t+\Delta t},A_{j}^{t+\Delta t}\}$
+\end_inset
+
+作为待求矢量，方程又化作 
+\begin_inset Formula $AX=b$
+\end_inset
+
+ 的形式。
 \end_layout
 
 \begin_layout Chapter
