@@ -3166,7 +3166,7 @@ y(x_{n+1})=y(x_{n})+hf\left(x_{n+1},y(x_{n+1})\right)-\frac{h^{2}}{2!}y''(\xi_{n
 
 ，略去高阶项得到 
 \series bold
-向后欧格式（方法）
+向后欧拉格式（方法）
 \begin_inset Formula 
 \begin{equation}
 y_{n+1}=y_{n}+hf\left(x_{n+1},y_{n+1}\right),\quad n=0,1,\cdots,N-1\label{eq:eu4}
@@ -3274,60 +3274,117 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-sdfa
+beta方法
 \end_layout
 
 \begin_layout Standard
-general ODE form：
+设一阶常微分方程的形式为
 \begin_inset Formula 
 \[
-K\,x(t)+L[x(t)]\,x(t)+F[x(t)]+M\frac{\dd{x}}{\dd{t}}=b(t)
+K\,x\left(t\right)+M\,x^{\prime}\left(t\right)=b\left(t\right)
 \]
 
 \end_inset
 
+引入可调参数
+\begin_inset Formula $\beta$
+\end_inset
 
-\end_layout
+，将函数
+\begin_inset Formula $x(t+\Delta t)$
+\end_inset
 
-\begin_layout Standard
+表示为
 \begin_inset Formula 
 \[
-Kx(t)+M\frac{\dd{x}}{\dd{t}}=b(t)
+x\left(t+\Delta t\right)=x\left(t\right)+\Delta t\left(1-\beta\right)x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
 \]
 
 \end_inset
 
+以下将
+\begin_inset Formula $t+\Delta t$
+\end_inset
 
-\end_layout
+时刻离散成
+\begin_inset Formula $n+1$
+\end_inset
 
-\begin_layout Standard
-sdfsda
+指标，联立方程
 \begin_inset Formula 
 \begin{align*}
- & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n}=b^{n}\\
- & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n+1}=b^{n+1}
+ & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta tx^{\prime;n+1}\\
+ & K\,x^{n}+M\,x^{\prime;n}=b^{n}\\
+ & K\,x^{n+1}+M\,x^{\prime;n+1}=b^{n+1}
 \end{align*}
 
 \end_inset
 
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
 
-\begin_inset Formula 
-\[
-M\frac{x^{n+1}-x^{n}}{\Delta t}+K\frac{x^{n}+x^{n+1}}{2}=\frac{b^{n}+b^{n+1}}{2}
-\]
+，可以解得
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify@First@ Solve[{x[n + 1] == x[n] + 
+\backslash
+[CapitalDelta]t (1 - 
+\backslash
+[Beta]) x
+\backslash
+[Prime][ n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]*x
+\backslash
+[Prime][n + 1], K*x[n] + M*x
+\backslash
+[Prime][n] == b[n], K*x[n + 1] + M*x
+\backslash
+[Prime][n + 1] == b[n + 1]}, {x[n + 1], x
+\backslash
+[Prime][n], x
+\backslash
+[Prime][n + 1]}]
+\end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-sdfdsa
 \begin_inset Formula 
 \begin{align*}
- & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n}=b^{n}\\
- & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n+1}=b^{n+1}
+\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}+\overline{\beta}\,b^{n}+\beta b^{n+1}\\
+M\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{\prime;n+1}} & =K\left(\overline{\beta}K-\frac{M}{\Delta t}\right)x^{n}-\overline{\beta}K\,b^{n}+\frac{M}{\Delta t}b^{n+1}\\
+M\,{\color{blue}x^{\prime;n}} & =-Kx^{n}+b^{n}
 \end{align*}
+
+\end_inset
+
+当
+\begin_inset Formula $\beta=0$
+\end_inset
+
+，回到向前欧拉法：
+\begin_inset Formula 
+\[
+\frac{M}{\Delta t}{\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-K\right)x^{n}+b^{n}
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta=1$
+\end_inset
+
+，回到向后欧拉法：
+\begin_inset Formula 
+\[
+\left(\frac{M}{\Delta t}+K\right){\color{blue}x^{n+1}}=\frac{M}{\Delta t}x^{n}+\beta b^{n+1}
+\]
 
 \end_inset
 
@@ -3335,7 +3392,7 @@ sdfdsa
 \end_layout
 
 \begin_layout Section
-龙格–库塔方法,Runge–Kutta方法
+龙格–库塔方法,Runge–Kutta
 \end_layout
 
 \begin_layout Standard
@@ -3354,7 +3411,7 @@ y(a)=y_{0}
 \end_layout
 
 \begin_layout Subsection
-Runge–Kutta方法的基本思想
+RK方法的基本思想
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:RK1"
@@ -5875,6 +5932,22 @@ y_{n+1}^{(k+1)}=y_{n}+\frac{h}{24}\left[{\color{blue}9}f(x_{n+1},y_{n+1}^{(0)})+
 \end_inset
 
 值得一提的是，线性多步方法都具有较好的稳定性。
+\end_layout
+
+\begin_layout Section
+sss
+\end_layout
+
+\begin_layout Standard
+general ODE form：
+\begin_inset Formula 
+\[
+K\,x(t)+L[x(t)]\,x(t)+F[x(t)]+M\,x^{\prime}(t)=b(t)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
