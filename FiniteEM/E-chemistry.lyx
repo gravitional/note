@@ -2324,11 +2324,37 @@ noprefix "false"
 \begin_inset Formula $A$
 \end_inset
 
-表示非线性迭代中的累积值
+表示非线性迭代中的累积值，以前一时刻
+\begin_inset Formula $\phi^{t}$
+\end_inset
+
+，
+\begin_inset Formula $C^{t}$
+\end_inset
+
+做为初始值
 \begin_inset Formula 
 \begin{align*}
-\phi^{t+\Delta t} & =\phi_{A}^{t+\Delta t}+\delta\phi=\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots,\quad\phi_{0}^{t+\Delta t}=\phi^{t}\\
-C^{t+\Delta t} & =C_{A}^{t+\Delta t}+\delta C=C^{t}+\delta^{(1)}C+\delta^{(2)}C+\cdots,\quad C_{0}^{t+\Delta t}=C^{t}
+\phi^{t+\Delta t} & ={\color{blue}\phi_{A}^{t+\Delta t}}+\delta^{(n)}\phi={\color{blue}\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots}+\delta^{(n)}\phi,\quad\phi_{0}^{t+\Delta t}=\phi^{t}\\
+C^{t+\Delta t} & ={\color{blue}C_{A}^{t+\Delta t}}+\delta^{(n)}C={\color{blue}C^{t}+\delta^{(1)}C+\delta^{(2)}C+\cdots}+\delta^{(n)}\phi,\quad C_{0}^{t+\Delta t}=C^{t}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\partial_{t}\phi & \approx\frac{1}{\Delta t}\left(\phi^{t+\Delta t}-\phi^{t}\right)=\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)\\
+\text{写作}\quad & =\partial_{t}\delta^{(1)}\phi+\partial_{t}\delta^{(2)}\phi+\cdots
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\phi_{A}^{t+\Delta t} & =\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\\
+\partial_{t}\phi_{A}^{t+\Delta t} & =\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)=\frac{1}{\Delta t}\left(\phi_{A}^{t+\Delta t}-\phi^{t}\right)
 \end{align*}
 
 \end_inset
@@ -2364,15 +2390,6 @@ noprefix "false"
 \end_inset
 
 联立求解。
-\begin_inset Formula 
-\begin{align*}
-\partial_{t}\phi & \approx\frac{1}{\Delta t}\left(\phi^{t+\Delta t}-\phi^{t}\right)=\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)\\
-\text{写作}\quad & =\partial_{t}\delta^{(1)}\phi+\partial_{t}\delta^{(2)}\phi+\cdots
-\end{align*}
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -2407,9 +2424,9 @@ b_{2,m}^{s} & =\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partia
 \begin{align*}
 Y_{mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
 K_{2,mn}^{e} & =\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\\
-K_{3,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
-b_{3,m}^{e} & =-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{A}}\dd{\Omega}\\
-b_{4,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
+b_{3,mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
+b_{4,m}^{e} & =-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{A}}\dd{\Omega}\\
+b_{5,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
 \end{align*}
 
 \end_inset
@@ -2420,8 +2437,8 @@ b_{4,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
 M_{2,mn}^{s}= & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\\
 M_{3,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\\
 M_{4,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\\
-b_{5,m}^{s}= & \int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{A}}{\partial n}}\dd{\Gamma}\\
-b_{6,m}^{s}= & \int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}
+b_{6,m}^{s}= & \int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{A}}{\partial n}}\dd{\Gamma}\\
+b_{7,m}^{s}= & \int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}
 \end{align*}
 
 \end_inset
@@ -2441,8 +2458,8 @@ K_{1,mn}^{e}{\color{blue}\delta\phi_{n}}+M_{a,mn}{\color{blue}\delta\phi_{n}}+M_
 
 \begin_inset Formula 
 \begin{align}
- & Y_{mn}^{e}\,\partial_{t}\delta C_{n}+K_{2,mn}^{e}{\color{red}\delta C_{n}}+K_{3,mn}^{e}\partial_{t}C_{n0}+M_{c,mn}{\color{blue}\delta\phi_{n}}+M_{d,mn}{\color{red}\delta C_{n}}\label{eq:eq11}\\
- & =b_{3,m}^{e}+b_{4,m}^{e}+b_{5,m}^{s}+b_{6,m}^{s}\nonumber 
+ & Y_{mn}^{e}\,\partial_{t}\delta C_{n}+K_{2,mn}^{e}{\color{red}\delta C_{n}}+b_{3,mn}^{e}\partial_{t}C_{nA}+M_{c,mn}{\color{blue}\delta\phi_{n}}+M_{d,mn}{\color{red}\delta C_{n}}\label{eq:eq11}\\
+ & =b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}\nonumber 
 \end{align}
 
 \end_inset
@@ -2485,13 +2502,13 @@ M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}
 \end{array}\right\} \\
 +\lambda\left[\begin{array}{cc}
 0 & 0\\
-0 & K_{3,mn}^{e}
+0 & b_{3,mn}^{e}
 \end{array}\right]\partial_{t}\left\{ \begin{array}{c}
 {\color{blue}\delta\phi_{nA}}\\
 {\color{red}\delta C_{nA}}
 \end{array}\right\}  & =\lambda\left\{ \begin{array}{c}
 b_{1,m}^{e}+b_{2,m}^{s}\\
-b_{3,m}^{e}+b_{4,m}^{e}+b_{5,m}^{s}+b_{6,m}^{s}
+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
 \end{array}\right\} 
 \end{align*}
 
@@ -2515,13 +2532,13 @@ M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}
 \end{array}\right\} \\
 +\lambda\left[\begin{array}{cc}
 0 & 0\\
-0 & K_{3,mn}^{e}
+0 & b_{3,mn}^{e}
 \end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
 {\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
 {\color{red}\delta C_{nA}^{t+\Delta t}}
 \end{array}\right\}  & =\lambda\left\{ \begin{array}{c}
 b_{1,m}^{e}+b_{2,m}^{s}\\
-b_{3,m}^{e}+b_{4,m}^{e}+b_{5,m}^{s}+b_{6,m}^{s}
+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
 \end{array}\right\} 
 \end{align*}
 
@@ -2539,15 +2556,29 @@ M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}+\frac{1}{\Delta t}Y_{mn}^{e}
 \end{array}\right\} \\
  & =\lambda\left\{ \begin{array}{c}
 b_{1,m}^{e}+b_{2,m}^{s}\\
-b_{3,m}^{e}+b_{4,m}^{e}+b_{5,m}^{s}+b_{6,m}^{s}
+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
 \end{array}\right\} -\lambda\left[\begin{array}{cc}
 0 & 0\\
-0 & \frac{1}{\Delta t}K_{3,mn}^{e}
+0 & \frac{1}{\Delta t}b_{3,mn}^{e}
 \end{array}\right]\left\{ \begin{array}{c}
 {\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
 {\color{red}\delta C_{nA}^{t+\Delta t}}
 \end{array}\right\} 
 \end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
+{\color{red}\delta C_{nA}^{t+\Delta t}}
+\end{array}\right\} =\left\{ \begin{array}{c}
+{\color{blue}\phi_{nA}^{t+\Delta t}-\phi_{n}^{t}}\\
+{\color{red}C_{nA}^{t+\Delta t}-C_{n}^{t}}
+\end{array}\right\} 
+\]
 
 \end_inset
 
@@ -2729,6 +2760,33 @@ noprefix "false"
 \end_inset
 
 的时间推进总是无条件稳定的。
+\end_layout
+
+\begin_layout Chapter
+静态电流场
+\end_layout
+
+\begin_layout Chapter
+动态电流场
+\end_layout
+
+\begin_layout Chapter
+浓度扩散场
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+C_{i}(x)\,u(x)+R_{i}\left(t,x\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+动态场
 \end_layout
 
 \begin_layout Chapter

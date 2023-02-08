@@ -3274,6 +3274,67 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
+sdfa
+\end_layout
+
+\begin_layout Standard
+general ODE form：
+\begin_inset Formula 
+\[
+K\,x(t)+L[x(t)]\,x(t)+F[x(t)]+M\frac{\dd{x}}{\dd{t}}=b(t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Kx(t)+M\frac{\dd{x}}{\dd{t}}=b(t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+sdfsda
+\begin_inset Formula 
+\begin{align*}
+ & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n}=b^{n}\\
+ & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n+1}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+M\frac{x^{n+1}-x^{n}}{\Delta t}+K\frac{x^{n}+x^{n+1}}{2}=\frac{b^{n}+b^{n+1}}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+sdfdsa
+\begin_inset Formula 
+\begin{align*}
+ & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n}=b^{n}\\
+ & M\frac{x^{n+1}-x^{n}}{\Delta t}+Kx^{n+1}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 龙格–库塔方法,Runge–Kutta方法
 \end_layout
 
@@ -18100,8 +18161,8 @@ i\omega\nabla\cdot\varepsilon\nabla\phi+\nabla\cdot\sigma\nabla\phi=0.
 定义系数矩阵
 \begin_inset Formula 
 \begin{align*}
- & A_{ij}^{e}=\int_{\Omega}\nabla N_{i}^{e}\cdot\varepsilon\nabla N_{j}^{e}\dd{\Omega},\\
- & B_{ij}^{e}=\int_{\Omega}\nabla N_{i}^{e}\cdot\sigma\nabla N_{j}^{e}\dd{\Omega}.
+ & M_{ij}^{e}=\int_{\Omega}\nabla N_{i}^{e}\cdot\varepsilon\nabla N_{j}^{e}\dd{\Omega},\\
+ & K_{ij}^{e}=\int_{\Omega}\nabla N_{i}^{e}\cdot\sigma\nabla N_{j}^{e}\dd{\Omega}.
 \end{align*}
 
 \end_inset
@@ -18109,7 +18170,7 @@ i\omega\nabla\cdot\varepsilon\nabla\phi+\nabla\cdot\sigma\nabla\phi=0.
 得到相应的矩阵方程
 \begin_inset Formula 
 \[
-A_{ij}^{e}\frac{\partial\phi_{j}}{\partial t}+B_{ij}^{e}\phi_{j}=0.
+M_{ij}^{e}\frac{\partial\phi_{j}}{\partial t}+K_{ij}^{e}\phi_{j}=0.
 \]
 
 \end_inset
@@ -18129,7 +18190,7 @@ A_{ij}^{e}\frac{\partial\phi_{j}}{\partial t}+B_{ij}^{e}\phi_{j}=0.
 ，可以将上述方程转化为准静态问题进行求解；
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Standard
 对于瞬态问题，可以用隐式欧拉方法，将
 \begin_inset Formula $\partial_{t}\phi$
 \end_inset
@@ -18149,7 +18210,31 @@ A_{ij}^{e}\frac{\partial\phi_{j}}{\partial t}+B_{ij}^{e}\phi_{j}=0.
 ，进而得到电流密度矢量的分布。
 \begin_inset Formula 
 \[
-\left(\frac{A_{ij}^{e}}{\Delta t}+B_{ij}^{e}\right)\phi_{j}^{t+\Delta t}=A_{ij}^{e}\frac{\phi_{j}}{\Delta t}
+\left(\frac{M_{ij}^{e}}{\Delta t}+K_{ij}^{e}\right)\phi_{j}^{t+\Delta t}=M_{ij}^{e}\frac{\phi_{j}^{t}}{\Delta t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\phi_{j}^{t+\Delta t}=\phi_{j}^{t}+\phi_{jA}^{t+\Delta t}+\delta\phi_{j}^{t+\Delta t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\frac{M_{ij}^{e}}{\Delta t}+K_{ij}^{e}\right)\left(\phi_{j}^{t}+\phi_{jA}^{t+\Delta t}+\delta\phi_{j}^{t+\Delta t}\right)=\frac{M_{ij}^{e}}{\Delta t}\phi_{j}^{t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\frac{M_{ij}^{e}}{\Delta t}+K_{ij}^{e}\right)\delta\phi_{t}^{j+\Delta t}=-\left[\frac{M_{ij}^{e}}{\Delta t}\phi_{j,A}^{t+\Delta t}+K_{ij}^{e}\left(\phi_{j}^{t}+\phi_{jA}^{t+\Delta t}\right)\right]
 \]
 
 \end_inset
