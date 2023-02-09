@@ -2776,8 +2776,108 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Formula 
+\begin{align*}
+\nabla\cdot\left(-\sigma\nabla\phi\right) & =0\\
+\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+C_{i}(x)\,u(x)+R_{i}\left(t,x\right)
+\end{align*}
+
+\end_inset
+
+对比标准形式
+\begin_inset Formula 
 \[
-\frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+C_{i}(x)\,u(x)+R_{i}\left(t,x\right)
+\frac{\partial C_{i}(t,x)}{\partial t}-{\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}-C_{i}(x)\,u(x)=R_{i}\left(t,x\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+R_{2}^{e}(N_{m})= & \int_{\Omega^{e}}N_{m}^{e}\left[\partial_{t}C_{i}-{\color{red}D_{i}\,\nabla^{2}C_{i}}-{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}-C_{i}\,u-R_{i}\right]\dd{\Omega}\\
+= & \int_{\Omega^{e}}\left[N_{m}^{e}\partial_{t}C_{i}+{\color{red}D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}+{\color{blue}z_{i}u_{i}F\,N_{m}^{e}C_{i}\nabla^{2}\phi}-N_{m}^{e}C_{i}\,u-N_{m}^{e}R_{i}\right]\dd{\Omega}\\
+ & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{s}}{\color{blue}z_{i}u_{i}FN_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+其中使用了第一标量格林定理。其中的
+\begin_inset Formula $i$
+\end_inset
+
+指标对应物质种类
+\begin_inset Formula $i$
+\end_inset
+
+，
+\begin_inset Formula $m,n$
+\end_inset
+
+则是单元上的节点指标。再考虑到
+\begin_inset Formula $\nabla^{2}\phi=0$
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{align*}
+R^{e}(N_{m})= & \int_{\Omega^{e}}\left[N_{m}^{e}\partial_{t}C_{i}{\color{red}+D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}-N_{m}^{e}C_{i}\,u-N_{m}^{e}R_{i}\right]\dd{\Omega}\quad\text{体方程}\\
+ & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{e}}{\color{blue}z_{i}u_{i}F\,N_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
+\end{align*}
+
+\end_inset
+
+法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从溶液指向电极（或容器壁）。
+\end_layout
+
+\begin_layout Standard
+如果不考虑耦合项
+\begin_inset Formula $-{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}$
+\end_inset
+
+，则得到
+\begin_inset Formula 
+\begin{align*}
+R^{e}(N_{m})= & \int_{\Omega^{e}}\left[N_{m}^{e}\partial_{t}C_{i}{\color{red}+D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}-N_{m}^{e}C_{i}\,u-N_{m}^{e}R_{i}\right]\dd{\Omega}\quad\text{体方程}\\
+ & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+R^{e}(N_{m})= & \int_{\Omega^{e}}\left[N_{m}^{e}N_{n}^{e}\partial_{t}C_{n,i}{\color{red}+D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla N_{n}^{e})C_{n,i}}-N_{m}^{e}N_{n}^{e}\,uC_{n,i}-N_{m}^{e}R_{i}\right]\dd{\Omega}\quad\text{体方程}\\
+ & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+M\,x^{\prime}\left(t\right)+K\,x\left(t\right)=b\left(t\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+M & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
+K & =\int_{\Omega^{e}}\left[D_{i}(\nabla N_{m}^{e})\cdot(\nabla N_{n}^{e})-N_{m}^{e}N_{n}^{e}\,u\right]\dd{\Omega}\\
+b(t) & =\int_{\Omega^{e}}N_{m}^{e}R_{i}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}+\overline{\beta}\,b^{n}+\beta b^{n+1}
 \]
 
 \end_inset

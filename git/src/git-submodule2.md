@@ -303,7 +303,7 @@ git commit -m "delete submodule sub1"
 本篇文章简单介绍了 `git submodule` 的添加和删除,
 以及项目开发过程中主项目与子模块不同状态时刻的操作方式.
 
-## xxxx
+## solver常用命令
 
 + 初始化仓库
 
@@ -332,12 +332,14 @@ git checkout xxx
 git submodule foreach --recursive 'git checkout xxx || true'
 ```
 
-solver 为主仓库，管理一级仓库(版本信息)；
+solver 为主仓库, 管理一级仓库(版本信息);
 thirdparty 为第三方 sdk;
-common, structure, fluid, electromagnetics, multibody 为一级子仓库，管理二级子仓库(版本信息)；
-其余为二级子仓库，管理代码。
+common, structure, fluid, electromagnetics, 
+multibody 为一级子仓库, 管理二级子仓库(版本信息);
+其余为二级子仓库, 管理代码.
 
-各组员 在二级仓库提交代码后，若涉及不同仓库则必须在相应的一级子仓库中提交对应更新（二级子仓库的版本信息），二者需时刻保持一致。
+各组员 在二级仓库提交代码后, 
+若涉及不同仓库则必须在相应的一级子仓库中提交对应更新(二级子仓库的版本信息), 二者需时刻保持一致.
 
 + 提交子仓库
 

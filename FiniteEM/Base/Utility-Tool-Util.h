@@ -1,6 +1,8 @@
+#include "BaseHeader.h"
 #include <vector>
 #include <list>
 #include <fstream>
+#include <complex>
 #include <algorithm>
 #include <string.h>
 #include <assert.h>
@@ -37,17 +39,17 @@ public:
 
     //------ find vlaue element
     template <typename ForwardIterator, typename T>
-    static void FindIndex(ForwardIterator first, ForwardIterator last, const T &values);
+    static int FindIndex(ForwardIterator first, ForwardIterator last, const T &values);
     // find equal value element, return -1 if not found
-    static void FindEqualIndex(const std::vector<double> &vec, double value);
+    static int FindEqualIndex(const std::vector<double> &vec, double value);
     // find nearest value element
-    static void FindNearestIndex(const std::vector<double> &vec, double value);
+    static int FindNearestIndex(const std::vector<double> &vec, double value);
     // find first element >= value
     template <typename T>
-    static void LowerBoundIndex(const std::vector<T> &x, const T &value);
+    static int LowerBoundIndex(const std::vector<T> &x, const T &value);
     // find first element > value
     template <typename T>
-    static void UpperBoundIndex(const std::vector<T> &x, const T &value);
+    static int UpperBoundIndex(const std::vector<T> &x, const T &value);
 
     //---- sort and remove duplicated components
     template <typename T>
@@ -104,6 +106,100 @@ public:
     // check if two integer multiplication exceed the limit of int.
     static bool IsMultExceed(const int a, const int b);
 };
+
+//-----
+template <typename T>
+void Util::Zero(T *x, size_t n)
+{
+    memset(x, 0, n * sizeof(T))
+}
+
+template <typename T>
+void Util::Zero(std::vector<T> &x)
+{
+    memset(x.data(), 0, x.size() * sizeof(T))
+}
+
+template <typename T>
+void Util::Copy(T *dst, const T *src, size_t n)
+{
+    memcpy(dst, src, n * sizeof(T))
+}
+
+template <typename T>
+void Util::Add(std::vector<T> &x, std::vector<T> &y)
+{
+    assert(x.size() == y.size());
+    for (size_t i = 0; i < x.size(); i++)
+    {
+        x[i] += y[i];
+    }
+}
+
+template <typename T>
+void Util::Multiply(size_t n, T *x, T y)
+{
+    assert(x.size() == y.size());
+    for (size_t i = 0; i < n; i++)
+    {
+        x[i] *= y;
+    }
+}
+
+template <typename T>
+void Util::Append(std::vector<T> &x, std::vector<T> &y)
+{
+    x.insert(x.end(), y.begin(), y.end());
+}
+
+template <typename T>
+void Util::Append(std::vector<T> &x, const T *y, size_t n)
+{
+    size_t m = x.size();
+    x.resize(m + n);
+    Copy(&x[m], y, n);
+}
+
+template <typename ForwardIterator, typename T>
+int Util::FindIndex(ForwardIterator first, ForwardIterator last, const T &value)
+{
+    return lower_bound(first, last, value) - first;
+}
+
+template <typename T>
+int Util::LowerBoundIndex(const std::vector<T> &x, const T &value)
+{
+    return lower_bound(x.begin(), x.end(), value) - x.begin();
+}
+
+template <typename T>
+int Util::UpperBoundIndex(const std::vector<T> &x, const T &value)
+{
+    return upper_bound(x.begin(), x.end(), value) - x.begin();
+}
+
+//
+template <typename T>
+int Util::SortAndDedup(const std::vector<T> &vec)
+{
+    std::sort(vec.begin(), vec.end());
+    auto iter = std::unique(vec.begin(), vec.end());
+    vec.resize(iter - vec.begin());
+    vec.shrink_to_fit();
+}
+
+template <typename T1, typename T2>
+void Util::QuickSort(T1 *keys, T2 *values, size_t start, size_t end)
+{
+    if (start + 1 < end)
+    {
+        size_t m = QuickSortPartition(keys, values, start, end);
+        QuickSort(keys, values, start, m);
+        QuickSort(keys, values, m, end);
+    }
+}
+
+
 
 //
 template <typename T>
