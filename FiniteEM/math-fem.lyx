@@ -1651,7 +1651,7 @@ P\left(\xi\right)=\left(\xi-\xi_{1}\right)\left(\xi-\xi_{2}\right)\cdots\left(\x
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Gauss积分的定义
 \end_layout
 
@@ -1776,7 +1776,7 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-Kare: 高斯积分运用的是正交多项式的性质。Lagrange 多项式那项已经保证了至少
+高斯积分运用的是正交多项式的性质。Lagrange 多项式那项已经保证了至少
 \begin_inset Formula $n$
 \end_inset
 
@@ -1911,7 +1911,7 @@ S=\frac{1}{2}\det[J]
 \begin_inset Formula $\sbf B$
 \end_inset
 
- 平面
+ 平面。
 \end_layout
 
 \begin_layout Subsection
@@ -3281,7 +3281,7 @@ noprefix "false"
 设一阶常微分方程的形式为
 \begin_inset Formula 
 \[
-K\,x\left(t\right)+M\,x^{\prime}\left(t\right)=b\left(t\right)
+M\,x^{\prime}\left(t\right)+K\,x\left(t\right)=b\left(t\right)
 \]
 
 \end_inset
@@ -3388,7 +3388,136 @@ M\,{\color{blue}x^{\prime;n}} & =-Kx^{n}+b^{n}
 
 \end_inset
 
+当
+\begin_inset Formula $\beta=1/2$
+\end_inset
 
+，回到梯形法则：
+\begin_inset Formula 
+\[
+\left(\frac{M}{\Delta t}+\frac{K}{2}\right){\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-\frac{K}{2}\right)x^{n}+\frac{1}{2}\left(b^{n}+b^{n+1}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By 《数值分析–张平文，李铁军》P156，将此方法应用到方程 
+\begin_inset Formula $x'=\lambda x$
+\end_inset
+
+ 上，可知此方法的稳定域为
+\begin_inset Formula 
+\[
+\abs{\frac{1+\overline{\beta}\xi}{1-\beta\xi}}<1,\quad\xi=\lambda\Delta t
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta$
+\end_inset
+
+从
+\begin_inset Formula $0$
+\end_inset
+
+到
+\begin_inset Formula $1$
+\end_inset
+
+，此方法的稳定域逐渐扩大。代码演示
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+solODE[x0_, n_, {
+\backslash
+[Beta]_, 
+\backslash
+[CapitalDelta]t_, M1_, K1_, b_}] := Module[{tmp, 
+\backslash
+[Beta]b}, 
+\backslash
+[Beta]b = 1 - 
+\backslash
+[Beta]; tmp = Range[n + 1]; tmp[[1]] = x0; Do[ tmp[[i + 1]] = LinearSolve[
+ M1/
+\backslash
+[CapitalDelta]t + 
+\backslash
+[Beta]* K1, (M1/
+\backslash
+[CapitalDelta]t - 
+\backslash
+[Beta]b*K1) .
+ tmp[[i]] + 
+\backslash
+[Beta]b* b[i] + 
+\backslash
+[Beta]*b[i + 1]] , {i, 1, n}]; tmp]; (*-----*) M1 = 1*{ {1, 0, 0}, {0, 1,
+ 0}, {0, 0, 1} }; K1 = 2.1*{ {1, 0, 0}, {0, 1, 0}, {0, 0, 1} }; b[n_] :=
+ 0*{1, 1, 1}; x0 = {1, 1, 1}; (*----------*) 
+\backslash
+[Beta] = 1/2; 
+\backslash
+[CapitalDelta]t = 1; step = 100; r1t = solODE[x0, step, {
+\backslash
+[Beta], 
+\backslash
+[CapitalDelta]t, M1, K1, b}]; r1 = Style[#, Red] & /@ Transpose@r1t; (**)
+ 
+\backslash
+[Beta] = 0; r2t = solODE[x0, step, {
+\backslash
+[Beta], 
+\backslash
+[CapitalDelta]t, M1, K1, b}]; r2 = Style[#, Green] & /@ Transpose@r2t; (**)
+ 
+\backslash
+[Beta] = 1; r3t = solODE[x0, step, {
+\backslash
+[Beta], 
+\backslash
+[CapitalDelta]t, M1, K1, b}]; r3 = Style[#, Black] & /@ Transpose@r3t; GraphicsC
+olumn[ Table[ ListPlot[{r1[[ord]], r2[[ord]], r3[[ord]]}, PlotRange -> All]
+ , {ord, 1, 3}] , ImageSize -> 500 ]
+\end_layout
+
+\end_inset
+
+，收敛域
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+f = Table[ 
+\backslash
+[Beta]b = 1 - 
+\backslash
+[Beta]; RegionPlot[ Callout[Abs[(1 + 
+\backslash
+[Beta]b (x + y*I))/(1 - 
+\backslash
+[Beta] (x + y I))] < 1, StringTemplate["
+\backslash
+[Beta]=``"][
+\backslash
+[Beta]], {
+\backslash
+[Beta], 0.7}], {x, -2.5, 2.5}, {y, -2.5, 2.5} , PlotStyle -> {ColorData[3, "ColorList
+"][[Mod[10 
+\backslash
+[Beta], 10]]], Opacity[.15]} , Axes -> True] , {
+\backslash
+[Beta], 0, 1, 0.1}] 
+\end_layout
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Section

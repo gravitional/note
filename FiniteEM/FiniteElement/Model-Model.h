@@ -68,10 +68,41 @@ public:
     // 获得某类单元及其子类的数量及其ID编号
     // 获得大类的单元总个数与ID号
 private:
-    // 获得所有指针, 边
-    // 获得所有ID
-protected:
-    int _compID;
-    vector<int> _setIDs;
-    VarValue _waveAmpl;
+    CompStorageNumerous<CompElement> _elements;
+
+    //--- 单元组
+public:
+    // 增加一个单元组
+    void AddEleGroup(const string &label, vector<int> &ids);
+    // 取一个单元组并静态转换成指定类型
+    template <typename T>
+    vector<T *> GetEleGroup(const string &label);
+
+private:
+    // 单元组ID, 用于记录不方便通过单元类型直接取用的单元集合
+    unordered_map<string, vector<int>> _groups;
+
+    //--- 材料
+public:
+    // 建立多线程私有材料对象
+    void CopyThreadsMaterial();
+    // 取材料
+private:
+    vector<unordered_map<int, CompMaterial *>> _matThreads; // 线程私有材料对象
+
+    //---自定义集合
+public:
+    // 定义集合（适用于少量元素）
+    void AddSet(const string &label, set<int> &ids);
+    // 取集合
+    set<int> &GetSet(const string &label);
+
+private:
+    unordered_map<string, set<int>> _sets; // 存放集合信息
+};
+
+// 全局函数
+inline Model *model()
+{
+    return &Model::GetInstance();
 }
