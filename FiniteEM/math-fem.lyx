@@ -3273,8 +3273,8 @@ noprefix "false"
 。
 \end_layout
 
-\begin_layout Section
-beta方法
+\begin_layout Subsection
+欧拉beta方法
 \end_layout
 
 \begin_layout Standard
@@ -3297,12 +3297,16 @@ K\,x\left(t\right)+M\,x^{\prime}\left(t\right)=b\left(t\right)
 表示为
 \begin_inset Formula 
 \[
-x\left(t+\Delta t\right)=x\left(t\right)+\Delta t\left(1-\beta\right)x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
+x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
 \]
 
 \end_inset
 
-以下将
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+。以下将
 \begin_inset Formula $t+\Delta t$
 \end_inset
 
@@ -3313,18 +3317,14 @@ x\left(t+\Delta t\right)=x\left(t\right)+\Delta t\left(1-\beta\right)x^{\prime}\
 指标，联立方程
 \begin_inset Formula 
 \begin{align*}
- & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta tx^{\prime;n+1}\\
+ & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
  & K\,x^{n}+M\,x^{\prime;n}=b^{n}\\
  & K\,x^{n+1}+M\,x^{\prime;n+1}=b^{n+1}
 \end{align*}
 
 \end_inset
 
-其中
-\begin_inset Formula $\overline{\beta}=1-\beta$
-\end_inset
-
-，可以解得
+解得
 \begin_inset Note Note
 status collapsed
 
@@ -3358,7 +3358,7 @@ Simplify@First@ Solve[{x[n + 1] == x[n] +
 \begin_inset Formula 
 \begin{align*}
 \left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}+\overline{\beta}\,b^{n}+\beta b^{n+1}\\
-M\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{\prime;n+1}} & =K\left(\overline{\beta}K-\frac{M}{\Delta t}\right)x^{n}-\overline{\beta}K\,b^{n}+\frac{M}{\Delta t}b^{n+1}\\
+\left(\frac{M}{\Delta t}K^{-1}M+\beta M\right){\color{blue}x^{\prime;n+1}} & =-\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}-\overline{\beta}b^{n}+\frac{M}{\Delta t}K^{-1}\,b^{n+1}\\
 M\,{\color{blue}x^{\prime;n}} & =-Kx^{n}+b^{n}
 \end{align*}
 
@@ -5939,7 +5939,7 @@ sss
 \end_layout
 
 \begin_layout Standard
-general ODE form：
+general ODE form：待整理
 \begin_inset Formula 
 \[
 K\,x(t)+L[x(t)]\,x(t)+F[x(t)]+M\,x^{\prime}(t)=b(t)
@@ -5948,6 +5948,58 @@ K\,x(t)+L[x(t)]\,x(t)+F[x(t)]+M\,x^{\prime}(t)=b(t)
 \end_inset
 
 
+\begin_inset Formula 
+\begin{align*}
+ & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
+ & K\,x^{n}+L^{n}x^{n}+F^{n}+M\,x^{\prime;n}=b^{n}\\
+ & K\,x^{n+1}+L^{n+1}x^{n+1}+F^{n+1}+M\,x^{\prime;n+1}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify@First@Solve[{ x[n + 1] == x[n] + 
+\backslash
+[CapitalDelta]t 
+\backslash
+[Beta]b* x
+\backslash
+[Prime][n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]*x
+\backslash
+[Prime][n + 1], K*x[n] + L[n]*x[n] + F[n] + M*x
+\backslash
+[Prime][n] == b[n], K*x[n + 1] + L[n + 1]*x[n + 1] + F[n + 1] + M*x
+\backslash
+[Prime][n + 1] == b[n + 1] }, {x[n + 1], x
+\backslash
+[Prime][n], x
+\backslash
+[Prime][n + 1]} ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(\beta K+\beta L^{n+1}+\frac{M}{\Delta t}\right)x^{n+1} & =\left(\frac{M}{\Delta t}-\overline{\beta}K-\overline{\beta}L^{n}\right)x^{n}-\left(\overline{\beta}F^{n}+\beta F^{n+1}\right)+\left(\overline{\beta}b^{n}+\beta b^{n+1}\right)\\
+\left(\beta K+\beta L^{n+1}+\frac{M}{\Delta t}\right)Mx^{\prime;n+1} & =-\overline{\beta}\,\left(K+L^{n+1}\right)b^{n}+\frac{M}{\Delta t}b^{n+1}+\overline{\beta}\,KF^{n}\\
+ & +\overline{\beta}\,F^{n}L^{n+1}-\frac{M}{\Delta t}F^{n+1}+\overline{\beta}K^{2}x^{n}+\overline{\beta}KL^{n}x^{n}\\
+ & +\overline{\beta}\,KL^{n+1}x^{n}-K\frac{M}{\Delta t}x^{n}-\frac{M}{\Delta t}L^{n+1}x^{n}+\overline{\beta}L^{n}L^{n+1}x^{n}\\
+M\,x^{\prime;n} & =-\left(K+L^{n}\right)x^{n}-F^{n}+b^{n}
+\end{align*}
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Chapter
