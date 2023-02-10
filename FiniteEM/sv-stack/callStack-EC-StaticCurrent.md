@@ -1,4 +1,4 @@
-# 求解器调用栈,电流场, 瞬态
+# 求解器调用栈,电化学/静态电流场
 
 ```cpp
 //solver/main.cpp
@@ -15,7 +15,7 @@ main(int argc, char* argv[]);
             lib()->Load(Str::ToLower(solver)); // load solver dll
 
             memTracker()->SnapShot("CreateModel"); //分析内存
-            unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建 solver model
+            unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建 solver model, 通过 RuntimeSelection 机制
             creator->Create(); // 创建网格和模型, /Common/Model/ModelCreator.cpp
                 CreateMesh(); // 创建网格
                 CreateModel(); //创建模型 /FiniteElement/Model/FeModelCreator.cpp
@@ -26,14 +26,15 @@ main(int argc, char* argv[]);
                     CreateElement(data); // 创建单元
                     CreateMaterial(data); //创建材料
                     CreateInitialField(data);
-                    CreateMisc(data); //创建各场的特有数据, /Current/Model/ModelCreatorCF.cpp
+                    CreateMisc(data); //创建各场的特有数据, /ElectroChemistry/Model/ModelCreatorEC.cpp
                         CreateInfo(data);
                             data.ReadValue("Thickness2D"...) //读取厚度
                             data.ReadValue("Sector"...) //读取模型分数
                         CreateConstraint(data) // 创建约束, 即边界条件, 
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
-                        //迭代分析类型
+                        //迭代分析类型, 读取 conrol 的分析节点
+
                         analysis->Read(); // 动态多态, 转向 AnalysisFe::Read()
                             auto reader=controlReader(); // control.json 单例
                             auto job =NewJob(); //任务工厂方法
@@ -42,7 +43,9 @@ main(int argc, char* argv[]);
                             reader->SetIDByName(_name,_jobID);// 设置 jobID 对应的名称,
                                                             //存入unordered_map<string, int> _nameMap, 不同 reader 共享
                             job->Create(*reader); //virtual, 创建 new job
-                                NonlinearPara.Create(data) //非线性迭代; /Current/Analysis/LoadJobCF.cpp
+                                // control节点读取: Parameter, ODEBeta 节点读取
+                                // Restart, Load, PostAnalysis
+                                NonlinearPara.Create(data) //非线性迭代; /ElectroChemistry/Analysis/LoadJobEC.cpp
                                 couple // 耦合
                                 load // 创建载荷
                                 int id=model()->AddComponentGenID(_PostAnalysis); // 添加后处理分析任务
@@ -50,8 +53,8 @@ main(int argc, char* argv[]);
                             //非续算时清空独立计时器
                             //清空当前分析的标记 _flags
                             //设置新的变量输出
-
-                    Initialize(); // 各个场自己的特定初始化, /Current/Model/ModelCreatorCF.cpp
+                    // 各个场自己的特定初始化, /ElectroChemistry/Model/ModelCreatorEC.cpp
+                    Initialize(); // 材料，约束, 自由度排序，网格，MPI，单元列表
                         model()->CopyThreadsMaterial(); //复制线程私有材料对象
                         ApplyConstraint(); // 施加约束
                             ExpandCons2Ele();//施加约束到单元上
@@ -72,7 +75,7 @@ main(int argc, char* argv[]);
                 auto analysis = anlsCtrl()->GetNextAnalysis();
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
-                    Analyze(); // 虚函数, /Current/Analysis/AnalysisDynaCF.cpp
+                    Analyze(); // 虚函数, /ElectroChemistry/Analysis/AnalysisDynaEC.cpp
                         InitBeforeJobLoop(); // 电流场分析初始化
                             ResultManipEM* p_resultHandle=resultManip(); //初始化计算结果存储指针
                             // 初始化 p_GFinAccum, p_GRt, p_GFv_T, p_Solu_T, P_GFv_Pre

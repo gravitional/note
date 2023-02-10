@@ -199,8 +199,6 @@ void Util::QuickSort(T1 *keys, T2 *values, size_t start, size_t end)
     }
 }
 
-
-
 //
 template <typename T>
 bool Util::Clear(std::list<T> &list)

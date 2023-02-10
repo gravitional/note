@@ -21,6 +21,7 @@ public:
     // 取 单数据场 的 ID列表
 
     // 根据工况, 场类型, ID 取数据
+    // id 相当于二维数组的行指标, length 相当于行元素的长度
     common::RefArray<double> GetData(SteroNo steroNo, FieldType field, int id);
 
     // 工况之间拷贝特定场数据, 乘系数 factor
@@ -43,8 +44,21 @@ private:
     int _maxID;                                      // 预设最大ID值.
 }
 
-FE_API FieldData &createFieldData(const std::string &name, int predCount = 0, int predMaxID = 0);
-FE_API FieldData &getFieldData(const std::string &name);
+FE_API FieldData &
+createFieldData(const std::string &name, int predCount = 0, int predMaxID = 0)
+{
+    if (!objects()->Exist<FieldData>(name))
+    {
+        new FieldData(name, predCount, predMaxID);
+    }
+    auto &result = getFieldData(name);
+    result.SetPredSize(predCount, predMaxID);
+    return result;
+}
+FE_API FieldData &getFieldData(const std::string &name)
+{
+    return objects()->GetRef<FieldData>(name);
+}
 
 // 单个场数据类型，本质为二维不定长数组，由ID值直接索引对应实数向量
 class SingleFieldData

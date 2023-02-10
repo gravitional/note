@@ -2,6 +2,7 @@
 
 [C++11中的通用引用](https://www.yuanguohuo.com/2018/05/25/cpp11-universal-ref/)
 [现代C++之万能引用, 完美转发, 引用折叠](https://zhuanlan.zhihu.com/p/99524127)
+[apiref-std::forward](https://www.apiref.com/cpp-zh/cpp/utility/forward.html)
 
 从语法上来看, 声明右值引用看起来和声明 `普通引用` 很像
 --后者现在被称为左值引用(lvalue references), 只不过你需要用 `&&` 而不是 `&`.
@@ -1025,10 +1026,11 @@ template<typename _Tp>  constexpr typename std::remove_reference<_Tp>::type&&  m
 
 ### 小结
 
-在 `<Effective Modern C++>` 中建议: 对于 `右值引用` 使用 `std::move`,
-对于万能引用使用std::forward. std::move()与std::forward()都仅仅做了类型转换而已.
+在 `<Effective Modern C++>` 中建议:
+对于 `右值引用` 使用 `std::move`, 对于 `万能引用` 使用 `std::forward`.
+`std::move()` 与 `std::forward()`都仅仅做了类型转换而已.
 真正的移动操作是在移动构造函数或者移动赋值操作符中发生的.
-std::move()可以应用于左值(普通的变量int这些使用move与不使用move效果一样), 但这么做要谨慎.
+`std::move()` 可以应用于左值(普通的变量int这些使用move与不使用move效果一样), 但这么做要谨慎.
 因为一旦"移动"了左值, 就表示当前的值不再需要了, 如果后续使用了该值, 产生的行为是未定义.
 
 最后给个练手的例子[5]:
