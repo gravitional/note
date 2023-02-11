@@ -122,7 +122,7 @@ Nernst–Einstein 方程，
 ）
 \begin_inset Formula 
 \begin{equation}
-\sbf j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)\,\nabla\phi(x)}+C_{i}(x)\,u(x)\label{eq:2}
+\sbf j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)\,\nabla\phi(x)}+C_{i}(x)\,\sbf u(x)\label{eq:2}
 \end{equation}
 
 \end_inset
@@ -145,8 +145,8 @@ noprefix "false"
 
 \end_inset
 
-中的三项分别表示扩散项，迁移项，和对流项。带时间项的质量守恒关系， Nernst–Planck 方程，一般情况下，电化学腐蚀过程中，电解质内部无化学反应发生，只
-存在物质传递过程，
+中的三项分别表示扩散项（Diffusion），迁移项（Migration），和对流项（Convection）。带时间项的质量守恒关系， Nernst–Planc
+k 方程，一般情况下，电化学腐蚀过程中，电解质内部无化学反应发生，只存在物质传递过程，
 \begin_inset Formula $R_{i}=0$
 \end_inset
 
@@ -332,7 +332,7 @@ noprefix "false"
 。离子流和电荷流定义 
 \begin_inset Formula 
 \begin{align*}
-\text{离子流：}\quad & j_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(t,x)\,\nabla\phi(x)}\\
+\text{离子流：}\quad & j_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(t,x)\,\nabla\phi(x)}+C_{i}(x)\,\sbf u(x)\\
 \text{电流：}\quad & \sbf i(x)=F\sum z_{i}\,\sbf j_{i}(t,x),\quad\text{求和消去时间依赖}
 \end{align*}
 
@@ -394,8 +394,9 @@ noprefix "false"
 满足的方程为：
 \begin_inset Formula 
 \begin{align*}
-\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}\\
- & \quad+{\color{blue}z_{i}u_{i}F\,C_{i}(t,x)\,\nabla^{2}\phi(x)}+R_{i}(t,x)
+\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+R_{i}(t,x)\\
+ & \;+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)+{\color{blue}z_{i}u_{i}F\,C_{i}(t,x)\,\nabla^{2}\phi(x)}}\\
+ & \;+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+C_{i}\left(x\right)\nabla\cdot\sbf u\left(x\right)
 \end{align*}
 
 \end_inset
@@ -410,21 +411,45 @@ noprefix "false"
 
  是空间上的常数，则
 \begin_inset Formula 
-\[
-\nabla\cdot\left[\sigma(x)\,\nabla\phi(x)\right]=\sigma\nabla^{2}\phi=0
-\]
+\begin{equation}
+\nabla\cdot\left[\sigma(x)\,\nabla\phi(x)\right]=\sigma\nabla^{2}\phi=0\label{eq:pre1}
+\end{equation}
 
 \end_inset
 
-直接代入 
-\begin_inset Formula $\nabla^{2}\phi=0$
+对于稳恒流速场：
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\sbf u\left(x\right)=0.\label{eq:pre2}
+\end{equation}
+
 \end_inset
 
-，得到
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pre1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pre1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得
 \begin_inset Formula 
 \begin{align}
  & \nabla\cdot\left(-\sigma\nabla\phi\right)=0\label{eq:eq1}\\
- & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+R_{i}\left(t,x\right)\label{eq:eq2}
+ & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+R_{i}\left(t,x\right)\label{eq:eq2}
 \end{align}
 
 \end_inset
@@ -2173,76 +2198,12 @@ noprefix "false"
 往往是稀疏的带状矩阵。
 \end_layout
 
-\begin_layout Section
-迭代展开
+\begin_layout Chapter
+动态场
 \end_layout
 
 \begin_layout Standard
-为了处理问题中的非线性部分，还需要将场作迭代展开。设场
-\begin_inset Formula $\phi$
-\end_inset
-
-相对于真实状态
-\begin_inset Formula $\phi_{0}$
-\end_inset
-
-有一个微小的偏移
-\begin_inset Formula $\delta\phi$
-\end_inset
-
-，用算式描述如下
-\begin_inset Formula 
-\begin{align}
-\sbf j & =\sbf j_{0}-\sigma\,\sbf\nabla\delta\phi\nonumber \\
-\phi & =\phi_{0}+\delta\phi\label{eq:fn4}
-\end{align}
-
-\end_inset
-
-以
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:res2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-为例，代入场的形函数展开
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fn3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-和
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fn4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的迭代展开，便可得到离散的矩阵方程
-\begin_inset Formula 
-\begin{align*}
-\bigg[\int_{\Omega^{e}}\nabla N_{i}^{e}\,\sigma\,\nabla N_{j}^{e} & +\beta N_{i}^{e}N_{j}^{e}\dd{\Omega}\bigg]\delta\phi_{j}+\left[\int_{\Gamma^{e}}\gamma N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]\delta\phi_{j}\\
- & =\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf i_{0}\dd{\Omega}-\int_{\Gamma^{e}}N_{i}^{e}q\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}f\dd{\Gamma}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-对于电化学理论中电场和浓度场满足的微分方程
+对于电化学理论，溶液中的电场和浓度场满足微分方程
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:eq1"
@@ -2264,502 +2225,467 @@ noprefix "false"
 
 ，
 \begin_inset Formula 
-\begin{align*}
- & \nabla\cdot\left(-\sigma\nabla\phi\right)=0\\
- & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+R_{i}\left(t,x\right)
-\end{align*}
+\begin{align}
+ & \nabla\cdot\left(-\sigma\nabla\phi\right)=0\label{eq:ef0}\\
+ & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+R_{i}\left(t,x\right)\nonumber 
+\end{align}
 
 \end_inset
 
-采用上述步骤的求解思想得到的方程如下（为简洁省略物质指标
-\begin_inset Formula $i$
-\end_inset
 
-）。电势
+\end_layout
+
+\begin_layout Example
+电势
 \begin_inset Formula $\phi$
 \end_inset
 
-满足
+的残差方程
 \begin_inset Formula 
-\begin{align}
-\bigg[\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot & \nabla N_{n}^{e}\dd{\Omega}\bigg]\delta\phi_{n}-\bigg[\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial}{\partial n}\delta\phi\right)\dd{\Gamma}\bigg]\nonumber \\
- & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Omega}+\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Gamma}\label{eq:fem1}
-\end{align}
+\[
+R_{E}^{e}\left(N_{m}\right)=\Big[\int_{\Omega^{e}}{\color{blue}\nabla N_{m}\cdot\sbf J_{e}}\dd{\Omega}-\int_{\Gamma^{s}}{\color{brown}N_{m}\sbf n\cdot\sbf J_{e}}\dd{\Gamma}\Big]=0
+\]
+
+\end_inset
+
+其中电场
+\begin_inset Formula $\sbf E$
+\end_inset
+
+对应的电流
+\begin_inset Formula $\sbf J_{E}=-\sigma\cdot\nabla\phi=-\sigma\cdot\nabla N_{n}\phi_{n}$
+\end_inset
+
+，经过有限元组装将得到关于
+\begin_inset Formula $\phi_{n}$
+\end_inset
+
+的方程，形如
+\begin_inset Formula 
+\begin{equation}
+K_{mn}\,\phi_{n}=0\label{eq:ef1}
+\end{equation}
+
+\end_inset
+
+若采用
+\begin_inset Formula $\lambda$
+\end_inset
+
+–不动点迭代求解，
+\begin_inset Formula 
+\begin{equation}
+K\cdot\delta J_{E,s+1}=-\lambda_{s}K\cdot J_{E,s}+\lambda_{s}b,\label{eq:ef2}
+\end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $\frac{\partial\phi_{0}}{\partial n}$
+\begin_inset Formula $s$
 \end_inset
 
-表示迭代基
-\begin_inset Formula $\phi_{0}$
+表示外迭代的第
+\begin_inset Formula $s$
 \end_inset
 
-的法向偏导。
-\end_layout
-
-\begin_layout Standard
-浓度场
-\begin_inset Formula $C$
+步，
+\begin_inset Formula $\lambda_{s}$
 \end_inset
 
-满足
-\begin_inset Formula 
-\begin{align}
- & \quad\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}\delta C_{n}+\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}C_{nA}\nonumber \\
- & +\left[\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\right]\delta C_{n}-\left[\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\right]\nonumber \\
- & -\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\right]\delta C_{n}-\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\right]\nonumber \\
-= & -\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{A}}\dd{\Omega}+\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}\nonumber \\
- & +\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{A}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\label{eq:fem2}
-\end{align}
-
+是第
+\begin_inset Formula $s$
 \end_inset
 
-其中积分域
-\begin_inset Formula $\Gamma^{s}$
+步迭代的参数。在这里
+\begin_inset Formula $b=0$
 \end_inset
 
-遍历所有边界单元。下表中的
-\begin_inset Formula $A$
+；当
+\begin_inset Formula $J_{E}$
 \end_inset
 
-表示非线性迭代中的累积值，以前一时刻
-\begin_inset Formula $\phi^{t}$
+序列收敛到根附近时，必然满足
+\begin_inset Formula $\delta J_{E}\approx\frac{\partial J}{\partial E}\delta E$
 \end_inset
 
 ，
-\begin_inset Formula $C^{t}$
-\end_inset
-
-做为初始值
-\begin_inset Formula 
-\begin{align*}
-\phi^{t+\Delta t} & ={\color{blue}\phi_{A}^{t+\Delta t}}+\delta^{(n)}\phi={\color{blue}\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots}+\delta^{(n)}\phi,\quad\phi_{0}^{t+\Delta t}=\phi^{t}\\
-C^{t+\Delta t} & ={\color{blue}C_{A}^{t+\Delta t}}+\delta^{(n)}C={\color{blue}C^{t}+\delta^{(1)}C+\delta^{(2)}C+\cdots}+\delta^{(n)}\phi,\quad C_{0}^{t+\Delta t}=C^{t}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-\partial_{t}\phi & \approx\frac{1}{\Delta t}\left(\phi^{t+\Delta t}-\phi^{t}\right)=\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)\\
-\text{写作}\quad & =\partial_{t}\delta^{(1)}\phi+\partial_{t}\delta^{(2)}\phi+\cdots
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-\phi_{A}^{t+\Delta t} & =\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\\
-\partial_{t}\phi_{A}^{t+\Delta t} & =\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)=\frac{1}{\Delta t}\left(\phi_{A}^{t+\Delta t}-\phi^{t}\right)
-\end{align*}
-
-\end_inset
-
-通过使用电极–电解质边界条件
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd15b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，可以将方程组
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fem1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-和
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fem2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-联立求解。
-\end_layout
-
-\begin_layout Section
-抽象表示
-\end_layout
-
-\begin_layout Standard
-下面分别整理出在体单元或者表面单元上，电势和浓度对应的刚度矩阵和激励。
-\end_layout
-
-\begin_layout Standard
-体单元，电势
-\begin_inset Formula 
-\begin{align*}
-K_{1,mn}^{e} & =\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot\nabla N_{n}^{e}\dd{\Omega}\\
-b_{1,m}^{e} & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-边界单元，电势
-\begin_inset Formula 
-\begin{align*}
-M_{1,mn}^{s} & =-\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial\delta\phi}{\partial n}\right)\dd{\Gamma}\\
-b_{2,m}^{s} & =\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Gamma}
-\end{align*}
-
-\end_inset
-
-体单元，浓度
-\begin_inset Formula 
-\begin{align*}
-Y_{mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
-K_{2,mn}^{e} & =\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\\
-b_{3,mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
-b_{4,m}^{e} & =-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{A}}\dd{\Omega}\\
-b_{5,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-边界单元，浓度
-\begin_inset Formula 
-\begin{align*}
-M_{2,mn}^{s}= & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\\
-M_{3,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\\
-M_{4,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\\
-b_{6,m}^{s}= & \int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{A}}{\partial n}}\dd{\Gamma}\\
-b_{7,m}^{s}= & \int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-使用以上记号，将两组方程简写为
 \begin_inset Formula 
 \begin{align}
-K_{1,mn}^{e}{\color{blue}\delta\phi_{n}}+M_{a,mn}{\color{blue}\delta\phi_{n}}+M_{b,mn}{\color{red}\delta C_{n}}=b_{1,m}^{e}+b_{2,m}^{s}\label{eq:eq10}
+\bigg[\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot & \nabla N_{n}^{e}\dd{\Omega}\bigg]\delta\phi_{n}-\bigg[\int_{\Gamma^{s}}N_{m}^{e}\left(\sigma\frac{\partial}{\partial n}\delta\phi\right)\dd{\Gamma}\bigg]\nonumber \\
+ & =\lambda_{s}\left[\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot\sbf J_{E,A}\dd{\Omega}-\int_{\Gamma^{e}}N_{m}^{e}\,\sbf n\cdot\sigma\cdot\sbf J_{E,A}\dd{\Gamma}\right]\label{eq:ef3}
 \end{align}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align}
- & Y_{mn}^{e}\,\partial_{t}\delta C_{n}+K_{2,mn}^{e}{\color{red}\delta C_{n}}+b_{3,mn}^{e}\partial_{t}C_{nA}+M_{c,mn}{\color{blue}\delta\phi_{n}}+M_{d,mn}{\color{red}\delta C_{n}}\label{eq:eq11}\\
- & =b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}\nonumber 
-\end{align}
-
-\end_inset
-
-以上各物理量取值均在
-\begin_inset Formula $t+\Delta t$
-\end_inset
-
-时刻。由于两个方程存在耦合，需要联立求解，其中
-\begin_inset Formula $M_{\{a,b,c,d\},mn}$
-\end_inset
-
-描述
-\begin_inset Formula $\delta C_{n}$
-\end_inset
-
-和
-\begin_inset Formula $\delta\phi_{n}$
-\end_inset
-
-的耦合，它们由
-\begin_inset Formula $M_{\{1,2,3,4\},mn}^{s}$
-\end_inset
-
-作线性组合得到。
-\begin_inset Formula 
-\begin{align*}
-\left[\begin{array}{cc}
-K_{1,mn}^{e}+M_{a,mn} & M_{b,mn}\\
-M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}
-\end{array}\right]\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{n}}\\
-{\color{red}\delta C_{n}}
-\end{array}\right\}  & +\left[\begin{array}{cc}
-0 & 0\\
-0 & Y_{mn}^{e}
-\end{array}\right]\partial_{t}\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{n}}\\
-{\color{red}\delta C_{n}}
-\end{array}\right\} \\
-+\lambda\left[\begin{array}{cc}
-0 & 0\\
-0 & b_{3,mn}^{e}
-\end{array}\right]\partial_{t}\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{nA}}\\
-{\color{red}\delta C_{nA}}
-\end{array}\right\}  & =\lambda\left\{ \begin{array}{c}
-b_{1,m}^{e}+b_{2,m}^{s}\\
-b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
-\end{array}\right\} 
-\end{align*}
-
-\end_inset
-
-显式写出时间标签
-\begin_inset Formula 
-\begin{align*}
-\left[\begin{array}{cc}
-K_{1,mn}^{e}+M_{a,mn} & M_{b,mn}\\
-M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}
-\end{array}\right]\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{n}^{t+\Delta t}}\\
-{\color{red}\delta C_{n}^{t+\Delta t}}
-\end{array}\right\}  & +\left[\begin{array}{cc}
-0 & 0\\
-0 & Y_{mn}^{e}
-\end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{n}^{t+\Delta t}}\\
-{\color{red}\delta C_{n}^{t+\Delta t}}
-\end{array}\right\} \\
-+\lambda\left[\begin{array}{cc}
-0 & 0\\
-0 & b_{3,mn}^{e}
-\end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
-{\color{red}\delta C_{nA}^{t+\Delta t}}
-\end{array}\right\}  & =\lambda\left\{ \begin{array}{c}
-b_{1,m}^{e}+b_{2,m}^{s}\\
-b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
-\end{array}\right\} 
-\end{align*}
-
-\end_inset
-
-整理
-\begin_inset Formula 
-\begin{align*}
- & \left[\begin{array}{cc}
-K_{1,mn}^{e}+M_{a,mn} & M_{b,mn}\\
-M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}+\frac{1}{\Delta t}Y_{mn}^{e}
-\end{array}\right]\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{n}^{t+\Delta t}}\\
-{\color{red}\delta C_{n}^{t+\Delta t}}
-\end{array}\right\} \\
- & =\lambda\left\{ \begin{array}{c}
-b_{1,m}^{e}+b_{2,m}^{s}\\
-b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
-\end{array}\right\} -\lambda\left[\begin{array}{cc}
-0 & 0\\
-0 & \frac{1}{\Delta t}b_{3,mn}^{e}
-\end{array}\right]\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
-{\color{red}\delta C_{nA}^{t+\Delta t}}
-\end{array}\right\} 
-\end{align*}
 
 \end_inset
 
 其中
-\begin_inset Formula 
-\[
-\left\{ \begin{array}{c}
-{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
-{\color{red}\delta C_{nA}^{t+\Delta t}}
-\end{array}\right\} =\left\{ \begin{array}{c}
-{\color{blue}\phi_{nA}^{t+\Delta t}-\phi_{n}^{t}}\\
-{\color{red}C_{nA}^{t+\Delta t}-C_{n}^{t}}
-\end{array}\right\} 
-\]
-
+\begin_inset Formula $\sbf J_{E,A}=-\sigma\cdot\nabla\phi_{A}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Section
-改进的欧拉方法
+ 是电流在外迭代中的累积值。
 \end_layout
 
 \begin_layout Standard
-对于微分方程
-\begin_inset Formula 
-\[
-\begin{cases}
-\partial_{t}y(t)=f(t,y), & a\le t\le b\\
-y(a)=y_{0}
-\end{cases}
-\]
-
-\end_inset
-
-改进的欧拉方法为
-\begin_inset Formula 
-\[
-y^{n+1}=y_{0}^{n+1}+\delta y^{n+1}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{cases}
-y^{n+1}=y^{n}+\frac{h}{2}\left(K_{1}+K_{2}\right),\\
-K_{1}=f\left(t^{n},y^{n}\right),\\
-K_{2}=f\left(t^{n}+h,y^{n}+hK_{1}\right),
-\end{cases}
-\]
-
-\end_inset
-
-使用
-\begin_inset Formula $(t^{n},y^{n})$
-\end_inset
-
-用向前欧拉法计算一次
-\begin_inset Formula $y^{n+1;0}$
-\end_inset
-
-；然后用
-\begin_inset Formula $(t^{n+1},y^{n+1;0})$
-\end_inset
-
-再计算一次得到
-\begin_inset Formula $y^{n+1;1}$
-\end_inset
-
-，改进欧拉法取平均
-\begin_inset Formula 
-\[
-y^{n+1}=\frac{1}{2}\left(y^{n+1;0}+y^{n+1;1}\right)
-\]
-
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-Newmark格式
-\end_layout
+\begin_layout Example
+浓度场
+\begin_inset Formula $C_{i}$
+\end_inset
 
-\begin_layout Standard
-上面给出的是每个确定时刻下的求解流程，为了得到完整的结果，还需要对场进行时间步迭代。上述有限元方程可以抽象成以下形式（为简洁省略物质指标
+的残差方程
+\begin_inset Formula 
+\begin{align}
+R_{C_{i}}^{e}\left(N_{m}\right)= & \int_{\Omega^{e}}N_{m}\left[\partial_{t}C_{i}-{\color{red}D_{i}\,\nabla^{2}C_{i}}-{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}-\sbf u\cdot\nabla C_{i}-R_{i}\right]\dd{\Omega}\nonumber \\
+= & \int_{\Omega^{e}}\left[N_{m}\partial_{t}C_{i}+{\color{red}D_{i}\,(\nabla N_{m})\cdot(\nabla C_{i})}+{\color{blue}z_{i}u_{i}F\,N_{m}C_{i}\nabla^{2}\phi}+\nabla N_{m}\cdot C_{i}\sbf u-N_{m}R_{i}\right]\dd{\Omega}\nonumber \\
+ & -\int_{\Gamma^{s}}{\color{red}N_{m}\,D_{i}\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{s}}{\color{blue}z_{i}u_{i}F\,N_{m}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot C_{i}\sbf u\dd{\Gamma}\label{eq:cf1}
+\end{align}
+
+\end_inset
+
+其中使用了第一标量格林定理，
+\begin_inset Formula $\nabla\cdot\sbf u=0$
+\end_inset
+
+。
 \begin_inset Formula $i$
 \end_inset
 
-）
+指标标记物质种类
+\begin_inset Formula $i$
+\end_inset
+
+；
+\begin_inset Formula $m,n$
+\end_inset
+
+标记单元上的节点指标。再代入
+\begin_inset Formula $\nabla^{2}\phi=0$
+\end_inset
+
+得
 \begin_inset Formula 
 \begin{align}
-[Y_{mn}^{e}]\partial_{t}\{C_{n}\}+[K_{mn}^{e}]\{C_{n}\}+\{b_{m}^{e}\}=\{0\}.\label{eq:con2}
+R_{C_{i}}^{e}\left(N_{m}\right)= & \int_{\Omega^{e}}\left[N_{m}\,\partial_{t}C_{i}+{\color{red}\left(\nabla N_{m}\right)\cdot D_{i}\cdot\left(\nabla C_{i}\right)}+\nabla N_{m}\cdot C_{i}\sbf u-N_{m}R_{i}\right]\dd{\Omega}\nonumber \\
+ & -\int_{\Gamma^{s}}{\color{red}N_{m}\,D_{i}\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{e}}{\color{blue}N_{m}\,z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot C_{i}\sbf u\dd{\Gamma}=0\label{eq:cf2}
 \end{align}
 
 \end_inset
 
-首先把时间轴离散化，令
-\begin_inset Formula $C(t)=C(\alpha\Delta t)$
+第一行和第二行分别对应体方程和边界项，它等价于
+\begin_inset Formula 
+\begin{align}
+\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b}\\
+ & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c}
+\end{align}
+
 \end_inset
 
-，其中
-\begin_inset Formula $\alpha=0,1,2,\cdots$
+约定法向
+\begin_inset Formula $\sbf n$
 \end_inset
 
-，因此可用
-\begin_inset Formula $\alpha$
+从溶液指向电极（或容器壁）；其中定义了三类浓度流
+\begin_inset Formula 
+\begin{align*}
+\sbf J_{D_{i}} & =-D_{i}\nabla C_{i},\quad\text{Diffusion}\\
+\sbf J_{M_{i}} & =-z_{i}u_{i}F\,C_{i}\nabla\phi,\quad\text{Migration}\\
+\sbf J_{C_{i}} & =C_{i}\sbf u,\quad\text{Convection}
+\end{align*}
+
 \end_inset
 
-指标表示每个时间步下的场。
+
 \end_layout
 
 \begin_layout Standard
-对于形如
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+代入
+\begin_inset Formula $\phi$
+\end_inset
+
+、
+\begin_inset Formula $C_{i}$
+\end_inset
+
+的有限元展开
+\begin_inset Formula 
+\begin{align*}
+C_{i} & =N_{n}C_{i,n}\\
+\phi & =N_{n}\phi_{n}
+\end{align*}
+
+\end_inset
+
+并完成有限元组装过程，最终关于自由度的方程形如：
+\begin_inset Formula 
+\begin{equation}
+M\,X^{\prime}\left(t\right)+K\,X\left(t\right)=b\left(t\right)\label{eq:ode1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+M & \Rightarrow\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\\
+K & \Rightarrow-\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\\
+ & \quad\;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\\
+b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $X=\left\{ \phi,C_{i}\right\} $
+\end_inset
+
+。使用
+\begin_inset Formula $\beta$
+\end_inset
+
+–欧拉迭代法求解此时间常微分方程，
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}\left(\frac{M}{\Delta t}+\beta K\right)}X^{\alpha+1}={\color{red}\left(\frac{M}{\Delta t}-\overline{\beta}K\right)X^{\alpha}+\left(\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1}\right)},\label{eq:ode2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\beta\in\left[0,1\right]$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+，
+\begin_inset Formula $\alpha$
+\end_inset
+
+标记时间步。此方程可抽象成
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}A}\cdot X^{\alpha+1}={\color{red}B}\label{eq:my20}
+\end{equation}
+
+\end_inset
+
+的形式，并进一步使用
+\begin_inset Formula $\lambda$
+\end_inset
+
+–不动点迭代求解
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}A}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left({\color{red}B}-{\color{blue}A}\cdot X_{\beta}^{\alpha+1}\right).\label{eq:my21}
+\end{equation}
+
+\end_inset
+
+再将它表示成
 \begin_inset Formula 
 \[
-[Y]\{C^{\prime\alpha}\}+[K]\{C^{\alpha}\}+\{b^{\alpha}\}=\{0\}.
+A\cdot Y=\lambda\left(F_{\text{ext}}-F_{\text{in}}\right)
 \]
 
 \end_inset
 
-的方程，使用Newmark 差分格式给出的递推解为
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $A$
+\end_inset
+
+是全局刚度矩阵，
+\begin_inset Formula $F_{\text{ext}}=B$
+\end_inset
+
+是外源激励，
+\begin_inset Formula $F_{\text{ext}}={\color{blue}A}\cdot X_{\beta}^{\alpha+1}$
+\end_inset
+
+表示“内力项”。
+\end_layout
+
+\begin_layout Enumerate
+其中
+\begin_inset Formula $\beta$
+\end_inset
+
+标记
+\begin_inset Formula $\lambda$
+\end_inset
+
+–不动点迭代（外迭代）的步数，
+\begin_inset Formula $\lambda_{\beta}$
+\end_inset
+
+是第
+\begin_inset Formula $\beta$
+\end_inset
+
+步的待定参数。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\lambda_{\beta}$
+\end_inset
+
+本身通过回溯线搜索迭代（内迭代）确定，若使用
+\begin_inset Formula $\gamma$
+\end_inset
+
+标记线搜索步数，
+\begin_inset Formula $\lambda$
+\end_inset
+
+可具体表示成
+\begin_inset Formula $\lambda_{\beta\gamma}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+非线性材料在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中得到处理，当
+\begin_inset Formula $J\Rightarrow\nabla X$
+\end_inset
+
+ 序列收敛到根附近时，必然满足
+\begin_inset Formula $\delta J\approx\frac{\partial J}{\partial(\nabla X)}\delta(\nabla X)$
+\end_inset
+
+。因此
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左边的
+\begin_inset Formula ${\color{blue}A}$
+\end_inset
+
+含有材料曲线的切线斜率，类似于电场中的
+\begin_inset Formula $\kappa=\partial D/\partial E$
+\end_inset
+
+；而右边含有材料曲线的截线斜率，类似电场中的 
+\begin_inset Formula $\varepsilon=D/E$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+类似地，非线性边界在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到处理，左边是切线，右边是截线。实际的处理时机上溯到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:cf3b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，也就是组装边界项的贡献时。
+\end_layout
+
+\begin_layout Chapter
+浓度扩散场
+\end_layout
+
+\begin_layout Standard
+sss
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-\left[\frac{\gamma}{\Delta t}[Y]+\beta[K]\right]\{C^{\alpha+1}\}= & \left[\frac{(2\gamma-1)}{\Delta t}[Y]-(\frac{1}{2}+\gamma-2\beta)[K]\right]\{C^{\alpha}\}\nonumber \\
- & +\left[\frac{1-\gamma}{\Delta t}[Y]-(\frac{1}{2}-\gamma+\beta)[K]\right]\{C^{\alpha-1}\}\nonumber \\
- & -\left\{ \beta\{b^{\alpha+1}\}+(\frac{1}{2}+\gamma-2\beta)\{b^{\alpha}\}+(\frac{1}{2}-\gamma+\beta)\{b^{\alpha-1}\}\right\} .\label{eq:nmark1}
+\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a-1}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b-1}\\
+ & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c-1}
 \end{align}
 
 \end_inset
 
-只要给定激励向量
-\begin_inset Formula $\{b\}^{\alpha}$
+约定法向
+\begin_inset Formula $\sbf n$
 \end_inset
 
-和初值
-\begin_inset Formula $\{C\}^{(0)},\{C\}^{(1)}$
-\end_inset
-
-，就能逐步求出
-\begin_inset Formula $\{C\}^{\alpha}$
-\end_inset
-
-（或
-\begin_inset Formula $\phi^{\alpha}$
-\end_inset
-
-）。在Newmark方法的常用版本中
-\begin_inset Formula $\gamma=\frac{1}{2}$
-\end_inset
-
-，也被称为 Newmark–
-\begin_inset Formula $\beta$
-\end_inset
-
-方法。显然如果令
-\begin_inset Formula $\beta=0$
-\end_inset
-
-，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:nmark1"
-plural "false"
-caps "false"
-noprefix "false"
+从溶液指向电极（或容器壁）；其中定义了两类浓度流
+\begin_inset Formula 
+\begin{align*}
+\sbf J_{D_{i}} & =-D_{i}\nabla C_{i},\quad\text{Diffusion}\\
+\sbf J_{C_{i}} & =C_{i}\sbf u,\quad\text{Convection}
+\end{align*}
 
 \end_inset
 
-就给出中心差分格式。如果令
-\begin_inset Formula $\beta=0.25$
-\end_inset
 
-，Newmark–
-\begin_inset Formula $\beta$
-\end_inset
-
-给出著名的梯形规则（trapezoidal rule）。可以证明，当
-\begin_inset Formula $\beta\ge0.25$
-\end_inset
-
-时，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:nmark1"
-plural "false"
-caps "false"
-noprefix "false"
+\begin_inset Formula 
+\begin{align*}
+M & \Rightarrow\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\\
+K & \Rightarrow-\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\\
+ & \quad\;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\\
+b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
+\end{align*}
 
 \end_inset
 
-的时间推进总是无条件稳定的。
+
+\begin_inset Formula 
+\[
+{\color{blue}\left(\frac{M}{\Delta t}+\beta K\right)}X^{\alpha+1}={\color{red}\left(\frac{M}{\Delta t}-\overline{\beta}K\right)X^{\alpha}+\left(\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1}\right)},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+{\color{blue}A}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left({\color{red}B}-{\color{blue}A}\cdot X_{\beta}^{\alpha+1}\right).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -2768,125 +2694,6 @@ noprefix "false"
 
 \begin_layout Chapter
 动态电流场
-\end_layout
-
-\begin_layout Chapter
-浓度扩散场
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align*}
-\nabla\cdot\left(-\sigma\nabla\phi\right) & =0\\
-\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+C_{i}(x)\,u(x)+R_{i}\left(t,x\right)
-\end{align*}
-
-\end_inset
-
-对比标准形式
-\begin_inset Formula 
-\[
-\frac{\partial C_{i}(t,x)}{\partial t}-{\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}-C_{i}(x)\,u(x)=R_{i}\left(t,x\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-R_{2}^{e}(N_{m})= & \int_{\Omega^{e}}N_{m}^{e}\left[\partial_{t}C_{i}-{\color{red}D_{i}\,\nabla^{2}C_{i}}-{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}-C_{i}\,u-R_{i}\right]\dd{\Omega}\\
-= & \int_{\Omega^{e}}\left[N_{m}^{e}\partial_{t}C_{i}+{\color{red}D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}+{\color{blue}z_{i}u_{i}F\,N_{m}^{e}C_{i}\nabla^{2}\phi}-N_{m}^{e}C_{i}\,u-N_{m}^{e}R_{i}\right]\dd{\Omega}\\
- & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{s}}{\color{blue}z_{i}u_{i}FN_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}
-\end{align*}
-
-\end_inset
-
-其中使用了第一标量格林定理。其中的
-\begin_inset Formula $i$
-\end_inset
-
-指标对应物质种类
-\begin_inset Formula $i$
-\end_inset
-
-，
-\begin_inset Formula $m,n$
-\end_inset
-
-则是单元上的节点指标。再考虑到
-\begin_inset Formula $\nabla^{2}\phi=0$
-\end_inset
-
-得到
-\begin_inset Formula 
-\begin{align*}
-R^{e}(N_{m})= & \int_{\Omega^{e}}\left[N_{m}^{e}\partial_{t}C_{i}{\color{red}+D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}-N_{m}^{e}C_{i}\,u-N_{m}^{e}R_{i}\right]\dd{\Omega}\quad\text{体方程}\\
- & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}-\int_{\Gamma^{e}}{\color{blue}z_{i}u_{i}F\,N_{m}^{s}C_{i}\frac{\partial\phi}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
-\end{align*}
-
-\end_inset
-
-法向
-\begin_inset Formula $\sbf n$
-\end_inset
-
-从溶液指向电极（或容器壁）。
-\end_layout
-
-\begin_layout Standard
-如果不考虑耦合项
-\begin_inset Formula $-{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}$
-\end_inset
-
-，则得到
-\begin_inset Formula 
-\begin{align*}
-R^{e}(N_{m})= & \int_{\Omega^{e}}\left[N_{m}^{e}\partial_{t}C_{i}{\color{red}+D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla C_{i})}-N_{m}^{e}C_{i}\,u-N_{m}^{e}R_{i}\right]\dd{\Omega}\quad\text{体方程}\\
- & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-R^{e}(N_{m})= & \int_{\Omega^{e}}\left[N_{m}^{e}N_{n}^{e}\partial_{t}C_{n,i}{\color{red}+D_{i}\,(\nabla N_{m}^{e})\cdot(\nabla N_{n}^{e})C_{n,i}}-N_{m}^{e}N_{n}^{e}\,uC_{n,i}-N_{m}^{e}R_{i}\right]\dd{\Omega}\quad\text{体方程}\\
- & -\int_{\Gamma^{s}}{\color{red}N_{m}^{s}D_{i}\,\frac{\partial C_{i}}{\partial n}}\dd{\Gamma}\quad\text{边界条件}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-M\,x^{\prime}\left(t\right)+K\,x\left(t\right)=b\left(t\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-M & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
-K & =\int_{\Omega^{e}}\left[D_{i}(\nabla N_{m}^{e})\cdot(\nabla N_{n}^{e})-N_{m}^{e}N_{n}^{e}\,u\right]\dd{\Omega}\\
-b(t) & =\int_{\Omega^{e}}N_{m}^{e}R_{i}\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}+\overline{\beta}\,b^{n}+\beta b^{n+1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-动态场
 \end_layout
 
 \begin_layout Chapter
@@ -4780,8 +4587,219 @@ R^{e}(N_{m})= & \int_{\Omega^{e}}\left[{\color{red}-D\,(\nabla N_{m}^{e})\cdot(\
 
 \end_layout
 
-\begin_layout Section
-抽象表示
+\begin_layout Standard
+为了处理问题中的非线性部分，还需要将场作迭代展开。设场
+\begin_inset Formula $\phi$
+\end_inset
+
+相对于真实状态
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+有一个微小的偏移
+\begin_inset Formula $\delta\phi$
+\end_inset
+
+，用算式描述如下
+\begin_inset Formula 
+\begin{align}
+\sbf j & =\sbf j_{0}-\sigma\,\sbf\nabla\delta\phi\nonumber \\
+\phi & =\phi_{0}+\delta\phi\label{eq:fn4}
+\end{align}
+
+\end_inset
+
+以
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:res2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+为例，代入场的形函数展开
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fn3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fn4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的迭代展开，便可得到离散的矩阵方程
+\begin_inset Formula 
+\begin{align*}
+\bigg[\int_{\Omega^{e}}\nabla N_{i}^{e}\,\sigma\,\nabla N_{j}^{e} & +\beta N_{i}^{e}N_{j}^{e}\dd{\Omega}\bigg]\delta\phi_{j}+\left[\int_{\Gamma^{e}}\gamma N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]\delta\phi_{j}\\
+ & =\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf i_{0}\dd{\Omega}-\int_{\Gamma^{e}}N_{i}^{e}q\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}f\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于电化学理论中电场和浓度场满足的微分方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\left(-\sigma\nabla\phi\right)=0\\
+ & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+R_{i}\left(t,x\right)
+\end{align*}
+
+\end_inset
+
+采用上述步骤的求解思想得到的方程如下（为简洁省略物质指标
+\begin_inset Formula $i$
+\end_inset
+
+）。电势
+\begin_inset Formula $\phi$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{align}
+\bigg[\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot & \nabla N_{n}^{e}\dd{\Omega}\bigg]\delta\phi_{n}-\bigg[\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial}{\partial n}\delta\phi\right)\dd{\Gamma}\bigg]\nonumber \\
+ & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Omega}+\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Gamma}\label{eq:fem1}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\frac{\partial\phi_{0}}{\partial n}$
+\end_inset
+
+表示迭代基
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+的法向偏导。
+\end_layout
+
+\begin_layout Standard
+浓度场
+\begin_inset Formula $C$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{align}
+ & \quad\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}\delta C_{n}+\left[\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\right]\partial_{t}C_{nA}\nonumber \\
+ & +\left[\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\right]\delta C_{n}-\left[\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\right]\nonumber \\
+ & -\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\right]\delta C_{n}-\left[\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\right]\nonumber \\
+= & -\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{A}}\dd{\Omega}+\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}\nonumber \\
+ & +\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{A}}{\partial n}}\dd{\Gamma}+\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\label{eq:fem2}
+\end{align}
+
+\end_inset
+
+其中积分域
+\begin_inset Formula $\Gamma^{s}$
+\end_inset
+
+遍历所有边界单元。下表中的
+\begin_inset Formula $A$
+\end_inset
+
+表示非线性迭代中的累积值，以前一时刻
+\begin_inset Formula $\phi^{t}$
+\end_inset
+
+，
+\begin_inset Formula $C^{t}$
+\end_inset
+
+做为初始值
+\begin_inset Formula 
+\begin{align*}
+\phi^{t+\Delta t} & ={\color{blue}\phi_{A}^{t+\Delta t}}+\delta^{(n)}\phi={\color{blue}\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots}+\delta^{(n)}\phi,\quad\phi_{0}^{t+\Delta t}=\phi^{t}\\
+C^{t+\Delta t} & ={\color{blue}C_{A}^{t+\Delta t}}+\delta^{(n)}C={\color{blue}C^{t}+\delta^{(1)}C+\delta^{(2)}C+\cdots}+\delta^{(n)}\phi,\quad C_{0}^{t+\Delta t}=C^{t}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\partial_{t}\phi & \approx\frac{1}{\Delta t}\left(\phi^{t+\Delta t}-\phi^{t}\right)=\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)\\
+\text{写作}\quad & =\partial_{t}\delta^{(1)}\phi+\partial_{t}\delta^{(2)}\phi+\cdots
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\phi_{A}^{t+\Delta t} & =\phi^{t}+\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\\
+\partial_{t}\phi_{A}^{t+\Delta t} & =\frac{1}{\Delta t}\left(\delta^{(1)}\phi+\delta^{(2)}\phi+\cdots\right)=\frac{1}{\Delta t}\left(\phi_{A}^{t+\Delta t}-\phi^{t}\right)
+\end{align*}
+
+\end_inset
+
+通过使用电极–电解质边界条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd15b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，可以将方程组
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fem1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fem2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+联立求解。
 \end_layout
 
 \begin_layout Standard
@@ -4902,7 +4920,7 @@ noprefix "false"
 随空间坐标变化，则
 \begin_inset Formula 
 \[
-\nabla\cdot\left[\sigma(x)\,\nabla\phi(x)\right]=\nabla\sigma(x)\cdot\nabla\phi(x)+\sigma(x)\nabla^{2}\phi(x)=0
+\nabla\cdot\left[\sigma\left(x\right)\,\nabla\phi\left(x\right)\right]=\nabla\sigma\left(x\right)\cdot\nabla\phi\left(x\right)+\sigma\left(x\right)\nabla^{2}\phi\left(x\right)=0
 \]
 
 \end_inset
@@ -4910,7 +4928,7 @@ noprefix "false"
 应该代入
 \begin_inset Formula 
 \[
-\nabla^{2}\phi(x)=-\frac{\nabla\sigma(x)\cdot\nabla\phi(x)}{\sigma}
+\nabla^{2}\phi\left(x\right)=-\frac{\nabla\sigma\left(x\right)\cdot\nabla\phi\left(x\right)}{\sigma}
 \]
 
 \end_inset
@@ -4918,13 +4936,379 @@ noprefix "false"
 得到
 \begin_inset Formula 
 \begin{align*}
-\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}\\
+\frac{\partial C_{i}\left(t,x\right)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}\\
  & \quad-{\color{blue}\frac{z_{i}u_{i}F}{\sigma(x)}C_{i}(t,x)\,\nabla\sigma(x)\cdot\nabla\phi(x)}+R_{i}(t,x)
 \end{align*}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+抽象表示
+\end_layout
+
+\begin_layout Standard
+使用以上记号，将两组方程简写为
+\begin_inset Formula 
+\begin{align}
+K_{1,mn}^{e}{\color{blue}\delta\phi_{n}}+M_{a,mn}{\color{blue}\delta\phi_{n}}+M_{b,mn}{\color{red}\delta C_{n}}=b_{1,m}^{e}+b_{2,m}^{s}\label{eq:eq10}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & Y_{mn}^{e}\,\partial_{t}\delta C_{n}+K_{2,mn}^{e}{\color{red}\delta C_{n}}+b_{3,mn}^{e}\partial_{t}C_{nA}+M_{c,mn}{\color{blue}\delta\phi_{n}}+M_{d,mn}{\color{red}\delta C_{n}}\label{eq:eq11}\\
+ & =b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}\nonumber 
+\end{align}
+
+\end_inset
+
+以上各物理量取值均在
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+时刻。由于两个方程存在耦合，需要联立求解，其中
+\begin_inset Formula $M_{\{a,b,c,d\},mn}$
+\end_inset
+
+描述
+\begin_inset Formula $\delta C_{n}$
+\end_inset
+
+和
+\begin_inset Formula $\delta\phi_{n}$
+\end_inset
+
+的耦合，它们由
+\begin_inset Formula $M_{\{1,2,3,4\},mn}^{s}$
+\end_inset
+
+作线性组合得到。
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{cc}
+K_{1,mn}^{e}+M_{a,mn} & M_{b,mn}\\
+M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}
+\end{array}\right]\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{n}}\\
+{\color{red}\delta C_{n}}
+\end{array}\right\}  & +\left[\begin{array}{cc}
+0 & 0\\
+0 & Y_{mn}^{e}
+\end{array}\right]\partial_{t}\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{n}}\\
+{\color{red}\delta C_{n}}
+\end{array}\right\} \\
++\lambda\left[\begin{array}{cc}
+0 & 0\\
+0 & b_{3,mn}^{e}
+\end{array}\right]\partial_{t}\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{nA}}\\
+{\color{red}\delta C_{nA}}
+\end{array}\right\}  & =\lambda\left\{ \begin{array}{c}
+b_{1,m}^{e}+b_{2,m}^{s}\\
+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
+\end{array}\right\} 
+\end{align*}
+
+\end_inset
+
+显式写出时间标签
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{cc}
+K_{1,mn}^{e}+M_{a,mn} & M_{b,mn}\\
+M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}
+\end{array}\right]\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{n}^{t+\Delta t}}\\
+{\color{red}\delta C_{n}^{t+\Delta t}}
+\end{array}\right\}  & +\left[\begin{array}{cc}
+0 & 0\\
+0 & Y_{mn}^{e}
+\end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{n}^{t+\Delta t}}\\
+{\color{red}\delta C_{n}^{t+\Delta t}}
+\end{array}\right\} \\
++\lambda\left[\begin{array}{cc}
+0 & 0\\
+0 & b_{3,mn}^{e}
+\end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
+{\color{red}\delta C_{nA}^{t+\Delta t}}
+\end{array}\right\}  & =\lambda\left\{ \begin{array}{c}
+b_{1,m}^{e}+b_{2,m}^{s}\\
+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
+\end{array}\right\} 
+\end{align*}
+
+\end_inset
+
+整理
+\begin_inset Formula 
+\begin{align*}
+ & \left[\begin{array}{cc}
+K_{1,mn}^{e}+M_{a,mn} & M_{b,mn}\\
+M_{c,mn} & K_{2,mn}^{e}+M_{d,mn}+\frac{1}{\Delta t}Y_{mn}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{n}^{t+\Delta t}}\\
+{\color{red}\delta C_{n}^{t+\Delta t}}
+\end{array}\right\} \\
+ & =\lambda\left\{ \begin{array}{c}
+b_{1,m}^{e}+b_{2,m}^{s}\\
+b_{4,m}^{e}+b_{5,m}^{e}+b_{6,m}^{s}+b_{7,m}^{s}
+\end{array}\right\} -\lambda\left[\begin{array}{cc}
+0 & 0\\
+0 & \frac{1}{\Delta t}b_{3,mn}^{e}
+\end{array}\right]\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
+{\color{red}\delta C_{nA}^{t+\Delta t}}
+\end{array}\right\} 
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{c}
+{\color{blue}\delta\phi_{nA}^{t+\Delta t}}\\
+{\color{red}\delta C_{nA}^{t+\Delta t}}
+\end{array}\right\} =\left\{ \begin{array}{c}
+{\color{blue}\phi_{nA}^{t+\Delta t}-\phi_{n}^{t}}\\
+{\color{red}C_{nA}^{t+\Delta t}-C_{n}^{t}}
+\end{array}\right\} 
+\]
+
+\end_inset
+
+下面分别整理出在体单元或者表面单元上，电势和浓度对应的刚度矩阵和激励。
+\end_layout
+
+\begin_layout Standard
+体单元，电势
+\begin_inset Formula 
+\begin{align*}
+K_{1,mn}^{e} & =\int_{\Omega^{e}}\nabla N_{m}^{e}\cdot\sigma\cdot\nabla N_{n}^{e}\dd{\Omega}\\
+b_{1,m}^{e} & =-\int_{\Omega^{e}}\nabla N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+边界单元，电势
+\begin_inset Formula 
+\begin{align*}
+M_{1,mn}^{s} & =-\int_{\Gamma^{e}}N_{m}^{e}\left(\sigma\frac{\partial\delta\phi}{\partial n}\right)\dd{\Gamma}\\
+b_{2,m}^{s} & =\int_{\Gamma^{e}}N_{m}^{e}\,\sigma\frac{\partial\phi_{A}}{\partial n}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+体单元，浓度
+\begin_inset Formula 
+\begin{align*}
+Y_{mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
+K_{2,mn}^{e} & =\int_{\Omega^{e}}{\color{red}(\nabla N_{m}^{e})\cdot D\cdot(\nabla N_{n}^{e})}\dd{\Omega}\\
+b_{3,mn}^{e} & =\int_{\Omega^{e}}N_{m}^{e}N_{n}^{e}\dd{\Omega}\\
+b_{4,m}^{e} & =-\int_{\Omega^{s}}{\color{red}\nabla N_{m}^{e}\cdot D\cdot\nabla C_{A}}\dd{\Omega}\\
+b_{5,m}^{e} & =\int_{\Omega^{e}}N_{m}^{e}R(x)\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+边界单元，浓度
+\begin_inset Formula 
+\begin{align*}
+M_{2,mn}^{s}= & -\int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\left(\frac{\partial\delta C}{\partial n}\right)}\dd{\Gamma}\\
+M_{3,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}N_{n}^{s}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}\\
+M_{4,mn}^{s}= & -\int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\left(\frac{\partial\delta\phi}{\partial n}\right)}\dd{\Gamma}\\
+b_{6,m}^{s}= & \int_{\Gamma^{s}}{\color{brown}N_{m}^{s}\cdot D\cdot\frac{\partial C_{A}}{\partial n}}\dd{\Gamma}\\
+b_{7,m}^{s}= & \int_{\Gamma^{e}}{\color{blue}z\,u\,F\,N_{m}^{s}\,C_{A}\frac{\partial\phi_{A}}{\partial n}}\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+改进的欧拉方法
+\end_layout
+
+\begin_layout Standard
+对于微分方程
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{t}y(t)=f(t,y), & a\le t\le b\\
+y(a)=y_{0}
+\end{cases}
+\]
+
+\end_inset
+
+改进的欧拉方法为
+\begin_inset Formula 
+\[
+y^{n+1}=y_{0}^{n+1}+\delta y^{n+1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{cases}
+y^{n+1}=y^{n}+\frac{h}{2}\left(K_{1}+K_{2}\right),\\
+K_{1}=f\left(t^{n},y^{n}\right),\\
+K_{2}=f\left(t^{n}+h,y^{n}+hK_{1}\right),
+\end{cases}
+\]
+
+\end_inset
+
+使用
+\begin_inset Formula $(t^{n},y^{n})$
+\end_inset
+
+用向前欧拉法计算一次
+\begin_inset Formula $y^{n+1;0}$
+\end_inset
+
+；然后用
+\begin_inset Formula $(t^{n+1},y^{n+1;0})$
+\end_inset
+
+再计算一次得到
+\begin_inset Formula $y^{n+1;1}$
+\end_inset
+
+，改进欧拉法取平均
+\begin_inset Formula 
+\[
+y^{n+1}=\frac{1}{2}\left(y^{n+1;0}+y^{n+1;1}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Newmark格式
+\end_layout
+
+\begin_layout Standard
+上面给出的是每个确定时刻下的求解流程，为了得到完整的结果，还需要对场进行时间步迭代。上述有限元方程可以抽象成以下形式（为简洁省略物质指标
+\begin_inset Formula $i$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{align}
+[Y_{mn}^{e}]\partial_{t}\{C_{n}\}+[K_{mn}^{e}]\{C_{n}\}+\{b_{m}^{e}\}=\{0\}.\label{eq:con2}
+\end{align}
+
+\end_inset
+
+首先把时间轴离散化，令
+\begin_inset Formula $C(t)=C(\alpha\Delta t)$
+\end_inset
+
+，其中
+\begin_inset Formula $\alpha=0,1,2,\cdots$
+\end_inset
+
+，因此可用
+\begin_inset Formula $\alpha$
+\end_inset
+
+指标表示每个时间步下的场。
+\end_layout
+
+\begin_layout Standard
+对于形如
+\begin_inset Formula 
+\[
+[Y]\{C^{\prime\alpha}\}+[K]\{C^{\alpha}\}+\{b^{\alpha}\}=\{0\}.
+\]
+
+\end_inset
+
+的方程，使用Newmark 差分格式给出的递推解为
+\begin_inset Formula 
+\begin{align}
+\left[\frac{\gamma}{\Delta t}[Y]+\beta[K]\right]\{C^{\alpha+1}\}= & \left[\frac{(2\gamma-1)}{\Delta t}[Y]-(\frac{1}{2}+\gamma-2\beta)[K]\right]\{C^{\alpha}\}\nonumber \\
+ & +\left[\frac{1-\gamma}{\Delta t}[Y]-(\frac{1}{2}-\gamma+\beta)[K]\right]\{C^{\alpha-1}\}\nonumber \\
+ & -\left\{ \beta\{b^{\alpha+1}\}+(\frac{1}{2}+\gamma-2\beta)\{b^{\alpha}\}+(\frac{1}{2}-\gamma+\beta)\{b^{\alpha-1}\}\right\} .\label{eq:nmark1}
+\end{align}
+
+\end_inset
+
+只要给定激励向量
+\begin_inset Formula $\{b\}^{\alpha}$
+\end_inset
+
+和初值
+\begin_inset Formula $\{C\}^{(0)},\{C\}^{(1)}$
+\end_inset
+
+，就能逐步求出
+\begin_inset Formula $\{C\}^{\alpha}$
+\end_inset
+
+（或
+\begin_inset Formula $\phi^{\alpha}$
+\end_inset
+
+）。在Newmark方法的常用版本中
+\begin_inset Formula $\gamma=\frac{1}{2}$
+\end_inset
+
+，也被称为 Newmark–
+\begin_inset Formula $\beta$
+\end_inset
+
+方法。显然如果令
+\begin_inset Formula $\beta=0$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:nmark1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+就给出中心差分格式。如果令
+\begin_inset Formula $\beta=0.25$
+\end_inset
+
+，Newmark–
+\begin_inset Formula $\beta$
+\end_inset
+
+给出著名的梯形规则（trapezoidal rule）。可以证明，当
+\begin_inset Formula $\beta\ge0.25$
+\end_inset
+
+时，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:nmark1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的时间推进总是无条件稳定的。
 \end_layout
 
 \end_body
