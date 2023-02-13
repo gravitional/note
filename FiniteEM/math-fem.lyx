@@ -14487,14 +14487,19 @@ status open
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
-fn = -1/5 #^2 + 3/2 &; pts = cobs[fn, 0.9, 8]; alist = Table[Arrow[{pts[[i]],
- pts[[i + 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, 0.8, 1.4}
- , PlotRange -> Automatic , Frame -> True , ImageSize -> Medium , AspectRatio
- -> Automatic]; f2 = Graphics[ Prepend[alist, Arrowheads[{{.018, 1}}]] ];
- Show[f1, f2]
+fpi[f_, x0_, n_] := NestList[f, x0, n]; cobs[f_, x0_, 0] := {{x0, 0}, {x0,
+ f@x0}}; cobs[f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi[f,
+ x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1; r4 = Rest@tmp;
+ Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*) fn = -1/5 #^2
+ + 3/2 &; pts = cobs[fn, 0.9, 8]; alist = Table[Arrow[{pts[[i]], pts[[i +
+ 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, 0.8, 1.4}, PlotRange
+ -> {{0.87, 1.38}, {1, 1.4}}, Frame -> True, ImageSize -> Medium, AspectRatio
+ -> Automatic, PlotStyle -> Thickness[0.005]]; f2 = Graphics[Prepend[Thickness@0.0
+03]@ Prepend[alist, Arrowheads[{{.018, 1}}]]]; Show[f1, f2, ImageSize ->
+ 500]
 \end_layout
 
 \end_inset

@@ -1149,11 +1149,13 @@ status collapsed
 fpi[f_, x0_, n_] := NestList[f, x0, n]; cobs[f_, x0_, 0] := {{x0, 0}, {x0,
  f@x0}}; cobs[f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi[f,
  x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1; r4 = Rest@tmp;
- Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*) fn = -3/2 #
- + 5/2 &; pts = cobs[fn, 0.7, 10]; alist = Table[Arrow[{pts[[i]], pts[[i
- + 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, -7.2, 9.5}, PlotRange
- -> Automatic, Frame -> True, ImageSize -> Medium, AspectRatio -> Automatic];
- f2 = Graphics[Prepend[alist, Arrowheads[{{.018, 1}}]]]; Show[f1, f2]
+ Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]];(*figure*)fn = -3/2 # +
+ 5/2 &; pts = cobs[fn, 0.7, 10]; alist = Table[Arrow[{pts[[i]], pts[[i +
+ 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, -7.2, 9.5}, PlotRange
+ -> {Automatic, {-8, 14}}, Frame -> True, ImageSize -> Medium, AspectRatio
+ -> Automatic , PlotStyle -> {Thickness[.005]}]; f2 = Graphics[Prepend[Thickness@
+0.003]@ Prepend[alist, Arrowheads[{{.018, 1}}]]]; Show[f1, f2, ImageSize ->
+ 500]
 \end_layout
 
 \end_inset
@@ -1172,7 +1174,7 @@ fpi[f_, x0_, n_] := NestList[f, x0, n]; cobs[f_, x0_, 0] := {{x0, 0}, {x0,
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 fpi2[
@@ -1185,7 +1187,7 @@ fpi2[
 \backslash
 [Lambda]*f@last + (1 - 
 \backslash
-[Lambda])*last] ]; cobs2[
+[Lambda])*last]]; cobs2[
 \backslash
 [Lambda]_, f_, x0_, 0] := {{x0, 0}, {x0, 
 \backslash
@@ -1196,17 +1198,18 @@ fpi2[
 [Lambda]_, f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi2[
 \backslash
 [Lambda], f, x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1;
- r4 = Rest@tmp; Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*)
- fn = -3/2 # + 5/2 &; 
+ r4 = Rest@tmp; Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]];(*figure*)fn
+ = -3/2 # + 5/2 &; 
 \backslash
-[Lambda] = 0.7; (*回旋路径*)pts = cobs2[
+[Lambda] = 0.7;(*回旋路径*)pts = cobs2[
 \backslash
 [Lambda], fn, 0.7, 12]; cowList = Table[Arrow[{pts[[i]], pts[[i + 1]]}],
- {i, 1, Length@pts - 1}]; (*迭代路径*)fpiList = pts[[2 ;; All ;; 2]]; f1 = Plot[{x,
- fn@x}, {x, 0.62, 1.3} , PlotRange -> Automatic, Frame -> True , ImageSize
- -> Medium, AspectRatio -> Automatic]; f2 = Graphics[Prepend[cowList, Arrowheads
-[{{.018, 1}}]]]; f3 = ListLinePlot[fpiList, PlotStyle -> {Red, AbsoluteThickness[
-1]}]; Show[f1, f2, f3]
+ {i, 1, Length@pts - 1}];(*迭代路径*)fpiList = pts[[2 ;; All ;; 2]]; f1 = Plot[{x,
+ fn@x}, {x, 0.62, 1.3}, PlotRange -> {Automatic, {0.75, 1.3}}, Frame -> True,
+ ImageSize -> Medium, AspectRatio -> Automatic , PlotStyle -> {Thickness[.005]}];
+ f2 = Graphics[Prepend[Thickness@0.003]@ Prepend[cowList, Arrowheads[{{.018,
+ 1}}]]]; f3 = ListLinePlot[fpiList, PlotStyle -> {Red, Thickness[0.005]}];
+ Show[f1, f2, f3, ImageSize -> 500]
 \end_layout
 
 \end_inset

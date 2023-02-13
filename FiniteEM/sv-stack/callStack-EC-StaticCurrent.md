@@ -24,7 +24,7 @@ main(int argc, char* argv[]);
                     CreateMonitor(); // 创建监视
                     CreateNode(); // 创建节点
                     CreateElement(data); // 创建单元
-                    CreateMaterial(data); //创建材料
+                    CreateMaterial(data); //创建材料, L42
                     CreateInitialField(data);
                     CreateMisc(data); //创建各场的特有数据, /ElectroChemistry/Model/ModelCreatorEC.cpp
                         CreateInfo(data);
@@ -73,12 +73,16 @@ main(int argc, char* argv[]);
             //迭代每个分析
             while(true){
                 auto analysis = anlsCtrl()->GetNextAnalysis();
+                    vector<string> fields=_curAnalysis->GetOutFields(); // 设置新的场变量输出, 调用重载函数
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
                     Analyze(); // 虚函数, /ElectroChemistry/Analysis/AnalysisDynaEC.cpp
                         InitBeforeJobLoop(); // 电流场分析初始化
                             ResultManipEM* p_resultHandle=resultManip(); //初始化计算结果存储指针
                             // 初始化 p_GFinAccum, p_GRt, p_GFv_T, p_Solu_T, P_GFv_Pre
+                            p_resultHandle->InitFieldData(_jobID);// 初始化场变量
+                                vector<FieldType> fieldTypes=GetOutputFields(); // 取要输出的场边量类型
+                                    set<string> names=anlsCtrl()->GetOutFields(); // 取要输出的场名称
                             RecordRestrictedEqNo(); // 记录受到约束的自由度
                             // 瞬态电流场, 没有激励类型,
                         // 根据设置, 运行不同分析算法, 
