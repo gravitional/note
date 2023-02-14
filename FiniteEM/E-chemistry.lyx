@@ -2268,14 +2268,14 @@ K_{mn}\,\phi_{n}=0\label{eq:ef1}
 
 \end_inset
 
-若采用
+若采用 
 \begin_inset Formula $\lambda$
 \end_inset
 
-–不动点迭代求解，
+–FPI 求解，
 \begin_inset Formula 
 \begin{equation}
-K\cdot\delta J_{E,s+1}=-\lambda_{s}K\cdot J_{E,s}+\lambda_{s}b,\label{eq:ef2}
+K\cdot\delta J_{E,s+1}=-\lambda_{s}\,K\cdot J_{E,s}+\lambda_{s}\,b,\label{eq:ef2}
 \end{equation}
 
 \end_inset
@@ -2680,7 +2680,32 @@ b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
 
 \begin_inset Formula 
 \[
-{\color{blue}\left(\frac{M}{\Delta t}+\beta K\right)}X^{\alpha+1}={\color{red}\left(\frac{M}{\Delta t}-\overline{\beta}K\right)X^{\alpha}+\left(\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1}\right)},
+{\color{blue}\left(\frac{M}{\Delta t}+\beta K\right)}X^{\alpha+1}={\color{brown}\left(\frac{M}{\Delta t}-\overline{\beta}K\right)}X^{\alpha}+{\color{red}\left(\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1}\right)},
+\]
+
+\end_inset
+
+整理：
+\begin_inset Formula 
+\[
+{\color{blue}A_{1}}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left[{\color{red}B}-\left({\color{blue}A_{1}}\cdot X_{\beta}^{\alpha+1}-{\color{brown}A_{2}}\cdot X^{\alpha}\right)\right].
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+ & {\color{blue}A_{1}}=\frac{M}{\Delta t}+\beta K,\quad A_{2}=\frac{M}{\Delta t}-\overline{\beta}K\\
+ & {\color{red}B}=\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1},\quad\text{外力项}
+\end{align*}
+
+\end_inset
+
+内力项
+\begin_inset Formula 
+\[
+\frac{1}{\Delta t}M\cdot\left(X_{\beta}^{\alpha+1}-X^{\alpha}\right)+\left(\beta K\cdot X_{\beta}^{\alpha+1}+\overline{\beta}K\cdot X^{\alpha}\right)
 \]
 
 \end_inset
@@ -2688,12 +2713,20 @@ b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
 
 \begin_inset Formula 
 \[
-{\color{blue}A}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left({\color{red}B}-{\color{blue}A}\cdot X_{\beta}^{\alpha+1}\right).
+{\color{blue}A_{1}}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left[{\color{red}B}-\left({\color{blue}A_{1}}\cdot X_{\beta}^{\alpha+1}-{\color{brown}A_{2}}\cdot X^{\alpha}\right)\right].
 \]
 
 \end_inset
 
+其中
+\begin_inset Formula $\alpha$
+\end_inset
 
+是时间步指标，
+\begin_inset Formula $\beta$
+\end_inset
+
+是非线性迭代指标。
 \end_layout
 
 \begin_layout Chapter

@@ -24,17 +24,16 @@ main(int argc, char* argv[]);
                     CreateMonitor(); // 创建监视
                     CreateNode(); // 创建节点
                     CreateElement(data); // 创建单元
-                    CreateMaterial(data); //创建材料, L42
+                    CreateMaterial(data); //创建材料, json, L42
                     CreateInitialField(data);
                     CreateMisc(data); //创建各场的特有数据, /ElectroChemistry/Model/ModelCreatorEC.cpp
                         CreateInfo(data);
-                            data.ReadValue("Thickness2D"...) //读取厚度
-                            data.ReadValue("Sector"...) //读取模型分数
-                        CreateConstraint(data) // 创建约束, 即边界条件, 
+                            data.ReadValue("Thickness2D"...) // 厚度, json
+                            data.ReadValue("Sector"...) // 模型分数, json
+                        CreateConstraint(data) // 约束, 即边界条件,  json
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
-                        //迭代分析类型, 读取 conrol 的分析节点
-
+                        //迭代分析类型, 读取 conrol 的分析节点, json
                         analysis->Read(); // 动态多态, 转向 AnalysisFe::Read()
                             auto reader=controlReader(); // control.json 单例
                             auto job =NewJob(); //任务工厂方法
@@ -42,12 +41,12 @@ main(int argc, char* argv[]);
                             _name=reader->GetCurrentNode(); // 获取有限元分析名称
                             reader->SetIDByName(_name,_jobID);// 设置 jobID 对应的名称,
                                                             //存入unordered_map<string, int> _nameMap, 不同 reader 共享
-                            job->Create(*reader); //virtual, 创建 new job
-                                // control节点读取: Parameter, ODEBeta 节点读取
-                                // Restart, Load, PostAnalysis
-                                NonlinearPara.Create(data) //非线性迭代; /ElectroChemistry/Analysis/LoadJobEC.cpp
-                                couple // 耦合
-                                load // 创建载荷
+                            job->Create(*reader); //virtual, 创建 new job, json
+                                NonlinearPara.Create(data); // 非线性迭代 json; /ElectroChemistry/Analysis/LoadJobEC.cpp
+                                DynamicPara.Create(data) // 时间步迭代参数 josn; Euler Beta 参数;
+                                "Restart" // 续算, json
+                                "Load" //  激励, json
+                                "PostAnalysis" // 后处理, json
                                 int id=model()->AddComponentGenID(_PostAnalysis); // 添加后处理分析任务
                         anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
                             //非续算时清空独立计时器
@@ -75,7 +74,7 @@ main(int argc, char* argv[]);
                 auto analysis = anlsCtrl()->GetNextAnalysis();
                     vector<string> fields=_curAnalysis->GetOutFields(); // 设置新的场变量输出, 调用重载函数
                 memTracker();timeTracker(); // 记录内存, 时间占用
-                analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
+                analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp; EC分析只有单步
                     Analyze(); // 虚函数, /ElectroChemistry/Analysis/AnalysisDynaEC.cpp
                         InitBeforeJobLoop(); // 电流场分析初始化
                             ResultManipEM* p_resultHandle=resultManip(); //初始化计算结果存储指针
@@ -101,6 +100,7 @@ main(int argc, char* argv[]);
                                     ElePt->CalcEleMatrixKeOpen(ke);//开放边界的贡献
                                     ElePt->CalcEleMatrixKeShield(ke);//介电屏蔽的贡献
                             CallSolver_T(K,p_GRt.data(),p_Solu_T.data());//求解方程
+                                "提取并保存自由度";// 将方程的解存入 _jobID, 工况号
                             LineSearch();//回溯线搜索, 广义牛顿法
                             p_resultHadle->CopySoluData(STP_SEARCH,_jobID,1);//复制解到 线搜索存储空间
                             p_resultHadle->AccumSoluData(STEPBEG_ACCUM,STP_SEARCH); // 将结果累加
