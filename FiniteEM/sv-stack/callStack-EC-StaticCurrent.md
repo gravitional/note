@@ -58,7 +58,7 @@ main(int argc, char* argv[]);
                         ApplyConstraint(); // 施加约束
                             ExpandCons2Ele();//施加约束到单元上
                             BuildMstSlvDofConnection();// 建立主从约束
-                        ArrangeEquationNo(); // 数据自由度排序
+                        ArrangeEquationNo(); // 数据自由度排序, 方程号
                         PartitionMesh(); // 剖分网格
                         AdjustRankComponent(); // 调整构件所属MPI 节点
                         CreateElementList(); // 生成单元列表

@@ -95,1478 +95,6 @@ Yang
 \end_layout
 
 \begin_layout Chapter
-方程梳理
-\end_layout
-
-\begin_layout Section
-理论方程
-\end_layout
-
-\begin_layout Subsection
-电解质域控制方程
-\end_layout
-
-\begin_layout Standard
-Nernst–Einstein 方程，
-\begin_inset Formula $u_{i}=D_{i}/RT$
-\end_inset
-
-，其中 
-\begin_inset Formula $u_{i}$
-\end_inset
-
-为迁移率（单位 
-\begin_inset Formula $\mathrm{s\cdot mol/Kg}$
-\end_inset
-
-）
-\begin_inset Formula 
-\begin{equation}
-\sbf j_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)\,\nabla\phi(x)}+C_{i}(x)\,\sbf u(x)\label{eq:2}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\sbf j_{i}(x)={\color{red}\sbf j_{c}}(x)+{\color{blue}\sbf j_{\varphi}(x)}+\sbf j_{u}(x)\label{eq:eq2b}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:eq2b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的三项分别表示扩散项（Diffusion），迁移项（Migration），和对流项（Convection）。带时间项的质量守恒关系， Nernst–Planc
-k 方程，一般情况下，电化学腐蚀过程中，电解质内部无化学反应发生，只存在物质传递过程，
-\begin_inset Formula $R_{i}=0$
-\end_inset
-
-：
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial C_{i}(x)}{\partial t}=-\nabla\cdot\sbf j_{i}(x)+R_{i}\label{eq:3}
-\end{equation}
-
-\end_inset
-
-电解质中的净电流密度矢量（
-\begin_inset Formula $\mathrm{A/m^{2}}$
-\end_inset
-
-），可用所有离子的总通量描述
-\begin_inset Formula 
-\begin{equation}
-\sbf i(t,x)=F\sum z_{i}\,\sbf j_{i}(t,x)\label{eq:4}
-\end{equation}
-
-\end_inset
-
-电解质满足电荷守恒方程，即
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial\rho}{\partial t}+\nabla\cdot\sbf i=0\label{eq:5}
-\end{equation}
-
-\end_inset
-
-电流密度
-\begin_inset Formula $i$
-\end_inset
-
-与电解质中的电场
-\begin_inset Formula $-\nabla\phi$
-\end_inset
-
- 满足一定的关系。满足为了准确描述电流体在电场环境下的传质过程，需要考虑荷电物质浓度分布的变化对电场的反作用，即要耦合 Poisson 方程：
-\begin_inset Formula 
-\begin{align}
-\nabla^{2}\phi(x)=\frac{\rho}{\varepsilon}=\frac{z_{i}e}{\varepsilon}C_{i}(x)\label{eq:6}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在电解质中，自由离子满足电中性（当考察的范围大于几个纳米长度时）
-\begin_inset Formula 
-\begin{equation}
-\sum z_{i}C_{i}(x)=0\label{eq:7}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-方程简化
-\end_layout
-
-\begin_layout Standard
-由
-\series bold
-电荷守恒
-\series default
-方程，和
-\series bold
-欧姆定律
-\series default
- 
-\begin_inset Formula $\sbf i=\sigma\sbf E$
-\end_inset
-
- 给出
-\begin_inset Formula 
-\begin{align*}
-\nabla\cdot\sbf i & =-\frac{\partial\rho(t,x)}{\partial t}\\
-\nabla\cdot(\sigma\nabla\phi) & =\frac{\partial\rho(t,x)}{\partial t}
-\end{align*}
-
-\end_inset
-
-其中电荷密度
-\begin_inset Formula $\rho$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\rho(t,x)=F\sum_{i}z_{i}C_{i}(t,x)
-\]
-
-\end_inset
-
-而静电场的泊松方程给出
-\begin_inset Formula 
-\[
-\nabla\cdot(\nabla\phi)=\frac{-\rho(t,x)}{\varepsilon_{0}\varepsilon_{r}}
-\]
-
-\end_inset
-
-因此
-\begin_inset Formula 
-\[
-\frac{\partial\rho(t,x)}{\partial t}=-\frac{\sigma}{\varepsilon_{0}\varepsilon_{r}}\rho(t,x)
-\]
-
-\end_inset
-
-显然
-\begin_inset Formula 
-\[
-\rho(t,x)=\rho_{0}(x)\exp(-\frac{\sigma t}{\varepsilon_{0}\varepsilon_{r}})
-\]
-
-\end_inset
-
-对于一般的金属良导体，
-\begin_inset Formula $\sigma/(\varepsilon_{0}\varepsilon_{r})>10^{17}$
-\end_inset
-
-，衰减特征时间 
-\begin_inset Formula $\tau\sim\varepsilon_{0}\varepsilon_{r}/\sigma\approx10^{-17}\mathrm{s}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-总结：
-\end_layout
-
-\begin_layout Enumerate
-对于满足欧姆定律的良导体，内部电荷总是很快地衰减到零，可以认为内部没有净余电荷，电荷只分布在表面上。对于电解质溶液，认为其近似满足良导体条件。
-\end_layout
-
-\begin_layout Enumerate
-对于导体中的直流场，它受到欧姆定律的控制：
-\begin_inset Formula $\sbf i=-\sigma\sbf E$
-\end_inset
-
-。稳定的电流场分布满足 
-\begin_inset Formula $\nabla\cdot\sbf i=0$
-\end_inset
-
-，结合两个公式可以看出：不同于静电场
-\series bold
-，在直流场的情形，导体不必是等势体
-\series default
-——因为存在电阻，沿着电流线的方向存在电压降，而遇到恒压源时电压被抬升。
-\end_layout
-
-\begin_layout Subsection
-控制方程总结
-\end_layout
-
-\begin_layout Enumerate
-电场： 在很多腐蚀工况下，电解质内含有大量其他离子，电导率基本上是恒定的。电化学反应、电迁移使得离子（生成或消耗）浓度发生变化，流速等因素对电导率影响较小时，电
-流密度可写成欧姆定律相同形式： 
-\begin_inset Formula 
-\begin{align*}
- & \sbf i=-\sigma\nabla\phi(x)\\
- & \nabla\cdot\left[-\sigma\nabla\phi(x)\right]=0
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-物质传递： 在很多腐蚀工况下，电解质中无需考虑对流
-\begin_inset Formula $u(x)$
-\end_inset
-
-。离子流和电荷流定义 
-\begin_inset Formula 
-\begin{align*}
-\text{离子流：}\quad & j_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(t,x)\,\nabla\phi(x)}+C_{i}(x)\,\sbf u(x)\\
-\text{电流：}\quad & \sbf i(x)=F\sum z_{i}\,\sbf j_{i}(t,x),\quad\text{求和消去时间依赖}
-\end{align*}
-
-\end_inset
-
-离子流守恒方程
-\begin_inset Formula 
-\begin{align*}
-\text{离子流守恒：} & \frac{\partial C_{i}(t,x)}{\partial t}=-\nabla\cdot\sbf j_{i}(t,x)+R_{i}(t,x)\\
-\text{电中性：}\quad & \sum z_{i}C_{i}(t,x)=0\\
-\text{稳恒电场：}\quad & \nabla\cdot\left[-\sigma\nabla\phi(x)\right]=0
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-在很多腐蚀工况下，电解质中无需考虑对流
-\begin_inset Formula $u(x)$
-\end_inset
-
-、无电场迁移 
-\begin_inset Formula $C_{i}(x)\nabla\phi(x)$
-\end_inset
-
-，离子流量简化为：
-\begin_inset Formula 
-\begin{align*}
- & j_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}\\
- & \frac{\partial C_{i}(t,x)}{\partial t}=-\nabla\cdot\sbf j_{i}(t,x)+R_{i}(t,x)\\
- & \sum z_{i}C_{i}(t,x)=0\\
- & \nabla\cdot(\sigma\nabla\phi)=0
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-有限元法数值分析腐蚀求解器
-\end_layout
-
-\begin_layout Subsection
-电解质域控制方程
-\end_layout
-
-\begin_layout Standard
-物质
-\begin_inset Formula $i$
-\end_inset
-
-的浓度场
-\begin_inset Formula $C_{i}(t,x)$
-\end_inset
-
-满足的方程为：
-\begin_inset Formula 
-\begin{align*}
-\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+R_{i}(t,x)\\
- & \;+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)+{\color{blue}z_{i}u_{i}F\,C_{i}(t,x)\,\nabla^{2}\phi(x)}}\\
- & \;+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+C_{i}\left(x\right)\nabla\cdot\sbf u\left(x\right)
-\end{align*}
-
-\end_inset
-
-其中使用了 
-\begin_inset Formula $\nabla\cdot(\phi\sbf f)=(\nabla\phi)\cdot\sbf f+\phi\nabla\cdot\sbf f$
-\end_inset
-
-。通常认为
-\begin_inset Formula $\sigma$
-\end_inset
-
- 是空间上的常数，则
-\begin_inset Formula 
-\begin{equation}
-\nabla\cdot\left[\sigma(x)\,\nabla\phi(x)\right]=\sigma\nabla^{2}\phi=0\label{eq:pre1}
-\end{equation}
-
-\end_inset
-
-对于稳恒流速场：
-\begin_inset Formula 
-\begin{equation}
-\nabla\cdot\sbf u\left(x\right)=0.\label{eq:pre2}
-\end{equation}
-
-\end_inset
-
-代入
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pre1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pre1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-得
-\begin_inset Formula 
-\begin{align}
- & \nabla\cdot\left(-\sigma\nabla\phi\right)=0\label{eq:eq1}\\
- & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+R_{i}\left(t,x\right)\label{eq:eq2}
-\end{align}
-
-\end_inset
-
-此方程不易使用变分原理建立泛函，可以使用 Galerkin 残差法建立矩阵方程。
-\end_layout
-
-\begin_layout Subsection
-电极域控制方程
-\end_layout
-
-\begin_layout Standard
-腐蚀反应中的电极基本上为金属，电导率较大，将欧姆定律和电流守恒定律 应用于电极内部
-\begin_inset Formula 
-\begin{align*}
- & \nabla\cdot\sbf i=Q,\quad\sbf i=-\sigma\nabla\phi\\
-\text{or},\quad & \nabla\cdot(-\sigma\nabla\phi)=Q
-\end{align*}
-
-\end_inset
-
-其中
-\begin_inset Formula $\sbf i$
-\end_inset
-
-为电流密度；
-\begin_inset Formula $Q$
-\end_inset
-
-为源项，一般为零。
-\end_layout
-
-\begin_layout Section
-边界条件
-\end_layout
-
-\begin_layout Subsection
-
-\color blue
-绝缘边界，溶液
-\end_layout
-
-\begin_layout Standard
-腐蚀反应中无电化学反应、无法向电流、无离子穿过边界，均视为粒子流平行边界，即绝缘。边界上无电流流出、无离子流出，满足如下方程
-\begin_inset Formula 
-\begin{align*}
- & n\cdot\sbf i=0\\
- & n\cdot\sbf j_{i}=0
-\end{align*}
-
-\end_inset
-
-其中
-\begin_inset Formula $\sbf i$
-\end_inset
-
-是电流，
-\begin_inset Formula $\sbf j_{i}$
-\end_inset
-
-是离子流。用电势和浓度场表示为，
-\begin_inset Formula 
-\begin{align}
-\sigma\frac{\partial\phi}{\partial n}=0\label{eq:bnd1}
-\end{align}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align}
-D_{i}\frac{\partial C_{i}}{\partial n}=-z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\partial n}=0\label{eq:bnd2}
-\end{align}
-
-\end_inset
-
-它是
-\begin_inset Formula $\phi$
-\end_inset
-
-和
-\begin_inset Formula $C_{i}$
-\end_inset
-
-的自然边界条件，无需特殊处理；
-\end_layout
-
-\begin_layout Subsection
-界面上的电势，溶液–电极
-\end_layout
-
-\begin_layout Standard
-电极-电解液界面区是腐蚀反应中的最重要部分，在此处发生了电子到离子的转变。在原电池中，发生氧化反应的电极为阳极，发生还原反应的电极为阴极。在界面边界上存在两个过
-度，一是电势、二是电流。
-\end_layout
-
-\begin_layout Subsubsection
-电流连续
-\end_layout
-
-\begin_layout Standard
-电化学反应均匀地发生在界面处，化学反应电流之和作为电极和电解液域之间边界上的电流密度条件：
-\begin_inset Formula 
-\begin{equation}
-i_{\text{total}}=\sbf n\cdot\sbf i_{l}=-\sbf n\cdot i_{s}=\sum_{m}\sbf i_{\text{loc},m}\label{eq:bnd3}
-\end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula $i_{m}$
-\end_inset
-
-为反应
-\begin_inset Formula $m$
-\end_inset
-
-在界面上产生的局部电流（单位
-\begin_inset Formula $\mathrm{A/m^{2}}$
-\end_inset
-
-），
-\begin_inset Formula $\sbf i_{l}$
-\end_inset
-
-为溶液的电流密度，
-\begin_inset Formula $\sbf i_{s}$
-\end_inset
-
-为电极表面的电流密度。
-\begin_inset Formula 
-\begin{equation}
--\sigma_{l}\frac{\partial\phi_{l}}{\partial n}=\sigma_{s}\frac{\partial\phi_{s}}{\partial n}\label{eq:bnd4}
-\end{equation}
-
-\end_inset
-
-法线
-\begin_inset Formula $\sbf n$
-\end_inset
-
-从电解质指向电极。此边界类似于静电场的
-\begin_inset Formula $\sbf n\cdot\varepsilon\sbf E$
-\end_inset
-
-连续，无需特殊考虑。
-\end_layout
-
-\begin_layout Subsubsection
-电势不连续
-\end_layout
-
-\begin_layout Standard
-当金属和电解液发生反应时，两者之间会因化学反应存在一定的电位差， 
-\begin_inset Formula 
-\begin{equation}
-E_{\text{eq}}=\phi_{s}-\phi_{l},\quad E_{\text{eq}}>0\label{eq:vdiff}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula $E_{\text{eq}}$
-\end_inset
-
-为界面反应的平衡电位，
-\begin_inset Formula $\phi_{s}$
-\end_inset
-
-为电极电位，
-\begin_inset Formula $\phi_{l}$
-\end_inset
-
-为电解质电位。若考虑界面区域温度
-\begin_inset Formula $T$
-\end_inset
-
-、反应离子浓度
-\begin_inset Formula $C$
-\end_inset
-
-变化对平衡电位的影响，此时能斯特方程可写为（假设反应计量系数为
-\begin_inset Formula $1$
-\end_inset
-
-）：
-\begin_inset Formula 
-\begin{equation}
-E_{\text{eq}}=E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C_{R}/C_{R,\text{ref}}}{C_{o}/C_{o,\text{ref}}}\label{eq:bnd6}
-\end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula $C$
-\end_inset
-
-为浓度场，一般情况
-\begin_inset Formula $C_{0}=1$
-\end_inset
-
-，带ref下标的表示参考点。由于反应势能的存在，大部分情况下界面间的电势差会高于平衡电位，高出的部分称之为过电位
-\begin_inset Formula $\eta>0$
-\end_inset
-
-，方程
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:vdiff"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-被修正为，
-\begin_inset Formula 
-\begin{equation}
-\eta+E_{\text{eq}}=\phi_{s}-\phi_{l}\label{eq:bnd7}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-过电位
-\begin_inset Formula $\eta$
-\end_inset
-
-不是常数，它与界面反应的电流数值
-\begin_inset Formula $\sbf i$
-\end_inset
-
- 有关，可用所谓的 
-\series bold
-极化曲线
-\series default
- 或 
-\series bold
-电极反应动力学
-\series default
- 公式表达。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-极化曲线
-\series default
- 包含了电化学动力学所有信息，可以判断电极反应的特征及控制步骤，也可以通过处理得到金属在给定体系下可能发生的反应速率，故以极化曲线及其处理得到的动力学参数，作为
-电极界面边界条件理论上是必需的。
-\end_layout
-
-\begin_layout Enumerate
-描述电化学反应电流和过电势的关系的动力学公式有很多，如Butler-Volmer公式、Tafel公式、线性Butler-Volmer公式，和浓度依赖动力学公式等
-。
-\end_layout
-
-\begin_layout Example
-Bulter–Volmer方程。当电极表面反应过程由活化极化步骤控制时，电极表面的粒子浓度与溶液本体的浓度相等，则电极反应过程的过电位
-\begin_inset Formula $\eta$
-\end_inset
-
-与电流密度
-\begin_inset Formula $i_{\text{loc}}$
-\end_inset
-
-之间的关系可用Bulter-Volmer方程表示。
-\begin_inset Formula 
-\[
-i_{\text{loc},m}=i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $i_{\text{loc},m}$
-\end_inset
-
-为电流密度（
-\begin_inset Formula $\mathrm{A/m^{2}}$
-\end_inset
-
-）；
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Formula $i_{0}$
-\end_inset
-
-为交换电流密度（平衡态下的电流密度，
-\begin_inset Formula $\mathrm{A/m^{2}}$
-\end_inset
-
-）；
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Formula $\alpha_{a}$
-\end_inset
-
-为阳极（anode）传递系数，
-\begin_inset Formula $\alpha_{c}$
-\end_inset
-
-为阴极（cathode）传递系数，均为无量纲常数。
-\begin_inset Formula $\alpha_{a}+\alpha_{c}=n$
-\end_inset
-
-，
-\begin_inset Formula $n$
-\end_inset
-
-为物质
-\begin_inset Formula $m$
-\end_inset
-
-的电极反应的电子数；
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Formula $\eta$
-\end_inset
-
-为过电位，即电极电位与平衡电位之差（
-\begin_inset Formula $\mathrm{V}$
-\end_inset
-
-）；
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Formula $F$
-\end_inset
-
-为法拉第常数，
-\begin_inset Formula $96485\,\mathrm{C/mol}$
-\end_inset
-
-；
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Formula $R$
-\end_inset
-
-为气体常数，
-\begin_inset Formula $8.314\,\mathrm{J/(mol\cdot K)}$
-\end_inset
-
-；
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-线性Bulter–Volmer方程。当电极表面电流密度较小，例如电镀或电化学阻抗谱，动力学可以简化为
-\begin_inset Formula 
-\[
-i_{\text{loc},m}=i_{0}\frac{(\alpha_{a}+\alpha_{c})F}{RT}\eta
-\]
-
-\end_inset
-
-当过电位
-\begin_inset Formula $\eta$
-\end_inset
-
-超过
-\begin_inset Formula $RT/F$
-\end_inset
-
-（室温下约为
-\begin_inset Formula $25\,\mathrm{mV}$
-\end_inset
-
-）时，此简化方程是不准确的。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-Tafel方程。当电极电流密度相比于交换电流大的多，或者过电位较大，Bulter–Volmer方程可以简化为Tafel公式。
-\begin_inset Formula 
-\begin{align*}
-\text{阳极Tafel方程} & i_{\text{loc},m}=i_{0}\,10^{\eta/A_{a}}\\
-\text{阴极Tafel方程} & i_{\text{loc},m}=-i_{0}\,10^{\eta/A_{c}}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula $A_{a}>0$
-\end_inset
-
-为阳极Tafel斜率，单位为
-\begin_inset Formula $\mathrm{V}$
-\end_inset
-
-，
-\begin_inset Formula $A_{c}<0$
-\end_inset
-
-为阴极Tafel斜率，单位为
-\begin_inset Formula $\mathrm{V}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-与浓度有关的 Bulter–Volmer公式。当考虑浓度分布不均匀时，即考虑扩散控制，则 Bulter–Volmer 公式可写为：
-\begin_inset Formula 
-\[
-i_{\text{loc},m}=i_{0}\left[c_{R}\exp(\frac{\alpha_{a}F\eta}{RT})-c_{0}\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-
-\color blue
-小结 
-\end_layout
-
-\begin_layout Standard
-综上所述，电极-电解液界面边界条件为（当溶液中只有一种电化学反应
-\begin_inset Formula $m$
-\end_inset
-
-时）：
-\begin_inset Formula 
-\begin{align*}
-\eta+E_{\text{eq}} & =\phi_{s}-\phi_{l}\\
-\sbf i_{m} & =\sbf n\cdot\left(-\sigma_{s}\nabla\phi_{s}\right)\\
-i_{m} & =i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
-\end{align*}
-
-\end_inset
-
-其中法向
-\begin_inset Formula $\sbf n$
-\end_inset
-
-从电解质指向电极。
-\begin_inset Formula $-\sigma_{l}\nabla\phi_{l}$
-\end_inset
-
-与
-\begin_inset Formula $\sbf n$
-\end_inset
-
-方向相同对应电流流出（原电池anode），方向相反对应电流流入（原电池cathode）。综合以上方程，得到界面上电解质电势
-\begin_inset Formula $\phi_{l}$
-\end_inset
-
-需要满足的边界条件
-\begin_inset Formula 
-\begin{align}
- & \sigma_{l}\frac{\partial\phi_{l}}{\partial n}=f\left(\phi_{l},C\right)\label{eq:bnd13}\\
-\Rightarrow\quad & f\left(\phi_{l},C\right)=-i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\nonumber \\
-\text{代入}\quad & \eta=\phi_{s}-\phi_{l}-E_{\text{eq}}\nonumber \\
-\text{以及}\quad & E_{\text{eq}}=E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}/C_{0,\text{ref}}}\nonumber 
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-此边界条件较为复杂，后面将采用迭代法求解。在迭代法过程中，
-\begin_inset Formula 
-\[
-\phi_{l}=\phi_{l,0}+\delta\phi_{l},\quad C=C_{0}+\delta C
-\]
-
-\end_inset
-
-下一步迭代得出的
-\begin_inset Formula $\phi_{l},C$
-\end_inset
-
-也应该满足
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd13"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，将边界条件表示为以下形式：
-\begin_inset Formula 
-\begin{equation}
-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}=f\left(\phi_{l},C\right)\label{eq:bnd14}
-\end{equation}
-
-\end_inset
-
-将边界条件在
-\begin_inset Formula $(\phi_{l,0},C_{0})$
-\end_inset
-
- 附近作线性展开得到
-\begin_inset Formula 
-\begin{align}
- & \sigma_{l}\frac{\partial\phi_{l,0}}{\partial n}=f\left(\phi_{l,0},C_{0}\right),\label{eq:bnd15a}\\
- & \sigma_{l}\frac{\partial\delta\phi}{\partial n}=f_{1}\left(\phi_{l,0},C_{0}\right)\delta\phi_{l}+f_{2}\left(\phi_{l,0},C_{0}\right)\delta C\label{eq:bnd15b}
-\end{align}
-
-\end_inset
-
-
-\begin_inset Formula $f_{1}$
-\end_inset
-
-和
-\begin_inset Formula $f_{2}$
-\end_inset
-
-分别表示
-\begin_inset Formula $f\left(\phi_{l},C\right)$
-\end_inset
-
-对
-\begin_inset Formula $\phi_{l}$
-\end_inset
-
-和
-\begin_inset Formula $C$
-\end_inset
-
-求偏导。
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd15a"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-和
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd15b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-分别贡献到激励向量和刚度矩阵中。
-\end_layout
-
-\begin_layout Subsection
-
-\color blue
-界面上的浓度，溶液–电极
-\end_layout
-
-\begin_layout Standard
-电极-溶液 界面发生传质、反应等一系列过程，例如下面的反应（原电池）
-\begin_inset Formula 
-\[
-\sum\alpha B^{+}+n_{e}e^{-}\to\beta A^{+}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/EChemstry-nongdu.png
-	scale 80
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-电化学反应示意图
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在反应过程中，
-\begin_inset Formula $B^{+}$
-\end_inset
-
- 离子减少，
-\begin_inset Formula $\alpha<0$
-\end_inset
-
-；
-\begin_inset Formula $A^{+}$
-\end_inset
-
-离子增加，
-\begin_inset Formula $\beta>0$
-\end_inset
-
-。反应使得电解液域内离子的浓度变化，需要在 电极–溶液 界面上施加边界条件，即界面上的反应速率与离子反应产生的电流遵循法拉第定律，
-\begin_inset Formula 
-\begin{align*}
--\sbf n\cdot\sbf j_{i} & =J_{0}=-\frac{\beta i_{m}}{n_{e}F}\\
-\sbf j_{i} & ={\color{red}-D_{i}\,\nabla C_{i}}{\color{blue}-z_{i}u_{i}F\,C_{i}\nabla\phi_{l}(x)}+C_{i}(x)\,u(x)
-\end{align*}
-
-\end_inset
-
-其中法向
-\begin_inset Formula $\sbf n$
-\end_inset
-
-从溶液指向电极；
-\begin_inset Formula $J_{0}$
-\end_inset
-
-为表面反应速率；单位
-\begin_inset Formula $\mathrm{mol/(m^{2}*s)}$
-\end_inset
-
-；
-\begin_inset Formula $\beta$
-\end_inset
-
-为产物化学计量系数；
-\begin_inset Formula $n_{e}$
-\end_inset
-
- 为反应转移电子数。
-\end_layout
-
-\begin_layout Standard
-忽略对流项
-\begin_inset Formula $C_{i}(x)\,u(x)$
-\end_inset
-
-，综合两个方程给出：
-\begin_inset Formula 
-\begin{equation}
-D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i},\label{eq:bnd5}
-\end{equation}
-
-\end_inset
-
-在迭代法中，展开为
-\begin_inset Formula 
-\begin{align}
- & D_{i}\frac{\partial C_{i,0}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,0}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}C_{i,0}\label{eq:bnd16a}\\
- & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,0}\right)\frac{\partial\delta\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}\delta C_{i}\label{eq:bnd16b}
-\end{align}
-
-\end_inset
-
-其中
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd16b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-还需结合
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd15b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-再次展开，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd16a"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-和
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd16b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-分别贡献到激励向量和刚度矩阵中。
-\end_layout
-
-\begin_layout Section
-瞬态膜阻边界
-\end_layout
-
-\begin_layout Subsection
-溶解边界
-\end_layout
-
-\begin_layout Standard
-对于金属溶解，对腐蚀电池整体电位分布无影响，只会带来浓度变化，浓度与反应电流（溶液电势）有关。仍然表述为
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd5"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-边界条件：
-\begin_inset Formula 
-\[
-D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i},
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-沉积边界 
-\end_layout
-
-\begin_layout Standard
-电极表面的 
-\series bold
-电流
-\series default
- 与 
-\series bold
-沉积物质质量
-\series default
- 或厚度的关系，可以通过法拉第定律描述。法拉第定律是描述电极上通过的 
-\series bold
-电量
-\series default
- 与电极反应物 
-\series bold
-质量
-\series default
- 之间的关系的，又称为电解定律。
-\end_layout
-
-\begin_layout Subsection
-稳态计算
-\end_layout
-
-\begin_layout Standard
-金属在电解时所析出的质量与电解液中所通过的电流和时间成正比。同量电流通过不同电解液时，则所析出金属（或反应产物）质量
-\begin_inset Formula $W$
-\end_inset
-
-与各电解液的
-\series bold
-化学当量
-\series default
-成正比。 
-\begin_inset Formula 
-\[
-W=C_{r}\,E\,I\,t
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $W$
-\end_inset
-
-为析出物质的重量
-\begin_inset Formula $(\mathrm{g})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $I$
-\end_inset
-
-为电流强度
-\begin_inset Formula $(\mathrm{A})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $t$
-\end_inset
-
-为通电时间
-\begin_inset Formula $(\mathrm{h})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $C_{r}$
-\end_inset
-
-为比例常数。
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $E$
-\end_inset
-
-为化学当量 
-\end_layout
-
-\begin_layout Enumerate
-理论化学当量
-\begin_inset Formula $E=M/n_{e}*F$
-\end_inset
-
-，
-\begin_inset Formula $M$
-\end_inset
-
-为物质的摩尔质量，
-\begin_inset Formula $n_{e}$
-\end_inset
-
-为电子数，
-\begin_inset Formula $F$
-\end_inset
-
-为法拉第常数,
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $1Ah=3600C$
-\end_inset
-
- 
-\begin_inset Formula 
-\[
-W=C_{r}\,M\,F\,I\,t/n_{e}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-沉积厚度
-\begin_inset Formula $L$
-\end_inset
-
-为
-\begin_inset Formula 
-\[
-L=W/ρ=\frac{C_{r}\,M\,F\,I\,t}{n×ρ}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\rho$
-\end_inset
-
-为表面密度 
-\begin_inset Formula $\mathrm{g/cm^{2}}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-瞬态计算 
-\end_layout
-
-\begin_layout Standard
-若电极表面沉积物质的阻抗较大，随着时间的累积，将会影响整体的电势分布。将膜阻导致的电势降记作
-\begin_inset Formula $\Delta\phi_{f}$
-\end_inset
-
-，薄膜中某一点的电势可以表示为 
-\begin_inset Formula $\phi_{f}=\phi_{s}-\Delta\phi_{f}$
-\end_inset
-
-。
-\begin_inset Formula $\Delta\phi_{f}$
-\end_inset
-
-满足
-\begin_inset Formula 
-\begin{align}
-\Delta\phi_{f}=i_{m}\,R\label{eq:bnd11}
-\end{align}
-
-\end_inset
-
-电极–薄膜–电解质满足电流连续性条件
-\begin_inset Formula 
-\begin{equation}
-i_{m}=-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\label{eq:bnd12}
-\end{equation}
-
-\end_inset
-
-式中
-\begin_inset Formula $R$
-\end_inset
-
-为薄膜电阻（
-\begin_inset Formula $\mathrm{ohm*m^{2}}$
-\end_inset
-
-），
-\begin_inset Formula $\sigma_{f}$
-\end_inset
-
-为薄膜电导率。
-\begin_inset Formula $\Delta\phi_{f}$
-\end_inset
-
-正比于薄膜厚度。已知薄膜厚度
-\begin_inset Formula $s$
-\end_inset
-
-和电导率
-\begin_inset Formula $\sigma_{f}$
-\end_inset
-
-，则电阻
-\begin_inset Formula $R$
-\end_inset
-
-可以写成：
-\begin_inset Formula 
-\[
-R=\frac{s_{0}+\Delta s}{\sigma_{f}}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $s_{0}$
-\end_inset
-
- 为薄膜的初始厚度，
-\begin_inset Formula $\Delta s$
-\end_inset
-
- 为电极上薄膜的累计厚度变化，总沉积/溶解厚度为 
-\begin_inset Formula $s=s_{0}+\Delta s$
-\end_inset
-
-（单位
-\begin_inset Formula $\mathrm{m}$
-\end_inset
-
-），
-\begin_inset Formula $\sigma_{f}$
-\end_inset
-
- 为薄膜电导率（
-\begin_inset Formula $\mathrm{S/m}$
-\end_inset
-
-）。而电极累计厚度变化
-\begin_inset Formula $\Delta s$
-\end_inset
-
-可以表示为 
-\begin_inset Formula 
-\[
-\Delta s=\frac{M}{\rho}\Delta C_{i}
-\]
-
-\end_inset
-
-溶液中浓度的变化为
-\begin_inset Formula $C_{i}=C_{i,0}-\Delta C_{i}$
-\end_inset
-
-。因此膜阻导致的电势降可以表示为
-\begin_inset Formula 
-\begin{align*}
-\Delta\phi_{f} & =i_{m}R=i_{m}\frac{s_{0}+\Delta s}{\sigma_{f}}\\
- & =i_{m}\left(s_{0}+\frac{M}{\rho}\Delta C_{i}\right)
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在电极–电解质界面上，将电势的关系修改为
-\begin_inset Formula 
-\[
-\phi_{s}-\phi_{l}=E_{\text{eq}}+η+\Delta\phi_{f}
-\]
-
-\end_inset
-
-使用局部常微分方程来描述
-\series bold
-累计薄膜表面浓度
-\series default
-变化：
-\begin_inset Formula 
-\[
-\frac{\dd{C_{i}}}{\dd{t}}=-\frac{\beta\,i_{m}}{nF}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-将这些方程综合起来：
-\begin_inset Formula 
-\begin{align*}
-\frac{\dd{C_{i}}}{\dd{t}} & =-\frac{\beta\,i_{m}}{nF}\\
-i_{m} & =-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\\
-i_{m} & =i_{0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\\
-\phi_{s}-\phi_{l} & =E_{\text{eq}}+\eta+\Delta\phi_{f}\\
-E_{\text{eq}} & =E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}/C_{0,\text{ref}}}\\
-\Delta\phi_{f} & =i_{m}\left(s_{0}+\frac{M}{\rho}\Delta C_{i}\right),\quad\Delta C_{i}=C_{i,0}-C_{i}
-\end{align*}
-
-\end_inset
-
-其中
-\begin_inset Formula $M$
-\end_inset
-
-为物质的摩尔质量，
-\begin_inset Formula $\rho$
-\end_inset
-
-为表面密度（
-\begin_inset Formula $\mathrm{g/cm^{2}}$
-\end_inset
-
-），
-\begin_inset Formula $s_{0}$
-\end_inset
-
- 为薄膜的初始厚度。每一步算一次结果，作为下一次的初始。 
-\end_layout
-
-\begin_layout Chapter
 有限元求解
 \end_layout
 
@@ -2199,6 +727,1657 @@ noprefix "false"
 \end_layout
 
 \begin_layout Chapter
+方程梳理
+\end_layout
+
+\begin_layout Section
+理论方程
+\end_layout
+
+\begin_layout Subsection
+电解质域控制方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{i}=D_{i}/RT$
+\end_inset
+
+，其中 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+为迁移率（单位 
+\begin_inset Formula $\mathrm{s\cdot mol/Kg}$
+\end_inset
+
+），
+\begin_inset Formula 
+\begin{equation}
+\sbf J_{i}(x)={\color{red}-D_{i}\,\nabla C_{i}(x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(x)\,\nabla\phi(x)}+C_{i}(x)\,\sbf u(x)\label{eq:2}
+\end{equation}
+
+\end_inset
+
+简写为
+\begin_inset Formula 
+\begin{equation}
+\sbf J_{i}(x)={\color{red}\sbf J_{D}}(x)+{\color{blue}\sbf J_{M}(x)}+\sbf J_{C}(x)\label{eq:2b}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的三项：
+\begin_inset Formula $\sbf J_{D}$
+\end_inset
+
+为扩散项（Diffusion），
+\begin_inset Formula $\sbf J_{M}$
+\end_inset
+
+为迁移项（Migration），
+\begin_inset Formula $\sbf J_{C}$
+\end_inset
+
+为对流项（Convection）。
+\end_layout
+
+\begin_layout Itemize
+其中
+\begin_inset Formula $\sbf J_{i}$
+\end_inset
+
+表示离子
+\begin_inset Formula $i$
+\end_inset
+
+的流密度，单位
+\begin_inset Formula $\mathrm{mol*m^{-2}*s^{-1}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $D_{i}$
+\end_inset
+
+为扩散常数，单位是
+\begin_inset Formula $\mathrm{m^{2}*s^{-1}}$
+\end_inset
+
+；
+\begin_inset Formula $\nabla C_{i}$
+\end_inset
+
+为浓度梯度，单位
+\begin_inset Formula $\mathrm{mol*m^{-4}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\nabla\phi$
+\end_inset
+
+是电势梯度，单位
+\begin_inset Formula $\mathrm{V*m^{-1}}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+是法拉第常数，
+\begin_inset Formula $96485\,\mathrm{C/mol}$
+\end_inset
+
+，表示每摩尔电子携带的电荷。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_{i}$
+\end_inset
+
+为物质
+\begin_inset Formula $i$
+\end_inset
+
+的价态，量纲
+\begin_inset Formula $1$
+\end_inset
+
+；
+\begin_inset Formula $R$
+\end_inset
+
+为通用气体常数，量纲
+\begin_inset Formula $1$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $T$
+\end_inset
+
+为温度，单位
+\begin_inset Formula $K$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $u(x)$
+\end_inset
+
+表示物质
+\begin_inset Formula $i$
+\end_inset
+
+的流速，单位
+\begin_inset Formula $\mathrm{m*s^{-1}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+Nernst–Planck 方程就是质量守恒方程，
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial C_{i}(x)}{\partial t}=-\nabla\cdot\sbf J_{i}(x)+R_{i}\label{eq:3}
+\end{equation}
+
+\end_inset
+
+一般情况下，电化学腐蚀过程中，电解质内部无化学反应发生，只存在物质传递过程，
+\begin_inset Formula $R_{i}=0$
+\end_inset
+
+：电解质中的净电流密度矢量（
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+），可用所有离子的总通量描述
+\begin_inset Formula 
+\begin{equation}
+\sbf J_{E}(t,x)=F\sum z_{i}\,\sbf J_{i}(t,x)\label{eq:4}
+\end{equation}
+
+\end_inset
+
+电解质满足电荷守恒方程，即
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho_{E}}{\partial t}+\nabla\cdot\sbf J_{E}=0\label{eq:5}
+\end{equation}
+
+\end_inset
+
+需要考虑荷电物质浓度分布的变化对电场的反作用，即要耦合 Poisson 方程：
+\begin_inset Formula 
+\begin{align}
+\nabla^{2}\phi(x)=\frac{\rho_{E}}{\varepsilon}=\frac{z_{i}e}{\varepsilon}C_{i}(x)\label{eq:6}
+\end{align}
+
+\end_inset
+
+在电解质中，自由离子满足电中性（当考察的范围大于几个纳米长度时）
+\begin_inset Formula 
+\begin{equation}
+\sum z_{i}C_{i}(x)=0\label{eq:7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+方程简化
+\end_layout
+
+\begin_layout Standard
+由
+\series bold
+电荷守恒
+\series default
+方程，和
+\series bold
+欧姆定律
+\series default
+ 
+\begin_inset Formula $\sbf J_{E}=\sigma\sbf E$
+\end_inset
+
+ 给出
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sbf J_{E} & =-\frac{\partial\rho_{E}(t,x)}{\partial t}\\
+\nabla\cdot(\sigma\nabla\phi) & =\frac{\partial\rho_{E}(t,x)}{\partial t}
+\end{align*}
+
+\end_inset
+
+其中电荷密度
+\begin_inset Formula $\rho$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho_{E}(t,x)=F\sum_{i}z_{i}C_{i}(t,x)
+\]
+
+\end_inset
+
+而静电场的泊松方程给出
+\begin_inset Formula 
+\[
+\nabla\cdot(\nabla\phi)=\frac{-\rho_{E}(t,x)}{\varepsilon_{0}\varepsilon_{r}}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\frac{\partial\rho_{E}(t,x)}{\partial t}=-\frac{\sigma}{\varepsilon_{0}\varepsilon_{r}}\rho_{E}(t,x)
+\]
+
+\end_inset
+
+显然
+\begin_inset Formula 
+\[
+\rho_{E}(t,x)=\rho_{0}(x)\exp(-\frac{\sigma t}{\varepsilon_{0}\varepsilon_{r}})
+\]
+
+\end_inset
+
+对于一般的金属良导体，
+\begin_inset Formula $\sigma/(\varepsilon_{0}\varepsilon_{r})>10^{17}$
+\end_inset
+
+，衰减特征时间 
+\begin_inset Formula $\tau\sim\varepsilon_{0}\varepsilon_{r}/\sigma\approx10^{-17}\mathrm{s}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+总结：
+\end_layout
+
+\begin_layout Enumerate
+对于满足欧姆定律的良导体，内部电荷总是很快地衰减到零，可以认为内部没有净余电荷，电荷只分布在表面上。对于电解质溶液，认为其近似满足良导体条件。
+\end_layout
+
+\begin_layout Enumerate
+对于导体中的直流场，它受到欧姆定律的控制：
+\begin_inset Formula $\sbf J_{E}=-\sigma\sbf E$
+\end_inset
+
+。稳定的电流场分布满足 
+\begin_inset Formula $\nabla\cdot\sbf J_{E}=0$
+\end_inset
+
+，结合两个公式可以看出：不同于静电场
+\series bold
+，在直流场的情形，导体不必是等势体
+\series default
+——因为存在电阻，沿着电流线的方向存在电压降，而遇到恒压源时电压被抬升。
+\end_layout
+
+\begin_layout Subsection
+控制方程总结
+\end_layout
+
+\begin_layout Enumerate
+电场： 在很多腐蚀工况下，电解质内含有大量其他离子，电导率基本上是恒定的。电化学反应、电迁移使得离子（生成或消耗）浓度发生变化，流速等因素对电导率影响较小时，电
+流密度可写成欧姆定律相同形式： 
+\begin_inset Formula 
+\begin{align*}
+ & \sbf J_{E}=-\sigma_{l}\nabla\phi_{l}(x)\\
+ & \nabla\cdot\left[-\sigma_{l}\nabla\phi_{l}(x)\right]=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+物质传递： 离子流和电荷流定义 
+\begin_inset Formula 
+\begin{align*}
+\text{离子流：}\quad & J_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}{\color{blue}-z_{i}u_{i}F\,C_{i}(t,x)\,\nabla\phi(x)}+C_{i}(x)\,\sbf u(x)\\
+\text{电流：}\quad & \sbf J_{E}(x)=F\sum z_{i}\,\sbf J_{i}(t,x),
+\end{align*}
+
+\end_inset
+
+离子流守恒方程
+\begin_inset Formula 
+\begin{align*}
+\text{离子流守恒：} & \frac{\partial C_{i}(t,x)}{\partial t}=-\nabla\cdot\sbf J_{i}(t,x)+R_{i}(t,x)\\
+\text{稳恒电场：}\quad & \nabla\cdot\left[-\sigma_{l}\nabla\phi_{l}(x)\right]=0
+\end{align*}
+
+\end_inset
+
+浓度还应该满足电中性条件
+\begin_inset Formula $\sum z_{i}C_{i}(t,x)=0$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Enumerate
+在很多腐蚀工况下，电解质中无需考虑对流
+\begin_inset Formula $u(x)$
+\end_inset
+
+、无电场迁移 
+\begin_inset Formula $C_{i}(x)\nabla\phi(x)$
+\end_inset
+
+，离子流量简化为：
+\begin_inset Formula 
+\begin{align*}
+ & J_{i}(t,x)={\color{red}-D_{i}\,\nabla C_{i}(t,x)}\\
+ & \frac{\partial C_{i}(t,x)}{\partial t}=-\nabla\cdot\sbf J_{i}(t,x)+R_{i}(t,x)\\
+ & \nabla\cdot(\sigma_{l}\nabla\phi_{l})=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+有限元法数值分析腐蚀求解器
+\end_layout
+
+\begin_layout Subsection
+电解质域控制方程
+\end_layout
+
+\begin_layout Standard
+物质
+\begin_inset Formula $i$
+\end_inset
+
+的浓度场
+\begin_inset Formula $C_{i}(t,x)$
+\end_inset
+
+满足的方程为：
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial C_{i}(t,x)}{\partial t} & ={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+R_{i}(t,x)\\
+ & \;+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)+{\color{blue}z_{i}u_{i}F\,C_{i}(t,x)\,\nabla^{2}\phi(x)}}\\
+ & \;+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+C_{i}\left(x\right)\nabla\cdot\sbf u\left(x\right)
+\end{align*}
+
+\end_inset
+
+其中使用了 
+\begin_inset Formula $\nabla\cdot(\phi\sbf f)=(\nabla\phi)\cdot\sbf f+\phi\nabla\cdot\sbf f$
+\end_inset
+
+。通常认为
+\begin_inset Formula $\sigma$
+\end_inset
+
+ 是空间上的常数，则
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\left[\sigma(x)\,\nabla\phi(x)\right]=\sigma\nabla^{2}\phi=0\label{eq:pre1}
+\end{equation}
+
+\end_inset
+
+对于稳恒流速场：
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\sbf u\left(x\right)=0.\label{eq:pre2}
+\end{equation}
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pre1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pre1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得
+\begin_inset Formula 
+\begin{align}
+ & \nabla\cdot\left(-\sigma\nabla\phi\right)=0\label{eq:eq1}\\
+ & \frac{\partial C_{i}(t,x)}{\partial t}={\color{red}D_{i}\,\nabla^{2}C_{i}(t,x)}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}(t,x)\cdot\nabla\phi(x)}+\sbf u\left(x\right)\cdot\nabla C_{i}\left(x\right)+R_{i}\left(t,x\right)\label{eq:eq2}
+\end{align}
+
+\end_inset
+
+此方程不易使用变分原理建立泛函，可以使用 Galerkin 残差法建立矩阵方程。
+\end_layout
+
+\begin_layout Subsection
+电极域控制方程
+\end_layout
+
+\begin_layout Standard
+腐蚀反应中的电极基本上为金属，电导率较大，将欧姆定律和电流守恒定律 应用于电极内部
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\sbf J_{E}=Q,\quad\sbf J_{E}=-\sigma\nabla\phi_{s}\\
+\text{or},\quad & \nabla\cdot(-\sigma_{s}\nabla\phi_{s})=Q
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+为电极上的电流密度；
+\begin_inset Formula $\sigma_{s}$
+\end_inset
+
+为电极电导率；
+\begin_inset Formula $Q$
+\end_inset
+
+为源项，一般为零。
+\end_layout
+
+\begin_layout Chapter
+边界条件
+\end_layout
+
+\begin_layout Section
+绝缘边界，溶液
+\end_layout
+
+\begin_layout Standard
+腐蚀反应中无电化学反应、无法向电流、无离子穿过边界，均视为粒子流平行边界，即绝缘。边界上无电流流出、无离子流出，满足如下方程
+\begin_inset Formula 
+\begin{align*}
+ & n\cdot\sbf J_{E}=0\\
+ & n\cdot\sbf J_{i}=0
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+是电流，
+\begin_inset Formula $\sbf J_{i}$
+\end_inset
+
+是第
+\begin_inset Formula $i$
+\end_inset
+
+种离子流。用溶液电势
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+和浓度场
+\begin_inset Formula $C_{i}$
+\end_inset
+
+表示为，
+\begin_inset Formula 
+\begin{align}
+\sigma\frac{\partial\phi_{l}}{\partial n}=0\label{eq:bnd1}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+D_{i}\frac{\partial C_{i}}{\partial n}=-z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\partial n}=0\label{eq:bnd2}
+\end{align}
+
+\end_inset
+
+它是
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $C_{i}$
+\end_inset
+
+的自然边界条件，无需特殊处理；
+\end_layout
+
+\begin_layout Section
+界面上的电势，溶液–电极
+\end_layout
+
+\begin_layout Standard
+电极-电解液界面区是腐蚀反应中的最重要部分，在此处发生了电子到离子的转变。在原电池中，发生氧化反应的电极为阳极，发生还原反应的电极为阴极。在界面边界上存在两个过
+度，一是电势、二是电流。
+\end_layout
+
+\begin_layout Subsection
+电流连续
+\end_layout
+
+\begin_layout Standard
+电化学反应均匀地发生在界面处，化学反应电流之和作为电极和电解液域之间边界上的电流密度条件：
+\begin_inset Formula 
+\begin{equation}
+\sbf n\cdot\sbf J_{El}=-\sbf n\cdot J_{Es}=\sum_{i}\sbf J_{Ei}\label{eq:bnd3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $J_{Ei}$
+\end_inset
+
+为反应
+\begin_inset Formula $i$
+\end_inset
+
+在界面上产生的电流密度（单位
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+），
+\begin_inset Formula $\sbf J_{El}$
+\end_inset
+
+为溶液的电流密度，
+\begin_inset Formula $\sbf J_{Es}$
+\end_inset
+
+为电极表面的电流密度。
+\begin_inset Formula 
+\begin{equation}
+-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}=\sigma_{s}\frac{\partial\phi_{s}}{\partial n}\label{eq:bnd4}
+\end{equation}
+
+\end_inset
+
+法线
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从溶液指向电极。此边界类似于静电场的电位移
+\begin_inset Formula $\sbf D$
+\end_inset
+
+法向连续，无需特殊考虑。
+\end_layout
+
+\begin_layout Standard
+若在外电极上施加总电流
+\begin_inset Formula $I$
+\end_inset
+
+（单位
+\begin_inset Formula $\mathrm{A}$
+\end_inset
+
+），则在界面上有积分方程，
+\begin_inset Formula 
+\[
+I=\int_{\Gamma}\sbf n\cdot\sbf J_{El}\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+电势不连续
+\end_layout
+
+\begin_layout Standard
+当金属和电解液发生反应时，两者之间会因化学反应存在一定的电位差， 
+\begin_inset Formula 
+\begin{equation}
+E_{\text{eq}}=\phi_{s}-\phi_{l},\quad E_{\text{eq}}>0\label{eq:vdiff}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $E_{\text{eq}}$
+\end_inset
+
+为界面反应的平衡电位，
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+为电极电位，
+\begin_inset Formula $\phi_{l}$
+\end_inset
+
+为电解质电位。若考虑界面区域温度
+\begin_inset Formula $T$
+\end_inset
+
+、反应离子浓度
+\begin_inset Formula $C$
+\end_inset
+
+变化对平衡电位的影响，此时能斯特方程可写为（假设反应计量系数为
+\begin_inset Formula $1$
+\end_inset
+
+）：
+\begin_inset Formula 
+\begin{equation}
+E_{\text{eq}}=E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C_{R}/C_{R,\text{ref}}}{C_{o}/C_{o,\text{ref}}}\label{eq:bnd6}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $C$
+\end_inset
+
+为浓度场，一般情况
+\begin_inset Formula $C_{0}=1$
+\end_inset
+
+，带ref下标的表示参考点。由于反应势能的存在，大部分情况下界面间的电势差会高于平衡电位，高出的部分称之为过电位
+\begin_inset Formula $\eta>0$
+\end_inset
+
+，方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:vdiff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+被修正为，
+\begin_inset Formula 
+\begin{equation}
+\eta+E_{\text{eq}}=\phi_{s}-\phi_{l}\label{eq:bnd7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+不是常数，它与界面反应的电流数值
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+有关，可用所谓的
+\series bold
+极化曲线
+\series default
+ 或 
+\series bold
+电极反应动力学
+\series default
+ 公式表达。
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+极化曲线
+\series default
+ 包含了电化学动力学所有信息，可以判断电极反应的特征及控制步骤，也可以通过处理得到金属在给定体系下可能发生的反应速率，故以极化曲线及其处理得到的动力学参数，作为
+电极界面边界条件理论上是必需的。
+\end_layout
+
+\begin_layout Enumerate
+描述电化学反应电流和过电势的关系的动力学公式有很多，如Butler-Volmer公式、Tafel公式、线性Butler-Volmer公式，和浓度依赖动力学公式等
+。
+\end_layout
+
+\begin_layout Subsubsection
+Bulter–Volmer方程
+\end_layout
+
+\begin_layout Standard
+当电极表面反应过程由活化极化步骤控制时，电极表面的粒子浓度与溶液本体的浓度相等，则电极反应过程的过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+与电流密度
+\begin_inset Formula $J_{Ei}$
+\end_inset
+
+之间的关系可用Bulter-Volmer方程表示。
+\begin_inset Formula 
+\[
+J_{Ei}=J_{E0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $J_{Ei}$
+\end_inset
+
+为电流密度（
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+）；
+\begin_inset Formula $J_{E0}$
+\end_inset
+
+为交换电流密度（平衡态下的电流密度，
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+）；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha_{a}$
+\end_inset
+
+为阳极（anode）传递系数，
+\begin_inset Formula $\alpha_{c}$
+\end_inset
+
+为阴极（cathode）传递系数，均为无量纲常数。
+\begin_inset Formula $\alpha_{a}+\alpha_{c}=n_{e}$
+\end_inset
+
+，
+\begin_inset Formula $n_{e}$
+\end_inset
+
+为物质
+\begin_inset Formula $i$
+\end_inset
+
+的电极反应的电子数；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta$
+\end_inset
+
+为过电位，即电极电位与平衡电位之差（
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+）；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+为法拉第常数，
+\begin_inset Formula $96485\,\mathrm{C/mol}$
+\end_inset
+
+；
+\begin_inset Formula $R$
+\end_inset
+
+为气体常数，
+\begin_inset Formula $8.314\,\mathrm{J/(mol\cdot K)}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+线性Bulter–Volmer方程
+\end_layout
+
+\begin_layout Standard
+当电极表面电流密度较小，例如电镀或电化学阻抗谱，动力学可以简化为
+\begin_inset Formula 
+\[
+J_{Ei}=J_{E0}\frac{(\alpha_{a}+\alpha_{c})F}{RT}\eta
+\]
+
+\end_inset
+
+当过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+超过
+\begin_inset Formula $RT/F$
+\end_inset
+
+（室温下约为
+\begin_inset Formula $25\,\mathrm{mV}$
+\end_inset
+
+）时，此简化方程是不准确的。
+\end_layout
+
+\begin_layout Subsubsection
+Tafel方程
+\end_layout
+
+\begin_layout Standard
+当电极电流密度相比于交换电流大的多，或者过电位较大，Bulter–Volmer方程可以简化为Tafel公式。
+\begin_inset Formula 
+\begin{align*}
+\text{阳极Tafel方程} & J_{Ei}=i_{0}\,10^{\eta/A_{a}}\\
+\text{阴极Tafel方程} & J_{Ei}=-J_{E0}\,10^{\eta/A_{c}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $A_{a}>0$
+\end_inset
+
+为阳极Tafel斜率，单位为
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+，
+\begin_inset Formula $A_{c}<0$
+\end_inset
+
+为阴极Tafel斜率，单位为
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+与浓度有关的 Bulter–Volmer公式
+\end_layout
+
+\begin_layout Standard
+当考虑浓度分布不均匀时，即考虑扩散控制，则 Bulter–Volmer 公式可写为：
+\begin_inset Formula 
+\[
+J_{Ei}=J_{E0}\left[c_{R}\exp(\frac{\alpha_{a}F\eta}{RT})-c_{0}\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+小结 
+\end_layout
+
+\begin_layout Standard
+综上所述，电极-电解液界面边界条件为（当溶液中只有一种电化学反应
+\begin_inset Formula $i$
+\end_inset
+
+时）：
+\begin_inset Formula 
+\begin{align*}
+\eta+E_{\text{eq}} & =\phi_{s}-\phi_{l}\\
+\sbf J_{Ei} & =\sbf n\cdot\left(-\sigma_{s}\nabla\phi_{s}\right)\\
+J_{Ei} & =J_{E0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
+\end{align*}
+
+\end_inset
+
+其中法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从电解质指向电极。
+\begin_inset Formula $-\sigma_{l}\nabla\phi_{l}$
+\end_inset
+
+与
+\begin_inset Formula $\sbf n$
+\end_inset
+
+方向相同对应电流流出（原电池anode），方向相反对应电流流入（原电池cathode）。综合以上方程，得到界面上电解质电势
+\begin_inset Formula $\phi_{l}$
+\end_inset
+
+需要满足的边界条件
+\begin_inset Formula 
+\begin{align}
+ & \sigma_{l}\frac{\partial\phi_{l}}{\partial n}=f\left(\phi_{l},C\right)\label{eq:bnd13}\\
+\Rightarrow\quad & f\left(\phi_{l},C\right)=-J_{E0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\nonumber \\
+\text{代入}\quad & \eta=\phi_{s}-\phi_{l}-E_{\text{eq}}\nonumber \\
+\text{以及}\quad & E_{\text{eq}}=E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}/C_{0,\text{ref}}}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+此边界条件较为复杂，后面将采用迭代法求解。在迭代法过程中，
+\begin_inset Formula 
+\[
+\phi_{l}=\phi_{l,0}+\delta\phi_{l},\quad C=C_{0}+\delta C
+\]
+
+\end_inset
+
+下一步迭代得出的
+\begin_inset Formula $\phi_{l},C$
+\end_inset
+
+也应该满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，将边界条件表示为以下形式：
+\begin_inset Formula 
+\begin{equation}
+\sigma_{l}\frac{\partial\phi_{l}}{\partial n}=f\left(\phi_{l},C\right)\label{eq:bnd14}
+\end{equation}
+
+\end_inset
+
+将边界条件在
+\begin_inset Formula $(\phi_{l,0},C_{0})$
+\end_inset
+
+ 附近作线性展开得到
+\begin_inset Formula 
+\begin{align}
+ & \sigma_{l}\frac{\partial\phi_{l,0}}{\partial n}=f\left(\phi_{l,0},C_{0}\right),\label{eq:bnd15a}\\
+ & \sigma_{l}\frac{\partial\delta\phi}{\partial n}=f_{1}\left(\phi_{l,0},C_{0}\right)\delta\phi_{l}+f_{2}\left(\phi_{l,0},C_{0}\right)\delta C\label{eq:bnd15b}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula $f_{1}$
+\end_inset
+
+和
+\begin_inset Formula $f_{2}$
+\end_inset
+
+分别表示
+\begin_inset Formula $f\left(\phi_{l},C\right)$
+\end_inset
+
+对
+\begin_inset Formula $\phi_{l}$
+\end_inset
+
+和
+\begin_inset Formula $C$
+\end_inset
+
+求偏导。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd15a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd15b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+分别贡献到激励向量和刚度矩阵中。
+\end_layout
+
+\begin_layout Section
+界面上的浓度，溶液–电极
+\end_layout
+
+\begin_layout Standard
+电极-溶液 界面发生传质、反应等一系列过程，例如下面的反应（原电池）
+\begin_inset Formula 
+\[
+\sum\alpha B^{+}+n_{e}e^{-}\to\beta A^{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/EChemstry-nongdu.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+电化学反应示意图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在反应过程中，
+\begin_inset Formula $B^{+}$
+\end_inset
+
+ 离子减少，
+\begin_inset Formula $\alpha<0$
+\end_inset
+
+；
+\begin_inset Formula $A^{+}$
+\end_inset
+
+离子增加，
+\begin_inset Formula $\beta>0$
+\end_inset
+
+。反应使得溶液的离子浓度变化，需要在
+\series bold
+电极–溶液
+\series default
+界面上施加边界条件，即界面上的反应速率与离子反应产生的电流遵循法拉第定律，
+\begin_inset Formula 
+\begin{align*}
+-\sbf n\cdot\sbf J_{i} & =J_{i,0}=-\frac{\beta\,J_{E}}{n_{e}F}\\
+\sbf J_{i} & ={\color{red}-D_{i}\,\nabla C_{i}}-{\color{blue}z_{i}u_{i}F\,C_{i}\nabla\phi_{l}(x)}+C_{i}(x)\,u(x)
+\end{align*}
+
+\end_inset
+
+其中法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+从溶液指向电极；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf J_{i}$
+\end_inset
+
+为物质
+\begin_inset Formula $i$
+\end_inset
+
+的浓度流，
+\begin_inset Formula $J_{0}$
+\end_inset
+
+为表面反应速率；单位
+\begin_inset Formula $\mathrm{mol/(m^{2}*s)}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $J_{E}$
+\end_inset
+
+为反应产生的电流密度，单位
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+为法拉第常数，
+\begin_inset Formula $96485\,\mathrm{C/mol}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\beta$
+\end_inset
+
+为产物化学计量系数，
+\begin_inset Formula $n_{e}$
+\end_inset
+
+ 为反应转移电子数，量纲均为
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+综合两个方程给出：
+\begin_inset Formula 
+\begin{equation}
+D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i}+uC_{i},\label{eq:bnd5}
+\end{equation}
+
+\end_inset
+
+在迭代法中展开为
+\begin_inset Formula 
+\begin{align}
+ & D_{i}\frac{\partial C_{i,A}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,A}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}C_{i,A}+uC_{i,A},\label{eq:bnd16a}\\
+ & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,A}\right)\frac{\partial\delta\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}\delta C_{i}+u\delta C_{i}\label{eq:bnd16b}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd16b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+还需结合
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd15b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+再次展开，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd16a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd16b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+分别贡献到激励向量和刚度矩阵中。
+\end_layout
+
+\begin_layout Section
+瞬态膜阻边界
+\end_layout
+
+\begin_layout Subsection
+溶解边界
+\end_layout
+
+\begin_layout Standard
+对于金属溶解，对腐蚀电池整体电位分布无影响，只会带来浓度变化，浓度与反应电流（溶液电势）有关。仍然表述为
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bnd5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+边界条件：
+\begin_inset Formula 
+\[
+D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+沉积边界 
+\end_layout
+
+\begin_layout Standard
+电极表面的 
+\series bold
+电流
+\series default
+ 与 
+\series bold
+沉积物质质量
+\series default
+ 或厚度的关系，可以通过法拉第定律描述。法拉第定律是描述电极上通过的 
+\series bold
+电量
+\series default
+ 与电极反应物 
+\series bold
+质量
+\series default
+ 之间的关系的，又称为电解定律。
+\end_layout
+
+\begin_layout Subsection
+稳态计算
+\end_layout
+
+\begin_layout Standard
+金属在电解时所析出的质量与电解液中所通过的电流和时间成正比。同量电流通过不同电解液时，则所析出金属（或反应产物）质量
+\begin_inset Formula $W$
+\end_inset
+
+与各电解液的
+\series bold
+化学当量
+\series default
+成正比。 
+\begin_inset Formula 
+\[
+W=C_{r}\,E\,I\,t
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $W$
+\end_inset
+
+为析出物质的重量
+\begin_inset Formula $(\mathrm{g})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $I$
+\end_inset
+
+为电流强度
+\begin_inset Formula $(\mathrm{A})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $t$
+\end_inset
+
+为通电时间
+\begin_inset Formula $(\mathrm{h})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $C_{r}$
+\end_inset
+
+为比例常数。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $E$
+\end_inset
+
+为化学当量 
+\end_layout
+
+\begin_layout Enumerate
+理论化学当量
+\begin_inset Formula $E=M/n_{e}*F$
+\end_inset
+
+，
+\begin_inset Formula $M$
+\end_inset
+
+为物质的摩尔质量，
+\begin_inset Formula $n_{e}$
+\end_inset
+
+为电子数，
+\begin_inset Formula $F$
+\end_inset
+
+为法拉第常数,
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $1Ah=3600C$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+W=C_{r}\,M\,F\,I\,t/n_{e}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+沉积厚度
+\begin_inset Formula $L$
+\end_inset
+
+为
+\begin_inset Formula 
+\[
+L=W/ρ=\frac{C_{r}\,M\,F\,I\,t}{n×ρ}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\rho$
+\end_inset
+
+为表面密度 
+\begin_inset Formula $\mathrm{g/cm^{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+瞬态计算 
+\end_layout
+
+\begin_layout Standard
+若电极表面沉积物质的阻抗较大，随着时间的累积，将会影响整体的电势分布。将膜阻导致的电势降记作
+\begin_inset Formula $\Delta\phi_{f}$
+\end_inset
+
+，薄膜中某一点的电势可以表示为 
+\begin_inset Formula $\phi_{f}=\phi_{s}-\Delta\phi_{f}$
+\end_inset
+
+。
+\begin_inset Formula $\Delta\phi_{f}$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{align}
+\Delta\phi_{f}=J_{Ei}\,R\label{eq:bnd11}
+\end{align}
+
+\end_inset
+
+电极–薄膜–电解质满足电流连续性条件
+\begin_inset Formula 
+\begin{equation}
+J_{Ei}=-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\label{eq:bnd12}
+\end{equation}
+
+\end_inset
+
+式中
+\begin_inset Formula $R$
+\end_inset
+
+为薄膜电阻（
+\begin_inset Formula $\mathrm{ohm*m^{2}}$
+\end_inset
+
+），
+\begin_inset Formula $\sigma_{f}$
+\end_inset
+
+为薄膜电导率。
+\begin_inset Formula $\Delta\phi_{f}$
+\end_inset
+
+正比于薄膜厚度。已知薄膜厚度
+\begin_inset Formula $s$
+\end_inset
+
+和电导率
+\begin_inset Formula $\sigma_{f}$
+\end_inset
+
+，则电阻
+\begin_inset Formula $R$
+\end_inset
+
+可以写成：
+\begin_inset Formula 
+\[
+R=\frac{s_{0}+\Delta s}{\sigma_{f}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ 为薄膜的初始厚度，
+\begin_inset Formula $\Delta s$
+\end_inset
+
+ 为电极上薄膜的累计厚度变化，总沉积/溶解厚度为 
+\begin_inset Formula $s=s_{0}+\Delta s$
+\end_inset
+
+（单位
+\begin_inset Formula $\mathrm{m}$
+\end_inset
+
+），
+\begin_inset Formula $\sigma_{f}$
+\end_inset
+
+ 为薄膜电导率（
+\begin_inset Formula $\mathrm{S/m}$
+\end_inset
+
+）。而电极累计厚度变化
+\begin_inset Formula $\Delta s$
+\end_inset
+
+可以表示为 
+\begin_inset Formula 
+\[
+\Delta s=\frac{M}{\rho}\Delta C_{i}
+\]
+
+\end_inset
+
+溶液中浓度的变化为
+\begin_inset Formula $C_{i}=C_{i,0}-\Delta C_{i}$
+\end_inset
+
+。因此膜阻导致的电势降可以表示为
+\begin_inset Formula 
+\begin{align*}
+\Delta\phi_{f} & =J_{Ei}\,R=J_{Ei}\frac{s_{0}+\Delta s}{\sigma_{f}}\\
+ & =J_{Ei}\left(s_{0}+\frac{M}{\rho}\Delta C_{i}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在电极–电解质界面上，将电势的关系修改为
+\begin_inset Formula 
+\[
+\phi_{s}-\phi_{l}=E_{\text{eq}}+η+\Delta\phi_{f}
+\]
+
+\end_inset
+
+使用局部常微分方程来描述
+\series bold
+累计薄膜表面浓度
+\series default
+变化：
+\begin_inset Formula 
+\[
+\frac{\dd{C_{i}}}{\dd{t}}=-\frac{\beta\,J_{Ei}}{nF}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将这些方程综合起来：
+\begin_inset Formula 
+\begin{align*}
+\frac{\dd{C_{i}}}{\dd{t}} & =-\frac{\beta\,J_{Ei}}{nF}\\
+J_{Ei} & =-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\\
+J_{Ei} & =J_{Ei0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\\
+\phi_{s}-\phi_{l} & =E_{\text{eq}}+\eta+\Delta\phi_{f}\\
+E_{\text{eq}} & =E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}/C_{0,\text{ref}}}\\
+\Delta\phi_{f} & =J_{Ei}\left(s_{0}+\frac{M}{\rho}\Delta C_{i}\right),\quad\Delta C_{i}=C_{i,0}-C_{i}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $M$
+\end_inset
+
+为物质的摩尔质量，
+\begin_inset Formula $\rho$
+\end_inset
+
+为表面密度（
+\begin_inset Formula $\mathrm{g/cm^{2}}$
+\end_inset
+
+），
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ 为薄膜的初始厚度。每一步算一次结果，作为下一次的初始。 
+\end_layout
+
+\begin_layout Chapter
 动态场
 \end_layout
 
@@ -2243,7 +2422,7 @@ noprefix "false"
 的残差方程
 \begin_inset Formula 
 \[
-R_{E}^{e}\left(N_{m}\right)=\Big[\int_{\Omega^{e}}{\color{blue}\nabla N_{m}\cdot\sbf J_{e}}\dd{\Omega}-\int_{\Gamma^{s}}{\color{brown}N_{m}\sbf n\cdot\sbf J_{e}}\dd{\Gamma}\Big]=0
+R_{E}^{e}\left(N_{m}\right)=\Big[\int_{\Omega^{e}}{\color{blue}\nabla N_{m}\cdot\sbf J_{E}}\dd{\Omega}-\int_{\Gamma^{s}}{\color{brown}N_{m}\sbf n\cdot\sbf J_{E}}\dd{\Gamma}\Big]=0
 \]
 
 \end_inset
@@ -2639,16 +2818,21 @@ noprefix "false"
 浓度扩散场
 \end_layout
 
-\begin_layout Standard
-sss
+\begin_layout Section
+迭代方程
 \end_layout
 
 \begin_layout Standard
+去掉和电势
+\begin_inset Formula $\phi$
+\end_inset
+
+的耦合，
 \begin_inset Formula 
 \begin{align}
-\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a-1}\\
- & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b-1}\\
- & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c-1}
+\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:df0a}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:df0b}\\
+ & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:df0c}
 \end{align}
 
 \end_inset
@@ -2666,18 +2850,18 @@ sss
 
 \end_inset
 
-
+定义
 \begin_inset Formula 
-\begin{align*}
-M & \Rightarrow\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\\
-K & \Rightarrow-\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\\
- & \quad\;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\\
-b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
-\end{align*}
+\begin{align}
+M\Rightarrow & \int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\nonumber \\
+K\Rightarrow & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:df1}\\
+ & \;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\nonumber \\
+b\Rightarrow & \int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\nonumber 
+\end{align}
 
 \end_inset
 
-
+时间步迭代
 \begin_inset Formula 
 \[
 {\color{blue}\left(\frac{M}{\Delta t}+\beta K\right)}X^{\alpha+1}={\color{brown}\left(\frac{M}{\Delta t}-\overline{\beta}K\right)}X^{\alpha}+{\color{red}\left(\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1}\right)},
@@ -2685,40 +2869,70 @@ b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
 
 \end_inset
 
-整理：
-\begin_inset Formula 
-\[
-{\color{blue}A_{1}}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left[{\color{red}B}-\left({\color{blue}A_{1}}\cdot X_{\beta}^{\alpha+1}-{\color{brown}A_{2}}\cdot X^{\alpha}\right)\right].
-\]
-
-\end_inset
-
-其中
+定义
 \begin_inset Formula 
 \begin{align*}
- & {\color{blue}A_{1}}=\frac{M}{\Delta t}+\beta K,\quad A_{2}=\frac{M}{\Delta t}-\overline{\beta}K\\
- & {\color{red}B}=\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1},\quad\text{外力项}
+{\color{blue}A_{1}} & =\frac{M}{\Delta t}+\beta K,\quad{\color{brown}A_{2}}=\frac{M}{\Delta t}-\overline{\beta}K\\
+\text{外力项}\quad{\color{red}B} & =\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1},
 \end{align*}
 
 \end_inset
 
+从
+\begin_inset Formula $A\delta X^{\alpha+1}=b-AX^{\alpha}$
+\end_inset
+
+导出 
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}A_{1}}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left[{\color{red}B}-\left({\color{blue}A_{1}}\cdot X_{\beta}^{\alpha+1}-{\color{brown}A_{2}}\cdot X^{\alpha}\right)\right].\label{eq:df3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ A_{1},A_{2}\right\} $
+\end_inset
+
+，
+\begin_inset Formula $\left\{ M,K\right\} $
+\end_inset
+
+可以互相表示，定义
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
 内力项
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
 \begin_inset Formula 
-\[
-\frac{1}{\Delta t}M\cdot\left(X_{\beta}^{\alpha+1}-X^{\alpha}\right)+\left(\beta K\cdot X_{\beta}^{\alpha+1}+\overline{\beta}K\cdot X^{\alpha}\right)
-\]
+\begin{equation}
+\frac{1}{\Delta t}M\cdot\left(X_{\beta}^{\alpha+1}-X^{\alpha}\right)+\left(\beta K\cdot X_{\beta}^{\alpha+1}+\overline{\beta}K\cdot X^{\alpha}\right)\label{eq:df4}
+\end{equation}
 
 \end_inset
 
-
-\begin_inset Formula 
-\[
-{\color{blue}A_{1}}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left[{\color{red}B}-\left({\color{blue}A_{1}}\cdot X_{\beta}^{\alpha+1}-{\color{brown}A_{2}}\cdot X^{\alpha}\right)\right].
-\]
-
-\end_inset
-
-其中
+以上
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -2727,6 +2941,150 @@ b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
 \end_inset
 
 是非线性迭代指标。
+\end_layout
+
+\begin_layout Standard
+从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:df1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula $K$
+\end_inset
+
+算符中的流分成 Diffusion，Convection，每个流的贡献又继续分为体单元，
+\begin_inset Formula 
+\begin{align}
+-\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{D_{i}}\dd{\Omega} & \Rightarrow-\int_{\Omega^{e}}\nabla N_{m}\cdot\delta\sbf J_{D_{i}}\dd{\Omega}-\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{D_{i},A}\dd{\Omega}\nonumber \\
+ & =\left[\int_{\Omega^{e}}\nabla N_{m}\cdot D_{i}\cdot\nabla N_{n}\dd{\Omega}\right]{\color{blue}\delta C_{i,n}}+\left[\int_{\Omega^{e}}\nabla N_{m}\cdot D_{i}\cdot\nabla N_{n}\dd{\Omega}\right]{\color{blue}C_{i,n,A}}\label{eq:df5a}
+\end{align}
+
+\end_inset
+
+和表面单元
+\begin_inset Formula 
+\begin{align}
+\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}\dd{\Gamma} & \Rightarrow\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{D_{i},A}\dd{\Gamma}+\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\delta\sbf J_{D_{i}}\dd{\Gamma}\nonumber \\
+ & =-\left[\int_{\Gamma^{s}}N_{m}\,D_{i}\cdot{\color{blue}\frac{\partial}{\partial n}\delta C_{i}}\dd{\Gamma}\right]-\left[\int_{\Gamma^{s}}N_{m}\,D_{i}\cdot\frac{\partial N_{n}}{\partial n}\dd{\Gamma}\right]{\color{blue}C_{i,n,A}}\label{eq:df5b}
+\end{align}
+
+\end_inset
+
+即
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:df3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:df4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，算符
+\begin_inset Formula $K$
+\end_inset
+
+的具体形式决定于：（1）位于体单元 or 表面单元；（2）作用到
+\begin_inset Formula $X$
+\end_inset
+
+ or 
+\begin_inset Formula $\delta X$
+\end_inset
+
+。例如
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:df5b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的两项，当施加第三类边界条件
+\begin_inset Formula $D_{i}\frac{\partial}{\partial n}C+\gamma C=q$
+\end_inset
+
+，分别化简为：
+\begin_inset Formula 
+\begin{align*}
+D_{i}\cdot\frac{\partial}{\partial n}\delta C_{i} & \Rightarrow-\gamma\,N_{n}^{e}\,\delta C_{i,n}\\
+D_{i}\cdot\frac{\partial N_{n}}{\partial n}C_{i,n,A} & \Rightarrow q
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+边界条件
+\end_layout
+
+\begin_layout Standard
+去掉和电势
+\begin_inset Formula $\phi$
+\end_inset
+
+的耦合，浓度边界为
+\begin_inset Formula 
+\begin{equation}
+D_{i}\frac{\partial C_{i}}{\partial n}=uC_{i},\label{eq:df6}
+\end{equation}
+
+\end_inset
+
+在迭代法中展开为
+\begin_inset Formula 
+\begin{align}
+ & D_{i}\frac{\partial C_{i,A}}{\partial n}=u\,C_{i,A}=u\,N_{n}^{e}\,C_{i,n,A},\label{eq:df7}\\
+ & D_{i}\frac{\partial\delta C_{i}}{\partial n}=u\,\delta C_{i}=u\,N_{n}^{e}\,\delta C_{i,n}\label{eq:df8}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $u$
+\end_inset
+
+是流速场，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:df7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:df8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+分别贡献到激励向量和刚度矩阵中。
 \end_layout
 
 \begin_layout Chapter
