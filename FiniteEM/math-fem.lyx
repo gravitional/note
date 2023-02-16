@@ -3274,253 +3274,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-欧拉beta方法
-\end_layout
-
-\begin_layout Standard
-设一阶常微分方程的形式为
-\begin_inset Formula 
-\[
-M\,x^{\prime}\left(t\right)+K\,x\left(t\right)=b\left(t\right)
-\]
-
-\end_inset
-
-引入可调参数
-\begin_inset Formula $\beta$
-\end_inset
-
-，将函数
-\begin_inset Formula $x(t+\Delta t)$
-\end_inset
-
-表示为
-\begin_inset Formula 
-\[
-x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\overline{\beta}=1-\beta$
-\end_inset
-
-。以下将
-\begin_inset Formula $t+\Delta t$
-\end_inset
-
-时刻离散成
-\begin_inset Formula $n+1$
-\end_inset
-
-指标，联立方程
-\begin_inset Formula 
-\begin{align*}
- & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
- & K\,x^{n}+M\,x^{\prime;n}=b^{n}\\
- & K\,x^{n+1}+M\,x^{\prime;n+1}=b^{n+1}
-\end{align*}
-
-\end_inset
-
-解得
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Simplify@First@ Solve[{x[n + 1] == x[n] + 
-\backslash
-[CapitalDelta]t (1 - 
-\backslash
-[Beta]) x
-\backslash
-[Prime][ n] + 
-\backslash
-[CapitalDelta]t*
-\backslash
-[Beta]*x
-\backslash
-[Prime][n + 1], K*x[n] + M*x
-\backslash
-[Prime][n] == b[n], K*x[n + 1] + M*x
-\backslash
-[Prime][n + 1] == b[n + 1]}, {x[n + 1], x
-\backslash
-[Prime][n], x
-\backslash
-[Prime][n + 1]}]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}+\overline{\beta}\,b^{n}+\beta b^{n+1}\\
-\left(\frac{M}{\Delta t}K^{-1}M+\beta M\right){\color{blue}x^{\prime;n+1}} & =-\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}-\overline{\beta}b^{n}+\frac{M}{\Delta t}K^{-1}\,b^{n+1}\\
-M\,{\color{blue}x^{\prime;n}} & =-Kx^{n}+b^{n}
-\end{align*}
-
-\end_inset
-
-当
-\begin_inset Formula $\beta=0$
-\end_inset
-
-，回到向前欧拉法：
-\begin_inset Formula 
-\[
-\frac{M}{\Delta t}{\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-K\right)x^{n}+b^{n}
-\]
-
-\end_inset
-
-当
-\begin_inset Formula $\beta=1$
-\end_inset
-
-，回到向后欧拉法：
-\begin_inset Formula 
-\[
-\left(\frac{M}{\Delta t}+K\right){\color{blue}x^{n+1}}=\frac{M}{\Delta t}x^{n}+\beta b^{n+1}
-\]
-
-\end_inset
-
-当
-\begin_inset Formula $\beta=1/2$
-\end_inset
-
-，回到梯形法则：
-\begin_inset Formula 
-\[
-\left(\frac{M}{\Delta t}+\frac{K}{2}\right){\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-\frac{K}{2}\right)x^{n}+\frac{1}{2}\left(b^{n}+b^{n+1}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-By 《数值分析–张平文，李铁军》P156，将此方法应用到方程 
-\begin_inset Formula $x'=\lambda x$
-\end_inset
-
- 上，可知此方法的稳定域为
-\begin_inset Formula 
-\[
-\abs{\frac{1+\overline{\beta}\xi}{1-\beta\xi}}<1,\quad\xi=\lambda\Delta t
-\]
-
-\end_inset
-
-当
-\begin_inset Formula $\beta$
-\end_inset
-
-从
-\begin_inset Formula $0$
-\end_inset
-
-到
-\begin_inset Formula $1$
-\end_inset
-
-，此方法的稳定域逐渐扩大。代码演示
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-solODE[x0_, n_, {
-\backslash
-[Beta]_, 
-\backslash
-[CapitalDelta]t_, M1_, K1_, b_}] := Module[{tmp, 
-\backslash
-[Beta]b}, 
-\backslash
-[Beta]b = 1 - 
-\backslash
-[Beta]; tmp = Range[n + 1]; tmp[[1]] = x0; Do[ tmp[[i + 1]] = LinearSolve[
- M1/
-\backslash
-[CapitalDelta]t + 
-\backslash
-[Beta]* K1, (M1/
-\backslash
-[CapitalDelta]t - 
-\backslash
-[Beta]b*K1) .
- tmp[[i]] + 
-\backslash
-[Beta]b* b[i] + 
-\backslash
-[Beta]*b[i + 1]] , {i, 1, n}]; tmp]; (*-----*) M1 = 1*{ {1, 0, 0}, {0, 1,
- 0}, {0, 0, 1} }; K1 = 2.1*{ {1, 0, 0}, {0, 1, 0}, {0, 0, 1} }; b[n_] :=
- 0*{1, 1, 1}; x0 = {1, 1, 1}; (*----------*) 
-\backslash
-[Beta] = 1/2; 
-\backslash
-[CapitalDelta]t = 1; step = 100; r1t = solODE[x0, step, {
-\backslash
-[Beta], 
-\backslash
-[CapitalDelta]t, M1, K1, b}]; r1 = Style[#, Red] & /@ Transpose@r1t; (**)
- 
-\backslash
-[Beta] = 0; r2t = solODE[x0, step, {
-\backslash
-[Beta], 
-\backslash
-[CapitalDelta]t, M1, K1, b}]; r2 = Style[#, Green] & /@ Transpose@r2t; (**)
- 
-\backslash
-[Beta] = 1; r3t = solODE[x0, step, {
-\backslash
-[Beta], 
-\backslash
-[CapitalDelta]t, M1, K1, b}]; r3 = Style[#, Black] & /@ Transpose@r3t; GraphicsC
-olumn[ Table[ ListPlot[{r1[[ord]], r2[[ord]], r3[[ord]]}, PlotRange -> All]
- , {ord, 1, 3}] , ImageSize -> 500 ]
-\end_layout
-
-\end_inset
-
-，收敛域
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-f = Table[ 
-\backslash
-[Beta]b = 1 - 
-\backslash
-[Beta]; RegionPlot[ Callout[Abs[(1 + 
-\backslash
-[Beta]b (x + y*I))/(1 - 
-\backslash
-[Beta] (x + y I))] < 1, StringTemplate["
-\backslash
-[Beta]=``"][
-\backslash
-[Beta]], {
-\backslash
-[Beta], 0.7}], {x, -2.5, 2.5}, {y, -2.5, 2.5} , PlotStyle -> {ColorData[3, "ColorList
-"][[Mod[10 
-\backslash
-[Beta], 10]]], Opacity[.15]} , Axes -> True] , {
-\backslash
-[Beta], 0, 1, 0.1}] 
-\end_layout
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Section
 龙格–库塔方法,Runge–Kutta
 \end_layout
 
@@ -6064,14 +5817,519 @@ y_{n+1}^{(k+1)}=y_{n}+\frac{h}{24}\left[{\color{blue}9}f(x_{n+1},y_{n+1}^{(0)})+
 \end_layout
 
 \begin_layout Section
-sss
+beta方法,exa1
+\end_layout
+
+\begin_layout Standard
+设一阶常微分方程的形式为
+\begin_inset Formula 
+\[
+M\,x^{\prime}\left(t\right)+K\,x\left(t\right)=b\left(t\right)
+\]
+
+\end_inset
+
+引入可调参数
+\begin_inset Formula $\beta$
+\end_inset
+
+，将函数
+\begin_inset Formula $x(t+\Delta t)$
+\end_inset
+
+表示为
+\begin_inset Formula 
+\[
+x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+。以下将
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+时刻离散成
+\begin_inset Formula $n+1$
+\end_inset
+
+指标，联立方程
+\begin_inset Formula 
+\begin{align*}
+ & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
+ & K\,x^{n}+M\,x^{\prime;n}=b^{n}\\
+ & K\,x^{n+1}+M\,x^{\prime;n+1}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+解得
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify@First@ Solve[{x[n + 1] == x[n] + 
+\backslash
+[CapitalDelta]t (1 - 
+\backslash
+[Beta]) x
+\backslash
+[Prime][ n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]*x
+\backslash
+[Prime][n + 1], K*x[n] + M*x
+\backslash
+[Prime][n] == b[n], K*x[n + 1] + M*x
+\backslash
+[Prime][n + 1] == b[n + 1]}, {x[n + 1], x
+\backslash
+[Prime][n], x
+\backslash
+[Prime][n + 1]}]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}+\overline{\beta}\,b^{n}+\beta b^{n+1}\\
+\left(\frac{M}{\Delta t}K^{-1}M+\beta M\right){\color{blue}x^{\prime;n+1}} & =-\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}-\overline{\beta}b^{n}+\frac{M}{\Delta t}K^{-1}\,b^{n+1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果使用
+\begin_inset Formula $\lambda$
+\end_inset
+
+-FPI 求解此方程，
+\begin_inset Formula 
+\[
+A\Delta x_{\beta+1}^{n+1}=\lambda\left[B-AX_{\beta}^{n+1}\right]
+\]
+
+\end_inset
+
+将对应矩阵代入得
+\begin_inset Formula 
+\[
+\left[\frac{M}{\Delta t}+\beta\,K\right]\Delta x_{\beta+1}^{n+1}=\lambda\Big[\overline{\beta}\,b^{n}+\beta b^{n+1}+\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}-\left(\frac{M}{\Delta t}+\beta\,K\right)x_{\beta}^{n+1}\Big]
+\]
+
+\end_inset
+
+整理
+\begin_inset Formula 
+\[
+\left[\frac{M}{\Delta t}+\beta\,K\right]\Delta x_{\beta+1}^{n+1}=\lambda\Big[{\color{blue}\overline{\beta}\,b^{n}+\beta b^{n+1}}-{\color{brown}\left(\overline{\beta}\,K\,x^{n}+\beta\,K\,x_{\beta}^{n+1}\right)}+{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{\beta}^{n+1}\right)}\Big]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+beta方法的参数具有对称性，也可以作
+\begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
+\end_inset
+
+对换，对应
+\begin_inset Formula 
+\[
+x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+1}
+\]
+
+\end_inset
+
+表达式为
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{M}{\Delta t}+\overline{\beta}\,K\right]\Delta x_{\beta+1}^{n+1}= & \lambda\Big[{\color{blue}\beta\,b^{n}+\overline{\beta}b^{n+1}}-{\color{brown}\left(\beta\,K\,x^{n}+\overline{\beta}\,K\,x_{\beta}^{n+1}\right)}\\
+ & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{\beta}^{n+1}\right)}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+当
+\begin_inset Formula $\beta=1$
+\end_inset
+
+，回到向前欧拉法：
+\begin_inset Formula 
+\[
+\frac{M}{\Delta t}{\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-K\right)x^{n}+b^{n}
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta=0$
+\end_inset
+
+，回到向后欧拉法：
+\begin_inset Formula 
+\[
+\left(\frac{M}{\Delta t}+K\right){\color{blue}x^{n+1}}=\frac{M}{\Delta t}x^{n}+\beta b^{n+1}
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta=1/2$
+\end_inset
+
+，回到梯形法则：
+\begin_inset Formula 
+\[
+\left(\frac{M}{\Delta t}+\frac{K}{2}\right){\color{blue}x^{n+1}}=\left(\frac{M}{\Delta t}-\frac{K}{2}\right)x^{n}+\frac{1}{2}\left(b^{n}+b^{n+1}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+By 《数值分析–张平文，李铁军》P156，将此方法应用到方程 
+\begin_inset Formula $x'=\lambda x$
+\end_inset
+
+ 上，可知此方法的稳定域为
+\begin_inset Formula 
+\[
+\abs{\frac{1+\beta\xi}{1-\overline{\beta}\xi}}<1,\quad\xi=\lambda\Delta t
+\]
+
+\end_inset
+
+当
+\begin_inset Formula $\beta$
+\end_inset
+
+从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $0$
+\end_inset
+
+，此方法的稳定域逐渐扩大。代码演示
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+solODE[x0_, n_, {
+\backslash
+[Beta]_, 
+\backslash
+[CapitalDelta]t_, M1_, K1_, b_}] := Module[{tmp, 
+\backslash
+[Beta]b}, 
+\backslash
+[Beta]b = 1 - 
+\backslash
+[Beta]; tmp = Range[n + 1]; tmp[[1]] = x0; Do[tmp[[i + 1]] = LinearSolve[
+ M1/
+\backslash
+[CapitalDelta]t + 
+\backslash
+[Beta]b* K1, (M1/
+\backslash
+[CapitalDelta]t - 
+\backslash
+[Beta]*K1) .
+ tmp[[i]] + 
+\backslash
+[Beta]* b[i] + 
+\backslash
+[Beta]b*b[i + 1]], {i, 1, n}]; tmp];(*-----*)M1 = 1*{{1, 0, 0}, {0, 1, 0},
+ {0, 0, 1}}; K1 = 2.1*{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}; b[n_] := 0*{1, 1,
+ 1}; x0 = {1, 1, 1};(*----------*)
+\backslash
+[Beta] = 1/2; 
+\backslash
+[CapitalDelta]t = 1; step = 100; r1t = solODE[x0, step, {
+\backslash
+[Beta], 
+\backslash
+[CapitalDelta]t, M1, K1, b}]; r1 = Style[#, Red] & /@ Transpose@r1t;(**)
+\backslash
+[Beta] = 0; r2t = solODE[x0, step, {
+\backslash
+[Beta], 
+\backslash
+[CapitalDelta]t, M1, K1, b}]; r2 = Style[#, Green] & /@ Transpose@r2t;(**)
+\backslash
+[Beta] = 1; r3t = solODE[x0, step, {
+\backslash
+[Beta], 
+\backslash
+[CapitalDelta]t, M1, K1, b}]; r3 = Style[#, Black] & /@ Transpose@r3t; GraphicsC
+olumn[ Table[ListPlot[{r1[[ord]], r2[[ord]], r3[[ord]]}, PlotRange -> All],
+ {ord, 1, 3}], ImageSize -> 500]
+\end_layout
+
+\end_inset
+
+，收敛域
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+f = Table[
+\backslash
+[Beta]b = 1 - 
+\backslash
+[Beta]; RegionPlot[ Callout[Abs[(1 + 
+\backslash
+[Beta] (x + y*I))/(1 - 
+\backslash
+[Beta]b (x + y I))] < 1, StringTemplate["
+\backslash
+[Beta]=``"][
+\backslash
+[Beta]], {
+\backslash
+[Beta], 0.7}], {x, -2.5, 2.5}, {y, -2.5, 2.5}, PlotStyle -> {ColorData[3, "ColorList"
+][[Mod[10 
+\backslash
+[Beta], 10]]], Opacity[.15]}, Axes -> True], {
+\backslash
+[Beta], 0, 1, 0.1}]
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+beta方法,exa2
+\end_layout
+
+\begin_layout Standard
+设一阶常微分方程的形式为
+\begin_inset Formula 
+\[
+R\,x^{\prime}(t)+S\,x(t)+F[x(t)]=b(t)
+\]
+
+\end_inset
+
+引入可调参数
+\begin_inset Formula $\beta$
+\end_inset
+
+，将函数
+\begin_inset Formula $x(t+\Delta t)$
+\end_inset
+
+表示为
+\begin_inset Formula 
+\[
+x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+。以下将
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+时刻离散成
+\begin_inset Formula $n+1$
+\end_inset
+
+指标，联立方程
+\begin_inset Formula 
+\begin{align*}
+ & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
+ & R\,x^{\prime;n}+S\,x^{n}+F^{n}=b^{n}\\
+ & R\,x^{\prime;n+1}+S\,x^{n+1}+F^{n+1}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+解得
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify@First@Solve[{ x[n + 1] == x[n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]b* x
+\backslash
+[Prime][n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]*x
+\backslash
+[Prime][n + 1], R*x
+\backslash
+[Prime][n] + S*x[n] + F[n] == b[n], R*x
+\backslash
+[Prime][n + 1] + S*x[n + 1] + F[n + 1] == b[n + 1] }, {x[n + 1], x
+\backslash
+[Prime][n], x
+\backslash
+[Prime][n + 1] }]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(\frac{R}{\Delta t}+\beta S\right){\color{blue}x^{n+1}} & =\left(\frac{R}{\Delta t}-\overline{\beta}S\right)x^{n}-\left(\beta\,F^{n+1}+\overline{\beta}\,F^{n}\right)+\left(\beta\,b^{n+1}+\overline{\beta}\,b^{n}\right)
+\end{align*}
+
+\end_inset
+
+简记
+\begin_inset Formula 
+\begin{align*}
+ & A_{1}=\left(\frac{R}{\Delta t}+\beta S\right),\quad A_{2}=\left(\frac{R}{\Delta t}-\overline{\beta}S\right)\\
+ & B_{1}=\left(\beta\,b^{n+1}+\overline{\beta}\,b^{n}\right)
+\end{align*}
+
+\end_inset
+
+如果使用
+\begin_inset Formula $\lambda$
+\end_inset
+
+-FPI 求解此方程，
+\begin_inset Formula 
+\[
+A\Delta x_{\beta+1}^{n+1}=\lambda\left[B-AX_{\beta}^{n+1}\right]
+\]
+
+\end_inset
+
+将对应矩阵代入得
+\begin_inset Formula 
+\begin{equation}
+A_{1}\Delta x_{\beta+1}^{n+1}=\lambda\left[A_{2}x^{n}-\beta\,{\color{blue}F^{n+1}}-\overline{\beta}\,F^{n}+B_{1}-A_{1}x_{\beta}^{n+1}\right]\label{eq:my30}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中
+\begin_inset Formula ${\color{blue}F^{n+1}}=F\left(x_{\beta+1}^{n+1}\right)$
+\end_inset
+
+，所以是隐式的。为转换成显式方程，作泰勒展开
+\begin_inset Formula 
+\[
+F^{n+1}=F\left(x_{\beta+1}^{n+1}\right)=F_{\beta}^{n+1}+F_{\beta}^{(1),n+1}\Delta x_{\beta+1}^{n+1}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $F_{\beta}^{(1),n+1}$
+\end_inset
+
+表示一阶导数，
+\begin_inset Formula $F_{\beta}^{n+1}=F\left(x_{\beta}^{n+1}\right)$
+\end_inset
+
+表示零阶值。
+\begin_inset Formula 
+\[
+\left[A_{1}+\beta F_{\beta}^{(1),n+1}\right]\Delta x_{\beta+1}^{n+1}=\lambda\left[B_{1}+A_{2}x^{n}-\beta F_{\beta}^{(0),n+1}-\overline{\beta}\,F^{n}-A_{1}x_{\beta}^{n+1}\right]
+\]
+
+\end_inset
+
+整理
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{R}{\Delta t}+\beta S+\beta F_{\beta}^{(1),n+1}\right]\Delta x_{\beta+1}^{n+1}= & \lambda\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta F_{\beta}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
+ & +{\color{magenta}\frac{R}{\Delta t}\left(x^{n}-x_{\beta}^{n+1}\right)-\overline{\beta}\,S\,x^{n}-\beta\,S\,x_{\beta}^{n+1}}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+beta方法的参数具有对称性，也可以作
+\begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
+\end_inset
+
+对换，对应
+\begin_inset Formula 
+\[
+x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+1}
+\]
+
+\end_inset
+
+表达式为
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{R}{\Delta t}+\overline{\beta}\,S+\overline{\beta}\,F_{\beta}^{(1),n+1}\right]\Delta x_{\beta+1}^{n+1}= & \lambda\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}\,F_{\beta}^{n+1}+\beta\,F^{n}}\right)\\
+ & +{\color{magenta}\frac{R}{\Delta t}\left(x^{n}-x_{\beta}^{n+1}\right)-\beta\,S\,x^{n}-\overline{\beta}\,S\,x_{\beta}^{n+1}}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+sss2
 \end_layout
 
 \begin_layout Standard
 general ODE form：待整理
 \begin_inset Formula 
 \[
-K\,x(t)+L[x(t)]\,x(t)+F[x(t)]+M\,x^{\prime}(t)=b(t)
+M\,x^{\prime}(t)+K\,x(t)+L[x(t)]\,x(t)+F[x(t)]=b(t)
 \]
 
 \end_inset
@@ -6119,16 +6377,23 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 
 \begin_inset Formula 
 \begin{align*}
-\left(\beta K+\beta L^{n+1}+\frac{M}{\Delta t}\right)x^{n+1} & =\left(\frac{M}{\Delta t}-\overline{\beta}K-\overline{\beta}L^{n}\right)x^{n}-\left(\overline{\beta}F^{n}+\beta F^{n+1}\right)+\left(\overline{\beta}b^{n}+\beta b^{n+1}\right)\\
-\left(\beta K+\beta L^{n+1}+\frac{M}{\Delta t}\right)Mx^{\prime;n+1} & =-\overline{\beta}\,\left(K+L^{n+1}\right)b^{n}+\frac{M}{\Delta t}b^{n+1}+\overline{\beta}\,KF^{n}\\
- & +\overline{\beta}\,F^{n}L^{n+1}-\frac{M}{\Delta t}F^{n+1}+\overline{\beta}K^{2}x^{n}+\overline{\beta}KL^{n}x^{n}\\
- & +\overline{\beta}\,KL^{n+1}x^{n}-K\frac{M}{\Delta t}x^{n}-\frac{M}{\Delta t}L^{n+1}x^{n}+\overline{\beta}L^{n}L^{n+1}x^{n}\\
-M\,x^{\prime;n} & =-\left(K+L^{n}\right)x^{n}-F^{n}+b^{n}
+\left(\frac{R}{\Delta t}+\beta S\right){\color{blue}x^{n+1}} & =\left(\frac{R}{\Delta t}-\overline{\beta}S\right)x^{n}-\left(\beta\,F^{n+1}+\overline{\beta}\,F^{n}\right)+\left(\beta\,b^{n+1}+\overline{\beta}\,b^{n}\right)
 \end{align*}
 
 \end_inset
 
- 
+
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{M}{\Delta t}+\beta K+\beta L^{n+1}\right]x^{n+1} & =\left(\frac{M}{\Delta t}-\overline{\beta}K-\overline{\beta}L^{n}\right)x^{n}-\left(\overline{\beta}F^{n}+\beta F^{n+1}\right)+\left(\overline{\beta}b^{n}+\beta b^{n+1}\right)\\
+\left(\beta K+\beta L^{n+1}+\frac{M}{\Delta t}\right)Mx^{\prime;n+1} & =-\overline{\beta}\,\left(K+L^{n+1}\right)b^{n}+\frac{M}{\Delta t}b^{n+1}+\overline{\beta}\,KF^{n}\\
+ & +\overline{\beta}\,F^{n}L^{n+1}-\frac{M}{\Delta t}F^{n+1}+\overline{\beta}K^{2}x^{n}+\overline{\beta}KL^{n}x^{n}\\
+ & +\overline{\beta}\,KL^{n+1}x^{n}-K\frac{M}{\Delta t}x^{n}-\frac{M}{\Delta t}L^{n+1}x^{n}+\overline{\beta}L^{n}L^{n+1}x^{n}
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -21366,7 +21631,7 @@ noprefix "false"
 \begin_inset Formula $\Phi$
 \end_inset
 
-和失势
+和矢势
 \begin_inset Formula $\sbf A$
 \end_inset
 
@@ -21471,7 +21736,7 @@ noprefix "false"
 \begin_inset Formula $j$
 \end_inset
 
-表示失势的自由度；
+表示矢势的自由度；
 \begin_inset Formula $m$
 \end_inset
 

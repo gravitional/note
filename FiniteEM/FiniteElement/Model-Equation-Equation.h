@@ -20,11 +20,19 @@ public:
     EquNoArrange *Get() { return _curArrage; }
 
     // 取当前节点方程号
+    int *GetNodeEquNo(int id)
+    {
+        return _curArrange->GetNodeEquNo(id);
+    };
     // 取当前边方程号
+    int *GetEdgeEquNo(int id);
     // 取当前单元方程号
+    int *GetElementEquNo(int id);
     // 取当前拉格朗日乘子方程号
-
+    int *GetLagEquNo(int id);
     // 取方程数
+    int Count();
+
 private:
     EquNoArrange *_curArrange;
     std::map<std::string, EquNoArrange> _arrange;
