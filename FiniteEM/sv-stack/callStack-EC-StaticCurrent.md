@@ -15,22 +15,24 @@ main(int argc, char* argv[]);
             lib()->Load(Str::ToLower(solver)); // load solver dll
 
             memTracker()->SnapShot("CreateModel"); //分析内存
-            unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建 solver model, 通过 RuntimeSelection 机制
+            unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建求解器, 通过 RuntimeSelection 机制, solver
             creator->Create(); // 创建网格和模型, /Common/Model/ModelCreator.cpp
                 CreateMesh(); // 创建网格
                 CreateModel(); //创建模型 /FiniteElement/Model/FeModelCreator.cpp
-                    CreateFunction(); //自定义函数
+                    CreateFunction(); //读取自定义函数
+                        int id=idObjects()->Add(func); // 将函数添加到IDObjects管理器
+                        reader->SetIDByName(name,id); // 设置函数名称对应的 id, 所有reader共享此map
                     CreateCoordSys(); //自定义坐标系
                     CreateMonitor(); // 创建监视
                     CreateNode(); // 创建节点
                     CreateElement(data); // 创建单元
                     CreateMaterial(data); //创建材料, json, L42
-                    CreateInitialField(data);
-                    CreateMisc(data); //创建各场的特有数据, /ElectroChemistry/Model/ModelCreatorEC.cpp
-                        CreateInfo(data);
+                    CreateInitialField(data); //virtual, 创建初始场
+                    CreateMisc(data); //生成物理场特有信息, /ElectroChemistry/Model/ModelCreatorEC.cpp
+                        CreateInfo(data); // 生成全局参数
                             data.ReadValue("Thickness2D"...) // 厚度, json
                             data.ReadValue("Sector"...) // 模型分数, json
-                        CreateConstraint(data) // 约束, 即边界条件,  json
+                        CreateConstraint(data) // 生成约束, 即边界条件,  json
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         //迭代分析类型, 读取 conrol 的分析节点, json
@@ -58,7 +60,7 @@ main(int argc, char* argv[]);
                         ApplyConstraint(); // 施加约束
                             ExpandCons2Ele();//施加约束到单元上
                             BuildMstSlvDofConnection();// 建立主从约束
-                        ArrangeEquationNo(); // 数据自由度排序, 方程号
+                        ArrangeEquationNo(); // 方程号排序，处理约束自由度，确定方程总数
                         PartitionMesh(); // 剖分网格
                         AdjustRankComponent(); // 调整构件所属MPI 节点
                         CreateElementList(); // 生成单元列表

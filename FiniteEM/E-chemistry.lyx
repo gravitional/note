@@ -1750,7 +1750,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & \sigma_{l}\frac{\partial\phi_{l,0}}{\partial n}=f\left(\phi_{l,0},C_{0}\right),\label{eq:bnd15a}\\
- & \sigma_{l}\frac{\partial\delta\phi}{\partial n}=f_{1}\left(\phi_{l,0},C_{0}\right)\delta\phi_{l}+f_{2}\left(\phi_{l,0},C_{0}\right)\delta C\label{eq:bnd15b}
+ & \sigma_{l}\frac{\partial}{\partial n}\delta\phi=f_{1}\left(\phi_{l,0},C_{0}\right)\delta\phi_{l}+f_{2}\left(\phi_{l,0},C_{0}\right)\delta C\label{eq:bnd15b}
 \end{align}
 
 \end_inset
@@ -1967,7 +1967,7 @@ D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\part
 \begin_inset Formula 
 \begin{align}
  & D_{i}\frac{\partial C_{i,A}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,A}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}C_{i,A}+uC_{i,A},\label{eq:bnd16a}\\
- & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,A}\right)\frac{\partial\delta\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}\delta C_{i}+u\delta C_{i}\label{eq:bnd16b}
+ & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,A}\right)\frac{\partial}{\partial n}\delta\phi_{l}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}\delta C_{i}+u\delta C_{i}\label{eq:bnd16b}
 \end{align}
 
 \end_inset
@@ -2861,44 +2861,19 @@ b\Rightarrow & \int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\nonumber
 
 \end_inset
 
-时间步迭代
-\begin_inset Formula 
-\[
-{\color{blue}\left(\frac{M}{\Delta t}+\beta K\right)}X^{\alpha+1}={\color{brown}\left(\frac{M}{\Delta t}-\overline{\beta}K\right)}X^{\alpha}+{\color{red}\left(\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1}\right)},
-\]
-
-\end_inset
-
-定义
-\begin_inset Formula 
-\begin{align*}
-{\color{blue}A_{1}} & =\frac{M}{\Delta t}+\beta K,\quad{\color{brown}A_{2}}=\frac{M}{\Delta t}-\overline{\beta}K\\
-\text{外力项}\quad{\color{red}B} & =\overline{\beta}\,b^{\alpha}+\beta b^{\alpha+1},
-\end{align*}
-
-\end_inset
-
 从
 \begin_inset Formula $A\delta X^{\alpha+1}=b-AX^{\alpha}$
 \end_inset
 
-导出 
+可以导出 
 \begin_inset Formula 
 \begin{equation}
-{\color{blue}A_{1}}\cdot\delta X_{\beta+1}^{\alpha+1}=\lambda_{\beta}\left[{\color{red}B}-\left({\color{blue}A_{1}}\cdot X_{\beta}^{\alpha+1}-{\color{brown}A_{2}}\cdot X^{\alpha}\right)\right].\label{eq:df3}
+\left[\frac{M}{\Delta t}+\overline{\beta}\,K\right]\delta X_{\beta+1}^{\alpha+1}=\lambda\Big[{\color{blue}\beta\,b^{\alpha}+\overline{\beta}b^{\alpha+1}}-{\color{brown}\left(\beta\,K\,X^{\alpha}+\overline{\beta}\,K\,X_{\beta}^{\alpha+1}\right)}+{\color{magenta}\frac{M}{\Delta t}\left(X^{\alpha}-X_{\beta}^{\alpha+1}\right)}\Big]\label{eq:df3}
 \end{equation}
 
 \end_inset
 
-
-\begin_inset Formula $\left\{ A_{1},A_{2}\right\} $
-\end_inset
-
-，
-\begin_inset Formula $\left\{ M,K\right\} $
-\end_inset
-
-可以互相表示，定义
+定义
 \family roman
 \series medium
 \shape up
@@ -2927,7 +2902,7 @@ b\Rightarrow & \int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\nonumber
 
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\Delta t}M\cdot\left(X_{\beta}^{\alpha+1}-X^{\alpha}\right)+\left(\beta K\cdot X_{\beta}^{\alpha+1}+\overline{\beta}K\cdot X^{\alpha}\right)\label{eq:df4}
+F_{\text{in}}=\frac{M}{\Delta t}\left(X_{\beta}^{\alpha+1}-X^{\alpha}\right)+\left(\overline{\beta}\,K\,X_{\beta}^{\alpha+1}+\beta\,K\,X^{\alpha}\right)\label{eq:df4}
 \end{equation}
 
 \end_inset
