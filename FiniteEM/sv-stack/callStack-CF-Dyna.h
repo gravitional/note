@@ -1,7 +1,6 @@
-# 求解器调用栈,电流场, 瞬态
-
-```cpp
+// 求解器调用栈,电流场, 瞬态
 //solver/main.cpp
+
 main(int argc, char* argv[]);
     common::Control().Execute(argc, argv); // 总流程控制类, 管理 Impl 资源, /Common/Control/Control.cpp
         args(); //解析命令行参数
@@ -23,6 +22,7 @@ main(int argc, char* argv[]);
                     CreateCoordSys(); //自定义坐标系
                     CreateMonitor(); // 创建监视
                     CreateNode(); // 创建节点
+                        CompNode* node=NewNode(); //节点工厂方法，调用具体实现
                     CreateElement(data); // 创建单元
                     CreateMaterial(data); //创建材料
                     CreateInitialField(data);
@@ -77,7 +77,7 @@ main(int argc, char* argv[]);
                             ResultManipEM* p_resultHandle=resultManip(); //初始化计算结果存储指针
                             // 初始化 p_GFinAccum, p_GRt, p_GFv_T, p_Solu_T, P_GFv_Pre
                             RecordRestrictedEqNo(); // 记录受到约束的自由度
-                            // 瞬态电流场, 没有激励类型,
+                            cons->SetValue(); // 设置边界条件，约束值
                         // 根据设置, 运行不同分析算法, 
                         analyze_EM_Field_Fixed(); // 非线性迭代, 固定时间步长
                             //---------------- 时间循环开始
@@ -127,4 +127,3 @@ main(int argc, char* argv[]);
             AmgxUtil::Finalize(); //amgx
             MPIUtil::Finalize(); //mpi
             CUDAUtil::Finalize(); //gpu
-```

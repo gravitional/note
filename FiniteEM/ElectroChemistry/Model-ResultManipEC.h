@@ -39,12 +39,12 @@ public:
     FieldData &GetSoluData();
 
     //--- 节点和约束的映射
-    void AddNodeID2Constraint(const int JobNO, int theID, double Consvalue);
-    void GetNodeID2Constraint(const int JobNO, int theID, double &Consvalue);
-    void SetNodeID2Constraint(int CopyNO, int FromNO);
+    void AddNodeID2Constraint(const int JobNO, int theID, double Consvalue); //
+    void GetNodeID2Constraint(const int JobNO, int theID, double &Consvalue); 
+    void SetNodeID2Constraint(int CopyNO, int FromNO); // 将CopyNO 设置成 FromNO
 
 protected:
-    map<int, map<int, double>> NodeID2Constraint;
+    map<int, map<int, double>> NodeID2Constraint; // jobID-> nodeID->约束值
 };
 
 // 全局函数
