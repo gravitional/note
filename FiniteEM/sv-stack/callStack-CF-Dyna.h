@@ -37,10 +37,9 @@ main(int argc, char* argv[]);
                         analysis->Read(); // 动态多态, 转向 AnalysisFe::Read()
                             auto reader=controlReader(); // control.json 单例
                             auto job =NewJob(); //任务工厂方法
-                            _jobID=model()->AddComponentGenID(job); //分配 jobID, 即 工况号
+                            _jobID=model()->AddComponentGenID(job); // 产生 _jobID, 即 工况号, AnalysisBase 成员
                             _name=reader->GetCurrentNode(); // 获取有限元分析名称
-                            reader->SetIDByName(_name,_jobID);// 设置 jobID 对应的名称,
-                                                            //存入unordered_map<string, int> _nameMap, 不同 reader 共享
+                            reader->SetIDByName(_name,_jobID);// 设置分析名称(_name) 对应的 ID(jobID), 存入unordered_map<string, int> _nameMap, 不同 reader 共享
                             job->Create(*reader); //virtual, 创建 new job
                                 NonlinearPara.Create(data) //非线性迭代; /Current/Analysis/LoadJobCF.cpp
                                 couple // 耦合

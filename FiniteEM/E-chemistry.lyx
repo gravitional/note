@@ -95,639 +95,71 @@ Yang
 \end_layout
 
 \begin_layout Chapter
-有限元求解
-\end_layout
-
-\begin_layout Section
-泛函简介
-\end_layout
-
-\begin_layout Definition
-\begin_inset Argument 1
-status collapsed
-
-\begin_layout Plain Layout
-泛函数 (Functionals)
-\end_layout
-
-\end_inset
-
- 简而言之，
-\series bold
-泛函是 函数的函数
-\series default
-，即它的输入是函数，输出是实数。而此输出值取决于函数（输入）在一整个路径上的积分，而非像一般函数那样取决于离散的变量。在变分法中，泛函数通常是一个积分，记做
-\begin_inset Formula $I$
-\end_inset
-
-，
-\begin_inset Formula 
-\[
-I=\int_{x_{1}}^{x^{2}}F\dd{x}.
-\]
-
-\end_inset
-
-我们想通过选择被积函数 
-\begin_inset Formula $F$
-\end_inset
-
- 来最大化或最小化泛函数 
-\begin_inset Formula $I$
-\end_inset
-
- 的值，称 
-\begin_inset Formula $F$
-\end_inset
-
- 为拉格朗日函数(Lagrangian)。
-\begin_inset Formula $F$
-\end_inset
-
-可以依赖于
-\begin_inset Formula $y(x)$
-\end_inset
-
- 和它的各阶导数
-\begin_inset Formula $y^{(n)}(x)$
-\end_inset
-
- (以下 
-\begin_inset Formula $y(x)$
-\end_inset
-
-均简写成 
-\begin_inset Formula $y$
-\end_inset
-
-)。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset CommandInset label
-LatexCommand label
-name "def:extreme"
-
-\end_inset
-
-
-\begin_inset Argument 1
-status collapsed
-
-\begin_layout Plain Layout
-泛函数的极值
-\end_layout
-
-\end_inset
-
- 泛函数 
-\begin_inset Formula $I$
-\end_inset
-
- 在区间 
-\begin_inset Formula $[x_{1},x_{2}]$
-\end_inset
-
- 上的值取决于积分路径的选择，即取决于函数
-\begin_inset Formula $y(x)$
-\end_inset
-
- 的形式。我们假设存在一个这样的 
-\begin_inset Formula $y(x)$
-\end_inset
-
-，可以使得泛函数 
-\begin_inset Formula $I$
-\end_inset
-
- 取到极值。而在
-\begin_inset Formula $y(x)$
-\end_inset
-
- 附近的任意路径我们记做
-\begin_inset Formula $\tilde{y}(x)$
-\end_inset
-
-。另外，我们假设 
-\begin_inset Formula $y(x)$
-\end_inset
-
- 两阶可微。通过引入一个微小量 
-\begin_inset Formula $\epsilon\ll1$
-\end_inset
-
- 和一个任意可微函数 
-\begin_inset Formula $\eta(x)$
-\end_inset
-
-，我们可以用 
-\begin_inset Formula $y(x)$
-\end_inset
-
- 表示 
-\begin_inset Formula $\tilde{y}(x)$
-\end_inset
-
-：
-\begin_inset Formula 
-\[
-\tilde{y}(x)=y(x)+\epsilon\eta(x).
-\]
-
-\end_inset
-
-这样做的好处是对于一个给定的 
-\begin_inset Formula $\eta(x)$
-\end_inset
-
-，我们可以通过改变
-\begin_inset Formula $\eta$
-\end_inset
-
- 值来得到无穷多的路径，同时对于任何 
-\begin_inset Formula $\eta(x)$
-\end_inset
-
-，当 
-\begin_inset Formula $\epsilon(x)=0$
-\end_inset
-
- 的时候，
-\begin_inset Formula $\tilde{y}(x)$
-\end_inset
-
- 和 
-\begin_inset Formula $y(x)$
-\end_inset
-
- 重合。图像直观表示如下图：
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/fanhan-1.png
-	lyxscale 50
-	scale 45
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-路径变分示意图
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-由于边界条件的限制，要求 
-\begin_inset Formula $\eta(x_{1})=\eta(x_{2})=0$
-\end_inset
-
-，这样能保证 
-\begin_inset Formula $\tilde{y}(x)$
-\end_inset
-
- 经过两个固定端点。可以认为
-\begin_inset Formula $y(x)$
-\end_inset
-
- 所对应的泛函数
-\begin_inset Formula $I$
-\end_inset
-
- 的值等于泛函数 
-\begin_inset Formula $\tilde{I}=\int_{x_{1}}^{x^{2}}F\left(\tilde{y},\tilde{y}';x\right)\dd{x}$
-\end_inset
-
- 的极值。我们可以进一步用 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 表示 
-\begin_inset Formula $\tilde{I}$
-\end_inset
-
-：
-\begin_inset Formula 
-\[
-\tilde{I}=\int_{x_{1}}^{x^{2}}F(\tilde{y},\tilde{y}';x)\dd{x}=\int_{x_{1}}^{x^{2}}F\left(y+\epsilon\eta,y'+\epsilon\eta';x\right)\dd{x}
-\]
-
-\end_inset
-
-根据上式，如果给定一个特定的 
-\begin_inset Formula $\eta(x)$
-\end_inset
-
-，
-\begin_inset Formula $\tilde{I}$
-\end_inset
-
- 的变化只取决于 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 的变化。所以我们现在可以把 
-\begin_inset Formula $\tilde{I}$
-\end_inset
-
- 看做是 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 的（普通）函数。用泰勒展开公式将 
-\begin_inset Formula $\tilde{I}$
-\end_inset
-
- 在
-\begin_inset Formula $\epsilon=0$
-\end_inset
-
- 处展开得到：
-\begin_inset Formula 
-\[
-\tilde{I}(\epsilon)=\left.\tilde{I}\right|_{\epsilon=0}+\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon+\left.(\frac{\dd[2]{\tilde{I}}}{\dd{\epsilon^{2}}})\right|_{\epsilon=0}\cdot\frac{\epsilon^{2}}{2!}+\cdots=\tilde{I}_{0}+\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
-\]
-
-\end_inset
-
-很明显，当 
-\begin_inset Formula $\epsilon=0$
-\end_inset
-
- 时，
-\begin_inset Formula $\left.\tilde{I}\right|_{\epsilon=0}=I$
-\end_inset
-
-，代入上式可得到：
-\begin_inset Formula 
-\[
-\tilde{I}-I=\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
-\]
-
-\end_inset
-
-这里我们记 
-\begin_inset Formula $\delta I=\tilde{I}_{1}\epsilon=\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon$
-\end_inset
-
-，并称之为一阶变分。同理二阶变分为 
-\begin_inset Formula $\delta I^{2}=\tilde{I}_{2}\epsilon^{2}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Remark
-变分和微分的区别：变分在上图的直观解释是
-\begin_inset Formula $\tilde{y}$
-\end_inset
-
-和 
-\begin_inset Formula $y$
-\end_inset
-
- 在竖直方向上的距离，称之为 
-\begin_inset Formula $\delta y$
-\end_inset
-
-，所以这个差是在同一个 
-\begin_inset Formula $x$
-\end_inset
-
- 上计算的。而微分则是由于 
-\begin_inset Formula $x$
-\end_inset
-
- 的微小变动引起的 
-\begin_inset Formula $y$
-\end_inset
-
- 的变动。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-然后我们可以类比求函数极值时的做法，为了求泛函数 
-\begin_inset Formula $\tilde{I}$
-\end_inset
-
- 的极值，我们令一阶变分 
-\begin_inset Formula $\delta I=0$
-\end_inset
-
-，计算 
-\begin_inset Formula $\delta I$
-\end_inset
-
-，并通过分部积分得到
-\begin_inset Formula 
-\begin{equation}
-\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\delta y\dd{x}+\left.{\color{blue}\frac{\partial F}{\partial y'}\delta y}\right|_{x_{1}}^{x_{2}}\label{eq:EL-equ}
-\end{equation}
-
-\end_inset
-
-令 
-\begin_inset Formula $\delta I=0$
-\end_inset
-
- 就能解得最小化泛函的
-\begin_inset Formula $y(x)$
-\end_inset
-
-。由于 
-\begin_inset Formula $\delta y$
-\end_inset
-
- 是任意的，所以使上式等于零必然有
-\begin_inset Formula 
-\[
-\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}=0,\quad x_{1}\le x\le x_{2}
-\]
-
-\end_inset
-
-此即欧拉–拉格朗日方程（Euler–Lagrange equation）。而
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EL-equ"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中第二项等于零则作为边界条件，边界条件还可以细分讨论：
-\end_layout
-
-\begin_layout Enumerate
-如果在边界 
-\begin_inset Formula $x_{1}$
-\end_inset
-
- 或 
-\begin_inset Formula $x_{2}$
-\end_inset
-
- 处 
-\begin_inset Formula ${\color{blue}\frac{\partial F}{\partial y'}}$
-\end_inset
-
- 等于零，那么我们称在 
-\begin_inset Formula $x_{1}$
-\end_inset
-
- 或 
-\begin_inset Formula $x_{2}$
-\end_inset
-
- 处 满足自然边界条件（
-\series bold
-Natural Boundary Condition
-\series default
-）。
-\end_layout
-
-\begin_layout Enumerate
-如果在边界 
-\begin_inset Formula $x_{1}$
-\end_inset
-
- 或 
-\begin_inset Formula $x_{2}$
-\end_inset
-
- 处 
-\begin_inset Formula ${\color{blue}\delta y}$
-\end_inset
-
- 等于零，我们就称 在 
-\begin_inset Formula $x_{1}$
-\end_inset
-
- 或 
-\begin_inset Formula $x_{2}$
-\end_inset
-
- 处 满足必要边界条件（
-\series bold
-Essential Boundary condition
-\series default
-）。
-\begin_inset Formula $\delta y=0$
-\end_inset
-
- 的具体含义是：就是如果
-\begin_inset Formula $y$
-\end_inset
-
-在某一点处的变分为零，说明它在这点的值是确定不变的。因此如果
-\begin_inset Formula $y$
-\end_inset
-
- 在边界上是确定的值，我们称这个是必要边界条件。
-\end_layout
-
-\begin_layout Enumerate
-此外，有限元中还常用到第三类边界条件，也称为混合边界条件，其形式为
-\begin_inset Formula $y'+\gamma(x)y=q(x)$
-\end_inset
-
-，它将贡献到边界上的方程中。
-\end_layout
-
-\begin_layout Section
-FEM求解流程
-\end_layout
-
-\begin_layout Standard
-有限元求解边界问题有两种常用的经典方法：一是里兹（Ritz）变分方法，另一种是伽辽金（Galerkin）方法，它们构成了现代有限元方法的基础。无论使用哪种方法，
-对于所考虑的边值问题最终都会得到离散的矩阵方程，方程的自由度是网格节点上场量的值（标量或矢量）。
-\end_layout
-
-\begin_layout Standard
-以下列直流场边值问题为例：
-\begin_inset Formula 
-\begin{align}
--\nabla\cdot\left(\sigma\nabla\phi\right)+\beta\phi & =f\label{eq:bq1}\\
-\phi & =p\quad\text{on}\quad\Gamma_{1}\nonumber \\
-\sigma\frac{\partial\phi}{\partial n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}\nonumber 
-\end{align}
-
-\end_inset
-
-在里兹方法中，对应的泛函
-\begin_inset Formula $\mathcal{F}(\phi)$
-\end_inset
-
-可以表示成每个单元的贡献的线性累加
-\begin_inset Formula 
-\begin{equation}
-\mathcal{F}(\phi)=\sum_{e}\mathcal{F}^{e}\left(\phi^{e}\right)+\sum_{s}\mathcal{F}^{s}\left(\phi^{s}\right)\label{eq:fn1}
-\end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula $\sum_{e}$
-\end_inset
-
-表示对体单元求和，
-\begin_inset Formula $\sum_{s}$
-\end_inset
-
-表示对表面单元求和。在每个单元上它们分别表示为
-\begin_inset Formula 
-\begin{align}
-\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[(\nabla\phi^{e})\cdot\sigma(\nabla\phi^{e})+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\label{eq:fn2}\\
-\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}\nonumber 
-\end{align}
-
-\end_inset
-
-令
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fn1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的泛函取极值
-\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
-\end_inset
-
-即给出
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bq1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中电势的微分方程和边界条件。
-\end_layout
-
-\begin_layout Standard
-在伽辽金方法中，边值问题对应的加权残差和也可写成每个单元的贡献的线性累加
-\begin_inset Formula 
-\begin{equation}
-R=\sum_{e}R^{e}\left[N_{i}^{e}\right]\label{eq:res1}
-\end{equation}
-
-\end_inset
-
-每个单元上的残差写作
-\begin_inset Formula 
-\begin{align}
-R^{e}\left[N_{i}^{e}\right] & =\int_{\Omega^{e}}N_{i}^{e}\left[\nabla\cdot(-\sigma\nabla\phi)+\beta\phi-f\right]\dd{\Omega}\nonumber \\
- & =-\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf j\dd{\Omega}+\int_{\Gamma^{e}}N_{i}^{e}\,\sbf n\cdot\sbf j\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\left(\beta\phi-f\right)\dd{\Omega}\label{eq:res2}
-\end{align}
-
-\end_inset
-
-迫使
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:res2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的加权残差和
-\begin_inset Formula $R$
-\end_inset
-
-为零便得到
-\begin_inset Formula $\phi$
-\end_inset
-
-必须满足的方程和边界条件
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bq1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-为了方便在计算机求解边值问题，还需要对问题中的待求场
-\begin_inset Formula $\phi$
-\end_inset
-
-进行插值
-\begin_inset Formula 
-\begin{equation}
-\phi=\sum_{i}N_{i}^{e}\phi_{i}\label{eq:fn3}
-\end{equation}
-
-\end_inset
-
-求和中
-\begin_inset Formula $i$
-\end_inset
-
-表示网格节点，
-\begin_inset Formula $\phi_{i}$
-\end_inset
-
-表示网格节点上的场值，并作为要求解的自由度进入最终的矩阵方程。
-\begin_inset Formula $N_{i}^{e}$
-\end_inset
-
-被称作形函数，它用来模拟真实场量在微小范围（单元）内的变化趋势。有限元中常使用分片连续的多项式形函数，它紧支撑（compact support
- ）于节点周围的单元，即节点上的形函数仅仅在周围的单元内不为零。这反映了真实物理场的定域性质（某一点的场值可以完全由它邻域内的场决定），也因此最终得到的系数矩阵
-往往是稀疏的带状矩阵。
-\end_layout
-
-\begin_layout Chapter
 方程梳理
+\end_layout
+
+\begin_layout Section
+化学反应
+\end_layout
+
+\begin_layout Itemize
+cathode：
+\series bold
+阴极
+\series default
+；
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在电解池中发生还原反应（reduction）的电极；
+\end_layout
+
+\begin_layout Itemize
+得到电子：电流方向为阴极
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+溶液。
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+anode：
+\series bold
+阳极
+\series default
+；
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在电解池中发生氧化反应（oxidation）的电极；
+\end_layout
+
+\begin_layout Itemize
+失去电子；电流方向为溶液
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+阳极。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+在原电池中，上述描述刚好相反。
+\end_layout
+
+\begin_layout Itemize
+oxygen evolution：氧气析出
+\end_layout
+
+\begin_layout Itemize
+copper redution：铜还原。
+\end_layout
+
+\begin_layout Itemize
+electrowinning：电解冶金法，电积金属法。
 \end_layout
 
 \begin_layout Section
@@ -3068,6 +2500,638 @@ noprefix "false"
 
 \begin_layout Chapter
 动态电流场
+\end_layout
+
+\begin_layout Chapter
+有限元求解
+\end_layout
+
+\begin_layout Section
+泛函简介
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status collapsed
+
+\begin_layout Plain Layout
+泛函数 (Functionals)
+\end_layout
+
+\end_inset
+
+ 简而言之，
+\series bold
+泛函是 函数的函数
+\series default
+，即它的输入是函数，输出是实数。而此输出值取决于函数（输入）在一整个路径上的积分，而非像一般函数那样取决于离散的变量。在变分法中，泛函数通常是一个积分，记做
+\begin_inset Formula $I$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+I=\int_{x_{1}}^{x^{2}}F\dd{x}.
+\]
+
+\end_inset
+
+我们想通过选择被积函数 
+\begin_inset Formula $F$
+\end_inset
+
+ 来最大化或最小化泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 的值，称 
+\begin_inset Formula $F$
+\end_inset
+
+ 为拉格朗日函数(Lagrangian)。
+\begin_inset Formula $F$
+\end_inset
+
+可以依赖于
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 和它的各阶导数
+\begin_inset Formula $y^{(n)}(x)$
+\end_inset
+
+ (以下 
+\begin_inset Formula $y(x)$
+\end_inset
+
+均简写成 
+\begin_inset Formula $y$
+\end_inset
+
+)。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:extreme"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status collapsed
+
+\begin_layout Plain Layout
+泛函数的极值
+\end_layout
+
+\end_inset
+
+ 泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 在区间 
+\begin_inset Formula $[x_{1},x_{2}]$
+\end_inset
+
+ 上的值取决于积分路径的选择，即取决于函数
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 的形式。我们假设存在一个这样的 
+\begin_inset Formula $y(x)$
+\end_inset
+
+，可以使得泛函数 
+\begin_inset Formula $I$
+\end_inset
+
+ 取到极值。而在
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 附近的任意路径我们记做
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+。另外，我们假设 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 两阶可微。通过引入一个微小量 
+\begin_inset Formula $\epsilon\ll1$
+\end_inset
+
+ 和一个任意可微函数 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，我们可以用 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{y}(x)=y(x)+\epsilon\eta(x).
+\]
+
+\end_inset
+
+这样做的好处是对于一个给定的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，我们可以通过改变
+\begin_inset Formula $\eta$
+\end_inset
+
+ 值来得到无穷多的路径，同时对于任何 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，当 
+\begin_inset Formula $\epsilon(x)=0$
+\end_inset
+
+ 的时候，
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 和 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 重合。图像直观表示如下图：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fanhan-1.png
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+路径变分示意图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于边界条件的限制，要求 
+\begin_inset Formula $\eta(x_{1})=\eta(x_{2})=0$
+\end_inset
+
+，这样能保证 
+\begin_inset Formula $\tilde{y}(x)$
+\end_inset
+
+ 经过两个固定端点。可以认为
+\begin_inset Formula $y(x)$
+\end_inset
+
+ 所对应的泛函数
+\begin_inset Formula $I$
+\end_inset
+
+ 的值等于泛函数 
+\begin_inset Formula $\tilde{I}=\int_{x_{1}}^{x^{2}}F\left(\tilde{y},\tilde{y}';x\right)\dd{x}$
+\end_inset
+
+ 的极值。我们可以进一步用 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{I}=\int_{x_{1}}^{x^{2}}F(\tilde{y},\tilde{y}';x)\dd{x}=\int_{x_{1}}^{x^{2}}F\left(y+\epsilon\eta,y'+\epsilon\eta';x\right)\dd{x}
+\]
+
+\end_inset
+
+根据上式，如果给定一个特定的 
+\begin_inset Formula $\eta(x)$
+\end_inset
+
+，
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 的变化只取决于 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的变化。所以我们现在可以把 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 看做是 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的（普通）函数。用泰勒展开公式将 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 在
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ 处展开得到：
+\begin_inset Formula 
+\[
+\tilde{I}(\epsilon)=\left.\tilde{I}\right|_{\epsilon=0}+\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon+\left.(\frac{\dd[2]{\tilde{I}}}{\dd{\epsilon^{2}}})\right|_{\epsilon=0}\cdot\frac{\epsilon^{2}}{2!}+\cdots=\tilde{I}_{0}+\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
+\]
+
+\end_inset
+
+很明显，当 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ 时，
+\begin_inset Formula $\left.\tilde{I}\right|_{\epsilon=0}=I$
+\end_inset
+
+，代入上式可得到：
+\begin_inset Formula 
+\[
+\tilde{I}-I=\tilde{I}_{1}\epsilon+\tilde{I}_{2}\epsilon^{2}+\cdots
+\]
+
+\end_inset
+
+这里我们记 
+\begin_inset Formula $\delta I=\tilde{I}_{1}\epsilon=\left.(\frac{\dd{\tilde{I}}}{\dd{\epsilon}})\right|_{\epsilon=0}\cdot\epsilon$
+\end_inset
+
+，并称之为一阶变分。同理二阶变分为 
+\begin_inset Formula $\delta I^{2}=\tilde{I}_{2}\epsilon^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+变分和微分的区别：变分在上图的直观解释是
+\begin_inset Formula $\tilde{y}$
+\end_inset
+
+和 
+\begin_inset Formula $y$
+\end_inset
+
+ 在竖直方向上的距离，称之为 
+\begin_inset Formula $\delta y$
+\end_inset
+
+，所以这个差是在同一个 
+\begin_inset Formula $x$
+\end_inset
+
+ 上计算的。而微分则是由于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的微小变动引起的 
+\begin_inset Formula $y$
+\end_inset
+
+ 的变动。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+然后我们可以类比求函数极值时的做法，为了求泛函数 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+ 的极值，我们令一阶变分 
+\begin_inset Formula $\delta I=0$
+\end_inset
+
+，计算 
+\begin_inset Formula $\delta I$
+\end_inset
+
+，并通过分部积分得到
+\begin_inset Formula 
+\begin{equation}
+\delta I=\int_{x_{1}}^{x^{2}}\left(\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}\right)\delta y\dd{x}+\left.{\color{blue}\frac{\partial F}{\partial y'}\delta y}\right|_{x_{1}}^{x_{2}}\label{eq:EL-equ}
+\end{equation}
+
+\end_inset
+
+令 
+\begin_inset Formula $\delta I=0$
+\end_inset
+
+ 就能解得最小化泛函的
+\begin_inset Formula $y(x)$
+\end_inset
+
+。由于 
+\begin_inset Formula $\delta y$
+\end_inset
+
+ 是任意的，所以使上式等于零必然有
+\begin_inset Formula 
+\[
+\frac{\partial F}{\partial y}-\frac{\dd}{\dd{x}}\frac{\partial F}{\partial y'}=0,\quad x_{1}\le x\le x_{2}
+\]
+
+\end_inset
+
+此即欧拉–拉格朗日方程（Euler–Lagrange equation）。而
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EL-equ"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中第二项等于零则作为边界条件，边界条件还可以细分讨论：
+\end_layout
+
+\begin_layout Enumerate
+如果在边界 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 
+\begin_inset Formula ${\color{blue}\frac{\partial F}{\partial y'}}$
+\end_inset
+
+ 等于零，那么我们称在 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 满足自然边界条件（
+\series bold
+Natural Boundary Condition
+\series default
+）。
+\end_layout
+
+\begin_layout Enumerate
+如果在边界 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 
+\begin_inset Formula ${\color{blue}\delta y}$
+\end_inset
+
+ 等于零，我们就称 在 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ 处 满足必要边界条件（
+\series bold
+Essential Boundary condition
+\series default
+）。
+\begin_inset Formula $\delta y=0$
+\end_inset
+
+ 的具体含义是：就是如果
+\begin_inset Formula $y$
+\end_inset
+
+在某一点处的变分为零，说明它在这点的值是确定不变的。因此如果
+\begin_inset Formula $y$
+\end_inset
+
+ 在边界上是确定的值，我们称这个是必要边界条件。
+\end_layout
+
+\begin_layout Enumerate
+此外，有限元中还常用到第三类边界条件，也称为混合边界条件，其形式为
+\begin_inset Formula $y'+\gamma(x)y=q(x)$
+\end_inset
+
+，它将贡献到边界上的方程中。
+\end_layout
+
+\begin_layout Section
+FEM求解流程
+\end_layout
+
+\begin_layout Standard
+有限元求解边界问题有两种常用的经典方法：一是里兹（Ritz）变分方法，另一种是伽辽金（Galerkin）方法，它们构成了现代有限元方法的基础。无论使用哪种方法，
+对于所考虑的边值问题最终都会得到离散的矩阵方程，方程的自由度是网格节点上场量的值（标量或矢量）。
+\end_layout
+
+\begin_layout Standard
+以下列直流场边值问题为例：
+\begin_inset Formula 
+\begin{align}
+-\nabla\cdot\left(\sigma\nabla\phi\right)+\beta\phi & =f\label{eq:bq1}\\
+\phi & =p\quad\text{on}\quad\Gamma_{1}\nonumber \\
+\sigma\frac{\partial\phi}{\partial n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}\nonumber 
+\end{align}
+
+\end_inset
+
+在里兹方法中，对应的泛函
+\begin_inset Formula $\mathcal{F}(\phi)$
+\end_inset
+
+可以表示成每个单元的贡献的线性累加
+\begin_inset Formula 
+\begin{equation}
+\mathcal{F}(\phi)=\sum_{e}\mathcal{F}^{e}\left(\phi^{e}\right)+\sum_{s}\mathcal{F}^{s}\left(\phi^{s}\right)\label{eq:fn1}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sum_{e}$
+\end_inset
+
+表示对体单元求和，
+\begin_inset Formula $\sum_{s}$
+\end_inset
+
+表示对表面单元求和。在每个单元上它们分别表示为
+\begin_inset Formula 
+\begin{align}
+\mathcal{F}^{e}\left(\phi^{e}\right) & =\frac{1}{2}\int_{\Omega^{e}}\left[(\nabla\phi^{e})\cdot\sigma(\nabla\phi^{e})+\beta\phi^{e;2}\right]\dd{\Omega}-\int_{\Omega^{e}}f\phi^{e}\dd{\Omega}\label{eq:fn2}\\
+\mathcal{F}^{s}\left(\phi^{s}\right) & =\int_{\Gamma^{e}}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}\nonumber 
+\end{align}
+
+\end_inset
+
+令
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fn1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的泛函取极值
+\begin_inset Formula $\delta\mathcal{F}(\phi)=0$
+\end_inset
+
+即给出
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中电势的微分方程和边界条件。
+\end_layout
+
+\begin_layout Standard
+在伽辽金方法中，边值问题对应的加权残差和也可写成每个单元的贡献的线性累加
+\begin_inset Formula 
+\begin{equation}
+R=\sum_{e}R^{e}\left[N_{i}^{e}\right]\label{eq:res1}
+\end{equation}
+
+\end_inset
+
+每个单元上的残差写作
+\begin_inset Formula 
+\begin{align}
+R^{e}\left[N_{i}^{e}\right] & =\int_{\Omega^{e}}N_{i}^{e}\left[\nabla\cdot(-\sigma\nabla\phi)+\beta\phi-f\right]\dd{\Omega}\nonumber \\
+ & =-\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf j\dd{\Omega}+\int_{\Gamma^{e}}N_{i}^{e}\,\sbf n\cdot\sbf j\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\left(\beta\phi-f\right)\dd{\Omega}\label{eq:res2}
+\end{align}
+
+\end_inset
+
+迫使
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:res2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的加权残差和
+\begin_inset Formula $R$
+\end_inset
+
+为零便得到
+\begin_inset Formula $\phi$
+\end_inset
+
+必须满足的方程和边界条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+为了方便在计算机求解边值问题，还需要对问题中的待求场
+\begin_inset Formula $\phi$
+\end_inset
+
+进行插值
+\begin_inset Formula 
+\begin{equation}
+\phi=\sum_{i}N_{i}^{e}\phi_{i}\label{eq:fn3}
+\end{equation}
+
+\end_inset
+
+求和中
+\begin_inset Formula $i$
+\end_inset
+
+表示网格节点，
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+表示网格节点上的场值，并作为要求解的自由度进入最终的矩阵方程。
+\begin_inset Formula $N_{i}^{e}$
+\end_inset
+
+被称作形函数，它用来模拟真实场量在微小范围（单元）内的变化趋势。有限元中常使用分片连续的多项式形函数，它紧支撑（compact support
+ ）于节点周围的单元，即节点上的形函数仅仅在周围的单元内不为零。这反映了真实物理场的定域性质（某一点的场值可以完全由它邻域内的场决定），也因此最终得到的系数矩阵
+往往是稀疏的带状矩阵。
 \end_layout
 
 \begin_layout Chapter
