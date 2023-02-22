@@ -69,6 +69,8 @@ main(int argc, char* argv[]);
             //迭代每个分析
             while(true){
                 auto analysis = anlsCtrl()->GetNextAnalysis();
+                    // /Common/Analysis/AnalysisControl.cpp:80; 设置新的变量输出, 获取分析 输出的场范围
+                    std::vector<std::string> fields=_curAnalysis->GetOutFields();
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
                     Analyze(); // 虚函数, /Current/Analysis/AnalysisDynaCF.cpp

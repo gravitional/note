@@ -40,7 +40,7 @@ public:
 
     //--- 节点和约束的映射
     void AddNodeID2Constraint(const int JobNO, int theID, double Consvalue); //
-    void GetNodeID2Constraint(const int JobNO, int theID, double &Consvalue); 
+    void GetNodeID2Constraint(const int JobNO, int theID, double &Consvalue);
     void SetNodeID2Constraint(int CopyNO, int FromNO); // 将CopyNO 设置成 FromNO
 
 protected:
