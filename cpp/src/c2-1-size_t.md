@@ -9,15 +9,15 @@
 
 + Header
 
-`<cstddef>`
-`<cstdio>`
-`<cstdlib>`
-`<cstring>`
-`<ctime>`
-`<cuchar>` (C++17 起)
-`<cwchar>`
-
 ```cpp
+<cstddef>
+<cstdio>
+<cstdlib>
+<cstring>
+<ctime>
+<cuchar> (C++17 起)
+<cwchar>
+
 typedef /* 由实现定义 */ size_t;
 ```
 
@@ -67,9 +67,9 @@ int main()
     for (std::size_t i = a.size(); i--;)
         std::cout << a[i] << ' ';
 
-    // 注意以下自减循环的简单实现：
+    // 注意以下自减循环的简单实现:
     //  for (std::size_t i = a.size() - 1; i >= 0; --i) ...
-    // 是无限循环，因为无符号数不会是负数
+    // 是无限循环, 因为无符号数不会是负数
 }
 ```
 

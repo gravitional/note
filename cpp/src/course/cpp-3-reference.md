@@ -22,6 +22,7 @@
 
 例3-11 输入两个整数并交换(值传递)
 
+```cpp
 #include<iostream>
 using namespace std;
 void swap(int a, int b) {
@@ -41,13 +42,13 @@ int main() {
 运行结果:
 x = 5      y = 10
 x = 5      y = 10
+```
 
 ## 例3-11 参数传递示意图
 
-![]()
-
 例3-12 输入两个整数并交换(引用传递)
 
+```cpp
 #include<iostream>
 using namespace std;
 
@@ -64,5 +65,4 @@ int main() {
     cout<<"x = "<<x<<"  y = "<<y<< endl;
     return 0;
 }
-
-例3-12参数传递示意图
+```

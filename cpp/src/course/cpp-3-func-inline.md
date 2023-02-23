@@ -6,14 +6,13 @@
 
 注意:
 
-n  内联函数体内不能有循环语句和switch语句;
-
-n  内联函数的定义必须出现在内联函数第一次被调用之前;
-
-n  对内联函数不能进行异常接口声明.
+内联函数体内不能有循环语句和switch语句;
+内联函数的定义必须出现在内联函数第一次被调用之前;
+对内联函数不能进行异常接口声明.
 
 例3-14  内联函数应用举例
 
+```cpp
 #include <iostream>
 
 using namespace std;
@@ -37,6 +36,7 @@ int main() {
           return 0;
 
 }
+```
 
 ## constexpr函数
 
@@ -47,6 +47,7 @@ constexpr修饰的函数在其所有参数都是constexpr时, 一定返回conste
 函数体中必须有且仅有一条return语句.
 constexpr函数举例
 
+```cpp
 constexpr int get_size() { return 20; }
-
 constexpr int foo = get_size();  //正确: foo是一个常量表达式
+```
