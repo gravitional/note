@@ -267,8 +267,8 @@ slmgr.vbs -xpr
 netsh wlan show profiles
 ```
 
-在给出的曾经使用过的 `WiFi连接` 中选择你想查询的连接名称,
-然后输入套入如下命令中查询密码:
+在给出的曾经使用过的 `WiFi连接` 中选择你想查询的 `连接名称`,
+然后输入如下命令中查询密码:
 
 ```powershell
 netsh wlan show profile name="连接名" key=clear
@@ -285,12 +285,16 @@ Note: The caveat re legacy console applications mentioned above equally applies 
 If running legacy console applications is important to you, see eryksun's recommendations in the comments.
 
 For PowerShell (both editions), add the following line to your $PROFILE (current user only)
-or $PROFILE.AllUsersCurrentHost (all users) file, which is the equivalent of chcp 65001, supplemented with setting preference variable $OutputEncoding to instruct PowerShell to send data to external programs via the pipeline in UTF-8:
+or $PROFILE.AllUsersCurrentHost (all users) file,
+which is the equivalent of chcp 65001,
+supplemented with setting preference variable `$OutputEncoding`
+to instruct PowerShell to send data to external programs via the pipeline in UTF-8:
 
 Note that running chcp 65001 from inside a PowerShell session is not effective,
 because .NET caches the console's output encoding on startup
 and is unaware of later changes made with chcp;
-additionally, as stated, Windows PowerShell requires $OutputEncoding to be set - see this answer for details.
+additionally, as stated, Windows PowerShell requires `$OutputEncoding`
+to be set - see this answer for details.
 
 ```ps1
 $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding

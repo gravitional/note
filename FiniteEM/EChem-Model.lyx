@@ -1,0 +1,614 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+电化学二维模型
+\end_layout
+
+\begin_layout Author
+Yang
+\end_layout
+
+\begin_layout Chapter
+二维模型
+\end_layout
+
+\begin_layout Section
+三次电流分布, Tertiary Current Distribution，Nernst–Planck
+\end_layout
+
+\begin_layout Standard
+以下公式中的符号，与 Comsol 案例图形界面中保持一致。按照 Comsol 界面的输入，整理了模型信息。
+\end_layout
+
+\begin_layout Subsection
+整体设置
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\partial c_{i}}{\partial t}+\nabla\cdot\sbf J_{i}+\sbf u_{i}\cdot\nabla C_{i}=R_{i}\\
+ & \nabla\cdot\sbf i_{l}=F\sum_{i}z_{i}R_{i}+Q_{l}\\
+ & \nabla\cdot\sbf i_{s}=-F\sum_{i}z_{i}R_{i}+Q_{s}\\
+ & \sbf J_{i}=-D_{i}\nabla c_{i}-z_{i}\,u_{m,i}\,F\,c_{i}\nabla\phi_{l}\\
+ & \sbf i_{l}=-\sigma_{l}\nabla\phi_{l}\\
+ & \sbf i_{s}=-\sigma_{s}\nabla\phi_{s}\\
+ & \phi_{l}={\color{blue}\mathrm{phil}2},\quad\phi_{s}={\color{blue}\text{phis2}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+二维模型的厚度设置为
+\begin_inset Formula $1\mathrm{m}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+下标中的
+\begin_inset Formula $i$
+\end_inset
+
+表示离子（Ion）的种类；下标中的 
+\begin_inset Formula $l$
+\end_inset
+
+ 表示电解质溶液（liquid），
+\begin_inset Formula $s$
+\end_inset
+
+ 表示固体电极（solid）。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c_{i}$
+\end_inset
+
+表示浓度场，
+\begin_inset Formula $\sbf J_{i}$
+\end_inset
+
+表示对应的浓度流；
+\begin_inset Formula $u_{i}$
+\end_inset
+
+对应的表示流速场；
+\begin_inset Formula $R_{i}$
+\end_inset
+
+表示对应的源项，通常设为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf i_{l}$
+\end_inset
+
+ 表示溶液电流密度，
+\begin_inset Formula $Q_{l}$
+\end_inset
+
+是对应的源项；
+\begin_inset Formula $\sbf i_{s}$
+\end_inset
+
+表示电极电流密度，
+\begin_inset Formula $Q_{s}$
+\end_inset
+
+是对应的源项；
+\begin_inset Formula $Q_{l}$
+\end_inset
+
+和
+\begin_inset Formula $Q_{s}$
+\end_inset
+
+通常为
+\begin_inset Formula $0$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_{i}$
+\end_inset
+
+为离子
+\begin_inset Formula $i$
+\end_inset
+
+的电荷数（Charge number，
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+就是
+\begin_inset Formula $2$
+\end_inset
+
+）；
+\begin_inset Formula $u_{m,i}$
+\end_inset
+
+是迁移率（Mobility），有 Nernst–Einstein 方程 
+\begin_inset Formula $u_{m,i}=D_{i}/(RT)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R$
+\end_inset
+
+为通用气体常数，
+\begin_inset Formula $8.314472\,\mathrm{J/(mol.K)}$
+\end_inset
+
+；
+\begin_inset Formula $T$
+\end_inset
+
+为温度，单位
+\begin_inset Formula $K$
+\end_inset
+
+；
+\begin_inset Formula $F$
+\end_inset
+
+是法拉第常数，
+\begin_inset Formula $96485\,\mathrm{C/mol}$
+\end_inset
+
+，表示每摩尔电子携带的电荷。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sigma_{l}$
+\end_inset
+
+，
+\begin_inset Formula $\sigma_{s}$
+\end_inset
+
+分别表示溶液和电极的电导率。
+\end_layout
+
+\begin_layout Itemize
+电解液电荷守恒模型（Electrolyte Charge Conservation）：此模型设置为 支撑电解质（Supporting electrolyte），
+它描述下述情况，电荷的迁移主要由 常数浓度的离子负责，在这个模型中就是 
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+ 离子。
+\end_layout
+
+\begin_layout Itemize
+物理场参比电位（Physics vs.
+ Materials Reference Electrode Potential），设置为
+\begin_inset Formula $0\mathrm{V}$
+\end_inset
+
+。在不同的溶液，例如水溶液，氢溶液，银溶液中进行电化学反应时，反应电位不一样，此参数度量溶液环境对所考察反应的影响。当以氢溶液为标准时，此参数就设置为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+此模型中的待求解变量（Dependent Variables）是 
+\begin_inset Formula $\phi_{l}$
+\end_inset
+
+，
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+，
+\begin_inset Formula $c_{1}$
+\end_inset
+
+；上面的 
+\begin_inset Formula ${\color{blue}\mathrm{phil}2}$
+\end_inset
+
+ 和 
+\begin_inset Formula ${\color{blue}\text{phis2}}$
+\end_inset
+
+ 是 Comsol 中 设置的后续引用名称，
+\begin_inset Formula $c_{1}$
+\end_inset
+
+就是 
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+ 的浓度。
+\begin_inset CommandInset label
+LatexCommand label
+name "ref:my1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+电解质1，Electrolyte1，Cu2+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+ & \frac{\partial c_{i}}{\partial t}+\nabla\cdot\sbf J_{i}+\sbf u_{i}\cdot\nabla C_{i}=R_{i}\nonumber \\
+ & \nabla\cdot\sbf i_{l}=F\sum_{i}z_{i}R_{i}+Q_{l}\nonumber \\
+ & \sbf J_{i}=-D_{i}\nabla c_{i}-z_{i}\,{\color{blue}u_{m,i}}\,F\,c_{i}\nabla\phi_{l}\label{eq:my10}\\
+ & \sbf i_{l}=-\sigma_{l}\nabla\phi_{l}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+温度：用户输入 
+\begin_inset Formula $T=300\mathrm{K}$
+\end_inset
+
+，参见
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+对流项（Convection）的流速场：全局坐标系，用户自定义的全空间常数：
+\begin_inset Formula $u_{x},u_{y}$
+\end_inset
+
+，并且在初步测试中都取
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+扩散项（Diffusion）设置扩散常数：
+\begin_inset Formula $c_{1}$
+\end_inset
+
+场对应
+\begin_inset Formula $D_{c_{1}}=2\times10^{-9}[\mathrm{m^{2}/s}]$
+\end_inset
+
+，各向同性常数（Isotropic）。
+\end_layout
+
+\begin_layout Itemize
+电场中的迁移项（Migration）：迁移率（Mobility）由 Nernst–Einstein 关系给出 
+\begin_inset Formula ${\color{blue}u_{m,i}}=D_{i}/(RT)$
+\end_inset
+
+，参见
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+；以及电荷数 
+\begin_inset Formula $z_{c1}=2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+电解液导电率（Electrolyte Current Conduction）：用户自定义 
+\begin_inset Formula $\sigma_{l}=2.5\,\mathrm{S/m}$
+\end_inset
+
+，各向同性常数（Isotropic）。
+\end_layout
+
+\begin_layout Subsection
+无通量边界条件，No Flux
+\end_layout
+
+\begin_layout Standard
+在溶液容器的边界（包括电极），设置 无通量边界
+\begin_inset Formula 
+\begin{equation}
+-\sbf n\cdot\sbf J_{i}=0,\label{eq:my13}
+\end{equation}
+
+\end_inset
+
+浓度场的齐次第二类边界条件，这里的
+\begin_inset Formula $\sbf n$
+\end_inset
+
+ 从边界指向溶液内部。
+\end_layout
+
+\begin_layout Subsection
+绝缘边界条件，Insulation
+\end_layout
+
+\begin_layout Standard
+除了电极的其他容器边界，设置了绝缘边界
+\begin_inset Formula 
+\[
+-\sbf n\cdot\sbf i_{l}=0,\quad-\sbf n\cdot\sbf i_{s}=0.
+\]
+
+\end_inset
+
+电势场的齐次第二类边界条件。
+\end_layout
+
+\begin_layout Subsection
+初始值，Initial Values。
+\end_layout
+
+\begin_layout Standard
+设置自由度的初始值（即Dependent Variables，见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ref:my1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+浓度场
+\begin_inset Formula $c_{1}$
+\end_inset
+
+初始值
+\begin_inset Formula $100\,\mathrm{mol/m^{3}}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+电解液电势（Electrolyte）：
+\begin_inset Formula $\text{phil2}=4\mathrm{V}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+电极电势（Electric potential）：
+\begin_inset Formula $\text{phis2}=10\mathrm{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+阳极表面，Electrode Surface；氧化反应，氧气析出，
+\end_layout
+
+\begin_layout Standard
+方程：
+\begin_inset Formula 
+\begin{align*}
+ & \sbf n\cdot\sbf i_{l}=i_{\text{total}}\\
+ & i_{\text{total}}=\sum_{m}i_{\text{loc},m}+i_{\text{dl}}\\
+ & -\sbf n\cdot\sbf J_{i}=R_{i,\text{tot}},\quad R_{i,\text{tot}}=\sum_{m}R_{i,m}+R_{\text{dl},i}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $i_{\text{dl}}$
+\end_inset
+
+和 
+\begin_inset Formula $R_{\text{dl},i}$
+\end_inset
+
+ 是来自 Porous Matrix Double Layer Capacitance（多孔电极）的贡献，暂不考虑。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $i_{\text{loc},m}$
+\end_inset
+
+是电极–溶液界面上的局域电流密度，
+\begin_inset Formula $m$
+\end_inset
+
+标示化学反应
+\begin_inset Formula $m$
+\end_inset
+
+的贡献，下面只有氧气析出一种贡献。
+\end_layout
+
+\begin_layout Itemize
+电极相电势边界条件（Electrode Phase Potential Condition）：外部电势（External electric potential）
+\begin_inset Formula $\phi_{s,\text{ext}}=5\,\mathrm{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+氧气析出，Electrode Reaction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \eta=E_{\text{ct}}-E_{\text{eq}},\quad E_{\text{ct}}=\phi_{s,\text{ext}}-\phi_{l},\\
+ & R_{i}=\frac{-v_{i}\,i_{\text{loc}}}{n\,F}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+模型输入：温度
+\begin_inset Formula $T=300\,\mathrm{K}$
+\end_inset
+
+，用户自定义。
+\end_layout
+
+\begin_layout Itemize
+化学计量系数（Stoichiometric Coefficients）：参与反应的电子数 
+\begin_inset Formula $n=2$
+\end_inset
+
+；化学计量系数 
+\begin_inset Formula $v_{c1}=0$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\sum_{\text{ox}}\abs{v_{\text{ox}}}\,\mathrm{Ox}+n\,e^{-}\Leftrightarrow\sum_{\text{red}}v_{\text{red}}\,\mathrm{Red}
+\]
+
+\end_inset
+
+其中氧化（Oxidation）系数
+\begin_inset Formula $v_{\text{ox}}<0$
+\end_inset
+
+，还原（Reduction）系数
+\begin_inset Formula $v_{\text{red}}>0$
+\end_inset
+
+。
+\end_layout
+
+\end_body
+\end_document

@@ -363,32 +363,36 @@ REQUIRED则cmake会继续执行.  COMPONENTS, components:可选字段, 表示查
 
 ### find_package的Config模式
 
->find_package(<PackageName> [version] [EXACT] [QUIET] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE]
->[NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]]
->[PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH]
->[NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH]
->[NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] #
->Deprecated; does nothing. [REQUIRED] [[COMPONENTS] [components...]]
->[NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH |
->ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])
+```cmake
+find_package(<PackageName> [version] [EXACT] [QUIET] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE]
+[NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]]
+[PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH]
+[NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH]
+[NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] #
+Deprecated; does nothing. [REQUIRED] [[COMPONENTS] [components...]]
+[NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH |
+ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])
+```
 
 Config模式下的查找顺序, 比Module模式下要多得多, 新版本的CMake比老版本的有更多的查找顺序
 (新增的在最优先的查找顺序). Config模式下需要查找到名为
 lower-case-package-name-config.cmake或PackageNameConfig.cmake文件.
 
-- PackageName_ROOT的cmake变量或环境变量. CMake3.12新增. 设定CMP0074 Policy来关闭. 如果定义
-  了PackageName_DIR cmake变量, 那么PackageName_ROOT 不起作用.
-- cmake特定的缓存变量 CMAKE_PREFIX_PATH CMAKE_FRAMEWORK_PATH CMAKE_APPBUNDLE_PATH
-- CMake特定的环境变量 PackageName_DIR CMAKE_PREFIX_PATH CMAKE_FRAMEWORK_PATH
-  CMAKE_APPBUNDLE_PATH
-- HINT字段指定的路径
-- 搜索标准的系统环境变量PATH.
-- 存储在CMake的"User Package Registry"(用户包注册表)中的路径. 通过设定
++ PackageName_ROOT的cmake变量或环境变量. CMake3.12新增. 设定CMP0074 Policy来关闭. 
+如果定义了PackageName_DIR cmake变量, 那么PackageName_ROOT 不起作用.
+
++ cmake特定的缓存变量 CMAKE_PREFIX_PATH CMAKE_FRAMEWORK_PATH CMAKE_APPBUNDLE_PATH
++ CMake特定的环境变量 PackageName_DIR CMAKE_PREFIX_PATH CMAKE_FRAMEWORK_PATH CMAKE_APPBUNDLE_PATH
+
++ HINT字段指定的路径 
++ 搜索标准的系统环境变量PATH.
++ 存储在CMake的"User Package Registry"(用户包注册表)中的路径. 通过设定
 NO_CMAKE_PACKAGE_REGISTRY, 或设定CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY为true, 来避开.
-- 设定为当前系统定义的cmake变量: CMAKE_SYSTEM_PREFIX_PATH CMAKE_SYSTEM_FRAMEWORK_PATH
+
++ 设定为当前系统定义的cmake变量: CMAKE_SYSTEM_PREFIX_PATH CMAKE_SYSTEM_FRAMEWORK_PATH
   CMAKE_SYSTEM_APPBUNDLE_PATH
-- 在cmake的"System Package Registry"(系统包注册表)中查找.
-- 从PATHS字段指定的路径中查找.
++ 在cmake的"System Package Registry"(系统包注册表)中查找.
++ 从PATHS字段指定的路径中查找.
 
 ### 自定义模块
 

@@ -51,7 +51,7 @@ cmake_minimum_required(VERSION 3.5)
 # Set the project name
 project (third_party_include)
 # find a boost install with the libraries filesystem and system
-#使用库文件系统和系统查找boost install
+#使用库文件系统和系统查找 boost install
 find_package(Boost 1.46.1 REQUIRED COMPONENTS filesystem system)
 #这是第三方库, 而不是自己生成的静态动态库
 # check if boost was found
