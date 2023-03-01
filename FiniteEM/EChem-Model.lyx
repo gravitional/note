@@ -103,11 +103,19 @@ Yang
 \end_layout
 
 \begin_layout Standard
-以下公式中的符号，与 Comsol 案例图形界面中保持一致。按照 Comsol 界面的输入，整理了模型信息。
+以下公式中的符号，与 Comsol 案例图形界面中保持一致。按照 Comsol 界面的节点树，整理了模型信息。
+\end_layout
+
+\begin_layout Standard
+Comsol 中约定求解域边界上法线
+\begin_inset Formula $\sbf n$
+\end_inset
+
+的方向，从溶液外部指向溶液内部，与通常的约定相反。
 \end_layout
 
 \begin_layout Subsection
-整体设置
+整体方程
 \end_layout
 
 \begin_layout Standard
@@ -129,7 +137,7 @@ Yang
 
 \begin_layout Itemize
 二维模型的厚度设置为
-\begin_inset Formula $1\mathrm{m}$
+\begin_inset Formula $1\,\mathrm{m}$
 \end_inset
 
 。
@@ -167,11 +175,7 @@ Yang
 \begin_inset Formula $R_{i}$
 \end_inset
 
-表示对应的源项，通常设为
-\begin_inset Formula $0$
-\end_inset
-
-。
+表示对应的源项，只在边界上有值（溶解或者沉积）。
 \end_layout
 
 \begin_layout Itemize
@@ -217,7 +221,7 @@ Yang
 \begin_inset Formula $\text{Cu}^{2+}$
 \end_inset
 
-就是
+对应
 \begin_inset Formula $2$
 \end_inset
 
@@ -225,7 +229,7 @@ Yang
 \begin_inset Formula $u_{m,i}$
 \end_inset
 
-是迁移率（Mobility），有 Nernst–Einstein 方程 
+是迁移率（Mobility），满足 Nernst–Einstein 方程 
 \begin_inset Formula $u_{m,i}=D_{i}/(RT)$
 \end_inset
 
@@ -272,11 +276,19 @@ Yang
 
 \begin_layout Itemize
 电解液电荷守恒模型（Electrolyte Charge Conservation）：此模型设置为 支撑电解质（Supporting electrolyte），
-它描述下述情况，电荷的迁移主要由 常数浓度的离子负责，在这个模型中就是 
+它描述下述情况，电荷的迁移主要由
+\series bold
+常数浓度
+\series default
+的离子携带，在这个模型中就是 
 \begin_inset Formula $\text{Cu}^{2+}$
 \end_inset
 
- 离子。
+ 离子，记作
+\begin_inset Formula $c_{1}$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Itemize
@@ -285,8 +297,8 @@ Yang
 \begin_inset Formula $0\mathrm{V}$
 \end_inset
 
-。在不同的溶液，例如水溶液，氢溶液，银溶液中进行电化学反应时，反应电位不一样，此参数度量溶液环境对所考察反应的影响。当以氢溶液为标准时，此参数就设置为
-\begin_inset Formula $0$
+。在不同的溶液，例如水溶液，氢溶液，银溶液中进行电化学反应时，反应电位不一样。当以氢溶液为标准时，此参数为
+\begin_inset Formula $0\mathrm{V}$
 \end_inset
 
 。
@@ -317,7 +329,7 @@ Yang
 \begin_inset Formula $c_{1}$
 \end_inset
 
-就是 
+是 
 \begin_inset Formula $\text{Cu}^{2+}$
 \end_inset
 
@@ -338,7 +350,7 @@ name "ref:my1"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
- & \frac{\partial c_{i}}{\partial t}+\nabla\cdot\sbf J_{i}+\sbf u_{i}\cdot\nabla C_{i}=R_{i}\nonumber \\
+ & \frac{\partial c_{i}}{\partial t}+\nabla\cdot\sbf J_{i}+\sbf u_{i}\cdot\nabla C_{i}=R_{i}\label{eq:my8}\\
  & \nabla\cdot\sbf i_{l}=F\sum_{i}z_{i}R_{i}+Q_{l}\nonumber \\
  & \sbf J_{i}=-D_{i}\nabla c_{i}-z_{i}\,{\color{blue}u_{m,i}}\,F\,c_{i}\nabla\phi_{l}\label{eq:my10}\\
  & \sbf i_{l}=-\sigma_{l}\nabla\phi_{l}\nonumber 
@@ -392,7 +404,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-电场中的迁移项（Migration）：迁移率（Mobility）由 Nernst–Einstein 关系给出 
+电场中的迁移项（Migration）：迁移率（Mobility）由 Nernst–Einstein 关系决定：
 \begin_inset Formula ${\color{blue}u_{m,i}}=D_{i}/(RT)$
 \end_inset
 
@@ -434,11 +446,11 @@ noprefix "false"
 
 \end_inset
 
-浓度场的齐次第二类边界条件，这里的
+浓度场的齐次第二类边界条件，
 \begin_inset Formula $\sbf n$
 \end_inset
 
- 从边界指向溶液内部。
+从外部指向溶液。
 \end_layout
 
 \begin_layout Subsection
@@ -458,11 +470,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-初始值，Initial Values。
+初始值，Initial Values
 \end_layout
 
 \begin_layout Standard
-设置自由度的初始值（即Dependent Variables，见
+读取用户设置的，浓度场和电势的初始值（即Dependent Variables，见
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ref:my1"
@@ -495,12 +507,16 @@ noprefix "false"
 \begin_inset Formula $\text{phil2}=4\mathrm{V}$
 \end_inset
 
-；
+；电极电势（Electric potential）：
+\begin_inset Formula $\text{phis2}=10\mathrm{V}$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Itemize
-电极电势（Electric potential）：
-\begin_inset Formula $\text{phis2}=10\mathrm{V}$
+如果没有用户输入，默认值为外加电压的一般；如果没有外加电压，默认为
+\begin_inset Formula $0\,\mathrm{V}$
 \end_inset
 
 。
@@ -513,11 +529,11 @@ noprefix "false"
 \begin_layout Standard
 方程：
 \begin_inset Formula 
-\begin{align*}
- & \sbf n\cdot\sbf i_{l}=i_{\text{total}}\\
- & i_{\text{total}}=\sum_{m}i_{\text{loc},m}+i_{\text{dl}}\\
- & -\sbf n\cdot\sbf J_{i}=R_{i,\text{tot}},\quad R_{i,\text{tot}}=\sum_{m}R_{i,m}+R_{\text{dl},i}
-\end{align*}
+\begin{align}
+ & \sbf n\cdot\sbf i_{l}=i_{\text{total}}\label{eq:my21}\\
+ & i_{\text{total}}=\sum_{m}i_{\text{loc},m}+{\color{brown}i_{\text{dl}}}\label{eq:my22}\\
+ & -\sbf n\cdot\sbf J_{i}=R_{i,\text{tot}},\quad R_{i,\text{tot}}=\sum_{m}R_{i,m}+{\color{brown}R_{\text{dl},i}}\label{eq:my23}
+\end{align}
 
 \end_inset
 
@@ -525,33 +541,127 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $i_{\text{dl}}$
+\begin_inset Formula ${\color{brown}i_{\text{dl}}}$
 \end_inset
 
 和 
-\begin_inset Formula $R_{\text{dl},i}$
+\begin_inset Formula ${\color{brown}R_{\text{dl},i}}$
 \end_inset
 
- 是来自 Porous Matrix Double Layer Capacitance（多孔电极）的贡献，暂不考虑。
+是来自 Porous Matrix Double Layer Capacitance（多孔电极）的贡献，暂不考虑。
 \end_layout
 
 \begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表示电流连续（溶液电流等于电极总电流）；
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my22"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
 \begin_inset Formula $i_{\text{loc},m}$
 \end_inset
 
-是电极–溶液界面上的局域电流密度，
+表示电极–溶液界面上，化学反应
 \begin_inset Formula $m$
 \end_inset
 
-标示化学反应
-\begin_inset Formula $m$
+的局域电流密度（
+\begin_inset Formula $\mathrm{A/m^{2}}$
 \end_inset
 
-的贡献，下面只有氧气析出一种贡献。
+），它垂直于电极表面；总电流要对所有化学反应求和。此例阳极上，只有
+\begin_inset Formula $\text{O}^{2-}$
+\end_inset
+
+变成氧气析出一种贡献。
 \end_layout
 
 \begin_layout Itemize
-电极相电势边界条件（Electrode Phase Potential Condition）：外部电势（External electric potential）
+方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula $\frac{\partial c_{i}}{\partial t}+\nabla\cdot\sbf J_{i}+\sbf u_{i}\cdot\nabla C_{i}=R_{i}$
+\end_inset
+
+在电极上变成
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my23"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，所以
+\begin_inset Formula $\sbf n$
+\end_inset
+
+的方向是从外部指向溶液。由于阳极不涉及
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+浓度，对于浓度场
+\begin_inset Formula $c_{1}$
+\end_inset
+
+这里的
+\begin_inset Formula $R_{1}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+一般的
+\begin_inset Formula $R_{i,m}$
+\end_inset
+
+与
+\begin_inset Formula $i_{\text{loc},m}$
+\end_inset
+
+ 的关系见下面
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+；
+\begin_inset Formula $i_{\text{loc},m}$
+\end_inset
+
+本身通过电极动力学决定，与电势有关。
+\end_layout
+
+\begin_layout Itemize
+电极相电势边界条件（Electrode Phase Potential Condition）：设置阳极电势为 
 \begin_inset Formula $\phi_{s,\text{ext}}=5\,\mathrm{V}$
 \end_inset
 
@@ -564,10 +674,10 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
- & \eta=E_{\text{ct}}-E_{\text{eq}},\quad E_{\text{ct}}=\phi_{s,\text{ext}}-\phi_{l},\\
- & R_{i}=\frac{-v_{i}\,i_{\text{loc}}}{n\,F}
-\end{align*}
+\begin{align}
+ & \eta=E_{\text{ct}}-E_{\text{eq}},\quad E_{\text{ct}}=\phi_{s,\text{ext}}-\phi_{l},\label{eq:my24}\\
+ & R_{i,m}=\frac{-v_{i,m}\,i_{\text{loc},m}}{n_{m}\,F}\label{eq:my25}
+\end{align}
 
 \end_inset
 
@@ -580,11 +690,26 @@ noprefix "false"
 \end_inset
 
 ，用户自定义。
+\begin_inset Formula $\eta$
+\end_inset
+
+称为过电位。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $i_{\text{loc}}$
+\end_inset
+
+ 为电极局部电流，
+\begin_inset Formula $F$
+\end_inset
+
+为法拉第常数。
 \end_layout
 
 \begin_layout Itemize
 化学计量系数（Stoichiometric Coefficients）：参与反应的电子数 
-\begin_inset Formula $n=2$
+\begin_inset Formula $n_{m}=2$
 \end_inset
 
 ；化学计量系数 
@@ -593,9 +718,9 @@ noprefix "false"
 
 。
 \begin_inset Formula 
-\[
-\sum_{\text{ox}}\abs{v_{\text{ox}}}\,\mathrm{Ox}+n\,e^{-}\Leftrightarrow\sum_{\text{red}}v_{\text{red}}\,\mathrm{Red}
-\]
+\begin{equation}
+\sum_{\text{ox}}\abs{v_{\text{ox}}}\,\mathrm{Ox}+n\,e^{-}\leftrightarrow\sum_{\text{red}}v_{\text{red}}\,\mathrm{Red}\label{eq:my26}
+\end{equation}
 
 \end_inset
 
@@ -607,7 +732,521 @@ noprefix "false"
 \begin_inset Formula $v_{\text{red}}>0$
 \end_inset
 
+。Comsol 中规定以还原方向书写电化学反应，例如这里（
+\begin_inset Formula $\text{Cu}^{2+}+\text{O}^{2-}=\text{Cu}+\text{O}$
+\end_inset
+
+的半反应）
+\begin_inset Formula 
+\[
+\text{O}+2e^{-}\leftrightarrow\text{O}^{2-}
+\]
+
+\end_inset
+
+对于
+\begin_inset Formula $\text{O}$
+\end_inset
+
+而言，化学当量系数为
+\begin_inset Formula $-1$
+\end_inset
+
+，为还原方向的
+\series bold
+反应物
+\series default
+；而
+\begin_inset Formula $\text{O}^{2-}$
+\end_inset
+
+则为 
+\begin_inset Formula $+1$
+\end_inset
+
+，为还原方向的
+\series bold
+产物
+\series default
+。由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，在此案例中，按Comsol的约定阳极
+\begin_inset Formula $i_{\text{loc},m}>0$
+\end_inset
+
+，所以
+\begin_inset Formula $R_{\mathrm{O}}>0$
+\end_inset
+
+，
+\begin_inset Formula $R_{\text{O}^{2-}}<0$
+\end_inset
+
+，对应氧气析出。参与电子数
+\begin_inset Formula $n_{m}$
+\end_inset
+
+为
+\begin_inset Formula $2$
+\end_inset
+
+。但是这里只关心
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+浓度，所以取 
+\begin_inset Formula $v_{c1}=0$
+\end_inset
+
 。
+\end_layout
+
+\begin_layout Itemize
+平衡电位（Equilibrium Potential）：阳极为用户输入的固定值，
+\begin_inset Formula $E_{\text{eq}}=1.23\,\mathrm{V}$
+\end_inset
+
+。由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my23"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\phi_{l}=\phi_{s,\text{ext}}-E_{\text{eq}}-\eta\label{eq:my28a}
+\end{equation}
+
+\end_inset
+
+从电极到溶液，电势经历两次下降。
+\end_layout
+
+\begin_layout Itemize
+电极动力学（Electrode Kinetics）：使用 Bulter–Volmer 型
+\begin_inset Formula 
+\begin{equation}
+i_{\text{loc},m}=i_{\text{loc,expr},m}=i_{0,m}\left[\exp\left(\frac{\alpha_{a,m}\,F\,\eta}{RT}\right)-\exp\left(\frac{-\alpha_{c,m}\,F\,\eta}{RT}\right)\right]\label{eq:my28b}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $i_{0,m}=250\,\mathrm{A/m^{2}}$
+\end_inset
+
+，阳极迁移系数（Anodeic transfer coefficient）
+\begin_inset Formula $\alpha_{a,m}=1.55$
+\end_inset
+
+；阴极迁移系数（Cathodic）
+\begin_inset Formula $\alpha_{c,m}=0.45$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{a,m}+\alpha_{c,m}=2$
+\end_inset
+
+，即参与反应的电子数。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my28a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my28b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+组成关于
+\begin_inset Formula $\phi_{l}$
+\end_inset
+
+的第三类边界条件。
+\end_layout
+
+\begin_layout Subsection
+阴极表面，Electrode Surface；还原反应，铜沉积
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+ & \sbf n\cdot\sbf i_{l}=i_{\text{total}},\quad i_{\text{total}}=\sum_{m}i_{\text{loc},m}+{\color{brown}i_{\text{dl}}}\label{eq:my29}\\
+ & -\sbf n\cdot\sbf J_{i}=R_{i,\text{tot}},\quad R_{i,\text{tot}}=\sum_{m}R_{i,m}+{\color{brown}R_{\text{dl},i}}\label{eq:my31}\\
+ & \Delta\phi_{s,\text{film}}=R_{\text{film}}i_{\text{total}},\quad R_{\text{film}}=\frac{s_{0}+\Delta s}{\sigma_{\text{film}}}\label{eq:my32}\\
+ & \frac{\partial c_{d,i}}{\partial t}=\sum_{m}R_{d,i,m},\quad\Delta s=\sum_{i}\frac{c_{d,i}-c_{d,i,0}}{\rho_{i}/M_{i}}\label{eq:my33}\\
+ & v_{\text{dep,tot}}=\sum_{i}\frac{M_{i}}{\rho_{i}}\sum_{m}R_{d,i,m}\label{eq:my34}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+~
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+与阳极同理。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my32"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表示铜沉积形成的薄膜（Film）造成电势进一步下降，电极相外部电势
+\begin_inset Formula $\phi_{s,\text{ext}}=0\,\mathrm{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+膜阻（Film resistance）计算参数：初始厚度
+\begin_inset Formula $s_{0}=0\,\mathrm{m}$
+\end_inset
+
+，膜导电率 
+\begin_inset Formula $\sigma_{\text{film}}=2\times10^{6}\,\mathrm{S/m}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my33"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，
+\begin_inset Formula $c_{d,i}$
+\end_inset
+
+表示表面浓度（即浓度场
+\begin_inset Formula $c_{1}$
+\end_inset
+
+在阴极边界上的值，
+\begin_inset Formula $\mathrm{mol/m^{2}}$
+\end_inset
+
+），
+\begin_inset Formula $R_{d,i,m}$
+\end_inset
+
+是表面浓度沉积速率（
+\begin_inset Formula $\mathrm{mol/m^{2}/s}$
+\end_inset
+
+），见
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，对于沉积反应
+\begin_inset Formula $R_{d,i,m}<0$
+\end_inset
+
+；表示随着沉积进行，溶液浓度下降。
+\begin_inset Formula $\Delta s$
+\end_inset
+
+表示薄膜总厚度（
+\begin_inset Formula $\mathrm{m}$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my34"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，
+\begin_inset Formula $v_{\text{dep,tot}}$
+\end_inset
+
+表示总生长速率（Total Growth），
+\begin_inset Formula $M_{i}$
+\end_inset
+
+是摩尔质量（
+\begin_inset Formula $\mathrm{kg/mol}$
+\end_inset
+
+），
+\begin_inset Formula $\rho_{i}$
+\end_inset
+
+是物质密度（
+\begin_inset Formula $\mathrm{kg/m^{3}}$
+\end_inset
+
+）。
+\begin_inset Formula $i$
+\end_inset
+
+是离子指标，
+\begin_inset Formula $m$
+\end_inset
+
+是电极反应指标。
+\end_layout
+
+\begin_layout Subsubsection
+铜沉积，Electrode Reaction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+ & \eta=E_{\text{ct}}-E_{\text{eq}},\quad E_{\text{ct}}=\phi_{s,\text{ext}}-\Delta\phi_{s,\text{film}}-\phi_{l},\label{eq:my40}\\
+ & R_{i,m}=\frac{-v_{i,m}\,i_{\text{loc},m}}{n_{m}\,F},\quad R_{d,i,m}=\frac{-v_{d,i,m}\,i_{\text{loc},d,m}}{n_{m}\,F}\label{eq:my41}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+模型输入：温度
+\begin_inset Formula $T=300\,\mathrm{K}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，
+\begin_inset Formula $R_{d,i,m}$
+\end_inset
+
+ 表示沉积和溶解反应的贡献；
+\begin_inset Formula $R_{i,m}$
+\end_inset
+
+ 表示其他反应的贡献；
+\begin_inset Formula $i_{\text{loc},d,m}$
+\end_inset
+
+是电极表面电流密度（阴极表面的法向电流，
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+）。对于沉积反应，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中
+\begin_inset Formula $-v_{d,c1,m}>0$
+\end_inset
+
+；按照Comsol约定，阴极（电流向溶液外）的
+\begin_inset Formula $i_{\text{loc},d,m}<0$
+\end_inset
+
+，所以整体的
+\begin_inset Formula $R_{d,i,m}<0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+化学反应计算系数（Stoichiometric Coefficients）：参与的电子数
+\begin_inset Formula $n_{m}=2$
+\end_inset
+
+；计量系数
+\begin_inset Formula $v_{c1}=-1$
+\end_inset
+
+（还原反应的
+\series bold
+反应物
+\series default
+系数为负数），
+\begin_inset Formula 
+\begin{equation}
+\text{Cu}^{2+}+2e^{-}\leftrightarrow\text{Cu}\label{eq:my42}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+平衡电位（Equilibrium Potential）：与浓度耦合，即 Nernst 方程
+\begin_inset Formula 
+\begin{equation}
+E_{\text{eq}}=E_{\text{eq,ref}}(T)-\frac{RT}{nF}\ln\prod_{i}\left(\frac{c_{i}}{c_{i,\text{ref}}}\right)^{v_{i}}\label{eq:my27}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{\text{eq,ref}}=0\,\mathrm{V}$
+\end_inset
+
+是参考平衡电位；
+\begin_inset Formula $c_{i,\text{ref}}=1\,\mathrm{mol/m^{3}}$
+\end_inset
+
+是参考浓度。指标
+\begin_inset Formula $i$
+\end_inset
+
+用于对不同离子求和，这里只有 
+\begin_inset Formula $\text{Cu}^{2+}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+电极动力学（Electrode Kinetics）：这里设置为热力学平衡态（Thermodynamic equlibrium），取过电位
+\begin_inset Formula $\eta=0$
+\end_inset
+
+，则由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my40"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\phi_{l}=\phi_{s,\text{ext}}-E_{\text{eq}}-\Delta\phi_{s,\text{film}}\label{eq:my42a}
+\end{equation}
+
+\end_inset
+
+从电极到溶液，电势经历两次下降。另一方面
+\begin_inset Formula 
+\begin{equation}
+i_{\text{total}}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\label{eq:my42b}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my42a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my42b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+形成关于
+\begin_inset Formula $\phi_{l}$
+\end_inset
+
+的第三类边界条件。
 \end_layout
 
 \end_body
