@@ -250,9 +250,9 @@ Unloading the module doesn't unload the assembly from the PSReadLine module
 因为 `GitLab` 是其中最出名的一个, 我们将它作为示例并讨论它的安装和使用.
 这比 `GitWeb` 要复杂的多并且需要更多的维护, 但它的确是一个功能更全的选择.
 
-## 还原文件,恢复
+### git-restore, 还原文件,恢复
 
-### git-restore
+[git-restore - Restore working tree files](https://git-scm.com/docs/git-restore/en)
 
 还原工作区的文件, 可以用 `--source` 指定例如 `HEAD` .
 
@@ -290,7 +290,51 @@ git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [
     git restore --source=9ea00d1 parton.note.1.nb
     ```
 
-### git-checkout
+### git restore 例子
+
+如果你想恢复所有的 `C` 源文件, 使之与 `index` 中的版本一致, 你可以输入
+
+```bash
+git restore '*.c'
+```
+
+注意 `*.c` 周围的引号.
+文件 `hello.c` 也会被还原, 尽管它已经不在工作树中了,
+因为文件 `globbing` 是用来匹配索引中的条目的(不是shell中的工作树).
+
+要恢复当前目录下的所有文件
+
+```bash
+git restore .
+```
+
+或者用 `top pathspec` 魔法恢复所有工作树上的文件,
+见[gitglossary 7](https://git-scm.com/docs/gitglossary).
+
+```bash
+git restore :/
+```
+
+要恢复 `index` 中的文件以匹配 `HEAD` 中的版本,
+这与使用 [git-reset 1](https://git-scm.com/docs/git-reset)相同
+
+```bash
+git restore --staged hello.c
+```
+
+或者您可以同时恢复索引和工作树(这与使用 git-checkout[1]相同)
+
+```bash
+git restore --source=HEAD --staged --worktree hello.c
+```
+
+或者用更实用但不容易读懂的简短形式.
+
+```bash
+git restore --source=HEAD --staged --worktree hello.c
+```
+
+## git-checkout
 
 切换分支, 或者恢复 `working tree` 中的文件
 

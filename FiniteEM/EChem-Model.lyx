@@ -175,7 +175,7 @@ Comsol 中约定求解域边界上法线
 \begin_inset Formula $R_{i}$
 \end_inset
 
-表示对应的源项，只在边界上有值（溶解或者沉积）。
+表示对应的源项，实际上是边界上的激励（溶解或者沉积）。
 \end_layout
 
 \begin_layout Itemize
@@ -397,7 +397,7 @@ noprefix "false"
 \end_inset
 
 场对应
-\begin_inset Formula $D_{c_{1}}=2\times10^{-9}[\mathrm{m^{2}/s}]$
+\begin_inset Formula $D_{c_{1}}=2\times10^{-9}\,\mathrm{m^{2}/s}$
 \end_inset
 
 ，各向同性常数（Isotropic）。
@@ -760,7 +760,7 @@ noprefix "false"
 \begin_inset Formula $\text{O}^{2-}$
 \end_inset
 
-则为 
+则为
 \begin_inset Formula $+1$
 \end_inset
 
@@ -897,7 +897,7 @@ noprefix "false"
  & \sbf n\cdot\sbf i_{l}=i_{\text{total}},\quad i_{\text{total}}=\sum_{m}i_{\text{loc},m}+{\color{brown}i_{\text{dl}}}\label{eq:my29}\\
  & -\sbf n\cdot\sbf J_{i}=R_{i,\text{tot}},\quad R_{i,\text{tot}}=\sum_{m}R_{i,m}+{\color{brown}R_{\text{dl},i}}\label{eq:my31}\\
  & \Delta\phi_{s,\text{film}}=R_{\text{film}}i_{\text{total}},\quad R_{\text{film}}=\frac{s_{0}+\Delta s}{\sigma_{\text{film}}}\label{eq:my32}\\
- & \frac{\partial c_{d,i}}{\partial t}=\sum_{m}R_{d,i,m},\quad\Delta s=\sum_{i}\frac{c_{d,i}-c_{d,i,0}}{\rho_{i}/M_{i}}\label{eq:my33}\\
+ & \frac{\dd{c_{s,i}}}{\dd{t}}=\sum_{m}\frac{-v_{d,i,m}}{n_{d,m}\,F}i_{\text{loc},m},\quad\Delta s=\sum_{i}\frac{c_{s,i}}{\rho_{i}/M_{i}}\label{eq:my33}\\
  & v_{\text{dep,tot}}=\sum_{i}\frac{M_{i}}{\rho_{i}}\sum_{m}R_{d,i,m}\label{eq:my34}
 \end{align}
 
@@ -968,51 +968,15 @@ noprefix "false"
 
 \end_inset
 
-中，
-\begin_inset Formula $c_{d,i}$
+中，引入了表面浓度
+\begin_inset Formula $c_{s,i}$
 \end_inset
 
-表示表面浓度（即浓度场
-\begin_inset Formula $c_{1}$
-\end_inset
-
-在阴极边界上的值，
+（
 \begin_inset Formula $\mathrm{mol/m^{2}}$
 \end_inset
 
-），
-\begin_inset Formula $R_{d,i,m}$
-\end_inset
-
-是表面浓度沉积速率（
-\begin_inset Formula $\mathrm{mol/m^{2}/s}$
-\end_inset
-
-），见
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my41"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-、
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my42"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-，对于沉积反应
-\begin_inset Formula $R_{d,i,m}<0$
-\end_inset
-
-；表示随着沉积进行，溶液浓度下降。
+）用于计算膜厚。
 \begin_inset Formula $\Delta s$
 \end_inset
 
@@ -1021,6 +985,10 @@ noprefix "false"
 \end_inset
 
 ）。
+\begin_inset Formula $v_{d,i,m}=1$
+\end_inset
+
+ 为产物化学计量系数。
 \end_layout
 
 \begin_layout Itemize
@@ -1061,7 +1029,15 @@ noprefix "false"
 \begin_inset Formula $m$
 \end_inset
 
-是电极反应指标。
+是电极反应指标。Cu数密度（Density of sites）
+\begin_inset Formula $\rho_{i}/M_{i}=1\times10^{-5}\,\mathrm{mol/m^{3}}$
+\end_inset
+
+，考虑到模型厚度，实际上取 
+\begin_inset Formula $1\times10^{-5}\,\mathrm{mol/m^{2}}$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1072,7 +1048,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
  & \eta=E_{\text{ct}}-E_{\text{eq}},\quad E_{\text{ct}}=\phi_{s,\text{ext}}-\Delta\phi_{s,\text{film}}-\phi_{l},\label{eq:my40}\\
- & R_{i,m}=\frac{-v_{i,m}\,i_{\text{loc},m}}{n_{m}\,F},\quad R_{d,i,m}=\frac{-v_{d,i,m}\,i_{\text{loc},d,m}}{n_{m}\,F}\label{eq:my41}
+ & R_{d,i,m}=\frac{-v_{d,i,m}\,i_{\text{loc},m}}{n_{d,m}\,F},\label{eq:my41}
 \end{align}
 
 \end_inset
@@ -1102,38 +1078,24 @@ noprefix "false"
 \begin_inset Formula $R_{d,i,m}$
 \end_inset
 
- 表示沉积和溶解反应的贡献；
-\begin_inset Formula $R_{i,m}$
-\end_inset
-
- 表示其他反应的贡献；
-\begin_inset Formula $i_{\text{loc},d,m}$
+ 表示沉积和溶解反应的贡献； 
+\begin_inset Formula $i_{\text{loc},m}$
 \end_inset
 
 是电极表面电流密度（阴极表面的法向电流，
 \begin_inset Formula $\mathrm{A/m^{2}}$
 \end_inset
 
-）。对于沉积反应，
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my42"
-plural "false"
-caps "false"
-noprefix "false"
-
+）。
+\begin_inset Formula $v_{d,i,m}=1$
 \end_inset
 
-中
-\begin_inset Formula $-v_{d,c1,m}>0$
-\end_inset
-
-；按照Comsol约定，阴极（电流向溶液外）的
+ ，按照Comsol约定，阴极（电流向溶液外）的
 \begin_inset Formula $i_{\text{loc},d,m}<0$
 \end_inset
 
-，所以整体的
-\begin_inset Formula $R_{d,i,m}<0$
+，所以
+\begin_inset Formula $R_{d,i,m}>0$
 \end_inset
 
 。
@@ -1141,22 +1103,30 @@ noprefix "false"
 
 \begin_layout Itemize
 化学反应计算系数（Stoichiometric Coefficients）：参与的电子数
-\begin_inset Formula $n_{m}=2$
+\begin_inset Formula $n_{d,m}=2$
 \end_inset
 
 ；计量系数
-\begin_inset Formula $v_{c1}=-1$
+\begin_inset Formula $v_{i,m}=-1$
 \end_inset
 
-（还原反应的
-\series bold
-反应物
-\series default
-系数为负数），
+（反应物），
+\begin_inset Formula $v_{d,i,m}=1$
+\end_inset
+
+（产物）
 \begin_inset Formula 
 \begin{equation}
 \text{Cu}^{2+}+2e^{-}\leftrightarrow\text{Cu}\label{eq:my42}
 \end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-\frac{n_{m}}{v_{i,m}}=\frac{n_{d,m}}{v_{d,i,m}},\qquad-\frac{2}{-1}=\frac{2}{1}
+\]
 
 \end_inset
 
@@ -1247,6 +1217,354 @@ noprefix "false"
 \end_inset
 
 的第三类边界条件。
+\end_layout
+
+\begin_layout Section
+方程求解
+\end_layout
+
+\begin_layout Itemize
+以下按照IBE的习惯，法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+ 从溶液指向外部。
+\end_layout
+
+\begin_layout Itemize
+无通量边界条件、绝缘边界条件分别是
+\begin_inset Formula $c_{1}$
+\end_inset
+
+，
+\begin_inset Formula $\phi$
+\end_inset
+
+的齐次第二类边界条件，无需特殊处理。
+\end_layout
+
+\begin_layout Itemize
+只需要处理阳极和阴极的第三类边界条件。
+\end_layout
+
+\begin_layout Subsection
+时间步迭代与非线性迭代
+\end_layout
+
+\begin_layout Standard
+常微分方程
+\begin_inset Formula 
+\[
+M.x^{\prime}(t)+K.x(t)+F[x(t)]=b(t)
+\]
+
+\end_inset
+
+的解可以写作
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{M}{\Delta t}+\overline{\beta}\,K+\overline{\beta}\,F_{\gamma}^{(1),n+1}\right].\Delta x_{\gamma+1}^{n+1}= & \lambda\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}\,F_{\gamma}^{n+1}+\beta\,F^{n}}\right)\\
+ & +\frac{M}{\Delta t}\left(x^{n}-x_{\gamma}^{n+1}\right)-\beta\,K.x^{n}-\overline{\beta}\,K.x_{\gamma}^{n+1}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+其中
+\begin_inset Formula $0\le\beta\le1$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x^{n}$
+\end_inset
+
+表示时间步
+\begin_inset Formula $n$
+\end_inset
+
+的解，
+\begin_inset Formula $x_{\gamma}^{n+1}$
+\end_inset
+
+表示时间步
+\begin_inset Formula $n+1$
+\end_inset
+
+，且非线性迭代步
+\begin_inset Formula $\gamma$
+\end_inset
+
+的解，
+\begin_inset Formula $\Delta x_{\gamma+1}^{n+1}=x_{\gamma+1}^{n+1}-x_{\gamma}^{n+1}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{\gamma}^{(1),n+1}=\left.\frac{\dd{F}}{\dd{x}}\right|_{\gamma}^{n+1}$
+\end_inset
+
+，表示系数矩阵
+\begin_inset Formula $F$
+\end_inset
+
+对
+\begin_inset Formula $x$
+\end_inset
+
+的一阶导数，在时间步
+\begin_inset Formula $n+1$
+\end_inset
+
+，非线性迭代步
+\begin_inset Formula $\gamma$
+\end_inset
+
+的值。
+\end_layout
+
+\begin_layout Subsection
+浓度场残差
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\int_{\Omega^{e}}N_{m}\,\partial_{t}c_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\quad\text{:Volume}\label{eq:cf3a}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\quad\text{:Surface}\label{eq:cf3b}\\
+ & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c}
+\end{align}
+
+\end_inset
+
+其中定义了三类浓度流
+\begin_inset Formula 
+\begin{align*}
+\sbf J_{D_{i}} & =-D_{i}\nabla c_{i},\quad\text{Diffusion}\\
+\sbf J_{M_{i}} & =-z_{i}\frac{D_{i}}{RT}F\,c_{i}\nabla\phi,\quad\text{Migration}\\
+\sbf J_{C_{i}} & =c_{i}\sbf u,\quad\text{Convection}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $R_{i}$
+\end_inset
+
+就是电极金属的溶解或沉积对应的激励项。
+\end_layout
+
+\begin_layout Subsection
+阳极，析氧反应
+\end_layout
+
+\begin_layout Itemize
+电势边界条件
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\eta & =\phi_{s,\text{ext}}-E_{\text{eq}}-\phi_{l}\label{eq:51a}\\
+\sigma_{l}\frac{\partial\phi_{l}}{\partial n} & =i_{0,m}\left[\exp\left(\frac{\alpha_{a,m}\,F\,\eta}{RT}\right)-\exp\left(\frac{-\alpha_{c,m}\,F\,\eta}{RT}\right)\right]\label{eq:51b}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi_{s,\text{ext}}=5\,\mathrm{V}$
+\end_inset
+
+，
+\begin_inset Formula $E_{\text{eq}}=1.23\,\mathrm{V}$
+\end_inset
+
+；
+\begin_inset Formula $i_{0,m}=250\,\mathrm{A/m^{2}}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{a,m}=1.55$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{c,m}=0.45$
+\end_inset
+
+；
+\begin_inset Formula $F=96485\,\mathrm{C/mol}$
+\end_inset
+
+，
+\begin_inset Formula $R=8.314472\,\mathrm{J/(mol.K)}$
+\end_inset
+
+，
+\begin_inset Formula $T=300\,\mathrm{K}$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+ & \sigma_{l}\frac{\partial\phi_{l,0}}{\partial n}=f\left(\phi_{l,0}\right),\quad\text{激励}\\
+ & \sigma_{l}\frac{\partial}{\partial n}\delta\phi_{l}=\left.\frac{\dd{f}}{\dd{\phi_{l}}}\right|_{\phi_{l,0}}\delta\phi_{l},\quad\text{刚阵}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+浓度边界条件
+\begin_inset Formula 
+\[
+D_{1}\frac{\partial c_{1}}{\partial n}=\frac{v_{1,m}}{n_{m}\,F}\sigma_{l}\frac{\partial\varphi_{l}}{\partial n}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $D_{1}=2\times10^{-9}\,\mathrm{m^{2}/s}$
+\end_inset
+
+，
+\begin_inset Formula $n_{m}=2$
+\end_inset
+
+，
+\begin_inset Formula $\sigma_{l}=2.5\,\mathrm{S/m}$
+\end_inset
+
+，浓度的法向
+\series bold
+取决于
+\series default
+电势的法向。但此处
+\begin_inset Formula $v_{1}=0$
+\end_inset
+
+，退化为 
+\begin_inset Formula $D_{1}\frac{\partial c_{1}}{\partial n}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+阴极，铜沉积
+\end_layout
+
+\begin_layout Itemize
+电势边界
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\phi_{l}= & \phi_{s,\text{ext}}-{\color{blue}E_{\text{eq}}}-\Delta\phi_{s,\text{film}},\\
+{\color{blue}E_{\text{eq}}} & =E_{\text{eq,ref}}(T)-\frac{RT}{nF}\ln\left(\frac{c_{1}}{c_{1,\text{ref}}}\right)^{v_{1}},\quad\text{平衡电位}
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\phi_{s,\text{ext}}=0\,\mathrm{V}$
+\end_inset
+
+，
+\begin_inset Formula $E_{\text{eq,ref}}=0\,\mathrm{V}$
+\end_inset
+
+，
+\begin_inset Formula $c_{1,\text{ref}}=1\,\mathrm{mol/m^{3}}$
+\end_inset
+
+，
+\begin_inset Formula $v_{1}=-1$
+\end_inset
+
+。进行时间步交错迭代。
+\end_layout
+
+\begin_layout Itemize
+引入表面浓度
+\begin_inset Formula $c_{s,i}$
+\end_inset
+
+，满足的ODE为
+\begin_inset Formula 
+\[
+\frac{\dd{c_{s,i}}}{\dd{t}}=\frac{v_{d,i,m}}{n_{d,m}\,F}i_{\text{loc},m},\quad\frac{n_{m}}{-v_{i,m}}=\frac{n_{d,m}}{v_{d,i,m}}
+\]
+
+\end_inset
+
+生长速率（Total Growth）
+\begin_inset Formula 
+\[
+v_{\text{dep}}=\frac{M_{i}}{\rho_{i}}\frac{v_{d,i,m}}{n_{d,m}\,F}i_{\text{loc},m}
+\]
+
+\end_inset
+
+膜阻为
+\begin_inset Formula 
+\begin{align*}
+\Delta\phi_{s,\text{film}} & =R_{\text{film}}\,i_{\text{total}},\quad R_{\text{film}}=\frac{s_{0}+\Delta s}{\sigma_{\text{film}}}\\
+\Delta s & =\frac{c_{s,i}}{\rho_{i}/M_{i}}
+\end{align*}
+
+\end_inset
+
+初始厚度
+\begin_inset Formula $s_{0}=0\,\mathrm{m}$
+\end_inset
+
+，膜导电率 
+\begin_inset Formula $\sigma_{\text{film}}=2\times10^{6}\,\mathrm{S/m}$
+\end_inset
+
+，
+\begin_inset Formula $\sigma_{l}=2.5\,\mathrm{S/m}$
+\end_inset
+
+；
+\begin_inset Formula $n_{d,m}=2$
+\end_inset
+
+，
+\begin_inset Formula $v_{d,i,m}=1$
+\end_inset
+
+，
+\begin_inset Formula $\rho_{i}/M_{i}=1\times10^{-5}\,\mathrm{mol/m^{3}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+浓度场满足第二类边界条件：
+\begin_inset Formula 
+\[
+\sbf n\cdot\sbf J_{i}=\frac{v_{d,i,m}\,i_{\text{loc},m}}{n_{d,m}\,F}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
