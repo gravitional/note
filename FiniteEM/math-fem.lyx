@@ -6135,9 +6135,9 @@ beta方法,exa2
 \begin_layout Standard
 设一阶常微分方程的形式为
 \begin_inset Formula 
-\[
-M\,x^{\prime}(t)+K\,x(t)+F[x(t)]=b(t)
-\]
+\begin{equation}
+M\,x^{\prime}(t)+K\,x(t)+F[x(t)]=b(t)\label{eq:beta2}
+\end{equation}
 
 \end_inset
 
@@ -6296,7 +6296,7 @@ F^{n+1}=F\left(x_{\gamma+1}^{n+1}\right)=F_{\gamma}^{n+1}+F_{\gamma}^{(1),n+1}\D
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 beta方法的系数具有对称性，作
 \begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
 \end_inset
@@ -6319,6 +6319,85 @@ x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+以电化学残差方程为例，
+\begin_inset Formula 
+\begin{align}
+\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b}\\
+ & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c}
+\end{align}
+
+\end_inset
+
+令待求自由度是
+\begin_inset Formula $C_{n,i}$
+\end_inset
+
+，
+\begin_inset Formula $n$
+\end_inset
+
+为节点指标，
+\begin_inset Formula $i$
+\end_inset
+
+为离子指标。则
+\begin_inset Formula $M=N_{m}N_{n}$
+\end_inset
+
+。体单元的 
+\begin_inset Formula ${\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}$
+\end_inset
+
+ 贡献到 
+\begin_inset Formula $K$
+\end_inset
+
+ 。边界项 
+\begin_inset Formula ${\color{red}\sbf n\cdot\sbf J_{D_{i}}}$
+\end_inset
+
+ 由边界条件给出，在齐次2nd边界上是零；在一般的3rd边界上可能具有下列形式
+\begin_inset Formula 
+\[
+\sbf n\cdot\sbf J_{D_{i}}=F(c_{i})+b(b)
+\]
+
+\end_inset
+
+则对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $F[x(t)]$
+\end_inset
+
+与
+\begin_inset Formula $b(t)$
+\end_inset
+
+，因此需要对
+\begin_inset Formula $F[x(t)]$
+\end_inset
+
+作线性化。
 \end_layout
 
 \begin_layout Section
@@ -6394,6 +6473,894 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+不动点迭代
+\end_layout
+
+\begin_layout Standard
+对于线性材料，
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+是不依赖于
+\begin_inset Formula $\sbf E$
+\end_inset
+
+（等价于
+\begin_inset Formula $\phi$
+\end_inset
+
+）的常数，因此刚度矩阵的元素不依赖于
+\begin_inset Formula $\phi$
+\end_inset
+
+，方程是线性的。但对于一般的问题，
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+可能依赖于
+\begin_inset Formula $\sbf E$
+\end_inset
+
+，方程组是
+\series bold
+非线性的
+\series default
+，形如 
+\begin_inset Formula $K_{ij}[\phi]\,\phi_{j}-b_{i}[\phi]=0$
+\end_inset
+
+。
+\series bold
+对于非线性问题，需要使用迭代法求解
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+ref:《数值分析–Timothyp27/42，不动点迭代》。先考虑类似问题的简化版本，即一维情形。以下
+\begin_inset Formula $k(\phi)$
+\end_inset
+
+是单变量函数，
+\begin_inset Formula $b$
+\end_inset
+
+是数，
+\begin_inset Formula $\phi$
+\end_inset
+
+是普通变量：
+\begin_inset Formula 
+\[
+k(\phi)\phi=b\quad\Rightarrow\quad\phi=k^{-1}(\phi)b
+\]
+
+\end_inset
+
+实际上就是方程
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+的一个特例，此类方程可以使用
+\series bold
+不动点迭代
+\series default
+（FPI）求解。
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+x_{0}=\text{初始估计}\\
+x_{i+1}=g(x_{i}), & \text{其中}i=0,1,2,\cdots
+\end{cases}\label{eq:my3a}
+\end{equation}
+
+\end_inset
+
+如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/cobweb2.pdf
+	lyxscale 50
+	scale 35
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fpi[f_, x0_, n_] := NestList[f, x0, n]; cobs[f_, x0_, 0] := {{x0, 0}, {x0,
+ f@x0}}; cobs[f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi[f,
+ x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1; r4 = Rest@tmp;
+ Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*) fn = -1/5 #^2
+ + 3/2 &; pts = cobs[fn, 0.9, 8]; alist = Table[Arrow[{pts[[i]], pts[[i +
+ 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, 0.8, 1.4}, PlotRange
+ -> {{0.87, 1.38}, {1, 1.4}}, Frame -> True, ImageSize -> Medium, AspectRatio
+ -> Automatic, PlotStyle -> Thickness[0.005]]; f2 = Graphics[Prepend[Thickness@0.0
+03]@ Prepend[alist, Arrowheads[{{.018, 1}}]]]; Show[f1, f2, ImageSize ->
+ 500]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi"
+
+\end_inset
+
+cobweb图，方程
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+不动点迭代过程的示意图。黄色曲线表示
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+，蓝色直线是
+\begin_inset Formula $y=x$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在迭代过程的每一步中，
+\begin_inset Formula $\phi$
+\end_inset
+
+，
+\begin_inset Formula $\sbf E$
+\end_inset
+
+，
+\begin_inset Formula $\sbf D$
+\end_inset
+
+保持为常量，对应cobweb图中的直线走法。所以相应地，每一步迭代中
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+等材料属性也可当成常数，从而采用线性材料的算法处理。
+\end_layout
+
+\begin_layout Subsection
+改进的FPI
+\end_layout
+
+\begin_layout Standard
+求解器中使用改进的不动点迭代，
+\begin_inset Formula 
+\begin{align}
+ & x_{0}=\text{初始估计}\nonumber \\
+ & x_{i+1}=\lambda_{i}\,g(x_{i})+\overline{\lambda}_{i}\,x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my3}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $0<\lambda_{i}\le1$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\lambda}_{i}=1-\lambda_{i}$
+\end_inset
+
+。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+也可以写成
+\begin_inset Formula 
+\begin{align}
+ & x_{0}=\text{初始估计}\nonumber \\
+ & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\label{eq:my4}\\
+\text{with}\quad & \Delta x_{i+1}=x_{i+1}-x_{i},\quad\Delta g(x_{i})=g(x_{i})-x_{i}\nonumber 
+\end{align}
+
+\end_inset
+
+这里的
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta g(x_{i})$
+\end_inset
+
+都是有限值（不必是无穷小量），参考图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box ovalbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+FPI的核心思想：给出
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+的估计即可，用什么方法不重要，只要在根
+\begin_inset Formula $r_{0}$
+\end_inset
+
+处满足
+\begin_inset Formula $\Delta x_{\infty}=0$
+\end_inset
+
+，即方程渐近成立，
+\begin_inset Formula $\lambda$
+\end_inset
+
+参数会使迭代尽可能收敛到根。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+设
+\begin_inset Formula $r$
+\end_inset
+
+为方程
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+的一个根，假设迭代的初始值在
+\begin_inset Formula $r$
+\end_inset
+
+附近，定义前向误差
+\begin_inset Formula $e_{i}=\abs{x_{i}-r}$
+\end_inset
+
+，从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到
+\begin_inset Formula 
+\begin{equation}
+e_{i+1}=P_{i}\,e_{i}\label{eq:my5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $P_{i}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}$
+\end_inset
+
+，而
+\begin_inset Formula $c_{i}\in\left[x_{i},r\right]$
+\end_inset
+
+。工作中我们选取的
+\begin_inset Formula $\lambda$
+\end_inset
+
+满足
+\begin_inset Formula $0<\lambda_{i}\le1$
+\end_inset
+
+，图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出了误差的收敛域，即满足
+\begin_inset Formula $0\le P_{i}<1$
+\end_inset
+
+的区域。其中横轴是
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+，取值范围是
+\begin_inset Formula $(0,1]$
+\end_inset
+
+，纵轴为
+\begin_inset Formula $g'(c_{i})$
+\end_inset
+
+，取值范围是
+\begin_inset Formula $(-\infty,1]$
+\end_inset
+
+，当
+\begin_inset Formula $g'(c_{i})$
+\end_inset
+
+沿着纵轴下降时，
+\begin_inset Formula $\lambda$
+\end_inset
+
+的取值范围需要缩短，以满足误差收敛条件。也就是说通过在迭代步中调节
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+，可以使原本在FPI中发散的迭代序列获得收敛。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi2.pdf
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+RegionPlot[ 0 <= Abs[
+\backslash
+[Lambda]*gc + 1 - 
+\backslash
+[Lambda]] < 1, {
+\backslash
+[Lambda], 0, 1}, {gc, -5, 1.1} , BoundaryStyle -> Dashed, PlotStyle -> Automatic
+ , FrameLabel -> {"
+\backslash
+[Lambda]", "gc"}, ImageSize -> Medium]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi2"
+
+\end_inset
+
+改进FPI的收敛域
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+结合式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\label{eq:my4b}\\
+ & e_{i+1}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}e_{i}\label{eq:my5b}
+\end{align}
+
+\end_inset
+
+对于普通FPI中发散的问题，即
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+将疯狂膨胀，通过在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my4b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+引入
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+调节，可以使步长
+\begin_inset Formula $\Delta x_{i+1}$
+\end_inset
+
+变小，从而使迭代回路有机会收敛到根。但是另一方面，如果
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+取得过小，由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my5b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知此时
+\begin_inset Formula $e_{i+1}\approx e_{i}$
+\end_inset
+
+，也就是前向误差的收敛速度会变慢，没有两全其美的事。图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:fpi-err"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中给出了
+\begin_inset Formula $P$
+\end_inset
+
+随
+\begin_inset Formula $\lambda$
+\end_inset
+
+的变化，每根曲线对应不同的
+\begin_inset Formula $g'(c_{i})$
+\end_inset
+
+。欲令迭代收敛，
+\begin_inset Formula $P$
+\end_inset
+
+应该比较小，从图中看到， 随着
+\begin_inset Formula $\lambda$
+\end_inset
+
+从
+\begin_inset Formula $1$
+\end_inset
+
+到
+\begin_inset Formula $0$
+\end_inset
+
+，
+\begin_inset Formula $P$
+\end_inset
+
+先变小，然后逐渐回升到
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi-err.pdf
+	lyxscale 90
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fn[
+\backslash
+[Lambda]_, g_] := Abs[
+\backslash
+[Lambda] (g - 1) + 1]; lst = {1, 0.5, 0.0, -0.5, -1.0, -1.5, -2}; lst2 = ("g="
+ <> ToString[#] &) /@ lst; Plot[Evaluate[fn[
+\backslash
+[Lambda], #] & /@ lst] , {
+\backslash
+[Lambda], 0, 1} , PlotLabels -> lst2 , AxesLabel -> {"
+\backslash
+[Lambda]", "P"} , ImageSize -> Medium ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi-err"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于不动点问题
+\begin_inset Formula $x=g(x)$
+\end_inset
+
+，其中
+\begin_inset Formula $g(x)=-3/2x+5/2$
+\end_inset
+
+，由于
+\begin_inset Formula $\abs{g(c_{i})}=3/2>1$
+\end_inset
+
+，使用普通的FPI不会收敛，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a。但使用改进的FPI，并令
+\begin_inset Formula $\lambda=0.7$
+\end_inset
+
+，此时
+\begin_inset Formula $P=0.75$
+\end_inset
+
+，则迭代收敛，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b。可以看到对于改进的FPI，迭代点
+\begin_inset Formula $x_{i+1}$
+\end_inset
+
+并不落在
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+曲线上，而是落在
+\begin_inset Formula $y=x$
+\end_inset
+
+ 和 
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+两条曲线之间，即图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b中的红色曲线，它就是修正曲线。当迭代序列到达根
+\begin_inset Formula $r$
+\end_inset
+
+附近时，三条曲线是相交的，所以不会影响最终结果的正确性。可以看到，在改进的FPI中，迭代回路的水平或垂直线段长度
+\begin_inset Formula $\Delta x_{i+1}=x_{i+1}-x_{i}$
+\end_inset
+
+变小，得到了有效的控制。但是
+\begin_inset Formula $\lambda$
+\end_inset
+
+也不能取得过小，如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fpi3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c，此时虽然收敛性好，但是收敛速率下降，需要更多步才能找到根。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fpi3a.pdf
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fpi3b.pdf
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fpi3c.pdf
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fpi3"
+
+\end_inset
+
+图a：FPI；图b：改进的FPI，
+\begin_inset Formula $\lambda=0.7$
+\end_inset
+
+；图c：改进的FPI，但
+\begin_inset Formula $\lambda=0.1$
+\end_inset
+
+取值过小。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+终止条件
+\end_layout
+
+\begin_layout Standard
+FPI 收敛到给定
+\series bold
+容差
+\series default
+（TOL）的步数无法事先预测，必须决定何时终止算法，即
+\series bold
+终止条件
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+绝对终止条件是
+\begin_inset Formula 
+\begin{equation}
+\abs{x_{i+1}-x_{i}}<\mathrm{TOL}\label{eq:1.16}
+\end{equation}
+
+\end_inset
+
+或者当解不在 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近，使用相对误差条件
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\mathrm{TOL}\label{eq:1.17}
+\end{equation}
+
+\end_inset
+
+还有混合 绝对/相对误差 终止条件：
+\begin_inset Formula 
+\begin{equation}
+\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\mathrm{TOL}\label{eq:1.18}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+，常常用于 
+\begin_inset Formula $0$
+\end_inset
+
+ 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
+\end_layout
+
+\begin_layout Standard
+对应到有限元方程的迭代法，
+\begin_inset Formula 
+\[
+K'\,\delta\phi_{j}=b'
+\]
+
+\end_inset
+
+相当于要求 
+\begin_inset Formula $\delta\phi_{j}<\mathrm{TOL}$
+\end_inset
+
+，而
+\begin_inset Formula $\delta\phi_{j}$
+\end_inset
+
+的充分条件是 
+\begin_inset Formula $b'\to0$
+\end_inset
+
+，所以可把
+\begin_inset Formula $\norm{b}\to0$
+\end_inset
+
+，即残差趋于零当成算法终止条件。
 \end_layout
 
 \begin_layout Chapter
@@ -14642,848 +15609,6 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 \end_layout
 
 \begin_layout Section
-不动点迭代
-\end_layout
-
-\begin_layout Standard
-对于线性材料，
-\begin_inset Formula $\varepsilon$
-\end_inset
-
-是不依赖于
-\begin_inset Formula $\sbf E$
-\end_inset
-
-（等价于
-\begin_inset Formula $\phi$
-\end_inset
-
-）的常数，因此刚度矩阵的元素不依赖于
-\begin_inset Formula $\phi$
-\end_inset
-
-，方程是线性的。但对于一般的问题，
-\begin_inset Formula $\varepsilon$
-\end_inset
-
-可能依赖于
-\begin_inset Formula $\sbf E$
-\end_inset
-
-，方程组是
-\series bold
-非线性的
-\series default
-，形如 
-\begin_inset Formula $K_{ij}[\phi]\,\phi_{j}-b_{i}[\phi]=0$
-\end_inset
-
-。
-\series bold
-对于非线性问题，需要使用迭代法求解
-\series default
-。
-\end_layout
-
-\begin_layout Standard
-ref:《数值分析–Timothyp27/42，不动点迭代》。先考虑类似问题的简化版本，即一维情形。以下
-\begin_inset Formula $k(\phi)$
-\end_inset
-
-是单变量函数，
-\begin_inset Formula $b$
-\end_inset
-
-是数，
-\begin_inset Formula $\phi$
-\end_inset
-
-是普通变量：
-\begin_inset Formula 
-\[
-k(\phi)\phi=b\quad\Rightarrow\quad\phi=k^{-1}(\phi)b
-\]
-
-\end_inset
-
-实际上就是方程
-\begin_inset Formula $x=g(x)$
-\end_inset
-
-的一个特例，此类方程可以使用
-\series bold
-不动点迭代
-\series default
-（FPI）求解。
-\begin_inset Formula 
-\begin{equation}
-\begin{cases}
-x_{0}=\text{初始估计}\\
-x_{i+1}=g(x_{i}), & \text{其中}i=0,1,2,\cdots
-\end{cases}\label{eq:my3a}
-\end{equation}
-
-\end_inset
-
-如图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/cobweb2.pdf
-	lyxscale 50
-	scale 35
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-fpi[f_, x0_, n_] := NestList[f, x0, n]; cobs[f_, x0_, 0] := {{x0, 0}, {x0,
- f@x0}}; cobs[f_, x0_, n_] := Module[{tmp, r1, r2, r3, r4}, tmp = fpi[f,
- x0, n]; r1 = Most@tmp; r2 = ReplacePart[r1, 1 -> 0]; r3 = r1; r4 = Rest@tmp;
- Riffle[Transpose@{r1, r2}, Transpose@{r3, r4}]]; (*figure*) fn = -1/5 #^2
- + 3/2 &; pts = cobs[fn, 0.9, 8]; alist = Table[Arrow[{pts[[i]], pts[[i +
- 1]]}], {i, 1, Length@pts - 1}]; f1 = Plot[{x, fn@x}, {x, 0.8, 1.4}, PlotRange
- -> {{0.87, 1.38}, {1, 1.4}}, Frame -> True, ImageSize -> Medium, AspectRatio
- -> Automatic, PlotStyle -> Thickness[0.005]]; f2 = Graphics[Prepend[Thickness@0.0
-03]@ Prepend[alist, Arrowheads[{{.018, 1}}]]]; Show[f1, f2, ImageSize ->
- 500]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:fpi"
-
-\end_inset
-
-cobweb图，方程
-\begin_inset Formula $x=g(x)$
-\end_inset
-
-不动点迭代过程的示意图。黄色曲线表示
-\begin_inset Formula $y=g(x)$
-\end_inset
-
-，蓝色直线是
-\begin_inset Formula $y=x$
-\end_inset
-
-。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在迭代过程的每一步中，
-\begin_inset Formula $\phi$
-\end_inset
-
-，
-\begin_inset Formula $\sbf E$
-\end_inset
-
-，
-\begin_inset Formula $\sbf D$
-\end_inset
-
-保持为常量，对应cobweb图中的直线走法。所以相应地，每一步迭代中
-\begin_inset Formula $\varepsilon$
-\end_inset
-
-等材料属性也可当成常数，从而采用线性材料的算法处理。
-\end_layout
-
-\begin_layout Subsection
-改进的FPI
-\end_layout
-
-\begin_layout Standard
-求解器中使用改进的不动点迭代，
-\begin_inset Formula 
-\begin{align}
- & x_{0}=\text{初始估计}\nonumber \\
- & x_{i+1}=\lambda_{i}\,g(x_{i})+\overline{\lambda}_{i}\,x_{i},\quad\text{其中}i=0,1,2,\cdots\label{eq:my3}
-\end{align}
-
-\end_inset
-
-其中
-\begin_inset Formula $0<\lambda_{i}\le1$
-\end_inset
-
-，
-\begin_inset Formula $\overline{\lambda}_{i}=1-\lambda_{i}$
-\end_inset
-
-。
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-也可以写成
-\begin_inset Formula 
-\begin{align}
- & x_{0}=\text{初始估计}\nonumber \\
- & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\label{eq:my4}\\
-\text{with}\quad & \Delta x_{i+1}=x_{i+1}-x_{i},\quad\Delta g(x_{i})=g(x_{i})-x_{i}\nonumber 
-\end{align}
-
-\end_inset
-
-这里的
-\begin_inset Formula $\Delta x_{i+1}$
-\end_inset
-
-，
-\begin_inset Formula $\Delta g(x_{i})$
-\end_inset
-
-都是有限值（不必是无穷小量），参考图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-设
-\begin_inset Formula $r$
-\end_inset
-
-为方程
-\begin_inset Formula $x=g(x)$
-\end_inset
-
-的一个根，假设迭代的初始值在
-\begin_inset Formula $r$
-\end_inset
-
-附近，定义前向误差
-\begin_inset Formula $e_{i}=\abs{x_{i}-r}$
-\end_inset
-
-，从
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-可以得到
-\begin_inset Formula 
-\begin{equation}
-e_{i+1}=P_{i}\,e_{i}\label{eq:my5}
-\end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula $P_{i}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}$
-\end_inset
-
-，而
-\begin_inset Formula $c_{i}\in\left[x_{i},r\right]$
-\end_inset
-
-。工作中我们选取的
-\begin_inset Formula $\lambda$
-\end_inset
-
-满足
-\begin_inset Formula $0<\lambda_{i}\le1$
-\end_inset
-
-，图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-给出了误差的收敛域，即满足
-\begin_inset Formula $0\le P_{i}<1$
-\end_inset
-
-的区域。其中横轴是
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
-，取值范围是
-\begin_inset Formula $(0,1]$
-\end_inset
-
-，纵轴为
-\begin_inset Formula $g'(c_{i})$
-\end_inset
-
-，取值范围是
-\begin_inset Formula $(-\infty,1]$
-\end_inset
-
-，当
-\begin_inset Formula $g'(c_{i})$
-\end_inset
-
-沿着纵轴下降时，
-\begin_inset Formula $\lambda$
-\end_inset
-
-的取值范围需要缩短，以满足误差收敛条件。也就是说通过在迭代步中调节
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
-，可以使原本在FPI中发散的迭代序列获得收敛。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/fpi2.pdf
-	lyxscale 70
-	scale 40
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-RegionPlot[ 0 <= Abs[
-\backslash
-[Lambda]*gc + 1 - 
-\backslash
-[Lambda]] < 1, {
-\backslash
-[Lambda], 0, 1}, {gc, -5, 1.1} , BoundaryStyle -> Dashed, PlotStyle -> Automatic
- , FrameLabel -> {"
-\backslash
-[Lambda]", "gc"}, ImageSize -> Medium]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:fpi2"
-
-\end_inset
-
-改进FPI的收敛域
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-结合式
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-、
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align}
- & \Delta x_{i+1}=\lambda_{i}\,\Delta g(x_{i}),\label{eq:my4b}\\
- & e_{i+1}=\abs{\lambda_{i}\,g'(c_{i})+\overline{\lambda}_{i}}e_{i}\label{eq:my5b}
-\end{align}
-
-\end_inset
-
-对于普通FPI中发散的问题，即
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my3a"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的
-\begin_inset Formula $\Delta x_{i+1}$
-\end_inset
-
-将疯狂膨胀，通过在
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my4b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-引入
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
-调节，可以使步长
-\begin_inset Formula $\Delta x_{i+1}$
-\end_inset
-
-变小，从而使迭代回路有机会收敛到根。但是另一方面，如果
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
-取得过小，由
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my5b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-可知此时
-\begin_inset Formula $e_{i+1}\approx e_{i}$
-\end_inset
-
-，也就是前向误差的收敛速度会变慢，没有两全其美的事。图
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:fpi-err"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中给出了
-\begin_inset Formula $P$
-\end_inset
-
-随
-\begin_inset Formula $\lambda$
-\end_inset
-
-的变化，每根曲线对应不同的
-\begin_inset Formula $g'(c_{i})$
-\end_inset
-
-。欲令迭代收敛，
-\begin_inset Formula $P$
-\end_inset
-
-应该比较小，从图中看到， 随着
-\begin_inset Formula $\lambda$
-\end_inset
-
-从
-\begin_inset Formula $1$
-\end_inset
-
-到
-\begin_inset Formula $0$
-\end_inset
-
-，
-\begin_inset Formula $P$
-\end_inset
-
-先变小，然后逐渐回升到
-\begin_inset Formula $1$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/fpi-err.pdf
-	lyxscale 90
-	scale 50
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-fn[
-\backslash
-[Lambda]_, g_] := Abs[
-\backslash
-[Lambda] (g - 1) + 1]; lst = {1, 0.5, 0.0, -0.5, -1.0, -1.5, -2}; lst2 = ("g="
- <> ToString[#] &) /@ lst; Plot[Evaluate[fn[
-\backslash
-[Lambda], #] & /@ lst] , {
-\backslash
-[Lambda], 0, 1} , PlotLabels -> lst2 , AxesLabel -> {"
-\backslash
-[Lambda]", "P"} , ImageSize -> Medium ]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:fpi-err"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-对于不动点问题
-\begin_inset Formula $x=g(x)$
-\end_inset
-
-，其中
-\begin_inset Formula $g(x)=-3/2x+5/2$
-\end_inset
-
-，由于
-\begin_inset Formula $\abs{g(c_{i})}=3/2>1$
-\end_inset
-
-，使用普通的FPI不会收敛，如图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-a。但使用改进的FPI，并令
-\begin_inset Formula $\lambda=0.7$
-\end_inset
-
-，此时
-\begin_inset Formula $P=0.75$
-\end_inset
-
-，则迭代收敛，如图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-b。可以看到对于改进的FPI，迭代点
-\begin_inset Formula $x_{i+1}$
-\end_inset
-
-并不落在
-\begin_inset Formula $y=g(x)$
-\end_inset
-
-曲线上，而是落在
-\begin_inset Formula $y=x$
-\end_inset
-
- 和 
-\begin_inset Formula $y=g(x)$
-\end_inset
-
-两条曲线之间，即图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-b中的红色曲线，它就是修正曲线。当迭代序列到达根
-\begin_inset Formula $r$
-\end_inset
-
-附近时，三条曲线是相交的，所以不会影响最终结果的正确性。可以看到，在改进的FPI中，迭代回路的水平或垂直线段长度
-\begin_inset Formula $\Delta x_{i+1}=x_{i+1}-x_{i}$
-\end_inset
-
-变小，得到了有效的控制。但是
-\begin_inset Formula $\lambda$
-\end_inset
-
-也不能取得过小，如图
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fig:fpi3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-c，此时虽然收敛性好，但是收敛速率下降，需要更多步才能找到根。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/fpi3a.pdf
-	lyxscale 50
-	scale 40
-
-\end_inset
-
-
-\begin_inset space \enskip{}
-\end_inset
-
-
-\begin_inset Graphics
-	filename inset/fpi3b.pdf
-	lyxscale 50
-	scale 40
-
-\end_inset
-
-
-\begin_inset space \enskip{}
-\end_inset
-
-
-\begin_inset Graphics
-	filename inset/fpi3c.pdf
-	lyxscale 50
-	scale 40
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:fpi3"
-
-\end_inset
-
-图a：FPI；图b：改进的FPI，
-\begin_inset Formula $\lambda=0.7$
-\end_inset
-
-；图c：改进的FPI，但
-\begin_inset Formula $\lambda=0.1$
-\end_inset
-
-取值过小。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-终止条件
-\end_layout
-
-\begin_layout Standard
-FPI 收敛到给定
-\series bold
-容差
-\series default
-（TOL）的步数无法事先预测，必须决定何时终止算法，即
-\series bold
-终止条件
-\series default
-。
-\end_layout
-
-\begin_layout Standard
-绝对终止条件是
-\begin_inset Formula 
-\begin{equation}
-\abs{x_{i+1}-x_{i}}<\mathrm{TOL}\label{eq:1.16}
-\end{equation}
-
-\end_inset
-
-或者当解不在 
-\begin_inset Formula $0$
-\end_inset
-
- 附近，使用相对误差条件
-\begin_inset Formula 
-\begin{equation}
-\frac{\abs{x_{i+1}-x_{i}}}{\abs{x_{i+1}}}<\mathrm{TOL}\label{eq:1.17}
-\end{equation}
-
-\end_inset
-
-还有混合 绝对/相对误差 终止条件：
-\begin_inset Formula 
-\begin{equation}
-\frac{\abs{x_{i+1}-x_{i}}}{\max(\abs{x_{i+1}},\theta)}<\mathrm{TOL}\label{eq:1.18}
-\end{equation}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\theta>0$
-\end_inset
-
-，常常用于 
-\begin_inset Formula $0$
-\end_inset
-
- 附近的解。此外，好的 FPI 代码应当在收敛失败的时候，设置最大迭代步数的限制。
-\end_layout
-
-\begin_layout Standard
-对应到有限元方程的迭代法，
-\begin_inset Formula 
-\[
-K'\,\delta\phi_{j}=b'
-\]
-
-\end_inset
-
-相当于要求 
-\begin_inset Formula $\delta\phi_{j}<\mathrm{TOL}$
-\end_inset
-
-，而
-\begin_inset Formula $\delta\phi_{j}$
-\end_inset
-
-的充分条件是 
-\begin_inset Formula $b'\to0$
-\end_inset
-
-，所以可把
-\begin_inset Formula $\norm{b}\to0$
-\end_inset
-
-，即残差趋于零当成算法终止条件。
-\end_layout
-
-\begin_layout Section
 场的迭代方程
 \end_layout
 
@@ -15504,43 +15629,128 @@ noprefix "false"
 
 得
 \begin_inset Formula 
-\begin{align*}
- & D_{0}=\text{初始估计}\\
- & \Delta D_{i+1}=\lambda_{i}\left[K^{-1}\,b-D_{i}\right].
-\end{align*}
-
-\end_inset
-
-这里以电位移
-\begin_inset Formula $D=-\varepsilon\cdot\nabla\phi$
-\end_inset
-
-作为待求变量，其中
-\begin_inset Formula $K$
-\end_inset
-
-，
-\begin_inset Formula $b$
-\end_inset
-
-都可能依赖于
-\begin_inset Formula $D$
-\end_inset
-
-的值。左右同乘刚度矩阵
-\begin_inset Formula $K$
-\end_inset
-
-，写成通常的形式
-\begin_inset Formula 
 \begin{align}
- & D_{0}=\text{初始估计},\nonumber \\
- & K\,\Delta D_{i+1}=\lambda_{i}\left[b-K\,D_{i}\right].\label{eq:gal3a}
+ & D_{0}=\text{初始估计}\nonumber \\
+ & \Delta D_{i+1}=\lambda_{i}\left[K^{-1}\,b-D_{i}\right].\label{eq:gal3a}
 \end{align}
 
 \end_inset
 
+这里的待求自由度实际上还是节点电势，
+\begin_inset Formula $D=-\varepsilon\cdot\nabla N_{j}\phi_{j}$
+\end_inset
 
+。只不过材料的曲线
+\begin_inset Formula $D=D(E)$
+\end_inset
+
+ 是非线性的（一般情况下也可能各向异性），也就是
+\begin_inset Formula $D$
+\end_inset
+
+和
+\begin_inset Formula $\phi$
+\end_inset
+
+的关系是非线性的。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal3a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $K^{-1}$
+\end_inset
+
+不太友好，因此让我们回忆FPI的本质：它只需要给出根
+\begin_inset Formula $x_{0}$
+\end_inset
+
+附近，方程左右不平衡性
+\begin_inset Formula $\Delta x$
+\end_inset
+
+的估计方程，因此直接对
+\begin_inset Formula $D$
+\end_inset
+
+进行线性化
+\begin_inset Formula 
+\begin{equation}
+KD=b,\quad\&\quad D=D^{0}+\left.\frac{\partial D}{\partial E}\right|_{D^{0}}\Delta E\label{eq:gal3b}
+\end{equation}
+
+\end_inset
+
+联合给出
+\begin_inset Formula 
+\begin{align}
+ & D_{0}=\text{初始估计},\nonumber \\
+ & K\,\Delta D_{i+1}=\lambda_{i}\left[b-K\,D_{i}\right].\label{eq:gal3c}
+\end{align}
+
+\end_inset
+
+其中已经引入了改善因子
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+。在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal3b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，随着
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ 收敛到根（渐进意义），
+\begin_inset Formula $\Delta D$
+\end_inset
+
+越来越小，
+\begin_inset Formula $\lim_{i\to\infty}\Delta D=\left.\frac{\partial D}{\partial E}\right|_{D^{0}}\Delta E$
+\end_inset
+
+。当
+\begin_inset Formula $\Delta D_{i+1}$
+\end_inset
+
+和
+\begin_inset Formula $b-K\,D_{i}$
+\end_inset
+
+都趋于零时，方程的不平衡性消除，迭代收敛到根；
+\begin_inset Formula $\lambda$
+\end_inset
+
+的取值对最终根的位置没有影响，只是改善了这个过程。另一方面，也可以理解成
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal3a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左右同乘刚度矩阵
+\begin_inset Formula $K$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:gal2"
@@ -15558,19 +15768,7 @@ noprefix "false"
 
 \end_inset
 
-
-\begin_inset Formula $D=D(E)$
-\end_inset
-
- 是材料的非线性曲线（一般情况下也可各向异性）。当
-\begin_inset Formula $D_{i}$
-\end_inset
-
-序列收敛到根附近时，必然满足
-\begin_inset Formula $\Delta D\approx\frac{\partial D}{\partial E}\Delta E$
-\end_inset
-
-，于是得到（以下变化量用
+于是得到（以下变化量用
 \begin_inset Formula $\delta\phi$
 \end_inset
 
