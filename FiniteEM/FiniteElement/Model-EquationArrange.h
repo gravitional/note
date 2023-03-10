@@ -78,10 +78,10 @@ private:
     // rank-> 方程编号; 如果节点有N个, 自由度为d, _equNo 的size是 N*d,
     // 受约束自由度的编号为-1
     std::vector<int> _equNo;
-    std::vector<int> _nodeIndex; // rank-> 节点编号的rank,
-    std::vector<int> _edgeIndex; // rank -> edge 编号的rank
-    std::vector<int> _eleIndex;  // rank -> ele 编号的rank
-    std::vector<int> _auxIndex;  // rank -> lag 编号的rank
+    std::vector<int> _nodeIndex; // rank-> 节点方程号 rank,
+    std::vector<int> _edgeIndex; // rank -> edge 节点方程号 rank
+    std::vector<int> _eleIndex;  // rank -> ele 节点方程号 rank
+    std::vector<int> _auxIndex;  // rank -> lag 节点方程号 rank
 
     std::vector<EqualDof> _nodeEqualDof;
     std::vector<EqualDof> _edgeEqualDof;
