@@ -15636,6 +15636,10 @@ noprefix "false"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
 这里的待求自由度实际上还是节点电势，
 \begin_inset Formula $D=-\varepsilon\cdot\nabla N_{j}\phi_{j}$
 \end_inset
@@ -15649,10 +15653,13 @@ noprefix "false"
 \end_inset
 
 和
-\begin_inset Formula $\phi$
+\begin_inset Formula $\phi_{j}$
 \end_inset
 
 的关系是非线性的。
+\end_layout
+
+\begin_layout Itemize
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:gal3a"
@@ -15663,10 +15670,22 @@ noprefix "false"
 \end_inset
 
 中的
+\begin_inset Formula $K$
+\end_inset
+
+，
+\begin_inset Formula $b$
+\end_inset
+
+ 也可能依赖于
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+。此外逆矩阵
 \begin_inset Formula $K^{-1}$
 \end_inset
 
-不太友好，因此让我们回忆FPI的本质：它只需要给出根
+算起来比较麻烦。让我们回忆FPI的本质：它只需要给出根
 \begin_inset Formula $x_{0}$
 \end_inset
 
@@ -15674,7 +15693,11 @@ noprefix "false"
 \begin_inset Formula $\Delta x$
 \end_inset
 
-的估计方程，因此直接对
+的估计方程。
+\end_layout
+
+\begin_layout Standard
+因此直接对
 \begin_inset Formula $D$
 \end_inset
 
@@ -15690,13 +15713,13 @@ KD=b,\quad\&\quad D=D^{0}+\left.\frac{\partial D}{\partial E}\right|_{D^{0}}\Del
 \begin_inset Formula 
 \begin{align}
  & D_{0}=\text{初始估计},\nonumber \\
- & K\,\Delta D_{i+1}=\lambda_{i}\left[b-K\,D_{i}\right].\label{eq:gal3c}
+ & K_{i}\,\Delta D_{i+1}=\lambda_{i,\beta}\left[b_{i}-K_{i}\,D_{i}\right].\label{eq:gal3c}
 \end{align}
 
 \end_inset
 
 其中已经引入了改善因子
-\begin_inset Formula $\lambda_{i}$
+\begin_inset Formula $\lambda_{i,\beta}$
 \end_inset
 
 。在
@@ -15748,6 +15771,102 @@ noprefix "false"
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Itemize
+在程序中，计算 
+\begin_inset Formula $K$
+\end_inset
+
+和
+\begin_inset Formula $F_{\text{in}}$
+\end_inset
+
+（内力，见下文）使用的
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+不是同步的。指标
+\begin_inset Formula $i$
+\end_inset
+
+ 标记非线性迭代步，
+\begin_inset Formula $\beta$
+\end_inset
+
+标记线搜索次数；每次
+\series bold
+非线性迭代
+\series default
+都会再调用
+\series bold
+线搜索迭代
+\series default
+确定合适的
+\begin_inset Formula $\lambda_{i,\beta}$
+\end_inset
+
+，即每一个
+\begin_inset Formula $i$
+\end_inset
+
+可能对应多个
+\begin_inset Formula $\beta$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+每一步非线性迭代中，
+\begin_inset Formula $K$
+\end_inset
+
+可以保持不变，即
+\begin_inset Formula $K_{i}$
+\end_inset
+
+；而 
+\begin_inset Formula $F_{\text{in}}$
+\end_inset
+
+ 需要随着 
+\begin_inset Formula $\lambda_{i,\beta}$
+\end_inset
+
+ 不停更新；当线搜索成功时，使用此时的
+\begin_inset Formula $K_{i}$
+\end_inset
+
+，
+\begin_inset Formula $F_{\text{in};i,\beta}$
+\end_inset
+
+ 计算新的增量
+\begin_inset Formula $\Delta\phi_{j}$
+\end_inset
+
+。因此 
+\begin_inset Formula $K_{i}$
+\end_inset
+
+ 的计算中，
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+ 使用 ACCUM 的结果； 
+\begin_inset Formula $F_{\text{in}}$
+\end_inset
+
+ 的计算中，
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+ 使用 
+\begin_inset Formula $\text{ACCUM}+\text{SEARCH}$
+\end_inset
+
+ 的结果。当达到收敛值时，SEACH 为零，两边是同步的。
 \end_layout
 
 \begin_layout Standard
@@ -16135,7 +16254,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Remark
-也可以换一种写法。边界条件
+以上符号对应有另一种写法。边界条件
 \begin_inset Formula $\varepsilon\frac{\partial\phi}{\partial n}=q-\gamma\phi$
 \end_inset
 
@@ -16226,7 +16345,19 @@ noprefix "false"
 
 \end_inset
 
-即可。
+即可。非线性迭代中，
+\begin_inset Formula $q$
+\end_inset
+
+ 对应的
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+ 是 ACCUM+SEARCH。达到收敛时，方程两边是同步的，SEARCH为零，即
+\begin_inset Formula $\delta\phi=0$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -16747,6 +16878,18 @@ P_GRt，
 
 \begin_layout Enumerate
 从单元的局域刚度矩阵, 组装全局矩阵的过程，见 金建铭note 4.3.3.2。
+\end_layout
+
+\begin_layout Enumerate
+STPBEG_POS：完整解，上一时间步的解。
+\end_layout
+
+\begin_layout Enumerate
+STPBEG_ACCUM：非线性迭代某一步的完整解，逐渐逼近收敛解；当且仅当 非线性迭代 成功时，累加上线搜索值。
+\end_layout
+
+\begin_layout Enumerate
+STP_SEARCH：线搜索解，自由度的增量，随着线搜索迭试探不停变小。
 \end_layout
 
 \begin_layout Section

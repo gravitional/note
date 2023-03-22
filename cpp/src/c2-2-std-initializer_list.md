@@ -1,7 +1,10 @@
-# std::initializer_list
+# c++ 初始化器列表, std::initializer_list
+
+[C/C++编程：初始化器列表构造函数](https://blog.csdn.net/zhizhengguan/article/details/112305541)
+
+`POD`(Plain Old Data, 即没有构造, 析构和虚函数的类或结构体)
 
 勿与成员初始化器列表混淆
-
 在 header `<initializer_list>` 定义
 
 ```cpp
