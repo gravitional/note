@@ -6161,15 +6161,27 @@ x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\le
 \begin_inset Formula $\overline{\beta}=1-\beta$
 \end_inset
 
-。以下将
-\begin_inset Formula $t+\Delta t$
+。
+\begin_inset Formula $\beta=1$
 \end_inset
 
-时刻离散成
+ 对应后向欧拉。
+\series bold
+以下用
+\begin_inset Formula $n$
+\end_inset
+
+标记时间步
+\series default
+，即指标 
 \begin_inset Formula $n+1$
 \end_inset
 
-指标，联立方程
+ 对应时刻 
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+，联立方程
 \begin_inset Formula 
 \begin{align*}
  & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
@@ -6226,14 +6238,30 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Example
 如果使用
 \begin_inset Formula $\lambda$
 \end_inset
 
 -FPI 求解此方程，
+\series bold
+并用
+\begin_inset Formula $w$
+\end_inset
+
+标记NLI（非线性）迭代步， 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 标记线搜索试探步
+\series default
+（线搜索结果是覆盖的，即只采用最后一次）
 \begin_inset Formula 
 \[
-A\Delta x_{\gamma+1}^{n+1}=\lambda\left[B-AX_{\gamma}^{n+1}\right]
+A\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[B-AX_{w}^{n+1}\right]
 \]
 
 \end_inset
@@ -6241,7 +6269,7 @@ A\Delta x_{\gamma+1}^{n+1}=\lambda\left[B-AX_{\gamma}^{n+1}\right]
 将对应矩阵代入得
 \begin_inset Formula 
 \begin{equation}
-A_{1}\Delta x_{\gamma+1}^{n+1}=\lambda\left[A_{2}x^{n}-\beta\,{\color{blue}F^{n+1}}-\overline{\beta}\,F^{n}+B_{1}-A_{1}x_{\gamma}^{n+1}\right]\label{eq:my30}
+A_{1}\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[A_{2}x^{n}-\beta\,{\color{blue}F^{n+1}}-\overline{\beta}\,F^{n}+B_{1}-A_{1}x_{w}^{n+1}\right]\label{eq:my30}
 \end{equation}
 
 \end_inset
@@ -6257,29 +6285,57 @@ noprefix "false"
 \end_inset
 
 中
-\begin_inset Formula ${\color{blue}F^{n+1}}=F\left(x_{\gamma+1}^{n+1}\right)$
+\begin_inset Formula ${\color{blue}F^{n+1}}=F\left(x_{w+1}^{n+1}\right)$
 \end_inset
 
 ，所以是隐式的。为转换成显式方程，作泰勒展开
 \begin_inset Formula 
 \[
-F^{n+1}=F\left(x_{\gamma+1}^{n+1}\right)=F_{\gamma}^{n+1}+F_{\gamma}^{(1),n+1}\Delta x_{\gamma+1}^{n+1}
+F^{n+1}=F\left(x_{w+1}^{n+1}\right)=F_{w}^{n+1}+F_{w}^{(1),n+1}\Delta x_{w+1}^{n+1}
 \]
 
 \end_inset
 
 其中
-\begin_inset Formula $F_{\gamma}^{(1),n+1}$
+\begin_inset Formula $F_{w}^{(1),n+1}$
 \end_inset
 
-表示一阶导数，
-\begin_inset Formula $F_{\gamma}^{n+1}=F\left(x_{\gamma}^{n+1}\right)$
+表示
+\begin_inset Formula $F$
 \end_inset
 
-表示零阶值。
+在
+\begin_inset Formula $x_{w}^{n+1}$
+\end_inset
+
+ 的一阶导数；
+\begin_inset Formula $F_{w}^{n+1}=F\left(x_{w}^{n+1}\right)$
+\end_inset
+
+表示
+\begin_inset Formula $F$
+\end_inset
+
+在
+\begin_inset Formula $x_{w}^{n+1}$
+\end_inset
+
+ 的零阶值；
+\begin_inset Formula $F^{n}$
+\end_inset
+
+表示
+\begin_inset Formula $F$
+\end_inset
+
+在
+\begin_inset Formula $x^{n}$
+\end_inset
+
+的值（上一时间步）。
 \begin_inset Formula 
 \[
-\left[A_{1}+\beta F_{\gamma}^{(1),n+1}\right]\Delta x_{\gamma+1}^{n+1}=\lambda\left[B_{1}+A_{2}x^{n}-\beta F_{\gamma}^{(0),n+1}-\overline{\beta}\,F^{n}-A_{1}x_{\gamma}^{n+1}\right]
+\left[A_{1}+\beta F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[B_{1}+A_{2}x^{n}-\beta F_{w}^{(0),n+1}-\overline{\beta}\,F^{n}-A_{1}x_{w}^{n+1}\right]
 \]
 
 \end_inset
@@ -6287,8 +6343,8 @@ F^{n+1}=F\left(x_{\gamma+1}^{n+1}\right)=F_{\gamma}^{n+1}+F_{\gamma}^{(1),n+1}\D
 整理
 \begin_inset Formula 
 \begin{align*}
-\left[\frac{M}{\Delta t}+\beta K+\beta F_{\gamma}^{(1),n+1}\right]\Delta x_{\gamma+1}^{n+1}= & \lambda\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta F_{\gamma}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
- & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{\gamma}^{n+1}\right)-\overline{\beta}\,K\,x^{n}-\beta\,K\,x_{\gamma}^{n+1}}\Big]
+\left[\frac{M}{\Delta t}+\beta K+\beta F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,\gamma}\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta F_{w}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
+ & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{w}^{n+1}\right)-\overline{\beta}\,K\,x^{n}-\beta\,K\,x_{w}^{n+1}}\Big]
 \end{align*}
 
 \end_inset
@@ -6301,7 +6357,11 @@ beta方法的系数具有对称性，作
 \begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
 \end_inset
 
-对换，对应
+对换（即XuLei的选取方式），
+\begin_inset Formula $\beta=0$
+\end_inset
+
+对应后向欧拉。
 \begin_inset Formula 
 \[
 x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+1}
@@ -6312,8 +6372,8 @@ x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+
 表达式为
 \begin_inset Formula 
 \begin{align*}
-\left[\frac{M}{\Delta t}+\overline{\beta}\,K+\overline{\beta}\,F_{\gamma}^{(1),n+1}\right]\Delta x_{\gamma+1}^{n+1}= & \lambda\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}\,F_{\gamma}^{n+1}+\beta\,F^{n}}\right)\\
- & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{\gamma}^{n+1}\right)-\beta\,K\,x^{n}-\overline{\beta}\,K\,x_{\gamma}^{n+1}}\Big]
+\left[\frac{M}{\Delta t}+\overline{\beta}\,K+\overline{\beta}\,F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,\gamma}\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}\,F_{w}^{n+1}+\beta\,F^{n}}\right)\\
+ & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{w}^{n+1}\right)-\beta\,K\,x^{n}-\overline{\beta}\,K\,x_{w}^{n+1}}\Big]
 \end{align*}
 
 \end_inset
@@ -6333,7 +6393,7 @@ x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+
 \begin_inset Formula 
 \begin{align}
 \int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a}\\
- & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot\sbf J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b}\\
  & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c}
 \end{align}
 
@@ -6398,6 +6458,39 @@ noprefix "false"
 \end_inset
 
 作线性化。
+\end_layout
+
+\begin_layout Remark
+迁移项：
+\begin_inset Formula ${\color{blue}\sbf J_{M_{i}}}=-z_{i}u_{i}F\,C_{i}\nabla\phi$
+\end_inset
+
+，如果将 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ 和
+\begin_inset Formula $\phi$
+\end_inset
+
+ 强行脱耦，则
+\begin_inset Formula ${\color{blue}\sbf J_{M_{i}}}$
+\end_inset
+
+就是上文中的 
+\begin_inset Formula $F[C_{i}(t)]$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+K_{\text{e}}:\, & -N_{m}N_{n}\,z_{i}u_{i}F\,\left(\sbf n\cdot\nabla\phi\right)\\
+F_{\text{in}}:\, & -N_{m}\,z_{i}u_{i}F\,C_{i}\left(\sbf n\cdot\nabla\phi\right)
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -24477,6 +24570,10 @@ noprefix "false"
 求导。
 \end_layout
 
+\begin_layout Enumerate
+表达式右边标出了维度。
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -26156,7 +26253,7 @@ noprefix "false"
 \end_inset
 
 ： 表示有限元中的采样点（node）， 
-\begin_inset Formula $\alpha\in{1,2,\cdots,N}$
+\begin_inset Formula $\alpha\in{1,2,\cdots,S}$
 \end_inset
 
 （希腊字母），线性单元
@@ -26202,6 +26299,10 @@ noprefix "false"
 \end_inset
 
  求导。
+\end_layout
+
+\begin_layout Enumerate
+表达式右边标出了维度。
 \end_layout
 
 \begin_layout Standard
@@ -26342,7 +26443,7 @@ E_{ij}=\left[\begin{array}{ccc}
 \begin_inset Formula $e_{1},e_{2},e_{3}$
 \end_inset
 
-。对于一阶单元
+。例如对于一阶单元
 \begin_inset Formula 
 \[
 E_{ij}=\frac{1}{\Delta\ell}\left[\begin{array}{cc}
@@ -26426,16 +26527,16 @@ L_{1q}=\frac{1}{2}\left[\begin{array}{cc}
 形函数 对 局域几何坐标 的梯度
 \begin_inset Formula 
 \[
-{\color{blue}\partial_{X}^{\prime}}\,N_{\alpha}={\color{blue}L_{11}^{-1}\,\partial_{\xi}}N_{\alpha},\quad[1,N]
+{\color{blue}\partial_{X}^{\prime}}\,N_{\alpha}={\color{blue}L_{11}^{-1}\,\partial_{\xi}}N_{\alpha},\quad[1,S]
 \]
 
 \end_inset
 
 其中
-\begin_inset Formula $N$
+\begin_inset Formula $S$
 \end_inset
 
-是节点的数目，
+是节点的总数，
 \begin_inset Formula $L^{-1}$
 \end_inset
 
@@ -26453,7 +26554,7 @@ noprefix "false"
 \begin_inset Formula $(1,1)$
 \end_inset
 
-。对于一阶单元
+。例如对于一阶单元
 \begin_inset Formula 
 \[
 {\color{blue}\partial_{X}^{\prime}}\,N_{\alpha}=\frac{1}{\Delta\ell}\left[\begin{array}{cc}
@@ -26462,7 +26563,7 @@ noprefix "false"
 
 \end_inset
 
-至此，
+至此，切向导数
 \begin_inset Formula $\partial_{t}N_{i}^{\ell}$
 \end_inset
 

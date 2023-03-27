@@ -73,8 +73,12 @@ FE_API FieldData &getFieldData(const std::string &name)
     return objects()->GetRef<FieldData>(name);
 }
 
-// 上面的 SingleFieldData, 用于存储 eleID -> vector
-// 单个场数据类型，本质为二维不定长数组，由ID值直接索引对应实数向量
+// 上面的 SingleFieldData, 用于存储 eleID -> Data Vector;
+// Data Vector 例如: ele内多个节点上的场量V，场量V可以是标量(1维度) 或者矢量(3维)
+// { v_11, v_12, V_13, V_21, V_22, V_23, ....}; V_ij 表示 节点i, 场量V 的分量 j
+
+// 单个场数据类型，本质为二维不定长数组，由ID值直接索引对应实数向量;
+// 指标1 为 ID值，如eleID; 指标2 为内部ID, 例如 ele节点ID，或高斯点ID
 class SingleFieldData
 {
 public:
