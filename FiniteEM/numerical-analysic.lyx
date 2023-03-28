@@ -2893,6 +2893,267 @@ p94/109;
 page 27/42
 \end_layout
 
+\begin_layout Section
+用于对称正定矩阵的方法
+\end_layout
+
+\begin_layout Section
+非线性方程组
+\end_layout
+
+\begin_layout Standard
+本节中将描述牛顿方法及其变体，并用于求解非线性方程组。
+\end_layout
+
+\begin_layout Subsection
+多元牛顿方法
+\end_layout
+
+\begin_layout Standard
+单变量的牛顿方法
+\begin_inset Formula 
+\[
+x_{k+1}=x_{k}-\frac{f(x_{k})}{f'(x_{k})}
+\]
+
+\end_inset
+
+提供了多元牛顿方法的主要轮廓。两种方法都是根据泰勒展开的线性近似推导得到，例如令
+\begin_inset Formula 
+\begin{align}
+ & f_{1}\left(u,v,w\right)=0\nonumber \\
+ & f_{2}\left(u,v,w\right)=0\nonumber \\
+ & f_{3}\left(u,v,w\right)=0\label{eq:2.49}
+\end{align}
+
+\end_inset
+
+是三个非线性方程，具有三个未知变量
+\begin_inset Formula $u$
+\end_inset
+
+、
+\begin_inset Formula $v$
+\end_inset
+
+、
+\begin_inset Formula $w$
+\end_inset
+
+ 。定义向量值函数 
+\begin_inset Formula 
+\[
+F(u,v,w)=\left(f_{1},f_{2},f_{3}\right),
+\]
+
+\end_inset
+
+将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.49"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的问题表示为
+\begin_inset Formula $F(x)=0$
+\end_inset
+
+，其中
+\begin_inset Formula $x=(u,v,w)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+单变量情况下函数导数
+\begin_inset Formula $f'$
+\end_inset
+
+ 现在对应的是 
+\series bold
+雅可比矩阵
+\series default
+，定义为
+\begin_inset Formula 
+\[
+D_{F}(x)=\left[\begin{array}{ccc}
+\frac{\partial f_{1}}{\partial u} & \frac{\partial f_{1}}{\partial v} & \frac{\partial f_{1}}{\partial w}\\
+\frac{\partial f_{2}}{\partial u} & \frac{\partial f_{2}}{\partial v} & \frac{\partial f_{2}}{\partial w}\\
+\frac{\partial f_{3}}{\partial u} & \frac{\partial f_{3}}{\partial v} & \frac{\partial f_{3}}{\partial w}
+\end{array}\right]
+\]
+
+\end_inset
+
+在点
+\begin_inset Formula $x_{0}$
+\end_inset
+
+附近的向量值函数的泰勒展开是
+\begin_inset Formula 
+\[
+F(x)=F(x_{0})+D_{F}(x_{0})\cdot\left(x-x_{0}\right)+\order{x-x_{0}}^{2}
+\]
+
+\end_inset
+
+例如在
+\begin_inset Formula $x_{0}=(0,0)$
+\end_inset
+
+ 附近的函数
+\begin_inset Formula $F(u,v)=(e^{u+v},\sin u)$
+\end_inset
+
+ 的线性展开是
+\begin_inset Formula 
+\[
+F(x)=\left[\begin{array}{c}
+1\\
+0
+\end{array}\right]+\left[\begin{array}{cc}
+e^{0} & e^{0}\\
+\cos0 & 0
+\end{array}\right]\left[\begin{array}{c}
+u\\
+v
+\end{array}\right]+\order{x^{2}}=\left[\begin{array}{c}
+1\\
+0
+\end{array}\right]+\left[\begin{array}{c}
+u+v\\
+u
+\end{array}\right]+\order{x^{2}}
+\]
+
+\end_inset
+
+牛顿方法基于线性近似，忽略 
+\begin_inset Formula $\order{x^{2}}$
+\end_inset
+
+项。正如在一维情况下，令
+\begin_inset Formula $x=r$
+\end_inset
+
+是根，令
+\begin_inset Formula $x_{0}$
+\end_inset
+
+是当前估计，则
+\begin_inset Formula 
+\[
+0=F(r)\approx F(x_{0})+D_{F}(x_{0})\cdot(r-x_{0})
+\]
+
+\end_inset
+
+ 或者
+\begin_inset Formula 
+\begin{equation}
+r-x_{0}\approx-D_{F}(x_{0})^{-1}F(x_{0})\label{eq:2.50}
+\end{equation}
+
+\end_inset
+
+因而通过求解
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.50"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula $r$
+\end_inset
+
+，可以对根进行更好的近似。（不动点迭代）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box ovalbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+多变量牛顿方法
+\begin_inset Formula 
+\begin{align*}
+x_{0} & =\text{初始向量}\\
+x_{k+1} & =x_{k}-D_{F}(x_{k})^{-1}F(x_{k}),\quad k=0,1,2,\cdots
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于计算逆矩阵的代价很大，我们使用技巧避免该计算。在每一步中，不是按上面描述的过程，而是令 
+\begin_inset Formula $x_{k+1}=x_{k}-s$
+\end_inset
+
+，即令
+\begin_inset Formula $s=D_{F}(x_{k})^{-1}F(x_{k})$
+\end_inset
+
+，因此
+\begin_inset Formula $s$
+\end_inset
+
+是
+\begin_inset Formula $D_{F}(x_{k})\,s=F(x_{k})$
+\end_inset
+
+ 的解。现在，仅仅需要在每步中使用高斯消去（
+\begin_inset Formula $n^{3}/3$
+\end_inset
+
+次的乘法），而不是计算矩阵的逆（相对于高斯消去大约
+\begin_inset Formula $3$
+\end_inset
+
+倍的计算次数）。因而，对于多元牛顿方法的迭代步骤如下
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+D_{F}(x_{k})\,s=-F(x_{k})\\
+x_{k+1}=x_{k}+s
+\end{cases}\label{eq:2.51}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 EOF
 \end_layout

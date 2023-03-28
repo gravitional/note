@@ -15,7 +15,7 @@ calc::CoordSysUtil *cs;
 cs->SetCartesianCS(axisX,axisY,axisZ)
 ```
 
-通过分析发现这与RTC(Run-Time Check, 运行时检查)机制有关(以下都是以VS2012为标准).
+通过分析发现这与 `RTC`(Run-Time Check, 运行时检查)机制有关(以下都是以VS2012为标准).
 首先普及一下RTC(Run-Time Check)机制, 包括:
 `堆栈帧`(RTCS), `未初始化变量`(RTCu), `两者都有`, 以及 `默认值` 四种.
 在 VS2022 编译器中, `项目`->`属性`->`配置属性`->`C/C++` ->`代码生成`->`基本运行时检查`
@@ -81,3 +81,33 @@ public:
 };
 template MyClass< int >;  // C4661
 ```
+
+## 引发了异常: 读取访问权限冲突
+
+[C++读取访问权限冲突引发异常问题](https://blog.csdn.net/gabriel1217/article/details/110083837)
+
+报错信息形如:
+
+```bash
+std::List_alloc<std::List_base_types<std::pair<int const, ETFilmBaseResistBase* __ptr64>,
+std::allocator<std::List_base_types<std::pair<int const, ETFilmBaseResistBase* __ptr64>>>::Mysize(...) 返回 0x120
+```
+
+经检查是由于:
+边界单元可能没有赋予材料, 而`mat` 指针没有检测是否为 `nullptr`,
+
+```cpp
+const auto* const mat=GetThreadMaterial();
+```
+
+### 访问数组越界
+
+当采用线性表的顺序结构, 例如顺序表, 队列, 栈等, 用数组存储数据时,
+若将要读取数据的位置超出了当前数组的长度, 就会发生数组访问越界的状况.
+
+### 空指针异常
+
+这主要发生在通过指针读取数据时, 比如在使用链表的过程中.
+
+当然, 不止链表, 空指针异常还会出现在很多其他情况下,
+比如在数据库查询, 指针未初始化时也会产生空指针异常.
