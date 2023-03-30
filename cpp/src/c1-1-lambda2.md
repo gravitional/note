@@ -11,11 +11,10 @@
 
 Lambda函数是一段简短的代码片段, 它具有以下特点:
 
-(1)不值得命名(无名, 匿名, 可处理等, 无论您如何称呼)
++ 不值得命名(无名, 匿名, 可处理等, 无论您如何称呼)
++ 不会重复使用
 
-(2)不会重复使用
-
-换句话说, 它只是语法糖. lambda函数的语法定义为:
+换句话说, 它只是语法糖. `lambda` 函数的语法定义为:
 
 ```cpp
 [ capture list ] (parameters) -> return-type
@@ -86,12 +85,12 @@ struct anonymous
 
 ## 使用Lambda函数的好处
 
-(1)零成本抽象. 是的!  你没看错. lambda 不会牺牲性能, 运行速度和普通函数一样快.
-(2)此外, 代码会变得更加紧凑, 结构层次更加明显和代码可读性更佳.
++ 零成本抽象. 是的!  你没看错. lambda 不会牺牲性能, 运行速度和普通函数一样快.
++ 此外, 代码会变得更加紧凑, 结构层次更加明显和代码可读性更佳.
 
 ## 学习lambda表达式
 
-1.通过引用/值捕获
+### 通过引用/值捕获
 
 ```cpp
 int main()
@@ -118,7 +117,7 @@ main()::<lambda()> : 100 , 200
 
 The following table shows different use cases for the same:
 
-2.Lambda捕获列表
+### Lambda捕获列表
 
 2.1 将lambda作为参数传递
 
@@ -155,7 +154,7 @@ Function Type : void f(Functor) [with Functor = int (*)(int)]
 相信您注意到了, 我在捕获列表中声明了变量i, 它将成为数据成员.
 所以, 每次调用 `lambda_func` 时, 它将被返回并递增.
 
-2.2lambda捕获 `this` 指针或成员变量
+### lambda捕获 `this` 指针或成员变量
 
 ```cpp
 class Example
@@ -186,7 +185,7 @@ int main()
 
 ## C++ lambda函数类型
 
-1.通用lambda
+### 通用lambda
 
 ```cpp
 const auto l = [](auto a, auto b, auto c) {};
@@ -203,7 +202,7 @@ struct anonymous
 
 C++ 14中引入的通用lambda可以使用 `auto` 说明符.
 
-2.可变参数通用 lambda
+### 可变参数通用 lambda
 
 ```cpp
 void print() {}
@@ -223,10 +222,10 @@ int main()
 }
 ```
 
-具有可变参数的Lambda在许多情况下非常有用,
+具有可变参数的 `Lambda` 在许多情况下非常有用,
 例如调试, 使用不同的数据输入重复操作等.
 
-3.mutable lambda函数
+### mutable lambda函数
 
 通常, lambda的函数调用运算符是const-by-value,
 这意味着lambda需要捕获可变值的 关键字时, 需要使用mutable关键字.
@@ -257,9 +256,10 @@ int main()
 }
 ```
 
-您可以通过添加命令"+"来强制编译器将lambda生成为函数指针而不是闭包.
+您可以通过添加命令 `+`,
+来强制编译器将 l`ambda` 生成为 `函数指针` 而不是闭包.
 
-5.lambda函数作为返回值
+### lambda函数作为返回值
 
 ```cpp
 const auto less_than = [](auto x) {
@@ -280,7 +280,7 @@ int main(void)
 再进一步, lambda函数还可以返回另一个lambda函数.
 这也为代码的自定义性, 代码可读性和紧凑性带来无限可能.
 
-6.constexpr lambda表达式
+### constexpr lambda表达式
 
 从C ++ 17开始, 可以将lambda表达式声明为 constexpr.
 
@@ -304,7 +304,7 @@ constexpr int answer = sum(10, 10);
 即使你没有指定 constexpr,
 如果它恰好满足所有 constexpr函数的要求, 那么它也会被声明为constexpr.
 
-结束语
+## 结束语
 
 希望您喜欢这篇文章. 文中我使用几个简单的小例子来介绍关于lambda的大量复杂问题.
 考虑到代码的可表达性和易维护性, 无论您想到什么, 都应该使用lambda,

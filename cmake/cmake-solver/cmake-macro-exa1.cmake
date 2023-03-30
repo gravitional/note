@@ -2,6 +2,8 @@
 macro(SetCurrentIncludeDirs DIRS)
     # macro和函数不同, 此处 DIRS 存储变量名称, 例如: ${DIR} -> indir
     set(${DIRS} ${CMAKE_SOURCE_DIR})
+
+    # PATHS 是变量名
     file(GLOB_RECURSE PATHS LIST_DIRECTORIES true *)
 
     foreach(PATH ${PATHS})

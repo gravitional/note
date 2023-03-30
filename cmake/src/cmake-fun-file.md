@@ -109,7 +109,8 @@ Globbing 表达式类似于正则表达式, 但要简单得多.
 
 + 注意 我们不推荐使用 `GLOB` 来收集 源码树 上的源码文件列表.
 如果在 添加 或 删除源文件时没有改变 `CMakeLists.txt` 文件,
-那么已生成的 `build system` 就无法知道何时要求 `CMake` 重新生成. `CONFIGURE_DEPENDS` 标志可能不会在所有的生成器上可靠地工作,
+那么已生成的 `build system` 就无法知道何时要求 `CMake` 重新生成. 
+`CONFIGURE_DEPENDS` 标志可能不会在所有的生成器上可靠地工作,
 或者如果将来有新的生成器不能支持它, 使用它的项目将被卡住.
 即使 `CONFIGURE_DEPENDS` 能够可靠地工作,
 在每次 `rebuild` 时执行检查仍然是有代价的.

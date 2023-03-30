@@ -3,7 +3,7 @@
 [Oh My Zsh 插件](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins)
 [Mac/Linux使用ZSH (oh-my-zsh)](https://www.jianshu.com/p/fa6aa9329be6)
 [oh-my-zsh国内镜像安装和更新方法](https://www.jianshu.com/p/6b47198fd430)
-[ Gitee 极速下载](https://gitee.com/mirrors):`Gitee 极速下载` 是为了提升国内下载速度的镜像仓库, 每日同步一次.
+[Gitee 极速下载](https://gitee.com/mirrors): `Gitee 极速下载` 是为了提升国内下载速度的镜像仓库, 每日同步一次.
 
 ## 从gitee安装的方式
 
@@ -18,14 +18,14 @@ sh -c "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install
 
 `oh-my-zsh`的 github 地址在国内可能用不了, 可以考虑使用`gitee`的镜像.
 
-首先需要安装`zsh`, 可以直接用`sudo apt install zsh`.
+首先需要安装`zsh`, 可以直接用 `sudo apt install zsh`.
 然后安装`oh-my-zsh`, 下载[码云安装脚本install.sh](https://gitee.com/mirrors/oh-my-zsh)
 
 ```bash
 wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
 ```
 
-编辑`install.sh`, 找到以下部分
+编辑 `install.sh`, 找到以下部分
 
 ```bash
 # Default settings
@@ -127,6 +127,24 @@ fc-cache -vf /usr/share/fonts/
 mv 10-powerline-symbols.conf /etc/fonts/conf.d/
 ```
 
+## Vim 中的 Powerline
+
+首先通过如下命令获取 `powerline` 的安装位置.
+
+```bash
+pip3 show powerline-status
+```
+
+在 `~/.vimrc` 中添加如下内容打开该插件(译注: 注意同样需要根据你的系统情况修改路径).
+
+```bash
+set rtp+=/home/tom/.local/lib/python3.6/site-packages/powerline/bindings/vim/
+set laststatus=2
+set t_Co=256
+```
+
+然后你打开 `vim` 后会看到一个新的状态行
+
 ## bash 中的 Powerline
 
 如果希望在 `bash shell` 中默认打开 `Powerline`,可以在 `~/.bashrc` 中添加如下内容.
@@ -150,21 +168,3 @@ source XXXXX/powerline/bindings/bash/powerline.sh
 ```
 
 然后退出后重新登录,现在 `powerline` 的状态行应该如下显示了.
-
-## Vim 中的 Powerline
-
-首先通过如下命令获取 `powerline` 的安装位置.
-
-```bash
-pip3 show powerline-status
-```
-
-在 `~/.vimrc` 中添加如下内容打开该插件(译注: 注意同样需要根据你的系统情况修改路径).
-
-```bash
-set rtp+=/home/tom/.local/lib/python3.6/site-packages/powerline/bindings/vim/
-set laststatus=2
-set t_Co=256
-```
-
-然后你打开 `vim` 后会看到一个新的状态行
