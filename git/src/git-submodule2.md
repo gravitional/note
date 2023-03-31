@@ -192,16 +192,15 @@ index ace9770..7097c48 160000
 
 ### 情况3: 子模块远程有更新
 
-通常来讲, 主项目与子模块的开发不会恰好是同时进行的.
+通常来讲, `主项目` 与 `子模块` 的开发不会恰好是同时进行的.
 通常是 `子模块` 负责维护自己的版本升级后,
 推送到 `远程仓库`, 并告知 `主项目` 可以更新对子模块的 `版本依赖`.
 
-在这种情况下, 主项目 是比较茫然的.
+在这种情况下, `主项目` 是比较茫然的.
 
-之前曾经提到, 主项目 可以使用 `git submodule update` 更新子模块的代码,
-但那是指 当前主项目文件夹下,
-`子模块文件内容` 与 当前主项目 `记录的子模块版本` 不一致时,
-会参考后者进行更新.
+之前曾经提到, `主项目` 可以使用 `git submodule update` 更新子模块的代码,
+但那是指当前 `主项目`文件夹下, `子模块文件内容` 与 当前主项目记录的 `子模块版本` 不一致时,
+会参考 后者 进行更新.
 
 但如今这种情况下, 当前主项目 `记录的子模块版本` 还没有变化,
 在主项目看来当前情况一切正常.
@@ -217,11 +216,13 @@ git pull origin master
 
 子模块目录下的代码版本会发生变化, 转到 `情况2` 的流程进行 `主项目` 的提交.
 
-当主项目的子项目特别多时, 可能会不太方便,
+当主项目的 `子项目` 特别多时, 可能会不太方便,
 此时可以使用 `git submodule` 的一个命令 `foreach` 执行:
 
 ```bash
 git submodule foreach 'git pull origin master'
+# or 递归 拉取 子项目
+git submodule foreach --recusive 'git pull origin master' 
 ```
 
 ### 情况汇总
@@ -334,11 +335,11 @@ git submodule foreach --recursive 'git checkout xxx || true'
 
 solver 为主仓库, 管理一级仓库(版本信息);
 thirdparty 为第三方 sdk;
-common, structure, fluid, electromagnetics, 
+common, structure, fluid, electromagnetics,
 multibody 为一级子仓库, 管理二级子仓库(版本信息);
 其余为二级子仓库, 管理代码.
 
-各组员 在二级仓库提交代码后, 
+各组员 在二级仓库提交代码后,
 若涉及不同仓库则必须在相应的一级子仓库中提交对应更新(二级子仓库的版本信息), 二者需时刻保持一致.
 
 + 提交子仓库
@@ -357,3 +358,44 @@ git submodule update <path子模块1>
 git submodule update <path子模块2>
 ...
 ```
+
+## foreach --recursive
+
+foreach [--recursive] <command>
+
+在每个 检出 的子模块中 执行一个任意的 `shell` 命令.
+该命令可以访问变量 `$name`, `$sm_path`, `$displaypath`, `$sha1` 和 `$toplevel`:
+`$name` 是 `.gitmodules` 中相关子模块部分的名称, `$sm_path` 是即时超级项目中记录的子模块的路径,
+`$displaypath` 包含从当前 `工作目录` 到 `子模块根目录` 的相对路径,
+`$sha1` 是当前父项目中记录的提交, 而 `$toplevel` 是即时超级项目的顶级的绝对路径.
+
+注意, 为了避免与 Windows 上的 `$PATH` 冲突,
+`$path` 变量现在是 `$sm_path` 变量的一个废弃的同义词.
+任何在超级项目中定义但 `没有被检出` 的子模块都会被这个命令忽略.
+除非给出 `--quiet`, `foreach` 在计算命令前会打印每个子模块的名字.
+
+如果给了 `--recursive`, 子模块会被递归遍历
+(也就是说, 给定的shell命令也会在嵌套的子模块中计算).
+在任何子模块中, 命令的非零返回会导致处理的终止.
+
+这可以通过在命令的末尾添加 `||:` 来覆盖.
+
+作为例子, 下面的命令将显示每个子模块的路径和当前检出的提交:
+
+```bash
+git submodule foreach 'echo $sm_path `git rev-parse HEAD`' .
+```
+
+### sync --recursive
+
+```bash
+sync [--recursive] [--] [<path>…​]
+```
+
+将子模块的远程 `URL 配置` 同步到 `.gitmodules` 中指定的条目.
+它只会影响那些在 `.git/config` 中已经有一个 `URL条目` 的子模块(也就是当它们被 初始化 或 新添加 时的情况).
+当子模块的 `URL` 在上游改变, 而你需要 相应地 更新你的 本地仓库时, 这很有用.
+
+`git submodule sync` 同步所有子模块, 而 `git submodule sync -- A` 只同步子模块 `A`.
+
+如果指定了 `--recursive`, 该命令将递归到 已注册的子模块, 并同步其中任何嵌套的子模块.

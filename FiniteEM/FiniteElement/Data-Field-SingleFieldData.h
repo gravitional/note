@@ -15,8 +15,14 @@ public:
     void SetData(int id, const double *newData, int length);
     // 全局数据置零
     int SetZero();
-    // 根据ID取数据
-    common::RefArray<double> GetData(int id);
+
+    // 根据ID取数据, SingleFieldData 的数据结构
+    common::RefArray<double> GetData(int id)
+    {
+        assert(HasData(id));
+        return _data[_index[id]];
+    }
+
     // 从另一个 SingleFieldData中拷贝数据，拷贝时乘系数
     void CopyData(SingleFieldData &other, double factor = 1.0);
     // 数值叠加另一个 SingleFieldData 中的数据，拷贝时乘系数

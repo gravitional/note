@@ -118,3 +118,15 @@ const auto* const mat=GetThreadMaterial();
 一般指针后面的 `.` 访问符会自动转换成 `->`, 有的时候 `VS` 识别不出来, 需要手动添加,
 同理, 有的时候会识别错误, 把 非指针后面的 `.` 改成 `->`,
 这时候按下 `backspace` 回退一格即可.
+
+## 程序运行时突然卡死, 调用栈崩溃在 ~Vector, ~Matrix ~Dense 等等.
+
+可以是 Vector 互相复制数据时, 输入了错误的 长度(size_t), 会引发奇怪的随机错误/异常,
+因为程序的运行栈可能会被破坏.
+例如 `Util::Copy` 的长度参数 `size_t n`, 指的是数组的长度, 而不是 `byte` 的长度.
+`memcpy` 的长度参数才是 `byte` 长度,  如果混淆就会发生上述错误.
+
+```cpp
+Util::Copy(T* dst, T* scr, size_t n);
+memcpy(T* dst, const T* scr, size_t Size)
+```
