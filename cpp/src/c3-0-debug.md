@@ -130,3 +130,89 @@ const auto* const mat=GetThreadMaterial();
 Util::Copy(T* dst, T* scr, size_t n);
 memcpy(T* dst, const T* scr, size_t Size)
 ```
+
+## 超出修饰名的长度, 名称被截断
+
+[编译器警告(等级 1)C4503](https://learn.microsoft.com/zh-cn/cpp/error-messages/compiler-warnings/compiler-warning-level-1-c4503?view=msvc-170)
+
+此编译器警告已过时, 不会在 Visual Studio 2017 及更高版本的编译器中生成.
+
+修饰名超过编译器限制 (4096), 已截断.
+为避免此警告和截断, 请减少使用的自变量数目或标识符的名称长度.
+超过编译器限制的修饰名应用了哈希, 不会有名称冲突的危险.
+
+使用旧版 Visual Studio 时, 如果代码重复包含模板中所述的模板, 可能会发出此警告.
+例如映射的映射(来自 C++ 标准库).
+在这种情况下, 可以将 typedef 设置为包含映射的类型(例如 struct).
+
+但你可以决定不重构代码.  可以推出生成 C4503 的应用程序,
+但如果截断符号出现链接时间错误, 则可能更难以确定错误中符号的类型.
+调试也可能更加困难;调试器可能很难将符号名称映射到类型名称.
+但程序的正确性不受截断名称的影响.
+
+示例
+以下示例在低于 Visual Studio 2017 的编译器中生成 C4503:
+
+```cpp
+// C4503.cpp
+// compile with: /W1 /EHsc /c
+// C4503 expected
+#include <string>
+#include <map>
+
+class Field{};
+
+typedef std::map<std::string, Field> Screen;
+typedef std::map<std::string, Screen> WebApp;
+typedef std::map<std::string, WebApp> WebAppTest;
+typedef std::map<std::string, WebAppTest> Hello;
+Hello MyWAT;
+```
+
+## 多线程, 程序结束时, Material 类析构时引发异常
+
+可能是手动管理的资源, 在多线程下析构了多次.
+使用 `MPIUtil::IsHost()`, 只在主线程进行析构.
+
+## 初始化操作由 case 标签跳过
+
+[初始化操作由 case 标签跳过](https://blog.csdn.net/hhhenjoy/article/details/117856700)
+
+如果要在case里面定义变量, 需要用括号括起来{}
+
+```cpp
+// BUG!
+char c;
+cin >> c;
+switch (c)
+{
+case '1':
+    cout << "input the complex:";
+    double a, b;
+    cin >> a >> b;
+    cout << sqrt(a * a + b * b);
+    break;
+case '2':
+    // …………
+}
+
+// RIGHT!
+else if (input == "4")
+{
+    char c;
+    cin >> c;
+    switch (c)
+    {
+    case '1':
+    {
+        cout << "input the complex:";
+        double a, b;
+        cin >> a >> b;
+        cout << sqrt(a * a + b * b);
+        break;
+    }
+    case '2':
+        // …………
+    }
+}
+```

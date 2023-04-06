@@ -38,8 +38,7 @@
 
 若要查看可用 `Linux` 分发版的列表,请输入 `wsl --list --online`.
 
-***
-手动安装步骤
+## 手动安装步骤
 
 1. 先启用`适用于 Linux 的 Windows 子系统`可选功能,然后才能在 `Windows` 上安装 `Linux` 分发.
 
@@ -49,7 +48,8 @@
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 ```
 
-建议现在转到步骤 #2,更新到 WSL 2,但如果只想安装 WSL 1,现在可以重新启动计算机,然后继续执行步骤 6 - 安装所选的 Linux 发行版.
+建议现在转到步骤 #2,更新到 WSL 2,但如果只想安装 WSL 1,
+现在可以重新启动计算机,然后继续执行步骤 6 - 安装所选的 Linux 发行版.
 若要更新到 WSL 2,请等待重新启动计算机,然后继续执行下一步.
 
 2. 更新到 WSL 2
@@ -146,9 +146,17 @@ wsl --set-default-version 2
 [failing to startup with code 4294967295](https://github.com/microsoft/WSL/issues/5092#:~:text=Solve%20%22process%20exited%20with%20code%204294967295%22%20%2C%20run,complete%20the%20reset.%20Does%20not%20resolve%20the%20issue.)
 [关于使用WSL2出现'参考的对象类型不支持尝试的操作'的解决方法](https://zhuanlan.zhihu.com/p/151392411)
 
+临时解决
+
+```pwsh
+netsh winsock reset
+```
+
 长期解决的方案(推荐),下载此软件: [http://www.proxifier.com/tmp/Test20200228/NoLsp.exe](http://www.proxifier.com/tmp/Test20200228/NoLsp.exe)
 
-因需要梯子访问下载,有些朋友不方便,所以我上传到百度云分享在这里: [https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A](https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A) ,提取码: `vjge`
+因需要梯子访问下载,有些朋友不方便,所以我上传到百度云分享在这里: 
+[https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A](https://pan.baidu.com/s/1bVZ0OXZPxEt8l1IHYaFK3A),
+提取码: `vjge`
 
 然后在管理员身份运行`CMD`输入:
 
@@ -163,7 +171,7 @@ NoLsp.exe C:\windows\system32\wsl.exe
 
 代理软件和`wsl2`的`sock`端口冲突,使用`netsh winsock reset`重置修复. `Proxifer` 开发人员解释如下:
 
-如果`Winsock LSP DLL`被加载到其进程中,则`wsl.exe`将显示此错误.
+如果`Winsock LSP DLL`被加载到其进程中, 则`wsl.exe`将显示此错误.
 最简单的解决方案是对`wsl.exe`使用`WSCSetApplicationCategory WinAPI`调用来防止这种情况.
-在后台,该调用在`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinSock2\Parameters\AppId_Catalog`中为`wsl.exe`创建一个条目.
+在后台,该调用在`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinSock2\Parameters\AppId_Catalog` 中为`wsl.exe`创建一个条目.
 这将告诉`Windows`不要将`LSP DLL`加载到`wsl.exe`进程中.

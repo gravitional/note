@@ -112,3 +112,23 @@ search()
 find()
 calc()
 ```
+
+## 场数据类型, FieldData, SingleFieldData
+
+在 `GetResultManip` 类中, `GetEleNdData()` 函数返回 `FieldData` 对象的引用,
+
+```cpp
+FieldData& GetEleNdData() const { return getFieldData("EleNd"); }
+GetEleNdData().SetData(
+    storeNo, filmID, ele->getID(), nComp * ele->NdNum());
+```
+
+其中:
+`storeNo` : STP_ACCUM, STP_SEARCH, jobID 等等.
+`ele->getID()` : 单元编号.
+`nComp*ele->NdNum()` : 衍生场分量数 * 此单元中的节点数
+
+后两个指标 `单元编号, 衍生场分量*节点数` 对应 `SingleFieldData` 对象,
+`SingleFieldData` 底层是 `JagArray`,
+由于单元分成体单元, 表面单元等, 不同单元具有的 `衍生场分量*节点数` 可能不同,
+所以是 `不定长二维数组`.

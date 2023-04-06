@@ -32,9 +32,15 @@ public:
     // 取单元实际节点号
 
     // 取单元中心点坐标
+    void GetEleCoodCenter(double xyz[3]);
+
     // 取高斯信息, 采样点总数, 第m个采样点, 等参坐标值, 权重
+    virtual void GetGaussIntgInfo(int IntgNum, int m, double *zeta, double &W) {}
     // 取单元温度
+    virtual double GetEleCentroidTemperature(int jobID) { return 0.0; }
+
     // 取节点在单元中的序号, 局部编号
+    int GetNodePos(int nodeID);
 
     int MatID;                     // 单元材料号
     std::vector<int> BndryNodeIDs; // 边界节点ID
