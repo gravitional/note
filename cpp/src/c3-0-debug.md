@@ -216,3 +216,75 @@ else if (input == "4")
     }
 }
 ```
+
+## C++编译报错: error: expected constructor, destructor, or type conversion before `(` token
+
+[error: expected constructor, destructor](https://blog.csdn.net/Dontla/article/details/129241996)
+
+错误代码, 在某个文件中
+
+```cpp
+int ticket_sum = 10;
+
+// 创建互斥锁
+pthread_mutex_t myMutex;
+pthread_mutex_init(&myMutex, nullptr);
+
+// 另一些函数
+void *sell_ticket(void *arg)
+{...}
+```
+
+报错原因:
+C++中, 全局域只能声明, 初始化变量; 不能用于赋值, 运算, 调用函数
+
+解决方案
+改成这样就好了:
+
+```cpp
+int ticket_sum = 10;
+
+void initMutex()
+{
+// 创建互斥锁
+pthread_mutex_t myMutex;
+pthread_mutex_init(&myMutex, nullptr);
+...
+}
+
+// 另一些函数
+void *sell_ticket(void *arg)
+{...}
+```
+
+把调用语句放到函数里, 然后再调用函数
+
+## undefined reference to std::cout
+
+[gcc编译报错: undefined reference to std::cout](https://blog.csdn.net/weixin_41010198/article/details/117523288)
+
+编译文件: `test.cpp` 内容如下:
+
+```cpp
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "Hello, world!" << endl;
+    return 0;
+}
+```
+
+上面使用gcc编译test.cpp会报错(参考):
+
+我们常见的编译器有两个:
+gcc 编译器
+g++ 编译器
+gcc和g++都是GNU(组织)的编译器.
+
+gcc和g++编译器的区别
+
++ g++:  会把 `.c` 和 `.cpp` 的文件都当作是C++的源程序进行编译.
++ gcc: 会把 `.c` 的程序当作是C的源程序进行编译, `.cpp` 的程序当作是 `C++` 的源程序进行编译
+
+解决上面的错误, 就是把gcc编译器换成g++编译器, 即使是把.cpp的后缀改成.c的后缀也可以正常编译!

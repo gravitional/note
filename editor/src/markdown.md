@@ -29,7 +29,7 @@ And then define the link:
 
 ## 链接 详细
 
-[original context] []
+[original context][]
 
 [original context]: https://www.appinn.com/markdown/#link "original context"
 
@@ -183,9 +183,12 @@ than from [Yahoo](http://search.yahoo.com/ "Yahoo Search") or
 [MSN](http://search.msn.com/ "MSN Search").
 ```
 
-参考式的链接其实重点不在于它比较好写, 而是它比较好读, 比较一下上面的范例, 使用参考式的文章本身只有 81 个字符, 但是用行内形式的却会增加到 176 个字元, 如果是用纯 HTML 格式来写, 会有 234 个字元, 在 HTML 格式中, 标签比文本还要多.
+参考式的链接其实重点不在于它比较好写, 而是它比较好读, 比较一下上面的范例,
+使用参考式的文章本身只有 81 个字符, 但是用行内形式的却会增加到 176 个字元,
+如果是用纯 HTML 格式来写, 会有 234 个字元, 在 HTML 格式中, 标签比文本还要多.
 
-使用 Markdown 的参考式链接, 可以让文件更像是浏览器最后产生的结果, 让你可以把一些标记相关的元数据移到段落文字之外, 你就可以增加链接而不让文章的阅读感觉被打断.
+使用 Markdown 的参考式链接, 可以让文件更像是浏览器最后产生的结果,
+让你可以把一些标记相关的元数据移到段落文字之外, 你就可以增加链接而不让文章的阅读感觉被打断.
 
 ## 代码区块 常用
 
@@ -199,11 +202,10 @@ $$  \iint _a^b \frac a b $$
 
 ### 代码区块 详细
 
-[original context] []
+[original context][]
 
-[original context]: https://www.appinn.com/markdown/#link "original context"
-
-和程序相关的写作或是标签语言原始码通常会有已经排版好的代码区块, 通常这些区块我们并不希望它以一般段落文件的方式去排版, 而是照原来的样子显示,
+和程序相关的写作或是标签语言原始码通常会有已经排版好的代码区块,
+通常这些区块我们并不希望它以一般段落文件的方式去排版, 而是照原来的样子显示,
 Markdown 会用 `<pre>` 和 `<code>` 标签来把代码区块包起来.
 
 要在 Markdown 中建立代码区块很简单, 只要简单地缩进 4 个空格或是 1 个制表符就可以, 例如, 下面的输入:
@@ -246,7 +248,9 @@ end tell
 
 一个代码区块会一直持续到没有缩进的那一行(或是文件结尾).
 
-在代码区块里面,  `&` ,  `<` 和 `>` 会自动转成 `HTML` 实体, 这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码, 只需要复制贴上, 再加上缩进就可以了, 剩下的 Markdown 都会帮你处理, 例如:
+在代码区块里面,  `&` ,  `<` 和 `>` 会自动转成 `HTML` 实体,
+这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码,
+只需要复制贴上, 再加上缩进就可以了, 剩下的 Markdown 都会帮你处理, 例如:
 
 ```html
     <div class="footer">
@@ -263,7 +267,8 @@ end tell
 </code></pre>
 ```
 
-代码区块中, 一般的 Markdown 语法不会被转换, 像是星号便只是星号, 这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件.
+代码区块中, 一般的 Markdown 语法不会被转换, 像是星号便只是星号,
+这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件.
 
 ## 反斜杠
 
@@ -483,3 +488,132 @@ Markdown 语法:
 Tips: `jpg`/`png` 都是常用文件格式,
 jpg 格式压缩效率高, 相对文件质量低, 占用空间少, 在页面显示时加载会快一些.
 png 格式的图片更清晰.
+
+## Markdown 表格
+
+[Markdown 表格](https://markdown.com.cn/extended-syntax/tables.html)
+
+要添加表, 请使用 `三个` 或多个连字符(---)创建每列的标题,
+并使用管道(|)分隔每列. 您可以选择在表的任一端添加管道.
+
+```markdown
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+```
+
+呈现的输出如下所示:
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+单元格宽度可以变化, 如下所示. 呈现的输出将看起来相同.
+
+| Syntax | Description |
+| --- | ----------- |
+| Header | Title |
+| Paragraph | Text |
+
+Tip: 使用连字符和管道创建表可能很麻烦.
+为了加快该过程, 请尝试使用 [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables).
+使用图形界面构建表, 然后将生成的Markdown格式的文本复制到文件中.
+
+## Markdown 定义列表
+
+一些Markdown处理器允许您创建术语及其对应定义的定义列表.
+要创建定义列表, 请在第一行上键入术语. 在下一行, 键入一个冒号, 后跟一个空格和定义.
+
+```markdown
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+```
+
+HTML看起来像这样:
+
+```html
+<dl>
+  <dt>First Term</dt>
+  <dd>This is the definition of the first term.</dd>
+  <dt>Second Term</dt>
+  <dd>This is one definition of the second term. </dd>
+  <dd>This is another definition of the second term.</dd>
+</dl>
+```
+
+呈现的输出如下所示:
+
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+
+## Markdown 脚注
+
+[Markdown 脚注](https://markdown.com.cn/extended-syntax/footnotes.html)
+
+脚注使您可以添加注释和参考, 而不会使文档正文混乱.
+当您创建脚注时, 带有脚注的上标数字会出现在您添加脚注参考的位置.
+读者可以单击链接以跳至页面底部的脚注内容.
+
+要创建脚注参考, 请在方括号([^1])内添加插入符号和标识符.
+标识符可以是数字或单词, 但不能包含空格或制表符.
+标识符仅将脚注参考与脚注本身相关联-在输出中, 脚注按顺序编号.
+
+在括号内使用另一个插入符号和数字添加脚注, 并用冒号和文本([^1]: My footnote.).
+您不必在文档末尾添加脚注.
+您可以将它们放在除列表, 块引号和表之类的其他元素之外的任何位置.
+
+Here's a simple footnote,[^1] and here's a longer one.[^bignote]
+
+[^1]: This is the first footnote.
+
+[^bignote]: Here's one with multiple paragraphs and code.
+
+    Indent paragraphs to include them in the footnote.
+
+    `{ my code }`
+
+    Add as many paragraphs as you like.
+
+## Markdown 标题编号 {#custom-id}
+
+许多Markdown处理器支持标题的自定义ID - 一些Markdown处理器会自动添加它们.
+添加自定义ID允许您直接链接到标题并使用CSS对其进行修改. 要添加自定义标题ID,
+请在与标题相同的行上用大括号括起该自定义ID.
+
+```markdown
+### My Great Heading {#custom-id}
+```
+
+HTML看起来像这样:
+
+```html
+<h3 id="custom-id">My Great Heading</h3>
+```
+
+### 链接到标题ID (#headid)
+
+通过创建带有数字符号(#)和自定义标题ID的 标准链接,
+可以链接到文件中具有自定义ID的标题.
+
+Markdown HTML 预览效果
+
+`[Heading IDs](#heading-ids)  <a href="#heading-ids">Heading IDs</a>`
+
+[Heading IDs](#custom-id)
+
+其他网站可以通过将自定义标题ID添加到网页的完整URL
+例如 `[Heading IDs](https://markdown.com.cn/extended-syntax/heading-ids.html#headid)`, 来链接到标题.
+
+## 使用 Emoji 表情
+
+[Markdown 使用 Emoji 表情](https://markdown.com.cn/extended-syntax/emoji.html)
