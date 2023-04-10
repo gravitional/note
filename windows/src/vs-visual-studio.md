@@ -198,3 +198,46 @@ Visual Studio已经为你安排的明明白白了.
 
 >提示
 >输入名称后将启用"添加"按钮.  必须先输入名称, 然后再单击"添加".
+
+## 查看汇编代码
+
+[在 Visual Studio 调试器中查看反汇编代码](https://learn.microsoft.com/zh-cn/visualstudio/debugger/how-to-use-the-disassembly-window?view=vs-2022)
+
+若要启用"反汇编"窗口, 请在"工具">"选项">"调试"下, 选择"启用地址级调试" .
+
+若要在调试期间打开 `反汇编` 窗口, 请选择 `窗口`>`反汇编`或按 `Alt+8`.
+
+若要打开或关闭可选信息, 请在"反汇编"窗口中单击右键, 然后在快捷菜单中设置或清除所需的选项.
+
+左边距中的黄色箭头表示当前执行点.
+对于本机代码, 该执行点对应于 CPU 的 `程序计数器`.
+该位置显示程序中将要执行的下一条指令.
+
+## utf-8 选项
+
+[/utf-8(将源字符集和执行字符集设置为 UTF-8)](https://learn.microsoft.com/zh-cn/cpp/build/reference/utf-8-set-source-and-executable-character-sets-to-utf-8)
+
+语法
+`/utf-8`
+
+备注
+可以使用 /utf-8 选项将源字符集和执行字符集指定为使用 UTF-8 编码的字符集.
+它等效于在命令行上指定 /source-charset:utf-8 /execution-charset:utf-8.
+任意这些选项还会默认启用 /validate-charset 选项.  有关受支持的代码页标识符和字符集名称的列表, 请参阅代码页标识符.
+
+默认情况下, Visual Studio 会检测字节顺序标记,
+以确定源文件是否采用编码的 Unicode 格式, 例如 UTF-16 或 UTF-8.
+如果未找到字节顺序标记,
+则除非已使用 /utf-8 或 /source-charset 选项指定代码页, 否则假定在当前用户代码页中对源文件进行编码.
+Visual Studio 允许采用多种字符编码中的任意一种保存 C++ 源代码.
+  有关源字符集和执行字符集的信息, 请参阅语言文档中的字符集.
+
+在 Visual Studio 中或以编程方式设置此选项
+在 Visual Studio 开发环境中设置此编译器选项
+打开项目"属性页" 对话框.  有关详细信息, 请参阅在 Visual Studio 中设置 C++ 编译器和生成属性.
+
+选择"配置属性">"C/C++">"命令行"属性页.
+
+在"附加选项"中, 添加 /utf-8 选项以指定首选编码.
+
+选择"确定"以保存更改 .

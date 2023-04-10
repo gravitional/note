@@ -59,13 +59,11 @@ Enter a positive integer:8
 
 ![hanno tower](http://studio-tsinghua.xuetangx.com/asset-v1:TsinghuaX+00740043-91-20202+2020_T2+type@asset+block@hanoi.png)
 
-将n 个盘子从A针移到C针可以分解为三个步骤:
+将 n 个盘子从A针移到C针可以分解为三个步骤:
 
-n  将A 上n-1个盘子移到 B针上(借助C针);
-
-n  把A针上剩下的一个盘子移到C针上;
-
-n  将n-1个盘子从B针移到C针上(借助A针).
++ 将A 上n-1个盘子移到 B针上(借助C针);
++ 把A针上剩下的一个盘子移到C针上;
++ 将n-1个盘子从B针移到C针上(借助A针).
 
 源代码:
 

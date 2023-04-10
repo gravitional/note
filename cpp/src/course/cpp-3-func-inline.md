@@ -1,7 +1,6 @@
 # 内联函数
 
 声明时使用关键字 inline.
-
 编译时在调用处用函数体进行替换, 节省了参数传递, 控制转移等开销.
 
 注意:
@@ -19,30 +18,26 @@ using namespace std;
 
 const double PI = 3.14159265358979;
 
-inline double calArea(double radius) {
-
-          return PI * radius * radius;
-
+inline double calArea(double radius)
+{
+    return PI * radius * radius;
 }
 
-int main() {
+int main()
+{
 
-          double r = 3.0;
-
-          double area = calArea(r);
-
-          cout << area << endl;
-
-          return 0;
-
+    double r = 3.0;
+    double area = calArea(r);
+    cout << area << endl;
+    return 0;
 }
 ```
 
 ## constexpr函数
 
-constexpr函数语法规定
+constexpr 函数语法规定
 
-constexpr修饰的函数在其所有参数都是constexpr时, 一定返回constexpr;
+constexpr 修饰的函数在其所有参数都是constexpr时, 一定返回 `constexpr`;
 
 函数体中必须有且仅有一条return语句.
 constexpr函数举例

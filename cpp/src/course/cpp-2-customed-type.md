@@ -112,8 +112,8 @@ int main() {
 `auto`: 编译器通过初始值自动推断变量的类型
 例如: auto val = val1 + val2;
 
-+ 如果val1+val2是int类型, 则val是int类型;
-+ 如果val1+val2是double类型, 则val是double类型.
++ 如果 val1+val2 是int类型, 则val是int类型;
++ 如果 val1+val2 是double类型, 则val是double类型.
 
 decltype: 定义一个变量与某一表达式的类型相同, 但并不用该表达式初始化变量
 例如:
