@@ -14055,8 +14055,100 @@ X_{j}=\overline{X}_{j\alpha}N_{\alpha},\quad X=\overline{X}^{T}\cdot N(\xi)\labe
 
 \end_layout
 
+\begin_layout Chapter
+FEM计算
+\end_layout
+
+\begin_layout Standard
+指标约定：
+\end_layout
+
+\begin_layout Enumerate
+用 
+\begin_inset Formula $a$
+\end_inset
+
+，
+\begin_inset Formula $b$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+ 表示正则坐标（单元自然参数坐标 
+\begin_inset Formula $\xi$
+\end_inset
+
+，
+\begin_inset Formula $\eta$
+\end_inset
+
+）；用
+\begin_inset Formula $i$
+\end_inset
+
+，
+\begin_inset Formula $j$
+\end_inset
+
+，
+\begin_inset Formula $k$
+\end_inset
+
+ 表示几何坐标（模型全局坐标 
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $y$
+\end_inset
+
+，
+\begin_inset Formula $z$
+\end_inset
+
+）；
+\end_layout
+
+\begin_layout Enumerate
+用字母 
+\begin_inset Formula $\alpha$
+\end_inset
+
+，
+\begin_inset Formula $\beta$
+\end_inset
+
+，
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 表示单元上不同节点，以及相关的形函数（
+\begin_inset Formula $N_{\alpha}^{e}$
+\end_inset
+
+）等。
+\end_layout
+
+\begin_layout Enumerate
+如果有局域坐标系，则用 
+\begin_inset Formula $u$
+\end_inset
+
+，
+\begin_inset Formula $v$
+\end_inset
+
+，
+\begin_inset Formula $w$
+\end_inset
+
+ 表示。
+\end_layout
+
 \begin_layout Section
-积分测度与雅可比矩阵
+积分测度与雅可比矩阵Jm
 \end_layout
 
 \begin_layout Standard
@@ -14083,7 +14175,7 @@ X_{j}=\overline{X}_{j\alpha}N_{\alpha},\quad X=\overline{X}^{T}\cdot N(\xi)\labe
 \begin_inset Formula $2$
 \end_inset
 
-维是
+维几何是
 \begin_inset Formula $2\times2$
 \end_inset
 
@@ -14332,7 +14424,7 @@ status open
 
 \begin_inset Formula 
 \[
-J_{ki}=(\tilde{\partial}_{k}\,N_{\alpha})\,\overline{X}_{\alpha i},\quad J=(\tilde{\nabla}N)\cdot\overline{X}
+J_{ki}=\tilde{\partial}_{b}X_{i}=(\tilde{\partial}_{b}\,N_{\alpha})\,\overline{X}_{\alpha i},\quad J=(\tilde{\nabla}N)\cdot\overline{X}
 \]
 
 \end_inset
@@ -14341,7 +14433,7 @@ J_{ki}=(\tilde{\partial}_{k}\,N_{\alpha})\,\overline{X}_{\alpha i},\quad J=(\til
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $k,i\in\left\{ 1,2\right\} $
+\begin_inset Formula $b,i\in\left\{ 1,2\right\} $
 \end_inset
 
 是自由度数目（
@@ -15958,7 +16050,7 @@ ref: FEM-Gerard;p45/61;sec 1.3.11。静电场的基础公式是 ：
 ，可以表示成单元残差的线性和
 \begin_inset Formula 
 \begin{equation}
-R(\phi)=\sum_{e}R^{e}\left(\phi;N_{i}^{e}\right).\label{eq:gal0}
+R(\phi)=\sum_{e}R^{e}\left(\phi;N_{\alpha}^{e}\right).\label{eq:gal0}
 \end{equation}
 
 \end_inset
@@ -15966,15 +16058,15 @@ R(\phi)=\sum_{e}R^{e}\left(\phi;N_{i}^{e}\right).\label{eq:gal0}
 在每个单元上，令加权的残差（residual error）和 为
 \begin_inset Formula 
 \begin{align}
-R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{i}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:gal00}\\
-\text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{i}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{i}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
-\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber 
+R^{e}\left(\phi;N_{\alpha}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{\alpha}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:gal00}\\
+\text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{\alpha}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{\alpha}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
+\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber 
 \end{align}
 
 \end_inset
 
 上面使用了分部积分，和高斯散度定理；通过分部积分引入了边界条件项 
-\begin_inset Formula ${\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}$
+\begin_inset Formula ${\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}$
 \end_inset
 
 。电势
@@ -15986,13 +16078,13 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 \end_inset
 
 ）的稳态分布应该满足
-\begin_inset Formula $R^{e}\left(\phi;N_{i}^{e}\right)=0$
+\begin_inset Formula $R^{e}\left(\phi;N_{\alpha}^{e}\right)=0$
 \end_inset
 
 ，即
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\label{eq:gal1}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\label{eq:gal1}
 \end{equation}
 
 \end_inset
@@ -16004,7 +16096,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 ，上式可以写成：
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal2}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal2}
 \end{equation}
 
 \end_inset
@@ -16018,7 +16110,7 @@ R^{e}\left(\phi;N_{i}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_
 \end_inset
 
  平行于边界），可以直接去掉 
-\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
+\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
 \end_inset
 
  项。
@@ -16057,7 +16149,7 @@ noprefix "false"
 
 \begin_layout Itemize
 这里的待求自由度实际上还是节点电势，
-\begin_inset Formula $D=-\varepsilon\cdot\nabla N_{j}\phi_{j}$
+\begin_inset Formula $D=-\varepsilon\cdot\nabla N_{\beta}\phi_{\beta}$
 \end_inset
 
 。只不过材料的曲线
@@ -16069,7 +16161,7 @@ noprefix "false"
 \end_inset
 
 和
-\begin_inset Formula $\phi_{j}$
+\begin_inset Formula $\phi_{\beta}$
 \end_inset
 
 的关系是非线性的。
@@ -16094,7 +16186,7 @@ noprefix "false"
 \end_inset
 
  也可能依赖于
-\begin_inset Formula $\phi_{j}$
+\begin_inset Formula $\phi_{\beta}$
 \end_inset
 
 。此外逆矩阵
@@ -16298,7 +16390,7 @@ noprefix "false"
 中给出了静电场问题的方程
 \begin_inset Formula 
 \[
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot D}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\sbf n\cdot D}\dd{\Gamma}=-\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot D}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot D}\dd{\Gamma}=-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \]
 
 \end_inset
@@ -16310,8 +16402,8 @@ noprefix "false"
 表示）
 \begin_inset Formula 
 \begin{align}
- & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla\delta\phi}\dd{\Gamma}\nonumber \\
- & =-\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla\delta\phi}\dd{\Gamma}\nonumber \\
+ & =-\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\sbf n\cdot\varepsilon(E^{0})\cdot\nabla\phi^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal3}
 \end{align}
 
 \end_inset
@@ -16365,7 +16457,7 @@ noprefix "false"
 
 \begin_layout Enumerate
 最后一项
-\begin_inset Formula $\int_{\Omega^{e}}N_{i}^{e}\rho\dd{\Omega}$
+\begin_inset Formula $\int_{\Omega^{e}}N_{\alpha}^{e}\rho\dd{\Omega}$
 \end_inset
 
  称为“
@@ -16385,14 +16477,14 @@ noprefix "false"
 \end_inset
 
  的插值展开 
-\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
+\begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{\beta}^{e}\delta\phi_{\beta}$
 \end_inset
 
  得
 \begin_inset Formula 
 \begin{align}
-\frac{1}{\varepsilon_{0}}\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla N_{j}^{e}}\dd{\Gamma}\bigg]\delta\phi_{j}\nonumber \\
- & =\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal4}
+\frac{1}{\varepsilon_{0}}\bigg[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Omega} & -\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Gamma}\bigg]\delta\phi_{\beta}\nonumber \\
+ & =\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\lambda\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal4}
 \end{align}
 
 \end_inset
@@ -16414,7 +16506,7 @@ noprefix "false"
 \end_inset
 
 取给定值，因此
-\begin_inset Formula $\delta\phi_{j}=0$
+\begin_inset Formula $\delta\phi_{\beta}=0$
 \end_inset
 
 ，从方程中直接删除对应的刚度矩阵和激励向量。
@@ -16454,7 +16546,7 @@ noprefix "false"
 总之，第一类和齐次第二类边界条件对刚度矩阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
 \begin_inset Formula 
 \begin{equation}
-\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\kappa\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
+\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
 \end{equation}
 
 \end_inset
@@ -16476,6 +16568,28 @@ noprefix "false"
 外加电场
 \series default
 ）。
+\end_layout
+
+\begin_layout Standard
+程序中因为是 
+\begin_inset Formula $F_{\text{v}}-F_{\text{in}}$
+\end_inset
+
+，所以
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+右边 
+\begin_inset Formula $\int_{\Omega^{e}}{\color{blue}\cdots\sbf D^{0}}\dd{\Omega}$
+\end_inset
+
+ 项前面有负号。
 \end_layout
 
 \begin_layout Section
@@ -16615,7 +16729,7 @@ Robbin 边界条件：
 \begin_inset Formula 
 \begin{align}
  & \left(\varepsilon\nabla\phi\right)\cdot\sbf n+\gamma\phi=q\label{eq:bnd3}\\
-\text{or}\quad & -\sbf D_{0}\cdot\sbf n=q,\quad\sbf n\cdot\varepsilon\cdot\sbf\nabla\delta\phi=-\gamma\delta\phi\label{eq:bnd3c}
+\text{or}\quad & -\sbf D_{0}\cdot\sbf n=q,\quad\sbf n\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi=-\gamma\delta\phi\label{eq:bnd3c}
 \end{align}
 
 \end_inset
@@ -16647,8 +16761,8 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align*}
- & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
- & =\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\sbf n\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi}\dd{\Gamma}\\
+ & =\lambda\left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\sbf n\cdot\sbf D^{0}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \end{align*}
 
 \end_inset
@@ -16656,8 +16770,8 @@ noprefix "false"
 得到第三类边界条件对应的Galerkin迭代方程
 \begin_inset Formula 
 \begin{align}
- & \frac{1}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\nabla N_{j}^{e}}\dd{\Omega}\right]\delta\phi_{j}+\frac{1}{\varepsilon_{0}}{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{i}^{e}N_{j}^{e}\dd{\Gamma}\right]}\delta\phi_{j}\nonumber \\
- & \qquad=\frac{1}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]+\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\frac{q}{\varepsilon_{0}}}\dd{\Gamma}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal-bnd3}
+ & \frac{1}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}+\frac{1}{\varepsilon_{0}}{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{\alpha}^{e}N_{\beta}^{e}\dd{\Gamma}\right]}\delta\phi_{\beta}\nonumber \\
+ & \qquad=\frac{\lambda}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]+\frac{\lambda}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}+\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal-bnd3}
 \end{align}
 
 \end_inset
@@ -16666,6 +16780,142 @@ noprefix "false"
 \series bold
 第三类边界条件对刚度矩阵和激励向量都有贡献
 \series default
+。
+\end_layout
+
+\begin_layout Standard
+符号说明：作为方程，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gal-bnd3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中各项的符号是相对的。下面说明在程序中的符号约定。
+\end_layout
+
+\begin_layout Itemize
+场强通常定义为
+\begin_inset Formula $\sbf D=-\varepsilon\nabla\phi$
+\end_inset
+
+；以体单元刚度矩阵 
+\begin_inset Formula $\left[\int_{\Omega^{e}}{\color{blue}\nabla N\cdots\nabla N}\dd{\Omega}\right]\delta\phi_{\beta}$
+\end_inset
+
+ 的符号为基准，它对应
+\begin_inset Formula $-\nabla N\cdot\delta\sbf D_{\beta}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+外力项
+\begin_inset Formula $\rho$
+\end_inset
+
+位于等式右侧，
+\color blue
+外力
+\begin_inset Formula $\rho$
+\end_inset
+
+的符号和
+\begin_inset Formula $K_{e}$
+\end_inset
+
+ 相同
+\color inherit
+。
+\end_layout
+
+\begin_layout Itemize
+体贡献和表面贡献总是差负号（来自于IBP）；
+\begin_inset Formula $\frac{1}{\varepsilon_{0}}{\color{brown}\left[\int_{\Gamma^{e}}\cdots\dd{\Gamma}\right]}\delta\phi_{\beta}$
+\end_inset
+
+ 表面
+\begin_inset Formula $K_{e}$
+\end_inset
+
+项中，表面负号与 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 的负号抵消；
+\color blue
+3rd表面
+\begin_inset Formula $\gamma$
+\end_inset
+
+项符号和
+\begin_inset Formula $K_{e}$
+\end_inset
+
+ 相同，
+\color inherit
+
+\begin_inset Formula $\gamma=-F^{(1)}(\phi_{0})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+外力和内力总是差负号（来自于FPI）；在程序中会给
+\begin_inset Formula $\frac{\lambda}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]$
+\end_inset
+
+ 强行添加负号，并在 
+\begin_inset Formula $-F_{\text{in}}$
+\end_inset
+
+ 那里抵消。
+\color blue
+体内力项和
+\begin_inset Formula $K_{e}$
+\end_inset
+
+ 相反，
+\color inherit
+
+\begin_inset Formula $q=F(\phi_{0})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+3rd边界的面内力项 
+\begin_inset Formula $q$
+\end_inset
+
+ 和 体内力项相同，即 
+\color blue
+3rd表面内力项
+\begin_inset Formula $q$
+\end_inset
+
+和
+\begin_inset Formula $K_{e}$
+\end_inset
+
+ 相反。
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $F(\phi_{0})$
+\end_inset
+
+是指非线性3rd 条件 
+\begin_inset Formula $\varepsilon\frac{\partial\phi}{\partial n}=F(\phi)$
+\end_inset
+
 。
 \end_layout
 
@@ -16686,8 +16936,8 @@ noprefix "false"
 代入下面的迭代形式中，
 \begin_inset Formula 
 \begin{align*}
- & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\varepsilon\,\frac{\partial}{\partial n}\delta\phi}\dd{\Gamma}\\
- & =\left[-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{i}^{e}\cdot\varepsilon\cdot\frac{\partial\phi_{0}}{\partial n}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{i}^{e}\,\varepsilon\,\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+ & \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\sbf\nabla\delta\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\varepsilon\,\frac{\partial}{\partial n}\delta\phi}\dd{\Gamma}\\
+ & =\left[-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\frac{\partial\phi_{0}}{\partial n}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\varepsilon\,\frac{\partial\phi_{0}}{\partial n}}\dd{\Gamma}\right]+\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
 \end{align*}
 
 \end_inset
@@ -16762,6 +17012,14 @@ noprefix "false"
 \end_inset
 
 即可。非线性迭代中，
+\begin_inset Formula $\gamma$
+\end_inset
+
+对应的
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+ 是 ACCUM；
 \begin_inset Formula $q$
 \end_inset
 
@@ -16769,7 +17027,7 @@ noprefix "false"
 \begin_inset Formula $\phi_{j}$
 \end_inset
 
- 是 ACCUM+SEARCH。达到收敛时，方程两边是同步的，SEARCH为零，即
+ 是 ACCUM+SEARCH，方程两边是错位的。只有当达到收敛时，方程两边是同步的，SEARCH为零，即
 \begin_inset Formula $\delta\phi=0$
 \end_inset
 
@@ -17278,7 +17536,7 @@ P_GFinAccum 是 Global Fin，即 Fin 在所有单元上累加的结果。
 
 \begin_layout Enumerate
 P_GRt，
-\begin_inset Formula $\mathrm{P\_GRt}=\mathrm{P\_GFv\_T}-\mathrm{P\_GFinAccum}$
+\begin_inset Formula $\mathrm{P\_GRt}={\color{red}\mathrm{P\_GFv\_T}-\mathrm{P\_GFinAccum}}$
 \end_inset
 
 ，两部分“力”的求和，注意这里的负号。
