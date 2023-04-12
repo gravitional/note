@@ -94,6 +94,14 @@ graphicboxes
 Young
 \end_layout
 
+\begin_layout Standard
+刚阵：刚度矩阵
+\end_layout
+
+\begin_layout Standard
+内力/外力：激励向量
+\end_layout
+
 \begin_layout Chapter
 数学基础
 \end_layout
@@ -1361,7 +1369,7 @@ literal "false"
 
 \begin_layout Standard
 Lagrange插值与Gauss积分是在学习FEM中不可回避的两部分，虽然说是两部分，其实在Gauss积分中，构造多项式的被积函数时，也用到了Lagrange插
-值多项式，所以在讲关于 参数单元 刚度矩阵求积分的时候，在数值积分中一起提出。
+值多项式，所以在讲关于 参数单元 刚阵 求积分的时候，在数值积分中一起提出。
 \begin_inset Formula 
 \begin{equation}
 \int_{a}^{b}f\left(x\right)\dd{x}\approx\int_{a}^{b}P\left(x\right)\dd{x}\label{eq:5.145}
@@ -2790,7 +2798,7 @@ K\phi=f\label{eq:mat1}
 
 \end_inset
 
-有限元计算中，组装完总刚度矩阵和载荷向量，并消去必要边界条件，就得到类似
+有限元计算中，组装完总刚阵和载荷向量，并消去必要边界条件，就得到类似
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:mat1"
@@ -2861,7 +2869,7 @@ noprefix "false"
 \begin_inset Formula $K$
 \end_inset
 
-是刚度矩阵。根据微积分求约束极值的思路，添加乘子项
+是刚阵。根据微积分求约束极值的思路，添加乘子项
 \begin_inset Formula 
 \[
 \mathcal{L}(\phi)=\frac{1}{2}\phi^{T}.K.\phi-\phi^{T}f+\lambda\left(\phi^{T}Q-c\right)
@@ -2945,7 +2953,7 @@ K'.\phi'=f'
 \begin_inset Formula $p$
 \end_inset
 
-远大于刚度矩阵最大元素，将约束方程增幅后添加到原方程中。由于
+远大于刚阵最大元素，将约束方程增幅后添加到原方程中。由于
 \begin_inset Formula $p$
 \end_inset
 
@@ -2989,11 +2997,11 @@ pQQ^{T}\phi=cpQ\label{eq:mat5}
 \begin_inset Formula $pQQ^{T}$
 \end_inset
 
-理解成对刚度矩阵的修正，
+理解成对刚阵的修正，
 \begin_inset Formula $cpQ$
 \end_inset
 
-理解成对激励向量的修正，
+理解成对力向量的修正，
 \begin_inset Formula 
 \begin{equation}
 \left(K+pQQ^{T}\right)\phi=f+cpQ\label{eq:mat6}
@@ -6149,10 +6157,10 @@ M\,x^{\prime}(t)+K\,x(t)+F[x(t)]=b(t)\label{eq:beta2}
 \begin_inset Formula $x(t+\Delta t)$
 \end_inset
 
-表示为
+表示为（XuLei的选取方式）
 \begin_inset Formula 
 \[
-x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t\right)+\beta\Delta t\,x^{\prime}\left(t+\Delta t\right)
+x\left(t+\Delta t\right)=x\left(t\right)+\beta\Delta t\,x^{\prime}\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t+\Delta t\right)
 \]
 
 \end_inset
@@ -6162,7 +6170,7 @@ x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\le
 \end_inset
 
 。
-\begin_inset Formula $\beta=1$
+\begin_inset Formula $\beta=0$
 \end_inset
 
  对应后向欧拉。
@@ -6184,7 +6192,7 @@ x\left(t+\Delta t\right)=x\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\le
 ，联立方程
 \begin_inset Formula 
 \begin{align*}
- & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
+ & x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime;n}+\overline{\beta}\Delta t\,x^{\prime;n+1}\\
  & M\,x^{\prime;n}+K\,x^{n}+F^{n}=b^{n}\\
  & M\,x^{\prime;n+1}+K\,x^{n+1}+F^{n+1}=b^{n+1}
 \end{align*}
@@ -6224,7 +6232,7 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 
 \begin_inset Formula 
 \begin{align*}
-\left(\frac{M}{\Delta t}+\beta K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\overline{\beta}K\right)x^{n}-\left(\beta\,F^{n+1}+\overline{\beta}\,F^{n}\right)+\left(\beta\,b^{n+1}+\overline{\beta}\,b^{n}\right)
+\left(\frac{M}{\Delta t}+\overline{\beta}K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\beta K\right)x^{n}-\left(\overline{\beta}\,F^{n+1}+\beta\,F^{n}\right)+\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
 \end{align*}
 
 \end_inset
@@ -6232,8 +6240,8 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 简记
 \begin_inset Formula 
 \begin{align*}
- & A_{1}=\left(\frac{M}{\Delta t}+\beta K\right),\quad A_{2}=\left(\frac{M}{\Delta t}-\overline{\beta}K\right)\\
- & B_{1}=\left(\beta\,b^{n+1}+\overline{\beta}\,b^{n}\right)
+ & A_{1}=\left(\frac{M}{\Delta t}+\overline{\beta}K\right),\quad A_{2}=\left(\frac{M}{\Delta t}-\beta K\right)\\
+ & B_{1}=\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
 \end{align*}
 
 \end_inset
@@ -6253,7 +6261,7 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 \end_inset
 
 标记NLI（非线性）迭代步， 
-\begin_inset Formula $\gamma$
+\begin_inset Formula $u$
 \end_inset
 
  标记线搜索试探步
@@ -6261,7 +6269,7 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 （线搜索结果是覆盖的，即只采用最后一次）
 \begin_inset Formula 
 \[
-A\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[B-AX_{w}^{n+1}\right]
+A\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[B-AX_{w}^{n+1}\right]
 \]
 
 \end_inset
@@ -6269,7 +6277,7 @@ A\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[B-AX_{w}^{n+1}\right]
 将对应矩阵代入得
 \begin_inset Formula 
 \begin{equation}
-A_{1}\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[A_{2}x^{n}-\beta\,{\color{blue}F^{n+1}}-\overline{\beta}\,F^{n}+B_{1}-A_{1}x_{w}^{n+1}\right]\label{eq:my30}
+A_{1}\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[A_{2}x^{n}-\overline{\beta}\,{\color{blue}F^{n+1}}-\beta\,F^{n}+B_{1}-A_{1}x_{w}^{n+1}\right]\label{eq:my30}
 \end{equation}
 
 \end_inset
@@ -6335,7 +6343,7 @@ F^{n+1}=F\left(x_{w+1}^{n+1}\right)=F_{w}^{n+1}+F_{w}^{(1),n+1}\Delta x_{w+1}^{n
 的值（上一时间步）。
 \begin_inset Formula 
 \[
-\left[A_{1}+\beta F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}=\lambda_{w,\gamma}\left[B_{1}+A_{2}x^{n}-\beta F_{w}^{(0),n+1}-\overline{\beta}\,F^{n}-A_{1}x_{w}^{n+1}\right]
+\left[A_{1}+\overline{\beta}F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[B_{1}+A_{2}x^{n}-\overline{\beta}F_{w}^{(0),n+1}-\beta\,F^{n}-A_{1}x_{w}^{n+1}\right]
 \]
 
 \end_inset
@@ -6343,13 +6351,33 @@ F^{n+1}=F\left(x_{w+1}^{n+1}\right)=F_{w}^{n+1}+F_{w}^{(1),n+1}\Delta x_{w+1}^{n
 整理
 \begin_inset Formula 
 \begin{align*}
-\left[\frac{M}{\Delta t}+\beta K+\beta F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,\gamma}\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta F_{w}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
- & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{w}^{n+1}\right)-\overline{\beta}\,K\,x^{n}-\beta\,K\,x_{w}^{n+1}}\Big]
+\left[\frac{M}{\Delta t}+\overline{\beta}K+\overline{\beta}F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,u}\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}F_{w}^{n+1}+\beta\,F^{n}}\right)\\
+ & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{w}^{n+1}\right)-\left(\overline{\beta}\,K\,x_{w}^{n+1}+\beta\,K\,x^{n}\right)}\Big]
 \end{align*}
 
 \end_inset
 
+对比容易发现，这里的 
+\begin_inset Formula $K\sim F_{w}^{(1),n+1}$
+\end_inset
 
+，
+\begin_inset Formula $K\,x_{w}^{n+1}\sim F_{w}^{n+1}$
+\end_inset
+
+，
+\begin_inset Formula $K\,x^{n}\sim F^{n}$
+\end_inset
+
+ 一一对应，这是由于
+\begin_inset Formula $F(x)$
+\end_inset
+
+是一般函数，也适用于
+\begin_inset Formula $K\,x(t)$
+\end_inset
+
+这样的线性项。
 \end_layout
 
 \begin_layout Remark
@@ -6357,14 +6385,14 @@ beta方法的系数具有对称性，作
 \begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
 \end_inset
 
-对换（即XuLei的选取方式），
-\begin_inset Formula $\beta=0$
+对换，
+\begin_inset Formula $\beta=1$
 \end_inset
 
 对应后向欧拉。
 \begin_inset Formula 
 \[
-x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+1}
+x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime,n}+\beta\Delta t\,x^{\prime,n+1}
 \]
 
 \end_inset
@@ -6372,8 +6400,8 @@ x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime,n}+\overline{\beta}\Delta t\,x^{\prime,n+
 表达式为
 \begin_inset Formula 
 \begin{align*}
-\left[\frac{M}{\Delta t}+\overline{\beta}\,K+\overline{\beta}\,F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,\gamma}\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}\,F_{w}^{n+1}+\beta\,F^{n}}\right)\\
- & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{w}^{n+1}\right)-\beta\,K\,x^{n}-\overline{\beta}\,K\,x_{w}^{n+1}}\Big]
+\left[\frac{M}{\Delta t}+\beta\,K+\beta\,F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,u}\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta\,F_{w}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
+ & +{\color{magenta}\frac{M}{\Delta t}\left(x^{n}-x_{w}^{n+1}\right)-\left(\beta\,K\,x_{w}^{n+1}+\overline{\beta}\,K\,x^{n}\right)}\Big]
 \end{align*}
 
 \end_inset
@@ -6556,7 +6584,7 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 \begin_inset Formula $\phi$
 \end_inset
 
-）的常数，因此刚度矩阵的元素不依赖于
+）的常数，因此刚阵的元素不依赖于
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -13666,7 +13694,7 @@ x=\sum_{i=1}^{m}N_{i}^{e\prime}(\xi_{1}\cdots)x_{i}
 \begin_layout Enumerate
 为什么会出现等参单元，因为方便。局部坐标系下的单元是很规则的单元，我们可以很容易通过 Lagrange 插值、划线法、Hermite插值来构造
  单元内场的插值函数。而且，如果单元是等参单元的话，坐标变换也可以运用场的插值函数，把局部坐标系下的规则单元变换为笛卡尔坐标系、极坐标、球坐标下的各种离奇形状的
-单元。即使这么做，对于刚度矩阵、力向量的积分上也不会很困难，所以我们很热爱等参单元。
+单元。即使这么做，对于刚阵、力向量的积分上也不会很困难，所以我们很热爱等参单元。
 \end_layout
 
 \begin_layout Standard
@@ -15055,7 +15083,7 @@ status open
 \end_layout
 
 \begin_layout Section
-计算刚度矩阵
+计算刚阵
 \end_layout
 
 \begin_layout Standard
@@ -15067,7 +15095,7 @@ status open
 
 \end_inset
 
-它对应的刚度矩阵是
+它对应的刚阵是
 \begin_inset Formula 
 \begin{align*}
  & K_{ij}^{e}=\iint_{\Omega^{e}}\left[(\nabla N_{i}^{e})\cdot\alpha\cdot(\nabla N_{j}^{e})+\beta N_{i}^{e}N_{j}^{e}\right]\dd{x}\dd{y},\\
@@ -15519,7 +15547,7 @@ noprefix "false"
 \series bold
 泛函或残差的线性律都是非常重要的保证
 \series default
-。因为线性律，才可以把刚度矩阵和激励向量的计算，分解成导出局域矩阵和组装为全局矩阵两步。
+。因为线性律，才可以把刚阵和力向量的计算，分解成导出局域矩阵和组装为全局矩阵两步。
 \end_layout
 
 \begin_layout Section
@@ -16274,7 +16302,7 @@ noprefix "false"
 
 \end_inset
 
-左右同乘刚度矩阵
+左右同乘刚阵
 \begin_inset Formula $K$
 \end_inset
 
@@ -16434,7 +16462,7 @@ noprefix "false"
 
 的“
 \series bold
-刚度矩阵
+刚阵
 \series default
 ”，由体单元和表面单元两部分的贡献组成；
 \end_layout
@@ -16442,9 +16470,9 @@ noprefix "false"
 \begin_layout Enumerate
 方程右边的总和称为“
 \series bold
-激励向量
+力向量
 \series default
-”（也叫“力向量”）反映了当前体系偏离平衡态的程度。
+”（也叫“激励向量”）反映了当前体系偏离平衡态的程度。
 \begin_inset Formula $[\cdots]$
 \end_inset
 
@@ -16509,7 +16537,7 @@ noprefix "false"
 \begin_inset Formula $\delta\phi_{\beta}=0$
 \end_inset
 
-，从方程中直接删除对应的刚度矩阵和激励向量。
+，从方程中直接删除对应的刚阵和力向量。
 \end_layout
 
 \begin_layout Enumerate
@@ -16543,7 +16571,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-总之，第一类和齐次第二类边界条件对刚度矩阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
+总之，第一类和齐次第二类边界条件对刚阵和激励都没有贡献。在这两种边界上可以直接将方程简化为
 \begin_inset Formula 
 \begin{equation}
 \left[\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}=\lambda\left\{ \frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}+\int_{\Omega^{e}}N_{i}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\right\} .\label{eq:gal5}
@@ -16642,7 +16670,7 @@ ref: JMJin P104, Sec 4.3.3。Dirichlet 边界条件定义为：
 \end_layout
 
 \begin_layout Enumerate
-以及修改对应的激励向量：
+以及修改对应的力向量：
 \begin_inset Formula 
 \begin{align*}
  & b_{j}\to b_{j}-K_{j,\text{nd}(i)}p\left(i\right);\\
@@ -16715,7 +16743,7 @@ ref: JMJin P104, Sec 4.3.3。Dirichlet 边界条件定义为：
 
  作对应的处理，即
 \series bold
-减去刚度矩阵乘以约束向量
+减去刚阵乘以约束向量
 \series default
 。
 \end_layout
@@ -16778,7 +16806,7 @@ noprefix "false"
 
 可以看到，
 \series bold
-第三类边界条件对刚度矩阵和激励向量都有贡献
+第三类边界条件对刚阵和力向量都有贡献
 \series default
 。
 \end_layout
@@ -16802,7 +16830,7 @@ noprefix "false"
 \begin_inset Formula $\sbf D=-\varepsilon\nabla\phi$
 \end_inset
 
-；以体单元刚度矩阵 
+；以体刚阵项 
 \begin_inset Formula $\left[\int_{\Omega^{e}}{\color{blue}\nabla N\cdots\nabla N}\dd{\Omega}\right]\delta\phi_{\beta}$
 \end_inset
 
@@ -16810,7 +16838,11 @@ noprefix "false"
 \begin_inset Formula $-\nabla N\cdot\delta\sbf D_{\beta}$
 \end_inset
 
-。
+。可以把个符号，连同
+\begin_inset Formula $\sbf D=-\varepsilon\nabla\phi$
+\end_inset
+
+作为标准符号约定。
 \end_layout
 
 \begin_layout Itemize
@@ -17110,7 +17142,7 @@ noprefix "false"
 
 
 \series bold
-第二类边界条件对激励向量有贡献
+第二类边界条件对力向量有贡献
 \series default
 。
 \end_layout
@@ -17130,7 +17162,7 @@ noprefix "false"
 
 
 \series bold
-自然边界条件对刚度矩阵和激励都没有贡献
+自然边界条件对刚阵和激励都没有贡献
 \series default
 ，与Ritz法的结论相同。
 \end_layout
@@ -17208,7 +17240,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Example
-有限元中界面连续性的保证。以Ritz方法为例，我们关注刚度矩阵的部分，静电场的泛函经过分部积分可以给出边界项：
+有限元中界面连续性的保证。以Ritz方法为例，我们关注刚阵的部分，静电场的泛函经过分部积分可以给出边界项：
 \begin_inset Formula 
 \begin{align*}
 \mathcal{F}(\phi)= & \frac{1}{2}\int_{V}(\nabla\phi)\cdot\varepsilon\cdot(\nabla\phi)\dd{V}\\
@@ -17376,7 +17408,7 @@ noprefix "false"
 
 \end_inset
 
-对刚度矩阵的贡献为：
+对刚阵的贡献为：
 \begin_inset Formula 
 \[
 S_{ij}^{e}=\int_{\Gamma^{c}}\varepsilon_{e}N_{i}\frac{\partial N_{j}}{\partial n_{e}}\dd{\Gamma}
@@ -17471,7 +17503,7 @@ K
 \begin_inset Quotes erd
 \end_inset
 
-)，刚度矩阵，Galerkin 方程左侧的稀疏矩阵。
+)，刚阵，Galerkin 方程左侧的稀疏矩阵。
 \begin_inset Formula 
 \[
 K=\nabla N^{T}\cdot\varepsilon\cdot\nabla N*W*\det[J]
@@ -17547,11 +17579,11 @@ P_GRt，
 \begin_inset Formula $\mathrm{res}=\sqrt{\sum_{i}\mathrm{P\_GRt}[i]}$
 \end_inset
 
-，即所有节点上激励向量的平方和，再开方。
+，即所有节点上力向量的平方和，再开方。
 \end_layout
 
 \begin_layout Enumerate
-从单元的局域刚度矩阵, 组装全局矩阵的过程，见 金建铭note 4.3.3.2。
+从单元的局域刚阵, 组装全局矩阵的过程，见 金建铭note 4.3.3.2。
 \end_layout
 
 \begin_layout Enumerate
@@ -17650,7 +17682,7 @@ noprefix "false"
 
 \end_inset
 
-可以看到，一般对刚度矩阵和激励向量都有贡献。
+可以看到，一般对刚阵和力向量都有贡献。
 \end_layout
 
 \begin_layout Section
@@ -17735,7 +17767,7 @@ q_{2}
 \begin_inset Formula $\phi_{i}$
 \end_inset
 
-表出，代入边界的刚度矩阵和激励向量。
+表出，代入边界的刚阵和力向量。
 \end_layout
 
 \begin_layout Standard
@@ -19089,7 +19121,7 @@ noprefix "false"
 \begin_inset Formula $\delta\phi=\sum_{e=1}^{N}N_{j}^{e}\delta\phi_{j}$
 \end_inset
 
-，相当于在刚度矩阵中添加一项
+，相当于在刚阵中添加一项
 \begin_inset Formula 
 \begin{equation}
 N_{i}^{e}\;\sbf e_{r}\cdot\frac{\partial D}{\partial E}\cdot\sbf e_{r}\frac{n}{r}\;N_{j}^{e}\label{eq:el-open}
@@ -19478,7 +19510,7 @@ noprefix "false"
 \begin_inset Formula ${\color{brown}-\nabla\Phi_{t}=\frac{n}{r}\Phi_{t}\sbf e_{r}}$
 \end_inset
 
- 的贡献归入刚度矩阵 
+ 的贡献归入刚阵 
 \begin_inset Formula $K_{ij}^{e}$
 \end_inset
 
@@ -21211,7 +21243,7 @@ noprefix "false"
 
 \end_inset
 
-因此在永磁材料中，激励向量会多出一项永磁体的贡献
+因此在永磁材料中，力向量会多出一项永磁体的贡献
 \begin_inset Formula 
 \[
 b_{i}^{e}=\mu_{0}\int_{\Omega_{e}}\sbf J\cdot\sbf N_{i}^{e}\dd{\Omega}+{\color{blue}\frac{\mu_{0}}{\mu_{r}}\int_{\Omega_{e}}\sbf M_{0}\cdot\left(\nabla\times\sbf N_{i}^{e}\right)\dd{\Omega}}
