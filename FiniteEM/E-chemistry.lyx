@@ -1647,7 +1647,7 @@ L=W/ρ=\frac{C_{r}\,M\,F\,I\,t}{n×ρ}
 \begin_inset Formula $\mathrm{g/cm^{2}}$
 \end_inset
 
-
+。
 \end_layout
 
 \begin_layout Subsection
@@ -1865,12 +1865,11 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Example
-电势
-\begin_inset Formula $\phi$
-\end_inset
+\begin_layout Section
+电场的残差方程
+\end_layout
 
-的残差方程
+\begin_layout Standard
 \begin_inset Formula 
 \[
 R_{E}^{e}\left(N_{m}\right)=\Big[\int_{\Omega^{e}}{\color{blue}\nabla N_{m}\cdot\sbf J_{E}}\dd{\Omega}-\int_{\Gamma^{s}}{\color{brown}N_{m}\sbf n\cdot\sbf J_{E}}\dd{\Gamma}\Big]=0
@@ -1954,19 +1953,11 @@ K\cdot\delta J_{E,s+1}=-\lambda_{s}\,K\cdot J_{E,s}+\lambda_{s}\,b,\label{eq:ef2
  是电流在外迭代中的累积值。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+\begin_layout Section
+浓度场的残差方程
 \end_layout
 
-\begin_layout Example
-浓度场
-\begin_inset Formula $C_{i}$
-\end_inset
-
-的残差方程
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
 R_{2}^{e}(N_{m})= & \int_{\Omega^{e}}N_{m}^{e}\left[{\color{red}D_{i}\,\nabla^{2}C_{i}}+{\color{blue}z_{i}u_{i}F\,\nabla C_{i}\cdot\nabla\phi}+R_{i}-\partial_{t}C_{i}\right]\dd{\Omega}\\
@@ -2030,12 +2021,20 @@ R_{C_{i}}^{e}\left(N_{m}\right)= & \int_{\Omega^{e}}\left[N_{m}\,\partial_{t}C_{
 \begin_inset Formula $\sbf n$
 \end_inset
 
-从溶液指向电极（或容器壁）；其中定义了三类浓度流
+从溶液指向电极（或容器壁）；其中定义了三类浓度流（
+\begin_inset Formula $K_{e}$
+\end_inset
+
+标准符号是
+\begin_inset Formula $+(\nabla N)\cdot(\nabla N)$
+\end_inset
+
+）
 \begin_inset Formula 
 \begin{align}
-\sbf J_{D_{i}} & =-D_{i}\nabla C_{i},\quad\text{Diffusion}\nonumber \\
-\sbf J_{M_{i}} & =-z_{i}u_{i}F\,C_{i}\nabla\phi,\quad\text{Migration}\label{eq:my26}\\
-\sbf J_{C_{i}} & =-C_{i}\sbf u,\quad\text{Convection}\nonumber 
+\sbf J_{D_{i}} & =-D_{i}{\color{brown}\nabla C_{i}},\quad\text{Diffusion}\nonumber \\
+\sbf J_{M_{i}} & =-z_{i}u_{i}F\,{\color{brown}C_{i}}\nabla\phi,\quad\text{Migration}\label{eq:my26}\\
+\sbf J_{C_{i}} & =-{\color{brown}C_{i}}\sbf u,\quad\text{Convection}\nonumber 
 \end{align}
 
 \end_inset
@@ -2044,7 +2043,42 @@ R_{C_{i}}^{e}\left(N_{m}\right)= & \int_{\Omega^{e}}\left[N_{m}\,\partial_{t}C_{
 \end_layout
 
 \begin_layout Remark
-如果将 
+表面项：
+\begin_inset Formula $\sbf J_{D_{i}}$
+\end_inset
+
+ 是类似于静电场的标准形式，在 3rd 条件中边界才有贡献；而 
+\begin_inset Formula $\sbf J_{M_{i}}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sbf J_{C_{i}}$
+\end_inset
+
+ 则是 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ 的线性项，可以强行把它们认作线性3rd条件
+\begin_inset Formula 
+\[
+D_{i}\frac{\partial C_{i}}{\partial n}=\sbf n\cdot\sbf J_{M_{i}}[C_{i}]+\sbf n\cdot\sbf J_{C_{i}}[C_{i}]
+\]
+
+\end_inset
+
+因为是线性函数（order 1），所以对 刚阵 和 内力 都有贡献。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+迁移项：如果将 
 \begin_inset Formula $C_{i}$
 \end_inset
 
@@ -2091,14 +2125,10 @@ noprefix "false"
 \end_inset
 
 其中
-\begin_inset Formula $G_{k\alpha}$
+\begin_inset Formula $G_{k\alpha}=\partial_{k}N_{\alpha}^{e}$
 \end_inset
 
-表示形函数梯度
-\begin_inset Formula $\partial_{k}N_{\alpha}^{e}$
-\end_inset
-
-；
+表示形函数梯度；
 \begin_inset Formula $E_{k}=-\nabla\phi$
 \end_inset
 
@@ -2124,7 +2154,11 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Section
+迭代法
+\end_layout
+
+\begin_layout Standard
 代入
 \begin_inset Formula $\phi$
 \end_inset
@@ -2366,8 +2400,8 @@ noprefix "false"
 的耦合，
 \begin_inset Formula 
 \begin{align}
-\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:df0a}\\
- & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:df0b}\\
+\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}-\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:df0a}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:df0b}\\
  & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:df0c}
 \end{align}
 
@@ -2381,7 +2415,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 \sbf J_{D_{i}} & =-D_{i}\nabla C_{i},\quad\text{Diffusion}\\
-\sbf J_{C_{i}} & =C_{i}\sbf u,\quad\text{Convection}
+\sbf J_{C_{i}} & =-C_{i}\sbf u,\quad\text{Convection}
 \end{align*}
 
 \end_inset
@@ -2390,8 +2424,8 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
 M\Rightarrow & \int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\nonumber \\
-K\Rightarrow & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:df1}\\
- & \;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\nonumber \\
+K\Rightarrow & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}-\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:df1}\\
+ & \;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\nonumber \\
 b\Rightarrow & \int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\nonumber 
 \end{align}
 
