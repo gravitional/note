@@ -322,3 +322,19 @@ Visual Studio的编译器分配完空间后, 会顺手往里面装进去一点�
 原因是组装矩阵时,
 将 local 矩阵插入全局矩阵的操作, 不在同一个 Critical 块中.
 导致 矩阵组装 过程那边变量被 race condition.
+
+## GetDofValue, HasField 报错, STPBEG_ACCUM
+
+原因, 没有初始化 STPBEG_ACCUM 对应的解.
+
+## 控制台乱码
+
+在 main.cpp 中添加
+
+```cpp
+//... 在这个位置添加
+#ifdef _WIN32
+// ...
+
+system("chcp 65001")
+```
