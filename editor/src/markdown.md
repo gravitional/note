@@ -270,7 +270,7 @@ end tell
 代码区块中, 一般的 Markdown 语法不会被转换, 像是星号便只是星号,
 这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件.
 
-## 反斜杠
+## 反斜杠转义
 
 Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号,
 例如: 如果你想要用星号加在文字旁边的方式来做出强调效果(但不用 `<em>` 标签), 你可以在星号的前面加上反斜杠:
@@ -407,7 +407,6 @@ Use the `printf()` function.
 
 Markdown 更改字体的语法:
 
-```markdown
 <font face="黑体">我是黑体字</font>
 <font face="微软雅黑">我是微软雅黑</font>
 <font face="STCAIYUN">我是华文彩云</font>
@@ -416,7 +415,6 @@ Markdown 更改字体的语法:
 <font color=Blue>我是蓝色</font>
 <font size=5>我是尺寸</font>
 <font face="黑体" color=green size=5>我是黑体, 绿色, 尺寸为5</font>
-```
 
 #### 为文字添加背景色
 
@@ -497,25 +495,25 @@ png 格式的图片更清晰.
 并使用管道(|)分隔每列. 您可以选择在表的任一端添加管道.
 
 ```markdown
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
 ```
 
 呈现的输出如下所示:
 
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
 
 单元格宽度可以变化, 如下所示. 呈现的输出将看起来相同.
 
-| Syntax | Description |
-| --- | ----------- |
-| Header | Title |
-| Paragraph | Text |
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
 
 Tip: 使用连字符和管道创建表可能很麻烦.
 为了加快该过程, 请尝试使用 [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables).
@@ -586,9 +584,9 @@ Here's a simple footnote,[^1] and here's a longer one.[^bignote]
 
 ## Markdown 标题编号 {#custom-id}
 
-许多Markdown处理器支持标题的自定义ID - 一些Markdown处理器会自动添加它们.
+许多Markdown处理器支持标题的 `自定义ID` - 一些Markdown处理器会自动添加它们.
 添加自定义ID允许您直接链接到标题并使用CSS对其进行修改. 要添加自定义标题ID,
-请在与标题相同的行上用大括号括起该自定义ID.
+请在与标题相同的行上用大括号括起该 `自定义ID`.
 
 ```markdown
 ### My Great Heading {#custom-id}
