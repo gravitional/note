@@ -59,11 +59,11 @@ devenv 解决方案文件.sln /build [ 解决方案配置 ] [ /project 项目名
 
 产品特定的开关:
 
-/debugexe       打开要调试的指定可执行文件. 将命令行的剩余部分作为参数传递给此可执行文件.
-/diff           比较两个文件.  采用四个参数:SourceFile, TargetFile, SourceDisplayName (可选),
+`/debugexe`       打开要调试的指定可执行文件. 将命令行的剩余部分作为参数传递给此可执行文件.
+`/diff`           比较两个文件.  采用四个参数:SourceFile, TargetFile, SourceDisplayName (可选),
                 TargetDisplayName (可选)
-/TfsLink        打开团队资源管理器并为提供的项目 URI 启动查看器(如果注册了项目 URI).
-/useenv        使用 PATH, INCLUDE, LIBPATH 和 LIB 环境变量而不是使用 VC++ 生成的 IDE 路径.
+`/TfsLink`        打开团队资源管理器并为提供的项目 URI 启动查看器(如果注册了项目 URI).
+`/useenv`        使用 PATH, INCLUDE, LIBPATH 和 LIB 环境变量而不是使用 VC++ 生成的 IDE 路径.
 
 要从命令行附加调试器, 请使用:
 VsJITDebugger.exe -p <pid>
@@ -75,7 +75,7 @@ VsJITDebugger.exe -p <pid>
 .\devenv.com F:\00Projects\test.sln /Build
 
 # debug x64
-.\devenv.com F:\00Projects\test.sln /Build "Debug|64"
+.\devenv.com F:\00Projects\test.sln /Build "Debug|x64"
 
 # debug win32
 .\devenv.com F:\00Projects\test.sln /Build "Debug|Win32"
