@@ -602,7 +602,8 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 3: invalid 
 
 `Python3`的字符串使用`Unicode`, 直接支持多语言.
 
-当`str`和`bytes`互相转换时, 需要指定编码. 最常用的编码是`UTF-8`. `Python`当然也支持其他编码方式, 比如把`Unicode`编码成`GB2312`:
+当`str`和`bytes`互相转换时, 需要指定编码. 最常用的编码是`UTF-8`.
+`Python`当然也支持其他编码方式, 比如把`Unicode`编码成`GB2312`:
 
 ```python
 >>> '中文'.encode('gb2312')
