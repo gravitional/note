@@ -1,7 +1,6 @@
 # c++ char char8_t char16_t 等类型
 
 [C++:char, wchar_t, char8_t, char16_t char32_t](https://blog.csdn.net/it_cplusplus/article/details/118191097)
-[C++ 中char wchar_t char16_t char32_t的简单区别](https://blog.csdn.net/dongxianfei/article/details/107489599)
 
 ## 简介
 
@@ -41,3 +40,54 @@ char8_t 和类型的字符串 char 称为 窄 字符串, 即使用于编码 Unic
 当字符为类型时, 请使用, 当字符为类型时, 当字符为类型时, 则使用;
 当字符类型为时使用 std::string char std::u8string char8_t std::u16string char16_t std::u32string char32_t std::wstring wchar_t .
 表示文本的其他类型, 包括 std::stringstream 和 std::cout 的专用化的窄字符串和宽字符串.
+
+## another
+
+[C++ 中char wchar_t char16_t char32_t的简单区别](https://blog.csdn.net/dongxianfei/article/details/107489599)
+
+首先这几种字符类型的首要区别就是其占用 `存储空间` 的大小不同.
+`char` 由一个字节表示, `wchar_t` 宽体字符, 由两个字符表示.
+char16_t, char32_t C++ 11 新增的字符类型, `char16_t` 占两个字节, `char32_t` 占四个字节.
+
+初始化的方法不同:
+
+```cpp
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    char nameChar[] = "This is a char array";
+    wchar_t nameWchar[] = L"This is a wchar array";
+    char16_t nameChar16[] = u"This is a char16 array";
+    char32_t nameChar32[] = U"This is a char32 array";
+    cin.get();
+}
+
+char     ch1{ 'a' };  // or { u8'a' }
+wchar_t  ch2{ L'a' };
+char16_t ch3{ u'a' };
+char32_t ch4{ U'a' };
+```
+
+Char类型是 C 和C++中的原始字符类型. 类型无符号字符通常用于表示字节;
+Wchar_t类型是实现定义的宽字符类型;
+Char16_t和char32_t类型分别表示16位和32位宽字符;
+在C++标准库中, 每个 basic_string 类型都专用于窄字符串和宽字符串.
+
+当字符的类型为char时, 使用 std::string;
+
++ `std::u16string` 字符类型 `char16_t`;
++ `std::u32string` 字符类型 `char32_t`;
++ `std::wstring` 字符类型 `wchar_t`;
+
+表示文本的其他类型, 包括 std::stringstream 和 std::cout 专用于窄字符串和宽字符串.
+
+```cpp
+typedef basic_string<char> string;
+typedef basic_string<wchar_t> wstring;
+typedef basic_string<char16_t> u16string; //C++11
+typedef basic_string<char32_t> u32string; //C++11
+```

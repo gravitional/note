@@ -348,3 +348,7 @@ uint64_t n1 = 1000 * 1000 * 1000 * 1000; //(错误)
 uint64_t n2 = (uint64_t)1000 * (uint64_t)1000 * (uint64_t)1000 * (uint64_t)10;
 uint64_t n3 = 1000ui64 * 1000ui64 * 1000ui64 * 10ui64;
 ```
+
+## LNK2001 连接错误
+
+[Error LNK2001 无法解析的外部符号 的几种情况及解决办法](https://blog.csdn.net/shenyulv/article/details/6699836)
