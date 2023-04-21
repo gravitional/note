@@ -80,8 +80,7 @@ sizeof(bool) is :1
 下例显示了不同类型变量占内存的字节数和表示范围,
 这都是在64bit Linux的环境下, 由g++-9定义的:
 
-看下面的例3, 在g++-9 64bit 中编译运行,
-显示
+看下面的例3, 在 g++-9 64bit 中编译运行, 显示
 short, unsigned short, int, unsigned int,
 long, unsigned long, long long(since C++11), u
 nsigned long long(since C++11)

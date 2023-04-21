@@ -35,7 +35,8 @@ with open(mesh_data, 'r') as mesh_fh:     # 从 mesh.dat 中提取数据
         with open(f'{node}.txt', 'w') as res_fh:  # 存储结果的 txt
             for line in mesh_fh:
                 if lnum > range[0] and lnum < range[1]:
-                    line = re.sub(r'[\[\],]', '', line)  # 删除多余的字符
-                    line = re.sub(r'^\s+', '', line)  # 删除多余的空白
+                    line = re.sub(r'[\[\],]', ' ', line)  # 删除多余的字符: [ ] ,
+                    line = re.sub(r'^\s+', '', line)  # 删除开头空白
+                    line = re.sub(r' +', ' ', line)  # 统一空格个数
                     res_fh.write(line)  # 输出结果到对应的 txt
                 lnum += 1
