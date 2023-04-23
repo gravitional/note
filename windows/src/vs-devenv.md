@@ -31,31 +31,31 @@ IDE 将查找引用该项目的单个 .sln 文件.
 devenv 解决方案文件.sln /build [ 解决方案配置 ] [ /project 项目名称或文件 [ /projectconfig 名称 ] ]
 可用的命令行开关:
 
-/Build          使用指定的解决方案配置生成解决方案或项目.
-例如"Debug". 如果可能存在多个平台, 则配置名称必须用引号括起来, 并且包含平台名称. 例如"Debug|Win32".
-/Clean          删除生成结果.
-/Command        启动 IDE 并执行该命令.
-/Deploy         生成并部署指定的生成配置.
-/Edit           在此应用程序的运行实例中打开指定文件. 如果没有正在运行的实例, 则启动一个具有简化窗口布局的新实例.
-/LCID           设置 IDE 中用于用户界面的默认语言.
-/Log            将 IDE 活动记录到指定的文件以用于疑难解答.
-/NoVSIP         禁用用于 VSIP 测试的 VSIP 开发人员许可证密钥.
-/Out            将生成日志追加到指定的文件中.
-/Project        指定生成, 清理或部署的项目. 必须和 /Build, /Rebuild, /Clean 或 /Deploy 一起使用.
+`/Build`          使用指定的解决方案配置生成解决方案或项目.
+例如 `Debug`. 如果可能存在多个平台, 则配置名称必须用引号括起来, 并且包含平台名称. 例如 `Debug|Win32`, `Debug|x64`
+`/Clean`          删除生成结果.
+`/Command`        启动 IDE 并执行该命令.
+`/Deploy`         生成并部署指定的生成配置.
+`/Edit`           在此应用程序的运行实例中打开指定文件. 如果没有正在运行的实例, 则启动一个具有简化窗口布局的新实例.
+`/LCID`           设置 IDE 中用于用户界面的默认语言.
+`/Log`            将 IDE 活动记录到指定的文件以用于疑难解答.
+`/NoVSIP`         禁用用于 VSIP 测试的 VSIP 开发人员许可证密钥.
+`/Out`            将生成日志追加到指定的文件中.
+`/Project`        指定生成, 清理或部署的项目. 必须和 /Build, /Rebuild, /Clean 或 /Deploy 一起使用.
 
 /ProjectConfig  重写解决方案 配置中指定的项目配置. 例如"Debug".
 如果可能存在多个平台, 则配置名称必须用引号括起来并包含平台名称.
 例如"Debug|Win32". 必须和 /Project 一起使用.
 
-/Rebuild        先清理, 然后使用指定配置生成解决方案或项目.
-/ResetSettings  恢复 IDE 的默认设置, 还可以重置为指定的 VSSettings 文件.
-/ResetSkipPkgs  清除所有添加到 VSPackages 的 SkipLoading 标记.
-/Run            编译并运行指定的解决方案.
-/RunExit        编译并运行指定的解决方案然后关闭 IDE.
-/SafeMode       以安全模式启动 IDE, 加载最少数量的窗口.
+`/Rebuild`        先清理, 然后使用指定配置生成解决方案或项目.
+`/ResetSettings`  恢复 IDE 的默认设置, 还可以重置为指定的 VSSettings 文件.
+`/ResetSkipPkgs`  清除所有添加到 VSPackages 的 SkipLoading 标记.
+`/Run`            编译并运行指定的解决方案.
+`/RunExit`        编译并运行指定的解决方案然后关闭 IDE.
+`/SafeMode`       以安全模式启动 IDE, 加载最少数量的窗口.
 
-/Upgrade        升级项目或解决方案以及其中的所有项目. 并相应地创建这些文件的备份.
-有关备份过程的详细信息, 请参见"Visual Studio 转换向导"上的帮助.
+`/Upgrade`        升级项目或解决方案以及其中的所有项目. 并相应地创建这些文件的备份.
+有关备份过程的详细信息, 请参见 "Visual Studio 转换向导"上的帮助.
 
 产品特定的开关:
 
