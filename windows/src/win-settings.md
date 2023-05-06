@@ -2,8 +2,8 @@
 
 [Settings页面的 URI 快捷方式](https://winaero.com/windows-11-ms-settings-commands-settings-uri-shortcuts)
 
-几乎所有的设置页面都可以用ms-settings命令直接打开.
-你可以为 "设置 "应用程序的任何页面创建一个快捷方式, 或者直接打开它.
+几乎所有的设置页面都可以用 `ms-settings` 命令直接打开.
+你可以为 `设置`"应用程序的任何页面创建一个快捷方式, 或者直接打开它.
 
 + 直接打开, 可以使用 `win+R` 快捷键, 输入例如 `ms-settings:color`
 + 桌面右键, 新建快捷方式, 在对象位置中输入 `explorer.exe <ms-settings command>`,
@@ -22,7 +22,7 @@ Category    Settings page   ms-settings command
 + Graphics​;  `ms-settings:display-advancedgraphics`
 + Sound;    `ms-settings:sound`
 + All sound devices​; `ms-settings:sound-devices`
-+ Volume mixer​; `ms-settings:apps-volume`
++ Volume mixer​; `ms-settings:apps-volume`, 音量合成器
 + Choose your sound defaults for AR/VR experiences​; `ms-settings:holographic-audio`
 
 + Notifications;    `ms-settings:notifications`
