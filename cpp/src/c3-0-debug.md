@@ -353,3 +353,24 @@ uint64_t n3 = 1000ui64 * 1000ui64 * 1000ui64 * 10ui64;
 ## LNK2001 连接错误
 
 [Error LNK2001 无法解析的外部符号 的几种情况及解决办法](https://blog.csdn.net/shenyulv/article/details/6699836)
+
+## 编译器错误 C2766, 编译器错误 C2766
+
+不允许重复显式专用化.  有关详细信息, 请参阅 [函数模板的显式专用化](https://learn.microsoft.com/zh-cn/cpp/cpp/explicit-specialization-of-function-templates?view=msvc-170).
+
+以下示例生成 C2766:
+
+```C++
+// C2766.cpp
+// compile with: /c
+template<class T>
+struct A {};
+
+template<>
+struct A<int> {};
+
+template<>
+struct A<int> {};   // C2766
+// try the following line instead
+// struct A<char> {};
+```

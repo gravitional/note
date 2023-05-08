@@ -1,6 +1,8 @@
 # Git中submodule的使用
 
 [Git中submodule的使用](https://zhuanlan.zhihu.com/p/87053283)
+[main]: https://gitee.com/mirrors_trending/OpenSSL-2022.git
+[sub1]: https://github.com/username/sub1.git
 
 ## 背景
 
@@ -23,9 +25,6 @@
 
 ## 使用流程
 
-[main]: https://gitee.com/mirrors_trending/OpenSSL-2022.git
-[sub1]: https://github.com/username/sub1.git
-
 假定我们有两个项目: `main` 和 `sub1`,
 其中 `main` 表示主项目, 而 `sub1` 表示子模块项目.
 
@@ -42,7 +41,8 @@
 
     ```bash
     # 创建根项目 OpenSSL,  并进入根目录
-    git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git; cd  OpenSSL-2022
+    git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git; 
+    cd  OpenSSL-2022
     # 添加子项目依赖
     git submodule add https://gitee.com/mirrors/tinyre.git
     ```
