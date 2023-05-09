@@ -9,6 +9,11 @@ import matplotlib.patches as mpatches
 er0 = 8.854187817e-12
 mu0 = 4 * math.pi * 1e-7
 
+# 文件名称
+filename_node = 'Node-1.txt'
+filename_plane = 'Tri3-3.txt'
+filename_bound = 'Line2-5.txt'
+
 
 #  读取数据
 def readData2(name: str):
@@ -28,7 +33,7 @@ def readData(name: str, cols, skip=0, /, dtype=float):
 
 def plotPlane(nodeData):
     # 读取数据
-    planeRef = readData('Tri3.txt', [1, 2, 3], dtype=int)
+    planeRef = readData(filename_plane, [1, 2, 3], dtype=int)
     # 节点 X Y 数据列的位置
     nodePosX = 0
     nodePosY = 1
@@ -57,7 +62,7 @@ def plotPlane(nodeData):
 
 
 def plotSurf(nodeData):
-    surfRef = readData('Line2.txt', [1, 2], dtype=int)
+    surfRef = readData(filename_bound, [1, 2], dtype=int)
     surfLen = len(surfRef)
     nodeN = 2
     # 节点 X Y 数据列的位置
@@ -82,7 +87,7 @@ def plotSurf(nodeData):
         dy = ylst[1]
         # plt.plot(xlst, ylst, linestyle='-', color='r')
         arrow = mpatches.FancyArrowPatch(
-            (x_tail, y_tail), (dx, dy), mutation_scale=12)
+            (x_tail, y_tail), (dx, dy), mutation_scale=12, color='r')
         maxe.add_patch(arrow)
     maxe.autoscale(tight=True)
 
@@ -104,7 +109,7 @@ def plotRegion():
     plt.xlabel('X')  # x轴标签
     plt.ylabel('Y')  # y轴标签
 
-    nodeData = readData('Node.txt', [1, 2, 3])
+    nodeData = readData(filename_node, [1, 2, 3])
     x1, y1, _ = np.amin(nodeData, axis=0)
     x2, y2, _ = np.amax(nodeData, axis=0)
     plotPlane(nodeData)

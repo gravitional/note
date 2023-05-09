@@ -2,6 +2,114 @@
 
 [7.11 Git 工具 - 子模块](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)
 
+## 开始使用子模块
+
+我们将要演示如何在一个被分成一个主项目与几个子项目的项目上开发.
+我们首先将一个已存在的 Git 仓库添加为正在工作的仓库的子模块.
+你可以通过在 git submodule add 命令后面加上想要跟踪的项目的 `相对或绝对URL` 来添加新的子模块.
+在本例中, 我们将会添加一个名为 "DbConnector" 的库.
+
+```bash
+$ git submodule add https://github.com/chaconinc/DbConnector
+
+Cloning into 'DbConnector'...
+...
+Checking connectivity... done.
+```
+
+默认情况下, 子模块会将子项目放到一个与仓库同名的目录中, 本例中是 "DbConnector".
+如果你想要放到其他地方, 那么可以在命令结尾添加 `自定义路径`.
+
+如果这时运行 `git status`, 你将看到:
+
+```bash
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+ new file:   .gitmodules
+ new file:   DbConnector
+```
+
+首先应当注意到新的 `.gitmodules` 文件.
+该配置文件保存了项目 URL 与已经拉取的本地目录之间的映射:
+
+```bash
+[submodule "DbConnector"]
+ path = DbConnector
+ url = https://github.com/chaconinc/DbConnector
+```
+
+如果有多个子模块, 该文件中就会有多条记录.
+要重点注意的是, 该文件也像 .gitignore 文件一样受到(通过)版本控制.
+它会和该项目的其他部分一同被拉取推送.  这就是克隆该项目的人知道去哪获得子模块的原因.
+
+## Note
+
+由于 .gitmodules 文件中的 URL 是人们首先尝试克隆/拉取的地方,
+因此请尽可能确保你使用的 URL 大家都能访问.
+例如, 若你要使用的推送 URL 与他人的拉取 URL 不同, 那么请使用他人能访问到的 URL.
+你也可以根据自己的需要,
+通过在本地执行 `git config submodule.DbConnector.url <私有URL>` 来覆盖这个选项的值.
+如果可行的话, 一个相对路径会很有帮助.
+
+在 git status 输出中列出的另一个是项目文件夹记录.
+如果你运行 git diff, 会看到类似下面的信息:
+
+```bash
+$ git diff --cached DbConnector
+diff --git a/DbConnector b/DbConnector
+new file mode 160000
+index 0000000..c3f01dc
+--- /dev/null
++++ b/DbConnector
+@@ -0,0 +1 @@
++Subproject commit c3f01dc8862123d317dd46284b05b6892c7b29bc
+```
+
+虽然 DbConnector 是工作目录中的一个子目录, 但 Git 还是会将它视作一个子模块.
+当你不在那个目录中时, Git 并不会跟踪它的内容,  而是将它看作子模块仓库中的某个具体的提交.
+
+如果你想看到更漂亮的差异输出,
+可以给 git diff 传递 --submodule 选项.
+
+```bash
+$ git diff --cached --submodule
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..71fc376
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "DbConnector"]
++       path = DbConnector
++       url = https://github.com/chaconinc/DbConnector
+Submodule DbConnector 0000000...c3f01dc (new submodule)
+```
+
+当你提交时, 会看到类似下面的信息:
+
+```bash
+$ git commit -am 'added DbConnector module'
+[master fb9093c] added DbConnector module
+ 2 files changed, 4 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 160000 DbConnector
+```
+
+注意 DbConnector 记录的 160000 模式.
+这是 Git 中的一种特殊模式, 它本质上意味着你是将这次 `commit` 作为 `directory entry` 记录的,
+而非将它记录成一个 `directory entry` 或者 `file`.
+
+最后, 推送这些更改:
+
+```bash
+$ git push origin master
+```
+
 ## 克隆含有子模块的项目
 
 接下来我们将会克隆一个含有子模块的项目.
@@ -20,7 +128,6 @@ drwxr-xr-x   2 schacon  staff   68 Sep 17 15:21 DbConnector
 
 $ cd DbConnector/
 $ ls
-$
 ```
 
 其中有 DbConnector 目录, 不过是空的.  你必须运行两个命令:
@@ -56,7 +163,8 @@ Submodule path 'DbConnector': checked out 'c3f01dc8862123d317dd46284b05b6892c7b2
 
 如果你已经克隆了项目但忘记了 `--recurse-submodules`,
 那么可以运行 `git submodule update --init` 将
-git submodule init 和 git submodule update 合并成一步.
+`git submodule init 和 git submodule update` 合并成一步.
+
 如果还要初始化, 抓取并检出任何嵌套的子模块,
 请使用简明的 `git submodule update --init --recursive`.
 
@@ -83,9 +191,10 @@ Updating c3f01dc..d0354fc
 ...
 ```
 
-如果你现在返回到主项目并运行 git diff --submodule,
+如果你现在返回到主项目并运行 `git diff --submodule`,
 就会看到子模块被更新的同时获得了一个包含新添加提交的列表.
-如果你不想每次运行 git diff 时都输入 --submodule, 那么可以将 diff.submodule 设置为 "log" 来将其作为默认行为.
+如果你不想每次运行 git diff 时都输入 --submodule,
+那么可以将 `diff.submodule` 设置为 "log" 来将其作为默认行为.
 
 ```bash
 $ git config --global diff.submodule log
@@ -145,7 +254,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-如果你设置了配置选项 status.submodulesummary, Git 也会显示你的子模块的更改摘要:
+如果你设置了配置选项 `status.submodulesummary`, Git 也会显示你的子模块的更改摘要:
 
 ```bash
 $ git config status.submodulesummary 1
@@ -166,7 +275,7 @@ Submodules changed but not updated:
   > catch non-null terminated lines
 ```
 
-这时如果运行 git diff, 可以看到我们修改了 .gitmodules 文件,
+这时如果运行 `git diff`, 可以看到我们修改了 .gitmodules 文件,
 同时还有几个已拉取的提交需要提交到我们自己的子模块项目中.
 
 ```bash
@@ -189,7 +298,7 @@ index 6fc0b3d..fd1cc29 100644
 ```
 
 这非常有趣, 因为我们可以直接看到将要提交到子模块中的提交日志.
-提交之后, 你也可以运行 git log -p 查看这个信息.
+提交之后, 你也可以运行 `git log -p` 查看这个信息.
 
 ```bash
 $ git log -p --submodule
