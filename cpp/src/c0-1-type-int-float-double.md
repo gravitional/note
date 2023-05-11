@@ -18,6 +18,23 @@ and provides semantic meaning to the otherwise generic sequences of bits.
 (还有占内存的不同)
 在C++中, 类型分为几类:
 
+## DWORD
+
+[C++中关于DWORD](https://blog.csdn.net/u013270326/article/details/74598785)
+
+C++中使用 `DWORD` 不用声明, 但是要加头文件 `Windows.h`. 具体描述如下:
+
+`DWORD` 就是 Double Word,
+每个 `word` 为2个字节的长度, `DWORD` 双字即为`4`个字节, 每个字节是8位, 共`32`位.
+`DWORD` 的宏定义如下:
+
+```c
+#define DWORD unsigned long
+```
+
+`DWORD` 在Windows下经常用来保存地址(或者存放指针).
+使用时应该添加如下文件包含 `#include<windows.h>`.
+
 ## fundamental types 基础类型
 
 可以用 `std::is_fundamental<TYPE>::value` 来判定是否是基础类型,
