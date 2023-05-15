@@ -25,7 +25,7 @@
 `大端BE` 是指低地址存放最高有效字节(MSB),`小端LE` 则是低地址存放最低有效字节(LSB).
 `Big-Endian` 相当于 `逆反次序`, `Little-Endian` 相当于 `一致次序`.
 
-`Big-Endian` 符合人类通常的读写顺序, 因为左边是`高位`.
+`Big-Endian` 符合人类通常的读写顺序, 因为左边是 `高位`.
 
 ![大端小端](https://upload-images.jianshu.io/upload_images/4933701-7d68dd0202001735.png?imageMogr2/auto-orient/strip|imageView2/2/w/562/format/webp)
 
