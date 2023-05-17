@@ -7,6 +7,7 @@
 
 int main()
 {
+    // char 类型的 bit 数目
     prt(CHAR_BIT);
     prt(CHAR_MIN);
     prt(CHAR_MAX);

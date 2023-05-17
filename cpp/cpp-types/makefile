@@ -1,4 +1,4 @@
-tar1=exa1        # 服务器运行目标文件server
+tar1=exa1        # 目标文件
 tar2=exa2
 tar3=integer
 tar4=fixed-integer
@@ -13,8 +13,8 @@ obj=$(patsubst %.cpp, %.o, $(src))    #用 patsubst 函数将所有 .cpp 文件�
 # 目标文件server和client, 多个目标文件一定形成此依赖关系
 all:$(tar1) $(tar2) $(tar3)  $(tar4) $(tar5) $(tar6)  $(tar7)  
 
-#exa1 的依赖为 types-exa1.o, 可以有多个, 空格分开
-#利用gcc编译器生成可执行文件 exa1
+# exa1 的依赖为 types-exa1.o, 可以有多个, 空格分开
+# 利用gcc编译器生成可执行文件 exa1
 $(tar1):types-exa1.o  
 	g++ $^ -o $@ -Wall   
 
