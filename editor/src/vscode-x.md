@@ -5,6 +5,12 @@
 
 [vscode 下载加速方法](https://blog.csdn.net/qq_42074368/article/details/120410816)
 
+[魔法注释]: https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#magic-comments
+[latexmk]: https://personal.psu.edu/jcc8/software/latexmk/
+
+[超链接]: https://code.visualstudio.com/docs/editor/integrated-terminal#_links
+[错误检测]: https://code.visualstudio.com/docs/editor/tasks
+
 官方的下载链接例如下:
 
 ```url
@@ -64,9 +70,6 @@ Keyboard Shortcut: `Ctrl+P`
 ## vscode 集成终端
 
 ### 集成终端
-
-[超链接]: https://code.visualstudio.com/docs/editor/integrated-terminal#_links
-[错误检测]: https://code.visualstudio.com/docs/editor/tasks
 
 Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在工作区的根目录(root)启动.
 它提供了与编辑器的集成, 以支持[超链接][] 和 [错误检测][] 等功能.
@@ -390,9 +393,6 @@ LaTeX配方(recipes), 是指LaTeX Workshop在构建LaTeX项目时按顺序执行
 ```
 
 `args` 和 `env` 参数可以包含由`%`包围的符号. 这些占位符会被即时替换(on-the-fly).
-
-[魔法注释]: https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#magic-comments
-[latexmk]: https://personal.psu.edu/jcc8/software/latexmk/
 
 ### 占位符
 
