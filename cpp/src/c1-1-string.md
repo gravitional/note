@@ -72,3 +72,25 @@ CP4 <= S1 returned False
 由上述内容可知, 使用 `比较运算符` 可以非常容易地实现字符串的大小比较.
 在使用时比较运算符时, 读者应注意, 对于参加比较的两个字符串,
 任一个字符串均不能为 `NULL`, 否则程序会异常退出.
+
+## std::string 初始化
+
+[::basic_string](https://zh.cppreference.com/w/cpp/string/basic_string/basic_string)
+
+重载(5)
+
+```cpp
+basic_string( const CharT* s, const Allocator& alloc = Allocator() ); //(C++20 前)
+constexpr basic_string( const CharT* s, const Allocator& alloc = Allocator() ); //(C++20 起)
+```
+
+注意
+以含内嵌 `\0` 字符的字符串字面量初始化 string 会使用重载 (5),
+并在首个空字符停止.
+这可通过指定不同的构造函数, 或通过使用 `operator""s` 避免:
+
+```cpp
+std::string s1 = "ab\0\0cd";   // s1 含 "ab"
+std::string s2{"ab\0\0cd", 6}; // s2 含 "ab\0\0cd"
+std::string s3 = "ab\0\0cd"s;  // s3 含 "ab\0\0cd"
+```
