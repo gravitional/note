@@ -111,7 +111,7 @@ gitbook mobi ./ ./mybook.mobi
 }
 ```
 
-然后终端执行 install 来安装插件即可:
+然后终端执行 `install` 来安装插件即可:
 
 ```bash
 gitbook install

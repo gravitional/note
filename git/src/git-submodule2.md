@@ -1,8 +1,6 @@
 # Git中submodule的使用
 
 [Git中submodule的使用](https://zhuanlan.zhihu.com/p/87053283)
-[main]: https://gitee.com/mirrors_trending/OpenSSL-2022.git
-[sub1]: https://github.com/username/sub1.git
 
 ## 背景
 
@@ -34,6 +32,9 @@
 接下来, 我们希望在 `main` 中添加 `sub1` ,
 而又保持 `sub1` 自身独立的版本控制.
 
+[main]: https://gitee.com/mirrors_trending/OpenSSL-2022.git
+[sub1]: https://github.com/username/sub1.git
+
 ### 创建 submodule
 
 + 使用 `git submodule add <submodule_url>` 命令可以在项目中创建 `子模块`.
@@ -41,7 +42,7 @@
 
     ```bash
     # 创建根项目 OpenSSL,  并进入根目录
-    git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git; 
+    git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git;
     cd  OpenSSL-2022
     # 添加子项目依赖
     git submodule add https://gitee.com/mirrors/tinyre.git
@@ -222,7 +223,7 @@ git pull origin master
 ```bash
 git submodule foreach 'git pull origin master'
 # or 递归 拉取 子项目
-git submodule foreach --recusive 'git pull origin master' 
+git submodule foreach --recusive 'git pull origin master'
 ```
 
 ### 情况汇总
@@ -399,3 +400,35 @@ sync [--recursive] [--] [<path>…​]
 `git submodule sync` 同步所有子模块, 而 `git submodule sync -- A` 只同步子模块 `A`.
 
 如果指定了 `--recursive`, 该命令将递归到 已注册的子模块, 并同步其中任何嵌套的子模块.
+
+## 修改子模块 URL
+
+[删除子模块(submodule)或修改Submodule URL](https://www.jianshu.com/p/ed0cb6c75e25)
+
+### 优雅的删除子模块
+
+```bash
+# 逆初始化模块, 其中{MOD_NAME}为模块目录, 执行后可发现模块目录被清空
+git submodule deinit {MOD_NAME}
+# 删除.gitmodules中记录的模块信息(--cached选项清除.git/modules中的缓存)
+git rm --cached {MOD_NAME}
+# 提交更改到代码库, 可观察到'.gitmodules'内容发生变更
+git commit -am "Remove a submodule."
+```
+
+Done! Nice & clean!
+
+### 修改某模块URL
+
+修改 `.gitmodules` 文件中对应模块的 `url` 属性;
+使用 `git submodule sync` 命令, 将新的 `URL` 更新到文件 `.git/config`;
+
+```bash
+xx@localhost: ~/app$ git submodule sync
+Synchronizing submodule url for 'gitmods/thinker_g/Helpers'
+xx@localhost: ~/app$ # 运行后可观察到'.git/config'中对应模块的url属性被更新
+xx@localhost: ~/app$ git commit -am "Update submodule url." # 提交变更
+```
+
+PS: 本实验使用git 2.7.4 完成, 较低版本git可能不能自动更新.git/config文件,
+需要修修改完 `.gitmodule` 文件后手动修改 `.git/config`.
