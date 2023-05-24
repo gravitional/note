@@ -80,7 +80,7 @@ CL /I \include /I\my\include main.c
 我们可以选择直接将调试信息写到 `.obj` 文件中, 或者存到 `.pdb` 文件中.
 
 + `/Z7` 不产生 `.pdb`文件, 将所有调试信息存入 `.obj` 文件中
-+ `/Zi` 和 `/ZI` 都产生 `.pdb` 文件, 不过 `/ZI` 支持"编辑继续调试"功能,
++ `/Zi` 和 `/ZI` 都产生 `.pdb` 文件, 不过 `/ZI` 支持 `编辑继续调试` 功能,
 (the edit and continue feature), 看上去更酷
 + `/ZI` 有一些边际效应, 会禁止 `#pragma optmize` 指令, 也不能和 `/clr` 一起用.
 

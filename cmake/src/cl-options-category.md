@@ -29,20 +29,22 @@ Option   Purpose
 + `/clr:netcore` 产生针对.NET核心运行时间的程序集.
 + `/clr:noAssembly` 不产生程序集.
 + `/clr:nostdimport` 不要隐含地导入任何需要的程序集.
-+ `/clr:nostdlib` 在搜索程序集时忽略系统.NET框架目录.
++ `/clr:nostdlib` 在搜索程序集时忽略系统 `.NET` 框架目录.
 + `/clr:pure` 生成一个只有IL的输出文件(没有本地可执行代码).
 + `/clr:safe` 产生一个仅有IL的可验证的输出文件.
 + `/EHa` 启用 C++ 异常处理(使用 SEH 异常).
 + `/EHc` ; `extern "C"` 默认为 `nothrow`.
-+ `/EHr `总是生成noexcept运行时终止检查.
++ `/EHr `总是生成 `noexcept` 运行时终止检查.
 + `/EHs` 启用C++异常处理(无SEH异常).
+
 + `/fp:contract` 生成代码时考虑浮点缩略语.
 + `/fp:except[-]` 生成代码时考虑浮点异常.
-+ `/fp:fast` "快速 "浮点模型;结果不容易预测.
-+ `/fp:precision` "精确的 "浮点模型;结果是可预测的.
++ `/fp:fast`      ;`快速` 浮点模型;结果不容易预测.
++ `/fp:precision` ; `精确的` 浮点模型;结果是可预测的.
 + `/fp:strict` "严格的 "浮点模型(意味着/fp:except).
 + `/fpcvt:BC` 向后兼容的浮点到无符号整数的转换.
 + `/fpcvt:IA` 英特尔本地浮点到无符号整数的转换行为.
+
 + `/fsanitize` 启用Sanitizer工具的编译, 如AddressSanitizer.
 + `/fsanitize-coverage` 启用LibFuzzer等库的代码覆盖仪的编译.
 
