@@ -2877,6 +2877,207 @@ LU分解
 误差来源
 \end_layout
 
+\begin_layout Subsection
+误差放大和条件数
+\end_layout
+
+\begin_layout Definition
+令
+\begin_inset Formula $x_{a}$
+\end_inset
+
+是线性方程组
+\begin_inset Formula $Ax=b$
+\end_inset
+
+的近似解。
+\series bold
+余项
+\series default
+ 是向量
+\begin_inset Formula $r=b-Ax_{a}$
+\end_inset
+
+，
+\series bold
+后向误差
+\series default
+ 是余项的范数 
+\begin_inset Formula $\left\Vert b-Ax_{a}\right\Vert _{\infty}$
+\end_inset
+
+，
+\series bold
+前向误差
+\series default
+ 是 
+\begin_inset Formula $\left\Vert x-x_{a}\right\Vert _{\infty}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+条件
+\end_layout
+
+\end_inset
+
+ 条件数的概念贯穿整个数值分析。在第1章讨论威尔金森多项式时，我们知道当给方程 
+\begin_inset Formula $f(x)=0$
+\end_inset
+
+ 一个小的扰动，如何求 “解根过程” 的误差放大因子。对于矩阵方程 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+，也有相似的误差放大因子，最大可能的放大因子是 
+\begin_inset Formula $\text{cond}(A)=\lVert A\rVert\,\lVert A^{-1}\rVert$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+方程 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+ 的误差放大因子是二者的比率，或者
+\begin_inset Formula 
+\begin{equation}
+\text{误差放大因子}=\frac{\text{相对前向误差}}{\text{相\text{对后向误差}}}=\frac{\frac{\left\Vert x-x_{a}\right\Vert _{\infty}}{\left\Vert x\right\Vert _{\infty}}}{\frac{\left\Vert r\right\Vert _{\infty}}{\left\Vert b\right\Vert _{\infty}}}\label{eq:2.18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在第1章中，我们定义条件数的概念，条件数对应在预先定义的输入误差范围中最大的误差放大倍数。“与定义范围”依赖于上下文。现在我们对于求解线性方程组系统将更精确定义
+这个概念。对于一个固定的矩阵
+\begin_inset Formula $A$
+\end_inset
+
+，考虑对不同向量
+\begin_inset Formula $b$
+\end_inset
+
+求解
+\begin_inset Formula $Ax=b$
+\end_inset
+
+。在这个上下文中，
+\begin_inset Formula $b$
+\end_inset
+
+是输入，对应的解
+\begin_inset Formula $x$
+\end_inset
+
+是输出。输入中小的变化对应
+\begin_inset Formula $b$
+\end_inset
+
+的小变化，这对应一个误差放大因子。我们做如下定义：
+\end_layout
+
+\begin_layout Definition
+方阵
+\begin_inset Formula $A$
+\end_inset
+
+的 
+\series bold
+条件数
+\series default
+ 
+\begin_inset Formula $\text{cond}(A)$
+\end_inset
+
+为求解
+\begin_inset Formula $Ax=b$
+\end_inset
+
+时，对于所有右侧向量
+\begin_inset Formula $b$
+\end_inset
+
+，可能出现的最大误差放大因子。
+\end_layout
+
+\begin_layout Definition
+令人惊讶的是，对于矩阵有一个关于条件数的紧致的公式。和向量范数类似，定义
+\begin_inset Formula $n\times n$
+\end_inset
+
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的 
+\series bold
+矩阵范数
+\series default
+ 为
+\begin_inset Formula 
+\begin{equation}
+\lVert A\rVert_{\infty}=\text{每行元素绝对值之和的最大值}\label{eq:2.19}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $n\times n$
+\end_inset
+
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+ 的条件数是
+\begin_inset Formula 
+\[
+\text{cond}(A)=\lVert A\rVert\cdot\lVert A^{-1}\rVert
+\]
+
+\end_inset
+
+ 
+\end_layout
+
 \begin_layout Section
 PA=LU分解
 \end_layout
@@ -2895,6 +3096,131 @@ page 27/42
 
 \begin_layout Section
 用于对称正定矩阵的方法
+\end_layout
+
+\begin_layout Definition
+如果 
+\begin_inset Formula $A^{T}=A$
+\end_inset
+
+，则
+\begin_inset Formula $n\times n$
+\end_inset
+
+ 矩阵
+\begin_inset Formula $A$
+\end_inset
+
+是 
+\series bold
+对称矩阵
+\series default
+。如果对于所有向量
+\begin_inset Formula $x\neq0$
+\end_inset
+
+，
+\begin_inset Formula $x^{T}Ax>0$
+\end_inset
+
+，则矩阵
+\begin_inset Formula $A$
+\end_inset
+
+是 
+\series bold
+正定矩阵
+\series default
+。 
+\end_layout
+
+\begin_layout Corollary
+如果
+\begin_inset Formula $n\times n$
+\end_inset
+
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+是对称矩阵，则
+\begin_inset Formula $A$
+\end_inset
+
+是正定矩阵，当且仅当所有特征值是正数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+如果
+\begin_inset Formula $n\times n$
+\end_inset
+
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+是对称矩阵，
+\begin_inset Formula $X$
+\end_inset
+
+是一个满秩
+\begin_inset Formula $n\times m$
+\end_inset
+
+矩阵，
+\begin_inset Formula $n\ge m$
+\end_inset
+
+，则
+\begin_inset Formula $X^{T}AX$
+\end_inset
+
+是
+\begin_inset Formula $m\times m$
+\end_inset
+
+对称正定矩阵。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+方阵
+\begin_inset Formula $A$
+\end_inset
+
+ 的主子矩阵是一个方的子矩阵，其对角线元素是矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的对角线元素。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+任何对称正定矩阵的主子矩阵也是对称正定矩阵。
+\end_layout
+
+\begin_layout Standard
+这说明对称正定矩阵的 对角线元素都是正数。
 \end_layout
 
 \begin_layout Section
