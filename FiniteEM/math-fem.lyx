@@ -3633,419 +3633,141 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-共轭梯度算法
+代数基本定理
 \end_layout
 
 \begin_layout Standard
-数值分析 Timothy page112。共轭梯度方法
-\begin_inset Formula 
-\begin{align*}
- & x_{0}=\text{初始估计}\\
- & d_{0}=r_{0}=b-A.x_{0}
-\end{align*}
+\begin_inset CommandInset href
+LatexCommand href
+name "代数基本定理-zhihu"
+target "https://zhuanlan.zhihu.com/p/34926001"
+literal "false"
 
 \end_inset
 
-对于
-\begin_inset Formula $k=0,1,2,\cdots,n-1$
-\end_inset
 
-：
-\begin_inset Formula 
-\begin{align}
- & \alpha_{k}=\frac{r_{k}^{T}\,r_{k}}{d_{k}^{T}Ad_{k}}\label{eq:t2.16a}\\
- & \sbf x_{k+1}=\sbf x_{k}+\alpha_{k}\,\sbf d_{k}\label{eq:t2.16b}\\
- & \sbf r_{k+1}=\sbf r_{k}-\alpha_{k}A\,\sbf d_{k}\label{eq:t2.16c}\\
- & \beta_{k}=\frac{r_{k+1}^{T}\,r_{k+1}}{r_{k}^{T}\,r_{k}}\label{eq:t2.16d}\\
- & \sbf d_{k+1}=\sbf r_{k+1}+\beta_{k}\sbf d_{k}\label{eq:t2.16e}
-\end{align}
-
-\end_inset
-
-其中 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:t2.16b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 通过选定的方向 
-\begin_inset Formula $\sbf d_{k}$
-\end_inset
-
- 更新近似解 
-\begin_inset Formula $x$
-\end_inset
-
-；
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:t2.16e"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 通过 残差 
-\begin_inset Formula $\sbf r_{k+1}$
-\end_inset
-
-和旧方向
-\begin_inset Formula $\sbf d_{k}$
-\end_inset
-
-构造新的下降方向 
-\begin_inset Formula $\sbf d_{k+1}$
-\end_inset
-
-。为了保证新余项 
-\begin_inset Formula $\sbf r_{k+1}$
-\end_inset
-
-和外面的所有余项向量都正交，需要精确选择 
-\begin_inset Formula $\alpha_{k}$
-\end_inset
-
- 使得 
-\color blue
-新余项 
-\begin_inset Formula $\sbf r_{k+1}$
-\end_inset
-
-和方向
-\begin_inset Formula $\sbf d_{k}$
-\end_inset
-
-
-\color inherit
- 正交。
 \end_layout
 
 \begin_layout Standard
-在构造
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:t2.16e"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-时是递归的；
-\end_layout
-
-\begin_layout Enumerate
-朝新的方向
-\begin_inset Formula $\sbf d_{k+1}$
-\end_inset
-
-下降引入新的残差
-\begin_inset Formula $\sbf r_{k+1}$
-\end_inset
-
-，也就是说 
-\begin_inset Formula $\sbf d_{k+1}$
-\end_inset
-
- 和 
-\begin_inset Formula $\sbf r_{k+1}$
-\end_inset
-
-是相关的，
-\begin_inset Formula 
-\[
-\sbf d_{k+1}=\theta\,\sbf r_{k+1}+\cdots
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-然后假设
-\begin_inset Formula $\{\sbf d_{0},\cdots,\sbf d_{k}\}$
-\end_inset
-
- 已经是两两
-\begin_inset Formula $A$
-\end_inset
-
-共轭的：
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-则
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:t2.16e"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的 
-\begin_inset Formula $\sbf d_{k}$
-\end_inset
-
- 项是和 
-\begin_inset Formula $\sbf d_{j}$
-\end_inset
-
-（
-\begin_inset Formula $j\le k-1$
-\end_inset
-
-） A 共轭的；
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\sbf r_{k+1}$
-\end_inset
-
- 和 
-\begin_inset Formula $\sbf d_{j}$
-\end_inset
-
-（
-\begin_inset Formula $j\le k-1$
-\end_inset
-
-）的
-\begin_inset Formula $A$
-\end_inset
-
- 共轭性 通过
-\begin_inset Formula $\{\sbf r\}$
-\end_inset
-
-的正交性保证，代入
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:t2.16c"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\sbf r_{k+1}A\sbf d_{j}=\sbf r_{k+1}\,\frac{\sbf r_{j}-\sbf r_{j+1}}{\alpha_{j}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-然后要保证 
-\begin_inset Formula $\sbf d_{k+1}$
-\end_inset
-
-，
-\begin_inset Formula $\sbf d_{k}$
-\end_inset
-
-是A 共轭的，这通过恰当选择 
-\begin_inset Formula $\beta_{k}$
-\end_inset
-
-的值来实现（计算表明只需要一个参数
-\begin_inset Formula $\beta_{k}$
-\end_inset
-
-）。
-\begin_inset Formula 
-\[
-\sbf d_{k}\,A\,\sbf d_{k+1}=\frac{\sbf r_{k}^{T}-\sbf r_{k+1}^{T}}{\alpha_{k}}\,\sbf r_{k+1}+\beta_{k}\sbf d_{k}\,A\,\sbf d_{k}
-\]
-
-\end_inset
-
-其中已知 
-\begin_inset Formula $\sbf r_{k}^{T}\sbf r_{k+1}=0$
-\end_inset
-
-，若 
-\begin_inset Formula $\sbf r_{k+1}^{T}\sbf r_{k+1}\neq0$
-\end_inset
-
-，则 
-\begin_inset Formula $\beta_{k}$
-\end_inset
-
- 唯一确定；若
-\begin_inset Formula $\sbf r_{k+1}^{T}\sbf r_{k+1}=0$
-\end_inset
-
-，则已经找到精确解。
-\end_layout
-
-\end_deeper
-\begin_layout Theorem
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-定理2.16
-\end_layout
-
-\end_inset
-
-令
-\begin_inset Formula $A$
-\end_inset
-
- 为对称正定的
-\begin_inset Formula $n\times n$
-\end_inset
-
-矩阵，
-\begin_inset Formula $b\neq0$
-\end_inset
-
-是一个向量。在共轭梯度方法中，假设
-\begin_inset Formula $r_{k}\neq0$
-\end_inset
-
-，其中
-\begin_inset Formula $k<n$
-\end_inset
-
-（如果
-\begin_inset Formula $r_{k}=0$
-\end_inset
-
-，方程已经求解）。则对于每个
-\begin_inset Formula $k\in[1,n]$
-\end_inset
-
-：
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $R^{n}$
-\end_inset
-
-的下列三个子空间等价：
-\begin_inset Formula 
-\[
-\langle x_{1},\cdots,x_{k}\rangle=\langle r_{0},\cdots,r_{k-1}\rangle=\langle d_{0},\cdots,d_{k-1}\rangle.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-余项
-\begin_inset Formula $r_{k}$
-\end_inset
-
-两两正交 
-\begin_inset Formula $r_{k}^{T}\,r_{j}=0$
-\end_inset
-
-，其中
-\begin_inset Formula $j<k$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-方向
-\begin_inset Formula $d_{k}$
-\end_inset
-
-两两 A共轭 
-\begin_inset Formula $d_{k}^{T}Ad_{j}=0$
-\end_inset
-
-，其中
-\begin_inset Formula $j<k$
-\end_inset
-
-。
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Formula $x$
-\end_inset
-
-为近似解，
-\begin_inset Formula $d$
-\end_inset
-
-为下降方向，
-\begin_inset Formula $r$
-\end_inset
-
-为残差。对于
-\begin_inset Formula $k=1$
-\end_inset
-
-，因为
-\begin_inset Formula $x_{0}=0$
-\end_inset
-
-，所以到
-\begin_inset Formula $\langle x_{1}\rangle=\langle d_{0}\rangle=\langle r_{0}\rangle$
-\end_inset
-
-。由定义知 
-\begin_inset Formula $x_{k}=x_{k-1}+\alpha_{k-1}d_{k-1}$
-\end_inset
-
-，这意味着通过归纳
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\langle x_{1},\cdots,x_{k}\rangle=\langle d_{0},\cdots,d_{k-1}\rangle.
-\]
-
-\end_inset
-
-相似地，利用 
-\begin_inset Formula $d_{k}=r_{k}+\beta_{k-1}d_{k-1}$
-\end_inset
-
-，表明
-\begin_inset Formula 
-\[
-\langle r_{0},\cdots,r_{k-1}\rangle=\langle d_{0},\cdots,d_{k-1}\rangle.
-\]
-
-\end_inset
-
-这三个
-\begin_inset Formula $R^{n}$
-\end_inset
-
-的子空间等价。
-\end_layout
-
-\begin_layout Standard
-共轭梯度法的名字来自于共轭梯度法实际进行的操作：在
 \begin_inset Formula $n$
 \end_inset
 
-维空间的二次抛物面的斜面上滑下来。名字中“梯度”表示通过微积分寻找最速下降的方向，“共轭”不是表示单个步骤和其他步正交，而是表示余项之间的正交性质。
+次代数方程
+\begin_inset Formula 
+\[
+f(z)=a_{n}z^{n}+a_{n-1}z^{n-1}+\cdots a_{1}z+a_{0}=0,\quad(a_{n}\neq0,\,n\ge1)
+\]
+
+\end_inset
+
+在复数域上恰有
+\begin_inset Formula $n$
+\end_inset
+
+个根。
+\end_layout
+
+\begin_layout Standard
+只要证明
+\begin_inset Formula $n$
+\end_inset
+
+次多项式存在一个根，则可知
+\begin_inset Formula $n-1$
+\end_inset
+
+次也存在一个根，通过归纳法即可证明。
+\end_layout
+
+\begin_layout Itemize
+第一步先证：当
+\begin_inset Formula $R$
+\end_inset
+
+足够大，圆周
+\begin_inset Formula $C_{R}$
+\end_inset
+
+（圆心位于原点，半径为
+\begin_inset Formula $R$
+\end_inset
+
+）在
+\begin_inset Formula $f$
+\end_inset
+
+ 下的像是把原点围绕在内部的封闭曲线。通过多项式在
+\begin_inset Formula $z\to\infty$
+\end_inset
+
+时主要由
+\begin_inset Formula $a_{n}z^{n}$
+\end_inset
+
+项决定。
+\end_layout
+
+\begin_layout Itemize
+第二步注意到：当
+\begin_inset Formula $R\to0$
+\end_inset
+
+时，圆周
+\begin_inset Formula $C_{R}$
+\end_inset
+
+收缩到原点，故封闭曲线 
+\begin_inset Formula $f(C_{R})$
+\end_inset
+
+会连续收缩到一个单点
+\begin_inset Formula $a_{0}$
+\end_inset
+
+。初始时刻原点和
+\begin_inset Formula $a_{0}$
+\end_inset
+
+都落在封闭曲线内，由于收缩过程连续并且收缩到单点，所以过程中必有某一时刻过原点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/algebra1.jpg
+	lyxscale 60
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
