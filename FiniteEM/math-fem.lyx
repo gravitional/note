@@ -14117,7 +14117,7 @@ N_{I}^{\text{4Q}}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi_{I}\xi\right)\left
 
 \end_inset
 
-
+具体形式是
 \begin_inset Formula 
 \begin{align*}
 N^{(1)} & =\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right),\\
@@ -14128,6 +14128,30 @@ N^{(4)} & =\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right).
 
 \end_inset
 
+坐标或场
+\begin_inset Formula $X$
+\end_inset
+
+的插值展开为，
+\begin_inset Formula 
+\[
+X=\sum_{j=1}^{4}X_{j}\,N_{j}^{\text{4Q}}\left(\xi,\eta\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $X_{j}$
+\end_inset
+
+为节点值。
+\end_layout
+
+\begin_layout Standard
 从 parent element 到 physical element 的映射为
 \begin_inset Formula 
 \begin{equation}
@@ -14324,7 +14348,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-四边形积分公式
+四边形特征参数
 \end_layout
 
 \begin_layout Standard
@@ -14391,13 +14415,10 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename inset/quadrilateral.png
+	scale 65
 
 \end_inset
 
@@ -14420,10 +14441,6 @@ status open
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 对于凸形四边形，
@@ -14443,6 +14460,384 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+令四边形的坐标分别为
+\begin_inset Formula $X_{i}=[x_{i},y_{i}]$
+\end_inset
+
+，
+\begin_inset Formula $i\in[1,4]$
+\end_inset
+
+， 
+\begin_inset Formula 
+\[
+\left[\begin{array}{cccc}
+X_{1} & X_{2} & X_{3} & X_{4}\end{array}\right]\left[\begin{array}{c}
+1-g_{1}\\
+-(1-g_{2})\\
+g_{1}\\
+-g_{2}
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+0
+\end{array}\right]
+\]
+
+\end_inset
+
+给定基三角形
+\begin_inset Formula $\Delta123$
+\end_inset
+
+以及参数
+\begin_inset Formula $g_{1}$
+\end_inset
+
+，
+\begin_inset Formula $g_{2}$
+\end_inset
+
+，可以唯一确定四边形。
+\end_layout
+
+\begin_layout Subsection
+四边形面积坐标
+\end_layout
+
+\begin_layout Standard
+四边形内任一点
+\begin_inset Formula $P$
+\end_inset
+
+的面积坐标
+\begin_inset Formula $\{L_{i}\},i=1,\cdots,4$
+\end_inset
+
+定义为
+\begin_inset Formula 
+\begin{equation}
+L_{i}=\frac{A_{i}}{A},\quad i=1,\cdots,4\label{eq:l18}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $A_{i}$
+\end_inset
+
+是由
+\begin_inset Formula $P$
+\end_inset
+
+点分别与四边形单元的各边组成的四个三角形的面积。显然四边形单元各边的方程为
+\begin_inset Formula 
+\[
+L_{i}=0,\quad i=1,\cdots,4
+\]
+
+\end_inset
+
+四个节点的面积坐标为
+\begin_inset Formula 
+\begin{align*}
+ & \left(g_{2},1-g_{2},0,0\right)\\
+ & \left(0,1-g_{1},g_{1},0\right)\\
+ & \left(0,0,1-g_{2},g_{2}\right)\\
+ & \left(1-g_{1},0,0,g_{1}\right)
+\end{align*}
+
+\end_inset
+
+对角线交点的坐标为
+\begin_inset Formula 
+\begin{equation}
+g_{2}(1-g_{1}),\quad(1-g_{1})(1-g_{2}),\quad(1-g_{2})g_{1},\quad g_{1}g_{2}\label{eq:l21}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/Q4_ele_2.png
+	lyxscale 85
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+四边形面积坐标的定义
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+直角坐标 To 面积坐标
+\end_layout
+
+\begin_layout Standard
+使用行列式求出三角形面积 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align}
+ & A_{1}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x & y\\
+1 & x_{2} & y_{2}\\
+1 & x_{3} & y_{3}
+\end{array}\right|,\quad A_{2}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x & y\\
+1 & x_{3} & y_{3}\\
+1 & x_{4} & y_{4}
+\end{array}\right|\nonumber \\
+ & A_{3}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x & y\\
+1 & x_{4} & y_{4}\\
+1 & x_{1} & y_{1}
+\end{array}\right|,\quad A_{4}=\frac{1}{2}\left|\begin{array}{ccc}
+1 & x & y\\
+1 & x_{1} & y_{1}\\
+1 & x_{2} & y_{2}
+\end{array}\right|\label{eq:l22}
+\end{align}
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:l18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到面积坐标用直角坐标表示的坐标变换式：
+\begin_inset Formula 
+\[
+L_{i}=\frac{1}{2A}\left(a_{i}+b_{i}x+c_{i}y\right),\quad i\in[1,4]
+\]
+
+\end_inset
+
+式中
+\begin_inset Formula 
+\begin{align*}
+ & a_{1}=x_{2}y_{3}-x_{3}y_{2},\\
+ & b_{1}=y_{2}-y_{3},\\
+ & c_{1}=x_{3}-x_{2}
+\end{align*}
+
+\end_inset
+
+代入适当的置换，可得出其余各式
+\begin_inset Formula 
+\begin{align*}
+ & a_{1}\rightarrow\{2,3\},\quad a_{2}\rightarrow\{3,4\}\\
+ & a_{3}\rightarrow\{4,1\},\quad a_{4}\rightarrow\{1,2\}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+直角坐标 To 特征参数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $g_{1}$
+\end_inset
+
+，
+\begin_inset Formula $g_{2}$
+\end_inset
+
+与
+\begin_inset Formula $b_{i}$
+\end_inset
+
+，
+\begin_inset Formula $c_{i}$
+\end_inset
+
+的关系。从面积–行列式关系得到 
+\begin_inset Formula $2Ag_{1}=b_{3}c_{4}-b_{4}c_{3}$
+\end_inset
+
+，通过指标置换得到
+\begin_inset Formula 
+\begin{align}
+2Ag_{1} & =b_{3}c_{4}-b_{4}c_{3}\nonumber \\
+2Ag_{2} & =b_{4}c_{1}-b_{1}c_{4}\nonumber \\
+2A(1-g_{1}) & =b_{1}c_{2}-b_{2}c_{1}\nonumber \\
+2A(1-g_{2}) & =b_{2}c_{3}-b_{3}c_{2}\label{eq:l27}
+\end{align}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{align}
+2A(1-g_{1}-g_{2}) & =b_{3}c_{1}-b_{1}c_{3}\nonumber \\
+2A(g_{2}-g_{1}) & =b_{2}c_{4}-b_{4}c_{2}\nonumber \\
+2A & =(b_{3}c_{4}-b_{4}c_{3})+(b_{1}c_{2}-b_{2}c_{1})\nonumber \\
+ & =(b_{4}c_{1}-b_{1}c_{4})+(b_{2}c_{3}-b_{3}c_{2})\nonumber \\
+ & =\frac{1}{2}\left[(b_{1}-b_{3})(c_{2}-c_{4})-(b_{2}-b_{4})(c_{1}-c_{3})\right]\label{eq:l28}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+系数恒等式
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $a_{i}$
+\end_inset
+
+，
+\begin_inset Formula $b_{i}$
+\end_inset
+
+，
+\begin_inset Formula $c_{i}$
+\end_inset
+
+满足下列等式。令
+\begin_inset Formula $v_{i}=[a_{i},b_{i},c_{i}]$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\sum_{i=1}^{4}v_{i}=\left[\begin{array}{c}
+2A\\
+0\\
+0
+\end{array}\right]\label{eq:l25}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cccc}
+v_{1} & v_{2} & v_{3} & v_{4}\end{array}\right]\left[\begin{array}{c}
+g_{1}(1-g_{2})\\
+-g_{1}g_{2}\\
+g_{2}(1-g_{1})\\
+-(1-g_{1})(1-g_{2})
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+0\\
+0
+\end{array}\right]\label{eq:l26}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $v_{i}$
+\end_inset
+
+的系数刚好是对角线交点的坐标。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+面积坐标的两个恒等式
+\begin_inset Formula 
+\begin{align}
+ & L_{1}+L_{2}+L_{3}+L_{4}=1\label{eq:l29}\\
+ & \left[\begin{array}{cccc}
+L_{1} & L_{2} & L_{3} & L_{4}\end{array}\right]\left[\begin{array}{c}
+g_{1}(1-g_{2})\\
+-g_{1}g_{2}\\
+g_{2}(1-g_{1})\\
+-(1-g_{1})(1-g_{2})
+\end{array}\right]=0\label{eq:l30}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+独立面积坐标：可以取相邻的两个坐标作为独立坐标，例如
+\begin_inset Formula $(L_{1},L_{2})$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+ & L_{3}=(1-g_{2})-\frac{1-g_{2}}{1-g_{1}}L_{1}-\frac{1-g_{1}-g_{2}}{1-g_{1}}L_{2}\nonumber \\
+ & L_{4}=g_{2}+\frac{g_{1}-g_{2}}{1-g_{1}}L_{1}-\frac{g_{2}}{1-g_{1}}L_{2}\label{eq:l31}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+四边形积分公式
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
 \iint_{A}L_{1}^{m}\,L_{2}^{n}\,L_{3}^{p}\,L_{4}^{q}\,\dd{A} & =\frac{m!n!p!q!}{(m+n+p+q+2)!}2A\times\\
@@ -14467,6 +14862,24 @@ status open
 \[
 C_{k}^{j}=\frac{k!}{\left(k-i\right)!i!}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+等参坐标 To 面积坐标
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & L_{1}=\frac{1}{4}\left(1-\xi\right)\left[g_{2}\left(1-\eta\right)+\overline{g_{1}}\left(1+\eta\right)\right]\\
+ & L_{2}=\frac{1}{4}\left(1-\eta\right)\left[\overline{g_{2}}\left(1-\xi\right)+\overline{g_{1}}\left(1+\xi\right)\right]\\
+ & L_{3}=\frac{1}{4}\left(1+\xi\right)\left[g_{1}\left(1-\eta\right)+\overline{g_{2}}\left(1+\eta\right)\right]\\
+ & L_{4}=\frac{1}{4}\left(1+\eta\right)\left[g_{1}\left(1-\xi\right)+g_{2}\left(1+\xi\right)\right]
+\end{align*}
 
 \end_inset
 
