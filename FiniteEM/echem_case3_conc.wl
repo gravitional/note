@@ -18,3 +18,9 @@ usol[30,il]
 Plot3D[usol[t,x],{t,0,60},{x,0,il}
 ,PlotRange->All
 ,AxesLabel->Automatic]
+
+
+(*figure*)
+Plot[usol[1,x],{x,0.007,il}
+,PlotRange->All
+,AxesLabel->Automatic]
