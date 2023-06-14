@@ -137,3 +137,26 @@ GetEleNdData().SetData(
 
 Comsol 二维模型中, 边界的法向正向, 指向区域内部,
 可以通过电流密度矢量的约定判断.
+
+## 材料节点平均
+
+```cpp
+void FieldWriterEC::SetTestFieldData()
+```
+
+有限元计算的 `自由度` 是 `节点`,
+但在计算场的分布时, 是遍历 模型的单元列表,
+
+### Test Node
+
+在输出场时 `SetTestFieldData` 中使用
+`SetTestNodeField(std::string&name, int nComp, vector<double>& data)` 输出,
+此函数按 `节点值` 输出, 由于 节点 可能被单元共享(公共节点),
+所以需要对 单元场值做平均, 才能得到节点场值,
+在这个过程中, 也可能用到材料性质, 所以把 `全局节点编号` 按照 `材料id` 分组.
+
+### Cell Node
+
+而另一个函数 `WriteField()` 中调用的
+`WriteCellNodeField(const string& name, int nComp, const vector<double>& data)`
+则直接输出 单元场数据, 因此无需作平均.
