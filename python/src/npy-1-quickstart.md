@@ -343,3 +343,26 @@ del a  # the memory of ``a`` can be released.
 
 ## Advanced indexing and index tricks
 
+以2D数组 `a` 为例, 提供 `行索引数组`, `列索引数组`,
+例如 `[1,2,3]`, `[3,2,1]` 去提取矩阵 `a` 中的元素
+对于给定索引, 有两种理解方式,
+
+经纬线确定了一个个交点, 可以只选取对角线上的元素,
+对应 `a[1,3]`, `a[2,2]`, `a[3,1]`
+
+也可以把所有交点的元素取出来, 对应
+`a[1,3]`, `a[1,2]`, `a[1,1]`,
+`a[2,3]`, `a[2,2]`, `a[2,1]`,
+`a[3,3]`, `a[3,2]`, `a[3,1]`,
+
+图像展示
+
+```wolfram
+lenx = 4; leny = 4;
+line$x = Line /@ Array[{{1, #}, {lenx, #}} &, 3];
+line$y = Line /@ Array[{{#, 1}, {#, lenx}} &, 4];
+pts = {PointSize[Large], Red, Point[{
+     {1, 3}, {2, 2}, {3, 1}
+     }]};
+Graphics[{line$x, line$y, pts}]
+```
