@@ -100,6 +100,8 @@ unordered_map与unordered_multimap 对比2.1中的两种map,
 因此其查找时间复杂度理论上达到了 `O(1)`,
 之所以说理论上是因为在理想无碰撞的情况下, 而真实情况未必如此.
 
+[insert_or_assign](https://en.cppreference.com/w/cpp/container/unordered_map/insert_or_assign)
+
 ## set & multiset & unordered_set & unordered_multiset
 
 这四种容器也都是关联容器,
