@@ -10,7 +10,7 @@
 [利用 Python 进行数据分析 第2版](https://github.com/apachecn/pyda-2e-zh)
 [利用 Python 进行数据分析 第2版 在线阅读](https://pyda.apachecn.org/#/)
 
-## 书记代码编译
+## 书籍代码编译
 
 ```bash
 npm install -g gitbook-cli          # 安装 gitbook
