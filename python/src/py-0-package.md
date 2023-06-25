@@ -1,25 +1,28 @@
 # python package, 包, 模块
 
 [7.11. import 语句](https://docs.python.org/zh-cn/3/reference/simple_stmts.html#import)
+[6. 模块](https://docs.python.org/zh-cn/3/tutorial/modules.html#modules)
+[python模块详解](https://zhuanlan.zhihu.com/p/33913131)
 
 ## ss
 
-+ 绝对导入可以使用 `import <>` 或 `from <> import <>` 语法,
-但相对导入只能使用 `from` 形式; 其中的原因在于 `import XXX.YYY.ZZZ`
-应当提供 `XXX.YYY.ZZZ` 作为可用表达式, 但 `.moduleY` 不是一个有效的表达式
-`.moduleY` 指代 当前脚本的同级目录下的 `moduleY` 模块
++ `import xxx` 形式可以 `import Foo` 或者 `import Foo.Bar`
++ 仅仅 `import A` 可能无法使用`A` 内部的模块，要导入到具体模块或者变量的层次, 或者在 `__init__.py` 初始化绑定.
++ `import A.b` 中的 `b` 需要是子模块, 不能是文件中的标识符, 导入后的标识符是 `A.b` 而不是 `b`.
 
-+ `import A.b` 中的 `b` 需要是子模块, 不能是文件中的子类, 导入后的标识符是 `A.b` 而不是 `b`.
-
++ `from A import b` 可以导入 `A` 中的标识符 `A.b`, 并绑定到当前命名空间, 后续只需使用 `b` 引用.
 + `from` 形式只能 `from A.B.C import D`, 而不能写成 `from A.B import C.B`,
-`import xxx` 形式可以 `import Foo` 或者 `import Foo.Bar`
-
 + 类似 `from .moduleY import spam` 的相对导入只能在 `package` 中使用, 而不能在 `脚本` 中使用.
 
 + 在 `sys.path` 中添加 `dirA` 并不会自动递归搜索 `dirA` 的子目录.
 所以在导入时不能跳过, 需要写成 `import A.B.module.D` 这种完全路径的形式,
 假设 `A` 已经加入搜索路径.
 通常使用 `python xxx.py` 运行脚本时, 会自动添加 `xxx.py` 所在的目录到 `sys.path`.
+
++ `.moduleY` 指代 当前脚本的同级目录下的 `moduleY` 模块
++ 绝对导入可以使用 `import <>` 或 `from <> import <>` 语法,
+但相对导入只能使用 `from` 形式; 其中的原因在于 `import XXX.YYY.ZZZ`
+应当提供 `XXX.YYY.ZZZ` 作为可用表达式, 但 `.moduleY` 不是一个有效的表达式
 
 + 多行导入可以写成
 
