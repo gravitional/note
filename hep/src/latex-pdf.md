@@ -88,3 +88,11 @@ PDF-Shuffler (Linux, free software)
 PDFsam (JRE - Windows, Linux, Mac, free and non-free versions)
 
 [This question](https://tex.stackexchange.com/q/5842/1402) is very similar although the questioner didn't realize it.
+
+## pdf 页面尺寸
+
+一英寸中有72个单位.
+一页纸大小宽 612 个单位, 高792个单位.
+默认的坐标会乘上100与PDF的规范匹配.
+
+[sample pdf](./sample.txt)
