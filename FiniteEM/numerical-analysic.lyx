@@ -2873,6 +2873,494 @@ noprefix "false"
  保证在每个根近邻中的初始估计收敛到根。
 \end_layout
 
+\begin_layout Section
+不需要导数的根求解
+\end_layout
+
+\begin_layout Subsection
+割线方法及其变体
+\end_layout
+
+\begin_layout Subsection
+Brent方法
+\end_layout
+
+\begin_layout Standard
+给定 
+\begin_inset Formula $a,b,c$
+\end_inset
+
+，对下一个点的估计是：
+\begin_inset Formula 
+\[
+x=b+\frac{P}{Q}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+ & P=s\,t(r-t)(c-b)-s(1-r)(b-a)\\
+ & Q=(t-1)(r-1)(s-1)
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula 
+\[
+r\equiv\frac{f(b)}{f(c)},\quad s\equiv\frac{f(b)}{f(a)},\quad t\equiv\frac{f(a)}{f(c)}
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $a\to c$
+\end_inset
+
+ 时，公式退化成割线方法
+\begin_inset Formula 
+\begin{align*}
+ & P=s(b-a),\quad Q=1-s\\
+ & x=b+\frac{s(b-a)}{1-s}=b-\frac{f_{b}(b-a)}{f_{b}-f_{a}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P=\frac{\left(c-b\right)\left[f_{a}\left(f_{b}-f_{a}\right)\right]-\left(b-a\right)\left[f_{c}\left(f_{c}-f_{b}\right)\right]}{f_{c}^{2}}
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+区间左右边界是 
+\begin_inset Formula $[b,c]$
+\end_inset
+
+ or 
+\begin_inset Formula $[c,b]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b$
+\end_inset
+
+ 是最新且最优估计，
+\begin_inset Formula $a$
+\end_inset
+
+ 是上次最优估计，
+\begin_inset Formula $c$
+\end_inset
+
+ 是之前某次的估计值；
+\begin_inset Formula $c$
+\end_inset
+
+的缩减不会优于
+\begin_inset Formula $a$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+如果
+\begin_inset Formula $b$
+\end_inset
+
+跳到和
+\begin_inset Formula $c$
+\end_inset
+
+同侧，则令
+\begin_inset Formula $c$
+\end_inset
+
+跳到
+\begin_inset Formula $b$
+\end_inset
+
+原先的位置，区间收缩。
+\begin_inset Formula $a,c$
+\end_inset
+
+ 重合，退化到截线。
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $b$
+\end_inset
+
+ 的BackErr 增大，则令
+\begin_inset Formula $b$
+\end_inset
+
+回溯到
+\begin_inset Formula $c$
+\end_inset
+
+；
+\begin_inset Formula $a$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+ 使用新的
+\begin_inset Formula $b$
+\end_inset
+
+位置，区间收缩。
+\begin_inset Formula $a,c$
+\end_inset
+
+ 重合，退化到截线。
+\end_layout
+
+\begin_layout Standard
+综上所述，
+\begin_inset Formula $\abs{b-a}\le\abs{c-b}$
+\end_inset
+
+，因为
+\begin_inset Formula $a$
+\end_inset
+
+位于
+\begin_inset Formula $[b,c]$
+\end_inset
+
+之间，顶多和
+\begin_inset Formula $c$
+\end_inset
+
+重合。类似地，
+\begin_inset Formula $\abs{f_{c}}$
+\end_inset
+
+ 不会优于
+\begin_inset Formula $\abs{f_{a}}$
+\end_inset
+
+，最多相等。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/IOI1.pdf
+	lyxscale 80
+	scale 45
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+fn1[x_] := Sqrt[x - 1]; fn2[x_] := -Sqrt[x - 1]; p1 = {x1 = 1.5, fn2[x1]};
+ p2 = {x2 = 1.2, fn1[x2]}; p3 = {x3 = 1.33, fn1[x3]}; p4 = {1, 0}; fig1 =
+ Graphics[{ PointSize[Large], Red, Point[{p1, p2, p3}], Text[Style["c",
+ Large, Bold, Blue], p1 + 0.04], Text[Style["b", Large, Bold, Blue], p2 -
+ 0.04], Text[Style["a", Large, Bold, Blue], p3 + 0.03], Text[Style["b
+\backslash
+[Prime]", Large, Bold, Blue], p4 + {-0.03, 0.08}] } , Frame -> All]; fig2
+ = Plot[{Sqrt[x - 1], -Sqrt[x - 1]}, {x, 0, 1.6}, PlotRange -> {{0.9, 1.6},
+ Automatic}]; Show[fig2, fig1, PlotRange -> All, ImageSize -> Medium]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+IOI 失效示例
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在一些特殊情况下，IOI可能给出失败的估计。如图所示，设根所在的区间为 
+\begin_inset Formula $b$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+；令IOI的初始点为 
+\begin_inset Formula $a,b,c$
+\end_inset
+
+，其中
+\begin_inset Formula $a$
+\end_inset
+
+是上上次估计；然而下一步的估计
+\begin_inset Formula $b'$
+\end_inset
+
+ 位于
+\begin_inset Formula $(1,0)$
+\end_inset
+
+，跳到了根区间之外。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language={[GNU]C++},basicstyle={\ttfamily},tabsize=4,keywordstyle={\bfseries\color{Blue}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+if (P>0)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	Q=-Q;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+P=std::fabs(P);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+min1=1.5*(c-b)*Q-std::fabs(tol1*q);
+\end_layout
+
+\begin_layout Plain Layout
+
+min2=std::fabs(sect_old*Q);
+\end_layout
+
+\begin_layout Plain Layout
+
+min=min1<min2?min1:min2;
+\end_layout
+
+\begin_layout Plain Layout
+
+...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if(2.0 * P < min)
+\end_layout
+
+\begin_layout Plain Layout
+
+//Accept interpolation
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+...
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+else
+\end_layout
+
+\begin_layout Plain Layout
+
+//Interpolation failed, use bisection
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+...
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+考察修正的符号
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:alg1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由于
+\begin_inset Formula $b=b+P/Q$
+\end_inset
+
+，正常情况下，我们期望
+\begin_inset Formula $b$
+\end_inset
+
+朝
+\begin_inset Formula $c$
+\end_inset
+
+前进，也就是
+\begin_inset Formula $\Delta b$
+\end_inset
+
+与
+\begin_inset Formula $c-b$
+\end_inset
+
+ 同号。程序
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:alg1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，通过符号转移算法把
+\begin_inset Formula $P/Q$
+\end_inset
+
+的符号转移到
+\begin_inset Formula $Q$
+\end_inset
+
+上，然后设定区间收敛阈值为
+\begin_inset Formula 
+\[
+\mathrm{min1}=\frac{3}{2}\left(c-b\right)*Q-\mathrm{tol}_{1}
+\]
+
+\end_inset
+
+如果
+\begin_inset Formula $(c-b)$
+\end_inset
+
+ 和 
+\begin_inset Formula $Q$
+\end_inset
+
+ 符号一致，则
+\begin_inset Formula $\mathrm{min1}>0$
+\end_inset
+
+，if 语句可能通过。如果
+\begin_inset Formula $(c-b)$
+\end_inset
+
+ 和 
+\begin_inset Formula $Q$
+\end_inset
+
+ 符号不一致，则由于
+\begin_inset Formula $P>0$
+\end_inset
+
+，if 语句一定失败，进入BiSection 分支。如此也就避免了
+\begin_inset Formula $b$
+\end_inset
+
+跳出根区间。
+\end_layout
+
 \begin_layout Chapter
 方程组
 \end_layout
