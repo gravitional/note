@@ -1,6 +1,7 @@
 # fmt 库
 
 [fmt: 现代的 C++ 字符串格式化库, 实现了 C++20 的特征](https://www.jianshu.com/p/fdca0fde50ac)
+[c++ {fmt}库使用指南一](https://blog.csdn.net/qq_33944628/article/details/129943438)
 
 ## 导入依赖
 
