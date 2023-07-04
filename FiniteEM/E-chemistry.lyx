@@ -1548,8 +1548,8 @@ D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\part
 成正比。 
 \begin_inset Formula 
 \begin{align*}
-m & =\frac{t}{60}K\,D_{k}\,\eta_{k}\\
-d & =100\,\frac{t}{60}\frac{K}{\rho}\,D_{k}\,\eta_{k}
+m & =\frac{t}{60}K\,I_{k}\,\eta_{k}\\
+d & =100\,\frac{t}{60}\frac{K}{\rho}\,I_{k}\,\eta_{k}
 \end{align*}
 
 \end_inset
@@ -1573,7 +1573,7 @@ d & =100\,\frac{t}{60}\frac{K}{\rho}\,D_{k}\,\eta_{k}
 。输入参数的单位是
 \begin_inset Formula 
 \begin{align*}
- & {\color{blue}K}:\mathrm{g/(A\cdot h)},\quad{\color{blue}D_{k}}:\mathrm{A/\mathrm{dm}^{2}},\\
+ & {\color{blue}K}:\mathrm{g/(A\cdot h)},\quad{\color{blue}I_{k}}:\mathrm{A/\mathrm{dm}^{2}},\\
  & {\color{blue}\rho}:\mathrm{g/cm^{3}},\quad{\color{blue}t}:\mathrm{min}\\
  & {\color{blue}\eta_{k}}:\mathrm{\%}
 \end{align*}
@@ -1588,7 +1588,7 @@ d & =100\,\frac{t}{60}\frac{K}{\rho}\,D_{k}\,\eta_{k}
 \end_inset
 
 ：待镀金属的电化学当量；
-\begin_inset Formula $D_{k}$
+\begin_inset Formula $I_{k}$
 \end_inset
 
 ：阴极电流密度；
@@ -1640,8 +1640,8 @@ d & =100\,\frac{t}{60}\frac{K}{\rho}\,D_{k}\,\eta_{k}
 ），上述公式采用标准单位制是
 \begin_inset Formula 
 \begin{align*}
-m & =t\,\frac{M}{n_{e}\,F}\,D_{k}\\
-d & =\frac{t}{\rho}\,\frac{M}{n_{e}\,F}\,D_{k}
+m & =t\,K\,I_{k}\,\eta_{k}\\
+d & =t\frac{K}{\rho}\,I_{k}\,\eta_{k}
 \end{align*}
 
 \end_inset
@@ -1662,12 +1662,12 @@ d & =\frac{t}{\rho}\,\frac{M}{n_{e}\,F}\,D_{k}
 \begin_inset Formula $\mathrm{meter}$
 \end_inset
 
-。输入参数的单位是 
+。输入参数的单位是
 \begin_inset Formula 
 \begin{align*}
  & {\color{blue}M}:\mathrm{Kg/mol},\quad{\color{blue}F}:\mathrm{C/mol},\quad{\color{blue}\rho}:\mathrm{Kg/m^{3}}\\
- & {\color{blue}D_{k}}:\mathrm{A/m^{2}},\quad{\color{blue}t}:\mathrm{s}\\
- & {\color{blue}n_{e}}:\mathrm{1}
+ & {\color{blue}I_{k}}:\mathrm{A/m^{2}},\quad{\color{blue}t}:\mathrm{s}\\
+ & {\color{blue}n_{e}}:\mathrm{1},\quad\eta_{k}:\mathrm{\%}
 \end{align*}
 
 \end_inset
@@ -1695,20 +1695,16 @@ d & =\frac{t}{\rho}\,\frac{M}{n_{e}\,F}\,D_{k}
 满足
 \begin_inset Formula 
 \begin{align}
-\Delta\phi_{f}=J_{Ei}\,R\label{eq:bnd11}
+\Delta\phi_{f}=J_{E}\,R\label{eq:bnd11}
 \end{align}
 
 \end_inset
 
-电极–薄膜–电解质满足电流连续性条件
-\begin_inset Formula 
-\begin{equation}
-J_{Ei}=-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\label{eq:bnd12}
-\end{equation}
-
+其中
+\begin_inset Formula $J_{E}$
 \end_inset
 
-式中
+是电极表面电流，
 \begin_inset Formula $R$
 \end_inset
 
@@ -1772,47 +1768,34 @@ R=\frac{s_{0}+\Delta s}{\sigma_{f}}
 \begin_inset Formula $\Delta s$
 \end_inset
 
-可以表示为 
+表示为 
 \begin_inset Formula 
 \[
-\Delta s=\frac{M}{\rho}\Delta C_{i}
+\Delta s=\Delta t\frac{M}{\rho}\frac{v_{d,i,m}}{n_{d,m}\,F}J_{E,m}
 \]
 
 \end_inset
 
-溶液中浓度的变化为
-\begin_inset Formula $C_{i}=C_{i,0}-\Delta C_{i}$
+其中
+\begin_inset Formula $J_{E,m}$
 \end_inset
 
-。因此膜阻导致的电势降可以表示为
+是属于反应
+\begin_inset Formula $m$
+\end_inset
+
+的电流（总表面电流的一部分）。沉积对浓度场的影响是添加一个流边界（2nd）
 \begin_inset Formula 
-\begin{align*}
-\Delta\phi_{f} & =J_{Ei}\,R=J_{Ei}\frac{s_{0}+\Delta s}{\sigma_{f}}\\
- & =J_{Ei}\left(s_{0}+\frac{M}{\rho}\Delta C_{i}\right)
-\end{align*}
+\[
+D_{1}\frac{\partial C_{i}}{\partial n}=\sum_{m}\frac{v_{d,i,m}}{n_{d,m}\,F}(-J_{E,m})
+\]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 在电极–电解质界面上，将电势的关系修改为
 \begin_inset Formula 
 \[
 \phi_{s}-\phi_{l}=E_{\text{eq}}+η+\Delta\phi_{f}
-\]
-
-\end_inset
-
-使用局部常微分方程来描述
-\series bold
-累计薄膜表面浓度
-\series default
-变化：
-\begin_inset Formula 
-\[
-\frac{\dd{C_{i}}}{\dd{t}}=-\frac{\beta\,J_{Ei}}{nF}
 \]
 
 \end_inset
@@ -1824,12 +1807,12 @@ R=\frac{s_{0}+\Delta s}{\sigma_{f}}
 将这些方程综合起来：
 \begin_inset Formula 
 \begin{align*}
-\frac{\dd{C_{i}}}{\dd{t}} & =-\frac{\beta\,J_{Ei}}{nF}\\
-J_{Ei} & =-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\\
-J_{Ei} & =J_{Ei0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\\
+\Delta s & =\Delta t\frac{M}{\rho}\frac{v_{d,i,m}}{n_{d,m}\,F}J_{E,m},\quad\Delta\phi_{f}=J_{E,m}\left(s_{0}+\Delta s\right),\\
+J_{E} & =-\sigma_{s}\frac{\partial\phi_{s}}{\partial n}=-\sigma_{f}\frac{\partial\phi_{f}}{\partial n}=-\sigma_{l}\frac{\partial\phi_{l}}{\partial n}\\
+J_{E,m} & =J_{E,m,0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\eta}{RT})\right]\\
 \phi_{s}-\phi_{l} & =E_{\text{eq}}+\eta+\Delta\phi_{f}\\
 E_{\text{eq}} & =E_{\text{eq,ref}}-\frac{RT}{nF}\ln\frac{C/C_{\text{ref}}}{C_{0}/C_{0,\text{ref}}}\\
-\Delta\phi_{f} & =J_{Ei}\left(s_{0}+\frac{M}{\rho}\Delta C_{i}\right),\quad\Delta C_{i}=C_{i,0}-C_{i}
+D_{1}\frac{\partial c_{1}}{\partial n} & =\sum_{m}\frac{v_{d,i,m}}{n_{d,m}\,F}(-J_{E,m})
 \end{align*}
 
 \end_inset
