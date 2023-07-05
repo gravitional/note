@@ -160,3 +160,20 @@ void FieldWriterEC::SetTestFieldData()
 而另一个函数 `WriteField()` 中调用的
 `WriteCellNodeField(const string& name, int nComp, const vector<double>& data)`
 则直接输出 单元场数据, 因此无需作平均.
+
+## 高斯积分
+
+[Numerical quadrature](https://finite-element.github.io/1_quadrature.html#extending-legendre-gausz-quadrature-to-two-dimensions)
+[Gaussian Quadrature](https://mathworld.wolfram.com/GaussianQuadrature.html)
+[Gaussian quadrature wiki](https://en.wikipedia.org/wiki/Gaussian_quadrature)
+
+## Echemistry
+
+电场和浓度场在时间步上交错计算,
+在 time 0: 先计算电场分布, 然后使用 time0电场 计算 time0浓度场分布.
+在 time 1: 使用 time0 浓度场分布计算 time1 电场分布. 再使用 time1 电场计算 time1 浓度场分布.
+
+计算 time0 电场时, film 厚度为零. 计算完成后更新 film 厚度.
+计算 time1 电场时, 使用 time0-1 积累的 film 厚度.
+计算 time2 电场时, 使用 time0-2 积累的 film 厚度.
+...
