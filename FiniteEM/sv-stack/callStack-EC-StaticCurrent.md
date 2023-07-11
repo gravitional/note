@@ -74,7 +74,8 @@ main(int argc, char* argv[]);
             //迭代每个分析
             while(true){
                 auto analysis = anlsCtrl()->GetNextAnalysis();
-                    vector<string> fields=_curAnalysis->GetOutFields(); // 设置新的场变量输出, 调用重载函数
+                    // Common/Analysis/AnalysisControl.cpp 设置新的场变量输出, 调用重载函数
+                    vector<string> fields=_curAnalysis->GetOutFields(); 
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp; EC分析只有单步
                     Analyze(); // 虚函数, /ElectroChemistry/Analysis/AnalysisDynaEC.cpp
