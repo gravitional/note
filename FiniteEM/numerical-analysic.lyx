@@ -4409,7 +4409,359 @@ x_{k+1}=x_{k}+s
 \end_layout
 
 \begin_layout Section
-12.3奇异值分解
+12.2 QR算法
+\end_layout
+
+\begin_layout Standard
+Normalized Simultaneous Iteration（NSI）：不断地对 正交向量基作QR分解，每步中
+\begin_inset Formula $Q$
+\end_inset
+
+的列向量都会被归一化。令
+\begin_inset Formula $\overline{Q}_{0}=I$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+A\overline{Q}_{0} & =\overline{Q}_{1}R_{1}\\
+A\overline{Q}_{1} & =\overline{Q}_{2}R_{2}\\
+A\overline{Q}_{2} & =\overline{Q}_{3}R_{3}\\
+ & \vdots
+\end{align*}
+
+\end_inset
+
+考虑相似的迭代 
+\series bold
+unshifted QR algorithm
+\series default
+：令
+\begin_inset Formula $Q_{0}=I$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align}
+A_{0}\equiv AQ_{0} & =Q_{1}T_{1}\label{eq:12.8.0}\\
+A_{1}\equiv T_{1}Q_{1} & =Q_{2}T_{2}\nonumber \\
+A_{2}\equiv T_{2}Q_{2} & =Q_{3}T_{3}\nonumber \\
+ & \vdots\nonumber 
+\end{align}
+
+\end_inset
+
+基本的思想是，由于
+\begin_inset Formula $Q$
+\end_inset
+
+矩阵为正交矩阵，是可逆的。
+\begin_inset Formula $A=QR$
+\end_inset
+
+，所以
+\begin_inset Formula $A$
+\end_inset
+
+和
+\begin_inset Formula $R$
+\end_inset
+
+之间差一个可逆变换，因此用
+\begin_inset Formula $R$
+\end_inset
+
+替代
+\begin_inset Formula $A$
+\end_inset
+
+去迭代。对
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.8.0"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+同乘系数得
+\begin_inset Formula 
+\begin{align}
+AQ_{0} & =Q_{1}T_{1}\label{eq:12.8.1}\\
+{\color{blue}Q_{1}}T_{1}\;Q_{1} & ={\color{blue}Q_{1}}Q_{2}T_{2}\label{eq:12.8.2}\\
+{\color{blue}Q_{1}Q_{2}}T_{2}\;Q_{2} & ={\color{blue}Q_{1}Q_{2}}Q_{3}T_{3}\label{eq:12.8.3}\\
+ & \vdots\nonumber 
+\end{align}
+
+\end_inset
+
+注意观察第
+\begin_inset Formula $j$
+\end_inset
+
+步的右侧式和第
+\begin_inset Formula $j+1$
+\end_inset
+
+步的左侧式。将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.8.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.8.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的左侧式，得到
+\begin_inset Formula 
+\begin{equation}
+AQ_{0}Q_{1}={\color{blue}Q_{1}}Q_{2}T_{2}\label{eq:12.8.4}
+\end{equation}
+
+\end_inset
+
+将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.8.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:12.8.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的左侧式，得到
+\begin_inset Formula 
+\[
+AQ_{0}Q_{1}Q_{2}={\color{blue}Q_{1}Q_{2}}Q_{3}T_{3}
+\]
+
+\end_inset
+
+类似地替换可以一直持续下去，得到
+\begin_inset Formula 
+\[
+AQ_{0}\;{\color{blue}Q_{1}\cdots Q_{j-1}}={\color{blue}Q_{1}Q_{2}\cdots Q_{j-1}}\;Q_{j}T_{j}
+\]
+
+\end_inset
+
+比较NSI的表达式
+\begin_inset Formula $A\overline{Q}_{j-1}=\overline{Q}_{j}R_{j}$
+\end_inset
+
+ 发现，可以选取
+\begin_inset Formula 
+\begin{align*}
+\overline{Q}_{j-1} & =Q_{0}Q_{1}\cdots Q_{j-1}\\
+\overline{Q}_{j} & =Q_{1}Q_{2}\cdots Q_{j}=Q_{0}^{-1}\,\overline{Q}_{j-1}\,Q_{j}
+\end{align*}
+
+\end_inset
+
+因为通常选取
+\begin_inset Formula $Q_{0}=I$
+\end_inset
+
+，则 
+\begin_inset Formula $\overline{Q}_{j}=\overline{Q}_{j-1}\,Q_{j}$
+\end_inset
+
+。也就是说两种迭代的
+\begin_inset Formula $Q$
+\end_inset
+
+矩阵，只相差累乘操作。无移动的QR算法和归一化同步迭代所进行的计算相同，只是在标记上略有不同。
+\end_layout
+
+\begin_layout Subsection
+12.2.2 实数舒尔形式和QR算法
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+12.5
+\end_layout
+
+\end_inset
+
+如果矩阵
+\begin_inset Formula $T$
+\end_inset
+
+为上三角矩阵，除了在主对角线上可以出现
+\begin_inset Formula $2\times2$
+\end_inset
+
+的块，该矩阵具有
+\series bold
+实数舒尔形式
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+例如，矩阵形式
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+x & x & x & x & x\\
+ & x & x & x & x\\
+ &  & x & x & x\\
+ &  & x & x & x\\
+ &  &  &  & x
+\end{array}\right]
+\]
+
+\end_inset
+
+是实舒尔形式。根据习题6，这种形式的矩阵特征值为对角块矩阵的特征值，这对应对角线元素（其对应的块为
+\begin_inset Formula $1\times1$
+\end_inset
+
+），或者
+\begin_inset Formula $2\times2$
+\end_inset
+
+块矩阵的特征值。不管是哪种形式，都可以快速计算矩阵的特征值。
+\end_layout
+
+\begin_layout Standard
+矩阵的行列式为（对所有列指标求和）
+\begin_inset Formula 
+\[
+\det[A]=\sum_{\{i,j,k,\cdots\}}A_{1i}\,A_{2j}\,A_{3k}\cdots
+\]
+
+\end_inset
+
+上三角矩阵相当于要求元素
+\begin_inset Formula $A_{ij}$
+\end_inset
+
+的下标
+\begin_inset Formula $j\ge i$
+\end_inset
+
+，指标
+\begin_inset Formula $\{i,j,k,\cdots\}$
+\end_inset
+
+ 全部相同，从
+\begin_inset Formula $A_{nn}$
+\end_inset
+
+开始逆序决定，指标唯一不为零的排列是
+\begin_inset Formula $\{1,2,3,\cdots,n\}$
+\end_inset
+
+，对应对角线元素的乘积。
+\end_layout
+
+\begin_layout Standard
+舒尔形式的矩阵，例如
+\begin_inset Formula $2\times2$
+\end_inset
+
+块出现在
+\begin_inset Formula $[a-1,a]$
+\end_inset
+
+的位置，相当于允许下列排列
+\begin_inset Formula 
+\begin{align}
+\text{行指标：} & 1\cdots a-1,a\cdots n\nonumber \\
+\text{列排序1：} & 1\cdots a-1,a\cdots n\label{eq:my20}\\
+\text{列排序2：} & 1\cdots a,a-1\cdots n\label{eq:my21}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对应
+\begin_inset Formula 
+\[
+\cdots A_{a-1,a-1}A_{a,a}\cdots-\cdots A_{a-1,a}A_{a,a-1}\cdots
+\]
+
+\end_inset
+
+构成关于
+\begin_inset Formula $[a-1,a]$
+\end_inset
+
+子矩阵的局部行列式，其他系数相同。所以实数舒尔形式矩阵的行列式是
+\series bold
+主对角块
+\series default
+行列式的乘积。如果
+\begin_inset Formula $A$
+\end_inset
+
+是实舒尔形式，则
+\begin_inset Formula $A-\lambda I$
+\end_inset
+
+ 仍然是实舒尔形式，所以
+\begin_inset Formula 
+\[
+\det\left[A-\lambda I\right]=\prod\det\left[\text{主对角块}\right]
+\]
+
+\end_inset
+
+因此，实舒尔形式矩阵的特征值等价于主对角块的特征值。
+\end_layout
+
+\begin_layout Section
+12.3 奇异值分解
 \end_layout
 
 \begin_layout Theorem

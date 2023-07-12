@@ -76,6 +76,8 @@ main(int argc, char* argv[]);
                 auto analysis = anlsCtrl()->GetNextAnalysis();
                     // Common/Analysis/AnalysisControl.cpp 设置新的场变量输出, 调用重载函数
                     vector<string> fields=_curAnalysis->GetOutFields(); 
+                    // 要输出的场量，存放在 _curFields, 调用接口是 anlsCtrl()->GetOutFields()
+                    set_intersection(_user...,fields..., inserter(_curFields,_curFields.begin()));
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp; EC分析只有单步
                     Analyze(); // 虚函数, /ElectroChemistry/Analysis/AnalysisDynaEC.cpp
