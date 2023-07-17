@@ -3884,6 +3884,248 @@ s_{k}^{\text{column}}=\text{itemsize}\prod_{j=0}^{k-1}d_{j},\quad s_{k}^{\text{r
 。
 \end_layout
 
+\begin_layout Section
+FFT，快速傅立叶变换
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "快速傅里叶变换（FFT）超详解"
+target "https://zhuanlan.zhihu.com/p/347091298"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "https://zhuanlan.zhihu.com/p/347514286"
+target "快速傅里叶变换（FFT）的优化"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "https://zhuanlan.zhihu.com/p/110897470"
+target "快速傅里叶变换"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+蝴蝶变换
+\end_layout
+
+\begin_layout Standard
+不失一般性的，设
+\begin_inset Formula $k$
+\end_inset
+
+为偶数。对于初始是
+\begin_inset Formula 
+\[
+\omega_{n}^{0},\quad\omega_{n}^{1},\quad\omega_{n}^{2},\quad\cdots,\quad\omega_{n}^{k}
+\]
+
+\end_inset
+
+的序列，在递归的第一层会将其拆分为 
+\begin_inset Formula 
+\[
+\omega_{n}^{0},\quad\omega_{n}^{2},\quad\omega_{n}^{4},\quad\cdots,\quad\omega_{n}^{k}
+\]
+
+\end_inset
+
+和 
+\begin_inset Formula 
+\[
+\omega_{n}^{1},\quad\omega_{n}^{3},\quad\omega_{n}^{5},\quad\cdots,\quad\omega_{n}^{k}
+\]
+
+\end_inset
+
+两部分。
+\end_layout
+
+\begin_layout Itemize
+也就是说对于任意的 
+\begin_inset Formula $\omega_{n}^{i}$
+\end_inset
+
+，若
+\begin_inset Formula $i$
+\end_inset
+
+在二进制下最后一位为
+\begin_inset Formula $0$
+\end_inset
+
+，则
+\begin_inset Formula $\omega_{n}^{i}$
+\end_inset
+
+会被分配到前半部分，否则会被分配到后半部分。
+\end_layout
+
+\begin_layout Itemize
+换言之，对于以
+\begin_inset Formula $k/2$
+\end_inset
+
+为中心的，长度为
+\begin_inset Formula $2*2^{k-j}$
+\end_inset
+
+的子序列，当前索引
+\begin_inset Formula $i$
+\end_inset
+
+在二进制下的
+\series bold
+ 倒数第
+\begin_inset Formula $j$
+\end_inset
+
+位
+\series default
+ 决定了它被放在长度为
+\begin_inset Formula $2^{k-j}$
+\end_inset
+
+的前半部分，还是长度为 的
+\begin_inset Formula $2^{k-j}$
+\end_inset
+
+后半部分。
+\end_layout
+
+\begin_layout Itemize
+可以发现 
+\begin_inset Formula $\omega_{n}^{i}$
+\end_inset
+
+ 在最终的序列中的位置下标，相当于
+\begin_inset Formula $i$
+\end_inset
+
+的二进制编码的逆序对应的数。
+\end_layout
+
+\begin_layout Itemize
+所以我们先把每个数放到最后的位置上，然后不断两两求和，同时求出点值表示即可。
+\end_layout
+
+\begin_layout Example
+我们以 
+\begin_inset Formula $N=8$
+\end_inset
+
+的序列为例，
+\begin_inset Formula $N=8$
+\end_inset
+
+的序列共进行了两次奇偶分组：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+进行分组之前的序号为： 
+\begin_inset Formula $0,\;1,\;2,\;3,\;4,\;5,\;6,\;7$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+第一次分组之后的序号为： 
+\begin_inset Formula $0,\;2,\;4,\;6,\;1,\;3,\;5,\;7$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+第二次分组之后的序号为： 
+\begin_inset Formula $0,\;4,\;2,\;6,\;1,\;5,\;3,\;7$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Example
+之后按第二次分组的序号进行运算，最终得到的结果的序号是： 
+\begin_inset Formula $0,\;1,\;2,\;3,\;4,\;5,\;6,\;7$
+\end_inset
+
+。如果我们将未分组之前的序号和第二次分组之后的序号进行二进制编码可以得到：
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+0 & 000 & \quad & 0 & 000\\
+1 & {\color{blue}001} & \quad & 4 & {\color{blue}100}\\
+2 & 010 & \quad & 2 & 010\\
+3 & {\color{blue}011} & \quad & 6 & {\color{blue}110}\\
+4 & {\color{blue}100} & \quad & 1 & {\color{blue}001}\\
+5 & 101 & \quad & 5 & 101\\
+6 & {\color{blue}110} & \quad & 3 & {\color{blue}011}\\
+7 & 111 & \quad & 7 & 111
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+使用 FFT 算法的注意事项：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+信号离散时，采样频率为 Nyquist 频率；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N$
+\end_inset
+
+必须为
+\begin_inset Formula $2$
+\end_inset
+
+的整数次幂；
+\end_layout
+
+\begin_layout Itemize
+数据长度必须足够长： 
+\begin_inset Formula $\Delta f=\frac{1}{N\cdot T_{s}}$
+\end_inset
+
+。其中，
+\begin_inset Formula $\Delta f$
+\end_inset
+
+ 为数据分辨率； 
+\begin_inset Formula $N$
+\end_inset
+
+为序列长度（序列点数）； 为采样周期， 
+\begin_inset Formula $N\cdot T_{s}$
+\end_inset
+
+是数据的实际长度。
+\end_layout
+
+\end_deeper
 \begin_layout Chapter
 数值基础
 \end_layout
@@ -17671,7 +17913,7 @@ a_{3}^{e}
 以静电场方程为例，在很多情况它下它可以化为如下形式
 \begin_inset Formula 
 \begin{equation}
--\nabla\cdot\left(\alpha\nabla\phi\right)+\beta\phi=f\label{eq:xl1.27}
+-\nabla\cdot\left(\varepsilon\nabla\phi\right)+\beta\phi=\rho(x)\label{eq:xl1.27}
 \end{equation}
 
 \end_inset
@@ -17680,7 +17922,7 @@ a_{3}^{e}
 \begin_inset Formula 
 \begin{align}
 \phi & =p\quad\text{on}\quad\Gamma_{1}\label{eq:xl1.28}\\
-\left(\alpha\nabla\phi\right)\cdot\sbf e_{n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}\label{eq:xl1.29}
+\left(\varepsilon\nabla\phi\right)\cdot\sbf e_{n}+\gamma\phi & =q\quad\text{on}\quad\Gamma_{2}\label{eq:xl1.29}
 \end{align}
 
 \end_inset
