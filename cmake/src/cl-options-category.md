@@ -15,7 +15,7 @@ Option   Purpose
 + `/Oi[-]` 生成内在函数.
 + `/O`; 偏向于小代码.
 + `/Ot`; 倾向于快速代码.
-+ `/Ox`; /O2的一个子集, 不包括/GF或/Gy.
++ `/Ox`; `/O2` 的一个子集, 不包括 `/GF` 或 `/Gy``.
 + `/Oy`; 省略帧指针(rame pointer). (仅X86)
 
 ## Code generation

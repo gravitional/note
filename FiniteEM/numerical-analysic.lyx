@@ -4953,6 +4953,462 @@ V & \leftrightarrow A^{\mathrm{T}}A,\quad U\leftrightarrow AA^{\mathrm{T}}
 
 \end_layout
 
+\begin_layout Chapter
+三角插值和FFT
+\end_layout
+
+\begin_layout Section
+傅立叶变换
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+原单位根
+\end_layout
+
+\end_inset
+
+设
+\begin_inset Formula $\omega$
+\end_inset
+
+为
+\begin_inset Formula $n$
+\end_inset
+
+次原单位根，
+\begin_inset Formula $k$
+\end_inset
+
+为整数，则有
+\begin_inset Formula 
+\[
+\sum_{j=0}^{n-1}\omega^{jk}=\begin{cases}
+n & \text{如果\ensuremath{k/n}是整数}\\
+0 & \text{其他}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+设
+\begin_inset Formula $x=\left[x_{0},\cdots,x_{n-1}\right]^{T}$
+\end_inset
+
+为
+\begin_inset Formula $n$
+\end_inset
+
+维实数向量，
+\begin_inset Formula $\omega=e^{-i\,2\pi/n}$
+\end_inset
+
+，下面是本章的一些基本定义。
+\end_layout
+
+\begin_layout Section
+三角插值
+\end_layout
+
+\begin_layout Section
+FFT和信号处理
+\end_layout
+
+\begin_layout Section
+FFT net
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "快速傅里叶变换（FFT）超详解"
+target "https://zhuanlan.zhihu.com/p/347091298"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "https://zhuanlan.zhihu.com/p/347514286"
+target "快速傅里叶变换（FFT）的优化"
+literal "false"
+
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+对多项式
+\begin_inset Formula $f(x)=\sum_{i=0}^{n}a_{i}x^{i}$
+\end_inset
+
+，
+\begin_inset Formula $g(x)=\sum_{i=0}^{n}b_{i}x^{i}$
+\end_inset
+
+，其乘积
+\begin_inset Formula $fg$
+\end_inset
+
+为
+\begin_inset Formula 
+\[
+(fg)(x)=\left(\sum_{i=0}^{n}a_{i}x^{i}\right)\left(\sum_{i=0}^{n}b_{i}x^{i}\right)
+\]
+
+\end_inset
+
+显然我们可以用
+\begin_inset Formula $\order{n^{2}}$
+\end_inset
+
+ 的复杂度计算这个乘积的每一项的系数。但FFT可以用
+\begin_inset Formula $\order{n\log n}$
+\end_inset
+
+的时间复杂度来计算这个乘积。
+\end_layout
+
+\begin_layout Subsection
+多项式的系数与点值表示
+\end_layout
+
+\begin_layout Standard
+对于任意
+\begin_inset Formula $n+1$
+\end_inset
+
+次多项式 
+\begin_inset Formula $f(x)=\sum_{i=0}^{n}a_{i}x^{i}\in X_{n}$
+\end_inset
+
+，只需知道每一项的系数就可以唯一确定
+\begin_inset Formula $f(x)$
+\end_inset
+
+，故
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 可以表示为 
+\begin_inset Formula $(a_{0},a_{1},a_{2},\cdots,a_{n})$
+\end_inset
+
+的形式，这就是多项式的
+\series bold
+系数表示
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+此外，
+\begin_inset Formula $n$
+\end_inset
+
+次多项式上
+\begin_inset Formula $n+1$
+\end_inset
+
+个不同的点能唯一确定这个多项式（插值定理），因此
+\begin_inset Formula $f(x)$
+\end_inset
+
+也可以写作
+\begin_inset Formula 
+\[
+\left\{ (x_{0},f_{0}),\;(x_{1},f_{1}),\;(x_{2},f_{2}),\cdots,(x_{n},f_{n})\right\} 
+\]
+
+\end_inset
+
+这就是多项式的点值表示。若 
+\begin_inset Formula $x_{0},x_{1},\cdots,x_{n}$
+\end_inset
+
+确定，则令
+\begin_inset Formula $\tau(f)$
+\end_inset
+
+ 表示
+\begin_inset Formula $f$
+\end_inset
+
+的点值表示。多项式乘法在点值表示法下可以用
+\begin_inset Formula $\order{n}$
+\end_inset
+
+的复杂度计算
+\begin_inset Formula 
+\[
+\tau(fg)=\left\{ (x_{0},f_{0}\cdot g_{0}),\;(x_{1},f_{1}\cdot g_{1}),\;(x_{2},f_{2}\cdot g_{2}),\cdots,(x_{n},f_{n}\cdot g_{n})\right\} .
+\]
+
+\end_inset
+
+所以需要一种方法在较低的时间复杂度内完成两种表示的转换。
+\end_layout
+
+\begin_layout Subsection
+单位根
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $n$
+\end_inset
+
+
+\series bold
+次单位根
+\series default
+定义为
+\begin_inset Formula 
+\[
+\omega_{n}=\cos\frac{2\pi}{n}+i\sin\frac{2\pi}{n}
+\]
+
+\end_inset
+
+由欧拉公式
+\begin_inset Formula 
+\[
+\omega_{n}^{k}=\cos\frac{2k\pi}{n}+i\sin\frac{2k\pi}{n}
+\]
+
+\end_inset
+
+特别地，
+\begin_inset Formula $\omega_{n}^{0}=\omega_{n}^{n}=1$
+\end_inset
+
+。此外
+\begin_inset Formula $\omega_{n}$
+\end_inset
+
+还具有以下性质：
+\begin_inset Formula 
+\begin{align*}
+\omega_{rn}^{rk} & =\cos\frac{2rk\pi}{rn}+i\sin\frac{2rk\pi}{rn}=\omega_{n}^{k},\quad r\in\mathbb{N}^{+}\\
+\omega_{n}^{k+n/2} & =\omega_{n}^{k}\left(\cos\frac{n\,2\pi}{2\,n}+i\sin\frac{n\,2\pi}{2\,n}\right)=-\omega_{n}^{k},\quad k\in\mathbb{N}^{+}\\
+\overline{\omega_{n}^{k}} & =\cos\frac{2k\pi}{n}-i\sin\frac{2k\pi}{n}=\omega_{n}^{n-k}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+快速傅里叶变换
+\end_layout
+
+\begin_layout Standard
+对多项式 
+\begin_inset Formula $f(x)=\sum_{i=0}^{n}a_{i}x^{i}\in X_{n}$
+\end_inset
+
+，不是一般性的设
+\begin_inset Formula $n=2^{s}$
+\end_inset
+
+，
+\begin_inset Formula $s\in\mathbb{N}$
+\end_inset
+
+（认为更高次幂系数为零）。考虑按
+\begin_inset Formula $a_{i}$
+\end_inset
+
+下标的奇偶性将
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 中的项分为两部分，即
+\begin_inset Formula 
+\begin{align*}
+f(x) & =(a_{0}+a_{2}x^{2}+a_{4}x^{4}+\cdots+a_{n-2}x^{n-2})\\
+ & +(a_{1}+a_{3}x^{2}+a_{5}x^{4}+\cdots+a_{n-1}x^{n-1})
+\end{align*}
+
+\end_inset
+
+令
+\begin_inset Formula 
+\begin{align*}
+f_{1}(x) & =a_{0}+a_{2}x^{1}+a_{4}x^{2}+\cdots+a_{n-2}x^{(n-2)/2}\\
+f_{2}(x) & =a_{1}+a_{3}x^{1}+a_{5}x^{2}+\cdots+a_{n-1}x^{(n-2)/2}
+\end{align*}
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+f(x)=f_{1}(x^{2})+xf_{2}(x^{2})
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $x=\omega_{n}^{k}$
+\end_inset
+
+（
+\begin_inset Formula $k<n/2$
+\end_inset
+
+）可得
+\begin_inset Formula 
+\begin{align}
+f(\omega_{n}^{k}) & =f_{1}\left(\omega_{n}^{2k}\right)+\omega_{n}^{k}f_{2}\left(\omega_{n}^{2k}\right)\nonumber \\
+ & =f_{1}\left(\omega_{n/2}^{k}\right)+\omega_{n}^{k}f_{2}\left(\omega_{n/2}^{k}\right)\label{eq:my10}
+\end{align}
+
+\end_inset
+
+代入
+\begin_inset Formula $\omega_{n}^{k+n/2}$
+\end_inset
+
+可得
+\begin_inset Formula 
+\begin{align}
+f(\omega_{n}^{k+n/2}) & =f_{1}\left(\omega_{n}^{2k+n}\right)+\omega_{n}^{k+n/2}f_{2}\left(\omega_{n}^{2k+n}\right)\nonumber \\
+ & =f_{1}\left(\omega_{n/2}^{k}\right)-\omega_{n}^{k}f_{2}\left(\omega_{n/2}^{k}\right)\label{eq:my11}
+\end{align}
+
+\end_inset
+
+观察
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，我们只需要求出
+\begin_inset Formula $f_{1}\left(\omega_{n/2}^{k}\right)$
+\end_inset
+
+，
+\begin_inset Formula $f_{2}\left(\omega_{n/2}^{k}\right)$
+\end_inset
+
+即可
+\begin_inset Formula $\order{1}$
+\end_inset
+
+求出
+\begin_inset Formula $f(\omega_{n}^{k})$
+\end_inset
+
+，
+\begin_inset Formula $f(\omega_{n}^{k+n/2})$
+\end_inset
+
+的值。类似地，可以递归转化，最终相当于求
+\begin_inset Formula 
+\[
+f_{1}(\omega_{1}^{k})=f_{2}(\omega_{1}^{k})=1
+\]
+
+\end_inset
+
+故以
+\begin_inset Formula $\order{\log n}$
+\end_inset
+
+的复杂度可以求出
+\begin_inset Formula $f(\omega_{n}^{k})$
+\end_inset
+
+，
+\begin_inset Formula $f\left(\omega_{n}^{k+n/2}\right)$
+\end_inset
+
+，进而可以用 
+\begin_inset Formula $\order{n\log n}$
+\end_inset
+
+的复杂度求出所有的
+\begin_inset Formula $f(\omega_{n}^{k})$
+\end_inset
+
+，即用 
+\begin_inset Formula $\order{n\log n}$
+\end_inset
+
+的时间复杂度将
+\begin_inset Formula $f$
+\end_inset
+
+的系数表示法转化为点值表示法。
+\end_layout
+
+\begin_layout Subsection
+逆FFT
+\end_layout
+
+\begin_layout Standard
+FFT的逆过程成为 离散傅立叶逆变换（IDFT）。DFT的矩阵形式为
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+1 & 1 & 1 & \cdots & 1\\
+1 & (\omega_{n}^{1})^{1} & (\omega_{n}^{1})^{2} & \cdots & (\omega_{n}^{1})^{n-1}\\
+1 & (\omega_{n}^{2})^{1} & (\omega_{n}^{2})^{2} & \cdots & (\omega_{n}^{2})^{n-1}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+1 & (\omega_{n}^{n-1})^{1} & (\omega_{n}^{n-1})^{2} & \cdots & (\omega_{n}^{n-1})^{n-1}
+\end{array}\right]\left[\begin{array}{c}
+a_{0}\\
+a_{1}\\
+a_{2}\\
+\vdots\\
+a_{n-1}
+\end{array}\right]=\left[\begin{array}{c}
+y_{0}\\
+y_{1}\\
+y_{2}\\
+\vdots\\
+y_{n-1}
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\left[a_{i}\cdots\right]$
+\end_inset
+
+为多项式的系数表示法，
+\begin_inset Formula $\left[y_{i}\cdots\right]$
+\end_inset
+
+为多项式的点值表示法。
+\end_layout
+
 \begin_layout Standard
 EOF
 \end_layout
