@@ -11981,8 +11981,16 @@ literal "false"
 \end_layout
 
 \begin_layout Enumerate
-电流（J），安培（ampere）：
+电流（I），安培（ampere）：
 \begin_inset Formula $\mathrm{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+电流密度（J），
+\begin_inset Formula $\mathrm{A}\cdot\mathrm{m}^{-2}\cdot\mathrm{s}^{-1}$
 \end_inset
 
 
@@ -20356,6 +20364,348 @@ u
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Section
+点状源
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "如何用弱形式实现点源"
+target "https://zhuanlan.zhihu.com/p/623459567"
+literal "false"
+
+\end_inset
+
+。考虑原点处具有点状源的泊松方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla\cdot\left(\varepsilon\nabla\phi\right)+\beta\phi=-\delta(x)
+\]
+
+\end_inset
+
+如往常使用Galerkin形式给出的方程是
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=-\int_{\Omega^{e}}N_{\alpha}^{e}\,\delta(x)\,\dd{\Omega}
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula $\delta$
+\end_inset
+
+函数的性质得到
+\begin_inset Formula 
+\[
+\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=-N_{\alpha}^{e}(0)
+\]
+
+\end_inset
+
+相当于力向量的外力部分添加 
+\begin_inset Formula $-N_{\alpha}^{e}(0)$
+\end_inset
+
+ 项。在单元上的局部矩阵相当于
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+K_{11} & \cdots & \cdots\\
+\cdots & K_{22} & \cdots\\
+\cdots & \cdots & K_{33}
+\end{array}\right]\left[\begin{array}{c}
+\phi_{1}\\
+\phi_{2}\\
+\phi_{3}
+\end{array}\right]=-\sum_{q}\left[\begin{array}{c}
+N_{1}^{e}(x_{q})\\
+N_{2}^{e}(x_{q})\\
+N_{3}^{e}(x_{q})
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $q\in\{1,2,3,\cdots\}$
+\end_inset
+
+，
+\begin_inset Formula $x_{q}$
+\end_inset
+
+表示各粒子的位置。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单元编号
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+粒子1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+粒子2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+粒子3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(x_{1},y_{1},z_{1})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(x_{2},y_{2},z_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(x_{m},y_{m},z_{m})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(x_{n},y_{n},z_{n})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter

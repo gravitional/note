@@ -96,6 +96,485 @@ Young
 \end_layout
 
 \begin_layout Chapter
+数值常用
+\end_layout
+
+\begin_layout Section
+二进制操作
+\end_layout
+
+\begin_layout Standard
+对整数 
+\begin_inset Formula $n$
+\end_inset
+
+，n<<1得到 
+\begin_inset Formula $n*2$
+\end_inset
+
+；n >> 1 得到 floor(n/2)，因此 1+n>>1 得到 ceil(n/2)。
+\end_layout
+
+\begin_layout Subsection
+二进制反转
+\end_layout
+
+\begin_layout Section
+特殊矩阵
+\end_layout
+
+\begin_layout Standard
+下三角矩阵
+\begin_inset Formula $L_{ij}$
+\end_inset
+
+，指标满足
+\begin_inset Formula $i\ge j$
+\end_inset
+
+；上三角矩阵
+\begin_inset Formula $U_{ij}$
+\end_inset
+
+，指标满足
+\begin_inset Formula $i\le j$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+追赶法
+\end_layout
+
+\begin_layout Subsection
+基本原理
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "追赶法求解三对角方程组"
+target "https://blog.csdn.net/u010450214/article/details/50170623"
+literal "false"
+
+\end_inset
+
+。Thomas, L.H., Elliptic Problems in Linear Differential Equations over a Network.
+ Watson Science Computer Laboratory Report, 1949.。
+\end_layout
+
+\begin_layout Standard
+（主）三对角方程，可以用“追赶法”求解，又称为 “Thomas算法”。追赶法的基本原理是矩阵的LU分解。即将矩阵
+\begin_inset Formula $A$
+\end_inset
+
+分解为
+\begin_inset Formula 
+\[
+A=L\,U
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $L$
+\end_inset
+
+是下三角，对角线元素为
+\begin_inset Formula $1$
+\end_inset
+
+；
+\begin_inset Formula $U$
+\end_inset
+
+为上三角矩阵。
+\series bold
+
+\begin_inset Formula $LU$
+\end_inset
+
+分解就是高斯消去法的矩阵形式
+\series default
+。容易验证，一个三角矩阵作LU分解以后，得到一个下2对角矩阵和一个上2对角矩阵，即
+\begin_inset Formula 
+\[
+A=\left[\begin{array}{ccccc}
+a_{11} & a_{12}\\
+a_{21} & a_{22} & a_{23}\\
+ & a_{32} & a_{33} & a_{34}\\
+ & \ddots & \ddots & \ddots\\
+\\
+ &  & a_{n-1,n-2} & a_{n-1,n-1} & a_{n-1,n}\\
+ &  &  &  & a_{n,n}
+\end{array}\right],
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+L=\left[\begin{array}{ccccc}
+1\\
+L_{21} & 1\\
+ & L_{32} & 1\\
+ & \ddots & \ddots\\
+ &  & L_{n-1,n-2} & 1\\
+ &  &  & L_{n,n-1} & 1
+\end{array}\right],\quad U=\left[\begin{array}{ccccc}
+U_{11} & U_{12}\\
+ & U_{22} & U_{23}\\
+ &  & U_{33} & U_{34}\\
+ &  & \ddots & \ddots\\
+ &  &  & U_{n-1,n-1} & U_{n-1,n}\\
+ &  &  &  & U_{n,n}
+\end{array}\right],
+\]
+
+\end_inset
+
+对于 
+\begin_inset Formula $2\le i<n$
+\end_inset
+
+（掐头去尾），有方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & L_{i,i-1}U_{i-1,i-1}=A_{i,i-1}\\
+ & L_{i,i-1}U_{i-1,i}+U_{i,i}=A_{i,i}\\
+ & U_{i,i+1}=A_{i,i+1}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $i=0,n$
+\end_inset
+
+ 的方程如下
+\begin_inset Formula 
+\begin{align*}
+ & U_{11}=A_{11},\quad U_{12}=A_{12}\\
+ & L_{n,n-1}U_{n-1,n}+U_{n,n}=A_{n,n}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+综合起来，
+\begin_inset Formula $A$
+\end_inset
+
+的LU分解计算过程如下（原位求解，下标从零开始）：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for i in range(1,n):
+\end_layout
+
+\begin_layout Plain Layout
+
+	A(i,i-1)=A(i,i-1)/A(i-1,i-1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	A(i,i)=A(i,i)-A(i,i-1)*A(i-1,i)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在计算过程中，将下三角矩阵
+\begin_inset Formula $L$
+\end_inset
+
+和上三角矩阵
+\begin_inset Formula $U$
+\end_inset
+
+的值保存在原矩阵
+\begin_inset Formula $A$
+\end_inset
+
+中。计算结束以后，矩阵
+\begin_inset Formula $A$
+\end_inset
+
+中的元素为
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+U_{11} & U_{12}\\
+L_{21} & U_{22} & U_{23}\\
+ & L_{32} & U_{33} & U_{34}\\
+ & \ddots & \ddots & \ddots\\
+\\
+ &  & L_{n-1,n-2} & U_{n-1,n-1} & U_{n-1,n}\\
+ &  &  & L_{n,n-1} & U_{n,n}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+三角矩阵
+\begin_inset Formula $A$
+\end_inset
+
+作LU分解之后，严格上三角部分的元素没有变，即
+\begin_inset Formula 
+\[
+U_{i,i+1}=a_{i,i+1},\quad i=1,2,\cdots,n-1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+LU回代
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+追的过程：分解
+\end_layout
+
+\end_inset
+
+ 对于
+\begin_inset Formula $n$
+\end_inset
+
+阶的三对角方程组，
+\begin_inset Formula 
+\[
+Ax=b
+\]
+
+\end_inset
+
+代入LU分解可得
+\begin_inset Formula 
+\[
+Ax=LUx=b\quad\Rightarrow\quad Ux=L^{-1}b
+\]
+
+\end_inset
+
+另一方面可以令 
+\begin_inset Formula $y=L^{-1}b$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+Ly=b.
+\]
+
+\end_inset
+
+ 由于
+\begin_inset Formula $L$
+\end_inset
+
+，
+\begin_inset Formula $U$
+\end_inset
+
+都是三角矩阵，容易求解
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $y$
+\end_inset
+
+。综合起来就是
+\begin_inset Formula 
+\[
+Ux=y,\quad Ly=b.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+赶的过程：回代
+\end_layout
+
+\end_inset
+
+ 接着，我们用回代法求解上三角方程组。
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+U_{11} & U_{12}\\
+ & U_{22} & U_{23}\\
+ &  & U_{33} & U_{34}\\
+ &  & \ddots & \ddots\\
+ &  &  & U_{n-1,n-1} & U_{n-1,n}\\
+ &  &  &  & U_{n,n}
+\end{array}\right]\left[\begin{array}{c}
+x_{1}\\
+x_{2}\\
+\vdots\\
+x_{n-1}\\
+x_{n}
+\end{array}\right]=\left[\begin{array}{c}
+y_{1}\\
+y_{2}\\
+\vdots\\
+y_{n-1}\\
+y_{n}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+实用程序
+\end_layout
+
+\begin_layout Standard
+在三对角矩阵中，三对角线以外的元素均为
+\begin_inset Formula $0$
+\end_inset
+
+，为了提高存储的效率，我们只需存储三对角线上的元素即可.
+ 因此，对于前面的矩阵
+\begin_inset Formula $A$
+\end_inset
+
+，我们只存储三个向量：
+\begin_inset Formula 
+\begin{align*}
+ & U=[A(1,2),A(2,3),...,A(n-1,n)]\\
+ & D=[A(1,1),A(2,2),...,A(n-1,n-1),A(n,n)]\\
+ & L=[A(2,1),A(3,2),...,A(n,n-1)]
+\end{align*}
+
+\end_inset
+
+这三个向量分别为矩阵
+\begin_inset Formula $A$
+\end_inset
+
+三条对角线上的元素。假定常熟向量为
+\begin_inset Formula 
+\[
+b=[b(1),b(2),...,b(n)]
+\]
+
+\end_inset
+
+则追赶法的程序可以写成：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#追
+\end_layout
+
+\begin_layout Plain Layout
+
+for i in range(1,n):
+\end_layout
+
+\begin_layout Plain Layout
+
+	A(i,i-1) = A(i,i-1)/A(i-1,i-1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	A(i,i) = A(i,i)-A(i,i-1)*A(i-1,i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	# Ly=b 回代
+\end_layout
+
+\begin_layout Plain Layout
+
+	b(i) = b(i) - b(i-1) * l(i-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+#赶
+\end_layout
+
+\begin_layout Plain Layout
+
+x[n] = b[n] / d[i]  
+\end_layout
+
+\begin_layout Plain Layout
+
+for i = range(n-1,0,-1):
+\end_layout
+
+\begin_layout Plain Layout
+
+  x[i] = (b[i] - u[i] * x[i+1]) / d[i]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 求解方程
 \end_layout
 
@@ -4962,6 +5441,13 @@ V & \leftrightarrow A^{\mathrm{T}}A,\quad U\leftrightarrow AA^{\mathrm{T}}
 \end_layout
 
 \begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:10.1"
+
+\end_inset
+
+
 \begin_inset Argument 1
 status open
 
@@ -4987,7 +5473,7 @@ status open
 \begin_inset Formula 
 \[
 \sum_{j=0}^{n-1}\omega^{jk}=\begin{cases}
-n & \text{如果\ensuremath{k/n}是整数}\\
+n & \text{如果}k=n\,\text{的整数倍}\\
 0 & \text{其他}
 \end{cases}
 \]
@@ -4995,6 +5481,14 @@ n & \text{如果\ensuremath{k/n}是整数}\\
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+此引理可用于证明傅立叶矩阵是幺正矩阵。
+\end_layout
+
+\begin_layout Subsection
+离散傅里叶变换
 \end_layout
 
 \begin_layout Standard
@@ -5011,6 +5505,158 @@ n & \text{如果\ensuremath{k/n}是整数}\\
 \end_inset
 
 ，下面是本章的一些基本定义。
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $x=[x_{0},\cdots,x_{n-1}]^{T}$
+\end_inset
+
+的离散傅里叶变换（DFT）为
+\begin_inset Formula $n$
+\end_inset
+
+维向量
+\begin_inset Formula $y=[y_{0},\cdots,y_{n-1}]$
+\end_inset
+
+，其中
+\begin_inset Formula $\omega=e^{-i2\pi/n}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+y_{k}=\frac{1}{\sqrt{n}}\sum_{j=0}^{n-1}x_{j}\omega^{jk}\label{eq:10.7}
+\end{equation}
+
+\end_inset
+
+用矩阵形式表示为
+\begin_inset Formula 
+\begin{equation}
+y=F_{n}\,x\label{eq:10.8}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $F$
+\end_inset
+
+是傅立叶矩阵，由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "lem:10.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula $F$
+\end_inset
+
+是幺正矩阵。
+\begin_inset Formula 
+\[
+F_{n}=\frac{1}{\sqrt{n}}\left[\begin{array}{ccccc}
+\omega^{0} & \omega^{0} & \omega^{0} & \cdots & \omega^{0}\\
+\omega^{0} & \omega^{1} & \omega^{2} & \cdots & \omega^{n-1}\\
+\omega^{0} & \omega^{2} & \omega^{4} & \cdots & \omega^{2(n-1)}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+\omega^{0} & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)^{2}}
+\end{array}\right]
+\]
+
+\end_inset
+
+除了第一行外，其他各行的元素和都为
+\begin_inset Formula $0$
+\end_inset
+
+。因为
+\begin_inset Formula $F_{n}$
+\end_inset
+
+是对称矩阵，因此对每一列也是如此。傅立叶矩阵的逆矩阵为 
+\begin_inset Formula $F_{n}^{-1}=\overline{F_{n}}$
+\end_inset
+
+，即它的复共轭。离散傅里叶逆变换写成
+\begin_inset Formula 
+\[
+x=F_{n}^{-1}\,y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+快速傅立叶变换
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+FFT计算次数
+\end_layout
+
+\end_inset
+
+设
+\begin_inset Formula $n$
+\end_inset
+
+是
+\begin_inset Formula $2$
+\end_inset
+
+的幂，则大小为
+\begin_inset Formula $n$
+\end_inset
+
+的
+\begin_inset Formula $FFT$
+\end_inset
+
+变换需要
+\begin_inset Formula $n\left(2\log_{2}n-1\right)+1$
+\end_inset
+
+次加法和乘法运算，以及一次除以
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+的运算。
+\end_layout
+
+\begin_layout Standard
+DFT 的快速算法可以直接用来计算 逆DFT 变换，逆DFT变换对应的矩阵是原矩阵的共轭
+\begin_inset Formula $\overline{F_{n}}$
+\end_inset
+
+。要计算
+\begin_inset Formula $y$
+\end_inset
+
+的DFT逆变换，我们只需先求共轭，再进行
+\begin_inset Formula $FFT$
+\end_inset
+
+，再求一次共轭就能得到结果了。这是因为
+\begin_inset Formula 
+\[
+F_{n}^{-1}\,y=\overline{F_{n}}\,y=\overline{F_{n}\overline{y}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
