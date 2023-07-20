@@ -95,7 +95,7 @@ theorems-chap
 Young
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Chapter*
 数值常用
 \end_layout
 
@@ -113,6 +113,14 @@ Young
 \end_inset
 
 ；n >> 1 得到 floor(n/2)，因此 1+n>>1 得到 ceil(n/2)。
+\end_layout
+
+\begin_layout Standard
+只有无符号整数，除以
+\begin_inset Formula $2$
+\end_inset
+
+和右移位才是等价的。负数除法是向上（向零）取整的。
 \end_layout
 
 \begin_layout Subsection
@@ -260,7 +268,7 @@ U_{11} & U_{12}\\
 \begin_inset Formula 
 \begin{align*}
  & U_{11}=A_{11},\quad U_{12}=A_{12}\\
- & L_{n,n-1}U_{n-1,n}+U_{n,n}=A_{n,n}
+ & L_{n,n-1}U_{n-1,n}+U_{n,n}=A_{n,n},\quad\text{形式相同}
 \end{align*}
 
 \end_inset
@@ -284,7 +292,7 @@ status open
 
 \begin_layout Plain Layout
 
-for i in range(1,n):
+for i in range(1,n+1):
 \end_layout
 
 \begin_layout Plain Layout
@@ -428,6 +436,42 @@ Ux=y,\quad Ly=b.
 \end_layout
 
 \begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#追
+\end_layout
+
+\begin_layout Plain Layout
+
+for i in range(1,n):
+\end_layout
+
+\begin_layout Plain Layout
+
+	A(i,i-1) = A(i,i-1)/A(i-1,i-1)    
+\end_layout
+
+\begin_layout Plain Layout
+
+	A(i,i) = A(i,i) - A(i-1,i) * A(i,i-1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+	b(i) = b(i) - b(i-1) * A(i,i-1)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -474,6 +518,37 @@ y_{n}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#赶
+\end_layout
+
+\begin_layout Plain Layout
+
+x(n) = b(n) / A(i,i) 
+\end_layout
+
+\begin_layout Plain Layout
+
+for i in range(n-2,-1,-1):
+\end_layout
+
+\begin_layout Plain Layout
+
+	x(i) = (b(i) - A(i,i+1) * x(i+1)) / A(i,i)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 实用程序
 \end_layout
@@ -491,9 +566,9 @@ y_{n}
 ，我们只存储三个向量：
 \begin_inset Formula 
 \begin{align*}
- & U=[A(1,2),A(2,3),...,A(n-1,n)]\\
  & D=[A(1,1),A(2,2),...,A(n-1,n-1),A(n,n)]\\
- & L=[A(2,1),A(3,2),...,A(n,n-1)]
+ & L=[A(2,1),A(3,2),...,A(n,n-1)]\\
+ & U=[A(1,2),A(2,3),...,A(n-1,n)]
 \end{align*}
 
 \end_inset
@@ -531,12 +606,12 @@ for i in range(1,n):
 
 \begin_layout Plain Layout
 
-	A(i,i-1) = A(i,i-1)/A(i-1,i-1)
+	l[i-1] = l[i-1]/d[i-1]
 \end_layout
 
 \begin_layout Plain Layout
 
-	A(i,i) = A(i,i)-A(i,i-1)*A(i-1,i)
+	d[i] = d[i]-l[i-1]*u[i-1]
 \end_layout
 
 \begin_layout Plain Layout
@@ -546,7 +621,7 @@ for i in range(1,n):
 
 \begin_layout Plain Layout
 
-	b(i) = b(i) - b(i-1) * l(i-1);
+	b[i] = b[i] - b[i-1]*l[i-1]
 \end_layout
 
 \begin_layout Plain Layout
@@ -556,12 +631,12 @@ for i in range(1,n):
 
 \begin_layout Plain Layout
 
-x[n] = b[n] / d[i]  
+x[n-1] = b[n-1] / d[n-1]  
 \end_layout
 
 \begin_layout Plain Layout
 
-for i = range(n-1,0,-1):
+for i in range(n-2,-1,-1):
 \end_layout
 
 \begin_layout Plain Layout
@@ -4066,11 +4141,77 @@ PA=LU分解
 \end_layout
 
 \begin_layout Standard
-p94/109;
+p94/109; page 27/42
 \end_layout
 
-\begin_layout Standard
-page 27/42
+\begin_layout Subsection
+雅可比方法
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+2.9
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $n\times n$
+\end_inset
+
+的矩阵
+\begin_inset Formula $A=(a_{ij})$
+\end_inset
+
+ 是
+\series bold
+严格对角占优矩阵
+\series default
+，要求对于每个
+\begin_inset Formula $1\le i\le n$
+\end_inset
+
+，
+\begin_inset Formula $\abs{a_{ii}}>\sum_{j\neq i}\abs{a_{ij}}$
+\end_inset
+
+。换句话说，对角线元素在对应行占优，其对应值在数量上比该行其他元素的和还要大。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+2.10
+\end_layout
+
+\end_inset
+
+如果
+\begin_inset Formula $n\times n$
+\end_inset
+
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+是严格对角占优矩阵，则（1）
+\begin_inset Formula $A$
+\end_inset
+
+是非奇异矩阵，（2）对于所有向量
+\begin_inset Formula $b$
+\end_inset
+
+和初始估计，对
+\begin_inset Formula $Ax=b$
+\end_inset
+
+应用雅可比方法都会收敛到（唯一）解。
 \end_layout
 
 \begin_layout Section
@@ -5430,6 +5571,571 @@ V & \leftrightarrow A^{\mathrm{T}}A,\quad U\leftrightarrow AA^{\mathrm{T}}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Chapter
+插值
+\end_layout
+
+\begin_layout Section
+数据和插值函数
+\end_layout
+
+\begin_layout Section
+插值误差
+\end_layout
+
+\begin_layout Section
+切比雪夫插值
+\end_layout
+
+\begin_layout Section
+三次样条
+\end_layout
+
+\begin_layout Section*
+三次样条c-recipe
+\end_layout
+
+\begin_layout Standard
+给定列表函数 
+\begin_inset Formula $y_{i}=y(x_{i})$
+\end_inset
+
+，
+\begin_inset Formula $i=1\cdots N$
+\end_inset
+
+。在区间 
+\begin_inset Formula $[x_{j},x_{j+1}]$
+\end_inset
+
+上的线性插值为
+\begin_inset Formula 
+\begin{equation}
+y=A\,y_{j}+B\,y_{j+1},\quad j=1,2,\cdots N-1\label{eq:c3.3.1}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+A\equiv\frac{x_{j+1}-x}{x_{j+1}-x_{j}},\quad B=1-A\equiv\frac{x-x_{j}}{x_{j+1}-x_{j}},\label{eq:c3.3.2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+三次样条插值表达式为
+\begin_inset Formula 
+\[
+y=A\,y_{j}+B\,y_{j+1}+C\,y_{j}^{\prime\prime}+D\,y_{j+1}^{\prime\prime},\quad j=1,2,\cdots N-1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+C\equiv\frac{1}{6}\left(A^{3}-A\right)\delta_{j}^{2},\quad D\equiv\frac{1}{6}\left(B^{3}-B\right)\delta_{j}^{2}\label{eq:c3.3.4}
+\end{equation}
+
+\end_inset
+
+为了简便，定义 
+\begin_inset Formula $\delta_{j}=x_{j+1}-x_{j}$
+\end_inset
+
+，
+\begin_inset Formula $\Delta_{j}=y_{j+1}-y_{j}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+插值表达式的导数为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd{y}}{\dd{x}}=\frac{\Delta_{j}}{\delta_{j}}-\frac{3A^{2}-1}{6}\delta_{j}\,y_{j}^{\prime\prime}+\frac{3B^{2}-1}{6}\delta_{j}\,y_{j+1}^{\prime\prime},\quad j=1,2,\cdots N-1\label{eq:c3.3.5}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\dd[2]{y}}{\dd{x^{2}}}=A\,y_{j}^{\prime\prime}+B\,y_{j+1}^{\prime\prime},\quad j=1,2,\cdots N-1\label{eq:c3.3.6}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $A=1$
+\end_inset
+
+ at 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+，
+\begin_inset Formula $A=0$
+\end_inset
+
+ at 
+\begin_inset Formula $x_{j+1}$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+ 刚好反过来。所以
+\begin_inset Formula $y_{j}^{\prime\prime}$
+\end_inset
+
+ 刚好是二阶导数，二阶导数在区间
+\begin_inset Formula $(x_{j-1},x_{j})$
+\end_inset
+
+ 和 
+\begin_inset Formula $(x_{j},x_{j+1})$
+\end_inset
+
+ 上连续。 
+\end_layout
+
+\begin_layout Standard
+要求一阶导数在相邻区间连续给出，for 
+\begin_inset Formula $j=2,\cdots,N-1$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}\frac{\delta_{j-1}}{6}y_{j-1}^{\prime\prime}}+\frac{\delta_{j}+\delta_{j-1}}{3}y_{j}^{\prime\prime}+{\color{red}\frac{\delta_{j}}{6}y_{j+1}^{\prime\prime}}=\frac{\Delta_{j}}{\delta_{j}}-\frac{\Delta_{j-1}}{\delta_{j-1}}\label{eq:c3.3.7}
+\end{equation}
+
+\end_inset
+
+方程一共有 
+\begin_inset Formula $N-2$
+\end_inset
+
+个，
+\series bold
+使用
+\begin_inset Formula $y_{j}^{\prime\prime}$
+\end_inset
+
+作为待求变量， 一共
+\begin_inset Formula $N$
+\end_inset
+
+个
+\series default
+，所以还需要补充两个边界条件。
+\end_layout
+
+\begin_layout Remark
+自然边界条件: 
+\begin_inset Formula $y_{1}^{\prime\prime}=y_{N}^{\prime\prime}=0$
+\end_inset
+
+，相当于
+\begin_inset Formula 
+\begin{align}
+2y_{1}^{\prime}+y_{2}^{\prime} & =3\frac{\Delta_{1}}{\delta_{1}}\nonumber \\
+y_{N-1}^{\prime}+2y_{N}^{\prime} & =3\frac{\Delta_{N-1}}{\delta_{N-1}}\label{eq:my3.3.6}
+\end{align}
+
+\end_inset
+
+如果以 
+\begin_inset Formula $y_{i}^{\prime}$
+\end_inset
+
+ 为待求变量，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3.3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出了矩阵的首末两行。
+\end_layout
+
+\begin_layout Subsection*
+换元表示
+\end_layout
+
+\begin_layout Standard
+边界条件可以通过规定 
+\begin_inset Formula $y_{0}^{\prime}$
+\end_inset
+
+，
+\begin_inset Formula $y_{N}^{\prime}$
+\end_inset
+
+ 施加，可以把方程用 
+\begin_inset Formula $y_{i}^{\prime}$
+\end_inset
+
+ 重新表示。代入
+\begin_inset Formula $x_{i}$
+\end_inset
+
+，
+\begin_inset Formula $x_{i+1}$
+\end_inset
+
+到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c3.3.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+y_{j}^{\prime} & =\frac{\Delta_{j}}{\delta_{j}}-\frac{1}{3}\delta_{j}\,y_{j}^{\prime\prime}-\frac{1}{6}\delta_{j}\,y_{j+1}^{\prime\prime},\\
+y_{j+1}^{\prime} & =\frac{\Delta_{j}}{\delta_{j}}+\frac{1}{6}\delta_{j}\,y_{j}^{\prime\prime}+\frac{1}{3}\delta_{j}\,y_{j+1}^{\prime\prime},\quad j=1,2,\cdots N-1
+\end{align*}
+
+\end_inset
+
+可以反解出 
+\begin_inset Formula $y_{j}^{\prime\prime}$
+\end_inset
+
+，
+\begin_inset Formula $y_{j+1}^{\prime\prime}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\delta_{j}\,y_{j}^{\prime\prime} & =\frac{6\Delta_{j}}{\delta_{j}}-4y_{j}^{\prime}-2y_{j+1}^{\prime}\label{eq:my3.3.7}\\
+\delta_{j}\,y_{j+1}^{\prime\prime} & =-(\frac{6\Delta_{j}}{\delta_{j}}-2y_{j}^{\prime}-4y_{j+1}^{\prime})\nonumber 
+\end{align}
+
+\end_inset
+
+方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:c3.3.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以重新为
+\begin_inset Formula 
+\begin{align*}
+ & {\color{blue}\frac{\Delta_{j-1}}{\delta_{j-1}}-\frac{2}{3}y_{j-1}^{\prime}-\frac{1}{3}y_{j}^{\prime}}+\frac{\delta_{j}+\delta_{j-1}}{\delta_{j}}\left(\frac{2\Delta_{j}}{\delta_{j}}-\frac{4}{3}y_{j}^{\prime}-\frac{2}{3}y_{j+1}^{\prime}\right)\\
+ & {\color{red}-(\frac{\Delta_{j}}{\delta_{j}}-\frac{1}{3}y_{j}^{\prime}-\frac{2}{3}y_{j+1}^{\prime})}=\frac{\Delta_{j}}{\delta_{j}}-\frac{\Delta_{j-1}}{\delta_{j-1}}
+\end{align*}
+
+\end_inset
+
+整理各项
+\begin_inset Formula 
+\begin{align*}
+ & -\frac{2}{3}y_{j-1}^{\prime}+y_{j}^{\prime}\left(-\frac{4}{3}\frac{\delta_{j}+\delta_{j-1}}{\delta_{j}}\right)+y_{j+1}^{\prime}\left(-\frac{2}{3}\frac{\delta_{j}+\delta_{j-1}}{\delta_{j}}+\frac{2}{3}\right)\\
+= & \frac{\Delta_{j}}{\delta_{j}}-2\frac{\Delta_{j-1}}{\delta_{j-1}}-\frac{\delta_{j}+2\delta_{j-1}}{\delta_{j}}\frac{\Delta_{j}}{\delta_{j}}
+\end{align*}
+
+\end_inset
+
+最后得到，for 
+\begin_inset Formula $j=2,\cdots,N-1$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+{\color{blue}\frac{1}{\delta_{j-1}}y_{j-1}^{\prime}}+2y_{j}^{\prime}(\frac{1}{\delta_{j-1}}+\frac{1}{\delta_{j}})+{\color{red}\frac{1}{\delta_{j}}y_{j+1}^{\prime}}=3(\frac{\Delta_{j-1}}{\delta_{j-1}^{2}}+\frac{\Delta_{j}}{\delta_{j}^{2}})
+\]
+
+\end_inset
+
+以
+\begin_inset Formula $y_{i}^{\prime}$
+\end_inset
+
+ 作为列向量，方程对应的三对角矩阵的系数是
+\begin_inset Formula 
+\begin{align*}
+ & \ell_{j}=\frac{1}{\delta_{j-1}},\quad u_{j}=\frac{1}{\delta_{j}},\quad d_{j}=2(\ell_{j}+u_{j})\\
+ & b_{j}=3(\frac{\Delta_{j-1}}{\delta_{j-1}^{2}}+\frac{\Delta_{j}}{\delta_{j}^{2}})
+\end{align*}
+
+\end_inset
+
+参考
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3.3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，矩阵的首尾两行是
+\begin_inset Formula 
+\[
+\left[\begin{array}{cccc}
+2 & 1\\
+ & \cdots\\
+ &  & 1 & 2
+\end{array}\right]\left[\begin{array}{c}
+y_{0}^{\prime}\\
+\vdots\\
+y_{N}^{\prime}
+\end{array}\right]=\left[\begin{array}{c}
+3\Delta_{1}/\delta_{1}\\
+\vdots\\
+3\Delta_{N-1}/\delta_{N-1}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+计算出
+\begin_inset Formula $y_{i}^{\prime}$
+\end_inset
+
+之后，可以求出
+\begin_inset Formula $y$
+\end_inset
+
+ 的各阶导数（计算过程见下文）
+\begin_inset Formula 
+\begin{align*}
+y(x) & =A\,y_{j}+B\,y_{j+1}+\frac{6\Delta_{j}}{\delta_{j}^{2}}\left(C-D\right)+\frac{y_{j}^{\prime}}{\delta_{j}}\left(2D-4C\right)+\frac{y_{j+1}^{\prime}}{\delta_{j}}\left(4D-2C\right)\\
+y^{\prime}(x) & =3\frac{\Delta_{j}}{\delta_{j}}\left[1-A^{2}-B^{2}\right]+\left(2A^{2}+B^{2}-1\right)y_{j}^{\prime}+\left(A^{2}+2B^{2}-1\right)y_{j+1}^{\prime}\\
+y_{j}^{\prime\prime}(x) & =\frac{6\Delta_{j}}{\delta_{j}^{2}}-\frac{4y_{j}^{\prime}+2y_{j+1}^{\prime}}{\delta_{j}}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+ & \delta_{j}=x_{j+1}-x_{j},\quad\Delta_{j}=y_{j+1}-y_{j}\\
+ & A\equiv\frac{x_{j+1}-x}{\delta_{j}},\quad B=1-A\equiv\frac{x-x_{j}}{\delta_{j}},\\
+ & C\equiv\frac{1}{6}\left(A^{3}-A\right)\delta_{j}^{2},\quad D\equiv\frac{1}{6}\left(B^{3}-B\right)\delta_{j}^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A$
+\end_inset
+
+和
+\begin_inset Formula $B$
+\end_inset
+
+都是
+\begin_inset Formula $x$
+\end_inset
+
+的线性函数，如果使用它们作为基本单元，插值函数也可以写成
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+iB[x_] := 1 - iA; iC[x_] := 1/6 (iA^3 - iA) 
+\backslash
+[Delta]j^2; iD[x_] := 1/6 (iB[x]^3 - iB[x]) 
+\backslash
+[Delta]j^2; y[x_] := iA yj + iB[x] (yj + 
+\backslash
+[CapitalDelta]j) + ( 6 
+\backslash
+[CapitalDelta]j)/
+\backslash
+[Delta]j^2 (iC[x] - iD[x]) + dyj/
+\backslash
+[Delta]j (2 iD[x] - 4 iC[x]) + dyj1/
+\backslash
+[Delta]j (4 iD[x] - 2 iC[x]) CoefficientList[y[x] // Simplify, iA]
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+iA[x_] := 1 - iB; iC[x_] := 1/6 (iA[x]^3 - iA[x]) 
+\backslash
+[Delta]j^2; iD[x_] := 1/6 (iB^3 - iB) 
+\backslash
+[Delta]j^2; y[x_] := iA [x] yj + iB (yj + 
+\backslash
+[CapitalDelta]j) + ( 6 
+\backslash
+[CapitalDelta]j)/
+\backslash
+[Delta]j^2 (iC[x] - iD[x]) + dyj/
+\backslash
+[Delta]j (2 iD[x] - 4 iC[x]) + dyj1/
+\backslash
+[Delta]j (4 iD[x] - 2 iC[x]) CoefficientList[y[x] // Simplify, iB]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+y(x) & =y_{j+1}+{\color{blue}A}\left[\delta_{j}\,y_{j+1}^{\prime}\right]+{\color{blue}A^{2}}\left[-3\Delta_{j}+\delta_{j}\,y_{j}^{\prime}+2\delta_{j}\,y_{j+1}^{\prime}\right]+{\color{blue}A^{3}}\left[2\Delta_{j}-\delta_{j}\,y_{j}^{\prime}-\delta_{j}\,y_{j+1}^{\prime}\right]\\
+ & =y_{j}+{\color{red}B}\left[\delta_{j}\,y_{j}^{\prime}\right]+{\color{red}B^{2}}\left[3\Delta_{j}-2\delta_{j}\,y_{j}^{\prime}-\delta_{j}\,y_{j+1}^{\prime}\right]+{\color{red}B^{3}}\left[-2\Delta_{j}+\delta_{j}\,y_{j}^{\prime}+\delta_{j}\,y_{j+1}^{\prime}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+经过样条插值，对应区间
+\begin_inset Formula $[x_{0},x_{N}]$
+\end_inset
+
+内任意点
+\begin_inset Formula $x$
+\end_inset
+
+的
+\begin_inset Formula $y$
+\end_inset
+
+是
+\begin_inset Formula 
+\[
+y=A\,y_{j}+B\,y_{j+1}+C\,y_{j}^{\prime\prime}+D\,y_{j+1}^{\prime\prime}
+\]
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my3.3.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+y=A\,y_{j}+B\,y_{j+1}+C\frac{1}{\delta_{j}}\left(\frac{6\Delta_{j}}{\delta_{j}}-4y_{j}^{\prime}-2y_{j+1}^{\prime}\right)-D\frac{1}{\delta_{j}}\left(\frac{6\Delta_{j}}{\delta_{j}}-2y_{j}^{\prime}-4y_{j+1}^{\prime}\right)
+\]
+
+\end_inset
+
+整理得
+\begin_inset Formula 
+\[
+y=A\,y_{j}+B\,y_{j+1}+\frac{6\Delta_{j}}{\delta_{j}^{2}}\left(C-D\right)+\frac{y_{j}^{\prime}}{\delta_{j}}\left(2D-4C\right)+\frac{y_{j+1}^{\prime}}{\delta_{j}}\left(4D-2C\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+计算 
+\begin_inset Formula $y^{\prime}(x)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+y^{\prime} & =\frac{\Delta_{j}}{\delta_{j}}-\frac{3A^{2}-1}{6}\left(\frac{6\Delta_{j}}{\delta_{j}}-4y_{j}^{\prime}-2y_{j+1}^{\prime}\right)+\frac{3B^{2}-1}{6}\left(-(\frac{6\Delta_{j}}{\delta_{j}}-2y_{j}^{\prime}-4y_{j+1}^{\prime})\right)\\
+ & =\frac{\Delta_{j}}{\delta_{j}}-\frac{3A^{2}-1}{6}\frac{6\Delta_{j}}{\delta_{j}}-\frac{3B^{2}-1}{6}\frac{6\Delta_{j}}{\delta_{j}}\\
+ & +\frac{3A^{2}-1}{6}4y_{j}^{\prime}+\frac{3B^{2}-1}{6}2y_{j}^{\prime}\\
+ & +\frac{3A^{2}-1}{6}2y_{j+1}^{\prime}+\frac{3B^{2}-1}{6}4y_{j+1}^{\prime}\\
+= & 3\frac{\Delta_{j}}{\delta_{j}}\left[1-A^{2}-B^{2}\right]+\left(2A^{2}+B^{2}-1\right)y_{j}^{\prime}+\left(A^{2}+2B^{2}-1\right)y_{j+1}^{\prime}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+y^{\prime}=3\frac{\Delta_{j}}{\delta_{j}}\left[1-A^{2}-B^{2}\right]+\left(2A^{2}+B^{2}-1\right)y_{j}^{\prime}+\left(A^{2}+2B^{2}-1\right)y_{j+1}^{\prime}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+最小二乘
+\end_layout
+
+\begin_layout Chapter
+数值微分和积分
+\end_layout
+
+\begin_layout Chapter
+常微分方程
+\end_layout
+
+\begin_layout Chapter
+边值问题
+\end_layout
+
+\begin_layout Chapter
+偏微分方程
+\end_layout
+
+\begin_layout Chapter
+随机数和应用
 \end_layout
 
 \begin_layout Chapter
