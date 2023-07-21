@@ -475,3 +475,29 @@ Ctrl+V o 4 1 9 -> !9
 普通的(一个八位数)十六进制数字被限制在两位数.
 和上面一样, 对于十六进制代码指定的字符, 你可以重复 radix 字符(例如, Ctrl+V u u 0 0 4 1 → A),
 `o` 和 `x` 不区分大小写.
+
+## 语法高亮
+
+[Vim 可以检测文件类型](https://yianwillis.github.io/vimcdoc/doc/filetype.html#filetypes)
+
+A. 如果文件类型没有被自动识别, 或者找到的是错误的类型, 你可以手动设置 `filetype`
+选项, 或者在文件里加入模式行.
+例如, 对于 IDL 文件, 可以使用
+
+```viml
+:set filetype=idl
+```
+
+或者在文件中加入模式行  modeline :
+
+```viml
+/* vim: set filetype=idl : */
+```
+
+如果你想在缺省文件类型检查之后检测自己的文件. 和上述的 A 类似.
+但不是无条件的设置 `filetype`, 而是使用 `:setfiletype`.
+该命令只有在没有文件类型被监测到的前提下才会设置 `filetype`. 例如:
+
+```viml
+au BufRead,BufNewFile *.txt             setfiletype text
+```

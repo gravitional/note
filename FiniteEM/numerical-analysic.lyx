@@ -127,6 +127,65 @@ Young
 二进制反转
 \end_layout
 
+\begin_layout Standard
+如果数字
+\begin_inset Formula $A$
+\end_inset
+
+ 的二进制编码为 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+abcde
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+，则 bcde==a>>1（右移位），如果按照大小顺序处理，则 bcde 的反转已经得到，于是可以使用归纳法。
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,keywordstyle={\color{blue}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for i in range(0,ilen):
+\end_layout
+
+\begin_layout Plain Layout
+
+	rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (ilen - 1))
+\end_layout
+
+\end_inset
+
+| 后面对首个二进制位反转，| 前面对余下
+\begin_inset Formula $n-1$
+\end_inset
+
+位反转。
+\end_layout
+
 \begin_layout Section
 特殊矩阵
 \end_layout
@@ -286,7 +345,7 @@ U_{11} & U_{12}\\
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily},keywordstyle={\color{blue}}"
 inline false
 status open
 
@@ -437,7 +496,7 @@ Ux=y,\quad Ly=b.
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily},keywordstyle={\color{blue}}"
 inline false
 status open
 
@@ -520,7 +579,7 @@ y_{n}
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily},keywordstyle={\color{blue}}"
 inline false
 status open
 
@@ -590,7 +649,7 @@ b=[b(1),b(2),...,b(n)]
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Python,numbers=left,basicstyle={\ttfamily}"
+lstparams "language=Python,numbers=left,basicstyle={\ttfamily},keywordstyle={\color{blue}}"
 inline false
 status open
 
@@ -5593,7 +5652,7 @@ V & \leftrightarrow A^{\mathrm{T}}A,\quad U\leftrightarrow AA^{\mathrm{T}}
 三次样条
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 三次样条c-recipe
 \end_layout
 
@@ -5606,7 +5665,23 @@ V & \leftrightarrow A^{\mathrm{T}}A,\quad U\leftrightarrow AA^{\mathrm{T}}
 \begin_inset Formula $i=1\cdots N$
 \end_inset
 
-。在区间 
+。
+\series bold
+
+\begin_inset Formula $N$
+\end_inset
+
+个点，
+\begin_inset Formula $N-1$
+\end_inset
+
+段区间，
+\begin_inset Formula $N-1$
+\end_inset
+
+个函数。
+\series default
+在区间 
 \begin_inset Formula $[x_{j},x_{j+1}]$
 \end_inset
 
@@ -5775,7 +5850,7 @@ noprefix "false"
 给出了矩阵的首末两行。
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsection
 换元表示
 \end_layout
 
@@ -6177,12 +6252,12 @@ status open
 
 为整数，则有
 \begin_inset Formula 
-\[
+\begin{equation}
 \sum_{j=0}^{n-1}\omega^{jk}=\begin{cases}
 n & \text{如果}k=n\,\text{的整数倍}\\
 0 & \text{其他}
-\end{cases}
-\]
+\end{cases}\label{eq:my10.1}
+\end{equation}
 
 \end_inset
 
@@ -6210,7 +6285,27 @@ n & \text{如果}k=n\,\text{的整数倍}\\
 \begin_inset Formula $\omega=e^{-i\,2\pi/n}$
 \end_inset
 
-，下面是本章的一些基本定义。
+。
+\series bold
+
+\begin_inset Formula $N$
+\end_inset
+
+个数据点，
+\begin_inset Formula $N$
+\end_inset
+
+次单位根，矩阵元素为 
+\begin_inset Formula $\omega^{jk}$
+\end_inset
+
+，
+\begin_inset Formula $j,k\in\{0,1,2,\cdots N-1\}$
+\end_inset
+
+
+\series default
+。下面是本章的一些基本定义。
 \end_layout
 
 \begin_layout Definition
@@ -6724,15 +6819,15 @@ f_{1}(\omega_{1}^{k})=f_{2}(\omega_{1}^{k})=1
 \end_layout
 
 \begin_layout Standard
-FFT的逆过程成为 离散傅立叶逆变换（IDFT）。DFT的矩阵形式为
+FFT的逆过程称为 离散傅立叶逆变换（IDFT）。首先来看DFT的矩阵形式为
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccccc}
+\frac{1}{\sqrt{n}}\left[\begin{array}{ccccc}
 1 & 1 & 1 & \cdots & 1\\
-1 & (\omega_{n}^{1})^{1} & (\omega_{n}^{1})^{2} & \cdots & (\omega_{n}^{1})^{n-1}\\
-1 & (\omega_{n}^{2})^{1} & (\omega_{n}^{2})^{2} & \cdots & (\omega_{n}^{2})^{n-1}\\
+1 & (\omega_{n}^{{\color{blue}1}})^{1} & (\omega_{n}^{1})^{2} & \cdots & (\omega_{n}^{1})^{n-1}\\
+1 & (\omega_{n}^{{\color{blue}2}})^{1} & (\omega_{n}^{2})^{2} & \cdots & (\omega_{n}^{2})^{n-1}\\
 \vdots & \vdots & \vdots & \ddots & \vdots\\
-1 & (\omega_{n}^{n-1})^{1} & (\omega_{n}^{n-1})^{2} & \cdots & (\omega_{n}^{n-1})^{n-1}
+1 & (\omega_{n}^{{\color{blue}n-1}})^{1} & (\omega_{n}^{n-1})^{2} & \cdots & (\omega_{n}^{n-1})^{n-1}
 \end{array}\right]\left[\begin{array}{c}
 a_{0}\\
 a_{1}\\
@@ -6758,7 +6853,84 @@ y_{n-1}
 \begin_inset Formula $\left[y_{i}\cdots\right]$
 \end_inset
 
-为多项式的点值表示法。
+为多项式的点值表示法。它的逆矩阵是（把矩阵的行逆序排列，即左乘次对角线
+\begin_inset Formula $I$
+\end_inset
+
+矩阵）
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{n}}\left[\begin{array}{ccccc}
+1 & 1 & 1 & \cdots & 1\\
+1 & (\omega_{n}^{{\color{blue}n-1}})^{1} & (\omega_{n}^{n-1})^{2} & \cdots & (\omega_{n}^{n-1})^{n-1}\\
+1 & (\omega_{n}^{{\color{blue}n-2}})^{1} & (\omega_{n}^{n-2})^{2} & \cdots & (\omega_{n}^{n-2})^{n-1}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+1 & (\omega_{n}^{{\color{blue}1}})^{1} & (\omega_{n}^{1})^{2} & \cdots & (\omega_{n}^{1})^{n-1}
+\end{array}\right].
+\]
+
+\end_inset
+
+这是因为从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my10.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知，
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{ccccc}
+1 & (\omega_{n}^{{\color{blue}n-i}})^{1} & (\omega_{n}^{{\color{blue}n-i}})^{2} & \cdots & (\omega_{n}^{{\color{blue}n-i}})^{n-1}\end{array}\right]\left[\begin{array}{c}
+1\\
+(\omega_{n}^{j})^{1}\\
+(\omega_{n}^{j})^{2}\\
+\vdots\\
+(\omega_{n}^{j})^{n-1}
+\end{array}\right] & =\sum_{k=0}^{n-1}(\omega^{n-i})^{k}(\omega_{n}^{j})^{k}\\
+ & =\sum(\omega^{n-i+j})^{k}=\begin{cases}
+n & i=j\\
+0 & i\neq j
+\end{cases}
+\end{align*}
+
+\end_inset
+
+考虑到
+\begin_inset Formula $\omega_{n}^{n-i}=\overline{\omega_{n}^{i}}$
+\end_inset
+
+，也可以把逆变换写成
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{n}}\left[\begin{array}{ccccc}
+1 & 1 & 1 & \cdots & 1\\
+1 & (\overline{\omega_{n}^{1}})^{1} & (\omega_{n}^{1})^{2} & \cdots & (\omega_{n}^{1})^{n-1}\\
+1 & (\omega_{n}^{2})^{1} & (\omega_{n}^{2})^{2} & \cdots & (\omega_{n}^{2})^{n-1}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+1 & (\omega_{n}^{n-1})^{1} & (\omega_{n}^{n-1})^{2} & \cdots & (\omega_{n}^{n-1})^{n-1}
+\end{array}\right]\left[\begin{array}{c}
+y_{0}\\
+y_{1}\\
+y_{2}\\
+\vdots\\
+y_{n-1}
+\end{array}\right]=\left[\begin{array}{c}
+a_{0}\\
+a_{1}\\
+a_{2}\\
+\vdots\\
+a_{n-1}
+\end{array}\right]
+\]
+
+\end_inset
+
+即对每个元素取复共轭。
 \end_layout
 
 \begin_layout Standard

@@ -20,8 +20,9 @@
 通常使用 `python xxx.py` 运行脚本时, 会自动添加 `xxx.py` 所在的目录到 `sys.path`.
 
 + `.moduleY` 指代 当前脚本的同级目录下的 `moduleY` 模块
+
 + 绝对导入可以使用 `import <>` 或 `from <> import <>` 语法,
-但相对导入只能使用 `from` 形式; 其中的原因在于 `import XXX.YYY.ZZZ`
+但 `相对导入` 只能写成 `from .X import 标识符` 的形式; 其中的原因在于 `import XXX.YYY.ZZZ`
 应当提供 `XXX.YYY.ZZZ` 作为可用表达式, 但 `.moduleY` 不是一个有效的表达式
 
 + 多行导入可以写成
@@ -34,7 +35,7 @@ from posixpath import (
     )
 ```
 
-## no known parent package
+## ImportError: attempted relative import with no known parent package
 
 [Python报错ImportError: attempted relative import with no known parent package](https://blog.csdn.net/weixin_43958105/article/details/114012590)
 [Python 导包八种方法](https://blog.csdn.net/sinat_38682860/article/details/111404997)
@@ -42,15 +43,17 @@ from posixpath import (
 [5. 导入系统](https://docs.python.org/zh-cn/3/reference/import.html#)
 [Python函数进阶:  Hook 钩子函数](https://zhuanlan.zhihu.com/p/339718510)
 
-使用下列命令调用 python 脚本时, 会将脚本所在目录添加到模块搜索路径 `sys.path`,
-参见 [sys.path][] 中的解释
+使用下列命令调用 python 脚本时
 
 ```bash
-python C:/Users/xxx/Numerics/pkg_test.py
+python xxx/xxx/pkg/pkg_test.py
 ```
 
+会将脚本所在目录添加到模块搜索路径 `sys.path`, 参见 [sys.path][] 中的解释.
+但是不会将 `pkg` 所在的目录添加到路径
+
 报错: `无法识别的包文件(no known parent package)`, 是由于
-`Python解释器` 无法查找到当前执行脚本(即当前模块), 所属的最小包结构(package).
+`Python解释器` 无法查找到 `当前执行脚本`(即当前模块), 所属的 `最小包结构`(package).
 
 [sys.path]: https://docs.python.org/zh-cn/3/library/sys.html#sys.path
 
