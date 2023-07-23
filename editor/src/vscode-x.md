@@ -445,6 +445,14 @@ LaTeX Workshop 注册(registers)了以下占位符. 根文件值的是 LaTeX 主
 
 + `boolean` `false`
 
+## 自动完成 括号匹配, 引号匹配
+
+Editor: auto closing Brackets
+Editor: auto closing Quotes
+
+如需关闭打开, markdown 的倒引号自动补全(匹配),
+可通过设置或关闭以上选项的值实现
+
 ## Wolfram Language extension
 
 Wolfram语言的官方Visual Studio Code扩展
