@@ -6460,6 +6460,1748 @@ F_{n}^{-1}\,y=\overline{F_{n}}\,y=\overline{F_{n}\overline{y}}
 
 \end_layout
 
+\begin_layout Subsection
+变换因子的性质
+\end_layout
+
+\begin_layout Standard
+如果定义 
+\begin_inset Formula $W_{N}^{nk}=e^{-j\,2\pi/N\,nk}$
+\end_inset
+
+，则显然有：
+\end_layout
+
+\begin_layout Enumerate
+缩放性质
+\begin_inset Formula 
+\[
+W_{N}^{2rk}=W_{N/2}^{rk},\quad W_{N}^{(2r+1)k}=W_{N/2}^{rk}\cdot W_{N}^{k},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+周期性（移除
+\begin_inset Formula $N$
+\end_inset
+
+的整数倍）
+\begin_inset Formula 
+\[
+W_{N}^{n(N-k)}=W_{N}^{-nk},\quad W_{N}^{k(N-n)}=W_{N}^{-nk},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+W_{N}^{nk}=W_{N}^{r},\quad r=(nk)\mod N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+以及（N/2反对称性）
+\begin_inset Formula 
+\[
+W_{N}^{(nk+N/2)}=-W_{N}^{nk}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有了这两个性质之后，设
+\begin_inset Formula $N=2^{m}$
+\end_inset
+
+（
+\begin_inset Formula $m\in\mathbb{N}^{+}$
+\end_inset
+
+）并将DFT 
+\begin_inset Formula 
+\[
+X(k)\coloneqq\mathrm{DFT}\{x(n)\}=\sum_{n=0}^{N-1}x(n)\cdot e^{-j\,2\pi/N\,nk},\quad k=0,1,\cdots,n-1
+\]
+
+\end_inset
+
+分解为两部分：
+\begin_inset Formula 
+\begin{align}
+X(k) & \coloneqq\sum_{r=0}^{N/2-1}x(2r)\cdot W_{N}^{2rk}+\sum_{r=0}^{N/2-1}x(2r+1)\cdot W_{N}^{(2r+1)k},\quad\text{even}+\text{odd}\nonumber \\
+ & =\sum_{r=0}^{N/2-1}x(2r)\cdot W_{N/2}^{rk}+W_{N}^{k}\cdot\sum_{r=0}^{N/2-1}x(2r+1)\cdot W_{N/2}^{rk}\nonumber \\
+ & \coloneqq{\color{blue}G(k)}+{\color{red}W_{N}^{k}\cdot H(k)},\quad k=0,1,2,\cdots,N/2-1\label{eq:my2}
+\end{align}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+只包括了
+\begin_inset Formula $k\in[0,N/2-1]$
+\end_inset
+
+的部分，使用其中 
+\begin_inset Formula ${\color{blue}G(k)}$
+\end_inset
+
+ 和 
+\begin_inset Formula ${\color{red}W_{N}^{k}\cdot H(k)}$
+\end_inset
+
+ 的周期性
+\begin_inset Formula 
+\[
+G(k+\frac{N}{2})=G(k),\quad W_{N}^{k}\cdot H(k+\frac{N}{2})=-W_{N}^{k}\cdot H(k),\quad k=0,1,2,\cdots,N/2-1
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula $k$
+\end_inset
+
+的其余部分对应的表达式
+\begin_inset Formula 
+\begin{equation}
+X(k+\frac{N}{2})=G(k)-W_{N}^{k}\cdot H(k),\quad k=0,1,2,\cdots,N/2-1\label{eq:my3}
+\end{equation}
+
+\end_inset
+
+例如
+\begin_inset Formula $N=4$
+\end_inset
+
+，
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+前
+\begin_inset Formula $N/2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G(0)+W_{4}^{0}\,H(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G(1)+W_{4}^{1}\,H(1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+后
+\begin_inset Formula $N/2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G(0)-W_{4}^{0}\,H(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G(1)-W_{4}^{1}\,H(1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/butterfly-unit.webp
+	lyxscale 80
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:my1"
+
+\end_inset
+
+序列长度
+\begin_inset Formula $N=4$
+\end_inset
+
+的完整的信号流图。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:my1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以看出，长度为
+\begin_inset Formula $N=4$
+\end_inset
+
+的序列最开始只进行了一次奇偶分解，而且分为了两组蝶形流程图，分别是从
+\begin_inset Formula $x$
+\end_inset
+
+到中间变量为一组（第1组）和从中间变量到
+\begin_inset Formula $X$
+\end_inset
+
+为一组（第 组）。右侧的蝶形单元出现交叉的原因是输出的 
+\begin_inset Formula $X(2)$
+\end_inset
+
+，
+\begin_inset Formula $X(3)$
+\end_inset
+
+没有换位。对于
+\begin_inset Formula $N=2^{m}$
+\end_inset
+
+的情况，这种奇偶分解和蝶形图分解应该被贯彻下去。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename inset/butterfly-unit2.webp
+	lyxscale 80
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:my2"
+
+\end_inset
+
+一般形式的鲽形单元
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:my2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示的一般形式的蝶形单元，对应下面的方程组
+\begin_inset Formula 
+\begin{align*}
+ & x_{m+1}(p)=x_{m}(p)+x_{m}(q)\cdot W^{r}\\
+ & x_{m+1}(q)=x_{m}(p)-x_{m}(q)\cdot W^{r}
+\end{align*}
+
+\end_inset
+
+在这样一个一般形式的蝶形单元中，总共进行了
+\begin_inset Formula $2$
+\end_inset
+
+次加法运算和
+\begin_inset Formula $1$
+\end_inset
+
+次乘法运算。
+\end_layout
+
+\begin_layout Standard
+蝶形单元具有以下特点：
+\end_layout
+
+\begin_layout Itemize
+每一个蝶形单元都是独立的；
+\end_layout
+
+\begin_layout Itemize
+每一级（组）都有
+\begin_inset Formula $N/2$
+\end_inset
+
+个蝶形单元，其中
+\begin_inset Formula $N$
+\end_inset
+
+为序列长度。
+\end_layout
+
+\begin_layout Itemize
+长度为
+\begin_inset Formula $N=2^{m}$
+\end_inset
+
+的序列具有
+\begin_inset Formula $m$
+\end_inset
+
+级（组）的蝶形，且每级可以分为
+\begin_inset Formula $N/2^{i}$
+\end_inset
+
+小组蝶形单元，
+\begin_inset Formula $i$
+\end_inset
+
+代表级数。
+\end_layout
+
+\begin_layout Remark
+以上蝶形单元的特点可以通过
+\begin_inset Formula $N=4$
+\end_inset
+
+的特殊情况推广得到。由蝶形单元的独立性可知，由两点构成的蝶型单元运算过后就不会再参与其他蝶型单元的运算了。对于长度为
+\begin_inset Formula $N=2^{m}$
+\end_inset
+
+的序列来讲，整个信号流图所需要的乘法运算次数为
+\begin_inset Formula 
+\[
+M_{c}=\frac{N}{2}\,m=\frac{N}{2}\log_{2}m
+\]
+
+\end_inset
+
+整个信号流图所需要的加法运算次数为
+\begin_inset Formula 
+\[
+M_{a}=N\,m=N\log_{2}N.
+\]
+
+\end_inset
+
+因此使用FFT算法比直接计算一个序列的DFT要快得多（矩阵运算
+\begin_inset Formula $A.X$
+\end_inset
+
+需要
+\begin_inset Formula $N^{2}$
+\end_inset
+
+次乘法和
+\begin_inset Formula $N(N-1)$
+\end_inset
+
+次加法）。
+\end_layout
+
+\begin_layout Example
+我们以 
+\begin_inset Formula $N=8$
+\end_inset
+
+的序列为例，
+\begin_inset Formula $N=8$
+\end_inset
+
+的序列共进行了两次奇偶分组：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+进行分组之前的序号为： 
+\begin_inset Formula $0,\;1,\;2,\;3,\;4,\;5,\;6,\;7$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+第一次分组之后的序号为： 
+\begin_inset Formula $0,\;2,\;4,\;6,\;1,\;3,\;5,\;7$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+第二次分组之后的序号为： 
+\begin_inset Formula $0,\;4,\;2,\;6,\;1,\;5,\;3,\;7$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Example
+之后按第二次分组的序号进行运算，最终得到的结果的序号是： 
+\begin_inset Formula $0,\;1,\;2,\;3,\;4,\;5,\;6,\;7$
+\end_inset
+
+。如果我们将未分组之前的序号和第二次分组之后的序号进行二进制编码可以得到：
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+0 & 000 & \quad & 0 & 000\\
+1 & {\color{blue}001} & \quad & 4 & {\color{blue}100}\\
+2 & 010 & \quad & 2 & 010\\
+3 & {\color{blue}011} & \quad & 6 & {\color{blue}110}\\
+4 & {\color{blue}100} & \quad & 1 & {\color{blue}001}\\
+5 & 101 & \quad & 5 & 101\\
+6 & {\color{blue}110} & \quad & 3 & {\color{blue}011}\\
+7 & 111 & \quad & 7 & 111
+\end{array}
+\]
+
+\end_inset
+
+我们可以看出用红色标记出的二进制编码实际上是进行了
+\series bold
+码位倒置
+\series default
+（code reverse）。
+\end_layout
+
+\begin_layout Remark
+使用 FFT 算法的注意事项：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+信号离散时，采样频率为 Nyquist 频率；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N$
+\end_inset
+
+必须为
+\begin_inset Formula $2$
+\end_inset
+
+的整数次幂；
+\end_layout
+
+\begin_layout Itemize
+数据长度必须足够长： 
+\begin_inset Formula $\Delta f=\frac{1}{N\cdot T_{s}}$
+\end_inset
+
+。其中，
+\begin_inset Formula $\Delta f$
+\end_inset
+
+ 为数据分辨率； 
+\begin_inset Formula $N$
+\end_inset
+
+为序列长度（序列点数）； 为采样周期， 
+\begin_inset Formula $N\cdot T_{s}$
+\end_inset
+
+是数据的实际长度。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+程序示例
+\end_layout
+
+\begin_layout Example
+\begin_inset listings
+lstparams "language={C++},keywordstyle={\color{red}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for (int i = 1; i < n; i <<= 1){
+\end_layout
+
+\begin_layout Plain Layout
+
+	complex<double> wn(cos(pi / i), inv * sin(pi / i)); //原根
+\end_layout
+
+\begin_layout Plain Layout
+
+	for (int j = 0; j < n; j += (i << 1)){
+\end_layout
+
+\begin_layout Plain Layout
+
+		complex<double> w0(1, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+		for (int k = 0; k < i; ++k, w0 *= wn){
+\end_layout
+
+\begin_layout Plain Layout
+
+			complex<double> x = a[j + k];
+\end_layout
+
+\begin_layout Plain Layout
+
+			complex<double> y = a[j + k + i] * w0;
+\end_layout
+
+\begin_layout Plain Layout
+
+			a[j + k] = x + y;
+\end_layout
+
+\begin_layout Plain Layout
+
+			a[i + j + k] = x - y; }}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j\Rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k\Rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j+k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j+k+i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+ 
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i=2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j\Rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k\Rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j+k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j+k+i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+ 
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i=4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j\Rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k\Rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j+k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j+k+i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:my2"
+
+\end_inset
+
+
+\begin_inset Formula $N=8$
+\end_inset
+
+的序列，指标的示意图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:my2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+展示了计算 
+\begin_inset Formula $x(n)$
+\end_inset
+
+，
+\begin_inset Formula $n=0,1,\cdots,7$
+\end_inset
+
+ 八个点的傅里叶变换的流程。
+\end_layout
+
+\begin_layout Itemize
+计算时，先对
+\begin_inset Formula $x(n)$
+\end_inset
+
+按二进制码逆序排序，形成蝶形信号图的最底层。
+\end_layout
+
+\begin_layout Itemize
+然后按照蝶形图计算。每一层的偏移是上一层的两倍。
+\begin_inset Formula $j\text{的数目}*k\text{的数目}=N/2$
+\end_inset
+
+（
+\begin_inset Formula $1/2$
+\end_inset
+
+ 来自于奇偶组合）。
+\end_layout
+
+\begin_layout Itemize
+然后按照蝶形图不停地作奇偶组合。
+\begin_inset Formula $k$
+\end_inset
+
+ 表示第几组蝶形单元。
+\begin_inset Formula $j+k$
+\end_inset
+
+索引蝶形单元的上端，
+\begin_inset Formula $j+k+i$
+\end_inset
+
+索引蝶形单元的下端。
+\begin_inset Formula 
+\begin{align*}
+ & X(k):={\color{blue}G(k)}+{\color{red}W_{N}^{k}\cdot H(k)}=\sum_{r=0}^{N/2-1}{\color{blue}x(2r)\cdot W_{N/2}^{rk}}+W_{N}^{k}\cdot\sum_{r=0}^{N/2-1}{\color{red}x(2r+1)\cdot W_{N/2}^{rk}},\\
+ & X(k+\frac{N}{2})=G(k)-W_{N}^{k}\cdot H(k),\quad k=0,1,2,\cdots,N/2-1
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 三角插值
 \end_layout
@@ -6606,7 +8348,7 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-单位根
+单位根的性质
 \end_layout
 
 \begin_layout Standard
