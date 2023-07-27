@@ -8804,6 +8804,118 @@ K'\,\delta\phi_{j}=b'
 \end_layout
 
 \begin_layout Chapter
+几何算法
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "点是否在 三角形,凸多边形, 凹多边形,四面体内 的判断"
+target "https://www.cnblogs.com/sosi/p/4658694.html"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如何判断一个点在四面体的内部呢? 使用有向体积的概念.
+ 假设四面体的四个顶点的坐标为 (x1,y1,z1), (x2,y2,z2), (x3,y3,z3), (x4,y4,z4).
+ 需要判断的点为(x,y,z).
+ 那么原来四面体的有向体积 为
+\begin_inset Formula 
+\[
+V_{0}=\frac{1}{3!}\left[\begin{array}{cccc}
+x_{1} & y_{1} & z_{1} & 1\\
+x_{2} & y_{2} & z_{2} & 1\\
+x_{3} & y_{3} & z_{3} & 1\\
+x_{4} & y_{4} & z_{4} & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+同理剩下的
+\begin_inset Formula $4$
+\end_inset
+
+个有向体积
+\begin_inset Formula $V_{1}$
+\end_inset
+
+~
+\begin_inset Formula $V_{4}$
+\end_inset
+
+分别为：用 
+\begin_inset Formula $(x,y,z,1)$
+\end_inset
+
+ 分别代替第 
+\begin_inset Formula $1$
+\end_inset
+
+，
+\begin_inset Formula $2$
+\end_inset
+
+，
+\begin_inset Formula $3$
+\end_inset
+
+，
+\begin_inset Formula $4$
+\end_inset
+
+行。判断准则很简单, 
+\begin_inset Formula $V_{0}$
+\end_inset
+
+与
+\begin_inset Formula $V_{1}$
+\end_inset
+
+，
+\begin_inset Formula $V_{2}$
+\end_inset
+
+，
+\begin_inset Formula $V_{3}$
+\end_inset
+
+，
+\begin_inset Formula $V_{4}$
+\end_inset
+
+ 都同向的时候, 则点位于四面体内, 否则位于四面体外。 当 
+\begin_inset Formula $V_{i}=0$
+\end_inset
+
+ 的时候, 则子四面体退化。判断的原理是，
+\begin_inset Formula $3$
+\end_inset
+
+点形成一个面，第
+\begin_inset Formula $4$
+\end_inset
+
+个点位于面的不同侧时，有向体积的符号不一样。
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+lst = { {0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1} }; a = Transpose@Append[Trans
+pose@lst, ConstantArray[1, Length@lst]]; lst[[4]] = {0, 0, -1}; b = Transpose@Ap
+pend[Transpose@lst, ConstantArray[1, Length@lst]] {Det[a], Det[b]}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 泛函与弱形式
 \end_layout
 
