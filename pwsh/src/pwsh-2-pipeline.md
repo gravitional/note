@@ -2,17 +2,18 @@
 
 [about_Pipelines](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines)
 
-+ 简要说明
+## 简要说明
+
 在PowerShell中把命令组合成 `管道`(pipelines)
 
-+ 长描述
+## 长描述
 
 `管道` 是一系列由 `管道操作符`(`|`)(ASCII 124)连接的命令.
 每个 `管道运算符` 都会将前一命令的结果发送到下个命令.
 
-第一条命令的输出可以作为第二条命令的输入被送去处理.
+第一条命令的输出 可以作为 第二条命令的输入 被送去处理.
 而这个输出又可以被发送到另一个命令.
-结果是个复杂的 命令链 或 `pipeline `, 由一系列的简单命令组成.
+结果是个复杂的 `命令链` 或 `pipeline`, 由一系列的简单命令组成.
 比如说.:
 
 ```powershell
@@ -34,13 +35,14 @@ Get-Process notepad | Stop-Process
 ```
 
 第一条命令使用 `Get-Process` cmdlet来获取代表 `记事本进程` 的对象.
-然后使用管道操作符 `|` 将进程对象发送到 `Stop-Process` cmdlet, 从而停止记事本进程.
-注意, `Stop-Process` 命令没有指定进程的 `Name` 或 `ID` 参数,
+然后使用管道操作符 `|` 将进程对象发送到 `Stop-Process` cmdlet,
+从而停止记事本进程.
+注意, `Stop-Process` 命令无需指定进程的 `Name` 或 `ID` 参数,
 因为指定的进程是通过 `pipeline` 提交的.
 
-这个管道的例子获取当前目录中的文本文件,
+下面这个管道的例子 获取当前目录中的文本文件,
 只选择长度超过 `10,000` 字节的文件,
-按长度排序, 并在表格中显示每个文件的名称和长度:
+按 `长度` 排序, 并在表格中显示每个文件的名称和长度:
 
 ```powershell
 Get-ChildItem -Path *.txt |
@@ -61,8 +63,8 @@ Get-ChildItem -Path *.txt |
 Get-Service wmi | Start-Service
 ```
 
-在另一个例子中, 你可以把 `PowerShell` 注册表provider 中的 `Get-Item`
-或 `Get-ChildItem` 的输出 `pipe` 到 `New-ItemProperty` cmdlet.
+在另一个例子中, 你可以把 `PowerShell` 注册表provider 中的
+`Get-Item` 或 `Get-ChildItem` 的输出 `pipe` 到 `New-ItemProperty` cmdlet.
 这个例子为 `MyCompany` 注册表键 添加 新的注册表项 `NoOfEmployees`,
 其值为 `8124`.
 
@@ -73,7 +75,7 @@ Get-Item -Path HKLM:\Software\MyCompany |
 
 许多实用的 cmdlet, 如 `Get-Member`, `Where-Object`, `Sort-Object`,
 `Group-Object` 和 `Measure-Object`, 几乎只在管道中使用.
-你可以用管道将任何对象类型传送给这些cmdlets.
+你可以用管道将任何对象类型传送给这些 cmdlets.
 这个例子显示了如何按照每个进程 中 打开的句柄数量,
 对计算机上的所有进程进行排序.
 
@@ -82,7 +84,7 @@ Get-Process | Sort-Object -Property handles
 ```
 
 你可以用管道将对象输送到 `格式化`,  `export` 和 `output ` 类型的cmdlet,
-如 `Format-List`, Format-Table, Export-Clixml, Export-CSV和`Out-File`.
+如 `Format-List`, `Format-Table`, `Export-Clixml`, `Export-CSV` 和`Out-File`.
 这个例子显示了如何使用 `Format-List` cmdlet来显示一个进程对象的属性列表.
 
 ```PowerShell
@@ -108,62 +110,66 @@ PS> ipconfig.exe | Select-String -Pattern 'IPv4'
 经过一段时间的练习, 你会发现将简单的命令组合成管道可以节省时间和打字,
 并使你的脚本更有效率.
 
-## 管道如何工作
+## 管道的工作原理
 
-本节解释了输入对象如何与 cmdlet 参数绑定并在管道执行期间进行处理.
-接受管道输入
+本节解释了输入对象如何与 cmdlet 参数绑定, 并在管道执行期间进行处理.
 
-为了支持流水线, 接收的cmdlet必须有一个接受流水线输入的参数. 使用带有完整或参数选项的 Get-Help 命令来确定 cmdlet 的哪些参数接受管道输入.
+### 接受管道输入
 
-例如, 要确定Start-Service cmdlet的哪些参数接受管道输入, 请输入.
+为了支持 pipeline, 接收方的cmdlet必须有接受管道输入的参数.
+使用带有 `-Full` 或 `-Parameter` 选项的 Get-Help 命令,
+来确定 cmdlet 的哪些参数接受管道输入.
+
+例如, 要确定 `Start-Service` 的哪些参数接受管道输入, 请输入:
 
 ```PowerShell
 Get-Help Start-Service -Full
 # 或
-Get-Help Start-Service -Parameter *(参数).
+Get-Help Start-Service -Parameter *
 ```
 
-`Start-Service` cmdlet的帮助显示, 只有InputObject和Name参数接受管道输入.
+`Start-Service` cmdlet的帮助显示, 只有 `InputObject` 和 `Name` 参数接受管道输入.
 
-当你通过管道向 `Start-Service` 发送对象时, PowerShell会尝试将对象与InputObject和Name参数相关联.
+当你通过管道向 `Start-Service` 发送对象时, PowerShell 会尝试将对象与 `InputObject` 和 `Name` 参数相关联.
 
-## 接受管道输入的方法
+### 接受管道输入的方法
 
-Cmdlets参数可以以两种不同的方式之一接受管道输入.
+Cmdlets参数可以以两种不同的方式之一接受管道输入:
 
-+ `ByValue`. 该参数接受符合预期的.NET类型或可转换为该类型的值.
++ `ByValue`: 该参数接受符合预期的 `.NET` 类型, 或可转换为该类型的值.
+    例如, `Start-Service` 的Name参数接受管道输入的值.
+    它可以接受字符串对象或可以转换为字符串的对象.
 
-    例如, `Start-Service` 的Name参数接受管道输入的值. 它可以接受字符串对象或可以转换为字符串的对象.
++ `ByPropertyName`. 只有输入对象具有同名参数时, 该参数才接受输入.
+    例如, `Start-Service` 的 `Name` 参数可以接受具有 `Name` 属性的对象.
+    要列出一个对象的属性, 请把对象 管道给 `Get-Member`.
 
-+ `ByPropertyName`. 该参数只接受输入对象具有与该参数同名的属性时的输入.
+一些参数可以通过 `值` 或 `属性` 接受对象, 使之更容易从管道中获取输入.
 
-    例如, `Start-Service` 的Name参数可以接受具有Name属性的对象. 要列出一个对象的属性, 请用管道输入Get-Member.
-
-一些参数可以通过值或属性名称接受对象, 使之更容易从管道中获取输入.
-
-## 参数绑定
+### 参数绑定
 
 当你把对象从一个命令输送到另一个命令时,
 PowerShell会尝试把输送的对象与接收的cmdlet的一个参数联系起来.
 PowerShell 的参数绑定组件根据以下标准将输入对象与cmdlet参数联系起来.
 
-  该参数必须接受来自管道的输入.
-  该参数必须接受被发送对象的类型或可以转换为预期类型的类型.
-  该参数没有在命令中使用.
++ 该参数需要能够接收 来自管道的输入.
++ 该参数必须能够接收 被发送对象的类型, 或可以转换为预期类型的类型.
++ 该参数没有在命令中使用.
 
 例如, `Start-Service` cmdlet有许多参数, 但只有两个, `Name` 和 `InputObject` 接受管道输入.
 `Name` 参数接受字符串, `InputObject` 参数接受服务对象.
-因此, 你可以用管道输入字符串, `服务对象` 以及具有可转换为 字符串 或 服务对象 的属性的对象.
+因此, 你可以用管道输入字符串,
+`服务对象` 以及具有可转换为 字符串 或 服务对象 的属性的对象.
 
 PowerShell尽可能有效地管理参数绑定.
-你不能建议或强迫PowerShell绑定到一个特定的参数.
+你不能建议或强迫 PowerShell 绑定到一个特定的参数.
 如果PowerShell不能绑定管道对象, 则命令失败.
 
 有关排除绑定错误的更多信息, 请参阅本文后面的调查管道错误.
 
-## 逐一处理
+### 逐一处理
 
-将对象管道化到一个命令中, 很像使用命令的一个参数来提交对象.
+使用管道向命令传递对象, 很像使用命令的参数来提交对象.
 让我们看看一个管道的例子. 在这个例子中,
 我们用一个管道来显示一个服务对象的表格.
 
@@ -186,16 +192,18 @@ Format-Table -InputObject (Get-Service) -Property Name, DependentServices
 ```
 
 然而, 有一个重要的区别. 当你用管道将多个对象输送到一个命令时,
-PowerShell会将对象一个一个地发送到命令中. 当你使用一个命令参数时,
-这些对象会作为一个单一的数组对象被发送. 这个微小的差别有很大的影响.
+PowerShell会将对象 `逐个地` 发送到命令中.
+当你使用命令参数时, 这些对象会作为 `单一的数组` 对象被整体发送.
+这个微小的差别有很大的影响.
 
 当执行管道时, PowerShell会自动枚举任何实现IEnumerable接口的类型,
 并通过管道一个一个地发送成员.
 但 `[hashtable]` 是个例外, 它需要调用 `GetEnumerator()` 方法.
 
-在下面的例子中, 一个数组和一个hashtable被输送到Measure-Object cmdlet,
+在下面的例子中, 数组 和 hashtable 被输送到 Measure-Object cmdlet,
 以计算从管道收到的对象的数量.
-数组有多个成员, 而hashtable有多个键值对. 每次只对数组进行枚举.
+数组有多个成员, 而hashtable有多个键值对.
+只对数组进行 逐个遍历.
 
 ```PowerShell
 @(1,2,3) | Measure-Object
@@ -231,9 +239,9 @@ Handles   AliasProperty  Handles = Handlecount
 >注意事项
 >Get-Member可以消除重复, 所以如果对象都是同一类型, 它只显示一种对象类型.
 
-然而, 如果你使用Get-Member的InputObject参数,
+然而, 如果你使用 `Get-Member` 的InputObject参数,
 那么Get-Member会接收一个System.Diagnostics.Process对象的数组作为一个单元.
-它显示一个数组对象的属性. (注意System.Object类型名称后面的数组符号([])).
+它显示一个数组对象的属性. (注意System.Object类型名称后面的数组符号(`[]`)).
 比如说
 
 ```PowerShell
@@ -248,22 +256,25 @@ Clone              Method        System.Object Clone()
 ```
 
 这个结果可能不是你想的那样. 但是在你理解之后, 你可以使用它.
-例如, 所有数组对象都有一个Count属性. 你可以用它来计算计算机上运行的进程的数量.
-比如说.
+例如, 所有数组对象都有一个Count属性.
+你可以用它来计算计算机上运行的进程的数量. 比如说.
 
 ```PowerShell
 (Get-Process).count
 ```
 
-重要的是要记住, 在管道中发送的对象是一次一个的.
+重要的是要记住, 在管道中发送的对象是 `一次一个` 的.
 
 ## 在管道中使用本地命令
 
-PowerShell允许你在管道中包含本地外部命令. 然而, 需要注意的是, PowerShell的管道是面向对象的, 不支持原始字节数据.
+PowerShell允许你在管道中包含本地外部命令.
+然而, 需要注意的是, PowerShell的管道是面向对象的, 不支持原始字节数据.
 
-从输出原始字节数据的本地程序中输送或重定向输出, 会将输出转换为.NET字符串. 这种转换可能导致原始数据输出的损坏.
+从输出原始字节数据的本地程序中输送或重定向输出, 会将输出转换为.NET字符串.
+这种转换可能导致原始数据输出的损坏.
 
-作为一种变通方法, 使用cmd.exe /c或sh -c调用本地命令, 并使用本地shell提供的|和>操作.
+作为一种变通方法, 使用 `cmd.exe /c` 或 `sh -c` 调用本地命令,
+并使用本地shell提供的 `|` 和 `>` 操作.
 
 ## 调查管道错误
 
@@ -380,10 +391,10 @@ Get-Item -Path HKLM:\Software\MyCompany\design |
 Move-ItemProperty -Destination HKLM:\Software\MyCompany\sales -Name product
 ```
 
-## 本质上的行延续
+## 内部行延续
 
-正如已经讨论过的, 流水线是由流水线操作符(|)连接的一系列命令, 通常写在一行. 
-然而, 为了可读性, PowerShell允许你将流水线分成多行. 
+正如已经讨论过的, 流水线是由流水线操作符(|)连接的一系列命令, 通常写在一行.
+然而, 为了可读性, PowerShell允许你将流水线分成多行.
 当管道操作符是该行的最后一个标记时, PowerShell解析器会将下一行与当前命令连接起来, 继续构建管道.
 例如, 下面的单行管道.
 
