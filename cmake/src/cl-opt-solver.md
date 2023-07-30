@@ -564,25 +564,23 @@ float_control, fenv_access 和 fp_contract.
 /utf-8
 
 备注
-可以使用 /utf-8 选项指定源字符集和执行字符集, 并使用 UTF-8 编码.
+可以使用 `/utf-8` 选项指定 `源字符集` 和 `执行字符集`, 并使用 `UTF-8` 编码.
 这等同于在命令行中指定 `/source-charset:utf-8 /execution-charset:utf-8`.
-默认情况下, 这些选项中的任何一个也会启用 /validate-charset 选项.
+默认情况下, 这些选项中的任何一个也会启用 `/validate-charset` 选项.
 有关支持的代码页标识符和字符集名称列表, 请参阅代码页标识符.
 
-默认情况下, Visual Studio 会检测字节序标记, 以确定源文件是否为 Unicode 编码格式, 例如 UTF-16 或 UTF-8.
+默认情况下, Visual Studio 会检测字节序标记, 以确定源文件是否为 `Unicode` 编码格式, 例如 `UTF-16` 或 `UTF-8`.
 如果找不到字节序标记, 它就会假定源文件是以当前用户代码页编码的,
-除非你使用/utf-8或/source-charset选项指定了代码页.
-Visual Studio 允许你以多种字符编码中的任何一种保存 C++ 源代码. 有关源代码和执行字符集的信息, 请参阅语言文档中的字符集.
+除非你使用 `/utf-8` 或 `/source-charset` 选项指定了代码页.
+Visual Studio 允许你以多种字符编码中的任何一种保存 C++ 源代码.
+有关源代码和执行字符集的信息, 请参阅语言文档中的字符集.
 
 在 Visual Studio 中或通过编程设置该选项
 要在 Visual Studio 开发环境中设置此编译器选项
 打开项目属性页对话框. 有关更多信息, 请参阅在 Visual Studio 中设置 C++ 编译器和构建属性.
 
 选择配置属性 > C/C++ > 命令行属性页.
-
 在 "附加选项 "中, 添加 /utf-8 选项以指定首选编码.
-
 选择 "确定 "保存更改.
-
 要以编程方式设置该编译器选项
 请参见 AdditionalOptions.
