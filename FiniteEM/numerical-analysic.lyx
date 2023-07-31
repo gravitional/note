@@ -6401,16 +6401,13 @@ x=F_{n}^{-1}\,y
 
 \begin_layout Lemma
 \noindent
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-10.4
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:10.4"
 
 \end_inset
 
- 设
+设
 \begin_inset Formula $\{y_{k}\}$
 \end_inset
 
@@ -6427,7 +6424,7 @@ status open
 \end_inset
 
 为实数；（b）
-\begin_inset Formula $y_{n-k}=\overline{y}_{k}$
+\begin_inset Formula $y_{n-k}=y_{k}^{*}$
 \end_inset
 
 ，
@@ -8279,11 +8276,551 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+DFT可以用来做插值，它的输入是均匀分布的样本点，通过DFT变换得到的输出向量
+\begin_inset Formula $y$
+\end_inset
+
+就是插值的系数。
+\end_layout
+
+\begin_layout Subsection
 DFT插值定理
 \end_layout
 
 \begin_layout Standard
-三角插值函数的效率
+设 
+\begin_inset Formula $[c,d]$
+\end_inset
+
+ 为插值区间，
+\begin_inset Formula $n$
+\end_inset
+
+为正整数。定义 
+\begin_inset Formula $\Delta t=(d-c)/n$
+\end_inset
+
+ 以及 
+\begin_inset Formula $t_{j}=c+j\Delta t$
+\end_inset
+
+ ，其中
+\begin_inset Formula $j=0,\cdots,n-1$
+\end_inset
+
+ 是插值区间上的均匀划分（注意不包括右端点
+\begin_inset Formula $d$
+\end_inset
+
+）。向量
+\begin_inset Formula $x$
+\end_inset
+
+为傅立叶变换的输入，
+\begin_inset Formula $x_{j}$
+\end_inset
+
+可以理解为信号的第
+\begin_inset Formula $j$
+\end_inset
+
+个分量。例如，我们可以把
+\begin_inset Formula $x$
+\end_inset
+
+想象成一系列的测量，每个
+\begin_inset Formula $x_{j}$
+\end_inset
+
+都测量一个离散的采样点
+\begin_inset Formula $t_{j}$
+\end_inset
+
+，如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:10.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/NA-10.4.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+向量
+\begin_inset Formula $x$
+\end_inset
+
+看成时间序列。通过傅立叶变换可以用三角函数多项式对其进行插值
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:10.4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & F_{n}=\frac{1}{\sqrt{n}}\left[\begin{array}{cc}
+\omega^{0} & \omega^{0}\\
+\omega^{0} & \omega^{1}
+\end{array}\right],\quad\omega=e^{-i2\pi/n}\\
+ & F_{n}^{-1}=\frac{1}{\sqrt{n}}\left[\begin{array}{cc}
+\omega^{0} & \omega^{0}\\
+\omega^{0} & \omega^{-1}
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+DFT插值定理
+\end_layout
+
+\end_inset
+
+给定区间
+\begin_inset Formula $[c,d]$
+\end_inset
+
+和正整数
+\begin_inset Formula $n$
+\end_inset
+
+，令
+\begin_inset Formula $t_{j}=c+j(d-c)/n$
+\end_inset
+
+， 
+\begin_inset Formula $j=0,\cdots,n-1$
+\end_inset
+
+，令 
+\begin_inset Formula $x=(x_{0},\cdots,x_{n-1})$
+\end_inset
+
+是一个
+\begin_inset Formula $n$
+\end_inset
+
+维向量。
+\begin_inset Formula $\vec{a}+\vec{b}i=F_{n}x$
+\end_inset
+
+，其中 
+\begin_inset Formula $F_{n}$
+\end_inset
+
+是离散傅立叶变换矩阵。则复函数
+\begin_inset Formula 
+\[
+Q(t)=\frac{1}{\sqrt{n}}\sum_{k=0}^{n-1}\left(a_{k}+ib_{k}\right)e^{i2\pi\,{\color{red}k}\,(t-c)/(d-c)}
+\]
+
+\end_inset
+
+满足
+\begin_inset Formula $Q(t_{j})=x_{j}$
+\end_inset
+
+，
+\begin_inset Formula $j=0,\cdots,n-1$
+\end_inset
+
+。并且若
+\begin_inset Formula $x_{j}$
+\end_inset
+
+为实数，则实数函数
+\begin_inset Formula 
+\[
+P_{n}(t)=\frac{1}{\sqrt{n}}\sum_{k=0}^{n-1}\left(a_{k}\cos\frac{2\pi k\,(t-c)}{d-c}-b_{k}\sin\frac{2\pi k\,(t-c)}{d-c}\right)
+\]
+
+\end_inset
+
+满足 
+\begin_inset Formula $D(t_{j})=x_{j}$
+\end_inset
+
+，
+\begin_inset Formula $j=0,\cdots,n-1$
+\end_inset
+
+。下标
+\begin_inset Formula $n$
+\end_inset
+
+表示三角插值公式中的项数（从零开始），有时可以把
+\begin_inset Formula $P_{n}$
+\end_inset
+
+称为
+\begin_inset Formula $n$
+\end_inset
+
+阶三角函数。
+\end_layout
+
+\begin_layout Itemize
+引理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:10.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+：设
+\begin_inset Formula $\{y_{k}\}$
+\end_inset
+
+是
+\begin_inset Formula $\{x_{j}\}$
+\end_inset
+
+的DFT，其中
+\begin_inset Formula $x_{j}$
+\end_inset
+
+是实数，则有(a) 
+\begin_inset Formula $y_{0}$
+\end_inset
+
+为实数；（b）
+\begin_inset Formula $y_{n-k}=y_{k}^{*}$
+\end_inset
+
+，
+\begin_inset Formula $k=1,\cdots,n-1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+和下面的引理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:10.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以进一步简化插值函数
+\begin_inset Formula $P_{n}(t)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:10.7"
+
+\end_inset
+
+设
+\begin_inset Formula $t=j/n$
+\end_inset
+
+，其中
+\begin_inset Formula $j$
+\end_inset
+
+和
+\begin_inset Formula $n$
+\end_inset
+
+为整数。另取一整数
+\begin_inset Formula $k$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\begin{equation}
+\cos2\pi\left(n-k\right)t=\cos2\pi\,kt,\quad\sin2\pi\left(n-k\right)t=-\sin2k\pi t\label{eq:10.18}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:10.8"
+
+\end_inset
+
+对偶数
+\begin_inset Formula $n$
+\end_inset
+
+，令
+\begin_inset Formula $t_{j}=c+j(d-c)/n$
+\end_inset
+
+， 
+\begin_inset Formula $j=0,\cdots,n-1$
+\end_inset
+
+，令 
+\begin_inset Formula $x=(x_{0},\cdots,x_{n-1})$
+\end_inset
+
+是
+\begin_inset Formula $n$
+\end_inset
+
+维实数向量。定义
+\begin_inset Formula $\sbf a+\sbf bi=F_{n}x$
+\end_inset
+
+，其中
+\begin_inset Formula $F_{n}$
+\end_inset
+
+为DFT，则以下方程
+\begin_inset Formula 
+\begin{equation}
+P_{n}(t)=\frac{1}{\sqrt{n}}\left[a_{0}+2\sum_{k=1}^{n/2-1}\left(a_{k}\cos\frac{2\pi k(t-c)}{d-c}-b_{k}\sin\frac{2\pi k(t-c)}{d-c}\right)+a_{n/2}\cos\frac{\pi n(t-c)}{d-c}\right]\label{eq:10.19}
+\end{equation}
+
+\end_inset
+
+满足
+\begin_inset Formula $P_{n}(t_{j})=x_{j}$
+\end_inset
+
+，
+\begin_inset Formula $j=0,\cdots,n-1$
+\end_inset
+
+。对奇数
+\begin_inset Formula $n$
+\end_inset
+
+有
+\begin_inset Formula 
+\[
+P_{n}(t)=\frac{1}{\sqrt{n}}\left[a_{0}+2\sum_{k=1}^{(n-1)/2}\left(a_{k}\cos\frac{2\pi k(t-c)}{d-c}-b_{k}\sin\frac{2\pi k(t-c)}{d-c}\right)\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+例如
+\begin_inset Formula $n$
+\end_inset
+
+为偶数，
+\begin_inset Formula $a_{n/2}$
+\end_inset
+
+恰好是中间项，
+\begin_inset Formula $0$
+\end_inset
+
+为求和项，
+\begin_inset Formula $1\sim n/2-1$
+\end_inset
+
+为正频项，
+\begin_inset Formula $n/2+1\sim n-1$
+\end_inset
+
+为负频项。
+\begin_inset Formula $P_{n}(t)$
+\end_inset
+
+的后半部分，根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:10.18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相当于做替换
+\begin_inset Formula 
+\[
+2\left(n-k\right)\pi t\Rightarrow-2k\pi t
+\]
+
+\end_inset
+
+即频率加上负号，所以被称为负频项。
+\color red
+正频项是从小到大
+\color inherit
+
+\begin_inset Formula 
+\[
+\omega,\quad2\omega,\;\cdots,\;(\frac{n}{2}-1)\omega,\quad\pi
+\]
+
+\end_inset
+
+
+\color red
+负频项的绝对值是从大到小
+\color inherit
+，越靠近中心项，频率绝对值越高，
+\begin_inset Formula 
+\[
+-(\frac{n}{2}-1)\omega,\quad-(\frac{n}{2}-2)\omega,\;\cdots,\;-2\omega,\quad-\omega
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\omega=2\pi/n$
+\end_inset
+
+。对于实数序列
+\begin_inset Formula $x$
+\end_inset
+
+，系数则满足 
+\begin_inset Formula $y_{n-k}=y_{k}^{*}$
+\end_inset
+
+（复共轭）。
+\end_layout
+
+\begin_layout Subsection
+三角插值函数的高效计算
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cor:10.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中明确给出了三角插值的公式。在数值上，为了计算多个离散点对儿，可以直接使用DFT变换替代
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:10.19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的正弦和余弦函数。当输入点数目为
+\begin_inset Formula $n$
+\end_inset
+
+个，为了将其扩充到
+\begin_inset Formula $p\ge n$
+\end_inset
+
+个，可以在逆变换之前，先把系数通过填零扩充到
+\begin_inset Formula $p$
+\end_inset
+
+个。也就是
+\begin_inset Formula 
+\begin{equation}
+P_{n}(t)=\frac{\sqrt{p/n}}{\sqrt{p}}\left[a_{0}+2\sum_{k=1}^{n/2-1}\left(a_{k}\cos\frac{2\pi k(t-c)}{d-c}-b_{k}\sin\frac{2\pi k(t-c)}{d-c}\right)+a_{n/2}\cos\frac{\pi n(t-c)}{d-c}\right]\label{eq:10.21}
+\end{equation}
+
+\end_inset
+
+其中对于 
+\begin_inset Formula $k=n/2+1,\cdots,p/2$
+\end_inset
+
+，
+\begin_inset Formula $a_{k}=b_{k}=0$
+\end_inset
+
+。也就是说，考虑到归一化，在逆变换之前，要先对数据乘上 
+\begin_inset Formula $\sqrt{p/n}$
+\end_inset
+
+。由于 Matlab FFT 接口在 DFT 时未进行归一化（公共系数为
+\begin_inset Formula $1$
+\end_inset
+
+），而IDFT 的系数为
+\begin_inset Formula $1/n$
+\end_inset
+
+。可以知道若使用 Matlab 接口
+\begin_inset Formula 
+\begin{equation}
+\mathrm{IDFT}\cdot\mathrm{DFT}\cdot x\Rightarrow F_{p}^{-1}\,\sqrt{\frac{p}{n}}\,F_{n}\,x\Rightarrow\frac{p}{n}\cdot\mathrm{ifft}_{[p]}\cdot\mathrm{fft}_{[n]}.\label{eq:10.22}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
