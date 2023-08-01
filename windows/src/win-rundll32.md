@@ -46,8 +46,8 @@ BOOLEAN SetSuspendState(
 `[in] bForce`; 此参数无效.
 
 `[in] bWakeupEventsDisabled`
-如果该参数为 `TRUE`, 系统将禁用所有唤醒事件.
-如果该参数为 `FALSE`, 任何系统唤醒事件都将保持启用状态.
+如果该参数为 `TRUE`, 系统将禁用所有 唤醒事件.
+如果该参数为 `FALSE`, 启用 任何系统唤醒事件.
 
 ### 返回值
 
