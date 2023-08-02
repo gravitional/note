@@ -122,3 +122,4 @@ ActiveX DLL 用的 `.ocx` 还有各种驱动使用的各种扩展名.
 
 [演练: 创建并使用静态库](https://learn.microsoft.com/zh-cn/cpp/build/walkthrough-creating-and-using-a-static-library-cpp)
 [演练: 创建和使用自己的动态链接库 (C++)](https://learn.microsoft.com/zh-cn/cpp/build/walkthrough-creating-and-using-a-dynamic-link-library-cpp?view=msvc-170)
+[导入和导出](https://learn.microsoft.com/zh-cn/cpp/build/importing-and-exporting?view=msvc-170)
