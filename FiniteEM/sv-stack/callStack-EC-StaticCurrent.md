@@ -17,6 +17,12 @@ main(int argc, char* argv[]);
             memTracker()->SnapShot("CreateModel"); //分析内存
             unique_ptr<ModelCreator> creator(ModelCreator::New(solver));// 创建求解器, 通过 RuntimeSelection 机制, solver
             creator->Create(); // 创建网格和模型, /Common/Model/ModelCreator.cpp
+                SetFieldInfo(); // ovride 创建 sub场单位制
+                LoadSharedLibrary();// 导入其他共享库
+                LoadParserPackage(); // 导入 表达式函数 解析库
+                ReadGlobalInfo(); // 创建全局信息
+                    anlsCtrl()->Read(); // 读取用户指定 输出的sub场
+                    constant()->Read(); // 读取用户设置的常数，标量或矢量
                 CreateMesh(); // 创建网格
                 CreateModel(); //创建模型 /FiniteElement/Model/FeModelCreator.cpp
                     CreateFunction(); //读取自定义函数
