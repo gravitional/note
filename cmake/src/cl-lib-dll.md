@@ -122,4 +122,63 @@ ActiveX DLL 用的 `.ocx` 还有各种驱动使用的各种扩展名.
 
 [演练: 创建并使用静态库](https://learn.microsoft.com/zh-cn/cpp/build/walkthrough-creating-and-using-a-static-library-cpp)
 [演练: 创建和使用自己的动态链接库 (C++)](https://learn.microsoft.com/zh-cn/cpp/build/walkthrough-creating-and-using-a-dynamic-link-library-cpp?view=msvc-170)
+
+[MFC 扩展 DLL: 概述](https://learn.microsoft.com/zh-cn/cpp/build/extension-dlls-overview?view=msvc-170)
+[DUMPBIN 参考](https://learn.microsoft.com/zh-cn/cpp/build/reference/dumpbin-reference?view=msvc-170)
+
 [导入和导出](https://learn.microsoft.com/zh-cn/cpp/build/importing-and-exporting?view=msvc-170)
+
+[使用 __declspec(dllimport) 导入到应用程序中](https://learn.microsoft.com/zh-cn/cpp/build/importing-into-an-application-using-declspec-dllimport?view=msvc-170)
+[将可执行文件链接到 DLL](https://learn.microsoft.com/zh-cn/cpp/build/linking-an-executable-to-a-dll?view=msvc-170#determining-which-linking-method-to-use)
+
+[从 DLL 导出](https://learn.microsoft.com/zh-cn/cpp/build/exporting-from-a-dll?view=msvc-170)
+[使用 DEF 文件从 DLL 导出](https://learn.microsoft.com/zh-cn/cpp/build/exporting-from-a-dll-using-def-files?view=msvc-170)
+[使用 __declspec(dllexport) 从 DLL 导出](https://learn.microsoft.com/zh-cn/cpp/build/exporting-from-a-dll-using-declspec-dllexport?view=msvc-170)
+[导出 C++ 函数以用于 C 语言可执行文件](https://learn.microsoft.com/zh-cn/cpp/build/exporting-cpp-functions-for-use-in-c-language-executables?view=msvc-170)
+
+使用由 `DLL 定义的公共符号` 的程序被称为 `导入` 这些符号.
+(A program that uses public symbols defined by a DLL is said to import them)
+
+## EXPORTS 宏
+
+[CMake adds -Dlibname_EXPORTS compile definition](https://stackoverflow.com/questions/27429732/cmake-adds-dlibname-exports-compile-definition)
+[通过CMake生成链接动态库并导入](https://blog.csdn.net/qq_23918781/article/details/107487875)
+
+cmake 仅为 `共享库`(SHARED) 添加 `<libname>_EXPORTS` 宏.
+
+当在 Windows DLL 中导出 API 时, 它非常有用.
+
+```c++
+#if defined(_WINDOWS) && defined(testlib_EXPORTS)
+#   define API_DLL extern "C" __declspec(dllexport)
+#else
+#   define API_DLL
+#endif
+
+API_DLL void foo();
+```
+
+将 `target` 的 `DEFINE_SYMBOL` 属性设置为空, 就可以禁用它.
+
+```c++
+# 禁用 <libname>_EXPORTS
+set_target_properties(sharedlib
+  PROPERTIES
+  DEFINE_SYMBOL ""
+  )
+```
+
+### DEFINE_SYMBOL
+
+[DEFINE_SYMBOL](https://cmake.org/cmake/help/latest/prop_tgt/DEFINE_SYMBOL.html)
+
+在编译该目标 源代码 时定义一个符号.
+
+`DEFINE_SYMBOL` 设置在编译 共享库 中的 源代码 时定义的 `预处理器符号` 名称.
+如果未在此处设置, 则默认设置为 `target_EXPORTS`(如果目标不是有效的 C 标识符, 则会进行一些替换).
+这对头文件很有用, 可以知道它们是被包含在 库内部(编译 dll) 还是 外部(被他人使用),
+以便在 Windows 上正确设置 `dllexport/dllimport` 装饰.
+
+在 POSIX 平台上, 可选择使用此功能来控制 符号的可见性.
+
+CMake 通过 `GenerateExportHeader` 模块为此类装饰提供支持.
