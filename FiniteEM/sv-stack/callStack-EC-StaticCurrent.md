@@ -38,10 +38,13 @@ main(int argc, char* argv[]);
                         CreateInfo(data); // 生成全局参数
                             data.ReadValue("Thickness2D"...) // 厚度, json
                             data.ReadValue("Sector"...) // 模型分数, json
+                        CreateModelInfo(data)
                         CreateConstraint(data) // 生成约束, 即边界条件,  json
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
+                        CreateETrodeCache(data)// 点击物理量缓存
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         //迭代分析类型, 读取 conrol 的分析节点, json
+                        AnalysisBase *analysis = NewAnalysis(type); // 创建分析
                         analysis->Read(); // 动态多态, 转向 AnalysisFe::Read()
                             auto reader=controlReader(); // control.json 单例
                             auto job =NewJob(); //任务工厂方法
@@ -56,7 +59,7 @@ main(int argc, char* argv[]);
                                 "Load" //  激励, json
                                 "PostAnalysis" // 后处理, json
                                 int id=model()->AddComponentGenID(_PostAnalysis); // 添加后处理分析任务
-                        anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
+                        anlsCtrl()->AddAnalysis(analysis) // 添加到分析队列末尾
                             //非续算时清空独立计时器
                             //清空当前分析的标记 _flags
                             //设置新的变量输出
@@ -72,7 +75,16 @@ main(int argc, char* argv[]);
                         CreateElementList(); // 生成单元列表
                         RemoveOtherRankComponent(); //删除其他MPI 节点上的对象
                         globalInfo()->SetDouble("Penalty",1e60)// 罚系数确定
-                        WriteGeoInfo(); //写出网格信息
+                        WriteGeoInfo(); //写出网格信息. // FeModelCreator.cpp
+                            writer->Initialize();
+                                //----------------- hdf5 // FieldWriterFe.cpp
+                                WriteTreatment(); // 场值的变换
+                                WriteMaterial(); // 写出材料
+                                //----------------- ensight
+                                SetInfo();
+                                SetGeoData();
+                                SetBlockData();
+                                
 
             memTracker()->SnapShot("CreateModel"); //分析内存,
 

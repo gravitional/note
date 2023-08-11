@@ -66,3 +66,19 @@ cmake --build . --verbose
 >启用详细输出(如果支持), 包括要执行的编译命令.
 >如果设置了 `VERBOSE` 环境变量或 `CMAKE_VERBOSE_MAKEFILE` 缓存变量,
 >则可以省略此选项.
+
+## 向CMake添加命令行选项
+
+[Adding command line options to CMake](https://stackoverflow.com/questions/5998186/adding-command-line-options-to-cmake)
+
+配置文件中的 option 对应于命令行选项 `-D`;
+
+```bash
+//CMakeLists.txt
+option(MyOption "MyOption" OFF)
+
+//Command line
+cmake -DMyOption=ON MyProjectFolder
+```
+
+注意为了保证生效, `-DMyOption` 必须添加在路径前面.
