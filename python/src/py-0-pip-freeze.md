@@ -35,3 +35,8 @@ pip download -d zips -r requirements.txt
 ```bash
 pip install --no-index --find-links=zips -r requirements.txt
 ```
+
+## pip wheel 包
+
+[python wheel 安装包的制作与安装](https://zhuanlan.zhihu.com/p/354110980)
+[python库打包分发setup.py编写指南](http://www.coolpython.net/python_senior/project/op_py_setup_install.html)

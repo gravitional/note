@@ -38,6 +38,28 @@ MSBuild.exe MyProject.proj -t:rebuild
 msbuild SlnFolders.sln -t:NotInSolutionfolder:Rebuild;NewFolder\InSolutionFolder:Clean
 ```
 
+### 重新构建, Rebuild, Clean
+
+例如解决方案为 `Test.sln`, 项目为 `test`,
+在命令行中, 注意转义 `:` 符号
+
+```powershell
+# 执行解决方案的 Clean 目标
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:Clean'
+# 执行解决方案的 test 目标的 子目标
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test' # 默认执行 Build 目标
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test:Clean' # 指定目标为 Clean
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test:Rebuild' # 指定目标为 Rebuild
+```
+
+想要确定有哪些可选目标, 可以使用 `msbuild` 的调试模式,
+通过设定环境变量 `$env:MSBUILDEMITSOLUTION=1`.
+一般都会有 `Build`, `Clean`, `Rebuild`, `Publish`.
+
+```powershell
+$env:MSBUILDEMITSOLUTION=1;msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test'
+```
+
 ## Arguments
 
 参数 描述
