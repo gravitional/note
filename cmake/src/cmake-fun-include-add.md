@@ -258,6 +258,8 @@ add_definitions(-DFOO -DBAR ...)
 
 ## add_subdirectory()
 
+[add_subdirectory](https://cmake.org/cmake/help/latest/command/add_subdirectory.html)
+
 在 `build` 中添加一个 `子目录`.
 
 ```cmake
@@ -266,13 +268,12 @@ add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL] [SYSTEM])
 
 在构建中添加 `子目录`.
 `source_dir` 指定了源 `CMakeLists.txt` 和 `代码文件` 所在的目录.
-如果它是 `相对路径`, 它将被计算为与当前目录有关(典型用法), 但它也可以是 `绝对路径`.
+如果它是 `相对路径`, 它将相对于 `当前目录` 计算(典型用法), 但它也可以是 `绝对路径`.
 
-`binary_dir` 指定了放置输出文件的目录. 如果它是相对路径,
-它将被计算为与当前输出目录有关, 但它也可以是绝对路径.
+`binary_dir` 指定了放置 `输出文件` 的目录. 
+如果它是相对路径, 它将相对于 `当前目录` 计算, 但它也可以是绝对路径.
 
-如果没有指定 `binary_dir`, 在扩展任何相对路径之前,
-将使用 `source_dir` 的值(典型用法).
+如果没有指定 `binary_dir`, 在扩展任何相对路径之前, 将使用 `source_dir` 的值(典型用法).
 在当前 `输入文件`(父目录 CMakeList.txt) 的处理进行到 `add_subdirectory`命令时,
 CMake 将立即处理指定目录中的 `CMakeLists.txt` 文件,
 接着再处理父目录 CMakeList.txt 中`add_subdirectory` 后面的语句.
@@ -289,6 +290,7 @@ CMake 将立即处理指定目录中的 `CMakeLists.txt` 文件,
 如果父项目构建的目标依赖于子目录中的目标,
 被依赖的目标将被包含在父项目的 `构建系统` 中以满足 `依赖关系`.
 
+>New in version 3.25:
 如果提供了 `SYSTEM` 参数, 子目录的 `SYSTEM 目录属性` 将被设置为真.
 这个属性被用来初始化, 在该 `子目录下`创建的每个 target 的 `SYSTEM属性`.
 在编译 consumers 时, `SYSTEM` 设置为 `true` 的 target 的 `include目录` 将被视为 `SYSTEM`.

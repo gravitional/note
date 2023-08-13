@@ -73,9 +73,8 @@ $ make VERBOSE=1
 ## Windows C++ 11标志
 
 [c++11 - Windows Makefile中的cl选项是否接受-std=c++11标志](https://www.coder.work/article/6207443)
-[/std (Specify Language Standard Version]: https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-170
 
-请参见 [/std (Specify Language Standard Version][],
+请参见 [/std (Specify Language Standard Version)][],
 `cl` 仅接受选项
 
 + `/std:c++14`
@@ -86,3 +85,5 @@ $ make VERBOSE=1
 + `/std:c17`
 
 默认情况下已启用 `C++11` 功能.
+
+[/std (Specify Language Standard Version)]: https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-170

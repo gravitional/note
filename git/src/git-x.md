@@ -355,6 +355,54 @@ git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
 + 通过使用`--ours`或`--theirs`, 可以从`index` 中检查出, 合并的特定一方的内容.
 + 使用`-m`, 对`工作树`文件所做的修改可以被丢弃, 以重新创建原先产生冲突(conflicted)的合并结果.
 
+### 描述
+
+更新 `工作树` 中的文件, 使其与 `index` 或指定树中的版本一致.
+如果没有给出 `pathspec`, `git checkout` 也会更新 `HEAD`, 将指定的 `分支` 设为 `当前分支`.
+
+#### `git checkout [<branch>]`
+
++ 要准备在 `<branch>` 上工作, 需要更新 索引 和 工作树 中的文件,
+并将 HEAD 指向该分支, 从而切换到该分支.
+对 工作树 中文件的本地修改将被保留, 以便提交到 `<branch>`.
+
++ 如果找不到 `<branch>`, 但正好有一个远端(就叫它 `<remote>`)存在名称匹配的 跟踪分支(tracking branch),
+且未指定 `--no-guess`, 则处理方式等同于
+
+```bash
+git checkout -b <branch> --track <remote>/<branch>
+```
+
++ 另一方面, 您可以省略 `<branch>`, 在这种情况下, 命令会退化为 `签出当前分支`,
+这是费力不讨好地显示当前分支的 `跟踪信息`(如果存在的话).
+
+#### `git checkout -b|-B <new_branch> [<start point>]`
+
+指定 `-b` 会创建一个新分支, 就像调用 `git-branch(1)` 然后 检出 一样.
+在这种情况下, 你可以使用 `--track` 或 `--no-track` 选项, 它们将被传递给 `git branch`.
+为方便起见, `--track`(不含 `-b`)意味着 创建新分支;参见下文对 `--track` 的描述.
+
+如果给定了 `-B`, `<new_branch>` 如果不存在, 就会被创建;否则, 就会被重置.
+这相当于
+
+```bash
+git branch -f <branch> [<start point>]
+git checkout <branch>
+```
+
+也就是说, 除非 `git checkout` 成功, 否则不会重置/创建分支.
+
+#### `git checkout --detach [<branch>]`
+
+`git checkout [--detach] <commit>`
+
+准备在 `<commit>` 上工作, 在其上分离 HEAD(参见 `DETACHED HEAD` 部分), 并更新索引和工作树中的文件.
+对 工作树 中文件的本地修改将被保留, 因此生成的 工作树 将是 `commit`的状态加上 本地修改.
+
+当 `<commit>` 参数是 `branch` 名时, 可以使用 `--detach` 选项来 将 `HEAD` 与 `分支顶端` 分离.
+(`git checkout <branch>` 会检出该分支, 但不分离 `HEAD`).
+省略 `<branch>` 则会在当前分支的顶端分离 `HEAD`.
+
 #### detached
 
 [DETACHED HEAD](https://git-scm.com/docs/git-checkout#_detached_head)
@@ -697,7 +745,7 @@ To https://github.com/schacon/simplegit
 git push [远程仓库] --delete [branchname]
 ```
 
-## 创建新分支
+## 创建新分支, git checkout -b
 
 `git checkout -b|-B <new_branch> [<start point>]`
 
@@ -708,18 +756,25 @@ git push [远程仓库] --delete [branchname]
 
 ### `git checkout`,`-t, --track`
 
-当创建新分支的时候, 自动设置上游. 如果`-b` 选项没有给出, 本地分支的名字会从 `remote-tracking branch` 推导. `git` 先查看本地中远程的 `refspec` , 然后把前面的初始部分去掉.
-也就是说, 如果远程名字是`origin/hack` (or `remotes/origin/hack`, 或者是`refs/remotes/origin/hack`),
-新的本地分支就叫做 `hack` , 如果查询到的名称中没有 `slash` (`/`), 或者上面的猜测得到一个空字符串, 那么猜测就会停止,
-你可以用 `-b` 选项手动指定一个名字.
+当创建新分支的时候, 自动设置上游.
+如果`-b` 选项没有给出, 本地分支的名字会从 远程跟踪分支(remote-tracking branch) 推导.
+`git` 先查看本地中配置的远程信息 `refspec` , 然后去掉 `*` 之前的初始部分.
+也就是说, 如果远程名字是`origin/hack`(or `remotes/origin/hack`, or `refs/remotes/origin/hack`),
+新的本地分支就叫做 `hack` ,
+
+如果查询到的名称中没有 `slash` (`/`), 或者上面的推测得到 空字符串, 那么猜测就会停止,
+此时, 你可以用 `-b` 选项手动指定 名称.
 
 ### `git branch`,`-t`, `--track`
 
-当创建新分支的时候, 设置 `branch.<name>.remote` 和 `branch.<name>.merge` 条目,把 `start-point branch` 当作 `upstream` (上游分支).
-这个配置会告诉 `git` , 在`git status ` and ` git branch -v`命令中显示两个分支的关系.而且, 当切换到新分支的时候, 它指导不带参数的 `git pull` 从上游拉取更新.
+当创建新分支的时候, 设置 `branch.<name>.remote` 和 `branch.<name>.merge` 条目,
+把 `start-point branch` 当作 `upstream` (上游分支).
+这个配置会告诉 `git` , 在`git status ` and ` git branch -v`命令中显示两个分支的关系.
+而且, 当切换到新分支的时候, 它指导不带参数的 `git pull` 从上游拉取更新.
 
 如果 `start point` 是 `remote-tracking` 分支, 会默认进行上面的设置.
-如果你想让`git checkout ` and ` git branch`默认行为是 `--no-track` , 也就是不自动跟踪上游,可以配置变量 `branch.autoSetupMerge` 为`false` .
+如果你想让`git checkout ` and ` git branch`默认行为是 `--no-track` ,
+也就是不自动跟踪上游,可以配置变量 `branch.autoSetupMerge` 为`false` .
 也可以设置成 `always` , 这样不管 `start-point` 是本地还是远程分支, 都会自动跟踪.
 
 ### 常见使用方法
