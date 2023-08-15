@@ -138,7 +138,6 @@ Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在�
 ### 终端配置文件,profiles
 
 [Terminal profiles](https://code.visualstudio.com/docs/editor/integrated-terminal#_terminal-profiles)
-[变量参考]: https://code.visualstudio.com/docs/editor/variables-reference
 
 终端配置文件(profiles), 是特定于平台的 `shell` 配置, 由`可执行路径`, `参数` 和 其他 `自定义内容`组成.
 配置文件的例子:
@@ -165,6 +164,8 @@ Visual Studio Code 包括一个功能齐全的集成终端, 可以方便地在�
 
 终端的 `shell` 在 `Linux` 和 `macOS` 上默认为 `$SHELL`,
 在 `Windows` 上默认为 `PowerShell`. VS Code 会自动检测大多数标准的 `shell`, 然后可以将其配置为默认.
+
+[变量参考]: https://code.visualstudio.com/docs/editor/variables-reference
 
 ### 配置 profiles
 
@@ -600,3 +601,11 @@ Which[a, b, a, b]
 ```wolfram
 Needs["LSPServer`"]
 ```
+
+## markdown 设置
+
+### outline 隐藏链接 link
+
+在 setting 中搜索 outline,
+取消勾选 `Outline: Show Constants`,
+即可隐藏 Explorer->Outline 中的 外链接项.
