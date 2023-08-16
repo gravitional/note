@@ -144,6 +144,95 @@ Young
 \end_layout
 
 \begin_layout Section
+数学初步
+\end_layout
+
+\begin_layout Standard
+积分方程是包含未知函数积分的方程。例如以下两个一维方程
+\begin_inset Formula 
+\begin{align}
+ & \int_{a}^{b}K(x,y)\,\phi(y)\,\dd{y}=f(x),\label{eq:1.13}\\
+ & \phi(x)=\int_{a}^{b}K(x,y)\,\phi(y)\,\dd{y}+g(x)\label{eq:1.14}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi$
+\end_inset
+
+是未知函数，
+\begin_inset Formula $K(x,y)$
+\end_inset
+
+ 是已知的核函数（kernel functions），
+\begin_inset Formula $f$
+\end_inset
+
+和
+\begin_inset Formula $g$
+\end_inset
+
+是两个已知函数。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是 第一类线性 Fredholm 方程，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 是第二类线性 Fredholm 方程。核函数
+\begin_inset Formula $K(x,y)$
+\end_inset
+
+ 决定了积分方程的特性。例如如果
+\begin_inset Formula 
+\[
+K(x,y)=\frac{1}{\abs{x-y}},
+\]
+
+\end_inset
+
+则当
+\begin_inset Formula $x\in(a,b)$
+\end_inset
+
+ 时，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的积分是奇异的，并将它们称为奇异积分方程。
+\end_layout
+
+\begin_layout Section
 静电场的格林函数
 \end_layout
 
@@ -1159,6 +1248,10 @@ noprefix "false"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Proof
+类似等式三
 \begin_inset Formula 
 \[
 \int_{V}\sbf r\nabla^{2}\left[G\left(\sbf x,\sbf y\right)\right]\dd{V_{y}}+\int_{V}\sbf r\,\delta\left(\sbf x,\sbf y\right)\dd{V_{y}}=0
@@ -1205,7 +1298,24 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-边界积分方程 形式
+2.3 边界积分方程 形式
+\end_layout
+
+\begin_layout Standard
+ddd
+\begin_inset Formula 
+\begin{align}
+\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\sbf y)\phi(\sbf y)\right]\dd{S(\sbf y)}\nonumber \\
+ & +\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)},\quad\forall\sbf x\in V,\label{eq:2.12}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $q=\partial\phi/\partial n$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -1467,8 +1577,696 @@ noprefix "false"
 中的所有积分至多是弱奇异的。
 \end_layout
 
+\begin_layout Standard
+弱奇异形式的 BIE 或正规化 BIE 不包含任何 强奇异 和 超奇异积分，在应用高阶边界单元求解 BIE 时非常有用。在这些情况下，很难或不可能获得奇异积分的
+解析结果，使用数值积分也很麻烦。当使用常数单元时，所有奇积分和超奇异积分都可以解析计算（见附录 A.1）；因此，CBIE (2.17) 和 HBIE
+ (2.21) 的原始奇积分形式可以直接应用。
+\end_layout
+
+\begin_layout Section
+2D边界积分方程的离散化，使用常数单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(\sbf y)=\phi_{j},\quad q(\sbf y)=q_{j},\quad\text{在单元}\Delta S_{j}\text{上},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+和
+\begin_inset Formula $q_{j}$
+\end_inset
+
+（
+\begin_inset Formula $i=1,2,\cdots N$
+\end_inset
+
+）分别是常数单元
+\begin_inset Formula $\Delta S_{j}$
+\end_inset
+
+上，
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $q$
+\end_inset
+
+的节点值。
+\begin_inset Formula 
+\begin{align*}
+c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\sbf y)\,\phi(\sbf y)\right]\dd{S(\sbf y)}\\
+ & +\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)},\quad\forall\sbf x\in S,
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{2}\phi_{i}=\sum_{j=1}^{N}\int_{\Delta S_{j}}\left[G_{i}q_{j}-F_{i}\phi_{j}\right]\dd{S}=\sum_{j=1}^{N}\left[\int_{\Delta S_{j}}G_{i}\dd{S}q_{j}-\int_{\Delta S_{j}}F_{i}\dd{S}\phi_{j}\right],\label{eq:2.27}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{2}\phi_{i}=\sum_{j=1}^{N}\left[g_{ij}q_{j}-\hat{f}_{ij}\phi_{j}\right],\quad\text{for}\,i=1,2,\cdots,N,\label{eq:2.28}
+\end{equation}
+
+\end_inset
+
+其中的系数为
+\begin_inset Formula 
+\begin{equation}
+g_{ij}=\int_{\Delta S_{j}}G_{i}\dd{S},\quad\hat{f}_{ij}=\int_{\Delta S_{j}}F_{i}\dd{S},\quad\text{for}\,i=1,2,\cdots,N.\label{eq:2.29}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $G_{i}=G(\sbf x_{i},\sbf y_{j})$
+\end_inset
+
+，
+\begin_inset Formula $F_{i}=F(\sbf x_{i},\sbf y_{j})$
+\end_inset
+
+。
+\begin_inset Formula $x_{i}$
+\end_inset
+
+是源点，
+\begin_inset Formula $y_{j}$
+\end_inset
+
+是被积场点。如果
+\begin_inset Formula $x_{i}$
+\end_inset
+
+刚好在
+\begin_inset Formula $y_{j}$
+\end_inset
+
+所在的
+\begin_inset Formula $\Delta S_{j}$
+\end_inset
+
+上，对应 Singular 情形。
+\end_layout
+
+\begin_layout Standard
+在常数单元上，这些积分不管对于奇异情形（
+\begin_inset Formula $i=j$
+\end_inset
+
+，对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:a.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+），还是非奇异情形（
+\begin_inset Formula $i\neq j$
+\end_inset
+
+，对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:a.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）都可以解析计算（参见附录
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "chap:A.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以写成矩阵形式
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cccc}
+f_{11} & f_{12} & \cdots & f_{1N}\\
+f_{21} & f_{22} & \cdots & f_{2N}\\
+\vdots & \vdots & \ddots & \vdots\\
+f_{N1} & f_{N2} & \cdots & f_{NN}
+\end{array}\right]\left\{ \begin{array}{c}
+\phi_{1}\\
+\phi_{2}\\
+\vdots\\
+\phi_{N}
+\end{array}\right\} =\left[\begin{array}{cccc}
+g_{11} & g_{12} & \cdots & g_{1N}\\
+g_{21} & g_{22} & \cdots & g_{2N}\\
+\vdots & \vdots & \ddots & \vdots\\
+g_{N1} & g_{N2} & \cdots & g_{NN}
+\end{array}\right]\left\{ \begin{array}{c}
+q_{1}\\
+q_{2}\\
+\vdots\\
+q_{N}
+\end{array}\right\} \label{eq:2.30}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $f_{ij}=\hat{f}_{ij}+\frac{1}{2}\delta_{ij}$
+\end_inset
+
+。在传统的 BEM 方法中，我们通过在每个节点上应用边界条件，并交换公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中两个矩阵的列，形成如下标准线性方程组
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1N}\\
+a_{21} & a_{22} & \cdots & a_{2N}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{N1} & a_{N2} & \cdots & a_{NN}
+\end{array}\right]\left\{ \begin{array}{c}
+\lambda_{1}\\
+\lambda_{2}\\
+\vdots\\
+\lambda_{N}
+\end{array}\right\} =\left\{ \begin{array}{c}
+b_{1}\\
+b_{2}\\
+\vdots\\
+b_{N}
+\end{array}\right\} ,\quad\text{or}\quad\sbf A\,\sbf\lambda=\sbf b\label{eq:2.31}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中，
+\begin_inset Formula $\sbf A$
+\end_inset
+
+是系数矩阵，
+\begin_inset Formula $\sbf\lambda$
+\end_inset
+
+是未知向量（每个节点上有未知的
+\begin_inset Formula $\phi$
+\end_inset
+
+或
+\begin_inset Formula $q$
+\end_inset
+
+），
+\begin_inset Formula $\sbf b$
+\end_inset
+
+是已知的右侧向量。显然，利用公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+构造矩阵 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+需要
+\begin_inset Formula $\order{N^{2}}$
+\end_inset
+
+次运算，而存储
+\begin_inset Formula $\sbf A$
+\end_inset
+
+所需的内存大小也是 
+\begin_inset Formula $\order{N^{2}}$
+\end_inset
+
+，因为
+\begin_inset Formula $\sbf A$
+\end_inset
+
+通常是一个非对称的密集（dense）矩阵。使用高斯消元法等直接求解器求解式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的系统需要 
+\begin_inset Formula $\order{N^{3}}$
+\end_inset
+
+次操作，因为这个矩阵是一般矩阵。因此，直接求解式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (2.31) 的传统 BEM 方法，只能在 1GB 内存（GB 是gigabyte，RAM 是随机存取内存）的台式计算机上处理几千个方程量级的
+ BEM 模型。
+\end_layout
+
+\begin_layout Standard
+通过求解式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，我们可以得到每个单元上的所有未知边界变量。如果需要知道域内的场，我们可以利用积分表示
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+计算
+\begin_inset Formula $\phi$
+\end_inset
+
+，并使用 2.20 的类似离散化形式计算
+\begin_inset Formula $\phi$
+\end_inset
+
+的导数。使用常数元素对 BIEs 进行离散化是非常简单的，单元上的所有核积分都可以用解析方法求得。但是，常数元素的精度不是很高，通常需要更多的常数元素才能获得比
+高阶单元更精确的 BEM 结果。
+\end_layout
+
+\begin_layout Section
+2.6使用高阶单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+c_{i}\phi_{i} & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i}q-F_{i}\phi\right]\dd{S_{y}},\nonumber \\
+ & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i}\sum_{\alpha=1}^{2}N_{\alpha}q^{\alpha}\right]\dd{S_{y}}-\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[F_{i}\sum_{\alpha=1}^{2}N_{\alpha}\phi^{\alpha}\right]\dd{S_{y}},\nonumber \\
+ & =\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\left[\int_{\Delta S_{k}}G_{i}N_{\alpha}\dd{S_{y}}\right]q^{\alpha}-\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\left[\int_{\Delta S_{k}}F_{i}N_{\alpha}\dd{S_{y}}\right]\phi^{\alpha},\label{eq:2.35}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+c_{i}\phi_{i}=\sum_{k=1}^{M}\sum_{\alpha=1}^{2}g_{ik}^{\alpha}\,q^{\alpha}-\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\hat{f}_{ik}^{\alpha}\,\phi^{\alpha},\label{eq:2.36}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align}
+ & g_{ik}^{\alpha}=\int_{\Delta S_{k}}G_{i}N_{\alpha}\dd{S_{y}}\nonumber \\
+ & \hat{f}_{ik}^{\alpha}=\int_{\Delta S_{k}}F_{i}N_{\alpha}\dd{S_{y}}\label{eq:2.37}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $i=1,2,3,\ldots,N$
+\end_inset
+
+（nodes 数目），
+\begin_inset Formula $k=1,2,3,\ldots,M$
+\end_inset
+
+（elements 数目），
+\begin_inset Formula $\alpha=1,2$
+\end_inset
+
+（每个 ele的 nodes 数目）。将这项按照全局节点编号重排（而不是单元号），从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.36"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{equation}
+c_{i}\phi_{i}=\sum_{j=1}^{N}g_{ij}\,q_{j}-\sum_{j=1}^{N}\hat{f}_{ij}\,\phi_{j},\label{eq:2.38}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $g_{ij}$
+\end_inset
+
+和
+\begin_inset Formula $\hat{f}_{ij}$
+\end_inset
+
+是node 
+\begin_inset Formula $j$
+\end_inset
+
+周围的单元上的积分
+\begin_inset Formula $g_{ik}^{\alpha}$
+\end_inset
+
+和
+\begin_inset Formula $\hat{f}_{ik}^{\alpha}$
+\end_inset
+
+ 的求和。因此会得到类似
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的线性方程组，它的矩阵形式和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+完全相同，其中
+\begin_inset Formula $f_{ij}=\hat{f}_{ij}+c_{i}\delta_{ij}$
+\end_inset
+
+（不对
+\begin_inset Formula $i$
+\end_inset
+
+求和）。
+\begin_inset Formula 
+\[
+\left[\begin{array}{cccc}
+f_{11} & f_{12} & \cdots & f_{1N}\\
+f_{21} & f_{22} & \cdots & f_{2N}\\
+\vdots & \vdots & \ddots & \vdots\\
+f_{N1} & f_{N2} & \cdots & f_{NN}
+\end{array}\right]\left\{ \begin{array}{c}
+\phi_{1}\\
+\phi_{2}\\
+\vdots\\
+\phi_{N}
+\end{array}\right\} =\left[\begin{array}{cccc}
+g_{11} & g_{12} & \cdots & g_{1N}\\
+g_{21} & g_{22} & \cdots & g_{2N}\\
+\vdots & \vdots & \ddots & \vdots\\
+g_{N1} & g_{N2} & \cdots & g_{NN}
+\end{array}\right]\left\{ \begin{array}{c}
+q_{1}\\
+q_{2}\\
+\vdots\\
+q_{N}
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+通常，使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.37"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的公式来计算
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的系数，需要使用数值积分方法。例如对于非对角项（
+\begin_inset Formula $i\neq j$
+\end_inset
+
+），我们有：
+\begin_inset Formula 
+\begin{equation}
+g_{ik}^{\alpha}=\int_{\Delta S_{k}}G_{i}\,N_{\alpha}\,\dd{S}=\int_{0}^{1}G_{i}\left[\sbf x,\sbf y(\xi)\right]\,N_{\alpha}(\xi)\,\abs{J}\,\dd{\xi},\label{eq:2.39}
+\end{equation}
+
+\end_inset
+
+其中的全局坐标
+\begin_inset Formula $\sbf y$
+\end_inset
+
+和局域坐标的关系是
+\begin_inset Formula 
+\[
+y_{\ell}(\xi)=\sum_{\alpha=1}^{2}N_{\alpha}(\xi)\,y_{\ell}^{\alpha},\quad\text{for}\,l=1,2,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\xi=(y_{a}-y_{a}^{1})/(y_{a}^{2}-y_{a}^{1})$
+\end_inset
+
+，
+\begin_inset Formula $y_{a},y_{b}$
+\end_inset
+
+分别是动点
+\begin_inset Formula $y$
+\end_inset
+
+的横纵坐标（全局），
+\begin_inset Formula $y_{a/b}^{1},y_{a/b}^{2}$
+\end_inset
+
+表示两个节点的横纵坐标（全局）。并且：
+\begin_inset Formula 
+\[
+\dd{S}=\sqrt{\left(\frac{\dd{y_{1}}}{\dd{\xi}}\right)^{2}+\left(\frac{\dd{y_{2}}}{\dd{\xi}}\right)^{2}}\dd{\xi}=\abs{J}\dd{\xi},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\abs{J}=\sqrt{\left(\frac{\dd{y_{1}}}{\dd{\xi}}\right)^{2}+\left(\frac{\dd{y_{2}}}{\dd{\xi}}\right)^{2}}$
+\end_inset
+
+是坐标变换的 Jacobian。公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.39"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+右侧的积分可以用标准 高斯积分法 求得。在大多数情况下，四点积分法就足够了。公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.37"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+=中的第二个积分也可以用类似的方法计算。
+\end_layout
+
+\begin_layout Standard
+至于对角项，可以使用CPV积分的定义解析地计算这些系数，结果是
+\begin_inset Formula 
+\begin{align}
+g_{ii} & =\frac{L_{a}}{8\pi}\left[3+2\log\left(\frac{1}{L_{a}}\right)\right]+\frac{L_{b}}{8\pi}\left[3+2\log\left(\frac{1}{L_{b}}\right)\right],\nonumber \\
+\hat{f}_{ii} & =0,\quad i=1,2,3,\ldots,N\label{eq:2.40}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $L_{a}$
+\end_inset
+
+，
+\begin_inset Formula $L_{b}$
+\end_inset
+
+是节点
+\begin_inset Formula $i$
+\end_inset
+
+前后两个单元的长度。对于系数
+\begin_inset Formula $f_{ii}$
+\end_inset
+
+，有一个简单的方法计算他们的值。假设我们有一个均匀势场，各处都有
+\begin_inset Formula $\phi=1$
+\end_inset
+
+，
+\begin_inset Formula $q=0$
+\end_inset
+
+。则从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可得，对于有限域（finite domain）问题，
+\begin_inset Formula 
+\begin{equation}
+f_{ii}=-\sum_{j\neq i}^{N}f_{ij},\label{eq:2.41}
+\end{equation}
+
+\end_inset
+
+从而避免计算每个节点的
+\begin_inset Formula $c_{i}$
+\end_inset
+
+。对于无限域（infinite domain）问题，均匀势在无穷远处的积分并不为零（无限大区域的包围面有两个，内部的和无限远处的）。因此
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+要修改成
+\begin_inset Formula 
+\begin{equation}
+f_{ii}=1-\sum_{j\neq i}^{N}f_{ij}\label{eq:2.42}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.41"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.42"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是精确的，不会引入额外误差。可以使用基本解的等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+解析地推导这些结果。
+\end_layout
+
 \begin_layout Chapter
 核函数积分
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:A.1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -1565,10 +2363,6 @@ name "fig:a.1"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -1597,7 +2391,11 @@ name "fig:a.1"
 \begin_inset Formula $t$
 \end_inset
 
-的分量。这些结果可用于直接计算使用 常数单元的二维 potential问题的 CBIE 和 HBIE 系数。如果 源点
+的分量。这些结果可用于直接计算使用 常数单元的二维 potential问题的 CBIE 和 HBIE 系数。
+\end_layout
+
+\begin_layout Standard
+如果 源点
 \begin_inset Formula $\sbf x$
 \end_inset
 
@@ -1612,10 +2410,10 @@ name "fig:a.1"
 对应的四个积分的值是
 \begin_inset Formula 
 \begin{align}
- & G(\sbf x,\sbf y)=\frac{R}{\pi}\left(1-\log R\right),\label{eq:a.9}\\
- & F(\sbf x,\sbf y)=\frac{-1}{2},\label{eq:a.10}\\
- & K(\sbf x,\sbf y)=\frac{1}{2},\label{eq:a.11}\\
- & H(\sbf x,\sbf y)=\frac{-1}{\pi R}.\label{eq:a.12}
+ & \int_{\Delta S}G(\sbf x,\sbf y)\dd{S_{y}}=\frac{R}{\pi}\left(1-\log R\right),\label{eq:a.9}\\
+ & \int_{\Delta S}F(\sbf x,\sbf y)\dd{S_{y}}=\frac{-1}{2},\label{eq:a.10}\\
+ & \int_{\Delta S}K(\sbf x,\sbf y)\dd{S_{y}}=\frac{1}{2},\label{eq:a.11}\\
+ & \int_{\Delta S}H(\sbf x,\sbf y)\dd{S_{y}}=\frac{-1}{\pi R}.\label{eq:a.12}
 \end{align}
 
 \end_inset
