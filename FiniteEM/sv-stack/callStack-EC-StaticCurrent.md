@@ -33,6 +33,9 @@ main(int argc, char* argv[]);
                     CreateNode(); // 创建节点
                     CreateElement(data); // 创建单元
                     CreateMaterial(data); //创建材料, json, L42
+                        mat->Create(data);
+                            CreateOrders(data); // 创建电化学场顺序
+                                gInfoEC()->SetAnlsType(); // 设置电化学分析类型
                     CreateInitialField(data); //virtual, 创建初始场
                     CreateMisc(data); //生成物理场特有信息, /ElectroChemistry/Model/ModelCreatorEC.cpp
                         CreateInfo(data); // 生成全局参数
@@ -41,10 +44,11 @@ main(int argc, char* argv[]);
                         CreateModelInfo(data)
                         CreateConstraint(data) // 生成约束, 即边界条件,  json
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
-                        CreateETrodeCache(data)// 点击物理量缓存
+                        CreateETrodeCache(data)// 电极物理量缓存
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         //迭代分析类型, 读取 conrol 的分析节点, json
                         AnalysisBase *analysis = NewAnalysis(type); // 创建分析
+                            gInfoEC()->SetAnlsType(); // 再次 设置电化学分析类型
                         analysis->Read(); // 动态多态, 转向 AnalysisFe::Read()
                             auto reader=controlReader(); // control.json 单例
                             auto job =NewJob(); //任务工厂方法

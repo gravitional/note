@@ -950,18 +950,7 @@ G(\sbf x,\sbf y)=\begin{cases}
 \begin_inset Formula $\sbf y$
 \end_inset
 
-之间的距离，它的法向导数为
-\begin_inset Formula 
-\begin{equation}
-F(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}=\begin{cases}
-\frac{-1}{2\pi r}r_{,k}\,n_{k}^{y} & \text{二维}\\
-\frac{-1}{4\pi r^{2}}r_{,k}\,n_{k}^{y} & \text{三维}
-\end{cases}\label{eq:2.6}
-\end{equation}
-
-\end_inset
-
-其中
+之间的距离
 \family roman
 \series medium
 \shape up
@@ -991,7 +980,18 @@ F(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}=\begi
 \uwave default
 \noun default
 \color inherit
-，
+，它的法向导数为
+\begin_inset Formula 
+\begin{equation}
+F(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}=\begin{cases}
+\frac{-1}{2\pi r}r_{,k}\,n_{k}^{y} & \text{二维}\\
+\frac{-1}{4\pi r^{2}}r_{,k}\,n_{k}^{y} & \text{三维}
+\end{cases}\label{eq:2.6}
+\end{equation}
+
+\end_inset
+
+其中
 \begin_inset Formula $r_{,k}=\partial r/\partial y_{k}=(y_{k}-x_{k})/r$
 \end_inset
 
@@ -2256,6 +2256,764 @@ noprefix "false"
 \end_inset
 
 解析地推导这些结果。
+\end_layout
+
+\begin_layout Chapter
+势问题的快速多极边界元方法
+\end_layout
+
+\begin_layout Section
+多极方法的基本思想
+\end_layout
+
+\begin_layout Standard
+如图 3.1(b)所示，在快速多极 BEM 中运算量减少的一个根本原因是，BIE 中的格林函数或核（kernels）可以按以下形式展开：
+\begin_inset Formula 
+\begin{equation}
+G(\sbf x,\sbf y)=\sum_{i}G_{i}^{x}(\sbf x,\sbf y_{c})\,G_{i}^{y}(\sbf y,\sbf y_{c})\label{eq:3.3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf y_{c}$
+\end_inset
+
+是展开点（expansion point）。
+\begin_inset Formula 
+\begin{equation}
+\int_{S_{c}}G(\sbf x,\sbf y)q(\sbf y)\dd{S(\sbf y)}=\sum_{i}G_{i}^{x}(\sbf x,\sbf y_{c})\int_{S_{c}}G_{i}^{y}(\sbf y,\sbf y_{c})q(\sbf y)\dd{S(\sbf y)}\label{eq:3.4}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $S_{c}$
+\end_inset
+
+是
+\begin_inset Formula $S$
+\end_inset
+
+的子集，并且远离
+\begin_inset Formula $\sbf x$
+\end_inset
+
+。在传统的 BEM 中，积分直接用公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 左侧的表达式计算。源点 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 位置的任何变化都需要重新计算整个积分。在快速多极 BEM 中，当源点
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 远离
+\begin_inset Formula $S_{c}$
+\end_inset
+
+时，原积分用式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+右侧的表达式计算，其中新积分只需求值一次，与源点 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 的位置无关（只需更新
+\begin_inset Formula $\sum_{i}G_{i}^{x}(\sbf x,\sbf y_{c})$
+\end_inset
+
+）。也就是说，通过扩展和引入新的 “中间”点
+\begin_inset Formula $\sbf y_{c}$
+\end_inset
+
+ ，切断了
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 和
+\begin_inset Formula $\sbf y$
+\end_inset
+
+之间的直接关系。快速多极 BEM 中引入了额外的展开和平移（expansions and translations），以及元素的分层树结构（hierarchic
+al tree），以进一步降低计算成本。
+\end_layout
+
+\begin_layout Section
+2D势问题的Fast multipole BEM
+\end_layout
+
+\begin_layout Standard
+首先考虑CBIE
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中
+\begin_inset Formula $G$
+\end_inset
+
+ kernel 的积分：
+\begin_inset Formula 
+\begin{equation}
+\int_{S_{c}}G(\sbf x,\sbf y)\,q(\sbf y)\dd{S(y)},\label{eq:3.5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $S_{c}$
+\end_inset
+
+是
+\begin_inset Formula $S$
+\end_inset
+
+的子集且远离源点
+\begin_inset Formula $\sbf x$
+\end_inset
+
+。complex notation；源点：
+\begin_inset Formula 
+\[
+\sbf x\Rightarrow\quad z_{0}=x_{1}+ix_{2}
+\]
+
+\end_inset
+
+场点
+\begin_inset Formula 
+\[
+\sbf y\Rightarrow\quad z=y_{1}+iy_{2}
+\]
+
+\end_inset
+
+到复平面。其中
+\begin_inset Formula $i=\sqrt{-1}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/liuyijun-3.2.png
+	lyxscale 85
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3.2"
+
+\end_inset
+
+复数记号，以及多极展开的相关点。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G(\sbf x,\sbf y)=\frac{1}{2\pi}\log\frac{1}{r},\quad\sbf r=\sbf y-\sbf x
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\log z=\log re^{i\theta}=\log r+i(\theta+2n\pi)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+G(\sbf x,\sbf y)=\ree\left\{ G(z_{0},z)\right\} ,\label{eq:3.6}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+G(z_{0},z)=\frac{-1}{2\pi}\log(z_{0}-z)\label{eq:3.7}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)},\label{eq:3.8}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $q(z)$
+\end_inset
+
+是复数变量
+\begin_inset Formula $z$
+\end_inset
+
+的实值函数（real-valued）。
+\end_layout
+
+\begin_layout Standard
+现在我们介绍 FMM 中的几个重要概念，它们构成了快速多极 BEM 的基石。
+\end_layout
+
+\begin_layout Subsection
+多级展开（Moments）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\abs{z-z_{c}}\ll\abs{z_{0}-z_{c}}$
+\end_inset
+
+。可以给出：
+\begin_inset Formula 
+\begin{equation}
+G(z_{0},z)=\frac{-1}{2\pi}\log(z_{0}-z)=\frac{-1}{2\pi}\left[\log(z_{0}-z_{c})+\log(1-\frac{z-z_{c}}{z_{0}-z_{c}})\right].\label{eq:3.9}
+\end{equation}
+
+\end_inset
+
+注意其中关于近场点
+\begin_inset Formula $z_{c}$
+\end_inset
+
+的场源比 
+\begin_inset Formula $(z-z_{c})/(z_{0}-z_{c})$
+\end_inset
+
+。使用泰勒级数展开：
+\begin_inset Formula 
+\begin{equation}
+\log(1-\xi)=-\sum_{k=1}^{\infty}\frac{\xi^{k}}{k},\quad\text{for}\,\abs{\xi}<1,\label{eq:3.10}
+\end{equation}
+
+\end_inset
+
+展开
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+右式中的第二项， 得到：
+\begin_inset Formula 
+\begin{equation}
+G(z_{0},z)=\frac{1}{2\pi}\sum_{k=0}^{\infty}{\color{blue}O_{k}(z_{0}-z_{c})}\,I_{k}(z-z_{c})\label{eq:3.11}
+\end{equation}
+
+\end_inset
+
+因子化为：
+\color blue
+源项
+\color inherit
+，场项。
+\begin_inset Formula 
+\begin{align}
+ & I_{k}(z)=\frac{z^{k}}{k!},\quad\text{for}\;k\ge0;\nonumber \\
+ & O_{k}(z)=\frac{(k-1)!}{z^{k}},\quad\text{for}\;k\ge1;\quad\text{and}\quad O_{0}(z)=-\log(z).\label{eq:3.12}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula $I_{k}(z)$
+\end_inset
+
+和
+\begin_inset Formula $O_{k}(z)$
+\end_inset
+
+的导数满足：
+\begin_inset Formula 
+\begin{align}
+ & I_{k}^{\prime}(z)=I_{k-1}(z),\quad\text{for}\,k\ge1;\quad\text{and}\quad I_{0}^{\prime}(z)=0;\nonumber \\
+ & O_{k}^{\prime}(z)=-O_{k+1}(z),\quad\text{for}\,k\ge0.\label{eq:3.13}
+\end{align}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{align}
+I_{k}(z_{1}+z_{2}) & =\sum_{\ell=0}^{k}I_{k-\ell}(z_{1})I_{\ell}(z_{2})=\sum_{\ell=0}^{k}I_{k-\ell}(z_{2})I_{\ell}(z_{1});\nonumber \\
+O_{k}(z_{1}+z_{2}) & =\sum_{\ell=0}^{\infty}\left(-1\right)^{\ell}O_{k+\ell}(z_{1})I_{\ell}(z_{2}),\quad\text{for}\quad\abs{z_{2}}<\abs{z_{1}}.\label{eq:3.14}
+\end{align}
+
+\end_inset
+
+第一个式子可以从二项式公式得到，第二个式子是
+\begin_inset Formula $O_{k}$
+\end_inset
+
+关于
+\begin_inset Formula $z_{1}$
+\end_inset
+
+的泰勒展开。
+\begin_inset Formula 
+\[
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}=\frac{1}{2\pi}\int_{S_{c}}\left[\sum_{k=0}^{\infty}O_{k}(z_{0}-z_{c})\,I_{k}(z-z_{c})\right]q(z)\dd{S(z)};
+\]
+
+\end_inset
+
+即多极展开（multipole expansion）：
+\begin_inset Formula 
+\begin{equation}
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}=\frac{1}{2\pi}\sum_{k=0}^{\infty}O_{k}(z_{0}-z_{c})\,M_{k}(z_{c}),\label{eq:3.15}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+M_{k}(z_{c})=\int_{S_{c}}I_{k}(z-z_{c})\,q(z)\dd{S(z)},\quad k=0,1,2,\cdots,\label{eq:3.16}
+\end{equation}
+
+\end_inset
+
+称为关于
+\begin_inset Formula $z_{c}$
+\end_inset
+
+的矩（moments），它独立于配对点（collocation point）
+\begin_inset Formula $z_{0}$
+\end_inset
+
+，只需要计算一次。得到这些矩后，就可以利用公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对远离 
+\begin_inset Formula $S_{c}$
+\end_inset
+
+ 的任意配对点 
+\begin_inset Formula $z_{0}$
+\end_inset
+
+（将在以
+\begin_inset Formula $z_{c}$
+\end_inset
+
+ 为中心的单元内）轻松求出 
+\begin_inset Formula $G$
+\end_inset
+
+的核积分。
+\end_layout
+
+\begin_layout Standard
+我们可以使用常数单元上的复数记号，来解析计算 moments。假设我们有一个起点为 
+\begin_inset Formula $z_{a}$
+\end_inset
+
+，终点为 
+\begin_inset Formula $z_{b}$
+\end_inset
+
+ 的线元。根据公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，该单元对矩的贡献可计算如下
+\begin_inset Formula 
+\begin{align}
+M_{k}^{(e)}(z_{c}) & =\int_{z_{a}}^{z_{b}}I_{k}(z-z_{c})\,q(z)\,\dd{S(z)}=q_{e}\int_{z_{a}}^{z_{b}}I_{k}(z-z_{c})\dd{S(z)}\nonumber \\
+ & =q_{e}\int_{z_{a}}^{z_{b}}\frac{(z-z_{c})^{k}}{k!}\dd{S(z)},\label{eq:3.17}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $q_{e}$
+\end_inset
+
+是
+\begin_inset Formula $q$
+\end_inset
+
+在单元上的节点值。注意到下列关系
+\begin_inset Formula 
+\begin{equation}
+\dd{z}=\dd{y_{1}}+i\dd{y_{2}}=\left[\left(\frac{\dd{y_{1}}}{\dd{S}}\right)+i\left(\frac{\dd{y_{2}}}{\dd{S}}\right)\right]\dd{S}=\omega\dd{S},\label{eq:3.18}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\omega$
+\end_inset
+
+是沿着边界
+\begin_inset Formula $S$
+\end_inset
+
+的complex（unit）切向量，所以
+\begin_inset Formula $\overline{\omega}\dd{z}=\overline{\omega}\omega\dd{S}=\dd{S}$
+\end_inset
+
+，
+\begin_inset Formula $\overline{\omega}$
+\end_inset
+
+是
+\begin_inset Formula $\omega$
+\end_inset
+
+的复共轭。使用此关系，我们可以把之前的 moment 贡献写成（对于常数单元）
+\begin_inset Formula 
+\begin{equation}
+M_{k}^{(e)}(z_{c})=q_{e}\int_{z_{a}}^{z_{b}}\frac{(z-z_{c})^{k}}{k!}\dd{S(z)}=q_{e}\overline{\omega}\left[I_{k+1}(z_{b}-z_{c})-I_{k+1}(z_{a}-a_{c})\right],\label{eq:3.19}
+\end{equation}
+
+\end_inset
+
+这一分析结果有助于对式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中定义的常数单元矩 进行高效、精确的计算。
+\end_layout
+
+\begin_layout Subsection
+多极展开的误差估计
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G(z_{0},z)=\frac{1}{2\pi}\sum_{k=0}^{\infty}{\color{blue}O_{k}(z_{0}-z_{c})}\,I_{k}(z-z_{c})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}=\frac{1}{2\pi}\sum_{k=0}^{\infty}O_{k}(z_{0}-z_{c})\,M_{k}(z_{c}),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+E_{M}^{p} & =\abs{\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}-\frac{1}{2\pi}\sum_{k=0}^{\infty}O_{k}(z_{0}-z_{c})\,M_{k}(z_{c})}\\
+ & =\frac{1}{2\pi}\abs{\sum_{k=p+1}^{\infty}O_{k}(z_{0}-z_{c})\,M_{k}(z_{c})}\\
+ & \cdots\\
+ & =\frac{A}{2\pi}\frac{R^{p+1}}{\abs{z_{0}-z_{c}}^{p+1}}\frac{1}{1-R/\abs{z_{0}-z_{c}}},
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $R$
+\end_inset
+
+是以
+\begin_inset Formula $z_{c}$
+\end_inset
+
+为中心的球半径，
+\begin_inset Formula 
+\begin{equation}
+\abs{z_{0}-z_{c}}<R,\quad\text{and}\quad A\equiv\int_{S_{c}}\abs{q(z)}\dd{S(z)}.\label{eq:3.20}
+\end{equation}
+
+\end_inset
+
+令
+\begin_inset Formula $\rho=\abs{z_{0}-z_{c}}/R$
+\end_inset
+
+；先前的误差限估计可以写成
+\begin_inset Formula 
+\begin{equation}
+E_{M}^{p}\le\frac{A}{2\pi}\frac{1}{\rho-1}(\frac{1}{\rho})^{P}.\label{eq:3.21}
+\end{equation}
+
+\end_inset
+
+由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知，
+\begin_inset Formula $\rho$
+\end_inset
+
+值越大，误差限的估计越小。如果
+\begin_inset Formula $\rho\ge2$
+\end_inset
+
+，即
+\begin_inset Formula $\abs{z_{0}-z_{c}}\ge2R$
+\end_inset
+
+，我们有如下估计：
+\begin_inset Formula 
+\begin{equation}
+E_{M}^{p}\le\frac{A}{2\pi}\left(\frac{1}{2}\right)^{p}.\label{eq:3.22}
+\end{equation}
+
+\end_inset
+
+误差限可用于估计展开项数
+\begin_inset Formula $p$
+\end_inset
+
+，以便于在程序中给出自动计算的结果。
+\end_layout
+
+\begin_layout Remark
+调和级数有限项和
+\begin_inset Formula 
+\[
+\sum_{k=1}^{n}\frac{1}{k}=\int_{0}^{1}\frac{1-x^{n}}{1-x}\dd{x}=\psi(n+1)+\gamma,\quad\text{Digamma 函数}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Moment to Moment 平移
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename inset/liuyijun-3.2.png
+	lyxscale 85
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M_{k}(z_{c})=\int_{S_{c}}I_{k}(z-z_{c})\,q(z)\dd{S(z)},\quad k=0,1,2,\cdots,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+M_{k}(z_{c'}) & =\int_{S_{c}}I_{k}(z-z_{c'})\,q(z)\dd{S(z)}\\
+ & =\int_{S_{c}}I_{k}\left[(z-z_{c})+(z_{c}-z_{c'})\right]\,q(z)\dd{S(z)}.
+\end{align*}
+
+\end_inset
+
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的二项式公式得到
+\begin_inset Formula 
+\[
+M_{k}(z_{c'})=\sum_{\ell=0}^{k}I_{k-\ell}(z_{c}-z_{c'})M_{\ell}(z_{c}).
+\]
+
+\end_inset
+
+这就是 moment-to-moment (M2M) 平移公式，当矩中的
+\begin_inset Formula $z_{c}$
+\end_inset
+
+移动到
+\begin_inset Formula $z_{c'}$
+\end_inset
+
+。注意到平移只需要有限项，因此M2M平移不会引入额外的截断误差。
+\end_layout
+
+\begin_layout Subsection
+local展开和Moment-to-Local平移
+\end_layout
+
+\begin_layout Standard
+下面介绍在源点
+\begin_inset Formula $z_{0}(\sbf x)$
+\end_inset
+
+附近的展开（local expansion）。假设
+\begin_inset Formula $z_{L}$
+\end_inset
+
+是靠近源点
+\begin_inset Formula $z_{0}$
+\end_inset
+
+的点，源距远小于场距，即
+\begin_inset Formula $\abs{z_{0}-z_{L}}\ll\abs{z_{L}-z_{c}}$
+\end_inset
+
+。从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的多极展开，
+\begin_inset Formula 
+\[
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}=\frac{1}{2\pi}\sum_{k=0}^{\infty}O_{k}(z_{0}-z_{c})\,M_{k}(z_{c}),
+\]
+
+\end_inset
+
+我们有
+\begin_inset Formula 
+\begin{align*}
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)} & =\frac{1}{2\pi}\sum_{k=0}^{\infty}O_{k}(z_{0}-z_{c})\,M_{k}(z_{c}),\\
+ & =\frac{1}{2\pi}\sum_{k=0}^{\infty}O_{k}\left[(z_{L}-z_{c})+(z_{0}-z_{L})\right]\,M_{k}(z_{c}).
+\end{align*}
+
+\end_inset
+
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的第二式
+\begin_inset Formula 
+\[
+O_{k}(z_{1}+z_{2})=\sum_{\ell=0}^{\infty}\left(-1\right)^{\ell}O_{k+\ell}(z_{1})I_{\ell}(z_{2}),\quad\text{for}\quad\abs{z_{2}}<\abs{z_{1}}.
+\]
+
+\end_inset
+
+得到 local expansion：
+\begin_inset Formula 
+\begin{equation}
+\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}=\frac{1}{2\pi}\sum_{\ell=0}^{\infty}L_{\ell}(z_{L})I_{\ell}(z_{0}-z_{L}),\label{eq:3.24}
+\end{equation}
+
+\end_inset
+
+其中 moment-to-local（M2L）平移：
+\begin_inset Formula 
+\begin{equation}
+L_{\ell}(z_{L})=(-1)^{\ell}\sum_{k=0}^{\infty}O_{\ell+k}(z_{L}-z_{c})\,M_{k}(z_{c}).\label{eq:3.25}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
