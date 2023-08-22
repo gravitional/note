@@ -76,7 +76,7 @@ main(int argc, char* argv[]);
                         ArrangeEquationNo(); // 方程号排序，处理约束自由度，确定方程总数
                         PartitionMesh(); // 剖分网格
                         AdjustRankComponent(); // 调整构件所属MPI 节点
-                        CreateElementList(); // 生成单元列表
+                        CreateElementList(); // 生成单元列表, RankAll, RankBH, RankETSurf, RankOut
                         RemoveOtherRankComponent(); //删除其他MPI 节点上的对象
                         globalInfo()->SetDouble("Penalty",1e60)// 罚系数确定
                         WriteGeoInfo(); //写出网格信息. // FeModelCreator.cpp
