@@ -51,8 +51,7 @@ c Computer the coefficient matrix A
 c Solve the system of equations Ax = b
 c Use LAPACK direct solver (double precision, available at www.netlib.org)
         write(6,*) 'LAPACK direct solver is called ......'
-        write(*,*) '
-        LAPACK direct solver is called ......'
+        write(*,*) 'LAPACK direct solver is called ......'
         call dgesv(n,1,a,n,itemp,u,n,info)
         write(6,*) 'LAPACK solver info =', info
         write(*,*) 'LAPACK solver info =', info
@@ -100,11 +99,11 @@ c----------------------------------------------------------------------------
 c Input the mesh data
       read(5,*)
       do i=1,n
-      read(5,*) itemp, y(1,i), y(2,i)
+        read(5,*) itemp, y(1,i), y(2,i)
       enddo
       read(5,*)
       do i=1,n
-      read(5,*) itemp, node(1,i), node(2,i), bc(1,i), bc(2,i)
+        read(5,*) itemp, node(1,i), node(2,i), bc(1,i), bc(2,i)
       enddo
 c Input the field points inside the domain
       if (nfield .gt. 0) then
