@@ -1588,6 +1588,52 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+现在，我们应用边界元对 BIE 进行离散化，以便对未知边界变量进行数值求解。以二维问题为例，我们使用常数单元对
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 CBIE（假设 
+\begin_inset Formula $f=0$
+\end_inset
+
+）进行离散化。
+\end_layout
+
+\begin_layout Standard
+首先，我们将边界 
+\begin_inset Formula $S$
+\end_inset
+
+ 划分为线段（单元）
+\begin_inset Formula $\Delta S_{j}$
+\end_inset
+
+，并在每个元素上放置一个节点（图 2.3）。元素总数为
+\begin_inset Formula $M$
+\end_inset
+
+，节点总数为 
+\begin_inset Formula $N$
+\end_inset
+
+。在使用常数单元时
+\begin_inset Formula $N=M$
+\end_inset
+
+。接下来，我们把 source点放在节点
+\begin_inset Formula $i$
+\end_inset
+
+并注意到：
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \phi(\sbf y)=\phi_{j},\quad q(\sbf y)=q_{j},\quad\text{在单元}\Delta S_{j}\text{上},
@@ -1600,7 +1646,7 @@ noprefix "false"
 \end_inset
 
 和
-\begin_inset Formula $q_{j}$
+\begin_inset Formula $q_{j}=\partial\phi/\partial n$
 \end_inset
 
 （
@@ -1611,7 +1657,7 @@ noprefix "false"
 \begin_inset Formula $\Delta S_{j}$
 \end_inset
 
-上，
+上 
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -1619,7 +1665,17 @@ noprefix "false"
 \begin_inset Formula $q$
 \end_inset
 
-的节点值。
+的节点值。CBIE
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{align*}
 c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\sbf y)\,\phi(\sbf y)\right]\dd{S(\sbf y)}\\
@@ -1628,7 +1684,7 @@ c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\s
 
 \end_inset
 
-
+现在写成：
 \begin_inset Formula 
 \begin{equation}
 \frac{1}{2}\phi_{i}=\sum_{j=1}^{N}\int_{\Delta S_{j}}\left[G_{i}q_{j}-F_{i}\phi_{j}\right]\dd{S}=\sum_{j=1}^{N}\left[\int_{\Delta S_{j}}G_{i}\dd{S}q_{j}-\int_{\Delta S_{j}}F_{i}\dd{S}\phi_{j}\right],\label{eq:2.27}
@@ -1681,6 +1737,46 @@ g_{ij}=\int_{\Delta S_{j}}G_{i}\dd{S},\quad\hat{f}_{ij}=\int_{\Delta S_{j}}F_{i}
 \end_inset
 
 上，对应 Singular 情形。
+\end_layout
+
+\begin_layout Remark
+从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+变到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.28"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，首先是
+\begin_inset Formula $S$
+\end_inset
+
+积分变成分段
+\begin_inset Formula $\Delta S$
+\end_inset
+
+积分。然后在单元
+\begin_inset Formula $\Delta S_{i}$
+\end_inset
+
+上进行CPV，并考虑了 jump term 
+\begin_inset Formula $1/2$
+\end_inset
+
+ 放到方程左边。在其他单元上可以直接积分，不会有奇异性。
 \end_layout
 
 \begin_layout Standard
@@ -3858,6 +3954,27 @@ noprefix "false"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+预条件
+\end_layout
+
+\begin_layout Standard
+为迭代求解器应用一个好的 
+\series bold
+预条件
+\series default
+ 对迭代求解的收敛性和计算效率非常有益，甚至是至关重要的。与直接求解器不同，迭代求解器在求解线性方程组时所用的 CPU 时间是不可预测的。在某些情况下，解法可以
+在几次迭代内收敛，而在另一些情况下，则需要几百次迭代，这取决于系统的 
+\series bold
+条件
+\series default
+（conditioning）。研究发现，迭代次数与使用迭代求解器求解方程组的
+\series bold
+条件数
+\series default
+直接相关。为了加速迭代求解过程，即减少给定容差下的迭代次数，可以引入一个 预处理（preconditioning）矩阵 来改进 BEM 系统矩阵的条件数。
 \end_layout
 
 \begin_layout Chapter
