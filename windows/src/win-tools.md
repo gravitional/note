@@ -17,3 +17,10 @@ SmartAssistant.log
 ```
 
 点击 `screencapture.exe` 即可使用.
+
+## Dependencies, 查看dll 依赖
+
+[lucasg/Dependencies](https://github.com/lucasg/Dependencies)
+
+A rewrite of the old legacy software "depends.exe" in C# for Windows devs,
+to troubleshoot dll load dependencies issues.
