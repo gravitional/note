@@ -84,6 +84,42 @@ print(requests.__file__)
 C:\Python\Python36\lib\site-packages\requests\__init__.py
 ```
 
+同理可以用于 [获取脚本所在路径: 执行脚本时的执行时的目录和脚本文件所在目录](https://blog.csdn.net/nixiang_888/article/details/109174340)
+
+两个目录的区分
+
+1. 执行脚本时, 命令行所处的目录: 即工作目录, working directory
+2. 脚本文件所在目录: 获得脚本文件 `xxx.py` 在文件系统中的位置
+
+例子: 目录结构
+
+```bash
+|-C:/test
+|   |-rootpath
+|   |   |-path.py
+|   |   |-sub_path
+|   |   |   |-sub_path.py
+# 其中, path.py中调用了sub_path.py
+```
+
+```bash
+# 在c:/test目录下, 执行
+python c:/test/rootpath/path.py
+```
+
+`os.getcwd()`: 执行脚本时所在目录
+在 `path.py` 和 `sub_path.py` 中的 `os.getcwd()` 的命令均获得 `c:/test`
+
+`sys.path[0]` 和 `sys.argv[0]`: 被初始执行的脚本文件所在目录
+在 `path.py` 中的 `sys.path[0]` 和 `sys.argv[0]` 的命令均获得 `c:/test/rootpath`
+在 `sub_path.py` 中的 `sys.path[0]` 和 `sys.argv[0]` 的命令均获得 c:/test/rootpath
+
+`os.path.split(os.path.realpath(__file__))[0]` : __file__所在脚本文件所在目录
+在 `path.py` 中的 `os.path.split(os.path.realpath(__file__))[0]` 的命令均获得 `c:/test/rootpath`
+在 `sub_path.py` 中的 `os.path.split(os.path.realpath(__file__))[0]` 的命令均获得 `c:/test/rootpath/sub_path`
+
+注意当打包文件为 `exe` 文件时, 尽量使用第三种情况, 不会出错
+
 ### 使用 `pip` 命令行
 
 使用 `pip list` 查看已安装的包名
