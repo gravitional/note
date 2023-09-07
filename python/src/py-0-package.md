@@ -94,10 +94,10 @@ C:\Python\Python36\lib\site-packages\requests\__init__.py
 例子: 目录结构
 
 ```bash
-|-C:/test
-|   |-rootpath
+|-C:/test #dir
+|   |-rootpath #dir
 |   |   |-path.py
-|   |   |-sub_path
+|   |   |-sub_path #dir
 |   |   |   |-sub_path.py
 # 其中, path.py中调用了sub_path.py
 ```
@@ -107,16 +107,18 @@ C:\Python\Python36\lib\site-packages\requests\__init__.py
 python c:/test/rootpath/path.py
 ```
 
-`os.getcwd()`: 执行脚本时所在目录
-在 `path.py` 和 `sub_path.py` 中的 `os.getcwd()` 的命令均获得 `c:/test`
++ `os.getcwd()`: 工作目录
+在 `path.py` 和 `sub_path.py` 中命令均获得 `c:/test`
 
-`sys.path[0]` 和 `sys.argv[0]`: 被初始执行的脚本文件所在目录
-在 `path.py` 中的 `sys.path[0]` 和 `sys.argv[0]` 的命令均获得 `c:/test/rootpath`
-在 `sub_path.py` 中的 `sys.path[0]` 和 `sys.argv[0]` 的命令均获得 c:/test/rootpath
++ `sys.path[0]` 和 `sys.argv[0]`: 入口脚本文件 的目录, 即 rootpath/path.py 的目录
+在 `path.py` 中 两条命令均获得 `c:/test/rootpath`
+在 `sub_path.py` 中 两条命令均获得 `c:/test/rootpath`
 
-`os.path.split(os.path.realpath(__file__))[0]` : __file__所在脚本文件所在目录
-在 `path.py` 中的 `os.path.split(os.path.realpath(__file__))[0]` 的命令均获得 `c:/test/rootpath`
-在 `sub_path.py` 中的 `os.path.split(os.path.realpath(__file__))[0]` 的命令均获得 `c:/test/rootpath/sub_path`
++ `os.path.split(os.path.realpath(__file__))[0]` : `__file__` 所在的脚本文件所在目录
+在 `path.py` 中 命令得到 `c:/test/rootpath`
+在 `sub_path.py` 中命令得到 `c:/test/rootpath/sub_path`
+
+也可以使用 `pathlib` 的 `Path(__file__).parent`
 
 注意当打包文件为 `exe` 文件时, 尽量使用第三种情况, 不会出错
 
