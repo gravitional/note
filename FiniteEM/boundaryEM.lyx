@@ -642,8 +642,15 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Section
-sasdf
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+傅立叶逆变换
 \end_layout
 
 \begin_layout Standard
@@ -2622,7 +2629,27 @@ G(z_{0},z)=\frac{-1}{2\pi}\log(z_{0}-z)\label{eq:3.7}
 \begin_inset Formula $\abs{z-z_{c}}\ll\abs{z_{0}-z_{c}}$
 \end_inset
 
-。可以给出：
+，场距 远远 小于源距。Term 为
+\begin_inset Formula $\int_{S_{c}}G(z_{0},z)\,q(z)\dd{S(z)}$
+\end_inset
+
+，
+\series bold
+Target 是
+\begin_inset Formula $z_{0}$
+\end_inset
+
+，M 适用于展开点
+\begin_inset Formula $z_{c}$
+\end_inset
+
+与target 
+\begin_inset Formula $z_{0}$
+\end_inset
+
+较远。
+\series default
+可以给出：
 \begin_inset Formula 
 \begin{equation}
 G(z_{0},z)=\frac{-1}{2\pi}\log(z_{0}-z)=\frac{-1}{2\pi}\left[\log(z_{0}-z_{c})+\log(1-\frac{z-z_{c}}{z_{0}-z_{c}})\right].\label{eq:3.9}
@@ -3088,6 +3115,18 @@ local展开和Moment-to-Local平移
 \begin_inset Formula $\abs{z_{0}-z_{L}}\ll\abs{z_{L}-z_{c}}$
 \end_inset
 
+。
+\series bold
+L展开适用于targe 
+\begin_inset Formula $z_{0}$
+\end_inset
+
+与基点
+\begin_inset Formula $z_{L}$
+\end_inset
+
+比较近
+\series default
 。从
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -3869,8 +3908,84 @@ CBIE的
  kernel 存在相同的关系。
 \end_layout
 
+\begin_layout Subsection
+预条件
+\end_layout
+
+\begin_layout Standard
+为迭代求解器应用一个好的 
+\series bold
+预条件
+\series default
+ 对迭代求解的收敛性和计算效率非常有益，甚至是至关重要的。与直接求解器不同，迭代求解器在求解线性方程组时所用的 CPU 时间是不可预测的。在某些情况下，解法可以
+在几次迭代内收敛，而在另一些情况下，则需要几百次迭代，这取决于系统的 
+\series bold
+条件
+\series default
+（conditioning）。研究发现，迭代次数与使用迭代求解器求解方程组的
+\series bold
+条件数
+\series default
+直接相关。为了加速迭代求解过程，即减少给定容差下的迭代次数，可以引入一个 预处理（preconditioning）矩阵 来改进 BEM 系统矩阵的条件数。
+\end_layout
+
+\begin_layout Standard
+简单而有效的方法是选取块对角预条件子（block diagonal preconditioner）
+\begin_inset Formula 
+\begin{equation}
+M=\left[\begin{array}{ccccc}
+A_{1} & 0 & 0 & \cdots & 0\\
+0 & A_{2} & 0 & \cdots & 0\\
+0 & 0 & A_{3} & \cdots & 0\\
+\vdots & \vdots & \vdots & \ddots & 0\\
+0 & 0 & 0 & 0 & A_{n}
+\end{array}\right],\label{eq:3.42}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $A_{i}$
+\end_inset
+
+是
+\begin_inset Formula $A$
+\end_inset
+
+的子矩阵，对应的系数在leaf上组装，通过在leaf上直接计算积分。使用预条件子矩阵
+\begin_inset Formula $M$
+\end_inset
+
+，将原本的系统
+\begin_inset Formula 
+\begin{equation}
+A\lambda=b\label{eq:3.43}
+\end{equation}
+
+\end_inset
+
+改写成（左预条件）：
+\begin_inset Formula 
+\begin{equation}
+(M^{-1}A)\lambda=M^{-1}b\label{eq:3.44}
+\end{equation}
+
+\end_inset
+
+或者（右预条件）
+\begin_inset Formula 
+\begin{equation}
+(AM^{-1})(M\lambda)=b\label{eq:3.45}
+\end{equation}
+
+\end_inset
+
+两种方法都能产生条件数更好的系统。其他形式的预条件子也存在，并且对于各种应用下的快速多极子BEM 选取更好的预条件子仍在探索中。在讨论过弹性问题（elastic
+ity）的快速多极子方法之后，在下一章中我们再讨论多区域和弹性问题的预条件子。
+\end_layout
+
 \begin_layout Section
-sss
+summary
 \end_layout
 
 \begin_layout Standard
@@ -3988,28 +4103,132 @@ noprefix "false"
 
 \end_inset
 
+其中
+\begin_inset Formula 
+\begin{align*}
+ & I_{k}(z)=\frac{z^{k}}{k!},\quad\text{for}\;k\ge0;\\
+ & O_{k}(z)=\frac{(k-1)!}{z^{k}},\quad\text{for}\;k\ge1;\quad\text{and}\quad O_{0}(z)=-\log(z).
+\end{align*}
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Subsection
-预条件
+tree 约定
 \end_layout
 
 \begin_layout Standard
-为迭代求解器应用一个好的 
-\series bold
-预条件
-\series default
- 对迭代求解的收敛性和计算效率非常有益，甚至是至关重要的。与直接求解器不同，迭代求解器在求解线性方程组时所用的 CPU 时间是不可预测的。在某些情况下，解法可以
-在几次迭代内收敛，而在另一些情况下，则需要几百次迭代，这取决于系统的 
-\series bold
-条件
-\series default
-（conditioning）。研究发现，迭代次数与使用迭代求解器求解方程组的
-\series bold
-条件数
-\series default
-直接相关。为了加速迭代求解过程，即减少给定容差下的迭代次数，可以引入一个 预处理（preconditioning）矩阵 来改进 BEM 系统矩阵的条件数。
+数组 ielem，itree，loct，numt 都是 0-based。
+\end_layout
+
+\begin_layout Standard
+与yijun程序区别：
+\color blue
+level
+\color inherit
+约定是一样的，
+\color blue
+itree[i]
+\color inherit
+ 输出是一样的，
+\color blue
+numt[i]
+\color inherit
+ 输出是一样的；其他相差F2C。
+\end_layout
+
+\begin_layout Itemize
+最大的cell，即最外层cell 位于 level 
+\begin_inset Formula $0$
+\end_inset
+
+，全局编号为
+\begin_inset Formula $0$
+\end_inset
+
+。level 
+\begin_inset Formula $1$
+\end_inset
+
+ 分成
+\begin_inset Formula $4$
+\end_inset
+
+个，全局编号为 
+\begin_inset Formula $1,2,3,4$
+\end_inset
+
+。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+level 
+\begin_inset Formula $\ell$
+\end_inset
+
+ 被剖分成 
+\begin_inset Formula $2^{\ell}\times2^{\ell}=4^{\ell}$
+\end_inset
+
+个厢格，局部编号从
+\begin_inset Formula $0$
+\end_inset
+
+开始，先沿着
+\begin_inset Formula $x$
+\end_inset
+
+方向增加，再沿着
+\begin_inset Formula $y$
+\end_inset
+
+方向增加。
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+ielem[k]：输入tree中编号为 k的 ele， 输出它的原编号 (0~n-1)。例如 ielem[1]=29，即第二个ielem 的原编号是
+ 29。
+\end_layout
+
+\begin_layout Itemize
+itree[i]：输入cell的全局编号
+\begin_inset Formula $i$
+\end_inset
+
+，输出在它所处level 中的局域编号，例如 itree(4)=3，即第五个cell的局域编号是3。
+\end_layout
+
+\begin_layout Itemize
+loct[i]：输入cell的全局编号
+\begin_inset Formula $i$
+\end_inset
+
+，输出位置索引q，q 是包含在此cell中的 ele 的开始编号（原编号）。loct[4]=22，而 ielem 从编号22 开始依次是 10，11，12，13
+，17，16，15，14，共8个单元。
+\end_layout
+
+\begin_layout Itemize
+numt[i]：给出全局编号
+\begin_inset Formula $i$
+\end_inset
+
+的cell中包含的单元数量。参见上一条，numt[4]=8。
+\end_layout
+
+\begin_layout Itemize
+ifath[i]：给出全局编号
+\begin_inset Formula $i$
+\end_inset
+
+的cell 的父cell 的编号，例如 ifath[0]=0，ifath[10]=2。
+\end_layout
+
+\begin_layout Itemize
+level[l]：输入 level 编号l，输出此层cell的开始编号（全局）。例如 level[2]=5，level[3]=17。
 \end_layout
 
 \begin_layout Chapter

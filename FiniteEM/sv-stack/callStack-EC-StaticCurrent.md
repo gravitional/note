@@ -36,15 +36,16 @@ main(int argc, char* argv[]);
                         mat->Create(data);
                             CreateOrders(data); // 创建电化学场顺序
                                 gInfoEC()->SetAnlsType(); // 设置电化学分析类型
-                    CreateInitialField(data); //virtual, 创建初始场
                     CreateMisc(data); //生成物理场特有信息, /ElectroChemistry/Model/ModelCreatorEC.cpp
                         CreateInfo(data); // 生成全局参数
                             data.ReadValue("Thickness2D"...) // 厚度, json
                             data.ReadValue("Sector"...) // 模型分数, json
-                        CreateModelInfo(data)
+                        CreateModelInfo(data); // 电化学 模型温度，计算贡献控制
+                        CreateInitialFieldPre(data)// 创建 电场，浓度场初始场; 场的总数目; 在 common 初始化接口之前
                         CreateConstraint(data) // 生成约束, 即边界条件,  json
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
                         CreateETrodeCache(data)// 电极物理量缓存
+                    CreateInitialField(data); //virtual, 创建初始场
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         //迭代分析类型, 读取 conrol 的分析节点, json
                         AnalysisBase *analysis = NewAnalysis(type); // 创建分析

@@ -8,3 +8,8 @@
 
 [FPGA最全科普总结](https://zhuanlan.zhihu.com/p/117974989)
 [什么是FPGA](https://zhuanlan.zhihu.com/p/135852115)
+
+## blas
+
+[BLAS 简介](https://wuli.wiki/online/BLAS.html)
+[BLAS and Sparse BLAS Routines](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-2/blas-and-sparse-blas-routines.html)
