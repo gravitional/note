@@ -6193,6 +6193,844 @@ y^{\prime}=3\frac{\Delta_{j}}{\delta_{j}}\left[1-A^{2}-B^{2}\right]+\left(2A^{2}
 最小二乘
 \end_layout
 
+\begin_layout Section
+最小二乘和法向方程
+\end_layout
+
+\begin_layout Section
+模型调查
+\end_layout
+
+\begin_layout Section
+QR分解
+\end_layout
+
+\begin_layout Subsection
+Gram–Schmidt 正交化和最小二乘
+\end_layout
+
+\begin_layout Subsection
+改进的 Gram–Schmidt 正交化
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+令 
+\begin_inset Formula $A_{j},\,j=1,\cdots,n$
+\end_inset
+
+ 是线性无关的向量组。
+\end_layout
+
+\begin_layout Plain Layout
+for 
+\begin_inset Formula $j=1,n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Formula $y=A_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+for 
+\begin_inset Formula $i=1,j-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length 3em
+\end_inset
+
+
+\begin_inset Formula $r_{ij}=q_{i}^{T}y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length 3em
+\end_inset
+
+
+\begin_inset Formula $y=y-r_{ij}q_{i}$
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+// 合并就是 
+\begin_inset Formula $y=y-q_{i}^{T}y\,q_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $r_{jj}=\left\Vert y\right\Vert _{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $q_{j}=y/r_{jj}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+end
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+改进的Gram–Schmidt正交化
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+GMRES方法
+\end_layout
+
+\begin_layout Subsection
+krylov方法
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+GMRES
+\series default
+ 是 
+\series bold
+Krylov方法
+\series default
+ 的一种。这类方法依赖于 
+\series bold
+Krylov空间
+\series default
+ 的精确计算，Krylov空间 是由向量
+\begin_inset Formula $\{r,Ar,\cdots,A^{k}r\}$
+\end_inset
+
+ 张成的空间，其中
+\begin_inset Formula $r=b-Ax_{0}$
+\end_inset
+
+是初始猜测的余项向量（residual vector）。 对于较大的
+\begin_inset Formula $k$
+\end_inset
+
+，向量
+\begin_inset Formula $A^{k}r$
+\end_inset
+
+倾向于同一个方向，因此 Krylov空间 的basis 必须仔细计算。
+\end_layout
+
+\begin_layout Standard
+GRMES方法 背后的思想是，在特定向量空间中寻找对初始猜测 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+的改进，即残差
+\begin_inset Formula $r$
+\end_inset
+
+，和 
+\begin_inset Formula $r$
+\end_inset
+
+与非奇异矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的乘积 张成的空间。在方法的第
+\begin_inset Formula $k$
+\end_inset
+
+步，通过添加 
+\begin_inset Formula $A^{k}r$
+\end_inset
+
+ 来扩充 Krylov 空间，重新正交化basis，然后使用最小化二乘（least squares）来找出对
+\begin_inset Formula $x_{0}$
+\end_inset
+
+的最佳改进。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $x_{0}=\text{initial guess}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $r=b-A\,x_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}=r/\left\Vert r\right\Vert _{2}$
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+初始Krylov空间
+\end_layout
+
+\begin_layout Plain Layout
+for k = 1, 2, ..., m
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Formula $y=A\,q_{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \quad{}
+\end_inset
+
+for j=1, 2, ..., k
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $h_{jk}=q_{j}^{T}\,y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $y=y-h_{jk}\,q_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \quad{}
+\end_inset
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $h_{k+1,k}=\left\Vert y\right\Vert _{2}$
+\end_inset
+
+ (If 
+\begin_inset Formula $h_{k+1,k}=0$
+\end_inset
+
+, 跳过下一行并在得到
+\begin_inset Formula $x_{k}$
+\end_inset
+
+后终止程序)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $q_{k+1}=y/h_{k+1,}k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+Minimize 
+\begin_inset Formula $\Bigl\Vert H\,c_{k}-\left[\left\Vert r\right\Vert _{2},\,0\cdots0\right]\Bigr\Vert_{2}$
+\end_inset
+
+ for 
+\begin_inset Formula $c_{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $x_{k}=Q_{k}\,c_{k}+x_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+end
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalized Minimum Residual Method (GMRES)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+迭代中的
+\begin_inset Formula $x_{k}$
+\end_inset
+
+是系统
+\begin_inset Formula $Ax=b$
+\end_inset
+
+的近似解。在伪代码的第
+\begin_inset Formula $k$
+\end_inset
+
+步，矩阵
+\begin_inset Formula $H$
+\end_inset
+
+是
+\begin_inset Formula $(k+1)\times k$
+\end_inset
+
+矩阵。生成
+\begin_inset Formula $c$
+\end_inset
+
+的最小化步骤是关于
+\begin_inset Formula $k$
+\end_inset
+
+个未知数、，
+\begin_inset Formula $k+1$
+\end_inset
+
+个方程的 least square 问题。代码中的矩阵
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+是
+\begin_inset Formula $n\times k$
+\end_inset
+
+维的，包含
+\begin_inset Formula $k$
+\end_inset
+
+个正交归一向量 
+\begin_inset Formula $q_{1},\cdots q_{k}$
+\end_inset
+
+。如果
+\begin_inset Formula $h_{k+1,k}=0$
+\end_inset
+
+，则步骤
+\begin_inset Formula $k$
+\end_inset
+
+为停止步，最小化会抵达
+\begin_inset Formula $Ax=b$
+\end_inset
+
+的精确解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+GMRES 是 Krylov方法 的第一个例子，此类方法依赖于 Krylov空间 的精确计算。 在Chap2 中我们发现，矩阵中近似平行的列向量将导致病态（il
+l-conditioning）。随着
+\begin_inset Formula $k$
+\end_inset
+
+增长，定义 Krylov空间 的向量
+\begin_inset Formula $A^{k}r$
+\end_inset
+
+将趋于平行，所以使用 Sect4.3 中的正交化技巧很有必要，以保证稳定，高效的GMRES算法。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+设Krylov空间 的当前近似为
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+，basis 为
+\begin_inset Formula $q_{1},\cdots,q_{k}$
+\end_inset
+
+；Krylov空间 的下一个近似通过
+\begin_inset Formula $AQ_{k}$
+\end_inset
+
+得到，通过QR分解的形式写成如下，其中引入了新的基向量
+\begin_inset Formula $q_{k+1}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+A\left[\begin{array}{ccccc}
+ & \vdots &  & \vdots\\
+ & \vdots &  & \vdots\\
+q_{1} & \vdots & \cdots & \vdots & q_{k}\\
+ & \vdots &  & \vdots\\
+ & \vdots &  & \vdots
+\end{array}\right]=\left[\begin{array}{ccccccc}
+ & \vdots &  & \vdots &  & \vdots\\
+ & \vdots &  & \vdots &  & \vdots\\
+q_{1} & \vdots & \cdots & \vdots & q_{k} & \vdots & q_{k+1}\\
+ & \vdots &  & \vdots &  & \vdots\\
+ & \vdots &  & \vdots &  & \vdots
+\end{array}\right]\left[\begin{array}{cccc}
+h_{11} & h_{12} & \cdots & h_{1k}\\
+h_{21} & h_{22} & \cdots & h_{2k}\\
+ & h_{32} & \cdots & h_{3k}\\
+ &  & \ddots & \vdots\\
+ &  &  & h_{k+1,k}
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $A$
+\end_inset
+
+是
+\begin_inset Formula $n\times n$
+\end_inset
+
+，
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+是
+\begin_inset Formula $n\times k$
+\end_inset
+
+，
+\begin_inset Formula $H_{k}$
+\end_inset
+
+是
+\begin_inset Formula $(k+1)\times k$
+\end_inset
+
+。大多数情况中，
+\begin_inset Formula $k$
+\end_inset
+
+远远小于
+\begin_inset Formula $n$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+的列向量长成了
+\begin_inset Formula $k$
+\end_inset
+
+–维 Krylov空间，将在其中寻找对初始估计
+\begin_inset Formula $x_{0}$
+\end_inset
+
+的修正
+\begin_inset Formula $x_{\text{add}}$
+\end_inset
+
+，将此空间中的向量写成
+\begin_inset Formula $x_{\text{add}}=Q_{k}c$
+\end_inset
+
+。为了最小化原先问题
+\begin_inset Formula $Ax=b$
+\end_inset
+
+的残差
+\begin_inset Formula 
+\[
+b-A(x_{0}+x_{\text{add}})=r-Ax_{\text{add}},
+\]
+
+\end_inset
+
+相当于最小化
+\begin_inset Formula 
+\[
+\left\Vert Ax_{\text{add}}-r\right\Vert _{2}=\left\Vert A\,Q_{k}c-r\right\Vert _{2}=\left\Vert Q_{k+1}\,H_{k}c-r\right\Vert _{2}=\left\Vert H_{k}c-Q_{k+1}^{T}r\right\Vert _{2},
+\]
+
+\end_inset
+
+其中最后一个等号考虑了正交归一组的 保模长性。注意到 
+\begin_inset Formula $Q_{k+1}^{T}r=\left[\left\Vert r\right\Vert _{2},\,0\cdots0\right]^{T}$
+\end_inset
+
+（
+\begin_inset Formula $(k+1)\times n$
+\end_inset
+
+），由于
+\begin_inset Formula $q_{1}=r/\left\Vert r\right\Vert _{2}$
+\end_inset
+
+，而
+\begin_inset Formula $Q_{k+1}$
+\end_inset
+
+中除第一列外都垂直于
+\begin_inset Formula $r$
+\end_inset
+
+，因此当前的最小二乘问题是
+\begin_inset Formula 
+\[
+\left[\begin{array}{cccc}
+h_{11} & h_{12} & \cdots & h_{1k}\\
+h_{21} & h_{22} & \cdots & h_{2k}\\
+ & h_{32} & \cdots & h_{3k}\\
+ &  & \ddots & \vdots\\
+ &  &  & h_{k+1,k}
+\end{array}\right]\left[\begin{array}{c}
+c_{1}\\
+c_{2}\\
+\vdots\\
+\vdots\\
+c_{k}
+\end{array}\right]=\left[\begin{array}{c}
+\left\Vert r\right\Vert _{2}\\
+0\\
+\vdots\\
+\vdots\\
+0
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\begin_inset Formula $[k+1,k]\times\left[k\right]\Rightarrow[k]$
+\end_inset
+
+。使用最小二乘解
+\begin_inset Formula $c$
+\end_inset
+
+，可以得到原问题
+\begin_inset Formula $Ax=b$
+\end_inset
+
+的第
+\begin_inset Formula $k$
+\end_inset
+
+步近似解
+\begin_inset Formula $x_{k}=x_{0}+x_{\text{add}}=x_{0}+Q_{k}c$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+值得注意的是，GMRES中不同子程序的规模。算法中计算复杂度最高的操作是 最小二乘计算，它用于最小化
+\begin_inset Formula $k$
+\end_inset
+
+个未知数，
+\begin_inset Formula $k+1$
+\end_inset
+
+个方程的误差。在大多数应用中，
+\begin_inset Formula $k$
+\end_inset
+
+ 将小于问题的总数
+\begin_inset Formula $n$
+\end_inset
+
+。在特殊情况
+\begin_inset Formula $h_{k+1,k}=0$
+\end_inset
+
+时，least square 问题变成 square （方阵），得到的解
+\begin_inset Formula $x_{k}$
+\end_inset
+
+将是精确解。
+\end_layout
+
+\begin_layout Standard
+GMRES的一个方便的性质是，后向误差 
+\begin_inset Formula $\left\Vert b-Ax_{k}\right\Vert _{2}$
+\end_inset
+
+随着
+\begin_inset Formula $k$
+\end_inset
+
+单调下降（monotonically）。原因很清楚：step k 的最小二乘手续，将在 
+\begin_inset Formula $k$
+\end_inset
+
+–维的 Krylov空间 中最小化
+\begin_inset Formula $\left\Vert r-Ax_{\text{add}}\right\Vert _{2}$
+\end_inset
+
+中的
+\begin_inset Formula $x_{\text{add}}$
+\end_inset
+
+。随着 GMRES进行，Krylov空间将不断扩大，所以下一次近似不可能变差。
+\end_layout
+
+\begin_layout Standard
+上述 GMRES伪代码 的一些实现细节值得一谈。
+\series bold
+首先
+\series default
+，注意到只有要求近似解
+\begin_inset Formula $x_{k}$
+\end_inset
+
+时，才需要进行最小二乘化步骤。因此可以间歇执行最小二乘，例如为了查看朝最终解的收敛进程；甚至极端一点，可以把最小二乘移出循环，只在最后一步执行，因为
+ 
+\begin_inset Formula $x_{\text{add}}=Q_{k}c$
+\end_inset
+
+ 并不依赖于之前的 least square 计算。这对应于把代码中的最后一个 
+\series bold
+end
+\series default
+ 向上移动两行。
+\series bold
+其次
+\series default
+，如果条件数（conditioning）是重要的因素，可以把内循环中的 Gram–Schmidt 正交化法替换成 Householder 正交化，而计算代价仅略
+微升高。
+\end_layout
+
+\begin_layout Standard
+GMRES 典型用于 large and sparse 
+\begin_inset Formula $n\times n$
+\end_inset
+
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+。理论上，只要
+\begin_inset Formula $A$
+\end_inset
+
+不是奇异矩阵，算法将在
+\begin_inset Formula $n$
+\end_inset
+
+步后收敛于正确解
+\begin_inset Formula $x$
+\end_inset
+
+。然而在大多数情况下，目的仅仅是运行
+\begin_inset Formula $k$
+\end_inset
+
+步，其中
+\begin_inset Formula $k$
+\end_inset
+
+远小于
+\begin_inset Formula $n$
+\end_inset
+
+。注意到矩阵
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+是
+\begin_inset Formula $n\times k$
+\end_inset
+
+，并且不保证是 sparse，因此内存大小也可以限制GMRES中的步数
+\begin_inset Formula $k$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+这些原因导致算法的变种，被称为 重启GRMES（Restarted GMRES）。如果经过
+\begin_inset Formula $k$
+\end_inset
+
+步之后没能足够趋近解，并且如果此时
+\begin_inset Formula $n\times k$
+\end_inset
+
+矩阵
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+太大难以处理，扔掉
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+重新开始GMRES方法，
+\emph on
+使用当前的最优估计
+\begin_inset Formula $x_{k}$
+\end_inset
+
+作为新的
+\begin_inset Formula $x_{0}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+选项带有 restart 的 GMRES算法，可以使用 MATLAB 命令 gmres 调用。
+\end_layout
+
+\begin_layout Subsection
+预条件GMRES
+\end_layout
+
 \begin_layout Chapter
 数值微分和积分
 \end_layout
