@@ -5,6 +5,22 @@
 [安装 GFortran](https://fortran-lang.org/zh_CN/learn/os_setup/install_gfortran/)
 [Equation Solution](http://www.equation.com/servlet/equation.cmd?fa=fortran)
 
+## vscode fortran, fortls
+
+`fortls` 是 Fortran 语言的 Language server,
+
+```bash
+pip install fortls
+```
+
+在 vscode 的 settings.json 中可以配置, 搜索 `fortls path` 可以找到配置入口,
+其中可以使用 `~` 符号表示家目录.
+
+```conf
+Path to the Fortran language server (fortls).
+~/bin/fortls.exe
+```
+
 ## findent 格式化工具
 
 [findent 4.2.6](https://pypi.org/project/findent/)
