@@ -177,3 +177,7 @@ void FieldWriterEC::SetTestFieldData()
 计算 time1 电场时, 使用 time0-1 积累的 film 厚度.
 计算 time2 电场时, 使用 time0-2 积累的 film 厚度.
 ...
+
+## solver 字符串操作, 路径操作
+
+见 `Str.cpp`

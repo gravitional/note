@@ -59,3 +59,64 @@ system("chcp 65001")
 ### 电化学, 反应动力学 自定义函数 计算失败, y too large
 
 改变 电场初始值, 可能会收敛.
+
+### warning C26451
+
+[Warning C26451: Arithmetic overflow](https://stackoverflow.com/questions/55995817/warning-c26451-arithmetic-overflow)
+[Warning C26451](https://learn.microsoft.com/en-us/cpp/code-quality/c26451?view=msvc-170)
+[C++ 中的 #pragma warning(push) 和 #pragma warning(pop)有什么用](https://blog.csdn.net/zgaoq/article/details/109123906)
+
+我认为这是 VS2019 中的一个bug. 在 VS2022 中它不再被标记.
+例如, 下列程序会产生警告
+
+```cpp
+double test2(int n)
+{
+     return 4.0 * (n - 1);
+}
+```
+
+但是这个反而不会
+
+```cpp
+int test2a(int n)
+{
+    return 4 * (n - 1);
+}
+```
+
+然而, 后者出现未定义行为的风险要大得多.
+`乘以4` 会大大增加出现未定义行为的风险, 因为大量的 `n` 会产生未定义行为.
+有多大?在第一个例子中, 在大约 `40亿` 个可能的 `n` 值中, 只有一个可能值会溢出.
+在第二个例子中, 大约有 `30亿个n` 会溢出/溢出.
+为什么反而只有第一个被警告呢?
+这是因为如果每一个比加 0 或乘 1 更复杂的表达式, 都会因为可能溢出而被标记, 那么整数运算就无法进行了.
+
+可以说, 如果要将警告设置得如此之高, 几乎所有对 ints 的算术运算都会受到警告.
+不过, 从 VS2022 开始, 微软不再对此发出 C26451 警告.
+在 `-Wall` 下也不会显示. 他们显然懂得都懂.
+
+`Code Analysis` 觉得会 overflow, 可以这样解决:
+
++ Disable the warning in code:
+
+```cpp
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 26454)    # 禁止compiler警告
+#endif
+
+//  your code  here
+
+#if defined(_MSC_VER)
+#pragma warning(pop)  # 恢复compiler警告
+#endif
+```
+
++ 本答案展示了在 VS 2019 代码分析规则集编辑器中禁用此警告的方法.
+在`Code Analysis rule` 中禁用此 warning
+[Use rule sets to group code analysis rules](https://learn.microsoft.com/en-us/visualstudio/code-quality/using-rule-sets-to-group-code-analysis-rules)
+
+![img](https://i.stack.imgur.com/GRon3.png)
+
+在 project 上右键, 通过 `properties` 页面寻找 code analysis.

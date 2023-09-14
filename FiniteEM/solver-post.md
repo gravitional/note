@@ -25,3 +25,11 @@ Mesh/
 
 Mapping/
     xxx.CellNode.1  场数据自然序 -> 单元自然序1 (上面的 Cell/Nodes.Index)
+
+## 节点顺序
+
+result.h5/Mesh/Node/Coord 有自己的排列顺序, 
+和 mesh.h5/Node/Coord 下面的顺序不一样.
+
+reuslt.h5 里面的节点场, 是按照 result.h5 自己的节点顺序给出的.
+如果场存在 mapping, 仍然是从 natural 编号 -> result 节点编号.

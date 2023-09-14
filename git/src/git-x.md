@@ -1015,3 +1015,24 @@ feature Z 完成
 ```
 
 通常我不喜欢保留这些信息, 所以我会清除默认消息, 使用一些自定义 `注释`, 例如只保留 `feature Z 完成`.
+
+## git 目录操作
+
+### 获取当前仓库的根目录
+
+[Git 如何使用一条命令来获取Git根目录](https://geek-docs.com/git/git-questions/267_git_is_there_a_way_to_get_the_git_root_directory_in_one_command.html)
+
+使用 `git rev-parse`命令获取Git根目录
+Git提供了一个名为 `git rev-parse` 的命令, 可以用来解析, 处理Git对象以及获取与之相关的信息.
+通过使用 `git rev-parse` 命令, 我们可以获取Git根目录的绝对路径.
+
+要获取Git根目录的绝对路径, 可以在命令行中输入以下命令:
+
+```bash
+git rev-parse --show-toplevel
+```
+
+这将返回 `Git根目录` 的绝对路径.
+例如, 假设我们的 `Git仓库` 位于 `/Users/username/git-repo` 目录中,
+那么以上命令将返回 `/Users/username/git-repo`.
+你可以在自己的 Git仓库 中尝试该命令, 看看它是否返回了正确的根目录路径.
