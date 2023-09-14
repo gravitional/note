@@ -18,6 +18,11 @@
 然后根据需要进行更改. 保存时字体将发生变化.
 浏览首选项 -> 设置的左侧窗格, 你还可以看到其他需要更改的设置.
 
+## cmake 高亮
+
+[Sublime Text 3 如何高亮 cmake 语法](https://zhuanlan.zhihu.com/p/508317313)
+[sublime-cmakelists](https://github.com/zyxar/Sublime-CMakeLists)
+
 ## sublime commands
 
 [How to list all commands in Sublime Text 3](https://stackoverflow.com/questions/48656430/how-to-list-all-commands-in-sublime-text-3)
