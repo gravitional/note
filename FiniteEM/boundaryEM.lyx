@@ -4192,6 +4192,14 @@ level
 \begin_layout Itemize
 ielem[k]：输入tree中编号为 k的 ele， 输出它的原编号 (0~n-1)。例如 ielem[1]=29，即第二个ielem 的原编号是
  29。
+\series bold
+ielem 中 ele 的编号按照 QuadTree 的 leaf编号（按深度优先且only leaf编号）
+\series default
+；预条件矩阵 rwork 中的元素也按照
+\series bold
+深度优先
+\series default
+编号。
 \end_layout
 
 \begin_layout Itemize
@@ -4207,8 +4215,30 @@ loct[i]：输入cell的全局编号
 \begin_inset Formula $i$
 \end_inset
 
-，输出位置索引q，q 是包含在此cell中的 ele 的开始编号（原编号）。loct[4]=22，而 ielem 从编号22 开始依次是 10，11，12，13
-，17，16，15，14，共8个单元。
+，输出位置索引q，q 是包含在此cell中的 ele 的开始编号（原编号）。例如 loct[4]=22，而 ielem 从编号22 开始依次是
+ 10，11，12，13，17，16，15，14，共8个单元；
+\series bold
+loct 可以理解为，按照 tree 中 cell 的顺序（cell 按 QuadTree 广度优先），对 ele 进行重新编号；
+\series default
+线性系统的 左项
+\begin_inset Formula $Ax$
+\end_inset
+
+，右项
+\begin_inset Formula $b$
+\end_inset
+
+，残差
+\begin_inset Formula $r$
+\end_inset
+
+ 也是按照
+\series bold
+广度优先
+\series default
+编号
+\series bold
+。
 \end_layout
 
 \begin_layout Itemize
