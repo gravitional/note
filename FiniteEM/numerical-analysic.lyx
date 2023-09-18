@@ -708,6 +708,186 @@ for i in range(n-2,-1,-1):
 
 \end_layout
 
+\begin_layout Section
+嵌套乘法，霍纳乘法
+\end_layout
+
+\begin_layout Standard
+标准形式的多项式 
+\begin_inset Formula $c_{0}+c_{1}x+c_{2}x^{2}+c_{3}x^{3}+c_{4}x^{4}$
+\end_inset
+
+可以用嵌套的形式写为
+\begin_inset Formula 
+\begin{equation}
+c_{0}+x{\color{cyan}\bigg(}c_{1}+x{\color{brown}\Big(}c_{2}+x{\color{blue}\big(}c_{3}+x(c_{4}){\color{blue}\big)}{\color{brown}\Big)}{\color{cyan}\bigg)}\label{eq:0.4}
+\end{equation}
+
+\end_inset
+
+但是一些应用需要更加一般的形式。特别是第3章的插值计算需要一下的形式：
+\begin_inset Formula 
+\begin{equation}
+c_{0}+(x-r_{0}){\color{cyan}\bigg(}c_{1}+(x-r_{1}){\color{brown}\Big(}c_{2}+(x-r_{2}){\color{blue}\big(}c_{3}+(x-r_{3})(c_{4}){\color{blue}\big)}{\color{brown}\Big)}{\color{cyan}\bigg)}\label{eq:0.5}
+\end{equation}
+
+\end_inset
+
+我们称
+\begin_inset Formula $r_{0}$
+\end_inset
+
+，
+\begin_inset Formula $r_{1}$
+\end_inset
+
+，
+\begin_inset Formula $r_{2}$
+\end_inset
+
+，
+\begin_inset Formula $r_{3}$
+\end_inset
+
+为
+\series bold
+基点
+\series default
+。若设置
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:0.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的参数
+\begin_inset Formula $r_{0}=r_{1}=r_{2}=r_{3}=0$
+\end_inset
+
+，则变成
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:0.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中传统的嵌套形式。
+\end_layout
+
+\begin_layout Example
+对于给定的标准形式多项式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:0.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，无需额外处理系数，即可使用嵌套乘法加速计算。其中c[i] 是系数数组，s 是多项式在
+\begin_inset Formula $x$
+\end_inset
+
+时的值。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Python,basicstyle={\ttfamily},tabsize=4,keywordstyle={\color{blue}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+s = c[n] #初始值，最深层
+\end_layout
+
+\begin_layout Plain Layout
+
+for i in range(n-1,-1,-1):
+\end_layout
+
+\begin_layout Plain Layout
+
+	s = s*x+c[i]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+嵌套乘法
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:0.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对应的多项式为
+\begin_inset Formula 
+\begin{align*}
+ & c_{4}r_{0}r_{1}r_{2}r_{3}-c_{3}r_{0}r_{1}r_{2}+c_{2}r_{0}r_{1}-c_{1}r_{0};\\
+ & -c_{4}(r_{1}r_{2}r_{3}+r_{0}r_{2}r_{3}+r_{0}r_{1}r_{3}+r_{0}r_{1}r_{2})+c_{3}(r_{0}r_{1}+r_{0}r_{2}+r_{1}r_{2})-c_{2}(r_{0}+r_{1})+c_{1}\\
+ & c_{4}(r_{0}r_{1}+r_{2}r_{3}+r_{1}r_{3}+r_{0}r_{3}+r_{1}r_{2}+r_{0}r_{2})-c_{3}(r_{0}+r_{1}+r_{2})+c_{2}\\
+ & -c_{4}(r_{0}+r_{1}+r_{2}+r_{3})+c_{3}\\
+ & c_{4}
+\end{align*}
+
+\end_inset
+
+观察可知，各项是 组合项，辅以交叉指标。
+\begin_inset Formula 
+\begin{align*}
+ & C_{4}^{4}-C_{3}^{3}+C_{2}^{2}-C_{1}^{1}\\
+ & -C_{4}^{3}+C_{3}^{2}-C_{2}^{1}+C_{1}^{0}\\
+ & C_{4}^{2}-C_{3}^{1}+C_{2}^{0}\\
+ & -C_{4}^{1}+C_{3}^{0}\\
+ & C_{4}^{0}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 求解方程
 \end_layout
