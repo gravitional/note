@@ -83,7 +83,7 @@ class subprocess.Popen(args, bufsize=-1, executable=None, stdin=None, stdout=Non
 
 [subprocess.check_call](https://docs.python.org/3/library/subprocess.html#subprocess.check_call)
 
-需要捕获 `stdout` or `stderr`, 则应该使用 `run()` 代替 `check_call`: 
+需要捕获 `stdout` or `stderr`, 则应该使用 `run()` 代替 `check_call`:
 
 ```python
 subprocess.run(..., check=True)
@@ -147,4 +147,42 @@ os.system("ls  -lah /home/tom/Downloads")
 print('\nuse another\n')
 # use subprocess.call
 subprocess.call("ls  -lah /home/tom/Downloads",shell=True)
+```
+
+## subprocess 直接输出到命令行
+
+[Python subprocess output to stdout](https://stackoverflow.com/questions/6062340/python-subprocess-output-to-stdout)
+[subprocess — Subprocess management](https://docs.python.org/3/library/subprocess.html#popen-constructor)
+
+Simply don't send the output to a pipe:
+
+```python
+proc = subprocess.Popen (command_args, shell=False)
+proc.communicate()
+```
+
+如下, Popen 构造函数中, stdin, stdout, stderr 的默认值均为 `None`,
+默认情况下, 创建的 `子进程` 将继承当前进程的 `stdout`, 这意味着所有内容都将直接打印到终端上.
+这也是代码不将结果存储在变量中的原因, 由于我们没有将输出发送到 `管道`(`pipe`).
+
+```python
+class subprocess.Popen(args, bufsize=- 1, executable=None, stdin=None, stdout=None, stderr=None,...)
+```
+
+所谓 `管道`, 即在创建 `Popen` 对象时,
+可以指定创建 `stdin`, `stdout` 和 `stderr` 三个文件句柄, 可以像文件那样进行读写操作.
+这里的 `管道`, 是 `subprocess` 模块代码内部创建的文件句柄,
+而不是指 父进程 `终端` 里面的 `管道操作符`
+
+```python
+import subprocess
+
+s = subprocess.Popen("python", stdout=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
+s.stdin.write(b"import os\n")
+s.stdin.write(b"print(os.environ)")
+s.stdin.close()
+
+out = s.stdout.read().decode("utf-8")
+s.stdout.close()
+print(out)
 ```
