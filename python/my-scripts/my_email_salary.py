@@ -28,7 +28,7 @@ class Test:
     def send_email(self, econtent, ename, mail):
         host = 'smtp.exmail.qq.com'
         user = 'mingyang.yang@ibe.cn'
-        password = 'Toapply.1'
+        password = 'XXXXXX'
         receivers = [mail]
         subject = '员工工资表'
         msg = MIMEText(econtent, 'html', 'utf-8')
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     cnt = 0
     sheet = wb.active
     dt_now = datetime.datetime.now()
-    duration=f'{dt_now.year}年{dt_now.month-1}月1日--{dt_now.year}年{dt_now.month}月1日'
+    duration = f'{dt_now.year}年{dt_now.month-1}月1日--{dt_now.year}年{dt_now.month}月1日'
     thead = '<thead>'
     #  1.获取excel表的数据
     for row in sheet:
@@ -71,8 +71,8 @@ if __name__ == '__main__':
             for cell in row:
                 tbody += f'<td>{cell.value}</td>'
             tbody += '</tr>'
-        name = row[0].value # 姓名
-        mail = row[1].value # 第 n个人 的 邮箱地址
+        name = row[0].value  # 姓名
+        mail = row[1].value  # 第 n个人 的 邮箱地址
         #  2.编写邮件内容
         content = f'''
             <h3>{name},你好</h3>
@@ -87,4 +87,3 @@ if __name__ == '__main__':
             print('content:', content)
             print(name, mail)
             o.send_email(content, name, mail)
-
