@@ -4,4 +4,4 @@
 
 使用 `numpy.loadtxt` or `numpy.genfromtxt`
 
-[read-csv](my-read-csv.py)
+[read-csv](../my-scripts/my-read-csv.py)

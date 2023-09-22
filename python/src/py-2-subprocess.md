@@ -1,6 +1,8 @@
 # Python运行外部程序
 
 [Python运行外部程序的几种方法](https://blog.csdn.net/xiligey1/article/details/80267983)
+[Python3 利用subprocess实现管道(pipe)交互操作读/写通信](https://www.cnblogs.com/suwings/p/6216279.html)
+[每周一个 Python 模块|subprocess](https://zhuanlan.zhihu.com/p/91342640)
 
 ## subprocess --- 子进程管理
 
