@@ -98,6 +98,34 @@ Young
 介绍
 \end_layout
 
+\begin_layout Standard
+平流（advection）与对流（convection）的区别，
+\begin_inset CommandInset href
+LatexCommand href
+name "Distinction between and convection"
+target "https://en.wikipedia.org/wiki/Advection"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+平流一词通常是对流的同义词，文献中也使用这种术语对应关系。从技术上讲，“convection” 适用于流体的运动（通常是由于热梯度产生的密度梯度），而“adve
+ction ” 则是流体速度引起的某些物质的运动。因此，尽管看起来可能有些混淆，it is technically correct to think
+ of momentum 
+\series bold
+being advected
+\series default
+ by the velocity field in the Navier-Stokes equations，尽管由此产生的运动将被视为 
+\series bold
+convection
+\series default
+。由于 “convection” 一词专门用于表示与热梯度相关的传输，因此，如果不能确定哪种术语最适合描述特定系统，使用 “advection”
+ 一词可能更为安全。 
+\end_layout
+
 \begin_layout Chapter
 矢量微积分回顾
 \end_layout
@@ -1091,6 +1119,200 @@ noprefix "false"
 
 \begin_layout Section
 能量守恒
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E=m\left(\hat{u}+\frac{1}{2}\sbf v\cdot\sbf v\right)\label{eq:3.43}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\hat{u}$
+\end_inset
+
+是 fluid specific internal energy（单位质量的内能）。
+\begin_inset Formula 
+\begin{equation}
+\left(\frac{\dd{E}}{\dd{t}}\right)_{\text{MV}}=\dot{Q}_{V}+\dot{Q}_{S}-\dot{W}_{b}-\dot{W}_{S}\label{eq:3.46}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\dot{W}_{S}=-\int_{S}\left[\Sigma\cdot\sbf v\right]\cdot\sbf n\dd{S}=-\int_{V}\nabla\cdot\left[\Sigma\cdot\sbf v\right]\dd{V}=-\int_{V}\nabla\cdot\left[\left(-p\sbf I+\sbf\tau\right)\cdot\sbf v\right]\dd{V}\label{eq:3.48}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\dot{W}_{S}$
+\end_inset
+
+可以重写为
+\begin_inset Formula 
+\begin{equation}
+\dot{W}_{S}=-\int_{V}\left(-\nabla\cdot\left[p\sbf v\right]+\nabla\cdot\left[\sbf\tau\cdot\sbf v\right]\right)\dd{V}\label{eq:3.49}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[\frac{\partial}{\partial t}\left(\rho\,e\right)+\nabla\cdot\left[\rho\sbf v\,e\right]+\nabla\cdot\dot{q}_{s}+\nabla\cdot\left[\rho\sbf v\right]-\nabla\cdot\left[\sbf\tau\cdot\sbf v\right]-\sbf f_{b}\cdot\sbf v-\dot{q}_{V}\right]\dd{V}=0.\label{eq:3.52}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial}{\partial t}\left(\rho\,e\right)+\nabla\cdot\left[\rho\sbf v\,e\right]=-\nabla\cdot\dot{q}_{s}-\nabla\cdot\left[\rho\sbf v\right]+\nabla\cdot\left[\sbf\tau\cdot\sbf v\right]+\sbf f_{b}\cdot\sbf v+\dot{q}_{V}\label{eq:3.53}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+能量守恒 in specific Internal Energy
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\frac{\partial}{\partial t} & \left(\rho\frac{1}{2}\sbf v\cdot\sbf v\right)+\nabla\cdot\left[\rho\left(\frac{1}{2}\sbf v\cdot\sbf v\right)\sbf v\right]=\nonumber \\
+ & -\nabla\cdot\left[p\sbf v\right]+p\nabla\cdot\sbf v+\nabla\cdot\left[\sbf\tau\cdot\sbf v\right]-\left(\sbf\tau:\nabla\sbf v\right)+\sbf f_{b}\cdot\sbf v\label{eq:3.58}
+\end{align}
+
+\end_inset
+
+从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.53"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中减去
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.58"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，能量方程 with specific intenal energy 作为著变量，可以写成
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial}{\partial t}\left(\rho\hat{u}\right)+\nabla\cdot\left[\rho\sbf v\,\hat{u}\right]=-\nabla\cdot\dot{q}_{s}-p\nabla\cdot\sbf v+\left(\sbf\tau:\nabla\sbf v\right)+\dot{q}_{V}\label{eq:3.59}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+能量守恒 in specific Enthalpy
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{u}=\hat{h}-\frac{p}{\rho}\label{eq:3.60}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\hat{h}$
+\end_inset
+
+表示 Enthalpy。代入
+\begin_inset Formula $\hat{u}=\hat{h}-p/\rho$
+\end_inset
+
+到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:3.59"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}\left(\rho\hat{h}\right)+\nabla\cdot\left[\rho\sbf v\,\hat{h}\right]=-\nabla\cdot\dot{q}_{s}+\frac{\DD{p}}{\DD{t}}+\left(\sbf\tau:\nabla\sbf v\right)+\dot{q}_{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+能量守恒 in specific Total Enthalpy
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+e=\hat{u}+\frac{1}{2}\sbf v\cdot\sbf v=\hat{h}-\frac{p}{\rho}+\frac{1}{2}\sbf v\cdot\sbf v=\hat{h}_{0}-\frac{p}{\rho}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial}{\partial t}\left(\rho\hat{h}_{0}\right)+\nabla\cdot\left[\rho\sbf v\,\hat{h}_{0}\right]=-\nabla\cdot\dot{q}_{s}+\frac{\partial p}{\partial t}+\nabla\cdot\left(\sbf\tau\cdot\sbf v\right)+\dot{q}_{V}\label{eq:3.63}
+\end{equation}
+
+\end_inset
+
+迄今为止介绍的所有形式的能量方程都是通用的，适用于
+\series bold
+牛顿
+\series default
+流体和
+\series bold
+非牛顿
+\series default
+流体。唯一的限制是它们都适用于
+\series bold
+固定的
+\series default
+控制体积。
+\end_layout
+
+\begin_layout Subsection
+能量守恒 in Temperature
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\dd{\hat{h}}=\left(\frac{\partial\hat{h}}{\partial T}\right)_{p}\dd{T}+\left(\frac{\partial\hat{h}}{\partial p}\right)_{T}\dd{p}\label{eq:3.64}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \end_body

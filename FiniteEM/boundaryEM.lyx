@@ -490,7 +490,7 @@ G(\sbf x,\sbf x')=\frac{1}{4\pi\varepsilon_{0}}\left(\frac{1}{r_{1}}-\frac{1}{r_
 \end_layout
 
 \begin_layout Section
-格林公式和边值问题的解
+格林公式和边值问题的解–特殊方法
 \end_layout
 
 \begin_layout Standard
@@ -869,6 +869,25 @@ f_{3}(x)=-\frac{1}{x-a}-\frac{1}{b-x}.\label{eq:1.35}
 
 \end_layout
 
+\begin_layout Chapter
+势问题的传统边界元方
+\end_layout
+
+\begin_layout Section
+边值问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla^{2}\phi+f=0,\quad\text{in}\quad V,\label{eq:2.1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 势问题的基本解
 \end_layout
@@ -991,15 +1010,15 @@ G(\sbf x,\sbf y)=\begin{cases}
 \begin_inset Formula 
 \begin{equation}
 F(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}=\begin{cases}
-\frac{-1}{2\pi r}r_{,k}\,n_{k}^{y} & \text{二维}\\
-\frac{-1}{4\pi r^{2}}r_{,k}\,n_{k}^{y} & \text{三维}
+\frac{-1}{2\pi r}r_{,k}^{y}\,n_{k}^{y} & \text{二维}\\
+\frac{-1}{4\pi r^{2}}r_{,k}^{y}\,n_{k}^{y} & \text{三维}
 \end{cases}\label{eq:2.6}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $r_{,k}=\partial r/\partial y_{k}=(y_{k}-x_{k})/r$
+\begin_inset Formula $r_{,k}^{y}=\partial r/\partial y_{k}=(y_{k}-x_{k})/r$
 \end_inset
 
 。基本解满足下列积分等式。以下各式中，
@@ -1064,7 +1083,17 @@ F(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}=\begi
 \end_layout
 
 \begin_layout Proof
-对方程左右积分得到
+对方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+左右积分得到
 \begin_inset Formula 
 \[
 \int_{V}\nabla^{2}G(\sbf x,\sbf y)\dd{V_{y}}=-\int_{V}\delta(\sbf x,\sbf y)\dd{V_{y}}.
@@ -1077,7 +1106,8 @@ F(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}=\begi
 \begin{align*}
 \int_{V}\nabla^{2}G(\sbf x,\sbf y)\dd{V_{y}} & =\int_{V}G_{,kk}\dd{V}\\
  & =\int_{S}G_{,k}\,n_{k}\dd{S}\\
- & =\int_{S}\frac{\partial}{\partial n}G(\sbf x,\sbf y)\dd{S_{y}}
+ & =\int_{S}\frac{\partial}{\partial n}G(\sbf x,\sbf y)\dd{S_{y}}\\
+ & =\int_{S}F(\sbf x,\sbf y)\dd{S_{y}}
 \end{align*}
 
 \end_inset
@@ -1304,12 +1334,283 @@ noprefix "false"
 。
 \end_layout
 
-\begin_layout Section
-2.3 边界积分方程 形式
+\begin_layout Example
+考虑一个导体（等势体），电荷都分布在表面上。现在把target 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 也选在导体表面，由于导体是等势体，不妨设为常量
+\begin_inset Formula $\phi$
+\end_inset
+
+，在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，可以把
+\begin_inset Formula $\phi(\sbf y)$
+\end_inset
+
+ 提到积分外面，则
+\begin_inset Formula 
+\[
+\phi+\phi\int_{S}F(\sbf x,\sbf y)\dd{S(\sbf y)}=\int_{S}G(\sbf x,\sbf y)\,q(\sbf y)\dd{S(\sbf y)}+\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)},
+\]
+
+\end_inset
+
+由等式一
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula $\int_{S}F(\sbf x,\sbf y)\dd{S(\sbf y)}=-1$
+\end_inset
+
+，则lhs为零，因此rhs也为零。
+\begin_inset Formula 
+\[
+\int_{S}G(\sbf x,\sbf y)\,q(\sbf y)\dd{S(\sbf y)}+\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)}=0
+\]
+
+\end_inset
+
+导体内部没有电荷，电荷
+\begin_inset Formula $f(\sbf y)$
+\end_inset
+
+只分布在表面，体积分实际上只包含面积分
+\begin_inset Formula 
+\[
+\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)}\Rightarrow\int_{S}G(\sbf x,\sbf y)\,f(\sbf y)\dd{S(\sbf y)},
+\]
+
+\end_inset
+
+由于此式要对任意形状的导体成立，包括在任意
+\begin_inset Formula $\sbf y$
+\end_inset
+
+处微小形变的两个导体，因此有
+\begin_inset Formula 
+\[
+-q(\sbf y)=f(\sbf y)
+\]
+
+\end_inset
+
+即熟知的导体表面场强公式
+\begin_inset Formula 
+\[
+E=-\nabla\phi=\sigma/\varepsilon_{0}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-ddd
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+三维格林函数
+\begin_inset Formula $F$
+\end_inset
+
+的 jump term。
+\end_layout
+
+\end_inset
+
+三维格林函数
+\begin_inset Formula $F(\sbf x,\sbf y)=\frac{-1}{4\pi r^{2}}r_{,k}^{y}\,n_{k}^{y}$
+\end_inset
+
+。在小曲面
+\begin_inset Formula $S$
+\end_inset
+
+上对 targe 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 的积分为
+\begin_inset Formula 
+\[
+I=\int_{\Omega}\frac{-1}{4\pi r^{2}}r_{,k}^{y}\,n_{k}^{y}\,r^{2}\dd{\Omega}
+\]
+
+\end_inset
+
+其中选取了以 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 为原点的球坐标；为了方便，我们假设
+\begin_inset Formula $S$
+\end_inset
+
+就是坐标球面（
+\begin_inset Formula $r=\text{常数}$
+\end_inset
+
+）的一部分，这样可以简化为
+\begin_inset Formula 
+\[
+r_{,k}^{y}\,n_{k}^{y}=\frac{\sbf r}{r}\cdot\sbf e_{r}=1,\quad I=\int_{\Omega}\frac{-1}{4\pi}\dd{\Omega}
+\]
+
+\end_inset
+
+因此，当
+\begin_inset Formula $\sbf x$
+\end_inset
+
+趋于
+\begin_inset Formula $S$
+\end_inset
+
+（
+\begin_inset Formula $\sbf x\in S$
+\end_inset
+
+）时，
+\begin_inset Formula $S$
+\end_inset
+
+对
+\begin_inset Formula $\sbf x$
+\end_inset
+
+张成的立体角趋于 
+\begin_inset Formula $2\pi$
+\end_inset
+
+，
+\begin_inset Formula $\lim_{x\in S}\,I=-1/2$
+\end_inset
+
+。当
+\begin_inset Formula $\sbf x$
+\end_inset
+
+趋于
+\begin_inset Formula $S$
+\end_inset
+
+时，球面的形状或者朝向也不再重要（对
+\begin_inset Formula $\sbf x$
+\end_inset
+
+而言等价于半球面），因此上面选取
+\begin_inset Formula $S$
+\end_inset
+
+为标准球面不影响结果。
+\end_layout
+
+\begin_layout Section
+边界积分方程形式
+\end_layout
+
+\begin_layout Standard
+为了推导对应PDE2.1 的 直接 BIE，使用Eq1.24中的格林第二等式 
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\left[u\nabla^{2}v-v\nabla^{2}u\right]\dd{V}=\int_{S}\left[u\frac{\partial v}{\partial n}-v\frac{\partial u}{\partial n}\right]\dd{S}.\label{eq:2.11}
+\end{equation}
+
+\end_inset
+
+令
+\begin_inset Formula $v\left(\sbf y\right)=\phi\left(\sbf y\right)$
+\end_inset
+
+，后者满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，并令
+\begin_inset Formula $u(\sbf y)=G(\sbf x,\sbf y)$
+\end_inset
+
+，它满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以得到
+\begin_inset Formula 
+\begin{align*}
+\int_{V} & \left[G(\sbf x,\sbf y)\nabla^{2}\phi(\sbf y)-\phi(\sbf y)\nabla^{2}G(\sbf x,\sbf y)\right]\dd{V(\sbf y)}\\
+ & =\int_{S}\left[G(\sbf x,\sbf y)\frac{\partial\phi(\sbf y)}{\partial n(\sbf y)}-\phi(\sbf y)\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf y)}\right]\dd{S(\sbf y)}.
+\end{align*}
+
+\end_inset
+
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，Eq 1.25，得到
 \begin_inset Formula 
 \begin{align}
 \phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\sbf y)\phi(\sbf y)\right]\dd{S(\sbf y)}\nonumber \\
@@ -1330,6 +1631,459 @@ ddd
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的解
+\begin_inset Formula $\phi$
+\end_inset
+
+的积分表示。只要知道了边界
+\begin_inset Formula $S$
+\end_inset
+
+上的
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $q$
+\end_inset
+
+，就可以计算
+\begin_inset Formula $V$
+\end_inset
+
+中任意点的
+\begin_inset Formula $\phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/liu-fig-2.2.png
+	lyxscale 80
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Limit as 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ approaches boundary 
+\begin_inset Formula $S$
+\end_inset
+
+。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:2.2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了求解边界
+\begin_inset Formula $S$
+\end_inset
+
+ 上的未知的
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $q$
+\end_inset
+
+，我们令
+\begin_inset Formula $\sbf x$
+\end_inset
+
+靠近
+\begin_inset Formula $S$
+\end_inset
+
+，来从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中得到BIE形式。考虑以下极限：
+\begin_inset Formula 
+\begin{equation}
+\lim_{\sbf x\to S}\phi(\sbf x)=\lim_{\sbf x\to S}\left\{ \int\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\sbf y)\,\phi(\sbf y)\right]\dd{S(\sbf y)}+\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)}\right\} \label{eq:2.13}
+\end{equation}
+
+\end_inset
+
+kernel 
+\series bold
+
+\begin_inset Formula $G(\sbf x,\sbf y))$
+\end_inset
+
+ 是 weakly singular
+\series default
+ at 
+\begin_inset Formula $r=0$
+\end_inset
+
+，在二维是
+\begin_inset Formula $\order{\log r}$
+\end_inset
+
+，在三维是 
+\begin_inset Formula $\order{1/r}$
+\end_inset
+
+；
+\series bold
+
+\begin_inset Formula $F(\sbf x,\sbf y)$
+\end_inset
+
+ 是 strongly singular
+\series default
+，在二维是
+\begin_inset Formula $\order{1/r}$
+\end_inset
+
+，在三维是 
+\begin_inset Formula $\order{1/r^{2}}$
+\end_inset
+
+。因此，在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中不能直接把
+\begin_inset Formula $\sbf x$
+\end_inset
+
+放到边界
+\begin_inset Formula $S$
+\end_inset
+
+上了事。仔细考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+rhs 每一个积分的极限过程很有必要。
+\end_layout
+
+\begin_layout Standard
+以2D情况为例。首先把边界
+\begin_inset Formula $S$
+\end_inset
+
+分成两部分：
+\begin_inset Formula $S-S_{\varepsilon}$
+\end_inset
+
+和
+\begin_inset Formula $S_{\varepsilon}$
+\end_inset
+
+，其中
+\begin_inset Formula $S_{\varepsilon}$
+\end_inset
+
+是小线段，长度为
+\begin_inset Formula $2\varepsilon$
+\end_inset
+
+，以
+\begin_inset Formula $\sbf x$
+\end_inset
+
+的极限点为中心。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:2.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+rhs 第一个积分计算如下：
+\begin_inset Formula 
+\begin{align*}
+\lim_{\sbf x\to S}\int_{S}G(\sbf x,\sbf y)\,q(\sbf y)\,\dd{S(\sbf y)} & =\lim_{\varepsilon\to0}\int_{S-S_{\varepsilon}}G(\sbf x,\sbf y)\,q(\sbf y)\,\dd{S(\sbf y)}\\
+ & +\lim_{\substack{d\to0\\
+\varepsilon\to0
+}
+}\int_{S_{\varepsilon}}G(\sbf x,\sbf y)\,\dd{S(\sbf y)}\,q(\sbf y_{\xi}),
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf y_{\xi}$
+\end_inset
+
+是
+\begin_inset Formula $S_{\varepsilon}$
+\end_inset
+
+上的某点。当
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 很小时，
+\begin_inset Formula $S_{\varepsilon}$
+\end_inset
+
+可以当成直线段（假设
+\begin_inset Formula $S$
+\end_inset
+
+光滑）；
+\begin_inset Formula $G$
+\end_inset
+
+ kernel 在直线段上的解析积分在 Appendix A.1 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:a.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中给出，可知此积分的极限是
+\begin_inset Formula 
+\[
+\lim_{\substack{d\to0\\
+\varepsilon\to0
+}
+}\int_{S_{\varepsilon}}G(\sbf x,\sbf y)\,\dd{S(\sbf y)}\,q(\sbf y_{\xi})=0
+\]
+
+\end_inset
+
+因此：
+\begin_inset Formula 
+\begin{equation}
+\lim_{\sbf x\to S}\int_{S}G(\sbf x,\sbf y)\,q(\sbf y)\,\dd{S(\sbf y)}=\lim_{\varepsilon\to0}\int_{S-S_{\varepsilon}}G(\sbf x,\sbf y)\,q(\sbf y)\,\dd{S(\sbf y)}=\int_{S}G(\sbf x,\sbf y)\,q(\sbf y)\,\dd{S(\sbf y)},\label{eq:2.14}
+\end{equation}
+
+\end_inset
+
+其中最后一个积分是 CPV 积分（为了记号简洁，不特别注明）。
+\end_layout
+
+\begin_layout Standard
+类似地，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+rhs的第二个积分计算为
+\begin_inset Formula 
+\begin{align*}
+\lim_{\sbf x\to S}\int_{S}F(\sbf x,\sbf y)\,\phi(\sbf y)\,\dd{S(\sbf y)} & =\lim_{\varepsilon\to0}\int_{S-S_{\varepsilon}}F(\sbf x,\sbf y)\,\phi(\sbf y)\,\dd{S(\sbf y)}\\
+ & +\lim_{\substack{d\to0\\
+\varepsilon\to0
+}
+}\int_{S_{\varepsilon}}F(\sbf x,\sbf y)\,\dd{S(\sbf y)}\,\phi(\sbf y_{\xi}),
+\end{align*}
+
+\end_inset
+
+使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:a.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得到
+\begin_inset Formula 
+\[
+\lim_{\substack{d\to0\\
+\varepsilon\to0
+}
+}\int_{S_{\varepsilon}}F(\sbf x,\sbf y)\,\dd{S(\sbf y)}\,\phi(\sbf y_{\xi})=\frac{-1}{2}\phi\left(\sbf x\right),\quad\sbf x\in S,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\lim_{\sbf x\to S}\int_{S}F(\sbf x,\sbf y)\,\phi(\sbf y)\,\dd{S(\sbf y)} & =\lim_{\varepsilon\to0}\int_{S-S_{\varepsilon}}F(\sbf x,\sbf y)\,\phi(\sbf y)\,\dd{S(\sbf y)}-\frac{1}{2}\phi\left(\sbf x\right)\nonumber \\
+ & =\int_{S}F(\sbf x,\sbf y)\,\phi(\sbf y)\,\dd{S(\sbf y)}-\frac{1}{2}\phi\left(\sbf x\right),\quad\sbf x\in S,\label{eq:2.15}
+\end{align}
+
+\end_inset
+
+其中最后一个积分是 CPV 积分，在
+\begin_inset Formula $S-S_{\varepsilon}$
+\end_inset
+
+上计算且
+\begin_inset Formula $\varepsilon\to0$
+\end_inset
+
+。我们看到，当
+\begin_inset Formula $\sbf x$
+\end_inset
+
+趋于
+\begin_inset Formula $S$
+\end_inset
+
+，
+\begin_inset Formula $F$
+\end_inset
+
+ kernel 的积分会产生 jump term。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+rhs的第三项没有 jump term：
+\begin_inset Formula 
+\begin{equation}
+\lim_{\sbf x\to S}\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\,\dd{V(\sbf y)}=\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\,\dd{V(\sbf y)}\label{eq:2.16}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，并组合 free term，我们得到下列 conventional BIE（CBIE）：
 \begin_inset Formula 
 \begin{align}
 c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\sbf y)\,\phi(\sbf y)\right]\dd{S(\sbf y)}\nonumber \\
@@ -1362,10 +2116,194 @@ c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\s
 \begin_inset Formula $c(\sbf x)=1/2$
 \end_inset
 
-。对三维可以推导出类似的结果。
+。对三维可以推导出类似的结果。在此方程中，变量
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $q$
+\end_inset
+
+均位于边界
+\begin_inset Formula $S$
+\end_inset
+
+上。后面可以看到，利用关于基本解的恒等式，可以把 CBIE
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+写成 weakly singular 形式。从而在求解 BIE 过程中，可以不用直接计算 
+\begin_inset Formula $F$
+\end_inset
+
+ kernel 的CPV 积分和常数
+\begin_inset Formula $c(\sbf x)$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
+在 Sect 2.9 中讨论了如何求解
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 domain 积分，若
+\begin_inset Formula $f(\sbf y)$
+\end_inset
+
+ 在
+\begin_inset Formula $V$
+\end_inset
+
+中的有限域上不为零。如果
+\begin_inset Formula $f(\sbf y)$
+\end_inset
+
+是一个
+\begin_inset Formula $V$
+\end_inset
+
+中的点源，可以把它写成
+\begin_inset Formula 
+\begin{equation}
+f(\sbf y)=Q\,\delta(\sbf x_{Q},\sbf y)\label{eq:2.18}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf x_{Q}$
+\end_inset
+
+是点源的位置，
+\begin_inset Formula $Q$
+\end_inset
+
+代表点源的强度。使用Dirac 
+\begin_inset Formula $\delta$
+\end_inset
+
+函数的过滤性质(sifting)，这种情况下可以如下计算CBIE
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\int_{V}G(\sbf x,\sbf y)\,f(\sbf y)\dd{V(\sbf y)}=Q\int_{V}G(\sbf x,\sbf y)\,\delta(\sbf x_{Q},\sbf y)\dd{V(\sbf y)}=Q\,G(\sbf x,\sbf x_{Q})\label{eq:2.19}
+\end{equation}
+
+\end_inset
+
+这一项将被添加到基于CBIE 的 BEM 的方程系统的 rhs vector 
+\begin_inset Formula $\sbf b$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+一旦通过求解CBIE
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到了未知量
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $q$
+\end_inset
+
+ 在边界上的值，就可以使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的积分表示计算 domain 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的 potential。如果要计算
+\begin_inset Formula $V$
+\end_inset
+
+中potential 的导数，可以取
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的导数得到
+\begin_inset Formula 
+\begin{align}
+\frac{\partial\phi}{\partial x_{i}}(\sbf x)=\int_{S} & \left[\frac{\partial G(\sbf x,\sbf y)}{\partial x_{i}}q(\sbf y)-\frac{\partial F(\sbf x,\sbf y)}{\partial x_{i}}\phi(\sbf y)\right]\dd{S(\sbf y)}\nonumber \\
+ & +\int_{V}\frac{\partial G(\sbf x,\sbf y)}{\partial x_{i}}\,f(\sbf y)\dd{V(\sbf y)},\quad\forall\sbf x\in V,\label{eq:2.20}
+\end{align}
+
+\end_inset
+
+令
+\begin_inset Formula $\sbf x$
+\end_inset
+
+趋近边界
+\begin_inset Formula $S$
+\end_inset
+
+，在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+两边同乘上
+\begin_inset Formula $\sbf x$
+\end_inset
+
+处的法向
+\begin_inset Formula $\sbf n$
+\end_inset
+
+，得到所谓的 hypersingular BIE（HBIE）：
 \begin_inset Formula 
 \begin{align}
 c(\sbf x)\,q(\sbf x) & =\int_{S}\left[K(\sbf x,\sbf y)q(\sbf y)-H(\sbf x,\sbf y)\phi(\sbf y)\right]\dd{S(\sbf y)}\nonumber \\
@@ -1387,17 +2325,121 @@ K(\sbf x,\sbf y)\equiv\frac{\partial G(\sbf x,\sbf y)}{\partial n(\sbf x)}=\begi
 
 
 \begin_inset Formula 
-\[
-H
-\]
+\begin{equation}
+H(\sbf x,\sbf y)\equiv\frac{\partial F(\sbf x,\sbf y)}{\partial n(\sbf x)}=\begin{cases}
+\frac{1}{2\pi r^{2}}\left[n_{k}(\sbf x)n_{k}(\sbf y)-2r_{,k}\,n_{k}(\sbf x)\,r_{,\ell}\,n_{\ell}(\sbf y)\right], & \text{二维}\\
+\frac{1}{4\pi r^{3}}\left[n_{k}(\sbf x)n_{k}(\sbf y)-3r_{,k}\,n_{k}(\sbf x)\,r_{,\ell}\,n_{\ell}(\sbf y)\right], & \text{三维}
+\end{cases}\label{eq:2.23}
+\end{equation}
 
 \end_inset
 
+其中
+\series bold
 
+\begin_inset Formula $K(\sbf x,\sbf y)$
+\end_inset
+
+ 是 strongly 奇异
+\series default
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的第一个积分是CPV积分；
+\series bold
+
+\begin_inset Formula $H(\sbf x,\sbf y)$
+\end_inset
+
+ 是 Hypersingular
+\series default
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的第二个积分是 HFP 积分。HBIE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+也可以写成 weakly singular 形式，在 BEM 中我们不会显式计算这些 singular 或者 hypersingular 积分，除非它们容易计算
+（例如下一 sect，在常数单元上计算）。
+\end_layout
+
+\begin_layout Standard
+在处理 crack 问题或者 thin inclusion 问题时，CBIE 将 degenerates。在这种情况下，可以单独使用 HBIE
+ 或者结合 CBIE 得到 nondegenerate dual BIE 形式，来处理 crack 或者 thin–shape 问题。我们将在此章和后序章节看到
+例子。
+\end_layout
+
+\begin_layout Standard
+CBIE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 对于 infinite domain 问题也成立，也就是 domain 位于闭合边界
+\begin_inset Formula $S$
+\end_inset
+
+ 的外面，延伸到无穷远。如果我们假设 
+\begin_inset Formula $\phi(R)\sim\order{1/R^{\alpha}}$
+\end_inset
+
+ 且 
+\begin_inset Formula $q(R)\sim\order{1/R^{1+\alpha}}$
+\end_inset
+
+，当
+\begin_inset Formula $R\to\infty$
+\end_inset
+
+，其中
+\begin_inset Formula $R$
+\end_inset
+
+是大圆（2D）或者球（3D）的半径，实数
+\begin_inset Formula $\alpha>0$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Section
-边界积分方程的Weakly Singular 形式
+BIE的Weakly Singular 形式
 \end_layout
 
 \begin_layout Standard
@@ -1421,7 +2463,11 @@ noprefix "false"
 
 \end_inset
 
-可以转换为只涉及弱奇异积分的形式。例如，使用
+可以转换为只涉及 
+\series bold
+weakly singular
+\series default
+ 积分的形式。例如，使用
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:2.7"
@@ -1456,7 +2502,7 @@ noprefix "false"
 
 \end_inset
 
-中的系数
+中的系数 
 \begin_inset Formula $c(\sbf x)$
 \end_inset
 
@@ -1464,7 +2510,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
 c(\sbf x) & =1+\lim_{d\to0,\varepsilon\to0}\int_{S_{\varepsilon}}F(\sbf x,\sbf y)\dd{S(\sbf y)}\nonumber \\
- & =1+R-\lim_{\varepsilon\to0}\int_{S-S_{\varepsilon}}F(\sbf x,\sbf y)\dd{S(\sbf y)}\nonumber \\
+ & =1+\left(\text{待定}\right)-\lim_{\varepsilon\to0}\int_{S-S_{\varepsilon}}F(\sbf x,\sbf y)\dd{S(\sbf y)}\nonumber \\
  & =\gamma-\int_{S}F(\sbf x,\sbf y)\dd{S(\sbf y)},\quad\forall\sbf\in S\quad\text{(a CPV integral)},\label{eq:2.24}
 \end{align}
 
@@ -1474,19 +2520,23 @@ c(\sbf x) & =1+\lim_{d\to0,\varepsilon\to0}\int_{S_{\varepsilon}}F(\sbf x,\sbf y
 \begin_inset Formula $\gamma=0$
 \end_inset
 
-；对于无限域问题，
+（
+\begin_inset Formula $\sbf x\in V$
+\end_inset
+
+）；对于无限域问题，
 \begin_inset Formula $\gamma=1$
 \end_inset
 
-。infinite domain problem 指的是闭合曲面
+（
+\begin_inset Formula $\sbf x\in E$
+\end_inset
+
+，infinite domain 问题指的是闭合曲面
 \begin_inset Formula $S$
 \end_inset
 
-外的domain，延伸到无穷远，此时
-\begin_inset Formula $\int_{S}F(\sbf x,\sbf y)\dd{S_{y}}=0$
-\end_inset
-
-。
+外的domain）。
 \end_layout
 
 \begin_layout Standard
@@ -1540,6 +2590,10 @@ F(\sbf x,\sbf y)\left[\phi(\sbf y)-\phi(\sbf x)\right]\sim\begin{cases}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 类似地，使用基本解的前三个等式，可以推出HBIE的弱奇异形式：
 \begin_inset Formula 
 \begin{align}
@@ -1567,7 +2621,15 @@ F(\sbf x,\sbf y)\left[\phi(\sbf y)-\phi(\sbf x)\right]\sim\begin{cases}
 \begin_inset Formula $\sbf x$
 \end_inset
 
-的切向坐标，在单元的局域（自然）坐标系中，
+的切向坐标（对于二维
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+，对于三维
+\begin_inset Formula $\alpha=1,2$
+\end_inset
+
+）；在单元的局域（自然）坐标系中，
 \begin_inset Formula $e_{\alpha k}=\partial\xi_{\alpha}/\partial x_{k}$
 \end_inset
 
@@ -1595,7 +2657,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-2D边界积分方程的离散化，使用常数单元
+2D BIE的离散化，使用常数单元
 \end_layout
 
 \begin_layout Standard
@@ -2022,8 +3084,47 @@ noprefix "false"
 高阶单元更精确的 BEM 结果。
 \end_layout
 
+\begin_layout Remark
+dssa
+\begin_inset Formula 
+\[
+\frac{1}{2}\phi_{x}=\int_{\Gamma}\left[G_{x,y}\,q_{y}-F_{x,y}\,\phi_{y}\right]\dd{S_{y}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $q_{y}=\partial\phi_{y}/\partial n_{y}$
+\end_inset
+
+，
+\begin_inset Formula $F_{x,y}=\partial G_{x,y}/\partial n_{y}$
+\end_inset
+
+。给定边界条件
+\begin_inset Formula 
+\[
+\begin{cases}
+\phi=\overline{\phi} & \text{on}\quad\Gamma_{1}\\
+q=\frac{\partial\phi}{\partial n}=\overline{q} & \text{on}\quad\Gamma_{2}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{2}\phi_{x}-\left[\int_{\Gamma_{1}}G_{x,y}\,q_{y}\dd{S_{y}}-\int_{\Gamma_{2}}F_{x,y}\,\phi_{y}\dd{S_{y}}\right]=\int_{\Gamma_{2}}G_{x,y}\,\overline{q}_{y}\dd{S_{y}}-\int_{\Gamma_{1}}F_{x,y}\,\overline{\phi}_{y}\dd{S_{y}}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-2.6使用高阶单元
+使用高阶单元
 \end_layout
 
 \begin_layout Standard
