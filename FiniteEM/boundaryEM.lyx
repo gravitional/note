@@ -2679,6 +2679,60 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/liuyijun-fig-2.3.png
+	lyxscale 70
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Discretization of boundary 
+\begin_inset Formula $S$
+\end_inset
+
+ using 
+\emph on
+constant
+\emph default
+ elements.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:2.3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 首先，我们将边界 
 \begin_inset Formula $S$
 \end_inset
@@ -2757,23 +2811,75 @@ c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\s
 
 \end_inset
 
-以下 
+以下作连续–离散对应： 
+\begin_inset Formula $\phi(\sbf x)\rightarrow$
+\end_inset
+
+
 \begin_inset Formula $\phi_{i}$
 \end_inset
 
- 表示 
-\begin_inset Formula $\phi(\sbf x_{i})$
+，
+\begin_inset Formula $\phi(\sbf y)\rightarrow$
 \end_inset
 
 
+\begin_inset Formula $\phi_{j}$
+\end_inset
+
+，
+\begin_inset Formula $G(\sbf x,\sbf y)\to G_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $q$
+\end_inset
+
+和
+\begin_inset Formula $F$
+\end_inset
+
+类似
+\begin_inset Formula $\phi$
+\end_inset
+
+和
+\begin_inset Formula $G$
+\end_inset
+
+。关联系数
+\begin_inset Formula $G_{ij}$
+\end_inset
+
+和
+\begin_inset Formula $F_{ij}$
+\end_inset
+
+表示了线元
+\begin_inset Formula $j$
+\end_inset
+
+对节点
+\begin_inset Formula $i$
+\end_inset
+
+的影响，积分是在线元
+\begin_inset Formula $j$
+\end_inset
+
+上进行的。
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{2}\phi_{i}=\sum_{j=1}^{N}\int_{\Delta S_{j}}\left[G_{ij}q_{j}-F_{i}\phi_{j}\right]\dd{S}=\sum_{j=1}^{N}\left[\int_{\Delta S_{j}}G_{i}\dd{S}q_{j}-\int_{\Delta S_{j}}F_{i}\dd{S}\phi_{j}\right],\label{eq:2.27}
+\frac{1}{2}\phi_{i}=\sum_{j=1}^{N}\int_{{\color{blue}\Delta S_{j}}}\left[G_{ij}\,{\color{blue}q_{j}}-F_{ij}\,{\color{blue}\phi_{j}}\right]\dd{{\color{blue}S_{j}}}=\sum_{j=1}^{N}\left[\int_{\Delta S_{j}}G_{ij}\,\dd{{\color{blue}S_{j}}}{\color{blue}q_{j}}-\int_{\Delta S_{j}}F_{ij}\,\dd{{\color{blue}S_{j}}}{\color{blue}\phi_{j}}\right],\label{eq:2.27}
 \end{equation}
 
 \end_inset
 
+ 对于节点
+\begin_inset Formula $i$
+\end_inset
 
+，我们得到了CBIE的如下离散形式
 \begin_inset Formula 
 \begin{equation}
 \frac{1}{2}\phi_{i}=\sum_{j=1}^{N}\left[g_{ij}q_{j}-\hat{f}_{ij}\phi_{j}\right],\quad\text{for}\,i=1,2,\cdots,N,\label{eq:2.28}
@@ -2784,40 +2890,28 @@ c(\sbf x)\,\phi(\sbf x) & =\int_{S}\left[G(\sbf x,\sbf y)\,q(\sbf y)-F(\sbf x,\s
 其中的系数为
 \begin_inset Formula 
 \begin{equation}
-g_{ij}=\int_{\Delta S_{j}}G_{i}\dd{S},\quad\hat{f}_{ij}=\int_{\Delta S_{j}}F_{i}\dd{S},\quad\text{for}\,i=1,2,\cdots,N.\label{eq:2.29}
+g_{ij}=\int_{\Delta S_{j}}G_{ij}\dd{S_{j}},\quad\hat{f}_{ij}=\int_{\Delta S_{j}}F_{ij}\dd{S_{j}},\quad\text{for}\,i=1,2,\cdots,N.\label{eq:2.29}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $G_{i}=G(\sbf x_{i},\sbf y_{j})$
+\begin_inset Formula $G_{ij}=G(\sbf x_{i},\sbf y_{j})$
 \end_inset
 
 ，
-\begin_inset Formula $F_{i}=F(\sbf x_{i},\sbf y_{j})$
+\begin_inset Formula $F_{ij}=F(\sbf x_{i},\sbf y_{j})$
 \end_inset
 
 。
 \begin_inset Formula $x_{i}$
 \end_inset
 
-是源点，
+是target点，
 \begin_inset Formula $y_{j}$
 \end_inset
 
-是被积场点。如果
-\begin_inset Formula $x_{i}$
-\end_inset
-
-刚好在
-\begin_inset Formula $y_{j}$
-\end_inset
-
-所在的
-\begin_inset Formula $\Delta S_{j}$
-\end_inset
-
-上，对应 Singular 情形。
+是integral点。
 \end_layout
 
 \begin_layout Remark
@@ -2861,7 +2955,19 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-在常数单元上，这些积分不管对于奇异情形（
+如果
+\begin_inset Formula $x_{i}$
+\end_inset
+
+刚好在
+\begin_inset Formula $y_{j}$
+\end_inset
+
+所在的
+\begin_inset Formula $\Delta S_{j}$
+\end_inset
+
+上，对应 Singular 情形。但在常数单元上，这些积分不管对于奇异情形（
 \begin_inset Formula $i=j$
 \end_inset
 
@@ -3128,7 +3234,131 @@ q=\frac{\partial\phi}{\partial n}=\overline{q} & \text{on}\quad\Gamma_{2}
 
 \end_inset
 
+kernel 
+\begin_inset Formula $G$
+\end_inset
 
+ 和 
+\begin_inset Formula $F$
+\end_inset
+
+ 的积分 
+\begin_inset Formula $\int\cdots\dd{S_{y}}$
+\end_inset
+
+ 应该理解成 CPV，即积分区间为 
+\begin_inset Formula $S-S_{\varepsilon}$
+\end_inset
+
+（跳过奇点）。
+\begin_inset Formula $1/2$
+\end_inset
+
+对应
+\begin_inset Formula $F$
+\end_inset
+
+的 jump term。
+\end_layout
+
+\begin_layout Remark
+假设 1st 边界对应 
+\begin_inset Formula $N_{1}$
+\end_inset
+
+个固定的
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+，2nd边界对应
+\begin_inset Formula $N_{2}$
+\end_inset
+
+个固定的
+\begin_inset Formula $q$
+\end_inset
+
+，
+\begin_inset Formula $N_{1}+N_{2}=N$
+\end_inset
+
+。则方程为
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccccc}
+f_{11} & f_{12} & \cdots & f_{1N_{1}} & f_{1N_{1}+1} & \cdots & f_{1N}\\
+f_{21} & f_{22} & \cdots & f_{2N_{1}} & f_{2N_{1}+1} & \cdots & f_{2N}\\
+\vdots & \vdots & \cdots & \vdots & \vdots & \cdots & \vdots\\
+f_{N_{1}1} & f_{N_{1}2} & \cdots & f_{N_{1}N_{1}} & f_{N_{1},N_{1}+1} & \cdots & h_{N_{1}N}\\
+\vdots & \vdots & \vdots & \cdots & \vdots & \vdots & \vdots\\
+f_{N1} & f_{N2} & f_{NN_{1}} & \cdots & f_{N,N_{1}+1} & \cdots & h_{NN}
+\end{array}\right]\left[\begin{array}{c}
+\overline{\phi}_{1}\\
+\overline{\phi}_{2}\\
+\vdots\\
+\overline{\phi}_{N_{1}}\\
+\vdots\\
+\phi_{N}
+\end{array}\right]=\left[\begin{array}{ccccccc}
+g_{11} & g_{12} & \cdots & g_{1N_{1}} & g_{1N_{1}+1} & \cdots & g_{1N}\\
+g_{21} & g_{22} & \cdots & g_{2N_{1}} & g_{2N_{1}+1} & \cdots & g_{2N}\\
+\vdots & \vdots & \cdots & \vdots & \vdots & \cdots & \vdots\\
+g_{N_{1}1} & g_{N_{1}2} & \cdots & g_{N_{1}N_{1}} & g_{N_{1},N_{1}+1} & \cdots & g_{N_{1}N}\\
+\vdots & \vdots & \vdots & \cdots & \vdots & \vdots & \vdots\\
+g_{N1} & g_{N2} & g_{NN_{1}} & \cdots & g_{N,N_{1}+1} & \cdots & g_{NN}
+\end{array}\right]\left[\begin{array}{c}
+q_{1}\\
+q_{2}\\
+\vdots\\
+q_{N_{1}}\\
+\vdots\\
+\overline{q}_{N}
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $f_{ij}=\hat{f}_{ij}+\frac{1}{2}\delta_{ij}$
+\end_inset
+
+。可以写成分块矩阵的形式
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\mathcal{F}_{1} & \mathcal{F}_{2}\end{array}\right]\left[\begin{array}{c}
+\overline{\Phi}\\
+\Phi
+\end{array}\right]=\left[\begin{array}{cc}
+\mathcal{G}_{1} & \mathcal{G}_{2}\end{array}\right]\left[\begin{array}{c}
+Q\\
+\overline{Q}
+\end{array}\right]
+\]
+
+\end_inset
+
+可以整理，把未知量统一放在左边
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+-\mathcal{G}_{1} & \mathcal{F}_{2}\end{array}\right]\left[\begin{array}{c}
+Q\\
+\Phi
+\end{array}\right]=\left[\begin{array}{cc}
+-\mathcal{H}_{1} & \mathcal{G}_{2}\end{array}\right]\left[\begin{array}{c}
+\overline{\Phi}\\
+\overline{Q}
+\end{array}\right]
+\]
+
+\end_inset
+
+则待求未知量是 
+\begin_inset Formula $X=\left(q_{1},q_{2}\cdots q_{N_{1}},\phi_{N_{1}+1}\cdots\phi_{N}\right)$
+\end_inset
+
+。系数矩阵一般是非稀疏非对称的。
 \end_layout
 
 \begin_layout Section
@@ -3136,11 +3366,78 @@ q=\frac{\partial\phi}{\partial n}=\overline{q} & \text{on}\quad\Gamma_{2}
 \end_layout
 
 \begin_layout Standard
+使用线性单元（linear elements）离散化
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:2.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。每个单元有首尾两个节点，单元被假设为线性的，场被假设为在单元上线性变化。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/liuyijun-2.4.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Discretization of boundary 
+\begin_inset Formula $S$
+\end_inset
+
+ using 
+\emph on
+linear
+\emph default
+ elements。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:2.4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-c_{i}\phi_{i} & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i}q-F_{i}\phi\right]\dd{S_{y}},\nonumber \\
- & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i}\sum_{\alpha=1}^{2}N_{\alpha}q^{\alpha}\right]\dd{S_{y}}-\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[F_{i}\sum_{\alpha=1}^{2}N_{\alpha}\phi^{\alpha}\right]\dd{S_{y}},\nonumber \\
- & =\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\left[\int_{\Delta S_{k}}G_{i}N_{\alpha}\dd{S_{y}}\right]q^{\alpha}-\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\left[\int_{\Delta S_{k}}F_{i}N_{\alpha}\dd{S_{y}}\right]\phi^{\alpha},\label{eq:2.35}
+ & \phi\left(\sbf y\right)=\phi\left(\xi\right)=\sum_{\alpha=1}^{2}N_{\alpha}\left(\xi\right)\phi^{\alpha},\label{eq:2.32}\\
+ & q\left(\sbf y\right)=q\left(\xi\right)=\sum_{\alpha=1}^{2}N_{\alpha}\left(\xi\right)q^{\alpha},\label{eq:2.33}
 \end{align}
 
 \end_inset
@@ -3148,7 +3445,25 @@ c_{i}\phi_{i} & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i}q-F_{i}\phi\right]\
 
 \begin_inset Formula 
 \begin{equation}
-c_{i}\phi_{i}=\sum_{k=1}^{M}\sum_{\alpha=1}^{2}g_{ik}^{\alpha}\,q^{\alpha}-\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\hat{f}_{ik}^{\alpha}\,\phi^{\alpha},\label{eq:2.36}
+N_{1}(\xi)=1-\xi,\quad\text{and},\quad N_{2}(\xi)=\xi.\label{eq:2.34}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+c_{i}\phi_{i} & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i}\,q-F_{i}\,\phi\right]\dd{S_{y}},\nonumber \\
+ & =\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[G_{i\alpha}\sum_{\alpha=1}^{2}N_{\alpha}q^{\alpha}\right]\dd{S_{y}}-\sum_{k=1}^{M}\int_{\Delta S_{k}}\left[F_{i\alpha}\sum_{\alpha=1}^{2}N_{\alpha}\phi^{\alpha}\right]\dd{S_{y}},\nonumber \\
+ & =\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\left[\int_{\Delta S_{k}}G_{i\alpha}N_{\alpha}\dd{S_{y}}\right]q^{\alpha}-\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\left[\int_{\Delta S_{k}}F_{i\alpha}N_{\alpha}\dd{S_{y}}\right]\phi^{\alpha},\label{eq:2.35}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+c_{i}\phi_{i}=\sum_{k=1}^{M}\sum_{\alpha=1}^{2}g_{i\alpha}^{k}\,q^{\alpha}-\sum_{k=1}^{M}\sum_{\alpha=1}^{2}\hat{f}_{i\alpha}^{k}\,\phi^{\alpha},\label{eq:2.36}
 \end{equation}
 
 \end_inset
@@ -3156,8 +3471,8 @@ c_{i}\phi_{i}=\sum_{k=1}^{M}\sum_{\alpha=1}^{2}g_{ik}^{\alpha}\,q^{\alpha}-\sum_
 其中
 \begin_inset Formula 
 \begin{align}
- & g_{ik}^{\alpha}=\int_{\Delta S_{k}}G_{i}N_{\alpha}\dd{S_{y}}\nonumber \\
- & \hat{f}_{ik}^{\alpha}=\int_{\Delta S_{k}}F_{i}N_{\alpha}\dd{S_{y}}\label{eq:2.37}
+ & g_{i\alpha}^{k}=\int_{\Delta S_{k}}G_{i\alpha}\,N_{\alpha}\dd{S_{y}}\nonumber \\
+ & \hat{f}_{i\alpha}^{k}=\int_{\Delta S_{k}}F_{i\alpha}N_{\alpha}\dd{S_{y}}\label{eq:2.37}
 \end{align}
 
 \end_inset
@@ -3205,11 +3520,11 @@ c_{i}\phi_{i}=\sum_{j=1}^{N}g_{ij}\,q_{j}-\sum_{j=1}^{N}\hat{f}_{ij}\,\phi_{j},\
 \end_inset
 
 周围的单元上的积分
-\begin_inset Formula $g_{ik}^{\alpha}$
+\begin_inset Formula $g_{i\alpha}^{k}$
 \end_inset
 
 和
-\begin_inset Formula $\hat{f}_{ik}^{\alpha}$
+\begin_inset Formula $\hat{f}_{i\alpha}^{k}$
 \end_inset
 
  的求和。因此会得到类似
@@ -3272,7 +3587,7 @@ q_{N}
 \end_layout
 
 \begin_layout Standard
-通常，使用
+通常，为了公式
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:2.37"
@@ -3282,7 +3597,7 @@ noprefix "false"
 
 \end_inset
 
-的公式来计算
+计算
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:2.30"
@@ -3299,7 +3614,7 @@ noprefix "false"
 ），我们有：
 \begin_inset Formula 
 \begin{equation}
-g_{ik}^{\alpha}=\int_{\Delta S_{k}}G_{i}\,N_{\alpha}\,\dd{S}=\int_{0}^{1}G_{i}\left[\sbf x,\sbf y(\xi)\right]\,N_{\alpha}(\xi)\,\abs{J}\,\dd{\xi},\label{eq:2.39}
+g_{i\alpha}^{k}=\int_{\Delta S_{k}}G_{i\alpha}\,N_{\alpha}(\sbf y)\,\dd{S_{y}}=\int_{0}^{1}G\left[\sbf x_{i},\sbf y(\xi)\right]\,N_{\alpha}(\xi)\,\abs{J(\xi)}\,\dd{\xi},\label{eq:2.39}
 \end{equation}
 
 \end_inset
@@ -3354,7 +3669,23 @@ noprefix "false"
 
 \end_inset
 
-右侧的积分可以用标准 高斯积分法 求得。在大多数情况下，四点积分法就足够了。公式 
+右侧的积分可以用标准 高斯积分法 求得：下面
+\begin_inset Formula $S$
+\end_inset
+
+表示积分采样点总数，
+\begin_inset Formula $w_{\beta}$
+\end_inset
+
+ 表示对应的权重。 
+\begin_inset Formula 
+\[
+g_{i\alpha}^{k}=\sum_{\beta=1}^{S}G\left[\sbf x_{i},\sbf y(\xi_{\beta})\right]\,N_{\alpha}(\xi_{\beta})\,\abs{J(\xi_{\beta})}\,w_{\beta}
+\]
+
+\end_inset
+
+在大多数情况下，四点积分法就足够了。公式 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:2.37"
@@ -3472,6 +3803,118 @@ noprefix "false"
 \end_inset
 
 解析地推导这些结果。
+\end_layout
+
+\begin_layout Section
+非线性条件
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial\phi}{\partial n}=f(\phi),\quad q=h(\phi)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+q(\phi^{1})=h(\phi^{0})+h'(\phi^{0})\,(\phi^{1}-\phi^{0})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\mathcal{F}_{1} & \mathcal{F}_{2}\end{array}\right]\left[\begin{array}{c}
+\overline{\Phi}\\
+\Phi
+\end{array}\right]=\left[\begin{array}{cc}
+\mathcal{G}_{1} & \mathcal{G}_{2}\end{array}\right]\left[\begin{array}{c}
+Q\\
+\overline{Q}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\mathcal{F}_{11} & \mathcal{F}_{12} & \mathcal{F}_{13}\\
+\mathcal{F}_{21} & \mathcal{F}_{22} & \mathcal{F}_{23}\\
+\mathcal{F}_{31} & \mathcal{F}_{32} & \mathcal{F}_{33}
+\end{array}\right]\left[\begin{array}{c}
+\overline{\Phi}_{a}\\
+\Phi_{b}^{1}\\
+\Phi_{c}^{1}
+\end{array}\right]=\left[\begin{array}{ccc}
+\mathcal{G}_{11} & \mathcal{G}_{12} & \mathcal{G}_{13}\\
+\mathcal{G}_{21} & \mathcal{G}_{22} & \mathcal{G}_{23}\\
+\mathcal{G}_{31} & \mathcal{G}_{32} & \mathcal{G}_{33}
+\end{array}\right]\left[\begin{array}{c}
+Q_{a}\\
+\overline{Q}_{b}\\
+{\color{red}H_{c}(\Phi_{c}^{0})}+H_{c}^{\prime}(\Phi_{c}^{0})\,({\color{blue}\Phi_{c}^{1}}{\color{red}-\Phi_{c}^{0}})
+\end{array}\right]
+\]
+
+\end_inset
+
+整理：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\mathcal{F}_{11} & \mathcal{F}_{12} & \mathcal{F}_{13}-\mathcal{G}_{13}\,{\color{blue}H_{c}^{\prime}(\Phi_{c}^{0})}\\
+\mathcal{F}_{21} & \mathcal{F}_{22} & \mathcal{F}_{23}-\mathcal{G}_{23}\,{\color{blue}H_{c}^{\prime}(\Phi_{c}^{0})}\\
+\mathcal{F}_{31} & \mathcal{F}_{32} & \mathcal{F}_{33}-\mathcal{G}_{33}\,{\color{blue}H_{c}^{\prime}(\Phi_{c}^{0})}
+\end{array}\right]\left[\begin{array}{c}
+\overline{\Phi}_{a}\\
+\Phi_{b}^{1}\\
+\Phi_{c}^{1}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+{\color{blue}H_{c}^{\prime}(\Phi_{c}^{0})}=\left[\begin{array}{cccc}
+h'(\phi_{N_{3}+1}^{0}) & \cdots & \cdots & 0\\
+\vdots & h'(\phi_{N_{3}+2}^{0}) & \cdots & \vdots\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & \cdots & \cdots & h'(\phi_{N}^{0})
+\end{array}\right]
+\]
+
+\end_inset
+
+LS b向量增加
+\begin_inset Formula 
+\[
+b+=\left[\begin{array}{c}
+\mathcal{G}_{13}\mathcal{R}\\
+\mathcal{G}_{23}\mathcal{R}\\
+\mathcal{G}_{33}\mathcal{R}
+\end{array}\right],\quad\mathcal{R}={\color{red}H_{c}(\Phi_{c}^{0})-H_{c}^{\prime}(\Phi_{c}^{0})\,\Phi_{c}^{0}}
+\]
+
+\end_inset
+
+如果使用 修正的FPI：
+\begin_inset Formula 
+\[
+\left[\mathcal{F}-H_{c}(\Phi_{c}^{0})\right]\Delta\Phi=\lambda\left[\mathcal{G}H_{c}(\Phi_{c}^{0})-\mathcal{F}\Phi_{0}\right]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -6172,6 +6615,34 @@ noprefix "false"
 \end_layout
 
 \begin_layout Example
+计算法向：对一点
+\begin_inset Formula $(\cos\theta,\sin\theta)$
+\end_inset
+
+ 逆时针旋转
+\begin_inset Formula $\pi/2$
+\end_inset
+
+是
+\begin_inset Formula $(-\sin\theta,\cos\theta)$
+\end_inset
+
+，即逆时针法线 
+\begin_inset Formula $(x,y)\to(-y,x)$
+\end_inset
+
+。对于二维闭合曲线，如果边界上的点按逆时针顺序给出，则计算法向需要顺时针旋转，对应的是 
+\begin_inset Formula $(\cos\theta,\sin\theta)\to(\sin\theta,-\cos\theta)$
+\end_inset
+
+，即 
+\begin_inset Formula $(x,y)\to(y,-x)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
 \begin_inset Graphics
 	filename inset/liuyijun-fig.a.2.jpg
 	lyxscale 60
@@ -6183,19 +6654,19 @@ noprefix "false"
 \begin_inset Newline newline
 \end_inset
 
-如果
-\begin_inset Formula $\sbf x$
+如图，如果targe 点位于闭合曲线
+\begin_inset Formula $S$
 \end_inset
 
-在
-\begin_inset Formula $\Delta S$
-\end_inset
-
-的右侧，画出类似的图，当使用C函数 arctan(y,x) 计算正切角时，
-\begin_inset Formula $d=\sbf r_{1}\cdot\sbf n_{y}>0$
+的外面，
+\begin_inset Formula $d=\sbf r_{1}\cdot\sbf n_{y}<0$
 \end_inset
 
 ，
+\begin_inset Formula $\abs{d}>0$
+\end_inset
+
+；当使用C函数 arctan(y,x) 计算正切角时，
 \begin_inset Formula $T_{1},T_{2}>0$
 \end_inset
 
@@ -6203,11 +6674,11 @@ noprefix "false"
 \begin_inset Formula $\theta_{2}-\theta_{1}<0$
 \end_inset
 
-；正确的
+；若
 \begin_inset Formula $\Delta\theta$
 \end_inset
 
-应该是逆时针角度，需要加上额外的负号。
+约定的是逆时针角度，需要加上额外的负号。
 \end_layout
 
 \begin_layout Standard

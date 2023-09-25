@@ -100,7 +100,433 @@ Young
 \end_layout
 
 \begin_layout Section
-正定矩阵
+线性代数
+\end_layout
+
+\begin_layout Subsection
+极大无关组：
+\end_layout
+
+\begin_layout Itemize
+将向量组按列排成矩阵
+\begin_inset Formula $A$
+\end_inset
+
+，然后对
+\begin_inset Formula $A$
+\end_inset
+
+作行变换，变化成阶梯矩阵，然后得到的每个阶对应的向量是极大无关组的部分。本质在于行秩等于列秩。是把向量尾部多余维数消为零。
+\end_layout
+
+\begin_layout Itemize
+如果对
+\begin_inset Formula $A$
+\end_inset
+
+作列变换，实际上是消去多余向量（线性相关向量）。
+\end_layout
+
+\begin_layout Subsection
+行最简矩阵形唯一
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+R=\left[\begin{array}{cccc}
+1 & 2 & 0 & -2\\
+0 & 0 & 1 & 2\\
+0 & 0 & 0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+在上三角的基础上，令 pivot value 上面也为零然后把所有的 pivot value 变为 
+\begin_inset Formula $1$
+\end_inset
+
+。称为 Reduced row echelon form (rref)。
+\end_layout
+
+\begin_layout Itemize
+求解线性方程组：将增广矩阵变为最简阶梯型
+\end_layout
+
+\begin_layout Itemize
+求
+\begin_inset Formula $n$
+\end_inset
+
+元列向量组的最大无关子组（秩）：列摆行变换法
+\end_layout
+
+\begin_layout Itemize
+求矩阵的逆：与单位矩阵同时列变换。
+\end_layout
+
+\begin_layout Standard
+要求只能做行变换，在这样的前提下，行最简阶梯型必定唯一。
+\end_layout
+
+\begin_layout Subsection
+主元，pivot column, free column
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+先导元素
+\series default
+：矩阵每一行从左到右第一个非零元素。
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+主元位置
+\series default
+：矩阵化成阶梯型以后，每一行从左到右的第一个非零元素，主元在矩阵中所处的位置叫做
+\series bold
+主元位置
+\series default
+。当给定矩阵
+\begin_inset Formula $A$
+\end_inset
+
+化为任何一个阶梯型时，先导元素总是在相同的位置上，这些先导元素对应简化阶梯形中的先导元素
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+主元
+\series default
+：矩阵中的
+\series bold
+主元位置
+\series default
+是
+\begin_inset Formula $A$
+\end_inset
+
+对应它的阶梯形中中先导元素
+\begin_inset Formula $1$
+\end_inset
+
+的位置；
+\series bold
+主元列
+\series default
+是
+\begin_inset Formula $A$
+\end_inset
+
+中含有主元位置的列。
+\series bold
+主元
+\series default
+就是主元位置上的非零元素。
+\end_layout
+
+\begin_layout Itemize
+主元所在的列称为 pivot column，而其余列称为 free column。换句话说，如果本该填充元的位置实际是零，就是 free column。自由列对
+应的
+\begin_inset Formula $x_{k}$
+\end_inset
+
+可以自由取数，阶梯型可以化成降阶的上三角矩阵。
+\end_layout
+
+\begin_layout Section
+null space
+\end_layout
+
+\begin_layout Standard
+退化矩阵
+\begin_inset Formula $R$
+\end_inset
+
+具有 null space，也就是存在线性空间
+\begin_inset Formula $V$
+\end_inset
+
+，
+\begin_inset Formula $\forall x\in V$
+\end_inset
+
+ 满足 
+\begin_inset Formula $Rx=0$
+\end_inset
+
+。可以将
+\begin_inset Formula $R$
+\end_inset
+
+化简成 rref 形式，然后通过列交换
+\begin_inset Formula 
+\[
+R=\left[\begin{array}{cccc}
+1 & 2 & 0 & -2\\
+0 & 0 & 1 & 2\\
+0 & 0 & 0 & 0
+\end{array}\right]\quad\Rightarrow\quad R=\left[\begin{array}{cccc}
+1 & 0 & 2 & -2\\
+0 & 1 & 0 & 2\\
+0 & 0 & 0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+写成 
+\begin_inset Formula 
+\[
+R'=\left[\begin{array}{cc}
+I & F\\
+0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+的形式，其中 
+\begin_inset Formula $I$
+\end_inset
+
+ 代表恒等矩阵。则 
+\begin_inset Formula 
+\[
+R'\,x'=0\quad\Rightarrow\quad x'=\left[\begin{array}{c}
+-F\\
+I
+\end{array}\right]=\left[\begin{array}{cc}
+-2 & 2\\
+0 & -2\\
+1 & 0\\
+0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+原问题
+\begin_inset Formula $Rx=0$
+\end_inset
+
+的解，可以通过对
+\begin_inset Formula $x'$
+\end_inset
+
+ 做对应的行交换得到
+\begin_inset Formula 
+\[
+x=\left[\begin{array}{cc}
+-2 & 2\\
+1 & 0\\
+0 & -2\\
+0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula $x$
+\end_inset
+
+就是原问题的 null space。
+\end_layout
+
+\begin_layout Section
+消除约束
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+K & N_{F}\\
+N & 0
+\end{array}\right]\left[\begin{array}{c}
+U\\
+\Lambda
+\end{array}\right]=\left[\begin{array}{c}
+L\\
+M
+\end{array}\right]
+\]
+
+\end_inset
+
+把解分成两部分，
+\begin_inset Formula 
+\begin{equation}
+U=Z\,U_{n}+U_{d}\label{eq:my30}
+\end{equation}
+
+\end_inset
+
+ 其中
+\begin_inset Formula $U_{d}$
+\end_inset
+
+满足 
+\begin_inset Formula $NU_{d}=M$
+\end_inset
+
+，即满足下半部分的约束方程 
+\begin_inset Formula $NU=M$
+\end_inset
+
+。
+\begin_inset Formula $Z$
+\end_inset
+
+ 是
+\begin_inset Formula $N$
+\end_inset
+
+的而
+\begin_inset Formula $Z\,U_{n}$
+\end_inset
+
+可以看作
+\begin_inset Formula 
+\[
+Z_{1}U_{n1}+Z_{2}U_{n2}+\cdots
+\]
+
+\end_inset
+
+即对
+\begin_inset Formula $N$
+\end_inset
+
+的零空间作线性组合。因此可以在不破坏 
+\begin_inset Formula $NU=M$
+\end_inset
+
+的前提下，再满足 
+\begin_inset Formula 
+\[
+K\,U+N_{F}\,\Lambda=L
+\]
+
+\end_inset
+
+如果 
+\begin_inset Formula $N_{F}\neq N^{T}$
+\end_inset
+
+，再定义 
+\begin_inset Formula $N_{F}^{T}\,Z_{F}=0$
+\end_inset
+
+，即
+\begin_inset Formula $Z_{F}$
+\end_inset
+
+ 是 
+\begin_inset Formula $N_{F}^{T}$
+\end_inset
+
+ 的零空间。再考虑上半部分的方程，
+\begin_inset Formula 
+\begin{align*}
+ & K\,U+N_{F}\,\Lambda=L\\
+ & Z_{F}^{T}\,K\,U+Z_{F}^{T}\,N_{F}\,\Lambda=Z_{F}^{T}\,L
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $Z_{F}^{T}N_{F}=0$
+\end_inset
+
+，因此
+\begin_inset Formula 
+\[
+Z_{F}^{T}\,K\,U=Z_{F}^{T}\,L
+\]
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+Z_{F}^{T}\,K\,ZU_{n}=Z_{F}^{T}\,(L-K\,U_{d})
+\]
+
+\end_inset
+
+以
+\begin_inset Formula $U_{n}$
+\end_inset
+
+为待求变量，则线性系统的
+\begin_inset Formula $A$
+\end_inset
+
+和
+\begin_inset Formula $b$
+\end_inset
+
+分别是
+\begin_inset Formula 
+\[
+\begin{cases}
+K_{c}=Z_{F}^{T}\,K\,Z\\
+L_{c}=Z_{F}^{T}\,(L-K\,U_{d})
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $K_{c}$
+\end_inset
+
+是 eliminated 刚度矩阵。
+\end_layout
+
+\begin_layout Standard
+对于本征值问题和时间依赖问题，对应的 eliminated 
+\begin_inset Formula $D$
+\end_inset
+
+ 和 
+\begin_inset Formula $E$
+\end_inset
+
+ 矩阵分别是
+\begin_inset Formula 
+\[
+D_{c}=Z_{F}^{T}\,D\,Z,\quad E_{c}=Z_{F}^{T}\,E\,Z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+矩阵
 \end_layout
 
 \begin_layout Standard
