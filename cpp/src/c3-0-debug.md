@@ -336,3 +336,43 @@ struct A<int> {};   // C2766
 // try the following line instead
 // struct A<char> {};
 ```
+
+## Compiler warning (level 1) C4834
+
+[Compiler warning (level 1) C4834](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/c4834?view=msvc-170)
+
+丢弃 带有 `nodiscard` 属性的 函数返回值
+
+### 备注
+
+从 C++17 标准开始, `[[nodiscard]]`属性指定 函数的返回值 不会被丢弃.
+如果调用者丢弃了返回值, 编译器会生成 C4834 警告.
+
+要解决此警告, 请考虑代码不使用返回值的原因.
+您对函数的使用可能与其意图不符.
+您可以将返回值赋值给 `std::ignore`, 
+或者在有意丢弃返回值的情况下将返回值赋值给 void, 从而规避警告.
+
+在 C++ 11 及更高版本中, 赋值到 `std::ignore` 比将其赋值到 `void` 更受青睐, 
+因为它使您的意图更加明确, 而且如果在代码分析设置中启用, 也不会触发 C26457 警告.
+
+该警告在 Visual Studio 2017 版本 15.3 中作为第 3 级警告引入.
+在 Visual Studio 2017 版本 15.7 中, 它被改为 1 级警告.
+在 Visual Studio 2017 版本 15.3 之前的编译器版本中编译时没有警告的代码现在可以生成 C4834.
+有关如何禁用特定编译器版本或更高版本中引入的警告的信息, 
+请参阅[按编译器版本划分的编译器警告](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warnings-by-compiler-version?view=msvc-170).
+
+在不修改代码的情况下关闭警告
+您可以使用警告实用程序 `#pragma warning(suppress : 4834)` 关闭特定代码行的警告.
+您也可以使用警告语句 `#pragma warning(disable : 4834)` 在文件中关闭警告.
+使用 `/wd4834` 命令行选项, 可以在命令行编译中全局关闭警告.
+
+在 Visual Studio IDE 中关闭整个项目的警告:
+
+打开项目的 `属性页`(Property Pages) 对话框.
+有关如何使用属性页对话框的信息, 请参阅 [属性页](https://learn.microsoft.com/en-us/cpp/build/reference/property-pages-visual-cpp?view=msvc-170).
+
+选择 `配置属性`>`C/C++`>`高级` 页面.
+
+编辑禁用特定警告属性(Disable Specific Warnings), 添加 `4834`.
+选择 `确定` 应用更改.
