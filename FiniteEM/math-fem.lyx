@@ -7916,6 +7916,170 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 \end_layout
 
 \begin_layout Section
+广义alpha方法
+\end_layout
+
+\begin_layout Standard
+设一阶常微分方程的形式为
+\begin_inset Formula 
+\begin{equation}
+M\,x^{\prime}(t)+F[x(t)]=b(t)\label{eq:mya1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+M\,x_{n+\alpha_{m}}^{\prime} & +F^{(0)}[x_{n}]+F^{(1)}(x_{n+\alpha_{f}}-x_{n})=b_{n+\alpha_{f}}\\
+x_{n+1}-x_{n} & =\Delta t\,\overline{\beta}\,x_{n}^{\prime}+\Delta t\,\beta\,x_{n+1}^{\prime}\\
+x_{n+\alpha_{m}}^{\prime}-x_{n}^{\prime} & =\alpha_{m}(x_{n+1}^{\prime}-x_{n}^{\prime})\\
+x_{n+\alpha_{f}}-x_{n} & =\alpha_{f}(x_{n+1}-x_{n})
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha_{m}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{f}$
+\end_inset
+
+，
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 当前是可调参数。
+\begin_inset Formula 
+\begin{align*}
+ & \left(\alpha_{m}M+\alpha_{f}\beta\Delta t\,F^{(1)}\right)x_{n+1}=\left(\alpha_{m}M+\beta\Delta t\alpha_{f}\,F^{(1)}\right)x_{n}+\left(\alpha_{m}-\beta\right)\Delta tM\,x_{n}^{\prime}+\beta\Delta t\left(b_{n+\alpha_{f}}-F^{(0)}\right)\\
+ & \left(\alpha_{m}M+\alpha_{f}\,\beta\Delta t\,F^{(1)}\right)x_{n+1}^{\prime}=-\left(\overline{\alpha_{m}}M+\alpha_{f}\overline{\beta}\Delta t\,F^{(1)}\right)x_{n}^{\prime}+\left(b_{n+\alpha_{f}}-F^{(0)}\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \left[\begin{array}{cc}
+\alpha_{m}M+\alpha_{f}\beta\Delta t\,F^{(1)}\\
+ & \alpha_{m}M+\alpha_{f}\beta\Delta t\,F^{(1)}
+\end{array}\right]\left[\begin{array}{c}
+x_{n+1}\\
+x_{n+1}^{\prime}
+\end{array}\right]=\\
+ & \left[\begin{array}{cc}
+\alpha_{m}M+\beta\Delta t\alpha_{f}\,F^{(1)} & \left(\alpha_{m}-\beta\right)\Delta tM\,\\
+ & -\left(\overline{\alpha_{m}}M+\alpha_{f}\overline{\beta}\Delta t\,F^{(1)}\right)
+\end{array}\right]\left[\begin{array}{c}
+x_{n}\\
+x_{n}^{\prime}
+\end{array}\right]+\left[\begin{array}{c}
+\beta\Delta t\left(b_{n+\alpha_{f}}-F^{(0)}\right)\\
+\left(b_{n+\alpha_{f}}-F^{(0)}\right)
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+引入可调参数
+\begin_inset Formula $\beta$
+\end_inset
+
+（
+\begin_inset Formula $0\le\beta\le1$
+\end_inset
+
+），将函数
+\begin_inset Formula $x(t+\Delta t)$
+\end_inset
+
+表示为（XuLei的选取方式）
+\begin_inset Formula 
+\[
+x\left(t+\Delta t\right)=x\left(t\right)+\beta\Delta t\,x^{\prime}\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t+\Delta t\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+。
+\begin_inset Formula $\beta=0$
+\end_inset
+
+ 对应后向欧拉。
+\series bold
+以下用
+\begin_inset Formula $n$
+\end_inset
+
+标记时间步
+\series default
+，即指标 
+\begin_inset Formula $n+1$
+\end_inset
+
+ 对应时刻 
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+，联立方程
+\begin_inset Formula 
+\begin{align*}
+ & x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime;n}+\overline{\beta}\Delta t\,x^{\prime;n+1}\\
+ & M\,x^{\prime;n}+K\,x^{n}+F^{n}=b^{n}\\
+ & M\,x^{\prime;n+1}+K\,x^{n+1}+F^{n+1}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+解得
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify@First@Solve[{ x[n + 1] == x[n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]* x
+\backslash
+[Prime][n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]b*x
+\backslash
+[Prime][n + 1], M*x
+\backslash
+[Prime][n] + K*x[n] + F[n] == b[n], M*x
+\backslash
+[Prime][n + 1] + K*x[n + 1] + F[n + 1] == b[n + 1] }, {x[n + 1], x
+\backslash
+[Prime][n], x
+\backslash
+[Prime][n + 1]} ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(\frac{M}{\Delta t}+\overline{\beta}K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\beta K\right)x^{n}-\left(\overline{\beta}\,F^{n+1}+\beta\,F^{n}\right)+\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
+\end{align*}
+
+\end_inset
+
+简记
+\end_layout
+
+\begin_layout Section
 不动点迭代
 \end_layout
 
