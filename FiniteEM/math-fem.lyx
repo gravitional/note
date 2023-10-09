@@ -2219,6 +2219,157 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
+牛顿优化，最速降线优化，回溯线搜索
+\end_layout
+
+\begin_layout Standard
+ref: Numerical methods for unconstrained optimization--J.
+ E.
+ Dennis，P101
+\end_layout
+
+\begin_layout Standard
+牛顿方向，
+\begin_inset Formula 
+\begin{align*}
+ & H_{k}\,s_{k}^{N}=-\nabla f(x_{k})\\
+ & x_{k+1}=x_{k}+s_{k}^{N}.
+\end{align*}
+
+\end_inset
+
+quasi–Newton 方向:
+\begin_inset Formula 
+\[
+-H_{k}^{-1}\,\nabla f(x_{k}),\quad H_{k}=\nabla^{2}f(x_{k})+\mu_{k}I
+\]
+
+\end_inset
+
+最速降线方向：寻找从
+\begin_inset Formula $x_{k}$
+\end_inset
+
+开始，
+\begin_inset Formula $f$
+\end_inset
+
+在
+\begin_inset Formula $-\nabla f(x_{k})$
+\end_inset
+
+方向上的最低点，即寻找
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \min_{\lambda_{k}>0}f\left(x_{k}-\lambda_{k}\nabla f(x_{k})\right)\\
+ & x_{k+1}:=x_{k}-\lambda_{k}\nabla f(x_{k})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+通常在绝大多数问题中，不应该使用 steepest descent 作为计算方法，因为 quasi–Newton 方法更高效。然而，当 global
+ strategy 必须取极小的步长时（相对于Newton step），Sect6.4 中将看到，global strategy 采用的步长将落在，或者靠近
+ steepest descent direction。
+\end_layout
+
+\begin_layout Standard
+steepest descent 方向对 
+\begin_inset Formula $x$
+\end_inset
+
+ 的scale 很敏感，而 Newton 方向不敏感。所以在 6.4 中使用 steepest descent 方向时，附录中的实现是，首先左乘一个
+ 对角的 scaling matrix。在Sect 7.1 中将会讨论这个实践中很重要的话题，称为 scaling。
+\end_layout
+
+\begin_layout Standard
+Page 117，线搜索 line searches。为了避免两种搜索失败的情况：
+\begin_inset Formula $x_{k}$
+\end_inset
+
+步长太小，或者
+\begin_inset Formula $f(x_{k})$
+\end_inset
+
+下降太慢。使用了两条筛选准则：
+\end_layout
+
+\begin_layout Itemize
+使
+\begin_inset Formula $f(x)$
+\end_inset
+
+充分下降，对于U形函数，对应避免
+\begin_inset Formula $x_{k}$
+\end_inset
+
+过大
+\begin_inset Formula 
+\[
+f(x_{c}+\lambda p)\le f(x_{c})+\alpha\,\lambda\,\nabla f(x_{c})^{T}\,p
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x_{+})\le f(x_{c})+\alpha\,\nabla f(x_{c})^{T}\,(x_{+}-x_{c})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+避免step 过小；对于U形函数，对应避免
+\begin_inset Formula $x_{k}$
+\end_inset
+
+过小
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla f(x_{+})^{T}p\stackrel{\Delta}{=}\nabla f(x_{c}+\lambda_{c}p)^{T}p\ge\beta\,\nabla f(x_{c})^{T}p
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\nabla f(x_{+})^{T}(x_{+}-x_{c})\ge\beta\,\nabla f(x_{c})^{T}(x_{+}-x_{c})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+P120 Example 6.3.1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Lagrange插值与Gauss积分
 \end_layout
 
