@@ -1,0 +1,478 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Numerical Recipes in C
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+预备 Preliminary
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+程序组织和控制结构
+\end_layout
+
+\begin_layout Section
+科学计算的C约定
+\end_layout
+
+\begin_layout Section
+Error, Accuracy and Stability
+\end_layout
+
+\begin_layout Chapter
+线性代数方程的解
+\end_layout
+
+\begin_layout Chapter
+插值和外推
+\end_layout
+
+\begin_layout Chapter
+函数的积分
+\end_layout
+
+\begin_layout Chapter
+函数求值
+\end_layout
+
+\begin_layout Chapter
+特殊函数
+\end_layout
+
+\begin_layout Chapter
+随机数
+\end_layout
+
+\begin_layout Chapter
+排序
+\end_layout
+
+\begin_layout Chapter
+求根和非线性方程组
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+括住和二分
+\end_layout
+
+\begin_layout Section
+截线法，试位法和Ridder法
+\end_layout
+
+\begin_layout Section
+Van Wijngaarden–Dekker–Brent 方法
+\end_layout
+
+\begin_layout Section
+Newton–Raphson法，使用导数
+\end_layout
+
+\begin_layout Section
+多项式的根
+\end_layout
+
+\begin_layout Section
+非线性方程组的Newton–Raphson法
+\end_layout
+
+\begin_layout Subsection
+牛顿法 versus Minimization
+\end_layout
+
+\begin_layout Standard
+在下一章中，我们将发现有一些高效的通用技术可以用来求 多变量函数 的minimum。为什么这项任务（相对）容易，而多维求根往往相当困难？最小化不就等同于找到
+ 
+\begin_inset Formula $N$
+\end_inset
+
+维梯度向量 的零点吗？不一样！梯度向量的分量并不是独立的任意函数。相反，它们服从所谓的 可积性条件（integrability），而这些条件具有很强的限制性。简
+单地说，在单个表面上滑下坡，总能找到最小值。因此，对 “下坡” 的检验是一维的。而多维求根问题中没有类似的 conceptual procedure，在这里，“
+下坡” 必须是指同时在 
+\begin_inset Formula $N$
+\end_inset
+
+ 个不同的函数空间中下坡，因此，在一个维度上的下降与另一个维度上的下降相比有多大价值，可以有多种取舍。
+\end_layout
+
+\begin_layout Standard
+你可能会想到，通过将所有这些维度折叠成一个维度来进行多维寻根： 将各个函数 
+\begin_inset Formula $F_{i}$
+\end_inset
+
+ 的平方相加，得到一个主函数 
+\begin_inset Formula $F$
+\end_inset
+
+，这个主函数 
+\begin_inset Formula $F$
+\end_inset
+
+ (i) 是正定的，(ii) 在原始非线性方程组的所有解上都有一个 global minimum 零。不幸的是，正如你在下一章中将看到的，寻找
+ minima 的高效算法不加区分地 终止于全局 和 局部最小值。你经常会发现，函数
+\begin_inset Formula $F$
+\end_inset
+
+ 有大量的局部极小值，这让你非常不满。例如，在图 9.6.1 中，只要 
+\begin_inset Formula $f$
+\end_inset
+
+ 和 
+\begin_inset Formula $g$
+\end_inset
+
+ 的零等值线相互靠近，就可能出现局部极小值。标注为 
+\begin_inset Formula $M$
+\end_inset
+
+ 的点就是这样一个点，我们可以看到附近没有根。
+\end_layout
+
+\begin_layout Standard
+不过，我们现在将看到，复杂的多维寻根策略实际上可以利用最小化主函数 
+\begin_inset Formula $F$
+\end_inset
+
+ 的思想，将其与应用于全套函数 
+\begin_inset Formula $F_{i}$
+\end_inset
+
+ 的牛顿方法相结合。虽然这些方法偶尔也会因停留在 
+\begin_inset Formula $F$
+\end_inset
+
+ 的局部最小值而失败，但它们往往能在 仅用牛顿法尝试失败的情况 取得成功。下一节将讨论这些方法。
+\end_layout
+
+\begin_layout Section
+非线性方程组的全局收敛方法
+\end_layout
+
+\begin_layout Standard
+下列方程组
+\begin_inset Formula 
+\begin{equation}
+\sbf F(x)=0\label{eq:w9.7.1}
+\end{equation}
+
+\end_inset
+
+的 Newton step 是
+\begin_inset Formula 
+\[
+\sbf x_{\text{new}}=\sbf x_{\text{old}}+\delta\sbf x
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+\delta\sbf x=-\sbf J^{-1}\cdot\sbf F\label{eq:w9.7.3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf J$
+\end_inset
+
+是Jacobian matrix。 是否接受此 Newton step 
+\begin_inset Formula $\delta\sbf x$
+\end_inset
+
+的判据，可以选为，要求
+\begin_inset Formula $\delta\sbf x$
+\end_inset
+
+ 降低 
+\begin_inset Formula $\abs{\sbf F}^{2}=\sbf F\cdot\sbf F$
+\end_inset
+
+。这也是相同的需求，如果我们要最小化
+\begin_inset Formula 
+\begin{equation}
+f=\frac{1}{2}\sbf F\cdot\sbf F.\label{eq:w9.7.4}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $1/2$
+\end_inset
+
+ for later convenience。 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:w9.7.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的每个解都会最小化
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:w9.7.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，但是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:w9.7.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可能存在 local minima，而不是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:w9.7.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的解。因此，简单的套用Chap.10的 minimum finding algorithms 
+\series bold
+不是
+\series default
+一个好办法。
+\end_layout
+
+\begin_layout Standard
+注意到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:w9.7.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 Newton step 是 
+\begin_inset Formula $f$
+\end_inset
+
+ 的 descent direction：
+\begin_inset Formula 
+\begin{equation}
+\nabla f\cdot\delta\sbf x=\left(\sbf F\cdot J\right)\cdot\left(-\sbf J^{-1}\cdot\sbf F\right)=-\sbf F\cdot\sbf F<0\label{eq:w9.7.5}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+因此，我们的策略非常简单： 我们总是先尝试 full牛顿步，因为一旦我们足够接近解，就会获得二次收敛。然而，我们在每次迭代时都会检查 提议的step
+ 能否减小
+\begin_inset Formula $f$
+\end_inset
+
+。如果不能，我们就沿着 牛顿步的方向 backtrack，直到找到一个可以接受的 step 为止。由于牛顿step 是 
+\begin_inset Formula $f$
+\end_inset
+
+ 的下降方向，我们可以保证通过回溯找到一个可接受的step。下面我们将详细讨论回溯算法。
+\end_layout
+
+\begin_layout Standard
+需要注意的是，这种方法本质上是通过 使 
+\begin_inset Formula $\sbf F$
+\end_inset
+
+ 为零的牛顿步 来最小化 
+\begin_inset Formula $f$
+\end_inset
+
+。这
+\series bold
+并不
+\series default
+等同于直接通过采取 使
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ 为零的牛顿步 来最小化 
+\begin_inset Formula $f$
+\end_inset
+
+。虽然这种方法偶尔也会因 
+\begin_inset Formula $f$
+\end_inset
+
+ 的 local minimum而失败，但在实际应用中这种情况非常罕见。如果出现这种情况，下面的例程 newt 会发出警告。补救措施是尝试一个新的起点。
+\end_layout
+
+\begin_layout Subsection
+线搜索和回溯
+\end_layout
+
+\begin_layout Standard
+Numerical recipes in c, P384。Line searches and backtracking。
+\end_layout
+
+\begin_layout Standard
+下面是使用 lnsrch 的全局收敛牛顿例程 newt。newt 的一个特点是你不需要提供 解析的 Jacobian矩阵；例程将尝试在 fdjac
+ 子例程中 通过有限差分计算 
+\begin_inset Formula $\sbf F$
+\end_inset
+
+ 的必要偏导数。这个例程使用了 Sect5.7 中描述的一些计算数值导数的技术。当然，你也可以用 解析计算雅各布矩阵的例程来代替 fdjac。
+\end_layout
+
+\begin_layout Chapter
+函数的极大值极小值
+\end_layout
+
+\begin_layout Chapter
+本征值系统
+\end_layout
+
+\begin_layout Chapter
+快速傅里叶变换
+\end_layout
+
+\begin_layout Chapter
+傅立叶和谱应用
+\end_layout
+
+\begin_layout Chapter
+数据的统计学描述
+\end_layout
+
+\begin_layout Chapter
+数据建模
+\end_layout
+
+\begin_layout Chapter
+常微分方程的积分
+\end_layout
+
+\begin_layout Chapter
+两点边值问题
+\end_layout
+
+\begin_layout Chapter
+积分方程和Inverse理论
+\end_layout
+
+\begin_layout Chapter
+偏微分方程
+\end_layout
+
+\begin_layout Chapter
+Less–Numerical 算法
+\end_layout
+
+\end_body
+\end_document

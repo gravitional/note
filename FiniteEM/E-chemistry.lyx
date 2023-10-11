@@ -95,7 +95,7 @@ Yang
 \end_layout
 
 \begin_layout Chapter
-方程梳理
+Conception, Convention
 \end_layout
 
 \begin_layout Section
@@ -179,6 +179,246 @@ literal "false"
 或者恢复能持续接受电子的能力。理解电极极化的最好例子就是充电电池的充电过程。当充电电池没电了，也就是说，两极的电位差不多一样了，能给出的电压差已经很小了。充电过
 程就是让正负极再次两极分化，达到原先的额定电压差。再一个例子，就是将平行板电容器接在直流电源上。刚接通，电路上是有电流的，电容器的两个板就像两个电极，当极化好了
 ，其反电势和电源电势相等，电路就不再有电流了。
+\end_layout
+
+\begin_layout Section
+电极符号约定
+\end_layout
+
+\begin_layout Enumerate
+阳极电流向电解液内，对应 
+\begin_inset Formula $I<0$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+浓度场 
+\begin_inset Formula $\mathrm{stoi}>0$
+\end_inset
+
+，对应 
+\begin_inset Formula $c_{i}\,\uparrow$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+膜：
+\begin_inset Formula $\mathrm{stoi}>0$
+\end_inset
+
+，对应 
+\begin_inset Formula $\Delta d<0$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+阴极电流向电解液外，对应 
+\begin_inset Formula $I>0$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+浓度场 
+\begin_inset Formula $\mathrm{stoi}>0$
+\end_inset
+
+，对应 
+\begin_inset Formula $c_{i}\,\downarrow$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+膜：
+\begin_inset Formula $\mathrm{stoi}>0$
+\end_inset
+
+，对应 
+\begin_inset Formula $\Delta d>0$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+体积项（V）和表面项（S）
+\end_layout
+
+\begin_layout Standard
+扩散
+\begin_inset Formula $J_{D}$
+\end_inset
+
+，迁移
+\begin_inset Formula $J_{M}$
+\end_inset
+
+，对流
+\begin_inset Formula $J_{C}$
+\end_inset
+
+ 都可以分成 体积项（V）和 表面项（S），表面项来自于分部积分。
+\end_layout
+
+\begin_layout Standard
+EC 模块中输出的 JID， JIM 只是体扩散率，体迁移率。在表面附近，没有考虑 表面流–表面沉积溶解流，表面迁移流；其中 表面迁移流项 的贡献是
+\begin_inset Formula 
+\[
+J_{\text{MS}}=\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot\sbf J_{M_{i}}}\dd{\Gamma}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf J_{M_{i}}=-z_{i}u_{i}F\,{\color{brown}C_{i}}\nabla\phi,\quad\text{Migration}
+\]
+
+\end_inset
+
+在案例中，假设表面
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上的 电势梯度
+\begin_inset Formula $\nabla\phi$
+\end_inset
+
+不为零，看起来应该考虑 表面 
+\begin_inset Formula $J_{\text{MS}}$
+\end_inset
+
+ 项。
+\end_layout
+
+\begin_layout Itemize
+但实际上如果表面是固体相，可以认为
+\begin_inset Formula $\nabla\phi$
+\end_inset
+
+在此处不起作用，即 
+\begin_inset Formula $\sbf n\cdot\left(-z_{i}u_{i}F\,{\color{brown}C_{i}}\nabla\phi\right)=0$
+\end_inset
+
+，即固体相不提供可以迁移的浓度粒子。
+\end_layout
+
+\begin_layout Itemize
+如果是考虑 物质沉积溶解，则电场的作用被专门考虑到 沉积溶解流中，也不会纳入 表面迁移率
+\end_layout
+
+\begin_layout Standard
+综上，在固体相边界的模型中，总是无需考虑 表面迁移率
+\begin_inset Formula $J_{\text{MS}}$
+\end_inset
+
+ 的贡献。
+\end_layout
+
+\begin_layout Section
+时间求解器
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "About the Time-Dependent Solver"
+target "https://doc.comsol.com/5.5/doc/com.comsol.help.comsol/comsol_ref_solver.27.098.html#1123398"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "向后差分公式法、广义 alpha 法和龙格-库塔法"
+target "https://cn.comsol.com/support/knowledgebase/1062"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+BDF VS.
+ 广义alpha And Runge–Kutta 方法
+\end_layout
+
+\begin_layout Standard
+BDF（backward differentiation formulas） 求解器使用后向微分公式，精确度从一阶（即 backward Euler）到五阶不等
+。BDF 方法使用已久，以其稳定性著称。然而，它们可能会产生严重的阻尼（damping）效应，尤其是低阶方法。后向欧拉法会对任何高频产生严重的阻尼。由于后向欧拉
+法的阻尼作用，即使你期望得到的解具有尖锐的梯度(sharp gradients)，也可能得到非常平滑的解。
+\end_layout
+
+\begin_layout Standard
+The generalized–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 求解器的特性与二阶 BDF 求解器相似，但底层技术不同。它包含一个参数，在文献中称为 
+\begin_inset Formula $\alpha$
+\end_inset
+
+，用于控制高频的damping（阻尼）程度。与 BDF（最大二阶）相比，广义–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 造成的阻尼要小得多，因此更加精确。出于同样的原因，它的稳定性也较差。 
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 中的广义–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 方法可以检测出哪些变量是一阶时间变量，哪些变量是二阶时间变量，并对变量应用正确的公式。 
+\end_layout
+
+\begin_layout Standard
+在许多情况下，广义–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 是一种精确的方法，具有足够好的稳定性，但 BDF 方法更稳健，更善于处理时间步长的变化。当时间步长几乎恒定、需要较小或最小阻尼时，如纯振动问题，广义–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 方法是模拟的首选。因此，COMSOL Multiphysics 中的一些物理界面（例如结构力学和电磁波）使用广义–
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 作为默认的瞬态求解器。但是，有些复杂问题需要 BDF 方法提供的额外稳健性。
+\end_layout
+
+\begin_layout Standard
+还有一些问题类型，如 ODE 系统，可以从高阶 BDF 方法提供的更高精度中获益。对于这类 ODE 系统，Runge–Kutta ODE 方法系列中的显式方法（
+RK34、Cash–Karp 5 和 Dormand–Prince 5）可能是最有效的方法。
+\end_layout
+
+\begin_layout Chapter
+方程梳理
 \end_layout
 
 \begin_layout Section
