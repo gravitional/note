@@ -64,13 +64,13 @@ target_include_directories(hello-world PRIVATE hello)
 
 ### INTERFACE: 接口
 
-生成 libhello-world.so 时,
-只在libhello-world.so 对外的头文件——hello_world.h 中包含 了 hello.h,
-hello_world.c 中不包含 hello.h,
-即 libhello-world.so 不使用 libhello.so 提供的功能,
-只使用 hello.h 中的某些信息, 比如结构体.
-但是 main.c 需要使用 libhello.so 中的功能.
-那么在 hello-world/CMakeLists.txt 中应该写入:
+生成 `libhello-world.so` 时,
+只在 `libhello-world.so` 对外的头文件 -- `hello_world.h` 中包含 了 `hello.h`,
+`hello_world.c` 中不包含 `hello.h`,
+即 `libhello-world.so` 不使用 `libhello.so` 提供的功能,
+只使用 `hello.h` 中的某些信息, 比如结构体.
+但是 `main.c` 需要使用 `libhello.so` 中的功能.
+那么在 `hello-world/CMakeLists.txt` 中应该写入:
 
 ```cmake
 target_link_libraries(hello-world INTERFACE hello)

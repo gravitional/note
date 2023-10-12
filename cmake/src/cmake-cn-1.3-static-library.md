@@ -118,10 +118,8 @@ add_library(hello_library STATIC
 这个目录是 `库` 所包含的 `头文件` 的目录, 并设置 `库属性` 为 `PUBLIC`.
 
 ```cmake
-target_include_directories(hello_library
-    PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
-)
+target_include_directories(hello_library PUBLIC
+    ${PROJECT_SOURCE_DIR}/include)
 ```
 
 This will cause the included directory used in the following places:

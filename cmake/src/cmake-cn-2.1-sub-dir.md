@@ -92,8 +92,9 @@ Variable    Info
 
 ## Header only Libraries
 
-如果您有一个库被创建为 `仅头文件` 的库, 则 `cmake` 支持 `INTERFACE` 目标,
-以允许创建没有 `任何build输出` 的目标.  可以[从here找到更多详细信息](https://cmake.org/cmake/help/v3.4/command/add_library.html#interface-libraries)
+如果您有一个库被创建为 `仅头文件` 的库, 
+则 `cmake` 支持 `INTERFACE` 目标, 以允许创建没有 `任何build输出` 的目标.  
+可以[从here找到更多详细信息](https://cmake.org/cmake/help/v3.4/command/add_library.html#interface-libraries)
 
 ```cmake
 add_library(${PROJECT_NAME} INTERFACE)
@@ -105,9 +106,7 @@ add_library(${PROJECT_NAME} INTERFACE)
 
 ```cmake
 target_include_directories(${PROJECT_NAME}
-    INTERFACE
-        ${PROJECT_SOURCE_DIR}/include
-)
+    INTERFACE ${PROJECT_SOURCE_DIR}/include)
 ```
 
 ## 引用子项目中的库
