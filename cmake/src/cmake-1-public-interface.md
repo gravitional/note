@@ -40,8 +40,8 @@ This will cause the included directory used in the following places:
 >如果 `源文件` 和 `头文件` 中都包含该第三方文件头, 采用 `PUBLIC`.
 >如果 `头文件` 中包含该第三方文件头, 但是 `源文件`(例如CPP)中不包含, 采用 `INTERFACE`.
 
-我个人认为上面的说法是错误的. 正确理解: 
-称当前 `编译目标(target)` 为 `目标(库)`, 
+我个人认为上面的说法是错误的. 正确理解:
+称当前 `编译目标(target)` 为 `目标(库)`,
 链接了(依赖于) `目标` 的 `其他目标`(库或者可执行程序)称为 `user`
 
 + `PRIVATE`; `目录` 将被添加到 `目标(库)` 的 include路径 中.
@@ -54,7 +54,7 @@ This will cause the included directory used in the following places:
 ### ​建议!
 
 对于公共的头文件, 最好在 `include` 文件夹下建立子目录.
-传递给函数 `target_include_directories()` 的目录, 
+传递给函数 `target_include_directories()` 的目录,
 应该是所有包含目录的根目录, 然后在这个根目录下建立不同的文件夹, 分别写头文件.
 
 这样使用的时候, 不需要写 `${PROJECT_SOURCE_DIR}/include`, 而是直接选择对应的文件夹里对应头文件.
@@ -63,8 +63,8 @@ This will cause the included directory used in the following places:
 
 ## Header only Libraries 只有头文件的库
 
-如果您有一个库被创建为 `仅头文件` 的库, 
-则 `cmake` 支持 `INTERFACE` 目标, 以允许创建没有 `任何build输出` 的目标.  
+如果您有一个库被创建为 `仅头文件` 的库,
+则 `cmake` 支持 `INTERFACE` 目标, 以允许创建没有 `任何build输出` 的目标.
 可以[从here找到更多详细信息](https://cmake.org/cmake/help/v3.4/command/add_library.html#interface-libraries)
 
 ```cmake

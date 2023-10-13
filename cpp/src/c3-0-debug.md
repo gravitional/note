@@ -350,16 +350,16 @@ struct A<int> {};   // C2766
 
 要解决此警告, 请考虑代码不使用返回值的原因.
 您对函数的使用可能与其意图不符.
-您可以将返回值赋值给 `std::ignore`, 
+您可以将返回值赋值给 `std::ignore`,
 或者在有意丢弃返回值的情况下将返回值赋值给 void, 从而规避警告.
 
-在 C++ 11 及更高版本中, 赋值到 `std::ignore` 比将其赋值到 `void` 更受青睐, 
+在 C++ 11 及更高版本中, 赋值到 `std::ignore` 比将其赋值到 `void` 更受青睐,
 因为它使您的意图更加明确, 而且如果在代码分析设置中启用, 也不会触发 C26457 警告.
 
 该警告在 Visual Studio 2017 版本 15.3 中作为第 3 级警告引入.
 在 Visual Studio 2017 版本 15.7 中, 它被改为 1 级警告.
 在 Visual Studio 2017 版本 15.3 之前的编译器版本中编译时没有警告的代码现在可以生成 C4834.
-有关如何禁用特定编译器版本或更高版本中引入的警告的信息, 
+有关如何禁用特定编译器版本或更高版本中引入的警告的信息,
 请参阅[按编译器版本划分的编译器警告](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warnings-by-compiler-version?view=msvc-170).
 
 在不修改代码的情况下关闭警告
@@ -376,3 +376,8 @@ struct A<int> {};   // C2766
 
 编辑禁用特定警告属性(Disable Specific Warnings), 添加 `4834`.
 选择 `确定` 应用更改.
+
+## c++ 找不到用户定义的文本运算符
+
+c++ 编译错误, 对于代码中的 `std::string` 字面字符串 `"xxx"s`.
+原因是没有引入 std namespace, 使用 `using namespace std` 即可.
