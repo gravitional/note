@@ -6914,6 +6914,375 @@ y^{\prime}=3\frac{\Delta_{j}}{\delta_{j}}\left[1-A^{2}-B^{2}\right]+\left(2A^{2}
 
 \end_layout
 
+\begin_layout Section
+贝塞尔曲线
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Bezier曲线"
+target "https://zhuanlan.zhihu.com/p/471457420"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $n$
+\end_inset
+
+个控制点确定
+\begin_inset Formula $n-1$
+\end_inset
+
+阶的贝塞尔曲线。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+一阶曲线
+\end_layout
+
+\end_inset
+
+给定平面上两点
+\begin_inset Formula $P_{0}$
+\end_inset
+
+，
+\begin_inset Formula $P_{1}$
+\end_inset
+
+，确定一阶贝塞尔曲线,
+\begin_inset Formula 
+\[
+B_{1}(t)=P_{0}+\left(P_{1}-P_{0}\right)t=\left(1-t\right)P_{0}+tP_{1},\quad t\in\left[0,1\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+二阶曲线
+\end_layout
+
+\end_inset
+
+给定平面上不共线三点
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+，
+\begin_inset Formula $C$
+\end_inset
+
+，确定二阶贝塞尔曲线。两个中继点
+\begin_inset Formula $D$
+\end_inset
+
+，
+\begin_inset Formula $E$
+\end_inset
+
+ 分别为
+\begin_inset Formula 
+\begin{align*}
+ & D(t)=(1-t)A+tB,\quad t\in\left[0,1\right]\\
+ & E(t)=(1-t)B+tC,\quad t\in\left[0,1\right]
+\end{align*}
+
+\end_inset
+
+再对
+\begin_inset Formula $DE$
+\end_inset
+
+ 作一阶插值得到
+\begin_inset Formula 
+\begin{align*}
+F(t) & =\left(1-t\right)D+tE=\left(1-t\right)\left[\left(1-t\right)A+tB\right]+t\left[\left(1-t\right)B+tC\right]\\
+ & =\left(1-t\right)^{2}A+2t(1-t)B+t^{2}C
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+贝塞尔曲线的一般公式：
+\begin_inset Formula 
+\begin{align*}
+ & C(t)=\sum_{i=0}^{n}P_{i}\,B_{i,n}(t),\quad t\in[0,1]\\
+ & B_{n,i}(t)=C_{n}^{i}t^{i}(1-t)^{n-i}=\frac{n!}{i!(n-i)!}t^{i}(1-t)^{n-i},\quad i=0,1,2,\cdots,n
+\end{align*}
+
+\end_inset
+
+系数
+\begin_inset Formula $B_{n,i}$
+\end_inset
+
+即二项式
+\begin_inset Formula $[t+(1-t)]^{n}$
+\end_inset
+
+的展开系数。
+\end_layout
+
+\begin_layout Subsection
+贝塞尔曲线的性质
+\end_layout
+
+\begin_layout Itemize
+贝塞尔曲线各项系数之和为
+\begin_inset Formula $1$
+\end_inset
+
+，因为 
+\begin_inset Formula $B_{n,i}$
+\end_inset
+
+ 是二项式系数。
+\end_layout
+
+\begin_layout Itemize
+对偶系数相等：
+\begin_inset Formula $B_{n,i}(t)=B_{n,n-i}$
+\end_inset
+
+
+\begin_inset Formula $\left(1-t\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+曲线的起始点和终点对应第一个和最后一个控制点。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+起始点
+\begin_inset Formula $t=0$
+\end_inset
+
+，只有 
+\begin_inset Formula $B_{n,0}(0)=1$
+\end_inset
+
+，其它系数为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+终点
+\begin_inset Formula $t=1$
+\end_inset
+
+，只有
+\begin_inset Formula $B_{n,n}(1)=1$
+\end_inset
+
+，其它系数为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+贝塞尔曲线被包含了所有控制点的最小凸多边形所包含, 这里要和控制点依次围成的最小多边形区分开。如下图所示，黄色的凸包将所有控制点以及贝塞尔曲线包含在内。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/bezier-convex.jpg
+	lyxscale 65
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+一阶导数
+\end_layout
+
+\end_inset
+
+贝塞尔曲线的起点和第一个控制点连线相切；终止点和最后一个控制点相切。贝塞尔曲线在
+\begin_inset Formula $t$
+\end_inset
+
+处的一阶导数为
+\begin_inset Formula 
+\begin{align*}
+ & C^{(1)}(t)=\sum_{i=0}^{n-1}P_{i}^{(1)}B_{n-1,i}(t)\\
+ & P_{i}^{(1)}=n\left(P_{i+1}-P_{i}\right)
+\end{align*}
+
+\end_inset
+
+因为 
+\begin_inset Formula $C^{(1)}(0)=n(P_{1}-P_{0})$
+\end_inset
+
+ ，
+\begin_inset Formula $C^{(1)}(1)=n(P_{n}-P_{n-1})$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+几何不变性
+\end_layout
+
+\end_inset
+
+Bezier曲线的形状仅与控制多边形各顶点的相对位置有关，而与坐标系的选择无关。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+波折递减性 
+\end_layout
+
+\end_inset
+
+ 如果曲线在平面中，则意味着直线与贝塞尔曲线的相交的次数不超过与曲线的控制折线相交的次数。它告诉我们曲线的复杂度（即旋转和扭曲）并不比控制折线复杂。
+\end_layout
+
+\begin_layout Subsection
+贝塞尔曲线的拼接
+\end_layout
+
+\begin_layout Standard
+根据前面针对Bezier曲线生成算法特别是系数B的研究：贝塞尔曲线的次数会随着控制点的增加提高，而高次多项式的计算必然会增加计算的成本。
+\end_layout
+
+\begin_layout Standard
+实际应用中的Bezier曲线，是根据实际场景构造若干段三次或者四次的曲线，再将它逐段拼接而形成的。这样就意味着，需要想办法在接合处保持一定的连续条件。
+\end_layout
+
+\begin_layout Standard
+这里补充一下对于连续性的定义：
+\end_layout
+
+\begin_layout Itemize
+位置连续：即两条曲线在某处的点坐标相同，又称为
+\begin_inset Formula $C_{0}$
+\end_inset
+
+连续
+\end_layout
+
+\begin_layout Itemize
+斜率连续：在满足1的条件上，第一段曲线的末端切矢量与第二段曲线的首端切矢方向相同，模长相等，又称
+\begin_inset Formula $C_{1}$
+\end_inset
+
+连续
+\end_layout
+
+\begin_layout Itemize
+曲率连续：在满足2的条件上，连接处曲率相等且满足主法线一致。
+\end_layout
+
+\begin_layout Standard
+通常，在贝塞尔曲线中我们要做到
+\begin_inset Formula $C_{1}$
+\end_inset
+
+连续，也只需满足以下两个条件：
+\end_layout
+
+\begin_layout Enumerate
+首尾控制点相接。原因：根据性质3，贝塞尔曲线必然经过首尾两个控制点。保证第一个段曲线的
+\series bold
+末端控制点
+\series default
+与第二段曲线的
+\series bold
+起始控制点
+\series default
+重合，就可以保证两端曲线在交接处重合。这样就保证了拼接曲线的 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+连续。
+\end_layout
+
+\begin_layout Enumerate
+连接处的四个控制点共线。原因：根据性质五，贝塞尔曲线与首尾两个控制点相切，因此只要保证连接处的四个控制点（第一段的最末两个控制点，第二段的最初两个控制点，其中两
+段具有公共控制点）共线，就可以保证两段曲线都与连接点以相同的斜率相切，即
+\begin_inset Formula $C_{1}$
+\end_inset
+
+连续。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/Bezier-C1-Continuation.jpg
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 最小二乘
 \end_layout
