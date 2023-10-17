@@ -36,7 +36,8 @@ refer: [runoob brief introduction](https://www.runoob.com/regexp/regexp-intro.ht
 
 ## 正则表达式 - 语法
 
-refer:[runoob syntax](https://www.runoob.com/regexp/regexp-syntax.html) and [runoob metachar](https://www.runoob.com/regexp/regexp-metachar.html)
+refer:[runoob syntax](https://www.runoob.com/regexp/regexp-syntax.html) and
+[runoob metachar](https://www.runoob.com/regexp/regexp-metachar.html)
 
 正则表达式(`regular expression`)描述了一种字符串匹配的模式(`pattern`),
 可以用来检查一个串是否含有某种子串,

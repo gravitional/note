@@ -12535,6 +12535,30 @@ literal "false"
 。
 \end_layout
 
+\begin_layout Enumerate
+通用气体常数 
+\begin_inset Formula $R=8.314472\,\mathrm{J\cdot mol^{-1}\cdot K^{-1}}$
+\end_inset
+
+；
+\begin_inset Formula $\mathrm{Kg\cdot m^{2}\cdot s^{-2}\cdot mol^{-1}\cdot K^{-1}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+法拉第常数，
+\begin_inset Formula $F=96485\,\mathrm{C\cdot mol^{-1}}$
+\end_inset
+
+；
+\begin_inset Formula $\mathrm{A\cdot s\cdot mol^{-1}}$
+\end_inset
+
+，表示每摩尔电子携带的电荷。
+\end_layout
+
 \begin_layout Standard
 介电常数
 \begin_inset Formula $\varepsilon_{0}=8.8541\,8781\,7620\,3898\,51×10^{-12}\,\mathrm{F/m}$
@@ -21196,6 +21220,151 @@ N_{3}^{e}(x_{q})
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+收敛判定标准
+\end_layout
+
+\begin_layout Standard
+非线性迭代求解 
+\begin_inset Formula $A\,X=b$
+\end_inset
+
+ 的过程为 
+\begin_inset Formula 
+\begin{align*}
+ & X_{0}=\text{initial}\\
+ & X_{n}=X_{n-1}+\delta X_{n}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\delta X_{n}$
+\end_inset
+
+是第
+\begin_inset Formula $n$
+\end_inset
+
+步迭代的修正向量。当满足以下任何一个判断标准收敛，程序认为迭代收敛。
+\end_layout
+
+\begin_layout Itemize
+后向误差收敛判定
+\begin_inset Formula 
+\[
+\frac{\text{FieldResidual}}{\max\left(\text{MinimumAbs},\text{FieldExtLoad}\right)}<\text{ResidualConvergeRatio}
+\]
+
+\end_inset
+
+其中 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+FieldResidual 是全局激励向量（global rhs ）的模长，in L2 norm。 MinimumAbs 是用户输入；ResidualConve
+rgeRatio
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color blue
+（control 项 ResidualConvTol）
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 是用户输入的收敛标准。FieldExtLoad 是外源激励幅值。为了处理 
+\begin_inset Formula $\text{FieldExtLoad}=0$
+\end_inset
+
+ 的情况，使用了 max 函数。
+\end_layout
+
+\begin_layout Itemize
+前向误差收敛判定
+\begin_inset Formula 
+\[
+\frac{\text{dFieldDataNorm}}{\max\left(\text{MinimumAbs},\text{FieldDataNorm}\right)}<\text{DispConvergeRatio}
+\]
+
+\end_inset
+
+其中
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ dFieldDataNorm 是当前解的模长（前向误差），FieldDataNorm 是解的累积模长；MinimumAbs同上；DispConvergeRat
+io 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color blue
+（control 项 IncrementConvTol）
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 是用户输入收敛标准。
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+control 项 MaxStepNum，默认值1000
+\color inherit
+：非线性迭代中外迭代最大步数。
 \end_layout
 
 \begin_layout Chapter

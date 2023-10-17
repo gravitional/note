@@ -95,16 +95,593 @@ Yang
 \end_layout
 
 \begin_layout Chapter
-电化学和有限元基础
+电化学建模的介绍
+\end_layout
+
+\begin_layout Section
+名词解释
+\end_layout
+
+\begin_layout Subsection
+Thermodynamic activity
 \end_layout
 
 \begin_layout Standard
-电化学过程是将电能转化为化学能或将化学能转化为电能的过程。
+\begin_inset CommandInset href
+LatexCommand href
+name "活度和活度系数是什么"
+target "https://www.zhihu.com/question/66406459/answer/298398998"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "Thermodynamic activity"
+target "https://en.wikipedia.org/wiki/Thermodynamic_activity"
+literal "false"
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
-在电化学反应中，化学物质通过获得或失去电子发生反应。化学物质可以与电导体或电路交换这些电子。因此，化学反应的化学势（或热力学驱动力）被转化为电势或电压。当电流产
-生时，就可以利用电势或电压做有用功。
+在实际溶液中，由于离子电荷、分子极性等原因，溶质和溶剂的粒子并非完全自由运动，彼此之间会受到影响，导致实际混合物中各组分的摩尔分数，以及由它导出的混合物性质变化
+量（如凝固点下降、沸点上升等）出现一定偏差。因此，在浓度（用摩尔分数或其它方式表示）上乘以一个系数，以修正这种偏差。该系数称为活度因子（活度系数），该系数与浓度
+的乘积称为活度（可看作组分在混合物中的有效浓度）。
+\end_layout
+
+\begin_layout Standard
+在化学热力学（chemical thermodynamics）中，
+\series bold
+活度
+\series default
+ （activity，符号 
+\begin_inset Formula $a$
+\end_inset
+
+）是混合物中某一物种 
+\begin_inset Quotes eld
+\end_inset
+
+有效浓度
+\begin_inset Quotes erd
+\end_inset
+
+ 的度量，即该物种的化学势取决于实际溶液的 活度，就像它取决于理想溶液的浓度一样。这种意义上的 
+\begin_inset Quotes eld
+\end_inset
+
+活度
+\begin_inset Quotes erd
+\end_inset
+
+ 一词是由美国化学家吉尔伯特–刘易斯（Gilbert N.
+ Lewis）于 1907 年创造的。
+\end_layout
+
+\begin_layout Standard
+按照惯例，
+\series bold
+活度
+\series default
+被视为 无量纲的量，尽管其值取决于 物质标准状态的习惯选择。纯物质在凝聚相（固态或液态）中的活度通常取为 
+\begin_inset Formula $1$
+\end_inset
+
+（数字 1）。活度取决于温度、压力和混合物的成分等因素。对于气体来说，活度就是有效分压，通常称为 逸度（fugacity）。
+\end_layout
+
+\begin_layout Standard
+由于非理想气体或溶液中 不同类型分子之间的相互作用，不同于相同类型分子之间的相互作用，因此活度与浓度的其他测量指标之间存在差异。离子的活度尤其受其周围环境的影响
+。
+\end_layout
+
+\begin_layout Standard
+平衡（Equilibrium）常数应该用活度来定义，但在实际应用中，往往用浓度来代替。反应速率（reaction rates）方程通常也是如此。不过，在某些情况
+下，活度和浓度会有很大的不同，因此，在需要活度的情况下，用浓度来近似是无效的。有两个例子可以说明这一点：
+\end_layout
+
+\begin_layout Itemize
+在 
+\begin_inset Formula $0.02\mathrm{M}$
+\end_inset
+
+ 的碘酸氢钾（potassium hydrogen iodate）
+\begin_inset Formula $\mathrm{KH(IO_{3})_{2}}$
+\end_inset
+
+ 溶液中，活度比计算出的氢离子浓度低 
+\begin_inset Formula $40\%$
+\end_inset
+
+，导致 pH 值比预期的要高得多。 
+\end_layout
+
+\begin_layout Itemize
+当含有甲基绿指示剂（methyl green indicator）的 
+\begin_inset Formula $0.1\mathrm{M}$
+\end_inset
+
+ 盐酸(hydrochloric acid)溶液加入 
+\begin_inset Formula $5\mathrm{M}$
+\end_inset
+
+ 的氯化镁(magnesium chloride)溶液中时，指示剂的颜色从绿色变为黄色，表明酸度增加，而实际上酸已被稀释。虽然在低离子强度（<
+ 0.1 M）下，活度系数接近于1；但在高离子强度条件下，该系数实际上会随着离子强度的增加而增加。对于盐酸溶液，最小值约为 0.4 M。
+\end_layout
+
+\begin_layout Section
+什么是电化学
+\end_layout
+
+\begin_layout Standard
+电化学（electrochemical）过程是将电能转化为化学能，或将化学能转化为电能的过程。
+\end_layout
+
+\begin_layout Standard
+在电化学反应中，化学物质通过得失电子发生反应。化学物质可以与电导体或电路交换这些电子。因此，化学反应的化学势（或热力学驱动力）被转化为电势或电压。当电流产生时，
+就可以利用电势或电压做有用功。
+\end_layout
+
+\begin_layout Standard
+电化学系统可以按不同方式分类。
+\end_layout
+
+\begin_layout Standard
+一种方法是将涉及desirable 反应的电化学系统与涉及 不undesirable反应的电化学系统进行对比。合成电解（Synthetic electrolys
+is）就是理想反应的一个例子，因为化学过程是为了产生理想的产物。或者，例如在设计电池时，我们可能希望设置促进 电化学反应 的条件，以提取有用的能量。
+\end_layout
+
+\begin_layout Standard
+腐蚀（Corrosion）是undesirable电化学的一个例子，因为在这种情况下，自发的电化学反应会破坏结构材料，从而损害系统的完整性（integrity）
+：我们的目标是尽量降低这些反应的速率。
+\end_layout
+
+\begin_layout Standard
+电化学系统还可分为 输出能量的系统 和 消耗能量的系统。电池和燃料电池（Batteries and fuel cells）是能量提取装置—通过电化学反应将化学系
+统中的能量转换为电压。这类电池也被称为 原电池（galvanic cells）。相比之下，在电解（electrolysis）过程中，系统消耗能量来促进
+ 电化学反应 用于合成（synthesis）。需要输入能量的类似电化学系统还包括电镀（electroplating）等制造过程。电化学反应也可用于电分析（ele
+ctroanalysis），以量化或探索系统的化学成分（constituents）或 反应性（reactivity）。
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 中的不同电化学模块旨在为每种电化学情况提供量身定制的物理界面。下面描述的通用物理界面所提供的 基本物理描述
+ 对所有模块都是通用的 — 模块之间的差异在于特定的预期系统输入和输出，以及系统的预期行为。
+\end_layout
+
+\begin_layout Remark
+
+\series bold
+反应性
+\series default
+（Reactivity）在化学中是一个有些模糊的概念。它似乎既包含热力学因素，也包含动力学因素— 即一种物质是否会发生反应以及反应速度有多快。这两个因素实际上是
+不同的，而且通常都取决于温度。例如，人们通常认为，第一类金属（Na、K 等）的反应性在元素周期表中是依次递增的，或者氢气的 反应性 体现在它与氧气的反应上。事实
+上，碱金属的反应速率（例如与水的反应）不仅是该族内位置的函数，也是颗粒大小的函数。氢气不会与氧气发生反应—尽管平衡常数非常大—除非有火焰引发自由基反应（radi
+cal reaction），从而导致爆炸。
+\end_layout
+
+\begin_layout Standard
+将这一术语限定为指反应速率（reaction rates），可以得出更一致的观点。反应性是指化学物质在一定时间内发生化学反应的速率。在纯化合物中，反应性受样品的
+物理特性调节。例如，将样品研磨成更大的比表面积就会提高其反应性。在不纯化合物中，杂质的加入也会影响反应活性。在结晶化合物中，结晶形式也会影响反应活性。不过，在所
+有情况下，反应性主要是由化合物的亚原子特性决定的。
+\end_layout
+
+\begin_layout Standard
+虽然 “X 物质具有反应性” 的说法很常见，但所有物质都会与某些试剂而非其他试剂发生反应。例如，当我们说 “金属钠具有反应性” 时，是指钠会与许多常见试剂（包括
+纯氧、氯、盐酸、水）发生反应，和/或在室温下或使用本生焰（Bunsen flame）时会与这些物质迅速发生反应。
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+稳定性
+\series default
+（Stability）不应与反应性混淆。例如，一个孤立的氧分子电子激发态分子在经过一段统计定义的时间后会自发发光。这种物质的半衰期是其稳定性的另一种表现，但其反
+应性只能通过与其他物质的反应来确定。
+\end_layout
+
+\begin_layout Section
+电化学建模基础
+\end_layout
+
+\begin_layout Standard
+电化学系统由导电介质组成。这些介质可分为电极（electrodes）和电解质（electrodes）。电极通过电子传输来传输电流；电极通常是传统的电导体，如金属
+。电解质通过传输带电的化学物质（离子）来传输电流。电解质通常是水中的盐溶液，但也可能包括其他液体溶剂中的盐溶液，以及固体如混凝土，它可以通过氧化物离子（oxid
+e ions）的传输来导电。电极的导电率通常比电解质的导电率大几个数量级。
+\end_layout
+
+\begin_layout Subsection
+电极–电解质界面
+\end_layout
+
+\begin_layout Standard
+在电极-电解质界面上，电极中的常规电流会转化为电解质中的离子电流。根据总电荷守恒原理，这些电流必须在此平衡。两种电流之间的转换可能源于电化学反应（电解）或电容充
+电。
+\end_layout
+
+\begin_layout Standard
+当电解质中的化学物质与电极交换一个或多个电子时，就会发生电解。当电极的电位发生变化时，电解质中的离子被吸引或排斥出电极表面，从而产生电流，这就是电容充电。
+\end_layout
+
+\begin_layout Standard
+电池和燃料电池也可能涉及多孔电极，其中电极材料具有可渗透电解质的微型或纳米结构。这种材料的优点是可以大大增加电极-电解质界面的面积。
+\end_layout
+
+\begin_layout Standard
+请注意，所有电流都必须在电路中运动。一个孤立的电极–电解质界面无法产生净电流，但有两个这样的界面的系统却可以。有两个或多个电极与电解质接触的电化学系统称为电化学
+电池（electrochemical cell）。
+\end_layout
+
+\begin_layout Standard
+在有两个电极的电化学电池中，这些电极被分成 阳极和阴极，阳极（anode）上的电化学反应将电子从电解质转移到电极上，而阴极（cathode）上的电子则从电极转移
+到电解质中。请注意，决定电极反应是 阳极反应 还是 阴极反应 的是电流的方向。以电池为例，阳极和阴极的位置会根据电池充电或放电而发生变化。
+\end_layout
+
+\begin_layout Standard
+传统的电流是正电荷的流动，它通过电解质从阳极流向阴极。从阴极到阳极的 电极区域（和任何电路）中的电流流动，以及从阳极到阴极的电解质域中的离子传输，形成了保持整个
+系统电荷守恒的闭合回路。
+\end_layout
+
+\begin_layout Subsection
+模型的相关输出
+\end_layout
+
+\begin_layout Standard
+物理建模（physical modeling）的优势在于能够研究系统在各种情况下，与空间有关（space-dependent）的全部行为，以确定观察到的
+ 电流–电压 关系的原因，从而根据需要确定适当的物理条件来优化电流和电压。
+\end_layout
+
+\begin_layout Standard
+电化学电池的整体 电流-电压曲线 也称为极化曲线（polarization curve），或在分析中称为伏安图（voltammogram）。这些曲线并不是唯一的
+，而是取决于改变电流或电压的方式，因为这些 集总参数（lumped）与具有不同长度和时间尺度的多种物理效应有关。实际极化曲线中的滞后（hysteresis）现象
+并不少见。
+\end_layout
+
+\begin_layout Standard
+极化曲线经常是非线性的（nonlinear）。非线性和滞后的结合意味着电化学电池并不一定像 “理想的” 电气元件（如电阻和电容组成的电路）那样具有可预测的线性电
+流–电压响应。
+\end_layout
+
+\begin_layout Section
+电流分布案例和选择正确的界面来模拟电化学电池
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 有许多针对特定应用的内置 物理接口（physics interfaces）。不过，在许多一般情况下，建模者在开始建立模型
+之前必须对其系统做出一些基本假设。
+\end_layout
+
+\begin_layout Standard
+在电流密度与电场呈线性关系的假设下，电解质电流遵循欧姆定律。这是一次电流分布（primary current distribution）的假设，同时也是无限快电
+极动力学（infinitely fast electrodes kinetics）的假设，导致电极–电解质界面上的 电压降 可以忽略不计。如果电极反应动力学以有
+限速率进行，则系统具有二次电流分布（secondary current distribution）。在需要更高级的 非线性电荷守恒方程 和 电极极化依赖浓度
+ 的情况下，系统被描述为服从 三次电流分布（tertiary current distribution）。
+\end_layout
+
+\begin_layout Standard
+在某些应用中，尤其是在电分析（electroanalysis）领域，电解质中的电位梯度非常小，因此无需求解电解质中电流的空间分布。此类模型的核心是
+ 电极动力学与电极附近反应物的输运（通过扩散）之间的相互作用。
+\end_layout
+
+\begin_layout Standard
+为模型选择合适的电流分布界面的经验法则流程图如下所示。这里的建议仅供参考，建模者有时可能希望偏离建议的路线；特别是，建议在模型开发的早期阶段进行更简单的描述。在
+以下章节中，我们将解释该流程图背后有关电解质电荷输运（transport）和电极反应描述的一些理论。
+\end_layout
+
+\begin_layout Section
+了解电解质中电荷守恒的不同近似
+\end_layout
+
+\begin_layout Standard
+决定如何为电解质中的 电荷输运 建模通常是建立电化学模型的起点，因为这将决定您在开始建立模型时将使用何种物理界面。COMSOL Multiphysics
+ 中包含不同的电解质电流密度理论描述。如本节所述，它们适用于不同的情况。
+\end_layout
+
+\begin_layout Standard
+介质中的电位移场（
+\begin_inset Formula $\sbf D$
+\end_inset
+
+）根据麦克斯韦方程之一的高斯定律与局部电荷密度相关：
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf D=\rho_{V}
+\]
+
+\end_inset
+
+在电解质中，通常我们可以假设 介电常数是恒定的，并且等于体积值：
+\begin_inset Formula 
+\[
+\sbf D=\varepsilon_{0}\varepsilon_{s}\sbf E=-\varepsilon_{0}\varepsilon_{s}\nabla V
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\nabla^{2}V+\frac{\rho_{V}}{\varepsilon_{0}\varepsilon_{s}}=0
+\]
+
+\end_inset
+
+在含有载荷离子的电解质中，电荷密度写成
+\begin_inset Formula 
+\[
+\rho_{V}=F\sum_{i}z_{i}c_{i}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\nabla^{2}V+\frac{F}{\varepsilon_{0}\varepsilon_{s}}\sum_{i}z_{i}c_{i}=0
+\]
+
+\end_inset
+
+这是有关电解质电位和 电解质中载荷离子分布 的泊松（Poisson）方程。在推导过程中，我们假设唯一的电荷载体是离子，并且溶解的离子和电场不会改变介质的介电常数
+。
+\end_layout
+
+\begin_layout Standard
+水体系中载荷离子的 质量传输（mass transport）通常由 Nernst–Planck 方程给出。这些方程忽略了离子间的相互作用（ion–ion
+ interactions），因此只对无限稀释的溶液精确：
+\begin_inset Formula 
+\[
+\sbf N_{i}=-D_{i}\nabla c_{i}-z_{i}u_{m,i}Fc_{i}\nabla\phi_{\ell}+c_{i}\sbf u
+\]
+
+\end_inset
+
+ 请注意，浓电解质系统（如许多电池中的浓电解质系统）使用基于 Maxwell-Stefan方程组的扩展浓物质通量（extended concentrated
+ species flux）定义。这将导致求解不同的方程组，但本节的一般原理和结论仍然成立。
+\end_layout
+
+\begin_layout Standard
+将 Nernst-Einstein 关系式代入离子的电迁移率，我们可以得到
+\begin_inset Formula 
+\[
+\sbf N_{i}=-D_{i}\left(\nabla c_{i}+\frac{z_{i}F}{RT}c_{i}\nabla\phi_{\ell}\right)+c_{i}\sbf u
+\]
+
+\end_inset
+
+上述 
+\begin_inset Formula $n$
+\end_inset
+
+ 中物质
+\begin_inset Formula $i$
+\end_inset
+
+的表达式，加上泊松方程，可以得到
+\begin_inset Formula $n+1$
+\end_inset
+
+个未知数中的
+\begin_inset Formula $n+1$
+\end_inset
+
+个方程组。这就是 Nernst–Planck–Poisson 方程。这些方程可以在 COMSOL Multiphysics 中通过将 Transport
+ of Diluted Species 与 Electrostatics 耦合定义，但它们高度非线性且难以收敛。通常情况下，进一步近似可以在不影响精度（accu
+racy）的前提下简化问题。
+\end_layout
+
+\begin_layout Standard
+泊松方程中的一个重要的 有量纲数是
+\begin_inset Formula 
+\[
+x_{D}=\sqrt{\frac{RT\,\varepsilon_{0}\varepsilon_{s}}{F^{2}I}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $I$
+\end_inset
+
+是离子浓度（
+\begin_inset Formula $\mathrm{mol/m^{3}}$
+\end_inset
+
+）。这是电场被屏蔽的长度。它被称为德拜长度（Debye length）。在电解质溶液中，这个长度非常短：对于典型的离子强度，大约为 1 纳米。在距离带电表面远大
+于 1 纳米的距离上，电中性将被保持：
+\begin_inset Formula 
+\[
+\sum z_{i}c_{i}=0
+\]
+
+\end_inset
+
+电中性（electroneutrality）约束可作为确定 Nernst–Planck 方程中电势的条件，以代替完整的泊松方程。具有电中性的 Nernst–Pl
+anck 方程用于描述 Tertiary Current Distribution, Nernst-Planck 界面中的 电流流动（current
+ flow）。
+\end_layout
+
+\begin_layout Standard
+电流的表达式为
+\begin_inset Formula 
+\[
+\sbf i_{\ell}=F\sum z_{i}\sbf N_{i}
+\]
+
+\end_inset
+
+通过替换 
+\begin_inset Formula $\sbf N_{i}$
+\end_inset
+
+ 的 Nernst–Planck 表达式，质量和电荷的守恒定律自动结合起来满足电流守恒。
+\end_layout
+
+\begin_layout Standard
+通过更详细地考虑 
+\begin_inset Formula $\sbf i_{\ell}$
+\end_inset
+
+ 的表达式，可以来进一步简化系统：
+\begin_inset Formula 
+\[
+\sbf i_{\ell}=-F\sum D_{i}z_{i}\nabla c_{i}-\frac{F^{2}}{RT}\nabla\phi_{\ell}\sum z_{i}^{2}D_{i}c_{i}+\sbf u\sum z_{i}c_{i}
+\]
+
+\end_inset
+
+显然，最右边的项为零：即电中性溶液的对流不会导致 电流流动（current flow）。如果电荷载流子的梯度为零，则最左项（扩散电流）也会因电中性而消失。
+\end_layout
+
+\begin_layout Standard
+不过，即使情况并非如此，只要载流离子的浓度在溶液中没有明显变化，该项通常也比中间项（迁移电流 migration current）小得多。在电解质成分几乎恒定、
+载流离子没有明显耗尽的条件下，扩散电流的作用可以忽略不计。
+\end_layout
+
+\begin_layout Standard
+因此可得
+\begin_inset Formula 
+\[
+\sbf i_{\ell}=-\sigma_{\ell}\nabla\phi_{\ell}
+\]
+
+\end_inset
+
+Secondary Current Distribution 界面和 Primary Current Distribution 界面都使用此电流密度表达式。这些
+界面的区别在于对 电极–电解质界面 的处理（见下文的 电化学反应动力学）。由上可知，电解质的电导率 
+\begin_inset Formula $\sigma_{\ell}$
+\end_inset
+
+ 为
+\begin_inset Formula 
+\[
+\sigma_{\ell}=\frac{F^{2}}{RT}\sum z_{i}^{2}D_{i}c_{i}
+\]
+
+\end_inset
+
+只要这个量在溶液中的变化不明显，那么扩散电流为零的近似值就是正确的。如果可以将扩散率（diffusivities）和浓度视为常数，我们就可以近似地认为扩散电流为
+零：
+\begin_inset Formula 
+\[
+\sigma_{\ell}\approx\frac{2F^{2}ID_{\text{mean}}}{RT}
+\]
+
+\end_inset
+
+电流密度欧姆（ohmic）表达式的优势在于，它是电流密度与电解质电位的线性关系。如果允许
+\begin_inset Formula $\sigma_{\ell}$
+\end_inset
+
+ 依赖于物质传输界面中求解的浓度，那么它只是弱非线性。相比之下，具有电中性的 Nernst–Planck 方程可能是高度非线性的。
+\end_layout
+
+\begin_layout Standard
+不过，用于推导 二次电流分布表达式 的近似方法对允许的 系统配置（configurations） 施加了更严格的限制。要使恒定电导（conductivity）近
+似有效，溶液的离子强度必须保持近似恒定。通常只有电导率相对较高的溶液才会出现这种情况。
+\end_layout
+
+\begin_layout Standard
+相对于检出电流，当电导率较大时，溶液中的电场可忽略不计。对于可忽略不计的电场，可使用仅扩散（diffusion-only）近似，即 
+\begin_inset Formula $\sbf E=0$
+\end_inset
+
+。这就将 Nernst–Planck 方程转换为菲克定律（Fick’s laws），必要时加上对流（convective）传输项。带有对流和电化学边界条件的
+ 菲克定律在电分析（Electroanalysis）界面中求解。
+\end_layout
+
+\begin_layout Remark
+即使您认为某个问题将涉及完整的 Nernst–Planck 方程，也最好先在 Secondary Current Distribution 建立模型，以便在使用
+较简单的电化学模型时，识别系统中任何其他可能的复杂因素。
+\end_layout
+
+\begin_layout Section
+电化学反应建模
+\end_layout
+
+\begin_layout Standard
+电化学反应 是通过电极反应（Electrode Reaction）或多孔电极反应（Porous Electrode Reaction）节点来定义的。电极反应由其
+热力学（thermodynamics）、动力学（kinetics）和化学计量学（stoichiometry）定义。后者描述了在一定的反应电流密度下，产生的质量通
+量（mass fluxes）、源（sources）和汇（sinks）。
+\end_layout
+
+\begin_layout Subsection
+电化学反应的热力学
+\end_layout
+
+\begin_layout Standard
+电解（electrolytic）反应涉及 与电极交换电子。这种反应被写成还原反应，即使反应主要发生在氧化方向上。例如
+\begin_inset Formula 
+\[
+\mathrm{Ag}^{+}(\text{aq})+\mathrm{e}^{-}\leftrightarrow\mathrm{Ag}(\text{s})
+\]
+
+\end_inset
+
+这种反应被称为 “半电池”（half–cell）反应，因为它发生在特定的 电极–电解质 界面上。它不能单独发生，只有在 双电极电化学电池中 与另一个半电池反应耦
+合时才会发生。每个反应都有一个 吉布斯（Gibbs）能量变化特征，它决定了反应在热力学上成立。吉布斯能变化为负数意味着反应是自发进行的（spontaneousl
+y）— 在热力学上是 “下山”（downhill）。
+\end_layout
+
+\begin_layout Standard
+吉布斯能量变化与 电极和电解质 之间的平衡电势差的关系是：
+\begin_inset Formula 
+\[
+E_{\text{eq},m}=-\frac{\Delta G_{m}}{n_{m}F}
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula $E_{\text{eq},m}$
+\end_inset
+
+是相对于 反应在平衡状态（
+\begin_inset Formula $\Delta G=0$
+\end_inset
+
+）的某个外部参比刻度的 电位差。这被称为电化学反应的 平衡电位（equilibrium potential）或还原电位（reduction potential）
+，或在腐蚀中称为腐蚀电位（corrosion potential），其绝对值取决于参比电极（reference electrode）的选择。
+\end_layout
+
+\begin_layout Remark
+平衡电势应始终引用特定的参考标度（specific reference）。如果在模型的不同部分使用了不同的参考标度，系统的热力学（thermodynamics）
+可能与预期不同。
+\end_layout
+
+\begin_layout Standard
+从标准的热力学关系
+\begin_inset Formula 
+\[
+\Delta G=-RT\ln K
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+E-E_{\text{eq}}=\frac{RT}{nF}\ln K
+\]
+
+\end_inset
+
+这就是 Nernst 方程，它是一个通用的热力学表达式。它总是适用于处于热力学平衡状态的系统，但不一定适用于非平衡状态的系统。
+\end_layout
+
+\begin_layout Standard
+假设物质（species）是理想的，且 活度（activity）可等效视为常数，那么对于单分子还原物种和氧化物种之间的转换，可以得出以下结论 ：
+\begin_inset Formula 
+\[
+[\mathrm{Ox}]=[\mathrm{Red}]\,\exp\left[\left(\frac{nF}{RT}\right)\left(\phi_{s}-\phi_{\ell}-E_{f}\right)\right]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body

@@ -120,3 +120,8 @@ int test2a(int n)
 ![img](https://i.stack.imgur.com/GRon3.png)
 
 在 project 上右键, 通过 `properties` 页面寻找 code analysis.
+
+## solver gcc 编译问题
+
++ 不要使用 `std::unordered_map<Enum,xxx>`, gcc 不会处理 Enum 作 key 的情形.
++ 不要使用 `std::unordered_map` 的 `insert_or_assign` 接口, gcc 不认识.
