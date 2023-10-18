@@ -7283,6 +7283,478 @@ status open
 
 \end_layout
 
+\begin_layout Section
+B-Spline和NURBS
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+节点向量
+\end_layout
+
+\end_inset
+
+ B-Spline需要定义曲线的节点向量U。把插值区间
+\begin_inset Formula $[U_{\text{min}},U_{\text{max}}]$
+\end_inset
+
+ 划分成多个非递减实数段。
+\begin_inset Formula 
+\[
+U=\left\{ u_{0},u_{1},\cdots,u_{m}\right\} 
+\]
+
+\end_inset
+
+节点向量
+\begin_inset Formula $U$
+\end_inset
+
+的取值需要满足：
+\begin_inset Formula 
+\[
+m-(p+1)=n
+\]
+
+\end_inset
+
+节点向量一共
+\begin_inset Formula $m+1$
+\end_inset
+
+ 个，曲线阶数是
+\begin_inset Formula $p$
+\end_inset
+
+，控制点数量是
+\begin_inset Formula $n$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+重复性（multiplicity）
+\end_layout
+
+\end_inset
+
+ 如果
+\begin_inset Formula $U$
+\end_inset
+
+向量中存在
+\begin_inset Formula $k$
+\end_inset
+
+个相等的元素
+\begin_inset Formula $u_{x}$
+\end_inset
+
+，则 B-spline 在 
+\begin_inset Formula $x$
+\end_inset
+
+ 处具有
+\begin_inset Formula $k$
+\end_inset
+
+的重复度。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+均匀性(uniformity)
+\end_layout
+
+\end_inset
+
+ 如果
+\begin_inset Formula $U$
+\end_inset
+
+每段的距离（span）是相等，那么这个B-Spline就被称为均匀B样条 ：
+\begin_inset Formula 
+\[
+u_{1}-u_{0}=u_{2}-u_{1}=\cdots=u_{n}-u_{n-1}
+\]
+
+\end_inset
+
+均匀性也可以只在局部遵守，比如 
+\begin_inset Formula $U=\left\{ 0,0,0,0.2,0.4,0.6,0.8,1,1,1\right\} $
+\end_inset
+
+,第 4 到第 8 个节点间保持 0.2 的差值，而首尾则有着 3 重复度。这样的曲线也被称为准均匀（quasi-uniform）B样条
+\end_layout
+
+\begin_layout Subsection
+B-Spline公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C(u)=\sum_{i=1}^{n}N_{i,p}(u)\,P_{i}
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula $p$
+\end_inset
+
+表示
+\begin_inset Formula $p$
+\end_inset
+
+阶曲线，
+\begin_inset Formula $i=1,\cdots n$
+\end_inset
+
+表示控制点个数，
+\begin_inset Formula $P_{i}$
+\end_inset
+
+是控制点；
+\begin_inset Formula $N_{i,p}(u)$
+\end_inset
+
+ 是基函数。和贝塞尔曲线一样，B-Spline的基函数也可以用递归的方法展开以降低阶数
+\begin_inset Formula 
+\begin{align*}
+ & N_{i,p}(u)=f_{i,p}(u)\,N_{i,p-1}(u)+g_{i+1,p}(u)\,N_{i+1,p-1}(u)\\
+ & f_{i,p}(u)=\frac{u-u_{i}}{u_{i+p}-u_{i}}\\
+ & g_{i,p}(u)=1-f_{i,p}(u)=\frac{u_{i+p}-u}{u_{i+p}-u_{i}}
+\end{align*}
+
+\end_inset
+
+点
+\begin_inset Formula $i$
+\end_inset
+
+处的 
+\begin_inset Formula $p$
+\end_inset
+
+ 阶基函数 
+\begin_inset Formula $N_{i,p}(u)$
+\end_inset
+
+，可以用 
+\begin_inset Formula $i$
+\end_inset
+
+和
+\begin_inset Formula $i+1$
+\end_inset
+
+处的 
+\begin_inset Formula $p-1$
+\end_inset
+
+阶基函数递归定义。对于
+\begin_inset Formula $N_{i,0}$
+\end_inset
+
+定义为
+\begin_inset Formula 
+\[
+N_{i,0}(u)=\begin{cases}
+1, & \text{if}\;u\in[u_{i},u_{i+1})\\
+0 & \text{if}\;u\notin[u_{i},u_{i+1})
+\end{cases}
+\]
+
+\end_inset
+
+也就是 
+\begin_inset Formula $N_{i,0}(u)$
+\end_inset
+
+ 具有支撑性。
+\end_layout
+
+\begin_layout Standard
+因此，如果要计算基函数
+\begin_inset Formula $N_{i,p}$
+\end_inset
+
+，最终递归到的
+\begin_inset Formula $0$
+\end_inset
+
+阶基函数是 
+\begin_inset Formula $\left(i,0\right)\rightarrow\left(i+p,0\right)$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+N_{i,p}(u)\Rightarrow\begin{cases}
+\ge0, & \text{if}\;u\in[u_{i},u_{i+p+1})\\
+=0 & \text{if}\;u\notin[u_{i},u_{i+p+1})
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/B-Spline1.webp
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+行指标是插值划分，列指标是曲线阶数
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由此可知，对于给定的
+\begin_inset Formula $u$
+\end_inset
+
+，如果 
+\begin_inset Formula $u$
+\end_inset
+
+ 落在 
+\begin_inset Formula $[u_{i},u_{i+1})$
+\end_inset
+
+区间，而曲线的阶数为
+\begin_inset Formula $p$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+N_{j,p}(u)\Rightarrow\begin{cases}
+\ge0 & x\in\left[i-p,\cdots,i\right]\\
+=0 & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+如下面所示，对于
+\begin_inset Formula $u\in[u_{3},u_{4})$
+\end_inset
+
+，如果使用
+\begin_inset Formula $2$
+\end_inset
+
+阶基函数，只需考虑 
+\begin_inset Formula $N_{2,2}$
+\end_inset
+
+，
+\begin_inset Formula $N_{3,2}$
+\end_inset
+
+，
+\begin_inset Formula $N_{4,2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/B-Spline2.webp
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+行指标是插值划分，列指标是曲线阶数
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+clamped
+\end_layout
+
+\begin_layout Standard
+和贝塞尔曲线不同的是，B–Spline不会天然经过首尾两个控制点。可以通过设计节点向量，让 B–Spline 经过首位控制点，这称为 clamped。与之相对，
+即曲线不经过首末控制点的场景，又被称为periodic。对于阶数为p的样条，首个节点和末个节点均应具有p+1的重复度（multiplicity）
+\begin_inset Formula 
+\[
+U=\{a,\dots,a,u_{p+1},\cdots,u_{m-p-1},b,\cdots,b\}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $U$
+\end_inset
+
+向量的前
+\begin_inset Formula $p+1$
+\end_inset
+
+个元素都是实数
+\begin_inset Formula $a$
+\end_inset
+
+，后 个元素都是
+\begin_inset Formula $b$
+\end_inset
+
+。如非特别强调，则
+\begin_inset Formula $a=0$
+\end_inset
+
+，
+\begin_inset Formula $b=1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+NURBS
+\end_layout
+
+\begin_layout Standard
+把每个字拆开来，
+\end_layout
+
+\begin_layout Itemize
+NU—nouniform，即非均匀，指有效节点向量区间距离非减不相等的。 
+\end_layout
+
+\begin_layout Itemize
+R—rational，有理，指权值（weight）各不相等。 权值代表各控制点对某一个拟合点的影响力，这里也可以发现普通的样条来说，各控制点对于同一个拟合点的影
+响力是相等的。
+\end_layout
+
+\begin_layout Itemize
+BS—BSpline，B样条。
+\end_layout
+
+\begin_layout Standard
+全称合起来就是控制点影响力和节点向量都参差不齐的B样条。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C(u)=\sum_{i=1}^{n}\frac{N_{i,p}(u)\,w_{i}}{S}P_{i},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $S=\sum_{i=1}^{n}N_{i,p}(u)\,w_{i}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+C(u,v)=\sum_{i=1}^{n}\sum_{j=1}^{m}R_{i,j}(u,v)\,P_{ij}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+R_{i,j}=\frac{N_{i,n}(u)\,N_{j,m}(v)\,w_{i,j}}{\sum_{i=1}^{n}\sum_{j=1}^{m}N_{i,n}(u)\,N_{j,m}(v)\,w_{i,j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 最小二乘
 \end_layout

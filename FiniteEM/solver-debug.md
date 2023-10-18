@@ -125,3 +125,8 @@ int test2a(int n)
 
 + 不要使用 `std::unordered_map<Enum,xxx>`, gcc 不会处理 Enum 作 key 的情形.
 + 不要使用 `std::unordered_map` 的 `insert_or_assign` 接口, gcc 不认识.
+
+## hdf5 writevalues readvalues 接口
+
+数据类型要匹配, 如果写出时用的 `complex<double>`,
+那么读取时候也要用 `complex<double>`.
