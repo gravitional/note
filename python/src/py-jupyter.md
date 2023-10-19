@@ -124,3 +124,17 @@ Verify password: 123
 这可以用来重置丢失的密码;  或者如果您认为您的凭据已泄漏并且希望更改密码.  重启服务器后, 更改密码将使所有登录的会话无效.
 
 设置`--NotebookApp.allow_password_change=False`可以禁用首次登录时更改密码的功能.
+
+## juypter lab
+
+[jupyterlab-cli](https://nocomplexity.com/documents/jupyterlab/notebooks/jupyterlab-cli.html)
+
+`--notebook-dir=<Unicode>`; The directory to use for notebooks and kernels.
+`--preferred-dir`; Preferred starting directory to use for notebooks and kernels.
+
+```bash
+#Windows Example
+jupyter lab --notebook-dir=E:/ --preferred-dir E:/Documents/Somewhere/Else
+#Linux Example
+jupyter lab --notebook-dir=/var/ --preferred-dir /var/www/html/example-app/
+```

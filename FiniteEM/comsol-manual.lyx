@@ -1,0 +1,2372 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+电化学–腐蚀模块
+\end_layout
+
+\begin_layout Author
+Yang
+\end_layout
+
+\begin_layout Chapter
+电化学建模的介绍
+\end_layout
+
+\begin_layout Section
+名词解释
+\end_layout
+
+\begin_layout Subsection
+Thermodynamic activity
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "活度和活度系数是什么"
+target "https://www.zhihu.com/question/66406459/answer/298398998"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "Thermodynamic activity"
+target "https://en.wikipedia.org/wiki/Thermodynamic_activity"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+在实际溶液中，由于离子电荷、分子极性等原因，溶质和溶剂的粒子并非完全自由运动，彼此之间会受到影响，导致实际混合物中各组分的摩尔分数，以及由它导出的混合物性质变化
+量（如凝固点下降、沸点上升等）出现一定偏差。因此，在浓度（用摩尔分数或其它方式表示）上乘以一个系数，以修正这种偏差。该系数称为活度因子（活度系数），该系数与浓度
+的乘积称为活度（可看作组分在混合物中的有效浓度）。
+\end_layout
+
+\begin_layout Standard
+在化学热力学（chemical thermodynamics）中，
+\series bold
+活度
+\series default
+ （activity，符号 
+\begin_inset Formula $a$
+\end_inset
+
+）是混合物中某一物种 
+\begin_inset Quotes eld
+\end_inset
+
+有效浓度
+\begin_inset Quotes erd
+\end_inset
+
+ 的度量，即该物种的化学势取决于实际溶液的 活度，就像它取决于理想溶液的浓度一样。这种意义上的 
+\begin_inset Quotes eld
+\end_inset
+
+活度
+\begin_inset Quotes erd
+\end_inset
+
+ 一词是由美国化学家吉尔伯特–刘易斯（Gilbert N.
+ Lewis）于 1907 年创造的。
+\end_layout
+
+\begin_layout Standard
+按照惯例，
+\series bold
+活度
+\series default
+被视为 无量纲的量，尽管其值取决于 物质标准状态的习惯选择。纯物质在凝聚相（固态或液态）中的活度通常取为 
+\begin_inset Formula $1$
+\end_inset
+
+（数字 1）。活度取决于温度、压力和混合物的成分等因素。对于气体来说，活度就是有效分压，通常称为 逸度（fugacity）。
+\end_layout
+
+\begin_layout Standard
+由于非理想气体或溶液中 不同类型分子之间的相互作用，不同于相同类型分子之间的相互作用，因此活度与浓度的其他测量指标之间存在差异。离子的活度尤其受其周围环境的影响
+。
+\end_layout
+
+\begin_layout Standard
+平衡（Equilibrium）常数应该用活度来定义，但在实际应用中，往往用浓度来代替。反应速率（reaction rates）方程通常也是如此。不过，在某些情况
+下，活度和浓度会有很大的不同，因此，在需要活度的情况下，用浓度来近似是无效的。有两个例子可以说明这一点：
+\end_layout
+
+\begin_layout Itemize
+在 
+\begin_inset Formula $0.02\mathrm{M}$
+\end_inset
+
+ 的碘酸氢钾（potassium hydrogen iodate）
+\begin_inset Formula $\mathrm{KH(IO_{3})_{2}}$
+\end_inset
+
+ 溶液中，活度比计算出的氢离子浓度低 
+\begin_inset Formula $40\%$
+\end_inset
+
+，导致 pH 值比预期的要高得多。 
+\end_layout
+
+\begin_layout Itemize
+当含有甲基绿指示剂（methyl green indicator）的 
+\begin_inset Formula $0.1\mathrm{M}$
+\end_inset
+
+ 盐酸(hydrochloric acid)溶液加入 
+\begin_inset Formula $5\mathrm{M}$
+\end_inset
+
+ 的氯化镁(magnesium chloride)溶液中时，指示剂的颜色从绿色变为黄色，表明酸度增加，而实际上酸已被稀释。虽然在低离子强度（<
+ 0.1 M）下，活度系数接近于1；但在高离子强度条件下，该系数实际上会随着离子强度的增加而增加。对于盐酸溶液，最小值约为 0.4 M。
+\end_layout
+
+\begin_layout Subsection
+
+\series bold
+反应性
+\series default
+ Reactivity
+\end_layout
+
+\begin_layout Remark
+在化学中是一个有些模糊的概念。它似乎既包含热力学因素，也包含动力学因素— 即一种物质是否会发生反应以及反应速度有多快。这两个因素实际上是不同的，而且通常都取决于
+温度。例如，人们通常认为，第一类金属（Na、K 等）的反应性在元素周期表中是依次递增的，或者氢气的 反应性 体现在它与氧气的反应上。事实上，碱金属的反应速率（例
+如与水的反应）不仅是该族内位置的函数，也是颗粒大小的函数。氢气不会与氧气发生反应—尽管平衡常数非常大—除非有火焰引发自由基反应（radical
+ reaction），从而导致爆炸。
+\end_layout
+
+\begin_layout Standard
+将这一术语限定为指反应速率（reaction rates），可以得出更一致的观点。反应性是指化学物质在一定时间内发生化学反应的速率。在纯化合物中，反应性受样品的
+物理特性调节。例如，将样品研磨成更大的比表面积就会提高其反应性。在不纯化合物中，杂质的加入也会影响反应活性。在结晶化合物中，结晶形式也会影响反应活性。不过，在所
+有情况下，反应性主要是由化合物的亚原子特性决定的。
+\end_layout
+
+\begin_layout Standard
+虽然 “X 物质具有反应性” 的说法很常见，但所有物质都会与某些试剂而非其他试剂发生反应。例如，当我们说 “金属钠具有反应性” 时，是指钠会与许多常见试剂（包括
+纯氧、氯、盐酸、水）发生反应，和/或在室温下或使用本生焰（Bunsen flame）时会与这些物质迅速发生反应。
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+稳定性
+\series default
+（Stability）不应与反应性混淆。例如，一个孤立的氧分子电子激发态分子在经过一段统计定义的时间后会自发发光。这种物质的半衰期是其稳定性的另一种表现，但其反
+应性只能通过与其他物质的反应来确定。
+\end_layout
+
+\begin_layout Section
+什么是电化学
+\end_layout
+
+\begin_layout Standard
+电化学（electrochemical）过程是将电能转化为化学能，或将化学能转化为电能的过程。
+\end_layout
+
+\begin_layout Standard
+在电化学反应中，化学物质通过得失电子发生反应。化学物质可以与电导体或电路交换这些电子。因此，化学反应的化学势（或热力学驱动力）被转化为电势或电压。当电流产生时，
+就可以利用电势或电压做有用功。
+\end_layout
+
+\begin_layout Standard
+电化学系统可以按不同方式分类。
+\end_layout
+
+\begin_layout Standard
+一种方法是将涉及desirable 反应的电化学系统与涉及 不undesirable反应的电化学系统进行对比。合成电解（Synthetic electrolys
+is）就是理想反应的一个例子，因为化学过程是为了产生理想的产物。或者，例如在设计电池时，我们可能希望设置促进 电化学反应 的条件，以提取有用的能量。
+\end_layout
+
+\begin_layout Standard
+腐蚀（Corrosion）是undesirable电化学的一个例子，因为在这种情况下，自发的电化学反应会破坏结构材料，从而损害系统的完整性（integrity）
+：我们的目标是尽量降低这些反应的速率。
+\end_layout
+
+\begin_layout Standard
+电化学系统还可分为 输出能量的系统 和 消耗能量的系统。电池和燃料电池（Batteries and fuel cells）是能量提取装置—通过电化学反应将化学系
+统中的能量转换为电压。这类电池也被称为 原电池（galvanic cells）。相比之下，在电解（electrolysis）过程中，系统消耗能量来促进
+ 电化学反应 用于合成（synthesis）。需要输入能量的类似电化学系统还包括电镀（electroplating）等制造过程。电化学反应也可用于电分析（ele
+ctroanalysis），以量化或探索系统的化学成分（constituents）或 反应性（reactivity）。
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 中的不同电化学模块旨在为每种电化学情况提供量身定制的物理界面。下面描述的通用物理界面所提供的 基本物理描述
+ 对所有模块都是通用的 — 模块之间的差异在于特定的预期系统输入和输出，以及系统的预期行为。
+\end_layout
+
+\begin_layout Section
+电化学建模基础
+\end_layout
+
+\begin_layout Standard
+电化学系统由导电介质组成。这些介质可分为电极（electrodes）和电解质（electrodes）。电极通过电子传输来传输电流；电极通常是传统的电导体，如金属
+。电解质通过传输带电的化学物质（离子）来传输电流。电解质通常是水中的盐溶液，但也可能包括其他液体溶剂中的盐溶液，以及固体如混凝土，它可以通过氧化物离子（oxid
+e ions）的传输来导电。电极的导电率通常比电解质的导电率大几个数量级。
+\end_layout
+
+\begin_layout Subsection
+电极–电解质界面
+\end_layout
+
+\begin_layout Standard
+在电极-电解质界面上，电极中的常规电流会转化为电解质中的离子电流。根据总电荷守恒原理，这些电流必须在此平衡。两种电流之间的转换可能源于电化学反应（电解）或电容充
+电。
+\end_layout
+
+\begin_layout Standard
+当电解质中的化学物质与电极交换一个或多个电子时，就会发生电解。当电极的电位发生变化时，电解质中的离子被吸引或排斥出电极表面，从而产生电流，这就是电容充电。
+\end_layout
+
+\begin_layout Standard
+电池和燃料电池也可能涉及多孔电极，其中电极材料具有可渗透电解质的微型或纳米结构。这种材料的优点是可以大大增加电极-电解质界面的面积。
+\end_layout
+
+\begin_layout Standard
+请注意，所有电流都必须在电路中运动。一个孤立的电极–电解质界面无法产生净电流，但有两个这样的界面的系统却可以。有两个或多个电极与电解质接触的电化学系统称为电化学
+电池（electrochemical cell）。
+\end_layout
+
+\begin_layout Standard
+在有两个电极的电化学电池中，这些电极被分成 阳极和阴极，阳极（anode）上的电化学反应将电子从电解质转移到电极上，而阴极（cathode）上的电子则从电极转移
+到电解质中。请注意，决定电极反应是 阳极反应 还是 阴极反应 的是电流的方向。以电池为例，阳极和阴极的位置会根据电池充电或放电而发生变化。
+\end_layout
+
+\begin_layout Standard
+传统的电流是正电荷的流动，它通过电解质从阳极流向阴极。从阴极到阳极的 电极区域（和任何电路）中的电流流动，以及从阳极到阴极的电解质域中的离子传输，形成了保持整个
+系统电荷守恒的闭合回路。
+\end_layout
+
+\begin_layout Subsection
+模型的相关输出
+\end_layout
+
+\begin_layout Standard
+物理建模（physical modeling）的优势在于能够研究系统在各种情况下，与空间有关（space-dependent）的全部行为，以确定观察到的
+ 电流–电压 关系的原因，从而根据需要确定适当的物理条件来优化电流和电压。
+\end_layout
+
+\begin_layout Standard
+电化学电池的整体 电流-电压曲线 也称为极化曲线（polarization curve），或在分析中称为伏安图（voltammogram）。这些曲线并不是唯一的
+，而是取决于改变电流或电压的方式，因为这些 集总参数（lumped）与具有不同长度和时间尺度的多种物理效应有关。实际极化曲线中的滞后（hysteresis）现象
+并不少见。
+\end_layout
+
+\begin_layout Standard
+极化曲线经常是非线性的（nonlinear）。非线性和滞后的结合意味着电化学电池并不一定像 “理想的” 电气元件（如电阻和电容组成的电路）那样具有可预测的线性电
+流–电压响应。
+\end_layout
+
+\begin_layout Section
+电流分布案例和选择正确的界面来模拟电化学电池
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 有许多针对特定应用的内置 物理接口（physics interfaces）。不过，在许多一般情况下，建模者在开始建立模型
+之前必须对其系统做出一些基本假设。
+\end_layout
+
+\begin_layout Standard
+在电流密度与电场呈线性关系的假设下，电解质电流遵循欧姆定律。这是一次电流分布（primary current distribution）的假设，同时也是无限快电
+极动力学（infinitely fast electrodes kinetics）的假设，导致电极–电解质界面上的 电压降 可以忽略不计。如果电极反应动力学以有
+限速率进行，则系统具有二次电流分布（secondary current distribution）。在需要更高级的 非线性电荷守恒方程 和 电极极化依赖浓度
+ 的情况下，系统被描述为服从 三次电流分布（tertiary current distribution）。
+\end_layout
+
+\begin_layout Standard
+在某些应用中，尤其是在电分析（electroanalysis）领域，电解质中的电位梯度非常小，因此无需求解电解质中电流的空间分布。此类模型的核心是
+ 电极动力学与电极附近反应物的输运（通过扩散）之间的相互作用。
+\end_layout
+
+\begin_layout Standard
+为模型选择合适的电流分布界面的经验法则流程图如下所示。这里的建议仅供参考，建模者有时可能希望偏离建议的路线；特别是，建议在模型开发的早期阶段进行更简单的描述。在
+以下章节中，我们将解释该流程图背后有关电解质电荷输运（transport）和电极反应描述的一些理论。
+\end_layout
+
+\begin_layout Section
+了解电解质中电荷守恒的不同近似
+\end_layout
+
+\begin_layout Standard
+决定如何为电解质中的 电荷输运 建模通常是建立电化学模型的起点，因为这将决定您在开始建立模型时将使用何种物理界面。COMSOL Multiphysics
+ 中包含不同的电解质电流密度理论描述。如本节所述，它们适用于不同的情况。
+\end_layout
+
+\begin_layout Standard
+介质中的电位移场（
+\begin_inset Formula $\sbf D$
+\end_inset
+
+）根据麦克斯韦方程之一的高斯定律与局部电荷密度相关：
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf D=\rho_{V}
+\]
+
+\end_inset
+
+在电解质中，通常我们可以假设 介电常数是恒定的，并且等于体积值：
+\begin_inset Formula 
+\[
+\sbf D=\varepsilon_{0}\varepsilon_{s}\sbf E=-\varepsilon_{0}\varepsilon_{s}\nabla V
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\nabla^{2}V+\frac{\rho_{V}}{\varepsilon_{0}\varepsilon_{s}}=0
+\]
+
+\end_inset
+
+在含有载荷离子的电解质中，电荷密度写成
+\begin_inset Formula 
+\[
+\rho_{V}=F\sum_{i}z_{i}c_{i}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\nabla^{2}V+\frac{F}{\varepsilon_{0}\varepsilon_{s}}\sum_{i}z_{i}c_{i}=0
+\]
+
+\end_inset
+
+这是有关电解质电位和 电解质中载荷离子分布 的泊松（Poisson）方程。在推导过程中，我们假设唯一的电荷载体是离子，并且溶解的离子和电场不会改变介质的介电常数
+。
+\end_layout
+
+\begin_layout Standard
+水体系中载荷离子的 质量传输（mass transport）通常由 Nernst–Planck 方程给出。这些方程忽略了离子间的相互作用（ion–ion
+ interactions），因此只对无限稀释的溶液精确：
+\begin_inset Formula 
+\[
+\sbf N_{i}=-D_{i}\nabla c_{i}-z_{i}u_{m,i}Fc_{i}\nabla\phi_{\ell}+c_{i}\sbf u
+\]
+
+\end_inset
+
+ 请注意，浓电解质系统（如许多电池中的浓电解质系统）使用基于 Maxwell-Stefan方程组的扩展浓物质通量（extended concentrated
+ species flux）定义。这将导致求解不同的方程组，但本节的一般原理和结论仍然成立。
+\end_layout
+
+\begin_layout Standard
+将 Nernst-Einstein 关系式代入离子的电迁移率，我们可以得到
+\begin_inset Formula 
+\[
+\sbf N_{i}=-D_{i}\left(\nabla c_{i}+\frac{z_{i}F}{RT}c_{i}\nabla\phi_{\ell}\right)+c_{i}\sbf u
+\]
+
+\end_inset
+
+上述 
+\begin_inset Formula $n$
+\end_inset
+
+ 中物质
+\begin_inset Formula $i$
+\end_inset
+
+的表达式，加上泊松方程，可以得到
+\begin_inset Formula $n+1$
+\end_inset
+
+个未知数中的
+\begin_inset Formula $n+1$
+\end_inset
+
+个方程组。这就是 Nernst–Planck–Poisson 方程。这些方程可以在 COMSOL Multiphysics 中通过将 Transport
+ of Diluted Species 与 Electrostatics 耦合定义，但它们高度非线性且难以收敛。通常情况下，进一步近似可以在不影响精度（accu
+racy）的前提下简化问题。
+\end_layout
+
+\begin_layout Standard
+泊松方程中的一个重要的 有量纲数是
+\begin_inset Formula 
+\[
+x_{D}=\sqrt{\frac{RT\,\varepsilon_{0}\varepsilon_{s}}{F^{2}I}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $I$
+\end_inset
+
+是离子浓度（
+\begin_inset Formula $\mathrm{mol/m^{3}}$
+\end_inset
+
+）。这是电场被屏蔽的长度。它被称为德拜长度（Debye length）。在电解质溶液中，这个长度非常短：对于典型的离子强度，大约为 1 纳米。在距离带电表面远大
+于 1 纳米的距离上，电中性将被保持：
+\begin_inset Formula 
+\[
+\sum z_{i}c_{i}=0
+\]
+
+\end_inset
+
+电中性（electroneutrality）约束可作为确定 Nernst–Planck 方程中电势的条件，以代替完整的泊松方程。具有电中性的 Nernst–Pl
+anck 方程用于描述 Tertiary Current Distribution, Nernst-Planck 界面中的 电流流动（current
+ flow）。
+\end_layout
+
+\begin_layout Standard
+电流的表达式为
+\begin_inset Formula 
+\[
+\sbf i_{\ell}=F\sum z_{i}\sbf N_{i}
+\]
+
+\end_inset
+
+通过替换 
+\begin_inset Formula $\sbf N_{i}$
+\end_inset
+
+ 的 Nernst–Planck 表达式，质量和电荷的守恒定律自动结合起来满足电流守恒。
+\end_layout
+
+\begin_layout Standard
+通过更详细地考虑 
+\begin_inset Formula $\sbf i_{\ell}$
+\end_inset
+
+ 的表达式，可以来进一步简化系统：
+\begin_inset Formula 
+\[
+\sbf i_{\ell}=-F\sum D_{i}z_{i}\nabla c_{i}-\frac{F^{2}}{RT}\nabla\phi_{\ell}\sum z_{i}^{2}D_{i}c_{i}+\sbf u\sum z_{i}c_{i}
+\]
+
+\end_inset
+
+显然，最右边的项为零：即电中性溶液的对流不会导致 电流流动（current flow）。如果电荷载流子的梯度为零，则最左项（扩散电流）也会因电中性而消失。
+\end_layout
+
+\begin_layout Standard
+不过，即使情况并非如此，只要载流离子的浓度在溶液中没有明显变化，该项通常也比中间项（迁移电流 migration current）小得多。在电解质成分几乎恒定、
+载流离子没有明显耗尽的条件下，扩散电流的作用可以忽略不计。
+\end_layout
+
+\begin_layout Standard
+因此可得
+\begin_inset Formula 
+\[
+\sbf i_{\ell}=-\sigma_{\ell}\nabla\phi_{\ell}
+\]
+
+\end_inset
+
+Secondary Current Distribution 界面和 Primary Current Distribution 界面都使用此电流密度表达式。这些
+界面的区别在于对 电极–电解质界面 的处理（见下文的 电化学反应动力学）。由上可知，电解质的电导率 
+\begin_inset Formula $\sigma_{\ell}$
+\end_inset
+
+ 为
+\begin_inset Formula 
+\[
+\sigma_{\ell}=\frac{F^{2}}{RT}\sum z_{i}^{2}D_{i}c_{i}
+\]
+
+\end_inset
+
+只要这个量在溶液中的变化不明显，那么扩散电流为零的近似值就是正确的。如果可以将扩散率（diffusivities）和浓度视为常数，我们就可以近似地认为扩散电流为
+零：
+\begin_inset Formula 
+\[
+\sigma_{\ell}\approx\frac{2F^{2}ID_{\text{mean}}}{RT}
+\]
+
+\end_inset
+
+电流密度欧姆（ohmic）表达式的优势在于，它是电流密度与电解质电位的线性关系。如果允许
+\begin_inset Formula $\sigma_{\ell}$
+\end_inset
+
+ 依赖于物质传输界面中求解的浓度，那么它只是弱非线性。相比之下，具有电中性的 Nernst–Planck 方程可能是高度非线性的。
+\end_layout
+
+\begin_layout Standard
+不过，用于推导 二次电流分布表达式 的近似方法对允许的 系统配置（configurations） 施加了更严格的限制。要使恒定电导（conductivity）近
+似有效，溶液的离子强度必须保持近似恒定。通常只有电导率相对较高的溶液才会出现这种情况。
+\end_layout
+
+\begin_layout Standard
+相对于检出电流，当电导率较大时，溶液中的电场可忽略不计。对于可忽略不计的电场，可使用仅扩散（diffusion-only）近似，即 
+\begin_inset Formula $\sbf E=0$
+\end_inset
+
+。这就将 Nernst–Planck 方程转换为菲克定律（Fick’s laws），必要时加上对流（convective）传输项。带有对流和电化学边界条件的
+ 菲克定律在电分析（Electroanalysis）界面中求解。
+\end_layout
+
+\begin_layout Remark
+即使您认为某个问题将涉及完整的 Nernst–Planck 方程，也最好先在 Secondary Current Distribution 建立模型，以便在使用
+较简单的电化学模型时，识别系统中任何其他可能的复杂因素。
+\end_layout
+
+\begin_layout Section
+电化学反应建模
+\end_layout
+
+\begin_layout Standard
+电化学反应 是通过电极反应（Electrode Reaction）或多孔电极反应（Porous Electrode Reaction）节点来定义的。电极反应由其
+热力学（thermodynamics）、动力学（kinetics）和化学计量学（stoichiometry）定义。后者描述了在一定的反应电流密度下，产生的质量通
+量（mass fluxes）、源（sources）和汇（sinks）。
+\end_layout
+
+\begin_layout Subsection
+电化学反应的热力学
+\end_layout
+
+\begin_layout Standard
+电解（electrolytic）反应涉及 与电极交换电子。这种反应被写成还原反应，即使反应主要发生在氧化方向上。例如
+\begin_inset Formula 
+\[
+\mathrm{Ag}^{+}(\text{aq})+\mathrm{e}^{-}\leftrightarrow\mathrm{Ag}(\text{s})
+\]
+
+\end_inset
+
+这种反应被称为 “半电池”（half–cell）反应，因为它发生在特定的 电极–电解质 界面上。它不能单独发生，只有在 双电极电化学电池中 与另一个半电池反应耦
+合时才会发生。每个反应都有一个 吉布斯（Gibbs）能量变化特征，它决定了反应在热力学上成立。吉布斯能变化为负数意味着反应是自发进行的（spontaneousl
+y）— 在热力学上是 “下山”（downhill）。
+\end_layout
+
+\begin_layout Standard
+吉布斯能量变化与 电极和电解质 之间的平衡电势差的关系是：
+\begin_inset Formula 
+\[
+E_{\text{eq},m}=-\frac{\Delta G_{m}}{n_{m}F}
+\]
+
+\end_inset
+
+其中，
+\begin_inset Formula $E_{\text{eq},m}$
+\end_inset
+
+是相对于 反应在平衡状态（
+\begin_inset Formula $\Delta G=0$
+\end_inset
+
+）的某个外部参比刻度的 电位差。这被称为电化学反应的 平衡电位（equilibrium potential）或还原电位（reduction potential）
+，或在腐蚀中称为腐蚀电位（corrosion potential），其绝对值取决于参比电极（reference electrode）的选择。
+\end_layout
+
+\begin_layout Remark
+平衡电势应始终引用特定的参考标度（specific reference）。如果在模型的不同部分使用了不同的参考标度，系统的热力学（thermodynamics）
+可能与预期不同。
+\end_layout
+
+\begin_layout Standard
+从标准的热力学关系
+\begin_inset Formula 
+\[
+\Delta G=-RT\ln K
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{equation}
+E-E_{\text{eq}}=\frac{RT}{nF}\ln K\label{eq:ymy1}
+\end{equation}
+
+\end_inset
+
+这就是 Nernst 方程，它是一个通用的热力学表达式。它总是适用于处于热力学平衡状态的系统，但不一定适用于非平衡状态的系统。
+\end_layout
+
+\begin_layout Standard
+假设物质（species）是理想的，且 活度（activity）可等效视为常数，那么对于单分子还原物种和氧化物种之间的转换，可以得出以下结论 ：
+\begin_inset Formula 
+\[
+[\mathrm{Ox}]=[\mathrm{Red}]\,\exp\left[\left(\frac{nF}{RT}\right)\left(\phi_{s}-\phi_{\ell}-E_{f}\right)\right]
+\]
+
+\end_inset
+
+因此，在平衡状态（equilibrium）下，电解质–电极 表面的反应物和生成物浓度之间的关系表达式取决于两相之间的 电位差 和两个反应参数：n，每个被还原分子
+转移的电子数；
+\begin_inset Formula $E_{f}$
+\end_inset
+
+，在与电极–电解质电位差 相同的电位标度上，测量的反应形式还原电位（formal reduction potential）。
+\end_layout
+
+\begin_layout Standard
+物理量
+\begin_inset Formula 
+\[
+\eta_{m}=\phi_{s}-\phi_{\ell}-E_{\text{eq},m}
+\]
+
+\end_inset
+
+ 称为过电势（overpotential），是在界面上发生的 特定反应 所特有的。
+\end_layout
+
+\begin_layout Remark
+\begin_inset Formula $\eta$
+\end_inset
+
+ 取决于电极的电动势
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+ 和电解质的电动势
+\begin_inset Formula $\phi_{\ell}$
+\end_inset
+
+。当电流流经溶液时受到很大电阻时，
+\begin_inset Formula $\phi_{\ell}$
+\end_inset
+
+中相应的电位差（称为欧姆压降,ohmic drop）会改变电化学平衡的位置。这时可能需要在电路中施加额外的电势，以产生等效的过电势。
+\end_layout
+
+\begin_layout Subsection
+电化学反应动力学 Kinetics
+\end_layout
+
+\begin_layout Standard
+Nernst方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ymy1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+告诉我们反应的平衡位置。但是，它并没有告诉我们系统达到平衡的速度。如果存在动力学限制，也就是说，如果反应进行得很慢，平衡条件可能永远不会被观察到。举个大家都熟悉
+的例子，金刚石（diamond）在室温和压力下反应生成石墨（graphite），热力学上是不稳定的。然而，这种反应在动力学上受到原子重新定向的巨大活化能的限制，
+因此在实践中从未观察到这种反应，而金刚石在技术上被描述为 亚稳态的（metastable）。
+\end_layout
+
+\begin_layout Standard
+在许多电化学环境中，我们都会遇到同样的问题。由于动力学限制，反应无法达到平衡。事实上，克服氢气和氧气等非极性小分子表面反应的天然动力学迟滞性是燃料电池研究的关键
+。
+\end_layout
+
+\begin_layout Standard
+有两个重要的表达式描述了电化学反应产生的电流密度，与过电位 以及反应物和生成物浓度的函数关系。需要注意的是，这些表达式的有效性并不普遍，如果有实验动力学数据，后
+者永远无法取代。
+\end_layout
+
+\begin_layout Standard
+首先是 Tafel 定律，它描述了不可逆（irreversible）阳极或阴极过程：
+\begin_inset Formula 
+\[
+\log\left(\frac{i}{i_{0}}\right)=A\,\eta
+\]
+
+\end_inset
+
+常数
+\begin_inset Formula $A$
+\end_inset
+
+ 是 Tafel slope，单位是 
+\begin_inset Formula $1/\mathrm{V}$
+\end_inset
+
+。它通常接近 
+\begin_inset Formula $F/RT$
+\end_inset
+
+ 的半整数倍，小于或等于 
+\begin_inset Formula $nF/RT$
+\end_inset
+
+。请注意，必须为反应指定一个参考交换电流密度（reference exchange current density）
+\begin_inset Formula $i_{0}$
+\end_inset
+
+。根据定义，这是在过电位为零时的电流密度。
+\end_layout
+
+\begin_layout Remark
+Tafel定律假定反应是不可逆的。如果在实践中可能发生逆反应，Tafel动力学就不正确了。
+\end_layout
+
+\begin_layout Standard
+第二个表达式是 Butler–Volmer方程，它描述的是一个可逆过程，因此根据过电位的符号和大小，阳极电流或阴极电流都可能流动：
+\begin_inset Formula 
+\[
+i=i_{0}\left[\exp\left(\frac{\alpha_{a}F\eta}{RT}\right)-\exp\left(\frac{-\alpha_{c}F\eta}{RT}\right)\right]
+\]
+
+\end_inset
+
+Butler–Volmer方程 是对电极动力学最一般的描述。它具有很强的适应性，因为：
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $i_{0}$
+\end_inset
+
+ 是经验值。
+\end_layout
+
+\begin_layout Itemize
+当
+\begin_inset Formula $i=0$
+\end_inset
+
+时，它与 Nernst 方程一致，因此对于一个非常快的反应（ 
+\begin_inset Formula $i_{0}\to\infty$
+\end_inset
+
+），Butler–Volmer方程给出的电势差与 Nernst 方程相同。这在高电阻条件下同样适用。
+\end_layout
+
+\begin_layout Itemize
+当阳极或阴极项占主导地位时，它与 Tafel 方程一致。对于高度不可逆反应（极低的 
+\begin_inset Formula $i_{0}$
+\end_inset
+
+），只有在过电势较大时才会产生可观的电流，因此这就是典型的情况。
+\end_layout
+
+\begin_layout Standard
+有关 Butler–Volmer表达式 和参与反应物质浓度变化的讨论，请参阅下文 
+\begin_inset Quotes eld
+\end_inset
+
+定义浓度 依赖的 Butler–Volmer动力学
+\begin_inset Quotes erd
+\end_inset
+
+ 一节。
+\end_layout
+
+\begin_layout Standard
+对于过电势很低（
+\begin_inset Formula $\eta$
+\end_inset
+
+ 量级为
+\begin_inset Formula $RT/F\sim25\,\mathrm{mV}$
+\end_inset
+
+）的可逆反应，Butler–Volmer方程中的指数可以线性化：
+\begin_inset Formula 
+\[
+i_{\text{loc}}=i_{0}\left[\frac{(\alpha_{a}+\alpha_{c})F}{RT}\right]\eta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+在研究模型的收敛性问题时，使用线性化的 Butler–Volmer 反应很有优势
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+线性化的 Butler–Volmer方程在应用过电位大于 (
+\begin_inset Formula $RT/F$
+\end_inset
+
+) 时是不正确的。室温下约为 
+\begin_inset Formula $25\,\mathrm{mV}$
+\end_inset
+
+。在此范围之外，该方程并不适用，因此仅限于在低电流密度下发生的电化学过程，如电镀（electroplating）或电化学阻抗谱（electrochemicl
+ impedance spectroscopy）。
+\end_layout
+
+\begin_layout Standard
+Electrode Kinetics Expressions
+\end_layout
+
+\begin_layout Subsection
+电极反应引起的通量和源/汇
+\end_layout
+
+\begin_layout Standard
+电极反应将导致 反应物质 的分子通量（molecular flux）流入或流出电极表面。如果在模型中包含质量输运，通常会将边界上 反应物的通量
+ 与 电极反应电流密度 耦合（根据法拉第电解定律 Faraday's law of electrolysis）。
+\end_layout
+
+\begin_layout Standard
+在某些电化学界面中，可以通过在 Electrode Reaction 和 Porous Electrode Reaction 节点中定义反应的化学计量系数（st
+oichiometry）来自动将 化学通量（chemical flux） 与 电流密度耦合。而在化学物质传输界面中，则需要通过 Electrode
+ Surface Coupling 节点手动设置耦合。多孔电极建模时，创建源/汇域的相应耦合节点是 Porous Electrode Coupling
+ 节点。
+\end_layout
+
+\begin_layout Standard
+数学处理方法可概括为以下表达式：
+\begin_inset Formula 
+\[
+N_{j}=-\frac{v_{jm}\,i_{m}}{n_{m}\,F}
+\]
+
+\end_inset
+
+这意味着 进入表面的化学物质 
+\begin_inset Formula $j$
+\end_inset
+
+ 的通量 
+\begin_inset Formula $N_{j}$
+\end_inset
+
+ 与 电极–电解质界面上反应 
+\begin_inset Formula $m$
+\end_inset
+
+ 所产生的电流密度 
+\begin_inset Formula $i_{m}$
+\end_inset
+
+ 成正比。比例常数是物种的 化学计量数 除以 
+\begin_inset Formula $n$
+\end_inset
+
+（每摩尔反应物在还原方向上转移的电子数）和法拉第常数 
+\begin_inset Formula $F$
+\end_inset
+
+（
+\begin_inset Formula $96485\,\mathrm{C/mol}$
+\end_inset
+
+，一摩尔电子的绝对电荷）。
+\end_layout
+
+\begin_layout Standard
+因此，通过了解电化学反应的化学计量系数，可以将 化学物质的局部通量 与 该反应产生的电流密度联系起来。请注意，一个电极上可能同时发生多个反应，它们对电流密度的贡
+献只需相加即可。
+\end_layout
+
+\begin_layout Remark
+按照惯例，电化学反应中化学物种的 化学计量系数 是以还原方向作为正向来书写的，即使实际上在系统中反应主要是以另一个方向进行的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+COMSOL 使用标准约定，阳极（氧化）电流为正。阴极（还原）电流为负。
+\end_layout
+
+\begin_layout Subsection
+定义浓度依赖的 Butler–Volmer 动力学
+\end_layout
+
+\begin_layout Standard
+如果电极表面的浓度发生变化，就会对局部动力学产生影响。推导 Butler-Volmer 动力学表达式，是通过考虑 氧化还原反应 的 速率
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Ox}+n\,\mathrm{e}^{-}\leftrightarrow\mathrm{Red}\label{eq:2-1}
+\end{equation}
+
+\end_inset
+
+作为前向和后向反应速率之和
+\begin_inset Formula 
+\begin{equation}
+r=\frac{i_{\text{loc}}}{nF}=k_{\text{fwd}}c_{R}\exp\left(\frac{\alpha_{a}FE}{RT}\right)-k_{\text{rwd}}c_{O}\exp\left(-\frac{\alpha_{c}FE}{RT}\right)\label{eq:2-2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $k_{\text{fwd}}$
+\end_inset
+
+和 
+\begin_inset Formula $k_{\text{rwd}}$
+\end_inset
+
+ 是反应速率常数，
+\begin_inset Formula $c_{O}$
+\end_inset
+
+和
+\begin_inset Formula $c_{R}$
+\end_inset
+
+是分别是氧化还原组的氧化和还原物质的活度（activities）。此处的电势
+\begin_inset Formula $E$
+\end_inset
+
+定义为
+\begin_inset Formula 
+\begin{equation}
+E=\phi_{s}-\phi_{\ell}\label{eq:2-3}
+\end{equation}
+
+\end_inset
+
+而 转移系数 等于电荷转移反应中电子的总和，即
+\begin_inset Formula 
+\begin{equation}
+\alpha_{a}+\alpha_{c}=n\label{eq:2-4}
+\end{equation}
+
+\end_inset
+
+通过定义正向反应和逆向反应速率相等时的 平衡势（equilibrium potential），可以证明方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 等价于常用的 Butler-Volmer方程： 
+\begin_inset Formula 
+\begin{equation}
+i_{\text{loc}}=i_{0}\left[\exp\left(\frac{\alpha_{a}F\eta}{RT}\right)-\exp\left(\frac{-\alpha_{c}F\eta}{RT}\right)\right]\label{eq:2-5}
+\end{equation}
+
+\end_inset
+
+在此公式中 交换电流密度 
+\begin_inset Formula $i_{0}$
+\end_inset
+
+ 定义为
+\begin_inset Formula 
+\begin{equation}
+i_{0}=i_{0,0}\,C_{R}^{\alpha_{c}/n}\,C_{O}^{\alpha_{a}/n}\label{eq:2-6}
+\end{equation}
+
+\end_inset
+
+ 其中 
+\begin_inset Formula $i_{0,0}$
+\end_inset
+
+ 是标准条件下的交换电流密度。
+\end_layout
+
+\begin_layout Standard
+此处的过电势定义为
+\begin_inset Formula 
+\begin{equation}
+\eta=E-E_{\text{eq}}=\phi_{s}-\phi_{\ell}-E_{\text{eq}}\label{eq:2-7}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{\text{eq}}$
+\end_inset
+
+是 Nernst 方程中定义的平衡电势
+\begin_inset Formula 
+\begin{equation}
+E_{\text{eq}}=E_{\text{eq},0}-\frac{RT}{nF}\ln\frac{c_{R}}{c_{O}}\label{eq:2-8}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{\text{eq},0}$
+\end_inset
+
+是标准条件下定义的平衡电势。
+\end_layout
+
+\begin_layout Standard
+请注意，在公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2-5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中，
+\begin_inset Formula $i_{0}$
+\end_inset
+
+ 和 
+\begin_inset Formula $E_{\text{eq}}$
+\end_inset
+
+ 都与浓度有关。在对 包括质量传输在内的电化学电池进行建模时，这会带来一些数值上的缺陷（numerical drawbacks），因为对于低浓度的参与物质，即当
+\begin_inset Formula $c_{O}\to0$
+\end_inset
+
+ 或
+\begin_inset Formula $c_{R}\to0$
+\end_inset
+
+时，因子
+\begin_inset Formula $\ln\frac{c_{R}}{c_{O}}$
+\end_inset
+
+ 在溶解过程中可能会变得不确定。方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+形式的表达式更为理想，因为该表达式包含对 物质活度 的简单线性依赖。
+\end_layout
+
+\begin_layout Standard
+解决这一问题的常见方法是重写 Bulter–Volmer 表达式，定义相对于 活度
+\begin_inset Formula $C_{R,\text{ref}}$
+\end_inset
+
+和 
+\begin_inset Formula $C_{O,\text{ref}}$
+\end_inset
+
+（通常对应于入口浓度或初始浓度）的固定参考状态的过电位，结果是
+\begin_inset Formula 
+\begin{equation}
+i_{\text{loc}}=i_{0,\text{ref}}\left[\frac{c_{R}}{c_{R,\text{ref}}}\exp\left(\frac{\alpha_{a}F\,\eta_{\text{ref}}}{RT}\right)-\frac{c_{O}}{c_{O,\text{ref}}}\exp\left(-\frac{\alpha_{c}F\,\eta_{\text{ref}}}{RT}\right)\right]\label{eq:2-9}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+i_{0,\text{ref}}=i_{0,0}\,c_{R,\text{ref}}^{\alpha_{c}/n}\,c_{O,\text{ref}}^{\alpha_{a}/n}\label{eq:2-10}
+\end{equation}
+
+\end_inset
+
+以及
+\begin_inset Formula 
+\begin{equation}
+\eta=E-E_{\text{eq,ref}}\label{eq:2-11}
+\end{equation}
+
+\end_inset
+
+with
+\begin_inset Formula 
+\begin{equation}
+E_{\text{eq,ref}}=E_{\text{eq},0}-\frac{RT}{nF}\ln\frac{c_{R,\text{ref}}}{c_{O,\text{ref}}}\label{eq:2-12}
+\end{equation}
+
+\end_inset
+
+注意到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2-9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中现在包含了对 活度 
+\begin_inset Formula $c_{O}$
+\end_inset
+
+ 和 
+\begin_inset Formula $c_{R}$
+\end_inset
+
+ 的线性依赖。
+\end_layout
+
+\begin_layout Section
+双电层电容 Double Layer Capacitance
+\end_layout
+
+\begin_layout Standard
+Tafel 和 Butler-Volmer 表达式可用于计算电解（electrolysis）产生的电流大小：这被称为法拉第电流（faradaic
+ current）。然而，由于离子之间的吸引力（attraction）或排斥力（repulsion），在靠近电极的溶液中，形成了带相反电荷的离子层，因此
+ 电极–电解质 界面也可能产生 电容电流（capacitive current）。
+\end_layout
+
+\begin_layout Standard
+电极上的电荷层 和 相邻电解质中的相反电荷层被称为 双电层（double layer），可以认为其行为类似于平行板电容器，因为其分离的电荷绝对值
+ 随电极上的 电荷密度 而变化，因此也随电压而变化。双电层结构和形成的物理学原理非常复杂，目前还不十分清楚。要解释观察到的电容对 极化曲线 的影响，最简单的经验
+方法之一是在电极–电解质界面上引入一个恒定的理想电容。
+\end_layout
+
+\begin_layout Standard
+这种效应可通过 双层电容（Double Layer Capacitance） 条件加以补充。电容器（capacitor）存储 表面电荷密度 
+\begin_inset Formula $Q=C_{d}(\phi_{s}-\phi_{\ell})$
+\end_inset
+
+，并产生动态充电电流密度（non–faradaic current），等于 
+\begin_inset Formula $i_{\text{NF}}=\dd{Q}/\dd{t}$
+\end_inset
+
+。实际实验中记录的总电流等于
+\begin_inset Formula 
+\[
+i_{\text{tot}}=i_{\text{Far}}+i_{\text{NF}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在电分析中，有时会进行无电解的空白扫描（blank scan），以减去 非法拉第电流。如果模型中忽略了双层电容，则应确保将仿真结果与在相同条件下记录的实验数据进
+行比较。
+\end_layout
+
+\begin_layout Remark
+COMSOL Multiphysics 具有模拟静电场（electrostatics）和带电物质传输的能力，因此很有必要明确地将 双电层 添加到模型中，以增加模
+型的细节。这些耦合方程总是 极度非线性，除了最简单的情况外，收敛并不容易。虽然 扩散双电层（diffuse double layer）可以单独建模（见示例），但
+不建议与更全面的电化学模型一起使用。
+\end_layout
+
+\begin_layout Standard
+Double Layer Capacitance。
+\end_layout
+
+\begin_layout Section
+多孔电极 Porous Electrodes
+\end_layout
+
+\begin_layout Standard
+多孔电极是一种电极的三维结构可渗透电解质的电极。这样，电极–电解质界面的表面积就增大很多。这种 比表面积（“SSA”，单位体积的面积，单位 
+\begin_inset Formula $\mathrm{1/m}$
+\end_inset
+
+）是多孔电极的一个关键特性。此外，这种电极还能通过 电极和电解质域 独立传导电流。
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 中的大多数电化学界面都包含 Porous Electrode 域节点，可用于模拟上述情况。在多孔电极中，电流密度既存在于
+电极中，也存在于假定含有电解质的孔（pores）中。对于固体导电而孔隙不导电的 气体扩散电极，应使用 Electrode 条件。
+\end_layout
+
+\begin_layout Standard
+为了模拟多孔介质的 传质（mass transport）、传热（heat transfer） 和 流动（flow）特性，通常会将电化学界面与其他物理学相结合。例
+如，Secondary Current Distribution Transport of Diluted Species in Porous
+ Media、Heat Transfer in Porous Media 和 Darcy’s Law 相耦合。
+\end_layout
+
+\begin_layout Standard
+均匀化（homogenized）传输参数，如扩散系数，通常是根据材料的体积溶液获得的。在多孔介质中，这些参数必须根据曲折（tortuosity）和孔隙率（por
+osity）进行修正。在定义材料属性时，请仔细考虑这些影响。
+\end_layout
+
+\begin_layout Standard
+Porous Electrode Theory
+\end_layout
+
+\begin_layout Section
+运行和控制电化学电池的边界条件
+\end_layout
+
+\begin_layout Standard
+电化学电池通常通过控制电池电压（恒电位控制 potentiostatic）或电池电流（恒电流控制 galvanostatic）来运行。在实验室实验中，可以通过
+ 恒压源（potentiostat）来实现。
+\end_layout
+
+\begin_layout Standard
+在模型中，恒电位控制是通过使用 固定电位边界条件来定义的。这可以通过设置 对地电位 来控制 电池电位，或设置 相对系统中某处参考电位的 Electrode
+ Potential 来实现。恒电流控制 可通过 总电流或平均电流密度 边界条件来实现。在这两种情况下，电池中都需要有一个电极接地（grounded）。
+\end_layout
+
+\begin_layout Standard
+在数学上，Total Current 或 Average Current Density 条件 意味着将边界电位设置为等于额外的 全局电位自由度（浮动电位
+ floating potential），以符合指定的电流条件。因此，恒电流控制的求解在数值上稍显复杂。
+\end_layout
+
+\begin_layout Standard
+需要注意的是，在实际实验中很难明确给定电极边界上的电流密度分布。在高于一维的情况下，应谨慎使用 Electrode Current Density
+ 和 Electrolyte Current Density 边界条件。
+\end_layout
+
+\begin_layout Subsection
+短接电池和电化学腐蚀 Short–circuiting a cell and galvanic corrosion
+\end_layout
+
+\begin_layout Standard
+建立 短路电池模型 的最简单方法是将两个电极设置为相同的电势，通过使用 固定电势边界条件。电解质的电荷平衡方程将确保所有电极表面的总电流和为零。
+\end_layout
+
+\begin_layout Standard
+请注意，许多电化学腐蚀（galvanic corrosion）情况实际上等同于由不同金属组成的两个电极短路。在此类模型中，两种金属被设置为相同的电位。通常情况下
+，该电位选择为零（接地）。
+\end_layout
+
+\begin_layout Section
+循环伏安法建模Modeling Cyclic Voltammetry
+\end_layout
+
+\begin_layout Standard
+在循环伏安法（cyclic voltammetry）实验中，使用 恒电位仪（potentiostat）将工作电极上的电压从起始电位线性扫描到顶点电位，然后再扫描
+回来。通常情况下，选择的电位窗口覆盖 相关氧化还原组 的形式电位（formal potential），从而可以同时研究化学物质的 动力学和输运特性。目标物质
+ 在动力学控制下反应到耗尽点（depletion），此时电流变为输运控制（transport–controlled）。
+\end_layout
+
+\begin_layout Standard
+电分析（Electroanalysis）界面中的内置循环伏安法（Cyclic Voltammetry）研究步骤可用于在随时间变化的研究中自动设置电压扫描。
+\end_layout
+
+\begin_layout Section
+电化学电池建模时常见的简化方法
+\end_layout
+
+\begin_layout Subsection
+应该用3D还是1D建模？
+\end_layout
+
+\begin_layout Standard
+许多电化学系统使用高纵横比的重复 单元池（unit cell）。在这种情况下，系统中边缘现象的叠加效应（lumped effect）很小。例如，在燃料电池（fu
+el cells）或电池（batteries）中，通常可以使用一维几何结构，而几乎不会损失细节。还可以考虑任何 镜面对称 或 旋转对称。尽可能精确或近似地减少几
+何尺寸，将大大减少网格划分和求解时间。
+\end_layout
+
+\begin_layout Remark
+从一维模型开始，有助于了解电化学系统中不同反应和现象的影响，并对电流–电压行为进行良好的初步估计。
+\end_layout
+
+\begin_layout Subsection
+忽略电极上的电荷转移和电势梯度
+\end_layout
+
+\begin_layout Standard
+由于电极是良导体，因此电极表面的电压通常是恒定的，或者几乎是恒定的。这意味着控制 电化学电池电流大小 的要么是电解质的固有电阻（intrinsic
+ resistance），要么是 电极–电解质界面 的电化学反应速率。在表面电压恒定的假设下，电极域本身无需建模，其表面的电荷和质量传输的耦合由
+ 
+\series bold
+Electrode Surface
+\series default
+ 节点处理。
+\end_layout
+
+\begin_layout Standard
+不过，在 多孔电极 和 气体扩散电极 建模时，通常需要将 金属相（metal phase）电势 包括在内，因为这类电极的金属相电势电导率可能低得多。这可以在
+ 
+\series bold
+Porous Electrode
+\series default
+ 节点中实现。
+\end_layout
+
+\begin_layout Subsection
+半电池模型 half–cell models
+\end_layout
+
+\begin_layout Standard
+经常的，研究人员只对电池中单个电极上发生的化学反应感兴趣。一个电极的模型被称为 “半电池模型”。
+\end_layout
+
+\begin_layout Standard
+在实验中，相关电极（无论是阳极还是阴极）被归类为工作电极（working electrode），而另一个电极则被称为 对应电极（counter
+ electrode）。
+\end_layout
+
+\begin_layout Standard
+在模型中，人们通常会忽略对电极的动力学特性；通常用恒定电位边界条件来表示。这种模型只有在 对应电极 能比 工作电极 任意吸收大量电流的情况下才是有效的，从而
+ 对应电极 永远不会限制电化学电池中的电流。
+\end_layout
+
+\begin_layout Subsection
+以边界条件代替薄层
+\end_layout
+
+\begin_layout Standard
+在考虑与几何体中其他尺寸相比非常薄的层时，通常正确的做法是使用物理条件（physical condition）来处理该层，而不是对其进行 网格剖分。
+\end_layout
+
+\begin_layout Standard
+燃料（fuel cell）电池中的催化剂层（catalyst layer）就是一个重要的例子。由于催化剂层只有纳米大小，与系统的其他部分相比，跨催化剂层的传输速
+度非常快。因此，没有必要求解该层的浓度或电位分布。
+\end_layout
+
+\begin_layout Standard
+另一个例子是氧化电极表面的钝化层（passivation layer ），可以使用 “薄膜电阻” 设置。由于该层比周围薄得多，通过它的电场几乎是恒定的。因此，可
+以使用 欧姆表达式来创建具有 电压降 的边界条件。这比 剖分几何薄层 要高效得多。
+\end_layout
+
+\begin_layout Subsection
+用于稳态电分析的无限单元
+\end_layout
+
+\begin_layout Standard
+对于微电极（microelectrodes）而言，扩散轮廓（diffusion profile）可能会接近稳定状态，其尺寸远大于相关工作电极的尺寸。在这种情况下
+，最好将模拟空间限定在一个不超过电极尺寸约 25 倍的区域内（假设周围的电解质是均匀的）。然而，在这一有限距离内应用固定浓度等体积边界条件会导致求解不准确。
+\end_layout
+
+\begin_layout Standard
+最好的办法是在有限模拟空间周围使用 Infinite Elements 层 ，将模拟空间投影到无限远处，消除人为限制模拟空间造成的误差。当电解质域比电极大几个数
+量级时，这是一种典型的近似方法：例如，厘米级反应容器中的微电极。
+\end_layout
+
+\begin_layout Standard
+Infinite Elements, Perfectly Matched Layers and Absorbing Layers
+\end_layout
+
+\begin_layout Section
+开始建模之前
+\end_layout
+
+\begin_layout Subsection
+逐步引入复杂因素
+\end_layout
+
+\begin_layout Standard
+建模的真正艺术在于知道哪些现象需要包含，哪些现象需要忽略。通过一次增加一个物理或几何特征来增加模型的复杂性，通常是实现建模目标的最快方法。以下是一些一般技巧：
+\end_layout
+
+\begin_layout Itemize
+从尽可能低的维度开始考虑电池（cell）。从一维模型开始有助于理解电化学系统中不同反应（reactions）的影响，并对电流–电压行为做出初步估计。从一维到二维
+，再从二维到三维。
+\end_layout
+
+\begin_layout Itemize
+每个电极反应都会给模型增加数值非线性。如果有多个电极反应，则一次添加一个。
+\end_layout
+
+\begin_layout Itemize
+从电解质电流的简单描述开始，如 
+\series bold
+Secondary Current Distribution
+\series default
+。分析结果以确保电化学模型的一致性。只有在认为有必要并对较简单情况下的结果感到满意时，才切换到更复杂的 电解质 模型，或添加额外的物理现象，如传质、传热或流动。
+\end_layout
+
+\begin_layout Itemize
+如果要在模型中加入 flow，请先求解流场，然后再将流动和电化学耦合在一起。
+\end_layout
+
+\begin_layout Subsection
+建模清单
+\end_layout
+
+\begin_layout Itemize
+确定哪些区域是电极和电解质。如何评估它们的导电性？
+\end_layout
+
+\begin_layout Itemize
+电极–电解质界面上发生了什么？阳极和阴极是否都需要建模？阳极和阴极是否都需要建模，是需要建模为域，还是可以将它们视为边界？
+\end_layout
+
+\begin_layout Itemize
+电极表面发生了哪些电化学反应导致电荷转移（charge transfer）？能否将其热力学（thermodynamics）参数化？能知道平衡电位吗？能否将其动力
+学参数化—动力学是否重要？如果不重要，请忽略它们。
+\end_layout
+
+\begin_layout Itemize
+用于引用平衡电势的 系统参考电势 是什么？系统的接地点在哪里？
+\end_layout
+
+\begin_layout Itemize
+电解质中的 电荷载流子 相对于 释放的电流密度是否充足？注意非线性效应可能会增加收敛难度。
+\end_layout
+
+\begin_layout Itemize
+如果您正在进行随时间变化的研究，那么您的初始条件是否具有一致的电流–电压关系？
+\end_layout
+
+\begin_layout Itemize
+还有哪些物理界面需要耦合？电荷转移如何影响这些物理接口？
+\end_layout
+
+\begin_layout Section
+网格建议
+\end_layout
+
+\begin_layout Standard
+默认的三角形（2D）或四面体（3D）网格通常适用于求解一般电化学问题的 电荷和质量守恒方程。
+\end_layout
+
+\begin_layout Standard
+涉及质量传输的电化学模型通常需要在电极表面和奇异点（如电极表面和绝缘表面之间的边界）处使用更精细的网格。为此，可为这些边界增加额外的 
+\series bold
+Size
+\series default
+ 网格节点。此外，还可以考虑改进 “element growth rate” ，和/或在 3D中使用 边界层网格（boundary layer
+ meshing）。
+\end_layout
+
+\begin_layout Standard
+有时，常规 
+\series bold
+Mapped
+\series default
+ 网格更适合矩形（2D）域；此类域在电池和燃料电池的剖面示意图研究中很常见。同样，
+\series bold
+Swept
+\series default
+ 网格通常适用于三维模型中的极薄层。
+\end_layout
+
+\begin_layout Standard
+对于流体域，应使用默认的 物理控制（physics-controlled）网格，并根据需要设置边界层。
+\end_layout
+
+\begin_layout Standard
+对于某些具有静态流速场，和 随时间变化的电化学反应物质对流 的问题，在 物质输运研究步骤中设置 不带边界层的细化网格 可能会提高收敛性。
+\end_layout
+
+\begin_layout Section
+求解电化学模型
+\end_layout
+
+\begin_layout Standard
+由于电极动力学的高度非线性性质，某些电化学模型可能难以求解。本节包括一些一般技巧和窍门，以方便模型求解、排除故障和提高求解精度（accuracy）。
+\end_layout
+
+\begin_layout Subsection
+一般电流分布问题
+\end_layout
+
+\begin_layout Standard
+如果您在解决问题时遇到困难，请从以下建议开始。
+\end_layout
+
+\begin_layout Itemize
+确保电势在模型中的某处被 “boot–strapped”，最好将一个电极接地。
+\end_layout
+
+\begin_layout Itemize
+考虑使用 
+\series bold
+Stationary with Initialization
+\series default
+ 或 
+\series bold
+Time Dependent with Initialization
+\series default
+ 研究。这两种研究都将使用 
+\series bold
+Current Distribution Initialization
+\series default
+ study 步骤作为第一步，只求解电位。如果在该研究的第二步求解中遇到问题，可能需要将 "电流分布初始化 "研究步骤节点上的 
+\begin_inset Quotes eld
+\end_inset
+
+Current distribution type
+\begin_inset Quotes erd
+\end_inset
+
+ 设置更改为 
+\series bold
+Secondary
+\series default
+，并按下一要点所述复核 
+\series bold
+Initial Values
+\series default
+。
+\end_layout
+
+\begin_layout Itemize
+检查 
+\series bold
+Initial Values
+\series default
+，尤其是电位。通常可以从 接地边界 开始，对几何体进行 “电位漫步”（potential walk），从而得出合适的初始电位值。通常情况下，接地应设置在动力学速
+度最快的边界：例如 PEM 燃料电池中的 氢电极。假设主要电极反应的 电极和电解质之间存在平衡电位差，从而计算其他区域的电位和电解质电位。
+\end_layout
+
+\begin_layout Itemize
+在排除故障时切换到 
+\series bold
+Linearized Butler-Volmer
+\series default
+ 动力学。这有助于为 非线性动力学求解失败 的模型，从而为非线性问题指出合适的初始值。
+\end_layout
+
+\begin_layout Itemize
+如果模型包含 多孔电极，请尝试改进这些区域的网格分辨率，尤其是电解质边界。
+\end_layout
+
+\begin_layout Subsection
+与质量输运耦合的电化学
+\end_layout
+
+\begin_layout Standard
+如果模型涉及与质量输运耦合的电化学，则可以尝试以下几种方法来帮助改善模型的收敛性。
+\end_layout
+
+\begin_layout Itemize
+查看浓度值的 
+\series bold
+Initial Values
+\series default
+。零初始浓度值可能不适合 三次电流分布问题 和 电池模拟，因为这可能意味着不存在电荷载体或反应物质。
+\end_layout
+
+\begin_layout Itemize
+如果预计电极表面附近会出现陡峭的浓度梯度，则应在这些边界处使用边界层网格或更精细的网格 
+\series bold
+Size
+\series default
+ 设置。
+\end_layout
+
+\begin_layout Itemize
+在设置用户定义的动力学表达式时，应通过 
+\begin_inset Formula $\max(c,\mathrm{eps}^{2})$
+\end_inset
+
+ 等表达式避免计算负浓 度，其中 eps 是机器epsilon（一个非常小但有限的数）。
+\end_layout
+
+\begin_layout Itemize
+尽量先求解低电流和低过电位，然后增加电池负载载荷（对于静态问题，this can be done using an auxiliary sweep
+ with continuation）。
+\end_layout
+
+\begin_layout Itemize
+如果涉及质量输运的问题在大电流时难以解决，但在小电流时却能解决，这可能是由于质量输运的限制。在这种情况下，请检查输运参数值，并检查电流大小是否合理。如果电流密度
+过高，请检查电极反应设置。
+\end_layout
+
+\begin_layout Subsection
+对多物理问题建立study序列
+\end_layout
+
+\begin_layout Standard
+对于多物理场问题，尝试调整 study 顺序。
+\end_layout
+
+\begin_layout Itemize
+按顺序求解某些物理界面。这在很多情况下可以减少计算时间并改善收敛性。分析单独求解物理接口得到的结果，也有助于排除不收敛模型的故障。
+\end_layout
+
+\begin_layout Itemize
+一个好的策略通常是，在求解研究序列中的完整模型之前，使用静态研究步骤只求解电势（即禁用质量输运和流场接口）。这样，静态解就会被用作后续步骤的初始值。这可以通过修
+改 study 节点的设置进行手动操作，也可以通过使用 Stationary with Initialization 或 Time Dependent
+ with Initialization study序列进行自动操作（如上所述）。
+\end_layout
+
+\begin_layout Itemize
+在许多模型中，电流密度的变化对 flow profile 的影响很小（或根本没有影响）。因此，在study序列的早期单独求解flow，然后在后续步骤中求解其他物
+理场，不失为一种好的策略。(如果流动完全不受电流分布的影响，则可以在后续步骤中完全取消对流动的求解）。
+\end_layout
+
+\begin_layout Subsection
+带负载阶跃 的 时间依赖问题
+\end_layout
+
+\begin_layout Standard
+对于随时间变化的问题，可尝试采用以下方法来解决与 突发性电流（sudden current） 或 电势负载阶跃（potential load steps）
+ 有关的精度和收敛问题。
+\end_layout
+
+\begin_layout Itemize
+使用平滑的（smmothed）电流或电势负载函数，以避免瞬时或离散负载阶跃（instantaneous or discrete load steps）。
+\end_layout
+
+\begin_layout Itemize
+在模型中添加 双层电容（double layer capacitance），以提高数值稳定性。
+\end_layout
+
+\begin_layout Itemize
+如果希望防止求解器 “遗漏” 短平方负载阶跃（short squre load steps），可减少求解器的最大步长，或将求解器的
+\series bold
+ Steps taken by solver
+\series default
+ 从 
+\series bold
+Free
+\series default
+ 改为 
+\series bold
+Strict
+\series default
+ 或 
+\series bold
+Intermediate
+\series default
+，以使用 
+\series bold
+Times
+\series default
+ 文本字段控制时间步长。在某些情况下，如果 load cycle 本身是动态变化的，也可以选择使用 Events 接口。
+\end_layout
+
+\begin_layout Standard
+Double Layer Capacitance
+\end_layout
+
+\begin_layout Subsection
+求解器设置
+\end_layout
+
+\begin_layout Standard
+尝试调整求解器设置
+\end_layout
+
+\begin_layout Itemize
+很偶然的，尝试增加 Maximum number of iterations。
+\end_layout
+
+\begin_layout Itemize
+如果事先知道 关键变量（dependent variables）的大小，将 scaling 方法设置为 
+\series bold
+Manual 
+\series default
+到那些值，可以改进收敛性（convergence）和精确度（accuracy）。在求解初始浓度很小，但末尾浓度大小已知的案例中，此举可能很重要。例如，电池模型中
+的 活跃成分（active species）。
+\end_layout
+
+\begin_layout Remark
+在多组分（multi–component）系统中，通常很难预测 rest potential 和 电流的方向， COMSOL 多物理的 
+\series bold
+Current initialization
+\series default
+ step可以帮你计算，但是仅当所有电极反应的浓度和 formal potentials 都相对同一个公共参考scale，才能保证结果正确。
+\end_layout
+
+\begin_layout Section
+解的后处理
+\end_layout
+
+\begin_layout Subsection
+电势变量
+\end_layout
+
+\begin_layout Standard
+在后处理（postprocessing）和计算过程中，存在几个可用的电势变量。常见的列在 Table 2-1中。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+描述
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+定义在
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+phil
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解液相电势
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解质 和 多孔电极域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+phis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极相电势
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极 和 多孔电极域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.phisext
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极相电极
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极反应边界to电解质域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.Eeq_yy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+平衡电势
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极反应边界 和 多孔电极反应域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.eta_yy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+过电势
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极反应边界
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+所有变量的单位都是
+\begin_inset Formula $\mathrm{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+xxx 表示物理接口的tag。例如 siec 用于 Secondary Current Distribution 接口。
+\end_layout
+
+\begin_layout Standard
+yy表示 (Porous) Electrode Reaction 节点的tag，例如 er1 表示 Electrode Reaction 节点。
+\end_layout
+
+\begin_layout Subsection
+电流变量，计算电池总电流
+\end_layout
+
+\begin_layout Standard
+电流密度可以在电极表面的不同位置变化。通过建模来理解这种效应是非常重要的，因为它不能直接测量。虽然电流密度的变化可以通过其他方法推断出来，但实验测量只能得到电极
+上的总电流。 
+\end_layout
+
+\begin_layout Standard
+为了计算COMSOL Multiphysics中的总电流，需要沿电极边界或电极区域对总drawn电流密度进行积分。一些常见的电流密度变量如表2-2所示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="middle" width="5cm">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单位
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+描述
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+定义在
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.nll
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解质电流密度，法向
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解质边界，多孔电极域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.nls
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极电流密度，法向
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解质边界，多孔电极域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.iloc_yy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极反应的局部电流密度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极反应边界
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.itot
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total interface 电流密度（local sum of xxx.iloc_yy）
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极反应边界
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.iv_yy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{3}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+多孔电极反应的体电流密度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+多孔电极域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.ivtot
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{3}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total 体电流密度 (local sum of all xxx.iv_yy)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+多孔电极域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.llMag
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解液电流密度大小
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解质域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xxx.lsMag
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{A/m^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电极电流密度大小
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电解质域
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+xxx 表示物理接口的tag。例如 siec 用于 Secondary Current Distribution 接口。
+\end_layout
+
+\begin_layout Standard
+yy表示 (Porous) Electrode Reaction 节点的tag，例如 er1 表示 Electrode Reaction 节点。
+\end_layout
+
+\begin_layout Standard
+在1D或1D轴对称中，电极是隐式均匀的，所以你可以乘以电极的面积。在2D或2D轴对称情况下，计算相应的线积分。在3D中，计算曲面积分。
+\end_layout
+
+\begin_layout Standard
+还可以通过使用across the electroactive boundaries 的Integration组件耦合来定义自己的总电流变量。这个变量也可以在计
+算过程中使用。在1D轴对称和2D轴对称组件中，请确保选中Compute integral in revolved geometry 复选框。
+\end_layout
+
+\begin_layout Remark
+避免在边界上计算 xxx.llMag/xxx.lsMag 这种变量。一般来说它们不如 xxx.nll/xxx.nls 精确。
+\end_layout
+
+\end_body
+\end_document
