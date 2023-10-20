@@ -2,7 +2,14 @@
 
 [thispagestyle](http://tug.ctan.org/tex-archive/info/latex2e-help-texinfo/latex2e.html#g_t_005cthispagestyle)
 
-## 页码
+## 隐藏页码
+
+[[Latex]显示或隐藏页码的方法](https://blog.51cto.com/ccxxxx/1339608)
+
+```latex
+\pagestyle{empty}
+\thispagestyle{empty} %当前页码空, 需紧跟在\maketitle后面使用
+```
 
 ### `\thispagestyle`
 
@@ -28,3 +35,12 @@
 plain 样式上有一个页码, 位于页脚的中心.
 为使页面完全为空白,
 命令 `\thispagestyle{empty}` 紧跟在第二个 `\chapter`后面.
+
+## TitlePage 封面页 代码
+
+[LaTeX正式排版: 封面, 大纲与目录](https://zhuanlan.zhihu.com/p/360029869)
+[info/latex-samples/TitlePages](https://ctan.org/tex-archive/info/latex-samples/TitlePages)
+[CTEX 宏集手册](https://ftp.kddilabs.jp/CTAN/language/chinese/ctex/ctex.pdf)
+
+如果在命令行中输入 `texdoc titlepages`, 就能找到 Peter Wilson 的精彩扉页示例集.
+下面是 CTAN 上的链接: TitlePages.

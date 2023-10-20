@@ -53,6 +53,31 @@ run `latexmk -showextraoptions`给出选项列表,这些选项被直接传递给
 `-interaction=STRING`     set interaction mode (STRING=batchmode/nonstopmode/scrollmode/errorstopmode)
 `-synctex=NUMBER`         generate `SyncTeX` data for previewers if nonzero
 
+### SyncTeX
+
+[What exactly is SyncTeX?](https://tex.stackexchange.com/questions/118489/what-exactly-is-synctex)
+
+`SyncTeX` 是由 Jérôme Laurens 编写的一款实用程序,
+可实现源文档与 PDF 输出之间的同步.
+如果你的编辑器/阅读器支持该功能, 那么你可以点击源文件跳转到 PDF 中的相应位置,
+或者点击 PDF 中的相应位置跳转到源文件中的相应位置.
+
+例如, 在 TeXShop 中, 按 Command 键即可实现导航.
+其他编辑器/阅读器可能会以略微不同的方式执行确切的命令.
+
+它创建的文件存储了所有同步数据, 使这一神奇功能成为可能.
+如果在 `pdflatex` 命令(以及其他类似的引擎)中传递 `--synctex=1` 选项, 就会创建这些文件的压缩版本;
+使用 `--synctex=-1` 可以创建非压缩版本,
+不过对于大型文档来说, 这些文件可能会相当大, 所以一般还是选择压缩版本.
+参见 [为什么 LaTeX 会压缩 synctex 文件?](https://tex.stackexchange.com/questions/118489/what-exactly-is-synctex)
+通常这是大多数支持 TeX 的编辑器中编译命令默认设置的一部分.
+
+## texstudio 使用的命令
+
+```bash
+xelatex.exe -synctex=1 -interaction=nonstopmode %.tex
+```
+
 ## 安装latex包
 
 [Ubuntu/Mint下LaTeX宏包安装及更新](https://blog.csdn.net/codeforces_sphinx/article/details/7315044)
@@ -129,8 +154,8 @@ pdfcrop --clip --bbox '60 660 516 775' moban.pdf moban_crop.pdf && evince moban_
 Hello world!
 ```
 
-这里的关键是需要第一行的 `\RequirePackage{snapshot}` 
-产生宏包依赖列表 `test.dep`. 
+这里的关键是需要第一行的 `\RequirePackage{snapshot}`
+产生宏包依赖列表 `test.dep`.
 例如上面的代码产生的宏包依赖列表为:
 
 ```latex

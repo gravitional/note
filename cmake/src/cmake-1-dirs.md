@@ -60,3 +60,25 @@ CMake 会将变量 `CMAKE_BINARY_DIR`, `CMAKE_SOURCE_DIR`,
 
 如果在创建目标时设置了 `CMAKE_RUNTIME_OUTPUT_DIRECTORY` 变量, 则该属性将由该变量的值初始化.
 另请参阅 `RUNTIME_OUTPUT_DIRECTORY_<CONFIG>` target 属性.
+
+## aux_source_directory
+
+[aux_source_directory](https://cmake.org/cmake/help/latest/command/aux_source_directory.html)
+
+查找目录中的所有源文件.
+
+```cmake
+aux_source_directory(<dir> <variable>)
+```
+
+收集指定目录中 所有源文件 的名称, 并将 列表 存储在所提供的 `<variable>` 中.
+此命令适用于使用 `显式模板实例化` 的项目.
+模板实例化文件可以存储在 Templates 子目录中,
+并使用此命令自动收集, 以避免手动列出所有实例化文件.
+
+使用该命令可以避免写入库或可执行目标的源文件列表.
+虽然这看起来可行, 但 `CMake` 无法生成一个, 知道何时添加了新源文件的编译系统.
+通常情况下, 生成的 build 系统会知道何时需要重新运行 CMake,
+因为 `CMakeLists.txt` 文件被修改以添加新源文件.
+如果只是将源代码添加到 文件目录中, 而没有修改 CMake 文件,
+则必须手动重新运行 CMake 才能生成包含新文件的编译系统.
