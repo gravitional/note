@@ -1293,7 +1293,7 @@ name "fig:fig5"
 \end_layout
 
 \begin_layout Subsection
-边界条件
+电极相控制条件
 \end_layout
 
 \begin_layout Standard
@@ -1333,7 +1333,7 @@ b_{2}\\
 \end_layout
 
 \begin_layout Subsection
-电化学电池建模时常见的简化方法
+建模时常见的简化方法
 \end_layout
 
 \begin_layout Itemize
@@ -2972,7 +2972,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-当腐蚀反应中无法向电流、无溶液离子穿过边界，可视为绝缘边界条件，满足如下方程
+当腐蚀反应中没有法向电流、无溶液离子穿过边界，可视为绝缘边界条件，满足如下方程
 \begin_inset Formula 
 \begin{align*}
  & n\cdot\sbf J_{E}=0\\
@@ -3029,11 +3029,11 @@ D_{i}\frac{\partial C_{i}}{\partial n}=-z_{i}u_{i}F\,C_{i}\frac{\partial\phi}{\p
 \end_layout
 
 \begin_layout Section
-电极–电解质界面的电势
+反应界面上的电势
 \end_layout
 
 \begin_layout Standard
-电极-电解液界面是腐蚀反应中的最重要部分，在此处发生了电子到离子的转变，电势和电流在界面上有各自的过渡关系。
+电极–电解液界面是腐蚀反应中的最重要部分，在此处发生了电子到离子的转变，电势和电流在界面上有各自的过渡关系。
 \end_layout
 
 \begin_layout Subsection
@@ -3347,8 +3347,8 @@ Tafel方程
 当电极电流密度相比于交换电流大的多，或者过电位较大，Bulter–Volmer方程可以简化为Tafel公式。
 \begin_inset Formula 
 \begin{align*}
-\text{阳极方程}* & J_{Ei}=i_{0}\,10^{\eta/A_{a}}\\
-\text{阴极方程}* & J_{Ei}=-J_{E0}\,10^{\eta/A_{c}}
+\text{阳极方程：} & J_{Ei}=i_{0}*10^{\eta/A_{a}}\\
+\text{阴极方程：} & J_{Ei}=-J_{E0}*10^{\eta/A_{c}}
 \end{align*}
 
 \end_inset
@@ -3373,11 +3373,11 @@ Tafel方程
 \end_layout
 
 \begin_layout Subsubsection
-与浓度有关的 Bulter–Volmer公式
+依赖浓度的 B–V 方程
 \end_layout
 
 \begin_layout Standard
-当考虑浓度分布不均匀时，即考虑扩散控制，则 Bulter–Volmer 公式可写为：
+当考虑浓度分布不均匀时，即考虑扩散控制，则 Bulter–Volmer 方程可写为：
 \begin_inset Formula 
 \[
 J_{Ei}=J_{E0}\left[c_{R}\exp(\frac{\alpha_{a}F\eta}{RT})-c_{0}\exp(\frac{-\alpha_{c}F\eta}{RT})\right]
@@ -3389,7 +3389,7 @@ J_{Ei}=J_{E0}\left[c_{R}\exp(\frac{\alpha_{a}F\eta}{RT})-c_{0}\exp(\frac{-\alpha
 \end_layout
 
 \begin_layout Subsection
-小结 
+小结
 \end_layout
 
 \begin_layout Standard
@@ -3434,11 +3434,7 @@ J_{Ei} & =J_{E0}\left[\exp(\frac{\alpha_{a}F\eta}{RT})-\exp(\frac{-\alpha_{c}F\e
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-此边界条件较为复杂，后面将采用迭代法求解。在迭代法过程中，
+此边界条件较为复杂，后面将采用迭代法求解，并展开为
 \begin_inset Formula 
 \[
 \phi_{l}=\phi_{l,0}+\delta\phi_{l},\quad C=C_{0}+\delta C
@@ -3525,14 +3521,14 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-界面上的浓度，溶液–电极
+反应界面上的浓度
 \end_layout
 
 \begin_layout Standard
-电极-溶液 界面发生传质、反应等一系列过程，例如下面的反应（原电池）
+电极–溶液 界面发生传质、反应等一系列过程，例如下面的原电池反应
 \begin_inset Formula 
 \[
-\sum\alpha B^{+}+n_{e}e^{-}\to\beta A^{+}
+\alpha B^{+}+n_{e}e^{-}\to\beta A^{+}
 \]
 
 \end_inset
@@ -3549,8 +3545,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename inset/EChemstry-nongdu.png
-	scale 80
+	filename inset-echem/EChemstry-nongdu.png
+	width 50text%
 
 \end_inset
 
@@ -3598,7 +3594,7 @@ status open
 界面上施加边界条件，即界面上的反应速率与离子反应产生的电流遵循法拉第定律，
 \begin_inset Formula 
 \begin{align*}
--\sbf n\cdot\sbf J_{i} & =J_{i,0}=-\frac{\beta\,J_{E}}{n_{e}F}\\
+-\sbf n\cdot\sbf J_{i} & =J_{i,0}=-\frac{v\,J_{E}}{n_{e}F}\\
 \sbf J_{i} & ={\color{red}-D_{i}\,\nabla C_{i}}-{\color{blue}z_{i}u_{i}F\,C_{i}\nabla\phi_{l}(x)}+C_{i}(x)\,u(x)
 \end{align*}
 
@@ -3666,7 +3662,7 @@ status open
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\beta$
+\begin_inset Formula $v$
 \end_inset
 
 为产物化学计量系数，
@@ -3684,7 +3680,7 @@ status open
 综合两个方程给出：
 \begin_inset Formula 
 \begin{equation}
-D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i}+uC_{i},\label{eq:bnd5}
+D_{i}\frac{\partial C_{i}}{\partial n}=\frac{v\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i}+u\,C_{i},\label{eq:bnd5}
 \end{equation}
 
 \end_inset
@@ -3692,33 +3688,13 @@ D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\part
 在迭代法中展开为
 \begin_inset Formula 
 \begin{align}
- & D_{i}\frac{\partial C_{i,A}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,A}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}C_{i,A}+uC_{i,A},\label{eq:bnd16a}\\
- & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{\beta\sigma_{l}}{n_{e}F}-z_{i}u_{i}FC_{i,A}\right)\frac{\partial}{\partial n}\delta\phi_{l}-z_{i}u_{i}F\frac{\partial\phi_{l,A}}{\partial n}\delta C_{i}+u\delta C_{i}\label{eq:bnd16b}
+ & D_{i}\frac{\partial C_{i,0}}{\partial n}=\frac{v\,\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l,0}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}C_{i,0}+u\,C_{i,0},\label{eq:bnd16a}\\
+ & D_{i}\frac{\partial\delta C_{i}}{\partial n}=\left(\frac{v\,\sigma_{l}}{n_{e}F}-z_{i}u_{i}F\,C_{i,0}\right)\frac{\partial}{\partial n}\delta\phi_{l}-z_{i}u_{i}F\frac{\partial\phi_{l,0}}{\partial n}\delta C_{i}+u\,\delta C_{i}\label{eq:bnd16b}
 \end{align}
 
 \end_inset
 
-其中
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd16b"
-plural "false"
-caps "false"
-noprefix "false"
 
-\end_inset
-
-还需结合
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd15b"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-再次展开，
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:bnd16a"
@@ -3742,61 +3718,23 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-瞬态膜阻边界
-\end_layout
-
-\begin_layout Subsection
-溶解边界
+反应物的沉积溶解
 \end_layout
 
 \begin_layout Standard
-对于金属溶解，对腐蚀电池整体电位分布无影响，只会带来浓度变化，浓度与反应电流（溶液电势）有关。仍然表述为
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:bnd5"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-边界条件：
-\begin_inset Formula 
-\[
-D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\partial\phi_{l}}{\partial n}-z_{i}u_{i}F\frac{\partial\phi_{l}}{\partial n}C_{i},
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-沉积边界 
-\end_layout
-
-\begin_layout Standard
-电极表面的 
+电极上可能发生反应物离子的溶解或沉积，法拉第定律描述了电极上通过的 
 \series bold
-电流
-\series default
- 与 
-\series bold
-沉积物质质量
-\series default
- 或厚度的关系，可以通过法拉第定律描述。法拉第定律是描述电极上通过的 
-\series bold
-电量
+电荷量
 \series default
  与电极反应物 
 \series bold
 质量
 \series default
- 之间的关系的，又称为电解定律。
+ 之间的关系，又称为电解定律。
 \end_layout
 
 \begin_layout Subsection
-镀膜厚度稳态计算
+膜厚膜阻的稳态计算
 \end_layout
 
 \begin_layout Standard
@@ -3808,7 +3746,7 @@ D_{i}\frac{\partial C_{i}}{\partial n}=\frac{\beta\sigma_{l}}{n_{e}F}\frac{\part
 \series bold
 化学当量
 \series default
-成正比。 
+成正比：
 \begin_inset Formula 
 \begin{align*}
 m & =\frac{t}{60}K\,I_{k}\,\eta_{k}\\
@@ -3817,7 +3755,7 @@ d & =100\,\frac{t}{60}\frac{K}{\rho}\,I_{k}\,\eta_{k}
 
 \end_inset
 
-结果中
+其中 
 \begin_inset Formula $m$
 \end_inset
 
@@ -3900,7 +3838,7 @@ d & =100\,\frac{t}{60}\frac{K}{\rho}\,I_{k}\,\eta_{k}
 \begin_inset Formula $96485\,\mathrm{C/mol}$
 \end_inset
 
-），上述公式采用标准单位制是
+）。上述公式在标准单位制下是
 \begin_inset Formula 
 \begin{align*}
 m & =t\,K\,I_{k}\,\eta_{k}\\
@@ -3921,8 +3859,8 @@ d & =t\frac{K}{\rho}\,I_{k}\,\eta_{k}
 \begin_inset Formula $d$
 \end_inset
 
-的单位是
-\begin_inset Formula $\mathrm{meter}$
+的单位是 
+\begin_inset Formula $\mathrm{m}$
 \end_inset
 
 。输入参数的单位是
@@ -3939,7 +3877,7 @@ d & =t\frac{K}{\rho}\,I_{k}\,\eta_{k}
 \end_layout
 
 \begin_layout Subsection
-瞬态计算 
+膜厚膜阻的瞬态计算 
 \end_layout
 
 \begin_layout Standard
@@ -4047,7 +3985,7 @@ R=\frac{s_{0}+\Delta s}{\sigma_{f}}
 \begin_inset Formula $m$
 \end_inset
 
-的电流（总表面电流的一部分）。沉积对浓度场的影响是添加一个流边界（2nd）
+的电流（总表面电流的一部分）。沉积对浓度场的影响是施加第二类边界条件
 \begin_inset Formula 
 \[
 D_{1}\frac{\partial C_{i}}{\partial n}=\sum_{m}\frac{v_{d,i,m}}{n_{d,m}\,F}(-J_{E,m})
@@ -4096,7 +4034,7 @@ D_{1}\frac{\partial c_{1}}{\partial n} & =\sum_{m}\frac{v_{d,i,m}}{n_{d,m}\,F}(-
 \begin_inset Formula $s_{0}$
 \end_inset
 
- 为薄膜的初始厚度。每一步算一次结果，作为下一次的初始。 
+ 为薄膜的初始厚度。每个时间步结束时更新膜阻等物理量的结果，作为下一步的输入。 
 \end_layout
 
 \end_body

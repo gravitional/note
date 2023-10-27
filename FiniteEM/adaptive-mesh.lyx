@@ -1,0 +1,222 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+自适应网格
+\end_layout
+
+\begin_layout Author
+Yang
+\end_layout
+
+\begin_layout Chapter
+Comsol 自适应
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t=t_{n}$
+\end_inset
+
+时刻的自适应结果 被映射到（mapped）到 coarse base mesh。为了构建 
+\begin_inset Formula $[t_{n},t_{n+1}]$
+\end_inset
+
+ 时刻的自适应网格（adapted mesh），首先在 base mesh 上计算 
+\begin_inset Formula $[t_{n},t_{s}]$
+\end_inset
+
+ 的解，其中
+\begin_inset Formula $t_{s}$
+\end_inset
+
+是最大采样时间，
+\begin_inset Formula $t_{n+1}=2t_{n}-t_{n-1}$
+\end_inset
+
+。使用给定采样点的 coarse solution 计算 误差指标 （error indicator）。
+\end_layout
+
+\begin_layout Standard
+如果使用自动 时间步长，将计算 refinement 的程度， 然后与给定限额比较。如果计算结果 
+\series bold
+太小
+\series default
+ 或者 
+\series bold
+太大
+\series default
+，时间间隔分别将被 
+\series bold
+增加
+\series default
+ 或 
+\series bold
+减少
+\series default
+，新的时刻将是 
+\begin_inset Formula $t_{n+1}$
+\end_inset
+
+。如果时间间隔需要调整，则使用新的 coarse solution 再次对 error indicator 采样。比较只进行一次。
+\end_layout
+
+\begin_layout Standard
+利用在 
+\begin_inset Formula $[t_{n},t_{n+1}]$
+\end_inset
+
+ 中给定点采样的 error indicator，根据 element pick function 选取一组单元，最后 细化（refining）这些单元，就得到
+了新的 自适应网格（adapted mesh）。PDE问题 使用上一张 
+\begin_inset Formula $[t_{n-1},t_{n}]$
+\end_inset
+
+自适应网格，在
+\begin_inset Formula $t_{n}$
+\end_inset
+
+时刻的解，将被映射到 
+\begin_inset Formula $[t_{n},t_{n+1}]$
+\end_inset
+
+的新网格，进行方程的时间积分（integration）。接下来是类似的 
+\begin_inset Formula $t_{n+1}$
+\end_inset
+
+时刻的网格自适应。
+\end_layout
+
+\begin_layout Standard
+确定 amount of refinement 的简单方法是
+\begin_inset Formula 
+\[
+\rho=\frac{1}{N}\;\sum_{i=1,\gamma(i)\neq0}^{N}\frac{2^{\gamma(i)}}{2^{p}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $N$
+\end_inset
+
+是 coarse base mesh 的单元总数，
+\begin_inset Formula $\gamma$
+\end_inset
+
+是 
+\begin_inset Formula $N$
+\end_inset
+
+长度vector，元素是此处单元被细分的次数，
+\begin_inset Formula $p=\max_{i}\:\gamma(i)$
+\end_inset
+
+，因此单个项
+\begin_inset Formula $\le1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如果
+\begin_inset Formula $\rho>120\%*\text{参考值}$
+\end_inset
+
+，则下个按给定因子
+\begin_inset Formula $\alpha$
+\end_inset
+
+增加 时间步长 ；如果 
+\begin_inset Formula $\rho<80\%*\text{参考值}$
+\end_inset
+
+，则应该增加 时间步长；否则保持当前 时间步长。
+\end_layout
+
+\end_body
+\end_document
