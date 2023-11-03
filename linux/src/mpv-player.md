@@ -19,7 +19,7 @@ mpv是一个自由开源的跨平台媒体播放器, 具有轻量, 兼容性好,
 使用方法:
 
 + windows端, 在mpv解压所得文件夹中新建 `portable_config` 文件夹,
-复制以下代码块内容到txt文本文件中, 分别改名称和后缀为 `mpv.conf`, `input.conf`,
+复制以下代码块内容到txt文本文件中, 分别改名称为 `mpv.conf`, `input.conf`,
 放置于 `mpv\portable_config\`中;
 + 类Unix(Linux/macOS等)则放在 `/usr/local/etc/mpv/` 或 `~/.config/mpv/`
 (注意, .开头的文件夹是隐藏的).

@@ -54,7 +54,9 @@ ffmpeg [global options] {[infile options]['-i' 'infile'] ...} {[outfile options]
 
 参数选项由三部分组成: 可选的一组全局参数,
 一组或多组输入文件参数, 一组或多组输出文件参数,
-其中, 每组输入文件参数以'-i'为结束标记;每组输出文件参数以输出文件名为结束标记.
+其中, 每组输入文件参数以 `-i` 为结束标记;每组输出文件参数以输出文件名为结束标记.
+
+`-hide_banner`; 隐藏输出开头的 banner 信息.
 
 ## 基本选项
 
@@ -73,15 +75,17 @@ ffmpeg [global options] {[infile options]['-i' 'infile'] ...} {[outfile options]
 常用输入选项
 
 + `-y`; overwrite output files
-+ -i filename: 指定输入文件名.
-+ -f fmt: 强制设定文件格式, 需使用能力集列表中的名称(缺省是根据扩展名选择的).
-+ -ss hh:mm:ss[.xxx]: 设定输入文件的起始时间点, 启动后将跳转到此时间点然后开始读取数据.
++ `-i filename`; 指定输入文件名.
++ `-f fmt`; 强制设定文件格式, 需使用能力集列表中的名称(缺省是根据扩展名选择的).
++ `-ss hh:mm:ss[.xxx]`; 设定输入文件的起始时间点, 启动后将跳转到此时间点然后开始读取数据.
 
 对于输入, 以下选项通常是自动识别的, 但也可以强制设定.
 
-+ -c codec: 指定解码器, 需使用能力集列表中的名称.
-+ -acodec codec: 指定声音的解码器, 需使用能力集列表中的名称.
-+ -vcodec codec: 指定视频的解码器, 需使用能力集列表中的名称.
++ -c codec; 指定解码器, 需使用能力集列表中的名称. 例如 `-c mp4`
++ -acodec codec; 指定声音的解码器, 需使用能力集列表中的名称. 例如 `-acodec mp3`
++ -vcodec codec; 指定视频的解码器, 需使用能力集列表中的名称.
+使用 `-acodec copy` 表示原样复制.
+
 + -b:v bitrate: 设定视频流的比特率, 整数, 单位bps.
 + -r fps: 设定视频流的帧率, 整数, 单位fps.
 + -s WxH : 设定视频的画面大小. 也可以通过挂载画面缩放滤镜实现.
@@ -104,19 +108,62 @@ ffmpeg [global options] {[infile options]['-i' 'infile'] ...} {[outfile options]
 + -ac channels: 设置音频编码器的声道数目.
 + -an 忽略任何音频流.
 + -vn 忽略任何视频流.
-+ -t hh:mm:ss[.xxx]: 设定输出文件的时间长度.
-+ -to hh:mm:ss[.xxx]: 如果没有设定输出文件的时间长度的画可以设定终止时间点.
++ `-t hh:mm:ss[.xxx]`; 设定输出文件的时间长度.
++ `-to hh:mm:ss[.xxx]`; 如果没有设定输出文件的时间长度的画可以设定终止时间点.
 
 ### 流标识
 
+[ffmpeg流选择](https://blog.csdn.net/qq_18998145/article/details/98940502)
+
 FFMPEG的某些选项可以对一个特定的媒体流起作用, 这种情况下需要在选项后面增加一个流标识. 流标识允许以下几种格式:
 
-+ 流序号. 譬如":1"表示第二个流.
-+ 流类型. 譬如":a"表示音频流, 流类型可以和流序号合并使用, 譬如":a:1"表示第二个音频流.
++ 流序号. 譬如 `:1` 表示第二个流.
++ 流类型. 譬如 `:a` 表示音频流, 流类型可以和流序号合并使用, 譬如":a:1"表示第二个音频流.
 + 节目. 节目和流序号可以合并使用.
 + 流标识. 流标识是一个内部标识号.
 
-假如要设定第二个音频流为copy, 则需要指定-codec:a:1 copy
+假如要设定第二个音频流为 `copy`, 则需要指定 `-codec:a:1 copy`
+
+FFmpeg可以识别5种流类型:
+音频(audio, a), 视频(video, v), 字幕(subtitle, s), 附加数据(attachment, t)和普通数据(data, d).
+流选择(stream selection)是从输入文件中选定某些流进行处理, 流选择有两种模式,
+
+1) 使用-map选项手动指定要选择的流;
+1) 无-map选项时由FFmpeg根据相应规则自动选择流.
+
+#### 流选择自动模式
+
+自动选择模式下, 每种类型的流只选择一路, 规则如下:
+音频流: 选择具有最多通道的流, 若多个音频流通道数相同且通道数最多, 则选第一个.
+视频流: 选择具有最高分辨率的流, 若多个视频流分辨率相同且是最高分辨率, 则选第一个.
+字幕流: 选择第一个字幕流. 注意: 字幕流有文本字幕流和图形字幕流, 输出格式默认的字幕编码器仅处理其支持的字幕类型.
+
+#### 流选择手动模式
+
+手动选择模式下, 要选定的流由-map选项后的流指定符(stream specifer)指定. stream_specifier语法如下:
+
+```bash
+[-]file_index:stream_type[:stream_index]
+```
+
+带-表示排除此流, 不带-表示选中此流. 文件序号file_index和流序号stream_index都是从0开始计数.
+几个特殊的stream_specifier如下:
+
+`-map 0` 选择所有类型的所有流.
+`-map i:v` 选择文件i中所有的视频流, i:a, i:s等同理.
+`-map -vn` 排除所有视频流, -an, -sn等同理.
+
+```bash
+ffmpeg -i a.mov -i b.mov -c copy -map 0:2 -map 1:6 out.mov
+```
+
+从文件a.mov中选择序号为2的流(流标签0:2), 以及从b.mov中选择序号为6的流(流标签1:6), 然后共同复制输出到 `out.mov`
+
+#### 流指定符stream_specifier
+
+有些选项(比如设置码率, 设置编解码器)是针对流的. 一个选项具体作用于哪些流, 由stream_specifier指定.
+stream_specifier附在选项后面, 由":"分隔. 例如: -codec:a:1 ac3中a:1就是stream_specifier, 表示编码器是对第2音频流以ac3编码. stream_index:匹配流的索引, 例如-threads:1 4表示对2号流采用4个线程处理.
+一个空的stream_specifier将匹配所有的流. 例如: -b:a 128k匹配所有音频流, 而-codec copy或-codec: copy则匹配所有流.
 
 ## 音频选项
 
@@ -150,7 +197,9 @@ FFMPEG的某些选项可以对一个特定的媒体流起作用, 这种情况下
 
 1. 将一个老式的avi文件转成mp4
 
+```bash
 ffmpeg -i final.avi -acodec copy -vcodec copy final.mp4
+```
 
 2. 从一个视频文件中抽取一帧图像:
 

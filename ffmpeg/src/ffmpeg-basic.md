@@ -125,6 +125,17 @@ ffmpeg -hide_banner -i $file -codec:a $tfmt -ar 44100 -ac 2 -b:a 320k -map_metad
 IFS=$SAVEIFS;
 ```
 
+## 音频截取, 制作铃声
+
+```bash
+ffmpeg  -hide_banner -ss 00:00:13.000  -t 00:01:33.000  -i  `
+'Cyua - Sternengesang.mp3' `
+-codec copy -map 0:a`
+'Cyua - Sternengesang--rt.mp3'
+```
+
+`-map 0:a` 表示只转换 audio 部分, copy 表示编码直接复制
+
 ## flac转换成mp3
 
 将`flac`文件转换为`mp3`文件使用以下命令即可,
