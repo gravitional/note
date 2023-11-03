@@ -9122,6 +9122,10 @@ K'\,\delta\phi_{j}=b'
 几何算法
 \end_layout
 
+\begin_layout Section
+带符号体积判断
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset href
 LatexCommand href
@@ -9228,6 +9232,89 @@ pend[Transpose@lst, ConstantArray[1, Length@lst]] {Det[a], Det[b]}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+非结构化网格
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "结构化网格和非结构化网格"
+target "https://stuch.cn/question/819"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+结构化网格
+\end_layout
+
+\end_inset
+
+一般数值计算中正交与非正交曲线坐标系中生成的网格都是结构化网格，其特点是每一节点与其邻点之间的连接关系固定不变，且隐含在所生成的网格中，因而我们不必专门设置数据
+去确认节点与邻点之间的这种联系。 从严格意义上讲，结构化网格是指网格区域内所有的内部点都具有相同的毗邻单元。结构化网格的主要优点有以下几点：
+\end_layout
+
+\begin_layout Itemize
+网格生成的速度快；
+\end_layout
+
+\begin_layout Itemize
+网格生成的质量好；
+\end_layout
+
+\begin_layout Itemize
+数据结构简单。
+\end_layout
+
+\begin_layout Itemize
+对曲面或空间的拟合大多数采用参数化或样条插值的方法得到，区域光滑，与实际的模型更容易接近；
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+非结构化网格
+\end_layout
+
+\end_inset
+
+ 同结构化网格的定义相对应，非结构化网格是指网格区域内的内部点不具有相同的批邻单元。即与网格剖分区域内的不同内点相连的网格数目不同。
+\end_layout
+
+\begin_layout Standard
+从定义上可以看出，结构化网格和非结构化网格有相互重叠的部分，即非结构化网格中可能会包含结构化网格的部分。 非结构化网格技术从 20 世纪 60
+ 年代开始得到了发展，主要是弥补结构化网格不能解决任意形状和任意连通区域的网格剖分的欠缺。 由于对不规则区域的特别适应性而自 20 世纪 80
+ 年代以来得到迅速的发展，到 90 年代时，非结构化网格的文献达到了它的高峰时期。由于非结构化网格的生成技术比较复杂，随着人们对求解区域的复杂性的不断提高，对非
+结构化网格生成技术的要求越来越高。
+\end_layout
+
+\begin_layout Itemize
+所有的网格都能以非结构化的形式描述 
+\end_layout
+
+\begin_layout Itemize
+部分网格（六面体网格，四面体网格）能用结构化的形式描述，也即是如果是结构化网格，则必须是 6 面体网格或者四边形网格，但是四边形网格和六面体网格不一定是结构化网
+格。 
+\end_layout
+
+\begin_layout Itemize
+结构化网格能转换成非结构化网格，但是非结构化网格一般不能转换成结构网格。 
+\end_layout
+
+\begin_layout Itemize
+结构化网格能通过 IJK 索引，而非结构不可以。
 \end_layout
 
 \begin_layout Chapter
@@ -12592,6 +12679,14 @@ literal "false"
  & \nabla\cdot\sbf D=\rho\\
  & \nabla\cdot\sbf B=0
 \end{align*}
+
+\end_inset
+
+电荷守恒方程
+\begin_inset Formula 
+\[
+-\sbf\nabla\cdot J=\frac{\partial\rho}{\partial t}
+\]
 
 \end_inset
 

@@ -1,0 +1,687 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+FEM基本原理 Zienkiewicz
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter*
+sss
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "任意拉格朗日-欧拉方法"
+target "https://zhuanlan.zhihu.com/p/418165221"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/ALE-fig1.jpg
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ALE 坐标系图示
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+连续介质体（物体）
+\begin_inset Formula $\mathcal{B}$
+\end_inset
+
+运动的三个瞬间
+\begin_inset Formula $t_{0}$
+\end_inset
+
+，
+\begin_inset Formula $t_{n-1}$
+\end_inset
+
+，
+\begin_inset Formula $t_{n}$
+\end_inset
+
+的构形: 初始构形
+\begin_inset Formula $\Omega_{0}$
+\end_inset
+
+ ,参考构形
+\begin_inset Formula $\hat{\Omega}$
+\end_inset
+
+和当前构形 
+\begin_inset Formula $\Omega$
+\end_inset
+
+，物质点
+\begin_inset Formula $P$
+\end_inset
+
+对应的坐标分别是拉格朗日坐标
+\begin_inset Formula $X$
+\end_inset
+
+ , ALE坐标
+\begin_inset Formula $\chi$
+\end_inset
+
+和欧拉坐标
+\begin_inset Formula $x$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+如果
+\series bold
+当前构形
+\series default
+相对
+\series bold
+初始构形
+\series default
+的变换不大时（小变形的情况），始终可取
+\begin_inset Formula $\hat{\Omega}=\Omega_{0}$
+\end_inset
+
+ ，
+\begin_inset Formula $\sbf\chi=\sbf X$
+\end_inset
+
+，即直接取 初始构形 作为 
+\series bold
+参考构形
+\series default
+。 此时，我们只需要在初始构形进行一次
+\series bold
+网格剖分 
+\series default
+即可，即网格是静止的。
+\end_layout
+
+\begin_layout Itemize
+如果当前构形相对初始构形的变换比较大时（
+\series bold
+大变形
+\series default
+的情况），由于网格畸变，会导致计算精度下降甚至计算错误。一种解决方案就是，在上一离散时刻
+\begin_inset Formula $t_{n-1}$
+\end_inset
+
+进行 
+\series bold
+网格重绘
+\series default
+，也就是取上一时刻的构形作为参考构形。这种方案就是所谓的 
+\series bold
+任意拉格朗日-欧拉方法(ALE)
+\series default
+。
+\end_layout
+
+\begin_layout Itemize
+对ALE方法而言，假设
+\series bold
+初始构形
+\series default
+相对 实验室系 是静止的，初始构形到当前构形的运动就是 
+\series bold
+物质运动
+\series default
+
+\begin_inset Formula $\sbf\varphi$
+\end_inset
+
+；而由于需要在参考构形上进行网格重绘，所以参考构形到当前构形的运动就是 
+\series bold
+网格运动
+\series default
+
+\begin_inset Formula $\sbf\Phi$
+\end_inset
+
+。 Here，we focus on 空间点在不同坐标系的描述，网格是特定坐标系空间的离散化表示。
+\begin_inset Formula $\sbf\Phi$
+\end_inset
+
+体现在网格上，就是节点相对于 参考构型（ALE坐标
+\begin_inset Formula $\sbf\chi$
+\end_inset
+
+）的位移。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\text{物理的，物质运动：} & \sbf x=\sbf\varphi\left(\sbf X,t\right)\\
+\text{非物理的，网格运动：} & \sbf x=\sbf\Phi\left(\sbf\chi,t\right)\\
+\text{E}\to\text{ALE：} & \sbf\chi=\sbf\psi\left(\sbf X,t\right)\\
+ & \sbf\varphi=\sbf\Phi\circ\sbf\psi
+\end{align*}
+
+\end_inset
+
+物质运动的Euler 描述 
+\begin_inset Formula $\sbf\varphi$
+\end_inset
+
+ 分成：先从 Lagrange 到 ALE坐标系–
+\begin_inset Formula $\sbf\psi$
+\end_inset
+
+，再从 ALE 坐标系到 Euler 系–
+\begin_inset Formula $\sbf\Phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+与Comsol frame的对应关系
+\end_layout
+
+\begin_layout Standard
+Moving–mesh 是在一张运动的网格上（ALE）求解物理问题。
+\end_layout
+
+\begin_layout Itemize
+Euler坐标系：Spatial frame；the usual, fixed, global, Euclidean coordinate system；以及
+ Geometry Frame（？？）。
+\end_layout
+
+\begin_layout Itemize
+Lagrange坐标系：Material frame；
+\end_layout
+
+\begin_layout Itemize
+参考构型 ALE 坐标系：Mesh frame；动网格
+\end_layout
+
+\begin_layout Standard
+Geometry 用于处理变形几何和参数化几何，在考虑形变（Deformed geometry 接口）的问题中，Geometry 和 Material
+ frame 将区分开，
+\end_layout
+
+\begin_layout Itemize
+Moving Mesh 功能处于 Spatial层 和 Material层 之间。
+\end_layout
+
+\begin_layout Itemize
+Deformed Geometry 或 Shape optimization 处于 Geometry层 和 Material 层 之间。如果 G
+ 和 M 之间存在坐标变换，则可以改变材料形状，而无需改变网格。Geometry frame 不受 Moving Mesh 的影响。
+\end_layout
+
+\begin_layout Itemize
+自动重剖分（Mesh/Deformed Configuration）处于 Geometry层 和 Mesh层 之间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考察物理模型中的一点
+\begin_inset Formula $P$
+\end_inset
+
+在不同Frame中的分量，右边给出了坐标架的分离接口。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf x\stackrel{\sbf f}{\longleftarrow}\sbf X$
+\end_inset
+
+：
+\series bold
+Moving Mesh
+\series default
+ only；
+\begin_inset Formula $\sbf x=\sbf f(\sbf X,t)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf X\stackrel{\sbf g}{\longleftarrow}\sbf X_{g}$
+\end_inset
+
+：
+\series bold
+Deformed Geometry
+\series default
+ only；
+\begin_inset Formula $\sbf X=\sbf g(\sbf X_{g},p)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf x\longleftarrow\sbf X_{g}$
+\end_inset
+
+：
+\series bold
+Moving Mesh
+\series default
+ + 
+\series bold
+Deformed Geometry
+\series default
+；
+\begin_inset Formula $\sbf x=\sbf f\left(\sbf g(\sbf X_{g},p),t\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf X_{m}\stackrel{\sbf h}{\longleftarrow}\sbf X_{g}$
+\end_inset
+
+：
+\series bold
+Deformed Configuration
+\series default
+（Remesh） only；
+\begin_inset Formula $\sbf X_{m}=\sbf h(\sbf X_{g})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 是Spatial坐标，
+\begin_inset Formula $\sbf X$
+\end_inset
+
+是 Material坐标，
+\begin_inset Formula $\sbf X_{g}$
+\end_inset
+
+ 是Geometry坐标，
+\begin_inset Formula $\sbf X_{m}$
+\end_inset
+
+是 Mesh坐标；
+\begin_inset Formula $t$
+\end_inset
+
+表示时间；
+\begin_inset Formula $p$
+\end_inset
+
+ 是控制 Deformed Geometry 的参数组；
+\begin_inset Formula $i$
+\end_inset
+
+标记几何被重剖分的次数。
+\begin_inset Formula 
+\begin{align*}
+\sbf x & =\sbf f\,(\sbf X,t)=\sbf f\,\left(\sbf g(\sbf X_{g},p),t\right),\quad\text{动网格映射}\\
+\sbf X & =\sbf g\,(\sbf X_{g},p)\quad\text{几何变形映射}\\
+\sbf X_{m} & =\sbf h\,(\sbf X_{g},i)\quad\text{\text{重剖分映射}}\\
+\sbf x & =\sbf f\,\Big(\sbf g\big(\sbf h^{-1}(\sbf X_{m},i),p\big),t\Big)
+\end{align*}
+
+\end_inset
+
+函数
+\begin_inset Formula $\sbf f$
+\end_inset
+
+可以是显式方程，或者网格平滑方程的解。
+\end_layout
+
+\begin_layout Itemize
+从物理的视角，the domain is fixed in the geometry frame coordinates 
+\begin_inset Formula $\sbf X_{g}$
+\end_inset
+
+，which are therefore seen as constant in the above formulas。从有限元的视角，it is
+ instead the mesh frame coordinates 
+\begin_inset Formula $\sbf X_{m}$
+\end_inset
+
+ that are constant and 
+\begin_inset Formula $\sbf X_{g}=\sbf h^{-1}(\sbf X_{m},t)$
+\end_inset
+
+。因此在组装有限元矩阵时使用的关系是
+\begin_inset Formula 
+\[
+\sbf x=\sbf f\left(\sbf g\left(\sbf h^{-1}\left(\sbf X_{m},i\right),p\right),t\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+如果 Spatial 和 Material 层重合则 
+\begin_inset Formula $\sbf f$
+\end_inset
+
+ is a unit map ； 如果Material和Geometry 重合 则
+\begin_inset Formula $\sbf g$
+\end_inset
+
+ is a unit map，the inverse mapping 
+\begin_inset Formula $\sbf h^{-1}\left(\sbf x_{m},i\right)$
+\end_inset
+
+ is initially a unit map and then updated by interpolation after each remeshing
+ operation。（重剖分之后，两个坐标系的变换
+\begin_inset Formula $\sbf\psi$
+\end_inset
+
+ 通过插值近似给出）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/moving-mesh1.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/moving-mesh2.pdf
+	lyxscale 80
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/moving-mesh3.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/moving-mesh1.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/moving-mesh4.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+第一行：初始构型（ref1），经过 [
+\series bold
+剪切变换
+\series default
+] 到 参考构型(ref2) ，经过 [
+\series bold
+伸缩变换
+\series default
+] 到 当前构型(ref3)。第二行：在ALE坐标系（ref2）观察
+\series bold
+伸缩变换
+\series default
+。在 ref2 中观察自身，认为空间是平直的。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+11 多区域和Mixed近似 p361
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+使用拉格朗日乘子连接多个区域
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi^{1}=\sbf N_{1}\tilde{\phi}^{1},\quad\phi^{2}=\sbf N_{2}\tilde{\phi}^{2},\quad\text{and}\quad\lambda=\sbf N_{\lambda}\,\tilde{\lambda}
+\]
+
+\end_inset
+
+分块矩阵
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+\sbf H^{1} & \sbf0 & \sbf Q^{1}\\
+\sbf0 & \sbf H^{2} & \sbf Q^{2}\\
+\sbf Q^{1T} & \sbf Q^{2T} & \sbf0
+\end{array}\right]\left\{ \begin{array}{c}
+\tilde{\sbf\phi}^{1}\\
+\tilde{\sbf\phi}^{2}\\
+\tilde{\sbf\lambda}
+\end{array}\right\} =\left\{ \begin{array}{c}
+\sbf f^{1}\\
+\sbf f^{2}\\
+\sbf0
+\end{array}\right\} \label{eq:11.5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+\sbf H^{1} & =\int_{\Omega_{1}}\left(\nabla\sbf N^{(1)}\right)^{T}\cdot\left(\sbf k^{(1)}\nabla\sbf N^{(1)}\right)\dd{\Omega}, & \sbf H^{(2)} & =\int_{\Omega_{2}}\left(\nabla\sbf N^{(2)}\right)^{T}\cdot\left(\sbf k^{(2)}\nabla\sbf N^{(2)}\right)\dd{\Omega},\\
+ & \quad+\int_{\Gamma_{q}^{(1)}}\sbf N_{1}^{T}\,H^{(1)}\,\sbf N_{1}\dd{\Gamma} &  & \quad+\int_{\Gamma_{q}^{(2)}}\sbf N_{2}^{T}\,H^{(2)}\,\sbf N_{2}\dd{\Gamma}\\
+\sbf Q^{(1)} & =\int_{\Gamma_{I}}\sbf N_{1}^{T}\sbf N_{\lambda}\dd{\Gamma} & \sbf Q^{(2)} & =\int_{\Gamma_{I}}\sbf N_{2}^{T}\sbf N_{\lambda}\dd{\Gamma}\\
+\sbf f^{(1)} & =-\int_{\Omega^{1}}\sbf N_{1}^{T}Q^{(1)}\dd{\Omega}-\int_{\Gamma_{q}^{(1)}}\sbf N_{1}^{T}\,\overline{q}^{(1)}\,\dd{\Gamma} & \sbf f^{(2)} & =-\int_{\Omega^{(2)}}\sbf N_{2}^{T}Q^{(2)}\dd{\Omega}-\int_{\Gamma_{q}^{(2)}}\sbf N_{2}^{T}\,\overline{q}^{(2)}\,\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+微扰拉格朗日乘子和罚系数法
+\end_layout
+
+\begin_layout Section
+问题
+\end_layout
+
+\begin_layout Chapter
+16 自适应网格细化
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+自适应h–细化
+\end_layout
+
+\begin_layout Section
+p–细化 和 hp–细化
+\end_layout
+
+\begin_layout Section
+总结
+\end_layout
+
+\begin_layout Section
+问题
+\end_layout
+
+\end_body
+\end_document
