@@ -923,6 +923,10 @@ material.detInvF
 
 \end_layout
 
+\begin_layout Subsection
+坐标变换
+\end_layout
+
 \begin_layout Standard
 \begin_inset Formula 
 \[
@@ -951,10 +955,10 @@ material.detInvF
 \begin_inset Formula $F_{\mu\nu}$
 \end_inset
 
-，将 contravariant 材料分量 变成 contravariant spatial 分量。
+，将 contravariant material 分量 变成 contravariant spatial 分量。
 \begin_inset Formula 
 \[
-v^{\nu}=V^{\mu}\frac{\partial x^{\nu}}{\partial X^{\mu}}
+v^{\nu}=V^{\mu}\frac{\partial x^{{\color{red}\nu}}}{\partial X^{{\color{blue}\mu}}}
 \]
 
 \end_inset
@@ -978,7 +982,7 @@ v^{\nu}=V^{\mu}\frac{\partial x^{\nu}}{\partial X^{\mu}}
 ，将 covariant spatial 分量 变成 covariant material 分量。
 \begin_inset Formula 
 \[
-X_{\mu}=\frac{\partial x^{\nu}}{\partial X^{\mu}}x_{\nu}
+X_{\mu}=\frac{\partial x^{{\color{red}\nu}}}{\partial X^{{\color{blue}\mu}}}x_{\nu}
 \]
 
 \end_inset
@@ -986,7 +990,133 @@ X_{\mu}=\frac{\partial x^{\nu}}{\partial X^{\mu}}x_{\nu}
 
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{spatial.invF}_{{\color{blue}\mu}{\color{red}\nu}}=\left[\begin{array}{ccc}
+\frac{\partial X}{\partial x} & \frac{\partial Y}{\partial x} & \frac{\partial Z}{\partial x}\\
+\frac{\partial X}{\partial y} & \frac{\partial Y}{\partial y} & \frac{\partial Z}{\partial y}\\
+\frac{\partial X}{\partial z} & \frac{\partial Y}{\partial z} & \frac{\partial Z}{\partial z}
+\end{array}\right]=\frac{\partial X^{{\color{red}\nu}}}{\partial x^{{\color{blue}\mu}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+矩阵的行（Row）可以理解为，将 global spatial 坐标系的 covariant 基矢量
+\begin_inset Formula $\partial_{X}$
+\end_inset
+
+ 用 global material 坐标系的 contravariant 分量表示；
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+左乘
+\begin_inset Formula $\mathrm{iF}_{\mu\nu}$
+\end_inset
+
+，将 contravariant spatial 分量 变成 contravariant material 分量。
+\begin_inset Formula 
+\[
+X^{\nu}=x^{\mu}\frac{\partial X^{{\color{red}\nu}}}{\partial x^{{\color{blue}\mu}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+列（column）可以理解为将 global material 坐标系的 contravariant 基矢量
+\begin_inset Formula $x$
+\end_inset
+
+，使用 global spatial 坐标系的 covariant分量表示。
+\begin_inset Formula $F_{\mu\nu}$
+\end_inset
+
+右乘
+\begin_inset Formula $x_{\nu}$
+\end_inset
+
+，将 covariant material 分量 变成 covariant spatial 分量。
+\begin_inset Formula 
+\[
+v_{\mu}=\frac{\partial X^{{\color{red}\nu}}}{\partial x^{{\color{blue}\mu}}}V_{\nu}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+体积因子
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{D}f(\sbf x)\dd{\sbf x}=\int_{D}f(\sbf X)\det F\,\dd{\sbf X}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\det F=\det|\frac{\partial x^{{\color{red}\nu}}}{\partial X^{{\color{blue}\mu}}}|$
+\end_inset
+
+；
+\begin_inset Formula 
+\[
+\int_{D}f(\sbf X)\dd{\sbf X}=\int_{D}f(\sbf x)\det\mathrm{iF}\,\dd{\sbf x}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\det\mathrm{iF}=\det|\frac{\partial X^{{\color{red}\nu}}}{\partial x^{{\color{blue}\mu}}}|$
+\end_inset
+
+。
+\begin_inset Formula $D$
+\end_inset
+
+可以是体积，表面积，线，或者 point elements；On points, spatial.detF 等于
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+material.F，material.invF，material.detF，material.detInvF 这些变量和 spatial 类似，只不过描述
+ 材料坐标
+\begin_inset Formula $\sbf X$
+\end_inset
+
+和几何坐标
+\begin_inset Formula $\sbf X_{g}$
+\end_inset
+
+之间的关系。
+\end_layout
+
+\begin_layout Subsection*
+矢量场和基矢
+\end_layout
+
+\begin_layout Standard
 从广义相对论参考书中：矢量的表示为
 \begin_inset Formula 
 \begin{align*}
@@ -1028,7 +1158,81 @@ X_{\mu}=\left.\frac{\partial x^{\prime\nu}}{\partial x^{\mu}}\right|_{p}X_{\nu}^
 
 \end_inset
 
+正向Jacobian 
+\begin_inset Formula $\frac{\partial x^{\prime\nu}}{\partial x^{\mu}}$
+\end_inset
 
+；逆变矢量按正向Jacobian变换；协变矢量（基矢）。
+\end_layout
+
+\begin_layout Subsection
+轴对称几何
+\end_layout
+
+\begin_layout Standard
+在定义变换矩阵和体积因子时，轴对称几何
+\begin_inset Formula $(r,\phi,z)$
+\end_inset
+
+被当作三维对象处理。特别地，网格的 radial 位移 引入azimuthal 方向的非单位变换，类似于轴对称固体对象中的 radial 位移引起的
+ azimuthal strain。 
+\begin_inset Formula 
+\[
+\mathrm{spatial.F}_{{\color{blue}\mu}{\color{red}\nu}}=\left[\begin{array}{ccc}
+\frac{\partial r}{\partial R} & 0 & \frac{\partial z}{\partial R}\\
+0 & \frac{r}{R} & 0\\
+\frac{\partial r}{\partial Z} & 0 & \frac{\partial z}{\partial Z}
+\end{array}\right]=\frac{\partial x^{{\color{red}\nu}}}{\partial X^{{\color{blue}\mu}}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathrm{spatial.invF}_{{\color{blue}\mu}{\color{red}\nu}}=\left[\begin{array}{ccc}
+\frac{\partial R}{\partial r} & 0 & \frac{\partial Z}{\partial r}\\
+0 & \frac{R}{r} & 0\\
+\frac{\partial Z}{\partial r} & 0 & \frac{\partial Z}{\partial z}
+\end{array}\right]=\frac{\partial X^{{\color{red}\nu}}}{\partial x^{{\color{blue}\mu}}}
+\]
+
+\end_inset
+
+体积因子
+\begin_inset Formula $\det F$
+\end_inset
+
+和
+\begin_inset Formula $\det\mathrm{iF}$
+\end_inset
+
+中也包括了 azimuath 因子 
+\begin_inset Formula $r/R$
+\end_inset
+
+，以满足：
+\begin_inset Formula 
+\[
+\int_{D}f(r,z)\,r\,\dd{r}\dd{z}=\int_{D}f(R,Z)\,\det F\,R\dd{R}\dd{Z}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{D}f(R,Z)\,R\,\dd{R}\dd{Z}=\int_{D}f(r,z)\,\det\mathrm{iF}\,r\dd{r}\dd{z}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $D$
+\end_inset
+
+是任意 表面，线或点的几何，对应 a ratio of volumes of domain, areas on boundaries, length
+ on point entities。
 \end_layout
 
 \begin_layout Section
@@ -1056,7 +1260,7 @@ moving boundary smoothing 选项平滑 施加了
 \begin_inset Formula $v_{\text{mbs}}$
 \end_inset
 
-是 抹匀速度
+是 平滑速度
 \begin_inset Formula 
 \[
 v_{\text{mbs}}=\delta_{\text{mbs}}\,\abs{v_{0}}\,h\,H
