@@ -594,6 +594,444 @@ status open
 \end_layout
 
 \begin_layout Section
+坐标变换矩阵，体积因子
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+分量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+描述
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.Fij
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jacobian空间坐标
+\begin_inset Formula $\sbf x$
+\end_inset
+
+对 材料坐标
+\begin_inset Formula $\sbf X$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.invF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.invFij
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jacobian：材料坐标
+\begin_inset Formula $\sbf X$
+\end_inset
+
+对 空间坐标
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.detF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.detF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单元体积比：空间坐标系/材料坐标系
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.detInvF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+spatial.detInvF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单元体积比：材料坐标系统/空间坐标系
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.Fij
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jacobian：材料坐标
+\begin_inset Formula $\sbf X$
+\end_inset
+
+ 对 几何坐标
+\begin_inset Formula $\sbf X_{g}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.invF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.invFij
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jacobian：几何标
+\begin_inset Formula $\sbf X_{g}$
+\end_inset
+
+ 对 材料坐标
+\begin_inset Formula $\sbf X$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.detF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.detF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单元体积比：材料坐标系 对 几何坐标系
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.detInvF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+material.detInvF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单元体积比：几何坐标系 对 材料坐标系
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+几何变量和网格变量
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{spatial.F}_{{\color{blue}\mu}{\color{red}\nu}}=\left[\begin{array}{ccc}
+\frac{\partial x}{\partial X} & \frac{\partial y}{\partial X} & \frac{\partial z}{\partial X}\\
+\frac{\partial x}{\partial Y} & \frac{\partial y}{\partial Y} & \frac{\partial z}{\partial Y}\\
+\frac{\partial x}{\partial Z} & \frac{\partial y}{\partial Z} & \frac{\partial z}{\partial Z}
+\end{array}\right]=\frac{\partial x^{{\color{red}\nu}}}{\partial X^{{\color{blue}\mu}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+矩阵的行（Row）可以理解为，将 global material坐标系的 covariant基矢量
+\begin_inset Formula $\partial_{X}$
+\end_inset
+
+ 用 global spatial坐标系的 contravariant分量表示；
+\begin_inset Formula $X^{\mu}$
+\end_inset
+
+左乘
+\begin_inset Formula $F_{\mu\nu}$
+\end_inset
+
+，将 contravariant 材料分量 变成 contravariant spatial 分量。
+\begin_inset Formula 
+\[
+v^{\nu}=V^{\mu}\frac{\partial x^{\nu}}{\partial X^{\mu}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+列（column）可以理解为将 global spatial坐标系的 contravariant基矢量
+\begin_inset Formula $x$
+\end_inset
+
+，使用 global material坐标系的 covariant分量表示。
+\begin_inset Formula $F_{\mu\nu}$
+\end_inset
+
+右乘
+\begin_inset Formula $x_{\nu}$
+\end_inset
+
+，将 covariant spatial 分量 变成 covariant material 分量。
+\begin_inset Formula 
+\[
+X_{\mu}=\frac{\partial x^{\nu}}{\partial X^{\mu}}x_{\nu}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+从广义相对论参考书中：矢量的表示为
+\begin_inset Formula 
+\begin{align*}
+ & v=v^{\mu}X_{\mu},\\
+ & v^{\mu}=v(x^{\mu}).
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $X_{\mu}$
+\end_inset
+
+，
+\begin_inset Formula $X_{\nu}^{\prime}$
+\end_inset
+
+ 是坐标基矢，
+\begin_inset Formula 
+\[
+X_{\mu}(f)=\left.\frac{\partial f(x)}{\partial x^{\mu}}\right|_{p},\quad X_{\nu}^{\prime}(f)=\left.\frac{\partial f^{\prime}(x^{\prime})}{\partial x^{\prime\nu}}\right|_{p},
+\]
+
+\end_inset
+
+矢量和基矢 的变换式
+\begin_inset Formula 
+\[
+v^{\prime\nu}=\left.\frac{\partial x^{\prime\nu}}{\partial x^{\mu}}\right|_{p}v^{\mu}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+X_{\mu}=\left.\frac{\partial x^{\prime\nu}}{\partial x^{\mu}}\right|_{p}X_{\nu}^{\prime}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 网格点法向速度平滑
 \end_layout
 
