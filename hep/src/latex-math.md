@@ -1284,6 +1284,54 @@ extarrows
 extpfeil
 mathtools
 
+## 长等号
+
+[如何输入长等号, 且上下可添加文字](https://www.latexstudio.net/archives/8004.html)
+
+有网友提出问题, 如何输入长等号,
+而且可以依据等号上下的文字宽度来自动伸缩长度, 同样我们也会用到箭头的输入.
+
+这里我们提供如下方案使用 `\usepackage{extarrows}`:
+
+```latex
+$$ A \xlongequal{\quad\quad}B $$
+$$ A\xlongequal[sub-script]{super-script}B $$
+```
+
+输出为:
+
+![arrow](https://pics.latexstudio.net/article/2019/1203/65cb85bf4cc5415.jpg)
+
+另外还有
+
+```latex
+\xLongleftarrow:
+\xLongrightarrow:
+\xLongleftrightarrow:
+\xLeftrightarrow:
+\xlongleftrightarrow:
+\xlongrightarrow:
+\xleftrightarrow:
+\xlongleftarrow:
+(amsmath) \xleftarrow:
+(amsmath) \xrightarrow:
+\xlongleftarrow:
+\xlongrightarrow:
+(amsmath) \xleftarrow:
+(amsmath) \xrightarrow:
+```
+
+样式如下:
+
+![longarrow](https://pics.latexstudio.net/article/2019/1203/1674d27738f84c9.jpg)
+
+参看: [extarrows](http://mirror.ctan.org/macros/latex/contrib/extarrows/extarrows-test.pdf)
+
+另外, 还有 `\usepackage{chemarrow}` 提供的扩展:
+如下:
+
+![chemarrow](https://pics.latexstudio.net/article/2019/1203/5b09a23951f9e3c.jpg)
+
 ## 下划线,中划线
 
 [LaTeX文字的加粗, 斜体, 下划线, 删除线等](https://www.jianshu.com/p/a1838fa53882)
