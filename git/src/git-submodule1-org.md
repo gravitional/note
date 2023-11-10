@@ -2,6 +2,22 @@
 
 [7.11 Git 工具 - 子模块](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)
 
+具有 `submodule` 的母仓库, 其根目录会有 `.gitmodules` 文件,
+里面记录了子模块的 名称和路径, 例如
+
+```conf
+[submodule "EMXXX"]
+    path= EMXXX # 文件路径
+    url= http://net-work/emxxx.git
+```
+
+嵌套在上层仓库中的子仓库, 其 `.git` 目录被合并到 `root` 仓库的 `.git` 目录中,
+子仓库的 `.git` 是一个引用文件, 存储了真正的 git data目录
+
+```conf
+gitdir: ../../.git/modules/src/EMXXX
+```
+
 ## 开始使用子模块
 
 我们将要演示如何在一个被分成一个主项目与几个子项目的项目上开发.

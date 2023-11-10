@@ -1044,6 +1044,39 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 \DeclareMathOperator{\Tr}{Tr}
 ```
 
+### ess sup 本性上确界 max
+
+[LaTeX系列笔记(3)-数学运算符 Math Operator](https://zhuanlan.zhihu.com/p/137969798)
+
+使用 `\operatorname` 打包成的 `\DeclareMathOperator`(推荐)
+
+```latex
+\usepackage{amsmath}
+
+\DeclareMathOperator{\arccot}{arccot}        %   不能把上下标放在符号的正上方/正下方
+\DeclareMathOperator*{\Max}{max}             %   可以把上下标放在符号的正上方/正下方
+```
+
+比如可以调用
+
+```latex
+$\arccot^2$                     % 而不能 \arccot\limits^2
+$\Max_u, \Max\limits_u$         % 都可以
+```
+
+那如果经常使用 `\Max\limits_u`, 一个方便的办法是
+
+```latex
+\usepackage{amsmath}
+
+\DeclareMathOperator*{\MaxTemp}{max}
+\newcommand*{\Max}[1]{\MaxTemp\limits_{#1}}
+
+\begin{document}
+$\Max{u}$
+\end{document}
+```
+
 ## 定义配对的数学符号
 
 绝对值
@@ -1284,7 +1317,16 @@ extarrows
 extpfeil
 mathtools
 
-## 长等号
+## 各种等号, 定义符号
+
+### 三角等号
+
+```latex
+\usepackage{amssymb}
+$\triangleq$
+```
+
+### 长等号
 
 [如何输入长等号, 且上下可添加文字](https://www.latexstudio.net/archives/8004.html)
 
