@@ -391,3 +391,29 @@ texmf-local:
     texmf:
         TEXMFHOME 个人宏, 等等.
 ```
+
+## 章节重编号
+
+[latex排版时, 如何使每个part中的section分别重新编号?](https://www.zhihu.com/question/531891867)
+
+在 `\section{xx}` 前一行加入下述语句:
+
+```latex
+\setcounter{section}{0} % 对 section 重编号
+\setcounter{chapter}{0} %类似地, 对 chapter 重编号
+```
+
+## 如何去掉章节与公式编号关联
+
+[如何去掉章节与公式编号关联](https://www.latexstudio.net/archives/2111.html)
+
+熟悉TeX的用户自然会找到book基础类里面的重置编号的命令, `\@addtoreset {equation}{chapter}`,
+对于初级用户各种方式修改都比较繁琐, 推荐大家用一个 `chngcntr` 包解决这一问题.
+
+```latex
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter} % 解除关联
+\counterwithin{equation}{chapter}  % 设置新的关联
+```
+
+简单的一个命令即可解除编号关联了.

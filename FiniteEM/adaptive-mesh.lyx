@@ -95,6 +95,689 @@ Yang
 \end_layout
 
 \begin_layout Chapter
+后验误差分析R.Verfurth
+\end_layout
+
+\begin_layout Standard
+3个不同的 a posterior error estimators for elliptic PDEs.
+ 基于 PDE 的 strong form 的 local residuals，on Neumann 边界条件的local problem 的解，on
+ Dirichelt 边界条件的local problem 的解；证明了三个方法是等价的，并且产生 true error 的 global upper
+ and local lower bounds。因此基于这些 estimators 的 adaptive mesh–refinement 技术可以探测到
+ 局部解的 singularities，从而适当的加密 奇点附近的网格。使用一些数值例子证明了 误差估计子 和网格细化技巧 的 efficiency
+ 。
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Standard
+数值近似的整体 accuracy 受到 局部 singularities 的劣化，源于 re-entrant corners（凹角），interior
+ or boundary layers, or shock–like fronts。An obvious remedy is to refine
+ the discretization near the critical regions，i.e.
+ to place more grid–points where the solution is less regular.
+ 问题变成，如何甄别这些区域，如何在 refineed 和 unrefined 区域间取得 good balance，从而整体的 accuracy
+ is optimal。
+\end_layout
+
+\begin_layout Standard
+另一个相关问题是 获取数值解的可靠 精度估计。FEM or finite–difference 方法的先验分析（a priori）通常不够，给出的是
+ asymptotic 误差行为，依赖于假设接的 regularity，在奇点存在的时候不满足。
+\end_layout
+
+\begin_layout Standard
+a posteriori error estimate 的计算应该比计算数值解廉价。此外，误差子应该是 local的，在用户给出的范数下，生成可靠的
+ upper 和 lower bounds。global upper bounds 足以给出满足规定的 tolerance 的数值解；local
+ lower bounds 用于保证 grid 被适当 refine，而不是过度 refine，以使用最少的 grid–points。为了此目标，a
+ posteriori 误差子如果只提供和 标准的a priori 相同的渐近行为是不够的。
+\end_layout
+
+\begin_layout Standard
+下面提供了三种 a posterior 误差子，基于 suitable local residuals 的计算，分别基于 the solution
+ of suitable local Neumann–type preoblems, the solution of suitable local
+ Dirichlet–type problem。证明了：up to 高阶项和常数（与网格尺寸无关），所有误差子等价，生成 global upper
+ and local bounds for the true error。upper bounds 本质上依赖于离散化的 consistency
+ 和 stability，以及分部积分。lower bounds 的估计的核心是小心选择 test–functions。我们使用的误差子和文件[5-9]中给出的
+不同。它们包含local projections of the data, 必须求解的局部问题的size 略大 when using a linear
+ finite-element discretization.
+ 使用 local projections of the data 结合 exact integration, however, 通常等价于使用exact
+ data 结合数值积分法则（quadrature rule）。
+\end_layout
+
+\begin_layout Standard
+为简化，使用简单模型：二维 Poisson 方程的 conforming FEM，with Dirichlet–Neumann 边界条件。误差子和对应的结果，可
+以推广到其他离散，例如 nonconforming FEM or Petrov–Galerkin 方法，或者更复杂的问题，例如 2– or 3–
+ 维 Navier–Stokes or elasticity 方程。或者在半导体装置模拟中使用的方程。后面简单评论。
+\end_layout
+
+\begin_layout Standard
+且不说 a posteriori 误差分析，自适应网格细化流程一般是以下结构：
+\end_layout
+
+\begin_layout Enumerate
+构建初始糙网格（coarse mesh 
+\begin_inset Formula $\mathscr{T}_{0}$
+\end_inset
+
+ ），良好表征模型即可，令
+\begin_inset Formula $k:=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+求解离散问题on 
+\begin_inset Formula $\mathscr{T}_{k}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+对于
+\begin_inset Formula $\mathscr{T}_{k}$
+\end_inset
+
+上的单元
+\begin_inset Formula $T$
+\end_inset
+
+，计算后验误差。
+\end_layout
+
+\begin_layout Enumerate
+如果计算的 global error 足够小，则 stop。否则，找出需要 refine 的单元，构建下一张网格 
+\begin_inset Formula $\mathscr{T}_{k+1}$
+\end_inset
+
+。令
+\begin_inset Formula $k=k+1$
+\end_inset
+
+，回到第二步。
+\end_layout
+
+\begin_layout Standard
+算法最适合稳态问题。对于 transient 计算，需要做适当修改（1–3,11,12,15,21）
+\end_layout
+
+\begin_layout Standard
+下面描述步骤四中的策略，即选择要细化的单元，建立下一张网格。更详细的可以参考 ref25。数值例子展示了 策略和误差子 的效率。
+\end_layout
+
+\begin_layout Subsection
+模型问题及其离散化
+\end_layout
+
+\begin_layout Standard
+Poission equation with mixed Dirichlet–Neumann 边界条件：
+\begin_inset Formula 
+\begin{equation}
+-\Delta u=f,\;\text{in}\,\Omega,\quad u=g_{D},\;\text{on}\;\Gamma_{D},\quad\frac{\partial u}{\partial n}=g_{N},\;\text{on}\;\Gamma_{N}\label{eq:r2.1}
+\end{equation}
+
+\end_inset
+
+in a connected, bounded, polygonal domain 
+\begin_inset Formula $\Omega\subset\sbb R^{2}$
+\end_inset
+
+ with boundary 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{D}\cup\Gamma_{N}=\Gamma$
+\end_inset
+
+，
+\begin_inset Formula $\Gamma_{D}\cap\Gamma_{N}=\emptyset$
+\end_inset
+
+，
+\begin_inset Formula $\Gamma_{D}\neq\emptyset$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Omega$
+\end_inset
+
+上的任意子集
+\begin_inset Formula $\omega$
+\end_inset
+
+，具有 Lipschitz 边界
+\begin_inset Formula $\gamma$
+\end_inset
+
+；记 
+\begin_inset Formula $L^{2}(\omega)$
+\end_inset
+
+，
+\begin_inset Formula $H^{k}(\omega)$
+\end_inset
+
+和
+\begin_inset Formula $L^{2}(\gamma)$
+\end_inset
+
+，
+\begin_inset Formula $k\ge1$
+\end_inset
+
+分别是标准的 Lebesgue 和 Sobolev 空间，装备了 范数 
+\begin_inset Formula 
+\[
+\left\Vert \cdot\right\Vert _{0,\omega}:=\left\Vert \cdot\right\Vert _{L^{2}(\omega)},\quad\left\Vert \cdot\right\Vert _{k,\omega}:=\left\Vert \cdot\right\Vert _{H^{k}(\omega)},\quad\left\Vert \cdot\right\Vert _{0,\gamma}:=\left\Vert \cdot\right\Vert _{L^{2}(\gamma)},
+\]
+
+\end_inset
+
+
+\begin_inset Formula $L^{2}(\omega)$
+\end_inset
+
+ 和
+\begin_inset Formula $L^{2}(\gamma)$
+\end_inset
+
+中的内积分别记作 
+\begin_inset Formula $(\cdot,\cdot)_{\omega}$
+\end_inset
+
+ 和
+\begin_inset Formula $(\cdot,\cdot)_{\gamma}$
+\end_inset
+
+。令
+\begin_inset Formula 
+\[
+V:=\left\{ u\in H^{1}(\Omega):u=0\quad\text{on}\quad\Gamma_{D}\right\} .
+\]
+
+\end_inset
+
+则问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的标准弱形式是：找出 
+\begin_inset Formula $u\in g_{D}+V$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{equation}
+\left(\nabla u,\nabla v\right)_{\Omega}=(f,v)_{\Omega}+(g_{N},v)_{\Gamma_{N}},\quad\forall v\in V.\label{eq:r2.3}
+\end{equation}
+
+\end_inset
+
+
+\series bold
+It is well known 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 具有唯一解。
+\end_layout
+
+\begin_layout Standard
+Denote by 
+\begin_inset Formula $\mathscr{T}$
+\end_inset
+
+ a family of triangulations of 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ which satisfies the following conditions.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathscr{T}$
+\end_inset
+
+ 中的任意两个三角形最少有一条公共边（edge）或者一个公共顶点（vertex）。
+\end_layout
+
+\begin_layout Enumerate
+三角化是 shape regular 的, i.e.
+ for all triangles the ratio of the radius of the smallest circumscribed
+ ball to that of the larges inscribed ball is bounded by 
+\series bold
+a constant
+\series default
+ which does note depend on the triangle and on 
+\begin_inset Formula $h$
+\end_inset
+
+。
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:rcd2"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+条件（2）等同于 所有三角形的最小角都远离零。
+\end_layout
+
+\begin_layout Standard
+令 
+\begin_inset Formula $P_{m,d}$
+\end_inset
+
+，
+\begin_inset Formula $m\ge1$
+\end_inset
+
+，
+\begin_inset Formula $d\ge1$
+\end_inset
+
+ 标记 degree 
+\begin_inset Formula $\le m$
+\end_inset
+
+，
+\begin_inset Formula $d$
+\end_inset
+
+个变量的多项式的空间，以及
+\begin_inset Formula 
+\begin{equation}
+V_{h}:=\left\{ u\in C(\overline{\Omega}):u|_{T}\in P_{k,2},\quad\forall T\in\mathscr{T}_{h},\;u=0\;\text{on}\;\Gamma_{D}\right\} \label{eq:r2.4}
+\end{equation}
+
+\end_inset
+
+即
+\begin_inset Formula $u$
+\end_inset
+
+是闭包
+\begin_inset Formula $\overline{\Omega}$
+\end_inset
+
+上的连续函数；在三角单元内是
+\begin_inset Formula $2$
+\end_inset
+
+个变量的多项式；在边界
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上为零。然后考虑问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的下列有限元离散化：寻找 
+\begin_inset Formula $u_{h}\in g_{D}+V_{h}$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{equation}
+\left(\nabla{\color{blue}u_{h}},\nabla v_{h}\right)_{\Omega}=(f,v_{h})_{\Omega}+(g_{N},v_{h})_{\Gamma_{N}},\quad\forall v_{h}\in V.\label{eq:r2.5}
+\end{equation}
+
+\end_inset
+
+易得
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+具有唯一解。在实际计算中，通常会用合适的有限元近似
+\begin_inset Formula $g_{D,h}$
+\end_inset
+
+代替
+\begin_inset Formula $g_{D}$
+\end_inset
+
+，会引入额外的高阶项形如 
+\begin_inset Formula $\left\Vert g_{D}-g_{D,h}\right\Vert _{0,\Gamma_{D}}$
+\end_inset
+
+，in the estimates of Propositions 4.2–4.4 below。
+\end_layout
+
+\begin_layout Standard
+下面始终用 
+\begin_inset Formula $u$
+\end_inset
+
+ 和 
+\begin_inset Formula $u_{h}$
+\end_inset
+
+ 代替问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的唯一解。此外，用
+\begin_inset Formula $c,c_{1},c_{2},\cdots$
+\end_inset
+
+表示各种常数，它们只依赖于
+\begin_inset Formula $\Omega$
+\end_inset
+
+和 条件2中的网格常数，见
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "enu:rcd2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+The a posteriori error estimators
+\end_layout
+
+\begin_layout Standard
+先引入一些记号。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\forall T\in\mathscr{T}_{h}$
+\end_inset
+
+ 我们使用 
+\begin_inset Formula $\mathscr{E}(T)$
+\end_inset
+
+ 和 
+\begin_inset Formula $\mathscr{V}(T)$
+\end_inset
+
+ 分别表示
+\begin_inset Formula $T$
+\end_inset
+
+的 edges 和 vertices 的集合，令
+\begin_inset Formula 
+\[
+\mathscr{E}_{h}:=\cup_{T\in\mathscr{T}_{h}}\mathscr{E}(T),\quad\mathscr{V}_{h}:=\cup_{T\in\mathscr{T}_{h}}\mathscr{V}(T)
+\]
+
+\end_inset
+
+分别表示所有 edges 和 vertices 的集合。我们将 
+\begin_inset Formula $\mathscr{E}_{h}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\mathscr{V}_{h}$
+\end_inset
+
+ 分解成
+\begin_inset Formula 
+\[
+\mathscr{E}_{h}=\mathscr{E}_{h,\Omega}\cup\mathscr{E}_{h,D}\cup\mathscr{E}_{h,N},\quad\mathscr{V}_{h}=\mathscr{V}_{h,\Omega}\cup\mathscr{V}_{h,D}\cup\mathscr{V}_{h,N},
+\]
+
+\end_inset
+
+即 Dirichelt /Neumann 边，Dirichelt/Neumann 顶点，
+\begin_inset Formula 
+\begin{align*}
+ & \mathscr{E}_{h,D}:=\left\{ E\in\mathscr{E}_{h}:\,E\subset\Gamma_{D}\right\} ,\quad\mathscr{E}_{h,N}:=\left\{ E\in\mathscr{E}_{h}:\,E\subset\Gamma_{N}\right\} ,\\
+ & \mathscr{V}_{h,D}:=\left\{ x\in\mathscr{V}_{h}:\,x\subset\Gamma_{D}\right\} ,\quad\mathscr{V}_{h,N}:=\left\{ x\in\mathscr{V}_{h}:\,x\subset\Gamma_{N}\right\} .
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于 
+\begin_inset Formula $T\in\mathscr{T}_{h}$
+\end_inset
+
+ 和 
+\begin_inset Formula $E\in\mathscr{E}_{h}$
+\end_inset
+
+，我们使用 
+\begin_inset Formula $h_{T}$
+\end_inset
+
+和
+\begin_inset Formula $h_{E}$
+\end_inset
+
+标记它们的 diameter 和 length。Sect.2 中的条件2 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "enu:rcd2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 表明 所有 ratio 
+\begin_inset Formula $h_{T}/h_{E}$
+\end_inset
+
+ for 
+\begin_inset Formula $T\in\mathscr{T}_{h}$
+\end_inset
+
+，
+\begin_inset Formula $E\in\mathscr{E}(T)$
+\end_inset
+
+；and 
+\begin_inset Formula $h_{T}/h_{T'}$
+\end_inset
+
+ for 
+\begin_inset Formula $T,T'\in\mathscr{T}_{h}$
+\end_inset
+
+，
+\begin_inset Formula $\mathscr{V}(T)\cap\mathscr{V}(T')\neq0$
+\end_inset
+
+（邻接三角形） 具有上下限常数，且只依赖于条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "enu:rcd2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $T\in\mathscr{T}_{h}$
+\end_inset
+
+，
+\begin_inset Formula $E\in\mathscr{E}_{h}$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in\mathscr{V}_{h}$
+\end_inset
+
+ let
+\begin_inset Formula 
+\[
+\omega_{T}:=\cup_{\mathscr{E}(T)\cap\mathscr{E}(T')\neq0}T',\quad\omega_{E}:=\cup_{E\in\mathscr{E}(T')}T',\quad\omega_{x}:=\cup_{x\in\mathscr{V}(T')}T'
+\]
+
+\end_inset
+
+即三角形
+\begin_inset Formula $T$
+\end_inset
+
+的 
+\series bold
+边邻居
+\series default
+，edge 
+\begin_inset Formula $E$
+\end_inset
+
+ 的 
+\series bold
+父三角形
+\series default
+， 顶点
+\begin_inset Formula $x$
+\end_inset
+
+的 
+\series bold
+父三角形
+\series default
+。见fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:fig1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/aposterror-1.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Domains 
+\begin_inset Formula $\omega_{T}$
+\end_inset
+
+，
+\begin_inset Formula $\omega_{E}$
+\end_inset
+
+和
+\begin_inset Formula $\omega_{x}$
+\end_inset
+
+。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fig1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+并令
+\begin_inset Formula 
+\begin{align*}
+V_{T} & :=\Big\{\phi\in C(T):\;\phi\in\Pi_{\max(k+1,3),2},\phi|_{E}\in\Pi_{k+1,1},\forall E\in\mathscr{E}(E),\\
+ & \qquad\qquad\phi(x)=0,\forall x\in\mathscr{V}(T),\phi|_{E}=0,\forall E\in\mathscr{E}(T)\cap\mathscr{E}_{h,D}\Big\}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 Comsol 自适应
 \end_layout
 
