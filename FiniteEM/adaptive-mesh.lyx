@@ -101,7 +101,7 @@ Yang
 \begin_layout Standard
 3个不同的 a posterior error estimators for elliptic PDEs.
  基于 PDE 的 strong form 的 local residuals，on Neumann 边界条件的local problem 的解，on
- Dirichelt 边界条件的local problem 的解；证明了三个方法是等价的，并且产生 true error 的 global upper
+ Dirichlet 边界条件的local problem 的解；证明了三个方法是等价的，并且产生 true error 的 global upper
  and local lower bounds。因此基于这些 estimators 的 adaptive mesh–refinement 技术可以探测到
  局部解的 singularities，从而适当的加密 奇点附近的网格。使用一些数值例子证明了 误差估计子 和网格细化技巧 的 efficiency
  。
@@ -405,6 +405,13 @@ name "enu:rcd2"
 \end_inset
 
 个变量的多项式的空间，以及
+\begin_inset CommandInset label
+LatexCommand label
+name "rpoly"
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 V_{h}:=\left\{ u\in C(\overline{\Omega}):u|_{T}\in P_{k,2},\quad\forall T\in\mathscr{T}_{h},\;u=0\;\text{on}\;\Gamma_{D}\right\} \label{eq:r2.4}
@@ -573,7 +580,7 @@ The a posteriori error estimators
 
 \end_inset
 
-即 Dirichelt /Neumann 边，Dirichelt/Neumann 顶点，
+即 内部边/Dirichlet边/Neumann 边，内部顶点/Dirichlet顶点/Neumann顶点，
 \begin_inset Formula 
 \begin{align*}
  & \mathscr{E}_{h,D}:=\left\{ E\in\mathscr{E}_{h}:\,E\subset\Gamma_{D}\right\} ,\quad\mathscr{E}_{h,N}:=\left\{ E\in\mathscr{E}_{h}:\,E\subset\Gamma_{N}\right\} ,\\
@@ -697,7 +704,7 @@ For
 。见fig.
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "fig:fig1"
+reference "fig:rfig1"
 plural "false"
 caps "false"
 noprefix "false"
@@ -716,7 +723,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename inset/aposterror-1.png
+	filename inset/R.Verfurth-1.png
 	scale 70
 
 \end_inset
@@ -743,7 +750,7 @@ Domains
 。
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:fig1"
+name "fig:rfig1"
 
 \end_inset
 
@@ -767,10 +774,932 @@ name "fig:fig1"
 \begin_layout Standard
 并令
 \begin_inset Formula 
+\begin{align}
+{\color{blue}V_{T}} & :=\Big\{\phi\in C\left(T\right):\;\phi\in\Pi_{\max(k+1,3),2},\quad\phi|_{E}\in\Pi_{k+1,1},\forall E\in\mathscr{E}(E),\nonumber \\
+ & \qquad\phi(x)=0,\forall x\in\mathscr{V}(T),\quad\phi|_{E}=0,\forall E\in\mathscr{E}(T)\cap\mathscr{E}_{h,D}\Big\}\label{eq:r3.1}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula $V_{T}$
+\end_inset
+
+ 是三角形
+\begin_inset Formula $T$
+\end_inset
+
+上的连续函数空间，
+\begin_inset Formula $\phi$
+\end_inset
+
+为
+\begin_inset Formula $2$
+\end_inset
+
+–因变量 多项式，在顶点上为零，在 Dirichlet 边上为零。
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}V_{x}}:=\left\{ \phi\in C\left(\overline{\omega}_{x}\right):\;\phi|_{T'}\in V_{T'},\quad\forall T'\subset\omega_{x},\quad\phi=0\;\text{on}\;\partial\omega_{x}\backslash\Gamma_{N}\right\} .\label{eq:r3.2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Pi\equiv P$
+\end_inset
+
+，see
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rpoly"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\begin_inset Formula $V_{x}$
+\end_inset
+
+ 是顶点
+\begin_inset Formula $x$
+\end_inset
+
+ 中心cell 上的连续函数空间，在 non–Neumann 边上为零。
+\end_layout
+
+\begin_layout Standard
+此外，定义截断函数 
+\begin_inset Formula $\psi_{T}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\psi_{E}$
+\end_inset
+
+，由以下性质唯一定义
+\begin_inset Formula 
+\begin{equation}
+\supp\psi_{T}\subset T,\quad\psi_{T}\in\Pi_{3,2},\quad\psi_{T}\ge0,\quad\max_{x\in T}\psi_{T}=1,\label{eq:r3.3}
+\end{equation}
+
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{equation}
+\supp\psi_{E}\subset\omega_{E},\quad\psi_{E}|_{T'}\in\Pi_{2,2},\;\forall T'\subset\omega_{E},\quad\psi_{E}\ge0,\quad\max_{x\in\omega_{E}}\psi_{E}=1.\label{eq:r3.4}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+给定 
+\begin_inset Formula $E\in\mathscr{E}_{h,\Omega}$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi\in L^{2}(\omega_{E})$
+\end_inset
+
+ with 
+\begin_inset Formula $\phi|_{T'}\in C(T')$
+\end_inset
+
+，
+\begin_inset Formula $\forall T'\subset\omega_{E}$
+\end_inset
+
+，标记 
+\begin_inset Formula $[\phi]_{E}$
+\end_inset
+
+ 为 the jump of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ across 
+\begin_inset Formula $E$
+\end_inset
+
+ in an arbitrary, but fixed direction.
+ 令 
+\series bold
+边界残差
+\series default
+
+\begin_inset Formula 
+\[
+R_{E}(u_{h}):=\begin{cases}
+-\left[\frac{\partial u_{h}}{\partial n}\right]_{E}, & \forall E\in\mathscr{E}_{h,\Omega},\;\text{内边}\\
+\Pi_{E}\,g_{N}-\frac{\partial u_{h}}{\partial n}, & \forall E\in\mathscr{E}_{h,N},\;\text{Neumann边}\\
+0, & \forall E\in\mathscr{E}_{h,D},\quad\text{Dirichlet边}
+\end{cases}
+\]
+
+\end_inset
+
+and 
+\series bold
+开集残差
+\series default
+
+\begin_inset Formula 
+\[
+R_{T}(u_{h}):=\Pi_{T}f+\Delta u_{h},\quad\forall T\in\mathscr{T}_{h},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Pi_{E}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Pi_{T}$
+\end_inset
+
+ are the 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ projectors of 
+\begin_inset Formula $L^{2}(\Gamma_{N})$
+\end_inset
+
+ and 
+\begin_inset Formula $L^{2}(\Omega)$
+\end_inset
+
+ onto the space of piecewise constant functions with respect to 
+\begin_inset Formula $\mathscr{E}_{h,N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathscr{T}_{h}$
+\end_inset
+
+。 Recall
+\begin_inset Formula 
+\[
+-\Delta u=f,\;\text{in}\,\Omega,\quad u=g_{D},\;\text{on}\;\Gamma_{D},\quad\frac{\partial u}{\partial n}=g_{N},\;\text{on}\;\Gamma_{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+第一个误差子
+\series default
+ 
+\begin_inset Formula $\eta_{T,R}$
+\end_inset
+
+ 是 
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+ 和 
+\begin_inset Formula $R_{T}(u_{h})$
+\end_inset
+
+ 的加权和（weighted combination）
+\begin_inset Formula 
+\begin{equation}
+\eta_{T,R}:=\left\{ h_{T}^{2}\,\left\Vert R_{T}(u_{h})\right\Vert _{0,T}^{2}+\sum_{E\in\mathscr{E}(T)\backslash\mathscr{E}_{h,D}}h_{E}\,\left\Vert R_{E}(u_{h})\right\Vert _{0,E}^{2}\right\} ^{1/2},\quad\forall T\in\mathscr{T}_{h}.\label{eq:r3.7}
+\end{equation}
+
+\end_inset
+
+即 weighted 开集误差 + 边界误差（除掉Dirichlet边）。ref[6] 中首次使用此误差子分析一维中的问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。在 ref[22-25] 中推广到了 Navier–Stokes 方程。
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+第二个误差子
+\series default
+ 基于 solution of local Neumann problems。对任意
+\begin_inset Formula $T\in\mathscr{T}_{h}$
+\end_inset
+
+，写作
+\begin_inset Formula 
+\[
+\eta_{T,N}:=\left\Vert \nabla u_{T,N}\right\Vert _{0,T},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $u_{T,N}\in V_{T}$
+\end_inset
+
+是唯一解 of
+\begin_inset Formula 
+\begin{equation}
+(\nabla u_{T,N},\;\nabla v_{T})_{T}=\left(R_{T}(u_{h}),\;v_{T}\right)_{T}+\sum_{E\in\mathscr{E}(T)\backslash\mathscr{E}_{h,D}}\left(R_{E}(u_{h}),v_{T}\right)_{E},\quad\forall v_{T}\in V_{T}.\label{eq:r3.9}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $V_{T}$
+\end_inset
+
+ see 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。Problem 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 是下列 Poission 方程 with mixed Neumann–Dirichlet 边界的离散版本：
+\begin_inset Formula 
 \begin{align*}
-V_{T} & :=\Big\{\phi\in C(T):\;\phi\in\Pi_{\max(k+1,3),2},\phi|_{E}\in\Pi_{k+1,1},\forall E\in\mathscr{E}(E),\\
- & \qquad\qquad\phi(x)=0,\forall x\in\mathscr{V}(T),\phi|_{E}=0,\forall E\in\mathscr{E}(T)\cap\mathscr{E}_{h,D}\Big\}
+ & -\Delta\phi=R_{T}(u_{h}),\quad\text{in}\;T\\
+ & \psi=0,\quad\text{on}\;\partial T\cap\Gamma_{D},\;\text{Dirichlet边}\\
+ & \frac{\partial\phi}{\partial n}=R_{E}(u_{h}),\quad\text{on}\;\partial T\backslash\Gamma_{D}.\;\text{Neumann边}
 \end{align*}
+
+\end_inset
+
+它具有唯一解 since the function in 
+\begin_inset Formula $V_{T}$
+\end_inset
+
+ vanish at the vertices of 
+\begin_inset Formula $T$
+\end_inset
+
+。ref[7] 首次分析了误差子 
+\begin_inset Formula $\eta_{T,N}$
+\end_inset
+
+，然后在 ref[8,9,22–25]中推广到 Navier–Stokes 方程。
+\end_layout
+
+\begin_layout Standard
+第三个误差子基于 solution of local Dirichlet problems。对于任意 
+\begin_inset Formula $x\in\mathscr{V}_{h,\Omega}\cup\mathscr{V}_{h,N}$
+\end_inset
+
+，写作
+\begin_inset Formula 
+\begin{equation}
+\eta_{x,D}:=\left\Vert \nabla(u_{x,D}-u_{h})\right\Vert _{0,\omega_{x}},\label{eq:r3.10}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $u_{x,D}\in u_{h}+V_{x}$
+\end_inset
+
+是下面方程的唯一解
+\begin_inset Formula 
+\begin{equation}
+\left(\nabla u_{x,D},\nabla v_{x}\right)_{\omega_{x}}=\left(\Pi_{T}f,v_{x}\right)_{\omega_{x}}+\left(\Pi_{E}\,g_{N},v_{x}\right)_{\partial\omega_{x}\cap\Gamma_{N}},\quad\forall v_{x}\in V_{x}.\label{eq:r3.11}
+\end{equation}
+
+\end_inset
+
+问题
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是下列 Poission 方程 with mixed Neumann–Dirichlet 边界的离散版本
+\begin_inset Formula 
+\begin{align*}
+-\Delta\psi & =\Pi_{T}f,\quad\text{in}\;\omega_{x},\\
+\psi & =u_{h},\quad\text{on}\;\partial\omega_{x}\backslash\Gamma_{N},\;\text{Dirichlet边}\\
+\frac{\partial\psi}{\partial n} & =\Pi_{E}\,g_{N},\quad\partial\omega_{x}\cap\Gamma_{N}.\;\text{Neumann边}
+\end{align*}
+
+\end_inset
+
+误差子
+\begin_inset Formula $\eta_{x,D}$
+\end_inset
+
+在 ref[5] 中引入。
+\end_layout
+
+\begin_layout Standard
+显然，计算 
+\begin_inset Formula $\eta_{T,R}$
+\end_inset
+
+ 的代价低于 
+\begin_inset Formula $\eta_{T,N}$
+\end_inset
+
+，后者又低于
+\begin_inset Formula $\eta_{x,D}$
+\end_inset
+
+。接下来remarks on the principal structure of the error estimators described
+ above，以及它们在更复杂问题中的推广。
+\end_layout
+
+\begin_layout Enumerate
+对于 低阶有限元方法，the jump term 
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+ are crucial。例如，考虑 harmonic 函数，i.e.
+ 问题
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $f=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{D}=\Gamma$
+\end_inset
+
+， and 用连续，分片线性函数近似它 i.e.
+ 
+\begin_inset Formula $k=1$
+\end_inset
+
+。则 
+\begin_inset Formula $R_{T}(u_{h})=0$
+\end_inset
+
+，
+\begin_inset Formula $\forall T\in\mathscr{T}_{h}$
+\end_inset
+
+，
+\begin_inset Formula $u_{h}\in V_{h}$
+\end_inset
+
+ 但是
+\begin_inset Formula $u_{h}$
+\end_inset
+
+当然不是 harmonic，因为它不在 
+\begin_inset Formula $H^{2}(\Omega)$
+\end_inset
+
+ 中。The jumps of the normal derivatives, i.e., 
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+，measure the discrepancy between 
+\begin_inset Formula $H^{1}(\Omega)$
+\end_inset
+
+ 和 
+\begin_inset Formula $H^{2}(\Omega)$
+\end_inset
+
+。下面的
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r4.22"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+证明了 
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+ 也隐含在 
+\begin_inset Formula $\eta_{x,D}$
+\end_inset
+
+中。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $R_{T}(u_{h})$
+\end_inset
+
+ is the residual on 
+\begin_inset Formula $T$
+\end_inset
+
+ of 
+\begin_inset Formula $u_{h}$
+\end_inset
+
+ with respect to the strong form of the PDE。
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+ is the jump across 
+\begin_inset Formula $E$
+\end_inset
+
+ of 
+\series bold
+that boundary operator
+\series default
+ applied to 
+\begin_inset Formula $u_{h}$
+\end_inset
+
+ that is canonically associated with the strong and the weak form of the
+ differential equation。因此，
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+ 只受微分算符 principal 部分的影响。如果在
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r2.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+加上一个 convection term 
+\begin_inset Formula $b\nabla u$
+\end_inset
+
+ ，
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+保持不变，然而与此同时，
+\begin_inset Formula $R_{T}(u_{h})$
+\end_inset
+
+ 上必须添加一项
+\begin_inset Formula $b\nabla u_{h}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+问题
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r3.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+是问题
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:r2.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的 local analogues，using higher–order elements。然而对于非线性问题，可以linearize the
+ local problems around the computed numerical solution 
+\begin_inset Formula $u_{h}$
+\end_inset
+
+。例如对于 Navier–stokes 方程，求解 local Stokes 问题就足够了。In the local problems one
+ can similarly neglect lower–order terms of the differential operator，provided
+ the local mesh–size is small enough.
+ Thus, one can, e.g., neglect the convection 
+\begin_inset Formula $b\nabla u$
+\end_inset
+
+ if the local Peclet number 
+\begin_inset Formula $h_{T}\left\Vert b\right\Vert _{L^{\infty}(T)}$
+\end_inset
+
+ is small enough。
+\end_layout
+
+\begin_layout Enumerate
+For the model problem it is quite easy to check that 问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are well–posed（适定的）。对于其他问题例如 Stokes 方程，则应该小心的选取 the finite–element spaces
+ 
+\begin_inset Formula $V_{T}$
+\end_inset
+
+和 
+\begin_inset Formula $V_{x}$
+\end_inset
+
+ in order to obtain well–posed local problems （ref[22,25]）。
+\end_layout
+
+\begin_layout Enumerate
+命题4.2–4.4 中对 lower bounds 的证明依赖于事实 
+\begin_inset Formula $R_{T}(u_{h})$
+\end_inset
+
+ 和 
+\begin_inset Formula $R_{E}(u_{h})$
+\end_inset
+
+ 属于有限维空间。因此需要使用合适的 piecewise polynomial 函数对 
+\begin_inset Formula $f$
+\end_inset
+
+ 和 
+\begin_inset Formula $g_{N}$
+\end_inset
+
+作近似。然而使用 piecewise constant 近似 或 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ projections 不是必要的，论文中使用近似只是为了方便。 ref[5–7] 中没有使用data 
+\begin_inset Formula $f$
+\end_inset
+
+ 和 
+\begin_inset Formula $g_{N}$
+\end_inset
+
+的近似。然而在实际计算中，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r3.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中出现的项是使用数值积分方法规则计算的。在许多情况下这等价于 使用 a finite–element approximation of the
+ data in combination with exact integration。
+\end_layout
+
+\begin_layout Section
+error estimators的上下限
+\end_layout
+
+\begin_layout Standard
+首先构建 extension 算符 
+\begin_inset Formula $P:C(E)\to C(T)$
+\end_inset
+
+，
+\begin_inset Formula $T\in\mathscr{T}_{h}$
+\end_inset
+
+，
+\begin_inset Formula $E\in\mathscr{E}(T)$
+\end_inset
+
+， which maps 
+\begin_inset Formula $P_{m,1},m\in\sbb N$
+\end_inset
+
+ into 
+\begin_inset Formula $P_{m,2}$
+\end_inset
+
+。为此，令
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+是 reference triangle with 顶点 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+，
+\begin_inset Formula $(1,0)$
+\end_inset
+
+ 和 
+\begin_inset Formula $(0,1)$
+\end_inset
+
+，
+\begin_inset Formula $\hat{E}$
+\end_inset
+
+是edge 
+\begin_inset Formula $[0,1]\times\{0\}$
+\end_inset
+
+of 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+。标记 
+\begin_inset Formula $F_{T}:\sbb R^{2}\to\sbb R^{2}$
+\end_inset
+
+ 是 orientation–preserving affine transformation which maps 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ onto 
+\begin_inset Formula $T$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{E}$
+\end_inset
+
+ onto 
+\begin_inset Formula $E$
+\end_inset
+
+。定义 extension算符
+\begin_inset Formula $\hat{P}:C(\hat{E})\to C(\hat{T})$
+\end_inset
+
+ by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{P}\,\hat{\sigma}(x,y)=\hat{\sigma}(x),\quad\forall\hat{\sigma}\in C(\hat{E}),\quad(x,y)\in\hat{T}.\label{eq:r4.1}
+\end{equation}
+
+\end_inset
+
+则
+\begin_inset Formula $P$
+\end_inset
+
+写成
+\begin_inset Formula 
+\[
+P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\quad\forall\sigma\in C(E).
+\]
+
+\end_inset
+
+注意
+\begin_inset Formula $P\sigma$
+\end_inset
+
+在平行于
+\begin_inset Formula $E'$
+\end_inset
+
+的线上是常数，
+\begin_inset Formula $E'$
+\end_inset
+
+是
+\begin_inset Formula $T$
+\end_inset
+
+的edg，
+\begin_inset Formula $T$
+\end_inset
+
+的right端点是 
+\begin_inset Formula $E'$
+\end_inset
+
+的左端点。这里orientation of edges is induced by the exterior normal of 
+\begin_inset Formula $T$
+\end_inset
+
+（see Fig.2）。
+\end_layout
+
+\begin_layout Remark
+如果 reference triangle 坐标记作 
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+，实际坐标记作
+\begin_inset Formula $x$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\hat{x}\stackrel{F_{T}}{\rightarrow}x,\quad\hat{x}\stackrel{F_{T}^{-1}}{\rightarrow}x,
+\]
+
+\end_inset
+
+在ref三角中，
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+ 经过坐标变换，写成
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+的函数，
+\begin_inset Formula 
+\[
+\sigma\circ F_{T}(\hat{x})\Rightarrow\sigma\left(F_{T}(\hat{x})\right)
+\]
+
+\end_inset
+
+然后 
+\begin_inset Formula $\hat{P}\left(\sigma\circ F_{T}\right)$
+\end_inset
+
+ 整体可以作为 
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+的函数。
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+的作用是从
+\begin_inset Formula $(\hat{x},\hat{y})$
+\end_inset
+
+中只取出
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\hat{P}\left(\sigma\circ F_{T}\right)\circ\hat{x}\Rightarrow\sigma\left(F_{T}(\hat{x},\hat{y})\right)\;\text{提取出}\hat{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/R.Verfurth-2.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Level lines of 
+\begin_inset Formula $P\sigma$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rfig2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $m\in\sbb N$
+\end_inset
+
+。存在常数 
+\begin_inset Formula $c_{1},\cdots,c_{4}$
+\end_inset
+
+只依赖于
+\begin_inset Formula $m$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{equation}
+sss\label{eq:r4.22}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\circledR
+\]
 
 \end_inset
 
