@@ -90,3 +90,38 @@ Copy-Item -Path C:\temp\tree -Filter *.txt -Recurse -Container:$true
 ## 使用 ffmpeg 合并目录中的 mp4 文件
 
 [合并mp4文件](my-merge-mp4.ps1)
+
+### pwsh 加载 cmd 脚本中的环境变量
+
+[Running cmd from powershell](https://stackoverflow.com/questions/41399692/running-a-build-script-after-calling-vcvarsall-bat-from-powershell)
+[Windows IT Pro: Take Charge of Environment Variables in PowerShell](http://windowsitpro.com/powershell/take-charge-environment-variables-powershell)
+
+问题是, 当你运行 `cmd.exe` 来运行批处理文件时,
+变量会在 `cmd.exe` 的实例中设置, 但在该cmd进程终止后就会消失.
+要解决这个问题, 可以使用本文中的 `Invoke-CmdScript` 函数:
+您可以将此函数添加到 `PowerShell` 配置文件中, 或将其作为脚本文件使用.
+
+```powershell
+# Invokes a Cmd.exe shell script and updates the environment.
+function Invoke-CmdScript {
+    param(
+        [String] $scriptName
+    )
+    $cmdLine = "`"$scriptName`" $args & set"
+    &"$Env:SystemRoot\system32\cmd.exe" /c $cmdLine |
+    select-string '^([^=]*)=(.*)$' | foreach-object {
+        $varName = $_.Matches[0].Groups[1].Value
+        $varValue = $_.Matches[0].Groups[2].Value
+        Set-Item Env:$varName $varValue
+    }
+}
+```
+
+定义好函数后, 就可以运行命令了:
+
+```powershell
+Invoke-CmdScript "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64_x86
+C:\buildscript.cmd --build-options
+```
+
+这篇文章还介绍了几个可以让你轻松保存和恢复环境变量的函数.

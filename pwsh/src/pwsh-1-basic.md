@@ -4,6 +4,16 @@
 
 [系统管理的示例脚本]: https://docs.microsoft.com/zh-cn/powershell/scripting/samples/sample-scripts-for-administration?view=powershell-7.1
 
+## 转义符号
+
+pwsh 使用倒引号 `` ` `` 进行转义,
+在双引号字符串(quote string)中, 双引号也可以使用 连续两个引号表示(`""`)
+
+``` powershell
+" a `" string "
+" a "" string "
+```
+
 ## 使用对象
 
 ### 查看对象结构 (Get-Member)
@@ -59,8 +69,7 @@ Get-CimInstance -Class Win32_LogicalDisk |
 经常使用的参考文档: [Microsoft.PowerShell.Management](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.management/?view=powershell-7)
 本节包含与`PowerShell Microsoft.PowerShell.Management`模块一起安装的`cmdlet`的帮助主题. 管理模块包含`cmdlet`,可帮助您在PowerShell中管理`Windows`.
 
-***
-查看pwsh 版本
+### 查看pwsh 版本
 
 ```powershell
 $PSVersionTable.PSVersion
@@ -75,14 +84,13 @@ $PSVersionTable.PSVersion
 [-<Optional Parameter Name>] <Required Parameter Value> # 可匿名的键值对
 ```
 
-***
 命令说明中,每一段都代表一种可能的语法格式.
 
 命令采用 `-参数 值`的形式,每个参数前面必须有一个`-`.
 `pwsh`是基于`Microsoft .NET`框架的,所以参数值是用它们的`.NET`类型表示的.
 
-***
-参数集合(Parameter Set),语法表中的每一段是一种可能的命令使用形式.如果参数不能放在一起使用,它们会出现在不同的参数集合中(不同的段落中).有些参数可能出现在多个 Parameter Sets 中.
+参数集合(Parameter Set),语法表中的每一段是一种可能的命令使用形式.
+如果参数不能放在一起使用,它们会出现在不同的参数集合中(不同的段落中).有些参数可能出现在多个 Parameter Sets 中.
 
 通过使用的参数名称,你隐式地指明了你想使用的参数集合.
 
