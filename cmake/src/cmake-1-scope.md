@@ -166,3 +166,37 @@ https://cmake.org/pipermail/cmake/2016-May/063400.html
 https://schneide.blog/2016/04/08/modern-cmake-with-target_link_libraries/
 https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
 https://stackoverflow.com/questions/26243169/cmake-target-include-directories-meaning-of-scope
+
+## add_subdirectory
+
+[add_subdirectory](https://cmake.org/cmake/help/latest/command/add_subdirectory.html#add-subdirectory)
+
+如果提供 `EXCLUDE_FROM_ALL` 参数,
+则子目录中的目标默认情况下不会包含在父目录的 `ALL` 目标中,
+也不会包含在 IDE 项目文件中.
+用户必须明确在子目录中构建目标.
+
+这适用于子目录包含项目中有用但不必要的单独部分(如examples)的情况.
+通常情况下, 子目录应包含自己的 `project()` 命令调用,
+以便在子目录中生成完整的构建系统(如 Visual Studio IDE 解决方案文件).
+请注意, 目标之间的依赖关系会取代这种 exclusion.
+如果 parent project 构建的目标依赖于子目录中的目标,
+则 dependee 目标将包含在 parent project 构建系统中, 以满足依赖关系.
+
+## add_library
+
+[add_library](https://cmake.org/cmake/help/latest/command/add_library.html#command:add_library)
+
+```cmake
+add_library(<name> [STATIC | SHARED | MODULE]
+    [EXCLUDE_FROM_ALL]
+    [<source>...])
+```
+
+添加名为 `<name>` 的目标库, 该目标库将根据 命令调用 中列出的 `source` 构建.
+`<name>` 对应 logical target name, 在项目中必须是全局唯一的.
+构建的库的实际文件名根据本地平台的约定(如 `lib<name>.a` 或 `<name>.lib`)构建.
+
+3.1 版新增: `add_library` 的源参数可使用 "生成器表达式", 语法为 `$<...>`.
+有关可用的表达式, 请参阅 cmake-generator-expressions(7) 手册.
+3.11 版新增功能: 如果以后使用 `target_sources()` 添加源文件, 则可省略源文件.
