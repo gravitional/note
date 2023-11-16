@@ -170,27 +170,30 @@ $ echo -E '\\\\'
 echo $text
 ```
 
-我们知道,`Bash`**会对传递给命令的字符串进行分字(根据空格或换行符)**,然后作为多个参数传给`echo`.
-当然,作为分隔符的换行,在最终输出时就被抹掉了.
+我们知道,`Bash` 会对传递给命令的字符串进行分字(split, 根据空格或换行符),
+然后作为多个参数传给`echo`.
+当然, 作为分隔符的换行在最终输出时就被抹掉了.
 
-于是,更好的习惯是把变量名放在双引号中,把它作为一个字符串传递,这样就可以保留文本中的换行符,将其原样输出.
+于是更好的习惯是把变量名放在双引号中, 把它作为一个字符串传递,
+这样就可以保留文本中的换行符, 将其原样输出.
 
 ```bash
 echo "$text"
 ```
 
-在`zsh`中,你不需要通过双引号来告诉解释器"`$text`是一个字符串".
+在`zsh`中, 你不需要通过双引号来告诉解释器"`$text`是一个字符串".
 解释器不会把它转换成一个由`空格`或者`\n`分隔的参数列表或者别的什么.
-所以,没有`Bash`中的`trick`,直接`echo $text`就可以保留换行符.
-但是,如前一节所说,我们需要一个多余的工作来保证输出的是未转义的原始文本,那就是`-E`选项:
+所以, 没有 Bash 中的 trick,直接 `echo $text` 就可以保留换行符.
+但是如前一节所说,我们需要一个多余的工作来保证输出的是未转义的原始文本, 那就是`-E`选项:
 
 ```bash
 echo -E $text
 ```
 
-从这里我们看到,**`zsh`中的变量在传递给命令时是不会被自动切分成`words`然后以多个参数的形式存在的**.它仍然保持为一个量.
-
-这是它与传统的`Bourne`衍生shell(`ksh`,`bash`)的一个重要不兼容之处.这是`zsh`的特性,而不是一个bug.
+从这里我们看到, `zsh`中的变量在传递给命令时是不会被自动切分成`words`,
+然后以多个参数的形式存在的.它仍然保持为一个量.
+这是它与传统的`Bourne`衍生shell(`ksh`,`bash`)的一个重要不兼容之处.
+这是`zsh`的特性,而不是一个bug.
 
 ### 通配符展开(globbing)
 
@@ -228,7 +231,7 @@ $ ls *.markdown
 zsh: no matches found: *.markdown
 ```
 
-Bash,这时候调用`ls`也会报错.
+bash,这时候调用`ls`也会报错.
 因为当前目录下没有`.markdown`后缀的文件,通配符展开失败后变成字面的`'*.markdown'`,这个文件自然也不可能存在,所以外部命令`ls`报错:
 
 ```bash
@@ -258,7 +261,8 @@ zsh: no matches found: *.markdown
 1
 ```
 
-大部分时候,我们并不想看到这些丑陋多余的错误输出,我们期望程序能完全捕获这些错误,然后完成它该完成的工作.
+大部分时候,我们并不想看到这些丑陋多余的错误输出,
+我们期望程序能完全捕获这些错误,然后完成它该完成的工作.
 但这也许是一种正常的行为.
 理由是,在程序语言里,`syntax error`一般是无法简单地由用户在运行阶段自行`catch`的,这个报错工作将直接由解释器来完成.除非,当然,除非我们用了邪恶的`eval`.
 
@@ -493,3 +497,65 @@ if [ 1 ]; then fi
 [Zsh 入门 ](https://linux.cn/article-11378-1.html)
 [A User's Guide to the Z-Shell](https://zsh.sourceforge.io/Guide/zshguide.html)
 [archwiki:Zsh](https://wiki.archlinux.org/title/Zsh_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
+
+## 自动分字的处理
+
+[What is word splitting? Why is it important in shell programming?](https://unix.stackexchange.com/questions/26661/what-is-word-splitting-why-is-it-important-in-shell-programming)
+
+早期的 shell 只有一种数据类型: `strings`.
+但操作字符串列表是很常见的, 通常是将多个文件名作为参数传递给程序.
+拆分的另一个常见用例是 命令输出 结果的列表:
+命令的输出是 `字符串`, 但想要的数据是 `字符串列表`.
+要在变量中存储文件名列表, 可以在它们之间加上空格. 那么 shell 脚本如下
+
+```bash
+files="foo bar qux"
+myprogram $files
+```
+
+调用带有三个参数的 `myprogram`, `shell` 会将字符串 `$files` 分割成单词.
+当时, 文件名中的空格要么是被禁止的, 要么被广泛认为是 `未完成`(Not Done).
+
+Korn shell 引入了数组: 你可以在变量中存储字符串列表.
+Korn shell 仍然与当时的 Bourne shell 兼容, so bare variable expansions kept undergoing word splitting,
+而使用数组需要一定的语法开销. 你可以将上面的代码段写成
+
+```bash
+files=(foo bar qux)
+myprogram "${files[@]}"
+```
+
+Zsh 从一开始就有数组, 它的作者以牺牲向后兼容性为代价, 选择了更合理的语言设计.
+在 zsh 中(在默认的扩展规则下), `$var` 并不执行分词;
+如果你想在变量中存储单词列表, 你应该使用数组; 如果你真的想要分词, 你可以写 `$=var`.
+
+```bash
+files=(foo bar qux)
+myprogram $files
+```
+
+如今, 你需要处理文件名中的空格, 这一方面是因为许多用户希望空格能起作用,
+另一方面是因为许多脚本是在安全敏感的环境下执行的, 攻击者可能会控制文件名.
+因此, 自动分词往往是个麻烦事; 所以我一般建议始终使用双引号, 即写 `"$foo"`,
+除非你明白为什么在特定使用情况下需要分词.
+(需要注意的是, bare variable expansions undergo globbing).
+
+在我的回答中, 我使用了 `word splitting`一词.
+这也被称为 `field splitting`, 因为构成一个词(也称为字段)的要素可以通过设置 `IFS` 变量来配置:
+`IFS` 中的任何字符都被视为分隔符, 而一个词则是一个不包含分隔符的字符序列.
+默认情况下, `IFS` 包含基本的空白字符(ASCII 空格, 制表符 和 换行符, 而不是回车符, 不可断开空格等).
+zsh 手册中使用的 `word splitting` 仅指解析 shell 代码的一个步骤,
+与 `field/word splitting ` 无关,
+后者是 part of the expansion that happens after variable and command substitutions.
+
+使用下面的命令探索 zsh 数组
+
+```zsh
+files=('foo 123' bar qux)
+echo -E ${files[1]} | cat -A
+echo -E ${files[2]} | cat -A
+echo -E ${files[3]} | cat -A
+
+echo -E ${files[*]} | cat -A
+echo -E ${files[@]} | cat -A
+```
