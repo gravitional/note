@@ -87,11 +87,11 @@ mkdir -force install
 $env:INSTALL_PREFIX="C:/cppLibs/flang-llvm/install"
 
 # Targets to build should be one of: X86 PowerPC AArch64
-$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} \
-    -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX/bin/clang++} \
-    -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX/bin/clang} \
-    -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX/bin/flang}
-    -DCMAKE_Fortran_COMPILER_ID=Flang \
+$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} 
+    -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX}/bin/clang++ 
+    -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX}/bin/clang 
+    -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX}/bin/flang
+    -DCMAKE_Fortran_COMPILER_ID=Flang 
     -DLLVM_TARGETS_TO_BUILD=X86"
 ```
 
@@ -117,18 +117,37 @@ mkdir -force build && cd build
 #cmake $env:CMAKE_OPTIONS -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ \
 #      -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
 
-cmake $env:CMAKE_OPTIONS \
--DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
+# ninja build
+#cmake $env:CMAKE_OPTIONS -G Ninja -DLLVM_ENABLE_CLASSIC_FLANG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="C:\cppLibs\flang-llvm" -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
 
-cmake --build .
-cmake --build . --target install
+# MSVC build
+cmake $env:CMAKE_OPTIONS -G "Visual Studio 17 2022" -A x64 -DLLVM_ENABLE_CLASSIC_FLANG=ON -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;openmp"  ../llvm
+
+
+cmake --install . --prefix C:\cppLibs\flang-llvm
 ```
 
-3. 克隆 flang 仓库, 并联编 `libpgmath` 和 `flang`.
+3. 克隆 `flang` 仓库, 并联编 `libpgmath` 和 `flang`.
 下面是一个 `build-flang.ps1` 脚本示例(使用 clang 构建).
 脚本首先编译 `libpgmath`, 然后编译经典 `flang` 前端和运行时库.
 
 请注意, x86 上的 libpgmath 需要能理解 AVX-512 指令的工具链, 如 gcc 7.2 或 clang.
+
+sss
+
+```bash
+$env:INSTALL_PREFIX="C:/cppLibs/flang-llvm"
+$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX}/bin/clang++ -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX}/bin/clang  -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX}/bin/flang -DCMAKE_Fortran_COMPILER_ID=Flang  -DLLVM_TARGETS_TO_BUILD=X86"
+
+$env:INSTALL_PREFIX="C:/cppLibs/flang-llvm"
+$env:CMAKE_OPTIONS="-DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX}/bin/flang -DCMAKE_Fortran_COMPILER_ID=Flang -DLLVM_TARGETS_TO_BUILD=X86"
+
+
+cmake $env:CMAKE_OPTIONS -DLLVM_MAIN_SRC_DIR="C:\Users\qingz\Downloads\classic-flang\classic-flang-llvm-project\llvm" -G "Visual Studio 17 2022" -A "x64" ..
+
+
+```
+
 
 ```powershell
 . setup.ps1
@@ -149,6 +168,8 @@ cmake $env:CMAKE_OPTIONS -DFLANG_LLVM_EXTENSIONS=ON ..
 cmake --build .
 cmake --build . --target install
 ```
+
+
 
 要使用 `Sphinx` 构建 HTML 文档, 请在构建经典 `Flang` 时
 在 cmake 命令中添加 `-DLLVM_INCLUDE_DOCS=ON` 或 `-DFLANG_INCLUDE_DOCS=ON` .
