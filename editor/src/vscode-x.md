@@ -446,7 +446,7 @@ LaTeX Workshop 注册(registers)了以下占位符. 根文件值的是 LaTeX 主
 
 + `boolean` `false`
 
-## 自动完成 括号匹配, 引号匹配
+## 自动完成 括号匹配, 引号匹配 倒引号 `` ` ``
 
 Editor: auto closing Brackets
 Editor: auto closing Quotes

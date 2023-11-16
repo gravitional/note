@@ -1,6 +1,7 @@
 # classic flang
 
 [Building-Flang](https://github.com/flang-compiler/flang/wiki/Building-Flang)
+[Ubuntu 22.04 clang++ /usr/bin/ld: 找不到 -lstdc++: 没有那个文件或目录](https://blog.csdn.net/hknaruto/article/details/133738834)
 
 ## Prerequisites
 
@@ -10,7 +11,7 @@
 在典型的 Ubuntu 系统中, 可以使用以下命令安装编译依赖项:
 
 ```bash
-sudo apt-get install build-essential cmake ccache git libffi-dev libtinfo-dev ninja-build zlib1g-dev zstd
+sudo apt-get install build-essential cmake ccache git libffi-dev libtinfo-dev ninja-build zlib1g-dev zstd libstdc++-12-dev
 ```
 
 ## Dependencies
@@ -41,6 +42,7 @@ Classic Flang 是在 LLVM 源代码树之外构建的.
 ### 编译 Classic Flang 时使用的 CMake 变量
 
 #### `CMAKE_INSTALL_PREFIX`
+
 要指定自定义的安装位置, 请在以下每个步骤中的每条 CMake 命令中添加 `-DCMAKE_INSTALL_PREFIX=<INSTALL_PREFIX> `.
 
 如果在任何步骤中使用了 `CMAKE_INSTALL_PREFIX`, 则必须在每个步骤中使用相同的 `CMAKE_INSTALL_PREFIX`.
@@ -83,45 +85,40 @@ mkdir -force install
 下面是一个 `setup.sh` 示例, 其他联编脚本可以用它来定义常用变量.
 我们指定了一个自定义安装位置, 并说明要使用 clang 为 X86 构建.
 
-```powershell
-$env:INSTALL_PREFIX="C:/cppLibs/flang-llvm/install"
+```bash
+INSTALL_PREFIX='/home/tom/llvm-flang'
 
 # Targets to build should be one of: X86 PowerPC AArch64
-$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} \
-    -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX/bin/clang++} \
-    -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX/bin/clang} \
-    -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX/bin/flang}
+CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
+    -DCMAKE_CXX_COMPILER=$INSTALL_PREFIX/bin/clang++ \
+    -DCMAKE_C_COMPILER=$INSTALL_PREFIX/bin/clang \
+    -DCMAKE_Fortran_COMPILER=$INSTALL_PREFIX/bin/flang \
     -DCMAKE_Fortran_COMPILER_ID=Flang \
     -DLLVM_TARGETS_TO_BUILD=X86"
 ```
 
 在build Classic Flang 时, 要使用试验性 和 unsupported OpenMP target offload functionality,
 请在 `CMAKE_OPTIONS` 中添加 `-DFLANG_OPENMP_GPU_NVIDIA=ON`.
-
 并非所有变量都会在每次联编中使用, 因此您可能会看到一些关于未使用定义的警告.
 
 2. 克隆 llvm-project fork, 联编并安装它(包括 Clang 和 OpenMP).
 下面是 build-llvm-project.ps1 脚本 (使用 gcc 和 g++ 引导工具链):
 
-```powershell
-. setup.ps1
+使用 `zsh` 需要小心考虑 field splitting, 即使用 `$=CMAKE_OPTIONS` 而不是 `$CMAKE_OPTIONS`
 
-if (! (Test-Path classic-flang-llvm-project -PathType Container)){
-git clone -b release_16x git@github.com:flang-compiler/classic-flang-llvm-project.git
-}
+```zsh
+. setup.sh
 
-Set-Location classic-flang-llvm-project
-mkdir -force build && cd build
+if [[ ! -d classic-flang-llvm-project ]]; then
+    git clone -b release_16x https://github.com/flang-compiler/classic-flang-llvm-project.git
+fi
 
-# on linux
-#cmake $env:CMAKE_OPTIONS -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ \
-#      -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
-
-cmake $env:CMAKE_OPTIONS \
--DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
-
-cmake --build .
-cmake --build . --target install
+cd classic-flang-llvm-project
+mkdir -p build && cd build
+cmake $=CMAKE_OPTIONS -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ \
+     -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
+make
+sudo make install
 ```
 
 3. 克隆 flang 仓库, 并联编 `libpgmath` 和 `flang`.
@@ -130,24 +127,24 @@ cmake --build . --target install
 
 请注意, x86 上的 libpgmath 需要能理解 AVX-512 指令的工具链, 如 gcc 7.2 或 clang.
 
-```powershell
-. setup.ps1
+```bash
+. setup.sh
 
-if (! (Test-Path flang )){
-    git clone git@github.com:flang-compiler/flang.git
-}
+if [[ ! -d flang ]]; then
+    git clone https://github.com/flang-compiler/flang.git
+fi
 
-cd flang/runtime/libpgmath
-mkdir -force build && cd build
-cmake $env:CMAKE_OPTIONS ..
-cmake --build .
-cmake --build . --target install
+(cd flang/runtime/libpgmath
+ mkdir -p build && cd build
+ cmake $=CMAKE_OPTIONS .. -DLLVM_MAIN_SRC_DIR=/home/tom/classic-flang/classic-flang-llvm-project/llvm
+ make
+ sudo make install)
 
 cd flang
-mkdir -force build && cd build
-cmake $env:CMAKE_OPTIONS -DFLANG_LLVM_EXTENSIONS=ON ..
-cmake --build .
-cmake --build . --target install
+mkdir -p build && cd build
+cmake $=CMAKE_OPTIONS -DFLANG_LLVM_EXTENSIONS=ON -DLLVM_MAIN_SRC_DIR=/home/tom/classic-flang/classic-flang-llvm-project/llvm  ..
+make
+sudo make install
 ```
 
 要使用 `Sphinx` 构建 HTML 文档, 请在构建经典 `Flang` 时
@@ -198,3 +195,61 @@ flang 和 classic-flang-llvm-project 软件源包含我们的 GitHub 工作流,
 并为 `build_flang.py` 添加 `-l` 选项以指向 `LLVM` 源代码目录.
 使用 --help 运行脚本将列出可用选项.
 有关如何使用脚本的示例, 请参见 [.github/workflows/flang-test.yml](https://github.com/flang-compiler/classic-flang-llvm-project/blob/release_16x/.github/workflows/flang-tests.yml).
+
+## windows 平台
+
+#### windows 平台
+
+setup.ps1
+
+```powershell
+$env:INSTALL_PREFIX="C:/cppLibs/flang-llvm/install"
+# Targets to build should be one of: X86 PowerPC AArch64
+$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} `
+    -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX/bin/clang++} `
+    -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX/bin/clang} `
+    -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX/bin/flang} `
+    -DCMAKE_Fortran_COMPILER_ID=Flang `
+    -DLLVM_TARGETS_TO_BUILD=X86"
+```
+
+classic-flang-llvm-project
+
+```powershell
+. setup.ps1
+
+if (! (Test-Path classic-flang-llvm-project -PathType Container)){
+git clone -b release_16x git@github.com:flang-compiler/classic-flang-llvm-project.git
+}
+
+Set-Location classic-flang-llvm-project
+mkdir -force build && cd build
+
+cmake $env:CMAKE_OPTIONS \
+-DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
+
+cmake --build .
+cmake --build . --target install
+```
+
+flang
+
+```powershell
+. setup.ps1
+
+if (! (Test-Path flang )){
+    git clone git@github.com:flang-compiler/flang.git
+}
+
+cd flang/runtime/libpgmath
+mkdir -force build && cd build
+cmake $env:CMAKE_OPTIONS ..
+cmake --build .
+cmake --build . --target install
+
+cd flang
+mkdir -force build && cd build
+cmake $env:CMAKE_OPTIONS -DFLANG_LLVM_EXTENSIONS=ON ..
+cmake --build .
+cmake --build . --target install
+```
