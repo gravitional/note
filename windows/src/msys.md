@@ -373,9 +373,17 @@ pacman -Sc # 清理未安装的包文件, 包文件位于 /var/cache/pacman/pkg/
 pacman -Scc # 清理所有的缓存文件.
 ```
 
-## perl cpan 安装其它管理器
+## perl cpan, cpanm, cpanp
 
 [Error: sys/wait.h: No such file or directory](https://stackoverflow.com/questions/18013950/error-sys-wait-h-no-such-file-or-directory)
+
+msys2 默认没有 `perldoc` 命令
+
+```bash
+pacman -S perl-doc
+```
+
+安装 cpan 的其他包管理器
 
 ```bash
 cpan -i -T App::cpanminus
