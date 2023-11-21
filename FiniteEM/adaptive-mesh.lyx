@@ -3099,5 +3099,287 @@ Comsol 自适应
 ，则应该增加 时间步长；否则保持当前 时间步长。
 \end_layout
 
+\begin_layout Chapter
+自适应FEM静电场求解器Jin–Fa Lee
+\end_layout
+
+\begin_layout Standard
+摘要 介绍了一种新的自适应 
+\begin_inset Formula $h$
+\end_inset
+
+–版本有限元算法，并将其性能与 uniform 
+\begin_inset Formula $h$
+\end_inset
+
+–版本和 
+\begin_inset Formula $p$
+\end_inset
+
+–版本的有限元分析进行了比较。结果表明，在求解精度和计算时间方面，自适应策略大大提高了求解过程的整体效率和性能。
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Standard
+有限元分析师在设计网格时，通常要结合经验和直觉。如果有限元近似的结果看起来是合理的，那么就会被接受；否则，就会重新设计网格并重复分析。这是一个非常昂贵和浪费的过
+程，而且无法保证新的网格足够精确。
+\end_layout
+
+\begin_layout Standard
+为了克服这一困难，过去已经开发出了自适应有限元方法[1]-[3]，在求解精度和计算时间方面提高了求解过程的整体效率。该算法从 initial minimum
+ mesh 开始，并对其应用有限元法（FEM）。然后进行误差分析，并根据 a posteriori error analysis 对计算解的局部和全局误差进行估
+计。利用这些估计值来决定解决方案是否可接受，如果不可接受，则应细化哪些单元。然后通过 细化 所选单元（
+\begin_inset Formula $h$
+\end_inset
+
+–细化）[4]或增加单元阶数（
+\begin_inset Formula $p$
+\end_inset
+
+–细化）[5]、[4]或两者（
+\begin_inset Formula $hp$
+\end_inset
+
+–细化）[4]来创建细化网格。此过程一直持续到找到可接受的解为止。
+\end_layout
+
+\begin_layout Standard
+在过去几十年中，文献[2]、[4] 提出了许多不同的误差估计方法。这里介绍一种基于 fictitious error charegs 的替代方法。
+\end_layout
+
+\begin_layout Section
+FEM 理论
+\end_layout
+
+\begin_layout Subsection
+Poisson方程
+\end_layout
+
+\begin_layout Standard
+本文致力于在已知电荷密度
+\begin_inset Formula $\rho$
+\end_inset
+
+和相对介电常数
+\begin_inset Formula $\epsilon_{r}$
+\end_inset
+
+的区域内，根据 Dirichlet 和 Neumann 边界条件，高效求解泊松方程。
+\begin_inset Formula 
+\begin{align}
+-\nabla\cdot(\epsilon_{r}\nabla\phi) & =\rho/\epsilon_{0},\quad\text{in}\Omega\label{eq:j1}\\
+\phi & =0\quad\text{on}\Gamma_{D}\label{eq:j2}\\
+\partial\phi/\partial n & =0\quad\text{on}\Gamma_{N}.\label{eq:j3}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Galerkin法
+\end_layout
+
+\begin_layout Standard
+有限元分析中最常用的方法是 Galerkin方法。方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+连同边界条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 描述了一个边界值问题 (BVP)，需要应用Galerkin 加权残差法 [6]。即在求解空间
+\begin_inset Formula $\Lambda$
+\end_inset
+
+中找到
+\begin_inset Formula $\phi$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}v\cdot\epsilon_{r}\nabla\phi\dd{\Omega}-\int_{\Omega}v\frac{\rho}{\epsilon_{0}}\dd{\Omega}=0\quad\forall v\in\Upsilon.\label{eq:j4}
+\end{equation}
+
+\end_inset
+
+其中解空间
+\begin_inset Formula $\Lambda$
+\end_inset
+
+和试探空间
+\begin_inset Formula $\Upsilon$
+\end_inset
+
+都属于 Hilbert 空间
+\begin_inset Formula $H_{0}^{1}(\Omega)$
+\end_inset
+
+，即 the space of square integrable functions also having square integrable
+ first derivatives and 满足边界条件
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。最一般情况下
+\begin_inset Formula $\Lambda$
+\end_inset
+
+和
+\begin_inset Formula $\Upsilon$
+\end_inset
+
+ spaces 可以不同；然而通常我们选同一空间，并得到对称的矩阵方程。
+\end_layout
+
+\begin_layout Subsection
+矩阵方程
+\end_layout
+
+\begin_layout Standard
+FEM简单地将 解空间
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ 替换为，
+\begin_inset Formula $\Lambda$
+\end_inset
+
+中的一系列 有限维子空间
+\begin_inset Formula $\Lambda^{h}$
+\end_inset
+
+。此外，在有限单元上定义的任何smooth trial 函数
+\begin_inset Formula $\phi^{h}\in\Lambda^{h}$
+\end_inset
+
+，现在都可以用与该单元相关的基函数来逼近
+\begin_inset Formula 
+\begin{equation}
+\phi^{h}=\sum_{i=1}^{N_{e}}\alpha_{i}\psi_{i}^{h}\label{eq:j5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $N_{e}$
+\end_inset
+
+是每个单元上的自由度数目，系数
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+需要计算。将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入并且迫使
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+成立 
+\begin_inset Formula $\forall v^{h}\in\Lambda^{h}$
+\end_inset
+
+可得矩阵方程，从而计算出
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\sum_{\Omega_{e}}S_{e}\,\underline{\alpha}=\sum_{\Omega_{e}}\underline{y_{e}}\label{eq:j6}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sum_{\Omega_{e}}$
+\end_inset
+
+是对每个单元贡献的求和。
+\begin_inset Formula $\underline{\alpha}$
+\end_inset
+
+是系数向量。最终，单元上的矩阵和右端向量写成
+\begin_inset Formula 
+\begin{equation}
+\left[S_{e}\right]_{ij}=\int_{\Omega_{e}}\nabla\psi_{i}^{h}\cdot\epsilon_{r}\nabla\psi_{j}^{h}\dd{\Omega};\quad\left[y_{e}\right]_{i}=\int_{\Omega_{e}}\psi_{i}^{h}\,\frac{\rho}{\epsilon_{0}}\dd{\Omega}.\label{eq:j7}
+\end{equation}
+
+\end_inset
+
+有时，an inhomogeneous Dirichlet 边界条件
+\begin_inset Formula 
+\begin{equation}
+\phi=\phi_{0},\quad\text{on}\Gamma_{D}\label{eq:j8}
+\end{equation}
+
+\end_inset
+
+需要指定某些
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+的值。纳入此边界条件，涉及到缩减矩阵
+\begin_inset Formula $S$
+\end_inset
+
+的size，并把特定
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+的贡献移动到 excitation 向量（右端向量）。
+\end_layout
+
+\begin_layout Section
+均匀细化
+\end_layout
+
 \end_body
 \end_document

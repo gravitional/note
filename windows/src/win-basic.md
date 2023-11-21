@@ -62,6 +62,24 @@
 
 在文件管理器中引用变量,`%xxx%`,比如`%PATH%`
 
+## windows 拼音设置
+
+[Microsoft Simplified Chinese IME](https://support.microsoft.com/en-us/windows/microsoft-simplified-chinese-ime-9b962a3b-2fa4-4f37-811c-b1886320dd72)
+[Set-WinUserLanguageList](https://learn.microsoft.com/en-us/powershell/module/international/set-winuserlanguagelist)
+
+直接在 `windows+S` 中搜索 IME,
+选择弹出的 Simplified Chinese Pinyin IME settings,
+就可以修改中文输入法键盘的一些设置
+`常规`, `按键`, `词库` 等等.
+
+通过 powershell 命令, 修改 language 设置
+
+```powershell
+$UserLanguageList = New-WinUserLanguageList -Language en-US
+$UserLanguageList[0].Handwriting = $True
+Set-WinUserLanguageList -LanguageList $UserLanguageList
+```
+
 ## windos 系统维护
 
 ### 启用组策略gpedit.msc
