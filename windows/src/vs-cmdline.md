@@ -82,3 +82,11 @@ cl /EHsc test.c # 编译源代码
 
 会生成 `.obj` 文件和 `.exe` 可执行文件:
 接着输入 `./test` 就会生成打印 `hello world!`
+
+## 使用 pwsh 修改 VS 环境变量 INCLUDE, LIB
+
+```bash
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\cppwinrt;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\winrt;C:\cppLibs\boost\boost;C:\cppLibs\pthreads\include\include;
+
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt_enclave\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\cppLibs\boost\boost\libs;C:\cppLibs\pthreads\lib\x64;C:\cppLibs\pthreads\dll\x64;
+```
