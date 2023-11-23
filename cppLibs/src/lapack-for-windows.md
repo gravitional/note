@@ -332,7 +332,7 @@ extern "C" void dgesv_( const int * , const int * , double * , const int * , int
 
 ### 使用 VS 的 Windows 版 LAPACK 3.5.0 的构建说明
 
-要求 Visual Studio, Intel  C 和 Fortran 编译器, CMAKE 2.8.12
+要求 Visual Studio, Intel C 和 Fortran 编译器, CMAKE 2.8.12
 
 1. 从 netlib 网站下载 [lapack.tgz](http://netlib.org/lapack/lapack.tgz), 并解压缩.
 2. 下载 [CMAKE](http://www.cmake.org/) 并安装到计算机上.
@@ -359,7 +359,7 @@ extern "C" void dgesv_( const int * , const int * , double * , const int * , int
 2. 下载 CMAKE 并将其安装到您的计算机上.
 3. 下载 MinGW 32 bits 或 MinGW-w64, 并将其安装到您的计算机上.
 4. 将 GNU runtime 目录放入 PATH, 我在 PATH 中添加了 `C:\MinGW\bin` (MinGW 32 bits)
-右键单击计算机图标, 进入属性, 高级系统设置, 环境变量, 查找 PATH 变量并在其当前值前面添加 `C:\MinGW\bin;`).
+右键单击计算机图标, 进入属性, 高级系统设置, 环境变量, 查找 PATH 变量并在其当前值前面添加 `C:\MinGW\bin;`.
 
 5. 打开 CMAKE
    + 将 lapack-3.5.0 文件夹填入 `source code folder`
@@ -367,9 +367,15 @@ extern "C" void dgesv_( const int * , const int * , double * , const int * , int
    + 点击 `configure`, 如果你想在特定位置安装库和包含文件, 请检查 `install` 路径.
    + 选择 `MinGW Makefiles`.
    + 单击 `Specify native compilers`, 并标明 Mingw 编译器的路径.
-    对于 Win32, 在我的计算机上, Fortran 编译器是 `C:/MinGW/bin/gfortran.exe`, C 编译器是 `C:/MinGW/bin/gcc.exe`.
-    对于 x64, 在我的机器上是 `C:/mingw64/bin/x86_64-w64-mingw32-gfortran.exe`, C 编译器是 `C:/mingw64/bin/x86_64-w64-mingw32-gcc.exe`.
-   + 仅对于 x64编译版本, 添加变量 `CMAKE_SIZEOF_VOID_P`, 并将其设置为 `8`(字符串), 这将强制 CMAKE 创建 `VCVARSAMD64` 变量, 请参阅[论坛上的帖子](https://icl.utk.edu/lapack-forum/viewtopic.php?f=12&t=4260&p=10623#p10623)
+    对于 ucrt64, 在我的计算机上, Fortran 编译器是 `C:/MyProgram/msys2/ucrt64/bin/gfortran.exe`,
+    C 编译器是 `C:/MyProgram/msys2/ucrt64/bin/gcc.exe`,
+    c++ 编译器是 `C:/MyProgram/msys2/ucrt64/bin/g++.exe`.
+
+    对于 x64, 在我的机器上是 `C:/mingw64/bin/x86_64-w64-mingw32-gfortran.exe`,
+    C 编译器是 `C:/mingw64/bin/x86_64-w64-mingw32-gcc.exe`.
+
+   + 仅对于 x64编译版本, 添加变量 `CMAKE_SIZEOF_VOID_P`, 并将其设置为 `8`(字符串),
+   这将强制 CMAKE 创建 `VCVARSAMD64` 变量, 请参阅[论坛上的帖子](https://icl.utk.edu/lapack-forum/viewtopic.php?f=12&t=4260&p=10623#p10623)
    注意: CMAKE 团队修正了该问题, 因此如果您使用的是 CMAKE 2.8.13 或更高版本, 则不需要此变通方法.
    + 将 `BUILD_SHARED_LIBS` 选项设置为 `ON`.
    + 将 `CMAKE_GNUtoMS` 选项设置为 `ON`.
@@ -380,8 +386,8 @@ extern "C" void dgesv_( const int * , const int * , double * , const int * , int
 
 6. 打开 cmd 提示符(点击 `运行...` 然后输入 cmd)
 7. 使用 cd 命令进入编译文件夹
-8. 键入 C:/MinGW/bin/mingw32-make.exe
-9. 如果要运行 LAPACK 测试以确保一切正常, 请键入 `C:/MinGW/bin/mingw32-make.exe test`
+8. 键入 `/ucrt64/bin/mingw32-make.exe`
+9. 如果要运行 LAPACK 测试以确保一切正常, 请键入 `/ucrt64/bin/mingw32-make.exe test`
 10. 库在 `lib` 文件夹中, dll 在 `bin` 文件夹中.
 编译后将为 DLLs 提供 `GNU` 格式和 `MS` 格式的 import libraries.
 11. 现在, 您应该可以创建一个使用 MSVC 构建的 C 应用程序, 并直接链接到 MinGW 构建的 LAPACK 动态链接库.
@@ -391,6 +397,28 @@ extern "C" void dgesv_( const int * , const int * , double * , const int * , int
 13. 请不要忘记参阅 [LAPACKE 用户指南](http://netlib.org/lapack/lapacke.html).
 
 感谢 CMAKE 伙计们提供此构建版.
+
+可以在 `msys2 ucrt64` 环境中使用下列命令行构建,
+并指定安装路径为 `c:/cppLibs/LAPACK-openBLAS-ucrt`
+
+```bash
+# 创建 makefile
+cmake -B . -S .. -G 'MinGW Makefiles' -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_GNUtoMS=ON -DCMAKE_INSTALL_PREFIX=/c/cppLibs/LAPACK-openBLAS-ucrt --fresh
+# make; 构建
+/ucrt64/bin/mingw32-make.exe -j
+
+# install; 改变安装路径
+# ./configure --prefix=/c/cppLibs/LAPACK-openBLAS-ucrt 
+# 使用 make DESTDIR=/c/cppLibs/LAPACK-openBLAS-ucrt install 指定安装路径
+/ucrt64/bin/mingw32-make.exe install
+```
+
+或者直接使用 cmake 构建并安装
+
+```bash
+cmake --build . --config Release -j
+cmake --install . --config Release --prefix '/c/cppLibs/LAPACK-openBLAS-ucrt' 
+```
 
 ## 支持与反馈
 

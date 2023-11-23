@@ -3410,11 +3410,254 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-h–收敛
+h–Convergence
 \end_layout
 
 \begin_layout Standard
+在 ref[6],[7] 中证明了对于
+\begin_inset Formula $h<1$
+\end_inset
 
+精确解
+\begin_inset Formula $\phi$
+\end_inset
+
+和有限元近似解
+\begin_inset Formula $\phi^{h}$
+\end_inset
+
+的误差为 
+\begin_inset Formula $\order{h^{p+1}}$
+\end_inset
+
+阶，其中
+\begin_inset Formula $p$
+\end_inset
+
+是单元 polynomial order，假设解
+\begin_inset Formula $\phi$
+\end_inset
+
+满足光滑性要求。此外，解
+\begin_inset Formula $\phi$
+\end_inset
+
+的
+\begin_inset Formula $m$
+\end_inset
+
+ th 导数的误差是
+\begin_inset Formula $\order{h^{p+1-m}}$
+\end_inset
+
+。由于 FEM 解最小化 the error in the energy norm，the error magnitude in energy
+ norm 是解整体质量的良好度量，因此
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,h^{p};\quad\left\Vert \phi\right\Vert _{E}=\left[\int_{\Omega}\nabla\phi\cdot\epsilon_{0}\epsilon_{r}\nabla\phi\,\dd{\Omega}\right]^{1/2}.\label{eq:j9}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对光滑解成立，也就是不存在 singularities；当存在奇点时情况，情况发生巨大变化。在 ref[4][6]中证明了，带奇点问题的收敛rate
+ 取决于 the intensity of singularity 
+\begin_inset Formula $\alpha$
+\end_inset
+
+（
+\begin_inset Formula $0<\alpha<1$
+\end_inset
+
+）（即在奇点的邻域
+\begin_inset Formula $\phi\sim r^{\alpha}$
+\end_inset
+
+，其中
+\begin_inset Formula $r$
+\end_inset
+
+是奇异点和观察点的距离），写作
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,h^{\min(p,\alpha)}\label{eq:j10}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $c$
+\end_inset
+
+是与
+\begin_inset Formula $h$
+\end_inset
+
+无关的常数，但取决于解
+\begin_inset Formula $\phi$
+\end_inset
+
+和单元的类型和order
+\begin_inset Formula $p$
+\end_inset
+
+。因此，带奇点案例的 convergence rate 与插值多项式的order无关，并低于理论预测值 
+\begin_inset Formula $\order{h^{p}}$
+\end_inset
+
+。由于总自由度数是
+\begin_inset Formula $N\sim1/h^{3}$
+\end_inset
+
+ in 3D，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+也可以写成
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,N^{-(1/3)\min(p,\alpha)}.\label{eq:j11}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+p–Convergence
+\end_layout
+
+\begin_layout Standard
+在有限元法的
+\begin_inset Formula $p$
+\end_inset
+
+–版本中，discretization 是固定的，分片多项式近似的 degree 
+\begin_inset Formula $p$
+\end_inset
+
+ 逐渐增加，直到达到目标精度。
+\begin_inset Formula $p$
+\end_inset
+
+–版本FEM的 asymptotic 收敛率在文献 [5][4][8][9] 中分析。在[5]中证明了如果
+\begin_inset Formula $\phi\in H^{k}(\Omega)$
+\end_inset
+
+ （
+\begin_inset Formula $k>1$
+\end_inset
+
+）是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的光滑解，
+\begin_inset Formula $\phi^{p}$
+\end_inset
+
+是有限元近似，over a quasiuniform discretization；则如果 插值函数是 complete 
+\begin_inset Formula $p$
+\end_inset
+
+ th order 多项式，收敛率是 optimal one，即
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \phi-\phi^{p}\right\Vert _{E}\le C\,p^{-(k-1)}.\label{eq:j12}
+\end{equation}
+
+\end_inset
+
+然而如果解具有奇异行为，则收敛率为
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \phi-\phi^{p}\right\Vert _{E}\le C\,p^{-2\alpha}.\label{eq:j13}
+\end{equation}
+
+\end_inset
+
+degree 
+\begin_inset Formula $p$
+\end_inset
+
+ 的多项式 in 3D 共有
+\begin_inset Formula $N$
+\end_inset
+
+个自由度，
+\begin_inset Formula $N\sim p^{3}$
+\end_inset
+
+。因此
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j12"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\begin{align}
+ & \left\Vert \phi-\phi^{p}\right\Vert _{E}\le C\,N^{-(1/3)(k-1)}\label{eq:j14}\\
+ & \left\Vert \phi-\phi^{p}\right\Vert _{E}\le C\,N^{-(2/3)\alpha}.\label{eq:j15}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+自适应h细化
+\end_layout
+
+\begin_layout Standard
+在自适应过程中
 \end_layout
 
 \end_body

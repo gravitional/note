@@ -55,3 +55,5 @@ cmake --build . --config Release
 ```powershell
 cmake --install . --prefix c:\opt -v
 ```
+
+[生成 import library](https://github.com/OpenMathLib/OpenBLAS/wiki/How-to-use-OpenBLAS-in-Microsoft-Visual-Studio#generate-import-library-before-0210-version)
