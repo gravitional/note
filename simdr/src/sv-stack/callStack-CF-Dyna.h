@@ -22,7 +22,7 @@ main(int argc, char* argv[]);
                     CreateCoordSys(); //自定义坐标系
                     CreateMonitor(); // 创建监视
                     CreateNode(); // 创建节点
-                        CompNode* node=NewNode(); //节点工厂方法，调用具体实现
+                        CompNode* node=NewNode(); //节点工厂方法, 调用具体实现
                     CreateElement(data); // 创建单元
                     CreateMaterial(data); //创建材料
                     CreateInitialField(data);
@@ -30,7 +30,7 @@ main(int argc, char* argv[]);
                         CreateInfo(data);
                             data.ReadValue("Thickness2D"...) //读取厚度
                             data.ReadValue("Sector"...) //读取模型分数
-                        CreateConstraint(data) // 创建约束, 即边界条件, 
+                        CreateConstraint(data) // 创建约束, 即边界条件,
                         // Volt, Current, Floating, Open, Periodic, Contact, Scalar1st, Scalar3rd, Nonbdr
                     CreateAnalysis(); // 创建分析, /FiniteElement/Model/FeModelCreator.cpp
                         //迭代分析类型
@@ -41,9 +41,10 @@ main(int argc, char* argv[]);
                             _name=reader->GetCurrentNode(); // 获取有限元分析名称
                             reader->SetIDByName(_name,_jobID);// 设置分析名称(_name) 对应的 ID(jobID), 存入unordered_map<string, int> _nameMap, 不同 reader 共享
                             job->Create(*reader); //virtual, 创建 new job
-                                NonlinearPara.Create(data) //非线性迭代; /Current/Analysis/LoadJobCF.cpp
-                                couple // 耦合
-                                load // 创建载荷
+                                NonlinearPara.Create(data); //非线性迭代; /Current/Analysis/LoadJobCF.cpp
+                                DynamicPara.Create(data); // 时间步迭代; 欧拉法/梯形法; 固定步长/自适应步长
+                                CreateCouple(); // 耦合
+                                CreateLoad(); // 创建载荷
                                 int id=model()->AddComponentGenID(_PostAnalysis); // 添加后处理分析任务
                         anlsCtrl()->AddAnalysis(analysis) // append 分析到分析队列末尾
                             //非续算时清空独立计时器
@@ -78,8 +79,8 @@ main(int argc, char* argv[]);
                             ResultManipEM* p_resultHandle=resultManip(); //初始化计算结果存储指针
                             // 初始化 p_GFinAccum, p_GRt, p_GFv_T, p_Solu_T, P_GFv_Pre
                             RecordRestrictedEqNo(); // 记录受到约束的自由度
-                            cons->SetValue(); // 设置边界条件，约束值
-                        // 根据设置, 运行不同分析算法, 
+                            cons->SetValue(); // 设置边界条件, 约束值
+                        // 根据设置, 运行不同分析算法,
                         analyze_EM_Field_Fixed(); // 非线性迭代, 固定时间步长
                             //---------------- 时间循环开始
                             // ---- 结果导入, 续算
@@ -111,10 +112,9 @@ main(int argc, char* argv[]);
                                 writer->Write(_job, "Static"); // 写入场量到 result.h5
                                     WriteField(); // 写入到 hdf5
                                     SetTestFieldData(); // 写入到 ensight
-                        
+
                         analyze_Coupled_Field(); // 耦合场分析
                         analyze_EM_Field_Adapt(); // 非线性迭代, 自适应时间步长
-
 
                 memTracker();timeTracker(); // 记录内存, 时间占用
             }
