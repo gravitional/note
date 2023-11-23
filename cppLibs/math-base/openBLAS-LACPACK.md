@@ -57,3 +57,17 @@ cmake --install . --prefix c:\opt -v
 ```
 
 [生成 import library](https://github.com/OpenMathLib/OpenBLAS/wiki/How-to-use-OpenBLAS-in-Microsoft-Visual-Studio#generate-import-library-before-0210-version)
+
+## msys2 构建测试
+
+在 msys2 ucrt64 环境下, 安装 gcc, g++, make 等工具链之后
+使用以下命令构建并安装
+
+```bash
+# 生成 make
+cmake -B . -S .. -G 'MinGW Makefiles' -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/c/cppLibs/LAPACK-openBLAS-ucrt --fresh
+# 构建
+cmake --build . --config Release
+# 安装
+cmake --install . --config Release --prefix /c/cppLibs/LAPACK-openBLAS-ucrt/
+```
