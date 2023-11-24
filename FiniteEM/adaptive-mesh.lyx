@@ -3282,7 +3282,7 @@ FEM简单地将 解空间
 \begin_inset Formula $\Lambda^{h}$
 \end_inset
 
-。此外，在有限单元上定义的任何smooth trial 函数
+。此外，在有限单元上定义的任何 光滑试探函数
 \begin_inset Formula $\phi^{h}\in\Lambda^{h}$
 \end_inset
 
@@ -3418,15 +3418,23 @@ h–Convergence
 \begin_inset Formula $h<1$
 \end_inset
 
+，
+\series bold
 精确解
 \begin_inset Formula $\phi$
 \end_inset
 
-和有限元近似解
+
+\series default
+和 
+\series bold
+有限元近似解
 \begin_inset Formula $\phi^{h}$
 \end_inset
 
-的误差为 
+
+\series default
+ 的误差为 
 \begin_inset Formula $\order{h^{p+1}}$
 \end_inset
 
@@ -3652,12 +3660,761 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 自适应h细化
 \end_layout
 
 \begin_layout Standard
-在自适应过程中
+在自适应过程中，将多次求解问题，after each pass，具有高error 的 tetrahedra将被再次细化以得到下一张有限元网格，而error来自于
+对当前解的 a posterior 误差分析。此过程导向所谓的 optimal meshes，因为每个单元内的误差近似在同一阶。在 [4],[7]
+ 中证明了当使用 optimal meshed 时，无论解的光滑性如何下式都成立
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,N^{-(1/3)p}.\label{eq:j16}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+误差泛函
+\end_layout
+
+\begin_layout Standard
+本文中采取的公式基于 Galerkin's weighted residual approach。因此采用 energy norm 测量引发的误差
+ 
+\begin_inset Formula $e^{h}=\phi-\phi^{h}$
+\end_inset
+
+ 蛮合理的。将 第一Green定理应用到误差泛函，可以把它写成
+\begin_inset Formula 
+\begin{align}
+\left\Vert e^{h}\right\Vert _{E}^{2} & =\int_{\Omega^{h}}\nabla e^{h}\cdot\epsilon_{0}\epsilon_{r}\nabla e^{h}\,\dd{\Omega}\nonumber \\
+ & =\sum_{K}\int_{K}\nabla e^{h}\cdot\epsilon_{0}\epsilon_{r}\nabla e^{h}\,\dd{K}\nonumber \\
+ & =\sum_{\Delta_{\text{in}}}\int_{\Delta_{\text{in}}}e^{h}\,\delta\left(\epsilon_{0}\epsilon_{r}\frac{\dd{e^{h}}}{\dd{n}}\right)_{\Delta_{\text{in}}}\dd{\Delta}-\sum_{K}\int_{K}e^{h}\,{\color{red}\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla e^{h}}\,\dd{K}\nonumber \\
+ & +\sum_{\Delta_{\Gamma_{N}}}\int_{\Delta_{\Gamma_{N}}}e^{h}\left(\epsilon_{0}\epsilon_{r}\frac{\dd{e^{h}}}{\dd{n}}\right)_{\Gamma_{N}}\dd{\Delta}\label{eq:j17}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Delta_{\text{in}}$
+\end_inset
+
+ 是 interior 三角形，
+\begin_inset Formula $\delta(f)_{\Gamma}$
+\end_inset
+
+是函数
+\begin_inset Formula $f$
+\end_inset
+
+穿过边界
+\begin_inset Formula $\Gamma$
+\end_inset
+
+的跃变（discontinuity）；
+\begin_inset Formula $\Delta_{\Gamma_{N}}$
+\end_inset
+
+ 表示 Neumann 边界上的三角形。为简化
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，代入
+\begin_inset Formula $e^{h}=\phi-\phi^{h}$
+\end_inset
+
+，注意到
+\begin_inset Formula 
+\begin{align}
+{\color{red}\nabla\cdot\epsilon_{0}\epsilon_{r}\,\nabla e^{h}} & =\nabla\cdot\epsilon_{0}\epsilon_{r}\,\nabla\phi-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}={\color{red}-\rho+\rho^{h}}\nonumber \\
+\delta\left(\epsilon_{0}\epsilon_{r}\frac{\dd{\color{blue}e^{h}}}{\dd{n}}\right)_{\Delta_{\text{in}}} & =-\delta\left(\epsilon_{0}\epsilon_{r}\frac{\dd{\color{blue}\phi^{h}}}{\dd{n}}\right)_{\Delta_{\text{in}}}\\
+\left(\epsilon_{0}\epsilon_{r}\frac{\dd{\color{blue}e^{h}}}{\dd{n}}\right)_{\Gamma_{N}} & =-\left(\epsilon_{0}\epsilon_{r}\frac{\dd{\color{blue}\phi^{h}}}{\dd{n}}\right)_{\Gamma_{N}}\label{eq:j18}
+\end{align}
+
+\end_inset
+
+从而，误差泛函可以重写为
+\begin_inset Formula 
+\begin{equation}
+a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\Delta}\int_{\Delta}e^{h}\sigma^{h}\dd{\Delta}\label{eq:j19}
+\end{equation}
+
+\end_inset
+
+其中的表面电荷密度
+\begin_inset Formula $\sigma^{h}$
+\end_inset
+
+写作
+\begin_inset Formula 
+\begin{equation}
+\sigma^{h}=\begin{cases}
+\delta\left(\epsilon_{0}\epsilon_{r}\frac{\dd{\phi^{h}}}{\dd{n}}\right)_{\Delta} & \Delta\in\Delta_{\text{in}}\quad\text{内边界}\\
+\epsilon_{0}\epsilon_{r}\frac{\dd{\phi^{h}}}{\dd{n}} & \Delta\in\Delta_{\Gamma_{N}}.\quad\text{诺伊曼边界}
+\end{cases}\label{eq:j20}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+后验误差分析
+\end_layout
+
+\begin_layout Standard
+在当前方法中，解的误差 通过两个 a posteriori parameters 表示。第一个参数与 
+\series bold
+残差
+\series default
+ 有关，
+\series bold
+残差
+\series default
+ 是由于数值求解无法精确满足 泊松方程 而产生的。第二个后验参数产生于 电通量密度
+\begin_inset Formula $\sbf D$
+\end_inset
+
+ 的法向分量 在单元间界面 和 Neumann边界上 的不连续性。
+\end_layout
+
+\begin_layout Standard
+由于有限元解
+\begin_inset Formula $\phi^{h}$
+\end_inset
+
+只是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在单元
+\begin_inset Formula $K$
+\end_inset
+
+内的近似值，因此会产生与之相关的 
+\series bold
+体积误差密度
+\series default
+（or residual）
+\begin_inset Formula 
+\begin{equation}
+q_{v}^{h}=-\nabla\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.\label{eq:j21}
+\end{equation}
+
+\end_inset
+
+类似地，电通量法向分量在跨过单元face时的 jump discontinuities 将引入与之相关的
+\series bold
+ 表面误差密度
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+q_{s}^{h}\equiv\sigma^{h}=\vec{n}\cdot\left(\vec{D}_{1}^{h}-\vec{D}_{2}^{h}\right)\label{eq:j22}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\vec{D}_{1}^{h}$
+\end_inset
+
+，
+\begin_inset Formula $\vec{D}_{2}^{h}$
+\end_inset
+
+是 单元
+\begin_inset Formula $1$
+\end_inset
+
+和
+\begin_inset Formula $2$
+\end_inset
+
+的界面的 flux 值，
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+是垂直界面的单位矢量。注意
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j21"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j22"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+与 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j19"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的定义一致。
+\begin_inset Formula $q_{v}^{h}$
+\end_inset
+
+ 和 
+\begin_inset Formula $q_{s}^{h}$
+\end_inset
+
+并称 
+\series bold
+虚拟误差电荷密度
+\series default
+（fictitious or residual error charge densities），因为不像 physical 电荷，它们对应有限元解的数值误差。此
+外，每个四面体 和 三角形面 关联一个 误差电荷（residual charge ）via
+\begin_inset Formula 
+\begin{equation}
+Q_{v}^{K}=\int_{K}q_{v}^{h}\,\dd{K}\quad Q_{s}^{\Delta}=\int_{\Delta}q_{s}^{h}\dd{\Delta}.\label{eq:j23}
+\end{equation}
+
+\end_inset
+
+从这些误差电荷 我们可以得到每个单元
+\begin_inset Formula $K$
+\end_inset
+
+内的 induced error 电场分布
+\begin_inset Formula 
+\begin{equation}
+\vec{\mathcal{E}}_{K}^{e}(\vec{r})=\frac{1}{4\pi\varepsilon_{0}\varepsilon_{r}}\frac{Q_{v}^{K}\vec{R}_{K}}{R_{K}^{3}}+\sum_{j=1}^{4}\frac{1}{4\pi\varepsilon_{0}\varepsilon_{\text{avg}}}\frac{Q_{s}^{\Delta_{j}}\vec{R}_{\Delta_{j}}}{R_{\Delta_{j}}^{3}}\label{eq:j24}
+\end{equation}
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+矢量
+\begin_inset Formula $\vec{R}_{K}$
+\end_inset
+
+从单元
+\begin_inset Formula $K$
+\end_inset
+
+的中心指向观察点，求和对属于单元的四个faces进行；
+\end_layout
+
+\begin_layout Itemize
+矢量
+\begin_inset Formula $\vec{R}_{\Delta_{j}}$
+\end_inset
+
+从face 
+\begin_inset Formula $j$
+\end_inset
+
+ 的中心指向 face 
+\begin_inset Formula $j$
+\end_inset
+
+ 内的点；
+\end_layout
+
+\begin_layout Itemize
+最后，
+\begin_inset Formula $\epsilon_{\text{avg}}$
+\end_inset
+
+是平均permittivity，由共享三角形
+\begin_inset Formula $\Delta_{j}$
+\end_inset
+
+的两个四面体的材料性质平均得到。
+\end_layout
+
+\begin_layout Standard
+在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j24"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，we assume that each residual charge corresponds only to the nodes of the
+ corresponding tetrahedron or triangular face.
+\end_layout
+
+\begin_layout Remark
+意思是，体误差电荷 
+\begin_inset Formula $Q_{v}^{K}$
+\end_inset
+
+ 贡献到四面体的
+\begin_inset Formula $4$
+\end_inset
+
+个顶点；面误差电荷
+\begin_inset Formula $Q_{s}^{\Delta}$
+\end_inset
+
+只贡献到此面的三个顶点或边中点（二阶单元）？？
+\end_layout
+
+\begin_layout Standard
+如果使用二阶基函数，则 the local error 场 
+\begin_inset Formula $\vec{\mathcal{E}}^{e}$
+\end_inset
+
+ 在四个顶点，
+\begin_inset Formula $6$
+\end_inset
+
+ 个边中点上计算，使用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j24"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+；然后使用叠加原理（superposition）计算总的误差场分布。一旦得到 
+\begin_inset Formula $\vec{E}^{e}$
+\end_inset
+
+，则可定义 单元细化指标（the element refinement index）
+\begin_inset Formula 
+\begin{equation}
+\theta_{K}=\frac{1}{2W}\int_{K}\vec{E}^{e}\cdot\vec{D}^{e}\dd{K}.\label{eq:j25}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $W$
+\end_inset
+
+是the total electric energy stored within the domain.
+ The local 细化指标
+\begin_inset Formula $\theta_{K}$
+\end_inset
+
+告诉我们哪些四面体需要细化。然而，还需要解决终止问题（termination issue）。因此，为了度量整体误差，我们定义 a global
+ refinement index 作为自适应过程中的停止判据（criterion）。
+\end_layout
+
+\begin_layout Section
+收敛性研究
+\end_layout
+
+\begin_layout Standard
+为了研究 nodal FEM 的收敛性，分析了各种 capacitor–like 结构，相对误差的 energy norm 计算如下
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Error}=\abs{(C-C')/C}^{1/2}\label{eq:j26}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+C'=\frac{1}{V^{2}}\int_{\Omega}\nabla\phi'\cdot\epsilon_{0}\epsilon_{r}\nabla\phi'\,\dd{\Omega}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $C$
+\end_inset
+
+是 reference capacitance value and 
+\begin_inset Formula $V$
+\end_inset
+
+ 是电容极板间的电势差。值得一提的是，
+\begin_inset Formula $C'$
+\end_inset
+
+ 的收敛速率与 静电能相同，is exactly the rate predicted by 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for 
+\begin_inset Formula $h$
+\end_inset
+
+– and 
+\begin_inset Formula $p$
+\end_inset
+
+–refinements.
+\end_layout
+
+\begin_layout Subsection
+平行平板电容器 Parallel Plate Capacitor
+\end_layout
+
+\begin_layout Standard
+第一个例子是 simple air–filled 3D 平行板电容器，它的截面如 Fig.1 所示。指定了体电荷密度
+\begin_inset Formula $\rho_{v}=x^{2}-a\,x$
+\end_inset
+
+。在电容极板上设置了
+\begin_inset Formula $1$
+\end_inset
+
+V 电势差。如果忽略边缘（fringing）效应，精确解
+\begin_inset Formula $\phi$
+\end_inset
+
+是四阶多项式函数，
+\begin_inset Formula $\phi\in H^{\infty}(\Omega)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+Fig.1 展示了 
+\begin_inset Formula $h$
+\end_inset
+
+–版本 FEM 的数值收敛性，对应 一阶和二阶基函数，对于不同的 quasiuniform 四面体网格。两个斜率都分别跟理论值 
+\begin_inset Formula $-1/3$
+\end_inset
+
+ 和 
+\begin_inset Formula $-2/3$
+\end_inset
+
+ 吻合的蛮好，如
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所预测的。
+\end_layout
+
+\begin_layout Standard
+Fig.1 中还展示了 
+\begin_inset Formula $p$
+\end_inset
+
+–version FEM 的收敛行为。此例中，有限单元离散不变，插值多项式的 order 逐渐升到三阶。从 Fig.1 可以明显看出，相对于第一个和第二个
+\begin_inset Formula $h$
+\end_inset
+
+–版本，
+\begin_inset Formula $p$
+\end_inset
+
+–版本的收敛率高得多。这是因为此问题中
+\begin_inset Formula $\phi$
+\end_inset
+
+的理论收敛率是
+\begin_inset Formula $-\infty$
+\end_inset
+
+，在三个细化步之后，几乎达到精确解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/jinfa-electrostatic1.png
+	lyxscale 60
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+quasiuniform 网格的收敛性为。求解了平行极板电容的例子，其电容值为
+\begin_inset Formula $C=\epsilon_{0}\,5057/2520$
+\end_inset
+
+（单位长度）
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+同轴平板电容Coaxial Plate Capacitor 
+\end_layout
+
+\begin_layout Standard
+Fig2 展示了 coaxial plate capacitor 的截面，计算了电容的近似值，然后与精确值
+\begin_inset Formula $C=\epsilon_{0}\,10.234\,092$
+\end_inset
+
+ （单位长度）对比，obtained by conformal mapping[10]。由于导体角（conductor cornors）的存在，解存在奇点，即在
+角点附近 
+\begin_inset Formula $\phi\sim r^{2/3}$
+\end_inset
+
+，其中
+\begin_inset Formula $r$
+\end_inset
+
+是从角点到观察点的距离。
+\end_layout
+
+\begin_layout Standard
+Fig2 中展示了一阶和二阶插值函数的收敛行为。如图所示，elements of any order exhibit the rate of convergen
+ce 渐进相同的斜率 
+\begin_inset Formula $-2/9$
+\end_inset
+
+，如
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所预测。Fig2 还展示了当构建自适应网格时，不同阶单元的收敛性。此时斜率不再受解的奇异性的限制，当使用 一阶基函数，收敛性得到恢复等于
+\begin_inset Formula $-1/3$
+\end_inset
+
+。对于二阶基函数，得到收敛率为
+\begin_inset Formula $\approx-0.75$
+\end_inset
+
+，甚至高于预测值 
+\begin_inset Formula $-2/3$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/jinfa-electrostatic2.png
+	lyxscale 60
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+当存在奇点时，
+\begin_inset Formula $h$
+\end_inset
+
+–版本FEM 的渐近收敛行为。分析了正方形同轴电容器（A square plate coaxial capacitor）。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Plate Capacitor with Inserted Conductor
+\end_layout
+
+\begin_layout Standard
+最后一个例子是，填充有 钻石形 导体的平板电容器，如 Fig.3。在电容极板 和 中间导体之间施加了
+\begin_inset Formula $1$
+\end_inset
+
+ volt 电势差。为了得到
+\begin_inset Formula $C'$
+\end_inset
+
+ 的 reference value，使用 
+\begin_inset Formula $4\,000\,000$
+\end_inset
+
+ 个二阶单元求解此问题（作为参考值）。
+\end_layout
+
+\begin_layout Standard
+Fig3 描绘了不同order有限单元的收敛性为，for both uniform and optimal 离散 in the presence
+ of singularity.
+ 值得强调，在 uniform 
+\begin_inset Formula $h$
+\end_inset
+
+–版本 FEM中，有限单元的阶不影响曲线的斜率（
+\begin_inset Formula $\approx0.25$
+\end_inset
+
+），而只影响
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的常数
+\begin_inset Formula $C$
+\end_inset
+
+。当生成了自适应网格，一阶FEM达到它的理论收敛率
+\begin_inset Formula $-1/3$
+\end_inset
+
+，二阶单元达到 asymptotic rate of 
+\begin_inset Formula $-0.61$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/jinfa-electrostatic3.png
+	lyxscale 60
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+当存在奇点时，
+\begin_inset Formula $h$
+\end_inset
+
+–版本FEM 的渐近收敛行为。分析了 含有内嵌导体的平板电容器。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+总结
 \end_layout
 
 \end_body
