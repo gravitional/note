@@ -11,7 +11,14 @@
 在典型的 Ubuntu 系统中, 可以使用以下命令安装编译依赖项:
 
 ```bash
-sudo apt-get install build-essential cmake ccache git libffi-dev libtinfo-dev ninja-build zlib1g-dev zstd libstdc++-12-dev
+sudo apt-get install build-essential cmake ccache git libffi-dev libtinfo-dev ninja-build zlib1g-dev zstd libstdc++-12-dev vim python
+```
+
+如果使用 pacman
+
+```bash
+pacman -S base-devel cmake ccache git libffi-devel ncurses ninja zlib-devel zstd vim python
+pacman -Syu mingw-w64-x86_64-gcc mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gcc-libgfortran mingw-w64-x86_64-gcc-libs  mingw-w64-x86_64-lcov mingw-w64-x86_64-perl
 ```
 
 ## Dependencies
@@ -44,9 +51,7 @@ Classic Flang 是在 LLVM 源代码树之外构建的.
 #### `CMAKE_INSTALL_PREFIX`
 
 要指定自定义的安装位置, 请在以下每个步骤中的每条 CMake 命令中添加 `-DCMAKE_INSTALL_PREFIX=<INSTALL_PREFIX> `.
-
 如果在任何步骤中使用了 `CMAKE_INSTALL_PREFIX`, 则必须在每个步骤中使用相同的 `CMAKE_INSTALL_PREFIX`.
-
 使用自定义安装位置时, 必须确保 `bin` 目录位于编译和运行 `Classic Flang` 时的搜索路径上.
 
 #### `LLVM_MAIN_SRC_DIR`
@@ -72,7 +77,7 @@ Classic Flang 支持 X86, PowerPC 和 AArch64.
 请注意, 虽然 LLVM 可同时构建以支持多个目标,
 但 Classic Flang 前端和运行库一次只能支持一个目标.
 
-## Step-by-step instructions
+## 逐步编译, on linux zsh
 
 1. 创建 build 目录并定义所需的 CMake 变量.
 在下面的示例中, 我们将假定你想安装在你将进行构建的安装目录中.
@@ -82,12 +87,11 @@ cd /where/you/want/to/build/flang
 mkdir -force install
 ```
 
-下面是一个 `setup.sh` 示例, 其他联编脚本可以用它来定义常用变量.
+下面是一个 `setup.sh` 示例, 其他build脚本可以用它来定义常用变量.
 我们指定了一个自定义安装位置, 并说明要使用 clang 为 X86 构建.
 
-```bash
+```zsh
 INSTALL_PREFIX='/home/tom/llvm-flang'
-
 # Targets to build should be one of: X86 PowerPC AArch64
 CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
     -DCMAKE_CXX_COMPILER=$INSTALL_PREFIX/bin/clang++ \
@@ -99,12 +103,13 @@ CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
 
 在build Classic Flang 时, 要使用试验性 和 unsupported OpenMP target offload functionality,
 请在 `CMAKE_OPTIONS` 中添加 `-DFLANG_OPENMP_GPU_NVIDIA=ON`.
-并非所有变量都会在每次联编中使用, 因此您可能会看到一些关于未使用定义的警告.
+并非所有变量都会在每次build中使用, 因此您可能会看到一些关于未使用定义的警告.
 
-2. 克隆 llvm-project fork, 联编并安装它(包括 Clang 和 OpenMP).
+2. 克隆 llvm-project fork, build并安装它(包括 Clang 和 OpenMP).
 下面是 build-llvm-project.ps1 脚本 (使用 gcc 和 g++ 引导工具链):
 
 使用 `zsh` 需要小心考虑 field splitting, 即使用 `$=CMAKE_OPTIONS` 而不是 `$CMAKE_OPTIONS`
+**如果是 `bash` 的话, 可以直接使用 `$CMAKE_OPTIONS`**
 
 ```zsh
 . setup.sh
@@ -115,13 +120,12 @@ fi
 
 cd classic-flang-llvm-project
 mkdir -p build && cd build
-cmake $=CMAKE_OPTIONS -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ \
-     -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
+cmake $=CMAKE_OPTIONS -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++  -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
 make
 sudo make install
 ```
 
-3. 克隆 `flang` 仓库, 并联编 `libpgmath` 和 `flang`.
+3. 克隆 `flang` 仓库, 并build `libpgmath` 和 `flang`.
 下面是一个 `build-flang.ps1` 脚本示例(使用 clang 构建).
 脚本首先编译 `libpgmath`, 然后编译经典 `flang` 前端和运行时库.
 
@@ -136,13 +140,13 @@ fi
 
 (cd flang/runtime/libpgmath
  mkdir -p build && cd build
- cmake $=CMAKE_OPTIONS .. -DLLVM_MAIN_SRC_DIR=/home/tom/classic-flang/classic-flang-llvm-project/llvm
+ cmake $=CMAKE_OPTIONS .. -DCMAKE_BUILD_TYPE=Release -DLLVM_MAIN_SRC_DIR=/home/tom/classic-flang/classic-flang-llvm-project/llvm
  make
  sudo make install)
 
 cd flang
 mkdir -p build && cd build
-cmake $=CMAKE_OPTIONS -DFLANG_LLVM_EXTENSIONS=ON -DLLVM_MAIN_SRC_DIR=/home/tom/classic-flang/classic-flang-llvm-project/llvm  ..
+cmake $=CMAKE_OPTIONS -DCMAKE_BUILD_TYPE=Release -DFLANG_LLVM_EXTENSIONS=ON -DLLVM_MAIN_SRC_DIR=/home/tom/classic-flang/classic-flang-llvm-project/llvm  ..
 make
 sudo make install
 ```
@@ -205,15 +209,10 @@ setup.ps1
 ```powershell
 $env:INSTALL_PREFIX="C:/cppLibs/flang-llvm/install"
 # Targets to build should be one of: X86 PowerPC AArch64
-$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} `
-    -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX/bin/clang++} `
-    -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX/bin/clang} `
-    -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX/bin/flang} `
-    -DCMAKE_Fortran_COMPILER_ID=Flang `
-    -DLLVM_TARGETS_TO_BUILD=X86"
+$env:CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${env:INSTALL_PREFIX} -DCMAKE_CXX_COMPILER=${env:INSTALL_PREFIX}/bin/clang++.exe -DCMAKE_C_COMPILER=${env:INSTALL_PREFIX}/bin/clang.exe -DCMAKE_Fortran_COMPILER=${env:INSTALL_PREFIX}/bin/flang.exe -DCMAKE_Fortran_COMPILER_ID=Flang -DLLVM_TARGETS_TO_BUILD=X86"
 ```
 
-classic-flang-llvm-project
+#### classic-flang-llvm-project
 
 ```powershell
 . setup.ps1
@@ -225,14 +224,13 @@ git clone -b release_16x git@github.com:flang-compiler/classic-flang-llvm-projec
 Set-Location classic-flang-llvm-project
 mkdir -force build && cd build
 
-cmake $env:CMAKE_OPTIONS \
--DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
+cmake $env:CMAKE_OPTIONS -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm
 
 cmake --build .
 cmake --build . --target install
 ```
 
-flang
+#### flang
 
 ```powershell
 . setup.ps1
@@ -241,15 +239,86 @@ if (! (Test-Path flang )){
     git clone git@github.com:flang-compiler/flang.git
 }
 
+# 编译 libpgmath
 cd flang/runtime/libpgmath
 mkdir -force build && cd build
-cmake $env:CMAKE_OPTIONS ..
+cmake $env:CMAKE_OPTIONS -DCMAKE_BUILD_TYPE=Release -DLLVM_MAIN_SRC_DIR=C:\Users\qingz\Downloads\classic-flang\classic-flang-llvm-project-release_17x\llvm .. --fresh
 cmake --build .
 cmake --build . --target install
 
+# 编译 flang
 cd flang
 mkdir -force build && cd build
-cmake $env:CMAKE_OPTIONS -DFLANG_LLVM_EXTENSIONS=ON ..
+cmake $env:CMAKE_OPTIONS -DCMAKE_BUILD_TYPE=Release -DFLANG_LLVM_EXTENSIONS=ON -DLLVM_MAIN_SRC_DIR=C:\Users\qingz\Downloads\classic-flang\classic-flang-llvm-project-release_17x\llvm  -D ..
 cmake --build .
 cmake --build . --target install
+```
+
+## ucrt64, bash
+
+[Cannot specify a non default C/C++ compiler in CMake under MinGW64/MSYS](https://stackoverflow.com/questions/66353055/cannot-specify-a-non-default-c-c-compiler-in-cmake-under-mingw64-msys)
+
+使用 msys2, `ucrt64` 子环境进行编译.
+注意指定编译器的时候, 应该写完全路径, 即 `-DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe`,
+这是 `windows` 的坑
+编译的时候会缺少x64汇编语言的assembler, 称为 MASM for x64 (ml64.exe)
+`ml.exe`, 使用下面的命令从 `VS` 安装中复制一份:
+
+```bash
+cp /c/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/vc/Tools/MSVC/14.38.33130/bin/Hostx64/x64/ml64.exe  /usr/bin/ml.exe
+
+```bash
+# setup.sh
+INSTALL_PREFIX='/c/cppLibs/llvm-flang' # on ucrt64 bash
+# Targets to build should be one of: X86 PowerPC AArch64
+CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
+    -DCMAKE_CXX_COMPILER=$INSTALL_PREFIX/bin/clang++ \
+    -DCMAKE_C_COMPILER=$INSTALL_PREFIX/bin/clang \
+    -DCMAKE_Fortran_COMPILER=$INSTALL_PREFIX/bin/flang \
+    -DCMAKE_Fortran_COMPILER_ID=Flang \
+    -DLLVM_TARGETS_TO_BUILD=X86"
+```
+
+使用 ninja 作为后端编译
+
+```bash
+. setup.sh
+
+if [[ ! -d classic-flang-llvm-project ]]; then
+    git clone -b release_17x https://github.com/flang-compiler/classic-flang-llvm-project.git
+fi
+
+cd classic-flang-llvm-project
+mkdir -p build && cd build
+cmake $CMAKE_OPTIONS -G 'MSYS Makefiles' -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc.exe -DCMAKE_CXX_COMPILER=g++.exe -DLLVM_ENABLE_CLASSIC_FLANG=ON -DLLVM_ENABLE_PROJECTS="clang;openmp" ../llvm --fresh
+make
+sudo make install
+```
+
+## new flang
+
+```powershell
+rm -Force -Recurse build
+mkdir build
+rm -Force -Recurse install
+mkdir install
+$env:ROOTDIR='C:/Users/qingz/Downloads/llvm-src'
+$env:INSTALLDIR="${env:ROOTDIR}/install"
+cd build
+
+cmake -G 'Visual Studio 17 2022' -DCMAKE_BUILD_TYPE='Release' -DCMAKE_INSTALL_PREFIX="${env:INSTALLDIR}" -DCMAKE_CXX_STANDARD='17' -DCMAKE_EXPORT_COMPILE_COMMANDS='ON' -DCMAKE_CXX_LINK_FLAGS="-Wl,-rpath,${env:LD_LIBRARY_PATH}" -DFLANG_ENABLE_WERROR='ON' -DLLVM_ENABLE_ASSERTIONS='ON' -DLLVM_TARGETS_TO_BUILD='host' -DLLVM_LIT_ARGS='-v' -DLLVM_ENABLE_PROJECTS="clang;mlir;flang;openmp" -DLLVM_ENABLE_RUNTIMES="compiler-rt" ../llvm --fresh
+
+MSBuild C:\Users\qingz\Downloads\llvm-src\build\LLVM.sln /m /p:Platform=x64 /v:m /p:Configuration=Release '-t:build'
+
+#To create the installed files:
+cmake --install .
+echo "latest" > "${env:INSTALLDIR}/bin/versionrc"
+```
+
+```powershell
+# llvm source 目录
+$env:ROOTDIR='C:/Users/qingz/Downloads/llvm-src/'
+cmake -G 'Visual Studio 17 2022' -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_LINK_FLAGS="-Wl,-rpath,${env:LD_LIBRARY_PATH}" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DFLANG_ENABLE_WERROR=ON -DLLVM_TARGETS_TO_BUILD=host   -DLLVM_ENABLE_ASSERTIONS=ON -DLLVM_BUILD_MAIN_SRC_DIR="${env:ROOTDIR}/build/lib/cmake/llvm" -DLLVM_EXTERNAL_LIT="${env:ROOTDIR}/build/bin/llvm-lit" -DLLVM_LIT_ARGS=-v -DLLVM_DIR="${env:ROOTDIR}/build/lib/cmake/llvm" -DCLANG_DIR="${env:ROOTDIR}/build/lib/cmake/clang" -DMLIR_DIR="${env:ROOTDIR}/build/lib/cmake/mlir"
+
+MSBuild  C:\Users\qingz\Downloads\llvm-src\build\LLVM.sln /m /p:Platform=x64 /v:m  /p:Configuration=Release '-t:build'
 ```

@@ -24,7 +24,7 @@ architecture, 使用的 system libraries 等.
 如果不确定, 请使用 `UCRT64`.
 
 `MSYS` 环境包含基于 unix-like/cygwin 的工具,
-位于 /usr 下, 其特殊之处在于它始终处于激活状态.
+位于 `/usr` 下, 其特殊之处在于它始终处于激活状态.
 所有其他环境都继承自 `MSYS` 环境, 并在其基础上添加了各种功能.
 
 例如, 在 `UCRT64` 环境中, `$PATH` 变量以`/ucrt64/bin:/usr/bin`开头,
@@ -249,9 +249,21 @@ pacman -S xx 安装软件xx
 pacman -R xx 删除软件xx
 ```
 
-### 安装gcc, g++编译器
+## 安装gcc, g++编译器
 
 随便哪个msys2 子环境都可以, 只是安装好后, 只能在对应的环境下运行.
+
+### 安装make编译器
+
+```bash
+#查询并找到msys/make
+pacman -Ss make
+#安装
+pacman -S msys/make
+
+# 安装 msys 版本
+pacman -S msys/gcc
+```
 
 查看可用的安装包
 
@@ -267,38 +279,29 @@ msys gcc
 
 分别对应于 msys 的三个环境.
 
-安装
+### 安装 mingw-w64-ucrt 工具链
 
 ```bash
-# 安装 msys 版本
-pacman -S msys/gcc
-
-# 安装 mingw64 版本
-pacman -S mingw-w64-x86_64-gcc
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-gcc-libgfortran
+ mingw-w64-ucrt-x86_64-gcc-libs mingw-w64-ucrt-x86_64-perl
 ```
+
+### 安装 mingw-w64-x86_64 工具链
 
 不论你在哪个环境下安装,
 MSYS2都会将 `mingw-w64-x86_64-gcc` 安装在 `msys64/mingw64` 下.
 从之前的分析可知只有在 mingw64 环境下才能使用这个目录下的程序.
 在其他两个环境下虽然能够安装mingw-w64-x86_64-gcc, 但是不能使用mingw-w64-x86_64-gcc.
 
-### 安装make编译器
-
-```bash
-#查询并找到msys/make
-pacman -Ss make
-#安装
-pacman -S msys/make
-```
-
 ### 安装编译工具链
 
 ```bash
 pacman-key --init
+# 安装 mingw64 版本
 pacman -Syu
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb
 pacman -S mingw-w64-x86_64-cmake mingw-w64-x86_64-extra-cmake-modules
 pacman -S mingw-w64-x86_64-make
-pacman -S mingw-w64-x86_64-gdb
 pacman -S mingw-w64-x86_64-toolchain
 ```
 
@@ -370,7 +373,7 @@ sudo pacman -R $(sudo pacman -Qdtq)
 ```bash
 pacman -Sw # 包名: 只下载包, 不安装.
 pacman -Sc # 清理未安装的包文件, 包文件位于 /var/cache/pacman/pkg/ 目录
-pacman -Scc # 清理所有的缓存文件.
+pacman -Scc # 清理所有的缓存文件
 ```
 
 ## perl cpan, cpanm, cpanp
@@ -397,5 +400,11 @@ msys2 安装 [List::Util][] 模块需要在 msys2 环境下运行,
 这些是 OS specific 文件, 但不是 Windows 头文件.
 Windows 并不完全支持 POSIX API.
 您可能需要对代码进行一些移植, 才能使其在 Windows 上编译和运行.
+
+`List::Util` 依赖于 `crypt.h`, 使用 pacman 安装
+
+```bash
+pacman -S msys/libcrypt-devel
+```
 
 [List::Util]: https://metacpan.org/pod/List::Util
