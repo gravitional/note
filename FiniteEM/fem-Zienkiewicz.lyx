@@ -95,7 +95,7 @@ Young
 \end_layout
 
 \begin_layout Chapter*
-sss
+ALE动网格
 \end_layout
 
 \begin_layout Standard
@@ -667,12 +667,717 @@ status open
 介绍
 \end_layout
 
+\begin_layout Standard
+在上一章中，我们详细讨论了使有限元求解结果更加精确的各种 recovery 方法，并由此设计了各种 误差估计程序。在本章中，我们将讨论在获得有限元求解结果后，可
+以用来减少误差的方法。由于这一过程在各个阶段都依赖于先前的结果，因此称为 自适应（adaptive）。这种自适应方法最早是由 Babuska 和
+ Rheinboldt 在 20 世纪 70 年代末引入有限元计算的。
+\end_layout
+
+\begin_layout Standard
+在继续深入研究之前，有必要明确 细化（refinement）的目标，并指定 “允许误差幅度”，在这方面，工程师或用户必须有非常明确的目标。例如，不能天真地要求所
+有位移或应力都在规定的tolerance范围内。原因显而易见，例如在奇点处，应力总是无限大，因此无法规定有限tolerance。如果考虑点或刀刃载荷（loads
+），位移也会遇到同样的困难。
+\end_layout
+
+\begin_layout Standard
+一般工程中最常用的准则（criterion）是规定 energy norm计算 误差的 total limit。通常，这种误差要求不超过解的总
+ energy norm 的一个特定百分比，在后面介绍的许多例子中，我们将使用这种简单的标准。然而，使用a recovery 类型的 error
+ estimator 可以自适应地细化网格，使某些相关量（如 RMS误差和应力RMS误差[见第 15 章，公式 (15.9) 和 (15.10)]）的精度满足用户指
+定的标准。我们应该认识到，基于减小位移RMS（均方根）误差的网格细化，实际上是减小用户指定区域（例如每个元素）内的平均位移误差；同样，基于减小应力均方根误差的网
+格细化等同于减小用户指定区域内的平均应力误差。例如，我们可以直接指定任意位置的应力或位移的允许误差。一些研究者（如 Zienkiewicz 和
+ Zhu [3]）在自适应网格细化中使用了应力RMS来获得更精确的应力解。其他研究者（如 Onate 和 Bugeda [4]）在自适应分析中使用了
+ constant energy norm density 的要求，这实际上等价于指定 应力RMS 在每个元素中均匀分布。我们注意到，误差估计的
+ recovery type 在设计相关量的自适应分析程序时特别有用和方便。设计基于相关量误差估计的自适应分析程序的方法原则上与本章所述相同；更多细节请读者参阅
+参考文献 [5-7]。
+\end_layout
+
+\begin_layout Standard
+如前一章所述，我们将始终考虑 实际有限元解 的误差，而不是 recovered solution 的误差。在特殊问题中，即使有限元解 本身的误差很大，recov
+ery solution 的误差也有可能为零。(例如，考虑一个由 线性单元 求解的线性应力分布问题，其结果是 单元应力恒定。显然，单元误差会相当大。但如果使用
+ recovery应力，则可以得到精确的结果，而且不会存在误差）。考虑哪些误差 的问题仍有待解决。目前，我们将把 recovery问题 视为在误差定义中提供一个
+非常大的安全系数（a very substantial margin of safety）。
+\end_layout
+
+\begin_layout Standard
+有限元解 的细化程序多种多样。大致可分为两类：
+\end_layout
+
+\begin_layout Enumerate
+h–refinement：继续使用同一类元素，但改变其 size，在某些位置变大，在另一些位置变小，以最大限度地节约成本，达到理想的解。
+\end_layout
+
+\begin_layout Enumerate
+h–refinement：继续使用相同的元素尺寸，只是增加（generally hierarchically）单元定义中使用的多项式的阶数。
+\end_layout
+
+\begin_layout Standard
+将上述分类划分为不同的子类有时是有用的，因为 h–refinement 可以具体为不同方式的应用和思考。图 16.1 展示了三种典型的 h–细化
+ 方法。
+\end_layout
+
+\begin_layout Enumerate
+第一种 h细化 方法是 
+\series bold
+element subdivision
+\series default
+（enrichment）（图 16.1b）。在这里可以方便地靠已有单元实现细化。如果现有单元误差过大，只需将其分割成更小的单元，并保持原有单元边界不变。这一过程非
+常 cumbersome，因为在有 中边节点的 单元 连接到无 中边节点的线性单元时，会产生许多 hanging points。在这种情况下，有必要在
+ 悬挂点上提供局部约束，计算将变得更加复杂。此外，de–refinement 的实现需要相当复杂的数据管理，这可能会降低该方法的效率。尽管如此，元素细分方法仍被
+广泛使用。
+\end_layout
+
+\begin_layout Enumerate
+第二种方法是 
+\series bold
+a complete mesh regeneration 
+\series default
+or
+\series bold
+ remeshing
+\series default
+（图 16.1c）。在此，根据给定的解，在所有域中预测新的单元尺寸，并生成全新的网格。因此可以同时进行 refinement 和 de–refinement。当然
+，这样做的成本会很高，特别是在三维空间中，生成特定类型的单元的网格很难时，而且从一个网格向另一个网格传输数据也是一个问题。不过，这种方法的结果通常要好得多，本章
+中的大多数例子都将采用这种方法。对于许多实际工程问题，尤其是在分析过程中元素形状会发生严重变形的问题，自适应 mesh regeneration
+ 是一个自然的选择。
+\end_layout
+
+\begin_layout Enumerate
+最后一种方法有时也称为 r–refinement（图 16.1d），它保持节点总数不变，并调整节点位置以获得最佳近似值[8-10]。虽然这种方法在理论上很有意义，
+但在实践中却很难使用，也没有什么值得推荐的地方。此外，它也不是真正的细化程序，因为一般无法达到预先设定的精度。 
+\end_layout
+
+\begin_layout Standard
+我们将看到，在指定 energy norm 作为criterion的情况下，预测特定近似程度所需的单元尺寸是一件相当简单的事情。因此，要达到目标，一般只需要很少
+的 resolutions。
+\end_layout
+
+\begin_layout Standard
+p–refinement 的情况则不同。这里存在两个子类：
+\end_layout
+
+\begin_layout Enumerate
+一是多项式阶数在整个域内均匀增加。
+\end_layout
+
+\begin_layout Enumerate
+而是使用 hierarchical细化 局部增加多项式阶数。
+\end_layout
+
+\begin_layout Standard
+在这两种情况下，都没有开发出一种直接的程序，能够预测需要的最佳细化来 达到给定误差。在这种情况下，程序一般需要更多的 resolutions，而且往往成本较高。
+然而，对于给定数量的变量，p–细化 的收敛速度更快，值得推荐。
+\end_layout
+
+\begin_layout Standard
+有时，可以将 h– 和 p–细化 有效地结合起来，称之为 hp–细化。在这个过程中，单元
+\begin_inset Formula $h$
+\end_inset
+
+的大小和多项式
+\begin_inset Formula $p$
+\end_inset
+
+的阶数 都会改变。Babuska、Oden 等人在文献中做了大量工作，感兴趣的读者可参阅参考文献 [11-21]。
+\end_layout
+
+\begin_layout Standard
+在第 16.2 和 16.3 节中，我们将讨论 
+\begin_inset Formula $h$
+\end_inset
+
+– 和 
+\begin_inset Formula $p$
+\end_inset
+
+– 细化方法。在第 16.3 节中，我们还将介绍 Zienkiewicz等人[22]提出的非常简单而高效的 
+\begin_inset Formula $hp$
+\end_inset
+
+–refinement 过程的一些细节。
+\end_layout
+
 \begin_layout Section
 自适应h–细化
 \end_layout
 
+\begin_layout Subsection
+在h细化中预测所需单元尺寸
+\end_layout
+
+\begin_layout Standard
+在本章的引言中，我们提到了几种可供选择的 
+\begin_inset Formula $h$
+\end_inset
+
+–adaptivity 过程，并认为一般来说，重新生成完整网格 的过程是最有效的。这种程序允许对元素进行 de-refined（或放大）和 refined（变小
+），并且在分析的每个阶段都从上一个网格的每个节点处定义的网格尺寸 
+\begin_inset Formula $h$
+\end_inset
+
+开始。使用 标准插值 用于确定域中任意点所需的元素尺寸。在后续每个分析阶段的细化过程中，计算出的网格尺寸 h 都是基于之前网格节点的规定精度。
+\end_layout
+
+\begin_layout Standard
+上一章中讨论的误差估算器可以确定误差的全局能量（或类似）norm，通常也能很好地表示局部（单元级）发生的误差。如果这些误差在工程师规定的范围内，那么工作显然已经
+完成。更常见的情况是，这些误差超出了规定范围，因此有必要进行改进。本节要解决的问题是如何最好地实现这种改进。显然，这里有许多可能的策略，而且在很大程度上取决于要
+实现的 
+\series bold
+objectives
+\series default
+ or 
+\series bold
+goals
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+例如在最简单的情况下，我们应设法使相对能量norm误差
+\begin_inset Formula $\eta$
+\end_inset
+
+[即公式 (15.12)]小于某个指定值
+\begin_inset Formula $\overline{\eta}$
+\end_inset
+
+（对于许多工程应用，例如
+\begin_inset Formula $5\%$
+\end_inset
+
+）。因此，要实现
+\begin_inset Formula 
+\begin{equation}
+\eta\le\overline{\eta}\label{eq:16.1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在 “optimal mesh” 中，我们希望所有元素的能量norm误差分布（即 
+\begin_inset Formula $\left\Vert e\right\Vert _{K}$
+\end_inset
+
+）对所有元素都相等。因此，如果总允许误差 （假设由近似分析结果给出）为
+\begin_inset Formula 
+\begin{equation}
+\text{Permissible error}\equiv\overline{\eta}\left\Vert \sbf u\right\Vert =\overline{\eta}\left(\left\Vert \hat{\sbf u}\right\Vert ^{2}+\left\Vert e\right\Vert ^{2}\right)^{1/2}\label{eq:16.2}
+\end{equation}
+
+\end_inset
+
+其中使用了
+\begin_inset Formula 
+\begin{equation}
+\left\Vert e\right\Vert ^{2}=\left\Vert u\right\Vert ^{2}-\left\Vert \hat{\sbf u}\right\Vert ^{2}\label{eq:16.3}
+\end{equation}
+
+\end_inset
+
+我们可以提出这样一个要求，即任何元素 
+\begin_inset Formula $k$
+\end_inset
+
+ 的误差都应该满足
+\begin_inset Formula 
+\begin{equation}
+\left\Vert e\right\Vert _{K}<\overline{\eta}\left(\frac{\left\Vert \hat{\sbf u}\right\Vert ^{2}+\left\Vert e\right\Vert ^{2}}{m}\right)^{1/2}\equiv\overline{e}_{m}\label{eq:16.4}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $m$
+\end_inset
+
+是涉及的单元数目。
+\end_layout
+
+\begin_layout Standard
+不满足上述标准的单元显然可以作为 refinement 候选。因此如果我们定义一个 refinement 比例
+\begin_inset Formula 
+\begin{equation}
+\xi_{k}=\frac{\left\Vert e\right\Vert _{K}}{\overline{e}_{m}}.\label{eq:16.5}
+\end{equation}
+
+\end_inset
+
+我们应当refine 如果
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+如果希望节省计算量，我们确实可以在
+\begin_inset Formula $\xi_{k}<1$
+\end_inset
+
+的地方“de–refine” 或使用更大的单元间距。
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\xi_{K}>1\label{eq:16.6}
+\end{equation}
+
+\end_inset
+
+The refinement ratio 
+\begin_inset Formula $\xi_{K}$
+\end_inset
+
+可以被近似，通过将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代之以 error estimators。
+\end_layout
+
+\begin_layout Standard
+在这种情况下，可以通过只细化
+\begin_inset Formula $\xi$
+\end_inset
+
+大于指定限值的部分单元来逐步进行细分。如图 16.1b 所示，这种单元细分过程也称为 
+\series bold
+mesh enrichment
+\series default
+。这种细化过程虽然最终能以相对较少的总自由度获得令人满意的解，但一般来说并不经济，因为 trial solutions 总数通常过多。
+\end_layout
+
+\begin_layout Standard
+更有效的方法是尝试设计一个全新的网格，在所有单元上满足
+\begin_inset Formula 
+\begin{equation}
+\xi_{K}\le1.\label{eq:16.7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中一种方法是引用 asymptotic convergence rate criteria 来预测单元大小分布。例如，如果我们假设
+\begin_inset Formula 
+\begin{equation}
+\left\Vert e\right\Vert _{K}\propto h_{K}^{p}\label{eq:16.8}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $h_{K}$
+\end_inset
+
+是当前单元尺寸，
+\begin_inset Formula $p$
+\end_inset
+
+ 是 polynomial order of approximation，为了满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的要求，新生成单元的尺寸应该不大于
+\begin_inset Formula 
+\begin{equation}
+h_{\text{new}}=\xi_{K}^{-1/p}h_{K}\label{eq:16.9}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+正如我们将在第 17 章讨论的那样，现在已经有了可以指定局部元素尺寸的网格生成程序，这些程序可以用来设计一个新的网格，并对其进行 reanalysis
+ [24,25]。从图中我们可以看出，从一个相对粗糙的解开始，通过一次网格预测，通常可以得到一个（几乎）满足指定精度要求的解。
+\end_layout
+
+\begin_layout Standard
+根据公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中隐含的 渐近收敛率 的简单假设，网格再生就能成功，是因为随着网格的细化，网格趋于 “最优”，局部奇异点的影响 不再 干扰整体收敛。
+\end_layout
+
+\begin_layout Standard
+当然，任何奇异点的影响仍会存在于其相邻的元素中。如果我们在这些元素中使用适当的收敛方法，并在公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中用
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 代替
+\begin_inset Formula $p$
+\end_inset
+
+，就可以得到改进的网格
+\begin_inset Formula 
+\begin{equation}
+h_{\text{new}}=\xi_{K}^{-1/\lambda}h_{K}\label{eq:16.10}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\lambda$
+\end_inset
+
+是 singularity strength，见 Chapter 15, Eq(15.14)。这里使用的保守数字是 
+\begin_inset Formula $\lambda=0.5$
+\end_inset
+
+，因为大多数 singularity parameters 的范围在 
+\begin_inset Formula $0.5\sim1.0$
+\end_inset
+
+ 之间。在细化策略中加入这一程序后，我们经常能在单次 remeshing 中获得优于规定极限的精度。
+\end_layout
+
+\begin_layout Subsection
+数值结果
+\end_layout
+
+\begin_layout Standard
+在下面的示例中，我们将展示一个总体的细化过程，在这个过程中，尽管网格是 redesigned，但每个阶段的自由度总数都在增加。这种情况并不总是成立，因为一个精细
+但结构不良的网格所显现的误差可能 比一个 near–optimal 的网格要大得多。为了说明这一点，我们在图 16.2 中展示了一个从均匀网格细分开始，一步达到
+\begin_inset Formula $5\%$
+\end_inset
+
+ 精度的细化模型。我们注意到，至少在一次细化中，总误差随着总自由度的减少而减小（从 
+\begin_inset Formula $544$
+\end_inset
+
+ 个方程的 
+\begin_inset Formula $8\times8$
+\end_inset
+
+ 均匀细分和
+\begin_inset Formula $\eta=9.8\%$
+\end_inset
+
+，到 
+\begin_inset Formula $460$
+\end_inset
+
+个方程的
+\begin_inset Formula $\eta=3.1\%$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+现在我们将进一步介绍 
+\begin_inset Formula $h$
+\end_inset
+
+–refinement with mesh adaptivity 的典型例子。在所有这些例子中，每一步都使用了 full mesh regeneration。
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+短悬臂梁
+\end_layout
+
+\end_inset
+
+（Short cantilever beam） 这个问题指的是一个短悬臂梁，其连接刚性墙的两个角有两个非常高的奇点。如图 16.3 和图 16.4
+ 所示，梁的顶部边界受均匀分布的载荷作用。在细化过程中，我们同时使用了公式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.10"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ ref[26] 中的 mesh criteria。在图 16.3 和 16.4 中，我们展示了自适应求解的三个阶段，并在图 16.5 中说明了这些阶段的收敛速度，尽
+管所有均匀细化的收敛速度都非常缓慢（由于 singularities）。
+\end_layout
+
+\begin_layout Standard
+同样的问题也可以通过使用 线性四边形单元 进行 mesh enrichment 和 mesh regeneration 来求解，以达到 
+\begin_inset Formula $5\%$
+\end_inset
+
+ 的精度。两种自适应细化方法都能达到 最佳收敛速度，从而获得规定的精度（图 16.6）。但是，如图 16.7 所示，mesh enrichment
+ 需要七次细化，而网格regeneration 只需要三次（见图 16.8）。在这里，细化准则公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:16.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+被用于网格enrichment过程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+受力圆柱体
+\end_layout
+
+\end_inset
+
+（Stressed cylinder）如前所述，energy norm error误差 并不一定是实际细化的最佳标准。可以有效利用对局部应力误差的限制。这些误差
+可以通过前一章中描述的 recovery 过程（第 15.4 节中的 SPR 和第 15.5 节中的 REP）简单获得。在图 16.9 中，我们展示了
+ Onate 和 Bugeda [4] 所做的一个简单练习，其中使用图 16.9 标题中描述的各种criteria，对受压圆柱体进行了细化。可以看出，the
+ stress tolerance法 通常需要更精细的网格。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+正方形域中的泊松方程
+\end_layout
+
+\end_inset
+
+（A Poisson equation in a square domain）本例比较简单，从一个简单的正方形域开始，在泊松方程中施加合适的载荷，从而得到图
+ 16.10 [15] 所示的解。在图 16.11 中，我们展示了将该域划分为 regular linear and quadratic 单元的第一次细分以及随后的
+细化。单元形状有三角形和四边形两种，线性元素的目标误差为总能量的
+\begin_inset Formula $10\%$
+\end_inset
+
+，而四边形元素的目标误差为总能量的
+\begin_inset Formula $1\%$
+\end_inset
+
+。实际上，在所有情况下，尽管原始网格无法以任何方式捕捉到图16.10所示的 high intensity 区域，但三次细化就足以获得满足要求的非常精确的解。值得注
+意的是，所有情况下的effectivity indices 都非常接近于 
+\begin_inset Formula $1$
+\end_inset
+
+，即使是 original refinement 也是如此。图 16.12 显示了不同单元的收敛情况，误差与总自由度的关系如图所示。读者应该注意到，当细化更接近最
+终目标时，the asymptotic rate of convergence is exceeded。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+L 形域
+\end_layout
+
+\end_inset
+
+（An L–shaped domain）值得注意的是图 16.13 中的结果，which come from an analysis of a re–entran
+t corner（凹角）using isoparametric quadratic quadrilaterals。这里显示了两个网格和 解的收敛数据。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+机器零件
+\end_layout
+
+\end_inset
+
+（A machine part）于此机器零件问题，plane strain conditions are assumed。使用 linear quadrilat
+eral单元 进行了一次自适应细化（见图 16.14），达到了
+\begin_inset Formula $5\%$
+\end_inset
+
+ 相对误差的规定精度。剪应力
+\begin_inset Formula $\tau_{xy}$
+\end_inset
+
+ 的收敛情况如图 16.15 所示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+穿孔重力坝
+\end_layout
+
+\end_inset
+
+（A perforated gravity dam）本节的最后一个例子展示了一个穿孔大坝的实际工程问题。该水坝在 20 世纪 60 年代末建造时进行过分析。为了
+选择合适的 quadratic triangles 网格，我们重新研究了这个问题。图 16.16a 显示了选择的网格。尽管使用了高阶网格单元，但误差却相当大，约为
+\begin_inset Formula $17\%$
+\end_inset
+
+。一阶段的自适应细化达到了能量norm误差
+\begin_inset Formula $5\%$
+\end_inset
+
+的指定值。正如我们在之前的示例中看到的，这种收敛并不总是可行的，但在这里却实现了。我们相信，这个典型的例子显示了自适应的优势，以及自动生成优化网格的便利。
+\end_layout
+
 \begin_layout Section
 p–细化 和 hp–细化
+\end_layout
+
+\begin_layout Standard
+当然，if done hierarchically，也可以使用 nonuniform 
+\begin_inset Formula $p$
+\end_inset
+
+–rinement 方法，而且已经有很多人尝试有效地使用这种方法。其中一些尝试早在 1983 年就已完成 [27,28]。然而，一般过程是困难的，需要对误差的减
+小做出许多假设。当然，所需的精确度很少能在单一步骤中获得，这方面的大部分工作都需要一系列步骤。我们在图 16.17 中对上一节中介绍的穿孔坝问题的细化过程进行了说
+明。
+\end_layout
+
+\begin_layout Standard
+同样的情况也适用于
+\begin_inset Formula $hp$
+\end_inset
+
+–过程，在过去的二十年中人们在这方面做了大量的工作[11-21]。在此，我们仅引述一种特别有效的
+\begin_inset Formula $hp$
+\end_inset
+
+–细化尝试，它需要的解数量很少。该方法由 Zienkiewicz 等人提出 [22]，我们在此引用其中的一些步骤。
+\end_layout
+
+\begin_layout Standard
+第一种方法是使用低阶单元（如线性或二次单元）进行 
+\begin_inset Formula $h$
+\end_inset
+
+–细化，以获得 
+\begin_inset Formula $5\%$
+\end_inset
+
+ 的精度，此时能量norm几乎均匀地分布在所有元素上。在此基础上，以统一的方式进行
+\begin_inset Formula $p$
+\end_inset
+
+– 细化（即在所有元素中使用相同的
+\begin_inset Formula $p$
+\end_inset
+
+）。这在计算上有很大的优势，因为编程很容易，尤其是在使用 hierarchical 函数的情况下。The uniform 
+\begin_inset Formula $p$
+\end_inset
+
+–细分 还允许全局能量norm误差近似地通过三个连续的解来计算 [29]。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left\Vert \sbf e\right\Vert \le C\,N^{-\beta}\label{eq:16.11}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

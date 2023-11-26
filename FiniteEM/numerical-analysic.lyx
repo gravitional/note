@@ -8665,6 +8665,274 @@ GMRES 典型用于 large and sparse
 常微分方程
 \end_layout
 
+\begin_layout Section
+初值问题
+\end_layout
+
+\begin_layout Section
+IVP求解器的分析
+\end_layout
+
+\begin_layout Section
+常微分方程组
+\end_layout
+
+\begin_layout Section
+龙格–库塔方法的应用
+\end_layout
+
+\begin_layout Section
+可变步长方法
+\end_layout
+
+\begin_layout Subsection
+龙格–库塔嵌入对（Embedded Runge–Kutta pairs）
+\end_layout
+
+\begin_layout Standard
+可变步长方法的主要思想是 monitor 当前步长产生的误差。用户设定当前步长必须满足的 
+\series bold
+容差（error tolerance）
+\series default
+。然后，设计该方法的目的是：(1) 如果超出误差容限，则拒绝该步并削减步长；或 (2) 如果满足误差容限，则接受该步，然后为下一步选择一个合适的步长
+ 
+\begin_inset Formula $h$
+\end_inset
+
+。关键是需要某种方法来估算每一步的误差。首先，让我们假设已经找到了这种方法，并解释如何改变步长。
+\end_layout
+
+\begin_layout Standard
+改变步长的最简单方法是根据当前误差将步长加倍或减半。将误差估计值 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ 或相对误差估计值 
+\begin_inset Formula $e_{i}/\left|w_{i}\right|$
+\end_inset
+
+ 与 
+\series bold
+容差
+\series default
+ 进行比较。(在此，与本节其余部分一样，我们将假设所求解的 ODE 系统由一个方程组成。将本节的思路推广到更高维度是相当容易的）。如果没有达到容差要求，则重复该
+步骤，新的步长等于 
+\begin_inset Formula $h_{i}/2$
+\end_inset
+
+。如果太符合容差要求，例如误差小于 tolerance的
+\begin_inset Formula $1/10$
+\end_inset
+
+，则在接受改步，下一步的步长将加倍。
+\end_layout
+
+\begin_layout Standard
+通过这种方式，步长将自动调整到能将 （relative）local truncation error 保持在用户要求水平附近的大小。使用 绝对误差
+ 还是 相对误差 取决于具体情况；一个很好的通用技术是使用 hybrid 
+\begin_inset Formula $e_{i}/\max(\abs{w_{i}},\theta)$
+\end_inset
+
+ 与 容差 进行比较，其中常数 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+ 可以防止 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ 值过小。
+\end_layout
+
+\begin_layout Standard
+根据对 ODE 求解器 order 的了解，可以用更复杂的方法来选择合适的步长。假设求解器的阶数为 
+\begin_inset Formula $p$
+\end_inset
+
+，那么局部截断误差 
+\begin_inset Formula $e_{i}=\order{h^{p+1}}$
+\end_inset
+
+。设 
+\begin_inset Formula $T$
+\end_inset
+
+ 为用户允许的每一步相对误差容限。也就是说，目标是确保
+\begin_inset Formula $e_{i}/\abs{w_{i}}<T$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如果目标
+\begin_inset Formula $e_{i}/\abs{w_{i}}<T$
+\end_inset
+
+已经满足，则接受此 step，并估计下一步的 step size，假设对于某常数
+\begin_inset Formula $c$
+\end_inset
+
+有
+\begin_inset Formula 
+\begin{equation}
+e_{i}\approx c\,h_{i}^{p+1}\label{eq:6.55}
+\end{equation}
+
+\end_inset
+
+则满足容差的最优步长
+\begin_inset Formula $h$
+\end_inset
+
+是
+\begin_inset Formula 
+\begin{equation}
+T\,\abs{w_{i}}=c\,h^{p+1}\label{eq:6.56}
+\end{equation}
+
+\end_inset
+
+求解方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.55"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.56"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $h$
+\end_inset
+
+和
+\begin_inset Formula $c$
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{equation}
+h_{*}=0.8\,\left(\frac{T\,\abs{w_{i}}}{e_{i}}\right)^{\frac{1}{p+1}}h_{i},\label{eq:6.57}
+\end{equation}
+
+\end_inset
+
+其中添加了 安全因子 
+\begin_inset Formula $0.8$
+\end_inset
+
+ 使方法更加保守，因此下一个 step size 将设置为 
+\begin_inset Formula $h_{i+1}=h_{*}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+另一方面，如果
+\begin_inset Formula $e_{i}/\abs{w_{i}}<T$
+\end_inset
+
+未满足，则 
+\begin_inset Formula $h_{i}$
+\end_inset
+
+ 将被设置为 
+\begin_inset Formula $h_{*}$
+\end_inset
+
+再试一次。由于安全因子一般就足够了，然而如果再次尝试仍然失败，那就简单地将步长减半。此迭代持续到满足目标。正如对通用目的的表述，相对误差应该替换成
+ 
+\begin_inset Formula $e_{i}/\max(\abs{w_{i}},\theta)$
+\end_inset
+
+ 。对应的，
+\begin_inset Formula 
+\[
+h_{*}=0.8\,\left(\frac{T\,\max(\abs{w_{i}},\theta)}{e_{i}}\right)^{\frac{1}{p+1}}h_{i},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+所述的简单方法和复杂方法在很大程度上都依赖于某种方法来估计 ODE 求解器当前步骤的误差 
+\begin_inset Formula $e_{i}=\abs{w_{i+1}-y_{i+1}}$
+\end_inset
+
+。一个重要的约束条件是在不需要大量额外计算的情况下获得估计值。
+\end_layout
+
+\begin_layout Standard
+获得这种误差估计最常用的方法是在运行相关 ODE 求解器的同时运行 higher order ODE 求解器。高阶方法对 
+\begin_inset Formula $w_{i+1}$
+\end_inset
+
+ 的估计值—称之为
+\begin_inset Formula $z_{i+1}$
+\end_inset
+
+—将比原始
+\begin_inset Formula $w_{i+1}$
+\end_inset
+
+精确得多，因此差值为
+\begin_inset Formula 
+\begin{equation}
+e_{i+1}\approx\abs{z_{i+1}-w_{i+1}}\label{eq:6.58}
+\end{equation}
+
+\end_inset
+
+ 被当作从 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+到
+\begin_inset Formula $t_{i+1}$
+\end_inset
+
+步的 error estimate。
+\end_layout
+
+\begin_layout Standard
+沿着这个思路，可以推导出一些龙格–库塔方法“对”，一个是
+\begin_inset Formula $p$
+\end_inset
+
+阶，另外一个是
+\begin_inset Formula $p+1$
+\end_inset
+
+阶，它们可以共享一些所需的计算。以这种方式，可以使得步长控制的额外代价很低。这样的一对通常被称为 
+\series bold
+嵌入龙格–库塔对
+\series default
+（embedded Runge–Kutta pair）。
+\end_layout
+
+\begin_layout Section
+隐式方法和刚性方程
+\end_layout
+
+\begin_layout Section
+多步方法
+\end_layout
+
 \begin_layout Chapter
 边值问题
 \end_layout

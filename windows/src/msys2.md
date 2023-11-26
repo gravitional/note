@@ -14,6 +14,11 @@ MSYS2 和 MinGW 都提供 gcc, 但是属于两个完全不同的工具链.
 根据我自己的经验, 如果你使用目标文件的环境就是 MSYS2 的话,
 用 MSYS2 工具链编译的程序要比 MinGW 工具链的稳定一些(对 ruby, python 等工具而言).
 
+请务必记住, MinGW 与 MSYS2 或 Cygwin 不同.
+MSYS2 和 Cygwin 是完全的 POSIX 环境, 有很多神奇的功能, 如 `fork()` 和自己的 `malloc()`.
+MinGW 基于普通的 Microsoft C Runtime, 没有这些功能.
+请明确您要构建的是哪一种环境.
+
 ## msys2 环境
 
 [Environments](https://www.msys2.org/docs/environments/)
