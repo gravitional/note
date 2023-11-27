@@ -35,7 +35,9 @@ def install(package):
 制作 `requirement.txt`, 导出项目中所有依赖包
 比如下载 django 1.8.11版本的包, requirements.txt的内容就是:
 
+```conf
 django==1.8.11
+```
 
 使用 `pip freeze` 会输出所有在本地已安装的包(但不包括 pip, wheel, setuptools 等自带包),
 若需要输出内容与 pip list 一致, 需使用 `pip freeze --all`.

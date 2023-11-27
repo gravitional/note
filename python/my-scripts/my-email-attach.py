@@ -16,7 +16,8 @@ from email.header import Header
 
 def echo2(x):
     print(
-        f'+++++++++++++++++++++++\n\033[1;47m\033[1;32m{str(x)}\033[0;0m\n++++++++++++++++++++ ')
+        f'+++++++++++++++++++++++\n\033[1;47m\033[1;32m{str(x)}\033[0;0m\n++++++++++++++++++++ '
+    )
 
 
 # 命令行参数, 第二个参数, 即 sys.argv[1], 是要发送的附件的位置, 支持 ~user
@@ -33,7 +34,9 @@ mail_sender = 'xxx@qq.com'
 # 邮箱授权码,注意这里不是邮箱密码,如何获取邮箱授权码,请看本文最后教程
 mail_license = 'xxx'
 # 收件人邮箱, 可以为多个收件人
-mail_receivers = ['xxx@qq.com', ]
+mail_receivers = [
+    'xxx@qq.com',
+]
 
 # 构建MIMEMultipart对象代表邮件本身, 可以往里面添加文本, 图片, 附件等
 mm = MIMEMultipart('related')
@@ -68,8 +71,8 @@ mm.attach(message_text)
 
 ## 如果存在的话, 就添加附件, 并发送邮件
 if attach_file.exists():
-    atta = MIMEText(open(str(attach_file), 'rb').read(),
-                    'base64', 'utf-8')  # 构造附件
+    atta = MIMEText(open(str(attach_file), 'rb').read(), 'base64',
+                    'utf-8')  # 构造附件
     # 设置附件信息
     atta["Content-Disposition"] = f'attachment; filename={str(attach_name)}'
     mm.attach(atta)  # 添加附件到邮件信息当中去

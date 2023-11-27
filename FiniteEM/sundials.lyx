@@ -1,0 +1,719 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+SUNDIALS
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+SUNDIALS组织
+\end_layout
+
+\begin_layout Chapter
+使用 SUNDIALS
+\end_layout
+
+\begin_layout Chapter
+ARKODE文档
+\end_layout
+
+\begin_layout Chapter
+CVODE文档
+\end_layout
+
+\begin_layout Chapter
+CVODES文档
+\end_layout
+
+\begin_layout Chapter
+IDA文档
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Standard
+IDA 是名为 SUNDIALS 的软件系列的一部分： SUite of Nonlinear and DIfferential/ALgebraic
+ equations Solvers[68]。这套软件包括 CVODE、ARKODE、KINSOL 和 IDA，以及具有灵敏度分析功能的 CVODES
+ 和 IDAS 变体。
+\end_layout
+
+\begin_layout Standard
+IDA 是一种通用求解器，用于求解微分代数方程 (DAEs) 系统的初值问题 (IVP)。IDA 是 Implicit Differential-Algebra
+ic solver（隐式微分代数求解器）的缩写。IDA 基于 DASPK [23, 24]，但用 ANSI 标准 C 而不是 Fortran77
+ 编写。它最显著的特点是：(1) 在每个时间步的底层非线性系统的求解中，它提供了 Newton/直接方法，和 不精确 Newton/Krylov
+ （迭代）方法的选择；(2) 它是以 数据无关的方式编写的，即它作用于通用向量和矩阵，而不假定数据的底层组织。因此，IDA 共享之前在 LLNL
+ 的 CASC 中编写的重要模块，它们用来支持常微分方程（ODE）求解器 CVODE [38, 71] 和 PVODE [29, 30]，以及非线性系统求解器
+ KINSOL [72]。
+\end_layout
+
+\begin_layout Standard
+目前，IDA 可以使用 SUNDIALS 提供的各种 Krylov方法，这些方法可以与 Newton 迭代结合使用： 这些方法包括 
+\end_layout
+
+\begin_layout Itemize
+GMRES（Generalized Minimal RESidual，广义最小残差法）[101]、
+\end_layout
+
+\begin_layout Itemize
+FGMRES（Flexible Generalized Minimum RESidual，灵活广义最小残差法）[100]
+\end_layout
+
+\begin_layout Itemize
+Bi-CGStab（Bi-Conjugate Gradient Stabilized，双共轭梯度稳定法）[123]、
+\end_layout
+
+\begin_layout Itemize
+TFQMR（Transpose-Free Quasi-Minimal Residual，无转置准最小残差法）[54]和
+\end_layout
+
+\begin_layout Itemize
+PCG（Preconditioned Conjugate Gradient，预条件共轭梯度法）[63]线性迭代法。
+\end_layout
+
+\begin_layout Standard
+作为 Krylov 方法，相比于 直接法，这些方法在求解 Newton方程时只需很少的矩阵存储空间。不过，这些算法允许用户提供 preconditioner，而
+对于大多数问题，预条件 对于高效求解至关重要。
+\end_layout
+
+\begin_layout Standard
+对于非常大的 DAE 系统，Krylov 夫 方法比 直接线性求解方法更推荐，而且往往是唯一可行的选择。在 SUNDIALS 的 Krylov
+ 方法中，我们推荐 GMRES 为最佳选择。不过，我们鼓励用户比较所有选项，尤其是在使用 GMRES 时遇到收敛失败的情况。Bi-CGFStab
+ 和 TFQMR 在存储要求方面具有优势，因为它们所需的 workspace vectors 数量是固定的，而 GMRES 所需的工作空间向量数量则取决于所需的
+ Krylov 子空间大小。FGMRES 的优势在于它可以支持在 iterations（e.g.
+ iterative methods）中变化的 preconditioners。PCG 具有快速收敛和最小 workspace vectors
+ 的特点，但只适用于对称线性系统。
+\end_layout
+
+\begin_layout Section
+数学考虑
+\end_layout
+
+\begin_layout Standard
+IDA 求解一般形式的 DAE 系统的初值问题 (IVP)
+\begin_inset Formula 
+\begin{equation}
+F(t,y,\dot{y})=0,\quad y(t_{0})=y_{0},\quad\dot{y}(t_{0})=\dot{y}_{0}\label{eq:6.1}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $y$
+\end_inset
+
+，
+\begin_inset Formula $\dot{y}$
+\end_inset
+
+ 和
+\begin_inset Formula $F$
+\end_inset
+
+是
+\begin_inset Formula $\sbb R^{n}$
+\end_inset
+
+中的矢量，
+\begin_inset Formula $t$
+\end_inset
+
+是自变量、
+\begin_inset Formula $\dot{y}=\dd{y}/\dd{t}$
+\end_inset
+
+，初始值 
+\begin_inset Formula $y_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\dot{y}_{0}$
+\end_inset
+
+是已知的。
+\begin_inset Formula $t$
+\end_inset
+
+ 通常是时间，但当然不必是时间。
+\end_layout
+
+\begin_layout Subsection
+初始条件
+\end_layout
+
+\begin_layout Standard
+在对 DAE 初值问题进行积分之前，一个重要的要求是 一对向量
+\begin_inset Formula $y_{0}$
+\end_inset
+
+和
+\begin_inset Formula $\dot{y}_{0}$
+\end_inset
+
+都初始化过，并满足 DAE 残差 
+\begin_inset Formula $F(t_{0},y_{0},\dot{y}_{0})=0$
+\end_inset
+
+。对于包括 所谓 semi–explicit index–one systems 在内的一类问题，IDA 提供了一个例程，可以根据用户的初始猜测计算出一致的初始
+条件 [24]。
+\end_layout
+
+\begin_layout Standard
+为此用户必须确定
+\begin_inset Formula $y$
+\end_inset
+
+ 的子向量（不一定连续），表示为
+\begin_inset Formula $y_{d}$
+\end_inset
+
+和
+\begin_inset Formula $y_{a}$
+\end_inset
+
+，分别表示其微分部分和代数部分，这样
+\begin_inset Formula $F$
+\end_inset
+
+取决于
+\begin_inset Formula $\dot{y}_{d}$
+\end_inset
+
+，而不取决于任何
+\begin_inset Formula $\dot{y}_{a}$
+\end_inset
+
+分量。 系统是 “index one”的假设意味着，对于给定的
+\begin_inset Formula $t$
+\end_inset
+
+和
+\begin_inset Formula $y_{d}$
+\end_inset
+
+，系统
+\begin_inset Formula $F(t,y,\dot{y})=0$
+\end_inset
+
+确定唯一的
+\begin_inset Formula $y_{a}$
+\end_inset
+
+。在这种情况下，IDA 内部的求解器会计算
+\begin_inset Formula $t=t_{0}$
+\end_inset
+
+的
+\begin_inset Formula $\dot{y}_{d}$
+\end_inset
+
+，当给定
+\begin_inset Formula $y_{d}$
+\end_inset
+
+和
+\begin_inset Formula $y_{a}$
+\end_inset
+
+的初始猜测。 
+\end_layout
+
+\begin_layout Standard
+该求解器的第二个选项还可以计算所有
+\begin_inset Formula $y(t_{0})$
+\end_inset
+
+，当给定
+\begin_inset Formula $\dot{y}(t_{0})$
+\end_inset
+
+；这主要适用于准静态问题（quasi–steady–state问题），其中给定
+\begin_inset Formula $\dot{y}(t_{0})=0$
+\end_inset
+
+。在两种情况下，IDA 都会求解系统的 的未知分量
+\begin_inset Formula $y_{0}$
+\end_inset
+
+和
+\begin_inset Formula $\dot{y}_{0}$
+\end_inset
+
+，采用 Newton迭代，augmented with a line search globalization strategy。在这一过程中，IDA
+ 利用了在积分过程中用于求解线性系统的现有机制，并结合了一些涉及步长的技巧（步长是为这一计算而人为设置的）。对于不属于上述两类的问题，用户负责传递一致的数值，否
+则将面临数值积分失败的风险。
+\end_layout
+
+\begin_layout Subsection
+IVP solution
+\end_layout
+
+\begin_layout Standard
+IDA 使用的积分方法是 variable–order, variable–coefficient BDF（后向微分公式），采用固定领头阶系数形式
+ [19]。该方法的阶数从 
+\begin_inset Formula $1$
+\end_inset
+
+ 到 
+\begin_inset Formula $5$
+\end_inset
+
+ 不等，
+\begin_inset Formula $q$
+\end_inset
+
+ 阶的BDF写作 multistep formula
+\begin_inset Formula 
+\begin{equation}
+\sum_{i=0}^{q}\alpha_{n,i}\,y_{n-i}=h_{n}\dot{y}_{n},\label{eq:6.2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $y_{n}$
+\end_inset
+
+和
+\begin_inset Formula $\dot{y}_{n}$
+\end_inset
+
+是对
+\begin_inset Formula $y(t_{n})$
+\end_inset
+
+和
+\begin_inset Formula $\dot{y}(t_{n})$
+\end_inset
+
+的计算近似值，步长为
+\begin_inset Formula $h_{n}=t_{n}-t_{n-1}$
+\end_inset
+
+。系数
+\begin_inset Formula $\alpha_{n,i}$
+\end_inset
+
+由order 
+\begin_inset Formula $q$
+\end_inset
+
+，以及历史步长唯一确定。将 BDF
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+应用于 DAE 系统
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到在每一步需要求解的非线性代数系统：
+\begin_inset Formula 
+\begin{equation}
+G(y_{n})\equiv F\left(t_{n},y_{n},h_{n}^{-1}\sum_{i=0}^{q}\alpha_{n,i}\,y_{n-i}\right)=0.\label{eq:6.3}
+\end{equation}
+
+\end_inset
+
+在控制 各层 误差的过程中，IDA 使用加权均方根norm（表示为 
+\begin_inset Formula $\left\Vert \cdot\right\Vert _{\text{WRMS}}$
+\end_inset
+
+。所使用的乘法权重基于当前解以及用户输入的相对和绝对公差，即
+\begin_inset Formula 
+\begin{equation}
+W_{i}=\frac{1}{\mathrm{rtol}\cdot\abs{y_{i}}+\mathrm{atol}_{i}}.\label{eq:6.4}
+\end{equation}
+
+\end_inset
+
+因为
+\begin_inset Formula $1/W_{i}$
+\end_inset
+
+表示分量
+\begin_inset Formula $y_{i}$
+\end_inset
+
+的tolerance ，因此norm为
+\begin_inset Formula $1$
+\end_inset
+
+的矢量被视为 “small”。为简洁起见，我们通常在下文中去掉norm的下标 WRMS。
+\end_layout
+
+\begin_layout Subsection
+Nonlinear Solve
+\end_layout
+
+\begin_layout Standard
+默认IDA使用 Newton 迭代求解 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+G(y_{n})\equiv F\left(t_{n},y_{n},h_{n}^{-1}\sum_{i=0}^{q}\alpha_{n,i}\,y_{n-i}\right)
+\]
+
+\end_inset
+
+但是IDA也允许用户指定的非线性求解器（see Chap12）。每次牛顿迭代需要求解下述线性系统的解
+\begin_inset Formula 
+\begin{equation}
+J\left[y_{n(m+1)}-y_{n(m)}\right]=-G\left[y_{n(m)}\right],\label{eq:6.5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $y_{n(m)}$
+\end_inset
+
+是
+\begin_inset Formula $y_{n}$
+\end_inset
+
+的 
+\begin_inset Formula $m$
+\end_inset
+
+–th 近似。这里
+\begin_inset Formula $J$
+\end_inset
+
+是系统 Jacobian 的某种近似
+\begin_inset Formula 
+\begin{equation}
+J=\frac{\partial G}{\partial y}=\frac{\partial F}{\partial y}+\alpha\frac{\partial F}{\partial\dot{y}},\label{eq:6.6}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha=\alpha_{n,0}/h_{n}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha_{n,0}$
+\end_inset
+
+是导数近似的领头阶系数。当步长改变或者方法的order改变时，标量
+\begin_inset Formula $\alpha$
+\end_inset
+
+将改变。
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Nonlinear-Solve"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于牛顿迭代中线性系统的求解，IDA提供了多种选择，包括用户提供的线性求解器（see chap 11）。随 SUNDIALS 一起发布的线性求解器分为两个系列：
+一个是 
+\series bold
+direct
+\series default
+系列，包括 dense, banded, or sparse matrices 的直接线性求解器；另一个是 
+\series bold
+spils
+\series default
+ 系列，包括 scaled preconditioned 迭代（Krylov）线性求解器。这些模块提供的方法如下：
+\end_layout
+
+\begin_layout Itemize
+dense direct solvers，包括自带内部实现、与 BLAS/LAPACK的接口、与 MAGMA 的接口 [119] 以及与 oneMKL
+ 库的接口 [3]，
+\end_layout
+
+\begin_layout Itemize
+band direct solvers，包括自带内部实现，或 BLAS/LAPACK 接口，
+\end_layout
+
+\begin_layout Itemize
+各种库的 sparse direct solver，包括 KLU [4，40]、SuperLU_MT [9，42，87]、SuperLU_Dist
+ [8，56，88，89] 和 cuSPARSE [7]、
+\end_layout
+
+\begin_layout Itemize
+SPGMR，一种带或不带重启的 scaled预条件 GMRES（广义最小残差法）求解器，
+\end_layout
+
+\begin_layout Itemize
+SPFGMR，带或不带重启的scaled预条件 FGMRES（灵活广义最小残差法）求解器，
+\end_layout
+
+\begin_layout Itemize
+SPBCG，scaled预条件 Bi-CGStab（双共轭梯度稳定法）求解器，
+\end_layout
+
+\begin_layout Itemize
+SPTFQMR，scaled预条件 TFQMR（无反转准最小残差法）求解器，或
+\end_layout
+
+\begin_layout Itemize
+PCG，scaled预条件 CG（共轭梯度法）求解器。
+\end_layout
+
+\begin_layout Standard
+对于大型stiff系统，直接方法并不可行，而 BDF integrator 与 预条件Krylov方法的结合则是一种强大的工具，因为它结合了stiff积分、非线
+性迭代和 Krylov（线性）迭代的既定方法，并以用户提供的 预处理矩阵的形式，针对具体问题处理了刚性的主要来源[22]。For the 
+\series bold
+spils
+\series default
+ linear solver with IDA，只允许在左侧进行预条件（见第 6.2.3 节）。请注意，密集、带状和稀疏直接线性求解器只能用于串行和线程（seria
+l and threaded）向量表示。
+\end_layout
+
+\begin_layout Standard
+对于基于矩阵的线性求解器，默认的 牛顿迭代是 修正牛顿迭代，即雅可比
+\begin_inset Formula $J$
+\end_inset
+
+ 在整个非线性迭代过程中都是固定的（通常也是过时的），用系数
+\begin_inset Formula $\overline{\alpha}$
+\end_inset
+
+ 代替
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula $J$
+\end_inset
+
+中的
+\begin_inset Formula $\alpha$
+\end_inset
+
+。然而，在使用无矩阵线性迭代求解器的情况下，默认牛顿迭代是 inexact牛顿迭代，其中
+\begin_inset Formula $J$
+\end_inset
+
+以无矩阵方式应用，矩阵矢量乘积 
+\begin_inset Formula $J\,v$
+\end_inset
+
+ 通过差商或用户提供的例程获得。在这种情况下，the linear residual 
+\begin_inset Formula $J\,\Delta y+G$
+\end_inset
+
+非零，但受到控制。在默认的牛顿迭代中，矩阵 
+\begin_inset Formula $J$
+\end_inset
+
+和预处理矩阵
+\begin_inset Formula $P$
+\end_inset
+
+尽可能少地更新，以平衡矩阵运算的高成本和其他成本。具体来说，这种矩阵更新发生在以下情况：
+\end_layout
+
+\begin_layout Itemize
+启动问题时。
+\end_layout
+
+\begin_layout Itemize
+The value 
+\begin_inset Formula $\overline{\alpha}$
+\end_inset
+
+ at the last update is such that 
+\begin_inset Formula $\alpha/\overline{\alpha}<3/5$
+\end_inset
+
+ or 
+\begin_inset Formula $\alpha/\overline{\alpha}>5/3$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+a non–fatal convergence failure occured with an out–of–date 
+\begin_inset Formula $J$
+\end_inset
+
+ or 
+\begin_inset Formula $P$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+上述策略平衡了 频繁矩阵计算 和 预处理的高成本，与不频繁更新导致的收敛慢。为了降低更新时的存储成本，Jacobian信息总是从头开始 reevaluated。
+\end_layout
+
+\begin_layout Standard
+IDA中非线性求解器迭代的默认停止测试，确保 iteration error 
+\begin_inset Formula $y_{n}-y_{n(m)}$
+\end_inset
+
+  相对于 的误差较小。为此，我们估计所有迭代的线性收敛率为 为
+\end_layout
+
+\begin_layout Section
+代码组成
+\end_layout
+
+\begin_layout Section
+使用IDA求解IVP
+\end_layout
+
+\begin_layout Section
+IDA常数
+\end_layout
+
+\begin_layout Chapter
+IDAS文档
+\end_layout
+
+\begin_layout Chapter
+KINSOL文档
+\end_layout
+
+\begin_layout Chapter
+Vector Data文档
+\end_layout
+
+\begin_layout Chapter
+Matrix Data文档
+\end_layout
+
+\begin_layout Chapter
+线性代数求解器
+\end_layout
+
+\begin_layout Chapter
+非线性代数求解器
+\end_layout
+
+\begin_layout Chapter
+内存管理工具
+\end_layout
+
+\begin_layout Chapter
+SUNDIALS安装步骤
+\end_layout
+
+\end_body
+\end_document

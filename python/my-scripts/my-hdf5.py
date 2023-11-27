@@ -21,21 +21,18 @@ def main():
     # Save and exit the file
     f.close()
 
+
 # 递归函数,  遍历所有节点
-
-
 def my_iter(name_str, d, count):
     if dataq(d):  # 如果是 dataset 类型
         print("{}{} is Dataset:".format("--" * count, name_str))  # 打印当前节点名称
         print("  " * count, d[:])  # 打印数据详情
         if len(d.attrs.keys()) > 0:
-            print("{}{} has attributes:".format(
-                "--" * (count + 1), name_str))
+            print("{}{} has attributes:".format("--" * (count + 1), name_str))
             for key in d.attrs.keys():  # 打印属性
                 print("**" * (count + 1), key, ":", d.attrs[key])
         else:
-            print("{}{} has No attributes".format(
-                "**" * (count + 1), name_str))
+            print("{}{} has No attributes".format("**" * (count + 1), name_str))
         print()
     elif hasattr(d, "keys") and len(d.keys()) > 0:  # 如果是 group 类型递归调用
         print("\n{}{} is Group, it has:".format("<<" * count, name_str))
