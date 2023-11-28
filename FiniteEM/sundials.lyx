@@ -428,6 +428,34 @@ W_{i}=\frac{1}{\mathrm{rtol}\cdot\abs{y_{i}}+\mathrm{atol}_{i}}.\label{eq:6.4}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
+在给定的
+\begin_inset Formula $\mathrm{rtol}$
+\end_inset
+
+，
+\begin_inset Formula $\mathrm{atol}_{i}$
+\end_inset
+
+下，
+\begin_inset Formula $\abs{y_{i}}$
+\end_inset
+
+越大，则
+\begin_inset Formula $W_{i}$
+\end_inset
+
+越小。倾向于压低小
+\begin_inset Formula $y_{i}$
+\end_inset
+
+的误差。
+\end_layout
+
+\begin_layout Itemize
 因为
 \begin_inset Formula $1/W_{i}$
 \end_inset
@@ -466,11 +494,19 @@ G(y_{n})\equiv F\left(t_{n},y_{n},h_{n}^{-1}\sum_{i=0}^{q}\alpha_{n,i}\,y_{n-i}\
 
 \end_inset
 
-但是IDA也允许用户指定的非线性求解器（see Chap12）。每次牛顿迭代需要求解下述线性系统的解
+但是IDA也允许用户指定的非线性求解器（see Chap12）。牛顿迭代每一步 需要求解下述线性系统的解
 \begin_inset Formula 
 \begin{equation}
 J\left[y_{n(m+1)}-y_{n(m)}\right]=-G\left[y_{n(m)}\right],\label{eq:6.5}
 \end{equation}
+
+\end_inset
+
+Timothy书中形式
+\begin_inset Formula 
+\[
+D_{F}(x_{k})\left(x_{k+1}-x_{k}\right)=-F(x_{k}),\quad k=0,1,2,\cdots
+\]
 
 \end_inset
 
@@ -486,7 +522,11 @@ J\left[y_{n(m+1)}-y_{n(m)}\right]=-G\left[y_{n(m)}\right],\label{eq:6.5}
 \begin_inset Formula $m$
 \end_inset
 
-–th 近似。这里
+–th 近似，
+\begin_inset Formula $n$
+\end_inset
+
+标记时间步。这里
 \begin_inset Formula $J$
 \end_inset
 
@@ -578,15 +618,15 @@ l and threaded）向量表示。
 \end_layout
 
 \begin_layout Standard
-对于基于矩阵的线性求解器，默认的 牛顿迭代是 修正牛顿迭代，即雅可比
+对于 matrix-based 线性求解器，默认的 牛顿迭代是 
+\series bold
+Modified Newton iteration
+\series default
+，即Jacobian 
 \begin_inset Formula $J$
 \end_inset
 
- 在整个非线性迭代过程中都是固定的（通常也是过时的），用系数
-\begin_inset Formula $\overline{\alpha}$
-\end_inset
-
- 代替
+ 在非线性迭代过程中是固定的（通常也是过时的），并将
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:6.6"
@@ -600,11 +640,15 @@ noprefix "false"
 \begin_inset Formula $J$
 \end_inset
 
-中的
+中的系数
 \begin_inset Formula $\alpha$
 \end_inset
 
-。然而，在使用无矩阵线性迭代求解器的情况下，默认牛顿迭代是 inexact牛顿迭代，其中
+重新标记为
+\begin_inset Formula $\overline{\alpha}$
+\end_inset
+
+ 。然而，在使用 matrix-free iterative 求解器的情况下，默认牛顿迭代是 inexact 牛顿迭代，其中
 \begin_inset Formula $J$
 \end_inset
 
@@ -612,7 +656,7 @@ noprefix "false"
 \begin_inset Formula $J\,v$
 \end_inset
 
- 通过差商或用户提供的例程获得。在这种情况下，the linear residual 
+ 通过差商或 user routine 提供。在这种情况下，the linear residual 
 \begin_inset Formula $J\,\Delta y+G$
 \end_inset
 
@@ -628,15 +672,27 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-启动问题时。
+starting the problem，
 \end_layout
 
 \begin_layout Itemize
-The value 
+标记上次步长
+\begin_inset Formula $h_{h}$
+\end_inset
+
+和阶数
+\begin_inset Formula $q_{n}$
+\end_inset
+
+对应的系数是
 \begin_inset Formula $\overline{\alpha}$
 \end_inset
 
- at the last update is such that 
+，若当前系数被更新为
+\begin_inset Formula $\alpha$
+\end_inset
+
+，若
 \begin_inset Formula $\alpha/\overline{\alpha}<3/5$
 \end_inset
 
@@ -644,7 +700,7 @@ The value
 \begin_inset Formula $\alpha/\overline{\alpha}>5/3$
 \end_inset
 
-, or
+，
 \end_layout
 
 \begin_layout Itemize
@@ -660,15 +716,250 @@ a non–fatal convergence failure occured with an out–of–date
 \end_layout
 
 \begin_layout Standard
-上述策略平衡了 频繁矩阵计算 和 预处理的高成本，与不频繁更新导致的收敛慢。为了降低更新时的存储成本，Jacobian信息总是从头开始 reevaluated。
+上述策略平衡了 频繁矩阵计算 和 预处理 导致的高成本，与不频繁更新导致的 收敛慢。为了降低更新时的存储成本，Jacobian信息总是从头开始重新计算。
 \end_layout
 
 \begin_layout Standard
-IDA中非线性求解器迭代的默认停止测试，确保 iteration error 
+IDA中 nonlinear solver iterations 的默认 stopping test，将确保相对于
+\begin_inset Formula $y$
+\end_inset
+
+ 本身，iteration error 
 \begin_inset Formula $y_{n}-y_{n(m)}$
 \end_inset
 
-  相对于 的误差较小。为此，我们估计所有迭代的线性收敛率为 为
+ 较小。为此对于所有
+\begin_inset Formula $m>1$
+\end_inset
+
+的迭代步，linear convergence rate 的估计是
+\begin_inset Formula 
+\[
+R=\left(\frac{\delta_{m}}{\delta_{1}}\right)^{\frac{1}{m-1}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\delta_{m}=y_{n(m)}-y_{n(m-1)}$
+\end_inset
+
+是迭代 
+\begin_inset Formula $m=1,2,\cdots$
+\end_inset
+
+ 时的 correction。The nonlinear solver iteration is halted if 
+\begin_inset Formula $R>0.9$
+\end_inset
+
+。
+\begin_inset Formula $m$
+\end_inset
+
+–th 迭代的收敛测试则为
+\begin_inset Formula 
+\begin{equation}
+S\left\Vert \delta_{m}\right\Vert <0.33\label{eq:6.7}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $S=R/(R-1)$
+\end_inset
+
+ whenever 
+\begin_inset Formula $m>1$
+\end_inset
+
+ and 
+\begin_inset Formula $R\le0.9$
+\end_inset
+
+。用户可以更改 收敛测试 中的常数，其默认值为 
+\begin_inset Formula $0.33$
+\end_inset
+
+。初始时以及
+\begin_inset Formula $J$
+\end_inset
+
+或
+\begin_inset Formula $P$
+\end_inset
+
+（预条件子）更新时，会将
+\begin_inset Formula $S$
+\end_inset
+
+重置为
+\begin_inset Formula $S=20$
+\end_inset
+
+ ；当某一step
+\begin_inset Formula $\alpha\neq\overline{\alpha}$
+\end_inset
+
+时充值
+\begin_inset Formula $S=100$
+\end_inset
+
+。注意当
+\begin_inset Formula $m=1$
+\end_inset
+
+，收敛检验
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+使用的是
+\begin_inset Formula $S$
+\end_inset
+
+的旧值。 因此，在非线性求解器的 首次迭代中，我们会进行额外的测试，并在
+\begin_inset Formula $\left\Vert \delta_{1}\right\Vert <0.33\cdot10^{-4}$
+\end_inset
+
+则停止迭代，（因为这样的
+\begin_inset Formula $\delta_{1}$
+\end_inset
+
+很可能只是噪音，因此不适合用于计算
+\begin_inset Formula $R$
+\end_inset
+
+ ).
+ 我们只允许少量的 nonlinear iterations（默认值为 
+\begin_inset Formula $4$
+\end_inset
+
+）。如果使用当前的
+\begin_inset Formula $J$
+\end_inset
+
+ or 
+\begin_inset Formula $P$
+\end_inset
+
+导致 convergence failures，我们将强制减小步长
+\begin_inset Formula $h_{n}$
+\end_inset
+
+，并用
+\begin_inset Formula $h_{n}\,\eta_{\text{cf}}$
+\end_inset
+
+替换
+\begin_inset Formula $h_{n}$
+\end_inset
+
+（默认
+\begin_inset Formula $\eta_{\text{cf}}=0.25$
+\end_inset
+
+）。在预设的 convergence failures 次数（默认为 10 次）后，将停止（halt）积分。用户可以更改这些默认值：nonlinear
+ iterations 最大次数 和 nonlinear convergence failures 最大次数。
+\end_layout
+
+\begin_layout Standard
+当使用iterative法求解线性系统时，为了尽量减少linear iteration 对非线性和 local integration 误差控制的影响，我们要求
+ preconditioned linear residual 相对于 allowed error in the nonlinear iteration
+ 要小，即
+\begin_inset Formula 
+\[
+\left\Vert P^{-1}(J\,x+G)\right\Vert <0.05\cdot0.33
+\]
+
+\end_inset
+
+安全系数 
+\begin_inset Formula $0.05$
+\end_inset
+
+ 可以由用户更改。
+\end_layout
+
+\begin_layout Standard
+当使用 SUNMATRIX_DENSE 或 SUNMATRIX_BAND 矩阵对象存储 Jacobian 时，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中定义的Jacobian 
+\begin_inset Formula $J$
+\end_inset
+
+ 可以由用户提供，也可以由 IDA 内部通过差商计算。 在后一种情况下，我们使用近似值
+\begin_inset Formula 
+\begin{align*}
+J_{ij} & =\left[F_{i}(t,y+\sigma_{j}e_{j},\dot{y}+\alpha\,\sigma_{j}\,e_{j})-F_{i}(t,y,\dot{y})\right]/\sigma_{j},\quad\text{with}\\
+ & \sigma_{j}=\sqrt{U}\max\left\{ \left|y_{j}\right|,\left|h\,\dot{y}_{j}\right|,1/W_{j}\right\} \,\sign\left(h\,\dot{y}_{j}\right),
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $U$
+\end_inset
+
+ 是 unit roundoff，
+\begin_inset Formula $h$
+\end_inset
+
+ 是当前步长，
+\begin_inset Formula $W_{j}$
+\end_inset
+
+是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中对分量
+\begin_inset Formula $y_{j}$
+\end_inset
+
+定义的误差权重。注意到，对于 sparse and user–supplied 矩阵对象，Jacobian 矩阵必须以用户routine提供。
+\end_layout
+
+\begin_layout Standard
+在 iterative linear solver 中，如果没有提供计算
+\begin_inset Formula $J\,v$
+\end_inset
+
+的例程，则使用此 乘积 的近似
+\begin_inset Formula 
+\[
+J\,v=\left[F(t,y+\sigma\,v,\dot{y}+\alpha\,\sigma\,v)-F(t,y,\dot{y})\right]/\sigma,
+\]
+
+\end_inset
+
+其中增量
+\begin_inset Formula $\sigma=1/\left\Vert v\right\Vert $
+\end_inset
+
+。作为选项，用户可以指定一个常数因子，插入到该表达式中用作 
+\begin_inset Formula $\sigma$
+\end_inset
+
+的值。
 \end_layout
 
 \begin_layout Section

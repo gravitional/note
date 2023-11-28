@@ -54,16 +54,16 @@ pip freeze > requirements.txt
 
 + 将所有包下载到目标目录中
 
-例如: 想将包放在 `zips` 目录下
+例如: 想将包放在 `pypkg` 目录下
 
 ```bash
-pip download -d zips -r requirements.txt
+pip download -d pypkg -r requirements.txt
 ```
 
-+ 将文件打包后放到离线服务器上, 并进行解压缩
++ 将文件打包后放到离线服务器上, 并进行解压缩, 然后安装
 
 ```bash
-pip install --no-index --find-links=zips -r requirements.txt
+pip install --no-index --find-links=pypkg -r requirements.txt
 ```
 
 ## pip wheel 包
