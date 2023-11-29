@@ -279,759 +279,634 @@ $ make install
 基于 CMake 的 SUNDIALS 配置的所有可用选项的完整列表如下.
 请注意, 所显示的默认值是 Linux 系统上的典型配置, 仅供参考.
 
-BUILD_ARKODE
+`BUILD_ARKODE`
 构建 ARKODE 库
+默认值: `ON`
 
-默认值:  开启
-
-BUILD_CVODE
+`BUILD_CVODE`
 构建 CVODE 库
+默认值: `ON`
 
-默认值: ON 开启
-
-BUILD_CVODES
+`BUILD_CVODES`
 构建 CVODES 库
-
-默认值: ON 开启
-
-BUILD_IDA
-构建 IDA 库
-
-默认值 开启
-
-BUILD_IDAS
-构建 IDAS 库
-
-默认值: ON 开启
-
-BUILD_KINSOL
-构建 KINSOL 库
-
-默认值: ON 开启
-
-build_shared_libs
-构建共享库
-
-默认值 开启
-
-build_static_libs
-构建静态库
-
-默认值:  开启
-
-cmake_build_type
-选择联编类型, 选项有 无, 调试, 发布, RelWithDebInfo 和 MinSizeRel
-
 默认值: ON
 
-注意
+`BUILD_IDA`
+构建 IDA 库
+默认值: `ON`
 
-指定联编类型将触发下面相应的特定联编类型编译器标志选项, 这些选项将附加到 CMAKE_<language>_FLAGS 设置的标志上.
+`BUILD_IDAS`
+构建 IDAS 库
+默认值: `ON`
 
-cmake_c_compiler
+`BUILD_KINSOL`
+构建 KINSOL 库
+默认值: `ON`
+
+`BUILD_SHARED_LIBS`
+构建共享库
+默认值: `ON`
+
+`BUILD_STATIC_LIBS`
+构建静态库
+默认值: `ON`
+
+`CMAKE_BUILD_TYPE`
+选择build类型,
+选项有 `None`, `Debug`, `Release`, `RelWithDebInfo` 和 `MinSizeRel`
+默认值:
+
+注意:
+指定 build type 将触发下面相应的 特定build type compiler flag options,
+这些选项将附加到 `CMAKE_<language>_FLAGS` 设置的 flags.
+
+`CMAKE_C_COMPILER`
 C 编译器
+默认值: `/usr/bin/cc`
 
-默认值:  /usr/bin/cc
-
-CMAKE_C_FLAGS
-C 编译器的标志
-
+`CMAKE_C_FLAGS`
+C 编译器的 Flags
 默认值:
 
-cmake_c_flags_debug
-C 编译器在调试编译时使用的标志
+`CMAKE_C_FLAGS_DEBUG`
+C 编译器在 debug builds时 使用的flags
+默认值: `-g`
 
-默认值: -g
-
-cmake_c_flags_minsizerel
+`CMAKE_C_FLAGS_MINSIZEREL`
 C 编译器在发布最小尺寸版本时使用的标记
+默认值: `-Os -DNDEBUG`
 
-默认值: -Os -DNDEBUG
-
-cmake_c_flags_release
+`CMAKE_C_FLAGS_RELEASE`
 C 编译器在发布版本时使用的标记
+默认值: `-O3 -DNDEBUG`
 
-默认值: -O3 -DNDEBUG
-
-cmake_c_standard
+`CMAKE_C_STANDARD`
 用于构建 SUNDIALS C 部分的 C 标准.
+默认值:  `99`
+选项 `90`, `99`, `11`, `17`.
 
-默认值:  99
-
-选项 90, 99, 11, 17.
-
-cmake_c_extensions
+`CMAKE_C_EXTENSIONS`
 启用编译器特定的 C 扩展.
+默认值: `OFF`
 
-默认值: OFF 关闭
-
-cmake_cxx_compiler
+`CMAKE_CXX_COMPILER`
 C++ 编译器
-
-默认值:  /usr/bin/c++
+默认值: `/usr/bin/c++`
 
 注意
+只有启用了需要 C++ 的功能(如 CUDA, HIP, SYCL, RAJA 等)
+或启用了 C++ 示例时, 才需要 C++ 编译器.
 
-只有启用了需要 C++ 的功能(如 CUDA, HIP, SYCL, RAJA 等)或启用了 C++ 示例时, 才需要 C++ 编译器.
+所有 SUNDIALS 解算器均可在 C++ 应用程序中使用,
+无需设置任何额外的配置选项.
 
-所有 SUNDIALS 解算器均可在 C++ 应用程序中使用, 无需设置任何额外的配置选项.
-
-cmake_cxx_flags
+`CMAKE_CXX_FLAGS`
 C++ 编译器的标志
-
 默认值:
 
-cmake_cxx_flags_debug
+`CMAKE_CXX_FLAGS_DEBUG`
 C++ 编译器在调试编译时使用的标志
+默认值: `-g`
 
-默认值: -g
-
-cmake_cxx_flags_minsizerel
+CMAKE_CXX_FLAGS_MINSIZEREL
 C++ 编译器在发布最小尺寸版本时使用的标记
+默认值: `-Os -DNDEBUG`
 
-默认值: -Os -DNDEBUG
-
-cmake_cxx_flags_release
+`CMAKE_CXX_FLAGS_RELEASE`
 C++ 编译器在发布版本时使用的标记
+默认值: `-O3 -DNDEBUG`
 
-默认值: -O3 -DNDEBUG
-
-cmake_cxx_standard
+`CMAKE_CXX_STANDARD`
 用于构建 SUNDIALS C++ 部分的 C++ 标准.
+默认值: `11`
+选项 `98`, `11`, `14`, `17`, `20`.
 
-默认值: 11
-
-选项 98, 11, 14, 17, 20.
-
-cmake_cxx_extensions
+`CMAKE_CXX_EXTENSIONS`
 启用编译器特定的 C++ 扩展.
+默认值: `OFF`
 
-默认值: OFF 关闭
-
-CMAKE_Fortran_COMPILER
+`CMAKE_Fortran_COMPILER`
 Fortran 编译器
-
-默认值:  /usr/bin/gfortran
+默认值:  `/usr/bin/gfortran`
 
 注意
 
-只有启用了 Fortran-C 支持 (BUILD_FORTRAN_MODULE_INTERFACE) 或 LAPACK (ENABLE_LAPACK) 支持, 才会触发 Fortran 支持(以及所有相关选项).
+只有启用了 Fortran-C 支持 (BUILD_FORTRAN_MODULE_INTERFACE)
+或 LAPACK (`ENABLE_LAPACK`) 支持,
+才会触发 `Fortran` 支持(以及所有相关选项).
 
-CMAKE_Fortran_FLAGS
+`CMAKE_Fortran_FLAGS`
 用于 Fortran 编译器的标志
-
 默认值:
 
-CMAKE_Fortran_FLAGS_DEBUG
+`CMAKE_Fortran_FLAGS_DEBUG`
 Fortran 编译器在调试构建时使用的标志
+默认值: `-g`
 
-默认值: -g
-
-CMAKE_Fortran_FLAGS_MINSIZEREL
+`CMAKE_Fortran_FLAGS_MINSIZEREL`
 Fortran编译器在发行版最小尺寸编译时使用的标记
+默认值: `-Os`
 
-默认值: -Os
-
-CMAKE_Fortran_FLAGS_RELEASE
+`CMAKE_Fortran_FLAGS_RELEASE`
 Fortran编译器在发布版编译时使用的标记
+默认值: `-O3`
 
-默认值: -O3
-
-cmake_install_libdir
+`CMAKE_INSTALL_LIBDIR`
 安装库的目录.
+默认值: 根据系统设置: `lib`, `lib64` 或 `lib/<multiarch-tuple>`
 
-默认值:  根据系统设置: lib, lib64 或 lib/<multiarch-tuple>
-
-cmake_install_prefix
+`CMAKE_INSTALL_PREFIX`
 安装路径前缀, 作为安装目录的前缀
-
-默认值:  /usr/local
+默认值: `/usr/local`
 
 注意
-
 用户必须有通过此选项指定位置的写入权限.
-导出的 SUNDIALS 头文件和库将分别安装在 CMAKE_INSTALL_PREFIX 的 include 和 lib 子目录下.
+导出的 SUNDIALS 头文件和库将分别安装在
+`CMAKE_INSTALL_PREFIX` 的 `include` 和 `lib` 子目录下.
 
-ENABLE_CUDA
-联编 SUNDIALS CUDA 模块.
+`ENABLE_CUDA`
+Build SUNDIALS CUDA 模块.
+默认值: `OFF`
 
-默认值:  关闭
-
-cmake_cuda_architectures
+`CMAKE_CUDA_ARCHITECTURES`
 指定要编译的 CUDA 架构.
+默认值: `sm_30`
 
-默认值: sm_30
-
-ENABLE_XBRAID
+`ENABLE_XBRAID`
 启用或禁用 ARKStep + XBraid 接口.
-
-默认值: OFF 关闭
+默认值: OFF
 
 注意
-
 请参阅第 14.1.4 节中关于启用 XBraid 的其他信息.
 
-examples_enable_c
+`EXAMPLES_ENABLE_C`
 构建 SUNDIALS C 示例
+默认值 `ON`
 
-默认值 开启
-
-examples_enable_cxx
+`EXAMPLES_ENABLE_CXX`
 构建 SUNDIALS C++ 示例
+默认值: `OFF`
 
-默认值: ON 关闭
-
-examples_enable_cuda
+`EXAMPLES_ENABLE_CUDA`
 构建 SUNDIALS CUDA 示例
-
-默认值 关闭
+默认值: `OFF`
 
 注意
-
 您需要启用 CUDA 支持才能构建这些示例.
 
-examples_enable_f2003
+`EXAMPLES_ENABLE_F2003`
 构建 SUNDIALS Fortran2003 示例
+默认值:  `ON`(如果 `BUILD_FORTRAN_MODULE_INTERFACE` 为 `ON`)
 
-默认值:  ON(如果 BUILD_FORTRAN_MODULE_INTERFACE 为 ON)
-
-examples_install
+`EXAMPLES_INSTALL`
 安装示例文件
-
-默认为 开启
+默认为: `ON`
 
 注意
+当 SUNDIALS 的任何示例程序被启用 (`EXAMPLES_ENABLE_<language>` 为 `ON`) 时, 此选项就会被触发.
+如果用户要求安装示例程序, 那么当前启用的所有 `SUNDIALS` 模块的源代码和示例输出文件,
+都将导出到 `EXAMPLES_INSTALL_PATH` 指定的目录.
+CMake 配置脚本也会自动生成, 并导出到同一目录.
+此外, 如果配置是在类 Unix 系统下完成的,
+用于编译示例程序的 `makefile`(使用安装的SUNDIALS库)
+也会自动生成并导出到 `EXAMPLES_INSTALL_PATH`.
 
-当 SUNDIALS 的任何示例程序被启用 (EXAMPLES_ENABLE_<language> 为 ON) 时, 此选项就会被触发.
-如果用户要求安装示例程序, 那么当前启用的所有 SUNDIALS 模块的源代码和示例输出文件都将导出到 EXAMPLES_INSTALL_PATH 指定的目录.
-CMake 配置脚本也会自动生成并导出到同一目录.
-此外, 如果配置是在类 Unix 系统下完成的, 用于编译示例 pr 的 makefile 也会自动导出到 EXAMPLES_INSTALL_PATH.
-
-examples_install_path
+`EXAMPLES_INSTALL_PATH`
 安装示例文件的输出目录
-
-默认值:  /usr/local/examples
+默认值: `/usr/local/examples`
 
 注意
+此选项的实际默认值是在 `CMAKE_INSTALL_PREFIX` 下创建的 `examples` 子目录.
 
-此选项的实际默认值是在 CMAKE_INSTALL_PREFIX 下创建的 examples 子目录.
-
-build_fortran_module_interface
+`BUILD_FORTRAN_MODULE_INTERFACE`
 启用 Fortran 2003 接口
+默认值: `OFF`
 
-默认值:  关闭
-
-ENABLE_GINKGO
+`ENABLE_GINKGO`
 启用 Ginkgo 线性代数库接口.
+默认值 `OFF`
 
-默认值 关闭
-
-Ginkgoo_DIR
+`Ginkgo_DIR`
 Ginkgo 安装路径.
+默认值: None
 
-默认值: 无 无
+`SUNDIALS_GINKGO_BACKENDS`
+以半冒号分隔的 Ginkgo target architecutres/executors 列表.
+目前支持的选项有 `REF`(Ginkgo 参考执行器), `OMP`, `CUDA`, `HIP` 和 `DPC++`.
+默认值: `"REF;OMP"`
 
-sundials_ginkgoo_backends
-以半冒号分隔的 Ginkgo 目标编译器/执行器列表.
-目前支持的选项有 REF(Ginkgo 参考执行器), OMP, CUDA, HIP 和 DPC++.
+`ENABLE_KOKKOS`
+启用基于 `Kokkos` 的向量.
+默认值: `OFF`
 
-默认值: "REF;OMP
-
-ENABLE_KOKKOS
-启用基于 Kokkos 的向量.
-
-默认值: "OFF":  关闭
-
-Kokkos_DIR
+`Kokkos_DIR`
 Kokkos 安装路径.
+默认值: None
 
-默认值: 无:  无
-
-enable_kokkos_kernels
+`ENABLE_KOKKOS_KERNELS`
 启用基于 Kokkos 的密集矩阵和线性求解器.
+默认值: `OFF`
 
-默认值: 关 关闭
-
-KokkosKernels_DIR
+`KokkosKernels_DIR`
 Kokkos-Kernels 的安装路径.
+默认值: None
 
-默认值: 无:  无
-
-ENABLE_HIP
+`ENABLE_HIP`
 启用 HIP 支持
+默认值:  `OFF`
 
-默认值:  关闭
+`AMDGPU_TARGETS`
+Specify which AMDGPU processor(s) to target.
+默认值:  None
 
-AMDGPU_TARGETS
-指定目标 AMDGPU 处理器.
-
-默认值:  无
-
-ENABLE_HYPRE
-启用 hypre 支持的标志
-
-默认值 关闭
+`ENABLE_HYPRE`
+启用 `hypre` 支持的标志
+默认值 `OFF`
 
 注释
-
 请参阅第 14.1.4 节中关于启用 hypre 的其他信息.
 
-hypre_include_dir
+`HYPRE_INCLUDE_DIR`
 hypre 头文件的路径
+默认: none
 
-默认: 无
+`HYPRE_LIBRARY`
+指向已安装 `hypre` 的库文件的路径
+默认值: none
 
-HYPRE_LIBRARY
-指向已安装 hypre 的库文件的路径
-
-默认值: 无
-
-ENABLE_KLU
-启用 KLU 支持
-
-默认值 关闭
+`ENABLE_KLU`
+启用 `KLU` 支持
+默认值 `OFF`
 
 备注
-
 请参阅第 14.1.4 节中有关启用 KLU 后构建的其他信息.
 
-klu_include_dir
-指向 SuiteSparse 头文件的路径
+`KLU_INCLUDE_DIR`
+指向 `SuiteSparse` 头文件的路径
+默认: none
 
-默认: 无
-
-klu_library_dir
+`KLU_LIBRARY_DIR`
 SuiteSparse 安装库文件的路径
+默认值: none
 
-默认值: 无
-
-ENABLE_LAPACK
-启用 LAPACK 支持
-
-默认值 关闭
+`ENABLE_LAPACK`
+启用 `LAPACK` 支持
+默认值: none
 
 注意
+将此选项设置为 `ON` 会触发额外的 `CMake` 选项.
+请参阅第 14.1.4 节中关于启用 `LAPACK` 的其他信息.
 
-将此选项设置为 ON 会触发额外的 CMake 选项.
-请参阅第 14.1.4 节中关于启用 LAPACK 的其他信息.
-
-lapack_libraries
+`lapack_libraries`
 LAPACK (和 BLAS) 库
-
-默认:  /usr/lib/liblapack.so;/usr/lib/libblas.so
+默认: `/usr/lib/liblapack.so;/usr/lib/libblas.so`
 
 注意
+CMake 在搜索默认系统路径之前, 会先搜索 `LD_LIBRARY_PATH` 中的库.
 
-CMake 在搜索默认系统路径之前, 会先搜索 LD_LIBRARY_PATH 中的库.
-
-ENABLE_MAGMA
+`ENABLE_MAGMA`
 启用 MAGMA 支持.
-
-默认值:  关闭
+默认值:  `OFF`
 
 注意
-
 将此选项设置为 ON 会触发与 MAGMA 相关的其他选项.
 
-MAGMA_DIR
+`MAGMA_DIR`
 MAGMA 安装根目录的路径.
+默认值: none
 
-默认值: 无
-
-sundials_magma_backends
+`SUNDIALS_MAGMA_BACKENDS`
 在 SUNDIALS MAGMA 界面下使用哪个 MAGMA 后端.
+默认值: `CUDA`
 
-默认值:  CUDA
-
-ENABLE_MPI
+`ENABLE_MPI`
 启用 MPI 支持.
-这将构建并行 nvector 和 ManyVector 库的 MPI 感知版本.
-
-默认值 关闭
+这将构建并行 `nvector` 和 `ManyVector` 库的 MPI-aware 版本.
+默认值 `OFF`
 
 注意
+将此选项设置为 `ON` 将触发多个与 `MPI` 相关的附加选项.
 
-将此选项设置为 "ON "将触发多个与 MPI 相关的附加选项.
-
-MPI_C_COMPILER
-mpicc 程序
-
+`MPI_C_COMPILER`
+`mpicc` 程序
 默认值:
 
-mpi_cxx_compiler
-mpicxx 程序
-
+`mpi_cxx_compiler`
+`mpicxx` 程序
 默认:
 
 注意
+只有在启用 `MPI` (ENABLE_MPI 为 ON),
+和启用 C++ 示例 (`EXAMPLES_ENABLE_CXX` 为 ON) 时才会触发此选项.
+默认情况下, 所有 SUNDIALS solvers 都可在 C++ MPI 应用程序中使用,
+无需设置除 `ENABLE_MPI` 以外的其他配置选项.
 
-只有在启用 MPI (ENABLE_MPI 为 ON) 和启用 C++ 示例 (EXAMPLES_ENABLE_CXX 为 ON) 时才会触发此选项.
-默认情况下, 所有 SUNDIALS 解算器都可在 C++ MPI 应用程序中使用, 无需设置除 ENABLE_MPI 以外的其他配置选项.
-
-MPI_Fortran_COMPILER
-mpif90 程序
-
+`MPI_Fortran_COMPILER`
+`mpif90` 程序
 默认值:
 
 注意
+只有启用 MPI(ENABLE_MPI 为 ON)
+和 Fortran-C 支持(EXAMPLES_ENABLE_F2003 为 ON)时, 才会触发该选项.
 
-只有启用 MPI(ENABLE_MPI 为 ON)和 Fortran-C 支持(EXAMPLES_ENABLE_F2003 为 ON)时, 才会触发该选项.
-
-mpiexec_executable
+`MPIEXEC_EXECUTABLE`
 指定运行 MPI 程序的可执行文件
-
-默认值: mpirun
+默认值: `mpirun`
 
 注意
+只有启用 MPI(`ENABLE_MPI` 为 `ON`)时, 才会触发该选项.
 
-只有启用 MPI(ENABLE_MPI 为 ON)时, 才会触发该选项.
+`ENABLE_ONEMKL`
+启用 `oneMKL` 支持.
+默认值: OFF
 
-ENABLE_ONEMKL
-启用 oneMKL 支持.
-
-默认值: OFF 关闭
-
-ONEMKL_DIR
+`ONEMKL_DIR`
 oneMKL 安装路径.
-
-默认值: 无
-
-sundials_onemkl_use_getrf_loop
-此高级调试选项将批处理 LU 因式分解替换为对批处理和非批处理 LU 因式分解中的每个系统进行循环.
-
-默认值:  关闭
-
-sundials_onemkl_use_getrs_loop
-此高级调试选项将批处理 LU 求解替换为对批处理和非批处理求解中的每个系统进行循环.
-
-默认值 关闭
-
-ENABLE_OPENMP
-启用 OpenMP 支持(构建 OpenMP NVector)
-
-默认值: OFF 关闭
-
-ENABLE_PETSC
-启用 PETSc 支持
-
-默认值 关闭
-
-注释
-
-请参阅第 14.1.4 节中有关启用 PETSc 后构建的其他信息.
-
-PETSC_DIR
-PETSc 安装路径
-
-默认: 无
-
-petsc_libraries
-半角分隔的 PETSc 链接库列表.
-除非用户提供, 否则将根据 PETSC_DIR 中的 PETSc 安装自动填充.
-
-默认值: 无
-
-PETSC_INCLUDES
-用半冒号分隔的 PETSc 包含目录列表.
-除非用户提供, 否则将根据 PETSC_DIR 中的 PETSc 安装文件自动填充.
-
-默认值: 无
-
-ENABLE_PTHREAD
-启用 Pthreads 支持(构建 Pthreads NVector)
-
-默认值:  关闭
-
-ENABLE_RAJA
-启用 RAJA 支持.
-
-默认值 关闭
-
-注意
-
-您需要启用 CUDA 或 HIP 才能构建 RAJA 向量模块.
-
-sundials_raja_backends
-如果在构建 SUNDIALS 时支持 RAJA, 则设置 RAJA 后端为目标.
-支持的值有 CUDA, HIP 或 SYCL.
-
-默认值:  CUDA
-
-enable_superludist
-启用 SuperLU_DIST 支持
-
-默认值: OFF 关闭
-
-注释
-
-请参阅第 14.1.4 节中有关启用 SuperLU_DIST 后构建的其他信息.
-
-superludist_dir
-SuperLU_DIST 的安装路径.
-
-默认值: 无
-
-SUPERLUDIST_OpenMP
-为使用 OpenMP 构建的 SuperLU_DIST 启用 SUNDIALS 支持
-
-默认值: 无
-
-注意: SuperLU_DIST 必须支持 OpenMP 才能运行此选项.
-此外, 环境变量 OMP_NUM_THREADS 必须设置为所需的线程数.
-
-superludist_include_dirs
-SuperLU_DIST 的包含路径列表(在典型的 SuperLU_DIST 安装中, 这通常是 SuperLU_DIST SRC 目录)
-
-默认值: 无
-
-注释
-
-这是一个高级选项.
-建议使用 SUPERLUDIST_DIR.
-
-superludist_libraries
-SuperLU_DIST 所需的半角分隔库列表
-
-默认值: 无
-
-注释
-
-这是一个高级选项.
-建议使用 SUPERLUDIST_DIR.
-
-superludist_include_dir
-SuperLU_DIST 头文件的路径(在典型的 SuperLU_DIST 安装中, 通常是 SuperLU_DIST SRC 目录)
-
-默认值: 无
-
-注释
-
-这是一个高级选项.
-该选项已被弃用.
-请使用 SUPERLUDIST_INCLUDE_DIRS.
-
-superludist_library_dir
-SuperLU_DIST 安装的库文件的路径
-
-默认值: 无
-
-注释
-
-此选项已被弃用.
-请使用 SUPERLUDIST_DIR.
-
-enable_superlumt
-启用 SuperLU_MT 支持
-
-默认值:  关闭
-
-注释
-
-请参阅第 14.1.4 节中有关启用 SuperLU_MT 后构建的其他信息.
-
-superlumt_include_dir
-SuperLU_MT 头文件的路径(在典型的 SuperLU_MT 安装中, 这通常是 SuperLU_MT SRC 目录)
-
-默认值: 无
-
-superlumt_library_dir
-SuperLU_MT 已安装库文件的路径
-
-默认值: 无
-
-superlumt_thread_type
-必须设置为 Pthread 或 OpenMP, 具体取决于 SuperLU_MT 的编译方式.
-
-默认值:  Pthread
-
-ENABLE_SYCL
-启用 SYCL 支持.
-
-默认值: OFF 关闭
-
-注意
-
-CMake 目前不支持 SYCL 编译器的自动检测, CMAKE_CXX_COMPILER 必须设置为有效的 SYCL 编译器.
-目前唯一支持的 SYCL 编译器是英特尔 oneAPI 编译器, 即 dpcpp 和 icpx.
-使用 icpx 时, 必须在 CMAKE_CXX_FLAGS 中添加 -fsycl 标志和任何提前编译标志.
-
-sundials_sycl_2020_unsupported
-这个高级选项禁止在 SUNDIALS 库和示例中使用 SYCL 2020 标准的某些功能.
-这可用于解决某些编译器对 SYCL 2020 支持不完整的情况.
-
-默认值:  关闭
-
-sundials_logging_level
-设置 SUNLogger 运行时 API 的最大日志记录级别.
-设置得越高, 可能记录的输出越多, 性能也可能下降得越多.
-选项如下
-
-0 - 不记录日志
-
-1 - 记录错误
-
-2 - 记录错误 + 警告
-
-3 - 记录错误 + 警告 + 信息输出
-
-4 - 记录错误 + 警告 + 信息输出 + 调试输出
-
-5 - 记录以上所有内容, 甚至更多内容(例如, 可记录矢量值变量)
-
-默认值: 0
-
-sundials_logging_enable_mpi
-在 SUNLogger 运行时 API 中启用 MPI 支持.
-也就是说, 使日志记录器具有 MPI 感知, 并能仅在特定行列上输出.
-
+默认值: none
+
+`SUNDIALS_ONEMKL_USE_GETRF_LOOP`;
+This advanced debugging option replaces the batched LU factorization
+with a loop over each system in the batch
+and a non-batched LU factorization.
 默认值:  OFF
 
-注意
-
-日志记录器可在未开启 MPI 支持的 MPI 应用程序中使用, 但会在所有行列上输出.
-
-sundials_build_with_monitoring
-构建具有细粒度解算器进度和统计监控功能的 SUNDIALS.
-这主要用于调试.
-
-默认值为 关闭
-
-警告
-
-即使不使用监控功能, 使用监控功能构建 SUNDIALS 也可能会导致轻微的性能下降.
-
-sundials_build_with_profiling
-构建具有细粒度剖析功能的 SUNDIALS.
-
-默认值:  关闭
-
-警告
-
-剖析会影响性能, 应谨慎启用.
-
-ENABLE_CALIPER
-启用 CALIPER 支持
-
-默认值:  关闭
-
-注意
-
-使用 Caliper 需要将 SUNDIALS_BUILD_WITH_PROFILING 设置为 ON.
-
-CALIPER_DIR
-Caliper 安装根目录的路径
-
-默认值:  无
-
-ENABLE_ADIAK
-启用 Adiak 支持
-
+`SUNDIALS_ONEMKL_USE_GETRS_LOOP`
+This advanced debugging option replaces the batched LU solve
+with a loop over each system in the batch
+and a non-batched solve.
 默认值 关闭
 
-adiak_DIR
-指向 Adiak 安装根目录的路径
+`ENABLE_OPENMP`
+启用 OpenMP 支持(构建 OpenMP NVector)
+默认值: OFF
 
+`ENABLE_PETSC`
+启用 PETSc 支持
+默认值 OFF
+
+注释
+请参阅第 14.1.4 节中有关启用 PETSc 构建的其他信息.
+
+`PETSC_DIR`
+PETSc 安装路径
+默认: 无
+
+`PETSC_LIBRARIES`
+Semi-colon分隔的 `PETSc` 链接库列表.
+除非用户提供, 否则将根据 `PETSC_DIR` 中的 `PETSc` 安装自动填充.
+默认值: 无
+
+`PETSC_INCLUDES`
+Semi-colon 分隔的 `PETSc` 包含目录列表.
+除非用户提供, 否则将根据 `PETSC_DIR` 中的 `PETSc` 安装文件自动填充.
+默认值: 无
+
+`ENABLE_PTHREAD`
+启用 Pthreads 支持(构建 Pthreads NVector)
+默认值:  关闭
+
+`ENABLE_RAJA`
+启用 RAJA 支持.
+默认值 关闭
+
+注意
+您需要启用 CUDA 或 HIP 才能构建 RAJA 向量模块.
+
+`SUNDIALS_RAJA_BACKENDS`
+如果在构建 SUNDIALS 时支持 RAJA, 则设置 RAJA 后端为目标.
+支持的值有 CUDA, HIP 或 SYCL.
+默认值:  CUDA
+
+`ENABLE_SUPERLUDIST`
+启用 `SuperLU_DIST` 支持
+默认值: OFF
+
+注释
+请参阅第 14.1.4 节中有关启用 SuperLU_DIST 后构建的其他信息.
+
+`SUPERLUDIST_DIR`
+SuperLU_DIST 的安装路径.
+默认值: 无
+
+`SUPERLUDIST_OpenMP`
+为使用 OpenMP 构建的 `SuperLU_DIST` 启用 SUNDIALS 支持
+默认值: 无
+
+注意: `SuperLU_DIST` 必须支持 `OpenMP` 才能运行此选项.
+此外, 环境变量 `OMP_NUM_THREADS` 必须设置为所需的线程数.
+
+`SUPERLUDIST_INCLUDE_DIRS`
+`SuperLU_DIST` 的包含路径列表
+(在典型的 SuperLU_DIST 安装中, 这通常是 `SuperLU_DIST SRC` 目录)
+默认值: 无
+
+注释
+这是一个高级选项.
+建议使用 `SUPERLUDIST_DIR`.
+
+`SUPERLUDIST_LIBRARIES`
+SuperLU_DIST 所需的库的 分号分隔列表
+默认值: 无
+
+注释
+这是一个高级选项.
+建议使用 `SUPERLUDIST_DIR`.
+
+`SUPERLUDIST_INCLUDE_DIR`
+SuperLU_DIST 头文件的路径
+(在典型的 SuperLU_DIST 安装中, 通常是 SuperLU_DIST SRC 目录)
+默认值: 无
+
+注释
+这是一个高级选项.
+该选项已被弃用.
+请使用 `SUPERLUDIST_INCLUDE_DIRS`.
+
+`SUPERLUDIST_LIBRARY_DIR`
+SuperLU_DIST 安装的库文件的路径
+默认值: 无
+
+注释
+此选项已被弃用.
+请使用 `SUPERLUDIST_DIR`.
+
+`ENABLE_SUPERLUMT`
+启用 `SuperLU_MT` 支持
+默认值:  关闭
+注释
+请参阅第 14.1.4 节中有关启用 SuperLU_MT 后构建的其他信息.
+
+`SUPERLUMT_INCLUDE_DIR`
+SuperLU_MT 头文件的路径(在典型的 SuperLU_MT 安装中, 这通常是 SuperLU_MT SRC 目录)
+默认值: 无
+
+`SUPERLUMT_LIBRARY_DIR`
+`SuperLU_MT` 已安装库文件的路径
+默认值: 无
+
+`SUPERLUMT_THREAD_TYPE`
+必须设置为 Pthread 或 OpenMP, 具体取决于 SuperLU_MT 的编译方式.
+默认值:  Pthread
+
+`ENABLE_SYCL`
+启用 SYCL 支持.
+默认值: OFF
+注意
+CMake 目前不支持 SYCL 编译器的自动检测,
+`CMAKE_CXX_COMPILER` 必须设置为有效的 SYCL 编译器.
+目前唯一支持的 SYCL 编译器是英特尔 oneAPI 编译器, 即 `dpcpp` 和 `icpx`.
+使用 `icpx` 时,
+必须在 `CMAKE_CXX_FLAGS` 中添加 `-fsycl` 标志和任何 ahead of time 编译标志.
+
+`SUNDIALS_SYCL_2020_UNSUPPORTED`
+这个高级选项禁止在 SUNDIALS 库和示例中使用 SYCL 2020 标准的某些功能.
+这可用于解决某些编译器对 SYCL 2020 支持不完整的情况.
+默认值:  OFF
+
+`SUNDIALS_LOGGING_LEVEL`
+设置 SUNLogger runtime API 的最大日志记录级别.
+设置得越高, 可能记录的输出越多, 性能也可能下降得越多.
+
+选项如下
+0 - 不记录日志
+1 - 记录错误
+2 - 记录错误 + 警告
+3 - 记录错误 + 警告 + 信息输出
+4 - 记录错误 + 警告 + 信息输出 + 调试输出
+5 - 记录以上所有内容, 甚至更多内容(例如, 可记录矢量值变量)
+默认值: `0`
+
+`SUNDIALS_LOGGING_ENABLE_MPI`
+在 `SUNLogger` 运行时 API 中启用 `MPI` 支持.
+也就是说, 使日志记录器具有 MPI 感知, 并能仅在特定 ranks 上输出.
+默认值:  OFF
+注意
+日志记录器可在未开启 `MPI` 支持的 `MPI` 应用程序中使用, 但会在所有行列上输出.
+
+`SUNDIALS_BUILD_WITH_MONITORING`
+构建具有细粒度解算器进度和统计监控功能的 SUNDIALS.
+这主要用于调试.
+默认值为 OFF
+
+警告
+即使不使用监控功能, 使用监控功能构建 `SUNDIALS` 也可能会导致轻微的性能下降.
+
+`SUNDIALS_BUILD_WITH_PROFILING`
+构建具有 fine-grained profiling 的 SUNDIALS.
+默认值:  关闭
+
+警告
+剖析会影响性能, 应谨慎启用.
+
+`ENABLE_CALIPER`
+启用 CALIPER 支持
+默认值:  关闭
+
+注意
+使用 Caliper 需要将 `SUNDIALS_BUILD_WITH_PROFILING` 设置为 ON.
+
+`CALIPER_DIR`
+Caliper 安装根目录的路径
 默认值:  无
 
-sundials_f77_func_case
-指定在 Fortran 名称混淆方案中使用的大小写, 选项为: 小写或大写
+`ENABLE_ADIAK`
+启用 Adiak 支持
+默认值 关闭
 
+`adiak_DIR`
+指向 Adiak 安装根目录的路径
+默认值:  无
+
+`SUNDIALS_F77_FUNC_CASE`
+指定在 Fortran name-mangling 方案中使用的大小写, 选项为: `lower`或 `upper`
 默认值: 无
 
 注意
+联编系统将尝试使用 `Fortran` 编译器来推断 `Fortran` 名称混淆方案.
+只有在没有 `Fortran` 编译器的情况下,
+或者在无法确定推断或默认(下层)方案的情况下, 才能使用该选项.
+如果使用, 还必须设置 `SUNDIALS_F77_FUNC_UNDERSCORES`.
 
-联编系统将尝试使用 Fortran 编译器来推断 Fortran 名称混淆方案.
-只有在没有 Fortran 编译器的情况下, 或者在无法确定推断或默认(下层)方案的情况下, 才能使用该选项.
-如果使用, 还必须设置 SUNDIALS_F77_FUNC_UNDERSCORES.
-
-SUNDIALS_F77_FUNC_UNDERSCORES
-指定在 Fortran 名称混淆方案中附加的下划线个数, 选项包括: 无, 一个或两个
-
+`SUNDIALS_F77_FUNC_UNDERSCORES`
+指定在 Fortran 名称混淆方案中附加的下划线个数,
+选项包括: `none`, `one` or `two`
 默认值:
 
 备注
-
 编译系统将尝试使用 Fortran 编译器推断 Fortran 名称混淆方案.
 只有在没有 Fortran 编译器的情况下, 或者在无法确定推断或默认(一种)方案的情况下, 才能使用该选项.
-如果使用, 还必须设置 SUNDIALS_F77_FUNC_CASE.
+如果使用, 还必须设置 `SUNDIALS_F77_FUNC_CASE`.
 
-SUNDIALS_INDEX_TYPE
-用于 SUNDIALS 索引的整数类型.
-大小必须与 SUNDIALS_INDEX_SIZE 选项提供的大小一致.
-
-默认值:  根据 SUNDIALS_INDEX_SIZE 自动确定
+`SUNDIALS_INDEX_TYPE`
+用于 SUNDIALS 索引的 Integer type.
+大小必须与 `SUNDIALS_INDEX_TYPE` 选项提供的大小一致.
+默认值:  根据 `SUNDIALS_INDEX_SIZE` 自动确定
 
 注意事项
-
-在过去的 SUNDIALS 版本中, 用户可以将此选项设置为 INT64_T 来使用 64 位整数, 或者设置为 INT32_T 来使用 32 位整数.
+在过去的 SUNDIALS 版本中, 用户可以将此选项设置为 `INT64_T` 来使用 64 位整数,
+或者设置为 `INT32_T` 来使用 `32` 位整数.
 从 SUNDIALS 3.2.0 开始, 这些特殊值将被弃用.
-对于 SUNDIALS 3.2.0 及以上版本, 用户在大多数情况下只需使用 SUNDIALS_INDEX_SIZE 选项.
+对于 SUNDIALS 3.2.0 及以上版本, 用户在大多数情况下只需使用 `SUNDIALS_INDEX_SIZE` 选项.
 
-sundials_index_size
-SUNDIALS 中用于索引的整数大小(以比特为单位), 可选项有:  32 或 64
-
+`SUNDIALS_INDEX_SIZE`
+SUNDIALS 中用于索引的整数大小(以比特为单位), 可选项有:  `32` 或 `64`
 默认值: 64
 
 注意事项
+build系统会尝试找到合适大小的整数类型.
+候选的 `64` 位整数类型有(按优先级排序): `int64_t`, `__int64`, `long long` 和 `long`.
+候选的 32 位整数类型(按优先级排序)有: `int32_t`, `int` 和 `long`.
+高级选项 `SUNDIALS_INDEX_SIZE` 可用于提供此处未列出的类型.
 
-联编系统会尝试找到合适大小的整数类型.
-候选的 64 位整数类型有(按优先级排序): int64_t, __int64, long long 和 long.
-候选的 32 位整数类型(按优先级排序)有: int32_t, int 和 long.
-高级选项 SUNDIALS_INDEX_TYPE 可用于提供此处未列出的类型.
+`SUNDIALS_MATH_LIBRARY`
+要链接的标准 C 数学库(如 `libm`).
+默认值: Unix 系统为 `-lm`, 其他系统为 none
 
-sundials_math_library
-要链接的标准 C 数学库(如 libm).
+`SUNDIALS_PRECISION`
+SUNDIALS 包和类实现中使用的浮点精度, 选项包括: `double`, `single` 或 `extended`.
+默认: `double`
 
-默认值: Unix 系统为 -lm, 其他系统为 0
+`SUNDIALS_INSTALL_CMAKEDIR`
+SUNDIALS cmake 文件的安装目录 (相对于 `CMAKE_INSTALL_PREFIX`).
+默认值: `CMAKE_INSTALL_PREFIX/cmake/sundials`
 
-sundials_precision
-SUNDIALS 包和类实现中使用的浮点精度, 选项包括: 双精度, 单精度或扩展精度.
-
-默认: 双
-
-sundials_install_cmakedir
-SUNDIALS cmake 文件的安装目录 (相对于 CMAKE_INSTALL_PREFIX).
-
-默认值:  CMAKE_INSTALL_PREFIX/cmake/sundials
-
-use_generic_math
-链接到 SUNDIALS_MATH_LIBRARY,  在 Unix 系统中默认为 libm.
-
-默认值:  开启
+`USE_GENERIC_MATH`
+链接到 `SUNDIALS_MATH_LIBRARY`,  在 Unix 系统中默认为 `libm`.
+默认值:  `ON`
 
 注意
-
 该选项已被弃用.
-请使用 SUNDIALS_MATH_LIBRARY.
+请使用 `SUNDIALS_MATH_LIBRARY`.
 
-XBRAID_DIR
-XBraid 安装的根目录.
-
+`XBRAID_DIR`
+`XBraid` 安装的根目录.
 默认值:  关闭
 
-xbraid_includes
+`XBRAID_INCLUDES`
 以分号分隔的 XBraid 包含目录列表.
-除非用户提供, 否则将根据 XBRAID_DIR 中的 XBraid 安装目录自动填充.
-
+除非用户提供, 否则将根据 `XBRAID_DIR` 中的 `XBraid` 安装目录自动填充.
 默认值: 无
 
-xbraid_libraries
+`XBRAID_LIBRARIES`
 以分号隔开的 XBraid 链接库列表.
 除非用户提供, 否则将根据 XBRAID_DIR 中的 XBraid 安装文件自动填充.
-
 默认值: 无
 
-use_xsdk_defaults
+`USE_XSDK_DEFAULTS`
 启用 xSDK(更多信息请参阅 https://xsdk.info)默认配置设置.
-这将把 CMAKE_BUILD_TYPE 设置为调试, 把 SUNDIALS_INDEX_SIZE 设置为 32, 把 SUNDIALS_PRECISION 设置为双倍.
+这将把 `CMAKE_BUILD_TYPE` 设置为 `Debug`,
+把 `SUNDIALS_INDEX_SIZE` 设置为 `32`,
+把 `SUNDIALS_PRECISION` 设置为 `double`.
+默认值为 OFF
 
-默认值为 关闭
+### 配置示例
 
-配置示例
 以下示例有助于演示 CMake 配置选项的用法.
 
-要使用默认的 C 和 Fortran 编译器, 默认的 mpicc 和 mpif90 并行编译器配置 SUNDIALS, 启用示例编译, 并在 /home/myname/sundials/ 的子目录下安装库, 头文件和示例源, 请使用
+要使用默认的 C 和 Fortran 编译器, 默认的 mpicc 和 mpif90 并行编译器配置 SUNDIALS,
+启用示例编译, 并在 /home/myname/sundials/ 的子目录下安装库, 头文件和示例源, 请使用
 
+```bash
 % cmake \
 > -DCMAKE_INSTALL_PREFIX=/home/myname/sundials/instdir \
 > -DEXAMPLES_INSTALL_PATH=/home/myname/sundials/instdir/examples \
@@ -1039,8 +914,11 @@ use_xsdk_defaults
 /home/myname/sundials/srcdir
 
 % make install
+```
+
 要禁用示例安装, 请使用
 
+```bash
 % cmake \
 > -DCMAKE_INSTALL_PREFIX=/home/myname/sundials/instdir \
 > -DEXAMPLES_INSTALL_PATH=/home/myname/sundials/instdir/examples \
@@ -1049,11 +927,15 @@ use_xsdk_defaults
 > /home/myname/sundials/srcdir
 
 % make install
-14.1.4. 使用外部库
+```
+
+### 14.1.4. 使用外部库
+
 SUNDIALS 套件包含许多选项, 以便在开发解决方案时实现灵活性.
 以下是使用受支持的第三方库时, 针对特定配置的一些说明.
 
-14.1.4.1. 使用 Ginkgo 构建
+#### 14.1.4.1. 使用 Ginkgo 构建
+
 Ginkgo 是面向多核系统的高性能线性代数库, 侧重于稀疏线性系统的求解.
 它使用现代 C++ 实现(至少需要 C++14 兼容编译器才能构建), GPU 内核使用 CUDA(针对英伟达设备), HIP(针对 AMD 设备)和 SYCL/DPC++(针对英特尔设备和其他支持的硬件)实现.
 要在 SUNDIALS 中启用 Ginkgo, 请将 ENABLE_GINKGO 设为 ON, 并在 Ginkgoo_DIR 中提供 Ginkgo 安装根目录的路径.
@@ -1067,7 +949,8 @@ Ginkgo 是面向多核系统的高性能线性代数库, 侧重于稀疏线性�
 > /home/myname/sundials/srcdir
 Ginkgo 的 SUNDIALS 接口与设置为扩展的 SUNDIALS_PRECISION 不兼容.
 
-使用 Kokkos 构建
+#### 使用 Kokkos 构建
+
 Kokkos 是一种现代 C++(至少需要 C++14)编程模型, 用于为基于多核 CPU 和 GPU(包括英伟达, AMD 和英特尔加速器)的系统编写性能可移植代码.
 要在 SUNDIALS 中启用 Kokkos, 请将 ENABLE_KOKKOS 设为 ON, 并在 Kokkos_DIR 中提供 Kokkos 安装根目录的路径.
 此外, Kokkos-Kernels 库还为线性代数提供了常用的计算内核.
@@ -1083,7 +966,8 @@ Kokkos 是一种现代 C++(至少需要 C++14)编程模型, 用于为基于多�
 
 Kokkos-Kernels 的最低支持版本为 3.7.00.
 
-14.1.4.3. 使用 LAPACK 构建
+#### 14.1.4.3. 使用 LAPACK 构建
+
 要启用 LAPACK, 请将 ENABLE_LAPACK 选项设置为 ON.
 如果包含 LAPACK 库的目录位于 LD_LIBRARY_PATH 环境变量中,  CMake 将相应地设置 LAPACK_LIBRARIES 变量,  否则 CMake 将尝试在标准系统位置中查找 LAPACK 库.
 要明确告诉 CMake 使用什么库, 可以将 LAPACK_LIBRARIES 变量设置为 LAPACK 所需的库.
@@ -1103,7 +987,8 @@ Kokkos-Kernels 的最低支持版本为 3.7.00.
 
 SUNDIALS 已通过 OpenBLAS 0.3.18 测试.
 
-14.1.4.4. 使用 KLU 构建
+#### 14.1.4.4. 使用 KLU 构建
+
 KLU 是一个直接求解电路仿真中出现的稀疏非对称线性方程组的软件包, 是稀疏矩阵软件套件 SuiteSparse 的一部分.
 该库由德州农工大学开发, 可从 SuiteSparse GitHub 存储库中获取.
 
@@ -1112,7 +997,8 @@ CMake configure 将填充以下变量:  AMD_LIBRARY, AMD_LIBRARY_DIR, BTF_LIBRAR
 
 SUNDIALS 已在 SuiteSparse 5.10.1 版本中进行了测试.
 
-14.1.4.5. 使用 SuperLU_DIST 进行构建
+#### 14.1.4.5. 使用 SuperLU_DIST 进行构建
+
 SuperLU_DIST 是一个通用库, 用于在分布式内存环境下直接求解大型, 稀疏, 非对称线性方程组.
 该库由劳伦斯伯克利国家实验室开发, 可从 SuperLU_DIST GitHub 存储库中获取.
 
@@ -1135,7 +1021,8 @@ SuperLU_MT 是一个通用库, 用于在共享内存并行计算机上直接求�
 
 SUNDIALS 已在 3.1 版的 SuperLU_MT 中进行了测试.
 
-14.1.4.7. 使用 PETSc 构建
+#### 14.1.4.7. 使用 PETSc 构建
+
 可移植, 可扩展的科学计算工具包(PETSc)是一套数据结构和例程, 用于模拟偏微分方程建模的应用.
 该库由阿贡国家实验室开发, 可从 PETSc GitLab 存储库中获取.
 
@@ -1145,7 +1032,8 @@ SUNDIALS 已在 3.1 版的 SuperLU_MT 中进行了测试.
 SUNDIALS 定期使用最新的 PETSc 版本进行测试, 特别是在 SUNDIALS v6.6.2 版中使用 3.18.1 版本.
 SUNDIALS 需要 PETSc 3.5.0 或更新版本.
 
-14.1.4.8. 使用 hypre 构建
+#### 14.1.4.8. 使用 hypre 构建
+
 hypre 是一个高性能预处理和求解器库, 采用多网格方法, 用于在大规模并行计算机上求解大型稀疏线性方程组.
 该库由劳伦斯利弗莫尔国家实验室开发, 可从 hypre GitHub 存储库中获取.
 
@@ -1157,7 +1045,8 @@ hypre 是一个高性能预处理和求解器库, 采用多网格方法, 用于�
 
 SUNDIALS 会定期使用最新版本的 hypre 进行测试, 特别是在 SUNDIALS v6.6.2 版之前的 2.26.0 版本.
 
-14.1.4.9. 使用 MAGMA 构建
+#### 14.1.4.9. 使用 MAGMA 构建
+
 GPU 和多核架构上的矩阵代数(MAGMA)项目提供了一个类似于 LAPACK 的密集线性代数库, 但以异构架构为目标.
 该库由田纳西大学开发, 可从田纳西大学的网页上获取.
 
@@ -1165,7 +1054,8 @@ GPU 和多核架构上的矩阵代数(MAGMA)项目提供了一个类似于 LAPAC
 
 SUNDIALS 已在 v2.6.1 和 v2.6.2 版的 MAGMA 上进行了测试.
 
-14.1.4.10. 使用 oneMKL
+#### 14.1.4.10. 使用 oneMKL
+
 英特尔 oneAPI 数学内核库 (oneMKL) 包括 LAPACK 密集线性代数例程的 CPU 和 DPC++ 接口.
 SUNDIALS oneMKL 接口以 DPC++ 例程为目标, 要使用 CPU 例程, 请参阅第 14.1.4.3 节.
 
@@ -1173,7 +1063,8 @@ SUNDIALS oneMKL 接口以 DPC++ 例程为目标, 要使用 CPU 例程, 请参阅
 
 SUNDIALS 已通过 oneMKL 2021.4 版本的测试.
 
-14.1.4.11. 使用 CUDA 构建
+#### 14.1.4.11. 使用 CUDA 构建
+
 英伟达™(NVIDIA®)CUDA 工具包为使用英伟达™(NVIDIA®)GPU 进行 GPU 加速计算提供了一个开发环境.
 CUDA 工具包和兼容的英伟达驱动程序可从英伟达开发者网站获取.
 
@@ -1183,7 +1074,8 @@ CUDA 工具包和兼容的英伟达驱动程序可从英伟达开发者网站获
 
 SUNDIALS 已通过 CUDA 工具包 10 和 11 版本的测试.
 
-14.1.4.12. 使用 HIP 构建
+#### 14.1.4.12. 使用 HIP 构建
+
 HIP(可移植的异构计算接口)允许开发人员为 AMD 和 NVIDIA GPU 创建可移植的应用程序.
 HIP 可从 HIP GitHub 代码库中获取.
 
@@ -1192,7 +1084,8 @@ HIP 可从 HIP GitHub 代码库中获取.
 
 SUNDIALS 已在 5.0.0 至 5.4.3 之间的 HIP 版本上进行了测试.
 
-14.1.4.13. 使用 RAJA 构建
+#### 14.1.4.13. 使用 RAJA 构建
+
 RAJA 是劳伦斯利弗莫尔国家实验室开发的性能可移植层, 可从 RAJA GitHub 存储库获取.
 
 构建 SUNDIALS 的 RAJA 模块需要安装启用了 CUDA, HIP 或 SYCL 的 RAJA.
@@ -1202,7 +1095,8 @@ RAJA 是劳伦斯利弗莫尔国家实验室开发的性能可移植层, 可从 
 
 SUNDIALS 已在 RAJA 0.14.0 版进行了测试.
 
-14.1.4.14. 使用 XBraid
+#### 14.1.4.14. 使用 XBraid
+
 XBraid 是一个实时并行库, 实现了最优缩放多网格时间缩减 (MGRIT) 求解器.
 该库由劳伦斯利弗莫尔国家实验室开发, 可从 XBraid GitHub 存储库中获取.
 
@@ -1216,7 +1110,8 @@ XBraid 是一个实时并行库, 实现了最优缩放多网格时间缩减 (MGR
 
 SUNDIALS 已通过 XBraid 3.0.0 版本的测试.
 
-14.1.5. 测试构建和安装
+#### 14.1.5. 测试构建和安装
+
 如果 SUNDIALS 在配置时将 EXAMPLES_ENABLE_<language> 选项设置为 ON,  则在使用 make 命令联编之后,  可以运行一组回归测试:
 
 % make test
@@ -1240,7 +1135,8 @@ CMakeLists.txt 文件或传统的 Makefile 文件都可用于构建示例, 也�
 
 由于机器架构, 编译器版本, 第三方库的使用等原因, 输出结果可能会有差异.
 
-14.1.7. 在 Windows 上配置, 编译和安装
+#### 14.1.7. 在 Windows 上配置, 编译和安装
+
 CMake 也可用于在 Windows 上构建 SUNDIALS.
 要在 Visual Studio 下构建 SUNDIALS, 应执行以下步骤:
 
@@ -1276,7 +1172,8 @@ CMake 也可用于在 Windows 上构建 SUNDIALS.
 构建整个解决方案, 创建 SUNDIALS 库.
 要在您自己的项目中使用绪雅思 (SUNDIALS) 库, 您必须为您的项目设置 include 目录, 将绪雅思 (SUNDIALS) 库添加到您的项目解决方案中, 并将绪雅思 (SUNDIALS) 库设置为您项目的依赖项.
 
-14.2. 安装库和导出头文件
+## 14.2. 安装库和导出头文件
+
 使用 CMake SUNDIALS 联编系统, 命令
 
 $ make install

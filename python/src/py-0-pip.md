@@ -70,3 +70,21 @@ pip install --no-index --find-links=pypkg -r requirements.txt
 
 [python wheel 安装包的制作与安装](https://zhuanlan.zhihu.com/p/354110980)
 [python库打包分发setup.py编写指南](http://www.coolpython.net/python_senior/project/op_py_setup_install.html)
+
+## pip 配置文件目录
+
+[pip 在Windows 10下的配置文件在哪里](https://zhuanlan.zhihu.com/p/113905629)
+
+简单命令就可以, 注意命令行里面的 `-v`
+
+```bash
+pip config list -v
+For variant 'global', will try loading 'C:\ProgramData\pip\pip.ini'
+For variant 'user', will try loading 'C:\Users\xxxusername\pip\pip.ini'
+For variant 'user', will try loading 'C:\Users\xxxusername\AppData\Roaming\pip\pip.ini'
+For variant 'site', will try loading 'd:\xxxusername\scoop\apps\python\current\pip.ini'
+global.index-url='http://mirrors.aliyun.com/pypi/simple/'
+install.trusted-host='mirrors.aliyun.com'
+```
+
+看下上面的路径哦, 按图索骥即可哦
