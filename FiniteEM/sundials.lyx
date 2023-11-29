@@ -464,7 +464,7 @@ W_{i}=\frac{1}{\mathrm{rtol}\cdot\abs{y_{i}}+\mathrm{atol}_{i}}.\label{eq:6.4}
 \begin_inset Formula $y_{i}$
 \end_inset
 
-的tolerance ，因此norm为
+的 tolerance，因此norm为
 \begin_inset Formula $1$
 \end_inset
 
@@ -759,13 +759,13 @@ R=\left(\frac{\delta_{m}}{\delta_{1}}\right)^{\frac{1}{m-1}},
 –th 迭代的收敛测试则为
 \begin_inset Formula 
 \begin{equation}
-S\left\Vert \delta_{m}\right\Vert <0.33\label{eq:6.7}
+S\left\Vert \delta_{m}\right\Vert <\Upsilon\label{eq:6.7}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $S=R/(R-1)$
+\begin_inset Formula $S=R/(1-R)$
 \end_inset
 
  whenever 
@@ -776,11 +776,59 @@ S\left\Vert \delta_{m}\right\Vert <0.33\label{eq:6.7}
 \begin_inset Formula $R\le0.9$
 \end_inset
 
-。用户可以更改 收敛测试 中的常数，其默认值为 
-\begin_inset Formula $0.33$
+。（源代码和文档不一致，以源代码为准）
+\end_layout
+
+\begin_layout Itemize
+用户可以更改
+\series bold
+收敛测试
+\series default
+中的常数 
+\begin_inset Formula $\Upsilon$
 \end_inset
 
-。初始时以及
+，其默认值为 
+\begin_inset Formula $\Upsilon=0.33$
+\end_inset
+
+。前几次牛顿迭代，假设
+\begin_inset Formula $\delta_{2}\approx\delta_{1}$
+\end_inset
+
+，则
+\begin_inset Formula $R\to1$
+\end_inset
+
+，
+\begin_inset Formula $S\to\infty$
+\end_inset
+
+，则收敛测试为
+\begin_inset Formula $\left\Vert \delta_{m}\right\Vert <\Upsilon/S\to0$
+\end_inset
+
+，判定非常严苛。随着牛顿迭代进行，假设
+\begin_inset Formula $R\to0.1$
+\end_inset
+
+，
+\begin_inset Formula $S\to1/9$
+\end_inset
+
+，
+\begin_inset Formula $\left\Vert \delta_{m}\right\Vert <9\Upsilon$
+\end_inset
+
+，判定逐渐宽松，因为此时修正
+\begin_inset Formula $\delta_{m}$
+\end_inset
+
+越来越小。
+\end_layout
+
+\begin_layout Itemize
+初始时以及
 \begin_inset Formula $J$
 \end_inset
 
@@ -796,15 +844,23 @@ S\left\Vert \delta_{m}\right\Vert <0.33\label{eq:6.7}
 \begin_inset Formula $S=20$
 \end_inset
 
- ；当某一step
+ ；
+\end_layout
+
+\begin_layout Itemize
+当某一step
 \begin_inset Formula $\alpha\neq\overline{\alpha}$
 \end_inset
 
-时充值
+时重置
 \begin_inset Formula $S=100$
 \end_inset
 
-。注意当
+。
+\end_layout
+
+\begin_layout Itemize
+注意当
 \begin_inset Formula $m=1$
 \end_inset
 
@@ -822,8 +878,12 @@ noprefix "false"
 \begin_inset Formula $S$
 \end_inset
 
-的旧值。 因此，在非线性求解器的 首次迭代中，我们会进行额外的测试，并在
-\begin_inset Formula $\left\Vert \delta_{1}\right\Vert <0.33\cdot10^{-4}$
+的旧值。
+\end_layout
+
+\begin_layout Itemize
+因此，在非线性求解器的 首次迭代中，我们会进行额外的测试，并在
+\begin_inset Formula $\left\Vert \delta_{1}\right\Vert <\Upsilon\cdot10^{-4}$
 \end_inset
 
 则停止迭代，（因为这样的
@@ -834,8 +894,11 @@ noprefix "false"
 \begin_inset Formula $R$
 \end_inset
 
- ).
- 我们只允许少量的 nonlinear iterations（默认值为 
+ )。
+\end_layout
+
+\begin_layout Itemize
+我们只允许少量的 nonlinear iterations（默认值为 
 \begin_inset Formula $4$
 \end_inset
 
@@ -863,17 +926,21 @@ noprefix "false"
 \begin_inset Formula $\eta_{\text{cf}}=0.25$
 \end_inset
 
-）。在预设的 convergence failures 次数（默认为 10 次）后，将停止（halt）积分。用户可以更改这些默认值：nonlinear
+）。
+\end_layout
+
+\begin_layout Itemize
+在预设的 convergence failures 次数（默认为 10 次）后，将停止（halt）积分。用户可以更改这些默认值：nonlinear
  iterations 最大次数 和 nonlinear convergence failures 最大次数。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 当使用iterative法求解线性系统时，为了尽量减少linear iteration 对非线性和 local integration 误差控制的影响，我们要求
  preconditioned linear residual 相对于 allowed error in the nonlinear iteration
  要小，即
 \begin_inset Formula 
 \[
-\left\Vert P^{-1}(J\,x+G)\right\Vert <0.05\cdot0.33
+\left\Vert P^{-1}(J\,x+G)\right\Vert <0.05\cdot\Upsilon
 \]
 
 \end_inset
@@ -909,11 +976,22 @@ J_{ij} & =\left[F_{i}(t,y+\sigma_{j}e_{j},\dot{y}+\alpha\,\sigma_{j}\,e_{j})-F_{
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
 其中
 \begin_inset Formula $U$
 \end_inset
 
- 是 unit roundoff，
+ 是 unit roundoff（机器精度，IEEE double 
+\begin_inset Formula $2^{-53}\approx1.1*10^{-16}$
+\end_inset
+
+）；
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $h$
 \end_inset
 
@@ -935,7 +1013,31 @@ noprefix "false"
 \begin_inset Formula $y_{j}$
 \end_inset
 
-定义的误差权重。注意到，对于 sparse and user–supplied 矩阵对象，Jacobian 矩阵必须以用户routine提供。
+定义的误差权重。
+\begin_inset Formula $1/W_{j}$
+\end_inset
+
+表示分量
+\begin_inset Formula $y_{i}$
+\end_inset
+
+的 容差。
+\begin_inset Formula 
+\[
+1/W_{i}=\mathrm{rtol}\cdot\abs{y_{i}}+\mathrm{atol}_{i}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+注意到，对于 sparse and user–supplied 矩阵对象，Jacobian 矩阵
+\series bold
+必须
+\series default
+由用户routine提供。
 \end_layout
 
 \begin_layout Standard
@@ -955,19 +1057,1209 @@ J\,v=\left[F(t,y+\sigma\,v,\dot{y}+\alpha\,\sigma\,v)-F(t,y,\dot{y})\right]/\sig
 \begin_inset Formula $\sigma=1/\left\Vert v\right\Vert $
 \end_inset
 
-。作为选项，用户可以指定一个常数因子，插入到该表达式中用作 
+。作为选项，用户可以指定一个常数因子，插入到
 \begin_inset Formula $\sigma$
 \end_inset
 
-的值。
+的表达式中。
+\end_layout
+
+\begin_layout Subsection
+Local Error Test
+\end_layout
+
+\begin_layout Standard
+在对系统进行积分的过程中，IDA 会计算第
+\begin_inset Formula $n$
+\end_inset
+
+–个时间步的局部截断误差 
+\begin_inset Formula $\mathrm{LTE}$
+\end_inset
+
+ 的估计值，并要求其满足不等式
+\begin_inset Formula 
+\[
+\left\Vert \mathrm{LTE}\right\Vert _{\text{WRMS}}\le1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+渐近地，LTE 按
+\begin_inset Formula $h^{q+1}$
+\end_inset
+
+变化，当步长为
+\begin_inset Formula $h$
+\end_inset
+
+，阶数为
+\begin_inset Formula $q$
+\end_inset
+
+。predictor–corrector difference 
+\begin_inset Formula $\Delta_{n}$
+\end_inset
+
+亦同 
+\begin_inset Formula 
+\[
+\Delta_{n}\equiv y_{n}-y_{n(0)}.
+\]
+
+\end_inset
+
+因此存在一个常数
+\begin_inset Formula $C$
+\end_inset
+
+使得
+\begin_inset Formula 
+\begin{equation}
+\mathrm{LTE}=C\Delta_{n}+\order{h^{q+2}},\label{eq:6.7c}
+\end{equation}
+
+\end_inset
+
+因此 LTE 的norm估计为
+\begin_inset Formula $\left|C\right|\cdot\left\Vert \Delta_{n}\right\Vert $
+\end_inset
+
+。此外，IDA 要求当前步长的 associated polynomial interpolant be bounded by 
+\begin_inset Formula $1$
+\end_inset
+
+ in norm。该误差的norm的领头阶上界为
+\begin_inset Formula $\overline{C}\left\Vert \Delta_{n}\right\Vert $
+\end_inset
+
+对于另一个常数
+\begin_inset Formula $\overline{C}$
+\end_inset
+
+。因此，IDA 的 local error test 为
+\begin_inset Formula 
+\begin{equation}
+\max\left\{ \left|C\right|,\overline{C}\right\} \left\Vert \Delta_{n}\right\Vert \le1.\label{eq:6.8}
+\end{equation}
+
+\end_inset
+
+如果 error vector 的代数分量已被确定，用户还可以选择从检验
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中省略这些分量。
+\end_layout
+
+\begin_layout Subsection
+步长控制和阶数选取
+\end_layout
+
+\begin_layout Standard
+在 IDA 中，local error test 与 选择 步长和阶数 的逻辑 紧密结合。首先，初始阶段作特殊处理；在最初的几步中，每一步的步长都会加倍，阶次也
+会提高（从初始值
+\begin_inset Formula $1$
+\end_inset
+
+），直到：
+\end_layout
+
+\begin_layout Itemize
+(a) 局部误差检验
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+失败，
+\end_layout
+
+\begin_layout Itemize
+(b) 阶次减少（根据下面给出的规则），或 
+\end_layout
+
+\begin_layout Itemize
+(c) 阶次达到 
+\begin_inset Formula $5$
+\end_inset
+
+（最大值）。
+\end_layout
+
+\begin_layout Standard
+For step and order selection on the general step，IDA uses a different set
+ of local error estimates, base on the asymptotic behavior of the local
+ error in the case of fixed step sizes.
+ At each of the orders 
+\begin_inset Formula $q'$
+\end_inset
+
+ equal to 
+\begin_inset Formula $q$
+\end_inset
+
+，
+\begin_inset Formula $q-1$
+\end_inset
+
+(if q>1)，
+\begin_inset Formula $q-2$
+\end_inset
+
+(if 
+\begin_inset Formula $q>2$
+\end_inset
+
+), or 
+\begin_inset Formula $q+1$
+\end_inset
+
+(if 
+\begin_inset Formula $q<5$
+\end_inset
+
+)，都有常数
+\begin_inset Formula $C(q')$
+\end_inset
+
+ 使得 局部截断误差的norm 在
+\begin_inset Formula $q'$
+\end_inset
+
+阶满足
+\begin_inset Formula 
+\[
+\mathrm{LTE}(q')=C(q')\left\Vert \phi(q'+1)\right\Vert +\order{h^{q'+2}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\phi(k)$
+\end_inset
+
+is a modified divided difference of order 
+\begin_inset Formula $k$
+\end_inset
+
+ （see 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://sundials.readthedocs.io/en/latest/ida/Mathematics_link.html"
+target "Divided Difference"
+literal "false"
+
+\end_inset
+
+），被 IDA 所维护（其渐近行为是
+\begin_inset Formula $h^{k}$
+\end_inset
+
+ ).
+ 因此，局部截断误差的估计值为 
+\begin_inset Formula 
+\[
+\mathrm{ELTE}(q')=C(q')\left\Vert \phi(q'+1)\right\Vert 
+\]
+
+\end_inset
+
+并以此来选择步长。但是，在 IDA 中 order 的选择是基于 the scaled derivative norms范的要求，
+\begin_inset Formula $\left\Vert h^{k}y^{(k)}\right\Vert $
+\end_inset
+
+随着
+\begin_inset Formula $k$
+\end_inset
+
+在
+\begin_inset Formula $q$
+\end_inset
+
+附近monotonically decreasing。这些norms也是利用
+\begin_inset Formula $\phi(k)$
+\end_inset
+
+估计，事实上
+\begin_inset Formula 
+\[
+\left\Vert h^{q'+1}\,y^{(q'+1)}\right\Vert \approx T(q')\equiv(q'+1)\mathrm{ELTE}(q')
+\]
+
+\end_inset
+
+步长/阶次选择开始于monotonicity测试，该测试甚至在进行局部误差测试
+\series bold
+之前
+\series default
+就已完成。也就是说，the order is reset to 
+\begin_inset Formula $q'=q-1$
+\end_inset
+
+ if 
+\end_layout
+
+\begin_layout Itemize
+(a) 
+\begin_inset Formula $q=2$
+\end_inset
+
+ and 
+\begin_inset Formula $T(1)\le T(2)/2$
+\end_inset
+
+，or
+\end_layout
+
+\begin_layout Itemize
+(b) 
+\begin_inset Formula $q>2$
+\end_inset
+
+ and 
+\begin_inset Formula $\max\left\{ T(q-1),T(q-2)\right\} \le T(q)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Standard
+否则 
+\begin_inset Formula $q'=q$
+\end_inset
+
+。接下来进行局部误差检验
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，如果检验失败，the step is redone at order 
+\begin_inset Formula $q\leftarrow q'$
+\end_inset
+
+ and a new step size 
+\begin_inset Formula $h'$
+\end_inset
+
+。后者基于 
+\begin_inset Formula $\mathrm{ELTE}(q)$
+\end_inset
+
+的渐近行为，加上安全系数，其值为
+\begin_inset Formula 
+\[
+\eta=h'/h=0.9/\left[2\,\mathrm{ELTE}(q)\right]^{1/(q+1)}.
+\]
+
+\end_inset
+
+（see ida.c:2813）由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.7c"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+知，一旦
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+失败，则
+\begin_inset Formula $\mathrm{ELTE}(q)>1$
+\end_inset
+
+。
+\begin_inset Formula $\eta$
+\end_inset
+
+的值将进行调整，使
+\begin_inset Formula $\eta_{\text{min\_ef}}\le\eta\le\eta_{\text{low}}$
+\end_inset
+
+（默认情况下
+\begin_inset Formula $\eta_{\text{min\_ef}}=0.25$
+\end_inset
+
+ 和
+\begin_inset Formula $\eta_{\text{low}}=0.9$
+\end_inset
+
+），然后再设置
+\begin_inset Formula 
+\[
+h\leftarrow h'=\eta h.
+\]
+
+\end_inset
+
+如果 local error test 第二次失败，IDA 将使用 
+\begin_inset Formula $\eta=\eta_{\text{min\_ef}}$
+\end_inset
+
+，而在第三次及以后的失败中，它将使用
+\begin_inset Formula $q=1$
+\end_inset
+
+和
+\begin_inset Formula $\eta=\eta_{\text{min\_ef}}$
+\end_inset
+
+。10 次失败后，IDA 返回 give–up 信息。
+\end_layout
+
+\begin_layout Standard
+一旦 local error test 通过，就可以调整 next step 的 step 和 order。No order change is
+ made 如果
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q'=q-1$
+\end_inset
+
+ from the prior test, or
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q=5$
+\end_inset
+
+ or
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q$
+\end_inset
+
+ was increase on the previous step.
+ 
+\end_layout
+
+\begin_layout Standard
+否则，if the last 
+\begin_inset Formula $q+1$
+\end_inset
+
+ steps were taken at a constant order 
+\begin_inset Formula $q<5$
+\end_inset
+
+ and a constant step size，IDA 会考虑将阶次提高到 
+\begin_inset Formula $q+1$
+\end_inset
+
+。逻辑如下：
+\end_layout
+
+\begin_layout Enumerate
+a.
+ if 
+\begin_inset Formula $q=1$
+\end_inset
+
+, then set 
+\begin_inset Formula $q=2$
+\end_inset
+
+ if 
+\begin_inset Formula $T(2)<T(1)/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+b.
+ if 
+\begin_inset Formula $q>1$
+\end_inset
+
+ then
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+set 
+\begin_inset Formula $q\leftarrow q-1$
+\end_inset
+
+ if 
+\begin_inset Formula $T(q-1)\le\min\left\{ T(q),T(q+1)\right\} $
+\end_inset
+
+, else
+\end_layout
+
+\begin_layout Itemize
+set 
+\begin_inset Formula $q\rightarrow q+1$
+\end_inset
+
+ if 
+\begin_inset Formula $T(q+1)<T(q)$
+\end_inset
+
+, otherwise
+\end_layout
+
+\begin_layout Itemize
+保持 
+\begin_inset Formula $q$
+\end_inset
+
+ 不变，in this case 
+\begin_inset Formula $T(q-1)>T(q)\le T(q+1)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+无论如何，新的步长
+\begin_inset Formula $h'$
+\end_inset
+
+ 的设置与之前一样：
+\begin_inset Formula 
+\[
+\eta=h'/h=1/\left[2\,\mathrm{ELTE}(q)\right]^{1/(q+1)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\eta$
+\end_inset
+
+的值调整为：
+\end_layout
+
+\begin_layout Enumerate
+如果
+\begin_inset Formula $\eta_{\text{min\_fx}}<\eta<\eta_{\text{max\_fx}}$
+\end_inset
+
+，则设置
+\begin_inset Formula $\eta=1$
+\end_inset
+
+。默认值为 
+\begin_inset Formula $\eta_{\text{min\_fx}}=1$
+\end_inset
+
+和
+\begin_inset Formula $\eta_{\text{max\_fx}}=2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\eta\ge\eta_{\text{max\_fx}}$
+\end_inset
+
+，则步长增长限制 
+\begin_inset Formula $\eta_{\text{max\_fx}}\le\eta\le\eta_{\text{max}}$
+\end_inset
+
+，默认
+\begin_inset Formula $\eta_{\text{max}}=2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\eta\le\eta_{\text{min\_fx}}$
+\end_inset
+
+ ，步长减小限制
+\begin_inset Formula $\eta_{\text{min}}\le\eta\le\eta_{\text{low}}$
+\end_inset
+
+，默认 
+\begin_inset Formula $\eta_{\text{min}}=0.5$
+\end_inset
+
+ and 
+\begin_inset Formula $\eta_{\text{low}}=0.9$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+因此，除非步长可以加倍，否则不会增加步长。如果需要减少步长，下一步的步长将至少减少 10%，最多减少 50%。详见 [19]。
+\end_layout
+
+\begin_layout Standard
+最后
+\begin_inset Formula $h$
+\end_inset
+
+设置为
+\begin_inset Formula $h'=\eta\,h$
+\end_inset
+
+，且
+\begin_inset Formula $\left|h\right|$
+\end_inset
+
+限制为
+\begin_inset Formula $h_{\text{min}}\le\left|h\right|\le h_{\text{max}}$
+\end_inset
+
+，默认为
+\begin_inset Formula $h_{\text{min}}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $h_{\text{max}}=\infty$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+通常情况下，IDA takes steps 直到超过用户定义的输出值
+\begin_inset Formula $t=t_{\text{out}}$
+\end_inset
+
+，然后通过 内插计算
+\begin_inset Formula $y(t_{\text{out}})$
+\end_inset
+
+ 。不过，也有 “one step” mode 选项，即每一 step 结束后，控制权返回给calling程序。还有一些选项可以强制 IDA 在超过给定的停止点
+\begin_inset Formula $t=t_{\text{stop}}$
+\end_inset
+
+时不再积分。
+\end_layout
+
+\begin_layout Subsection
+不等式限制
+\end_layout
+
+\begin_layout Standard
+IDA 允许用户对求解向量
+\begin_inset Formula $y$
+\end_inset
+
+的各个分量施加可选的不等式约束。用户可以施加以下四种约束中的任意一种：
+\begin_inset Formula 
+\[
+y_{i}>0,\quad y_{i}<0,\quad y_{i}\ge0,\quad y_{i}\le0
+\]
+
+\end_inset
+
+在非线性系统求解成功后，将测试约束是否满足。如果任何约束条件失效，我们就宣布非线性迭代收敛失败，并减小步长。IDA 不会随意削减步长，而是通过对
+ 未通过约束测试的
+\begin_inset Formula $y$
+\end_inset
+
+分量 作线性近似估算出新的步长
+\begin_inset Formula $h'$
+\end_inset
+
+（在strict inequality 情况下包含 
+\begin_inset Formula $0.9$
+\end_inset
+
+ 的安全系数）。在计算一致的初始条件时，也会施加这些附加约束。如果在某个时间积分步中的试探中，约束持续被违反，则积分会停止并返回错误信息。在这种情况下，用户可能
+需要采用 S6.4.5.2 中讨论的其他策略来满足不等式约束。
+\end_layout
+
+\begin_layout Subsection
+预条件
+\end_layout
+
+\begin_layout Standard
+当使用非线性求解器时，而它需要求解形式为 
+\begin_inset Formula $J\,\Delta y=-G$
+\end_inset
+
+的线性系统(例如默认的牛顿迭代），IDA 会重复使用线性求解器。如果线性系统的求解是使用 SUNDIALS 提供的 scaled 预条件迭代线性求解器之一，那么
+这些求解器在没有预条件的情况下很少能成功；通常需要对系统进行预处理才能获得可接受的效率。线性系统
+\begin_inset Formula 
+\[
+A\,x=b
+\]
+
+\end_inset
+
+可以在左侧、右侧或两侧进行预处理。然后将 Krylov 方法应用于矩阵，将
+\begin_inset Formula $A$
+\end_inset
+
+替换为
+\begin_inset Formula 
+\[
+P^{-1}A,\quad\text{or}\quad AP^{-1},\quad\text{or}\quad P_{L}^{-1}AP_{R}^{-1}.
+\]
+
+\end_inset
+
+然而，在 IDA 中，只允许在左侧进行预处理，因此迭代法将用于如下系统
+\begin_inset Formula 
+\[
+\left(P^{-1}J\right)\Delta y=-P^{-1}G
+\]
+
+\end_inset
+
+为了使 非线性迭代 中的 norm of the linear residual 有意义，需要进行左侧预处理；一般来说，
+\begin_inset Formula $\left\Vert J\,\Delta y+G\right\Vert $
+\end_inset
+
+是没有意义的，因为 WRMS–norm 中使用的权重对应于
+\begin_inset Formula $y$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+为了提高克 Krylov 迭代的收敛性，预处理矩阵
+\begin_inset Formula $P$
+\end_inset
+
+应在某种意义上近似于系统矩阵
+\begin_inset Formula $A$
+\end_inset
+
+。但同时，为了提高计算效率，矩阵
+\begin_inset Formula $P$
+\end_inset
+
+应具有合理的计算和求解效率。要在快速收敛和低成本之间找到最佳平衡点可能非常困难。好的选择往往取决于问题的具体情况（例如，参见文献[22]对 reaction–t
+ransport 系统 预条件子 的广泛研究）。
+\end_layout
+
+\begin_layout Standard
+IDA 使用的典型 预条件子 基于 an approximationss to the iteration matrix of the systems
+ involved；换句话说 ，
+\begin_inset Formula 
+\[
+P\approx\frac{\partial F}{\partial y}+\alpha\frac{\partial F}{\partial\dot{y}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha$
+\end_inset
+
+是与积分步长
+\begin_inset Formula $h$
+\end_inset
+
+成反比的标量。由于 Krylov迭代 发生在非线性求解器的迭代中，并进一步发生在 时间步积分中，而且每个Krylov迭代都有自己的收敛测试，因此预条件子
+ 可以使用非常粗糙的近似值，只要它能捕捉到系统的 主要数值特征即可。我们发现，将 因此预条件子 与 牛顿–Krylov 迭代结合使用，即使使用的
+ Jacobian 近似值相当差，也会比使用相同矩阵但不进行 Krylov加速（即修正牛顿迭代），以及使用不带预条件子的 牛顿–Krylov 方法出人意料地优越
+。
+\end_layout
+
+\begin_layout Subsection
+根搜索
+\end_layout
+
+\begin_layout Standard
+The IDA solver 已增加了 
+\series bold
+寻根
+\series default
+（rootfinding）功能。这意味着，在积分 初值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的同时，IDA 还能找到一组用户自定义函数
+\begin_inset Formula $g_{i}(t,y,\dot{y})$
+\end_inset
+
+的根，这些函数依赖于 
+\begin_inset Formula $t$
+\end_inset
+
+，解向量
+\begin_inset Formula $y=y(t)$
+\end_inset
+
+ 及其导数
+\begin_inset Formula $\dot{y}(t)$
+\end_inset
+
+。待求根函数的数量是任意的。 如果在任意给定的区间，发现一个以上的函数
+\begin_inset Formula $g_{i}$
+\end_inset
+
+有根，则会寻找并报告各个根的位置，并按照它们在
+\begin_inset Formula $t$
+\end_inset
+
+轴上出现的顺序报告，沿着积分的方向。
+\end_layout
+
+\begin_layout Standard
+一般来说，这种寻根功能只能找到 odd multiplicity 的根，对应于
+\begin_inset Formula $g_{i}(t,y,\dot{y})$
+\end_inset
+
+的符号改变，简记为
+\begin_inset Formula $g_{i}(t)$
+\end_inset
+
+。如果用户提供的根函数具有 even multiplicity（没有符号变化），IDA很可能会忽略它。如果需要这样的根，用户应重新编写根函数，使其在所需根处符号
+发生变化。
+\end_layout
+
+\begin_layout Standard
+使用的基本方案是在每个时间步长内检查任何
+\begin_inset Formula $g_{i}(t)$
+\end_inset
+
+的符号变化，然后（当发现符号变化时）用改进的 secant 方法[64]定位到根（或多个根）。此外，每次计算
+\begin_inset Formula $g$
+\end_inset
+
+时，IDA 都会检查是否
+\begin_inset Formula $g_{i}(t)=0$
+\end_inset
+
+。如果是则报告为根。但是，如果发现
+\begin_inset Formula $g_{i}$
+\end_inset
+
+的精确零点时，IDA 会计算
+\begin_inset Formula $g$
+\end_inset
+
+在
+\begin_inset Formula $t+\delta t$
+\end_inset
+
+的值，
+\begin_inset Formula $\delta t$
+\end_inset
+
+是在积分方向上的微小增量，如果还发现任何
+\begin_inset Formula $g_{i}(t+\delta)=0$
+\end_inset
+
+，则 IDA 停止计算并报错。这样每次 IDA 前进一个时间步时，都能保证 the values of all 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ are nonzero at some past value of 
+\begin_inset Formula $t$
+\end_inset
+
+，beyond which a search for roots is to be done。
+\end_layout
+
+\begin_layout Standard
+在时间步进过程中的任何给定时间内，经过适当的检查和调整后，IDA 有一个区间
+\begin_inset Formula $(t_{\text{lo}},t_{\text{hi}}]$
+\end_inset
+
+ ，根要在这个区间内寻找。 
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+在积分方向上更靠前，而所有的
+\begin_inset Formula $g_{i}(t_{\text{lo}})\neq0$
+\end_inset
+
+。终点
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+要么是 上一个时间步的终点，或者是下一个要求的输出时间
+\begin_inset Formula $t_{\text{out}}$
+\end_inset
+
+，如果
+\begin_inset Formula $t_{\text{out}}$
+\end_inset
+
+来的更快。端点
+\begin_inset Formula $t_{\text{lo}}$
+\end_inset
+
+或者是
+\begin_inset Formula $t_{n-1}$
+\end_inset
+
+，或上次输出时间
+\begin_inset Formula $t_{\text{out}}$
+\end_inset
+
+ (if this occured within the last step），或最后的根位置（如果在这一步内刚刚找到了根），如果发现精确的零点，可能会向
+\begin_inset Formula $t_{n}$
+\end_inset
+
+略微调整。The algorithm checks 
+\begin_inset Formula $g$
+\end_inset
+
+ at 
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+ for zeros，and 
+\begin_inset Formula $(t_{\text{lo}},t_{\text{hi}})$
+\end_inset
+
+ 内的符号变化。如果没有符号变化，那么要么报告一个根（如果某个
+\begin_inset Formula $g_{i}(t_{\text{hi}})=0$
+\end_inset
+
+），或者进入下一个时间间隔（从
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+开始 ).
+ 如果发现一个或多个符号变化，则进入一个循环，在一个相当小的容差范围内找到根，容差为
+\begin_inset Formula 
+\[
+\tau=100*U*\left(\left|t_{n}\right|+\left|h\right|\right),\quad U=\text{机器精度}
+\]
+
+\end_inset
+
+每当在两个或两个以上的根函数中发现符号变化时，认为最有可能首先出现根的函数是具有最大值
+\begin_inset Formula 
+\[
+\left|g_{i}(t_{\text{hi}})\right|/\left|g_{i}(t_{\text{hi}})-g_{i}(t_{\text{lo}})\right|
+\]
+
+\end_inset
+
+的那个，对应 割线法得到的数值中最接近
+\begin_inset Formula $t_{\text{lo}}$
+\end_inset
+
+的值。At each pass through the loop，都会设置一个新值
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+，严格位于搜索区间内，并检查 
+\begin_inset Formula $g_{i}(t_{\text{mid}})$
+\end_inset
+
+的值。然后根据哪个子区间的符号发生变化，将
+\begin_inset Formula $t_{\text{lo}}$
+\end_inset
+
+或
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+重置为
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+。如果 
+\begin_inset Formula $(t_{\text{lo}},t_{\text{mid}})$
+\end_inset
+
+中没有符号改变，但某些
+\begin_inset Formula $g_{i}(t_{\text{mid}})=0$
+\end_inset
+
+则报告该根。循环继续，直到
+\begin_inset Formula 
+\[
+\left|t_{\text{hi}}-t_{\text{lo}}\right|<\tau
+\]
+
+\end_inset
+
+此时报告的根位置是
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+在定位
+\begin_inset Formula $g_{i}(t)$
+\end_inset
+
+根的循环中，计算
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+的公式为
+\begin_inset Formula 
+\[
+t_{\text{mid}}=t_{\text{hi}}-\left(t_{\text{hi}}-t_{\text{lo}}\right)g_{i}(t_{\text{hi}})/\left[g_{i}(t_{\text{hi}})-\alpha\,g_{i}(t_{\text{lo}})\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha$
+\end_inset
+
+是权重参数。在循环的前两次中，
+\begin_inset Formula $\alpha$
+\end_inset
+
+设置为
+\begin_inset Formula $1$
+\end_inset
+
+，使得
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+为 secant方法值。此后 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is reset according to the side of the subinterval (low vs high, i.e.
+ toward 
+\begin_inset Formula $t_{\text{lo}}$
+\end_inset
+
+ vs toward 
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+) in which the sign change was found in the previous two passes.
+\end_layout
+
+\begin_layout Itemize
+如果两side不同，则
+\begin_inset Formula $\alpha$
+\end_inset
+
+设置为
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+如果两side相同，
+\begin_inset Formula $\alpha$
+\end_inset
+
+将减半（如果在低侧）或加倍（如果在高侧）。
+\end_layout
+
+\begin_layout Itemize
+当
+\begin_inset Formula $\alpha<1$
+\end_inset
+
+时，
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+的值更接近
+\begin_inset Formula $t_{\text{lo}}$
+\end_inset
+
+；当
+\begin_inset Formula $\alpha>1$
+\end_inset
+
+时，
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+的值更接近
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+如果上述
+\begin_inset Formula $t_{\text{mid}}$
+\end_inset
+
+的值在
+\begin_inset Formula $t_{\text{lo}}$
+\end_inset
+
+或
+\begin_inset Formula $t_{\text{hi}}$
+\end_inset
+
+的
+\begin_inset Formula $\tau/2$
+\end_inset
+
+邻域内，it is adjusted inward。使其与端点的分数距离（相对于区间大小）介于 
+\begin_inset Formula $0.1$
+\end_inset
+
+ 和
+\begin_inset Formula $0.5$
+\end_inset
+
+ 之间（
+\begin_inset Formula $0.5$
+\end_inset
+
+为中点），而与端点的实际距离至少为
+\begin_inset Formula $\tau/2$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Section
 代码组成
 \end_layout
 
+\begin_layout Standard
+IDA 程序包是用 ANSI C 语言编写的。下面概述了该程序包的基本结构，但使用该程序包并不需要了解这些结构。
+\end_layout
+
+\begin_layout Standard
+Fig
+\end_layout
+
+\begin_layout Standard
+IDA 软件包的总体结构如图 6.3 所示。IDA 使用分别由 SUNLinearSolver（见第 11 节）和 SUNNonlinearSolver
+ 接口（见第 12 节）定义的 通用线性和非线性求解器。因此，IDA 不知道用于求解 线性和非线性系统的方法。对于任何给定的用户问题，都存在一个单一的非线性求解
+器接口，如有必要，还可指定一个线性系统求解器接口，并在积分过程中根据需要调用。
+\end_layout
+
+\begin_layout Standard
+IDA 有一个统一的线性求解器接口，
+\series bold
+IDALS
+\series default
+，支持使用通用 SUNLinearSolver 接口构建 的直接和迭代 线性求解器（见第 11 节）。这些求解器可以使用 SUNMatrix 对象（见第
+ 10 节）来存储 Jacobian 信息，也可以不使用矩阵。由于 IDA 可以在任何有效的 SUNLinearSolver 上运行，因此 IDA
+ 可用的 线性求解器模块集 将随着新的 SUNLinearSolver 实现的开发而扩大。
+\end_layout
+
+\begin_layout Standard
+对于使用 SUNMATRIX_DENSE 或 SUNMATRIX_BAND Jacobian 矩阵的用户，IDA 包括通过差商 对其进行逼近的算法，不过用户也可
+以选择提供一个例程来直接计算 Jacobian矩阵（或其近似值）。在使用 sparse 矩阵 或 用户提供的Jacobian 矩阵时，需要使用用户提供的例程。
+\end_layout
+
+\begin_layout Standard
+对于使用无矩阵 迭代线性求解器的用户，IDA 包含了一种通过乘积
+\begin_inset Formula $J\,v$
+\end_inset
+
+ 的差商进行近似的算法。同样，用户也可以选择为这一操作提供例程，分为两个阶段：设置（Jacobian数据的预处理）和 相乘。
+\end_layout
+
+\begin_layout Standard
+对于预条件迭代法，用户必须提供预条件，同样分为两个阶段：设置和求解。虽然不提供默认的预条件子（direct求解器情况提供 差商近似 作为默认），但参考文献[22
+, 27]以及 IDA 附带的示例和演示程序为构建预条件子提供了很大帮助。
+\end_layout
+
+\begin_layout Standard
+IDA 的线性求解界面由四个主要阶段组成，分别是：
+\end_layout
+
+\begin_layout Enumerate
+内存分配和初始化；
+\end_layout
+
+\begin_layout Enumerate
+设置相关矩阵数据；
+\end_layout
+
+\begin_layout Enumerate
+求解线性系统；
+\end_layout
+
+\begin_layout Enumerate
+释放内存。
+\end_layout
+
+\begin_layout Standard
+设置阶段 和 求解阶段 是分开的，因为 Jacobians 和 预条件子 的计算只在积分过程中定期进行，而且只在需要达到收敛时才进行。IDA 中央模块对四个相关
+函数的调用的列表是固定的，因此中央模块完全独立于 线性系统方法。
+\end_layout
+
+\begin_layout Standard
+IDA 还提供了一个 预条件子模块，可与任何Krylov迭代线性求解器配合使用。它与 NVECTOR_PARALLEL 配合使用，生成一个块对角矩阵的
+ 预条件子，每个块都是一个带状矩阵。
+\end_layout
+
+\begin_layout Standard
+IDA 用于解决给定问题的所有状态信息都存储在 N_Vector 实例中。IDA 软件包中没有全局数据，因此从这方面讲是可重入的（reentrant）。线性和非
+线性求解器的特定状态信息分别保存在 SUNLinearSolver 和 SUNNonlinearSolver 实例中。IDA 的重入性允许在单个用户程序中，通过
+混合或并行调用软件包的不同实例，来解决两个或多个问题。
+\end_layout
+
 \begin_layout Section
 使用IDA求解IVP
+\end_layout
+
+\begin_layout Standard
+本章主要介绍如何使用 IDA 积分 DAE。
+\end_layout
+
+\begin_layout Standard
+下文将讨论头文件和用户主程序的布局，并对 IDA 的 user–callable函数和 user–supplied函数 进行说明。配套文件[73]中描述的示例程
+序可能也会有所帮助。这些代码可用作模板（删除测试中使用的某些行），并包含在 IDA 软件包中。
+\end_layout
+
+\begin_layout Standard
+IDA在输入和输出中使用各种常量。本章根据需要对这些常量进行了定义，但为了方便起见，还在第 6.5 节中单独列出。
+\end_layout
+
+\begin_layout Standard
+用户应该注意，并非所有的 SUNLinearSolver 和 SUNMatrix 对象 都与所有的 N_Vector 实现 兼容。关于兼容性的详细信息，请参见每
+一个 SUNMatrix（第 10 章）和 SUNLinearSolver（第 11 章）实现的文档。例如，NVECTOR_PARALLEL 与密集、带状或稀疏
+的 SUNMatrix 类型不兼容，也与相应的密集、带状或稀疏的 SUNLinearSolver 对象不兼容。请查看第 10 章和第 11 章以验证这些对象之间
+的兼容性。除上述文档外，我们还注意到 IDABBDPRE 预处理程序只能与 NVECTOR_PARALLEL 配合使用。我们不建议在 SuperLU_MT
+ 中使用 线程向量对象，除非它是 NVECTOR_OPENMP 模块，而且 SuperLU_MT 也是用 OpenMP 编译的。
 \end_layout
 
 \begin_layout Section
