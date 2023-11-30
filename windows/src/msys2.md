@@ -116,6 +116,7 @@ MSYS2 有 [自己的指南](https://www.msys2.org/docs/terminals/) 来将 MSYS2 
     -no-start       不使用 "start" 命令, 并返回登录 shell 后产生的 错误代码为该批处理文件 结果错误代码
     -shell SHELL    设置登录 shell
     -help | --help | -? | /?         显示帮助并退出
+```
 
 任何不能被视为有效选项的参数和所有之后的参数都作为 login shell command 参数传递.
 
@@ -413,3 +414,55 @@ pacman -S msys/libcrypt-devel
 ```
 
 [List::Util]: https://metacpan.org/pod/List::Util
+
+## 各种环境的区别
+
+[在 msys2 中的 mingw64 ,  ucrt64 ,  clang64 的区别与相同点有啥?](https://www.zhihu.com/question/463666011/answer/1927907983)
+
+`clang` 和 `gcc` 是两个不同的 C/C++ 编译器, 而 `mingw-w64` 是一个 Windows 上的编译和运行时环境.
+注意, `mingw-w64` 本身并不是一个编译器, 而是一组库, 头文件和实用工具.
+gcc 需要 `mingw-w64` 环境才能在 Windows 上编译程序,
+加上最初(现已过时)的 mingw 项目就是专为 gcc 设计的,
+因此通常用 mingw64 代指 64 位的 gcc 和 mingw-w64 环境.
+
+mingw64, ucrt64, clang64 都是 Windows 原生程序(不依赖 cygwin.dll),
+不过 mingw64 是很早就有的, 后两者是最近(本回答最初写于2021年6月)才新加的,
+~~所以只是选一个用的话就 mingw64 就没问题.~~(划掉)
+2022年11月25日更新: 现在 msys2 官方推荐优先选择 ucrt64,
+经过一年多时间, 现在 ucrt64 环境已经非常稳定了, 而且对 UTF-8 语言环境的支持更好.
+
+后两者先后刚出来时我还查过, 简而言之, 这三者的区别是:
+mingw64 与 ucrt64 都是用 gcc 编译器编译的 Windows 64 位程序,
+只不过它们链接到的 crt(C runtime)不同,
+mingw64 是链接到了 msvcrt ,
+而 ucrt64 则是链接到了 Windows 上新的 ucrt 上.
+而 clang64 很好理解, 就是用 clang 而非 gcc 来编译各种库.
+另外它也是链接到了 ucrt 而非 msvcrt.
+三者是共同点是, 它们都需要 mingw-w64 环境来进行编译.
+
+以 zstd 为例:
+
+![zstd](https://picx.zhimg.com/80/v2-2f6ed84eb78c2cfae0d64a30662bb152_720w.webp?source=1def8aca)
+
+图中的 `/usr/bin/zstd` 就是依赖 cygwin 的非原生程序,
+这里的 `msys-2.0.dll` 实际上就是 msys2 版的 `cygwin.dll`
+如果你了解 `archlinux` 的打包的话,
+如果不了解可以在 [archwiki](https://link.zhihu.com/?target=https%3A//wiki.archlinux.org/title/Creating_packages) 了解一下,
+也可以从这几个包的打包脚本(PKGBUILD)来观察区别.
+msys2 的打包脚本可以在 packages.msys2.org 在线查看.
+
+在这个网站上搜索 zstd 得到这几个 zstd 包的构建脚本,
+发现这几个 Windows 原生的包其实是共用同一个构建脚本的.
+从 `mingw_arch` 变量来看, 还有几个32位的包和 arm64 的包也是用这个打包脚本.
+
+只不过它会根据不同的 `MINGW_PACKAGE_PREFIX` 环境变量来执行不同的构建工具,
+构建出不同的包.
+
+```makefile
+mingw_arch=('mingw32' 'mingw64' 'ucrt64' 'clang64' 'clang32' 'clangarm64')
+makedepends=("${MINGW_PACKAGE_PREFIX}-gcc"
+             "${MINGW_PACKAGE_PREFIX}-ninja"
+             "${MINGW_PACKAGE_PREFIX}-cmake")
+```
+
+这里是 msys2 最初关于添加 ucrt64 与 clang64 构建的讨论: [issue 6901](https://link.zhihu.com/?target=https%3A//github.com/msys2/MINGW-packages/issues/6901)
