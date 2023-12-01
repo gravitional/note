@@ -581,9 +581,9 @@ The a posteriori error estimators
 
  分解成
 \begin_inset Formula 
-\[
-\mathscr{E}_{h}=\mathscr{E}_{h,\Omega}\cup\mathscr{E}_{h,D}\cup\mathscr{E}_{h,N},\quad\mathscr{V}_{h}=\mathscr{V}_{h,\Omega}\cup\mathscr{V}_{h,D}\cup\mathscr{V}_{h,N},
-\]
+\begin{equation}
+\mathscr{E}_{h}=\mathscr{E}_{h,\Omega}\cup\mathscr{E}_{h,D}\cup\mathscr{E}_{h,N},\quad\mathscr{V}_{h}=\mathscr{V}_{h,\Omega}\cup\mathscr{V}_{h,D}\cup\mathscr{V}_{h,N},\label{eq:edge1}
+\end{equation}
 
 \end_inset
 
@@ -911,11 +911,25 @@ R_{E}(u_{h}):=\begin{cases}
 
 \end_inset
 
-and 
+其中
+\begin_inset Formula $\mathscr{E}_{h,\Omega}$
+\end_inset
+
+定义see
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:edge1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。And 
 \series bold
 开集残差
 \series default
-
+（在每个单元上）
 \begin_inset Formula 
 \[
 R_{T}(u_{h}):=\Pi_{T}f+\Delta u_{h},\quad\forall T\in\mathscr{T}_{h},
@@ -1079,7 +1093,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-第三个误差子基于 solution of local Dirichlet problems。对于任意 
+
+\series bold
+第三个误差子
+\series default
+基于 solution of local Dirichlet problems。对于任意 
 \begin_inset Formula $x\in\mathscr{V}_{h,\Omega}\cup\mathscr{V}_{h,N}$
 \end_inset
 
@@ -3467,7 +3485,11 @@ h–Convergence
 
 \end_inset
 
+下标
+\begin_inset Formula $E$
+\end_inset
 
+表示Energy norm。
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j9"
@@ -3699,7 +3721,15 @@ noprefix "false"
 
 \end_inset
 
-其中 
+其中
+\begin_inset Formula $K$
+\end_inset
+
+表示单元
+\begin_inset Formula $K$
+\end_inset
+
+。 
 \begin_inset Formula $\Delta_{\text{in}}$
 \end_inset
 
@@ -3815,7 +3845,7 @@ noprefix "false"
 （or residual）
 \begin_inset Formula 
 \begin{equation}
-q_{v}^{h}=-\nabla\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.\label{eq:j21}
+q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.\label{eq:j21}
 \end{equation}
 
 \end_inset
@@ -3980,7 +4010,8 @@ noprefix "false"
 \end_inset
 
 中，we assume that each residual charge corresponds only to the nodes of the
- corresponding tetrahedron or triangular face.
+ corresponding tetrahedron or triangular face。也就是假设了 fictitious 电荷的分布模型位于
+ 单元体心和面心，然后先计算节点值，再对单元进行 Lagrange 插值。
 \end_layout
 
 \begin_layout Remark
@@ -4041,6 +4072,64 @@ noprefix "false"
 
 告诉我们哪些四面体需要细化。然而，还需要解决终止问题（termination issue）。因此，为了度量整体误差，我们定义 a global
  refinement index 作为自适应过程中的停止判据（criterion）。
+\end_layout
+
+\begin_layout Section
+calc
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h} & =\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\left(\phi_{\alpha}^{h}N_{\alpha}\right)\\
+ & =\phi_{\alpha}^{h}\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla N_{\alpha}
+\end{align*}
+
+\end_inset
+
+定义等参坐标导数
+\begin_inset Formula $\tilde{\partial}_{\mu}=\partial/\partial\xi^{\mu}$
+\end_inset
+
+，空间导数 
+\begin_inset Formula $\partial_{\mu}=\partial/\partial x^{\mu}$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla N_{\alpha} & =\partial^{\mu}\,\epsilon_{0}\epsilon_{r}\,\partial_{\mu}N_{\alpha}\\
+ & =\overline{J}_{\circ\nu}^{\mu}\tilde{\partial}^{\nu}\,\epsilon_{0}\epsilon_{r}\,(\overline{J}_{\mu}^{\circ\nu}\,\tilde{\partial}_{\nu}\,N_{\alpha})\\
+ & =\overline{J}_{\circ\nu}^{\mu}\tilde{\partial}^{\nu}\,\epsilon_{0}\epsilon_{r}\,(\overline{J}_{\mu}^{\circ\nu}\,\tilde{\partial}_{\nu}\,N_{\alpha})
+\end{align*}
+
+\end_inset
+
+其中 Jacobian inverse 
+\begin_inset Formula $\overline{J}$
+\end_inset
+
+定义为：
+\begin_inset Formula 
+\[
+\overline{J}_{\mu}^{\circ\nu}=\frac{\partial\xi^{\circ\nu}}{\partial x^{\mu}},\quad\overline{J}_{\circ\nu}^{\mu}=\frac{\partial\xi^{\circ\nu}}{\partial x^{\mu}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\circ$
+\end_inset
+
+用来指示指标的左右次序。同时可以定义 Jacobian 为
+\begin_inset Formula 
+\[
+J_{\circ\nu}^{\mu}=\frac{\partial x^{\mu}}{\partial\xi^{\circ\nu}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -4415,6 +4504,67 @@ status open
 
 \begin_layout Section
 总结
+\end_layout
+
+\begin_layout Standard
+在本文中，我们比较了
+\begin_inset Formula $h$
+\end_inset
+
+–版 和 
+\begin_inset Formula $p$
+\end_inset
+
+–版 FEMs 的收敛特性。两种方法的渐进收敛性都 依赖于解的光滑性、元素阶数 和 所使用的网格序列。对于光滑解，
+\begin_inset Formula $p$
+\end_inset
+
+–版本 的收敛性优于 
+\begin_inset Formula $h$
+\end_inset
+
+–版本。对于非光滑解和 准均匀（quasiuniform）网格，
+\begin_inset Formula $p$
+\end_inset
+
+–版本的收敛速度是 
+\begin_inset Formula $h$
+\end_inset
+
+–版本的两倍。然而，这两种方法的收敛性都受 奇异点强度（intensity of the singularity ）的影响。对于非光滑解，通过构建
+ 最优（optimal）自适应网格序列，可以显著提高 
+\begin_inset Formula $h$
+\end_inset
+
+– 版本的收敛性，see
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j16"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，这使得它在
+\begin_inset Formula $p>1$
+\end_inset
+
+时 优于 the uniform 
+\begin_inset Formula $p$
+\end_inset
+
+–版本
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
 \end_layout
 
 \end_body
