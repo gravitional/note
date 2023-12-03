@@ -822,7 +822,7 @@ Caliper 安装根目录的路径
 默认值: 无
 
 注意
-联编系统将尝试使用 `Fortran` 编译器来推断 `Fortran` 名称混淆方案.
+build系统将尝试使用 `Fortran` 编译器来推断 `Fortran` 名称混淆方案.
 只有在没有 `Fortran` 编译器的情况下,
 或者在无法确定推断或默认(下层)方案的情况下, 才能使用该选项.
 如果使用, 还必须设置 `SUNDIALS_F77_FUNC_UNDERSCORES`.
@@ -929,211 +929,288 @@ SUNDIALS cmake 文件的安装目录 (相对于 `CMAKE_INSTALL_PREFIX`).
 % make install
 ```
 
-### 14.1.4. 使用外部库
+### 14.1.4 使用外部库
 
 SUNDIALS 套件包含许多选项, 以便在开发解决方案时实现灵活性.
 以下是使用受支持的第三方库时, 针对特定配置的一些说明.
 
 #### 14.1.4.1. 使用 Ginkgo 构建
 
-Ginkgo 是面向多核系统的高性能线性代数库, 侧重于稀疏线性系统的求解.
-它使用现代 C++ 实现(至少需要 C++14 兼容编译器才能构建), GPU 内核使用 CUDA(针对英伟达设备), HIP(针对 AMD 设备)和 SYCL/DPC++(针对英特尔设备和其他支持的硬件)实现.
-要在 SUNDIALS 中启用 Ginkgo, 请将 ENABLE_GINKGO 设为 ON, 并在 Ginkgoo_DIR 中提供 Ginkgo 安装根目录的路径.
-此外, SUNDIALS_GINKGO_BACKENDS 必须设置为 Ginkgo 目标编译器/执行器的列表.
+[Ginkgo](https://ginkgo-project.github.io/)
+是面向多核系统的高性能线性代数库, 侧重于稀疏线性系统的求解.
+它使用现代 C++ 实现(至少需要 C++14 兼容编译器才能构建),
+GPU 内核使用 CUDA(针对英伟达设备), HIP(针对 AMD 设备)和
+SYCL/DPC++(针对英特尔设备和其他支持的硬件)实现.
+
+要在 SUNDIALS 中启用 Ginkgo, 请将 `ENABLE_GINKGO` 设为 ON,
+并在 `Ginkgoo_DIR` 中提供 Ginkgo 安装根目录的路径.
+此外, `SUNDIALS_GINKGO_BACKENDS` 必须设置为 Ginkgo 目标编译器/执行器的列表.
 例如
 
+```bash
 % cmake \
-> -denable_ginkgo=on \
-> -DGinkgoo_DIR=/path/to/ginkgo/installation \
-> -dsundials_ginkgoo_backends="ref;omp;cuda"\
+> -DENABLE_GINKGO=ON \
+> -DGinkgo_DIR=/path/to/ginkgo/installation \
+> -DSUNDIALS_GINKGO_BACKENDS="REF;OMP;CUDA" \
 > /home/myname/sundials/srcdir
-Ginkgo 的 SUNDIALS 接口与设置为扩展的 SUNDIALS_PRECISION 不兼容.
+```
+
+Ginkgo 的 `SUNDIALS` 接口与设置为 `extended` 的 `SUNDIALS_PRECISION` 不兼容.
 
 #### 使用 Kokkos 构建
 
-Kokkos 是一种现代 C++(至少需要 C++14)编程模型, 用于为基于多核 CPU 和 GPU(包括英伟达, AMD 和英特尔加速器)的系统编写性能可移植代码.
-要在 SUNDIALS 中启用 Kokkos, 请将 ENABLE_KOKKOS 设为 ON, 并在 Kokkos_DIR 中提供 Kokkos 安装根目录的路径.
-此外, Kokkos-Kernels 库还为线性代数提供了常用的计算内核.
-要在 SUNDIALS 中启用 Kokkos-Kernels, 请将 ENABLE_KOKKOS_KERNELS 设为 ON, 并在 KokkosKernels_DIR 中提供 Kokkos-Kernels 安装根目录的路径, 例如
+[Kokkos](https://kokkos.github.io/kokkos-core-wiki/) 是一种现代 C++(至少需要 C++14)编程模型,
+用于为基于多核 CPU 和 GPU(包括英伟达, AMD 和英特尔加速器)的系统编写性能可移植代码.
 
+要在 SUNDIALS 中启用 `Kokkos`, 请将 `ENABLE_KOKKOS` 设为 ON,
+并在 `Kokkos_DIR` 中提供 Kokkos 安装根目录的路径.
+此外, `Kokkos-Kernels` 库还为线性代数提供了常用的计算内核.
+要在 SUNDIALS 中启用 `Kokkos-Kernels`, 请将 `ENABLE_KOKKOS_KERNELS` 设为 `ON`,
+并在 `KokkosKernels_DIR` 中提供 `Kokkos-Kernels` 安装根目录的路径, 例如
+
+```bash
 % cmake \
-> -denable_kokkos=on \
+> -DENABLE_KOKKOS=ON \
 > -DKokkos_DIR=/path/to/kokkos/installation \
-> -denable_kokkos_kernels=on \
+> -DENABLE_KOKKOS_KERNELS=ON \
 > -DKokkosKernels_DIR=/path/to/kokkoskernels/installation \
 > /home/myname/sundials/srcdir
-注意事项
+```
 
-Kokkos-Kernels 的最低支持版本为 3.7.00.
+>注意事项
+>Kokkos-Kernels 的最低支持版本为 3.7.00.
 
-#### 14.1.4.3. 使用 LAPACK 构建
+#### 14.1.4.3 使用 LAPACK 构建
 
-要启用 LAPACK, 请将 ENABLE_LAPACK 选项设置为 ON.
-如果包含 LAPACK 库的目录位于 LD_LIBRARY_PATH 环境变量中,  CMake 将相应地设置 LAPACK_LIBRARIES 变量,  否则 CMake 将尝试在标准系统位置中查找 LAPACK 库.
-要明确告诉 CMake 使用什么库, 可以将 LAPACK_LIBRARIES 变量设置为 LAPACK 所需的库.
+要启用 `LAPACK`, 请将 `ENABLE_LAPACK` 选项设置为 `ON`.
+如果包含 `LAPACK` 库的目录位于 `LD_LIBRARY_PATH` 环境变量中,
+`CMake` 将相应地设置 `LAPACK_LIBRARIES` 变量,
+否则 CMake 将尝试在标准系统位置中查找 LAPACK 库.
+要明确告诉 CMake 使用什么库, 可以将 `LAPACK_LIBRARIES` 变量设置为 `LAPACK` 所需的库.
 
+```bash
 % cmake \
 > -DCMAKE_INSTALL_PREFIX=/home/myname/sundials/instdir \
 > -DEXAMPLES_INSTALL_PATH=/home/myname/sundials/instdir/examples \
-> -DEXAMPLES_INSTALL_PATH=/home/myname/sundial/instdir/examples
+> -DENABLE_LAPACK=ON \
 > -DLAPACK_LIBRARIES=/mylapackpath/lib/libblas.so;/mylapackpath/lib/liblapack.so \
 > /home/myname/sundials/srcdir
 
 % make install
-注意事项
+```
 
-如果没有可用的 Fortran 编译器来推断 Fortran 名称混淆方案,  则必须设置 SUNDIALS_F77_FUNC_CASE 和 SUNDIALS_F77_FUNC_UNDERSCORES 选项,  以绕过对 Fortran 编译器的检查并定义名称混淆方案.
-在 SUNDIALS 早期版本中, 这些选项的默认值分别为 "低 "和 "一".
+>注意事项
+>如果没有可用的 Fortran 编译器来推断 Fortran 名称混淆方案,
+则必须设置 `SUNDIALS_F77_FUNC_CASE` 和 `SUNDIALS_F77_FUNC_UNDERSCORES` 选项,
+以绕过对 Fortran 编译器的检查, 并定义名称混淆方案.
+在 `SUNDIALS` 早期版本中, 这些选项的默认值分别为 `lower` 和 `one`.
 
-SUNDIALS 已通过 OpenBLAS 0.3.18 测试.
+`SUNDIALS` 已通过 OpenBLAS 0.3.18 测试.
 
 #### 14.1.4.4. 使用 KLU 构建
 
-KLU 是一个直接求解电路仿真中出现的稀疏非对称线性方程组的软件包, 是稀疏矩阵软件套件 SuiteSparse 的一部分.
-该库由德州农工大学开发, 可从 SuiteSparse GitHub 存储库中获取.
+`KLU` 是一个 直接求解 电路仿真中出现的 稀疏非对称线性方程组 的软件包,
+是稀疏矩阵软件套件 `SuiteSparse` 的一部分.
+该库由 Texas A&M 大学开发,
+可从 [SuiteSparse GitHub](https://github.com/DrTimothyAldenDavis/SuiteSparse) 存储库中获取.
 
-要启用 KLU, 请将 ENABLE_KLU 设为 ON, 将 KLU_INCLUDE_DIR 设为 KLU 安装的 include 路径, 将 KLU_LIBRARY_DIR 设为 KLU 安装的 lib 路径.
-CMake configure 将填充以下变量:  AMD_LIBRARY, AMD_LIBRARY_DIR, BTF_LIBRARY, BTF_LIBRARY_DIR, COLAMD_LIBRARY, COLAMD_LIBRARY_DIR 和 KLU_LIBRARY.
+要启用 KLU, 请将 `ENABLE_KLU` 设为 ON,
+将 `KLU_INCLUDE_DIR` 设为 `KLU` 安装的 `include` 路径,
+将 `KLU_LIBRARY_DIR` 设为 `KLU` 安装的 `lib` 路径.
 
-SUNDIALS 已在 SuiteSparse 5.10.1 版本中进行了测试.
+CMake configure 将填充以下变量:
+`AMD_LIBRARY`, `AMD_LIBRARY_DIR`, `BTF_LIBRARY`, `BTF_LIBRARY_DIR`,
+`COLAMD_LIBRARY`, `COLAMD_LIBRARY_DIR` 和 `KLU_LIBRARY`.
 
-#### 14.1.4.5. 使用 SuperLU_DIST 进行构建
+`SUNDIALS` 已在 SuiteSparse 5.10.1 版本中进行了测试.
 
-SuperLU_DIST 是一个通用库, 用于在分布式内存环境下直接求解大型, 稀疏, 非对称线性方程组.
-该库由劳伦斯伯克利国家实验室开发, 可从 SuperLU_DIST GitHub 存储库中获取.
+#### 14.1.4.5 使用 SuperLU_DIST 进行构建
 
-要启用 SuperLU_DIST, 请将 ENABLE_SUPERLUDIST 设为 ON, 将 SUPERLUDIST_DIR 设为安装 SuperLU_DIST 的路径.
-如果 SuperLU_DIST 是使用 OpenMP 构建的, 则 SUPERLUDIST_OpenMP 和 ENABLE_OPENMP 选项应设置为 ON.
+`SuperLU_DIST` 是一个通用库, 用于在分布式内存环境下直接求 解大型, 稀疏, 非对称线性方程组.
+该库由 Lawrence Berkeley 国家实验室开发,
+可从 [SuperLU_DIST GitHub](https://github.com/xiaoyeli/superlu_dist) 存储库中获取.
 
-SUNDIALS 支持 SuperLU_DIST v7.0.0 - v8.x.x, 并已通过 v7.2.0 和 v8.1.0 测试.
+要启用 `SuperLU_DIST`, 请将 `ENABLE_SUPERLUDIST` 设为 `ON`,
+将 `SUPERLUDIST_DIR` 设为安装 `SuperLU_DIST` 的路径.
+如果 `SuperLU_DIST` 是使用 `OpenMP` 构建的,
+则 `SUPERLUDIST_OpenMP` 和 `ENABLE_OPENMP` 选项应设置为 ON.
 
-14.1.4.6. 使用 SuperLU_MT 构建
-SuperLU_MT 是一个通用库, 用于在共享内存并行计算机上直接求解大型, 稀疏, 非对称线性方程组.
-该库由劳伦斯伯克利国家实验室开发, 可从 SuperLU_MT GitHub 存储库中获取.
+`SUNDIALS` 支持 SuperLU_DIST v7.0.0 - v8.x.x, 并已通过 v7.2.0 和 v8.1.0 测试.
 
-要启用 SuperLU_MT, 请将 ENABLE_SUPERLUMT 设为 ON, 将 SUPERLUMT_INCLUDE_DIR 设为 SuperLU_MT 安装的 SRC 路径, 并将 SUPERLUMT_LIBRARY_DIR 变量设为 SuperLU_MT 安装的 lib 路径.
-同时, 变量 SUPERLUMT_LIBRARIES 必须设置为以分号分隔的 SuperLU_MT 所依赖的其他库的列表.
-例如, 如果在构建 SuperLU_MT 时使用了外部 blas 库, 则应在该列表中包含 blas 库的完整路径.
-此外, 变量 SUPERLUMT_THREAD_TYPE 必须设置为 Pthread 或 OpenMP.
+#### 14.1.4.6. 使用 SuperLU_MT 构建
 
-在构建 SUNDIALS 求解器时, 请勿混合使用线程类型.
-如果 SUNDIALS 通过将 ENABLE_OPENMP 或 ENABLE_PTHREAD 设置为 ON 启用了线程, 则 SuperLU_MT 应设置为使用相同的线程类型.
+SuperLU_MT 是一个通用库, 用于在 共享内存 并行计算机上直接求解大型, 稀疏, 非对称线性方程组.
+该库由劳伦斯伯克利国家实验室开发,
+可从 [SuperLU_MT GitHub](https://github.com/xiaoyeli/superlu_mt) 存储库中获取.
+
+要启用 SuperLU_MT, 请将 `ENABLE_SUPERLUMT` 设为 ON,
+将 `SUPERLUMT_INCLUDE_DIR` 设为 SuperLU_MT 安装的 SRC 路径,
+并将 `SUPERLUMT_LIBRARY_DIR` 变量设为 SuperLU_MT 安装的 lib 路径.
+
+同时, 变量 `SUPERLUMT_LIBRARIES` 必须设置为以分号分隔的 `SuperLU_MT` 所依赖的其他库的列表.
+例如, 如果在构建 `SuperLU_MT` 时使用了外部 `blas` 库, 则应在该列表中包含 blas 库的完整路径.
+此外, 变量 `SUPERLUMT_THREAD_TYPE` 必须设置为 `Pthread` 或 `OpenMP`.
+
+在构建 `SUNDIALS` 求解器时, 请勿 混合使用 线程类型.
+如果 `SUNDIALS` 通过将 `ENABLE_OPENMP` 或 `ENABLE_PTHREAD` 设置为 ON 启用了线程,
+则 `SuperLU_MT` 应设置为使用相同的线程类型.
 
 SUNDIALS 已在 3.1 版的 SuperLU_MT 中进行了测试.
 
 #### 14.1.4.7. 使用 PETSc 构建
 
-可移植, 可扩展的科学计算工具包(PETSc)是一套数据结构和例程, 用于模拟偏微分方程建模的应用.
-该库由阿贡国家实验室开发, 可从 PETSc GitLab 存储库中获取.
+The Portable, Extensible Toolkit for Scientific Computation(PETSc)
+是一套数据结构和例程, 用于模拟偏微分方程建模的应用.
+该库由阿贡国家实验室开发,
+可从 [PETSc GitLab](https://gitlab.com/petsc/petsc) 存储库中获取.
 
-要启用 PETSc, 请将 ENABLE_PETSC 设为 ON, 并将 PETSC_DIR 设为 PETSc 的安装路径.
-或者, 用户可以在 PETSC_INCLUDES 中提供包含路径列表, 在 PETSC_LIBRARIES 中提供 PETSc 库的完整路径列表.
+要启用 `PETSc`, 请将 `ENABLE_PETSC` 设为 `ON`, 并将 `PETSC_DIR` 设为 `PETSc` 的安装路径.
+或者, 用户可以在 `PETSC_INCLUDES` 中提供包含路径列表,
+在 `PETSC_LIBRARIES` 中提供 `PETSc` 库的完整路径列表.
 
-SUNDIALS 定期使用最新的 PETSc 版本进行测试, 特别是在 SUNDIALS v6.6.2 版中使用 3.18.1 版本.
+SUNDIALS 定期使用最新的 PETSc 版本进行测试,
+特别是在 SUNDIALS v6.6.2 版中使用 3.18.1 版本.
 SUNDIALS 需要 PETSc 3.5.0 或更新版本.
 
-#### 14.1.4.8. 使用 hypre 构建
+#### 14.1.4.8 使用 hypre 构建
 
-hypre 是一个高性能预处理和求解器库, 采用多网格方法, 用于在大规模并行计算机上求解大型稀疏线性方程组.
-该库由劳伦斯利弗莫尔国家实验室开发, 可从 hypre GitHub 存储库中获取.
+`hypre` 是一个高性能 预条件子 和 solvers 库,
+采用 multigrid 方法, 用于在 大规模并行计算机 上求解 大型稀疏线性方程组.
+该库由 Lawrence Livermore 国家实验室开发,
+可从 [hypre GitHub](https://github.com/hypre-space/hypre) 存储库中获取.
 
-要启用 hypre, 请将 ENABLE_HYPRE 设为 ON, 将 HYPRE_INCLUDE_DIR 设为 hypre 安装的 include 路径, 并将变量 HYPRE_LIBRARY_DIR 设为 hypre 安装的 lib 路径.
+要启用 `hypre`, 请将 `ENABLE_HYPRE` 设为 `ON`,
+将 `HYPRE_INCLUDE_DIR` 设为 `hypre` 安装的 `include` 路径,
+并将变量 `HYPRE_LIBRARY_DIR` 设为 `hypre` 安装的 `lib` 路径.
 
 注意
+必须配置 `SUNDIALS`, 使 `SUNDIALS_INDEX_SIZE` 与 `hypre` 安装中的 `HYPRE_BigInt` 兼容.
+SUNDIALS 会定期使用最新版本的 hypre 进行测试,
+特别是在 SUNDIALS v6.6.2 版之前的 2.26.0 版本.
 
-必须配置 SUNDIALS, 使 SUNDIALS_INDEX_SIZE 与 hypre 安装中的 HYPRE_BigInt 兼容.
+#### 14.1.4.9 使用 MAGMA 构建
 
-SUNDIALS 会定期使用最新版本的 hypre 进行测试, 特别是在 SUNDIALS v6.6.2 版之前的 2.26.0 版本.
+The Matrix Algebra on GPU and Multicore Architectures (MAGMA)
+项目提供了一个类似于 LAPACK 的 dense 线性代数库,
+但以 异构(heterogeneous)架构为目标.
+该库由田纳西大学开发,
+可从 [田纳西大学](https://icl.utk.edu/magma/index.html) 的网页上获取.
 
-#### 14.1.4.9. 使用 MAGMA 构建
-
-GPU 和多核架构上的矩阵代数(MAGMA)项目提供了一个类似于 LAPACK 的密集线性代数库, 但以异构架构为目标.
-该库由田纳西大学开发, 可从田纳西大学的网页上获取.
-
-要启用 SUNDIALS 的 MAGMA 接口, 请将 ENABLE_MAGMA 设为 ON, MAGMA_DIR 设为 MAGMA 安装路径, SUNDIALS_MAGMA_BACKENDS 设为与 SUNDIALS 配合使用的所需 MAGMA 后端, 如 CUDA 或 HIP.
+要启用 SUNDIALS 的 MAGMA 接口, 请将 `ENABLE_MAGMA` 设为 ON,
+`MAGMA_DIR` 设为 `MAGMA` 安装路径,
+`SUNDIALS_MAGMA_BACKENDS` 设为与 SUNDIALS 配合使用的所需 MAGMA 后端,
+如 `CUDA` 或 `HIP`.
 
 SUNDIALS 已在 v2.6.1 和 v2.6.2 版的 MAGMA 上进行了测试.
 
-#### 14.1.4.10. 使用 oneMKL
+#### 14.1.4.10 使用 oneMKL
 
-英特尔 oneAPI 数学内核库 (oneMKL) 包括 LAPACK 密集线性代数例程的 CPU 和 DPC++ 接口.
-SUNDIALS oneMKL 接口以 DPC++ 例程为目标, 要使用 CPU 例程, 请参阅第 14.1.4.3 节.
+英特尔 [oneAPI 数学内核库](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html) (oneMKL)
+包括 LAPACK dense线性代数例程 的 CPU 和 DPC++ 接口.
+SUNDIALS oneMKL 接口以 DPC++ 例程为目标,
+要使用 CPU 例程, 请参阅第 [14.1.4.3 节](https://sundials.readthedocs.io/en/latest/Install_link.html#installation-cmake-externallibraries-lapack).
 
-要启用 SUNDIALS oneMKL 接口, 将 ENABLE_ONEMKL 设为 ON, 并将 ONEMKL_DIR 设为 oneMKL 的安装路径.
+要启用 SUNDIALS oneMKL 接口, 将 `ENABLE_ONEMKL` 设为 `ON`,
+并将 `ONEMKL_DIR` 设为 oneMKL 的安装路径.
 
 SUNDIALS 已通过 oneMKL 2021.4 版本的测试.
 
 #### 14.1.4.11. 使用 CUDA 构建
 
-英伟达™(NVIDIA®)CUDA 工具包为使用英伟达™(NVIDIA®)GPU 进行 GPU 加速计算提供了一个开发环境.
-CUDA 工具包和兼容的英伟达驱动程序可从英伟达开发者网站获取.
+The NVIDIA CUDA 工具包为使用 NVIDIA GPU 进行 GPU 加速计算提供了一个开发环境.
+CUDA 工具包和兼容的英伟达驱动程序可从 [英伟达开发者网站获取](https://developer.nvidia.com/cuda-downloads).
 
-要启用 CUDA, 请将 ENABLE_CUDA 设置为 ON.
-如果 CUDA 安装在非标准位置, 系统可能会提示您使用 CUDA 工具包安装路径设置变量 CUDA_TOOLKIT_ROOT_DIR.
-要启用 CUDA 示例, 请将 EXAMPLES_ENABLE_CUDA 设置为 ON.
+要启用 `CUDA`, 请将 `ENABLE_CUDA` 设置为 `ON`.
+如果 CUDA 安装在非标准位置,
+系统可能会提示您使用 `CUDA` 工具包安装路径设置变量 `CUDA_TOOLKIT_ROOT_DIR`.
+要启用 CUDA 示例, 请将 `EXAMPLES_ENABLE_CUDA` 设置为 `ON`.
 
 SUNDIALS 已通过 CUDA 工具包 10 和 11 版本的测试.
 
 #### 14.1.4.12. 使用 HIP 构建
 
-HIP(可移植的异构计算接口)允许开发人员为 AMD 和 NVIDIA GPU 创建可移植的应用程序.
-HIP 可从 HIP GitHub 代码库中获取.
+`HIP`(heterogeneous-compute interface for portability)
+允许开发人员为 `AMD` 和 `NVIDIA GPU` 创建可移植的应用程序.
+HIP 可从 [HIP GitHub 代码库](https://github.com/ROCm-Developer-Tools/HIP)中获取.
 
-要启用 HIP, 请将 ENABLE_HIP 设置为 ON, 并将 AMDGPU_TARGETS 设置为所需目标(例如 gfx705).
-此外, 将 CMAKE_C_COMPILER 和 CMAKE_CXX_COMPILER 设置为指向 hipcc 的安装.
+要启用 `HIP`, 请将 `ENABLE_HIP` 设置为 `ON`,
+并将 `AMDGPU_TARGETS` 设置为所需目标(例如 `gfx705`).
+此外, 将 `CMAKE_C_COMPILER` 和 `CMAKE_CXX_COMPILER` 设置为指向 `hipcc` 的安装.
 
 SUNDIALS 已在 5.0.0 至 5.4.3 之间的 HIP 版本上进行了测试.
 
-#### 14.1.4.13. 使用 RAJA 构建
+#### 14.1.4.13 使用 RAJA 构建
 
-RAJA 是劳伦斯利弗莫尔国家实验室开发的性能可移植层, 可从 RAJA GitHub 存储库获取.
+RAJA 是 Lawrence Livermore 国家实验室开发的
+performance portability layer,
+可从 [RAJA GitHub 存储库](https://github.com/LLNL/RAJA)获取.
 
-构建 SUNDIALS 的 RAJA 模块需要安装启用了 CUDA, HIP 或 SYCL 的 RAJA.
-要启用 RAJA, 请将 ENABLE_RAJA 设为 ON, 将 SUNDIALS_RAJA_BACKENDS 设为所需的后端(CUDA, HIP 或 SYCL), 并根据所选后端将 ENABLE_CUDA, ENABLE_HIP 或 ENABLE_SYCL 设为 ON.
-如果 RAJA 安装在非标准位置, 系统会提示您将 RAJA CMake 配置文件的路径设置为变量 RAJA_DIR.
-要启动 RAJA 示例的编译, 请将 EXAMPLES_ENABLE_CXX 设为 ON.
+构建 SUNDIALS 的 RAJA 模块需要安装启用了 `CUDA`, `HIP` 或 `SYCL` 的 `RAJA`.
+要启用 RAJA, 请将 `ENABLE_RAJA` 设为 ON,
+将 `SUNDIALS_RAJA_BACKENDS` 设为所需的后端(CUDA, HIP 或 SYCL),
+并根据所选后端将 ENABLE_CUDA, ENABLE_HIP 或 ENABLE_SYCL 设为 ON.
+如果 RAJA 安装在非标准位置, 系统会提示将 `RAJA_DIR` 变量 RAJA CMake 配置文件的路径.
+要启动 RAJA 示例的编译, 请将 `EXAMPLES_ENABLE_CXX` 设为 `ON`.
 
 SUNDIALS 已在 RAJA 0.14.0 版进行了测试.
 
 #### 14.1.4.14. 使用 XBraid
 
-XBraid 是一个实时并行库, 实现了最优缩放多网格时间缩减 (MGRIT) 求解器.
-该库由劳伦斯利弗莫尔国家实验室开发, 可从 XBraid GitHub 存储库中获取.
+XBraid 是一个 实时并行库, 实现了 optimal-scaling multigrid reduction in time(MGRIT) 求解器.
+该库由 劳伦斯利弗莫尔 国家实验室开发,
+可从 [XBraid GitHub 存储库](https://github.com/XBraid/xbraid)中获取.
 
-要启用 XBraid 支持, 请将 ENABLE_XBRAID 设为 ON, 将 XBRAID_DIR 设为 XBraid 的根安装位置或 XBraid 仓库克隆的位置.
+要启用 `XBraid` 支持, 请将 `ENABLE_XBRAID` 设为 ON,
+将 `XBRAID_DIR` 设为 `XBraid` 的根安装位置, 或 XBraid 仓库克隆的位置.
 
 注意事项
 
-目前, XBraid 的 braid_Int 和 braid_Real 类型分别被硬编码为 int 和 double.
-因此, 在配置 SUNDIALS 时, 必须将 SUNDIALS_INDEX_SIZE 设置为 32, 将 SUNDIALS_PRECISION 设置为双倍.
-此外, 在配置 SUNDIALS 时, 必须将 ENABLE_MPI 设置为 ON.
+目前, `XBraid` 的 `braid_Int` 和 `braid_Real` 类型分别被硬编码为 `int` 和 `double`.
+因此, 在配置 SUNDIALS 时,
+必须将 `SUNDIALS_INDEX_SIZE` 设置为 `32`, 将 `SUNDIALS_PRECISION` 设置为 `double`.
+此外, 在配置 SUNDIALS 时, 必须将 `ENABLE_MPI` 设置为 ON.
 
 SUNDIALS 已通过 XBraid 3.0.0 版本的测试.
 
-#### 14.1.5. 测试构建和安装
+#### 14.1.5 测试构建和安装
 
-如果 SUNDIALS 在配置时将 EXAMPLES_ENABLE_<language> 选项设置为 ON,  则在使用 make 命令联编之后,  可以运行一组回归测试:
+如果 SUNDIALS 在配置时将 `EXAMPLES_ENABLE_<language>` 选项设置为 `ON`,
+则在使用 `make` 命令build之后,  可以运行一组回归测试:
 
+```bash
 % make test
-此外, 如果 EXAMPLES_INSTALL 也被设置为 "ON", 那么在使用 make install 命令安装后, 可以运行 % make test_install 命令来运行一组烟雾测试:
+```
 
+此外, 如果 `EXAMPLES_INSTALL` 也被设置为 `ON`,
+那么在使用 `make install` 命令安装后,
+可以运行 冒烟测试:
+
+```bash
 % make test_install
-14.1.6. 构建和运行 Examples
-每个 SUNDIALS 解算器都附带了一组示例, 演示基本用法.
-要编译和安装示例, 至少要将 EXAMPLES_ENABLE_<language> 选项设为 ON, 并将 EXAMPLES_INSTALL 设为 ON.
-用 EXAMPLES_INSTALL_PATH 变量指定示例的安装路径.
-CMake 将生成 CMakeLists.txt 配置文件(如果在 Linux/Unix 系统上, 则生成 Makefile 文件), 这些文件将引用已安装的 SUNDIALS 头文件和库.
+```
 
-CMakeLists.txt 文件或传统的 Makefile 文件都可用于构建示例, 也可作为创建用户开发解决方案的模板.
-要使用提供的 Makefile, 只需运行 make 即可编译并生成可执行文件.
-要在已安装的示例目录中使用 CMake, 可运行 cmake(或 ccmake 或 cmake-gui, 以使用图形用户界面), 然后运行 make 来编译示例代码.
-请注意, 如果使用 CMake, 它将用 CMake 生成的新 Makefile 覆盖传统的 Makefile.
+### 14.1.6 构建和运行 Examples
+
+每个 SUNDIALS solver 都附带了一组示例, 演示基本用法.
+要编译和安装示例, 至少要将 `EXAMPLES_ENABLE_<language>` 选项设为 `ON`,
+并将 `EXAMPLES_INSTALL` 设为 `ON`.
+用 `EXAMPLES_INSTALL_PATH` 变量指定示例的安装路径.
+CMake 将生成 CMakeLists.txt 配置文件(如果在 Linux/Unix 系统上, 则生成 Makefile 文件),
+这些文件将引用已安装的 `SUNDIALS` 头文件和库.
+
+`CMakeLists.txt` 文件或传统的 Makefile 文件都可用于构建示例,
+也可作为创建用户开发解决方案的模板.
+
+要使用提供的 `Makefile`, 只需运行 make 即可编译并生成可执行文件.
+要在已安装的示例目录中使用 CMake,
+可运行 cmake(或 ccmake 或 cmake-gui, 以使用图形用户界面),
+然后运行 make 来编译示例代码.
+请注意, 如果使用 CMake, 它将用 CMake 生成的新 `Makefile` 覆盖传统的 Makefile.
 
 运行示例的输出结果可与 SUNDIALS 发行版中的示例输出结果进行比较.
 
-注意
-
-由于机器架构, 编译器版本, 第三方库的使用等原因, 输出结果可能会有差异.
+>注意
+>由于机器架构, 编译器版本, 第三方库的使用等原因, 输出结果可能会有差异.
 
 #### 14.1.7. 在 Windows 上配置, 编译和安装
 
@@ -1174,7 +1251,7 @@ CMake 也可用于在 Windows 上构建 SUNDIALS.
 
 ## 14.2. 安装库和导出头文件
 
-使用 CMake SUNDIALS 联编系统, 命令
+使用 CMake SUNDIALS build系统, 命令
 
 $ make install
 将安装 LIBDIR 下的库和 INCLUDEDIR 下的公共头文件.
