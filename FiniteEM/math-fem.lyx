@@ -103,6 +103,14 @@ Young
 \end_layout
 
 \begin_layout Standard
+iso坐标：有限元等参坐标
+\begin_inset Formula $\xi_{\alpha}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset href
 LatexCommand href
 name "经典书单：学习有限元分析"
@@ -2828,7 +2836,7 @@ status open
 \begin_inset Formula $J$
 \end_inset
 
- 表示几何坐标对正则坐标的雅可比矩阵，
+ 表示几何坐标对 iso坐标的雅可比矩阵，
 \begin_inset Formula $\det[J]$
 \end_inset
 
@@ -13589,11 +13597,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-正则坐标（Regular Coordinates）：有限元的分片单元经过坐标变换后，一般变成参数空间的标准单元，例如三角形
+iso坐标（Isoparametric Coordinates）：有限元的分片单元经过坐标变换后，一般变成参数空间的标准单元，例如三角形
 \begin_inset Formula $\rightarrow$
 \end_inset
 
-等腰直角三角形。将参数空间的坐标称为正则坐标，意思是它比较标准和简单，利于处理。
+等腰直角三角形。将参数空间的坐标称为 等参坐标坐标，因为它使用和 场量 相同的插值函数。
 \end_layout
 
 \begin_layout Section
@@ -13761,11 +13769,11 @@ end{document}
 \begin_inset Formula $3$
 \end_inset
 
-，经过正则坐标变换，所有单元都变成标准单元–边长为
+，经过 iso坐标变换，所有单元都变成标准单元–边长为
 \begin_inset Formula $1$
 \end_inset
 
-的直角三角形，即右图。在正则坐标系中，两个单元的形状完全相同。
+的直角三角形，即右图。在 iso坐标系中，两个单元的形状完全相同。
 \begin_inset Float figure
 placement H
 wide false
@@ -13806,15 +13814,23 @@ name "fig:ele-trans"
 
 \end_inset
 
-某个单元内的场量的插值，在正则坐标系下写作：
+某个单元内的场量的插值，在 iso坐标系下写作：
 \begin_inset Formula 
 \[
-\phi\left(\xi,\eta\right)=\sum_{i=1}^{n}N_{i}^{e}\left(\xi,\eta\right)\phi_{i}
+\phi\left(\xi_{\alpha}\right)=\sum_{i=1}^{n}N_{i}^{e}\left(\xi_{\alpha}\right)\phi_{i}
 \]
 
 \end_inset
 
-fig.
+其中
+\begin_inset Formula $\alpha=1,2,\cdots N$
+\end_inset
+
+，
+\begin_inset Formula $N$
+\end_inset
+
+是单元的自由度数。fig.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:ele-trans"
@@ -13835,13 +13851,13 @@ noprefix "false"
 表示，即
 \begin_inset Formula 
 \[
-\phi=\sum_{i=1}^{n}N_{i}^{(1)}\left(\xi,\eta\right)\phi_{i}^{(1)}=\sum_{i=1}^{n}N_{i}^{(2)}\left(\xi,\eta\right)\phi_{i}^{(2)}
+\phi=\sum_{i=1}^{n}N_{i}^{(1)}\left(\xi_{\alpha}\right)\phi_{i}^{(1)}=\sum_{i=1}^{n}N_{i}^{(2)}\left(\xi_{\alpha}\right)\phi_{i}^{(2)}
 \]
 
 \end_inset
 
-公共边在两个单元中的正则坐标 
-\begin_inset Formula $(\xi,\eta)$
+公共边在两个单元中的 iso坐标 
+\begin_inset Formula $(\xi_{\alpha})$
 \end_inset
 
  是相同的，形函数在两个单元中也取相同的形式，因此唯一的差别在于顶点 
@@ -13864,7 +13880,7 @@ noprefix "false"
 \begin_inset Formula $C^{0}$
 \end_inset
 
-连续的。
+连续的。（类似拉格朗日插值）
 \end_layout
 
 \begin_layout Section
@@ -14455,7 +14471,7 @@ nShape[1,
 \end_layout
 
 \begin_layout Standard
-计算中经常会用到 几何坐标 和 正则坐标 微分之间的转换，即
+计算中经常会用到 几何坐标 和 iso坐标 微分之间的转换，即
 \begin_inset Formula 
 \[
 J=\frac{\partial x}{\partial\xi}=\frac{\partial N_{i}^{e}}{\partial\xi}x_{i}
@@ -14491,6 +14507,14 @@ v1 = {-1, 0}; v2 = {1, 0}; v3 = {0, Sqrt[3]}; Graphics[{Line[{v1, v2, v3,
 \end_inset
 
 
+\begin_inset Graphics
+	filename inset/affine.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -14504,11 +14528,11 @@ v1 = {-1, 0}; v2 = {1, 0}; v3 = {0, Sqrt[3]}; Graphics[{Line[{v1, v2, v3,
 
 \end_inset
 
-二维形函数的正则坐标取值为 
+二维形函数的 iso坐标取值为 
 \begin_inset Formula $[0,1]$
 \end_inset
 
-，一阶形函数可以用正则坐标表示为：
+，一阶形函数可以用 iso坐标表示为：
 \begin_inset Formula 
 \begin{align*}
  & N_{1}^{(1)}=1-\xi-\eta,\\
@@ -14577,6 +14601,142 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+math remark
+\end_layout
+
+\begin_layout Standard
+一阶单元的坐标变换在数学上就是仿射变换（Affine transformation）。
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+x\\
+y\\
+1
+\end{array}\right)=\left[\begin{array}{ccc}
+R_{00} & R_{01} & T_{x}\\
+R_{10} & R_{11} & T_{y}\\
+0 & 0 & 1
+\end{array}\right]\left(\begin{array}{c}
+\xi_{1}\\
+\xi_{2}\\
+1
+\end{array}\right)
+\]
+
+\end_inset
+
+变换矩阵一共
+\begin_inset Formula $6$
+\end_inset
+
+个未知元素，需要
+\begin_inset Formula $6$
+\end_inset
+
+个方程，因此提供三个节点的坐标（共
+\begin_inset Formula $6$
+\end_inset
+
+个分量），可以唯一确定这
+\begin_inset Formula $6$
+\end_inset
+
+个元素。
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+x_{1} & x_{2} & x_{3}\\
+y_{1} & y_{2} & y_{3}\\
+1 & 1 & 1
+\end{array}\right)=\left[\begin{array}{ccc}
+R_{00} & R_{01} & T_{x}\\
+R_{10} & R_{11} & T_{y}\\
+0 & 0 & 1
+\end{array}\right]\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+1 & 1 & 1
+\end{array}\right)
+\]
+
+\end_inset
+
+从另一个角度，一阶单元上的插值场是一阶线性多项式
+\begin_inset Formula 
+\[
+\hat{\phi}^{e}=\alpha_{1}+\alpha_{2}x+\alpha_{3}y
+\]
+
+\end_inset
+
+为了确定系数
+\begin_inset Formula $\alpha_{1},\alpha_{2},\alpha_{3}$
+\end_inset
+
+，代入三角形三个顶点的 坐标和对应的场值
+\begin_inset Formula $\tilde{\phi}$
+\end_inset
+
+，建立方程组
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\tilde{\phi}_{1}^{e}\\
+\tilde{\phi}_{2}^{e}\\
+\tilde{\phi}_{3}^{e}
+\end{array}\right)=\left[\begin{array}{ccc}
+1 & x_{1} & y_{1}\\
+1 & x_{2} & y_{2}\\
+1 & x_{3} & y_{3}
+\end{array}\right]\left(\begin{array}{c}
+\alpha_{1}\\
+\alpha_{2}\\
+\alpha_{3}
+\end{array}\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\tilde{\phi}$
+\end_inset
+
+场可以是电势（场插值），也可以是空间坐标
+\begin_inset Formula $x,y$
+\end_inset
+
+（坐标变换）。系数矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的逆是
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & x_{1} & y_{1}\\
+1 & x_{2} & y_{2}\\
+1 & x_{3} & y_{3}
+\end{array}\right]^{-1}=\frac{1}{2\Delta}\left[\begin{array}{ccc}
+a_{1} & a_{2} & a_{3}\\
+b_{1} & b_{2} & b_{3}\\
+c_{1} & c_{2} & c_{3}
+\end{array}\right]
+\]
+
+\end_inset
+
+上式为 逆矩阵 的 伴随矩阵形式，
+\begin_inset Formula $A_{ij}^{-1}=C_{ji}/\det[A]$
+\end_inset
+
+，
+\begin_inset Formula $2\Delta=\det[A]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
 矩阵形式
 \end_layout
 
@@ -14613,7 +14773,7 @@ y
 \begin_inset Formula $L_{j}^{e}$
 \end_inset
 
- 就是一阶三角形单元的形函数。逆变换矩阵为
+ 是面积坐标，恰好是一阶三角形单元的形函数。逆变换矩阵为
 \begin_inset Formula 
 \begin{equation}
 \left\{ \begin{array}{c}
@@ -14645,7 +14805,7 @@ L_{3}^{e}
 \begin_inset Formula $(x,y)$
 \end_inset
 
- 与 正则坐标 
+ 与 iso坐标 
 \begin_inset Formula $(\xi,\eta)$
 \end_inset
 
@@ -14655,9 +14815,9 @@ L_{3}^{e}
 [J]=\left[\begin{array}{cc}
 \frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
 \frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
-\end{array}\right]=\left[\begin{array}{cc}
--x_{1}+x_{2} & -y_{1}+y_{2}\\
--x_{1}+x_{3} & -y_{1}+y_{3}
+\end{array}\right]=\left[\begin{array}{ccc}
+-x_{1}+x_{2} &  & -y_{1}+y_{2}\\
+-x_{1}+x_{3} &  & -y_{1}+y_{3}
 \end{array}\right]
 \]
 
@@ -15405,6 +15565,77 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+math remark
+\end_layout
+
+\begin_layout Standard
+对于四边形，长宽分别为
+\begin_inset Formula $2a$
+\end_inset
+
+，
+\begin_inset Formula $2b$
+\end_inset
+
+。可以先定义局部坐标（原点在矩阵中心）
+\begin_inset Formula 
+\[
+x'=x-x_{0},\quad\text{and}\quad y'=y-y_{0}
+\]
+
+\end_inset
+
+ 其中
+\begin_inset Formula 
+\[
+x_{0}=\frac{1}{4}\sum_{a=1}^{4}y_{a}\quad\text{and}\quad y_{0}=\frac{1}{4}\sum_{a=1}^{4}x_{a}
+\]
+
+\end_inset
+
+We now need four functions for each displacement component in order to uniquely
+ define the shape functions.
+ In addition these functions must have linear behavior along each edge of
+ the element to ensure interelement C0 continuity.
+ A suitable choice is given by
+\begin_inset Formula 
+\[
+\hat{\phi}^{e}=\alpha_{1}+\alpha_{2}x'+\alpha_{3}y'+\alpha_{4}x'y'
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\tilde{\phi}_{1}^{e}\\
+\tilde{\phi}_{2}^{e}\\
+\tilde{\phi}_{3}^{e}\\
+\tilde{\phi}_{4}^{e}
+\end{array}\right)=\left[\begin{array}{cccc}
+1 & -a & -b & ab\\
+1 & a & -b & -ab\\
+1 & a & b & ab\\
+1 & -a & b & -ab
+\end{array}\right]\left(\begin{array}{c}
+\alpha_{1}\\
+\alpha_{2}\\
+\alpha_{3}\\
+\alpha_{4}
+\end{array}\right)
+\]
+
+\end_inset
+
+同样的，可以反解出系数
+\begin_inset Formula $\alpha_{1}\sim\alpha_{4}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
 四边形特征参数
 \end_layout
 
@@ -16002,11 +16233,11 @@ V_{1}=\frac{1}{6}\det\left[\begin{array}{cccc}
 \end_layout
 
 \begin_layout Example
-三维形函数正则坐标取值范围 
+三维形函数 iso坐标取值范围 
 \begin_inset Formula $\xi,\eta,\zeta\in\left[0,1\right]$
 \end_inset
 
-，一阶形函数可以用正则坐标表示为：
+，一阶形函数可以用 iso坐标表示为：
 \begin_inset Formula 
 \begin{align*}
  & N_{1}^{(1)}=1-\xi-\eta-\zeta\\
@@ -16028,7 +16259,7 @@ V_{1}=\frac{1}{6}\det\left[\begin{array}{cccc}
 \end_layout
 
 \begin_layout Example
-正则坐标 和 几何坐标 之间的变换关系，正变换为：
+iso坐标 和 几何坐标 之间的变换关系，正变换为：
 \begin_inset Formula 
 \[
 \left[\begin{array}{c}
@@ -16065,7 +16296,7 @@ L_{4}^{e}
 \begin_inset Formula $L_{i}^{e}$
 \end_inset
 
- 表示正则坐标。对应的 逆变换 为：
+ 表示 iso坐标。对应的 逆变换 为：
 \begin_inset Formula 
 \[
 \left[\begin{array}{c}
@@ -16233,7 +16464,7 @@ b_{4} & c_{4} & d_{4}
 \end_layout
 
 \begin_layout Section
-雅可比矩阵等式
+Jacobian相关计算
 \end_layout
 
 \begin_layout Standard
@@ -16243,21 +16474,29 @@ b_{4} & c_{4} & d_{4}
 \color inherit
 （物理时空坐标）和 
 \color blue
-正则坐标
+iso坐标
 \color inherit
  之间的变换关系。
 \end_layout
 
 \begin_layout Enumerate
-正则坐标组 
-\begin_inset Formula $\left\{ \xi\right\} $
+iso坐标组 
+\begin_inset Formula $\left\{ \xi_{\alpha}\right\} $
 \end_inset
 
-，对每个单元形式上相同，实际上依赖于 全局几何坐标 
+，对每个单元都写成
+\begin_inset Formula $\xi_{1},\xi_{2}$
+\end_inset
+
+ (or 
+\begin_inset Formula $\xi,\eta$
+\end_inset
+
+)，取值范围相同；但实际上是全局几何坐标 
 \begin_inset Formula $\{X\}$
 \end_inset
 
-。
+的函数。
 \end_layout
 
 \begin_layout Enumerate
@@ -16278,46 +16517,172 @@ b_{4} & c_{4} & d_{4}
 
 \begin_layout Enumerate
 单元内点的几何坐标总是参数化成 
-\begin_inset Formula $X=\sum_{i}N_{i}^{e}\left(x,y\right)X_{i}$
+\begin_inset Formula 
+\begin{align*}
+X & =\sum_{\alpha}N_{\alpha}^{e}\left(\xi_{i}\right)X_{\alpha}\\
+ & =\sum_{\alpha}N_{\alpha}^{e}\left[\xi_{i}(x,y)\right]X_{\alpha}
+\end{align*}
+
 \end_inset
 
-，形函数 
-\begin_inset Formula $\{N_{i}^{e}\}$
+形函数 
+\begin_inset Formula $\{N_{\alpha}^{e}\}$
 \end_inset
 
- 可以取不同 order，则对应的雅可比 
+ 可以取不同阶或形式（e.g.
+ Serenpidity），则对应的雅可比 
 \begin_inset Formula $[J]$
 \end_inset
 
  取不同的形式。
+\begin_inset Formula 
+\[
+J_{ij}=\frac{\partial x_{i}}{\partial\xi_{j}}=\frac{\partial N_{\alpha}^{e}}{\partial\xi_{j}}\,X_{\alpha i},\quad\text{expressed in}\;\xi_{j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\overline{J}_{ij}=\frac{\partial\xi_{i}}{\partial x_{j}}
+\]
+
+\end_inset
+
+对于确定阶的形函数 
+\begin_inset Formula $\{N_{\alpha}^{e}\}$
+\end_inset
+
+，每个单元的节点坐标组 
+\begin_inset Formula $\{X_{\alpha i}\}$
+\end_inset
+
+ 不同，
+\series bold
+
+\begin_inset Formula $\alpha$
+\end_inset
+
+是节点编号，
+\begin_inset Formula $i$
+\end_inset
+
+是坐标次序
+\series default
+；
+\begin_inset Formula $\partial N_{\alpha}^{e}/\partial\xi_{j}$
+\end_inset
+
+是固定的，只依赖于
+\begin_inset Formula $\{N_{\alpha}^{e}\}$
+\end_inset
+
+ expressed in 
+\begin_inset Formula $\xi_{j}$
+\end_inset
+
+。采用下文的简记写作
+\begin_inset Formula 
+\[
+J_{ij}=\frac{\partial x_{i}}{\partial\xi_{j}}=X_{\alpha i}N_{\alpha,j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J_{ij}\overline{J}_{jk}=\delta_{ik}=X_{\alpha i}N_{\alpha,j}\overline{J}_{jk}
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Enumerate
-对于确定 order 的形函数 
-\begin_inset Formula $\{N_{i}^{e}\}$
-\end_inset
-
-，除了顶点坐标组 
-\begin_inset Formula $\{X_{i}\}$
-\end_inset
-
- 带来的区别，
-\begin_inset Formula $[J]$
-\end_inset
-
- 中其它系数是固定的，只和 
-\begin_inset Formula $\{N_{i}^{e}\}$
-\end_inset
-
- 在等参系中的函数形式有关。
+\begin_layout Subsection
+Jacobian导数
 \end_layout
 
 \begin_layout Standard
-因此变换的 雅可比矩阵 可以通过 各个顶点
+令
+\begin_inset Formula $X_{\alpha i}$
+\end_inset
+
+表示节点
+\begin_inset Formula $\alpha$
+\end_inset
+
+的坐标分量
+\begin_inset Formula $i$
+\end_inset
+
+，则Jacobian的导数为
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial J_{{\color{red}kj}}}{\partial X_{\alpha{\color{blue}i}}} & =\frac{\partial}{\partial X_{\alpha i}}\left(X_{\alpha k}\frac{\partial N_{\alpha}}{\partial\xi_{j}}\right)\\
+ & =\delta_{ki}\;\tilde{\partial}_{j}N_{\alpha}+X_{\alpha k}\;\overline{J}_{\ell i}\;\tilde{\partial}_{\ell}\tilde{\partial}_{j}N_{\alpha}\\
+ & =\delta_{{\color{red}k}{\color{blue}i}}\,N_{\alpha,{\color{blue}\tilde{j}}}+X_{\alpha{\color{red}k}}\,\overline{J}_{\ell{\color{blue}i}}\,N_{\alpha,{\color{red}\tilde{j}}\tilde{\ell}}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $J_{ki}=\partial x_{k}/\partial\xi_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\overline{J}_{\ell i}=\partial\xi_{\ell}/\partial x_{i}$
+\end_inset
+
+为逆矩阵（注意指标次序）；并引入了简记 
+\begin_inset Formula $\tilde{\partial}_{j}=\partial/\partial\xi_{j}$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+N_{\alpha,\tilde{j}}=\frac{\partial N_{\alpha}}{\partial\xi_{j}},\quad N_{\alpha,\tilde{j}\tilde{\ell}}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{\ell}\,\partial\xi_{j}}.
+\]
+
+\end_inset
+
+通常偏导数可以交换次序 
+\begin_inset Formula $N_{\alpha,\tilde{j}\tilde{\ell}}=N_{\alpha,\tilde{\ell}\tilde{j}}$
+\end_inset
+
+。并且如果不加说明，形函数的导数都是对
+\begin_inset Formula $\xi_{\alpha}$
+\end_inset
+
+的，可以省略tilde。
+\end_layout
+
+\begin_layout Subsection
+Jacobian逆的导数
 \end_layout
 
 \begin_layout Standard
-可以计算出在三维直角坐标系中，雅可比矩阵为：
+类似地，
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial\overline{J}_{kj}}{\partial X_{\alpha i}} & =\overline{J}_{km}\frac{\partial J_{mn}}{\partial X_{\alpha i}}\overline{J}_{nj}\\
+ & =\overline{J}_{km}\left(\delta_{mi}\,N_{\alpha,n}+X_{\alpha m}\,\overline{J}_{\ell i}\,N_{\alpha,n\ell}\right)\overline{J}_{nj}\\
+ & =\overline{J}_{ki}\,N_{\alpha,n}\,\overline{J}_{nj}+\overline{J}_{km}\,X_{\alpha m}\,\overline{J}_{\ell i}\,N_{\alpha,n\ell}\,\overline{J}_{nj}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+sss
+\end_layout
+
+\begin_layout Example
+在三维直角坐标系中，Jacobian 为：
 \begin_inset Formula 
 \begin{equation}
 J_{{\color{blue}\nu}}^{\circ\mu}=\frac{\partial x^{\circ\mu}}{\partial\xi^{\nu}}\left[\begin{array}{ccc}
@@ -16355,6 +16720,13 @@ d_{2} & d_{3} & d_{4}
 \end{array}\right].
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -16578,35 +16950,35 @@ noprefix "false"
 
 \begin_layout Example
 如果是平直Euclidean空间，不需要考虑度规，则对于矩阵
-\begin_inset Formula $g$
+\begin_inset Formula $A$
 \end_inset
 
 
 \begin_inset Formula 
 \[
-\frac{\partial\det[g]}{\partial g_{ij}}=\det[g]\,\overline{g}_{ji}
+\frac{\partial\det[A]}{\partial A_{ij}}=\det[A]\,B_{ji}
 \]
 
 \end_inset
 
 其中矩阵
-\begin_inset Formula $\overline{g}$
+\begin_inset Formula $B$
 \end_inset
 
 是
-\begin_inset Formula $g$
+\begin_inset Formula $A$
 \end_inset
 
 的逆，
-\begin_inset Formula $\overline{g}^{\mu\nu}=h^{\nu\mu}/\det[g]$
+\begin_inset Formula $B^{\mu\nu}=C^{\nu\mu}/\det[A]$
 \end_inset
 
 ，
-\begin_inset Formula $h^{\mu\nu}$
+\begin_inset Formula $C^{\mu\nu}$
 \end_inset
 
 是
-\begin_inset Formula $g^{\mu\nu}$
+\begin_inset Formula $A^{\mu\nu}$
 \end_inset
 
 的代数余子式。
@@ -16785,7 +17157,7 @@ x=\sum_{i=1}^{m}N_{i}^{e\prime}(\xi_{1}\cdots)x_{i}
 \begin_inset Formula $N_{i}^{e\prime}(\xi_{1}\cdots)$
 \end_inset
 
-对正则坐标
+对 iso坐标
 \begin_inset Formula $\{\xi_{1}\cdots\}$
 \end_inset
 
@@ -16885,7 +17257,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-正则坐标变换
+iso坐标变换
 \end_layout
 
 \end_inset
@@ -17041,7 +17413,7 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 \series bold
 物理单元
 \series default
-），一一映射到 正则坐标空间的小单元（称作 
+），一一映射到 iso坐标空间的小单元（称作 
 \series bold
 参数单元
 \series default
@@ -17069,7 +17441,7 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 \begin_inset Formula $\left\{ \xi,\eta\right\} $
 \end_inset
 
-表示正则坐标，但是
+表示 iso坐标，但是
 \series bold
 具体的坐标变换 对于不同的单元是不同的，也就是每个坐标变换局域于它的单元上
 \series default
@@ -17110,7 +17482,7 @@ N_{1}(-1)=1,N_{2}(-1)=0,
 \end_layout
 
 \begin_layout Standard
-几何坐标与正则坐标的 变换式（映射关系）为：
+几何坐标与 iso坐标的 变换式（映射关系）为：
 \begin_inset Formula 
 \begin{align}
  & x=\sum_{i}N_{i}^{e}\left(\xi,\eta\right)x_{i}\label{eq:coord}\\
@@ -17306,7 +17678,7 @@ FEM计算
 \begin_inset Formula $c$
 \end_inset
 
- 表示正则坐标（单元自然参数坐标 
+ 表示 iso坐标（单元自然参数坐标 
 \begin_inset Formula $\xi$
 \end_inset
 
@@ -17382,11 +17754,11 @@ FEM计算
 \end_layout
 
 \begin_layout Standard
-在标准单元的方法中，独立几何坐标的个数和独立正则坐标的个数相同，例如对于二维都是
+在标准单元的方法中，独立几何坐标的个数和独立 iso坐标的个数相同，例如对于二维都是
 \begin_inset Formula $2$
 \end_inset
 
-。几何坐标与正则坐标微分的变换式是：
+。几何坐标与 iso坐标微分的变换式是：
 \end_layout
 
 \begin_layout Standard
@@ -17442,7 +17814,7 @@ x_{i} & y_{i}\end{array}\right)\nonumber
 \begin_inset Formula $[J]$
 \end_inset
 
-，正则坐标
+，iso坐标
 \begin_inset Formula $\xi$
 \end_inset
 
@@ -17502,7 +17874,7 @@ J=(\tilde{\nabla}N)\cdot\overline{X},\label{eq:612}
 \begin_inset Formula $\tilde{\nabla}N$
 \end_inset
 
-表示形函数对正则坐标的梯度；
+表示形函数对 iso坐标的梯度；
 \begin_inset Formula $\overline{X}$
 \end_inset
 
@@ -17720,7 +18092,7 @@ J_{ki}=\tilde{\partial}_{b}X_{i}=(\tilde{\partial}_{b}\,N_{\alpha})\,\overline{X
 \end_layout
 
 \begin_layout Section
-正则坐标逆变换
+iso坐标逆变换
 \end_layout
 
 \begin_layout Standard
@@ -17733,7 +18105,7 @@ noprefix "false"
 
 \end_inset
 
-中已经给出了正则坐标
+中已经给出了 iso坐标
 \begin_inset Formula $\rightarrow$
 \end_inset
 
@@ -17757,7 +18129,7 @@ noprefix "false"
 \begin_inset Formula $\sbf\xi$
 \end_inset
 
- 是正则坐标，
+ 是 iso坐标，
 \begin_inset Formula $\sbf N(\sbf\xi)$
 \end_inset
 
@@ -17839,7 +18211,7 @@ J_{ji} & =(\tilde{\partial}_{j}\,N_{\alpha})\,\overline{X}_{\alpha i}
 \begin_inset Formula $\tilde{\nabla}N$
 \end_inset
 
-表示形函数对正则坐标（参数坐标）的梯度。这里的
+表示形函数对 iso坐标（参数坐标）的梯度。这里的
 \begin_inset Formula $D_{F}$
 \end_inset
 
@@ -17924,11 +18296,11 @@ noprefix "false"
 \begin_inset Formula $\rightarrow$
 \end_inset
 
-正则坐标。利用这一关系，可以实现边界单元的正则坐标
+iso坐标。利用这一关系，可以实现边界单元的 iso坐标
 \begin_inset Formula $\rightarrow$
 \end_inset
 
-体单元的正则坐标。例如二维三角形网格的边界为线段，可以实现从线段上的正则坐标 
+体单元的 iso坐标。例如二维三角形网格的边界为线段，可以实现从线段上的 iso坐标 
 \begin_inset Formula $(\xi)$
 \end_inset
 
@@ -17936,7 +18308,7 @@ noprefix "false"
 \begin_inset Formula $\rightarrow$
 \end_inset
 
- 所属三角形单元的正则坐标
+ 所属三角形单元的 iso坐标
 \begin_inset Formula $(\xi,\eta)$
 \end_inset
 
@@ -17960,7 +18332,7 @@ noprefix "false"
 
 \end_inset
 
-整个过程就是不断使用正则坐标变换和逆变换。
+整个过程就是不断使用 iso坐标变换和逆变换。
 \end_layout
 
 \begin_layout Section
@@ -17972,7 +18344,7 @@ noprefix "false"
 \begin_inset Formula $\nabla N_{i}^{e}$
 \end_inset
 
-，它可以通过 Jacobi 矩阵，和形函数对正则坐标（
+，它可以通过 Jacobi 矩阵，和形函数对 iso坐标（
 \begin_inset Formula $\xi$
 \end_inset
 
@@ -18124,7 +18496,7 @@ status open
 \begin_inset Formula $\tilde{\partial}$
 \end_inset
 
-表示对正则坐标 
+表示对 iso坐标 
 \begin_inset Formula $\left\{ \xi,\eta\right\} $
 \end_inset
 
@@ -18206,7 +18578,7 @@ status open
 \begin_inset Formula $W\left(\xi_{m},\eta_{m}\right)$
 \end_inset
 
- ，可以通过查表获取，这些结果都使用正则坐标 
+ ，可以通过查表获取，这些结果都使用 iso坐标 
 \begin_inset Formula $\left(\xi,\eta\right)$
 \end_inset
 
@@ -18609,7 +18981,7 @@ status open
 
 \end_inset
 
-普通坐标和正则坐标之间的变换为：
+普通坐标和 iso坐标之间的变换为：
 \begin_inset Formula 
 \begin{align*}
  & \left[\begin{array}{c}
@@ -27715,7 +28087,7 @@ B_{j}=A_{i}\varepsilon_{jk\ell}\partial_{k}N_{i}^{e}\left(\hat{e}_{z}\right)_{\e
 \begin_inset Formula $\partial_{k}N_{i}^{e}$
 \end_inset
 
- 可以在正则坐标系下表示为：
+ 可以在 iso坐标系下表示为：
 \begin_inset Formula 
 \[
 \partial_{k}N_{i}^{e}=J_{k\ell}^{-1}\hat{\partial}_{\ell}N_{i}^{e}.
@@ -27727,7 +28099,7 @@ B_{j}=A_{i}\varepsilon_{jk\ell}\partial_{k}N_{i}^{e}\left(\hat{e}_{z}\right)_{\e
 \begin_inset Formula $\hat{\partial}_{\ell}$
 \end_inset
 
- 表示正则坐标系下的偏导。
+ 表示 iso坐标系下的偏导。
 \end_layout
 
 \begin_layout Enumerate
@@ -28195,7 +28567,7 @@ E_{k}=-\partial_{k}\phi=-{\color{blue}\partial_{k}N_{\beta}^{e}\;\phi_{\beta}}
 \begin_inset Formula $\phi_{\beta}$
 \end_inset
 
- 是节点上的电势，为常数。将对正则坐标的偏导数记作 
+ 是节点上的电势，为常数。将对 iso坐标的偏导数记作 
 \begin_inset Formula $\hat{\partial}_{k}=\left(\frac{\partial}{\partial\xi},\frac{\partial}{\partial\eta},\frac{\partial}{\partial\zeta}\right)$
 \end_inset
 
@@ -28215,11 +28587,11 @@ E_{k}=-{\color{brown}J_{k\ell}^{-1}}\;{\color{blue}\hat{\partial}_{\ell}N_{\beta
 \begin_inset Formula $\hat{\partial}_{\ell}N_{\beta}^{e}$
 \end_inset
 
- 表示正则坐标系下的偏导，此时形函数 
+ 表示 iso坐标系下的偏导，此时形函数 
 \begin_inset Formula $N_{\beta}^{e}$
 \end_inset
 
- 使用正则坐标表示，不包含节点 
+ 使用 iso坐标表示，不包含节点 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -29190,7 +29562,7 @@ noprefix "false"
 \begin_inset Formula $\xi_{p}$
 \end_inset
 
- 表示将二维局域坐标再变换到正则坐标 
+ 表示将二维局域坐标再变换到 iso坐标 
 \begin_inset Formula $\left(\xi_{1},\xi_{2}\right)$
 \end_inset
 
@@ -29225,7 +29597,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-全局几何坐标对正则坐标的雅可比行列式
+全局几何坐标对 iso坐标的雅可比行列式
 \begin_inset Formula 
 \begin{equation}
 J_{pj}=\hat{\partial}_{p}{\color{blue}r_{j}}=\left[\begin{array}{ccc}
@@ -29332,7 +29704,7 @@ e_{1} & e_{2} & e_{3}\\
 \end_layout
 
 \begin_layout Enumerate
-局域几何坐标 对 正则坐标的 雅可比矩阵：
+局域几何坐标 对 iso坐标的 雅可比矩阵：
 \begin_inset Formula 
 \begin{equation}
 L_{pq}=\hat{\partial}_{p}x_{q}^{\prime}=\left[\begin{array}{cc}
@@ -30956,7 +31328,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-全局几何坐标对正则坐标的雅可比行列式
+全局几何坐标对 iso坐标的雅可比行列式
 \begin_inset Formula 
 \begin{equation}
 J_{1i}=\partial_{\xi}{\color{blue}r_{i}}=\left[\begin{array}{cc}

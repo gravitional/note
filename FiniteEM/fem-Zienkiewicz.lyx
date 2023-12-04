@@ -598,7 +598,577 @@ status open
 \end_layout
 
 \begin_layout Chapter
-11 多区域和Mixed近似 p361
+标准离散系统和FEM的起源
+\end_layout
+
+\begin_layout Chapter
+Problems in Linear Elasticity and Fields
+\end_layout
+
+\begin_layout Chapter
+若形式和有限元近似：1D问题
+\end_layout
+
+\begin_layout Chapter
+变分形式和有限单元近似：1D问题
+\end_layout
+
+\begin_layout Chapter
+场问题：多为有限元方法
+\end_layout
+
+\begin_layout Chapter
+形函数，导数和积分
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+二维形函数
+\end_layout
+
+\begin_layout Subsection
+三角形形函数
+\end_layout
+
+\begin_layout Subsubsection
+Triangle with three nodes
+\end_layout
+
+\begin_layout Subsubsection
+高阶三角形单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+N_{a}=\ell_{I}^{I}\left(L_{1}\right)\,\ell_{J}^{J}\left(L_{2}\right)\,\ell_{K}^{K}\left(L_{3}\right),\quad\text{with}\quad I+J+K=M\label{eq:6.7}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\ell_{I}^{I}$
+\end_inset
+
+,
+\begin_inset Formula $\ell_{J}^{J}$
+\end_inset
+
+,
+\begin_inset Formula $\ell_{K}^{K}$
+\end_inset
+
+的表达式在3.39 中给出，并将其中的
+\begin_inset Formula $\xi$
+\end_inset
+
+替换成
+\begin_inset Formula $L_{1}$
+\end_inset
+
+，
+\begin_inset Formula $L_{2}$
+\end_inset
+
+，
+\begin_inset Formula $L_{3}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+容易验证上面的表达式给出
+\begin_inset Formula 
+\[
+N_{a}=1,\quad\text{at}\quad L_{1}=L_{1I},\quad L_{2}=L_{1J},\quad L_{3}=L_{3K},
+\]
+
+\end_inset
+
+and zero at all other nodes。展开式中出现的最高项为
+\begin_inset Formula $L_{1}^{I}L_{2}^{J}L_{3}^{K}$
+\end_inset
+
+，and as 所有点上都有 
+\begin_inset Formula $I+J+K\equiv M$
+\end_inset
+
+ ，多项式的阶数也是
+\begin_inset Formula $M$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+表达式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+适用于图 6.4 所示的任意节点分布，如果节点线的间距相等（即 
+\begin_inset Formula $1/m$
+\end_inset
+
+），则表达式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以简化。该公式最早由 Argyris 等人[3]获得，并由其他人[4,5]以不同的方式形式化。
+\end_layout
+
+\begin_layout Standard
+读者可以验证下面给出的二阶和三阶单元的形函数，实际上也可以很容易地推导出更高阶的形函数。
+\end_layout
+
+\begin_layout Subsubsection
+Quadratic triangle
+\end_layout
+
+\begin_layout Standard
+Corner nodes:
+\begin_inset Formula 
+\[
+N_{a}=\left(2L_{a}-1\right)L_{a},\quad a=1,2,3
+\]
+
+\end_inset
+
+Mid–side nodes:
+\begin_inset Formula 
+\[
+N_{4}=4L_{1}L_{2},\quad N_{5}=4L_{2}L_{3},\quad N_{6}=4L_{3}L_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Cubic triangle
+\end_layout
+
+\begin_layout Standard
+Corner nodes:
+\begin_inset Formula 
+\[
+N_{a}=\frac{1}{2}\left(3L_{a}-1\right)\left(3L_{a}-2\right)L_{a},\quad a=1,2,3
+\]
+
+\end_inset
+
+Mid–side nodes
+\begin_inset Formula 
+\[
+N_{4}=\frac{9}{2}L_{1}L_{2}\left(3L_{1}-1\right),\quad N_{5}=\frac{9}{2}L_{1}L_{2}\left(3L_{2}-1\right),\quad\text{etc.}
+\]
+
+\end_inset
+
+The internal nodes:
+\begin_inset Formula 
+\[
+N_{10}=27L_{1}L_{2}L_{3}
+\]
+
+\end_inset
+
+The last shape again is a “bubble” function，在边界上的贡献为零–在其他的context中有用（see
+ the mixed forms in Chapter 10）。
+\end_layout
+
+\begin_layout Standard
+The quadratic triangle was first derived by de Veubeke[6] and used later
+ in the context of plane stress analysis by Argyris[7].
+\end_layout
+
+\begin_layout Subsection
+四边形形函数
+\end_layout
+
+\begin_layout Subsubsection
+Quadrilateral with four nodes
+\end_layout
+
+\begin_layout Subsubsection
+Lagrangian family of quadrilaterals
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{a}=\frac{1}{4}\left(1+\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Quotes eld
+\end_inset
+
+Quadratic
+\begin_inset Quotes erd
+\end_inset
+
+ element
+\end_layout
+
+\begin_layout Standard
+Corner nodes:
+\begin_inset Formula 
+\[
+N_{a}=\frac{1}{4}\xi\eta\left(\xi+\xi_{a}\right)\left(\eta+\eta_{a}\right)
+\]
+
+\end_inset
+
+Mid–side nodes:
+\begin_inset Formula 
+\begin{align*}
+ & \text{for}\,\xi_{a}=0,\quad N_{a}=\frac{1}{2}\eta\left(1-\xi^{2}\right)\left(\eta+\eta_{a}\right)\\
+ & \text{for}\,\eta_{a}=0,\quad N_{a}=\frac{1}{2}\xi\left(\xi+\xi_{a}\right)\left(1-\eta^{2}\right)
+\end{align*}
+
+\end_inset
+
+Center nodes:
+\begin_inset Formula 
+\[
+N_{a}=\left(1-\xi^{2}\right)\left(1-\eta^{2}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Serendipity family of quadrilaterals
+\end_layout
+
+\begin_layout Standard
+对于某些类型的问题，令函数依赖于主要位于单元边界上的节点值会更有效。例如，考虑图 6.8 中的前四个单元。在每个单元中，单元边界上的节点数量逐渐增加且数量相等。为
+确保连续性，边上的函数依次为线性、抛物线和三次。
+\end_layout
+
+\begin_layout Standard
+要实现第一个单元的形函数，显然可以再次使用线性拉格朗日多项式的乘积。事实上，这个元素与
+\begin_inset Formula $n=1$
+\end_inset
+
+ 的拉格朗日单元完全相同，所有的形函数都可以写成一个表达式：
+\begin_inset Formula 
+\[
+N_{a}=\frac{1}{4}\left(1+\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)
+\]
+
+\end_inset
+
+读者可以验证以下函数满足二次函数和三次函数的mebers of the family 的所有必要条件。
+\end_layout
+
+\begin_layout Subsubsection
+Qudratic element
+\end_layout
+
+\begin_layout Standard
+Corner nodes:
+\begin_inset Formula 
+\begin{equation}
+N_{a}=\frac{1}{4}\left(1+\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)\left(\xi_{a}\xi+\eta_{a}\eta-1\right)\label{eq:6.10a}
+\end{equation}
+
+\end_inset
+
+Mid–side nodes:
+\begin_inset Formula 
+\begin{align}
+\text{for} & \xi_{a}=0,\quad N_{a}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta_{a}\eta\right)\label{eq:6.10b}\\
+\text{for} & \eta_{a}=0,\quad N_{a}=\frac{1}{2}\left(1+\xi_{a}\xi\right)\left(1-\eta^{2}\right)\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Quotes eld
+\end_inset
+
+Cubic
+\begin_inset Quotes erd
+\end_inset
+
+ element P161/200
+\end_layout
+
+\begin_layout Standard
+Corner nodes:
+\begin_inset Formula 
+\begin{equation}
+N_{a}=\frac{1}{32}\left(1+\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)\left[9(\xi^{2}+\eta^{2})-10\right]\label{eq:6.11a}
+\end{equation}
+
+\end_inset
+
+Mid–side nodes:
+\begin_inset Formula 
+\begin{align}
+\text{for} & \xi_{a}=\pm1,\quad\text{and}\quad\eta_{a}=\pm\frac{1}{3}\label{eq:6.11b}\\
+ & N_{a}=\frac{9}{32}\left(1+\xi_{a}\xi\right)\left(1-\eta^{2}\right)\left(1+9\eta_{a}\eta\right)\nonumber 
+\end{align}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align}
+ & \xi_{a}=\pm\frac{1}{3}\quad\text{and}\quad\eta_{a}=\pm1\nonumber \\
+ & N_{a}=\frac{9}{32}\left(1-\xi^{2}\right)\left(1+9\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)\label{eq:6.11c}
+\end{align}
+
+\end_inset
+
+which all satisfy the requirement
+\begin_inset Formula 
+\begin{equation}
+N_{a}\left(\xi_{a},\eta_{b}\right)=\delta_{ab}=\begin{cases}
+1 & a=b\\
+0 & a\neq b
+\end{cases}\label{eq:6.11d}
+\end{equation}
+
+\end_inset
+
+上述函数最初是通过观察得出的，而要想推广到更高阶的函数则十分困难，需要一些独创性[8,9]。因此，将这一家族命名为 “serendipity”
+ 是恰当的，after the famous princes of Serendip noted for their chance discoveries（Ho
+race Walpole，1754 年）。
+\end_layout
+
+\begin_layout Standard
+然而，我们可以设计出一种相当系统的方法来生成 “serendipity” 形函数，这一点从图 6.9 中的二次形函数生成过程中可以看出[4,11]。
+\end_layout
+
+\begin_layout Standard
+作为起点，我们观察到，对于 
+\series bold
+mid–side
+\series default
+ 节点，二次
+\begin_inset Formula $\times$
+\end_inset
+
+线性类型的拉格朗日插值足以确定节点 5 至 8 的 
+\begin_inset Formula $N_{a}$
+\end_inset
+
+。对于 
+\series bold
+corner
+\series default
+ 节点，如图 6.9c，我们从双线性拉格朗日族 
+\begin_inset Formula $\hat{N}_{1}$
+\end_inset
+
+ 开始，并立即注意到虽然在节点 1 处 
+\begin_inset Formula $\hat{N}_{1}=1$
+\end_inset
+
+，但在节点 5 或 8 处（步骤 1）并不为零。连续减去 
+\begin_inset Formula $1/2\,N_{5}$
+\end_inset
+
+（第 2 步）和 
+\begin_inset Formula $1/2N_{8}$
+\end_inset
+
+（第 3 步）可确保在这些节点上得到一个零值。读者可以验证最终得到的表达式与公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.10a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.10b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的表达式一致。
+\end_layout
+
+\begin_layout Standard
+事实上，对于所有高阶元素，
+\series bold
+mid–side
+\series default
+ 和 
+\series bold
+corner
+\series default
+ 
+\series bold
+shape
+\series default
+ 函数都可以通过相同的过程生成。对于前者，只需将 
+\begin_inset Formula $m$
+\end_inset
+
+ th阶和一阶拉格朗日插值简单相乘即可。对于后者，需要结合bilinear corner函数以及 适量的的 mid–side 形函数，以确保在适当的节点处为零。
+\end_layout
+
+\begin_layout Standard
+通过类似的系统算法，为每侧节点数不同的单元 生成形函数也很容易。如果要在不同阶次的元素之间进行渐变（transition），以便对大型问题的不同部分进行不同阶次
+的精度研究，这可能是非常理想的。图 6.10 展示了立方/线性过渡所需的形状函数。这种特殊单元的使用最早见于文献[11]，但这里使用的是参考文献[4]中更简单的表
+述。
+\end_layout
+
+\begin_layout Standard
+有了这一类单元的形函数生成模式，很明显，现在对给定的 complete polynomial expansion 所需的自由度减少了。图 6.11
+ 显示了立方元素的情况，其中只出现了两个剩余项（指下面的两个。相比之下，同阶拉格朗日单元有六个剩余项）。然而，当第 6.5 节引入一般四边形映射时，这些优势就会丧
+失，从而使拉格朗日插值形式更具优势。
+\end_layout
+
+\begin_layout Standard
+然而，显而易见的是，仅沿边缘放置的节点所生成的函数不会生成超过三阶（cubic）的 complete polynomial。对于更高阶的多项式，有必要通过内部节
+点或使用包含适当多项式项的 “无节点” 变量来补充展开式。例如，在这个系列的下一个四次方程[12]中，增加了一个中心节点[即图 6.8d]，这样就可以得到
+ 完整的四阶展开式的所有项。这个中心节点添加了一个形函数 
+\begin_inset Formula $\left(1-\xi^{2}\right)\left(1-\eta^{2}\right)$
+\end_inset
+
+，它在所有外部边界上都为零，并且与 quadratic格朗日单元中使用的内部函数相吻合。一旦添加了内部节点，就有必要修改 corner and
+ mid–side 的形函数（让它们在内点为零），以保持 Kronecker 特性 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.11d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。不过，我们也可以将内部节点视为分层节点（hierarchical 参见第 3.6 节）。
+\end_layout
+
+\begin_layout Standard
+读者可以验证，在单元 edges，上述所有二维形函数，完全由边缘上的 nodal parameters 表达。因此，mathching values
+ at nodes of contiguous edges 确保所需的 C0 连续性。
+\end_layout
+
+\begin_layout Section
+三维形函数
+\end_layout
+
+\begin_layout Subsection
+四面体单元
+\end_layout
+
+\begin_layout Subsection
+Hexagon单元：Brick family
+\end_layout
+
+\begin_layout Section
+其他简单三维单元
+\end_layout
+
+\begin_layout Section
+映射：参数形式
+\end_layout
+
+\begin_layout Section
+Order of convergence for mapped elements
+\end_layout
+
+\begin_layout Section
+Computation of global derivatives
+\end_layout
+
+\begin_layout Subsection
+Placement of element coordinates
+\end_layout
+
+\begin_layout Section
+数值积分
+\end_layout
+
+\begin_layout Subsection
+四边形单元
+\end_layout
+
+\begin_layout Subsection
+Brick单元
+\end_layout
+
+\begin_layout Subsection
+三角形单元
+\end_layout
+
+\begin_layout Section
+Shape functions by degeneration
+\end_layout
+
+\begin_layout Section
+从映射生成有限元单元
+\end_layout
+
+\begin_layout Section
+数值积分有限单元的计算优势
+\end_layout
+
+\begin_layout Section
+问题
+\end_layout
+
+\begin_layout Subsection
+参考
+\end_layout
+
+\begin_layout Chapter
+弹性：二和三维有限单元
+\end_layout
+
+\begin_layout Chapter
+The Patch Test, Reduced Integraion and Nonconforming Elements
+\end_layout
+
+\begin_layout Chapter
+混合方法和约束：Complete Field Methods
+\end_layout
+
+\begin_layout Chapter
+不可压缩问题，Mixed Methods, and 其他求解程序
+\end_layout
+
+\begin_layout Chapter
+Multidomain Mixed Approximations p361
 \end_layout
 
 \begin_layout Section
@@ -657,6 +1227,22 @@ status open
 
 \begin_layout Section
 问题
+\end_layout
+
+\begin_layout Chapter
+The Time Dimension: Semi–Discretization of Field and Dynamic Problems
+\end_layout
+
+\begin_layout Chapter
+Plate Bending 近似: Thin and Thick Plates
+\end_layout
+
+\begin_layout Chapter
+Shells：三维分析特例
+\end_layout
+
+\begin_layout Chapter
+Errors，Recovery Process, and Error Estimates
 \end_layout
 
 \begin_layout Chapter
@@ -1386,6 +1972,14 @@ p–细化 和 hp–细化
 
 \begin_layout Section
 问题
+\end_layout
+
+\begin_layout Chapter
+Automatic Mesh Generation
+\end_layout
+
+\begin_layout Chapter
+Computer Procedures for Finite Element Analysis
 \end_layout
 
 \end_body
