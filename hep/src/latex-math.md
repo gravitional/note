@@ -1479,3 +1479,29 @@ $$ A\xlongequal[sub-script]{super-script}B $$
 \test
 \end{document}
 ```
+
+## 调整array环境间距
+
+[tools/array](https://mirror-hk.koddos.net/CTAN/macros/latex/required/tools/array.pdf)
+
+array 和 tabular 环境的新实现是一个更大项目的一部分,
+我们试图在某些方面改进 LATEX 代码, 使 LATEX 更容易处理.
+读者应该熟悉上述环境的一般结构.
+更多信息可参见 [3] 和 [1].
+
+表 1 介绍了 preamble 中可以使用的 附加选项,
+以及那些现在含义略有不同的选项.
+
+### `\extrarowheight`
+
+此外, 我们还引入了一个名为 `\extrarowheight` 的新参数.
+如果它的长度为正数, 那么该参数的值将加到表格每一行的正常高度上,
+而深度将保持不变.
+这对有水平线的表格很重要, 因为这些线通常会接触到大写字母.
+例如, 我们在表 1 中使用了 `\setlength{\extrarowheight}{1pt}`.
+
+在讨论实现之前, 我们将讨论几个使用新 preamble选项的例子.
+
++ 如果想在左侧冲洗列中使用特殊字体(例如 `\bfseries`),
+可以使用 `>{\bfseries}l` 来实现.
+您不必再将 `\bfseries` 添加到列中的每个条目了.

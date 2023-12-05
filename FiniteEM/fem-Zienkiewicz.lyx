@@ -606,7 +606,65 @@ Problems in Linear Elasticity and Fields
 \end_layout
 
 \begin_layout Chapter
-若形式和有限元近似：1D问题
+弱形式和有限元近似：1D问题
+\end_layout
+
+\begin_layout Section
+3.5 Isoparametric form
+\end_layout
+
+\begin_layout Standard
+2–节点 单元的位移函数现在写作
+\begin_inset Formula 
+\[
+\hat{u}^{e}(x,t)=N_{1}(x')\,\tilde{u}_{1}^{e}(t)+N_{2}(x')\,\tilde{u}_{2}^{e}(t)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $x=x_{1}^{e}+x'$
+\end_inset
+
+ and 形函数表示为
+\begin_inset Formula 
+\[
+N_{1}(x')=1-\frac{x'}{h^{e}},\quad\text{and}\quad N_{2}(x')=\frac{x'}{h^{e}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果我们令
+\begin_inset Formula 
+\[
+\frac{x'}{h^{e}}=\xi\quad\text{where}\quad0\le\xi\le1
+\]
+
+\end_inset
+
+形函数可以写成
+\begin_inset Formula 
+\begin{equation}
+N_{1}(\xi)=1-\xi\quad\text{and}\quad N_{2}(\xi)=\xi,\quad0\le\xi\le1\label{eq:3.35a}
+\end{equation}
+
+\end_inset
+
+现在可以把 单元坐标，位移，或者任意函数写成参数形式
+\begin_inset Formula 
+\begin{align}
+ & x^{e}=N_{1}(\xi)x_{1}^{e}+N_{2}(\xi)x_{2}^{e}\nonumber \\
+ & \hat{u}^{e}=N_{1}(\xi)\tilde{u}_{1}^{e}+N_{2}(\xi)\tilde{u}_{2}^{e}\nonumber \\
+ & \hat{w}^{e}=N_{1}(\xi)\tilde{w}_{1}^{e}+N_{2}(\xi)\tilde{w}_{2}^{e}\label{eq:3.35b}
+\end{align}
+
+\end_inset
+
+这称作 isoparametric form，也就是说这三个表达式形式相同。
 \end_layout
 
 \begin_layout Chapter
@@ -637,8 +695,52 @@ Problems in Linear Elasticity and Fields
 Triangle with three nodes
 \end_layout
 
+\begin_layout Standard
+由于有三个父坐标，因此必须始终注意它们受到总面积的限制，即
+\begin_inset Formula 
+\begin{equation}
+L_{1}+L_{2}+L_{3}=1\label{eq:6.4}
+\end{equation}
+
+\end_inset
+
+三节点 三角形单元的形函数用面积坐标表示是
+\begin_inset Formula 
+\begin{equation}
+N_{a}=L_{a},\quad a=1,2,3\label{eq:6.5}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-高阶三角形单元
+高阶三角形单元 p153/192
+\end_layout
+
+\begin_layout Standard
+使用三个整数 
+\begin_inset Formula $I,J,K$
+\end_inset
+
+ 标记节点
+\begin_inset Formula $a$
+\end_inset
+
+，对应坐标位置
+\begin_inset Formula $L_{1a}$
+\end_inset
+
+，
+\begin_inset Formula $L_{2a}$
+\end_inset
+
+，
+\begin_inset Formula $L_{3a}$
+\end_inset
+
+，可以用三个拉格朗日插值表示形函数
 \end_layout
 
 \begin_layout Standard
@@ -677,7 +779,51 @@ N_{a}=\ell_{I}^{I}\left(L_{1}\right)\,\ell_{J}^{J}\left(L_{2}\right)\,\ell_{K}^{
 \begin_inset Formula $L_{3}$
 \end_inset
 
-。
+；其他的基点 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 代之以各个节点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+拉格朗日插值
+\begin_inset Formula 
+\begin{align*}
+\ell_{a}^{p}(\xi) & =\prod_{\begin{subarray}{c}
+b=1\\
+b\neq a
+\end{subarray}}^{n}\frac{(\xi-\xi_{b})}{(\xi_{a}-\xi_{b})}\\
+ & =\frac{(\xi-\xi_{1})(\xi-\xi_{2})(\cdots)(\xi-\xi_{a-1})(\xi-\xi_{a+1})(\cdots)(\xi-\xi_{n})}{(\xi_{a}-\xi_{1})(\xi_{a}-\xi_{2})(\cdots)(\xi_{a}-\xi_{a-1})(\xi_{a}-\xi_{a+1})(\cdots)(\xi_{a}-\xi_{n})}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1100,7 +1246,88 @@ Hexagon单元：Brick family
 \end_layout
 
 \begin_layout Section
-映射：参数形式
+映射：参数形式 p170/209
+\end_layout
+
+\begin_layout Standard
+FEM分析中可考虑的 parametric mapping 类型由以下因素决定 由 coordinate插值与 因变量（
+\begin_inset Formula $\tilde{\phi}$
+\end_inset
+
+）插值之间的关系决定。If we denote the mapping by
+\begin_inset Formula 
+\begin{align}
+\sbf x(\xi_{j}) & =\sum_{a}N_{a}^{\prime}(\xi_{j})\sbf x_{a}\nonumber \\
+\hat{\phi}(\xi_{j}) & =\sum_{a}N_{a}(\xi_{j})\,\tilde{\phi}_{a}\label{eq:6.20}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\xi_{j}$
+\end_inset
+
+是上文提到的任意 母坐标，则有下面三种情况
+\end_layout
+
+\begin_layout Itemize
+Sub-parametric interpolation: 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+的插值order 低于 
+\begin_inset Formula $\phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+Isoparametric interpolation: 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+的插值order 等于 
+\begin_inset Formula $\phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+Super-parametric interpolation: 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+的插值order 高于 
+\begin_inset Formula $\phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+在开发 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ 问题的解法时，可以使用 “sub-parametric” 或 
+\begin_inset Quotes eld
+\end_inset
+
+isoparametric
+\begin_inset Quotes erd
+\end_inset
+
+ 插值法，因为这两种方法都能确保多项式 
+\begin_inset Formula $1,x,y$
+\end_inset
+
+ 以及三维空间的 
+\begin_inset Formula $z$
+\end_inset
+
+ 始终可用，从而确保 constant derivatives 的计算。另一方面，一般应避免使用 “super-parametric” 插值法。
 \end_layout
 
 \begin_layout Section
