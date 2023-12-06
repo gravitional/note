@@ -14487,7 +14487,7 @@ N^{(4)} & =\frac{1}{4}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right).
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename inset/Pyramid-ele.pdf
+	filename inset/tetrahedron-ele.pdf
 	lyxscale 50
 	scale 55
 
@@ -14591,6 +14591,36 @@ N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3
 \end_layout
 
 \begin_layout Section
+程序约定
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+//[#母坐标,#节点]
+\end_layout
+
+\begin_layout Plain Layout
+
+Matrix dNdzeta(1,NdNum);// LineFunc
+\end_layout
+
+\begin_layout Plain Layout
+
+Matrix dNdzeta(2,NdNum);// TriangleFunc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 一维形函数：直线元
 \end_layout
 
@@ -14674,6 +14704,60 @@ x=\sum_{i=1}^{n_{e}}N_{i}^{e}(\xi)x_{i}=\sum_{i=1}^{n_{e}}N_{i}^{e\prime}(x,y)x_
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+定义为
+\begin_inset Formula $G_{\alpha i}=\partial N^{\alpha}/\partial\xi$
+\end_inset
+
+ ，结果是
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 
+\backslash
+[Xi]; dvlst = {
+\backslash
+[Xi]}; NShapelst = { (1 - L0)/2, (1 + L0)/2 }; Simplify[D[#, {dvlst}] &
+ /@ NShapelst] Simplify[D[#, {dvlst, 2}] & /@ NShapelst]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{cc}
+-\frac{1}{2}\\
+\frac{1}{2}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hessian 矩阵
+\begin_inset Formula 
+\[
+\left[0\right],\left[0\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+remark
 \end_layout
 
 \begin_layout Enumerate
@@ -14860,7 +14944,7 @@ v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[
 \end_layout
 
 \begin_layout Subsection
-一维二阶形函数
+线段二阶形函数
 \end_layout
 
 \begin_layout Standard
@@ -14875,9 +14959,9 @@ v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[
 status collapsed
 
 \begin_layout Plain Layout
-v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[{
- Line[{v1, v2, v3}], PointSize[.04], Point[{v1, v2, v3}], Text["1", v1 +
- d1], Text["2", v2 + d1], Text["3", v3 + d1] } , ImageSize -> Small ]
+v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[{Li
+ne[{v1, v2, v3}], PointSize[.04], Point[{v1, v2, v3}], Text["1", v1 + d1],
+ Text["3", v2 + d1], Text["2", v3 + d1]}, ImageSize -> Small]
 \end_layout
 
 \end_inset
@@ -14886,19 +14970,55 @@ v1 = {0, 0}; v2 = {1, 0}; v3 = {2, 0}; d1 = {0, 0.1}; d2 = {0.5, 0.1}; Graphics[
 \end_layout
 
 \begin_layout Standard
-在一维有限元单元上添加中点，可以构造二阶形函数。二阶形函数可以由一阶形函数直接生成。首先，边中点形函数 
+在一维有限元单元上添加中点，可以构造二阶形函数。二阶形函数可以由一阶形函数直接生成。
+\begin_inset Formula 
+\[
+N_{1}^{(1)}=\frac{1-\xi}{2},\quad N_{2}^{(1)}=\frac{1+\xi}{2}
+\]
+
+\end_inset
+
+首先，边中点形函数 
 \begin_inset Formula $N_{3}^{(2)}$
 \end_inset
 
  可以由两个节点的一阶形函数生成，即
 \begin_inset Formula 
 \[
-N_{3}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}
+{\color{blue}N_{3}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}}
 \]
 
 \end_inset
 
-节点的二阶形函数可以由 节点的一阶形函数，和中点的二阶形函数生成，即
+则
+\begin_inset Formula $N_{3}^{(2)}$
+\end_inset
+
+在节点
+\begin_inset Formula $1,2$
+\end_inset
+
+上必为零。但此时，
+\begin_inset Formula $N_{1}^{(1)},N_{2}^{(1)}$
+\end_inset
+
+在节点
+\begin_inset Formula $3$
+\end_inset
+
+上不为零。可以通过从
+\begin_inset Formula $N_{1}^{(1)},N_{2}^{(1)}$
+\end_inset
+
+中减除适当的
+\begin_inset Formula $N_{3}^{(2)}$
+\end_inset
+
+，使得它们满足
+\begin_inset Formula $N_{\alpha}(\xi_{\beta})=\delta_{\alpha\beta}$
+\end_inset
+
+
 \begin_inset Formula 
 \[
 N_{i}^{(2)}=N_{i}^{(1)}-\frac{1}{2}N_{3}^{(2)},\quad i\in\{1,2\}
@@ -14986,6 +15106,74 @@ nShape[1,
 \begin_inset Formula 
 \[
 J=\frac{\partial x}{\partial\xi}=\frac{\partial N_{i}^{e}}{\partial\xi}x_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+根据中点形函数公式 
+\begin_inset Formula ${\color{blue}N_{i}^{(2)}=4N_{j}^{(1)}N_{k}^{(1)}}$
+\end_inset
+
+，首先使用Leibniz 法则计算 边中点 的导数；然后根据 trim 规则，修正对应 角点的形函数。
+\begin_inset Formula 
+\[
+N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}N_{i}^{(2)},
+\]
+
+\end_inset
+
+Gradient 矩阵 
+\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\end_inset
+
+:
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 
+\backslash
+[Xi]; dvlst = {
+\backslash
+[Xi]}; NShapelst = { L0 (L0 - 1)/2, L0 (L0 + 1)/2, (1 + L0) (1 - L0) };
+ Simplify[D[#, {dvlst}] & /@ NShapelst] Simplify[D[#, {dvlst, 2}] & /@ NShapelst
+]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\xi-\frac{1}{2}\\
+\xi+\frac{1}{2}\\
+-2\xi
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hessian矩阵 
+\begin_inset Formula $H_{\alpha ij}=\partial^{2}N^{\alpha}/\partial\xi_{i}\partial\xi_{j}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[1\right],\quad\left[1\right],\quad\left[-2\right],
 \]
 
 \end_inset
@@ -15116,7 +15304,30 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-二维二阶形函数
+derivatives
+\end_layout
+
+\begin_layout Standard
+定义
+\begin_inset Formula $G_{i\alpha}=\tilde{\partial}_{i}\,N_{\alpha}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+G^{(1)}=\left[\begin{array}{ccc}
+-1 & 1 & 0\\
+-1 & 0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+三角形二阶
 \end_layout
 
 \begin_layout Standard
@@ -15135,11 +15346,12 @@ noprefix "false"
 status collapsed
 
 \begin_layout Plain Layout
-Graphics[{ Line[{{-1, 0}, {1, 0}, {0, Sqrt[3]}, {-1, 0}}], PointSize[0.03],
- Point[{{0, 0}, {0.5, Sqrt[3]/2}, {-0.5, Sqrt[3]/2}}], Style[Text["1", {-1.1,
- 0}], 16], Style[Text["4", {0, -0.16}], 16], Style[Text["2", {1.1, 0}], 16],
- Style[Text["5", {0.62, Sqrt[3]/2}], 16], Style[Text["3", {0, Sqrt[3] + 0.1}],
- 16], Style[Text["6", {-0.62, Sqrt[3]/2}], 16] }, ImageSize -> Small]
+Graphics[{Line[{{-1, 0}, {1, 0}, {0, Sqrt[3]}, {-1, 0}}], PointSize[0.03],
+ Point[{{0, 0}, {0.5, Sqrt[3]/2}, {-0.5, Sqrt[3]/2}}], Style[Text["0", {-1.1,
+ 0}], 16], Style[Text["1", {1.1, 0}], 16], Style[Text["2", {0, Sqrt[3] +
+ 0.1}], 16], (*mid side nodes*) Style[Text["3", {0, -0.16}], 16], Style[Text["4",
+ {0.62, Sqrt[3]/2}], 16], Style[Text["5", {-0.62, Sqrt[3]/2}], 16]}, ImageSize
+ -> Small]
 \end_layout
 
 \end_inset
@@ -15152,7 +15364,7 @@ Graphics[{ Line[{{-1, 0}, {1, 0}, {0, Sqrt[3]}, {-1, 0}}], PointSize[0.03],
 \begin_inset Formula $N_{i}^{(2)}$
 \end_inset
 
- 可以由两个节点的一阶形函数生成，即
+ 可以由对应两个端点的 一阶形函数 相乘 得到
 \begin_inset Formula 
 \begin{align*}
  & N_{4}^{(2)}=4N_{1}^{(1)}N_{2}^{(1)}\\
@@ -15332,6 +15544,69 @@ nShape[4][
 
 \end_layout
 
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+根据中点形函数
+\begin_inset Formula ${\color{blue}N_{i}^{(2)}=4N_{j}^{(1)}N_{k}^{(1)}}$
+\end_inset
+
+，首先使用Leibniz 法则计算 边中点 的导数；然后根据角点形函数的 trim 规则
+\begin_inset Formula 
+\[
+N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}\sum_{i}N_{i}^{(2)},
+\]
+
+\end_inset
+
+修正对应 角点的形函数。其中
+\begin_inset Formula $j$
+\end_inset
+
+表示角节点，
+\begin_inset Formula $\sum_{i}$
+\end_inset
+
+ 对所有相邻中点
+\begin_inset Formula $i$
+\end_inset
+
+进行。
+\end_layout
+
+\begin_layout Standard
+dsf
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+L0 := 1 - Subscript[
+\backslash
+[Xi], 0] - Subscript[
+\backslash
+[Xi], 1]; L1 := Subscript[
+\backslash
+[Xi], 0]; L2 := Subscript[
+\backslash
+[Xi], 1]; dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1]}; NShapelst = { (2 L0 - 1) L0, (2 L1 - 1) L1, (2 L2 - 1) L2, 4
+ L0*L1, 4 L1*L2, 4 L2*L0 }; (Grid[#, Frame -> All, FrameStyle -> Directive[Thin,
+ Dashed, Orange, 5]] &@ Simplify[D[#, {dvlst}] & /@ NShapelst]) Grid[{#},
+ Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings -> {2, Automatic
+}] &@ (Grid[#, Frame -> All, FrameStyle -> Directive[Thin, Dashed, Orange,
+ 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst])
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 二维形函数：四边形
 \end_layout
@@ -15341,7 +15616,7 @@ ref: AfirstCourse-Jacob Fish，P165，quadrilateral。
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float table
+\begin_inset Float figure
 placement H
 wide false
 sideways false
@@ -15584,6 +15859,13 @@ Node
 
 \begin_layout Plain Layout
 在参数单元域中的节点坐标
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:7.7"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -15601,7 +15883,21 @@ Node
 \end_layout
 
 \begin_layout Standard
-形函数为
+注意在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:7.7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，每个坐标轴旁的表达式，在此坐标轴上为零。因此可以构造形函数为（例如节点
+\begin_inset Formula $1$
+\end_inset
+
+ 使用 2–3, 3–4 边的形函数）
 \begin_inset Formula 
 \[
 N_{I}^{\text{4Q}}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi_{I}\xi\right)\left(1+\eta_{I}\eta\right),
@@ -15702,7 +15998,7 @@ x\left(\xi,\eta\right)=\sbf N^{\text{4Q}}\left(\xi,\eta\right)\sbf x^{e},\quad y
 写成矩阵符号是
 \begin_inset Formula 
 \[
-\nabla\sbf N_{\alpha}^{\text{4Q}}=\sbf J^{e,-1}\,\sbf G\sbf N_{\alpha}^{\text{4Q}},
+\nabla\sbf N_{\alpha}^{\text{4Q}}=\sbf J^{e,-1}\,\tilde{\sbf\partial}\sbf N_{\alpha}^{\text{4Q}},
 \]
 
 \end_inset
@@ -15718,7 +16014,7 @@ x\left(\xi,\eta\right)=\sbf N^{\text{4Q}}\left(\xi,\eta\right)\sbf x^{e},\quad y
 是母坐标偏导列向量
 \begin_inset Formula 
 \begin{equation}
-\sbf G=\left[\begin{array}{c}
+\tilde{\sbf\partial}=\left[\begin{array}{c}
 \partial/\partial\xi\\
 \partial/\partial\eta
 \end{array}\right].\label{eq:j7.34}
@@ -15733,7 +16029,7 @@ x\left(\xi,\eta\right)=\sbf N^{\text{4Q}}\left(\xi,\eta\right)\sbf x^{e},\quad y
 。
 \begin_inset Formula 
 \begin{equation}
-\sbf J^{e}=\tilde{\partial}_{i}x_{j}=\sbf G\sbf N_{\alpha}^{\text{4Q}}\left[\begin{array}{cc}
+\sbf J^{e}=\tilde{\partial}_{i}x_{j}=\tilde{\sbf\partial}\sbf N_{\alpha}^{\text{4Q}}\left[\begin{array}{cc}
 \sbf x^{e} & \sbf y^{e}\end{array}\right]\label{eq:j7.36}
 \end{equation}
 
@@ -15750,7 +16046,7 @@ x\left(\xi,\eta\right)=\sbf N^{\text{4Q}}\left(\xi,\eta\right)\sbf x^{e},\quad y
 是节点坐标列向量。
 \begin_inset Formula 
 \[
-\sbf G\sbf N_{\alpha}^{\text{4Q}}=\frac{1}{4}\left[\begin{array}{cccc}
+\tilde{\sbf\partial}\sbf N_{\alpha}^{\text{4Q}}=\frac{1}{4}\left[\begin{array}{cccc}
 -\left(1-\eta\right) & \left(1-\eta\right) & \left(1+\eta\right) & -\left(1+\eta\right)\\
 -\left(1-\xi\right) & -\left(1+\xi\right) & \left(1+\xi\right) & \left(1-\xi\right)
 \end{array}\right]
@@ -15837,6 +16133,240 @@ noprefix "false"
 \end_inset
 
 ，则满足以上要求（Problem 7.3）。
+\end_layout
+
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+定义形函数砖块
+\begin_inset Formula 
+\[
+L=\left[\begin{array}{c}
+1+\eta\\
+1-\xi\\
+1-\eta\\
+1+\xi
+\end{array}\right],\quad\frac{\partial L}{\partial(\xi,\eta)}=\left[\begin{array}{cccc}
+0 & -1 & 0 & 1\\
+1 & 0 & -1 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+四边形的形函数可以写成 
+\begin_inset Formula $L$
+\end_inset
+
+的乘积：
+\begin_inset Formula 
+\[
+N_{i}^{(1)}=\frac{1}{4}L_{j}L_{k},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $j=(i+1)\%4$
+\end_inset
+
+，
+\begin_inset Formula $k=(i+2)\%4$
+\end_inset
+
+；然后使用 Leibniz 法则计算 
+\begin_inset Formula $G_{i\alpha}^{(1)}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+四边形二阶
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename inset/rectangle-ele-o2.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics[{Line[{{-1, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1, -1}}],
+ FontSize -> 13, Text[1, {-1 - 3 delta, -1 - 3 delta}], Text[2, {1 + 3 delta,
+ -1 - 3 delta}], Text[3, {1 + 3 delta, 1 + 3 delta}], Text[4, {-1 - 3 delta,
+ 1 + 3 delta}], Text[Style[5, Red, Medium], {0 + 3 delta, -1 + 3 delta}],
+ Text[Style[6, Red, Medium], {1 - 3 delta, 0 + 3 delta}], Text[Style[7,
+ Red, Medium], {0 + 3 delta, 1 - 3 delta}], Text[Style[8, Red, Medium],
+ {-1 + 3 delta, 0 + 3 delta}], Text[Style["1+
+\backslash
+[Xi]2", Small], {0 - 4 delta, -1 - 4 delta}], Text[Style["1-
+\backslash
+[Xi]1", Small], {1 + 4 delta, 0 + 3 delta}], Text[Style["1-
+\backslash
+[Xi]2", Small], {0 + 4 delta, 1 + 4 delta}], Text[Style["1+
+\backslash
+[Xi]1", Small], {-1 - 4 delta, 0 + 4 delta}], }, Axes -> True, AxesOrigin
+ -> {0, 0}, AxesStyle -> Arrowheads[{0.07}], AxesLabel -> {"
+\backslash
+[Xi]1", "
+\backslash
+[Xi]2"}, PlotRangePadding -> {{Scaled[.1], Scaled[.1]}, {Scaled[.1], Scaled[.1]}},
+ ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Serenpidity 形函数族。Zienkiewicz 159/198。
+\end_layout
+
+\begin_layout Standard
+一阶为
+\begin_inset Formula 
+\[
+N_{a}=\frac{1}{4}\left(1+\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+二阶为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Corner nodes:
+\begin_inset Formula 
+\[
+N_{a}=\frac{1}{4}\left(1+\xi_{a}\xi\right)\left(1+\eta_{a}\eta\right)\left(\xi_{a}\xi+\eta_{a}\eta-1\right)
+\]
+
+\end_inset
+
+Mid–side nodes:
+\begin_inset Formula 
+\begin{align*}
+\xi_{a}=0,\quad & N_{a}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta_{a}\eta\right)\\
+\eta_{a}=0,\quad & N_{a}=\frac{1}{2}\left(1+\xi_{a}\xi\right)\left(1-\eta^{2}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+例如 mid node 5，对应 
+\begin_inset Formula $\xi_{a}=0$
+\end_inset
+
+，
+\begin_inset Formula $\eta_{a}=-1$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{2}\left(1+\xi\right)\left(1-\xi\right)\left(1+\eta_{a}\eta\right)
+\]
+
+\end_inset
+
+观察可知，使用了 2–3，3–4，4–1 边上的 形函数砖块。
+\end_layout
+
+\begin_layout Standard
+所以 mid–side nodes 的形函数可以写成
+\begin_inset Formula 
+\[
+N_{i}^{(2)}=\frac{1}{2}L_{k}L_{m}L_{n},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $j=i-4$
+\end_inset
+
+（中点重编号），
+\begin_inset Formula $k=(j+1)\%4$
+\end_inset
+
+，
+\begin_inset Formula $m=(k+1)\%4$
+\end_inset
+
+，
+\begin_inset Formula $n=(k+2)\%4$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+类似地，形函数的导数使用 Leibniz 法则计算，先计算 中点形函数的导数。然后根据角点形函数的 trim 规则
+\begin_inset Formula 
+\[
+N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}\sum_{i}N_{i}^{(2)},
+\]
+
+\end_inset
+
+修正对应 角点的形函数。其中
+\begin_inset Formula $j$
+\end_inset
+
+表示角节点，
+\begin_inset Formula $\sum_{i}$
+\end_inset
+
+ 对所有相邻中点
+\begin_inset Formula $i$
+\end_inset
+
+进行。
 \end_layout
 
 \begin_layout Subsection
@@ -16456,9 +16986,31 @@ C_{k}^{j}=\frac{k!}{\left(k-i\right)!i!}
 \begin_layout Standard
 \align left
 \begin_inset Graphics
-	filename inset/Pyramid-ele.pdf
+	filename inset/tetrahedron-ele.pdf
 	lyxscale 50
 	scale 55
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics3D[{ Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0,
+ 0}}], Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}], Line[{{0, 0, 1}, {0, 0,
+ 0}}], , FontSize -> 13 , Text[1, {1 + 3 delta, 2 delta, 0}] , Text[2, {2
+ delta, 1 + 3 delta, 0}] , Text[3, {2 delta, 2 delta, 1 + 3 delta}] , Text[4,
+ {+3 delta, -delta, +3 delta}] } , Axes -> True, AxesOrigin -> {0, 0, 0}
+ , AxesStyle -> Arrowheads[{0.07}] , AxesLabel -> {"
+\backslash
+[Xi]_1", "
+\backslash
+[Xi]_2", "
+\backslash
+[Xi]_3"} , PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]} , ImageSize
+ -> Medium , Boxed -> False ]
+\end_layout
 
 \end_inset
 
@@ -16732,6 +17284,389 @@ b_{4} & c_{4} & d_{4}
 \begin{equation}
 \partial_{i}L_{\alpha}^{e}=\frac{1}{\det\left[J\right]}{\color{blue}M_{\alpha i}}\label{eq:shapeGrad}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+定义
+\begin_inset Formula $G_{i\alpha}=\tilde{\partial}_{i}\,N_{\alpha}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+G^{(1)}=\left[\begin{array}{cccc}
+-1 & 1 & 0 & 0\\
+-1 & 0 & 1 & 0\\
+-1 & 0 & 0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+四面体二阶
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset Graphics
+	filename inset/tetrahedron-ele-o2.pdf
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+delta = 0.05; Graphics3D[{Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0, 0}}],
+ Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}], Line[{{0, 0, 1}, {0, 0, 0}}],
+ FontSize -> 13, Text[Style[0, Black, Medium], {1 + 2 delta, 2 delta, 0}],
+ Text[Style[1, Black, Medium], {2 delta, 1 + 2 delta, 0}], Text[Style[2,
+ Black, Medium], {2 delta, 2 delta, 1 + 1 delta}], Text[Style[3, Black,
+ Medium], {+2 delta, -delta, +2 delta}], (*mid-side nodes*) Text[Style[4,
+ Red, Medium], {.5 + 1 delta, .5 + 1 delta, 0}], Text[Style[5, Red, Medium],
+ {.5 + 1 delta, 0, .5 + 1 delta}], Text[Style[6, Red, Medium], {.5 + 0 delta,
+ 0 + 1 delta, 0 + 0 delta}], Text[Style[7, Red, Medium], {0 + 0 delta, .5
+ + 1 delta, .5 + 1 delta}], Text[Style[8, Red, Medium], {0 + 0 delta, 0 +
+ 1 delta, .5 + 0 delta}], Text[Style[9, Red, Medium], {0 - 2 delta, 0.5 +
+ 0 delta, 0 + 0 delta}] }, Axes -> True, AxesOrigin -> {0, 0, 0}, AxesStyle
+ -> Arrowheads[{0.07}], AxesLabel -> {"
+\backslash
+[Xi]1", "
+\backslash
+[Xi]2", "
+\backslash
+[Xi]3"}, PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]}, Ticks ->
+ Automatic, TicksStyle -> Directive[Orange, 6], ImageSize -> Medium, Boxed
+ -> False, ViewPoint -> {3, 1, 1}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+高阶单元用类似于三角形的方法推导，即建立适当的 Lagrange–type 公式，类似6.7，结果是
+\begin_inset Formula 
+\[
+N_{a}=\ell_{I}^{I}(L_{0})\,\ell_{J}^{J}(L_{1})\,\ell_{K}^{K}(L_{2})\,\ell_{L}^{L}(L_{3}),\quad\text{with}\;I+J+K+L=M
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $L_{1}\sim L_{4}$
+\end_inset
+
+是母坐标分量。插值中使用的控制点，选取 
+\begin_inset Formula $(I,J,K)$
+\end_inset
+
+ 周围的节点，例如上图中节点
+\begin_inset Formula $4$
+\end_inset
+
+ 周围的是节点
+\begin_inset Formula $\{0,1\}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+其中使用了拉格朗日插值项（在
+\begin_inset Formula $L_{a}$
+\end_inset
+
+为
+\begin_inset Formula $1$
+\end_inset
+
+，在其他点为
+\begin_inset Formula $0$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{align*}
+\ell_{a}^{p}(L) & =\prod_{\begin{subarray}{c}
+b=1\\
+b\neq a
+\end{subarray}}^{n}\frac{(L-L_{b})}{(L_{a}-L_{b})}\\
+ & =\frac{(L-L_{1})(L-L_{2})(\cdots)(L-L_{a-1})(L-L_{a+1})(\cdots)(L-L_{n})}{(L_{a}-L_{1})(L_{a}-L_{2})(\cdots)(L_{a}-L_{a-1})(L_{a}-L_{a+1})(\cdots)(L_{a}-L_{n})}
+\end{align*}
+
+\end_inset
+
+多项式的阶数为
+\begin_inset Formula $p=n-1$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $M$
+\end_inset
+
+是 tetrahedron 的 order，符号
+\begin_inset Formula $L_{a}$
+\end_inset
+
+表示母坐标
+\begin_inset Formula 
+\[
+L_{a}=\frac{V_{a}}{V},\quad a=0,1,2,3
+\]
+
+\end_inset
+
+在母坐标下
+\begin_inset Formula 
+\[
+L_{a}=\left[\begin{array}{cccc}
+1-\xi_{0}-\xi_{1}-\xi_{2}, & \xi_{0}, & \xi_{1}, & \xi_{2}\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Corner nodes：
+\begin_inset Formula 
+\[
+N_{a}=L_{a}(2L_{a}-1),\quad a=0,1,2,3
+\]
+
+\end_inset
+
+Mid–edge nodes:
+\begin_inset Formula 
+\begin{align*}
+ & N_{4}=4L_{1}L_{0},\quad N_{5}=4L_{2}L_{0},\quad N_{6}=4L_{3}L_{0}\\
+ & N_{7}=4L_{1}L_{2},\quad N_{8}=4L_{2}L_{3},\quad N_{9}=4L_{3}L_{1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+derivatives
+\end_layout
+
+\begin_layout Standard
+Gradient
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 1 - Subscript[
+\backslash
+[Xi], 0] - Subscript[
+\backslash
+[Xi], 1] - Subscript[
+\backslash
+[Xi], 2]; L1 := Subscript[
+\backslash
+[Xi], 0]; L2 := Subscript[
+\backslash
+[Xi], 1]; L3 := Subscript[
+\backslash
+[Xi], 2]; dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1], Subscript[
+\backslash
+[Xi], 2]}; NShapelst = { L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
+ (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1 }; Simplify[D[
+#, {dvlst}] & /@ NShapelst] // TableForm
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+4\xi_{0}+4\xi_{1}+4\xi_{2}-3 & 4\xi_{0}+4\xi_{1}+4\xi_{2}-3 & 4\xi_{0}+4\xi_{1}+4\xi_{2}-3\\
+4\xi_{0}-1 & 0 & 0\\
+0 & 4\xi_{1}-1 & 0\\
+0 & 0 & 4\xi_{2}-1\\
+-4\left(2\xi_{0}+\xi_{1}+\xi_{2}-1\right) & -4\xi_{0} & -4\xi_{0}\\
+-4\xi_{1} & -4\left(\xi_{0}+2\xi_{1}+\xi_{2}-1\right) & -4\xi_{1}\\
+-4\xi_{2} & -4\xi_{2} & -4\left(\xi_{0}+\xi_{1}+2\xi_{2}-1\right)\\
+4\xi_{1} & 4\xi_{0} & 0\\
+0 & 4\xi_{2} & 4\xi_{1}\\
+4\xi_{2} & 0 & 4\xi_{0}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hessian Matrix
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 1 - Subscript[
+\backslash
+[Xi], 0] - Subscript[
+\backslash
+[Xi], 1] - Subscript[
+\backslash
+[Xi], 2]; L1 := Subscript[
+\backslash
+[Xi], 0]; L2 := Subscript[
+\backslash
+[Xi], 1]; L3 := Subscript[
+\backslash
+[Xi], 2]; dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1], Subscript[
+\backslash
+[Xi], 2]}; NShapelst = { L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
+ (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1 };
+\end_layout
+
+\begin_layout Plain Layout
+Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
+ -> {2, Automatic}] &@ (Grid[#, Frame -> All, FrameStyle -> Directive[Thin,
+ Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst])
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+H_{\alpha ij}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{i}\partial\xi_{j}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha$
+\end_inset
+
+是节点编号，the result is
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+\left(\begin{array}{ccc}
+4 & 4 & 4\\
+4 & 4 & 4\\
+4 & 4 & 4
+\end{array}\right) & \left(\begin{array}{ccc}
+4 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right) & \left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 4 & 0\\
+0 & 0 & 0
+\end{array}\right)\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+\left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 4
+\end{array}\right) & \left(\begin{array}{ccc}
+-8 & -4 & -4\\
+-4 & 0 & 0\\
+-4 & 0 & 0
+\end{array}\right) & \left(\begin{array}{ccc}
+0 & -4 & 0\\
+-4 & -8 & -4\\
+0 & -4 & 0
+\end{array}\right)\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\left(\begin{array}{ccc}
+0 & 0 & -4\\
+0 & 0 & -4\\
+-4 & -4 & -8
+\end{array}\right) & \left(\begin{array}{ccc}
+0 & 4 & 0\\
+4 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right) & \left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 4\\
+0 & 4 & 0
+\end{array}\right) & \left(\begin{array}{ccc}
+0 & 0 & 4\\
+0 & 0 & 0\\
+4 & 0 & 0
+\end{array}\right)\end{array}
+\]
 
 \end_inset
 
@@ -18809,27 +19744,35 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 \nabla N_{i}^{e} & =\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial x}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial x}\\
 \frac{\partial N_{i}^{e}}{\partial y}
 \end{array}\right)=\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial x}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial x}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial x}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial x}\\
 \frac{\partial N_{i}^{e}}{\partial\xi}\frac{\partial\xi}{\partial y}+\frac{\partial N_{i}^{e}}{\partial\eta}\frac{\partial\eta}{\partial y}
 \end{array}\right)\\
  & =\left(\begin{array}{cc}
-\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\vspace{1ex}\\
+\frac{\partial\xi}{\partial x} & \frac{\partial\eta}{\partial x}\\
 \frac{\partial\xi}{\partial y} & \frac{\partial\eta}{\partial y}
 \end{array}\right)\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\vspace{1ex}\\
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
 \frac{\partial N_{i}^{e}}{\partial\eta}
-\end{array}\right)=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{c}
-\frac{\partial N_{i}^{e}}{\partial\xi}\vspace{1ex}\\
+\end{array}\right)=\overline{J}(\xi,\eta)\left(\begin{array}{c}
+\frac{\partial N_{i}^{e}}{\partial\xi}\\
 \frac{\partial N_{i}^{e}}{\partial\eta}
 \end{array}\right).
 \end{align*}
 
 \end_inset
 
-例如对于 
+其中
+\begin_inset Formula $\overline{J}$
+\end_inset
+
+是
+\begin_inset Formula $J$
+\end_inset
+
+的逆。例如对于 
 \begin_inset Formula $i\in\{1,2,3\}$
 \end_inset
 
@@ -18837,8 +19780,8 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \left[\begin{array}{ccc}
-\nabla N_{1}^{e} & \nabla N_{2}^{e} & \nabla N_{3}^{e}\end{array}\right]=\left[J\left(\xi,\eta\right)\right]^{-1}\left(\begin{array}{ccc}
-\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\vspace{1ex}\\
+\nabla N_{1}^{e} & \nabla N_{2}^{e} & \nabla N_{3}^{e}\end{array}\right]=\overline{J}(\xi,\eta)\left(\begin{array}{ccc}
+\frac{\partial N_{1}^{e}}{\partial\xi} & \frac{\partial N_{2}^{e}}{\partial\xi} & \frac{\partial N_{3}^{e}}{\partial\xi}\\
 \frac{\partial N_{1}^{e}}{\partial\eta} & \frac{\partial N_{2}^{e}}{\partial\eta} & \frac{\partial N_{3}^{e}}{\partial\eta}
 \end{array}\right).
 \]
@@ -18867,7 +19810,7 @@ noprefix "false"
 \begin_inset Formula 
 \[
 J\left(\xi,\eta\right)=\frac{\partial\left(N_{i}^{e}x_{i},N_{i}^{e}y_{i}\right)}{\partial\left(\xi,\eta\right)}=\frac{\partial\left(x,y\right)}{\partial\left(\xi,\eta\right)}=\left[\begin{array}{cc}
-\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\vspace{1ex}\\
+\frac{\partial x}{\partial\xi} & \frac{\partial y}{\partial\xi}\\
 \frac{\partial x}{\partial\eta} & \frac{\partial y}{\partial\eta}
 \end{array}\right].
 \]
@@ -18960,13 +19903,6 @@ status open
  求偏导。
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
