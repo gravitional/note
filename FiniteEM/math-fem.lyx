@@ -14711,21 +14711,21 @@ derivatives
 \end_layout
 
 \begin_layout Standard
-定义为
-\begin_inset Formula $G_{\alpha i}=\partial N^{\alpha}/\partial\xi$
+Gradient 矩阵 
+\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
 \end_inset
 
- ，结果是
+
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 L0 := 
 \backslash
 [Xi]; dvlst = {
 \backslash
-[Xi]}; NShapelst = { (1 - L0)/2, (1 + L0)/2 }; Simplify[D[#, {dvlst}] &
- /@ NShapelst] Simplify[D[#, {dvlst, 2}] & /@ NShapelst]
+[Xi]}; NShapelst = {(1 - L0)/2, (1 + L0)/2}; Simplify[D[#, {dvlst}] & /@
+ NShapelst] // Print; Simplify[D[#, {dvlst, 2}] & /@ NShapelst] // Print;
 \end_layout
 
 \end_inset
@@ -14733,7 +14733,7 @@ L0 :=
 
 \begin_inset Formula 
 \[
-\begin{array}{cc}
+\begin{array}{c}
 -\frac{1}{2}\\
 \frac{1}{2}
 \end{array}
@@ -14745,10 +14745,14 @@ L0 :=
 \end_layout
 
 \begin_layout Standard
-Hessian 矩阵
+Hessian 矩阵 
+\begin_inset Formula $H_{\alpha ij}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{i}\partial\xi_{j}}$
+\end_inset
+
+
 \begin_inset Formula 
 \[
-\left[0\right],\left[0\right]
+\left[0\right]_{1\times1},\left[0\right]_{1\times1}
 \]
 
 \end_inset
@@ -15130,22 +15134,26 @@ N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}N_{i}^{(2)},
 
 \end_inset
 
-Gradient 矩阵 
+
+\end_layout
+
+\begin_layout Standard
+或者直接计算：Gradient 矩阵 
 \begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
 \end_inset
 
 :
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 L0 := 
 \backslash
 [Xi]; dvlst = {
 \backslash
-[Xi]}; NShapelst = { L0 (L0 - 1)/2, L0 (L0 + 1)/2, (1 + L0) (1 - L0) };
- Simplify[D[#, {dvlst}] & /@ NShapelst] Simplify[D[#, {dvlst, 2}] & /@ NShapelst
-]
+[Xi]}; NShapelst = {L0 (L0 - 1)/2, L0 (L0 + 1)/2, (1 + L0) (1 - L0)}; Simplify[D
+[#, {dvlst}] & /@ NShapelst] // Print; Simplify[D[#, {dvlst, 2}] & /@ NShapelst]
+ // Print;
 \end_layout
 
 \end_inset
@@ -15173,7 +15181,7 @@ Hessian矩阵
 
 \begin_inset Formula 
 \[
-\left[1\right],\quad\left[1\right],\quad\left[-2\right],
+\left[1\right]_{1\times1},\quad\left[1\right]_{1\times1},\quad\left[-2\right]_{1\times1},
 \]
 
 \end_inset
@@ -15308,17 +15316,57 @@ derivatives
 \end_layout
 
 \begin_layout Standard
-定义
-\begin_inset Formula $G_{i\alpha}=\tilde{\partial}_{i}\,N_{\alpha}$
+Gradient 矩阵 
+\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\end_inset
+
+：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 1 - Subscript[
+\backslash
+[Xi], 0] - Subscript[
+\backslash
+[Xi], 1]; L1 := Subscript[
+\backslash
+[Xi], 0]; L2 := Subscript[
+\backslash
+[Xi], 1]; dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1]}; NShapelst = {L0, L1, L2}; (Grid[#, Frame -> All, FrameStyle ->
+ Directive[Thin, Dashed, Orange, 5]] &@ Simplify[D[#, {dvlst}] & /@ NShapelst])
+ // Print; Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5],
+ Spacings -> {2, Automatic}] &@(Grid[#, Frame -> All, FrameStyle -> Directive[Th
+in, Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst])
+ // Print;
+\end_layout
+
 \end_inset
 
 
 \begin_inset Formula 
 \[
-G^{(1)}=\left[\begin{array}{ccc}
--1 & 1 & 0\\
--1 & 0 & 1
+\left[\begin{array}{cc}
+-1 & -1\\
+1 & 0\\
+0 & 1
 \end{array}\right]
+\]
+
+\end_inset
+
+Hessian矩阵 
+\begin_inset Formula $H_{\alpha ij}=\partial^{2}N^{\alpha}/\partial\xi_{i}\partial\xi_{j}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\left[0\right]_{2\times2},\quad\left[0\right]_{2\times2},\quad\left[0\right]_{2\times2}
 \]
 
 \end_inset
@@ -15577,9 +15625,13 @@ N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}\sum_{i}N_{i}^{(2)},
 \end_layout
 
 \begin_layout Standard
-dsf
+Gradient 矩阵 
+\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\end_inset
+
+：
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 L0 := 1 - Subscript[
@@ -15601,6 +15653,52 @@ L0 := 1 - Subscript[
 }] &@ (Grid[#, Frame -> All, FrameStyle -> Directive[Thin, Dashed, Orange,
  5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst])
 \end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+4\xi_{0}+4\xi_{1}-3 & 4\xi_{0}+4\xi_{1}-3\\
+4\xi_{0}-1 & 0\\
+0 & 4\xi_{1}-1\\
+-4\left(2\xi_{0}+\xi_{1}-1\right) & -4\xi_{0}\\
+4\xi_{1} & 4\xi_{0}\\
+-4\xi_{1} & -4\left(\xi_{0}+2\xi_{1}-1\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+Hessian矩阵 
+\begin_inset Formula $H_{\alpha ij}=\partial^{2}N^{\alpha}/\partial\xi_{i}\partial\xi_{j}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+ & \left[\begin{array}{cc}
+4 & 4\\
+4 & 4
+\end{array}\right],\quad\left[\begin{array}{cc}
+4 & 0\\
+0 & 0
+\end{array}\right],\quad\left[\begin{array}{cc}
+0 & 0\\
+0 & 4
+\end{array}\right],\\
+ & \left[\begin{array}{cc}
+-8 & -4\\
+-4 & 0
+\end{array}\right],\quad\left[\begin{array}{cc}
+0 & 4\\
+4 & 0
+\end{array}\right],\quad\left[\begin{array}{cc}
+0 & -4\\
+-4 & -8
+\end{array}\right].
+\end{align*}
 
 \end_inset
 
@@ -16183,6 +16281,87 @@ N_{i}^{(1)}=\frac{1}{4}L_{j}L_{k},
 。
 \end_layout
 
+\begin_layout Standard
+或者直接计算：Gradient 矩阵 
+\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\end_inset
+
+：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 1/4 (1 - Subscript[
+\backslash
+[Xi], 0]) (1 - Subscript[
+\backslash
+[Xi], 1]); L1 := 1/4 (1 + Subscript[
+\backslash
+[Xi], 0]) (1 - Subscript[
+\backslash
+[Xi], 1]); L2 := 1/4 (1 + Subscript[
+\backslash
+[Xi], 0]) (1 + Subscript[
+\backslash
+[Xi], 1]); L3 := 1/4 (1 - Subscript[
+\backslash
+[Xi], 0]) (1 + Subscript[
+\backslash
+[Xi], 1]); dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1]}; NShapelst = {L0, L1, L2, L3}; (Grid[#, Frame -> All, FrameStyle
+ -> Directive[Thin, Dashed, Orange, 5]] &@ Simplify[D[#, {dvlst}] & /@ NShapelst
+]) // Print; Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray,
+ 5], Spacings -> {2, Automatic}] &@(Grid[#, Frame -> All, FrameStyle ->
+ Directive[Thin, Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@
+ NShapelst]) // Print;
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\frac{1}{4}\left(\xi_{1}-1\right) & \frac{1}{4}\left(\xi_{0}-1\right)\\
+\frac{1}{4}\left(1-\xi_{1}\right) & \frac{1}{4}\left(-\xi_{0}-1\right)\\
+\frac{1}{4}\left(\xi_{1}+1\right) & \frac{1}{4}\left(\xi_{0}+1\right)\\
+\frac{1}{4}\left(-\xi_{1}-1\right) & \frac{1}{4}\left(1-\xi_{0}\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+Hessian矩阵 
+\begin_inset Formula $H_{\alpha ij}=\partial^{2}N^{\alpha}/\partial\xi_{i}\partial\xi_{j}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\left[\begin{array}{cc}
+0 & \frac{1}{4}\\
+\frac{1}{4} & 0
+\end{array}\right], & \left[\begin{array}{cc}
+0 & -\frac{1}{4}\\
+-\frac{1}{4} & 0
+\end{array}\right], & \left[\begin{array}{cc}
+0 & \frac{1}{4}\\
+\frac{1}{4} & 0
+\end{array}\right], & \left[\begin{array}{cc}
+0 & -\frac{1}{4}\\
+-\frac{1}{4} & 0
+\end{array}\right]\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 四边形二阶
 \end_layout
@@ -16367,6 +16546,159 @@ N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}\sum_{i}N_{i}^{(2)},
 \end_inset
 
 进行。
+\end_layout
+
+\begin_layout Standard
+或者直接计算：Gradient 矩阵 
+\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\end_inset
+
+：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1]}; NShapelst = { (1 + (-1) Subscript[
+\backslash
+[Xi], 0]) (1 + (-1) Subscript[
+\backslash
+[Xi], 1]) (Subscript[
+\backslash
+[Xi], 0] (-1) + Subscript[
+\backslash
+[Xi], 1] (-1) - 1), (1 + (1) Subscript[
+\backslash
+[Xi], 0]) (1 + (-1) Subscript[
+\backslash
+[Xi], 1]) (Subscript[
+\backslash
+[Xi], 0] (1) + Subscript[
+\backslash
+[Xi], 1] (-1) - 1), (1 + (1) Subscript[
+\backslash
+[Xi], 0]) (1 + (1) Subscript[
+\backslash
+[Xi], 1]) (Subscript[
+\backslash
+[Xi], 0] (1) + Subscript[
+\backslash
+[Xi], 1] (1) - 1), (1 + (-1) Subscript[
+\backslash
+[Xi], 0]) (1 + (1) Subscript[
+\backslash
+[Xi], 1]) (Subscript[
+\backslash
+[Xi], 0] (-1) + Subscript[
+\backslash
+[Xi], 1] (1) - 1), (1/2) (1 - Subscript[
+\backslash
+[Xi], 0]^2) (1 + (-1) Subscript[
+\backslash
+[Xi], 1]), (1/2) (1 + (1) Subscript[
+\backslash
+[Xi], 0]) (1 - Subscript[
+\backslash
+[Xi], 1]^2), (1/2) (1 - Subscript[
+\backslash
+[Xi], 0]^2) (1 + (1) Subscript[
+\backslash
+[Xi], 1]), (1/2) (1 + (-1) Subscript[
+\backslash
+[Xi], 0]) (1 - Subscript[
+\backslash
+[Xi], 1]^2) }; (Grid[#, Frame -> All, FrameStyle -> Directive[Thin, Dashed,
+ Orange, 5]] &@ FullSimplify[D[#, {dvlst}] & /@ NShapelst]) // Print; Grid[{#},
+ Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings -> {2, Automatic
+}] &@(Grid[#, Frame -> All, FrameStyle -> Directive[Thin, Dashed, Orange,
+ 5]] & /@ FullSimplify[D[#, {dvlst, 2}] & /@ NShapelst]) // Print;
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+-\left(\xi_{1}-1\right)\left(2\xi_{0}+\xi_{1}\right), & -\left(\xi_{0}-1\right)\left(\xi_{0}+2\xi_{1}\right)\\
+-\left(2\xi_{0}-\xi_{1}\right)\left(\xi_{1}-1\right), & -\left(\xi_{0}+1\right)\left(\xi_{0}-2\xi_{1}\right)\\
+\left(\xi_{1}+1\right)\left(2\xi_{0}+\xi_{1}\right) & \left(\xi_{0}+1\right)\left(\xi_{0}+2\xi_{1}\right)\\
+\left(2\xi_{0}-\xi_{1}\right)\left(\xi_{1}+1\right) & \left(\xi_{0}-1\right)\left(\xi_{0}-2\xi_{1}\right)\\
+\xi_{0}\left(\xi_{1}-1\right) & \frac{1}{2}\left(\xi_{0}^{2}-1\right)\\
+\frac{1}{2}\left(1-\xi_{1}^{2}\right) & -\left(\xi_{0}+1\right)\xi_{1}\\
+-\xi_{0}\left(\xi_{1}+1\right) & \frac{1}{2}\left(1-\xi_{0}^{2}\right)\\
+\frac{1}{2}\left(\xi_{1}^{2}-1\right) & \left(\xi_{0}-1\right)\xi_{1}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hessian矩阵 
+\begin_inset Formula $H_{\alpha ij}=\partial^{2}N^{\alpha}/\partial\xi_{i}\partial\xi_{j}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{array}{cc}
+\left[\begin{array}{cc}
+2-2\xi_{1} & -2\xi_{0}-2\xi_{1}+1\\
+-2\xi_{0}-2\xi_{1}+1 & 2-2\xi_{0}
+\end{array}\right], & \left[\begin{array}{cc}
+2-2\xi_{1} & -2\xi_{0}+2\xi_{1}-1\\
+-2\xi_{0}+2\xi_{1}-1 & 2\left(\xi_{0}+1\right)
+\end{array}\right],\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{cc}
+\left[\begin{array}{cc}
+2\left(\xi_{1}+1\right) & 2\xi_{0}+2\xi_{1}+1\\
+2\xi_{0}+2\xi_{1}+1 & 2\left(\xi_{0}+1\right)
+\end{array}\right], & \left[\begin{array}{cc}
+2\left(\xi_{1}+1\right) & 2\xi_{0}-2\xi_{1}-1\\
+2\xi_{0}-2\xi_{1}-1 & 2-2\xi_{0}
+\end{array}\right]\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\left[\begin{array}{cc}
+\xi_{1}-1 & \xi_{0}\\
+\xi_{0} & 0
+\end{array}\right], & \left[\begin{array}{cc}
+0 & -\xi_{1}\\
+-\xi_{1} & -\xi_{0}-1
+\end{array}\right], & \left[\begin{array}{cc}
+-\xi_{1}-1 & -\xi_{0}\\
+-\xi_{0} & 0
+\end{array}\right], & \left[\begin{array}{cc}
+0 & \xi_{1}\\
+\xi_{1} & \xi_{0}-1
+\end{array}\right]\end{array}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -17522,9 +17854,17 @@ L0 := 1 - Subscript[
 \backslash
 [Xi], 1], Subscript[
 \backslash
-[Xi], 2]}; NShapelst = { L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
- (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1 }; Simplify[D[
-#, {dvlst}] & /@ NShapelst] // TableForm
+[Xi], 2]}; NShapelst = {L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
+ (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1}; (Grid[#,
+ Frame -> All, FrameStyle -> Directive[Thin, Dashed, Orange, 5]] &@ FullSimplify
+[D[#, {dvlst}] & /@ NShapelst]) // Print;
+\end_layout
+
+\begin_layout Plain Layout
+Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
+ -> {2, Automatic}] &@(Grid[#, Frame -> All, FrameStyle -> Directive[Thin,
+ Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst]) //
+ Print;
 \end_layout
 
 \end_inset
@@ -17556,93 +17896,8 @@ L0 := 1 - Subscript[
 \end_layout
 
 \begin_layout Standard
-Hessian Matrix
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-L0 := 1 - Subscript[
-\backslash
-[Xi], 0] - Subscript[
-\backslash
-[Xi], 1] - Subscript[
-\backslash
-[Xi], 2]; L1 := Subscript[
-\backslash
-[Xi], 0]; L2 := Subscript[
-\backslash
-[Xi], 1]; L3 := Subscript[
-\backslash
-[Xi], 2]; dvlst = {Subscript[
-\backslash
-[Xi], 0], Subscript[
-\backslash
-[Xi], 1], Subscript[
-\backslash
-[Xi], 2]}; NShapelst = { L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
- (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1 };
-\end_layout
-
-\begin_layout Plain Layout
-Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
- -> {2, Automatic}] &@ (Grid[#, Frame -> All, FrameStyle -> Directive[Thin,
- Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst])
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-H_{\alpha ij}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{i}\partial\xi_{j}}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\alpha$
-\end_inset
-
-是节点编号，the result is
-\begin_inset Formula 
-\[
-\begin{array}{ccc}
-\left(\begin{array}{ccc}
-4 & 4 & 4\\
-4 & 4 & 4\\
-4 & 4 & 4
-\end{array}\right) & \left(\begin{array}{ccc}
-4 & 0 & 0\\
-0 & 0 & 0\\
-0 & 0 & 0
-\end{array}\right) & \left(\begin{array}{ccc}
-0 & 0 & 0\\
-0 & 4 & 0\\
-0 & 0 & 0
-\end{array}\right)\end{array}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{array}{ccc}
-\left(\begin{array}{ccc}
-0 & 0 & 0\\
-0 & 0 & 0\\
-0 & 0 & 4
-\end{array}\right) & \left(\begin{array}{ccc}
--8 & -4 & -4\\
--4 & 0 & 0\\
--4 & 0 & 0
-\end{array}\right) & \left(\begin{array}{ccc}
-0 & -4 & 0\\
--4 & -8 & -4\\
-0 & -4 & 0
-\end{array}\right)\end{array}
-\]
-
+Hessian Matrix 
+\begin_inset Formula $H_{\alpha ij}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{i}\partial\xi_{j}}$
 \end_inset
 
 
@@ -17650,10 +17905,52 @@ H_{\alpha ij}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{i}\partial\xi_{j}}
 \[
 \begin{array}{cccc}
 \left(\begin{array}{ccc}
+4 & 4 & 4\\
+4 & 4 & 4\\
+4 & 4 & 4
+\end{array}\right), & \left(\begin{array}{ccc}
+4 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right), & \left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 4 & 0\\
+0 & 0 & 0
+\end{array}\right), & \left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 4
+\end{array}\right)\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+\left(\begin{array}{ccc}
+-8 & -4 & -4\\
+-4 & 0 & 0\\
+-4 & 0 & 0
+\end{array}\right), & \left(\begin{array}{ccc}
+0 & -4 & 0\\
+-4 & -8 & -4\\
+0 & -4 & 0
+\end{array}\right), & \left(\begin{array}{ccc}
 0 & 0 & -4\\
 0 & 0 & -4\\
 -4 & -4 & -8
-\end{array}\right) & \left(\begin{array}{ccc}
+\end{array}\right)\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+\left(\begin{array}{ccc}
 0 & 4 & 0\\
 4 & 0 & 0\\
 0 & 0 & 0

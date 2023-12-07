@@ -10,3 +10,15 @@
 + 使用自定义的命令来扩展 `Cargo`
 
 Cargo 的功能不止本章所介绍的, 关于其全部功能的详尽解释, 请查看 [文档](doc.rust-lang.org/cargo/)
+
+## cargo test 打印输出
+
+[rust的单元测试cargo test显示println!宏的打印信息](https://blog.csdn.net/lizhe_dashuju/article/details/108737366)
+
+cargo test运行单元测试, 默认不显示输出信息,
+因此 `println!` 的信息也不显示, 如果要显示,
+需要使用
+
+```bash
+cargo test -- --nocapture
+```
