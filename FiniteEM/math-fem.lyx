@@ -17627,18 +17627,90 @@ derivatives
 \end_layout
 
 \begin_layout Standard
-定义
-\begin_inset Formula $G_{i\alpha}=\tilde{\partial}_{i}\,N_{\alpha}$
+Gradient
+\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
+\end_inset
+
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+L0 := 1 - Subscript[
+\backslash
+[Xi], 0] - Subscript[
+\backslash
+[Xi], 1] - Subscript[
+\backslash
+[Xi], 2]; L1 := Subscript[
+\backslash
+[Xi], 0]; L2 := Subscript[
+\backslash
+[Xi], 1]; L3 := Subscript[
+\backslash
+[Xi], 2]; dvlst = {Subscript[
+\backslash
+[Xi], 0], Subscript[
+\backslash
+[Xi], 1], Subscript[
+\backslash
+[Xi], 2]}; NShapelst = {L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
+ (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1}; (Grid[#,
+ Frame -> All, FrameStyle -> Directive[Thin, Dashed, Orange, 5]] &@ FullSimplify
+[D[#, {dvlst}] & /@ NShapelst]) // Print;
+\end_layout
+
+\begin_layout Plain Layout
+Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
+ -> {2, Automatic}] &@(Grid[#, Frame -> All, FrameStyle -> Directive[Thin,
+ Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst]) //
+ Print;
+\end_layout
+
 \end_inset
 
 
 \begin_inset Formula 
 \[
-G^{(1)}=\left[\begin{array}{cccc}
--1 & 1 & 0 & 0\\
--1 & 0 & 1 & 0\\
--1 & 0 & 0 & 1
+\left[\begin{array}{ccc}
+-1 & -1 & -1\\
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
 \end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hessian Matrix 
+\begin_inset Formula $H_{\alpha ij}=\frac{\partial^{2}N_{\alpha}}{\partial\xi_{i}\partial\xi_{j}}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right] & \left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right] & \left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right] & \left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right]\end{array}
 \]
 
 \end_inset
@@ -17832,6 +17904,10 @@ derivatives
 
 \begin_layout Standard
 Gradient
+\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
+\end_inset
+
+ 
 \begin_inset Note Note
 status collapsed
 
@@ -17870,10 +17946,6 @@ Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
 \end_inset
 
  
-\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \left[\begin{array}{ccc}
