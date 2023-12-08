@@ -1,4 +1,4 @@
-# msvc cl 预编译指令, 预处理器
+# c++ 预编译指令, 预处理器
 
 ## 预定义宏
 
@@ -146,17 +146,4 @@ guard the contents of header files against multiple inclusions.
 #define HEADER_H_
 // Code placed here is included only once per translation unit
 #endif // HEADER_H_
-```
-
-## __FUNCSIG__ 未定义
-
-[__FUNCSIG__ is not defined on all target platforms](https://github.com/TheCherno/Hazel/issues/173)
-
-`__FUNCSIG__` 在 `msvc cl` 中有定义, 但是在 `llvm-clang` 编译器中没有定义, 因此可以使用类似下面的宏补充定义
-
-```cpp
-#ifndef _MSVC_LANG
-#define __FUNCDNAME__ __PRETTY_FUNCTION__
-#define __FUNCSIG__ __PRETTY_FUNCTION__
-#endif
 ```

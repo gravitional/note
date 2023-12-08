@@ -2,6 +2,8 @@
 
 [TOC]
 
+[The Ninja build system](https://ninja-build.org/manual.html)
+
 ## 介绍
 
 如前所述, `CMake` 是一个元构建系统, 可用于为许多其他构建工具创建构建文件.

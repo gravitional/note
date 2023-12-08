@@ -466,3 +466,36 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-gcc"
 ```
 
 这里是 msys2 最初关于添加 ucrt64 与 clang64 构建的讨论: [issue 6901](https://link.zhihu.com/?target=https%3A//github.com/msys2/MINGW-packages/issues/6901)
+
+## msys2 oh-my-zsh 卡顿 解决方法
+
+[去掉oh_my_zsh主题自带的git检查](https://www.cnblogs.com/brady-wang/p/14356525.html)
+
+修改 `.zshrc` 中的主题名称为 `ymy`,
+
+```rc
+ZSH_THEME="ymy"
+```
+
+然后在以下位置新建 `ymy` 主题
+
+```bash
+vim ~/.oh-my-zsh/themes/ymy.zsh-theme
+```
+
+内容为
+
+```bash
+PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%}"
+PROMPT+=' '
+
+#PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%}"
+#PROMPT+=' $(git_prompt_info)'
+
+#ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
+#ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+#ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}%1{✗%}"
+#ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+```
+
+也就是把 `git` 检查相关的部分注释掉.

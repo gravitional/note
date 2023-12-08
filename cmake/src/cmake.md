@@ -61,3 +61,38 @@
 [生成器表达式]: https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html
 [这个答案]: https://stackoverflow.com/a/24470998/1938798
 [这个帖子]: https://stackoverflow.com/q/36084785/1938798
+
+## cmake 列出项目中的所有 target
+
+[How do I list the defined make targets from the command line?](https://stackoverflow.com/questions/30793804/how-do-i-list-the-defined-make-targets-from-the-command-line)
+
+对于 Makefile 生成器的构建环境, 您可以使用
+
+```bash
+cmake --build . --target help
+```
+
+还有图形输出解决方案(此处有示例):
+
+```bash
+cmake --graphviz=test.graph 
+dotty test.graph
+```
+
+另请参阅 [使用 CMake 生成依赖关系图](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/Graphviz)
+和 [CMake Graphviz Output Cleaner](https://www.semipol.de/software/cmake-graphviz-output-cleaner).
+
+如果没有安装 dotty, 仍可在 CMakeLists.txt 中启用 [GLOBAL_DEPENDS_DEBUG_MODE](http://www.cmake.org/cmake/help/v3.2/prop_gbl/GLOBAL_DEPENDS_DEBUG_MODE.html), 
+使目标依赖关系可见:
+
+```cmake
+set_property(GLOBAL PROPERTY GLOBAL_DEPENDS_DEBUG_MODE 1)
+```
+
+这里的缺点是无法从命令行触发.
+在 generate `make` 环境时, 它将始终显示在 `stderr` 中.
+
+参考资料
+
+[如何获取 cmake 目标的依赖关系列表?](https://stackoverflow.com/questions/22021312/how-can-i-get-the-list-of-dependencies-of-cmake-target)
+[Internet Archive:  "CMake: 目标列表](https://web.archive.org/web/20160405081525/https://root.cern.ch/blog/cmake-list-targets)
