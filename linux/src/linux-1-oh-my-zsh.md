@@ -8,6 +8,7 @@
 ## 从gitee安装的方式
 
 [Gitee极速下载/oh-my-zsh的评论](https://gitee.com/colo9)
+通过修改环境变量, 实现便捷安装 oh my zsh
 
 ```bash
 REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
