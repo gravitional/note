@@ -4075,7 +4075,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-calc
+计算方案ymy
+\end_layout
+
+\begin_layout Standard
+为计算 fictitious 电荷，需要计算
 \end_layout
 
 \begin_layout Standard
@@ -4124,20 +4128,32 @@ calc
 
 \begin_inset Formula 
 \begin{align*}
-\frac{\partial J_{{\color{red}kj}}}{\partial\xi_{{\color{blue}i}}} & =\frac{\partial}{\partial\xi_{i}}\left(\frac{\partial N_{\alpha}}{\partial\xi_{k}}X_{\alpha j}\right)\\
+\frac{\partial J_{{\color{red}kj}}}{\partial\xi_{{\color{blue}i}}} & =X_{\alpha j}N_{\alpha,k}=\frac{\partial}{\partial\xi_{i}}\left(\frac{\partial N_{\alpha}}{\partial\xi_{k}}X_{\alpha j}\right)\\
 \text{参数形式} & =X_{\alpha j}\,N_{\alpha,ki}
 \end{align*}
 
 \end_inset
 
-
+从而
 \begin_inset Formula 
 \begin{align*}
-\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha} & =\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}(\tilde{\partial}_{j}\overline{J}_{ik})N_{\alpha,k}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\\
- & =\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}N_{\alpha,k}\,X_{\beta k}\,N_{\beta,ij}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\\
+\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha} & =\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}({\color{blue}\tilde{\partial}_{j}\overline{J}_{ik}})N_{\alpha,k}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\\
+ & =\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}N_{\alpha,k}\,{\color{blue}X_{\beta k}\,N_{\beta,ij}}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\\
  & =\epsilon_{0}\epsilon_{r}\;(\overline{J}_{ij}\,N_{\beta,ij})\;(X_{\beta k}\,N_{\alpha,k})+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}
 \end{align*}
 
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\phi_{\alpha}^{h}\;\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha}=\epsilon_{0}\epsilon_{r}\;(\overline{J}_{ij}\,N_{\beta,ij})\;X_{\beta k}\,(N_{\alpha,k}\,\phi_{\alpha}^{h})+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\,\phi_{\alpha}^{h}
+\]
+
+\end_inset
+
+程序中定义了 
+\begin_inset Formula $G_{i\alpha}=\tilde{\partial}_{i}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
 \end_inset
 
 

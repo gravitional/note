@@ -20,7 +20,7 @@ MSBuild.exe [Switches] [ProjectFile]
 例如编译求解器程序:
 
 ```cmd
-MSBuild.exe  C:\solver\src\build\solver.sln /m /p:Platform=x64 /v:n  /p:Configuration=Debug 
+MSBuild.exe  C:\solver\src\solver.sln /m /p:Platform=x64 /v:n  /p:Configuration=Debug
 ```
 
 下面的示例生成 `MyProject.proj` 项目的 rebuild 目标.

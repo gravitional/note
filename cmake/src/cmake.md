@@ -75,14 +75,14 @@ cmake --build . --target help
 还有图形输出解决方案(此处有示例):
 
 ```bash
-cmake --graphviz=test.graph 
+cmake --graphviz=test.graph
 dotty test.graph
 ```
 
 另请参阅 [使用 CMake 生成依赖关系图](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/Graphviz)
 和 [CMake Graphviz Output Cleaner](https://www.semipol.de/software/cmake-graphviz-output-cleaner).
 
-如果没有安装 dotty, 仍可在 CMakeLists.txt 中启用 [GLOBAL_DEPENDS_DEBUG_MODE](http://www.cmake.org/cmake/help/v3.2/prop_gbl/GLOBAL_DEPENDS_DEBUG_MODE.html), 
+如果没有安装 dotty, 仍可在 CMakeLists.txt 中启用 [GLOBAL_DEPENDS_DEBUG_MODE](http://www.cmake.org/cmake/help/v3.2/prop_gbl/GLOBAL_DEPENDS_DEBUG_MODE.html),
 使目标依赖关系可见:
 
 ```cmake
@@ -96,3 +96,29 @@ set_property(GLOBAL PROPERTY GLOBAL_DEPENDS_DEBUG_MODE 1)
 
 [如何获取 cmake 目标的依赖关系列表?](https://stackoverflow.com/questions/22021312/how-can-i-get-the-list-of-dependencies-of-cmake-target)
 [Internet Archive:  "CMake: 目标列表](https://web.archive.org/web/20160405081525/https://root.cern.ch/blog/cmake-list-targets)
+
+## cmake 编译例子
+
+### 生成编译规则
+
+在 MSYS2 clang64 环境中编译,
+确保 `clang.exe`, `clang++.exe` 已经添加到环境变量.
+
+```bash
+#  使用 ninja native tool;
+# 使用 ninja 可能没有颜色; 即便已经 add_compile_options("-fcolor-diagnostics") 并且设置环境变量 CLICOLOR_FORCE=1
+cmake -G 'Ninja Multi-Config' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe --fresh
+
+# 使用 make native tool;
+cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe --fresh
+```
+
+### 编译目标
+
+```bash
+# -j 指定并线编译; -v 开启 verbose 输出
+cmake --build . -j 10 -v
+
+# 直接使用 make 编译; VERBOSE 是 CMake 添加的 VERBOSE 选项
+make VERBOSE=1 -j 10
+```
