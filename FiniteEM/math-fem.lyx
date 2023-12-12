@@ -19362,7 +19362,7 @@ X_{j}=\overline{X}_{j\alpha}N_{\alpha},\quad X=\overline{X}^{T}\cdot N(\xi)\labe
 \end_layout
 
 \begin_layout Section
-边界法向
+内部边界，法向，连续性，电场连续性
 \end_layout
 
 \begin_layout Standard
@@ -19404,6 +19404,228 @@ X_{j}=\overline{X}_{j\alpha}N_{\alpha},\quad X=\overline{X}^{T}\cdot N(\xi)\labe
 \end_inset
 
 指向区域内部，与标准约定（指向体系外部）差一负号。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/common-edge.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+p1 = {0, 0}; p2 = {1, 0}; p3 = {0.2, 0.6}; p4 = {0.8, 0.7}; 
+\backslash
+[Delta] = 0.01; sty = Style[#, 13, Red, Bold] &; fig = Graphics[{ Thick,
+ Line[{p1, p3}], Line[{p1, p2, p4, p3, p2}], sty@Text["1", p1 + {-2 
+\backslash
+[Delta], 0 
+\backslash
+[Delta]}], sty@Text["2", p2 + {2 
+\backslash
+[Delta], 0}], sty@Text["3", p3 + {-2 
+\backslash
+[Delta], 
+\backslash
+[Delta]}], sty@Text["4", p4 + {2 
+\backslash
+[Delta], 2 
+\backslash
+[Delta]}], sty@Text["A", 1/3*(p1 + p2 + p3)], sty@Text["B", 1/3*(p3 + p2
+ + p4)] }, ImageSize -> Medium]
+\end_layout
+
+\begin_layout Plain Layout
+Export[ FileNameJoin[{$HomeDirectory, "note", "FiniteEM", "inset", "common-edge.p
+df"}] , fig]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+具有公共边的两个单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:my7.18"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:my7.18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，具有公共边
+\begin_inset Formula $E$
+\end_inset
+
+ 的两个单元 
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+；IBE 再输出边的几何信息时，都按逆时针，即 
+\begin_inset Formula $3-2-4$
+\end_inset
+
+，
+\begin_inset Formula $1-2-3$
+\end_inset
+
+。这样公共边的顺序分别是
+\begin_inset Formula $3-2$
+\end_inset
+
+，
+\begin_inset Formula $2-3$
+\end_inset
+
+，也就是刚好相反。如果都拿 
+\begin_inset Formula $\hat{\sbf z}$
+\end_inset
+
+方向法矢作叉乘，得到的两个法向刚好是反向的。可用于计算下式
+\begin_inset Formula 
+\[
+\sbf n\cdot(\sbf D_{2}-\sbf D_{1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla\phi=\partial_{i}\,N_{\alpha}\phi_{\alpha}=\phi_{\alpha}\overline{J}_{ij}\tilde{\partial}_{j}N_{\alpha}=\phi_{\alpha}\overline{J}_{ij}\,G_{j\alpha}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $G_{j\alpha}=\partial N_{\alpha}/\partial\xi_{j}$
+\end_inset
+
+；上划线表示求逆；
+\begin_inset Formula 
+\[
+J_{ij}=\partial x_{j}/\partial\xi_{i}=\partial(N_{\beta}X_{\beta j})/\partial x_{i}=G_{i\beta}\,X_{\beta j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\nabla\phi=\overline{G.X}.G.\Phi
+\]
+
+\end_inset
+
+使用数值方法，对
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:my7.18"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的单元进行测试
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(*gradient of shapeFun; order 1, independent of 
+\backslash
+[Xi]*) iG = {{-1, 1, 0} , {-1, 0, 1}}; (*nodal coord; 公共边*) p0 = {0, 0};
+ p1 = {1, 0}; (*公共边上的两个法向*) norm[vec2_] := Take[#, 2] &@(Cross[{0, 0, 1},
+ Append[#, 0] &@vec2]/ Sqrt@Dot[vec2, vec2]); nA = norm@(p1 - p0); nB =
+ norm@(p0 - p1); (*nodal coord; 两个区别顶点*) p2 = {0.5, 1}; p3 = {0.5, -1}; (*nodal
+ coord matrix*) iXA = {p0, p1, p2}; iXB = {p0, p3, p1}; (*nodal phi; common
+ edge*) 
+\backslash
+[Phi]0 = 1; 
+\backslash
+[Phi]1 = 1; (*nodal phi; diff nodes*) 
+\backslash
+[Phi]2 = 2; 
+\backslash
+[Phi]3 = 3; 
+\backslash
+[Phi]A = {
+\backslash
+[Phi]0, 
+\backslash
+[Phi]1, 
+\backslash
+[Phi]2}; 
+\backslash
+[Phi]B = {
+\backslash
+[Phi]0, 
+\backslash
+[Phi]3, 
+\backslash
+[Phi]1}; EA = -Inverse[iG .
+ iXA] .
+ iG .
+ 
+\backslash
+[Phi]A; EB = -Inverse[iG .
+ iXB] .
+ iG .
+ 
+\backslash
+[Phi]B; {EA, EB} TableForm[ {{EA, EB}, {EA .
+ nA, EB .
+ nB} }, TableHeadings -> {{"Vec_E", "E_norm"}}, TableDepth -> 1]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
