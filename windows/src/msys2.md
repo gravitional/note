@@ -224,7 +224,22 @@ if ! shopt -oq posix; then
 fi
 ```
 
-## 安装编译环境
+## 安装编译环境, build-essential
+
+[build-essential in Arch Linux](https://www.garron.me/en/bits/build-essential-arch-linux.html)
+
+I usually run Ubuntu or Debian servers, but I like Arch Linux a lot. So when I need to compile software in Arch Linux,
+I come to the question of what is the equivalent of build-essential package in Arch Linux.
+
+The package build-essential is a set of packages
+that you need in order the compile software in Ubuntu or Debian.
+For Arch Linux run this command.
+
+```bash
+sudo pacman -Sy base-devel
+```
+
+### gcc, make
 
 [MSYS2安装gcc, make环境](https://www.jianshu.com/p/04636461341e)
 [windows上msys2配置及填坑](https://hustlei.github.io/2018/11/msys2-for-win.html)
