@@ -111,6 +111,9 @@ cmake -G 'Ninja Multi-Config' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CX
 
 # 使用 make native tool;
 cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe --fresh
+
+# 指定 make 程序路径
+cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe -DCMAKE_MAKE_PROGRAM='c:/msys64/usr/bin/make.exe'  --fresh
 ```
 
 ### 编译目标
