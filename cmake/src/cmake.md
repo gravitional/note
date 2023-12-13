@@ -97,6 +97,43 @@ set_property(GLOBAL PROPERTY GLOBAL_DEPENDS_DEBUG_MODE 1)
 [如何获取 cmake 目标的依赖关系列表?](https://stackoverflow.com/questions/22021312/how-can-i-get-the-list-of-dependencies-of-cmake-target)
 [Internet Archive:  "CMake: 目标列表](https://web.archive.org/web/20160405081525/https://root.cern.ch/blog/cmake-list-targets)
 
+### make help
+
+[How do you get the list of targets in a makefile?](https://stackoverflow.com/questions/4219255/how-do-you-get-the-list-of-targets-in-a-makefile)
+
+如果您的 Makefile 是由 CMake 创建的, 您可以运行 `make help`.
+
+```bash
+$ make help
+The following are some of the valid targets for this Makefile:
+... all (the default if no target is provided)
+... clean
+... depend
+... install
+etc
+```
+
+如果没有, 我写了一个补丁, 为 Make 添加对这一明显有用的功能的适当支持.
+这比其他所有的答案都要好得多,
+因为其他的答案都是用可怕的黑客手段来对 Makefile 进行搜索.
+如果你包含其他 Makefile, 使用 计算得到的target name等, 这显然是行不通的.
+
+补丁尚未合并, 所以你必须从源代码构建.
+这并不难, 但你确实需要一些与 autoconf 相关的老旧构建工具:
+
+git clone https://github.com/Timmmm/make
+cd make
+./bootstrap
+./configure
+make -j4
+在 Linux 上, 你可以使用[我已经编译好的二进制文件](https://github.com/Timmmm/make/releases/download/0.0/make).
+
+然后使用 `-l` 标志列出目标:
+
+```bash
+./make -C /path/to/your/project -l
+```
+
 ## cmake 编译例子
 
 ### 生成编译规则
@@ -109,11 +146,11 @@ set_property(GLOBAL PROPERTY GLOBAL_DEPENDS_DEBUG_MODE 1)
 # 使用 ninja 可能没有颜色; 即便已经 add_compile_options("-fcolor-diagnostics") 并且设置环境变量 CLICOLOR_FORCE=1
 cmake -G 'Ninja Multi-Config' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe --fresh
 
-# 使用 make native tool;
-cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe --fresh
+# 指定 make 程序路径, 指定构建类型为 debug
+cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe -DCMAKE_MAKE_PROGRAM='c:/msys64/usr/bin/make.exe' -DCMAKE_BUILD_TYPE=Debug --fresh
 
-# 指定 make 程序路径
-cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=clang.exe -DCMAKE_CXX_COMPILER=clang++.exe -DCMAKE_MAKE_PROGRAM='c:/msys64/usr/bin/make.exe'  --fresh
+# 使用 gcc 进行编译
+cmake -G 'MSYS Makefiles' -B . -S .. -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_MAKE_PROGRAM='c:/msys64/usr/bin/make.exe' -DCMAKE_BUILD_TYPE=Debug --fresh
 ```
 
 ### 编译目标
@@ -124,4 +161,6 @@ cmake --build . -j 10 -v
 
 # 直接使用 make 编译; VERBOSE 是 CMake 添加的 VERBOSE 选项
 make VERBOSE=1 -j 10
+
+make -j10 debug
 ```
