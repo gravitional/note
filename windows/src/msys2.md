@@ -300,30 +300,31 @@ msys gcc
 
 分别对应于 msys 的三个环境.
 
-### 安装 mingw-w64-ucrt 工具链
-
-```bash
-pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-gcc-libgfortran
- mingw-w64-ucrt-x86_64-gcc-libs mingw-w64-ucrt-x86_64-perl
-```
-
-### 安装 mingw-w64-x86_64 工具链
+## 安装 mingw-w64 工具链
 
 不论你在哪个环境下安装,
 MSYS2都会将 `mingw-w64-x86_64-gcc` 安装在 `msys64/mingw64` 下.
 从之前的分析可知只有在 mingw64 环境下才能使用这个目录下的程序.
 在其他两个环境下虽然能够安装mingw-w64-x86_64-gcc, 但是不能使用mingw-w64-x86_64-gcc.
 
-### 安装编译工具链
++ 安装 mingw-w64-x86_64 工具链
 
 ```bash
-pacman-key --init
-# 安装 mingw64 版本
-pacman -Syu
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb
-pacman -S mingw-w64-x86_64-cmake mingw-w64-x86_64-extra-cmake-modules
-pacman -S mingw-w64-x86_64-make
 pacman -S mingw-w64-x86_64-toolchain
+```
+
++ 安装 mingw-w64-ucrt-x86_64 工具链
+
+打开MSYS2命令行, 输入 `pacman -Syu` 同步更新所有工具, 然后输入
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-toolchain
+```
+
++ mingw-w64-clang 工具链
+
+```bash
+pacman -S mingw-w64-clang-x86_64-toolchain
 ```
 
 ### pacman 的配置
