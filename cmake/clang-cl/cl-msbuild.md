@@ -20,7 +20,7 @@ MSBuild.exe [Switches] [ProjectFile]
 例如编译求解器程序:
 
 ```cmd
-MSBuild.exe  C:\solver\src\solver.sln /m /p:Platform=x64 /v:n  /p:Configuration=Debug
+msbuild ~\sim-solver\build\solver.sln /m /p:Platform=x64 /v:m /t:build /p:Configuration=Release
 ```
 
 下面的示例生成 `MyProject.proj` 项目的 rebuild 目标.
@@ -35,7 +35,7 @@ MSBuild.exe MyProject.proj -t:rebuild
 并清理项目 `InSolutionFolder` (位于 `NewFolder` 解决方案文件夹中).
 
 ```cmd
-msbuild SlnFolders.sln -t:NotInSolutionfolder:Rebuild;NewFolder\InSolutionFolder:Clean
+msbuild SlnFolders.sln /t:NotInSolutionfolder:Rebuild;NewFolder\InSolutionFolder:Clean
 ```
 
 ### 重新构建, Rebuild, Clean
