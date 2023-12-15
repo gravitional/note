@@ -609,3 +609,35 @@ Needs["LSPServer`"]
 在 setting 中搜索 outline,
 取消勾选 `Outline: Show Constants`,
 即可隐藏 Explorer->Outline 中的 外链接项.
+
+## vscode 离线安装 插件
+
+[离线安装VSCode 插件](https://zixizixi.cn/vscode-extension-vsix-install)
+[vscode离线安装包制作 及 批量安装插件](https://blog.csdn.net/pk0127/article/details/118558950)
+
+在 [插件市场](https://marketplace.visualstudio.com/) 搜索需要下载的插件,
+然后点击页面右侧的 Resources/Download Extension, 就会下载 `.vsix` 格式的插件包.
+vscode 安装插件的相关命令是
+
+```bash
+# 该命令将打印当前的插件列表
+code --list-extensions --show-versions
+
+#安装制定版本的vim插件
+code --install-extension  vscodevim.vim@1.21.5
+
+#自动安装并强制更新至最新版本
+code --install-extension --force  vscodevim.vim
+
+#自动安装匹配的最新版本 此处也可以使用离线的vsix包
+code --install-extension  vscodevim.vim
+
+# 卸载指定插件
+code --uninstall-extension
+```
+
+nushell 命令行
+
+```nushell
+let fs = (glob *.vsix); $fs | each {|it| code --install-extension ($it | path expand)}
+```
