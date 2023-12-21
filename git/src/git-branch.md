@@ -61,12 +61,13 @@ DESCRIPTION
 前提是你的 `working tree` 是 `clean` 的(no modifications from the HEAD commit).
 
 `git revert `用来记录撤销提交的操作(通常是错误的提交).
-如果只是想丢弃工作区的修改, 可以使用`git-reset --hard`, 或者用`git checkout <commit>  -- <filename>`从别的提交中提取文件(覆盖当前版本), 不同于`git revert`, 这些操作都会导致工作区未提交的更改丢失.
+如果只是想丢弃工作区的修改, 可以使用`git-reset --hard`,
+或者用`git checkout <commit>  -- <filename>`从别的提交中提取文件(覆盖当前版本),
+不同于`git revert`, 这些操作都会导致工作区未提交的更改丢失.
 
 相比`git reset`, 它不会改变现在的提交历史.因此, `git revert`可以用在公共分支上, `git reset`应该用在私有分支上.
 
-[git reset --hard xxx, git reset --soft 及git revert 的区别]: https://www.jianshu.com/p/8be0cc35e672
-
+[git reset --hard xxx, git reset --soft 及git revert 的区别](https://www.jianshu.com/p/8be0cc35e672)
 [Git Reset 三种模式]: https://www.jianshu.com/p/c2ec5f06cf1a
 
 ### 恢复EXAMPLES
