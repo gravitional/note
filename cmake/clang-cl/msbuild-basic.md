@@ -15,51 +15,6 @@
 MSBuild.exe [Switches] [ProjectFile]
 ```
 
-## 示例
-
-例如编译求解器程序:
-
-```cmd
-msbuild ~\sim-solver\build\solver.sln /m /p:Platform=x64 /v:m /t:build /p:Configuration=Release
-```
-
-下面的示例生成 `MyProject.proj` 项目的 rebuild 目标.
-
-```cmd
-MSBuild.exe MyProject.proj -t:rebuild
-```
-
-可以使用 `MSBuild.exe` 执行更复杂的生成.
-例如, 可以使用它在解决方案中生成 特定项目 的特定目标.
-下面的示例 重新生成 项目 `NotInSolutionFolder`,
-并清理项目 `InSolutionFolder` (位于 `NewFolder` 解决方案文件夹中).
-
-```cmd
-msbuild SlnFolders.sln /t:NotInSolutionfolder:Rebuild;NewFolder\InSolutionFolder:Clean
-```
-
-### 重新构建, Rebuild, Clean
-
-例如解决方案为 `Test.sln`, 项目为 `test`,
-在命令行中, 注意转义 `:` 符号
-
-```powershell
-# 执行解决方案的 Clean 目标
-msbuild C:\Users\yd\cppTest\build\Test.sln '-target:Clean'
-# 执行解决方案的 test 目标的 子目标
-msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test' # 默认执行 Build 目标
-msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test:Clean' # 指定目标为 Clean
-msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test:Rebuild' # 指定目标为 Rebuild
-```
-
-想要确定有哪些可选目标, 可以使用 `msbuild` 的调试模式,
-通过设定环境变量 `$env:MSBUILDEMITSOLUTION=1`.
-一般都会有 `Build`, `Clean`, `Rebuild`, `Publish`.
-
-```powershell
-$env:MSBUILDEMITSOLUTION=1;msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test'
-```
-
 ## Arguments
 
 参数 描述
@@ -68,7 +23,7 @@ ProjectFile 在指定项目文件中生成目标.
 则 `MSBuild` 会在当前工作目录中搜索以 `proj` 结尾的文件扩展名并使用该文件.
 还可以为此参数指定 `Visual Studio 解决方案文件`(.sln).
 
-## 开关
+## 开关 选项
 
 开关    缩写形式    描述
 
@@ -431,11 +386,8 @@ msbuild myfile.proj -flp:FileLogger,Microsoft.Build;logfile=MyLog.log;append
 
 ```cmd
 -fileLoggerParameters:LogFile=MyLog.log;Append; Verbosity=diagnostic;Encoding=UTF-8
-
 -flp:Summary;Verbosity=minimal;LogFile=msbuild.sum
-
 -flp1:warningsonly;logfile=msbuild.wrn
-
 -flp2:errorsonly;logfile=msbuild.err
 ```
 
@@ -471,3 +423,72 @@ msbuild myfile.proj -flp:FileLogger,Microsoft.Build;logfile=MyLog.log;append
 请参阅
 [MSBuild 参考](https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-reference?view=vs-2022)
 [常用的 MSBuild 项目属性](https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022)
+
+## msbuild examples 示例
+
+### 编译求解器程序
+
+```cmd
+msbuild ~\sim-solver\build\solver.sln /m /p:Platform=x64 /v:m /t:build /p:Configuration=Release
+```
+
+下面的示例生成 `MyProject.proj` 项目的 rebuild 目标.
+
+```cmd
+MSBuild.exe MyProject.proj -t:rebuild
+```
+
+可以使用 `MSBuild.exe` 执行更复杂的生成.
+例如, 可以使用它在解决方案中生成 特定项目 的特定目标.
+下面的示例 重新生成 项目 `NotInSolutionFolder`,
+并清理项目 `InSolutionFolder` (位于 `NewFolder` 解决方案文件夹中).
+
+```cmd
+msbuild SlnFolders.sln /t:NotInSolutionfolder:Rebuild;NewFolder\InSolutionFolder:Clean
+```
+
+### 编译单独的某个模块, 编译 vcxproj
+
+```cmd
+msbuild c:\solver\build\src\common\Common\Base\Base.vcxproj /m /p:Platform=x64 /v:m /t:build /p:Configuration=debug
+```
+
+### cmake solver bug; 单独执行链接任务
+
+[How to use MSBuild command line to just link a project?](https://stackoverflow.com/questions/19945975/how-to-use-msbuild-command-line-to-just-link-a-project)
+
+在使用 solver sdk 时遇到找不到 ibevalidator 之类的问题,
+重新链接 base 即可, 如果还有其他奇怪的现象, rebuild 可以解决.
+本质上是由于 bin里面的dll 被 sdk 里的 dll 错误覆盖了.
+此 `file(COPY xxx)` 操作在配置cmake时发生.
+如果点击 `configure` 按钮, 就会执行覆盖操作,
+如果点击 `generate` 则不会覆盖
+
+You cank use the BuildLink target.
+
+```cmd
+msbuild.exe xxx/solver\build\src\common\Common\Base\Base.vcxproj /t:BuildLink /p:Configuration=debug
+msbuild.exe xxx/solver\build\src\common\Common\Base\Base.vcxproj /t:BuildLink /p:Configuration=release
+```
+
+### 重新构建, Rebuild, Clean
+
+例如解决方案为 `Test.sln`, 项目为 `test`,
+在命令行中, 注意转义 `:` 符号
+
+```powershell
+# 执行解决方案的 Clean 目标
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:Clean'
+# 执行解决方案的 test 目标的 子目标
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test' # 默认执行 Build 目标
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test:Clean' # 指定目标为 Clean
+msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test:Rebuild' # 指定目标为 Rebuild
+```
+
+想要确定有哪些可选目标, 可以使用 `msbuild` 的调试模式,
+通过设定环境变量 `$env:MSBUILDEMITSOLUTION=1`.
+一般都会有 `Build`, `Clean`, `Rebuild`, `Publish`.
+
+```powershell
+$env:MSBUILDEMITSOLUTION=1;msbuild C:\Users\yd\cppTest\build\Test.sln '-target:test'
+```

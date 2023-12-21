@@ -125,3 +125,37 @@ cl /W4 /EHsc hello.cpp there.obj /link /VERSION:3.14
 ## 设置编译器和构建特性
 
 [Set compiler and build properties](https://learn.microsoft.com/en-us/cpp/build/working-with-project-properties)
+
+## cl link 诊断报告; performing full link
+
+[linker diagnostic: "exe not found or not built by the last incremental link; performing full link", why? [closed]](https://stackoverflow.com/questions/24195648/linker-diagnostic-exe-not-found-or-not-built-by-the-last-incremental-link-per)
+
+`performing full link` diagnostic并不是错误, 而只是一条警告/信息.
+
+它与增量链接(incremental linking)有关,
+编译器使用增量链接功能来解决每次编译应用程序时都必须重建所有源代码的问题.
+如果链接器找不到以前编译过的 exe, 或存在其他问题,
+它就会发出上述诊断信息, 好像在说: "我需要进行一次全面重建, 请抓紧".
+
+更多信息请参阅下面的问答:
+[什么是 "增量链接"?](https://stackoverflow.com/q/3349521/1090079)
+
+[如文档所述:](http://msdn.microsoft.com/en-us/library/4khtbfyf.aspx)
+
+>此外, 如果出现以下情况, LINK 会执行完全链接:
+>
+>+ 增量状态 (`.ilk`) 文件丢失.
+>(LINK 会创建一个新的 `.ilk` 文件, 为后续的增量链接做准备).
+>+ `.ilk` 文件没有写入权限.
+>+ (LINK 会忽略 `.ilk` 文件并进行非增量链接).
+>+ `.exe` 或 `.dll` 输出文件丢失.
+>+ `.ilk`, `.exe` 或 .dll 的时间戳已更改.
+>+ `LINK` 选项更改.
+>+ 大多数 LINK 选项在两次编译之间更改时 都会导致完全链接.
+>+ 添加或省略了对象 (.obj) 文件.
+
+## 如果我不想要增量链接和诊断, 该怎么办?
+
+如果想禁用 incremental linking, 可以进入项目属性并移除 `/INCREMENTAL`.
+请参阅文档:
+[msdn.com - /INCREMENTAL(增量链接)](http://msdn.microsoft.com/en-us/library/4khtbfyf.aspx)
