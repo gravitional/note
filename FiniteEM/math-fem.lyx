@@ -17714,23 +17714,23 @@ Hessian Matrix
 
 \end_inset
 
-
+使用IBE中的邻接关系约定
 \begin_inset Note Note
 status collapsed
 
 \begin_layout Plain Layout
-delta = 0.05; Graphics3D[{Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0, 0}}],
- Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}], Line[{{0, 0, 1}, {0, 0, 0}}],
- FontSize -> 13, Text[Style[0, Black, Medium], {1 + 2 delta, 2 delta, 0}],
- Text[Style[1, Black, Medium], {2 delta, 1 + 2 delta, 0}], Text[Style[2,
- Black, Medium], {2 delta, 2 delta, 1 + 1 delta}], Text[Style[3, Black,
- Medium], {+2 delta, -delta, +2 delta}], (*mid-side nodes*) Text[Style[4,
- Red, Medium], {.5 + 1 delta, .5 + 1 delta, 0}], Text[Style[5, Red, Medium],
- {.5 + 1 delta, 0, .5 + 1 delta}], Text[Style[6, Red, Medium], {.5 + 0 delta,
- 0 + 1 delta, 0 + 0 delta}], Text[Style[7, Red, Medium], {0 + 0 delta, .5
- + 1 delta, .5 + 1 delta}], Text[Style[8, Red, Medium], {0 + 0 delta, 0 +
- 1 delta, .5 + 0 delta}], Text[Style[9, Red, Medium], {0 - 2 delta, 0.5 +
- 0 delta, 0 + 0 delta}] }, Axes -> True, AxesOrigin -> {0, 0, 0}, AxesStyle
+delta = 0.05; (fig = Graphics3D[{Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1,
+ 0, 0}}], Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}], Line[{{0, 0, 1}, {0,
+ 0, 0}}], FontSize -> 13, Text[Style[0, Black, Medium], {1 + 2 delta, 2
+ delta, 0}], Text[Style[1, Black, Medium], {2 delta, 1 + 2 delta, 0}], Text[Styl
+e[2, Black, Medium], {2 delta, 2 delta, 1 + 1 delta}], Text[Style[3, Black,
+ Medium], {+2 delta, -delta, +2 delta}],(*mid-side nodes*) Text[Style[4,
+ Red, Medium], {.5 + 1 delta, .5 + 1 delta, 0}], Text[Style[6, Red, Medium],
+ {.5 + 1 delta, 0, .5 + 1 delta}], Text[ Style[7, Red, Medium], {.5 + 0 delta,
+ 0 + 1 delta, 0 + 0 delta}], Text[ Style[5, Red, Medium], {0 + 0 delta,
+ .5 + 1 delta, .5 + 1 delta}], Text[ Style[9, Red, Medium], {0 + 0 delta,
+ 0 + 1 delta, .5 + 0 delta}], Text[ Style[8, Red, Medium], {0 - 2 delta,
+ 0.5 + 0 delta, 0 + 0 delta}]}, Axes -> True, AxesOrigin -> {0, 0, 0}, AxesStyle
  -> Arrowheads[{0.07}], AxesLabel -> {"
 \backslash
 [Xi]1", "
@@ -17739,7 +17739,8 @@ delta = 0.05; Graphics3D[{Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0, 0}}],
 \backslash
 [Xi]3"}, PlotRangePadding -> {Scaled[.1], Scaled[.1], Scaled[.1]}, Ticks ->
  Automatic, TicksStyle -> Directive[Orange, 6], ImageSize -> Medium, Boxed
- -> False, ViewPoint -> {3, 1, 1}]
+ -> False, ViewPoint -> {3, 1, 1}]) // Print; Export["C:/Users/yd/note/FiniteEM/
+inset/tetrahedron-ele-o2.pdf", fig];
 \end_layout
 
 \end_inset
@@ -17913,10 +17914,10 @@ L0 := 1 - Subscript[
 \backslash
 [Xi], 1], Subscript[
 \backslash
-[Xi], 2]}; NShapelst = {L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
- (2 L3 - 1), 4 L1*L0, 4 L2*L0, 4 L3*L0, 4 L1*L2, 4 L2*L3, 4 L3*L1}; (Grid[#,
- Frame -> All, FrameStyle -> Directive[Thin, Dashed, Orange, 5]] &@ FullSimplify
-[D[#, {dvlst}] & /@ NShapelst]) // Print;
+[Xi], 2]}; NShapelst = { L0 (2 L0 - 1), L1 (2 L1 - 1), L2 (2 L2 - 1), L3
+ (2 L3 - 1), (*-----------------*) 4 L1*L0, 4 L1*L2, 4 L2*L0, 4 L3*L0, 4
+ L3*L1, 4 L2*L3 }; (Grid[#, Frame -> All, FrameStyle -> Directive[Thin,
+ Dashed, Orange, 5]] &@ FullSimplify[D[#, {dvlst}] & /@ NShapelst]) // Print;
 \end_layout
 
 \begin_layout Plain Layout
@@ -17928,7 +17929,7 @@ Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
 
 \end_inset
 
- 
+（使用IBE中约定的中点邻接关系）
 \begin_inset Formula 
 \[
 \left[\begin{array}{ccc}
@@ -17937,11 +17938,11 @@ Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
 0 & 4\xi_{1}-1 & 0\\
 0 & 0 & 4\xi_{2}-1\\
 -4\left(2\xi_{0}+\xi_{1}+\xi_{2}-1\right) & -4\xi_{0} & -4\xi_{0}\\
+4\xi_{1} & 4\xi_{0} & 0\\
 -4\xi_{1} & -4\left(\xi_{0}+2\xi_{1}+\xi_{2}-1\right) & -4\xi_{1}\\
 -4\xi_{2} & -4\xi_{2} & -4\left(\xi_{0}+\xi_{1}+2\xi_{2}-1\right)\\
-4\xi_{1} & 4\xi_{0} & 0\\
-0 & 4\xi_{2} & 4\xi_{1}\\
-4\xi_{2} & 0 & 4\xi_{0}
+4\xi_{2} & 0 & 4\xi_{0}\\
+0 & 4\xi_{2} & 4\xi_{1}
 \end{array}\right]
 \]
 
@@ -17989,13 +17990,13 @@ Hessian Matrix
 -4 & 0 & 0\\
 -4 & 0 & 0
 \end{array}\right), & \left(\begin{array}{ccc}
+0 & 4 & 0\\
+4 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right), & \left(\begin{array}{ccc}
 0 & -4 & 0\\
 -4 & -8 & -4\\
 0 & -4 & 0
-\end{array}\right), & \left(\begin{array}{ccc}
-0 & 0 & -4\\
-0 & 0 & -4\\
--4 & -4 & -8
 \end{array}\right)\end{array}
 \]
 
@@ -18006,17 +18007,17 @@ Hessian Matrix
 \[
 \begin{array}{ccc}
 \left(\begin{array}{ccc}
-0 & 4 & 0\\
-4 & 0 & 0\\
-0 & 0 & 0
-\end{array}\right) & \left(\begin{array}{ccc}
-0 & 0 & 0\\
-0 & 0 & 4\\
-0 & 4 & 0
-\end{array}\right) & \left(\begin{array}{ccc}
+0 & 0 & -4\\
+0 & 0 & -4\\
+-4 & -4 & -8
+\end{array}\right), & \left(\begin{array}{ccc}
 0 & 0 & 4\\
 0 & 0 & 0\\
 4 & 0 & 0
+\end{array}\right), & \left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 4\\
+0 & 4 & 0
 \end{array}\right)\end{array}
 \]
 
