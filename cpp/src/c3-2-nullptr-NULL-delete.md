@@ -16,7 +16,7 @@ int *p2 = 0;
 int *p3 = nullptr;
 ```
 
-新标准中建议使用nullptr代替NULL来声明空指针.
+新标准中建议使用 `nullptr` 代替 `NULL` 来声明空指针.
 到这里, 大家心里有没有疑问: 为什么C++11要引入nullptr?
 它与NULL相比又有什么不同呢?这就是我们今天要解决的问题.
 
@@ -101,4 +101,56 @@ char *p1 = nullptr; // 正确
 int *p2 = nullptr; // 正确
 bool b = nullptr; // 正确. if(b)判断为false
 int a = nullptr; // error
+```
+
+## delete nullptr
+
+[C++中, 能不能delete空指针](https://blog.csdn.net/qq_41786318/article/details/81943101)
+
+完全可以 .... 可能有不少人对Delete删除空指针的用法不屑一顾,
+但在实际运用当中, 却有不少人会犯类似的错误, 最典型的如下:
+
+```cpp
+if(pMyClass) //这里, pMyClass是指向某个类的指针 . .
+{
+   delete pMyClass ;
+}
+```
+
+他们往往先判断一下指针是否为空, 如果不为空, 说明没有被删除,
+于是清空这个指针. 出发点和逻辑思维是好的, 但是却毫无必要.
+因为实际上delete 本身会自动检查对象是否为空. 如果为空, 就不做操作.
+所以直接用 `delete pMyClass` 就可以了,
+删除空指针当然也是同样道理.
+
+注意:
+
+### `delete NULL` 是没有问题的
+
+```cpp
+char *p = NULL;
+delete p;
+```
+
++ delete栈上的空间是不行的
+
+```cpp
+char *p = "1234";
+delete p;
+```
+
+```cpp
+char *p = new char;
+delete p;
+delete p;  // 不能删除两次,第一次delete p之后, p的地址并不是空, 同一块内存释放两次是有问题的
+```
+
+最好的风格是:
+
+```cpp
+if(pMyClass)  //这里, pMyClass是指向某个类的指针 . .
+{
+    delete pMyClass ;
+    pMyClass = NULL;  // 这句不能少
+}
 ```

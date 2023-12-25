@@ -2,12 +2,19 @@
 
 [C++(二): 如何确定表达式的值类型](https://zhuanlan.zhihu.com/p/435605194)
 [理解 C/C++ 中的左值和右值](https://nettee.github.io/posts/2018/Understanding-lvalues-and-rvalues-in-C-and-C/)
+[C++11右值引用(一看即懂)](https://c.biancheng.net/view/7829.html)
+
+>话说, C++标准委员会在选定 右值引用 符号时,
+>既希望能选用现有 C++ 内部已有的符号, 还不能与 C++98/03 标准产生冲突,
+>最终选定了 `&&` 表示 `右值引用`.
+
+右值引用语义就是 声明一块 `能转移所有权` 的内存.
 
 ## 常见左值右值总结
 
 字符串是左值.
 
-[c++字符串字面量为什么为左值？](https://www.zhihu.com/question/480430938)
+[c++字符串字面量为什么为左值?](https://www.zhihu.com/question/480430938)
 
 ### 左值lvalue
 
@@ -16,7 +23,7 @@
 + 对象的成员变量; `p.age`, 其中 `p` 是 `Person`类的对象
 + 字符类型的字面量; `"hello world"`
 + 函数返回的 `左值引用`; 即`f()->int&`, 则 `f()` 是左值
-+ 指向函数的 `左值引用` 或者 `右值引用`
++ 指向函数的 `左值引用` 或者 `右值引用` (右值引用Type的 符号本身是左值)
 
 ```cpp
 void g() {}; //定义一个函数
@@ -34,7 +41,7 @@ void (&&g2)() = g; //指向函数的 右值引用语法, g2 是左值
 
 ## 将亡值xvalue
 
-+ `std::move`; std::move(10)
++ `std::move`; 例如 std::move(10)
 + `static_cast<T&&>`; `static_cast<T&&>(10)`
 + 函数返回`右值引用`; 即`h()->int&&`, 则 `h()` 是 `xvalue`.
 + rvalue 对象的非静态成员; `Person{}.age`, `std::move(p).age`
@@ -57,10 +64,10 @@ void (&&g2)() = g; //指向函数的 右值引用语法, g2 是左值
 
 根据这两个特性, 可以将表达式分成 4 类:
 
-+ 唯一, 不能移动 - 这类表达式在 C++ 中被称为 `lvalue`.
-+ 唯一, 可以移动 - 这类表达式在 C++ 中被成为 `xvalue`(expiring value).
-+ 不唯一, 可以移动 - 这类表达式在 C++ 中被成为 `prvalue`(pure rvalue).
-+ 不唯一, 不可移动 -C++ 中不存在这类表达式.
++ 有ID, 不能移动 - 这类表达式在 C++ 中被称为 `lvalue`.
++ 有ID, 可以移动 - 这类表达式在 C++ 中被成为 `xvalue`(expiring value).
++ 无ID, 可以移动 - 这类表达式在 C++ 中被成为 `prvalue`(pure rvalue).
++ 无ID, 不可移动 -C++ 中不存在这类表达式.
 
 简单总结一下这些 value categories 之间的关系:
 
