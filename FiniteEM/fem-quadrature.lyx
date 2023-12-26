@@ -1,0 +1,589 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+FEM 数值积分
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Finite elements analysis and implementation"
+target "https://finite-element.github.io/1_quadrature.html"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+数值积分
+\end_layout
+
+\begin_layout Standard
+在有限元方法中，我们关注的核心计算操作是对已知 reference 单元上的函数进行积分。因此，这一运算将成为我们有限元实施的核心，这并不令人感到惊讶。
+\end_layout
+
+\begin_layout Standard
+对任意积分进行有效数值计算的通常方法是 numerical quadrature。本科数学（甚至高中微积分）专业的学生对这一基本思想应该不会陌生，因为它是梯形法
+则（trapezoidal ）和辛普森积分法则（Simpson）的推广。
+\end_layout
+
+\begin_layout Standard
+quadrature 的核心思想是，函数 
+\begin_inset Formula $f(X)$
+\end_inset
+
+ 在单元
+\begin_inset Formula $e$
+\end_inset
+
+上的积分 ，可以近似为在特定点求值的函数值的加权和：
+\begin_inset Formula 
+\begin{equation}
+\int_{e}f(X)=\sum_{q}f(X_{q})\,w_{q}+\order{h^{n}}\label{eq:1.4}
+\end{equation}
+
+\end_inset
+
+称 
+\begin_inset Formula $\{X_{q}\}$
+\end_inset
+
+为 
+\series bold
+积分点
+\series default
+的集合，相应的 
+\begin_inset Formula $\{w_{q}\}$
+\end_inset
+
+ 称为
+\series bold
+积分权重
+\series default
+的集合。一组 积分点及其相应的 积分权重共同构成了 
+\series bold
+
+\begin_inset Formula $e$
+\end_inset
+
+的积分规则
+\series default
+。 .
+ 对于任意函数 
+\begin_inset Formula $f$
+\end_inset
+
+，quadrature 只是积分的近似值。这种近似的全局截断误差对任何函数都是
+\begin_inset Formula $\order{h^{n}}$
+\end_inset
+
+，其中 
+\begin_inset Formula $h$
+\end_inset
+
+ 是单元的直径。
+\end_layout
+
+\begin_layout Standard
+如果 
+\begin_inset Formula $f$
+\end_inset
+
+ 是
+\begin_inset Formula $X$
+\end_inset
+
+的多项式 with degree 
+\begin_inset Formula $p$
+\end_inset
+
+，且 
+\begin_inset Formula $p\le n-2$
+\end_inset
+
+ ，那么很容易证明，用 
+\begin_inset Formula $n$
+\end_inset
+
+ 阶的积分规则 得到的结果 误差正好为零。
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+1.15 
+\end_layout
+
+\end_inset
+
+ 积分规则的 degree 是定义为最大的
+\begin_inset Formula $p$
+\end_inset
+
+，对所有阶数为 
+\begin_inset Formula $p$
+\end_inset
+
+ 的多项式进行精确积分。
+\end_layout
+
+\begin_layout Section
+精确和不完全积分 
+\end_layout
+
+\begin_layout Standard
+在有限元方法中，积分常常是多项式。如果针对特定区间所使用的 quadrature规则 具有足够高的 degree，则不会出现积分误差，我们就称其为
+ exact or complete。在其他情况下，我们将 quadrature 称为 incomplete。
+\end_layout
+
+\begin_layout Standard
+通常，高阶quadrature比低阶quadrature 有更多的 积分点。这就需要权衡 quadrature 的精确度与函数求值次数，以及使用该规则进行积分的
+计算成本。Complete quadrature 导致较低的误差，但如果与模拟中的其他误差相比，特别是与离散化误差相比，incomplete quadratur
+e 导致的误差较小，则incomplete quadrature 可能更具优势。
+\end_layout
+
+\begin_layout Section
+一维实例 
+\end_layout
+
+\begin_layout Standard
+我们在上文提到，在积分入门课程中通常会讲授一些一维积分规则。首先是中点规则：
+\begin_inset Formula 
+\begin{equation}
+\int_{0}^{h}f(X)\,\dd{X}=h\,f(0.5h)+\order{h^{3}}\label{eq:1.5}
+\end{equation}
+
+\end_inset
+
+换句话说，
+\begin_inset Formula $f$
+\end_inset
+
+在区间中点的值乘以区间长度，即可计算出 
+\begin_inset Formula $f$
+\end_inset
+
+在区间上的integral近似值。这相当于用一个恒定值来近似被积函数。
+\end_layout
+
+\begin_layout Standard
+如果我们将 
+\begin_inset Formula $f$
+\end_inset
+
+ 近似为区间上的直线，那么我们就得出了trapezoidal （或trapezium）法则：
+\begin_inset Formula 
+\begin{equation}
+\int_{0}^{h}f(X)\,\dd{X}=\frac{h}{2}f(0)+\frac{h}{2}f(h)+\order{h^{4}}\label{eq:1.6}
+\end{equation}
+
+\end_inset
+
+如果我们使用二次函数，则得出辛普森法则：
+\begin_inset Formula 
+\begin{equation}
+\int_{0}^{h}f(X)\,\dd{X}=\frac{h}{6}f(0)+\frac{2h}{3}f(\frac{h}{2})+\frac{h}{6}f(h)+\order{h^{5}}\label{eq:1.7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+参考单元
+\end_layout
+
+\begin_layout Standard
+在实际应用中，我们希望将quadrature规则写成数组，不依赖于
+\begin_inset Formula $h$
+\end_inset
+
+。 为此，我们将为单个
+\series bold
+reference element
+\series default
+编写 积分规则。当我们希望在 cell上对函数进行实际积分时，我们将改变坐标至 reference cell。我们稍后将讨论这一过程的机制，但现在我们只需考虑我
+们选择的 reference cells 的积分规则。
+\end_layout
+
+\begin_layout Standard
+常用的一维参考单元是单位区间 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+。 这也是我们在这里要采用的参考单元（另一种常用的参考单元是区间 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ ）。 由于其对原点的对称性，有些人更倾向于采用）。
+\end_layout
+
+\begin_layout Standard
+在二维空间中，最常用的单元是三角形和四边形。为简单起见，在本课程中我们只考虑在三角形上实施有限元方法，因此需要选择 reference triangle。对应于
+单位区间，自然的选择是定点为 
+\begin_inset Formula $[(0,0),(1,0),(0,1)]$
+\end_inset
+
+ 的三角形，尽管顶点编号可以有不同的选择。
+\end_layout
+
+\begin_layout Section
+参考单元的 Python实现
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+ReferenceCell
+\family default
+ 类提供了Python 对象，后者编码了 reference cell 的 geometry and topology。在此阶段，相关信息是 参考单元
+ 的 维度和 顶点列表。当我们考虑网格时，拓扑结构将变得非常重要。本课程中我们需要的 参考单元是 
+\family typewriter
+
+\begin_inset CommandInset href
+LatexCommand href
+name "ReferenceInterval"
+target "https://finite-element.github.io/fe_utils.html#fe_utils.reference_elements.ReferenceInterval"
+literal "false"
+
+\end_inset
+
+
+\family default
+ 和 
+\begin_inset CommandInset href
+LatexCommand href
+name "ReferenceTriangle"
+target "https://finite-element.github.io/fe_utils.html#fe_utils.reference_elements.ReferenceTriangle"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+参考单元上的积分法则
+\end_layout
+
+\begin_layout Standard
+选定了参考单元的约定之后，可以简单地把 qudrature rule 表示成一对儿 积分点list 和 权重 list。例如 Simpson's
+ rule:
+\begin_inset Formula 
+\begin{align}
+ & w=\left[\frac{1}{6},\frac{2}{3},\frac{1}{6}\right]\nonumber \\
+ & X=[(0),(0.5),(1)].\label{eq:1.8}
+\end{align}
+
+\end_inset
+
+我们把 quadrature 点写成 1–tuple，为了兼容
+\begin_inset Formula $n$
+\end_inset
+
+–维情形，那时积分点会是 
+\begin_inset Formula $n$
+\end_inset
+
+–tuples。
+\end_layout
+
+\begin_layout Standard
+参考三角形上的最低阶积分法则是 单点 quadrature
+\begin_inset Formula 
+\begin{align}
+ & w=\left[\frac{1}{2}\right]\nonumber \\
+ & X=[(\frac{1}{3},\frac{1}{3})]\label{eq:1.9}
+\end{align}
+
+\end_inset
+
+此规则的精确度是
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+Quadrature rule 的权重列表的求和等于 参考单元的 volume。
+\end_layout
+
+\begin_layout Section
+一维中的Legendre–Gauß Quadrature
+\end_layout
+
+\begin_layout Standard
+有限元方法会产生不同多项式degree的integrands，因此如果能够根据需要使用任意degree的quadrature，就会非常方便。在一维中，Legen
+dre–Gauß 积分规则是一个具有任意精度的规则族，我们可以利用它来实现这一目的。numpy提供了我们可以采用的实现，这对我们很有帮助。Legendre-Ga
+uß 正交规则通常针对区间 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ 进行定义。 因此，我们需要改变坐标，以获得在我们约定的参考区间的积分规则：
+\begin_inset Formula 
+\begin{align}
+X_{q} & =\frac{X_{q}^{\prime}+1}{2}\nonumber \\
+w_{q} & =\frac{w_{q}^{\prime}}{2}\label{eq:1.10}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $(\{X_{q}^{\prime}\},\{w_{q}^{\prime}\})$
+\end_inset
+
+ 是 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ 上的积分规则；
+\begin_inset Formula $(\{X_{q}\},\{w_{q}\})$
+\end_inset
+
+ 是单位区间上的规则。区间上的 Legendre-Gauß quadrature是最优的，in the sense that 它在每个精度degree上都使用了
+尽可能少的点数。
+\end_layout
+
+\begin_layout Section
+将 Legendre-Gauß 积分拓展到二维
+\end_layout
+
+\begin_layout Standard
+通过两个单位区间的 Cartesian 积可以得到单位正方形 
+\begin_inset Formula $(0,1)\otimes(0,1)$
+\end_inset
+
+。类似地，直乘两个单位区间的积分规则得到单位正方形的积分规则：
+\begin_inset Formula 
+\begin{align}
+X_{\text{sq}} & =\left\{ (x_{p},x_{q})\;|\;x_{p},x_{q}\in X\right\} \nonumber \\
+w_{\text{sq}} & =\left\{ w_{p}w_{q}\;|\;w_{p},w_{q}\in w\right\} \label{eq:1.11}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $(X,w)$
+\end_inset
+
+ 是区间上的积分规则。此外，
+\begin_inset Formula $(X_{\text{sq}},w_{\text{sq}})$
+\end_inset
+
+ 将和一维规则的精度相同。
+\end_layout
+
+\begin_layout Standard
+然而，我们需要单位三角形的积分规则。可以通过将三角形视为某个边长为零的正方形来实现。Duffy变换 将单位正方形映射为单位三角形：
+\begin_inset Formula 
+\begin{equation}
+(x_{\text{tri}},y_{\text{tri}})=\left(x_{\text{sq}},y_{\text{sq}}(1-x_{\text{sq}})\right)\label{eq:1.12}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/duffy-transform.svg
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+通过压缩一条边，Duffy变换将正方形变成三角形
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:1.5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+通过结合Duffy变换与
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.11"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到三角形的积分规则
+\begin_inset Formula 
+\begin{align}
+X_{\text{tri}} & =\left\{ (x_{p},x_{q}(1-x_{p}))\;|\;x_{p}\in X_{h},\;x_{q}\in X_{v}\right\} \label{eq:1.13}\\
+w_{\text{tri}} & =\left\{ w_{p}w_{q}(1-x_{p})\;|\;w_{p}\in w_{h},\;w_{q}\in w_{v}\right\} 
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $(X_{v},w_{v})$
+\end_inset
+
+是 degree of precison 
+\begin_inset Formula $n$
+\end_inset
+
+ 的参考区间积分法则，
+\begin_inset Formula $(X_{h},w_{h})$
+\end_inset
+
+ 是精度 
+\begin_inset Formula $n+1$
+\end_inset
+
+ 的参考区间积分法则。组合得到的积分法则
+\begin_inset Formula $(X_{\text{tri}},w_{\text{tri}})$
+\end_inset
+
+ 将是精度
+\begin_inset Formula $n$
+\end_inset
+
+的。
+\begin_inset Formula $(X_{h},w_{h})$
+\end_inset
+
+ 需要额外自由度是因为 Duffy 变换相当于将 integrand 的多项式degree加一。
+\end_layout
+
+\begin_layout Section
+在Python中实现quadrature
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document
