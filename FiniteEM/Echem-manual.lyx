@@ -413,10 +413,20 @@ name "fig:fig3"
 \end_layout
 
 \begin_layout Standard
-在开始建模之前必须对电化学系统做一些基本假设。假设电流密度与电场呈线性关系，则电解质电流遵循欧姆定律，此即 一次电流分布。同时它也是无限快电极动力学的假设，并可
-以忽略 电极–电解质界面上的 电压降。如果电极反应动力学以有限速率进行，则称系统具有二次电流分布。如果系统满足更复杂的 非线性电荷守恒方程 和
- 电极极化浓度依赖关系，则称为三次电流分布。在某些应用尤其是电分析领域，电解质的电位梯度非常小，从而无需求解电流的空间分布，此时只需关注 电极动力学与电极附近物
-质输运（扩散）的交互。根据麦克斯韦方程之一的高斯定律，介质中的电位移场（
+在开始建模之前必须对电化学系统做一些基本假设。假设电流密度与电场强度呈线性关系，则电解质电流遵循欧姆定律，此即 
+\series bold
+一次电流分布
+\series default
+，同时它假设电极动力学无限快，因此可以忽略 电极–电解质界面上的 电压降。如果电极反应动力学以有限速率进行，则称系统具有
+\series bold
+二次电流分布
+\series default
+。如果系统满足更复杂的 非线性电荷守恒方程 和 电极极化浓度依赖关系，则称为
+\series bold
+三次电流分布
+\series default
+。在某些应用尤其是电分析领域，电解质的电位梯度非常小，从而无需求解电流的空间分布，此时只需关注 电极动力学与电极附近物质输运（扩散）的交互。根据麦克斯韦方程之一
+的高斯定律，介质中的电位移场（
 \begin_inset Formula $\sbf D$
 \end_inset
 
@@ -452,7 +462,11 @@ name "fig:fig3"
 
 \end_inset
 
-在含有载荷离子的电解质中，电荷密度写成
+在含有载荷离子的电解质中，电荷密度
+\begin_inset Formula $\rho_{V}$
+\end_inset
+
+写成
 \begin_inset Formula 
 \[
 \rho_{V}=F\sum_{i}z_{i}c_{i}
@@ -476,7 +490,7 @@ name "fig:fig3"
 \end_layout
 
 \begin_layout Standard
-水溶液中载荷子的 质量传输通常由 Nernst–Planck 方程给出，它忽略了离子间相互作用，因此只在无限稀溶液中精确：
+水溶液中载荷子的 质量传输通常由 Nernst–Planck 方程给出，它忽略了离子间相互作用，因此只在无限稀溶液中精确成立：
 \begin_inset Formula 
 \begin{equation}
 \sbf N_{i}=-D_{i}\nabla c_{i}-z_{i}u_{m,i}Fc_{i}\nabla\phi_{\ell}+c_{i}\sbf u\label{eq:my1}
@@ -534,8 +548,11 @@ x_{D}=\sqrt{\frac{RT\,\varepsilon}{F^{2}I}}
 \begin_inset Formula $\mathrm{mol/m^{3}}$
 \end_inset
 
-），它描述电场被屏蔽的长度，被称为德拜（Debye）长度。在电解质溶液中这个长度非常短：对于典型的离子强度大约为 1 纳米。在远离带电表面1 纳米以上时，溶液将
-保持电中性：
+），它描述电场被屏蔽的长度，被称为
+\series bold
+德拜（Debye）长度
+\series default
+。在电解质溶液中这个长度非常短：对于典型的离子强度大约为 1 纳米。在远离带电表面1 纳米以上时，溶液将保持电中性：
 \begin_inset Formula 
 \[
 \sum z_{i}c_{i}=0
@@ -543,8 +560,8 @@ x_{D}=\sqrt{\frac{RT\,\varepsilon}{F^{2}I}}
 
 \end_inset
 
-电中性约束可以施加到 Nernst–Planck方程中的电势上，以代替完整的泊松方程。电中性的 Nernst–Planck 方程将用于描述三次电流分布模型中的电
-流。而电流的表达式为
+可以要求 Nernst–Planck方程中的电势满足上式的电中性约束，而不是完整的泊松方程。电中性的 Nernst–Planck 方程将用于描述三次电流分布模型
+中的电流，考虑到电流的表达式为
 \begin_inset Formula 
 \[
 \sbf i_{\ell}=F\sum z_{i}\sbf N_{i}
@@ -566,7 +583,7 @@ noprefix "false"
 \begin_inset Formula $\sbf N_{i}$
 \end_inset
 
-，可知结合质量守恒和电荷守恒结合，将自动得到电流守恒。
+，可知结合质量守恒和电荷守恒结合，自动得到电流守恒。
 \end_layout
 
 \begin_layout Standard
@@ -574,7 +591,7 @@ noprefix "false"
 \begin_inset Formula $\sbf i_{\ell}$
 \end_inset
 
- 的表达式可以简化系统：
+ 的表达式中的各项：
 \begin_inset Formula 
 \begin{equation}
 \sbf i_{\ell}=-F\sum D_{i}z_{i}\nabla c_{i}-\frac{F^{2}}{RT}\nabla\phi_{\ell}\sum z_{i}^{2}D_{i}c_{i}+\sbf u\sum z_{i}c_{i}\label{eq:my2}
@@ -2973,6 +2990,206 @@ noprefix "false"
 
 \begin_layout Chapter
 边界条件和约束
+\end_layout
+
+\begin_layout Section
+电极边界条件Reduce
+\end_layout
+
+\begin_layout Standard
+在当前的分析模型中，电流场和浓度场的耦合主要发生在（用户指定的）电极边界上，电势分布 受到 反应过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+，反应电流
+\begin_inset Formula $\sbf J_{Em}$
+\end_inset
+
+，反应动力学
+\begin_inset Formula $\sbf J_{Em}=f(\eta)$
+\end_inset
+
+等的影响，这些参数可以依赖于浓度场
+\begin_inset Formula $C_{i}$
+\end_inset
+
+（可能有多个）。反过来，当电流场分布确定之后，又会通过迁移项
+\begin_inset Formula $\sbf J_{M_{i}}$
+\end_inset
+
+ 影响浓度场的分布。
+\end_layout
+
+\begin_layout Itemize
+考虑到电场分布改变迅速，浓度场扩散相对较慢（不在同一个时间尺度），为提高计算效率，在瞬态计算中电场和浓度场是分开计算的（时间步错开），即 电场(0s)
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+浓度场(0s)
+\begin_inset Formula $\to$
+\end_inset
+
+电场(1s)
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+浓度场(1s) 这样的形式，也就是 浓度场（前一步）
+\begin_inset Formula $\to$
+\end_inset
+
+ 电场（下一步），其中 
+\begin_inset Formula $\to$
+\end_inset
+
+ 表示单向耦合。
+\end_layout
+
+\begin_layout Itemize
+程序中，将电极边界（ConstraintETSurface）作为一种独立的 约束类型，它包含子组件：电极相条件（ETPConditionBase），电极反应（E
+TReactionBase），膜配置（ETFilmConfBase），膜物质（ETFSpeciesBase），膜阻设置（ETFilmResistBase）
+ 等等。
+\end_layout
+
+\begin_layout Itemize
+具体的电极反应又包含子组件：膜配置（ETFilmConfBase），平衡电位（ETEquilBase），反应动力学（ETDynamicsBase）等等。
+\end_layout
+
+\begin_layout Standard
+电极边界的复杂之处在于，它的约束类型（1st，2nd，...）是运行时而非编译期决定的。根据用户设置的不同组件状态，将 reduce 到不同的 约束类型和处理方法（E
+TReactBasic::ReduceConstraint）。对于电场（ETReactBasic::ReduceCstElec）：
+\end_layout
+
+\begin_layout Itemize
+如果电极相条件是电流约束，则 reduce 到 2nd 边界条件。
+\end_layout
+
+\begin_layout Itemize
+如果电极相条件是电压约束，根据具体的反应动力学，reduce 到 1st（并约束节点自由度）， 或 3rd 边界条件（计算对刚阵和激励的贡献）。
+\end_layout
+
+\begin_layout Itemize
+多个电极反应之间会互相影响，1st 边界优先生效，并 override 其他电极反应。
+\end_layout
+
+\begin_layout Itemize
+多个电极反应各自的反应电流
+\begin_inset Formula $\sbf J_{Em}$
+\end_inset
+
+的贡献直接相加，根据电流的连续性，等于溶液中的电流
+\begin_inset Formula $J_{E\ell}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+对于浓度场（ETReactBasic::ReduceCstConc），则根据Control.json 输入的浓度场反应系数类型，设置为固定浓度流（2nd边界），
+ 或电迁移流（耦合2nd边界）。
+\end_layout
+
+\begin_layout Standard
+电极边界的具体设置也会影响 电极电压，过电位，电极反应电流等 电极物理量的计算。
+\end_layout
+
+\begin_layout Itemize
+如果电极边界是1st 类型，则电极电位
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+，过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+ 可以简单相加减得到；从
+\begin_inset Formula $\eta$
+\end_inset
+
+可以得到总反应电流和反应分电流。
+\end_layout
+
+\begin_layout Itemize
+如果电极边界是 2nd 类型，则要先通过FEM方法计算出 总反应电流大小
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+，然后数值求解
+\begin_inset Formula $\sbf J_{E}=\sum_{m}f_{m}(\eta)$
+\end_inset
+
+ 的根（
+\begin_inset Formula $\sum_{m}$
+\end_inset
+
+对所有电极反应），确定过电位
+\begin_inset Formula $\eta$
+\end_inset
+
+，再确定电极电位 
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+。从
+\begin_inset Formula $\eta$
+\end_inset
+
+可以得到总反应电流和反应分电流。
+\end_layout
+
+\begin_layout Itemize
+如果电极上只有一个反应，那么反应电流就等于 溶液电流场总电流
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+。将
+\begin_inset Formula $\eta$
+\end_inset
+
+代入电极动力学得到的电流
+\begin_inset Formula $\sbf J_{Em}$
+\end_inset
+
+，相比于
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+一般有数值误差，建议直接使用准确值
+\begin_inset Formula $\sbf J_{E}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+关于膜阻的计算，
+\end_layout
+
+\begin_layout Itemize
+电极电流导致 镀膜物质厚度增加或减少，生长或消耗速率正比于 界面反应电流。
+\end_layout
+
+\begin_layout Itemize
+如果 镀膜物质 电阻较大，膜厚的改变将导致额外电压降，并影响电势分布，进而影响电流分布，此过程是非线性的。
+\end_layout
+
+\begin_layout Itemize
+为了简化程序设计提高计算效率。膜阻的计算采用阶梯式方法，即从 
+\begin_inset Formula $n\to(n+1)$
+\end_inset
+
+ 步时，使用的
+\begin_inset Formula $n$
+\end_inset
+
+时刻的电流计算膜厚膜阻。为了提高膜厚的精度，也可以使用线性近似，对 
+\begin_inset Formula $n$
+\end_inset
+
+ 和 
+\begin_inset Formula $n+1$
+\end_inset
+
+ 的结果做平均。
 \end_layout
 
 \begin_layout Section

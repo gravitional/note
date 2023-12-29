@@ -1,0 +1,131 @@
+# yd desktop 命令行
+
+## 求解器 powershell
+
+```powershell
+# 批量运行solver 程序, testdriver 测试命令, release4.2/vs-debug
+#$solver='C:\solver\bin\Release\solver.exe'; $solverTag='R4.2R'
+#$solver='C:\solver\bin\Debug\solver.exe'; $solverTag='R4.2D'
+$solver='D:\SolverRemote\bin\Debug\solver.exe'; $solverTag='DevD'
+$myArgs='-dtep8'
+## 初始化两个文本文件, 运行的任务列表
+$rFBase='runList'; $rFExt='.txt'; $timeTag=(date -Format 'MMdd-HHmmss');
+$runFile= ('{0}-{1}-{2}{3}' -f $rFBase, $solverTag ,$timeTag, $rFExt)
+### 避免重复运行时, 覆盖日志
+if(Test-Path -PathType Leaf $runFile){
+	$timeTag=(date -Format 'MMdd-HHmmss-ffff')
+    $runFile= ('{0}-{1}-{2}{3}' -f $rFBase, $solverTag ,$timeTag, $rFExt)
+}
+## solver 日志
+$logFile='runLog.log'; $svlogName='solver.log'
+New-Item -Force -Path $runFile
+New-Item -Force -Path $logFile
+# 初始化任务列表
+$testsOri = @(ls -Recurse -Directory 'SolvingDomain' )
+$tLast=$testsOri.Length-1
+$tests=$testsOri[0..$tLast] #默认选取全部运行，按字母排序, 从0开始
+foreach ($t in $tests) {
+	write-output "`n<<<<<<<<<<<<<<<<<<< $t"
+    $tName=$t.FullName; # 任务名称
+    $svlog=Join-Path -Path $t -ChildPath $svlogName # 计算日志名称
+    $t1=Get-Date
+    Out-File -Append -FilePath $runFile -Encoding 'utf8' -InputObject ($t1.ToString() + ' :Run: ' + $tName)
+    # solver 日志 重定向, 不能加括号，不然会运行完再重定向; C:\solver\bin\Debug\solver.exe
+	# C:\solver\bin\Debug\solver.exe $myArgs $tName | Tee-Object -FilePath $logFile
+	&$solver $myArgs $tName | Tee-Object -FilePath $logFile
+    # 日志重定向
+    $t2=Get-Date
+    Out-File -Append -FilePath $runFile -Encoding 'utf8' -InputObject ($t2.ToString() + ' :End Solver.')
+    Out-File -Append -FilePath $runFile -Encoding 'utf8' -InputObject ('TotalMinuts: '+($t2-$t1).TotalMinutes.ToString())
+    $out=$null;
+    Select-String -SimpleMatch -OutVariable out -Path $svlog -Pattern '分析全部完成'
+    if ($out){Out-File -Append -FilePath $runFile -Encoding 'utf8' -InputObject 'find: 分析全部完成'
+        }else{Out-File -Append -FilePath $runFile -Encoding 'utf8' -InputObject 'warn: 分析可能失败'}
+    Out-File -Append -FilePath $runFile -Encoding 'utf8' -InputObject ''
+}
+
+
+##----------------------------------------------
+### 如果还有 app 项目，为了具体过滤出 simdroid 项目， 使用下面的命令
+$tests = @(ls -Recurse -Directory | where { $_.FullName -match 'Solving\\SolvingDomain$' } );
+
+### 筛选工程目录
+ls -Recurse -Directory | where { $_.FullName -match 'Solving\\SolvingDomain$' }  | select FullName >test3.txt
+
+
+### solver 日志 重定向
+D:\SolverRemote\bin\Debug\solver.exe -dtep4 $tName | Tee-Object -FilePath $logFile
+D:\SolverRemote\bin\Debug\solver.exe -dtep4 $tName > $logFile
+
+## 批量 start-process 运行，非阻塞
+$num=0
+$tests = @(ls -Recurse -Directory 'SolvingDomain' )
+$runFile = 'runList.txt'; Write-Output ''> $runFile
+$p=@(1..$tests.Length) # 存储返回的进程对象
+foreach ($t in $tests) {
+    $pOptions=@{
+        FilePath = 'D:\SolverRemote\bin\Debug\solver.exe'
+        ArgumentList= "-dtep4 $($t.FullName)"
+        RedirectStandardOutput= 'running.log'
+        PassThru= $true
+        UseNewEnvironment=$false
+        NoNewWindow=$true
+    }
+    Write-Output ((Get-Date).ToString() + ' :Run: ' + $t.FullName) >> $runFile
+    echo $pOptions
+	$p[$num]=(Start-Process @pOptions)
+    Write-Output ((Get-Date).ToString() + ' :End: ' + ($t.FullName) ) >> $runFile
+    Write-Output ''>> $runFile
+    $num+=1
+}
+```
+
+## 求解器2
+
+```powershell
+##----------------------------------------------
+## 查看所有 result.h5
+ls -Recurse -Filter 'result.h5' | select FullName
+
+### 统计 result.h5 共有多少个
+ls -Recurse -Filter 'result.h5' | select FullName | measure
+
+## 筛选出 result 文件夹, 并进行备份, 备份到 xxx-D4.2
+$bakName = '-D4.2'
+ls -Directory -Recurse -Filter 'result' | foreach { copy -Recurse -force $_.FullName ($_.FullName + $bakName) -WhatIf }
+
+### 另一个版本
+$bakName = '-D4.2'
+ls -Directory -Recurse | where { $_.FullName -match 'result$' } | foreach { copy -Recurse -force $_.FullName ($_.FullName + $bakName) -WhatIf }
+
+## solver 调试参数
+solver-dev "D:\TestDriverPaths\debug.txt"  -tdep8
+## 无脑测试5遍
+foreach($i in (0..4)){ solver-D "D:\TestDriverPaths\debug.txt" -tdep8}
+```
+
+## 编译求解器
+
+```powershell
+## 编译求解器
+msbuild C:\Solver\src\build\solver.sln /m /p:Platform=x64 /v:n /p:Configuration=Release
+```
+
+## msys2 编译
+
+```bash
+cmake -G 'MSYS Makefiles' -S C:\solver -B C:\solver\build-gcc -DCMAKE_C_COMPILER='gcc.exe' -DCMAKE_CXX_COMPILER='g++.exe' -DCMAKE_MAKE_PROGRAM='c:/msys64/usr/bin/make.exe' -DRELEASE_WITH_DEBUG_INFO=OFF -DCMAKE_BUILD_TYPE=Debug
+
+cmake.exe -G 'MSYS Makefiles' -S C:/Solver -B C:/Solver/build-gcc -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_MAKE_PROGRAM=make -DRELEASE_WITH_DEBUG_INFO=OFF -DCMAKE_BUILD_TYPE=Debug --fresh
+```
+
+## 制作gif 动图
+
+```bash
+# 生成调色板
+ffmpeg.exe -r 2 -i jh9-primary-cell-2d-f%3d.png -vf palettegen tmp-%3d.png
+
+#  生成 gif
+ffmpeg.exe -r 2 -i jh7-pcb4-cu-static-f%3d.png -i tmp-001.png -lavfi paletteuse out.gif
+```
+
