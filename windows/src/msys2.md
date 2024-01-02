@@ -19,6 +19,48 @@ MSYS2 和 Cygwin 是完全的 POSIX 环境, 有很多神奇的功能, 如 `fork(
 MinGW 基于普通的 Microsoft C Runtime, 没有这些功能.
 请明确您要构建的是哪一种环境.
 
+## MSYS2 目录映射问题
+
+[windows上msys2配置及填坑](https://hustlei.github.io/2018/11/msys2-for-win.html)
+
+### MSYS2 ln -s软连接会复制目录的问题
+
+[Symlink in msys2: Copy or hard link?](https://stackoverflow.com/questions/61594025/symlink-in-msys2-copy-or-hard-link)
+
+MSYS2在windows上用`ln -s dir`创建软连接时, 会复制所有文件到目标文件夹.
+解决这个问题需要在 `/etc/profile` 文件里面加上一个关键变量:
+在 `/etc/profile` 添加对 `zsh` 也生效.
+
+```bash
+export MSYS="winsymlinks:lnk"
+```
+
+添加后创建的目录软连接, 就和linux上很类似了.
+直接cd就能进入被连接的目录文件夹, 非常方便.
+
+具体的规则, see [cygwin Symbolic links](https://cygwin.com/cygwin-ug-net/using.html#pathnames-symlinks)
+
++ 如果没有设置 `MSYS`, 那么`link`只是一个 copy
++ 如果 `MSYS` 为 `winsymlinks`, 则会创建一个 `Windows快捷方式`.
++ 如果 `MSYS` 为 `winsymlinks:nativestrict`,
+则会创建 NTFS native 的符号链接,
+但如果不是以管理员身份运行 MSYS2 shell, 似乎会出现 `操作不允许` 的错误.
+
+### fastab配置文件目录的方法
+
+在fstab中配置也可以映射目录, 个人更喜欢用`ln -s`软连接.
+
+在`/etc/fstab`配置文件目录映射的方法:
+
+直接在`/etc/fstab`后加入如下代码, 然后重启msys2就可以了
+
+```bash
+#目录路径中不能有空格. 如果目录路径中有空格请使用转义字符"\040"代替
+C:\Users\adminstrator\Desktop /desktop
+```
+
+上述命令配置完成后, 在终端 `cd /desktop` 后可以直接切换到 `C:\Users\adminstrator\Desktop` 目录下.
+
 ## msys2 环境
 
 [Environments](https://www.msys2.org/docs/environments/)
@@ -349,38 +391,6 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
 
 然后执行 pacman -Sy 刷新软件包数据即可.
 
-## MSYS2 目录映射问题
-
-[windows上msys2配置及填坑](https://hustlei.github.io/2018/11/msys2-for-win.html)
-
-### MSYS2 ln -s软连接会复制目录的问题
-
-MSYS2在windows上用ln -s dir创建软连接时, 会复制所有文件到目标文件夹.
-
-解决这个问题需要在/etc/profile文件里面加上一个关键变量:
-
-```bash
-export MSYS="winsymlinks:lnk"
-```
-
-添加后创建的目录软连接, 就和linux上很类似了.
-直接cd就能进入被连接的目录文件夹, 非常方便.
-
-### fastab配置文件目录的方法
-
-在fstab中配置也可以映射目录, 个人更喜欢用ln -s软连接.
-
-在/etc/fstab配置文件目录映射的方法:
-
-直接在/etc/fstab后加入如下代码, 然后重启msys2就可以了
-
-```bash
-C:\Users\adminstrator\Desktop /desktop
-#目录路径中不能有空格. 如果目录路径中有空格请使用转义字符"\040"代替
-```
-
-上述命令配置完成后, 在终端 `cd /desktop` 后可以直接切换到 `C:\Users\adminstrator\Desktop` 目录下.
-
 ## pacman 管理包
 
 [pacman的包管理命令](https://blog.csdn.net/qq_41601836/article/details/106519865)
@@ -515,3 +525,56 @@ PROMPT+=' '
 ```
 
 也就是把 `git` 检查相关的部分注释掉.
+
+## msys2 lib, dll
+
+[How to link to shared object library in msys2?](https://stackoverflow.com/questions/74270765/how-to-link-to-shared-object-library-in-msys2)
+
+MinGW 对共享库使用 `.dll` 扩展名, 而不是 `.so`.
+
+`lib?.dll.a` 是一个[导入库](https://stackoverflow.com/q/3573475/2752075),
+是在运行时加载相应 `lib?.dll` 的`shim`.
+
+在某些时候, 你不能直接链接 `.dll`, 而必须链接 `.dll.a`.
+现代 MinGW 可以直接链接 `.dll`, 因此您应该不再需要使用导入库了.
+
+```bash
+-ltest1 没有此类文件或目录
+```
+
+您必须用 `-L` 指定库搜索路径.
+`-ltest1` 需要 `libtest1.a` 或 `libtest1.dll.a` 或 `libtest1.dll`
+(也许还会检查其他一些变体).
+
+## 命名约定
+
+[Porting](https://www.msys2.org/wiki/Porting/#library-prefixes)
+
+Undefined references and linking to DLLs/SOs
+
+Linux/ELF 平台通常不会对链接到共享对象做任何特殊处理,
+它们只是将 `undefined references` 保留在二进制文件中.
+Windows 则要求在链接时解决所有引用问题.
+就 DLL 而言, `.dll.a` 导入库可以解决这个问题,
+它可以将相关的 `.dll` 添加到二进制文件的导入表中,
+并在代码中插入正确的调用, 但需要在链接二进制文件时传递正确的  linker flags.
+
+请注意, 链接器知道这些文件, 并会在使用标准 `-l` 参数时自动使用它们,
+例如 `-lfoo` 会让链接器按此顺序检查 `libfoo.dll.a` 和 `libfoo.a`
+(除非另有说明).
+
+除非在链接器调用中传递了 `-no-undefined`
+(`library_la_LDFLAGS = -no-undefined`),
+否则 Libtool 通常拒绝创建 DLL.
+
+参见: [libtool](https://lists.gnu.org/archive/html/libtool/2007-04/msg00066.html)
+
+## 库前缀
+
+mingw DLL 遵循以 lib 作为库前缀的惯例.
+这影响到共享库(`.dll`), 静态对象存档(`.a`)和 DLL 导入库(`.dll.a`).
+由于 msys2 动态链接库通常与 msys2 之外的所有内容 ABI 不兼容,
+因此它们的前缀改为 `msys2-`.
+为完整起见, 我们注意到 Cygwin DLL 的前缀是 `cyg`.
+
+libtool 或 linker 会自动处理吗?
