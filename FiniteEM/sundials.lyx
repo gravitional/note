@@ -472,7 +472,7 @@ W_{i}=\frac{1}{\mathrm{rtol}\cdot\abs{y_{i}}+\mathrm{atol}_{i}}.\label{eq:6.4}
 \end_layout
 
 \begin_layout Subsection
-Nonlinear Solve
+非线性求解Nonlinear Solve
 \end_layout
 
 \begin_layout Standard
@@ -776,7 +776,11 @@ S\left\Vert \delta_{m}\right\Vert <\Upsilon\label{eq:6.7}
 \begin_inset Formula $R\le0.9$
 \end_inset
 
-。（源代码和文档不一致，以源代码为准）
+。（此处文档中
+\begin_inset Formula $S$
+\end_inset
+
+的表达式有误）。
 \end_layout
 
 \begin_layout Itemize
@@ -1065,7 +1069,7 @@ J\,v=\left[F(t,y+\sigma\,v,\dot{y}+\alpha\,\sigma\,v)-F(t,y,\dot{y})\right]/\sig
 \end_layout
 
 \begin_layout Subsection
-Local Error Test
+局部截断误差Local Error Test
 \end_layout
 
 \begin_layout Standard
@@ -1343,7 +1347,11 @@ literal "false"
 \begin_inset Formula $q'=q$
 \end_inset
 
-。接下来进行局部误差检验
+。接下来进行 
+\series bold
+局部误差检验
+\series default
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:6.8"
@@ -1373,7 +1381,51 @@ noprefix "false"
 
 \end_inset
 
-（see ida.c:2813）由
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+源代码见 ida.c:2813。此处
+\begin_inset Formula $\mathrm{ELTE}(q)$
+\end_inset
+
+是 WRMS 误差估计，是无量纲的。局部误差检验失败时有 
+\begin_inset Formula $\left\Vert \mathrm{LTE}\right\Vert _{\text{WRMS}}>1$
+\end_inset
+
+，
+\begin_inset Formula $0.9/2$
+\end_inset
+
+可以理解为安全系数。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:6.7c"
@@ -1750,11 +1802,15 @@ P^{-1}A,\quad\text{or}\quad AP^{-1},\quad\text{or}\quad P_{L}^{-1}AP_{R}^{-1}.
 \begin_inset Formula $y$
 \end_inset
 
-。
+（而非
+\begin_inset Formula $\Delta y$
+\end_inset
+
+）。
 \end_layout
 
 \begin_layout Standard
-为了提高克 Krylov 迭代的收敛性，预处理矩阵
+为了提高 Krylov 迭代的收敛性，预处理矩阵
 \begin_inset Formula $P$
 \end_inset
 
