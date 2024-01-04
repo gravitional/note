@@ -134,62 +134,6 @@ SYNOPSIS
 + `-h`, `--human-readable` print sizes in powers of 1024 (e.g., 1023M)
 + `-T`, `--print-type` print file system type
 
-## find 过滤文件
-
-删除日志文件
-
-```bash
-sudo /dev/null > /var/log/**.log
-```
-
-下面这个推荐使用,删除30天之前的旧文件
-
-```bash
-sudo find /var/log/ -type f -mtime +30 -exec rm -f {} \;
-```
-
-***
-`find` - search for files in a directory hierarchy
-
-`find [-H] [-L] [-P] [-D debugopts] [-Olevel] [starting-point...] [expression]`
-
-***
-`expression`
-
-`starting points`列表之后的部分是`表达式`.  这是一种查询规范, 描述了我们如何匹配文件以及如何处理匹配的文件.
-表达式由一系列事物组成:`Test`, `Actions`,...
-
-***
-`-exec command ;`
-
-执行命令;  如果返回`0`状态, 则为`true`.  之后传递给`find`的参数都将作为命令的参数, 直到遇到`;`为止.
-字符` {}`被替换为当前文件名命令参数中出现的任何地方的当前文件名, 而不仅仅是在单独存在的参数中.
-这两种构造都可能需要转义(以`\`表示)或加引号以保护它们, 避免 shell 展开.
-有关使用`-exec`选项的示例, 请参见示例部分. 对每个匹配的文件运行一次指定的命令.
-该命令在起始目录中执行.  与`-exec`有关的操作具有不可避免的安全问题;  你应该使用`-execdir`选项代替.
-
-***
-`-exec command {} +`
-
-在选定的文件上运行指定的命令, `-exec` action的变体. 但是通过在命令结尾附加上每个选中的文件名;
-该命令的调用总数将远远少于匹配文件的数目.  命令行的构建方式与`xargs`几乎相同.
-命令中仅允许使用一个`{}`实例, 并且当从`shell`调用`find`时,应该用引号保护起来, 例如`'{}'`, 以防止其被`shell`解释.
-该命令在起始目录中执行.  如果有任何调用返回一个非零值作为退出状态, 则`find`返回一个非零退出状态.
-如果`find`遇到错误, 有时可能会导致立即退出, 因此一些待处理的命令可能根本不会运行. This variant of `-exec` always returns `true`.
-
-***
-`-mtime n`
-文件数据的最后修改时间为 `n*24` 小时. 请参阅`-atime`的注释, 以了解舍入如何影响文件修改时间的解释
-
-`-type c`
-File is of type c:
-
-+ `b`  block (buffered) special
-+ `c`  character (unbuffered) special
-+ `d`  directory
-+ `p`  named pipe (FIFO)
-+ `f`  regular file
-
 ## 查看文件大小
 
 [Ubuntu下查看文件, 文件夹和磁盘空间的大小](https://blog.csdn.net/BigData_Mining/java/article/details/88998472)
