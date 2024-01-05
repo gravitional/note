@@ -235,6 +235,7 @@ sudo restart lightdm
 
 + 开启`SysRq`功能: [Linux中的SysRq魔术键](https://blog.csdn.net/jasonchen_gbd/article/details/79080576).
 幸运的是: `Ubuntu` 默认已经开启了这个功能.
+见文件 `/etc/sysctl.d/10-magic-sysrq.conf`
 
 首先要确保内核打开了`CONFIG_MAGIC_SYSRQ`配置项, 这样`SysRq`的底层处理才可用.
 另外内核中有一个宏定义`SYSRQ_DEFAULT_ENABLE`, 表示系统默认情况下是否启用`SysRq`功能键.
