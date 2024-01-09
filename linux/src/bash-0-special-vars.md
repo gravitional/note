@@ -180,3 +180,15 @@ export [-fn] [-p] [name[=value]]
 
 除非提供的选项无效, 或其中一个名称不是有效的 shell 变量名,
 或提供的 -f 名称不是 shell 函数, 否则返回状态为零.
+
+## bash 操作符 |&
+
+[What does "|&" mean in Bash?](https://stackoverflow.com/questions/35384999/what-does-mean-in-bash)
+
+摘自 `man 1 bash`, Pipelines 一节:
+
+[时间 [-p]] [ ! ] command [ [|⎪|&] command2 ... ]
+
+如果使用了 `|&`, `command` 的 标准错误 和 标准输出,
+会通过管道连接到 `command2` 的标准输入.
+因此, 它就像管道操作符 `|`, 但同时对标准输出 和 标准错误 进行 管道连接.

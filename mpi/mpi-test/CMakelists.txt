@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.15)
+
+message(STATUS "The CMAKE_VERSION is ${CMAKE_VERSION}.")
+
+project(SimpleMPIPrj)
+message(STATUS "<<< PROJECT_NAME is ${PROJECT_NAME}")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+find_package(MPI REQUIRED)
+
+# add_compile_options("-I${MPI_CXX_INCLUDE_DIRS}")
+if(MPI_FOUND)
+    message(${MPI_CXX_INCLUDE_DIRS})
+    include_directories(SYSTEM "${MPI_CXX_INCLUDE_DIRS}")
+endif()
+
+add_executable(${PROJECT_NAME} app.cpp)
+target_link_libraries(${PROJECT_NAME} ${MPI_LIBRARIES})

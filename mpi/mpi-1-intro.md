@@ -1,7 +1,7 @@
 # 两小时入门MPI与并行计算系列
 
-[MPI 教程介绍](https://mpitutorial.com/tutorials/mpi-introduction/zh_cn/) [入门MPI与并行计
-算系列](https://zhuanlan.zhihu.com/p/355652501)
+[MPI 教程介绍](https://mpitutorial.com/tutorials/mpi-introduction/zh_cn/) 
+[入门MPI与并行计算系列](https://zhuanlan.zhihu.com/p/355652501)
 
 [潘建瑜 教授, 计算数学](https://math.ecnu.edu.cn/~jypan/Teaching.html)
 [高等数值分析(高性能计算, 并行计算)](https://math.ecnu.edu.cn/~jypan/Teaching/ParaComp/index.html)

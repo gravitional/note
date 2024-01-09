@@ -302,33 +302,10 @@ sudo pacman -Sy base-devel
 [清华大学](https://mirrors.tuna.tsinghua.edu.cn/)
 [中国科学技术大学](http://mirrors.ustc.edu.cn/)
 
-### pacman基本命令
-
-```bash
-pacman -Sy 更新软件包数据
-pacman -Syu 更新所有
-pacman -Ss xx 查询软件xx的信息
-pacman -S xx 安装软件xx
-pacman -R xx 删除软件xx
-```
-
-## 安装gcc, g++编译器
+## 安装 mingw-w64工具链, mingw-w64-x86_64-toolchain
 
 随便哪个msys2 子环境都可以, 只是安装好后, 只能在对应的环境下运行.
-
-### 安装make编译器
-
-```bash
-#查询并找到msys/make
-pacman -Ss make
-#安装
-pacman -S msys/make
-
-# 安装 msys 版本
-pacman -S msys/gcc
-```
-
-查看可用的安装包
+查看可用的安装包.
 
 ```bash
 pacman -Ssq gcc #或者pacman -Sl grep gcc
@@ -341,21 +318,19 @@ mingw64 mingw-w64-x86_64-gcc
 msys gcc
 
 分别对应于 msys 的三个环境.
-
-## 安装 mingw-w64 工具链
-
 不论你在哪个环境下安装,
 MSYS2都会将 `mingw-w64-x86_64-gcc` 安装在 `msys64/mingw64` 下.
 从之前的分析可知只有在 mingw64 环境下才能使用这个目录下的程序.
-在其他两个环境下虽然能够安装mingw-w64-x86_64-gcc, 但是不能使用mingw-w64-x86_64-gcc.
+在其他两个环境下虽然能够安装 `mingw-w64-x86_64-gcc`,
+但是不能使用 `mingw-w64-x86_64-gcc`(没有加入PATH).
 
-+ 安装 mingw-w64-x86_64 工具链
+简单地, 可以安装 mingw-w64-x86_64-toolchain [软件包组](https://wiki.archlinuxcn.org/wiki/Pacman)
 
 ```bash
 pacman -S mingw-w64-x86_64-toolchain
 ```
 
-+ 安装 mingw-w64-ucrt-x86_64 工具链
+## 安装 ucrt64工具链, mingw-w64-ucrt-x86_64-toolchain
 
 打开MSYS2命令行, 输入 `pacman -Syu` 同步更新所有工具, 然后输入
 
@@ -390,23 +365,6 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
 ```
 
 然后执行 pacman -Sy 刷新软件包数据即可.
-
-## pacman 管理包
-
-[pacman的包管理命令](https://blog.csdn.net/qq_41601836/article/details/106519865)
-
-```bash
-sudo pacman -Qdt #查询所有孤儿软件, 不再被需要的.
-sudo pacman -Qdtq #查询所有不再被依赖的包名
-# 查询孤儿软件并删除掉他们
-sudo pacman -R $(sudo pacman -Qdtq)
-```
-
-```bash
-pacman -Sw # 包名: 只下载包, 不安装.
-pacman -Sc # 清理未安装的包文件, 包文件位于 /var/cache/pacman/pkg/ 目录
-pacman -Scc # 清理所有的缓存文件
-```
 
 ## perl cpan, cpanm, cpanp
 
