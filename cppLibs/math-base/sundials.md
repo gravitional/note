@@ -1300,26 +1300,21 @@ add_executable(myexec main.c)
 target_link_libraries(myexec PUBLIC SUNDIALS::cvode SUNDIALS::nvecpetsc)
 ```
 
-### sd
+### sundial cmake 配置
 
+on MSYS2 ucrt64, 安装好必须的 各种包,
 
-CMAKE_Fortran_COMPILER
-EXAMPLES_ENABLE_F2003
-BUILD_FORTRAN_MODULE_INTERFACE
-
-
-
+CMAKE_INSTALL_PREFIX: sundials 安装路径
+PETSC_DIR: petsc 安装路径
+LAPACK_LIBRARIES; blas 和 lapack 的路径.
 
 ```bash
 cmake \
 -DCMAKE_BUILD_TYPE=Release \
-\
 -DCMAKE_INSTALL_PREFIX='C:/cppLibs/sundials' \
 -DEXAMPLES_INSTALL_PATH=C:/cppLibs/sundials/examples \
-\
 -DEXAMPLES_ENABLE_C=ON \
 -DEXAMPLES_ENABLE_CXX=ON \
-\
 -DENABLE_OPENMP=ON \
 -DENABLE_MPI=ON \
 -DEXAMPLES_ENABLE_F2003=ON \
@@ -1327,12 +1322,33 @@ cmake \
 -DMPIEXEC_EXECUTABLE='c:/msys64/home/yd/bin/mpiexec.exe' \
 -DMPI_Fortran_COMPILER='c:/msys64/ucrt64/bin/mpif90.exe' \
 -DSUNDIALS_LOGGING_ENABLE_MPI=ON \
-\
 -DENABLE_PETSC=ON \
 -DPETSC_DIR=/c/cppLibs/PETSc \
-\
 -DENABLE_LAPACK=ON \
 -DLAPACK_LIBRARIES='/ucrt64/bin/libopenblas_64.dll;/ucrt64/bin/liblapack64.dll' \
 -G 'MSYS Makefiles' \
 -B . -S .. --fresh
+```
+
+on Linux, 配置好相关的路径,
+`liblapack.so` 或 `liblapacke.so` 都行
+
+```bash
+cmake \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_PREFIX=/home/tom/myLibs/sundials \
+-DEXAMPLES_INSTALL_PATH=/home/tom/myLibs/sundials/examples \
+-DEXAMPLES_ENABLE_C=ON \
+-DEXAMPLES_ENABLE_CXX=ON \
+-DENABLE_OPENMP=ON \
+-DENABLE_MPI=ON \
+-DEXAMPLES_ENABLE_F2003=ON \
+-DBUILD_FORTRAN_MODULE_INTERFACE=ON \
+-DSUNDIALS_LOGGING_ENABLE_MPI=ON \
+-DENABLE_PETSC=ON \
+-DPETSC_DIR=/home/tom/myLibs/PETSc \
+-DENABLE_LAPACK=ON \
+-DLAPACK_LIBRARIES='/home/tom/myLibs/openBLAS/lib/libopenblas.so;/home/tom/myLibs/openBLAS/lib/liblapacke.so' \
+-G 'Unix Makefiles' \
+-B . -S ..
 ```
