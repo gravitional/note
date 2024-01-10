@@ -19,6 +19,9 @@ MSYS2 和 Cygwin 是完全的 POSIX 环境, 有很多神奇的功能, 如 `fork(
 MinGW 基于普通的 Microsoft C Runtime, 没有这些功能.
 请明确您要构建的是哪一种环境.
 
+前缀
+mingw-w64-ucrt-x86_64-
+
 ## MSYS2 目录映射问题
 
 [windows上msys2配置及填坑](https://hustlei.github.io/2018/11/msys2-for-win.html)

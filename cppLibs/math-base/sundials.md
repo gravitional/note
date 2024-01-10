@@ -1253,7 +1253,10 @@ CMake 也可用于在 Windows 上构建 SUNDIALS.
 
 使用 CMake SUNDIALS build系统, 命令
 
+```bash
 $ make install
+```
+
 将安装 LIBDIR 下的库和 INCLUDEDIR 下的公共头文件.
 这些目录的值分别是 INSTDIR/lib 和 INSTDIR/include.
 可以通过设置 CMake 变量 CMAKE_INSTALL_PREFIX 来更改位置.
@@ -1295,4 +1298,41 @@ add_executable(myexec main.c)
 # 用例.
 
 target_link_libraries(myexec PUBLIC SUNDIALS::cvode SUNDIALS::nvecpetsc)
+```
+
+### sd
+
+
+CMAKE_Fortran_COMPILER
+EXAMPLES_ENABLE_F2003
+BUILD_FORTRAN_MODULE_INTERFACE
+
+
+
+
+```bash
+cmake \
+-DCMAKE_BUILD_TYPE=Release \
+\
+-DCMAKE_INSTALL_PREFIX='C:/cppLibs/sundials' \
+-DEXAMPLES_INSTALL_PATH=C:/cppLibs/sundials/examples \
+\
+-DEXAMPLES_ENABLE_C=ON \
+-DEXAMPLES_ENABLE_CXX=ON \
+\
+-DENABLE_OPENMP=ON \
+-DENABLE_MPI=ON \
+-DEXAMPLES_ENABLE_F2003=ON \
+-DBUILD_FORTRAN_MODULE_INTERFACE=ON \
+-DMPIEXEC_EXECUTABLE='c:/msys64/home/yd/bin/mpiexec.exe' \
+-DMPI_Fortran_COMPILER='c:/msys64/ucrt64/bin/mpif90.exe' \
+-DSUNDIALS_LOGGING_ENABLE_MPI=ON \
+\
+-DENABLE_PETSC=ON \
+-DPETSC_DIR=/c/cppLibs/PETSc \
+\
+-DENABLE_LAPACK=ON \
+-DLAPACK_LIBRARIES='/ucrt64/bin/libopenblas_64.dll;/ucrt64/bin/liblapack64.dll' \
+-G 'MSYS Makefiles' \
+-B . -S .. --fresh
 ```
