@@ -185,7 +185,7 @@ FOPTFLAGS='-O3 -march=native -mtune=native'
 测试
 
 ```bash
-cd ~/petsc-3.14.1/src/ksp/ksp/tutorials
+cd xxx/petsc-3.14.1/src/ksp/ksp/tutorials
 
 # 编译
 make ex50

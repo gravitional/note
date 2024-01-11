@@ -1261,7 +1261,8 @@ make install 命令也会安装一个 CMake 软件包配置文件, 其他 CMake 
 
 14.2.1. 在其他 CMake 项目中将 SUNDIALS 作为第三方库使用
 make install 命令也会安装一个 CMake 软件包配置文件, 其他 CMake 项目可以加载该文件, 以获取针对 SUNDIALS 构建所需的所有信息.
-在使用项目的 CMake 代码中, 可以使用 find_package 命令来搜索配置文件, 该文件将与软件包版本文件 instdir/SUNDIALS_INSTALL_CMAKEDIR/SUNDIALSConfig.cmake 一起安装到 instdir/SUNDIALS_INSTALL_CMAKEDIR/SUNDIALSConfigVersion.cmake.
+在使用项目的 CMake 代码中, 可以使用 find_package 命令来搜索配置文件,
+该文件将与软件包版本文件 instdir/SUNDIALS_INSTALL_CMAKEDIR/SUNDIALSConfig.cmake 一起安装到 instdir/SUNDIALS_INSTALL_CMAKEDIR/SUNDIALSConfigVersion.cmake.
 这些文件包含使用 SUNDIALS 的项目所需的所有信息, 包括导出的 CMake 目标.
 SUNDIALS 导出的 CMake 目标与生成的库二进制文件遵循相同的命名约定, 例如 CVODE 的导出目标是 SUNDIALS::cvode.
 下面的 CMake 代码片段展示了消费项目如何利用 SUNDIALS 软件包配置文件, 在自己的 CMake 项目中针对 SUNDIALS 进行构建.
@@ -1289,15 +1290,16 @@ target_link_libraries(myexec PUBLIC SUNDIALS::cvode SUNDIALS::nvecpetsc)
 
 ### sundial cmake 配置
 
-on MSYS2 ucrt64, 安装好必须的 各种包,
+### MSYS2 ucrt64, openBLAS
 
 CMAKE_INSTALL_PREFIX: sundials 安装路径
 PETSC_DIR: petsc 安装路径
 LAPACK_LIBRARIES; blas 和 lapack 的路径.
 
 ```bash
-cmake \
+cmake.exe \
 -DCMAKE_BUILD_TYPE=Release \
+-DBUILD_CVODES=OFF \
 -DCMAKE_INSTALL_PREFIX=/c/cppLibs/sundials \
 -DEXAMPLES_INSTALL_PATH=/c/cppLibs/sundials/examples \
 -DEXAMPLES_ENABLE_C=ON \
@@ -1312,13 +1314,15 @@ cmake \
 -DENABLE_PETSC=ON \
 -DPETSC_DIR=/c/cppLibs/PETSc \
 -DENABLE_LAPACK=ON \
--DLAPACK_LIBRARIES='/c/cppLibs/openBLASLAPACK/bin/libopenblas.dll;/c/cppLibs/openBLASLAPACK/bin/liblapack.dll' \
+-DLAPACK_LIBRARIES='c:/cppLibs/openBLASLAPACK/bin/libopenblas.dll;c:/cppLibs/openBLASLAPACK/bin/liblapack.dll' \
 -G 'MSYS Makefiles' \
 -B . -S .. --fresh
 ```
 
-on Linux, 配置好相关的路径,
-`liblapack.so` 或 `liblapacke.so` 都行
+sundials nvector petsc 的CMAKE 脚本有问题,
+使用这个 [修改过的版本](src-nvector-petsc-CMakeLists.txt).
+
+### Linux, openBLAS
 
 ```bash
 cmake \
