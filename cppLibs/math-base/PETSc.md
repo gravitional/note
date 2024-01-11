@@ -25,7 +25,8 @@ on linux
 
 ```bash
 python3 ./configure --prefix=/home/tom/myLibs/PETSc \
---download-f2cblaslapack \
+--with-blas-lib=/home/tom/myLibs/openBLASLAPACK/lib/libopenblas.a \
+--with-lapack-lib=/home/tom/myLibs/openBLASLAPACK/lib/libopenblas.a \
 --with-shared-libraries=1 --with-debugging=0 --with-64-bit-indices \
 COPTFLAGS='-O3 -march=native -mtune=native' CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3  -march=native -mtune=native'
 ```

@@ -1348,7 +1348,7 @@ cmake \
 -DENABLE_PETSC=ON \
 -DPETSC_DIR=/home/tom/myLibs/PETSc \
 -DENABLE_LAPACK=ON \
--DLAPACK_LIBRARIES='/home/tom/myLibs/openBLAS/lib/libopenblas.so;/home/tom/myLibs/openBLAS/lib/liblapacke.so' \
+-DLAPACK_LIBRARIES='/home/tom/myLibs/openBLASLAPACK/lib/libopenblas.so;/home/tom/myLibs/openBLASLAPACK/lib/liblapack.so' \
 -G 'Unix Makefiles' \
 -B . -S ..
 ```
