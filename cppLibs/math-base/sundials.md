@@ -1217,32 +1217,19 @@ CMake 将生成 CMakeLists.txt 配置文件(如果在 Linux/Unix 系统上, 则�
 CMake 也可用于在 Windows 上构建 SUNDIALS.
 要在 Visual Studio 下构建 SUNDIALS, 应执行以下步骤:
 
-将下载的 tar 文件解压缩到一个目录中.
-这将是 SOLVERDIR
-
-创建单独的 BUILDDIR
-
-打开 Visual Studio 命令提示符并 cd 到 BUILDDIR
-
-运行 cmake-gui ../SOLVERDIR
-
-点击 "配置
-
-选中/取消选中要编译的求解器
-
-将 CMAKE_INSTALL_PREFIX 更改为 INSTDIR
-
-根据需要设置其他选项
-
-点击生成
-
-回到 VS 命令窗口:
-
-运行 msbuild ALL_BUILD.vcxproj
-
-运行 msbuild INSTALL.vcxproj
-
-生成的库将位于 INSTDIR 中.
++ 将下载的 tar 文件解压缩到一个目录中. 作为 `SOLVERDIR`
++ 创建单独的 `BUILDDIR`
++ 打开 Visual Studio 命令提示符并 cd 到 `BUILDDIR`
++ 运行 `cmake-gui ../SOLVERDIR`
+    + 点击 "配置
+    + 选中/取消选中要编译的求解器
+    + 将 CMAKE_INSTALL_PREFIX 更改为 INSTDIR
+    + 根据需要设置其他选项
+    + 点击生成
++ 回到 VS 命令窗口:
++ 运行 msbuild ALL_BUILD.vcxproj
++ 运行 msbuild INSTALL.vcxproj
++ 生成的库将位于 INSTDIR 中.
 
 现在也可以在 Visual Studio 中打开 SUNDIALS 项目.
 双击 ALL_BUILD.vcxproj 文件打开项目.

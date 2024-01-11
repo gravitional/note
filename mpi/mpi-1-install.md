@@ -10,6 +10,9 @@
 `mpi.h`, `libmpi.dll` 等开发依赖可以通过 pacman 安装,
 无需使用 msmpisdk.msi 中提供的, 可以免去配置头文件搜索路径的麻烦.
 
+`mpiexec.exe` 在 `C:\Program Files\Microsoft MPI\Bin`
+`msmpi` 的头文件和库文件在 `C:\Program Files (x86)\Microsoft SDKs\MPI\Lib\x64`
+
 ### 安装msmpi, MSYS2 ucrt64
 
 使用 pacman 安装如下包

@@ -1,6 +1,6 @@
 # PETSc
 
-## 配置PETSc    编译脚本
+## 配置PETSc 编译脚本
 
 [Configuring PETSc](https://petsc.org/release/install/install/#doc-config-faq)
 
@@ -15,22 +15,26 @@
 我们还建议不要使用共享库, 因为这样更容易创建独立的二进制文件.
 + msys2 下指定安装路径, c盘路径 `c:/xx` 要写成 `/c/xxx`
 
-msys2, ucrt64, make, 使用openBLAS编译出的 `.a` lib
+## msys2, ucrt64, make, 使用 fblaslapack 包
+
+需要使用 PETSc configure 从网上下载的 fblaslapack 包,
+然后编译出的静态库在 `petsc-xxx/arch-xxx/externalpackages/git.fblaslapack` 下面
+`libflapack.a`, `libfblas.a`
+将它们加入到系统的 Lib 搜索路径, 不然会报错
 
 ```bash
 /usr/bin/python ./configure --prefix='/c/cppLibs/PETSc' \
 --with-cc=/ucrt64/bin/mpicc \
 --with-cxx=/ucrt64/bin/mpicxx \
 --with-fc=/ucrt64/bin/mpif90 \
---with-blas-lib=/c/cppLibs/openBLASLAPACK/lib/libopenblas.a \
---with-lapack-lib=/c/cppLibs/openBLASLAPACK/lib/liblapack.a \
+--download-fblaslapack \
 --with-mpiexec='/C/Program\ Files/Microsoft\ MPI/Bin/mpiexec' \
 --with-shared-libraries=0 --with-debugging=0 --with-64-bit-indices \
 COPTFLAGS='-O3 -march=native -mtune=native' \
 CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3 -march=native -mtune=native'
 ```
 
-linux, 使用 openBLAS 编译出的 `.a` lib
+## linux, 使用openBLAS编译的 `libopenblas.a`
 
 ```bash
 python3 ./configure --prefix=/home/tom/myLibs/PETSc \
@@ -150,3 +154,73 @@ configure 无法检测某些编译器的编译器库.
 ./configure --with-blas-lib=libblas.a --with-lapack-lib=liblapack.a
 ./configure --with-blaslapack-dir=/soft/com/packages/intel/13/079/mkl
 ```
+
+## PETSc 添加扩展包
+
+[PETSc 编译安装教程](https://nscc.mrzhenggang.com/petsc)
+
+安装扩展包
+PETSc添加扩展的方式有2中:
+
+1. 通过 --with-xx-dir 的方式指定已经安装过的目录
+2. 通过 --download-xx 的方式自动下载包并编译安装(需要联网)
+3. 通过 --download-xx=/path/to/package.tar.gz 指定安装包的路径, 扩展包可以去 https://ftp.mcs.anl.gov/pub/petsc/externalpackages/ 下载
+
+```bash
+# configure
+./configure prefix=$HOME/software/petsc/3.14.1-gcc49-mpich \
+--with-cc=mpicc --with-cxx=mpicxx --with-fc=mpif90 \
+--with-mpiexec=/usr/bin/yhrun \
+--download-fblaslapack=/vol-th/software/petsc/externalpackages/fblaslapack-3.4.2.tar.gz \
+--download-fftw=/vol-th/software/petsc/externalpackages/fftw-3.3.8.tar.gz \
+--download-hdf5=/vol-th/software/petsc/externalpackages/hdf5-1.12.0.tar.bz2 \
+--download-netcdf=/vol-th/software/petsc/externalpackages/netcdf-4.5.0.tar.gz \
+--download-metis=/vol-th/software/petsc/externalpackages/metis-5.1.0-p3.tar.gz \
+--with-debugging=0 \
+COPTFLAGS='-O3 -march=native -mtune=native' \
+CXXOPTFLAGS='-O3 -march=native -mtune=native' \
+FOPTFLAGS='-O3 -march=native -mtune=native'
+```
+
+测试
+
+```bash
+cd ~/petsc-3.14.1/src/ksp/ksp/tutorials
+
+# 编译
+make ex50
+# 运行
+./ex50  -da_grid_x 4 -da_grid_y 4 -mat_view
+```
+
+## msys2 PETSc
+
+msys2 安装的 PETSc 有多个版本,
+
+补充的 `petsc-build` 包包含经过提炼的 PETSc 生成树.
+某些软件包(如 SLEPc)在编译时需要它.
+普通用户应使用 `petsc` 软件包.
+
+该软件包提供多种库编译方式, 其区别在于
+3 个字符的后缀 XYZ 区分, 如下所示:
+
+* X 是基于 Netlib 的 SDCZ 符号的标量类型:
+    - A 表示多精度或中性精度构建
+    - S 表示单精度实数
+    - D 表示双精度实数
+    - C 表示单精度复数
+    - Z 表示双精度复数
+
+* Y 为执行模式:
+    - S 表示顺序代码
+    - M 表示 MPI 并行代码
+    - T 表示多线程代码, 裸线程或 OpenMP, OpenACC 等.
+    - H 表示使用 CUDA, OpenCL 等的异构代码.
+
+* Z 是构建类型:
+    - O 表示优化构建
+    - G 表示调试构建
+
+后缀用于静态和动态库, 以及 PkgConfig .pc 文件.
+后缀 ZMO 表示优化的 MPI 并行双精度复杂库.
+使用 `pkg-config petsc-zmo --cflags` 命令来获取特定于编译的编译标志.
