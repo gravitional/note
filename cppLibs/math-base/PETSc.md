@@ -7,13 +7,15 @@
 使用 msys2 环境中的 python 运行 configure 脚本
 注意事项:
 
-+ Do not specify --with-cc, --with-fc etc for the above when using --with-mpi-dir - so that mpicc/ mpif90 will be picked up from mpi-dir!
-+ The two difficulties here are:
-  1) make sure PETSc configure picks up the proper Python installation, as there are more than one available in a MSYS2 MinGW shell and
-  2) tell PETSc where is MS-MPI mpiexec. We also recommend not to use shared libraries as it is easier to create standalone binaries that way.
++ 使用 `--with-mpi-dir` 时,
+不要为上述内容指定 `--with-cc`, `--with-fc` 等, 这样 mpicc/ mpif90 就会从 mpi-dir 中读取!
++ 这里的两个难点是
+  1) 确保 PETSc 配置选择正确的 Python 安装, 因为 MSYS2 MinGW shell 中有多个可用的 Python, 以及
+  2) 告诉 PETSc MS-MPI mpiexec 在哪里.
+我们还建议不要使用共享库, 因为这样更容易创建独立的二进制文件.
 + msys2 下指定安装路径, c盘路径 `c:/xx` 要写成 `/c/xxx`
 
-on msys2 ucrt64
+msys2, ucrt64, make, 使用openBLAS编译出的 `.a` lib
 
 ```bash
 /usr/bin/python ./configure --prefix='/c/cppLibs/PETSc' \
@@ -28,7 +30,7 @@ COPTFLAGS='-O3 -march=native -mtune=native' \
 CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3 -march=native -mtune=native'
 ```
 
-on linux
+linux, 使用 openBLAS 编译出的 `.a` lib
 
 ```bash
 python3 ./configure --prefix=/home/tom/myLibs/PETSc \

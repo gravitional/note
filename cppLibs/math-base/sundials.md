@@ -1311,16 +1311,16 @@ LAPACK_LIBRARIES; blas 和 lapack 的路径.
 ```bash
 cmake \
 -DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_PREFIX='C:/cppLibs/sundials' \
--DEXAMPLES_INSTALL_PATH=C:/cppLibs/sundials/examples \
+-DCMAKE_INSTALL_PREFIX=/c/cppLibs/sundials \
+-DEXAMPLES_INSTALL_PATH=/c/cppLibs/sundials/examples \
 -DEXAMPLES_ENABLE_C=ON \
 -DEXAMPLES_ENABLE_CXX=ON \
 -DENABLE_OPENMP=ON \
 -DENABLE_MPI=ON \
 -DEXAMPLES_ENABLE_F2003=ON \
 -DBUILD_FORTRAN_MODULE_INTERFACE=ON \
--DMPIEXEC_EXECUTABLE='c:/msys64/home/yd/bin/mpiexec.exe' \
--DMPI_Fortran_COMPILER='c:/msys64/ucrt64/bin/mpif90.exe' \
+-DMPIEXEC_EXECUTABLE=/home/yd/bin/mpiexec \
+-DMPI_Fortran_COMPILER=/ucrt64/bin/mpif90 \
 -DSUNDIALS_LOGGING_ENABLE_MPI=ON \
 -DENABLE_PETSC=ON \
 -DPETSC_DIR=/c/cppLibs/PETSc \
