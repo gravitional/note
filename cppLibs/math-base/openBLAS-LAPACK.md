@@ -16,8 +16,46 @@ OpenBLAS 文件夹中的 changelog.txt 上写道
 在此页查看[源代码布局](https://github.com/xianyi/OpenBLAS/wiki/Developer-manual),
 
 简单地说, openBLAS 编译时会同时编译 LAPACK,
-但提供单一库 `libopenblas.so`, 可以自行软连接,
-或者手动复制一份改名字为 `liblapack.so`.
+但编译脚本只提供单一库 `libopenblas.so`.
+
+在 msys2 下, 软连接可能有问题, 编译器找不到动态库中的函数,
+简单的方法是手动复制
+
+```bash
+# 在 /openBLAS/lib 目录下
+cp -a libopenblasp-r0.3.26.a libopenblas.a
+cp -a libopenblasp-r0.3.26.a liblapack.a
+cp -a libopenblas.dll.a liblapack.dll.a
+# 在 /openBLAS/bin 目录下
+cp -a libopenblas.dll liblapack.dll
+```
+
+## 编译 openBLAS, LAPACK
+
+### 正常编译
+
+输入 `make` 自动检测 CPU 类型.
+or type `make TARGET=xxx` to set target CPU,
+e.g. `make TARGET=NEHALEM`.
+The full target list is in file TargetList.txt.
+
+```bash
+# 编译动态库版本
+make DYNAMIC_ARCH=1
+# 安装
+make DYNAMIC_ARCH=1 install
+```
+
+### 安装到目录
+
+```bash
+make install PREFIX=your_installation_directory
+```
+
+默认目录为 `/opt/OpenBLAS`.
+请注意, 在构建过程中传递给 make 的任何标志也应传递给 make install,
+以避免出现任何安装错误, 例如某些头文件未被正确复制.
+更多信息, 请阅读 [安装指南](https://github.com/OpenMathLib/OpenBLAS/wiki/Installation-Guide).
 
 ### openBLAS 中 LAPACK 相关的faq
 
@@ -53,7 +91,7 @@ Ubuntu 和 Debian 提供了 "替代 "机制,
 ```bash
 make clean
 make DYNAMIC_ARCH=1
-sudo make DYNAMIC_ARCH=1 install
+make DYNAMIC_ARCH=1 install
 ```
 
 可以重定向 BLAS 和 LAPACK 替代程序, 使其指向源代码构建的 OpenBLAS 首先,
@@ -109,30 +147,3 @@ ln -s libopenblas.so liblapack.so
 --因此 OpenBLAS Makefile 中的默认编译设置在 gfortran 选项中添加了
 `-fno-optimize-sibling-calls` 以防止在 "受影响 "版本中编译错误).
 有关详细信息和链接, 请参见问题跟踪中的 ticket 2154)
-
-## 编译 openBLAS, LAPACK
-
-### 正常编译
-
-输入 `make` 自动检测 CPU 类型.
-or type `make TARGET=xxx` to set target CPU,
-e.g. `make TARGET=NEHALEM`.
-The full target list is in file TargetList.txt.
-
-```bash
-# 编译动态库版本
-make DYNAMIC_ARCH=1
-# 安装
-sudo make DYNAMIC_ARCH=1 install
-```
-
-### 安装到目录
-
-```bash
-make install PREFIX=your_installation_directory
-```
-
-默认目录为 `/opt/OpenBLAS`.
-请注意, 在构建过程中传递给 make 的任何标志也应传递给 make install,
-以避免出现任何安装错误, 例如某些头文件未被正确复制.
-更多信息, 请阅读 [安装指南](https://github.com/OpenMathLib/OpenBLAS/wiki/Installation-Guide).
