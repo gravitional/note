@@ -1,16 +1,6 @@
-# openBLAS
+# 编译 LAPACK with refBLAS 参考BLAS
 
-[open blas user manual](https://github.com/OpenMathLib/OpenBLAS/wiki/User-Manual)
-
-## Compile the library
-
-Normal compile
-type `make` to detect the CPU automatically. or
-type `make TARGET=xxx` to set target CPU,
-e.g. `make TARGET=NEHALEM`.
-The full target list is in file TargetList.txt.
-
-## 编译 LAPACK
+## 编译LAPACK, make, msys2
 
 [下载lapack](https://www.netlib.org/lapack/)
 
@@ -66,3 +56,21 @@ CFLAGS = -O3 -fPIC
 FFLAGS = -O2 -frecursive -fPIC
 FFLAGS_NOOPT = -O0 -frecursive -fPIC
 ```
+
+## 编译 openBLAS, msys2, cmake
+
+在 msys2 ucrt64 环境下, 安装 gcc, g++, make 等工具链之后
+使用以下命令构建并安装
+
+```bash
+# 生成 make
+cmake -B . -S .. -G 'MinGW Makefiles' -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/c/cppLibs/LAPACK-openBLAS-ucrt --fresh
+# 构建
+cmake --build . --config Release
+# 安装
+cmake --install . --config Release --prefix /c/cppLibs/LAPACK-openBLAS-ucrt/
+```
+
+### 其他
+
+[生成 import library](https://github.com/OpenMathLib/OpenBLAS/wiki/How-to-use-OpenBLAS-in-Microsoft-Visual-Studio#generate-import-library-before-0210-version)

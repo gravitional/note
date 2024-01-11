@@ -1325,7 +1325,7 @@ cmake \
 -DENABLE_PETSC=ON \
 -DPETSC_DIR=/c/cppLibs/PETSc \
 -DENABLE_LAPACK=ON \
--DLAPACK_LIBRARIES='/ucrt64/bin/libopenblas_64.dll;/ucrt64/bin/liblapack64.dll' \
+-DLAPACK_LIBRARIES='/c/cppLibs/openBLASLAPACK/bin/libopenblas.dll;/c/cppLibs/openBLASLAPACK/bin/liblapack.dll' \
 -G 'MSYS Makefiles' \
 -B . -S .. --fresh
 ```

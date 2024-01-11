@@ -35,3 +35,9 @@ COPTFLAGS='-O3 -march=native -mtune=native' CXXOPTFLAGS='-O3 -march=native -mtun
 ```bash
 make PETSC_DIR=/c/Users/yd/Downloads/petsc-3.20.3 PETSC_ARCH=arch-mswin-c-opt all -j
 ```
+
+安装
+
+```bash
+make PETSC_DIR=/c/Users/yd/Downloads/petsc-3.20.3 PETSC_ARCH=arch-mswin-c-opt PREFIX=/c/cppLibs/PETSc install
+```
