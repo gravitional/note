@@ -42,14 +42,12 @@ The full target list is in file TargetList.txt.
 ```bash
 # 编译动态库版本
 make DYNAMIC_ARCH=1
-# 安装
-make DYNAMIC_ARCH=1 install
 ```
 
-### 安装到目录
++ 安装到目录
 
 ```bash
-make install PREFIX=your_installation_directory
+make PREFIX=/home/tom/myLibs/openBLASLAPACK install
 ```
 
 默认目录为 `/opt/OpenBLAS`.

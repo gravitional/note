@@ -1324,6 +1324,9 @@ sundials nvector petsc 的CMAKE 脚本有问题,
 
 ### Linux, openBLAS
 
+依情况而定, 可能需要指定 PETSc include 目录,
+即`-DPETSC_INCLUDE_DIRS=/home/tom/myLibs/PETSc/include`
+
 ```bash
 cmake \
 -DCMAKE_BUILD_TYPE=Release \
@@ -1338,8 +1341,20 @@ cmake \
 -DSUNDIALS_LOGGING_ENABLE_MPI=ON \
 -DENABLE_PETSC=ON \
 -DPETSC_DIR=/home/tom/myLibs/PETSc \
+-DPETSC_INCLUDE_DIRS=/home/tom/myLibs/PETSc/include \
 -DENABLE_LAPACK=ON \
 -DLAPACK_LIBRARIES='/home/tom/myLibs/openBLASLAPACK/lib/libopenblas.so;/home/tom/myLibs/openBLASLAPACK/lib/liblapack.so' \
 -G 'Unix Makefiles' \
 -B . -S ..
+```
+
+## 测试
+
+```bash
+# 进入 算例目录
+cd xxx/sundials/examples/idas/C_openmp
+# 编译
+gcc -o idasFoodWeb_kry_omp idasFoodWeb_kry_omp.c -lsundials_ida -lsundials_nvecopenmp -lm
+# 执行
+./idasFoodWeb_kry_omp
 ```
