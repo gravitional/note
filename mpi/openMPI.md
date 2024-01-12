@@ -13,7 +13,7 @@ tar xzf openmpi-xxx.tar.gz
 + 配置安装路径, 编译并安装, 安装路径自定义
 
 ```bash
-./configure --prefix=/usr/local/openmpi
+./configure --prefix=/home/tom/myLibs/openmpi
 make -j
 make install
 ```

@@ -1352,9 +1352,9 @@ cmake \
 
 ```bash
 # 进入 算例目录
-cd xxx/sundials/examples/idas/C_openmp
+cd xxx/sundials/examples/ida/C_openmp
 # 编译
-gcc -o idasFoodWeb_kry_omp idasFoodWeb_kry_omp.c -lsundials_ida -lsundials_nvecopenmp -lm
+gcc -o idaFoodWeb_kry_omp idaFoodWeb_kry_omp.c -lsundials_ida -lsundials_nvecopenmp -lm
 # 执行
 ./idasFoodWeb_kry_omp
 ```
