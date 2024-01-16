@@ -205,6 +205,10 @@ F(t,y,\dot{y})=0,\quad y(t_{0})=y_{0},\quad\dot{y}(t_{0})=\dot{y}_{0}\label{eq:6
 \end_inset
 
 中的矢量，
+\begin_inset Formula $F$
+\end_inset
+
+是residual 函数，
 \begin_inset Formula $t$
 \end_inset
 
@@ -533,7 +537,7 @@ D_{F}(x_{k})\left(x_{k+1}-x_{k}\right)=-F(x_{k}),\quad k=0,1,2,\cdots
 是系统 Jacobian 的某种近似
 \begin_inset Formula 
 \begin{equation}
-J=\frac{\partial G}{\partial y}=\frac{\partial F}{\partial y}+\alpha\frac{\partial F}{\partial\dot{y}},\label{eq:6.6}
+[J]_{n\times n}=\frac{\partial G}{\partial y}=\frac{\partial F}{\partial y}+\alpha\frac{\partial F}{\partial\dot{y}},\label{eq:6.6}
 \end{equation}
 
 \end_inset
@@ -2320,6 +2324,804 @@ IDA在输入和输出中使用各种常量。本章根据需要对这些常量�
 
 \begin_layout Section
 IDA常数
+\end_layout
+
+\begin_layout Chapter
+IDA例子
+\end_layout
+
+\begin_layout Section
+idaFoodWeb_bnd
+\end_layout
+
+\begin_layout Standard
+这个例子是一个多物种食物网模型（multi–species food web）[3]，其中模拟了在二维空间域中具有扩散性的捕食者–猎物（predator–pre
+y）关系。这里我们考虑一个 
+\begin_inset Formula $s=2p$
+\end_inset
+
+ 个物种的模型：
+\begin_inset Formula $p$
+\end_inset
+
+个捕食者和 
+\begin_inset Formula $p$
+\end_inset
+
+个猎物。物种 
+\begin_inset Formula $1,\ldots,p$
+\end_inset
+
+（猎物）满足 rate方程，而物种
+\begin_inset Formula $p+1,\ldots,s$
+\end_inset
+
+（捕食者）的反应速度无穷快（瞬间达到平衡态，
+\begin_inset Formula $\partial_{t}c^{i}=0$
+\end_inset
+
+）。物种浓度 
+\begin_inset Formula $c^{i}(x,y,t)$
+\end_inset
+
+ 的耦合 PDE 为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{c}
+\partial_{t}c^{i}=R_{i}(x,y,c)+d_{i}(c_{xx}^{i}+c_{yy}^{i}),\quad i=1,2,\cdots,p\\
+0=R_{i}(x,y,c)+d_{i}(c_{xx}^{i}+c_{yy}^{i}),\quad i=p+1,\cdots,s,
+\end{array}\right]\label{eq:al2}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $s=2p$
+\end_inset
+
+，with
+\begin_inset Formula 
+\[
+R_{i}(x,y,c)=c^{i}\,b_{i}+\sum_{j=1}^{s}{\color{blue}a_{ij}}\,c^{i}c^{j}.
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $c$
+\end_inset
+
+标记矢量
+\begin_inset Formula $\{c^{i}\}$
+\end_inset
+
+。一般来说，相互作用系数和扩散系数
+\begin_inset Formula $(a_{ij},b_{i},d_{i})$
+\end_inset
+
+ 可以是 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 的函数。本测试中使用的系数如下：
+\begin_inset Formula 
+\[
+a_{ij}=\begin{cases}
+-1 & i=j\\
+-0.5\cdot10^{-6} & i\le p,\,j>p\\
+10^{4} & i>p,j\le p\\
+0 & \text{其他}(i,j)
+\end{cases}
+\]
+
+\end_inset
+
+或者写成分块矩阵的形式
+\begin_inset Formula 
+\[
+{\color{blue}a_{ij}}=\left[\begin{array}{cc}
+-I & -0.5\cdot10^{-6}\\
+10^{4} & -I
+\end{array}\right],
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{i}=b_{i}(x,y)=\left[\begin{array}{c}
+1+\alpha xy+\beta\sin(4\pi x)\sin(4\pi y),\\
+-\left[1+\alpha xy+\beta\sin(4\pi x)\sin(4\pi y)\right],
+\end{array}\right],\;\text{for}\;\left[\begin{array}{c}
+i\le p\\
+i>p
+\end{array}\right]
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+d_{i}=\left[\begin{array}{c}
+1\\
+0.5
+\end{array}\right],\;\text{for}\;\left[\begin{array}{c}
+i\le p\\
+i>p
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+空间区域是 unit square 
+\begin_inset Formula $0\le x,y\le1$
+\end_inset
+
+，时间间隔是
+\begin_inset Formula $0\le t\le1$
+\end_inset
+
+。边界条件各处均为 homogeneous Neumann 类型（法向导数为零）。系数如此选取：当 
+\begin_inset Formula $\alpha=\beta=0$
+\end_inset
+
+时，保证存在唯一的 stable equilibrium [3]。根据经验，当 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 和
+\begin_inset Formula $\beta$
+\end_inset
+
+为正数时，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:al2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的稳定均衡似乎是存在的，尽管它可能不是唯一的。在这个问题中，我们取 
+\begin_inset Formula $\alpha=50$
+\end_inset
+
+，
+\begin_inset Formula $\beta=1000$
+\end_inset
+
+。对于初始条件，我们将每种猎物的浓度都设定为满足边界条件的简单多项式曲线，而捕食者的浓度都设定为一个统一值：
+\begin_inset Formula 
+\[
+c^{i}(x,y,0)=\begin{cases}
+10+i[16x(1-x)y(1-y)]^{2} & i\le p,\\
+10^{5} & i>p.
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+我们在一个 
+\begin_inset Formula $L\times L$
+\end_inset
+
+ 的网格上用中心差分法离散化这个 PDE 系统 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:al2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+（加上边界条件），从而得到一个大小（方程数）为 
+\begin_inset Formula $N=sL^{2}$
+\end_inset
+
+ 的 DAE 系统。因变量向量
+\begin_inset Formula $C$
+\end_inset
+
+ 由 
+\begin_inset Formula $c^{i}(x_{j},y_{k},t)$
+\end_inset
+
+ 的值组成，首先按物种索引 
+\begin_inset Formula $i$
+\end_inset
+
+ 分组，然后按 
+\begin_inset Formula $x$
+\end_inset
+
+ 分组，最后按 
+\begin_inset Formula $y$
+\end_inset
+
+分组。在本例中，我们取 
+\begin_inset Formula $p=1$
+\end_inset
+
+，
+\begin_inset Formula $s=2$
+\end_inset
+
+，
+\begin_inset Formula $L=20$
+\end_inset
+
+。Jacobian是带状的，半带宽为 
+\begin_inset Formula $\mathrm{mu}=\mathrm{ml}=sL=40$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+导数的中心差分公式
+\begin_inset Formula 
+\[
+f'(x)=\frac{f(x+h)-f(x-h)}{2h}-\frac{h^{2}}{6}f'''(c)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f''(x)=\frac{f(x+h)-2f(x)+f(x-h)}{h^{2}}-\frac{h^{2}}{12}f^{(4)}(c)
+\]
+
+\end_inset
+
+从Jacobian 的形式可知，
+\begin_inset Formula $J$
+\end_inset
+
+的带宽取决于 
+\begin_inset Formula $G$
+\end_inset
+
+ 对变量
+\begin_inset Formula $y_{q}$
+\end_inset
+
+的依赖形式。本例中某一点
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 上的
+\begin_inset Formula $F$
+\end_inset
+
+只依赖于此点上的所有
+\begin_inset Formula $y_{q}$
+\end_inset
+
+，一共有
+\begin_inset Formula $sL$
+\end_inset
+
+个。
+\begin_inset Formula 
+\[
+J=\frac{\partial\sbf G}{\partial\sbf y}=\frac{\partial\sbf F}{\partial\sbf y}+\alpha\frac{\partial\sbf F}{\partial\dot{\sbf y}},\quad J_{pq}=\frac{\partial G_{p}}{\partial y_{q}}
+\]
+
+\end_inset
+
+其中系统满足方程
+\begin_inset Formula $F(t,y,\dot{y})=0$
+\end_inset
+
+，
+\begin_inset Formula $F$
+\end_inset
+
+ 是 residual 函数；
+\begin_inset Formula $G$
+\end_inset
+
+是离散化 residue 
+\begin_inset Formula 
+\[
+G(y_{n})\equiv F\left(t_{n},y_{n},h_{n}^{-1}\sum_{i=0}^{q}\alpha_{n,i}y_{n-i}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+idaFoodWeb_bnd.c
+\family default
+ 程序包含 sunmatrix_band.h 和 sunlinsol_band.h 文件，以便使用 
+\emph on
+\noun on
+SUNLINSOL_BAND
+\emph default
+\noun default
+ 线性求解器。前者包含带状矩阵类型 SUNMATRIX_BAND 的定义，以及用于访问矩阵元素的 SM_COLUMN_B 和 SM_COLUMN_ELEMENT
+_B 宏。参见xxx。Include the main ida 头文件 ida.h，用于包含原型 of 求解器的用户可调用函数和 ida常量，而
+ nvector_serial.h 文件包含 串行 
+\family typewriter
+N_Vector
+\family default
+ 类型的定义。头文件 sundials_dense.h 用于为用户数据结构分配内存的 newDenseMat 函数。
+\end_layout
+
+\begin_layout Standard
+文件顶部的包含行后面是问题常量的定义，包括 x 和 y 的网格尺寸 MX 和 MY、方程数 NEQ、标量相对容差和绝对容差 
+\noun on
+RTOL
+\noun default
+和
+\noun on
+ATOL
+\noun default
+，以及 food–web 问题的各种参数。
+\end_layout
+
+\begin_layout Standard
+PDE的空间离散化自然地产生一个 DAE 系统，其中的方程按网格坐标 
+\begin_inset Formula $(i,j)$
+\end_inset
+
+ 编号。用户定义的宏 
+\family typewriter
+IJth_Vptr
+\family default
+ 封装了转换，将数学上的二维索引转换为一维的 
+\family typewriter
+N_Vector
+\family default
+ 索引，允许用户编写简洁、可读的代码来访问因变量的组成部分。
+\family typewriter
+IJ_Vptr(v,i,j)
+\family default
+返回一个指针，指向 
+\family typewriter
+v
+\family default
+ 中与索引为 
+\begin_inset Formula $\mathrm{is}=0$
+\end_inset
+
+、x 索引 
+\begin_inset Formula $\mathrm{ix=i}$
+\end_inset
+
+ 和 y 索引
+\begin_inset Formula $\mathrm{jy=j}$
+\end_inset
+
+ 的物种相对应的位置。
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+UserData
+\family default
+ 类型是指向结构体的指针，该结构包含 
+\family typewriter
+resweb
+\family default
+ 函数中使用的解题数据。该结构体在
+\family typewriter
+main
+\family default
+开始时分配并初始化。指向该结构体的指针（称为
+\family typewriter
+webdata
+\family default
+）被传递给
+\family typewriter
+IDASetUserData
+\family default
+，然后每次调用 
+\family typewriter
+resweb
+\family default
+ 函数时，该指针都会被传回。
+\end_layout
+
+\begin_layout Standard
+主程序简单明了，与 
+\family typewriter
+idaRoberts_dns
+\family default
+ 非常相似。不同之处在于使用了 
+\noun on
+SUNLINSOL_BAND
+\noun default
+ 线性求解器，以及使用了 ida 中的一致初始条件算法来修正初始值。对 
+\family typewriter
+SUNBandMatrix
+\family default
+ 的调用包括半带宽 
+\family typewriter
+ml
+\family default
+ 和 
+\family typewriter
+mu
+\family default
+。调用 
+\family typewriter
+IDACalcIC
+\family default
+ 时带有 
+\family typewriter
+\noun on
+IDA_YA_YDP_INIT
+\family default
+\noun default
+ 选项，这意味着 ida 将根据 y 的微分分量，计算 y 的代数分量和 
+\begin_inset Formula $y'$
+\end_inset
+
+ 的微分分量。在本例中，
+\family typewriter
+id
+\family default
+ 的分量对猎物来说等于 
+\begin_inset Formula $1$
+\end_inset
+
+（表示微分变量），对捕食者来说等于 
+\begin_inset Formula $0$
+\end_inset
+
+（代数变量）。
+\end_layout
+
+\begin_layout Standard
+接下来，在输出时间上循环调用 
+\family typewriter
+IDASolve
+\family default
+ 函数，打印出左下角和右上角物种浓度的解，以及累计时间步数、当前方法阶次 和 当前步长。
+\end_layout
+
+\begin_layout Standard
+最后，主程序调用 
+\family typewriter
+PrintFinalStats 
+\family default
+获取并打印所有相关统计量。然后调用 
+\family typewriter
+N_VDestroy_Serial
+\family default
+ 释放向量 
+\family typewriter
+cc
+\family default
+、
+\family typewriter
+cp
+\family default
+ 和 
+\family typewriter
+id
+\family default
+，并调用 
+\family typewriter
+IDAFree
+\family default
+ 释放 
+\family typewriter
+IDA
+\family default
+ 内存块。这里使用的函数 
+\family typewriter
+PrintFinalStats
+\family default
+ 实际上适用于将 
+\family typewriter
+IDA
+\family default
+ 应用于任何有带状 Jacobian 的问题。它调用各种
+\family typewriter
+IDAGet***
+\family default
+函数来获取相关计数器，然后打印出来。具体来说，这些计数器包括：累积步数（nst）、残差求值次数（nre）（不包括差商Jacobian求值）、Jacobian求值
+的残差求值次数（nreLS）、雅各布求值次数（nje）、非线性（牛顿）迭代次数（nni）、局部误差测试失败次数（netf）和非线性收敛失败次数（ncfn）。这些
+可选输出将在 xxx 中描述。
+\end_layout
+
+\begin_layout Standard
+函数 resweb 是 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:al2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中残差的直接翻译。它首先调用私有函数 
+\family typewriter
+Fweb
+\family default
+ 用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:al2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的右侧值初始化残差向量，然后在所有网格点上循环，适当设置微分或代数分量的残差值。相互作用项 
+\begin_inset Formula $R_{i}$
+\end_inset
+
+ 的计算在函数 
+\family typewriter
+WebRates
+\family default
+ 中完成。
+\family typewriter
+idaFoodWeb_bnd
+\family default
+ 的输出示例如下。
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+idaFoodWeb_bnd_omp: Predator-prey DAE OpenMP example problem for IDA
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of species ns: 2     Mesh dimensions: 20 x 20     System size: 800
+\end_layout
+
+\begin_layout Plain Layout
+
+Tolerance parameters:  rtol = 1e-05   atol = 1e-05
+\end_layout
+
+\begin_layout Plain Layout
+
+Linear solver: SUNBAND,  Band parameters mu = 40, ml = 40
+\end_layout
+
+\begin_layout Plain Layout
+
+CalcIC called to correct initial predator concentrations.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+  t        bottom-left  top-right    | nst  k      h
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+0.00e+00   1.0000e+01   1.0000e+01   |   0  0   1.6310e-08
+\end_layout
+
+\begin_layout Plain Layout
+
+           1.0000e+05   1.0000e+05   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+1.00e-03   1.0318e+01   1.0827e+01   |  32  4   1.0823e-04
+\end_layout
+
+\begin_layout Plain Layout
+
+           1.0319e+05   1.0822e+05   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+1.00e-02   1.6188e+02   1.9735e+02   | 127  4   1.4203e-04
+\end_layout
+
+\begin_layout Plain Layout
+
+           1.6189e+06   1.9734e+06   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+1.00e-01   2.4019e+02   2.7072e+02   | 235  1   3.9160e-02
+\end_layout
+
+\begin_layout Plain Layout
+
+           2.4019e+06   2.7072e+06   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+4.00e-01   2.4019e+02   2.7072e+02   | 238  1   3.1328e-01
+\end_layout
+
+\begin_layout Plain Layout
+
+           2.4019e+06   2.7072e+06   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+7.00e-01   2.4019e+02   2.7072e+02   | 239  1   6.2655e-01
+\end_layout
+
+\begin_layout Plain Layout
+
+           2.4019e+06   2.7072e+06   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+1.00e+00   2.4019e+02   2.7072e+02   | 239  1   6.2655e-01
+\end_layout
+
+\begin_layout Plain Layout
+
+           2.4019e+06   2.7072e+06   |
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+Final run statistics:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of steps                    = 239
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of residual evaluations     = 3339
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of Jacobian evaluations     = 36
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of nonlinear iterations     = 421
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of error test failures      = 3
+\end_layout
+
+\begin_layout Plain Layout
+
+Number of nonlinear conv.
+ failures = 10
+\end_layout
+
+\begin_layout Plain Layout
+
+num_threads = 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+通常浓度场的形式
+\begin_inset Formula 
+\[
+\frac{\partial C_{i}(t,x)}{\partial t}={\color{red}\nabla\cdot[D_{i}\,\nabla C_{i}(t,x)]}+R_{i}(t,x)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter

@@ -1,43 +1,19 @@
 # lyx
 
-使用 LyX 须知:
+## lyx 快捷键
 
-1. `LyX` 具有极好的文档--使用它. 点击`Help--Introduction`按钮,将会得到一个简明的介绍. 然后通过`Help-Tutorial`学习使用 `LyX`.
-1. `LyX` 是一个`文档处理系统`. 在设计上,它跟通常的文字处理系统不同--它可以让写作变得更容易. 但是区别也不是天翻地覆的,不要怕. 帮助文档会告诉你如何使用.
-1. `LyX`的输出更加好看. 使用菜单里的`Document--View[PDF(pdflatex)]`或者点击工具栏上的`眼睛`按钮,亲自试试看.
-1. `LyX`可以模仿几乎所有的`LaTex`功能. 并且能够导入`LaTeX`件. `LaTeX`老司机简单浏览下面的教程就可以了. 然后阅读 `LyX for LaTeX Users`一章. (对于别的读者:不用担心,你不必精通`LaTeX`才能使用`LyX`).
-1. `LyX` 的许多特性为非英语使用者提供便利. 另外,按键绑定以及工具栏等许多其他特性都是高度可定制的, 参见 `Help->Cuttomization`.
-1. `LyX` 主页是[http://www.lyx.org/](http://www.lyx.org/). 可以用来获取有关`LyX`的信息, 订阅 LyX mailing list(s), 参加 LyX Graphical Tour 等等.
-2. `Linux` 用户请注意: 请检查 `LaTeX` 发行版 `TeXLive` 的语言包是否安装,否则`LaTeX`可能会报错. 例如在`Linux`发行版`(K,X)Ubuntu`和`Debian`上,`German`语言的包为`texlive-lang-german`. 安装完语言包后, 需要使用`LyX`菜单栏中的`Tools->Reconfigure` 来更新. 重装`TeXLive`等操作之后, 也需要`Tools->Reconfigure`.
-
-## LyX 介绍
-
-### LyX 的理念
-
-`LyX` 是文档准备系统,适合用来打公式,交叉引用,参考文献,索引. lyx 背后的理念是: 指定你的意愿, 而不是具体怎么实现.
-Instead of "What You See Is What You Get," the LyX model is "What You See Is What You Mean" or "WYSIWYM."
-
-+ `Emphasized Style` 用于一般强调, 一般论点, 书籍标题, 其他手册各节的名称, 和作者的注释.
-+ `Typewriter` 用于程序和文件名, `LyX`代码和功能.
-+ `Sans Serif` 用于菜单, 按钮或对话框的名称以及键盘键的名称.
-+ `Noun Style` 用于表示人的名字.
-+ `Bold` 用于 `LaTeX` 代码.
-
-## LyX 入门
-
-## 创建文档
-
-### 脚注
-
-脚注可以复制粘贴,通过点击工具栏上的按钮, 可以把普通文字变成脚注. 也可以把脚注变成普通文字,通过 `backspace` 或者 `delete`, 去掉脚注框.
++ `ctrl+M` 插入数学
++ `ctrl+shift+M` 插入display数学
++ `ctrl+R` 查看pdf
++ `ctrl+shift+p`; 切换 typewriter 字体
 
 ## 数学
 
 ## 数学宏
 
-可以使用 LyX 自带的数学宏(Math Macro)功能, 
-能够自定义新的命令，同时改变 LyX 主界面的预览效果.
-例如以下定义，分别定义了 粗体符号 和 费曼 slash
+可以使用 LyX 自带的数学宏(Math Macro)功能,
+能够自定义新的命令, 同时改变 LyX 主界面的预览效果.
+例如以下定义, 分别定义了 粗体符号 和 费曼 slash
 
 ```latex
 \begin_layout Standard
@@ -52,14 +28,6 @@ Instead of "What You See Is What You Get," the LyX model is "What You See Is Wha
 \end_inset
 \end_layout
 ```
-
-### 杂项
-
-`LyX` 是高度可定制的, 从窗口外观到输出结果样式都可以按多种方式定制.
-
-大部分配置通过`Tools->Preferences`完成. 有关此的更多信息, 请查看`Help->Customization`. LyX菜单中的操作支持按键绑定.
-这意味着您可以通过按`Alt+F`松开手接着按下`O`或使用菜单旁边显示的快捷键绑定(默认为`Ctrl+O`)来执行`File->Open`.
-按键绑定也是可配置的. 有关此信息, 请查看`Help->Customization`.
 
 ### SVG Converter
 
@@ -88,12 +56,6 @@ Important: Press add
 Press Save
 
 You need to  maybe `reconfigure`  and restart LyX.
-
-## 快捷键
-
-+ `ctrl+M` 插入数学
-+ `ctrl+shift+M` 插入display数学
-+ `c+R` 查看pdf
 
 ### 字体
 
@@ -133,83 +95,13 @@ You need to  maybe `reconfigure`  and restart LyX.
 
 下面是我经常使用的 `lyx` 导言,也即 `latex`导言.
 
-```latex
-% 如果没有这一句命令,XeTeX会出错,原因参见
-% http://bbs.ctex.org/viewthread.php?tid=60547
-% \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
-%%%%%%%%%%%%%%%%%+++++++++++
-\usepackage{eso-pic}
-% 添加图片命令或者背景到每一页的绝对位置,
-% 添加一个或者多个用户命令到 latex 的 shipout rou­tine, 可以用来在固定位置放置输出
-\usepackage{hyperref} %处理交叉引用,在生成的文档中插入超链接
-%\usepackage[colorlinks,linkcolor=blue]{hyperref}
-\usepackage{graphicx} %插入图片,基于graphics,给 \includegraphics 命令提供了key-value 形式的接口,比 graphics 更好用
-%%%+++++++++++++++++++++++++++++++
-\usepackage{xcolor}
-% xcolor 包从 color 包的基本实现开始,提供了独立于驱动的接口,可以设置 color tints, shades, tones, 或者任意颜色的混合
-% 可以用名字指定颜色,颜色可以混合, \color{red!30!green!40!blue}
-%\definecolor{ocre}{RGB}{243,102,25} %定义一个颜色名称
-%\newcommand{\cola}[1]{{\color{blue}{#1}}} %定义一个颜色命令
-%%%+++++++++++++++++++++++++++++++
-\usepackage{listings} % 在LaTex中添加代码高亮
-\definecolor{codegreen}{rgb}{0,0.6,0} %定义各种颜色,给代码着色用
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%\lstdefinestyle{<style name>}{<key=value list>}, 存储键值列表
-\lstdefinestyle{codestyle1}{
-    backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2
-}
-%%%+++++++++++++++++++++++++++++++
-\usepackage{framed} % 在对象周围添加方框,阴影等等,允许跨页
-\definecolor{shadecolor}{rgb}{0.96,0.96,0.93}  %定义阴影颜色 shaded环境使用
-%%%+++++++++++++++++++++++++++++++
-\usepackage{amsmath,amssymb,amsfonts} % 数学字体
-\usepackage{mathrsfs} % \mathscr 命令,更花的花体
-\usepackage{enumitem} % 提供了对三种基本列表环境:  enumerate, itemize and description 的用户控制.
-% 取代  enumerate and mdwlist 包,对它们功能有 well-structured 的替代.
-%%%+++++++++++++++++++++++++++++++
-\usepackage{hepunits} % 高能物理单位 \MeV \GeV
-\usepackage{braket} % 狄拉克 bra-ket notation
-\usepackage{slashed} % 费曼 slash 记号 \slashed{k}
-\usepackage{bm,bbm}  %\bm 命令使参数变成粗体
-% Blackboard variants of Computer Modern fonts.
-\usepackage{simplewick} % 在式子上下画 Wick 收缩的包
-\usepackage{makeidx}% 用来创建 indexes 的标准包
-\usepackage{multirow} % 创建具有多行的 tabular
-\usepackage{tikz-feynman}  % 画费曼图用
-\usepackage{tikz} %画矢量图用
-%%++++++++++++++++++++
-\usepackage{mathtools}% 基于 amsmath, 提供更多数学符号,这里用来定义配对的数学符号
-\DeclarePairedDelimiter\abs{\lvert}{\rvert} % 定义配对的绝对值命令
-%%  amsmath 子包 amsopn 提供了\DeclareMathOperatorfor 命令,可以用于定义新的算符名称
-\DeclareMathOperator{\tr}{Tr} %矩阵求迹的符号
-\DeclareMathOperator{\diag}{diag} %对角矩阵
-\DeclareMathOperator{\res}{Res} %复变函数的留数
-\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}} % 手动定义一个垂直的微分符号
-```
+[lyx-preamble](lyx-preamble.tex)
 
 ## LyX 命令行, 转换格式
 
 概要: `lyx [ command-line switches ] [ name[.lyx] ... ]`
 
-描述: `LyX`太复杂了,无法以`man`页面格式进行完整描述. 
+描述: `LyX`太复杂了,无法以`man`页面格式进行完整描述.
 如果系统配置正确,则可以在`Help`菜单下的`LyX`中访问完整文档.
 `LyX`支持以下命令行switches.
 
@@ -220,28 +112,28 @@ You need to  maybe `reconfigure`  and restart LyX.
 + `-geometry WxH+X+Y`: 设置主窗口的几何形状.
 + `-dbg feature[,feature...]`:  其中`feature`是名称或数字. 使用`lyx -dbg`查看可用的调试功能列表.
 + `-i [--import] fmt file.xxx`:其中,`fmt`是选择的导入格式,而file.xxx是要导入的文件.
-+ `-f [--force-overwrite] what`:     其中`what`是"all", "main" or "none"之一. 
-指定`all`以允许在批量导出期间覆盖所有文件,指定`main`以允许仅覆盖主文件,或`none`以覆盖任何文件. 
++ `-f [--force-overwrite] what`:     其中`what`是"all", "main" or "none"之一.
+指定`all`以允许在批量导出期间覆盖所有文件,指定`main`以允许仅覆盖主文件,或`none`以覆盖任何文件.
 其他内容被当成`all`, 更之后的命令行输入留待进一步解析.
 
-+ `--ignore-error-message which`: 允许您忽略特定的`LaTeX`错误消息. 
++ `--ignore-error-message which`: 允许您忽略特定的`LaTeX`错误消息.
 请勿用于最终文件! 当前支持的值: `"missing_glyphs"`,Fontspec `"missing glyphs"` error.
 
 + `-n [--no-remote]`: 即使在另一个`LyX`实例已在运行的情况下,
 也可以在新实例中打开作为参数传递的文档.
 
-+ `-r [--remote]`: 通过使用lyxpipe,要求一个已经运行的`LyX`实例打开作为参数传递的文档,然后退出. 
++ `-r [--remote]`: 通过使用lyxpipe,要求一个已经运行的`LyX`实例打开作为参数传递的文档,然后退出.
 如果是`lyxpipe`未设置或无法正常运行,则创建了新实例,并且正常继续执行.
 
 + `-v [--verbose]`:在终端上打印所有产生的外部命令.
-+ `-batch`:使`LyX`在不打开`GUI`窗口的情况下运行给定命令. 
++ `-batch`:使`LyX`在不打开`GUI`窗口的情况下运行给定命令.
 因此,类似于`lyx -batch -x "buffer-print printer default dvips" myfile.lyx` 的命令
 会导致`LyX`将`myfile.lyx`打印到默认打印机(必须已配置),使用`dvips`和默认打印设置.
 
 ***
 
 + ` -x [--execute] command`:  其中`command`是一个`lyx`命令
-+ `-E [--export-to] fmt filename`: 
++ `-E [--export-to] fmt filename`:
 其中,`fmt`是选择的导出格式(请参阅`--export`),而`filename`是目标文件名.
 
 + 请注意,任何其他外部文件名所需的文件(例如图像文件)
@@ -249,7 +141,7 @@ You need to  maybe `reconfigure`  and restart LyX.
 
 + ` -e [--export] fmt`:其中`fmt`是选择的导出格式
 (`latex`, `pdflatex`, `luatex`, `xetex`, `xhtml`, `text`, `lyx`, `ps`, `pdf`, ...).
-在`Tools->Preferences->File Handling->File Formats->Short Name` 可以查看应该传递那个参数, 
+在`Tools->Preferences->File Handling->File Formats->Short Name` 可以查看应该传递那个参数,
 短名称一般与`File->Export menu`菜单中的格式名称不同.
 要导出到文件的默认输出格式, 使用`default`. `-e`和`-x`开关的顺序很重要.
 
@@ -288,7 +180,7 @@ lyx -dbg graphics
 
 如果图形输出有问题,可以从在上述命令生成的输出中找到原因.
 
-要在 `LyX` 屏幕上查看图形, 
+要在 `LyX` 屏幕上查看图形,
 `LyX` 必须从 `EncapsulatedPostScript` 转换到可加载的图形格式.
 在`tools-preference-Converters`部分可以看到配置的转换器机制.
 添加新的 `转换器`将导致类似下面的行
@@ -302,7 +194,7 @@ lyx -dbg graphics
 占位符 `$$i` 和 `$$o` 由 `LyX` 替换为输入文件和输出文件的名称.
 
 如果 `LyX` 无法通过转换路径(可能有许多步骤),
-从 `EncapsulatedPostScript` 转换到上面列出的可加载格式中的一种, 
+从 `EncapsulatedPostScript` 转换到上面列出的可加载格式中的一种,
 则默认为使用 `Shell` 脚本 `convertDefault.sh`.
 后者是 `ImageMagick` 的 `convert` utility 的简单`wrapper`.
 显然,只有在安装了 `convert` 且`convert` 可以处理从A格式到B格式的转换时,它才可以工作.
@@ -313,16 +205,16 @@ lyx -dbg graphics
 
 添加`EPS-> PNG`转换器的示例(对于 `Mac OS X`).
 
-+ 安装 `ImageMagick`. 
++ 安装 `ImageMagick`.
 安装后,通过在终端中键入 `convert /path/test.eps /path/test.png`
 (对于Mac OS X),检查将 `eps` 转换为`png`的转换器是否正常工作.
 
 + 在`Lyx->Preferences->File Handling->Converters`中, 将 `EPS` 添加到 `LyX` 中的 `PNG` 转换器.
-选择 `EPS-> PDF`, 然后将 `格式` 从 `PDF` 更改为`PNG`. 
+选择 `EPS-> PDF`, 然后将 `格式` 从 `PDF` 更改为`PNG`.
 在转换器行中,键入 `convert $$i $$o`, 然后按添加并保存.
 
 + 将 `convert` 命令所在的路径添加到 `Lyx`. 例如 `/opt/ImageMagick/bin` (for Mac OS X).
-转到 `Lyx>Preferences>Paths>Path prefix`, 
+转到 `Lyx>Preferences>Paths>Path prefix`,
 添加`:/opt/ImageMagick/bin`到路径的末尾. 保存路径并退出 `LyX`.
 
 + 再次运行 Lyx,然后打开包含`eps`图形的文件,
@@ -469,131 +361,101 @@ Categories: FAQ, Multipart
 
 关于处理多文件和多部分文件的常见问题:
 
-+ 我怎样才能将其他文件包括在一个多部分文档中, 使其不在新的一页上开始?
-    使用选项 `input` 而不是 `include`.
+### 我怎样才能将其他文件包括在一个多部分文档中, 使其不在新的一页上开始?
 
-+ `input` 和 `include` 的区别是什么?
+使用选项 `input` 而不是 `include`.
 
-    `input` 和 `include` 都可以包括一个子文件(例如, 你的书的一个章节). 
-    然而, 它们在某些方面有所不同, 有一些优点和缺点.
+### `input` 和 `include` 的区别是什么?
 
-    区别:
-    `include` 可以开始一个新的页面, 而 `input` 则不能. 
-    这在某些情况下可能是一个优势, 在其他情况下是一个劣势.
+`input` 和 `include` 都可以包括一个子文件(例如, 你的书的一个章节).
+然而, 它们在某些方面有所不同, 有一些优点和缺点.
 
-    `include` 的优点
-    你可以在输出时 `禁用` 选定的子文件, 同时保留原始页码和参考文献. 
-    从 `LyX 2.0` 开始, 这个功能是通过 `Document→Settings...→Child documents` 来提供的(这个 窗格 只有在你实际包含子文档时才可见).
++ 区别:
+`include` 可以开始一个新的页面, 而 `input` 则不能.
+这在某些情况下可能是一个优势, 在其他情况下是一个劣势.
 
-    `input` 的优势
-    被 `input` 的文档可以包含另一个 `input` 语句,
-    一个 `included `的文件不能包含另一个 `included` 的文件.
++ `include` 的优点
+你可以在输出时 `禁用` 选定的子文件, 同时保留原始页码和参考文献.
+从 `LyX 2.0` 开始, 这个功能是通过 `Document→Settings...→Child documents`
+来提供的(这个 窗格 只有在你实际包含子文档时才可见).
 
-+ 多部分文件中使用哪个 `preamble`?
-    一般来说, 对于多部分文件, 在你编译的时候只使用 `主文件` 的 导言(preamble). 
-    只有当你 `单独编译` 从属文件时, 才会使用该文件的 导言.
++ `input` 的优势
+被 `input` 的文档可以包含另一个 `input` 语句,
+一个 `included `的文件不能包含另一个 `included` 的文件.
 
-+ 我怎样才能在不同的 `LyX`(子)文件中共享相同的 导言?
-    `共享导言`允许你配置许多文档设置, 并使它们在所有相关的文档中保持一致.
-    
-    首先将序言复制到 文本文件 中, 例如 `preamble.tex`, 
-    然后用 `\input{preamble}` 替换现有 导言.
+### 多部分文件中使用哪个 `preamble`?
 
-+ 如何对整个多部分文档使用一个 `主bib`, 而在各章单独编译时使用单独的`bib`?
+一般来说, 对于多部分文件, 在你编译的时候只使用 `主文件` 的 导言(preamble).
+只有当你 `单独编译` 从属文件时, 才会使用该文件的 导言.
 
-    对于 `主文档`, 你只需在必须出现 `主bib`的地方(在主文件内或在子文件内)插入一个`bibliography inset`.
-    在 `子文档` 中, 在 `子文档` 单独编辑时, 在书目应该出现的地方插入书目插页, 
-    但要把它们插入到 `分支` 中(`Insert→Branch→Insert New Branch...`), 
-    例如, 叫做 `Childonly`.
-    在 `子文档` 中, 激活该分支(`Document→Settings...→Branches`).
-    在 `主文档` 中, 取消激活该分支(`Document→Settings...→Branches`).
+### 我怎样才能在不同的 `LyX`(子)文件中共享相同的 导言?
 
-+ 我怎样才能把包含在 `LyX文档` 中的所有文件打包?
+`共享导言`允许你配置许多文档设置, 并使它们在所有相关的文档中保持一致.
+首先将序言复制到 文本文件 中, 例如 `preamble.tex`,
+然后用 `\input{preamble}` 替换现有 导言.
 
-    试着使用 [ConvertFilesIntoArchive页面][] 上描述的脚本.
+### 如何对整个多部分文档使用一个 `主bib`, 而在各章单独编译时使用单独的`bib`?
+
+对于 `主文档`, 你只需在必须出现 `主bib`的地方(在主文件内或在子文件内)插入一个`bibliography inset`.
+在 `子文档` 中, 在 `子文档` 单独编辑时, 在书目应该出现的地方插入书目插页,
+但要把它们插入到 `分支` 中(`Insert→Branch→Insert New Branch...`),
+例如, 叫做 `Childonly`.
+在 `子文档` 中, 激活该分支(`Document→Settings...→Branches`).
+在 `主文档` 中, 取消激活该分支(`Document→Settings...→Branches`).
+
+### 我怎样才能把包含在 `LyX文档` 中的所有文件打包?
 
 [ConvertFilesIntoArchive页面]: https://wiki.lyx.org/Tips/ConvertFilesIntoArchive
 
-脚本: lyx_pak.sh
+试着使用 [ConvertFilesIntoArchive页面][] 上描述的脚本.
+脚本: [lyx_pak.sh](lyx-pack.sh)
 
-```bash
-#!/bin/sh
-# This script creates archive with lyx file and all included files (graphics 
-# and so on). It can make plain tar archive or compress it with bz2 or gz
-#
-# Author: Marcin Bukat
-# email : wodz@netlandia.pl
-# Ths script is a FREE software
-# Use at Your own risk
+## lyx intro
 
-function usage
-#Prints usage instructions
-{
-        echo "Usage: lyx_pak.sh [OPTONS] [FULL PATH TO LYX FILE]"
-        echo " OPTIONS:"
-        echo "-j        compress with bzip2"
-        echo "-z        compress with gzip"
-        exit
-}
+使用 LyX 须知:
 
-function archive
-#Creates archive
-{
-ARCHNAME=`basename $LYXFILENAME lyx`tar
-       case "$1" in
-        -j)
-        COMPRESS="bzip2 $ARCHNAME"
-        ;;
-        -z)
-        COMPRESS="gzip $ARCHNAME"
-        ;;
-        *)
-        COMPRESS=""
-        esac
+1. `LyX` 具有极好的文档--使用它. 点击`Help--Introduction`按钮,将会得到一个简明的介绍.
+然后通过`Help-Tutorial`学习使用 `LyX`.
+2. `LyX` 是一个`文档处理系统`. 在设计上,它跟通常的文字处理系统不同--它可以让写作变得更容易.
+但是区别也不是天翻地覆的,不要怕. 帮助文档会告诉你如何使用.
+3. `LyX`的输出更加好看.
+使用菜单里的`Document--View[PDF(pdflatex)]`或者点击工具栏上的`眼睛`按钮,亲自试试看.
+4. `LyX`可以模仿几乎所有的`LaTex`功能. 并且能够导入`LaTeX`件.
+`LaTeX`老司机简单浏览下面的教程就可以了.
+然后阅读 `LyX for LaTeX Users`一章. (对于别的读者:不用担心,你不必精通`LaTeX`才能使用`LyX`).
+5. `LyX` 的许多特性为非英语使用者提供便利.
+另外,按键绑定以及工具栏等许多其他特性都是高度可定制的, 参见 `Help->Cuttomization`.
+6. `LyX` 主页是[http://www.lyx.org/](http://www.lyx.org/).
+可以用来获取有关`LyX`的信息, 订阅 LyX mailing list(s), 参加 LyX Graphical Tour 等等.
+7. `Linux` 用户请注意: 请检查 `LaTeX` 发行版 `TeXLive` 的语言包是否安装,否则`LaTeX`可能会报错.
+例如在`Linux`发行版`(K,X)Ubuntu`和`Debian`上,`German`语言的包为`texlive-lang-german`.
+安装完语言包后, 需要使用`LyX`菜单栏中的`Tools->Reconfigure` 来更新. 重装`TeXLive`等操作之后, 也需要`Tools->Reconfigure`.
 
-cd $WORKDIR
+### LyX 的理念
 
-tar cvf $ARCHNAME $LYXFILENAME `cat $LYXFILENAME|grep filename|cut -d " " -f 2` "`cat $LYXFILENAME|grep BibTeX|cut -d { -f2|tr -d '}'`.bib"
-$COMPRESS
+`LyX` 是文档准备系统,适合用来打公式,交叉引用,参考文献,索引. lyx 背后的理念是: 指定你的意愿, 而不是具体怎么实现.
+Instead of "What You See Is What You Get," the LyX model is "What You See Is What You Mean" or "WYSIWYM."
 
-if [ $? -eq 0 ]; then
-        echo "Lyx archive created successfully"
-else
-        exit 1
-fi
-}
-#Main part starts here
++ `Emphasized Style` 用于一般强调, 一般论点, 书籍标题, 其他手册各节的名称, 和作者的注释.
++ `Typewriter` 用于程序和文件名, `LyX`代码和功能.
++ `Sans Serif` 用于菜单, 按钮或对话框的名称以及键盘键的名称.
++ `Noun Style` 用于表示人的名字.
++ `Bold` 用于 `LaTeX` 代码.
 
-#Check if there is any parameter
-if [ $# -gt 0 ]; then
-        #Ok we got two parameters so first is a commpress switch
-        if [ $# -eq 2 ]; then
-                if [ "$1" = "-j" ] || [ "$1" = "-z" ]; then
-                        PARAM=$1
-                        LYXFILENAME=`basename $2`
-                        WORKDIR=`dirname $2`
-                        if [ -f $2 ] && [ -d `dirname $2` ]; then
-                        #parameters are correct so make archive
-                        archive $PARAM
-                        else
-                        usage
-                        fi
-                else
-                usage
-                fi
-        else
-                #One parameter - only path to the file
-                PARAM="-"
-                LYXFILENAME=`basename $1`
-                WORKDIR=`dirname $1`
-                if [ -f "$1" ] && [ -d "`dirname $1`" ]; then
-                #parameters are correct so make archive
-                archive $PARAM
-                else
-                usage
-                fi
-        fi
-else
-usage
-fi
-```
+## LyX 入门
+
+## 创建文档
+
+### 脚注
+
+脚注可以复制粘贴,通过点击工具栏上的按钮, 可以把普通文字变成脚注.
+也可以把脚注变成普通文字,通过 `backspace` 或者 `delete`, 去掉脚注框.
+
+### 杂项
+
+`LyX` 是高度可定制的, 从窗口外观到输出结果样式都可以按多种方式定制.
+
+大部分配置通过`Tools->Preferences`完成.
+有关此的更多信息, 请查看`Help->Customization`. LyX菜单中的操作支持按键绑定.
+这意味着您可以通过按`Alt+F`松开手接着按下`O`或使用菜单旁边显示的快捷键绑定(默认为`Ctrl+O`)来执行`File->Open`.
+按键绑定也是可配置的. 有关此信息, 请查看`Help->Customization`.
