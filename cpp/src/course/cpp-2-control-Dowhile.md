@@ -1,6 +1,6 @@
 # do-while语句
 
-`do-while` 语句的语法形式
+## `do-while` 语句的语法形式
 
 ```cpp
 do   语句     // 可以是复合语句, 其中必须含有改变条件表达式值的语句.
@@ -35,7 +35,7 @@ int main() {
 }
 ```
 
-例2-7 用 `do-while` 语句编程, 求自然数1~10之和
+## 例2-7 用 `do-while` 语句编程, 求自然数1~10之和
 
 ```cpp
 #include <iostream>

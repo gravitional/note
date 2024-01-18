@@ -2,7 +2,11 @@
 
 + for语句语法形式:
 
-![for statement](http://studio-tsinghua.xuetangx.com/asset-v1:TsinghuaX+00740043-91-20202+2020_T2+type@asset+block@forpic.png)
+```cpp
+for (size_t i=0;i<n; i++){
+    ...
+}
+```
 
 + for语句的另一种形式: `范围for` 语句:
 

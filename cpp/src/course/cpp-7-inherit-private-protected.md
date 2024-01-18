@@ -3,17 +3,19 @@
 ## 私有继承(private)
 
 继承的访问控制
-    基类的public和protected成员: 都以private身份出现在派生类中;
-    基类的private成员: 不可直接访问.
+
++ 基类的public和protected成员: 都以private身份出现在派生类中;
++ 基类的private成员: 不可直接访问.
 
 访问权限
 
-    派生类中的成员函数: 可以直接访问基类中的public和protected成员, 但不能直接访问基类的private成员;
-    通过派生类的对象: 不能直接访问从基类继承的任何成员.
++ 派生类中的成员函数: 可以直接访问基类中的public和protected成员,
+但不能直接访问基类的private成员;
++ 通过派生类的对象: 不能直接访问从基类继承的任何成员.
 
-例7-2 私有继承举例
+## 例7-2 私有继承举例
 
-Point.h
+### Point.h
 
 ```cpp
 #ifndef _POINT_H
@@ -32,7 +34,7 @@ private:    //私有数据成员
 #endif //_POINT_H
 ```
 
-Rectangle.h
+### Rectangle.h
 
 ```cpp
 #ifndef _RECTANGLE_H
@@ -56,7 +58,7 @@ private:    //新增私有数据成员
 #endif //_RECTANGLE_H
 ```
 
-main.cpp
+### main.cpp
 
 ```cpp
 #include <iostream>
@@ -78,27 +80,23 @@ int main() {
 
 ## 保护继承(protected)
 
-    继承的访问控制
+### 继承的访问控制
 
-        基类的public和protected成员: 都以protected身份出现在派生类中;
++ 基类的public和protected成员: 都以protected身份出现在派生类中;
++ 基类的private成员: 不可直接访问.
 
-        基类的private成员: 不可直接访问.
+### 访问权限
 
-    访问权限
++ 派生类中的成员函数: 可以直接访问基类中的public和protected成员,
+但不能直接访问基类的private成员;
++ 通过派生类的对象: 不能直接访问从基类继承的任何成员.
 
-        派生类中的成员函数: 可以直接访问基类中的public和protected成员, 但不能直接访问基类的private成员;
+### protected 成员的特点与作用
 
-        通过派生类的对象: 不能直接访问从基类继承的任何成员.
-
-    protected 成员的特点与作用
-
-        对建立其所在类对象的模块来说, 它与 private 成员的性质相同.
-
-        对于其派生类来说, 它与 public 成员的性质相同.
-
-        既实现了数据隐藏, 又方便继承, 实现代码重用.
-
-        如果派生类有多个基类, 也就是多继承时, 可以用不同的方式继承每个基类.
++ 对建立其所在类对象的模块来说, 它与 private 成员的性质相同.
++ 对于其派生类来说, 它与 public 成员的性质相同.
++ 既实现了数据隐藏, 又方便继承, 实现代码重用.
++ 如果派生类有多个基类, 也就是多继承时, 可以用不同的方式继承每个基类.
 
 ### protected 成员举例(补7-1)
 

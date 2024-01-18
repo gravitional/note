@@ -1,26 +1,8 @@
 # 函数的递归调用
 
-定义
+## 定义
 
 函数直接或间接地调用自身, 称为递归调用.
-
-例: 计算n!
-
-公式1: n!=n×(n-1)×(n-2)×(n-3)×...×2×1.
-
-公式2:
-
-![formula2](http://studio-tsinghua.xuetangx.com/asset-v1:TsinghuaX+00740043-91-20202+2020_T2+type@asset+block@image001digui.png)
-
-例如, 计算4!的两个阶段:
-
-递推:
-
-![ditui](http://studio-tsinghua.xuetangx.com/asset-v1:TsinghuaX+00740043-91-20202+2020_T2+type@asset+block@image002digui.jpg)
-
-回归:
-
-![huiGui](http://studio-tsinghua.xuetangx.com/asset-v1:TsinghuaX+00740043-91-20202+2020_T2+type@asset+block@image003digui.jpg)
 
 ## 例3-8 求n!
 
