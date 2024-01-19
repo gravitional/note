@@ -151,7 +151,7 @@ print('\nuse another\n')
 subprocess.call("ls  -lah /home/tom/Downloads",shell=True)
 ```
 
-## subprocess 直接输出到命令行
+## subprocess 直接输出到命令行, PIPE 管道
 
 [Python subprocess output to stdout](https://stackoverflow.com/questions/6062340/python-subprocess-output-to-stdout)
 [subprocess — Subprocess management](https://docs.python.org/3/library/subprocess.html#popen-constructor)
@@ -174,7 +174,7 @@ class subprocess.Popen(args, bufsize=- 1, executable=None, stdin=None, stdout=No
 所谓 `管道`, 即在创建 `Popen` 对象时,
 可以指定创建 `stdin`, `stdout` 和 `stderr` 三个文件句柄, 可以像文件那样进行读写操作.
 这里的 `管道`, 是 `subprocess` 模块代码内部创建的文件句柄,
-而不是指 父进程 `终端` 里面的 `管道操作符`
+而不是指 父进程 `终端` 里面的 `管道操作符`.
 
 ```python
 import subprocess

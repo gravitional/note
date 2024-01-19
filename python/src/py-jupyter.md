@@ -138,3 +138,11 @@ jupyter lab --notebook-dir=E:/ --preferred-dir E:/Documents/Somewhere/Else
 #Linux Example
 jupyter lab --notebook-dir=/var/ --preferred-dir /var/www/html/example-app/
 ```
+
+## notebook vscode
+
+`A` 在上方插入cell
+`B` 在下方插入cell
+
+`M` 将cell类型改成 Markdown
+`Y` 将cell类型改成 code
