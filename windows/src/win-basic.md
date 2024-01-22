@@ -354,3 +354,28 @@ not just for communicating with external programs in-memory (such as when readin
 [2] In PowerShell v4-, where the static ::new() method isn't available,
 use `$OutputEncoding = (New-Object System.Text.UTF8Encoding).psobject.BaseObject`.
 See GitHub issue #5763 for why the .psobject.BaseObject part is needed.
+
+## windows 系统信息,系统工具
+
++ 搜索 `msinfo` or `系统信息`: 打开系统信息页面, 查看软硬件信息
+
+```bash
+%windir%\system32\msinfo32.exe
+```
+
++ 搜索 `环境变量` or `huanjingbianliang` or `environ` or `高级`,
+or 在 `此电脑` 右键点击 `属性` -> 点击 `高级系统设置`:
+都可以打开 `高级系统设置页面`, 含有 `环境变量` 标签页
+
+`环境变量` 页面 和 `性能--视觉效果, 处理器计划` 放在一起
+
+```bash
+C:/Windows/System32/SystemPropertiesAdvanced.exe
+```
+
++ 搜索 `perfo`, `perfomance`, `调整`; 打开 `更改计算机性能设置` 页面
+可以选择计算机的 外观和性能平衡.
+
+```cmd
+C:\Windows\System32\SystemPropertiesPerformance.exe
+```

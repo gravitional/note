@@ -181,3 +181,17 @@ void FieldWriterEC::SetTestFieldData()
 ## solver 字符串操作, 路径操作
 
 见 `Str.cpp`
+
+## solver 单元节点接口
+
+节点顺序的定义见 confluence
+
+页面/Simdroid/接口文档/网格
+
+tri6 单元按照先顶点, 再中点,
+编号分别为
+0,1,2;
+3: 0-1
+4: 1-2
+5: 2-0
+quad8 编号类似

@@ -2,45 +2,53 @@
 
 ## 简单的规则
 
+[LaTeX: 打出波浪线~](https://www.jianshu.com/p/b891a63948a6)
+
 1. 空格:`Latex` 中空格不起作用.
-1. 换行:用控制命令`\\`,或`\newline`.
-1. 分段:用控制命令`\par` 或空出一行.
-1. 换页:用控制命令`\newpage`或`\clearpage`
-1. 特殊控制字符: `#`,`$`, `%`, `&`, `-` ,`{}`, `^`, `~`
+2. 换行:用控制命令`\\`,或`\newline`.
+3. 分段:用控制命令`\par` 或空出一行.
+4. 换页:用控制命令`\newpage`或`\clearpage`
+5. 特殊控制字符: `#`,`$`, `%`, `&`, `-` ,`{}`, `^`, `~`
+
+方式1: 一般文字环境下, `\textasciitilde`
+方式2: 公式环境下, `$\sim$`
+区别: 用公式环境下打出, 会大一些!
 
 ## 帮助文档
 
 查看 LaTeX 的帮助文档,可以直接用 `texdoc pkg`. 官方文档是`TeXBook`, 输入
 
-    texdoc texbytopic
+```bash
+texdoc texbytopic
+```
 
 `texdoc` - find & view documentation in TeX Live
 
-+ 语法:
+### 语法
 
-    ```bash
-    texdoc [OPTION]... NAME...
-    texdoc ACTION
-    ```
+```bash
+texdoc [OPTION]... NAME...
+texdoc ACTION
+```
 
-+ 描述
++ 描述; 对于给定的名字(可以多个),试图寻找合适的TeX文档. 或者,执行某些动作并退出.
 
-    对于给定的名字(可以多个),试图寻找合适的TeX文档. 或者,执行某些动作并退出.
+动作:
 
-+ 动作:
-    + `-h`, `--help` 打印帮助信息.
-    + `-V`, `--version`打印版本号
-    + `-f`, `--files` 打印使用的配置文件
-    + `--just-view file` 展示文件,给出绝对路径(不搜索)
++ `-h`, `--help` 打印帮助信息.
++ `-V`, `--version`打印版本号
++ `-f`, `--files` 打印使用的配置文件
++ `--just-view file` 展示文件,给出绝对路径(不搜索)
 
-+ 选项:
-    + `-w`, `--view` 使用查看模式,打开文档阅读器(默认)
-    + `-m`, `--mixed` 使用混合模式(查看或者列表)
-    + `-l`, `--list` 使用列表模式:列出搜索结果.
-    + `-s`, `--showall` 展示所有模式,包括"坏"的结果
-    + `-i`, `--interact` 使用交互菜单(默认)
-    + `-I`, `--nointeract`使用plain列表,不需要交互
-    + `-M`, `--machine` 机器可读的结果
+选项:
+
++ `-w`, `--view` 使用查看模式,打开文档阅读器(默认)
++ `-m`, `--mixed` 使用混合模式(查看或者列表)
++ `-l`, `--list` 使用列表模式:列出搜索结果.
++ `-s`, `--showall` 展示所有模式,包括"坏"的结果
++ `-i`, `--interact` 使用交互菜单(默认)
++ `-I`, `--nointeract`使用plain列表,不需要交互
++ `-M`, `--machine` 机器可读的结果
 
 ## 转义到命令行
 

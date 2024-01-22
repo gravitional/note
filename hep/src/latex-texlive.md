@@ -155,8 +155,7 @@ ubuntu 仓库的texlive
 >这将创建`usertree / web2c`和`usertree / tlpkg / tlpobj`,以及最小的`usertree / tlpkg / texlive.tlpdb`.
 >此时,您可以通过添加`--usermode`命令行选项来告诉`tlmgr`执行(支持的)动作.
 
-***
-下面这些是`tlmgr`的常用命令:
+### `tlmgr`的常用命令
 
 + `tlmgr option repository ctan`
 + `tlmgr option repository http://mirror.ctan.org/systems/texlive/tlnet`

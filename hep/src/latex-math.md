@@ -348,9 +348,9 @@ New counters are created with `\newcounter`.
 + `\stepcounter`: Add to a counter, resetting subsidiary counters.
 + `\day` & `\month` & `\year`: Numeric date values.
 
-## 列表环境
+## 列表环境, enumrate
 
-## enumerate
+### enumerate
 
 Synopsis:
 
@@ -362,10 +362,13 @@ Synopsis:
 \end{enumerate}
 ```
 
-产生编号项目清单的环境.
-标签编号的格式取决于此环境的嵌套级别. 见下文.
-默认的顶级编号是``1.``,``2.``等.每个枚举列表环境必须至少包含一个项目;
-缺少将导致` LaTeX`错误`Something's wrong--perhaps a missing \item`..
+产生编号项目清单的环境. 标签编号的格式取决于此环境的嵌套级别. 见下文.
+默认的顶级编号是 `1.`, `2.`等.每个枚举列表环境必须至少包含一个项目;
+缺少 `\item` 将导致 LaTeX错误
+
+```bash
+Something's wrong--perhaps a missing \item..
+```
 
 此示例给出了1908年奥运会马拉松比赛的前两名. 作为顶级列表,标签将显示为` 1.`和` 2.`.
 
@@ -376,28 +379,31 @@ Synopsis:
 \end{enumerate}
 ```
 
-用`\ item`命令开始列表项(请参阅`\ item`).
+用`\item`命令开始列表项(请参阅`\item`).
 如果您给`\item`提供可选参数,通过在其后加上方括号,例如`\item[Interstitial label]`,
 则下一项将继续中断的序列(请参见`\item`).
 
-也就是说,您将获得诸如` 1`,`Interstitial label`,` 2`之类的标签. `\item`之后是可选文本,其中可能包含多个段落.
+也就是说,您将获得诸如 `1`, `Interstitial label`, `2`之类的标签.
+`\item`之后是可选文本,其中可能包含多个段落.
 
 `Enumerations`可以嵌套在其他`enumerate`环境中,也可以嵌套在任何`paragraph-making`环境中,
-例如` itemize`(请参阅` itemize`),深度最多为四个级别.
-下面给出了` LaTeX`对每个嵌套层提供的默认格式,其中` 1`是顶层,即最外层.
+例如 `itemize`(请参阅` itemize`),深度最多为四个级别.
+下面给出了` LaTeX`对每个嵌套层提供的默认格式,其中 `1`是顶层,即最外层.
 
 + arabic number followed by a period: `1.`, `2.`, ...
 + lowercase letter inside parentheses: `(a)`, `(b)` ...
 + lowercase roman numeral followed by a period: `i.`, `ii.`, ...
 + uppercase letter followed by a period: `A.`, `B.`, ...
 
-The enumerate environment uses the counters `\enumi` through `\enumiv` (see `Counters`).
+`enumerate` 环境使用的计数器(counters)是 `\enumi` through `\enumiv` (see `Counters`).
 
 对于其他主要的LaTeX标签列表环境,请参阅`description`和`itemize`.
-有关列表`layout parameters`(包括默认值)的信息,以及有关自定义列表布局的信息,请参见`list`.  软件包`enumitem`可用于自定义列表.
+有关列表`layout parameters`(包括默认值)的信息,
+以及有关自定义列表布局的信息,请参见`list`.  软件包`enumitem`可用于自定义列表.
 
-要更改标签的格式,对命令`\labelenumi`使用`\renewcommand`(请参阅`\newcommand`和`\renewcommand`).
-例如,下面使第一级列表以大写字母标记,并以`boldface`显示,并且没有尾随句点.
+要更改`标签`的格式, 对命令`\labelenumi` 使用 `\renewcommand`
+(请参阅`\newcommand`和`\renewcommand`).
+例如,下面使第一级列表以大写字母标记, 并以`boldface`显示, 并且没有尾随句点.
 
 ```latex
 \renewcommand{\labelenumi}{\textbf{\Alph{enumi}}}
@@ -407,11 +413,26 @@ The enumerate environment uses the counters `\enumi` through `\enumiv` (see `Cou
 \end{enumerate}
 ```
 
-For a list of counter-labeling commands see `\alph \Alph \arabic \roman \Roman \fnsymbol`.
+#### 标记格式, counter-labeling
 
-## enumitem
+For a list of counter-labeling commands see
+ `\alph`, `\Alph`, `\arabic`, `\roman`, `\Roman`, `\fnsymbol`.
 
-## itemize
+参考 [LaTex itemize enumerate 枚举 编号使用](https://blog.csdn.net/z_feng12489/article/details/90600970)
+可以使用 `A`, `a`, `I`, `i`, `1` 作为可选项,
+产生 `\Alph`, `\alph`, `\Roman`, `\roman`, `\arabic` 的效果.
+
+```bash
+\begin{enumerate}[A]
+  \item Huawei
+  \item Xiaomi
+  \item Oppo
+\end{enumerate}
+```
+
+### enumitem
+
+### itemize
 
 Synopsis:
 
