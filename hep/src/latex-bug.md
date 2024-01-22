@@ -42,3 +42,13 @@ $\frac{1}{x+1$
 注意有的模板类文件(.cls)可能会预先引入其中某个包,
 例如China Communication的模板文件(ccjnl.cls)就预先引入了`amsthm`包
 这个时候就只能使用 `amsthm` 包而不能使用 `ntheorem` 包了.
+
+## unexpected EOF in PK file
+
+[dvips: ! Bad PK file](https://tex.stackexchange.com/questions/13322/dvips-bad-pk-file)
+
+具体原因未知, 在 tlmgr 中重新运行 `操作` 下面的
+regenerate filename database
+regenerate formats
+regenerate fontmaps
+再重启, 就好了

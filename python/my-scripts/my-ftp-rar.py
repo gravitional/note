@@ -2,7 +2,8 @@ from ftplib import FTP
 import pathlib as ptl
 import subprocess as subp
 import re
-
+import shutil as shu
+import os
 # ======================== 配置变量
 # 求解器 solver/sdk 目录
 # solver_sdk_dir = ptl.Path('~/Downloads/ttta').expanduser()
@@ -11,16 +12,31 @@ solver_sdk_dir = ptl.Path('C:/Solver/sdk').expanduser()
 exe_rar = 'C:/Program Files/WinRAR/Rar.exe'
 # sdk.rar 的下载目录
 down_dir = ptl.Path('~/Downloads/').expanduser()
+# --------------------------- sdk ftp 地址配置
+sdk_ftp_address = 'xxx.xxx.xxx.xxx'
+sdk_user = 'developer'
+sdk_passwd = 'developer'
+sdk_remote_dir = '/SDK/SolverSDK/develop/'
 # ========================= 检查变量
 if not solver_sdk_dir.exists():
     raise RuntimeError('目标文件夹不存在')
 if not solver_sdk_dir.is_dir():
     raise RuntimeError('目标路径不是文件夹')
-solver_sdk_dir = solver_sdk_dir.as_posix()
-if not solver_sdk_dir.endswith('\\'):
-    solver_sdk_dir += '\\'
-print(f'求解器 sdk 目录为 {solver_sdk_dir}')
+solver_sdk_dir_str: str = solver_sdk_dir.as_posix()
+if not solver_sdk_dir_str.endswith('\\') or not solver_sdk_dir_str.endswith(
+        '/'):
+    solver_sdk_dir_str_rar = solver_sdk_dir_str + '\\'  # winrar目录格式以`\`结尾
+    # solver_sdk_dir_str += '/'  # posix 目录以`/`结尾
 
+# ------------ 删除旧的文件夹
+print(f'求解器的 sdk目录为 {solver_sdk_dir_str}')
+print(f'删除sdk旧内容, 创建新文件夹: {solver_sdk_dir_str}')
+shu.rmtree(solver_sdk_dir_str)
+os.mkdir(solver_sdk_dir_str, mode=0o666)
+if not solver_sdk_dir.exists() or not solver_sdk_dir.is_dir():
+    raise RuntimeError('创建新的空文件夹失败')
+
+# sdk.rar的下载路径
 sdk_download_path: str = ''
 
 
@@ -28,9 +44,9 @@ def ftp_sdk():
     global sdk_download_path
     # ========================== ftp part
     # 连接到 ftp, 跳转目录
-    sdk_ftp = FTP('xxxx')
-    sdk_ftp.login('xxx', 'xxx')
-    sdk_ftp.cwd('/SDK/SolverSDK/develop/')
+    sdk_ftp = FTP(sdk_ftp_address)
+    sdk_ftp.login(sdk_user, sdk_passwd)
+    sdk_ftp.cwd(sdk_remote_dir)
     # 获取 solverSDK 列表
     f_list = list(sdk_ftp.mlsd())
     # 按照时间信息排序
@@ -44,7 +60,6 @@ def ftp_sdk():
     print(f'最新的 sovler sdk 为 {sdk_new}')
     # ftp RETR 命令
     retr_cmd = 'RETR ' + sdk_new
-    # sdk 下载路径
     sdk_download_path = down_dir.joinpath(sdk_new).as_posix()
     print(f'sdk.rar 下载路径 {sdk_download_path}')
     with open(sdk_download_path, 'wb') as fp:
@@ -65,7 +80,8 @@ def winrar_sdk():
     base_patten: str = base_dir + '\*'
     # rar 解压缩目录
     args_rar_extract = [
-        'x', '-y', args_file, '-ep1', base_patten, solver_sdk_dir
+        'x', '-y', '-idn', args_file, '-ep1', base_patten,
+        solver_sdk_dir_str_rar
     ]
     # 执行解压缩
     p = subp.Popen([exe_rar, *args_rar_extract], shell=False)
@@ -75,4 +91,4 @@ def winrar_sdk():
 if __name__ == '__main__':
     ftp_sdk()
     winrar_sdk()
-    input('输入任意字符, 并按Enter结束:')
+    input('更新 solver/sdk 成功, 按Enter结束:')
