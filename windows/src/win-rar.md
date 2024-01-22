@@ -94,3 +94,23 @@ WinRAR x -ep1 data 'images\*' 'dest\'
 ```bash
 `C:\Program Files\WinRAR\Rar.exe` x -y develop -ep1 'develop\*' 'dest\'
 ```
+
+## 消息开关 `-id[c,d,n,p,q]`
+
+[RAR console version User's Manual](https://gist.github.com/YenForYang/5953ad8355cf32188aa75c0139cc9261)
+
+显示或禁用信息.
+
++ 开关 `-idc` 禁用版权字符串, opyright string
++ 开关 `-idd` 禁用操作结束时的 `Done` 字符串.
+
++ 开关 `-idn` 在 `创建`, `测试` 或 `提取` archive时禁用 archived名称输出,
+当解压文件到不存在的目录, 不会输出创建文件夹的消息.
+它还会影响其他一些存档处理命令. 它不会隐藏其他信息, 和总百分比指示器.
+开启 `-idn` 可能轻微影响视觉效果,
+如百分比指示器覆盖错误信息的最后几个字符.
+
++ 开关 `-idp` 会禁用百分比指示器.
++ 开关 `-idq` 打开静音模式, 因此只显示 error信息和 question.
+
+允许同时使用多个修饰符, 因此写成 `-idcdp` 是合法的.
