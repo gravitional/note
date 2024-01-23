@@ -17574,7 +17574,7 @@ C_{k}^{j}=\frac{k!}{\left(k-i\right)!i!}
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 delta = 0.05; Graphics3D[{ Line[{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0,
@@ -17957,8 +17957,8 @@ Hessian Matrix
 \align left
 \begin_inset Graphics
 	filename inset/tetrahedron-ele-o2.pdf
-	lyxscale 60
-	scale 45
+	lyxscale 80
+	scale 55
 
 \end_inset
 
@@ -33970,7 +33970,11 @@ R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left
 \end_layout
 
 \begin_layout Chapter
-网格
+网格，几何
+\end_layout
+
+\begin_layout Section
+圆心
 \end_layout
 
 \begin_layout Standard
@@ -34081,6 +34085,96 @@ equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
 \end_inset
 
 。结论就是，只要三点不共线，上面的解始终适用。
+\end_layout
+
+\begin_layout Section
+IBEMesh 单元Face法向
+\end_layout
+
+\begin_layout Itemize
+搭建正方体几何的测试案例，剖分成6个四面体单元。
+\end_layout
+
+\begin_layout Itemize
+Simdroid UI 上，单元，节点，面的编号都是 1–based；mesh.dat，mesh.h5 中是 0–based。
+\end_layout
+
+\begin_layout Itemize
+以第
+\begin_inset Formula $5$
+\end_inset
+
+个单元为例，mesh.dat 中给出体
+\begin_inset Formula $\to$
+\end_inset
+
+节点：
+\begin_inset Formula $4\;[7,4,0,5]$
+\end_inset
+
+；也就是对应 UI 上 
+\begin_inset Formula $5\;[8,5,1,6]$
+\end_inset
+
+。
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+t$Sty = Style[#, Red] &; delta = 0.05; Graphics3D[{ Line[{{1, 0, 0}, {0,
+ 1, 0}, {0, 0, 1}, {1, 0, 0}}] , Line[{{1, 0, 0}, {0, 0, 0}, {0, 1, 0}}]
+ , Line[{{0, 0, 1}, {0, 0, 0}}] , FontSize -> 13 , t$Sty@Text[6, {1 + 3
+ delta, 2 delta, 0}], t$Sty@Text[1, {2 delta, 1 + 3 delta, 0}] , t$Sty@Text[8,
+ {1 delta, 1 delta, 1 + 0 delta}] , t$Sty@Text[5, {+2 delta, -delta, +2
+ delta}]} , Axes -> True, AxesOrigin -> {0, 0, 0} , AxesStyle -> Arrowheads[{0.07
+}] , AxesLabel -> {"
+\backslash
+[Xi]1", "
+\backslash
+[Xi]2", "
+\backslash
+[Xi]3"} , Ticks -> None , PlotRangePadding -> {Scaled[.0], Scaled[.0], Scaled[.0]},
+ ImageSize -> Medium, Boxed -> False]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+mesh.dat 中相关的 boundary face 的编号是 
+\begin_inset Formula $6\;[4,5,7,4]$
+\end_inset
+
+，
+\begin_inset Formula $13\;[4,0,5,4]$
+\end_inset
+
+；对应 UI 中的 
+\begin_inset Formula $7\;[5,6,8,5]$
+\end_inset
+
+，
+\begin_inset Formula $14\;[5,1,6,5]$
+\end_inset
+
+。第四位是face所属单元编号，前三位是节点编号，从图中可见，
+\series bold
+face的法向都指向单元外部
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/ibe-normal-test.pdf
+	lyxscale 60
+	scale 35
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
