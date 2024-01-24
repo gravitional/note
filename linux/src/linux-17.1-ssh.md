@@ -319,7 +319,7 @@ host "NagaSiren"
 1. 在指定目录下生成`rsa`密钥, 并指定注释为`xxx`, 实现示例:
 
 ```bash
-$ ssh-keygen -t rsa -f ~/.ssh/id_rsa -C "xxxxx"
+$ ssh-keygen -t rsa -f ~/.ssh/id_rsa -C "abc@def.com"
 #        ~密钥类型 ~密钥文件路径及名称 ~ 备注信息
 Generating public/private rsa key pair.
 Enter passphrase (empty for no passphrase): # 输入密码, 若不输入则直接回车

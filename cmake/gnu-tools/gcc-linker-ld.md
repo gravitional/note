@@ -34,7 +34,7 @@
 只有使用 `--with-sysroot` 选项配置的
 本地链接器 和 交叉链接器才支持以这种方式搜索 -rpath.
 
-如果在链接 ELF 可执行文件时未使用 -rpath 选项, 则将使用已定义的环境变量 `LD_RUN_PATH` 的内容.
+如果在链接 ELF 可执行文件时未使用 `-rpath` 选项, 则将使用已定义的环境变量 `LD_RUN_PATH` 的内容.
 
 在 SunOS 上也可以使用 -rpath 选项.
 默认情况下, 在 SunOS 上, 链接器将从给出的所有 -L 选项中生成一个运行时搜索路径.
@@ -161,3 +161,68 @@ LDFLAGS := ${LIBS} -Wl,-Bstatic ${STATIC_LIBS} -Wl,-Bdynamic ${DYN_LIBS}
 
 这样当你不关心怎么连接的时候用 `LIBS`,
 当你想静态连接的时候用 `STATIC_LIBS`, 当你想动态连接的时候用 `DYN_LIBS`.
+
+## gcc 链接顺序
+
+[GCC linking libc static and some other library dynamically, revisited?](https://stackoverflow.com/questions/26277283/gcc-linking-libc-static-and-some-other-library-dynamically-revisited)
+
+基本上, 你的第一种方法是正确的:
+
+```bash
+gcc test.c libc.a -lm
+```
+
+在 `gcc` 添加 implicit libraries 后, 它看起来(概念上)是这样的
+
+```bash
+gcc crt1.o test.c libc.a -lm -lc -lgcc -lc
+```
+
+这意味着, `crt1.o` 或 `test.c` 调用的 libc 函数将
+从 `libc.a` 导入并静态链接, 而仅从 `libm` 或 `libgcc`
+调用的函数将动态链接
+(但如果 `libm` 调用了已经 pulled in 的函数, 则会重用静态函数).
+
+链接器总是从最左侧的 file/library 开始向右链接, 不会折返向左.
+`.c` 和 `.o` 文件是无条件链接的,
+但 `.a` 文件和 `-l` 选项仅用于查找已被引用但尚未定义的函数.
+因此, 左边的库是没有意义的
+(而且 `-lc` 必须出现两次, 因为 `-lc` 依赖于 `-lgcc`,
+而 `-lgcc` 依赖于 `-lc`).
+**链接顺序很重要!**
+
+不幸的是, 你似乎被 `strcmp`
+(或者说是包含 `strcmp` 的 `libc`)中的一个 bug 所挫败:
+`STT_GNU_IFUNC` 是一个聪明的功能,
+它允许包含一个函数的多个版本, 并在运行时根据可用的硬件选择最合适的版本.
+我不太确定, 但看起来这个功能只有在 `PIE`
+(Position Independent Executable)或共享库构建中可用.
+
+为什么要在静态 `libc.a` 中使用这个功能对我来说是个谜,
+但有一个简单的解决方法: 实现你自己的 `strcmp`
+(一个基本的, 慢速的实现只需几行 C 语言), 并在 `libc.a` 之前将其链接进去.
+
+```bash
+gcc test.c mystrcmp.c libc.a -lm
+```
+
+或者, 你也可以从 `libc.a` 中提取你真正需要的函数, 然后只静态链接这些函数:
+
+```bash
+ar x libc.a
+gcc test.c somefile.o -lm
+```
+
+`ar` 与 `.a` 文件的关系就像 `tar` 与 `.tar` 文件的关系一样,
+但命令用法略有不同, 因此本例从 `.a` 文件中提取 `.o` 文件, 然后明确链接它们.
+
+## 找出标准库的位置
+
+[Location of C standard library](https://stackoverflow.com/questions/5925678/location-of-c-standard-library)
+
+使用以下命令找出 `libc.a` 的路径:
+
+```bash
+gcc --print-file-name=libc.a
+/usr/lib/gcc/x86_64-linux-gnu/4.8/../../../x86_64-linux-gnu/libc.a
+```

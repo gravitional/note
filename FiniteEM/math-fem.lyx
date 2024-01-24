@@ -4339,6 +4339,113 @@ FEM 求解 variational 问题：寻找
 由在每条边上连续的函数组成， conformity 等价于 试探函数的连续性（continuity）。
 \end_layout
 
+\begin_layout Section
+conforming mesh
+\end_layout
+
+\begin_layout Standard
+refs：
+\begin_inset CommandInset href
+LatexCommand href
+name "conformal-vs-non-conformal-mesh"
+target "https://www.cfd-online.com/Forums/main/15242-conformal-vs-non-conformal-mesh.html"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "comsol_ref_mesh"
+target "https://doc.comsol.com/5.5/doc/com.comsol.help.comsol/comsol_ref_mesh.15.04.html"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+conformal mesh 是指单元之间的几何形状和阶次一致的网格（例如，没有悬挂节点，并持有恒定的多项式阶次）。h–nonconforming
+ 意味着存在悬挂节点，p–nonconforming意味着多项式阶次不一致。conformal discretization 是指全局函数空间具有预期的正则性（
+通常为 
+\begin_inset Formula $H^{1}$
+\end_inset
+
+）。由于全局函数空间不在 
+\begin_inset Formula $H^{1}$
+\end_inset
+
+ 中（尽管在元素上是 
+\begin_inset Formula $H^{1}$
+\end_inset
+
+），因此Discontinuous Galerkin 采用的是 nonconforming 离散化。您可以通过使用约束和消除约束自由度，在nonconformi
+ng 网格上使用 conformal 离散化。
+\end_layout
+
+\begin_layout Standard
+COMSOL Multiphysics 软件生成的网格是conforming mesh。在共形网格中，网格中任何两个单元之间的交集都是这两个单元的子单元（mes
+h face, mesh edge, or mesh vertex），或者nothing。对于装配体类型的几何图形，此定义只对装配体的每个单独零件有效。nonc
+onforming 网格（如导入网格）通常包含 “悬挂节点”（hanging nodes 见下图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:comsol-8.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/comsol-mesh-hanging-nodes.png
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+带有悬挂节点的网格
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:comsol-8.1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 数值基础
 \end_layout
@@ -26565,7 +26672,7 @@ noprefix "false"
 
 \begin_layout Theorem
 \begin_inset Argument 1
-status collapsed
+status open
 
 \begin_layout Plain Layout
 毕奥–萨伐尔定律
@@ -26704,16 +26811,11 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Example
-\begin_inset Argument 1
-status collapsed
-
-\begin_layout Plain Layout
+\begin_layout Subsection
 磁矢势的泛函
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 与
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -26818,24 +26920,12 @@ noprefix "false"
 对于磁场，二维，轴对称和 三维问题 所采用的单元略有不同。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Argument 1
-status collapsed
-
-\begin_layout Plain Layout
+\begin_layout Subsection
 二维情况
 \end_layout
 
-\end_inset
-
- 电流是垂直二维平面流过的，
+\begin_layout Standard
+电流是垂直二维平面流过的，
 \begin_inset Formula $\sbf A$
 \end_inset
 
@@ -26844,13 +26934,13 @@ status collapsed
 \end_inset
 
 ，有限元中的矢势可以用形函数和节点上定义的 
-\begin_inset Formula $A_{z,i}$
+\begin_inset Formula $A_{z,\alpha}$
 \end_inset
 
  表示为：
 \begin_inset Formula 
 \[
-\sbf A^{e}(x,y)=\sum_{i=1}^{n_{e}}N_{i}^{e}(x,y)A_{z,i}\sbf e_{z},
+\sbf A^{e}(x,y)=\sum_{\alpha=1}^{n_{e}}N_{\alpha}^{e}(x,y)\,A_{z,\alpha}\sbf e_{z}.
 \]
 
 \end_inset
@@ -26858,24 +26948,12 @@ status collapsed
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Argument 1
-status collapsed
-
-\begin_layout Plain Layout
+\begin_layout Subsection
 轴对称情况
 \end_layout
 
-\end_inset
-
- 然后是磁感应强度 
+\begin_layout Standard
+然后是磁感应强度 
 \begin_inset Formula $\sbf B$
 \end_inset
 
@@ -26946,7 +27024,7 @@ noprefix "false"
  表示为：
 \begin_inset Formula 
 \[
-\sbf A^{e}(\rho,z)=\sum_{\alpha=1}^{n_{e}}N_{\alpha}^{e}(\rho,z)A_{\varphi,\alpha}\sbf e_{\varphi}
+\sbf A^{e}(\rho,z)=\sum_{\alpha=1}^{n_{e}}N_{\alpha}^{e}(\rho,z)\,A_{\varphi,\alpha}\sbf e_{\varphi}
 \]
 
 \end_inset
@@ -26954,31 +27032,19 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Argument 1
-status collapsed
-
-\begin_layout Plain Layout
+\begin_layout Subsection
 三维磁场
 \end_layout
 
-\end_inset
-
- 对于三维磁场问题，采用的是棱边单元，相应的形函数是矢量。有限元中的矢势可以用形函数和棱边上定义的 
+\begin_layout Standard
+对于三维磁场问题，采用的是棱边单元，相应的形函数是矢量。有限元中的矢势可以用形函数和棱边上定义的 
 \begin_inset Formula $A_{\alpha}$
 \end_inset
 
  表示为：
 \begin_inset Formula 
 \[
-\sbf A^{e}(x,y,z)=\sum_{\alpha=1}^{n_{e}}\sbf N_{\alpha}^{e}(x,y,z)A_{\alpha}
+\sbf A^{e}(x,y,z)=\sum_{\alpha=1}^{n_{e}}\sbf N_{\alpha}^{e}(x,y,z)\,A_{\alpha}
 \]
 
 \end_inset
@@ -27099,15 +27165,21 @@ b_{\alpha}^{e} & =\mu_{0}\int_{\Omega^{e}}\sbf J\cdot\sbf N_{\alpha}^{e}\dd{\Ome
 \begin_inset Formula $\sbf A$
 \end_inset
 
-只有垂直二维平面的分量。即 
-\begin_inset Formula $\sbf J=J_{z}\sbf e_{z}$
+只有垂直二维平面的分量
+\begin_inset Formula 
+\begin{align*}
+\sbf N_{\alpha}^{e} & =N_{\alpha}^{e}\left(x,y\right)\sbf e_{z},\\
+\sbf J & =J_{z}\sbf e_{z},\\
+\sbf A & =A_{z,\alpha}\,N_{\alpha}^{e}(x,y)\,\sbf e_{z}.
+\end{align*}
+
 \end_inset
 
-，
-\begin_inset Formula $\sbf N_{\alpha}^{e}=N_{\alpha}^{e}\left(x,y\right)\sbf e_{z}$
+其中 
+\begin_inset Formula $\alpha$
 \end_inset
 
-，将其代入式
+ 标记单元节点局部编号。将其代入式
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:xl3.8"
