@@ -230,12 +230,8 @@ Mesh quality
 Young
 \end_layout
 
-\begin_layout Chapter
-FEM中的 Mesh Quality Parameters 
-\end_layout
-
-\begin_layout Section
-单元质量检查 
+\begin_layout Part
+有限元分析中的网格质量参数
 \end_layout
 
 \begin_layout Standard
@@ -251,58 +247,39 @@ literal "false"
 
 \end_layout
 
-\begin_layout Itemize
-在对不规则或复杂的几何形状进行网格划分时，FE分析中单元的形状必须偏离其理想形状。
+\begin_layout Chapter
+为什么要进行单元质量检查？ 
 \end_layout
 
 \begin_layout Itemize
-每种单元只在适当变形范围内能正常工作。究竟允许多大的变形，以及哪种类型的变形才会导致单元退化，这取决于单元类型、单元设计中使用的数值程序等因素。
+在对不规则或复杂的几何形状进行网格划分时，FE分析中单元的形状必须从其理想形状变形。
 \end_layout
 
 \begin_layout Itemize
-二维单元 的理想形状：三角形
-\begin_inset Formula $\to$
-\end_inset
-
-等边三角形，四边形
-\begin_inset Formula $\to$
-\end_inset
-
-正方形。
+每个单元都被设计为在一定的形状变形范围内正常工作。究竟允许多大的变形，以及哪种类型的变形才会导致元素退化，这取决于单元类型、单元设计中使用的数值程序等因素。
 \end_layout
 
 \begin_layout Itemize
-三维单元的理想形状：四面体
-\begin_inset Formula $\to$
-\end_inset
-
- 正四面体或等腰四面体，六面体 
-\begin_inset Formula $\to$
-\end_inset
-
- 立方体等等。
+二维单元 的理想形状：三角形单元是等边三角形，四边形单元是正方形。
 \end_layout
 
 \begin_layout Itemize
-如果单元映射到模型几何后的实际形状与自然形状相差太大，单元就会退化并产生错误的结果。
+三维单元的理想形状：四面体元素是正四面体或等腰四面体，六面体是立方体等等。
 \end_layout
 
 \begin_layout Itemize
-三角形单元主要检查：单元长度，长度比，扭曲角和内角大小
+如果元素映射到模型几何后的实际形状与自然形状相差太大，元素就会退化并产生错误的结果。
 \end_layout
 
-\begin_layout Itemize
-四边形单元主要检查：单元长度，翘曲度，长宽比，扭曲角，雅可比比率，弦偏离度。
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Section
 Result Quality alpha Element Quality
 \end_layout
 
 \begin_layout Itemize
 degeneration 的主要类型有：Aspect Ratio（长宽比）、Skewness（歪斜度）、Jacobian Ratio、Warping
- Factor（翘曲）、Maximum Corner Angle（最大转角）、Orthogonal Quality、Parallel Deviation（平行偏
-差）、Taper（锥度）、Curvature distortion（曲率变形）和 mid–size node position。
+ Factor（翘曲）、Maximum Corner Angle（最大转角）、Orthogonal Quality（正交质量）、Parallel
+ Deviation（平行偏差）、Taper（锥度）、Curvature distortion（曲率变形）和 mid–size node position（中间
+节点位置）。
 \end_layout
 
 \begin_layout Itemize
@@ -310,11 +287,15 @@ degeneration 的主要类型有：Aspect Ratio（长宽比）、Skewness（歪�
 \end_layout
 
 \begin_layout Itemize
-生成具有良好 quality参数的网格非常重要。如果单元退化，它们就会变得过于 stiff，从而低估变形（场变量），其导数（如应变和应力值）也会变得错误。
+每个 FE 网格都应进行单元质量检查，消除退化单元。
 \end_layout
 
 \begin_layout Itemize
-所有单元 distortions 都是根据理想形状测量的。
+为了获得合理精确的结果，生成具有良好 quality参数的 结构网格始终是非常重要的。
+\end_layout
+
+\begin_layout Itemize
+如果单元退化，它们就会变得过于僵硬（stiff），从而低估变形（场变量），其导数（如应变和应力值）也会变得错误。
 \end_layout
 
 \begin_layout Standard
@@ -354,7 +335,27 @@ status open
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Itemize
+退化单元会增加有限元表示的不准确性，并对有限元解的收敛性产生不利影响。
+\end_layout
+
+\begin_layout Itemize
+如今，大多数有限元仿真软件都配备了内置Quality检查选项，和基于Quality的网格生成算法。
+\end_layout
+
+\begin_layout Itemize
+在网格收敛研究中，保持单元质量始终是分析者面临的一项挑战。虽然单元尺寸已经最小化，但如果它们违反Quality要求，就毫无用处。
+\end_layout
+
+\begin_layout Itemize
+因此，了解如何计算不同单元形状的Quality参数非常重要。所有单元 distortions 都是根据理想形状测量的。
+\end_layout
+
+\begin_layout Itemize
+在接下来的文章中，我们将讨论所有Quality参数及其计算方法。最初讨论的是二维单元的Quality参数计算，随后将在二维计算的帮助下扩展到三维单元。
+\end_layout
+
+\begin_layout Section*
 References
 \end_layout
 
@@ -376,65 +377,146 @@ The Finite Element Method : Practical Course by G.
  Quek (Chapter 11.4.2).
 \end_layout
 
+\begin_layout Chapter
+Aspect Ratio，2D单元
+\end_layout
+
 \begin_layout Section
-Aspect Ratio边长比
+简介
 \end_layout
 
 \begin_layout Itemize
-单元的最大和最小特征尺寸之比称为 Aspect Ratio（边长比），
-\begin_inset Formula $\gamma_{\text{AR}}$
+单元的最大和最小特征尺寸之比称为 Aspect Ratio（纵横比）。
+\end_layout
+
+\begin_layout Itemize
+较大的纵横比会增加有限元表示的不准确性，并对有限元解的收敛性产生不利影响。
+\end_layout
+
+\begin_layout Itemize
+理想的长宽比为 
+\begin_inset Formula $1$
 \end_inset
 
-。
-\end_layout
-
-\begin_layout Itemize
-对线性单元来说，可接受的单元边长比的范围是
-\begin_inset Formula $0<\gamma_{\text{AR}}<3$
+，但很难始终保持。一般来说，在域中场变量导数较大的关键区域，纵横比保持在 
+\begin_inset Formula $1$
 \end_inset
 
-；对二次单元来说，可接受的单元边长比范围是
-\begin_inset Formula $0<\gamma_{\text{AR}}<10$
+ 至 
+\begin_inset Formula $5$
 \end_inset
 
-。
+ 之间。
 \end_layout
 
 \begin_layout Itemize
-对于同样形状的单元来说，高阶单元对于边长比没有线性单元那么敏感。单元在非线性分析中对于边长比的敏感程度要比在线性分析中高。
+在非线性分析中，单元形状不佳通常会导致收敛问题，同时还会影响求解精度。
 \end_layout
 
-\begin_layout Itemize
-如果一个问题在某一方向应力梯度很大，单元有可能需要相当大的边长比，最小边放在梯度最大的地方。 这是因为在一个单元内，如果某一边的梯度很大，这一边又很长，那么误差
-就会很大。
+\begin_layout Subsection
+Example Mesh with Aspect Ratios (A.R)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/aspect-ratio-quad.png
+	lyxscale 60
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Aspect Ratio 分别为 
+\begin_inset Formula $1$
+\end_inset
+
+和
+\begin_inset Formula $2$
+\end_inset
+
+的 Quad 单元。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/ideal-shapes-tri-quad.png
+	lyxscale 70
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+三角形和四边形单元的理想形状
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 以下步骤说明了 Ansys 软件如何计算三角形和四边形单元的纵横比。
 \end_layout
 
+\begin_layout Section
+三角形单元的纵横比
+\end_layout
+
 \begin_layout Subsection
-三角形单元的边长比
-\end_layout
-
-\begin_layout Subsubsection
-计算L1轴的长宽比
+以 L1 为轴，求矩形–1 的长宽比
 \end_layout
 
 \begin_layout Itemize
-在三角形 “ABC”中，连接顶点和对边中点（L1）；连接相邻边的两个中点（L2）。
+连接三角形 “ABC” 的 每条边的中点和对角 (L1)。连接其他相邻边的两个中点（L2）。
 \end_layout
 
 \begin_layout Itemize
-以L1为轴，在相邻两边的中点 E 和 F 处画出与 L1 的平行线；在 A 和 D 处画 L1 的垂线。
+以 L1 为轴，在相邻两边的中点 E 和 F 处画出与 L1 的平行线。
 \end_layout
 
 \begin_layout Itemize
-求所得矩阵的长宽比，
-\begin_inset Formula $\text{Ratio}=\text{长边}/\text{短边}$
-\end_inset
+在 A 和 D 处画 L1 的垂线。
+\end_layout
 
-（如下图所示）。
+\begin_layout Itemize
+求最大边与最小边的长度比，即用 L1 形成的矩形–1 的最大边与最小边的长度比（如下图所示）。
 \end_layout
 
 \begin_layout Standard
@@ -470,12 +552,12 @@ status open
 
 \end_layout
 
-\begin_layout Subsubsection
-计算L2轴的长宽比
+\begin_layout Subsection
+找到以 L2 为轴形成的矩形–2 的长度比
 \end_layout
 
 \begin_layout Itemize
-类似地，以 L2 为轴，在顶点和对边中点（即 A 和 D 处）画出与 L2 的平行线。
+同样，以 L2 为轴，在对角和对边的中点（即 A 和 D 处）画出与 L2 的平行线。
 \end_layout
 
 \begin_layout Itemize
@@ -483,11 +565,7 @@ status open
 \end_layout
 
 \begin_layout Itemize
-求所得矩阵长宽比，
-\begin_inset Formula $\text{Ratio}=\text{长边}/\text{短边}$
-\end_inset
-
-（步骤如下图所示）。
+求最大边与最小边的长度比，即用 L2 形成的矩形–2 的最大边与最小边之间的长度比（步骤如下图所示）。
 \end_layout
 
 \begin_layout Standard
@@ -524,29 +602,17 @@ L2 构成的 Rectangle-2
 \end_layout
 
 \begin_layout Itemize
-在三个顶角上实行上述步骤，分别构建 6个矩形，求出长度比。
+在三个角上重复上述步骤，构建所有 6个矩形（用 L3 和 L4、L5 和 L6 拼成），并求出长度比。
 \end_layout
 
 \begin_layout Itemize
-找出六个矩形中的最大长宽比。
+找出六个矩形中的最大长度比。
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\text{三角形单元的边长比}=\frac{\max(\text{长宽比})}{\sqrt{3}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-显然有
-\begin_inset Formula 
-\[
-\text{等边三角形边长比}=\frac{\text{长度比}}{\sqrt{3}}=\frac{1.732}{\sqrt{3}}=1
+\text{三角形单元的纵横比}=\frac{\max(\text{长度比})}{\sqrt{3}}
 \]
 
 \end_inset
@@ -555,11 +621,75 @@ L2 构成的 Rectangle-2
 \end_layout
 
 \begin_layout Subsection
-四边形单元的边长比
+等边三角形的长宽比计算
 \end_layout
 
-\begin_layout Subsubsection
-计算 L1 轴的长宽比
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+三角形元素的每条边长：50 毫米（AB=BC=CA）
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+每个角的角度：60 度（
+\begin_inset Formula $\angle A=\angle B=\angle C=60\text{度}$
+\end_inset
+
+）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/example-equilateral-triangle-aspect-ratio.png
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+计算等边三角形的 纵横比
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+类似地，为所有其它角构建矩形，最大边长和最小边长的值将与上述测量值相同。
+\begin_inset Formula 
+\begin{align*}
+\text{长度比}=\frac{\text{最长边}}{\text{最\text{短\text{边}}}} & =\frac{43.3}{25}=1.732\\
+\text{等边三角形纵横比}=\frac{\text{长度比}}{\sqrt{3}} & =\frac{1.732}{\sqrt{3}}=1
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+四边形单元的纵横比
+\end_layout
+
+\begin_layout Subsection
+计算以 L1 为轴形成的矩形–1 的长宽比
 \end_layout
 
 \begin_layout Itemize
@@ -567,7 +697,7 @@ L2 构成的 Rectangle-2
 \end_layout
 
 \begin_layout Itemize
-以 L1 为轴，在对边中点 E 和 G 画 L1 的平行线。
+以 L1 为轴，在其他对边的中点 E 和 G 画 L1 的平行线。
 \end_layout
 
 \begin_layout Itemize
@@ -575,11 +705,7 @@ L2 构成的 Rectangle-2
 \end_layout
 
 \begin_layout Itemize
-求所得矩阵的长宽比，
-\begin_inset Formula $\text{Ratio}=\text{长边}/\text{短边}$
-\end_inset
-
-（步骤如下图所示）。
+求最大边与最小边的比值，即用 L1 形成的矩形–1 的最大边与最小边之比（步骤如下图所示）。
 \end_layout
 
 \begin_layout Standard
@@ -602,7 +728,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-计算四边形单元的边长比，L1构成的Rectangle–1。
+计算四边形单元纵横比，L1构成的Rectangle–1。
 \end_layout
 
 \end_inset
@@ -615,8 +741,8 @@ status open
 
 \end_layout
 
-\begin_layout Subsubsection
-计算 L1 轴的长宽比
+\begin_layout Subsection
+找到以 L2 为轴形成的矩形–2 的长度比
 \end_layout
 
 \begin_layout Itemize
@@ -628,7 +754,7 @@ status open
 \end_layout
 
 \begin_layout Itemize
-求矩形–2 的长宽比（步骤如下图所示）。
+求矩形–2 的最大边与最小边的比值。（步骤如下图所示）。
 \end_layout
 
 \begin_layout Standard
@@ -664,11 +790,60 @@ L2构成的Rectangle–2。
 
 \end_layout
 
+\begin_layout Subsection
+正方形的长宽比计算
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+正方形元素的每条边长：50 毫米（AB=BC=CA）
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+每个角：90度（
+\begin_inset Formula $\angle A=\angle B=\angle C=\angle D=90\text{度}$
+\end_inset
+
+）
+\end_layout
+
 \begin_layout Standard
-显然有
+由于所有边都相等（AB=BC=CD=DA），且 L1 垂直于 L2，因此以 L1 和 L2 为轴构建的矩形与 “ABCD” 相同。因此，长宽比是由
+ L1 和 L2 形成的两个长度比的最大值。
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/example-square-ratio.png
+	lyxscale 65
+	scale 48
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+例：正方形单元的 Aspect ratio。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
-\text{正方形的边长比}=\frac{AB}{CD}=\frac{BC}{AD}=1.
+\text{正方形的纵横比}=\frac{AB}{CD}=\frac{BC}{AD}=1.
 \]
 
 \end_inset
@@ -677,7 +852,7 @@ L2构成的Rectangle–2。
 \end_layout
 
 \begin_layout Subsection
-菱形的边长比
+菱形的纵横比
 \end_layout
 
 \begin_layout Itemize
@@ -685,7 +860,7 @@ L2构成的Rectangle–2。
 \end_layout
 
 \begin_layout Itemize
-假设菱形单元的边长各为 10 毫米。
+假设菱形元素的边长各为 10 毫米。
 \end_layout
 
 \begin_layout Standard
@@ -722,7 +897,11 @@ Rhombus shaped Element with L1 & L2 Axis
 \end_layout
 
 \begin_layout Itemize
-找出所得矩阵的长宽比。
+按照四边形元素的重复步骤，围绕 EF 和 GH 构建如下所示的矩形。
+\end_layout
+
+\begin_layout Itemize
+找出最大边长与最小边长之比。
 \end_layout
 
 \begin_layout Standard
@@ -761,7 +940,7 @@ Rhombus shaped Element with L1 & L2 Axis
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\text{长宽比}=\frac{10}{7.07}=1.414.
+\text{纵横比}=\text{长度比}=\frac{\text{长边}}{\text{短边}}=\frac{10}{7.07}=1.414.
 \]
 
 \end_inset
@@ -770,6 +949,15 @@ Rhombus shaped Element with L1 & L2 Axis
 \end_layout
 
 \begin_layout Remark
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+参数研究
+\end_layout
+
+\end_inset
+
 通过将角度
 \begin_inset Formula $\Theta$
 \end_inset
@@ -1040,7 +1228,7 @@ Aspect Ratio
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Aspect ratio 与菱形顶角的关系
+Aspect ratio 与菱形角的关系
 \end_layout
 
 \end_inset
@@ -1057,7 +1245,7 @@ Aspect ratio 与菱形顶角的关系
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 References
 \end_layout
 
@@ -1085,16 +1273,16 @@ Ansys, Inc.
  Theory Reference, Ansys Release 9.0, 2004 (Chapter: 13.7.3)
 \end_layout
 
-\begin_layout Section
-Skewness 歪斜度
+\begin_layout Chapter
+Skewness，2D单元
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 歪斜度计算
 \end_layout
 
 \begin_layout Itemize
-Skewness是基于角度的单元Quality度量方式，它与理想单元的角度作比较。
+Skewness是基于角度的单元Quality度量方式，它与理想单元的角度比较。
 \end_layout
 
 \begin_layout Itemize
@@ -1102,19 +1290,19 @@ Skewness是基于角度的单元Quality度量方式，它与理想单元的角�
 \end_layout
 
 \begin_layout Itemize
-二维单元的斜度有两种不同的计算方法。
+二维元素的斜度有两种不同的计算方法。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 方法1：Angular Measure
 \end_layout
 
-\begin_layout Subsubsection
-三角形单元
+\begin_layout Subsection
+三角形元素
 \end_layout
 
 \begin_layout Itemize
-从顶点到对边中点作直线，再作直线连接邻边中点，找出两条直线之间的夹角。对所有三个节点重复上述步骤，找出所有六个角（
+从每个节点到其对边的中点画一条直线，再画一条直线连接其他两条边的中点，测量两条直线之间的夹角。对所有三个节点重复上述步骤，找出所有六个角（
 \begin_inset Formula $\Theta1$
 \end_inset
 
@@ -1126,11 +1314,7 @@ Skewness是基于角度的单元Quality度量方式，它与理想单元的角�
 \end_layout
 
 \begin_layout Itemize
-歪斜度 等于 
-\begin_inset Formula $90\text{°}$
-\end_inset
-
- 减去最小角度。
+斜度的计算方法是 90 度减去最小角度。
 \begin_inset Formula 
 \[
 \text{Skewness}=90-\min\left(\Theta1,\Theta2,\cdots,\Theta6\right)
@@ -1229,21 +1413,13 @@ status open
 
 \end_layout
 
-\begin_layout Remark
-另外还有一种定义：单元相邻边夹角与
-\begin_inset Formula $60\text{°}$
-\end_inset
-
-之间的差值。
-\end_layout
-
-\begin_layout Subsubsection
+\begin_layout Subsection
 四边形单元
 \end_layout
 
 \begin_layout Itemize
 绘制对边中点的连接线，并测量这两条线之间的夹角 (
-\begin_inset Formula $\Theta1,\Theta2$
+\begin_inset Formula $\Theta1\,\&\,\Theta2$
 \end_inset
 
 )。
@@ -1290,12 +1466,62 @@ status open
 
 \end_layout
 
-\begin_layout Standard
-显然正方形单元的歪斜度为
-\begin_inset Formula $0$
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+正方形元素的斜度
+\end_layout
+
+\end_inset
+
+ 对于正方形 
+\begin_inset Formula $\Theta1$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Theta2=90\,\text{度}$
+\end_inset
+
+。因此，正方形的 
+\begin_inset Formula $\text{歪斜度}=0\,\text{度}$
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/example-skewness-square.png
+	lyxscale 90
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+例：正方形单元的歪斜度
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -1306,12 +1532,12 @@ status open
 。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 方法2：Normalized angle deviation
 \end_layout
 
 \begin_layout Standard
-在 “归一化角度偏差” 中，歪斜度（一般）定义为 “与理想单元的角度偏差之比的最大值”。
+在归一化角度偏差法中，歪斜度（一般）定义为 “与理想单元的角度偏差之比的最大值”。
 \begin_inset Formula 
 \[
 \text{Skewness}=\max\left[\frac{\theta_{\text{max}}-\theta_{e}}{180-\theta_{e}},\frac{\theta_{e}-\theta_{\text{min}}}{\theta_{e}}\right]
@@ -1536,7 +1762,7 @@ status open
 。
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 References
 \end_layout
 
@@ -1566,287 +1792,36 @@ Ansys theory reference manual.
 Hypermesh users guide.
 \end_layout
 
-\begin_layout Section
-Jocabian Ratio
-\end_layout
-
-\begin_layout Quotation
-即单元内各个积分点 Jocabian 行列式值中的最小值与最大值之比，计算公式如下
-\begin_inset Formula 
-\[
-J_{R}=\frac{\abs{J}_{\min}}{\abs{J}_{\max}}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\abs{J}_{\min}$
-\end_inset
-
-，
-\begin_inset Formula $\abs{J}_{\max}$
-\end_inset
-
- 分别为最小和最大的雅可比行列式值。
+\begin_layout Chapter
+Warping Factor/Angle
 \end_layout
 
 \begin_layout Section
-三维网格质量评价
-\end_layout
-
-\begin_layout Itemize
-三维单元质量检查指标与二维单元质量检查指标大同小异，但有些指标不一样。
-\end_layout
-
-\begin_layout Itemize
-对于六面体单元，单元质量检查指标与二维单元差不多。
-\end_layout
-
-\begin_layout Itemize
-在四面体中，边长比定义为单元最长边与最短高之间的比值，见图
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:lihf-6"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/LiHaiFeng-f6.png
-	scale 60
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-四面体单元 边长比示意图
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:lihf-6"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-对于四面体单元，还需要另外检查如下指标：坍塌（collapse）值，体积扭曲（skew）值。
-\end_layout
-
-\begin_layout Subsection
-四面体单元坍塌值
-\end_layout
-
-\begin_layout Standard
-如图
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:lihf-7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-所示，其计算公式为
-\begin_inset Formula 
-\[
-T_{\text{collapse}}=\min\left(\frac{h_{i}}{\sqrt{A_{i}}}\right)/1.24,\quad i=1,2,3,4
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $h_{i}$
-\end_inset
-
- 为各个顶点到对应面的距离值， 
-\begin_inset Formula $A_{i}$
-\end_inset
-
- 为对应面的面积。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/LiHaiFeng-f7.png
-	scale 60
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-四面体单元 坍塌值计算示意图
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:lihf-7"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-四面体单元的体积扭曲值
-\end_layout
-
-\begin_layout Itemize
-对于任意一个四面体单元，定义一个过四个顶点的外接球体，如图
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:lihf-8"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-所示。
-\end_layout
-
-\begin_layout Itemize
-再依照球体的半径，计算出一个理想四面体的体积，该体积假定为Videal，实际四面体单元的体积为Vactual。
-\end_layout
-
-\begin_layout Itemize
-参照理想四面体的体积，按照下面公式计算，就得到四面体单元的体积扭曲值：
-\begin_inset Formula 
-\begin{align*}
-T_{\text{volumetric skew}} & =\left(V_{\text{ideal}}-V_{\text{actual}}\right)/V_{\text{ideal}}\\
-V_{\text{ideal}} & =\frac{8r^{3}}{9\sqrt{3}}
-\end{align*}
-
-\end_inset
-
-式中，
-\begin_inset Formula $r$
-\end_inset
-
-为外接球的半径。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/LiHaiFeng-f8.png
-	lyxscale 70
-	scale 45
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-四面体单元体积扭曲值计算示意图
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:lihf-8"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-四边形的Warping Factor/Angle
-\end_layout
-
-\begin_layout Subsection
 单元的翘曲
 \end_layout
 
 \begin_layout Itemize
-理想情况下，四边形单元的所有节点都应位于同一平面上，但实际中会遇到弯曲和复杂的几何面。衡量四边形偏差平面的标准是“翘曲因子” 或 “翘曲角”。
+理想情况下，四边形元素的所有节点都应位于同一平面上，但在curvatures 和复杂几何剖面上却不可能。“衡量四边形偏差平面的标准是翘曲因子或翘曲角”。
 \end_layout
 
 \begin_layout Itemize
-翘曲计算不适用于三角形单元，因为三点定义平面，此检查仅适用于四边形。
+翘曲计算不适用于三角形元素，因为三点定义平面，此检查仅适用于四边形。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Warping Angle
 \end_layout
 
 \begin_layout Itemize
-定义为：将四边形单元沿对角线分割后，得到的两（三角形）平面的法线之间的夹角。
+它的定义是，将四边形单元沿对角线分割后形成的两个（三角形）平面的法线之间的夹角。
 \end_layout
 
 \begin_layout Itemize
-从两个对角线得到两个夹角，将大的夹角称为 “翘曲角”。
+对应两对角线的两个角度中的大的那个被称为 “翘曲角”。
+\end_layout
+
+\begin_layout Itemize
+对于实体（solid）单元，单元face偏离平面。四边形沿其对角线分为两个三角形，并测量三角形法线之间的角度。
 \end_layout
 
 \begin_layout Itemize
@@ -1913,7 +1888,7 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 例：四边形的Warping Angle
 \end_layout
 
@@ -1937,12 +1912,12 @@ status open
  。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 ABD&BCD之间的夹角
 \end_layout
 
 \begin_layout Itemize
-ABD 和 BCD 平面的方程
+ABD 平面的方程
 \begin_inset Formula 
 \[
 \left|\begin{array}{ccc}
@@ -1955,6 +1930,10 @@ x-10 & y-15 & z-0\\
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+BCD平面的方程
 \begin_inset Formula 
 \[
 \left|\begin{array}{ccc}
@@ -1970,7 +1949,7 @@ x-25 & y-25 & z-0\\
 \end_layout
 
 \begin_layout Itemize
-将平面方程的系数归一化
+把两个平面的方程作系数归一化
 \begin_inset Formula 
 \begin{align*}
  & \frac{-2}{\sqrt{113}}x+\frac{3}{\sqrt{113}}y-\frac{10}{\sqrt{113}}z=\frac{25}{\sqrt{113}}\\
@@ -1983,7 +1962,7 @@ x-25 & y-25 & z-0\\
 \end_layout
 
 \begin_layout Itemize
-从方程读出两个 Direction Cosines
+从方程可以读出两个 Direction Cosines
 \begin_inset Formula 
 \begin{align*}
  & \sbf n_{1}=\left(\frac{-2}{\sqrt{113}},\frac{3}{\sqrt{113}},-\frac{10}{\sqrt{113}}\right)\\
@@ -1996,7 +1975,7 @@ x-25 & y-25 & z-0\\
 \end_layout
 
 \begin_layout Itemize
-两平面夹角为
+所以两平面夹角为
 \begin_inset Formula 
 \[
 \cos\theta_{1}=\sbf n_{1}\cdot\sbf n_{2}=\abs{\frac{91}{\sqrt{15481}}}=0.731378
@@ -2005,22 +1984,46 @@ x-25 & y-25 & z-0\\
 \end_inset
 
 对应的
-\begin_inset Formula $\theta_{1}=42.998\text{°}$
+\begin_inset Formula $\theta_{1}=42.998\text{\textdegree}$
 \end_inset
 
 。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 ABC&ACD之间的夹角
 \end_layout
 
 \begin_layout Standard
 类似地，ABC 和 ACD 的方程为
 \begin_inset Formula 
+\[
+\left|\begin{array}{ccc}
+x-10 & y-15 & z-0\\
+25-10 & 25-15 & 0-0\\
+35-10 & 15-15 & 5-0
+\end{array}\right|=0\quad\to\quad-2x+3y+10z=25
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left|\begin{array}{ccc}
+x-10 & y-15 & z-0\\
+35-10 & 15-15 & 5-0\\
+20-10 & 5-15 & -5-0
+\end{array}\right|=0\quad\to\quad2x+7y-10z=125
+\]
+
+\end_inset
+
+归一化
+\begin_inset Formula 
 \begin{align*}
- & -2x+3y+10z=25\\
- & 2x+7y-10z=125
+ & \frac{-2}{\sqrt{113}}x+\frac{3}{\sqrt{113}}y+\frac{10}{\sqrt{113}}z=\frac{20}{\sqrt{113}}\\
+ & \frac{2}{\sqrt{153}}x+\frac{7}{\sqrt{153}}y-\frac{10}{\sqrt{153}}z=\frac{125}{\sqrt{153}}
 \end{align*}
 
 \end_inset
@@ -2034,7 +2037,7 @@ ABC&ACD之间的夹角
 \end_inset
 
 对应的
-\begin_inset Formula $\theta_{2}=50.860\text{°}$
+\begin_inset Formula $\theta_{2}=50.860\text{\textdegree}$
 \end_inset
 
 
@@ -2050,18 +2053,18 @@ Warping Angle 取
 \end_inset
 
 的最大值，即
-\begin_inset Formula $50.86\text{°}$
+\begin_inset Formula $50.86\text{\textdegree}$
 \end_inset
 
 。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Warping Factor
 \end_layout
 
 \begin_layout Itemize
-某些有限元软件使用 Warping factor，而不是 Warping Angle。
+某些有限元软件将 单元偏离平面的程度 叫作 Warping factor，而不是 Warping Angle。
 \end_layout
 
 \begin_layout Itemize
@@ -2114,11 +2117,15 @@ status open
 \end_layout
 
 \begin_layout Itemize
-通过向量叉乘，找到两条对角线（向量）AC 和 BD 的公共法线。
+通过向量叉乘，或使用 3D 几何原理，找到两条对角线（向量）AC 和 BD 的公共法线。
 \end_layout
 
 \begin_layout Itemize
-然后生成两个垂直于公共法线，并分别经过 A–C 和 B–D 的平面，这两个平面相互平行。
+然后生成两个垂直于公共法线，并分别经过 A–C 和 B–D 的平面。
+\end_layout
+
+\begin_layout Itemize
+这两个平面，其中一个平面包含 AC，另一个平面包含 BD，相互平行。
 \end_layout
 
 \begin_layout Standard
@@ -2155,7 +2162,11 @@ status open
 \end_layout
 
 \begin_layout Itemize
-在这两个平面之间构建 均分平面（Average Plane）。节点在该平均面上的投影分别为 
+在这两个平面之间构建一个 均分平面。
+\end_layout
+
+\begin_layout Itemize
+节点在该平均面上的投影分别为 
 \begin_inset Formula $A'$
 \end_inset
 
@@ -2179,11 +2190,7 @@ status open
 \end_layout
 
 \begin_layout Itemize
-节点
-\begin_inset Formula $ABCD$
-\end_inset
-
-到均分平面的距离相同，即 
+节点到均分平面的距离相同，即 
 \begin_inset Formula $A\,A'=B\,B'=C\,C'=D\,D'=h$
 \end_inset
 
@@ -2191,27 +2198,15 @@ status open
 \end_layout
 
 \begin_layout Itemize
-求 节点相对于均分平面的高度差。边
-\begin_inset Formula $AB$
+现在，求 Edge 节点相对于均分平面的高度差。Edge AB 的节点高度差为 
+\begin_inset Formula $h-(-h)=2h$
 \end_inset
 
-的节点的高度差为 
-\begin_inset Formula $2h$
-\end_inset
-
-（
-\begin_inset Formula $h$
-\end_inset
-
-是均分平面与上下平面的距离）。
+（两个平行平面之间的距离）。
 \end_layout
 
 \begin_layout Itemize
-求 
-\begin_inset Formula $ABCD$
-\end_inset
-
- 在 均分平面 的 投影四边形（ 
+求实际节点（A、B、C 和 D）的投影在平均平面上形成的四边形（ 
 \begin_inset Formula $A'\,B'\,C'\,D'$
 \end_inset
 
@@ -2246,7 +2241,7 @@ status open
 。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 例：四边形的Warping Factor
 \end_layout
 
@@ -2409,7 +2404,7 @@ AA''=\abs{\sbf n\cdot\sbf A-\text{rhs}}=\frac{\abs{10*{\color{blue}1}+15*{\color
 \begin_inset Formula $\abs{\sbf A'-\sbf A}=h=2.4055$
 \end_inset
 
-，得到
+，因此解得
 \begin_inset Formula 
 \[
 \sbf A'=\left(10.463,15.463,-2.315\right)
@@ -2456,7 +2451,7 @@ B'=(24.537,24.537,2.315),\quad C'=(35.463,15.463,2.685),\quad D'=(19.537,4.537,-
 计算两个三角形的面积，最终得到均分平面四边形的面积为
 \begin_inset Formula 
 \[
-S=S_{1}+S_{2}=117.8757+141.9319=259.8.
+A=A_{1}+A_{2}=117.8757+141.9319=259.8.
 \]
 
 \end_inset
@@ -2468,7 +2463,7 @@ S=S_{1}+S_{2}=117.8757+141.9319=259.8.
 则翘曲因子
 \begin_inset Formula 
 \[
-\text{Warping Factor}=\frac{2h}{\sqrt{S}}=0.298
+\text{Warping Factor}=\frac{2h}{\sqrt{A}}=0.298
 \]
 
 \end_inset
@@ -2476,7 +2471,7 @@ S=S_{1}+S_{2}=117.8757+141.9319=259.8.
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 References
 \end_layout
 
@@ -2506,75 +2501,8 @@ Ansys theory reference manual.
 Hypermesh users guide.
 \end_layout
 
-\begin_layout Section
-弦偏离度
-\end_layout
-
-\begin_layout Standard
-考虑单元中各边中点或各顶点在对应边上的投影点的距离值,见图
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:lihf-4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的L1、L2，弦偏离度定义为
-\begin_inset Formula 
-\[
-\text{String Deviation}=\frac{\abs{L1-L2}}{L1+L2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/LiHaiFeng-f4.png
-	scale 60
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-四边形单元弦偏离度
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:lihf-4"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-COMSOL 自动重剖分UI
+\begin_layout Part
+COMSOL 网格自动重剖分UI
 \end_layout
 
 \begin_layout Standard
@@ -2586,14 +2514,7 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Graphics
-	filename inset/auto-remeshing-ui.png
-	lyxscale 80
-	scale 60
-
-\end_inset
-
-
+ssss
 \end_layout
 
 \begin_layout Plain Layout
@@ -2791,327 +2712,7 @@ r Backward Euler。
 \end_layout
 
 \begin_layout Chapter
-COMSOL 网格质量评估
-\end_layout
-
-\begin_layout Standard
-Mesh element quality — which measures the regularity of the mesh elements'shapes
-。低网格单元质量可能导致 inverted mesh elements，以及 Jacobian 的条件数变高，引发收敛困难。 Mesh element
- quality是
-\begin_inset Formula $0$
-\end_inset
-
-和
-\begin_inset Formula $1$
-\end_inset
-
-之间的无量纲数， 
-\begin_inset Formula $1$
-\end_inset
-
-代表当前度量下的 perfectly regular element，
-\begin_inset Formula $0$
-\end_inset
-
-代表 a degenerated element。COMSOL 具有以下 mesh quality measures：
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Skewness。
-\series default
-默认的 quality measure, 度量 equiangular skew，定义为以下量在单元上的 minimum：
-\begin_inset Formula 
-\[
-1-\max(\frac{\theta-\theta_{e}}{180-\theta_{e}},\frac{\theta_{e}-\theta}{\theta_{e}}).
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\theta$
-\end_inset
-
- 是单元中的 vertex(2D) 或 edge(3D) 上的角度， 
-\begin_inset Formula $\theta_{e}$
-\end_inset
-
- 是 理想单元中对应的 edge or vertex 的角度， the minimum 取遍单元的所有 vertices(2D) or edges(3D).
- 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Maximum angle
-\series default
-。基于单元中的最大角。如果 element 中的所有角都 
-\begin_inset Formula $<$
-\end_inset
-
- 对应optimal单元的最大角，则 quality 为
-\begin_inset Formula $1$
-\end_inset
-
-。否则此度量指示超过 理想最大角 的程度。此 quality measure 对 element anisotropy 不敏感。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Volume versus circumradius。
-\series default
-基于 element volume 
-\begin_inset Formula $/$
-\end_inset
-
- 外接球(圆)的半径。此 quality measure 对 大角、小角和 anisotropy 敏感。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Condition number
-\series default
-。单元量纲
-\begin_inset Formula $/$
-\end_inset
-
-
-\begin_inset Formula $T$
-\end_inset
-
-的条件数(in the Frobenius norm)，
-\begin_inset Formula $T$
-\end_inset
-
-是从网格单元到 reference单元的 变换矩阵。
-\begin_inset Formula 
-\[
-\left\Vert A\right\Vert _{F}=\sqrt{\sum_{i=1}^{m}\sum_{j=1}^{n}\abs{a_{ij}}^{2}}=\sqrt{\Tr{(A^{*}A)}}=\sqrt{\sum_{i=1}^{\min{m,n}}\sigma_{i}^{2}}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\sigma_{i}$
-\end_inset
-
-是
-\begin_inset Formula $A$
-\end_inset
-
-的奇异值。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Growth rate
-\series default
-。它是 local (anisotropy) growth rate 的度量。令
-\begin_inset Formula $s_{\alpha}(E)$
-\end_inset
-
- 标记单元
-\begin_inset Formula $E$
-\end_inset
-
-在空间方向
-\begin_inset Formula $\alpha$
-\end_inset
-
-上的尺寸，令
-\begin_inset Formula $E_{\alpha}$
-\end_inset
-
-标记
-\begin_inset Formula $E$
-\end_inset
-
-在
-\begin_inset Formula $\alpha$
-\end_inset
-
-方向上的 element neighbor，则 growth rate measure 是
-\begin_inset Formula 
-\[
-\min\frac{\min(s_{\alpha}(E),s_{\alpha}(E_{\alpha}))}{\max(s_{\alpha}(E),s_{\alpha}(E_{\alpha}))}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\alpha$
-\end_inset
-
-遍历所有方向。对于 uniform sized mesh, the growth rate 等于
-\begin_inset Formula $1$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Curved skewness
-\series default
-。定义为 
-\family typewriter
-skewness
-\family default
- 和
-\family typewriter
- reldetjacmin
-\family default
- 的elementwise乘积。它是生成高阶单元时 deformation 的度量。当在
-\family typewriter
- Mesh Statistics
-\family default
- 计算 curved skewness， 总是使用 2 阶 Lagrange 几何形函数计算 deformation。
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-reldetjac
-\series default
- 求解过程中，直边网格单元可能会变成弯曲单元，令
-\begin_inset Formula $J$
-\end_inset
-
-表示从直边
-\begin_inset Formula $\to$
-\end_inset
-
-弯曲的 Jacobian矩阵，则
-\family typewriter
- reldetjac
-\family default
- 是 
-\begin_inset Formula $J$
-\end_inset
-
- 的行列式。它度量 curved单元 和对应直边单元在形状上的区别。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-reldetjacmin
-\series default
- 标量，定义为
-\family typewriter
- reldetjac
-\family default
- 在对应单元上的最小值。若某个单元的
-\begin_inset Formula $\mathrm{reldetjacmin}<0$
-\end_inset
-
-，意味着它发生内外翻转，单元变成
-\series bold
- an inverted mesh element。
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-Custom expression
-\series default
-。使用下列变量 组成的表达式。取值范围应该在 
-\begin_inset Formula $0\sim1$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-COMSOL中为以上网格量定义了内置变量。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-h
-\series default
-。The local mesh size。 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qualskewness
-\series default
-。The skewness mesh quality measure，默认的网格质量度量。 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qualmaxangle
-\series default
-。The maximum angle mesh quality measure。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qual
-\series default
-。The volume versus circumradius quality measure。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qualvollength
-\series default
-。The volume versus length mesh quality measure。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qualcondition
-\series default
-。The condition number mesh quality measure。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qualgrowth
-\series default
-。The growth rate mesh quality measure。
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-qualcurvedskewness
-\series default
-。The quality measure of the deformation when generating higher--order elements。
-\end_layout
-
-\begin_layout Remark
-对于具有大的长宽比的 四边形 和 六面体 单元（例如在边界层中出现的）， 默认的 网格质量度量—skewness，以及 the maximum
- angle，the quality measure 将给出
-\series bold
- high mesh quality
-\series default
-；而 volume versus circumradius 和 volume versus length 将给出
-\series bold
- low mesh quality
-\series default
-，因为后两者会受到长宽比的影响。
-\end_layout
-
-\begin_layout Chapter
-others
+ssss
 \end_layout
 
 \begin_layout Standard

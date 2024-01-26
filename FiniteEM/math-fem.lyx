@@ -13978,6 +13978,10 @@ noprefix "false"
 有限元的自然边界条件
 \end_layout
 
+\begin_layout Subsection
+自然边界条件–磁力线垂直
+\end_layout
+
 \begin_layout Standard
 磁矢势的泛函积分，给出在边界
 \begin_inset Formula $\Gamma$
@@ -13995,59 +13999,195 @@ noprefix "false"
 
 \end_inset
 
-对应磁场切向分量为零，所以是磁力线垂直。
+对应磁场切向分量为零，所以是
+\series bold
+磁力线垂直
+\series default
+。
+\end_layout
+
+\begin_layout Subsection
+Dirichlet边界–磁力线平行
 \end_layout
 
 \begin_layout Standard
-考察边界上的
-\begin_inset Formula $B=\nabla\times\sbf A$
+IBE中的“磁力线平行”表示边界 
+\begin_inset Formula $\Gamma_{D}$
 \end_inset
 
-，
+ 满足Dirichlet 边界条件。在 Edge–单元中，磁矢势表示为
 \begin_inset Formula 
 \[
-\sbf B=\sbf e_{n}\left(\partial_{i}A_{i}\right)+\sbf e_{t}\left(\partial_{j}A_{j}\right)
+\sbf A=\sum_{\alpha}A_{\alpha}\,\sbf N_{\alpha},
 \]
 
 \end_inset
 
-即把
-\begin_inset Formula $\sbf B$
+
+\end_layout
+
+\begin_layout Standard
+若给定在 
+\begin_inset Formula $\Gamma_{D}$
 \end_inset
 
-沿着边界法向和切向分解，其中的 
-\begin_inset Formula $\partial_{i}A_{i}$
+上
+\begin_inset Formula $\sbf A=0$
 \end_inset
 
- ，
-\begin_inset Formula $\partial_{j}A_{j}$
+，对于其它不在
+\begin_inset Formula $\Gamma_{D}$
 \end_inset
 
-是偏导数和
-\begin_inset Formula $A$
+上的边
+\begin_inset Formula $\beta$
 \end_inset
 
-分量的组合。假如边界是
-\begin_inset Formula $xy$
+（内边），对应的矢量形函数
+\begin_inset Formula $\sbf N_{\beta}$
 \end_inset
 
-平面，则
-\begin_inset Formula 
-\[
-B_{z}=\left(\nabla\times\sbf A\right)_{z}=\partial_{x}A_{y}-\partial_{y}A_{x}
-\]
-
+ 在
+\begin_inset Formula $\Gamma_{D}$
 \end_inset
 
-如果
+上只有法向分量，只对
 \begin_inset Formula $\sbf A$
 \end_inset
 
-是常数（大小，方向恒定），则 
-\begin_inset Formula $\partial_{x}A_{y}-\partial_{y}A_{x}=0$
+ 贡献法向分量；更准确地说，考虑到 
+\begin_inset Formula $\sbf N$
 \end_inset
 
-，即法向分量为零，对应 磁力线平行。
+ 在柱坐标下的表达式，
+\begin_inset Formula 
+\[
+\sbf N=\frac{r}{h}\sbf e_{\phi}
+\]
+
+\end_inset
+
+参考柱坐标下的 curl 算符
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gI.36"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\nabla\times\sbf f=\left(\frac{1}{r}\partial_{\phi}f_{z}-\partial_{z}f_{\phi}\right)\sbf e_{r}+\left(\partial_{z}f_{r}-\partial_{r}f_{z}\right)\sbf e_{\phi}+\frac{1}{r}\left[\partial_{r}(rf_{\phi})-\partial_{\phi}f_{r}\right]\sbf e_{z}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula $\sbf N^{e}$
+\end_inset
+
+只有
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sbf e_{z}$
+\end_inset
+
+不为零，
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula 
+\[
+\nabla\times\sbf N=\frac{1}{r}\partial_{r}\left(r\frac{r}{h}\right)=\frac{2}{h}\sbf e_{z}
+\]
+
+\end_inset
+
+对应到有限元模型中，
+\begin_inset Formula $\sbf e_{z}$
+\end_inset
+
+沿着边界切向；因此
+\begin_inset Formula $\nabla\times\sbf B$
+\end_inset
+
+只有切向分量，即
+\series bold
+磁力线平行
+\series default
+。
+\end_layout
+
+\begin_layout Itemize
+在一般曲线正交坐标系中，设单位基矢为
+\begin_inset Formula $\{\sbf e_{1},\sbf e_{2},\sbf e_{3}\}$
+\end_inset
+
+，如果
+\begin_inset Formula $\sbf f$
+\end_inset
+
+ 只有
+\begin_inset Formula $\sbf e_{3}$
+\end_inset
+
+分量，则
+\begin_inset Formula $\nabla\times\sbf f$
+\end_inset
+
+的结果一定只有
+\begin_inset Formula $\{\sbf e_{1},\sbf e_{2}\}$
+\end_inset
+
+分量，即在局部上，
+\begin_inset Formula $(\nabla\times\sbf f)\perp\sbf f$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+若给定在
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上
+\begin_inset Formula $\sbf A\neq0$
+\end_inset
+
+，则 
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上的边的形函数 
+\begin_inset Formula $\sbf N_{\alpha}$
+\end_inset
+
+也有贡献，则最终磁力线不一定平行。
 \end_layout
 
 \begin_layout Chapter

@@ -1,0 +1,270 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+数学笔记
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+有限元法
+\end_layout
+
+\begin_layout Section
+有限元法概述
+\end_layout
+
+\begin_layout Section
+标量场的有限元分析
+\end_layout
+
+\begin_layout Section
+矢量场的有限元分析
+\end_layout
+
+\begin_layout Subsection
+边值问题
+\end_layout
+
+\begin_layout Standard
+典型的电场边界条件有理想导体表面的齐次 Dirichlet 条件和阻抗表面的混合边界条件。为了说明如何处理这两种不同的边界条件，我们将边界条件假设为
+\begin_inset Formula 
+\begin{align}
+\hat{n}\times\sbf E & =\sbf P,\quad\text{在}\Gamma_{D}\text{上}\label{eq:9.3.6}\\
+\hat{n}\times\left(\frac{1}{\mu_{r}}\nabla\times\sbf E\right)+\frac{j\,k_{0}}{\eta_{r}}\hat{n}\times\left(\hat{n}\times\sbf E\right) & =\sbf K_{N},\quad\text{在}\Gamma_{N}\text{上}\label{eq:9.3.7}
+\end{align}
+
+\end_inset
+
+其实，
+\begin_inset Formula $\sbf P$
+\end_inset
+
+为边界
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上的切向电场值，
+\begin_inset Formula $\eta_{r}$
+\end_inset
+
+为
+\begin_inset Formula $\Gamma_{N}$
+\end_inset
+
+上的归一化表面阻抗，
+\begin_inset Formula $\sbf K_{N}$
+\end_inset
+
+为已知函数，表示边界
+\begin_inset Formula $\Gamma_{N}$
+\end_inset
+
+上的边界源。
+\end_layout
+
+\begin_layout Subsection
+有限元公式的建立
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\int_{\Omega} & \left[\frac{1}{\mu_{r}}\left(\nabla\times\sbf W_{i}\right)\cdot\left(\nabla\times\sbf E\right)-k_{0}^{2}\epsilon_{r}\sbf W_{i}\cdot\sbf E\right]\dd{\Omega}=\int_{\Gamma_{D}}\frac{1}{\mu_{r}}\left(\hat{n}\times\sbf W_{i}\right)\cdot\left(\nabla\times\sbf E\right)\dd{\Gamma}\nonumber \\
+ & -\int_{\Gamma_{N}}\left[\frac{j\,k_{0}}{\eta_{r}}\left(\hat{n}\times\sbf W_{i}\right)\cdot{\color{blue}\left(\hat{n}\times\sbf E\right)}+\sbf W_{i}\cdot\sbf K_{N}\right]\dd{\Gamma}-jk_{0}Z_{0}\int_{\Omega}\sbf W_{i}\cdot\sbf J_{\text{imp}}\dd{\Omega}\label{eq:9.3.11}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sbf E={\color{blue}\sum_{j=1}^{N_{\text{edge}}}\sbf N_{j}\,E_{j}}+{\color{red}\sum_{j=1}^{N_{D}}\sbf N_{j}^{D}\,E_{j}^{D}}\label{eq:9.3.15}
+\end{equation}
+
+\end_inset
+
+我们还可以注意到，由于式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:9.3.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的第二项，插值场满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:9.3.6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示的边界条件。（意思是，Dirichlet 边界
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上电场的切向分量直接分解到基函数 
+\begin_inset Formula $\sbf N_{j}^{D}$
+\end_inset
+
+上，并且不作为自由度进入方程求解，Restrained。）
+\begin_inset Formula 
+\begin{align*}
+K_{ij} & =\left[\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{i}\right)\cdot\left(\nabla\times\sbf N_{j}\right)-k_{0}^{2}\epsilon_{r}\sbf N_{i}\cdot\sbf N_{j}\right]\dd{\Omega}\\
+ & +j\,k_{0}\int_{\Gamma_{N}}\left[\frac{1}{\eta_{r}}\left(\hat{n}\times\sbf N_{i}\right)\cdot\left(\hat{n}\times\sbf N_{j}\right)\right]\dd{\Gamma}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+应当注意，由于在 
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+ 上有 
+\begin_inset Formula $\hat{n}\times\sbf N_{i}=0$
+\end_inset
+
+（不属于
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+的 edge 的基函数在 
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上只有法向分量），故式（9.3.11）在
+\begin_inset Formula $\Gamma_{D}$
+\end_inset
+
+上的积分为零。式（9.3.16）可以紧凑地写成
+\begin_inset Formula 
+\[
+[K]\,\{E\}=\{b\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+时域有限元分析
+\end_layout
+
+\begin_layout Section
+时域间断伽辽金法
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ref61"
+literal "true"
+
+\end_inset
+
+xx
+\end_layout
+
+\end_body
+\end_document
