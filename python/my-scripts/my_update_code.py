@@ -1,43 +1,48 @@
 import subprocess as subp
 import pathlib as plb
 
+
+def prt_sep(istr: str = ''):
+    print('<' * 35 + '[ymy] ' + istr, flush=True)
+
+
 # ----------------- exe 路径
 # 求解器路径
-solver_dir = 'C:/solver'
-solver_build_dir = 'C:/solver/build/'
+_solver_dir = 'C:/solver'
+_solver_build_dir = 'C:/solver/build/'
 # git 路径
-exe_git = 'C:/Program Files/Git/bin/git.exe'
+_exe_git = 'C:/Program Files/Git/bin/git.exe'
 # cmake 路径
-exe_cmake = 'C:/Program Files/CMake/bin/cmake.exe'
+_exe_cmake = 'C:/Program Files/CMake/bin/cmake.exe'
 
 # ------------------- 命令参数
-args_git = ['-C', solver_dir, 'pull']
-exe_git_sub = exe_git
+_args_git = ['-C', _solver_dir, 'pull']
+_exe_git_sub = _exe_git
 # 无需担心 命令行转义, 下面使用 shell=False
-args_git_sub = [
-    '-C', solver_dir, 'submodule', 'foreach', '--recursive',
+_args_git_sub = [
+    '-C', _solver_dir, 'submodule', 'foreach', '--recursive',
     'echo "========================================";git pull || true'
 ]
 
-args_cmake = [
-    '-DRELEASE_WITH_DEBUG_INFO=OFF', '-S', solver_dir, '-B', solver_build_dir
+_args_cmake = [
+    '-DRELEASE_WITH_DEBUG_INFO=OFF', '-S', _solver_dir, '-B', _solver_build_dir
 ]
 
 
-def init():
-    print('================================= pull from repo: solver\n')
-    p = subp.Popen([exe_git, *args_git], shell=False)
+def pull_and_cmake():
+    prt_sep('Pull from repo: solver\n')
+    p = subp.Popen([_exe_git, *_args_git], shell=False)
     p.communicate()
 
-    print('\n================================= sub modules:\n')
-    p = subp.Popen([exe_git_sub, *args_git_sub], shell=False)
+    prt_sep('Sub modules:\n')
+    p = subp.Popen([_exe_git_sub, *_args_git_sub], shell=False)
     p.communicate()
 
-    print('\n================================= running CMake\n')
-    p = subp.Popen([exe_cmake, *args_cmake], shell=False)
+    prt_sep('Running CMake\n')
+    p = subp.Popen([_exe_cmake, *_args_cmake], shell=False)
     p.communicate()
 
 
 if __name__ == '__main__':
-    init()
-    input('输入任意字符, 并按Enter结束:')
+    pull_and_cmake()
+    input('更新 solver 代码成功, 按Enter结束:')
