@@ -409,3 +409,47 @@ Proposed salary: $300000
 对constexpr函数的限制放松了, 例如, 可以有多个返回值, 可以在内部使用case和if语句, 可以用循环以及其它.
 这就对能在编译器做的事进行了扩展, 为模板的引入插上了翅膀.
 其他小的特性包括为内存分配指定大小(sized deallocations)和一些语法的整理(tidying).
+
+## c 语言 dollar sign, 美元符号
+
+[does-c11-allow-dollar-signs-in-identifiers](https://stackoverflow.com/questions/26301737/does-c11-allow-dollar-signs-in-identifiers)
+
+这是实现定义的行为, `$` 不包含在标识符语法中.
+C++11 中标识符名称的规则是
+
++ 不能以数字开头
++ 可以由字母, 数字, 下划线, 通用字符名和 `实现定义的字符` 组成
++ 不能是[关键字](http://en.cppreference.com/w/cpp/keyword)
+
+允许使用实现定义的字符, 许多编译器
+(包括 gcc, clang, Visual Studio 和 DEC C++ 编译器)都支持这种扩展.
+
+[C++ 标准草案](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3485.pdf)
+第 2.11 节 `标识符` 涵盖了该语法, 我添加了以 <- 开头的附加说明:
+
+```c
+identifier:
+  identifier-nondigit            <- Can only start with a non-digit
+  identifier identifier-nondigit <- Next two rules allows for subsequent
+  identifier digit               <-  characters to be those outlined in 2 above
+identifier-nondigit:
+  nondigit                       <- a-z, A-Z and _
+  universal-character-name
+  other implementation-defined characters
+[...]
+```
+
+如果我们使用带有 `-pedantic-errors` 标志的 clang 来编译这段代码,
+它将无法编译:
+
+```c
+int $ = 0
+```
+
+并产生以下错误:
+
+```bash
+error: '$' in identifier [-Werror,-Wdollar-in-identifier-extension]
+int $ = 0;
+    ^
+```

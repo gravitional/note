@@ -40,6 +40,27 @@
 \end{table}
 ```
 
+table 可以指定列宽度
+lyx -> `Table Settings` -> `Column Settings` -> `Width`
+可以设定列宽度, 以及行列 对齐等.
+
+也可以借助包 `makecell` 实现 表格单元内 换行
+
+```latex
+\documentclass[12pt]{article}
+\usepackage{makecell}
+
+\begin{document}
+    \begin{tabular}{ | c | c | c |}
+      \hline
+      \thead{A Head} & \thead{A Second \\ Head} & \thead{A Third \\ Head} \\
+      \hline
+      Some text &  \makecell{Some really \\ longer text}  & Text text text  \\
+      \hline
+    \end{tabular}
+\end{document}
+```
+
 ### float 包
 
 [float – Improved interface for floating objects](https://www.ctan.org/pkg/float)
