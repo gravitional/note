@@ -57,13 +57,20 @@ pip freeze > requirements.txt
 例如: 想将包放在 `pypkg` 目录下
 
 ```bash
-pip download -d pypkg -r requirements.txt
+pip download -d pypkg -r req.txt
 ```
 
 + 将文件打包后放到离线服务器上, 并进行解压缩, 然后安装
 
 ```bash
-pip install --no-index --find-links=pypkg -r requirements.txt
+pip install --no-index --find-links=. -r req.txt
+```
+
+如果前面使用了 `pip freeze --all` 选项输出 package 列表,
+则使用下列方式安装, 可以同时更新 `pip`
+
+```bash
+python -m pip install --no-index --find-links=. -r req.txt
 ```
 
 ## pip wheel 包

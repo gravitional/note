@@ -381,3 +381,26 @@ struct A<int> {};   // C2766
 
 c++ 编译错误, 对于代码中的 `std::string` 字面字符串 `"xxx"s`.
 原因是没有引入 std namespace, 使用 `using namespace std` 即可.
+
+## c++ 重复free内存
+
+[VS报错: 0xC0000005: 读取位置 0xFFFFFFFFFFFFFFFF 时发生访问冲突/无可用源](https://www.cnblogs.com/zzzsj/p/14985746.html)
+
+c++ 异常为:
+
+```bash
+0x00007FFC16EA605D (electrics.dll)处(位于 solver.exe 中)引发的异常:
+0xC0000005: 读取位置 0xFFFFFFFF FFFFFFFF 时发生访问冲突.
+```
+
+原因是重复释放 new 出来的内存, 例如
+
+```cpp
+delete _mediator;
+delete _adapter0;
+```
+
+`_adapter0` 已经被 `_mediator` 管理,
+例如 `_mediator` 中使用 `unique_ptr` 自动释放了 `_adapter0` 指向的堆内存,
+而后面的 `delete _adapter0;` 重复释放, 就会报这个异常.
+
