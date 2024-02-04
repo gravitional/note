@@ -52,7 +52,7 @@ pip freeze > requirements.txt
 由于 `pip freeze` 与 `pip list` 内容区别不大,
 所以若想要用其作为工程依赖包列表, 需要配合 Python 虚拟环境 `virtualenv` 使用.
 
-+ 将所有包下载到目标目录中
+### 将所有包下载到目标目录中
 
 例如: 想将包放在 `pypkg` 目录下
 
@@ -60,7 +60,7 @@ pip freeze > requirements.txt
 pip download -d pypkg -r req.txt
 ```
 
-+ 将文件打包后放到离线服务器上, 并进行解压缩, 然后安装
+### 将文件打包后放到离线服务器上, 并进行解压缩, 然后安装
 
 ```bash
 pip install --no-index --find-links=. -r req.txt

@@ -19,7 +19,7 @@
 
 可以用CMD的SET命令来查看现有的系统变量, "="前的部分用%括起来就是.
 
-+ 常用:
+### 常用系统变量
 
 ```cmd
 %USERPROFILE% =C:\Users\用户名
@@ -34,7 +34,7 @@
 %ProgramFiles(x86)% =C:\Program Files (x86)
 ```
 
-+ 其他:
+### 其他系统变量
 
 ```cmd
 %ALLUSERSPROFILE% =C:\ProgramData
@@ -61,6 +61,13 @@
 + `set xxx=` 删除已经存在的环境变量,不能有空格.
 
 在文件管理器中引用变量,`%xxx%`,比如`%PATH%`
+
+## 快捷键
+
+资源管理器中
+
+`C+A+2`; 大图标显示, 预览文件
+`C+A+6`; 列表显示文件属性
 
 ## windows 拼音设置
 
