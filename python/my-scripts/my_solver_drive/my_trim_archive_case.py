@@ -3,9 +3,11 @@ import shutil as shu
 import pathlib as ptl
 import subprocess as subp
 import re
+from datetime import datetime as dtt
 
 _exe_7z = r'C:/Program Files/7-Zip/7z.exe'
 _args_7z = ['a']
+_arc_default_name = 'case_' + dtt.now().strftime('%y%m%d_%H%M%S')
 
 
 def prt_sep(istr):
@@ -14,9 +16,9 @@ def prt_sep(istr):
 
 # 输入为ibe 对应的目录
 def clean_case(ipath: ptl.Path):
-    prt_sep(f'以下目录被处理的很干净: {ipath}')
     # 删除 ibe 对应的 项目目录
     if ipath.exists() and ipath.is_dir():
+        prt_sep(f'以下目录被处理的很干净: {ipath}')
         shu.rmtree(ipath)
     # 删除多余的 result 文件
     # ip_parent = ipath.parent
@@ -51,7 +53,7 @@ def exe():
                         '--archive',
                         dest='archive',
                         action='store',
-                        default=None,
+                        default=_arc_default_name,
                         help='启用自动打包到桌面, 参数为 .7z 文件的名称, 不带.7z后缀')
 
     args = parser.parse_args()
@@ -72,16 +74,21 @@ def exe():
         else:
             raise f'所给路径不存在, 或者不是目录: {ifd}'
         ibe_folder_path = ifd / ibe_folder
-        solving_domain = ibe_folder_path / 'Solving' / 'SolvingDomain/'
-        if solving_domain.exists():
-            for sd_p in solving_domain.glob('*'):
+        dir_solving_domain = ibe_folder_path / 'Solving' / 'SolvingDomain/'
+        dir_solving = ibe_folder_path / 'Solving'
+        if dir_solving_domain.exists():
+            for sd_p in dir_solving_domain.glob('*'):
                 re_result = re.compile(r'result', flags=re.I)
                 if re_result.match(sd_p.stem):  # 排除 resultxxx 文件夹
                     continue
+                ifd_term = ifd / sd_p.name  # 根目录下是否有同名文件, 默认不执行覆盖
+                if ifd_term.exists():  # 不拷贝已经存在的文件
+                    # prt_sep(f'Does not copy already exist {ifd_term}')
+                    continue
                 shu.copy2(sd_p, ifd)
-            args.clean(ibe_folder_path)
         else:
             prt_sep(f'处理的很干净: {ifd}')
+        args.clean(ibe_folder_path)  # 清除 ibe 工程目录; 默认什么也不做
 
     #============================ 打包
     if args.archive:  # 如果指定了打包名称

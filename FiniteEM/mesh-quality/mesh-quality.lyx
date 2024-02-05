@@ -1567,6 +1567,73 @@ Hypermesh users guide.
 \end_layout
 
 \begin_layout Section
+弦偏离度
+\end_layout
+
+\begin_layout Standard
+考虑单元中各边中点或各顶点在对应边上的投影点的距离值,见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lihf-4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的L1、L2，弦偏离度定义为
+\begin_inset Formula 
+\[
+\text{String Deviation}=\frac{\abs{L1-L2}}{L1+L2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/LiHaiFeng-f4.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+四边形单元弦偏离度
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lihf-4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Jocabian Ratio
 \end_layout
 
@@ -2019,7 +2086,770 @@ name "fig:an-jaco-quad-1"
 \end_layout
 
 \begin_layout Section
-三维网格质量评价
+Warping Factor/Angle
+\end_layout
+
+\begin_layout Standard
+主要对 四边形单元计算 Warping factor，以及 bricks，wedges and pyramids 的四边形面。过高的因子表明网格生成存在缺陷。
+\end_layout
+
+\begin_layout Subsection
+单元的翘曲
+\end_layout
+
+\begin_layout Itemize
+理想情况下，四边形单元的所有节点都应位于同一平面上，但实际中会遇到弯曲和复杂的几何面。衡量四边形偏差平面的标准是“翘曲因子” 或 “翘曲角”。
+\end_layout
+
+\begin_layout Itemize
+翘曲计算不适用于三角形单元，因为三点定义平面，此检查仅适用于四边形。
+\end_layout
+
+\begin_layout Subsection
+Warping Angle 翘曲角
+\end_layout
+
+\begin_layout Itemize
+定义为：将四边形单元沿对角线分割后，得到的两（三角形）平面的法线之间的夹角。
+\end_layout
+
+\begin_layout Itemize
+从两个对角线得到两个夹角，将大的夹角称为 “翘曲角”。
+\end_layout
+
+\begin_layout Itemize
+理想值 
+\begin_inset Formula $=0\text{°}$
+\end_inset
+
+（可接受 
+\begin_inset Formula $<[5\text{°}\sim10\text{°}]$
+\end_inset
+
+）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/warping-measure-plane1.png
+	lyxscale 80
+	scale 57
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/warping-measure-plane2.png
+	lyxscale 80
+	scale 57
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+计算四边形单元的翘曲角
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+例：四边形的翘曲角
+\end_layout
+
+\begin_layout Standard
+设四边形的四个顶点为 
+\begin_inset Formula $A(10,15,0)$
+\end_inset
+
+，
+\begin_inset Formula $B(25,25,0)$
+\end_inset
+
+，
+\begin_inset Formula $C(35,15,5)$
+\end_inset
+
+，
+\begin_inset Formula $D(25,5,-5)$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Subsubsection
+ABD&BCD之间的夹角
+\end_layout
+
+\begin_layout Itemize
+ABD 和 BCD 平面的方程
+\begin_inset Formula 
+\[
+\left|\begin{array}{ccc}
+x-10 & y-15 & z-0\\
+25-10 & 25-15 & 0-0\\
+20-10 & 5-15 & -5-0
+\end{array}\right|=0\quad\to\quad-2x+3y-10z=25
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left|\begin{array}{ccc}
+x-25 & y-25 & z-0\\
+35-25 & 15-25 & 5-0\\
+20-25 & 5-25 & -5-0
+\end{array}\right|=0\quad\to\quad6x+y-10z=175
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+将平面方程的系数归一化
+\begin_inset Formula 
+\begin{align*}
+ & \frac{-2}{\sqrt{113}}x+\frac{3}{\sqrt{113}}y-\frac{10}{\sqrt{113}}z=\frac{25}{\sqrt{113}}\\
+ & \frac{6}{\sqrt{137}}x+\frac{1}{\sqrt{137}}y-\frac{10}{\sqrt{137}}z=\frac{175}{\sqrt{137}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+从方程读出两个 Direction Cosines
+\begin_inset Formula 
+\begin{align*}
+ & \sbf n_{1}=\left(\frac{-2}{\sqrt{113}},\frac{3}{\sqrt{113}},-\frac{10}{\sqrt{113}}\right)\\
+ & \sbf n_{2}=\left(\frac{6}{\sqrt{137}},\frac{1}{\sqrt{137}},-\frac{10}{\sqrt{137}}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+两平面夹角为
+\begin_inset Formula 
+\[
+\cos\theta_{1}=\sbf n_{1}\cdot\sbf n_{2}=\abs{\frac{91}{\sqrt{15481}}}=0.731378
+\]
+
+\end_inset
+
+对应的
+\begin_inset Formula $\theta_{1}=42.998\text{°}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+ABC&ACD之间的夹角
+\end_layout
+
+\begin_layout Standard
+类似地，ABC 和 ACD 的方程为
+\begin_inset Formula 
+\begin{align*}
+ & -2x+3y+10z=25\\
+ & 2x+7y-10z=125
+\end{align*}
+
+\end_inset
+
+夹角为
+\begin_inset Formula 
+\[
+\cos\theta_{2}=\sbf n_{3}\cdot\sbf n_{4}=\abs{\frac{-83}{\sqrt{17289}}}=0.63124
+\]
+
+\end_inset
+
+对应的
+\begin_inset Formula $\theta_{2}=50.860\text{°}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Warping Angle 取 
+\begin_inset Formula $\theta_{1}$
+\end_inset
+
+与
+\begin_inset Formula $\theta_{2}$
+\end_inset
+
+的最大值，即
+\begin_inset Formula $50.86\text{°}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+Warping Factor 翘曲因子
+\end_layout
+
+\begin_layout Standard
+某些有限元软件使用 Warping factor，而不是 Warping Angle。翘曲因子的理想值
+\begin_inset Formula $=0$
+\end_inset
+
+（可接受值：
+\begin_inset Formula $0\sim1$
+\end_inset
+
+）翘曲因子按以下步骤计算：
+\end_layout
+
+\begin_layout Enumerate
+通过向量叉乘，找到两条对角线（向量）AC 和 BD 的公共法线。
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/warping-factor-measure1.png
+	lyxscale 80
+	scale 46
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+计算四边形单元翘曲因子
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+垂直于公共法线，分别作出 经过 AC 和 BD 的平面，两平面平行。在这两个平面之间构建 均分平面（Average Plane）。设四边形 
+\begin_inset Formula $ABCD$
+\end_inset
+
+ 在均分平面上的投影为 
+\begin_inset Formula $A'\,B'\,C'\,D'$
+\end_inset
+
+。
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/warping-factor-measure2.png
+	lyxscale 70
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+计算翘曲因子的投影平面
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+节点
+\begin_inset Formula $ABCD$
+\end_inset
+
+到均分平面的距离相同，即 
+\begin_inset Formula $A\,A'=B\,B'=C\,C'=D\,D'=h$
+\end_inset
+
+，求出
+\begin_inset Formula $h$
+\end_inset
+
+。然后求出投影四边形 
+\begin_inset Formula $A'\,B'\,C'\,D'$
+\end_inset
+
+ 的面积 
+\begin_inset Formula $S$
+\end_inset
+
+。翘曲因子定义为
+\begin_inset Formula 
+\[
+\text{Warping Factor}=2h/\sqrt{S}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于所有 shell 单元，除了 Ansys 
+\begin_inset Quotes eld
+\end_inset
+
+membrane stiffness only
+\begin_inset Quotes erd
+\end_inset
+
+类型的，如果存在厚度信息，则 “thickness warping factor” 定义为 
+\begin_inset Formula 
+\[
+2h/\mathrm{\text{单元平均厚度}}.
+\]
+
+\end_inset
+
+照此定义的 翘曲因子 可能远远大于上述定义的 “area factor”。在网格质量检测中，使用两者中较大的 factor。
+\end_layout
+
+\begin_layout Itemize
+对于平面四边形，
+\begin_inset Formula $h=0$
+\end_inset
+
+，所以翘曲系数
+\begin_inset Formula $=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+例：四边形的翘曲因子
+\end_layout
+
+\begin_layout Standard
+设四边形的四个顶点为 
+\begin_inset Formula $A(10,15,0)$
+\end_inset
+
+，
+\begin_inset Formula $B(25,25,0)$
+\end_inset
+
+，
+\begin_inset Formula $C(35,15,5)$
+\end_inset
+
+，
+\begin_inset Formula $D(25,5,-5)$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $AC$
+\end_inset
+
+ 和 
+\begin_inset Formula $BD$
+\end_inset
+
+ 的 Direction Cosines 是
+\begin_inset Formula 
+\[
+\sbf n_{1}=\frac{\sbf A-\sbf C}{\abs{\sbf A-\sbf C}}=\left(\frac{5}{\sqrt{26}},0,\frac{1}{\sqrt{26}}\right),\quad\sbf n_{2}=\frac{\sbf B-\sbf D}{\abs{\sbf B-\sbf D}}=\left(\frac{-1}{3\sqrt{2}},\frac{-4}{3\sqrt{2}},\frac{-1}{3\sqrt{2}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+找出两个 AC & BD 的公共法线，设法线方向为 
+\begin_inset Formula $\sbf n$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{cases}
+\sbf n\cdot\sbf n_{1}=0\\
+\sbf n\cdot\sbf n_{2}=0
+\end{cases}\;\Rightarrow\;\sbf n=\left(\frac{1}{\sqrt{27}},\frac{1}{\sqrt{27}},\frac{-5}{\sqrt{27}}\right)
+\]
+
+\end_inset
+
+垂直
+\begin_inset Formula $\sbf n$
+\end_inset
+
+过 点
+\begin_inset Formula $AC$
+\end_inset
+
+ 的平面为（
+\begin_inset Formula $p$
+\end_inset
+
+为待定系数）
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{27}}x+\frac{1}{\sqrt{27}}y-\frac{5}{\sqrt{27}}z=p,
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $A$
+\end_inset
+
+点坐得到
+\begin_inset Formula $p=25/\sqrt{27}$
+\end_inset
+
+。类似地，垂直
+\begin_inset Formula $\sbf n$
+\end_inset
+
+过 
+\begin_inset Formula $BD$
+\end_inset
+
+ 的平面
+\begin_inset Formula 
+\[
+\frac{{\color{blue}1}}{\sqrt{27}}x+\frac{{\color{blue}1}}{\sqrt{27}}y-\frac{{\color{blue}5}}{\sqrt{27}}z=\frac{{\color{blue}50}}{\sqrt{27}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+找出距离差
+\begin_inset Formula $h$
+\end_inset
+
+。例如 
+\begin_inset Formula $A(10,15,0)$
+\end_inset
+
+ 离
+\begin_inset Formula $BD$
+\end_inset
+
+平面的距离是
+\begin_inset Formula 
+\[
+2h=AA''=\abs{\sbf n\cdot\sbf A-\text{rhs}}=\frac{\abs{10*{\color{blue}1}+15*{\color{blue}1}-5*{\color{blue}0}-{\color{blue}50}}}{\sqrt{27}}=4.811
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $h=2.4055$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+找出投影点 
+\begin_inset Formula $A',B',C',D'$
+\end_inset
+
+的坐标，以
+\begin_inset Formula $A'$
+\end_inset
+
+为例，由
+\begin_inset Formula $AA'\,//\,\sbf n$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\sbf A'-\sbf A}{\abs{\sbf A'-\sbf A}}=\sbf n=\left(\frac{1}{\sqrt{27}},\frac{1}{\sqrt{27}},\frac{-5}{\sqrt{27}}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\abs{\sbf A'-\sbf A}=h=2.4055$
+\end_inset
+
+，得
+\begin_inset Formula 
+\[
+\sbf A'=\left(10.463,15.463,-2.315\right)
+\]
+
+\end_inset
+
+类似得
+\begin_inset Formula $B',C',D'$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B'=(24.537,24.537,2.315),\quad C'=(35.463,15.463,2.685),\quad D'=(19.537,4.537,-2.685)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+将四边形
+\begin_inset Formula $A'B'C'D'$
+\end_inset
+
+划分成两个三角形，使用秦九韶面积公式（
+\begin_inset Formula $a,b,c$
+\end_inset
+
+为三角形边长 ）
+\begin_inset Formula 
+\[
+\text{Area}=\sqrt{s(s-a)(s-b)(s-c)},\quad s=\frac{a+b+c}{2}
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula $A'B'C'D'$
+\end_inset
+
+的面积为
+\begin_inset Formula 
+\[
+S=S_{1}+S_{2}=117.8757+141.9319=259.8.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+则翘曲因子
+\begin_inset Formula 
+\[
+\text{Warping Factor}=\frac{2h}{\sqrt{S}}=0.298
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:warp-quad"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 显示了“warped” 单元和对应的平面单元。只移动了上部元素的右侧节点。该单元为单位正方形，厚度为均匀
+\begin_inset Formula $0.1$
+\end_inset
+
+。当上部单元的翘曲系数为 
+\begin_inset Formula $0.01$
+\end_inset
+
+ 时，无法明确区分。当上部单元的翘曲系数为 
+\begin_inset Formula $0.04$
+\end_inset
+
+ 时，刚开始能分辨出偏离。
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/warping-factor-quadrilateral.png
+	lyxscale 60
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+四边形shell的翘曲因子，只移动右上角节点。单元为unit square，厚度为 
+\begin_inset Formula $0.1$
+\end_inset
+
+。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:warp-quad"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $0.1$
+\end_inset
+
+的翘曲相对于参考平面可见，但微不足道；然而，它远远超出了 membrane shell 的误差限。
+\begin_inset Formula $1.0$
+\end_inset
+
+ 的翘曲看起来就不太行，这是大多数 shells 的误差极限。
+\end_layout
+
+\begin_layout Standard
+翘曲超过 1.0 显然是不可接受的；然而，SHELL181 甚至允许这么大的翘曲。此外，翘曲系数的计算似乎在 7.0 左右达到峰值。将节点进一步偏离原始平面，远超此
+处的图示，也不会进一步增加翘曲因子。请用户注意，手动增加这些单元的误差限，使其超过默认的
+\begin_inset Formula $5.0$
+\end_inset
+
+，可能意味着对单元变形不加限制。
+\end_layout
+
+\begin_layout Subsection
+3D单元的翘曲因子
+\end_layout
+
+\begin_layout Standard
+在计算三维实体单元面的翘曲因子时，令 
+\begin_inset Formula $4$
+\end_inset
+
+个节点组成了无厚度的四边形shell单元，然后使用 
+\begin_inset Formula $2h/\sqrt{S}$
+\end_inset
+
+ 计算，如上文所述。
+\end_layout
+
+\begin_layout Standard
+brick 单元该元素的翘曲因子是为砖块的 6 个四边形面、楔形的 3 个四边形面或金字塔的 1 个四边形面计算的翘曲因子中的最大值。任何砖块元素的所有面都是平
+的，其翘曲因子为零（图.2）： 砖块的翘曲因子（第 113 页））。
+\end_layout
+
+\begin_layout Subsection*
+References
+\end_layout
+
+\begin_layout Enumerate
+Finite Element Analysis For Design Engineers by Paul M.
+ Kurowski (Chapter 5.3.1).
+\end_layout
+
+\begin_layout Enumerate
+Practical Finite Element Analysis by Nitin S Gokhale, Sanjay S Deshpande,
+ Sanjeev V Bedekar and Anand N Thite (Chapter 7.9).
+\end_layout
+
+\begin_layout Enumerate
+The Finite Element Method : Practical Course by G.
+ R.
+ Liu , S.
+ S.
+ Quek (Chapter 11.4.2).
+\end_layout
+
+\begin_layout Enumerate
+Ansys theory reference manual.
+\end_layout
+
+\begin_layout Enumerate
+Hypermesh users guide.
+\end_layout
+
+\begin_layout Section
+3D单元质量检查
 \end_layout
 
 \begin_layout Itemize
@@ -2233,812 +3063,6 @@ status open
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:lihf-8"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Warping Factor/Angle
-\end_layout
-
-\begin_layout Standard
-主要对 四边形单元计算 Warping factor，以及 bricks，wedges and pyramids 的四边形面。过高的因子表明网格生成存在缺陷。
-\end_layout
-
-\begin_layout Subsection
-单元的翘曲
-\end_layout
-
-\begin_layout Itemize
-理想情况下，四边形单元的所有节点都应位于同一平面上，但实际中会遇到弯曲和复杂的几何面。衡量四边形偏差平面的标准是“翘曲因子” 或 “翘曲角”。
-\end_layout
-
-\begin_layout Itemize
-翘曲计算不适用于三角形单元，因为三点定义平面，此检查仅适用于四边形。
-\end_layout
-
-\begin_layout Subsection
-Warping Angle
-\end_layout
-
-\begin_layout Itemize
-定义为：将四边形单元沿对角线分割后，得到的两（三角形）平面的法线之间的夹角。
-\end_layout
-
-\begin_layout Itemize
-从两个对角线得到两个夹角，将大的夹角称为 “翘曲角”。
-\end_layout
-
-\begin_layout Itemize
-理想值 
-\begin_inset Formula $=0\text{°}$
-\end_inset
-
-（可接受 
-\begin_inset Formula $<[5\text{°}\sim10\text{°}]$
-\end_inset
-
-）
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/warping-measure-plane1.png
-	lyxscale 80
-	scale 57
-
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset Graphics
-	filename inset/warping-measure-plane2.png
-	lyxscale 80
-	scale 57
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-计算四边形单元的翘曲角
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-例：四边形的Warping Angle
-\end_layout
-
-\begin_layout Standard
-设四边形的四个顶点为 
-\begin_inset Formula $A(10,15,0)$
-\end_inset
-
-，
-\begin_inset Formula $B(25,25,0)$
-\end_inset
-
-，
-\begin_inset Formula $C(35,15,5)$
-\end_inset
-
-，
-\begin_inset Formula $D(25,5,-5)$
-\end_inset
-
- 。
-\end_layout
-
-\begin_layout Subsubsection
-ABD&BCD之间的夹角
-\end_layout
-
-\begin_layout Itemize
-ABD 和 BCD 平面的方程
-\begin_inset Formula 
-\[
-\left|\begin{array}{ccc}
-x-10 & y-15 & z-0\\
-25-10 & 25-15 & 0-0\\
-20-10 & 5-15 & -5-0
-\end{array}\right|=0\quad\to\quad-2x+3y-10z=25
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left|\begin{array}{ccc}
-x-25 & y-25 & z-0\\
-35-25 & 15-25 & 5-0\\
-20-25 & 5-25 & -5-0
-\end{array}\right|=0\quad\to\quad6x+y-10z=175
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-将平面方程的系数归一化
-\begin_inset Formula 
-\begin{align*}
- & \frac{-2}{\sqrt{113}}x+\frac{3}{\sqrt{113}}y-\frac{10}{\sqrt{113}}z=\frac{25}{\sqrt{113}}\\
- & \frac{6}{\sqrt{137}}x+\frac{1}{\sqrt{137}}y-\frac{10}{\sqrt{137}}z=\frac{175}{\sqrt{137}}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-从方程读出两个 Direction Cosines
-\begin_inset Formula 
-\begin{align*}
- & \sbf n_{1}=\left(\frac{-2}{\sqrt{113}},\frac{3}{\sqrt{113}},-\frac{10}{\sqrt{113}}\right)\\
- & \sbf n_{2}=\left(\frac{6}{\sqrt{137}},\frac{1}{\sqrt{137}},-\frac{10}{\sqrt{137}}\right)
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-两平面夹角为
-\begin_inset Formula 
-\[
-\cos\theta_{1}=\sbf n_{1}\cdot\sbf n_{2}=\abs{\frac{91}{\sqrt{15481}}}=0.731378
-\]
-
-\end_inset
-
-对应的
-\begin_inset Formula $\theta_{1}=42.998\text{°}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Subsubsection
-ABC&ACD之间的夹角
-\end_layout
-
-\begin_layout Standard
-类似地，ABC 和 ACD 的方程为
-\begin_inset Formula 
-\begin{align*}
- & -2x+3y+10z=25\\
- & 2x+7y-10z=125
-\end{align*}
-
-\end_inset
-
-夹角为
-\begin_inset Formula 
-\[
-\cos\theta_{2}=\sbf n_{3}\cdot\sbf n_{4}=\abs{\frac{-83}{\sqrt{17289}}}=0.63124
-\]
-
-\end_inset
-
-对应的
-\begin_inset Formula $\theta_{2}=50.860\text{°}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Warping Angle 取 
-\begin_inset Formula $\theta_{1}$
-\end_inset
-
-与
-\begin_inset Formula $\theta_{2}$
-\end_inset
-
-的最大值，即
-\begin_inset Formula $50.86\text{°}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Subsection
-Warping Factor
-\end_layout
-
-\begin_layout Itemize
-某些有限元软件使用 Warping factor，而不是 Warping Angle。
-\end_layout
-
-\begin_layout Itemize
-翘曲因子的理想值
-\begin_inset Formula $=0$
-\end_inset
-
-（可接受值：
-\begin_inset Formula $0\sim1$
-\end_inset
-
-）
-\end_layout
-
-\begin_layout Itemize
-翘曲因子按以下步骤计算：
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/warping-factor-measure1.png
-	lyxscale 80
-	scale 55
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-计算四边形单元翘曲因子
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-通过向量叉乘，找到两条对角线（向量）AC 和 BD 的公共法线。
-\end_layout
-
-\begin_layout Itemize
-然后生成两个垂直于公共法线，并分别经过 A–C 和 B–D 的平面，这两个平面相互平行。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/warping-factor-measure2.png
-	lyxscale 70
-	scale 55
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-计算翘曲因子的投影平面
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-在这两个平面之间构建 均分平面（Average Plane）。节点在该平均面上的投影分别为 
-\begin_inset Formula $A'$
-\end_inset
-
-，
-\begin_inset Formula $B'$
-\end_inset
-
-，
-\begin_inset Formula $C'$
-\end_inset
-
-，
-\begin_inset Formula $D'$
-\end_inset
-
-，并构成四边形 
-\begin_inset Formula $A'\,B'\,C'\,D'$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Itemize
-节点
-\begin_inset Formula $ABCD$
-\end_inset
-
-到均分平面的距离相同，即 
-\begin_inset Formula $A\,A'=B\,B'=C\,C'=D\,D'=h$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Itemize
-求 节点相对于均分平面的高度差。边
-\begin_inset Formula $AB$
-\end_inset
-
-的节点的高度差为 
-\begin_inset Formula $2h$
-\end_inset
-
-（
-\begin_inset Formula $h$
-\end_inset
-
-是均分平面与上下平面的距离）。
-\end_layout
-
-\begin_layout Itemize
-求 
-\begin_inset Formula $ABCD$
-\end_inset
-
- 在 均分平面 的 投影四边形（ 
-\begin_inset Formula $A'\,B'\,C'\,D'$
-\end_inset
-
-）的面积 (
-\begin_inset Formula $S$
-\end_inset
-
-)。
-\end_layout
-
-\begin_layout Itemize
-翘曲因子定义为
-\begin_inset Formula 
-\[
-\text{Warping Factor}=2h/\sqrt{S}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-对于所有 shell 单元，除了 
-\begin_inset Quotes eld
-\end_inset
-
-membrane stiffness only
-\begin_inset Quotes erd
-\end_inset
-
-类型的，如果存在厚度信息，则 “thickness warping factor” 定义为 edge 高度差比上 单元平均厚度。照此定义的 翘曲因子
- 可能远远大于上述定义的 “area factor”。在 warning and error limits 检测中，使用两者中较大的 factor。
-\end_layout
-
-\begin_layout Itemize
-对于平面四边形，
-\begin_inset Formula $h=0$
-\end_inset
-
-，所以翘曲系数
-\begin_inset Formula $=0$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/warping-factor-quadrilateral.png
-	lyxscale 60
-	scale 50
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-四边形shell的翘曲因子。只移动右上角节点。单元为unit square，厚度为 
-\begin_inset Formula $0.1$
-\end_inset
-
-。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-例：四边形的Warping Factor
-\end_layout
-
-\begin_layout Standard
-设四边形的四个顶点为 
-\begin_inset Formula $A(10,15,0)$
-\end_inset
-
-，
-\begin_inset Formula $B(25,25,0)$
-\end_inset
-
-，
-\begin_inset Formula $C(35,15,5)$
-\end_inset
-
-，
-\begin_inset Formula $D(25,5,-5)$
-\end_inset
-
- 。
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $AC$
-\end_inset
-
- 的 Direction Cosines 是
-\begin_inset Formula 
-\[
-\sbf n_{1}=\frac{\sbf A-\sbf C}{\abs{\sbf A-\sbf C}}=\left(\frac{5}{\sqrt{26}},0,\frac{1}{\sqrt{26}}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-类似地，
-\begin_inset Formula $BD$
-\end_inset
-
-的Direction Cosines 是
-\begin_inset Formula 
-\[
-\sbf n_{2}=\frac{\sbf B-\sbf D}{\abs{\sbf B-\sbf D}}=\left(\frac{-1}{3\sqrt{2}},\frac{-4}{3\sqrt{2}},\frac{-1}{3\sqrt{2}}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-找出两个 AC & BD 的公共法线，设法线方向为 
-\begin_inset Formula $\sbf n$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{cases}
-\sbf n\cdot\sbf n_{1}=0\\
-\sbf n\cdot\sbf n_{2}=0
-\end{cases}
-\]
-
-\end_inset
-
-求解方程得到 
-\begin_inset Formula 
-\[
-\sbf n=\left(\frac{1}{\sqrt{27}},\frac{1}{\sqrt{27}},\frac{-5}{\sqrt{27}}\right)
-\]
-
-\end_inset
-
-法线为
-\begin_inset Formula $\sbf n$
-\end_inset
-
-，经过点
-\begin_inset Formula $A,c$
-\end_inset
-
- 的平面方程为（
-\begin_inset Formula $p$
-\end_inset
-
-待定）
-\begin_inset Formula 
-\[
-\frac{1}{\sqrt{27}}x+\frac{1}{\sqrt{27}}y-\frac{5}{\sqrt{27}}z=p,
-\]
-
-\end_inset
-
-代入
-\begin_inset Formula $A$
-\end_inset
-
-点坐标到方程中解出
-\begin_inset Formula $p=25/\sqrt{27}$
-\end_inset
-
-。类似地，得到经过 BD 的平面
-\begin_inset Formula 
-\[
-\frac{{\color{blue}1}}{\sqrt{27}}x+\frac{{\color{blue}1}}{\sqrt{27}}y-\frac{{\color{blue}5}}{\sqrt{27}}z=\frac{{\color{blue}50}}{\sqrt{27}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-然后找出 ABCD 与均分平面的距离（都相等）。例如 
-\begin_inset Formula $A(10,15,0)$
-\end_inset
-
- 离
-\begin_inset Formula $BD$
-\end_inset
-
-平面的距离是
-\begin_inset Formula 
-\[
-AA''=\abs{\sbf n\cdot\sbf A-\text{rhs}}=\frac{\abs{10*{\color{blue}1}+15*{\color{blue}1}-5*{\color{blue}0}-{\color{blue}50}}}{\sqrt{27}}=4.811\;\left(=2h\right)
-\]
-
-\end_inset
-
-因此，
-\begin_inset Formula $A$
-\end_inset
-
-离均分平面的距离为 
-\begin_inset Formula $h=4.811/2=2.4055$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Itemize
-找出 A,B,C,D 在均分平面上的投影 
-\begin_inset Formula $A',B',C',D'$
-\end_inset
-
-的坐标。
-\begin_inset Formula 
-\[
-\frac{\sbf A'-\sbf A}{\abs{\sbf A'-\sbf A}}=\sbf n=\left(\frac{1}{\sqrt{27}},\frac{1}{\sqrt{27}},\frac{-5}{\sqrt{27}}\right)
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\abs{\sbf A'-\sbf A}=h=2.4055$
-\end_inset
-
-，得到
-\begin_inset Formula 
-\[
-\sbf A'=\left(10.463,15.463,-2.315\right)
-\]
-
-\end_inset
-
-类似地可以解出 
-\begin_inset Formula $B',C',D'$
-\end_inset
-
-的坐标
-\begin_inset Formula 
-\[
-B'=(24.537,24.537,2.315),\quad C'=(35.463,15.463,2.685),\quad D'=(19.537,4.537,-2.685)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-将四边形 
-\begin_inset Formula $A'B'C'D'$
-\end_inset
-
-划分成例如 
-\begin_inset Formula $A'B'C'$
-\end_inset
-
-和
-\begin_inset Formula $A'C'D'$
-\end_inset
-
-，使用秦九韶公式
-\begin_inset Formula 
-\[
-\text{Area}=\sqrt{s(s-a)(s-b)(s-c)},\quad s=\frac{a+b+c}{2}
-\]
-
-\end_inset
-
-计算两个三角形的面积，最终得到均分平面四边形的面积为
-\begin_inset Formula 
-\[
-S=S_{1}+S_{2}=117.8757+141.9319=259.8.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-则翘曲因子
-\begin_inset Formula 
-\[
-\text{Warping Factor}=\frac{2h}{\sqrt{S}}=0.298
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection*
-References
-\end_layout
-
-\begin_layout Enumerate
-Finite Element Analysis For Design Engineers by Paul M.
- Kurowski (Chapter 5.3.1).
-\end_layout
-
-\begin_layout Enumerate
-Practical Finite Element Analysis by Nitin S Gokhale, Sanjay S Deshpande,
- Sanjeev V Bedekar and Anand N Thite (Chapter 7.9).
-\end_layout
-
-\begin_layout Enumerate
-The Finite Element Method : Practical Course by G.
- R.
- Liu , S.
- S.
- Quek (Chapter 11.4.2).
-\end_layout
-
-\begin_layout Enumerate
-Ansys theory reference manual.
-\end_layout
-
-\begin_layout Enumerate
-Hypermesh users guide.
-\end_layout
-
-\begin_layout Section
-弦偏离度
-\end_layout
-
-\begin_layout Standard
-考虑单元中各边中点或各顶点在对应边上的投影点的距离值,见图
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:lihf-4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的L1、L2，弦偏离度定义为
-\begin_inset Formula 
-\[
-\text{String Deviation}=\frac{\abs{L1-L2}}{L1+L2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/LiHaiFeng-f4.png
-	scale 60
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-四边形单元弦偏离度
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:lihf-4"
 
 \end_inset
 
