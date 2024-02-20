@@ -110,7 +110,7 @@ int main() {
 如果指定了 `/std:c++20` 编译器选项, 该宏被设置为 `202002L`.
 如果指定了 `/std:c++latest` 选项, 它将被设置为一个更高的, 未指定的值.
 否则, 该宏是未定义的.
-`_MSVC_LANG` 宏和/std(指定语言标准版本)编译器选项从Visual Studio 2015 Update 3开始可用.
+`_MSVC_LANG` 宏和 `/std(指定语言标准版本)`编译器选项 从Visual Studio 2015 Update 3开始可用.
 
 + `__MSVC_RUNTIME_CHECKS` Defined as 1 when one of the /RTC compiler options is set. Otherwise, undefined.
 

@@ -1,4 +1,4 @@
-## VCBuild vs. C++ MSBuild on the Command Line
+# VCBuild vs. C++ MSBuild on the Command Line
 
 在 Visual Studio 2010 中,
 命令行工具 vcbuild.exe 将被 msbuild.exe 取代.

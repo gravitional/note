@@ -46,16 +46,19 @@ window.addEventListener('copy', e => {
 })
 ```
 
-以及document.getSelection(), 这个方法是用来操作选中的内容的api, 其中:
-document.getSelection(0).toString()可以 获得选中内容的文字部分,
-document.getSelection(0).empty()可以取消选中,
-在getSelection()中传参可以获取不同的选中 内容段, 更多有趣的方法在它原型里.
+以及 `document.getSelection()`, 这个方法是用来操作选中的内容的api, 其中:
+`document.getSelection(0).toString()`可以 获得选中内容的文字部分,
+`document.getSelection(0).empty()`可以取消选中,
+在 `getSelection()` 中传参可以获取不同的选中 内容段, 更多有趣的方法在它原型里.
 
 另外顺便提一下和复制相关的还有剪切-cut, 粘贴-paste, 用法和copy一致.
 
 一些网站虽然不禁止用户复制内容, 但会在复制的内容后面加版权以及来源信息,
 这个就需要用到剪切板这个对象了, 即: clipboa rdData.
-它常用的方法有3个, setData('text', 插入的内容)插入数据, getData()获取剪切板的数据, clearData('text') 清除数据.
+它常用的方法有3个, 
+setData('text', 插入的内容)插入数据, 
+getData()获取剪切板的数据, 
+clearData('text') 清除数据.
 
 ### 知乎的转载加版权实现
 
@@ -91,7 +94,6 @@ document.body.oncopy = (event) => {
     let clipboardData = event.clipboardData || window.clipboardData;
     clipboardData.setData('text', copyText);
 }
-复制代码
 ```
 
 ### 起点网防复制功能实现

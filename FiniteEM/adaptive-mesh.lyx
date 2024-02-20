@@ -3749,7 +3749,52 @@ noprefix "false"
 \begin_inset Formula $\Delta_{\Gamma_{N}}$
 \end_inset
 
- 表示 Neumann 边界上的三角形。为简化
+ 表示 Neumann 边界上的三角形。
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j17"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到 
+\begin_inset Formula $\sum_{\Delta_{\text{in}}}\int_{\Delta_{\text{in}}}e^{h}\,\delta\left(\cdots\right)_{\Delta_{\text{in}}}\dd{\Delta}$
+\end_inset
+
+这一步使用了高斯定理，每个单元的
+\begin_inset Formula $\sbf n$
+\end_inset
+
+ 朝
+\series bold
+外法线方向
+\series default
+，相邻单元的
+\begin_inset Formula $\sbf n$
+\end_inset
+
+刚好是反向的，所以可以写成 
+\begin_inset Formula $\delta\left(\cdots\right)_{\Delta_{\text{in}}}$
+\end_inset
+
+（在内部face上的不连续）。因此
+\begin_inset Formula $\sbf n$
+\end_inset
+
+的选取单元的face的外法向，对于 owner 单元就是外法向，而 neighbor 单元的外法向
+\begin_inset Formula $=$
+\end_inset
+
+负的 owner 外法向。
+\end_layout
+
+\begin_layout Standard
+为简化
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j17"
@@ -3773,7 +3818,15 @@ noprefix "false"
 
 \end_inset
 
-从而，误差泛函可以重写为
+其中
+\begin_inset Formula $\phi$
+\end_inset
+
+在内边界和齐次诺伊曼边界上满足 
+\begin_inset Formula $\dd\phi/\dd{n}=0$
+\end_inset
+
+，从而误差泛函可以重写为
 \begin_inset Formula 
 \begin{equation}
 a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\Delta}\int_{\Delta}e^{h}\sigma^{h}\dd{\Delta}\label{eq:j19}
@@ -3790,7 +3843,7 @@ a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\De
 \begin{equation}
 \sigma^{h}=\begin{cases}
 \delta\left(\epsilon_{0}\epsilon_{r}\frac{\dd{\phi^{h}}}{\dd{n}}\right)_{\Delta} & \Delta\in\Delta_{\text{in}}\quad\text{内边界}\\
-\epsilon_{0}\epsilon_{r}\frac{\dd{\phi^{h}}}{\dd{n}} & \Delta\in\Delta_{\Gamma_{N}}.\quad\text{诺伊曼边界}
+\epsilon_{0}\epsilon_{r}\frac{\dd{\phi^{h}}}{\dd{n}} & \Delta\in\Delta_{\Gamma_{N}}.\quad\text{齐次诺伊曼边界}
 \end{cases}\label{eq:j20}
 \end{equation}
 
@@ -3816,7 +3869,15 @@ a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\De
 \begin_inset Formula $\sbf D$
 \end_inset
 
- 的法向分量 在单元间界面 和 Neumann边界上 的不连续性。
+ 的法向分量 在 
+\series bold
+单元间界面 
+\series default
+和 
+\series bold
+Neumann边界 
+\series default
+上的不连续性。
 \end_layout
 
 \begin_layout Standard
@@ -3882,7 +3943,11 @@ q_{s}^{h}\equiv\sigma^{h}=\vec{n}\cdot\left(\vec{D}_{1}^{h}-\vec{D}_{2}^{h}\righ
 \begin_inset Formula $\vec{n}$
 \end_inset
 
-是垂直界面的单位矢量。注意
+是垂直界面的单位矢量（单元
+\begin_inset Formula $1$
+\end_inset
+
+的外法向）。注意
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j21"
