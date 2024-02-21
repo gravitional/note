@@ -983,6 +983,505 @@ status open
 \end_layout
 
 \begin_layout Section
+偏序全序
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Preorders vs partial orders"
+target "https://math.stackexchange.com/questions/1992277/preorders-vs-partial-orders-clarification"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对集合
+\begin_inset Formula $S$
+\end_inset
+
+ 上的二元关系
+\begin_inset Formula $R$
+\end_inset
+
+，我们定义如下特殊性质：
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+自反性
+\color inherit
+：
+\begin_inset Formula $\forall a\in S$
+\end_inset
+
+，
+\begin_inset Formula $,aRa$
+\end_inset
+
+，自己和自己满足二元关系
+\begin_inset Formula $R$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+反自反性
+\color inherit
+（irreflexive）：
+\begin_inset Formula $\forall a\in S$
+\end_inset
+
+，
+\begin_inset Formula $\lnot(aRa)$
+\end_inset
+
+，自己和自己不满足
+\begin_inset Formula $R$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+对称性
+\color inherit
+（symmetric）：
+\begin_inset Formula $\forall a,b\in S$
+\end_inset
+
+，
+\begin_inset Formula $aRb\,\Leftrightarrow\,bRa$
+\end_inset
+
+。例如 
+\begin_inset Formula $a=b$
+\end_inset
+
+ 和 
+\begin_inset Formula $b=a$
+\end_inset
+
+。（
+\begin_inset Formula $+1$
+\end_inset
+
+对称）
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+反对称性
+\color inherit
+（antisymmetric）：
+\begin_inset Formula $\forall a,b\in S$
+\end_inset
+
+，
+\begin_inset Formula $aRb\wedge bRa\,\Rightarrow\,a=b$
+\end_inset
+
+。例如
+\begin_inset Formula $a\le b\,\wedge\,b\le a\;\Rightarrow\;a=b$
+\end_inset
+
+。（
+\begin_inset Formula $-1$
+\end_inset
+
+对称）
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+非对称性
+\color inherit
+（asymmetric）：
+\begin_inset Formula $\forall a,b\in S$
+\end_inset
+
+，
+\begin_inset Formula $aRb\;\Rightarrow\;\lnot(bRa)$
+\end_inset
+
+。即 
+\begin_inset Formula $a<b$
+\end_inset
+
+ 否定
+\begin_inset Formula $b<a$
+\end_inset
+
+。（没有对称）
+\end_layout
+
+\begin_layout Enumerate
+传递性（transitive）：
+\begin_inset Formula $\forall a,b,c\in S$
+\end_inset
+
+，
+\begin_inset Formula $aRb\wedge bRc\;\Rightarrow\;aRc$
+\end_inset
+
+。例如
+\begin_inset Formula $<$
+\end_inset
+
+的传递性。
+\end_layout
+
+\begin_layout Enumerate
+连接性（connected）：
+\begin_inset Formula $\forall a,b\in S$
+\end_inset
+
+，
+\begin_inset Formula $a\neq b\;\Rightarrow\;(aRb\vee bRa)$
+\end_inset
+
+。任意两个元素一定有关系。
+\end_layout
+
+\begin_layout Enumerate
+良基性（well–founded）：
+\begin_inset Formula $\exists m\in S\neq\emptyset$
+\end_inset
+
+，
+\begin_inset Formula $\forall a\in S\backslash\{m\}$
+\end_inset
+
+，
+\begin_inset Formula $\lnot(aRm)$
+\end_inset
+
+；即非空集合
+\begin_inset Formula $S$
+\end_inset
+
+中有极小元
+\begin_inset Formula $m$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+不可比的传递性（transitive of incomparability）：
+\begin_inset Formula $\forall a,b,c\in S$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\lnot(aRb\wedge bRa)\wedge\lnot(bRc\wedge cRb)\;\Rightarrow\;\lnot(aRc\wedge cRa)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\lnot(aRb\wedge bRa)$
+\end_inset
+
+ 表示 
+\begin_inset Formula $a$
+\end_inset
+
+ 和 
+\begin_inset Formula $b$
+\end_inset
+
+是不可比的，即无法比较 
+\begin_inset Formula $a$
+\end_inset
+
+ 和 
+\begin_inset Formula $b$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Subsection
+STL排序相关
+\end_layout
+
+\begin_layout Standard
+CC++ STL 中 
+\begin_inset CommandInset href
+LatexCommand href
+name "需要使用比较的算法和数据结构"
+target "https://en.cppreference.com/w/cpp/named_req/Compare#Standard_library"
+literal "false"
+
+\end_inset
+
+ 中有序理论的应用。我们经常需要在 C++ 中自定义比较器，STL 要求 其必须为 
+\series bold
+严格弱序
+\series default
+。令 
+\begin_inset Formula $<$
+\end_inset
+
+ 为自定义比较器，则可以定义：
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x>y$
+\end_inset
+
+ 为 
+\begin_inset Formula $y<x$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x\le y$
+\end_inset
+
+ 为 
+\begin_inset Formula $y\nless x$
+\end_inset
+
+（意思是
+\begin_inset Formula $y$
+\end_inset
+
+不满足“小于”
+\begin_inset Formula $x$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x\ge y$
+\end_inset
+
+ 为
+\begin_inset Formula $x\nless y$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x=y$
+\end_inset
+
+ 为 
+\begin_inset Formula $x\nless y\,\wedge\,y\nless x$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+preorder
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $a\lesssim b$
+\end_inset
+
+ 是集合
+\begin_inset Formula $S$
+\end_inset
+
+上的二元关系，满足 reflexive（自反性） and transitive（传递）。
+\end_layout
+
+\begin_layout Itemize
+即
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ 是自反的，满足 
+\begin_inset Formula $a\lesssim a$
+\end_inset
+
+ 
+\begin_inset Formula $\forall a\in S$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ 是传递性的，
+\begin_inset Formula $a\lesssim b$
+\end_inset
+
+ and 
+\begin_inset Formula $b\lesssim c$
+\end_inset
+
+ 意味着 
+\begin_inset Formula $a\lesssim c$
+\end_inset
+
+， 
+\begin_inset Formula $\forall\,a,b,c\in S$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+例如 去掉
+\begin_inset Formula $0$
+\end_inset
+
+的整数集合 
+\begin_inset Formula $Z\backslash\{0\}$
+\end_inset
+
+，整除关系 
+\begin_inset Formula $a|b$
+\end_inset
+
+ 就是 preorder。因为 
+\begin_inset Formula $a|b$
+\end_inset
+
+ 且 
+\begin_inset Formula $b|a$
+\end_inset
+
+ 只能推导出 
+\begin_inset Formula $a=\pm b$
+\end_inset
+
+而不能推导出 
+\begin_inset Formula $a=b$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+partial order
+\end_layout
+
+\begin_layout Standard
+除了 preorder 满足的性质外，还要满足 antisymmetric，即 
+\begin_inset Formula $a\le b$
+\end_inset
+
+，
+\begin_inset Formula $b\le a$
+\end_inset
+
+ 意味着 
+\begin_inset Formula $a=b$
+\end_inset
+
+， 
+\begin_inset Formula $\forall a,b\in S$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+通过定义等价类：即定义等价关系 
+\begin_inset Formula $a\sim b\Leftrightarrow a\lesssim b\,\text{and}\,b\lesssim a$
+\end_inset
+
+，以及 
+\begin_inset Formula $a$
+\end_inset
+
+ 的等价类 
+\begin_inset Formula $[a]=\{x\in S|x\sim a\}$
+\end_inset
+
+，可以从 pre-order 关系中提取出 partial order。即改变集合
+\begin_inset Formula $S$
+\end_inset
+
+ 的构成 
+\begin_inset Formula $S\quad\Rightarrow\quad S/\sim$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+如果把 ordered set 看成 category。preorder 对应的范畴中，从 object 
+\begin_inset Formula $a$
+\end_inset
+
+ 到 object 
+\begin_inset Formula $b$
+\end_inset
+
+ 最多有一个 morphism。
+\end_layout
+
+\begin_layout Itemize
+范畴 
+\begin_inset Formula $C$
+\end_inset
+
+ 中 
+\begin_inset Formula $a\to b$
+\end_inset
+
+ 的态射的集合称为 hom-set，记作
+\begin_inset Formula $C(a,b)$
+\end_inset
+
+。因此，preorder 中的每个 hom-set 要么是空集，要么是 singleton。
+\begin_inset Formula $C(a,a)$
+\end_inset
+
+ 必然是 singleton。
+\end_layout
+
+\begin_layout Itemize
+preorder 中可能有 cycles；而 partial order 中不能有 cycle。
+\end_layout
+
+\begin_layout Subsection
+total order
+\end_layout
+
+\begin_layout Standard
+如果集合中的任意两个元素
+\begin_inset Formula $a,b$
+\end_inset
+
+，或者能满足
+\begin_inset Formula $aRb$
+\end_inset
+
+ ，或者能满足
+\begin_inset Formula $bRa$
+\end_inset
+
+，则称 linear order 或 total order。
+\end_layout
+
+\begin_layout Section
 点到平面距离公式
 \end_layout
 
@@ -9772,7 +10271,7 @@ literal "false"
 
 \begin_layout Itemize
 二面角角度：
-\begin_inset Formula $\arccos(1/3)=\arctan(2\sqrt{2})\approx70.5288\text{\textdegree}$
+\begin_inset Formula $\arccos(1/3)=\arctan(2\sqrt{2})\approx70.5288\text{°}$
 \end_inset
 
 。
@@ -9780,7 +10279,7 @@ literal "false"
 
 \begin_layout Itemize
 面棱夹角： 
-\begin_inset Formula $\arccos(1/\sqrt{3})=\arctan(\sqrt{2})\approx54.7356\text{\textdegree}$
+\begin_inset Formula $\arccos(1/\sqrt{3})=\arctan(\sqrt{2})\approx54.7356\text{°}$
 \end_inset
 
 。
@@ -9788,7 +10287,7 @@ literal "false"
 
 \begin_layout Itemize
 中心–顶点连线之间夹角： 
-\begin_inset Formula $\arccos(-1/3)=2\arctan(\sqrt{2})\approx109.4712\text{\textdegree}$
+\begin_inset Formula $\arccos(-1/3)=2\arctan(\sqrt{2})\approx109.4712\text{°}$
 \end_inset
 
 。
