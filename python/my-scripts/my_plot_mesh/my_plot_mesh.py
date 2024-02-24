@@ -12,117 +12,91 @@ from _nodes import in_nodes_coord
 from _Velements import in_Velements
 from _Selements import in_Selements
 from _inFaces import in_inner_faces
+from my_conf import *
 
-#  真空介电常数  和 真空磁导率
-er0 = 8.854187817e-12
-mu0 = 4 * math.pi * 1e-7
-
-# -----------------------
-_dlt = 0.004  # 节点文字 偏移比率
-_irange = 0.006  # 图形范围
-_dlt_nd: float = _dlt * _irange  # 节点文字偏移
-_ftsz_VS: float = 10  # 体,面单元 文字标注大小
-_ftsz_in: float = 7  # inner边 文字标注大小
-_in_text_ws = [0.60, 0.40]  # inner边 文字位置, 节点坐标的权重
-
-_color_V = 'y'  # 体单元 line 颜色
-_color_Nd = 'g'  # 节点ID text 颜色
-_color_S = 'r'  # 面单元 line arrow 颜色
-_color_in = 'b'  # inner Edge line, text 颜色
-
-_alpha_VS = 0.20  # 体单元和面单元的透明度
-_alpha_in = 0.50  # 内部边界的透明度
-_lw_VS = 3.0  # 体单元, 表面单元 线宽度
-_lw_in = 1.0  # 内部边 线宽度
-
-#--------- node 坐标 array中, X Y Z数据列的位置
-nodePosX = 1
-nodePosY = 2
-nodePosZ = 3
-VnodeOFST: int = 1  # volume ele 构成节点的 列偏移
-SnodeOFST: int = 3  # surface ele 构成节点的 列偏移
-IFnodeOFST: int = 2  # inner faces 构成节点的 列偏移
+myText = plt.text  # 控制是否显示 文字标注; 空函数为: myText=my_void
 
 
 #=============== 画出体单元; 输入 node 坐标list; 体单元构成list
 def plot_Veles(nodeData: ndarray, Velements: ndarray):
-
     VeleLen = Velements.shape[0]  # 体单元list 长度
-    nodeN = Velements.shape[1] - VnodeOFST  # ele 拥有的节点数
+    nodeN = Velements.shape[1] - VndOS  # ele 拥有的节点数
     xlst = np.empty(1 + nodeN)
     ylst = np.empty(1 + nodeN)
     # 遍历体单元列表
     for eleID in range(VeleLen):
         for nodeIdx in range(nodeN):
             # 获取节点获取节点的 index
-            nodeID = Velements[eleID, nodeIdx + VnodeOFST]
+            nodeID = Velements[eleID, nodeIdx + VndOS]
             # 获取节点的 x,y 坐标
-            xlst[nodeIdx] = nodeData[nodeID, nodePosX]  # nodex是三个横坐标
-            ylst[nodeIdx] = nodeData[nodeID, nodePosY]  # ylst 是三个纵坐标
+            xlst[nodeIdx] = nodeData[nodeID, ndPosX]  # nodex是三个横坐标
+            ylst[nodeIdx] = nodeData[nodeID, ndPosY]  # ylst 是三个纵坐标
             center_x = np.average(xlst[0:-1])
             center_y = np.average(ylst[0:-1])
+        VndRaffle(xlst)
+        VndRaffle(ylst)
         xlst[nodeN] = xlst[0]  # 首尾相接
         ylst[nodeN] = ylst[0]
         plt.plot(list(xlst),
                  list(ylst),
                  linestyle='-',
-                 linewidth=_lw_VS,
-                 color=_color_V,
-                 alpha=_alpha_VS)
-        plt.text(center_x,
-                 center_y,
-                 str(eleID),
-                 fontsize=_ftsz_VS,
-                 color=_color_V)
+                 linewidth=a_lw_VS,
+                 color=a_color_V,
+                 alpha=a_alpha_VS)
+        myText(center_x,
+               center_y,
+               str(eleID),
+               fontsize=a_ftsz_VS,
+               color=a_color_V)
 
 
-#=============== 画出节点
+#=============== 画出节点, 二阶单元包括中间节点
 def plot_nodes(nodeData: ndarray):
     maxe = plt.gca()
     nodeLen = nodeData.shape[0]
     for ndID in range(nodeLen):
-        cx = nodeData[ndID, nodePosX]  # nodex是三个横坐标
-        cy = nodeData[ndID, nodePosY]  # ylst 是三个纵坐标
-        maxe.text(cx + _dlt_nd,
-                  cy + _dlt_nd,
-                  f'({ndID}',
-                  fontsize=_ftsz_VS,
-                  color=_color_Nd)
+        cx = nodeData[ndID, ndPosX]  # nodex是三个横坐标
+        cy = nodeData[ndID, ndPosY]  # ylst 是三个纵坐标
+        myText(cx + a_dlt_nd,
+               cy + a_dlt_nd,
+               f'({ndID}',
+               fontsize=a_ftsz_VS,
+               color=a_color_Nd)
 
 
 #=============== 画出 外表面单元;输入 node 坐标list; 面单元构成list
 def plot_Seles(nodeData: ndarray, Selements: ndarray):
     SeleLen = Selements.shape[0]  # surf 单元list 长度
-    nodeN = Selements.shape[1] - SnodeOFST  # surf ele 拥有的节点数
+    nodeN = Selements.shape[1] - SndOS  # surf ele 拥有的节点数
     xlst = np.empty(1 + nodeN)
     ylst = np.empty(1 + nodeN)
-
     maxe = plt.gca()
     for eleID in range(SeleLen):
         for nodeIdx in range(nodeN):
-            nodeID = Selements[eleID, nodeIdx + SnodeOFST]
-            xlst[nodeIdx] = nodeData[nodeID, nodePosX]
-            ylst[nodeIdx] = nodeData[nodeID, nodePosY]
-            xlst[nodeN] = xlst[0]
-            ylst[nodeN] = ylst[0]
-        x_tail = xlst[0]
-        y_tail = ylst[0]
-        dx = xlst[1]
-        dy = ylst[1]
-        # plt.plot(xlst, ylst, linestyle='-', color='r')
-        arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy),
-                                         mutation_scale=12,
-                                         linewidth=_lw_VS,
-                                         color=_color_S,
-                                         alpha=_alpha_VS)
-        maxe.add_patch(arrow)
+            nodeID = Selements[eleID, nodeIdx + SndOS]
+            xlst[nodeIdx] = nodeData[nodeID, ndPosX]
+            ylst[nodeIdx] = nodeData[nodeID, ndPosY]
+        SndRaffle(xlst)
+        SndRaffle(ylst)
+        for ai in range(nodeN - 1):
+            x_tail = xlst[ai]
+            y_tail = ylst[ai]
+            dx = xlst[ai + 1]
+            dy = ylst[ai + 1]
+            # plt.plot(xlst, ylst, linestyle='-', color='r')
+            arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy),
+                                             mutation_scale=12,
+                                             linewidth=a_lw_VS,
+                                             color=a_color_S,
+                                             alpha=a_alpha_VS)
+            maxe.add_patch(arrow)
     maxe.autoscale(tight=True)
 
 
 #==================== 画出内部面，或者内部 Edge, 适用于 2D
 def plot_InFaces(nodeData: ndarray, inFaces: ndarray):
     SeleLen = inFaces.shape[0]  # surf 单元list 长度
-    nodeN = inFaces.shape[1] - IFnodeOFST  # surf ele 拥有的节点数
+    nodeN = inFaces.shape[1] - IFndOS  # surf ele 拥有的节点数
     print(f'inner face node num: {nodeN}')
     xlst = np.empty(nodeN)
     ylst = np.empty(nodeN)
@@ -131,27 +105,27 @@ def plot_InFaces(nodeData: ndarray, inFaces: ndarray):
         ownID = inFaces[eleID, 0]
         neibID = inFaces[eleID, 1]
         for nodeIdx in range(nodeN):
-            nodeID = inFaces[eleID, nodeIdx + IFnodeOFST]
-            xlst[nodeIdx] = nodeData[nodeID, nodePosX]
-            ylst[nodeIdx] = nodeData[nodeID, nodePosY]
+            nodeID = inFaces[eleID, nodeIdx + IFndOS]
+            xlst[nodeIdx] = nodeData[nodeID, ndPosX]
+            ylst[nodeIdx] = nodeData[nodeID, ndPosY]
         maxe.plot(xlst,
                   ylst,
                   linestyle='-',
-                  linewidth=_lw_in,
+                  linewidth=a_lw_in,
                   marker=None,
-                  color=_color_in,
-                  alpha=_alpha_in)
-        nodeIDs = inFaces[eleID, IFnodeOFST:]
+                  color=a_color_in,
+                  alpha=a_alpha_in)
+        nodeIDs = inFaces[eleID, IFndOS:]
         pos_text1 = [
-            np.average(xlst, weights=_in_text_ws),
-            np.average(ylst, weights=_in_text_ws)
+            np.average(xlst, weights=a_in_text_ws),
+            np.average(ylst, weights=a_in_text_ws)
         ]
         # 标注信息为: ownerID, neighborID, node1, node2
-        maxe.text(*pos_text1,
-                  f'({ownID},{neibID}, {nodeIDs}',
-                  fontsize=_ftsz_in,
-                  color=_color_in,
-                  alpha=_alpha_in)
+        myText(*pos_text1,
+               f'({ownID},{neibID}, {nodeIDs}',
+               fontsize=a_ftsz_in,
+               color=a_color_in,
+               alpha=a_alpha_in)
 
 
 def get_range(start: list, end: list, ratio: float = 0.01):

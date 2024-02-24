@@ -6,9 +6,9 @@ cfg_solver_sdk_dir = ptl.Path('C:/Solver/sdk').expanduser()
 cfg_exe_rar = 'C:/Program Files/WinRAR/Rar.exe'  # winRAR.exe 的路径
 cfg_down_dir = ptl.Path('~/Downloads/').expanduser()  # sdk.rar 的临时下载目录
 # --------------------------- sdk ftp 地址配置
-cfg_sdk_ftp_address = 'xxxxx'
-cfg_sdk_user = 'xxxx'
-cfg_sdk_passwd = 'xxxx'
+cfg_sdk_ftp_address = 'x'
+cfg_sdk_user = 'x'
+cfg_sdk_passwd = 'x'
 cfg_sdk_remote_dir = '/SDK/SolverSDK/develop/'  # 远程目录
 
 ## ======================== 配置变量 of git, cmake
