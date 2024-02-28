@@ -6122,6 +6122,46 @@ F(\sbf E) & =\frac{1}{2}\int_{V}\left[\frac{1}{\varepsilon_{r}}(\nabla\times\sbf
 \end_layout
 
 \begin_layout Standard
+矩阵单元虽然最简单，可以清晰地看到 矢量单元 和 矢量基函数 的特点。
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset-fem-JinJianMing/f8.1.png
+	lyxscale 28
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+图8.1矩阵棱边单元
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:8.1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
 考虑
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -6186,49 +6226,6 @@ noprefix "false"
 \end_inset
 
 分量。 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset-fem-JinJianMing/f8.1.png
-	lyxscale 70
-	scale 60
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-图8.1矩阵棱边单元
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:8.1"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -6297,18 +6294,61 @@ noprefix "false"
 
 \end_inset
 
-这些基函数的一个很重要的特性是：
+Note：
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $N_{i}^{e}$
+磁矢势展开 
+\begin_inset Formula $\sbf A=\sum_{\alpha}\sbf N_{\alpha}^{e}\,A_{i}^{e}$
+\end_inset
+
+ 的实际自由度是 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+ 在棱边上的积分。
+\begin_inset Formula 
+\[
+\alpha_{i}(v)=\int_{a_{i}}\left(v\cdot t_{i}\right)\dd{s},\quad t_{i}\text{ is 切矢量}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+只要插值展开写成
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:8.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的形式；对于 share 公共边的两个单元，公共边上会有两套展开；为了保持棱边上切向场的连续性，则必然有 
+\series bold
+
+\begin_inset Formula $\sbf N_{i}^{e}$
 \end_inset
 
  只在第 
 \begin_inset Formula $i$
 \end_inset
 
- 边上有切向分量，而在其它所有边上都没有切向分量。因此，通过所有单元棱边的切向场的连续性得到保证。
+ 边上有切向分量，而在其它所有边上没有切向分量
+\series default
+（离散正交性）。
+\begin_inset Formula 
+\[
+\sbf N_{i}^{e}(e_{j})=\delta_{ij}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -6316,11 +6356,15 @@ noprefix "false"
 \begin_inset Formula $\nabla\cdot\sbf N_{i}^{e}=0$
 \end_inset
 
-。因此，在无源区域中，用它们来表达矢量场是理想的。
+。因此在
+\series bold
+无源区域
+\series default
+中，用它们来表达矢量场是理想的。
 \end_layout
 
 \begin_layout Enumerate
-而且，这些函数的旋度可以很容易地找到：
+而且这些函数的旋度可以很容易找到：
 \begin_inset Formula 
 \begin{align*}
  & \nabla\times\sbf N_{1}^{e}=\frac{1}{\ell_{y}^{e}}\hat{\sbf z},\quad\nabla\times\sbf N_{2}^{e}=\frac{-1}{\ell_{y}^{e}}\hat{\sbf z}\\
@@ -6329,11 +6373,20 @@ noprefix "false"
 
 \end_inset
 
-显然它们是非零常数。
+它们显然是非零常数。
 \end_layout
 
-\begin_layout Standard
-顺便指出，以上矢量基函数，是为了建立场表达式中切向量的连续性而提出的。用 
+\begin_layout Remark
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+屋顶基函数
+\end_layout
+
+\end_inset
+
+ 顺便指出，以上矢量基函数，是为了建立场表达式中切向量的连续性而提出的。用 
 \begin_inset Formula $\hat{\sbf z}$
 \end_inset
 
@@ -6349,7 +6402,26 @@ noprefix "false"
 \begin_inset Formula $\hat{\sbf z}\times\sbf N_{i}^{e}$
 \end_inset
 
- 有零旋度和非零散度，因而用来表达面电流密度是理想的。在电磁学中，这些函数被称为 屋顶基函数，被并广泛应用于积分方程的 矩量法求解中。
+ 有零旋度和非零散度，因而用来表达
+\series bold
+面电流密度
+\series default
+是理想的。在电磁学中，这些函数被称为
+\series bold
+屋顶基函数
+\series default
+，被并广泛应用于积分方程的
+\series bold
+矩量法
+\series default
+求解中。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -6381,11 +6453,19 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-如前所述，矩阵单元适用于有限类的几何结构。当处理不规则集合形状的问题时，有必要使用三角形单元。
+如前所述，矩阵单元适用于有限类的几何结构。当处理不规则集合形状的问题时，有必要使用
+\series bold
+三角形单元
+\series default
+。
 \end_layout
 
 \begin_layout Standard
-三角形单元的 矢量基函数 可以从 必备特性导出。首先考虑 
+三角形单元的 矢量基函数 可以从 
+\series bold
+必要特性
+\series default
+导出。首先考虑 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "chap:4"
@@ -6399,10 +6479,11 @@ noprefix "false"
 \begin_inset Formula $(L_{1}^{e},L_{2}^{e},L_{3}^{e})$
 \end_inset
 
-，它们是单元的线性插值函数。
-\end_layout
-
-\begin_layout Standard
+，它们是单元的
+\series bold
+线性插值函数
+\series default
+。
 \begin_inset Float figure
 placement H
 wide false
@@ -6446,10 +6527,6 @@ name "fig:8.2"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 考虑下列矢量函数
 \begin_inset Formula 
 \begin{equation}
@@ -6462,7 +6539,23 @@ name "fig:8.2"
 \end_layout
 
 \begin_layout Enumerate
-首先可以看出
+
+\series bold
+散度
+\series default
+
+\begin_inset Formula $\nabla\cdot\sbf W_{12}^{e}=0$
+\end_inset
+
+，它不依赖于
+\begin_inset Formula $L_{i_{1}}^{e}$
+\end_inset
+
+和 
+\begin_inset Formula $L_{i_{2}}^{e}$
+\end_inset
+
+的具体表达式
 \begin_inset Formula 
 \begin{equation}
 \nabla\cdot\sbf W_{12}=\nabla\cdot\left(L_{1}^{e}\nabla L_{2}^{e}\right)-\nabla\cdot\left(L_{2}^{e}\nabla L_{1}^{e}\right)=0\label{eq:8.9}
@@ -6474,7 +6567,11 @@ name "fig:8.2"
 \begin_inset Formula $\nabla\cdot(\varphi\sbf f)=(\nabla\varphi)\cdot\sbf f+\varphi\nabla\cdot\sbf f$
 \end_inset
 
-。以及
+。而
+\series bold
+旋度
+\series default
+
 \begin_inset Formula 
 \[
 \nabla\times\sbf W_{12}=\nabla\times\left(L_{1}^{e}\nabla L_{2}^{e}\right)-\nabla\times\left(L_{2}^{e}\nabla L_{1}^{e}\right)=2\nabla L_{1}^{e}\times\nabla L_{2}^{e}
@@ -6490,13 +6587,13 @@ name "fig:8.2"
 \end_layout
 
 \begin_layout Enumerate
-其次，
-\series bold
-设 
+其次，设
 \begin_inset Formula $\sbf e_{1}$
 \end_inset
 
-是从节点
+是从
+\series bold
+节点
 \begin_inset Formula $1$
 \end_inset
 
@@ -6504,9 +6601,9 @@ name "fig:8.2"
 \begin_inset Formula $2$
 \end_inset
 
- 的单位矢量
+ 
 \series default
-。因为
+的单位矢量。因为
 \begin_inset Formula $L_{1}^{e}$
 \end_inset
 
@@ -6555,7 +6652,7 @@ name "fig:8.2"
 
 \end_inset
 
-这里 
+这里
 \begin_inset Formula $\ell_{1}^{e}$
 \end_inset
 
@@ -6567,7 +6664,9 @@ name "fig:8.2"
 \begin_inset Formula $2$
 \end_inset
 
-的棱边的长度。换句话说， 
+的棱边的长度。换句话说，
+\series bold
+
 \begin_inset Formula $\sbf W_{12}$
 \end_inset
 
@@ -6575,7 +6674,13 @@ name "fig:8.2"
 \begin_inset Formula $(1,2)$
 \end_inset
 
-有一不变的切向分量。并且因为 
+有一不变的切向分量
+\series default
+。
+\end_layout
+
+\begin_layout Enumerate
+并且因为
 \begin_inset Formula $L_{1}^{e}$
 \end_inset
 
@@ -6592,10 +6697,14 @@ name "fig:8.2"
 \end_inset
 
 为零，所以 
+\series bold
+
 \begin_inset Formula $\sbf W_{12}$
 \end_inset
 
-沿这两个棱边没有切向分量。
+沿这两个棱边没有切向分量
+\series default
+。
 \end_layout
 
 \begin_layout Standard
@@ -6669,6 +6778,42 @@ name "fig:8.2"
 \end_inset
 
 个棱边的切向场。
+\begin_inset Formula $\sbf N_{1}^{e}$
+\end_inset
+
+同一写成
+\begin_inset Formula 
+\[
+\sbf N_{i}^{e}=\left(L_{i_{1}}^{e}\nabla L_{i_{2}}^{e}-L_{i_{2}}^{e}\nabla L_{i_{1}}^{e}\right)\ell_{i}^{e}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $i_{1}$
+\end_inset
+
+与 
+\begin_inset Formula $i_{2}$
+\end_inset
+
+ 分别为棱边
+\begin_inset Formula $i$
+\end_inset
+
+的
+\series bold
+两个顶点
+\series default
+。
+\begin_inset Formula $\ell_{i}^{e}$
+\end_inset
+
+ 的绝对值等于棱边的长度，为了保证基函数方向一致，可以加上额外的正负号，并由
+\begin_inset Formula $i_{1},i_{2}$
+\end_inset
+
+节点的 节点全局编号顺序给出。
 \end_layout
 
 \begin_layout Standard
@@ -6682,6 +6827,13 @@ status open
 \begin_inset Graphics
 	filename inset-fem-JinJianMing/f8.3.png
 	lyxscale 70
+	scale 60
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/xl-1.2.png
 	scale 60
 
 \end_inset
@@ -7215,15 +7367,35 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-首先四边形单元通常没有简单的解析解，而其他两种单元则有，因此总需要数值积分。
+首先四边形单元通常
+\series bold
+没有简单的解析解
+\series default
+，而其他两种单元则有，因此总需要
+\series bold
+数值积分
+\series default
+。
 \end_layout
 
 \begin_layout Enumerate
-其次不同于三角形单元和矩阵单元，四边形单元的矢量基函数 不是无散的。
+其次不同于三角形单元和矩阵单元，四边形单元的矢量基函数
+\series bold
+不是无散的，
+\series default
+
+\begin_inset Formula $\nabla\cdot\sbf N_{\alpha}\neq0$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
-不过四边形单元基函数同样具有建立场表达式所需的切向连续性。所以在大多数应用中，和前面两种单元同样有用。
+不过四边形单元基函数同样具有建立场表达式所需的
+\series bold
+切向连续性
+\series default
+。所以在大多数应用中，和前面两种单元同样有用。
 \end_layout
 
 \begin_layout Standard

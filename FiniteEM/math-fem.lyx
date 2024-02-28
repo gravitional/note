@@ -20437,95 +20437,6 @@ x_{4} & y_{4} & z_{4}
 \end_layout
 
 \begin_layout Section
-Edge单元
-\end_layout
-
-\begin_layout Standard
-在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
-在棱边 
-\begin_inset Formula $i$
-\end_inset
-
- 上可以定义形函数：
-\begin_inset Formula 
-\[
-\sbf N_{i}^{e}=\left(L_{i(1)}^{e}\nabla L_{i(2)}^{e}-L_{i(2)}^{e}\nabla L_{i(1)}^{e}\right)\ell_{i}^{e}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $i(1)$
-\end_inset
-
-与 
-\begin_inset Formula $i(2)$
-\end_inset
-
-为与棱边
-\begin_inset Formula $i$
-\end_inset
-
- 邻接的两个顶点。
-\begin_inset Formula $\ell_{i}^{e}$
-\end_inset
-
- 的绝对值等于棱边的长度，正负号由节点的总体编号决定。
-\begin_inset Formula $\nabla\cdot\sbf N_{i}^{e}=0$
-\end_inset
-
-，此性质只取决于上式的构造，不依赖于
-\begin_inset Formula $L_{i(1)}^{e}$
-\end_inset
-
-和
-\begin_inset Formula $L_{i(2)}^{e}$
-\end_inset
-
-的具体表达式。形函数 
-\begin_inset Formula $\sbf N_{i}^{e}$
-\end_inset
-
- 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/xl-1.2.png
-	scale 60
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-二维三角形单元，相邻单元同一条棱边上形函数的矢量图分布。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
 为什么叫做等参单元
 \end_layout
 
@@ -21324,6 +21235,148 @@ status collapsed
 [Phi]B; {EA, EB} TableForm[ {{EA, EB}, {EA .
  nA, EB .
  nB} }, TableHeadings -> {{"Vec_E", "E_norm"}}, TableDepth -> 1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Edge单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sbf E^{e}=\sum_{i=1}^{4}\sbf N_{i}^{e}\,E_{i}^{e}\label{eq:j8.3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{i}^{e}$
+\end_inset
+
+表示沿着第
+\begin_inset Formula $i$
+\end_inset
+
+个棱边的切向场，
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+是矢量插值函数或基函数。
+\end_layout
+
+\begin_layout Standard
+只要插值展开写成
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j8.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的形式；如果两个单元上的展开 share 公共Edge，则能推导出： 
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 只在第 
+\begin_inset Formula $i$
+\end_inset
+
+ 边上有切向分量，而在其它所有边上没有切向分量（离散正交性）。
+\begin_inset Formula 
+\[
+\sbf N_{i}^{e}(e_{j})=\delta_{ij}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
+在棱边 
+\begin_inset Formula $i$
+\end_inset
+
+ 上可以定义形函数：
+\begin_inset Formula 
+\[
+\sbf N_{i}^{e}=\left(L_{i(1)}^{e}\nabla L_{i(2)}^{e}-L_{i(2)}^{e}\nabla L_{i(1)}^{e}\right)\ell_{i}^{e}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $i(1)$
+\end_inset
+
+与 
+\begin_inset Formula $i(2)$
+\end_inset
+
+为与棱边
+\begin_inset Formula $i$
+\end_inset
+
+ 邻接的两个顶点。
+\begin_inset Formula $\ell_{i}^{e}$
+\end_inset
+
+ 的绝对值等于棱边的长度，正负号由节点的总体编号决定。
+\begin_inset Formula $\nabla\cdot\sbf N_{i}^{e}=0$
+\end_inset
+
+，此性质只取决于上式的构造，不依赖于
+\begin_inset Formula $L_{i(1)}^{e}$
+\end_inset
+
+和
+\begin_inset Formula $L_{i(2)}^{e}$
+\end_inset
+
+的具体表达式。形函数 
+\begin_inset Formula $\sbf N_{i}^{e}$
+\end_inset
+
+ 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/xl-1.2.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维三角形单元，相邻单元同一条棱边上形函数的矢量图分布。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset

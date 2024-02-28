@@ -30,7 +30,8 @@ Perl是针对90%的文本工作, 和10%的其他问题而优化的.
 当然, 这不一定是你开始时的那个源代码, 但它将是某种源代码.
 
 真正能让你的秘密算法保持秘密的方法是, 唉, 应用适当数量的律师.
-他们可以写一份许可证, 说 "你可以用这些代码做这个, 但你不能做那个. 如果你违反了我们的规则, 我们有适当数量的律师来确保你会后悔".
+他们可以写一份许可证, 说 "你可以用这些代码做这个, 但你不能做那个. 
+如果你违反了我们的规则, 我们有适当数量的律师来确保你会后悔".
 
 ## 如何安装CPAN模块
 
@@ -54,9 +55,11 @@ CPAN被复制在世界各地的数百台镜像机器上;
 [C编写]: https://en.wikipedia.org/wiki/C_(programming_language)
 [CPAN]: https://www.cpan.org/
 
-大多数 `Perl模块` 是用Perl编写的, 有些使用 [XS][] (它们是用 [C编写][] 的), 所以需要一个C编译器(这很容易设置--不要惊慌),
+大多数 `Perl模块` 是用Perl编写的, 有些使用 [XS][] 
+(它们是用 [C编写][] 的), 所以需要一个C编译器(这很容易设置--不要惊慌),
 请看下面你选择的操作系统以了解如何获得正确的编译器.
-`模块`可能依赖于其他模块(几乎总是在 [CPAN][] 上), 没有这些依赖模块就不能安装(或者没有它们的特定版本). 值得通读下面这些选项的文档.
+`模块`可能依赖于其他模块(几乎总是在 [CPAN][] 上), 没有这些依赖模块就不能安装(或者没有它们的特定版本). 
+值得通读下面这些选项的文档.
 CPAN上的许多模块都需要一个比较新的Perl版本(5.8版或以上).
 
 ### 快速启动
@@ -76,6 +79,8 @@ cpanm Module::Name
 
 ### 工具
 
+[CPAN2][], [cpan22][]
+
 [App::cpanminus]: https://metacpan.org/release/App-cpanminus
 [安装说明]: https://metacpan.org/pod/App::cpanminus#INSTALLATION
 [cpan-outdated]: https://metacpan.org/dist/cpan-outdated/view/script/cpan-outdated
@@ -85,8 +90,8 @@ cpanm Module::Name
 [cpanp]: https://metacpan.org/dist/CPANPLUS/view/bin/cpanp
 [CPANPLUS]: https://metacpan.org/dist/CPANPLUS
 [cpanm]: https://metacpan.org/dist/App-cpanminus/view/bin/cpanm
-[CPAN]: https://metacpan.org/dist/CPAN
-[cpan]: https://metacpan.org/dist/CPAN/view/scripts/cpan
+[CPAN2]: https://metacpan.org/dist/CPAN
+[cpan22]: https://metacpan.org/dist/CPAN/view/scripts/cpan
 
 帮助你安装和管理你的模块.
 
