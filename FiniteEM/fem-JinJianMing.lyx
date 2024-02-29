@@ -3856,7 +3856,7 @@ and
 \end_layout
 
 \begin_layout Section
-变分formulation
+变分公式
 \end_layout
 
 \begin_layout Section
@@ -4002,6 +4002,517 @@ b_{i}^{e} & =\iiint_{V}fN_{i}^{e}\dd{V}\label{eq:5.18-1}
 \begin{equation}
 g_{i}^{e}=\oint_{S^{e}}N_{i}^{e}\sbf D\cdot\hat{n}^{e}\dd{S}\cdot\label{eq:5.44}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+矩形块单元
+\end_layout
+
+\begin_layout Section
+静电问题的应用
+\end_layout
+
+\begin_layout Section
+静磁问题的应用
+\end_layout
+
+\begin_layout Subsection
+问题的描述
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\times(\frac{1}{\mu_{r}}\nabla\times\sbf A)=\mu_{0}\sbf J\label{eq:5.60}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+狄利克雷边界条件
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times\sbf A=\sbf P\quad\text{在}S_{1}\text{上}\label{eq:5.61}
+\end{equation}
+
+\end_inset
+
+如果在局部坐标系中为 
+\begin_inset Formula $\sbf n=(0,0,1)$
+\end_inset
+
+，则
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}\hat{\sbf n}\times\sbf A=(-A_{y},A_{x})}=(P_{x},P_{y})\label{eq:5.61b}
+\end{equation}
+
+\end_inset
+
+即约束
+\begin_inset Formula $\sbf A$
+\end_inset
+
+的切向分量 
+\begin_inset Formula $\{A_{x},A_{y}\}$
+\end_inset
+
+，因此将约束
+\begin_inset Formula $\sbf A$
+\end_inset
+
+在Edges上的环路积分 
+\begin_inset Formula $\int\sbf A\cdot\dd{\sbf\ell}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Paragraph
+适用于对称面的齐次诺伊曼条件
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times(\nabla\times\sbf A)=0,\quad\text{在}S_{2}\text{上}\label{eq:5.62}
+\end{equation}
+
+\end_inset
+
+同样在局部坐标系
+\begin_inset Formula $\sbf n=(0,0,1)$
+\end_inset
+
+中,
+\begin_inset Formula 
+\[
+\nabla\times\sbf A=(\partial_{y}A_{z}-\partial_{z}A_{y},\,{\color{blue}\partial_{z}A_{x}-\partial_{x}A_{z}},\,\partial_{x}A_{y}-\partial_{y}A_{x})
+\]
+
+\end_inset
+
+则套用
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.61b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\hat{\sbf n}\times(\nabla\times\sbf A)=(-{\color{blue}\mathrm{curl}_{y}},\,\mathrm{curl}_{x})=(0,0)
+\]
+
+\end_inset
+
+即约束
+\begin_inset Formula $\sbf A$
+\end_inset
+
+的旋度的切向分量。
+\end_layout
+
+\begin_layout Paragraph
+介质分界面的连续性条件
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times\sbf A^{+}=\hat{\sbf n}\times\sbf A^{-},\quad\text{在}S_{d}\text{上}\label{eq:5.63}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\mu_{r}^{+}}\hat{\sbf n}\times\nabla\times\sbf A^{+}=\frac{1}{\mu_{r}^{-}}\hat{\sbf n}\times\nabla\times\sbf A^{-},\quad\text{在}S_{d}\text{上}\label{eq:5.64}
+\end{equation}
+
+\end_inset
+
+它们是连续性条件 
+\begin_inset Formula $\hat{\sbf n}\cdot\sbf B^{+}=\hat{\sbf n}\cdot\sbf B^{-}$
+\end_inset
+
+和 
+\begin_inset Formula $\hat{\sbf n}\times\sbf H^{+}=\hat{\sbf n}\times\sbf H^{-}$
+\end_inset
+
+的直接结果。
+\end_layout
+
+\begin_layout Subsection
+变分公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F(\sbf A)=\frac{1}{2}\int_{V}\frac{1}{\mu_{r}}(\nabla\times\sbf A)\cdot(\nabla\times\sbf A)\dd{V}-\mu_{0}\int_{V}\sbf J\cdot\sbf A\dd{V}\label{eq:5.65}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+有矢量恒等式
+\begin_inset Formula 
+\[
+\nabla\cdot({\color{blue}\sbf a}\times\sbf b)=\sbf b\cdot\nabla\times\sbf a-\sbf a\cdot\nabla\times\sbf b
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula $\sbf b={\color{red}\delta\sbf A}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf a={\color{blue}\nabla\times\sbf A}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\nabla\cdot\left[({\color{blue}\nabla\times\sbf A})\times{\color{red}\delta\sbf A}\right]={\color{red}\delta\sbf A}\cdot\nabla\times({\color{blue}\nabla\times\sbf A})-({\color{blue}\nabla\times\sbf A})\cdot(\nabla\times{\color{red}\delta\sbf A})
+\]
+
+\end_inset
+
+在考虑散度定理
+\begin_inset Formula $\int_{v}\nabla\cdot\sbf f\dd{V}=\int_{S}\hat{\sbf n}\cdot\sbf f\dd{S}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\left[({\color{blue}\nabla\times\sbf A})\times{\color{red}\delta\sbf A}\right] & \Rightarrow\sbf n\cdot\left[({\color{blue}\nabla\times\sbf A})\times{\color{red}\delta\sbf A}\right]\\
+ & ={\color{red}\delta\sbf A}\cdot\left[\sbf n\times({\color{blue}\nabla\times\sbf A})\right]
+\end{align*}
+
+\end_inset
+
+因此 
+\series bold
+在积分号下
+\series default
+ 有
+\begin_inset Formula 
+\begin{align*}
+\int_{V}({\color{blue}\nabla\times\sbf A})\cdot(\nabla\times{\color{red}\delta\sbf A})= & \int_{V}\left(\nabla\times{\color{blue}\nabla\times\sbf A}\right)\cdot{\color{red}\delta\sbf A}\\
+ & -\int_{S_{2}}\left(\sbf n\times{\color{blue}\nabla\times\sbf A}\right)\cdot{\color{red}\delta\sbf A}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+类似地，
+\begin_inset Formula 
+\begin{align*}
+\int_{V}({\color{blue}\nabla\times\sbf A})\cdot(\nabla\times{\color{red}\sbf A})= & \int_{V}\left(\nabla\times{\color{blue}\nabla\times\sbf A}\right)\cdot{\color{red}\sbf A}\\
+ & -\int_{S_{2}}\left(\sbf n\times{\color{blue}\nabla\times\sbf A}\right)\cdot{\color{red}\sbf A}
+\end{align*}
+
+\end_inset
+
+即 
+\series bold
+curl 的模方
+\series default
+等于
+\series bold
+二阶curl的投影
+\series default
+减去
+\series bold
+curl切向分量的投影
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\delta F(\sbf A)= & \int_{V}\left[\nabla\times(\frac{1}{\mu_{r}}\nabla\times\sbf A)-\mu_{0}\sbf J\right]\cdot\delta\sbf A\dd{V}\\
+ & -\int_{S_{d}}\left[\frac{1}{\mu_{r}^{+}}\left(\hat{\sbf n}\times\nabla\times\sbf A^{+}\right)-\frac{1}{\mu_{r}^{+}}\left(\hat{\sbf n}\times\nabla\times\sbf A^{-}\right)\right]\cdot\delta\sbf A\dd{S}\\
+ & -\int_{S_{2}}\frac{1}{\mu_{r}}\left(\hat{\sbf n}\times\nabla\times\sbf A\right)\cdot\delta\sbf A\dd{S}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $S_{2}$
+\end_inset
+
+表示诺伊曼边界，
+\begin_inset Formula $\hat{n}\times\delta\sbf A$
+\end_inset
+
+在狄利克雷边界
+\begin_inset Formula $S_{1}$
+\end_inset
+
+上为零。
+\begin_inset Formula $\delta F(\sbf A)=0$
+\end_inset
+
+ 意味着
+\begin_inset Formula $\sbf A$
+\end_inset
+
+必须满足 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.60"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.62"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.64"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Exercise
+从下式
+\end_layout
+
+\begin_layout Exercise
+\begin_inset Formula 
+\[
+R_{p\alpha}^{e}=\int_{V^{e}}N_{\alpha}^{e}\,\hat{\sbf p}\cdot\left[\nabla\times\left(\frac{1}{\mu_{r}}\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{V},\quad p=x,y,z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+时谐场问题的应用
+\end_layout
+
+\begin_layout Subsection
+问题的描述
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\left(\frac{1}{\mu_{r}}\nabla\times\sbf E\right)-k_{0}^{2}\varepsilon_{r}\,\sbf E=-i\,k_{0}Z_{0}\sbf J\label{eq:5.101}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\left(\frac{1}{\varepsilon_{r}}\nabla\times\sbf H\right)-k_{0}^{2}\mu_{r}\,\sbf H=\nabla\times\left(\frac{1}{\varepsilon_{r}}\sbf J\right)\label{eq:5.102}
+\end{equation}
+
+\end_inset
+
+导电面上的边界条件
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times\sbf E=0\label{eq:2.103}
+\end{equation}
+
+\end_inset
+
+i.e.
+\begin_inset Formula 
+\[
+(-E_{y},E_{x})=(0,0)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times\nabla\times\sbf H=0\label{eq:5.104}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+({\color{blue}\partial_{x}H_{z}-\partial_{z}H_{x}},\,\partial_{y}H_{z}-\partial_{z}H_{y})=(0,0)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以及应用于导磁面上的对偶条件
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times\nabla\times\sbf E=0\label{eq:5.105}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+({\color{blue}\partial_{x}E_{z}-\partial_{z}E_{x}},\,\partial_{y}E_{z}-\partial_{z}E_{y})=(0,0)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\hat{\sbf n}\times\sbf H=0\label{eq:5.106}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(-H_{y},H_{x})=(0,0)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+第三类边界条件
+\begin_inset Formula 
+\begin{align*}
+ & \frac{1}{\mu_{r}}\hat{\sbf n}\times\left(\nabla\times\sbf E\right)+\gamma_{e}\hat{\sbf n}\times\left(\hat{\sbf n}\times\sbf E\right)=\sbf U\\
+ & \frac{1}{\varepsilon_{r}}\hat{\sbf n}\times\left(\nabla\times\sbf H\right)+\gamma_{h}\hat{\sbf n}\times\left(\hat{\sbf n}\times\sbf H\right)=\sbf V
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\sbf n=(0,0,1)$
+\end_inset
+
+局部坐标下的分量形式
+\begin_inset Formula 
+\[
+\frac{1}{\mu_{r}}(-{\color{blue}\mathrm{curl}_{y}},\,\mathrm{curl}_{x})+\gamma_{e}\left(-E_{x},-E_{y}\right)=\left(U_{x},U_{y}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\gamma_{e}$
+\end_inset
+
+和
+\begin_inset Formula $\gamma_{h}$
+\end_inset
+
+是已知参数，
+\begin_inset Formula $\sbf U$
+\end_inset
+
+和
+\begin_inset Formula $\sbf V$
+\end_inset
+
+是已知矢量。
+\end_layout
+
+\begin_layout Standard
+两种不同媒质分界面上的连续性条件为
+\begin_inset Formula 
+\begin{align}
+ & \hat{\sbf n}\times\sbf E^{+}=\hat{\sbf n}\times\sbf E^{-}\label{eq:5.109}\\
+ & \hat{\sbf n}\times\sbf H^{+}=\hat{\sbf n}\times\sbf H^{-}\label{eq:5.110}
+\end{align}
+
+\end_inset
+
+也可将它们写成
+\begin_inset Formula 
+\begin{align}
+ & \frac{1}{\mu_{r}^{+}}\hat{\sbf n}\times(\nabla\times\sbf E^{+})=\frac{1}{\mu_{r}^{-}}\hat{\sbf n}\times(\nabla\times\sbf E^{-})\label{eq:5.111}\\
+ & \frac{1}{\varepsilon_{r}^{+}}\hat{\sbf n}\times(\nabla\times\sbf H^{+})=\frac{1}{\varepsilon_{r}^{-}}\hat{\sbf n}\times(\nabla\times\sbf H^{-})\label{eq:5.112}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+变分公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+F(\sbf E)= & \frac{1}{2}\int_{V}\left[\frac{1}{\mu_{r}}\left(\nabla\times\sbf E\right)\cdot\left(\nabla\times\sbf E\right)-k_{0}^{2}\varepsilon_{r}\,\sbf E\cdot\sbf E\right]\dd{V}\nonumber \\
+ & +\int_{S_{2}}\left[\frac{\gamma_{e}}{2}\left(\hat{\sbf n}\times\sbf E\right)\cdot\left(\hat{\sbf n}\times\sbf E\right)+\sbf E\cdot\sbf U\right]\dd{S}\nonumber \\
+ & +i\,k_{0}Z_{0}\int_{V}\sbf E\cdot\sbf J\dd{V}\label{eq:5.113}
+\end{align}
 
 \end_inset
 
