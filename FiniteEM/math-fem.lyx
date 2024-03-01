@@ -1554,6 +1554,107 @@ d=\frac{\abs{{\color{blue}A}\,x_{0}+{\color{blue}B}\,y_{0}+{\color{blue}C}\,z_{0
 \end_layout
 
 \begin_layout Section
+行列式拉普拉斯展开
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "https://zh.wikipedia.org/wiki/拉普拉斯展开"
+target "拉普拉斯展开"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+行列式的按行按列展开，
+\begin_inset Formula $B$
+\end_inset
+
+关于第
+\begin_inset Formula $i$
+\end_inset
+
+行第
+\begin_inset Formula $j$
+\end_inset
+
+列的
+\series bold
+余子式
+\series default
+
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+是值去掉第
+\begin_inset Formula $i$
+\end_inset
+
+行第
+\begin_inset Formula $j$
+\end_inset
+
+列后得到的
+\begin_inset Formula $n-1$
+\end_inset
+
+阶子矩阵的行列式，简称
+\begin_inset Formula $B$
+\end_inset
+
+的
+\begin_inset Formula $(i,j)$
+\end_inset
+
+ 余子式。
+\begin_inset Formula $B$
+\end_inset
+
+的
+\begin_inset Formula $(i,j)$
+\end_inset
+
+
+\series bold
+代数余子式 
+\series default
+
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+ 是指
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+与
+\begin_inset Formula $(-1)^{i+j}$
+\end_inset
+
+的乘积：
+\begin_inset Formula $C_{ij}=(-1)^{i+j}M_{ij}$
+\end_inset
+
+；
+\begin_inset Formula $(i,j)$
+\end_inset
+
+均是 0–based or 1–based。
+\begin_inset Formula 
+\begin{align*}
+\abs{B} & =b_{i1}C_{i1}+b_{i2}C_{i2}+\cdots+b_{in}C_{in}\\
+ & =b_{1j}C_{1j}+b_{2j}C_{2j}+\cdots+b_{nj}C_{nj}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 范德蒙德行列式
 \end_layout
 
@@ -4651,6 +4752,225 @@ literal "false"
 \end_layout
 
 \begin_layout Section
+矢量运算的几何
+\end_layout
+
+\begin_layout Standard
+高斯公式和斯托克斯公式
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}\sbf D}\cdot\dd{S}\quad & \Leftrightarrow\quad{\color{blue}\nabla\cdot\sbf D}\,\dd{V}\\
+{\color{blue}\sbf A}\cdot\dd{\sbf\ell}\quad & \Leftrightarrow\quad{\color{blue}\nabla\times\sbf A}\cdot\,\dd{\sbf S}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fig-divergence.png
+	lyxscale 25
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fig-curl.png
+	lyxscale 25
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+散度和旋度
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+散度——Box
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla\cdot\sbf D=\partial_{x}D_{x}+\partial_{y}D_{y}+\partial_{z}D_{z}
+\]
+
+\end_inset
+
+差分表达式为
+\begin_inset Formula 
+\[
+\lim_{\Delta V\to0}\frac{\left(D_{x+\Delta x}-D_{x}\right)\dd{S_{x}}+\left(D_{y+\Delta y}-D_{y}\right)\dd{S_{y}}+\left(D_{z+\Delta z}-D_{z}\right)\dd{S_{z}}}{\Delta V},\quad\Delta V=\Delta x\Delta y\Delta z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+几何上，
+\begin_inset Formula $0$
+\end_inset
+
+阶量是通过一个 Box 的流量的difference。当
+\begin_inset Formula $\Delta V\to0$
+\end_inset
+
+，Box 收缩到一个点
+\begin_inset Formula $(x,y,z)$
+\end_inset
+
+，就是散度
+\begin_inset Formula $\nabla\cdot\sbf D$
+\end_inset
+
+的定义。
+\end_layout
+
+\begin_layout Itemize
+边界条件的情形：当 Box 跨过边界，则可选取细长Box；即令
+\begin_inset Formula $x$
+\end_inset
+
+方向两个面比较大，其他面很窄，则通量的主要贡献在
+\begin_inset Formula $x$
+\end_inset
+
+面上，其他面忽略不计。再考虑到
+\begin_inset Formula $x$
+\end_inset
+
+面可以任意变形，从而得到
+\series bold
+每一点上
+\series default
+满足
+\begin_inset Formula $D_{2n}=D_{1n}$
+\end_inset
+
+ 类型的边界条件。
+\end_layout
+
+\begin_layout Paragraph
+旋度——回路
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inset/fig-curl2.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla\times\sbf A=\left({\color{blue}\left[\partial,A\right]_{y,z}},\left[\partial,A\right]_{z,x},\left[\partial,A\right]_{x,y}\right)
+\]
+
+\end_inset
+
+其中反对称记号
+\begin_inset Formula $\left[\partial,A\right]_{y,z}=\partial_{y}A_{z}-\partial_{z}A_{y}$
+\end_inset
+
+。差分表达式为（
+\begin_inset Formula $\dd{\ell_{x}}$
+\end_inset
+
+表示沿着
+\begin_inset Formula $x$
+\end_inset
+
+轴正方向）
+\begin_inset Formula 
+\[
+\lim_{\Delta S\to0}\frac{(A_{3;y+\Delta y}-A_{3;y})\dd{\ell_{z}}-(A_{2;z+\Delta z}-A_{2;z})\dd{\ell_{y}}}{\Delta S},\quad\Delta S=\Delta y\Delta z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+几何上，
+\begin_inset Formula $0$
+\end_inset
+
+阶量是矢量在Ring上的积分。当
+\begin_inset Formula $\Delta S\to0$
+\end_inset
+
+，Ring 收缩到一个点
+\begin_inset Formula $(x,y,z)$
+\end_inset
+
+，就是旋度
+\begin_inset Formula $\nabla\times\sbf A$
+\end_inset
+
+沿着这个方向的分量。
+\end_layout
+
+\begin_layout Itemize
+边界条件的情形，当 Ring 跨过边界，则可选取细长回路。即令上图中沿
+\begin_inset Formula $z$
+\end_inset
+
+方向的回路长，令
+\begin_inset Formula $y$
+\end_inset
+
+方向的回路短，从而
+\begin_inset Formula $y$
+\end_inset
+
+回路可以忽略。再考虑到回路可以任意变形，从而得到
+\series bold
+每一点上
+\series default
+满足 
+\begin_inset Formula $A_{2t}=A_{1t}$
+\end_inset
+
+ 类型的边界条件。
+\begin_inset Formula $y,z$
+\end_inset
+
+方向的边界同理。
+\end_layout
+
+\begin_layout Section
 代数基本定理
 \end_layout
 
@@ -4771,7 +5091,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+aaa
 \end_layout
 
 \end_inset
@@ -14776,6 +15096,45 @@ noprefix "false"
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.1.15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的物理含义是，面电流
+\begin_inset Formula $\sbf\alpha$
+\end_inset
+
+是沿着表面切向
+\begin_inset Formula $\sbf\tau$
+\end_inset
+
+的，根据安培环路定律
+\begin_inset Formula $\nabla\times\sbf B=\mu_{0}\sbf J$
+\end_inset
+
+，产生的磁场的轴（旋度）是沿着
+\begin_inset Formula $\sbf\tau$
+\end_inset
+
+的。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:g3.1.14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
