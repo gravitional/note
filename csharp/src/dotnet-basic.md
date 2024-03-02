@@ -27,11 +27,14 @@ dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
 ## build 项目
 
 ```bash
-# 还原 package 依赖
+# 还原项目 package 依赖
 dotnet restore
 
-# 构建 release 版本
+# 构建项目的 release 版本
 dotnet build -c Release
-# 指定输出位置
+# 构建 publish 版本
+dotnet publish -c Release
+
+# 指定 编译结果的 输出位置
 dotnet build -c Release -o ~/Downloads/build-test
 ```
