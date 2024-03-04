@@ -296,8 +296,8 @@ target_link_libraries(myprogram ${TIFF_LIBRARY})
 根据不同的特性将会采取不同的方式编写FindXXX.cmake:
 
 是否单个头文件或者单个库文件:
-相对来说, 单个头文件和库文件的库写FindXXX.cmake会简洁很多,
-一个find_path和find_library就能描述所有的依赖关系;
+相对来说, 单个头文件和库文件的库写 `FindXXX.cmake` 会简洁很多,
+一个 `find_path和find_library` 就能描述所有的依赖关系;
 
 库文件是否区分debug和release:
 只有windows库才有可能区分debug和release,
@@ -307,6 +307,12 @@ windows库除了静态库是否还有动态库:
 在定义Target时候, 需要在property里设置静态库和动态库的文件路径
 
 ### 单头文件&单库文件&单dll的情况
+
+[IMPORTED_LOCATION](https://cmake.org/cmake/help/latest/prop_tgt/IMPORTED_LOCATION.html)
+
+其中 `IMPORTED_LOCATION` 是导入库的位置
+Full path to the main file on disk for an `IMPORTED` target.
+Set this to the location of an `IMPORTED` target file on disk.
 
 ```cmake
 # FindOpenCV
