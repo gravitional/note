@@ -5167,5 +5167,467 @@ noprefix "false"
 。
 \end_layout
 
+\begin_layout Chapter
+自适应分析，矢量场
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+双线性型
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla\times\left(\frac{1}{\mu_{r}}\nabla\times\sbf E\right)-k_{0}^{2}\varepsilon_{r}\,\sbf E=-i\,k_{0}Z_{0}\sbf J,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $Z_{0}=\sqrt{\mu_{0}/\varepsilon_{0}}$
+\end_inset
+
+。
+\begin_inset Formula 
+\[
+\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u-k^{2}\varepsilon_{r}\sbf u=-j\omega\mu_{0}\sbf J
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了求解 多端口微波元件，将 Galerkin 方法应用到麦克斯韦方程推导出的矢量波动方程。结果可以写成双线性型（假设为2端口元件）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+B(\sbf u,\sbf v) & =\int_{\Omega}\nabla\times\sbf v\cdot\frac{1}{\mu_{r}}\nabla\times\sbf u\,\dd{x^{3}}-k^{2}\int_{\Omega}\sbf v\cdot\varepsilon_{r}\sbf u\dd{x^{3}}+j\,\omega\mu_{0}\int_{\Gamma_{1}}\sbf v\cdot\sbf J\dd{x^{2}}\nonumber \\
+ & =a\left(\sbf u,\sbf v\right)-k^{2}\langle\sbf u,\sbf v\rangle+j\omega\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}}\label{eq:v1}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+是 
+\series bold
+输入激励
+\series default
+的边界端口区域。多端口微波元件的
+\series bold
+弱解
+\series default
+是 矢量函数 
+\begin_inset Formula 
+\[
+\sbf u\in H(\mathrm{curl})=\left\{ \sbf w|\int_{\Omega}(\abs{\sbf\omega}+\abs{\nabla\times\sbf\omega})\dd{x^{3}}<\infty\right\} 
+\]
+
+\end_inset
+
+且满足
+\begin_inset Formula 
+\begin{align}
+a\left(\sbf u,\sbf v\right)-k^{2}\langle\sbf u,\sbf v\rangle=-j\omega\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}},\quad\sbf v\in H(\mathrm{curl})\label{eq:v2}
+\end{align}
+
+\end_inset
+
+在离散版本（即FEM ）过程，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\text{seek}\quad\sbf u^{h}\in S^{h} & \subset H(\mathrm{curl})\quad\text{s.t.}\nonumber \\
+a\left(\sbf u^{h},\sbf v^{h}\right)-k^{2}\langle\sbf u^{h},\sbf v^{h}\rangle & =-j\omega\mu_{0}\langle\sbf v^{h},\sbf J^{h}\rangle_{\Gamma_{1}}\nonumber \\
+\forall v^{h} & \in S^{h}\label{eq:v3}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf J^{h}$
+\end_inset
+
+是 
+\begin_inset Formula $\sbf J$
+\end_inset
+
+在有限单元网格上的插值，或投影。在当前的研究中，子空间 
+\begin_inset Formula $S^{h}$
+\end_inset
+
+ 由 Ref.[5] 中描述的 
+\begin_inset Formula $H^{(1)}(\mathrm{curl})$
+\end_inset
+
+ TVFEM 矢量基函数张成。假设 
+\series bold
+端口网格
+\series default
+ 足够细，
+\begin_inset Formula $\sbf J$
+\end_inset
+
+和
+\begin_inset Formula $\sbf J^{h}$
+\end_inset
+
+之间的插值误差可以忽略，随后将简化地用 
+\begin_inset Formula $\sbf J$
+\end_inset
+
+代替
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $\sbf J^{h}$
+\end_inset
+
+直接参与运算。此外下列定理成立。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "the1"
+
+\end_inset
+
+令
+\begin_inset Formula $\sbf e^{h}=\sbf u-\sbf u^{h}$
+\end_inset
+
+，即有限元解
+\begin_inset Formula $\sbf u^{h}$
+\end_inset
+
+的误差，则我们有
+\begin_inset Formula 
+\begin{equation}
+a\left(\sbf e^{h},\sbf u^{h}\right)-k^{2}\langle\sbf e^{h},\sbf u^{h}\rangle\equiv0.\label{eq:v4}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+误差泛函
+\end_layout
+
+\begin_layout Standard
+在模拟多端口微波器件时，经常感兴趣的是
+\begin_inset Formula $S$
+\end_inset
+
+参数。得到电磁场的解之后，器件的
+\begin_inset Formula $S$
+\end_inset
+
+参数可以通过适当的面积分得到。特别地，反射系数
+\begin_inset Formula $S_{11}$
+\end_inset
+
+表示成
+\begin_inset Formula 
+\begin{equation}
+S_{11}=1-\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}.\label{eq:v5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+是
+\series bold
+输入端口
+\series default
+，
+\begin_inset Formula $\sbf u$
+\end_inset
+
+是
+\series bold
+电场
+\series default
+，
+\begin_inset Formula $\sbf J$
+\end_inset
+
+是 流入求解区域的 基本模式（输入波）的表面电流。因此从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以推导出误差泛函，
+\begin_inset Formula 
+\begin{align}
+F(\sbf u^{h}) & =S_{11}^{h}-S_{11}\nonumber \\
+ & =\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}-\langle\sbf u^{h},\sbf J\rangle_{\Gamma_{1}}=\langle\sbf e^{h},\sbf J\rangle_{\Gamma_{1}}\label{eq:v6}
+\end{align}
+
+\end_inset
+
+其中假设了前文提到的 
+\begin_inset Formula $\sbf J-\sbf J^{h}$
+\end_inset
+
+可忽略。注意到
+\begin_inset Formula $\sbf e^{h}\in H(\mathrm{curl})$
+\end_inset
+
+ 并考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a\left(\sbf u,\sbf v\right)-k^{2}\langle\sbf u,\sbf v\rangle=-j\omega\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}},\quad\sbf v\in H(\mathrm{curl})
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\begin{equation}
+F(\sbf u^{h})=\frac{1}{-j\omega\mu_{0}}\left[a(\sbf u,\sbf e^{h})-k^{2}\langle\sbf u,\sbf e^{h}\rangle\right],\label{eq:v7}
+\end{equation}
+
+\end_inset
+
+使用定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "the1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula $a\left(\sbf e^{h},\sbf u^{h}\right)-k^{2}\langle\sbf e^{h},\sbf u^{h}\rangle\equiv0$
+\end_inset
+
+，误差泛函可以写成
+\begin_inset Formula 
+\begin{equation}
+F(\sbf u^{h})=\frac{1}{-j\omega\mu_{0}}\left[a\left(\sbf e^{h},\sbf e^{h}\right)-k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\right].\label{eq:v8}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+将作为推导 FEM 网格的每个四面体的 refinement index 的依据。
+\end_layout
+
+\begin_layout Section
+细化指标 Refinement indicator
+\end_layout
+
+\begin_layout Standard
+为得到 能计算 的细化指标，我们有
+\begin_inset Formula 
+\begin{align}
+a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\nonumber \\
+= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^{h}\cdot\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}-k^{2}\sbf e^{h}\cdot\varepsilon_{r}\sbf e^{h}\right)\dd{x^{3}}\nonumber \\
+= & \sum_{K}\int_{K}\sbf e^{h}\cdot\left(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}-k^{2}\varepsilon_{r}\sbf e^{h}\right)\dd{x}\nonumber \\
+ & +\sum_{\Delta}\int_{\Delta}\sbf e^{h}\cdot\left(\delta\left(\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\right)_{\Delta}\times\hat{\sbf n}\right)\dd{x^{2}}\nonumber \\
+ & +\int_{\Gamma_{1}}\sbf e^{h}\cdot\left(\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\times\hat{\sbf n}\right)\dd{x^{2}}\label{eq:v9}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $K$
+\end_inset
+
+是网格中的四面体单元，
+\begin_inset Formula $\Delta$
+\end_inset
+
+是内部三角形面，
+\begin_inset Formula $\delta(\cdot)_{\Delta}$
+\end_inset
+
+标记
+\begin_inset Formula $\cdot$
+\end_inset
+
+穿过
+\begin_inset Formula $\Delta$
+\end_inset
+
+时的不连续（discontinuity）。进一步简化，注意到
+\begin_inset Formula 
+\begin{align}
+\nabla\times & \frac{1}{\mu_{r}}\nabla\times\sbf e^{h}-k^{2}\varepsilon_{r}\sbf e^{h}\nonumber \\
+ & =-\left(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u^{h}-k^{2}\epsilon_{r}\sbf u^{h}\right)=j\,\omega\mu_{0}\,\sbf j_{v}\label{eq:v10a}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\delta & \left(\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\right)_{\Delta}\times\hat{\sbf n}\nonumber \\
+ & =-\delta\left(\frac{1}{\mu_{r}}\nabla\times\sbf u^{h}\right)_{\Delta}\times\hat{\sbf n}=j\,\omega\mu_{0}\,\sbf j_{s}\label{eq:v10b}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf j_{s}$
+\end_inset
+
+分别是 volume 和 surface residual currents。物理上可以解释为，
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf j_{s}$
+\end_inset
+
+是产生误差场
+\begin_inset Formula $\sbf e^{h}$
+\end_inset
+
+的源。接着，误差泛函可以写成
+\begin_inset Formula 
+\begin{align}
+F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delta}\int_{\Delta}\sbf e^{h}\cdot\sbf j_{s}\dd{x^{2}}\nonumber \\
+ & +\int_{\Gamma_{1}}\sbf e^{h}\cdot\sbf j_{s}\dd{x^{2}}\label{eq:v11}
+\end{align}
+
+\end_inset
+
+理论上，
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf j_{s}$
+\end_inset
+
+的计算是exact。自适应网格细化的目标，或者更精确地说，后验误差估计地计算只依赖于 how one computes 
+\begin_inset Formula $\sbf e^{h}$
+\end_inset
+
+from these sources。
+\end_layout
+
+\begin_layout Standard
+在本文中，我们将重点推导出一种易于计算的细化指标，该指标可用于可靠地指导我们
+\series bold
+最优地
+\series default
+细化有限元网格。为此，我们定义了残差指标
+\begin_inset Formula $\alpha_{K}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\alpha_{K}=\int_{K}(\sbf e^{h}\cdot\sbf j_{v})\dd{x^{3}}\label{eq:v12}
+\end{equation}
+
+\end_inset
+
+此处是我们作的主要近似。We would only compute 
+\begin_inset Formula $\left.\sbf e^{h}\right|_{K}$
+\end_inset
+
+ form 
+\series bold
+local sources
+\series default
+ and employ an approximate Green's functions，即
+\begin_inset Formula 
+\begin{align}
+\left.\sbf e^{h}\right|_{K}= & -\nabla V-j\omega\sbf A\nonumber \\
+\approx & -\nabla\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x^{3}}\nonumber \\
+ & -\frac{j\omega\mu}{4\pi}\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\label{eq:v13}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $R$
+\end_inset
+
+是 从观察点（
+\begin_inset Formula $\sbf e^{h}$
+\end_inset
+
+）到源 
+\begin_inset Formula $(\rho_{v},\sbf j_{v})$
+\end_inset
+
+的距离。然后 residual index 
+\begin_inset Formula $\alpha_{K}$
+\end_inset
+
+写成
+\begin_inset Formula 
+\begin{align}
+\alpha_{K}\approx & -\int_{K}\left(\sbf j_{v}\cdot\nabla\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
+ & -\frac{j\omega\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
+\approx & -j\omega\int_{K}\rho_{v}\left(\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
+ & -\frac{j\omega\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
+\approx & \frac{-j\omega e^{-jk\,R_{K}}}{4\pi\epsilon R_{K}}Q_{K}Q_{K}-\frac{j\omega\mu\,e^{-jk\,R_{K}}}{4\pi R_{K}}\sbf J_{K}\cdot\sbf J_{K}.\label{eq:v14}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
