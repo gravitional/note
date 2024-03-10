@@ -1,6 +1,19 @@
 # Haskell
 
 安装之前首先切换 Cabal USTC Mirror
+运行下列命令确定 Cabal 配置文件的位置,
+其中 `C:\ghcup` 是 ghcup 工具链的安装位置
+
+```bash
+C:\ghcup\bin\cabal.exe user-config init
+```
+
+命令会输出 config 文件的位置, 在测试过程中, 
+正确的配置文件位置是 `c:/cabal/configc`,
+`c:/cabal` 是cabal的安装目录
+
+建议直接使用下面的手动安装方式, 
+由于 haskell.org 的连接速度过慢.
 
 ## Hackage USTC 源
 
@@ -15,7 +28,8 @@ GHCup 类似 Rustup, 可以用于安装 Haskell 工具链.
 
 >备注
 >以下命令会安装并配置 GHCup 0.0.7 版本的元数据.
->可查看 https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ 目录的内容, 并选择需要安装的 GHCup 版本的 yaml 文件替换以下命令中的 URL.
+>可查看 https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ 目录的内容, 
+并选择需要安装的 GHCup 版本的 yaml 文件替换以下命令中的 URL.
 
 ### 第一步(可选):使用科大源安装 GHCup 本体
 
@@ -61,6 +75,93 @@ url-source:
     - https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-0.0.7.yaml
     - https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-prereleases-0.0.7.yaml
 ```
+
+
+## 手动安装
+
+[Manual installation](https://www.haskell.org/ghcup/install/#manual-installation)
+
+### 安装 ghcup 二进制文件
+
+下载 [ghc 二进制文件](https://downloads.haskell.org/~ghcup/x86_64-mingw64-ghcup.exe)
+放入例如 `C:\ghcup\bin`
+
+### 安装 MSYS2,
+
+[下载 MSYS2](https://repo.msys2.org/distrib/msys2-x86_64-latest.exe),
+默认安装位置是 `C:\msys64`
+
+### 添加环境变量, 更新 PATH
+
+`Path` 变量加入 `C:\ghcup\bin`
+新建 `GHCUP_MSYS2`, 值为 `C:\msys64`
+新建 `GHCUP_INSTALL_BASE_PREFIX`, 输入device directory, 默认为 `C:\`
+新建 `CABAL_DIR`, 值为 device directory + cabal subdir, 默认为 `C:\cabal`
+
+### Install tools
+
+在powershell中运行
+
+```powershell
+ghcup install ghc --set recommended
+ghcup install cabal latest
+ghcup install stack latest
+ghcup install hls latest
+cabal update
+```
+
+### Update msys2
+
+在powershell中运行
+
+```powershell
+ghcup run -m -- pacman --noconfirm -Syuu
+ghcup run -m -- pacman --noconfirm -Syuu
+ghcup run -m -- pacman --noconfirm -S --needed curl autoconf mingw-w64-x86_64-pkgconf
+ghcup run -m -- pacman --noconfirm -S ca-certificates
+```
+
+### 更新 cabal 配置
+
++ 转到例如 `C:\cabal`(基于您在1中选择的device)
++ 打开文件 `config`
++ 取消注释 `extra-include-dirs` (the --)
+添加值(取决于你在 2. 中选择的安装目录), 例如 `C:\msys64\mingw64\include`...
+所以最后一行应该是 `extra-include-dirs: C:\msys64\mingw64\include`...
+
++ uncomment `extra-lib-dirs`并做同样的操作, 添加`C:\msys64\mingw64\lib`
+
++ uncomment `extra-prog-path`并将其设置为 `C:\ghcup\bin, C:\cabal\bin, C:\msys64\mingw64\bin, C:\msys64\usr\bin`,
+这取决于你在1.和2.中的安装目的地.
+
+### 设置 msys2 shell
+
+运行
+
+```bash
+ghcup run -m -- sed -i -e 's/db_home:.*$/db_home: windows/' /etc/nsswitch.conf
+```
+
+使 msys2 shell 中的 "HOME "与 windows 中的 "HOME "一致
+
++ 从 `C:\msys64\msys2_shell.cmd`制作一个桌面快捷方式,
+这将允许你启动一个正确的 msys2 shell
+
++ 运行
+
+```bash
+ghcup run -m -- sed -i -e 's/#MSYS2_PATH_TYPE=.*/MSYS2_PATH_TYPE=inherit/' /c/msys64/msys2.ini
+```
+
++ 运行
+
+```bash
+ghcup run -m -- sed -i -e 's/rem set MSYS2_PATH_TYPE=inherit/set MSYS2_PATH_TYPE=inherit/' /c/msys64/msys2_shell.cmd
+```
+
+一切就绪.
+现在可以在空目录下运行 cabal init
+目录下运行 cabal init 来启动项目.
 
 ## Hackage 源使用帮助
 
@@ -214,89 +315,3 @@ ghcup 有一个很好用的命令叫 tui, 运行 `ghcup tui` 会显示如下界�
 ### GHC 安装失败
 
 Mac 上安装时, 出现以下错误, 是因为没有安装 Xcode Command Line Tools. 安装后即可恢复正常.
-
-## 手动安装
-
-[Manual installation](https://www.haskell.org/ghcup/install/#manual-installation)
-
-### 安装 ghcup 二进制文件
-
-下载 [ghc 二进制文件](https://downloads.haskell.org/~ghcup/x86_64-mingw64-ghcup.exe)
-放入例如 `C:\ghcup\bin`
-
-### 安装 MSYS2,
-
-[下载 MSYS2](https://repo.msys2.org/distrib/msys2-x86_64-latest.exe),
-默认安装位置是 `C:\msys64`
-
-### 添加环境变量, 更新 PATH
-
-`Path` 变量加入 `C:\ghcup\bin`
-新建 `GHCUP_MSYS2`, 值为 `C:\msys64`
-新建 `GHCUP_INSTALL_BASE_PREFIX`, 输入device directory, 默认为 `C:\`
-新建 `CABAL_DIR`, 值为 device directory + cabal subdir, 默认为 `C:\cabal`
-
-### Install tools
-
-在powershell中运行
-
-```powershell
-ghcup install ghc --set recommended
-ghcup install cabal latest
-ghcup install stack latest
-ghcup install hls latest
-cabal update
-```
-
-### Update msys2
-
-在powershell中运行
-
-```powershell
-ghcup run -m -- pacman --noconfirm -Syuu
-ghcup run -m -- pacman --noconfirm -Syuu
-ghcup run -m -- pacman --noconfirm -S --needed curl autoconf mingw-w64-x86_64-pkgconf
-ghcup run -m -- pacman --noconfirm -S ca-certificates
-```
-
-### 更新 cabal 配置
-
-+ 转到例如 `C:\cabal`(基于您在1中选择的device)
-+ 打开文件 `config`
-+ 取消注释 `extra-include-dirs` (the --)
-添加值(取决于你在 2. 中选择的安装目录), 例如 `C:\msys64\mingw64\include`...
-所以最后一行应该是 `extra-include-dirs: C:\msys64\mingw64\include`...
-
-+ uncomment `extra-lib-dirs`并做同样的操作, 添加`C:\msys64\mingw64\lib`
-
-+ uncomment `extra-prog-path`并将其设置为 `C:\ghcup\bin, C:\cabal\bin, C:\msys64\mingw64\bin, C:\msys64\usr\bin`,
-这取决于你在1.和2.中的安装目的地.
-
-### 设置 msys2 shell
-
-运行
-
-```bash
-ghcup run -m -- sed -i -e 's/db_home:.*$/db_home: windows/' /etc/nsswitch.conf
-```
-
-使 msys2 shell 中的 "HOME "与 windows 中的 "HOME "一致
-
-+ 从 `C:\msys64\msys2_shell.cmd`制作一个桌面快捷方式,
-这将允许你启动一个正确的 msys2 shell
-
-+ 运行
-
-```bash
-ghcup run -m -- sed -i -e 's/#MSYS2_PATH_TYPE=.*/MSYS2_PATH_TYPE=inherit/' /c/msys64/msys2.ini
-```
-
-+ 运行
-
-```bash
-ghcup run -m -- sed -i -e 's/rem set MSYS2_PATH_TYPE=inherit/set MSYS2_PATH_TYPE=inherit/' /c/msys64/msys2_shell.cmd
-```
-
-一切就绪.
-现在可以在空目录下运行 cabal init
-目录下运行 cabal init 来启动项目.

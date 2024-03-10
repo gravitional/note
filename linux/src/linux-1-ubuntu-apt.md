@@ -1,5 +1,12 @@
 # linux-ubuntu
 
+ubuntu 配置使用环境
+
+```bash
+sudo apt install zsh vim git python3 python3-pip build-essential
+pip3 install git+git://github.com/powerline/powerline
+```
+
 ### apt 与 apt-get
 
 [Linux中apt与apt-get命令的区别与解释](https://www.sysgeek.cn/apt-vs-apt-get/)

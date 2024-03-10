@@ -89,7 +89,7 @@ Start a new terminal session.
 首次安装`pip`,即python包管理器,在 Debian, Ubuntu 和 Linux Mint 中安装 `pip`
 
 ```bash
-apt-get install python3-pip
+sudo apt-get install python3-pip
 ```
 
 然后你可以通过 pip 命令安装 `Powerline`.
@@ -136,7 +136,7 @@ mv 10-powerline-symbols.conf /etc/fonts/conf.d/
 pip3 show powerline-status
 ```
 
-在 `~/.vimrc` 中添加如下内容打开该插件(译注: 注意同样需要根据你的系统情况修改路径).
+在 `~/.vimrc` 中添加如下内容打开该插件(译注: 注意同样需要根据你的系统情况**修改路径**).
 
 ```bash
 set rtp+=/home/tom/.local/lib/python3.6/site-packages/powerline/bindings/vim/
