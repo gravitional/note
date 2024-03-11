@@ -995,6 +995,15 @@ literal "false"
 
 \end_inset
 
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "序理论"
+target "https://oi-wiki.org/math/order-theory/#dilworth-定理与-mirsky-定理"
+literal "false"
+
+\end_inset
+
 
 \end_layout
 
@@ -1482,78 +1491,462 @@ total order
 \end_layout
 
 \begin_layout Section
-点到平面距离公式
+行列式相关
+\end_layout
+
+\begin_layout Subsection
+行列式的性质
 \end_layout
 
 \begin_layout Standard
-平面方程，过一点
-\begin_inset Formula $P=(a,b,c)$
-\end_inset
-
- 且垂直于 法向矢量 
-\begin_inset Formula $(A,B,C)$
-\end_inset
-
- 的点的集合：
+行列式使用全反称张量展开
 \begin_inset Formula 
 \[
-A(x-a)+B(y-b)+C(z-c)=0
+\left|\begin{array}{ccc}
+a_{11} & \cdots & a_{n1}\\
+\vdots &  & \vdots\\
+a_{n1} & \cdots & a_{nn}
+\end{array}\right|=\varepsilon_{i_{1}\cdots i_{n}}a_{1i_{1}}\,a_{2i_{2}}\cdots a_{ni_{n}}
 \]
 
 \end_inset
 
-可以进一步化简成
+
+\end_layout
+
+\begin_layout Standard
+行列式的性质：
+\begin_inset CommandInset href
+LatexCommand href
+name "deteminant"
+target "https://zh.wikipedia.org/wiki/行列式#行列式的性質"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+在行列式中，一行（列）元素全为
+\begin_inset Formula $0$
+\end_inset
+
+，则此行列式的值为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+在行列式中，有两行（列）对应成比例或相同，则此行列式的值为
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+将一行（列）的
+\begin_inset Formula $k$
+\end_inset
+
+倍加进另一行（列）里，行列式的值不变。
+\end_layout
+
+\begin_layout Enumerate
+线性律。在行列式中，某一行（列）有公因子
+\begin_inset Formula $k$
+\end_inset
+
+，则可以提出
+\begin_inset Formula $k$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+行列式分解。在行列式中，某一行（列）的每个元素是两数之和，则此行列式可拆分为两个相加的行列式。
+\end_layout
+
+\begin_layout Enumerate
+行列式中的两行（列）互换，改变行列式正负符号。
+\end_layout
+
+\begin_layout Enumerate
+将行列式的行列互换，行列式的值不变，其中行列互换相当于转置。这个性质可以简单地记作
 \begin_inset Formula 
 \[
-Ax+By+Cz+D=0,
+D=\abs{a_{ij}}=\abs{a_{ji}}=\tps D
 \]
 
 \end_inset
 
-不同的
-\begin_inset Formula $D$
+
+\end_layout
+
+\begin_layout Enumerate
+行列式的乘法定理：
+\series bold
+方块矩阵的乘积
+\series default
+ 的行列式等于 
+\series bold
+行列式的乘积
+\series default
+。
+\begin_inset Formula 
+\[
+\det(AB)=\det(A)\,\det(B)
+\]
+
 \end_inset
 
- 对应不同的
+特别的，若将矩阵中的每一行每一列上的数都乘以一个常数
+\begin_inset Formula $r$
+\end_inset
+
+，那么所得到的行列式将是原来的
+\begin_inset Formula $r^{n}$
+\end_inset
+
+倍：
+\begin_inset Formula 
+\[
+\det(rA)=\det(rI_{n}\cdot A)=\det(rI_{n})\cdot\det(A)=r^{n}\det(A).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+以上的乘法公式还可以进一步推广为所谓 
+\series bold
+柯西–比内公式
+\series default
+，从而使得只要两个矩阵的乘积是方块矩阵，就有类似于以上的结果：假设
+\begin_inset Formula $A$
+\end_inset
+
+是一个
+\begin_inset Formula $m\times n$
+\end_inset
+
+矩阵，而
+\begin_inset Formula $B$
+\end_inset
+
+是一个
+\begin_inset Formula $n\times m$
+\end_inset
+
+矩阵。如果
+\begin_inset Formula $S$
+\end_inset
+
+是
+\begin_inset Formula $\{1,\cdots,n\}$
+\end_inset
+
+中具有
+\begin_inset Formula $m$
+\end_inset
+
+个元素的子集 
+\begin_inset Formula $\{S_{1},\cdots,S_{m}\}$
+\end_inset
+
+，我们记
+\begin_inset Formula $A_{s}$
+\end_inset
+
+为
+\begin_inset Formula $A$
+\end_inset
+
+中列指标位于
+\begin_inset Formula $S$
+\end_inset
+
+中的
+\begin_inset Formula $m\times m$
+\end_inset
+
+子矩阵。类似地，记
+\begin_inset Formula $B_{S}$
+\end_inset
+
+为
+\begin_inset Formula $B$
+\end_inset
+
+中行指标位于
+\begin_inset Formula $S$
+\end_inset
+
+中的
+\begin_inset Formula $m\times m$
+\end_inset
+
+子矩阵。那么
+\begin_inset Formula 
+\[
+\det(AB)=\sum_{S}\det(A_{S})\,\det(B_{S})
+\]
+
+\end_inset
+
+这里求遍
+\begin_inset Formula $\{1,\cdots,n\}$
+\end_inset
+
+中
+\begin_inset Formula $m$
+\end_inset
+
+个元素的所有可能子集
+\begin_inset Formula $S$
+\end_inset
+
+，共有
+\begin_inset Formula $C(n,m)$
+\end_inset
+
+个。如果
+\begin_inset Formula $m=2$
+\end_inset
+
+，即
+\begin_inset Formula $A$
+\end_inset
+
+与
+\begin_inset Formula $B$
+\end_inset
+
+是同样大小的方块矩阵，则只有一个容许集合
+\begin_inset Formula $S$
+\end_inset
+
+，柯西–比内公式退化为通常行列式的乘法公式。如过
+\begin_inset Formula $m=1$
+\end_inset
+
+则有
+\begin_inset Formula $n$
+\end_inset
+
+个容许集合
+\begin_inset Formula $S$
+\end_inset
+
+，这个公式退化为点积。如果
+\begin_inset Formula $m>n$
+\end_inset
+
+，没有容许集合
+\begin_inset Formula $S$
+\end_inset
+
+，约定行列式 
+\begin_inset Formula $\det(AB)$
+\end_inset
+
+是零。
+\end_layout
+
+\begin_layout Enumerate
+若
+\begin_inset Formula $A$
+\end_inset
+
+是可逆矩阵，
+\begin_inset Formula $\det(A^{-1})=(\det A)^{-1}$
+\end_inset
+
+ 。
+\end_layout
+
+\begin_layout Enumerate
+由行列式的
+\series bold
+乘法定理
+\series default
+，以及
+\begin_inset Formula $\det(A^{-1})=(\det A)^{-1}$
+\end_inset
+
+ 可以知道，行列式定义了一个从
+\series bold
+一般线性群
+\series default
+
+\begin_inset Formula $(\mathrm{GL}_{n}(\mathbb{F}),\times)$
+\end_inset
+
+ 到
+\begin_inset Formula $(\mathbb{F}^{*},\times)$
+\end_inset
+
+ 上的群同态。
+\end_layout
+
+\begin_layout Enumerate
+若将方块矩阵中的元素取共轭，得到的是矩阵的共轭矩阵。共轭矩阵的行列式值等于矩阵行列式值的共轭：
+\begin_inset Formula 
+\[
+\det(\overline{A})=\overline{\det(A)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+若两个矩阵相似，那么它们的行列式相同。这是因为两个相似的矩阵之间只相差一个基底变换，而行列式描述的是矩阵对应的线性映射对体积的影响，而不是体积，所以基底变换并不
+会影响行列式的值。用数学语言来说，就是：如果两个矩阵
+\begin_inset Formula $A$
+\end_inset
+
+与
+\begin_inset Formula $B$
+\end_inset
+
+相似，那么存在可逆矩阵
 \begin_inset Formula $P$
 \end_inset
 
-，即垂直于 
-\begin_inset Formula $(A,B,C)$
+使得
+\begin_inset Formula 
+\begin{align*}
+ & A=P\,B\,P^{-1},\\
+ & \det(A)=\det(PBP^{-1})=\det(B).
+\end{align*}
+
 \end_inset
 
- 的平面簇。
+
 \end_layout
 
-\begin_layout Standard
-给定平面外一点 
-\begin_inset Formula $Q=(x_{0},y_{0},z_{0})$
+\begin_layout Enumerate
+行列式是所有
+\series bold
+特征值
+\series default
+（按代数重数计）的乘积。这可由矩阵必和其若尔当标准型相似推导出。特殊地，
+\series bold
+三角矩阵
+\series default
+的行列式等于其对角线上所有元素的乘积。
+\end_layout
+
+\begin_layout Enumerate
+由于三角矩阵的行列式计算简便，当矩阵的系数为
+\series bold
+域
+\series default
+时，可以通过
+\series bold
+高斯消元法
+\series default
+将矩阵变换成三角矩阵，或者将矩阵分解成三角矩阵的乘积之后再利用行列式的乘法定理进行计算。可以证明，所有的矩阵
+\begin_inset Formula $A$
 \end_inset
 
-，则点到平面的距离为
+都可以分解成一个上三角矩阵
+\begin_inset Formula $U$
+\end_inset
+
+、一个下三角矩阵
+\begin_inset Formula $L$
+\end_inset
+
+以及一个置换矩阵
+\begin_inset Formula $P$
+\end_inset
+
+的乘积：
+\begin_inset Formula $A=P\cdot L\cdot U$
+\end_inset
+
+。这时，矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的行列式可以写成：
 \begin_inset Formula 
 \[
-d=\frac{\abs{{\color{blue}A}\,x_{0}+{\color{blue}B}\,y_{0}+{\color{blue}C}\,z_{0}+D}}{{\color{blue}\sqrt{A^{2}+B^{2}+C^{2}}}}
+\det(A)=\det(P)\cdot\det(L)\cdot\det(U)
 \]
 
 \end_inset
 
-可以理解成，线段
-\begin_inset Formula $PQ$
-\end_inset
 
-在单位法线上的投影。
+\end_layout
+
+\begin_layout Enumerate
+分块矩阵的行列式并不能简单地表示成每个分块的行列式的乘积组合。对于分块的三角矩阵，仍然有类似的结论：
 \begin_inset Formula 
 \[
-{\color{blue}\frac{(A,B,C)}{\sqrt{A^{2}+B^{2}+C^{2}}}}
+\left|\begin{array}{cc}
+A & 0\\
+C & D
+\end{array}\right|=\left|\begin{array}{cc}
+A & B\\
+0 & D
+\end{array}\right|=\det(A)\,\det(D),
 \]
 
 \end_inset
 
-是归一化的法向矢量。
+矩阵的行列式等于对角元素的行列式之乘积。 对于一般情况，若对角元素中有一个是可逆矩阵，比如说
+\begin_inset Formula $A$
+\end_inset
+
+可逆，那么矩阵的行列式可以写做
+\begin_inset Formula 
+\[
+\left|\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right|=\det(A)\,\det(D-CA^{-1}B)
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section
+\begin_layout Enumerate
+矩阵的行列式和矩阵的
+\series bold
+迹数
+\series default
+有一定的关联，当矩阵的系数为
+\series bold
+域
+\series default
+时，在定义了
+\series bold
+矩阵的指数函数
+\series default
+后，有如下的恒等式：
+\begin_inset Formula 
+\[
+\det(\exp(A))=\exp(\tr(A)).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 行列式拉普拉斯展开
 \end_layout
 
@@ -1654,7 +2047,7 @@ literal "false"
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 范德蒙德行列式
 \end_layout
 
@@ -1768,7 +2161,7 @@ D=\prod_{n\ge i\ge j\ge1}=(x_{i}-x_{j}).
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 代数余子式，矩阵的逆
 \end_layout
 
@@ -11039,6 +11432,372 @@ status open
 \end_inset
 
 排序，则几乎能够唯一确定节点的次序。此时，两个 vector 是一一对应的。
+\end_layout
+
+\begin_layout Section
+点到平面距离公式
+\end_layout
+
+\begin_layout Standard
+平面方程，过一点
+\begin_inset Formula $P=(a,b,c)$
+\end_inset
+
+ 且垂直于 法向矢量 
+\begin_inset Formula $(A,B,C)$
+\end_inset
+
+ 的点的集合：
+\begin_inset Formula 
+\[
+A(x-a)+B(y-b)+C(z-c)=0
+\]
+
+\end_inset
+
+可以进一步化简成
+\begin_inset Formula 
+\[
+Ax+By+Cz+D=0,
+\]
+
+\end_inset
+
+不同的
+\begin_inset Formula $D$
+\end_inset
+
+ 对应不同的
+\begin_inset Formula $P$
+\end_inset
+
+，即垂直于 
+\begin_inset Formula $(A,B,C)$
+\end_inset
+
+ 的平面簇。
+\end_layout
+
+\begin_layout Standard
+给定平面外一点 
+\begin_inset Formula $Q=(x_{0},y_{0},z_{0})$
+\end_inset
+
+，则点到平面的距离为
+\begin_inset Formula 
+\[
+d=\frac{\abs{{\color{blue}A}\,x_{0}+{\color{blue}B}\,y_{0}+{\color{blue}C}\,z_{0}+D}}{{\color{blue}\sqrt{A^{2}+B^{2}+C^{2}}}}
+\]
+
+\end_inset
+
+可以理解成，线段
+\begin_inset Formula $PQ$
+\end_inset
+
+在单位法线上的投影。
+\begin_inset Formula 
+\[
+{\color{blue}\frac{(A,B,C)}{\sqrt{A^{2}+B^{2}+C^{2}}}}
+\]
+
+\end_inset
+
+是归一化的法向矢量。
+\end_layout
+
+\begin_layout Section
+三角形外接圆
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "外接圆--wiki"
+target "https://zh.wikipedia.org/wiki/外接圓"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+圆的方程
+\begin_inset Formula 
+\begin{equation}
+(x-x_{0})^{2}+(y-y_{0})^{2}=R^{2}\quad\Rightarrow\quad x^{2}+y^{2}-2x_{0}x-2y_{0}y-(R^{2}-x_{0}^{2}-y_{0}^{2})=0\label{eq:1.4.0}
+\end{equation}
+
+\end_inset
+
+过三点的圆的方程：
+\begin_inset Formula 
+\begin{align}
+ & x^{2}+y^{2}-2x_{0}x-2y_{0}y-Q^{2}=0\nonumber \\
+ & x_{1}^{2}+y_{1}^{2}-2x_{0}x-2y_{0}y-Q^{2}=0\nonumber \\
+ & x_{2}^{2}+y_{2}^{2}-2x_{0}x-2y_{0}y-Q^{2}=0\nonumber \\
+ & x_{3}^{2}+y_{3}^{2}-2x_{0}x-2y_{0}y-Q^{2}=0\label{eq:1.4.1}
+\end{align}
+
+\end_inset
+
+其中第一个方程是圆上动点的方程，其它是控制的方程。根据行列式的性质，将
+\begin_inset Formula $x_{0}$
+\end_inset
+
+，
+\begin_inset Formula $y_{0}$
+\end_inset
+
+，
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+理解为 矩阵列 的线性相关系数。可以写成
+\begin_inset Formula 
+\begin{equation}
+\left|\begin{array}{cccc}
+x^{2}+y^{2} & x & y & 1\\
+x_{1}^{2}+y_{1}^{2} & x_{1} & y_{1} & 1\\
+x_{2}^{2}+y_{2}^{2} & x_{2} & y_{2} & 1\\
+x_{3}^{2}+y_{3}^{2} & x_{3} & y_{3} & 1
+\end{array}\right|=0\label{eq:1.4.2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+第一列减去第二列乘上
+\begin_inset Formula $2x_{0}$
+\end_inset
+
+，减去第三列乘上
+\begin_inset Formula $2y_{0}$
+\end_inset
+
+，减去第四列乘上
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+，即可得到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.4.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，因此等价于行列式为零。反过来，行列式为零，则矩阵列线性相关。满足适当线性组合，因此
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.4.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.4.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+等价。
+\end_layout
+
+\begin_layout Enumerate
+将行列式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.4.2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+按第一行展开，根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1.4.1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，第二列的系数等于
+\begin_inset Formula $2x_{0}$
+\end_inset
+
+，第三列的系数等于
+\begin_inset Formula $2y_{0}$
+\end_inset
+
+，因此三角形的外心坐标和
+\begin_inset Formula $Q^{2}$
+\end_inset
+
+为（负号来自行列式展开）
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*三点共圆的方程*) mat = { {x^2 + y^2, x, y, 1} , {x1^2 + y1^2, x1, y1, 1} , {x2^2
+ + y2^2, x2, y2, 1} , {x3^2 + y3^2, x3, y3, 1}}; ia = mat[[{2, 3, 4}, {2,
+ 3, 4}]]; ib = mat[[{2, 3, 4}, {1, 3, 4}]]; ic = mat[[{2, 3, 4}, {1, 2,
+ 4}]]; id = mat[[{2, 3, 4}, {1, 2, 3}]]; (*圆心坐标, 半径*) circle = Simplify[{{Det@ib
+, -Det@ic}/(2*Det@ia)}]; radi2 = (Det@id/Det@ia) + (Power[#, 2] &)@(Norm
+ @@ circle); circle = (Append@Sqrt@radi2)@circle; (*3 vertex of triangle*)
+ tri = {{0, 0} , {1, 2} , {2, .5}}; (*坐标的替换规则*) rule = MapThread[Rule]@{{x1,
+ y1, x2, y2, x3, y3}, Flatten@tri}; iCirc = circle /.
+ rule; Graphics[{ Triangle@tri , Circle @@ iCirc }]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\left|\begin{array}{ccc}
+x_{1}^{2}+y_{1}^{2} & y_{1} & 1\\
+x_{2}^{2}+y_{2}^{2} & y_{2} & 1\\
+x_{3}^{2}+y_{3}^{2} & y_{3} & 1
+\end{array}\right|}{2\left|\begin{array}{ccc}
+x_{1} & y_{1} & 1\\
+x_{2} & y_{2} & 1\\
+x_{3} & y_{3} & 1
+\end{array}\right|},\frac{-\left|\begin{array}{ccc}
+x_{1}^{2}+y_{1}^{2} & x_{1} & 1\\
+x_{2}^{2}+y_{2}^{2} & x_{2} & 1\\
+x_{3}^{2}+y_{3}^{2} & x_{3} & 1
+\end{array}\right|}{2\left|\begin{array}{ccc}
+x_{1} & y_{1} & 1\\
+x_{2} & y_{2} & 1\\
+x_{3} & y_{3} & 1
+\end{array}\right|},\quad\frac{\left|\begin{array}{ccc}
+x_{1}^{2}+y_{1}^{2} & x_{1} & y_{1}\\
+x_{2}^{2}+y_{2}^{2} & x_{2} & y_{2}\\
+x_{3}^{2}+y_{3}^{2} & x_{3} & y_{3}
+\end{array}\right|}{2\left|\begin{array}{ccc}
+x_{1} & y_{1} & 1\\
+x_{2} & y_{2} & 1\\
+x_{3} & y_{3} & 1
+\end{array}\right|}
+\]
+
+\end_inset
+
+或者直接求解方程
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
+ 0])^2 == r2, (Subscript[x, 2] - Subscript[x, 0])^2 + (Subscript[y, 2] -
+ Subscript[y, 0])^2 == r2, (Subscript[x, 3] - Subscript[x, 0])^2 + (Subscript[y,
+ 3] - Subscript[y, 0])^2 == r2}; ans = Simplify[ First@Solve[equ, {Subscript[x,
+ 0], Subscript[y, 0], r2}], r2 > 0 ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & x_{0}=\frac{x_{1}^{2}y_{23}+x_{2}^{2}y_{31}+x_{3}^{2}y_{12}+y_{23}y_{12}y_{13}}{a},\\
+ & y_{0}=\frac{x_{1}b_{23}+x_{2}b_{31}+x_{3}b_{12}}{a},\\
+ & R^{2}=\frac{\left(x_{12}^{2}+y_{12}^{2}\right)\left(x_{13}^{2}+y_{13}^{2}\right)\left(x_{23}^{2}+y_{23}^{2}\right)}{a^{2}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中定义了 
+\begin_inset Formula $a$
+\end_inset
+
+，
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+，
+\begin_inset Formula $x_{ij}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{align*}
+ & a=2(x_{3}y_{12}+x_{1}y_{23}+x_{2}y_{31})\\
+ & b_{ij}=x_{i}^{2}+y_{i}^{2}-x_{j}^{2}-y_{j}^{2}\\
+ & x_{ij}=x_{i}-x_{j}\text{，}y_{ij}=y_{i}-y_{j}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+讨论特殊情况：分母实际就是三角形的面积。因此只要三点不共线，上面的解始终适用。
+\end_layout
+
+\begin_layout Enumerate
+另一个角度：给定任意三点，不妨通过坐标系转动使得
+\begin_inset Formula $x_{1}=x_{2}$
+\end_inset
+
+且
+\begin_inset Formula $y_{1}\neq y_{2}$
+\end_inset
+
+（非同一点），令
+\begin_inset Formula $a=0$
+\end_inset
+
+，解得 
+\begin_inset Formula $x_{1}=x_{3}$
+\end_inset
+
+，则 
+\begin_inset Formula $x_{1}=x_{2}=x_{3}$
+\end_inset
+
+，表明只有三点共线，才会令分母
+\begin_inset Formula $a=0$
+\end_inset
+
+。同样，如果我们令
+\begin_inset Formula $y_{1}=y_{2}$
+\end_inset
+
+且
+\begin_inset Formula $x_{1}\neq x_{2}$
+\end_inset
+
+，
+\begin_inset Formula $a=0$
+\end_inset
+
+ 将迫使
+\begin_inset Formula $y_{1}=y_{2}=y_{3}$
+\end_inset
+
+，对应三点共线。
 \end_layout
 
 \begin_layout Chapter
@@ -36085,120 +36844,6 @@ R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left
 
 \begin_layout Chapter
 网格，几何
-\end_layout
-
-\begin_layout Section
-圆心
-\end_layout
-
-\begin_layout Standard
-过任意三个不共线的点
-\begin_inset Formula $(x_{i},y_{i})$
-\end_inset
-
-，
-\begin_inset Formula $i=1,2,3$
-\end_inset
-
-的圆，其圆心
-\begin_inset Formula $(x_{0},y_{0})$
-\end_inset
-
- 和半径平方
-\begin_inset Formula $r^{2}$
-\end_inset
-
-为
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
- 0])^2 == r2, (Subscript[x, 2] - Subscript[x, 0])^2 + (Subscript[y, 2] -
- Subscript[y, 0])^2 == r2, (Subscript[x, 3] - Subscript[x, 0])^2 + (Subscript[y,
- 3] - Subscript[y, 0])^2 == r2}; ans = Simplify[ First@Solve[equ, {Subscript[x,
- 0], Subscript[y, 0], r2}], r2 > 0 ]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
- & x_{0}=\frac{x_{1}^{2}y_{23}+x_{2}^{2}y_{31}+x_{3}^{2}y_{12}+y_{23}y_{12}y_{13}}{a},\\
- & y_{0}=\frac{x_{1}b_{23}+x_{2}b_{31}+x_{3}b_{12}}{a},\\
- & r^{2}=\frac{\left(x_{12}^{2}+y_{12}^{2}\right)\left(x_{13}^{2}+y_{13}^{2}\right)\left(x_{23}^{2}+y_{23}^{2}\right)}{a^{2}}
-\end{align*}
-
-\end_inset
-
-其中定义了 
-\begin_inset Formula $a$
-\end_inset
-
-，
-\begin_inset Formula $b_{ij}$
-\end_inset
-
-，
-\begin_inset Formula $x_{ij}$
-\end_inset
-
-：
-\begin_inset Formula 
-\begin{align*}
- & a=2(x_{3}y_{12}+x_{1}y_{23}+x_{2}y_{31})\\
- & b_{ij}=x_{i}^{2}+y_{i}^{2}-x_{j}^{2}-y_{j}^{2}\\
- & x_{ij}=x_{i}-x_{j}\text{，}y_{ij}=y_{i}-y_{j}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-讨论特殊情况：上面的解假设了三点不共线。给定任意三点，不妨通过坐标系转动使得
-\begin_inset Formula $x_{1}=x_{2}$
-\end_inset
-
-且
-\begin_inset Formula $y_{1}\neq y_{2}$
-\end_inset
-
-（非同一点），令
-\begin_inset Formula $a=0$
-\end_inset
-
-，解得 
-\begin_inset Formula $x_{1}=x_{3}$
-\end_inset
-
-，则 
-\begin_inset Formula $x_{1}=x_{2}=x_{3}$
-\end_inset
-
-，表明只有三点共线，才会令分母
-\begin_inset Formula $a=0$
-\end_inset
-
-。同样，如果我们令
-\begin_inset Formula $y_{1}=y_{2}$
-\end_inset
-
-且
-\begin_inset Formula $x_{1}\neq x_{2}$
-\end_inset
-
-，
-\begin_inset Formula $a=0$
-\end_inset
-
- 将迫使
-\begin_inset Formula $y_{1}=y_{2}=y_{3}$
-\end_inset
-
-。结论就是，只要三点不共线，上面的解始终适用。
 \end_layout
 
 \begin_layout Section

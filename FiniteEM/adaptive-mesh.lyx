@@ -5601,7 +5601,7 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 \begin_inset Formula $\sbf j_{s}$
 \end_inset
 
-分别是 volume 和 surface residual currents。并考虑了 
+分别是 volume 和 surface residual 电流。并考虑了 
 \begin_inset Formula 
 \begin{align*}
  & \nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u-k^{2}\epsilon_{r}\sbf u=0\\
@@ -5649,11 +5649,15 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \begin_inset Formula $\sbf j_{s}$
 \end_inset
 
-的计算是exact。自适应网格细化的目标，或者更精确地说，后验误差估计地计算只依赖于 how one computes 
+的计算是精确的。自适应网格细化的目标，或者更精确地说，后验误差估计的计算只依赖于 how one computes 
 \begin_inset Formula $\sbf e^{h}$
 \end_inset
 
  from these sources。
+\end_layout
+
+\begin_layout Subsection
+体残差
 \end_layout
 
 \begin_layout Standard
@@ -5661,7 +5665,7 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \series bold
 最优地
 \series default
-细化有限元网格。为此，我们定义了残差指标
+细化有限元网格。为此我们定义残差指标
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -5673,7 +5677,7 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 
 \end_inset
 
-此处是我们作的主要近似。We would only compute 
+在这里我们作主要近似。We would only compute 
 \begin_inset Formula $\left.\sbf e^{h}\right|_{K}$
 \end_inset
 
@@ -5709,13 +5713,131 @@ local sources
 写成
 \begin_inset Formula 
 \begin{align}
-\alpha_{K}\approx & -\int_{K}\left(\sbf j_{v}\cdot\nabla\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}-\frac{j\omega\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
-\approx & -j\omega\int_{K}\rho_{v}\left(\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}-\frac{j\omega\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
-\approx & \frac{-j\omega e^{-jk\,R_{K}}}{4\pi\epsilon R_{K}}Q_{K}Q_{K}-\frac{j\omega\mu\,e^{-jk\,R_{K}}}{4\pi R_{K}}\sbf J_{K}\cdot\sbf J_{K}.\label{eq:v14}
+\alpha_{K}\approx & -\int_{K}\left(\sbf j_{v}\cdot\nabla{\color{blue}\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x'^{3}}}\right)\dd{x^{3}}-\frac{j\omega\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
+\approx & -j\omega\int_{K}\rho_{v}\left({\color{blue}\frac{1}{4\pi\epsilon}\int_{K}\frac{\rho_{v}\,e^{-jkR}}{R}\dd{x'^{3}}}\right)\dd{x^{3}}-\frac{j\omega\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}\,e^{-jkR}}{R}\dd{x'^{3}}\right)\dd{x^{3}}\nonumber \\
+\approx\frac{-j\omega}{4\pi\epsilon} & \frac{e^{-jkR_{K}}}{R_{K}}Q_{K}Q_{K}-\frac{j\omega\mu}{4\pi}\frac{e^{-jkR_{K}}}{R_{K}}\sbf J_{K}\cdot\sbf J_{K}.\label{eq:v14}
 \end{align}
 
 \end_inset
 
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的体残余（residual）电荷和电流是
+\begin_inset Formula 
+\begin{align*}
+Q_{K} & =\int_{K}\rho_{v}\dd{x^{3}}\quad\rho_{v}=\nabla\cdot(\epsilon\,\sbf u^{h})\\
+\sbf J_{k} & =\int_{K}\sbf j_{v}\dd{x^{3}}
+\end{align*}
+
+\end_inset
+
+作用距离 
+\begin_inset Formula $\sbf R=\sbf x-\sbf x'$
+\end_inset
+
+ 包含了积分变量 
+\begin_inset Formula $x$
+\end_inset
+
+与
+\begin_inset Formula $x'$
+\end_inset
+
+的纠缠，在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+末尾，将积分用外接圆半径
+\begin_inset Formula $R_{K}$
+\end_inset
+
+近似，强行去掉纠缠。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中蓝色部分的变换使用了
+\begin_inset Formula 
+\[
+\nabla\cdot\left(\sbf j_{v}\,f\right)=\left(\nabla\cdot\sbf j_{v}\right)f+\sbf j_{v}\cdot\nabla f\quad\Rightarrow\quad\sbf j_{v}\cdot\nabla f=-\left(\nabla\cdot\sbf j_{v}\right)f+{\color{blue}\nabla\cdot\left(\sbf j_{v}\,f\right)}
+\]
+
+\end_inset
+
+认为 残余电流和残余电荷近似满足电荷守恒关系 
+\begin_inset Formula $\nabla\cdot\sbf j_{v}=-j\omega\rho_{v}$
+\end_inset
+
+，然后使用高斯定理 
+\begin_inset Formula $\int_{V}{\color{blue}\nabla\cdot\left(\sbf j_{v}\,f\right)}\dd{V}\Rightarrow\oint_{s}(\sbf j_{v}\,f)\cdot\dd{\sbf S}$
+\end_inset
+
+，取足够大的包围面
+\begin_inset Formula $S$
+\end_inset
+
+，使得
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+位于
+\begin_inset Formula $S$
+\end_inset
+
+内部，则此项面积分为零。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+面残差
+\end_layout
+
+\begin_layout Standard
 类似地，每个三角形面
 \begin_inset Formula $\Delta$
 \end_inset
@@ -5735,16 +5857,6 @@ local sources
 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:v14"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-和
-\begin_inset CommandInset ref
-LatexCommand eqref
 reference "eq:v15"
 plural "false"
 caps "false"
@@ -5752,11 +5864,9 @@ noprefix "false"
 
 \end_inset
 
-中出现的 residual charges 和 residual currents 分别是
+中出现的面残余电荷和电流是
 \begin_inset Formula 
 \begin{align}
-Q_{K} & =\int_{K}\rho_{v}\dd{x^{3}}\quad\rho_{v}=\nabla\cdot(\epsilon\,\sbf u^{h})\nonumber \\
-\sbf J_{k} & =\int_{K}\sbf j_{v}\dd{x^{3}}\nonumber \\
 Q_{\Delta} & =\int_{\Delta}\rho_{s}\dd{x^{2}}\quad\rho_{s}=\delta(\epsilon\,\sbf u^{h})_{\Delta}\cdot\hat{\sbf n}\nonumber \\
 \sbf J_{\Delta} & =\int_{\Delta}\sbf j_{s}\dd{x^{2}}\label{eq:v16}
 \end{align}
