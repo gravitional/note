@@ -983,6 +983,61 @@ status open
 \end_layout
 
 \begin_layout Section
+循环指标
+\end_layout
+
+\begin_layout Standard
+编码中经常遇到需要处理循环指标，例如下列这种表达式。
+\begin_inset Formula 
+\[
+x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+要想让指标范围在
+\begin_inset Formula $[0,1,\cdots,n-1]$
+\end_inset
+
+中。令循环指标的表达式如下：
+\begin_inset Formula 
+\begin{align*}
+\mathrm{id}_{1} & =i+0\\
+\mathrm{id}_{2} & =(i+1)\%n\\
+ & \vdots\\
+\mathrm{id}_{n} & =(i+n-1)\%n
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $i$
+\end_inset
+
+是 0–based，
+\begin_inset Formula $i=0,1,\cdots,n-1$
+\end_inset
+
+ 共
+\begin_inset Formula $n$
+\end_inset
+
+个。
+\end_layout
+
+\begin_layout Itemize
+要想让指标范围在
+\begin_inset Formula $[1,\cdots,n]$
+\end_inset
+
+中，令循环指标的表达式同上，再加上适当的 偏移量（offset）。
+\end_layout
+
+\begin_layout Section
 偏序全序
 \end_layout
 
@@ -11716,7 +11771,7 @@ equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
 
 \begin_inset Formula 
 \begin{align*}
- & x_{0}=\frac{x_{1}^{2}y_{23}+x_{2}^{2}y_{31}+x_{3}^{2}y_{12}+y_{23}y_{12}y_{13}}{a},\\
+ & x_{0}=\frac{x_{1}^{2}y_{23}+x_{2}^{2}y_{31}+x_{3}^{2}y_{12}-y_{23}y_{31}y_{12}}{a},\\
  & y_{0}=\frac{x_{1}b_{23}+x_{2}b_{31}+x_{3}b_{12}}{a},\\
  & R^{2}=\frac{\left(x_{12}^{2}+y_{12}^{2}\right)\left(x_{13}^{2}+y_{13}^{2}\right)\left(x_{23}^{2}+y_{23}^{2}\right)}{a^{2}}
 \end{align*}
@@ -11798,6 +11853,74 @@ equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
 \end_inset
 
 ，对应三点共线。
+\end_layout
+
+\begin_layout Section
+四面体外接球
+\end_layout
+
+\begin_layout Standard
+类似地，可以求出四面体外接球，公式比较复杂，可以直接使用 Mathematica 计算的结果。下面的mma代码给出C语言形式的表达式。
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+equ = {(x1 - x0)^2 + (y1 - y0)^2 + (z1 - z0)^2 == r2 , (x2 - x0)^2 + (y2
+ - y0)^2 + (z2 - z0)^2 == r2 , (x3 - x0)^2 + (y3 - y0)^2 + (z3 - z0)^2 ==
+ r2 , (x4 - x0)^2 + (y4 - y0)^2 + (z4 - z0)^2 == r2 }; ans = Simplify[First@Solv
+e[equ, {x0, y0, z0, r2}], r2 > 0];
+\end_layout
+
+\begin_layout Plain Layout
+cRule = {Power -> pow}; CForm[Last@ ans[[1]] /.
+ cRule]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Mathematica,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+equ = {(x1 - x0)^2 + (y1 - y0)^2 + (z1 - z0)^2 == r2
+\end_layout
+
+\begin_layout Plain Layout
+
+,(x2 - x0)^2 + (y2 - y0)^2 + (z2 - z0)^2 == r2
+\end_layout
+
+\begin_layout Plain Layout
+
+,(x3 - x0)^2 + (y3 - y0)^2 + (z3 - z0)^2 == r2
+\end_layout
+
+\begin_layout Plain Layout
+
+,(x4 - x0)^2 + (y4 - y0)^2 + (z4 - z0)^2 == r2}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+ans = Simplify[First@Solve[equ, {x0, y0, z0, r2}], r2 > 0];
+\end_layout
+
+\begin_layout Plain Layout
+
+cRule = {Power -> pow}; CForm[Last@ ans[[1]] /.
+ cRule]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter

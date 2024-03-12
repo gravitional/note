@@ -44,3 +44,19 @@ if ($IsWindows) {
     $Env:PATH += $paths -join $split
 }
 ```
+
+## 修改环境变量 api
+
+也可以使用下面的 api, 永久修改环境变量
+
+```powershell
+$mypath='你的路径';
+echo "查看现在的路径`n---------`n";
+$target='User';
+$path=[Environment]::GetEnvironmentVariable('Path', $target); $path -split ';'
+echo "查看修改后的路径`n---------`n";
+$newPath=$path+';'+$mypath;$newPath -split ';'
+
+# 先不要运行下面的命令, 先检查上面的命令确认无误
+[Environment]::SetEnvironmentVariable("Path",$newPath,$target)
+```
