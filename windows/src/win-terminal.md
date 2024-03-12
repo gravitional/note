@@ -17,6 +17,24 @@
 ]
 ```
 
+## powershell 包
+
+```powershell
+# 安装 posh-git, terminal icons, oh my posh
+PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
+Install-Module -Name Terminal-Icons -Repository PSGallery
+winget install JanDeDobbeleer.OhMyPosh -s winget
+```
+
+```powershell
+# 升级，更新
+PowerShellGet\Update-Module posh-git
+PowerShellGet\Update-Module Terminal-Icons
+
+winget upgrade JanDeDobbeleer.OhMyPosh -s winget
+```
+
+ 
 ## 等宽字体
 
 [Cascadia Code](https://docs.microsoft.com/zh-cn/windows/terminal/cascadia-code)
