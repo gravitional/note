@@ -11860,25 +11860,131 @@ equ = { (Subscript[x, 1] - Subscript[x, 0])^2 + (Subscript[y, 1] - Subscript[y,
 \end_layout
 
 \begin_layout Standard
-类似地，可以求出四面体外接球，公式比较复杂，可以直接使用 Mathematica 计算的结果。下面的mma代码给出C语言形式的表达式。
-\begin_inset Note Note
-status open
+\begin_inset CommandInset href
+LatexCommand href
+name "Circumsphere"
+target "https://mathworld.wolfram.com/Circumsphere.html"
+literal "false"
 
-\begin_layout Plain Layout
-equ = {(x1 - x0)^2 + (y1 - y0)^2 + (z1 - z0)^2 == r2 , (x2 - x0)^2 + (y2
- - y0)^2 + (z2 - z0)^2 == r2 , (x3 - x0)^2 + (y3 - y0)^2 + (z3 - z0)^2 ==
- r2 , (x4 - x0)^2 + (y4 - y0)^2 + (z4 - z0)^2 == r2 }; ans = Simplify[First@Solv
-e[equ, {x0, y0, z0, r2}], r2 > 0];
-\end_layout
+\end_inset
 
-\begin_layout Plain Layout
-cRule = {Power -> pow}; CForm[Last@ ans[[1]] /.
- cRule]
-\end_layout
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "外接球算法"
+target "https://blog.csdn.net/LiveALearn/article/details/7412214"
+literal "false"
+
+\end_inset
+
+。类似外接圆，外接球上一点
+\begin_inset Formula $(x,y,z)$
+\end_inset
+
+满足的方程是
+\begin_inset Formula 
+\[
+\det(M)=\left|\begin{array}{ccccc}
+x^{2}+y^{2}+z^{2} & x & y & z & 1\\
+x_{1}^{2}+y_{1}^{2}+z_{1}^{2} & x_{1} & y_{1} & z_{1} & 1\\
+x_{2}^{2}+y_{2}^{2}+z_{2}^{2} & x_{2} & y_{2} & z_{2} & 1\\
+x_{3}^{2}+y_{3}^{2}+z_{3}^{2} & x_{3} & y_{3} & z_{3} & 1\\
+x_{4}^{2}+y_{4}^{2}+z_{4}^{2} & x_{4} & y_{4} & z_{4} & 1
+\end{array}\right|=0
+\]
+
+\end_inset
+
+展开行列式
+\begin_inset Formula 
+\[
+a(x^{2}+y^{2}+z^{2})-\left(D_{x}x+D_{y}y+D_{z}z\right)+c=0
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a=\det M\left\llbracket 2;;5,\,2;;5\right\rrbracket $
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a\equiv\left|\begin{array}{cccc}
+x_{1} & y_{1} & z_{1} & 1\\
+x_{2} & y_{2} & z_{2} & 1\\
+x_{3} & y_{3} & z_{3} & 1\\
+x_{4} & y_{4} & z_{4} & 1
+\end{array}\right|
+\]
 
 \end_inset
 
 
+\begin_inset Formula $D_{x}$
+\end_inset
+
+，
+\begin_inset Formula $D_{y}$
+\end_inset
+
+，
+\begin_inset Formula $D_{z}$
+\end_inset
+
+分别是下列余子式
+\begin_inset Formula 
+\[
+\det M\left\llbracket 2;;5,\,\{\cancel{2}\}\right\rrbracket ,\quad-\det M\left\llbracket 2;;5,\,\{\cancel{3}\}\right\rrbracket ,\quad\det M\left\llbracket 2;;5,\,\{\cancel{4}\}\right\rrbracket ,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\{\cancel{2}\}$
+\end_inset
+
+表示除去第
+\begin_inset Formula $2$
+\end_inset
+
+列。类似地，
+\begin_inset Formula 
+\[
+c=\det M\left\llbracket 2;;5,\,1;;4\right\rrbracket 
+\]
+
+\end_inset
+
+写成完全平方式
+\begin_inset Formula 
+\[
+a(x-\frac{D_{x}}{2a})^{2}+a(y-\frac{D_{y}}{2a})^{2}+a(z-\frac{D_{z}}{2a})^{2}-\frac{D_{x}^{2}+D_{y}^{2}+D_{z}^{2}}{4a}+c=0
+\]
+
+\end_inset
+
+对比球的标准形式
+\begin_inset Formula 
+\[
+(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=r^{2}
+\]
+
+\end_inset
+
+得到球心，半径平方 为
+\begin_inset Formula 
+\[
+(\frac{D_{x}}{2a},\frac{D_{y}}{2a},\frac{D_{z}}{2a}),\quad\frac{D_{x}^{2}+D_{y}^{2}+D_{z}^{2}-4ac}{4a}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+也可以使用Mathemtaica直接求解，下面的代码给出C语言表达式。
 \end_layout
 
 \begin_layout Standard

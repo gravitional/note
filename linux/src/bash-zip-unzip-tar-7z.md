@@ -287,12 +287,12 @@ unzip -j '*.zip'  '*.otf'
 
 + 可以使用的开关. 开关后面跟的具体参数不需要空格隔开.
 
-+ `--` : 停止解析开关
-+ `-o{Directory}` : 设置输出目录
-+ `-p{Password}` : 设置密码
-+ `-r[-|0]` : 递归子目录,作者不推荐使用
++ `--`; 停止解析开关
++ `-o{Directory}`: 设置输出目录
++ `-p{Password}`: 设置密码
++ `-r[-|0]`: 递归子目录,作者不推荐使用
 + `-y` : 对所有询问回答 yes
-+ `-t{Type}`:设置归档的类型
++ `-t{Type}`: 设置归档的类型
 + `-ai[r[-|0]]@{listfile} | !{wildcard}`: 包括额外的压缩文件, 以及通配符. 支持使用多次.
 + `-an`: 禁止命令行自动解析压缩文档的名字,需要与`-ai` (Include archives)开关一起使用
 + `-m`: 设置压缩方法开关
@@ -300,6 +300,13 @@ unzip -j '*.zip'  '*.otf'
 
 `-an`禁止解析命令行中的压缩文档名称. 此开关必须与 `-ai` (Include archives) 开关一起使用.
 如果你的压缩文档在列表文件中给出, 你要用`-ai`开关指定它, 所以在命令行中你需要禁止解析`存档_名称`字段.
+
++ quiet 忽略输出, 7z 没有提供专门的 silence or quiet 开关, 但可以将输出重定向到 `/dev/null`
+
+```bash
+7z a file.7z ~/file > /dev/null # in bash
+7z a file.7z ~/file | ignore # in nushell
+```
 
 ### 方法详情
 
