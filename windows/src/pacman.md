@@ -6,6 +6,34 @@
 pacman是arclinux中的软件管理工具, 也是widows上msys2默认的软件管理工具.
 pacman可以直接从网络上的软件仓库下载安装及删除软件, 自动处理依赖关系, 类似ubuntu中的apt-get.
 
+## 搜索软件
+
+搜索支持正则表达式, 例如搜索 ucrt 下面的 `make`
+
+```bash
+pacman -Ssq 'ucrt.+make'
+```
+
+`pacman -Ss <regex>`: 在仓库中搜索含关键字的软件包(本地已安装的会标记)
+`pacman -Sl <repo>`:
+显示软件仓库中所有软件的列表
+可以省略, 通常这样用:pacman -Sl | grep 关键字
+
+`pacman -Qs 关键字`: 搜索已安装的软件包
+`pacman -Qu`: 列出所有可升级的软件包
+`pacman -Qt`: 列出不被任何软件要求的软件包
+参数加q可以简洁方式显示结果, 比如pacman -Ssq gcc会比pacman -Ss gcc显示的好看一些.
+
+```bash
+pacman -Sl | grep gcc # 跟pacman -Ssq gcc很接近, 但是会少一些和gcc有关但软件名不包含gcc的包.
+```
+
+查询软件信息
+
+`pacman -Q` 软件名: 查看软件包是否已安装, 已安装则显示软件包名称和版本
+`pacman -Qi` 软件名: 查看某个软件包信息, 显示较为详细的信息, 包括描述, 构架, 依赖, 大小等等
+`pacman -Ql` 软件名: 列出软件包内所有文件, 包括软件安装的每个文件, 文件夹的名称和路径
+
 ## 安装软件
 
 `pacman -S 软件名`: 安装软件.
@@ -54,28 +82,6 @@ pacman -S --needed filesystem msys2-runtime bash libreadline libiconv libarchive
 `pacman -Rsc 软件名`: 删除软件, 并删除所有依赖这个软件的程序, 慎用
 `pacman -Ru 软件名`: 删除软件,同时删除不再被任何软件所需要的依赖
 
-## 搜索软件
-
-`pacman -Ss 关键字`: 在仓库中搜索含关键字的软件包(本地已安装的会标记)
-`pacman -Sl <repo>`:
-显示软件仓库中所有软件的列表
-可以省略, 通常这样用:pacman -Sl | grep 关键字
-
-`pacman -Qs 关键字`: 搜索已安装的软件包
-`pacman -Qu`: 列出所有可升级的软件包
-`pacman -Qt`: 列出不被任何软件要求的软件包
-参数加q可以简洁方式显示结果, 比如pacman -Ssq gcc会比pacman -Ss gcc显示的好看一些.
-
-```bash
-pacman -Sl | grep gcc # 跟pacman -Ssq gcc很接近, 但是会少一些和gcc有关但软件名不包含gcc的包.
-```
-
-查询软件信息
-
-`pacman -Q` 软件名: 查看软件包是否已安装, 已安装则显示软件包名称和版本
-`pacman -Qi` 软件名: 查看某个软件包信息, 显示较为详细的信息, 包括描述, 构架, 依赖, 大小等等
-`pacman -Ql` 软件名: 列出软件包内所有文件, 包括软件安装的每个文件, 文件夹的名称和路径
-
 ## 软件包组
 
 pacman -Sg: 列出软件仓库上所有的软件包组
@@ -101,9 +107,9 @@ msys2就要占掉超过10G的硬盘空间, 所以个人很少直接安装软件�
 `pacman -Sc`: 清理未安装的包文件, 包文件位于 /var/cache/pacman/pkg/ 目录.
 `pacman -Scc`: 清理所有的缓存文件.
 
-`pacman -Qeq`; 查询所有自己安装的软件，只显示包名，不显示版本号等
+`pacman -Qeq`; 查询所有自己安装的软件, 只显示包名, 不显示版本号等
 `pacman -Qs <pkg_name>`; 查询本地安装的所有带<pkg_name>的软件
-`pacman -Qdt`; 查询所有孤儿软件，不再被需要的。
+`pacman -Qdt`; 查询所有孤儿软件, 不再被需要的. 
 `pacman -Qdtq`; 查询所有不再被依赖的包名
 
 查询孤儿软件并删除掉他们

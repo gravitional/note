@@ -19,8 +19,23 @@ MSYS2 和 Cygwin 是完全的 POSIX 环境, 有很多神奇的功能, 如 `fork(
 MinGW 基于普通的 Microsoft C Runtime, 没有这些功能.
 请明确您要构建的是哪一种环境.
 
-前缀
+```bash
+## ucrt 64位 软件包的前缀是
 mingw-w64-ucrt-x86_64-
+mingw-w64-ucrt-x86_64-toolchain # 例如 工具链
+
+## clang64 软件包的前缀是
+mingw-w64-clang-x86_64-
+mingw-w64-clang-x86_64-toolchain #例如工具链
+```
+
+```bash
+pacman -S git vim mingw-w64-ucrt-x86_64-toolchain mingw-w64-clang-x86_64-toolchain \
+mingw-w64-ucrt-x86_64-cmake mingw-w64-clang-x86_64-cmake cmake \
+mingw-w64-clang-aarch64-make mingw-w64-ucrt-x86_64-make make \
+mingw-w64-ucrt-x86_64-boost mingw-w64-clang-x86_64-boost \
+python python-pip \
+```
 
 ## MSYS2 目录映射问题
 
@@ -30,7 +45,7 @@ mingw-w64-ucrt-x86_64-
 
 [Symlink in msys2: Copy or hard link?](https://stackoverflow.com/questions/61594025/symlink-in-msys2-copy-or-hard-link)
 
-MSYS2在windows上用`ln -s dir`创建软连接时, 会复制所有文件到目标文件夹.
+MSYS2在windows上用`ln -s dir`创建软连接时, 会**复制**所有文件到目标文件夹.
 解决这个问题需要在 `/etc/profile` 文件里面加上一个关键变量:
 在 `/etc/profile` 添加对 `zsh` 也生效.
 
@@ -40,6 +55,10 @@ export MSYS="winsymlinks:lnk"
 
 添加后创建的目录软连接, 就和linux上很类似了.
 直接cd就能进入被连接的目录文件夹, 非常方便.
+
+```bash
+ln -s /c/Users/qingz/ winH
+```
 
 具体的规则, see [cygwin Symbolic links](https://cygwin.com/cygwin-ug-net/using.html#pathnames-symlinks)
 
@@ -51,10 +70,9 @@ export MSYS="winsymlinks:lnk"
 
 ### fastab配置文件目录的方法
 
-在fstab中配置也可以映射目录, 个人更喜欢用`ln -s`软连接.
+在`fstab`中配置也可以映射目录, 个人更喜欢用 `ln -s` 软连接.
 
 在`/etc/fstab`配置文件目录映射的方法:
-
 直接在`/etc/fstab`后加入如下代码, 然后重启msys2就可以了
 
 ```bash
