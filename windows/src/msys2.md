@@ -476,16 +476,16 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-gcc"
 
 [去掉oh_my_zsh主题自带的git检查](https://www.cnblogs.com/brady-wang/p/14356525.html)
 
-修改 `.zshrc` 中的主题名称为 `ymy`,
+修改 `.zshrc` 中的主题名称为 `__ymy`,
 
 ```rc
 ZSH_THEME="ymy"
 ```
 
-然后在以下位置新建 `ymy` 主题
+然后在以下位置新建 `__ymy` 主题
 
 ```bash
-vim ~/.oh-my-zsh/themes/ymy.zsh-theme
+vim ~/.oh-my-zsh/themes/__ymy.zsh-theme
 ```
 
 内容为
