@@ -8,11 +8,11 @@
 C:\ghcup\bin\cabal.exe user-config init
 ```
 
-命令会输出 config 文件的位置, 在测试过程中, 
+命令会输出 config 文件的位置, 在测试过程中,
 正确的配置文件位置是 `c:/cabal/configc`,
 `c:/cabal` 是cabal的安装目录
 
-建议直接使用下面的手动安装方式, 
+建议直接使用下面的手动安装方式,
 由于 haskell.org 的连接速度过慢.
 
 ## Hackage USTC 源
@@ -28,7 +28,7 @@ GHCup 类似 Rustup, 可以用于安装 Haskell 工具链.
 
 >备注
 >以下命令会安装并配置 GHCup 0.0.7 版本的元数据.
->可查看 https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ 目录的内容, 
+>可查看 https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ 目录的内容,
 并选择需要安装的 GHCup 版本的 yaml 文件替换以下命令中的 URL.
 
 ### 第一步(可选):使用科大源安装 GHCup 本体
@@ -50,6 +50,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force;[System.Net.ServicePointManager
 ### 第二步 : 配置 GHCup 使用科大源
 
 编辑 `~/.ghcup/config.yaml` 增加如下配置:
+在 windows 上可能要编辑 `C:\ghcup\config.yaml`.
 
 ```yaml
 url-source:
@@ -76,8 +77,7 @@ url-source:
     - https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-prereleases-0.0.7.yaml
 ```
 
-
-## 手动安装
+## 手动安装 ghc
 
 [Manual installation](https://www.haskell.org/ghcup/install/#manual-installation)
 

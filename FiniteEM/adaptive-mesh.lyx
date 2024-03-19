@@ -5168,7 +5168,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Chapter
-自适应分析，矢量场
+自适应分析，矢量场 时谐场
 \end_layout
 
 \begin_layout Section
@@ -5953,6 +5953,757 @@ Q_{\Delta} & =\int_{\Delta}\rho_{s}\dd{x^{2}}\quad\rho_{s}=\delta(\epsilon\,\sbf
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:v14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以看出，residual index 
+\begin_inset Formula $\alpha_{K}$
+\end_inset
+
+和
+\begin_inset Formula $\alpha_{\Delta}$
+\end_inset
+
+的计算涉及大量近似，因此它们可能并不代表
+\series bold
+准确的
+\series default
+后验误差估计。不过，它们确实提供了有关四面体中 
+\series bold
+actions
+\series default
+ 排序的有用信息。我们将在下一节通过数值实验证明它们的有效性。
+\end_layout
+
+\begin_layout Section
+数值结果
+\end_layout
+
+\begin_layout Chapter
+自适应分析，矢量场 静态场
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Section
+双线性型
+\end_layout
+
+\begin_layout Standard
+磁矢势
+\begin_inset Formula $\sbf A$
+\end_inset
+
+满足的基本方程
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J\label{eq:m00}
+\end{equation}
+
+\end_inset
+
+ 其中
+\begin_inset Formula $\mu_{r}$
+\end_inset
+
+是相对磁导率。下面用
+\begin_inset Formula $\sbf u$
+\end_inset
+
+代替
+\begin_inset Formula $\sbf A$
+\end_inset
+
+，推导类似时谐场。
+\begin_inset Formula 
+\begin{equation}
+\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u=\mu_{0}\sbf J\label{eq:m01}
+\end{equation}
+
+\end_inset
+
+将 Galerkin 方法应用矢量方程。结果写成双线性型
+\begin_inset Formula 
+\begin{align}
+B(\sbf u,\sbf v) & =\int_{\Omega}\nabla\times\sbf v\cdot\frac{1}{\mu_{r}}\nabla\times\sbf u\,\dd{x^{3}}-\mu_{0}\int_{\Gamma_{1}}\sbf v\cdot\sbf J\dd{x^{2}}\nonumber \\
+ & =a\left(\sbf u,\sbf v\right)-\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}}\label{eq:m1}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+是 
+\series bold
+输入激励
+\series default
+的边界端口区域。
+\series bold
+弱解
+\series default
+是 矢量函数 
+\begin_inset Formula 
+\[
+\sbf u\in H(\mathrm{curl})=\left\{ \sbf w|\int_{\Omega}(\abs{\sbf\omega}+\abs{\nabla\times\sbf\omega})\dd{x^{3}}<\infty\right\} 
+\]
+
+\end_inset
+
+且满足
+\begin_inset Formula 
+\begin{align}
+a\left(\sbf u,\sbf v\right)=\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}},\quad\sbf v\in H(\mathrm{curl})\label{eq:m2}
+\end{align}
+
+\end_inset
+
+在离散版本（即FEM ）过程，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\text{seek}\quad\sbf u^{h}\in S^{h} & \subset H(\mathrm{curl})\quad\text{s.t.}\nonumber \\
+a\left(\sbf u^{h},\sbf v^{h}\right) & =\mu_{0}\langle\sbf v^{h},\sbf J^{h}\rangle_{\Gamma_{1}}\nonumber \\
+\forall v^{h} & \in S^{h}\label{eq:m3}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf J^{h}$
+\end_inset
+
+是 
+\begin_inset Formula $\sbf J$
+\end_inset
+
+在有限单元网格上的插值，或投影。在当前的研究中，子空间 
+\begin_inset Formula $S^{h}$
+\end_inset
+
+ 由 Ref.[5] 中描述的 
+\begin_inset Formula $H^{(1)}(\mathrm{curl})$
+\end_inset
+
+ TVFEM 矢量基函数张成。假设 
+\series bold
+网格
+\series default
+ 足够细，
+\begin_inset Formula $\sbf J$
+\end_inset
+
+和
+\begin_inset Formula $\sbf J^{h}$
+\end_inset
+
+之间的插值误差可以忽略，随后将简化地用 
+\begin_inset Formula $\sbf J$
+\end_inset
+
+代替
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $\sbf J^{h}$
+\end_inset
+
+直接参与运算。此外下列定理成立。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "the1-1"
+
+\end_inset
+
+令
+\begin_inset Formula $\sbf e^{h}=\sbf u-\sbf u^{h}$
+\end_inset
+
+，即有限元解
+\begin_inset Formula $\sbf u^{h}$
+\end_inset
+
+的误差，则我们有
+\begin_inset Formula 
+\begin{equation}
+a\left(\sbf e^{h},\sbf u^{h}\right)\equiv0.\label{eq:m4}
+\end{equation}
+
+\end_inset
+
+考虑到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得
+\begin_inset Formula 
+\begin{align*}
+ & a\left(\sbf u,\sbf u^{h}\right)=\mu_{0}\langle\sbf u^{h},\sbf J\rangle_{\Gamma_{1}}\\
+ & a\left(\sbf u^{h},\sbf u^{h}\right)=\mu_{0}\langle\sbf u^{h},\sbf J\rangle_{\Gamma_{1}}
+\end{align*}
+
+\end_inset
+
+两式相减得
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
+误差泛函
+\end_layout
+
+\begin_layout Standard
+在模拟多端口微波器件时，经常感兴趣的是
+\begin_inset Formula $S$
+\end_inset
+
+参数。得到电磁场的解之后，器件的
+\begin_inset Formula $S$
+\end_inset
+
+参数可以通过适当的面积分得到。特别地，反射系数
+\begin_inset Formula $S_{11}$
+\end_inset
+
+表示成
+\begin_inset Formula 
+\begin{equation}
+S_{11}=1-\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}.\label{eq:m5}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+是
+\series bold
+输入端口
+\series default
+，
+\begin_inset Formula $\sbf u$
+\end_inset
+
+是
+\series bold
+电场
+\series default
+，
+\begin_inset Formula $\sbf J$
+\end_inset
+
+是 流入求解区域的 基本模式（输入波）的表面电流。因此从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以推导出误差泛函，
+\begin_inset Formula 
+\begin{align}
+F(\sbf u^{h}) & =S_{11}^{h}-S_{11}\nonumber \\
+ & =\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}-\langle\sbf u^{h},\sbf J\rangle_{\Gamma_{1}}=\langle\sbf e^{h},\sbf J\rangle_{\Gamma_{1}}\label{eq:m6}
+\end{align}
+
+\end_inset
+
+其中假设了前文提到的 
+\begin_inset Formula $\sbf J-\sbf J^{h}$
+\end_inset
+
+可忽略。注意到
+\begin_inset Formula $\sbf e^{h}\in H(\mathrm{curl})$
+\end_inset
+
+ 并考虑
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a\left(\sbf u,\sbf v\right)=\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}},\quad\sbf v\in H(\mathrm{curl})
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\begin{equation}
+F(\sbf u^{h})=\frac{1}{\mu_{0}}\left[a(\sbf u,\sbf e^{h})\right],\label{eq:m7}
+\end{equation}
+
+\end_inset
+
+使用定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "the1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula $a\left(\sbf e^{h},\sbf u^{h}\right)\equiv0$
+\end_inset
+
+，误差泛函可以写成
+\begin_inset Formula 
+\begin{equation}
+F(\sbf u^{h})=\frac{1}{\mu_{0}}\left[a\left(\sbf e^{h},\sbf e^{h}\right)\right].\label{eq:m8}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+将作为推导 FEM 网格的每个四面体的 refinement index 的依据。
+\end_layout
+
+\begin_layout Section
+细化指标 Refinement indicator
+\end_layout
+
+\begin_layout Standard
+为得到 能计算 的细化指标，我们有
+\begin_inset Formula 
+\begin{align}
+a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^{h}\cdot\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\right)\dd{x^{3}}\nonumber \\
+= & \sum_{K}\int_{K}\sbf e^{h}\cdot\left(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\right)\dd{x}\nonumber \\
+ & +\sum_{\Delta}\int_{\Delta}\sbf e^{h}\cdot\left(\delta\left(\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\right)_{\Delta}\times\hat{\sbf n}\right)\dd{x^{2}}\nonumber \\
+ & +\int_{\Gamma_{1}}\sbf e^{h}\cdot\left(\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\times\hat{\sbf n}\right)\dd{x^{2}}\label{eq:m9}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+其中使用了矢量格林定理
+\begin_inset Formula 
+\[
+\int_{V}\left[{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,{\color{blue}\sbf a}\cdot\left(({\color{brown}\nabla\times\sbf b})\times\sbf n\right)\dd{S}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\begin_inset Formula $\hat{\sbf n}$
+\end_inset
+
+是每个单元的外法向或
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+上的外法向
+\series default
+。此处约定使用 facet 的 owner 单元的外法向，neighbor 多一个负号。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K$
+\end_inset
+
+是网格中的四面体单元，
+\begin_inset Formula $\Delta$
+\end_inset
+
+是内部三角形面，
+\begin_inset Formula $\delta(\cdot)_{\Delta}$
+\end_inset
+
+表示
+\begin_inset Formula $\cdot$
+\end_inset
+
+穿过
+\begin_inset Formula $\Delta$
+\end_inset
+
+时的不连续（discontinuity）。进一步简化，注意到
+\begin_inset Formula 
+\begin{align}
+\nabla\times & \frac{1}{\mu_{r}}\nabla\times\sbf e^{h}=\nabla\times\frac{1}{\mu_{r}}\nabla\times(\sbf u-\sbf u^{h})\nonumber \\
+ & =\mu_{0}\sbf J-\left(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u^{h}\right)=\mu_{0}\left(\sbf J-\sbf j\right)=\mu_{0}\sbf j_{v}\label{eq:m10a}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\delta & \left(\frac{1}{\mu_{r}}\nabla\times{\color{blue}\sbf e^{h}}\right)_{\Delta}\times\hat{\sbf n}=\delta\left(\frac{1}{\mu_{r}}\nabla\times{\color{blue}(\sbf u-\sbf u^{h})}\right)_{\Delta}\times\hat{\sbf n}\nonumber \\
+ & =-\delta\left(\frac{1}{\mu_{r}}\nabla\times\sbf u^{h}\right)_{\Delta}\times\hat{\sbf n}=\mu_{0}\,\sbf j_{s}\label{eq:m10b}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf j_{s}$
+\end_inset
+
+分别是 volume 和 surface 残余电流。其中使用了
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u=\sbf J_{v},\quad\text{体电流外源}\\
+ & \delta\left(\frac{1}{\mu_{r}}\nabla\times\sbf u\right)_{\Delta}\times\hat{\sbf n}=0
+\end{align*}
+
+\end_inset
+
+即通常认为面电流外源为零。物理上可以解释为，
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf j_{s}$
+\end_inset
+
+是产生误差场
+\begin_inset Formula $\sbf e^{h}$
+\end_inset
+
+的源。接着，误差泛函
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m9"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\begin{align}
+F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delta}\int_{\Delta}\sbf e^{h}\cdot\sbf j_{s}\dd{x^{2}}\nonumber \\
+ & +\int_{\Gamma_{1}}\sbf e^{h}\cdot\sbf j_{s}\dd{x^{2}}\label{eq:m11}
+\end{align}
+
+\end_inset
+
+理论上，
+\begin_inset Formula $\sbf j_{v}$
+\end_inset
+
+和
+\begin_inset Formula $\sbf j_{s}$
+\end_inset
+
+的计算是精确的。自适应网格细化的目标，或者更精确地说，后验误差估计的计算只依赖于 how one computes 
+\begin_inset Formula $\sbf e^{h}$
+\end_inset
+
+ from these sources。
+\end_layout
+
+\begin_layout Subsection
+体残差
+\end_layout
+
+\begin_layout Standard
+在本文中，我们将重点推导出一种易于计算的细化指标，该指标可用于可靠地指导我们
+\series bold
+最优地
+\series default
+细化有限元网格。为此我们定义残差指标
+\begin_inset Formula $\alpha_{K}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\alpha_{K}=\int_{K}(\sbf e^{h}\cdot\sbf j_{v})\dd{x^{3}}\label{eq:m12}
+\end{equation}
+
+\end_inset
+
+在这里我们作主要近似。We would only compute 
+\begin_inset Formula $\left.\sbf e^{h}\right|_{K}$
+\end_inset
+
+ form 
+\series bold
+local sources
+\series default
+ and employ an approximate Green's functions，即
+\begin_inset Formula 
+\[
+\left.\sbf e^{h}\right|_{K}=\frac{\mu}{4\pi}\int_{K}\frac{\sbf j_{v}(\sbf x')}{R}\dd{V'}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\left.\sbf e^{h}\right|_{K}=\frac{\mu}{4\pi}\int_{K}\frac{\sbf j_{v}(\sbf x')}{R}\dd{V'}\label{eq:m13}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $R$
+\end_inset
+
+是 从观察点（
+\begin_inset Formula $\sbf e^{h}$
+\end_inset
+
+）到源 
+\begin_inset Formula $(\rho_{v},\sbf j_{v})$
+\end_inset
+
+的距离。然后 residual index 
+\begin_inset Formula $\alpha_{K}$
+\end_inset
+
+写成
+\begin_inset Formula 
+\begin{align}
+\alpha_{K}= & \frac{\mu}{4\pi}\int_{K}\left(\sbf j_{v}\cdot\int_{K}\frac{\sbf j_{v}(x^{\prime3})}{R}\dd{x^{\prime3}}\right)\dd{x^{3}}\nonumber \\
+ & \approx\frac{\mu}{4\pi}\frac{1}{R_{K}}\sbf J_{K}\cdot\sbf J_{K}.\label{eq:m14}
+\end{align}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的体残余（residual）电荷和电流是
+\begin_inset Formula 
+\begin{align*}
+Q_{K} & =\int_{K}\rho_{v}\dd{x^{3}}\quad\rho_{v}=\nabla\cdot(\epsilon\,\sbf u^{h})\\
+\sbf J_{k} & =\int_{K}\sbf j_{v}\dd{x^{3}}
+\end{align*}
+
+\end_inset
+
+作用距离 
+\begin_inset Formula $\sbf R=\sbf x-\sbf x'$
+\end_inset
+
+ 包含了积分变量 
+\begin_inset Formula $x$
+\end_inset
+
+与
+\begin_inset Formula $x'$
+\end_inset
+
+的纠缠，在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m14"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+末尾，将积分用外接圆半径
+\begin_inset Formula $R_{K}$
+\end_inset
+
+近似，强行去掉纠缠。
+\end_layout
+
+\begin_layout Subsection
+面残差
+\end_layout
+
+\begin_layout Standard
+类似地，每个三角形面
+\begin_inset Formula $\Delta$
+\end_inset
+
+可以计算出一个 residual index 
+\begin_inset Formula $\alpha_{\Delta}$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{equation}
+\alpha_{\Delta}\approx\frac{\mu}{4\pi R_{\Delta}}\sbf J_{\Delta}\cdot\sbf J_{\Delta}\label{eq:m15}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m15"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中出现的
+\series bold
+面残余电流
+\series default
+是
+\begin_inset Formula 
+\begin{align}
+\sbf J_{\Delta}=\int_{\Delta}\sbf j_{s}\dd{x^{2}}\label{eq:m16}
+\end{align}
+
+\end_inset
+
+其中，
+\begin_inset Formula $R_{K}$
+\end_inset
+
+和
+\begin_inset Formula $R_{\Delta}$
+\end_inset
+
+分别是 
+\begin_inset Formula $K$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ 的
+\series bold
+外接球和外接圆的半径
+\series default
+。最后，单元
+\begin_inset Formula $K$
+\end_inset
+
+的 refinement index 定义为
+\begin_inset Formula 
+\begin{equation}
+\theta_{K}=\alpha_{K}+\sum_{i=0}^{3}\frac{\alpha_{K}}{\alpha_{K}+\alpha_{N_{i}}}\alpha_{\Delta_{i}}.\label{eq:m17}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta_{i}$
+\end_inset
+
+是单元
+\begin_inset Formula $K$
+\end_inset
+
+的 
+\series bold
+第
+\begin_inset Formula $i$
+\end_inset
+
+个三角面
+\series default
+，且 
+\begin_inset Formula $\alpha_{N_{i}}$
+\end_inset
+
+ 是单元
+\begin_inset Formula $K$
+\end_inset
+
+的 
+\series bold
+第
+\begin_inset Formula $i$
+\end_inset
+
+个邻居
+\series default
+
+\begin_inset Formula $N_{i}$
+\end_inset
+
+的 residual index。从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:m14"
 plural "false"
 caps "false"
 noprefix "false"
