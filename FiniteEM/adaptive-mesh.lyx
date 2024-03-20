@@ -4648,7 +4648,15 @@ q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.
 
 \end_inset
 
-定义等参坐标导数
+核心是计算形函数Hessian 
+\begin_inset Formula $\nabla\nabla N$
+\end_inset
+
+ 的迹 
+\begin_inset Formula $\nabla^{2}N$
+\end_inset
+
+。定义等参坐标导数
 \begin_inset Formula $\tilde{\partial}_{i}=\partial/\partial\xi_{i}$
 \end_inset
 
@@ -4682,54 +4690,54 @@ q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.
 
 \end_inset
 
-
+Jacobian 母导数为
 \begin_inset Formula 
-\begin{align*}
-\frac{\partial J_{{\color{red}kj}}}{\partial\xi_{{\color{blue}i}}} & =X_{\alpha j}N_{\alpha,k}=\frac{\partial}{\partial\xi_{i}}\left(\frac{\partial N_{\alpha}}{\partial\xi_{k}}X_{\alpha j}\right)\\
-\text{参数形式} & =X_{\alpha j}\,N_{\alpha,ki}
-\end{align*}
+\[
+\frac{\partial\overline{J}_{{\color{red}12}}}{\partial\xi_{{\color{blue}3}}}=-\overline{J}_{1m}\frac{\partial J_{mn}}{\partial\xi_{3}}\overline{J}_{n2}=-\overline{J}_{b2}\,X_{\beta b}\,\overline{J}_{1c}\,N_{\beta,c3}
+\]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 从而
 \begin_inset Formula 
 \begin{align*}
-\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha} & =\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}({\color{blue}\tilde{\partial}_{j}\overline{J}_{ik}})N_{\alpha,k}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\\
- & =\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}N_{\alpha,k}\,{\color{blue}X_{\beta k}\,N_{\beta,ij}}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\\
- & =\epsilon_{0}\epsilon_{r}\;(\overline{J}_{ij}\,N_{\beta,ij})\;(X_{\beta k}\,N_{\alpha,k})+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}
+{\color{blue}\nabla^{2}N_{\alpha}} & =\partial_{i}\partial_{i}N_{\alpha}\\
+ & =-(\overline{J}_{ik}\overline{J}_{ic}\,N_{\beta,ck})\,X_{\beta b}\,\overline{J}_{bm}\,N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{im}\,N_{\alpha,mk}
 \end{align*}
 
 \end_inset
 
-so
+写成矩阵运算形式为
 \begin_inset Formula 
 \[
-\phi_{\alpha}^{h}\;\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha}=\epsilon_{0}\epsilon_{r}\;(\overline{J}_{ij}\,N_{\beta,ij})\;X_{\beta k}\,(N_{\alpha,k}\,\phi_{\alpha}^{h})+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\,\phi_{\alpha}^{h}
+{\color{blue}\nabla^{2}N_{\alpha}}=-\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]
 \]
 
 \end_inset
 
-其中
-\begin_inset Formula $N_{\alpha,k}\,\phi_{\alpha}^{h}=-E_{k}^{h}$
-\end_inset
-
-（电场强度），so
+有限元解对应的 体电荷估计
 \begin_inset Formula 
-\[
-\phi_{\alpha}^{h}\;\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha}=-\epsilon_{0}\epsilon_{r}\;(\overline{J}_{ij}\,N_{\beta,ij})\;X_{\beta k}\,E_{k}^{h}+\epsilon_{0}\epsilon_{r}\;\overline{J}_{ij}\,\overline{J}_{ik}\,N_{\alpha,kj}\,\phi_{\alpha}^{h}
-\]
+\begin{align*}
+\rho^{h}= & -\epsilon_{0}\epsilon_{r}\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}\\
+= & -\epsilon_{0}\,\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)\\
+ & -\epsilon_{0}\epsilon_{r}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]\phi_{\alpha}
+\end{align*}
 
 \end_inset
 
-程序中定义了 
-\begin_inset Formula $G_{i\alpha}=\tilde{\partial}_{i}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
+电位移矢量 
+\begin_inset Formula $D_{k}^{h}=-\epsilon_{r}N_{\alpha,k}\,\phi_{\alpha}^{h}=-\epsilon_{r}\phi_{\alpha}G_{k\alpha}$
 \end_inset
 
-，or 
-\begin_inset Formula $N_{\alpha,k}=G_{i\alpha}$
+，
+\begin_inset Formula $G$
 \end_inset
 
-。
+ 就是 dNdzeta。
 \end_layout
 
 \begin_layout Section
