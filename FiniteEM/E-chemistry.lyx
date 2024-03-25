@@ -2405,13 +2405,17 @@ R_{C_{i}}^{e}\left(N_{m}\right)= & \int_{\Omega^{e}}\left[N_{m}\,\partial_{t}C_{
 \end_inset
 
 从溶液指向电极（或容器壁）；其中定义了三类浓度流（
+\series bold
+以下对应
 \begin_inset Formula $K_{e}$
 \end_inset
 
-标准符号是
+的标准符号是
 \begin_inset Formula $+(\nabla N)\cdot(\nabla N)$
 \end_inset
 
+
+\series default
 ）
 \begin_inset Formula 
 \begin{align}
@@ -2426,7 +2430,7 @@ R_{C_{i}}^{e}\left(N_{m}\right)= & \int_{\Omega^{e}}\left[N_{m}\,\partial_{t}C_{
 \end_layout
 
 \begin_layout Subsection
-表面项
+表面项 Surf
 \end_layout
 
 \begin_layout Standard
@@ -2461,7 +2465,7 @@ D_{i}\frac{\partial C_{i}}{\partial n}=\sbf n\cdot\sbf J_{M_{i}}[C_{i}]+\sbf n\c
 \end_layout
 
 \begin_layout Subsection
-迁移项
+迁移项 Migr
 \end_layout
 
 \begin_layout Standard
@@ -2506,7 +2510,7 @@ noprefix "false"
 是Faraday 常数。
 \begin_inset Formula 
 \[
--\nabla N_{m}\cdot\sbf J_{M_{i}}=-z_{i}u_{i}F\,G_{k,\alpha}E_{k}N_{\beta1}C_{i,\beta}
+-\nabla N_{m}\cdot\sbf J_{M_{i}}=-z_{i}u_{i}F\,G_{k\alpha}E_{k}N_{\beta1}C_{i,\beta}
 \]
 
 \end_inset
@@ -2535,12 +2539,45 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
  & -G_{k,\alpha}\quad M_{kj}\quad E_{j1}\quad N_{\beta1}\\
- & \left(G^{T}\right)_{\alpha,k}.\left(M^{T}\right)_{kj}.(E)_{j1}\cdot(N^{T})_{1\beta}\,\Rightarrow\,(K)_{\alpha\beta}
+ & -\left(G^{T}\right)_{\alpha,k}.\left(M^{T}\right)_{kj}.(E)_{j1}\cdot(N^{T})_{1\beta}\,\Rightarrow\,(K)_{\alpha\beta}
 \end{align*}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+对流项 Conv
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+-\nabla N_{m}\cdot\sbf J_{C_{i}} & =\nabla N_{m}\cdot{\color{brown}C_{i}}\sbf u\\
+ & =G_{k\alpha}u_{k}N_{\beta}{\color{brown}C_{i\beta}}\\
+ & =u_{k}G_{k\alpha}N_{\beta}\,{\color{brown}C_{i\beta}}
+\end{align*}
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+K_{\alpha\beta}=(\sbf u\cdot G)_{\alpha}\,N_{\beta}
+\]
+
+\end_inset
+
+其在程序中
+\begin_inset Formula $G_{k\alpha}=\tilde{\partial}_{k}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
+\end_inset
+
+，
+\begin_inset Formula $G$
+\end_inset
+
+ 的plain name 是 dNdzeta。
 \end_layout
 
 \begin_layout Section

@@ -1,8 +1,17 @@
 import math
+import matplotlib.pyplot as plt
 
 
 def my_void(*args, **kwargs):
     pass
+
+
+# 控制是否显示 单元文字标注;
+myText = None
+if 1:
+    myText = plt.text  # 显示单元编号
+else:
+    myText = my_void  #空函数
 
 
 # 二阶 vol单元节点重排序

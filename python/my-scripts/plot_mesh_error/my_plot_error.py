@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 """
-画出内部 Edges上 的面电荷分布, 需要先运行 my_mesh_h5.py, 生成 python 版本的输入
+画出2维案例的误差分布, 需要先运行 my_mesh_h5.py 生成 python 版本的 mesh 输入
 """
 import math
 import numpy as np
@@ -11,16 +12,8 @@ import matplotlib.patches as mpatches
 from _nodes import in_nodes_coord
 from _Velements import in_Velements
 from _Selements import in_Selements
-from _facesCharge import in_faces_charge
+from _eleErrors import in_ele_errors
 from my_conf import *
-
-# -----------------------
-myText = plt.text  # 控制是否显示 文字标注; 空函数为: myText=my_void
-
-a_color_V = 'k'  # 体单元 line 颜色
-a_color_Nd = 'k'  # 节点ID text 颜色
-a_color_S = 'k'  # 面单元 line arrow 颜色
-a_color_in = 'b'  # inner Edge line, text 颜色
 
 
 #=============== 画出体单元; 输入 node 坐标list; 体单元构成list
@@ -29,6 +22,7 @@ def plot_Veles(nodeData: ndarray, Velements: ndarray):
     nodeN = Velements.shape[1] - VndOS  # ele 拥有的节点数
     xlst = np.empty(1 + nodeN)
     ylst = np.empty(1 + nodeN)
+    # print(f'#ele nodes: {nodeN}')
     # 遍历体单元列表
     for eleID in range(VeleLen):
         for nodeIdx in range(nodeN):
@@ -43,8 +37,8 @@ def plot_Veles(nodeData: ndarray, Velements: ndarray):
         VndRaffle(ylst)
         xlst[nodeN] = xlst[0]  # 首尾相接
         ylst[nodeN] = ylst[0]
-        plt.plot(list(xlst),
-                 list(ylst),
+        plt.plot(xlst,
+                 ylst,
                  linestyle='-',
                  linewidth=a_lw_VS,
                  color=a_color_V,
@@ -99,25 +93,31 @@ def plot_Seles(nodeData: ndarray, Selements: ndarray):
     maxe.autoscale(tight=True)
 
 
-#======================= 画出面电荷分布
-def plot_faces_charge(nodeData: ndarray, Velements: ndarray,
-                      fchaArray: ndarray):
-    """
-    fchaArray: face charge array, 名称为 in_faces_charge
-    """
-    fchLen = fchaArray.shape[0]  # error list 长度
-    face_charge = fchaArray[:, 0]  # face charge list
-    xlst = fchaArray[:, 1]
-    ylst = fchaArray[:, 2]
-    # print(f'face charge array: {face_charge}')
-    fchMin = np.amin(face_charge, axis=0)
-    fchMax = np.amax(face_charge, axis=0)
-    # note: face charge 可能为负数
-    face_charge = (face_charge * (a_face_marker_size / fchMax))
+def plot_error(nodeData: ndarray, Velements: ndarray, errArray: ndarray):
+    errLen = errArray.shape[0]  # error list 长度
+    Vtriangles = np.empty((errLen, tri_ndN), dtype=int)  # 体单元节点构成
+    eleErrs = np.empty(errLen, dtype=float)  # 误差向量
+    # print(f'ele array: {errArray}')
+    ii = 0
+    xlst = nodeData[:, ndPosX]
+    ylst = nodeData[:, ndPosY]
+    for errPair in errArray:
+        eleID = int(errPair[ErrID_OS])
+        # 对于二阶单元, 只取前三个 node GID, 即只取顶点
+        Vtriangles[ii] = Velements[eleID][tri_LocLst]
+        eleErrs[ii] = errPair[ErrV_OS] * a_error_norm
+        ii += 1
+    # print(f'ele errors: {eleErrs}')
     maxe = plt.gca()
     mfig = plt.gcf()
-    myp2 = maxe.scatter(xlst, ylst, c=face_charge, s=abs(face_charge))
-    mfig.colorbar(myp2)  # color bar
+    tpc = maxe.tripcolor(
+        xlst,
+        ylst,
+        Vtriangles,
+        #  vmin=0.0, vmax=1.0E-38,
+        facecolors=eleErrs,
+        edgecolors='k')
+    mfig.colorbar(tpc)  # color bar
 
 
 def get_range(start: list, end: list, ratio: float = 0.01):
@@ -131,7 +131,7 @@ def get_range(start: list, end: list, ratio: float = 0.01):
 def plot_region():
     plt.figure()
     # plot title
-    plt.title("Mesh Info & inner face charges")
+    plt.title("Mesh Info & Element errors")
     plt.rcParams['axes.unicode_minus'] = False
     # plt.rcParams['font.sans-serif'] = ['SimHei'] #中文
     plt.xlabel('X')  # x轴标签
@@ -144,7 +144,7 @@ def plot_region():
     plot_Veles(nodeData, in_Velements)
     # plot_nodes(nodeData)
     plot_Seles(nodeData, in_Selements)
-    plot_faces_charge(nodeData, in_Velements, in_faces_charge)
+    plot_error(nodeData, in_Velements, in_ele_errors)
 
     x1, y1, x2, y2 = get_range([x1, y1], [x2, y2], 0.015)
     plt.gca().set_xlim(x1, x2)

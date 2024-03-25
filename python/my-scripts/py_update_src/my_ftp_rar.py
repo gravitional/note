@@ -6,7 +6,7 @@ import shutil as shu
 import os
 
 # ==================== 导入配置变量
-from my_config import cfg_solver_sdk_dir, cfg_exe_rar, cfg_down_dir
+from my_config import cfg_solver_sdk_dir, cfg_exe_rar, cfg_down_dir, cfg_sdk_pattern_regex
 from my_config import cfg_sdk_ftp_address, cfg_sdk_remote_dir
 from my_config import cfg_sdk_user, cfg_sdk_passwd
 
@@ -47,7 +47,7 @@ def ftp_sdk():
     # 获取最新的 sdk 文件
     sdk_new = ''
     for f in f_list:
-        if re.search(r'solversdk_develop_.+\.rar', f[0]):
+        if re.search(cfg_sdk_pattern_regex, f[0]):
             sdk_new = f[0]
             break
     print(f'最新的 sovler sdk 为 {sdk_new}')

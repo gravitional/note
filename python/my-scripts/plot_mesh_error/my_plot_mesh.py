@@ -14,8 +14,6 @@ from _Selements import in_Selements
 from _inFaces import in_inner_faces
 from my_conf import *
 
-myText = plt.text  # 控制是否显示 文字标注; 空函数为: myText=my_void
-
 
 #=============== 画出体单元; 输入 node 坐标list; 体单元构成list
 def plot_Veles(nodeData: ndarray, Velements: ndarray):
@@ -94,7 +92,7 @@ def plot_Seles(nodeData: ndarray, Selements: ndarray):
 
 
 #==================== 画出内部面，或者内部 Edge, 适用于 2D
-def plot_InFaces(nodeData: ndarray, inFaces: ndarray):
+def plot_Facets(nodeData: ndarray, inFaces: ndarray):
     SeleLen = inFaces.shape[0]  # surf 单元list 长度
     nodeN = inFaces.shape[1] - IFndOS  # surf ele 拥有的节点数
     print(f'inner face node num: {nodeN}')
@@ -152,7 +150,7 @@ def plot_region():
     plot_Veles(nodeData, in_Velements)
     plot_nodes(nodeData)
     plot_Seles(nodeData, in_Selements)
-    plot_InFaces(nodeData, in_inner_faces)
+    plot_Facets(nodeData, in_inner_faces)
 
     x1, y1, x2, y2 = get_range([x1, y1], [x2, y2], 0.015)
     plt.gca().set_xlim(x1, x2)

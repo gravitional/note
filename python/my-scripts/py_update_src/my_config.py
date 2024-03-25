@@ -5,10 +5,15 @@ import pathlib as ptl
 cfg_solver_sdk_dir = ptl.Path('C:/Solver/sdk').expanduser()
 cfg_exe_rar = 'C:/Program Files/WinRAR/Rar.exe'  # winRAR.exe 的路径
 cfg_down_dir = ptl.Path('~/Downloads/').expanduser()  # sdk.rar 的临时下载目录
+
+cfg_save_last_files: int = 2  # 只保留最新的2份 sdk
+cfg_sdk_pattern: str = r'solversdk_develop_*.rar'  # sdk 文件名的模式, unix-like
+cfg_sdk_pattern_regex: str = r'solversdk_develop_.+\.rar'  # sdk 文件名的模式, regex expression
+
 # --------------------------- sdk ftp 地址配置
-cfg_sdk_ftp_address = 'x'
-cfg_sdk_user = 'x'
-cfg_sdk_passwd = 'x'
+cfg_sdk_ftp_address = 'xxx'
+cfg_sdk_user = 'xxx'
+cfg_sdk_passwd = 'xxx'
 cfg_sdk_remote_dir = '/SDK/SolverSDK/develop/'  # 远程目录
 
 ## ======================== 配置变量 of git, cmake
