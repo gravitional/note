@@ -79,7 +79,7 @@ url-source:
 
 ## 手动安装 ghc
 
-[Manual installation](https://www.haskell.org/ghcup/install/#manual-installation)
+[Manual installation](https://www.haskell.org/ghcup/install/#manual-installation)
 
 ### 安装 ghcup 二进制文件
 
@@ -201,7 +201,7 @@ package-index:
 执行 `cabal user-config init`
 修改 `~/.cabal/config`
 
-Cabal ≥ 1.24 (GHC 8.0)
+Cabal ≥ 1.24 (GHC 8.0)
 找到官方仓库:
 
 ```yaml
