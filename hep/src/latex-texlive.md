@@ -10,8 +10,19 @@
 ### 准备工作:下载,清除
 
 注意:安装 `lyx`, `apt` 会默认安装 `tex2017`版本,覆盖掉新版的`texlive2020`
-
 注意:如果重新安装,请务必完全删除之前的失败安装,默认情况下,这将在这两个目录中:
+
+#### windows下使用卸载脚本
+
+[Texlive2023与Texstudio2023卸载与安装](https://blog.csdn.net/m0_37738114/article/details/132598628)
+
+texlive 自带卸载脚本, 位置在例如
+
+```bash
+C:\texlive\2021\tlpkg\installer\uninst.bat
+```
+
+#### 手动删除
 
 ```bash
 rm -rf /usr/local/texlive/2020

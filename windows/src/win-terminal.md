@@ -33,7 +33,6 @@ PowerShellGet\Update-Module Terminal-Icons
 
 winget upgrade JanDeDobbeleer.OhMyPosh -s winget
 ```
-
  
 ## 等宽字体
 
