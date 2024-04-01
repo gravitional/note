@@ -404,3 +404,40 @@ delete _adapter0;
 例如 `_mediator` 中使用 `unique_ptr` 自动释放了 `_adapter0` 指向的堆内存,
 而后面的 `delete _adapter0;` 重复释放, 就会报这个异常.
 
+## c2504 未定义基类
+
+[error C2504: 未定义基类](https://blog.csdn.net/qncj666/article/details/8562338)
+
+此错误是编译错误, 和 `inclued头文件` 有关
+
+问题描述:
+有三个头文件 `SDK.h`, `AA.h`, `BB.h`, 其中 `BB` 类继承自 `AA`.
+
+头文件包含顺序如下,
+
+1. `AA.h` 包含 `SDK.h`
+2. `SDK.h` 包含 `BB.h`
+3. `BB.h` 包含 `AA.h`
+
+原因分析: 编译器首先编译 `AA.h`, 因其包含 `SDK.h`, 引入 `SDK.h` 继续编译.
+因为 `SDK.h` 包含 `BB.h`, 载入 `BB.h` 内容准备编译.
+`BB` 继承自 `AA`, `AA` 尚未编译成功, 此时VS错误列表中会出现
+>error C2504: "CAA": 未定义基类.
+此编译错误就是在编译 `AA.h` 头文件时出的错.
+
+结论: 头文件在包含顺序上不要成闭合的环状, 结构顺序最好应该是树.
+
+## 禁止编译器警告
+
+```cpp
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 26454)    # 禁止compiler警告
+#endif
+
+//  your code  here
+
+#if defined(_MSC_VER)
+#pragma warning(pop)  # 恢复compiler警告
+#endif
+```
