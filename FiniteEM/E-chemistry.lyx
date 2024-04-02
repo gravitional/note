@@ -2361,7 +2361,7 @@ R_{2}^{e}(N_{m})= & \int_{\Omega^{e}}N_{m}^{e}\left[{\color{red}D_{i}\,\nabla^{2
 
 \end_inset
 
-其中使用了第一标量格林定理，
+其中使用了第一标量格林定理 和 
 \begin_inset Formula $\nabla\cdot\sbf u=0$
 \end_inset
 
@@ -2602,7 +2602,7 @@ C_{i} & =N_{n}C_{i,n}\\
 
 \end_inset
 
-并完成有限元组装过程，最终关于自由度的方程形如：
+并完成有限元组装过程，代入ODE形式
 \begin_inset Formula 
 \begin{equation}
 M\,X^{\prime}\left(t\right)+K\,X\left(t\right)=b\left(t\right)\label{eq:ode1}
@@ -2610,7 +2610,7 @@ M\,X^{\prime}\left(t\right)+K\,X\left(t\right)=b\left(t\right)\label{eq:ode1}
 
 \end_inset
 
-
+并定义：
 \begin_inset Formula 
 \begin{align*}
 M & \Rightarrow\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\\
@@ -2810,6 +2810,74 @@ noprefix "false"
 。
 \end_layout
 
+\begin_layout Section
+sundials 形式
+\end_layout
+
+\begin_layout Standard
+sundials 定义的 ODE 方程的一般形式
+\begin_inset Formula 
+\[
+F(t,y,\dot{y})=0,\quad y(t_{0})=y_{0},\quad\dot{y}(t_{0})=\dot{y}_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于电场
+\begin_inset Formula 
+\[
+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+K & \Rightarrow\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}\\
+b & \Rightarrow\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F(t,X,\dot{X})=K\,X(t)-b(t)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于浓度场
+\begin_inset Formula 
+\begin{align*}
+M & \Rightarrow\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\\
+K & \Rightarrow-\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\\
+ & \quad\;+\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\\
+b & \Rightarrow\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F(t,X,\dot{X})=M\,X^{\prime}\left(t\right)+K\,X\left(t\right)-b\left(t\right)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 浓度扩散场
 \end_layout
@@ -2846,7 +2914,11 @@ noprefix "false"
 
 \end_inset
 
-定义
+代入 
+\begin_inset Formula $M\,X^{\prime}\left(t\right)+K\,X\left(t\right)=b\left(t\right)$
+\end_inset
+
+并定义
 \begin_inset Formula 
 \begin{align}
 M\Rightarrow & \int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega}\nonumber \\

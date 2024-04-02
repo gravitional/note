@@ -358,9 +358,10 @@ IDA 使用的积分方法是 variable–order, variable–coefficient BDF（后�
 
  阶的BDF写作 multistep formula
 \begin_inset Formula 
-\begin{equation}
-\sum_{i=0}^{q}\alpha_{n,i}\,y_{n-i}=h_{n}\dot{y}_{n},\label{eq:6.2}
-\end{equation}
+\begin{align}
+ & \sum_{i=0}^{q}\alpha_{n,i}\,y_{n-i}=h_{n}\dot{y}_{n},\label{eq:6.2}\\
+\text{i.e.}\quad & \alpha_{n,0}y_{n}+\alpha_{n,1}y_{n-1}+\cdots\alpha_{n,5}y_{n-5}=h_{n}\dot{y}_{n}\label{eq:6.2b}
+\end{align}
 
 \end_inset
 
@@ -534,15 +535,55 @@ D_{F}(x_{k})\left(x_{k+1}-x_{k}\right)=-F(x_{k}),\quad k=0,1,2,\cdots
 \begin_inset Formula $J$
 \end_inset
 
-是系统 Jacobian 的某种近似
+是系统 Jacobian 的某种近似，由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.2b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\alpha_{n,0}y_{n}+\alpha_{n,1}y_{n-1}+\cdots\alpha_{n,5}y_{n-5}=h_{n}\dot{y}_{n}
+\]
+
+\end_inset
+
+多步BDF下的
+\begin_inset Formula $J$
+\end_inset
+
+可以近似为
 \begin_inset Formula 
 \begin{equation}
-[J]_{n\times n}=\frac{\partial G}{\partial y}=\frac{\partial F}{\partial y}+\alpha\frac{\partial F}{\partial\dot{y}},\label{eq:6.6}
+[J]_{n\times n}=\frac{\partial G}{\partial y}=\frac{\partial F}{\partial y}+\alpha\frac{\partial F}{\partial\dot{y}},\quad J_{pq}=\frac{\partial G_{p}}{\partial y_{q}}\label{eq:6.6}
 \end{equation}
 
 \end_inset
 
-其中
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p,q$
+\end_inset
+
+是矢量
+\begin_inset Formula $G$
+\end_inset
+
+和
+\begin_inset Formula $y$
+\end_inset
+
+的分量指标。
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\alpha=\alpha_{n,0}/h_{n}$
 \end_inset
 
@@ -2421,7 +2462,7 @@ R_{i}(x,y,c)=c^{i}\,b_{i}+\sum_{j=1}^{s}{\color{blue}a_{ij}}\,c^{i}c^{j}.
 \begin_inset Formula $(x,y)$
 \end_inset
 
- 的函数。多维向量的压缩方案如下
+ 的函数。计算中多维向量的压缩方案如下
 \end_layout
 
 \begin_layout Enumerate
@@ -2547,7 +2588,15 @@ noprefix "false"
 \begin_inset Formula $\beta=1000$
 \end_inset
 
-。对于初始条件，我们将每种猎物的浓度都设定为满足边界条件的简单多项式曲线，而捕食者的浓度都设定为一个统一值：
+。对于初始条件，我们将每种
+\series bold
+猎物
+\series default
+的浓度都设定为满足边界条件的简单多项式曲线，而
+\series bold
+捕食者
+\series default
+的浓度都设定为一个统一值：
 \begin_inset Formula 
 \[
 c^{i}(x,y,0)=\begin{cases}
@@ -2588,19 +2637,23 @@ noprefix "false"
 \begin_inset Formula $c^{i}(x_{j},y_{k},t)$
 \end_inset
 
- 的值组成，首先按物种索引 
+ 的值组成，变化最快的指标是 
+\series bold
+物种索引 
+\series default
+
 \begin_inset Formula $i$
 \end_inset
 
- 分组，然后按 
+ ，然后是 
 \begin_inset Formula $x$
 \end_inset
 
- 分组，最后按 
+ 离散指标，最后是 
 \begin_inset Formula $y$
 \end_inset
 
-分组。在本例中，我们取 
+。在本例中，我们取 
 \begin_inset Formula $p=1$
 \end_inset
 
@@ -2617,9 +2670,25 @@ noprefix "false"
 \end_inset
 
 。
-\end_layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
-\begin_layout Remark
+\begin_layout Plain Layout
 导数的中心差分公式
 \begin_inset Formula 
 \[
@@ -2636,6 +2705,71 @@ f''(x)=\frac{f(x+h)-2f(x)+f(x-h)}{h^{2}}-\frac{h^{2}}{12}f^{(4)}(c)
 
 \end_inset
 
+在边界上满足齐次诺伊曼条件，即 
+\begin_inset Formula $f'(x)=0$
+\end_inset
+
+，从而
+\begin_inset Formula 
+\[
+f''(x)=\frac{2f(x-h)-2f(x)}{h^{2}}
+\]
+
+\end_inset
+
+在程序中，通过改变差分公式的方向实现 齐次边界条件。即在边界上，由于 
+\begin_inset Formula $f(x+h)$
+\end_inset
+
+ 不存在，改成 
+\begin_inset Formula $f(x-h)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=C,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+idyu = (jy != MY - 1) ? NSMX : -NSMX;// y 方向的 上节点
+\end_layout
+
+\begin_layout Plain Layout
+
+idyl = (jy != 0) ? NSMX : -NSMX;// y 方向的 下节点
+\end_layout
+
+\begin_layout Plain Layout
+
+...
+\end_layout
+
+\begin_layout Plain Layout
+
+//y的差分公式
+\end_layout
+
+\begin_layout Plain Layout
+
+dcyli = *(cxy + is) - *(cxy - idyl + is);
+\end_layout
+
+\begin_layout Plain Layout
+
+dcyui = *(cxy + idyu + is) - *(cxy + is);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 从Jacobian 的形式可知，
 \begin_inset Formula $J$
 \end_inset
@@ -2672,6 +2806,15 @@ J=\frac{\partial\sbf G}{\partial\sbf y}=\frac{\partial\sbf F}{\partial\sbf y}+\a
 
 \end_inset
 
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
 其中系统满足方程
 \begin_inset Formula $F(t,y,\dot{y})=0$
 \end_inset
