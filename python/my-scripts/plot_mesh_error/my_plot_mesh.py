@@ -11,8 +11,8 @@ import matplotlib.patches as mpatches
 from _nodes import in_nodes_coord
 from _Velements import in_Velements
 from _Selements import in_Selements
-from _inFaces import in_inner_faces
-from my_conf import *
+from _inFaces_0 import in_inner_faces
+from my_conf import VndOS, a_color_V, a_ftsz_VS, a_color_Nd, ndPosX, ndPosY, a_alpha_VS, a_lw_VS, a_lw_in, myText, a_dlt_nd, SndOS, a_color_S, IFndOS, a_in_text_ws, a_color_in, a_alpha_in, a_ftsz_in, VndRaffle, SndRaffle, a_list_spec, a_color_V_spec, a_ftsz_VS_spec
 
 
 #=============== 画出体单元; 输入 node 坐标list; 体单元构成list
@@ -23,6 +23,12 @@ def plot_Veles(nodeData: ndarray, Velements: ndarray):
     ylst = np.empty(1 + nodeN)
     # 遍历体单元列表
     for eleID in range(VeleLen):
+        _color_V = a_color_V
+        _ftsz_VS = a_ftsz_VS
+        # 突出显示特定单元
+        if eleID in a_list_spec:
+            _color_V = a_color_V_spec
+            _ftsz_VS = a_ftsz_VS_spec
         for nodeIdx in range(nodeN):
             # 获取节点获取节点的 index
             nodeID = Velements[eleID, nodeIdx + VndOS]
@@ -39,13 +45,13 @@ def plot_Veles(nodeData: ndarray, Velements: ndarray):
                  list(ylst),
                  linestyle='-',
                  linewidth=a_lw_VS,
-                 color=a_color_V,
+                 color=_color_V,
                  alpha=a_alpha_VS)
         myText(center_x,
                center_y,
                str(eleID),
-               fontsize=a_ftsz_VS,
-               color=a_color_V)
+               fontsize=_ftsz_VS,
+               color=_color_V)
 
 
 #=============== 画出节点, 二阶单元包括中间节点
@@ -106,6 +112,8 @@ def plot_Facets(nodeData: ndarray, inFaces: ndarray):
             nodeID = inFaces[eleID, nodeIdx + IFndOS]
             xlst[nodeIdx] = nodeData[nodeID, ndPosX]
             ylst[nodeIdx] = nodeData[nodeID, ndPosY]
+        SndRaffle(xlst)
+        SndRaffle(ylst)
         maxe.plot(xlst,
                   ylst,
                   linestyle='-',
@@ -115,8 +123,8 @@ def plot_Facets(nodeData: ndarray, inFaces: ndarray):
                   alpha=a_alpha_in)
         nodeIDs = inFaces[eleID, IFndOS:]
         pos_text1 = [
-            np.average(xlst, weights=a_in_text_ws),
-            np.average(ylst, weights=a_in_text_ws)
+            np.average(xlst, weights=a_in_text_ws(nodeN)),
+            np.average(ylst, weights=a_in_text_ws(nodeN))
         ]
         # 标注信息为: ownerID, neighborID, node1, node2
         myText(*pos_text1,

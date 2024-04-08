@@ -11,7 +11,7 @@ cfg_sdk_pattern: str = r'solversdk_develop_*.rar'  # sdk 文件名的模式, uni
 cfg_sdk_pattern_regex: str = r'solversdk_develop_.+\.rar'  # sdk 文件名的模式, regex expression
 
 # --------------------------- sdk ftp 地址配置
-cfg_sdk_ftp_address = 'xxx'
+cfg_sdk_ftp_address = 'xxxx'
 cfg_sdk_user = 'xxx'
 cfg_sdk_passwd = 'xxx'
 cfg_sdk_remote_dir = '/SDK/SolverSDK/develop/'  # 远程目录

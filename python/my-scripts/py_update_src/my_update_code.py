@@ -12,13 +12,13 @@ _args_git_sub = [
 ]
 
 _args_cmake = [
-    '-DRELEASE_WITH_DEBUG_INFO=OFF', '-S', cfg_solver_dir, '-B',
+    '-DRELEASE_WITH_DEBUG_INFO=ON', '-S', cfg_solver_dir, '-B',
     cfg_solver_build_dir
 ]
 
 
-def pull_and_cmake():
-    prt_sep('Pull from repo: solver\n')
+def run_git_pull(msg: str = ''):
+    prt_sep(f'Pull from repo: solver {msg}\n')
     p = subp.Popen([cfg_exe_git, *_args_git], shell=False)
     p.communicate()
 
@@ -26,11 +26,19 @@ def pull_and_cmake():
     p = subp.Popen([_exe_git_sub, *_args_git_sub], shell=False)
     p.communicate()
 
+
+def run_cmake():
     prt_sep('Running CMake\n')
     p = subp.Popen([cfg_exe_cmake, *_args_cmake], shell=False)
     p.communicate()
 
 
+def run_git_and_cmake():
+    run_git_pull('第一遍')
+    # run_git_pull('第二遍')  # 两次 pull, 防止网格不稳定
+    run_cmake()
+
+
 if __name__ == '__main__':
-    pull_and_cmake()
+    run_git_and_cmake()
     input('更新 solver 代码成功, 按Enter结束:')

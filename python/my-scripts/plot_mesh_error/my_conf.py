@@ -42,7 +42,7 @@ ndPosY = 2
 ndPosZ = 3
 VndOS: int = 1  # volume ele 构成节点的 列偏移
 SndOS: int = 3  # surface ele 构成节点的 列偏移
-IFndOS: int = 2  # inner faces 构成节点的 列偏移
+IFndOS: int = 4  # inner facets 构成节点的 列偏移
 ErrID_OS: int = 0  # error data 中 ele Global ID 的列偏移
 ErrV_OS: int = 1  # error data 中 error value 的 列偏移
 ErrRI_OS: int = 2  # error data 中 Refine Indicator 的列偏移
@@ -61,14 +61,27 @@ a_irange = 0.006  # 图形范围
 a_dlt_nd: float = a_dlt * a_irange  # 节点文字偏移
 a_ftsz_VS: float = 10  # 体,面单元 文字标注大小
 a_ftsz_in: float = 7  # inner边 文字标注大小
-a_in_text_ws = [0.60, 0.40]  # inner边 文字位置, 节点坐标的权重
 
-a_color_V = 'y'  # 体单元 line 颜色
-a_color_Nd = 'g'  # 节点ID text 颜色
-a_color_S = 'r'  # 面单元 line arrow 颜色
-a_color_in = 'b'  # inner Edge line, text 颜色
+
+# inner边 文字位置, 节点坐标的权重
+def a_in_text_ws(nodeN):
+    if 2 == nodeN:
+        return [0.60, 0.40]
+    elif 3 == nodeN:
+        return [0.60, 0.0, 0.40]
+
+
+a_color_V = 'olive'  # 体单元 line 颜色
+a_color_Nd = 'green'  # 节点ID text 颜色
+a_color_S = 'red'  # 面单元 line arrow 颜色
+a_color_in = 'blue'  # inner Edge line, text 颜色
 
 a_alpha_VS = 0.20  # 体单元和面单元的透明度
 a_alpha_in = 0.50  # 内部边界的透明度
 a_lw_VS = 3.0  # 体单元, 表面单元 线宽度
 a_lw_in = 1.0  # 内部边 线宽度
+
+# --------------------------- 特殊上色区域
+a_list_spec = [1, 2, 3, 4]
+a_color_V_spec = 'magenta'
+a_ftsz_VS_spec = '12'
