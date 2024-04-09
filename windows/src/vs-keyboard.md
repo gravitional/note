@@ -2,12 +2,20 @@
 
 ## 自定义快捷键
 
+[default-keyboard-shortcuts](https://learn.microsoft.com/zh-cn/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio)
 [快速切换 头/源文件 (.h/.cpp)](https://blog.csdn.net/woloveguojia/article/details/122364839)
 
 菜单栏>`工具`>`选项`>`环境`>`键盘`,
 在下面 "显示命令包含" 里面输入关键字 : `编辑器上下文菜单.代码窗口.切换标题代码文件`
 最后在 `按快捷键` 中输入按下自己的组合键,
 可以选择配置 `全局属性`, 或者限定快捷键的生效范围.
+
+## 常用快捷键
+
+`Ctrl+k, ctrl+o`; `.h`/`.cpp` 切换
+`Ctrl+Q`; general 查找
+`Ctrl+,`; 查找符号，文件等等
+`Ctrl+Shift+T`; 打开文件列表
 
 ### 编辑
 
