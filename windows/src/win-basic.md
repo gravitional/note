@@ -184,7 +184,19 @@ YNDMB-2QCFC-HTFBP-JF9HC-FX849
 
 ### 查看内存硬件信息
 
-`pwsh` 中输入`wmic memorychip`.
+[Windows系统怎么看计算机的RAM(内存)是DDR5还是DDR4](https://www.zhihu.com/question/606481711)
+
+`pwsh` 中输入`wmic memorychip`. 具体有:
+
+```bash
+wmic memorychip get Speed,SMBIOSMemoryType
+```
+
+速度区间; DDR; SMBIOSMemoryType 对应关系
+
++ 1600~2400MHz; DDR3; 24
++ 2133~4400MHz; DDR4; 26
++ 4800~8000MHz; DDR5; 34
 
 ### DistributedCOM错误10016
 

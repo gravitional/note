@@ -3,6 +3,13 @@
 ## 预定义宏
 
 [预定义宏](https://learn.microsoft.com/zh-cn/cpp/preprocessor/predefined-macros?view=msvc-170)
+[Distinguish between Clang CL and MSVC CL](https://stackoverflow.com/questions/67599384/distinguish-between-clang-cl-and-msvc-cl)
+
+区分 MSVC-cl 和 clang-cl
+
+The macro you're looking for is `__clang__`.
+Note that the regular Clang (not only Clang-CL) also defines it,
+so you want to check for both `__clang__` and _MSC_VER at the same time.
 
 ### 标准预定义宏
 
