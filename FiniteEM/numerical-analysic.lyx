@@ -8724,11 +8724,420 @@ GMRES 典型用于 large and sparse
 \end_layout
 
 \begin_layout Section
-初值问题
+初值问题 Initial Value Problems
+\end_layout
+
+\begin_layout Standard
+如下初值问题的解
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+y'=cy(1-y)\\
+y(0)=y_{0}\\
+t\in\left[0,T\right]
+\end{cases}\label{eq:6.4}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+欧拉方法 Euler's Method
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\sbf w_{0} & =\sbf y_{0}\nonumber \\
+\sbf w_{i+1} & =\sbf w_{i}+h\,\sbf f(t_{i},\sbf w_{i})\label{eq:s6.7}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+解的存在性，唯一性和连续性 Existence, uniqueness and continuity
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Lipschitz continuous"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\abs{f(t,y_{1})-f(t,y_{2})}\le L\abs{y_{1}-y_{2}}
+\]
+
+\end_inset
+
+对于
+\begin_inset Formula $S$
+\end_inset
+
+上的任意 
+\begin_inset Formula $(t,y_{1}),(t,y_{2})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition
+对于
+\begin_inset Formula $y$
+\end_inset
+
+ Lipschitz 连续的函数一定是
+\begin_inset Formula $y$
+\end_inset
+
+连续的，但不一定
+\begin_inset Formula $y$
+\end_inset
+
+可微。
+\end_layout
+
+\begin_layout Subsection
+一阶线性方程 First-order linear equations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+y' & =g(t)y+h(t)\nonumber \\
+y(a) & =y_{a}\nonumber \\
+t & \text{in}\quad[a,b]\label{eq:6.15}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+y(t)=G^{-1}(t)\int G(t)\,h(t)\dd{t}\label{eq:6.16}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $G(t)=e^{-\int^{t}g(s)\dd{s}}$
+\end_inset
+
+，指数上是
+\begin_inset Formula $-g$
+\end_inset
+
+的原函数。
 \end_layout
 
 \begin_layout Section
-IVP求解器的分析
+IVP求解器的分析 Analysis of IVP Solvers
+\end_layout
+
+\begin_layout Subsection
+局部和全局截断误差 Local and global truncation error
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+y'=f(t,y)\\
+y(a)=y_{a}\\
+t\;\text{in}\;\left[a,b\right]
+\end{cases}\label{eq:6.18}
+\end{equation}
+
+\end_inset
+
+局部截断误差（
+\series bold
+local truncation error
+\series default
+），或称 一步误差（one-step error）
+\begin_inset Formula 
+\begin{equation}
+e_{i+1}=\abs{w_{i+1}-z(t_{i+1})},\label{eq:6.19}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+g_{i} & \le\nonumber \\
+ & =\nonumber \\
+ & \le\nonumber \\
+ & =\frac{Ch^{k}}{L}\left(E^{L(t_{i}-a)}-1\right).\label{eq:6.24}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $E$
+\end_inset
+
+表示自然底数。
+\end_layout
+
+\begin_layout Theorem
+sadf
+\begin_inset Formula 
+\begin{equation}
+g_{i}=\abs{w_{i}-y_{i}}\le\frac{Ch^{k}}{L}\left(E^{L(t_{i}-a)}-1\right)\label{eq:6.25}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果当 
+\begin_inset Formula $h\to0$
+\end_inset
+
+时 ODE求解器满足
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:6.25"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，那么称求解器是
+\series bold
+
+\begin_inset Formula $k$
+\end_inset
+
+阶
+\series default
+的方法。例6.7 表明欧拉方法的局部截断误差的界是 
+\begin_inset Formula $Mh^{2}/2$
+\end_inset
+
+，因而欧拉方法的阶数是
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+显式梯形方法 The explicit Trapezoid Method
+\end_layout
+
+\begin_layout Standard
+方程
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+y'=f(t,y)\\
+y(t_{i})=w_{i}\\
+t\in\left[t_{i},t_{i+1}\right]
+\end{cases}\label{eq:s6.20}
+\end{equation}
+
+\end_inset
+
+
+\series bold
+显式梯形方法
+\series default
+
+\begin_inset Formula 
+\begin{align}
+w_{0} & =y_{0}\nonumber \\
+\hat{f}_{i+1} & =f(t_{i}+h,w_{i}+hf_{i})\nonumber \\
+w_{i+1} & =w_{i}+\frac{h}{2}\left[f_{i}+\hat{f}_{i+1}\right]\label{eq:s6.29}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $f_{i}=f(t_{i},w_{i})$
+\end_inset
+
+，
+\begin_inset Formula $\hat{f}_{i+1}$
+\end_inset
+
+是
+\begin_inset Formula $f_{i+1}$
+\end_inset
+
+的估计值。
+\end_layout
+
+\begin_layout Standard
+梯形方法被称为显示方法是由于新点的近似值
+\begin_inset Formula $w_{i+1}$
+\end_inset
+
+可以使用前面的
+\begin_inset Formula $w_{i}$
+\end_inset
+
+，
+\begin_inset Formula $t_{i}$
+\end_inset
+
+以及
+\begin_inset Formula $h$
+\end_inset
+
+构成的显式公式来确定。欧拉方法也是一个显式的方法。
+\end_layout
+
+\begin_layout Standard
+显式梯形方法在文献中也被称为 改进的欧拉方法和 Heun 方法。
+\end_layout
+
+\begin_layout Subsection
+泰勒方法 Taylor Methods
+\end_layout
+
+\begin_layout Standard
+sd
+\begin_inset Formula 
+\begin{align}
+w_{0} & =y_{0}\nonumber \\
+w_{i+1} & =w_{i}+h\,f(t_{i},w_{i})+\frac{h^{2}}{2}f'(t_{i},w_{i})+\cdots+\frac{h^{k}}{k!}f^{(k-1)}(t_{i},w_{i})\label{eq:s6.34}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $f'$
+\end_inset
+
+表示
+\begin_inset Formula $f(t,y(t))$
+\end_inset
+
+关于
+\begin_inset Formula $t$
+\end_inset
+
+的全导数。例如，
+\begin_inset Formula 
+\[
+f'(t,y)=f_{t}(t,y)+f_{y}(t,y)y'(t)=f_{t}(t,y)+f_{y}(t,y)f(t,y)
+\]
+
+\end_inset
+
+ 其中
+\begin_inset Formula $f_{t}$
+\end_inset
+
+表示
+\begin_inset Formula $f$
+\end_inset
+
+关于
+\begin_inset Formula $t$
+\end_inset
+
+的偏导数，
+\begin_inset Formula $f_{y}$
+\end_inset
+
+表示
+\begin_inset Formula $f$
+\end_inset
+
+关于
+\begin_inset Formula $y$
+\end_inset
+
+的偏导数。局部截断误差为
+\begin_inset Formula 
+\[
+y_{i+1}-w_{i+1}=\frac{h^{k+1}}{(k+1)!}y^{(k+1)}(c)
+\]
+
+\end_inset
+
+即
+\begin_inset Formula $k$
+\end_inset
+
+阶的泰勒方法的局部截断误差是
+\begin_inset Formula $h^{k+1}$
+\end_inset
+
+，根据定理6.4，该方法是
+\begin_inset Formula $k$
+\end_inset
+
+阶方法。
+\end_layout
+
+\begin_layout Standard
+一阶泰勒方法是
+\begin_inset Formula 
+\[
+w_{i+1}=w_{i}+h\,f(t_{i},w_{i})
+\]
+
+\end_inset
+
+这正是欧拉方法。二阶泰勒方法是
+\begin_inset Formula 
+\[
+w_{i+1}=w_{i}+h\,f(t_{i},w_{i})+\frac{1}{2}h^{2}\left[f_{i}(t_{i},w_{i})+f_{y}(t_{i},w_{i})f(t_{i},w_{i})\right]
+\]
+
+\end_inset
+
+尽管二阶泰勒方法是二阶方法，注意到需要用户手工确定偏导数。而显式梯形方法
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:s6.29"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+仅仅需要调用
+\begin_inset Formula $f(t,y)$
+\end_inset
+
+本身的值。
+\end_layout
+
+\begin_layout Standard
+概念上，泰勒方法告诉我们任何阶的ODE方法都存在，如
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:s6.34"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示。但是该方法的麻烦之处在于，需要计算公式中出现的函数
+\begin_inset Formula $f$
+\end_inset
+
+的偏导数。由于可以推导出相同阶但不需要计算偏导数的方法，泰勒方法仅仅用于特定的用途。
 \end_layout
 
 \begin_layout Section

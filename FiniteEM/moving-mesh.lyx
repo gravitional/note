@@ -1315,5 +1315,197 @@ Weak约束
 （默认）。
 \end_layout
 
+\begin_layout Chapter
+moving mesh solver
+\end_layout
+
+\begin_layout Section
+刚体平动和转动
+\end_layout
+
+\begin_layout Standard
+电磁分析中经常会处理的运动问题包括转动和平动两种。对于转动问题，转动自由度为角度
+\begin_inset Formula $\theta$
+\end_inset
+
+，运动方程表示为
+\begin_inset Formula 
+\[
+\mathcal{I}\frac{\dd[2]\theta}{\dd{t^{2}}}+\beta\frac{\dd\theta}{\dd{t}}=T(t)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\mathcal{I}$
+\end_inset
+
+为转动惯量，
+\begin_inset Formula $\beta$
+\end_inset
+
+为阻尼系数，
+\begin_inset Formula $T(t)$
+\end_inset
+
+为所受力矩。对于平动问题，平动自由度为位移
+\begin_inset Formula $x$
+\end_inset
+
+，运动方程表示为
+\begin_inset Formula 
+\[
+m\frac{\dd[2]x}{\dd{t^{2}}}+\beta\frac{\dd x}{\dd{t}}=F(t)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $m$
+\end_inset
+
+为质量，
+\begin_inset Formula $F(t)$
+\end_inset
+
+为所受力。
+\begin_inset Formula $x_{0}=x$
+\end_inset
+
+，
+\begin_inset Formula $x_{1}=x'$
+\end_inset
+
+，
+\begin_inset Formula $x_{2}=x''$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+写成一阶ODE组
+\begin_inset Formula 
+\begin{align*}
+x_{0}^{\prime} & =x_{1}\\
+mx_{1}^{\prime} & =-\beta x_{1}+F(t)
+\end{align*}
+
+\end_inset
+
+向量形式为
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}D}\,\sbf x' & ={\color{red}C}\,\sbf x+\sbf F\\
+{\color{blue}\left[\begin{array}{cc}
+1 & 0\\
+0 & m
+\end{array}\right]}\frac{\dd}{\dd{t}}\left[\begin{array}{c}
+x_{0}\\
+x_{1}
+\end{array}\right] & ={\color{red}\left[\begin{array}{cc}
+0 & 1\\
+0 & -\beta
+\end{array}\right]}\left[\begin{array}{c}
+x_{0}\\
+x_{1}
+\end{array}\right]+\left[\begin{array}{c}
+0\\
+F(t)
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+后向欧拉方法
+\end_layout
+
+\begin_layout Standard
+使用后向欧拉方法，代入 backwards导数展开式
+\begin_inset Formula 
+\[
+h\sbf x'_{i+1}\approx\sbf x_{i+1}-\sbf x_{i}
+\]
+
+\end_inset
+
+联立 ODEs在
+\begin_inset Formula $t_{i+1}$
+\end_inset
+
+的形式（其中，
+\begin_inset Formula $F_{i+1}=F(t_{i+1})$
+\end_inset
+
+，
+\begin_inset Formula $D,C$
+\end_inset
+
+系数矩阵也取相应时刻值）
+\begin_inset Formula 
+\[
+{\color{blue}D}\,\sbf x{}_{i+1}^{\prime}={\color{red}C}\,\sbf x_{i+1}+\sbf F_{i+1}
+\]
+
+\end_inset
+
+消去
+\begin_inset Formula $\sbf x{}_{i+1}^{\prime}$
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+\left(D_{i+1}-hC_{i+1}\right)\sbf x_{i+1}=D_{i+1}\,\sbf x_{i}+h\,F_{i+1}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\left(h^{-1}D_{i+1}-C_{i+1}\right)\sbf x_{i+1}=h^{-1}D_{i+1}\,\sbf x_{i}+F_{i+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+显式梯形方法
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\beta$
+\end_inset
+
+显式梯形法的公式为
+\begin_inset Formula 
+\[
+\left(2h^{-1}M+K\right){\color{blue}x_{i+1}}=\left(2h^{-1}M-K\right)x_{i}+\left(b_{i+1}+b_{i}\right)
+\]
+
+\end_inset
+
+对应到此处的符号是
+\begin_inset Formula 
+\[
+\left(2h^{-1}D+C\right){\color{blue}x_{i+1}}=\left(2h^{-1}D-C\right)x_{i}+\left(b_{i+1}+b_{i}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
 \end_body
 \end_document

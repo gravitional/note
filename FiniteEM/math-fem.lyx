@@ -9178,7 +9178,7 @@ y_{n+1}^{(k+1)}=y_{n}+\frac{h}{24}\left[{\color{blue}9}f(x_{n+1},y_{n+1}^{(0)})+
 \end_layout
 
 \begin_layout Section
-beta方法,exa1
+beta显式梯形方法1
 \end_layout
 
 \begin_layout Standard
@@ -9490,7 +9490,7 @@ f = Table[
 \end_layout
 
 \begin_layout Section
-beta方法,exa2
+beta显式梯形方法2
 \end_layout
 
 \begin_layout Standard
@@ -9543,7 +9543,7 @@ x\left(t+\Delta t\right)=x\left(t\right)+\beta\Delta t\,x^{\prime}\left(t\right)
 \end_inset
 
  对应时刻 
-\begin_inset Formula $t+\Delta t$
+\begin_inset Formula $t+n\Delta t$
 \end_inset
 
 ，联立方程
@@ -9850,50 +9850,98 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-sss2
+beta显式梯形方法3
 \end_layout
 
 \begin_layout Standard
-general ODE form：待整理
+设一阶常微分方程的形式为
+\begin_inset Formula 
+\begin{equation}
+\mathcal{M}\,x^{\prime}(t)+\mathcal{K}[x(t)]=b(t)\label{eq:beta3}
+\end{equation}
+
+\end_inset
+
+引入可调参数
+\begin_inset Formula $\beta$
+\end_inset
+
+（
+\begin_inset Formula $0\le\beta\le1$
+\end_inset
+
+），取离散步长为
+\begin_inset Formula $h$
+\end_inset
+
+，将函数
+\begin_inset Formula $x(t+h)$
+\end_inset
+
+表示为
 \begin_inset Formula 
 \[
-M\,x^{\prime}(t)+K\,x(t)+L[x(t)]\,x(t)+F[x(t)]=b(t)
+x\left(t+h\right)=x\left(t\right)+\beta\,h\,x^{\prime}\left(t\right)+\overline{\beta}\,h\,x^{\prime}\left(t+\Delta t\right)
 \]
 
 \end_inset
 
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
 
+；
+\begin_inset Formula $\beta=0$
+\end_inset
+
+ 对应后向欧拉。
+\series bold
+以下用
+\begin_inset Formula $i$
+\end_inset
+
+标记时间步
+\series default
+，即指标 
+\begin_inset Formula $i+1$
+\end_inset
+
+ 对应时刻 
+\begin_inset Formula $t+i\,h$
+\end_inset
+
+，联立方程
 \begin_inset Formula 
 \begin{align*}
- & x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime;n}+\beta\Delta t\,x^{\prime;n+1}\\
- & K\,x^{n}+L^{n}x^{n}+F^{n}+M\,x^{\prime;n}=b^{n}\\
- & K\,x^{n+1}+L^{n+1}x^{n+1}+F^{n+1}+M\,x^{\prime;n+1}=b^{n+1}
+ & x_{i+1}=x_{i}+\beta h\,x_{i}^{\prime}+\overline{\beta}h\,x_{i+1}^{\prime}\\
+ & \mathcal{M}_{i}\,x_{i}^{\prime}+\mathcal{K}_{i}=b_{i}\\
+ & \mathcal{M}_{i+1}\,x_{i+1}^{\prime}+\mathcal{K}_{i+1}=b_{i+1}
 \end{align*}
 
 \end_inset
 
-
+解得
 \begin_inset Note Note
 status collapsed
 
 \begin_layout Plain Layout
 Simplify@First@Solve[{ x[n + 1] == x[n] + 
 \backslash
-[CapitalDelta]t 
+[CapitalDelta]t*
 \backslash
-[Beta]b* x
+[Beta]* x
 \backslash
 [Prime][n] + 
 \backslash
 [CapitalDelta]t*
 \backslash
-[Beta]*x
+[Beta]b*x
 \backslash
-[Prime][n + 1], K*x[n] + L[n]*x[n] + F[n] + M*x
+[Prime][n + 1], M*x
 \backslash
-[Prime][n] == b[n], K*x[n + 1] + L[n + 1]*x[n + 1] + F[n + 1] + M*x
+[Prime][n] + K*x[n] + F[n] == b[n], M*x
 \backslash
-[Prime][n + 1] == b[n + 1] }, {x[n + 1], x
+[Prime][n + 1] + K*x[n + 1] + F[n + 1] == b[n + 1] }, {x[n + 1], x
 \backslash
 [Prime][n], x
 \backslash
@@ -9904,24 +9952,88 @@ Simplify@First@Solve[{ x[n + 1] == x[n] +
 
 
 \begin_inset Formula 
-\begin{align*}
-\left(\frac{R}{\Delta t}+\beta S\right){\color{blue}x^{n+1}} & =\left(\frac{R}{\Delta t}-\overline{\beta}S\right)x^{n}-\left(\beta\,F^{n+1}+\overline{\beta}\,F^{n}\right)+\left(\beta\,b^{n+1}+\overline{\beta}\,b^{n}\right)
-\end{align*}
+\begin{equation}
+h^{-1}\mathcal{M}_{i+1}{\color{blue}x_{i+1}}=h^{-1}\mathcal{M}_{i}x_{i}-\left(\overline{\beta}\,\mathcal{K}_{i+1}+\beta\,\mathcal{K}_{i}\right)+\left(\overline{\beta}\,b_{i+1}+\beta\,b_{i}\right)\label{eq:beta3b}
+\end{equation}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Example
+若
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ 与 
+\begin_inset Formula $t$
+\end_inset
+
+ 无关，即
+\begin_inset Formula $\mathcal{M}_{i+1}=\mathcal{M}_{i}=M$
+\end_inset
+
+；且
+\begin_inset Formula $\mathcal{K}$
+\end_inset
+
+线性于
+\begin_inset Formula $x$
+\end_inset
+
+ 即写作 
+\begin_inset Formula $K\,x$
+\end_inset
+
+，则代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta3b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得到
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\left[\frac{M}{\Delta t}+\beta K+\beta L^{n+1}\right]x^{n+1} & =\left(\frac{M}{\Delta t}-\overline{\beta}K-\overline{\beta}L^{n}\right)x^{n}-\left(\overline{\beta}F^{n}+\beta F^{n+1}\right)+\left(\overline{\beta}b^{n}+\beta b^{n+1}\right)\\
-\left(\beta K+\beta L^{n+1}+\frac{M}{\Delta t}\right)Mx^{\prime;n+1} & =-\overline{\beta}\,\left(K+L^{n+1}\right)b^{n}+\frac{M}{\Delta t}b^{n+1}+\overline{\beta}\,KF^{n}\\
- & +\overline{\beta}\,F^{n}L^{n+1}-\frac{M}{\Delta t}F^{n+1}+\overline{\beta}K^{2}x^{n}+\overline{\beta}KL^{n}x^{n}\\
- & +\overline{\beta}\,KL^{n+1}x^{n}-K\frac{M}{\Delta t}x^{n}-\frac{M}{\Delta t}L^{n+1}x^{n}+\overline{\beta}L^{n}L^{n+1}x^{n}
-\end{align*}
+\begin{equation}
+\left(h^{-1}M+\overline{\beta}\,K\right){\color{blue}x_{i+1}}=\left(h^{-1}M-\beta\,K\right)x_{i}+\left(\overline{\beta}\,b_{i+1}+\beta\,b_{i}\right)\label{eq:beta3c}
+\end{equation}
+
+\end_inset
+
+取
+\begin_inset Formula $\beta=0.5$
+\end_inset
+
+得到
+\begin_inset Formula 
+\begin{equation}
+\left(2h^{-1}M+K\right){\color{blue}x_{i+1}}=\left(2h^{-1}M-K\right)x_{i}+\left(b_{i+1}+b_{i}\right)\label{eq:beta3d}
+\end{equation}
 
 \end_inset
 
 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $b$
+\end_inset
+
+表示外力激励项。
 \end_layout
 
 \begin_layout Section
