@@ -1369,6 +1369,10 @@ m\frac{\dd[2]x}{\dd{t^{2}}}+\beta\frac{\dd x}{\dd{t}}=F(t)
 \end_inset
 
 为所受力。
+\end_layout
+
+\begin_layout Standard
+令
 \begin_inset Formula $x_{0}=x$
 \end_inset
 
@@ -1380,11 +1384,7 @@ m\frac{\dd[2]x}{\dd{t^{2}}}+\beta\frac{\dd x}{\dd{t}}=F(t)
 \begin_inset Formula $x_{2}=x''$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-写成一阶ODE组
+，将二阶ODE 改写成 ODE组
 \begin_inset Formula 
 \begin{align*}
 x_{0}^{\prime} & =x_{1}\\
@@ -1501,6 +1501,233 @@ or
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+solver 柱坐标系
+\end_layout
+
+\begin_layout Standard
+设坐标系变换矩阵 
+\begin_inset Formula $A$
+\end_inset
+
+: Local 
+\begin_inset Formula $\to$
+\end_inset
+
+ Global；local 系的基矢量 
+\begin_inset Formula $\sbf u_{i}$
+\end_inset
+
+ 可以写成
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{array}\right)
+\]
+
+\end_inset
+
+每一列表示一个基矢量。把 local 基矢量
+\begin_inset Formula $\sbf u_{i}$
+\end_inset
+
+变换到 global 下：
+\begin_inset Formula 
+\[
+A\,u_{i}=u_{i}^{\prime},\quad\text{e.g.}\;A\left(\begin{array}{c}
+1\\
+0\\
+0
+\end{array}\right)=\left(\begin{array}{c}
+a\\
+b\\
+c
+\end{array}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{i}^{\prime}$
+\end_inset
+
+ 为 local基矢量 
+\begin_inset Formula $\sbf u_{i}$
+\end_inset
+
+ 在 global 系下的表示。因此，
+\begin_inset Formula $A$
+\end_inset
+
+ 矩阵的第
+\begin_inset Formula $i$
+\end_inset
+
+列 就是 local基矢
+\begin_inset Formula $\sbf u_{i}$
+\end_inset
+
+在 global下的表示 
+\begin_inset Formula $u_{i}^{\prime}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+solver 测试：柱坐标Z轴与global 
+\series bold
+同向
+\series default
+，输入点在Z轴上。 局域柱坐标系为（分别是原点，
+\begin_inset Formula $Z$
+\end_inset
+
+方向归一矢量，
+\begin_inset Formula $R$
+\end_inset
+
+方向归一矢量）
+\begin_inset Formula 
+\[
+\mathrm{Org}:\left[\begin{array}{c}
+0.001\\
+0\\
+0
+\end{array}\right],\quad\mathrm{AxisZ}:\left[\begin{array}{c}
+0\\
+0\\
+1
+\end{array}\right],\quad\mathrm{AxisR}:\left[\begin{array}{c}
+1\\
+0\\
+0
+\end{array}\right]
+\]
+
+\end_inset
+
+GetRL2G 接口：获取 局部坐标系
+\begin_inset Formula $\to$
+\end_inset
+
+全局 坐标系的转换矩阵，输入 
+\begin_inset Formula $\mathrm{pos}=\{0.001,\;0,\;0.001\}$
+\end_inset
+
+，得到变换矩阵为：
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+0 & 1 & 0\\
+-1 & 0 & 0\\
+0 & 0 & 1
+\end{array}\right)
+\]
+
+\end_inset
+
+分别是柱坐标的 
+\begin_inset Formula $\mathrm{AxisR}$
+\end_inset
+
+（rho），
+\begin_inset Formula $\mathrm{AxisT}$
+\end_inset
+
+（theat），
+\begin_inset Formula $\mathrm{AxisZ}$
+\end_inset
+
+。对应的坐标系相比，绕
+\begin_inset Formula $Z$
+\end_inset
+
+轴旋转了
+\begin_inset Formula $-\pi/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+solver 测试：柱坐标Z轴与global
+\series bold
+ 不同向
+\series default
+，输入点在局域坐标Z轴上。
+\begin_inset Formula 
+\[
+\mathrm{Org}:\left[\begin{array}{c}
+0.002\\
+0\\
+0
+\end{array}\right],\quad\mathrm{AxisZ}:\left[\begin{array}{c}
+a\\
+0\\
+b
+\end{array}\right],\quad\mathrm{AxisR}:\left[\begin{array}{c}
+b\\
+0\\
+-a
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $a=0.3162\,2776\,6016\,83796$
+\end_inset
+
+，
+\begin_inset Formula $b=3a$
+\end_inset
+
+；输入 
+\begin_inset Formula $\mathrm{pos}=\mathrm{Org}+\mathrm{AxisZ}$
+\end_inset
+
+，得到变换矩阵：
+\begin_inset Formula 
+\[
+T=\left(\begin{array}{ccc}
+0.3 & 0 & a\\
+0 & a & 0\\
+-0.1 & 0 & b
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T^{-1}=\left(\begin{array}{ccc}
+3. & 0. & -1.\\
+0. & 10\,a & 0.\\
+a & 0. & b
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $T$
+\end_inset
+
+是正交的，但不是归一的。
 \end_layout
 
 \begin_layout Standard

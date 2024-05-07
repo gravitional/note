@@ -2,6 +2,20 @@
 
 tutorial/Numbers
 
+## 输入数字
+
+https://reference.wolfram.com/language/tutorial/InputSyntax.html#29301
+https://mathematica.stackexchange.com/questions/36792/entering-numbers-in-scientific-notation
+
+可以通过 `3*^-3` 的形式输入 `3E-3`, 表示科学计数法.
+
+输入 digits group, 翻译成数字
+
+```mathematica
+interpDigits[x_] := Interpreter["Number"]@StringDelete[x, " "];
+interpDigits@"0.3162 2776 6016 8379 6"
+```
+
 ## 数值精度
 
 tutorial/Numbers#21155

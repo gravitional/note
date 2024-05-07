@@ -18,9 +18,15 @@
 ```py
 x = 153.5102
 y = -153.5102
+
+# 默认空格填充 fill align sign
+# [[fill]align][sign]["z"]["#"]["0"][width][grouping_option]["." precision][type]
+
 # 使用字母 X 填充, 对齐方式可以为 = < >;
 # 井号#开启第二格式. G 表示 pretty 科学计数法
-#
+
+print(f'{x:<#20.16g}')
+
 print(f'ret 1: {x:Q=#.11G}')
 print(f'ret 2: {x:Q<+#.11G}')
 
