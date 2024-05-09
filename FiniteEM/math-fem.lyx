@@ -127,6 +127,67 @@ literal "false"
 \end_layout
 
 \begin_layout Section
+左逆元，右逆元
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "方阵的左逆等于右逆，本质的原因是什么？"
+target "https://www.zhihu.com/question/26549728"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "左逆，右逆，可逆"
+target "https://zhuanlan.zhihu.com/p/20589059"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+假设有且只有唯一单位元，满足 
+\begin_inset Formula $A\,I=I\,A=A$
+\end_inset
+
+。对于元素
+\begin_inset Formula $x$
+\end_inset
+
+，假设存在左逆
+\begin_inset Formula $L$
+\end_inset
+
+和右逆
+\begin_inset Formula $R$
+\end_inset
+
+满足 
+\begin_inset Formula $Lx=I$
+\end_inset
+
+，
+\begin_inset Formula $xR=I$
+\end_inset
+
+，易知
+\begin_inset Formula 
+\[
+L=L\,I=L\,x\,R=I\,R=R
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 原码，补码
 \end_layout
 
@@ -11089,64 +11150,600 @@ K'\,\delta\phi_{j}=b'
 \end_layout
 
 \begin_layout Section
-左逆元，右逆元
+拉普拉斯算符
+\end_layout
+
+\begin_layout Subsection
+离散拉普拉斯算符
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-name "方阵的左逆等于右逆，本质的原因是什么？"
-target "https://www.zhihu.com/question/26549728"
-literal "false"
-
+利用二阶导数的中心差分公式得到二维拉普拉斯方程
+\begin_inset Formula $u_{xx}+u_{yy}=0$
 \end_inset
 
-，
-\begin_inset CommandInset href
-LatexCommand href
-name "左逆，右逆，可逆"
-target "https://zhuanlan.zhihu.com/p/20589059"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-假设有且只有唯一单位元，满足 
-\begin_inset Formula $A\,I=I\,A=A$
-\end_inset
-
-。对于元素
-\begin_inset Formula $x$
-\end_inset
-
-，假设存在左逆
-\begin_inset Formula $L$
-\end_inset
-
-和右逆
-\begin_inset Formula $R$
-\end_inset
-
-满足 
-\begin_inset Formula $Lx=I$
-\end_inset
-
-，
-\begin_inset Formula $xR=I$
-\end_inset
-
-，易知
+的差分公式为
 \begin_inset Formula 
 \[
-L=L\,I=L\,x\,R=I\,R=R
+\frac{u(x+\Delta x,y)-2u(x,y)+u(x-\Delta x,y)}{(\Delta x)^{2}}+\frac{u(x,y+\Delta y)-2u(x,y)+u(x,y-\Delta y)}{(\Delta y)^{2}}=0
+\]
+
+\end_inset
+
+记
+\begin_inset Formula $\Delta x=\Delta y=h$
+\end_inset
+
+，
+\begin_inset Formula $x=ih$
+\end_inset
+
+，
+\begin_inset Formula $y=jh$
+\end_inset
+
+（
+\begin_inset Formula $i,j=0,1,2,\cdots,n-1$
+\end_inset
+
+），得显式公式
+\begin_inset Formula 
+\[
+u(i,j)=\frac{1}{4}\left[u(i+1,j)+u(i-1,j)+u(i,j+1)+u(i,j-1)\right]
+\]
+
+\end_inset
+
+这个公式的数据点之间的关系如图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:laplacian-op"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+所示，每一个点的计算都与周围四个相邻的点有关。稳定条件是 
+\begin_inset Formula $\frac{(\Delta y)^{2}}{(\Delta x)^{2}}\le1$
+\end_inset
+
+。类似地推导得出隐式的公式为
+\begin_inset Formula 
+\[
+{\color{blue}u(i,j+1)}-2u(i,j)+u(i,j-1)=-\frac{(\Delta y)^{2}}{(\Delta x)^{2}}\left[u(i+1,j+1)-2{\color{blue}u\left(i,j+1\right)}+u(i-1,j+1)\right]
+\]
+
+\end_inset
+
+它的截断误差是 
+\begin_inset Formula $\order{(\Delta x)^{2},(\Delta y)^{2}}$
+\end_inset
+
+，该式是恒稳定的。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fig-laplacian-op.png
+	lyxscale 80
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+椭圆型方程显示差分公式中的数据点的关系，即矩形网格上的拉普拉斯算子
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:laplacian-op"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+边界条件
+\end_layout
+
+\begin_layout Standard
+在矩形网格上组装方程是类似的，
+\end_layout
+
+\begin_layout Example
+第一类边界条件通过消除自由度，并移动到方程右边（Load中），用
+\begin_inset Formula $\varphi$
+\end_inset
+
+表示给定的边界值
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fig-laplacian-mesh.png
+	lyxscale 65
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+求解区域的网点的编号
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:laplacian-mesh"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+例如网格
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:laplacian-mesh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+对应方程如下（矩阵中的红色部分展示了拉普拉斯算符的特征）
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccccccc}
+-4 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+1 & -4 & 1 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 1 & -4 & 0 & 0 & 1 & 0 & 0 & 0\\
+1 & 0 & 0 & -4 & {\color{red}1} & 0 & 1 & 0 & 0\\
+0 & 1 & 0 & {\color{red}1} & {\color{red}{\color{red}-4}} & {\color{red}1} & 0 & 1 & 0\\
+0 & 0 & 1 & 0 & {\color{red}1} & -4 & 0 & 0 & 1\\
+0 & 0 & 0 & 1 & 0 & 0 & -4 & 1 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 1 & -4 & 1\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & -4
+\end{array}\right]\left[\begin{array}{c}
+\phi_{11}\\
+\phi_{12}\\
+\phi_{13}\\
+\phi_{21}\\
+\phi_{22}\\
+\phi_{23}\\
+\phi_{31}\\
+\phi_{32}\\
+\phi_{33}
+\end{array}\right]=\left[\begin{array}{c}
+-\varphi_{01}-\varphi_{10}\\
+-\varphi_{02}\\
+-\varphi_{03}-\varphi_{14}\\
+-\varphi_{20}\\
+0\\
+-\varphi_{24}\\
+-\varphi_{41}-\varphi_{30}\\
+-\varphi_{42}\\
+-\varphi_{43}-\varphi_{34}
+\end{array}\right]
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于第二类边界条件，给定法向导数值。设区域格点编号为
+\begin_inset Formula $0\sim m$
+\end_inset
+
+，
+\begin_inset Formula $0\sim n$
+\end_inset
+
+，对于右边界上的点 
+\begin_inset Formula $u_{in}$
+\end_inset
+
+，更右边的
+\begin_inset Formula $u_{in+1}$
+\end_inset
+
+是不存在的，边界条件相当于
+\begin_inset Formula 
+\[
+\frac{u_{i,n+1}-u_{i,n-1}}{2\Delta x}=0\quad\Rightarrow\quad u_{i,n+1}=u_{i,n-1}
+\]
+
+\end_inset
+
+代入差分公式得
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}u_{i,n+1}+u_{i,n-1}} & +u_{i-1,n}+u_{i+1,n}-4u_{i,n}=0\\
+\Rightarrow\quad2{\color{blue}u_{i,n-1}} & +u_{i-1,n}+u_{i+1,n}-4u_{i,n}=0
+\end{align*}
+
+\end_inset
+
+在网格
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:laplacian-mesh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，如果令格点
+\begin_inset Formula $34$
+\end_inset
+
+满足 齐次2nd边界条件，则新增自由度
+\begin_inset Formula $\phi_{34}$
+\end_inset
+
+，矩阵右下角局部修改如下：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+-4 & 1 & 0\\
+1 & -4 & {\color{red}1}\\
+0 & {\color{red}2} & -4
+\end{array}\right]\left[\begin{array}{c}
+\phi_{32}\\
+\phi_{33}\\
+{\color{red}\phi_{34}}
+\end{array}\right]=\left[\begin{array}{c}
+-\varphi_{42}\\
+-\varphi_{43}-\varphi_{34}\\
+{\color{red}-\varphi_{44}-\varphi_{24}}
+\end{array}\right]
+\]
+
+\end_inset
+
+因此，2nd条件改变 矩阵
+\begin_inset Formula $A$
+\end_inset
+
+，2nd 条件 衔接边界点与内点。类似地可以处理第三类边界条件
+\begin_inset Formula 
+\[
+\frac{\partial\phi}{\partial n}+\gamma\phi=q.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+其他边界的处理是类似的
+\begin_inset Formula 
+\begin{align*}
+ & 2{\color{blue}u_{i,1}}+u_{i-1,0}+u_{i+1,0}-4u_{i,0}=0\\
+ & 2{\color{blue}u_{1,j}}+u_{0,j-1}+u_{0,j+1}-4u_{0,j}=0\\
+ & 2{\color{blue}u_{m-1,j}}+u_{m,j-1}+u_{m,j+1}-4u_{m,j}=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+拉普拉斯平滑
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Laplacian smoothing"
+target "https://en.wikipedia.org/wiki/Laplacian_smoothing"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Quote
+拉普拉斯平滑是一种 网格平滑算法。同名的还有 多项式收缩估计器（multinomial shrinkage estimator），也称为拉普拉斯平滑或
+ 加一平滑，请参见 
+\begin_inset CommandInset href
+LatexCommand href
+name "加法平滑"
+target "https://en.wikipedia.org/wiki/Additive_smoothing"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+拉普拉斯平滑（
+\series bold
+Laplacian smoothing 
+\series default
+）是一种平滑多边形网格（polygonal mesh）的算法。对于网格中的每个顶点，都会根据局部信息（如相邻顶点的位置）选择一个新位置，并将顶点移动到该位置。如
+果网格在拓扑上是一个矩形网格（即每个内部顶点都与四个相邻顶点相连），那么这个操作就会产生网格的 
+\begin_inset CommandInset href
+LatexCommand href
+name "Laplacian"
+target "https://en.wikipedia.org/wiki/Laplace_operator"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+更正式地说，平滑操作可以按顶点描述为
+\begin_inset Formula 
+\[
+\overline{x}_{i}=\frac{1}{N}\sum_{j=1}^{N}\overline{x}_{j}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $N$
+\end_inset
+
+是节点
+\begin_inset Formula $i$
+\end_inset
+
+ 的相邻顶点个数，
+\begin_inset Formula $\overline{x}_{j}$
+\end_inset
+
+ 是第
+\begin_inset Formula $j$
+\end_inset
+
+ 个 相邻顶点的位置，而 
+\begin_inset Formula $\overline{x}_{i}$
+\end_inset
+
+ 是节点
+\begin_inset Formula $i$
+\end_inset
+
+的新位置。
+\end_layout
+
+\begin_layout Section
+径向基函数插值 RBF
+\end_layout
+
+\begin_layout Standard
+ref: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Radial basis function interpolation"
+target "https://en.wikipedia.org/wiki/Radial_basis_function_interpolation"
+literal "false"
+
+\end_inset
+
+；《Meshfree Approximation Methods with MATLAB Gregory F.
+ Fasshauer》 p19, chap 2.2
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+径向基函数
+\series default
+（Radial basis function）插值法是近似理论中的一种先进方法，用于构建非结构化数据（可能在高维空间中）的高阶精确插值。插值的形式是径向基函数的
+加权和。RBF插值是一种无网格方法，即节点（域中的点）不需要位于结构化网格上，也不需要形成网格。它通常 spectrally accurate，即使在高维度下，
+对于大量节点也能保持稳定。
+\end_layout
+
+\begin_layout Standard
+许多插值方法都可以作为 algorithms for approximating linear operators 的理论基础，RBF 插值也不例外。RBF
+ 插值已被用于近似微分算子、积分算子和曲面微分算子。
+\end_layout
+
+\begin_layout Example
+令
+\begin_inset Formula $f(x)=\exp(x\cos(3\pi x))$
+\end_inset
+
+ and 令 
+\begin_inset Formula $x_{k}=\frac{k}{14}$
+\end_inset
+
+，
+\begin_inset Formula $k=0,1,\cdots,14$
+\end_inset
+
+ 是区间
+\begin_inset Formula $[0,1]$
+\end_inset
+
+上的等距离点。可以构造 
+\begin_inset Formula 
+\[
+s(x)=\sum_{k=0}^{14}w_{k}\,\varphi\left(\left\Vert x-x_{k}\right\Vert \right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\varphi$
+\end_inset
+
+是 radial basis function，并选取合适的
+\begin_inset Formula $w_{k}$
+\end_inset
+
+，令
+\begin_inset Formula $s(x_{k})=f(x_{k})$
+\end_inset
+
+，for 
+\begin_inset Formula $k=0,1,\cdots,14$
+\end_inset
+
+。可以写成矩阵形式
+\begin_inset Formula 
+\[
+\left[\begin{array}{cccc}
+\varphi_{0,0} & \varphi_{1,0} & \cdots & \varphi_{14,0}\\
+\varphi_{0,1} & \varphi_{1,1} & \cdots & \varphi_{14,1}\\
+\vdots & \vdots & \ddots & \vdots\\
+\varphi_{0,14} & \varphi_{1,14} & \cdots & \varphi_{14,14}
+\end{array}\right]\left[\begin{array}{c}
+w_{0}\\
+w_{1}\\
+\vdots\\
+w_{14}
+\end{array}\right]=\left[\begin{array}{c}
+f(x_{0})\\
+f(x_{1})\\
+\vdots\\
+f(x_{14})
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\varphi_{i,j}=\varphi\left(\left\Vert x_{i}-x_{j}\right\Vert \right)$
+\end_inset
+
+。选取
+\begin_inset Formula $\varphi(r)=\exp(-(\varepsilon r)^{2})$
+\end_inset
+
+，the Gaussian，with a shape parameter of 
+\begin_inset Formula $\varepsilon=3$
+\end_inset
+
+，可以求解矩阵方程，并画出 interpolant。我们可以看到，插值曲线几乎处处重合，除了左边界处（此即Runge 现象），仍是很好的近似。更精确地说，最大误
+差估计为
+\begin_inset Formula $\left\Vert f-s\right\Vert _{\infty}\approx0.0267414$
+\end_inset
+
+ at 
+\begin_inset Formula $x=0.0220012$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/fig-rbf-exa1.png
+	lyxscale 50
+	scale 46
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/fig-rbf-exa2.png
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+RBF插值和误差
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rbf-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+带多项式自由度的RBF
+\end_layout
+
+\begin_layout Standard
+ref: 
+\begin_inset CommandInset href
+LatexCommand href
+name "scipy.interpolate.RBFInterpolator"
+target "https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.RBFInterpolator.html#scipy.interpolate.RBFInterpolator"
+literal "false"
+
+\end_inset
+
+；《Meshfree Approximation Methods with MATLAB Gregory F.
+ Fasshauer》 p57, chap 6.3
 \end_layout
 
 \begin_layout Chapter
