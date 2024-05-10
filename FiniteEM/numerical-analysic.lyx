@@ -8719,6 +8719,412 @@ GMRES 典型用于 large and sparse
 数值微分和积分
 \end_layout
 
+\begin_layout Section
+数值微分
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+推广中值定理
+\end_layout
+
+\end_inset
+
+ 令
+\begin_inset Formula $f$
+\end_inset
+
+是区间
+\begin_inset Formula $[a,b]$
+\end_inset
+
+上的连续函数，令
+\begin_inset Formula $x_{1},\cdots,x_{n}$
+\end_inset
+
+是区间
+\begin_inset Formula $[a,b]$
+\end_inset
+
+上的点，
+\begin_inset Formula $a_{1},\cdots,a_{n}>0$
+\end_inset
+
+，则存在 
+\begin_inset Formula $c\in[a,b]$
+\end_inset
+
+满足
+\begin_inset Formula 
+\begin{equation}
+(a_{1}+\cdots+a_{n})f(c)=a_{1}f(x_{1})+\cdots+a_{n}f(x_{n})\label{eq:5.6}
+\end{equation}
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+f(c)=s_{1}f(x_{1})+\cdots+s_{n}f(x_{n}),\quad\sum_{i=1}^{n}s_{i}=1
+\]
+
+\end_inset
+
+即 采样点的加权和等于 “中值”采样。
+\end_layout
+
+\begin_layout Subsection
+有限差分公式
+\end_layout
+
+\begin_layout Definition
+二阶导数的三点中心差分公式
+\begin_inset Formula 
+\begin{equation}
+f''(x)=\frac{f(x-h)-2f(x)+f(x+h)}{h^{2}}-\frac{h^{2}}{12}f^{(4)}(c)\label{eq:5.8}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $c$
+\end_inset
+
+位于
+\begin_inset Formula $x-h$
+\end_inset
+
+和
+\begin_inset Formula $x+h$
+\end_inset
+
+之间。
+\end_layout
+
+\begin_layout Definition
+sdf
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Description
+收敛性 随着
+\begin_inset Formula $h\to0$
+\end_inset
+
+，计算导数本来就是不稳定的过程。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+舍入误差
+\end_layout
+
+\begin_layout Subsection
+外推 Extrapolation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f'(x)=\frac{f(x+h)-f(x-h)}{2h}-\frac{f'''(c_{h})}{6}h^{2}\label{eq:5.13}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+\begin_inset Formula $n$
+\end_inset
+
+阶公式的外推
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+Q\approx\frac{2^{n}F(h/2)-F(h)}{2^{n}-1}\label{eq:5.15}
+\end{equation}
+
+\end_inset
+
+这是
+\begin_inset Formula $F(h)$
+\end_inset
+
+的
+\series bold
+外推
+\series default
+公式。外推有时候也被称为 理查德森外推，相对于
+\begin_inset Formula $F(h)$
+\end_inset
+
+，可以给出对
+\begin_inset Formula $Q$
+\end_inset
+
+更高阶的近似。
+\end_layout
+
+\begin_layout Example
+应用外推公式到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.13"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align}
+F_{4}(x) & =\frac{2^{2}F_{2}(h/2)-F_{2}(h)}{2^{2}-1}=\left[4\frac{f(x+h/2)-f(x-h/2)}{h}-\frac{f(x+h)-f(x-h)}{2h}\right]/3\nonumber \\
+ & =\frac{f(x-h)-8f(x-h/2)+8f(x+h/2)-f(x+h)}{6h}\label{eq:5.16}
+\end{align}
+
+\end_inset
+
+这是 五点中心差分公式。至少是三阶的公式，事实上，由于消去了三界误差项，这是一个四阶公式。检查可知
+\begin_inset Formula $F_{4}(h)=F_{4}(-h)$
+\end_inset
+
+，误差对于
+\begin_inset Formula $h$
+\end_inset
+
+和
+\begin_inset Formula $-h$
+\end_inset
+
+相等，因而误差项仅和
+\begin_inset Formula $h$
+\end_inset
+
+的偶数阶项有关。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对二阶导数公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+使用外推。
+\begin_inset Formula 
+\begin{align*}
+F_{4}(x) & =\frac{2^{2}F_{2}(h/2)-F_{2}(h)}{2^{2}-1}\\
+ & =\\
+ & =\frac{-f(x-h)+16f(x-h/2)-30f(x)+16f(x+h/2)-f(x+h)}{3h^{2}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+符号微分和积分
+\end_layout
+
+\begin_layout Section
+数值积分的牛顿–科特斯公式
+\end_layout
+
+\begin_layout Subsection
+梯形法则 Trapezoid Rule
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+梯形法则
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{0}}^{x_{1}}f(x)\dd{x}=\frac{h}{2}(y_{0}+y_{1})-\frac{h^{3}}{12}f''(c)\label{eq:5.21}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+辛普森法则
+\end_layout
+
+\begin_layout Definition
+辛普森法则
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{0}}^{x_{2}}f(x)\dd{x}=\frac{h}{3}(y_{0}+4y_{1}+y_{2})-\frac{h^{5}}{90}f^{(4)}(c)\label{eq:5.22}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $h=x_{2}-x_{1}=x_{1}-x_{0}$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+在
+\begin_inset Formula $x_{0}$
+\end_inset
+
+和
+\begin_inset Formula $x_{2}$
+\end_inset
+
+之间。
+\end_layout
+
+\begin_layout Example
+找出
+\begin_inset Formula $3$
+\end_inset
+
+阶牛顿–科特斯公式的精度，该公式被称为 
+\series bold
+辛普森3/8公式
+\series default
+
+\begin_inset Formula 
+\[
+\int_{x_{0}}^{x_{3}}f(x)\dd{x}=\frac{3h}{8}(y_{0}+3y_{1}+3y_{2}+y_{3})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+复合牛顿–科特斯公式
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+复合梯形法则
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+\int_{a}^{b}f(x)\dd{x}=\frac{h}{2}(y_{0}+y_{m}+2\sum_{i=1}^{m-1}y_{i})-\frac{(b-a)h^{2}}{12}f''(c)\label{eq:5.24}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $h=(b-a)/m$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+ 在
+\begin_inset Formula $a$
+\end_inset
+
+和
+\begin_inset Formula $b$
+\end_inset
+
+之间。
+\end_layout
+
+\begin_layout Standard
+sf
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+复合辛普森公式
+\series default
+
+\begin_inset Formula 
+\[
+\int_{a}^{b}f(x)\dd{x}=\frac{h}{3}\left[y_{0}+y_{2m}+{\color{blue}4\sum_{i=1}^{m}y_{2i-1}}+{\color{red}2\sum_{i=1}^{m-1}y_{2i}}\right]-\frac{(b-a)h^{2}}{12}f''(c)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $c$
+\end_inset
+
+ 在
+\begin_inset Formula $a$
+\end_inset
+
+和
+\begin_inset Formula $b$
+\end_inset
+
+之间。后两项分别为奇次项和偶次项。
+\end_layout
+
+\begin_layout Subsection
+开牛顿–科特斯方法
+\end_layout
+
+\begin_layout Section
+龙贝格积分
+\end_layout
+
+\begin_layout Section
+自适应积分
+\end_layout
+
+\begin_layout Section
+高斯积分
+\end_layout
+
 \begin_layout Chapter
 常微分方程
 \end_layout
