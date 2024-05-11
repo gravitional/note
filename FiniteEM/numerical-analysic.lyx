@@ -9078,7 +9078,7 @@ F_{4}(x) & =\frac{2^{2}F_{2}(h/2)-F_{2}(h)}{2^{2}-1}\\
 \end_layout
 
 \begin_layout Standard
-sf
+dsf
 \end_layout
 
 \begin_layout Definition
@@ -9113,8 +9113,483 @@ sf
 开牛顿–科特斯方法
 \end_layout
 
+\begin_layout Definition
+中点法则
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{0}}^{x_{1}}f(x)\dd{x}=hf(w)+\frac{h^{3}}{24}f''(c)\label{eq:5.26}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $h=(x_{1}-x_{0})$
+\end_inset
+
+，
+\begin_inset Formula $w$
+\end_inset
+
+是中点
+\begin_inset Formula $x_{0}+h/2$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+在
+\begin_inset Formula $x_{0}$
+\end_inset
+
+和
+\begin_inset Formula $x_{1}$
+\end_inset
+
+之间。
+\end_layout
+
+\begin_layout Standard
+中点法则可以减少所需函数求值的次数。与梯形法则相比，闭牛顿–科特斯方法具有相同的阶数，只需要一次函数求值，而不是两次。而且误差项是梯形法则误差项大小的一半。
+\end_layout
+
+\begin_layout Definition
+复合中点法则
+\begin_inset Formula 
+\begin{equation}
+\int_{a}^{b}f(x)\dd{x}=h\sum_{i=1}^{m}f(w_{i})+\frac{(b-a)h^{2}}{24}f''(c)\label{eq:5.27}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $h=(b-a)/m$
+\end_inset
+
+，
+\begin_inset Formula $c$
+\end_inset
+
+在
+\begin_inset Formula $a$
+\end_inset
+
+和
+\begin_inset Formula $b$
+\end_inset
+
+之间。
+\begin_inset Formula $w_{i}$
+\end_inset
+
+是
+\begin_inset Formula $[a,b]$
+\end_inset
+
+中
+\begin_inset Formula $m$
+\end_inset
+
+个相等子区间的中点。
+\end_layout
+
+\begin_layout Subsection*
+5.2节习题
+\end_layout
+
+\begin_layout Standard
+15.找出4阶牛顿–科特斯法则（常常成为布尔法则）的精度
+\begin_inset Formula 
+\[
+\int_{x_{0}}^{x_{4}}f(x)\dd{x}\approx\frac{2h}{45}\left(7y_{0}+32y_{1}+12y_{2}+32y_{3}+7y_{4}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 龙贝格积分
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{a}^{b}f(x)\dd{x}=\frac{h}{2}\left(y_{0}+y_{m}+2\sum_{i=1}^{m-1}y_{i}\right)+c_{2}h^{2}+c_{4}h^{4}+c_{6}h^{6}+\cdots\label{eq:5.29}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $c_{i}$
+\end_inset
+
+依赖于
+\begin_inset Formula $f$
+\end_inset
+
+在
+\begin_inset Formula $a$
+\end_inset
+
+和
+\begin_inset Formula $b$
+\end_inset
+
+之间的高阶导数，而不依赖于
+\begin_inset Formula $h$
+\end_inset
+
+。例如，
+\begin_inset Formula $c_{2}=\left(f'(a)-f'(b)\right)/12$
+\end_inset
+
+。由于在误差中没有奇次幂，使用外推会得到额外的好处。由于没有奇次幂，对复合梯形法则给出的二阶公式进行外推会得到4阶公式；对结果的4阶公式外推会得到6阶公式，以此
+类推。
+\end_layout
+
+\begin_layout Standard
+外推公式包含对
+\begin_inset Formula $h$
+\end_inset
+
+以及半步长
+\begin_inset Formula $h/2$
+\end_inset
+
+的计算。预测我们前进的方向，定义如下的步长序列：
+\begin_inset Formula $j=0,1,\cdots,n-1$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+h_{0} & =b-a\nonumber \\
+h_{1} & =\frac{1}{2}(b-a)\nonumber \\
+ & \vdots\nonumber \\
+h_{j-1} & =\frac{1}{2^{j-1}}(b-a)\label{eq:5.30}
+\end{align}
+
+\end_inset
+
+需要近似的量是
+\begin_inset Formula $M=\int_{a}^{b}f(x)\dd{x}$
+\end_inset
+
+。
+\begin_inset Formula 
+\begin{align*}
+R_{00} & =\frac{h_{0}}{2}\left(f(a)+f(b)\right)\\
+R_{10} & =\frac{h_{1}}{2}\left(f(a)+f(b)+{\color{blue}2f(\frac{a+b}{2})}\right)=\frac{1}{2}R_{00}+{\color{blue}h_{1}f(\frac{a+b}{2})}\\
+\end{align*}
+
+\end_inset
+
+通过归纳证明，对于
+\begin_inset Formula $j=1,2,\cdots$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+R_{j0}=\frac{1}{2}R_{j-1,0}+h_{j}\sum_{i=0}^{2^{j-1}}f\left(a+(2i+1)h_{j}\right)\label{eq:5.31}
+\end{equation}
+
+\end_inset
+
+方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+给出了递增计算复合梯形法则的有效方法。龙贝格积分的第二个特征是外推。构造下表
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccccc}
+R_{00}\\
+R_{10} & R_{11}\\
+R_{20} & R_{21} & R_{22}\\
+R_{30} & R_{31} & R_{32} & R_{33}\\
+\vdots &  &  &  & \ddots
+\end{array}\right]\label{eq:5.32}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+外推公式：
+\begin_inset Formula 
+\[
+Q\approx\frac{2^{n}F(h/2)-F(h)}{2^{n}-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中我们定义第
+\begin_inset Formula $2$
+\end_inset
+
+列
+\begin_inset Formula $R_{i1}$
+\end_inset
+
+是第
+\begin_inset Formula $1$
+\end_inset
+
+列的外推：（L形，得到
+\begin_inset Formula $4$
+\end_inset
+
+阶法则）
+\begin_inset Formula 
+\begin{align}
+ & R_{11}=\frac{2^{2}R_{10}-R_{00}}{2^{2}-1}\nonumber \\
+ & R_{21}=\frac{2^{2}R_{20}-R_{10}}{2^{2}-1}\nonumber \\
+ & R_{31}=\frac{2^{2}R_{30}-R_{20}}{2^{2}-1}\label{eq:5.33}
+\end{align}
+
+\end_inset
+
+第
+\begin_inset Formula $3$
+\end_inset
+
+列包含对于
+\begin_inset Formula $M$
+\end_inset
+
+的
+\begin_inset Formula $4$
+\end_inset
+
+阶近似，因而可以进行外推
+\begin_inset Formula 
+\begin{align}
+ & R_{22}=\frac{4^{2}R_{21}-R_{11}}{4^{2}-1}\nonumber \\
+ & R_{32}=\frac{4^{2}R_{31}-R_{21}}{4^{2}-1}\nonumber \\
+ & R_{42}=\frac{4^{2}R_{41}-R_{31}}{4^{2}-1}\label{eq:5.34}
+\end{align}
+
+\end_inset
+
+第
+\begin_inset Formula $jk$
+\end_inset
+
+项由如下公式给出（
+\begin_inset Formula $j=1,2,\cdots$
+\end_inset
+
+，
+\begin_inset Formula $k=1,2,\cdots j$
+\end_inset
+
+）
+\begin_inset Formula 
+\begin{equation}
+R_{jk}=\frac{4^{k}R_{j,k-1}-R_{j-1,k-1}}{4^{k}-1}\label{eq:5.35}
+\end{equation}
+
+\end_inset
+
+该表是下三角矩阵，并可以向下向后无穷扩展。对于给定积分
+\begin_inset Formula $M$
+\end_inset
+
+的最优近似是
+\begin_inset Formula $R_{jj}$
+\end_inset
+
+，这是目前为止计算的最右下项，该近似是
+\begin_inset Formula $2j$
+\end_inset
+
+阶的近似。龙贝格积分计算仅仅是循环写公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.31"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5.35"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的问题。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithmic}[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+State $R_{00}=(b-a)
+\backslash
+frac{f(a)+f(b)}{2}$
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{$j=1,2,
+\backslash
+cdots$}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+State $h_{j}=
+\backslash
+frac{b-a}{2^j}$
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+State $R_{j0}=
+\backslash
+frac{1}{2}R_{j-1,0}+
+\end_layout
+
+\begin_layout Plain Layout
+
+	h_{j}
+\backslash
+sum_{i=0}^{2^{j-1}}f
+\backslash
+left(a+(2i+1)h_{j}
+\backslash
+right)$
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+For{$k=1,2,
+\backslash
+cdots$}
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\backslash
+State $R_{jk}=
+\backslash
+frac{4^k R_{j,k-1}-R_{j-1,k-1}}{4^k-1}$
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+EndFor
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndFor
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithmic}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+龙贝格积分
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+龙贝格积分的常用停止条件是：计算新的一行直到相邻的对角线元素
+\begin_inset Formula $R_{jj}$
+\end_inset
+
+差异小于当前的容差。
 \end_layout
 
 \begin_layout Section

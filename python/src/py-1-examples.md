@@ -7,6 +7,8 @@
 
 ## python 格式化例子
 
+[格式字符串语法](https://docs.python.org/zh-cn/3/library/string.html#formatstrings)
+
 ```python
 s=1.6456468468
 print(f'{s:<#20.16g}') # 默认空格填充 fill align sign
