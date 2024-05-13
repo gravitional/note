@@ -6,13 +6,15 @@
 
 ## init
 
-`init [--] [<path>…​]`
+```bash
+init [--] [<path>…​]
+```
 
 通过在 `.git/config` 中设置 `submodule.$name.url`,
-初始化 `index` 中记录的子模块(来自其他作者的 添加和提交).
+初始化 `index` 中记录的 **子模块信息**(来自其他作者的 添加和提交).
 它使用 `.gitmodules` 中的相同设置作为模板.
-如果 URL 是相对的, 将使用默认远程地址解析.
-如果没有默认远程, 则当前版本库将被假定为 `upstream`.
+如果 URL 是相对的, 将使用 默认远程地址 解析.
+如果没有 默认远程, 则当前版本库将被假定为 `upstream`.
 
 可选的 `<path>` 参数会限制哪些子模块将被初始化.
 如果没有指定路径, 且已配置 `submodule.active`,
@@ -25,6 +27,20 @@
 也可以直接使用 `git submodule update --init` 而不需要 显式运行init
 
 有关默认远程的定义, 请参阅 `add` 子命令.
+
+## deinit
+
+```bash
+deinit [-f|--force] (--all|[--] <path>…​)
+```
+
+Unregister the given submodules, i.e. remove the whole submodule.$name section from .git/config together with their work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any unregistered submodules until they are initialized again, so use this command if you don’t want to have a local checkout of the submodule in your working tree anymore.
+
+When the command is run without pathspec, it errors out, instead of deinit-ing everything, to prevent mistakes.
+
+If --force is specified, the submodule’s working tree will be removed even if it contains local modifications.
+
+If you really want to remove a submodule from the repository and commit that use git-rm(1) instead. See gitsubmodules(7) for removal options.
 
 ## update
 

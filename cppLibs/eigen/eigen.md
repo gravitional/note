@@ -22,3 +22,14 @@ cmake --install . --config=release
 
 [eigen 中文文档](https://runebook.dev/zh/docs/eigen3/-index-)
 [eigen api 文档](https://eigen.tuxfamily.org/dox/index.html)
+
+## cmake
+
+```cmake
+# 设置 eigen cmake 所在目录
+set(my_project_dir ${CMAKE_SOURCE_DIR})
+set(Eigen3_DIR "${my_project_dir}/dependencies/eigen/share/eigen3/cmake")
+# find eigen
+message("<<<eigen dir: " ${Eigen3_DIR})
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+```

@@ -37,6 +37,10 @@
 
 ### 创建 submodule
 
+```bash
+git submodule [--quiet] add [<options>] [--] <repository> [<path>]
+```
+
 + 使用 `git submodule add <submodule_url>` 命令可以在项目中创建 `子模块`.
 演示:
 
@@ -44,7 +48,7 @@
     # 创建根项目 OpenSSL,  并进入根目录
     git clone https://gitee.com/mirrors_trending/OpenSSL-2022.git;
     cd  OpenSSL-2022
-    # 添加子项目依赖
+    # 添加子项目依赖, 可以指定路径
     git submodule add https://gitee.com/mirrors/tinyre.git
     ```
 
