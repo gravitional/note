@@ -96,7 +96,8 @@ cd gcc-4.6.2
 cd ..
 mkdir objdir
 cd objdir
-$PWD/../gcc-4.6.2/configure --prefix=$HOME/GCC-4.6.2 --enable-languages=c,c++,fortran,go
+# --disable-multilib 禁用 32 位 build
+$PWD/../gcc-14.1.0/configure --prefix=$HOME/gcc-14.1.0 --enable-languages=c,c++,fortran,go --disable-multilib
 make
 make install
 ```
