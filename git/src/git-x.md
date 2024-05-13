@@ -1036,3 +1036,91 @@ git rev-parse --show-toplevel
 例如, 假设我们的 `Git仓库` 位于 `/Users/username/git-repo` 目录中,
 那么以上命令将返回 `/Users/username/git-repo`.
 你可以在自己的 Git仓库 中尝试该命令, 看看它是否返回了正确的根目录路径.
+
+## git submodule
+
++ 添加/引入 子仓库
+
+```bash
+git submodule add https://xxx/some.git 自定义目录
+```
+
++ 克隆含有子仓库的项目
+
+```bash
+git clone --recurse-submodules https://github.com/项目地址
+```
+
++ 克隆之后, 手动初始化子项目配置(`--init`)并检出子项目(update)
+
+```bash
+git submodule update --init
+```
+
++ 递归 初始化 并 更新子模块
+
+```bash
+git submodule update --init --recursive
+```
+
++ 更新子模块仓库 url, 然后递归更新子模块
+
+```bash
+# 将新的 URL 复制到本地配置中
+$ git submodule sync --recursive
+# 从新 URL 更新子模块
+$ git submodule update --init --recursive
+```
+
++ 合并子模块冲突
+
+```bash
+# ------ 查看主仓库更新
+$ git diff
+diff --cc DbConnector
+index eb41d76,c771610..0000000
+--- a/DbConnector
++++ b/DbConnector
+
+# --------- 迁出子模块 远程更新
+$ cd DbConnector
+$ git rev-parse HEAD
+eb41d764bccf88be77aced643c13a7fa86714135
+
+$ git branch try-merge c771610
+(DbConnector) $ git merge try-merge
+Auto-merging src/main.c
+
+# -------- 修改代码, 合并冲突, 在子模块提交  (1)
+$ code .
+$ git add src/main.c
+$ git commit -am 'merged our changes'
+
+# ------------- 回到主仓库, 查看子模块 commit 更新
+$ cd .. (2)
+$ git diff (3)
+diff --cc DbConnector
+index eb41d76,c771610..0000000
+--- a/DbConnector
++++ b/DbConnector
+@@@ -1,1 -1,1 +1,1 @@@
+- Subproject commit eb41d764bccf88be77aced643c13a7fa86714135
+ -Subproject commit c77161012afbbe1f58b5053316ead08f4b7e6d1d
+++Subproject commit 9fd905e5d7f45a0d4cbc43d1ee550f16a30e825a
+
+# -------------- 提交子模块 commit 更新
+$ git add DbConnector (4)
+$ git commit -m "Merge Tom's Changes" (5)
+[master 10d2c60] Merge Tom's Changes
+```
+
++ 递归`git`操作 子模块
+
+```bash
+# 递归 stash
+$ git submodule foreach 'git stash'
+# 递归 checkout
+$ git submodule foreach 'git checkout -b featureA'
+# 递归 生成 diff log
+$ git diff; git submodule foreach 'git diff'
+```

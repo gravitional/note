@@ -4,15 +4,32 @@
 [git-submodule - Initialize, update or inspect submodules](https://book.git-scm.com/docs/git-submodule/zh_HANS-CN)
 [Where is the gitlink entry located for Git submodules?](https://stackoverflow.com/questions/66955714/where-is-the-gitlink-entry-located-for-git-submodules)
 
-## init
+## git submodule init
 
 ```bash
-init [--] [<path>…​]
+git submodule init [--] [<path>…​]
 ```
 
 通过在 `.git/config` 中设置 `submodule.$name.url`,
 初始化 `index` 中记录的 **子模块信息**(来自其他作者的 添加和提交).
-它使用 `.gitmodules` 中的相同设置作为模板.
+它使用 `.gitmodules` 中的相同设置作为模板. 例如下列实例
+
+```yaml
+#---- .git/config 中的配置
+[submodule "dependencies/fmt"]
+    url = https://gitee.com/mirrors_trending/fmt.git
+[submodule "dependencies/cpp11-range"]
+    url = git@gitee.com:graviton/cpp11-range.git
+
+#---- .gitmodules 中的配置
+[submodule "dependencies/fmt"]
+    path = dependencies/fmt
+    url = https://gitee.com/mirrors_trending/fmt.git
+[submodule "dependencies/cpp11-range"]
+    path = dependencies/cpp11-range
+    url = git@gitee.com:graviton/cpp11-range.git
+```
+
 如果 URL 是相对的, 将使用 默认远程地址 解析.
 如果没有 默认远程, 则当前版本库将被假定为 `upstream`.
 
@@ -21,10 +38,11 @@ init [--] [<path>…​]
 则将初始化配置为`active`的子模块, 否则将初始化所有子模块.
 
 如果存在, 它还将复制 `submodule.$name.update` 的值.
-该命令不会更改 `.git/config` 中的现有信息.
-然后, 你可以根据本地设置在 `.git/config` 中自定义子模块克隆 URL,
-并继续执行 `git submodule update`;如果你不打算自定义任何子模块位置,
-也可以直接使用 `git submodule update --init` 而不需要 显式运行init
+该命令不会更改 `.git/config` 中已有信息.
+
+然后, 你可以根据本地设置在 `.git/config` 中的 **submodule clone URLs**,
+并继续执行 `git submodule update`; 如果你不打算自定义任何子模块位置,
+也可以直接使用 `git submodule update --init` 而不需要**手动运行init**
 
 有关默认远程的定义, 请参阅 `add` 子命令.
 
@@ -34,11 +52,11 @@ init [--] [<path>…​]
 deinit [-f|--force] (--all|[--] <path>…​)
 ```
 
-Unregister the given submodules, i.e. remove the whole submodule.$name section from .git/config together with their work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any unregistered submodules until they are initialized again, so use this command if you don’t want to have a local checkout of the submodule in your working tree anymore.
+Unregister the given submodules, i.e. remove the whole submodule.$name section from .git/config together with their work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any unregistered submodules until they are initialized again, so use this command if you don't want to have a local checkout of the submodule in your working tree anymore.
 
 When the command is run without pathspec, it errors out, instead of deinit-ing everything, to prevent mistakes.
 
-If --force is specified, the submodule’s working tree will be removed even if it contains local modifications.
+If --force is specified, the submodule's working tree will be removed even if it contains local modifications.
 
 If you really want to remove a submodule from the repository and commit that use git-rm(1) instead. See gitsubmodules(7) for removal options.
 

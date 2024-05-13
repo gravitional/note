@@ -100,7 +100,7 @@ CMAKE_LIBRARY_PATH, CMAKE_PROGRAM_PATH, and CMAKE_IGNORE_PATH.
 
 ## [CMAKE_MODULE_PATH](https://cmake.org/cmake/help/latest/variable/CMAKE_MODULE_PATH.html)
 
-**以分号分隔的**目录列表, 使用**正斜线**`/`) 表示,
+**以分号分隔的**目录列表, 使用**正斜线**(`/`) 表示,
 指定在检查 CMake 自带的默认模块之前,
 由 `include()` 或 `find_package()` 命令加载的 CMake 模块的搜索路径.
 

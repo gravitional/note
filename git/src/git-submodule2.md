@@ -428,11 +428,12 @@ Done! Nice & clean!
 使用 `git submodule sync` 命令, 将新的 `URL` 更新到文件 `.git/config`;
 
 ```bash
-xx@localhost: ~/app$ git submodule sync
+$ git submodule sync
 Synchronizing submodule url for 'gitmods/thinker_g/Helpers'
-xx@localhost: ~/app$ # 运行后可观察到'.git/config'中对应模块的url属性被更新
-xx@localhost: ~/app$ git commit -am "Update submodule url." # 提交变更
+
+# 运行后可观察到'.git/config'中对应模块的url属性被更新
+$ git commit -am "Update submodule url." # 提交变更
 ```
 
-PS: 本实验使用git 2.7.4 完成, 较低版本git可能不能自动更新.git/config文件,
+PS: 本实验使用git 2.7.4 完成, 较低版本git可能不能自动更新 `.git/config` 文件,
 需要修修改完 `.gitmodule` 文件后手动修改 `.git/config`.
