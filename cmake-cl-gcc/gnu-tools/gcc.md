@@ -113,3 +113,24 @@ make -j 12 #等于物理核心数目, 太大的数字会导致内存不足
 
 如果编译失败, 而 `configure` 命令又有很多复杂的选项, 你应该尝试删除选项, 保持简单.
 不要添加大量你不理解的 `configure` 选项, 它们可能是导致编译失败的原因.
+
+编译后的输出
+
+```bash
+Libraries have been installed in:
+   /home/tom/gcc-14.1.0/lib/../lib64
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+```
