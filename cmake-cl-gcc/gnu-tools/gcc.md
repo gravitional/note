@@ -35,6 +35,31 @@ sudo ln -s -f /usr/bin/g++-11 /usr/bin/g++
 
 通过[镜像地址](https://gcc.gnu.org/mirrors.html) 下载源码压缩包,
 
+### 检查环境变量
+
+[error: LIBRARY_PATH shouldn't contain the current directory](https://blog.csdn.net/ariesqingtian1/article/details/116147215)
+
+>`*** LIBRARY_PATH shouldn't contain the current directory when *** building gcc.`
+
+检查 bash 环境变量
+
+```bash
+echo $PATH '\n'; echo $LIBRARY_PATH '\n'; echo $LD_LIBRARY_PATH '\n'; \
+echo $LD_RUN_PATH '\n'; echo $C_INCLUDE_PATH '\n'; echo $CPLUS_INCLUDE_PATH '\n';
+```
+
+`LD_LIBRARY_PATH`以冒号结尾, GCC不赞成该冒号.
+还应确保 `C_INCLUDE_PATH` 不以冒号结尾, 以避免出现相关问题.
+方法如下:
+
++ 方法一: 重新export LIBRARY_PATH和C_INCLUDE_PATH 尾部不含冒号
++ 方法二:
+
+```bash
+export LIBRARY_PATH=$(echo $LIBRARY_PATH | sed 's/:$//; s/^://;')
+export C_INCLUDE_PATH=$(echo $C_INCLUDE_PATH | sed 's/:$//; s/^://;')
+```
+
 ### 安装 GCC
 
 本页旨在提供指导, 避免在安装 GCC 时出现一些常见问题,
@@ -78,7 +103,7 @@ sudo apt install libgmp-dev libmpfr-dev libmpc-dev
 
 + 或者, 在解压缩 GCC 源代码压缩包后, 只需在 GCC 源代码目录下运行 `./contrib/download_prerequisites` 脚本.
 这将下载支持库并创建符号链接, 使其作为 GCC 编译过程的一部分自动编译.
-如果想在不使用 ISL 的情况下编译 GCC, 请在脚本中设置 GRAPHITE_LOOP_OPT=no,
+如果想在不使用 ISL 的情况下编译 GCC, 请在脚本中设置 `GRAPHITE_LOOP_OPT=no`,
 因为 ISL 仅适用于可选的 Graphite 循环优化.
 
 不推荐使用的困难方法是下载 GMP, MPFR 和 MPC 的源代码, 然后将它们配置并安装到非标准位置,
@@ -115,7 +140,7 @@ cd ..
 mkdir objdir
 cd objdir
 # --disable-multilib 禁用 32 位 build
-$PWD/../gcc-14.1.0/configure --prefix=$HOME/gcc-14.1.0 --enable-languages=c,c++,fortran,go --disable-multilib
+$PWD/../gcc-14.1.0/configure --prefix=$HOME/myProg/gcc-14.1.0 --enable-languages=c,c++,fortran,go --disable-multilib
 make
 make install
 ```
