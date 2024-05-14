@@ -4723,8 +4723,7 @@ Jacobian 母导数为
 \begin_inset Formula 
 \begin{align*}
 \rho^{h}= & -\epsilon_{0}\epsilon_{r}\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}\\
-= & -\epsilon_{0}\,\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)\\
- & -\epsilon_{0}\epsilon_{r}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]\phi_{\alpha}
+= & -\epsilon_{0}\,{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)-\epsilon_{0}\epsilon_{r}{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}
 \end{align*}
 
 \end_inset
@@ -5988,6 +5987,72 @@ actions
 
 \begin_layout Section
 数值结果
+\end_layout
+
+\begin_layout Chapter
+磁场2D
+\end_layout
+
+\begin_layout Standard
+形函数的二阶旋度为
+\begin_inset Formula 
+\begin{align*}
+\nabla\times\nabla\times N_{\alpha}^{e}(x,y)\sbf e_{z} & =\left[\begin{array}{ccc}
+\sbf e_{x} & \sbf e_{y} & \sbf e_{z}\\
+\partial_{x} & \partial_{y} & \partial_{z}\\
+N_{\alpha,y} & -N_{\alpha,x} & 0
+\end{array}\right]\\
+ & =\left[N_{\alpha,xz},\;N_{\alpha,yz},\;N_{\alpha,yy}-N_{\alpha,xx}\right]\\
+ & =\left[0,\;0,\;N_{\alpha,yy}-N_{\alpha,xx}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+使用
+\begin_inset Formula 
+\[
+\nabla\nabla N_{\alpha}=\partial_{i}\partial_{j}N_{\alpha}
+\]
+
+\end_inset
+
+矩阵形式为，
+\begin_inset Formula 
+\[
+\nabla\nabla N_{\alpha}=-(\overline{J}\cdot H_{\beta}\cdot\overline{J}^{\mathrm{T}})_{ji}\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+(\overline{J}\cdot H_{\alpha}\cdot\overline{J}^{\mathrm{T}})_{ji}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $H_{\beta}\equiv$
+\end_inset
+
+ 节点
+\begin_inset Formula $\beta$
+\end_inset
+
+的形函数
+\begin_inset Formula $N_{\beta}$
+\end_inset
+
+的Hessian；在程序中
+\begin_inset Formula $G_{k\alpha}=\tilde{\partial}_{k}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
+\end_inset
+
+，or 
+\begin_inset Formula $N_{\alpha,k}=G_{k\alpha}^{\mathrm{T}}$
+\end_inset
+
+，
+\begin_inset Formula $G$
+\end_inset
+
+ 就是 dNdzeta。
 \end_layout
 
 \begin_layout Chapter

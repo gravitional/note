@@ -3,6 +3,8 @@
 ## 下载安装
 
 [eigen 主页](https://eigen.tuxfamily.org/index.php?title=Main_Page)
+[通过CMake使用Eigen3](https://zhuanlan.zhihu.com/p/361969822)
+
 下载解压后, 进入 `eigen-x.x.x` 目录
 
 ```powershell

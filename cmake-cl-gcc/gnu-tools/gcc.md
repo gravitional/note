@@ -1,16 +1,34 @@
 # [gcc](https://gcc.gnu.org/)
 
-## ubuntu 安装gcc 特定版本
+## ubuntu 安装gcc 特定版本, re symbol gcc,g++ 命令
 
 ubunt上[安装某个特定版本的 gcc 套装, 并启用](https://askubuntu.com/questions/1500017/ubuntu-22-04-default-gcc-version-does-not-match-version-that-built-latest-defaul)
 
-例如安装 gcc-10
+`apt` 安装特定版本的 gcc 工具链, 例如 `gcc-10`
 
 ```bash
 sudo apt install gcc-10 g++-10
+```
 
-sudo ln -s -f /usr/bin/gcc-10 /usr/bin/gcc
-sudo ln -s -f /usr/bin/g++-10 /usr/bin/g++
+将 `/usr/bin/gcc` 符号链接修改为 自定义工具链
+
+```bash
+sudo ln -s -f ~/myProg/gcc-14.1.0/bin/gcc /usr/bin/gcc
+sudo ln -s -f ~/myProg/gcc-14.1.0/bin/g++ /usr/bin/g++
+sudo ln -s -f ~/myProg/gcc-14.1.0/bin/gfortran /usr/bin/gfortran
+sudo ln -s -f ~/myProg/gcc-14.1.0/bin/go /usr/bin/go
+# 检查 gcc 版本
+gcc --version
+g++ --version
+gfortran --version
+go version
+```
+
+类似地, 恢复成 `apt` 安装的工具链
+
+```bash
+sudo ln -s -f /usr/bin/gcc-11 /usr/bin/gcc
+sudo ln -s -f /usr/bin/g++-11 /usr/bin/g++
 ```
 
 ## [下载安装](https://gcc.gnu.org/wiki/InstallingGCC)
@@ -114,12 +132,45 @@ make -j 12 #等于物理核心数目, 太大的数字会导致内存不足
 如果编译失败, 而 `configure` 命令又有很多复杂的选项, 你应该尝试删除选项, 保持简单.
 不要添加大量你不理解的 `configure` 选项, 它们可能是导致编译失败的原因.
 
-编译后的输出
+## runtime lib 路径配置
+
+[What is LD_RUNPATH?](https://stackoverflow.com/questions/26281813/what-is-ld-runpath)
+[LD_RUN_PATH和LD_LIBRARY_PATH是干什么的?](https://www.cnblogs.com/dakewei/p/10682678.html)
+[ld Command Line Options](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_chapter/ld_2.html)
+
+### 环境变量 LD_RUN_PATH LD_LIBRARY_PATH
+
++ Linux 下有环境变量 `LD_RUN_PATH` or `DT_RUNPATH`.
+对于 `DT_RUNPATH`, [TechBlog](http://blog.lxgcc.net/?tag=dt_runpath) says:
+
++ The `DT_RUNPATH` value is set with the linker options
+`-rpath`(or `LD_RUN_PATH`) and the –enable-new-dtags.
+
++ `LD_RUN_PATH` 在链接时使用, 对应 GNU linker `ld` 的选项:
+
+```bash
+-rpath dir
+-rpath-link DIR
+```
+
++ `LD_LIBRARY_PATH` 在执行时使用
+
+### 设置运行库路径
+
+如何指定环境变量
+
+```.bashrc
+export LD_LIBRARY_PATH=/opt/jello/lib:$LD_LIBRARY_PATH
+```
+
+编译完成后, 会输出 gcc 库的路径, 例如
 
 ```bash
 Libraries have been installed in:
    /home/tom/gcc-14.1.0/lib/../lib64
+```
 
+```bash
 If you ever happen to want to link against installed libraries
 in a given directory, LIBDIR, you must either use libtool, and
 specify the full pathname of the library, or use the `-LLIBDIR'

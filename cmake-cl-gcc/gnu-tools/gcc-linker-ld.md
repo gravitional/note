@@ -1,10 +1,12 @@
-# linker 选项
+# gcc linker 选项
 
 [Options for Linking](https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html)
 
-## `-Wl,option`
+## `gcc -Wl,option`
 
-将 `option ` 作为选项传递给 linker.
+可能是 **With linker,option** 的意思.
+
+将 `option` 作为**选项**传递给 linker.
 如果 `option` 包含逗号, 则会在逗号处将其分割为多个选项.
 您可以使用该语法向选项传递一个参数.
 例如, `-Wl,-Map,output.map` 将 `-Map output.map` 传递给链接器.
@@ -12,7 +14,7 @@
 
 + `-R filename`
 + `--just-symbols=filename`
-从filename中读取 symbol names及其地址,
+从 `filename` 中读取 `symbol names` 及其地址,
 但不对其重新定位, 也不将其包含在输出中.
 这样, 输出文件就能以符号方式引用其他程序中定义的内存绝对位置.
 您可以多次使用该选项.
@@ -20,7 +22,7 @@
 为了与其他 ELF 链接器兼容, 如果 `-R` 选项后面跟的是目录名而不是文件名,
 则会被视为 `-rpath` 选项.
 
-## `-Wl,-rpath=dir`
+## `gcc -Wl,-rpath=dir`
 
 [binutils ld Command-line Options](https://sourceware.org/binutils/docs-2.41/ld/Options.html)
 
@@ -34,7 +36,7 @@
 只有使用 `--with-sysroot` 选项配置的
 本地链接器 和 交叉链接器才支持以这种方式搜索 -rpath.
 
-如果在链接 ELF 可执行文件时未使用 `-rpath` 选项, 则将使用已定义的环境变量 `LD_RUN_PATH` 的内容.
+如果在链接 `ELF` 可执行文件时未使用 `-rpath` 选项, 则将使用已定义的环境变量 `LD_RUN_PATH` 的内容.
 
 在 SunOS 上也可以使用 -rpath 选项.
 默认情况下, 在 SunOS 上, 链接器将从给出的所有 -L 选项中生成一个运行时搜索路径.
@@ -46,17 +48,17 @@
 为了与其他 ELF 链接器兼容,
 如果 `-R` 选项后面跟的是`目录名`而不是文件名, 则会被视为 `-rpath` 选项.
 
-## `-Wl,-rpath-link=dir`
+## `gcc -Wl,-rpath-link=dir`
 
--rpath-link=dir
+`-rpath-link=dir`;
 使用 ELF 或 SunOS 时, 一个共享库可能需要另一个共享库.
 当 `ld -shared` 链接将 shared library 作为输入文件之一时, 就会出现这种情况.
 
 当链接程序在进行非共享, 非可重定位链接时遇到这种依赖关系时, 如果没有明确将其包含在内,
-它会自动尝试找到所需的共享库并将其包含在链接中.
-在这种情况下, `-rpath-link` 选项指定了要搜索的第一组目录.
--rpath-link选项可以指定一系列目录名,
-可以是用 `冒号分隔的目录名列表`,
+它会自动尝试找到 所需的共享库 并将其包含在链接中.
+在这种情况下, `-rpath-link` 选项指定了 **要搜索的第一组目录**.
+`-rpath-link` 选项可以指定一系列目录名,
+可以是用 **冒号分隔的目录名列表**,
 也可以是多次使用 `-rpath-link=dir` 选项.
 
 这些搜索目录中可以出现 `$ORIGIN` 和 `$LIB` token.
@@ -70,12 +72,12 @@
 在这种情况下, 可能会无意中使用与运行时链接器不同的搜索路径.
 链接器使用以下搜索路径查找所需的共享库:
 
-+ 由 -rpath-link 选项指定的任何目录.
-+ 由 -rpath 选项指定的任何目录.
--rpath 和 -rpath-link 的区别在于,
--rpath 选项指定的目录会包含在可执行文件中, 并在运行时使用, 而 `-rpath-link` 选项只在链接时有效.
++ 由 `-rpath-link` 选项指定的任何目录.
++ 由 `-rpath` 选项指定的任何目录.
+`-rpath` 和 `-rpath-link` 的区别在于,
+`-rpath` 选项指定的目录会包含在可执行文件中, 并在运行时使用, 而 `-rpath-link` 选项只在链接时有效.
 只有使用 `--with-sysroot` 选项配置的本地链接器和交叉链接器, 才支持以这种方式搜索 `-rpath`.
-+ 在 ELF 系统上, 对于本地链接器, 如果未使用 -rpath 和 -rpath-link 选项,
++ 在 ELF 系统上, 对于本地链接器, 如果未使用 `-rpath` 和 `-rpath-link` 选项,
 则搜索环境变量 `LD_RUN_PATH` 的内容.
 
 + 在 SunOS 上, 如果未使用 -rpath 选项, 则搜索使用 -L 选项指定的任何目录.
@@ -103,8 +105,8 @@
 
 [在Linux下, 如何强制让GCC静态链接?](https://www.zhihu.com/question/22940048/answer/222625910)
 
-gcc使用 `-Wl` 传递连接器参数,
-ld使用 `-Bdynamic` 强制连接动态库, `-Bstatic` 强制连接静态库.
+gcc 使用 `-Wl` 传递连接器参数,
+ld 使用 `-Bdynamic` 强制连接动态库, `-Bstatic` 强制连接静态库.
 
 所以部分静态, 部分动态连接这么写:
 
@@ -216,7 +218,7 @@ gcc test.c somefile.o -lm
 `ar` 与 `.a` 文件的关系就像 `tar` 与 `.tar` 文件的关系一样,
 但命令用法略有不同, 因此本例从 `.a` 文件中提取 `.o` 文件, 然后明确链接它们.
 
-## 找出标准库的位置
+## gcc 找出标准库的位置
 
 [Location of C standard library](https://stackoverflow.com/questions/5925678/location-of-c-standard-library)
 
