@@ -71,10 +71,12 @@ main(int argc, char* argv[]);
                 memTracker();timeTracker(); // 记录内存, 时间占用
                 analysis->Run(); // 运行每个分析. /Common/Analysis/AnalysisBase.cpp
                     Analyze(); // 虚函数, /Electrics/Analysis/AnalysisStaticEF.cpp
+                        InitiDyMesh();  // 初始化动网格 和 后验误差分析 组件
                         InitBeforeJobLoop(); // 静态电场分析初始化
                             ResultManipEM* p_resultHandle=resultManip(); //初始化计算结果存储指针
                             RecordRestrictedEqNo(); // 记录受到约束的自由度
                             _load->Inital(); // 激励初始化
+                        time()->Clear(); // 初始化 AMR 时间步
                         analyze_EM_Field_Nonlinear(); // 静电场分析 非线性迭代
                             AssembleGlobleFv(p_GFv_T); //组装总体载荷列向量(力矢量)
                                 cons->AssembleFv(p_GFv_T); // 计算约束对应的激励
@@ -86,20 +88,32 @@ main(int argc, char* argv[]);
                                     ElePt->CalcEleMatrixKeOpen(ke);//开放边界的贡献
                                     ElePt->CalcEleMatrixKeShield(ke);//介电屏蔽的贡献
                             CallSolver_T(K,p_GRt.data(),p_Solu_T.data());//求解方程
+                                resultManip()->SetSolution(_jobID, gX); // 存储自由度解X, 到 _jobID steroNO
                             LineSearch();//回溯线搜索
-                            p_resultHadle->CopySoluData(STP_SEARCH,_jobID,1);//复制解到 线搜索存储空间
-                            p_resultHadle->AccumSoluData(STEPBEG_ACCUM,STP_SEARCH); // 将结果累加
-                            AlgPostAnalysisEF analysis; // 新建Post分析对象
-                            analysis.Run(); // 运行后处理分析, 电磁力, 力矩, 电容
-                                PostProcessElementData(jobID);//计算场量如 V,E,D,Energy 则高斯点和节点的值
-                                PostProcessElementNodeForce(jobID);//计算节点上受的电磁力
-                                _PostAnalysis->Analysis();// 依次运行特定的后处理任务
-                                auto io=common::resultWriter()->GetID(); // 输出结果到 h5
-                                Print2TxtFile();//输出结果到 txt 文件
-                            FieldWriterEF* writer=objects()->GetUniPtr<FieldWriterEF>();
-                            writer->Write(_job, "Static"); // 写入场量到 result.h5
-                                WriteField(); // 写入到 hdf5
-                                SetTestFieldData(); // 写入到 ensight
+                                p_resultHadle->CopySoluData(STP_SEARCH, _jobID, aStep); // 复制 自由度X 到 STP_SEARCH SeteroNO
+                            p_resultHadle->CopySoluData(STP_SEARCH,_jobID,1); // 复制 自由度X 到 STP_SEARCH SeteroNO
+                            p_resultHadle->AccumSoluData(STEPBEG_ACCUM,STP_SEARCH); // 累加 自由度
+                        isConverged=AMRCheck(); // 后验误差分析 check
+                            auto refnStatus=ConvergenceCheck(); // 后验误差分析
+                            UpdateWriter(); // 更新 field writer
+                            PostAnls_Dump(); // post 输出, Field value
+                                AlgPostAnalysisEF analysis; // 新建Post分析对象
+                                analysis.Run(); // 运行后处理分析, 电磁力, 力矩, 电容
+                                    PostProcessElementData(jobID);//计算场量如 V,E,D,Energy 则高斯点和节点的值
+                                    PostProcessElementNodeForce(jobID);//计算节点上受的电磁力
+                                    _PostAnalysis->Analysis();// 依次运行特定的后处理任务
+                                    auto io=common::resultWriter()->GetID(); // 输出结果到 h5
+                                    Print2TxtFile();//输出结果到 txt 文件
+                                FieldWriterEF* writer=objects()->GetUniPtr<FieldWriterEF>();
+                                writer->Write(_job, "Static"); // 写入场量到 result.h5
+                                    _time=timer()->GetTotalTime(); // 获取 Field Value 的时刻
+                                    FieldWriterEF::WriteField(); // ov; 写入到 hdf5
+                                        FieldWriterEM::WriteField();
+                                            GetFieldDataGenTest();
+                                    SetTestFieldData(); // 写入到 ensight
+                            isConverged= _dyMesh->RunAMR(move(cellRefnOrNot)); // 网格自适应
+                            if(!isConverged) ReInitForDyMesh(); // FieldValue, DOF 刷新
+                        time()->StepForward(); // AMR 时间步 forward
 
                 memTracker();timeTracker(); // 记录内存, 时间占用
             }
