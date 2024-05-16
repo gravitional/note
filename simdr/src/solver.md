@@ -138,29 +138,6 @@ GetEleNdData().SetData(
 Comsol 二维模型中, 边界的法向正向, 指向区域内部,
 可以通过电流密度矢量的约定判断.
 
-## 材料节点平均
-
-```cpp
-void FieldWriterEC::SetTestFieldData()
-```
-
-有限元计算的 `自由度` 是 `节点`,
-但在计算场的分布时, 是遍历 模型的单元列表,
-
-### Test Node
-
-在输出场时 `SetTestFieldData` 中使用
-`SetTestNodeField(std::string&name, int nComp, vector<double>& data)` 输出,
-此函数按 `节点值` 输出, 由于 节点 可能被单元共享(公共节点),
-所以需要对 单元场值做平均, 才能得到节点场值,
-在这个过程中, 也可能用到材料性质, 所以把 `全局节点编号` 按照 `材料id` 分组.
-
-### Cell Node
-
-而另一个函数 `WriteField()` 中调用的
-`WriteCellNodeField(const string& name, int nComp, const vector<double>& data)`
-则直接输出 单元场数据, 因此无需作平均.
-
 ## 高斯积分
 
 [Numerical quadrature](https://finite-element.github.io/1_quadrature.html#extending-legendre-gausz-quadrature-to-two-dimensions)
@@ -195,3 +172,47 @@ tri6 单元按照先顶点, 再中点,
 4: 1-2
 5: 2-0
 quad8 编号类似
+
+## field dump, 物理场输出
+
+### 材料节点平均
+
+```cpp
+void FieldWriterEC::SetTestFieldData()
+```
+
+有限元计算的 `自由度` 是 `节点`,
+但在计算场的分布时, 是遍历 模型的单元列表,
+
+### Test Node
+
+在输出场时 `SetTestFieldData` 中使用
+`SetTestNodeField(std::string&name, int nComp, vector<double>& data)` 输出,
+此函数按 `节点值` 输出, 由于 节点 可能被单元共享(公共节点),
+所以需要对 单元场值做平均, 才能得到节点场值,
+在这个过程中, 也可能用到材料性质, 所以把 `全局节点编号` 按照 `材料id` 分组.
+
+### Cell Node
+
+而另一个函数 `WriteField()` 中调用的
+`WriteCellNodeField(const string& name, int nComp, const vector<double>& data)`
+则直接输出 单元场数据, 因此无需作平均.
+
+### 场量输出 FieldWriteFe, cell, node, cellNode
+
+```c++
+WriteNodeField: "Node", 按每个节点输出场
+
+WriteCellField: "CellCenter", 按每个体单元(cell) 的中心输出场
+
+WriteCellNodeField: "CellNode", 按每个单元的多个节点输出, 重叠节点多次输出
+```
+
+### 设置几何数据 FieldWriterGen::SetGeoDataSerial()
+
+设置物理场输出对应的几何模型
+
+```cpp
+// 往 _ensight writer 中 添加单元, 此处顺序
+_ensight.AddCell(ele->NaturalCoordNum(), eleNodes.size(), eleNodes.data());
+```
