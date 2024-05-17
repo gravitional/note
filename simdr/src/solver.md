@@ -173,6 +173,16 @@ tri6 单元按照先顶点, 再中点,
 5: 2-0
 quad8 编号类似
 
+## stepID, jobID
+
+如果 `control.json/Analysis` 中有多个分析任务,
+anlsCtrl 中将添加多个分析任务,
+每个 `analysis` 对应一个 `stepID`, 也就是多步计算的编号.
+
+每个 `analysis->Read()` 中将创建 `NewJob()`.
+`job` 设置分析的 `Load`, `耦合`, `非线性迭代` 等等分析参数,
+每个 `job` 有对应的 `jobID`.
+
 ## field dump, 物理场输出
 
 ### 材料节点平均

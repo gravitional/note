@@ -24,7 +24,7 @@ main(int argc, char* argv[]);
                     anlsCtrl()->Read(); // 读取用户指定 输出的sub场
                     constant()->Read(); // 读取用户设置的常数，标量或矢量
                 CreateMesh(); // 创建网格
-                CreateModel(); //创建模型 /FiniteElement/Model/FeModelCreator.cpp
+                CreateModel(); //ov; 创建模型 /FiniteElement/Model/FeModelCreator.cpp
                     CreateFunction(); //读取自定义函数
                         int id=idObjects()->Add(func); // 将函数添加到IDObjects管理器
                         reader->SetIDByName(name,id); // 设置函数名称对应的 id, 所有reader共享此map
