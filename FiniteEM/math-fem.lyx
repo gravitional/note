@@ -19313,6 +19313,14 @@ noprefix "false"
 \end_inset
 
 
+\begin_inset Formula 
+\begin{equation}
+\iint_{\Delta}L_{1}^{a}L_{2}^{b}L_{3}^{c}\dd{x}\dd{y}=\frac{a!b!c!}{(a+b+c+2)!}2\Delta\label{eq:z6.47}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -27163,6 +27171,233 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
+浮动导体，节点共自由度
+\end_layout
+
+\begin_layout Standard
+有限元求解边值问题的公式推演如下
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+-\nabla\cdot\left(\sigma\nabla\phi\right)+\beta\phi & =\partial_{t}\rho\\
+\sigma\frac{\partial\phi}{\partial n} & =q-\gamma\phi\quad\text{on}\quad\Gamma_{3}
+\end{align*}
+
+\end_inset
+
+能量泛函
+\begin_inset Formula 
+\begin{align*}
+\mathcal{F}(\phi)= & \frac{1}{2}\int_{\Omega}\left[(\nabla\phi)\cdot\sigma\cdot(\nabla\phi)\right]\dd{V}+\int_{\Gamma}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}\\
+= & -\frac{1}{2}\int_{\Omega}\phi\nabla\cdot\left(\sigma\cdot\nabla\phi\right)\dd{V}\\
+ & +\oint_{\Gamma}\left[\frac{\sigma}{2}\phi^{s}\frac{\partial}{\partial n}\phi^{s}+\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\sbf\Gamma}
+\end{align*}
+
+\end_inset
+
+非线性迭代
+\begin_inset Formula 
+\begin{align*}
+ & \left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}+{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{\alpha}^{e}N_{\beta}^{e}\dd{\Gamma}\right]}\delta\phi_{\beta}\\
+ & \qquad=\lambda\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]+\lambda\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}+\int_{\Omega^{e}}N_{\alpha}^{e}\,\partial_{t}\rho\,\dd{\Omega}
+\end{align*}
+
+\end_inset
+
+对于电流场问题，如果在边界
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上给定了总电流
+\begin_inset Formula $I$
+\end_inset
+
+，因为电流总是沿着边界的法向，根据
+\begin_inset Formula $\sbf J=\sigma\sbf E$
+\end_inset
+
+，也就是电势梯度沿着边界法向，所以此时边界
+\begin_inset Formula $\Gamma$
+\end_inset
+
+成为
+\begin_inset Formula $\phi$
+\end_inset
+
+的等势面，可以将边界
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上的所有节点简化为单个节点，即所谓的
+\series bold
+共自由度问题
+\series default
+。给定边界上总电流
+\begin_inset Formula $I$
+\end_inset
+
+，相当于取
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+，
+\begin_inset Formula $\int q=I$
+\end_inset
+
+；对于共节点问题，
+\series bold
+由于
+\begin_inset Formula $\Gamma$
+\end_inset
+
+上的节点坍缩到单自由度
+\series default
+，电流密度的积分 
+\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}$
+\end_inset
+
+ 坍缩到 总电流 
+\begin_inset Formula $I$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+浮动导体将增加额外1个边界自由度
+\begin_inset Formula $\phi_{f}$
+\end_inset
+
+。
+\series bold
+刚度矩阵（方程 lhs）完全由体单元贡献，边界单元没有贡献
+\series default
+；因为边界对应的3rd 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+；rhs项为
+\begin_inset Formula 
+\[
+\lambda\sum_{\{\alpha,e\}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}=\lambda\sum_{\{e\}}\int_{\Gamma^{e}}\left(\sum_{\alpha}N_{\alpha}^{e}\right){\color{brown}\,q}\dd{\Gamma}=\lambda\sum_{\{e\}}\int_{\Gamma^{e}}{\color{brown}q}\dd{\Gamma}=\lambda\,I_{\text{tot}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 表示对节点指标求和，
+\begin_inset Formula $e$
+\end_inset
+
+表示在边界单元上求积分，
+\begin_inset Formula $I_{\text{tot}}$
+\end_inset
+
+表示总电流；并使用了
+\begin_inset Formula 
+\[
+\sum_{\alpha}N_{\alpha}^{e}=1
+\]
+
+\end_inset
+
+直观上，
+\begin_inset Formula $b$
+\end_inset
+
+的分量坍缩
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+{\color{blue}b_{3}}\\
+{\color{blue}\vdots}\\
+{\color{blue}b_{7}}
+\end{array}\right]\to b_{3'}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+从单位制也可以看出，矩阵方程为
+\begin_inset Formula 
+\[
+K\,\phi=b
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $K=\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}$
+\end_inset
+
+，电导率
+\begin_inset Formula $\sigma$
+\end_inset
+
+的单位是
+\begin_inset Formula $[\mathrm{A\,V^{-1}\,m^{-1}}]$
+\end_inset
+
+，所以
+\begin_inset Formula $K$
+\end_inset
+
+ 的单位是 
+\begin_inset Formula $[\mathrm{A\,V^{-1}}]$
+\end_inset
+
+，
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的单位是
+\begin_inset Formula $[\mathrm{V}]$
+\end_inset
+
+，因此
+\begin_inset Formula $b$
+\end_inset
+
+ 的单位是
+\begin_inset Formula $[\mathrm{A}]$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
 界面连续性条件
 \end_layout
 
@@ -30614,177 +30849,6 @@ P=\sbf J\cdot\sbf E
 \end_inset
 
 进行积分得到。
-\end_layout
-
-\begin_layout Section
-浮动导体，节点共自由度
-\end_layout
-
-\begin_layout Standard
-有限元求解边值问题的公式推演如下
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align*}
--\nabla\cdot\left(\sigma\nabla\phi\right)+\beta\phi & =\partial_{t}\rho\\
-\sigma\frac{\partial\phi}{\partial n} & =q-\gamma\phi\quad\text{on}\quad\Gamma_{3}
-\end{align*}
-
-\end_inset
-
-能量泛函
-\begin_inset Formula 
-\begin{align*}
-\mathcal{F}(\phi)= & \frac{1}{2}\int_{\Omega}\left[(\nabla\phi)\cdot\sigma\cdot(\nabla\phi)\right]\dd{V}+\int_{\Gamma}\left[\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\Gamma}\\
-= & -\frac{1}{2}\int_{\Omega}\phi\nabla\cdot\left(\sigma\cdot\nabla\phi\right)\dd{V}\\
- & +\oint_{\Gamma}\left[\frac{\sigma}{2}\phi^{s}\frac{\partial}{\partial n}\phi^{s}+\frac{\gamma}{2}\left(\phi^{s}\right)^{2}-q\phi^{s}\right]\dd{\sbf\Gamma}
-\end{align*}
-
-\end_inset
-
-非线性迭代
-\begin_inset Formula 
-\begin{align*}
- & \left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}+{\color{brown}\left[\int_{\Gamma^{e}}\gamma N_{\alpha}^{e}N_{\beta}^{e}\dd{\Gamma}\right]}\delta\phi_{\beta}\\
- & \qquad=\lambda\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]+\lambda\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}+\int_{\Omega^{e}}N_{\alpha}^{e}\,\partial_{t}\rho\,\dd{\Omega}
-\end{align*}
-
-\end_inset
-
-对于电流场问题，如果在边界
-\begin_inset Formula $\Gamma$
-\end_inset
-
-上给定了总电流
-\begin_inset Formula $I$
-\end_inset
-
-，因为电流总是沿着边界的法向，根据
-\begin_inset Formula $\sbf J=\sigma\sbf E$
-\end_inset
-
-，也就是电势梯度沿着边界法向，所以此时边界
-\begin_inset Formula $\Gamma$
-\end_inset
-
-成为
-\begin_inset Formula $\phi$
-\end_inset
-
-的等势面，可以将边界
-\begin_inset Formula $\Gamma$
-\end_inset
-
-上的所有节点简化为单个节点，即所谓的
-\series bold
-共自由度问题
-\series default
-。电流密度边界条件相当于
-\begin_inset Formula $q$
-\end_inset
-
-项，对于共节点问题，由于
-\begin_inset Formula $\Gamma$
-\end_inset
-
-上的节点坍缩到单自由度，电流密度的积分 
-\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}$
-\end_inset
-
- 坍缩到 总电流 
-\begin_inset Formula $I$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-浮动导体将增加额外1个边界自由度
-\begin_inset Formula $\phi_{f}$
-\end_inset
-
-。
-\series bold
-刚度矩阵（方程 lhs）完全由体单元贡献，边界单元没有贡献
-\series default
-；因为边界对应的3rd 
-\begin_inset Formula $\gamma=0$
-\end_inset
-
-；rhs项为
-\begin_inset Formula 
-\[
-\lambda\sum_{\{\alpha,e\}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,q}\dd{\Gamma}=\lambda\sum_{\{e\}}\int_{\Gamma^{e}}\left(\sum_{\alpha}N_{\alpha}^{e}\right){\color{brown}\,q}\dd{\Gamma}=\lambda\sum_{\{e\}}\int_{\Gamma^{e}}{\color{brown}q}\dd{\Gamma}=\lambda\,I_{\text{tot}}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\alpha$
-\end_inset
-
- 表示对节点指标求和，
-\begin_inset Formula $e$
-\end_inset
-
-表示对边界单元求和，
-\begin_inset Formula $I_{\text{tot}}$
-\end_inset
-
-表示总电流；并使用了
-\begin_inset Formula 
-\[
-\sum_{\alpha}N_{\alpha}^{e}=1
-\]
-
-\end_inset
-
-从单位制也可以看出，矩阵方程为
-\begin_inset Formula 
-\[
-K\,\phi=b
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $K=\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\kappa(E^{0})\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\right]\delta\phi_{\beta}$
-\end_inset
-
-，电导率
-\begin_inset Formula $\sigma$
-\end_inset
-
-的单位是
-\begin_inset Formula $[\mathrm{A\,V^{-1}\,m^{-1}}]$
-\end_inset
-
-，所以
-\begin_inset Formula $K$
-\end_inset
-
- 的单位是 
-\begin_inset Formula $[\mathrm{A\,V^{-1}}]$
-\end_inset
-
-，
-\begin_inset Formula $\phi$
-\end_inset
-
- 的单位是
-\begin_inset Formula $[\mathrm{V}]$
-\end_inset
-
-，因此
-\begin_inset Formula $b$
-\end_inset
-
- 的单位是
-\begin_inset Formula $[\mathrm{A}]$
-\end_inset
-
-。
 \end_layout
 
 \begin_layout Chapter

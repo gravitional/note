@@ -68,8 +68,8 @@ main(int argc, char* argv[]);
                             //非续算时清空独立计时器
                             //清空当前分析的标记 _flags
                             //设置新的变量输出
-                    // 各个场自己的特定初始化, /ElectroChemistry/Model/ModelCreatorEC.cpp
-                    Initialize(); // 材料，约束, 自由度排序，网格，MPI，单元列表
+                    // 各个场自己的特定初始化, /ElectroChemistry/Model/ModelCreatorEC.cpp; FeModelCreator.cpp
+                    Initialize(); // ov; 材料，约束, 自由度排序，网格，MPI，单元列表
                         model()->CopyThreadsMaterial(); //复制线程私有材料对象
                         ApplyConstraint(); // 施加约束
                             ExpandCons2Ele();//施加约束到单元上
@@ -127,11 +127,11 @@ main(int argc, char* argv[]);
                                 cons->AssembleKe(mat); //组装约束对应的刚度矩阵
                                     ElePt->CalcEleMatrixKeOpen(ke);//开放边界的贡献
                                     ElePt->CalcEleMatrixKeShield(ke);//介电屏蔽的贡献
-                            CallSolver_T(K,p_GRt.data(),p_Solu_T.data());//求解方程
+                            CallSolver_T(K,p_GRt.data(),p_Solu_T.data());//求解方程;  <<存储在_pSolu, _pSolu->jobID>>
                                 "提取并保存自由度";// 将方程的解存入 _jobID, 工况号
-                            LineSearch();//回溯线搜索, 广义牛顿法
+                            LineSearch();//回溯线搜索, 广义牛顿法; <<jobID->STP_SEARCH]>>
                             p_resultHadle->CopySoluData(STP_SEARCH,_jobID,1);//复制解到 线搜索存储空间
-                            p_resultHadle->AccumSoluData(STEPBEG_ACCUM,STP_SEARCH); // 将结果累加
+                            p_resultHadle->AccumSoluData(STEPBEG_ACCUM,STP_SEARCH); // 将结果累加; << STP_ACCUM+=STP_SEARCH >>
                             bool converged= false;//判断解是否收敛
                             PostProcessStepFiledData(); // 后处理, 当前时间步场数据
                                 AlgPostAnalysisEF analysis; // 新建Post分析对象
