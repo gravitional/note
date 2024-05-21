@@ -38,3 +38,9 @@ print(f'ret 5: {y:0<#.11G}')
 print(f'ret 6: {y:0>#.11G}')
 print(f'ret 7: {y:0=#.11G}')
 ```
+
+cpp `fmt` 库使用相同的语法:
+
+```cpp
+fmt::print(fmt::fg(fmt::color::aqua), "test ret1: {:#15.12g}", c);
+```

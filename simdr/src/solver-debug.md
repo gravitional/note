@@ -31,10 +31,10 @@ Visual Studio的编译器分配完空间后, 会顺手往里面装进去一点�
 ### OpenMP Critical
 
 原因是组装矩阵时,
-将 local 矩阵插入全局矩阵的操作, 不在同一个 Critical 块中.
+将 `local` 矩阵插入全局矩阵的操作, 不在同一个 `Critical` 块中.
 导致 矩阵组装 过程那边变量被 race condition.
 
-## GetDofValue, HasField 报错, STPBEG_ACCUM
+### GetDofValue, HasField 报错, STPBEG_ACCUM
 
 原因, 没有初始化 `STPBEG_ACCUM` 对应的解.
 
@@ -55,10 +55,6 @@ Create 函数, 参数读取错误, Release 版本会将读取失败的参数 初
 system("chcp 65001")
 #endif
 ```
-
-### 电化学, 反应动力学 自定义函数 计算失败, y too large
-
-改变 电场初始值, 可能会收敛.
 
 ### warning C26451
 
@@ -130,3 +126,30 @@ int test2a(int n)
 
 数据类型要匹配, 如果写出时用的 `complex<double>`,
 那么读取时候也要用 `complex<double>`.
+
+## 电化学 bug
+
+### 电化学, 反应动力学 自定义函数 计算失败, y too large
+
+改变 电场初始值, 可能会收敛.
+
+### 电化学 ground search 不收敛. 计算 AssembleGlobalFin 不会变化.
+
+因为在 `CompElementEC::CalcuElementFin()` 中根据 分析类型是
+`Static` or `Dynamic` 做了区分.
+
+然而 `if else` 之外, 默认情况下是啥也不干,
+导致没有报错, 但是结果不对.
+应该对默认情况 添加断言 `assert(false)`.
+
+### 判断分析类型, SetFlag, GetFlag.
+
+之前通过 分析开始 添加的 Flag, 判断分析类型是 `Static` 还是 `Dynamic`,
+但是使用的时候, `GetFlag` 要在 `SetFlag` 之后, 但是这个没有保证.
+
+### MPC expand 错误
+
+`new MPCFloating()` 创建是在 `cons->expand2Ele()`,
+没有和 `Create(data)` json 读取绑定在一起.
+在多次调用 `expand2Ele()` 时候会 `new` 多个重复的 `MPCFloating()`.
+导致代码运行错误.
