@@ -73,6 +73,7 @@ class CFG_data_spec:
 
     # ----------------------- 误差 归一化
     err_val_scale: float = 1.0E0  # 误差的放大系数
+    err_indi_scale: float = 1.0E0  # indicator 的放大系数
     fct_charge_scale: float = 1.0E0  # 面电荷密度的放大系数
     fct_charge_marker_size: float = 1.0E3  # face charge 记号系数
 

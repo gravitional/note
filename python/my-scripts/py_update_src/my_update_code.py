@@ -35,7 +35,7 @@ def run_cmake():
 
 def run_git_and_cmake():
     run_git_pull('第一遍')
-    # run_git_pull('第二遍')  # 两次 pull, 防止网格不稳定
+    run_git_pull('第二遍')  # 两次 pull, 防止网格不稳定
     run_cmake()
 
 

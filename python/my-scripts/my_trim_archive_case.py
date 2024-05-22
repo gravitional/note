@@ -6,8 +6,16 @@ import re
 from datetime import datetime as dtt
 
 _exe_7z = r'C:/Program Files/7-Zip/7z.exe'
-_args_7z = ['a']
+_cmd_7z = 'a'
 _arc_dft_out_name = 'case_' + dtt.now().strftime('%y%m%d_%H%M%S')
+#----- 7z 参数, 要排除的文件夹
+_exclude = [
+    # r"-xr!result",
+    r"-xr!cache",
+    r"-xr!__pycache__",
+    r"-xr!result_backup",
+    r"-xr!result - 副本",
+]
 
 
 def prt_sep(istr):
@@ -103,7 +111,7 @@ abc
         if dir_solving_domain.exists():  # 检查 solvingDomain 是否存在
             for sd_p in dir_solving_domain.glob('*'):
                 re_result = re.compile(r'result', flags=re.I)
-                if re_result.match(sd_p.stem):  # 排除 resultxxx 文件夹
+                if re_result.match(sd_p.stem):  # copy 时略过 resultxxx 文件夹
                     continue
                 # 根目录下是否有同名文件, 默认不执行覆盖; 一般是 修改过的 control.json 文件
                 ifd_term = ifd / sd_p.name
@@ -122,9 +130,8 @@ abc
         arch_base = ptl.Path('~/Desktop').expanduser()  #打包到桌面
         arch_path: ptl.Path = arch_base / (args.output + '.7z')  # 压缩文件名称
         prt_sep(f'打包到压缩文件: {arch_path}')
-        _args_7z.append(arch_path.as_posix())
-        _args_7z.extend(folder_exist)  # 存在的 项目路径
-        p = subp.Popen([_exe_7z, *_args_7z], shell=False)
+        p = subp.Popen([_exe_7z, _cmd_7z, arch_path, *_exclude, *folder_exist],
+                       shell=False)
         p.communicate()
     else:
         prt_sep('没有给出 `压缩文档` 的名称, 不制作 .7z 了')
