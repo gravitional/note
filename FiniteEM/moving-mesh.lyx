@@ -1420,6 +1420,32 @@ F(t)
 
 \end_layout
 
+\begin_layout Standard
+MMA求解
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+mass = 1.0; beta = 1.0; iF0 = {0.0, 0.2}; xv0 = {1.0, 0.0}; (*---------*) massM
+ = {{1, 0}, {0, mass}}; massMInv = Inverse@massM; betaM0 = {{0, 1}, {0,
+ -beta}}; (*--------------*) betaM = massMInv .
+ betaM0; iF = massMInv .
+ iF0; (*-----------*) ret = First@DSolve[{ y0'[t] == betaM[[1]] .
+ {y0[t], y1[t]} + iF[[1]], y1'[t] == betaM[[2]] .
+ {y0[t], y1[t]} + iF[[2]], y0[0] == xv0[[1]], y1[0] == xv0[[2]] }, {y0[t],
+ y1[t]}, t]; ret // Chop // TableForm;
+\end_layout
+
+\begin_layout Plain Layout
+TableForm[ Table[ NumberForm[(Last /@ ret) /.
+ t -> x, {10, 9}](*,{x,0.01,0.1,0.01}*) , {x, 0.1, 1, 0.1} ] ]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 后向欧拉方法
 \end_layout
