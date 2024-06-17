@@ -48,3 +48,27 @@ call  C:\dev\ros2_galactic\local_setup.bat
 
 "E:\IBECAE\\"%2"\bin\\"%3"\solver.exe" %1 -threads=1 %5 %6 %7 %8 %9
 pause
+
+## powershell 禁用 `关闭设备以节约电源`, 禁止关闭 wifi
+
+[Disable turn off this device to save power for NIC](https://stackoverflow.com/questions/46145449/disable-turn-off-this-device-to-save-power-for-nic)
+
+`win+x` 打开 管理员模式下的 powershell
+设置所有的网络适配器 关闭 省电模式
+
+```powershell
+ $adapters = Get-NetAdapter -Physical | Get-NetAdapterPowerManagement
+    foreach ($adapter in $adapters)
+        {
+        $adapter.AllowComputerToTurnOffDevice = 'Disabled'
+        $adapter | Set-NetAdapterPowerManagement
+        }
+```
+
+或者只设置 第一个, 使用 `select -Index 0`
+
+```powershell
+$adapter = Get-NetAdapter -Physical | select -Index 0 | Get-NetAdapterPowerManagement
+$adapter.AllowComputerToTurnOffDevice = 'Disabled'
+$adapter | Set-NetAdapterPowerManagement
+```
