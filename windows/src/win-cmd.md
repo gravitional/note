@@ -2,6 +2,15 @@
 
 [Windows控制台cmd默认代码页修改的办法[GBK, UTF-8]](https://blog.csdn.net/tanmx219/article/details/123723771)
 
+## cmd 常用命令
+
+```cmd
+cd c:Users/xxx # 切换目录
+cd # 显示当前目录
+echo %cd% #显示当前目录
+dir #相当于 ls, 显示文件和目录
+```
+
 ## 修改CMD窗口编码
 
 ### 直接输入指令

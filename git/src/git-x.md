@@ -1124,3 +1124,20 @@ $ git submodule foreach 'git checkout -b featureA'
 # 递归 生成 diff log
 $ git diff; git submodule foreach 'git diff'
 ```
+
+## git 合并冲突
+
+git 拉去更新或者合并分支时, 形成的冲突的格式如下
+
+```git
+<<<<<<< HEAD:index.html
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+ please contact us at support@github.com
+</div>
+>>>>>>> iss53:index.html
+```
+
+`<<<<< xxx ======` 上半部分, 是本地的修改
+`===== xxx >>>>>>` 下半部分, 是远程的修改
