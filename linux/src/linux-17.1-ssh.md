@@ -191,16 +191,32 @@ sftp> bye
 
 ## Windows 中的 SSH 客户端
 
-比方说你正坐在一台 Windows 机器前面,但是你需要登录到你的 Linux 服务器中,去完成 一些实际的工作,那该怎么办呢?
+比方说你正坐在一台 Windows 机器前面,但是你需要登录到你的 Linux 服务器中,
+去完成 一些实际的工作,那该怎么办呢?
 当然是得到一个 Windows 平台下的 SSH 客户端!有很多这样 的工具.
 
 最流行的可能就是由 Simon Tatham 和他的团队开发的 `PuTTY` 了.
-这个 `PuTTY` 程序 能够显示一个终端窗口,而且允许Windows 用户在远端主机中打开一个 SSH(或者 telnet)会话.
+这个 `PuTTY` 程序 能够显示一个终端窗口,
+而且允许Windows 用户在远端主机中打开一个 SSH(或者 telnet)会话.
 这个程序也提供了 `scp` 和 `sftp` 程序的类似物.
 
 [PuTTY链接](http://www.chiark.greenend.org.uk/~sgtatham/putty/)
 
-拓展阅读
+安装 windows 可选组件, ssh 服务端
+
+### windows scp
+
+windows 上的 `scp` 指定端口使用大写的 `-P`
+
+```bash
+# 拷贝本地文件夹中的 myFile* 到远程 目录 /sdcard/1doc; 支持通配符
+scp -P 8022 myFile* 192.168.3.28:/sdcard/1doc
+
+# 将远程文件 /home/tom/.bashrc 拷贝到 当前目录.
+scp 192.168.3.28:/home/tom/.bashrc .
+```
+
+### 拓展阅读
 
 Linux 文档项目提供了 Linux 网络管理指南,可以广泛地(虽然过时了)了解网络管理方面的知识.
 
@@ -220,8 +236,7 @@ Linux 文档项目提供了 Linux 网络管理指南,可以广泛地(虽然过�
 第二个便是利用`IPv6`登录. 其中,`IPv6`的方式最方便(Linux默认是开启`IPv6`服务的),无须多余设置,只需要知道`IPv6`地址即可.
 具体方法如下: (假设`IPv6`地址为`2101:da8:a000:12:bc26:9915:4b1d:64cc`)
 
-***
-`ssh`远程登录服务器
+### `ssh`远程登录服务器
 
 ```bash
 # 用法:
@@ -230,8 +245,7 @@ ssh [username]@[IPv6_Host] -p [port number]
 ssh lg@2101:da8:a000:12:bc26:9915:4b1d:64cc -p 1234
 ```
 
-***
-`SCP`拷贝文件
+### `SCP`拷贝文件
 
 ```bash
 # 用法;
@@ -240,7 +254,8 @@ scp [username]@[IPv6_Host]:[file_path] [target_path]
 scp lg@\[2101:da8:a000:12:bc26:9915:4b1d:64cc\]:/home/lg/example.c ~/home/lg/src
 ```
 
-这里需要注意的是,由于`IPv6`地址中的冒号和`host`中的冒号有冲突,需要用中括号加转义字符的方式把`IPv6`的地址括起来.
+这里需要注意的是,由于 `IPv6` 地址中的冒号和`host`中的冒号有冲突,
+需要用 `\[` 符号把`IPv6`的地址括起来.
 
 以下补充 `ssh` 的使用
 
