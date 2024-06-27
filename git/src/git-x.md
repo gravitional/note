@@ -491,10 +491,12 @@ git reset --hard branch2
 有三个名称相似的命令: `git reset`, `git restore` 和 `git revert`.
 
 + [git-revert (1)][]; 将产生新的 `commit` , 新 `commit` 将还原旧 `commit` 所做的更改.
+
 + [git-restore (1)][]; 用于从 `index` 或某个 `commit` 还原 `working tree` 中的文件.
 此命令不会更新您的 `分支`. 该命令还可用于从某个 `commit` 还原 `index` 中的文件.
-+ [git-reset (1)][]; 用于 `更新 `某个分支, 移动 分支头(`tip`), 以添加或删除 `commit`s.
-此操作将更改 `commit` 历史.
+
++ [git-reset (1)][]; 用于 `更新` 某个分支, 移动 分支头(`tip`), 
+以添加或删除 `commit`s. 此操作将更改 `commit` 历史.
 
 + `git reset`也可以用来还原 `index`, 与 `git restore` 功能重叠.
 
@@ -502,8 +504,6 @@ git reset --hard branch2
 [git-revert (1)]: https://git-scm.com/docs/git-revert
 [git-restore (1)]: https://git-scm.com/docs/git-restore
 [git-reset (1)]: https://git-scm.com/docs/git-reset
-
-There are three commands with similar names: git reset, git restore and git revert.
 
 ## git重命名文件夹
 
