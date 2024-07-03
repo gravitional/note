@@ -5780,6 +5780,107 @@ s_{k}^{\text{column}}=\text{itemsize}\prod_{j=0}^{k-1}d_{j},\quad s_{k}^{\text{r
 \end_layout
 
 \begin_layout Section
+Seq 变换
+\end_layout
+
+\begin_layout Subsection
+Seq 局部升序
+\end_layout
+
+\begin_layout Standard
+有一个数组长度为
+\begin_inset Formula $n$
+\end_inset
+
+，元素为
+\begin_inset Formula $[0,\cdots,n-1]$
+\end_inset
+
+，即自然数 Sequence。
+\end_layout
+
+\begin_layout Enumerate
+如果把它分成两个数组
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+且
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+各自升序，再拼接成数组
+\begin_inset Formula $C$
+\end_inset
+
+。使用场景是，对象有递增编号，按照不同类型，将对象分成两类；
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $A$
+\end_inset
+
+，
+\begin_inset Formula $B$
+\end_inset
+
+需要保持各自升序，不失一般性假设
+\begin_inset Formula $C$
+\end_inset
+
+的序号排列为：
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccccccc}
+{\color{blue}a_{0}} & {\color{blue}a_{1}} & {\color{blue}a_{2}} & {\color{blue}a_{3}} & | & {\color{red}b_{0}} & {\color{red}b_{1}} & {\color{red}b_{2}} & {\color{red}b_{3}}\end{array}\right]\Rightarrow\left[\begin{array}{ccccccccc}
+{\color{blue}a_{0}} & {\color{blue}a_{1}} & {\color{blue}a_{3}} & {\color{red}b_{0}} & | & {\color{blue}a_{2}} & {\color{red}b_{1}} & {\color{red}b_{2}} & {\color{red}b_{3}}\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $|$
+\end_inset
+
+ 表示“分割线”，左边表示分割在原先Seq中的位置，
+\begin_inset Formula $a_{i}$
+\end_inset
+
+，
+\begin_inset Formula $b_{i}$
+\end_inset
+
+表示子数组，右边表示 新数组
+\begin_inset Formula $C$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+则乱序部分 
+\begin_inset Formula $[{\color{blue}a_{0}},{\color{blue}a_{1}},{\color{blue}a_{3}},{\color{red}b_{0}},{\color{blue}a_{2}}]$
+\end_inset
+
+ 是有界的，小于最大值为 
+\begin_inset Formula $\mathrm{size}-1$
+\end_inset
+
+；更强的，
+\begin_inset Formula $a_{2}<\min b_{0}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Section
 FFT，快速傅立叶变换
 \end_layout
 
