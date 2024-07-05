@@ -87,7 +87,27 @@ make -j4
 ./make -C /path/to/your/project -l
 ```
 
-## cmake 编译例子
+## cmake 编译项目 Linux
+
+```bash
+cmake -B . -S .. -G 'Unix Makefiles' --fresh #-- 重新构建 makefile
+cmake -B . -S .. -G 'Unix Makefiles' --config Release #-- 构建 Release 版本的 makefile
+cmake --build . --config Debug -j 8 #-- 调用 gcc 编译源代码
+```
+
+## cmake 编译项目 Windows
+
+```bash
+#-------- 使用
+cmake --help # 获取 Generator 列表
+cmake -B . -S ..  -G 'Visual Studio 17 2022' --fresh  # 生成 .sln
+cmake --build . --config Debug -j 8 # 编译源代码, Debug 版本, 8 threads
+
+#----- 或者生成 .sln 后, 使用 msvc msbuild 编译
+msbuild /m /v:n /p:Platform=x64 /p:Configuration=Debug Test.sln
+```
+
+## cmake 编译项目 MSYS
 
 ### 生成编译规则
 
