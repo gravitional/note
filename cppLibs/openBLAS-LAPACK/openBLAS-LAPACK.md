@@ -43,7 +43,7 @@ The full target list is in file TargetList.txt.
 # 编译动态库版本
 make DYNAMIC_ARCH=1
 # 安装到目录
-make  PREFIX=/home/tom/myLibs/openBLASLAPACK install
+make PREFIX=/home/tom/myLibs/openBLASLAPACK install
 ```
 
 默认目录为 `/opt/OpenBLAS`.

@@ -19,7 +19,7 @@
 
 [How do I list the defined make targets from the command line?](https://stackoverflow.com/questions/30793804/how-do-i-list-the-defined-make-targets-from-the-command-line)
 
-对于 Makefile 生成器的构建环境, 您可以使用
+对于 `Makefile generator` 的构建环境, 您可以使用
 
 ```bash
 cmake --build . --target help
@@ -35,7 +35,7 @@ dotty test.graph
 另请参阅 [使用 CMake 生成依赖关系图](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/Graphviz)
 和 [CMake Graphviz Output Cleaner](https://www.semipol.de/software/cmake-graphviz-output-cleaner).
 
-如果没有安装 dotty, 仍可在 CMakeLists.txt 中启用 [GLOBAL_DEPENDS_DEBUG_MODE](http://www.cmake.org/cmake/help/v3.2/prop_gbl/GLOBAL_DEPENDS_DEBUG_MODE.html),
+如果没有安装 `dotty`, 仍可在 `CMakeLists.txt` 中启用 [GLOBAL_DEPENDS_DEBUG_MODE](http://www.cmake.org/cmake/help/v3.2/prop_gbl/GLOBAL_DEPENDS_DEBUG_MODE.html),
 使目标依赖关系可见:
 
 ```cmake
@@ -90,21 +90,29 @@ make -j4
 ## cmake 编译项目 Linux
 
 ```bash
+# ---
 cmake -B . -S .. -G 'Unix Makefiles' --fresh #-- 重新构建 makefile
-cmake -B . -S .. -G 'Unix Makefiles' --config Release #-- 构建 Release 版本的 makefile
+#-- 生成 makefile; 优化配置为 Release; 指定安装路径前缀;
+cmake -B . -S .. -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/cppLibs/deal.ii
+#-- 调用编译器生成项目; compile Release 版本; -j 指定线程; -t <tgt> 指定编译目标, 如 INSTALL, 多个目标使用空格分隔
 cmake --build . --config Debug -j 8 #-- 调用 gcc 编译源代码
 ```
 
 ## cmake 编译项目 Windows
 
 ```bash
-#-------- 使用
-cmake --help # 获取 Generator 列表
-cmake -B . -S ..  -G 'Visual Studio 17 2022' --fresh  # 生成 .sln
-cmake --build . --config Debug -j 8 # 编译源代码, Debug 版本, 8 threads
+#--- 获取 Generator 列表
+cmake --help
+#-- 生成 .sln; MSVC 不需要指定 CMAKE_BUILD_TYPE;
+cmake -B . -S ..  -G 'Visual Studio 17 2022' -DCMAKE_INSTALL_PREFIX=C:/cppLibs/deal.ii
 
+# 编译源代码; Debug 版本; 8 threads
+cmake --build . --config Debug -j 8
 #----- 或者生成 .sln 后, 使用 msvc msbuild 编译
 msbuild /m /v:n /p:Platform=x64 /p:Configuration=Debug Test.sln
+
+#-- 安装编译得到的二进制文件
+cmake --install . --config Release --prefix C:/cppLibs/xxx
 ```
 
 ## cmake 编译项目 MSYS

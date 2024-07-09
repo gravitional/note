@@ -24,7 +24,7 @@ cmake --build --preset <preset> [<options>] [-- <build-tool-options>]
 当前工作目录必须包含 CMake 预设文件. 详见[预设](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html#manual:cmake-presets(7)).
 
 + `--list-presets`
-列出可用的编译预置. 当前工作目录必须包含 CMake 预设文件.
+列出可用的 编译预置. 当前工作目录必须包含 CMake 预设文件.
 
 + `-j [<jobs>], --parallel [<jobs>]`
 3.12 版新增.
@@ -36,7 +36,7 @@ cmake --build --preset <preset> [<options>] [-- <build-tool-options>]
 构建 `<tgt>` 而不是默认目标. 可以给出多个目标, 以空格分隔.
 
 + `--config <cfg>`
-对于多配置工具, 请选择配置 `<cfg>`.
+对于 `多配置工具`, 请选择配置 `<cfg>`.
 例如 Visual Studio 的 `Debug`, `Release`.
 
 + `--clean-first`
