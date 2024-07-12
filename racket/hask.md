@@ -47,7 +47,7 @@ class Applicative m => Monad m where
     (>>) :: m a -> m b -> m b
     return = pure
 
-    join mma = mma >>= id -- 从 mma 中取出 ma, 应用 id 函数, 得到 mb == ma
+    join mma = mma >>= id -- 从 mma 中取出 ma, 应用 id::ma->mb 函数, 得到 mb == ma
     (>>=) ma mf = join $ fmap mf ma -- 将 m 中的函数 f 应用到 ma, 得到 mma, 再使用 join 脱去一层
     (>>) ma mb = ma >>= \_ -> mb
 ```
@@ -64,3 +64,38 @@ class Applicative m => Monad m where
 
 定律 10.7.1. `join ◦ return = id = join ◦ fmap return`
 定律 10.7.2. `join ◦ join = join ◦ fmap join`
+
+## haskell do notation
+
+[Haskell/do_notation](https://en.wikibooks.org/wiki/Haskell/do_notation)
+
+```hs
+do { x1 <- action1
+   ; x2 <- action2
+   ; mk_action3 x1 x2 }
+
+-- 等价于如下形式; parentheses 可以去掉
+action1 >>= (\x1 -> action2 >>= (\x2 -> mk_action3 x1 x2 ))
+
+-- 也可以写成 缩进形式;
+action1 >>=
+    \x1 -> action2 >>=
+            \x2 -> mk_action3 x1 x2
+```
+
+haskell 支持返回函数 和 偏函数.
+因此 `\x2 -> mk_action3 x1 x2` 中的 依赖 `x1` 被抛出到上层,
+即 `\x1 -> action2 >>= \x2 -> mk_action3 x1 x2` 中的 `\x1`,
+`\x1` 被抛出到 `action1 >>= ...`, 即从容器 `action1` 中取出.
+
+也可以正过来看, bind operator `(>>=)` 的第二个参数 是 lambda 函数,
+lambda 指明了如何使用 `action1` 的结果, 而 `action1` 是 `(>=)` 的第一个.
+因此, chains of lambdas pass the results downstream.
+
+简单地说, 等价形式如下
+
+```hs
+x1 <- action1 ...
+-- 等价于
+action1 >>= \x1 -> ...
+```
