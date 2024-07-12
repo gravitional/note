@@ -93,3 +93,66 @@ class Collection e ce | ce -> e where
 {-# LANGUAGE TypeSynonymInstances #-}
 
 ```
+
+## InstanceSigs
+
+在使用 `instance` 关键字声明类型类实例时, `Haskell` 默认是不允许我们写出类型签名的,
+但是有时写出类型签名对我们有辅助的作用,
+GHC 提供了 `InstanceSigs `语言扩展来让我们 给出类型类中函数的签名:
+
+```hs
+{-# LANGUAGE InstanceSigs #-}
+instance Eq Shape where
+    (==) :: Shape -> Shape -> Bool
+    Circle r1 == Circle r2 = r1 == r
+```
+
+## FlexibleInstances, FlexibleContext
+
+我们这里的 `Shape` 并不带有类型参数,
+如果它带有一个类型参数的话我们就可以手工指定其中半径还有边长的类型了:
+
+```hs
+data Shape a = Circle a | Square a | Rectangle a a
+```
+
+而当我们试着把 `Shape Double` 类型实现为 `Eq` 类型类的实例时就会得到下面的错误:
+
+```hs
+instance Eq (Shape Double)
+>
+    Illegal instance declaration for 'Eq (Shape Double)'
+        (All instance types must be of the form (T a1 ... an)
+        where a1 ... an are *distinct type variables*,
+        and each type variable appears at most once in the instance head.
+        Use FlexibleInstances if you want to disable this.)
+    In the instance declaration for 'Eq (Shape Double)'
+```
+
+这是由于 `Haskell` 标准中规定,
+类型类中类型变量在实现时也必须使用类型变量去匹配, 即写成:
+
+```hs
+instance Eq (Shape a)
+```
+
+但是这样不是总能满足我们在编程实践中的需要,
+所以 GHC 对这一点做了扩展, 即使用 `FlexibleInstances` 语言扩展,
+这样我们可以对 有着任意类型的 `Shape` 实现 `Eq` 类型类.
+更多关于这个语言扩展的内容可以参阅 [87] 的 9.8.3.2.
+
+除了对于类型变量的限定外,
+Haskell 标准中还对 类型类实例声明的 **类型上下文** 做出了限定,
+例如我们给定 `Shape` 的类型参数为 `(a,a)`, 而我们希望在实现相等类型类实例时使用
+`Eq (a,a)` 而非 `Eq a`, 虽然在这种情形上意义并不大, 但是在很多时候还是需要的,
+此时就需要 `FlexibleContext` 语言扩展来打破这一限定:
+
+```hs
+{-# LANGUAGE FlexibleInstances, FlexibleContexts #-}
+data Shape a = Circle a | Square a | Rectangle a a
+
+instance Eq (Shape Double) -- 只需要FlexibleInstances
+instance Eq (a,a) => Eq (Shape (a,a)) -- 同时需要两个扩展
+```
+
+更多关于 `FlexibleContext` 的内容可以参阅 [87] 的 9.8.1.2.
