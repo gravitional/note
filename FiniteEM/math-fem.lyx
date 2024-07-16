@@ -27135,11 +27135,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-外力和内力总是差负号（来自于FPI）；在程序中会给
+外力和内力总是差负号（来自于FPI）；在程序中计算
 \begin_inset Formula $\frac{\lambda}{\varepsilon_{0}}\left[\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D^{0}}\dd{\Omega}\right]$
 \end_inset
 
- 强行添加负号，并在 
+ 会添加负号，并在 
 \begin_inset Formula $-F_{\text{in}}$
 \end_inset
 
@@ -27156,6 +27156,10 @@ noprefix "false"
 \end_inset
 
 】。
+\color red
+内力项实际上就是 旧的刚度矩阵乘上 旧的自由度向量
+\color inherit
+。
 \end_layout
 
 \begin_layout Itemize
@@ -29057,6 +29061,14 @@ x_{4}
 \end_layout
 
 \begin_layout Section
+直角坐标系
+\end_layout
+
+\begin_layout Standard
+如上所述
+\end_layout
+
+\begin_layout Section
 轴对称电场
 \end_layout
 
@@ -29121,12 +29133,28 @@ x_{4}
 此方程的求解和二维情况完全相同，即它对应的泛函和通常的二维情况相同。
 \begin_inset Formula 
 \[
-\mathcal{F}^{e}\left(\Phi\right)=\frac{1}{2}\int_{\Omega^{e}}\left(\nabla N_{i}^{e}\cdot\epsilon_{r}\cdot\nabla N_{j}^{e}\right)\Phi_{i}\Phi_{j}\dd{\Omega}-\int_{\Omega^{e}}\frac{\rho}{\epsilon_{0}}N_{i}^{e}\Phi_{i}\dd{\Omega}.
+\mathcal{F}^{e}\left(\Phi\right)=\frac{1}{2\pi}\int_{\Omega^{e}}\left[\frac{1}{2}(\nabla N_{i}^{e}\cdot\epsilon_{r}\cdot\nabla N_{j}^{e})\,\Phi_{i}\Phi_{j}-\int_{\Omega^{e}}\frac{\rho}{\epsilon_{0}}N_{i}^{e}\Phi_{i}\right]\dd{\Omega}.
 \]
 
 \end_inset
 
-对上式的泛函变分时，自由度是电势
+其中
+\begin_inset Formula $\dd{\Omega}=r\dd{r}\dd{z}\dd{\phi}$
+\end_inset
+
+，关于 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的积分给出
+\begin_inset Formula $2\pi$
+\end_inset
+
+因子，与前面的系数
+\begin_inset Formula $1/2\pi$
+\end_inset
+
+ 互相抵消。对上式的泛函变分时，自由度是电势
 \begin_inset Formula $\Phi_{i}$
 \end_inset
 
@@ -29142,15 +29170,7 @@ x_{4}
 
 \end_inset
 
-只不过由于对称性，泛函的积分可以直接把 
-\begin_inset Formula $\phi$
-\end_inset
 
- 积掉，给出 
-\begin_inset Formula $2\pi$
-\end_inset
-
- 因子。
 \end_layout
 
 \begin_layout Standard
@@ -31396,7 +31416,7 @@ noprefix "false"
 \begin_inset Formula $\sbf A$
 \end_inset
 
-的自然边界条件：
+的自然边界条件（磁感应线垂直）：
 \begin_inset Formula 
 \[
 \sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=0
@@ -31737,6 +31757,14 @@ noprefix "false"
 
 
 \begin_inset Formula 
+\[
+\nabla\times\nabla\times N_{\alpha}^{e}\sbf e_{z}=-(\partial_{xx}N_{\alpha}+\partial_{yy}N_{\alpha})\sbf e_{z}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
 \begin{align*}
  & K_{\alpha\beta}^{e}=\frac{1}{\mu_{r}}\int_{\Omega^{e}}\left(\frac{\partial N_{\alpha}^{e}}{\partial x}\frac{\partial N_{\beta}^{e}}{\partial x}+\frac{\partial N_{\alpha}^{e}}{\partial y}\frac{\partial N_{\beta}^{e}}{\partial y}\right)\dd{\Omega}\\
  & b_{\alpha}^{e}=\mu_{0}\int_{\Omega^{e}}J_{z}N_{\alpha}^{e}\dd{\Omega}
@@ -31958,7 +31986,7 @@ status open
 \begin_inset Formula 
 \begin{align*}
 K_{\alpha\beta}^{e} & =\int_{\Gamma^{e}}\frac{r}{\mu_{r}}\left[(\partial_{z}N_{\alpha}^{e})\,(\partial_{z}N_{\beta}^{e})+\left(\frac{N_{\alpha}^{e}}{r}+\partial_{r}N_{\alpha}^{e}\right)\left(\frac{N_{\beta}^{e}}{r}+\partial_{r}N_{\beta}^{e}\right)\right]\dd{r}\dd{z}\\
-b_{\alpha}^{e} & ={\color{blue}\mu_{0}\,J_{\varphi}}\,\int_{\Gamma^{e}}N_{\alpha}^{e}r\,\dd{r}\dd{z}.
+b_{\alpha}^{e} & ={\color{blue}\mu_{0}\,J_{\varphi}}\,\int_{\Gamma^{e}}N_{\alpha}^{e}\,r\,\dd{r}\dd{z}.
 \end{align*}
 
 \end_inset
@@ -31976,8 +32004,28 @@ noprefix "false"
 。
 \end_layout
 
-\begin_layout Standard
-将
+\begin_layout Itemize
+当
+\begin_inset Formula $r\to0$
+\end_inset
+
+时，为了使
+\begin_inset Formula $\frac{N_{\alpha}^{e}}{r}$
+\end_inset
+
+有限，需要
+\begin_inset Formula $N_{\alpha}^{e}\to0$
+\end_inset
+
+，则 
+\begin_inset Formula $\frac{N_{\alpha}^{e}}{r}\to\partial_{r}N_{\alpha}^{e}$
+\end_inset
+
+，也就是洛必达法则。
+\end_layout
+
+\begin_layout Itemize
+sdf将
 \begin_inset Formula $K_{\alpha\beta}^{e}$
 \end_inset
 
@@ -32005,7 +32053,7 @@ K_{\alpha\beta}^{e}=\int_{\Gamma^{e}}\frac{1}{\mu_{r}}\left({\color{blue}r\left[
 \end_layout
 
 \begin_layout Subsection
-整理:轴对称的导数矩阵
+整理:轴对称的Hessian
 \end_layout
 
 \begin_layout Standard
@@ -33475,7 +33523,7 @@ status collapsed
  的渐近边界条件，表面积分对矩阵方程的贡献为：
 \begin_inset Formula 
 \[
-\sum_{e=1}^{M}\left(\left[K_{ij}^{e}\right]+\left[K_{ij}^{s}\right]\right)\left\{ \sbf A_{j}\right\} =\sum_{e=1}^{M}\left\{ b_{i}^{e}\right\} 
+\sum_{e=1}^{M}\left(\left[K_{\alpha\beta}^{e}\right]+\left[K_{\alpha\beta}^{s}\right]\right)\left\{ \sbf A_{\beta}\right\} =\sum_{e=1}^{M}\left\{ b_{\alpha}^{e}\right\} 
 \]
 
 \end_inset
@@ -33493,7 +33541,7 @@ noprefix "false"
 ）
 \begin_inset Formula 
 \[
-K_{ij}^{s}=\frac{n}{r^{3}}\int_{\Gamma}\left(\sbf r\times\sbf N_{i}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\sbf r\times\sbf N_{j}^{e}\right)\dd{\Gamma}
+K_{\alpha\beta}^{s}=\frac{n}{r^{3}}\int_{\Gamma}\left(\sbf r\times\sbf N_{\alpha}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\sbf r\times\sbf N_{\beta}^{e}\right)\dd{\Gamma}
 \]
 
 \end_inset
@@ -33517,7 +33565,7 @@ K_{ij}^{s}=\frac{n}{r^{3}}\int_{\Gamma}\left(\sbf r\times\sbf N_{i}^{e}\right)\c
 ，即
 \begin_inset Formula 
 \[
-K_{ij}^{s}=\frac{n}{r}\int_{\Gamma}\frac{N_{i}^{s}N_{j}^{s}}{\mu_{r}}\dd{\Gamma}
+K_{\alpha\beta}^{s}=\frac{n}{r}\int_{\Gamma}\frac{N_{\alpha}^{s}N_{\beta}^{s}}{\mu_{r}}\dd{\Gamma}
 \]
 
 \end_inset
@@ -33555,7 +33603,7 @@ noprefix "false"
 ）
 \begin_inset Formula 
 \begin{equation}
-K_{ij}^{s}=\frac{1}{2\pi}\frac{n}{r}\int_{\Gamma}\frac{N_{i}^{e}N_{j}^{e}}{\mu_{r}}\dd{\Gamma}\label{eq:xl3.26}
+K_{\alpha\beta}^{s}=\frac{1}{2\pi}\frac{n}{r}\int_{\Gamma}\frac{N_{\alpha}^{e}N_{\beta}^{e}}{\mu_{r}}\dd{\Gamma}\label{eq:xl3.26}
 \end{equation}
 
 \end_inset
@@ -33564,7 +33612,11 @@ K_{ij}^{s}=\frac{1}{2\pi}\frac{n}{r}\int_{\Gamma}\frac{N_{i}^{e}N_{j}^{e}}{\mu_{
 \end_layout
 
 \begin_layout Standard
-上面的积分涉及边界上单元面积的积分，边界元形状如图
+上面的积分涉及 边界上单元面积的积分（
+\series bold
+圆台侧面积分
+\series default
+），边界元形状如图
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:xl3.3"
@@ -33722,7 +33774,7 @@ noprefix "false"
 的积分可以表示为
 \begin_inset Formula 
 \[
-K_{ij}^{s}=\frac{1}{2\pi}\int_{0}^{L_{s}}\frac{1}{r}\frac{N_{i}^{e}N_{j}^{e}}{\mu_{r}}2\pi\left(\rho_{1}+\frac{\rho_{2}-\rho_{1}}{L_{s}}\ell_{s}\right)\dd{\ell_{s}}
+K_{\alpha\beta}^{s}=\frac{1}{2\pi}\int_{0}^{L_{s}}\frac{1}{r}\frac{N_{\alpha}^{e}N_{\beta}^{e}}{\mu_{r}}2\pi\left(\rho_{1}+\frac{\rho_{2}-\rho_{1}}{L_{s}}\ell_{s}\right)\dd{\ell_{s}}
 \]
 
 \end_inset
@@ -33736,11 +33788,11 @@ K_{ij}^{s}=\frac{1}{2\pi}\int_{0}^{L_{s}}\frac{1}{r}\frac{N_{i}^{e}N_{j}^{e}}{\m
 \end_inset
 
 在面单元内变换不大，可以提到积分外面，二维形函数 
-\begin_inset Formula $N_{i}^{e}$
+\begin_inset Formula $N_{\alpha}^{e}$
 \end_inset
 
  在边界上退化为一维形函数
-\begin_inset Formula $N_{i}^{s}$
+\begin_inset Formula $N_{\alpha}^{s}$
 \end_inset
 
 。然后取 
@@ -33750,7 +33802,7 @@ K_{ij}^{s}=\frac{1}{2\pi}\int_{0}^{L_{s}}\frac{1}{r}\frac{N_{i}^{e}N_{j}^{e}}{\m
 ，可以得到
 \begin_inset Formula 
 \[
-K_{ij}^{s}=\frac{1}{r}\frac{1}{\mu_{r}}L_{s}\int_{0}^{1}N_{i}^{e}N_{j}^{e}\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\eta\right]\dd{\eta}
+K_{\alpha\beta}^{s}=\frac{1}{r}\frac{1}{\mu_{r}}L_{s}\int_{0}^{1}N_{\alpha}^{e}N_{\beta}^{e}\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\eta\right]\dd{\eta}
 \]
 
 \end_inset
@@ -33774,8 +33826,8 @@ K_{ij}^{s}=\frac{1}{r}\frac{1}{\mu_{r}}L_{s}\int_{0}^{1}N_{i}^{e}N_{j}^{e}\left[
 可以得到
 \begin_inset Formula 
 \begin{align*}
-K_{ij}^{s} & =\frac{n}{r}\frac{1}{\mu_{r}}\frac{L_{s}}{2}\int_{-1}^{+1}N_{i}^{s}N_{j}^{s}\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\frac{\xi+1}{2}\right]\dd{\eta}\\
- & =\frac{n}{r}\frac{1}{\mu_{r}}\frac{L_{s}}{2}\sum_{\alpha}N_{i}^{s}\left(\xi_{\alpha}\right)N_{j}^{s}\left(\xi_{\alpha}\right)\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\frac{\xi_{\alpha}+1}{2}\right]W\left(\xi_{\alpha}\right)
+K_{\alpha\beta}^{s} & =\frac{n}{r}\frac{1}{\mu_{r}}\frac{L_{s}}{2}\int_{-1}^{+1}N_{\alpha}^{s}N_{\beta}^{s}\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\frac{\xi+1}{2}\right]\dd{\eta}\\
+ & =\frac{n}{r}\frac{1}{\mu_{r}}\frac{L_{s}}{2}\sum_{\alpha}N_{\alpha}^{s}\left(\xi_{\alpha}\right)N_{\beta}^{s}\left(\xi_{\alpha}\right)\left[\rho_{1}+\left(\rho_{2}-\rho_{1}\right)\frac{\xi_{\alpha}+1}{2}\right]W\left(\xi_{\alpha}\right)
 \end{align*}
 
 \end_inset
@@ -34208,7 +34260,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align}
 \nabla\cdot\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right) & =0,\label{eq:hm1}\\
-\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right) & =\sbf J_{0;\text{ex}}e^{-i\varphi}+\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)\label{eq:hm2}
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right) & =\mu_{0}\sbf J_{0;\text{ex}}e^{-i\varphi}+\mu_{0}\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)\label{eq:hm2}
 \end{align}
 
 \end_inset
@@ -34278,7 +34330,7 @@ noprefix "false"
 得到
 \begin_inset Formula 
 \[
-\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A_{\omega}-\mu_{0}\mu_{r}\sigma\sbf T\right)=\sbf J_{0;\text{ex}}e^{-i\varphi}
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}-\mu_{r}\sigma\sbf T\right)=\mu_{0}\sbf J_{0;\text{ex}}e^{-i\varphi}
 \]
 
 \end_inset
@@ -34315,8 +34367,8 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{align}
-{\color{blue}\frac{i}{\omega}\nabla\cdot(\sigma\nabla\Phi_{\omega})}+{\color{brown}\nabla\cdot(\sigma\sbf A_{\omega})} & =0\label{eq:hm1b}\\
-{\color{blue}\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)-i\omega\sigma\sbf A_{\omega}}+{\color{brown}\sigma\nabla\Phi_{\omega}} & =\sbf J_{0}e^{-i\varphi}\label{eq:hm2b}
+{\color{blue}-\nabla\cdot(\sigma\nabla\Phi_{\omega})}+{\color{brown}i\omega\sigma\,\nabla\cdot\sbf A_{\omega}} & =0\label{eq:hm1b}\\
+{\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)-i\mu_{0}\omega\sigma\sbf A_{\omega}}+{\color{brown}\mu_{0}\sigma\nabla\Phi_{\omega}} & =\mu_{0}e^{-i\varphi}\,\sbf J_{0}\label{eq:hm2b}
 \end{align}
 
 \end_inset
@@ -34419,6 +34471,86 @@ b_{\alpha}^{e}
 \end_layout
 
 \begin_layout Section
+时谐磁场二维
+\end_layout
+
+\begin_layout Standard
+代入
+\begin_inset Formula 
+\begin{align*}
+\sbf N_{\alpha}^{e} & =N_{\alpha}^{e}\left(x,y\right)\sbf e_{z},\\
+\sbf J & =J_{z}\sbf e_{z},\\
+\sbf A & =A_{z,\alpha}\,N_{\alpha}^{e}(x,y)\,\sbf e_{z}.
+\end{align*}
+
+\end_inset
+
+到
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)=0,\\
+ & \nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)=\mu_{0}e^{-i\varphi}\,\sbf J_{0}+\mu_{0}\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)
+\end{align*}
+
+\end_inset
+
+这里的
+\begin_inset Formula $J_{0}$
+\end_inset
+
+表示外加电流；得到
+\begin_inset Formula 
+\begin{align*}
+ & -\sigma_{x}\partial_{xx}\phi_{\omega;x}-\sigma_{y}\partial_{yy}\phi_{\omega;y}=0\\
+ & -\frac{1}{\mu_{r}}(\partial_{xx}N_{\alpha}+\partial_{yy}N_{\alpha})\sbf e_{z}=\mu_{0}e^{-i\varphi}\,J_{0;z}+i\mu_{0}\sigma\omega\,A_{\omega;z}
+\end{align*}
+
+\end_inset
+
+其中考虑了 
+\begin_inset Formula $\partial_{z}A_{\omega;z}=0$
+\end_inset
+
+，
+\begin_inset Formula $\partial_{z}\Phi_{\omega;z}=0$
+\end_inset
+
+，因此 
+\begin_inset Formula $A_{\omega},\Phi_{\omega}$
+\end_inset
+
+ 解耦。因为要想影响
+\begin_inset Formula $x,y$
+\end_inset
+
+上的电场
+\begin_inset Formula $\sbf E$
+\end_inset
+
+，需要有
+\begin_inset Formula $z$
+\end_inset
+
+方向的
+\begin_inset Formula $\sbf B$
+\end_inset
+
+；但是2D分析只有
+\begin_inset Formula $x,y$
+\end_inset
+
+上的
+\begin_inset Formula $\sbf B$
+\end_inset
+
+，因此
+\begin_inset Formula $\sbf E,\sbf B$
+\end_inset
+
+解耦。
+\end_layout
+
+\begin_layout Section
 瞬态磁场
 \end_layout
 
@@ -34467,7 +34599,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 \nabla\cdot\sigma\left(\nabla\Phi+\frac{\partial\sbf A}{\partial t}\right) & =0\\
-\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right) & =\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}+\sbf J_{\text{ex}}+\sigma\left(-\nabla\Phi-\frac{\partial\sbf A}{\partial t}\right)
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)+\mu_{0}\sigma\frac{\partial\sbf A}{\partial t} & =\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}+\mu_{0}\sbf J_{\text{0}}-\mu_{0}\sigma\,\nabla\Phi
 \end{align*}
 
 \end_inset
@@ -34476,7 +34608,11 @@ noprefix "false"
 \begin_inset Formula $\sbf M_{0}$
 \end_inset
 
-为零外加磁场下，永磁材料中的磁化强度。
+为零外加磁场下，永磁材料中的磁化强度；
+\begin_inset Formula $\sbf J_{\text{0}}$
+\end_inset
+
+是外加电流。
 \end_layout
 
 \begin_layout Remark
@@ -34535,10 +34671,10 @@ noprefix "false"
 对应的加权残差得
 \begin_inset Formula 
 \begin{align}
-R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right){\color{red}-\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}}-\sbf J_{\text{ex}}+\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\nonumber \\
- & \quad+{\color{red}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\frac{1}{\mu_{r}}\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}\nonumber \\
- & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{blue}(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)}-\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}\label{eq:my20}\\
- & \quad-\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})+{\color{brown}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\nabla W}+{\color{magenta}\sbf N_{i}^{e}\cdot\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}\nonumber 
+R^{e}(\sbf N_{\alpha}^{e}) & =\int_{\Omega^{e}}\sbf N_{\alpha}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right){\color{red}-\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}}-\sbf J_{\text{ex}}+\mu_{0}\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\nonumber \\
+ & \quad+{\color{red}\int_{\Gamma^{e}}\sbf N_{\alpha}^{e}\cdot\frac{\mu_{0}}{\mu_{r}}\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}\nonumber \\
+ & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{blue}(\nabla\times\sbf N_{\alpha}^{e})\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}-\mu_{0}\sbf N_{\alpha}^{e}\cdot\sbf J_{\text{ex}}\label{eq:my20}\\
+ & \quad-\frac{\mu_{0}}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{\alpha}^{e})+{\color{brown}\sbf N_{\alpha}^{e}\cdot\mu_{0}\sigma\frac{\partial}{\partial t}\nabla W}+{\color{magenta}\sbf N_{\alpha}^{e}\cdot\mu_{0}\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}\nonumber 
 \end{align}
 
 \end_inset
@@ -34546,7 +34682,26 @@ R^{e}(\sbf N_{i}^{e}) & =\int_{\Omega^{e}}\sbf N_{i}^{e}\cdot\left[\nabla\times\
 
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Itemize
 在推导
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -34560,8 +34715,8 @@ noprefix "false"
 时使用了公式
 \begin_inset Formula 
 \begin{align*}
-\nabla\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right) & ={\color{red}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf N_{i}^{e}}-\left(\nabla\times\sbf N_{i}^{e}\right)\cdot\sbf M_{0}\\
-\text{and}\;\int_{\Omega^{e}}\dd{\Omega}\nabla\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right) & =\int_{\Gamma^{e}}\sbf e_{n}\cdot\left(\sbf M_{0}\times\sbf N_{i}^{e}\right)\dd{\Gamma}={\color{red}\int_{\Gamma^{e}}\sbf N_{i}^{e}\cdot\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}
+\nabla\cdot\left(\sbf M_{0}\times\sbf N_{\alpha}^{e}\right) & ={\color{red}\left(\nabla\times\sbf M_{0}\right)\cdot\sbf N_{\alpha}^{e}}-\left(\nabla\times\sbf N_{\alpha}^{e}\right)\cdot\sbf M_{0}\\
+\text{and}\;\int_{\Omega^{e}}\dd{\Omega}\nabla\cdot\left(\sbf M_{0}\times\sbf N_{\alpha}^{e}\right) & =\int_{\Gamma^{e}}\sbf e_{n}\cdot\left(\sbf M_{0}\times\sbf N_{\alpha}^{e}\right)\dd{\Gamma}={\color{red}\int_{\Gamma^{e}}\sbf N_{\alpha}^{e}\cdot\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}
 \end{align*}
 
 \end_inset
@@ -34581,6 +34736,11 @@ noprefix "false"
 \end_inset
 
 那里的说明。
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -34647,11 +34807,71 @@ R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\O
 
 \end_inset
 
-第一项是求解域内部电荷堆积速率；第二项是经由求解域表面灌入电荷的速率，对于匀强
+第一项是求解域内部电荷堆积速率；第二项是经由求解域表面灌入电荷的速率，对于稳恒电流
 \begin_inset Formula $\sbf J$
 \end_inset
 
 ，第二项为零。
+\end_layout
+
+\begin_layout Section
+矢量场的第三类边界条件
+\end_layout
+
+\begin_layout Standard
+使用第一矢量格林定理
+\begin_inset Formula 
+\[
+\int_{V}\left[{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}
+\]
+
+\end_inset
+
+矢量场刚度项 
+\begin_inset Formula $(\nabla\times\sbf A)\cdot(\nabla\times\sbf A)$
+\end_inset
+
+的IBP为
+\begin_inset Formula 
+\[
+\int_{V}{\color{blue}(\nabla\times\sbf N_{\alpha})}\cdot{\color{brown}(\nabla\times\sbf A)}-\oint_{S}\sbf n\cdot({\color{blue}\sbf N_{\alpha}}\times{\color{brown}\nabla\times\sbf A})=\int_{V}{\color{blue}\sbf N_{\alpha}}\cdot(\nabla\times{\color{brown}\nabla\times\sbf A})
+\]
+
+\end_inset
+
+因此边界项形如
+\begin_inset Formula 
+\[
+\frac{1}{\mu_{r}}\oint_{S}\sbf N_{\alpha}\cdot(\sbf n\times\sbf B)\dd{\Gamma}
+\]
+
+\end_inset
+
+约定矢量场的3rd边界条件为
+\begin_inset Formula 
+\[
+\frac{1}{\mu}(\sbf n\times\sbf B)=\gamma\sbf A-\sbf q
+\]
+
+\end_inset
+
+则对应的 刚度矩阵
+\begin_inset Formula $A$
+\end_inset
+
+和激励
+\begin_inset Formula $b$
+\end_inset
+
+的修正项为
+\begin_inset Formula 
+\[
+\mu_{0}\gamma\,\sbf N_{\alpha}^{e}\cdot\sbf N_{\beta}^{e},\quad\mu_{0}\,\sbf N_{\alpha}^{e}\cdot\sbf q
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
