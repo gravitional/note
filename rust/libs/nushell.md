@@ -25,7 +25,7 @@ ls -a **/*xxx* | where ($it.name | path basename) =~ 'xxx'
 ```
 
 需要注意的是, 实验性的 Nushell glob 命令(0.61 版)
-总是会使用 glob **/*xxx* 返回隐藏目录中的文件, 但它只返回文件名, 
+总是会使用 glob **/*xxx* 返回隐藏目录中的文件, 但它只返回文件名,
 而不是像 ls 那样返回 Nushell 列中的文件, 所以听起来并不适合你的使用情况:
 
 有时我只需要通过其他列进行过滤
@@ -42,6 +42,27 @@ Nushell 的 ls **/* 会递归跟踪符号链接.
 一般来说, 在当前的 Nushell 版本中使用 ls **/... globs 会非常小心.
 至少从目前来看, ^find 二进制文件可能是更安全的选择.
 
-分享到
-改进此答案
-关注
+## nushell 更改按键定义
+
+[keybindings list for platform](https://www.nushell.sh/commands/docs/keybindings_list.html)
+
+使用以下组合按键列出所有 edit 命令,
+
+```bash
+keybindings list -d
+```
+
+默认的 `$nu.config-path` 文件中有一个配置是
+
+```nu
+{
+    name: cut_line_from_start
+    modifier: control
+    keycode: char_u
+    mode: emacs
+    event: {edit: cutfromstart}
+}
+```
+
+按下 `ctrl+u`, 会用当前命令行替换剪贴板中的内容, 如果只是想清除当前 line 中的输入,
+可以把 `event: {edit: cutfromstart}` 修改成 `event: {edit: clear}` 即可.
