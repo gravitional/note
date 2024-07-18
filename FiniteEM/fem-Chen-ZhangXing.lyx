@@ -1,0 +1,719 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+数学笔记
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter*
+函数空间
+\end_layout
+
+\begin_layout Section
+Lebesgue空间
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "本质上确界和本质下确界"
+target "https://zh.wikipedia.org/wiki/本质上确界和本质下确界"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "稠密"
+target "https://zh.wikipedia.org/wiki/%E7%A8%A0%E5%AF%86%E9%9B%86"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\Vert v\right\Vert L^{\infty}(\Omega)=\esssup\left\{ \left|v(\sbf x)\right|:x\in\Omega\right\} ,
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\esssup$
+\end_inset
+
+是本质上确界。
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+度量空间中的柯西列
+\end_layout
+
+\end_inset
+
+。为了将柯西列的定义推广到一般的度量空间，必须将
+\series bold
+绝对值
+\series default
+替换为该度量空间中的
+\series bold
+距离
+\series default
+。
+\end_layout
+
+\begin_layout Standard
+形式上说，给定任何一个度量空间
+\begin_inset Formula $(M,d)$
+\end_inset
+
+，一个序列
+\begin_inset Formula 
+\[
+x_{1},x_{2},x_{3},\cdots
+\]
+
+\end_inset
+
+被称为柯西列，如果对于任何正实数
+\begin_inset Formula $r>0$
+\end_inset
+
+，存在一个正整数
+\begin_inset Formula $N$
+\end_inset
+
+使得对于所有的整数
+\begin_inset Formula $m,n>N$
+\end_inset
+
+，都有
+\begin_inset Formula 
+\[
+d(x_{m},x_{n})<r
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $d(x,y)$
+\end_inset
+
+表示
+\begin_inset Formula $x$
+\end_inset
+
+和
+\begin_inset Formula $y$
+\end_inset
+
+之间的距离。
+\end_layout
+
+\begin_layout Standard
+直观上说，一个序列中的元素越来越靠近，似乎说明这个序列必然在这个度量空间存在一个极限，而事实上在某些情况下这个结论是不对的。例如
+\series bold
+有理数序列
+\series default
+：有理数 
+\begin_inset Formula $\mathbb{Q}$
+\end_inset
+
+ 在通常定义的距离意义下不是完备的。存在某个由有理数组成的序列，收敛到某个
+\series bold
+无理数
+\series default
+，所以这数列在 
+\series bold
+有理数空间
+\series default
+ 是不收敛的。例如
+\begin_inset Formula 
+\[
+x_{0}=1,\;x_{n+1}=\frac{x_{n}+2/x_{n}}{2},
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+1,\frac{3}{2},\frac{17}{12}
+\]
+
+\end_inset
+
+可以证明这个序列收敛到一个无理数
+\begin_inset Formula $\sqrt{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如果度量空间
+\begin_inset Formula $X$
+\end_inset
+
+中的所有柯西数列都会收敛到
+\begin_inset Formula $X$
+\end_inset
+
+中的一点 ，那么
+\begin_inset Formula $X$
+\end_inset
+
+被称为是一个完备空间。例如实数是完备的度量空间。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+H
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\begin_inset Quotes erd
+\end_inset
+
+o
+\end_layout
+
+\end_inset
+
+lder 不等式
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $1/q+1/q'=1$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{equation}
+\left\Vert u\,v\right\Vert _{L^{1}}(\Omega)\le\left\Vert u\right\Vert _{L^{q}}(\Omega)\left\Vert v\right\Vert _{L^{q'}}(\Omega),\quad\forall u\in L^{q}(\Omega),\;v\in L^{q'}(\Omega)\label{eq:c1.29}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+closure 闭包
+\end_layout
+
+\end_inset
+
+ 所有包含
+\begin_inset Formula $\Omega$
+\end_inset
+
+的闭集的交集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+稠密
+\end_layout
+
+\end_inset
+
+在拓扑学及数学的其它相关领域，给定拓扑空间
+\begin_inset Formula $X$
+\end_inset
+
+及其子集
+\begin_inset Formula $A$
+\end_inset
+
+，如果对于
+\begin_inset Formula $X$
+\end_inset
+
+中任一点
+\begin_inset Formula $x$
+\end_inset
+
+，
+\begin_inset Formula $x$
+\end_inset
+
+的任一邻域同
+\begin_inset Formula $A$
+\end_inset
+
+的交集不为空，则
+\begin_inset Formula $A$
+\end_inset
+
+称为在
+\begin_inset Formula $X$
+\end_inset
+
+中稠密。直观上，如果
+\begin_inset Formula $X$
+\end_inset
+
+中的任一点
+\begin_inset Formula $x$
+\end_inset
+
+可以被
+\begin_inset Formula $A$
+\end_inset
+
+中的点很好的逼近，则称
+\begin_inset Formula $A$
+\end_inset
+
+在
+\begin_inset Formula $X$
+\end_inset
+
+中稠密。
+\end_layout
+
+\begin_layout Definition
+等价地说，
+\begin_inset Formula $A$
+\end_inset
+
+在
+\begin_inset Formula $X$
+\end_inset
+
+中稠密当且仅当
+\begin_inset Formula $X$
+\end_inset
+
+中唯一包含
+\begin_inset Formula $A$
+\end_inset
+
+的闭集是
+\begin_inset Formula $X$
+\end_inset
+
+自己。或者说，
+\begin_inset Formula $A$
+\end_inset
+
+的闭包是
+\begin_inset Formula $X$
+\end_inset
+
+，又或者
+\begin_inset Formula $A$
+\end_inset
+
+的补集的内部是空集。
+\end_layout
+
+\begin_layout Chapter
+Elementary Finite Elements
+\end_layout
+
+\begin_layout Section
+介绍
+\end_layout
+
+\begin_layout Subsection
+一维模型
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\text{Find}\;p\in V\;\text{such that}\;F(p)\le F(v),\quad\forall v\in V.\label{eq:1.2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left(\frac{\dd{p}}{\dd{x}},\frac{\dd{v}}{\dd{x}}\right)=(f,v),\label{eq:1.3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\abs{(v,\omega)}\le\left\Vert v\right\Vert \;\left\Vert w\right\Vert .\label{eq:1.10}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+二维模型
+\end_layout
+
+\begin_layout Subsection
+一般边界条件
+\end_layout
+
+\begin_layout Subsection
+编程
+\end_layout
+
+\begin_layout Section
+Sobolev Spaces
+\end_layout
+
+\begin_layout Subsection
+Lebesgue 空间
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Omega$
+\end_inset
+
+是 
+\begin_inset Formula $\mathbb{R}^{d}$
+\end_inset
+
+中的 open set，
+\begin_inset Formula $1\le d\le3$
+\end_inset
+
+，with 分段光滑的边界。
+\begin_inset Formula 
+\[
+\left\Vert v\right\Vert _{L^{q}(\Omega)}=\left(\int_{\Omega}\left|v(\sbf x)\right|^{q}\dd{\sbf x}\right)^{1/q}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\Vert v\right\Vert _{L^{\infty}(\Omega)}=\esssup\{\left|v(\sbf x)\right|:\sbf x\in\Omega\},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+L^{q}(\Omega)=\{v:v\;\text{定义在}\;\Omega,\;\text{and}\;\left\Vert v\right\Vert _{L^{q}(\Omega)}<\infty\}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Banach 空间
+\begin_inset Formula 
+\begin{equation}
+\left\Vert uv\right\Vert _{L^{1}(\Omega)}\le\left\Vert u\right\Vert _{L^{q}(\Omega)}\left\Vert v\right\Vert _{L^{q'}(\Omega)},\quad\forall u\in L^{q}(\Omega),\;v\in L^{q'}(\Omega).\label{eq:1.29}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left\Vert u+v\right\Vert _{L^{q}(\Omega)}\le\left\Vert u\right\Vert _{L^{q}(\Omega)}+\left\Vert v\right\Vert _{L^{q}(\Omega)},\quad\forall u,v\in L^{q}(\Omega).\label{eq:1.31}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在微积分中，函数的导数是 以点为单位 定义的。有限元法中的变分公式是全局给出的，即用
+\begin_inset Formula $\Omega$
+\end_inset
+
+上的积分表示。不需要导数的 Pointwise 值；只会用到，可以解释为 Lebesgue 空间中函数的导数。因此，引入更适合 Lebesgue
+ 空间的 
+\series bold
+derivative
+\series default
+的 global definition 是很自然的。
+\end_layout
+
+\begin_layout Standard
+局部可积空间
+\begin_inset Formula 
+\[
+L_{\text{loc}}^{1}(\Omega)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $L_{\text{loc}}^{1}(\Omega)$
+\end_inset
+
+中的函数在 
+\series bold
+靠近边界处可以表现地任意坏。
+\series default
+
+\begin_inset Formula 
+\[
+\int_{\Omega}u(\sbf x)\varphi(\sbf x)\dd{\sbf x}=(-1)^{\abs{\alpha}}\int_{\Omega}v(\sbf x)\,D^{\alpha}\varphi(\sbf x)\dd{\sbf x},\quad\forall\varphi\in\mathcal{D}(\Omega).
+\]
+
+\end_inset
+
+
+\begin_inset Formula $D_{w}^{\alpha}v=u$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+弱导数
+\begin_inset Formula 
+\[
+v(x)=1-\abs{x}
+\]
+
+\end_inset
+
+的弱导数是
+\begin_inset Formula 
+\[
+u(x)=\begin{cases}
+-1 & \mathrm{if}\,x>0,\\
+1 & \mathrm{if}\,x<0.
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+庞加莱不等式
+\begin_inset Formula 
+\begin{equation}
+\Vert v\Vert_{L^{2}(\Omega)}\le C\,|v|_{H^{1}(\Omega)}.\label{eq:1.36}
+\end{equation}
+
+\end_inset
+
+the abstract minimization problem
+\begin_inset Formula 
+\begin{equation}
+\text{Find}\;p\in V\;\text{such that}\;F(p)\le F(v)\quad\forall v\in V,\label{eq:1.37}
+\end{equation}
+
+\end_inset
+
+and the abstract variational problem
+\begin_inset Formula 
+\begin{equation}
+\text{Find}\;p\in V\;\text{such that}\;a(p,v)=L(v)\quad\forall v\in V.\label{eq:1.38}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+a(u,v)=a(v,u),\quad\forall u,v\in V.\label{eq:1.39}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+a(v,v)|\le a^{*}\Vert u\Vert_{V}\;\Vert v\Vert_{V},\quad\forall u,\,v\in V.\label{eq:1.40}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+|a(v,v)|\ge a_{*}\Vert v\Vert_{V}^{2},\quad\forall v\in V.\label{eq:1.41}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+|L(v)|\le\tilde{L}\,\Vert v\Vert_{V},\quad\forall v\in V.\label{eq:1.42}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+sdfds
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+二维例子。
+\begin_inset Formula 
+\[
+\Vert v\Vert_{V}^{2}=\Vert v\Vert_{H^{1}(\Omega)}^{2}=\Vert v\Vert_{L^{2}(\Omega)}^{2}+\Vert v_{x}\Vert_{L^{2}(\Omega)}^{2}+\Vert v_{y}\Vert_{L^{2}(\Omega)}^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+|a(v,v)| & =\Vert v_{x}\Vert_{L^{2}(\Omega)}^{2}+\Vert v_{y}\Vert_{L^{2}(\Omega)}^{2}\\
+ & =\frac{1}{2}(|v|_{H^{1}(\Omega)}+|v|_{H^{1}(\Omega)})\\
+ & \ge\begin{cases}
+\frac{1}{2}\left(\frac{1}{C^{2}}\Vert v\Vert_{L^{2}(\Omega)}^{2}+|v|_{H^{1}(\Omega)}\right) & \frac{1}{C^{2}}\ge1\\
+\frac{1}{2C^{2}}\left(\Vert v\Vert_{L^{2}(\Omega)}^{2}+C^{2}\,|v|_{H^{1}(\Omega)}\right) & \frac{1}{C^{2}}<1
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
