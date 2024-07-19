@@ -460,6 +460,30 @@ Elementary Finite Elements
 
 
 \begin_inset Formula 
+\[
+\Vert v\Vert=(v,v)^{1/2}=\left(\int_{0}^{1}v^{2}\dd{x}\right)^{1/2}
+\]
+
+\end_inset
+
+它是与 
+\series bold
+标量积
+\series default
+
+\begin_inset Formula $(\cdot,\cdot)$
+\end_inset
+
+ 相联系的 
+\series bold
+范数
+\series default
+，具有 
+\series bold
+Cauchy 不等式
+\series default
+。
+\begin_inset Formula 
 \begin{equation}
 \abs{(v,\omega)}\le\left\Vert v\right\Vert \;\left\Vert w\right\Vert .\label{eq:1.10}
 \end{equation}
@@ -479,6 +503,37 @@ Elementary Finite Elements
 
 \begin_layout Subsection
 编程
+\end_layout
+
+\begin_layout Standard
+2D 散度定理—Green's 公式，对于矢量场
+\begin_inset Formula $\sbf b=(b_{1},b_{2})$
+\end_inset
+
+，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\nabla\cdot\sbf b\,\dd{\sbf x}=\int_{\Gamma}\sbf b\cdot\sbf v\,\dd{\ell},\label{eq:1.17}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf v$
+\end_inset
+
+是朝外的单位矢量。
+\begin_inset Formula 
+\begin{equation}
+\int_{\Omega}\Delta v\,w\,\dd{\sbf x}=\int_{\Gamma}\frac{\partial v}{\partial\sbf v}w\,\dd{\ell}-\int_{\Omega}\nabla v\cdot\nabla w\,\dd{\sbf x},\label{eq:1.19}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -616,6 +671,98 @@ u(x)=\begin{cases}
 
 \end_layout
 
+\begin_layout Subsection
+sobolev
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Vert u\Vert_{W^{k,p}(\Omega)}:=\begin{cases}
+\left(\sum_{|\alpha|\le k}\Vert D^{\alpha}u\Vert_{L^{p}(\Omega)}^{p}\right)^{1/p} & 1\le p<\infty;\\
+\max_{|\alpha|\le k}\Vert D^{\alpha}u\Vert_{L^{\infty}(\Omega)} & p=\infty
+\end{cases}
+\]
+
+\end_inset
+
+例如对于
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+上的函数
+\begin_inset Formula $u$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+\Vert u\Vert_{H^{1}(\Omega)} & =\left(\Vert u\Vert_{L^{2}(\Omega)}^{2}+\sum\Vert D^{1}u\Vert_{L^{2}(\Omega)}^{2}\right)^{1/p}
+\end{align*}
+
+\end_inset
+
+括号中的部分等于
+\begin_inset Formula 
+\begin{align*}
+ & \int u^{2}+\int(\partial_{x}u)^{2}+\int(\partial_{y}u)^{2}\\
+ & =\int u^{2}+\int(\partial_{x}u)^{2}+(\partial_{y}u)^{2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Vert u\Vert_{L^{2}(\Omega)}+\left(\Vert\partial_{x}u\Vert_{L^{2}(\Omega)}+\Vert\partial_{y}u\Vert_{L^{2}(\Omega)}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sobolev 范数的另一种等价定义
+\begin_inset CommandInset href
+LatexCommand href
+name "Sobolev space"
+target "https://en.wikipedia.org/wiki/Sobolev_space"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Vert u\Vert_{W^{k,p}(\Omega)}^{\prime}:=\begin{cases}
+\sum_{|\alpha|\le k}\Vert D^{\alpha}u\Vert_{L^{p}(\Omega)} & 1\le p<\infty;\\
+\sum_{|\alpha|\le k}\Vert D^{\alpha}u\Vert_{L^{\infty}(\Omega)} & p=\infty
+\end{cases}
+\]
+
+\end_inset
+
+例如对于
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+上的函数
+\begin_inset Formula $u$
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+\Vert u\Vert_{H^{1}(\Omega)}^{\prime} & =\Vert u\Vert_{L^{2}(\Omega)}+\sum\Vert D^{1}u\Vert_{L^{2}(\Omega)}\\
+ & =\Vert u\Vert_{L^{2}(\Omega)}+\left(\Vert\partial_{x}u\Vert_{L^{2}(\Omega)}+\Vert\partial_{y}u\Vert_{L^{2}(\Omega)}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 庞加莱不等式
 \begin_inset Formula 
@@ -655,7 +802,7 @@ a(u,v)=a(v,u),\quad\forall u,v\in V.\label{eq:1.39}
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-a(v,v)|\le a^{*}\Vert u\Vert_{V}\;\Vert v\Vert_{V},\quad\forall u,\,v\in V.\label{eq:1.40}
+a(u,v)|\le a^{*}\Vert u\Vert_{V}\;\Vert v\Vert_{V},\quad\forall u,\,v\in V.\label{eq:1.40}
 \end{equation}
 
 \end_inset
