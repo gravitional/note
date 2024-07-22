@@ -5252,6 +5252,10 @@ noprefix "false"
 \end_inset
 
 ，
+\begin_inset Formula $\omega=k_{0}\sqrt{1/\varepsilon_{0}\mu_{0}}$
+\end_inset
+
+，
 \begin_inset Formula $k_{0}Z_{0}=\omega\mu_{0}$
 \end_inset
 
@@ -6042,10 +6046,33 @@ actions
 \end_layout
 
 \begin_layout Chapter
-磁场二维
+磁场二维, Node Based
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mu_{0}{\color{red}\sbf j}=\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf A^{h}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mu_{0}\sbf R=\mu_{0}\sbf J-\mu_{0}{\color{red}\sbf j}
+\]
+
+\end_inset
+
 二维静磁问题中的电流
 \series bold
 垂直流过
@@ -6072,10 +6099,10 @@ actions
 \begin_inset Formula $\sbf A$
 \end_inset
 
-满足的基本方程
+的方程在二维下化简成
 \begin_inset Formula 
 \[
-\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J
+-\frac{1}{\mu_{r}}(\partial_{xx}+\partial_{yy})A_{z}=\mu_{0}\,J_{z}
 \]
 
 \end_inset
@@ -6084,10 +6111,10 @@ actions
 \end_layout
 
 \begin_layout Itemize
-FEM近似解对应的体电流密度
+FEM近似解对应的体电流密度，in 2D
 \begin_inset Formula 
 \[
-\mu_{0}{\color{red}\sbf j}=\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf A^{h}
+\mu_{0}j_{z}=-\frac{1}{\mu_{r}}(\partial_{xx}+\partial_{yy})A_{z}^{h}
 \]
 
 \end_inset
@@ -6099,7 +6126,7 @@ FEM近似解对应的体电流密度
 体残余电流密度
 \begin_inset Formula 
 \[
-\mu_{0}\sbf j_{v}=\mu_{0}\sbf J-\mu_{0}{\color{red}\sbf j}
+\mu_{0}j_{v;z}=\mu_{0}J_{z}-\mu_{0}{\color{red}j_{z}}
 \]
 
 \end_inset
@@ -6107,7 +6134,38 @@ FEM近似解对应的体电流密度
 
 \end_layout
 
+\begin_layout Example
+形函数的一阶旋度
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\begin{align*}
+\nabla\times N_{\alpha}^{e}(x,y)\sbf e_{z} & =\left[\begin{array}{ccc}
+\sbf e_{x} & \sbf e_{y} & \sbf e_{z}\\
+\partial_{x} & \partial_{y} & \partial_{z}\\
+0 & 0 & N_{\alpha}^{e}(x,y)
+\end{array}\right]\\
+ & =\sbf e_{x}\,\partial_{y}N_{\alpha}^{e}-\sbf e_{y}\,\partial_{x}N_{\alpha}^{e}\\
+ & =\left[\begin{array}{c}
+\partial_{y}N_{\alpha}^{e}\\
+-\partial_{x}N_{\alpha}^{e}
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 形函数的二阶旋度为
 \begin_inset Formula 
 \begin{align*}
@@ -6116,8 +6174,8 @@ FEM近似解对应的体电流密度
 \partial_{x} & \partial_{y} & \partial_{z}\\
 N_{\alpha,y} & -N_{\alpha,x} & 0
 \end{array}\right]\\
- & =\left[N_{\alpha,xz},\;N_{\alpha,yz},\;N_{\alpha,yy}-N_{\alpha,xx}\right]\\
- & =\left[0,\;0,\;N_{\alpha,yy}-N_{\alpha,xx}\right]
+ & =\left[N_{\alpha,xz},\;N_{\alpha,yz},\;-N_{\alpha,yy}-N_{\alpha,xx}\right]\\
+ & =\left[0,\;0,\;-N_{\alpha,xx}-N_{\alpha,yy}\right]
 \end{align*}
 
 \end_inset
@@ -6167,6 +6225,18 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 \end_inset
 
  就是 dNdzeta。
+\end_layout
+
+\begin_layout Section
+约定
+\end_layout
+
+\begin_layout Itemize
+2D磁场的 外加激励 为标量 
+\begin_inset Formula $J_{z}$
+\end_inset
+
+。solver 中外加激励接口 统一为矢量。2D激励存储在 z分量位置，即类似 extJ[2]={0, 0, Jz} 的形式。
 \end_layout
 
 \begin_layout Chapter

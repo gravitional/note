@@ -23896,6 +23896,108 @@ status collapsed
 
 \end_layout
 
+\begin_layout Section
+形函数Hessian
+\end_layout
+
+\begin_layout Standard
+使用
+\begin_inset Formula 
+\[
+\frac{\partial\overline{J}_{{\color{red}12}}}{\partial\xi_{{\color{blue}3}}}=-\overline{J}_{1m}\frac{\partial J_{mn}}{\partial\xi_{3}}\overline{J}_{n2}=-\overline{J}_{b2}\,X_{\beta b}\,\overline{J}_{1c}\,N_{\beta,c3}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+计算形函数
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+的空间坐标Hessian矩阵
+\begin_inset Formula 
+\begin{align*}
+\nabla\nabla N_{\alpha} & =\partial_{i}\partial_{j}N_{\alpha}\\
+ & =\overline{J}_{ik}\tilde{\partial}_{k}\,\left(\overline{J}_{jm}\tilde{\partial}_{m}N_{\alpha}\right)\\
+ & =\overline{J}_{ik}\left({\color{blue}\tilde{\partial}_{k}\overline{J}_{jm}}\right)N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{jm}\,N_{\alpha,mk}\\
+ & =\overline{J}_{ik}\left({\color{blue}-\overline{J}_{bm}\,X_{\beta b}\,\overline{J}_{jc}\,N_{\beta,ck}}\right)N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{jm}\,N_{\alpha,mk}\\
+ & =-(\overline{J}_{ik}\overline{J}_{jc}\,N_{\beta,ck})\,X_{\beta b}\,\overline{J}_{bm}\,N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{jm}\,N_{\alpha,mk}
+\end{align*}
+
+\end_inset
+
+矩阵形式为，
+\begin_inset Formula 
+\[
+\nabla\nabla N_{\alpha}=-(\overline{J}\cdot H_{\beta}\cdot\overline{J}^{\mathrm{T}})_{ji}\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+(\overline{J}\cdot H_{\alpha}\cdot\overline{J}^{\mathrm{T}})_{ji}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $H_{\beta}\equiv$
+\end_inset
+
+ 节点
+\begin_inset Formula $\beta$
+\end_inset
+
+的形函数
+\begin_inset Formula $N_{\beta}$
+\end_inset
+
+的Hessian；在程序中
+\begin_inset Formula $G_{k\alpha}=\tilde{\partial}_{k}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
+\end_inset
+
+，or 
+\begin_inset Formula $N_{\alpha,k}=G_{k\alpha}^{\mathrm{T}}$
+\end_inset
+
+，
+\begin_inset Formula $G$
+\end_inset
+
+ 就是 dNdzeta。
+\end_layout
+
+\begin_layout Enumerate
+Hessian 的迹（对坐标index求迹）为
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}\nabla^{2}N_{\alpha}} & =\partial_{i}\partial_{i}N_{\alpha}\\
+ & =-(\overline{J}_{ik}\overline{J}_{ic}\,N_{\beta,ck})\,X_{\beta b}\,\overline{J}_{bm}\,N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{im}\,N_{\alpha,mk}
+\end{align*}
+
+\end_inset
+
+写成矩阵运算形式为
+\begin_inset Formula 
+\[
+{\color{blue}\nabla^{2}N_{\alpha}}=-\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]
+\]
+
+\end_inset
+
+有限元解对应的 体电荷估计
+\begin_inset Formula 
+\begin{align*}
+\rho^{h}= & -\epsilon_{0}\epsilon_{r}\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}\\
+= & -\epsilon_{0}\,{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)-\epsilon_{0}\epsilon_{r}{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}
+\end{align*}
+
+\end_inset
+
+电位移矢量 
+\begin_inset Formula $D_{k}^{h}=-\epsilon_{r}N_{\alpha,k}\,\phi_{\alpha}^{h}=-\epsilon_{r}\phi_{\alpha}G_{k\alpha}$
+\end_inset
+
+。
+\end_layout
+
 \begin_layout Chapter
 Edge单元
 \end_layout
@@ -24152,106 +24254,40 @@ status open
 
 \end_layout
 
+\begin_layout Section
+矢量形函数例子
+\end_layout
+
 \begin_layout Subsection
-形函数Hessian
+1D
 \end_layout
 
 \begin_layout Standard
-使用
+一维 Reference 单元，例如 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+，标量形函数为
 \begin_inset Formula 
 \[
-\frac{\partial\overline{J}_{{\color{red}12}}}{\partial\xi_{{\color{blue}3}}}=-\overline{J}_{1m}\frac{\partial J_{mn}}{\partial\xi_{3}}\overline{J}_{n2}=-\overline{J}_{b2}\,X_{\beta b}\,\overline{J}_{1c}\,N_{\beta,c3}
+N_{1}=1-x,\quad N_{2}^{(1)}=x.
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Enumerate
-计算形函数
-\begin_inset Formula $N_{\alpha}$
-\end_inset
-
-的空间坐标Hessian矩阵
-\begin_inset Formula 
-\begin{align*}
-\nabla\nabla N_{\alpha} & =\partial_{i}\partial_{j}N_{\alpha}\\
- & =\overline{J}_{ik}\tilde{\partial}_{k}\,\left(\overline{J}_{jm}\tilde{\partial}_{m}N_{\alpha}\right)\\
- & =\overline{J}_{ik}\left({\color{blue}\tilde{\partial}_{k}\overline{J}_{jm}}\right)N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{jm}\,N_{\alpha,mk}\\
- & =\overline{J}_{ik}\left({\color{blue}-\overline{J}_{bm}\,X_{\beta b}\,\overline{J}_{jc}\,N_{\beta,ck}}\right)N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{jm}\,N_{\alpha,mk}\\
- & =-(\overline{J}_{ik}\overline{J}_{jc}\,N_{\beta,ck})\,X_{\beta b}\,\overline{J}_{bm}\,N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{jm}\,N_{\alpha,mk}
-\end{align*}
-
-\end_inset
-
-矩阵形式为，
+则对应的矢量形函数为
 \begin_inset Formula 
 \[
-\nabla\nabla N_{\alpha}=-(\overline{J}\cdot H_{\beta}\cdot\overline{J}^{\mathrm{T}})_{ji}\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+(\overline{J}\cdot H_{\alpha}\cdot\overline{J}^{\mathrm{T}})_{ji}
+\sbf N_{\alpha}^{e}=\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{i}^{e}=(1-x)\sbf e_{x}-x(-\sbf e_{x})=\sbf e_{x}.
 \]
 
 \end_inset
 
-其中
-\begin_inset Formula $H_{\beta}\equiv$
-\end_inset
-
- 节点
-\begin_inset Formula $\beta$
-\end_inset
-
-的形函数
-\begin_inset Formula $N_{\beta}$
-\end_inset
-
-的Hessian；在程序中
-\begin_inset Formula $G_{k\alpha}=\tilde{\partial}_{k}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
-\end_inset
-
-，or 
-\begin_inset Formula $N_{\alpha,k}=G_{k\alpha}^{\mathrm{T}}$
-\end_inset
-
-，
-\begin_inset Formula $G$
-\end_inset
-
- 就是 dNdzeta。
-\end_layout
-
-\begin_layout Enumerate
-Hessian 的迹（对坐标index求迹）为
-\begin_inset Formula 
-\begin{align*}
-{\color{blue}\nabla^{2}N_{\alpha}} & =\partial_{i}\partial_{i}N_{\alpha}\\
- & =-(\overline{J}_{ik}\overline{J}_{ic}\,N_{\beta,ck})\,X_{\beta b}\,\overline{J}_{bm}\,N_{\alpha,m}+\overline{J}_{ik}\overline{J}_{im}\,N_{\alpha,mk}
-\end{align*}
-
-\end_inset
-
-写成矩阵运算形式为
-\begin_inset Formula 
-\[
-{\color{blue}\nabla^{2}N_{\alpha}}=-\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]
-\]
-
-\end_inset
-
-有限元解对应的 体电荷估计
-\begin_inset Formula 
-\begin{align*}
-\rho^{h}= & -\epsilon_{0}\epsilon_{r}\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}\\
-= & -\epsilon_{0}\,{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)-\epsilon_{0}\epsilon_{r}{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}
-\end{align*}
-
-\end_inset
-
-电位移矢量 
-\begin_inset Formula $D_{k}^{h}=-\epsilon_{r}N_{\alpha,k}\,\phi_{\alpha}^{h}=-\epsilon_{r}\phi_{\alpha}G_{k\alpha}$
-\end_inset
-
-。
+也就是
+\series bold
+沿着Edge方向
+\series default
+的单位矢量。
 \end_layout
 
 \begin_layout Chapter
@@ -34204,6 +34240,23 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+低频近似下的 
+\begin_inset Formula $\Phi-A$
+\end_inset
+
+方程是
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\cdot\sigma\left(-\nabla\Phi-\frac{\partial\sbf A}{\partial t}\right)=0.\\
+ & \frac{1}{\mu_{r}}\nabla\times\nabla\times\sbf A=\mu_{0}\sbf J_{0}+\mu_{0}\sigma(-\nabla\phi-\frac{\partial\sbf A}{\partial t})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 对于时谐磁场，可以做傅立叶展开，将外加电流写成
 \begin_inset Formula $\sbf J(t)=\sbf J_{0}\cos(\omega t+\varphi)$
 \end_inset
@@ -34313,14 +34366,17 @@ noprefix "false"
 可以得到
 \begin_inset Formula 
 \begin{align}
-\nabla\cdot\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right) & =0,\label{eq:hm1}\\
-\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right) & =\mu_{0}\sbf J_{0;\text{ex}}e^{-i\varphi}+\mu_{0}\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)\label{eq:hm2}
+ & \nabla\cdot\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)=0,\label{eq:hm1}\\
+ & \nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)=\mu_{0}\sbf J_{0;\text{ex}}e^{-i\varphi}+\mu_{0}\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)\label{eq:hm2}
 \end{align}
 
 \end_inset
 
 
-\begin_inset Box Boxed
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
 position "t"
 hor_pos "c"
 has_inner_box 1
@@ -34339,6 +34395,21 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
+其中 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sbf J_{\text{eddy}}(\sbf R,t)=-\sigma\,\partial_{t}\sbf A(\sbf R,t)$
+\end_inset
+
+ 代表涡流项，
+\begin_inset Formula $\sbf R$
+\end_inset
+
+表示 随体运动的坐标（拉格朗日描述）。
+\end_layout
+
+\begin_layout Itemize
 如果对
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -34363,7 +34434,7 @@ noprefix "false"
 
 \end_inset
 
-。反过来，可以认为
+。因此可以写
 \begin_inset Formula 
 \[
 -\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}=\nabla\times\sbf T
@@ -34371,24 +34442,6 @@ noprefix "false"
 
 \end_inset
 
-代入
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:hm2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-得到
-\begin_inset Formula 
-\[
-\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}-\mu_{r}\sigma\sbf T\right)=\mu_{0}\sbf J_{0;\text{ex}}e^{-i\varphi}
-\]
-
-\end_inset
-
 
 \end_layout
 
@@ -34397,8 +34450,8 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-整理
+\begin_layout Itemize
+方程
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:hm1"
@@ -34418,11 +34471,11 @@ noprefix "false"
 
 \end_inset
 
-
+作整理
 \begin_inset Formula 
 \begin{align}
-{\color{blue}-\nabla\cdot(\sigma\nabla\Phi_{\omega})}+{\color{brown}i\omega\sigma\,\nabla\cdot\sbf A_{\omega}} & =0\label{eq:hm1b}\\
-{\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)-i\mu_{0}\omega\sigma\sbf A_{\omega}}+{\color{brown}\mu_{0}\sigma\nabla\Phi_{\omega}} & =\mu_{0}e^{-i\varphi}\,\sbf J_{0}\label{eq:hm2b}
+{\color{brown}-\nabla\cdot(\sigma\nabla\Phi_{\omega})}+{\color{red}i\omega\sigma\,\nabla\cdot\sbf A_{\omega}} & =0\label{eq:hm1b}\\
+{\color{blue}\nabla\times\frac{1}{\mu_{r}}(\nabla\times\sbf A_{\omega})}{\color{brown}-i\mu_{0}\omega\sigma\sbf A_{\omega}}+{\color{red}\mu_{0}\sigma\nabla\Phi_{\omega}} & =\mu_{0}e^{-i\varphi}\,\sbf J_{0}\label{eq:hm2b}
 \end{align}
 
 \end_inset
@@ -34430,31 +34483,56 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-可以写出上述方程组对应的泛函积分
+\begin_layout Itemize
+引入 
+\begin_inset Formula $\Phi=\partial_{t}\Psi$
+\end_inset
+
+，即
+\begin_inset Formula $\Phi_{\omega}=-i\omega\Psi_{\omega}$
+\end_inset
+
+，并在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:hm1b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中乘上因子
+\begin_inset Formula $\mu_{0}$
+\end_inset
+
+。此举为了拉近两方程数量级（改善矩阵性质），并使得
+\begin_inset Formula $A-\phi$
+\end_inset
+
+耦合项对称
 \begin_inset Formula 
-\begin{align*}
-\mathcal{F}(\sbf A_{\omega},\Phi_{\omega})=\int_{\Omega}\dd{\Omega}\Big\{ & \frac{1}{2}\left[{\color{blue}(\nabla\times\sbf A_{\omega})\cdot\frac{1}{\mu_{0}\mu_{r}}(\nabla\times\sbf A_{\omega})-i\omega\sigma\,\sbf A_{\omega}\cdot\sbf A_{\omega}}\right]\\
- & +{\color{blue}\frac{i}{\omega}\frac{1}{2}(\nabla\Phi_{\omega})\cdot\sigma(\nabla\Phi_{\omega})}-\sbf J_{0}e^{-i\varphi}\cdot\sbf A_{\omega}\\
- & +{\color{brown}\nabla\cdot(\Phi_{\omega}\sigma\sbf A_{\omega})}\Big\}
-\end{align*}
+\begin{align}
+ & {\color{brown}i\omega\mu_{0}\nabla\cdot(\sigma\nabla\Psi_{\omega})}+{\color{red}i\omega\mu_{0}\sigma\,\nabla\cdot\sbf A_{\omega}}=0\label{eq:hm1c}\\
+ & {\color{blue}\nabla\times\frac{1}{\mu_{r}}(\nabla\times\sbf A_{\omega})}{\color{brown}-i\mu_{0}\omega\sigma\,\sbf A_{\omega}}-{\color{red}i\omega\mu_{0}\sigma\,\nabla\Psi_{\omega}}=\mu_{0}e^{-i\varphi}\,\sbf J_{0}\label{eq:hm2c}
+\end{align}
 
 \end_inset
 
-其中使用了
-\begin_inset Formula ${\color{brown}\nabla\cdot(\Phi_{\omega}\sigma\sbf A_{\omega})}=\nabla\Phi_{\omega}\cdot\sigma\sbf A_{\omega}+\Phi_{\omega}\nabla\cdot\sigma\sbf A_{\omega}$
-\end_inset
 
-。方程中的矢势和标势可以分别用形函数表示为
+\end_layout
+
+\begin_layout Itemize
+在方程两边乘上测试函数；使用 IBP，写出双线性型和线性算符（Galerkin 变分形式）
 \begin_inset Formula 
-\begin{align*}
-\sbf A_{\omega} & =\sbf N_{\alpha}^{e}A_{\alpha}\\
-\Phi_{\omega} & =L_{\mu}^{e}\Phi_{\mu}
-\end{align*}
+\begin{align}
+ & {\color{brown}-(\nabla N_{\mu}^{e},\,i\omega\mu_{0}\sigma\nabla\Psi_{\omega})}-{\color{red}(i\omega\mu_{0}\sigma\,\nabla N_{\mu}^{e},\,\sbf A_{\omega})}=0\label{eq:hm1d}\\
+ & {\color{blue}(\nabla\times\sbf N_{\alpha}^{e},\,\frac{1}{\mu_{r}}\nabla\times\sbf A_{\omega})}{\color{brown}-(\sbf N_{\alpha}^{e},\,i\omega\mu_{0}\sigma\,\sbf A_{\omega})}-{\color{red}(\sbf N_{\alpha}^{e},\,i\omega\mu_{0}\sigma\nabla\Psi_{\omega})}=(\sbf N_{\alpha}^{e},\,\mu_{0}e^{-i\varphi}\,\sbf J_{0})\label{eq:hm2d}
+\end{align}
 
 \end_inset
 
-其中指标
+为便于阅读，上面用指标
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -34462,33 +34540,36 @@ noprefix "false"
 \begin_inset Formula $\beta$
 \end_inset
 
-表示矢势的自由度；
+表示
+\begin_inset Formula $\sbf A_{w}$
+\end_inset
+
+的自由度，用
 \begin_inset Formula $\mu,\nu$
 \end_inset
 
-表示标势的自由度。因此每个单元中的泛函写成
+表示
+\begin_inset Formula $\Psi_{w}$
+\end_inset
+
+的自由度；
+\end_layout
+
+\begin_layout Itemize
+将 矢势和标势 分别按照 Edge 和 Node 形函数展开
 \begin_inset Formula 
 \begin{align*}
-\mathcal{F}^{e}(A_{\alpha},\Phi_{\mu})=\int_{\Omega^{e}}\dd{\Omega} & \Big\{\frac{1}{2}\left[{\color{blue}\left(\nabla\times\sbf N_{\alpha}^{e}A_{\alpha}\right)\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf N_{\beta}^{e}A_{\beta}\right)-i\omega\sigma\sbf N_{\alpha}^{e}A_{\alpha}\cdot\sbf N_{\beta}^{e}A_{\beta}}\right]\\
- & +{\color{brown}\frac{i}{\omega}\frac{1}{2}(\nabla L_{\mu}^{e}\Phi_{\mu})\cdot\sigma(\nabla L_{\nu}^{e}\Phi_{\nu})}-\sbf J_{0}e^{-i\varphi}\cdot\sbf N_{\alpha}^{e}A_{\alpha}\\
- & +{\color{red}\nabla\cdot(L_{\mu}^{e}\Phi_{\mu}\,\sigma\sbf N_{\alpha}^{e}A_{\alpha}})\Big\}
+\sbf A_{\omega} & =\sbf N_{\alpha}^{e}\,A_{\alpha}\\
+\Psi_{\omega} & =N_{\mu}^{e}\,\Psi_{\mu}
 \end{align*}
 
 \end_inset
 
-分别对
-\begin_inset Formula $A_{\alpha}$
-\end_inset
-
-和
-\begin_inset Formula $\Phi_{\mu}$
-\end_inset
-
-求导可以得到
+从弱形式可以得到矩阵方程
 \begin_inset Formula 
 \begin{align*}
-\frac{\partial\mathcal{F}^{e}}{\partial A_{\alpha}} & ={\color{blue}K_{\alpha\beta}^{e}A_{\beta}}-b_{\alpha}^{e}+{\color{red}C_{\alpha\mu}\Phi_{\mu}}\\
-\frac{\partial\mathcal{F}^{e}}{\partial\Phi_{\mu}} & ={\color{brown}D_{\mu\nu}^{e}\phi_{\nu}}-b_{\mu}^{e}+{\color{red}C_{\mu\alpha}A_{\alpha}}
+K_{\alpha\beta}^{e}A_{\beta}+{\color{red}C_{\alpha\mu}\Phi_{\mu}} & =b_{\alpha}^{e}\\
+{\color{brown}D_{\mu\nu}^{e}\phi_{\nu}}+{\color{red}C_{\mu\alpha}A_{\alpha}} & =b_{\mu}^{e}
 \end{align*}
 
 \end_inset
@@ -34496,10 +34577,10 @@ noprefix "false"
  其中
 \begin_inset Formula 
 \begin{align*}
-{\color{blue}K_{\alpha\beta}^{e}} & =\int_{\Omega^{e}}\left[\left(\nabla\times\sbf N_{\alpha}^{e}\right)\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf N_{\beta}^{e}\right)-i\omega\sigma\sbf N_{\alpha}^{e}\cdot\sbf N_{\beta}^{e}\right]\dd{\Omega}\\
-b_{\alpha}^{e} & =\int_{\Omega^{e}}\sbf J_{0}e^{-i\varphi}\cdot\sbf N_{\alpha}^{e}\dd{\Omega}\\
-{\color{red}C_{\alpha\mu}^{e}=C_{\mu\alpha}^{e}} & =\int_{\Omega^{e}}\nabla\cdot(L_{\mu}^{e}\sigma\sbf N_{\alpha}^{e})\dd{\Omega}\\
-{\color{brown}D_{\mu\nu}^{e}} & =\int_{\Omega^{e}}\frac{i}{\omega}(\nabla L_{\mu}^{e})\cdot\sigma(\nabla L_{\nu}^{e})\dd{\Omega}
+K_{\alpha\beta}^{e} & =\int_{\Omega^{e}}\left[{\color{blue}\left(\nabla\times\sbf N_{\alpha}^{e}\right)\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf N_{\beta}^{e}\right)}{\color{brown}-i\omega\mu_{0}\,\sbf N_{\alpha}^{e}\cdot\sigma\sbf N_{\beta}^{e}}\right]\dd{\Omega}\\
+b_{\alpha}^{e} & =\mu_{0}e^{-i\varphi}\int_{\Omega^{e}}\sbf N_{\alpha}^{e}\cdot\sbf J_{0}\dd{\Omega}\\
+{\color{red}C_{\alpha\mu}^{e}=C_{\mu\alpha}^{e}} & =-i\omega\mu_{0}\int_{\Omega^{e}}\sbf N_{\alpha}^{e}\cdot\sigma\nabla N_{\mu}^{e}\,\dd{\Omega}\\
+{\color{brown}D_{\mu\nu}^{e}} & =-i\omega\mu_{0}\int_{\Omega^{e}}(\nabla N_{\mu}^{e})\cdot\sigma(\nabla N_{\nu}^{e})\dd{\Omega}
 \end{align*}
 
 \end_inset
@@ -34509,7 +34590,7 @@ b_{\alpha}^{e} & =\int_{\Omega^{e}}\sbf J_{0}e^{-i\varphi}\cdot\sbf N_{\alpha}^{
 \begin{equation}
 \left[\begin{array}{cc}
 {\color{brown}D_{\mu\nu}^{e}} & {\color{red}C_{\mu\beta}^{e}}\\
-{\color{red}C_{\alpha\nu}^{e}} & {\color{blue}K_{\alpha\beta}^{e}}
+{\color{red}C_{\alpha\nu}^{e}} & K_{\alpha\beta}^{e}
 \end{array}\right]\left\{ \begin{array}{c}
 \Phi_{\nu}\\
 A_{\beta}
@@ -34524,12 +34605,72 @@ b_{\alpha}^{e}
 
 \end_layout
 
+\begin_layout Itemize
+推到弱形式时，要求边界条件 
+\begin_inset Formula $\sbf n\cdot\sbf A_{\omega}=0$
+\end_inset
+
+，即磁力线平行。
+\begin_inset Formula 
+\[
+(N_{\mu}^{e},\,\nabla\cdot\sbf A_{\omega})=\int_{\Gamma}\sbf n\cdot\sbf A_{\omega}\,N_{\mu}^{e}\dd{\Gamma}-(\nabla N_{\mu}^{e},\,\sbf A_{\omega})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Solver 中使用的 时间因子 是
+\begin_inset Formula $e^{i\omega t}$
+\end_inset
+
+，因此上面 
+\begin_inset Formula $K_{\alpha\beta}^{e}$
+\end_inset
+
+第二项，
+\begin_inset Formula ${\color{red}C_{\alpha\mu}^{e}}$
+\end_inset
+
+，
+\begin_inset Formula ${\color{brown}D_{\mu\nu}^{e}}$
+\end_inset
+
+中的 
+\begin_inset Formula $-i\omega\mu_{0}$
+\end_inset
+
+均变成
+\begin_inset Formula $i\omega\mu_{0}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+Solver 中把 
+\begin_inset Formula $K_{\alpha\beta}^{e}$
+\end_inset
+
+第二项，
+\begin_inset Formula ${\color{red}C_{\alpha\mu}^{e}}$
+\end_inset
+
+，
+\begin_inset Formula ${\color{brown}D_{\mu\nu}^{e}}$
+\end_inset
+
+ 归入 ElementMatrixMe 项，有耦合时才计算。
+\end_layout
+
 \begin_layout Section
 时谐磁场二维
 \end_layout
 
 \begin_layout Standard
-代入
+将二维磁场的表示
 \begin_inset Formula 
 \begin{align*}
 \sbf N_{\alpha}^{e} & =N_{\alpha}^{e}\left(x,y\right)\sbf e_{z},\\
@@ -34539,20 +34680,20 @@ b_{\alpha}^{e}
 
 \end_inset
 
-到
+代入时谐场方程（这里的
+\begin_inset Formula $J_{0}$
+\end_inset
+
+表示外加电流）
 \begin_inset Formula 
 \begin{align*}
  & \nabla\cdot\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)=0,\\
- & \nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)=\mu_{0}e^{-i\varphi}\,\sbf J_{0}+\mu_{0}\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)
+ & \nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A_{\omega}\right)=\mu_{0}\sbf J_{0;\text{ex}}e^{-i\varphi}+\mu_{0}\sigma\left(-\nabla\Phi_{\omega}+i\omega\sbf A_{\omega}\right)
 \end{align*}
 
 \end_inset
 
-这里的
-\begin_inset Formula $J_{0}$
-\end_inset
-
-表示外加电流；得到
+得到
 \begin_inset Formula 
 \begin{align*}
  & -\sigma_{x}\partial_{xx}\phi_{\omega;x}-\sigma_{y}\partial_{yy}\phi_{\omega;y}=0\\
