@@ -6,7 +6,7 @@ from numpy import ndarray
 import matplotlib.pyplot as plt
 from functools import reduce
 
-from _facetsCurrent import facets_current
+from _facetsSource import in_facets_source
 from my_conf import CFG_data_spec, my_text_fun, VndRaffle, SndRaffle, fct_text_weights
 
 cfg = CFG_data_spec()
@@ -24,11 +24,11 @@ def plot_faces_charge(fchaArray: ndarray):
     fchaArray: facet charge array, 名称为 facets_current
     """
     fchLen = fchaArray.shape[0]  # error list 长度
-    facet_curr_arr = fchaArray[:, 0:3]  # face charge list
+    xlst = fchaArray[:, 0]
+    ylst = fchaArray[:, 1]
+    zlst = fchaArray[:, 2]
+    facet_curr_arr = fchaArray[:, 3:6]  # face charge list
     facet_curr = np.linalg.norm(facet_curr_arr, axis=1)
-    xlst = fchaArray[:, 3]
-    ylst = fchaArray[:, 4]
-    zlst = fchaArray[:, 5]
 
     # print(f'facet current array: {facet_curr}')
     fchMin = np.amin(facet_curr, axis=0)

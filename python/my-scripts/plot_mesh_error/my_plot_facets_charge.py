@@ -11,7 +11,7 @@ import matplotlib.patches as mpatches
 from _nodes import in_nodes_coord
 from _Velements import in_Velements
 from _Selements import in_Selements
-from _facetsCharge import in_facets_charge
+from _facetsSource import in_facets_source
 from my_conf import CFG_data_spec, my_text_fun, VndRaffle, SndRaffle, fct_text_weights
 
 cfg = CFG_data_spec()
@@ -113,9 +113,9 @@ def plot_faces_charge(nodeData: ndarray, Velements: ndarray,
     fchaArray: face charge array, 名称为 in_faces_charge
     """
     fchLen = fchaArray.shape[0]  # error list 长度
-    face_charge = fchaArray[:, 0]  # face charge list
-    xlst = fchaArray[:, 1]
-    ylst = fchaArray[:, 2]
+    xlst = fchaArray[:, 0]
+    ylst = fchaArray[:, 1]
+    face_charge = fchaArray[:, 2]  # face charge list
     # print(f'face charge array: {face_charge}')
     fchMin = np.amin(face_charge, axis=0)
     fchMax = np.amax(face_charge, axis=0)
@@ -151,7 +151,7 @@ def plot_region():
     plot_Veles(nodeData, in_Velements)
     # plot_nodes(nodeData)
     plot_Seles(nodeData, in_Selements)
-    plot_faces_charge(nodeData, in_Velements, in_faces_charge)
+    plot_faces_charge(nodeData, in_Velements, in_facets_charge)
 
     x1, y1, x2, y2 = get_range([x1, y1], [x2, y2], 0.015)
     plt.gca().set_xlim(x1, x2)

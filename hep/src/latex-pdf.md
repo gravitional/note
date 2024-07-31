@@ -62,19 +62,19 @@ pdfjoin foo1.pdf foo2.pdf --outfile bar.pdf
 + stapler is a pure Python alternative to pdftk.
 
 ```bash
-$ stapler cat in1.pdf in2.pdf out.pdf
+stapler cat in1.pdf in2.pdf out.pdf
 ```
 
 + PyMuPDF is a Python binding for MuPDF – "a lightweight PDF and XPS viewer".
 
 ```bash
-$ python -m fitz join -o output.pdf file1.pdf file2.pdf
+python -m fitz join -o output.pdf file1.pdf file2.pdf
 ```
 
 + qpdf is a command-line tool and C++ library that performs content-preserving transformations on PDF files.
 
 ```bash
-$ qpdf --empty --pages file1.pdf file2.pdf -- output.pdf
+qpdf --empty --pages file1.pdf file2.pdf -- output.pdf
 ```
 
 ### GUI

@@ -54,6 +54,8 @@ mu0: float = 4 * math.pi * 1e-7
 #---------------- volume, surface, facet 数据特征指定
 # @dataclass
 class CFG_data_spec:
+    plot_in_facet: bool = False  # 是否画出 内部 facets
+
     crd_x_seq: int = 1  # node 坐标 array中, X Y Z数据列的位置
     crd_y_seq: int = 2
     crd_z_seq: int = 3
@@ -82,19 +84,27 @@ class CFG_data_spec:
     axe_range: float = 0.006  # 图形范围
     node_text_ofst: float = node_text_ofst_ratio * axe_range  # 节点文字偏移
     VS_fontsize: float = 10  # 体,面单元 文字标注大小
-    fct_fontsize: float = 7  # fct or edge 文字标注大小
+    fct_fontsize: float = 7  # facet 文字标注大小
 
     vol_color: str = 'olive'  # 体单元 line 颜色
     node_color: str = 'green'  # 节点ID text 颜色
     surf_color: str = 'red'  # 面单元 line arrow 颜色
     fct_color: str = 'blue'  # inner Edge line, text 颜色
 
+    surf_txt_color: str = 'red'  # 面单元文字标注颜色
+    surf_txt_ftsz: float = 9  # edge 文字标注大小
+
     VS_alpha: float = 0.20  # 体单元和面单元的透明度
     fct_alpha: float = 0.50  # 内部边界的透明度
     VS_line_width: float = 3.0  # 体单元, 表面单元 线宽度
     fct_line_width: float = 1.0  # 内部边 线宽度
 
-    # --------------------------- 特殊上色区域
-    high_id_list: list[int] = [1, 2, 3, 4]
+    # --------------------------- 特殊上色区域, element
+    high_id_list: set[int] = {1, 2, 3, 4}
     high_color: str = 'magenta'
     high_fontsize: int = 12
+
+    # --------------------------- 特殊上色区域, node
+    high_nodeID_list: set[int] = {1, 2, 3, 4}
+    high_nodeID_color: str = 'black'
+    high_nodeID_fontsize: int = 14
