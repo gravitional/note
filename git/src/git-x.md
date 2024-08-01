@@ -495,7 +495,7 @@ git reset --hard branch2
 + [git-restore (1)][]; 用于从 `index` 或某个 `commit` 还原 `working tree` 中的文件.
 此命令不会更新您的 `分支`. 该命令还可用于从某个 `commit` 还原 `index` 中的文件.
 
-+ [git-reset (1)][]; 用于 `更新` 某个分支, 移动 分支头(`tip`), 
++ [git-reset (1)][]; 用于 `更新` 某个分支, 移动 分支头(`tip`),
 以添加或删除 `commit`s. 此操作将更改 `commit` 历史.
 
 + `git reset`也可以用来还原 `index`, 与 `git restore` 功能重叠.
@@ -1141,3 +1141,65 @@ git 拉去更新或者合并分支时, 形成的冲突的格式如下
 
 `<<<<< xxx ======` 上半部分, 是本地的修改
 `===== xxx >>>>>>` 下半部分, 是远程的修改
+
+## git 用远程分支覆盖本地分支
+
+[overwrite local files](https://stackoverflow.com/questions/1125968/how-do-i-force-git-pull-to-overwrite-local-files)
+
+>警告:
+>对已跟踪文件的任何未提交的本地变更都将丢失, 即使已暂存(`staged`).
+>但任何未被 Git 跟踪的本地文件都不会受到影响.
+
+首先, 将所有 `origin/<branch>` refs 更新到最新版本:
+
+```bash
+git fetch --all
+```
+
+备份当前分支(如 `master`):
+
+```bash
+git branch backup-master
+```
+
+跳转到 `origin/master` 上的最新提交, 并 checkout 这些文件:
+
+```bash
+git reset --hard origin/master
+```
+
+### 说明
+
++ `git fetch` 从远程下载最新提交, 而不会合并或重置任何内容.
++ `git reset` 会将主分支重置为刚获取的版本.
+选项 `--hard` 会修改工作树中的所有文件, 使之与 `origin/master` 中的文件一致.
+
+### 维护当前本地提交
+
+值得注意的是, 在重置之前, 可以从 `master` 创建一个分支来保持当前的本地提交:
+
+```bash
+git checkout master
+git branch new-branch-to-save-current-commits
+git fetch --all
+git reset --hard origin/master
+```
+
+之后, 所有旧提交都会保留在 `new-branch-to-save-current-commits` 中.
+
+### 未提交的变更 Uncommitted changes
+
+未提交的改动, 即使已暂存(使用 git add), 也会丢失.
+请确保缓存或提交任何您需要的内容. 例如, 运行
+
+```bash
+git stash
+```
+
+稍后(在 `git reset` 后), 重新应用这些未提交的更改:
+
+```bash
+git stash pop
+```
+
+这可能会产生合并冲突.

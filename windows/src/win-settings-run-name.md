@@ -192,7 +192,7 @@ Downloads folder    `ms-settings:privacy-downloadsfolder`
 Music library    `ms-settings:privacy-musiclibrary`
 Pictures    `ms-settings:privacy-pictures`
 Videos    `ms-settings:privacy-documents`
-File system    `ms-settings:privacy-broadfilesystemaccess`
+File system `ms-settings:privacy-broadfilesystemaccess`
 Screenshot borders
 Screenshots and apps
 

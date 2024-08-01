@@ -374,7 +374,7 @@ not just for communicating with external programs in-memory (such as when readin
 use `$OutputEncoding = (New-Object System.Text.UTF8Encoding).psobject.BaseObject`.
 See GitHub issue #5763 for why the .psobject.BaseObject part is needed.
 
-## windows 系统信息,系统工具
+## windows 系统信息,系统工具, 系统工具名称
 
 + 搜索 `msinfo` or `系统信息`: 打开系统信息页面, 查看软硬件信息
 
@@ -398,3 +398,8 @@ C:/Windows/System32/SystemPropertiesAdvanced.exe
 ```cmd
 C:\Windows\System32\SystemPropertiesPerformance.exe
 ```
+
++ 创建, 管理还原点
+
+huanyuan
+SystemPropertiesProtection.exe
