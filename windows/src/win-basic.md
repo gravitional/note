@@ -403,3 +403,56 @@ C:\Windows\System32\SystemPropertiesPerformance.exe
 
 huanyuan
 SystemPropertiesProtection.exe
+
+## 双拼 小鹤输入法
+
+[Win10 微软拼音开启小鹤双拼的两种方法](https://blog.csdn.net/weixin_44878336/article/details/125095163)
+
+### 方法1
+
+`win+R`, 输入 `regedit`, 打开注册表
+
+找到计算机
+`\HKEY_CURRENT_USER\Software\Microsoft\InputMethod\Settings\CHS`项
+
+新建一个字符串值,
+
+```bash
+UserDefinedDoublePinyinScheme0 # 名改
+xiaohe*2*^*iuvdjhcwfg^xmlnpbksqszxkrltvyovt # 值
+```
+
+打开 `控制面板`->`微软拼音输入法`设置(或者 win+s 搜索 pinyin 即可),
+把 `小鹤双拼` 设置为双拼的默认选择即可.
+
+### 方法2
+
++ 开启: 启用双拼, 添加小鹤双拼方案, 设置默认双拼方案为小鹤双拼
+
+新建一个文本文档(`.txt`)
+复制粘贴以下文本
+
+```bash
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS]
+"Enable Double Pinyin"=dword:00000001
+"DoublePinyinScheme"=dword:0000000a
+"UserDefinedDoublePinyinScheme0"="xiaohe*2*^*iuvdjhcwfg^xmlnpbksqszxkrltvyovt"
+```
+
+把扩展名 `.txt` 改成 `.reg`, 双击运行
+
++ 关闭: 关闭双拼, 删除小鹤双拼方案, 设置默认双拼方案为微软双拼
+
+新建一个文本文档(.txt)
+复制粘贴以下文本
+
+```bash
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS]
+"Enable Double Pinyin"=dword:00000000
+"DoublePinyinScheme"=dword:00000000
+"UserDefinedDoublePinyinScheme0"=-
+```
