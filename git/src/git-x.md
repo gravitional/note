@@ -779,22 +779,26 @@ git push [远程仓库] --delete [branchname]
 
 ### 常见使用方法
 
-+ 先运行 `checkout -b` 命令创建新分支
++ 先运行 `git checkout -b` 命令创建新分支
 
-        git checkout -b branchname startpoint
+```bash
+git checkout -b branchname startpoint
+```
 
-+ 然后用 `push -u` 命令推送到远程:
++ 然后用 `git push -u` 命令推送到远程:
 
-        git push -u origin <refspec>
+```bash
+git push -u origin <refspec>
+```
 
-    第一次推送 `source` 分支的所有内容, 并把本地的 `source` 分支和远程的 `destination` 分支关联起来
+第一次推送 `source` 分支的所有内容, 并把本地的 `source` 分支和远程的 `destination` 分支关联起来
 
 ***
 `git push` 语法说明;
 
 + `<refspec>...`; `<refspec>`指定用 `source` 对象更新哪个 `destination` ref.
     `<refspec> `的格式是: 可选的`+`号, 接着一个 `source object <src>` , 然后是`:`,
-    然后是the `destination ref <dst>`,就是`本地分支:远程分支`的格式,
+    然后是the `destination ref <dst>`, 就是`本地分支:远程分支`的格式,
 
     推送一个空的 `<src>` 相当于删除远程库中的 `<dst> ref` .
     特殊的refspec `:` (or `+:` to allow non-fast-forward updates) ,

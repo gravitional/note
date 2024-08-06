@@ -131,3 +131,7 @@ winget install --id Microsoft.VisualStudio.2022.Community --override "--passive 
 此方法使用此处所述的[Visual Studio PowerShell DSC 提供程序](https://www.powershellgallery.com/packages/Microsoft.VisualStudio.DSC).
 
 [winget configure]: https://learn.microsoft.com/zh-cn/windows/package-manager/configuration/
+
+## visual studio 字体
+
+更换字体之后需要重启 Visual studio 才有效果

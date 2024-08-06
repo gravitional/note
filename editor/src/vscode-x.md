@@ -641,3 +641,9 @@ nushell 命令行
 ```nushell
 let fs = (glob *.vsix); $fs | each {|it| code --install-extension ($it | path expand)}
 ```
+
+## vscode 中文显示黄色框框
+
+[VScode 中文显示出现黄色方框的解决方法](https://blog.csdn.net/qq_33249042/article/details/123252625)
+
+关闭的命令为: `Disable highlighting of non basic ASCII characters`

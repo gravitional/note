@@ -415,7 +415,7 @@ SystemPropertiesProtection.exe
 找到计算机
 `\HKEY_CURRENT_USER\Software\Microsoft\InputMethod\Settings\CHS`项
 
-新建一个字符串值,
+新建一个`字符串值`,
 
 ```bash
 UserDefinedDoublePinyinScheme0 # 名改

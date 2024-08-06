@@ -1108,7 +1108,7 @@ Young
 \end_layout
 
 \begin_layout Chapter
-电路
+电路 MNA
 \end_layout
 
 \begin_layout Enumerate
@@ -1151,7 +1151,101 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-对应 Solver 中的 MNAxxx 模块
+对应 Solver 中的 MNAxxx 模块。
+\end_layout
+
+\begin_layout Standard
+在电气工程中，Modified nodal analysis，即 MNA 是 nodal analysis 的一种扩展，它不仅能确定电路的 node电压（如经典
+节点分析），还能确定一些 branch电流。
+\series bold
+修正节点分析法
+\series default
+是为 缓解在节点分析法中 表示 voltage-defined组件（如电压控制电压源）的困难而开发的一种形式。它就是此类形式之一，其他形式，如
+ sparse tableau 格式 也同样通用，并通过 矩阵变换 相联系。
+\end_layout
+
+\begin_layout Example
+电阻矩阵
+\begin_inset Formula 
+\[
+\sum_{j\ne k}G_{jk}\left(v_{k}-v_{j}\right)=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+G_{kk}v_{k}-\sum_{j\neq k}G_{jk}v_{j}=0
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $G_{kk}$
+\end_inset
+
+是所有连接到
+\begin_inset Formula $k$
+\end_inset
+
+的 电导之和。 
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\sigma(v_{1}-v_{2})\\
+\sigma(v_{2}-v_{1})
+\end{array}\right]=\left[\begin{array}{cc}
+\sigma & -\sigma\\
+-\sigma & \sigma
+\end{array}\right]\left[\begin{array}{c}
+v_{1}\\
+v_{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+电感
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & 0 & 1\\
+0 & 0 & -1\\
+1 & -1 & -R
+\end{array}\right]\left[\begin{array}{c}
+v_{1}\\
+v_{2}\\
+I_{1}
+\end{array}\right],\quad\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & -L
+\end{array}\right]\left[\begin{array}{c}
+v_{1}\\
+v_{2}\\
+I_{1}
+\end{array}\right],
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EOF
 \end_layout
 
 \end_body
