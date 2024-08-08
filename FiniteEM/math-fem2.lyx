@@ -1244,6 +1244,317 @@ I_{1}
 
 \end_layout
 
+\begin_layout Section
+耦合
+\end_layout
+
+\begin_layout Standard
+有限元分析 和 电路分析耦合。刚度矩阵写成分块形式
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+{\color{blue}K_{00}} & K_{01}\\
+K_{10} & {\color{blue}K_{11}}
+\end{array}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula ${\color{blue}K_{00}}$
+\end_inset
+
+表示有限元部分矩阵，
+\begin_inset Formula ${\color{blue}K_{11}}$
+\end_inset
+
+表示电路部分矩阵；
+\begin_inset Formula $K_{01}$
+\end_inset
+
+（upper）表示 
+\begin_inset Formula $\text{电路}\to\text{有限元}$
+\end_inset
+
+，
+\begin_inset Formula $K_{10}$
+\end_inset
+
+（lower）表示 
+\begin_inset Formula $\text{有限元}\to\text{电路}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+元器件由它的伏安特性曲线（V-I ）刻画。
+\end_layout
+
+\begin_layout Itemize
+给到导体性质和通过导体的总电流 
+\begin_inset Formula $\mathcal{I}$
+\end_inset
+
+，通过电流分布模型模拟出电流密度分布函数
+\begin_inset Formula $\sbf j(x)$
+\end_inset
+
+，满足
+\begin_inset Formula $\int_{S}\sbf j\dd{s}=\mathcal{I}$
+\end_inset
+
+。然后把 电流分布函数
+\begin_inset Formula $\sbf j(x)$
+\end_inset
+
+ 作
+\series bold
+内积投影
+\series default
+到 FEM 基函数上，得到 Node Fv Distribute of 
+\begin_inset Formula $\sbf j$
+\end_inset
+
+ — 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+，程序中表示为
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ _Con_FvModel
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+，相当于总电流
+\begin_inset Formula $\mathcal{I}=1\,\mathrm{A}$
+\end_inset
+
+时对应的 
+\begin_inset Formula $\sbf j(x)$
+\end_inset
+
+的内积投影，
+\begin_inset Formula 
+\[
+d_{j}=\left(J,N_{\alpha}\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf J=-\sigma\frac{\sbf A_{t}-\sbf A_{\mathrm{t0}}}{\dd{t}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf J$
+\end_inset
+
+从
+\begin_inset Formula $\sbf E=-\nabla\phi-\frac{\partial\sbf A}{\partial t}$
+\end_inset
+
+推导；在瞬态场分析中，矩阵贡献到 时间导数项。
+\begin_inset Formula 
+\[
+\sbf J=i\sigma\omega t\sbf Ae^{i\omega t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+耦合机制
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\text{电路}\to\text{有限元}$
+\end_inset
+
+（upper）：给出总电流
+\begin_inset Formula $\mathcal{I}$
+\end_inset
+
+，通过 配分函数
+\begin_inset Formula $d_{j}$
+\end_inset
+
+，贡献到 FEM 节点上。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\text{有限元}\to\text{电路}$
+\end_inset
+
+（upper）：给出每个节点上的电流标量值
+\begin_inset Formula $j_{\alpha}$
+\end_inset
+
+，将
+\begin_inset Formula $j_{\alpha}$
+\end_inset
+
+按照 配分函数函数
+\begin_inset Formula $d_{j}$
+\end_inset
+
+求和，给出对电路的贡献。求和操作可抽出成 刚度矩阵
+\begin_inset Formula $K$
+\end_inset
+
+中的一行。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+基函数展开
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+用
+\begin_inset Formula $\mathcal{I}(x)$
+\end_inset
+
+ 表示通过导体的电流，在 FEM的基函数空间中
+\begin_inset Formula $\mathcal{I}(x)$
+\end_inset
+
+的近似（或投影）
+\begin_inset Formula $\mathcal{I}_{h}(x)$
+\end_inset
+
+表示为
+\begin_inset Formula 
+\begin{equation}
+\mathcal{I}_{h}(x)=\sum_{i=1}^{M}\mathcal{I}_{\alpha}\,N_{\alpha}(x),\quad\mathcal{I}_{\alpha}=\mathcal{I}(x_{i}),\label{eq:mna1}
+\end{equation}
+
+\end_inset
+
+由于基函数 
+\series bold
+关于节点正交
+\series default
+，所以表示系数就是
+\begin_inset Formula $\mathcal{I}(x)$
+\end_inset
+
+在节点上的值
+\begin_inset Formula $\mathcal{I}(x_{i})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+通常基函数空间的内积定义为 
+\begin_inset Formula $(N_{\alpha},N_{\beta})=\int_{\Omega}N_{\alpha}(x)\,N_{\beta}(x)\dd{V}$
+\end_inset
+
+，则 
+\series bold
+基函数关于内积并不是正交的
+\series default
+，
+\begin_inset Formula $(N_{\alpha},N_{\beta})\neq0$
+\end_inset
+
+，因为support有重合。
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mna3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，使用非正交的内积投影得到一众分量方程，在寻找有限元解的时候需要求解矩阵方程 
+\begin_inset Formula $\sbf A\cdot\sbf p=\sbf f$
+\end_inset
+
+（如果是正交投影，就不用求解矩阵方程）：
+\begin_inset Formula 
+\begin{align}
+ & p_{h}(x)=\sum_{\alpha=1}^{M}p_{\alpha}\,N_{\alpha}(x),\quad p_{\alpha}=p_{h}(x_{\alpha}),\label{eq:mna2}\\
+ & \sum_{\alpha=1}^{M}\left(\frac{\dd{N_{\alpha}}}{\dd{x}},\frac{\dd{N_{\beta}}}{\dd{x}}\right)p_{\beta}=(f,N_{\beta}),\quad\beta=1,2,\cdots,M\label{eq:mna3}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+因此，给定面
+\begin_inset Formula $S$
+\end_inset
+
+，和面上节点的值
+\begin_inset Formula $\mathcal{I}_{\alpha}$
+\end_inset
+
+，根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mna1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，在基函数空间恢复（计算）
+\series bold
+面上通量
+\series default
+，需要对基函数做积分。对应上面 【
+\begin_inset Formula $j_{\alpha}$
+\end_inset
+
+按照 配分函数函数
+\begin_inset Formula $d_{j}$
+\end_inset
+
+求和】。
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 EOF
 \end_layout

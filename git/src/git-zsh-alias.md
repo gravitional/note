@@ -157,6 +157,23 @@ gdw='git diff --word-diff'
     此选项不能与 `--reverse` 结合使用. 参见 git-reflog(1).
     在 `--pretty=reference` 下, 这些信息将完全不显示.
 
+```bash
+glgg = git log --graph
+glgga = git log --graph --decorate --all
+glgm = git log --graph --max-count=10
+glod = git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
+glods = git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short
+glol = git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'
+glola = git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all
+glols = git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat
+glo = git log --oneline --decorate
+glog = git log --oneline --decorate --graph
+gloga = git log --oneline --decorate --graph --all
+glp = git log --pretty=<format>
+glg = git log --stat
+glgp = git log --stat --patch
+```
+
 ### gitk
 
 + ` gitk [<options>] [<revision range>] [--] [<path>...]`

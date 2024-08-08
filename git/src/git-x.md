@@ -1207,3 +1207,19 @@ git stash pop
 ```
 
 这可能会产生合并冲突.
+
+## git 提交日志
+
+[Git Commit Log的小型团队最佳实践](https://blog.csdn.net/weixin_34409703/article/details/88819727)
+
+type: 提交 commit 的类型，包括以下几种
+
++ `feat`: 新功能
++ `fix`: 修复问题
++ `docs`: 修改文档
++ `chore`: 构建工具, 日常事务
++ `style`: 修改代码格式，不影响代码逻辑
++ `refactor`: 重构代码，理论上不影响现有功能
++ `perf`: 提升性能
++ `test`: 增加修改测试用例
++ `revert`: 回退，建议直接使用Github Desktop回退，而不是使用命令
