@@ -1208,7 +1208,7 @@ git stash pop
 
 这可能会产生合并冲突.
 
-## git 提交日志
+## git 提交日志规范
 
 [Git Commit Log的小型团队最佳实践](https://blog.csdn.net/weixin_34409703/article/details/88819727)
 
