@@ -3,7 +3,7 @@
 [在 PowerShell 中连接字符串](https://www.delftstack.com/zh/howto/powershell/concatenate-strings-using-powershell/)
 
 在 PowerShell 中, 我们通过多种方式实现字符串连接;
-然而, 虽然 PowerShell 有它自己的内置 concat() 函数(我们也将在后面讨论),
+然而, 虽然 PowerShell 有它自己的内置 `concat()` 函数(我们也将在后面讨论),
 有更直接的方法来连接各种字符串变量.
 
 在枚举所有字符串连接方法之前, 最好先声明一些我们将用作示例的字符串变量.

@@ -2,6 +2,22 @@
 
 [about_Pipelines](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines)
 
+## `-passthru`
+
+[out-gridview](https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.utility/out-gridview)
+
+某些 cmdlet 具有 `-PassThru` 选项, 例如对于 `out-gridview`,
+作用是指示 `out-gridview` 将用户通过 UI 选中的项, 作为管道右边命令的输入.
+默认情况下, `out-gridview` 没有返回值.
+此参数等效于使用 `OutputMode` 参数的 `Multiple` 值.
+
+若要将交互式窗口中的项通过管道向下发送, 请单击以选择项, 然后单击"确定".
+支持通过 Shift 和 Ctrl 多选. 例子
+
+```powershell
+test ls | Out-GridView -PassThru | ls
+```
+
 ## 简要说明
 
 在PowerShell中把命令组合成 `管道`(pipelines)
@@ -278,7 +294,7 @@ PowerShell允许你在管道中包含本地外部命令.
 
 ## 调查管道错误
 
-当PowerShell不能将管道对象与接收cmdlet的参数联系起来时, 命令就会失败.
+当PowerShell 不能将管道对象与接收cmdlet的参数联系起来时, 命令就会失败.
 
 在下面的例子中, 我们试图将一个注册表项从一个注册表键移动到另一个注册表键.
 Get-Item cmdlet获得目标路径, 然后将其输送到Move-ItemProperty cmdlet. Move-ItemProperty命令指定了要移动的注册表项的当前路径和名称.
