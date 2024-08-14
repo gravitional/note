@@ -76,10 +76,25 @@ vs_enterprise.exe --layout c:\localVSlayout --add Microsoft.VisualStudio.Workloa
 VS 各种版本的可用组件 see [Visual Studio工作负荷和组件ID](https://learn.microsoft.com/zh-cn/visualstudio/install/workload-and-component-ids?view=vs-2022)
 例如 VS 生成工具 see [Visual Studio 生成工具组件目录](https://learn.microsoft.com/zh-cn/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022)
 
-例如下载 VS生成工具组件: MSBuild 工具, 通用 Windows 平台生成工具, 使用 C++ 的桌面开发 到当前目录
+#### vs msbuild tools
+
+例如下载 VS生成工具组件: `MSBuild 工具`, `通用 Windows 平台生成工具`, `使用 C++ 的桌面开发` 到当前目录
 
 ```powershell
 .\vs_BuildTools.exe --layout .\localVSlayout --add 'Microsoft.VisualStudio.Workload.MSBuildTools' 'Microsoft.VisualStudio.Workload.VCTools' 'Microsoft.VisualStudio.Workload.UniversalBuildTools' --includeRecommended --includeOptional --lang Zh-cn
+```
+
+### vs professional c++ python 开发环境
+
+下载到当前目录: `使用 C++ 的桌面开发`, `.NET 桌面开发`, `Python 开发`, 到当前目录,
+c++生成工具 有 `适用于 v143 生成工具的 C++/CLI 支持(最新版本)`, `MSVC v142 - VS 2019 C++ x64/x86 生成工具 (v14.29)`
+
+```powershell
+(C:\Users\qingz\Downloads\VisualStudioSetup.exe --layout .\localVSlayout --add
+'Microsoft.VisualStudio.Workload.NativeDesktop'
+'Microsoft.VisualStudio.Workload.ManagedDesktop'
+'Microsoft.VisualStudio.Workload.Python'
+--includeRecommended --includeOptional --lang Zh-cn)
 ```
 
 [使用命令行参数安装 Visual Studio 页面]: https://learn.microsoft.com/en-us/visualstudio/install/create-a-network-installation-of-visual-studio?view=vs-2022
