@@ -94,7 +94,17 @@ c++生成工具 有 `适用于 v143 生成工具的 C++/CLI 支持(最新版本)
 'Microsoft.VisualStudio.Workload.NativeDesktop'
 'Microsoft.VisualStudio.Workload.ManagedDesktop'
 'Microsoft.VisualStudio.Workload.Python'
+'Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64'
+'Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL'
+'Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC'
+'Microsoft.VisualStudio.Component.VC.ASAN'
 --includeRecommended --includeOptional --lang Zh-cn)
+```
+
+离线安装, 推荐下载完整包
+
+```powershell
+C:\Users\qingz\Downloads\VisualStudioSetup.exe --layout .\localVSlayout --all --lang Zh-cn
 ```
 
 [使用命令行参数安装 Visual Studio 页面]: https://learn.microsoft.com/en-us/visualstudio/install/create-a-network-installation-of-visual-studio?view=vs-2022
@@ -147,6 +157,23 @@ winget install --id Microsoft.VisualStudio.2022.Community --override "--passive 
 
 [winget configure]: https://learn.microsoft.com/zh-cn/windows/package-manager/configuration/
 
+## VS 运行代码缺少 msvcr120.dll
+
+[缺失msvcr120.dll一般性问题如何解决](https://blog.csdn.net/hdp134793/article/details/88088667)
+
+找到微软官网, 下载Visual Studio 2013, 主要是为了支持 `msvcr120.dll` 配置文件的运行环境. 
+[官网地址](https://www.microsoft.com/zh-CN/download/details.aspx?id=40784)
+
+下载 `vcredist_x64.ext` 并安装.
+
 ## visual studio 字体
 
 更换字体之后需要重启 Visual studio 才有效果
+
+## VS 代码补全字体大小
+
+[修改VisualStudio的代码补全字体大小](https://blog.csdn.net/qq_43496435/article/details/112757484)
+
+Tools > Options > Fonts and Colors > 语句结束
+
+![state completion](https://i-blog.csdnimg.cn/blog_migrate/f231cb6a2fc750325812ad3a83d0cb6f.png)
