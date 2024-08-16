@@ -1212,14 +1212,29 @@ git stash pop
 
 [Git Commit Log的小型团队最佳实践](https://blog.csdn.net/weixin_34409703/article/details/88819727)
 
-type: 提交 commit 的类型，包括以下几种
+type: 提交 commit 的类型, 包括以下几种
 
 + `feat`: 新功能
 + `fix`: 修复问题
 + `docs`: 修改文档
 + `chore`: 构建工具, 日常事务
-+ `style`: 修改代码格式，不影响代码逻辑
-+ `refactor`: 重构代码，理论上不影响现有功能
++ `style`: 修改代码格式, 不影响代码逻辑
++ `refactor`: 重构代码, 理论上不影响现有功能
 + `perf`: 提升性能
 + `test`: 增加修改测试用例
-+ `revert`: 回退，建议直接使用Github Desktop回退，而不是使用命令
++ `revert`: 回退, 建议直接使用Github Desktop回退, 而不是使用命令
+
+## git cherry-pick 注意事项
+
+[Stop cherry-picking, start merging, Part 1: The merge conflicts](https://devblogs.microsoft.com/oldnewthing/20180312-00/?p=98215)
+
+如果 在 `dev` 和 `feat` 分支之间使用 `cherry-pick` 功能,
+一旦两个分支对 `cherry-pick` 到的 `commit` 中的文件都进行了改动,
+那么下次合并的时候, 很容易出现问题.
+
+如果想进行所谓的 `partial merge`
+
++ 所以要么 cherry-pick 之后完全不进行改动.
++ 要么新拉一个 `patch` 分支进行改动, 然后 同时合并到 `dev` 和 `feat` 分支上.
+
+`ABA` 问题
