@@ -161,7 +161,7 @@ winget install --id Microsoft.VisualStudio.2022.Community --override "--passive 
 
 [缺失msvcr120.dll一般性问题如何解决](https://blog.csdn.net/hdp134793/article/details/88088667)
 
-找到微软官网, 下载Visual Studio 2013, 主要是为了支持 `msvcr120.dll` 配置文件的运行环境. 
+找到微软官网, 下载Visual Studio 2013, 主要是为了支持 `msvcr120.dll` 配置文件的运行环境.
 [官网地址](https://www.microsoft.com/zh-CN/download/details.aspx?id=40784)
 
 下载 `vcredist_x64.ext` 并安装.
@@ -177,3 +177,7 @@ winget install --id Microsoft.VisualStudio.2022.Community --override "--passive 
 Tools > Options > Fonts and Colors > 语句结束
 
 ![state completion](https://i-blog.csdnimg.cn/blog_migrate/f231cb6a2fc750325812ad3a83d0cb6f.png)
+
+## VS codesnippet
+
+[代码片段架构参考](https://learn.microsoft.com/zh-cn/visualstudio/ide/code-snippets-schema-reference?view=vs-2022#code-element)
