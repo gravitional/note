@@ -1238,3 +1238,19 @@ type: 提交 commit 的类型, 包括以下几种
 + 要么新拉一个 `patch` 分支进行改动, 然后 同时合并到 `dev` 和 `feat` 分支上.
 
 `ABA` 问题
+
+## git push, git pull error, XML error: not well-formed (invalid token)
+
+["no DAV locking support" errors while pushing to Bitbucket](https://confluence.atlassian.com/bitbucketserverkb/no-dav-locking-support-errors-while-pushing-to-bitbucket-1072486686.html)
+
+在使用 git 命令行时, 报以下错误:
+
+```bash
+git push
+XML error: not well-formed (invalid token)
+error: no DAV locking support on '<https URL>'
+fatal: git-http-push failed
+error: failed to push some refs to '<https URL>'
+```
+
+重启 terminal 可能就好了.

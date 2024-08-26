@@ -1,5 +1,7 @@
 # VCBuild vs. C++ MSBuild on the Command Line
 
+[MSBuild 命令行参考](https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022)
+
 在 Visual Studio 2010 中,
 命令行工具 `vcbuild.exe` 将被 `msbuild.exe` 取代.
 可执行文件的改变意味着 **开关** 也将改变.
@@ -69,8 +71,8 @@ MSBuild.exe <solutionname.sln>
 + 多处理器编译(见下文)
 
 ```powershell
-/m#
-/m:#
+-maxCpuCount[: number]
+-m[: number] # number 指定生成时要使用的最大并发进程数; 允许同时生成 n 个项目
 ```
 
 + 平台
@@ -163,3 +165,36 @@ Quiet and would barely show
 [命令行上的 VC++构建](https://learn.microsoft.com/zh-cn/cpp/build/building-on-the-command-line?view=msvc-170)
 
 [新的 VC++项目/构建系统](https://learn.microsoft.com/zh-cn/visualstudio/msbuild/whats-new-msbuild-17-0?view=vs-2022)
+
+## [记录器的开关](https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022#switches-for-loggers)
+
+-consoleLoggerParameters: parameters
+将指定的参数传递到控制台记录器, 后者会在控制台窗口中显示生成信息.  可以指定以下参数:
+
+-clp:parameters
+
++ PerformanceSummary. 显示在任务, 目标和项目中所花费的时间.
++ Summary. 在末尾显示错误和警告摘要.
++ NoSummary. 不在末尾显示错误和警告摘要.
++ ErrorsOnly. 仅显示错误.
++ WarningsOnly. 仅显示警告.
++ NoItemAndPropertyList. 如果详细级别设置为 diagnostic, 则不在每个项目生成开头显示项和属性的列表.
++ ShowCommandLine. 显示 TaskCommandLineEvent 消息.
++ ShowProjectFile. 在诊断消息中显示项目文件的路径. 此设置默认启用.
++ ShowTimestamp. 将时间戳显示为任何消息的前缀.
++ ShowEventId. 显示每个已启动事件, 已完成事件和消息的事件 ID.
++ ForceNoAlign. 不将文本与控制台缓冲区大小对齐.
++ DisableConsoleColor. 将默认控制台颜色用于所有日志记录消息.
++ DisableMPLogging. 在非多处理器模式下运行时, 禁用输出的多处理器日志记录样式.
++ EnableMPLogging. 启用多处理器日志记录样式(即使在非多处理器模式下运行). 默认情况下, 此日志记录样式处于启用状态.
++ ForceConsoleColor. 即使控制台不支持, 也可以使用 ANSI 控制台颜色.
++ Verbosity. -verbosity重写此记录器的设置.
+
+使用分号分隔多个参数, 如以下示例所示:
+
+```bash
+/clp:ErrorsOnly
+-consoleloggerparameters:PerformanceSummary;NoSummary -verbosity:minimal
+```
+
+默认控制台记录器的详细级别为 `normal`, 并包括 `Summary`.
