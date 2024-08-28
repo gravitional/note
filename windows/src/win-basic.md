@@ -456,3 +456,11 @@ Windows Registry Editor Version 5.00
 "DoublePinyinScheme"=dword:00000000
 "UserDefinedDoublePinyinScheme0"=-
 ```
+
+## 企业微信 表情编码 转义
+
+[企业微信表情符自动转义怎么用](https://www.weixinsiwei.com/?id=8192)
+
+点击自己的头像,
+`设置`->`通用`->`功能选项卡` 下有一个 `表情符自动转义` 的选项, 勾选即可. 
+例如 `/ws` 生成 `握手` 表情.
