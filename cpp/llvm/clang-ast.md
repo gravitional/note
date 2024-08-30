@@ -22,7 +22,7 @@ you can grab the temporary `.dot` file generated
 clang -cc1 -ast-view your_file.c
 ```
 
-You can also print to the command line with:
+打印到命令行:
 
 ```bash
 clang -cc1 -ast-dump your_file.c

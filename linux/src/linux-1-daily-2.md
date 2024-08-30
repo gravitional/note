@@ -787,3 +787,7 @@ rsync -a /images2/  /images/
 如果你想从 `/images2` 移动文件, 用 `rsync`, 你可以通过选项 `--remove-source-files`.
 然后 `rsync` 依次复制所有的文件, 完成后再删除每个文件.
 如果源目录和目的目录在同一个文件系统上, 这要比移动慢得多.
+
+## bat 工具
+
+[sharkdp/bat](https://github.com/sharkdp/bat/blob/master/doc/README-zh.md)
