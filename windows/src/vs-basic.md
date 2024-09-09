@@ -181,3 +181,20 @@ Tools > Options > Fonts and Colors > 语句结束
 ## VS codesnippet
 
 [代码片段架构参考](https://learn.microsoft.com/zh-cn/visualstudio/ide/code-snippets-schema-reference?view=vs-2022#code-element)
+
+## c/c++ clang format 自动设置格式
+
+[[方法]关闭Visual Studio 2019的代码自动格式化功能](https://blog.csdn.net/ZLK1214/article/details/106416075)
+
+关闭这个自动格式化代码的功能的方法是, 选择 `Tools` 菜单中的 `Options` 命令, 
+在 `Text Editor -> C/C++ -> Formatting -> General`
+中取消勾选所有的 Automatically indent 和 Automatically format 就可以了. 
+默认开启了
+
++ 键入 `;` 时自动设置语句的格式
++ 键入 `}` 时自动设置块的格式
+
++ 粘贴时 缩进和格式
+
++ 在大括号自动完成时自动设置其格式
+ 
