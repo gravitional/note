@@ -228,6 +228,7 @@ ffmpeg -i input.mp4 -filter:v "crop=w:h:x:y" output.mp4
 且具有 `640` 像素宽度和 `480` 像素高度的视频, 命令应该是:
 
 ```bash
+# crop 后面依次是 width:height:x:y; x,y 表示 left corner
 ffmpeg -i input.mp4 -filter:v "crop=640:480:200:150" output.mp4
 ```
 

@@ -26,6 +26,14 @@ ffmpeg -r 12 -i image.%4d.png -vf palettegen tmp.png
 ffmpeg -r 12 -i image.%4d.png -i tmp.png -lavfi paletteuse out.gif
 ```
 
+### gif 裁切
+
+`crop` 参数后面依次是 `width:height:x:y`, 其中 `x:y` 表示 left corner 像素坐标
+
+```bash
+ffmpeg -i input.gif -vf "crop=640:480:200:150" output.gif
+```
+
 ## 将gif转换成MP4
 
 ```bash
