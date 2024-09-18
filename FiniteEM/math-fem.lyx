@@ -2277,6 +2277,69 @@ D=\prod_{n\ge i\ge j\ge1}=(x_{i}-x_{j}).
 
 \end_layout
 
+\begin_layout Section
+张量等式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\varepsilon_{ijk}\varepsilon_{\ell mn}=\left|\begin{array}{ccc}
+\delta_{i\ell} & \delta_{im} & \delta_{in}\\
+\delta_{j\ell} & \delta_{jm} & \delta_{jn}\\
+\delta_{k\ell} & \delta_{km} & \delta_{kn}
+\end{array}\right|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+证明思路：
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $i=j$
+\end_inset
+
+，根据行列式性质，结果为零。类似如果
+\begin_inset Formula $\ell=m$
+\end_inset
+
+结果为零。
+\end_layout
+
+\begin_layout Itemize
+交换两行出负号。
+\end_layout
+
+\begin_layout Itemize
+因此相差一个待定常数。
+\end_layout
+
+\begin_layout Standard
+例如
+\begin_inset Formula 
+\[
+\varepsilon_{ij{\color{red}k}}\varepsilon_{{\color{red}k}mn}=\left|\begin{array}{ccc}
+\delta_{ik} & \delta_{im} & \delta_{in}\\
+\delta_{jk} & \delta_{jm} & \delta_{jn}\\
+\delta_{kk} & \delta_{km} & \delta_{kn}
+\end{array}\right|=\left|\begin{array}{ccc}
+0 & \delta_{im} & \delta_{in}\\
+0 & \delta_{jm} & \delta_{jn}\\
+1 & 0 & 0
+\end{array}\right|=\delta_{im}\delta_{jn}-\delta_{in}\delta_{jm}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 代数余子式，矩阵的逆
 \end_layout
@@ -27302,9 +27365,9 @@ ref: JMJin P104, Sec 4.3.3。Dirichlet 边界条件定义为：
 \begin_layout Enumerate
 以及修改对应的力向量：
 \begin_inset Formula 
-\[
-b_{j}\to b_{j}-K_{j,m}\,p\left(i\right);\text{for}\quad j\neq m
-\]
+\begin{equation}
+b_{j}\to b_{j}-K_{j,m}\,p\left(i\right);\text{for}\quad j\neq m\label{eq:jm4.60b}
+\end{equation}
 
 \end_inset
 
@@ -27382,7 +27445,31 @@ b_{j}\to b_{j}-K_{j,m}\,p\left(i\right);\text{for}\quad j\neq m
 \series bold
 减去刚阵乘以约束向量
 \series default
-。这一部分体现在计算 ElementFin 中。
+。这一部分体现在计算 ElementFin 中。不使用FPI时，对应的是
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:jm4.60b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，使用FPI时，
+\begin_inset Formula $\delta\phi=0$
+\end_inset
+
+，仍然使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:jm4.60b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+即可。
 \end_layout
 
 \begin_layout Section

@@ -66,3 +66,11 @@ keybindings list -d
 
 按下 `ctrl+u`, 会用当前命令行替换剪贴板中的内容, 如果只是想清除当前 line 中的输入,
 可以把 `event: {edit: cutfromstart}` 修改成 `event: {edit: clear}` 即可.
+
+## do -i 执行命令, 忽略错误
+
+[do for core](https://www.nushell.sh/commands/docs/do.html)
+
+```bash
+do --ignore-errors { thisisnotarealcommand }
+```
