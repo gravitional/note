@@ -198,3 +198,22 @@ Tools > Options > Fonts and Colors > 语句结束
 
 + 在大括号自动完成时自动设置其格式
  
+## vs 离线安装
+
+[ATL与COM之间的关系、ATL的特点与基本使用方法](https://www.cnblogs.com/gowell2014/p/7846210.html)
+
+使用 c++ 的桌面开发
+
++ MSVC v143 生成工具
++ C++ Build Insights
++ 实时调试器
++ C++ 分析工具
++ 用于Windows的 CMake
++ Boost.Test
++ C++ AddressSanitizer
++ Windows 11 SDK
++ MSVC v142 生成工具
+
+Python 开发
+
++ python 语言支持
