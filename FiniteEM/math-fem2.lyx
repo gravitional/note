@@ -6294,10 +6294,23 @@ literal "false"
 运动导体，Eddy电流
 \end_layout
 
+\begin_layout Section
+约定
+\end_layout
+
 \begin_layout Standard
+随体坐标系（moving坐标系）表示为 
+\begin_inset Formula $(X,Y,Z)$
+\end_inset
+
+，固定坐标系表示为
+\begin_inset Formula $(x,y,z)$
+\end_inset
+
+。坐标的变换关系为
 \begin_inset Formula 
 \[
-\sbf R=\sbf r+\sbf v\,t
+\sbf r=\sbf R+\sbf v\,t
 \]
 
 \end_inset
@@ -6309,7 +6322,7 @@ literal "false"
 洛伦兹力公式
 \begin_inset Formula 
 \[
-\sbf F=q\sbf\sbf E+q\sbf v\times\sbf B
+\sbf F=q\,\sbf E+q\,\sbf v\times\sbf B
 \]
 
 \end_inset
@@ -6337,57 +6350,34 @@ literal "false"
 
 \end_layout
 
-\begin_layout Itemize
-静坐标系
-\begin_inset Formula $(t,\sbf r)$
-\end_inset
-
-下，涡流可以表示为
-\begin_inset Formula 
-\[
-\sbf J_{\text{eddy}}\left(t,\sbf r\right)=-\sigma\,\partial_{t}\sbf A(t,\sbf r)+\sigma\,\sbf v\times\left[\nabla\times\sbf A(t,\sbf r)\right]
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\sbf v$
-\end_inset
-
-为导体的运动速度。
+\begin_layout Section
+涡流 eddy current
 \end_layout
 
 \begin_layout Itemize
-而在动坐标系
+随体坐标 
 \begin_inset Formula $(t,\sbf R)$
 \end_inset
 
 下，涡流表示为
 \begin_inset Formula 
 \[
-\sbf J_{\text{eddy}}\left(t,\sbf R\right)=\sigma\,\partial_{t}\sbf A(t,\sbf R)
+\sbf J_{\text{eddy}}\left(t,\sbf R\right)={\color{blue}-\sigma_{\text{ed}}\,\partial_{t}\sbf A(t,\sbf R)}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
-syw
-\end_layout
-
-\begin_layout Standard
+磁矢势方程
 \begin_inset Formula 
 \begin{align}
- & \nabla\times\left(\nu\nabla\times\sbf A(X,Y,Z)\right)=\sbf J_{0}-\sigma\left[\partial_{t}A(X,Y,Y)+\nabla\phi(X,Y,Z)\right]\label{eq:T1}\\
- & \nabla\cdot\left[-\sigma\left(\partial_{t}A(X,Y,Z)+\nabla\phi(X,Y,Z)\right)\right]=0\label{eq:T2}
+ & \nabla\times\nu\,\nabla\times A(t,\sbf R)=\sbf J_{0}{\color{blue}-\sigma_{\text{ed}}\,\partial_{t}\sbf A(t,\sbf R)}-\sigma\,\nabla\phi(t,\sbf R)\label{eq:Na1}\\
+ & \nabla\cdot\left[{\color{blue}-\sigma_{\text{ed}}\,\partial_{t}\sbf A(t,\sbf R)}-\sigma\,\nabla\phi(t,\sbf R)\right]=0\label{eq:Na2}
 \end{align}
 
 \end_inset
 
-其中 
-\begin_inset Formula $A$
+其中
+\begin_inset Formula $\sbf A$
 \end_inset
 
  and 
@@ -6395,29 +6385,399 @@ syw
 \end_inset
 
  分别是 磁矢势 和 电标势。
-\begin_inset Formula $\nu$
+\begin_inset Formula $\nu=\mu^{-1}$
 \end_inset
 
- 和
+ 是磁阻率（reluctivity），
 \begin_inset Formula $\sigma$
 \end_inset
 
- 分别是 reluctivity（磁阻率）and conductivity。
+是电导率，
+\begin_inset Formula $\sigma_{\text{ed}}$
+\end_inset
+
+表示
+\series bold
+运动导体
+\series default
+的电导率；
 \begin_inset Formula $\sbf J_{0}$
 \end_inset
 
  是 magnetizing current density。
 \end_layout
 
-\begin_layout Standard
-在固定坐标系 
-\begin_inset Formula $(x,y,z)$
+\begin_layout Itemize
+固定坐标系
+\begin_inset Formula $(t,\sbf r)$
 \end_inset
 
-下，
+下，涡流可以表示为
+\begin_inset Formula 
+\[
+\sbf J_{\text{eddy}}\left(t,\sbf r\right)={\color{blue}-\sigma_{\text{ed}}\,\partial_{t}\sbf A(t,\sbf r)+\sigma_{\text{ed}}\,\sbf v\times\sbf B(t,\sbf r)}
+\]
+
+\end_inset
+
+磁矢势方程
+\begin_inset Formula 
+\begin{align}
+ & \nabla\times\mu\,\nabla\times A(t,\sbf r)=\sbf J_{0}{\color{blue}-\sigma_{\text{ed}}\,\partial_{t}\sbf A(t,\sbf R)+\sigma_{\text{ed}}\,\sbf v\times\sbf B(t,\sbf r)}-\sigma\,\nabla\phi(t,\sbf R)\label{eq:Na3}\\
+ & \nabla\cdot\left[{\color{blue}-\sigma_{\text{ed}}\,\partial_{t}\sbf A(t,\sbf r)+\sigma_{\text{ed}}\,\sbf v\times\sbf B(t,\sbf r)}-\sigma\,\nabla\phi(t,\sbf r)\right]=0\label{eq:Na4}
+\end{align}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\sbf v$
+\end_inset
+
+为 
+\series bold
+运动导体
+\series default
+ 的 速度矢量，
+\begin_inset Formula $\sbf B=\nabla\times\sbf A(t,\sbf r)$
+\end_inset
+
+ 是 flux density vector 。
+\end_layout
+
+\begin_layout Section
+Eddy 电流项的离散
+\end_layout
+
+\begin_layout Standard
+以
+\begin_inset Formula $1$
+\end_inset
+
+–D模型为例
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:T1"
+reference "fig:Na-fig2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，沿着
+\begin_inset Formula $x$
+\end_inset
+
+轴作匀速运动，使用 backward 差分离散时间导数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/eddy-fig1.png
+	lyxscale 45
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Conductor moving with constant velocity。
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Na-fig2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Transient 分析
+\end_layout
+
+\begin_layout Standard
+In the transient analysis of the moving conductor，在时刻 
+\begin_inset Formula $(t+\Delta t)$
+\end_inset
+
+，点
+\begin_inset Formula $p$
+\end_inset
+
+（固定系坐标为
+\begin_inset Formula $x_{2}$
+\end_inset
+
+），
+\end_layout
+
+\begin_layout Itemize
+随体坐标系的时间导数为
+\begin_inset Formula 
+\begin{align}
+\frac{\partial\sbf A(X_{1})^{t+\Delta t}}{\partial t} & =\frac{\sbf A^{*}(X_{1})^{t+\Delta t}-\sbf A(X_{1})^{t}}{\Delta t}\nonumber \\
+ & =\frac{\sbf A^{*}(x_{2})^{t+\Delta t}-\sbf A(x_{1})^{t}}{\Delta t}\label{eq:Na5}
+\end{align}
+
+\end_inset
+
+其中使用了
+\begin_inset Formula $\sbf A^{*}(X_{1})^{t+\Delta t}=\sbf A^{*}(x_{2})^{t+\Delta t}$
+\end_inset
+
+，
+\begin_inset Formula $\sbf A(X_{1})^{t}=\sbf A(x_{1})^{t}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+固定坐标系的时间导数为
+\begin_inset Formula 
+\begin{align}
+\frac{\partial\sbf A(x_{2})^{t+\Delta t}}{\partial t} & -\sbf v\cdot\sbf B(x_{2})^{t+\Delta t}\nonumber \\
+ & =\frac{\sbf A^{*}(x_{2})^{t+\Delta t}-\sbf A(x_{2})^{t}}{\Delta t}-\sbf v\cdot\sbf B^{*}(x_{2})^{t+\Delta t}\label{eq:Na6}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $\Delta t$
+\end_inset
+
+表示时间间隔。例如 
+\begin_inset Formula $\sbf A^{*}(x_{2})^{t+\Delta t}$
+\end_inset
+
+表示点
+\begin_inset Formula $p(x_{2})$
+\end_inset
+
+，时刻
+\begin_inset Formula $(t+\Delta t)$
+\end_inset
+
+时的矢量势，上标
+\begin_inset Formula $\,^{*}$
+\end_inset
+
+表示需要计算的未知量。
+\end_layout
+
+\begin_layout Standard
+使用 随体坐标系（moving）得到的 系数矩阵是 对称的（symmetric）；使用固定坐标系（fixed）得到的 系数矩阵是非对称的，由于速度项。
+\end_layout
+
+\begin_layout Subsection
+DC 稳态分析
+\end_layout
+
+\begin_layout Standard
+In the dc steady state analysis of the moving conductor with constant velocity
+ in the dc uniform field, 
+\begin_inset Formula $\sbf A(x)$
+\end_inset
+
+ does not change with time as follows:
+\begin_inset Formula 
+\begin{equation}
+\sbf A(x)^{t}=\sbf A(x)^{t+\Delta t}\label{eq:Na7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在随体坐标系中，将
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到磁矢势
+\begin_inset Formula $\sbf A(x)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\sbf A(X_{1})^{t+\Delta t}}{\partial t}=\frac{\sbf A^{*}(x_{2})^{t+\Delta t}-\sbf A^{*}(x_{1})^{t+\Delta t}}{\Delta t}\label{eq:Na8}
+\end{equation}
+
+\end_inset
+
+由于时刻
+\begin_inset Formula $(t+\Delta t)$
+\end_inset
+
+ 的势是未知的，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na8"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 
+\begin_inset Formula $\sbf A^{*}(x_{1})^{t+\Delta t}$
+\end_inset
+
+ 被当作未知量，从而稀疏矩阵是非对称的。
+\end_layout
+
+\begin_layout Itemize
+在固定坐标系中，考虑到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的时间导数等于零
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\sbf A(x_{2})^{t+\Delta t}}{\partial t}-\sbf v\cdot\sbf B(x_{2})^{t+\Delta t}=-\sbf v\cdot\sbf B^{*}(x_{2})^{t+\Delta t}\label{eq:Na9}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Eddy电流项的物理意义
+\end_layout
+
+\begin_layout Standard
+in the transient analysis，随体坐标中的 速度项 可以从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+推导出来
+\begin_inset Formula 
+\begin{align}
+\frac{\partial\sbf A(X_{1})^{t+\Delta t}}{\partial t}= & \frac{\sbf A^{*}(x_{2})^{t+\Delta t}-\sbf A(x_{2})^{t}}{\Delta t}\nonumber \\
+ & \quad+\frac{\sbf A(x_{2})^{t}-\sbf A(x_{1})^{t}}{\Delta x}\cdot\frac{\Delta x}{\Delta t}\nonumber \\
+= & \frac{\sbf A^{*}(x_{2})^{t+\Delta t}-\sbf A(x_{2})^{t}}{\Delta t}-\mathrm{Ba}^{t}\cdot\sbf v\label{eq:Na10}
+\end{align}
+
+\end_inset
+
+其中
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ 是
+\begin_inset Formula $x_{1}$
+\end_inset
+
+和 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+之间的距离，速度项中的
+\begin_inset Formula $\mathrm{Ba}^{t}=-[\sbf A(x_{2})-\sbf A(x_{1})]/\Delta x$
+\end_inset
+
+ 是 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+和 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+之间的平均 flux density at 时刻
+\begin_inset Formula $t$
+\end_inset
+
+。另一方面，固定坐标系的速度项中，出现的是 
+\begin_inset Formula $\sbf B^{*}(x_{2})^{t+\Delta t}$
+\end_inset
+
+ the flux density at point p in the conductor at the instant 
+\begin_inset Formula $(t+\Delta t)$
+\end_inset
+
+。因此，若使用 
+\series bold
+时间差分
+\series default
+ 代替 
+\series bold
+时间导数
+\series default
+，两种坐标系下的公式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na5"
 plural "false"
 caps "false"
 noprefix "false"
@@ -6426,98 +6786,25 @@ noprefix "false"
 
 和
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:T2"
+LatexCommand eqref
+reference "eq:Na6"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-变成
-\begin_inset Formula 
-\begin{align}
- & \nabla\times\left(\nu\nabla\times\sbf A(x,y,z)\right)=\sbf J_{0}-\sigma\left[\partial_{t}A(x,y,z)-\sbf v\times\sbf B(x,y,z)+\nabla\phi(x,y,z)\right]\label{eq:T3}\\
- & \nabla\cdot\left[-\sigma\left(\partial_{t}A(x,y,z)-\sbf v\times B(x,y,z)+\nabla\phi(x,y,z)\right)\right]=0\label{eq:T4}
-\end{align}
+是有区别的，从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Na10"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-其中
-\begin_inset Formula $\sbf v$
-\end_inset
-
-是运动导体的速度矢量, 
-\begin_inset Formula $\sbf B=\nabla\times\sbf A$
-\end_inset
-
- 是flux density vector 。
-\end_layout
-
-\begin_layout Remark
-sss Wrong
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-{\color{blue}-\nabla\phi-\partial_{t}\sbf A}+\sbf v\times\nabla\times\sbf A
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\nabla\times(\sbf v\times\sbf A)=\left(\sbf A\cdot\nabla\right)\sbf v+\left(\nabla\cdot\sbf A\right)\sbf v-\left(\sbf v\cdot\nabla\right)\sbf A+\left(\nabla\cdot\sbf v\right)\sbf A
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
- & \sbf v\times\left(\nabla\times\sbf A\right)-\nabla\times\left(\sbf v\times\sbf A\right)\\
-= & \varepsilon_{ijk}\varepsilon_{kmn}\,\left(v_{j}\partial_{m}A_{n}-\partial_{j}v_{m}A_{n}\right)
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-= & (\delta_{im}\delta_{jn}-\delta_{in}\delta_{jm})\,\left(v_{j}\partial_{m}A_{n}-\partial_{j}v_{m}A_{n}\right)\\
-= & \left(v_{j}\partial_{i}A_{j}-v_{j}\partial_{j}A_{i}\right)-\left({\color{brown}\partial_{j}v_{i}A_{j}}-\partial_{j}v_{j}A_{i}\right)\\
-= & \left(v_{j}\partial_{i}A_{j}-v_{j}\partial_{j}A_{i}\right)-\left({\color{brown}A_{j}\partial_{j}v_{i}+v_{i}\partial_{j}A_{j}}-v_{j}\partial_{j}A_{i}-A_{i}\partial_{j}v_{j}\right)
-\end{align*}
-
-\end_inset
-
-如果考虑 
-\begin_inset Formula $\partial_{j}A_{j}=0$
-\end_inset
-
-，得到
-\begin_inset Formula 
-\[
-v_{j}\partial_{i}A_{j}-{\color{brown}A_{j}\partial_{j}v_{i}}+A_{i}\partial_{j}v_{j}
-\]
-
-\end_inset
-
-如果认为
-\begin_inset Formula $\partial_{j}v_{i}=0$
-\end_inset
-
-，得到
-\begin_inset Formula 
-\[
-v_{j}\partial_{i}A_{j}
-\]
-
-\end_inset
-
-
+可以看出。In the dc steady state analysis，it is the same as mentioned above.
 \end_layout
 
 \begin_layout Chapter

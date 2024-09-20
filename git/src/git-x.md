@@ -696,11 +696,17 @@ git push [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run]
 - 其他含糊不清的解决方法可能会在将来被添加, 但现在任何其他情况都会出错, 会有一个错误表明我们所作的尝试,
 并根据 `advice.pushUnqualifiedRefname` 的配置(见 git-config(1)), 建议你可能想要推送至的,  `refs/` 命名空间.
 
++ `--follow-tags`
+推送 (不使用该选项时要推送的) 所有`ref`, 同时也会推送 `ref/tags` 中的 注释标签(annotated tags),
+这些标签还未推送到 remote, 但指向的提交与正在推送的 ref 是一致的(reachable).
+这也可以通过配置变量 `push.followTags` 来指定.
+详情请参阅 [git-config[1]](https://git-scm.com/docs/git-config) 中的 `push.followTags`.
+
 #### 例子
 
 如果你的当前分支设置了`跟踪远程分支`, 那么可以用 `git pull` 命令来自动抓取后合并该远程分支到当前分支
 
-推送工作使用 `git push <remote> <branch>` , 比如`$ git push origin serverfix`
+推送工作使用 `git push <remote> <branch>` , 比如 `git push origin serverfix`
 
 这里有些工作被简化了.
 Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads/serverfix`,
