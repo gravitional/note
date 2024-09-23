@@ -6671,6 +6671,14 @@ noprefix "false"
 \end_inset
 
  被当作未知量，从而稀疏矩阵是非对称的。
+\series bold
+在随体坐标中不认为 
+\begin_inset Formula $\sbf A(X_{1})^{t+\Delta t}=\sbf A(X_{1})^{t}$
+\end_inset
+
+
+\series default
+。
 \end_layout
 
 \begin_layout Itemize
@@ -12814,6 +12822,79 @@ pf=\frac{P}{S}=\cos\theta
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Chapter
+速度项离散格式
+\end_layout
+
+\begin_layout Subsection
+迎风格式 Upwind scheme
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Upwind scheme"
+target "https://en.wikipedia.org/wiki/Upwind_scheme"
+literal "false"
+
+\end_inset
+
+，
+\begin_inset CommandInset href
+LatexCommand href
+name "迎风格式(upwind scheme)离散原理"
+target "https://www.techchickensoup.com/cae/upwind-scheme-intro/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\partial_{t}u+a\partial_{x}u=0.
+\]
+
+\end_inset
+
+简单说，就是当速度
+\begin_inset Formula $a>0$
+\end_inset
+
+时，且对流占主导时，对于当下求解的格点
+\begin_inset Formula $i$
+\end_inset
+
+而言，影响几乎都来自于左侧上游格点
+\begin_inset Formula $i-1$
+\end_inset
+
+，如果这是使用中央差分来离散空间值，同时考虑上下游
+\begin_inset Formula $(i-1,i+1)$
+\end_inset
+
+的影响，由于采用的离散数值方法不符合流场特性，会使数值求解相当不稳定。
+\begin_inset Formula 
+\begin{align*}
+ & \frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}=0\quad\text{for}\quad a>0\\
+ & \frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i+1}^{n}-u_{i}^{n}}{\Delta x}=0\quad\text{for}\quad a<0
+\end{align*}
+
+\end_inset
+
+稳定性，Courant–Friedrichs–Lewy 条件
+\begin_inset Formula 
+\[
+c=\abs{\frac{a\Delta t}{\Delta x}}\le1,\quad\text{and}\quad0\le a.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
