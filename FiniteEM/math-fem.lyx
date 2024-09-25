@@ -9554,6 +9554,554 @@ y_{n+1}^{(k+1)}=y_{n}+\frac{h}{24}\left[{\color{blue}9}f(x_{n+1},y_{n+1}^{(0)})+
 \end_layout
 
 \begin_layout Section
+beta显式梯形方法2
+\end_layout
+
+\begin_layout Standard
+设一阶常微分方程的形式为
+\begin_inset Formula 
+\begin{equation}
+M\,x^{\prime}(t)+K\,x(t)+{\color{brown}F[x(t)]}=b(t)\label{eq:beta2}
+\end{equation}
+
+\end_inset
+
+引入可调参数
+\begin_inset Formula $\beta$
+\end_inset
+
+（
+\begin_inset Formula $0\le\beta\le1$
+\end_inset
+
+），将函数
+\begin_inset Formula $x(t+\Delta t)$
+\end_inset
+
+表示为（XuLei的选取方式）
+\begin_inset Formula 
+\begin{equation}
+x\left(t+\Delta t\right)=x\left(t\right)+\beta\Delta t\,x^{\prime}\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t+\Delta t\right)\label{eq:beta2b}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\beta}=1-\beta$
+\end_inset
+
+。
+\begin_inset Formula $\beta=0$
+\end_inset
+
+ 对应后向欧拉。
+\series bold
+以下用 
+\begin_inset Formula $n$
+\end_inset
+
+ 标记时间步
+\series default
+，即指标 
+\begin_inset Formula $n+1$
+\end_inset
+
+ 对应时刻 
+\begin_inset Formula $t+n\Delta t$
+\end_inset
+
+，联立方程
+\begin_inset Formula 
+\begin{align*}
+ & x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime;n}+\overline{\beta}\Delta t\,x^{\prime;n+1}\\
+ & M\,x^{\prime;n}+K^{n}\,x^{n}+{\color{brown}F^{n}}=b^{n}\\
+ & M\,x^{\prime;n+1}+K^{n+1}\,x^{n+1}+{\color{brown}F^{n+1}}=b^{n+1}
+\end{align*}
+
+\end_inset
+
+解得
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Simplify@First@Solve[{ x[n + 1] == x[n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]* x
+\backslash
+[Prime][n] + 
+\backslash
+[CapitalDelta]t*
+\backslash
+[Beta]b*x
+\backslash
+[Prime][n + 1], M*x
+\backslash
+[Prime][n] + K*x[n] + F[n] == b[n], M*x
+\backslash
+[Prime][n + 1] + K*x[n + 1] + F[n + 1] == b[n + 1] }, {x[n + 1], x
+\backslash
+[Prime][n], x
+\backslash
+[Prime][n + 1]} ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(\frac{M}{\Delta t}+\overline{\beta}K^{n+1}\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\beta K^{n}\right)x^{n}-{\color{brown}\left(\overline{\beta}\,F^{n+1}+\beta\,F^{n}\right)}+\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+
+\series bold
+Note
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+实际上对于一个任意函数
+\series default
+
+\begin_inset Formula $F[x(t)]$
+\end_inset
+
+ ，按
+\begin_inset Formula $x$
+\end_inset
+
+作线性展开 
+\begin_inset Formula ${\color{brown}F[x(t)]}=b[t]+K\,x(t)+\cdots$
+\end_inset
+
+。
+\begin_inset Formula $b[t]$
+\end_inset
+
+是零阶项，对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $b(t)$
+\end_inset
+
+；
+\begin_inset Formula $K$
+\end_inset
+
+是一阶项，对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $K\,x(t)$
+\end_inset
+
+；即在
+\begin_inset Formula $F[x]$
+\end_inset
+
+能展开的情况下，只要能求解以下方程即可， 
+\begin_inset Formula 
+\[
+M\,x^{\prime}(t)+K\,x(t)=b(t).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+数值算法或者数值近似（mFPI）不
+\series bold
+改变相对符号
+\series default
+：刚度矩阵 
+\family sans
+\series bold
+Me
+\family default
+\series default
+ 和 
+\family sans
+\series bold
+Ke
+\family default
+\series default
+ 同号；外力在方程右边符号为正，则内力符号为负；从
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta2b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+看出，
+\begin_inset Formula $x^{n+1}$
+\end_inset
+
+的符号同 
+\family sans
+\series bold
+Me
+\family default
+\series default
+ 相同，
+\begin_inset Formula $x^{n}$
+\end_inset
+
+同 
+\family sans
+\series bold
+Me
+\family default
+\series default
+ 相反；
+\end_layout
+
+\begin_layout Itemize
+当
+\begin_inset Formula $\beta=1/2$
+\end_inset
+
+时，方程遍乘
+\begin_inset Formula $2$
+\end_inset
+
+；对应 时间矩阵 
+\family sans
+\series bold
+Me
+\family default
+\series default
+ 乘上系数
+\begin_inset Formula $2$
+\end_inset
+
+，外力取 
+\begin_inset Formula $b^{n+1}+b^{n}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+在 mFPI 中，非线性 B–H，E–D 曲线被线性化，对应刚度矩阵线性化，即每一步的刚度矩阵是滞后的，对应 STPBEG_ACCUM 的解。
+\end_layout
+
+\begin_layout Itemize
+在当前的大多数例子中，时间项离散化，脱去 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+之后，剩下的就是 
+\begin_inset Formula $\int_{\Omega}N_{\alpha}N_{\beta}$
+\end_inset
+
+ or 
+\begin_inset Formula $\int_{\Omega}\sbf N_{\alpha}\cdot\sbf N_{\beta}$
+\end_inset
+
+，不依赖于
+\begin_inset Formula $t$
+\end_inset
+
+ or 自由度。
+\end_layout
+
+\begin_layout Example
+如果使用
+\begin_inset Formula $\lambda$
+\end_inset
+
+-FPI 求解此方程：用
+\begin_inset Formula $w$
+\end_inset
+
+标记
+\series bold
+ NLI（非线性）迭代步， 
+\begin_inset Formula $u$
+\end_inset
+
+
+\series default
+标记 
+\series bold
+线搜索试探步
+\series default
+（线搜索结果是覆盖的，即只采用最后一次）
+\begin_inset Formula 
+\[
+A_{w}\,\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[B-A_{w}\,X_{w}^{n+1}\right]
+\]
+
+\end_inset
+
+简记
+\begin_inset Formula 
+\begin{align*}
+ & A_{1}=\left(\frac{M}{\Delta t}+\overline{\beta}K^{n+1}\right),\quad A_{2}=\left(\frac{M}{\Delta t}-\beta K^{n}\right)\\
+ & B_{1}=\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
+\end{align*}
+
+\end_inset
+
+将对应矩阵代入得
+\begin_inset Formula 
+\begin{equation}
+A_{1}\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[A_{2}x^{n}-\overline{\beta}\,{\color{blue}F^{n+1}}-\beta\,F^{n}+B_{1}-A_{1}x_{w}^{n+1}\right]\label{eq:my30}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my30"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中
+\begin_inset Formula ${\color{blue}F^{n+1}}=F\left(x_{w+1}^{n+1}\right)$
+\end_inset
+
+，所以是隐式的。为转换成显式方程，作泰勒展开
+\begin_inset Formula 
+\[
+F^{n+1}=F\left(x_{w+1}^{n+1}\right)=F_{w}^{n+1}+F_{w}^{(1),n+1}\Delta x_{w+1}^{n+1}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $F_{w}^{(1),n+1}$
+\end_inset
+
+表示
+\begin_inset Formula $F$
+\end_inset
+
+在
+\begin_inset Formula $x_{w}^{n+1}$
+\end_inset
+
+ 的一阶导数；
+\begin_inset Formula $F_{w}^{n+1}=F\left(x_{w}^{n+1}\right)$
+\end_inset
+
+表示
+\begin_inset Formula $F$
+\end_inset
+
+在
+\begin_inset Formula $x_{w}^{n+1}$
+\end_inset
+
+ 的零阶值；
+\begin_inset Formula $F^{n}$
+\end_inset
+
+表示
+\begin_inset Formula $F$
+\end_inset
+
+在
+\begin_inset Formula $x^{n}$
+\end_inset
+
+的值（上一时间步）。
+\begin_inset Formula 
+\[
+\left[A_{1}+\overline{\beta}F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[B_{1}+A_{2}x^{n}-\overline{\beta}F_{w}^{(0),n+1}-\beta\,F^{n}-A_{1}x_{w}^{n+1}\right]
+\]
+
+\end_inset
+
+整理
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{M}{\Delta t}+\overline{\beta}K+\overline{\beta}F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,u}\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}F_{w}^{(0),n+1}+\beta\,F^{n}}\right)\\
+ & -{\color{magenta}\frac{M}{\Delta t}\left(x_{w}^{n+1}-x^{n}\right)-\left(\overline{\beta}\,K\,x_{w}^{n+1}+\beta\,K\,x^{n}\right)}\Big]
+\end{align*}
+
+\end_inset
+
+对比系数项容易发现，
+\begin_inset Formula $K\sim F_{w}^{(1),n+1}$
+\end_inset
+
+，
+\begin_inset Formula $K\,x_{w}^{n+1}\sim F_{w}^{n+1}$
+\end_inset
+
+，
+\begin_inset Formula $K\,x^{n}\sim F^{n}$
+\end_inset
+
+ 一一对应；这是由于推导时假设
+\begin_inset Formula $F[x(t)]$
+\end_inset
+
+是一般函数，推导也适用于
+\begin_inset Formula $K\,x(t)$
+\end_inset
+
+这样的线性项。
+\end_layout
+
+\begin_layout Remark
+beta方法的系数具有对称性，作
+\begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
+\end_inset
+
+对换，
+\begin_inset Formula $\beta=1$
+\end_inset
+
+对应后向欧拉。
+\begin_inset Formula 
+\[
+x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime,n}+\beta\Delta t\,x^{\prime,n+1}
+\]
+
+\end_inset
+
+表达式为
+\begin_inset Formula 
+\begin{align*}
+\left[\frac{M}{\Delta t}+\beta\,K+\beta\,F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,u}\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta\,F_{w}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
+ & -{\color{magenta}\frac{M}{\Delta t}\left(x_{w}^{n+1}-x^{n}\right)-\left(\beta\,K\,x_{w}^{n+1}+\overline{\beta}\,K\,x^{n}\right)}\Big]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+以电化学残差方程为例，
+\begin_inset Formula 
+\begin{align}
+\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a}\\
+ & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot\sbf J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b}\\
+ & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c}
+\end{align}
+
+\end_inset
+
+令待求自由度是
+\begin_inset Formula $C_{n,i}$
+\end_inset
+
+，
+\begin_inset Formula $n$
+\end_inset
+
+为节点指标，
+\begin_inset Formula $i$
+\end_inset
+
+为离子指标。则
+\begin_inset Formula $M=N_{m}N_{n}$
+\end_inset
+
+。体单元的 
+\begin_inset Formula ${\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}$
+\end_inset
+
+ 贡献到 
+\begin_inset Formula $K$
+\end_inset
+
+ 。边界项 
+\begin_inset Formula ${\color{red}\sbf n\cdot\sbf J_{D_{i}}}$
+\end_inset
+
+ 由边界条件给出，在齐次2nd边界上是零；在一般的3rd边界上可能具有下列形式
+\begin_inset Formula 
+\[
+\sbf n\cdot\sbf J_{D_{i}}=F[c_{i}(t)]+b(b)
+\]
+
+\end_inset
+
+这里的
+\begin_inset Formula $F$
+\end_inset
+
+是已知函数，则对应
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:beta2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的
+\begin_inset Formula $F[x(t)]$
+\end_inset
+
+与
+\begin_inset Formula $b(t)$
+\end_inset
+
+，因此需要对
+\begin_inset Formula $F[x(t)]$
+\end_inset
+
+作线性化。
+\end_layout
+
+\begin_layout Subsection
 beta显式梯形方法1
 \end_layout
 
@@ -9865,367 +10413,7 @@ f = Table[
 。
 \end_layout
 
-\begin_layout Section
-beta显式梯形方法2
-\end_layout
-
-\begin_layout Standard
-设一阶常微分方程的形式为
-\begin_inset Formula 
-\begin{equation}
-M\,x^{\prime}(t)+K\,x(t)+F[x(t)]=b(t)\label{eq:beta2}
-\end{equation}
-
-\end_inset
-
-引入可调参数
-\begin_inset Formula $\beta$
-\end_inset
-
-（
-\begin_inset Formula $0\le\beta\le1$
-\end_inset
-
-），将函数
-\begin_inset Formula $x(t+\Delta t)$
-\end_inset
-
-表示为（XuLei的选取方式）
-\begin_inset Formula 
-\[
-x\left(t+\Delta t\right)=x\left(t\right)+\beta\Delta t\,x^{\prime}\left(t\right)+\overline{\beta}\Delta t\,x^{\prime}\left(t+\Delta t\right)
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\overline{\beta}=1-\beta$
-\end_inset
-
-。
-\begin_inset Formula $\beta=0$
-\end_inset
-
- 对应后向欧拉。
-\series bold
-以下用
-\begin_inset Formula $n$
-\end_inset
-
-标记时间步
-\series default
-，即指标 
-\begin_inset Formula $n+1$
-\end_inset
-
- 对应时刻 
-\begin_inset Formula $t+n\Delta t$
-\end_inset
-
-，联立方程
-\begin_inset Formula 
-\begin{align*}
- & x^{n+1}=x^{n}+\beta\Delta t\,x^{\prime;n}+\overline{\beta}\Delta t\,x^{\prime;n+1}\\
- & M\,x^{\prime;n}+K\,x^{n}+F^{n}=b^{n}\\
- & M\,x^{\prime;n+1}+K\,x^{n+1}+F^{n+1}=b^{n+1}
-\end{align*}
-
-\end_inset
-
-解得
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Simplify@First@Solve[{ x[n + 1] == x[n] + 
-\backslash
-[CapitalDelta]t*
-\backslash
-[Beta]* x
-\backslash
-[Prime][n] + 
-\backslash
-[CapitalDelta]t*
-\backslash
-[Beta]b*x
-\backslash
-[Prime][n + 1], M*x
-\backslash
-[Prime][n] + K*x[n] + F[n] == b[n], M*x
-\backslash
-[Prime][n + 1] + K*x[n + 1] + F[n + 1] == b[n + 1] }, {x[n + 1], x
-\backslash
-[Prime][n], x
-\backslash
-[Prime][n + 1]} ]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-\left(\frac{M}{\Delta t}+\overline{\beta}K\right){\color{blue}x^{n+1}} & =\left(\frac{M}{\Delta t}-\beta K\right)x^{n}-\left(\overline{\beta}\,F^{n+1}+\beta\,F^{n}\right)+\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
-\end{align*}
-
-\end_inset
-
-简记
-\begin_inset Formula 
-\begin{align*}
- & A_{1}=\left(\frac{M}{\Delta t}+\overline{\beta}K\right),\quad A_{2}=\left(\frac{M}{\Delta t}-\beta K\right)\\
- & B_{1}=\left(\overline{\beta}\,b^{n+1}+\beta\,b^{n}\right)
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-如果使用
-\begin_inset Formula $\lambda$
-\end_inset
-
--FPI 求解此方程，
-\series bold
-并用
-\begin_inset Formula $w$
-\end_inset
-
-标记NLI（非线性）迭代步， 
-\begin_inset Formula $u$
-\end_inset
-
- 标记线搜索试探步
-\series default
-（线搜索结果是覆盖的，即只采用最后一次）
-\begin_inset Formula 
-\[
-A\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[B-AX_{w}^{n+1}\right]
-\]
-
-\end_inset
-
-将对应矩阵代入得
-\begin_inset Formula 
-\begin{equation}
-A_{1}\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[A_{2}x^{n}-\overline{\beta}\,{\color{blue}F^{n+1}}-\beta\,F^{n}+B_{1}-A_{1}x_{w}^{n+1}\right]\label{eq:my30}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:my30"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中
-\begin_inset Formula ${\color{blue}F^{n+1}}=F\left(x_{w+1}^{n+1}\right)$
-\end_inset
-
-，所以是隐式的。为转换成显式方程，作泰勒展开
-\begin_inset Formula 
-\[
-F^{n+1}=F\left(x_{w+1}^{n+1}\right)=F_{w}^{n+1}+F_{w}^{(1),n+1}\Delta x_{w+1}^{n+1}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $F_{w}^{(1),n+1}$
-\end_inset
-
-表示
-\begin_inset Formula $F$
-\end_inset
-
-在
-\begin_inset Formula $x_{w}^{n+1}$
-\end_inset
-
- 的一阶导数；
-\begin_inset Formula $F_{w}^{n+1}=F\left(x_{w}^{n+1}\right)$
-\end_inset
-
-表示
-\begin_inset Formula $F$
-\end_inset
-
-在
-\begin_inset Formula $x_{w}^{n+1}$
-\end_inset
-
- 的零阶值；
-\begin_inset Formula $F^{n}$
-\end_inset
-
-表示
-\begin_inset Formula $F$
-\end_inset
-
-在
-\begin_inset Formula $x^{n}$
-\end_inset
-
-的值（上一时间步）。
-\begin_inset Formula 
-\[
-\left[A_{1}+\overline{\beta}F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}=\lambda_{w,u}\left[B_{1}+A_{2}x^{n}-\overline{\beta}F_{w}^{(0),n+1}-\beta\,F^{n}-A_{1}x_{w}^{n+1}\right]
-\]
-
-\end_inset
-
-整理
-\begin_inset Formula 
-\begin{align*}
-\left[\frac{M}{\Delta t}+\overline{\beta}K+\overline{\beta}F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,u}\Big[{\color{blue}\overline{\beta}\,b^{n+1}+\beta\,b^{n}}-\left({\color{brown}\overline{\beta}F_{w}^{(0),n+1}+\beta\,F^{n}}\right)\\
- & -{\color{magenta}\frac{M}{\Delta t}\left(x_{w}^{n+1}-x^{n}\right)-\left(\overline{\beta}\,K\,x_{w}^{n+1}+\beta\,K\,x^{n}\right)}\Big]
-\end{align*}
-
-\end_inset
-
-对比系数项容易发现，
-\begin_inset Formula $K\sim F_{w}^{(1),n+1}$
-\end_inset
-
-，
-\begin_inset Formula $K\,x_{w}^{n+1}\sim F_{w}^{n+1}$
-\end_inset
-
-，
-\begin_inset Formula $K\,x^{n}\sim F^{n}$
-\end_inset
-
- 一一对应；这是由于推导时假设
-\begin_inset Formula $F[x(t)]$
-\end_inset
-
-是一般函数，推导也适用于
-\begin_inset Formula $K\,x(t)$
-\end_inset
-
-这样的线性项。
-\end_layout
-
-\begin_layout Remark
-beta方法的系数具有对称性，作
-\begin_inset Formula $\beta\leftrightarrow\overline{\beta}$
-\end_inset
-
-对换，
-\begin_inset Formula $\beta=1$
-\end_inset
-
-对应后向欧拉。
-\begin_inset Formula 
-\[
-x^{n+1}=x^{n}+\overline{\beta}\Delta t\,x^{\prime,n}+\beta\Delta t\,x^{\prime,n+1}
-\]
-
-\end_inset
-
-表达式为
-\begin_inset Formula 
-\begin{align*}
-\left[\frac{M}{\Delta t}+\beta\,K+\beta\,F_{w}^{(1),n+1}\right]\Delta x_{w+1}^{n+1}= & \lambda_{w,u}\Big[{\color{blue}\beta\,b^{n+1}+\overline{\beta}\,b^{n}}-\left({\color{brown}\beta\,F_{w}^{n+1}+\overline{\beta}\,F^{n}}\right)\\
- & -{\color{magenta}\frac{M}{\Delta t}\left(x_{w}^{n+1}-x^{n}\right)-\left(\beta\,K\,x_{w}^{n+1}+\overline{\beta}\,K\,x^{n}\right)}\Big]
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-以电化学残差方程为例，
-\begin_inset Formula 
-\begin{align}
-\int_{\Omega^{e}}N_{m}\,\partial_{t}C_{i}\dd{\Omega} & -\int_{\Omega^{e}}{\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}\dd{\Omega}+\int_{\Omega^{e}}\nabla N_{m}\cdot\sbf J_{C_{i}}\dd{\Omega}\label{eq:cf3a}\\
- & +\int_{\Gamma^{s}}{\color{red}N_{m}\,\sbf n\cdot\sbf J_{D_{i}}}\dd{\Gamma}+\int_{\Gamma^{s}}{\color{blue}N_{m}\,\sbf n\cdot\sbf J_{M_{i}}}\dd{\Gamma}-\int_{\Gamma^{s}}N_{m}\,\sbf n\cdot\sbf J_{C_{i}}\dd{\Gamma}\label{eq:cf3b}\\
- & =\int_{\Omega^{e}}N_{m}R_{i}\dd{\Omega}\label{eq:cf3c}
-\end{align}
-
-\end_inset
-
-令待求自由度是
-\begin_inset Formula $C_{n,i}$
-\end_inset
-
-，
-\begin_inset Formula $n$
-\end_inset
-
-为节点指标，
-\begin_inset Formula $i$
-\end_inset
-
-为离子指标。则
-\begin_inset Formula $M=N_{m}N_{n}$
-\end_inset
-
-。体单元的 
-\begin_inset Formula ${\color{red}\nabla N_{m}\cdot\sbf J_{D_{i}}}$
-\end_inset
-
- 贡献到 
-\begin_inset Formula $K$
-\end_inset
-
- 。边界项 
-\begin_inset Formula ${\color{red}\sbf n\cdot\sbf J_{D_{i}}}$
-\end_inset
-
- 由边界条件给出，在齐次2nd边界上是零；在一般的3rd边界上可能具有下列形式
-\begin_inset Formula 
-\[
-\sbf n\cdot\sbf J_{D_{i}}=F[c_{i}(t)]+b(b)
-\]
-
-\end_inset
-
-这里的
-\begin_inset Formula $F$
-\end_inset
-
-是已知函数，则对应
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:beta2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-中的
-\begin_inset Formula $F[x(t)]$
-\end_inset
-
-与
-\begin_inset Formula $b(t)$
-\end_inset
-
-，因此需要对
-\begin_inset Formula $F[x(t)]$
-\end_inset
-
-作线性化。
-\end_layout
-
-\begin_layout Section
+\begin_layout Subsection
 beta显式梯形方法3
 \end_layout
 
@@ -12099,11 +12287,15 @@ RBF 是
 \end_inset
 
 ，其中
-\begin_inset Formula $y$
+\begin_inset Formula $\sbf y$
 \end_inset
 
-表示插值点位置，
-\begin_inset Formula $d$
+（
+\begin_inset Formula $y_{0}\cdots y_{N-1}$
+\end_inset
+
+）表示插值点位置，
+\begin_inset Formula $\sbf d$
 \end_inset
 
 表示函数值，RBF interpolant 可以表示成以 
@@ -12131,6 +12323,14 @@ RBF 是
 \end_inset
 
  求值；
+\begin_inset Formula $\sbf a$
+\end_inset
+
+，
+\begin_inset Formula $\sbf b$
+\end_inset
+
+是系数列向量。
 \begin_inset Formula $P(x)$
 \end_inset
 
@@ -12138,14 +12338,15 @@ RBF 是
 \begin_inset Formula $\sbf x$
 \end_inset
 
-求值。
+求值（上标表示次幂，下标是自由度编号）。
 \begin_inset Formula 
 \[
 P(x)=\left[\begin{array}{ccc}
+1 & x_{0}^{1} & x_{0}^{2}\\
 \vdots & \vdots & \vdots\\
-1 & \sbf x & \sbf x^{2}\\
-\vdots & \vdots & \vdots
-\end{array}\right]
+1 & x_{N-1}^{1} & x_{N-1}^{2}
+\end{array}\right]=\left[\begin{array}{ccc}
+\sbf1 & \sbf x & \sbf x^{2}\end{array}\right]
 \]
 
 \end_inset
@@ -12321,11 +12522,20 @@ P(y)^{T} & 0
 ，
 \begin_inset Formula 
 \[
-P(y)=\left[\begin{array}{cc}
+\sbf f(x)=K(x,y)\,\sbf a+P(x)\,\sbf b,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P(x)=\left[\begin{array}{cc}
+1 & x_{0}^{1}\\
 \vdots & \vdots\\
-1 & \sbf y\\
-\vdots & \vdots
-\end{array}\right]
+1 & x_{N-1}^{1}
+\end{array}\right]=\left[\begin{array}{cc}
+\sbf1 & \sbf x\end{array}\right]
 \]
 
 \end_inset
@@ -12333,7 +12543,10 @@ P(y)=\left[\begin{array}{cc}
 RBF函数为
 \begin_inset Formula 
 \[
-\varphi(r)=\left(1-\frac{r}{R}\right)^{4}\,\left(1+4\frac{r}{R}\right)
+\varphi(r)=\begin{cases}
+\left(1-\frac{r}{R}\right)^{4}\,\left(1+4\frac{r}{R}\right) & r<R\\
+0 & r>=R
+\end{cases}
 \]
 
 \end_inset
@@ -12342,7 +12555,11 @@ RBF函数为
 \begin_inset Formula $r=\left\Vert x-x_{k}\right\Vert $
 \end_inset
 
-。
+，
+\begin_inset Formula $R$
+\end_inset
+
+表示 ratio，限定 插值影响范围。
 \end_layout
 
 \begin_layout Chapter
@@ -24502,17 +24719,17 @@ noprefix "false"
 \end_inset
 
 的形式；如果两个单元上的展开 share 公共Edge，则能推导出： 
-\begin_inset Formula $\sbf N_{i}^{e}$
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
 \end_inset
 
  只在第 
-\begin_inset Formula $i$
+\begin_inset Formula $\alpha$
 \end_inset
 
  边上有切向分量，而在其它所有边上没有切向分量（离散正交性）。
 \begin_inset Formula 
 \[
-\sbf N_{i}^{e}(e_{j})=\delta_{ij}
+\sbf N_{\alpha}^{e}(e_{\beta})=\delta_{\alpha\beta}
 \]
 
 \end_inset
@@ -24523,47 +24740,47 @@ noprefix "false"
 \begin_layout Standard
 在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
 在棱边 
-\begin_inset Formula $i$
+\begin_inset Formula $\alpha$
 \end_inset
 
  上可以定义形函数：
 \begin_inset Formula 
 \[
-\sbf N_{i}^{e}=\left(L_{i(1)}^{e}\nabla L_{i(2)}^{e}-L_{i(2)}^{e}\nabla L_{i(1)}^{e}\right)\ell_{i}^{e}
+\sbf N_{\alpha}^{e}=\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{\alpha}^{e}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $i(1)$
+\begin_inset Formula $\alpha(1)$
 \end_inset
 
 与 
-\begin_inset Formula $i(2)$
+\begin_inset Formula $\alpha(2)$
 \end_inset
 
 为与棱边
-\begin_inset Formula $i$
+\begin_inset Formula $\alpha$
 \end_inset
 
  邻接的两个顶点。
-\begin_inset Formula $\ell_{i}^{e}$
+\begin_inset Formula $\ell_{\alpha}^{e}$
 \end_inset
 
  的绝对值等于棱边的长度，正负号由节点的总体编号决定。
-\begin_inset Formula $\nabla\cdot\sbf N_{i}^{e}=0$
+\begin_inset Formula $\nabla\cdot\sbf N_{\alpha}^{e}=0$
 \end_inset
 
 ，此性质只取决于上式的构造，不依赖于
-\begin_inset Formula $L_{i(1)}^{e}$
+\begin_inset Formula $L_{\alpha(1)}^{e}$
 \end_inset
 
 和
-\begin_inset Formula $L_{i(2)}^{e}$
+\begin_inset Formula $L_{\alpha(2)}^{e}$
 \end_inset
 
 的具体表达式。形函数 
-\begin_inset Formula $\sbf N_{i}^{e}$
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
 \end_inset
 
  为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
@@ -24596,16 +24813,32 @@ status open
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
+程序中使用的矢量基函数放入 Dense 矩阵中，记作
+\begin_inset Formula $\sbf N_{k\alpha}$
+\end_inset
+
+，
+\begin_inset Formula $k$
+\end_inset
+
+是维度指标，
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 是edge指标；程序符号为 
+\family sans
+NshapeVec
+\family default
+。
+\end_layout
+
+\begin_layout Remark
 形函数的旋度
 \begin_inset Formula 
 \begin{align*}
@@ -24643,6 +24876,13 @@ status open
 。
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Remark
 使用了 
 \begin_inset Formula 
@@ -24658,19 +24898,8 @@ status open
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
-矢量形函数例子
-\end_layout
-
-\begin_layout Subsection
-1D
+矢量形函数 1D
 \end_layout
 
 \begin_layout Standard
@@ -25560,6 +25789,26 @@ status open
 \end_inset
 
  求偏导。
+\end_layout
+
+\begin_layout Enumerate
+程序中 电位移矢量 
+\begin_inset Formula $D_{k}^{h}=-\epsilon_{r}N_{\alpha,k}\,\phi_{\alpha}^{h}=-\epsilon_{r}\phi_{\alpha}G_{k\alpha}$
+\end_inset
+
+，
+\begin_inset Formula $G$
+\end_inset
+
+ 就是 dNdzeta，
+\begin_inset Formula $k$
+\end_inset
+
+是维度指标，
+\begin_inset Formula $\alpha$
+\end_inset
+
+是节点指标。
 \end_layout
 
 \end_inset
@@ -26759,9 +27008,9 @@ R(\phi)=\sum_{e}R^{e}\left(\phi;N_{\alpha}^{e}\right).\label{eq:gal0}
 在每个单元上，令加权的残差（residual error）和 为
 \begin_inset Formula 
 \begin{align}
-R^{e}\left(\phi;N_{\alpha}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{\alpha}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}\label{eq:gal00}\\
-\text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{\alpha}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{\alpha}^{e}\sbf D\right)\dd{\Omega}}-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
-\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber 
+R^{e}\left(\phi;N_{\alpha}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}N_{\alpha}^{e}\left({\color{blue}\nabla\cdot\sbf D}-\rho\right)\dd{\Omega}=0\label{eq:gal00}\\
+\text{分部积分} & \Rightarrow{\color{blue}-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla N_{\alpha}^{e}\cdot\sbf D\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}\nabla\cdot\left(N_{\alpha}^{e}\sbf D\right)\dd{\Omega}}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber \\
+\text{散度定理} & \Rightarrow-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\nonumber 
 \end{align}
 
 \end_inset
@@ -26770,22 +27019,10 @@ R^{e}\left(\phi;N_{\alpha}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{
 \begin_inset Formula ${\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}$
 \end_inset
 
-。电势
-\begin_inset Formula $\phi$
-\end_inset
-
-（电场
-\begin_inset Formula $\sbf E$
-\end_inset
-
-）的稳态分布应该满足
-\begin_inset Formula $R^{e}\left(\phi;N_{\alpha}^{e}\right)=0$
-\end_inset
-
-，即
+。总之是
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D}\dd{\Omega}=-\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}\label{eq:gal1}
+-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sbf D}\dd{\Omega}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal1}
 \end{equation}
 
 \end_inset
@@ -26797,7 +27034,7 @@ R^{e}\left(\phi;N_{\alpha}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{
 ，上式可以写成：
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\varepsilon\cdot\nabla\phi}\dd{\Omega}-\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\varepsilon\cdot\nabla\phi}\dd{\Gamma}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}\label{eq:gal2}
+\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\frac{\varepsilon}{\varepsilon_{0}}\cdot\nabla\phi}\dd{\Omega}=\int_{\Omega^{e}}N_{\alpha}^{e}\frac{\rho}{\varepsilon_{0}}\dd{\Omega}+\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\cdot\frac{\varepsilon}{\varepsilon_{0}}\cdot\frac{\partial\phi}{\partial n}}\dd{\Gamma}\label{eq:gal2}
 \end{equation}
 
 \end_inset
@@ -26811,7 +27048,7 @@ R^{e}\left(\phi;N_{\alpha}^{e}\right) & =\frac{1}{\varepsilon_{0}}\int_{\Omega^{
 \end_inset
 
  平行于边界），可以直接去掉 
-\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\sbf D}\dd{\Gamma}$
+\begin_inset Formula $\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\,\frac{\partial\phi}{\partial n}}\dd{\Gamma}$
 \end_inset
 
  项。
@@ -27480,7 +27717,7 @@ noprefix "false"
 Robbin 边界条件：
 \begin_inset Formula 
 \begin{align}
- & \left(\varepsilon\nabla\phi\right)\cdot\sbf n=q-\gamma\phi\label{eq:bnd3}\\
+ & \left(\varepsilon\nabla\phi\right)\cdot\sbf n=q-\gamma\phi,\quad\text{or}\quad\varepsilon\frac{\partial\phi}{\partial n}=q-\gamma\phi\label{eq:bnd3}\\
 \text{or}\quad & -\sbf D_{0}\cdot\sbf n=q,\quad\sbf n\cdot\kappa(E^{0})\cdot\sbf\nabla\delta\phi=-\gamma\delta\phi\label{eq:bnd3c}
 \end{align}
 

@@ -5783,6 +5783,13 @@ Solver 中把
 
 \begin_layout Section
 瞬态磁场
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:xl4.4"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5829,9 +5836,22 @@ noprefix "false"
 可以得到
 \begin_inset Formula 
 \begin{align*}
-\nabla\cdot\sigma\left(\nabla\Phi+\frac{\partial\sbf A}{\partial t}\right) & =0\\
-\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)+\mu_{0}\sigma\frac{\partial\sbf A}{\partial t} & =\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}+\mu_{0}\sbf J_{\text{0}}-\mu_{0}\sigma\,\nabla\Phi
+\nabla\cdot\sigma\left(\nabla\phi+\partial_{t}\sbf A\right)= & 0\\
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)= & -\mu_{0}\sigma\,\partial_{t}\sbf A+\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}+\mu_{0}\sbf J_{\text{0}}-\mu_{0}\sigma\,\nabla\phi
 \end{align*}
+
+\end_inset
+
+取 
+\begin_inset Formula $\phi=\partial_{t}\Phi$
+\end_inset
+
+ 可以得到
+\begin_inset Formula 
+\begin{align}
+ & \nabla\cdot\sigma\,\partial_{t}\left(\nabla\Phi+\sbf A\right)=0,\quad\sbf E=-\partial_{t}\left(\nabla\Phi+\sbf A\right)\label{eq:my18}\\
+ & \nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\frac{1}{\mu_{r}}\nabla\times(\mu_{0}\sbf M_{0})+\mu_{0}\sbf J_{\text{ex}}-\sigma\mu_{0}\,\partial_{t}\left(\nabla\Phi+\sbf A\right)\label{eq:my19}
+\end{align}
 
 \end_inset
 
@@ -5868,23 +5888,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-取 
-\begin_inset Formula $\Phi=\frac{\partial W}{\partial t}$
-\end_inset
-
- 可以得到
-\begin_inset Formula 
-\begin{align}
- & \nabla\cdot\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)=0,\quad\sbf E=-\partial_{t}\left(\nabla W+\sbf A\right)\label{eq:my18}\\
- & \nabla\times\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf A\right)=\frac{1}{\mu_{r}}\nabla\times\sbf M_{0}+\sbf J_{\text{ex}}-\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\label{eq:my19}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 以
 \begin_inset Formula $\sbf N_{i}$
 \end_inset
@@ -5902,10 +5905,10 @@ noprefix "false"
 对应的加权残差得
 \begin_inset Formula 
 \begin{align}
-R^{e}(\sbf N_{\alpha}^{e}) & =\int_{\Omega^{e}}\sbf N_{\alpha}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right){\color{red}-\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}}-\sbf J_{\text{ex}}+\mu_{0}\sigma\frac{\partial}{\partial t}\left(\nabla W+\sbf A\right)\right]\dd{\Omega}\nonumber \\
+R^{e}(\sbf N_{\alpha}^{e}) & =\int_{\Omega^{e}}\sbf N_{\alpha}^{e}\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right){\color{red}-\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}}-\sbf J_{\text{ex}}+\mu_{0}\sigma\frac{\partial}{\partial t}\left(\nabla\Phi+\sbf A\right)\right]\dd{\Omega}\nonumber \\
  & \quad+{\color{red}\int_{\Gamma^{e}}\sbf N_{\alpha}^{e}\cdot\frac{\mu_{0}}{\mu_{r}}\left(\sbf e_{n}\times\sbf M_{0}\right)\dd{\Gamma}}\nonumber \\
  & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{blue}(\nabla\times\sbf N_{\alpha}^{e})\cdot\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}-\mu_{0}\sbf N_{\alpha}^{e}\cdot\sbf J_{\text{ex}}\label{eq:my20}\\
- & \quad-\frac{\mu_{0}}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{\alpha}^{e})+{\color{brown}\sbf N_{\alpha}^{e}\cdot\mu_{0}\sigma\frac{\partial}{\partial t}\nabla W}+{\color{magenta}\sbf N_{\alpha}^{e}\cdot\mu_{0}\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}\nonumber 
+ & \quad-\frac{\mu_{0}}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{\alpha}^{e})+{\color{brown}\sbf N_{\alpha}^{e}\cdot\mu_{0}\sigma\frac{\partial}{\partial t}\nabla\Phi}+{\color{magenta}\sbf N_{\alpha}^{e}\cdot\mu_{0}\sigma\frac{\partial}{\partial t}\sbf A}\Big]\dd{\Omega}\nonumber 
 \end{align}
 
 \end_inset
@@ -5976,7 +5979,7 @@ noprefix "false"
 
 \begin_layout Standard
 类似地，以
-\begin_inset Formula $L_{m}^{e}$
+\begin_inset Formula $L_{\mu}^{e}$
 \end_inset
 
 作为权函数，计算
@@ -5992,8 +5995,8 @@ noprefix "false"
 对应的加权残差得
 \begin_inset Formula 
 \begin{align}
-R^{e}(L_{m}^{e}) & =-\int_{\Omega^{e}}\left[L_{m}^{e}\nabla\cdot\sigma\,\partial_{t}(\nabla W+\sbf A)\right]\dd{\Omega}+\int_{\Gamma^{e}}\left[L_{m}^{e}\sbf e_{n}\cdot\sigma\,\partial_{t}(\nabla W+\sbf A)\right]\dd{\Gamma}\label{eq:my21}\\
- & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{red}\nabla L_{m}^{e}\cdot\sigma\,\partial_{t}\nabla W}+{\color{brown}\nabla L_{m}^{e}\cdot\sigma\,\partial_{t}\sbf A}\Big]\dd{\Omega}\nonumber 
+R^{e}(L_{\mu}^{e}) & =-\int_{\Omega^{e}}\left[L_{\mu}^{e}\nabla\cdot\sigma\,\partial_{t}(\nabla\Phi+\sbf A)\right]\dd{\Omega}+\int_{\Gamma^{e}}\left[L_{\mu}^{e}\sbf e_{n}\cdot\sigma\,\partial_{t}(\nabla\Phi+\sbf A)\right]\dd{\Gamma}\label{eq:my21}\\
+ & \stackrel{\text{IBP}}{=}\int_{\Omega^{e}}\Big[{\color{red}\nabla L_{\mu}^{e}\cdot\sigma\,\partial_{t}\nabla\Phi}+{\color{brown}\nabla L_{\mu}^{e}\cdot\sigma\,\partial_{t}\sbf A}\Big]\dd{\Omega}\nonumber 
 \end{align}
 
 \end_inset
@@ -6033,7 +6036,7 @@ noprefix "false"
  表示
 \begin_inset Formula 
 \[
-R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\Omega}+\int_{\Gamma^{e}}L_{m}^{e}\left(-\sbf e_{n}\cdot\sbf J\right)\dd{\Gamma}
+R^{e}(L_{\mu}^{e})=\int_{\Omega^{e}}L_{\mu}^{e}\,\partial_{t}\rho\dd{\Omega}+\int_{\Gamma^{e}}L_{\mu}^{e}\left(-\sbf e_{n}\cdot\sbf J\right)\dd{\Gamma}
 \]
 
 \end_inset
@@ -6070,7 +6073,7 @@ R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\O
 
 \end_inset
 
-因此边界项形如
+因此边界项形如（重新安排混合积，边界项和刚阵项同符号）
 \begin_inset Formula 
 \[
 \frac{1}{\mu_{r}}\oint_{S}\sbf N_{\alpha}\cdot(\sbf n\times\sbf B)\dd{\Gamma}
@@ -6078,10 +6081,14 @@ R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\O
 
 \end_inset
 
-约定矢量场的3rd边界条件为
+
+\series bold
+若约定矢量场的3rd边界条件为
+\series default
+
 \begin_inset Formula 
 \[
-\frac{1}{\mu}(\sbf n\times\sbf B)=\gamma\sbf A-\sbf q
+\frac{1}{\mu_{0}\mu_{r}}(\sbf n\times\sbf B)=\gamma\sbf A-\sbf q
 \]
 
 \end_inset
@@ -6105,40 +6112,40 @@ R^{e}(L_{m}^{e})=\int_{\Omega^{e}}L_{m}^{e}\frac{\partial\rho}{\partial t}\dd{\O
 
 \end_layout
 
-\begin_layout Subsection
-总结
+\begin_layout Section
+FEM离散和时间迭代
 \end_layout
 
 \begin_layout Standard
 作展开 
-\begin_inset Formula $\sbf A=\sbf N_{i}^{e}A_{i}$
+\begin_inset Formula $\sbf A=\sbf N_{\alpha}^{e}A_{\alpha}$
 \end_inset
 
 ，
-\begin_inset Formula $W=L_{m}^{e}W_{m}$
+\begin_inset Formula $\Phi=L_{\mu}^{e}\Phi_{\mu}$
 \end_inset
 
 ，其中
-\begin_inset Formula $A_{i}$
+\begin_inset Formula $A_{\alpha}$
 \end_inset
 
  表示 Edge 
-\begin_inset Formula $i$
+\begin_inset Formula $\alpha$
 \end_inset
 
  上的自由度；
-\begin_inset Formula $W_{m}$
+\begin_inset Formula $\Phi_{\mu}$
 \end_inset
 
 表示节点
-\begin_inset Formula $m$
+\begin_inset Formula $\mu$
 \end_inset
 
 上的自由度。代入上述方程可得
 \begin_inset Formula 
 \begin{align*}
-R^{e}(\sbf N_{i}^{e}) & ={\color{blue}K_{ij}^{e}}\,A_{j}-b_{i}^{e}+{\color{brown}C_{im}^{e}}\frac{\partial W_{m}}{\partial t}+{\color{magenta}M_{ij}^{e}}\frac{\partial A_{j}}{\partial t}\\
-R^{e}(L_{m}^{e}) & ={\color{red}D_{mn}^{e}}\frac{\partial W_{n}}{\partial t}+{\color{brown}C_{mj}^{e}}\frac{\partial A_{j}}{\partial t}
+R^{e}(\sbf N_{\alpha}^{e}) & ={\color{blue}K_{\alpha\beta}^{e}}\,A_{\beta}-b_{\alpha}^{e}+{\color{brown}C_{\alpha\nu}^{e}}\,\partial_{t}\Phi_{\nu}+{\color{magenta}M_{\alpha\beta}^{e}}\,\partial_{t}A_{\beta}\\
+R^{e}(L_{\mu}^{e}) & ={\color{red}D_{\mu\nu}^{e}}\,\partial_{t}\Phi_{\nu}+{\color{brown}C_{\mu\beta}^{e}}\,\partial_{t}A_{\beta}
 \end{align*}
 
 \end_inset
@@ -6146,11 +6153,11 @@ R^{e}(L_{m}^{e}) & ={\color{red}D_{mn}^{e}}\frac{\partial W_{n}}{\partial t}+{\c
 其中
 \begin_inset Formula 
 \begin{align*}
-K_{ij}^{e} & =\int_{\Omega^{e}}\left[{\color{blue}(\nabla\times\sbf N_{i}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf N_{j}^{e}\right)}\right]\dd{\Omega}\\
-b_{i}^{e} & =\int_{\Omega^{e}}\left[\sbf N_{i}^{e}\cdot\sbf J_{\text{ex}}+\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{i}^{e})\right]\dd{\Omega}\\
-C_{im}^{e}=C_{mi}^{e} & =\int_{\Omega^{e}}{\color{brown}\sigma\nabla L_{m}^{e}\cdot\sbf N_{i}^{e}}\dd{\Omega}\\
-M_{ij}^{e} & =\int_{\Omega^{e}}{\color{magenta}\sigma\sbf N_{i}^{e}\cdot\sbf N_{j}^{e}}\dd{\Omega}\\
-D_{mn}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{m}^{e}\cdot\nabla L_{n}^{e}\right)}\dd{\Omega}
+K_{\alpha\beta}^{e} & =\int_{\Omega^{e}}\left[{\color{blue}(\nabla\times\sbf N_{\alpha}^{e})\cdot\frac{1}{\mu_{0}\mu_{r}}\left(\nabla\times\sbf N_{\beta}^{e}\right)}\right]\dd{\Omega}\\
+b_{\alpha}^{e} & =\int_{\Omega^{e}}\left[\sbf N_{\alpha}^{e}\cdot\sbf J_{\text{ex}}+\frac{1}{\mu_{r}}\sbf M_{0}\cdot(\nabla\times\sbf N_{\alpha}^{e})\right]\dd{\Omega}\\
+C_{\alpha\mu}^{e}=C_{\mu\alpha}^{e} & =\int_{\Omega^{e}}{\color{brown}\sigma\nabla L_{\mu}^{e}\cdot\sbf N_{\alpha}^{e}}\dd{\Omega}\\
+M_{\alpha\beta}^{e} & =\int_{\Omega^{e}}{\color{magenta}\sigma\sbf N_{\alpha}^{e}\cdot\sbf N_{\beta}^{e}}\dd{\Omega}\\
+D_{\mu\nu}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{\mu}^{e}\cdot\nabla L_{\nu}^{e}\right)}\dd{\Omega}
 \end{align*}
 
 \end_inset
@@ -6158,8 +6165,8 @@ D_{mn}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{m}^{e}\cdot\nab
 最后可以得到两个矩阵方程
 \begin_inset Formula 
 \begin{align*}
- & \{R^{e}(\sbf N_{i}^{e})\}=[{\color{blue}K_{ij}^{e}}]\{A_{j}\}-\{b_{i}^{e}\}+[{\color{brown}C_{im}^{e}}]\frac{\partial\{W_{m}\}}{\partial t}+[{\color{magenta}M_{ij}^{e}}]\frac{\partial\{A_{j}\}}{\partial t}=\{0\}\\
- & \{R^{e}(L_{m}^{e})\}=[{\color{red}D_{mn}^{e}}]\frac{\partial\{W_{n}\}}{\partial t}+[{\color{brown}C_{mj}^{e}}]\frac{\partial\{A_{j}\}}{\partial t}=\{0\}
+ & R^{e}(\sbf N_{\alpha}^{e})=[{\color{blue}K_{\alpha\beta}^{e}}]\,A_{\beta}-b_{\alpha}^{e}+[{\color{brown}C_{\alpha\nu}^{e}}]\,\partial_{t}\Phi_{\nu}+[{\color{magenta}M_{\alpha\beta}^{e}}]\,\partial_{t}A_{\beta}=\{0\}\\
+ & R^{e}(L_{\mu\nu}^{e})=[{\color{red}D_{\mu\nu}^{e}}]\,\partial_{t}\Phi_{\nu}+[{\color{brown}C_{\mu\beta}^{e}}]\partial_{t}A_{\beta}=\{0\}
 \end{align*}
 
 \end_inset
@@ -6168,44 +6175,101 @@ D_{mn}^{e} & =\int_{\Omega^{e}}{\color{red}\sigma\left(\nabla L_{m}^{e}\cdot\nab
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
-[0] & [0]\\{}
-[0] & [{\color{blue}K_{ij}^{e}}]
-\end{array}\right]\left\{ \begin{array}{c}
-\{W_{n}\}\\
-\{A_{j}\}
-\end{array}\right\} +\left[\begin{array}{cc}
-[{\color{red}D_{mn}^{e}}] & [{\color{brown}C_{mj}^{e}}]\\{}
-[{\color{brown}C_{in}^{e}}] & [{\color{magenta}M_{ij}^{e}}]
-\end{array}\right]\frac{\partial}{\partial t}\left\{ \begin{array}{c}
-\{W_{n}\}\\
-\{A_{j}\}
-\end{array}\right\} =\left\{ \begin{array}{c}
-\{0\}\\
-\{b_{i}^{e}\}
-\end{array}\right\} 
+0 & 0\\
+0 & {\color{blue}K_{\alpha\beta}^{e}}
+\end{array}\right]\left[\begin{array}{c}
+\Phi_{\mu}\\
+A_{\beta}
+\end{array}\right]+\left[\begin{array}{cc}
+{\color{red}D_{\mu\nu}^{e}} & {\color{brown}C_{\mu\beta}^{e}}\\
+{\color{brown}C_{\alpha\nu}^{e}} & {\color{magenta}M_{\alpha\beta}^{e}}
+\end{array}\right]\partial_{t}\left[\begin{array}{c}
+\Phi_{\nu}\\
+A_{\beta}
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+b_{\alpha}^{e}
+\end{array}\right]
 \]
 
 \end_inset
 
-将时间微分离散化
+
+\end_layout
+
+\begin_layout Itemize
+然后是时间导数项作离散，按照通常的 常微分方程 离散格式。空间离散（FEM）和 时间离散（ODE）彼此独立，
+\series bold
+按照各自的离散化规则处理即可
+\series default
+，时间矩阵在代码中标记为 
+\family sans
+\series bold
+Me
+\family default
+\series default
+。
+\end_layout
+
+\begin_layout Itemize
+拿掉 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+之后，
+\family sans
+\series bold
+Me
+\family default
+\series default
+对应的矩阵是 
+\begin_inset Formula $\sbf N_{\alpha}^{e}\cdot\sbf N_{\beta}^{e}$
+\end_inset
+
+ 这种二次项，
+\family sans
+\series bold
+Me
+\family default
+\series default
+ 与 
+\family sans
+\series bold
+Ke
+\family default
+\series default
+ 项符号相同。
+\end_layout
+
+\begin_layout Remark
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+deprecated
+\end_layout
+
+\end_inset
+
+。例如使用后向微分。
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
 0 & 0\\
-0 & {\color{blue}K_{ij}^{e}}
-\end{array}\right]\left\{ \begin{array}{c}
-W_{n}^{t+\Delta t}\\
-A_{j}^{t+\Delta t}
-\end{array}\right\} +\left[\begin{array}{cc}
-{\color{red}D_{mn}^{e}} & {\color{brown}C_{mj}^{e}}\\
-{\color{brown}C_{in}^{e}} & {\color{magenta}M_{ij}^{e}}
-\end{array}\right]\frac{1}{\Delta t}\left\{ \begin{array}{c}
-W_{n}^{t+\Delta t}-W_{n}^{t}\\
-A_{j}^{t+\Delta t}-A_{j}^{t}
-\end{array}\right\} =\left\{ \begin{array}{c}
+0 & {\color{blue}K_{\alpha\beta}^{e}}
+\end{array}\right]\left[\begin{array}{c}
+\Phi_{\mu}^{t+\Delta t}\\
+A_{\beta}^{t+\Delta t}
+\end{array}\right]+\left[\begin{array}{cc}
+{\color{red}D_{\mu\nu}^{e}} & {\color{brown}C_{\mu\beta}^{e}}\\
+{\color{brown}C_{\alpha\nu}^{e}} & {\color{magenta}M_{\alpha\beta}^{e}}
+\end{array}\right]\frac{1}{\Delta t}\left[\begin{array}{c}
+\Phi_{\nu}^{t+\Delta t}-\Phi_{\nu}^{t}\\
+A_{\beta}^{t+\Delta t}-A_{\beta}^{t}
+\end{array}\right]=\left[\begin{array}{c}
 0\\
-b_{i}^{e}
-\end{array}\right\} 
+b_{\alpha}^{e}
+\end{array}\right]
 \]
 
 \end_inset
@@ -6215,24 +6279,24 @@ b_{i}^{e}
 \begin{align}
 \Bigg(\left[\begin{array}{cc}
 0 & 0\\
-0 & {\color{blue}K_{ij}^{e}}
+0 & {\color{blue}K_{\alpha\beta}^{e}}
 \end{array}\right]+\frac{1}{\Delta t}\left[\begin{array}{cc}
-{\color{red}D_{mn}^{e}} & {\color{brown}C_{mj}^{e}}\\
-{\color{brown}C_{in}^{e}} & {\color{magenta}M_{ij}^{e}}
-\end{array}\right]\Bigg) & \left\{ \begin{array}{c}
-W_{n}^{t+\Delta t}\\
-A_{j}^{t+\Delta t}
-\end{array}\right\} \label{eq:my22}\\
- & \qquad=\left\{ \begin{array}{c}
+{\color{red}D_{\mu\nu}^{e}} & {\color{brown}C_{\mu\beta}^{e}}\\
+{\color{brown}C_{\alpha\nu}^{e}} & {\color{magenta}M_{\alpha\beta}^{e}}
+\end{array}\right]\Bigg) & \left[\begin{array}{c}
+\Phi_{\nu}^{t+\Delta t}\\
+A_{\beta}^{t+\Delta t}
+\end{array}\right]\label{eq:my22}\\
+ & \qquad=\left[\begin{array}{c}
 0\\
-b_{i}^{e}
-\end{array}\right\} +\frac{1}{\Delta t}\left[\begin{array}{cc}
-{\color{red}D_{mn}^{e}} & {\color{brown}C_{mj}^{e}}\\
-{\color{brown}C_{in}^{e}} & {\color{magenta}M_{ij}^{e}}
-\end{array}\right]\left\{ \begin{array}{c}
-W_{n}^{t}\\
-A_{j}^{t}
-\end{array}\right\} \nonumber 
+b_{\alpha}^{e}
+\end{array}\right]+\frac{1}{\Delta t}\left[\begin{array}{cc}
+{\color{red}D_{\mu\nu}^{e}} & {\color{brown}C_{\mu\beta}^{e}}\\
+{\color{brown}C_{\alpha\nu}^{e}} & {\color{magenta}M_{\alpha\beta}^{e}}
+\end{array}\right]\left[\begin{array}{c}
+\Phi_{\nu}^{t}\\
+A_{\beta}^{t}
+\end{array}\right]\nonumber 
 \end{align}
 
 \end_inset
@@ -6255,11 +6319,11 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
-时刻的场；以
-\begin_inset Formula $\{W_{n}^{t+\Delta t},A_{j}^{t+\Delta t}\}$
+时刻的场；以 
+\begin_inset Formula $[\Phi_{\nu}^{t+\Delta t},A_{\beta}^{t+\Delta t}]$
 \end_inset
 
-作为待求矢量，方程又化作 
+ 作为待求矢量，方程又化作 
 \begin_inset Formula $AX=b$
 \end_inset
 
@@ -6352,6 +6416,29 @@ literal "false"
 
 \begin_layout Section
 涡流 eddy current
+\end_layout
+
+\begin_layout Standard
+参考
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "sec:xl4.4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula 
+\begin{align*}
+\nabla\cdot\sigma\left(\nabla\Phi+\partial_{t}\sbf A\right)= & 0\\
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)= & -\mu_{0}\sigma\,\partial_{t}\sbf A+\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}+\mu_{0}\sbf J_{\text{0}}-\mu_{0}\sigma\,\nabla\Phi
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -10842,6 +10929,176 @@ R^{e}\left[N_{i}^{e}\right]=\int_{\Gamma^{e}}N_{i}^{e}\left[\nabla_{t}\cdot\left
 
 \begin_layout Section
 电流场中的介电屏蔽条件
+\end_layout
+
+\begin_layout Chapter
+洛伦兹变换
+\end_layout
+
+\begin_layout Section
+特殊洛伦兹变换
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S'$
+\end_inset
+
+和
+\begin_inset Formula $S$
+\end_inset
+
+系
+\begin_inset Formula $t=0$
+\end_inset
+
+远点重合，
+\begin_inset Formula $S'$
+\end_inset
+
+以速度
+\begin_inset Formula $v$
+\end_inset
+
+沿着
+\begin_inset Formula $S$
+\end_inset
+
+的
+\begin_inset Formula $x$
+\end_inset
+
+轴方向运动，则坐标变换为
+\begin_inset Formula 
+\begin{equation}
+L_{\mu\nu}=\left[\begin{array}{cccc}
+\gamma & -\gamma v/c^{2} & 0 & 0\\
+-\gamma v & \gamma & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right],\label{eq:ll5.1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x_{\mu}^{\prime}=L_{\mu\nu}x_{\nu}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\gamma=(1-\beta)^{-1/2}$
+\end_inset
+
+，
+\begin_inset Formula $\beta=v/c$
+\end_inset
+
+。逆变换为
+\begin_inset Formula $L(-v)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+电磁场
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A_{\mu}^{\prime}=L_{\mu\nu}A_{\nu},\quad A'=LA
+\]
+
+\end_inset
+
+根据洛伦兹变换13.5式，电磁矢势和标势的变换为
+\begin_inset Formula 
+\begin{align*}
+ & A_{1}^{\prime}=\gamma(A_{1}-\frac{v}{c^{2}}\varphi),\\
+ & A_{2}^{\prime}=A_{2},\\
+ & A_{3}^{\prime}=A_{3},\\
+ & \varphi'=\gamma(\varphi-v\,A_{1}).
+\end{align*}
+
+\end_inset
+
+逆变换为
+\begin_inset Formula 
+\begin{align*}
+ & A_{1}=\gamma(A_{1}^{\prime}+\frac{v}{c^{2}}\varphi),\\
+ & A_{2}=A_{2}^{\prime},\\
+ & A_{3}=A_{3}^{\prime},\\
+ & \varphi=\gamma(\varphi'+v\,A_{1}^{\prime}).
+\end{align*}
+
+\end_inset
+
+四维矢量的长度不变
+\begin_inset Formula 
+\[
+A_{\mu}A_{\mu}=\abs{\sbf A}^{2}-(\frac{\varphi}{c})^{2}=\text{inv.}\;.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+电磁场强度的变换
+\end_layout
+
+\begin_layout Standard
+分量变换形式，
+\begin_inset Formula $S\to S'$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+E_{1}^{\prime}=E_{1} & B_{1}^{\prime}=B_{1}\\
+E_{2}^{\prime}=\gamma\left(E_{2}+vB_{3}\right), & B_{2}^{\prime}=\gamma\left(B_{2}-vE_{3}/c^{2}\right),\\
+E_{3}^{\prime}=\gamma\left(E_{3}-vB_{2}\right), & B_{3}^{\prime}=\gamma\left(B_{3}+vE_{2}/c^{2}\right),
+\end{cases}\label{eq:ll15.8}
+\end{equation}
+
+\end_inset
+
+或者写成矢量形式：
+\begin_inset Formula 
+\begin{align}
+ & \sbf E'=\gamma(\sbf E+\sbf v\times\sbf B-\frac{\gamma}{\gamma+1}\frac{(\sbf v\cdot\sbf E)\sbf v}{c^{2}}),\label{eq:ll15.8'}\\
+ & \sbf B'=\gamma(\sbf B-\frac{\sbf v}{c^{2}}\times\sbf E-\frac{\gamma}{\gamma+1}\frac{(\sbf v\cdot\sbf B)\sbf v}{c^{2}}),\nonumber 
+\end{align}
+
+\end_inset
+
+令
+\begin_inset Formula $\sbf v\to-\sbf v$
+\end_inset
+
+ 即可得到逆变换。也可以对
+\begin_inset Formula $A-\varphi$
+\end_inset
+
+变换直接求导得到。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+c^{2}B^{2}-E^{2} & =c^{2}B^{\prime2}-E^{\prime2}\label{eq:ll15.9}\\
+\sbf B\cdot\sbf E & =\sbf B^{\prime}\cdot\sbf E^{\prime}\label{eq:ll15.10}
+\end{align}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
