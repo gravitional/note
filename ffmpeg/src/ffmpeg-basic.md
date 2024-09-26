@@ -127,6 +127,8 @@ IFS=$SAVEIFS;
 
 ## 音频截取, 制作铃声
 
+时间指定是 `hour:min:sec:milli`
+
 ```bash
 ffmpeg  -hide_banner -ss 00:00:13.000  -t 00:01:33.000  -i  `
 'Cyua - Sternengesang.mp3' `
