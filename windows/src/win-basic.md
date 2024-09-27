@@ -481,3 +481,12 @@ powercfg /h off # 关闭休眠功能
 
 + 启用快速启动 x
 + 休眠 x
+
+## 如何破解 ipguard
+
+[破解IPGURAD方案](https://www.jianshu.com/p/585cc9b9a9b7)
+
+```bash
+c:/windows/system32/winrdlv3.exe
+c:/windows/Syswow64/WINRDLV3.EXE
+```

@@ -138,6 +138,108 @@ ffmpeg  -hide_banner -ss 00:00:13.000  -t 00:01:33.000  -i  `
 
 `-map 0:a` 表示只转换 audio 部分, copy 表示编码直接复制
 
+## 调整音频音量
+
+[使用ffmpeg调整音频音量](https://blog.csdn.net/LS7011846/article/details/90813220)
+[ffmpeg 音量调整](https://blog.csdn.net/ternence_hsu/article/details/91407681)
+
+当前衡量一个音频音量的常用单位是分贝(db), 对音频音量处理相关的操作都是基于分贝而来.
+而ffmpeg作为我们多媒体处理届的大佬,
+在这一块也是有相应的功能, 其中ffmpeg的安装在 ffmpeg基本使用 这一篇博客中有讲到,
+下面仔细介绍ffmpeg各种处理音频音量的方式.
+
+### 查看音频分贝
+
+```bash
+ffmpeg -i great.mp3 -filter_complex volumedetect -c:v copy -f null /dev/null
+```
+
+输出如下图所示, 可以看到最高为-10db, 最低为-31db, histogram_11db: 25 应该为-11db的长度为25帧?
+
+```bash
+[Parsed_volumedetect_0 @ 0x7f8b1a201300] n_samples: 0
+Stream mapping:
+  Stream #0:0 (mp3float) -> volumedetect
+  volumedetect -> Stream #0:0 (pcm_s16le)
+Press [q] to stop, [?] for help
+Output #0, null, to '/dev/null':
+  Metadata:
+    encoder         : Lavf58.20.100
+    Stream #0:0: Audio: pcm_s16le, 44100 Hz, stereo, s16, 1411 kb/s
+    Metadata:
+      encoder         : Lavc58.35.100 pcm_s16le
+size=N/A time=00:00:01.58 bitrate=N/A speed= 273x
+video:0kB audio:272kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] n_samples: 139396
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] mean_volume: -31.2 dB
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] max_volume: -10.6 dB
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] histogram_10db: 7
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] histogram_11db: 25
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] histogram_12db: 53
+[Parsed_volumedetect_0 @ 0x7f8b197c1080] histogram_13db: 105
+```
+
+### 基于当前音量倍数处理
+
+命令如下, 是以当前音量的0.5倍变更输出一个音频, 即音量降低了一半;
+
+```bash
+ffmpeg  -i input.mp3-filter: "volume = 0.5" output.mp3
+```
+
+音量调整为静音
+
+```bash
+ffmpeg -i input.wav -filter:a "volume=0" output.wav
+```
+
+下面这个是将当前音量提升一倍的处理,
+这种处理相对粗暴, 在表现形式上也是直接对音频波的高度进行的处理, 可能会使音频出现失真的现象.
+
+```bash
+ffmpeg  -i input.mp3 -filter: "volume = 2" output.mp3
+```
+
+### 基于分贝数值的处理
+
+上面的基于倍数的处理可能会导致音频的失真, 这个基于分贝数值的处理则相对会保留音频的原声效果, 如下:
+
+使用 decibel 来调节音量, 音量提升5分贝(db);
+
+```bash
+ffmpeg  -i input.mp3 -filter: "volume = 5dB" output.mp3
+```
+
+音量降低5分贝(db).
+
+```bash
+ffmpeg  -i input.mp3 -filter: "volume = -5dB" output.mp3
+```
+
+### 音量的标准化
+
+除了上面对音量的整体处理, 如降低分贝值或者成倍增加音量,
+ffmpeg还有对音量标准化的处理功能, 即削峰填谷,
+使整个音频的音量变化跨度降低, 变得平滑, 可能会听起来更舒服点吧.
+
+```bash
+ffmepg -i input.mp3 -filter:a "loudnorm" output.mp3
+```
+
+### 关于音频音量负数
+
+其实这几天在对音频处理时, 也使用ffprobe查看各种各样的音频的基础信息,
+几乎所有音频的分贝属性都是负数, 其中越接近于0的, 播放音量越大,
+首先说明一下音频的分贝为负数是正常的, 感兴趣的可以了解一下分贝的计算方法
+(log10, 对电流等属性运算后的值取的对数).
+
+### 结语
+
+在对音频音量处理的时候, 一直在想, 为什么没有出一个对整段音频分贝数明确控制的功能呢?
+后来想了一下, 如果一整段音频, 发出声音的段落音量都相同的话, 可能效果会很不好.
+
+那么如何做音频音量的统一化呢, 我觉得应该是定义一套音频音量的最高分贝值, 然后对所有音频的最高分贝值进行限制处理即可.
+
 ## flac转换成mp3
 
 将`flac`文件转换为`mp3`文件使用以下命令即可,
