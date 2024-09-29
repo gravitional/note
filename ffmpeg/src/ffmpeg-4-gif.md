@@ -28,7 +28,8 @@ ffmpeg -r 12 -i image.%4d.png -i tmp.png -lavfi paletteuse out.gif
 
 ### gif 裁切
 
-`crop` 参数后面依次是 `width:height:x:y`, 其中 `x:y` 表示 left corner 像素坐标
+`crop` 参数后面依次是 `width:height:x:y`, 其中 `x:y` 表示 左上角像素坐标,
+计算机图形坐标 左上角为(0,0)
 
 ```bash
 ffmpeg -i input.gif -vf "crop=640:480:200:150" output.gif

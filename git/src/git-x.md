@@ -505,6 +505,16 @@ git reset --hard branch2
 [git-restore (1)]: https://git-scm.com/docs/git-restore
 [git-reset (1)]: https://git-scm.com/docs/git-reset
 
+## 修改最后一次注释
+
+如果你只想修改最后一次注释(就是最新的一次提交),
+
+`git commit --amend`
+
+## git 撤销提交
+
+
+
 ## git重命名文件夹
 
 不用先在本地修改文件夹名称
@@ -517,11 +527,6 @@ git reset --hard branch2
 
 ref: [git重命名文件夹](https://www.jianshu.com/p/e886fde18ba0)
 
-## 修改最后一次注释
-
-如果你只想修改最后一次注释(就是最新的一次提交),
-
-`git commit --amend`
 
 ## 远程仓库
 
