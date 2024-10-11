@@ -1,5 +1,9 @@
 # java_2
 
+## java 嵌套类, 静态内部类
+
+[Java中的嵌套类、内部类、静态内部类](https://blog.csdn.net/iispring/article/details/46490319)
+
 ## 反射
 
 反射就是`Reflection`. `Java`的反射是指程序在运行期可以拿到一个对象的所有信息. 
