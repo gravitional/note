@@ -95,3 +95,18 @@ install.trusted-host='mirrors.aliyun.com'
 ```
 
 看下上面的路径哦, 按图索骥即可哦
+
+## pip 常用环境
+
+```bash
+python -V # 打印 python 版本
+python -m pip install numpy scipy matplotlib jupyterlab
+```
+
+`pywinpty` 依赖 rust, 如果安装失败, 可以下载预编译 wheel, 手动安装
+[pywinpty](https://pypi.org/project/pywinpty/#files)
+[Error installing Jupyter & pywinpty (Python)](https://stackoverflow.com/questions/51260909/error-installing-jupyter-pywinpty-python)
+
+```bash
+pip install c:/xxx/pywinpty-xxx-win_amd64.whl
+```

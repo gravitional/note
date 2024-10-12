@@ -20,7 +20,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 在 `macOS` 上, 你可以通过运行以下命令获得 C 语言编译器:
 
 ```bash
-$ xcode-select --install
+xcode-select --install
 ```
 
 根据发行版的文档, `Linux` 用户通常应该安装 `GCC` 或 `Clang`. 例如, 如果你使用 `Ubuntu`, 则可以安装 则可以安装 `build-essential` 包.
