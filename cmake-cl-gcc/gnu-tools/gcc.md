@@ -13,10 +13,10 @@ sudo apt install gcc-10 g++-10
 将 `/usr/bin/gcc` 符号链接修改为 自定义工具链
 
 ```bash
-sudo ln -s -f ~/myProg/gcc-14.1.0/bin/gcc /usr/bin/gcc
-sudo ln -s -f ~/myProg/gcc-14.1.0/bin/g++ /usr/bin/g++
-sudo ln -s -f ~/myProg/gcc-14.1.0/bin/gfortran /usr/bin/gfortran
-sudo ln -s -f ~/myProg/gcc-14.1.0/bin/go /usr/bin/go
+sudo ln -s -f ~/myProg/gcc-14.2.0/bin/gcc /usr/bin/gcc
+sudo ln -s -f ~/myProg/gcc-14.2.0/bin/g++ /usr/bin/g++
+sudo ln -s -f ~/myProg/gcc-14.2.0/bin/gfortran /usr/bin/gfortran
+sudo ln -s -f ~/myProg/gcc-14.2.0/bin/go /usr/bin/go
 # 检查 gcc 版本
 gcc --version
 g++ --version
@@ -135,12 +135,12 @@ LD_LIBRARY_PATH=/some/silly/path/gmp:/some/silly/path/mpfr:/some/silly/path/mpc/
 ```bash
 tar xzf gcc-4.6.2.tar.gz
 cd gcc-4.6.2
-./contrib/download_prerequisites
+./contrib/download_prerequisites # 如果安装过 gmp mpfr mpc 可以跳过
 cd ..
 mkdir objdir
 cd objdir
-# --disable-multilib 禁用 32 位 build
-$PWD/../gcc-14.1.0/configure --prefix=$HOME/myProg/gcc-14.1.0 --enable-languages=c,c++,fortran,go --disable-multilib
+# --disable-multilib 禁用 32 位 build, 修改 gcc-14.1.0 为相应版本
+$PWD/../gcc-14.2.0/configure --prefix=$HOME/myProg/gcc-14.2.0 --enable-languages=c,c++,fortran,go --disable-multilib
 make
 make install
 ```
@@ -156,6 +156,27 @@ make -j 12 #等于物理核心数目, 太大的数字会导致内存不足
 
 如果编译失败, 而 `configure` 命令又有很多复杂的选项, 你应该尝试删除选项, 保持简单.
 不要添加大量你不理解的 `configure` 选项, 它们可能是导致编译失败的原因.
+
+### 编译报错
+
+```bash
+configure: error:
+*** LIBRARY_PATH shouldn't contain the current directory when
+*** building gcc. Please change the environment variable
+*** and run configure again.
+```
+
+如果报以上错误, 说明 `LIBRARY_PATH` 末尾包含 `:`, 例如
+
+```bash
+/home/tom/myLibs/libA:/home/tom/myLibs/libB:
+```
+
+会把当前目录 `.` 也加入 `LIBRARY_PATH`, 修复即可, 例如使用 sed
+
+```bash
+LIBRARY_PATH=$(echo $LIBRARY_PATH | sed 's/:$//; s/^://;')
+```
 
 ## runtime lib 路径配置
 

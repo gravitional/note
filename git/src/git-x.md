@@ -513,7 +513,7 @@ git reset --hard branch2
 
 ## git 撤销提交
 
-
+详见 git-x-reset.md.
 
 ## git重命名文件夹
 
