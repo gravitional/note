@@ -334,11 +334,27 @@ git restore --source=HEAD --staged --worktree hello.c
 git restore --source=HEAD --staged --worktree hello.c
 ```
 
-## git 查看所有提交的 commit
+## git log 查看所有 commit
 
 [Get a list of all Git commits, including the 'lost' ones](https://stackoverflow.com/questions/4786972/get-a-list-of-all-git-commits-including-the-lost-ones)
 
-Try:
+例如在运行 `git reset --hard HEAD^` 之前忘了拉一个新分支,
+这时候运行 `gitk --all` 会看不到刚刚的提交, 这时候只要运行
+
+```bash
+$ git reflog
+
+b6784ba (HEAD -> master) HEAD@{0}: reset: moving to b6784ba7c93cd894a0482
+9a7a9bd (origin/master, origin/HEAD) HEAD@{1}: reset: moving to HEAD@{5 minutes ago}
+9a7a9bd (origin/master, origin/HEAD) HEAD@{2}: reset: moving to HEAD
+9a7a9bd (origin/master, origin/HEAD) HEAD@{3}: reset: moving to HEAD^
+b6784ba (HEAD -> master) HEAD@{4}: commit: git commit
+...
+```
+
+就能看到最近的提交操作.
+
++ 类似的 git log 命令
 
 ```bash
 git log --reflog
@@ -346,7 +362,39 @@ gitk --reflog # gitk 也支持
 ```
 
 会列出所有 git 提交, 方法是假装所有 reflog(git reflog)
-提到的对象都在命令行中以 `<commit>` 列出. 
+提到的对象都在命令行中以 `<commit>` 列出.
+
++ 还有一个命令可以找到所有不再被引用的提交
+
+```bash
+git fsck --unreachable
+```
+
+但其中会包括你在 `git commit --amend` 之后丢弃的提交,
+以及你 `rebase` 的分支上的旧提交等等.
+因此, 同时查看所有这些提交很可能会导致信息量过大而无法浏览.
+
+所以, 轻描淡写的回答就是, 不要丢失你感兴趣的东西.
+更重要的是, `reflogs` 默认会保存您在过去 60 天左右使用过的所有提交的引用.
+更重要的是, 它们会提供一些关于这些 `commit` 的上下文.
+
+## git reflog
+
+[git reflog](https://git-scm.com/docs/git-reflog)
+
+该命令管理 `reflogs` 中记录的信息.
+
+Reference logs, 或称 "reflogs", 记录了 tips of branches and other references 的更新时间.
+Reflogs 在各种 Git 命令中都很有用, 可以用来指定引用的旧值.
+例如, `HEAD@{2}` 表示 `HEAD` 在两步前的位置, `master@{one.week.ago}` 表示
+"where master used to point to one week ago in this local repository", 以此类推.
+详见 [gitrevisions[7]](https://git-scm.com/docs/gitrevisions).
+
+该命令有多种子命令, 不同的子命令有不同的选项:
+
+`show` 子命令(在没有任何子命令的情况下也是默认命令)显示命令行中提供的引用日志(默认为 `HEAD`).
+git reflog show 是 `git log -g --abbrev-commit --pretty=oneline` 的别名;
+更多信息请参见 [git-log[1]](https://git-scm.com/docs/git-log).
 
 ## git-checkout
 

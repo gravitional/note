@@ -341,7 +341,8 @@ stage文件包含了包文件的偏移信息, 我们通过stage文件就可以�
 通过打包对象减少了一半的磁盘占用空间.
 
 Git 是如何做到这点的?  Git 打包对象时, 会查找命名及大小相近的文件, 并只保存文件不同版本之间的差异内容.
- 你可以查看包文件, 观察它是如何节省空间的. `git verify-pack` 这个底层命令可以让你查看已打包的内容:
+你可以查看包文件, 观察它是如何节省空间的.
+`git verify-pack` 这个底层命令可以让你查看已打包的内容:
 
 ```bash
 git verify-pack -v .git/objects/pack/pack-978e03944f5c581011e6998cd0e9e30000905586.idx
@@ -356,14 +357,18 @@ b042a... blob   22054 5799 1463
 ```
 
 `033b4` 这个数据对象引用了数据对象 `b042a`.
-命令输出内容的第三列显示的是各个对象在包文件中的大小, 可以看到 `b042a` 占用了 `22K` 空间, 而 `033b4` 仅占用 `9` 字节.
-同样有趣的地方在于, 第二个版本完整保存了文件内容, 而原始的版本反而是以差异方式保存的 -- 这是因为大部分情况下需要快速访问文件的最新版本.
+命令输出内容的第三列显示的是各个对象在包文件中的大小,
+可以看到 `b042a` 占用了 `22K` 空间, 而 `033b4` 仅占用 `9` 字节.
+同样有趣的地方在于, 第二个版本完整保存了文件内容, 而原始的版本反而是以差异方式保存的 --
+这是因为大部分情况下需要快速访问文件的最新版本.
 
-最妙之处是你可以随时重新打包. `Git` 时常会自动对仓库进行重新打包以节省空间.当然你也可以随时手动执行 `git gc` 命令来这么做.
+最妙之处是你可以随时重新打包. `Git` 时常会自动对仓库进行重新打包以节省空间.
+当然你也可以随时手动执行 `git gc` 命令来这么做.
 
 ## revision 的写法
 
-A revision parameter  `<rev>`一般是`commit`, 它使用what is called an extended `SHA-1` syntax
+A revision parameter  `<rev>`一般是`commit`,
+它使用what is called an extended `SHA-1` syntax
 
 ### sha1
 
@@ -371,8 +376,7 @@ A revision parameter  `<rev>`一般是`commit`, 它使用what is called an exten
 
 The full SHA-1 object name (40-byte hexadecimal string), or a leading substring that is  within the repository
 
-***
-`<describeOutput>`, e.g. `v1.7.4.2-679-g3bee7fb`
+### `<describeOutput>`, e.g. `v1.7.4.2-679-g3bee7fb`
 
 Output from git describe;
 i.e. a closest tag,  optionally followed by a dash and a number of commits,  followed by a dash, a g, and an abbreviated object name.
