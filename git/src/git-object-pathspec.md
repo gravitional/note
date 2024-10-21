@@ -386,9 +386,9 @@ If you happen to have both `heads/master` and `tags/master`,you can explicitly s
 
 ### @
 
-`@`
+#### `@`
 
-`@` alone is a shortcut for `HEAD`.
+只有 `@`, 将被理解成 `HEAD` 的简写.
 
 ***
 `<refname>@{<date>}`, e.g. `master@{yesterday}`, `HEAD@{5 minutes ago}`
@@ -396,10 +396,9 @@ If you happen to have both `heads/master` and `tags/master`,you can explicitly s
 A ref followed by the suffix `@` with a 日期包围在大括号中 (e.g.  `{yesterday}`, `{1 month 2 weeks 3 days 1 hour 1 second ago}` or `{1979-02-26 18:30:00}`) specifies the value of the ref at a prior point in time.
 
 这个后缀只能用在 `ref name` 后面.它会寻找给定时间内的状态, 比如上星期,
-如果你想寻找时间段内的, 用`--since` and `--until`.
+如果你想寻找时间段内的, 用 `--since` and `--until`.
 
-***
-`<refname>@{<n>}, e.g. master@{1}`
+#### `<refname>@{<n>}, e.g. master@{1}`
 
 A `ref` followed by the suffix `@` with an 大括号中的顺序(e.g.  `{1}`, `{15}`) specifies the `n-th` prior value of that `ref`.
 
@@ -413,12 +412,12 @@ This suffix may only be used immediately following a ref name and the ref must h
 
 For example, if you are on branch blabla then @{1} means the same as blabla@{1}.
 
-***
-`@{-<n>}, e.g. @{-1}`
+#### `@{-<n>}, e.g. @{-1}`
+
 The construct `@{-<n>}` means the `<n>th branch/commit` checked out before the current one.
 
-***
-`<branchname>@{upstream}`, e.g. `master@{upstream}`, `@{u}`
+#### `<branchname>@{upstream}`, e.g. `master@{upstream}`, `@{u}`
+
 `<branchname>@{push}`, e.g. `master@{push}`, `@{push}`
 
 上游分支, 推送分支,
@@ -437,7 +436,9 @@ $ git rev-parse --symbolic-full-name @{push} #给出默认push分支
 refs/remotes/myfork/mybranch
 ```
 
-在这个例子中, 我们建立了一个triangular workflow(三角形工作流), 从一个位置pull然后push到另一个位置, 如果是一个普通的工作流, 那么`@{push}` is the same as `@{upstream}`.
+在这个例子中, 我们建立了一个triangular workflow(三角形工作流),
+从一个位置pull然后push到另一个位置, 如果是一个普通的工作流,
+那么`@{push}` is the same as `@{upstream}`.
 
 后缀`@{push}` or `@{upstream}`大小写不敏感
 
@@ -445,12 +446,12 @@ refs/remotes/myfork/mybranch
 
 `<rev>^`, e.g. `HEAD^`, `v1.5.1^0`
 
-`<rev>^`等价于`<rev>^1`, `^<n>`意思是当前`ref`的第`n`个父节点, 指的是同一个`level`上的, 也就是水平方向的.
+`<rev>^`等价于`<rev>^1`, `^<n>`意思是当前 `ref` 的第 `n` 个父节点,
+指的是同一个`level`上的, 也就是水平方向的.
 
 As a special rule,` <rev>^0` 指向自身, 可以用`tag`(tag object)指向提交(commit object)
 
-***
-`<rev>~<n>`, e.g. `master~3`
+### `<rev>~<n>`, e.g. `master~3`
 
 A suffix `~<n>` to a revision parameter 之的是第`n`个首位父节点,
 I.e.  `<rev>~3`等价于`<rev>^^^`, 等价于 `<rev>^1^1^1`.

@@ -334,6 +334,20 @@ git restore --source=HEAD --staged --worktree hello.c
 git restore --source=HEAD --staged --worktree hello.c
 ```
 
+## git 查看所有提交的 commit
+
+[Get a list of all Git commits, including the 'lost' ones](https://stackoverflow.com/questions/4786972/get-a-list-of-all-git-commits-including-the-lost-ones)
+
+Try:
+
+```bash
+git log --reflog
+gitk --reflog # gitk 也支持
+```
+
+会列出所有 git 提交, 方法是假装所有 reflog(git reflog)
+提到的对象都在命令行中以 `<commit>` 列出. 
+
 ## git-checkout
 
 切换分支, 或者恢复 `working tree` 中的文件
@@ -526,7 +540,6 @@ git reset --hard branch2
 + `git push origin dev`  ; 推送到 `dev` 分支
 
 ref: [git重命名文件夹](https://www.jianshu.com/p/e886fde18ba0)
-
 
 ## 远程仓库
 
