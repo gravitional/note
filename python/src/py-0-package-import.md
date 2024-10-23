@@ -7,12 +7,16 @@
 ## ss
 
 + `import xxx` 形式可以 `import Foo` 或者 `import Foo.Bar`
-+ 仅仅 `import A` 可能无法使用`A` 内部的模块，要导入到具体模块或者变量的层次, 或者在 `__init__.py` 初始化绑定.
-+ `import A.b` 中的 `b` 需要是子模块, 不能是文件中的标识符, 导入后的标识符是 `A.b` 而不是 `b`.
++ 仅仅 `import A` 可能无法使用`A` 内部的模块，
+要导入到具体模块或者变量的层次, 或者在 `__init__.py` 初始化绑定.
++ `import A.b` 中的 `b` 需要是 `子模块`(`.py`),
+不能是文件中的 `标识符`, 导入后的标识符是 `A.b` 而不是 `b`.
 
-+ `from A import b` 可以导入 `A` 中的标识符 `A.b`, 并绑定到当前命名空间, 后续只需使用 `b` 引用.
++ `from A import b` 可以导入 `A` 中的标识符 `A.b`(变量名称),
+并绑定到当前命名空间, 后续只需使用 `b` 引用.
 + `from` 形式只能 `from A.B.C import D`, 而不能写成 `from A.B import C.B`,
-+ 类似 `from .moduleY import spam` 的相对导入只能在 `package` 中使用, 而不能在 `脚本` 中使用.
++ 类似 `from .moduleY import spam` 的相对导入只能在 `package` 中使用,
+而不能在 `脚本` 中使用.
 
 + 在 `sys.path` 中添加 `dirA` 并不会自动递归搜索 `dirA` 的子目录.
 所以在导入时不能跳过, 需要写成 `import A.B.module.D` 这种完全路径的形式,
@@ -25,7 +29,21 @@
 但 `相对导入` 只能写成 `from .X import 标识符` 的形式; 其中的原因在于 `import XXX.YYY.ZZZ`
 应当提供 `XXX.YYY.ZZZ` 作为可用表达式, 但 `.moduleY` 不是一个有效的表达式
 
-+ 多行导入可以写成
+```python
+import A
+import A.B
+import .A.B.C # error, . 只能在 from 后面使用
+
+from A.B.C import D1
+from A.B.C import D1 as D2
+
+from .moduleY import spam # 只能在 package 内使用, 不能在 project 中使用
+from A import B.C # error
+
+
+```
+
+### 多行导入可以写成
 
 ```python
 from posixpath import (
@@ -53,7 +71,7 @@ python xxx/xxx/pkg/pkg_test.py
 但是不会将 `pkg` 所在的目录添加到路径
 
 报错: `无法识别的包文件(no known parent package)`, 是由于
-`Python解释器` 无法查找到 `当前执行脚本`(即当前模块), 所属的 `最小包结构`(package).
+`Python` 解释器 无法查找到 `当前执行脚本`(即当前模块), 所属的 `最小包结构`(package).
 
 [sys.path]: https://docs.python.org/zh-cn/3/library/sys.html#sys.path
 

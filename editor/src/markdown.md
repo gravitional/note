@@ -3,6 +3,10 @@
 reference: [Simplelified Markdown Syntax](https://www.appinn.com/markdown/#backslash)
 [CommonMark specification ](https://commonmark.org/)
 
+## [markdownlint](https://github.com/DavidAnson/markdownlint/blob/v0.35.0/schema/.markdownlint.yaml)
+
+[markdownlint 自定义规则示例](example-markdownlint.yml)
+
 ## 删除线
 
 ```markdown
