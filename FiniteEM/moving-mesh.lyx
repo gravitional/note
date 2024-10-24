@@ -1838,6 +1838,232 @@ w_{i}=\frac{\sum_{j=1}^{k}d_{j}}{d_{i}},\quad v_{n}=\frac{\sum_{i=1}^{k}w_{i}v_{
 形函数插值
 \end_layout
 
+\begin_layout Chapter
+Local RBF
+\end_layout
+
+\begin_layout Standard
+ref: Local Radial Basis Function Methods: Comparison, Improvements, and
+ Implementation–Scott A.
+ Sarra
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathcal{I}_{N}f(x)=\sum_{k=1}^{N}a_{k}\,\phi\left(\left\Vert x-x_{k}^{c}\right\Vert _{2}\right)\label{eq:s1}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $\sbf a$
+\end_inset
+
+ 是展开系数矢量。
+\begin_inset Formula 
+\begin{equation}
+\mathcal{I}_{N}f(x_{k}^{c})=f(x_{k}^{c}),\quad k=1,2,\cdots N\label{eq:s2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+B\,a=f\label{eq:s3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+b_{jk}=\phi\left(\left\Vert x_{j}^{c}-x_{k}^{c}\right\Vert _{2}\right),\quad j,k=1,\cdots,N\label{eq:s4}
+\end{equation}
+
+\end_inset
+
+is called the system matrix.
+\end_layout
+
+\begin_layout Standard
+Gaussian(GA) RBF
+\begin_inset Formula 
+\begin{equation}
+\phi(r)=e^{-\varepsilon^{2}r^{2}}\label{eq:s5}
+\end{equation}
+
+\end_inset
+
+inverse quadratic(IQ) RBF
+\begin_inset Formula 
+\begin{equation}
+\phi(r)=\frac{1}{1+\varepsilon^{2}r^{2}}\label{eq:s6}
+\end{equation}
+
+\end_inset
+
+inverse multiquadric(IMQ) RBF
+\begin_inset Formula 
+\begin{equation}
+\phi(r)=\frac{1}{\sqrt{1+\varepsilon^{2}r^{2}}}\label{eq:s7}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+h_{jk}=\phi_{k}\left(\left\Vert x_{j}-x_{k}^{c}\right\Vert _{2}\right),\quad j=1,\cdots,M\quad\text{and}\quad k=1,\dots,N\label{eq:s8}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}\left(\mathcal{I}_{N}f(x)\right)=\sum_{k=1}^{N}a_{k}\,\mathcal{L}\,\phi\left(\left\Vert x-x_{k}^{c}\right\Vert _{2}\right)\label{eq:s9}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+ is a linear differential opeartor.
+\begin_inset Formula 
+\begin{equation}
+H_{\mathcal{L}}\;\Rightarrow\;h_{jk}=\mathcal{L}\phi\left(\left\Vert x_{j}^{c}-x_{k}^{c}\right\Vert _{2}\right),\quad j,k=1,\cdots,N.\label{eq:s10}
+\end{equation}
+
+\end_inset
+
+That is, 
+\begin_inset Formula $\mathcal{L}f\approx H_{\mathcal{L}}\,a$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+by the differentiation matrix 
+\begin_inset Formula $D=H_{\mathcal{L}}\,B^{-1}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}f\approx H_{\mathcal{L}}\,B^{-1}=H_{\mathcal{L}}(B^{-1}f)=(H_{\mathcal{L}}\,B^{-1})\,f.\label{eq:s11}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Center Locations
+\end_layout
+
+\begin_layout Standard
+unique positive largest root of the equation
+\begin_inset Formula 
+\[
+x^{d+1}-x-1=0.
+\]
+
+\end_inset
+
+In one dimension 
+\begin_inset Formula $\phi_{1}=(1+\sqrt{5})/2$
+\end_inset
+
+ golden ratio, and in two dimension 
+\begin_inset Formula $\phi_{2}=1.3247179572$
+\end_inset
+
+ which has been termed the plastic constant.
+\end_layout
+
+\begin_layout Standard
+After selecting the initial point, the rest of the points are found via
+ the simple iteration
+\begin_inset Formula 
+\begin{equation}
+\sbf x_{k}=(\sbf\alpha_{0}+k\,\sbf\alpha)(\mod1),\quad k=1,2,3,\cdots\label{eq:s12}
+\end{equation}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\alpha=\left(\frac{1}{\phi_{d}},\frac{1}{\phi_{d}^{2}},\cdots\frac{1}{\phi_{d}^{d}},\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+MDI Regularization
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f(x)=e^{\sin(\pi x)}\label{eq:s13}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+B\,a=f\label{eq:s14}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+(B+\mu\,I)\,a=f\label{eq:s15}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\mu$
+\end_inset
+
+ is a small positive constant called the regularization parameter and 
+\begin_inset Formula $I$
+\end_inset
+
+ is the identity matrix.
+\begin_inset Formula 
+\[
+\kappa(B+\mu\,I)=\frac{\lambda_{\max}+\mu}{\lambda_{\min}+\mu}<\kappa(B)=\frac{\lambda_{\max}}{\lambda_{\min}}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\mu=5\,\epsilon_{M}$
+\end_inset
+
+ where 
+\begin_inset Formula $\epsilon_{M}$
+\end_inset
+
+ is machine epsilon in the floating point number system being used.
+\end_layout
+
 \begin_layout Standard
 EOF
 \end_layout
