@@ -141,6 +141,12 @@ jupyter lab --notebook-dir=/var/ --preferred-dir /var/www/html/example-app/
 
 ## notebook vscode
 
+vscode 运行 notebook 需要安装 ipykernel 包,
+
+```bash
+python -m pip install ipykernel -U --user
+```
+
 `A` 在上方插入cell
 `B` 在下方插入cell
 
