@@ -1,15 +1,18 @@
 # homebrew,软件管理
 
-`brew Shellenv`: 打印 export 设置. 在 `shell` 中运行时, 将 `Homebrew` 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`.
+`brew Shellenv`: 打印 export 设置.
+在 `shell` 中运行时, 将 `Homebrew` 的安装路径添加到`PATH`, `MANPATH`和`INFOPATH`.
 变量`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`和`HOMEBREW_REPOSITORY`也被 `export` 以避免多次查询.
-考虑将该命令的输出添加配置文件中(例如`~/.profile, ~/.bash_profile, or ~/.zprofile`), 例如: `eval "$(/opt/homebrew/bin/brew shellenv)"`
+考虑将该命令的输出添加配置文件中(例如`~/.profile, ~/.bash_profile, or ~/.zprofile`),
+例如: `eval "$(/opt/homebrew/bin/brew shellenv)"`
 
 ***
-uninstall/卸载brew: 运行  `git` 仓库中的`uninstall.sh`脚本即可, 但是其中有一个`raw github` 地址, 需要更改一下.
+uninstall/卸载brew: 运行  `git` 仓库中的`uninstall.sh`脚本即可,
+但是其中有一个`raw github` 地址, 需要更改一下.
 
 卸载之后打开终端时, 可能会报错:
 
-```
+```bash
 zsh problem: compinit:503: no such file or directory: /usr/local/share/zsh/site-functions/_brew
 ```
 
@@ -207,15 +210,19 @@ Homebrew 启用 `/opt` 作为 ARM 版的安装路径, 可能更多是出于确�
 
 ## 常用软件的安装
 
-使用`brew info zsh-completions`, 可以查看安装完需要进行的操作,比如配置路径等. `gnu`的软件会多一个`g`开头.
+使用`brew info zsh-completions`,
+可以查看安装完需要进行的操作,比如配置路径等.
+`gnu`的软件会多一个`g`开头.
 
 ```bash
 brew install  gettext libunistring libidn2 openssl wget # 前面的是依赖
 brew install zsh-completions zsh-autosuggestions brew-cask-completion
 brew install coreutils rename pcre grep
 brew info tcl-tk git-gui # gitk 命令
-brew install ncurses; brew install htop # 更好用的 top
-brew install libevent utf8proc ; brew install tmux # 终端复用器
+brew install ncurses;
+brew install htop # 更好用的 top
+brew install libevent utf8proc ;
+brew install tmux # 终端复用器
 brew install visual-studio-code lyx # 文字编辑器
 brew install findutils # find locate xargs
 ```
