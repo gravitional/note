@@ -179,10 +179,10 @@ nginx
     termux-setup-storage
     ```
 
-2. 提取 `home` 和 `usr`, 覆盖所有文件. 
-通过 `--recursive-unlink` 来删除任何垃圾和无主的文件. 
-通过 `--preserve-permissions` 来设置文件权限, 
-如同存档时一样, 忽略 `umask`值. 
+2. 提取 `home` 和 `usr`, 覆盖所有文件.
+通过 `--recursive-unlink` 来删除任何垃圾和无主的文件.
+通过 `--preserve-permissions` 来设置文件权限,
+如同存档时一样, 忽略 `umask`值.
 通过结合这些额外的选项, 你将得到与归档文件中完全一样的安装状态.
 
 ```bash
@@ -190,3 +190,56 @@ tar -zxf /sdcard/termux-backup.tar.gz -C /data/data/com.termux/files --recursive
 ```
 
 现在用通知中的 `exit` 按钮关闭 `Termux`, 然后再次打开它.
+
+## 使用附带的脚本
+
+### Using supplied scripts
+
+The latest version of package "termux-tools" contains basic scripts for backup and restore of Termux installation. 
+They are working in a way similar to tar commands mentioned above.
+
+These scripts backup and restore scripts will not backup, restore or in any other way touch your home directory. 
+Check out the notice if have questions why so. Termux developers are not responsible with what you are doing with your files. 
+If you managed to lost data, that would be your own problem.
+Using termux-backup
+
+Simple backup with auto compression:
+
+```bash
+termux-backup /sdcard/backup.tar.xz
+```
+
+Compression format is determined by file extension, which is typically .tar.gz (gzip), .tar.xz (xz) or .tar (no compression).
+
+It is possible to stream backup contents to standard output, for example to encrypt it with GnuPG utility or send to remote storage. 
+Set file name as "-" to enable streaming to stdout:
+
+```bash
+termux-backup - | gpg --symmetric --output /sdcard/backup.tar.gpg
+```
+
+Content written to stdout is not compressed.
+
+### Using termux-restore
+
+Warning: restore procedure will destroy any previous data stored in $PREFIX. 
+Script will perform a complete rollback to state state exactly as in backup archive.
+
+Restoring backup is also simple:
+
+```bash
+termux-restore /sdcard/backup.tar.xz
+```
+
+Once finished, restart Termux application.
+
+The utility termux-restore is able to read backup data from standard input. 
+You can use this for reading content supplied by other tool. Backup contents supplied to stdin must not be compressed. 
+See below example for restoring from encrypted, compressed backup:
+
+```bash
+export GPG_TTY=$(tty)
+gpg --decrypt /sdcard/backup.tar.gz.gpg | gunzip | termux-restore -
+```
+
+Please note that if restore procedure will be terminated before finish, your environment will be corrupted.
