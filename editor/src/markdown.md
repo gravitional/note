@@ -3,9 +3,74 @@
 reference: [Simplelified Markdown Syntax](https://www.appinn.com/markdown/#backslash)
 [CommonMark specification ](https://commonmark.org/)
 
-## [markdownlint](https://github.com/DavidAnson/markdownlint/blob/v0.35.0/schema/.markdownlint.yaml)
+## [markdownlint 语法提示](https://github.com/DavidAnson/markdownlint/blob/v0.35.0/schema/.markdownlint.yaml)
 
 [markdownlint 自定义规则示例](example-markdownlint.yml)
+
+默认规则配置禁用`MD013/line-length`, 因为许多文件包含的行长超过`80`个字符
+
+```json
+{
+    "MD013": false
+}
+```
+
+注意: 默认情况下禁用`MD002/first-heading-h1`, 因为markdownlint库中已不推荐使用它.
+
+可以在项目的任何目录中, 通过创建名为 `.markdownlint.json` or `.markdownlintrc` 的`JSON`文件, 或名为`markdownlint.yaml` or `.markdownlint.yml` 的`YAML`文件来启用, 禁用和自定义规则. 这些自定义的规则适用于同一目录中的`Markdown`文件以及没有配置规则的任何子目录.
+
+注意: `.markdownlint{.json,.yaml,.yml,rc}`仅在打开项目时使用.
+当没有打开文件夹或文件不属于当前项目时, 将应用常规用户和工作区设置(请参见下文).
+如果同一目录中存在多个这些文件, `.markdownlint.json`优先于`.markdownlint`,
+`.markdownlint.yml`优先于`.markdownlintrc`.
+
+自定义配置通常由项目根目录中的`.markdownlint.json`文件定义:
+
+```json
+{
+    "default": true,
+    "MD003": { "style": "atx_closed" },
+    "MD007": { "indent": 4 },
+    "no-hard-tabs": false
+}
+```
+
+要从另一个配置文件开始, 任何配置文件都可以使用`extends`属性提供相对路径:
+
+```json
+{
+    "extends": "../.markdownlint.json",
+    "no-hard-tabs": true
+}
+```
+
+通过扩展引用的文件不必是当前项目的一部分(但通常是).
+
+也可以使用`VS Code`的用户和工作区`settings`来配置规则, 在`VS Code`的用户设置中设置如下内容:
+
+```json
+{
+    "editor.someSetting": true,
+    "markdownlint.config": {
+        "default": true,
+        "MD003": { "style": "atx_closed" },
+        "MD007": { "indent": 4 },
+        "no-hard-tabs": false
+    }
+}
+```
+
+从`user settings`引用的文件路径是相对于用户的主目录解析的(例如: 在`Windows`上为`%USERPROFILE%`, 在`macOS/Linux`上为`$HOME`).
+配置位置具有以下优先级(以降序排列):
+
++ `.markdownlint{.json,.yaml,.yml,rc}` file in the same directory
++ `.markdownlint{.json,.yaml,.yml,rc}` file in a parent directory
++ `.markdownlint{.json,.yaml,.yml,rc}` file in the root of the project
++ `Visual Studio Code` user/workspace settings
++ `Default configuration` (see above)
+
+找到配置后, 较低优先级的位置将被忽略.  保存到任何位置的更改将立即生效.  通过扩展引用的文件不会监视更改.
+仅最后两个位置适用于项目外部的文件.
 
 ## 删除线
 
@@ -334,73 +399,6 @@ Use the `printf()` function.
 后来又被用于`SEO`, 可以方便搜索引擎根据`Alt text`里面的关键词搜索到图片.
 + `图片链接`: 可以是图片的本地地址或者是网址.
 + `"鼠标悬浮文字"`: 鼠标悬置于图片上会出现的标题文字, 可以不写.
-
-## markdownlint 语法提示
-
-默认规则配置禁用`MD013/line-length`, 因为许多文件包含的行长超过`80`个字符
-
-```json
-{
-    "MD013": false
-}
-```
-
-注意: 默认情况下禁用`MD002/first-heading-h1`, 因为markdownlint库中已不推荐使用它.
-
-可以在项目的任何目录中, 通过创建名为 `.markdownlint.json` or `.markdownlintrc` 的`JSON`文件, 或名为`markdownlint.yaml` or `.markdownlint.yml` 的`YAML`文件来启用, 禁用和自定义规则. 这些自定义的规则适用于同一目录中的`Markdown`文件以及没有配置规则的任何子目录.
-
-注意: `.markdownlint{.json,.yaml,.yml,rc}`仅在打开项目时使用.
-当没有打开文件夹或文件不属于当前项目时, 将应用常规用户和工作区设置(请参见下文).
-如果同一目录中存在多个这些文件, `.markdownlint.json`优先于`.markdownlint`,
-`.markdownlint.yml`优先于`.markdownlintrc`.
-
-自定义配置通常由项目根目录中的`.markdownlint.json`文件定义:
-
-```json
-{
-    "default": true,
-    "MD003": { "style": "atx_closed" },
-    "MD007": { "indent": 4 },
-    "no-hard-tabs": false
-}
-```
-
-要从另一个配置文件开始, 任何配置文件都可以使用`extends`属性提供相对路径:
-
-```json
-{
-    "extends": "../.markdownlint.json",
-    "no-hard-tabs": true
-}
-```
-
-通过扩展引用的文件不必是当前项目的一部分(但通常是).
-
-也可以使用`VS Code`的用户和工作区`settings`来配置规则, 在`VS Code`的用户设置中设置如下内容:
-
-```json
-{
-    "editor.someSetting": true,
-    "markdownlint.config": {
-        "default": true,
-        "MD003": { "style": "atx_closed" },
-        "MD007": { "indent": 4 },
-        "no-hard-tabs": false
-    }
-}
-```
-
-从`user settings`引用的文件路径是相对于用户的主目录解析的(例如: 在`Windows`上为`%USERPROFILE%`, 在`macOS/Linux`上为`$HOME`).
-配置位置具有以下优先级(以降序排列):
-
-+ `.markdownlint{.json,.yaml,.yml,rc}` file in the same directory
-+ `.markdownlint{.json,.yaml,.yml,rc}` file in a parent directory
-+ `.markdownlint{.json,.yaml,.yml,rc}` file in the root of the project
-+ `Visual Studio Code` user/workspace settings
-+ `Default configuration` (see above)
-
-找到配置后, 较低优先级的位置将被忽略.  保存到任何位置的更改将立即生效.  通过扩展引用的文件不会监视更改.
-仅最后两个位置适用于项目外部的文件.
 
 ## 字体,图片排版
 

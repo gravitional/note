@@ -4,11 +4,10 @@
 
 到 `源码树顶层`(top level of the source tree)的路径.
 
-含有多个文件夹(多个 CMakeLists.txt) 的情况下,
-指的是最外层的 CMakeLists.tx 的目录.
-
-这是到 `当前CMake源代码树` 顶层的 `完整路径`.
-对于 in-source 构建, 这与 `CMAKE_BINARY_DIR` 相同.
++ 含有多个文件夹(多个 CMakeLists.txt) 的情况下, 
+  指的是 **最外层的 CMakeLists.txt** 的目录.
++ 这是到 `当前CMake源代码树` 顶层的 `完整路径`.
+  对于 in-source 构建, 这与 `CMAKE_BINARY_DIR` 相同.
 
 当以 [cmake -P][] 脚本模式运行时,
 `CMake` 会将 `CMAKE_BINARY_DIR`, `CMAKE_SOURCE_DIR`, `CMAKE_CURRENT_BINARY_DIR` 和 `CMAKE_CURRENT_SOURCE_DIR`

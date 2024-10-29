@@ -365,3 +365,20 @@ autoProxy=true
 ```
 
 然后用 `wsl --shutdown` 关闭WSL, 之后再重启, 提示就消失了.
+
+## [跨 Windows 和 Linux 文件系统工作](https://learn.microsoft.com/zh-cn/windows/wsl/filesystems#file-storage-and-performance-across-file-systems)
+
+建议不要跨操作系统使用文件, 除非有这么做的特定原因.
+若想获得最快的性能速度, 请将文件存储在 WSL 文件系统中,
+前提是在 Linux 命令行(Ubuntu, OpenSUSE 等)中工作.
+如果使用 Windows 命令行(PowerShell, 命令提示符)工作, 请将文件存储在 Windows 文件系统中.
+
+例如, 在存储 WSL 项目文件时:
+
++ 使用 Linux 文件系统根目录: `/home/<user name>/Project`
++ 而不使用 Windows 文件系统根目录: `/mnt/c/Users/<user name>/Project$` 或 `C:\Users\<user name>\Project`
+
+在 WSL 命令行的文件路径中看到 `/mnt/` 时, 表示你正在使用已装载的驱动器.
+因此, Windows 文件系统 `C:/drive` (`C:\Users\<user name>\Project`)
+在 WSL 命令行中装载时将如下所示: `/mnt/c/Users/<user name>/Project$`.
+可以将项目文件存储在装载的驱动器上, 但如果将其直接存储在 `\\wsl$` 驱动器上, 性能速度会提高.

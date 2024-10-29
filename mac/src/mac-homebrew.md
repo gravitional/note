@@ -210,13 +210,33 @@ Homebrew 启用 `/opt` 作为 ARM 版的安装路径, 可能更多是出于确�
 
 ## 常用软件的安装
 
+### [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/tree/master)
+
+使用国内 gitee 镜像安装
+
+```bash
+git clone https://gitee.com/graviton/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+添加到 `~/.zshrc` oh-my-zsh 插件启动项
+
+```bash
+plugins=(
+    # other plugins...
+    zsh-autosuggestions
+)
+```
+
+### homebrew
+
 使用`brew info zsh-completions`,
 可以查看安装完需要进行的操作,比如配置路径等.
 `gnu`的软件会多一个`g`开头.
 
 ```bash
 brew install  gettext libunistring libidn2 openssl wget # 前面的是依赖
-brew install zsh-completions zsh-autosuggestions brew-cask-completion
+brew install zsh-completions brew-cask-completion
 brew install coreutils rename pcre grep
 brew info tcl-tk git-gui # gitk 命令
 brew install ncurses;

@@ -259,7 +259,7 @@ dashboard](https://open.cdash.org/index.php?project=PublicDashboard)
 良好的项目结构是后续项目之间完美依赖的基础. 我参考了很多知名的开源项目, 为了方便自己编译生
 成打包, 也为了第三方可以方便使用, 总结出了一个不错的方案:
 
-``` txt
+``` bash
 .
 \-- .git
 \-- README.md #说明文件
@@ -298,93 +298,128 @@ modern cmake是围绕着target这一概念而成, 不再是过程式配置, 更�
 ### 配置构建对象
 
 ```cmake
-target_sources() #设置源码文件
-target_include_directories() #设置引用目录
-target_compile_definitions() #设置预定义
-target_compile_features() #设置编译功能
-target_compile_options() #设置编译选项
-target_link_libraries() #设置链接库
-target_link_directories() #设置链接目录
-target_link_options() #设置链接选项
+target_sources() # 设置源码文件
+target_include_directories() # 设置引用目录
+target_compile_definitions() # 设置预定义
+target_compile_features() # 设置编译功能
+target_compile_options() # 设置编译选项
+target_link_libraries() # 设置链接库
+target_link_directories() # 设置链接目录
+target_link_options() # 设置链接选项
 ```
 
 ### 构建对象固有属性
 
-get_target_property() #获取构建对象的属性set_target_properties() #设置构建对象的属性
+```cmake
+get_target_property() # 获取构建对象的属性
+set_target_properties() # 设置构建对象的属性
+```
 
 ### 辅助添加函数
 
-find_package() #查找CMAKE_FRAMEWORK_PATH对应的库aux_source_directory() #用于自动生成目录源
-文件集合add_subdirectory() #跳转到子目录
+```cmake
+find_package() # 查找CMAKE_FRAMEWORK_PATH对应的库
+aux_source_directory() # 用于自动生成目录源文件集合
+add_subdirectory() # 跳转到子目录
+```
 
 ### 构建对象依赖
 
-- Build-Requirements:  包含了所有构建Target必须的材料. 如源代码, include路径, 预编译命令,
-  链接依赖, 编译/链接选项, 编译/链接特性等.
-- Usage-Requirements: 包含了所有使用Target必须的材料. 如源代码, include路径, 预编译命令,
-  链接依赖, 编译/链接选项, 编译/链接特性等. 这些往往是当另一个Target需要使用当前target时,
-  必须包含的依赖.
+- Build-Requirements:  包含了所有 **构建 Target** 必须的材料.
+  如源代码, include路径, 预编译命令, 链接依赖, 编译/链接选项, 编译/链接特性等.
 
-属性依赖传递
+- Usage-Requirements: 包含了所有 **使用Target** 必须的材料.
+  如源代码, include路径, 预编译命令, 链接依赖, 编译/链接选项, 编译/链接特性等.
+  这些往往是当另一个Target需要使用当前target时, 必须包含的依赖.
 
-- INTERFACE : 表示Target的属性不适用于自身, 只使用于依赖其的target. 自己只用到头文件, 被依
-  赖时可能使用部分功能.
-- PRIVATE : 表示Target的属性只定义在当前Target中, 任何依赖当前Target的Target不共享PRIVATE
-  关键字下定义的属性. 只给自己生成时使用, 依赖自己时不知道自己的依赖.
-- PUBLIC : 表示Target的属性既是build-requirements也是usage-requirements. 凡是依赖于当前
-  Target的Target都会共享本属性. 自己生成时要用, 依赖自己时也要用.
+### 属性依赖传递
+
+- `INTERFACE` : 表示Target的属性不适用于自身, 只使用于依赖其的target.
+  自己只用到 **头文件**, 被依赖时可能使用部分功能.
+
+- `PRIVATE` : 表示 Target 的属性 **只定义在当前Target中**,
+  任何依赖当前Target的Target不共享 PRIVATE 关键字下定义的属性.
+  只给自己生成时使用, 其他项目依赖 此Target时 不知道 Target自己 的依赖.
+
+- `PUBLIC` : 表示 Target 的属性既是 `build-requirements` 也是 `usage-requirements`.
+  凡是依赖于当前 Target的Target都会共享本属性.
+  自己生成时要用, 依赖自己时也要用.
 
 ## 高级功能
 
+[Can I get the system home directory in CMake on Linux?](https://stackoverflow.com/questions/32866503/can-i-get-the-system-home-directory-in-cmake-on-linux)
+
+家目录可以通过环境变量指定, 在 Cmake 脚本中写作
+
+```bash
+$ENV{HOME}
+```
+
 ### find_package模式
 
-find_package() 有 Module模式(基本用法)和Config模式(完全用法),
-其中Module模式是基础, Config 模式则提供复杂高级功能.
-find_package是否使用Config模式可以通过下列条件判断:
-(1)find_package()中指定CONFIG关键字(2)find_package()中指定NO_MODULE关键字
-(3)find_package()中使用了不再Module模式下所有支持配置的关键字
+`find_package()` 有 `Module` 模式(基本用法)和 `Config` 模式(完全用法),
+其中 `Module` 模式是基础, `Config` 模式则提供复杂高级功能.
 
-### find_package的Module模式
+`find_package` 是否使用 `Config` 模式可以通过下列条件判断:
 
->find_package(<PackageName> [version] [EXACT] [QUIET] [MODULE] [REQUIRED] [[COMPONENTS]
-> [components...]] [OPTIONAL_COMPONENTS components...] [NO_POLICY_SCOPE])
+1. `find_package()` 中指定 `CONFIG` 关键字
+1. `find_package()` 中指定 `NO_MODULE` 关键字
+1. `find_package()` 中使用了不在 `Module` 模式下所有支持配置的关键字
 
-version和EXACT, 可选, version指定版本, 如果指定就必须检查找到的包的版本是否和version兼容.
-如果指定EXACT则表示必须完全匹配的版本而不是兼容版本就可以.  QUIET, 可选字段, 表示如果查找
-失败, 不会在屏幕进行输出(但如果指定了REQUIRED字段, 则QUIET无效, 仍然会输出查找失败提示
-语).  MODULE, 可选字段. 前面提到说"如果Module模式查找失败则回退到Config模式进行查找", 但
-是假如设定了MODULE选项, 那么就只在Module模式查找, 如果Module模式下查找失败并不回落到Config
-模式查找.  REQUIRED可选字段. 表示一定要找到包, 找不到的话就立即停掉整个cmake. 而如果不指定
-REQUIRED则cmake会继续执行.  COMPONENTS, components:可选字段, 表示查找的包中必须要找到的组
-件(components), 如果有任何一个找不到就算失败, 类似于REQUIRED, 导致cmake停止执行.  Module
-模式下需要查找到名为FindPackageName.cmake的文件. 先在CMAKE_MODULE_PATH变量对应的路径中查
-找. 如果路径为空, 或者路径中查找失败, 则在cmake module directory(cmake安装时的Modules目
-录, 比如/usr/local/share/cmake/Modules)查找.
+### find_package 的 Module 模式
+
+```bash
+find_package(<PackageName>
+    [version] [EXACT] [QUIET] [MODULE] [REQUIRED] [[COMPONENTS]
+    [components...]] [OPTIONAL_COMPONENTS components...] [NO_POLICY_SCOPE])
+```
+
+1. `version` 和 `EXACT`, 可选, `version` 指定版本,
+如果指定就必须检查找到的 包的版本 是否和 version 兼容.
+如果指定 `EXACT` 则表示必须完全匹配的版本而不是兼容版本就可以.
+
+2. `QUIET`, 可选字段, 表示如果查找失败, 不会在屏幕进行输出
+(但如果指定了REQUIRED字段, 则QUIET无效, 仍然会输出查找失败提示语).
+
++ `MODULE`, 可选字段. 前面提到说 **如果Module模式查找失败则回退到Config模式进行查找**,
+但是假如设定了 `MODULE` 选项, 那么就只在 `Module` 模式查找,
+如果 `Module` 模式下查找失败并不回落到 `Config` 模式查找.
++ `REQUIRED`可选字段. 表示一定要找到包, 找不到的话就立即停掉整个cmake.
+而如果不指定 `REQUIRED` 则 `cmake` 会继续执行.
++ `COMPONENTS components`: 可选字段,
+表示查找的包中必须要找到的组件(components), 如果有任何一个找不到就算失败,
+类似于 `REQUIRED`, 导致cmake停止执行.
+
+`Module` 模式下需要查找到名为 `FindPackageName.cmake` 的文件.
+先在 `CMAKE_MODULE_PATH` 变量对应的路径中查找.
+如果路径为空, 或者路径中查找失败, 则在 `cmake module directory`
+(`cmake` 安装时的 `Modules`目录, 比如 `/usr/local/share/cmake/Modules`)查找.
 
 ### find_package的Config模式
 
-```cmake
-find_package(<PackageName> [version] [EXACT] [QUIET] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE]
-[NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]]
-[PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH]
-[NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH]
-[NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] #
-Deprecated; does nothing. [REQUIRED] [[COMPONENTS] [components...]]
-[NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH |
-ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])
+```bash
+find_package(<PackageName>
+    [version] [EXACT] [QUIET] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE]
+    [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]]
+    [PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH]
+    [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH]
+    [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] #
+    Deprecated; does nothing. [REQUIRED] [[COMPONENTS] [components...]]
+    [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH |
+    ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])
 ```
 
-Config模式下的查找顺序, 比Module模式下要多得多, 新版本的CMake比老版本的有更多的查找顺序
+Config 模式下的查找顺序, 比 Module 模式下要多得多, 新版本的 CMake 比老版本的有更多的查找顺序
 (新增的在最优先的查找顺序). Config模式下需要查找到名为
 lower-case-package-name-config.cmake或PackageNameConfig.cmake文件.
 
-+ PackageName_ROOT的cmake变量或环境变量. CMake3.12新增. 设定CMP0074 Policy来关闭. 
++ PackageName_ROOT的cmake变量或环境变量. CMake3.12新增. 设定CMP0074 Policy来关闭.
 如果定义了PackageName_DIR cmake变量, 那么PackageName_ROOT 不起作用.
 
 + cmake特定的缓存变量 CMAKE_PREFIX_PATH CMAKE_FRAMEWORK_PATH CMAKE_APPBUNDLE_PATH
 + CMake特定的环境变量 PackageName_DIR CMAKE_PREFIX_PATH CMAKE_FRAMEWORK_PATH CMAKE_APPBUNDLE_PATH
 
-+ HINT字段指定的路径 
++ HINT字段指定的路径
 + 搜索标准的系统环境变量PATH.
 + 存储在CMake的"User Package Registry"(用户包注册表)中的路径. 通过设定
 NO_CMAKE_PACKAGE_REGISTRY, 或设定CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY为true, 来避开.
@@ -419,7 +454,7 @@ ENDIF(NAME_FOUND)
 
 ### 自定义模块实现
 
-``` cmake
+```bash
 #Findhello.cmake
 #查找hello库头文件的安装路径
 FIND_PATH(HELLO_INCLUDE_DIR Hello.h /usr/local/include/hello)

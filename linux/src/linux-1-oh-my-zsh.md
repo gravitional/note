@@ -59,26 +59,28 @@ git remote set-url origin https://gitee.com/mirrors/oh-my-zsh.git
 git pull
 ```
 
-## zsh-autosuggestions
+## [zsh-autosuggestions](https://gitee.com/graviton/zsh-autosuggestions.git)
 
-[zsh-users/zsh-autosuggestions](https://gitee.com/graviton/zsh-autosuggestions.git), 见 INSTALL.md
+见 INSTALL.md.
 
-Clone this repository into `$ZSH_CUSTOM/plugins (by default ~/.oh-my-zsh/custom/plugins)`
+将仓库克隆到 `$ZSH_CUSTOM/plugins (by default ~/.oh-my-zsh/custom/plugins)`,
+使用 国内镜像代替
 
 ```bash
 git clone https://gitee.com/graviton/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
-Add the plugin to the list of plugins for Oh My Zsh to load (inside `~/.zshrc`):
+添加到 `~/.zshrc` oh-my-zsh 插件启动项
 
-```conf
+```bash
 plugins=(
     # other plugins...
     zsh-autosuggestions
 )
 ```
 
-Start a new terminal session.
+开启新的 terminal session.
 
 ## Powerline 状态条
 

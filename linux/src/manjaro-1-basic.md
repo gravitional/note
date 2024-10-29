@@ -119,7 +119,7 @@ Theme=Nord-Light
 
 完成之后就可以注销, 重新登录之后打开`fcitx5-configtool`编辑一下相应配置:
 
-### 配置ohmyzsh
+### 配置 oh-my-zsh
 
 首先说一下这个过程不需要使用`pacman/yay`安装软件, 首先修改默认`shell`为`zsh`
 
@@ -136,13 +136,25 @@ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ```
 
-+ 安装[`autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions): 记住你之前使用过的命令
+#### 安装[`autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions)
+
+记住你之前使用过的命令, 使用国内镜像代替 github
 
 ```bash
-git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://gitee.com/graviton/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
-+ 安装 `incr`: (需要注意的是这个插件会拖慢`zsh`的速度, 新手入门可以试试)
+添加到 `~/.zshrc` oh-my-zsh 插件启动项
+
+```bash
+plugins=(
+    # other plugins...
+    zsh-autosuggestions
+)
+```
+
+#### 安装 `incr` (这个插件会拖慢`zsh`的速度, 新手入门可以试试)
 
 ```bash
 git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr
@@ -153,7 +165,7 @@ git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr
 ```bash
 nano ~/.zshrc
 # 将 plugins=(git) 改为:
-plugins=(git tmux  sudo extract  zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git tmux  sudo extract zsh-autosuggestions zsh-syntax-highlighting)
 ```
 
 这个`sudo`是`ohmyzsh`自带的插件, 功能是在你输入的命令的开头添加`sudo `, 方法是`双击Esc`
