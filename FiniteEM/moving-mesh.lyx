@@ -1906,13 +1906,123 @@ inverse quadratic(IQ) RBF
 
 inverse multiquadric(IMQ) RBF
 \begin_inset Formula 
-\begin{equation}
-\phi(r)=\frac{1}{\sqrt{1+\varepsilon^{2}r^{2}}}\label{eq:s7}
-\end{equation}
+\begin{align}
+\phi(r) & =\frac{1}{\sqrt{1+\varepsilon^{2}r^{2}}}\label{eq:s7}\\
+ & =1-\frac{\varepsilon^{2}r^{2}}{2}+\frac{3\varepsilon^{4}r^{4}}{8}-\frac{5\varepsilon^{6}r^{6}}{16}+\frac{35\varepsilon^{8}r^{8}}{128}+\cdots
+\end{align}
+
+\end_inset
+
+Power4 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\begin{cases}
+\left(1-\varepsilon r\right)^{4}\,\left(1+4\,\varepsilon r\right) & r<1/\varepsilon\\
+0 & r>=1/\varepsilon
+\end{cases}
+\]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+函数图像如下
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+phi1[
+\backslash
+[CurlyEpsilon]_, r_] := Exp[-
+\backslash
+[CurlyEpsilon]^2 r^2]; phi2[
+\backslash
+[CurlyEpsilon]_, r_] := 1/(1 + 
+\backslash
+[CurlyEpsilon]^2 r^2); phi3[
+\backslash
+[CurlyEpsilon]_, r_] := 1/Sqrt[(1 + 
+\backslash
+[CurlyEpsilon]^2 r^2)]; phi4[
+\backslash
+[CurlyEpsilon]_, r_] := (1 - 
+\backslash
+[CurlyEpsilon] r)^4 (1 + 4 
+\backslash
+[CurlyEpsilon] r); rng = 10; Plot[ { Labeled[phi1[1/rng, r] , "GA"] , Labeled[ph
+i2[1/rng, r], "IQ"] , Labeled[phi3[1/rng, r], "MIQ"] , Labeled[phi4[1/rng,
+ r], "Pwr4"] } (*,{r,0,1 rng}*) , {r, 0, 1.6 rng} (*,PlotRange->Automatic*)
+ , PlotRange -> Full , PlotRangeClipping -> True (*,PlotLabels->Automatic*)
+ ]
+\end_layout
+
+\end_inset
+
+。可以看到在 
+\begin_inset Formula $\varepsilon r\in[0,1]$
+\end_inset
+
+区间，Power4 衰减的最快，而在 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+之外，Power4 将会回升。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/RBF-exa1.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/RBF-exa2.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+左边是 
+\begin_inset Formula $\varepsilon r\in[0,1]$
+\end_inset
+
+，右边是
+\begin_inset Formula $\varepsilon r\in[0,1.6]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+qqq
 \begin_inset Formula 
 \begin{equation}
 h_{jk}=\phi_{k}\left(\left\Vert x_{j}-x_{k}^{c}\right\Vert _{2}\right),\quad j=1,\cdots,M\quad\text{and}\quad k=1,\dots,N\label{eq:s8}

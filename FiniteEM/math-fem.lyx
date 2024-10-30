@@ -1099,7 +1099,7 @@ x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}
 \end_layout
 
 \begin_layout Section
-偏序全序
+偏序全序 weak order
 \end_layout
 
 \begin_layout Standard
@@ -1340,10 +1340,143 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-STL排序相关
+STL排序相关 严格弱序 <
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "strict_partial_order"
+target "https://en.wikipedia.org/wiki/Partially_ordered_set#strict_partial_order"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An 
+\series bold
+irreflexive, strong
+\series default
+, or 
+\series bold
+strict partial order
+\series default
+ （严格偏序）is a 
+\series bold
+homogeneous relation
+\series default
+ 
+\begin_inset Formula $<$
+\end_inset
+
+ on a Set 
+\begin_inset Formula $P$
+\end_inset
+
+ that is 
+\color blue
+irreflexive, asymmetric and transitive
+\color inherit
+; 即满足以下性质对于
+\begin_inset Formula $a,b,c\in P$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+irreflexive
+\series default
+: 
+\begin_inset Formula $\lnot(a<a)$
+\end_inset
+
+，i.e.
+ 没有元素和自身有关系（也称为 anti-reflexive）。
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Asymmetry
+\series default
+: if 
+\begin_inset Formula $a<b$
+\end_inset
+
+ then no 
+\begin_inset Formula $b<a$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Transitivity
+\series default
+: if 
+\begin_inset Formula $a<b$
+\end_inset
+
+ and 
+\begin_inset Formula $b<c$
+\end_inset
+
+ then 
+\begin_inset Formula $a<c$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+irreflexivity and transitivity
+\series default
+ together imply 
+\series bold
+asymmetry
+\series default
+.
+ Also, 
+\series bold
+asymmetry
+\series default
+ implies 
+\series bold
+irreflexivity
+\series default
+.
+ 换句话说，a 
+\series bold
+transitive
+\series default
+ relation is 
+\series bold
+asymmetric
+\series default
+ if and only if it is 
+\series bold
+irreflexive
+\series default
+.
+ 所以定义中可以忽略 irreflexive or asymmetry (but no both).
+ A strict partial order 也被称为 
+\series bold
+asymmetric strict preorder
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
 CC++ STL 中 
 \begin_inset CommandInset href
 LatexCommand href
@@ -1357,60 +1490,429 @@ literal "false"
 \series bold
 严格弱序
 \series default
-。令 
+。
+\series bold
+严格弱序
+\series default
+ 比 严格偏序 多的要求就是，
+\series bold
+不可比的传递性
+\series default
+：induced 
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ is a homogeneous equivalence relation on 
+\begin_inset Formula $S$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+严格弱序的例子是自然数的
 \begin_inset Formula $<$
 \end_inset
 
- 为自定义比较器，则可以定义：
+，对应的 
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ 即 
+\begin_inset Formula $\ge$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+不可比性和不可比性的传递性
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $x>y$
+集合
+\begin_inset Formula $S$
 \end_inset
 
- 为 
-\begin_inset Formula $y<x$
-\end_inset
-
-；
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $x\le y$
-\end_inset
-
- 为 
-\begin_inset Formula $y\nless x$
-\end_inset
-
-（意思是
-\begin_inset Formula $y$
-\end_inset
-
-不满足“小于”
+中的两个元素
 \begin_inset Formula $x$
 \end_inset
 
-）。
+和 
+\begin_inset Formula $y$
+\end_inset
+
+被称为 
+\series bold
+不可比
+\series default
+（incomparable）对于
+\begin_inset Formula $<$
+\end_inset
+
+，如果 
+\begin_inset Formula $x<y$
+\end_inset
+
+ 和
+\begin_inset Formula $y<x$
+\end_inset
+
+ 都不为true。
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $x\ge y$
+A 
+\series bold
+stict partial order
+\series default
+ 
+\begin_inset Formula $<$
 \end_inset
 
- 为
-\begin_inset Formula $x\nless y$
+ is a 
+\series bold
+strict weak ordering
+\series default
+ if and only if 
+\series bold
+不可比
+\series default
+ 对于 
+\begin_inset Formula $<$
 \end_inset
 
-；
+ is an equivalence relation.
+ 不可比 对于 
+\begin_inset Formula $<$
+\end_inset
+
+ 总是集合
+\begin_inset Formula $S$
+\end_inset
+
+ 上的 homogeneous symmetric relation。不可比是 reflexive if and only if 
+\begin_inset Formula $<$
+\end_inset
+
+ is irreflexive（
+\begin_inset Formula $x<x$
+\end_inset
+
+总是为false），因此 “不可比”只需再满足 transitivity 即可成为 equivalence relation.
 \end_layout
 
 \begin_layout Itemize
+定义一个 induced homogeneous 关系 
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ on 
+\begin_inset Formula $S$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+x\lesssim y\;\text{is true}\qquad\text{if and only if}\qquad y<x\;\text{is false}
+\]
+
+\end_inset
+
+值得注意，
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ 的定义
+\series bold
+不同于
+\series default
+：
+\begin_inset Formula $x\lesssim y$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $x<y$
+\end_inset
+
+ or 
 \begin_inset Formula $x=y$
 \end_inset
 
- 为 
-\begin_inset Formula $x\nless y\,\wedge\,y\nless x$
+。Two elements 
+\begin_inset Formula $x,y\in S$
+\end_inset
+
+ are incomparable 对于
+\begin_inset Formula $<$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ 关于
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ 等价（简称
+\begin_inset Formula $\lesssim$
+\end_inset
+
+–等价），也就是说 both 
+\begin_inset Formula $x\lesssim y$
+\end_inset
+
+ and 
+\begin_inset Formula $y\lesssim x$
+\end_inset
+
+ 为 true。The relation 
+\begin_inset Quotes eld
+\end_inset
+
+不可比对于
+\begin_inset Formula $<$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ 等于说 the relation “are 
+\begin_inset Formula $\lesssim$
+\end_inset
+
+–等价”。当
+\begin_inset Formula $<$
+\end_inset
+
+本身是 irreflexive 此性质称为 
+\begin_inset Quotes eld
+\end_inset
+
+不可比的传递性
+\begin_inset Quotes erd
+\end_inset
+
+。
+\begin_inset Quotes eld
+\end_inset
+
+不可比的传递性
+\begin_inset Quotes erd
+\end_inset
+
+可作为
+\begin_inset Formula $S$
+\end_inset
+
+上的等价关系，如果 
+\begin_inset Formula $x,y\in S$
+\end_inset
+
+满足
+\begin_inset Formula $x\lesssim y$
+\end_inset
+
+ and 
+\begin_inset Formula $y\lesssim x$
+\end_inset
+
+，可以认为 
+\begin_inset Formula $x,y$
+\end_inset
+
+是 single object（等价类）。
+\end_layout
+
+\begin_layout Subsubsection
+定义
+\end_layout
+
+\begin_layout Standard
+集合
+\begin_inset Formula $S$
+\end_inset
+
+上的 
+\series bold
+strict weak ordering
+\series default
+ 
+\begin_inset Formula $<$
+\end_inset
+
+ 是一个 strict partial order，要求
+\begin_inset Formula $<$
+\end_inset
+
+ 诱导的 
+\emph on
+incomparability
+\emph default
+（不可比）关系是一个传递关系（transitive ）。具体表示为：
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Irreflexivity
+\series default
+: 
+\begin_inset Formula $\forall x\in S$
+\end_inset
+
+，it is not true 
+\begin_inset Formula $x<x$
+\end_inset
+
+；对应于 relation 
+\begin_inset Formula $\lesssim$
+\end_inset
+
+ on 
+\begin_inset Formula $S$
+\end_inset
+
+ is reflexive.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Transitivity
+\series default
+: 
+\begin_inset Formula $\forall x,y,z\in S$
+\end_inset
+
+, if 
+\begin_inset Formula $x<y$
+\end_inset
+
+ and 
+\begin_inset Formula $y<z$
+\end_inset
+
+ then 
+\begin_inset Formula $x<z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Asymmetry
+\series default
+: 
+\begin_inset Formula $\forall x,y\in S$
+\end_inset
+
+, if 
+\begin_inset Formula $x<y$
+\end_inset
+
+ is true then 
+\begin_inset Formula $y<x$
+\end_inset
+
+ is false.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Transitivity of incomparability
+\series default
+: 
+\begin_inset Formula $\forall x,y,z\in S$
+\end_inset
+
+, if 
+\begin_inset Formula $x$
+\end_inset
+
+ is incomparability with 
+\begin_inset Formula $y$
+\end_inset
+
+ (neither 
+\begin_inset Formula $x<y$
+\end_inset
+
+ or 
+\begin_inset Formula $y<x$
+\end_inset
+
+) and if 
+\begin_inset Formula $y$
+\end_inset
+
+ is incomparability with 
+\begin_inset Formula $z,$
+\end_inset
+
+then 
+\begin_inset Formula $x$
+\end_inset
+
+ is incomparability with 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+若
+\begin_inset Formula $<$
+\end_inset
+
+满足 
+\series bold
+induced incomparability relation是等价关系（严格弱序）
+\series default
+，则集合
+\begin_inset Formula $S$
+\end_inset
+
+可以按 
+\begin_inset Formula $<$
+\end_inset
+
+ strictly totally ordered，设
+\begin_inset Formula $S$
+\end_inset
+
+的等价类集合为
+\begin_inset Formula $P$
+\end_inset
+
+，则 
+\begin_inset Formula $\forall A,B\in P$
+\end_inset
+
+可以定义：
+\begin_inset Formula $A<B$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $a<b$
+\end_inset
+
+ for some 代表元 
+\begin_inset Formula $a\in A$
+\end_inset
+
+ and 
+\begin_inset Formula $b\in B$
 \end_inset
 
 。
