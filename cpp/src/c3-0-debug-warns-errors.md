@@ -43,7 +43,7 @@ C++编译器只能将源代码嵌入, 而没办法从外部库中将机器代码
 1. 在类的 声明文件(.h) 文件的后面, 用 `inline` 关键字完成定义, 因为和声明在同一个文件中, 所以编译器可以找到他
 1. 在别的文件中定义时候, 就不能再加 `inline` 关键字了
 
-## vector 容器, unique_ptr 尝试引用已删除的函数
+## C2280, vector 容器, unique_ptr 尝试引用已删除的函数
 
 [C++ Error C2280 尝试引用已删除的函数](https://blog.csdn.net/qq_26735913/article/details/109688203)
 
@@ -63,7 +63,7 @@ xxx error C2280: "unique_ptr(const unique_ptr &)": 尝试引用已删除的函�
 最简单的解决方式是, 使用 `裸指针`,
 并且在 `Con` 的封闭类的析构函数中, `delete` 这些 `new` 出来的对象.
 
-## 没有为显式模板实例化请求提供适当的定义
+## C4661, 没有为显式模板实例化请求提供适当的定义
 
 [编译器警告(等级1)C4661](https://learn.microsoft.com/zh-cn/cpp/error-messages/compiler-warnings/compiler-warning-level-1-c4661?view=msvc-170)
 [警告C4661: 没有为显式模板实例化请求提供适当的定义](https://www.codenong.com/44160467/)
@@ -131,7 +131,7 @@ Util::Copy(T* dst, T* scr, size_t n);
 memcpy(T* dst, const T* scr, size_t Size)
 ```
 
-## 超出修饰名的长度, 名称被截断
+## C4503 超出修饰名的长度, 名称被截断
 
 [编译器警告(等级 1)C4503](https://learn.microsoft.com/zh-cn/cpp/error-messages/compiler-warnings/compiler-warning-level-1-c4503?view=msvc-170)
 
@@ -316,9 +316,10 @@ uint64_t n3 = 1000ui64 * 1000ui64 * 1000ui64 * 10ui64;
 
 [Error LNK2001 无法解析的外部符号 的几种情况及解决办法](https://blog.csdn.net/shenyulv/article/details/6699836)
 
-## 编译器错误 C2766, 编译器错误 C2766
+## C2766, 编译器错误
 
-不允许重复显式专用化.  有关详细信息, 请参阅 [函数模板的显式专用化](https://learn.microsoft.com/zh-cn/cpp/cpp/explicit-specialization-of-function-templates?view=msvc-170).
+不允许重复显式专用化.
+有关详细信息, 请参阅 [函数模板的显式专用化](https://learn.microsoft.com/zh-cn/cpp/cpp/explicit-specialization-of-function-templates?view=msvc-170).
 
 以下示例生成 C2766:
 
@@ -337,7 +338,7 @@ struct A<int> {};   // C2766
 // struct A<char> {};
 ```
 
-## Compiler warning (level 1) C4834
+## C4834, Compiler warning (level 1)
 
 [Compiler warning (level 1) C4834](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/c4834?view=msvc-170)
 
@@ -440,4 +441,174 @@ delete _adapter0;
 #if defined(_MSC_VER)
 #pragma warning(pop)  # 恢复compiler警告
 #endif
+```
+
+
+## C26495
+
+[警告 C26495](https://learn.microsoft.com/zh-cn/cpp/code-quality/c26495?view=msvc-170)
+
+变量 "variable" 未初始化. 始终初始化成员变量 (type.6).
+Variable 'variable' is uninitialized. Always initialize a member variable (type.6).
+
+## Remarks
+
+成员变量 没有被构造函数或 初始化器(initializer) 初始化.
+请确保在构造结束时初始化了所有变量.
+更多信息, 请参见 C++ 核心指南 [Type.6](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#SS-type) 和 [C.48](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c48-prefer-in-class-initializers-to-member-initializers-in-constructors-for-constant-initializers).
+
+该检查属于过程内检查(intra-procedural).
+只要有函数调用到 非Const成员函数, 检查就会假定该成员函数初始化了所有成员.
+这种启发式方法可能会导致错误遗漏, 因此采用这种方法是为了避免出现错误结果.
+此外, 当一个成员通过 非Const引用 传递给函数时,
+检查会假定该函数初始化了该成员.
+
+代码分析名称: `MEMBER_UNINIT`
+
+示例
+下面的示例产生了 C26495 警告, 因为在创建 MyStruct 对象时没有初始化成员变量值.
+
+```C++
+struct MyStruct
+{
+    int value;
+    MyStruct() {} // C26495, MyStruct::value is uninitialized
+};
+```
+
+To resolve the issue, you can add in-class initialization to all of the member variables.
+
+```C++
+struct MyStruct
+{
+    int value{};  // empty brace initializer sets value to 0
+    MyStruct() {} // no warning, MyStruct::value is set via default member initialization
+};
+```
+
+## C6011
+
+[Warning C6011](https://learn.microsoft.com/en-us/cpp/code-quality/c6011?view=msvc-170)
+
+解引用 `NULL` 指针 `pointer-name`.
+以下代码会产生此警告, 因为调用 `malloc`可能会在内存不足时返回 null:
+
+```cpp
+#include <malloc.h>
+
+void f( )
+{
+  char *p = ( char * ) malloc( 10 );
+  *p = '\0';
+
+  // code ...
+ free( p );
+}
+```
+
+要纠正这一警告, 请检查指针是否为空值, 如以下代码所示:
+
+```cpp
+#include <malloc.h>
+void f( )
+{
+  char *p = ( char * )malloc ( 10 );
+  if ( p )
+  {
+    *p = '\0';
+    // code ...
+
+    free( p );
+  }
+}
+```
+
+函数可以通过在 预条件(Pre condition) 中使用 `Null属性` 来注释参数.
+在 解引用参数 之前, 请在这些函数内部分配内存.
+下面的代码生成了 C6011 警告,
+因为尝试在函数内部 解引用空指针 (pc), 而没有首先分配内存:
+
+```cpp
+#include <sal.h>
+using namespace vc_attributes;
+void f([Pre(Null=Yes)] char* pc)
+{
+  *pc='\0'; // warning C6011 - pc is null
+  // code ...
+}
+```
+
+不小心使用 `malloc` 和 `free` 会导致内存泄漏和异常.
+要想彻底减少此类泄漏和异常问题, 应避免自己分配原始内存.
+
+相反, 应使用 C++ 标准库 (STL) 提供的机制.
+这些机制包括 shared_ptr, unique_ptr 和 `std::vector`.
+更多信息, 请参阅智能指针和 C++ 标准库.
+
+## C2910 "function": 不能显式专用化
+
+编译器检测到尝试将函数 显式专用化 两次. explicit specializition
+
+下面的示例生成 C2910:
+
+```cpp
+// C2910.cpp
+// compile with: /c
+template <class T>
+struct S;
+/// 特化, 且已经 定义 f()
+template <>
+struct S<int> { void f() {} };
+
+template <>
+void S<int>::f() {}   // C2910 delete this specialization
+```
+
+如果你尝试将 非模板成员 显式专用化, 也可能出现 `C2910`.
+也就是说, 只能将函数模板显式专用化.
+
+下面的示例生成 C2910:
+
+```cpp
+// C2910b.cpp
+// compile with: /c
+template <class T> 
+struct A {
+   A(T* p);
+};
+template <class T>
+inline A<T>::A(T* p) {}
+
+/// 成员函数 f 声明
+template <>
+struct A<void> {
+   A(void* p);
+};
+
+//---------- C2910; 尝试特化成员函数; A<void> 此时已经是普通类; gcc 可以编过,虽然
+template <>
+A<void>::A(void* p){}   
+//-------- 应该使用下面的写法
+// A<void>::A(void* p){}
+```
+
+此错误还可能来自于 Visual Studio .NET 2003 中执行的编译器一致性工作.
+要使代码在 Visual Studio .NET 2003 和 Visual Studio .NET 版本的 Visual C++ 中有效, 
+请删除 `template <>`.
+
+```cpp
+// C2910c.cpp
+// compile with: /c
+template <class T> class A {
+   void f();
+};
+
+// 类模板特化, 成员函数 f 声明
+template <> class A<int> {
+   void f();
+};
+
+template <> void A<int>::f() {}   // C2910
+//------ 使用下面的写法
+// void A<int>::f(){}   // OK
 ```
