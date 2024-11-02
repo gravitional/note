@@ -1,5 +1,18 @@
 # lyx
 
+## lyx bug
+
+lyx 2.4.2.1 的bug.
+
+对于染色的公式, 如果末尾是 `]`, lyx 的翻译是错误的, 
+
+```latex
+\det[J\left(\xi,\eta\right)}\mathclose{\color{blue}]}\dd{\xi}\dd{\eta}
+```
+
+其中的 `\mathclose{\color{blue}]}`, 含有错误的 `]`,
+临时的解决办法是, 在`]`输入一个额外的空格, 快捷键是 `Shift+Option+Space`.
+
 ## lyx 快捷键
 
 + `ctrl+M` 插入数学

@@ -88,3 +88,11 @@
 \usepackage{physics-ymy} % physics by ymy
 \setlength{\extrarowheight}{2pt} % 给array环境添加额外间距
 % \setlength{\lineskiplimit}{2pt} % 设置最小间距
+% https://github.com/CTeX-org/ctex-kit/issues/723
+\ExplSyntaxOn
+\clist_map_inline:nn { fp, int, dim, skip, muskip }
+  {
+    \cs_generate_variant:cn { #1_set:Nn }  { NV }
+    \cs_generate_variant:cn { #1_gset:Nn } { NV }
+  }
+\ExplSyntaxOff
