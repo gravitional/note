@@ -10,3 +10,9 @@
 https://sspai.com/post/69601
 https://krasjet.com/voice/pdf.tocgen/
 https://github.com/Krasjet/pdf.tocgen
+
+## [zathura](https://pwmt.org/projects/zathura/installation/)
+
+## [girara](https://pwmt.org/projects/girara/)
+
+## [Setting up GTK for Windows](https://www.gtk.org/docs/installations/windows/)
