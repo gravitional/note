@@ -425,7 +425,7 @@ git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
 #### `git checkout [<branch>]`
 
 + 要准备在 `<branch>` 上工作, 需要更新 索引 和 工作树 中的文件,
-并将 HEAD 指向该分支, 从而切换到该分支.
+并将 `HEAD` 指向该分支, 从而切换到该分支.
 对 工作树 中文件的本地修改将被保留, 以便提交到 `<branch>`.
 
 + 如果找不到 `<branch>`, 但正好有一个远端(就叫它 `<remote>`)存在名称匹配的 跟踪分支(tracking branch),
@@ -489,7 +489,7 @@ $ git branch foo
 $ git tag foo
 ```
 
-创建一个新的分支 foo, 它引用了提交的 f, 然后更新 HEAD 以引用分支 foo.
+创建一个新的分支 foo, 它引用了提交的 `f`, 然后更新 HEAD 以引用分支 foo.
 换句话说, 这条命令之后, 我们将不再处于分离的 HEAD 状态.
 类似地, 创建一个新的分支 foo, 它指向提交的 f, 但让 HEAD 脱离.
 创建一个新的标签 foo, 它引用了提交的 f, 但 HEAD 被分离.
@@ -512,7 +512,7 @@ git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 ```
 
 + 在前三种形式中, 将 `entries` 从 `<tree-ish>` 复制到 `index` .
-+ 在最后一种形式中, 将当前分支头( `HEAD` )设置为 `<commit>` ,
++ 在最后一种形式中, 将当前分支头(`HEAD`)设置为 `<commit>` ,
 可以选择修改 `index` 和 `working tree` 以使其匹配.
 ` <tree-ish>` / `<commit>`在所有形式中的默认值都是 `HEAD`.
 
@@ -529,7 +529,7 @@ git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 `reset --soft` 会在重置 `HEAD` 和 `branch` 时, 保留 `working tree` 和 `index` 中的内容,
 并把重置 `HEAD` 所带来的新的差异放进 `index` .
 
-+ `reset 不加参数(--mixed)` or 别名 `grh <commit>`
++ `reset` 不加参数(`--mixed`) or 别名 `grh <commit>`
 
 清空 `index` , `mix` 到 `working tree` 中
 

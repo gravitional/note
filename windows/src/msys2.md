@@ -98,6 +98,49 @@ architecture, 使用的 system libraries 等.
 例如, 在 `UCRT64` 环境中, `$PATH` 变量以`/ucrt64/bin:/usr/bin`开头,
 因此你可以获得所有基于 ucrt64 的工具以及所有 MSYS 工具.
 
+### 环境区别
+
+[在 msys2 中的 mingw64 ,  ucrt64 ,  clang64 的区别与相同点有啥?](https://www.zhihu.com/question/463666011/answer/1927907983)
+
+clang 和 gcc 是两个不同的 C/C++ 编译器,
+而 mingw-w64 是一个 Windows 上的编译和运行时环境.
+注意, mingw-w64 本身并不是一个编译器, 而是一组库, 头文件和实用工具.
+
+gcc 需要 mingw-w64 环境才能在 Windows 上编译程序,
+加上最初(现已过时)的 mingw 项目就是专为 gcc 设计的,
+因此通常用 mingw64 代指 64 位的 gcc 和 mingw-w64 环境.
+
+mingw64, ucrt64, clang64 都是 Windows 原生程序(不依赖 cygwin.dll),
+不过 mingw64 是很早就有的, 后两者是最近(本回答最初写于2021年6月)才新加的,
+~~所以只是选一个用的话就 mingw64 就没问题. ~~(划掉)
+
+2022年11月25日更新: 现在 msys2 官方推荐优先选择 ucrt64,
+经过一年多时间, 现在 ucrt64 环境已经非常稳定了,
+而且对 UTF-8 语言环境的支持更好.
+后两者先后刚出来时我还查过,
+简而言之, 这三者的区别是: mingw64 与 ucrt64 都是用 gcc 编译器编译的 Windows 64 位程序,
+只不过它们链接到的 crt(C runtime)不同,
+mingw64 是链接到了 msvcrt , 而 ucrt64 则是链接到了 Windows 上新的 ucrt 上.
+而 clang64 很好理解, 就是用 clang 而非 gcc 来编译各种库.
+另外它也是链接到了 ucrt 而非 msvcrt. 三者是共同点是, 它们都需要 mingw-w64 环境来进行编译.
+以 `zstd` 为例:
+
+```bash
+ldd /ucrt64/bin/zstd
+ldd /mingw64/bin/zstd
+ldd /clang64/bin/zstd
+ldd /usr/bin/zstd
+```
+
+`/usr/bin/zstd` 就是依赖 cygwin 的非原生程序,
+这里的 `msys-2.0.dll` 实际上就是 msys2 版的 `cygwin.dll`
+
+简而言之,
+
++ mingw64/32=msvcrt+libstdc++ +GCC
++ UCRT64 = UCRT + libstdc++ +GCC
++ CLANG64 = UCRT + clang + libc++
+
 ### overview
 
 Name  Prefix  Toolchain  Architecture  C Library  C++ Library

@@ -1,5 +1,28 @@
 # cpan 使用
 
+## 自带 CPAN 使用说明
+
+[How to install CPAN modules](https://www.cpan.org/modules/INSTALL.html)
+
+安装 `cpanm`, 以便更轻松地安装其他模块.
+你需要在终端模拟器(macOS, Win32, Linux)中键入以下命令
+
+```bash
+cpan App::cpanminus
+```
+
+现在安装你能找到的任何模块. `-n` 表示 `-no-test`
+
+```bash
+cpanm -n Module::Name
+```
+
+### 例
+
+```bash
+cpanm XML::Parser
+```
+
 ## 使用 cpan.bat 安装, 建议
 
 如果需要安装 [Devel::REPL](https://metacpan.org/pod/Devel::REPL) 模块, 使用
@@ -22,7 +45,7 @@ cpan -i -T Devel::REPL
 
 但是会缺少依赖.
 
-使用 cpan 安装的包, 二进制文件 和 lib 文件分别位于
+使用 `cpan` 安装的包, 二进制文件 和 lib 文件分别位于
 
 ```bash
 C:\Strawberry\perl\site\bin

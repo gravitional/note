@@ -1,5 +1,12 @@
 # git reset 例子
 
+[Git 分支 - 分支简介](https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%AE%80%E4%BB%8B)
+
+`HEAD` 是二级指针, 指向例如 `master`, `develop` 等分支头, 如图所示,
+![img](https://git-scm.com/book/zh/v2/images/head-to-master.png)
+
+`git-reset` 默认操作 `HEAD` 指向的分支头, 如 `develop`.
+
 ## Undo add
 
 撤销 index 中的改动, 匹配 `HEAD`.
