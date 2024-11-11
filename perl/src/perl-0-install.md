@@ -54,3 +54,7 @@ c:\myperl\update_env.pl.bat ... 这是可选的
 + 和 [Notepad3](https://sourceforge.net/projects/notepad3/),
 
 这两个软件都包括语法高亮功能语法高亮的perl脚本. 如果你愿意, 你甚至可以使用记事本.
+
+## [perl IDE/Perl5-IDEA](https://github.com/Camelcade/Perl5-IDEA/wiki)
+
+[Getting started](https://github.com/Camelcade/Perl5-IDEA/wiki/Getting-started)

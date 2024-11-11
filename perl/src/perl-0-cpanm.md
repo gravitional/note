@@ -26,13 +26,13 @@ cpan App::cpanminus
 cpanm -n Module::Name
 ```
 
-### 例
+### 安装建议
 
 ```bash
-cpanm XML::Parser
+cpanm --mirror http://mirrors.aliyun.com/CPAN -n  File::Utils CPAN ExtUtils::MakeMaker Module::Build Bundle::CPAN CPANPLUS App::pmuninstall
 ```
 
-## 使用 cpan.bat 安装, 建议
+### cpan -T 跳过测试
 
 如果需要安装 [Devel::REPL](https://metacpan.org/pod/Devel::REPL) 模块, 使用
 
