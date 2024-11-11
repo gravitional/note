@@ -1,5 +1,14 @@
 # cpan 使用
 
+## [windows msys2 perl](https://packages.msys2.org/groups/perl-modules)
+
+windows 在 msys2 下使用 perl, 可以使用 pacman 安装 perl 常用发行包,
+使用自带的 cpan 安装大概率会失败, 因为缺少 glibc 的很多头文件.
+
+```bash
+pacman -S perl-modules
+```
+
 ## 自带 CPAN 使用说明
 
 [How to install CPAN modules](https://www.cpan.org/modules/INSTALL.html)

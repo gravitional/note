@@ -6,19 +6,30 @@
 `aria2`程序分成前后端, 后端是一个叫做`aria2c.exe`的程序, 在命令行中运行.
 前端是一个网页`index.html`, 在浏览器中运行.
 
-## aria2c.exe
-
-+ 从官网地址[aria2/releases](https://github.com/aria2/aria2/releases)下载系统对应版本的程序,
-例如`aria2-1.35.0-win-64bit-build1.zip`,解压缩. 放到一个准备好的目录,比如`d:\aria2`.
-
 ## ariaNg前端
+
+[mayswind/AriaNg]: https://github.com/mayswind/AriaNg/releases
 
 从[mayswind/AriaNg][]下载网页版界面, 下载 `AriaNg-xxx-AllInOne.zip`,
 可以也放到 `aria2` 文件夹里面, 用浏览器打开里面的`index.html`,
 它默认会监听本地的`6800`端口, 后面我们会配置`aria2`, 让它连接上后台服务.
 可以`ctrl+D`收藏这个页面, 方便下次使用.
 
-[mayswind/AriaNg]: https://github.com/mayswind/AriaNg/releases
+如果连接不上, 记得查看配置文件中的选项
+
+```conf
+# RPC监听端口, 可修改, 默认:6800; AriaNg设置->右边->RPC地址
+rpc-listen-port=6800 端口
+# 设置的RPC授权令牌, 网页端需要对应; AriaNg设置->右边->RPC密钥
+rpc-secret=abcd
+# 启用加密后RPC服务, 需要使用https或者wss协议连接; AriaNg设置->右边->RPC协议
+rpc-secure=true
+```
+
+## aria2c.exe
+
++ 从官网地址[aria2/releases](https://github.com/aria2/aria2/releases)下载系统对应版本的程序,
+例如`aria2-1.35.0-win-64bit-build1.zip`,解压缩. 放到一个准备好的目录,比如`d:\aria2`.
 
 ## aria2c 配置文件
 
@@ -111,11 +122,11 @@ $newPath=$path+';'+$mypath;$newPath -split ';'
 我使用的配置如下:
 
 ```bash
-## '#'开头为注释内容, 选项都有相应的注释说明, 根据需要修改 ##
-## 被注释的选项填写的是默认值, 建议在需要修改时再取消注释  ##
-## 文件保存相关 ##
+# '#'开头为注释内容, 选项都有相应的注释说明, 根据需要修改
+# 被注释的选项填写的是默认值, 建议在需要修改时再取消注释
+# 文件保存相关
 # 文件的保存路径(可使用绝对路径或相对路径), 默认: 当前启动位置
-dir=C:/Users/yd/Downloads
+dir=C:/Users/qingz/Downloads
 # 启用磁盘缓存, 0为禁用缓存, 需1.16以上版本, 默认:16M
 #disk-cache=32M
 # 文件预分配方式, 能有效降低磁盘碎片, 默认:prealloc
@@ -125,9 +136,9 @@ dir=C:/Users/yd/Downloads
 file-allocation=falloc
 # 断点续传
 continue=true
-## 下载连接相关 ##
+## 下载连接相关
 # 最大同时下载任务数, 运行时可修改, 默认:5
-max-concurrent-downloads=6
+max-concurrent-downloads=20
 # 同一服务器连接数, 添加时可指定, 默认:1
 max-connection-per-server=5
 # 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M
@@ -153,11 +164,11 @@ min-split-size=10M
 #retry-wait=0
 ## 进度保存相关 ##
 # 从会话文件中读取下载任务
-input-file=C:/MyProgram/aria2/aria2.session
+input-file=aria2.session
 # 在Aria2退出时保存`错误/未完成`的下载任务到会话文件
-save-session=C:/MyProgram/aria2/aria2.session
+save-session=aria2.session
 # 定时保存会话, 0为退出时才保存, 需1.16.1以上版本, 默认:0
-#save-session-interval=60
+save-session-interval=100
 ## RPC相关设置 ##
 # 启用RPC, 默认:false
 enable-rpc=true
@@ -167,17 +178,16 @@ rpc-allow-origin-all=true
 rpc-listen-all=true
 # 事件轮询方式, 取值:[epoll, kqueue, port, poll, select], 不同系统默认值不同
 #event-poll=select
-# RPC监听端口, 端口被占用时可以修改, 默认:6800
+# RPC监听端口, 可修改, 默认:6800; AriaNg设置->右边->RPC地址
 rpc-listen-port=6800
-# 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项, 新手可以先不管
-#rpc-secret=<TOKEN>
+# 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项, 新手可以先不管 网页端需要对应; AriaNg设置->右边->RPC密钥
+rpc-secret=abcd
 # 设置的RPC访问用户名, 此选项新版已废弃, 建议改用 --rpc-secret 选项
 #rpc-user=<USER>
 # 设置的RPC访问密码, 此选项新版已废弃, 建议改用 --rpc-secret 选项
 #rpc-passwd=<PASSWD>
-# 是否启用 RPC 服务的 SSL/TLS 加密,
-# 启用加密后 RPC 服务需要使用 https 或者 wss 协议连接
-#rpc-secure=true
+# 是否启用 RPC 服务的 SSL/TLS 加密; 启用加密后RPC服务, 需要使用https或者wss协议连接; AriaNg设置->右边->RPC协议
+# rpc-secure=true
 # 在 RPC 服务中启用 SSL/TLS 加密时的证书文件,
 # 使用 PEM 格式时,您必须通过 --rpc-private-key 指定私钥
 #rpc-certificate=/path/to/certificate.pem
@@ -185,7 +195,7 @@ rpc-listen-port=6800
 #rpc-private-key=/path/to/certificate.key
 ## BT/PT下载相关 ##
 # 当下载的是一个种子(以.torrent结尾)时, 自动开始BT任务, 默认:true
-#follow-torrent=true
+follow-torrent=true
 # BT监听端口, 当端口被屏蔽时使用, 默认:6881-6999
 listen-port=51413
 # 单个种子最大连接数, 默认:55
@@ -210,12 +220,13 @@ peer-agent=Transmission/2.77
 seed-ratio=0
 # 强制保存会话, 即使任务已经完成, 默认:false
 # 较新的版本开启后会在任务完成后依然保留.aria2文件
-#force-save=false
+# force-save=true
 # BT校验相关, 默认:true
-#bt-hash-check-seed=true
+# bt-hash-check-seed=true
 # 继续之前的BT任务时, 无需再次校验, 默认:false
 bt-seed-unverified=true
 # 保存磁力链接元数据为种子文件(.torrent文件), 默认:false
-# bt-tracker 链接, 记得修改成最新的, 粘贴到等号后面. https://github.com/XIU2/TrackersListCollection
-bt-tracker=
+bt-save-metadata=true
+# bt-tracker 链接, 记得修改成最新的, 粘贴到等号后面. search Aria2
+# https://github.com/XIU2/TrackersListCollection
 ```
