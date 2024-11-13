@@ -109,3 +109,46 @@ flag    别名     描述     可选项     默认
         diff2html --ig package-lock.json --ig yarn.lock
 
 >注意例子中的 `--`.
+
+## `git diff [<options>] <commit> <commit>…​ <commit> [--] [<path>…​]`
+
+此形式用于查看 merge commit 的结果.
+第一个列出的 `<commit>` 必须是合并本身;
+其余两个或更多 commit 应是其父级提交.
+快捷方式是使用后缀 `^@` 和 `^!`,
+如果 A 是 merge commit, 那么 `git diff A A^@`, `git diff A^!`, `git show A`
+都给出相同的 combined diff.
+
+## `git diff [<options>] <commit>..<commit> [--] [<path>…​]`
+
+这与之前的形式(不带 `..`)同义,
+用于查看两个任意 `<commit>` 之间的改动.
+如果省略了一边的 `<commit>`, 效果与使用 `HEAD` 相同. 
+例如查看从 `HEAD首父节点` 到 `HEAD` 的更改
+
+```bash
+git diff HEAD^..
+```
+
+## `git diff [<options>] <commit>...<commit> [--] [<path>…​]`
+
+[gitrevisions[7]]: https://git-scm.com/docs/gitrevisions
+[git-merge[1]]: https://git-scm.com/docs/git-merge
+
+此形式用于查看 changes on the branch 至多包含第二个 `<commit>`, 从两个 `<commit>` 的公共祖先开始.
+
+`git diff A...B` 等同于 `git diff $(git merge-base A B) B`.
+您可以省略 `<commit>` 中的任何一个, 效果与使用 `HEAD` 相同.
+
+为了以防万一, 需要注意的是, 除了 `--merge-base` 和最后两种使用 `..` 符号的形式外,
+上述描述中的所有 `<commit>` 都可以是任何 `<tree>`.
+我们感兴趣的是名为 `AUTO_MERGE` 的 `ref` 所指向的树,
+它是由 `ort` 合并策略在遇到合并冲突时写入的, 参见 [git-merge[1]][].
+将工作树与 `AUTO_MERGE` 进行比较,
+可以看到你迄今为止为解决文本冲突所做的改动(见下面的示例).
+
+关于 `<commit>` 的更多拼写方式,
+请参阅 [gitrevisions[7]][] 中的 "SPECIFYING REVISIONS" 部分.
+不过, `git diff` 是比较两个端点(endpoints), 而不是范围(ranges),
+而范围符号(`<commit>...<commit>` 和 `<commit>...<commit>`)
+并不意味着 [gitrevisions[7]][] 中 "SPECIFYING RANGES "一节所定义的范围.

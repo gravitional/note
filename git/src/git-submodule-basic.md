@@ -107,3 +107,48 @@ update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--forc
 如果指定了 `--filter <filter spec>`,
 给定的 `partial clone filter` 将应用于子模块.
 有关过滤器规格的详情, 请参阅 git-rev-list(1).
+
+## 状态, `status [--cached] [--recursive] [--] [<path>…​]`
+
+显示子模块的状态
+
+这将打印每个子模块当前 已checkout的commit的 `SHA-1`, 
+以及子模块路径和 `git describe` 对 `SHA-1` 的输出.
+如果子模块未初始化, 则每个 `SHA-1` 都可能以 `-` 为前缀;
+如果当前签出的子模块提交 与 上层仓库索引中的 `SHA-1` 不匹配,
+则以 `+` 为前缀; 如果子模块有合并冲突, 则以 `U` 为前缀. 
+
++ 如果指定 `--cached`, 该命令将打印 superproject 中记录的每个子模块的 `SHA-1`. 
+
++ 如果指定 `--recursive`, 该命令将递归到嵌套子模块, 并显示它们的状态. 
+
+如果你只对当前初始化的子模块相对于 `index` 或 `HEAD` 中记录的提交的变化感兴趣, 
+[git-status[1]](https://git-scm.com/docs/git-status) 和 [git-diff[1]](https://git-scm.com/docs/git-diff) 也会提供这方面的信息(还能报告子模块工作树的变化). 
+
+### 日志, `git log --submodule[=<format>]`
+
+指定 子模块差异的显示方式. 
+当指定 `--submodule=short` 时, 将使用简短格式. 
+这种格式只显示范围开始和结束时的提交名称. 
+指定 `--submodule` 或 `--submodule=log` 时, 将使用日志格式. 
+这种格式会像 [git-submodule[1] summary](https://git-scm.com/docs/git-submodule) 那样列出范围内的提交. 
+如果指定 `--submodule=diff`, 则使用 diff 格式. 
+这种格式显示子模块内容在提交范围之间的 inline diff. 
+默认使用 `diff.submodule`, 如果配置选项未设置, 则使用 `short` 格式. 
+
+## 总结, `summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>…​]`
+
+显示 `给定提交`(默认为 `HEAD`)和 `工作树`/`索引` 之间的提交摘要.
+对于某个 子模块, 会显示从给定的 superproject commit 到索引或工作树(由 `--cached` 切换)之间的一系列提交. 
+如果给出选项 `--files`, 则显示子模块中从 superproject index 到子模块工作树之间的一系列提交
+(该选项不允许使用 `--cached` 选项或提供明确的 commit). 
+在[git-diff[1]](https://git-scm.com/docs/git-diff)中使用 `--submodule=log` 选项也能提供该信息. 
+
+## 查看子模块 SHA-1 更改
+
+```bash
+# 首父节点
+git diff HEAD^..
+# 次父节点
+git diff HEAD^2..
+```

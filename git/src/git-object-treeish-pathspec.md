@@ -367,19 +367,21 @@ b042a... blob   22054 5799 1463
 
 ## revision 的写法
 
-A revision parameter  `<rev>`一般是`commit`,
-它使用what is called an extended `SHA-1` syntax
+`revision` 参数 `<rev>`一般是`commit`,
+它使用拓展的 `SHA-1` 语法(an extended `SHA-1` syntax)
 
 ### sha1
 
-`<sha1>`, e.g. `dae86e1950b1277e545cee180551750029cfe735`, `dae86e`
+`<sha1>`, 例如 `dae86e1950b1277e545cee180551750029cfe735`, `dae86e`
 
-The full SHA-1 object name (40-byte hexadecimal string), or a leading substring that is  within the repository
+The full `SHA-1` object name (40-byte hexadecimal string),
+or a leading substring that is  within the repository
 
 ### `<describeOutput>`, e.g. `v1.7.4.2-679-g3bee7fb`
 
 Output from git describe;
-i.e. a closest tag,  optionally followed by a dash and a number of commits,  followed by a dash, a g, and an abbreviated object name.
+i.e. a closest tag,  optionally followed by a dash and a number of commits,
+followed by a dash, a g, and an abbreviated object name.
 
 ### refname
 
@@ -394,26 +396,29 @@ If you happen to have both `heads/master` and `tags/master`,you can explicitly s
 
 只有 `@`, 将被理解成 `HEAD` 的简写.
 
-***
-`<refname>@{<date>}`, e.g. `master@{yesterday}`, `HEAD@{5 minutes ago}`
++ `<refname>@{<date>}`, e.g. `master@{yesterday}`, `HEAD@{5 minutes ago}`
 
-A ref followed by the suffix `@` with a 日期包围在大括号中 (e.g.  `{yesterday}`, `{1 month 2 weeks 3 days 1 hour 1 second ago}` or `{1979-02-26 18:30:00}`) specifies the value of the ref at a prior point in time.
+A ref followed by the suffix `@` with a 日期包围在大括号中
+(e.g.  `{yesterday}`, `{1 month 2 weeks 3 days 1 hour 1 second ago}`
+or `{1979-02-26 18:30:00}`) specifies the value of the ref at a prior point in time.
 
 这个后缀只能用在 `ref name` 后面.它会寻找给定时间内的状态, 比如上星期,
 如果你想寻找时间段内的, 用 `--since` and `--until`.
 
 #### `<refname>@{<n>}, e.g. master@{1}`
 
-A `ref` followed by the suffix `@` with an 大括号中的顺序(e.g.  `{1}`, `{15}`) specifies the `n-th` prior value of that `ref`.
+`ref`后面跟着 `@`, 再加上 大括号和一个序号(例如 `{1}`, `{15}`)
+指定 `ref`的 第 `n` 个先前值.
 
-For example `master@{1}` is the immediate prior value of `master` while `master@{5}` is the 5th prior value of master.
+例如 `master@{1}` 是 `master` 最近的值(immediate prior value), 
+0-based, 即 master 是 `0`
+`git diff ..@{1}` 就是跟上一次的差别.
+而 `master@{5}` 是 master 之前的 5th 提交.
 
-This suffix may only be used immediately following a ref name and the ref must have an existing log (`$GIT_DIR/logs/<refname>`).
+这个后缀只能紧跟着 `ref` 名称, 并且 ref 必须存在 log (`$GIT_DIR/logs/<refname>`).
 
-`@{<n>}`, e.g. `@{1}`
-
-如果省略前面的`ref`指定的话, 默认指的是当前分支
-
++ `@{<n>}`, e.g. `@{1}`
+如果省略前面的`ref`指定的话, 默认指的是 `当前分支`
 For example, if you are on branch blabla then @{1} means the same as blabla@{1}.
 
 #### `@{-<n>}, e.g. @{-1}`
@@ -446,7 +451,7 @@ refs/remotes/myfork/mybranch
 
 后缀`@{push}` or `@{upstream}`大小写不敏感
 
-### ^ caret and ~ tilde
+### `^` caret 和 `~` 波浪号
 
 `<rev>^`, e.g. `HEAD^`, `v1.5.1^0`
 
@@ -457,7 +462,7 @@ As a special rule,` <rev>^0` 指向自身, 可以用`tag`(tag object)指向提�
 
 ### `<rev>~<n>`, e.g. `master~3`
 
-A suffix `~<n>` to a revision parameter 之的是第`n`个首位父节点,
+revision 参数的后缀 `~<n>` 指的是 第`n`个首位父节点,
 I.e.  `<rev>~3`等价于`<rev>^^^`, 等价于 `<rev>^1^1^1`.
 
 参见下面的图示
@@ -477,13 +482,11 @@ without requiring `rev` to be a tag, and without dereferencing rev;  because a t
 
 `rev^{tag}` can be used to ensure that `rev` identifies an existing tag object.
 
-***
-`<rev>^{}`, e.g. `v0.99.8^{}`
++ `<rev>^{}`, e.g. `v0.99.8^{}`
 
 `<rev>^{}` 意思是这个object可能是个tag, and  the tag recursively until a non-tag object is found.
 
-***
-`<rev>^{/<text>}`, e.g. `HEAD^{/fix nasty bug}`
++ `<rev>^{/<text>}`, e.g. `HEAD^{/fix nasty bug}`
 
 这个形式等价于下面的`:/fix nasty bug` , 除了它返回  the youngest matching commit which is reachable from the `<rev>` before `^`.
 
