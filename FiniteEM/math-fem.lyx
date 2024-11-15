@@ -1044,6 +1044,283 @@ status open
 \end_layout
 
 \begin_layout Section
+整数补码相乘
+\end_layout
+
+\begin_layout Itemize
+用 
+\begin_inset Formula $\otimes$
+\end_inset
+
+ or 
+\begin_inset Formula $\cdot$
+\end_inset
+
+ 表示通常数学意义上的乘法。
+\end_layout
+
+\begin_layout Itemize
+源码（无符号数）和 补码的乘法，可以使用相同的 bit level 操作，即
+\begin_inset Formula 
+\[
+\mathrm{T2B}_{w}(x\,*_{w}^{t}\,y)=\mathrm{U2B}_{w}(x'\,*_{w}^{u}\,y')
+\]
+
+\end_inset
+
+证明过程：
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+原码
+\series default
+ 和 
+\series bold
+补码
+\series default
+ 之间存在一一映射，即对应同一个位向量
+\begin_inset Formula $\sbf b=[x_{w-1},\cdots,x_{0}]$
+\end_inset
+
+）。令
+\begin_inset Formula $x',x$
+\end_inset
+
+ 分别表示
+\begin_inset Formula $\sbf b$
+\end_inset
+
+对应的 原码，补码，则
+\begin_inset Formula 
+\begin{equation}
+x'=x+x_{w-1}2^{w}\label{eq:r2.6}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x\otimes y$
+\end_inset
+
+（乘积值）是确定的数值，与使用十进制或二进制表示无关。对同一个位向量
+\begin_inset Formula $\sbf b$
+\end_inset
+
+作不同诠释，对应不同的数值；
+\begin_inset Formula $x\otimes y$
+\end_inset
+
+ 一般也不相等
+\series bold
+（因为 原码 和 补码 乘积规则不同）
+\begin_inset Formula $x\otimes y$
+\end_inset
+
+（乘积值）的位表示一般也不相等
+\series default
+
+\begin_inset Formula 
+\[
+\mathrm{T2B}_{w}(x\otimes y)\neq\mathrm{U2B}_{2}(x'\otimes y')
+\]
+
+\end_inset
+
+例如 
+\begin_inset Formula $101*011$
+\end_inset
+
+：无符号 
+\begin_inset Formula $001111$
+\end_inset
+
+；补码 
+\begin_inset Formula $110111$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+但是在模乘法的意义下：设 
+\begin_inset Formula $\{x,y\}$
+\end_inset
+
+（补码）和
+\begin_inset Formula $\{x',y'\}$
+\end_inset
+
+（无符号）对应 同一组位向 量 
+\begin_inset Formula $\{\sbf a,\sbf b\}$
+\end_inset
+
+；若 补码乘法 和 无符号乘法 
+\series bold
+位级操作相同
+\series default
+，则 补码乘法 
+\begin_inset Formula $*_{w}^{t}$
+\end_inset
+
+ 必然满足
+\begin_inset Formula 
+\[
+\mathrm{T2U}_{w}({\color{blue}x\,*_{w}^{t}\,y})=x'*_{w}^{u}\,y'
+\]
+
+\end_inset
+
+它的含义是
+\series bold
+ 两个操作数位表示相同
+\series default
+，
+\series bold
+乘积值位表示也相同（但诠释值不同）
+\series default
+；这样我们就可以用简单的 
+\begin_inset Formula $x'*_{w}^{u}\,y'$
+\end_inset
+
+ 代替补码乘法。它的等价表示是
+\begin_inset Formula 
+\begin{equation}
+{\color{blue}x\,*_{w}^{t}\,y}=\mathrm{U2T}_{w}(x'*_{w}^{u}\,y')\label{eq:2.17a}
+\end{equation}
+
+\end_inset
+
+ 所以补码乘法需要定义为 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，其实就是 
+\series bold
+按无符号作乘法，再诠释成补码
+\series default
+。 注意这里的 
+\begin_inset Formula ${\color{blue}x\,*_{w}^{t}\,y}$
+\end_inset
+
+，
+\begin_inset Formula $x'*_{w}^{u}\,y'$
+\end_inset
+
+ 含义是：对同一组位向量 
+\begin_inset Formula $\{\sbf a,\sbf b\}$
+\end_inset
+
+ 做不同的诠释，得到不同的数值，相差的就是 
+\begin_inset Formula $\mathrm{U2T}_{w}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+那么
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2.17a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的定义跟通常的乘法是否一致呢？因为有
+\begin_inset Formula 
+\begin{align*}
+(x'\cdot y')\mod2^{w} & =[(x+x_{w-1}2^{w})\cdot(y+y_{w-1}2^{w})]\mod2^{w}\\
+ & =[x\cdot y+(x_{w-1}y+y_{w-1}x)2^{w}+x_{w-1}y_{w-1}2^{2w}]\mod2^{w}\\
+ & \stackrel{?}{=}(x\cdot y)\mod2^{w},
+\end{align*}
+
+\end_inset
+
+注意 
+\begin_inset Formula $x'\cdot y'$
+\end_inset
+
+ 一定是非负数，而
+\begin_inset Formula $x\cdot y$
+\end_inset
+
+ 可能是负数；如果
+\begin_inset Formula $x\cdot y>0$
+\end_inset
+
+，则等号成立；若
+\begin_inset Formula $x\cdot y<0$
+\end_inset
+
+，则 
+\begin_inset Formula $(x'\cdot y')\mod2^{w}=(x\cdot y)\mod2^{w}+2^{w}$
+\end_inset
+
+；因此这两个值刚好是对偶的 {正数，负数}，也就是 
+\begin_inset Formula $\mathrm{U2T}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathrm{T2U}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+因此，在 截断（mod group）的意义上，位向量 按 无符号诠释作
+\begin_inset Formula $\otimes$
+\end_inset
+
+得到原码，再按补码求值；跟直接 
+\series bold
+用补码诠释作
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\otimes$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+得到补码，再按补码求值 相同。
+\end_layout
+
+\begin_layout Section
 循环指标
 \end_layout
 
