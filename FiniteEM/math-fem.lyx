@@ -188,6 +188,10 @@ L=L\,I=L\,x\,R=I\,R=R
 \end_layout
 
 \begin_layout Section
+二进制表示
+\end_layout
+
+\begin_layout Subsection
 原码，补码
 \end_layout
 
@@ -1043,7 +1047,7 @@ status open
 。
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 整数补码相乘
 \end_layout
 
@@ -1318,6 +1322,83 @@ noprefix "false"
 \noun default
 \color inherit
 得到补码，再按补码求值 相同。
+\end_layout
+
+\begin_layout Subsection
+判断溢出
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Overflow in Integer Arithmetic"
+target "https://www.cse.cuhk.edu.hk/~mcyang/csci2510/2122T1/Lec02%20Number%20and%20Character%20Representation.pdf"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于 Unsigned 整数，最高位进一（carry out of 1 from the MSB, the most significant bit）总是表示有
+ 
+\series bold
+overflow
+\series default
+：例如
+\begin_inset Formula 
+\begin{align*}
+ & (1111)_{2}+(0001)_{2}=({\color{red}\underline{\sbf1}}\quad0000)_{2}\quad\leftarrow\text{overflow}\\
+ & (0111)_{2}+(0001)_{2}=(\sbf0\quad1000)_{2}\quad\leftarrow\text{no overflow}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于补码表示，2's complement Signed，不能靠 carry-out bit from the sign-bit 来判断，因为
+ 溢出时 
+\begin_inset Formula $0$
+\end_inset
+
+，
+\begin_inset Formula $1$
+\end_inset
+
+都有可能
+\begin_inset Formula 
+\begin{align*}
+ & (+7)_{10}+(+4)_{10}=(0111)_{2}+(0100)_{2}=({\color{red}\underline{\sbf0}}\quad1011)_{2}=(-5)_{10}\\
+ & (-4)_{10}+(-6)_{10}=(1100)_{2}+(1010)_{2}=({\color{red}\underline{\sbf1}}\quad0110)_{2}=(+6)_{10}
+\end{align*}
+
+\end_inset
+
+符号相反的两个数相加永远不会溢出
+\begin_inset Formula 
+\[
+(+7)_{10}+(-6)_{10}=(0111)_{2}+(1010)_{2}=({\color{purple}\sbf0}\,001)_{2}=(+1)_{10}\quad\leftarrow\text{no overflow}
+\]
+
+\end_inset
+
+因此，如果两个数符号相同，而结果符号相反，则一定发生 
+\series bold
+overflow
+\series default
+：
+\begin_inset Formula 
+\begin{align*}
+ & (+7)_{10}+(+4)_{10}=({\color{purple}\sbf0}\,111)_{2}+({\color{purple}\sbf0}\,100)_{2}=({\color{purple}\sbf1}\,011)_{2}=(-5)_{10}\quad\leftarrow\text{overflow}\\
+ & (-4)_{10}+(-6)_{10}=({\color{purple}\sbf1}\,100)_{2}+({\color{purple}\sbf1}\,010)_{2}=({\color{purple}\sbf0}\,110)_{2}=(+6)_{10}\quad\leftarrow\text{overflow}
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
