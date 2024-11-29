@@ -98,9 +98,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 ## 自己的库如何能被find_pakcage(xxx)
 
-`cmake` 有两种方式让 `find_package(xxx)` 能找到库, 如果没有找到会报错, 如下:
-
-`find_package(OpenCV)` 出现错误如下:
+`cmake` 有两种方式让 `find_package(xxx)` 能找到库, 如果没有找到会报错,
+例如 `find_package(OpenCV)` 出现错误如下:
 
 ```bash
 CMake Warning at CMakeLists.txt:37 (find_package):
@@ -121,12 +120,13 @@ CMake Warning at CMakeLists.txt:37 (find_package):
 
 简单翻译下:
 
-`cmake` 优先会以 `Moudule模式` 寻找,
-即: 搜索 `CMAKE_MODULE_PATH` 指定路径下的 `FindXXX.cmake` 文件, 默认路径按系统平台区分如下:
+`cmake` 优先会以 `Moudule模式` 寻找, 即:
+搜索 `CMAKE_MODULE_PATH` 指定路径下的 `FindXXX.cmake` 文件,
+默认路径按系统平台区分如下:
 
 ```bash
 windows:  C:/Program Files/CMake/share/cmake-3.xx/Modules
-linux: /usr/share/cmake-3.xx/Modules
+linux:  /usr/share/cmake-3.xx/Modules
 ```
 
 一旦找到了 `FindXXX.cmake`, 则此库一般会提供以下变量, 目的是方便调用者快速集成它:
@@ -137,8 +137,9 @@ linux: /usr/share/cmake-3.xx/Modules
 <NAME>_LIBRARIES or <NAME>_LIBS
 ```
 
-如果没能找到 `FindXXX.cmake`, 则尝试以 `Config模式`:
-搜索指定路径下的 `XXXConfig.cmake` 或者 `XXX-config.cmake` 文件, 搜索路径优先是 `cmake install` 的路径:
+如果没能找到 `FindXXX.cmake`, 则尝试以 `Config` 模式:
+搜索指定路径下的 `XXXConfig.cmake` 或者 `XXX-config.cmake` 文件,
+搜索路径优先是 `cmake install` 的路径:
 
 ```bash
 windows: C:/Program Files
@@ -147,15 +148,18 @@ linux: /usr/local
 
 当然也支持在项目里通过 `CMAKE_PREFIX_PATH` 指定了寻找路径,
 或者直接通过设置 `XXX_DIR` 告知准确的查找路径.
-其实, 还有一种做法是通过指定 `toolchain` 让 cmake 统一从toolchain里寻找.
+其实, 还有一种做法是通过指定 `toolchain` 让 cmake 统一从 `toolchain` 里寻找.
 
 ### Config方式
 
-这是一种基于有项目源码的方式, 需要为cmake组织的项目提供完整的install脚本,
-当执行install时候会在install目的地的lib目录下创建share目录,
-并在share目录里自动生成 `XXXConfig.cmake` 或者 `xxx-config.cmake` 等配置文件
+这是一种基于 可获取项目源码的方式,
+需要为 cmake 组织的项目提供完整的install脚本,
+当执行 install 时候会在 `install dir` 的`lib`目录下创建`share`目录,
+并在`share`目录里自动生成 `XXXConfig.cmake` 或者 `xxx-config.cmake` 等配置文件
 
-`cmake install`的脚本相对比较通用, 一般只要加在cmake项目的实现模块的 `CMakeList.txt` 最下面即可, 如下:
+`cmake install`的脚本相对比较通用,
+一般只要加在cmake项目的实现模块的 `CMakeList.txt` 最下面即可,
+如下:
 
 ```cmake
 # ============================== 安装脚本 ==============================
