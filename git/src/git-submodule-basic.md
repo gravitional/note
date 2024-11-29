@@ -152,3 +152,33 @@ git diff HEAD^..
 # 次父节点
 git diff HEAD^2..
 ```
+
+## 更新所有子模块到 remote 最新
+
+[Pull latest changes for all git submodules](https://stackoverflow.com/questions/1030169/pull-latest-changes-for-all-git-submodules)
+
+如果您是第一次检出 `repo`, 需要先使用 `--init` 命令: 
+
+```bash
+git submodule update --init --recursive
+```
+
+在 git 1.8.2 或更高版本中, 添加了 `--remote` 选项, 以支持更新到远程分支的最新提示: 
+
+```bash
+git submodule update --recursive --remote
+```
+
+这样做的另一个好处是会考虑 `.gitmodules` 或 `.git/config` 文件中指定的任何 "非默认" 分支
+(如果有的话, 默认分支是 origin/master, 在这种情况下, 这里的其他答案也同样有效). 
+
+对于 1.7.3 或更高版本的 git, 你可以使用(但以下关于更新的问题仍然适用): 
+
+```bash
+git submodule update --recursive
+# or
+git pull --recurse-submodules
+```
+
+如果你想把子模块拉到最新提交, 而不是 父仓库当前指向的 子仓库提交. 
+详见 [git-submodule(1)](https://www.kernel.org/pub/software/scm/git/docs/git-submodule.html). 

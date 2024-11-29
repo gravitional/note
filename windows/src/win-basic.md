@@ -490,3 +490,10 @@ powercfg /h off # 关闭休眠功能
 c:/windows/system32/winrdlv3.exe
 c:/windows/Syswow64/WINRDLV3.EXE
 ```
+
+## windows 显示任务栏数字编号
+
+[7+ Taskbar Numberer – 为 Windows 任务栏添加数字快捷键, 适合语音识别与快捷键用户](https://www.appinn.com/7-taskbar-tweaker-new/)
+
+如果安装了 powertoys, 可以通过 `win+shift+/` 显示编号,
+对应的功能是 `快捷键指南`.

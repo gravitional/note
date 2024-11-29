@@ -33,7 +33,7 @@ public:
 #endif
 ```
 
-### 1.2 Hello.cpp
+### 1.2 `Hello.cpp`
 
 ```cpp
 /*实现了Hello::print()*/
@@ -47,7 +47,7 @@ void Hello::print()
 }
 ```
 
-### 1.3 main.cpp
+### 1.3 `main.cpp`
 
 ```cpp
 #include "static/Hello.h"
@@ -124,12 +124,12 @@ target_include_directories(hello_library PUBLIC
 
 This will cause the included directory used in the following places:
 
-使用这个函数后, 这个目录会在以下情况被调用:
+使用这个函数后, 这个`目录`会在以下情况被调用:
 
-+ 编译这个库的时候
-  因为这个库 `hello_library` 由 `Hello.cpp` 生成, `Hello.cpp` 中函数的定义在`Hello.h` 中,
-  `Hello.h` 在这个 `include` 目录下, 所以显然编译这个库的时候, 这个目录会用到
-
++ 编译 `hello_library` 这个库的时候
+  因为这个库 `hello_library` 由 `Hello.cpp` 生成,
+  `Hello.cpp` 中函数的定义在`Hello.h` 中, `Hello.h` 在此 `include` 目录下,
+  所以显然编译这个库的时候, 这个目录会用到
 + 欲编译其他目标 `A`(`库`或者`exe`), 而 `A` 链接到(依赖于)库 `hello_library`.
 
 ### 2.2.1 private pubic interface的范围详解

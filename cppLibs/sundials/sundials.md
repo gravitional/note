@@ -1358,3 +1358,60 @@ gcc -o idaFoodWeb_kry_omp idaFoodWeb_kry_omp.c -lsundials_ida -lsundials_nvecope
 # 执行
 ./idasFoodWeb_kry_omp
 ```
+
+## windows cmake UI
+
+[SUNDIALS 下载地址](https://computing.llnl.gov/projects/sundials/sundials-software)
+[SUNDIALS 库的编译和使用](https://blog.csdn.net/qq_44246618/article/details/114240234)
+
+在 `~/test` 下面建立三个目录
+
+```bash
+sundials-src
+sundials-build
+sundials-install
+```
+
+配置好 CMake 的目录
+`Where is the source code` 和 `Where to build the binaries`,
+然后反复点击 Configure, 直到红色消失(红色表示需要确认的选择),
+期间可以根据需要配置 选项的值, 或者 开关的 `ON,OFF`
+
+然后使用 VisualStudio 编译 `ALL_BUILD` 项目生成 dll,
+编译 `INSTALL` 项目安装到指定的目录.
+
+## 查看更改的选项
+
+cmake 菜单栏 `Tools`->`Show My Changes`,
+给出的输入如下, 主要是:
+
++ 设置了 `ENABLE_OPENMP`, 禁止了 `SUNDIALS_ENABLE_ERROR_CHECKS`
++ 修改了 install 时的路径
++ 选择构建 动态库 `BUILD_SHARED_LIBS`, 而不构建静态库 `BUILD_STATIC_LIBS`.
+
+```bash
+# Commandline options: 命令行指定的选项
+-DENABLE_MPI:BOOL="0" -DEXAMPLES_ENABLE_CXX:BOOL="1" \
+-DCMAKE_CXX_STANDARD:STRING="17" -DBUILD_KINSOL:BOOL="1" \
+-DEXAMPLES_INSTALL_PATH:PATH="C:/Users/qingz/test/sundials/sundials-install/examples" \
+-DCMAKE_INSTALL_PREFIX:PATH="C:/Users/qingz/test/sundials/sundials-install" \
+-DENABLE_OPENMP:BOOL="1" -DBUILD_IDAS:BOOL="1" -DSUNDIALS_ENABLE_ERROR_CHECKS:BOOL="0" \
+-DBUILD_SHARED_LIBS:BOOL="1" -DBUILD_CVODE:BOOL="1" \
+-DBENCHMARKS_INSTALL_PATH:PATH="C:/Users/qingz/test/sundials/sundials-install/benchmark" \
+-DBUILD_STATIC_LIBS:BOOL="0"
+
+# Cache file: 缓存文件中的选项
+ENABLE_MPI:BOOL=0
+EXAMPLES_ENABLE_CXX:BOOL=1
+CMAKE_CXX_STANDARD:STRING=17
+BUILD_KINSOL:BOOL=1
+EXAMPLES_INSTALL_PATH:PATH=C:/Users/qingz/test/sundials/sundials-install/examples
+CMAKE_INSTALL_PREFIX:PATH=C:/Users/qingz/test/sundials/sundials-install
+ENABLE_OPENMP:BOOL=1
+BUILD_IDAS:BOOL=1
+SUNDIALS_ENABLE_ERROR_CHECKS:BOOL=0
+BUILD_SHARED_LIBS:BOOL=1
+BUILD_CVODE:BOOL=1
+BENCHMARKS_INSTALL_PATH:PATH=C:/Users/qingz/test/sundials/sundials-install/benchmark
+BUILD_STATIC_LIBS:BOOL=0
+```

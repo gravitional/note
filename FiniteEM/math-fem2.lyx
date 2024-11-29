@@ -2174,7 +2174,7 @@ P=\sbf J\cdot\sbf E
 \end_layout
 
 \begin_layout Chapter
-静磁场
+矢量场-静磁场
 \end_layout
 
 \begin_layout Section
@@ -2412,7 +2412,7 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 磁矢势的泛函
 \end_layout
 
@@ -2451,16 +2451,43 @@ noprefix "false"
 
 \end_inset
 
-根据公式 
-\begin_inset Formula $\nabla\cdot(\sbf a\times\sbf b)=\sbf b\cdot(\nabla\times\sbf a)-\sbf a\cdot(\nabla\times\sbf b)$
+by第一矢量格林定理
+\begin_inset Formula 
+\[
+\int_{V}\left[u{\color{blue}(\nabla\times\sbf a)}\cdot{\color{brown}(\nabla\times\sbf b)}-{\color{blue}\sbf a}\cdot(\nabla\times{\color{brown}u\nabla\times\sbf b})\right]\dd{V}=\oint_{S}\,u({\color{blue}\sbf a}\times{\color{brown}\nabla\times\sbf b})\cdot\sbf n\dd{S}
+\]
+
 \end_inset
 
-， 并使用高斯定理可以得到
+可以得到（并交换
+\begin_inset Formula $\oint$
+\end_inset
+
+项的叉乘顺序）
 \begin_inset Formula 
-\begin{align*}
-\delta\mathcal{F}(\sbf A) & =\int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{\Omega}+\int_{\Gamma}\sbf e_{n}\cdot\left[\delta\sbf A\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\right]\dd{\Gamma}\\
- & =\int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{\Omega}-\int_{\Gamma}\delta\sbf A\cdot\left[\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\right]\dd{\Gamma}
-\end{align*}
+\[
+\int\frac{1}{2}\frac{1}{\mu_{r}}(\nabla\times\sbf A)\cdot(\nabla\times\sbf A)=\int\frac{1}{2}\sbf A\cdot(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf A)-\frac{1}{2}\oint\frac{1}{\mu_{r}}\sbf A\cdot\sbf n\times(\nabla\times\sbf A)
+\]
+
+\end_inset
+
+因此 体密度项 
+\begin_inset Formula $\nabla\times\nabla\times\sbf A$
+\end_inset
+
+ 与面密度项 
+\begin_inset Formula $\sbf n\times(\nabla\times\sbf A)$
+\end_inset
+
+ 差一个负号。
+\end_layout
+
+\begin_layout Standard
+变分形式为
+\begin_inset Formula 
+\[
+\delta\mathcal{F}(\sbf A)=\int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{\Omega}-\int_{\Gamma}\delta\sbf A\cdot\left[\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\right]\dd{\Gamma}
+\]
 
 \end_inset
 
@@ -2527,6 +2554,251 @@ noprefix "false"
 \end_inset
 
 对于磁场，二维，轴对称和 三维问题 所采用的单元略有不同。
+\end_layout
+
+\begin_layout Subsection
+矢量场的3rd边界
+\end_layout
+
+\begin_layout Standard
+类似于标量场的3rd边界 
+\begin_inset Formula $\varepsilon\,\partial\phi/\partial n=q-\gamma\phi$
+\end_inset
+
+，矢量场的 3rd 边界
+\begin_inset Formula 
+\begin{align}
+\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right) & =\sbf q-\gamma\,\sbf A\nonumber \\
+-\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right) & =\gamma\,\sbf A-\sbf q\label{eq:v3rd2}
+\end{align}
+
+\end_inset
+
+注意到矢量场的泛函变分为
+\begin_inset Formula 
+\begin{equation}
+\delta\mathcal{F}(\sbf A)=\int_{\Omega}\delta\sbf A\cdot\left[\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)-\mu_{0}\sbf J\right]\dd{\Omega}-\int_{\Gamma}\delta\sbf A\cdot\left[\sbf e_{n}\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\right]\dd{\Gamma}\label{eq:MF3rdTemp}
+\end{equation}
+
+\end_inset
+
+注意到 Volume 和 Surface 两项中，
+\begin_inset Formula $\delta\sbf A$
+\end_inset
+
+的系数的符号；考虑到通常的控制方程形式，受到启发；代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:v3rd2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MF3rdTemp"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，此约定下 Volume 和 Surface 的方程分别写成（把
+\begin_inset Formula $q$
+\end_inset
+
+–term 移动到等号右端当成激励）
+\begin_inset Formula 
+\begin{align*}
+\delta\sbf A\cdot\left[{\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}\right] & =\delta\sbf A\cdot\left[{\color{blue}\mu_{0}\sbf J}-\mu_{0}\sigma\,\partial_{t}\sbf A-\mu_{0}\sigma\,\nabla\Phi\right]\\
+\delta\sbf A\cdot\left[{\color{blue}\gamma\,\sbf A}\right] & =\delta\sbf A\cdot\left[{\color{blue}\sbf q}+\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+这样，当组装全局矩阵方程时，Volume 和 Surface 刚阵（或激励）可以直接相加，不用考虑负号。
+\end_layout
+
+\begin_layout Itemize
+上面还添加了瞬态磁场项 
+\begin_inset Formula $\mu_{0}\sigma\,\partial_{t}\sbf A$
+\end_inset
+
+，
+\begin_inset Formula $\mu_{0}\sigma\,\nabla\Phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+组装 Volume 矩阵时，我们实际上使用的是 
+\begin_inset Formula $\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)\cdot\left(\nabla\times\sbf A\right)$
+\end_inset
+
+ 对应的矩阵Block，而不是 
+\begin_inset Formula ${\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}$
+\end_inset
+
+对应的Block，这个差别刚好被边界方程弥补。
+\end_layout
+
+\begin_layout Subsection
+永磁体，材料磁矩M
+\end_layout
+
+\begin_layout Standard
+永磁体控制方程，
+\begin_inset Formula 
+\[
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)=\mu_{0}\sbf J+\frac{\mu_{0}}{\mu_{r}}{\color{red}\nabla\times\sbf M_{0}}
+\]
+
+\end_inset
+
+对应的泛函项，
+\begin_inset Formula 
+\[
+\frac{\mu_{0}}{\mu_{r}}\int_{V}\dd{V}\nabla\times\sbf M_{0}\cdot\sbf A
+\]
+
+\end_inset
+
+by 矢量等式
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot(\sbf M\times\sbf A)=(\nabla\times M)\cdot\sbf A-(\nabla\times A)\cdot\sbf M\label{eq:coercive2}
+\end{equation}
+
+\end_inset
+
+get
+\begin_inset Formula 
+\[
+\frac{\mu_{0}}{\mu_{r}}\int_{V}\dd{V}\nabla\times\sbf M_{0}\cdot\sbf A=\oint_{S}\frac{\mu_{0}}{\mu_{r}}\dd{\sbf S}\times(\sbf M_{0}\cdot\sbf A)+\int_{V}\sbf M_{0}\cdot\left(\nabla\times\sbf A\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑到泛函变分形式
+\begin_inset Formula 
+\begin{align*}
+\int_{v}\frac{1}{\mu_{r}} & (\nabla\times\sbf A)\cdot(\nabla\times{\color{brown}\delta\sbf A})=\int_{v}{\color{brown}\delta\sbf A}\cdot(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf A)-\oint_{S}\frac{1}{\mu_{r}}{\color{brown}\delta\sbf A}\cdot\sbf n\times(\nabla\times\sbf A)=\\
+ & -\int_{v}\mu_{0}\sigma\,\partial_{t}\sbf A\cdot{\color{brown}\delta\sbf A}+\oint_{S}\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}\cdot{\color{brown}\delta\sbf A}+\int_{V}\sbf M_{0}\cdot\left(\nabla\times{\color{brown}\delta\sbf A}\right)\\
+ & +\int_{v}\mu_{0}\sbf J_{\text{0}}\cdot{\color{brown}\delta\sbf A}-\int_{v}\mu_{0}\sigma\,\nabla\Phi\cdot{\color{brown}\delta\sbf A}
+\end{align*}
+
+\end_inset
+
+对方程的修改是
+\begin_inset Formula 
+\begin{align*}
+ & \delta\sbf A\cdot\left[{\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}\right]=\delta\sbf A\cdot{\color{blue}\mu_{0}\sbf J}+\sbf M_{0}\cdot\left(\nabla\times{\color{brown}\delta\sbf A}\right)\\
+ & \delta\sbf A\cdot\left[{\color{blue}\gamma\,\sbf A}\right]=\delta\sbf A\cdot\left[{\color{blue}\sbf q}+\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+运动感生电流
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:eddyCurr"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+带有运动感生电流的磁场泛函等式
+\begin_inset Formula 
+\begin{align}
+\int_{V}\frac{1}{2}\frac{1}{\mu_{r}} & {\color{blue}(\nabla\times\sbf A)\cdot(\nabla\times\sbf A)}=-\frac{1}{2}\int_{V}\mu_{0}\sigma\,\partial_{t}\sbf A\cdot\sbf A+\int_{V}\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}\cdot\sbf A\nonumber \\
+ & +\int_{V}\mu_{0}\sbf J_{\text{0}}\cdot\sbf A+\frac{1}{2}\int_{V}\sbf A\cdot({\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A})-\int_{V}\mu_{0}\sigma\,\nabla\Phi\cdot\sbf A\label{eq:EddyCurr}
+\end{align}
+
+\end_inset
+
+类似上面得到
+\begin_inset Formula 
+\begin{align*}
+\int_{V}\frac{1}{2}\frac{1}{\mu_{r}} & \sbf A\cdot(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf A)-\frac{1}{2}\oint_{S}\frac{1}{\mu_{r}}\sbf A\cdot\sbf n\times(\nabla\times\sbf A)=\\
+ & -\frac{1}{2}\int_{V}\mu_{0}\sigma\,\partial_{t}\sbf A\cdot\sbf A+\oint_{S}\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}\cdot\sbf A+\int_{V}\sbf M_{0}\cdot\left(\nabla\times\sbf A\right)\\
+ & +\int_{V}\mu_{0}\,\sbf J_{\text{0}}\cdot\sbf A+\frac{1}{2}\int_{V}\sbf A\cdot({\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A})-\int_{V}\mu_{0}\sigma\,\nabla\Phi\cdot\sbf A
+\end{align*}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EddyCurr"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的泛函变分
+\begin_inset Formula 
+\begin{align*}
+\int_{V}\frac{1}{\mu_{r}} & (\nabla\times\sbf A)\cdot(\nabla\times{\color{brown}\delta\sbf A})\\
+= & \int_{V}{\color{brown}\delta\sbf A}\cdot(\nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf A)-\oint_{S}\frac{1}{\mu_{r}}{\color{brown}\delta\sbf A}\cdot\sbf n\times(\nabla\times\sbf A)\\
+= & -\int_{V}\mu_{0}\sigma\,\partial_{t}\sbf A\cdot{\color{brown}\delta\sbf A}+\oint_{S}\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}\cdot{\color{brown}\delta\sbf A}+\int_{V}\sbf M_{0}\cdot\left(\nabla\times{\color{brown}\delta\sbf A}\right)\\
+ & +\int_{V}\mu_{0}\,\sbf J_{\text{0}}\cdot{\color{brown}\delta\sbf A}+\int_{V}{\color{brown}\delta\sbf A}\cdot({\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A})-\int_{V}\mu_{0}\sigma\,\nabla\Phi\cdot{\color{brown}\delta\sbf A}
+\end{align*}
+
+\end_inset
+
+对应的 Volume 和 Surface 方程是；如果有其他 3rd 边界 
+\begin_inset Formula $-\frac{1}{\mu_{r}}\sbf n\times\left(\nabla\times\sbf A\right)=\gamma\,\sbf A-\sbf q$
+\end_inset
+
+，合起来是
+\begin_inset Formula 
+\begin{align*}
+\delta\sbf A\cdot\left[{\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}\right] & =\delta\sbf A\cdot\left[-\mu_{0}\sigma\,\partial_{t}\sbf A+{\color{blue}\mu_{0}\sbf J}+\sbf M_{0}\cdot\left(\nabla\times{\color{brown}\delta\sbf A}\right)+{\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A}-\mu_{0}\sigma\,\nabla\Phi\right]\\
+\delta\sbf A\cdot\left[{\color{blue}\gamma\,\sbf A}\right] & =\delta\sbf A\cdot\left[{\color{blue}\sbf q}+{\color{olive}\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+注意其中的 
+\begin_inset Formula ${\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A}$
+\end_inset
+
+，这种带有速度
+\begin_inset Formula $v$
+\end_inset
+
+的项，对应的刚阵 Block 一般是非对称的。
+\end_layout
+
+\begin_layout Itemize
+通常认为 
+\begin_inset Formula ${\color{olive}\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}}=0$
+\end_inset
+
+，也就是磁体的环形电流不会流出磁体表面，所以可以忽略。
 \end_layout
 
 \begin_layout Subsection
@@ -2656,13 +2928,6 @@ noprefix "false"
 \sbf A^{e}(x,y,z)=\sum_{\alpha=1}^{n_{e}}\sbf N_{\alpha}^{e}(x,y,z)\,A_{\alpha}
 \]
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
@@ -6359,7 +6624,40 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-约定
+约定（
+\begin_inset Formula $x$
+\end_inset
+
+固定，
+\begin_inset Formula $X$
+\end_inset
+
+随体）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(2,0)$
+\end_inset
+
+型张量（输入2个dual vector，1个vector，给实数）
+\begin_inset Formula 
+\[
+T=T_{\phantom{\mu\nu}\alpha}^{\mu\nu}(x')\partial_{\mu}\partial_{\nu}\dd{x^{\alpha}}
+\]
+
+\end_inset
+
+张量坐标变换式
+\begin_inset Formula 
+\begin{align*}
+T_{\phantom{\mu\nu}\alpha}^{\mu\nu}(x') & =\frac{\partial x'^{\mu}}{\partial x^{\rho}}\frac{\partial x'^{\nu}}{\partial x^{\sigma}}\frac{\partial x^{\beta}}{\partial x'^{\alpha}}\,T_{\phantom{\rho\sigma}\beta}^{\rho\sigma}(x)\\
+\text{简记}\; & =\partial_{\rho}x'^{\mu}\,\partial_{\sigma}x'^{\nu}\,\partial_{\prime\alpha}x{}^{\beta}\,T_{\phantom{\rho\sigma}\beta}^{\rho\sigma}(x)\\
+\text{简记}\; & =\partial_{\rho}^{\prime\mu}\,\partial_{\sigma}^{\prime\nu}\,\partial_{\prime\alpha}^{\beta}\,T_{\phantom{\rho\sigma}\beta}^{\rho\sigma}(x)
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6374,7 +6672,19 @@ literal "false"
 。坐标的变换关系为
 \begin_inset Formula 
 \[
-\sbf r=\sbf R+\sbf v\,t
+\sbf r=\sbf R+\sbf v\,t,\quad\left[\begin{array}{c}
+t\\
+x\\
+y
+\end{array}\right]=\left[\begin{array}{ccc}
+1 & 0 & 0\\
+v_{x} & 1 & 0\\
+v_{y} & 0 & 1
+\end{array}\right]\left[\begin{array}{c}
+t\\
+x\\
+y
+\end{array}\right]
 \]
 
 \end_inset
@@ -6415,7 +6725,15 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-涡流 eddy current
+涡流 eddy current（
+\begin_inset Formula $x$
+\end_inset
+
+固定，
+\begin_inset Formula $X$
+\end_inset
+
+随体）
 \end_layout
 
 \begin_layout Standard
@@ -6429,11 +6747,11 @@ noprefix "false"
 
 \end_inset
 
-，
+ i.e.
 \begin_inset Formula 
 \begin{align*}
 \nabla\cdot\sigma\left(\nabla\Phi+\partial_{t}\sbf A\right)= & 0\\
-\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)= & -\mu_{0}\sigma\,\partial_{t}\sbf A+\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}+\mu_{0}\sbf J_{\text{0}}-\mu_{0}\sigma\,\nabla\Phi
+\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)= & {\color{blue}-\mu_{0}\sigma\,\partial_{t}\sbf A}+\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}+\mu_{0}\sbf J_{\text{0}}-\mu_{0}\sigma\,\nabla\Phi
 \end{align*}
 
 \end_inset
@@ -6531,8 +6849,60 @@ noprefix "false"
  是 flux density vector 。
 \end_layout
 
+\begin_layout Subsection
+补充推导
+\end_layout
+
+\begin_layout Standard
+带有运动感生电流的磁场泛函等式
+\begin_inset Formula 
+\begin{align}
+\int_{V}\frac{1}{2}\frac{1}{\mu_{r}} & {\color{blue}(\nabla\times\sbf A)\cdot(\nabla\times\sbf A)}=-\frac{1}{2}\int_{V}\mu_{0}\sigma\,\partial_{t}\sbf A\cdot\sbf A+\int_{V}\frac{\mu_{0}}{\mu_{r}}\nabla\times\sbf M_{0}\cdot\sbf A\nonumber \\
+ & +\int_{V}\mu_{0}\sbf J_{\text{0}}\cdot\sbf A+\frac{1}{2}\int_{V}\sbf A\cdot({\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A})-\int_{V}\mu_{0}\sigma\,\nabla\Phi\cdot\sbf A\label{eq:EddyCurrCopy}
+\end{align}
+
+\end_inset
+
+参考
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "subsec:eddyCurr"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，对应的 Volume 和 Surface 方程是
+\begin_inset Formula 
+\begin{align*}
+\delta\sbf A\cdot\left[{\color{blue}\nabla\times\frac{1}{\mu_{r}}\left(\nabla\times\sbf A\right)}\right] & =\delta\sbf A\cdot\left[-\mu_{0}\sigma\,\partial_{t}\sbf A+{\color{blue}\mu_{0}\sbf J}+\sbf M_{0}\cdot\left(\nabla\times{\color{brown}\delta\sbf A}\right)+{\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A}-\mu_{0}\sigma\,\nabla\Phi\right]\\
+\delta\sbf A\cdot\left[{\color{blue}\gamma\,\sbf A}\right] & =\delta\sbf A\cdot\left[{\color{blue}\sbf q}+{\color{olive}\frac{\mu_{0}}{\mu_{r}}\sbf n\times\sbf M_{0}}\right]
+\end{align*}
+
+\end_inset
+
+注意其中的 
+\begin_inset Formula ${\color{red}\sigma_{\text{ed}}\,\sbf v\times\nabla\times\sbf A}$
+\end_inset
+
+，这种带有速度
+\begin_inset Formula $v$
+\end_inset
+
+的项，对应的刚阵 Block 一般是非对称的。
+\end_layout
+
 \begin_layout Section
-Eddy 电流项的离散
+Eddy 电流项的离散（
+\begin_inset Formula $x$
+\end_inset
+
+固定，
+\begin_inset Formula $X$
+\end_inset
+
+随体）
 \end_layout
 
 \begin_layout Standard
@@ -6604,7 +6974,15 @@ name "fig:Na-fig2"
 \end_layout
 
 \begin_layout Subsection
-Transient 分析
+Transient 分析（
+\begin_inset Formula $x$
+\end_inset
+
+固定，
+\begin_inset Formula $X$
+\end_inset
+
+随体）
 \end_layout
 
 \begin_layout Standard
@@ -6639,6 +7017,18 @@ In the transient analysis of the moving conductor，在时刻
 
 ，
 \begin_inset Formula $\sbf A(X_{1})^{t}=\sbf A(x_{1})^{t}$
+\end_inset
+
+。使用 随体坐标系（moving）得到的 系数矩阵是 对称的（symmetric）；
+\begin_inset Formula 
+\[
+\frac{1}{\Delta t}\left[\sbf N_{\alpha}\cdot\sbf N_{\beta}\,A_{\beta}^{*}(t+\Delta t,x_{2})-\sbf N_{\alpha}\cdot\sbf N_{\beta}\,A_{\beta}(t,x_{1})\right]
+\]
+
+\end_inset
+
+单元矩阵Block是 
+\begin_inset Formula $\sbf N_{\alpha}\cdot\sbf N_{\beta}$
 \end_inset
 
 。
@@ -6682,11 +7072,19 @@ In the transient analysis of the moving conductor，在时刻
 \end_layout
 
 \begin_layout Standard
-使用 随体坐标系（moving）得到的 系数矩阵是 对称的（symmetric）；使用固定坐标系（fixed）得到的 系数矩阵是非对称的，由于速度项。
+使用固定坐标系（fixed）得到的 系数矩阵是非对称的，由于速度项。
 \end_layout
 
 \begin_layout Subsection
-DC 稳态分析
+DC 稳态分析（
+\begin_inset Formula $x$
+\end_inset
+
+固定，
+\begin_inset Formula $X$
+\end_inset
+
+随体）
 \end_layout
 
 \begin_layout Standard
@@ -6792,7 +7190,7 @@ noprefix "false"
 中的时间导数等于零
 \begin_inset Formula 
 \begin{equation}
-\frac{\partial\sbf A(x_{2})^{t+\Delta t}}{\partial t}-\sbf v\cdot\sbf B(x_{2})^{t+\Delta t}=-\sbf v\cdot\sbf B^{*}(x_{2})^{t+\Delta t}\label{eq:Na9}
+\frac{\partial\sbf A(x_{2})^{t+\Delta t}}{\partial t}-\sbf v\times\sbf B(x_{2})^{t+\Delta t}=-\sbf v\times\sbf B^{*}(x_{2})^{t+\Delta t}\label{eq:Na9}
 \end{equation}
 
 \end_inset
@@ -6801,7 +7199,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Eddy电流项的物理意义
+Eddy电流项的物理意义（
+\begin_inset Formula $x$
+\end_inset
+
+固定，
+\begin_inset Formula $X$
+\end_inset
+
+随体）
 \end_layout
 
 \begin_layout Standard
@@ -6815,7 +7221,7 @@ noprefix "false"
 
 \end_inset
 
-推导出来
+推导出来（二维）
 \begin_inset Formula 
 \begin{align}
 \frac{\partial\sbf A(X_{1})^{t+\Delta t}}{\partial t}= & \frac{\sbf A^{*}(x_{2})^{t+\Delta t}-\sbf A(x_{2})^{t}}{\Delta t}\nonumber \\
@@ -11823,7 +12229,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-固有洛伦兹变换群可藉由特殊洛伦兹变换经空间转动实现。先把
+固有洛伦兹变换群可借由特殊洛伦兹变换经空间转动实现。先把
 \begin_inset Formula $S$
 \end_inset
 
@@ -11863,7 +12269,7 @@ L_{P}=D\,{\color{blue}R^{-1}LR}.
 \begin_inset Formula $L$
 \end_inset
 
-，加上三位空间转动
+，加上三维空间转动
 \begin_inset Formula $D$
 \end_inset
 
