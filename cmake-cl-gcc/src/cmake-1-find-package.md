@@ -46,7 +46,7 @@
 图一: 在每个项目里都存放一套自身需要的依赖库, 类似离线式依赖包含关系;
 图二: camera依赖了opencv, baumer等别的库, 但不存在包含关系,
 仓库里所有库的依赖关系都是通过配置进行关联的,
-本质所有的库都在项目之外的仓库里存放的.
+本质 **所有的库都在项目之外的仓库里存放的**.
 
 ## 简洁优雅的库依赖集成方式
 
@@ -120,13 +120,13 @@ CMake Warning at CMakeLists.txt:37 (find_package):
 
 简单翻译下:
 
-`cmake` 优先会以 `Moudule模式` 寻找, 即:
+`cmake` 优先会以 `Moudule` 模式寻找, 即:
 搜索 `CMAKE_MODULE_PATH` 指定路径下的 `FindXXX.cmake` 文件,
 默认路径按系统平台区分如下:
 
 ```bash
-windows:  C:/Program Files/CMake/share/cmake-3.xx/Modules
-linux:  /usr/share/cmake-3.xx/Modules
+windows: C:/Program Files/CMake/share/cmake-3.xx/Modules
+linux: /usr/share/cmake-3.xx/Modules
 ```
 
 一旦找到了 `FindXXX.cmake`, 则此库一般会提供以下变量, 目的是方便调用者快速集成它:
@@ -135,6 +135,11 @@ linux:  /usr/share/cmake-3.xx/Modules
 <NAME>_FOUND
 <NAME>_INCLUDE_DIRS or <NAME>_INCLUDES
 <NAME>_LIBRARIES or <NAME>_LIBS
+
+#-- 例如; 下面 <lang> is one of C, CXX, or Fortran:
+MPI_<lang>_FOUND
+MPI_<lang>_INCLUDE_DIRS
+MPI_<lang>_LIBRARIES
 ```
 
 如果没能找到 `FindXXX.cmake`, 则尝试以 `Config` 模式:
@@ -146,16 +151,16 @@ windows: C:/Program Files
 linux: /usr/local
 ```
 
-当然也支持在项目里通过 `CMAKE_PREFIX_PATH` 指定了寻找路径,
+当然也支持在项目里通过 `CMAKE_PREFIX_PATH` 指定**寻找路径**,
 或者直接通过设置 `XXX_DIR` 告知准确的查找路径.
 其实, 还有一种做法是通过指定 `toolchain` 让 cmake 统一从 `toolchain` 里寻找.
 
 ### Config方式
 
 这是一种基于 可获取项目源码的方式,
-需要为 cmake 组织的项目提供完整的install脚本,
-当执行 install 时候会在 `install dir` 的`lib`目录下创建`share`目录,
-并在`share`目录里自动生成 `XXXConfig.cmake` 或者 `xxx-config.cmake` 等配置文件
+需要为 cmake 组织的项目提供完整的 `install` 脚本,
+当执行 install 时候会在 安装目录 的`lib`目录下创建`cmake`目录,
+并在`cmake`目录里自动生成 `XXXConfig.cmake` 或者 `xxx-config.cmake` 等配置文件
 
 `cmake install`的脚本相对比较通用,
 一般只要加在cmake项目的实现模块的 `CMakeList.txt` 最下面即可,
@@ -827,9 +832,9 @@ target_link_libraries(${PROJECT_NAME} smt-logger)
 如上, 演示了如何集成vcpkg到cmake项目,
 同时也指定了本地统一库寻找目录, 且有寻找优先级.
 
-首先, find_package()默认优先会尝试从vcpkg里寻找,
-假设系统环境变量定义了vcpkg根目录 --- `VCPKG_ROOT`
-随后, 若VCPKG_ROOT 未定义(假设你不喜欢vcpkg, 想自己折腾),
++ 首先, `find_package()` 默认优先会尝试从vcpkg里寻找,
+假设系统环境变量定义了 `vcpkg` 根目录 --- `VCPKG_ROOT`
++ 随后, 若 `VCPKG_ROOT` 未定义(假设你不喜欢 `vcpkg`, 想自己折腾),
 则尝试从本地统一库寻找目录里寻找, 假设系统环境变量定义了统一库寻找目录 --- `LOCAL_REPOSITORY`
-如果以上环境变量都没有, 那么则尝试找默认的路径,
-linux从/usr/local里找, windows从C:/Program File里找
++ 如果以上环境变量都没有, 那么则尝试找默认的路径,
+`linux从/usr/local`里找, windows从 `C:/Program File` 里找

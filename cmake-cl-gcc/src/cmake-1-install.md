@@ -2,7 +2,10 @@
 
 [CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT](https://cmake.org/cmake/help/latest/variable/CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT.html)
 
-CMake sets this variable to a TRUE value when the CMAKE_INSTALL_PREFIX has just been initialized to its default value, typically on the first run of CMake within a new build tree and the CMAKE_INSTALL_PREFIX environment variable is not set on the first run of CMake. This can be used by project code to change the default without overriding a user-provided value:
+当 `CMAKE_INSTALL_PREFIX` 刚刚被初始化为默认值时, `CMake` 会将此变量设置为 `TRUE`,
+这通常发生在 CMake 在新的 build tree 中首次运行时,
+并且在此时的 `CMake` 首次运行中, 未设置 `CMAKE_INSTALL_PREFIX` 环境变量.
+项目代码可以使用它来更改默认值, 而无需覆盖用户提供的值:
 
 ```cmake
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)

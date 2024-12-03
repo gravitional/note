@@ -69,17 +69,17 @@ CMake 会将变量 `CMAKE_BINARY_DIR`, `CMAKE_SOURCE_DIR`,
 aux_source_directory(<dir> <variable>)
 ```
 
-收集指定目录中 所有源文件 的名称, 并将 列表 存储在所提供的 `<variable>` 中.
+收集指定目录中 所有源文件 的名称, 并将 *列表* 存储在所提供的 `<variable>` 中.
 此命令适用于使用 `显式模板实例化` 的项目(explicit template instantiation).
 模板实例化文件可以存储在 `Templates` 子目录中,
 并使用此命令自动收集, 以避免手动列出所有实例化文件.
 
 很自然可以想到, 使用该命令避免手写 **库或可执行目标** 的源文件列表.
-但 `CMake` 无法生成一个, 知道何时添加了新源文件的 编译系统.
+但 `CMake` 生成的编译系统, 无法知道何时添加了新源文件的 编译系统.
 通常情况下, 生成的 **build系统**(例如MSVC .sln项目) 会知道何时需要重新运行 CMake,
 因为 `CMakeLists.txt` 文件被修改以添加新源文件.
 
-如果只是将源代码添加到 文件目录中, 而没有修改 CMake 文件,
+简单的说:如果添加新的源文件到目录中, 而没有修改 CMake 文件,
 则必须手动重新运行 CMake 才能生成 包含新文件的 **build system**(.sln 文件).
 
 ## [CMAKE_PREFIX_PATH](https://cmake.org/cmake/help/latest/variable/CMAKE_PREFIX_PATH.html#cmake-prefix-path)

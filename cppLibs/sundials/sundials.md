@@ -1390,7 +1390,7 @@ cmake 菜单栏 `Tools`->`Show My Changes`,
 + 选择构建 动态库 `BUILD_SHARED_LIBS`, 而不构建静态库 `BUILD_STATIC_LIBS`.
 
 ```bash
-# Commandline options: 命令行指定的选项
+# Commandline options: 命令行指定的选项; 在 build 目录下输入
 -DENABLE_MPI:BOOL="0" -DEXAMPLES_ENABLE_CXX:BOOL="1" \
 -DCMAKE_CXX_STANDARD:STRING="17" -DBUILD_KINSOL:BOOL="1" \
 -DEXAMPLES_INSTALL_PATH:PATH="C:/Users/qingz/test/sundials/sundials-install/examples" \
@@ -1398,20 +1398,23 @@ cmake 菜单栏 `Tools`->`Show My Changes`,
 -DENABLE_OPENMP:BOOL="1" -DBUILD_IDAS:BOOL="1" -DSUNDIALS_ENABLE_ERROR_CHECKS:BOOL="0" \
 -DBUILD_SHARED_LIBS:BOOL="1" -DBUILD_CVODE:BOOL="1" \
 -DBENCHMARKS_INSTALL_PATH:PATH="C:/Users/qingz/test/sundials/sundials-install/benchmark" \
--DBUILD_STATIC_LIBS:BOOL="0"
+-DBUILD_STATIC_LIBS:BOOL="0" \
+#---- Cache file: 缓存文件中的选项; 有重复, 使用 cmake命令行的时候不用输入
+ENABLE_MPI:BOOL=0 EXAMPLES_ENABLE_CXX:BOOL=1 CMAKE_CXX_STANDARD:STRING=17 BUILD_KINSOL:BOOL=1 EXAMPLES_INSTALL_PATH:PATH=C:/Users/qingz/test/sundials/sundials-install/examples CMAKE_INSTALL_PREFIX:PATH=C:/Users/qingz/test/sundials/sundials-install ENABLE_OPENMP:BOOL=1 BUILD_IDAS:BOOL=1 SUNDIALS_ENABLE_ERROR_CHECKS:BOOL=0 BUILD_SHARED_LIBS:BOOL=1 BUILD_CVODE:BOOL=1 BENCHMARKS_INSTALL_PATH:PATH=C:/Users/qingz/test/sundials/sundials-install/benchmark BUILD_STATIC_LIBS:BOOL=0
+```
 
-# Cache file: 缓存文件中的选项
-ENABLE_MPI:BOOL=0
-EXAMPLES_ENABLE_CXX:BOOL=1
-CMAKE_CXX_STANDARD:STRING=17
-BUILD_KINSOL:BOOL=1
-EXAMPLES_INSTALL_PATH:PATH=C:/Users/qingz/test/sundials/sundials-install/examples
-CMAKE_INSTALL_PREFIX:PATH=C:/Users/qingz/test/sundials/sundials-install
-ENABLE_OPENMP:BOOL=1
-BUILD_IDAS:BOOL=1
-SUNDIALS_ENABLE_ERROR_CHECKS:BOOL=0
-BUILD_SHARED_LIBS:BOOL=1
-BUILD_CVODE:BOOL=1
-BENCHMARKS_INSTALL_PATH:PATH=C:/Users/qingz/test/sundials/sundials-install/benchmark
-BUILD_STATIC_LIBS:BOOL=0
+### linux gcc
+
+```bash
+# Commandline options: 命令行指定的选项; 后面是 Cache file: 缓存文件中的选项
+mySUNPATH=..
+cmake -B . -S .. \
+-DENABLE_MPI:BOOL="0" -DEXAMPLES_ENABLE_CXX:BOOL="1" \
+-DCMAKE_CXX_STANDARD:STRING="17" -DBUILD_KINSOL:BOOL="1" \
+-DEXAMPLES_INSTALL_PATH:PATH="examples" \
+-DCMAKE_INSTALL_PREFIX:PATH="$mySUNPATH/sundials-install" \
+-DENABLE_OPENMP:BOOL="1" -DBUILD_IDAS:BOOL="1" -DSUNDIALS_ENABLE_ERROR_CHECKS:BOOL="0" \
+-DBUILD_SHARED_LIBS:BOOL="1" -DBUILD_CVODE:BOOL="1" \
+-DBENCHMARKS_INSTALL_PATH:PATH="$mySUNPATH/sundials-install/benchmark" \
+-DBUILD_STATIC_LIBS:BOOL="0"
 ```
