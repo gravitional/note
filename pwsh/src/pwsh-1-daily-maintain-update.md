@@ -6,7 +6,8 @@
 
 ### 升级
 
-当运行以下建议的命令时, 请确保退出所有 `powershell.exe`, `pwsh.exe` 或 `pwsh` 的实例, 包括在 `VSCode` 终端打开的实例.
+当运行以下建议的命令时, 请确保退出所有 `powershell.exe`, `pwsh.exe` 或 `pwsh` 的实例,
+包括在 `VSCode` 终端打开的实例.
 
 然后, 要确保 `PSReadLine` 没有被加载.
 

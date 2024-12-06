@@ -462,7 +462,7 @@ Windows Registry Editor Version 5.00
 [企业微信表情符自动转义怎么用](https://www.weixinsiwei.com/?id=8192)
 
 点击自己的头像,
-`设置`->`通用`->`功能选项卡` 下有一个 `表情符自动转义` 的选项, 勾选即可. 
+`设置`->`通用`->`功能选项卡` 下有一个 `表情符自动转义` 的选项, 勾选即可.
 例如 `/ws` 生成 `握手` 表情.
 
 ## 关闭休眠和快速启动
@@ -497,3 +497,9 @@ c:/windows/Syswow64/WINRDLV3.EXE
 
 如果安装了 powertoys, 可以通过 `win+shift+/` 显示编号,
 对应的功能是 `快捷键指南`.
+
+## 备份网页
+
+[How do I download someone else's entire blog posts easily?](https://www.quora.com/How-do-I-download-someone-elses-entire-blog-posts-easily)
+
+使用此程序 [Download HTTrack Website Copier](https://www.httrack.com/page/2/en/index.html).

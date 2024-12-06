@@ -1,6 +1,6 @@
-# 结构体
+# 结构体, 数组
 
-## 数组
+## 数组基本操作
 
 [about_Arrays](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_arrays)
 [Everything you wanted to know about arrays](https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays)
@@ -70,29 +70,53 @@ it also makes it easier to compare to previous versions when using source contro
 [Diagnostics.Process[]]$zz = Get-Process
 ```
 
-### 子表达式运算符@()
+### Splattin(拍平,拼接), unpack, 解包参数
+
+[Splatting with arrays](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting?view=powershell-7.4#splatting-with-arrays)
+
+pwsh 使用 `@` 用于 数组参数 解包(摊平), 类似于 python 的 `*list`
+
+```pwsh
+$ArrayArguments = "test.txt", "test2.txt"
+# 等价于分别传递两个参数, Copy-Item "test.txt" "test2.txt" -WhatIf
+Copy-Item @ArrayArguments -WhatIf
+```
+
+pwsh 脚本块的 `-ArgumentList` 在接收参数时,
+会自动 splatting, 因此要想传递 Array 作为 single object, 需要再包一层
+
+```pwsh
+$array = 'Hello', 'World!'
+Invoke-Command -ScriptBlock {
+  param([string[]]$words) $words -join ' '
+} -ArgumentList (,$array)
+```
+
+### 子表达式运算符`@()`
 
 数组 sub-expression 运算符根据它内部的 `语句` 创建 `数组`.
-运算符将语句生成的结果放在数组中, 即使是零个或一个对象. 数组运算符的语法如下所示:
+运算符将语句生成的结果放在数组中, **即使是零个或一个对象**.
+数组运算符的语法如下所示:
 
 ```powershell
 @( ... )
 ```
 
-可以使用 `array` 运算符创建零个或一个对象的数组.  例如:
+可以使用 array运算符 创建**零个或一个对象的数组**.  例如:
 
 ```powershell
-$a = @("Hello World");$a.Count
-$b = @();$b.Count
+$a = @("Hello World"); $a.Count
+
+$b = @(); $b.Count
 ```
 
-当获取未知数量的对象时, array operator 很有用. 例如:
++ 当获取未知数量的对象时, array operator 很有用. 例如:
 
 ```powershell
 $p = @(Get-Process Notepad)
 ```
 
-数组支持常用的切片方法. 还可以使用`+`号来组合指标范围. 例如:
++ 数组支持常用的切片方法. 还可以使用`+`号来组合指标范围. 例如:
 
 ```powershell
 #创建数组
@@ -105,7 +129,7 @@ $a[0,2+4..6]
 $a[+0..2+4..6+8]
 ```
 
-可以使用`ForEach`, `For`, `While`循环来遍历数组:
++ 可以使用`ForEach`, `For`, `While`循环来遍历数组:
 
 ```powershell
 # for each
@@ -127,9 +151,9 @@ while($i -lt 4) {
 }
 ```
 
-### Rank
+### Rank, 数组维数
 
-返回数组中的维数.  `PowerShell` 中的大多数数组是一维的.
+返回数组中的维数. `PowerShell` 中的大多数数组是一维的.
 即使您认为生成多维数组, 如以下示例中所示:
 
 ```powershell
@@ -149,7 +173,7 @@ $a = @(
 这也称为 jagged array(交错数组).  `Rank` 属性证明这是一维的.
 若要访问交错数组中的项, 索引必须位于单独的方括号中, 例如 `$a[2][1]` .
 
-多维数组按`行顺序`(row major order)存储.  下面的示例演示如何创建一个真正的多维数组.
+多维数组按`行顺序`(row major order)存储. 下面的示例演示如何创建一个真正的多维数组.
 
 ```powershell
 [string[,]]$rank2 = [string[,]]::New(3,2)
@@ -164,7 +188,8 @@ $rank2[1,1]
 
 若要访问多维数组中的项, 请使用`[1,2,3]`的索引形式.
 
-对多维数组的某些运算(例如复制和串联)要求对数组进行展平.  展平将数组转换为无类型的一维数组. 生成的数组按行顺序列出所有元素.  请考虑以下示例:
+对多维数组的某些运算(例如复制和串联)要求对数组进行展平.
+展平将数组转换为无类型的一维数组. 生成的数组按行顺序列出所有元素. 请考虑以下示例:
 
 ```powershell
 $a = "red",$true
@@ -178,27 +203,46 @@ $a.GetType().Name
 $b.GetType().Name
 ```
 
-输出显示的 `$c` 是包含`$a`和`$b`的项的`1`维数组,  按行顺序排列.
+输出显示的 `$c` 是包含`$a`和`$b`的项的`1`维数组, 按行顺序排列.
 
 ### 获取数组的成员
 
-通过管道将数组发送到`Get-Member`时, `PowerShell` 一次发送一个项, 并返回数组中每个项的类型,  忽略重复项目.
+通过管道将数组发送到`Get-Member`时, `PowerShell` 一次发送一个项,
+并返回数组中每个项的类型, 忽略重复项目.
 
-若要获取数组的属性和方法(如`Length`属性和 `SetValue` 方法), 使用 `Get-Member` 的 `InputObject`  参数.
-使用 `InputObject` 参数 时, ` Get-Member` 返回`array`的属性, 而不是数组元素的属性和方法. 例如,
+若要获取数组的属性和方法(如`Length`属性和 `SetValue` 方法),
+使用 `Get-Member` 的 `InputObject`  参数.
+使用 `InputObject` 参数 时, ` Get-Member` 返回`array`的属性,
+而不是数组元素的属性和方法. 例如,
 
 ```powershell
 Get-Member -InputObject $a
 ```
 
-也可以在`array`前面加上一个`,`逗号, 再管道给`Get-Member`, 即组成一个套娃数组. PowerShell 一次管道一个对象, 所以会返回这个数组的属性.  如下所示.
+也可以在`array`前面加上一个`,`逗号, 再管道给`Get-Member`, 即组成一个套娃数组.
+PowerShell 一次管道一个对象, 所以会返回这个数组的属性.  如下所示.
 
 ```powershell
 ,$a | Get-Member
 ,(1,2,3) | Get-Member
 ```
 
-### 操作数组
+## 操作数组, append, remove
+
+### 更改, 添加元素
+
+[Array.Add vs +=](https://stackoverflow.com/questions/14620290/array-add-vs)
+
+`array` 是固定长度的 容器类型,
+
+```pwsh
+$array = @()
+$array.Add(1)
+
+Out:
+MethodInvocationException: Exception calling "Add" with "1" argument(s):
+"Collection was of a fixed size."
+```
 
 可以更改数组中的元素, 将元素添加到数组, 以及将两个数组中的值合并到第三个数组中. 例如:
 
@@ -206,7 +250,7 @@ Get-Member -InputObject $a
 $a[1] = 10
 ```
 
-还可使用数组的 `SetValue` 方法更改值.  以下示例将数组`$a`的元素`2`更改为`500`:
+还可使用数组的 `SetValue` 方法更改值. 以下示例将数组`$a`的元素`2`更改为`500`:
 
 ```powershell
 $a.SetValue(500,1)
@@ -219,8 +263,11 @@ $a = @(0..4)
 $a += 5
 ```
 
-备注: 使用`+=`运算符时,  `PowerShell` 实际上会创建一个新数组.
-如果多次重复操作或数组太大, 则可能会导致性能问题.
+>备注: 使用`+=`运算符时,  `PowerShell` 实际上会创建一个新数组.
+>如果**多次重复操作或数组太大, 则可能会导致性能问题**.
+>因此尽量合并操作, 减少使用 `+=` 的次数.
+
+### 删除元素
 
 从数组中删除元素并不简单, 但可以创建 `新数组`, 该数组仅包含现有数组的选定元素.
 例如, 若要创建不包含元素 `2` 的新数组,请键入:
@@ -247,9 +294,41 @@ $a = $null
 
 也可使用`Remove-Item`, 但分配`$null的值速度更快, 尤其是对于大型数组.
 
+### 排序, 去重, sort, unique
+
+[Removing duplicate values from a PowerShell array](https://stackoverflow.com/questions/1391853/removing-duplicate-values-from-a-powershell-array)
+[Get-Unique](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-unique?view=powershell-7.4#examples)
+
+使用 `Select-Object`(别名为 `select`), 并使用 `-Unique`开关, 即:
+如果要忽略大小写, 可以添加 `-CaseInsensitive`
+
+```pwsh
+$a = @(1,2,3,4,5,5,6,7,8,9,0,0)
+$a = $a | select -Unique
+```
+
+如果不需要保持顺序不变, 可以使用 `Sort-Object | Get-Unique`, 先排序再去重
+
+```pwsh
+1,1,1,1,12,23,4,5,4643,5,3,3,3,3,3,3,3 | Sort-Object | Get-Unique
+
+Get-ChildItem | Sort-Object {$_.GetType()} | Get-Unique -OnType
+```
+
+pwsh 5.x 兼容性, 检查版本, 决定是否添加 `CaseInsensitive` 选项
+
+```pwsh
+$_myIs_lt_7_0 = $PSVersionTable.PSVersion -lt [System.Version]::new(7, 0)
+$testL = 'a', 'b', 'a', 'b '
+$_selectArgs = @{Unique = $true }
+if (-not $_myIs_lt_7_0) { $_selectArgs.Add('CaseInsensitive', $true) }
+$testL | Select-Object @_selectArgs
+```
+
 ### 零或一的数组
 
-从 `Windows PowerShell 3.0` 开始, 零个或一个对象的集合具有 和 `Count`, `Length` 属性.
+从 `Windows PowerShell 3.0` 开始,
+零个或一个对象的集合具有 和 `Count`, `Length` 属性.
 此外, 可以索引只有一个对象的数组.
 此功能可帮助你避免脚本错误, 如果某个输入为集合的命令, 只获取到两个以下的项目.
 以下示例演示了此功能.
@@ -266,6 +345,8 @@ $a.Length
 $a[0]
 $a[-1]
 ```
+
+## 遍历数组
 
 ### 成员枚举
 

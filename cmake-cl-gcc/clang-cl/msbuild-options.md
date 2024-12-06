@@ -33,7 +33,7 @@ $env:Configuration='Debug' # powershell
 
 >`[]`中的文字 是用于帮助记忆开关的可选字符
 
-+ Build Project
++ Build Project; **一次只能指定一个项目**
 
 ```powershell
 VCBuild.exe <projectname.vcproj>
@@ -68,11 +68,11 @@ MSBuild.exe <solutionname.sln>
 /p[roperty]:useenv=true
 ```
 
-+ 多处理器编译(见下文)
++ /m; 多处理器编译(见下文), parallel
 
 ```powershell
--maxCpuCount[: number]
--m[: number] # number 指定生成时要使用的最大并发进程数; 允许同时生成 n 个项目
+-maxCpuCount[:number]
+-m[:number] # number 指定生成时要使用的最大并发进程数; 允许同时生成 n 个项目
 ```
 
 + 平台
