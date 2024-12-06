@@ -246,7 +246,7 @@ refer:[runoob syntax](https://www.runoob.com/regexp/regexp-syntax.html) and
 
 ### 捕获example
 
-`industr(?:y|ies)`相当于`industry|industries`
+`industr(?:y|ies)`相当于 `industry|industries`
 
 ## 各种预查
 
@@ -284,7 +284,7 @@ refer:[runoob syntax](https://www.runoob.com/regexp/regexp-syntax.html) and
 在任何不匹配`pattern`的字符串开始处匹配查找字符串.
 这是一个非获取匹配, 也就是说, 该匹配不需要获取供以后使用.
 
-例如`Windows(?!95|98|NT|2000)`能匹配`Windows3.1`中的`Windows`,
+例如 `Windows(?!95|98|NT|2000)`能匹配`Windows3.1`中的`Windows`,
 但不能匹配`Windows2000`中的`Windows`.
 预查不消耗字符, 也就是说, 在一个匹配发生后, 在最后一次匹配之后立即开始下一次匹配的搜索, 而不是从包含预查的字符之后开始.
 
@@ -394,7 +394,9 @@ result: Is is,of of,up up
 |  `(), (?:), (?=), []`  | `圆括号和方括号`    |
 |  `*, +, ?, {n}, {n,}, {n,m}`  | `限定符`   |
 |  `^, $, \任何元字符, 任何字符`   |`定位点和序列(即: 位置和顺序)`     |
-|   `|` | `替换, "或"操作字符具有高于替换运算符的优先级, 使得"m|food"匹配"m"或"food". 若要匹配"mood"或"food", 请使用括号创建子表达式, 从而产生"(m|f)ood". ` |
+
++ `|`; 替代; `|`操作字符具有高于替换运算符的优先级, 使得 `m|food` 匹配 `m` 或 `food`.
+若要匹配 `mood` 或 `food`, 请使用括号创建子表达式, 从而产生 `(m|f)ood`.
 
 ## 示例
 
@@ -560,11 +562,11 @@ result: Is is,of of,up up
 | ------------------- | ---- |
 | `/\b([a-z]+) \1\b/gi` |  `一个单词连续出现的位置`    |
 | `/(\w+):\/\/([^/:]+)(:\d*)?([^# ]*)/`| `将一个URL解析为协议, 域, 端口及相对路径. `   |
-|`/^(?:Chapter|Section) [1-9][0-9]{0,1}$/` |  `定位章节的位置`    |
+|`/^(?:Chapter\|Section) [1-9][0-9]{0,1}$/` |  `定位章节的位置`    |
 | `/[-a-z]/`   |   `a至z共26个字母再加一个-号. `   |
 |`/ter\b/`   |   `可匹配chapter, 而不能匹配terminal.`  |
 | `/\Bapt/` |  `可匹配chapter, 而不能匹配aptitude. `  |
-| `/Windows(?=95 |98 |NT )/`  |  `可匹配Windows95或Windows98或WindowsNT, 当找到一个匹配后, 从Windows后面开始进行下一次的检索匹配. `    |
+| `/Windows(?=95 \|98 \|NT )/`  | `可匹配Windows95或Windows98或WindowsNT, 当找到一个匹配后, 从Windows后面开始进行下一次的检索匹配. `    |
 | `/^\s*$/`  | `匹配空行`    |
 | `/\d{2}-\d{5}/` | `验证由两位数字, 一个连字符再加 5 位数字组成的 ID 号. ` |
 | `/<\s*(\S+)(\s[^>]*)?>[\s\S]*<\s*\/\1\s*>/` | `匹配 HTML 标记. ` |
@@ -654,3 +656,6 @@ x 的值必须为 A-Z 或 a-z 之一. 否则, 将 c 视为一个原义的 `c` �
 如果前面的条件都不满足, 若 n 和 m 均为八进制数字 (0-7), 则 `\nm` 将匹配八进制转义值 `nm`.
 + `\nml` ; 如果 n 为八进制数字 (0-3), 且 m 和 l 均为八进制数字 (0-7), 则匹配八进制转义值 nml.
 + `\un` ; 匹配 n, 其中 n 是一个用四个十六进制数字表示的 `Unicode` 字符. 例如,  `\u00A9` 匹配版权符号 `(?)`.
+
+[runoob metachar]: https://www.runoob.com/regexp/regexp-metachar.html
+[runoob syntax]: https://www.jianshu.com/p/1adced676d79
