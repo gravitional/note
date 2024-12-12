@@ -68,10 +68,10 @@ c:/msys64/clang64/bin/clangd.exe --check=app.cpp --query-driver=c++.exe
 一般情况下, 这应该用于 shared 和 checked-in 设置.
 
 + 用户配置: 操作系统特定目录中的 `config.yaml` 文件:
-    + Windows: `%LocalAppData%\clangd\config.yaml`,
+  + Windows: `%LocalAppData%\clangd\config.yaml`,
     通常是 `C:\Users\Bob\AppData\Local\clangd\config.yaml`.
-    + macOS:  `~/Library/Preferences/clangd/config.yaml`
-    + Linux 和其他系统: `$XDG_CONFIG_HOME/clangd/config.yml`,
+  + macOS:  `~/Library/Preferences/clangd/config.yaml`
+  + Linux 和其他系统: `$XDG_CONFIG_HOME/clangd/config.yml`,
     通常为 `~/.config/clangd/config.yml`.
 
 私人设置放在这里, 并可使用 `If` 条件将其作用域扩展到项目.
@@ -268,3 +268,7 @@ add_compile_options("-isystem${CMAKE_SOURCE_DIR}/src/dependencies/fmt/include")
 ```bash
 set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES 0)
 ```
+
+## clangd 配置文件 stack overflow
+
+[Is there "includePath" option in clangd?](https://stackoverflow.com/questions/61206703/is-there-includepath-option-in-clangd)

@@ -188,6 +188,690 @@ L=L\,I=L\,x\,R=I\,R=R
 \end_layout
 
 \begin_layout Section
+矩阵乘法面面观
+\end_layout
+
+\begin_layout Itemize
+定义初等列矢量 
+\begin_inset Formula $y^{j}$
+\end_inset
+
+（elementary basis vector ），除了第
+\begin_inset Formula $j$
+\end_inset
+
+元为
+\begin_inset Formula $1$
+\end_inset
+
+其余都为零；以及相应的初等行矢量 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+按照微分几何的习惯，
+\series bold
+列基矢量腿号用下标
+\series default
+，对偶行基矢量腿号用上标；重复指标求和。抽象指标记号：
+\begin_inset Formula $(y_{\mu})^{a}$
+\end_inset
+
+，
+\begin_inset Formula $(y^{\nu})_{b}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+普通列矢量（分量指标或抽象指标）用
+\series bold
+上标
+\series default
+，普通对偶矢量用下标。例如
+\begin_inset Formula $v^{a}$
+\end_inset
+
+，
+\begin_inset Formula $v^{\mu}$
+\end_inset
+
+；
+\begin_inset Formula $v_{b}$
+\end_inset
+
+，
+\begin_inset Formula $v_{\nu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+初等基矢量是坐标依赖的矢量
+\series default
+，
+\series bold
+也就是切换坐标系时，切换它们的定义
+\series default
+；但它们本身仍然是矢量，满足矢量的坐标变换式；它们在本地坐标系下写成
+\begin_inset Formula 
+\[
+(y_{2})^{a}=\left[\begin{array}{c}
+0\\
+1\\
+0\\
+\vdots
+\end{array}\right],\quad(y^{2})_{b}=\left[\begin{array}{cccc}
+0 & 1 & 0 & \cdots\end{array}\right]
+\]
+
+\end_inset
+
+通常我们省略初等基矢量的腿号，比如 
+\begin_inset Formula $(y_{2})^{a}$
+\end_inset
+
+直接写成 
+\begin_inset Formula $y^{2}$
+\end_inset
+
+，
+\begin_inset Formula $2$
+\end_inset
+
+即表示腿号，又表示分量
+\begin_inset Formula $2$
+\end_inset
+
+不为零。
+\begin_inset CommandInset label
+LatexCommand label
+name "conv:y1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+矩阵乘矢量的理解
+\end_layout
+
+\begin_layout Itemize
+普通矩阵可以写成
+\begin_inset Formula $(1,1)$
+\end_inset
+
+型张量，即 
+\begin_inset Formula $T(V^{*},V)\to\mathbb{R}$
+\end_inset
+
+，记作 
+\begin_inset Formula $A_{\phantom{i}j}^{i}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\color blue
+列矢量
+\series default
+\color inherit
+右乘 
+\begin_inset Formula $A\,\sbf x$
+\end_inset
+
+ 有两种理解（
+\begin_inset Formula $\bullet$
+\end_inset
+
+在行指标上形成列，
+\begin_inset Formula $\bullet$
+\end_inset
+
+在列指标上形成行）：
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+不拆开
+\series default
+— 将右矢量
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 当成一个整体，并依次取出左矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的行；因此理解为
+\series bold
+ 
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 投影（变换）到 矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的
+\color red
+行对偶矢量
+\color inherit
+空间
+\series default
+。
+\begin_inset Formula 
+\[
+A_{\phantom{j}\bullet}^{j}\quad\sbf x^{\bullet}
+\]
+
+\end_inset
+
+这种观点下可以形象的理解为，矢量逆时针旋转
+\begin_inset Formula $90\text{\textdegree}$
+\end_inset
+
+，从上到上与矩阵的每一行作内积。如果 
+\begin_inset Formula $A_{mn}$
+\end_inset
+
+(
+\begin_inset Formula $m<n$
+\end_inset
+
+) 可联系到 矢量数据降维。
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+拆开
+\series default
+— 将右矢量
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 拆成单独的分量，并依次取出左矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的列；因此理解为，
+\series bold
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的
+\color blue
+列矢量
+\color inherit
+按照
+\begin_inset Formula $x_{j}$
+\end_inset
+
+作线性组合（变换）
+\series default
+。
+\begin_inset Formula 
+\[
+A_{\phantom{\bullet}j}^{\bullet}\quad\sbf x^{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对应的，
+\series bold
+\color red
+行对偶矢量
+\series default
+\color inherit
+左乘 
+\begin_inset Formula $\sbf x\,A$
+\end_inset
+
+也有两种理解：
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+不拆开
+\series default
+— 将左对偶矢量
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 当成一个整体，并依次取出右矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的行；因此理解为 
+\series bold
+
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 投影（变换）到矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的
+\color blue
+列矢量
+\color inherit
+空间
+\series default
+。
+\begin_inset Formula 
+\[
+\sbf x_{\bullet}\quad A_{\phantom{\bullet}j}^{\bullet}
+\]
+
+\end_inset
+
+这种观点下可以形象的理解为，矢量顺时针旋转
+\begin_inset Formula $90\text{\textdegree}$
+\end_inset
+
+，从左到右与矩阵的每一列作内积。
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+拆开
+\series default
+— 将左对偶矢量
+\begin_inset Formula $\sbf x$
+\end_inset
+
+ 拆成单独的分量，并依次取出左矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的列；因此理解为，
+\series bold
+矩阵
+\begin_inset Formula $A$
+\end_inset
+
+的
+\color red
+行对偶矢量
+\color inherit
+按照
+\begin_inset Formula $x_{j}$
+\end_inset
+
+作线性组合（变换）
+\series default
+。
+\begin_inset Formula 
+\[
+\sbf x_{1j}\quad A_{\phantom{j}\bullet}^{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+矩阵乘矩阵的理解
+\end_layout
+
+\begin_layout Standard
+使用初等列矢量或初等行对偶矢量，可以取出矩阵的列或者行，
+\begin_inset Formula 
+\begin{align*}
+\text{取列} &  & A_{\phantom{\bullet}\nu}^{\bullet}=\, & A_{\phantom{\bullet}b}^{\bullet}\;(y_{\nu})^{b}{\color{blue}\coloneqq}A_{\phantom{\bullet}\nu}^{\bullet}\;y^{\nu}, & \text{i.e.}\nu\equiv b\\
+\text{取行} &  & A_{\phantom{\mu}\bullet}^{\mu}=\, & (y^{\mu})_{a}\;A_{\phantom{a}\bullet}^{a}{\color{blue}\coloneqq}y_{\mu}\,A_{\phantom{\mu}\bullet}^{\mu} & \text{i.e.}\mu\equiv a
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\color{blue}\coloneqq}$
+\end_inset
+
+ 后面的是简记，使用了约定
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "conv:y1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，把两个指标浓缩成了一个，所以不存在指标平衡的问题。
+\end_layout
+
+\begin_layout Itemize
+因为矩阵可以看作由 列矢量 或 行矢量 拼接而成（分块矩阵），所以对于每一列或者每一行，可以套用上面的观点。
+\end_layout
+
+\begin_layout Subsection
+矩阵转置与正交矩阵
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+矩阵转置
+\end_layout
+
+\end_inset
+
+ 对于张量 
+\begin_inset Formula $T_{\phantom{a}b}^{a}$
+\end_inset
+
+，输入一个对偶矢量
+\color blue
+
+\begin_inset Formula $(e^{\mu})_{a}$
+\end_inset
+
+
+\color inherit
+，一个矢量
+\color red
+ 
+\begin_inset Formula $(e_{\nu})^{b}$
+\end_inset
+
+
+\color inherit
+，得到一个数
+\begin_inset Formula 
+\begin{equation}
+T_{\phantom{\mu}\nu}^{\mu}=T_{\phantom{a}b}^{a}\,{\color{blue}(e^{\mu})_{a}}\,{\color{red}(e_{\nu})^{b}}\label{eq:my-tensor}
+\end{equation}
+
+\end_inset
+
+此数称为张量 
+\begin_inset Formula $T_{\phantom{a}b}^{a}$
+\end_inset
+
+ 的分量；
+\end_layout
+
+\begin_layout Itemize
+写成矩阵时约定 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 是行指标，
+\begin_inset Formula $\nu$
+\end_inset
+
+ 是列指标；从左到右，从上到下书写。
+\end_layout
+
+\begin_layout Itemize
+我们用 
+\series bold
+上下
+\series default
+ 区分 矢量/对偶矢量（上指标用对偶矢量投影出），
+\series bold
+左右
+\series default
+ 区分矩阵的 行/列；两相互不干扰。
+\end_layout
+
+\begin_layout Standard
+因此约定，矩阵作转置，例如
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my-tensor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的记号变化如下
+\begin_inset Formula 
+\[
+T_{\nu}^{\phantom{\nu}\mu}=T_{b}^{\phantom{b}a}{\color{red}(e_{\nu})^{b}}\,{\color{blue}(e^{\mu})_{a}}
+\]
+
+\end_inset
+
+即 
+\begin_inset Formula $T_{\phantom{a}b}^{a}$
+\end_inset
+
+作转置变成 
+\begin_inset Formula $T_{b}^{\phantom{b}a}$
+\end_inset
+
+，分量
+\begin_inset Formula $T_{\phantom{\bullet}\nu}^{\bullet}$
+\end_inset
+
+作转置变成 
+\begin_inset Formula $T_{\nu}^{\phantom{\nu}\bullet}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+对称矩阵
+\end_layout
+
+\end_inset
+
+如果矩阵是对称的，即
+\begin_inset Formula 
+\[
+T_{\phantom{\mu}\nu}^{\mu}=T_{\mu}^{\phantom{\nu}\nu}
+\]
+
+\end_inset
+
+看起来违背了指标平衡，那么只有一种可能：矢量 
+\begin_inset Formula $\equiv$
+\end_inset
+
+ 对偶矢量，它们是完全等价的。此时指标可以随意上下。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+假设 矢量 
+\begin_inset Formula $A_{\phantom{\bullet}j}^{\bullet}$
+\end_inset
+
+和 对偶矢量 
+\begin_inset Formula $\tps A_{\phantom{j}\bullet}^{k}$
+\end_inset
+
+ 是相互正交的（不一定归一），即
+\begin_inset Formula 
+\begin{align*}
+ & \tps A_{\phantom{j}\bullet}^{k}\;A_{\phantom{\bullet}j}^{\bullet}=d_{\phantom{k}j}^{k}\\
+\text{or}\quad & A_{\bullet}^{\phantom{\bullet}k}\;A_{\phantom{\bullet}j}^{\bullet}=d_{\phantom{k}j}^{k}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $d$
+\end_inset
+
+ 是对角矩阵 
+\begin_inset Formula $\{d_{1},d_{2},\cdots\}$
+\end_inset
+
+。由于 
+\begin_inset Formula $\tps d_{\phantom{k}j}^{k}=d_{k}^{\phantom{k}j}$
+\end_inset
+
+，方程两边都作转置
+\begin_inset Formula 
+\[
+A_{\phantom{k}\bullet}^{k}\;A_{j}^{\phantom{j}\bullet}=d_{\phantom{k}j}^{k}
+\]
+
+\end_inset
+
+因此可知，矩阵 
+\begin_inset Formula $A$
+\end_inset
+
+的行也是正交的。因此 行正交 和列正交是等价的，并且相同编号的行和列，模长也相同。
+\end_layout
+
+\begin_layout Standard
+dsf
+\end_layout
+
+\begin_layout Subsection
+相似变换 Wrong
+\end_layout
+
+\begin_layout Standard
+对于如下形式的相似变换，
+\begin_inset Formula 
+\begin{align}
+x= & Q\,x'\nonumber \\
+A= & Q\,A'\,\tps Q\label{eq:my1}
+\end{align}
+
+\end_inset
+
+其中变换矩阵是正交矩阵 
+\begin_inset Formula $\tps QQ=I$
+\end_inset
+
+，or 
+\begin_inset Formula $Q^{-1}=\tps Q$
+\end_inset
+
+。使用矩阵面面观看待
+\begin_inset Formula $\tps QQ=I$
+\end_inset
+
+ ，将它写成分块矩阵相乘的形式
+\begin_inset Formula 
+\begin{equation}
+\tps Q_{\phantom{m}\bullet}^{j}\;Q_{\phantom{m}k}^{\bullet}=\delta_{\phantom{m}k}^{j}\label{eq:my2}
+\end{equation}
+
+\end_inset
+
+因为
+\begin_inset Formula $\tps Q_{\phantom{m}\bullet}^{j}=Q_{\phantom{m}j}^{\bullet}$
+\end_inset
+
+，即
+\begin_inset Formula $\tps Q_{\phantom{m}\bullet}^{j}$
+\end_inset
+
+的行矢量就是
+\begin_inset Formula $Q$
+\end_inset
+
+的列矢量，上式等价于
+\begin_inset Formula 
+\[
+Q^{\bullet j}\;Q_{\phantom{m}k}^{\bullet}=\delta_{\phantom{m}k}^{j}
+\]
+
+\end_inset
+
+或者说，如果把 
+\begin_inset Formula $Q_{\phantom{m}k}^{\bullet}$
+\end_inset
+
+ 看作列基矢，则根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+它的对偶行基矢就是它自己（的转置）。
+\end_layout
+
+\begin_layout Standard
+如果可逆矩阵 
+\begin_inset Formula $A$
+\end_inset
+
+ 通过相似变换，变成它的对角形式 
+\begin_inset Formula $A'$
+\end_inset
+
+，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:my1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以写成它的秩
+\begin_inset Formula $1$
+\end_inset
+
+展开形式
+\begin_inset Formula 
+\[
+Q\,A'\,\tps Q=\coprod_{jk}Q_{\phantom{m}j}^{\bullet}\;A_{\phantom{m}k}^{\prime j}\;\tps Q_{\phantom{m}\bullet}^{k}=Q_{\phantom{m}j}^{\bullet}\;A_{\phantom{m}k}^{\prime j}\;Q^{\bullet k}=A_{\phantom{m}j}^{\prime j},\quad A_{\phantom{m}j}^{\prime j}\text{不求和}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\coprod_{jk}$
+\end_inset
+
+表示组装
+\end_layout
+
+\begin_layout Section
 二进制表示
 \end_layout
 
