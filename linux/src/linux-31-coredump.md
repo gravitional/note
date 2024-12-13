@@ -25,24 +25,24 @@ Core Dump 中的 Core 沿用了磁芯内存的 Core 表达.
 也能看出 Unix 系统 Core Dump 机制的悠久历史.
 
 `Dump` 指的是拷贝一种存储介质中的部分内容到另一个存储介质,
-或者将内容打印, 显示或者其它输出设备. 
+或者将内容打印, 显示或者其它输出设备.
 ump 出来的内容是格式化的, 可以使用一些工具来解析它.
 
-现代操作系统中, 用 Core Dump 表示当程序异常终止或崩溃时, 
+现代操作系统中, 用 Core Dump 表示当程序异常终止或崩溃时,
 将进程此时的内存中的内容拷贝到磁盘文件中存储, 以方便编程人员调试.
 
 ## Core Dump 如何产生
 
-上面说当程序运行过程中异常终止或崩溃时会发生 core dump, 
-但还没说到什么具体的情景程序会发生异常终止或崩溃, 
+上面说当程序运行过程中异常终止或崩溃时会发生 core dump,
+但还没说到什么具体的情景程序会发生异常终止或崩溃,
 例如我们使用 kill -9 命令杀死一个进程会发生 core dump 吗?
 实验证明是不能的, 那么什么情况会产生呢?
 
-Linux 中信号是一种异步事件处理的机制, 每种信号对应有其默认的操作, 
-你可以在 [这里](http://man7.org/linux/man-pages/man7/signal.7.html) 
-查看 Linux 系统提供的信号以及默认处理. 
-默认操作主要包括忽略该信号(Ingore), 暂停进程(Stop), 终止进程(Terminate), 
-终止并发生core dump(core)等. 如果我们信号均是采用默认操作, 
+Linux 中信号是一种异步事件处理的机制, 每种信号对应有其默认的操作,
+你可以在 [这里](http://man7.org/linux/man-pages/man7/signal.7.html)
+查看 Linux 系统提供的信号以及默认处理.
+默认操作主要包括忽略该信号(Ingore), 暂停进程(Stop), 终止进程(Terminate),
+终止并发生core dump(core)等. 如果我们信号均是采用默认操作,
 那么, 以下列出几种信号, 它们在发生时会产生 core dump:
 
 Signal Action Comment
@@ -52,12 +52,12 @@ Signal Action Comment
 + `SIGABRT`;    `Core` Abort signal from abort
 + `SIGTRAP`;    `Core` Trace/breakpoint trap
 
-当然不仅限于上面的几种信号. 
-这就是为什么我们使用 Ctrl+z 来挂起一个进程或者 Ctrl+C 结束一个进程均不会产生 core dump, 
+当然不仅限于上面的几种信号.
+这就是为什么我们使用 Ctrl+z 来挂起一个进程或者 Ctrl+C 结束一个进程均不会产生 core dump,
 因为前者会向进程发出 `SIGTSTP` 信号, 该信号的默认操作为 `暂停进程`(Stop Process);
-后者会向进程发出 `SIGINT` 信号, 该信号默认操作为终止进程(Terminate Process). 
-同样上面提到的 `kill -9` 命令会发出 `SIGKILL` 命令, 该命令默认为终止进程. 
-而如果我们使用 `Ctrl+\` 来终止一个进程, 会向进程发出 `SIGQUIT` 信号, 默认是会产生 core dump 的. 
+后者会向进程发出 `SIGINT` 信号, 该信号默认操作为终止进程(Terminate Process).
+同样上面提到的 `kill -9` 命令会发出 `SIGKILL` 命令, 该命令默认为终止进程.
+而如果我们使用 `Ctrl+\` 来终止一个进程, 会向进程发出 `SIGQUIT` 信号, 默认是会产生 core dump 的.
 还有其它情景会产生 core dump,  如: 程序调用 `abort()` 函数, 访存错误, 非法指令等等.
 
 下面举两个例子来说明:
@@ -102,11 +102,11 @@ guohailin@guohailin:~$ ls      #多出下面一个 core 文件
 
 在终端中输入命令 `ulimit -c` , 输出的结果为 0,
 说明默认是关闭 core dump 的, 即当程序异常终止时, 也不会生成 core dump 文件.
-我们可以使用命令 `ulimit -c unlimited` 来开启 core dump 功能, 
-并且不限制 core dump 文件的大小; 如果需要限制文件的大小, 
+我们可以使用命令 `ulimit -c unlimited` 来开启 core dump 功能,
+并且不限制 core dump 文件的大小; 如果需要限制文件的大小,
 将 `unlimited` 改成你想生成 core 文件最大的大小, 注意单位为 `blocks`(KB).
-用上面命令只会对当前的终端环境有效, 如果想需要永久生效, 
-可以修改文件 `/etc/security/limits.conf` 文件, 
+用上面命令只会对当前的终端环境有效, 如果想需要永久生效,
+可以修改文件 `/etc/security/limits.conf` 文件,
 关于此文件的设置参看 [manpages.ubuntu.com](http://manpages.ubuntu.com/manpages/hardy/man5/limits.conf.5.html) 增加一行:
 
 ```bash
@@ -126,35 +126,34 @@ guohailin@guohailin:~$ ls      #多出下面一个 core 文件
 
 [Linux: Ubuntu coredump 配置](https://blog.csdn.net/JiMoKuangXiangQu/article/details/129040106)
 
-
 ### 修改 core 文件保存的路径
 
 默认生成的 core 文件保存在可执行文件所在的目录下, 文件名就为 `core`.
 通过修改 `/proc/sys/kernel/core_uses_pid` 文件可以让生成 core 文件名是否自动加上 pid 号.
-例如 `echo 1 > /proc/sys/kernel/core_uses_pid` , 
+例如 `echo 1 > /proc/sys/kernel/core_uses_pid` ,
 生成的 core 文件名将会变成 core.pid, 其中 pid 表示该进程的 PID.
 还可以通过修改 `/proc/sys/kernel/core_pattern` 来控制生成 core 文件保存的位置以及文件名格式.
-例如可以用 
+例如可以用
 
 ```bash
-echo "/tmp/corefile-%e-%p-%t" > /proc/sys/kernel/core_pattern 
+echo "/tmp/corefile-%e-%p-%t" > /proc/sys/kernel/core_pattern
 ```
 
-设置生成的 core 文件保存在 `/tmp/corefile` 目录下, 文件名格式为 `core-命令名-pid-时间戳`. 
+设置生成的 core 文件保存在 `/tmp/corefile` 目录下, 文件名格式为 `core-命令名-pid-时间戳`.
 [man7.org/linux/man-pages](http://man7.org/linux/man-pages/man5/core.5.html) 有更多详细的说明!
-
-
 
 ## 使用 gdb 调试 Core 文件
 
 产生了 core 文件, 我们该如何使用该 Core 文件进行调试呢?
 Linux 中可以使用 GDB 来调试 core 文件, 步骤如下:
 
-首先, 使用 gcc 编译源文件, 加上 -g 以增加调试信息;
-按照上面打开 core dump 以使程序异常终止时能生成 core 文件;
-运行程序, 当core dump 之后, 使用命令 gdb program core 来查看 core 文件, 其中 program 为可执行程序名, core 为生成的 core 文件名.
+首先, 使用 gcc 编译源文件, 加上 `-g` 以增加调试信息;
+按照上面打开 `core dump` 以使程序异常终止时能生成 core 文件;
+运行程序, 当 `core dump` 之后, 使用命令 `gdb program core` 来查看 `core` 文件,
+其中 `program` 为可执行程序名, `core` 为生成的 `core` 文件名.
 下面用一个简单的例子来说明:
 
+```cpp
 # include <stdio.h>
 int func(int *p)
 {
@@ -166,8 +165,11 @@ int main()
     int *p = NULL;
     return func(p);
 }
-编译加上调试信息, 运行之后core dump, 使用 gdb 查看 core 文件.
+```
 
+编译加上调试信息, 运行之后 `core dump`, 使用 `gdb` 查看 `core` 文件.
+
+```bash
 guohailin@guohailin:~$ gcc core_demo.c -o core_demo -g
 guohailin@guohailin:~$ ./core_demo
 Segmentation fault (core dumped)
@@ -191,9 +193,14 @@ Stack level 0, frame at 0xffd590a4:
  Saved registers:
   ebp at 0xffd5909c, eip at 0xffd590a0
 (gdb)
-从上面可以看出,我们可以还原 core_demo 执行时的场景,并使用 where 可以查看当前程序调用函数栈帧, 还可以使用 gdb 中的命令查看寄存器,变量等信息.
+```
+
+从上面可以看出,我们可以还原 `core_demo` 执行时的场景,
+并使用 `where` 可以查看当前程序调用函数栈帧,
+还可以使用 `gdb` 中的命令查看寄存器,变量等信息.
 
 参考资料
-http://whatis.techtarget.com/definition/core-dump
-http://man7.org/linux/man-pages/man5/core.5.html
-http://en.wikipedia.org/wiki/Core_dump
+
+[core-dump](http://whatis.techtarget.com/definition/core-dump)
+[man5/core.5](http://man7.org/linux/man-pages/man5/core.5.html)
+[Core_dump](http://en.wikipedia.org/wiki/Core_dump)

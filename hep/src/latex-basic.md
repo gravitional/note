@@ -628,3 +628,15 @@ The \newtie form is centered in its box.
 + `\x`;
 + `\y`;
 + `\z`;
+
+## 分页, 新的一页[\pagebreak vs \newpage](https://tex.stackexchange.com/questions/736/pagebreak-vs-newpage)
+
+这两个命令都会开始新的一页.
+
+如果不使用可选参数, `pagebreak` 会开始新的一页,
+旧页的段落会分散开来, 这样旧页看起来就不像是一章的结束.
+另一方面, 如果使用 `\newpage`,
+旧页底部就会出现空白, 因为段落会粘连在一起, 就像一章在这里结束一样.
+
+[这个链接](https://web.archive.org/web/20100622022829/http://help-csli.stanford.edu/tex/latex-pagebreaks.shtml)会很有用, [一个重复问题的答案](https://tex.stackexchange.com/questions/9852/what-is-the-difference-between-page-break-and-new-page/9855#9855)
+(后来从 SO 迁移到了本网站)给出了下面的例子:
