@@ -186,9 +186,9 @@ Tools > Options > Fonts and Colors > 语句结束
 
 [[方法]关闭Visual Studio 2019的代码自动格式化功能](https://blog.csdn.net/ZLK1214/article/details/106416075)
 
-关闭这个自动格式化代码的功能的方法是, 选择 `Tools` 菜单中的 `Options` 命令, 
+关闭这个自动格式化代码的功能的方法是, 选择 `Tools` 菜单中的 `Options` 命令,
 在 `Text Editor -> C/C++ -> Formatting -> General`
-中取消勾选所有的 Automatically indent 和 Automatically format 就可以了. 
+中取消勾选所有的 Automatically indent 和 Automatically format 就可以了.
 默认开启了
 
 + 键入 `;` 时自动设置语句的格式
@@ -197,10 +197,10 @@ Tools > Options > Fonts and Colors > 语句结束
 + 粘贴时 缩进和格式
 
 + 在大括号自动完成时自动设置其格式
- 
+
 ## vs 离线安装
 
-[ATL与COM之间的关系、ATL的特点与基本使用方法](https://www.cnblogs.com/gowell2014/p/7846210.html)
+[ATL与COM之间的关系, ATL的特点与基本使用方法](https://www.cnblogs.com/gowell2014/p/7846210.html)
 
 使用 c++ 的桌面开发
 
@@ -217,3 +217,37 @@ Tools > Options > Fonts and Colors > 语句结束
 Python 开发
 
 + python 语言支持
+
+## 高级保存选项
+
+[Visual Studio系列开启高级保存选项的两种方式](https://blog.csdn.net/qq_33391499/article/details/84135899)
+
+### Visual系列产品内置的转码功能
+
++ Visual Studio提供高级保存选项功能, 它能指定特定代码文件的编码规范和行尾所使用的换行符.
++ VS默认是隐藏了高级保存选项的命令了的, 可以自行设置打开.
++ 此选项可以放在菜单栏中, 也可以放在"文件"菜单栏或其他菜单栏下
+(笔者倾向于放入文件中, 因为此功能并不常用).
+
+### 开启高级保存选项的两种方式
+
++ 单击 `工具` –> `自定义` –> `命令` 选项卡–>
+
+1) 选中 `菜单栏` 单选框及 `菜单栏` 下拉框
+2) 选中 `菜单栏` 单选框及 `文件` 下拉框.
+
+注意, 此处按 `1` 走则会将高级保存选项放置在菜单栏,
+跟 `2` 走则放在文件菜单下. 本图以`1`为例.
+
+![img](https://i-blog.csdnimg.cn/blog_migrate/afbed5b925f064e32c83ceb5a2d0751a.png)
+
++ 在预览中选择 `文件` -->点击 `添加命令` 按钮-->
+在弹出的 `添加命令` 模态窗口中选择 `文件` -->
+在右侧的列表中找到 `高级保存选项` -->点击 `确定` 按钮-->
+点击 `关闭` 按钮即可添加成功.
+
+![img2](https://i-blog.csdnimg.cn/blog_migrate/59fa074a12e16c57af69b240b2be5a97.png)
+
+### 高级选项保存使用方式
+
+选择需要转码的文件, 点击 `高级保存选项`, 进行转码及行尾设置即可.
