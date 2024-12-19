@@ -19,8 +19,10 @@
 
 ### 普通变量(Normal Variable)
 
-```camke
+```cmake
 set(<variable> <value>... [PARENT_SCOPE])
+# set 的时候变量不需要加 `$`
+set(var 'temp string')
 ```
 
 在 `当前函数` 或 `目录范围` 内设置给定的 `<variable>`,
@@ -66,8 +68,8 @@ test:
 cmake_minimum_required (VERSION 3.5)
 project (subtest)
 
-set (val sub_hello)
-set (val par_hello PARENT_SCOPE)
+set(val sub_hello)
+set(val par_hello PARENT_SCOPE)
 
 message (">>>>>> in sub level, value = ${val}")
 ```
