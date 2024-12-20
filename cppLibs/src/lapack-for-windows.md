@@ -408,7 +408,7 @@ cmake -B . -S .. -G 'MinGW Makefiles' -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_
 /ucrt64/bin/mingw32-make.exe -j
 
 # install; 改变安装路径
-# ./configure --prefix=/c/cppLibs/LAPACK-openBLAS-ucrt 
+# ./configure --prefix=/c/cppLibs/LAPACK-openBLAS-ucrt
 # 使用 make DESTDIR=/c/cppLibs/LAPACK-openBLAS-ucrt install 指定安装路径
 /ucrt64/bin/mingw32-make.exe install
 ```
@@ -417,7 +417,7 @@ cmake -B . -S .. -G 'MinGW Makefiles' -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_
 
 ```bash
 cmake --build . --config Release -j
-cmake --install . --config Release --prefix '/c/cppLibs/LAPACK-openBLAS-ucrt' 
+cmake --install . --config Release --prefix '/c/cppLibs/LAPACK-openBLAS-ucrt'
 ```
 
 ## 支持与反馈
@@ -428,3 +428,26 @@ cmake --install . --config Release --prefix '/c/cppLibs/LAPACK-openBLAS-ucrt'
 
 + 论坛: [/lapack-forum/index.php](/lapack-forum/index.php)
 + 邮件列表: lapack@cs.utk.edu
+
+## 使用 cmake + intel oneAPI, ifx 编译器编译
+
+cmake 3.29 之后支持 `Visual Studio 17 2022` 选择 fortran 编译器,
+CMAKE_GENERATOR_TOOLSET, `-T 'fortran=ifx'`
+
+不开启 `BLAS++`, `LAPACK++`
+
+```bash
+cmake -G 'Visual Studio 17 2022' -B . -S .. -T 'fortran=ifx' -DCMAKE_Fortran_COMPILER='C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifx.exe'  -DCMAKE_INSTALL_PREFIX='C:\Users\qingz\Downloads\lapack-install' -DCBLAS:BOOL=ON  -DBUILD_SHARED_LIBS:BOOL=ON  -DUSE_OPTIMIZED_LAPACK:BOOL=OFF -DBLAS++:BOOL=OFF -DMEMORYCHECK_COMMAND:FILEPATH="MEMORYCHECK_COMMAND-NOTFOUND" -DUSE_OPTIMIZED_BLAS:BOOL=OFF -DLAPACK++:BOOL=OFF -DLAPACKE:BOOL=ON -DBUILD_SINGLE:BOOL=OFF -DLAPACKE_BUILD_SINGLE=OFF
+```
+
+开启 `BLAS++`, `LAPACK++`
+
+```bash
+cmake -G 'Visual Studio 17 2022' -B . -S .. -T 'fortran=ifx' -DCMAKE_Fortran_COMPILER='C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifx.exe'  -DCMAKE_INSTALL_PREFIX='C:/Users/qingz/Downloads/lapack-install'  -DMEMORYCHECK_COMMAND:FILEPATH="MEMORYCHECK_COMMAND-NOTFOUND" -DUSE_OPTIMIZED_LAPACK:BOOL=ON -DBUILD_SHARED_LIBS:BOOL=ON  -DBLAS++:BOOL=ON -DCBLAS:BOOL=ON  -DUSE_OPTIMIZED_BLAS:BOOL=ON -DLAPACK++:BOOL=ON -DLAPACKE:BOOL=ON -DBUILD_SINGLE:BOOL=OFF -DLAPACKE_BUILD_SINGLE=OFF
+```
+
+编译
+
+```bash
+cmake --build . --config release -j
+```
