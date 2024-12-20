@@ -1911,6 +1911,86 @@ Galerkin 方程边界项的贡献是
 \end_layout
 
 \begin_layout Section
+电流密度边界条件
+\end_layout
+
+\begin_layout Standard
+3D模型的 
+\series bold
+电流边界
+\series default
+ 相当于 
+\series bold
+浮动电位
+\series default
+边界（MPCFloating），电流方向就是等势面的法向。总电流就是对方程右端项的主自由度的贡献，总电流 等于 电流密度在边界面上的积分，即
+\begin_inset Formula 
+\[
+\iint_{S}\sbf j\cdot\dd{\sbf s}=J.
+\]
+
+\end_inset
+
+3D模型中 
+\begin_inset Formula $\sbf j$
+\end_inset
+
+的量纲是 
+\begin_inset Formula $\mathrm{A}*\mathrm{m}^{-2}$
+\end_inset
+
+。IBE 中设置 value 的量纲为 
+\begin_inset Formula $\mathrm{A}$
+\end_inset
+
+，因此 给定的就是 总电流。
+\end_layout
+
+\begin_layout Standard
+2D模型对边界线积分，再乘以厚度
+\begin_inset Formula 
+\[
+d*\int_{L}\sbf j\cdot\dd{\sbf\ell}=J.
+\]
+
+\end_inset
+
+2D模型中 
+\begin_inset Formula $\sbf j$
+\end_inset
+
+的量纲是 
+\begin_inset Formula $\mathrm{A}*\mathrm{m}^{-2}$
+\end_inset
+
+。而 IBE 中电流密度边界的 value 的量纲为 
+\begin_inset Formula $\mathrm{A}$
+\end_inset
+
+，此时对应的厚度是 
+\begin_inset Formula $1\,\mathrm{m}$
+\end_inset
+
+。因此给定的是 
+\begin_inset Formula $1\,\mathrm{m}$
+\end_inset
+
+ 厚度时，边界线上的总电流，对于不同的厚度
+\begin_inset Formula $d$
+\end_inset
+
+，value 需要修改为
+\begin_inset Formula 
+\[
+d*\mathrm{value}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 稳态电流场
 \end_layout
 
