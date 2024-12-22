@@ -9,7 +9,9 @@ windows 系统, 修改环境变量的例子, Linux 类似, 需要修改分隔符
 
 ```powershell
 if ($IsWindows) {
-    $paths = 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\bin\Hostx64\x64',
+    # `'',` 强制 -join 添加首部的 `;`
+    $paths ='',
+    'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\bin\Hostx64\x64',
     'C:\Strawberry\c\bin',
     'C:\Strawberry\perl\site\bin',
     'C:\Strawberry\perl\bin',

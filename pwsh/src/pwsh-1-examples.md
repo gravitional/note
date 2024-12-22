@@ -214,3 +214,18 @@ C:\buildscript.cmd --build-options
 ```
 
 这篇文章还介绍了几个可以让你轻松保存和恢复环境变量的函数.
+
+## sdfds
+
+cmd.exe /E:ON /K ""C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64 vs2022"
+cmd.exe /K '"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64 vs2022 && powershell'
+
+c:\PROGRA~1
+"C:\Program Files\CMake\bin\cmake.exe"
+C:\PROGRA~1\CMake\bin\cmake.exe
+
+cd C:\Users\qingz\Downloads\lapack-3.12.0\build
+
+```pwsh
+pwsh.exe -NoProfile -Command {C:\Program` Files\CMake\bin\cmake.exe -E __create_def C:\Users\qingz\Downloads\lapack-3.12.0\build\LAPACKE\CMakeFiles\lapacke.dir\.\exports.def C:\Users\qingz\Downloads\lapack-3.12.0\build\LAPACKE\CMakeFiles\lapacke.dir\.\exports.def.objs && cd C:\Users\qingz\Downloads\lapack-3.12.0\build} && Get-Content CMakeFiles\lapacke.rsp && cp CMakeFiles\lapacke.rsp ~\Downloads\ttqqq.rsp && C:\Program` Files\CMake\bin\cmake.exe -E vs_link_dll --msvc-ver=1941 --intdir=LAPACKE\CMakeFiles\lapacke.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100226~1.0\x64\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100226~1.0\x64\mt.exe --manifests -- C:\PROGRA~2\Intel\oneAPI\compiler\latest\bin\icx-cl.exe /nologo @CMakeFiles\lapacke.rsp -LD /Qoption,link,/machine:x64 /Qoption,link,/debug /Qoption,link,/INCREMENTAL /Qoption,link,/DEF:LAPACKE\CMakeFiles\lapacke.dir\.\exports.def -link /out:bin\liblapacke.dll /implib:lib\lapacke.lib /pdb:bin\liblapacke.pdb /version:3.12 && cd .
+```

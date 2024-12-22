@@ -1,4 +1,175 @@
-# lapack for windows
+# intel oneAPI fortran 编译器 ifx, c++ 编译器 icx 编译 LAPACK
+
+## 使用 cmake + intel oneAPI, ifx 编译器编译
+
+cmake 3.29 之后支持 `Visual Studio 17 2022` 选择 fortran 编译器,
+指定cmake 命令行选项 `-T "fortran=ifx"`;
+相关的 CMAKE 变量是 `CMAKE_GENERATOR_TOOLSET`,
+
+LAPACK 官方提供的 `CMakeLists.txt` 中, 如果开启 `BLAS++`, `LAPACK++`,
+需要在线下载包, 可能失败, 这里暂且选择关闭;
+开启 `BLAS++`, `LAPACK++` 在命令行中加上选项 `-DBLAS++:BOOL=ON -DLAPACK++:BOOL=ON`.
+
+### 设置环境变量
+
+安装好 intel fortran 和 c++ 编译器之后,
+打开 `intel oneAPI command prompt for Intel 64 for Visual Studio 2022` 窗口,
+它会自动设置**环境变量**, 参考 [scripts-to-set-environment-variables](https://www.intel.com/content/www/us/en/docs/onemkl/developer-guide-linux/2025-0/scripts-to-set-environment-variables.html).
+
+可以在 pwsh 下运行下面的命令, 是等价的(用 nushell 运行, 因为 quoting rule 不同, 好像会有问题)
+
+```powershell
+cmd.exe /k '"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64 vs2022 && pwsh'
+```
+
+>顺带一提, 上面的 `intel oneAPI command prompt` 快捷方式执行的命令是(可以在属性页查看, cmd 的引号规则非常奇葩)
+
+```batch
+C:\Windows\System32\cmd.exe /E:ON /K ""C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64 vs2022"
+```
+
+执行成功之后, 可以用以下命令验证是否能找到 intel 编译器
+
+```pwsh
+gcm icx,ifx
+# 输出
+icx.exe  2025.0.4.0 C:\Program Files (x86)\Intel\oneAPI\compiler\latest\bin\icx.exe
+ifx.exe  2025.0.4.0 C:\Program Files (x86)\Intel\oneAPI\compiler\latest\bin\ifx.exe
+```
+
+### 设置 CMake 编译选项
+
+**在设置好环境变量的 pwsh 中运行下列的命令**, 设置 cmake 项目属性,
+
++ 注意适当修改 `-DCMAKE_INSTALL_PREFIX` 后面的位置,
+
++ 这里指定了 c 编译器为 `icx-cl.exe`, 与微软的 MSVC 编译器具有兼容的选项,
+默认在 `C:\Program Files (x86)\Intel\oneAPI\compiler\latest\bin` 目录.
+关于编译器 `icx`, `icx-cc`, `icx-cl` 的区别, 可以参考 [Get Started on Windows*](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/get-started-guide/2025-0/get-started-on-windows.html)
+
++ 生成系统必须使用 `Ninja`, 参考 [Use CMake with the Compiler](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-0/use-cmake-with-the-compiler.html), 以及 [如何让cmake在windows上编译时使用Intel编译器icx?](https://www.zhihu.com/question/605196623)
+**MSVC 不支持 fortran 和 c 项目混合编译**, 编译 CBLAS 的时候会失败.
+
+我开启的选项如下
+
+```bash
+cmake -G Ninja -B . -S ..  -DCMAKE_LINKER_TYPE=MSVC -DCMAKE_C_COMPILER=icx-cl -DCMAKE_CXX_COMPILER=icx-cl -DCMAKE_Fortran_COMPILER=ifx -DCMAKE_INSTALL_PREFIX="C:/Users/qingz/Downloads/lapack-install"  -DCBLAS:BOOL=ON -DLAPACKE:BOOL=ON  -DBUILD_COMPLEX=ON -DBUILD_COMPLEX16=ON -DBUILD_DOUBLE:BOOL=ON -DBUILD_INDEX64_EXT_API=ON  -DBUILD_SHARED_LIBS:BOOL=ON  -DBUILD_SINGLE:BOOL=ON   -DLAPACKE_BUILD_SINGLE=ON -DUSE_OPTIMIZED_LAPACK:BOOL=OFF -DUSE_OPTIMIZED_BLAS:BOOL=OFF -DBLAS++:BOOL=OFF -DLAPACK++:BOOL=OFF  -DUSE_XBLAS=OFF
+```
+
+使用下面的命令可以查看 全部的构建目标, 但是太多了, 肉眼看没啥意义
+
+```pwsh
+ninja -t targets all
+```
+
+### 编译项目
+
+使用 `cmake --build` 或者 `ninja` build 项目,
+**但是先不要急, 在链接 `liblapacke.dll` 的时候会报错, 所以先手动修改 `CMakelistx.txt` 脚本**
+
+具体表现是, 编译到最后执行 链接命令时,
+报一个 [链接器工具错误 LNK1170](https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk1170?view=msvc-170),
+`windows` + `cmake` + `msvc` 纯沙壁.
+原因是要连接的 `.obj` 文件太多, 超过了 `link.exe` 单行命令的长度限制 131071 个字符.
+~~之前尝试修改 `build/CMakeFiles/rules.ninja` 文件, 不过效果好像不稳定.~~
+
+[根据 intel 的 编译器选项说明](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-0/fuse-ld.html)
+可以指定使用 llvm 的 `lld` 链接器, 开关是 `-fuse-ld=lld`,
+
+修改 `LAPACKE\CMakeLists.txt`, 找到
+
+```cmake
+add_library(${LAPACKELIB} ${SOURCES})
+set_target_properties(
+    ${LAPACKELIB} PROPERTIES
+    LINKER_LANGUAGE C
+    VERSION ${LAPACK_VERSION}
+    SOVERSION ${LAPACK_MAJOR_VERSION}
+)
+```
+
+在下面添加 linker 选项
+
+```cmake
+target_link_options(${LAPACKELIB}
+    BEFORE PRIVATE "-fuse-ld=lld"
+)
+```
+
+在 `build\build.ninja` 文件中, 可以搜索 `build bin\liblapacke.dll lib\lapacke.lib`,
+可以看到 `LINK_FLAGS` 中确实已添加了 `-fuse-ld=lld` 选项,
+
+```ninja
+LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1
+LINK_FLAGS = /Qoption,link,/machine:x64 /Qoption,link,/debug /Qoption,link,/INCREMENTAL  -fuse-ld=lld /Qoption,link,/DEF:LAPACKE\CMakeFiles\lapacke.dir\.\exports.def
+```
+
+`LINK_FLAGS` 在 `build\CMakeFiles\rules.ninja` 中被使用,
+用于链接制作 `lapacke.dll`,
+
+```ninja
+#############################################
+# Rule for linking C shared library.
+
+rule C_SHARED_LIBRARY_LINKER__lapacke_Debug
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Program Files\CMake\bin\cmake.exe" -E vs_link_dll --msvc-ver=1941 --intdir=$OBJECT_DIR --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100226~1.0\x64\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100226~1.0\x64\mt.exe --manifests $MANIFESTS -- C:\PROGRA~2\Intel\oneAPI\compiler\latest\bin\icx-cl.exe /nologo @$RSP_FILE  -LD $LINK_FLAGS -link /out:$TARGET_FILE /implib:$TARGET_IMPLIB /pdb:$TARGET_PDB /version:3.12 && $POST_BUILD"
+  description = Linking C shared library $TARGET_FILE
+  rspfile = $RSP_FILE
+  rspfile_content = $in_newline $LINK_PATH $LINK_LIBRARIES
+  restat = $RESTAT
+```
+
+然后运行 `ninja` build 项目, 即可顺利编译成功.
+构建要花很久, **直接喝茶**.
+
+```bash
+ninja
+# 或者
+cmake --build . --config release -j
+```
+
+### 安装
+
+安装到预定的位置, 可以使用
+
+```bash
+ninja install
+# 或者
+cmake --install . --config Release
+```
+
+## intel 链接器选项: fuse-ld
+
+告诉编译器使用不同的链接器, 而不是默认链接器,
+默认链接器在 Linux 上是 `ld`, 在 Windows 上是 `link.exe`.
+
+### 语法
+
+Linux 和 windows 相同
+
+```bash
+-fuse-ld=keyword
+```
+
+keyword: 告诉编译器使用哪个非默认链接器. 可能的值有
+
++ `bfd`; 告诉编译器使用 bfd 连接器. 此设置仅适用于 Linux.
++ `gold`; 告诉编译器使用 gold 链接器. 此设置仅适用于 Linux.
++ `lld`; 告诉编译器使用 lld 链接器.
++ `llvm-lib`; 告诉编译器使用 LLVM 库. 此设置仅适用于 Windows.
+
+在 Linux 上, 提供此选项是为了与 gcc 兼容.
+
+### 注意
+
+在 Windows 中, 选项 `/Qipo` 会自动设置选项 `-fuse-ld=lld`.
+
+注意
+该选项仅适用于 host compilation. 启用 offloading 后, 它不会影响 device-specific compilation.
+
+# lapack for windows, 官网的帖子
+
+[LAPACK for Windows](https://icl.utk.edu/lapack-for-windows/lapack/)
 
 ## 您需要什么?
 
@@ -428,26 +599,3 @@ cmake --install . --config Release --prefix '/c/cppLibs/LAPACK-openBLAS-ucrt'
 
 + 论坛: [/lapack-forum/index.php](/lapack-forum/index.php)
 + 邮件列表: lapack@cs.utk.edu
-
-## 使用 cmake + intel oneAPI, ifx 编译器编译
-
-cmake 3.29 之后支持 `Visual Studio 17 2022` 选择 fortran 编译器,
-CMAKE_GENERATOR_TOOLSET, `-T 'fortran=ifx'`
-
-不开启 `BLAS++`, `LAPACK++`
-
-```bash
-cmake -G 'Visual Studio 17 2022' -B . -S .. -T 'fortran=ifx' -DCMAKE_Fortran_COMPILER='C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifx.exe'  -DCMAKE_INSTALL_PREFIX='C:\Users\qingz\Downloads\lapack-install' -DCBLAS:BOOL=ON  -DBUILD_SHARED_LIBS:BOOL=ON  -DUSE_OPTIMIZED_LAPACK:BOOL=OFF -DBLAS++:BOOL=OFF -DMEMORYCHECK_COMMAND:FILEPATH="MEMORYCHECK_COMMAND-NOTFOUND" -DUSE_OPTIMIZED_BLAS:BOOL=OFF -DLAPACK++:BOOL=OFF -DLAPACKE:BOOL=ON -DBUILD_SINGLE:BOOL=OFF -DLAPACKE_BUILD_SINGLE=OFF
-```
-
-开启 `BLAS++`, `LAPACK++`
-
-```bash
-cmake -G 'Visual Studio 17 2022' -B . -S .. -T 'fortran=ifx' -DCMAKE_Fortran_COMPILER='C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifx.exe'  -DCMAKE_INSTALL_PREFIX='C:/Users/qingz/Downloads/lapack-install'  -DMEMORYCHECK_COMMAND:FILEPATH="MEMORYCHECK_COMMAND-NOTFOUND" -DUSE_OPTIMIZED_LAPACK:BOOL=ON -DBUILD_SHARED_LIBS:BOOL=ON  -DBLAS++:BOOL=ON -DCBLAS:BOOL=ON  -DUSE_OPTIMIZED_BLAS:BOOL=ON -DLAPACK++:BOOL=ON -DLAPACKE:BOOL=ON -DBUILD_SINGLE:BOOL=OFF -DLAPACKE_BUILD_SINGLE=OFF
-```
-
-编译
-
-```bash
-cmake --build . --config release -j
-```

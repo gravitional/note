@@ -6,7 +6,7 @@
 
 ## 工具
 
-用到的命令行工具是devenv.com, 帮助手册如下:
+用到的命令行工具是 `devenv.com`, 帮助手册如下:
 
 ```powershell
 &'C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.com' /?

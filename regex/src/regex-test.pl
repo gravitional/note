@@ -11,6 +11,8 @@ sub te_1 {
     std::fabs(1.0)
     std::std::abs(1.0)
     std::std::fabs(4.0)
+    pos_abs(5.0)
+    posabs(6.0)
     EOFFF
     # 
     foreach (split(/\n/, $test_doc))

@@ -3,13 +3,32 @@
 [带你玩转Visual Studio——命令行编译C/C++程序](https://blog.csdn.net/luoweifu/article/details/49847749)
 [Windows11下配置Visual Studio2022 环境变量](https://blog.csdn.net/en_Wency/article/details/124767742)
 
-## 配置环境
+## 使用 pwsh 导入VS DevShell.dll
+
+```pwsh
+pwsh -noe -c '&{Import-Module "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";Enter-VsDevShell df2f5a84}'
+```
+
+>解释
+>`win+s` 搜索 `Developer Powershell for VS 2022`,
+>查看文件位置, 查看快捷方式标签页中的 `目标(T)`, 其中的值为,
+
+```pwsh
+C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe -noe -c "&{Import-Module """C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"""; Enter-VsDevShell df2f5a84}"
+```
+
+中间的 `"""` 是 `powershell` 的 `"` escape, 直接改成上面的形式 `'aaa"bb"ccc'` 即可,
+`pwsh core` 不认识这个语法.
+
+## 手动修改环境变量
+
+### 配置环境
 
 安装好 Visual Studio 之后,
 按下快捷键 `Win+s` 搜索 `环境变量`, 配置如下环境变量.
 推荐添加到 用户变量 中.
 
-### Path 变量
+#### Path 变量
 
 各种命令行工具的位置(默认安装位置下)
 
@@ -20,7 +39,7 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.3132
 `C:\Program Files\Microsoft Visual Studio\2022` 视安装情况可能不同,
 `14.32.31326` 也可能不一样, 但原理是相同的.
 
-### INCLUDE 变量配置
+#### INCLUDE 变量配置
 
 新建 `INCLUDE` 环境变量, 填充以下 头文件(include)目录.
 我电脑上的路径为:
@@ -42,7 +61,7 @@ Windows 环境变量的值是用分号 `;` 分隔的.
 ![img1](https://img-blog.csdnimg.cn/3ba0c1d8127346a5bb0932845f0fe078.png)
 ![img2](https://img-blog.csdnimg.cn/82a00734632949fda02eb91cd781580b.png)
 
-### LIB 变量配置
+#### LIB 变量配置
 
 类似地, 新建环境变量 `LIB`, 填充一下库文件(libraray)目录
 我电脑上的路径为:
@@ -57,7 +76,7 @@ C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64
 具体路径前缀 `C:\Program Files\Microsoft Visual Studio`, `C:\Program Files (x86)`
 取决于你安装的位置.
 
-## 测试
+### 测试
 
 在桌面右键创建一个 `txt` 文本文件, 修改名称为 `test.c`(`.c`是后缀), 就得到一个C格式文件.
 双击打开, 写入代码:
