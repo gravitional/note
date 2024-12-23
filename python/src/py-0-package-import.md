@@ -4,12 +4,12 @@
 [6. 模块](https://docs.python.org/zh-cn/3/tutorial/modules.html#modules)
 [python模块详解](https://zhuanlan.zhihu.com/p/33913131)
 
-## ss
+## import & from import
 
 + `import xxx` 形式可以 `import Foo` 或者 `import Foo.Bar`
-+ 仅仅 `import A` 可能无法使用`A` 内部的模块，
+仅仅 `import A` 可能无法使用`A` 内部的模块，
 要导入到具体模块或者变量的层次, 或者在 `__init__.py` 初始化绑定.
-+ `import A.b` 中的 `b` 需要是 `子模块`(`.py`),
+`import A.b` 中的 `b` 需要是 `子模块` (`.py`),
 不能是文件中的 `标识符`, 导入后的标识符是 `A.b` 而不是 `b`.
 
 + `from A import b` 可以导入 `A` 中的标识符 `A.b`(变量名称),

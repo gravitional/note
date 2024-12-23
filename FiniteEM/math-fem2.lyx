@@ -3212,6 +3212,57 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 
 \end_layout
 
+\begin_layout Remark
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+1st
+\end_layout
+
+\end_inset
+
+ 边界条件；平面磁场中
+\begin_inset Formula 
+\[
+\sbf B=\left[\sbf e_{x},\sbf e_{y}\right]\left[\begin{array}{c}
+\partial_{y}\,A_{z}\\
+-\partial_{x}\,A_{z}
+\end{array}\right]
+\]
+
+\end_inset
+
+如果在模型边界上，令 
+\begin_inset Formula $\sbf B=[B_{x,0},B_{y,0}]$
+\end_inset
+
+，分量均为常数，则
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{y}\,A_{z}=B_{x,0}\\
+\partial_{x}\,A_{z}=-B_{y,0}
+\end{cases}
+\]
+
+\end_inset
+
+容易知道，此时对应的
+\begin_inset Formula $A_{z}$
+\end_inset
+
+的 1st 边界条件为
+\begin_inset Formula 
+\[
+A_{z}=B_{x,0}\,y-B_{y,0}\,x
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 二维磁场等Az线与B方向
 \end_layout
@@ -3232,7 +3283,10 @@ literal "false"
 \begin_inset Formula 
 \begin{align*}
 \sbf B & =\nabla\times(A_{z}\sbf e_{z})\\
- & =\sbf e_{x}\,{\color{blue}\partial_{y}A_{z}}+\sbf e_{y}{\color{blue}(-\partial_{x}A_{z})}
+ & =\left[\sbf e_{x},\sbf e_{y}\right]\left[\begin{array}{c}
+{\color{blue}\partial_{y}A_{z}}\\
+-\partial_{x}A_{z}
+\end{array}\right]
 \end{align*}
 
 \end_inset
@@ -3320,12 +3374,126 @@ literal "false"
 平面。
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
 柱坐标下的旋度表示
 \begin_inset Formula 
 \begin{equation}
 \nabla\times\sbf A=\left(r^{-1}\partial_{\phi}A_{z}-{\color{blue}\partial_{z}A_{\phi}}\right)\sbf e_{r}+\left(\partial_{z}A_{r}-\partial_{r}A_{z}\right)\sbf e_{\phi}+\left[{\color{blue}r^{-1}\partial_{r}\left(rA_{\phi}\right)}-r^{-1}\partial_{\phi}A_{r}\right]\sbf e_{z}\label{eq:curl-cylin}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+1st
+\end_layout
+
+\end_inset
+
+边界条件；轴对称磁场类似于 平面磁场，
+\begin_inset Formula $(r,z)\to(x,y)$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf B=\left[\sbf e_{r},\sbf e_{z}\right]\left[\begin{array}{c}
+-\partial_{z}A_{\phi}\\
+\frac{1}{r}\partial_{r}\left(rA_{\phi}\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+如果在边界上，令 
+\begin_inset Formula $\sbf B=[B_{r,0},B_{z,0}]$
+\end_inset
+
+，分量均为常数，则
+\begin_inset Formula 
+\[
+\begin{cases}
+-\partial_{z}\,A(r,z)=B_{r,0}\\
+\frac{1}{r}\,\partial_{r}(r\,A)=B_{z,0}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+DSolve[iA[r]/r + iA'[r] - z/r*iCr == iCz, iA[r] , r , Assumptions -> And[{r,
+ z, iCr, iCz} 
+\backslash
+[Element] Realsm] ]
+\end_layout
+
+\end_inset
+
+此方程只有
+\begin_inset Formula $B_{r,0}=0$
+\end_inset
+
+时有解，即轴对称面上，不可能存在均匀的 
+\begin_inset Formula $B_{r}$
+\end_inset
+
+ 方向分量。原因如下图所示，如果存在均匀的
+\begin_inset Formula $B_{r,0}$
+\end_inset
+
+，那么相邻的两个球壳的
+\begin_inset Formula $B$
+\end_inset
+
+通量就会有差别，由此导出 
+\begin_inset Formula $\nabla\cdot\sbf B\neq0$
+\end_inset
+
+，这是不可能的。
+\end_layout
+
+\begin_layout Remark
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/sphere-sector.pdf
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -3339,7 +3507,7 @@ literal "false"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 另外需要注意的是，虽然在截面上划分的单元和二维情况下的划分完全一样。但实际上处理的有限元单元并不是一个平面单元，而是平面单元沿对称轴旋转 
 \begin_inset Formula $360$
 \end_inset
