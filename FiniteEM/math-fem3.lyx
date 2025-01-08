@@ -983,7 +983,11 @@ T_{\nu}^{\phantom{\nu}\mu}={\color{blue}e_{\phantom{b}\nu}^{b}}\;T_{b}^{\phantom
 \end_layout
 
 \begin_layout Example
-张量乘矢量（矩阵乘列矢量）
+张量乘矢量（矩阵乘列矢量）；被动观点下可以理解成 
+\series bold
+坐标变换
+\series default
+。
 \begin_inset Formula 
 \begin{align*}
 W^{a} & =T_{\phantom{a}b}^{a}\;V^{b}\\
@@ -994,6 +998,47 @@ W^{a} & =T_{\phantom{a}b}^{a}\;V^{b}\\
 
 \end_inset
 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+认为张量是不变的，即 
+\begin_inset Formula $T_{\phantom{a}b}^{a}\;V^{b}$
+\end_inset
+
+ 是坐标系无关的；
+\end_layout
+
+\begin_layout Itemize
+固有坐标基矢
+\begin_inset Formula ${\color{blue}e_{\phantom{b}\sigma}^{b}}$
+\end_inset
+
+ 在固有坐标系下，每一列 都是 初等列矢量，即基矢量矩阵等于
+\series bold
+恒等矩阵
+\series default
+。
+\end_layout
+
+\begin_layout Itemize
+坐标变换就是 把 
+\begin_inset Formula ${\color{blue}e_{\phantom{b}\sigma}^{b}}$
+\end_inset
+
+ 转换到其他坐标系，每一列表示固有基矢在新坐标系下的分量形式。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
 图像上，转换过程如下：
 \begin_inset Formula 
 \[
@@ -2161,9 +2206,11 @@ q_{4}
 \end_inset
 
 
+\size small
+
 \begin_inset Formula 
 \[
-\left[\begin{array}{cccc}
+U^{\prime\mathrm{T}}\,K\,U'=\left[\begin{array}{cccc}
 {\color{blue}U_{11}} & {\color{blue}U_{21}} & {\color{blue}U_{31}} & {\color{blue}U_{n1}}\\
 U_{12} & U_{22} & U_{32} & U_{n2}\\
 U_{1s} & U_{2s} & U_{3s} & U_{ns}\\
@@ -2203,6 +2250,87 @@ K_{31}^{\prime} & K_{32}^{\prime} & K_{33}^{\prime}\\
 阶离散方程，理论上能够较大地提升计算效率。但是相关研究表明，POD方法在实际应用中的效率提升十分有限，原因在于强非线性方程中 POD 无法降低形成有限元刚度矩阵
 的固有时间。同时，考虑到与全局域节点数量相比，POD模态系数个数远远小于前者，因此，本文提出采用径向基函数响应面法建立POD模态系数关于绕组工况的响应面模型，实
 现通过绕组工况快速获得POD模态系数，进而结合降阶模态快速重构绕组温度场。
+\end_layout
+
+\begin_layout Section
+partial POD
+\end_layout
+
+\begin_layout Standard
+在场路耦合模型中，如果只对场的部分作 POD 降阶。
+\end_layout
+
+\begin_layout Standard
+蓝色表示 列矢量，红色表示 对偶行矢量。
+\end_layout
+
+\begin_layout Itemize
+列矢量的分量展开
+\begin_inset Formula 
+\begin{align*}
+W^{a}=T_{\phantom{a}b}^{a}\;V^{b} & ={\color{blue}e_{\phantom{b}\mu}^{a}}\;T_{\phantom{\mu}\nu}^{\mu}\;{\color{red}e_{\phantom{\mu}b}^{\nu}}\;{\color{blue}e_{\phantom{b}\sigma}^{b}}\;V^{\sigma}\\
+V^{a} & ={\color{blue}e_{\phantom{a}\mu}^{a}}\;V^{\mu}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对偶行矢量的分量展开
+\begin_inset Formula 
+\begin{align*}
+W_{a}=T_{a}^{\phantom{a}b}\;V_{b} & ={\color{red}e_{\phantom{\mu}a}^{\mu}}\;T_{\mu}^{\phantom{\mu}\nu}\;{\color{blue}e_{\phantom{b}\nu}^{b}}\;{\color{red}e_{\phantom{\sigma}b}^{\sigma}}\;V_{\sigma}\\
+V_{a} & ={\color{red}e_{\phantom{\mu}a}^{\mu}}\;V^{\mu}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可以看出，POD 使用的是 对偶行矢量的坐标变换形式，对于
+\begin_inset Formula ${\color{red}e_{\phantom{\mu}a}^{\mu}}$
+\end_inset
+
+ 固定
+\begin_inset Formula $\mu$
+\end_inset
+
+ 指标，分量写在一行上。
+\begin_inset Formula 
+\begin{align*}
+F\Rightarrow & U^{\prime\mathrm{T}}\,F\\
+K\Rightarrow & U^{\prime\mathrm{T}}\,K\,U'\,\alpha
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $U^{\prime\mathrm{T}}$
+\end_inset
+
+的每一行是一个对偶行基矢。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+U_{r\times f}^{\prime\mathrm{T}} & E_{s\times s}\end{array}\right]\left[\begin{array}{cc}
+{\color{blue}K_{f\times f}} & K_{f\times s}\\
+K_{s\times f} & {\color{red}K_{s\times s}}
+\end{array}\right]\left[\begin{array}{c}
+U_{f\times r}\\
+E_{s\times s}
+\end{array}\right]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
