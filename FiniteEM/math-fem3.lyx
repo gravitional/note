@@ -2315,18 +2315,60 @@ K\Rightarrow & U^{\prime\mathrm{T}}\,K\,U'\,\alpha
 的每一行是一个对偶行基矢。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Claim
+partial POD，只对FEM部分刚阵 
+\begin_inset Formula ${\color{blue}K_{f\times f}}$
+\end_inset
+
+ 作POD变换，保持电路部分刚阵 
+\begin_inset Formula ${\color{red}K_{s\times s}}$
+\end_inset
+
+ 不变。用分块矩阵表示变换矩阵
+\begin_inset Formula $U^{\mathrm{T}}$
+\end_inset
+
+，
+\begin_inset Formula $U^{\mathrm{T}}$
+\end_inset
+
+的下半部分为
+\begin_inset Formula $I_{s\times s}$
+\end_inset
+
+ 恒等矩阵，交叉部分为零
+\emph on
+（也就是不混合）
+\emph default
+，
 \begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-U_{r\times f}^{\prime\mathrm{T}} & E_{s\times s}\end{array}\right]\left[\begin{array}{cc}
+\begin{align*}
+ & \left[\begin{array}{cc}
+U_{r\times f}^{\prime\mathrm{T}}\\
+ & I_{s\times s}
+\end{array}\right]\left[\begin{array}{cc}
 {\color{blue}K_{f\times f}} & K_{f\times s}\\
 K_{s\times f} & {\color{red}K_{s\times s}}
-\end{array}\right]\left[\begin{array}{c}
+\end{array}\right]\left[\begin{array}{cc}
 U_{f\times r}\\
-E_{s\times s}
+ & I_{s\times s}
+\end{array}\right]\\
+ & =\left[\begin{array}{cc}
+U_{r\times f}^{\prime\mathrm{T}}\,{\color{blue}K_{f\times f}} & U_{r\times f}^{\prime\mathrm{T}}\,K_{f\times s}\\
+I_{s\times s}\,K_{s\times f} & I_{s\times s}\,{\color{red}K_{s\times s}}
+\end{array}\right]\left[\begin{array}{cc}
+U_{f\times r}\\
+ & I_{s\times s}
+\end{array}\right]\\
+ & =\left[\begin{array}{cc}
+U_{r\times f}^{\prime\mathrm{T}}\,{\color{blue}K_{f\times f}}\,U_{f\times r} & U_{r\times f}^{\prime\mathrm{T}}\,K_{f\times s}\,I_{s\times s}\\
+I_{s\times s}\,K_{s\times f}\,U_{f\times r} & I_{s\times s}\,{\color{red}K_{s\times s}}\,I_{s\times s}
+\end{array}\right]\\
+ & =\left[\begin{array}{cc}
+U_{r\times f}^{\prime\mathrm{T}}\,{\color{blue}K_{f\times f}}\,U_{f\times r} & U_{r\times f}^{\prime\mathrm{T}}\,K_{f\times s}\\
+K_{s\times f}\,U_{f\times r} & {\color{red}K_{s\times s}}
 \end{array}\right]
-\]
+\end{align*}
 
 \end_inset
 
