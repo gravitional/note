@@ -503,3 +503,29 @@ c:/windows/Syswow64/WINRDLV3.EXE
 [How do I download someone else's entire blog posts easily?](https://www.quora.com/How-do-I-download-someone-elses-entire-blog-posts-easily)
 
 使用此程序 [Download HTTrack Website Copier](https://www.httrack.com/page/2/en/index.html).
+
+## windows 下载 UWP 商店的 appx 离线包
+
+[如何获取微软商店应用的appxbundle程序包, 并实现离线安装](https://blog.csdn.net/Junson142099/article/details/132407864)
+
+我们以 "NVIDIA Control Panel" 为例
+
+1. 先在[网页版Microsoft应用商店](https://www.microsoft.com/zh-cn/store/apps/?rtc=1)
+这里找到 NVIDIA Control Panel, 将网页链接地址复制下;
+
+2. 到 [https://store.rg-adguard.net/](https://store.rg-adguard.net/) 这个网址粘贴链接, 
+点击 √ 后会在页面最下方出现下载列表, 点击最新版本的 `.appx` 或者是 `.appxbundle` 格式文件即可下载, 
+点击后如提示"无法安全下载", 可以点击右键的三个点, 选择保留此文件;
+
+3. 下载好之后, 双击此appx文件就能开始安装了. 
+不过有时候直接双击点开安装会安装失败, 或者是有的电脑是ltsc版本没有微软商店导致装不了, 
+此时可以借助 powershell 命令来安装. 
+
+```pwsh
+#Add-AppxPackage 用途: 为当前用户安装一个appx程序包. 
+add-appxpackage D:\NVIDIACorp.NVIDIAControlPanel_8.1.964.0_x64__56jybvy8sckqj.Appx
+
+# Add-AppxProvisionedPackage 用途: 安装appx程序包到计算机, 
+# 所有的用户都将默认安装此appx程序包. 如要封装系统请必须选择此命令. 
+add-appxprovisionedpackage -online -packagepath D:\NVIDIACorp.NVIDIAControlPanel_8.1.962.0_x64__56jybvy8sckqj.Appx -skiplicense
+```
