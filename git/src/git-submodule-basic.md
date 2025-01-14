@@ -60,14 +60,14 @@ If --force is specified, the submodule's working tree will be removed even if it
 
 If you really want to remove a submodule from the repository and commit that use git-rm(1) instead. See gitsubmodules(7) for removal options.
 
-## update
+## git submodule update
 
 ```bash
 update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter <filter spec>] [--] [<path>…​]
 ```
 
-通过克隆缺失的子模块, 获取子模块中缺失的提交以及更新子模块的 `工作树`,
-完成更新 已注册的子模块, 使其符合 super projct的期望.
+通过克隆缺失的子模块, 获取子模块中缺失的提交以及 更新子模块的 `工作树`,
+完成更新 已注册的子模块, 使其符合 super projct 的期望.
 
 `更新` 有多种方式, 取决于命令行选项和
 `submodule.<name>.update` 配置变量的值. 命令行选项优先于配置变量.
