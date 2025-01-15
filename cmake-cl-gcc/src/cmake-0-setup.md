@@ -23,8 +23,8 @@ sudo apt install libssl-dev
 ### 编译代码
 
 + 运行 CMake 源代码目录下的 `bootstrap` 脚本.
-    + 你可以使用 `--help` 选项查看支持的选项.
-    + 您可以使用 `--prefix=<install_prefix>` 选项指定 CMake 的自定义安装目录.
+  + 你可以使用 `--help` 选项查看支持的选项.
+  + 您可以使用 `--prefix=<install_prefix>` 选项指定 CMake 的自定义安装目录.
 + 一旦安装成功, 运行 `make` 和 `make install`.
 
 ```bash

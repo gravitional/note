@@ -612,3 +612,27 @@ template <> void A<int>::f() {}   // C2910
 //------ 使用下面的写法
 // void A<int>::f(){}   // OK
 ```
+
+## [文件无效或损坏: 无法在 0x300 处读取][def]
+
+[VS2015里 fatal error LNK1107: 文件无效或损坏: 无法在 0x300 处读取](https://blog.csdn.net/qq_36812406/article/details/83501724)
+
+cmake 添加 imported library, 编译时报错
+>fatal error LNK1107: 文件无效或损坏: 无法在 0x300 处读取
+
+原因是 imported libraray 的属性设置错误,
+`INTERFACE_LINK_LIBRARIES` 应该设置为 `.lib` 导入库文件的路径,
+MSVC 链接动态库时, 使用的是 `xxx.lib` 而非 `xxx.dll`.
+
+```cmake
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    INTERFACE_LINK_LIBRARIES ${lua_impl_libs}
+    IMPORTED_LOCATION ${lua_shared_libs}
+    IMPORTED_IMPLIB ${lua_impl_libs}
+)
+```
+
+## reference
+
+[def]: https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk1107?view=msvc-170
