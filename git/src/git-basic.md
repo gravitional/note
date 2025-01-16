@@ -249,9 +249,9 @@ use as:
 + `git diff [<options>] <commit> <commit> [--] [<path>... ]` ; 用来查看两个任意的`<commit>`之间的变化.
 + `git diff [<options>] <commit>..<commit> [--] [<path>... ]`; 上一条的同义形式. 如果省略了一边的`<commit>`, 将使用`HEAD`.
 + `git diff [<options>] <commit>...<commit> [--] [<path>... ]` ; 这种形式是用来查看
-    + 当前分支上的修改
-    + 包含并直到第二个 `<commit>`
-    + 起点是两个`<commit>`的共同祖先.
+  + 当前分支上的修改
+  + 包含并直到第二个 `<commit>`
+  + 起点是两个`<commit>`的共同祖先.
   `git diff A...B`等同于`git diff $(git merge-base A B) B`. 你可以省略`<commit>`中的任何一个, 相当于使用`HEAD`.
 
 注意:

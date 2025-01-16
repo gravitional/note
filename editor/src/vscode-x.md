@@ -647,3 +647,11 @@ let fs = (glob *.vsix); $fs | each {|it| code --install-extension ($it | path ex
 [VScode 中文显示出现黄色方框的解决方法](https://blog.csdn.net/qq_33249042/article/details/123252625)
 
 关闭的命令为: `Disable highlighting of non basic ASCII characters`
+
+## [markdown 代码块高亮][def]
+
+cmake 代码块不会高亮
+
+## ref
+
+[def]: https://markdown-all-in-one.github.io/docs/guide/syntax-highlighting-for-fenced-code-blocks.html#in-editor
