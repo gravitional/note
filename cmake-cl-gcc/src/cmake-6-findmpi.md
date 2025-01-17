@@ -10,7 +10,8 @@ MPI是一个标准接口(由MPI论坛定义), 有许多实现.
 
 ## 使用MPI的变量
 
-该模块公开了C, CXX, MPICXX和Fortran等组件. 每一个都控制着要搜索的各种MPI语言.
+该模块公开了C, CXX, MPICXX和Fortran等组件.
+每一个都控制着要搜索的各种MPI语言.
 
 CXX和MPICXX之间的区别是:
 CXX指的是MPI C API可以从C++中使用,
