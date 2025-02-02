@@ -240,6 +240,22 @@ brew cask install App
 brew cu
 ```
 
+## mac 键盘控制焦点转移, 确认/取消
+
+[能不能用键盘在 Mac OS X 的对话框中切换是/否按钮从而无须鼠标点选?](https://www.zhihu.com/question/20002166)
+
+打开System Preferences, 进入Keyboard 的设置，选择Keyboard shortcuts 的tab.
+
+底部：   All Keyboard Access: In windows and dialogs, 
+press Tab to move keyboard focus between:
+Text boxes and lists only 
+All controls
+
+选All controls 吧。
+
+键盘导航: 使用键盘在控制键移动焦点. 按下 tab 键将焦点前移，按下 shift+tab 将焦点后移.
+按下空格确认选择.
+
 ## diskutil 磁盘管理
 
 [MacOS 磁盘管理工具 diskutil 介绍](https://www.jianshu.com/p/6a1f365617ad)

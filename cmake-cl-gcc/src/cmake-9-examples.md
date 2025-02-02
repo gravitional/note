@@ -15,7 +15,7 @@
 
 [cmake(13): 构建时设置预处理宏定义以及add_compile_definitions命令详解](https://blog.csdn.net/rangfei/article/details/125651845)
 
-## cmake 列出项目中的所有 target
+## cmake 列出项目中的所有 target, 所有编译目标, 所有 targets
 
 [How do I list the defined make targets from the command line?](https://stackoverflow.com/questions/30793804/how-do-i-list-the-defined-make-targets-from-the-command-line)
 

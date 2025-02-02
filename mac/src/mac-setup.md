@@ -16,8 +16,8 @@
 + 锁定屏幕快捷键`^+cmd+Q`
 
 + 在调整音量时，同时按住 `Shift + option` 可以做更细微的调整，
-    + 调低 1/4 格音量：shift + option + F11
-    + 调高 1/4 格音量：shift + option + F12
+  + 调低 1/4 格音量：shift + option + F11
+  + 调高 1/4 格音量：shift + option + F12
 
 ### vscode 常用的快捷键
 
