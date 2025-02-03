@@ -237,3 +237,15 @@ audiofile.tag.save()
 不过python还是很慢的, 以后还是用C++那个程序比较好.
 
 [nondanee/ncmdump]: https://github.com/nondanee/ncmdump
+
+## [ncmdump-go](https://git.taurusxin.com/taurusxin/ncmdump-go)
+
+基于 https://github.com/taurusxin/ncmdump 的 Golang 移植版
+
+支持网易云音乐最新的 3.x 版本，但需要注意：
+从 3. x开始的某些网易云音乐版本不再在 ncm 文件中内置封面图片，
+本项目支持从网易服务器上自动下载对应歌曲的封面图并写入到最终的音乐文件中
+
+你也可以去 [ncmdump-gui][def], 下载基于本项目的 gui 可视化图形应用，只需简单点击即可自动转换。
+
+[def]: https://git.taurusxin.com/taurusxin/ncmdump-gui
