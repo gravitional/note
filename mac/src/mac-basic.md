@@ -1,5 +1,44 @@
 # macos 基础操作
 
+## 常用快捷键
+
+打开帮助搜索框, `cmd+shift+/`
+搜索 `cmd+f`,
+选中光标下的词语搜索 `cmd+e`
+搜索下一个, `cmd+g`
+搜索上一个 `shift+cmd+g`
+
+Xcode, go to last destination, 回到上次编辑的地方
+
+Ctrl+A：到行首（达到Home键的效果）
+Ctrl+E：到行尾（达到End键的效果）
+Ctrl+N：到下一行
+Ctrl+P：到上一行
+Ctrl+K：从光标处开始删除，直到行尾
+
+fn键+左方向键是HOME
+fn键+右方向键是END
+fn+上方向键是page up
+fn+下方向键是page down
+
+## 允许打开任意应用
+
+在mac系统中安装自己下载的软件，经常会提示“无法打开，因为apple无法检查其是否包含恶意软件”无法使用，下面我们就来学习一下怎么解决这个问题。
+
+解决方法一：
+
+打开系统偏好设置>安全性与隐私>通用，这个时候有个按钮，“仍然允许”点击即可。
+
+解决方法二：
+
+按住Control键点按应用, 然后打开，这样会把应用增加到白名单中许可执行。
+
+解决方法三：
+
+禁用新安全检查，执行如下命令：
+
+sudo spctl --master-disable
+
 ## 常用命令
 
 [请问有哪些实用的Mac终端命令](https://www.zhihu.com/question/27864961)
