@@ -7,7 +7,9 @@ recurrence relation $F_n = F_(n-1) + F_(n-2)$.
 It can also be expressed in _closed form:_
 
 $ F_n = round(1 / sqrt(5) phi.alt^n), quad
-  phi.alt = (1 + sqrt(5)) / 2 $
+  phi.alt = (1 + sqrt(5)) / 2 
+  quad epsilon "epsilon"
+$
 
 #let count = 8
 #let nums = range(1, count + 1)
