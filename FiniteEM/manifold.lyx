@@ -207,6 +207,61 @@ g_{\mu\nu}=\begin{cases}
 \begin_inset Formula $-1$
 \end_inset
 
+。'
+\end_layout
+
+\begin_layout Example
+度规张量作为
+\begin_inset Formula $(0,2)$
+\end_inset
+
+型张量，其分量遵从坐标变换式
+\begin_inset Formula 
+\[
+g_{\mu\nu}^{\prime}=\frac{\partial x^{\rho}}{\partial x^{\prime\mu}}\frac{\partial x^{\sigma}}{\partial x^{\prime\nu}}g_{\rho\sigma}
+\]
+
+\end_inset
+
+例如直角坐标到标准极坐标的坐标变换为
+\begin_inset Formula 
+\[
+\begin{cases}
+r=x^{2}+y^{2}\\
+\phi=\arctan\frac{y}{x}
+\end{cases},\quad\begin{cases}
+x=r\cos\phi\\
+y=r\sin\phi
+\end{cases},
+\]
+
+\end_inset
+
+度规张量的变换为
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+1 & 0\\
+0 & 1
+\end{array}\right]\quad\Rightarrow\quad\left[\begin{array}{cc}
+\frac{\partial x}{\partial r}\frac{\partial x}{\partial r}+\frac{\partial y}{\partial r}\frac{\partial y}{\partial r} & 0\\
+0 & \frac{\partial x}{\partial\phi}\frac{\partial x}{\partial\phi}+\frac{\partial y}{\partial\phi}\frac{\partial y}{\partial\phi}
+\end{array}\right]=\left[\begin{array}{cc}
+1 & 0\\
+0 & r^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+因此对偶基矢模长 
+\begin_inset Formula $\abs{\dd r}=1$
+\end_inset
+
+，
+\begin_inset Formula $\abs{\dd\phi}=r$
+\end_inset
+
 。
 \end_layout
 
@@ -1574,6 +1629,22 @@ sdfsd
 微分形式
 \end_layout
 
+\begin_layout Standard
+全反称对偶张量
+\begin_inset Formula $\omega_{a_{1}a_{2}\cdots a_{\ell}}=\omega_{[a_{1}a_{2}\cdots a_{\ell}]}$
+\end_inset
+
+，例如
+\begin_inset Formula 
+\[
+\omega_{abc}=\frac{1}{3!}\left(\omega_{abc}+\omega_{cab}+\omega_{bca}-\omega_{bac}-\omega_{acb}-\omega_{bac}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
 d
 \begin_inset Formula 
@@ -1598,19 +1669,84 @@ d
 。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula $\left(\sbf\omega\wedge\sbf\mu\right)\wedge\sbf v=\sbf\omega\wedge\left(\sbf\mu\wedge\sbf v\right)$
+\begin_layout Example
+例如对于
+\begin_inset Formula $2$
 \end_inset
 
-和
-\begin_inset Formula $\sbf\omega\wedge(\sbf\mu+\sbf v)=\sbf\omega\wedge\sbf\mu+\sbf\omega\wedge\sbf v$
+维流形上的
+\begin_inset Formula $2$
+\end_inset
+
+形式，
+\begin_inset Formula $\omega_{a_{1}a_{2}}$
+\end_inset
+
+与 
+\begin_inset Formula $\mu_{a_{1}a_{2}}$
+\end_inset
+
+。
+\begin_inset Formula $\omega$
+\end_inset
+
+按对偶坐标基矢展开
+\begin_inset Formula 
+\begin{align*}
+\omega_{a_{1}a_{2}} & =\omega_{\mu_{1}\mu_{2}}(\dd x^{\mu_{1}})_{a_{1}}(\dd x^{\mu_{2}})_{a_{2}}\\
+ & =\omega_{11}(\dd x^{1})_{a_{1}}(\dd x^{1})_{a_{2}}+\omega_{12}(\dd x^{1})_{a_{1}}(\dd x^{2})_{a_{2}}\\
+ & \;+\omega_{21}(\dd x^{2})_{a_{1}}(\dd x^{1})_{a_{2}}+\omega_{22}(\dd x^{2})_{a_{1}}(\dd x^{2})_{a_{2}}\\
+\text{全反称}\quad & ={\color{blue}\omega_{12}(\dd x^{1})_{a_{1}}(\dd x^{2})_{a_{2}}-\omega_{12}(\dd x^{2})_{a_{1}}(\dd x^{1})_{a_{2}}}\\
+ & =\omega_{12}\;(\dd x^{1})_{a_{1}}\wedge(\dd x^{2})_{a_{2}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\omega\wedge\mu & =\frac{(2+2)!}{2!2!}\omega_{[ab}\mu_{cd]}\\
+ & =6\frac{1}{4!}\Big({\color{blue}\omega_{ab}\mu_{cd}}-\omega_{ba}\mu_{cd}-\omega_{ab}\mu_{dc}+\omega_{ba}\mu_{dc}{\color{blue}-\omega_{ac}\mu_{bd}}+\omega_{ca}\mu_{bd}+\omega_{ac}\mu_{db}-\omega_{ca}\mu_{db}\\
+ & \;{\color{blue}+\omega_{ad}\mu_{bc}}-\omega_{da}\mu_{bc}-\omega_{ad}\mu_{cb}+\omega_{da}\mu_{cb}{\color{blue}+\omega_{bc}\mu_{ad}}-\omega_{bc}\mu_{da}-\omega_{cb}\mu_{ad}+\omega_{cb}\mu_{da}\\
+ & \;{\color{blue}-\omega_{bd}\mu_{ac}}+\omega_{db}\mu_{ac}+\omega_{bd}\mu_{ca}-\omega_{db}\mu_{ca}{\color{blue}+\omega_{cd}\mu_{ab}}-\omega_{cd}\mu_{ba}-\omega_{dc}\mu_{ab}+\omega_{dc}\mu_{ba}\Big)\\
+ & =\omega_{ab}\mu_{cd}-\omega_{ac}\mu_{bd}+\omega_{ad}\mu_{bc}+\omega_{bc}\mu_{ad}-\omega_{bd}\mu_{ac}+\omega_{cd}\mu_{ab}
+\end{align*}
+
+\end_inset
+
+可以看出，最后的结果只有
+\begin_inset Formula $C_{\ell}^{(\ell+m)}=C_{m}^{(\ell+m)}$
+\end_inset
+
+个独立的项。标量因子刚好抵消，最后为
+\begin_inset Formula $1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+类似地，对于对偶坐标基矢有 
+\begin_inset Formula $(\dd x)_{a}\wedge(\dd y)_{b}=(\dd x)_{a}(\dd y)_{b}-(\dd y)_{a}(\dd x)_{b}$
+\end_inset
+
+简写为 
+\begin_inset Formula $\dd x\,\dd y-\dd y\,\dd x$
 \end_inset
 
 。
 \end_layout
 
 \begin_layout Standard
-对于两个1形式的楔积有
+由定义可知楔积满足结合律和分配律，即
+\begin_inset Formula $\left(\sbf\omega\wedge\sbf\mu\right)\wedge\sbf\nu=\sbf\omega\wedge\left(\sbf\mu\wedge\sbf\nu\right)$
+\end_inset
+
+和
+\begin_inset Formula $\sbf\omega\wedge(\sbf\mu+\sbf\nu)=\sbf\omega\wedge\sbf\mu+\sbf\omega\wedge\sbf\nu$
+\end_inset
+
+。但楔积一般不满足交换律，例如对于对于两个1形式的楔积有
 \begin_inset Formula $\sbf\omega\wedge\sbf\mu=-\sbf\mu\wedge\sbf\omega$
 \end_inset
 
@@ -1738,7 +1874,7 @@ d
 的基底的分量，即
 \begin_inset Formula 
 \begin{equation}
-\omega_{\mu_{1}\cdots\mu_{\ell}}=\omega_{a_{1}\cdots a_{\ell}}\left(e_{\mu_{1}}\right)^{a_{1}}\cdots\left(e_{\mu_{\ell}}\right)^{a_{\ell}},\label{eq:5-1-7}
+\omega_{\mu_{1}\cdots\mu_{\ell}}=\omega_{a_{1}\cdots a_{\ell}}\,(e_{\mu_{1}})^{a_{1}}\cdots(e_{\mu_{\ell}})^{a_{\ell}},\label{eq:5-1-7}
 \end{equation}
 
 \end_inset
@@ -1763,7 +1899,11 @@ d
 \begin_inset Formula $\ell$
 \end_inset
 
-个的各种排列，即 
+个的各种
+\series bold
+组合（不是排列）
+\series default
+，即 
 \begin_inset Formula $\Lambda(\ell)$
 \end_inset
 
@@ -1782,11 +1922,93 @@ d
 。
 \end_layout
 
+\begin_layout Itemize
+\begin_inset Formula $\ell$
+\end_inset
+
+形式的全反称性（同一组的所有不同排列，带置换宇称）被吸收到 
+\begin_inset Formula $(e^{\mu_{1}})_{a_{1}}\wedge\cdots(e^{\mu_{\ell}})_{a_{\ell}}$
+\end_inset
+
+中；
+\begin_inset Formula $\omega_{\mu_{1}\cdots\mu_{\ell}}$
+\end_inset
+
+只负责给出所有独立的分量（取尽指标的所有组合）。
+\end_layout
+
+\begin_layout Itemize
+以
+\begin_inset Formula $\ell=2$
+\end_inset
+
+为例验证 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5-1-5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\omega_{a_{1}\cdots a_{\ell}}(\frac{\partial}{\partial x^{\mu_{1}}})^{a_{1}}(\frac{\partial}{\partial x^{\mu_{2}}})^{a_{2}} & =\left\{ \sum_{C}\omega_{\rho_{1}\rho_{2}}\left[(\dd x^{\rho_{1}})_{a_{1}}(\dd x^{\rho_{2}})_{a_{2}}-(\dd x^{\rho_{2}})_{a_{1}}(\dd x^{\rho_{1}})_{a_{2}}\right]\right\} (\frac{\partial}{\partial x^{\mu_{1}}})^{a_{1}}(\frac{\partial}{\partial x^{\mu_{2}}})^{a_{2}}\\
+ & =\omega_{\mu_{1}\mu_{2}}-0=\omega_{\mu_{1}\mu_{2}}
+\end{align*}
+
+\end_inset
+
+因为是对所有组合求和，所以第二项缩并为零。例如对于
+\begin_inset Formula $n=3$
+\end_inset
+
+，
+\begin_inset Formula $\ell=2$
+\end_inset
+
+来说
+\begin_inset Formula 
+\begin{align*}
+ & \left[\omega_{xy}\,\dd x\wedge\dd y+\omega_{xz}\,\dd x\wedge\dd z+\omega_{yz}\,\dd y\wedge\dd z\right](\frac{\partial}{\partial x})(\frac{\partial}{\partial y})\\
+ & =\omega_{xy}\left(\dd x\,\dd y-\dd y\,\dd x\right)(\frac{\partial}{\partial x})(\frac{\partial}{\partial y})\\
+ & =\omega_{xy}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+设
+\begin_inset Formula $n=4$
+\end_inset
+
+，
+\begin_inset Formula $\ell=3$
+\end_inset
+
+，则
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5-1-6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+表现为
+\end_layout
+
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\omega_{abc}= & \omega_{123}\,\left(e^{1}\right)_{a}\wedge\left(e^{2}\right)_{b}\wedge\left(e^{3}\right)_{c}+\omega_{124}\,\left(e^{1}\right)_{a}\wedge\left(e^{2}\right)_{b}\wedge\left(e^{4}\right)_{c}\\
- & +\omega_{134}\,\left(e^{1}\right)_{a}\wedge\left(e^{3}\right)_{b}\wedge\left(e^{4}\right)_{c}+\omega_{234}\,\left(e^{2}\right)_{a}\wedge\left(e^{3}\right)_{b}\wedge\left(e^{4}\right)_{c}
+\omega_{abc}= & \omega_{123}\,(e^{1})_{a}\wedge(e^{2})_{b}\wedge(e^{3})_{c}+\omega_{124}\,(e^{1})_{a}\wedge(e^{2})_{b}\wedge(e^{4})_{c}\\
+ & +\omega_{134}\,(e^{1})_{a}\wedge(e^{3})_{b}\wedge(e^{4})_{c}+\omega_{234}\,(e^{2})_{a}\wedge(e^{3})_{b}\wedge(e^{4})_{c}
 \end{align*}
 
 \end_inset
@@ -1802,7 +2024,7 @@ noprefix "false"
 \end_inset
 
 决定，例如 
-\begin_inset Formula $\omega_{134}=\omega_{abc}\left(e_{1}\right)^{a}\left(e_{3}\right)^{b}\left(e_{4}\right)^{c}$
+\begin_inset Formula $\omega_{134}=\omega_{abc}\,(e_{1})^{a}(e_{3})^{b}(e_{4})^{c}$
 \end_inset
 
 。
@@ -2668,12 +2890,15 @@ noprefix "false"
  坐标线上
 \begin_inset Formula 
 \[
-\sbf\varepsilon=\dd x\wedge\dd y=\dd x\dd y-\dd y\dd x
+\sbf\varepsilon=\sbb1\;\dd x\wedge\dd y=\sbb1\left(\dd x\,\dd y-\dd y\,\dd x\right),\quad\varepsilon_{xy}=\left[\begin{array}{cc}
+0 & 1\\
+-1 & 0
+\end{array}\right]
 \]
 
 \end_inset
 
-
+直角坐标到标准极坐标的坐标变换为
 \begin_inset Formula 
 \[
 \begin{cases}
@@ -2682,55 +2907,72 @@ r=x^{2}+y^{2}\\
 \end{cases},\quad\begin{cases}
 x=r\cos\phi\\
 y=r\sin\phi
-\end{cases}
+\end{cases},
 \]
 
 \end_inset
 
-
-\begin_inset Formula 
-\begin{align*}
-\varepsilon_{r\phi}= & (\dd x\wedge\dd y)\;(\partial/\partial r)(\partial/\partial\phi)\\
-= & r\cos^{2}\phi+r\sin^{2}\phi=r
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dd s^{2}=\dd r^{2}+r^{2}\dd\phi^{2},\quad g_{\mu\nu}=\left[\begin{array}{cc}
-1 & 0\\
-0 & r^{2}
-\end{array}\right]
-\]
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:5-1-7"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-可以看出 
-\begin_inset Formula $\delta(\partial/\partial r)=1$
+ 
+\begin_inset Formula $\omega_{\mu_{1}\cdots\mu_{\ell}}=\omega_{a_{1}\cdots a_{\ell}}\,(e_{\mu_{1}})^{a_{1}}\cdots(e_{\mu_{\ell}})^{a_{\ell}}$
 \end_inset
 
 ，
-\begin_inset Formula $\delta(\partial/\partial\phi,\partial/\partial\phi)=r^{2}$
+\begin_inset Formula 
+\begin{align}
+\varepsilon_{r\phi} & =(\dd x\wedge\dd y)\;(\partial/\partial r)(\partial/\partial\phi)\nonumber \\
+ & =\frac{\partial x}{\partial r}\frac{\partial y}{\partial\phi}-\frac{\partial y}{\partial r}\frac{\partial x}{\partial\phi}\label{eq:myeq1}\\
+ & =r\cos^{2}\phi+r\sin^{2}\phi=r\nonumber 
+\end{align}
+
 \end_inset
 
-，即
-\begin_inset Formula $\partial/\partial\phi$
+注意到
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:myeq1"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-的长度为
-\begin_inset Formula $r$
+其实就是 对偶矢量的坐标变换式 
+\begin_inset Formula $\omega_{\nu}^{\prime}=\left.\frac{\partial x^{\mu}}{\partial x^{\prime\nu}}\right|_{p}\omega_{\mu}$
 \end_inset
 
-。
+，
+\begin_inset Formula $\varepsilon_{r\phi}=\frac{\partial x}{\partial r}\frac{\partial y}{\partial\phi}-\frac{\partial y}{\partial r}\frac{\partial x}{\partial\phi}$
+\end_inset
+
+；从而
 \begin_inset Formula 
 \[
-\sbf\varepsilon=r\,\dd r\dd\phi
+\varepsilon_{r\phi}=\left[\begin{array}{cc}
+0 & r\\
+-r & 0
+\end{array}\right],\quad\sbf\varepsilon=r\;\dd r\wedge\dd\phi=r\left(\dd r\,\dd\phi-\dd\phi\,\dd r\right).
 \]
 
 \end_inset
 
+因此 
+\series bold
+对偶矢量作楔积之后的分量 仍然遵从原先的 分量变换式
+\series default
+。
+\end_layout
+
+\begin_layout Example
 在 
 \begin_inset Formula $r=R$
 \end_inset
@@ -2772,6 +3014,44 @@ y=r\sin\phi
 \end_inset
 
 的规定，和诱导度规的符号，可知圆环在自然诱导下的正方向是逆时针。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+ss
+\begin_inset Formula 
+\[
+\dd s^{2}=\dd r^{2}+r^{2}\dd\phi^{2},\quad g_{\mu\nu}=\left[\begin{array}{cc}
+1 & 0\\
+0 & r^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+可以看出 
+\begin_inset Formula $\delta(\partial/\partial r)=1$
+\end_inset
+
+，
+\begin_inset Formula $\delta(\partial/\partial\phi,\partial/\partial\phi)=r^{2}$
+\end_inset
+
+，即
+\begin_inset Formula $\partial/\partial\phi$
+\end_inset
+
+的长度为
+\begin_inset Formula $r$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Section
