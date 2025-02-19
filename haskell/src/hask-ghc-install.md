@@ -315,3 +315,33 @@ ghcup 有一个很好用的命令叫 tui, 运行 `ghcup tui` 会显示如下界�
 ### GHC 安装失败
 
 Mac 上安装时, 出现以下错误, 是因为没有安装 Xcode Command Line Tools. 安装后即可恢复正常.
+
+## ghc 更新,
+
+可以直接使用 text-based user interface (TUI) 界面
+
+```bash
+ghcup tui
+```
+
+其他命令行选项:
+
+```bash
+# list available ghc/cabal versions
+ghcup list
+
+# install the recommended GHC version
+ghcup install ghc
+
+# install a specific GHC version
+ghcup install ghc 8.2.2
+
+# set the currently "active" GHC version
+ghcup set ghc 8.4.4
+
+# install cabal-install
+ghcup install cabal
+
+# update ghcup itself
+ghcup upgrade
+```
