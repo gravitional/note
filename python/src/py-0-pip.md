@@ -32,8 +32,8 @@ def install(package):
 
 [离线批量安装python包](https://zhuanlan.zhihu.com/p/528753336)
 
-制作 `requirement.txt`, 导出项目中所有依赖包
-比如下载 django 1.8.11版本的包, requirements.txt的内容就是:
+制作 `req.txt`, 导出项目中所有依赖包
+比如下载 django 1.8.11版本的包, `req.txt` 的内容就是:
 
 ```conf
 django==1.8.11
@@ -42,10 +42,16 @@ django==1.8.11
 使用 `pip freeze` 会输出所有在本地已安装的包(但不包括 pip, wheel, setuptools 等自带包),
 若需要输出内容与 pip list 一致, 需使用 `pip freeze --all`.
 
-使用方法:
+bash 使用方法:
 
 ```bash
-pip freeze > requirements.txt
+pip freeze --all > req.txt
+```
+
+nushell 使用方法:
+
+```nu
+pip freeze --all | save -f req.txt 
 ```
 
 适用场合:
