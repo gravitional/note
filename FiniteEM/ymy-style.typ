@@ -38,16 +38,19 @@
 ]
 
 // You have to define the kinds of frames you need
-#let (theorem, lemma, definition, important) = make-frames(
+#let (mytheo, mylem, mydef, myimp, myexa, myrem, mycor) = make-frames(
   // This identifies the counter used for all theorems in this definition
   "counter-id",
-  theorem: ("Theorem",),
+  mytheo: ("定理",),
   // You can provide a color or leave it out and it will be generated
-  lemma: ("Lemma", gray),
+  mylem: ("引理", gray),
   // For each frame kind, you have to provide its supplement title to be displayed
-  definition: ("Definition",),
+  mydef: ("定义",),
   // You can add as many as you want
-  important: ("Important", blue.lighten(25%)),
+  myimp: ("重要", blue.lighten(25%)),
+  myexa: ("例 ", orange.lighten(25%)),
+  myrem: ("注", olive.lighten(25%)),
+  mycor: ("推论", lime.lighten(25%)),
 )
 
 

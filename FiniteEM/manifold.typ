@@ -3,7 +3,26 @@
 #show: apply-template
 #set text(font: "Source Han Serif SC")
 
+
 = 微分几何与广义相对论
+
+== 拓扑空间简介
+
+== 流形和张量场
+
+=== 微分流形
+
+=== 切矢和切矢场
+
+=== 流形上的矢量场
+
+#myexa[例1][
+在2维欧氏空间中，笛卡尔系${x,y}$的$x$及$y$坐标线是互相正交的两组平行直线，极坐标系$r,phi$的$phi$坐标线是以原点为心得无数同心圆，$r$坐标线是从原点出发的无数半直线。
+]
+
+== 黎曼（内禀）曲率张量
+
+== 李导数、killing场和超曲面
 
 == 微分形式及其积分
 
@@ -22,13 +41,13 @@ $<5-7-1>
 式#ref(<5-7-1>)与对偶基矢$(e^nu)_a$ 缩并给出 $tensor(gamma,+sigma,-mu,-tau)$ 的显表达式.
 
 
-#theorem[嘉当(Cartan)第一结构方程][Important][Exam][other][
+#mytheo[嘉当(Cartan)第一结构方程][Important][Exam][other][
   $
     dd(vb(e)^nu) = - vb(e)^mu and tensor(vb(omega),-nu,+nu)
   $<5-7-6>
 ]
 
-#theorem[嘉当第二结构方程][Important][
+#mytheo[嘉当第二结构方程][Important][
   $
     tensor(vb(R),-mu,+nu)=
     tensor(dd(vb(omega)),-mu,+nu)+
