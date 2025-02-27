@@ -1,38 +1,69 @@
 #import "@preview/physica:0.9.4": *
 #import "ymy-style.typ": *
 #show: apply-template
-#set text(font: "Source Han Serif SC")
+#set text(font: "Noto Sans CJK SC")
 
+#let myTitle = [ 微分几何与广义相对论]
+#align(center, text(17pt)[*#myTitle*])
 
-= 微分几何与广义相对论
+= 拓扑空间简介
 
-== 拓扑空间简介
+= 流形和张量场
 
-== 流形和张量场
+== 微分流形
 
-=== 微分流形
+== 切矢和切矢场
 
-=== 切矢和切矢场
-
-=== 流形上的矢量场
+== 流形上的矢量场
 
 #myexa[例1][
-在2维欧氏空间中，笛卡尔系${x,y}$的$x$及$y$坐标线是互相正交的两组平行直线，极坐标系$r,phi$的$phi$坐标线是以原点为心得无数同心圆，$r$坐标线是从原点出发的无数半直线。
+  在2维欧氏空间中，笛卡尔系${x,y}$的$x$及$y$坐标线是互相正交的两组平行直线，
+  极坐标系$r,phi$的$phi$坐标线是以原点为心得无数同心圆，
+  $r$坐标线是从原点出发的无数半直线。
 ]
 
-== 黎曼（内禀）曲率张量
+= 黎曼（内禀）曲率张量
 
-== 李导数、killing场和超曲面
+= 李导数、killing场和超曲面
 
-== 微分形式及其积分
+== 流形间的映射
 
-=== 用标架计算曲率张量
+设$phi: M to N $是微分同胚，$p in M$,
+${x^mu}$ 和 $y^mu$ 分别是 $M$ 和 $N$ 的局部坐标系，
+坐标域$O_1$和 $O_2$满足$p in O_1, phi(p) in O_2$.
+于是$p in phi^(-1)[O_2]$。
+$phi$为微分同胚保证$M$和$N$维数相等，
+故${x^mu}$和${y^mu}$的$mu$都是从$1$到$n$。
+微分同胚本是点的变换，但也可等价看作坐标变换，因为可用
+$phi:M to N$在$phi^(-1)[O_2]$上定义一组新坐标${x^('mu)}$如下:
+$forall q in phi^(-1)[O_2]$，定义$x^('mu) := y^mu (phi(q))$.
+可见微分同胚映射$phi$在$p$的邻域$O_1 inter phi^(-1) O_2 $ 有
+$
+  phi_*[eval((pdv(,x^('mu),s:\/))^a)_q] =
+  eval((pdv(,y^(mu),s:\/))^a)_phi(q),
+$<4-1-4>
+由此又可证明
+$
+  phi_*[eval((dd(x^('mu)))_a)_q] =
+  eval((dd(y^(mu)))_a)_phi(q).
+$<4-1-5>
+
+== 李导数
+
+== killing矢量场
+
+== 超曲面
+
+= 微分形式及其积分
+
+== 用标架计算曲率张量
 
 $
   tensor((e_tau),+b) grad_b tensor((e_mu),+a)
   =tensor(gamma,+sigma,-mu,-tau) tensor((e_sigma),+a)
 $
-其中展开系数 $tensor(gamma,+sigma,-mu,-tau)$ 称为*联络系数(connection coefficients)*，可看作 $grad_a$ 借基底场${tensor((e_mu),a)}$ 的体现。
+其中展开系数 $tensor(gamma,+sigma,-mu,-tau)$ 称为*联络系数(connection coefficients)*，
+可看作 $grad_a$ 借基底场${tensor((e_mu),a)}$ 的体现。
 
 $
   (pdv(,x^tau))^b grad_b (pdv(,x^mu))^a=
@@ -72,8 +103,10 @@ $
   (b) quad tensor((e_mu),+a) equiv g_(mu nu) tensor((e^nu),+a),
 $
 
-#myeqs(
-  $ F &= sum $, // 编号为 (1-1.a)
-  $ = x $, // 编号为 (1-1.b)
-  $ = 1 / 2m v^2 $, // 编号为 (1-1.c)
-)
+
+$
+  F &= sum ,\ // 编号为 (1-1.a)
+  & = x ,\ // 编号为 (1-1.b)
+  & = 1 / 2m v^2\
+$ // 编号为 (1-1.c)
+

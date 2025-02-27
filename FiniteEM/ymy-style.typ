@@ -54,3 +54,8 @@
 )
 
 
+// #let phia = sym.phi.alt
+#let to = sym.arrow
+#let phi = sym.phi.alt
+#let varphi = sym.phi
+#let pd = sym.partial

@@ -31,8 +31,8 @@ LaTeX几乎提供了 任何人 使用的 任何 数学或技术符号.
 创建 子方程 环境
 
 + 二元运算符
-    + `+` 号后面 加 `{}` , 变成二元运算符,强制排版,用在多行公式换行中
-    + `=` 号也是同理
+  + `+` 号后面 加 `{}` , 变成二元运算符,强制排版,用在多行公式换行中
+  + `=` 号也是同理
 
 + 数学模式中的空格
 
@@ -1031,7 +1031,7 @@ ref-3: [查找任意符号的LaTeX指令](https://www.zhihu.com/question/2694117
 | `\upsilon`         | $\upsilon$           | Lowercase Greek letter                                      |
 | `\mathsection`     | $\mathsection$       | Section sign in math mode                                   |
 | `\langle`          | $\langle$            | Section sign in math mode 尖括号                            |
-| `\left| a \right|` | $\left\| a \right\|$ | absolute value 绝对值                                       |
+| `\left\| a \right\|` | $\left\| a \right\|$ | absolute value 绝对值                                       |
 | `\leftrightarrow`  | $\leftrightarrow$    | 双向箭头                                                    |
 | `\widehat{}`       | $\widehat{M}$        | 宽帽子                                                      |
 | `\sqrt[4]{8}`      | $\sqrt[4]{8}$        | 四次根号`8`                                                 |
@@ -1470,8 +1470,8 @@ $$ A\xlongequal[sub-script]{super-script}B $$
 + 当相邻行的 `纵向间距` 小于 `\lineskiplimit` 时, 额外插入高度为 `\lineskip` 的间距.
 详见书籍 TeX by Topic[1], chap 15.
 + 另见刘海洋的知乎回答
-    + [对于固定格式的文档, latex相对于word来说还有什么优势? ](https://www.zhihu.com/question/58100147/answer/155635456)
-    + [LaTeX 设置的行距与 Word 的行距如何对应?](https://www.zhihu.com/question/62327906/answer/197899935)
+  + [对于固定格式的文档, latex相对于word来说还有什么优势? ](https://www.zhihu.com/question/58100147/answer/155635456)
+  + [LaTeX 设置的行距与 Word 的行距如何对应?](https://www.zhihu.com/question/62327906/answer/197899935)
 
 从一致性的角度, 应注意避免行间距不一致.
 减小行内公式的高度(使用 m/2 代替 \frac{m}{2})和 复杂程度,
@@ -1526,3 +1526,45 @@ array 和 tabular 环境的新实现是一个更大项目的一部分,
 + 如果想在左侧冲洗列中使用特殊字体(例如 `\bfseries`),
 可以使用 `>{\bfseries}l` 来实现.
 您不必再将 `\bfseries` 添加到列中的每个条目了.
+
+## Latex 带圈文字
+
+Here's a TikZ solution:
+
+```latex
+\documentclass{article}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\begin{document}
+Numbers aligned with the text:  \circled{1} \circled{2} \circled{3} end.
+\end{document}
+alt text
+```
+
+It's just a node. TikZ options are used to align the base line, to adjust the size and to get the circle shape.
+You're free to choose further options regarding size or circle thickness (option thick).
+There's more: for example you could even name the nodes by another argument to connect them by arrows later.
+
+If one like to use it for an enumerated list, for example,
+it's easy but has to be protected:
+
+```latex
+\usepackage{enumitem}
+...
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item First item
+\item Second item
+\item Third item
+\item Fourth item
+\end{enumerate}
+```
+
+或者使用 `circledtext` 宏包,
+
+```latex
+\usepackage{circledtext}
+
+\circledtext{1} xxx
+\circledtext{2} qqq
+```
