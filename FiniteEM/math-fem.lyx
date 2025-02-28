@@ -13214,129 +13214,235 @@ literal "false"
  Fasshauer》 p57, chap 6.3
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 RBF 是 
-\begin_inset Formula $N$
+\begin_inset Formula $n$
 \end_inset
 
-–维 空间中的 scalar 函数，它在 
+ 维 空间中的
+\series bold
+标量函数（scalar）
+\series default
+，它在 
 \begin_inset Formula $x$
 \end_inset
 
-处的值可以只用
+处的值只依赖于
 \begin_inset Formula $r=\norm{x-c}$
 \end_inset
 
-表示，其中
+（只依赖距离，不依赖方向），其中
 \begin_inset Formula $c$
 \end_inset
 
-是 RBF 的 center。
+是 RBF 的
+\series bold
+中心点
+\series default
+（ center）；也把它称为支点。
 \end_layout
 
-\begin_layout Standard
-对于给定的插值点 
+\begin_layout Itemize
+对于给定的 支点 
 \begin_inset Formula $(\sbf y,\sbf d)$
 \end_inset
 
-共
-\begin_inset Formula $M$
+ 共
+\begin_inset Formula $m$
 \end_inset
 
-个，其中
+个；其中
+\begin_inset Formula $\sbf y\coloneqq[y_{1},\cdots,y_{n}]$
+\end_inset
+
+ 表示支点坐标分量（
+\begin_inset Formula $n$
+\end_inset
+
+维），
+\begin_inset Formula $\sbf f$
+\end_inset
+
+ 表示目标函数值。
+\end_layout
+
+\begin_layout Itemize
+RBF 插值（interpolant）表示为，以支点
 \begin_inset Formula $\sbf y$
 \end_inset
 
-（
-\begin_inset Formula $y_{0}\cdots y_{N-1}$
+ 为中心的 RBFs 的线性组合，再加上给定自由度的多项式。作为插值，要求插值式本身穿过支点的函数值 
+\begin_inset Formula $\sbf f(x)=[f(x_{1}),\cdots f(x_{m})]$
 \end_inset
 
-）表示插值点位置，
-\begin_inset Formula $\sbf d$
-\end_inset
-
- 表示函数值，RBF interpolant 可以表示成以 
-\begin_inset Formula $\sbf y$
-\end_inset
-
- 为中心的 RBFs 的线性组合，再加上给定自由度的多项式，写作
+，因此表述为
 \begin_inset Formula 
 \[
-\sbf f(x)=K(x,y)\,\sbf a+P(x)\,\sbf b.
+\sbf f(\sbf{\color{blue}x})=K(\sbf{\color{blue}x},\sbf y)\,\sbf a+P(\sbf{\color{blue}x})\,\sbf b.
 \]
 
 \end_inset
 
-其中：
+
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $K(x,y)$
-\end_inset
-
- 是 RBFs 矩阵，中心点在
-\begin_inset Formula $\sbf y$
-\end_inset
-
-，在
-\begin_inset Formula $\sbf x$
-\end_inset
-
- 求值；
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\sbf a$
+对于目标函数为
+\series bold
+矢量
+\series default
+的情况，例如 
+\begin_inset Formula $\va f=f^{\mu}$
 \end_inset
 
 ，
-\begin_inset Formula $\sbf b$
+\begin_inset Formula $\mu=0,1,\cdots,n$
 \end_inset
 
-是系数列向量。
-\begin_inset Formula $\sbf a$
-\end_inset
-
-的长度为
-\begin_inset Formula $M$
-\end_inset
-
-等于插值点个数；
-\begin_inset Formula $\sbf b$
-\end_inset
-
-的长度等于多项式阶数
-\begin_inset Formula $+1$
-\end_inset
-
-，见下。
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $P(x)$
-\end_inset
-
- 是单项式矩阵（每列一个单项式），张成给定 degree 的多项式，并在
-\begin_inset Formula $\sbf x$
-\end_inset
-
-求值（上标表示次幂，下标是自由度编号）。
-\end_layout
-
-\begin_layout Standard
+。将插值系数推广到矢量
 \begin_inset Formula 
 \[
-P(x)=\left[\begin{array}{ccc}
-1 & x_{0}^{1} & x_{0}^{2}\\
-\vdots & \vdots & \vdots\\
-1 & x_{N-1}^{1} & x_{N-1}^{2}
-\end{array}\right]=\left[\begin{array}{ccc}
-\sbf1 & \sbf x & \sbf x^{2}\end{array}\right]
+f^{\phantom{i}\mu}({\color{blue}x^{\mu}})=\varphi(\lVert x^{\mu}-y_{j}^{\phantom{j}\mu}\rVert)\,a_{j}^{\phantom{j}\mu}+P_{\ell}^{\phantom{\ell}\mu}(x)\,b_{\ell}^{\phantom{j}\mu},\quad\ell\in\{0,1,\cdots,q\}
 \]
 
 \end_inset
 
-系数
+其中
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+表示第
+\begin_inset Formula $\mu$
+\end_inset
+
+个坐标分量，
+\begin_inset Formula $\mu=1,\cdots,n$
+\end_inset
+
+共
+\begin_inset Formula $n$
+\end_inset
+
+个坐标分量；
+\begin_inset Formula $P_{\ell}^{\phantom{\ell}\mu}(x^{\mu})$
+\end_inset
+
+ 是适当的
+\begin_inset Formula $\ell$
+\end_inset
+
+次多项式。同样要求满足 插值式 穿过支点，得到 
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{c}
+f(y_{1}^{\phantom{0}\mu})\\
+\vdots\\
+f(y_{m}^{\phantom{0}\mu})
+\end{array}\right] & =\left[\begin{array}{ccc}
+\varphi(r_{11}) & \cdots & \varphi(r_{1m})\\
+\vdots & \ddots & \vdots\\
+\varphi(r_{m1}) & \cdots & \varphi(r_{mm})
+\end{array}\right]\left[\begin{array}{c}
+a_{1}^{\phantom{j}\mu}\\
+\vdots\\
+a_{m}^{\phantom{j}\mu}
+\end{array}\right]+\left[\begin{array}{cccc}
+1 & P_{1}^{\phantom{\ell}\mu}(y_{1}) & \cdots & P_{q}^{\phantom{q}\mu}(y_{1})\\
+\vdots & \vdots & \cdots & \vdots\\
+1 & P_{1}^{\phantom{\ell}\mu}(y_{1}^{\nu}) & \cdots & P_{q}^{\phantom{q}\mu}(y_{m})
+\end{array}\right]\left[\begin{array}{c}
+b_{0}^{\phantom{0}\mu}\\
+b_{1}^{\phantom{0}\mu}\\
+\vdots\\
+b_{q}^{\phantom{0}\mu}
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+其中，
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varphi(r_{ij})=\varphi(\lVert y_{i}^{\mu}-y_{j}^{\mu}\rVert)$
+\end_inset
+
+ 是 RBFs 矩阵；以支点
+\begin_inset Formula $\{y_{j}^{\phantom{j}\mu}\}$
+\end_inset
+
+为中心，然后在
+\begin_inset Formula $\{x^{\mu}\}$
+\end_inset
+
+上求值（此处 
+\begin_inset Formula $x^{\mu}=y_{i}^{\phantom{j}\mu}$
+\end_inset
+
+）；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a_{i}^{\phantom{i}\mu}$
+\end_inset
+
+，
+\begin_inset Formula $b_{\ell}^{\phantom{\ell}\mu}$
+\end_inset
+
+是系数列向量；
+\begin_inset Formula $i=1,\cdots,m$
+\end_inset
+
+为 支点个数，
+\begin_inset Formula $\mu=1,2,\cdots,n$
+\end_inset
+
+为空间维数；
+\begin_inset Formula $\ell=0,1,\cdots,q$
+\end_inset
+
+共
+\begin_inset Formula $q+1$
+\end_inset
+
+个，
+\begin_inset Formula $q$
+\end_inset
+
+为多项式的阶数；例如对于
+\begin_inset Formula $2$
+\end_inset
+
+维的
+\begin_inset Formula $P_{1}^{\phantom{\ell}\mu}(x)$
+\end_inset
+
+（
+\begin_inset Formula $1$
+\end_inset
+
+次多项式）构造为
+\begin_inset Formula 
+\[
+P_{1}^{\phantom{\ell}\mu}(y_{i}^{\phantom{0}\nu})=y_{i}^{\phantom{0}\nu}\,(b_{1})_{\nu}^{\phantom{\nu}\mu}=y_{i}^{\phantom{0}1}\,(b_{1})_{1}^{\phantom{\nu}\mu}+y_{i}^{\phantom{0}2}\,(b_{1})_{2}^{\phantom{\nu}\mu}.
+\]
+
+\end_inset
+
+也就是说一次项系数
+\begin_inset Formula $b_{1}=(b_{1})_{\nu}^{\phantom{\nu}\mu}$
+\end_inset
+
+实际上是二阶张量（矩阵），因为要作映射 
+\begin_inset Formula $y^{\nu}\to f^{\mu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+为确定系数
 \begin_inset Formula $\sbf a$
 \end_inset
 
@@ -13344,34 +13450,132 @@ P(x)=\left[\begin{array}{ccc}
 \begin_inset Formula $\sbf b$
 \end_inset
 
-是下列线性方程的解
+，求解下列线性方程（也就是要求 插值式 通过所有给定
+\begin_inset Formula $\{y_{j}\}$
+\end_inset
+
+），对于固定的
+\begin_inset Formula $\mu$
+\end_inset
+
+（不求和）
 \begin_inset Formula 
 \begin{align*}
- & \left[K(y,y)+\lambda\,I\right]\,\sbf a+P(y)\,\sbf b=\sbf d\\
- & P(y)^{T}\,\sbf a=\sbf0
+ & \left[{\color{blue}K_{ij}}+\lambda\,I\right]\,a_{j}^{\phantom{j}\mu}+P_{\ell}^{\phantom{\ell}\mu}(y_{j})\,b_{\ell}^{\phantom{j}\mu}=f_{i}^{\phantom{i}\mu}\\
+ & \left[P_{\ell}^{\phantom{\ell}\mu}(y_{j})\right]^{\mathrm{T}}\,a_{j}^{\phantom{j}\mu}=\sbf0,
 \end{align*}
 
 \end_inset
 
-写成分块矩阵形式
+
+\end_layout
+
+\begin_layout Itemize
+第二个方程，在
+\begin_inset Formula $1$
+\end_inset
+
+次多项式的情况的完整形式为（
+\begin_inset Formula $\{x_{1},y_{1},z_{1}\}$
+\end_inset
+
+表示支点
+\begin_inset Formula $1$
+\end_inset
+
+的坐标分量）
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+{\color{blue}x_{1}} & {\color{blue}y_{1}} & {\color{blue}z_{1}}\\
+x_{2} & y_{2} & z_{2}\\
+\vdots & \vdots & \vdots\\
+x_{m} & y_{m} & z_{m}
+\end{array}\right]\left[\begin{array}{c}
+b_{1}\\
+b_{2}\\
+b_{3}
+\end{array}\right],\quad\left[\begin{array}{cccc}
+{\color{blue}x_{1}} & x_{2} & \cdots & x_{m}\\
+{\color{blue}y_{1}} & y_{2} & \cdots & y_{m}\\
+{\color{blue}z_{1}} & z_{2} & \cdots & z_{m}
+\end{array}\right]\left[\begin{array}{c}
+a_{1}\\
+a_{2}\\
+\vdots\\
+a_{m}
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+0\\
+0
+\end{array}\right]
+\]
+
+\end_inset
+
+由于基函数
+\begin_inset Formula $\varphi$
+\end_inset
+
+满足的性质，
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+的列矢量是满秩线性空间；
+\begin_inset Formula $K$
+\end_inset
+
+接近恒等矩阵，
+\begin_inset Formula $P_{\ell}$
+\end_inset
+
+在
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+上的展开系数接近于
+\begin_inset Formula $\{x_{1},x_{2},\cdots,x_{m}\}$
+\end_inset
+
+。
+\begin_inset Formula $P_{\ell}^{\mathrm{T}}a_{j}=0$
+\end_inset
+
+表示正交，也就是 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ 中不包含 
+\begin_inset Formula $P_{\ell}$
+\end_inset
+
+分量。
+\end_layout
+
+\begin_layout Itemize
+对于确定的
+\begin_inset Formula $\mu$
+\end_inset
+
+，写成分块矩阵形式
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
-{\color{blue}K(y,y)+\lambda\,I} & P(y)\\
-P(y)^{T} & 0
+{\color{blue}{\color{blue}K_{ij}}+\lambda\,I}\; & P_{\ell}(y_{j})\\
+P_{\ell}(y_{j})^{\mathrm{T}} & 0
 \end{array}\right]\left[\begin{array}{c}
-{\color{blue}\sbf a}\\
-\sbf b
+a_{j}\\
+b_{\ell}
 \end{array}\right]=\left[\begin{array}{c}
-{\color{blue}\sbf d}\\
-\sbf0
+f_{i}\\
+0_{\ell}
 \end{array}\right]
 \]
 
 \end_inset
 
 其中
-\begin_inset Formula ${\color{blue}K(y,y)}_{ij}=\varphi\left(\left\Vert y_{i}-y_{j}\right\Vert \right)$
+\begin_inset Formula ${\color{blue}K_{ij}}=\varphi\left(\left\Vert y_{i}-y_{j}\right\Vert \right)$
 \end_inset
 
 是 system matrix，
@@ -13475,19 +13679,27 @@ atic ”或 “gaussian”）时，必须选择合适的形状参数（例如，
 \end_layout
 
 \begin_layout Standard
-动网格中使用的 RBF 插值为
+动网格中使用 RBF 插值拟合网格节点位移 
+\begin_inset Formula $\Delta^{\mu}$
+\end_inset
+
+，
+\begin_inset Formula $\mu=1,2,3$
+\end_inset
+
+ 表示三个坐标分量。
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
-{\color{blue}K(y,y)+\lambda\,I} & P(y)\\
-P(y)^{T} & 0
+{\color{blue}K_{ij}+\lambda\,I}\; & P^{\mu}(y)\\
+P^{\mu}(y)^{\mathrm{T}}\; & 0
 \end{array}\right]\left[\begin{array}{c}
-{\color{blue}\sbf a}\\
-\sbf b
+{\color{blue}\sbf a^{\mu}}\\
+\sbf b^{\mu}
 \end{array}\right]=\left[\begin{array}{c}
-{\color{blue}\sbf d}\\
+{\color{blue}\sbf\Delta^{\mu}}\\
 \sbf0
-\end{array}\right]
+\end{array}\right],\quad\mu\text{不求和}
 \]
 
 \end_inset
@@ -13496,65 +13708,100 @@ P(y)^{T} & 0
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $T$
+其中
+\begin_inset Formula $\mathrm{T}$
 \end_inset
 
-表示转置；其中 要拟合的目标数据为 节点位移 
-\begin_inset Formula $\sbf d=x_{\text{new}}-x_{\text{old}}$
-\end_inset
-
-；
-\end_layout
-
-\begin_layout Itemize
-选 
+表示转置；选取 
 \begin_inset Formula $\lambda=0$
 \end_inset
 
-，选 多项式 degree为
-\begin_inset Formula $1$
-\end_inset
-
-；
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\sbf a$
-\end_inset
-
-的长度等于插值点个数，
-\begin_inset Formula $\sbf b$
-\end_inset
-
-的长度等于多项式阶数 
-\begin_inset Formula $+1$
+，多项式 degree 
+\begin_inset Formula $q=1$
 \end_inset
 
 。
 \end_layout
 
+\begin_layout Itemize
+给定的 插值点对 
+\begin_inset Formula $(\sbf y^{\mu},\Delta^{\mu})$
+\end_inset
+
+ 共
+\begin_inset Formula $M$
+\end_inset
+
+个；
+\begin_inset Formula $y^{\mu},\Delta^{\mu}$
+\end_inset
+
+ 都有三个分量。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+只依赖于
+\begin_inset Formula $r$
+\end_inset
+
+，因此对所有
+\begin_inset Formula $\mu$
+\end_inset
+
+分量相同；
+\begin_inset Formula $P^{\mu}=\left[\begin{array}{cc}
+1\; & x^{\mu}\end{array}\right]$
+\end_inset
+
+ 对于每个
+\begin_inset Formula $\mu$
+\end_inset
+
+分别定义。
+\end_layout
+
 \begin_layout Standard
+最终使用的插值形式为
 \begin_inset Formula 
 \[
-\sbf f(x)={\color{blue}K(x,y)}\,\sbf a+{\color{blue}P(x)}\,\sbf b,
+f^{\mu}({\color{blue}x^{\mu}})=K({\color{blue}x^{\mu}},y_{j}^{\phantom{j}\nu})\,\sbf a^{\mu}+{\color{blue}P^{\mu}(x^{\mu})}\,\sbf b^{\mu},\quad\mu\text{不求和}
 \]
 
 \end_inset
 
+其中
+\begin_inset Formula $K({\color{blue}x^{\mu}},y_{j}^{\nu})=\varphi(r_{j})$
+\end_inset
 
+，定义第
+\begin_inset Formula $j$
+\end_inset
+
+个距离
+\begin_inset Formula $r_{j}\coloneqq\sqrt{\sum_{\mu=1}^{3}(x^{\mu}-y_{j}^{\mu})^{2}}$
+\end_inset
+
+。写成矩阵
 \begin_inset Formula 
 \[
-P(x)=\left[\begin{array}{cc}
-1 & x_{0}^{1}\\
-\vdots & \vdots\\
-1 & x_{N-1}^{1}
-\end{array}\right]=\left[\begin{array}{cc}
-\sbf1 & \sbf x\end{array}\right]
+f^{\mu}(x)=\left[\begin{array}{ccc}
+\varphi(r_{1}) & \cdots & \varphi(r_{m})\end{array}\right]\left[\begin{array}{c}
+a_{1}^{\phantom{0}\mu}\\
+\vdots\\
+a_{m}^{\phantom{0}\mu}
+\end{array}\right]+\left[\begin{array}{cc}
+1\; & x^{\mu}\end{array}\right]\left[\begin{array}{c}
+b_{0}^{\phantom{0}\mu}\\
+b_{1}^{\phantom{0}\mu}
+\end{array}\right],\quad\mu\text{不求和}
 \]
 
 \end_inset
 
-RBF函数为
+其中的 RBF Core 函数为
 \begin_inset Formula 
 \[
 \varphi(r)=\begin{cases}
@@ -13566,7 +13813,7 @@ RBF函数为
 \end_inset
 
 其中
-\begin_inset Formula $r=\left\Vert x-x_{k}\right\Vert $
+\begin_inset Formula $r=\left\Vert x-y_{j}\right\Vert $
 \end_inset
 
 ，
@@ -13574,6 +13821,46 @@ RBF函数为
 \end_inset
 
 表示 ratio，限定 插值影响范围，取为模型 fixed nodes 的包围盒。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p=\{x^{\mu}\}$
+\end_inset
+
+ 点的Jacobi 矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{\partial x{}^{\prime\mu}}{\partial x^{\nu}}\right|_{p} & =\left.\frac{\partial f^{\mu}(x)}{\partial x^{\nu}}\right|_{p}\\
+ & =\left.a_{j}^{\phantom{0}\mu}\frac{\dd\varphi_{j}}{\dd r}\,\frac{\partial r}{\partial x^{\nu}}+b_{1}^{\phantom{0}\mu}\delta_{\nu}^{\phantom{\nu}\mu}\right|_{p}\\
+ & =\left.a_{j}^{\phantom{0}\mu}\,\varphi'(r_{j})\,\frac{\Delta_{j}^{\phantom{j}\nu}}{r}+b_{1}^{\phantom{0}\mu}\delta_{\nu}^{\phantom{\nu}\mu}\right|_{p}
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\varphi'$
+\end_inset
+
+表示
+\begin_inset Formula $\dd\varphi/\dd r$
+\end_inset
+
+，
+\begin_inset Formula $\Delta_{j}^{\phantom{j}\nu}=x^{\nu}-y_{j}^{\phantom{j}\nu}$
+\end_inset
+
+是第
+\begin_inset Formula $j$
+\end_inset
+
+个支点的
+\begin_inset Formula $\nu$
+\end_inset
+
+ diff。
 \end_layout
 
 \begin_layout Chapter
