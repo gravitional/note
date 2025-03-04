@@ -2,10 +2,11 @@
 
 [一行代码可以做什么](https://www.zhihu.com/question/285586045/answer/1164579350)
 
-自由修改网页内容
-
 ```js
+// 自由修改网页内容
 document.body.contentEditable='true';
+// 控制台打印选中的文字
+window.getSelection(0).toString();
 ```
 
 ## 复制粘贴限制
@@ -17,7 +18,7 @@ document.body.contentEditable='true';
 + 通过`js`阻止复制功能实现禁止复制.
 + 通过`css`样式`user-select:none`阻止选中实现禁止复制.
 
-目前一般选择其中一种, 比如简书, 掘金, 知乎等资讯问答类, 也有混合使用的, 比如起点网这类阅读为主的.
+目前一般选择其中一种, 比如`简书`, `掘金`, `知乎`等资讯问答类, 也有混合使用的, 比如起点网这类阅读为主的.
 
 破解禁止复制功能的方法
 禁止当前页面的 `javascript`, 毕竟我们对复制拦截就是通过`js`实现的.
@@ -31,7 +32,8 @@ document.body.contentEditable='true';
 
 最牛皮的方法: 手敲, 解决一切妖魔鬼怪.
 
-js实现防复制功能
+### js实现防复制功能
+
 js实现防复制一般就是使用`copy`这个api:
 
 ```js
@@ -93,6 +95,13 @@ document.body.oncopy = (event) => {
     }
     // 兼容一下ie浏览器, ie中是window, 其他浏览器是event
     let clipboardData = event.clipboardData || window.clipboardData;
+    clipboardData.setData('text', copyText);
+}
+```
+
+```js
+document.body.oncopy = (event) => {
+    let copyText = window.getSelection(0).toString(); // 获取被复制的文本内容, 没有dom结构
     clipboardData.setData('text', copyText);
 }
 ```
