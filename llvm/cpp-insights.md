@@ -46,6 +46,8 @@ line395 遇到非 unicode 字符注释导致的编译错误,
 
 ## Build insights
 
+原文使用 `-T LLVM_v142`
+
 Assume:
 
 `cppinsights` sources are in `~\myprojs\cppinsights-main`
@@ -58,7 +60,7 @@ cd C:\dev\cppinsights\
 mkdir build
 cd build
 set path=%path%;C:\cppLibs\LLVM_local2\bin
-cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 ..
+cmake -G "Visual Studio 16 2019" -A x64 -T ClangCL ..
 cmake --build . --config Release --target insights
 ```
 
@@ -68,29 +70,21 @@ cmake --build . --config Release --target insights
 cd ~\myprojs\cppinsights-main
 mkdir build
 cd build
-$env.Path = ($env.Path ++ 'C:\cppLibs\LLVM_local2\bin') 
+$env.Path = ($env.Path ++ 'C:/cppLibs/llvm/bin')
 (
-cmake -G "Visual Studio 17 2022" -A x64 -T LLVM_v142 ..
-)
-cmake --build . --config Release --target insights
-```
-
-```nu
-cd ~\myprojs\cppinsights-main
-mkdir build
-cd build
-$env.Path = ($env.Path ++ 'C:/cppLibs/LLVM_local2/bin') 
-(
-cmake -G "Visual Studio 17 2022" -A x64 -T ClangCL 
--DCMAKE_CXX_COMPILER=C:/cppLibs/LLVM_local2/bin/clang-cl.exe ..
+cmake -G "Visual Studio 17 2022" -A x64 -T ClangCL -DCMAKE_MT=mt -B . -S ..
 )
 ```
 
-cmake -G 'Visual Studio 17 2022' -A x64 -T ClangCL -DCMAKE_MT=mt -DCMAKE_CXX_COMPILER=C:/cppLibs/LLVM_local2/bin/clang-cl.exe ..
++
 
-Instead of "Visual Studio 16 2019" generator with Clang, 
-you can choose whatever works for you. 
+```bash
+cmake -B . -S ..
+```
+
+Instead of "Visual Studio 16 2019" generator with Clang,
+you can choose whatever works for you.
 See "Tested with (supported compilers)", CMake command column above.
 
-Also, instead of building from command line, 
+Also, instead of building from command line,
 you can open build/cpp-insights.sln and have fun with VS.
