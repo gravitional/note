@@ -30,6 +30,11 @@ https://marketplace.visualstudio.com/items?itemName=ms-python.python
 格式：发布者.插件名-版本号。
 例如 `python` 插件的下载链接为
 
-[ms-python.python-2025.1.2025022102@win32-x64.vsix](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.1.2025022102/vspackage)
-[ms-python.debugpy-2025.1.2025021701.vsix](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/debugpy/2025.1.2025021701/vspackage)
-[ms-python.vscode-pylance-2025.2.101.vsix](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/2025.2.101/vspackage)
+```python
+# ms-python.python-2025.1.2025022102@win32-x64.vsix
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.1.2025022102/vspackage
+# ms-python.debugpy-2025.1.2025021701.vsix
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/debugpy/2025.1.2025021701/vspackage
+# ms-python.vscode-pylance-2025.2.101.vsix
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/2025.2.101/vspackage
+````
