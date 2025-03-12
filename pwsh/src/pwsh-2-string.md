@@ -212,15 +212,15 @@ Select-String -Path .\*.txt -Pattern 'Get-'
 
 + `-Encoding`; 指定目标文件的编码类型. 默认值是 `utf8NoBOM`.
 这个参数的可接受值如下.
-    + `ascii` ;  使用`ASCII(7位)`字符集的编码.
-    + `bigendianunicode` ;  使用`big-endian`字节顺序的`UTF-16`格式进行编码.
-    + `oem` ;  使用`MS-DOS`和控制台程序的默认编码.
-    + `unicode` ;  以`UTF-16`格式编码, 使用`little-endian`的字节顺序.
-    + `utf7` ;  以`UTF-7`格式编码.
-    + `utf8` ;  以`UTF-8`格式编码.
-    + `utf8BOM` ;  以`UTF-8`格式编码, 使用BOM(Byte Order Mark, 字节顺序标记).
-    + `utf8NoBOM` ;  以`UTF-8`格式编码, 没有BOM.
-    + `utf32` ; 以`UTF-32` 格式编码.
+  + `ascii` ;  使用`ASCII(7位)`字符集的编码.
+  + `bigendianunicode` ;  使用`big-endian`字节顺序的`UTF-16`格式进行编码.
+  + `oem` ;  使用`MS-DOS`和控制台程序的默认编码.
+  + `unicode` ;  以`UTF-16`格式编码, 使用`little-endian`的字节顺序.
+  + `utf7` ;  以`UTF-7`格式编码.
+  + `utf8` ;  以`UTF-8`格式编码.
+  + `utf8BOM` ;  以`UTF-8`格式编码, 使用BOM(Byte Order Mark, 字节顺序标记).
+  + `utf8NoBOM` ;  以`UTF-8`格式编码, 没有BOM.
+  + `utf32` ; 以`UTF-32` 格式编码.
 
 从`PowerShell 6.2`开始,
 `-Encoding`参数还允许注册代码页的`数字ID`, 如`-Encoding 1251`.
