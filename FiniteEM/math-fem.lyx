@@ -20469,7 +20469,19 @@ N_{\alpha}(\xi_{\beta})=\delta_{\alpha\beta}.
 \begin_inset Formula $\sum_{\alpha}N_{\alpha}(\xi_{\beta})=1$
 \end_inset
 
-。矢量形函数类似。
+。
+\end_layout
+
+\begin_layout Itemize
+矢量形函数类似。切面分量的归一性。
+\begin_inset Formula 
+\[
+\sum_{\alpha}\sbf N_{\alpha}(\xi_{\beta})A_{\alpha}=\sbf A
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -26632,7 +26644,7 @@ x_{3} & y_{3}
  矩阵。在程序中写成矩阵符号相乘的形式
 \begin_inset Formula 
 \begin{equation}
-J=(\tilde{\nabla}N)\cdot X,\label{eq:612}
+J=(\tilde{\nabla}N)\cdot V,\label{eq:612}
 \end{equation}
 
 \end_inset
@@ -26642,7 +26654,7 @@ J=(\tilde{\nabla}N)\cdot X,\label{eq:612}
 \end_inset
 
 表示形函数对 母坐标的梯度；
-\begin_inset Formula $X_{\alpha j}$
+\begin_inset Formula $V_{\alpha j}$
 \end_inset
 
 是节点坐标矩阵，每行存入一个节点的
@@ -26762,6 +26774,30 @@ noprefix "false"
 \end_inset
 
 表示。
+\begin_inset Formula 
+\[
+J_{\phantom{\mu}k}^{\mu}\,(J^{-1})_{\phantom{k}\nu}^{k}=\delta_{\phantom{\mu}\nu}^{\mu}
+\]
+
+\end_inset
+
+因此，
+\begin_inset Formula $J_{\phantom{\mu}k}^{\mu}$
+\end_inset
+
+以全局坐标
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+为行，
+\begin_inset Formula $(J^{-1})_{\phantom{k}\nu}^{k}$
+\end_inset
+
+ 以母坐标
+\begin_inset Formula $\xi^{k}$
+\end_inset
+
+为行。
 \end_layout
 
 \begin_layout Standard
@@ -26784,47 +26820,53 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-总结：雅可比矩阵 
-\begin_inset Formula $\partial\left(x,y\right)/\partial\left(\xi,\eta\right)$
+总结：用拉丁字母表示母坐标，用希腊字母表示全局坐标。则雅可比矩阵 
+\begin_inset Formula $J_{\phantom{\mu}k}^{\mu}=\partial\left(x,y\right)/\partial\left(\xi,\eta\right)$
 \end_inset
 
-为
-\color blue
-
+为，
 \begin_inset Formula 
 \[
-J_{ki}=\tilde{\partial}_{b}X_{i}=(\tilde{\partial}_{b}\,N_{\alpha})\,X_{\alpha i},\quad J=(\tilde{\nabla}N)\cdot X
+{\color{blue}J_{\phantom{\mu}k}^{\mu}=\partial x^{\mu}/\partial\xi^{k}=N_{\alpha,k}\,V_{\alpha}^{\phantom{\alpha}\mu}=G_{k\alpha}\,V_{\alpha}^{\phantom{\alpha}\mu}}
 \]
 
 \end_inset
 
+其中定义了形函数母梯度
+\begin_inset Formula $G_{k\alpha}=N_{\alpha,k}=\partial N_{\alpha}/\partial\xi^{k}$
+\end_inset
 
+。
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $b,i\in\left\{ 1,2\right\} $
+\begin_inset Formula $\mu,k=1,2,3$
 \end_inset
 
-是自由度数目（
-\begin_inset Formula $\xi$
+表示坐标分量（
+\begin_inset Formula $J_{\phantom{\mu}k}^{\mu}$
 \end_inset
 
-对应行指标，
-\begin_inset Formula $x$
+的行是
+\begin_inset Formula $x^{\mu}$
 \end_inset
 
-对应列指标）；
+，列是
+\begin_inset Formula $\xi^{k}$
+\end_inset
+
+）；
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $X_{\alpha i}$
+\begin_inset Formula $V_{\alpha}^{\phantom{\alpha}\mu}$
 \end_inset
 
  表示节点坐标；
-\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
+\begin_inset Formula $\alpha=1,\dots,n$
 \end_inset
 
-是插值点的数目；
+ 是单元节点的数目；
 \end_layout
 
 \begin_layout Enumerate
@@ -26832,18 +26874,10 @@ J_{ki}=\tilde{\partial}_{b}X_{i}=(\tilde{\partial}_{b}\,N_{\alpha})\,X_{\alpha i
 \end_inset
 
  表示形函数，
-\begin_inset Formula $\tilde{\partial}$
+\begin_inset Formula $N_{\alpha,k}=\partial N_{\alpha}/\partial\xi^{k}$
 \end_inset
 
-表示对 
-\begin_inset Formula $\xi$
-\end_inset
-
-，
-\begin_inset Formula $\eta$
-\end_inset
-
- 求偏导。
+表示对 自然坐标求导。
 \end_layout
 
 \end_inset
@@ -26879,17 +26913,17 @@ noprefix "false"
 空间坐标的变换关系
 \begin_inset Formula 
 \begin{equation}
-\sbf X=X^{T}\cdot\sbf N(\sbf\xi)\label{eq:my61b}
+\sbf V=V^{T}\cdot\sbf N(\sbf\xi)\label{eq:my61b}
 \end{equation}
 
 \end_inset
 
 其中
-\begin_inset Formula $\sbf X$
+\begin_inset Formula $\sbf V$
 \end_inset
 
  是空间坐标，
-\begin_inset Formula $X$
+\begin_inset Formula $V$
 \end_inset
 
 是节点空间坐标矩阵，
@@ -26901,7 +26935,7 @@ noprefix "false"
 \end_inset
 
  是形函数；
-\begin_inset Formula $\sbf X$
+\begin_inset Formula $\sbf V$
 \end_inset
 
 与
@@ -26931,7 +26965,7 @@ noprefix "false"
 \end_inset
 
 是非线性坐标变换，它的逆变换形式会比较复杂。但是可以一般地，把它当成函数零点问题求解：定义 
-\begin_inset Formula $\sbf F(\sbf\xi)=X^{T}\cdot\sbf N(\sbf\xi)-\sbf X$
+\begin_inset Formula $\sbf F(\sbf\xi)=V^{T}\cdot\sbf N(\sbf\xi)-\sbf V$
 \end_inset
 
 ，则
@@ -26958,18 +26992,18 @@ noprefix "false"
 \end_inset
 
 在逆变换问题中，
-\begin_inset Formula $X^{T}$
+\begin_inset Formula $V^{T}$
 \end_inset
 
 、
-\begin_inset Formula $\sbf X$
+\begin_inset Formula $\sbf V$
 \end_inset
 
  均当成常数矩阵，则
 \begin_inset Formula 
 \begin{align*}
-D_{F}(\sbf\xi_{k}) & =\left[\frac{\partial X}{\partial\xi}\right]^{T}=X^{T}\cdot(\tilde{\nabla}N)\\
-J_{ji} & =(\tilde{\partial}_{j}\,N_{\alpha})\,X_{\alpha i}
+D_{F}(\sbf\xi_{k}) & =\left[\frac{\partial X}{\partial\xi}\right]^{T}=V^{T}\cdot(\tilde{\nabla}N)\\
+J_{ji} & =(\tilde{\partial}_{j}\,N_{\alpha})\,V_{\alpha i}
 \end{align*}
 
 \end_inset
@@ -27012,7 +27046,7 @@ status open
 \begin_inset Formula 
 \begin{align}
 \sbf\xi_{0} & =\text{初始向量}\label{eq:my610}\\
-\sbf\xi_{k+1} & =\sbf\xi_{k}-\left.J\right|_{\xi_{k}}^{-1,T}\cdot\left[X_{k}-X\right],\quad k=0,1,2,\cdots\nonumber 
+\sbf\xi_{k+1} & =\sbf\xi_{k}-\left.J\right|_{\xi_{k}}^{-1,T}\cdot\left[V_{k}-V\right],\quad k=0,1,2,\cdots\nonumber 
 \end{align}
 
 \end_inset
@@ -27027,7 +27061,7 @@ status open
 
 \begin_layout Standard
 其中
-\begin_inset Formula $X_{k}=X(\xi_{k})$
+\begin_inset Formula $V_{k}=V(\xi_{k})$
 \end_inset
 
 ，是对应
@@ -27220,82 +27254,107 @@ status open
 \end_inset
 
 处，形函数的物理梯度 
-\begin_inset Formula $\nabla N_{i}^{e}$
+\begin_inset Formula $\nabla N_{\alpha}^{e}$
 \end_inset
 
  可以表出为
 \color blue
 
 \begin_inset Formula 
-\begin{equation}
-\partial_{i}N_{\alpha}^{e}=\overline{J}_{ij}\;\tilde{\partial}_{j}\,N_{\alpha}^{e}.\label{eq:gradient}
-\end{equation}
+\begin{align}
+G_{\mu\alpha}=\partial_{\mu}N_{\alpha}^{e} & =N_{\alpha,\mu}^{e}=J_{\phantom{k}\mu}^{k}\,\partial_{k}N_{\alpha}^{e}.\label{eq:gradient}\\
+ & =(G_{k\alpha}\,V_{\alpha}^{\phantom{\alpha}\mu})^{-1}\,N_{\alpha,k}^{e}
+\end{align}
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $i,j\in\left\{ 1,2\right\} $
-\end_inset
-
-是自由度数目，
-\begin_inset Formula $\alpha\in\left\{ 1,2,3,\cdots\right\} $
-\end_inset
-
-是插值点的数目；
 \end_layout
 
 \begin_layout Enumerate
 维度是
-\begin_inset Formula $[\text{dim},\alpha]$
+\begin_inset Formula $[n,q]$
 \end_inset
 
 ，dim 是空间维度；
-\begin_inset Formula $\alpha$
+\begin_inset Formula $V_{\alpha}^{\phantom{\alpha}\mu}$
 \end_inset
 
- 是插值点数目。
+ 表示节点坐标；
+\begin_inset Formula $\alpha=1,\dots,q$
+\end_inset
+
+ ，
+\begin_inset Formula $q$
+\end_inset
+
+ 是单元节点数目。
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+ 表示形函数。
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $\partial$
+\begin_inset Formula $\partial_{\mu}N_{\alpha}^{e}=N_{\alpha,\mu}^{e}$
 \end_inset
 
- 表示对空间坐标 
-\begin_inset Formula $\left\{ x,y\right\} $
+ 表示对全局坐标
+\begin_inset Formula $x^{\mu}$
 \end_inset
 
  求偏导，
-\begin_inset Formula $\tilde{\partial}$
+\begin_inset Formula $\partial_{k}N_{\alpha}^{e}=N_{\alpha,k}^{e}$
 \end_inset
 
 表示对 母坐标 
-\begin_inset Formula $\left\{ \xi,\eta\right\} $
+\begin_inset Formula $\xi^{k}$
 \end_inset
 
  求偏导。
 \end_layout
 
 \begin_layout Enumerate
+\begin_inset Formula $\mu,k=1,2,3$
+\end_inset
+
+ 表示坐标分量（
+\begin_inset Formula $J_{\phantom{\mu}k}^{\mu}$
+\end_inset
+
+的行是
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+，列是
+\begin_inset Formula $\xi^{k}$
+\end_inset
+
+）；
+\end_layout
+
+\begin_layout Enumerate
 程序中 电位移矢量 
-\begin_inset Formula $D_{k}^{h}=-\epsilon_{r}N_{\alpha,k}\,\phi_{\alpha}^{h}=-\epsilon_{r}\phi_{\alpha}G_{k\alpha}$
+\begin_inset Formula $D_{\mu}^{e}=-\epsilon_{r}N_{\alpha,\mu}\,\phi_{\alpha}^{e}=-\varepsilon_{r}\phi_{\alpha}^{e}G_{\mu\alpha}$
 \end_inset
 
 ，
 \begin_inset Formula $G$
 \end_inset
 
- 就是 dNdzeta，
+ 就是 dNdzeta 或GradN，
 \begin_inset Formula $k$
 \end_inset
 
-是维度指标，
+是
+\begin_inset Formula $\xi^{k}$
+\end_inset
+
+，
 \begin_inset Formula $\alpha$
 \end_inset
 
-是节点指标。
+是节点编号。
 \end_layout
 
 \end_inset

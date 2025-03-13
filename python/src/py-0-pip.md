@@ -40,7 +40,7 @@ django==1.8.11
 ```
 
 使用 `pip freeze` 会输出所有在本地已安装的包(但不包括 pip, wheel, setuptools 等自带包),
-若需要输出内容与 pip list 一致, 需使用 `pip freeze --all`.
+若需要输出内容与 `pip list` 一致, 需使用 `pip freeze --all`.
 
 bash 使用方法:
 
