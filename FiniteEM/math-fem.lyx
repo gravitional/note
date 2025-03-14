@@ -20405,7 +20405,14 @@ N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3
 
 \end_inset
 
-三角形单元；
+三角形单元；Jacobi 为
+\begin_inset Formula $J_{k}^{\phantom{k}\mu}=\left[\begin{array}{cc}
+x_{21} & y_{21}\\
+x_{31} & y_{31}
+\end{array}\right]$
+\end_inset
+
+，在单元上为常数。
 \end_layout
 
 \begin_layout Itemize
@@ -20413,11 +20420,11 @@ N^{(8)} & =\frac{1}{8}\left(1-\xi_{1}\right)\left(1+\xi_{2}\right)\left(1+\xi_{3
 \series bold
 形函数正交性
 \series default
-。形函数
+。如果两个单元share公共边，要求插值连续，则形函数
 \begin_inset Formula $N_{\alpha}$
 \end_inset
 
-满足
+必须满足
 \begin_inset Formula 
 \[
 N_{\alpha}(\xi_{\beta})=\delta_{\alpha\beta}.
@@ -20447,7 +20454,7 @@ N_{\alpha}(\xi_{\beta})=\delta_{\alpha\beta}.
 \begin_layout Itemize
 
 \series bold
-形函数归一性
+标量形函数归一性
 \series default
 。要求形函数可以精确插值常数场，结合正交性，常函数
 \begin_inset Formula $C$
@@ -20473,15 +20480,11 @@ N_{\alpha}(\xi_{\beta})=\delta_{\alpha\beta}.
 \end_layout
 
 \begin_layout Itemize
-矢量形函数类似。切面分量的归一性。
-\begin_inset Formula 
-\[
-\sum_{\alpha}\sbf N_{\alpha}(\xi_{\beta})A_{\alpha}=\sbf A
-\]
 
-\end_inset
-
-
+\series bold
+矢量形函数不能保证归一性类似
+\series default
+。因为单元内部无法定义“切向”。
 \end_layout
 
 \begin_layout Itemize
@@ -20529,10 +20532,374 @@ N_{\alpha}(\xi_{\beta})=\delta_{\alpha\beta}.
 \begin_inset Formula $1,2,4$
 \end_inset
 
-上必须为零，所以它在 Edge(1,4,2) 上恒为零，因为单变量的二阶多项式在3个点上为零。
+上必须为零，所以它在 Edge(1,4,2) 上恒为零；因为单变量的二阶多项式在3个点上为零，则系数全为零。
 \end_layout
 
 \begin_layout Itemize
+simplex（单纯形），例如2维三角形，3维四面体的一阶形函数，
+\series bold
+在单元上的 Jacobi 为常数矩阵
+\series default
+，因此在参考单元上的性质可以平移到任意单元上。
+\end_layout
+
+\begin_layout Section
+矢量形函数，Edge单元性质
+\end_layout
+
+\begin_layout Standard
+Discrete Time Vector Finite Element Methods for Solving Maxwell's Equations
+ on 3D Unstructured Grids--Daniel Arthur White, page63/46
+\end_layout
+
+\begin_layout Itemize
+矢量场用 Edge基函数展开
+\begin_inset Formula 
+\begin{equation}
+\sbf A^{e}=\sum_{\alpha=1}^{4}\sbf N_{\alpha}^{e}\,A_{\alpha}^{e}\label{eq:j8.3}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{\alpha}^{e}$
+\end_inset
+
+表示沿着第
+\begin_inset Formula $\alpha$
+\end_inset
+
+个棱边的切向场，
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
+\end_inset
+
+是矢量插值函数或基函数。自由度实际上是 
+\begin_inset Formula $\sbf A\cdot\sbf\ell$
+\end_inset
+
+，即矢量场
+\begin_inset Formula $\sbf A$
+\end_inset
+
+沿着 Edge 的线积分。
+\begin_inset Formula 
+\[
+A_{\mu}^{e}(\sbf v)=\int_{E_{\mu}}(\sbf A\cdot\sbf t_{\mu})\dd{\ell}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{\mu}$
+\end_inset
+
+表示第
+\begin_inset Formula $\mu$
+\end_inset
+
+ 条 Edge，
+\begin_inset Formula $\sbf t_{\mu}$
+\end_inset
+
+ 是沿着
+\begin_inset Formula $E_{\mu}$
+\end_inset
+
+的单位切向矢量。一阶 Edge 单元中 
+\begin_inset Formula $\sbf A$
+\end_inset
+
+在Edge上是常数，所以
+\begin_inset Formula $\sbf A$
+\end_inset
+
+直接提出来，Edge 长度
+\begin_inset Formula $L$
+\end_inset
+
+计入在 
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
+\end_inset
+
+中。
+\end_layout
+
+\begin_layout Itemize
+只要插值展开写成
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:j8.3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的形式；如果两个单元上的展开 share 公共Edge，要求插值场的切向连续，则能推导出： 
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
+\end_inset
+
+ 只在第 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 边上有切向分量，而在其它所有边上没有切向分量（
+\series bold
+离散切向正交性
+\series default
+）。
+\begin_inset Formula 
+\[
+\sbf N_{\alpha}^{e}(e_{\beta})=\delta_{\alpha\beta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+矢量形函数不能保证归一性
+\series default
+，因为单元内部没有切向。
+\end_layout
+
+\begin_layout Itemize
+在有限元方法计算三维磁场时，通常会使用 Edge 单元（形函数定义在边上而非节点上）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，在棱边
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 上可以定义形函数：
+\begin_inset Formula 
+\[
+\sbf N_{\alpha}^{e}=\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{\alpha}^{e}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+其中 
+\begin_inset Formula $\alpha(1)$
+\end_inset
+
+与 
+\begin_inset Formula $\alpha(2)$
+\end_inset
+
+为与棱边
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 邻接的两个顶点。
+\begin_inset Formula $\ell_{\alpha}^{e}$
+\end_inset
+
+ 的绝对值等于棱边的长度，
+\end_layout
+
+\begin_layout Itemize
+正负号由节点的总体编号决定，solver中，在生成Edge时，将Edge的nodes按照global seq排序。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\nabla\cdot\sbf N_{\alpha}^{e}=0$
+\end_inset
+
+，此性质只取决于上式的构造，不依赖于
+\begin_inset Formula $L_{\alpha(1)}^{e}$
+\end_inset
+
+和
+\begin_inset Formula $L_{\alpha(2)}^{e}$
+\end_inset
+
+的具体表达式。形函数
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
+\end_inset
+
+ 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/xl-1.2.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维三角形单元，相邻单元同一条棱边上形函数的矢量图分布。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+程序中使用的矢量基函数放入 Dense 矩阵中，记作
+\begin_inset Formula $\sbf N_{k\alpha}$
+\end_inset
+
+，
+\begin_inset Formula $k$
+\end_inset
+
+是维度指标，
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 是edge指标；程序符号为 
+\family sans
+NshapeVec
+\family default
+。
+\end_layout
+
+\begin_layout Example
+一阶形函数对应的矢量棱边元。在右手三角形
+\begin_inset Formula $(0,1,2)$
+\end_inset
+
+中，如果以
+\begin_inset Formula $2$
+\end_inset
+
+为坐标原点，角度从节点
+\begin_inset Formula $0$
+\end_inset
+
+到
+\begin_inset Formula $1$
+\end_inset
+
+增加（逆时针），则
+\begin_inset Formula $\sbf N_{01}$
+\end_inset
+
+可表示为柱坐标形式
+\begin_inset Formula 
+\begin{equation}
+\sbf N_{01}=\frac{r}{h_{3}^{e}}\hat{\phi}\label{eq:jm8.16}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula $h_{3}^{e}$
+\end_inset
+
+表示从节点
+\begin_inset Formula $3$
+\end_inset
+
+到棱边
+\begin_inset Formula $1$
+\end_inset
+
+的垂直距离，
+\begin_inset Formula $\hat{\phi}$
+\end_inset
+
+为单位坐标基矢。其他两个函数有类似特性。代入柱坐标的旋度公式得到、、
+\begin_inset Formula 
+\[
+\nabla\times\sbf N_{01}=\frac{2}{h_{3}^{e}}\sbf e_{z}
+\]
+
+\end_inset
+
+即 棱边元在三角形内具有 constant curl。
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $\hat{z}\times\sbf N_{12}^{e}$
+\end_inset
+
+是满足法向连续性（棱边正交性）的基函数，它们具有零旋度和非零散度。在上面定义的柱坐标系中，
+\begin_inset Formula 
+\begin{equation}
+\hat{z}\times\sbf N_{12}^{e}=\frac{-\rho}{h_{3}^{e}}\hat{\rho}.\label{eq:jm8.17}
+\end{equation}
+
+\end_inset
+
+在电磁学中，这些矢量基函数可以用来表示任意形状导体的表面电流。
+\end_layout
+
+\begin_layout Example
+形函数的旋度
+\begin_inset Formula 
+\begin{align*}
+\nabla\times\sbf N_{\alpha}^{e} & =\nabla\times\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{\alpha}^{e}\\
+ & =2\left[{\color{blue}(\nabla L_{\alpha(1)}^{e})}\times\nabla L_{\alpha(2)}^{e}\right]\ell_{\alpha}^{e}
+\end{align*}
+
+\end_inset
+
+形函数的二阶旋度
+\begin_inset Formula 
+\begin{align*}
+\nabla\times\nabla\times\sbf N_{\alpha}^{e} & =2\left[(\nabla L_{\alpha(2)}^{e}\cdot\nabla){\color{blue}(\nabla L_{\alpha(1)}^{e})}+(\nabla^{2}L_{\alpha(2)}^{e}){\color{blue}(\nabla L_{\alpha(1)}^{e})}-({\color{blue}(\nabla L_{\alpha(1)}^{e})}\cdot\nabla)\nabla L_{\alpha(2)}^{e}-{\color{blue}(\nabla^{2}L_{\alpha(1)}^{e})}\nabla L_{\alpha(2)}^{e}\right]\\
+ & =2\left[\nabla L_{\alpha(2)}^{e}\cdot{\color{blue}\nabla\nabla L_{\alpha(1)}^{e}}-{\color{blue}\nabla L_{\alpha(1)}^{e}}\cdot\nabla\nabla L_{\alpha(2)}^{e}\right]+2\left[\nabla^{2}L_{\alpha(2)}^{e}\,{\color{blue}\nabla L_{\alpha(1)}^{e}}-{\color{blue}\nabla^{2}L_{\alpha(1)}^{e}}\,\nabla L_{\alpha(2)}^{e}\right]
+\end{align*}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\nabla\nabla$
+\end_inset
+
+是形函数的Hessian 矩阵，
+\begin_inset Formula $\nabla^{2}$
+\end_inset
+
+是Hessian矩阵的迹，其中各block均可使用等参坐标计算。对于一阶形函数
+\begin_inset Formula $\sbf N_{\alpha}^{e}$
+\end_inset
+
+，
+\begin_inset Formula $\nabla\times\nabla\times\sbf N_{\alpha}^{e}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Remark
+使用了 
+\begin_inset Formula 
+\begin{align*}
+ & \nabla\times(\varphi\sbf f)=(\nabla\varphi)\times\sbf f+\varphi(\nabla\times\sbf f)\\
+ & \nabla\times(\sbf f\times\sbf g)=(\sbf g\cdot\nabla)\sbf f+(\nabla\cdot\sbf g)\sbf f-(\sbf f\cdot\nabla)\sbf g-(\nabla\cdot\sbf f)\sbf g\\
+ & \nabla\times\nabla\varphi\equiv0\\
+ & \nabla\cdot(\nabla\times\sbf f)\equiv0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 
 \series bold
 矢量形函数边界值
@@ -20673,13 +21040,37 @@ Nl[a, b], {a, b}], {a -> x, b -> y}]; vecN[x_, y_] := Module[{iN = iNl[x,
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
+\end_layout
+
+\begin_layout Example
+矢量形函数 1D。一维参考（reference） 单元，例如 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+，标量形函数为
+\begin_inset Formula 
+\[
+N_{1}=1-x,\quad N_{2}^{(1)}=x.
+\]
+
+\end_inset
+
+则对应的矢量形函数为
+\begin_inset Formula 
+\[
+\sbf N_{\alpha}^{e}=\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{i}^{e}=(1-x)\sbf e_{x}-x(-\sbf e_{x})=\sbf e_{x}.
+\]
+
+\end_inset
+
+也就是
+\series bold
+沿着Edge方向
+\series default
+的单位矢量。
 \end_layout
 
 \begin_layout Section
@@ -20968,7 +21359,7 @@ derivatives
 
 \begin_layout Standard
 Gradient 矩阵 
-\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi_{k}$
 \end_inset
 
 
@@ -20989,10 +21380,10 @@ L0 :=
 
 \begin_inset Formula 
 \[
-\begin{array}{c}
+N_{\alpha,k}=\left[\begin{array}{c}
 -\frac{1}{2}\\
 \frac{1}{2}
-\end{array}
+\end{array}\right]
 \]
 
 \end_inset
@@ -21395,7 +21786,7 @@ N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}N_{i}^{(2)},
 
 \begin_layout Standard
 或者直接计算：Gradient 矩阵 
-\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi$
 \end_inset
 
 :
@@ -21417,7 +21808,7 @@ L0 :=
 
 \begin_inset Formula 
 \[
-\left(\begin{array}{c}
+N_{\alpha,k}=\left(\begin{array}{c}
 \xi-\frac{1}{2}\\
 \xi+\frac{1}{2}\\
 -2\xi
@@ -21512,7 +21903,7 @@ v1 = {-1, 0}; v2 = {1, 0}; v3 = {0, Sqrt[3]}; Graphics[{Line[{v1, v2, v3,
  加三角形顶点，所分割成的三个 子三角形的面积。
 \end_layout
 
-\begin_layout Remark
+\begin_layout Example
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:shape-2-1"
@@ -21528,6 +21919,16 @@ noprefix "false"
  & a_{1}^{e}=x_{2}^{e}y_{3}^{e}-y_{2}^{e}x_{3}^{e}; &  & b_{1}^{e}=y_{2}^{e}-y_{3}^{e}; &  & c_{1}^{e}=x_{3}^{e}-x_{2}^{e}\\
  & a_{2}^{e}=x_{3}^{e}y_{1}^{e}-y_{3}^{e}x_{1}^{e}; &  & b_{2}^{e}=y_{3}^{e}-y_{1}^{e}; &  & c_{2}^{e}=x_{1}^{e}-x_{3}^{e}\\
  & a_{3}^{e}=x_{1}^{e}y_{2}^{e}-y_{1}^{e}x_{2}^{e}; &  & b_{3}^{e}=y_{1}^{e}-y_{2}^{e}; &  & c_{3}^{e}=x_{2}^{e}-x_{1}^{e}
+\end{align*}
+
+\end_inset
+
+完全展开形式为
+\begin_inset Formula 
+\begin{align*}
+N_{1}^{(1)}= & \frac{{\color{blue}x}(y_{2}-y_{3})-x_{2}({\color{blue}y}-y_{3})+x_{3}({\color{blue}y}-y_{2})}{x_{1}(y_{2}-y_{3})+x_{2}(y_{3}-y_{1})+x_{3}(y_{1}-y_{2})},\\
+N_{2}^{(1)}= & \frac{{\color{blue}x}(y_{3}-y_{1})+x_{1}({\color{blue}y}-y_{3})+x_{3}(y_{1}-{\color{blue}y})}{x_{1}(y_{2}-y_{3})+x_{2}(y_{3}-y_{1})+x_{3}(y_{1}-y_{2})},\\
+N_{3}^{(1)}= & \frac{{\color{blue}x}(y_{1}-y_{2})-x_{1}({\color{blue}y}-y_{2})+x_{2}({\color{blue}y}-y_{1})}{x_{1}(y_{2}-y_{3})+x_{2}(y_{3}-y_{1})+x_{3}(y_{1}-y_{2})}
 \end{align*}
 
 \end_inset
@@ -21572,7 +21973,238 @@ noprefix "false"
 
 \end_inset
 
+形函数对全局坐标梯度展开形式
+\begin_inset Formula 
+\[
+N_{\alpha,\mu}=\left[\begin{array}{cc}
+\frac{y_{23}}{x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}}, & \frac{x_{32}}{x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}}\\
+\frac{y_{31}}{x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}}, & \frac{x_{13}}{x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}}\\
+\frac{y_{12}}{x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}}, & \frac{x_{21}}{x_{1}y_{23}+x_{2}y_{31}+x_{3}y_{12}}
+\end{array}\right]
+\]
 
+\end_inset
+
+其中
+\begin_inset Formula $x_{ij}=x_{j}-x_{j}$
+\end_inset
+
+，
+\begin_inset Formula $y_{ij}=y_{i}-y_{j}$
+\end_inset
+
+。即
+\begin_inset Formula $N_{\alpha,\mu}$
+\end_inset
+
+在单元上为常数。
+\end_layout
+
+\begin_layout Example
+矢量形函数 
+\begin_inset Formula $\sbf N_{\alpha\beta}=(N_{12},N_{23},N_{13})$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\frac{(y-\text{y3})\ell_{12}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}} & \frac{(x-\text{x3})\ell_{12}}{\text{x1}(\text{y2}-\text{y3})+\text{x2}(\text{y3}-\text{y1})+\text{x3}(\text{y1}-\text{y2})}\\
+\frac{(y-\text{y1})\ell_{23}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}} & \frac{(x-\text{x1})\ell_{23}}{\text{x1}(\text{y2}-\text{y3})+\text{x2}(\text{y3}-\text{y1})+\text{x3}(\text{y1}-\text{y2})}\\
+\frac{(\text{y2}-y)\ell_{13}}{\text{x1}(\text{y3}-\text{y2})+\text{x2}(\text{y1}-\text{y3})+\text{x3}(\text{y2}-\text{y1})} & \frac{(x-\text{x2})\ell_{13}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于标准单元 
+\begin_inset Formula $(0,0),(1,0),(0,1)$
+\end_inset
+
+，形函数和梯度的显式为
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*node coords*) (*x1={0,0};x2={1,0};x3={0,1};*) v0 = {{x1, y1}, {x2, y2},
+ {x3, y3}}; v1 = {{x, y}, {x2, y2}, {x3, y3}}; v2 = {{x1, y1}, {x, y}, {x3,
+ y3}}; v3 = {{x1, y1}, {x2, y2}, {x, y}}; (*edge length; edge nodes [1,2],
+ [2,3], [3,1]*) iL = {Sqrt[(x1 - x2)^2 + (y1 - y2)^2], Sqrt[(x2 - x3)^2
+ + (y2 - y3)^2], Sqrt[(x1 - x3)^2 + (y3 - y1)^2]}; i1s = {1, 1, 1}; fn =
+ Transpose[Prepend[i1s]@Transpose@#] &; mat0 = fn@v0; mat1 = fn@v1; mat2
+ = fn@v2; mat3 = fn@v3; Echo[TableForm /@ {mat0, mat1, mat2, mat3}]; dMat0
+ = 1/2*Det@mat0; (*形函数*) iNs = Echo@Simplify[1/2*Det /@ {mat1, mat2, mat3}/dMat0
+]; (*Grad N, 形函数对全局坐标导数*) iGNs = EchoFunction["Grad", TableForm]@Simplify@Grad[i
+Ns, {x, y}]; iVNs = EchoFunction["iVNs", TableForm]@Simplify@{ (iNs[[1]]
+ iGNs[[2]] - iNs[[2]] iGNs[[1]])*iL[[1]], (iNs[[2]] iGNs[[3]] - iNs[[3]]
+ iGNs[[2]])*iL[[2]], (iNs[[1]] iGNs[[3]] - iNs[[3]] iGNs[[1]])*iL[[3]] };
+ crd1 = Echo@MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, { 0, 0,(*1*)1, 0,(*2*)0,
+ 1(*3*)}}]; iNs
+\backslash
+[Prime]1 = Echo[iNs /.
+ crd1]; iGNs
+\backslash
+[Prime]1 = Echo[iGNs /.
+ crd1]; iVNs
+\backslash
+[Prime]1 = Echo[iVNs /.
+ crd1]; (*邻居三角形*) crd2 = MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, {1,
+ 1, 0, 1, 1, 0}}]; iDirectionFac = {-1, -1, -1}; iDirectionFac = {1, 1,
+ 1}; iVNs
+\backslash
+[Prime]2 = Echo[iDirectionFac*iVNs /.
+ crd2]; (*tangent vector*) iVT = {-1, 1}/Sqrt[2]; (*norm vector*) iVN =
+ {1, 1}/Sqrt[2]; (*在公共边的中点上*) crdxy = {x -> 1/2, y -> 1/2}; comp1 = EchoLabel[
+ "comp1:tan, norm"][{iVNs
+\backslash
+[Prime]1 .
+ iVT, iVNs
+\backslash
+[Prime]1 .
+ iVN} /.
+ crdxy]; comp2 = EchoLabel[ "comp2:tan, norm"][{iVNs
+\backslash
+[Prime]2 .
+ iVT, iVNs
+\backslash
+[Prime]2 .
+ iVN} /.
+ crdxy]; 
+\end_layout
+
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+N_{\alpha}=\{1-x-y,x,y\}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+N_{\alpha,\mu}=\left(\begin{array}{cc}
+-1 & -1\\
+1 & 0\\
+0 & 1
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf N_{\alpha\beta}=N_{\alpha}\nabla N_{\beta}-N_{\beta}\nabla N_{\alpha}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf N_{\theta}=\left[\begin{array}{cc}
+1-y & x\\
+-y & x\\
+y & 1-x
+\end{array}\right],\quad\left(\begin{array}{c}
+0,1\\
+1,2\\
+0,2
+\end{array}\right)
+\]
+
+\end_inset
+
+后边标注了边
+\begin_inset Formula $\theta$
+\end_inset
+
+对应的节点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在参考三角形 节点0对应的垂线上，矢量形函数的值
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+iD = Sqrt[2]/2; 
+\backslash
+[Theta]b = 
+\backslash
+[Pi]/4 - 
+\backslash
+[Theta]; (iVNs = Simplify[{ (iD/Cos[
+\backslash
+[Theta]b]) {Cos[
+\backslash
+[Theta]], Sin[
+\backslash
+[Theta]]}, (iD/Cos[
+\backslash
+[Theta]b]) {-Sin[
+\backslash
+[Theta]], -Cos[
+\backslash
+[Theta]]}, (1 - Tan[
+\backslash
+[Theta]b])*{Cos[
+\backslash
+[Pi]/4], Sin[
+\backslash
+[Pi]/4]} }]) // TableForm; EchoLabel[ "NShapeVector
+\backslash
+n"][(te1 = iVNs /.
+ {
+\backslash
+[Theta] -> 
+\backslash
+[Pi]/14} // N) // TableForm]; EchoLabel["Vector sum"]@Total[te1, {1}]; EchoLabel
+["Norm"][Norm /@ te1]; EchoLabel["Norm Sum"]@Total[Norm /@ te1];
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \frac{D}{\cos\overline{\theta}}\left(\cos\theta,\sin\theta\right)\\
+ & \frac{D}{\cos\overline{\theta}}\left(-\sin\theta,-\cos\theta\right)\\
+ & (1-\tan\overline{\theta})\left(\cos\frac{\pi}{4},\sin\frac{\pi}{4}\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\theta}=\frac{\pi}{4}-\theta$
+\end_inset
+
+，
+\begin_inset Formula $D=\sqrt{2}/2$
+\end_inset
+
+是垂线段长度。
 \end_layout
 
 \begin_layout Subsection
@@ -21665,9 +22297,9 @@ s^{2}=d_{00}\,d_{11}-d_{01}^{2}
 derivatives
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 Gradient 矩阵 
-\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi^{k}$
 \end_inset
 
 ：
@@ -21700,15 +22332,44 @@ in, Dashed, Orange, 5]] & /@ Simplify[D[#, {dvlst, 2}] & /@ NShapelst])
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{cc}
+N_{\alpha,k}=\left[\begin{array}{cc}
 -1 & -1\\
 1 & 0\\
 0 & 1
+\end{array}\right],\quad\left[\begin{array}{ccc}
+-1 & 1 & 0\\
+-1 & 0 & 1
 \end{array}\right]
 \]
 
 \end_inset
 
+Jacobia为 
+\begin_inset Formula $J_{k}^{\phantom{k}\mu}=G_{k\alpha}X_{\alpha}^{\phantom{\alpha}\mu}$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+-1 & 1 & 0\\
+-1 & 0 & 1
+\end{array}\right]\left[\begin{array}{cc}
+x_{1} & y_{1}\\
+x_{2} & y_{2}\\
+x_{3} & y_{3}
+\end{array}\right]=\left[\begin{array}{cc}
+x_{21} & y_{21}\\
+x_{31} & y_{31}
+\end{array}\right],\quad x_{ij}=x_{i}-x_{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 Hessian矩阵 
 \begin_inset Formula $H_{\alpha ij}=\partial^{2}N^{\alpha}/\partial\xi_{i}\partial\xi_{j}$
 \end_inset
@@ -21980,7 +22641,7 @@ N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}\sum_{i}N_{i}^{(2)},
 
 \begin_layout Standard
 Gradient 矩阵 
-\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi^{k}$
 \end_inset
 
 ：
@@ -22013,7 +22674,7 @@ L0 := 1 - Subscript[
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{cc}
+N_{\alpha,k}=\left[\begin{array}{cc}
 4\xi_{0}+4\xi_{1}-3 & 4\xi_{0}+4\xi_{1}-3\\
 4\xi_{0}-1 & 0\\
 0 & 4\xi_{1}-1\\
@@ -22637,7 +23298,7 @@ N_{i}^{(1)}=\frac{1}{4}L_{j}L_{k},
 
 \begin_layout Standard
 或者直接计算：Gradient 矩阵 
-\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi$
 \end_inset
 
 ：
@@ -22678,7 +23339,7 @@ L0 := 1/4 (1 - Subscript[
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{cc}
+N_{\alpha,k}=\left[\begin{array}{cc}
 \frac{1}{4}\left(\xi_{1}-1\right) & \frac{1}{4}\left(\xi_{0}-1\right)\\
 \frac{1}{4}\left(1-\xi_{1}\right) & \frac{1}{4}\left(-\xi_{0}-1\right)\\
 \frac{1}{4}\left(\xi_{1}+1\right) & \frac{1}{4}\left(\xi_{0}+1\right)\\
@@ -22904,7 +23565,7 @@ N_{j}^{(2)}=N_{j}^{(1)}-\frac{1}{2}\sum_{i}N_{i}^{(2)},
 
 \begin_layout Standard
 或者直接计算：Gradient 矩阵 
-\begin_inset Formula $G_{\alpha}=\partial N_{\alpha}/\partial\xi$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi$
 \end_inset
 
 ：
@@ -22976,7 +23637,7 @@ dvlst = {Subscript[
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{cc}
+N_{\alpha,k}=\left[\begin{array}{cc}
 -\left(\xi_{1}-1\right)\left(2\xi_{0}+\xi_{1}\right), & -\left(\xi_{0}-1\right)\left(\xi_{0}+2\xi_{1}\right)\\
 -\left(2\xi_{0}-\xi_{1}\right)\left(\xi_{1}-1\right), & -\left(\xi_{0}+1\right)\left(\xi_{0}-2\xi_{1}\right)\\
 \left(\xi_{1}+1\right)\left(2\xi_{0}+\xi_{1}\right) & \left(\xi_{0}+1\right)\left(\xi_{0}+2\xi_{1}\right)\\
@@ -23976,13 +24637,106 @@ b_{4} & c_{4} & d_{4}
 
 \end_layout
 
+\begin_layout Example
+四面体形函数，梯度，旋度 
+\begin_inset Formula $\nabla_{\mu}\sbf N_{\alpha}$
+\end_inset
+
+，
+\begin_inset Formula $\nabla_{\mu}\times\sbf N_{\alpha}$
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+iCombin = EchoLabel[ "iCombin"]@(Join @@ Table[{i, j}, {i, 1, 4}, {j, i,
+ 4}]);(*node 
+\backslash
+ coords*)(*x1={0,0,0};x2={1,0,0};x3={0,1,0},x4={0,0,1};1,2,3右手螺旋指向4*)
+\backslash
+ v0 = {{x1, y1, z1}, {x2, y2, z2}, {x3, y3, z3}, {x4, y4, z4}}; v1 = {{x,
+ y, z}, {x2, y2, z2}, {x3, y3, z3}, {x4, y4, z4}}; v2 = {{x1, y1, z1}, {x,
+ y, z}, {x3, y3, z3}, {x4, y4, z4}}; v3 = {{x1, y1, z1}, {x2, y2, z2}, {x,
+ y, z}, {x4, y4, z4}}; v4 = {{x1, y1, z1}, {x2, y2, z2}, {x3, y3, z3}, {x,
+ y, z}};(*edge length;(1,2) (2,3) (3,1) (4,1) (4,2) (4,3)*)iL = 
+\backslash
+ {Sqrt[(x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2], Sqrt[(x2 - x3)^2 + (y2
+ - y3)^2 + (z2 - z3)^2], Sqrt[(x3 - x1)^2 + (y3 - y1)^2 + (z3 - z1)^2],
+ Sqrt[(x4 - x1)^2 + (y4 - y1)^2 + (z4 - z1)^2], Sqrt[(x4 - x2)^2 + (y4 -
+ y2)^2 + (z4 - z2)^2], Sqrt[(x4 - x3)^2 + (y4 - y3)^2 + (z4 - z3)^2]}; i1s
+ = {1, 1, 1, 1}; fn = Transpose[Prepend[i1s]@Transpose@#] &;(*母坐标分子分母*)mat0
+ = fn@v0; mat1 = fn@v1; mat2 = fn@v2; mat3 = fn@v3; mat4 = fn@v4; EchoLabel["pre
+ matrix"][ TableForm /@ {mat0, mat1, mat2, mat3, mat4}]; dMat0 = 1/6*Det@mat0;(*
+形函数*)iNs = EchoLabel["NShapes"]@ Simplify[ 1/6*Det /@ {mat1, mat2, mat3,
+ mat4}/dMat0];(*Grad N,形函数对全局坐标导数*) iGNs = EchoFunction["Grad", TableForm]@
+ Simplify@Grad[iNs, {x, y, z}]; iVNs = EchoFunction["iVNs", TableForm]@
+ Simplify@{(iNs[[1]] iGNs[[2]] - iNs[[2]] iGNs[[1]])* iL[[1]], (iNs[[2]]
+ iGNs[[3]] - iNs[[3]] iGNs[[2]])* iL[[2]], (iNs[[1]] iGNs[[3]] - iNs[[3]]
+ iGNs[[1]])* iL[[3]], (iNs[[1]] iGNs[[4]] - iNs[[4]] iGNs[[1]])* iL[[4]],
+ (iNs[[2]] iGNs[[4]] - iNs[[4]] iGNs[[2]])* iL[[5]], (iNs[[3]] iGNs[[4]]
+ - iNs[[4]] iGNs[[3]])*iL[[6]]}; iCurlVNs = EchoFunction["iCurlVNs", TableForm]@
+Simplify[2*{ (iGNs[[1]]
+\backslash
+[Cross] iGNs[[2]])*iL[[1]], (iGNs[[2]] iGNs[[3]])* iL[[2]], (iGNs[[1]] iGNs[[3]]
+)*iL[[3]], (iGNs[[1]] iGNs[[4]])*iL[[4]], (iGNs[[2]] iGNs[[4]])*iL[[5]],
+ (iGNs[[3]] iGNs[[4]])*iL[[6]]}]; crd1 = Echo@ MapThread[ Rule, {{x1, y1,
+ z1, x2, y2, z2, x3, y3, z3, x4, y4, z4}, {0, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+ 0, 1}}]; iNs
+\backslash
+[Prime]1 = Echo[iNs /.
+ crd1]; iGNs
+\backslash
+[Prime]1 = Echo[iGNs /.
+ crd1]; iVNs
+\backslash
+[Prime]1 = EchoLabel["iVNs
+\backslash
+[Prime]1"][iVNs /.
+ crd1]; iCurlVNs
+\backslash
+[Prime]1 = EchoLabel["CurlVN
+\backslash
+[Prime]1"][iCurlVNs /.
+ crd1]; (*邻居三角形*)crd2 = MapThread[ Rule, {{x1, y1, z1, x2, y2, z2, x3, y3,
+ z3, x4, y4, z4}, {1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1}}];(*edge sign factor*)iDi
+rectionFac = {-1, -1, -1, -1, -1, 
+\backslash
+ -1}; iDirectionFac = {1, 1, 1, 1, 1, 1}; iVNs
+\backslash
+[Prime]2 = Echo[iDirectionFac*iVNs /.
+ crd2];(*tangent vector*)iVT = {-1, 1, 0}/ Sqrt[2]; iVT = {1, 1, 0}/Sqrt[2];(*no
+rm vector*)iVN = {1, 1, 1}/ Sqrt[3];(*在公共边的中点上*)crdxy = {x -> 1/5, y ->
+ 1/5, z -> 1/5}; comp1 = EchoLabel[ "comp1:tan, norm"][{iVNs
+\backslash
+[Prime]1 .
+ iVT, iVNs
+\backslash
+[Prime]1 .
+ iVN} /.
+ crdxy]; comp2 = EchoLabel[ "comp2:tan, norm"][{iVNs
+\backslash
+[Prime]2 .
+ iVT, iVNs
+\backslash
+[Prime]2 .
+ iVN} /.
+ crdxy];
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 derivatives
 \end_layout
 
 \begin_layout Standard
 Gradient
-\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi_{j}$
 \end_inset
 
  
@@ -24026,7 +24780,7 @@ Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
+N_{\alpha,k}=\left[\begin{array}{ccc}
 -1 & -1 & -1\\
 1 & 0 & 0\\
 0 & 1 & 0\\
@@ -24258,7 +25012,7 @@ derivatives
 
 \begin_layout Standard
 Gradient
-\begin_inset Formula $G_{\alpha j}=\partial N_{\alpha}/\partial\xi_{j}$
+\begin_inset Formula $G_{k\alpha}=\partial N_{\alpha}/\partial\xi^{k}$
 \end_inset
 
  
@@ -24302,7 +25056,7 @@ Grid[{#}, Frame -> All, FrameStyle -> Directive[Thin, Gray, 5], Spacings
 （使用IBE中约定的中点邻接关系）
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
+N_{\alpha,k}=\left[\begin{array}{ccc}
 4\xi_{0}+4\xi_{1}+4\xi_{2}-3 & 4\xi_{0}+4\xi_{1}+4\xi_{2}-3 & 4\xi_{0}+4\xi_{1}+4\xi_{2}-3\\
 4\xi_{0}-1 & 0 & 0\\
 0 & 4\xi_{1}-1 & 0\\
@@ -26112,321 +26866,6 @@ Hessian 的迹（对坐标index求迹）为
 \end_inset
 
 。
-\end_layout
-
-\begin_layout Chapter
-Edge单元
-\end_layout
-
-\begin_layout Standard
-Discrete Time Vector Finite Element Methods for Solving Maxwell's Equations
- on 3D Unstructured Grids--Daniel Arthur White, page63/46
-\end_layout
-
-\begin_layout Itemize
-矢量场用 Edge基函数展开
-\begin_inset Formula 
-\begin{equation}
-\sbf A^{e}=\sum_{\alpha=1}^{4}\sbf N_{\alpha}^{e}\,A_{\alpha}^{e}\label{eq:j8.3}
-\end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula $E_{\alpha}^{e}$
-\end_inset
-
-表示沿着第
-\begin_inset Formula $\alpha$
-\end_inset
-
-个棱边的切向场，
-\begin_inset Formula $\sbf N_{\alpha}^{e}$
-\end_inset
-
-是矢量插值函数或基函数。自由度实际上是 
-\begin_inset Formula $\sbf A\cdot\sbf\ell$
-\end_inset
-
-，即矢量场
-\begin_inset Formula $\sbf A$
-\end_inset
-
-沿着 Edge 的线积分。
-\begin_inset Formula 
-\[
-A_{\mu}^{e}(\sbf v)=\int_{E_{\mu}}(\sbf A\cdot\sbf t_{\mu})\dd{\ell}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $E_{\mu}$
-\end_inset
-
-表示第
-\begin_inset Formula $\mu$
-\end_inset
-
- 条 Edge，
-\begin_inset Formula $\sbf t_{\mu}$
-\end_inset
-
- 是沿着
-\begin_inset Formula $E_{\mu}$
-\end_inset
-
-的单位切向矢量。一阶 Edge 单元中 
-\begin_inset Formula $\sbf A$
-\end_inset
-
-在Edge上是常数，所以
-\begin_inset Formula $\sbf A$
-\end_inset
-
-直接提出来，Edge 长度
-\begin_inset Formula $L$
-\end_inset
-
-计入在 
-\begin_inset Formula $\sbf N_{\alpha}^{e}$
-\end_inset
-
-中。
-\end_layout
-
-\begin_layout Itemize
-只要插值展开写成
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:j8.3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-的形式；如果两个单元上的展开 share 公共Edge，则能推导出： 
-\begin_inset Formula $\sbf N_{\alpha}^{e}$
-\end_inset
-
- 只在第 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 边上有切向分量，而在其它所有边上没有切向分量（离散正交性）。
-\begin_inset Formula 
-\[
-\sbf N_{\alpha}^{e}(e_{\beta})=\delta_{\alpha\beta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在有限元方法计算磁场时，特别是三维磁场，通常会使用在单元边上定义的 Edge 单元（而非节点上定义的）作为待求未知量。图1.1为四面体单元上棱边与节点的对应关系，
-在棱边 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 上可以定义形函数：
-\begin_inset Formula 
-\[
-\sbf N_{\alpha}^{e}=\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{\alpha}^{e}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-其中 
-\begin_inset Formula $\alpha(1)$
-\end_inset
-
-与 
-\begin_inset Formula $\alpha(2)$
-\end_inset
-
-为与棱边
-\begin_inset Formula $\alpha$
-\end_inset
-
- 邻接的两个顶点。
-\begin_inset Formula $\ell_{\alpha}^{e}$
-\end_inset
-
- 的绝对值等于棱边的长度，
-\end_layout
-
-\begin_layout Itemize
-正负号由节点的总体编号决定，solver中，在生成Edge时，将Edge的nodes按照global seq排序。
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\nabla\cdot\sbf N_{\alpha}^{e}=0$
-\end_inset
-
-，此性质只取决于上式的构造，不依赖于
-\begin_inset Formula $L_{\alpha(1)}^{e}$
-\end_inset
-
-和
-\begin_inset Formula $L_{\alpha(2)}^{e}$
-\end_inset
-
-的具体表达式。形函数 
-\begin_inset Formula $\sbf N_{\alpha}^{e}$
-\end_inset
-
- 为一矢量，相应的矢量图可以参照图1.2所示的二维情况。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename inset/xl-1.2.png
-	scale 60
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-二维三角形单元，相邻单元同一条棱边上形函数的矢量图分布。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-程序中使用的矢量基函数放入 Dense 矩阵中，记作
-\begin_inset Formula $\sbf N_{k\alpha}$
-\end_inset
-
-，
-\begin_inset Formula $k$
-\end_inset
-
-是维度指标，
-\begin_inset Formula $\alpha$
-\end_inset
-
- 是edge指标；程序符号为 
-\family sans
-NshapeVec
-\family default
-。
-\end_layout
-
-\begin_layout Remark
-形函数的旋度
-\begin_inset Formula 
-\begin{align*}
-\nabla\times\sbf N_{\alpha}^{e} & =\nabla\times\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{\alpha}^{e}\\
- & =2\left[{\color{blue}(\nabla L_{\alpha(1)}^{e})}\times\nabla L_{\alpha(2)}^{e}\right]\ell_{\alpha}^{e}
-\end{align*}
-
-\end_inset
-
-形函数的二阶旋度
-\begin_inset Formula 
-\begin{align*}
-\nabla\times\nabla\times\sbf N_{\alpha}^{e} & =2\left[(\nabla L_{\alpha(2)}^{e}\cdot\nabla){\color{blue}(\nabla L_{\alpha(1)}^{e})}+(\nabla^{2}L_{\alpha(2)}^{e}){\color{blue}(\nabla L_{\alpha(1)}^{e})}-({\color{blue}(\nabla L_{\alpha(1)}^{e})}\cdot\nabla)\nabla L_{\alpha(2)}^{e}-{\color{blue}(\nabla^{2}L_{\alpha(1)}^{e})}\nabla L_{\alpha(2)}^{e}\right]\\
- & =2\left[\nabla L_{\alpha(2)}^{e}\cdot{\color{blue}\nabla\nabla L_{\alpha(1)}^{e}}-{\color{blue}\nabla L_{\alpha(1)}^{e}}\cdot\nabla\nabla L_{\alpha(2)}^{e}\right]+2\left[\nabla^{2}L_{\alpha(2)}^{e}\,{\color{blue}\nabla L_{\alpha(1)}^{e}}-{\color{blue}\nabla^{2}L_{\alpha(1)}^{e}}\,\nabla L_{\alpha(2)}^{e}\right]
-\end{align*}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\nabla\nabla$
-\end_inset
-
-是形函数的Hessian 矩阵，
-\begin_inset Formula $\nabla^{2}$
-\end_inset
-
-是Hessian矩阵的迹，其中各block均可使用等参坐标计算。对于一阶形函数
-\begin_inset Formula $\sbf N_{\alpha}^{e}$
-\end_inset
-
-，
-\begin_inset Formula $\nabla\times\nabla\times\sbf N_{\alpha}^{e}=0$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-使用了 
-\begin_inset Formula 
-\begin{align*}
- & \nabla\times(\varphi\sbf f)=(\nabla\varphi)\times\sbf f+\varphi(\nabla\times\sbf f)\\
- & \nabla\times(\sbf f\times\sbf g)=(\sbf g\cdot\nabla)\sbf f+(\nabla\cdot\sbf g)\sbf f-(\sbf f\cdot\nabla)\sbf g-(\nabla\cdot\sbf f)\sbf g\\
- & \nabla\times\nabla\varphi\equiv0\\
- & \nabla\cdot(\nabla\times\sbf f)\equiv0
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-矢量形函数 1D
-\end_layout
-
-\begin_layout Standard
-一维 Reference 单元，例如 
-\begin_inset Formula $[0,1]$
-\end_inset
-
-，标量形函数为
-\begin_inset Formula 
-\[
-N_{1}=1-x,\quad N_{2}^{(1)}=x.
-\]
-
-\end_inset
-
-则对应的矢量形函数为
-\begin_inset Formula 
-\[
-\sbf N_{\alpha}^{e}=\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{i}^{e}=(1-x)\sbf e_{x}-x(-\sbf e_{x})=\sbf e_{x}.
-\]
-
-\end_inset
-
-也就是
-\series bold
-沿着Edge方向
-\series default
-的单位矢量。
 \end_layout
 
 \begin_layout Chapter
@@ -29179,7 +29618,11 @@ status open
 \begin_inset Formula $n$
 \end_inset
 
-个形函数都不为零)；
+个形函数
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+都不为零)；
 \end_layout
 
 \begin_layout Itemize
@@ -29204,7 +29647,11 @@ status open
 
 \end_inset
 
- 类似地，
+ 类似地，对一个常数场
+\begin_inset Formula $\phi(x)=C$
+\end_inset
+
+进行展开
 \begin_inset Formula 
 \begin{align*}
  & \phi(x)=\sum_{\alpha}N_{\alpha}(x)\,C=C\\
@@ -29217,10 +29664,10 @@ status open
 \begin_inset Formula $C=1$
 \end_inset
 
-对应
+得到
 \begin_inset Formula 
 \[
-\sum_{\alpha}\nabla N_{\alpha}(x)=0.\quad\text{for }\forall x\in\text{element}
+\sum_{\alpha}\nabla N_{\alpha}(x)=0.\quad\text{for }\forall x\in\text{单元}
 \]
 
 \end_inset
@@ -29229,11 +29676,23 @@ status open
 \begin_inset Formula $x=x_{\alpha}$
 \end_inset
 
-，即x就在节点，求和一般也是
-\begin_inset Formula $n$
+，即
+\begin_inset Formula $x$
 \end_inset
 
-项，因为形函数梯度不必为零。
+就在节点，所有邻接点的
+\begin_inset Formula $N_{\beta}(x)$
+\end_inset
+
+在
+\begin_inset Formula $\alpha$
+\end_inset
+
+上也不必为零，例如一阶形函数的梯度在参考单元上为
+\begin_inset Formula $\pm1$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -29256,38 +29715,71 @@ status open
 泛函投影方程
 \begin_inset Formula 
 \[
--\frac{1}{\varepsilon_{0}}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\phi_{\beta}+\frac{1}{\varepsilon_{0}}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\nabla N_{\beta}}\dd{\Gamma}\phi_{\beta}=0
+-\frac{1}{\varepsilon_{0}}\sum_{e}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}}\dd{\Omega}\phi_{\beta}+\frac{1}{\varepsilon_{0}}\sum_{e}\int_{\Gamma^{e}}{\color{brown}N_{\alpha}^{e}\sbf n\cdot\nabla N_{\beta}}\dd{\Gamma}\phi_{\beta}=0
 \]
 
 \end_inset
 
 对于刚度矩阵 
-\begin_inset Formula $\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}}\dd{\Omega}$
+\begin_inset Formula $\sum_{e}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}}\dd{\Omega}$
 \end_inset
 
-，固定比如 
+，固定 
 \begin_inset Formula $\alpha$
 \end_inset
 
-，对应刚度矩阵某一列
-\begin_inset Formula $\beta$
-\end_inset
-
-，根据上面推论的结果
+，对应全局刚度矩阵的某一行。积分被分解到单元上分片求值，也就是 row–矩阵 分解成 sub–row 求和。
 \begin_inset Formula 
 \[
-{\color{blue}\nabla N_{\alpha}^{e}\cdot\sum_{\beta}\nabla N_{\beta}^{e}=\nabla N_{\alpha}^{e}\cdot0=0}
+K_{\alpha\bullet}=K_{\alpha\bullet}^{(1)}+K_{\alpha\bullet}^{(2)}+\cdots+K_{\alpha\bullet}^{(n)},
 \]
 
 \end_inset
 
-即
+其中
+\begin_inset Formula $n$
+\end_inset
+
+为节点
+\begin_inset Formula $\alpha$
+\end_inset
+
+所属的单元总数。对于单个积分域（某确定单元
+\begin_inset Formula $j$
+\end_inset
+
+），将 
+\begin_inset Formula $K_{\alpha\bullet}^{(j)}$
+\end_inset
+
+中的元素求和，
+\begin_inset Formula 
+\begin{align*}
+\sum_{\beta}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}} & =\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sum_{\beta}\nabla N_{\beta}^{e}}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot0}=0
+\end{align*}
+
+\end_inset
+
+其中使用了上面的推论 
+\begin_inset Formula $\sum_{\alpha}\nabla N_{\alpha}(x)=0$
+\end_inset
+
+，
+\begin_inset Formula $\text{for }\forall x\in\text{单元}$
+\end_inset
+
+，即每个 sub–row 求和都为零，因此 
+\begin_inset Formula $K_{\alpha\bullet}$
+\end_inset
+
+ row 求和也为零。对每一行都有类似结论，因此
 \series bold
 不加任何约束的刚度矩阵 
 \begin_inset Formula $K$
 \end_inset
 
-的列不满秩，因此行也不满秩
+的行不满秩，因此列也不满秩
 \series default
 。
 \end_layout
