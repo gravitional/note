@@ -349,9 +349,20 @@ yay -Ss marksman
 
 ```bash
 chsh -s /usr/bin/zsh
-#安装ohmyzsh
-wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+#安装ohmyzsh, 使用国内镜像
+REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
+sh -c "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"
 ```
+
+如果之前用 github 源安装的，可以修改地址到国内
+
+```bash
+cd ~/.oh-my-zsh
+git remote set-url origin https://gitee.com/mirrors/oh-my-zsh.git
+git pull
+```
+
+### zsh-syntax-highlighting
 
 安装`zsh-syntax-highlighting`: [提供命令高亮](https://github.com/zsh-users/zsh-syntax-highlighting)
 作者建议把这个插件放在插件列表的最后
@@ -362,7 +373,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 #### 安装[`autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions)
 
-记住你之前使用过的命令, 使用国内镜像代替 github
+作用是记住你之前使用过的命令, 使用国内镜像代替 github
 
 ```bash
 git clone https://gitee.com/graviton/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
