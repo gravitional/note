@@ -20733,8 +20733,132 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename inset/xl-1.2.png
-	scale 60
+	filename inset/my-vec-shape-function-tri3-dou-ele-rhombus.pdf
+	lyxscale 72
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vec-shape-function-tri3-dou-ele.pdf
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-mma-vector-colorbar1.pdf
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-mma-vector-colorbar2.pdf
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*node coords*) (*x1={0,0};x2={1,0};x3={0,1};*) v0 = {{x1, y1}, {x2, y2},
+ {x3, y3}}; v1 = {{x, y}, {x2, y2}, {x3, y3}}; v2 = {{x1, y1}, {x, y}, {x3,
+ y3}}; v3 = {{x1, y1}, {x2, y2}, {x, y}}; (*edge length; edge nodes [1,2],
+ [2,3], [3,1]*) iL = {Sqrt[(x1 - x2)^2 + (y1 - y2)^2], Sqrt[(x2 - x3)^2
+ + (y2 - y3)^2], Sqrt[(x1 - x3)^2 + (y3 - y1)^2]}; iNorm = {{x1 - x2, y1
+ - y2}/iL[[1]], {x2 - x3, y2 - y3}/ iL[[2]], {x3 - x1, y3 - y1}/iL[[3]]};
+ i1s = {1, 1, 1}; fn = Transpose[Prepend[i1s]@Transpose@#] &; mat0 = fn@v0;
+ mat1 = fn@v1; mat2 = fn@v2; mat3 = fn@v3; Echo[TableForm /@ {mat0, mat1,
+ mat2, mat3}]; dMat0 = 1/2*Det@mat0; (*形函数*) iNs = Echo@Simplify[1/2*Det
+ /@ {mat1, mat2, mat3}/dMat0]; (*Grad N, 形函数对全局坐标导数*) iGNs = EchoFunction["Grad"
+, TableForm]@Simplify@Grad[iNs, {x, y}]; iVNs = EchoFunction["iVNs", TableForm]@
+Simplify@{ (iNs[[1]] iGNs[[2]] - iNs[[2]] iGNs[[1]])*iL[[1]], (iNs[[2]]
+ iGNs[[3]] - iNs[[3]] iGNs[[2]])*iL[[2]], (iNs[[3]] iGNs[[1]] - iNs[[1]]
+ iGNs[[3]])*iL[[3]] }; crd1 = Echo@MapThread[Rule, {{x1, y1, x2, y2, x3,
+ y3}, { (*1*)0, 0,(*2*)1, 0,(*3*)0, 1}}]; iNs
+\backslash
+[Prime]1 = EchoLabel["iNs
+\backslash
+[Prime]1"][iNs /.
+ crd1]; iGNs
+\backslash
+[Prime]1 = EchoLabel["iGNs
+\backslash
+[Prime]1"][iGNs /.
+ crd1]; iVNs
+\backslash
+[Prime]1 = EchoLabel["iVNs
+\backslash
+[Prime]1"][iVNs /.
+ crd1]; iNorm
+\backslash
+[Prime]1 = iNorm /.
+ crd1; (*邻居三角形*) crd2 = MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, {1, 1,
+ 0, 1, 1, 0}}]; iDirectionFac = {-1, -1, -1}; iDirectionFac = {1, 1, 1};
+ iVNs
+\backslash
+[Prime]2 = EchoLabel["iVNs
+\backslash
+[Prime]2"][iDirectionFac*iVNs /.
+ crd2]; iNorm
+\backslash
+[Prime]2 = iNorm /.
+ crd2 (*tangent vector*) iVT = {-1, 1}/Sqrt[2]; (*norm vector*) iVN = {1,
+ 1}/Sqrt[2]; (*在公共边的中点上*) crdxy = {x -> 1/2, y -> 1/2}; comp1 = EchoLabel[
+ "comp1:tan, norm"][{iVNs
+\backslash
+[Prime]1 .
+ iVT, iVNs
+\backslash
+[Prime]1 .
+ iVN} /.
+ crdxy]; comp2 = EchoLabel[ "comp2:tan, norm"][{iVNs
+\backslash
+[Prime]2 .
+ iVT, iVNs
+\backslash
+[Prime]2 .
+ iVN} /.
+ crdxy]; (*plot and show*) iVPlot = VectorPlot[#, {x, 0, 1}, {y, 0, 1},
+ RegionFunction -> Function[{x, y}, 0 <= x + y <= 1](*,ImageSize-> Medium*)]
+ &; Show[{ VectorPlot[iVNs
+\backslash
+[Prime]1[[2]], {x, 0, 1}, {y, 0, 1}, RegionFunction -> Function[{x, y},
+ 0 <= x + y <= 1], PlotLegends -> Automatic(*,ImageSize->Medium*)] , VectorPlot[
+iVNs
+\backslash
+[Prime]2[[2]], {x, 0, 1}, {y, 0, 1}, RegionFunction -> Function[{x, y},
+ 1 <= x + y <= 2], VectorColorFunction -> "Rainbow", PlotLegends -> Automatic(*,
+ ImageSize->Medium*)] }] Print@{ iVPlot[iVNs
+\backslash
+[Prime]1[[1]] .
+ iNorm
+\backslash
+[Prime]1[[1]]*iNorm
+\backslash
+[Prime]1[[1]]] , iVPlot[ iVNs
+\backslash
+[Prime]1[[2]] .
+ iNorm
+\backslash
+[Prime]1[[2]]*iNorm
+\backslash
+[Prime]1[[2]]] , iVPlot[ iVNs
+\backslash
+[Prime]1[[3]] .
+ iNorm
+\backslash
+[Prime]1[[3]]*iNorm
+\backslash
+[Prime]1[[3]]] }；
+\end_layout
 
 \end_inset
 
@@ -20775,8 +20899,12 @@ NshapeVec
 。
 \end_layout
 
-\begin_layout Example
-一阶形函数对应的矢量棱边元。在右手三角形
+\begin_layout Subsection
+一阶矢量形的极坐标
+\end_layout
+
+\begin_layout Standard
+在右手三角形
 \begin_inset Formula $(0,1,2)$
 \end_inset
 
@@ -20831,7 +20959,7 @@ NshapeVec
 即 棱边元在三角形内具有 constant curl。
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
 \begin_inset Formula $\hat{z}\times\sbf N_{12}^{e}$
 \end_inset
 
@@ -20846,8 +20974,11 @@ NshapeVec
 在电磁学中，这些矢量基函数可以用来表示任意形状导体的表面电流。
 \end_layout
 
-\begin_layout Example
+\begin_layout Subsection
 形函数的旋度
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
 \nabla\times\sbf N_{\alpha}^{e} & =\nabla\times\left(L_{\alpha(1)}^{e}\nabla L_{\alpha(2)}^{e}-L_{\alpha(2)}^{e}\nabla L_{\alpha(1)}^{e}\right)\ell_{\alpha}^{e}\\
@@ -20899,12 +21030,14 @@ NshapeVec
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Subsection
 
 \series bold
 矢量形函数边界值
-\series default
-。对于矢量形函数
+\end_layout
+
+\begin_layout Standard
+对于矢量形函数
 \begin_inset Formula 
 \begin{equation}
 \sbf N_{01}=N_{0}\nabla N_{1}-N_{1}\nabla N_{0}\label{eq:73.1}
@@ -20935,7 +21068,7 @@ NshapeVec
  在Edge(1,2) 上的切向分量为零。矢量形函数沿一条边的切向分量是非零常数，而沿其他边则为零。
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 组合
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -21014,6 +21147,116 @@ Nl[a, b], {a, b}], {a -> x, b -> y}]; vecN[x_, y_] := Module[{iN = iNl[x,
 \end_inset
 
 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*node coords*) (*x1={0,0};x2={1,0};x3={0,1};*) v0 = {{x1, y1}, {x2, y2},
+ {x3, y3}}; v1 = {{x, y}, {x2, y2}, {x3, y3}}; v2 = {{x1, y1}, {x, y}, {x3,
+ y3}}; v3 = {{x1, y1}, {x2, y2}, {x, y}}; (*edge length; edge nodes [1,2],
+ [2,3], [3,1]*) iL = {Sqrt[(x1 - x2)^2 + (y1 - y2)^2], Sqrt[(x2 - x3)^2
+ + (y2 - y3)^2], Sqrt[(x1 - x3)^2 + (y3 - y1)^2]}; iNorm = {{x1 - x2, y1
+ - y2}/iL[[1]], {x2 - x3, y2 - y3}/ iL[[2]], {x3 - x1, y3 - y1}/iL[[3]]};
+ i1s = {1, 1, 1}; fn = Transpose[Prepend[i1s]@Transpose@#] &; mat0 = fn@v0;
+ mat1 = fn@v1; mat2 = fn@v2; mat3 = fn@v3; Echo[TableForm /@ {mat0, mat1,
+ mat2, mat3}]; dMat0 = 1/2*Det@mat0; (*形函数*) iNs = Echo@Simplify[1/2*Det
+ /@ {mat1, mat2, mat3}/dMat0]; (*Grad N, 形函数对全局坐标导数*) iGNs = EchoFunction["Grad"
+, TableForm]@Simplify@Grad[iNs, {x, y}]; iVNs = EchoFunction["iVNs", TableForm]@
+Simplify@{ (iNs[[1]] iGNs[[2]] - iNs[[2]] iGNs[[1]])*iL[[1]], (iNs[[2]]
+ iGNs[[3]] - iNs[[3]] iGNs[[2]])*iL[[2]], (iNs[[3]] iGNs[[1]] - iNs[[1]]
+ iGNs[[3]])*iL[[3]] }; crd1 = Echo@MapThread[Rule, {{x1, y1, x2, y2, x3,
+ y3}, { 0, 0,(*1*)1, 0,(*2*)0, 1(*3*)}}]; iNs
+\backslash
+[Prime]1 = Echo[iNs /.
+ crd1]; iGNs
+\backslash
+[Prime]1 = Echo[iGNs /.
+ crd1]; iVNs
+\backslash
+[Prime]1 = Echo[iVNs /.
+ crd1]; iNorm
+\backslash
+[Prime]1 = iNorm /.
+ crd1; (*邻居三角形*) crd2 = MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, {1, 1,
+ 0, 1, 1, 0}}]; iDirectionFac = {-1, -1, -1}; iDirectionFac = {1, 1, 1};
+ iVNs
+\backslash
+[Prime]2 = Echo[iDirectionFac*iVNs /.
+ crd2]; iNorm
+\backslash
+[Prime]2 = iNorm /.
+ crd2 (*tangent vector*) iVT = {-1, 1}/Sqrt[2]; (*norm vector*) iVN = {1,
+ 1}/Sqrt[2]; (*在公共边的中点上*) crdxy = {x -> 1/2, y -> 1/2}; comp1 = EchoLabel[
+ "comp1:tan, norm"][{iVNs
+\backslash
+[Prime]1 .
+ iVT, iVNs
+\backslash
+[Prime]1 .
+ iVN} /.
+ crdxy]; comp2 = EchoLabel[ "comp2:tan, norm"][{iVNs
+\backslash
+[Prime]2 .
+ iVT, iVNs
+\backslash
+[Prime]2 .
+ iVN} /.
+ crdxy]; (*plot and show*) iVPlot = VectorPlot[#, {x, 0, 1}, {y, 0, 1},
+ RegionFunction -> Function[{x, y}, 0 <= x + y <= 1]] & { iVPlot[iVNs
+\backslash
+[Prime]1[[1]] .
+ iNorm
+\backslash
+[Prime]1[[1]]*iNorm
+\backslash
+[Prime]1[[1]]] , iVPlot[iVNs
+\backslash
+[Prime]1[[2]] .
+ iNorm
+\backslash
+[Prime]1[[2]]*iNorm
+\backslash
+[Prime]1[[2]]] , iVPlot[iVNs
+\backslash
+[Prime]1[[3]] .
+ iNorm
+\backslash
+[Prime]1[[3]]*iNorm
+\backslash
+[Prime]1[[3]]] } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/vector-shape-function-comp1.pdf
+	lyxscale 60
+	scale 28
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/vector-shape-function-comp2.pdf
+	lyxscale 60
+	scale 28
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/vector-shape-function-comp3.pdf
+	lyxscale 60
+	scale 28
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -21032,7 +21275,7 @@ Nl[a, b], {a, b}], {a -> x, b -> y}]; vecN[x_, y_] := Module[{iN = iNl[x,
 \begin_inset Formula $N_{31}$
 \end_inset
 
-。
+。以及它们的切向分量。
 \end_layout
 
 \end_inset
@@ -21071,6 +21314,563 @@ N_{1}=1-x,\quad N_{2}^{(1)}=x.
 沿着Edge方向
 \series default
 的单位矢量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对于标准单元 
+\begin_inset Formula $(0,0),(1,0),(0,1)$
+\end_inset
+
+，形函数和梯度的显式为
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*node coords*) (*x1={0,0};x2={1,0};x3={0,1};*) v0 = {{x1, y1}, {x2, y2},
+ {x3, y3}}; v1 = {{x, y}, {x2, y2}, {x3, y3}}; v2 = {{x1, y1}, {x, y}, {x3,
+ y3}}; v3 = {{x1, y1}, {x2, y2}, {x, y}}; (*edge length; edge nodes [1,2],
+ [2,3], [3,1]*) iL = {Sqrt[(x1 - x2)^2 + (y1 - y2)^2], Sqrt[(x2 - x3)^2
+ + (y2 - y3)^2], Sqrt[(x1 - x3)^2 + (y3 - y1)^2]}; iNorm = {{x1 - x2, y1
+ - y2}/iL[[1]], {x2 - x3, y2 - y3}/ iL[[2]], {x3 - x1, y3 - y1}/iL[[3]]};
+ i1s = {1, 1, 1}; fn = Transpose[Prepend[i1s]@Transpose@#] &; mat0 = fn@v0;
+ mat1 = fn@v1; mat2 = fn@v2; mat3 = fn@v3; Echo[TableForm /@ {mat0, mat1,
+ mat2, mat3}]; dMat0 = 1/2*Det@mat0; (*形函数*) iNs = Echo@Simplify[1/2*Det
+ /@ {mat1, mat2, mat3}/dMat0]; (*Grad N, 形函数对全局坐标导数*) iGNs = EchoFunction["Grad"
+, TableForm]@Simplify@Grad[iNs, {x, y}]; iVNs = EchoFunction["iVNs", TableForm]@
+Simplify@{ (iNs[[1]] iGNs[[2]] - iNs[[2]] iGNs[[1]])*iL[[1]], (iNs[[2]]
+ iGNs[[3]] - iNs[[3]] iGNs[[2]])*iL[[2]], (iNs[[3]] iGNs[[1]] - iNs[[1]]
+ iGNs[[3]])*iL[[3]] }; crd1 = Echo@MapThread[Rule, {{x1, y1, x2, y2, x3,
+ y3}, { (*1*)0, 0,(*2*)1, 0,(*3*)0, 1}}]; iNs
+\backslash
+[Prime]1 = EchoLabel["iNs
+\backslash
+[Prime]1"][iNs /.
+ crd1]; iGNs
+\backslash
+[Prime]1 = EchoLabel["iGNs
+\backslash
+[Prime]1"][iGNs /.
+ crd1]; iVNs
+\backslash
+[Prime]1 = EchoLabel["iVNs
+\backslash
+[Prime]1"][iVNs /.
+ crd1]; iNorm
+\backslash
+[Prime]1 = iNorm /.
+ crd1; (*邻居三角形*) crd2 = MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, {1, 1,
+ 0, 1, 1, 0}}]; iDirectionFac = {-1, -1, -1}; iDirectionFac = {1, 1, 1};
+ iVNs
+\backslash
+[Prime]2 = EchoLabel["iVNs
+\backslash
+[Prime]2"][iDirectionFac*iVNs /.
+ crd2]; iNorm
+\backslash
+[Prime]2 = iNorm /.
+ crd2 (*tangent vector*) iVT = {-1, 1}/Sqrt[2]; (*norm vector*) iVN = {1,
+ 1}/Sqrt[2]; (*在公共边的中点上*) crdxy = {x -> 1/2, y -> 1/2}; comp1 = EchoLabel[
+ "comp1:tan, norm"][{iVNs
+\backslash
+[Prime]1 .
+ iVT, iVNs
+\backslash
+[Prime]1 .
+ iVN} /.
+ crdxy]; comp2 = EchoLabel[ "comp2:tan, norm"][{iVNs
+\backslash
+[Prime]2 .
+ iVT, iVNs
+\backslash
+[Prime]2 .
+ iVN} /.
+ crdxy]; (*plot and show*) iVPlot = VectorPlot[#, {x, 0, 1}, {y, 0, 1},
+ RegionFunction -> Function[{x, y}, 0 <= x + y <= 1], ImageSize -> Medium]
+ &; { iVPlot[iVNs
+\backslash
+[Prime]1[[1]] .
+ iNorm
+\backslash
+[Prime]1[[1]]*iNorm
+\backslash
+[Prime]1[[1]]] , iVPlot[iVNs
+\backslash
+[Prime]1[[2]] .
+ iNorm
+\backslash
+[Prime]1[[2]]*iNorm
+\backslash
+[Prime]1[[2]]] , iVPlot[iVNs
+\backslash
+[Prime]1[[3]] .
+ iNorm
+\backslash
+[Prime]1[[3]]*iNorm
+\backslash
+[Prime]1[[3]]] }
+\end_layout
+
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+N_{\alpha}=\{1-x-y,x,y\}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+N_{\alpha,\mu}=\left(\begin{array}{cc}
+-1 & -1\\
+1 & 0\\
+0 & 1
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sbf N_{\alpha\beta}=(N_{\alpha}\nabla N_{\beta}-N_{\beta}\nabla N_{\alpha})\ell_{\alpha\beta}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\sbf N_{\alpha\beta}$
+\end_inset
+
+在标准单元上的表达式
+\begin_inset Formula 
+\[
+\sbf N_{\alpha\beta}=\left[\begin{array}{cc}
+1-y & x\\
+-\sqrt{2}y & \sqrt{2}x\\
+-y & x-1
+\end{array}\right],
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+v1 = {0, 0}; v2 = {1, 0}; v3 = {0, 1}; vm12 = {1/2, 1/2}; 
+\backslash
+[Delta] = 0.06; vte1 = {0.35, 0.35}; Graphics[{ Line[{v1, v2, v3, v1}], Line[{v1,
+ vm12}] , Line[{v3, vte1}], , Line[{v2, vte1}] , {Red, Circle[v3, 2.5 
+\backslash
+[Delta], {-
+\backslash
+[Pi]/2, -
+\backslash
+[Pi]/2 + 0.5}] , Text["
+\backslash
+[Theta]", v3 + {0.56 
+\backslash
+[Delta], -3.5 
+\backslash
+[Delta]}] }, , PointSize[0.03], Point[{v1, v2, v3}], FontSize -> 14, Text["1",
+ v1 + {-
+\backslash
+[Delta], 0}] , Text["2", v2 + {
+\backslash
+[Delta], 0}] , Text["3", v3 + {
+\backslash
+[Delta], 0}] , Text["5", vm12 + {
+\backslash
+[Delta], 
+\backslash
+[Delta]}] , {Red, Text["s", vte1 + {-
+\backslash
+[Delta], 0}]} }, ImageSize -> Small]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-fem-tri3-vert-exa.pdf
+	lyxscale 80
+	scale 50
+
+\end_inset
+
+，在此参考三角形的 line(1,5) 上（5是边的中点）。通过使用矢量形函数的极坐标表达式
+\begin_inset Formula $\sbf N=r/h\,\sbf e_{\phi}$
+\end_inset
+
+，得到矢量形函数在
+\begin_inset Formula $s$
+\end_inset
+
+点的值为
+\begin_inset Formula 
+\begin{align*}
+N_{12}= & \frac{D}{\cos\overline{\theta}}\left(\cos\theta,\sin\theta\right)\\
+N_{23}= & (1-\tan\overline{\theta})\left(-\cos\frac{\pi}{4},\sin\frac{\pi}{4}\right)\\
+N_{31}= & \frac{D}{\cos\overline{\theta}}\left(-\sin\theta,-\cos\theta\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $\overline{\theta}=\frac{\pi}{4}-\theta$
+\end_inset
+
+，
+\begin_inset Formula $D=\sqrt{2}/2$
+\end_inset
+
+是 line(1,5) 的长度。数值结果与之前使用 XY 坐标系得到的 矢量形函数数值相同。下面给出了
+\begin_inset Formula $\theta=\pi/10$
+\end_inset
+
+和
+\begin_inset Formula $\theta=\pi/9$
+\end_inset
+
+的数值结果，
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*使用极坐标表达式坐标变换得到*) iD = Sqrt[2]/2; 
+\backslash
+[Theta]b = 
+\backslash
+[Pi]/4 - 
+\backslash
+[Theta]; iRule1 = {
+\backslash
+[Theta] -> 
+\backslash
+[Pi]/10}; iN1 = iD/Cos[
+\backslash
+[Theta]b] {Cos[
+\backslash
+[Theta] ], Sin[
+\backslash
+[Theta] ]}; iN2 = (1 - Tan[
+\backslash
+[Theta]b]) {-Cos[
+\backslash
+[Pi]/4 ], Sin[
+\backslash
+[Pi]/4 ]}; iN3 = iD/Cos[
+\backslash
+[Theta]b] {-Sin[
+\backslash
+[Theta] ], -Cos[
+\backslash
+[Theta] ]}; xyRule = MapThread[Rule]@{{x, y}, iD*(1 - Tan[
+\backslash
+[Theta]b])*{Cos[
+\backslash
+[Pi]/4], Sin[
+\backslash
+[Pi]/4]}} /.
+ iRule1; teVs = EchoLabel["teVs"]@N[{iN1, iN2, iN3} /.
+ iRule1]; teVNs = EchoLabel["teVNs"]@N[Norm /@ {iN1, iN2, iN3} /.
+ iRule1]; iSum1 = Simplify[iN1 + iN2 + iN3]; (*对比两种计算方式*) EchoFunction[TableForm
+]@ N[{iSum1 /.
+ iRule1, Total[iVNs
+\backslash
+[Prime]1 /.
+ xyRule, {1}]}];
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \sbf N_{\alpha\beta}(\frac{\pi}{10})=\left(\begin{array}{cc}
+0.754763 & 0.245237\\
+-0.346818 & 0.346818\\
+-0.245237 & -0.754763
+\end{array}\right),\quad\sbf N_{\alpha\beta}(\frac{\pi}{9})=\left(\begin{array}{cc}
+0.733154 & 0.266846\\
+-0.377377 & 0.377377\\
+-0.266846 & -0.733154
+\end{array}\right),\\
+ & \sum\sbf N_{\alpha\beta}(\frac{\pi}{10})=\left(\begin{array}{cc}
+0.162708 & -0.162708\end{array}\right),\quad\sum\sbf N_{\alpha\beta}(\frac{\pi}{9})=\left(\begin{array}{cc}
+0.0889302 & -0.0889302\end{array}\right)
+\end{align*}
+
+\end_inset
+
+可以看到，矢量形函数的分量并不满足归一关系。
+\end_layout
+
+\begin_layout Subsection
+四面体矢量形
+\end_layout
+
+\begin_layout Standard
+ds 矢量形函数 
+\begin_inset Formula $\sbf N_{\alpha\beta}=(N_{12},N_{23},N_{13})$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\frac{(y-\text{y3})\ell_{12}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}} & \frac{(x-\text{x3})\ell_{12}}{\text{x1}(\text{y2}-\text{y3})+\text{x2}(\text{y3}-\text{y1})+\text{x3}(\text{y1}-\text{y2})}\\
+\frac{(y-\text{y1})\ell_{23}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}} & \frac{(x-\text{x1})\ell_{23}}{\text{x1}(\text{y2}-\text{y3})+\text{x2}(\text{y3}-\text{y1})+\text{x3}(\text{y1}-\text{y2})}\\
+\frac{(\text{y2}-y)\ell_{13}}{\text{x1}(\text{y3}-\text{y2})+\text{x2}(\text{y1}-\text{y3})+\text{x3}(\text{y2}-\text{y1})} & \frac{(x-\text{x2})\ell_{13}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet4-edge-01.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet4-edge-12.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet4-edge-20.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet4-edge-30.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet4-edge-31.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet4-edge-32.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-mma-vector-colorbar1.pdf
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+sss
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/my-vector-curl-tet4-edge-01.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-curl-tet4-edge-12.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-curl-tet4-edge-20.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/my-vector-curl-tet4-edge-30.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-curl-tet4-edge-31.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-vector-curl-tet4-edge-32.pdf
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+sss
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inset/my-vector-shape-tet-duo-edge-30.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-mma-vector-colorbar1.pdf
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename inset/my-mma-vector-colorbar2.pdf
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+sss
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -21998,213 +22798,6 @@ N_{\alpha,\mu}=\left[\begin{array}{cc}
 \end_inset
 
 在单元上为常数。
-\end_layout
-
-\begin_layout Example
-矢量形函数 
-\begin_inset Formula $\sbf N_{\alpha\beta}=(N_{12},N_{23},N_{13})$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-\frac{(y-\text{y3})\ell_{12}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}} & \frac{(x-\text{x3})\ell_{12}}{\text{x1}(\text{y2}-\text{y3})+\text{x2}(\text{y3}-\text{y1})+\text{x3}(\text{y1}-\text{y2})}\\
-\frac{(y-\text{y1})\ell_{23}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}} & \frac{(x-\text{x1})\ell_{23}}{\text{x1}(\text{y2}-\text{y3})+\text{x2}(\text{y3}-\text{y1})+\text{x3}(\text{y1}-\text{y2})}\\
-\frac{(\text{y2}-y)\ell_{13}}{\text{x1}(\text{y3}-\text{y2})+\text{x2}(\text{y1}-\text{y3})+\text{x3}(\text{y2}-\text{y1})} & \frac{(x-\text{x2})\ell_{13}}{-\text{x1}\text{y2}+\text{x1}\text{y3}+\text{x2}\text{y1}-\text{x2}\text{y3}-\text{x3}\text{y1}+\text{x3}\text{y2}}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-对于标准单元 
-\begin_inset Formula $(0,0),(1,0),(0,1)$
-\end_inset
-
-，形函数和梯度的显式为
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-(*node coords*) (*x1={0,0};x2={1,0};x3={0,1};*) v0 = {{x1, y1}, {x2, y2},
- {x3, y3}}; v1 = {{x, y}, {x2, y2}, {x3, y3}}; v2 = {{x1, y1}, {x, y}, {x3,
- y3}}; v3 = {{x1, y1}, {x2, y2}, {x, y}}; (*edge length; edge nodes [1,2],
- [2,3], [3,1]*) iL = {Sqrt[(x1 - x2)^2 + (y1 - y2)^2], Sqrt[(x2 - x3)^2
- + (y2 - y3)^2], Sqrt[(x1 - x3)^2 + (y3 - y1)^2]}; i1s = {1, 1, 1}; fn =
- Transpose[Prepend[i1s]@Transpose@#] &; mat0 = fn@v0; mat1 = fn@v1; mat2
- = fn@v2; mat3 = fn@v3; Echo[TableForm /@ {mat0, mat1, mat2, mat3}]; dMat0
- = 1/2*Det@mat0; (*形函数*) iNs = Echo@Simplify[1/2*Det /@ {mat1, mat2, mat3}/dMat0
-]; (*Grad N, 形函数对全局坐标导数*) iGNs = EchoFunction["Grad", TableForm]@Simplify@Grad[i
-Ns, {x, y}]; iVNs = EchoFunction["iVNs", TableForm]@Simplify@{ (iNs[[1]]
- iGNs[[2]] - iNs[[2]] iGNs[[1]])*iL[[1]], (iNs[[2]] iGNs[[3]] - iNs[[3]]
- iGNs[[2]])*iL[[2]], (iNs[[1]] iGNs[[3]] - iNs[[3]] iGNs[[1]])*iL[[3]] };
- crd1 = Echo@MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, { 0, 0,(*1*)1, 0,(*2*)0,
- 1(*3*)}}]; iNs
-\backslash
-[Prime]1 = Echo[iNs /.
- crd1]; iGNs
-\backslash
-[Prime]1 = Echo[iGNs /.
- crd1]; iVNs
-\backslash
-[Prime]1 = Echo[iVNs /.
- crd1]; (*邻居三角形*) crd2 = MapThread[Rule, {{x1, y1, x2, y2, x3, y3}, {1,
- 1, 0, 1, 1, 0}}]; iDirectionFac = {-1, -1, -1}; iDirectionFac = {1, 1,
- 1}; iVNs
-\backslash
-[Prime]2 = Echo[iDirectionFac*iVNs /.
- crd2]; (*tangent vector*) iVT = {-1, 1}/Sqrt[2]; (*norm vector*) iVN =
- {1, 1}/Sqrt[2]; (*在公共边的中点上*) crdxy = {x -> 1/2, y -> 1/2}; comp1 = EchoLabel[
- "comp1:tan, norm"][{iVNs
-\backslash
-[Prime]1 .
- iVT, iVNs
-\backslash
-[Prime]1 .
- iVN} /.
- crdxy]; comp2 = EchoLabel[ "comp2:tan, norm"][{iVNs
-\backslash
-[Prime]2 .
- iVT, iVNs
-\backslash
-[Prime]2 .
- iVN} /.
- crdxy]; 
-\end_layout
-
-\end_inset
-
-，
-\begin_inset Formula 
-\[
-N_{\alpha}=\{1-x-y,x,y\}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-N_{\alpha,\mu}=\left(\begin{array}{cc}
--1 & -1\\
-1 & 0\\
-0 & 1
-\end{array}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\sbf N_{\alpha\beta}=N_{\alpha}\nabla N_{\beta}-N_{\beta}\nabla N_{\alpha}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\sbf N_{\theta}=\left[\begin{array}{cc}
-1-y & x\\
--y & x\\
-y & 1-x
-\end{array}\right],\quad\left(\begin{array}{c}
-0,1\\
-1,2\\
-0,2
-\end{array}\right)
-\]
-
-\end_inset
-
-后边标注了边
-\begin_inset Formula $\theta$
-\end_inset
-
-对应的节点。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-在参考三角形 节点0对应的垂线上，矢量形函数的值
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-iD = Sqrt[2]/2; 
-\backslash
-[Theta]b = 
-\backslash
-[Pi]/4 - 
-\backslash
-[Theta]; (iVNs = Simplify[{ (iD/Cos[
-\backslash
-[Theta]b]) {Cos[
-\backslash
-[Theta]], Sin[
-\backslash
-[Theta]]}, (iD/Cos[
-\backslash
-[Theta]b]) {-Sin[
-\backslash
-[Theta]], -Cos[
-\backslash
-[Theta]]}, (1 - Tan[
-\backslash
-[Theta]b])*{Cos[
-\backslash
-[Pi]/4], Sin[
-\backslash
-[Pi]/4]} }]) // TableForm; EchoLabel[ "NShapeVector
-\backslash
-n"][(te1 = iVNs /.
- {
-\backslash
-[Theta] -> 
-\backslash
-[Pi]/14} // N) // TableForm]; EchoLabel["Vector sum"]@Total[te1, {1}]; EchoLabel
-["Norm"][Norm /@ te1]; EchoLabel["Norm Sum"]@Total[Norm /@ te1];
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
- & \frac{D}{\cos\overline{\theta}}\left(\cos\theta,\sin\theta\right)\\
- & \frac{D}{\cos\overline{\theta}}\left(-\sin\theta,-\cos\theta\right)\\
- & (1-\tan\overline{\theta})\left(\cos\frac{\pi}{4},\sin\frac{\pi}{4}\right)
-\end{align*}
-
-\end_inset
-
-其中
-\begin_inset Formula $\overline{\theta}=\frac{\pi}{4}-\theta$
-\end_inset
-
-，
-\begin_inset Formula $D=\sqrt{2}/2$
-\end_inset
-
-是垂线段长度。
 \end_layout
 
 \begin_layout Subsection
