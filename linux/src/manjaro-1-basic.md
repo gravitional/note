@@ -683,3 +683,20 @@ yay -S latte-dock
 ## mathematica
 
 [Mathematica 激活指南](https://tiebamma.github.io/InstallTutorial)
+
+## texlive 等其他软件
+
+[otf-stix](https://aur.archlinux.org/packages/otf-stix)
+
+```bash
+yay -S texlive-bin texlive-doc texlive-fontsrecommended texlive-games texlive-meta texlive-latexextra texlive-latex texlive-latexrecommended texlive-xetex  texlive-mathscience texlive-pstricks texlive-fontsextra texlive-context texlive-luatex texlive-binextra  texlive-bibtexextra texlive-pictures texlive-metapost texlive-langcjk  texlive-humanities texlive-formatsextra  texlive-fontutils texlive-langchinese
+yay -S clash-verge-rev-bin
+yay -S powershell-lts-bin
+yay -S neofetc
+yay -S vdhcoapp
+yay -S lyx
+yay -S qtcreator 
+yay -S microsoft-edge-beta-bin
+yay -S otf-latin-modern
+yay -S otf-stix
+```
