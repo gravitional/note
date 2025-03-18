@@ -674,3 +674,44 @@ Error in startup script: unknown color name "S_base3"
 #define S_red           #dc322f
 #define S_magenta       #d33682
 ```
+
+## 开机启动小键盘
+
+[Manjaro开机自动打开NumLoc](https://www.yikakia.com/Manjaro%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80NumLock/)
+
+安装Numlockx
+
+```bash
+sudo pacman -S numlockx
+```
+
+配置 `ssdm.conf`, 安装好之后配置一下就行了。
+
+```bash
+sudo vim /etc/sddm.conf
+```
+
+打开文件后，找到类似于下面这样的一行
+
+```conf
+[General]
+HaltCommand=/usr/bin/systemctl poweroff
+InputMethod=
+Numlock=none
+RebootCommand=/usr/bin/systemctl reboot
+```
+
+然后把 `Numlock=none` 这一条改成 `Numlock=on` 就行了。
+
+修改后的结果大概长这样
+
+```conf
+[General]
+HaltCommand=/usr/bin/systemctl poweroff
+InputMethod=
+Numlock=on
+#Numlock=none
+RebootCommand=/usr/bin/systemctl reboot
+```
+
+现在重启一下就好啦。
