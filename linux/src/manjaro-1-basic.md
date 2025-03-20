@@ -1,14 +1,14 @@
 # manjaro
 
 [Manjaro-KDE安装配置全攻略](https://zhuanlan.zhihu.com/p/114296129)
-[Manjaro安装后调教（Gnome/KDE）|](https://www.airnan.cn/2024/10/29/jDDcZulZ)
+[Manjaro安装后调教(Gnome/KDE)|](https://www.airnan.cn/2024/10/29/jDDcZulZ)
 
 ## 基本使用
 
-[linux查看、添加、删除环境变量](https://blog.csdn.net/mayue_web/article/details/97023615)
-[如何查看Linux桌面环境版本和详细信息？](https://www.dongmanai.cn/post/3D61B932AaB8.html)
+[linux查看, 添加, 删除环境变量](https://blog.csdn.net/mayue_web/article/details/97023615)
+[如何查看Linux桌面环境版本和详细信息? ](https://www.dongmanai.cn/post/3D61B932AaB8.html)
 
-+ `Manjaro` KDE 桌面的大部分软件，
++ `Manjaro` KDE 桌面的大部分软件,
 配置快捷键的 快捷键 是 `Ctrl+Alt+,`(逗号)
 
 查看 KDE plasma 版本
@@ -34,7 +34,7 @@ printenv
 env
 ```
 
-使用set查看所有本地定义的环境变量。
+使用set查看所有本地定义的环境变量.
 
 ## 系统安装
 
@@ -64,7 +64,7 @@ env
 
 ### pacman 换源
 
-启动`terminal`, 输入以下命令, 生成可用中国镜像站列表：
+启动`terminal`, 输入以下命令, 生成可用中国镜像站列表:
 
 ```bash
 sudo pacman-mirrors -i -c China -m rank
@@ -104,15 +104,15 @@ sudo pacman -Syy && sudo pacman -S archlinuxcn-keyring
 ### 软件仓库镜像源
 
 1. 设置 *软件商店* 的镜像源
-    运行软件仓库软件，点击右上角菜单，选择首选项，在常规选项卡中找到官方软件仓库，
-    将镜像源调整到 `China`，刷新列表即可。
+    运行软件仓库软件, 点击右上角菜单, 选择首选项, 在常规选项卡中找到官方软件仓库,
+    将镜像源调整到 `China`, 刷新列表即可.
 
 2. 启用AUR和Flatpak
-    在第三方选项卡中打开AUR和Flatpak开关，关闭窗口后会自动刷新列表。
-    
+    在第三方选项卡中打开AUR和Flatpak开关, 关闭窗口后会自动刷新列表.
+
 3.修改Flatpak源
-    在这里有一个问题，当Flatpak镜像源没有修改时，启用Flatpak并关闭软件仓库后便无法再次打开，
-    因此，需要手动切换以下国内的镜像源，然后重启即可
+    在这里有一个问题, 当Flatpak镜像源没有修改时, 启用Flatpak并关闭软件仓库后便无法再次打开,
+    因此, 需要手动切换以下国内的镜像源, 然后重启即可
 
 ```bash
 sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
@@ -126,8 +126,8 @@ sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 [Visual Studio Code](https://wiki.archlinux.org/title/Visual_Studio_Code)
 [manjaro](https://blog.csdn.net/qq_19000143/article/details/103111617)
 
-在使用 yay 安装 vscode 时会报错，没安装 fakeroot、binutils 等打包基本工具,
-需要安装此基本 devel 工具链。
+在使用 yay 安装 vscode 时会报错, 没安装 fakeroot, binutils 等打包基本工具,
+需要安装此基本 devel 工具链.
 
 ```bash
 sudo pacman -S base-devel
@@ -147,27 +147,27 @@ sudo pacman -S yay
 
 ### [Yakuake](https://wiki.archlinuxcn.org/zh-my/Yakuake)
 
-Yakuake 是一个适用于 KDE 的下拉式终端，类似于 GNOME 的 Guake、Tilda或 Quake 中使用的终端。 
+Yakuake 是一个适用于 KDE 的下拉式终端, 类似于 GNOME 的 Guake, Tilda或 Quake 中使用的终端.
 
-安装后，您可以在终端启动 yakuake：
+安装后, 您可以在终端启动 yakuake:
 
 ```bash
  yakuake
 ```
 
-Yakuake 启动后，您可以点击“配置 Yakuake” 通过点击菜单按钮
-（界面右下中间）并选择配置键盘快捷键以更改收放终端的热键，默认是 F12。 
+Yakuake 启动后, 您可以点击"配置 Yakuake" 通过点击菜单按钮
+(界面右下中间)并选择配置键盘快捷键以更改收放终端的热键, 默认是 F12.
 
-### fcitx5 输入法（Flexible Input Method Framework）
+### fcitx5 输入法(Flexible Input Method Framework)
 
-[Manjaro KDE —— Fcitx5（输入法）](https://zhuanlan.zhihu.com/p/577060385)
+[Manjaro KDE —— Fcitx5(输入法)](https://zhuanlan.zhihu.com/p/577060385)
 [Fcitx5官方文档](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland)
 
-复制粘贴命令：
+复制粘贴命令:
 
 ```bash
-sudo pacman -S fcitx5 
-sudo pacman -S fcitx5-configtool  
+sudo pacman -S fcitx5
+sudo pacman -S fcitx5-configtool
 sudo pacman -S fcitx5-qt
 sudo pacman -S fcitx5-gtk
 sudo pacman -S fcitx5-chinese-addons
@@ -176,37 +176,38 @@ sudo pacman -S kcm-fcitx5
 sudo pacman -S fcitx5-lua
 ```
 
-修改环境变量（调用Fctix5输入法）
+修改环境变量(调用Fctix5输入法),
+**但是如果使用 wayland 显示服务器, 推荐不设置这个**
 
 ```bash
 sudo vim /etc/environment
 
-# 复制粘贴代码：
+# 复制粘贴代码:
 GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 INPUT_METHOD=fcitx5
 SDL_IM_MODULE=fcitx5
 
-# 保存，确定，退出；重启; 或者注销重新登入也可以
+# 保存, 确定, 退出; 重启; 或者注销重新登入也可以
 reboot
 ```
 
-Fcitx5 配置中文输入（`xxx` 为选项）
+Fcitx5 配置中文输入(`xxx` 为选项)
 
-电脑重启右下角出现 `输入法图标`；
-右击 `输入法图标`，点击菜单里的 `配置` 选项打开 输入法的配置页；
-点击右下角 `添加输入法` 出现输入法的菜单；
-有 `双拼，拼音，五笔` 等输入法，选中你要添加的输入法再点击右下角的 `添加`；
-（笔者用的是小鹤双拼，点击 双拼输入法横条右边的  `配置图标` 配置小鹤双拼就行了）；
-还能开启———— 云拼 和 输入预测。
+电脑重启右下角出现 `输入法图标`;
+右击 `输入法图标`, 点击菜单里的 `配置` 选项打开 输入法的配置页;
+点击右下角 `添加输入法` 出现输入法的菜单;
+有 `双拼, 拼音, 五笔` 等输入法, 选中你要添加的输入法再点击右下角的 `添加`;
+(笔者用的是小鹤双拼, 点击 双拼输入法横条右边的  `配置图标` 配置小鹤双拼就行了);
+还能开启———— 云拼 和 输入预测.
 
 ![ime1](https://pic2.zhimg.com/v2-940ae8eba1e4b9c3e88e8576f3f1a425_1440w.jpg)
 ![ime2](https://pic4.zhimg.com/v2-b882f8bf3197efe6e7cc3542db0d2807_1440w.jpg)
 ![ime3](https://pic2.zhimg.com/v2-13c6178c89a89cc5f838bf34ec7e3fe9_1440w.jpg)
 ![ime4](https://pic2.zhimg.com/v2-e1b4a012a648048bad99fce92dc9d9db_1440w.jpg)
 
-#### 配置快捷键
+#### 配置快捷键, CapsLock  切换输入法
 
 [如何在 Linux 使用 Caps Lock 切换输入法](https://wancat.cc/post/capslock/)
 [Xmodmap](https://wiki.archlinuxcn.org/wiki/Xmodmap)
@@ -214,13 +215,13 @@ Fcitx5 配置中文输入（`xxx` 为选项）
 
 或者用 bash 输入 `fcitx5-configtool` 也可以直达此界面.
 一般可设置  `输入法`->`分组1`:
-   
+
 + 输入法关闭 `键盘--汉语`
 + 输入法开启 `双拼`
 
 然后是 `配置全局选项`,
-切换，禁用输入法，选择 `Super+空格`, `Multi_key`
-把其他的一些不需要的快捷键禁用掉。
+切换, 禁用输入法, 选择 `Super+空格`, `Multi_key`
+把其他的一些不需要的快捷键禁用掉.
 
 设置 切换大小写按键为 `Caps_Lock`(`Multi_key`),
 
@@ -231,34 +232,34 @@ $ xmodmap -pke | grep Caps_Lock
 keycode  66 = Caps_Lock NoSymbol Caps_Lock
 ```
 
-可以看到键盘上的 `Caps_Lock` 对应的是 keycode `66`，
+可以看到键盘上的 `Caps_Lock` 对应的是 keycode `66`,
 接下來把 66 改成对应 `Multi_key`.
 
 ```bash
 $ xmodmap -pke > ~/.Xmodmap  #存储设定
 $ vim ~/.Xmodmap
-# 将 keycode 66 处改成
+# 将 keycode 66 处改成;  ! for comment
 keycode  66 = Multi_key NoSymbol Multi_key
 # 在最底下加入
 clear lock
 $ xmodmap ~/.Xmodmap     # 载入设定
 ```
 
-根据 ArchLinux wiki，`~/.Xmodmap` 会自动被 GDM、XDM、LightDM 载入，
-如果是使用其他的请自行设定。
+根据 ArchLinux wiki, `~/.Xmodmap` 会自动被 GDM, SDDM, XDM 载入,
+如果是使用其他的请自行设定.
 
-最后打开 ``fcitx5-configtool``，将输入法切换按键设定为 `Multi_key`.
-建议保险的话多设定一组切换键，避免设定失败卡在中文无法切换.
+最后打开 ``fcitx5-configtool``, 将输入法切换按键设定为 `Multi_key`.
+建议保险的话多设定一组切换键, 避免设定失败卡在中文无法切换.
 
 ![ime3](https://wancat.cc/img/capslock/fcitx-config.png)
 
-#### Fcitx5-Material-Color（自定义输入法外观）
+#### Fcitx5-Material-Color(自定义输入法外观)
 
 ```bash
 编辑配置文件
 sudo nano ~/.config/fcitx5/conf/classicui.conf
 
-复制粘贴代码：
+复制粘贴代码:
 # 垂直候选列表
 Vertical Candidate List=False
 
@@ -271,8 +272,8 @@ Font="思源黑体 CN Medium 13"
 # 主题
 Theme=Material-Color-Blue
 
-！详细使用方法点击标题直达开源项目！
-（#号后面的内容也能复制进去；）
+! 详细使用方法点击标题直达开源项目!
+(#号后面的内容也能复制进去; )
 ```
 
 ![ime5](https://pica.zhimg.com/v2-a0662fd7e6c7c820f2aa9c0c3f70278e_1440w.jpg)
@@ -354,7 +355,7 @@ REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
 sh -c "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"
 ```
 
-如果之前用 github 源安装的，可以修改地址到国内
+如果之前用 github 源安装的, 可以修改地址到国内
 
 ```bash
 cd ~/.oh-my-zsh
@@ -419,10 +420,10 @@ cd ~/.vimplus
 
 ### 安装Clash Verge Rev
 
-[Manjaro安装后调教（Gnome/KDE） ](https://www.airnan.cn/2024/10/29/jDDcZulZ)
+[Manjaro安装后调教(Gnome/KDE) ](https://www.airnan.cn/2024/10/29/jDDcZulZ)
 
-这一步是为了完全解锁超能力，好方便折腾嘛，毕竟换源终究还是不如直连的靠谱。
-[参考官方安装文档：](https://www.clashverge.dev/install.html)
+这一步是为了完全解锁超能力, 好方便折腾嘛, 毕竟换源终究还是不如直连的靠谱.
+[参考官方安装文档: ](https://www.clashverge.dev/install.html)
 
 直接使用 yay 安装
 
@@ -478,9 +479,9 @@ yay -S linuxqq
 
 [微信](https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E4%BF%A1)
 
-微信打包于 [wechat-binAUR](https://aur.archlinux.org/packages/wechat-bin/)，并提供带有一些针对微信的修复包 [wechatAUR](https://aur.archlinux.org/packages/wechat/)。
-后者有进程管理，沙盒（可选），输入法及 HiDPI 修复等功能。
-也可以使用 Flatpak 从 Flathub 安装 com.tencent.WeChat。 
+微信打包于 [wechat-binAUR](https://aur.archlinux.org/packages/wechat-bin/), 并提供带有一些针对微信的修复包 [wechatAUR](https://aur.archlinux.org/packages/wechat/).
+后者有进程管理, 沙盒(可选), 输入法及 HiDPI 修复等功能.
+也可以使用 Flatpak 从 Flathub 安装 com.tencent.WeChat.
 
 aur 现在已经有官方的 wechat-linux 版
 aur/wechat-bin 4.0.1.11-2 (+4 1.43) (已安装)  This is a repackage of WeChat.
@@ -695,7 +696,7 @@ yay -S powershell-lts-bin
 yay -S neofetc
 yay -S vdhcoapp
 yay -S lyx
-yay -S qtcreator 
+yay -S qtcreator
 yay -S microsoft-edge-beta-bin
 yay -S otf-latin-modern
 yay -S otf-stix

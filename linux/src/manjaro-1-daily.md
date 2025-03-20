@@ -200,7 +200,7 @@ sudo pacman-mirrors -f && sudo pacman -Syyu
 
 ## 修改 home 下文件夹, 中文目录改名
 
-[记录一次修改用户主目录的中文文件夹为英文，导致manjaro无法启动的问题](https://blog.csdn.net/z17815950792/article/details/117115203)
+[记录一次修改用户主目录的中文文件夹为英文, 导致manjaro无法启动的问题](https://blog.csdn.net/z17815950792/article/details/117115203)
 
 ## archwiki 帮助
 
@@ -208,31 +208,31 @@ sudo pacman-mirrors -f && sudo pacman -Syyu
 
 ### 起因
 
-想要将用户目录下的“下载”、“文档”等几个文件夹改为英文名称，由于之前重命名过文件夹，
-“下载”改成了“downloads”，“文档”改为“documents”，其他的文件夹类似。
-但是这也仅仅只是给文件夹改了一个名字罢了。
+想要将用户目录下的"下载", "文档"等几个文件夹改为英文名称, 由于之前重命名过文件夹,
+"下载"改成了"downloads", "文档"改为"documents", 其他的文件夹类似.
+但是这也仅仅只是给文件夹改了一个名字罢了.
 
-重启系统后，由于 x session无法在用户目录下找到“桌面”、“下载”等文件夹，一律会把
-`XDG_DESKTOP_DIR`、`XDG_DOWNLOAD_DIR`… 这些和主目录相关的变量改为`$HOME`
-（变量的配置文件目录：`${HOME}/.config/user-dirs.dirs`）。
+重启系统后, 由于 x session无法在用户目录下找到"桌面", "下载"等文件夹, 一律会把
+`XDG_DESKTOP_DIR`, `XDG_DOWNLOAD_DIR`… 这些和主目录相关的变量改为`$HOME`
+(变量的配置文件目录: `${HOME}/.config/user-dirs.dirs`).
 
-由于`XDG_DESKTOP_DIR`变成了`${HOME}`，可以看到`${HOME}`目录下所有的文件夹和文件都会出现在KDE的桌面上。
-这个问题，只需要手动修改 `${HOME}/.config/user-dirs.dirs` 文件，然后重启系统即可。
+由于`XDG_DESKTOP_DIR`变成了`${HOME}`, 可以看到`${HOME}`目录下所有的文件夹和文件都会出现在KDE的桌面上.
+这个问题, 只需要手动修改 `${HOME}/.config/user-dirs.dirs` 文件, 然后重启系统即可.
 
-我在修改这个配置文件的同时，为了符合英语的复数使用规范，重命名文件夹Document为Documents。
+我在修改这个配置文件的同时, 为了符合英语的复数使用规范, 重命名文件夹Document为Documents.
 
-重启系统后，我发现，登陆用户之后，迟迟无法进入桌面。之后检查了/var/log下的日志，没有发现异常。
-`systemctl status sddm` 可以看到 closed session 用户会话退出，但是也没有异常信息。
-之后无意中发现，在 `${HOME}/.local/share/sddm/` 有个 `xorg-session.log`，看这名字应该是sddm的session会话记录，
-文件当中只有一条日志：
->source: No such file or directory: /home/user/Document/script/console/fcitx5.sh，
-这个文件是我配置tcitx5输入法的脚本文件，最后我在`/etc/profile`中看到 `source /home/user/Document/script/console/fcitx5.sh`，
-好像知道问题在哪了，把 Document 改为 Documents，然后重启系统，好了
+重启系统后, 我发现, 登陆用户之后, 迟迟无法进入桌面. 之后检查了/var/log下的日志, 没有发现异常.
+`systemctl status sddm` 可以看到 closed session 用户会话退出, 但是也没有异常信息.
+之后无意中发现, 在 `${HOME}/.local/share/sddm/` 有个 `xorg-session.log`, 看这名字应该是sddm的session会话记录,
+文件当中只有一条日志:
+>source: No such file or directory: /home/user/Document/script/console/fcitx5.sh,
+这个文件是我配置tcitx5输入法的脚本文件, 最后我在`/etc/profile`中看到 `source /home/user/Document/script/console/fcitx5.sh`,
+好像知道问题在哪了, 把 Document 改为 Documents, 然后重启系统, 好了
 
 ### 发现
 
-`${HOME}/.local/share/sddm/xorg-session.log` 这个文件应该是记录GUI程序的启动日志的，
-正常情况下，可以在这个文件可以看到GUI程序输出的所有log
+`${HOME}/.local/share/sddm/xorg-session.log` 这个文件应该是记录GUI程序的启动日志的,
+正常情况下, 可以在这个文件可以看到GUI程序输出的所有log
 
 ### 安装软件包
 
@@ -685,13 +685,13 @@ Error in startup script: unknown color name "S_base3"
 sudo pacman -S numlockx
 ```
 
-配置 `ssdm.conf`, 安装好之后配置一下就行了。
+配置 `ssdm.conf`, 安装好之后配置一下就行了.
 
 ```bash
 sudo vim /etc/sddm.conf
 ```
 
-打开文件后，找到类似于下面这样的一行
+打开文件后, 找到类似于下面这样的一行
 
 ```conf
 [General]
@@ -701,7 +701,7 @@ Numlock=none
 RebootCommand=/usr/bin/systemctl reboot
 ```
 
-然后把 `Numlock=none` 这一条改成 `Numlock=on` 就行了。
+然后把 `Numlock=none` 这一条改成 `Numlock=on` 就行了.
 
 修改后的结果大概长这样
 
@@ -714,4 +714,68 @@ Numlock=on
 RebootCommand=/usr/bin/systemctl reboot
 ```
 
-现在重启一下就好啦。
+现在重启一下就好啦.
+
+## 切换到 wayland 显示服务器
+
+首先在 sddm, 也就是登录界面, 点击左下角的 显示服务器选项, 切换到 wayland.
+但是登陆可能会黑屏, 这时候按下 `ctrl+alt+F3`, 进入 tty, 编辑
+
+```bash
+sudo vim /etc/modprobe.d/nvidia.conf
+# 输入 下面配置
+options nvidia_drm modeset=1
+options nvidia_drm fbdev=1
+# 然后更新 initramfs
+sudo update-grub
+```
+
+### vscode 在 wayland 下闪屏, 不能正常使用
+
+[Arch 安装 Visual Studio Code(支持Wayland)](https://blog.csdn.net/sinat_21946723/article/details/129350960)
+[wayland - ArchWiki](https://wiki.archlinux.org/title/Wayland#Electron)
+
+好像是 Electron 在 wayland 下的通病,
+
+为了实现开始菜单和右键菜单打开的vscode显示正确,
+需要修改`/usr/share/applications/code.desktop`, 在每个`Exec=`中加上这两个参数:
+
+```conf
+Exec=/usr/bin/code --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --unity-launch %F
+Exec=/usr/bin/code --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --new-window %F
+```
+
+正常的vscode然后就正常了.
+
+还有另一种更直接更有效的方法, 直接在文件中配置, 可以对任何方式启动的code生效(包括从命令行启动):
+
+在 `~/.config/code-flags.conf` 中加上两行:
+
+```conf
+--enable-features=WaylandWindowDecorations
+--ozone-platform-hint=auto
+```
+
+就可以全局生效了.
+
+在Wayland下无法使用输入法的解决方法 的解决方法类似, 需要再加一个参数 `--enable-wayland-ime`
+
+```conf
+--enable-wayland-ime
+# 如果加上对模糊的处理
+--enable-features=WaylandWindowDecorations
+--ozone-platform-hint=auto
+```
+
+直接在命令行使用(配置.desktop文件同理):
+
+```bash
+code --enable-wayland-ime
+# 如果加上对模糊的处理
+code --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto --enable-wayland-ime
+```
+
+配置`~/.config/code-flags.conf文`件:
+
+注: 博客的之前的版本用的是`~/.config/electron-flags.conf`, 但是目前测试无效, 未知原因,
+但是在`~/.config/code-flags.conf`中添加参数实测有效
