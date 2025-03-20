@@ -779,3 +779,68 @@ code --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto --ena
 
 注: 博客的之前的版本用的是`~/.config/electron-flags.conf`, 但是目前测试无效, 未知原因,
 但是在`~/.config/code-flags.conf`中添加参数实测有效
+
+### microsoft edge
+
+edge 也不能正常使用, 但是flags好像没效果
+
+```bash
+sudo vim /usr/share/applications/microsoft-edge-beta.desktop
+Exec=/usr/bin/microsoft-edge-beta --inprivate --enable-features=VaapiVideoDecodeLinuxGL --enable-wayland-ime --ozone-platform-hint=auto --high-dpi-support=1
+```
+
+### wayland 修改 Caps_Lock 绑定
+
+[How to customise keyboard mappings with Wayland](https://unix.stackexchange.com/questions/292868/how-to-customise-keyboard-mappings-with-wayland)
+[linux 改键实现Capslock+](https://zhuanlan.zhihu.com/p/585475198)
+
+wayland 不支持 `xmodmap` 修改按键, 所以使用 [keyd](https://github.com/rvaiya/keyd)
+首先安装 keyd,
+
+```bash
+yay -S keyd
+```
+
+然后启用守护进程
+
+```bash
+sudo systemctl enable keyd --now
+```
+
++ `keyd list-keys`  查看所有可用的按键名称
++ `sudo keyd monitor` 查看当前按下的按键的名称
++ `sudo keyd reload`  读取最新的配置文件
+
+修改配置文件
+
+```bash
+sudo  vim /etc/keyd/default.conf
+````
+
+```conf
+[ids]
+
+*
+
+[main]
+# 将 capslock 绑定到 forwardmail(转发邮件)
+capslock = forwardmail
+```
+
+刷新查看是否生效
+
+```bash
+sudo keyd reload;sudo keyd monitor
+```
+
+按下 `capslock` 应当显示 `forwardmail`, 按下 `ctrl-c` 结束测试.
+
+然后在 `fcitx5-configtool` 界面的配置全局选项,
+`切换启用/禁用输入法`, 添加一个新的快捷键, 显示为 `转发邮件`,
+关闭窗口即可正常使用.
+
+为了防止进程被杀, 可以添加 shell 别名
+
+```bash
+alias keyd="sudo systemctl enable keyd && sudo systemctl start keyd"
+```
