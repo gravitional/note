@@ -13863,7 +13863,7 @@ a_{m}^{\phantom{0}\mu}
 \begin{align*}
 J_{\phantom{\mu}\nu}^{\mu}=\left.\frac{\partial x{}^{\prime\mu}}{\partial x^{\nu}}\right|_{p} & =\left.\frac{\partial f^{\mu}(x)}{\partial x^{\nu}}\right|_{p}\\
  & =\left.a_{j}^{\phantom{0}\mu}\frac{\dd\varphi_{j}}{\dd r}\,\frac{\partial r}{\partial x^{\nu}}+(b_{1}^{\phantom{j}\mu})_{\alpha}\frac{\partial x^{\alpha}}{\partial x^{\nu}}\right|_{p}\\
- & =\left.a_{j}^{\phantom{0}\mu}\,\varphi'(r_{j})\,\frac{\Delta_{j}^{\phantom{j}\nu}}{r}+(b_{1}^{\phantom{j}\mu})_{\nu}\right|_{p}
+ & =\left.a_{j}^{\phantom{0}\mu}\,\varphi_{j}^{\prime}(r_{j})\,\frac{\Delta_{j}^{\phantom{j}\nu}}{r_{j}}+(b_{1}^{\phantom{j}\mu})_{\nu}\right|_{p}
 \end{align*}
 
 \end_inset
@@ -13877,6 +13877,14 @@ J_{\phantom{\mu}\nu}^{\mu}=\left.\frac{\partial x{}^{\prime\mu}}{\partial x^{\nu
 \end_inset
 
 ，
+\begin_inset Formula $r_{j}$
+\end_inset
+
+是目标点与支点
+\begin_inset Formula $j$
+\end_inset
+
+的距离，
 \begin_inset Formula $\Delta_{j}^{\phantom{j}\nu}=x^{\nu}-u_{j}^{\phantom{j}\nu}$
 \end_inset
 
@@ -20541,6 +20549,46 @@ simplex（单纯形），例如2维三角形，3维四面体的一阶形函数�
 在单元上的 Jacobi 为常数矩阵
 \series default
 ，因此在参考单元上的性质可以平移到任意单元上。
+\end_layout
+
+\begin_layout Itemize
+形函数梯度
+\begin_inset Formula 
+\[
+G_{\mu\alpha}=\partial_{\mu}N_{\alpha}^{e}=N_{\alpha,\mu}^{e}=J_{\mu}^{\phantom{\mu}k}\,\partial_{k}N_{\alpha}^{e}.
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $J_{\mu}^{\phantom{\mu}k}=\partial\xi^{k}/\partial x^{\mu}=\left[(G_{k\beta}\,V_{\beta}^{\phantom{\alpha}\mu})^{-1}\right]_{\mu}^{\phantom{\mu}k}$
+\end_inset
+
+是Jacobi，
+\begin_inset Formula $\partial_{k}N_{\alpha}^{e}=\partial N_{\alpha}^{e}/\partial\xi^{k}$
+\end_inset
+
+是母坐标梯度。对于不同单元，
+\begin_inset Formula $\partial_{k}N_{\alpha}^{e}$
+\end_inset
+
+ 是相同矩阵，因此 
+\begin_inset Formula $\partial_{\mu}N_{\alpha}^{e}$
+\end_inset
+
+ 依赖于
+\begin_inset Formula $J_{\mu}^{\phantom{\mu}k}$
+\end_inset
+
+，也就是坐标变换。即使是同一全局坐标，如果所属的单元不同，造成
+\begin_inset Formula $J_{\mu}^{\phantom{\mu}k}$
+\end_inset
+
+不同，出来的
+\begin_inset Formula $\partial_{\mu}N_{\alpha}^{e}$
+\end_inset
+
+不同。也就是电场的方向不是网格无关的。
 \end_layout
 
 \begin_layout Section
@@ -28177,8 +28225,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-我们来计算 形函数 对空间坐标的梯度 
-\begin_inset Formula $\nabla N_{i}^{e}$
+我们来计算 形函数 对全局坐标的梯度 
+\begin_inset Formula $\nabla_{\mu}N_{\alpha}^{e}$
 \end_inset
 
 ，它可以通过 Jacobi 矩阵，和形函数对 母坐标（
