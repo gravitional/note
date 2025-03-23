@@ -3,6 +3,16 @@
 [Manjaro-KDE安装配置全攻略](https://zhuanlan.zhihu.com/p/114296129)
 [Manjaro安装后调教(Gnome/KDE)|](https://www.airnan.cn/2024/10/29/jDDcZulZ)
 
+## 安装
+
+[Writing to a USB Stick in Linux](https://wiki.manjaro.org/index.php/Burn_an_ISO_File#Writing_to_a_USB_Stick_in_Linux)
+
+```bash
+sudo dd bs=4M if=/home/tom/downloads/manjaro-kde-24.2.1-241216-linux612.iso of=/dev/sdc status=progress oflag=sync
+```
+
+安装的时候, 务必把语言选择为 `英文`.
+
 ## 基本使用
 
 [linux查看, 添加, 删除环境变量](https://blog.csdn.net/mayue_web/article/details/97023615)
