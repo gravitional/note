@@ -292,3 +292,54 @@ tlmgr conf # 这个会输出texlive大部分配置的信息
 此外在家目录下, 即`/home/tom/texmf`还有一个用户目录树, 建议把宏包解压到这里, 不会影响`ubuntu`自带的发行版.
 如果你的`home`没有这个文件夹, 可以运行`tlmgr init-usertree`产生一个.
 由于路径中`/home/tom/texmf`在前面, 把宏包装在这里, 就会被优先使用.
+
+## linux `./install-tl` 给出的信息
+
+在 linux 上, 解压 texlive2025-20250308.iso,
+使用 `sudo ./install-tl`, 打印出如下安装目录信息.
+输入 `i`, 开始安装
+
+```bash
+ Detected platform: GNU/Linux on x86_64
+
+ <B> set binary platforms: 1 out of 15
+
+ <S> set installation scheme: scheme-full
+
+ <C> set installation collections:
+     40 collections out of 41, disk space required: 8779 MB (free: 820631 MB)
+
+ <D> set directories:
+   TEXDIR (the main TeX directory):
+     /usr/local/texlive/2025
+   TEXMFLOCAL (directory for site-wide local files):
+     /usr/local/texlive/texmf-local
+   TEXMFSYSVAR (directory for variable and automatically generated data):
+     /usr/local/texlive/2025/texmf-var
+   TEXMFSYSCONFIG (directory for local config):
+     /usr/local/texlive/2025/texmf-config
+   TEXMFVAR (personal directory for variable and automatically generated data):
+     ~/.texlive2025/texmf-var
+   TEXMFCONFIG (personal directory for local config):
+     ~/.texlive2025/texmf-config
+   TEXMFHOME (directory for user-specific files):
+     ~/texmf
+
+ <O> options:
+   [ ] use letter size instead of A4 by default
+   [X] allow execution of restricted list of programs via \write18
+   [X] create all format files
+   [X] install macro/font doc tree
+   [X] install macro/font source tree
+   [ ] create symlinks to standard directories
+   [X] after install, set CTAN as source for package updates
+
+ <V> set up for portable installation
+
+Actions:
+ <I> start installation to hard disk
+ <P> save installation profile to 'texlive.profile' and exit
+ <Q> quit
+
+Enter command:
+``

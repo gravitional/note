@@ -236,7 +236,8 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 [Sync requests to re-login every 2 minutes](https://github.com/microsoft/vscode/issues/92972)
 [install gnome keyring and qtkeychain](https://rtfm.co.ua/en/linux-the-nextcloud-client-qtkeychain-and-the-the-name-org-freedesktop-secrets-was-not-provided-by-any-service-files-error/)
 
-`KDE` 环境下, `vs-code`登陆账户无法保存, 下次启动仍然提示登陆. 问题出在`keychain`. 解决方法是安装 gnome keyring and qtkeychain
+`KDE` 环境下, `vs-code`登陆账户无法保存, 下次启动仍然提示登陆. 问题出在`keychain`.
+解决方法是安装 gnome keyring and qtkeychain
 
 ```bash
 yay -S qtkeychain gnome-keyring

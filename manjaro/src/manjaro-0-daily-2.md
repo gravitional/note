@@ -123,3 +123,15 @@ faillock --reset --user username
 ```bash
 dd if=/dev/null of=/run/faillock/username
 ```
+
+### okular 更新背景颜色
+
+背景颜色
+
+```bash
+绿豆沙 #C7EDCC
+青草绿 #E3EDCD RGB(227, 237, 205)
+电脑管家 #CCE8CF RGB(204, 232, 207)
+WPS护眼色 #6E7B6C RGB(110, 123, 108)
+Settings -> Configure Okular -> Accessibility(辅助功能) -> Change colors -> Color mode: Change Paper Color -> Paper color -> HTML: #d6e7cb
+```
