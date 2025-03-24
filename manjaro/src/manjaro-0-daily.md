@@ -29,6 +29,80 @@ neofetch | lolcat
 虽说`Manjaro`相对`Arch`应该稳定一点, 但终究是滚动发行版,
 还是有滚挂的风险, 防止滚挂的最好办法就是 及时滚 长时间不更新必挂.
 
+## [Arch mkinitcpio](https://wiki.archlinuxcn.org/zh-cn/Mkinitcpio)
+
+[mkinitcpio命令](https://zhuanlan.zhihu.com/p/1009019300)
+
+mkinitcpio 是一个创建 initramfs 的 bash 脚本. 来自 mkinitcpio(8)帮助页面.
+
+> 初始内存盘本质上是一个很小的运行环境(早期用户空间),
+> 用于加载一些核心模块, 并在 init 接管启动过程之前做必要的准备.
+> 有了这个环境, 才能支持加密根文件系统, RAID上的根文件系统等高级功能.
+> mkinitcpio 支持自定义的钩子扩展, 运行时自动检测以及其他功能.
+
+`mkinitcpio` 的功能和作用:
+
++ 生成 initramfs: mkinitcpio 通过读取配置文件(默认是 /etc/mkinitcpio.conf), 打包必要的模块, 钩子和配置, 生成一个适用于系统引导的 initramfs 文件.
++ 模块加载: 它会将你系统启动所需的内核模块(如文件系统驱动, 设备驱动等)预先加载到 initramfs 中, 以确保系统能够正确识别硬件并挂载根文件系统.
++ 引导相关功能: 系统在引导时会调用该镜像来启动, 特别是在涉及 LVM, RAID, 加密分区等复杂启动场景时.
+
+### 常见用法
+
+1. 生成 initramfs 镜像:
+
+    ```bash
+    mkinitcpio -p linux
+    ```
+
++ 这条命令根据当前的内核生成一个 initramfs 镜像, -p linux 表示使用 /etc/mkinitcpio.d/linux.preset 预设文件, 该文件包含了镜像的生成规则.
+
+2. 自定义生成 initramfs:
+    重新生成 initramfs:
+    如果你修改了内核模块或配置文件(如 /etc/mkinitcpio.conf), 你可以使用以下命令重新生成 initramfs:
+
+    ```bash
+    mkinitcpio -g /boot/initramfs-linux.img
+    ```
+
+    这将根据 /etc/mkinitcpio.conf 文件生成新的 initramfs 文件, 并保存在 /boot 目录中, 通常配合内核一起用于启动.
+
+3. 指定自定义配置文件:
+
+如果你有自定义的 mkinitcpio 配置文件, 也可以使用以下命令:
+
+```bash
+mkinitcpio -c /path/to/custom.conf -g /boot/initramfs-linux.img
+```
+
+其中 -c 选项指定配置文件, -g 用于指定生成的镜像路径.
+
+mkinitcpio 配置文件 /etc/mkinitcpio.conf:
+
+该文件包含了如何生成 initramfs 镜像的信息. 你可以在该文件中自定义添加模块, 钩子(hooks)等. 常见的钩子包括:
+
++ base: 提供引导系统的基本工具.
++ udev: 负责设备管理.
++ autodetect: 自动检测系统所需的模块, 减少 initramfs 大小.
++ filesystems: 包括常见的文件系统支持(如 ext4, xfs 等).
++ keyboard: 提供键盘支持(如果需要在引导时解锁加密分区).
+
+你可以根据需要编辑此文件, 以确保在系统启动时加载正确的驱动程序和功能.
+
+典型的应用场景:
+
++ 更新内核后: 更新内核后, 通常需要重新生成 initramfs, 以确保新内核模块在启动时可用.
++ 更改硬件配置: 如果添加了新硬件设备(例如硬盘)或修改了系统启动过程的配置, 重新生成 initramfs 可以确保系统在启动时正确识别这些硬件.
++ 加密磁盘和复杂启动: 对于使用 LUKS
+
+磁盘加密或 LVM 的系统, mkinitcpio 确保在启动时加载正确的模块来解锁和挂载这些设备.
+
+### 总结
+
+mkinitcpio 是 Arch Linux 中一个关键的工具,
+用于生成引导系统所需的 initramfs 镜像.
+它负责在系统启动时加载关键的内核模块和工具,
+确保系统能够顺利启动和正确挂载根文件系统.
+
 ## 维护
 
 ### manjaro 开机红色提示
@@ -718,7 +792,15 @@ RebootCommand=/usr/bin/systemctl reboot
 
 ## 切换到 wayland 显示服务器
 
-首先在 sddm, 也就是登录界面, 点击左下角的 显示服务器选项, 切换到 wayland.
+### 使用 wayland服务器, 桌面黑屏, nvidia 驱动
+
+[升级KDE6之后, 使用wayland, 桌面黑屏](https://bbs.archlinuxcn.org/viewtopic.php?id=14105)
+https://wiki.archlinuxcn.org/wiki/
+[archlinux-nvidia相关](https://wiki.archlinuxcn.org/wiki/NVIDIA)
+[archlinux nvidia 独显配置](https://www.zido.site/blog/2021-09-04-archlinux-nvdia/)
+参考 [DRM 内核级显示模式设置](https://wiki.archlinuxcn.org/wiki/NVIDIA#DRM_%E5%86%85%E6%A0%B8%E7%BA%A7%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE).
+
+首先在 `sddm`, 也就是登录界面, 点击左下角的 显示服务器选项, 切换到 wayland.
 但是登陆可能会黑屏, 这时候按下 `ctrl+alt+F3`, 进入 tty, 编辑
 
 ```bash
@@ -729,6 +811,64 @@ options nvidia_drm fbdev=1
 # 然后更新 initramfs
 sudo update-grub
 ```
+
+其中 [nvidia uvm](https://zhuanlan.zhihu.com/p/663428129)
+
+异构内存管理 (HMM) 和 NVIDIA Unified Virtual Memory (UVM) 是两种独立的技术, 但也可以协作.
+这些技术将设备内存域集成到操作系统虚拟内存系统中, 并提供透明地跨设备迁移页面的功能.
+HMM 是Linux 内核提供的一种功能, 为产品制造商的驱动程序提供异构内存管理的通用接口 .
+NVIDIA UVM 目前提供了一种结合分页和设备驱动程序用于 NVIDIA GPU 的一体化解决方案. 它还可以与 HMM 接口集成
+
+### 另一种方式
+
+翻了翻文档, 尝试让内核优先加载独显驱动.
+
+首先通过 `grub` 来添加内核启动参数 `nvidia-drm.modeset=1` . 这会开启DRM 内核级显示模式.
+修改 `/etc/default/grub` 文件. 添加 `nvidia-drm.modeset=1` 到`GRUB_CMDLINE_LINUX_DEFAULT` 行中. 我这里大概是这样
+
+```conf
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia-drm.modeset=1"
+```
+
+但是 nvidia 内核在 GDM 之后才加载, 于是需要在启动过程中添加四个内核模块:
+`nvidia,  nvidia_modeset,  nvidia_uvm` 以及 `nvidia_drm`.
+
+修改文件 `/etc/mkinitcpio.conf`:
+
+```conf
+MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+```
+
+加入这四个模块后, 就需要每次更新 `nvidia` 驱动之后运行一次 `mkinitcpio`.
+这可以使用 pacman 钩子来自动化:
+
+添加 `/etc/pacman.d/hooks/nvidia.hook` 文件:
+
+```conf
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+# Change the linux part above and in the Exec line if a different kernel is used
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+```
+
+务必保证 Target 项所设置的软件包与你在前面的安装过程中所使用的相符
+(例如 `nvidia` 或 `nvidia-dkms` 或 `nvidia-lts` 或 `nvidia-ck-something`).
+
+>注意:  Exec 那一行看起来非常复杂,
+>是为了避免在 nvidia 和 linux 软件包都发生更新的时候重复运行 mkinitcpio.
+>如果你觉得无所谓, 可以删掉 `Target=linux` 以及 `NeedsTargets`,
+>然后 Exec 就可以简化为 >`Exec=/usr/bin/mkinitcpio -P`.
 
 ### vscode 在 wayland 下闪屏, 不能正常使用
 
@@ -789,7 +929,7 @@ sudo vim /usr/share/applications/microsoft-edge-beta.desktop
 Exec=/usr/bin/microsoft-edge-beta --inprivate --enable-features=VaapiVideoDecodeLinuxGL --enable-wayland-ime --ozone-platform-hint=auto --high-dpi-support=1
 ```
 
-### wayland 修改 Caps_Lock 绑定
+### wayland 修改 Caps_Lock 绑定, keyd
 
 [How to customise keyboard mappings with Wayland](https://unix.stackexchange.com/questions/292868/how-to-customise-keyboard-mappings-with-wayland)
 [linux 改键实现Capslock+](https://zhuanlan.zhihu.com/p/585475198)

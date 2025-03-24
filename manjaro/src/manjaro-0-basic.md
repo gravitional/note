@@ -5,6 +5,8 @@
 
 ## 安装
 
+### 制作 USB 安装工具
+
 [Writing to a USB Stick in Linux](https://wiki.manjaro.org/index.php/Burn_an_ISO_File#Writing_to_a_USB_Stick_in_Linux)
 
 ```bash
@@ -12,8 +14,92 @@ sudo dd bs=4M if=/home/tom/downloads/manjaro-kde-24.2.1-241216-linux612.iso of=/
 ```
 
 安装的时候, 务必把语言选择为 `英文`.
+微星主板上, 开机连续按下`F11`打开 UEFI 启动顺序界面,
+选择 Manjaro 安装选项, 如果有 nvidia 显卡,
+可以选择使用 proprietary 驱动(nvidia私有驱动)启动安装页面,
+安装过程中将安装私有驱动.
 
-## 基本使用
+### 系统安装
+
+这里我假设你的电脑引导方式是 `UEFI`, 如果你的 `ssd` 是 `NVMe` 协议 `M.2` 的,
+需要在进入安装界面之前先进去 `BIOS` 里面修改从硬盘的启动形式, 把 `RAID` 改成 `AHCI`,
+保存退出, 否则进入安装界面你不会看到你的`NVMe`硬盘, 做好这件事, 其他就都和普通 `ssd` 一样了.
+
+还需要注意的一点是, 修改成`AHCI`模式之后, 重新进入`Windows`时会有问题,
+这个时候不要慌, 等电脑自动重启第三次的时候, 进入安全模式启动 `Windows`,
+进去之后重启系统, 再次进入 `Windows` 就不需要安全模式了
+
+插上 `U盘`, 在电脑`logo`出现之前狂按`F12`手动选择从`U`盘启动.
+如果你的电脑有`NVIDIA`和 `Intel` 双显卡的话, 开机界面将 `drive` 改成 `nonfree`,
+这样系统会自动帮你安装适配的 `NVIDIA` 驱动(简直太方便了)
+如果这一步你没有改, 进去之后手动安装 `NVIDIA` 驱动千万不要自己随便安装,
+这样很可能会导致下次启动进入`X-Window`界面失败, 具体怎么安装可以参考`Manjaro WiKi`的解决方案
+
+为保安装一步成功请在启动安装程序之前先联网,
+一般来讲, 你只要在 `Windows` 下给 `Manjaro` 预留出磁盘空间,
+如果你有多个硬盘记得在安装窗口的最上面选对硬盘,
+安装时候的分区方案 选择 `取代一个分区`, 点击你之前分好的硬盘空间, 接着下一步即可.
+
+安装nvidia驱动参考 [manjaro 配置显卡](https://wiki.manjaro.org/index.php/Configure_Graphics_Cards/zh-cn).
+
+如果你需要手动分区, 看下面
+
+### 分区方案
+
+例如在一块 `1TB` 的 SSD 上安装manjaro, 内存为 `32GB`,
+选对硬盘之后, 安装程序推荐的默认分区方案, 按排列顺序是:
+
++ 300 MB; `fat32`; 标记为 `boot`, `esp`; 挂载点 `/boot/efi`; 安装 EFI grub 启动文件
++ 869.90 GB; `ext4`; 挂载点 `/`; 根目录
++ 34.32 GB; swap; 挂载为 linux swap 分区.
+
+### 其他初始化设定
+
+#### 安装Clash Verge Rev
+
+[最萌的云导航站](https://release.cutecloud.net/)
+[Manjaro安装后调教(Gnome/KDE) ](https://www.airnan.cn/2024/10/29/jDDcZulZ)
+[参考官方安装文档: ](https://www.clashverge.dev/install.html)
+[clash-verge-rev](https://github.com/clash-verge-rev/clash-verge-rev)
+
+直接使用 yay 安装
+
+```bash
+sudo pacman -S yay
+yay -S clash-verge-rev-bin
+```
+
++ 定义命令行代理:
+
+```bash
+# ===================================== system proxy
+# where proxy
+proxyOn () {
+export https_proxy="http://127.0.0.1:7897" http_proxy"=http://127.0.0.1:7897" all_proxy="socks5://127.0.0.1:7897"
+  echo "HTTP Proxy on"
+}
+# where noproxy
+proxyOff () {
+  unset http_proxy
+  unset https_proxy
+  unset all_proxy
+  echo "HTTP Proxy off"
+}
+```
+
++ firefox 需要手动设置使用代理;
+设置->拉到最下面, 网络设置->设置->手动配置代理.
+分别设置http代理和端口 为
+
+    ```bash
+    127.0.0.1, 7897
+    ```
+
+#### 生成 ssh key, git pull
+
+参考 [linux-17.1-ssh.md](https://gitee.com/graviton/note/blob/master/linux/src/linux-17.1-ssh.md)
+
+## plasma桌面 基本使用
 
 [linux查看, 添加, 删除环境变量](https://blog.csdn.net/mayue_web/article/details/97023615)
 [如何查看Linux桌面环境版本和详细信息? ](https://www.dongmanai.cn/post/3D61B932AaB8.html)
@@ -44,33 +130,7 @@ printenv
 env
 ```
 
-使用set查看所有本地定义的环境变量.
-
-## 系统安装
-
-这里我假设你的电脑引导方式是 `UEFI`, 如果你的 `ssd` 是 `NVMe` 协议 `M.2` 的,
-需要在进入安装界面之前先进去 `BIOS` 里面修改从硬盘的启动形式, 把 `RAID` 改成 `AHCI`,
-保存退出, 否则进入安装界面你不会看到你的`NVMe`硬盘, 做好这件事, 其他就都和普通 `ssd` 一样了.
-
-还需要注意的一点是, 修改成`AHCI`模式之后, 重新进入`Windows`时会有问题,
-这个时候不要慌, 等电脑自动重启第三次的时候, 进入安全模式启动 `Windows`,
-进去之后重启系统, 再次进入 `Windows` 就不需要安全模式了
-
-插上 `U盘`, 在电脑`logo`出现之前狂按`F12`手动选择从`U`盘启动.
-如果你的电脑有`NVIDIA`和 `Intel` 双显卡的话, 开机界面将 `drive` 改成 `nonfree`,
-这样系统会自动帮你安装适配的 `NVIDIA` 驱动(简直太方便了)
-如果这一步你没有改, 进去之后手动安装 `NVIDIA` 驱动千万不要自己随便安装,
-这样很可能会导致下次启动进入`X-Window`界面失败, 具体怎么安装可以参考`Manjaro WiKi`的解决方案
-
-为保安装一步成功请在启动安装程序之前先联网,
-一般来讲, 你只要在 `Windows` 下给 `Manjaro` 预留出磁盘空间,
-如果你有多个硬盘记得在安装窗口的最上面选对硬盘,
-安装时候的分区方案直接选择取代一个分区, 点击你之前分好的硬盘空间, 接着下一步即可.
-
-如果你需要手动分区:
-如果你的硬盘是 `ssd+hdd`, 并且打算把系统装在`hdd`下的话, 建议直接用 `windows`的 `efi` 分区,
-`hdd`中划分一个区出来挂载`/`区, 或者在`ssd`中分一个
-`150MB`(当然大点也行)的区出来挂载`/boot/efi`, 安装完毕重启即可.
+使用`set`查看所有本地定义的环境变量.
 
 ### pacman 换源
 
@@ -217,7 +277,7 @@ Fcitx5 配置中文输入(`xxx` 为选项)
 ![ime3](https://pic2.zhimg.com/v2-13c6178c89a89cc5f838bf34ec7e3fe9_1440w.jpg)
 ![ime4](https://pic2.zhimg.com/v2-e1b4a012a648048bad99fce92dc9d9db_1440w.jpg)
 
-#### 配置快捷键, CapsLock  切换输入法
+#### CapsLock  切换输入法, Xmodmap
 
 [如何在 Linux 使用 Caps Lock 切换输入法](https://wancat.cc/post/capslock/)
 [Xmodmap](https://wiki.archlinuxcn.org/wiki/Xmodmap)
@@ -238,7 +298,8 @@ Fcitx5 配置中文输入(`xxx` 为选项)
 我们先查询一下 `Caps_Lock` 对应的 `keycode`
 
 ```bash
-$ xmodmap -pke | grep Caps_Lock
+xmodmap -pke | grep Caps_Lock
+
 keycode  66 = Caps_Lock NoSymbol Caps_Lock
 ```
 
@@ -246,13 +307,14 @@ keycode  66 = Caps_Lock NoSymbol Caps_Lock
 接下來把 66 改成对应 `Multi_key`.
 
 ```bash
-$ xmodmap -pke > ~/.Xmodmap  #存储设定
-$ vim ~/.Xmodmap
-# 将 keycode 66 处改成;  ! for comment
+xmodmap -pke > ~/.Xmodmap  #存储设定
+vim ~/.Xmodmap
+# 将 keycode 66 处改成;  ! 表示注释
 keycode  66 = Multi_key NoSymbol Multi_key
 # 在最底下加入
 clear lock
-$ xmodmap ~/.Xmodmap     # 载入设定
+
+xmodmap ~/.Xmodmap     # 载入设定
 ```
 
 根据 ArchLinux wiki, `~/.Xmodmap` 会自动被 GDM, SDDM, XDM 载入,
@@ -346,12 +408,33 @@ Theme=Nord-Light
 
 完成之后就可以注销, 重新登录之后打开`fcitx5-configtool`编辑一下相应配置.
 
+## 字体大小
+
+调整 plasma 桌面字体大小
+settings-> Appearance & style -> Text & fonts
+
+### 调整 fcitx5 输入法候选托盘字体大小
+
+[fcitx5设置字体和大小](https://segmentfault.com/a/1190000044892285)
+
+终端输入 `fcitx5-configtool` 回车, 打开输入法设置界面
+也就是 `设置` 中的
+`Language & Time`->`Input Method`,
+页面下方 `Configure addons...`-> `Classic User Interface`->
+点击右侧设置按钮, 即可设置各种字体大小.
+影响输入法候选栏大小主要是其中的 `Font`
+
+![img](https://segmentfault.com/img/bVdcwHe)
+![img](https://segmentfault.com/img/bVdcwHf)
+![img](https://segmentfault.com/img/bVdcwHg)
+![img](https://segmentfault.com/img/bVdcwHe)
+
 ### kate markdown lsp 语言服务器
 
 [artempyanykh/marksman](https://github.com/artempyanykh/marksman)
 
 ```bash
-yay -Ss marksman
+yay -S marksman
 ```
 
 ### 配置 oh-my-zsh
@@ -428,19 +511,6 @@ cd ~/.vimplus
 ./install.sh
 ```
 
-### 安装Clash Verge Rev
-
-[Manjaro安装后调教(Gnome/KDE) ](https://www.airnan.cn/2024/10/29/jDDcZulZ)
-
-这一步是为了完全解锁超能力, 好方便折腾嘛, 毕竟换源终究还是不如直连的靠谱.
-[参考官方安装文档: ](https://www.clashverge.dev/install.html)
-
-直接使用 yay 安装
-
-```bash
-yay -S clash-verge-rev-bin
-```
-
 ### AppImage,  AppImageLauncher
 
 [在Ubuntu中运行和管理AppImage](https://blog.csdn.net/u012899618/article/details/144206660)
@@ -497,7 +567,7 @@ aur 现在已经有官方的 wechat-linux 版
 aur/wechat-bin 4.0.1.11-2 (+4 1.43) (已安装)  This is a repackage of WeChat.
 
 ```bash
-yay -Ss wechat-bin
+yay -S wechat-bin
 ```
 
 `electron`版:
@@ -510,6 +580,12 @@ yay -S electron-wechat
 
 ```bash
 yay -S baidunetdisk-bin
+```
+
+#### 阿里云盘命令行版
+
+```bash
+yay -S aur/aliyunpan-go-bin
 ```
 
 ### 安装其他软件
