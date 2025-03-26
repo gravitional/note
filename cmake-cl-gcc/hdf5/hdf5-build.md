@@ -38,7 +38,7 @@ type 为 `PATH`, value 为 `${CMAKE_PREFIX_PATH};C:/cppLibs/zlib`
 然后 Configure, Generate, build 相同。
 
 ```nu
-$env.HDF5_DIR = 'C:/cppLibs/hdf5-1.13.0';
-$env.Path = 'C:/cppLibs/hdf5-1.13.0/bin' ++ $env.Path
+$env.HDF5_DIR = 'C:/cppLibs/hdf-1.10.5';
+$env.Path = 'C:/cppLibs/hdf-1.10.5/bin' ++ $env.Path
 cargo build
 ```
