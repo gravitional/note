@@ -652,6 +652,37 @@ let fs = (glob *.vsix); $fs | each {|it| code --install-extension ($it | path ex
 
 cmake 代码块不会高亮
 
+## [vscode 启动之后, 命令行里每小时打印一次"update#setState“][def2]
+
+Try running "C:\Program Files\Microsoft VS Code\bin\Code.cmd" instead, as this is the CLI version. Code.exe is the electron app that should not be in the path.
+
+解决方案是从 PATH 中删除
+`D:\Users\<me>\AppData\Local\Programs\Microsoft VS Code\`
+然后添加
+`D:\Users\<me>\AppData\Local\Programs\Microsoft VS Code\bin`
+
+### [Cursor code/cursor 命令](https://www.runoob.com/cursor/cursor-cursor-command.html)
+
+Cursor 支持将终端启动命令设置为 code 或 cursor，以便快速启动编辑器，如果本地已经安装了 VS Code，code 命令一般用在 VS Code 中，Cursor 使用 cursor 命令。
+启用 Cursor 的 code 命令 非常简单，先打开命令面板：
+
+macOS 系统快捷键：⇧⌘P（command + shift + p）
+Windows/Linux 快捷键: Ctrl + Shift + P
+搜索安装 `>shell command:install "cursor" command`
+如果不想让 cursor 的 code 命令 和 VSCode 冲突,
+可以把 VSCode 的路径提到 PATH 上面，
+或者直接把 Cursor 的 path 删除,
+或者把 `C:\MyProgram\cursor\resources\app\bin` 中的 `code.cmd` 删除.
+
+## vscode 命令行比较两个文件的差异
+
+```bash
+code --diff a.md b.md
+```
+
+给出以 `a.md` 为基础参照(base), `b.md` 带来的差异, 即 `b-a`
+
 ## ref
 
 [def]: https://markdown-all-in-one.github.io/docs/guide/syntax-highlighting-for-fenced-code-blocks.html#in-editor
+[def2]: https://stackoverflow.com/questions/49676290/visual-studio-code-starting-from-command-line-batch-prints-out-updatesetstate
