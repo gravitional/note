@@ -695,8 +695,10 @@ git  remote rm gitee
 git remote set-url --add  origin git@xxxx2
 ```
 
+添加远程仓库
+
 ```zsh
-grset --add  origin git@xxxx2
+grset --add origin git@xxxx2
 ```
 
 查看远程仓库情况. 可以看到 `origin` 远程仓库有两个 `push` 地址.
@@ -727,11 +729,15 @@ git remote set-url --add [--push] <name> <newurl>
 git remote set-url --delete [--push] <name> <url>
 ```
 
-为远程仓库设置新的链接,改变远程 `<name>` 的链接, 可以通过给出 ` <oldurl>` 进一步确认.
+更改 remote 的 `URL`.
+remote 名称为 `<name>`, 使用 regex 匹配模式为`<oldurl>` 的 旧有URL, 然后更新为 `<newurl>`;
+如果没有给出 `<oldurl>` 则选取第一个 URL.
+如果 `<oldurl>` 与任何 URL 都不匹配, 则会出错, 不会更改任何内容. 
 
-`--push `, 设置push URLs 而不是 fetch URLs
+`--push `, 设置 push URLs 而不是 fetch URLs
 `--add`, 不改变已经存在的 URLs, 添加新 URL
-`--delete`, 不改变已经存在的 URLs, 删除 `<name>` 上匹配正则 `<url>`的 地址. 试图删除所有 non-push URLs 将导致错误.
+`--delete`, 不改变已经存在的 URLs, 删除 `<name>` 上匹配正则 `<url>`的 地址. 
+试图删除所有 non-push URLs 将导致错误.
 
 ### 远程分支
 
@@ -797,8 +803,7 @@ Git 自动将 `serverfix` 分支名字展开为 `refs/heads/serverfix:refs/heads
 当克隆一个仓库时, 它通常会自动地创建一个跟踪 `origin/master` 的 `master` 分支.
 然而, 如果你愿意的话可以设置这个远程库的其他分支, 或是一个在其他远程仓库上的分支, 又或者不跟踪`master` 分支.
 
-***
-上游快捷方式
+#### 上游快捷方式
 
 当设置好跟踪分支后, 可以通过简写 `@{upstream}` 或 `@{u}` 来引用它的上游分支.
 所以在 `master` 分支时并且它正在跟踪 `origin/master` 时, 如果愿意的话可以使用 `git merge @{u}` 来取代 `git merge origin/master`.
@@ -869,14 +874,26 @@ git push -u origin <refspec>
 `git push` 语法说明;
 
 + `<refspec>...`; `<refspec>`指定用 `source` 对象更新哪个 `destination` ref.
-    `<refspec> `的格式是: 可选的`+`号, 接着一个 `source object <src>` , 然后是`:`,
-    然后是the `destination ref <dst>`, 就是`本地分支:远程分支`的格式,
+`<refspec> `的格式是: 可选的`+`号, 接着一个 `source object <src>` , 然后是`:`,
+然后是the `destination ref <dst>`, 就是`本地分支:远程分支`的格式,
 
-    推送一个空的 `<src>` 相当于删除远程库中的 `<dst> ref` .
-    特殊的refspec `:` (or `+:` to allow non-fast-forward updates) ,
-    告诉Git推送匹配的分支: 如果远程库里存在和本地名字一样的分支, 就把本地分支推送过去.
+推送一个空的 `<src>` 相当于删除远程库中的 `<dst> ref` .
+特殊的refspec `:` (or `+:` to allow non-fast-forward updates) ,
+告诉Git推送匹配的分支: 如果远程库里存在和本地名字一样的分支, 就把本地分支推送过去.
 
 + `--all` ; 推送所有分支(i.e. `refs/heads/`下面的所有ref); 这时候不要再指定其他特定 `<refspec>` .
+
+### 设置远程仓库地址
+
+如果先建立本地仓库, 后建立远程仓库,
+这时候本地仓库未设置 remote 的 orgin 的 url,
+可以使用以下命令设置或者覆写, 并强制推送
+
+```bash
+git remote add origin git@gitee.com:graviton/xxxx.git # 添加 remote url
+git remote set-url git@gitee.com:graviton/xxxx.git # 覆写 remote url
+git push --set-upstream origin master -f # 设置 master 的上游分支, 并强制推送,
+```
 
 ## git diff
 
