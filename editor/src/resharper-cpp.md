@@ -16,17 +16,39 @@
 `Ctrl+Shift+Backspace`; Previous Edit
 `Ctrl+Shift+Alt+G`; Related Files
 
+在有 Resharper hint 的地方, 例如变量下面有绿色虚线,
+`Ctrl+.` == `Alt+Enter`, 打开建议窗口
+在普通变量上, `Ctrl+.` 没有效果, `Ctrl+K, Ctrl+i` 打开 VS 的悬浮提示
+
+## Navigate 导航
+
 Search EveryWhere/Go to Type; `Ctrl+N`
-Go to File... Ctrl+Shift+N
-Go to Symbol... Ctrl+Shift+Alt+N
+Go to File...; 打开文件; Ctrl+Shift+N
+File.NewProject `Ct+Al+N`; 全局
+View.ASP.NETNonvisualControls; `Ct+Al+N`; HTML编辑器设计视图
+
+Go to Symbol...; 打开符号; Ctrl+Shift+Alt+N
+
 Go to Text ...
-Go to File Member... Ctrl+F12
+Go to File Member...; 到文件中的成员; `Ctrl+F12`
+Edit.GoToDeclaration; 全局
+Edit.GoToImplementation; `Ctrl+F12`; C#编辑器
+Edit.GoToImplementation; `Ctrl+F12`; 带编码功能的C#编辑器
+Edit.GoToImplementation; `Ctrl+F12`; Visual Basic 编辑器
+Edit.GoToImplementation; `Ctrl+F12`; 带编码功能的 Visual Basic 编辑器
+
+
+
 Go to Actions... Ctrl+Shift+A
 
 Navigate To ... Ctrl+Shift+G
 Derived Symbols Ctrl+Alt+B
 
-Next Member Alt+Down
+Next Member; `Alt+DArr`; GoToNextMember; 下一个成员;ov
+Edit.MoveSelectedLinesDown; `Alt+DArr`; 文本编辑器
+Next Member; `Alt+UArr`; GoToPrevMember, 上一个成员;ov
+Edit.MoveSelectedLinesUp; `Alt+UArr`; 文本编辑器
+
 Previous Member Alt+Up
 containing Declaration `Ctrl+[`
 
@@ -42,9 +64,8 @@ Clear All Bookmarks
 Clear All Bookmarks in Documents
 Breakpoints... Ctrl+Alt+F9
 
-Nevigate Backward
-Nevigate Forward
-
+Nevigate Backward; 向后导航, `Ctrl+-`
+Nevigate Forward; 向前导航; `Ctrl+Shift+-`
 
 ### Find
 
@@ -77,7 +98,16 @@ Extend Selection; Ctrl+W
 Duplicate Text; Ctrl+D
 Comment With Line Commnet; Ctrl+/
 Comment With Block Commnet; Ctrl+Shift/
-Rearrange Code
+
+Rearrange Code; 移动代码位置; 
+`C+S+A+UArr`; `C+S+A+DArr`; `C+S+A+LArr`; `C+S+A+RArr`
+另外使用 vim 键位, J 向下, K向上,
+
+`Ctrl+Shift+Alt+LArw`; ReSharper.ReSharper_MoveLeft; 移动定义的整体位置, 使用上下左右箭头
+Edit.PreviousSubwordExtend; `C+S+A+LArw`; 文本编辑器
+`C+S+A+J`; ReSharper.ReSharper_MoveRight;
+Edit.NextSubwordExtend; `C+S+A+LArw`; 文本编辑器
+
 
 Cleanup Code... Ctrl+Alt+F
 Silent Cleanup Code; Ctrl+Shift+Alt+F
@@ -99,8 +129,13 @@ Safe Delete...; Alt+Del
 Change Signature.. Ctrl+F6
 
 Extract
-Inline
+Inline; ;就是把函数的定义直接粘贴过来
 Convert
+
+`Ct+Al+N` inline variable; 内联变量, 将变量的定义直接填入使用的地方; 移除多余变量定义;
+`Ct+Al+M`; Extract Method; 提取方法, 将代码段提取为 成员函数
+`Ct+Al+V`; Introduce Variable; 提取变量; 将代码段赋值给变量, 方便重复访问值;
+`Ct+Al+D`; Introduce Field; 引入字段(成员变量); 将代码段的值赋给成员变量.
 
 ## Inspect
 
@@ -116,7 +151,7 @@ Code issues in Current Project
 Load Saved Report...
 Save issues Report...
 
-Next Issue in File F12
+Next Issue in File; 文件中的下一个问题 F12
 Previous Issue in File; Shift+F12
 Next Error/Waring; Shift+Alt+F12
 
@@ -210,7 +245,6 @@ Edit.LineOpenAbove; 文本编辑器
 
 `Alt+Enter`; ReSharper.ReSharper_AltEnter; ov
 View.QuickActions; 文本编辑器
-`Ctrl+.` 也打开 `Alt+Enter` 窗口
 
 `Ctrl+E`; ReSharper.ReSharper_GotoRecentFiles; ov 
 Edit.ToggleWordWrap; Ctrl+E,Ctrl+W; 文本编辑器
