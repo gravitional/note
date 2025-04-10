@@ -1,5 +1,7 @@
 # jetbrains resharper c++
 
+[每个人都应该知晓的8项Resharper快捷键](https://www.cnblogs.com/redmoon/p/4458697.html)
+
 调试.自动窗口, Ctrl+Alt+V,A 全局
 调试.局部变量, Ctrl+Alt+V,L 全局
 调试.调用堆栈, Ctrl+Alt+C 全局
@@ -50,10 +52,12 @@ Next Member; `Alt+UArr`; GoToPrevMember, 上一个成员;ov
 Edit.MoveSelectedLinesUp; `Alt+UArr`; 文本编辑器
 
 Previous Member Alt+Up
-containing Declaration `Ctrl+[`
+containing Declaration; 导航到所属的方法和类的签名处 `Ctrl+[`
+选择 当前位置所属的方法或类,整个选中, `Ctrl + Shift + [`
+
 
 Recent Files... Ctrl+E
-Recent Edits... Ctrl+Shift+Alt+Backspace
+Recent Edits... `Ctrl+Shift+Alt+Backspace`; 列出最近编辑的位置的列表
 Previous Edit Ctrl+Shift+Backspace
 Related Files Ctrl+Shift+Alt+G
 Switch Header/Source Alt+O
@@ -67,7 +71,14 @@ Breakpoints... Ctrl+Alt+F9
 Nevigate Backward; 向后导航, `Ctrl+-`
 Nevigate Forward; 向前导航; `Ctrl+Shift+-`
 
-### Find
+`Shift+Alt+L`; LocateInSolutionOrAssemblyExplorer; 在解决方案管理器中定位正在编辑的文件. ov;
+Edit.SortLines; `Shift+Alt+L Shift+Alt+S`; 文本编辑器
+Edit.JoinLines; `Shift+Alt+L Shift+Alt+J`; 文本编辑器
+Team.NewLinkedWorkItem; `Shift+Alt+L`; 工作项查询视图
+
+
+
+## Find
 
 Optimize Reference ... Ctrl+Alt+Y
 Search with Pattern...
@@ -108,6 +119,7 @@ Edit.PreviousSubwordExtend; `C+S+A+LArw`; 文本编辑器
 `C+S+A+J`; ReSharper.ReSharper_MoveRight;
 Edit.NextSubwordExtend; `C+S+A+LArw`; 文本编辑器
 
+迅速为一行代码加上大括号; 选中, 输入 `{` 或者 `[`.
 
 Cleanup Code... Ctrl+Alt+F
 Silent Cleanup Code; Ctrl+Shift+Alt+F
