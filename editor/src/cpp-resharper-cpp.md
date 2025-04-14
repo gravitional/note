@@ -6,17 +6,21 @@
 调试.局部变量, Ctrl+Alt+V,L 全局
 调试.调用堆栈, Ctrl+Alt+C 全局
 调试.监视1, Ctrl+Alt+W 1 全局
-快速监视,计算表达式; shift+F9, 
+快速监视,计算表达式; shift+F9,
 
 `Ctrl+B` Declaration/Definition 切换
 `Ctrl+Alt+Shift+B`; Go to Implementation
 `Ctrl+Alt+B`; Derived Symbols
 
-`Ctrl+[` containing Declaration
-`Alt+Up`; Previous Member
-`Alt+Down`; Next  Member
-`Ctrl+Shift+Backspace`; Previous Edit
-`Ctrl+Shift+Alt+G`; Related Files
++ `Ctrl+[`; containing Declaration; 跳转到包含光标的 closure.
++ `Ctrl+Shift+[`; _SelectContainingDeclartaion; 选中包含光标的 closure;
+ov Image.PreviousRightColor;`Ctrl+Shift+[`; VC图像编辑器;
+
+
++ `Alt+Up`; Previous Member
++ `Alt+Down`; Next  Member
++ `Ctrl+Shift+Backspace`; Previous Edit
++ `Ctrl+Shift+Alt+G`; Related Files
 
 在有 Resharper hint 的地方, 例如变量下面有绿色虚线,
 `Ctrl+.` == `Alt+Enter`, 打开建议窗口
@@ -24,8 +28,8 @@
 
 ## Navigate 导航
 
-Search EveryWhere/Go to Type; `Ctrl+N`
-Go to File...; 打开文件; Ctrl+Shift+N
+`Ctrl+N`; Search EveryWhere/Go to Type; 全局搜索; 打开类型
+`Ctrl+Shift+N`; Go to File...; 打开文件;
 File.NewProject `Ct+Al+N`; 全局
 View.ASP.NETNonvisualControls; `Ct+Al+N`; HTML编辑器设计视图
 
@@ -38,7 +42,6 @@ Edit.GoToImplementation; `Ctrl+F12`; C#编辑器
 Edit.GoToImplementation; `Ctrl+F12`; 带编码功能的C#编辑器
 Edit.GoToImplementation; `Ctrl+F12`; Visual Basic 编辑器
 Edit.GoToImplementation; `Ctrl+F12`; 带编码功能的 Visual Basic 编辑器
-
 
 
 Go to Actions... Ctrl+Shift+A
@@ -108,9 +111,11 @@ Surround with Template... Ctrl+Alt+J
 Extend Selection; Ctrl+W
 Duplicate Text; Ctrl+D
 Comment With Line Commnet; Ctrl+/
-Comment With Block Commnet; Ctrl+Shift/
 
-Rearrange Code; 移动代码位置; 
+`Ctrl+Shift/`; Comment With Block Commnet; 添加块注释;ov
+Edit.ToggleBlockComment; `Ctrl+Shift+/`; 文本编辑器
+
+Rearrange Code; 移动代码位置;
 `C+S+A+UArr`; `C+S+A+DArr`; `C+S+A+LArr`; `C+S+A+RArr`
 另外使用 vim 键位, J 向下, K向上,
 
@@ -123,11 +128,13 @@ Edit.NextSubwordExtend; `C+S+A+LArw`; 文本编辑器
 
 Cleanup Code... Ctrl+Alt+F
 Silent Cleanup Code; Ctrl+Shift+Alt+F
-Reformat Code; Ctrl+Alt+Enter
-Apply Syntax Style; Ctrl+Alt+S
++ `Ctrl+Alt+Enter`; Reformat Code; ov
+OtherContextMenu.浏览器链接.RefreshLinkedBrowsers, `Ctrl+Alt+Enter`; 全局
+
++ Apply Syntax Style; Ctrl+Alt+S
 Detect Code Style Settings
 
-Paste... Ctrl+Shift+V
+`Ctrl+Shift+V`; Paste... 
 Join Lines; Ctrl+Shift+J
 Edit Project Item Properties
 Copy Code Reference... Ctrl+Shift+Alt+C
@@ -164,8 +171,11 @@ Load Saved Report...
 Save issues Report...
 
 Next Issue in File; 文件中的下一个问题 F12
-Previous Issue in File; Shift+F12
-Next Error/Waring; Shift+Alt+F12
+`Shift+F12`; Next Error/Waring; _GotoNextErrorInSolution; ov
+Edit.PeekDefinition; `Alt+F12`; 文本编辑器
+
+`Shift+Alt+F12` _GotoPrevErrorInSolution; ov
+Edit.QuickfindSymbol; `Shift+Alt+F12`; 全局
 
 Solution Errors;
 Analyze includes in Solution
@@ -230,10 +240,10 @@ View.Publish; Ctrl+Alt+F9; 全局
 Debug.ToggleDisassembly; Ctrl+F11; 全局
 
 
-`Ctrl+Q`; ReSharper.ReSharper_QuickDoc, ov 
+`Ctrl+Q`; ReSharper.ReSharper_QuickDoc, ov
 Window.ActivateQuickLaunch; 全局
 
-`Ctrl+Shift+T` ReSharper.ReSharper_GotoTypeDeclaration; ov 
+`Ctrl+Shift+T` ReSharper.ReSharper_GotoTypeDeclaration; ov
 Edit.GoToFile; 全局
 
 + 重定义; 编辑器上下文菜单.导航.与活动文档同步, `ctrl+, S`, control+逗号 然后按 s
@@ -249,16 +259,16 @@ TestExplorer.OpenTest, 测试资源管理器
 TestExplorer.OpenTest, Live Unit Testing 选项卡
 TestExplorer.OpenTest, "测试资源管理器播放列表"选项卡
 
-`Shift+F12`; ReSharper.ReSharper_GotoPrevHighlight; ov 
+`Shift+F12`; ReSharper.ReSharper_GotoPrevHighlight; ov
 Edit.FindAllReferences; 全局
 
-`Ctrl+Enter`; ReSharper.ReSharper_ForceCompleteItem; ov 
+`Ctrl+Enter`; ReSharper.ReSharper_ForceCompleteItem; ov
 Edit.LineOpenAbove; 文本编辑器
 
 `Alt+Enter`; ReSharper.ReSharper_AltEnter; ov
 View.QuickActions; 文本编辑器
 
-`Ctrl+E`; ReSharper.ReSharper_GotoRecentFiles; ov 
+`Ctrl+E`; ReSharper.ReSharper_GotoRecentFiles; ov
 Edit.ToggleWordWrap; Ctrl+E,Ctrl+W; 文本编辑器
 Edit.Duplicate; Ctrl+E,V; 文本编辑器
 Edit.Duplicate; Ctrl+E,Ctrl+V; 文本编辑器
@@ -282,15 +292,15 @@ Image.UseSelectionBrush; Ctrl+U; VC图像编辑器
 `Ctrl+D`; ReSharper.ReSharper_DuplicateText; 复制文字; ov
 Edit.Duplicate; Ctrl+D; 文本编辑器
 
-`Ctrl+J`; ReSharper.ReSharper_LiveTemplatesInsert; 
+`Ctrl+J`; ReSharper.ReSharper_LiveTemplatesInsert;
 Edit.ListMembers; Ctrl+J; 文本编辑器
 
 `Ctrl+W`; ReSharper.ReSharper_ExtendSeclection; ov
 Edit.SelectCurrentWord; 文本编辑器
 
-`Ctrl+B`; ReSharper.ReSharper_GotoDeclaration; ov
-Format.Bold Ctrl+B; HTML编辑器设计视图
-Build.BuildSelecton; Ctrl+B; 全局
++ `Ctrl+B`; ReSharper.ReSharper_GotoDeclaration; ov
+Format.Bold `Ctrl+B`; HTML编辑器设计视图
++ Build.BuildSelecton; Ctrl+B; 全局
 Format.ButtonBottom; Ctrl+B; VC对话框编辑器
 Image.BrushTool; Ctrl+B; VC图像编辑器
 生成.生成选定内容, `Ctrl+, B`
