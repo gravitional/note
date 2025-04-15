@@ -106,7 +106,8 @@ Show Quick Documentation...; Ctrl+Q
 Generate Code... Alt+Ins
 Create Ne File... Ctrl+Alt+Ins
 Insert Live Template... Ctrl+J
-Surround with Template... Ctrl+Alt+J
+
++ `Ctrl+Alt+J`; Surround with Template...; 用模板包裹
 
 Extend Selection; Ctrl+W
 Duplicate Text; Ctrl+D
