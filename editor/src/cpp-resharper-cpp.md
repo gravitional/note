@@ -26,7 +26,17 @@ ov Image.PreviousRightColor;`Ctrl+Shift+[`; VC图像编辑器;
 `Ctrl+.` == `Alt+Enter`, 打开建议窗口
 在普通变量上, `Ctrl+.` 没有效果, `Ctrl+K, Ctrl+i` 打开 VS 的悬浮提示
 
+## ymy 自定义
+
++ `ctrl+, S`, `control+逗号 然后按 s`; 重定义; 编辑器上下文菜单.导航.与活动文档同步, 
++ `ctrl+, ctrl+.`, `control+逗号, 句号`; 重定义; 编辑.转到所有, , 弹出 VS 的代码搜索页面
++ `ctrl+, B`; 生成.生成选定内容; build select project
++ `ctrl+, D`; 跳转到声明, Declaration, .h 文件
+
 ## Navigate 导航
+
+切换 .cpp, .h 文件, `Alt+o`,
+也可以 ctrl+鼠标点击名称
 
 `Ctrl+N`; Search EveryWhere/Go to Type; 全局搜索; 打开类型
 `Ctrl+Shift+N`; Go to File...; 打开文件;
@@ -43,10 +53,11 @@ Edit.GoToImplementation; `Ctrl+F12`; 带编码功能的C#编辑器
 Edit.GoToImplementation; `Ctrl+F12`; Visual Basic 编辑器
 Edit.GoToImplementation; `Ctrl+F12`; 带编码功能的 Visual Basic 编辑器
 
++ Go to Actions... Ctrl+Shift+A
 
-Go to Actions... Ctrl+Shift+A
++ `Ctrl+Shift+G`; Navigate To ...; 导航到...; _NavigateTo; ov
+Edit.OpenFile; `Ctrl+Shift+G`; 全局
 
-Navigate To ... Ctrl+Shift+G
 Derived Symbols Ctrl+Alt+B
 
 Next Member; `Alt+DArr`; GoToNextMember; 下一个成员;ov
@@ -247,8 +258,7 @@ Window.ActivateQuickLaunch; 全局
 `Ctrl+Shift+T` ReSharper.ReSharper_GotoTypeDeclaration; ov
 Edit.GoToFile; 全局
 
-+ 重定义; 编辑器上下文菜单.导航.与活动文档同步, `ctrl+, S`, control+逗号 然后按 s
-+ 重定义; 编辑.转到所有, `ctrl+, ctrl+.`, control+逗号, 句号, 弹出 VS 的代码搜索页面
+
 
 `F6`; ReSharper.ReSharper_Move; ov; 重命名文件
 Window.NextSplitPane; F6 全局
@@ -304,7 +314,6 @@ Format.Bold `Ctrl+B`; HTML编辑器设计视图
 + Build.BuildSelecton; Ctrl+B; 全局
 Format.ButtonBottom; Ctrl+B; VC对话框编辑器
 Image.BrushTool; Ctrl+B; VC图像编辑器
-生成.生成选定内容, `Ctrl+, B`
 
 `Ctrl+N`; ReSharper.ReSharper_GotoType; ov
 File.NewFile; Ctrl+N; 全局
