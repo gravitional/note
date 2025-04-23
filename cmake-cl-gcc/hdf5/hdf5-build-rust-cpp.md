@@ -60,10 +60,12 @@ CMake 构建对应的说明文件是 `release_docs/INSTALL_CMake.txt`,
   + [ZLIBNG](https://github.com/zlib-ng/zlib-ng/archive/refs/tags/2.2.2.tar.gz)
   + [LIBAEC](https://github.com/MathisRosenhauer/libaec/releases/download/v1.1.3/libaec-1.1.3.tar.gz)
 
-其中 ZLIB 和 ZLIBNG 选择一个就行; LIBAEC 又称为 Szip.
+其中 ZLIB 和 ZLIBNG 选择一个就行; `LIBAEC` 又称为 `Szip`.
 
-查询文档之后, 选择如下的 CMake 配置:
-下面是对应的 nushell 下的 cmake 命令行, 
++ 新建一个目录, 把这些压缩包都放进去, 我放在 download 目录下
+
++ 查询文档之后, 选择如下的 CMake 配置:
+下面是对应的 nushell 下的 cmake 命令行,
 其他命令行类似, 可能需要续行符
 
 + 构建CMake项目
@@ -103,11 +105,40 @@ cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX='C:/Users/qingz/D
 + 编译, 链接
 
 ```bash
-cmake --build . --config Release
+cmake --build . --config Release -j
 ```
 
 + 安装
 
 ```bash
 cmake --install . --config release
+```
+
+## msys2 上编译
+
+安装依赖库
+
+```bash
+pacman -S mingw-w64-x86_64-zlib mingw-w64-x86_64-libaec
+```
+
+```bash
+args=(
+ -G Ninja
+ -DCMAKE_BUILD_TYPE:STRING=Release
+ -DBUILD_SHARED_LIBS:BOOL=ON
+ -DHDF5_BUILD_HL_LIBS:BOOL=ON
+ -DHDF5_BUILD_CPP_LIB:BOOL=ON
+ -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON
+ -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=ON
+ -DHDF5_BUILD_TOOLS:BOOL=ON
+ -DHDF5_BUILD_UTILS:BOOL=ON
+ -DHDF5_BUILD_EXAMPLES:BOOL=OFF
+ -DHDF5_BUILD_TESTING:BOOL=OFF
+ -DHDF5_BUILD_DOCS:BOOL=OFF
+ -DPLUGIN_TGZ_NAME:STRING="hdf5_plugins-1.14.tar.gz"
+ -B . -S ..
+)
+# cmake "${args[@]}" # for bash
+cmake $args
 ```
