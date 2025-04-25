@@ -26,6 +26,9 @@ ov Image.PreviousRightColor;`Ctrl+Shift+[`; VC图像编辑器;
 `Ctrl+.` == `Alt+Enter`, 打开建议窗口
 在普通变量上, `Ctrl+.` 没有效果, `Ctrl+K, Ctrl+i` 打开 VS 的悬浮提示
 
+`Ctr+, F9`; 编辑器上下文菜单.代码窗口.断点.插入条件断点
+调试器上下文菜单.代码窗口.断点.插入条件断点
+
 ## ymy 自定义
 
 + `ctrl+, S`, `control+逗号 然后按 s`; 重定义; 编辑器上下文菜单.导航.与活动文档同步, 
