@@ -101,11 +101,14 @@ c++生成工具 有 `适用于 v143 生成工具的 C++/CLI 支持(最新版本)
 --includeRecommended --includeOptional --lang Zh-cn)
 ```
 
-离线安装, 推荐下载完整包
+### **离线安装, 推荐下载完整包**
 
 ```powershell
-C:\Users\qingz\Downloads\VisualStudioSetup.exe --layout .\localVSlayout --all --lang Zh-cn
+.\VisualStudioSetup.exe .\vs-layout-enterprise-250430 --all --lang Zh-cn
 ```
+
+中间可能会因为网络链接等问题失败,
+继续运行同一个命令, 安装程序会更新所有的包
 
 [使用命令行参数安装 Visual Studio 页面]: https://learn.microsoft.com/en-us/visualstudio/install/create-a-network-installation-of-visual-studio?view=vs-2022
 [Visual Studio安装命令行参数示例]: https://learn.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples?view=vs-2022
@@ -211,7 +214,7 @@ Tools > Options > Fonts and Colors > 语句结束
 + 用于Windows的 CMake
 + Boost.Test
 + C++ AddressSanitizer
-+ Windows 11 SDK
++ Windows 11 SDK, 最新版本, 可以不选
 + MSVC v142 生成工具
 
 Python 开发
