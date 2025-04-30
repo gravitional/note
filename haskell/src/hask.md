@@ -140,3 +140,75 @@ foldr (+) 0 [1,2,3]
 + 对于给定的列表 `[1,2,3,4,5]`, `foldr` 从右边塌缩, `foldl` 从左边塌缩,
 其中 `0` 是 **初始值** or **启动值**, 
 对于 `foldr`, 放到最右边; 对于 `foldl`, 放到最左边
+
+### 不动点函数 fix, Y 组合子
+
+```hs
+fix :: (a -> a) -> a 
+fix rec = rec (fix rec)
+-- 输入一个函数 rec, 计算 rec 的不动点;
+-- 这里的 a 可以是例如 Int, 也可以是 Int->Int, 也可以是高阶函数
+
+fix f
+= f (fix f)
+= f (f (fix f))
+= f (f (f (fix f)))
+```
+
+因此 不动点函数 fix 是 foldr.
+
+## id, const, slot 重抛出
+
+```hs
+-- 恒等函数
+id :: a -> a
+id x = x
+
+-- 给定两个元素, 只返回第一个
+const :: a -> b -> a
+```
+
+那么 `const id` 的类型为
+
+```hs
+const id
+
+a -> b -> a @ c -> c
+b -> (c -> c)
+-- 因为 -> 是 右结合的, foldr
+b -> c -> c
+```
+其中用 `@` 表示函数复合, 显然 `const id` 的效果是给出
+
+## 应用和声明的结合性
+
+函数应用是左结合, 即 `f g h` 等于 `(f g) h`;
+而类型签名中的 `->` 为右结合, 即 `a -> b -> c` 等于 `a -> (b -> c)`,
+
++ 这是因为 haskell 中的函数是 curry 化的,
+对于`f a b c`, `f` 先应用到 `a`, 因此 `f g h` 等于 `(f g) h`;
++ 但是 使用 和 定义 的顺序相反; 使用是从 f 开始, 从左到右的, `foldl`
+声明的时候, 是从右到左的, foldr,
+如下所示, 圆括号表示 Apply 的顺序, 方括号表示 定义的顺序,
+相反的结合性保证了, 
+`A g` 抵消, `B h` 抵消, `C i` 抵消 ...,
+这和 Haskell 的约定有关, haskell 约定输入槽(slot) 是从左边开始的, 
+或者说从左边入栈
+
+```hs
+(((f g) h) i) j -- eq1; Apply
+A -> [B -> [C -> [D -> E]]] -- eq2; Declaration
+
+-- eq2 代入 eq1, 得到
+(((A -> [B -> [C -> [D -> E]]]  g)  h)  i)  j
+((([B -> [C -> [D -> E]]])  h)  i)  j
+
+((B -> [C -> [D -> E]]  h)  i)  j
+(([C -> [D -> E]])  i)  j
+
+(C -> [D -> E]  i)  j
+([D -> E])  j
+
+D -> E  j
+```
+
