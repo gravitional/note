@@ -136,3 +136,14 @@ pacman命令较多, 作为新手, 将个人最常用的命令总结如下:
 `pacman -Sg 软件包组`: 查看某软件包组所包含的所有软件包.
 `pacman -Sc`: 清理未安装的包文件, 包文件位于 /var/cache/pacman/pkg/ 目录.
 `pacman -Scc`: 清理所有的缓存文件.
+
+## pacman regex 正则表达式，限定包搜索
+
+pacman 支持正则表达式, 因此可以
+
+```bash
+pacman -Ss 'mingw-w64-ucrt-x86_64-.*rust.*'
+pacman -Ss 'ucrt-.*rust.*'
+```
+
+在使用 MSYS2 时, 可以限定搜索范围在 `ucrt` 下面, 方便过滤结果

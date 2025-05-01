@@ -600,3 +600,68 @@ mingw DLL 遵循以 lib 作为库前缀的惯例.
 为完整起见, 我们注意到 Cygwin DLL 的前缀是 `cyg`.
 
 libtool 或 linker 会自动处理吗?
+
+## msys2 bash, bash-completion
+
+### stackover
+
+[Does bash source bash completion files in /usr/local/etc/bash_completion.d by default?](https://stackoverflow.com/questions/56389011/does-bash-source-bash-completion-files-in-usr-local-etc-bash-completion-d-by-de)
+
+这取决于您的平台和  `bash` 和 `bash-completion` 的版本. 例如
+
++ Ubuntu
+
+在 Ubuntu 20.04 上, `/etc/bash_completion` 文件的作用如下:
+
+```bash
+. /usr/share/bash-completion/bash_completion
+```
+
+在该文件中, 我发现
+
+```bash
+for dir in ${XDG_DATA_DIRS:-/usr/local/share:/usr/share}; do
+    dirs+=( $dir/bash-completion/completions )
+done
+```
+
+这表明 `/usr/local/share/bash-completion/completions` 会扫描完成脚本. 经验实验支持这一点.
+
++ MacOS/Brew
+在 MacOS 11.2.3 上, 我在 /etc 或 /usr/share 中找不到任何有关 bash completion 的内容.
+这表明, bare Darwin 没有 bash complet, 这也是有道理的, 因为苹果公司出于授权考虑, 将 Bash 保留在了 3.2 版. 不过zsh可能有, 我没看.
+
+你提到的 `/usr/local/etc/bash-completion.d`, 是 `/usr/local` 下 Homebrew 安装程序的一部分.
+我在其中找到了一些完成脚本, 但没有激活脚本. 你应该不需要自己明确激活这些脚本.
+
+我找到了 `/usr/local/share/bash-completion`, 同样来自 Homebrew, 其中有 bash_completion 脚本.
+其中的行数与 Ubuntu 相同, 这也是有道理的, 因为 Homebrew 有点像完整的 "GNU",
+但在 /usr/local 下. 但它同时也引用了 /usr/local/etc/bash-completion.d 目录.
+
+但 `/usr/local/share/bash-completion/bash_completion` 默认情况下不会被执行,
+所以你必须按照此处的说明将其添加到 ~/bash_profile 或 ~/profile 中. 它还介绍了如何处理 zsh 和 fish.
+
++ Cygwin
+Cygwin 是另一个兼容 Posix 的环境, 它也有 bash completion.
+安装 bash-completion 软件包后, 会出现 `/usr/share/bash-completion/bash_completion`, 就像 Ubuntu 和 Homebrew 一样.
+这里没有 `/etc/bash_completion`, 而且我的 `~/.bashrc`(很久以前生成的)只查找了这个 completions, 并没有激活.
+
+总结: 许多类 GNU 环境都支持 bash_completion, 但你可能需要
++ 安装一个软件包
++ 确保在登录时源码中包含它, 但默认情况下并非总是如此
+如果在你的环境中默认情况下没有激活它, 你需要在你的 `.bashrc`, `bash_profile` 或类似的文件中
+source "root"脚本(在 `/etc`, `/usr/share/bash-completion` 或它可能所在的位置)来激活它.
+
+对于所有其他可能的平台(其他 Linux 发行版, MSYS2 等), 我想还是见仁见智吧. 如果可以的话, 这确实很有帮助.
+
+### msys 上的位置
+
+```bash
+/usr/share/bash-completion/bash_completion
+```
+
+可以使用下面的命令运行
+
+```bash
+[[ -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
+```

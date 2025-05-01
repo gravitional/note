@@ -46,7 +46,7 @@ Keyboard Shortcut: `Ctrl+P`
 你可以通过按 `右箭头` 从快速打开中打开多个文件.
 这将在后台打开当前选定的文件, 而你可以继续从 "快速打开 "中选择文件.
 
-### code 环境变量
+### code 环境变量, magic variables
 
 [Variables Reference](https://code.visualstudio.com/docs/editor/variables-reference)
 
