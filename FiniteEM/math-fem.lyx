@@ -30358,7 +30358,19 @@ status open
 \begin_inset Formula $\phi(x)=C$
 \end_inset
 
-进行展开
+进行展开。假设 
+\begin_inset Formula $\{N_{\alpha}\}$
+\end_inset
+
+对常数场
+\begin_inset Formula $C$
+\end_inset
+
+的描述是精确的（因此适用于各种阶数的
+\begin_inset Formula $N_{\alpha}$
+\end_inset
+
+）
 \begin_inset Formula 
 \begin{align*}
  & \phi(x)=\sum_{\alpha}N_{\alpha}(x)\,C=C\\
@@ -30414,7 +30426,9 @@ status open
 status open
 
 \begin_layout Plain Layout
-刚度矩阵Rank
+
+\series bold
+刚度矩阵的秩（Rank）
 \end_layout
 
 \end_inset
@@ -30427,7 +30441,11 @@ status open
 
 \end_inset
 
-对于刚度矩阵 
+
+\series bold
+现在对 刚度矩阵的一行 求和
+\series default
+。对于刚度矩阵 
 \begin_inset Formula $\sum_{e}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}}\dd{\Omega}$
 \end_inset
 
@@ -30435,23 +30453,27 @@ status open
 \begin_inset Formula $\alpha$
 \end_inset
 
-，对应全局刚度矩阵的某一行。积分被分解到单元上分片求值，也就是 row–矩阵 分解成 sub–row 求和。
+，对应全局刚度矩阵的某一行；求和又可以分解到 相关单元上（分片求值），将每个单元上的贡献记作 sub-row：
 \begin_inset Formula 
 \[
-K_{\alpha\bullet}=K_{\alpha\bullet}^{(1)}+K_{\alpha\bullet}^{(2)}+\cdots+K_{\alpha\bullet}^{(n)},
+\sum K_{\alpha\bullet}=\sum K_{\alpha\bullet}^{(1)}+\sum K_{\alpha\bullet}^{(2)}+\cdots+\sum K_{\alpha\bullet}^{(n)},
 \]
 
 \end_inset
 
 其中
-\begin_inset Formula $n$
+\begin_inset Formula $(1),(2)\cdots(3)$
 \end_inset
 
-为节点
+标记交于此节点
 \begin_inset Formula $\alpha$
 \end_inset
 
-所属的单元总数。对于单个积分域（某确定单元
+的各个单元，
+\begin_inset Formula $n$
+\end_inset
+
+为单元总数。对于单个积分域（某确定单元
 \begin_inset Formula $j$
 \end_inset
 
@@ -30462,14 +30484,14 @@ K_{\alpha\bullet}=K_{\alpha\bullet}^{(1)}+K_{\alpha\bullet}^{(2)}+\cdots+K_{\alp
 中的元素求和，
 \begin_inset Formula 
 \begin{align*}
-\sum_{\beta}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\nabla N_{\beta}^{e}} & =\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot\sum_{\beta}\nabla N_{\beta}^{e}}\\
- & =\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{e}\cdot0}=0
+\sum_{\beta}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{j}\cdot\nabla N_{\beta}^{j}}\dd{\Omega} & \stackrel{\text{移动}\Sigma}{=}\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{j}\cdot}{\color{red}\sum_{\beta}\nabla N_{\beta}^{j}}\dd{\Omega}\\
+ & =\int_{\Omega^{e}}{\color{blue}\nabla N_{\alpha}^{j}\cdot}{\color{red}0}\dd{\Omega}=0
 \end{align*}
 
 \end_inset
 
 其中使用了上面的推论 
-\begin_inset Formula $\sum_{\alpha}\nabla N_{\alpha}(x)=0$
+\begin_inset Formula $\sum_{\alpha}^{e}\nabla N_{\alpha}^{e}(x)=0$
 \end_inset
 
 ，
@@ -30492,11 +30514,23 @@ K_{\alpha\bullet}=K_{\alpha\bullet}^{(1)}+K_{\alpha\bullet}^{(2)}+\cdots+K_{\alp
 \end_layout
 
 \begin_layout Corollary
-另一种考虑方式是：，令 
-\begin_inset Formula $\phi_{a}=(1,1,1,\cdots)$
+抠除一个或多个节点之后（也就是设置了 1st 边界），破坏了 
+\begin_inset Formula $\sum_{\alpha}^{e}\nabla N_{\alpha}^{e}(x)=0$
 \end_inset
 
-，对于给定网格考虑它的矩阵方程，其中
+，可以使行列求和不为零，矩阵才是满秩的。
+\end_layout
+
+\begin_layout Corollary
+另一种考虑方式是：如果区域上的外加激励
+\begin_inset Formula $b=0$
+\end_inset
+
+，也不设置任何边界条件（自由区域），则显然有匀强场的解
+\begin_inset Formula $x=(1,1,1,\cdots)^{\mathrm{T}}$
+\end_inset
+
+。对于给定网格考虑它的矩阵方程，其中
 \begin_inset Formula $K$
 \end_inset
 
@@ -30512,15 +30546,7 @@ K\,x=b
 
 \end_inset
 
-如果区域上的外加激励
-\begin_inset Formula $b=0$
-\end_inset
-
-，然后不设置任何边界条件，则显然有匀强场的解
-\begin_inset Formula $x=(1,1,1,\cdots)^{\mathrm{T}}$
-\end_inset
-
-；因此有
+因此有
 \begin_inset Formula 
 \[
 K\cdot(1,1,1,\cdots)^{\mathrm{T}}=\sbf0
