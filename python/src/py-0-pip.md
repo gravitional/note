@@ -106,7 +106,8 @@ install.trusted-host='mirrors.aliyun.com'
 
 ```bash
 python -V # 打印 python 版本
-python -m pip install numpy scipy matplotlib jupyterlab
+python -m pip install numpy scipy matplotlib jupyterlab colorama pandas
+pip install numpy scipy matplotlib jupyterlab colorama pandas
 ```
 
 `pywinpty` 依赖 rust, 如果安装失败, 可以下载预编译 wheel, 手动安装
