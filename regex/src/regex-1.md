@@ -275,7 +275,7 @@ refer:[runoob syntax](https://www.runoob.com/regexp/regexp-syntax.html) and
 
 注意:  在这里,  `Windows(?=95|98|NT|2000)`中的`|`实际上相当于数学中的 `or`
 
-### 正向否定预查
+### 正向否定预查, after
 
 ```regex
 (?!pattern)
