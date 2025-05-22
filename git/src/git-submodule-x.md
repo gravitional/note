@@ -182,3 +182,24 @@ git pull --recurse-submodules
 
 如果你想把子模块拉到最新提交, 而不是 父仓库当前指向的 子仓库提交. 
 详见 [git-submodule(1)](https://www.kernel.org/pub/software/scm/git/docs/git-submodule.html). 
+
+## git 删除子模块
+
+刚刚添加之后，还没有提交的时候删除,
+
+```bash
+# 例如我这里的子模块项目放在 closure 文件夹下面
+git rm --cached closure\
+# 从硬盘上删除
+rm -rf closure
+```
+
+此外, 还需要打开 项目根目录下的 `.gitmodules`, 删除 子模块配置
+
+```conf
+[submodule "git_repos/closure"]
+    path = git_repos/closure
+    url = git@github.com:coyorkdow/closure.git
+```
+
+再提交更改.
