@@ -21,3 +21,11 @@ version = '1.21.28'
 #
 url = f'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{publisher}/vsextensions/{plugin_name}/{version}/vspackage'
 print(f'\n{plugin_name}: {url}')
+
+#*******************  Even Better TOML
+publisher = 'tamasfe'
+plugin_name = 'even-better-toml'
+version = '0.21.2'
+#
+url = f'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{publisher}/vsextensions/{plugin_name}/{version}/vspackage'
+print(f'\n{plugin_name}: {url}')
