@@ -2608,7 +2608,7 @@ noprefix "false"
 的分量
 \begin_inset Formula 
 \[
-\left.(\phi_{*}T)_{\phantom{\mu}\nu}^{\mu}\right|_{\phi(p)}=\left.T_{\phantom{\mu}\nu}^{\prime\mu}\right|_{p}=\frac{\partial x^{\prime\mu}}{\partial x^{\rho}}\frac{\partial x^{\sigma}}{\partial x^{\prime\nu}}\,T_{\phantom{\rho}\sigma}^{\rho}
+\left.(\phi_{*}T)_{\phantom{\mu}\nu}^{\mu}\right|_{\phi(p)}=\left.T_{\phantom{\prime\mu}\nu}^{\prime\mu}\right|_{p}=\frac{\partial x^{\prime\mu}}{\partial x^{\rho}}\frac{\partial x^{\sigma}}{\partial x^{\prime\nu}}\,T_{\phantom{\rho}\sigma}^{\rho}
 \]
 
 \end_inset
@@ -2641,7 +2641,303 @@ noprefix "false"
 
 被移动到了新的位置，并不是标量场
 \series default
+。边界条件和激励被网格带着运动，反过来影响场的分布。
+\end_layout
+
+\begin_layout Section
+ssqq
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A^{\prime\mu}=J_{\phantom{\prime\mu}\nu}^{\prime\mu}=\frac{\partial x^{\prime\mu}}{\partial x^{\nu}}A^{\nu}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于平动，刚体部分
+\begin_inset Formula 
+\[
+x^{\prime\mu}=x^{\mu}+\text{Const.}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\frac{\partial x^{\prime\mu}}{\partial x^{\nu}}=I$
+\end_inset
+
+，即恒等矩阵。
+\end_layout
+
+\begin_layout Itemize
+对于转动，刚体部分
+\begin_inset Formula 
+\[
+x^{\prime\mu}-r_{0}=R(x^{\mu}-r_{0}),
+\]
+
+\end_inset
+
+
+\begin_inset Formula $R$
+\end_inset
+
+为转动矩阵。在转动平面上，
+\begin_inset Formula $R=\left[\begin{array}{cc}
+\cos\theta & -\sin\theta\\
+\sin\theta & \cos\theta
+\end{array}\right]$
+\end_inset
+
+，
+\begin_inset Formula $\theta$
+\end_inset
+
+按逆时针，
+\begin_inset Formula 
+\[
+\frac{\partial x^{\prime\mu}}{\partial x^{\nu}}=R_{\phantom{\mu}\nu}^{\mu}
+\]
+
+\end_inset
+
+记转动轴所在的坐标系为局部坐标系（新系）
+\begin_inset Formula $T:x\to x'$
+\end_inset
+
+，则
+\begin_inset Formula $T^{-1}:x'\to x$
+\end_inset
+
+， 
+\begin_inset Formula $x$
+\end_inset
+
+标记全局坐标系（旧系）
+\begin_inset Formula 
+\begin{align*}
+ & T^{-1}\,R\,{\color{blue}x'}\\
+ & =T^{-1}R{\color{blue}TT^{-1}\,x'}\\
+ & =T^{-1}RT\,x
+\end{align*}
+
+\end_inset
+
+则局部坐标系的2D转动 
+\begin_inset Formula $R$
+\end_inset
+
+在全局下是 
+\begin_inset Formula $T^{-1}RT$
+\end_inset
+
+，其中
+\begin_inset Formula $T:x\to x'$
+\end_inset
+
 。
+\end_layout
+
+\begin_layout Itemize
+Smoother 部分，
+\begin_inset Formula 
+\[
+J_{\phantom{\mu}\nu}^{\mu}=\left.\frac{\partial x{}^{\prime\mu}}{\partial x^{\nu}}\right|_{p}=\left.a_{j}^{\phantom{0}\mu}\,\varphi_{j}^{\prime}(r_{j})\,\frac{\Delta_{j}^{\phantom{j}\nu}}{r_{j}}+(b_{1}^{\phantom{j}\mu})_{\nu}\right|_{p}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $a_{j}^{\phantom{0}\mu}$
+\end_inset
+
+是RBF系数矩阵，
+\begin_inset Formula $(b_{1}^{\phantom{j}\mu})_{\nu}$
+\end_inset
+
+是多项式部分系数矩阵。 其中
+\begin_inset Formula $\varphi'$
+\end_inset
+
+表示
+\begin_inset Formula $\dd\varphi/\dd r$
+\end_inset
+
+，
+\begin_inset Formula $r_{j}$
+\end_inset
+
+是目标点与支点
+\begin_inset Formula $j$
+\end_inset
+
+的距离，
+\begin_inset Formula $\Delta_{j}^{\phantom{j}\nu}=x^{\nu}-u_{j}^{\phantom{j}\nu}$
+\end_inset
+
+是相对第
+\begin_inset Formula $j$
+\end_inset
+
+个支点的位移
+\begin_inset Formula $\nu$
+\end_inset
+
+。函数
+\begin_inset Formula $\varphi(r)$
+\end_inset
+
+的导数为，令
+\begin_inset Formula $a=r/R$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\dd\varphi}{\dd r}=\begin{cases}
+-20a(1-a)^{3}/R & r<R\;\text{or}\;a<1\\
+0 & r>=R\;\text{or}\;a>=1
+\end{cases},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+转动矩阵
+\end_layout
+
+\begin_layout Example
+RollPitchYawMatrix 滚动-俯仰-偏航矩阵, RollPitchYawMatrix[{
+\begin_inset Formula $\alpha,\beta,\gamma$
+\end_inset
+
+}] 给出三维旋转矩阵，通过绕初始 
+\begin_inset Formula $z$
+\end_inset
+
+ 轴旋转 
+\begin_inset Formula $\alpha$
+\end_inset
+
+，再绕初始 
+\begin_inset Formula $y$
+\end_inset
+
+ 轴旋转 
+\begin_inset Formula $\beta$
+\end_inset
+
+，然后绕初始 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴旋转 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 形成。标准滚动-俯仰-水平矩阵：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+RollPitchYawMatrix[{
+\backslash
+[Alpha], 
+\backslash
+[Beta], 
+\backslash
+[Gamma]}] /.
+ {Cos[x_] :> Subscript[c, x], Sin[x_] :> Subscript[s, x]} // MatrixForm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+c_{\alpha}c_{\beta} & -c_{\beta}s_{\alpha} & s_{\beta}\\
+c_{\alpha}s_{\beta}s_{\gamma}+c_{\gamma}s_{\alpha} & c_{\alpha}c_{\gamma}-s_{\alpha}s_{\beta}s_{\gamma} & -c_{\beta}s_{\gamma}\\
+s_{\alpha}s_{\gamma}-c_{\alpha}c_{\gamma}s_{\beta} & c_{\gamma}s_{\alpha}s_{\beta}+c_{\alpha}s_{\gamma} & c_{\beta}c_{\gamma}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+EulerMatrix(欧拉三维旋转矩阵)。EulerMatrix[{
+\begin_inset Formula $\alpha,\beta,\gamma$
+\end_inset
+
+}] 给出欧拉三维旋转矩阵，通过绕当前 
+\begin_inset Formula $z$
+\end_inset
+
+ 轴旋转 
+\begin_inset Formula $\alpha$
+\end_inset
+
+，再绕当前 
+\begin_inset Formula $y$
+\end_inset
+
+ 轴旋转 
+\begin_inset Formula $\beta$
+\end_inset
+
+，然后再绕当前 
+\begin_inset Formula $z$
+\end_inset
+
+ 轴旋转 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 得到。标准欧拉矩阵：
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(m = EulerMatrix[{
+\backslash
+[Alpha], 
+\backslash
+[Beta], 
+\backslash
+[Gamma]}]) /.
+ {Cos[x_] :> Subscript[c, x], Sin[x_] :> Subscript[s, x]} // MatrixForm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+c_{\alpha}c_{\beta}c_{\gamma}-s_{\alpha}s_{\gamma} & -c_{\alpha}c_{\beta}s_{\gamma}-c_{\gamma}s_{\alpha} & c_{\alpha}s_{\beta}\\
+c_{\beta}c_{\gamma}s_{\alpha}+c_{\alpha}s_{\gamma} & c_{\alpha}c_{\gamma}-c_{\beta}s_{\alpha}s_{\gamma} & s_{\alpha}s_{\beta}\\
+-c_{\gamma}s_{\beta} & s_{\beta}s_{\gamma} & c_{\beta}
+\end{array}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
