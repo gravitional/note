@@ -1,6 +1,6 @@
 # 变量局部化
 
-`Block` 居域化变量, 但不创建新变量; `Module` 创建新变量.
+`Block` 局域化变量, 但不创建新变量; `Module` 创建新变量.
 
 ```mathematica
 x = 7;
@@ -13,7 +13,8 @@ Module[{x}, Print[x]]
 `Module` 是 `lexical scoping`, 而`Block`是`dynamic scoping`,
 `Module` 把 `程序文本` 中出现的变量替换成局部变量,
 
-而`Block` 把 `计算过程`中出现的变量替换成局部变量, 也就是运行时修改, 或者说 `Block` 在执行堆栈中进行替换.
+而`Block` 把 `计算过程`中出现的变量替换成局部变量, 也就是运行时修改, 
+或者说 `Block` 在执行堆栈中进行替换.
 `Block`在交互计算的时候, 更常用, 因为这时候更关注计算历史.
 
 ## Block
@@ -157,4 +158,17 @@ x$358
 i = 5;
 Table[i, {i, 1, i}]
 Out[1]= {1, 2, 3, 4, 5}
+```
+
+## 用 Block 实现 Module
+
+```mathematica
+SetAttributes[myModule, HoldAll];
+myModule[vars_, body_] := With[{uniqueVars = Unique /@ vars},
+   Block[uniqueVars,
+    ReleaseHold[HoldComplete@ body /. Thread[Rule[vars, uniqueVars]]]]
+   ];
+myModule[{x, y},
+ x = 1; y = 2;
+ x + y]
 ```
