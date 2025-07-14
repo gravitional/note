@@ -229,4 +229,5 @@ bt-seed-unverified=true
 bt-save-metadata=true
 # bt-tracker 链接, 记得修改成最新的, 粘贴到等号后面. search Aria2
 # https://github.com/XIU2/TrackersListCollection
+# bt-tracker=
 ```

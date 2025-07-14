@@ -29,6 +29,15 @@
 但 `相对导入` 只能写成 `from .X import 标识符` 的形式; 其中的原因在于 `import XXX.YYY.ZZZ`
 应当提供 `XXX.YYY.ZZZ` 作为可用表达式, 但 `.moduleY` 不是一个有效的表达式
 
+相对导入语法, 参考 [the-import-statement][def]
+
+```python
+"from" relative_module "import" identifier ["as" identifier]
+relative_module ::= "."* module | "."+
+```
+
+相对导入可以是任意个 `.`, 即 `.`, `..`, `...`
+
 ```python
 import A
 import A.B
@@ -119,3 +128,6 @@ sys.path.insert(0, join(abspath(dirname(__file__)), 'src'))
 ```
 
 这将 `src` 目录添加到 `path` 里, 和执行插入步骤的代码在同一个目录里.
+
+
+[def]: https://docs.python.org/zh-cn/3/reference/simple_stmts.html#the-import-statement
