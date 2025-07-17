@@ -1343,18 +1343,3 @@ error: failed to push some refs to '<https URL>'
 ```
 
 重启 terminal 可能就好了.
-
-## git http 拉取代码报错
-
-```bash
-Cloning into 'tps_service'...
-fatal: unable to access 'http://xxxxxx.git/': Failed to connect to 192.168.0.41 port 8082 after 21052 ms: Could not connect to server
-```
-
-原因是设置了 git 的全局代理, 默认配置文件在 `~/.gitconfig`,
-把类似这样的行注释掉,
-
-```yaml
-[http]
-    proxy = http://192.168.0.41:8082
-```

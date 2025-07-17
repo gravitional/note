@@ -1,0 +1,89 @@
+\ProvidesPackage{physics-ymy}
+% by modify physics 1.3
+% This material is subject to the LaTeX Project Public License.
+% See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
+%
+% Handy commands for physicists including macros for vectors, calculus, matrices, and bra-ket (Dirac) notation
+% Requires xparse package, which comes bundled with l3packages and l3kernel
+% This package loads amsmath, which comes standard with most latex distributions
+% The commands defined in this package will silently overwrite previous commands with the same name, if such commands exist
+%
+% Created by Sergio C. de la Barrera
+% Updated on December 12, 2012
+% Uploaded on December 20, 2012
+
+\RequirePackage{xparse}
+\RequirePackage{amsmath}
+
+% Options
+\DeclareOption{uprightdiff}{\def\diffD{\mathrm{D}}} % Upright differentials
+\DeclareOption{italicdiff}{\def\diffD{D}} % Italic differentials
+\ExecuteOptions{uprightdiff}
+\ProcessOptions\relax
+
+%--------------------------------------
+%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+%\DeclareMathOperator{\Tr}{Tr} %矩阵求迹的符号
+% * 号版本可以把上下标放在符号的正上方/正下方
+\DeclareMathOperator{\ree}{Re}
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\diag}{diag} %对角矩阵
+\DeclareMathOperator{\dist}{dist} %距离
+\DeclareMathOperator{\res}{Res} %复变函数的留数
+\DeclareMathOperator{\disc}{Disc} %定义复变函数不连续符号
+\DeclareMathOperator{\sign}{Sign} %符号函数
+\DeclareMathOperator{\fmp}{P} %定义费曼传播子的符号
+\DeclareMathOperator{\erfc}{erfc}%误差函数填补
+\DeclareMathOperator{\sinc}{sinc}% 函数 sin x/x
+\DeclareMathOperator{\siint}{Si}
+\DeclareMathOperator{\rmgrad}{grad}
+\DeclareMathOperator{\rmcurl}{curl}
+\DeclareMathOperator{\rmdiv}{div}
+\DeclareMathOperator{\arctanh}{ArcTanh}
+\newcommand*{\tps}[1]{{#1^\mathsf{T}}} %矩阵转置
+\newcommand*{\prtps}[1]{{#1^\mathsf{'T}}} % A^{'T}
+\newcommand*{\tpspr}[1]{{#1^\mathsf{T'}}} % A^{T'}
+\newcommand*{\ssl}{\mathbin{/\mkern-5.5mu/}}%定义双斜线符号.
+%\newcommand*{\dd}{\mathop{}\!\mathrm{d}}%普通微分
+%\newcommand*{\DD}{\mathop{}\!\mathrm{D}}%泛函变分
+\newcommand*{\sbf}{\symbf} %粗体数学符号或矢量符号
+\newcommand*{\sbb}{\symbb} %黑板字体
+%\renewcommand{\boldsymbol}{\symbf} %重定义 ams 包的黑体
+\newcommand*{\sla}{\slashed}% feynman slash
+\DeclareMathOperator*{\essupTemp}{ess~sup} % 本性上确界
+\newcommand*{\essup}[1]{\essupTemp\limits_{#1}} 
+\DeclareMathOperator{\supp}{supp} % 支撑集
+\DeclareMathOperator*{\esssup}{ess\,sup} %本质上确界
+%============================================== Derivatives of functional
+\DeclareDocumentCommand\FuncDifferential{ o g d() }{ % Differential 'd'
+	% o: optional n for nth differential
+	% g: optional argument for readability and to control spacing
+	% d: long-form as in d(cos x)
+	\IfNoValueTF{#2}{
+		\IfNoValueTF{#3}
+			{\diffD\IfNoValueTF{#1}{}{^{#1}}}
+			{\mathinner{\diffD\IfNoValueTF{#1}{}{^{#1}}\argopen(#3\argclose)}}
+		}
+		{\mathinner{\diffD\IfNoValueTF{#1}{}{^{#1}}#2} \IfNoValueTF{#3}{}{(#3)}}
+	}
+\DeclareDocumentCommand\DD{}{\FuncDifferential} % Shorthand for \FuncDifferential
+
+% \DeclareDocumentCommand\FuncDerivative{ s o m g d() }
+% { % Total derivative
+% 	% s: star for \flatfrac flat derivative
+% 	% o: optional n for nth derivative
+% 	% m: mandatory (x in df/dx)
+% 	% g: optional (f in df/dx)
+% 	% d: long-form d/dx(...)
+% 	\IfBooleanTF{#1}
+% 	{\let\fractype\flatfrac}
+% 	{\let\fractype\frac}
+% 	\IfNoValueTF{#4}
+% 	{
+% 		\IfNoValueTF{#5}
+% 		{\fractype{\diffD \IfNoValueTF{#2}{}{^{#2}}}{\diffD #3\IfNoValueTF{#2}{}{^{#2}}}}
+% 		{\fractype{\diffD \IfNoValueTF{#2}{}{^{#2}}}{\diffD #3\IfNoValueTF{#2}{}{^{#2}}} \argopen(#5\argclose)}
+% 	}
+% 	{\fractype{\diffD \IfNoValueTF{#2}{}{^{#2}} #3}{\diffD #4\IfNoValueTF{#2}{}{^{#2}}}}
+% }
+% \DeclareDocumentCommand\Dv{}{\FuncDerivative} % Shorthand for \derivative

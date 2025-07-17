@@ -89,12 +89,21 @@ make -j4
 
 ## cmake 编译项目 Linux
 
++ 重新构建 makefile
+
 ```bash
-# ---
-cmake -B . -S .. -G 'Unix Makefiles' --fresh #-- 重新构建 makefile
-#-- 生成 makefile; 优化配置为 Release; 指定安装路径前缀;
+cmake -B . -S .. -G 'Unix Makefiles' --fresh 
+```
+
++ 生成 makefile; 优化配置为 Release; 指定安装路径前缀;
+
+```bash
 cmake -B . -S .. -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/cppLibs/deal.ii
-#-- 调用编译器生成项目; compile Release 版本; -j 指定线程; -t <tgt> 指定编译目标, 如 INSTALL, 多个目标使用空格分隔
+```
+
++ 调用编译器生成项目; compile Release 版本; -j 指定线程; -t <tgt> 指定编译目标, 如 INSTALL, 多个目标使用空格分隔
+
+```bash
 cmake --build . --config Debug -j 8 #-- 调用 gcc 编译源代码
 ```
 
