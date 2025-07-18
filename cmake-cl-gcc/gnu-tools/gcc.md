@@ -80,7 +80,7 @@ GCC 项目不提供 GCC 的预制二进制文件, 只提供源代码, 但所有 
 的情况下就匆忙尝试构建 GCC, 结果犯了以下一个或多个常见错误:
 
 + 不要在源代码目录下运行 `./configure`, 这是不支持的.
-您需要在源代码目录之外, 在为编译创建的单独目录中运行 configure
+您需要在源代码目录之外, 在为编译创建的单独目录中运行 `configure`
 (这是一个[常见问题](https://gcc.gnu.org/wiki/FAQ#configure))
 + 如果 GCC 动态链接到 `GMP`, `MPFR` 或 `MPC` 支持库,
 那么在构建 gcc 和使用已安装的编译器时,
@@ -130,22 +130,28 @@ LD_LIBRARY_PATH=/some/silly/path/gmp:/some/silly/path/mpfr:/some/silly/path/mpc/
 源代码目录不会以任何方式被修改, 因此如果编译失败或想重新配置并再次编译,
 只需删除 `objdir` 中的所有内容并重新开始即可.
 
-例如, 配置和编译 GCC 4.6.2(支持 C, C++, Fortran 和 Go)应该很简单:
+例如, 配置和编译 GCC 15.1.0(支持 C, C++, Fortran 和 Go)应该很简单:
 
 ```bash
-tar xzf gcc-4.6.2.tar.gz
-cd gcc-4.6.2
-./contrib/download_prerequisites # 如果安装过 gmp mpfr mpc 可以跳过
+# 如果下载的是 .tar.gz 格式的源码包, 使用 xzf 解压选项
+tar xzf gcc-15.1.0.tar.xz 
+cd gcc-15.1.0
+
+## 如果安装过 gmp-devel mpfr-devel mpc-devel 可以跳过
+# ./contrib/download_prerequisites
+
+# 创建构建目录
 cd ..
-mkdir objdir
-cd objdir
-# --disable-multilib 禁用 32 位 build, 修改 gcc-14.1.0 为相应版本
-$PWD/../gcc-14.2.0/configure --prefix=$HOME/myProg/gcc-14.2.0 --enable-languages=c,c++,fortran,go --disable-multilib
-make
+mkdir objdir && cd objdir
+
+# --disable-multilib 禁用 32 位 build;
+# !注意修改 gcc-14.1.0 为相应版本
+$PWD/../gcc-15.1.0/configure --prefix=/data/myprog/gcc-15.1.0 --enable-languages=c,c++,fortran --disable-multilib
+make -j 16
 make install
 ```
 
-make 这一步需要很长时间. 如果你的电脑有多个处理器或内核,
+`make` 这一步需要很长时间. 如果你的电脑有多个处理器或内核,
 你可以使用 `make -j 4`(或更高的数字以获得更多并行性)并行编译, 从而加快编译速度.
 
 在我的台式机上, 使用了
@@ -186,7 +192,7 @@ LIBRARY_PATH=$(echo $LIBRARY_PATH | sed 's/:$//; s/^://;')
 
 ### 环境变量 LD_RUN_PATH LD_LIBRARY_PATH
 
-+ Linux 下有环境变量 `LD_RUN_PATH` or `DT_RUNPATH`.
++ Linux 下有 环境变量 `LD_RUN_PATH` or `DT_RUNPATH`.
 对于 `DT_RUNPATH`, [TechBlog](http://blog.lxgcc.net/?tag=dt_runpath) says:
 
 + The `DT_RUNPATH` value is set with the linker options
@@ -216,7 +222,6 @@ Libraries have been installed in:
    /home/tom/gcc-14.1.0/lib/../lib64
 ```
 
-```bash
 If you ever happen to want to link against installed libraries
 in a given directory, LIBDIR, you must either use libtool, and
 specify the full pathname of the library, or use the `-LLIBDIR'
@@ -230,4 +235,4 @@ flag during linking and do at least one of the following:
 
 See any operating system documentation about shared libraries for
 more information, such as the ld(1) and ld.so(8) manual pages.
-```
+
