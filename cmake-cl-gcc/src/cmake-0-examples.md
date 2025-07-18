@@ -92,7 +92,7 @@ make -j4
 + 重新构建 makefile
 
 ```bash
-cmake -B . -S .. -G 'Unix Makefiles' --fresh 
+cmake -B . -S .. -G 'Unix Makefiles' --fresh
 ```
 
 + 生成 makefile; 优化配置为 Release; 指定安装路径前缀;
@@ -154,3 +154,13 @@ make VERBOSE=1 -j 10
 
 make -j10 debug
 ```
+
+## ss
+
+cmake -B . -S .. -G 'Unix Makefiles' \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/home/tom/cpplibs/suitesparse \
+    -DCMAKE_Fortran_COMPILER=gfortran \
+    -DBUILD_SHARED_LIBS=ON \
+    -DSUITESPARSE_USE_OPENMP=ON \
+    -DSUITESPARSE_USE_FORTRAN=ON

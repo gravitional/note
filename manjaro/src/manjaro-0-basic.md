@@ -771,7 +771,7 @@ yay -S latte-dock
 
 [Mathematica 激活指南](https://tiebamma.github.io/InstallTutorial)
 
-## texlive 等其他软件
+## texlive 等其他软件, tex 字体
 
 [otf-stix](https://aur.archlinux.org/packages/otf-stix)
 
