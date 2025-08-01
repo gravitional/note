@@ -11,7 +11,7 @@
 通过修改环境变量, 实现便捷安装 oh my zsh
 
 ```bash
-REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
+export REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
 sh -c "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"
 ```
 
@@ -30,24 +30,17 @@ wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
 
 ```bash
 # Default settings
-ZSH=${ZSH:-~/.oh-my-zsh}
+# Default settings
 REPO=${REPO:-ohmyzsh/ohmyzsh}
 REMOTE=${REMOTE:-https://github.com/${REPO}.git}
 BRANCH=${BRANCH:-master}
 ```
 
-把其中的
+直接修改成
 
 ```bash
-REPO=${REPO:-ohmyzsh/ohmyzsh}
-REMOTE=${REMOTE:-https://github.com/${REPO}.git}
-```
-
-替换为
-
-```bash
-REPO=${REPO:-mirrors/oh-my-zsh}
-REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
+REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
+BRANCH=${BRANCH:-master}
 ```
 
 编辑后保存, 运行安装即可. (运行前先给`install.sh`权限, `chmod +x install.sh`).
