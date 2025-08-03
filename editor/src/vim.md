@@ -34,7 +34,7 @@ For myself and for you
 vim有两种运行方式(我只知道两种): 附送的 `gui`程序`gVim` 或者 各种命令行/shell 里的`vim`.
 可以直接在`gVim`或者`vim`用命令进行配置, 不过直接改配置文件, 一劳永逸, 应该更开心一些.
 
-vim的配置文件, 路径一般是`~/.vimrc`, windows 下就是 `C:\Users\Your-Name\.vimrc`.
+vim的配置文件, 路径一般是`~/.vimrc`, windows 下就是 `C:/Users/<用户名>/_vimrc`.
 不同操作系统具体位置应该不太一样, 可以自行搜索一下.
 
 另外, `gui` 环境下的 `gVim`还有一个配置文件`defaults.vim`在
