@@ -244,11 +244,11 @@ refer:[runoob syntax](https://www.runoob.com/regexp/regexp-syntax.html) and
 前者为正向预查, 在任何开始匹配圆括号内的正则表达式模式的位置来匹配搜索字符串.
 后者为负向预查, 在任何开始不匹配该正则表达式模式的位置来匹配搜索字符串.
 
-### 捕获example
+### `(?:xxx)` 非捕获, example
 
 `industr(?:y|ies)`相当于 `industry|industries`
 
-## 各种预查
+## 各种预查, 都是非捕获组
 
 | 语法         | 中文名       | 英文名                       |
 | ------------ | ------------ | -------------------------- |
