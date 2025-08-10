@@ -75,7 +75,7 @@ Windows Registry Editor Version 5.00
 "RealTimeIsUniversal"=dword:00000001
 ```
 
-如果Windows由于夏令时的变化而要求更新时钟, 让它来吧.
+如果 `Windows` 由于夏令时的变化而要求更新时钟, 让它来吧.
 它将使时钟保持在预期的 `UTC状态`, 只是纠正显示的时间.
 
 设置此值后,  [硬件时钟][] 和 [系统时钟][] 时间可能需要更新.
