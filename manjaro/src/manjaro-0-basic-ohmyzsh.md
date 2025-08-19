@@ -507,6 +507,9 @@ plugins=(git tmux  sudo extract zsh-autosuggestions zsh-syntax-highlighting)
 
 ```bash
 git clone https://github.com/chxuan/vimplus.git ~/.vimplus
+# gitee 地址为
+git clone git@gitee.com:chxuan/vimplus.git ~/.vimplus
+
 cd ~/.vimplus
 ./install.sh
 ```
