@@ -87,23 +87,20 @@ Enter command: i
 
 `install-tl --profile=profile #`进行一个批处理安装,需要一个 `profile` (配置文件),为了创建一个`profile`,最简单的方式是使用`tlpkg/texlive.profile`文件,这是安装器在安装成功后生成的文件.
 
-***
-卸载镜像文件
+#### 卸载镜像文件
 
 ```bash
 sudo umount /mnt
 ```
 
-***
-字体配置
+#### 字体配置
 
 ```bash
 sudo cp /home/tom/texlive/2020/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/20-texlive.conf
 sudo fc-cache -fsv
 ```
 
-***
-环境变量
+#### 环境变量
 
 安装完之后有提示:
 
@@ -123,20 +120,17 @@ export INFOPATH=${INFOPATH}:/home/tom/texlive/2020/texmf-dist/doc/info
 export PATH=${PATH}:/home/tom/texlive/2020/bin/x86_64-linux
 ```
 
-***
-验证安装是否成功
+#### 验证安装是否成功
 
 ```bash
 tex -v
 ```
 
-***
-设置默认纸张尺寸
+#### 设置默认纸张尺寸
 
 `tlmgr paper letter`
 
-***
-ubuntu 仓库的texlive
+#### ubuntu 仓库的texlive
 
 使用`apt`命令从`ubuntu`仓库安装的`texlive`可以使用`dpkg -L texlive-full`查询
 

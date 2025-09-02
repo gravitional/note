@@ -983,5 +983,5 @@ sudo keyd reload;sudo keyd monitor
 为了防止进程被杀, 可以添加 shell 别名
 
 ```bash
-alias keyd="sudo systemctl enable keyd && sudo systemctl start keyd"
+alias run_keyd="sudo systemctl enable keyd && sudo systemctl start keyd"
 ```

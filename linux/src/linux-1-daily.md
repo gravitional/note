@@ -510,7 +510,7 @@ sudo cp ~/myfonts/* /usr/share/fonts/myfonts/
 
 ```bash
 cd /usr/share/fonts/
-sudo chmod -R  755 myfonts/
+sudo chmod -R 755 myfonts/
 ```
 
 + 建立字体缓存
