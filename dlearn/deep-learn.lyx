@@ -1,0 +1,900 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children no
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Deep Learning
+\end_layout
+
+\begin_layout Author
+Young
+\end_layout
+
+\begin_layout Chapter
+反向传播
+\end_layout
+
+\begin_layout Itemize
+设两层网络间的传播，
+从输出值 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 到 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+的传播。
+传播方式为
+\begin_inset Formula 
+\[
+w_{ji}\,x_{i}\to u_{j}\to y_{j}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $y_{j}=f(u_{j})$
+\end_inset
+
+，
+
+\begin_inset Formula $f$
+\end_inset
+
+是激活函数（activiate function）。
+
+\end_layout
+
+\begin_layout Itemize
+设第
+\begin_inset Formula $a$
+\end_inset
+
+层，
+node 
+\begin_inset Formula $i$
+\end_inset
+
+ 对下一层 node 
+\begin_inset Formula $j$
+\end_inset
+
+ 的正向连接权重为 
+\begin_inset Formula $w_{a;ji}$
+\end_inset
+
+，
+
+\series bold
+指标故意写反
+\series default
+，
+是为了方便写成 矩阵相乘 的形式。
+
+\end_layout
+
+\begin_layout Itemize
+沿着梯度的负方向
+\begin_inset Formula 
+\begin{equation}
+\Delta w=-\eta\frac{\partial E}{\partial w}\label{eq:2.6}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+误差函数为 
+\begin_inset Formula $\mathcal{E}(w_{i},y_{i})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在每一层上 
+\begin_inset Formula $y=f(u)$
+\end_inset
+
+，
+导数 
+\begin_inset Formula $f'(u)$
+\end_inset
+
+求偏导数，
+
+\begin_inset Formula $w_{\sim}$
+\end_inset
+
+表示（其他 
+\begin_inset Formula $w_{k\ell}$
+\end_inset
+
+保持不变，
+
+\begin_inset Formula $x_{k}$
+\end_inset
+
+作为参数）。
+类似地，
+
+\begin_inset Formula $y_{\sim}$
+\end_inset
+
+表示其他
+\begin_inset Formula $y$
+\end_inset
+
+保持不变。
+
+\begin_inset Formula 
+\[
+y=f(u),\quad f'(u)=\frac{\dd f(u)}{\dd u},
+\]
+
+\end_inset
+
+然后用反函数关系 
+\begin_inset Formula $u_{j}=f^{-1}(y_{j})$
+\end_inset
+
+（
+\begin_inset Formula $f^{-1}$
+\end_inset
+
+函数对所有
+\begin_inset Formula $j$
+\end_inset
+
+相同） 得到：
+
+\begin_inset Formula 
+\[
+f'(u)\to f'(f^{-1}(y))\coloneqq g(y)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\left.\frac{\partial\mathcal{E}(x_{\bullet})}{\partial w_{ji}}\right|_{w_{\sim}} & =\sum_{k}\left.\frac{\partial\mathcal{E}}{\partial y_{k}}\right|_{y_{\sim}}\,\left.\frac{\partial y_{k}}{\partial w_{ji}}\right|_{w_{\sim}}\label{eq:2.16}\\
+ & =\sum_{k}\left.\frac{\partial\mathcal{E}}{\partial y_{k}}\right|_{y_{\sim}}\,\left.f'(u_{k})\right|_{y}\,\left.\frac{\partial u_{k}}{\partial w_{ji}}\right|_{w_{\sim}}\nonumber \\
+ & =\left.\frac{\partial\mathcal{E}}{\partial y_{j}}\right|_{y_{\text{ot}}}\;g(y_{j})\;x_{i}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\begin_inset Formula $u_{k}=w_{ki}\,x_{i}$
+\end_inset
+
+对于
+\begin_inset Formula $w_{ji}$
+\end_inset
+
+的偏导，
+仅有 
+\begin_inset Formula $k=j$
+\end_inset
+
+ 这一项不为零，
+值为 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+。
+
+\begin_inset Formula 
+\begin{align}
+\left.\frac{\partial\mathcal{E}}{\partial w_{(a-1);ji}}\right|_{\text{wx}} & =\sum_{k}\left.\frac{\partial E}{\partial y_{a;k}}\right|_{y_{a;\text{ot}}}\;\left.\frac{\partial y_{a;k}}{\partial w_{(a-1);ji}}\right|_{\text{wx}}\label{eq:2.34}\\
+ & =\sum_{k}\left.\frac{\partial E}{\partial y_{a;k}}\right|_{y_{a;\text{ot}}}\;\left.f'(u_{a;k})\right|\;\left.\frac{\partial u_{a;k}}{\partial w_{(a-1);ji}}\right|_{\text{wx}}\nonumber \\
+ & =\left.\frac{\partial E}{\partial y_{a;k}}\right|_{y_{a;\text{ot}}}\;g(y_{a;j})\;y_{(a-1)}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对第
+\begin_inset Formula $a-1$
+\end_inset
+
+层求关于
+\begin_inset Formula $w_{(a-1);ij}$
+\end_inset
+
+的偏导，
+求和跑遍第
+\begin_inset Formula $a$
+\end_inset
+
+层的
+\begin_inset Formula $y_{k}$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Standard
+网络传播关系=
+\begin_inset Formula 
+\[
+\sum_{i}w_{{\color{red}j}i}y_{i}\to u_{{\color{red}j}},\quad f(u_{j})\to z_{j}
+\]
+
+\end_inset
+
+函数符号= 
+\begin_inset Formula $E$
+\end_inset
+
+:error function,
+ 
+\begin_inset Formula $f$
+\end_inset
+
+:
+ activation function;
+\begin_inset Formula 
+\[
+E(z_{j})=E(f(w_{ji}y_{i}))
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+w_{ji}y_{i}\stackrel{A}{\to}z_{j}\stackrel{E}{\to}E
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+实际上可以是 关于 
+\begin_inset Formula $y_{q}$
+\end_inset
+
+ 的任意标量函数，
+求导都是这么个框架，
+
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{\partial\mathcal{E}}{\partial w_{ji}}\right|_{w_{\text{ot}}} & =\sum_{{\color{red}k}}\left.\frac{\partial E}{\partial z_{{\color{red}k}}}\right|_{z_{\text{ot}}}\;g(z_{{\color{red}k}})\;\left.\frac{\partial u_{{\color{red}k}}}{\partial w_{{\color{red}j}i}}\right|_{w_{\text{ot}}}\\
+ & =y_{i}\;[\left.\frac{\partial E}{\partial z_{{\color{red}j}}}\right|_{z_{\text{ot}}}g(z_{{\color{red}j}})]
+\end{align*}
+
+\end_inset
+
+使用了只有 
+\begin_inset Formula $k=j$
+\end_inset
+
+ 才有贡献，
+去掉求和号。
+
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{\partial\mathcal{E}}{\partial y_{j}}\right|_{w_{\text{ot}}} & =\sum_{{\color{red}k}}\left.\frac{\partial E}{\partial z_{{\color{red}k}}}\right|_{z_{\text{ot}}}\;g(z_{{\color{red}k}})\;\left.\frac{\partial u_{{\color{red}k}}}{\partial y_{j}}\right|_{w_{\text{ot}}}\\
+ & =\sum_{{\color{red}k}}[w_{{\color{red}k}j}g(z_{{\color{red}k}})]\;\left.\frac{\partial E}{\partial z_{{\color{red}k}}}\right|_{z_{\text{ot}}}
+\end{align*}
+
+\end_inset
+
+这里求和号不能去掉。
+
+\end_layout
+
+\begin_layout Section
+反向传播推导过程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+t,x,y,z
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & z=f(W_{y}\,y-B_{y})\\
+ & y=f(W_{x}\,x-B_{x})\\
+ & x=f(W_{t}\,t-B_{t})
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+z & =f\Big(W_{y}\\
+ & \phantom{=f\Big(W_{y}}f\Big(W_{x}\\
+ & \phantom{=f\Big(W_{y}f\Big(W_{x}}f\Big(W_{t}-B_{t})-B_{x}\Big)-B_{y}\Big)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+取任意相邻的两层记作 
+\begin_inset Formula $p,q$
+\end_inset
+
+，
+满足 
+\begin_inset Formula $p=q-1$
+\end_inset
+
+，
+即传播方向为 
+\begin_inset Formula $p\rightarrow q$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+用 
+\begin_inset Formula $w_{p\text{\textasciitilde}}$
+\end_inset
+
+ 表示求偏导时，
+除了关注的
+\begin_inset Formula $w_{ji}$
+\end_inset
+
+其他
+\begin_inset Formula $w_{\bullet\bullet}$
+\end_inset
+
+（以及
+\begin_inset Formula $y_{\bullet}$
+\end_inset
+
+）保持不变；
+用 
+\begin_inset Formula $y_{p\sim}$
+\end_inset
+
+表示除了关注的
+\begin_inset Formula $y_{j}$
+\end_inset
+
+，
+其他
+\begin_inset Formula $y_{\bullet}$
+\end_inset
+
+（以及
+\begin_inset Formula $w_{\bullet\bullet}$
+\end_inset
+
+）保持不变。
+
+\end_layout
+
+\begin_layout Itemize
+所有层的权重 
+\begin_inset Formula $w_{p;ji}$
+\end_inset
+
+互不相干，
+均视为
+\series bold
+独立变量。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+表示 Error/Cost/Loss 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+ & \left.\frac{\partial\mathcal{E}}{\partial w_{p;ji}}\right|_{w_{p\sim}}=y_{p;i}\;g\left(y_{q;{\color{brown}j}}\right)\;\left.\frac{\partial\mathcal{E}}{\partial y_{q;{\color{brown}j}}}\right|_{y_{q\sim}}\\
+ & \left.\frac{\partial\mathcal{E}}{\partial y_{p;j}}\right|_{y_{p\text{\textasciitilde}}}=\sum_{{\color{brown}k}}\;g(y_{q;{\color{brown}k}})\;w_{p;{\color{brown}k}j}\;\left.\frac{\partial\mathcal{E}}{\partial y_{q;{\color{brown}k}}}\right|_{y_{q\text{\textasciitilde}}}
+\end{align*}
+
+\end_inset
+
+这就是 
+\series bold
+反向传播
+\series default
+（
+\begin_inset Formula $p\leftarrow q$
+\end_inset
+
+），
+从 
+\begin_inset Formula ${\color{blue}q}$
+\end_inset
+
+层的 
+\begin_inset Formula $\partial E/\partial y$
+\end_inset
+
+，
+
+\begin_inset Formula $\partial E/\partial w$
+\end_inset
+
+，
+计算出上一层的 
+\begin_inset Formula $\partial E/\partial y$
+\end_inset
+
+，
+
+\begin_inset Formula $\partial E/\partial w$
+\end_inset
+
+ 。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+{\color{blue}\left.\frac{\partial\mathcal{E}}{\partial w_{h;ji}}\right|_{w_{h\sim}}=}y_{p;i}\;g\left(y_{q;{\color{brown}j}}\right)\;\left.\frac{\partial\mathcal{E}}{\partial y_{q;{\color{brown}j}}}\right|_{y_{q\sim}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+求出的 
+\begin_inset Formula $\partial E/\partial y\text{，}\partial E/\partial w$
+\end_inset
+
+可以看成标量函数，
+继续套用公式，
+不停迭代。
+
+\end_layout
+
+\begin_layout Itemize
+激活函数 
+\begin_inset Formula $y_{{\color{blue}q};j}=f\left(u_{{\color{blue}q};j}\right)$
+\end_inset
+
+，
+
+\begin_inset Formula $u_{{\color{blue}q};j}=\sum w_{{\color{blue}q};ji}y_{{\color{red}p};i}-b_{j}$
+\end_inset
+
+；
+对于
+\begin_inset Formula ${\color{blue}q}$
+\end_inset
+
+层中的所有
+\begin_inset Formula $y_{{\color{blue}q};j}$
+\end_inset
+
+，
+激活函数的形式是相同的，
+实际上整个网络上都是相同的。
+
+\end_layout
+
+\begin_layout Itemize
+激活函数的导数，
+
+\begin_inset Formula $g(y_{{\color{blue}q};k})=f'(u)=f'\left(f^{-1}(y_{{\color{blue}q};k})\right)$
+\end_inset
+
+，
+意思是把 
+\begin_inset Formula $f'(u)$
+\end_inset
+
+ 用反函数关系 
+\begin_inset Formula $u=f^{-1}(y)$
+\end_inset
+
+ 重新表示；
+这个反函数的形式对于整个网络也是唯一的。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial\mathcal{E}}{\partial y_{{\color{blue}q};j}}g(y_{{\color{blue}q};j})$
+\end_inset
+
+ 可以叫做 
+\series bold
+调制
+\begin_inset Formula $y$
+\end_inset
+
+梯度
+\series default
+，
+记作
+\begin_inset Formula $G_{{\color{blue}q};j}^{\text{my}}$
+\end_inset
+
+（m表示modulated）；
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $w_{{\color{red}p};kj}\,g(y_{{\color{blue}q};k})$
+\end_inset
+
+ 可以叫做 反向调制权重，
+记作 
+\begin_inset Formula $W_{{\color{red}p};kj}^{\leftarrow}$
+\end_inset
+
+；
+它用 
+\begin_inset Formula ${\color{blue}q}$
+\end_inset
+
+ 层的 
+\begin_inset Formula $g(y_{{\color{blue}q};k})$
+\end_inset
+
+ 
+\series bold
+，
+按行调制
+\series default
+ 
+\begin_inset Formula ${\color{red}p}$
+\end_inset
+
+ 层的
+\begin_inset Formula $w_{p;kj}$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\color{blue}\left.\frac{\partial\mathcal{E}}{\partial w_{p;ji}}\right|_{w_{p\sim}}}$
+\end_inset
+
+记作 
+\begin_inset Formula $L_{p;ji}$
+\end_inset
+
+ ，
+称为 
+\begin_inset Formula $p$
+\end_inset
+
+层
+\begin_inset Formula $w$
+\end_inset
+
+梯度矩阵；
+
+\end_layout
+
+\begin_layout Itemize
+用 
+\begin_inset Formula $G_{q;j}=\frac{\partial\mathcal{E}}{\partial y_{q;{\color{red}j}}}$
+\end_inset
+
+和
+\begin_inset Formula $W_{kj}=w_{q;{\color{red}k}j}$
+\end_inset
+
+ 表示没有调制过的普通版本。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+L_{{\color{red}p};ji}\\
+G_{{\color{red}p};j}
+\end{array}\right)=\left(\begin{array}{c}
+G_{{\color{blue}q};j}^{\text{my}}\;y_{{\color{red}p};i}\\
+G_{{\color{blue}q};k}\cdot W_{{\color{red}p};kj}^{\leftarrow}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+第一行表示 列矩阵 乘 行矩阵；
+第二行表示矩阵乘向量。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1\leftrightarrow1$
+\end_inset
+
+映射 
+\begin_inset Formula $g(y_{{\color{red}k}})=f'(f^{-1}(y_{{\color{red}k}}))$
+\end_inset
+
+，
+evaluated at 
+\begin_inset Formula $y_{k}$
+\end_inset
+
+；
+也就是先求导数，
+再求反函数，
+用 
+\begin_inset Formula $y_{k}$
+\end_inset
+
+表示 
+\begin_inset Formula $f'(u_{k})$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+给定初始 标量函数 
+\begin_inset Formula $E(y_{n;j})$
+\end_inset
+
+ ，
+所以初始梯度 
+\begin_inset Formula $G_{n;j}$
+\end_inset
+
+已知；
+调制函数 
+\begin_inset Formula $g(y_{q;{\color{red}j}})$
+\end_inset
+
+ 也是已知量；
+权重，
+value 均已知；
+不断反向迭代，
+即可求出所有层的 
+\begin_inset Formula $L$
+\end_inset
+
+ 和 
+\begin_inset Formula $G$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Subsection
+链式法则
+\end_layout
+
+\begin_layout Standard
+反向传播的过程中，
+把 
+\begin_inset Formula $y_{q}$
+\end_inset
+
+ 作为中继变量，
+对独立变量
+\begin_inset Formula $w_{jk}$
+\end_inset
+
+求偏导。
+
+\end_layout
+
+\begin_layout Standard
+求导终止Expression：
+
+\begin_inset Formula 
+\[
+\text{for }w:\quad\left.\frac{\partial y_{q;j}}{\partial w_{{\color{red}p};\ell k}}\right|_{w_{p\sim}}=\delta_{\ell j}\;g\left(y_{q;j}\right)\;y_{{\color{red}p};k}
+\]
+
+\end_inset
+
+本身是三位张量，
+但是只有 
+\begin_inset Formula $\ell=j$
+\end_inset
+
+ 的时候不为零。
+对于 
+\begin_inset Formula $w$
+\end_inset
+
+的其他行全为零。
+简化为
+\begin_inset Formula 
+\[
+\text{for }w:\quad\left.\frac{\partial y_{q;j}}{\partial w_{{\color{red}p};jk}}\right|_{w_{p\sim}}=g\left(y_{q;j}\right)\;y_{{\color{red}p};k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+求导中继Expression：
+
+\begin_inset Formula 
+\[
+\text{for }y:\quad\left.\frac{\partial y_{q;j}}{\partial y_{{\color{red}p};k}}\right|_{w_{p\sim}}=g\left(y_{q;j}\right)\;w_{{\color{red}p};jk},\quad\text{a matrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对
+\begin_inset Formula $w$
+\end_inset
+
+求偏导 
+\begin_inset Formula $\to$
+\end_inset
+
+ 转换为对 
+\begin_inset Formula $y$
+\end_inset
+
+ 求偏导的链式法则，
+不断应用 
+\begin_inset Formula $\partial y_{q;j}/\partial y_{{\color{red}p};k}$
+\end_inset
+
+，
+到倒数第二层，
+再应用 
+\begin_inset Formula $\partial y_{q;j}/\partial w_{{\color{red}p};\ell k}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left.\frac{\partial\mathcal{E}}{\partial y_{8;j}}\right|_{y_{8\sim}}\quad g\left(y_{8;j}\right)\,w_{7;jk}\quad g\left(y_{7;k}\right)\,w_{6;k\ell}\quad\cdots
+\]
+
+\end_inset
+
+对所有引入的额外指标求和。
+
+\begin_inset Formula 
+\[
+j\to jk\to k\ell
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
