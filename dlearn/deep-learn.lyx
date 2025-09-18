@@ -109,19 +109,20 @@ Young
 
 \begin_layout Itemize
 设两层网络间的传播，
-从输出值 
-\begin_inset Formula $x_{i}$
+神经元输出分别是 
+\begin_inset Formula $x_{i},y_{j}$
 \end_inset
 
- 到 
-\begin_inset Formula $y_{j}$
+，
+传播为 
+\begin_inset Formula $x_{i}\to y_{j}$
 \end_inset
 
-的传播。
+ ，
 传播方式为
 \begin_inset Formula 
 \[
-w_{ji}\,x_{i}\to u_{j}\to y_{j}
+w_{ji}\,x_{i}\to u_{j}\stackrel{f}{\to}y_{j}
 \]
 
 \end_inset
@@ -171,7 +172,7 @@ node
 沿着梯度的负方向
 \begin_inset Formula 
 \begin{equation}
-\Delta w=-\eta\frac{\partial E}{\partial w}\label{eq:2.6}
+\Delta w=-\eta\frac{\partial\mathcal{E}}{\partial w}\label{eq:2.6}
 \end{equation}
 
 \end_inset
@@ -794,21 +795,21 @@ value 均已知；
 
 \begin_layout Standard
 反向传播的过程中，
-把 
+每一层的 
 \begin_inset Formula $y_{q}$
 \end_inset
 
  作为中继变量，
-对独立变量
+求偏导的独立变量为
 \begin_inset Formula $w_{jk}$
 \end_inset
 
-求偏导。
+。
 
 \end_layout
 
 \begin_layout Standard
-求导终止Expression：
+求导链末端 Expression：
 
 \begin_inset Formula 
 \[
@@ -817,21 +818,30 @@ value 均已知；
 
 \end_inset
 
-本身是三位张量，
+本身是三阶张量，
 但是只有 
 \begin_inset Formula $\ell=j$
 \end_inset
 
- 的时候不为零。
-对于 
-\begin_inset Formula $w$
+ 的时候不为零；
+即对于 
+\begin_inset Formula $w_{p;jk}$
 \end_inset
 
-的其他行全为零。
-简化为
+ 求偏导，
+只需考虑 
+\begin_inset Formula $(q;j)$
+\end_inset
+
+，
+
+\begin_inset Formula $(p;k)$
+\end_inset
+
+ 这一对指标
 \begin_inset Formula 
 \[
-\text{for }w:\quad\left.\frac{\partial y_{q;j}}{\partial w_{{\color{red}p};jk}}\right|_{w_{p\sim}}=g\left(y_{q;j}\right)\;y_{{\color{red}p};k}
+\text{for }w:\quad\left.\frac{\partial y_{q;j}}{\partial w_{{\color{red}p};jk}}\right|_{w_{p\sim}}=g\left(y_{q;j}\right)\;y_{{\color{red}p};k},\quad\text{only for }j
 \]
 
 \end_inset
@@ -853,46 +863,70 @@ value 均已知；
 \end_layout
 
 \begin_layout Standard
-对
+对某一层的
 \begin_inset Formula $w$
+\end_inset
+
+ 例如
+\begin_inset Formula $w_{1;jk}$
 \end_inset
 
 求偏导 
 \begin_inset Formula $\to$
 \end_inset
 
- 转换为对 
+ 转换为迭代 
 \begin_inset Formula $y$
 \end_inset
 
- 求偏导的链式法则，
-不断应用 
-\begin_inset Formula $\partial y_{q;j}/\partial y_{{\color{red}p};k}$
+ 的链式法则，
+例如 
+\begin_inset Formula $\partial y_{3;j}/\partial y_{2;k}$
 \end_inset
 
-，
-到倒数第二层，
-再应用 
-\begin_inset Formula $\partial y_{q;j}/\partial w_{{\color{red}p};\ell k}$
+；
+一直到
+\begin_inset Formula $w$
 \end_inset
 
+的上一层，
+再使用 
+\begin_inset Formula $\partial y_{2;j}/\partial w_{1;\ell k}$
+\end_inset
 
+。
+下面以
 \begin_inset Formula 
 \[
-\left.\frac{\partial\mathcal{E}}{\partial y_{8;j}}\right|_{y_{8\sim}}\quad g\left(y_{8;j}\right)\,w_{7;jk}\quad g\left(y_{7;k}\right)\,w_{6;k\ell}\quad\cdots
+\frac{\partial\mathcal{E}}{\partial\omega_{1;ab}}=\left.\frac{\partial\mathcal{E}}{\partial y_{8;j}}\right|_{y_{8\sim}}\quad g\left(y_{8;j}\right)\,w_{7;jk}\quad g\left(y_{7;k}\right)\,w_{6;k\ell}\quad\cdots\quad g\left(y_{3;c}\right)\,w_{2;ca}\quad g(y_{2;a})y_{1;b}
 \]
 
 \end_inset
 
-对所有引入的额外指标求和。
+其中所有重复指标求和（引入的 
+\begin_inset Formula $j,k,\ell$
+\end_inset
+
+等中继指标）；
+指标的衔接形如：
 
 \begin_inset Formula 
 \[
-j\to jk\to k\ell
+g_{j}\,w_{jk}\to g_{k}\,w_{k\ell}\to\cdots\rightarrow g_{c}\,w_{ca}\to{\color{blue}g_{a}\,y_{b}}
 \]
 
 \end_inset
 
+前面都是 
+\begin_inset Formula $g\,w$
+\end_inset
+
+的形式，
+最后一项是 
+\begin_inset Formula $g\,y$
+\end_inset
+
+。
 
 \end_layout
 
