@@ -1,5 +1,5 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -14,11 +14,11 @@
 theorems-ams-chap-bytype
 graphicboxes
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language chinese-simplified
 \language_package none
 \inputencoding utf8-plain
-\fontencoding global
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -26,7 +26,9 @@ graphicboxes
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -61,7 +63,9 @@ graphicboxes
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -77,11 +81,16 @@ graphicboxes
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -100,11 +109,15 @@ Yang
 
 \begin_layout Standard
 3个不同的 a posterior error estimators for elliptic PDEs.
- 基于 PDE 的 strong form 的 local residuals，on Neumann 边界条件的local problem 的解，on
- Dirichlet 边界条件的local problem 的解；证明了三个方法是等价的，并且产生 true error 的 global upper
- and local lower bounds。因此基于这些 estimators 的 adaptive mesh–refinement 技术可以探测到
- 局部解的 singularities，从而适当的加密 奇点附近的网格。使用一些数值例子证明了 误差估计子 和网格细化技巧 的 efficiency
- 。
+ 基于 PDE 的 strong form 的 local residuals，
+on Neumann 边界条件的local problem 的解，
+on Dirichlet 边界条件的local problem 的解；
+证明了三个方法是等价的，
+并且产生 true error 的 global upper and local lower bounds。
+因此基于这些 estimators 的 adaptive mesh–refinement 技术可以探测到 局部解的 singularities，
+从而适当的加密 奇点附近的网格。
+使用一些数值例子证明了 误差估计子 和网格细化技巧 的 efficiency 。
+
 \end_layout
 
 \begin_layout Section
@@ -112,46 +125,84 @@ Yang
 \end_layout
 
 \begin_layout Standard
-数值近似的整体 accuracy 受到 局部 singularities 的劣化，源于 re-entrant corners（凹角），interior
- or boundary layers, or shock–like fronts。An obvious remedy is to refine
- the discretization near the critical regions，i.e.
+数值近似的整体 accuracy 受到 局部 singularities 的劣化，
+源于 re-entrant corners（凹角），
+interior or boundary layers,
+ or shock–like fronts。
+An obvious remedy is to refine the discretization near the critical regions，
+i.e.
  to place more grid–points where the solution is less regular.
- 问题变成，如何甄别这些区域，如何在 refineed 和 unrefined 区域间取得 good balance，从而整体的 accuracy
- is optimal。
+ 问题变成，
+如何甄别这些区域，
+如何在 refineed 和 unrefined 区域间取得 good balance，
+从而整体的 accuracy is optimal。
+
 \end_layout
 
 \begin_layout Standard
-另一个相关问题是 获取数值解的可靠 精度估计。FEM or finite–difference 方法的先验分析（a priori）通常不够，给出的是
- asymptotic 误差行为，依赖于假设接的 regularity，在奇点存在的时候不满足。
+另一个相关问题是 获取数值解的可靠 精度估计。
+FEM or finite–difference 方法的先验分析（a priori）通常不够，
+给出的是 asymptotic 误差行为，
+依赖于假设接的 regularity，
+在奇点存在的时候不满足。
+
 \end_layout
 
 \begin_layout Standard
-a posteriori error estimate 的计算应该比计算数值解廉价。此外，误差子应该是 local的，在用户给出的范数下，生成可靠的
- upper 和 lower bounds。global upper bounds 足以给出满足规定的 tolerance 的数值解；local
- lower bounds 用于保证 grid 被适当 refine，而不是过度 refine，以使用最少的 grid–points。为了此目标，a
- posteriori 误差子如果只提供和 标准的a priori 相同的渐近行为是不够的。
+a posteriori error estimate 的计算应该比计算数值解廉价。
+此外，
+误差子应该是 local的，
+在用户给出的范数下，
+生成可靠的 upper 和 lower bounds。
+global upper bounds 足以给出满足规定的 tolerance 的数值解；
+local lower bounds 用于保证 grid 被适当 refine，
+而不是过度 refine，
+以使用最少的 grid–points。
+为了此目标，
+a posteriori 误差子如果只提供和 标准的a priori 相同的渐近行为是不够的。
+
 \end_layout
 
 \begin_layout Standard
-下面提供了三种 a posterior 误差子，基于 suitable local residuals 的计算，分别基于 the solution
- of suitable local Neumann–type preoblems, the solution of suitable local
- Dirichlet–type problem。证明了：up to 高阶项和常数（与网格尺寸无关），所有误差子等价，生成 global upper
- and local bounds for the true error。upper bounds 本质上依赖于离散化的 consistency
- 和 stability，以及分部积分。lower bounds 的估计的核心是小心选择 test–functions。我们使用的误差子和文件[5-9]中给出的
-不同。它们包含local projections of the data, 必须求解的局部问题的size 略大 when using a linear
- finite-element discretization.
- 使用 local projections of the data 结合 exact integration, however, 通常等价于使用exact
- data 结合数值积分法则（quadrature rule）。
+下面提供了三种 a posterior 误差子，
+基于 suitable local residuals 的计算，
+分别基于 the solution of suitable local Neumann–type preoblems,
+ the solution of suitable local Dirichlet–type problem。
+证明了：
+up to 高阶项和常数（与网格尺寸无关），
+所有误差子等价，
+生成 global upper and local bounds for the true error。
+upper bounds 本质上依赖于离散化的 consistency 和 stability，
+以及分部积分。
+lower bounds 的估计的核心是小心选择 test–functions。
+我们使用的误差子和文件[5-9]中给出的不同。
+它们包含local projections of the data,
+ 必须求解的局部问题的size 略大 when using a linear finite-element discretization.
+ 使用 local projections of the data 结合 exact integration,
+ however,
+ 通常等价于使用exact data 结合数值积分法则（quadrature rule）。
+
 \end_layout
 
 \begin_layout Standard
-为简化，使用简单模型：二维 Poisson 方程的 conforming FEM，with Dirichlet–Neumann 边界条件。误差子和对应的结果，可
-以推广到其他离散，例如 nonconforming FEM or Petrov–Galerkin 方法，或者更复杂的问题，例如 2– or 3–
- 维 Navier–Stokes or elasticity 方程。或者在半导体装置模拟中使用的方程。后面简单评论。
+为简化，
+使用简单模型：
+二维 Poisson 方程的 conforming FEM，
+with Dirichlet–Neumann 边界条件。
+误差子和对应的结果，
+可以推广到其他离散，
+例如 nonconforming FEM or Petrov–Galerkin 方法，
+或者更复杂的问题，
+例如 2– or 3– 维 Navier–Stokes or elasticity 方程。
+或者在半导体装置模拟中使用的方程。
+后面简单评论。
+
 \end_layout
 
 \begin_layout Standard
-且不说 a posteriori 误差分析，自适应网格细化流程一般是以下结构：
+且不说 a posteriori 误差分析，
+自适应网格细化流程一般是以下结构：
+
 \end_layout
 
 \begin_layout Enumerate
@@ -159,11 +210,14 @@ a posteriori error estimate 的计算应该比计算数值解廉价。此外，�
 \begin_inset Formula $\mathscr{T}_{0}$
 \end_inset
 
- ），良好表征模型即可，令
+ ），
+良好表征模型即可，
+令
 \begin_inset Formula $k:=0$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -172,6 +226,7 @@ a posteriori error estimate 的计算应该比计算数值解廉价。此外，�
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -183,27 +238,43 @@ a posteriori error estimate 的计算应该比计算数值解廉价。此外，�
 \begin_inset Formula $T$
 \end_inset
 
-，计算后验误差。
+，
+计算后验误差。
+
 \end_layout
 
 \begin_layout Enumerate
-如果计算的 global error 足够小，则 stop。否则，找出需要 refine 的单元，构建下一张网格 
+如果计算的 global error 足够小，
+则 stop。
+否则，
+找出需要 refine 的单元，
+构建下一张网格 
 \begin_inset Formula $\mathscr{T}_{k+1}$
 \end_inset
 
-。令
+。
+令
 \begin_inset Formula $k=k+1$
 \end_inset
 
-，回到第二步。
+，
+回到第二步。
+
 \end_layout
 
 \begin_layout Standard
-算法最适合稳态问题。对于 transient 计算，需要做适当修改（1–3,11,12,15,21）
+算法最适合稳态问题。
+对于 transient 计算，
+需要做适当修改（1–3,11,12,15,21）
 \end_layout
 
 \begin_layout Standard
-下面描述步骤四中的策略，即选择要细化的单元，建立下一张网格。更详细的可以参考 ref25。数值例子展示了 策略和误差子 的效率。
+下面描述步骤四中的策略，
+即选择要细化的单元，
+建立下一张网格。
+更详细的可以参考 ref25。
+数值例子展示了 策略和误差子 的效率。
+
 \end_layout
 
 \begin_layout Subsection
@@ -212,6 +283,7 @@ a posteriori error estimate 的计算应该比计算数值解廉价。此外，�
 
 \begin_layout Standard
 Poission equation with mixed Dirichlet–Neumann 边界条件：
+
 \begin_inset Formula 
 \begin{equation}
 -\Delta u=f,\;\text{in}\,\Omega,\quad u=g_{D},\;\text{on}\;\Gamma_{D},\quad\frac{\partial u}{\partial n}=g_{N},\;\text{on}\;\Gamma_{N}\label{eq:r2.1}
@@ -219,7 +291,9 @@ Poission equation with mixed Dirichlet–Neumann 边界条件：
 
 \end_inset
 
-in a connected, bounded, polygonal domain 
+in a connected,
+ bounded,
+ polygonal domain 
 \begin_inset Formula $\Omega\subset\sbb R^{2}$
 \end_inset
 
@@ -232,14 +306,17 @@ in a connected, bounded, polygonal domain
 \end_inset
 
 ，
+
 \begin_inset Formula $\Gamma_{D}\cap\Gamma_{N}=\emptyset$
 \end_inset
 
 ，
+
 \begin_inset Formula $\Gamma_{D}\neq\emptyset$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
@@ -250,15 +327,18 @@ in a connected, bounded, polygonal domain
 \begin_inset Formula $\omega$
 \end_inset
 
-，具有 Lipschitz 边界
+，
+具有 Lipschitz 边界
 \begin_inset Formula $\gamma$
 \end_inset
 
-；记 
+；
+记 
 \begin_inset Formula $L^{2}(\omega)$
 \end_inset
 
 ，
+
 \begin_inset Formula $H^{k}(\omega)$
 \end_inset
 
@@ -267,10 +347,12 @@ in a connected, bounded, polygonal domain
 \end_inset
 
 ，
+
 \begin_inset Formula $k\ge1$
 \end_inset
 
-分别是标准的 Lebesgue 和 Sobolev 空间，装备了 范数 
+分别是标准的 Lebesgue 和 Sobolev 空间，
+装备了 范数 
 \begin_inset Formula 
 \[
 \left\Vert \cdot\right\Vert _{0,\omega}:=\left\Vert \cdot\right\Vert _{L^{2}(\omega)},\quad\left\Vert \cdot\right\Vert _{k,\omega}:=\left\Vert \cdot\right\Vert _{H^{k}(\omega)},\quad\left\Vert \cdot\right\Vert _{0,\gamma}:=\left\Vert \cdot\right\Vert _{L^{2}(\gamma)},
@@ -294,7 +376,8 @@ in a connected, bounded, polygonal domain
 \begin_inset Formula $(\cdot,\cdot)_{\gamma}$
 \end_inset
 
-。令
+。
+令
 \begin_inset Formula 
 \[
 V:=\left\{ u\in H^{1}(\Omega):u=0\quad\text{on}\quad\Gamma_{D}\right\} .
@@ -309,10 +392,12 @@ reference "eq:r2.1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-的标准弱形式是：找出 
+的标准弱形式是：
+找出 
 \begin_inset Formula $u\in g_{D}+V$
 \end_inset
 
@@ -333,10 +418,12 @@ reference "eq:r2.3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
  具有唯一解。
+
 \end_layout
 
 \begin_layout Standard
@@ -356,6 +443,7 @@ Denote by
 \end_inset
 
  中的任意两个三角形最少有一条公共边（edge）或者一个公共顶点（vertex）。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "enu:rcd1"
@@ -366,9 +454,9 @@ name "enu:rcd1"
 \end_layout
 
 \begin_layout Enumerate
-三角化是 shape regular 的, i.e.
- for all triangles the ratio of the radius of the smallest circumscribed
- ball to that of the larges inscribed ball is bounded by 
+三角化是 shape regular 的,
+ i.e.
+ for all triangles the ratio of the radius of the smallest circumscribed ball to that of the larges inscribed ball is bounded by 
 \series bold
 a constant
 \series default
@@ -377,6 +465,7 @@ a constant
 \end_inset
 
 。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "enu:rcd2"
@@ -388,6 +477,7 @@ name "enu:rcd2"
 
 \begin_layout Standard
 条件（2）等同于 所有三角形的最小角都远离零。
+
 \end_layout
 
 \begin_layout Standard
@@ -396,10 +486,12 @@ name "enu:rcd2"
 \end_inset
 
 ，
+
 \begin_inset Formula $m\ge1$
 \end_inset
 
 ，
+
 \begin_inset Formula $d\ge1$
 \end_inset
 
@@ -408,10 +500,12 @@ name "enu:rcd2"
 \end_inset
 
 ，
+
 \begin_inset Formula $d$
 \end_inset
 
-个变量的多项式的空间，以及
+个变量的多项式的空间，
+以及
 \begin_inset CommandInset label
 LatexCommand label
 name "rpoly"
@@ -434,25 +528,30 @@ V_{h}:=\left\{ u\in C(\overline{\Omega}):u|_{T}\in P_{k,2},\quad\forall T\in\mat
 \begin_inset Formula $\overline{\Omega}$
 \end_inset
 
-上的连续函数；在三角单元内是
+上的连续函数；
+在三角单元内是
 \begin_inset Formula $2$
 \end_inset
 
-个变量的多项式；在边界
+个变量的多项式；
+在边界
 \begin_inset Formula $\Gamma_{D}$
 \end_inset
 
-上为零。然后考虑问题
+上为零。
+然后考虑问题
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r2.3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-的下列有限元离散化：寻找 
+的下列有限元离散化：
+寻找 
 \begin_inset Formula $u_{h}\in g_{D}+V_{h}$
 \end_inset
 
@@ -471,10 +570,13 @@ reference "eq:r2.5"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-具有唯一解。在实际计算中，通常会用合适的有限元近似
+具有唯一解。
+在实际计算中，
+通常会用合适的有限元近似
 \begin_inset Formula $g_{D,h}$
 \end_inset
 
@@ -482,11 +584,14 @@ noprefix "false"
 \begin_inset Formula $g_{D}$
 \end_inset
 
-，会引入额外的高阶项形如 
+，
+会引入额外的高阶项形如 
 \begin_inset Formula $\left\Vert g_{D}-g_{D,h}\right\Vert _{0,\Gamma_{D}}$
 \end_inset
 
-，in the estimates of Propositions 4.2–4.4 below。
+，
+in the estimates of Propositions 4.2–4.4 below。
+
 \end_layout
 
 \begin_layout Standard
@@ -505,6 +610,7 @@ reference "eq:r2.3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -515,28 +621,35 @@ reference "eq:r2.5"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中的唯一解。此外，用
+中的唯一解。
+此外，
+用
 \begin_inset Formula $c,c_{1},c_{2},\cdots$
 \end_inset
 
-表示各种常数，它们只依赖于
+表示各种常数，
+它们只依赖于
 \begin_inset Formula $\Omega$
 \end_inset
 
-和 条件2中的网格常数，见
+和 条件2中的网格常数，
+见
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Section
@@ -545,6 +658,7 @@ The a posteriori error estimators
 
 \begin_layout Standard
 先引入一些记号。
+
 \end_layout
 
 \begin_layout Standard
@@ -563,7 +677,8 @@ The a posteriori error estimators
 \begin_inset Formula $T$
 \end_inset
 
-的 edges 和 vertices 的集合，令
+的 edges 和 vertices 的集合，
+令
 \begin_inset Formula 
 \[
 \mathscr{E}_{h}:=\cup_{T\in\mathscr{T}_{h}}\mathscr{E}(T),\quad\mathscr{V}_{h}:=\cup_{T\in\mathscr{T}_{h}}\mathscr{V}(T)
@@ -571,7 +686,8 @@ The a posteriori error estimators
 
 \end_inset
 
-分别表示所有 edges 和 vertices 的集合。我们将 
+分别表示所有 edges 和 vertices 的集合。
+我们将 
 \begin_inset Formula $\mathscr{E}_{h}$
 \end_inset
 
@@ -587,7 +703,9 @@ The a posteriori error estimators
 
 \end_inset
 
-即 内部边/Dirichlet边/Neumann 边，内部顶点/Dirichlet顶点/Neumann顶点，
+即 内部边/Dirichlet边/Neumann 边，
+内部顶点/Dirichlet顶点/Neumann顶点，
+
 \begin_inset Formula 
 \begin{align*}
  & \mathscr{E}_{h,D}:=\left\{ E\in\mathscr{E}_{h}:\,E\subset\Gamma_{D}\right\} ,\quad\mathscr{E}_{h,N}:=\left\{ E\in\mathscr{E}_{h}:\,E\subset\Gamma_{N}\right\} ,\\
@@ -608,7 +726,8 @@ The a posteriori error estimators
 \begin_inset Formula $E\in\mathscr{E}_{h}$
 \end_inset
 
-，我们使用 
+，
+我们使用 
 \begin_inset Formula $h_{T}$
 \end_inset
 
@@ -616,13 +735,15 @@ The a posteriori error estimators
 \begin_inset Formula $h_{E}$
 \end_inset
 
-标记它们的 diameter 和 length。Sect.2 中的条件2 
+标记它们的 diameter 和 length。
+Sect.2 中的条件2 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -635,10 +756,12 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula $E\in\mathscr{E}(T)$
 \end_inset
 
-；and 
+；
+and 
 \begin_inset Formula $h_{T}/h_{T'}$
 \end_inset
 
@@ -647,20 +770,24 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula $\mathscr{V}(T)\cap\mathscr{V}(T')\neq0$
 \end_inset
 
-（邻接三角形） 具有上下限常数，且只依赖于条件
+（邻接三角形） 具有上下限常数，
+且只依赖于条件
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
@@ -669,6 +796,7 @@ For
 \end_inset
 
 ，
+
 \begin_inset Formula $E\in\mathscr{E}_{h}$
 \end_inset
 
@@ -692,7 +820,8 @@ For
 \series bold
 边邻居
 \series default
-，edge 
+，
+edge 
 \begin_inset Formula $E$
 \end_inset
 
@@ -700,7 +829,8 @@ For
 \series bold
 父三角形
 \series default
-， 顶点
+，
+ 顶点
 \begin_inset Formula $x$
 \end_inset
 
@@ -708,21 +838,26 @@ For
 \series bold
 父三角形
 \series default
-。见fig.
+。
+见fig.
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:rfig1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -747,6 +882,7 @@ Domains
 \end_inset
 
 ，
+
 \begin_inset Formula $\omega_{E}$
 \end_inset
 
@@ -755,6 +891,7 @@ Domains
 \end_inset
 
 。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:rfig1"
@@ -797,6 +934,7 @@ name "fig:rfig1"
 \end_inset
 
 上的连续函数空间，
+
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -804,7 +942,10 @@ name "fig:rfig1"
 \begin_inset Formula $2$
 \end_inset
 
-–因变量 多项式，在顶点上为零，在 Dirichlet 边上为零。
+–因变量 多项式，
+在顶点上为零，
+在 Dirichlet 边上为零。
+
 \begin_inset Formula 
 \begin{equation}
 {\color{blue}V_{x}}:=\left\{ \phi\in C\left(\overline{\omega}_{x}\right):\;\phi|_{T'}\in V_{T'},\quad\forall T'\subset\omega_{x},\quad\phi=0\;\text{on}\;\partial\omega_{x}\backslash\Gamma_{N}\right\} .\label{eq:r3.2}
@@ -816,17 +957,20 @@ name "fig:rfig1"
 \begin_inset Formula $\Pi\equiv P$
 \end_inset
 
-，see
+，
+see
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "rpoly"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \begin_inset Formula $V_{x}$
 \end_inset
 
@@ -834,11 +978,14 @@ noprefix "false"
 \begin_inset Formula $x$
 \end_inset
 
- surrounding cell 上的连续函数空间，在 non–Neumann 边上为零。
+ surrounding cell 上的连续函数空间，
+在 non–Neumann 边上为零。
+
 \end_layout
 
 \begin_layout Standard
-此外，定义截断函数 
+此外，
+定义截断函数 
 \begin_inset Formula $\psi_{T}$
 \end_inset
 
@@ -846,7 +993,8 @@ noprefix "false"
 \begin_inset Formula $\psi_{E}$
 \end_inset
 
-，由以下性质唯一定义
+，
+由以下性质唯一定义
 \begin_inset Formula 
 \begin{equation}
 \supp\psi_{T}\subset T,\quad\psi_{T}\in\Pi_{3,2},\quad\psi_{T}\ge0,\quad\max_{x\in T}\psi_{T}=1,\label{eq:r3.3}
@@ -879,10 +1027,12 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula $\forall T'\subset\omega_{E}$
 \end_inset
 
-，标记 
+，
+标记 
 \begin_inset Formula $[\phi]_{E}$
 \end_inset
 
@@ -894,7 +1044,8 @@ noprefix "false"
 \begin_inset Formula $E$
 \end_inset
 
- in an arbitrary, but fixed direction.
+ in an arbitrary,
+ but fixed direction.
  令 
 \series bold
 边界残差
@@ -922,10 +1073,12 @@ reference "eq:edge1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-。And 
+。
+And 
 \series bold
 开集残差
 \series default
@@ -965,7 +1118,8 @@ where
 \begin_inset Formula $\mathscr{T}_{h}$
 \end_inset
 
-。 Recall
+。
+ Recall
 \begin_inset Formula 
 \[
 -\Delta u=f,\;\text{in}\,\Omega,\quad u=g_{D},\;\text{on}\;\Gamma_{D},\quad\frac{\partial u}{\partial n}=g_{N},\;\text{on}\;\Gamma_{N}
@@ -1001,17 +1155,21 @@ where
 
 \end_inset
 
-即 weighted 开集误差 + 边界误差（除掉Dirichlet边）。ref[6] 中首次使用此误差子分析一维中的问题
+即 weighted 开集误差 + 边界误差（除掉Dirichlet边）。
+ref[6] 中首次使用此误差子分析一维中的问题
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r2.1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-。在 ref[22-25] 中推广到了 Navier–Stokes 方程。
+。
+在 ref[22-25] 中推广到了 Navier–Stokes 方程。
+
 \end_layout
 
 \begin_layout Standard
@@ -1019,11 +1177,13 @@ noprefix "false"
 \series bold
 第二个误差子
 \series default
- 基于 solution of local Neumann problems。对任意
+ 基于 solution of local Neumann problems。
+对任意
 \begin_inset Formula $T\in\mathscr{T}_{h}$
 \end_inset
 
-，写作
+，
+写作
 \begin_inset Formula 
 \[
 \eta_{T,N}:=\left\Vert \nabla u_{T,N}\right\Vert _{0,T},
@@ -1054,20 +1214,24 @@ reference "eq:r3.1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-。Problem 
+。
+Problem 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r3.9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
  是下列 Poission 方程 with mixed Neumann–Dirichlet 边界的离散版本：
+
 \begin_inset Formula 
 \begin{align*}
  & -\Delta\phi=R_{T}(u_{h}),\quad\text{in}\;T\\
@@ -1085,11 +1249,14 @@ noprefix "false"
 \begin_inset Formula $T$
 \end_inset
 
-。ref[7] 首次分析了误差子 
+。
+ref[7] 首次分析了误差子 
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
 
-，然后在 ref[8,9,22–25]中推广到 Navier–Stokes 方程。
+，
+然后在 ref[8,9,22–25]中推广到 Navier–Stokes 方程。
+
 \end_layout
 
 \begin_layout Standard
@@ -1097,11 +1264,13 @@ noprefix "false"
 \series bold
 第三个误差子
 \series default
-基于 solution of local Dirichlet problems。对于任意 
+基于 solution of local Dirichlet problems。
+对于任意 
 \begin_inset Formula $x\in\mathscr{V}_{h,\Omega}\cup\mathscr{V}_{h,N}$
 \end_inset
 
-，写作
+，
+写作
 \begin_inset Formula 
 \begin{equation}
 \eta_{x,D}:=\left\Vert \nabla(u_{x,D}-u_{h})\right\Vert _{0,\omega_{x}},\label{eq:r3.10}
@@ -1128,6 +1297,7 @@ reference "eq:r3.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1146,10 +1316,12 @@ noprefix "false"
 \end_inset
 
 在 ref[5] 中引入。
+
 \end_layout
 
 \begin_layout Standard
-显然，计算 
+显然，
+计算 
 \begin_inset Formula $\eta_{T,R}$
 \end_inset
 
@@ -1157,20 +1329,27 @@ noprefix "false"
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
 
-，后者又低于
+，
+后者又低于
 \begin_inset Formula $\eta_{x,D}$
 \end_inset
 
-。接下来remarks on the principal structure of the error estimators described
- above，以及它们在更复杂问题中的推广。
+。
+接下来remarks on the principal structure of the error estimators described above，
+以及它们在更复杂问题中的推广。
+
 \end_layout
 
 \begin_layout Enumerate
-对于 低阶有限元方法，the jump term 
+对于 低阶有限元方法，
+the jump term 
 \begin_inset Formula $R_{E}(u_{h})$
 \end_inset
 
- are crucial。例如，考虑 harmonic 函数，i.e.
+ are crucial。
+例如，
+考虑 harmonic 函数，
+i.e.
  问题
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1178,6 +1357,7 @@ reference "eq:r2.1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1189,20 +1369,25 @@ noprefix "false"
 \begin_inset Formula $\Gamma_{D}=\Gamma$
 \end_inset
 
-， and 用连续，分片线性函数近似它 i.e.
+，
+ and 用连续，
+分片线性函数近似它 i.e.
  
 \begin_inset Formula $k=1$
 \end_inset
 
-。则 
+。
+则 
 \begin_inset Formula $R_{T}(u_{h})=0$
 \end_inset
 
 ，
+
 \begin_inset Formula $\forall T\in\mathscr{T}_{h}$
 \end_inset
 
 ，
+
 \begin_inset Formula $u_{h}\in V_{h}$
 \end_inset
 
@@ -1210,15 +1395,20 @@ noprefix "false"
 \begin_inset Formula $u_{h}$
 \end_inset
 
-当然不是 harmonic，因为它不在 
+当然不是 harmonic，
+因为它不在 
 \begin_inset Formula $H^{2}(\Omega)$
 \end_inset
 
- 中。The jumps of the normal derivatives, i.e., 
+ 中。
+The jumps of the normal derivatives,
+ i.e.,
+ 
 \begin_inset Formula $R_{E}(u_{h})$
 \end_inset
 
-，measure the discrepancy between 
+，
+measure the discrepancy between 
 \begin_inset Formula $H^{1}(\Omega)$
 \end_inset
 
@@ -1226,13 +1416,15 @@ noprefix "false"
 \begin_inset Formula $H^{2}(\Omega)$
 \end_inset
 
-。下面的
+。
+下面的
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:r4.22"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1245,6 +1437,7 @@ noprefix "false"
 \end_inset
 
 中。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1260,6 +1453,7 @@ noprefix "false"
 \end_inset
 
  with respect to the strong form of the PDE。
+
 \begin_inset Formula $R_{E}(u_{h})$
 \end_inset
 
@@ -1275,18 +1469,21 @@ that boundary operator
 \begin_inset Formula $u_{h}$
 \end_inset
 
- that is canonically associated with the strong and the weak form of the
- differential equation。因此，
+ that is canonically associated with the strong and the weak form of the differential equation。
+因此，
+
 \begin_inset Formula $R_{E}(u_{h})$
 \end_inset
 
- 只受微分算符 principal 部分的影响。如果在
+ 只受微分算符 principal 部分的影响。
+如果在
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:r2.1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1295,10 +1492,13 @@ noprefix "false"
 \end_inset
 
  ，
+
 \begin_inset Formula $R_{E}(u_{h})$
 \end_inset
 
-保持不变，然而与此同时，
+保持不变，
+然而与此同时，
+
 \begin_inset Formula $R_{T}(u_{h})$
 \end_inset
 
@@ -1307,6 +1507,7 @@ noprefix "false"
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1317,6 +1518,7 @@ reference "eq:r3.9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1327,6 +1529,7 @@ reference "eq:r3.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1337,18 +1540,26 @@ reference "eq:r2.5"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-的 local analogues，using higher–order elements。然而对于非线性问题，可以linearize the
- local problems around the computed numerical solution 
+的 local analogues，
+using higher–order elements。
+然而对于非线性问题，
+可以linearize the local problems around the computed numerical solution 
 \begin_inset Formula $u_{h}$
 \end_inset
 
-。例如对于 Navier–stokes 方程，求解 local Stokes 问题就足够了。In the local problems one
- can similarly neglect lower–order terms of the differential operator，provided
- the local mesh–size is small enough.
- Thus, one can, e.g., neglect the convection 
+。
+例如对于 Navier–stokes 方程，
+求解 local Stokes 问题就足够了。
+In the local problems one can similarly neglect lower–order terms of the differential operator，
+provided the local mesh–size is small enough.
+ Thus,
+ one can,
+ e.g.,
+ neglect the convection 
 \begin_inset Formula $b\nabla u$
 \end_inset
 
@@ -1357,6 +1568,7 @@ noprefix "false"
 \end_inset
 
  is small enough。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1367,6 +1579,7 @@ reference "eq:r3.9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1377,11 +1590,13 @@ reference "eq:r3.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- are well–posed（适定的）。对于其他问题例如 Stokes 方程，则应该小心的选取 the finite–element spaces
- 
+ are well–posed（适定的）。
+对于其他问题例如 Stokes 方程，
+则应该小心的选取 the finite–element spaces 
 \begin_inset Formula $V_{T}$
 \end_inset
 
@@ -1390,6 +1605,7 @@ noprefix "false"
 \end_inset
 
  in order to obtain well–posed local problems （ref[22,25]）。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1401,7 +1617,8 @@ noprefix "false"
 \begin_inset Formula $R_{E}(u_{h})$
 \end_inset
 
- 属于有限维空间。因此需要使用合适的 piecewise polynomial 函数对 
+ 属于有限维空间。
+因此需要使用合适的 piecewise polynomial 函数对 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1409,11 +1626,14 @@ noprefix "false"
 \begin_inset Formula $g_{N}$
 \end_inset
 
-作近似。然而使用 piecewise constant 近似 或 
+作近似。
+然而使用 piecewise constant 近似 或 
 \begin_inset Formula $L^{2}$
 \end_inset
 
- projections 不是必要的，论文中使用近似只是为了方便。 ref[5–7] 中没有使用data 
+ projections 不是必要的，
+论文中使用近似只是为了方便。
+ ref[5–7] 中没有使用data 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1421,23 +1641,28 @@ noprefix "false"
 \begin_inset Formula $g_{N}$
 \end_inset
 
-的近似。然而在实际计算中，
+的近似。
+然而在实际计算中，
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r3.7"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 ，
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r3.9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1448,11 +1673,13 @@ reference "eq:r3.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中出现的项是使用数值积分方法规则计算的。在许多情况下这等价于 使用 a finite–element approximation of the
- data in combination with exact integration。
+中出现的项是使用数值积分方法规则计算的。
+在许多情况下这等价于 使用 a finite–element approximation of the data in combination with exact integration。
+
 \end_layout
 
 \begin_layout Section
@@ -1465,14 +1692,17 @@ error estimators的上下限
 \end_inset
 
 ，
+
 \begin_inset Formula $T\in\mathscr{T}_{h}$
 \end_inset
 
 ，
+
 \begin_inset Formula $E\in\mathscr{E}(T)$
 \end_inset
 
-， which maps 
+，
+ which maps 
 \begin_inset Formula $P_{m,1},m\in\sbb N$
 \end_inset
 
@@ -1480,7 +1710,9 @@ error estimators的上下限
 \begin_inset Formula $P_{m,2}$
 \end_inset
 
-。为此，令
+。
+为此，
+令
 \begin_inset Formula $\hat{T}$
 \end_inset
 
@@ -1489,6 +1721,7 @@ error estimators的上下限
 \end_inset
 
 ，
+
 \begin_inset Formula $(1,0)$
 \end_inset
 
@@ -1497,6 +1730,7 @@ error estimators的上下限
 \end_inset
 
 ，
+
 \begin_inset Formula $\hat{E}$
 \end_inset
 
@@ -1508,7 +1742,8 @@ of
 \begin_inset Formula $\hat{T}$
 \end_inset
 
-。标记 
+。
+标记 
 \begin_inset Formula $F_{T}:\sbb R^{2}\to\sbb R^{2}$
 \end_inset
 
@@ -1528,7 +1763,8 @@ of
 \begin_inset Formula $E$
 \end_inset
 
-。定义 extension算符
+。
+定义 extension算符
 \begin_inset Formula $\hat{P}:C(\hat{E})\to C(\hat{T})$
 \end_inset
 
@@ -1564,6 +1800,7 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \end_inset
 
 的线上是常数，
+
 \begin_inset Formula $E'$
 \end_inset
 
@@ -1572,6 +1809,7 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \end_inset
 
 的edg，
+
 \begin_inset Formula $T$
 \end_inset
 
@@ -1579,11 +1817,13 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \begin_inset Formula $E'$
 \end_inset
 
-的左端点。这里orientation of edges is induced by the exterior normal of 
+的左端点。
+这里orientation of edges is induced by the exterior normal of 
 \begin_inset Formula $T$
 \end_inset
 
 （see Fig.2）。
+
 \end_layout
 
 \begin_layout Remark
@@ -1591,11 +1831,13 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \begin_inset Formula $\hat{x}$
 \end_inset
 
-，实际坐标记作
+，
+实际坐标记作
 \begin_inset Formula $x$
 \end_inset
 
-，则
+，
+则
 \begin_inset Formula 
 \[
 \hat{x}\stackrel{F_{T}}{\rightarrow}x,\quad\hat{x}\stackrel{F_{T}^{-1}}{\rightarrow}x,
@@ -1604,14 +1846,17 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \end_inset
 
 在ref三角中，
+
 \begin_inset Formula $\sigma(x)$
 \end_inset
 
- 经过坐标变换，写成
+ 经过坐标变换，
+写成
 \begin_inset Formula $\hat{x}$
 \end_inset
 
 的函数，
+
 \begin_inset Formula 
 \[
 \sigma\circ F_{T}(\hat{x})\Rightarrow\sigma\left(F_{T}(\hat{x})\right)
@@ -1628,6 +1873,7 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \end_inset
 
 的函数。
+
 \begin_inset Formula $\hat{P}$
 \end_inset
 
@@ -1640,6 +1886,7 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 \end_inset
 
 ，
+
 \begin_inset Formula 
 \[
 \hat{P}\left(\sigma\circ F_{T}\right)\circ\hat{x}\Rightarrow\sigma\left(F_{T}(\hat{x},\hat{y})\right)\;\text{提取出}\hat{x}
@@ -1652,6 +1899,8 @@ P\sigma:=\left[\hat{P}\left(\sigma\circ F_{T}\right)\right]\circ F_{T}^{-1},\qua
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -1704,11 +1953,13 @@ Let
 \begin_inset Formula $m\in\sbb N$
 \end_inset
 
-。存在常数 
+。
+存在常数 
 \begin_inset Formula $c_{1},\cdots,c_{4}$
 \end_inset
 
-，它们只依赖于
+，
+它们只依赖于
 \begin_inset Formula $m$
 \end_inset
 
@@ -1719,26 +1970,33 @@ reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中的常数，such that for any 
+中的常数，
+such that for any 
 \begin_inset Formula $T\in\mathscr{T}_{h}$
 \end_inset
 
 ，
+
 \begin_inset Formula $E\in\mathscr{E}(T)$
 \end_inset
 
 ，
+
 \begin_inset Formula $\phi\in L^{2}(T)\cap P_{m,2}$
 \end_inset
 
 ，
+
 \begin_inset Formula $\sigma\in L^{2}(E)\cap P_{m,1}$
 \end_inset
 
-，都有以下不等式成立：
+，
+都有以下不等式成立：
+
 \begin_inset Formula 
 \begin{align}
  & \left\Vert \psi_{T}\phi\right\Vert _{0,T}\le\left\Vert \phi\right\Vert _{0,T}\label{eq:r4.3}\\
@@ -1762,6 +2020,7 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula $\psi_{T}$
 \end_inset
 
@@ -1772,20 +2031,24 @@ reference "eq:r3.3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 ，
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r3.4"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-。 
+。
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1798,6 +2061,7 @@ noprefix "false"
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
@@ -1828,7 +2092,8 @@ name "rprop4.2"
 \begin_inset Formula $c_{5},c_{6}$
 \end_inset
 
-，只依赖于多项式阶数
+，
+只依赖于多项式阶数
 \begin_inset Formula $k$
 \end_inset
 
@@ -1839,10 +2104,12 @@ reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中的常数，such that
+中的常数，
+such that
 \begin_inset Formula 
 \begin{equation}
 \left\Vert u-u_{h}\right\Vert _{1,\Omega}\le c_{5}\left\{ \sum_{T\in\mathscr{T}_{h}}\eta_{T,R}^{2}+\sum_{T\in\mathscr{T}_{h}}h_{T}^{2}\left\Vert f-\Pi_{T}f\right\Vert _{0,T}^{2}+\sum_{E\in\mathscr{E}_{h,N}}h_{E}\left\Vert g_{N}-\Pi_{E}g_{N}\right\Vert _{0,E}^{2}\right\} ^{1/2}\label{eq:r4.8}
@@ -1862,17 +2129,20 @@ and
 \begin_inset Formula $\omega_{T}$
 \end_inset
 
-表示单元的边邻居，see 
+表示单元的边邻居，
+see 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:rfig1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Proof
@@ -1899,17 +2169,20 @@ v\in V\\
 \end_layout
 
 \begin_layout Standard
-在考虑其它 error estimators 之前，我们对
+在考虑其它 error estimators 之前，
+我们对
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "rprop4.2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 和其证明做一些备注。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1922,6 +2195,7 @@ The term
 \end_inset
 
  are higher–order perturbations。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "enu:rrmk1"
@@ -1939,6 +2213,7 @@ reference "eq:r4.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1957,21 +2232,27 @@ reference "eq:r4.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- upon the above estimate，因为
+ upon the above estimate，
+因为
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r4.11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-的类似形对更复杂的问题也成立，e.g.
- the Stokes 方程，而后者的类似形不再成立。
+的类似形对更复杂的问题也成立，
+e.g.
+ the Stokes 方程，
+而后者的类似形不再成立。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1982,52 +2263,61 @@ reference "eq:r4.10"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- follows from the conformity of the finite–element spaces。For nonconforming
- methods，
+ follows from the conformity of the finite–element spaces。
+For nonconforming methods，
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r4.10"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 右边将出现 consistency error。
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "rprop4.2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-仍然成立，假如 the consistency error 是 higher–order perturbation 如同在
+仍然成立，
+假如 the consistency error 是 higher–order perturbation 如同在
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "enu:rrmk1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中讨论的。同样的讨论适用于 certain Petrov–Galerkin methods where higher–order terms used
- for the stabilization of the method appear on the right–hand side of 
+中讨论的。
+同样的讨论适用于 certain Petrov–Galerkin methods where higher–order terms used for the stabilization of the method appear on the right–hand side of 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r4.10"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 （ref[24,25]）。
+
 \end_layout
 
 \begin_layout Standard
@@ -2039,17 +2329,20 @@ noprefix "false"
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
 
-本质上等价。结合
+本质上等价。
+结合
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "rprop4.2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-，表明对于
+，
+表明对于
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
 
@@ -2060,20 +2353,24 @@ reference "eq:r4.8"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 ，
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:r4.9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 的不等式。
+
 \end_layout
 
 \begin_layout Proposition
@@ -2098,6 +2395,7 @@ name "rprop4.3"
 \end_inset
 
 成立：
+
 \begin_inset Formula 
 \begin{align}
  & \eta_{T,N}\le c_{18}\eta_{T,R},\label{eq:4.16}\\
@@ -2111,6 +2409,7 @@ name "rprop4.3"
 \end_inset
 
 ，
+
 \begin_inset Formula $c_{19}$
 \end_inset
 
@@ -2125,10 +2424,12 @@ reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 中的常数。
+
 \end_layout
 
 \begin_layout Standard
@@ -2147,17 +2448,21 @@ noprefix "false"
 \begin_inset Formula $\eta_{T,R}$
 \end_inset
 
-，因此和
+，
+因此和
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
 
-，本质上都是等价的。结合
+，
+本质上都是等价的。
+结合
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "rprop4.2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2172,6 +2477,7 @@ reference "eq:r4.8"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2182,10 +2488,12 @@ reference "eq:r4.9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
  的不等式。
+
 \end_layout
 
 \begin_layout Proposition
@@ -2210,6 +2518,7 @@ name "rprop4.4"
 \end_inset
 
 成立：
+
 \begin_inset Formula 
 \begin{align}
  & \eta_{x,D}\le c_{24}\left\{ \sum_{T'\subset\omega_{x}}\eta_{T',R}^{2}\right\} ^{1/2},\label{eq:r4.20}\\
@@ -2233,10 +2542,12 @@ reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 中的常数。
+
 \end_layout
 
 \begin_layout Proof
@@ -2273,6 +2584,7 @@ reference "rprop4.2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2283,6 +2595,7 @@ reference "rprop4.4"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2290,12 +2603,16 @@ noprefix "false"
 \begin_inset Formula $\mathscr{T}_{h}$
 \end_inset
 
-。当使用 Introduction 中描述的 adaptive mesh generation 技术，
+。
+当使用 Introduction 中描述的 adaptive mesh generation 技术，
+
 \begin_inset Formula $\mathscr{T}_{h}$
 \end_inset
 
-的shape regularity 主要取决于 the shape regularity of the coarsest mesh。因此选择合适的
- coarsest mesh 会极大影响 the quality of the error estimators。更详细的讨论 see ref[4,13]。
+的shape regularity 主要取决于 the shape regularity of the coarsest mesh。
+因此选择合适的 coarsest mesh 会极大影响 the quality of the error estimators。
+更详细的讨论 see ref[4,13]。
+
 \end_layout
 
 \begin_layout Section
@@ -2303,8 +2620,11 @@ Adaptive mesh–refinement techniques
 \end_layout
 
 \begin_layout Standard
-接下来给出 不同 mesh–refinement 技巧的总结。更详细的展式，以及所需的数据结构，参考 ref[25] 以及其引文。接下来我们总是假设在给定的
- mesh 
+接下来给出 不同 mesh–refinement 技巧的总结。
+更详细的展式，
+以及所需的数据结构，
+参考 ref[25] 以及其引文。
+接下来我们总是假设在给定的 mesh 
 \begin_inset Formula $\mathscr{T}_{h}$
 \end_inset
 
@@ -2313,10 +2633,13 @@ Adaptive mesh–refinement techniques
 \end_inset
 
 ，
+
 \begin_inset Formula $T\in\mathscr{T}_{h}$
 \end_inset
 
-，of the true error of the finite–element discretization。
+，
+of the true error of the finite–element discretization。
+
 \end_layout
 
 \begin_layout Standard
@@ -2324,11 +2647,17 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $\sum_{T\in\mathscr{T}_{h}}\eta_{T}^{2}$
 \end_inset
 
-，在约束下：未知量的数目不超过用户给定数目（cf[14]）。这种方法 rather costly。
+，
+在约束下：
+未知量的数目不超过用户给定数目（cf[14]）。
+这种方法 rather costly。
+
 \end_layout
 
 \begin_layout Standard
-另一种方案是使用某种 local extrapolation 预测进一步的 refinement 是否有利。更准确地说，假设我们已经计算了 
+另一种方案是使用某种 local extrapolation 预测进一步的 refinement 是否有利。
+更准确地说，
+假设我们已经计算了 
 \begin_inset Formula $\eta_{T}$
 \end_inset
 
@@ -2336,7 +2665,8 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $\eta_{T'}$
 \end_inset
 
-，其中
+，
+其中
 \begin_inset Formula $T'$
 \end_inset
 
@@ -2344,15 +2674,18 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $T$
 \end_inset
 
- refine 得到，我们想知道是否需要进一步 refine 
+ refine 得到，
+我们想知道是否需要进一步 refine 
 \begin_inset Formula $T'$
 \end_inset
 
-。通常假设 errors locally behave like 
+。
+通常假设 errors locally behave like 
 \begin_inset Formula $c\,h_{T}^{\gamma}$
 \end_inset
 
- 都是合理的，其中
+ 都是合理的，
+其中
 \begin_inset Formula $c$
 \end_inset
 
@@ -2360,7 +2693,8 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $\gamma$
 \end_inset
 
-为待定常数。可以使用 
+为待定常数。
+可以使用 
 \begin_inset Formula $\eta_{T}$
 \end_inset
 
@@ -2376,16 +2710,21 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $\gamma$
 \end_inset
 
-。These estimates 然后给出 a prediction of the error on a refinement of 
+。
+These estimates 然后给出 a prediction of the error on a refinement of 
 \begin_inset Formula $T'$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
-最后，可以想象，mesh is optimal when error is equidistributed ref[5,17]。对应的策略是：refine
- all 
+最后，
+可以想象，
+mesh is optimal when error is equidistributed ref[5,17]。
+对应的策略是：
+refine all 
 \begin_inset Formula $T$
 \end_inset
 
@@ -2393,24 +2732,41 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $\eta_{T}\ge\gamma*\max_{T'\in\mathscr{T}_{h}}\,\eta_{T'}$
 \end_inset
 
-。此处
+。
+此处
 \begin_inset Formula $0<\gamma<1$
 \end_inset
 
-是给定的阈值，常取作
+是给定的阈值，
+常取作
 \begin_inset Formula $\gamma=0.5$
 \end_inset
 
-。此策略比较廉价，经常生成满意的结果。下面的数值案例使用此方法。
+。
+此策略比较廉价，
+经常生成满意的结果。
+下面的数值案例使用此方法。
+
 \end_layout
 
 \begin_layout Standard
-决定了要细化的单元，然后需要进行实际的细化操作，这取决于 element geometry。For quadrilaterals，有效的细化方法是连接
- edges 的中点。Triangles 可以通过连接 edge 中点分成四个新的；或者通过连接一条边的中点 和 相对的vertex。方法一显然产生相似三角形，
-而方法二 may lead to increasingly acute triangles （尖锐）。基本上有两种策略来避免劣化。 In the
- longest–edge bisection，三角形只会在它们的 最长边上进行二分（cf[18,19]）。In the marked–edge
- bisection，三角形只会在 be cut along a marked edge。初始时刻，one marks exactly one
- edge of each triangle in the coarsest mesh。当三角形
+决定了要细化的单元，
+然后需要进行实际的细化操作，
+这取决于 element geometry。
+For quadrilaterals，
+有效的细化方法是连接 edges 的中点。
+Triangles 可以通过连接 edge 中点分成四个新的；
+或者通过连接一条边的中点 和 相对的vertex。
+方法一显然产生相似三角形，
+而方法二 may lead to increasingly acute triangles （尖锐）。
+基本上有两种策略来避免劣化。
+ In the longest–edge bisection，
+三角形只会在它们的 最长边上进行二分（cf[18,19]）。
+In the marked–edge bisection，
+三角形只会在 be cut along a marked edge。
+初始时刻，
+one marks exactly one edge of each triangle in the coarsest mesh。
+当三角形
 \begin_inset Formula $A$
 \end_inset
 
@@ -2419,6 +2775,7 @@ Adaptive mesh–refinement techniques
 \end_inset
 
 ，
+
 \begin_inset Formula $A$
 \end_inset
 
@@ -2426,11 +2783,15 @@ Adaptive mesh–refinement techniques
 \begin_inset Formula $B,C$
 \end_inset
 
- 的 marked edges （cf[20]）。tetrahedra 的refinement 见 ref[10]。各种不同细分策略的对比 see[16]。
+ 的 marked edges （cf[20]）。
+tetrahedra 的refinement 见 ref[10]。
+各种不同细分策略的对比 see[16]。
+
 \end_layout
 
 \begin_layout Standard
-上诉所有方法必须补完如何处理 hanging nodes，i.e.
+上诉所有方法必须补完如何处理 hanging nodes，
+i.e.
  违反条件1
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -2438,20 +2799,23 @@ reference "enu:rcd1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-的points。对 quadrilateral mesh 最简单和高效的方法是把 hanging nodes 当作 spurious degrees
- of freedoms，i.e.
- to fix the value of the finite–element function in these points to be a
- suitable interpolation of their values correponding to neigbouring regular
- nodes.
- 对 Triangular meshes 最好引入 auxiliary bisected triangles。ref[25] 中描述了不同的策略来避免过于尖锐的
- auxiliary triangles。在下面的数值例子中使用如下策略。
+的points。
+对 quadrilateral mesh 最简单和高效的方法是把 hanging nodes 当作 spurious degrees of freedoms，
+i.e.
+ to fix the value of the finite–element function in these points to be a suitable interpolation of their values correponding to neigbouring regular nodes.
+ 对 Triangular meshes 最好引入 auxiliary bisected triangles。
+ref[25] 中描述了不同的策略来避免过于尖锐的 auxiliary triangles。
+在下面的数值例子中使用如下策略。
+
 \end_layout
 
 \begin_layout Standard
-当 passing to the next triangulation, 我们按如下标记三角形
+当 passing to the next triangulation,
+ 我们按如下标记三角形
 \begin_inset CommandInset label
 LatexCommand label
 name "rRGBrule"
@@ -2459,6 +2823,7 @@ name "rRGBrule"
 \end_inset
 
 ，
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2466,7 +2831,10 @@ name "rRGBrule"
 \series bold
 red
 \series default
-，如果通过 连接 edges 的中点，分成四个新的三角形。
+，
+如果通过 连接 edges 的中点，
+分成四个新的三角形。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2474,7 +2842,10 @@ red
 \series bold
 green
 \series default
-，如果通过 连接最长边中点和对应顶点，分成两个新的三角形。
+，
+如果通过 连接最长边中点和对应顶点，
+分成两个新的三角形。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2482,13 +2853,17 @@ green
 \series bold
 blue
 \series default
-，如果通过 连接最长边中点和对应顶点，以及剩余边的中点。see 
+，
+如果通过 连接最长边中点和对应顶点，
+以及剩余边的中点。
+see 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:r3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2497,6 +2872,7 @@ noprefix "false"
 
 \begin_layout Standard
 然后通过如下规则避免 hanging nodes。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2505,6 +2881,7 @@ noprefix "false"
 red
 \series default
 。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2512,11 +2889,14 @@ red
 \series bold
 blue
 \series default
-，如果其一悬垂节点位于最长边；否则它是 
+，
+如果其一悬垂节点位于最长边；
+否则它是 
 \series bold
 red
 \series default
 （在最长边中点添加node）。
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2524,40 +2904,54 @@ red
 \series bold
 green
 \series default
-，如果它位于最长边，否则它是 
+，
+如果它位于最长边，
+否则它是 
 \series bold
 blue
 \series default
 （在最长边中点添加 node）。
+
 \end_layout
 
 \begin_layout Standard
-此处的red, blue, green 将按照
+此处的red,
+ blue,
+ green 将按照
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "rRGBrule"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中的规则 refine。注意到，rules (2) 和 (3) 可能引入新的 hanging nodes。然而可以证明依据上述规则的 refinement
- process 是有限步的。此外，rules (2) and (3) 保证满足
+中的规则 refine。
+注意到，
+rules (2) 和 (3) 可能引入新的 hanging nodes。
+然而可以证明依据上述规则的 refinement process 是有限步的。
+此外，
+rules (2) and (3) 保证满足
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "enu:rcd2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2577,7 +2971,9 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-三角形的 Red, green and blue refinement。
+三角形的 Red,
+ green and blue refinement。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:r3"
@@ -2606,7 +3002,8 @@ Numerical examples
 \end_layout
 
 \begin_layout Standard
-我们考虑两个数值例子：圆形区域
+我们考虑两个数值例子：
+圆形区域
 \begin_inset Formula $\Omega=\left\{ (r,\phi):0\le r<1,0\le\phi\le\alpha\right\} $
 \end_inset
 
@@ -2617,6 +3014,7 @@ reference "eq:r2.1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2624,7 +3022,8 @@ noprefix "false"
 \begin_inset Formula $\alpha=1.5\pi$
 \end_inset
 
- for the first example, and 
+ for the first example,
+ and 
 \begin_inset Formula $\alpha=2\pi$
 \end_inset
 
@@ -2636,7 +3035,9 @@ noprefix "false"
 \begin_inset Formula $\Gamma_{D}=\Gamma$
 \end_inset
 
- for both examples。For both examples，极坐标中的精确解写作
+ for both examples。
+For both examples，
+极坐标中的精确解写作
 \begin_inset Formula 
 \[
 u=r^{\pi/\alpha}\sin\left(\frac{\pi}{\alpha}\phi\right).
@@ -2644,16 +3045,22 @@ u=r^{\pi/\alpha}\sin\left(\frac{\pi}{\alpha}\phi\right).
 
 \end_inset
 
-离散化使用 continuous, piecewise linear finite elements，i.e.
+离散化使用 continuous,
+ piecewise linear finite elements，
+i.e.
  
 \begin_inset Formula $k=1$
 \end_inset
 
-。The error estimator is 
+。
+The error estimator is 
 \begin_inset Formula $\eta_{T,R}$
 \end_inset
 
-。若三角形的 estimated error 超过 estimated maximal error 的一半，则refine。
+。
+若三角形的 estimated error 超过 estimated maximal error 的一半，
+则refine。
+
 \end_layout
 
 \begin_layout Standard
@@ -2664,6 +3071,7 @@ reference "fig:r45"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2674,11 +3082,14 @@ reference "fig:r10-11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- 展示了初始网格，和两张 refined triangulations，and zooms of the refinement near the
- critical regions。当使用estimator 
+ 展示了初始网格，
+和两张 refined triangulations，
+and zooms of the refinement near the critical regions。
+当使用estimator 
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
 
@@ -2686,11 +3097,15 @@ noprefix "false"
 \begin_inset Formula $\eta_{x,D}$
 \end_inset
 
- 时，结果是类似的。
+ 时，
+结果是类似的。
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2723,7 +3138,15 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-左：例一，初始三角化；右：例一，4 细化步，318三角形，183节点。
+左：
+例一，
+初始三角化；
+右：
+例一，
+4 细化步，
+318三角形，
+183节点。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:r45"
@@ -2749,6 +3172,8 @@ name "fig:r45"
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2781,11 +3206,18 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-左：例一，7细化步，2298三角形，1209节点；右：Zoom of 
+左：
+例一，
+7细化步，
+2298三角形，
+1209节点；
+右：
+Zoom of 
 \begin_inset Formula $[-\frac{1}{8},\frac{1}{8}]\times[-\frac{1}{8},\frac{1}{8}]$
 \end_inset
 
  左图。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:r67"
@@ -2807,6 +3239,8 @@ name "fig:r67"
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2839,7 +3273,15 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-左：例二，初始三角化；右：例二，4 细化步，424三角形，240节点。
+左：
+例二，
+初始三角化；
+右：
+例二，
+4 细化步，
+424三角形，
+240节点。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:r89"
@@ -2861,6 +3303,8 @@ name "fig:r89"
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2893,11 +3337,18 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-左：例二，7 细化步，2832三角形，1482节点；右：Zoom of 
+左：
+例二，
+7 细化步，
+2832三角形，
+1482节点；
+右：
+Zoom of 
 \begin_inset Formula $[-\frac{1}{8},\frac{1}{8}]\times[-\frac{1}{8},\frac{1}{8}]$
 \end_inset
 
  左图。
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:r10-11"
@@ -2918,14 +3369,21 @@ name "fig:r10-11"
 \end_layout
 
 \begin_layout Standard
-Table 1 给出了 uniform 和 adaptive refinement 策略在例1和例2上的对比。这里
+Table 1 给出了 uniform 和 adaptive refinement 策略在例1和例2上的对比。
+这里
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $L$
 \end_inset
 
-，NT，NN：细化次数；三角形数目；未知量数目；
+，
+NT，
+NN：
+细化次数；
+三角形数目；
+未知量数目；
+
 \end_layout
 
 \begin_layout Itemize
@@ -2933,27 +3391,36 @@ Table 1 给出了 uniform 和 adaptive refinement 策略在例1和例2上的对�
 \end_inset
 
 ，
+
 \begin_inset Formula $q$
 \end_inset
 
- ：相对误差 in 
+ ：
+相对误差 in 
 \begin_inset Formula $H^{1}$
 \end_inset
 
-–norm；the ratio of 
+–norm；
+the ratio of 
 \begin_inset Formula $\left\Vert u-u_{h}\right\Vert _{1,\Omega}$
 \end_inset
 
 的预测值 比上 the true one；
+
 \end_layout
 
 \begin_layout Itemize
-Tt 和 Ts：mesh–generation 的时间，in 秒；求解离散问题使用的时间, in 秒。
+Tt 和 Ts：
+mesh–generation 的时间，
+in 秒；
+求解离散问题使用的时间,
+ in 秒。
+
 \end_layout
 
 \begin_layout Standard
-Note that the solution algorithm could be accelerated, since it does superfluous
- work when only a few unknowns are added during the refinement process.
+Note that the solution algorithm could be accelerated,
+ since it does superfluous work when only a few unknowns are added during the refinement process.
  Table 1 说明 
 \begin_inset Formula $\eta_{T,N}$
 \end_inset
@@ -2966,13 +3433,15 @@ Note that the solution algorithm could be accelerated, since it does superfluous
 \begin_inset Formula $\eta_{T,R}$
 \end_inset
 
-稍好。然而 Figs
+稍好。
+然而 Figs
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:r45"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2983,6 +3452,7 @@ reference "fig:r10-11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2991,6 +3461,7 @@ noprefix "false"
 \end_inset
 
 可以高效地定位需要加密的网格区域。
+
 \end_layout
 
 \begin_layout Chapter
@@ -3001,27 +3472,36 @@ Comsol 自适应
 \begin_inset Formula $t=t_{n}$
 \end_inset
 
-时刻的自适应结果 被映射到（mapped）到 coarse base mesh。为了构建 
+时刻的自适应结果 被映射到（mapped）到 coarse base mesh。
+为了构建 
 \begin_inset Formula $[t_{n},t_{n+1}]$
 \end_inset
 
- 时刻的自适应网格（adapted mesh），首先在 base mesh 上计算 
+ 时刻的自适应网格（adapted mesh），
+首先在 base mesh 上计算 
 \begin_inset Formula $[t_{n},t_{s}]$
 \end_inset
 
- 的解，其中
+ 的解，
+其中
 \begin_inset Formula $t_{s}$
 \end_inset
 
 是最大采样时间，
+
 \begin_inset Formula $t_{n+1}=2t_{n}-t_{n-1}$
 \end_inset
 
-。使用给定采样点的 coarse solution 计算 误差指标 （error indicator）。
+。
+使用给定采样点的 coarse solution 计算 误差指标 （error indicator）。
+
 \end_layout
 
 \begin_layout Standard
-如果使用自动 时间步长，将计算 refinement 的程度， 然后与给定限额比较。如果计算结果 
+如果使用自动 时间步长，
+将计算 refinement 的程度，
+ 然后与给定限额比较。
+如果计算结果 
 \series bold
 太小
 \series default
@@ -3029,7 +3509,8 @@ Comsol 自适应
 \series bold
 太大
 \series default
-，时间间隔分别将被 
+，
+时间间隔分别将被 
 \series bold
 增加
 \series default
@@ -3037,11 +3518,16 @@ Comsol 自适应
 \series bold
 减少
 \series default
-，新的时刻将是 
+，
+新的时刻将是 
 \begin_inset Formula $t_{n+1}$
 \end_inset
 
-。如果时间间隔需要调整，则使用新的 coarse solution 再次对 error indicator 采样。比较只进行一次。
+。
+如果时间间隔需要调整，
+则使用新的 coarse solution 再次对 error indicator 采样。
+比较只进行一次。
+
 \end_layout
 
 \begin_layout Standard
@@ -3049,24 +3535,32 @@ Comsol 自适应
 \begin_inset Formula $[t_{n},t_{n+1}]$
 \end_inset
 
- 中给定点采样的 error indicator，根据 element pick function 选取一组单元，最后 细化（refining）这些单元，就得到
-了新的 自适应网格（adapted mesh）。PDE问题 使用上一张 
+ 中给定点采样的 error indicator，
+根据 element pick function 选取一组单元，
+最后 细化（refining）这些单元，
+就得到了新的 自适应网格（adapted mesh）。
+PDE问题 使用上一张 
 \begin_inset Formula $[t_{n-1},t_{n}]$
 \end_inset
 
-自适应网格，在
+自适应网格，
+在
 \begin_inset Formula $t_{n}$
 \end_inset
 
-时刻的解，将被映射到 
+时刻的解，
+将被映射到 
 \begin_inset Formula $[t_{n},t_{n+1}]$
 \end_inset
 
-的新网格，进行方程的时间积分（integration）。接下来是类似的 
+的新网格，
+进行方程的时间积分（integration）。
+接下来是类似的 
 \begin_inset Formula $t_{n+1}$
 \end_inset
 
 时刻的网格自适应。
+
 \end_layout
 
 \begin_layout Standard
@@ -3083,6 +3577,7 @@ Comsol 自适应
 \end_inset
 
 是 coarse base mesh 的单元总数，
+
 \begin_inset Formula $\gamma$
 \end_inset
 
@@ -3090,15 +3585,19 @@ Comsol 自适应
 \begin_inset Formula $N$
 \end_inset
 
-长度vector，元素是此处单元被细分的次数，
+长度vector，
+元素是此处单元被细分的次数，
+
 \begin_inset Formula $p=\max_{i}\:\gamma(i)$
 \end_inset
 
-，因此单个项
+，
+因此单个项
 \begin_inset Formula $\le1$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
@@ -3106,15 +3605,20 @@ Comsol 自适应
 \begin_inset Formula $\rho>120\%*\text{参考值}$
 \end_inset
 
-，则下个按给定因子
+，
+则下个按给定因子
 \begin_inset Formula $\alpha$
 \end_inset
 
-增加 时间步长 ；如果 
+增加 时间步长 ；
+如果 
 \begin_inset Formula $\rho<80\%*\text{参考值}$
 \end_inset
 
-，则应该增加 时间步长；否则保持当前 时间步长。
+，
+则应该增加 时间步长；
+否则保持当前 时间步长。
+
 \end_layout
 
 \begin_layout Chapter
@@ -3126,7 +3630,8 @@ Comsol 自适应
 \begin_inset Formula $h$
 \end_inset
 
-–版本有限元算法，并将其性能与 uniform 
+–版本有限元算法，
+并将其性能与 uniform 
 \begin_inset Formula $h$
 \end_inset
 
@@ -3134,7 +3639,11 @@ Comsol 自适应
 \begin_inset Formula $p$
 \end_inset
 
-–版本的有限元分析进行了比较。结果表明，在求解精度和计算时间方面，自适应策略大大提高了求解过程的整体效率和性能。
+–版本的有限元分析进行了比较。
+结果表明，
+在求解精度和计算时间方面，
+自适应策略大大提高了求解过程的整体效率和性能。
+
 \end_layout
 
 \begin_layout Section
@@ -3142,14 +3651,29 @@ Comsol 自适应
 \end_layout
 
 \begin_layout Standard
-有限元分析师在设计网格时，通常要结合经验和直觉。如果有限元近似的结果看起来是合理的，那么就会被接受；否则，就会重新设计网格并重复分析。这是一个非常昂贵和浪费的过
-程，而且无法保证新的网格足够精确。
+有限元分析师在设计网格时，
+通常要结合经验和直觉。
+如果有限元近似的结果看起来是合理的，
+那么就会被接受；
+否则，
+就会重新设计网格并重复分析。
+这是一个非常昂贵和浪费的过程，
+而且无法保证新的网格足够精确。
+
 \end_layout
 
 \begin_layout Standard
-为了克服这一困难，过去已经开发出了自适应有限元方法[1]-[3]，在求解精度和计算时间方面提高了求解过程的整体效率。该算法从 initial minimum
- mesh 开始，并对其应用有限元法（FEM）。然后进行误差分析，并根据 a posteriori error analysis 对计算解的局部和全局误差进行估
-计。利用这些估计值来决定解决方案是否可接受，如果不可接受，则应细化哪些单元。然后通过 细化 所选单元（
+为了克服这一困难，
+过去已经开发出了自适应有限元方法[1]-[3]，
+在求解精度和计算时间方面提高了求解过程的整体效率。
+该算法从 initial minimum mesh 开始，
+并对其应用有限元法（FEM）。
+然后进行误差分析，
+并根据 a posteriori error analysis 对计算解的局部和全局误差进行估计。
+利用这些估计值来决定解决方案是否可接受，
+如果不可接受，
+则应细化哪些单元。
+然后通过 细化 所选单元（
 \begin_inset Formula $h$
 \end_inset
 
@@ -3161,11 +3685,16 @@ Comsol 自适应
 \begin_inset Formula $hp$
 \end_inset
 
-–细化）[4]来创建细化网格。此过程一直持续到找到可接受的解为止。
+–细化）[4]来创建细化网格。
+此过程一直持续到找到可接受的解为止。
+
 \end_layout
 
 \begin_layout Standard
-在过去几十年中，文献[2]、[4] 提出了许多不同的误差估计方法。这里介绍一种基于 fictitious error charegs 的替代方法。
+在过去几十年中，
+文献[2]、[4] 提出了许多不同的误差估计方法。
+这里介绍一种基于 fictitious error charegs 的替代方法。
+
 \end_layout
 
 \begin_layout Section
@@ -3185,7 +3714,10 @@ Poisson方程
 \begin_inset Formula $\epsilon_{r}$
 \end_inset
 
-的区域内，根据 Dirichlet 和 Neumann 边界条件，高效求解泊松方程。
+的区域内，
+根据 Dirichlet 和 Neumann 边界条件，
+高效求解泊松方程。
+
 \begin_inset Formula 
 \begin{align}
 -\nabla\cdot(\epsilon_{r}\nabla\phi) & =\rho/\epsilon_{0},\quad\text{in}\Omega\label{eq:j1}\\
@@ -3203,13 +3735,15 @@ Galerkin法
 \end_layout
 
 \begin_layout Standard
-有限元分析中最常用的方法是 Galerkin方法。方程 
+有限元分析中最常用的方法是 Galerkin方法。
+方程 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3220,6 +3754,7 @@ reference "eq:j2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3230,10 +3765,13 @@ reference "eq:j3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- 描述了一个边界值问题 (BVP)，需要应用Galerkin 加权残差法 [6]。即在求解空间
+ 描述了一个边界值问题 (BVP)，
+需要应用Galerkin 加权残差法 [6]。
+即在求解空间
 \begin_inset Formula $\Lambda$
 \end_inset
 
@@ -3261,17 +3799,22 @@ noprefix "false"
 \begin_inset Formula $H_{0}^{1}(\Omega)$
 \end_inset
 
-，即平方可积的函数空间，并且 具有平方可积的一阶导数，并满足边界条件
+，
+即平方可积的函数空间，
+并且 具有平方可积的一阶导数，
+并满足边界条件
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-。最一般情况下
+。
+最一般情况下
 \begin_inset Formula $\Lambda$
 \end_inset
 
@@ -3279,7 +3822,10 @@ noprefix "false"
 \begin_inset Formula $\Upsilon$
 \end_inset
 
- spaces 可以不同；然而通常我们选同一空间，并得到对称的矩阵方程。
+ spaces 可以不同；
+然而通常我们选同一空间，
+并得到对称的矩阵方程。
+
 \end_layout
 
 \begin_layout Subsection
@@ -3292,6 +3838,7 @@ FEM简单地将 解空间
 \end_inset
 
  替换为，
+
 \begin_inset Formula $\Lambda$
 \end_inset
 
@@ -3299,11 +3846,14 @@ FEM简单地将 解空间
 \begin_inset Formula $\Lambda^{h}$
 \end_inset
 
-。此外，在有限单元上定义的任何 光滑试探函数
+。
+此外，
+在有限单元上定义的任何 光滑试探函数
 \begin_inset Formula $\phi^{h}\in\Lambda^{h}$
 \end_inset
 
-，现在都可以用与该单元相关的基函数来逼近
+，
+现在都可以用与该单元相关的基函数来逼近
 \begin_inset Formula 
 \begin{equation}
 \phi^{h}=\sum_{i=1}^{N_{e}}\alpha_{i}\,\psi_{i}^{h}\label{eq:j5}
@@ -3315,17 +3865,20 @@ FEM简单地将 解空间
 \begin_inset Formula $N_{e}$
 \end_inset
 
-是每个单元上的自由度数目，系数
+是每个单元上的自由度数目，
+系数
 \begin_inset Formula $\alpha_{i}$
 \end_inset
 
-需要计算。将
+需要计算。
+将
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j5"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3336,6 +3889,7 @@ reference "eq:j4"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3343,7 +3897,8 @@ noprefix "false"
 \begin_inset Formula $\forall v^{h}\in\Lambda^{h}$
 \end_inset
 
-可得矩阵方程，从而计算出
+可得矩阵方程，
+从而计算出
 \begin_inset Formula $\alpha_{i}$
 \end_inset
 
@@ -3360,10 +3915,13 @@ noprefix "false"
 \end_inset
 
 是对每个单元贡献的求和。
+
 \begin_inset Formula $\underline{\alpha}$
 \end_inset
 
-是系数向量。最终，单元上的矩阵和右端向量写成
+是系数向量。
+最终，
+单元上的矩阵和右端向量写成
 \begin_inset Formula 
 \begin{equation}
 \left[S_{e}\right]_{ij}=\int_{\Omega_{e}}\nabla\psi_{i}^{h}\cdot\epsilon_{r}\nabla\psi_{j}^{h}\dd{\Omega};\quad\left[y_{e}\right]_{i}=\int_{\Omega_{e}}\psi_{i}^{h}\,\frac{\rho}{\epsilon_{0}}\dd{\Omega}.\label{eq:j7}
@@ -3371,7 +3929,8 @@ noprefix "false"
 
 \end_inset
 
-有时，an inhomogeneous Dirichlet 边界条件
+有时，
+an inhomogeneous Dirichlet 边界条件
 \begin_inset Formula 
 \begin{equation}
 \phi=\phi_{0},\quad\text{on}\Gamma_{D}\label{eq:j8}
@@ -3383,15 +3942,19 @@ noprefix "false"
 \begin_inset Formula $\alpha_{i}$
 \end_inset
 
-的值。纳入此边界条件，涉及到缩减矩阵
+的值。
+纳入此边界条件，
+涉及到缩减矩阵
 \begin_inset Formula $S$
 \end_inset
 
-的size，并把特定
+的size，
+并把特定
 \begin_inset Formula $\alpha_{i}$
 \end_inset
 
 的贡献移动到 excitation 向量（右端向量）。
+
 \end_layout
 
 \begin_layout Section
@@ -3406,6 +3969,7 @@ reference "eq:j1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3416,14 +3980,18 @@ reference "eq:j3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-给出的二阶BVP问题，regular in 区域
+给出的二阶BVP问题，
+regular in 区域
 \begin_inset Formula $\Omega$
 \end_inset
 
-，当只使用quasiuniform and regular tetrahedral 离散。
+，
+当只使用quasiuniform and regular tetrahedral 离散。
+
 \end_layout
 
 \begin_layout Subsection
@@ -3436,6 +4004,7 @@ h–Convergence
 \end_inset
 
 ，
+
 \series bold
 精确解
 \begin_inset Formula $\phi$
@@ -3455,15 +4024,19 @@ h–Convergence
 \begin_inset Formula $\order{h^{p+1}}$
 \end_inset
 
-阶，其中
+阶，
+其中
 \begin_inset Formula $p$
 \end_inset
 
-是单元 polynomial order，假设解
+是单元 polynomial order，
+假设解
 \begin_inset Formula $\phi$
 \end_inset
 
-满足光滑性要求。此外，解
+满足光滑性要求。
+此外，
+解
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -3475,8 +4048,10 @@ h–Convergence
 \begin_inset Formula $\order{h^{p+1-m}}$
 \end_inset
 
-。由于 FEM 解最小化 the error in the energy norm，the error magnitude in energy
- norm 是解整体质量的良好度量，因此
+。
+由于 FEM 解最小化 the error in the energy norm，
+the error magnitude in energy norm 是解整体质量的良好度量，
+因此
 \begin_inset Formula 
 \begin{equation}
 \left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,h^{p};\quad\left\Vert \phi\right\Vert _{E}=\left[\int_{\Omega}\nabla\phi\cdot\epsilon_{0}\epsilon_{r}\nabla\phi\,\dd{\Omega}\right]^{1/2}.\label{eq:j9}
@@ -3489,17 +4064,23 @@ h–Convergence
 \end_inset
 
 表示Energy norm。
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-对光滑解成立，也就是不存在 singularities；当存在奇点时情况，情况发生巨大变化。在 ref[4][6]中证明了，带奇点问题的收敛rate
- 取决于 the intensity of singularity 
+对光滑解成立，
+也就是不存在 singularities；
+当存在奇点时情况，
+情况发生巨大变化。
+在 ref[4][6]中证明了，
+带奇点问题的收敛rate 取决于 the intensity of singularity 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -3511,11 +4092,13 @@ noprefix "false"
 \begin_inset Formula $\phi\sim r^{\alpha}$
 \end_inset
 
-，其中
+，
+其中
 \begin_inset Formula $r$
 \end_inset
 
-是奇异点和观察点的距离），写作
+是奇异点和观察点的距离），
+写作
 \begin_inset Formula 
 \begin{equation}
 \left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,h^{\min(p,\alpha)}\label{eq:j10}
@@ -3531,7 +4114,8 @@ noprefix "false"
 \begin_inset Formula $h$
 \end_inset
 
-无关的常数，但取决于解
+无关的常数，
+但取决于解
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -3539,21 +4123,27 @@ noprefix "false"
 \begin_inset Formula $p$
 \end_inset
 
-。因此，带奇点案例的 convergence rate 与插值多项式的order无关，并低于理论预测值 
+。
+因此，
+带奇点案例的 convergence rate 与插值多项式的order无关，
+并低于理论预测值 
 \begin_inset Formula $\order{h^{p}}$
 \end_inset
 
-。由于总自由度数是
+。
+由于总自由度数是
 \begin_inset Formula $N\sim1/h^{3}$
 \end_inset
 
  in 3D，
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j10"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3577,15 +4167,20 @@ p–Convergence
 \begin_inset Formula $p$
 \end_inset
 
-–版本中，discretization 是固定的，分片多项式近似的 degree 
+–版本中，
+discretization 是固定的，
+分片多项式近似的 degree 
 \begin_inset Formula $p$
 \end_inset
 
- 逐渐增加，直到达到目标精度。
+ 逐渐增加，
+直到达到目标精度。
+
 \begin_inset Formula $p$
 \end_inset
 
-–版本FEM的 asymptotic 收敛率在文献 [5][4][8][9] 中分析。在[5]中证明了如果
+–版本FEM的 asymptotic 收敛率在文献 [5][4][8][9] 中分析。
+在[5]中证明了如果
 \begin_inset Formula $\phi\in H^{k}(\Omega)$
 \end_inset
 
@@ -3600,6 +4195,7 @@ reference "eq:j1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3610,18 +4206,24 @@ reference "eq:j3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 的光滑解，
+
 \begin_inset Formula $\phi^{p}$
 \end_inset
 
-是有限元近似，over a quasiuniform discretization；则如果 插值函数是 complete 
+是有限元近似，
+over a quasiuniform discretization；
+则如果 插值函数是 complete 
 \begin_inset Formula $p$
 \end_inset
 
- th order 多项式，收敛率是 optimal one，即
+ th order 多项式，
+收敛率是 optimal one，
+即
 \begin_inset Formula 
 \begin{equation}
 \left\Vert \phi-\phi^{p}\right\Vert _{E}\le C\,p^{-(k-1)}.\label{eq:j12}
@@ -3629,7 +4231,8 @@ noprefix "false"
 
 \end_inset
 
-然而如果解具有奇异行为，则收敛率为
+然而如果解具有奇异行为，
+则收敛率为
 \begin_inset Formula 
 \begin{equation}
 \left\Vert \phi-\phi^{p}\right\Vert _{E}\le C\,p^{-2\alpha}.\label{eq:j13}
@@ -3646,16 +4249,19 @@ degree
 \end_inset
 
 个自由度，
+
 \begin_inset Formula $N\sim p^{3}$
 \end_inset
 
-。因此
+。
+因此
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j12"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3666,6 +4272,7 @@ reference "eq:j13"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3686,9 +4293,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-在自适应过程中，将多次求解问题，after each pass，具有高error 的 tetrahedra将被再次细化以得到下一张有限元网格，而error来自于
-对当前解的 a posterior 误差分析。此过程导向所谓的 optimal meshes，因为每个单元内的误差近似在同一阶。在 [4],[7]
- 中证明了当使用 optimal meshed 时，无论解的光滑性如何下式都成立
+在自适应过程中，
+将多次求解问题，
+after each pass，
+具有高error 的 tetrahedra将被再次细化以得到下一张有限元网格，
+而error来自于对当前解的 a posterior 误差分析。
+此过程导向所谓的 optimal meshes，
+因为每个单元内的误差近似在同一阶。
+在 [4],[7] 中证明了当使用 optimal meshed 时，
+无论解的光滑性如何下式都成立
 \begin_inset Formula 
 \begin{equation}
 \left\Vert \phi-\phi^{h}\right\Vert _{E}\le C\,N^{-(1/3)p}.\label{eq:j16}
@@ -3704,12 +4317,14 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-本文中采取的公式基于 Galerkin's weighted residual approach。因此采用 energy norm 测量引发的误差
- 
+本文中采取的公式基于 Galerkin's weighted residual approach。
+因此采用 energy norm 测量引发的误差 
 \begin_inset Formula $e^{h}=\phi-\phi^{h}$
 \end_inset
 
- 蛮合理的。将 第一Green定理应用到误差泛函，可以把它写成
+ 蛮合理的。
+将 第一Green定理应用到误差泛函，
+可以把它写成
 \begin_inset Formula 
 \begin{align}
 \left\Vert e^{h}\right\Vert _{E}^{2} & =\int_{\Omega^{h}}\nabla e^{h}\cdot\epsilon_{0}\epsilon_{r}\nabla e^{h}\,\dd{\Omega}\nonumber \\
@@ -3728,11 +4343,13 @@ noprefix "false"
 \begin_inset Formula $K$
 \end_inset
 
-。 
+。
+ 
 \begin_inset Formula $\Delta_{\text{in}}$
 \end_inset
 
  是 interior 三角形，
+
 \begin_inset Formula $\delta(f)_{\Gamma}$
 \end_inset
 
@@ -3745,10 +4362,12 @@ noprefix "false"
 \end_inset
 
 的跃变（discontinuity）；
+
 \begin_inset Formula $\Delta_{\Gamma_{N}}$
 \end_inset
 
  表示 Neumann 边界上的三角形。
+
 \end_layout
 
 \begin_layout Remark
@@ -3758,6 +4377,7 @@ reference "eq:j17"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3765,7 +4385,8 @@ noprefix "false"
 \begin_inset Formula $\sum_{\Delta_{\text{in}}}\int_{\Delta_{\text{in}}}e^{h}\,\delta\left(\cdots\right)_{\Delta_{\text{in}}}\dd{\Delta}$
 \end_inset
 
-这一步使用了高斯定理，每个单元的
+这一步使用了高斯定理，
+每个单元的
 \begin_inset Formula $\sbf n$
 \end_inset
 
@@ -3773,23 +4394,29 @@ noprefix "false"
 \series bold
 外法线方向
 \series default
-，相邻单元的
+，
+相邻单元的
 \begin_inset Formula $\sbf n$
 \end_inset
 
-刚好是反向的，所以可以写成 
+刚好是反向的，
+所以可以写成 
 \begin_inset Formula $\delta\left(\cdots\right)_{\Delta_{\text{in}}}$
 \end_inset
 
-（在内部face上的不连续）。因此
+（在内部face上的不连续）。
+因此
 \begin_inset Formula $\sbf n$
 \end_inset
 
-的选取单元的face的外法向，对于 owner 单元就是外法向，而 neighbor 单元的外法向
+的选取单元的face的外法向，
+对于 owner 单元就是外法向，
+而 neighbor 单元的外法向
 \begin_inset Formula $=$
 \end_inset
 
 负的 owner 外法向。
+
 \end_layout
 
 \begin_layout Standard
@@ -3800,14 +4427,17 @@ reference "eq:j17"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-，代入
+，
+代入
 \begin_inset Formula $e^{h}=\phi-\phi^{h}$
 \end_inset
 
-，注意到
+，
+注意到
 \begin_inset Formula 
 \begin{align}
 {\color{red}\nabla\cdot\epsilon_{0}\epsilon_{r}\,\nabla e^{h}} & =\nabla\cdot\epsilon_{0}\epsilon_{r}\,\nabla\phi-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}={\color{red}-\rho+\rho^{h}}\nonumber \\
@@ -3825,7 +4455,8 @@ noprefix "false"
 \begin_inset Formula $\dd\phi/\dd{n}=0$
 \end_inset
 
-，从而误差泛函可以重写为
+，
+从而误差泛函可以重写为
 \begin_inset Formula 
 \begin{equation}
 a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\Delta}\int_{\Delta}e^{h}\sigma^{h}\dd{\Delta}\label{eq:j19}
@@ -3856,15 +4487,19 @@ a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\De
 \end_layout
 
 \begin_layout Standard
-在当前方法中，解的误差 通过两个 a posteriori parameters 表示。第一个参数与 
+在当前方法中，
+解的误差 通过两个 a posteriori parameters 表示。
+第一个参数与 
 \series bold
 残差
 \series default
  有关，
+
 \series bold
 残差
 \series default
- 是由于数值求解无法精确满足 泊松方程 而产生的。第二个后验参数产生于 电通量密度
+ 是由于数值求解无法精确满足 泊松方程 而产生的。
+第二个后验参数产生于 电通量密度
 \begin_inset Formula $\sbf D$
 \end_inset
 
@@ -3877,6 +4512,7 @@ a(e^{h},e^{h})=\sum_{k}\int_{K}e^{h}{\color{red}(\rho-\rho^{h})}\dd{K}-\sum_{\De
 Neumann边界 
 \series default
 上的不连续性。
+
 \end_layout
 
 \begin_layout Standard
@@ -3891,6 +4527,7 @@ reference "eq:j1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3898,7 +4535,8 @@ noprefix "false"
 \begin_inset Formula $K$
 \end_inset
 
-内的近似值，因此会产生与之相关的 
+内的近似值，
+因此会产生与之相关的 
 \series bold
 体积误差密度
 \series default
@@ -3910,7 +4548,8 @@ q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.\label{eq:j21}
 
 \end_inset
 
-类似地，电通量法向分量在跨过单元face时的 jump discontinuities 将引入与之相关的
+类似地，
+电通量法向分量在跨过单元face时的 jump discontinuities 将引入与之相关的
 \series bold
  表面误差密度
 \series default
@@ -3927,6 +4566,7 @@ q_{s}^{h}\equiv\sigma^{h}=\vec{n}\cdot\left(\vec{D}_{1}^{h}-\vec{D}_{2}^{h}\righ
 \end_inset
 
 ，
+
 \begin_inset Formula $\vec{D}_{2}^{h}$
 \end_inset
 
@@ -3939,6 +4579,7 @@ q_{s}^{h}\equiv\sigma^{h}=\vec{n}\cdot\left(\vec{D}_{1}^{h}-\vec{D}_{2}^{h}\righ
 \end_inset
 
 的界面的 flux 值，
+
 \begin_inset Formula $\vec{n}$
 \end_inset
 
@@ -3946,13 +4587,15 @@ q_{s}^{h}\equiv\sigma^{h}=\vec{n}\cdot\left(\vec{D}_{1}^{h}-\vec{D}_{2}^{h}\righ
 \begin_inset Formula $1$
 \end_inset
 
-的外法向）。注意
+的外法向）。
+注意
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j21"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3963,6 +4606,7 @@ reference "eq:j22"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3973,6 +4617,7 @@ reference "eq:j18"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3983,10 +4628,12 @@ reference "eq:j19"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 中的定义一致。
+
 \begin_inset Formula $q_{v}^{h}$
 \end_inset
 
@@ -3998,8 +4645,11 @@ noprefix "false"
 \series bold
 虚拟误差电荷密度
 \series default
-（fictitious or residual error charge densities），因为不像 physical 电荷，它们对应有限元解的数值误差。此
-外，每个四面体 和 三角形面 关联一个 误差电荷（residual charge ）via
+（fictitious or residual error charge densities），
+因为不像 physical 电荷，
+它们对应有限元解的数值误差。
+此外，
+每个四面体 和 三角形面 关联一个 误差电荷（residual charge ）via
 \begin_inset Formula 
 \begin{equation}
 Q_{v}^{K}=\int_{K}q_{v}^{h}\,\dd{K}\quad Q_{s}^{\Delta}=\int_{\Delta}q_{s}^{h}\dd{\Delta}.\label{eq:j23}
@@ -4031,7 +4681,9 @@ Q_{v}^{K}=\int_{K}q_{v}^{h}\,\dd{K}\quad Q_{s}^{\Delta}=\int_{\Delta}q_{s}^{h}\d
 \begin_inset Formula $K$
 \end_inset
 
-的中心指向观察点，求和对属于单元的四个faces进行；
+的中心指向观察点，
+求和对属于单元的四个faces进行；
+
 \end_layout
 
 \begin_layout Itemize
@@ -4048,18 +4700,22 @@ Q_{v}^{K}=\int_{K}q_{v}^{h}\,\dd{K}\quad Q_{s}^{\Delta}=\int_{\Delta}q_{s}^{h}\d
 \end_inset
 
  内的点；
+
 \end_layout
 
 \begin_layout Itemize
 最后，
+
 \begin_inset Formula $\epsilon_{\text{avg}}$
 \end_inset
 
-是平均permittivity，由共享三角形
+是平均permittivity，
+由共享三角形
 \begin_inset Formula $\Delta_{j}$
 \end_inset
 
 的两个四面体的材料性质平均得到。
+
 \end_layout
 
 \begin_layout Standard
@@ -4070,16 +4726,21 @@ reference "eq:j24"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-中，we assume that each residual charge corresponds only to the nodes of the
- corresponding tetrahedron or triangular face。也就是假设了 fictitious 电荷的分布模型位于
- 单元体心和面心，然后先计算节点值，再对单元进行 Lagrange 插值。
+中，
+we assume that each residual charge corresponds only to the nodes of the corresponding tetrahedron or triangular face。
+也就是假设了 fictitious 电荷的分布模型位于 单元体心和面心，
+然后先计算节点值，
+再对单元进行 Lagrange 插值。
+
 \end_layout
 
 \begin_layout Remark
-意思是，体误差电荷 
+意思是，
+体误差电荷 
 \begin_inset Formula $Q_{v}^{K}$
 \end_inset
 
@@ -4087,37 +4748,47 @@ noprefix "false"
 \begin_inset Formula $4$
 \end_inset
 
-个顶点；面误差电荷
+个顶点；
+面误差电荷
 \begin_inset Formula $Q_{s}^{\Delta}$
 \end_inset
 
-只贡献到此面的三个顶点或边中点（二阶单元）？？
+只贡献到此面的三个顶点或边中点（二阶单元）？
+？
+
 \end_layout
 
 \begin_layout Standard
-如果使用二阶基函数，则 the local error 场 
+如果使用二阶基函数，
+则 the local error 场 
 \begin_inset Formula $\vec{\mathcal{E}}^{e}$
 \end_inset
 
  在四个顶点，
+
 \begin_inset Formula $6$
 \end_inset
 
- 个边中点上计算，使用
+ 个边中点上计算，
+使用
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j24"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-；然后使用叠加原理（superposition）计算总的误差场分布。一旦得到 
+；
+然后使用叠加原理（superposition）计算总的误差场分布。
+一旦得到 
 \begin_inset Formula $\vec{E}^{e}$
 \end_inset
 
-，则可定义 单元细化指标（the element refinement index）
+，
+则可定义 单元细化指标（the element refinement index）
 \begin_inset Formula 
 \begin{equation}
 \theta_{K}=\frac{1}{2W}\int_{K}\vec{E}^{e}\cdot\vec{D}^{e}\dd{K}.\label{eq:j25}
@@ -4134,8 +4805,13 @@ noprefix "false"
 \begin_inset Formula $\theta_{K}$
 \end_inset
 
-告诉我们哪些四面体需要细化。然而，还需要解决终止问题（termination issue）。因此，为了度量整体误差，我们定义 a global
- refinement index 作为自适应过程中的停止判据（criterion）。
+告诉我们哪些四面体需要细化。
+然而，
+还需要解决终止问题（termination issue）。
+因此，
+为了度量整体误差，
+我们定义 a global refinement index 作为自适应过程中的停止判据（criterion）。
+
 \begin_inset Formula 
 \[
 \theta=\sum_{K}\theta_{K}.
@@ -4160,10 +4836,12 @@ W=\frac{1}{2}\int_{\infty}\sbf E\cdot\sbf D\dd{V}\label{eq:g1.13}
 \end_inset
 
 静电场情况下，
+
 \begin_inset Formula $W$
 \end_inset
 
 可以用电势和电荷分布表出。
+
 \begin_inset Formula 
 \begin{equation}
 W=\frac{1}{2}\int_{V}\rho\varphi\dd{V}\label{eq:g1.14}
@@ -4175,11 +4853,16 @@ W=\frac{1}{2}\int_{V}\rho\varphi\dd{V}\label{eq:g1.14}
 \begin_inset Formula $V$
 \end_inset
 
-。这公式只有作为静电场总能量才有意义，不应该把
+。
+这公式只有作为静电场总能量才有意义，
+不应该把
 \begin_inset Formula $\frac{1}{2}\rho\varphi$
 \end_inset
 
-看作能量密度，因为能量分布于电场内，而不仅在电荷分布区域。
+看作能量密度，
+因为能量分布于电场内，
+而不仅在电荷分布区域。
+
 \end_layout
 
 \begin_layout Standard
@@ -4189,6 +4872,7 @@ reference "eq:j14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -4200,17 +4884,21 @@ u是由电荷分布
 \begin_inset Formula $\rho$
 \end_inset
 
-激发的电势。若全空间充满均匀介质，介电常数为
+激发的电势。
+若全空间充满均匀介质，
+介电常数为
 \begin_inset Formula $\varepsilon$
 \end_inset
 
-，由
+，
+由
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:g1.7"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -4229,6 +4917,7 @@ reference "eq:g1.14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -4260,6 +4949,7 @@ W=\frac{1}{8\pi\varepsilon}\int\dd{V}\int\dd{V'}\frac{\rho(\sbf x)\,\rho(\sbf x'
 \end_inset
 
 点的距离。
+
 \end_layout
 
 \begin_layout Example
@@ -4267,29 +4957,36 @@ W=\frac{1}{8\pi\varepsilon}\int\dd{V}\int\dd{V'}\frac{\rho(\sbf x)\,\rho(\sbf x'
 \begin_inset Formula $Q$
 \end_inset
 
-，半径为
+，
+半径为
 \begin_inset Formula $a$
 \end_inset
 
 的导体球的静电场总能量。
+
 \end_layout
 
 \begin_layout Example
-导体球的电荷分布于球面上，整个导体为等势体。用
+导体球的电荷分布于球面上，
+整个导体为等势体。
+用
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:g1.14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-求总能量最为方便。球面上的电势为
+求总能量最为方便。
+球面上的电势为
 \begin_inset Formula $\varphi_{a}=Q/(4\pi\varepsilon_{0}a)$
 \end_inset
 
-，因此静电场总能量为
+，
+因此静电场总能量为
 \begin_inset Formula 
 \[
 W=\frac{1}{2}Q\phi_{a}=\frac{Q^{2}}{8\pi\varepsilon_{0}a}
@@ -4304,10 +5001,13 @@ reference "eq:g1.13"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-求出。因为球内电场为零，只需对球外积分
+求出。
+因为球内电场为零，
+只需对球外积分
 \begin_inset Formula 
 \begin{align*}
 W & =\frac{\varepsilon_{0}}{2}\int\left(\frac{Q}{4\pi\varepsilon_{0}r^{2}}\right)^{2}r^{2}\dd{r}\dd{\Omega}=\frac{Q^{2}}{8\pi\varepsilon_{0}}\int_{a}^{\infty}\frac{1}{r^{2}}\dd{r}\\
@@ -4333,6 +5033,7 @@ W & =\frac{\varepsilon_{0}}{2}\int\left(\frac{Q}{4\pi\varepsilon_{0}r^{2}}\right
 \end_inset
 
 。
+
 \begin_inset Formula 
 \[
 4\pi r^{2}\varepsilon\,E=\int_{0}^{r}f(r)=F(r)\quad E(r)=\frac{F(r)}{4\pi\varepsilon r^{2}}
@@ -4378,7 +5079,10 @@ W_{1} & =\frac{\varepsilon}{2}\int_{0}^{R}\left(\frac{F(r)}{4\pi\varepsilon r^{2
 \end_layout
 
 \begin_layout Example
-如果是逆向线性分布，球壳上电荷为零，则球内电荷密度分布，累积分布和 球内能量为
+如果是逆向线性分布，
+球壳上电荷为零，
+则球内电荷密度分布，
+累积分布和 球内能量为
 \begin_inset Note Note
 status collapsed
 
@@ -4387,11 +5091,14 @@ status collapsed
 \backslash
 [Pi] 
 \backslash
-[CurlyEpsilon]) (Q ((4 r^3)/R^3 - (3 r^4)/R^4))^2/r^2, 1/(8 
+[CurlyEpsilon]) (Q ((4 r^3)/R^3 - (3 r^4)/R^4))^2/r^2,
+ 1/(8 
 \backslash
 [Pi] 
 \backslash
-[CurlyEpsilon]) Integrate[(Q ((4 r^3)/R^3 - (3 r^4)/R^4))^2/r^2, {r, 0,
+[CurlyEpsilon]) Integrate[(Q ((4 r^3)/R^3 - (3 r^4)/R^4))^2/r^2,
+ {r,
+ 0,
  R}]} // Simplify
 \end_layout
 
@@ -4437,19 +5144,30 @@ W_{2} & =\frac{Q^{2}}{8\pi\varepsilon}\int_{0}^{R}\frac{r^{4}(3r-4R)^{2}}{R^{8}}
 \begin_inset Formula $n\ge0$
 \end_inset
 
-次幂律分布，球心电势为零，则
+次幂律分布，
+球心电势为零，
+则
 \begin_inset Note Note
 status collapsed
 
 \begin_layout Plain Layout
 {First@First@Solve[k*(4 
 \backslash
-[Pi])* Assuming[{n > 0}, Integrate[ r^n*r^2, {r, 0, R}]] == Q, k], Assuming[{n
- > 0}, 4 
+[Pi])* Assuming[{n > 0},
+ Integrate[ r^n*r^2,
+ {r,
+ 0,
+ R}]] == Q,
+ k],
+ Assuming[{n > 0},
+ 4 
 \backslash
 [Pi] Integrate[ Q (n + 3)/(4 
 \backslash
-[Pi] R^(n + 3)) r^n*r^2, {r, 0, a}]]} // Simplify
+[Pi] R^(n + 3)) r^n*r^2,
+ {r,
+ 0,
+ a}]]} // Simplify
 \end_layout
 
 \end_inset
@@ -4475,7 +5193,10 @@ Simplify[ Q^2/R^6/(8
 \backslash
 [Pi] 
 \backslash
-[CurlyEpsilon]) Integrate[r^4, {r, 0, R}]]
+[CurlyEpsilon]) Integrate[r^4,
+ {r,
+ 0,
+ R}]]
 \end_layout
 
 \end_inset
@@ -4494,11 +5215,14 @@ W_{2} & =\frac{Q^{2}/R^{2n+6}}{8\pi\varepsilon}\int_{0}^{R}r^{2n+4}\dd{r}\\
 
 \begin_deeper
 \begin_layout Itemize
-如果是均匀分布，代入
+如果是均匀分布，
+代入
 \begin_inset Formula $n=0$
 \end_inset
 
-，得到球内电荷密度分布，累积分布和 球内能量为
+，
+得到球内电荷密度分布，
+累积分布和 球内能量为
 \begin_inset Formula 
 \[
 f(r)=\frac{3Q}{4\pi R^{3}},\quad F(r)=Q\frac{r^{3}}{R^{3}},\quad W_{2}=\frac{Q^{2}}{\varepsilon R}\,\frac{1}{40\pi}
@@ -4510,11 +5234,13 @@ f(r)=\frac{3Q}{4\pi R^{3}},\quad F(r)=Q\frac{r^{3}}{R^{3}},\quad W_{2}=\frac{Q^{
 \end_layout
 
 \begin_layout Itemize
-如果是线性分布，代入
+如果是线性分布，
+代入
 \begin_inset Formula $n=1$
 \end_inset
 
-，得到各量为
+，
+得到各量为
 \begin_inset Formula 
 \[
 f(r)=\frac{Q}{\pi R^{4}}r,\quad F(r)=Q\frac{r^{4}}{R^{4}},\quad W_{2}=\frac{Q^{2}}{\varepsilon R}\,\frac{1}{56\pi}
@@ -4531,7 +5257,8 @@ f(r)=\frac{Q}{\pi R^{4}}r,\quad F(r)=Q\frac{r^{4}}{R^{4}},\quad W_{2}=\frac{Q^{2
 \begin_inset Formula $n\ge0$
 \end_inset
 
-，球形内外能量相加得到
+，
+球形内外能量相加得到
 \end_layout
 
 \begin_layout Example
@@ -4547,6 +5274,7 @@ W_{1}+W_{2}=\frac{Q^{2}}{\varepsilon R}\,{\color{blue}\frac{1}{8\pi}\left(\frac{
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Itemize
@@ -4555,6 +5283,7 @@ W_{1}+W_{2}=\frac{Q^{2}}{\varepsilon R}\,{\color{blue}\frac{1}{8\pi}\left(\frac{
 \end_inset
 
 ，
+
 \begin_inset Formula $n=0$
 \end_inset
 
@@ -4563,6 +5292,7 @@ W_{1}+W_{2}=\frac{Q^{2}}{\varepsilon R}\,{\color{blue}\frac{1}{8\pi}\left(\frac{
 \end_inset
 
 。
+
 \begin_inset Note Note
 status collapsed
 
@@ -4579,18 +5309,22 @@ Q^2/(8.85418781*R)*1/(8
 \end_inset
 
 ，
+
 \begin_inset Formula $R=0.00065$
 \end_inset
 
-，相对介电常数
+，
+相对介电常数
 \begin_inset Formula $\varepsilon=2.1$
 \end_inset
 
-，得到总能量
+，
+得到总能量
 \begin_inset Formula $W=0.00873077$
 \end_inset
 
 。
+
 \begin_inset Note Note
 status collapsed
 
@@ -4598,7 +5332,8 @@ status collapsed
 Simplify[Q^2/(8.85418781*10^-12)/R/(8 
 \backslash
 [Pi])*(6/5)/2.1 /.
- { Q -> 4.69395*10^-8, R -> 0.000648034}] // Simplify
+ { Q -> 4.69395*10^-8,
+ R -> 0.000648034}] // Simplify
 \end_layout
 
 \end_inset
@@ -4611,7 +5346,9 @@ Simplify[Q^2/(8.85418781*10^-12)/R/(8
 \begin_inset Formula $R\to0$
 \end_inset
 
-，即点电荷模型，能量
+，
+即点电荷模型，
+能量
 \begin_inset Formula $W_{1}$
 \end_inset
 
@@ -4620,6 +5357,7 @@ Simplify[Q^2/(8.85418781*10^-12)/R/(8
 \end_inset
 
 均趋于发散。
+
 \end_layout
 
 \begin_layout Section
@@ -4628,6 +5366,7 @@ Simplify[Q^2/(8.85418781*10^-12)/R/(8
 
 \begin_layout Standard
 为计算 fictitious 电荷，
+
 \begin_inset Formula 
 \[
 q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.
@@ -4655,15 +5394,18 @@ q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.
 \begin_inset Formula $\nabla^{2}N$
 \end_inset
 
-。定义等参坐标导数
+。
+定义等参坐标导数
 \begin_inset Formula $\tilde{\partial}_{i}=\partial/\partial\xi_{i}$
 \end_inset
 
-，空间导数 
+，
+空间导数 
 \begin_inset Formula $\partial_{i}=\partial/\partial x_{i}$
 \end_inset
 
 ，
+
 \begin_inset Formula 
 \begin{align*}
 \nabla\cdot\epsilon_{0}\epsilon_{r}\nabla N_{\alpha} & =\partial_{i}\,\epsilon_{0}\epsilon_{r}\,\partial_{i}N_{\alpha}\\
@@ -4682,6 +5424,7 @@ q_{v}^{h}=-\nabla\cdot\epsilon_{0}\epsilon_{r}\nabla\phi^{h}-\rho.
 \end_inset
 
 ：
+
 \begin_inset Formula 
 \[
 \overline{J}_{ij}=\frac{\partial\xi^{j}}{\partial x^{i}},\quad J_{ij}=\frac{\partial x^{j}}{\partial\xi^{i}},
@@ -4713,7 +5456,7 @@ Jacobian 母导数为
 写成矩阵运算形式为
 \begin_inset Formula 
 \[
-{\color{blue}\nabla^{2}N_{\alpha}}=-\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]
+{\color{blue}\nabla^{2}N_{\alpha}}=-\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]
 \]
 
 \end_inset
@@ -4722,7 +5465,7 @@ Jacobian 母导数为
 \begin_inset Formula 
 \begin{align*}
 \rho^{h}= & -\epsilon_{0}\epsilon_{r}\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}\\
-= & -\epsilon_{0}\,{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)-\epsilon_{0}\epsilon_{r}{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}
+= & -\epsilon_{0}\,{\color{blue}\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)-\epsilon_{0}\epsilon_{r}{\color{blue}\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}
 \end{align*}
 
 \end_inset
@@ -4732,10 +5475,12 @@ Jacobian 母导数为
 \end_inset
 
 ，
+
 \begin_inset Formula $G$
 \end_inset
 
  就是 dNdzeta。
+
 \end_layout
 
 \begin_layout Section
@@ -4743,7 +5488,9 @@ Jacobian 母导数为
 \end_layout
 
 \begin_layout Standard
-为了研究 nodal FEM 的收敛性，分析了各种 capacitor–like 结构，相对误差的 energy norm 计算如下
+为了研究 nodal FEM 的收敛性，
+分析了各种 capacitor–like 结构，
+相对误差的 energy norm 计算如下
 \begin_inset Formula 
 \begin{equation}
 \mathrm{Error}=\abs{(C-C')/C}^{1/2}\label{eq:j26}
@@ -4767,17 +5514,21 @@ C'=\frac{1}{V^{2}}\int_{\Omega}\nabla\phi'\cdot\epsilon_{0}\epsilon_{r}\nabla\ph
 \begin_inset Formula $V$
 \end_inset
 
- 是电容极板间的电势差。值得一提的是，
+ 是电容极板间的电势差。
+值得一提的是，
+
 \begin_inset Formula $C'$
 \end_inset
 
- 的收敛速率与 静电能相同，is exactly the rate predicted by 
+ 的收敛速率与 静电能相同，
+is exactly the rate predicted by 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -4788,6 +5539,7 @@ reference "eq:j15"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -4807,23 +5559,30 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-第一个例子是 simple air–filled 3D 平行板电容器，它的截面如 Fig.1 所示。指定了体电荷密度
+第一个例子是 simple air–filled 3D 平行板电容器，
+它的截面如 Fig.1 所示。
+指定了体电荷密度
 \begin_inset Formula $\rho_{v}=x^{2}-a\,x$
 \end_inset
 
-。在电容极板上设置了
+。
+在电容极板上设置了
 \begin_inset Formula $1$
 \end_inset
 
-V 电势差。如果忽略边缘（fringing）效应，精确解
+V 电势差。
+如果忽略边缘（fringing）效应，
+精确解
 \begin_inset Formula $\phi$
 \end_inset
 
 是四阶多项式函数，
+
 \begin_inset Formula $\phi\in H^{\infty}(\Omega)$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
@@ -4831,7 +5590,10 @@ Fig.1 展示了
 \begin_inset Formula $h$
 \end_inset
 
-–版本 FEM 的数值收敛性，对应 一阶和二阶基函数，对于不同的 quasiuniform 四面体网格。两个斜率都分别跟理论值 
+–版本 FEM 的数值收敛性，
+对应 一阶和二阶基函数，
+对于不同的 quasiuniform 四面体网格。
+两个斜率都分别跟理论值 
 \begin_inset Formula $-1/3$
 \end_inset
 
@@ -4839,17 +5601,20 @@ Fig.1 展示了
 \begin_inset Formula $-2/3$
 \end_inset
 
- 吻合的蛮好，如
+ 吻合的蛮好，
+如
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 所预测的。
+
 \end_layout
 
 \begin_layout Standard
@@ -4857,15 +5622,22 @@ Fig.1 中还展示了
 \begin_inset Formula $p$
 \end_inset
 
-–version FEM 的收敛行为。此例中，有限单元离散不变，插值多项式的 order 逐渐升到三阶。从 Fig.1 可以明显看出，相对于第一个和第二个
+–version FEM 的收敛行为。
+此例中，
+有限单元离散不变，
+插值多项式的 order 逐渐升到三阶。
+从 Fig.1 可以明显看出，
+相对于第一个和第二个
 \begin_inset Formula $h$
 \end_inset
 
 –版本，
+
 \begin_inset Formula $p$
 \end_inset
 
-–版本的收敛率高得多。这是因为此问题中
+–版本的收敛率高得多。
+这是因为此问题中
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -4873,12 +5645,16 @@ Fig.1 中还展示了
 \begin_inset Formula $-\infty$
 \end_inset
 
-，在三个细化步之后，几乎达到精确解。
+，
+在三个细化步之后，
+几乎达到精确解。
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -4899,7 +5675,9 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-quasiuniform 网格的收敛性为。求解了平行极板电容的例子，其电容值为
+quasiuniform 网格的收敛性为。
+求解了平行极板电容的例子，
+其电容值为
 \begin_inset Formula $C=\epsilon_{0}\,5057/2520$
 \end_inset
 
@@ -4925,56 +5703,76 @@ quasiuniform 网格的收敛性为。求解了平行极板电容的例子，其�
 \end_layout
 
 \begin_layout Standard
-Fig2 展示了 coaxial plate capacitor 的截面，计算了电容的近似值，然后与精确值
+Fig2 展示了 coaxial plate capacitor 的截面，
+计算了电容的近似值，
+然后与精确值
 \begin_inset Formula $C=\epsilon_{0}\,10.234\,092$
 \end_inset
 
- （单位长度）对比，obtained by conformal mapping[10]。由于导体角（conductor cornors）的存在，解存在奇点，即在
-角点附近 
+ （单位长度）对比，
+obtained by conformal mapping[10]。
+由于导体角（conductor cornors）的存在，
+解存在奇点，
+即在角点附近 
 \begin_inset Formula $\phi\sim r^{2/3}$
 \end_inset
 
-，其中
+，
+其中
 \begin_inset Formula $r$
 \end_inset
 
 是从角点到观察点的距离。
+
 \end_layout
 
 \begin_layout Standard
-Fig2 中展示了一阶和二阶插值函数的收敛行为。如图所示，elements of any order exhibit the rate of convergen
-ce 渐进相同的斜率 
+Fig2 中展示了一阶和二阶插值函数的收敛行为。
+如图所示，
+elements of any order exhibit the rate of convergence 渐进相同的斜率 
 \begin_inset Formula $-2/9$
 \end_inset
 
-，如
+，
+如
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-所预测。Fig2 还展示了当构建自适应网格时，不同阶单元的收敛性。此时斜率不再受解的奇异性的限制，当使用 一阶基函数，收敛性得到恢复等于
+所预测。
+Fig2 还展示了当构建自适应网格时，
+不同阶单元的收敛性。
+此时斜率不再受解的奇异性的限制，
+当使用 一阶基函数，
+收敛性得到恢复等于
 \begin_inset Formula $-1/3$
 \end_inset
 
-。对于二阶基函数，得到收敛率为
+。
+对于二阶基函数，
+得到收敛率为
 \begin_inset Formula $\approx-0.75$
 \end_inset
 
-，甚至高于预测值 
+，
+甚至高于预测值 
 \begin_inset Formula $-2/3$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -4996,10 +5794,13 @@ status open
 
 \begin_layout Plain Layout
 当存在奇点时，
+
 \begin_inset Formula $h$
 \end_inset
 
-–版本FEM 的渐近收敛行为。分析了正方形同轴电容器（A square plate coaxial capacitor）。
+–版本FEM 的渐近收敛行为。
+分析了正方形同轴电容器（A square plate coaxial capacitor）。
+
 \end_layout
 
 \end_inset
@@ -5017,39 +5818,49 @@ Plate Capacitor with Inserted Conductor
 \end_layout
 
 \begin_layout Standard
-最后一个例子是，填充有 钻石形 导体的平板电容器，如 Fig.3。在电容极板 和 中间导体之间施加了
+最后一个例子是，
+填充有 钻石形 导体的平板电容器，
+如 Fig.3。
+在电容极板 和 中间导体之间施加了
 \begin_inset Formula $1$
 \end_inset
 
- volt 电势差。为了得到
+ volt 电势差。
+为了得到
 \begin_inset Formula $C'$
 \end_inset
 
- 的 reference value，使用 
+ 的 reference value，
+使用 
 \begin_inset Formula $4\,000\,000$
 \end_inset
 
  个二阶单元求解此问题（作为参考值）。
+
 \end_layout
 
 \begin_layout Standard
-Fig3 描绘了不同order有限单元的收敛性为，for both uniform and optimal 离散 in the presence
- of singularity.
- 值得强调，在 uniform 
+Fig3 描绘了不同order有限单元的收敛性为，
+for both uniform and optimal 离散 in the presence of singularity.
+ 值得强调，
+在 uniform 
 \begin_inset Formula $h$
 \end_inset
 
-–版本 FEM中，有限单元的阶不影响曲线的斜率（
+–版本 FEM中，
+有限单元的阶不影响曲线的斜率（
 \begin_inset Formula $\approx0.25$
 \end_inset
 
-），而只影响
+），
+而只影响
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j11"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5057,20 +5868,25 @@ noprefix "false"
 \begin_inset Formula $C$
 \end_inset
 
-。当生成了自适应网格，一阶FEM达到它的理论收敛率
+。
+当生成了自适应网格，
+一阶FEM达到它的理论收敛率
 \begin_inset Formula $-1/3$
 \end_inset
 
-，二阶单元达到 asymptotic rate of 
+，
+二阶单元达到 asymptotic rate of 
 \begin_inset Formula $-0.61$
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -5092,10 +5908,13 @@ status open
 
 \begin_layout Plain Layout
 当存在奇点时，
+
 \begin_inset Formula $h$
 \end_inset
 
-–版本FEM 的渐近收敛行为。分析了 含有内嵌导体的平板电容器。
+–版本FEM 的渐近收敛行为。
+分析了 含有内嵌导体的平板电容器。
+
 \end_layout
 
 \end_inset
@@ -5113,7 +5932,8 @@ status open
 \end_layout
 
 \begin_layout Standard
-在本文中，我们比较了
+在本文中，
+我们比较了
 \begin_inset Formula $h$
 \end_inset
 
@@ -5121,7 +5941,10 @@ status open
 \begin_inset Formula $p$
 \end_inset
 
-–版 FEMs 的收敛特性。两种方法的渐进收敛性都 依赖于解的光滑性、元素阶数 和 所使用的网格序列。对于光滑解，
+–版 FEMs 的收敛特性。
+两种方法的渐进收敛性都 依赖于解的光滑性、元素阶数 和 所使用的网格序列。
+对于光滑解，
+
 \begin_inset Formula $p$
 \end_inset
 
@@ -5129,7 +5952,9 @@ status open
 \begin_inset Formula $h$
 \end_inset
 
-–版本。对于非光滑解和 准均匀（quasiuniform）网格，
+–版本。
+对于非光滑解和 准均匀（quasiuniform）网格，
+
 \begin_inset Formula $p$
 \end_inset
 
@@ -5137,22 +5962,29 @@ status open
 \begin_inset Formula $h$
 \end_inset
 
-–版本的两倍。然而，这两种方法的收敛性都受 奇异点强度（intensity of the singularity ）的影响。对于非光滑解，通过构建
- 最优（optimal）自适应网格序列，可以显著提高 
+–版本的两倍。
+然而，
+这两种方法的收敛性都受 奇异点强度（intensity of the singularity ）的影响。
+对于非光滑解，
+通过构建 最优（optimal）自适应网格序列，
+可以显著提高 
 \begin_inset Formula $h$
 \end_inset
 
-– 版本的收敛性，see
+– 版本的收敛性，
+see
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:j16"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-，这使得它在
+，
+这使得它在
 \begin_inset Formula $p>1$
 \end_inset
 
@@ -5167,10 +5999,12 @@ reference "eq:j15"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Chapter
@@ -5178,7 +6012,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-在稳态情况下，电流密度矢量可以通过欧姆定理表示为
+在稳态情况下，
+电流密度矢量可以通过欧姆定理表示为
 \begin_inset Formula 
 \[
 \sbf J=\sigma\sbf E
@@ -5206,7 +6041,9 @@ noprefix "false"
 \begin_inset Formula $\nabla\cdot\sbf J=0$
 \end_inset
 
-，最终可以得到稳态电流场中，标量势所满足的方程
+，
+最终可以得到稳态电流场中，
+标量势所满足的方程
 \begin_inset Formula 
 \[
 \nabla\cdot\sigma\nabla\phi=0.
@@ -5230,7 +6067,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-作为对比，静电场方程是
+作为对比，
+静电场方程是
 \begin_inset Formula 
 \[
 -\epsilon_{0}\nabla\cdot(\epsilon_{r}\nabla\phi)=\rho,\quad\text{in}\Omega
@@ -5243,6 +6081,7 @@ noprefix "false"
 
 \begin_layout Standard
 瞬态或交流问题的方程。
+
 \end_layout
 
 \begin_layout Standard
@@ -5298,7 +6137,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-时谐场：各物理量展开为傅立叶系数
+时谐场：
+各物理量展开为傅立叶系数
 \begin_inset Formula 
 \[
 \varrho=\rho\,e^{i\omega t},\quad\mathbb{E}=\sbf E\,e^{i\omega t},\quad\mathbb{J}(t)=\sbf J\,e^{i\omega t},\quad\Phi(t)=\phi\,e^{i\omega t}
@@ -5335,6 +6175,7 @@ noprefix "false"
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Itemize
@@ -5346,8 +6187,8 @@ noprefix "false"
 \begin_inset Formula 
 \begin{align*}
 -i\omega\rho^{h}= & -i\omega\epsilon_{0}\epsilon_{r}\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}-\sigma\,\phi_{\alpha}{\color{blue}\nabla^{2}N_{\alpha}}\\
-= & -i\omega\epsilon_{0}\left({\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)+\epsilon_{r}{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}\right)\\
- & -\left({\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot J_{E})+\sigma{\color{blue}\tr[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}\right)
+= & -i\omega\epsilon_{0}\left({\color{blue}\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot D)+\epsilon_{r}{\color{blue}\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}\right)\\
+ & -\left({\color{blue}\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\beta}]}\,(X_{\beta\cdot}\cdot\overline{J}\cdot J_{E})+\sigma{\color{blue}\tr\,[\overline{J}^{\mathrm{T}}\cdot\overline{J}\cdot H_{\alpha}]}\phi_{\alpha}\right)
 \end{align*}
 
 \end_inset
@@ -5357,19 +6198,24 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula $G$
 \end_inset
 
  就是 dNdzeta。
+
 \end_layout
 
 \begin_layout Itemize
-代码中的 material->GetDielectric()->GetCoField(Rvec, E_zeta, D_zeta) 中已经考虑了
- eps0。
+代码中的 material->GetDielectric()->GetCoField(Rvec,
+ E_zeta,
+ D_zeta) 中已经考虑了 eps0。
+
 \end_layout
 
 \begin_layout Chapter
-自适应分析，矢量场 时谐场
+自适应分析，
+矢量场 时谐场
 \end_layout
 
 \begin_layout Section
@@ -5394,14 +6240,17 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula $\omega=k_{0}\sqrt{1/\varepsilon_{0}\mu_{0}}$
 \end_inset
 
 ，
+
 \begin_inset Formula $k_{0}Z_{0}=\omega\mu_{0}$
 \end_inset
 
 。
+
 \begin_inset Formula 
 \begin{equation}
 \nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u-k^{2}\epsilon_{r}\sbf u=-j\omega\mu_{0}\sbf J\label{eq:v0}
@@ -5413,7 +6262,9 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-为了求解 多端口微波元件，将 Galerkin 方法应用到麦克斯韦方程推导出的矢量波动方程。结果可以写成双线性型（假设为2端口元件）
+为了求解 多端口微波元件，
+将 Galerkin 方法应用到麦克斯韦方程推导出的矢量波动方程。
+结果可以写成双线性型（假设为2端口元件）
 \end_layout
 
 \begin_layout Standard
@@ -5433,7 +6284,8 @@ B(\sbf u,\sbf v) & =\int_{\Omega}\nabla\times\sbf v\cdot\frac{1}{\mu_{r}}\nabla\
 \series bold
 输入激励
 \series default
-的边界端口区域。多端口微波元件的
+的边界端口区域。
+多端口微波元件的
 \series bold
 弱解
 \series default
@@ -5454,6 +6306,7 @@ a\left(\sbf u,\sbf v\right)-k^{2}\langle\sbf u,\sbf v\rangle=-j\omega\mu_{0}\lan
 \end_inset
 
 在离散版本（即FEM ）过程，
+
 \end_layout
 
 \begin_layout Standard
@@ -5474,7 +6327,10 @@ a\left(\sbf u^{h},\sbf v^{h}\right)-k^{2}\langle\sbf u^{h},\sbf v^{h}\rangle & =
 \begin_inset Formula $\sbf J$
 \end_inset
 
-在有限单元网格上的插值，或投影。在当前的研究中，子空间 
+在有限单元网格上的插值，
+或投影。
+在当前的研究中，
+子空间 
 \begin_inset Formula $S^{h}$
 \end_inset
 
@@ -5482,11 +6338,13 @@ a\left(\sbf u^{h},\sbf v^{h}\right)-k^{2}\langle\sbf u^{h},\sbf v^{h}\rangle & =
 \begin_inset Formula $H^{(1)}(\mathrm{curl})$
 \end_inset
 
- TVFEM 矢量基函数张成。假设 
+ TVFEM 矢量基函数张成。
+假设 
 \series bold
 端口网格
 \series default
  足够细，
+
 \begin_inset Formula $\sbf J$
 \end_inset
 
@@ -5494,7 +6352,8 @@ a\left(\sbf u^{h},\sbf v^{h}\right)-k^{2}\langle\sbf u^{h},\sbf v^{h}\rangle & =
 \begin_inset Formula $\sbf J^{h}$
 \end_inset
 
-之间的插值误差可以忽略，随后将简化地用 
+之间的插值误差可以忽略，
+随后将简化地用 
 \begin_inset Formula $\sbf J$
 \end_inset
 
@@ -5505,6 +6364,7 @@ reference "eq:v3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5512,7 +6372,9 @@ noprefix "false"
 \begin_inset Formula $\sbf J^{h}$
 \end_inset
 
-直接参与运算。此外下列定理成立。
+直接参与运算。
+此外下列定理成立。
+
 \end_layout
 
 \begin_layout Theorem
@@ -5526,11 +6388,13 @@ name "the1"
 \begin_inset Formula $\sbf e^{h}=\sbf u-\sbf u^{h}$
 \end_inset
 
-，即有限元解
+，
+即有限元解
 \begin_inset Formula $\sbf u^{h}$
 \end_inset
 
-的误差，则我们有
+的误差，
+则我们有
 \begin_inset Formula 
 \begin{equation}
 a\left(\sbf e^{h},\sbf u^{h}\right)-k^{2}\langle\sbf e^{h},\sbf u^{h}\rangle\equiv0.\label{eq:v4}
@@ -5545,6 +6409,7 @@ reference "eq:v2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5555,6 +6420,7 @@ reference "eq:v3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5574,10 +6440,12 @@ reference "eq:v4"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Section
@@ -5585,15 +6453,20 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-在模拟多端口微波器件时，经常感兴趣的是
+在模拟多端口微波器件时，
+经常感兴趣的是
 \begin_inset Formula $S$
 \end_inset
 
-参数。得到电磁场的解之后，器件的
+参数。
+得到电磁场的解之后，
+器件的
 \begin_inset Formula $S$
 \end_inset
 
-参数可以通过适当的面积分得到。特别地，反射系数
+参数可以通过适当的面积分得到。
+特别地，
+反射系数
 \begin_inset Formula $S_{11}$
 \end_inset
 
@@ -5614,6 +6487,7 @@ S_{11}=1-\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}.\label{eq:v5}
 输入端口
 \series default
 ，
+
 \begin_inset Formula $\sbf u$
 \end_inset
 
@@ -5622,20 +6496,24 @@ S_{11}=1-\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}.\label{eq:v5}
 电场
 \series default
 ，
+
 \begin_inset Formula $\sbf J$
 \end_inset
 
-是 流入求解区域的 基本模式（输入波）的表面电流。因此从
+是 流入求解区域的 基本模式（输入波）的表面电流。
+因此从
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:v5"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 可以推导出误差泛函，
+
 \begin_inset Formula 
 \begin{align}
 F(\sbf u^{h}) & =S_{11}^{h}-S_{11}\nonumber \\
@@ -5648,7 +6526,8 @@ F(\sbf u^{h}) & =S_{11}^{h}-S_{11}\nonumber \\
 \begin_inset Formula $\sbf J-\sbf J^{h}$
 \end_inset
 
-可忽略。注意到
+可忽略。
+注意到
 \begin_inset Formula $\sbf e^{h}\in H(\mathrm{curl})$
 \end_inset
 
@@ -5659,6 +6538,7 @@ reference "eq:v2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5685,14 +6565,17 @@ reference "the1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 ，
+
 \begin_inset Formula $a\left(\sbf e^{h},\sbf u^{h}\right)-k^{2}\langle\sbf e^{h},\sbf u^{h}\rangle\equiv0$
 \end_inset
 
-，误差泛函可以写成
+，
+误差泛函可以写成
 \begin_inset Formula 
 \begin{equation}
 F(\sbf u^{h})=\frac{1}{-j\omega\mu_{0}}\left[a\left(\sbf e^{h},\sbf e^{h}\right)-k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\right].\label{eq:v8}
@@ -5707,10 +6590,12 @@ reference "eq:v8"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 将作为推导 FEM 网格的每个四面体的 refinement index 的依据。
+
 \end_layout
 
 \begin_layout Section
@@ -5718,7 +6603,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-为得到 能计算 的细化指标，我们有
+为得到 能计算 的细化指标，
+我们有
 \begin_inset Formula 
 \begin{align}
 a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\nonumber \\
@@ -5757,7 +6643,10 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 
 上的外法向
 \series default
-。对于owner 单元就是外法向，对于 neighbor 单元是负的 owner 外法向。
+。
+对于owner 单元就是外法向，
+对于 neighbor 单元是负的 owner 外法向。
+
 \end_layout
 
 \begin_layout Standard
@@ -5765,10 +6654,12 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 \end_inset
 
 是网格中的四面体单元，
+
 \begin_inset Formula $\Delta$
 \end_inset
 
 是内部三角形面，
+
 \begin_inset Formula $\delta(\cdot)_{\Delta}$
 \end_inset
 
@@ -5780,7 +6671,9 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 \begin_inset Formula $\Delta$
 \end_inset
 
-时的不连续（discontinuity）。进一步简化，注意到
+时的不连续（discontinuity）。
+进一步简化，
+注意到
 \begin_inset Formula 
 \begin{align}
 \nabla\times & \frac{1}{\mu_{r}}\nabla\times\sbf e^{h}-k^{2}\epsilon_{r}\sbf e^{h}=\nabla\times\frac{1}{\mu_{r}}\nabla\times(\sbf u-\sbf u^{h})-k^{2}\epsilon_{r}(\sbf u-\sbf u^{h})\nonumber \\
@@ -5806,7 +6699,8 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 \begin_inset Formula $\sbf j_{s}$
 \end_inset
 
-分别是 volume 和 surface residual 电流。并考虑了 
+分别是 volume 和 surface residual 电流。
+并考虑了 
 \begin_inset Formula 
 \begin{align*}
  & \nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u-k^{2}\epsilon_{r}\sbf u=0\\
@@ -5816,6 +6710,7 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 \end_inset
 
 物理上可以解释为，
+
 \begin_inset Formula $\sbf j_{v}$
 \end_inset
 
@@ -5827,13 +6722,16 @@ a\left(\sbf e^{h},\sbf e^{h}\right) & -k^{2}\langle\sbf e^{h},\sbf e^{h}\rangle\
 \begin_inset Formula $\sbf e^{h}$
 \end_inset
 
-的源。接着，误差泛函
+的源。
+接着，
+误差泛函
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:v9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5847,6 +6745,7 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \end_inset
 
 理论上，
+
 \begin_inset Formula $\sbf j_{v}$
 \end_inset
 
@@ -5854,11 +6753,15 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \begin_inset Formula $\sbf j_{s}$
 \end_inset
 
-的计算是精确的。自适应网格细化的目标，或者更精确地说，后验误差估计的计算只依赖于 how one computes 
+的计算是精确的。
+自适应网格细化的目标，
+或者更精确地说，
+后验误差估计的计算只依赖于 how one computes 
 \begin_inset Formula $\sbf e^{h}$
 \end_inset
 
  from these sources。
+
 \end_layout
 
 \begin_layout Subsection
@@ -5866,11 +6769,14 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \end_layout
 
 \begin_layout Standard
-在本文中，我们将重点推导出一种易于计算的细化指标，该指标可用于可靠地指导我们
+在本文中，
+我们将重点推导出一种易于计算的细化指标，
+该指标可用于可靠地指导我们
 \series bold
 最优地
 \series default
-细化有限元网格。为此我们定义残差指标
+细化有限元网格。
+为此我们定义残差指标
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -5882,7 +6788,8 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 
 \end_inset
 
-在这里我们作主要近似。We would only compute 
+在这里我们作主要近似。
+We would only compute 
 \begin_inset Formula $\left.\sbf e^{h}\right|_{K}$
 \end_inset
 
@@ -5890,7 +6797,8 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \series bold
 local sources
 \series default
- and employ an approximate Green's functions，即
+ and employ an approximate Green's functions，
+即
 \begin_inset Formula 
 \begin{align}
 \left.\sbf e^{h}\right|_{K}= & -\nabla V-j\omega\sbf A\nonumber \\
@@ -5911,7 +6819,8 @@ local sources
 \begin_inset Formula $(\rho_{v},\sbf j_{v})$
 \end_inset
 
-的距离。然后 residual index 
+的距离。
+然后 residual index 
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -5932,6 +6841,7 @@ reference "eq:v14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -5956,21 +6866,26 @@ Q_{K} & \coloneqq\int_{K}\rho_{v}\dd{x^{3}}\quad\rho_{v}=\nabla\cdot(\epsilon\,\
 \begin_inset Formula $x'$
 \end_inset
 
-的纠缠，在
+的纠缠，
+在
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:v14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-末尾，将积分用外接圆半径
+末尾，
+将积分用外接圆半径
 \begin_inset Formula $R_{K}$
 \end_inset
 
-近似，强行去掉纠缠。
+近似，
+强行去掉纠缠。
+
 \end_layout
 
 \begin_layout Standard
@@ -5999,6 +6914,7 @@ reference "eq:v14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6014,15 +6930,18 @@ noprefix "false"
 \begin_inset Formula $\nabla\cdot\sbf j_{v}=-j\omega\rho_{v}$
 \end_inset
 
-，然后使用高斯定理 
+，
+然后使用高斯定理 
 \begin_inset Formula $\int_{V}{\color{blue}\nabla\cdot\left(\sbf j_{v}\,f\right)}\dd{V}\Rightarrow\oint_{s}(\sbf j_{v}\,f)\cdot\dd{\sbf S}$
 \end_inset
 
-，取足够大的包围面
+，
+取足够大的包围面
 \begin_inset Formula $S$
 \end_inset
 
-，使得
+，
+使得
 \begin_inset Formula $\sbf j_{v}$
 \end_inset
 
@@ -6030,7 +6949,9 @@ noprefix "false"
 \begin_inset Formula $S$
 \end_inset
 
-内部，则此项面积分为零。
+内部，
+则此项面积分为零。
+
 \end_layout
 
 \end_inset
@@ -6043,7 +6964,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-类似地，每个三角形面
+类似地，
+每个三角形面
 \begin_inset Formula $\Delta$
 \end_inset
 
@@ -6052,6 +6974,7 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula 
 \begin{equation}
 \alpha_{\Delta}\approx\frac{-j\omega\,e^{-jkR_{\Delta}}}{4\pi\epsilon R_{\Delta}}Q_{\Delta}Q_{\Delta}-\frac{j\omega\mu\,e^{-jkR_{\Delta}}}{4\pi R_{\Delta}}\sbf J_{\Delta}\cdot\sbf J_{\Delta}\label{eq:v15}
@@ -6066,6 +6989,7 @@ reference "eq:v15"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6087,6 +7011,7 @@ Q_{\Delta} & =\int_{\Delta}\rho_{s}\dd{x^{2}}\quad\rho_{s}=\delta(\epsilon\,\sbf
 \end_inset
 
 其中，
+
 \begin_inset Formula $R_{K}$
 \end_inset
 
@@ -6106,7 +7031,9 @@ Q_{\Delta} & =\int_{\Delta}\rho_{s}\dd{x^{2}}\quad\rho_{s}=\delta(\epsilon\,\sbf
 \series bold
 外接球和外接圆的半径
 \series default
-。最后，单元
+。
+最后，
+单元
 \begin_inset Formula $K$
 \end_inset
 
@@ -6134,7 +7061,8 @@ Q_{\Delta} & =\int_{\Delta}\rho_{s}\dd{x^{2}}\quad\rho_{s}=\delta(\epsilon\,\sbf
 
 个三角面
 \series default
-，且 
+，
+且 
 \begin_inset Formula $\alpha_{N_{i}}$
 \end_inset
 
@@ -6154,17 +7082,20 @@ Q_{\Delta} & =\int_{\Delta}\rho_{s}\dd{x^{2}}\quad\rho_{s}=\delta(\epsilon\,\sbf
 \begin_inset Formula $N_{i}$
 \end_inset
 
-的 residual index。从
+的 residual index。
+从
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:v14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-可以看出，residual index 
+可以看出，
+residual index 
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -6172,15 +7103,20 @@ noprefix "false"
 \begin_inset Formula $\alpha_{\Delta}$
 \end_inset
 
-的计算涉及大量近似，因此它们可能并不代表
+的计算涉及大量近似，
+因此它们可能并不代表
 \series bold
 准确的
 \series default
-后验误差估计。不过，它们确实提供了有关四面体中 
+后验误差估计。
+不过，
+它们确实提供了有关四面体中 
 \series bold
 actions
 \series default
- 排序的有用信息。我们将在下一节通过数值实验证明它们的有效性。
+ 排序的有用信息。
+我们将在下一节通过数值实验证明它们的有效性。
+
 \end_layout
 
 \begin_layout Section
@@ -6188,7 +7124,8 @@ actions
 \end_layout
 
 \begin_layout Chapter
-磁场二维, Node Based
+磁场二维,
+ Node Based
 \end_layout
 
 \begin_layout Standard
@@ -6220,6 +7157,7 @@ actions
 垂直流过
 \series default
 二维平面，
+
 \begin_inset Formula $\sbf A$
 \end_inset
 
@@ -6253,7 +7191,8 @@ actions
 \end_layout
 
 \begin_layout Itemize
-FEM近似解对应的体电流密度，in 2D
+FEM近似解对应的体电流密度，
+in 2D
 \begin_inset Formula 
 \[
 \mu_{0}j_{z}=-\frac{1}{\mu_{r}}(\partial_{xx}+\partial_{yy})A_{z}^{h}
@@ -6335,6 +7274,7 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 \end_inset
 
 矩阵形式为，
+
 \begin_inset Formula 
 \[
 \nabla\nabla N_{\alpha}=-(\overline{J}\cdot H_{\beta}\cdot\overline{J}^{\mathrm{T}})_{ji}\,(X_{\beta\cdot}\cdot\overline{J}\cdot G_{\cdot\alpha})+(\overline{J}\cdot H_{\alpha}\cdot\overline{J}^{\mathrm{T}})_{ji}
@@ -6354,19 +7294,23 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 \begin_inset Formula $N_{\beta}$
 \end_inset
 
-的Hessian；在程序中
+的Hessian；
+在程序中
 \begin_inset Formula $G_{k\alpha}=\tilde{\partial}_{k}N_{\alpha}=N_{\alpha,k}^{\mathrm{T}}$
 \end_inset
 
-，or 
+，
+or 
 \begin_inset Formula $N_{\alpha,k}=G_{k\alpha}^{\mathrm{T}}$
 \end_inset
 
 ，
+
 \begin_inset Formula $G$
 \end_inset
 
  就是 dNdzeta。
+
 \end_layout
 
 \begin_layout Section
@@ -6378,7 +7322,13 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 \begin_inset Formula $J_{z}$
 \end_inset
 
-。solver 中外加激励接口 统一为矢量。2D激励存储在 z分量位置，即类似 extJ[2]={0, 0, Jz} 的形式。
+。
+solver 中外加激励接口 统一为矢量。
+2D激励存储在 z分量位置，
+即类似 extJ[2]={0,
+ 0,
+ Jz} 的形式。
+
 \end_layout
 
 \begin_layout Chapter
@@ -6410,7 +7360,8 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 \begin_inset Formula $\mu_{r}$
 \end_inset
 
-是相对磁导率。下面用
+是相对磁导率。
+下面用
 \begin_inset Formula $\sbf u$
 \end_inset
 
@@ -6418,7 +7369,9 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 \begin_inset Formula $\sbf A$
 \end_inset
 
-，推导类似时谐场。
+，
+推导类似时谐场。
+
 \begin_inset Formula 
 \begin{equation}
 \nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u=\mu_{0}\sbf J\label{eq:m01}
@@ -6426,7 +7379,8 @@ N_{\alpha,y} & -N_{\alpha,x} & 0
 
 \end_inset
 
-将 Galerkin 方法应用矢量方程。结果写成双线性型
+将 Galerkin 方法应用矢量方程。
+结果写成双线性型
 \begin_inset Formula 
 \begin{align}
 B(\sbf u,\sbf v) & =\int_{\Omega}\nabla\times\sbf v\cdot\frac{1}{\mu_{r}}\nabla\times\sbf u\,\dd{x^{3}}-\mu_{0}\int_{\Gamma_{1}}\sbf v\cdot\sbf J\dd{x^{2}}\nonumber \\
@@ -6444,6 +7398,7 @@ B(\sbf u,\sbf v) & =\int_{\Omega}\nabla\times\sbf v\cdot\frac{1}{\mu_{r}}\nabla\
 输入激励
 \series default
 的边界端口区域。
+
 \series bold
 弱解
 \series default
@@ -6464,6 +7419,7 @@ a\left(\sbf u,\sbf v\right)=\mu_{0}\langle\sbf v,\sbf J\rangle_{\Gamma_{1}},\qua
 \end_inset
 
 在离散版本（即FEM ）过程，
+
 \end_layout
 
 \begin_layout Standard
@@ -6484,7 +7440,10 @@ a\left(\sbf u^{h},\sbf v^{h}\right) & =\mu_{0}\langle\sbf v^{h},\sbf J^{h}\rangl
 \begin_inset Formula $\sbf J$
 \end_inset
 
-在有限单元网格上的插值，或投影。在当前的研究中，子空间 
+在有限单元网格上的插值，
+或投影。
+在当前的研究中，
+子空间 
 \begin_inset Formula $S^{h}$
 \end_inset
 
@@ -6492,11 +7451,13 @@ a\left(\sbf u^{h},\sbf v^{h}\right) & =\mu_{0}\langle\sbf v^{h},\sbf J^{h}\rangl
 \begin_inset Formula $H^{(1)}(\mathrm{curl})$
 \end_inset
 
- TVFEM 矢量基函数张成。假设 
+ TVFEM 矢量基函数张成。
+假设 
 \series bold
 网格
 \series default
  足够细，
+
 \begin_inset Formula $\sbf J$
 \end_inset
 
@@ -6504,7 +7465,8 @@ a\left(\sbf u^{h},\sbf v^{h}\right) & =\mu_{0}\langle\sbf v^{h},\sbf J^{h}\rangl
 \begin_inset Formula $\sbf J^{h}$
 \end_inset
 
-之间的插值误差可以忽略，随后将简化地用 
+之间的插值误差可以忽略，
+随后将简化地用 
 \begin_inset Formula $\sbf J$
 \end_inset
 
@@ -6515,6 +7477,7 @@ reference "eq:m3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6522,7 +7485,9 @@ noprefix "false"
 \begin_inset Formula $\sbf J^{h}$
 \end_inset
 
-直接参与运算。此外下列定理成立。
+直接参与运算。
+此外下列定理成立。
+
 \end_layout
 
 \begin_layout Theorem
@@ -6536,11 +7501,13 @@ name "the1-1"
 \begin_inset Formula $\sbf e^{h}=\sbf u-\sbf u^{h}$
 \end_inset
 
-，即有限元解
+，
+即有限元解
 \begin_inset Formula $\sbf u^{h}$
 \end_inset
 
-的误差，则我们有
+的误差，
+则我们有
 \begin_inset Formula 
 \begin{equation}
 a\left(\sbf e^{h},\sbf u^{h}\right)\equiv0.\label{eq:m4}
@@ -6555,6 +7522,7 @@ reference "eq:m2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6565,6 +7533,7 @@ reference "eq:m3"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6584,10 +7553,12 @@ reference "eq:m4"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 。
+
 \end_layout
 
 \begin_layout Section
@@ -6595,15 +7566,20 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-在模拟多端口微波器件时，经常感兴趣的是
+在模拟多端口微波器件时，
+经常感兴趣的是
 \begin_inset Formula $S$
 \end_inset
 
-参数。得到电磁场的解之后，器件的
+参数。
+得到电磁场的解之后，
+器件的
 \begin_inset Formula $S$
 \end_inset
 
-参数可以通过适当的面积分得到。特别地，反射系数
+参数可以通过适当的面积分得到。
+特别地，
+反射系数
 \begin_inset Formula $S_{11}$
 \end_inset
 
@@ -6624,6 +7600,7 @@ S_{11}=1-\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}.\label{eq:m5}
 输入端口
 \series default
 ，
+
 \begin_inset Formula $\sbf u$
 \end_inset
 
@@ -6632,20 +7609,24 @@ S_{11}=1-\langle\sbf u,\sbf J\rangle_{\Gamma_{1}}.\label{eq:m5}
 电场
 \series default
 ，
+
 \begin_inset Formula $\sbf J$
 \end_inset
 
-是 流入求解区域的 基本模式（输入波）的表面电流。因此从
+是 流入求解区域的 基本模式（输入波）的表面电流。
+因此从
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:m5"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 可以推导出误差泛函，
+
 \begin_inset Formula 
 \begin{align}
 F(\sbf u^{h}) & =S_{11}^{h}-S_{11}\nonumber \\
@@ -6658,7 +7639,8 @@ F(\sbf u^{h}) & =S_{11}^{h}-S_{11}\nonumber \\
 \begin_inset Formula $\sbf J-\sbf J^{h}$
 \end_inset
 
-可忽略。注意到
+可忽略。
+注意到
 \begin_inset Formula $\sbf e^{h}\in H(\mathrm{curl})$
 \end_inset
 
@@ -6669,6 +7651,7 @@ reference "eq:m2"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6695,14 +7678,17 @@ reference "the1-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 ，
+
 \begin_inset Formula $a\left(\sbf e^{h},\sbf u^{h}\right)\equiv0$
 \end_inset
 
-，误差泛函可以写成
+，
+误差泛函可以写成
 \begin_inset Formula 
 \begin{equation}
 F(\sbf u^{h})=\frac{1}{\mu_{0}}\left[a\left(\sbf e^{h},\sbf e^{h}\right)\right].\label{eq:m8}
@@ -6717,10 +7703,12 @@ reference "eq:m8"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 将作为推导 FEM 网格的每个四面体的 refinement index 的依据。
+
 \end_layout
 
 \begin_layout Section
@@ -6728,7 +7716,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-为得到 能计算 的细化指标，我们有
+为得到 能计算 的细化指标，
+我们有
 \begin_inset Formula 
 \begin{align}
 a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^{h}\cdot\frac{1}{\mu_{r}}\nabla\times\sbf e^{h}\right)\dd{x^{3}}\nonumber \\
@@ -6766,7 +7755,10 @@ a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^
 
 上的外法向
 \series default
-。此处约定使用 facet 的 owner 单元的外法向，neighbor 多一个负号。
+。
+此处约定使用 facet 的 owner 单元的外法向，
+neighbor 多一个负号。
+
 \end_layout
 
 \begin_layout Standard
@@ -6774,10 +7766,12 @@ a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^
 \end_inset
 
 是网格中的四面体单元，
+
 \begin_inset Formula $\Delta$
 \end_inset
 
 是内部三角形面，
+
 \begin_inset Formula $\delta(\cdot)_{\Delta}$
 \end_inset
 
@@ -6789,7 +7783,9 @@ a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^
 \begin_inset Formula $\Delta$
 \end_inset
 
-时的不连续（discontinuity）。进一步简化，注意到
+时的不连续（discontinuity）。
+进一步简化，
+注意到
 \begin_inset Formula 
 \begin{align}
 \nabla\times & \frac{1}{\mu_{r}}\nabla\times\sbf e^{h}=\nabla\times\frac{1}{\mu_{r}}\nabla\times(\sbf u-\sbf u^{h})\nonumber \\
@@ -6815,7 +7811,8 @@ a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^
 \begin_inset Formula $\sbf j_{s}$
 \end_inset
 
-分别是 volume 和 surface 残余电流。其中使用了
+分别是 volume 和 surface 残余电流。
+其中使用了
 \begin_inset Formula 
 \begin{align*}
  & \nabla\times\frac{1}{\mu_{r}}\nabla\times\sbf u=\sbf J_{v},\quad\text{体电流外源}\\
@@ -6824,7 +7821,9 @@ a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^
 
 \end_inset
 
-即通常认为面电流外源为零。物理上可以解释为，
+即通常认为面电流外源为零。
+物理上可以解释为，
+
 \begin_inset Formula $\sbf j_{v}$
 \end_inset
 
@@ -6836,13 +7835,16 @@ a\left(\sbf e^{h},\sbf e^{h}\right)= & \sum_{K}\int_{K}\left(\nabla\times\sbf e^
 \begin_inset Formula $\sbf e^{h}$
 \end_inset
 
-的源。接着，误差泛函
+的源。
+接着，
+误差泛函
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:m9"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6856,6 +7858,7 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \end_inset
 
 理论上，
+
 \begin_inset Formula $\sbf j_{v}$
 \end_inset
 
@@ -6863,11 +7866,15 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \begin_inset Formula $\sbf j_{s}$
 \end_inset
 
-的计算是精确的。自适应网格细化的目标，或者更精确地说，后验误差估计的计算只依赖于 how one computes 
+的计算是精确的。
+自适应网格细化的目标，
+或者更精确地说，
+后验误差估计的计算只依赖于 how one computes 
 \begin_inset Formula $\sbf e^{h}$
 \end_inset
 
  from these sources。
+
 \end_layout
 
 \begin_layout Subsection
@@ -6875,11 +7882,14 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \end_layout
 
 \begin_layout Standard
-在本文中，我们将重点推导出一种易于计算的细化指标，该指标可用于可靠地指导我们
+在本文中，
+我们将重点推导出一种易于计算的细化指标，
+该指标可用于可靠地指导我们
 \series bold
 最优地
 \series default
-细化有限元网格。为此我们定义残差指标
+细化有限元网格。
+为此我们定义残差指标
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -6891,7 +7901,8 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 
 \end_inset
 
-在这里我们作主要近似。We would only compute 
+在这里我们作主要近似。
+We would only compute 
 \begin_inset Formula $\left.\sbf e^{h}\right|_{K}$
 \end_inset
 
@@ -6899,7 +7910,8 @@ F(\sbf u^{h})= & \sum_{K}\int_{K}\sbf e^{h}\cdot\sbf j_{v}\dd{x^{3}}+\sum_{\Delt
 \series bold
 local sources
 \series default
- and employ an approximate Green's functions，即
+ and employ an approximate Green's functions，
+即
 \begin_inset Formula 
 \[
 \left.\sbf e^{h}\right|_{K}=\frac{\mu}{4\pi}\int_{K}\frac{\sbf j_{v}(\sbf x')}{R}\dd{V'}
@@ -6927,7 +7939,8 @@ local sources
 \begin_inset Formula $(\rho_{v},\sbf j_{v})$
 \end_inset
 
-的距离。然后 residual index 
+的距离。
+然后 residual index 
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -6947,6 +7960,7 @@ reference "eq:m14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6971,21 +7985,26 @@ Q_{K} & =\int_{K}\rho_{v}\dd{x^{3}}\quad\rho_{v}=\nabla\cdot(\epsilon\,\sbf u^{h
 \begin_inset Formula $x'$
 \end_inset
 
-的纠缠，在
+的纠缠，
+在
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:m14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-末尾，将积分用外接圆半径
+末尾，
+将积分用外接圆半径
 \begin_inset Formula $R_{K}$
 \end_inset
 
-近似，强行去掉纠缠。
+近似，
+强行去掉纠缠。
+
 \end_layout
 
 \begin_layout Subsection
@@ -6993,7 +8012,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-类似地，每个三角形面
+类似地，
+每个三角形面
 \begin_inset Formula $\Delta$
 \end_inset
 
@@ -7002,6 +8022,7 @@ noprefix "false"
 \end_inset
 
 ，
+
 \begin_inset Formula 
 \begin{equation}
 \alpha_{\Delta}\approx\frac{\mu}{4\pi R_{\Delta}}\sbf J_{\Delta}\cdot\sbf J_{\Delta}\label{eq:m15}
@@ -7016,6 +8037,7 @@ reference "eq:m15"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -7032,6 +8054,7 @@ noprefix "false"
 \end_inset
 
 其中，
+
 \begin_inset Formula $R_{K}$
 \end_inset
 
@@ -7051,7 +8074,9 @@ noprefix "false"
 \series bold
 外接球和外接圆的半径
 \series default
-。最后，单元
+。
+最后，
+单元
 \begin_inset Formula $K$
 \end_inset
 
@@ -7079,7 +8104,8 @@ noprefix "false"
 
 个三角面
 \series default
-，且 
+，
+且 
 \begin_inset Formula $\alpha_{N_{i}}$
 \end_inset
 
@@ -7099,17 +8125,20 @@ noprefix "false"
 \begin_inset Formula $N_{i}$
 \end_inset
 
-的 residual index。从
+的 residual index。
+从
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:m14"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-可以看出，residual index 
+可以看出，
+residual index 
 \begin_inset Formula $\alpha_{K}$
 \end_inset
 
@@ -7117,15 +8146,20 @@ noprefix "false"
 \begin_inset Formula $\alpha_{\Delta}$
 \end_inset
 
-的计算涉及大量近似，因此它们可能并不代表
+的计算涉及大量近似，
+因此它们可能并不代表
 \series bold
 准确的
 \series default
-后验误差估计。不过，它们确实提供了有关四面体中 
+后验误差估计。
+不过，
+它们确实提供了有关四面体中 
 \series bold
 actions
 \series default
- 排序的有用信息。我们将在下一节通过数值实验证明它们的有效性。
+ 排序的有用信息。
+我们将在下一节通过数值实验证明它们的有效性。
+
 \end_layout
 
 \begin_layout Section
