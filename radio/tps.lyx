@@ -24,7 +24,7 @@ graphicboxes
 \font_typewriter "default" "default"
 \font_math "auto" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc false
 \font_roman_osf false
 \font_sans_osf false
@@ -39,6 +39,7 @@ graphicboxes
 \bibtex_command default
 \index_command default
 \float_placement H
+\float_alignment class
 \paperfontsize default
 \spacing single
 \use_hyperref false
@@ -127,7 +128,7 @@ LET Linear Energy Transfer,
 
  个粒子在体素中沉积的能量处以步长，
 
-\begin_inset Formula $\mathrm{keV/\mu m}$
+\begin_inset Formula $\text{KeV/\ensuremath{\mu}m}$
 \end_inset
 
 。
@@ -181,7 +182,7 @@ LET Linear Energy Transfer,
 
 个粒子在体素中沉积能量的能量处以步长，
 
-\begin_inset Formula $\mathrm{keV/\mu m}=\mathrm{MeV/\mathrm{mm}}$
+\begin_inset Formula $\text{KeV/\ensuremath{\mu}m=MeV/mm}$
 \end_inset
 
 。
@@ -334,6 +335,1318 @@ w_{0,j}=\frac{d_{\text{tar}}}{f_{\text{tol}}\,R_{\text{cur}}\,\max(d_{j}\,w_{I})
 \end_inset
 
 
+\end_layout
+
+\begin_layout Chapter
+束流模型
+\end_layout
+
+\begin_layout Section
+相对论
+\end_layout
+
+\begin_layout Standard
+四速度
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+ct\\
+x\\
+y\\
+z
+\end{array}\right),\quad\left(\begin{array}{c}
+\gamma c\\
+\gamma\beta_{x}\\
+\gamma\beta_{y}\\
+\gamma\beta_{z}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+洛伦兹变换群在速度表象下的形式；
+沿
+\begin_inset Formula $x$
+\end_inset
+
+方向的特殊变换，
+运动坐标系为
+\begin_inset Formula $t'$
+\end_inset
+
+，
+
+\begin_inset Formula $x'$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+t^{\prime}\\
+x^{\prime}
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+t\\
+x
+\end{array}\right)
+\]
+
+\end_inset
+
+微分也同样满足
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\dd t'\\
+\dd x'
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\dd t\\
+\dd x
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+粒子在自身的固有坐标系中静止，
+因此
+\begin_inset Formula $\dd x=0$
+\end_inset
+
+，
+得到固有系的间隔为 
+\begin_inset Formula $c^{2}(\dd t)^{2}$
+\end_inset
+
+；
+这是一个特殊的洛伦兹变换下的不变量，
+用 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 表示固有系时间以表尊敬，
+
+\begin_inset Formula 
+\[
+\dd\sbf s=\left(\begin{array}{c}
+\dd\tau\\
+0\\
+0\\
+0
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\dd\sbf s$
+\end_inset
+
+在任意boosted 坐标系中表示为
+\begin_inset Formula 
+\[
+\dd s'=\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+\dd\tau\\
+0
+\end{array}\right)=\left(\begin{array}{c}
+\gamma\dd\tau\\
+-\gamma\beta\dd\tau
+\end{array}\right)=\left(\begin{array}{c}
+\gamma\\
+-\gamma\beta
+\end{array}\right)\dd\tau
+\]
+
+\end_inset
+
+因此除以洛伦兹标量
+\begin_inset Formula $\dd\tau$
+\end_inset
+
+，
+可以定义出一个特殊的洛伦兹四矢量
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\gamma\\
+\pm\gamma\beta
+\end{array}\right)\quad\text{or}\quad\left(\begin{array}{c}
+\gamma c\\
+\pm\gamma v
+\end{array}\right)
+\]
+
+\end_inset
+
+物理意义是 
+\series bold
+固有时 在任意速度坐标下的表示，
+或者说抻长（strech）
+\series default
+。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(\gamma,\pm\gamma\beta)$
+\end_inset
+
+被理解为 
+\series bold
+四速度
+\series default
+；
+因为
+\series bold
+时间平移不变性
+\series default
+，
+
+\series bold
+空间平移不变性
+\series default
+，
+分别对应
+\series bold
+能量和动量
+\series default
+；
+令
+\begin_inset Formula $m$
+\end_inset
+
+为固有坐标系下的固有质量，
+定义四动量
+\begin_inset Formula 
+\[
+m\left(\begin{array}{c}
+\gamma\\
+\gamma\beta
+\end{array}\right)=\left(\begin{array}{c}
+m\gamma\\
+m\gamma\beta
+\end{array}\right)=\left(\begin{array}{c}
+E\\
+p
+\end{array}\right)
+\]
+
+\end_inset
+
+则 
+\begin_inset Formula 
+\[
+E^{2}-p^{2}=m^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+钟慢尺缩（钟走的慢，
+距离缩短）
+\end_layout
+
+\begin_layout Standard
+人们通常理解的 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+是
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\dd\tau\\
+-\beta\dd\tau
+\end{array}\right)
+\]
+
+\end_inset
+
+对比洛伦兹变换给出的 
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\gamma\dd\tau\\
+-\gamma\beta\dd\tau
+\end{array}\right)
+\]
+
+\end_inset
+
+可以看出明显的 时间延长，
+距离延长的效应。
+也就是在高速运动的坐标系，
+
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ 都被抻长了。
+
+\end_layout
+
+\begin_layout Paragraph
+对于二维的 
+\begin_inset Formula $t,x$
+\end_inset
+
+坐标，
+也可以考虑 固有长度
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+\gamma & -\gamma\beta\\
+-\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+0\\
+\dd x
+\end{array}\right)=\left(\begin{array}{c}
+-\gamma\beta\dd x\\
+\gamma\dd x
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\pm\gamma\beta\\
+\gamma
+\end{array}\right)\quad\text{or}\quad\left(\begin{array}{c}
+\pm\gamma v\\
+\gamma c
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+逆变换
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+t\\
+x
+\end{array}\right)=\left(\begin{array}{cc}
+\gamma & \gamma\beta\\
+\gamma\beta & \gamma
+\end{array}\right)\left(\begin{array}{c}
+t^{\prime}\\
+x^{\prime}
+\end{array}\right)
+\]
+
+\end_inset
+
+sdfasdf
+\begin_inset Formula 
+\[
+\gamma=1/\sqrt{1-\beta^{2}},\quad\beta=v/c
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\gamma\frac{\partial}{\partial t}\\
+\gamma\beta\frac{\partial}{\partial x}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & \left(E,\sbf p\right)\\
+ & E^{2}-p^{2}=m^{2}\\
+ & E=\gamma m,\quad p=\gamma m\,\beta\\
+ & \gamma^{2}(1-\beta^{2})=1
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & p=\gamma\beta\,m\\
+ & p\beta=\gamma\beta^{2}m
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Moliere 理论
+\end_layout
+
+\begin_layout Standard
+小角散射 
+\begin_inset Formula $\sin\theta\approx\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+single scattering cross section
+\begin_inset Formula 
+\begin{equation}
+\rho\sigma(\theta)=2\chi_{c}^{2}\,\frac{1}{(\theta^{2}+\chi_{\alpha}^{2})^{2}},\label{eq:be.A1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\rho$
+\end_inset
+
+ number of 
+\begin_inset Formula $\mathrm{atoms}/\mathrm{cm}^{2}$
+\end_inset
+
+，
+也就是撞击平面上，
+原子的密度。
+进行了 axial 积分。
+
+\end_layout
+
+\begin_layout Standard
+RMS(root of mean square) 
+\begin_inset Formula $\sqrt{\langle x^{2}\rangle}$
+\end_inset
+
+；
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Pure
+\series default
+ rms scattering angle：
+
+\begin_inset Formula 
+\[
+\chi_{c}^{2}=0.1569\cdot10^{-6}\,Z^{2}z^{2}\frac{x}{A}\frac{1}{p^{2}\beta^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $z$
+\end_inset
+
+ incident 粒子的 atomic 数，
+
+\begin_inset Formula $Z$
+\end_inset
+
+和 
+\begin_inset Formula $A$
+\end_inset
+
+target 的 atomic数和 mass数，
+
+\begin_inset Formula $x$
+\end_inset
+
+是 target 厚度(
+\begin_inset Formula $\mathrm{g\,cm^{-2}}$
+\end_inset
+
+)，
+
+\begin_inset Formula $p$
+\end_inset
+
+ 是动量 in 
+\begin_inset Formula $\mathrm{GeV}\,c^{-1}$
+\end_inset
+
+，
+
+\begin_inset Formula $\beta=v/c$
+\end_inset
+
+ ，
+
+\begin_inset Formula $v$
+\end_inset
+
+是入射粒子的速度。
+
+\end_layout
+
+\begin_layout Standard
+electron screening of the Coulomb势，
+电子屏蔽（遮蔽）
+\begin_inset Formula 
+\begin{align}
+\chi_{\alpha}^{2} & =\mu^{2}\chi_{0}^{2}\nonumber \\
+\mu^{2} & =\left(1.13+3.76\frac{z^{2}Z^{2}}{137^{2}\beta^{2}}\right)\label{eq:bea4}
+\end{align}
+
+\end_inset
+
+当
+\begin_inset Formula $\mu=0$
+\end_inset
+
+ Rutherford cross section of a point charge,
+ 
+\begin_inset Formula 
+\[
+\rho\,\sigma(\theta)=2\chi_{c}^{2}\,\frac{1}{\theta^{2}},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hbar c=197.327\text{MeV fm}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\begin{equation}
+\chi_{0}=4.216\cdot10^{-6}\frac{Z^{1/3}}{p},\label{eq:bea6}
+\end{equation}
+
+\end_inset
+
+动量 
+\begin_inset Formula $p$
+\end_inset
+
+ is in 
+\begin_inset Formula $\text{GeV }c{}^{-1}$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Standard
+total number of multiple scattering events,
+\begin_inset Formula 
+\[
+\rho\int_{0}^{\infty}\sigma(\theta)\,\sin\theta\dd\theta=\int_{0}^{\infty}2\chi_{c}^{2}\,\frac{1}{(\theta^{2}+\chi_{\alpha}^{2})^{2}}\dd\theta=\frac{\chi_{c}^{2}}{\chi_{\alpha}^{2}}\equiv\Omega_{0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho\int_{0}^{\pi}\sigma(\theta)\,\sin\theta\dd\theta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f(\theta)\theta\dd\theta=\frac{\theta\dd\theta}{\chi_{c}^{2}}\int_{0}^{\Gamma}J_{0}\left(\frac{\theta\,\eta}{\chi_{c}}\right)\exp\left[-\frac{\eta^{2}}{4}\left(b-\ln\frac{\eta^{2}}{4}\right)\right]\eta\dd\eta.\label{eq:be.a8}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+f(\theta_{x})\dd\theta_{x}=\frac{\dd\theta_{x}}{\pi\chi_{c}}\int_{0}^{\Gamma}\cos\left(\frac{\theta_{x}\eta}{\chi_{c}}\right)\exp\left[-\frac{\eta^{2}}{4}\left(b-\ln\frac{\eta^{2}}{4}\right)\right]\eta\dd\eta.\label{eq:be.a11}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\theta=\sqrt{\theta_{x}^{2}+\theta_{y}^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\theta_{R}\equiv\sqrt{\langle\theta^{2}\rangle}=\chi_{c}\sqrt{B},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B-\ln B=b.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{xR}=\frac{\theta_{R}}{\sqrt{2}}=\frac{\chi_{c}\sqrt{B}}{\sqrt{2}}\label{eq:be.a16}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+B\approx1.153+1.122\ln\Omega_{0}\label{eq:be.a17}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+混合物
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Z_{M}=\sum_{i}n_{i}Z_{i},\quad A_{M}=\sum_{i}n_{i}A_{i}.
+\]
+
+\end_inset
+
+for water,
+ 
+\begin_inset Formula $Z_{M}=10$
+\end_inset
+
+ and 
+\begin_inset Formula $A_{M}=18$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+固定能量，
+单原子 
+\begin_inset Formula $\chi_{c}$
+\end_inset
+
+（联系到 rms scattering angle）
+\begin_inset Formula 
+\[
+\chi_{c}^{2}=0.1569\cdot10^{-6}\,Z^{2}z^{2}\frac{x}{A}\frac{1}{p^{2}\beta^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+固定能量 多原子 
+\begin_inset Formula $\chi_{c}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\chi_{c}^{2}=\sum_{i}\chi_{ci}^{2}=\chi_{W}^{2}\,\frac{x}{p^{2}\beta^{2}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\chi_{W}^{2}$
+\end_inset
+
+为常数，
+
+\begin_inset Formula 
+\[
+\chi_{W}^{2}=0.1569\cdot10^{-6}\frac{z^{2}\left(2Z_{H}^{2}+Z_{O}^{2}\right)}{A_{M}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $Z_{H}=1$
+\end_inset
+
+，
+
+\begin_inset Formula $Z_{O}=8$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+对连续能量积分
+\begin_inset Formula 
+\[
+\chi_{c}^{2}=\chi_{W}^{2}\int_{0}^{x}\frac{1}{p(t)^{2}\,\beta(t)^{2}}\dd{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The lateral displacement
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\chi_{c}^{2}(x)=\chi_{W}^{2}\frac{1}{p^{2}\beta^{2}}\int_{0}^{x}\frac{1}{\left(1-t/R\right)^{k}}\dd{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The rms 
+\begin_inset Formula $y_{M}$
+\end_inset
+
+ of the transverse displacement on a measuring plane at 
+\begin_inset Formula $x$
+\end_inset
+
+ due to a layer 
+\begin_inset Formula $\dd t$
+\end_inset
+
+ at the depth t is given by 
+\begin_inset Formula $(x-t)\theta_{xR}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\theta_{xR}(x)=\frac{\theta_{R}(x)}{\sqrt{2}}=\frac{\chi_{c}(x)\sqrt{B}}{\sqrt{2}}
+\]
+
+\end_inset
+
+看到 
+\begin_inset Formula $(D-t)\dd t$
+\end_inset
+
+了吗，
+这个计算过程也是一种卷积，
+
+\begin_inset Formula 
+\[
+\int(D-t)^{2}\,\theta_{xR}^{2}(x)\dd t
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\langle(x-\langle x\rangle)^{2}\rangle=\langle x^{2}\rangle-\langle x\rangle^{2}$
+\end_inset
+
+ 所以这里的 
+\begin_inset Formula $\langle x\rangle$
+\end_inset
+
+为
+\begin_inset Formula $0$
+\end_inset
+
+ ？
+
+\begin_inset Formula 
+\begin{equation}
+y_{M}=\sqrt{\frac{B}{2}}\frac{\chi_{W}}{p\beta}\left[\int_{0}^{x}\frac{(D-t)^{2}}{\left(1-t/R\right)^{k}}\dd{t}.\right]^{1/2}\label{eq:be.8}
+\end{equation}
+
+\end_inset
+
+对于 
+\begin_inset Formula $D=x$
+\end_inset
+
+，
+积分结果
+\begin_inset Formula 
+\begin{equation}
+y_{M}=\frac{R^{2}\left[2R(1-x/R)^{3-k}-2k\,x+6x-2R\right]}{(k-1)(k-2)(k-3)}-\frac{Rx^{2}}{k-1},\quad k>1\label{eq:be9}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be.8"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+中的 rms 
+\begin_inset Formula $y_{M}$
+\end_inset
+
+ 对应于 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be.a16"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 中的 rms 
+\begin_inset Formula $\theta_{xR}$
+\end_inset
+
+，
+后者来自于 angular 分布的 Gaussian core，
+因此,
+ the factor
+\begin_inset Formula 
+\begin{equation}
+\delta=\frac{y_{M}}{\theta_{xR}}=\frac{y_{M}\sqrt{2}}{\chi_{c}\sqrt{B}}\label{eq:be10}
+\end{equation}
+
+\end_inset
+
+代表 the scale factor that allow the passage from the angular to the spatial 分布，
+observed after the passage of a thickness 
+\begin_inset Formula $x$
+\end_inset
+
+。
+变量之间的映射为
+\begin_inset Formula 
+\begin{equation}
+\delta=\frac{y}{\theta_{x}}\quad\to\quad\theta_{x}=\frac{y}{\delta},\label{eq:be11}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be.a11"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+可以写成
+\begin_inset Formula 
+\begin{equation}
+f_{M}(y)=\frac{1}{\pi\chi_{c}\delta}\int_{0}^{\Gamma}\cos\left(\frac{y\eta}{\chi_{c}\delta}\right)\exp\left[-\frac{\eta^{2}}{4}\left(b-\ln\frac{\eta^{2}}{4}\right)\right]\eta\,\dd\eta.\label{eq:be12}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Energy Loss 连续过程
+\end_layout
+
+\begin_layout Subsection
+Scattering 参数 chi_c
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\chi_{c}^{2}(x)=\chi_{W}^{2}\int_{0}^{x}\frac{1}{p(t)^{2}\,\beta(t)^{2}}\dd{t}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\chi_{W}^{2}=0.1569\cdot10^{-6}\frac{z^{2}\left(2Z_{H}^{2}+Z_{O}^{2}\right)}{A_{M}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $Z_{H}=1$
+\end_inset
+
+，
+
+\begin_inset Formula $Z_{O}=8$
+\end_inset
+
+。
+
+\begin_inset Formula $z$
+\end_inset
+
+ 是入射粒子的 atomic number。
+
+\end_layout
+
+\begin_layout Standard
+动量损失公式
+\begin_inset Formula 
+\[
+p(x)^{2}\,\beta(x)^{2}=p^{2}\beta^{2}\left(1-\frac{x}{R}\right)^{k}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+k=1.0753+0.12\exp(-0.09\,\rho\,X_{0})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\rho$
+\end_inset
+
+(
+\begin_inset Formula $\mathrm{g}\,\mathrm{cm}^{-3}$
+\end_inset
+
+) 密度,
+ 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+（
+\begin_inset Formula $\mathrm{cm}$
+\end_inset
+
+）材料的辐射长度（radiation length）均取决于材料，
+对于 water 
+\begin_inset Formula $k=1.07$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+ is the momentum in 
+\begin_inset Formula $\mathrm{GeV}\,\mathrm{c}^{-1}$
+\end_inset
+
+，
+
+\begin_inset Formula $\beta=v/c$
+\end_inset
+
+，
+
+\begin_inset Formula $v$
+\end_inset
+
+ is the velocity of the projectile.
+\end_layout
+
+\begin_layout Standard
+连续能量下的
+\begin_inset Formula $\chi_{c}^{2}$
+\end_inset
+
+结果
+\begin_inset Formula 
+\begin{align}
+\chi_{c}^{2}(x) & =\chi_{W}^{2}\frac{1}{p^{2}\beta^{2}}\int_{0}^{x}\frac{1}{\left(1-t/R\right)^{k}}\dd{t}.\nonumber \\
+ & =\chi_{W}^{2}\,\frac{R\left[\left(1-x/R\right)^{1-k}-1\right]}{(k-1)\cdot p^{2}\beta^{2}}\label{eq:be6}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Scattering 参数 chi_alpha
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ln\chi_{\alpha}^{2}=\frac{1}{\chi_{c}^{2}}\frac{0.1569\cdot10^{-6}\,z^{2}}{A_{M}}\sum_{i}\frac{n_{i}Z_{i}^{2}}{p^{2}\beta^{2}}\int_{0}^{x}\frac{\ln\left[\mu_{i}^{2}\chi_{0i}^{2}\right]-\frac{D_{i}}{Z_{i}}}{\left(1-t/R\right)^{k}}\dd{t}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $Z_{M}=\sum_{i}n_{i}\,Z_{i}$
+\end_inset
+
+ ，
+
+\begin_inset Formula $A_{M}=\sum_{i}n_{i}\,A_{i}$
+\end_inset
+
+，
+对于 water 
+\begin_inset Formula $Z_{M}=10$
+\end_inset
+
+，
+
+\begin_inset Formula $A_{M}=18$
+\end_inset
+
+。
+
+\begin_inset Formula 
+\begin{align*}
+\mu_{i}^{2}(\beta) & =\left(1.13+3.76\frac{z^{2}Z^{2}}{137^{2}\beta^{2}}\right)\\
+\chi_{0i}^{2}(p) & =\left(\frac{\hbar}{p}\,\frac{Z^{1/3}}{0.468\cdot10^{-8}(\mathrm{cm})}\right)^{2}=4.216\cdot10^{-6}\frac{Z^{1/3}}{p},
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+其中动量 
+\begin_inset Formula $p$
+\end_inset
+
+ is in 
+\begin_inset Formula $\mathrm{GeV}\,c^{-1}$
+\end_inset
+
+，
+并使用了 
+\begin_inset Formula $\hbar c=197.327\,\mathrm{MeV}\,\mathrm{fm}$
+\end_inset
+
+ 。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mu_{i}^{2}(\beta)$
+\end_inset
+
+，
+
+\begin_inset Formula $\chi_{0i}^{2}(p)$
+\end_inset
+
+ 都是无量纲数。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\chi_{c}^{2}$
+\end_inset
+
+需要使用 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:be6"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 中的值。
+
+\end_layout
+
+\begin_layout Standard
+Equation (7) can be evaluated with good precision with the Simpson numerical integration rule because of the smooth behavior of the integrand.
+ In water,
+ integration steps of 0.5 cm are enough to provide good accuracy.
+ Since 
+\begin_inset Formula $\mu_{i}^{2}(\beta)$
+\end_inset
+
+ and 
+\begin_inset Formula $\chi_{0i}^{2}(p)$
+\end_inset
+
+ depend on 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ separately,
+ we have to calculate them from the current product 
+\begin_inset Formula $p(x)\beta(x)$
+\end_inset
+
+ resulting during the numerical integration.
+ 
+\begin_inset Formula 
+\[
+p\beta=\gamma m\beta c\beta=\frac{\beta^{2}}{\sqrt{1-\beta^{2}}}mc
+\]
+
+\end_inset
+
+令
+\begin_inset Formula $p\beta=E_{k}$
+\end_inset
+
+，
+求解得到的 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 类似于 
+\begin_inset Formula $\frac{x}{1+x}$
+\end_inset
+
+ or 
+\begin_inset Formula $\log(1+x)$
+\end_inset
+
+ 这种图像
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/relativity_beta.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $E_{k}$
+\end_inset
+
+–
+\begin_inset Formula $\beta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+rl = {m -> 1,
+ c -> 1};
+\end_layout
+
+\begin_layout Plain Layout
+f1[
+\backslash
+[Beta]_] := 
+\backslash
+[Beta]^2/Sqrt[1 - 
+\backslash
+[Beta]^2] m c /.
+ rl;
+\end_layout
+
+\begin_layout Plain Layout
+ComapApply[
+\end_layout
+
+\begin_layout Plain Layout
+{Plot,
+ LogLinearPlot,
+ LogLogPlot}
+\end_layout
+
+\begin_layout Plain Layout
+,
+ {f1[
+\backslash
+[Beta]],
+ {
+\backslash
+[Beta],
+ 0,
+ 1 - 10^-6}}
+\end_layout
+
+\begin_layout Plain Layout
+] // TableForm
+\end_layout
+
+\begin_layout Plain Layout
+Plot[
+\backslash
+[Beta] /.
+ FindRoot[f1[
+\backslash
+[Beta]] - engy,
+ {
+\backslash
+[Beta],
+ 10^-5}],
+ {engy,
+\end_layout
+
+\begin_layout Plain Layout
+0,
+ 2}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+sdfds
+\end_layout
+
+\begin_layout Standard
+减法形式的卷积
+\begin_inset Formula 
+\[
+\int f(t-x)\,g(t)\dd t
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+乘法形式的卷积
+\begin_inset Formula 
+\[
+\int f(\frac{xy}{s})\,g(y)\dd y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+除法形式的卷积
+\begin_inset Formula 
+\[
+\int f(\frac{xs}{y})\,g(y)\dd y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EOF
 \end_layout
 
 \end_body
