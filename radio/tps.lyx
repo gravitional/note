@@ -1646,19 +1646,123 @@ sdfds
 \end_layout
 
 \begin_layout Chapter
-Geant4 统计
+横向拟合
 \end_layout
 
 \begin_layout Standard
-例如 
-\begin_inset Formula $\mathrm{He}_{2}^{4}$
-\end_inset
-
- primary，
-non-primary 
+拟合模型，
+ 5– Gauss 函数
 \begin_inset Formula 
 \[
-(n_{1},q_{1}),\quad(n_{2},q_{2}),
+f(x)=\sum_{i=1}^{5}\alpha\,w_{i}\,g_{i}(x)=\sum_{i=1}^{5}\alpha\,w_{i}\,\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+这里使用 Gauss core,
+ 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+是权重，
+
+\begin_inset Formula $\alpha$
+\end_inset
+
+是整体归一化因子。
+
+\end_layout
+
+\begin_layout Standard
+设目标数据的矢量为
+\begin_inset Formula $t_{j}$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Standard
+Linear objective function
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Logrithm objective function
+\begin_inset Formula 
+\[
+J_{\text{log}}=\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}
+\]
+
+\end_inset
+
+square 理解为矢量模平方，
+
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ 用于添加特定注意力，
+关注拟合数据的不同部分。
+
+\end_layout
+
+\begin_layout Section
+Jacobian
+\end_layout
+
+\begin_layout Standard
+定义模型参数
+\begin_inset Formula 
+\[
+\theta=\{\alpha,\sbf w,\sbf\mu,\sbf\sigma\}
+\]
+
+\end_inset
+
+定义
+\begin_inset Formula $r_{j}=f(x_{j})-t_{j}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=2\sum_{j}a_{j}\,r_{j}\cdot{\color{blue}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\]
+
+\end_inset
+
+定义 
+\begin_inset Formula $r_{\text{log}j}=\log f(x_{j})-\log t_{j}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=2\sum_{J}a_{j}\,r_{\text{log}j}\,\frac{\partial\log f(x_{j})}{\partial\theta_{i}}=2\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{f(x_{j})}\cdot{\color{blue}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+偏导数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T_{ij}
 \]
 
 \end_inset
@@ -1666,19 +1770,73 @@ non-primary
 
 \begin_inset Formula 
 \[
-\frac{q_{1}}{n_{1}},\quad\frac{q_{2}}{n_{2}},\quad\frac{q_{1}+q_{2}}{n_{1}+n_{2}}
+T_{ij}\:r_{j}
 \]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+对scale factor 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{j})}{\partial\alpha}=\sum_{i=1}^{5}w_{i}\,g_{i}(x)
+\]
+
+\end_inset
+
+对权重
+\begin_inset Formula $w_{j}$
+\end_inset
+
+的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{j})}{\partial w_{i}}=g_{i}(x_{j})=\exp\left(-\frac{\left(x_{j}-\mu_{i}\right)^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+对均值
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+的偏导：
 
 \begin_inset Formula 
 \[
-(\frac{q_{1}}{n_{1}})\,\frac{\frac{q_{1}}{n_{1}+n_{2}}}{\frac{q_{1}}{n_{1}}}=(\frac{q_{1}}{n_{1}})\,\frac{n_{1}}{n_{1}+n_{2}}
+\frac{\partial f(x_{j})}{\partial\mu_{i}}=w_{i}\,\frac{\partial g_{i}(x_{j})}{\partial\mu_{i}}=w_{i}\,g_{i}(x_{j})\,\frac{x_{j}-\mu_{i}}{\sigma_{i}^{2}}
 \]
 
 \end_inset
 
+对标准差
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+的偏导
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{j})}{\partial\sigma_{i}}=w_{i}\,\frac{\partial g_{i}(x_{j})}{\partial\sigma_{i}}=w_{i}\,g_{i}(x_{j})\,\frac{\left(x_{j}-\mu_{i}\right)^{2}}{\sigma_{i}^{3}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
+\begin_inset Formula $f(x_{j})$
+\end_inset
+
+，
 
 \end_layout
 
