@@ -1654,7 +1654,15 @@ sdfds
  5– Gauss 函数
 \begin_inset Formula 
 \[
-f(x)=\sum_{i=1}^{5}\alpha\,w_{i}\,g_{i}(x)=\sum_{i=1}^{5}\alpha\,w_{i}\,\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
+{\color{blue}\alpha}\,{\color{red}f(x)}=\sum_{i=1}^{5}{\color{blue}\alpha}\,{\color{red}w_{i}\,g_{i}(x)}=\sum_{i=1}^{5}{\color{blue}\alpha}\,w_{i}\,\frac{1}{\sqrt{2\pi}\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+{\color{red}f(x)}=\sum_{i}{\color{red}w_{i}\,g_{i}(x)}
 \]
 
 \end_inset
@@ -1686,7 +1694,7 @@ f(x)=\sum_{i=1}^{5}\alpha\,w_{i}\,g_{i}(x)=\sum_{i=1}^{5}\alpha\,w_{i}\,\exp\lef
 Linear objective function
 \begin_inset Formula 
 \[
-J_{\text{lin}}=\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}
+J_{\text{lin}}=\sum_{j}a_{j}\left({\color{blue}\alpha}f(x_{j})-t_{j}\right)^{2}
 \]
 
 \end_inset
@@ -1698,7 +1706,7 @@ J_{\text{lin}}=\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}
 Logrithm objective function
 \begin_inset Formula 
 \[
-J_{\text{log}}=\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}
+J_{\text{log}}=\sum_{j}a_{j}\left(\log{\color{blue}\alpha}f(x_{j})-\log t_{j}\right)^{2}
 \]
 
 \end_inset
@@ -1727,27 +1735,27 @@ Jacobian
 \end_inset
 
 定义
-\begin_inset Formula $r_{j}=f(x_{j})-t_{j}$
+\begin_inset Formula $r_{j}={\color{blue}\alpha}f(x_{j})-t_{j}$
 \end_inset
 
 ，
 
 \begin_inset Formula 
 \[
-\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=2\sum_{j}a_{j}\,r_{j}\cdot{\color{blue}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=2\sum_{j}a_{j}\,r_{j}\cdot{\color{red}\frac{\partial\alpha\,f(x_{j})}{\partial\theta_{i}}},
 \]
 
 \end_inset
 
 定义 
-\begin_inset Formula $r_{\text{log}j}=\log f(x_{j})-\log t_{j}$
+\begin_inset Formula $r_{\text{log}j}=\log{\color{blue}\alpha}f(x_{j})-\log t_{j}$
 \end_inset
 
 ，
 
 \begin_inset Formula 
 \[
-\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=2\sum_{J}a_{j}\,r_{\text{log}j}\,\frac{\partial\log f(x_{j})}{\partial\theta_{i}}=2\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{f(x_{j})}\cdot{\color{blue}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=2\sum_{J}a_{j}\,r_{\text{log}j}\,\frac{\partial\log\alpha\,f(x_{j})}{\partial\theta_{i}}=2\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{\alpha\,f(x_{j})}\cdot{\color{red}\frac{\partial\alpha\,f(x_{j})}{\partial\theta_{i}}}
 \]
 
 \end_inset
@@ -1786,7 +1794,7 @@ T_{ij}\:r_{j}
  的偏导数
 \begin_inset Formula 
 \[
-\frac{\partial f(x_{j})}{\partial\alpha}=\sum_{i=1}^{5}w_{i}\,g_{i}(x)
+\frac{\partial\alpha\,f(x_{j})}{\partial\alpha}=f(x_{j})
 \]
 
 \end_inset
@@ -1798,7 +1806,7 @@ T_{ij}\:r_{j}
 的偏导数
 \begin_inset Formula 
 \[
-\frac{\partial f(x_{j})}{\partial w_{i}}=g_{i}(x_{j})=\exp\left(-\frac{\left(x_{j}-\mu_{i}\right)^{2}}{2\sigma_{i}^{2}}\right)
+\frac{\partial\alpha\,f(x_{j})}{\partial w_{i}}=\alpha\,g_{i}(x_{j})=\alpha\,\exp\left(-\frac{\left(x_{j}-\mu_{i}\right)^{2}}{2\sigma_{i}^{2}}\right)
 \]
 
 \end_inset
@@ -1811,7 +1819,7 @@ T_{ij}\:r_{j}
 
 \begin_inset Formula 
 \[
-\frac{\partial f(x_{j})}{\partial\mu_{i}}=w_{i}\,\frac{\partial g_{i}(x_{j})}{\partial\mu_{i}}=w_{i}\,g_{i}(x_{j})\,\frac{x_{j}-\mu_{i}}{\sigma_{i}^{2}}
+\frac{\partial\alpha\,f(x_{j})}{\partial\mu_{i}}=\alpha w_{i}\,\frac{\partial g_{i}(x_{j})}{\partial\mu_{i}}=\alpha\,w_{i}\,g_{i}(x_{j})\,\frac{x_{j}-\mu_{i}}{\sigma_{i}^{2}}
 \]
 
 \end_inset
@@ -1823,7 +1831,7 @@ T_{ij}\:r_{j}
 的偏导
 \begin_inset Formula 
 \[
-\frac{\partial f(x_{j})}{\partial\sigma_{i}}=w_{i}\,\frac{\partial g_{i}(x_{j})}{\partial\sigma_{i}}=w_{i}\,g_{i}(x_{j})\,\frac{\left(x_{j}-\mu_{i}\right)^{2}}{\sigma_{i}^{3}}
+\frac{\partial\alpha\,f(x_{j})}{\partial\sigma_{i}}=\alpha w_{i}\,\frac{\partial g_{i}(x_{j})}{\partial\sigma_{i}}=\alpha\,w_{i}\,g_{i}(x_{j})\,\frac{\left(x_{j}-\mu_{i}\right)^{2}}{\sigma_{i}^{3}}
 \]
 
 \end_inset
