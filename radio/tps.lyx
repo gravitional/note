@@ -1628,26 +1628,79 @@ Plot[
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $z$
+\end_inset
+
+ 表示 入射粒子的 atom number，
+
+\begin_inset Formula $Z$
+\end_inset
+
+表示靶粒子的 atom number。
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $\chi_{c}$
 \end_inset
 
 
 \begin_inset Formula 
 \[
-\text{pure:}\quad\chi_{c}^{2}=0.1569\cdot10^{-6}\,Z^{2}z^{2}\frac{x}{A}\frac{1}{p^{2}\beta^{2}}
+\text{纯净物:}\quad\chi_{c}^{2}=0.1569\cdot10^{-6}\,Z^{2}z^{2}\frac{x}{A}\frac{1}{p^{2}\beta^{2}}
 \]
 
 \end_inset
 
+其中
+\begin_inset Formula $x$
+\end_inset
+
+是厚度，
+单位 [cm]。
+
+\end_layout
+
+\begin_layout Standard
+能动量连续变化的情况下，
 令
 \begin_inset Formula $h=x/R$
 \end_inset
 
+，
+
+\begin_inset Formula $R$
+\end_inset
+
+表示射程（粒子在水中的最大深度）。
+
+\begin_inset Formula 
+\[
+k=1.0753+0.12\,\exp(-0.09\,\rho_{W}X_{0})
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\rho_{W}$
+\end_inset
+
+水密度 [g cm^-3]，
+
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ radiation length [cm]。
+
+\begin_inset Formula $k\approx1.07997$
+\end_inset
+
+。
 
 \begin_inset Formula 
 \begin{align*}
-\text{混合物:}\quad\chi_{c}^{2}(x) & =\chi_{W}^{2}\frac{R}{p^{2}\beta^{2}}\int_{0}^{h}\frac{1}{\left(1-t\right)^{k}}\dd{t}.\\
- & =\chi_{W}^{2}\,\frac{R\left[\left(1-h\right)^{1-k}-1\right]}{(k-1)\cdot p^{2}\beta^{2}}
+\text{混合物:}\quad\chi_{c}^{2}(h) & =\chi_{W}^{2}\frac{R}{p^{2}\beta^{2}}\int_{0}^{h}\frac{1}{\left(1-t\right)^{k}}\dd{t}.\\
+ & ={\color{blue}\chi_{W}^{2}}\,\frac{R\left[\left(1-h\right)^{1-k}-1\right]}{(k-1)\cdot p^{2}\beta^{2}}
 \end{align*}
 
 \end_inset
@@ -1655,7 +1708,7 @@ Plot[
 
 \begin_inset Formula 
 \[
-\chi_{W}^{2}=0.1569\cdot10^{-6}\frac{z^{2}\left(2Z_{H}^{2}+Z_{O}^{2}\right)}{A_{M}}
+{\color{blue}\chi_{W}^{2}}=0.1569\cdot10^{-6}\frac{z^{2}\left(2Z_{H}^{2}+Z_{O}^{2}\right)}{A_{M}}
 \]
 
 \end_inset
@@ -1680,7 +1733,7 @@ Plot[
 
 \begin_inset Formula 
 \begin{align}
-\text{pure:}\quad\chi_{\alpha}^{2} & =\mu^{2}\chi_{0}^{2}\nonumber \\
+\text{纯净物:}\quad\chi_{\alpha}^{2} & =\mu^{2}\chi_{0}^{2}\nonumber \\
 \mu^{2} & =\left(1.13+3.76\frac{z^{2}Z^{2}}{137^{2}\beta^{2}}\right)\label{eq:bea4-1}\\
 \chi_{0}^{2} & =\left(4.216\cdot10^{-6}\frac{Z^{1/3}}{p}\right)^{2}
 \end{align}
@@ -1698,7 +1751,7 @@ Plot[
 
 \begin_inset Formula 
 \[
-\ln\chi_{\alpha}^{2}=\frac{1}{\chi_{c}^{2}}\frac{0.1569\cdot10^{-6}\,z^{2}}{A_{M}}\sum_{i}\frac{n_{i}Z_{i}^{2}}{p^{2}\beta^{2}}\int_{0}^{h}\frac{\ln\left[\mu_{i}^{2}\chi_{0i}^{2}\right]-\frac{D_{i}}{Z_{i}}}{\left(1-t\right)^{k}}\dd{t}
+\ln\chi_{\alpha}^{2}=\frac{R}{\chi_{c}^{2}}\frac{0.1569\cdot10^{-6}\,z^{2}}{A_{M}}\sum_{i}\frac{n_{i}Z_{i}^{2}}{p^{2}\beta^{2}}\int_{0}^{h}\frac{\ln\left[\mu_{i}^{2}\chi_{0i}^{2}\right]-\frac{D_{i}}{Z_{i}}}{\left(1-t\right)^{k}}\dd{t}
 \]
 
 \end_inset
@@ -1711,7 +1764,27 @@ D_{i}=\ln\left(\frac{1130}{Z_{i}^{4/3}\left(\frac{1}{\beta^{2}}-1\right)}\right)
 
 \end_inset
 
-其中
+
+\begin_inset Formula $p$
+\end_inset
+
+in [GeV/c]，
+
+\begin_inset Formula $R$
+\end_inset
+
+in [cm]，
+光速 
+\begin_inset Formula $c$
+\end_inset
+
+ 的值对最终的结果没有影响，
+可以取为
+\begin_inset Formula $1$
+\end_inset
+
+。
+
 \begin_inset Formula $u_{H}=3.6$
 \end_inset
 
@@ -1725,7 +1798,122 @@ D_{i}=\ln\left(\frac{1130}{Z_{i}^{4/3}\left(\frac{1}{\beta^{2}}-1\right)}\right)
 \end_layout
 
 \begin_layout Standard
-ddddd:
+Moliere 分布，
+参数。
+
+\end_layout
+
+\begin_layout Standard
+RMS 
+\begin_inset Formula $\theta$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\langle\theta^{2}\rangle & =\langle\theta_{x}^{2}\rangle+\langle\theta_{y}^{2}\rangle=2\langle\theta_{y}^{2}\rangle\\
+\theta_{R} & =\sqrt{\langle\theta^{2}\rangle}=\chi_{c}\sqrt{B}\\
+\theta_{yR} & =\sqrt{\langle\theta_{y}^{2}\rangle}=\chi_{c}\sqrt{B/2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+B-\ln B & =b,\\
+b & =\ln\frac{\chi_{c}^{2}}{\chi_{\alpha}^{2}}-0.154\,432=\ln\Omega_{0}-0.154\,432.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+测量平面上的 RMS(root mean square) 位移
+\begin_inset Formula $y_{M}$
+\end_inset
+
+ ，
+
+\begin_inset Formula $(x-t)\theta_{xR}$
+\end_inset
+
+，
+
+\begin_inset Formula $h=x/R$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\chi_{c}^{2}(h)=\chi_{W}^{2}\frac{R}{p^{2}\beta^{2}}\int_{0}^{h}\frac{1}{\left(1-t\right)^{k}}\dd{t}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+y_{M} & =\frac{\chi_{W}}{p\beta}\sqrt{B/2}\;\left({\color{blue}I_{y_{M}}}\right)^{1/2}\\
+ & =\frac{\chi_{W}}{p\beta}\sqrt{B/2}\;\left[{\color{blue}R\int_{0}^{h}\frac{(D-Rt)^{2}}{(1-t)^{k}}\dd t}\right]^{1/2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+I_{y_{M}}=\frac{R^{3}\left[2(1-h)^{3-k}-2k\,h+6\,h-2\right]}{(k-1)(k-2)(k-3)}-\frac{R^{3}h^{2}}{k-1},\quad k>1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\delta\coloneqq\frac{y_{M}}{\theta_{yR}}=\frac{y_{M}}{\chi_{c}\sqrt{B/2}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\theta_{yR}=\theta_{R}/\sqrt{2}=\chi_{c}\sqrt{B/2}$
+\end_inset
+
+。
+ 
+\begin_inset Formula 
+\[
+y=\delta\,\theta_{y}
+\]
+
+\end_inset
+
+即 
+\begin_inset Formula $\delta$
+\end_inset
+
+ 作为 
+\begin_inset Formula $\theta$
+\end_inset
+
+（小角散射） 和 
+\begin_inset Formula $y$
+\end_inset
+
+ 之间的比例因子。
+
+\end_layout
+
+\begin_layout Standard
+Moliere 分布 in displacement 
+\begin_inset Formula $y$
+\end_inset
+
+ [cm]
 \begin_inset Formula 
 \[
 f_{M}(y)=\frac{1}{\pi\chi_{c}\delta}\int_{0}^{\Gamma}\cos\left(\frac{y\eta}{\chi_{c}\delta}\right)\exp\left[-\frac{\eta^{2}}{4}\left(b-\ln\frac{\eta^{2}}{4}\right)\right]\dd\eta.
@@ -1733,58 +1921,18 @@ f_{M}(y)=\frac{1}{\pi\chi_{c}\delta}\int_{0}^{\Gamma}\cos\left(\frac{y\eta}{\chi
 
 \end_inset
 
-
-\begin_inset Formula 
-\[
-y_{M}=\frac{R^{3}\left[2(1-h)^{3-k}-2k\,h+6\,h-2\right]}{(k-1)(k-2)(k-3)}-\frac{R^{3}h^{2}}{k-1},\quad k>1
-\]
-
+理论积分上限（
+\begin_inset Formula $-\frac{\eta^{2}}{4}(b-\ln\frac{\eta^{2}}{4})$
 \end_inset
 
-
-\begin_inset Formula 
-\[
-\delta=\frac{y_{M}}{\theta_{xR}}=\frac{y_{M}\sqrt{2}}{\chi_{c}\sqrt{B}}
-\]
-
+ 图像的最小值对应的
+\begin_inset Formula $\eta$
 \end_inset
 
-
-\begin_inset Formula 
-\[
-\theta_{xR}=\frac{\theta_{R}}{\sqrt{2}}=\frac{\chi_{c}\sqrt{B}}{\sqrt{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-B-\ln B=b.
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b=\ln\frac{\chi_{c}^{2}}{\chi_{\alpha}^{2}}-0.154\,432=\ln\Omega_{0}-0.154\,432,
-\]
-
-\end_inset
-
-理论积分上限
+）
 \begin_inset Formula 
 \[
 \Gamma=2\,e^{(b-1)/2},
-\]
-
-\end_inset
-
-数值中用的积分上限
-\begin_inset Formula 
-\[
-\Gamma^{\prime2}\coloneqq\,\frac{\Gamma^{\prime2}}{4}\left(b-\ln\frac{\Gamma^{\prime2}}{4}\right)=-99
 \]
 
 \end_inset
