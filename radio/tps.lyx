@@ -109,6 +109,142 @@ Treatment planning system
 \end_layout
 
 \begin_layout Chapter
+量纲分析
+\end_layout
+
+\begin_layout Standard
+比如辐射长度 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ 是平均能量因韧致辐射降低到原先的
+\begin_inset Formula $1/e$
+\end_inset
+
+（
+\begin_inset Formula $\approx36.8\%$
+\end_inset
+
+）所走过的路程，
+单位应该是
+\begin_inset Formula $m$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Standard
+实际使用中，
+因为材料具有不同的密度，
+所以实际使用中的单位是 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+,
+ [
+\begin_inset Formula $\mathrm{g}\,\mathrm{cm}^{-2}$
+\end_inset
+
+]
+\end_layout
+
+\begin_layout Itemize
+单位可以看作对物理量进行 “归一化”，
+也就是除以 unit。
+例如 
+\begin_inset Formula $1\mathrm{m}=100\,\mathrm{cm}=1000\,\mathrm{mm}$
+\end_inset
+
+，
+采用了不同的归一化。
+
+\end_layout
+
+\begin_layout Itemize
+可以看到 number 和 dimension 的变化是相反的，
+因为它们乘在一起构成物理量，
+所以变化趋势肯定是相反的。
+一个变大，
+另一个就变小。
+
+\end_layout
+
+\begin_layout Itemize
+想象世界可以任意变化，
+其实就相当于 dimension 作缩放。
+拿辐射长度举例，
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+5.6\;\mathrm{g}\,\mathrm{cm}^{-2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\mathrm{g}$
+\end_inset
+
+变大，
+那么 
+\begin_inset Formula $5.6$
+\end_inset
+
+ 就要变小，
+比如变成 
+\begin_inset Formula $4.8$
+\end_inset
+
+；
+物理场景是，
+材料的质量变大，
+材料中的粒子变多，
+韧致辐射变强，
+因此穿梭的电子能量衰减变快，
+ 辐射长度变短。
+
+\end_layout
+
+\begin_layout Enumerate
+如果 
+\begin_inset Formula $\mathrm{cm}$
+\end_inset
+
+ 变大，
+由于是负幂次，
+那么 
+\begin_inset Formula $5.6$
+\end_inset
+
+ 就要变大。
+物理场景是，
+同样的材料，
+在电子径迹的横向上占更多面积，
+也就是材料粒子变稀薄了，
+那么肯定韧致能力变弱，
+辐射长度变长。
+
+\end_layout
+
+\begin_layout Standard
+总之一句话，
+
+\series bold
+digits 和 dimension 的变化趋势相反
+\series default
+。
+
+\end_layout
+
+\begin_layout Chapter
 公式
 \end_layout
 
@@ -2768,6 +2904,252 @@ sss
 \end_inset
 
 注意这里没有求和。
+
+\end_layout
+
+\begin_layout Chapter
+Adam优化器
+\end_layout
+
+\begin_layout Section
+RMSProp 算法
+\end_layout
+
+\begin_layout Standard
+梯度平方的指数加权平均：
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E[g^{2}]_{t}=\rho\,E[g^{2}]_{t-1}+(1-\rho)\,\left[\nabla_{\theta_{t}}J(\theta_{t})\right]^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+更新参数
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{E[g^{2}]_{t}}+\epsilon}\,\nabla_{\theta_{t}}J(\theta_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Adam优化器
+\end_layout
+
+\begin_layout Enumerate
+一阶矩估计（动量项）
+\begin_inset Formula 
+\[
+m_{t}=\beta_{1}\:m_{t-1}+(1-\beta_{1})\,\nabla_{\theta_{t}}J(\theta_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+二阶矩估计 RMSProp 部分 Root Mean Square Prop
+\begin_inset Formula 
+\[
+v_{t}=\beta_{2}\:v_{t-1}+(1-\beta_{2})\,\left[\nabla_{\theta_{t}}J(\theta_{t})\right]^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+偏差校正。
+为了纠正 
+\begin_inset Formula $m_{t}$
+\end_inset
+
+ 和 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ 在初始阶段偏向于零的现象，
+进行偏差校正；
+一阶矩偏差矫正，
+二阶矩偏差矫正分别为
+\begin_inset Formula 
+\[
+\hat{m_{t}}=\frac{m_{t}}{1-\beta_{1}^{t}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{v_{t}}=\frac{v_{t}}{1-\beta_{2}^{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+参数更新
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}\hat{m}_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\theta_{t}$
+\end_inset
+
+：
+第
+\begin_inset Formula $t$
+\end_inset
+
+次迭代的参数向量。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\nabla_{\theta_{t}}J(\theta_{t})$
+\end_inset
+
+ ：
+损失函数
+\begin_inset Formula $J$
+\end_inset
+
+关于参数
+\begin_inset Formula $\theta_{t}$
+\end_inset
+
+的梯度。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $m_{t}$
+\end_inset
+
+：
+梯度的一阶矩估计（动量）。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $v_{t}$
+\end_inset
+
+：
+梯度的二阶矩估计（平方梯度的指数加权平均）。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\beta_{1}$
+\end_inset
+
+，
+
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+：
+一阶和二阶矩估计的指数衰减率超参数，
+通常取值为 
+\begin_inset Formula $\beta_{1}=0.9$
+\end_inset
+
+，
+
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+=0.999。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta$
+\end_inset
+
+：
+初始学习率（通常取为
+\begin_inset Formula $0.001$
+\end_inset
+
+）。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\epsilon$
+\end_inset
+
+：
+微小常数（如
+\begin_inset Formula $1\mathrm{e}-8$
+\end_inset
+
+）防止除以零。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t$
+\end_inset
+
+：
+当前迭代次数。
+
+\end_layout
+
+\begin_layout Section
+Adamax
+\end_layout
+
+\begin_layout Standard
+更新规则
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{t}=\max(\beta_{2}\,v_{t-1},\,\nabla_{\theta_{t}}J(\theta_{t}))
+\]
+
+\end_inset
+
+参数更新
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{v_{t}}m_{t}
+\]
+
+\end_inset
+
 
 \end_layout
 
