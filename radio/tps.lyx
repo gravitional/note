@@ -2107,6 +2107,93 @@ B & \propto b\propto\ln\Omega_{0}\propto\ln\frac{\chi_{c}^{2}}{\chi_{\alpha}^{2}
 \end_layout
 
 \begin_layout Chapter
+IDD 填充
+\end_layout
+
+\begin_layout Standard
+tmpdose，
+MC IDD
+\end_layout
+
+\begin_layout Standard
+idealCaseRatio1
+\begin_inset Formula 
+\[
+i_{1}=\frac{d_{\text{MC},p,[2]}}{\overline{d_{\text{MC},p,[1,5)}}},\quad i_{2}=\frac{d_{\text{MC},q,[2]}}{\overline{d_{\text{MC},q,[1,5)}}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\overline{d}$
+\end_inset
+
+表示取平均；
+
+\begin_inset Formula $p,q$
+\end_inset
+
+ 分别是缺失能量左右两个最靠近的能量；
+MC 表示 Monte Carlo 得到的 IDD 分布。
+
+\begin_inset Formula 
+\[
+t_{1}=\frac{\overline{d_{p,[0,5)}}}{i_{1}}=\overline{d_{p,[0,5)}}\,\frac{\overline{d_{\text{MC},p,[1,5)}}}{d_{\text{MC},p,[2]}}
+\]
+
+\end_inset
+
+dose1,
+ dose2 避免死区，
+
+\begin_inset Formula 
+\begin{align*}
+ & \sbf d_{1}=\frac{\sbf d_{p}}{t_{1}}=\frac{\sbf d_{p}}{\overline{d_{p,[0,5)}}}/\frac{\overline{d_{\text{MC},p,[1,5)}}}{d_{\text{MC},p,[2]}}=\frac{\sbf d_{p}}{\overline{d_{p,[0,5)}}}\,{\color{blue}\frac{d_{\text{MC},p,[2]}}{\overline{d_{\text{MC},p,[1,5)}}}},\\
+ & \sbf d_{2}=\frac{\sbf d_{q}}{t_{2}}=\frac{\sbf d_{q}}{\overline{d_{q,[0,5)}}}/\frac{\overline{d_{\text{MC},q,[1,5)}}}{d_{\text{MC},q,[2]}}=\frac{\sbf d_{q}}{\overline{d_{q,[0,5)}}}\,{\color{blue}\frac{d_{\text{MC},q,[2]}}{\overline{d_{\text{MC},q,[1,5)}}}},
+\end{align*}
+
+\end_inset
+
+可以看到，
+是无量纲的，
+进行了归一化。
+
+\end_layout
+
+\begin_layout Standard
+按照线性插值的思想 组合系数反比于 能量间距
+\begin_inset Formula 
+\begin{align*}
+ & \alpha+\beta=1\\
+ & \alpha=\frac{E-E_{p}}{E_{q}-E_{p}},\quad\beta=\frac{E_{q}-E}{E_{q}-E_{p}}=1-\alpha
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+剂量分布 Depth Dose distribution 的插值使用 
+\begin_inset Formula 
+\[
+\sbf z\,\frac{\mathrm{assumedPeakPos}}{\mathrm{Peak}_{p}},\quad\text{or}\quad\sbf z\,\frac{\mathrm{assumedPeakPos}}{\mathrm{Peak}_{q}}
+\]
+
+\end_inset
+
+也就是根据相近能量，
+根据 Peaks 的位置，
+对曲线进行拉伸或者收缩，
+从而插值（认为相邻能量的曲线形状是相似的，
+存在等比变换 
+\begin_inset Formula $\alpha=\mathrm{assumedPeakPos}/\mathrm{Peak}_{p}$
+\end_inset
+
+）
+\end_layout
+
+\begin_layout Chapter
 sdfds
 \end_layout
 
@@ -2152,7 +2239,8 @@ sdfds
 
 \begin_layout Standard
 拟合模型，
- 5– Gauss 函数
+ 5– Gauss 函数，
+在 笛卡尔坐标系下
 \begin_inset Formula 
 \[
 f(x)=\alpha\sum_{i}w_{i}\frac{1}{\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
@@ -2175,6 +2263,286 @@ f(x)=\alpha\sum_{i}w_{i}\frac{1}{\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\
 \end_inset
 
 。
+
+\end_layout
+
+\begin_layout Section
+柱坐标系
+\end_layout
+
+\begin_layout Example
+应该使用 
+\begin_inset Formula $(r,\phi)$
+\end_inset
+
+坐标下的 高斯分布
+\begin_inset Formula 
+\[
+p(x_{1},x_{2})=\frac{1}{2\pi\,\sigma_{1}\sigma_{2}}\exp\left(-\frac{1}{2}\left[\begin{array}{cc}
+x_{1} & x_{2}\end{array}\right]\left[\begin{array}{cc}
+\sigma_{1}^{-2} & 0\\
+0 & \sigma_{2}^{-2}
+\end{array}\right]\left[\begin{array}{c}
+x_{1}\\
+x_{2}
+\end{array}\right]\right)
+\]
+
+\end_inset
+
+如果
+\begin_inset Formula $\sigma_{1}^{2}=\sigma_{2}^{2}$
+\end_inset
+
+，
+令 
+\begin_inset Formula $\sigma^{2}=\sigma_{1}^{2}+\sigma_{2}^{2}$
+\end_inset
+
+，
+
+\begin_inset Formula $r^{2}=x_{1}^{2}+y_{1}^{2}$
+\end_inset
+
+，
+则得到同心圆形状的 高斯分布
+\begin_inset Formula 
+\[
+p'(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
+\]
+
+\end_inset
+
+如果在
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分，
+得到
+\begin_inset Formula 
+\[
+p''(r,\phi)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x)={\color{blue}\alpha}\sum_{i}w_{i}\,\frac{2r}{\sigma_{i}^{2}}\exp\left(-\frac{(r-\mu_{i})^{2}}{\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+归一化
+\begin_inset Formula 
+\[
+\alpha=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Delta_{j}=f(x_{j})-t_{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+\Delta_{\text{log}j}=\log f(x_{j})-\log t_{j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{j}^{2}}}\sum_{j}a_{j}\,\Delta_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{\text{log}j}^{2}}}\sum_{j}a_{j}\,\frac{\Delta_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\]
+
+\end_inset
+
+记号简化，
+
+\begin_inset Formula 
+\[
+f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-\frac{(r_{{\color{red}j}1}-\mu_{1i})^{2}}{\sigma_{1i}^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+指标1 index 所有坐标点
+\begin_inset Formula $x$
+\end_inset
+
+，
+指标
+\begin_inset Formula $2$
+\end_inset
+
+ index 高斯分量（例如5个）
+\begin_inset Newline newline
+\end_inset
+
+令
+\series bold
+中间记号
+\begin_inset Formula 
+\[
+T_{{\color{red}j}i}=\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right),\quad D_{{\color{red}j}i}=\frac{r_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+
+\series default
+
+\begin_inset Formula 
+\[
+f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+注意为了凑成矩阵乘法，
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Standard
+sss
+\end_layout
+
+\begin_layout Itemize
+对scale factor 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Itemize
+对权重
+\begin_inset Formula $w_{1i}$
+\end_inset
+
+的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对均值
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+的偏导：
+
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\,\exp\left(-D_{{\color{red}j}i}^{2}\right)\,\frac{2(r_{{\color{red}j}1}-\mu_{1i})}{\sigma_{1i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2D_{ji}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对标准差
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+的偏导
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{2}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\frac{2\left(r_{{\color{red}j}1}-\mu_{1i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-4}{\sigma_{1i}^{3}}\exp\left(\cdots\right)\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
+\end{align*}
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Standard
+Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
+\begin_inset Formula $f(x_{j})$
+\end_inset
+
+，
+
+\end_layout
+
+\begin_layout Section
+直角坐标系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
@@ -3146,6 +3514,106 @@ v_{t}=\max(\beta_{2}\,v_{t-1},\,\nabla_{\theta_{t}}J(\theta_{t}))
 \begin_inset Formula 
 \[
 \theta_{t+1}=\theta_{t}-\frac{\eta}{v_{t}}m_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+高斯分布
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Sigma=\left[\begin{array}{cc}
+\sigma_{1}^{2} & \sigma_{1}\sigma_{2}\\
+\sigma_{2}\sigma_{1} & \sigma_{2}^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+二维线性无关时
+\begin_inset Formula 
+\[
+\Sigma=\left[\begin{array}{cc}
+\sigma_{1}^{2} & \sigma_{1}\sigma_{2}\\
+\sigma_{2}\sigma_{1} & \sigma_{2}^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathrm{cov}(x,y)=E\left[\left(x-\mu_{x}\right)\left(y-\mu_{y}\right)\right]=\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\mu_{x}\right)\left(y_{i}-\mu_{y}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\abs{\Sigma}=\sigma_{1}^{2}\,\sigma_{2}^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+p(x_{1},x_{2})=\frac{1}{2\pi\,\sigma_{1}\sigma_{2}}\exp\left(-\frac{1}{2}\left[\begin{array}{cc}
+x_{1} & x_{2}\end{array}\right]\left[\begin{array}{cc}
+\sigma_{1}^{-2} & 0\\
+0 & \sigma_{2}^{-2}
+\end{array}\right]\left[\begin{array}{c}
+x_{1}\\
+x_{2}
+\end{array}\right]\right)
+\]
+
+\end_inset
+
+如果
+\begin_inset Formula $\sigma_{1}^{2}=\sigma_{2}^{2}$
+\end_inset
+
+，
+令 
+\begin_inset Formula $\sigma^{2}=\sigma_{1}^{2}+\sigma_{2}^{2}$
+\end_inset
+
+，
+
+\begin_inset Formula $r^{2}=x_{1}^{2}+y_{1}^{2}$
+\end_inset
+
+，
+则得到同心圆形状的 高斯分布
+\begin_inset Formula 
+\[
+p'(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
+\]
+
+\end_inset
+
+如果在
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分，
+得到
+\begin_inset Formula 
+\[
+p''(r,\phi)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
 \]
 
 \end_inset
