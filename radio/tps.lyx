@@ -2536,6 +2536,146 @@ Log objective function 对应的 Jacobian 相当于把 Linear 的都除以
 \end_layout
 
 \begin_layout Section
+高斯作图，
+LogLog
+\end_layout
+
+\begin_layout Standard
+对高斯正态分布作图，
+LogLog 图像,
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+sg = 0.005;
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["Normal"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogLogPlot[PDF[NormalDistribution[0,
+ sg],
+ x],
+ {x,
+ 0,
+ 10},
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotRange -> All,
+ ImageSize -> Medium,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotLabel -> "gauss(x) LogLog"];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["g(r)"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogLogPlot[2/sg^2 Exp[-r^2/sg^2],
+ {r,
+ 0,
+ 10},
+ PlotRange -> All,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotStyle -> Red,
+ ImageSize -> Medium,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotLabel -> "gauss(r) LogLog"];
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/gaussian_loglog.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/gaussian_radius_loglog.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/alpha_600MeV_loglog.png
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+高斯分布。
+左边是标准高斯分布 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ ；
+右边是2维极坐标下，
+对
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分后的高斯分布
+\begin_inset Formula $f(r)$
+\end_inset
+
+。
+下方是 alpha 600 MeV，
+深度为 7.0cm 时的横向分布。
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 提取 sigma
 \end_layout
 
@@ -3341,6 +3481,326 @@ sss
 \end_inset
 
 注意这里没有求和。
+
+\end_layout
+
+\begin_layout Section
+电磁，
+核相互作用比例
+\end_layout
+
+\begin_layout Standard
+ref 12;
+\end_layout
+
+\begin_layout Standard
+Ulmer (2007) provides a formula for the determination of the percentage 
+\begin_inset Formula $W_{p}$
+\end_inset
+
+ of protons that have only had electromagnetic interactions,
+ i.e.
+ no nuclear interactions,
+ as a function of the traversed thickness,
+ for protons of incident kinetic energy 
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ and range 
+\begin_inset Formula $R$
+\end_inset
+
+ in water,
+ at a certain water thickness 
+\begin_inset Formula $x$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+W_{p}=\frac{1}{2}\left[1-\left(\frac{E_{k}-E_{\text{th}}}{m}\right)^{f}\frac{x}{R}\right]\left[1+\erf\left(\frac{R-x}{\tau}\right)\right],
+\]
+
+\end_inset
+
+for where 
+\begin_inset Formula $\erf$
+\end_inset
+
+ is the error function,
+ 
+\begin_inset Formula $f=1.032$
+\end_inset
+
+,
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ is the proton mass in MeV,
+ 
+\begin_inset Formula $E_{\text{th}}=7$
+\end_inset
+
+ MeV is the 
+\begin_inset Formula $\,^{16}O$
+\end_inset
+
+ threshold energy for the 
+\begin_inset Formula $(p,p')$
+\end_inset
+
+ reaction.
+ 
+\begin_inset Newline newline
+\end_inset
+
+The parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+ takes into account the range variation due to the straggling along the beam path and can be parametrized as (Ulmer and Schaffner 2011):
+\begin_inset Formula 
+\[
+\tau=0.0179651452\,R^{4},\;\text{where}\;t=\begin{cases}
+0.9352 & \mathrm{if}\;R\ge1\,\mathrm{cm}\\
+1.1763 & \mathrm{if}\;R<1\,\mathrm{cm}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*percentage Wp of protons that have only had electromagnetic interact
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+ions,i.e.no nuclear interaction*)
+\end_layout
+
+\begin_layout Plain Layout
+fWpp[x_,
+ R_,
+ f_,
+ Ek_,
+ Eth_,
+ m_] := Module[{t,
+ 
+\backslash
+[Tau]},
+\end_layout
+
+\begin_layout Plain Layout
+t = If[R >= 1,
+ 0.9352,
+ 1.1763];
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+[Tau] = 0.0179651452*R^t;
+\end_layout
+
+\begin_layout Plain Layout
+1/2 (1 - ((Ek - Eth)/m)^f*x/R) (1 + Erf[(R - x)/
+\backslash
+[Tau]])
+\end_layout
+
+\begin_layout Plain Layout
+];
+\end_layout
+
+\begin_layout Plain Layout
+x = 2;(*cm*)
+\end_layout
+
+\begin_layout Plain Layout
+iR = 15.86;(*cm*)
+\end_layout
+
+\begin_layout Plain Layout
+f = 1.032;
+\end_layout
+
+\begin_layout Plain Layout
+iEk = 600;(*MeV*)
+\end_layout
+
+\begin_layout Plain Layout
+iEth = 7;(*MeV*)
+\end_layout
+
+\begin_layout Plain Layout
+m = 938.27231;(*MeV/c^2*)
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["test at 2cm"]@fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["XY"]@
+\end_layout
+
+\begin_layout Plain Layout
+Plot[fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m],
+ {x,
+ 0,
+ iR},
+ ImageSize -> Medium,
+\end_layout
+
+\begin_layout Plain Layout
+PlotLabel -> "XY"];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["LogY"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogPlot[fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m],
+ {x,
+ 0,
+ iR},
+\end_layout
+
+\begin_layout Plain Layout
+ImageSize -> Medium,
+ PlotStyle -> Black,
+ PlotLabel -> "LogY"];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["LogX"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogLinearPlot[fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m],
+ {x,
+ 0.01,
+ iR},
+\end_layout
+
+\begin_layout Plain Layout
+ImageSize -> Medium,
+ PlotStyle -> Red,
+ PlotLabel -> "LogX"];
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/UMFormula_EM_ratio1.pdf
+	scale 48
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/UMFormula_EM_ratio2.pdf
+	scale 48
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/UMFormula_EM_ratio3.pdf
+	scale 48
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $W_{p}$
+\end_inset
+
+的图像，
+分别为 X–Y,
+ X–LogY,
+ LogX–Y
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+t(y)=\frac{1-A\,\exp\left[-\frac{y^{2}}{2b^{2}\sigma^{2}}\right]}{\pi\,b\left(\frac{y^{2}}{b^{2}}+1\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+f(y) & =W_{p}\,f_{M}(y)+(1-W_{p})f_{N}(y)\\
+ & =W_{p}\,f_{M}(y)+(1-W_{p})\,\frac{t(y)}{\int_{-\infty}^{+\infty}t(y)\dd y}
+\end{align*}
+
+\end_inset
+
 
 \end_layout
 
