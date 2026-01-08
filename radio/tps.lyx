@@ -805,6 +805,2405 @@ r_{e}=\alpha\frac{1}{m_{e}}
 \end_layout
 
 \begin_layout Chapter
+横向拟合
+\end_layout
+
+\begin_layout Standard
+拟合模型，
+ 5– Gauss 函数，
+在 笛卡尔坐标系下
+\begin_inset Formula 
+\[
+f(x)=\alpha\sum_{i}w_{i}\frac{1}{\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $\alpha$
+\end_inset
+
+是全局归一化常数，
+
+\begin_inset Formula $w_{i}$
+\end_inset
+
+是权重，
+
+\begin_inset Formula $\sum_{i}w_{i}=1$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Section
+柱坐标系
+\end_layout
+
+\begin_layout Example
+应该使用 
+\begin_inset Formula $(r,\phi)$
+\end_inset
+
+坐标下的 高斯分布
+\begin_inset Formula 
+\[
+p(x_{1},x_{2})=\frac{1}{2\pi\,\sigma_{1}\sigma_{2}}\exp\left(-\frac{1}{2}\left[\begin{array}{cc}
+x_{1} & x_{2}\end{array}\right]\left[\begin{array}{cc}
+\sigma_{1}^{-2} & 0\\
+0 & \sigma_{2}^{-2}
+\end{array}\right]\left[\begin{array}{c}
+x_{1}\\
+x_{2}
+\end{array}\right]\right)
+\]
+
+\end_inset
+
+如果
+\begin_inset Formula $\sigma_{1}^{2}=\sigma_{2}^{2}$
+\end_inset
+
+，
+令 
+\begin_inset Formula $\sigma^{2}=\sigma_{1}^{2}+\sigma_{2}^{2}$
+\end_inset
+
+，
+
+\begin_inset Formula $r^{2}=x_{1}^{2}+y_{1}^{2}$
+\end_inset
+
+，
+则得到同心圆形状的 高斯分布
+\begin_inset Formula 
+\[
+p'(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
+\]
+
+\end_inset
+
+如果在
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分，
+得到
+\begin_inset Formula 
+\[
+p''(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+归一化
+\begin_inset Formula 
+\[
+\alpha=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Delta_{j}=f(x_{j})-t_{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+\Delta_{\text{log}j}=\log f(x_{j})-\log t_{j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{j}^{2}}}\sum_{j}a_{j}\,\Delta_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{\text{log}j}^{2}}}\sum_{j}a_{j}\,\frac{\Delta_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\]
+
+\end_inset
+
+记号简化，
+
+\begin_inset Formula 
+\[
+f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-\frac{(r_{{\color{red}j}1}-\mu_{1i})^{2}}{\sigma_{1i}^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+指标1 index 所有坐标点
+\begin_inset Formula $x$
+\end_inset
+
+，
+指标
+\begin_inset Formula $2$
+\end_inset
+
+ index 高斯分量（例如5个）
+\begin_inset Newline newline
+\end_inset
+
+令
+\series bold
+中间记号
+\begin_inset Formula 
+\[
+T_{{\color{red}j}i}=\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right),\quad D_{{\color{red}j}i}=\frac{r_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+
+\series default
+
+\begin_inset Formula 
+\[
+f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+注意为了凑成矩阵乘法，
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Standard
+sss
+\end_layout
+
+\begin_layout Itemize
+对scale factor 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Itemize
+对权重
+\begin_inset Formula $w_{1i}$
+\end_inset
+
+的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对均值
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+的偏导：
+
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\,\exp\left(-D_{{\color{red}j}i}^{2}\right)\,\frac{2(r_{{\color{red}j}1}-\mu_{1i})}{\sigma_{1i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2D_{ji}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对标准差
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+的偏导
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{2}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\frac{2\left(r_{{\color{red}j}1}-\mu_{1i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-4}{\sigma_{1i}^{3}}\exp\left(\cdots\right)\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
+\end{align*}
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Standard
+Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
+\begin_inset Formula $f(x_{j})$
+\end_inset
+
+，
+
+\end_layout
+
+\begin_layout Section
+高斯作图，
+LogLog
+\end_layout
+
+\begin_layout Standard
+对高斯正态分布作图，
+LogLog 图像,
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+sg = 0.005;
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["Normal"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogLogPlot[PDF[NormalDistribution[0,
+ sg],
+ x],
+ {x,
+ 0,
+ 10},
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotRange -> All,
+ ImageSize -> Medium,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotLabel -> "gauss(x) LogLog"];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["g(r)"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogLogPlot[2/sg^2 Exp[-r^2/sg^2],
+ {r,
+ 0,
+ 10},
+ PlotRange -> All,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotStyle -> Red,
+ ImageSize -> Medium,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+PlotLabel -> "gauss(r) LogLog"];
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ln f(r)=\ln\frac{2}{\sigma^{2}}-\frac{(r-\mu)^{2}}{\sigma^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/gaussian_loglog.pdf
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/gaussian_radius_loglog.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/alpha_600MeV_loglog.png
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+高斯分布。
+左边是标准高斯分布 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ ；
+右边是2维极坐标下，
+对
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分后的高斯分布
+\begin_inset Formula $f(r)$
+\end_inset
+
+。
+下方是 alpha 600 MeV，
+深度为 7.0cm 时的横向分布。
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+f'(r) & =-\frac{4(r-\mu)}{\sigma^{4}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\\
+ & =-\frac{2(r-\mu)}{\sigma^{2}}f(r)\\
+\left(f(r)r\right)' & =-\frac{2(r-\mu)}{\sigma^{2}}rf(r)+f(r)\\
+ & =-\frac{2r(r-\mu)+\sigma^{2}}{\sigma^{2}}f(r)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+f'(r) & =-\frac{4\,r}{\sigma^{4}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)=-\frac{2\,r}{\sigma^{2}}f(r)\\
+\left(f(r)r\right)' & =-\frac{2\,r^{2}}{\sigma^{2}}f(r)+f(r)=-\frac{2r^{2}+\sigma^{2}}{\sigma^{2}}f(r)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+r f(r) 拟合
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(rf(x_{j})-t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Delta_{j}=f(x_{j})-t_{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Delta_{\text{log}j}=\log f(x_{j})-\log t_{j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{j}^{2}}}\sum_{j}a_{j}\,\Delta_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{\text{log}j}^{2}}}\sum_{j}a_{j}\,\frac{\Delta_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\rho(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(r)={\color{blue}\alpha}\sum_{i}w_{i}\,\frac{2r}{\sigma_{i}^{2}}\exp\left(-\frac{(r-\mu_{i})^{2}}{\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+令
+\series bold
+中间记号
+\begin_inset Formula 
+\[
+T_{{\color{red}j}i}=\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right),\quad D_{{\color{red}j}i}=\frac{r_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+
+\series default
+
+\begin_inset Formula 
+\[
+f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+注意为了凑成矩阵乘法，
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Standard
+sss
+\end_layout
+
+\begin_layout Itemize
+对scale factor 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Itemize
+对权重
+\begin_inset Formula $w_{1i}$
+\end_inset
+
+的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对均值
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+的偏导：
+
+\begin_inset Formula 
+\[
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\,\exp\left(-D_{{\color{red}j}i}^{2}\right)\,\frac{2(r_{{\color{red}j}1}-\mu_{1i})}{\sigma_{1i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2D_{ji}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对标准差
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+的偏导
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial f(r_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\frac{2\left(r_{{\color{red}j}1}-\mu_{1i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-4\,r_{{\color{red}j}1}}{\sigma_{1i}^{3}}\exp\left(\cdots\right)\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
+\end{align*}
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Standard
+Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
+\begin_inset Formula $f(x_{j})$
+\end_inset
+
+，
+
+\end_layout
+
+\begin_layout Section
+Gauss R 提取 sigma
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+{\color{blue}f(r,\phi)}\,r\dd r\dd\phi={\color{blue}\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)}\quad r\dd r\dd\phi
+\]
+
+\end_inset
+
+如果在
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分，
+得到
+\begin_inset Formula 
+\[
+{\color{blue}f(r)}\,r\dd r={\color{blue}\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)}\quad r\dd r
+\]
+
+\end_inset
+
+使用 
+\begin_inset Formula ${\color{blue}f(r)}$
+\end_inset
+
+ 作为概率密度分布函数，
+已知中心值为
+\begin_inset Formula $r=0$
+\end_inset
+
+，
+计算 std variance:
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*2D polar 坐标系,
+ 高斯 radius 分布*)
+\end_layout
+
+\begin_layout Plain Layout
+gssR[r_,
+ sgm_] := 2/sgm^2*Exp[-((r)^2/sgm^2)]
+\end_layout
+
+\begin_layout Plain Layout
+Integrate[r^2 *gssR[r,
+ sgm]*r,
+ {r,
+ 0,
+ 
+\backslash
+[Infinity]},
+\end_layout
+
+\begin_layout Plain Layout
+Assumptions -> sgm > 0
+\end_layout
+
+\begin_layout Plain Layout
+]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\langle(r-\mu)^{2}\rangle & =\langle r^{2}\rangle\\
+ & =\int_{0}^{r}r^{2}\,{\color{blue}\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)}\quad r\dd r\\
+ & =\sigma^{2}
+\end{align*}
+
+\end_inset
+
+积分结果正好是 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(0)=\frac{2}{\sigma^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+令前面的归一化系数为
+\begin_inset Formula $a$
+\end_inset
+
+，
+重新写作
+\begin_inset Formula 
+\[
+p''(r)=a\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+半高宽
+\begin_inset Formula 
+\[
+2\Delta=2\sigma\sqrt{\ln2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Log 分析
+\begin_inset Formula 
+\begin{align*}
+\log\,\rho''(r) & =\log a-\frac{1}{\sigma^{2}}\left[r^{2}+\mu^{2}-2\mu r\right]\\
+ & =-\frac{r^{2}}{\sigma^{2}}+\frac{2\mu r}{\sigma^{2}}+\log a-\frac{\mu^{2}}{\sigma^{2}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A=-\frac{1}{\sigma^{2}},\quad B=\frac{2\mu}{\sigma^{2}},\quad C=\log\frac{2}{\sigma^{2}}-\frac{\mu^{2}}{\sigma^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+直角坐标系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+中心分布
+\end_layout
+
+\end_inset
+
+ 考虑
+\begin_inset Formula $\mu_{i}=0$
+\end_inset
+
+，
+中心分布的情况，
+对于圆柱探测器的结果拟合，
+因为 
+\begin_inset Formula $r$
+\end_inset
+
+坐标的取值范围只有
+\begin_inset Formula $[0,\infty]$
+\end_inset
+
+也就是高斯分布的右半边，
+右半边上高斯分布积分的结果是 
+\begin_inset Formula $0.5$
+\end_inset
+
+。
+
+\begin_inset Formula 
+\begin{align*}
+\int_{0}^{\infty}f(r)\dd{r} & =\sqrt{2\pi}\alpha\,\sum_{i}w_{i}\,\int_{0}^{\infty}\frac{1}{\sqrt{2\pi}\sigma_{i}}\exp\left(-\frac{r^{2}}{2\sigma_{i}^{2}}\right)\dd r\\
+ & =\sqrt{2\pi}\alpha\,\sum_{i}w_{i}\,\frac{1}{2}\\
+ & =\alpha\,\sqrt{\frac{\pi}{2}}
+\end{align*}
+
+\end_inset
+
+如果 拟合的目标数据做了归一化，
+分布的积分总量为
+\begin_inset Formula $1$
+\end_inset
+
+，
+那么
+\begin_inset Formula 
+\[
+\alpha\,\sqrt{\frac{\pi}{2}}=1
+\]
+
+\end_inset
+
+所以要求 
+\begin_inset Formula 
+\[
+\alpha=\sqrt{\frac{2}{\pi}}.
+\]
+
+\end_inset
+
+注意拟合的目标是 dose，
+单位是 
+\begin_inset Formula $\mathrm{MeV/Kg}$
+\end_inset
+
+，
+也就是已经除以圆柱的几何测度 
+\begin_inset Formula $r\dd r\dd\phi\dd z$
+\end_inset
+
+。
+
+\begin_inset Formula 
+\[
+f(0)=\alpha\sum_{i}\frac{w_{i}}{\sigma_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+
+\series bold
+如果分布偏离中心，
+ 那么高斯分布积分不等于 
+\begin_inset Formula $0.5$
+\end_inset
+
+，
+权重归一化会比较复杂
+\series default
+。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+偏导数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)={\color{blue}\alpha}\sum_{i}w_{i}\,\frac{1}{\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+设目标数据的矢量为
+\begin_inset Formula $t_{j}$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Standard
+Linear objective function
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Logrithm objective function
+\begin_inset Formula 
+\[
+J_{\text{log}}=\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}
+\]
+
+\end_inset
+
+square 理解为矢量模平方，
+
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ 用于添加特定注意力，
+关注拟合数据的不同部分。
+
+\end_layout
+
+\begin_layout Standard
+RMS
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Logrithm objective function
+\begin_inset Formula 
+\[
+J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Jacobian
+\end_layout
+
+\begin_layout Standard
+定义模型参数
+\begin_inset Formula 
+\[
+\theta=\{\alpha,\sbf w,\sbf\mu,\sbf\sigma\}
+\]
+
+\end_inset
+
+定义
+\begin_inset Formula $r_{j}=f(x_{j})-t_{j}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=2\sum_{j}a_{j}\,r_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\]
+
+\end_inset
+
+定义 
+\begin_inset Formula $r_{\text{log}j}=\log f(x_{j})-\log t_{j}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=2\sum_{J}a_{j}\,r_{\text{log}j}\,\frac{\partial\log f(x_{j})}{\partial\theta_{i}}=2\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+RMS
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,r_{j}^{2}}}\sum_{j}a_{j}\,r_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,r_{\text{log}j}^{2}}}\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+偏导数
+\end_layout
+
+\begin_layout Example
+numpy 广播机制，
+相当于如下操作，
+
+\begin_inset Formula 
+\[
+x_{{\color{red}j}1}-\mu_{1i}\Rightarrow D_{{\color{red}j}i}
+\]
+
+\end_inset
+
+并矢是用乘法结合元素，
+这里相当是用减法，
+结合运算还可以是加法，
+除法等等，
+思想精髓是一样的。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+记号简化，
+
+\begin_inset Formula 
+\[
+f(x)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,\frac{1}{\sigma_{1i}}\exp\left(-\frac{(x_{{\color{red}j}1}-\mu_{1i})^{2}}{2\sigma_{1i}^{2}}\right)
+\]
+
+\end_inset
+
+指标1 index 所有坐标点
+\begin_inset Formula $x$
+\end_inset
+
+，
+指标
+\begin_inset Formula $2$
+\end_inset
+
+ index 高斯分量（例如5个）
+\begin_inset Newline newline
+\end_inset
+
+令
+\series bold
+中间记号
+\begin_inset Formula 
+\[
+T_{{\color{red}j}i}=\frac{1}{\sigma_{1i}}\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right),\quad D_{{\color{red}j}i}=\frac{x_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+
+\series default
+
+\begin_inset Formula 
+\[
+f(x)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+注意为了凑成矩阵乘法，
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Standard
+sss
+\end_layout
+
+\begin_layout Itemize
+对scale factor 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{1}{\sigma_{1i}}\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+ 要做转置。
+
+\end_layout
+
+\begin_layout Itemize
+对权重
+\begin_inset Formula $w_{1i}$
+\end_inset
+
+的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\frac{1}{\sigma_{1i}}\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对均值
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+的偏导：
+
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{1}{\sigma_{1i}}\,\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right)\,\frac{x_{j}-\mu_{i}}{\sigma_{i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{D_{ji}}{\sigma_{1i}}
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对标准差
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+的偏导
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial f(x_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{1}{\sigma_{1i}}\exp\left(\cdots\right)\frac{\left(x_{j}-\mu_{i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-1}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,\frac{1}{\sigma_{1i}}\exp\left(\cdots\right)\,\frac{1}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
+ & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{1}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
+\end{align*}
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Standard
+Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
+\begin_inset Formula $f(x_{j})$
+\end_inset
+
+，
+
+\end_layout
+
+\begin_layout Section
+线性化拟合理论
+\end_layout
+
+\begin_layout Example
+logx–logy
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+g(x)=\frac{w_{i}}{\sigma_{i}}\exp\left(-\frac{x^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ln g=\ln\frac{w_{i}}{\sigma_{i}}-\frac{x^{2}}{2\sigma_{i}^{2}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+g'=\ln g,\quad x'=x^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+g'=\ln\frac{w_{i}}{\sigma_{i}}-\frac{x'}{2\sigma_{i}^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $(g',x')$
+\end_inset
+
+ 线性关系。
+
+\end_layout
+
+\begin_layout Example
+三
+\begin_inset Formula 
+\[
+f(x)=\alpha\sum_{i}w_{i}\frac{1}{\sigma_{i}}\exp\left(-\frac{x^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ln f=\log\sum_{i}\left(\ln\frac{\alpha w_{i}}{\sigma_{i}}-\frac{x^{2}}{2\sigma_{i}^{2}}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f'=\ln f,\quad x'=x^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f'=\sum_{i}\ln\frac{\alpha w_{i}}{\sigma_{i}}-\frac{x'}{2\sigma_{i}^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f'=n\ln\alpha+\sum_{i}\ln w_{i}+\frac{1}{2}\ln\frac{1}{\sigma_{i}^{2}}-\frac{x'}{2\sigma_{i}^{2}}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{align*}
+f' & =\ln f,\quad x'=x^{2}\\
+\alpha' & =n\ln\alpha\\
+w_{i}^{\prime} & =\ln w_{i}\\
+\sigma_{i}^{\prime} & =\frac{1}{\sigma_{i}^{2}}
+\end{align*}
+
+\end_inset
+
+通常有
+\begin_inset Formula $\alpha'=n\ln\alpha=5\,\sqrt{2/\pi}$
+\end_inset
+
+，
+所以自由参数可以只有 
+\begin_inset Formula $w_{i}^{\prime}$
+\end_inset
+
+，
+
+\begin_inset Formula $\sigma_{i}^{\prime}$
+\end_inset
+
+。
+
+\begin_inset Formula 
+\[
+f^{\prime}=\alpha^{\prime}+\sum_{i}w_{i}^{\prime}+\frac{1}{2}\left(\ln\sigma_{i}^{\prime}-\sigma_{i}^{\prime}\,x^{\prime}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+拟合方案
+\end_layout
+
+\begin_layout Standard
+为了简略起见，
+以下省略 prime 
+\begin_inset Formula $\prime$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{j}=\alpha+\sum_{i}w_{i}+\frac{1}{2}\left(\ln\sigma_{i}-\sigma_{i}\,x_{j}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+w_{i}^{\prime}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J_{\text{lin}}=\sum_{j}a_{j1}\left(f(x_{j1})-t_{j1}\right)^{2}
+\]
+
+\end_inset
+
+square 理解为矢量模平方，
+
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ 用于添加特定注意力，
+关注拟合数据的不同部分。
+
+\end_layout
+
+\begin_layout Section
+Jacobian
+\end_layout
+
+\begin_layout Standard
+定义模型参数
+\begin_inset Formula 
+\[
+\theta=\{\alpha,\sbf w_{i},\sbf\sigma_{i}\}
+\]
+
+\end_inset
+
+定义
+\begin_inset Formula $r_{j}=f(x_{j})-t_{j}$
+\end_inset
+
+，
+
+\begin_inset Formula 
+\[
+\frac{\partial J_{\text{lin}}}{\partial\theta_{1i}}=\sum_{j}\left(2a_{j1}*r_{j1}\right)\,{\color{red}\frac{\partial f(x_{j1})}{\partial\theta_{1i}}},
+\]
+
+\end_inset
+
+指标1 index 所有坐标点
+\begin_inset Formula $x$
+\end_inset
+
+，
+指标
+\begin_inset Formula $2$
+\end_inset
+
+ index 高斯分量（例如5个）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{j}=\alpha+\sum_{i}w_{i}+\frac{1}{2}\left(\ln\sigma_{i}-\sigma_{i}\,x_{j}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f_{j1}=\alpha+1_{ji}\bullet{\color{brown}w_{i1}}+\frac{1}{2}\,1_{ji}\bullet\ln{\color{brown}\sigma_{i1}}-\frac{1}{2}\left(1_{ji}\bullet{\color{brown}\sigma_{i1}}\right)\,x_{j1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\bullet$
+\end_inset
+
+表示矩阵乘法，
+空格表示 element-wise 普通乘法。
+上述的着色部分，
+
+\begin_inset Formula ${\color{brown}w_{i1}}$
+\end_inset
+
+
+\begin_inset Formula ${\color{brown}\sigma_{i1}}$
+\end_inset
+
+ 表示为了凑成矩阵乘法，
+指标跟上面的约定相反（idx1 索引高斯分量，
+ idx2 索引坐标点）。
+
+\end_layout
+
+\begin_layout Standard
+sss
+\end_layout
+
+\begin_layout Itemize
+对scale factor 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的偏导数 (scalar)
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{{\color{red}j}1})}{\partial\alpha}=1,\quad\text{scalar}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对权重
+\begin_inset Formula $w_{1i}$
+\end_inset
+
+的偏导数
+\begin_inset Formula 
+\[
+\frac{\partial f(x_{{\color{red}j}1})}{\partial w_{1i}}=1_{ji},\quad
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Itemize
+对标准差
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+的偏导
+\begin_inset Formula 
+\[
+\frac{\partial f_{j1}}{\partial\sigma_{1i}}=\frac{1}{2}\left(\frac{1}{\sigma_{1i}}-x_{{\color{red}j}1}\right)
+\]
+
+\end_inset
+
+注意这里没有求和。
+
+\end_layout
+
+\begin_layout Section
+电磁，
+核相互作用比例
+\end_layout
+
+\begin_layout Standard
+ref 12;
+\end_layout
+
+\begin_layout Standard
+Ulmer (2007) provides a formula for the determination of the percentage 
+\begin_inset Formula $W_{p}$
+\end_inset
+
+ of protons that have only had electromagnetic interactions,
+ i.e.
+ no nuclear interactions,
+ as a function of the traversed thickness,
+ for protons of incident kinetic energy 
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ and range 
+\begin_inset Formula $R$
+\end_inset
+
+ in water,
+ at a certain water thickness 
+\begin_inset Formula $x$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+W_{p}=\frac{1}{2}\left[1-\left(\frac{E_{k}-E_{\text{th}}}{m}\right)^{f}\frac{x}{R}\right]\left[1+\erf\left(\frac{R-x}{\tau}\right)\right],
+\]
+
+\end_inset
+
+for where 
+\begin_inset Formula $\erf$
+\end_inset
+
+ is the error function,
+ 
+\begin_inset Formula $f=1.032$
+\end_inset
+
+,
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ is the proton mass in MeV,
+ 
+\begin_inset Formula $E_{\text{th}}=7$
+\end_inset
+
+ MeV is the 
+\begin_inset Formula $\,^{16}O$
+\end_inset
+
+ threshold energy for the 
+\begin_inset Formula $(p,p')$
+\end_inset
+
+ reaction.
+ 
+\begin_inset Newline newline
+\end_inset
+
+The parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+ takes into account the range variation due to the straggling along the beam path and can be parametrized as (Ulmer and Schaffner 2011):
+\begin_inset Formula 
+\[
+\tau=0.0179651452\,R^{4},\;\text{where}\;t=\begin{cases}
+0.9352 & \mathrm{if}\;R\ge1\,\mathrm{cm}\\
+1.1763 & \mathrm{if}\;R<1\,\mathrm{cm}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(*percentage Wp of protons that have only had electromagnetic interact
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+ions,i.e.no nuclear interaction*)
+\end_layout
+
+\begin_layout Plain Layout
+fWpp[x_,
+ R_,
+ f_,
+ Ek_,
+ Eth_,
+ m_] := Module[{t,
+ 
+\backslash
+[Tau]},
+\end_layout
+
+\begin_layout Plain Layout
+t = If[R >= 1,
+ 0.9352,
+ 1.1763];
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+[Tau] = 0.0179651452*R^t;
+\end_layout
+
+\begin_layout Plain Layout
+1/2 (1 - ((Ek - Eth)/m)^f*x/R) (1 + Erf[(R - x)/
+\backslash
+[Tau]])
+\end_layout
+
+\begin_layout Plain Layout
+];
+\end_layout
+
+\begin_layout Plain Layout
+x = 2;(*cm*)
+\end_layout
+
+\begin_layout Plain Layout
+iR = 15.86;(*cm*)
+\end_layout
+
+\begin_layout Plain Layout
+f = 1.032;
+\end_layout
+
+\begin_layout Plain Layout
+iEk = 600;(*MeV*)
+\end_layout
+
+\begin_layout Plain Layout
+iEth = 7;(*MeV*)
+\end_layout
+
+\begin_layout Plain Layout
+m = 938.27231;(*MeV/c^2*)
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["test at 2cm"]@fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["XY"]@
+\end_layout
+
+\begin_layout Plain Layout
+Plot[fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m],
+ {x,
+ 0,
+ iR},
+ ImageSize -> Medium,
+\end_layout
+
+\begin_layout Plain Layout
+PlotLabel -> "XY"];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["LogY"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogPlot[fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m],
+ {x,
+ 0,
+ iR},
+\end_layout
+
+\begin_layout Plain Layout
+ImageSize -> Medium,
+ PlotStyle -> Black,
+ PlotLabel -> "LogY"];
+\end_layout
+
+\begin_layout Plain Layout
+EchoLabel["LogX"]@
+\end_layout
+
+\begin_layout Plain Layout
+LogLinearPlot[fWpp[x,
+ iR,
+ f,
+ iEk,
+ iEth,
+ m],
+ {x,
+ 0.01,
+ iR},
+\end_layout
+
+\begin_layout Plain Layout
+ImageSize -> Medium,
+ PlotStyle -> Red,
+ PlotLabel -> "LogX"];
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/UMFormula_EM_ratio1.pdf
+	scale 48
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/UMFormula_EM_ratio2.pdf
+	scale 48
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/UMFormula_EM_ratio3.pdf
+	scale 48
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $W_{p}$
+\end_inset
+
+的图像，
+分别为 X–Y,
+ X–LogY,
+ LogX–Y
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+t(y)=\frac{1-A\,\exp\left[-\frac{y^{2}}{2b^{2}\sigma^{2}}\right]}{\pi\,b\left(\frac{y^{2}}{b^{2}}+1\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+f(y) & =W_{p}\,f_{M}(y)+(1-W_{p})f_{N}(y)\\
+ & =W_{p}\,f_{M}(y)+(1-W_{p})\,\frac{t(y)}{\int_{-\infty}^{+\infty}t(y)\dd y}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Planar Laplacian 分布
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(r)=\epsilon^{2}\,r\,\exp\left(-\epsilon\,r\right),\quad r\ge0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ln p(r)=\ln\epsilon^{2}+\ln r-\epsilon\,r
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+高斯分布
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Sigma=\left[\begin{array}{cc}
+\sigma_{1}^{2} & \sigma_{1}\sigma_{2}\\
+\sigma_{2}\sigma_{1} & \sigma_{2}^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+二维线性无关时
+\begin_inset Formula 
+\[
+\Sigma=\left[\begin{array}{cc}
+\sigma_{1}^{2} & \sigma_{1}\sigma_{2}\\
+\sigma_{2}\sigma_{1} & \sigma_{2}^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathrm{cov}(x,y)=E\left[\left(x-\mu_{x}\right)\left(y-\mu_{y}\right)\right]=\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\mu_{x}\right)\left(y_{i}-\mu_{y}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\abs{\Sigma}=\sigma_{1}^{2}\,\sigma_{2}^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+p(x_{1},x_{2})=\frac{1}{2\pi\,\sigma_{1}\sigma_{2}}\exp\left(-\frac{1}{2}\left[\begin{array}{cc}
+x_{1} & x_{2}\end{array}\right]\left[\begin{array}{cc}
+\sigma_{1}^{-2} & 0\\
+0 & \sigma_{2}^{-2}
+\end{array}\right]\left[\begin{array}{c}
+x_{1}\\
+x_{2}
+\end{array}\right]\right)
+\]
+
+\end_inset
+
+如果
+\begin_inset Formula $\sigma_{1}^{2}=\sigma_{2}^{2}$
+\end_inset
+
+，
+令 
+\begin_inset Formula $\sigma^{2}=\sigma_{1}^{2}+\sigma_{2}^{2}$
+\end_inset
+
+，
+
+\begin_inset Formula $r^{2}=x_{1}^{2}+y_{1}^{2}$
+\end_inset
+
+，
+则得到同心圆形状的 高斯分布
+\begin_inset Formula 
+\[
+p'(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
+\]
+
+\end_inset
+
+如果在
+\begin_inset Formula $\phi$
+\end_inset
+
+方向积分，
+得到
+\begin_inset Formula 
+\[
+p''(r,\phi)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+微积分
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F(z)=\int_{a(z)}^{b(z)}f(x,z)\,\dd x
+\]
+
+\end_inset
+
+导数
+\begin_inset Formula 
+\[
+\frac{\dd F}{\dd z}=f\bigl(b(z),z\bigr)\cdot b'(z)-f\bigl(a(z),z\bigr)\cdot a'(z)+\int_{a(z)}^{b(z)}\frac{\partial f}{\partial z}(x,z)\,\dd x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EOF
+\end_layout
+
+\begin_layout Chapter
+IDD 填充
+\end_layout
+
+\begin_layout Standard
+tmpdose，
+MC IDD
+\end_layout
+
+\begin_layout Standard
+idealCaseRatio1
+\begin_inset Formula 
+\[
+i_{1}=\frac{d_{\text{MC},p,[2]}}{\overline{d_{\text{MC},p,[1,5)}}},\quad i_{2}=\frac{d_{\text{MC},q,[2]}}{\overline{d_{\text{MC},q,[1,5)}}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\overline{d}$
+\end_inset
+
+表示取平均；
+
+\begin_inset Formula $p,q$
+\end_inset
+
+ 分别是缺失能量左右两个最靠近的能量；
+MC 表示 Monte Carlo 得到的 IDD 分布。
+
+\begin_inset Formula 
+\[
+t_{1}=\frac{\overline{d_{p,[0,5)}}}{i_{1}}=\overline{d_{p,[0,5)}}\,\frac{\overline{d_{\text{MC},p,[1,5)}}}{d_{\text{MC},p,[2]}}
+\]
+
+\end_inset
+
+dose1,
+ dose2 避免死区，
+
+\begin_inset Formula 
+\begin{align*}
+ & \sbf d_{1}=\frac{\sbf d_{p}}{t_{1}}=\frac{\sbf d_{p}}{\overline{d_{p,[0,5)}}}/\frac{\overline{d_{\text{MC},p,[1,5)}}}{d_{\text{MC},p,[2]}}=\frac{\sbf d_{p}}{\overline{d_{p,[0,5)}}}\,{\color{blue}\frac{d_{\text{MC},p,[2]}}{\overline{d_{\text{MC},p,[1,5)}}}},\\
+ & \sbf d_{2}=\frac{\sbf d_{q}}{t_{2}}=\frac{\sbf d_{q}}{\overline{d_{q,[0,5)}}}/\frac{\overline{d_{\text{MC},q,[1,5)}}}{d_{\text{MC},q,[2]}}=\frac{\sbf d_{q}}{\overline{d_{q,[0,5)}}}\,{\color{blue}\frac{d_{\text{MC},q,[2]}}{\overline{d_{\text{MC},q,[1,5)}}}},
+\end{align*}
+
+\end_inset
+
+可以看到，
+是无量纲的，
+进行了归一化。
+
+\end_layout
+
+\begin_layout Standard
+按照线性插值的思想 组合系数反比于 能量间距
+\begin_inset Formula 
+\begin{align*}
+ & \alpha+\beta=1\\
+ & \alpha=\frac{E-E_{p}}{E_{q}-E_{p}},\quad\beta=\frac{E_{q}-E}{E_{q}-E_{p}}=1-\alpha
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+剂量分布 Depth Dose distribution 的插值使用 
+\begin_inset Formula 
+\[
+\sbf z\,\frac{\mathrm{assumedPeakPos}}{\mathrm{Peak}_{p}},\quad\text{or}\quad\sbf z\,\frac{\mathrm{assumedPeakPos}}{\mathrm{Peak}_{q}}
+\]
+
+\end_inset
+
+也就是根据相近能量，
+根据 Peaks 的位置，
+对曲线进行拉伸或者收缩，
+从而插值（认为相邻能量的曲线形状是相似的，
+存在等比变换 
+\begin_inset Formula $\alpha=\mathrm{assumedPeakPos}/\mathrm{Peak}_{p}$
+\end_inset
+
+）
+\end_layout
+
+\begin_layout Chapter
+卷积
+\end_layout
+
+\begin_layout Standard
+减法形式的卷积
+\begin_inset Formula 
+\[
+\int f(t-x)\,g(t)\dd t
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+乘法形式的卷积
+\begin_inset Formula 
+\[
+\int f(\frac{xy}{s})\,g(y)\dd y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+除法形式的卷积
+\begin_inset Formula 
+\[
+\int f(\frac{xs}{y})\,g(y)\dd y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Adam优化器
+\end_layout
+
+\begin_layout Section
+RMSProp 算法
+\end_layout
+
+\begin_layout Standard
+梯度平方的指数加权平均：
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E[g^{2}]_{t}=\rho\,E[g^{2}]_{t-1}+(1-\rho)\,\left[\nabla_{\theta_{t}}J(\theta_{t})\right]^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+更新参数
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{E[g^{2}]_{t}}+\epsilon}\,\nabla_{\theta_{t}}J(\theta_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Adam优化器
+\end_layout
+
+\begin_layout Enumerate
+一阶矩估计（动量项）
+\begin_inset Formula 
+\[
+m_{t}=\beta_{1}\:m_{t-1}+(1-\beta_{1})\,\nabla_{\theta_{t}}J(\theta_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+二阶矩估计 RMSProp 部分 Root Mean Square Prop
+\begin_inset Formula 
+\[
+v_{t}=\beta_{2}\:v_{t-1}+(1-\beta_{2})\,\left[\nabla_{\theta_{t}}J(\theta_{t})\right]^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+偏差校正。
+为了纠正 
+\begin_inset Formula $m_{t}$
+\end_inset
+
+ 和 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ 在初始阶段偏向于零的现象，
+进行偏差校正；
+一阶矩偏差矫正，
+二阶矩偏差矫正分别为
+\begin_inset Formula 
+\[
+\hat{m_{t}}=\frac{m_{t}}{1-\beta_{1}^{t}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{v_{t}}=\frac{v_{t}}{1-\beta_{2}^{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+参数更新
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}\hat{m}_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\theta_{t}$
+\end_inset
+
+：
+第
+\begin_inset Formula $t$
+\end_inset
+
+次迭代的参数向量。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\nabla_{\theta_{t}}J(\theta_{t})$
+\end_inset
+
+ ：
+损失函数
+\begin_inset Formula $J$
+\end_inset
+
+关于参数
+\begin_inset Formula $\theta_{t}$
+\end_inset
+
+的梯度。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $m_{t}$
+\end_inset
+
+：
+梯度的一阶矩估计（动量）。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $v_{t}$
+\end_inset
+
+：
+梯度的二阶矩估计（平方梯度的指数加权平均）。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\beta_{1}$
+\end_inset
+
+，
+
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+：
+一阶和二阶矩估计的指数衰减率超参数，
+通常取值为 
+\begin_inset Formula $\beta_{1}=0.9$
+\end_inset
+
+，
+
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+=0.999。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta$
+\end_inset
+
+：
+初始学习率（通常取为
+\begin_inset Formula $0.001$
+\end_inset
+
+）。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\epsilon$
+\end_inset
+
+：
+微小常数（如
+\begin_inset Formula $1\mathrm{e}-8$
+\end_inset
+
+）防止除以零。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t$
+\end_inset
+
+：
+当前迭代次数。
+
+\end_layout
+
+\begin_layout Section
+Adamax
+\end_layout
+
+\begin_layout Standard
+更新规则
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{t}=\max(\beta_{2}\,v_{t-1},\,\nabla_{\theta_{t}}J(\theta_{t}))
+\]
+
+\end_inset
+
+参数更新
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{v_{t}}m_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 束流模型 moliere分布
 \end_layout
 
@@ -2715,2322 +5114,6 @@ Shell修正，
  就够了，
 仿佛问题真的只跟辐射长度有关。
 
-\end_layout
-
-\begin_layout Chapter
-IDD 填充
-\end_layout
-
-\begin_layout Standard
-tmpdose，
-MC IDD
-\end_layout
-
-\begin_layout Standard
-idealCaseRatio1
-\begin_inset Formula 
-\[
-i_{1}=\frac{d_{\text{MC},p,[2]}}{\overline{d_{\text{MC},p,[1,5)}}},\quad i_{2}=\frac{d_{\text{MC},q,[2]}}{\overline{d_{\text{MC},q,[1,5)}}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula $\overline{d}$
-\end_inset
-
-表示取平均；
-
-\begin_inset Formula $p,q$
-\end_inset
-
- 分别是缺失能量左右两个最靠近的能量；
-MC 表示 Monte Carlo 得到的 IDD 分布。
-
-\begin_inset Formula 
-\[
-t_{1}=\frac{\overline{d_{p,[0,5)}}}{i_{1}}=\overline{d_{p,[0,5)}}\,\frac{\overline{d_{\text{MC},p,[1,5)}}}{d_{\text{MC},p,[2]}}
-\]
-
-\end_inset
-
-dose1,
- dose2 避免死区，
-
-\begin_inset Formula 
-\begin{align*}
- & \sbf d_{1}=\frac{\sbf d_{p}}{t_{1}}=\frac{\sbf d_{p}}{\overline{d_{p,[0,5)}}}/\frac{\overline{d_{\text{MC},p,[1,5)}}}{d_{\text{MC},p,[2]}}=\frac{\sbf d_{p}}{\overline{d_{p,[0,5)}}}\,{\color{blue}\frac{d_{\text{MC},p,[2]}}{\overline{d_{\text{MC},p,[1,5)}}}},\\
- & \sbf d_{2}=\frac{\sbf d_{q}}{t_{2}}=\frac{\sbf d_{q}}{\overline{d_{q,[0,5)}}}/\frac{\overline{d_{\text{MC},q,[1,5)}}}{d_{\text{MC},q,[2]}}=\frac{\sbf d_{q}}{\overline{d_{q,[0,5)}}}\,{\color{blue}\frac{d_{\text{MC},q,[2]}}{\overline{d_{\text{MC},q,[1,5)}}}},
-\end{align*}
-
-\end_inset
-
-可以看到，
-是无量纲的，
-进行了归一化。
-
-\end_layout
-
-\begin_layout Standard
-按照线性插值的思想 组合系数反比于 能量间距
-\begin_inset Formula 
-\begin{align*}
- & \alpha+\beta=1\\
- & \alpha=\frac{E-E_{p}}{E_{q}-E_{p}},\quad\beta=\frac{E_{q}-E}{E_{q}-E_{p}}=1-\alpha
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-剂量分布 Depth Dose distribution 的插值使用 
-\begin_inset Formula 
-\[
-\sbf z\,\frac{\mathrm{assumedPeakPos}}{\mathrm{Peak}_{p}},\quad\text{or}\quad\sbf z\,\frac{\mathrm{assumedPeakPos}}{\mathrm{Peak}_{q}}
-\]
-
-\end_inset
-
-也就是根据相近能量，
-根据 Peaks 的位置，
-对曲线进行拉伸或者收缩，
-从而插值（认为相邻能量的曲线形状是相似的，
-存在等比变换 
-\begin_inset Formula $\alpha=\mathrm{assumedPeakPos}/\mathrm{Peak}_{p}$
-\end_inset
-
-）
-\end_layout
-
-\begin_layout Chapter
-卷积
-\end_layout
-
-\begin_layout Standard
-减法形式的卷积
-\begin_inset Formula 
-\[
-\int f(t-x)\,g(t)\dd t
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-乘法形式的卷积
-\begin_inset Formula 
-\[
-\int f(\frac{xy}{s})\,g(y)\dd y
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-除法形式的卷积
-\begin_inset Formula 
-\[
-\int f(\frac{xs}{y})\,g(y)\dd y
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-横向拟合
-\end_layout
-
-\begin_layout Standard
-拟合模型，
- 5– Gauss 函数，
-在 笛卡尔坐标系下
-\begin_inset Formula 
-\[
-f(x)=\alpha\sum_{i}w_{i}\frac{1}{\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula $\alpha$
-\end_inset
-
-是全局归一化常数，
-
-\begin_inset Formula $w_{i}$
-\end_inset
-
-是权重，
-
-\begin_inset Formula $\sum_{i}w_{i}=1$
-\end_inset
-
-。
-
-\end_layout
-
-\begin_layout Section
-柱坐标系
-\end_layout
-
-\begin_layout Example
-应该使用 
-\begin_inset Formula $(r,\phi)$
-\end_inset
-
-坐标下的 高斯分布
-\begin_inset Formula 
-\[
-p(x_{1},x_{2})=\frac{1}{2\pi\,\sigma_{1}\sigma_{2}}\exp\left(-\frac{1}{2}\left[\begin{array}{cc}
-x_{1} & x_{2}\end{array}\right]\left[\begin{array}{cc}
-\sigma_{1}^{-2} & 0\\
-0 & \sigma_{2}^{-2}
-\end{array}\right]\left[\begin{array}{c}
-x_{1}\\
-x_{2}
-\end{array}\right]\right)
-\]
-
-\end_inset
-
-如果
-\begin_inset Formula $\sigma_{1}^{2}=\sigma_{2}^{2}$
-\end_inset
-
-，
-令 
-\begin_inset Formula $\sigma^{2}=\sigma_{1}^{2}+\sigma_{2}^{2}$
-\end_inset
-
-，
-
-\begin_inset Formula $r^{2}=x_{1}^{2}+y_{1}^{2}$
-\end_inset
-
-，
-则得到同心圆形状的 高斯分布
-\begin_inset Formula 
-\[
-p'(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
-\]
-
-\end_inset
-
-如果在
-\begin_inset Formula $\phi$
-\end_inset
-
-方向积分，
-得到
-\begin_inset Formula 
-\[
-p''(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-归一化
-\begin_inset Formula 
-\[
-\alpha=1
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Formula 
-\[
-J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Delta_{j}=f(x_{j})-t_{j}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Formula 
-\[
-\Delta_{\text{log}j}=\log f(x_{j})-\log t_{j}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{j}^{2}}}\sum_{j}a_{j}\,\Delta_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{\text{log}j}^{2}}}\sum_{j}a_{j}\,\frac{\Delta_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
-\]
-
-\end_inset
-
-记号简化，
-
-\begin_inset Formula 
-\[
-f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-\frac{(r_{{\color{red}j}1}-\mu_{1i})^{2}}{\sigma_{1i}^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-指标1 index 所有坐标点
-\begin_inset Formula $x$
-\end_inset
-
-，
-指标
-\begin_inset Formula $2$
-\end_inset
-
- index 高斯分量（例如5个）
-\begin_inset Newline newline
-\end_inset
-
-令
-\series bold
-中间记号
-\begin_inset Formula 
-\[
-T_{{\color{red}j}i}=\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right),\quad D_{{\color{red}j}i}=\frac{r_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
-\]
-
-\end_inset
-
-
-\series default
-
-\begin_inset Formula 
-\[
-f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
-\]
-
-\end_inset
-
-注意为了凑成矩阵乘法，
-这里的 
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
- 要做转置。
-
-\end_layout
-
-\begin_layout Standard
-sss
-\end_layout
-
-\begin_layout Itemize
-对scale factor 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(r_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
-\]
-
-\end_inset
-
-这里的 
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
- 要做转置。
-
-\end_layout
-
-\begin_layout Itemize
-对权重
-\begin_inset Formula $w_{1i}$
-\end_inset
-
-的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(r_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对均值
-\begin_inset Formula $\mu_{i}$
-\end_inset
-
-的偏导：
-
-\begin_inset Formula 
-\[
-\frac{\partial f(r_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\,\exp\left(-D_{{\color{red}j}i}^{2}\right)\,\frac{2(r_{{\color{red}j}1}-\mu_{1i})}{\sigma_{1i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2D_{ji}}{\sigma_{1i}}
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对标准差
-\begin_inset Formula $\sigma_{i}$
-\end_inset
-
-的偏导
-\begin_inset Formula 
-\begin{align*}
-\frac{\partial f(r_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{2}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\frac{2\left(r_{{\color{red}j}1}-\mu_{1i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-4}{\sigma_{1i}^{3}}\exp\left(\cdots\right)\right]\\
- & ={\color{blue}\alpha}\,w_{1i}\,\frac{2}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
- & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
-\end{align*}
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Standard
-Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
-\begin_inset Formula $f(x_{j})$
-\end_inset
-
-，
-
-\end_layout
-
-\begin_layout Section
-高斯作图，
-LogLog
-\end_layout
-
-\begin_layout Standard
-对高斯正态分布作图，
-LogLog 图像,
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-sg = 0.005;
-\end_layout
-
-\begin_layout Plain Layout
-EchoLabel["Normal"]@
-\end_layout
-
-\begin_layout Plain Layout
-LogLogPlot[PDF[NormalDistribution[0,
- sg],
- x],
- {x,
- 0,
- 10},
- 
-\end_layout
-
-\begin_layout Plain Layout
-PlotRange -> All,
- ImageSize -> Medium,
- 
-\end_layout
-
-\begin_layout Plain Layout
-PlotLabel -> "gauss(x) LogLog"];
-\end_layout
-
-\begin_layout Plain Layout
-EchoLabel["g(r)"]@
-\end_layout
-
-\begin_layout Plain Layout
-LogLogPlot[2/sg^2 Exp[-r^2/sg^2],
- {r,
- 0,
- 10},
- PlotRange -> All,
- 
-\end_layout
-
-\begin_layout Plain Layout
-PlotStyle -> Red,
- ImageSize -> Medium,
- 
-\end_layout
-
-\begin_layout Plain Layout
-PlotLabel -> "gauss(r) LogLog"];
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\ln f(r)=\ln\frac{2}{\sigma^{2}}-\frac{(r-\mu)^{2}}{\sigma^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename insets/gaussian_loglog.pdf
-	scale 50
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename insets/gaussian_radius_loglog.pdf
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename insets/alpha_600MeV_loglog.png
-	lyxscale 60
-	scale 40
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-高斯分布。
-左边是标准高斯分布 
-\begin_inset Formula $f(x)$
-\end_inset
-
- ；
-右边是2维极坐标下，
-对
-\begin_inset Formula $\phi$
-\end_inset
-
-方向积分后的高斯分布
-\begin_inset Formula $f(r)$
-\end_inset
-
-。
-下方是 alpha 600 MeV，
-深度为 7.0cm 时的横向分布。
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align*}
-f'(r) & =-\frac{4(r-\mu)}{\sigma^{4}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\\
- & =-\frac{2(r-\mu)}{\sigma^{2}}f(r)\\
-\left(f(r)r\right)' & =-\frac{2(r-\mu)}{\sigma^{2}}rf(r)+f(r)\\
- & =-\frac{2r(r-\mu)+\sigma^{2}}{\sigma^{2}}f(r)
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-f'(r) & =-\frac{4\,r}{\sigma^{4}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)=-\frac{2\,r}{\sigma^{2}}f(r)\\
-\left(f(r)r\right)' & =-\frac{2\,r^{2}}{\sigma^{2}}f(r)+f(r)=-\frac{2r^{2}+\sigma^{2}}{\sigma^{2}}f(r)
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-r f(r) 拟合
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(rf(x_{j})-t_{j}\right)^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Delta_{j}=f(x_{j})-t_{j}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\Delta_{\text{log}j}=\log f(x_{j})-\log t_{j}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{j}^{2}}}\sum_{j}a_{j}\,\Delta_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,\Delta_{\text{log}j}^{2}}}\sum_{j}a_{j}\,\frac{\Delta_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\rho(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f(r)={\color{blue}\alpha}\sum_{i}w_{i}\,\frac{2r}{\sigma_{i}^{2}}\exp\left(-\frac{(r-\mu_{i})^{2}}{\sigma_{i}^{2}}\right)
-\]
-
-\end_inset
-
-令
-\series bold
-中间记号
-\begin_inset Formula 
-\[
-T_{{\color{red}j}i}=\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right),\quad D_{{\color{red}j}i}=\frac{r_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
-\]
-
-\end_inset
-
-
-\series default
-
-\begin_inset Formula 
-\[
-f(r)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
-\]
-
-\end_inset
-
-注意为了凑成矩阵乘法，
-这里的 
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
- 要做转置。
-
-\end_layout
-
-\begin_layout Standard
-sss
-\end_layout
-
-\begin_layout Itemize
-对scale factor 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(r_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
-\]
-
-\end_inset
-
-这里的 
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
- 要做转置。
-
-\end_layout
-
-\begin_layout Itemize
-对权重
-\begin_inset Formula $w_{1i}$
-\end_inset
-
-的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(r_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(-D_{{\color{red}j}i}^{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对均值
-\begin_inset Formula $\mu_{i}$
-\end_inset
-
-的偏导：
-
-\begin_inset Formula 
-\[
-\frac{\partial f(r_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\,\exp\left(-D_{{\color{red}j}i}^{2}\right)\,\frac{2(r_{{\color{red}j}1}-\mu_{1i})}{\sigma_{1i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2D_{ji}}{\sigma_{1i}}
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对标准差
-\begin_inset Formula $\sigma_{i}$
-\end_inset
-
-的偏导
-\begin_inset Formula 
-\begin{align*}
-\frac{\partial f(r_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\frac{2\left(r_{{\color{red}j}1}-\mu_{1i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-4\,r_{{\color{red}j}1}}{\sigma_{1i}^{3}}\exp\left(\cdots\right)\right]\\
- & ={\color{blue}\alpha}\,w_{1i}\,\frac{2\,r_{{\color{red}j}1}}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
- & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{2}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
-\end{align*}
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Standard
-Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
-\begin_inset Formula $f(x_{j})$
-\end_inset
-
-，
-
-\end_layout
-
-\begin_layout Section
-提取 sigma
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
-\]
-
-\end_inset
-
-如果在
-\begin_inset Formula $\phi$
-\end_inset
-
-方向积分，
-得到
-\begin_inset Formula 
-\[
-f(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-令前面的归一化系数为
-\begin_inset Formula $a$
-\end_inset
-
-，
-重新写作
-\begin_inset Formula 
-\[
-p''(r)=a\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-半高宽
-\begin_inset Formula 
-\[
-2\Delta=2\sigma\sqrt{\ln2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align*}
-\log\,\rho''(r) & =\log a-\frac{1}{\sigma^{2}}\left[r^{2}+\mu^{2}-2\mu r\right]\\
- & =-\frac{r^{2}}{\sigma^{2}}+\frac{2\mu r}{\sigma^{2}}+\log a-\frac{\mu^{2}}{\sigma^{2}}
-\end{align*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-A=-\frac{1}{\sigma^{2}},\quad B=\frac{2\mu}{\sigma^{2}},\quad C=\log\frac{2}{\sigma^{2}}-\frac{\mu^{2}}{\sigma^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-直角坐标系
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-中心分布
-\end_layout
-
-\end_inset
-
- 考虑
-\begin_inset Formula $\mu_{i}=0$
-\end_inset
-
-，
-中心分布的情况，
-对于圆柱探测器的结果拟合，
-因为 
-\begin_inset Formula $r$
-\end_inset
-
-坐标的取值范围只有
-\begin_inset Formula $[0,\infty]$
-\end_inset
-
-也就是高斯分布的右半边，
-右半边上高斯分布积分的结果是 
-\begin_inset Formula $0.5$
-\end_inset
-
-。
-
-\begin_inset Formula 
-\begin{align*}
-\int_{0}^{\infty}f(r)\dd{r} & =\sqrt{2\pi}\alpha\,\sum_{i}w_{i}\,\int_{0}^{\infty}\frac{1}{\sqrt{2\pi}\sigma_{i}}\exp\left(-\frac{r^{2}}{2\sigma_{i}^{2}}\right)\dd r\\
- & =\sqrt{2\pi}\alpha\,\sum_{i}w_{i}\,\frac{1}{2}\\
- & =\alpha\,\sqrt{\frac{\pi}{2}}
-\end{align*}
-
-\end_inset
-
-如果 拟合的目标数据做了归一化，
-分布的积分总量为
-\begin_inset Formula $1$
-\end_inset
-
-，
-那么
-\begin_inset Formula 
-\[
-\alpha\,\sqrt{\frac{\pi}{2}}=1
-\]
-
-\end_inset
-
-所以要求 
-\begin_inset Formula 
-\[
-\alpha=\sqrt{\frac{2}{\pi}}.
-\]
-
-\end_inset
-
-注意拟合的目标是 dose，
-单位是 
-\begin_inset Formula $\mathrm{MeV/Kg}$
-\end_inset
-
-，
-也就是已经除以圆柱的几何测度 
-\begin_inset Formula $r\dd r\dd\phi\dd z$
-\end_inset
-
-。
-
-\begin_inset Formula 
-\[
-f(0)=\alpha\sum_{i}\frac{w_{i}}{\sigma_{i}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-
-\series bold
-如果分布偏离中心，
- 那么高斯分布积分不等于 
-\begin_inset Formula $0.5$
-\end_inset
-
-，
-权重归一化会比较复杂
-\series default
-。
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-偏导数
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)={\color{blue}\alpha}\sum_{i}w_{i}\,\frac{1}{\sigma_{i}}\exp\left(-\frac{(x-\mu_{i})^{2}}{2\sigma_{i}^{2}}\right)
-\]
-
-\end_inset
-
-设目标数据的矢量为
-\begin_inset Formula $t_{j}$
-\end_inset
-
-。
-
-\end_layout
-
-\begin_layout Standard
-Linear objective function
-\begin_inset Formula 
-\[
-J_{\text{lin}}=\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Logrithm objective function
-\begin_inset Formula 
-\[
-J_{\text{log}}=\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}
-\]
-
-\end_inset
-
-square 理解为矢量模平方，
-
-\begin_inset Formula $a_{j}$
-\end_inset
-
- 用于添加特定注意力，
-关注拟合数据的不同部分。
-
-\end_layout
-
-\begin_layout Standard
-RMS
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-J_{\text{lin}}=\sqrt{\sum_{j}a_{j}\left(f(x_{j})-t_{j}\right)^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Logrithm objective function
-\begin_inset Formula 
-\[
-J_{\text{log}}=\sqrt{\sum_{j}a_{j}\left(\log f(x_{j})-\log t_{j}\right)^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Jacobian
-\end_layout
-
-\begin_layout Standard
-定义模型参数
-\begin_inset Formula 
-\[
-\theta=\{\alpha,\sbf w,\sbf\mu,\sbf\sigma\}
-\]
-
-\end_inset
-
-定义
-\begin_inset Formula $r_{j}=f(x_{j})-t_{j}$
-\end_inset
-
-，
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=2\sum_{j}a_{j}\,r_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
-\]
-
-\end_inset
-
-定义 
-\begin_inset Formula $r_{\text{log}j}=\log f(x_{j})-\log t_{j}$
-\end_inset
-
-，
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=2\sum_{J}a_{j}\,r_{\text{log}j}\,\frac{\partial\log f(x_{j})}{\partial\theta_{i}}=2\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-RMS
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{lin}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,r_{j}^{2}}}\sum_{j}a_{j}\,r_{j}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{log}}}{\partial\theta_{i}}=\frac{1}{\sqrt{\sum_{j}a_{j}\,r_{\text{log}j}^{2}}}\sum_{J}a_{j}\,\frac{r_{\text{log}j}}{f(x_{j})}\cdot{\color{red}\frac{\partial f(x_{j})}{\partial\theta_{i}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-偏导数
-\end_layout
-
-\begin_layout Example
-numpy 广播机制，
-相当于如下操作，
-
-\begin_inset Formula 
-\[
-x_{{\color{red}j}1}-\mu_{1i}\Rightarrow D_{{\color{red}j}i}
-\]
-
-\end_inset
-
-并矢是用乘法结合元素，
-这里相当是用减法，
-结合运算还可以是加法，
-除法等等，
-思想精髓是一样的。
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-记号简化，
-
-\begin_inset Formula 
-\[
-f(x)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,\frac{1}{\sigma_{1i}}\exp\left(-\frac{(x_{{\color{red}j}1}-\mu_{1i})^{2}}{2\sigma_{1i}^{2}}\right)
-\]
-
-\end_inset
-
-指标1 index 所有坐标点
-\begin_inset Formula $x$
-\end_inset
-
-，
-指标
-\begin_inset Formula $2$
-\end_inset
-
- index 高斯分量（例如5个）
-\begin_inset Newline newline
-\end_inset
-
-令
-\series bold
-中间记号
-\begin_inset Formula 
-\[
-T_{{\color{red}j}i}=\frac{1}{\sigma_{1i}}\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right),\quad D_{{\color{red}j}i}=\frac{x_{{\color{red}j}1}-\mu_{1i}}{\sigma_{1i}}
-\]
-
-\end_inset
-
-
-\series default
-
-\begin_inset Formula 
-\[
-f(x)_{{\color{red}j}}={\color{blue}\alpha}\sum_{i}w_{1i}\,T_{{\color{red}j}i}={\color{blue}\alpha}\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
-\]
-
-\end_inset
-
-注意为了凑成矩阵乘法，
-这里的 
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
- 要做转置。
-
-\end_layout
-
-\begin_layout Standard
-sss
-\end_layout
-
-\begin_layout Itemize
-对scale factor 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(x_{{\color{red}j}1})}{\partial\alpha}=\sum_{i}w_{1i}\,\frac{1}{\sigma_{1i}}\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right)=\sum_{i}T_{{\color{red}j}i}\,{\color{brown}w_{i1}}
-\]
-
-\end_inset
-
-这里的 
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
- 要做转置。
-
-\end_layout
-
-\begin_layout Itemize
-对权重
-\begin_inset Formula $w_{1i}$
-\end_inset
-
-的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(x_{{\color{red}j}1})}{\partial w_{1i}}={\color{blue}\alpha}\frac{1}{\sigma_{1i}}\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right)={\color{blue}\alpha}\,T_{{\color{red}j}i}
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对均值
-\begin_inset Formula $\mu_{i}$
-\end_inset
-
-的偏导：
-
-\begin_inset Formula 
-\[
-\frac{\partial f(x_{{\color{red}j}1})}{\partial\mu_{1i}}={\color{blue}\alpha}\,w_{1i}\,\frac{1}{\sigma_{1i}}\,\exp\left(-\frac{D_{{\color{red}j}i}^{2}}{2}\right)\,\frac{x_{j}-\mu_{i}}{\sigma_{i}^{2}}={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{D_{ji}}{\sigma_{1i}}
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对标准差
-\begin_inset Formula $\sigma_{i}$
-\end_inset
-
-的偏导
-\begin_inset Formula 
-\begin{align*}
-\frac{\partial f(x_{{\color{red}j}1})}{\partial\sigma_{1i}} & ={\color{blue}\alpha}\,w_{1i}\,\left[\frac{1}{\sigma_{1i}}\exp\left(\cdots\right)\frac{\left(x_{j}-\mu_{i}\right)^{2}}{\sigma_{1i}^{3}}+\frac{-1}{\sigma_{1i}^{2}}\exp\left(\cdots\right)\right]\\
- & ={\color{blue}\alpha}\,w_{1i}\,\frac{1}{\sigma_{1i}}\exp\left(\cdots\right)\,\frac{1}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]\\
- & ={\color{blue}\alpha}\,w_{1i}\,T_{{\color{red}j}i}\,\frac{1}{\sigma_{1i}}\left[D_{{\color{red}j}i}^{2}-1\right]
-\end{align*}
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Standard
-Log objective function 对应的 Jacobian 相当于把 Linear 的都除以 
-\begin_inset Formula $f(x_{j})$
-\end_inset
-
-，
-
-\end_layout
-
-\begin_layout Section
-线性化拟合理论
-\end_layout
-
-\begin_layout Example
-logx–logy
-\end_layout
-
-\begin_layout Example
-\begin_inset Formula 
-\[
-g(x)=\frac{w_{i}}{\sigma_{i}}\exp\left(-\frac{x^{2}}{2\sigma_{i}^{2}}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\ln g=\ln\frac{w_{i}}{\sigma_{i}}-\frac{x^{2}}{2\sigma_{i}^{2}}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-g'=\ln g,\quad x'=x^{2}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-g'=\ln\frac{w_{i}}{\sigma_{i}}-\frac{x'}{2\sigma_{i}^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula $(g',x')$
-\end_inset
-
- 线性关系。
-
-\end_layout
-
-\begin_layout Example
-三
-\begin_inset Formula 
-\[
-f(x)=\alpha\sum_{i}w_{i}\frac{1}{\sigma_{i}}\exp\left(-\frac{x^{2}}{2\sigma_{i}^{2}}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\ln f=\log\sum_{i}\left(\ln\frac{\alpha w_{i}}{\sigma_{i}}-\frac{x^{2}}{2\sigma_{i}^{2}}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f'=\ln f,\quad x'=x^{2}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f'=\sum_{i}\ln\frac{\alpha w_{i}}{\sigma_{i}}-\frac{x'}{2\sigma_{i}^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f'=n\ln\alpha+\sum_{i}\ln w_{i}+\frac{1}{2}\ln\frac{1}{\sigma_{i}^{2}}-\frac{x'}{2\sigma_{i}^{2}}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\begin{align*}
-f' & =\ln f,\quad x'=x^{2}\\
-\alpha' & =n\ln\alpha\\
-w_{i}^{\prime} & =\ln w_{i}\\
-\sigma_{i}^{\prime} & =\frac{1}{\sigma_{i}^{2}}
-\end{align*}
-
-\end_inset
-
-通常有
-\begin_inset Formula $\alpha'=n\ln\alpha=5\,\sqrt{2/\pi}$
-\end_inset
-
-，
-所以自由参数可以只有 
-\begin_inset Formula $w_{i}^{\prime}$
-\end_inset
-
-，
-
-\begin_inset Formula $\sigma_{i}^{\prime}$
-\end_inset
-
-。
-
-\begin_inset Formula 
-\[
-f^{\prime}=\alpha^{\prime}+\sum_{i}w_{i}^{\prime}+\frac{1}{2}\left(\ln\sigma_{i}^{\prime}-\sigma_{i}^{\prime}\,x^{\prime}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-拟合方案
-\end_layout
-
-\begin_layout Standard
-为了简略起见，
-以下省略 prime 
-\begin_inset Formula $\prime$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f_{j}=\alpha+\sum_{i}w_{i}+\frac{1}{2}\left(\ln\sigma_{i}-\sigma_{i}\,x_{j}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-w_{i}^{\prime}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-J_{\text{lin}}=\sum_{j}a_{j1}\left(f(x_{j1})-t_{j1}\right)^{2}
-\]
-
-\end_inset
-
-square 理解为矢量模平方，
-
-\begin_inset Formula $a_{j}$
-\end_inset
-
- 用于添加特定注意力，
-关注拟合数据的不同部分。
-
-\end_layout
-
-\begin_layout Section
-Jacobian
-\end_layout
-
-\begin_layout Standard
-定义模型参数
-\begin_inset Formula 
-\[
-\theta=\{\alpha,\sbf w_{i},\sbf\sigma_{i}\}
-\]
-
-\end_inset
-
-定义
-\begin_inset Formula $r_{j}=f(x_{j})-t_{j}$
-\end_inset
-
-，
-
-\begin_inset Formula 
-\[
-\frac{\partial J_{\text{lin}}}{\partial\theta_{1i}}=\sum_{j}\left(2a_{j1}*r_{j1}\right)\,{\color{red}\frac{\partial f(x_{j1})}{\partial\theta_{1i}}},
-\]
-
-\end_inset
-
-指标1 index 所有坐标点
-\begin_inset Formula $x$
-\end_inset
-
-，
-指标
-\begin_inset Formula $2$
-\end_inset
-
- index 高斯分量（例如5个）
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f_{j}=\alpha+\sum_{i}w_{i}+\frac{1}{2}\left(\ln\sigma_{i}-\sigma_{i}\,x_{j}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f_{j1}=\alpha+1_{ji}\bullet{\color{brown}w_{i1}}+\frac{1}{2}\,1_{ji}\bullet\ln{\color{brown}\sigma_{i1}}-\frac{1}{2}\left(1_{ji}\bullet{\color{brown}\sigma_{i1}}\right)\,x_{j1}
-\]
-
-\end_inset
-
-
-\begin_inset Formula $\bullet$
-\end_inset
-
-表示矩阵乘法，
-空格表示 element-wise 普通乘法。
-上述的着色部分，
-
-\begin_inset Formula ${\color{brown}w_{i1}}$
-\end_inset
-
-
-\begin_inset Formula ${\color{brown}\sigma_{i1}}$
-\end_inset
-
- 表示为了凑成矩阵乘法，
-指标跟上面的约定相反（idx1 索引高斯分量，
- idx2 索引坐标点）。
-
-\end_layout
-
-\begin_layout Standard
-sss
-\end_layout
-
-\begin_layout Itemize
-对scale factor 
-\begin_inset Formula $\alpha$
-\end_inset
-
- 的偏导数 (scalar)
-\begin_inset Formula 
-\[
-\frac{\partial f(x_{{\color{red}j}1})}{\partial\alpha}=1,\quad\text{scalar}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-对权重
-\begin_inset Formula $w_{1i}$
-\end_inset
-
-的偏导数
-\begin_inset Formula 
-\[
-\frac{\partial f(x_{{\color{red}j}1})}{\partial w_{1i}}=1_{ji},\quad
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Itemize
-对标准差
-\begin_inset Formula $\sigma_{i}$
-\end_inset
-
-的偏导
-\begin_inset Formula 
-\[
-\frac{\partial f_{j1}}{\partial\sigma_{1i}}=\frac{1}{2}\left(\frac{1}{\sigma_{1i}}-x_{{\color{red}j}1}\right)
-\]
-
-\end_inset
-
-注意这里没有求和。
-
-\end_layout
-
-\begin_layout Section
-电磁，
-核相互作用比例
-\end_layout
-
-\begin_layout Standard
-ref 12;
-\end_layout
-
-\begin_layout Standard
-Ulmer (2007) provides a formula for the determination of the percentage 
-\begin_inset Formula $W_{p}$
-\end_inset
-
- of protons that have only had electromagnetic interactions,
- i.e.
- no nuclear interactions,
- as a function of the traversed thickness,
- for protons of incident kinetic energy 
-\begin_inset Formula $E_{k}$
-\end_inset
-
- and range 
-\begin_inset Formula $R$
-\end_inset
-
- in water,
- at a certain water thickness 
-\begin_inset Formula $x$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-W_{p}=\frac{1}{2}\left[1-\left(\frac{E_{k}-E_{\text{th}}}{m}\right)^{f}\frac{x}{R}\right]\left[1+\erf\left(\frac{R-x}{\tau}\right)\right],
-\]
-
-\end_inset
-
-for where 
-\begin_inset Formula $\erf$
-\end_inset
-
- is the error function,
- 
-\begin_inset Formula $f=1.032$
-\end_inset
-
-,
- 
-\begin_inset Formula $m$
-\end_inset
-
- is the proton mass in MeV,
- 
-\begin_inset Formula $E_{\text{th}}=7$
-\end_inset
-
- MeV is the 
-\begin_inset Formula $\,^{16}O$
-\end_inset
-
- threshold energy for the 
-\begin_inset Formula $(p,p')$
-\end_inset
-
- reaction.
- 
-\begin_inset Newline newline
-\end_inset
-
-The parameter 
-\begin_inset Formula $\tau$
-\end_inset
-
- takes into account the range variation due to the straggling along the beam path and can be parametrized as (Ulmer and Schaffner 2011):
-\begin_inset Formula 
-\[
-\tau=0.0179651452\,R^{4},\;\text{where}\;t=\begin{cases}
-0.9352 & \mathrm{if}\;R\ge1\,\mathrm{cm}\\
-1.1763 & \mathrm{if}\;R<1\,\mathrm{cm}
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-(*percentage Wp of protons that have only had electromagnetic interact
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-ions,i.e.no nuclear interaction*)
-\end_layout
-
-\begin_layout Plain Layout
-fWpp[x_,
- R_,
- f_,
- Ek_,
- Eth_,
- m_] := Module[{t,
- 
-\backslash
-[Tau]},
-\end_layout
-
-\begin_layout Plain Layout
-t = If[R >= 1,
- 0.9352,
- 1.1763];
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
-[Tau] = 0.0179651452*R^t;
-\end_layout
-
-\begin_layout Plain Layout
-1/2 (1 - ((Ek - Eth)/m)^f*x/R) (1 + Erf[(R - x)/
-\backslash
-[Tau]])
-\end_layout
-
-\begin_layout Plain Layout
-];
-\end_layout
-
-\begin_layout Plain Layout
-x = 2;(*cm*)
-\end_layout
-
-\begin_layout Plain Layout
-iR = 15.86;(*cm*)
-\end_layout
-
-\begin_layout Plain Layout
-f = 1.032;
-\end_layout
-
-\begin_layout Plain Layout
-iEk = 600;(*MeV*)
-\end_layout
-
-\begin_layout Plain Layout
-iEth = 7;(*MeV*)
-\end_layout
-
-\begin_layout Plain Layout
-m = 938.27231;(*MeV/c^2*)
-\end_layout
-
-\begin_layout Plain Layout
-EchoLabel["test at 2cm"]@fWpp[x,
- iR,
- f,
- iEk,
- iEth,
- m];
-\end_layout
-
-\begin_layout Plain Layout
-EchoLabel["XY"]@
-\end_layout
-
-\begin_layout Plain Layout
-Plot[fWpp[x,
- iR,
- f,
- iEk,
- iEth,
- m],
- {x,
- 0,
- iR},
- ImageSize -> Medium,
-\end_layout
-
-\begin_layout Plain Layout
-PlotLabel -> "XY"];
-\end_layout
-
-\begin_layout Plain Layout
-EchoLabel["LogY"]@
-\end_layout
-
-\begin_layout Plain Layout
-LogPlot[fWpp[x,
- iR,
- f,
- iEk,
- iEth,
- m],
- {x,
- 0,
- iR},
-\end_layout
-
-\begin_layout Plain Layout
-ImageSize -> Medium,
- PlotStyle -> Black,
- PlotLabel -> "LogY"];
-\end_layout
-
-\begin_layout Plain Layout
-EchoLabel["LogX"]@
-\end_layout
-
-\begin_layout Plain Layout
-LogLinearPlot[fWpp[x,
- iR,
- f,
- iEk,
- iEth,
- m],
- {x,
- 0.01,
- iR},
-\end_layout
-
-\begin_layout Plain Layout
-ImageSize -> Medium,
- PlotStyle -> Red,
- PlotLabel -> "LogX"];
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename insets/UMFormula_EM_ratio1.pdf
-	scale 48
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename insets/UMFormula_EM_ratio2.pdf
-	scale 48
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename insets/UMFormula_EM_ratio3.pdf
-	scale 48
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset Formula $W_{p}$
-\end_inset
-
-的图像，
-分别为 X–Y,
- X–LogY,
- LogX–Y
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-t(y)=\frac{1-A\,\exp\left[-\frac{y^{2}}{2b^{2}\sigma^{2}}\right]}{\pi\,b\left(\frac{y^{2}}{b^{2}}+1\right)}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-f(y) & =W_{p}\,f_{M}(y)+(1-W_{p})f_{N}(y)\\
- & =W_{p}\,f_{M}(y)+(1-W_{p})\,\frac{t(y)}{\int_{-\infty}^{+\infty}t(y)\dd y}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Planar Laplacian 分布
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-p(r)=\epsilon^{2}\,r\,\exp\left(-\epsilon\,r\right),\quad r\ge0
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\ln p(r)=\ln\epsilon^{2}+\ln r-\epsilon\,r
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-Adam优化器
-\end_layout
-
-\begin_layout Section
-RMSProp 算法
-\end_layout
-
-\begin_layout Standard
-梯度平方的指数加权平均：
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-E[g^{2}]_{t}=\rho\,E[g^{2}]_{t-1}+(1-\rho)\,\left[\nabla_{\theta_{t}}J(\theta_{t})\right]^{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-更新参数
-\begin_inset Formula 
-\[
-\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{E[g^{2}]_{t}}+\epsilon}\,\nabla_{\theta_{t}}J(\theta_{t})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Adam优化器
-\end_layout
-
-\begin_layout Enumerate
-一阶矩估计（动量项）
-\begin_inset Formula 
-\[
-m_{t}=\beta_{1}\:m_{t-1}+(1-\beta_{1})\,\nabla_{\theta_{t}}J(\theta_{t})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-二阶矩估计 RMSProp 部分 Root Mean Square Prop
-\begin_inset Formula 
-\[
-v_{t}=\beta_{2}\:v_{t-1}+(1-\beta_{2})\,\left[\nabla_{\theta_{t}}J(\theta_{t})\right]^{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-偏差校正。
-为了纠正 
-\begin_inset Formula $m_{t}$
-\end_inset
-
- 和 
-\begin_inset Formula $v_{t}$
-\end_inset
-
- 在初始阶段偏向于零的现象，
-进行偏差校正；
-一阶矩偏差矫正，
-二阶矩偏差矫正分别为
-\begin_inset Formula 
-\[
-\hat{m_{t}}=\frac{m_{t}}{1-\beta_{1}^{t}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\hat{v_{t}}=\frac{v_{t}}{1-\beta_{2}^{t}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-参数更新
-\begin_inset Formula 
-\[
-\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}\hat{m}_{t}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-其中
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\theta_{t}$
-\end_inset
-
-：
-第
-\begin_inset Formula $t$
-\end_inset
-
-次迭代的参数向量。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\nabla_{\theta_{t}}J(\theta_{t})$
-\end_inset
-
- ：
-损失函数
-\begin_inset Formula $J$
-\end_inset
-
-关于参数
-\begin_inset Formula $\theta_{t}$
-\end_inset
-
-的梯度。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $m_{t}$
-\end_inset
-
-：
-梯度的一阶矩估计（动量）。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $v_{t}$
-\end_inset
-
-：
-梯度的二阶矩估计（平方梯度的指数加权平均）。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\beta_{1}$
-\end_inset
-
-，
-
-\begin_inset Formula $\beta_{2}$
-\end_inset
-
-：
-一阶和二阶矩估计的指数衰减率超参数，
-通常取值为 
-\begin_inset Formula $\beta_{1}=0.9$
-\end_inset
-
-，
-
-\begin_inset Formula $\beta_{2}$
-\end_inset
-
-=0.999。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\eta$
-\end_inset
-
-：
-初始学习率（通常取为
-\begin_inset Formula $0.001$
-\end_inset
-
-）。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\epsilon$
-\end_inset
-
-：
-微小常数（如
-\begin_inset Formula $1\mathrm{e}-8$
-\end_inset
-
-）防止除以零。
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $t$
-\end_inset
-
-：
-当前迭代次数。
-
-\end_layout
-
-\begin_layout Section
-Adamax
-\end_layout
-
-\begin_layout Standard
-更新规则
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-v_{t}=\max(\beta_{2}\,v_{t-1},\,\nabla_{\theta_{t}}J(\theta_{t}))
-\]
-
-\end_inset
-
-参数更新
-\begin_inset Formula 
-\[
-\theta_{t+1}=\theta_{t}-\frac{\eta}{v_{t}}m_{t}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-高斯分布
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\Sigma=\left[\begin{array}{cc}
-\sigma_{1}^{2} & \sigma_{1}\sigma_{2}\\
-\sigma_{2}\sigma_{1} & \sigma_{2}^{2}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-二维线性无关时
-\begin_inset Formula 
-\[
-\Sigma=\left[\begin{array}{cc}
-\sigma_{1}^{2} & \sigma_{1}\sigma_{2}\\
-\sigma_{2}\sigma_{1} & \sigma_{2}^{2}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\mathrm{cov}(x,y)=E\left[\left(x-\mu_{x}\right)\left(y-\mu_{y}\right)\right]=\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\mu_{x}\right)\left(y_{i}-\mu_{y}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\abs{\Sigma}=\sigma_{1}^{2}\,\sigma_{2}^{2}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-p(x_{1},x_{2})=\frac{1}{2\pi\,\sigma_{1}\sigma_{2}}\exp\left(-\frac{1}{2}\left[\begin{array}{cc}
-x_{1} & x_{2}\end{array}\right]\left[\begin{array}{cc}
-\sigma_{1}^{-2} & 0\\
-0 & \sigma_{2}^{-2}
-\end{array}\right]\left[\begin{array}{c}
-x_{1}\\
-x_{2}
-\end{array}\right]\right)
-\]
-
-\end_inset
-
-如果
-\begin_inset Formula $\sigma_{1}^{2}=\sigma_{2}^{2}$
-\end_inset
-
-，
-令 
-\begin_inset Formula $\sigma^{2}=\sigma_{1}^{2}+\sigma_{2}^{2}$
-\end_inset
-
-，
-
-\begin_inset Formula $r^{2}=x_{1}^{2}+y_{1}^{2}$
-\end_inset
-
-，
-则得到同心圆形状的 高斯分布
-\begin_inset Formula 
-\[
-p'(r,\phi)=\frac{1}{\pi\,\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r\dd\phi
-\]
-
-\end_inset
-
-如果在
-\begin_inset Formula $\phi$
-\end_inset
-
-方向积分，
-得到
-\begin_inset Formula 
-\[
-p''(r,\phi)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-微积分
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-F(z)=\int_{a(z)}^{b(z)}f(x,z)\,\dd x
-\]
-
-\end_inset
-
-导数
-\begin_inset Formula 
-\[
-\frac{\dd F}{\dd z}=f\bigl(b(z),z\bigr)\cdot b'(z)-f\bigl(a(z),z\bigr)\cdot a'(z)+\int_{a(z)}^{b(z)}\frac{\partial f}{\partial z}(x,z)\,\dd x
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-EOF
 \end_layout
 
 \end_body
