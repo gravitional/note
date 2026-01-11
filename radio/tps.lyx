@@ -1165,7 +1165,7 @@ PlotLabel -> "gauss(r) LogLog"];
 
 \begin_inset Formula 
 \[
-f(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r\dd r
+f(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{r^{2}}{\sigma^{2}}\right)\quad r\dd r
 \]
 
 \end_inset
@@ -1173,8 +1173,158 @@ f(r)=\frac{2}{\sigma^{2}}\exp\left(-\frac{(r-\mu)^{2}}{\sigma^{2}}\right)\quad r
 
 \begin_inset Formula 
 \[
-\ln f(r)=\ln\frac{2}{\sigma^{2}}-\frac{(r-\mu)^{2}}{\sigma^{2}}
+\ln f(r)=\ln\frac{2}{\sigma^{2}}-\frac{r^{2}}{\sigma^{2}}
 \]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\ln f(r)\right)'=-\frac{2r}{\sigma^{2}}
+\]
+
+\end_inset
+
+可以看到斜率从
+\begin_inset Formula $0$
+\end_inset
+
+开始逐渐变大；
+观察5-Gauss 模型拟合比较好的例子（在给定energy/depthZ）,
+ 可以看到，
+5–Gauss 呈现出明显的段落感，
+每个段落内 Gauss 分量仍然遵循斜率变大的趋势，
+区间之间连接的地方斜率不连续。
+Gauss 分量变化趋势，
+并不符合 横向分布整体趋势（斜率逐渐趋于平缓）。
+只是每个 Gauss 分量在自己的显著区间上，
+大致落在实验数据上。
+ 
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename insets/logGaussR1.pdf
+	scale 40
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+logfr[r_,
+ sgm_] := Log[2/sgm^2] - r^2/sgm^2
+\end_layout
+
+\begin_layout Plain Layout
+iEnd = 10;
+\end_layout
+
+\begin_layout Plain Layout
+opts = {AxesLabel -> {X,
+ LogY},
+ ImageSize -> Medium};
+\end_layout
+
+\begin_layout Plain Layout
+plts = {
+\end_layout
+
+\begin_layout Plain Layout
+sgm = 0.1;
+\end_layout
+
+\begin_layout Plain Layout
+Plot[logfr[r,
+ sgm],
+ {r,
+ 0,
+ iEnd},
+ Evaluate@Sequence@opts],
+\end_layout
+
+\begin_layout Plain Layout
+sgm = 1;
+\end_layout
+
+\begin_layout Plain Layout
+Plot[logfr[r,
+ sgm],
+ {r,
+ 0,
+ iEnd},
+ Evaluate@Sequence@opts],
+\end_layout
+
+\begin_layout Plain Layout
+sgm = 10;
+\end_layout
+
+\begin_layout Plain Layout
+Plot[logfr[r,
+ sgm],
+ {r,
+ 0,
+ iEnd},
+ Evaluate@Sequence@opts]
+\end_layout
+
+\begin_layout Plain Layout
+} // TableForm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename insets/semilogy_Z_077_sq_0.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+GaussR 分布的
+\begin_inset Formula $X$
+\end_inset
+
+–
+\begin_inset Formula $\ln Y$
+\end_inset
+
+图像，
+可以看到斜率从
+\begin_inset Formula $0$
+\end_inset
+
+开始逐渐变大；
+
+\begin_inset Formula $\sigma=1$
+\end_inset
+
+。
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
