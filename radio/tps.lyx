@@ -5517,7 +5517,141 @@ dose1,
 \end_layout
 
 \begin_layout Chapter
-Adam优化器
+优化器
+\end_layout
+
+\begin_layout Section
+动量优化器
+\end_layout
+
+\begin_layout Itemize
+在高维空间中，
+目标函数的形状可能是狭长的椭圆，
+导致梯度在不同维度上的尺度差异较大。
+在这种情况下，
+标准的梯度下降算法可能会在接近最优点时产生振荡，
+导致收敛缓慢。
+
+\end_layout
+
+\begin_layout Itemize
+动量优化器的核心思想是引入一个动量项，
+对过去梯度的累积进行加权，
+从而平滑参数更新的方向。
+
+\end_layout
+
+\begin_layout Standard
+动量项的更新：
+
+\begin_inset Formula 
+\[
+v_{t}=\gamma\,v_{t-1}+\eta\,\nabla_{\theta}J(\theta_{t})
+\]
+
+\end_inset
+
+参数的更新：
+
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-v_{t}
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\theta$
+\end_inset
+
+表示第
+\begin_inset Formula $t$
+\end_inset
+
+次迭代的参数向量。
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\eta$
+\end_inset
+
+是学习率（learning rate）。
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $v_{t}$
+\end_inset
+
+是第
+\begin_inset Formula $t$
+\end_inset
+
+次迭代的动量项（也成为速度，
+veclocity）。
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\gamma$
+\end_inset
+
+是动量系数（momentum coefficient），
+取值范围是
+\begin_inset Formula $[0,1)$
+\end_inset
+
+，
+通常取接近
+\begin_inset Formula $1$
+\end_inset
+
+的值（例如0.9）.
+\end_layout
+
+\begin_layout Subsection
+原理解析
+\end_layout
+
+\begin_layout Itemize
+累积历史梯度：
+动量项 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+是对历史梯度的指数加权移动平均，
+它在一定程度上记忆了过去梯度的方向和大小。
+
+\end_layout
+
+\begin_layout Itemize
+加速相同方向的更新：
+如果连续多个迭代的梯度方向相同，
+动量项会逐渐增加，
+从而加速参数在该方向上的更新。
+
+\end_layout
+
+\begin_layout Itemize
+减小振荡：
+在梯度方向变化较大的维度上，
+动量项由于正负抵消，
+更新幅度被减小，
+从而抑制了振荡现象。
+
+\end_layout
+
+\begin_layout Standard
+形象比喻：
+ 可以将参数更新过程想象成一个带有惯性的物体在损失函数的曲面上滑动。
+动量项赋予了物体惯性，
+使其能够越过局部最小值，
+朝着全局最小值方向前进。
+
 \end_layout
 
 \begin_layout Section
@@ -5755,6 +5889,217 @@ v_{t}=\max(\beta_{2}\,v_{t-1},\,\nabla_{\theta_{t}}J(\theta_{t}))
 \begin_inset Formula 
 \[
 \theta_{t+1}=\theta_{t}-\frac{\eta}{v_{t}}m_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+统计,随机变量
+\end_layout
+
+\begin_layout Standard
+设
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\theta$
+\end_inset
+
+：
+真实参数值（固定常数）
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\hat{\theta}$
+\end_inset
+
+：
+估计量（随机变量，
+因为依赖于样本）
+\end_layout
+
+\begin_layout Standard
+均方误差 MSE = 
+\begin_inset Formula 
+\begin{align*}
+ & E\left[\left(\hat{\theta}-\theta\right)^{2}\right]\\
+ & =E\left[\left(\hat{\theta}{\color{blue}-\hat{\mu}+\hat{\mu}}-\theta\right)^{2}\right]\\
+ & =E\left[\left(\hat{\theta}-\hat{\mu}\right)^{2}+2\left(\hat{\theta}-\hat{\mu}\right)\left(\hat{\mu}-\theta\right)+\left(\hat{\mu}-\theta\right)^{2}\right]\\
+ & =E\left[\left(\hat{\theta}-\hat{\mu}\right)^{2}\right]+\left(\hat{\mu}-\theta\right)^{2}\\
+ & =\mathrm{var}[\hat{\theta}]+(E[\hat{\theta}]-\theta)^{2}
+\end{align*}
+
+\end_inset
+
+总误差 
+\begin_inset Formula $E[(\hat{\theta}-\theta)^{2}]=(E[\hat{\theta}-\theta])^{2}+\mathrm{var}(\hat{\theta})$
+\end_inset
+
+，
+总误差 = 偏差 square + 方差。
+
+\end_layout
+
+\begin_layout Subsection
+指数移动平均
+\end_layout
+
+\begin_layout Standard
+递推公式为
+\begin_inset Formula 
+\[
+m_{t}=\beta_{1}m_{t-1}+\overline{\beta}_{1}g_{t}
+\]
+
+\end_inset
+
+可以求出通项公式
+\begin_inset Formula 
+\begin{align*}
+m_{1} & =\beta_{1}m_{0}+\overline{\beta}_{1}g_{1}\\
+m_{2} & =\beta_{1}^{2}m_{0}+\beta_{1}\overline{\beta}_{1}g_{1}+\overline{\beta}_{1}g_{2}\\
+m_{3} & =\beta_{1}^{3}m_{0}+\beta_{1}^{2}\overline{\beta}_{1}g_{1}+\beta\overline{\beta}_{1}g_{2}+\overline{\beta}_{1}g_{3}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+m_{t}=\beta_{1}^{t}m_{0}+\overline{\beta}_{1}\sum_{i=1}^{t}\beta_{1}^{t-i}\,g_{i}
+\]
+
+\end_inset
+
+权重和是
+\begin_inset Formula 
+\[
+\beta_{1}^{t}+\overline{\beta}_{1}\sum_{i=1}^{t}\beta_{1}^{t-i}=\beta_{1}^{t}+\overline{\beta}_{1}\frac{1-\beta_{1}^{t}}{1-\beta_{1}}=\beta_{1}^{t}+\left(1-\beta_{1}^{t}\right)
+\]
+
+\end_inset
+
+如果启动值
+\begin_inset Formula $m_{0}=0$
+\end_inset
+
+，
+则会造成 
+\begin_inset Formula $\beta_{1}^{t}m_{0}$
+\end_inset
+
+ 这一项贡献一直为零，
+权重和不为零。
+
+\end_layout
+
+\begin_layout Section
+泊松分布
+\end_layout
+
+\begin_layout Itemize
+当
+\begin_inset Formula $x\ge0$
+\end_inset
+
+时 ，
+Poisson 分布中整数值
+\begin_inset Formula $k$
+\end_inset
+
+的概率为
+\begin_inset Formula 
+\[
+P[\mu,k]=\frac{\mu^{k}}{k!}e^{-\mu}
+\]
+
+\end_inset
+
+作为概率分布，
+它只在整数上取值，
+
+\begin_inset Formula 
+\[
+\sum_{k=0}^{\infty}P[\mu,k]=e^{-\mu}\sum_{k=0}^{\infty}\frac{\mu^{k}}{k!}=e^{-\mu}e^{\mu}=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+当
+\begin_inset Formula $x<0$
+\end_inset
+
+时，
+为零。
+
+\end_layout
+
+\begin_layout Itemize
+允许 
+\begin_inset Formula $\mu$
+\end_inset
+
+为任意的正实数。
+
+\end_layout
+
+\begin_layout Itemize
+均值和方差都是 
+\begin_inset Formula $\mu$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle k\rangle=e^{-\mu}\sum_{k=0}^{\infty}\frac{\mu^{k}}{k!}k
+\]
+
+\end_inset
+
+从知道结果的角度，
+尝试算 
+\begin_inset Formula $\mu e^{\mu}$
+\end_inset
+
+的导数，
+
+\begin_inset Formula 
+\[
+\frac{\dd^{n}\left(\mu e^{\mu}\right)}{\dd\mu^{n}}=\left(k+\mu\right)e^{\mu}
+\]
+
+\end_inset
+
+所以
+\begin_inset Formula $\mu e^{\mu}$
+\end_inset
+
+ 在
+\begin_inset Formula $\mu=0$
+\end_inset
+
+ 处的泰勒展开为
+\begin_inset Formula 
+\[
+\mu e^{\mu}=1+\frac{1}{1!}\mu^{1}+\frac{2}{2!}\mu^{2}+\cdots=\sum_{k=0}^{\infty}\frac{k}{k!}\mu^{k}
+\]
+
+\end_inset
+
+所以
+\begin_inset Formula 
+\[
+\langle k\rangle=e^{-\mu}\sum_{k=0}^{\infty}\frac{\mu^{k}}{k!}k=e^{-\mu}\mu e^{\mu}=\mu
 \]
 
 \end_inset
