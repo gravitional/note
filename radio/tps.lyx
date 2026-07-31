@@ -4902,7 +4902,9 @@ Shell修正，
 \end_layout
 
 \begin_layout Chapter
-高斯分布
+束流,
+ 高斯核,
+ 卷积
 \end_layout
 
 \begin_layout Standard
@@ -5024,8 +5026,182 @@ F(z)=\int_{a(z)}^{b(z)}f(x,z)\,\dd x
 
 \end_layout
 
+\begin_layout Section
+卷积公式
+\end_layout
+
 \begin_layout Standard
-EOF
+减法形式的卷积
+\begin_inset Formula 
+\[
+\int f(t-x)\,g(t)\dd t
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+乘法形式的卷积
+\begin_inset Formula 
+\[
+\int f(\frac{xy}{s})\,g(y)\dd y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+除法形式的卷积
+\begin_inset Formula 
+\[
+\int f(\frac{xs}{y})\,g(y)\dd y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+高斯核卷积
+\end_layout
+
+\begin_layout Standard
+2D 轴对称 Gaussian 分布，
+做完角度方向积分，
+得到归一化的分布为
+\begin_inset Formula 
+\[
+f(r)\,r\dd r=\frac{2}{\sigma_{1}^{2}}\exp\left(-\frac{r^{2}}{\sigma_{1}^{2}}\right)r\dd r,\quad g(r)\,r\dd r=\frac{2}{\sigma_{2}^{2}}\exp\left(-\frac{r^{2}}{\sigma_{2}^{2}}\right)r\dd r,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+轴对称情况下，
+受到积分测度的影响，
+不能简单地应用 1D 卷积公式。
+对于轴对称函数，
+2D Fourier 变换退化为 
+\series bold
+零阶 Hankel 变换
+\series default
+：
+
+\begin_inset Formula 
+\[
+\mathcal{H}_{0}\{f(r)\}(k)=2\pi\int_{0}^{\infty}f(r)\,J_{0}(kr)\,r\dd r
+\]
+
+\end_inset
+
+Gaussian 的 Hankel 变换仍未 Gaussian：
+
+\begin_inset Formula 
+\[
+\mathcal{H}_{0}\left\{ \frac{1}{\pi\sigma^{2}}e^{-\frac{r^{2}}{\sigma^{2}}}\right\} (k)=\exp\left(-\frac{\sigma^{2}k^{2}}{4}\right)
+\]
+
+\end_inset
+
+卷积在 Fourier/Hankel 域变为乘积：
+
+\begin_inset Formula 
+\[
+\tilde{H}(k)=\tilde{f}(k)\,\tilde{g}(k)=\exp\left(-\frac{\left(\sigma_{1}^{2}+\sigma_{2}^{2}\right)k^{2}}{4}\right)
+\]
+
+\end_inset
+
+逆 Hankel 变换即得：
+
+\begin_inset Formula 
+\[
+H(r)=\frac{1}{\pi\left(\sigma_{1}^{2}+\sigma_{2}^{2}\right)}\exp\left(-\frac{r^{2}}{\sigma_{1}^{2}+\sigma_{2}^{2}}\right)
+\]
+
+\end_inset
+
+将卷积结果 
+\begin_inset Formula $H(r)$
+\end_inset
+
+ 对角度积分，
+得到径向分布：
+
+\begin_inset Formula 
+\[
+{\color{blue}h(r)=2\pi H(r)=\frac{2}{\left(\sigma_{1}^{2}+\sigma_{2}^{2}\right)}\exp\left(-\frac{r^{2}}{\sigma_{1}^{2}+\sigma_{2}^{2}}\right)}
+\]
+
+\end_inset
+
+仍然满足 2D轴对称高斯形式。
+
+\end_layout
+
+\begin_layout Section
+束流 卷积 散射核
+\end_layout
+
+\begin_layout Standard
+物理模型是叠加积分
+\begin_inset Formula 
+\[
+D(r)=\left(F\otimes K\right)(r)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+其中
+\begin_inset Formula $F$
+\end_inset
+
+是束流 fluence（通量,
+ 单高斯，
+方差 initR2(z)，
+来自 commissioned 二阶矩传播），
+
+\begin_inset Formula $K$
+\end_inset
+
+是单粒子水中散射核（5-gauss mixture）；
+
+\end_layout
+
+\begin_layout Itemize
+ss
+\begin_inset Formula 
+\begin{align*}
+F\otimes K & =F\otimes\sum_{j}w_{j}\,G_{j}=\sum_{j}w_{j}\,\left(F\otimes G_{j}\right)\\
+ & =\sum_{j}w_{j}\,G\left(r;\,s_{j}+R_{0}^{2}\right)
+\end{align*}
+
+\end_inset
+
+其中
+\begin_inset Formula $R_{0}^{2}$
+\end_inset
+
+ 表示 initR2，
+每一项是 
+\begin_inset Formula $\text{高斯}\otimes\text{高斯}=\text{方差相加}$
+\end_inset
+
+，
+整体靠 线性性 拼起来。
+
 \end_layout
 
 \begin_layout Chapter
@@ -5113,46 +5289,6 @@ dose1,
 \end_inset
 
 ）
-\end_layout
-
-\begin_layout Chapter
-卷积
-\end_layout
-
-\begin_layout Standard
-减法形式的卷积
-\begin_inset Formula 
-\[
-\int f(t-x)\,g(t)\dd t
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-乘法形式的卷积
-\begin_inset Formula 
-\[
-\int f(\frac{xy}{s})\,g(y)\dd y
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-除法形式的卷积
-\begin_inset Formula 
-\[
-\int f(\frac{xs}{y})\,g(y)\dd y
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Chapter
@@ -6119,12 +6255,12 @@ sdfasdf
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Chapter
 散射过程，
 反向Schwarz不等式
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 类时向量的“反向”施瓦茨不等式
 \end_layout
 
@@ -6254,7 +6390,7 @@ p\cdot q\geq\sqrt{p^{2}\,q^{2}}=m_{p}m_{q}
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 应用于 2->2 散射的阈值约束
 \end_layout
 
@@ -6311,6 +6447,10 @@ s=(p_{1}+p_{2})^{2}\geq(m_{1}+m_{2})^{2}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+打靶 2->n
 \end_layout
 
 \begin_layout Standard
@@ -6386,7 +6526,64 @@ k
 
 \begin_inset Formula 
 \[
-2\left(\sqrt{1+k^{2}}-1\right)m_{1}m_{2}
+2\left(E_{1}-m_{1}\right)m_{2}={\color{blue}2E_{1k}\,m_{2}}=2\left(\sqrt{1+k^{2}}-1\right)m_{1}m_{2}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula $E_{1}$
+\end_inset
+
+是入射粒子的相对论总能量，
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $E_{1k}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\nospellcheck default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+入射粒子动能（更常用），
+
+\begin_inset Formula $m_{1}$
+\end_inset
+
+入射粒子质量；
+
+\begin_inset Formula $m_{2}$
+\end_inset
+
+ 出射粒子质量。
+也就是说，
+
+\begin_inset Formula 
+\[
+m_{1}'+m_{2}'\le\sqrt{\left(m_{1}+m_{2}\right)^{2}+2E_{1k}\,m_{2}}
 \]
 
 \end_inset
@@ -6437,16 +6634,12 @@ status open
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 等号成立的物理意义
 \end_layout
 
@@ -6471,7 +6664,7 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 对单个出射粒子质量的限制
 \end_layout
 
