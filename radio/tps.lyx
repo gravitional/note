@@ -2891,6 +2891,628 @@ p(r)=\epsilon^{2}\,r\,\exp\left(-\epsilon\,r\right),\quad r\ge0
 \end_layout
 
 \begin_layout Chapter
+横向拟合，
+ring avg
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(r)\;=\;\sum_{i=1}^{N_{g}}\bar{w}_{i}\,g_{i}(r),\qquad g_{i}(r)=\frac{1}{\pi\sigma_{i}^{2}}\exp\!\left(-\frac{r^{2}}{\sigma_{i}^{2}}\right),\qquad\bar{w}_{i}=\frac{w_{i}}{W},\quad W=\sum_{k}w_{k}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\begin_inset Formula $\sigma$
+\end_inset
+
+ 是表约定
+\series default
+:
+ 指数里是 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ 而不是 
+\begin_inset Formula $2\sigma^{2}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\sigma_{\text{table}}=\sqrt{2}\,\sigma_{\text{std}}$
+\end_inset
+
+。
+写成教科书约定会让落库 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ 偏小 
+\begin_inset Formula $\sqrt{2}$
+\end_inset
+
+ 倍,
+ TPS 束斑偏窄 —
+—
+ 静默错剂量 (`point_value_matches_cuda_kernel` 测试钉住此约定,
+ 不要放宽)。
+
+\end_layout
+
+\begin_layout Itemize
+每个分量自归一:
+ 
+\begin_inset Formula $\int_{0}^{\infty}2\pi r\,g_{i}(r)\,\dd r=1$
+\end_inset
+
+。
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bar{w}_{i}=w_{i}/W$
+\end_inset
+
+ 是 
+\series bold
+恒等式归一
+\series default
+:
+ 
+\begin_inset Formula $\Sigma\bar{w}=1$
+\end_inset
+
+ 由模型结构保证,
+ 不是优化约束 (README "两个关键不变量" 第 1 条)。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Ring 平均
+\end_layout
+
+\begin_layout Standard
+Geant4 mesh scoring 记录的是能量沉积落进环形 bin 
+\begin_inset Formula $[r_{1},r_{2}]$
+\end_inset
+
+ 的总量除以环体积,
+ 即该环上的 
+\series bold
+面积平均
+\series default
+:
+\begin_inset Formula 
+\[
+\langle f\rangle_{[r_{1},r_{2}]}=\frac{{\displaystyle \int_{r_{1}}^{r_{2}}2\pi r\,f(r)\,dr}}{\pi\,(r_{2}^{2}-r_{1}^{2})}.
+\]
+
+\end_inset
+
+对单个高斯分量,
+ 分子有闭式原函数 
+\begin_inset Formula $\ensuremath{\int2\pi r\,g_{i}\,dr=-\exp(-r^{2}/\sigma_{i}^{2})}$
+\end_inset
+
+ 所以:
+\begin_inset Formula 
+\[
+\boxed{G_{i}(r_{1},r_{2})=\frac{\exp(-r_{1}^{2}/\sigma_{i}^{2})-\exp(-r_{2}^{2}/\sigma_{i}^{2})}{\pi\,(r_{2}^{2}-r_{1}^{2})}}
+\]
+
+\end_inset
+
+这就是 `ring_avg` 函数返回的第一个值,
+ 已对数值积分核验到 1e-6 (ring_avg_matches_numerical_integration)。
+
+\end_layout
+
+\begin_layout Remark
+
+\series bold
+点值是环平均的极限
+\series default
+:
+ bin 宽 
+\begin_inset Formula $\to0$
+\end_inset
+
+ 时 
+\begin_inset Formula $G_{i}\to g_{i}(r_{m})$
+\end_inset
+
+,
+ 其中 
+\begin_inset Formula $r_{m}^{2}=(r_{1}^{2}+r_{2}^{2})/2$
+\end_inset
+
+ (面积加权中点)。
+旧点值推导只在这个极限下成立;
+ 实际 bin 宽 0.5 mm 与 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ 下限 0.354 mm 同量级,
+ 极限远未达到 —
+—
+ 这就是必须用环平均的原因 (`ring_avg_differs_from_point_value_at_small_sigma`)。
+
+\end_layout
+
+\begin_layout Subsection
+数据与目标函数
+\end_layout
+
+\begin_layout Standard
+第 
+\begin_inset Formula $j$
+\end_inset
+
+ 个径向 bin:
+ 内外半径 
+\begin_inset Formula $r_{1j},r_{2j}$
+\end_inset
+
+,
+ 归一化剂量 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+,
+ 统计权重
+\begin_inset Formula $a_{j}=1/\text{rel}_{j}$
+\end_inset
+
+ (相对统计误差的倒数,
+ `g4io.rs::profile_at`)。
+模型在 bin $j$ 上的预测:
+\begin_inset Formula 
+\[
+f_{j}\;=\;\sum_{i}\bar{w}_{i}\,G_{ji},\qquad G_{ji}=G_{i}(r_{1j},r_{2j}).
+\]
+
+\end_inset
+
+残差在 
+\series bold
+log 空间
+\series default
+,
+ 按统计误差加权:
+\begin_inset Formula 
+\[
+R_{j}=a_{j}\left(\ln f_{j}-\ln y_{j}\right).
+\]
+
+\end_inset
+
+优化目标 (TRF 内部) 与落库指标:
+\begin_inset Formula 
+\[
+C=\tfrac{1}{2}\sum_{j}R_{j}^{2},\qquad\chi=\sqrt{\frac{2C}{m}}=\sqrt{\frac{1}{m}\sum_{j}R_{j}^{2}}\quad(\text{加权 log 残差的 RMS}).
+\]
+
+\end_inset
+
+
+\begin_inset Formula $m$
+\end_inset
+
+ 是 bin 总数。
+log 空间的理由:
+ 横向剂量跨 6+ 个量级,
+ 线性残差只会盯着近轴尖峰而放掉尾巴;
+ 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ 权重则把统计噪声大的远尾点自然压低。
+
+\end_layout
+
+\begin_layout Section
+Jacobian 解析式
+\end_layout
+
+\begin_layout Standard
+参数向量 
+\begin_inset Formula $\theta=(w_{1},\dots,w_{N_{g}},\,\sigma_{1},\dots,\sigma_{N_{g}})$
+\end_inset
+
+ ,
+ 
+\begin_inset Formula $N_{p}=2N_{g}$
+\end_inset
+
+。
+TRF 消费的是 
+\series bold
+残差向量的 Jacobian
+\series default
+ 
+\begin_inset Formula $J\in\mathbb{R}^{m\times N_{p}}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $J_{jk}=\partial R_{j}/\partial\theta_{k}$
+\end_inset
+
+,
+ 不是标量目标的梯度 (标量梯度由优化器内部按 
+\begin_inset Formula $\nabla C=J^{\mathsf{T}}R$
+\end_inset
+
+ 合成,
+ 不需要手写)。
+
+\end_layout
+
+\begin_layout Standard
+链式分解成两层:
+\begin_inset Formula 
+\[
+\frac{\partial R_{j}}{\partial\theta_{k}}=\underbrace{\frac{a_{j}}{f_{j}}}_{\text{log 残差外层}}\cdot\frac{\partial f_{j}}{\partial\theta_{k}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+对权重 w_k 的偏导
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\bar{w}_{i}=w_{i}/W$
+\end_inset
+
+ 使每个 
+\begin_inset Formula $f_{j}$
+\end_inset
+
+ 通过 
+\begin_inset Formula $W$
+\end_inset
+
+ 依赖 
+\series bold
+所有
+\series default
+ 
+\begin_inset Formula $w_{k}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\frac{\partial\bar{w}_{i}}{\partial w_{k}}=\frac{\delta_{ik}-\bar{w}_{i}}{W}\;\;\Longrightarrow\;\;\frac{\partial f_{j}}{\partial w_{k}}=\sum_{i}G_{ji}\,\frac{\delta_{ik}-\bar{w}_{i}}{W}=\boxed{\,\frac{G_{jk}-f_{j}}{W}\,}
+\]
+
+\end_inset
+
+注意与旧点值推导的关键差别:
+ 那边 
+\begin_inset Formula $\partial f/\partial w_{k}=\alpha\,T_{jk}$
+\end_inset
+
+(各分量独立);
+ 这里因为归一是恒等式,
+ 出现了 
+\begin_inset Formula $-f_{j}/W$
+\end_inset
+
+ 的耦合项 —
+—
+增大一个权重会稀释其余所有分量。
+
+\series bold
+没有这一项的 Jacobian 是错的
+\series default
+,
+ 有限差分核验会立刻抓到。
+
+\end_layout
+
+\begin_layout Standard
+一个有用的自检:
+ 
+\begin_inset Formula $\sum_{k}w_{k}\,\partial f_{j}/\partial w_{k}=0$
+\end_inset
+
+。
+(模型对 
+\begin_inset Formula $w$
+\end_inset
+
+ 的整体缩放不变 —
+—
+ 归一吸收了尺度自由度,
+ 这也是不需要 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的原因)。
+
+\end_layout
+
+\begin_layout Remark
+即
+\begin_inset Formula 
+\[
+\sum_{k}\frac{\partial f_{j}}{\partial w_{k}}\,\alpha w_{k}\quad\forall\alpha\in\mathbb{R}
+\]
+
+\end_inset
+
+所以
+\begin_inset Formula 
+\[
+\frac{\partial f_{j}}{\partial w_{k}}\cdot\dd w_{k}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\partial f\perp\dd w_{k}$
+\end_inset
+
+；
+ 反过来说，
+对任何
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 都成立，
+因此 
+\begin_inset Formula 
+\[
+\sum_{k}w_{k}\,\frac{\partial f_{j}}{\partial w_{k}}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+对 sigma_k 的偏导
+\end_layout
+
+\begin_layout Standard
+只有分量 
+\begin_inset Formula $k$
+\end_inset
+
+ 依赖 
+\begin_inset Formula $\sigma_{k}$
+\end_inset
+
+,
+ 无求和:
+\begin_inset Formula 
+\[
+\frac{\partial f_{j}}{\partial\sigma_{k}}=\bar{w}_{k}\,\frac{\partial G_{jk}}{\partial\sigma_{k}}.
+\]
+
+\end_inset
+
+对闭式环平均求导,
+ 用 
+\begin_inset Formula $\dfrac{\dd}{\dd\sigma}\exp(-a/\sigma^{2})=\dfrac{2a}{\sigma^{3}}\exp(-a/\sigma^{2})$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\frac{\partial G_{jk}}{\partial\sigma_{k}}=\frac{2\left[r_{1j}^{2}\,e^{-r_{1j}^{2}/\sigma_{k}^{2}}-r_{2j}^{2}\,e^{-r_{2j}^{2}/\sigma_{k}^{2}}\right]}{\pi\,(r_{2j}^{2}-r_{1j}^{2})\;\sigma_{k}^{3}}}
+\]
+
+\end_inset
+
+这是 `ring_avg` 函数返回的第二个值。
+
+\end_layout
+
+\begin_layout Subsection
+汇总
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+J_{jk}=\begin{cases}
+\dfrac{a_{j}}{f_{j}}\cdot\dfrac{G_{jk}-f_{j}}{W}, & k=1..N_{g}\;(\text{权重})\\[2ex]
+\dfrac{a_{j}}{f_{j}}\cdot\bar{w}_{k'}\cdot\dfrac{2\left[r_{1j}^{2}e^{-r_{1j}^{2}/\sigma_{k'}^{2}}-r_{2j}^{2}e^{-r_{2j}^{2}/\sigma_{k'}^{2}}\right]}{\pi(r_{2j}^{2}-r_{1j}^{2})\,\sigma_{k'}^{3}}, & k=N_{g}\!+\!k'\;(\text{sigma})
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+数值实现
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+广播形式 (numpy 风格,
+ 与旧笔记的 
+\begin_inset Formula $D_{ji}$
+\end_inset
+
+ 记号对应).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+指标 
+\begin_inset Formula $j$
+\end_inset
+
+ 走径向 bin (
+\begin_inset Formula $m$
+\end_inset
+
+ 个),
+ 
+\begin_inset Formula $i$
+\end_inset
+
+ 走高斯分量 (
+\begin_inset Formula $N_{g}=5$
+\end_inset
+
+)。
+列向量按 
+\begin_inset Formula $(m,1)$
+\end_inset
+
+、行向量按 
+\begin_inset Formula $(1,N_{g})$
+\end_inset
+
+ 摆,
+ 广播得 
+\begin_inset Formula $(m,N_{g})$
+\end_inset
+
+ 矩阵:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,style=codestyle1"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# 输入:
+ r1,
+ r2 形状 (m,1);
+ w,
+ s 形状 (1,Ng);
+ y,
+ a 形状 (m,)
+\end_layout
+
+\begin_layout Plain Layout
+
+W    = w.sum()
+\end_layout
+
+\begin_layout Plain Layout
+
+wbar = w / W                                    # (1,Ng)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+A  = np.pi * (r2**2 - r1**2)                    # (m,1)  环面积
+\end_layout
+
+\begin_layout Plain Layout
+
+E1 = np.exp(-r1**2 / s**2)                      # (m,1)/(1,Ng) -> (m,Ng)
+\end_layout
+
+\begin_layout Plain Layout
+
+E2 = np.exp(-r2**2 / s**2)                      # (m,Ng)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G  = (E1 - E2) / A                              # (m,Ng)  环平均 G_ji
+\end_layout
+
+\begin_layout Plain Layout
+
+dG = 2 * (r1**2 * E1 - r2**2 * E2) / (A * s**3) # (m,Ng)  p_G/p_sigma
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+f  = G @ wbar.ravel()                           # (m,)    模型预测
+\end_layout
+
+\begin_layout Plain Layout
+
+R  = a * (np.log(f) - np.log(y))                # (m,)    加权 log 残差
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+pre = (a / f)[:,
+ None]                          # (m,1)   log 外层
+\end_layout
+
+\begin_layout Plain Layout
+
+Jw  = pre * (G - f[:,
+ None]) / W                # (m,Ng)  权重块
+\end_layout
+
+\begin_layout Plain Layout
+
+Js  = pre * wbar * dG                           # (m,Ng)  sigma 块
+\end_layout
+
+\begin_layout Plain Layout
+
+J   = np.hstack([Jw,
+ Js])                       # (m,2Ng) 残差 Jacobian
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 moliere分布 束流模型 
 \end_layout
 
