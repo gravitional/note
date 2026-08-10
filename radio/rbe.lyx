@@ -107,6 +107,167 @@ RBE 与 MKM
 \end_layout
 
 \begin_layout Section
+记号约定
+\end_layout
+
+\begin_layout Standard
+本章为了避免和 Bellinzona / Yoon 原文里的重名符号混淆，采用下面的读法。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N$
+\end_inset
+ 是能量沉积事件数，是随机变量；
+\begin_inset Formula $k$
+\end_inset
+ 是它的取值或求和哑指标；
+\begin_inset Formula $\bar N$
+\end_inset
+ 是泊松参数。
+\end_layout
+
+\begin_layout Itemize
+下标
+\begin_inset Formula $n$
+\end_inset
+ 一律读作 cell nucleus，例如
+\begin_inset Formula $z_n$
+\end_inset
+、
+\begin_inset Formula $z_{n,D}$
+\end_inset
+、
+\begin_inset Formula $S_n$
+\end_inset
+、
+\begin_inset Formula $R_n$
+\end_inset
+。
+\end_layout
+
+\begin_layout Itemize
+无下标的
+\begin_inset Formula $z$
+\end_inset
+ 默认属于 domain；
+\begin_inset Formula $z_1$
+\end_inset
+ 表示一次事件贡献的比能；
+\begin_inset Formula $z=\sum_i z_i$
+\end_inset
+ 表示多事件总比能。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_F$
+\end_inset
+ 是 frequency-mean，
+\begin_inset Formula $z_D$
+\end_inset
+ 是 dose-mean。
+这里的
+\begin_inset Formula $D$
+\end_inset
+ 是“大写下标”的 dose-averaged，不是宏观剂量
+\begin_inset Formula $D$
+\end_inset
+。
+\end_layout
+
+\begin_layout Standard
+因此
+\begin_inset Formula $D$
+\end_inset
+ 这个字母在本章有三种读法：独立符号
+\begin_inset Formula $D$
+\end_inset
+ 是宏观吸收剂量，大写下标
+\begin_inset Formula $\cdot_D$
+\end_inset
+ 是剂量平均，小写下标
+\begin_inset Formula $\langle\cdot\rangle_d$
+\end_inset
+ 是 domain 层平均。
+\end_layout
+
+\begin_layout Subsection
+常用符号与单位速查
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z,\ z_1,\ z_n$
+\end_inset
+：比能，单位 Gy。
+\begin_inset Formula $z_1$
+\end_inset
+ 是单事件量，
+\begin_inset Formula $z$
+\end_inset
+ 是 domain 总比能，
+\begin_inset Formula $z_n$
+\end_inset
+ 是 cell nucleus 总比能。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_F,\ z_D,\ z_D^{*}$
+\end_inset
+：单事件比能的频率平均、剂量平均、饱和修正剂量平均，单位 Gy。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $y_F,\ y_D$
+\end_inset
+：线能的频率平均和剂量平均，单位 keV/
+\begin_inset Formula $\mu\mathrm{m}$
+\end_inset
+。
+\begin_inset Formula $y$
+\end_inset
+ 是随机量，通常来自 TEPC 或固态微剂量探测器。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathrm{LET}_d$
+\end_inset
+：剂量平均 LET，单位 keV/
+\begin_inset Formula $\mu\mathrm{m}$
+\end_inset
+。
+它是工程上常用的辐射品质代理量，但不是 MKM 真正的微剂量学输入。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha_0,\ \beta_0$
+\end_inset
+：LET 趋近于零时的 LQ 参数，单位分别为
+\begin_inset Formula $\mathrm{Gy}^{-1}$
+\end_inset
+ 和
+\begin_inset Formula $\mathrm{Gy}^{-2}$
+\end_inset
+。
+\begin_inset Formula $\alpha_P$
+\end_inset
+ 是泊松近似下的线性项，
+\begin_inset Formula $\alpha_{NP}$
+\end_inset
+ 是非泊松修正后的线性项。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $r_d,\ R_n,\ N_d$
+\end_inset
+：domain 半径、细胞核半径、细胞核内 domain 数。
+\begin_inset Formula $r_d$
+\end_inset
+ 是拟合尺度，
+\begin_inset Formula $R_n$
+\end_inset
+ 可由细胞核几何估计。
+\end_layout
+
+\begin_layout Section
 泊松与复合泊松前置
 \end_layout
 
@@ -182,6 +343,83 @@ nolink "false"
  控制单位剂量下的微观涨落。
 \end_layout
 
+\begin_layout Subsection
+二阶矩推导
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-moments"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 只用到两个假设：事件数泊松，以及各次事件贡献的
+\begin_inset Formula $z_i$
+\end_inset
+ 独立同分布。
+先固定事件数
+\begin_inset Formula $N=k$
+\end_inset
+，则
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left\langle\left(\sum_{i=1}^{k}z_i\right)^2\right\rangle
+=k\,\langle z_1^2\rangle+k(k-1)\langle z_1\rangle^2
+=k\,z_Fz_D+k(k-1)z_F^2\label{eq:rbe-fixed-k-moment}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+再对
+\begin_inset Formula $N$
+\end_inset
+ 做泊松平均。泊松分布的二阶阶乘矩为
+\begin_inset Formula $\langle N(N-1)\rangle=\bar N^2$
+\end_inset
+，所以
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\langle z^2\rangle
+=\langle N\rangle z_Fz_D+\langle N(N-1)\rangle z_F^2
+=\bar N z_Fz_D+\bar N^2z_F^2
+=D z_D+D^2\label{eq:rbe-moment-derivation}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+等价地，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Var}(z)=D z_D,\qquad
+\frac{\sigma(z)}{\langle z\rangle}=\sqrt{\frac{z_D}{D}}\label{eq:rbe-relative-fluctuation}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+这解释了为什么
+\begin_inset Formula $z_D$
+\end_inset
+ 与剂量无关：它是单位剂量下的微观涨落强度，而不是给了多少剂量。
+\end_layout
+
 \begin_layout Section
 LQ 与 RBE
 \end_layout
@@ -242,6 +480,41 @@ S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end_layout
 
 \begin_layout Standard
+若把离子剂量记为
+\begin_inset Formula $D$
+\end_inset
+，参考辐射的
+\begin_inset Formula $\alpha_X/\beta_X$
+\end_inset
+ 比记为
+\begin_inset Formula $R$
+\end_inset
+，则等效终点下的剂量相关 RBE 可以直接由 LQ 方程反解：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{RBE}(D,z_D)=\frac{R}{2D}\left[-1+\sqrt{1+\frac{4}{R}\left(\mathrm{RBE}_{\alpha}(z_D)D+\frac{(\mathrm{RBE}_{\beta}D)^2}{R}\right)}\right]\label{eq:rbe-lq-explicit}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+其中
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{RBE}_{\alpha}=\frac{\alpha}{\alpha_X},\qquad
+\mathrm{RBE}_{\beta}=\sqrt{\frac{\beta}{\beta_X}},\qquad
+R=\frac{\alpha_X}{\beta_X}\label{eq:rbe-lq-ratios}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
 式
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -268,6 +541,117 @@ nolink "false"
 \end_layout
 
 \begin_layout Section
+MKM 生物学假设
+\end_layout
+
+\begin_layout Standard
+Hawkins MKM 的关键不是只把 LQ 参数改成 LET 函数，而是把“能量在微米尺度怎么落下去”与“DNA 损伤怎样转成细胞死亡”连起来。
+模型可以按下面的假设链读。
+\end_layout
+
+\begin_layout Enumerate
+细胞核是敏感靶，被划分为
+\begin_inset Formula $N_d$
+\end_inset
+ 个 domain。
+domain 是亚致死损伤相互作用的空间关联长度。
+\end_layout
+
+\begin_layout Enumerate
+辐射诱发两类损伤：I 型损伤不可修复，直接致死；II 型损伤可修复，也可自发转化或两两结合成 I 型损伤。
+\end_layout
+
+\begin_layout Enumerate
+给定一个 domain 收到的比能
+\begin_inset Formula $z$
+\end_inset
+ 后，初始损伤平均数正比于
+\begin_inset Formula $z$
+\end_inset
+：
+\begin_inset Formula $x_I(0)=\lambda z,\ x_{II}(0)=\kappa z$
+\end_inset
+。
+\end_layout
+
+\begin_layout Enumerate
+domain 内的 II 型损伤按一阶速率
+\begin_inset Formula $a$
+\end_inset
+ 转化为 I 型，按一阶速率
+\begin_inset Formula $r$
+\end_inset
+ 修复，并按二阶速率
+\begin_inset Formula $b$
+\end_inset
+ 两两结合成 I 型。
+\end_layout
+
+\begin_layout Enumerate
+给定
+\begin_inset Formula $z$
+\end_inset
+ 时，domain 内致死损伤数服从泊松分布。
+这一步把“平均致死损伤数”
+\begin_inset Formula $x_I$
+\end_inset
+ 转成“零致死损伤概率”
+\begin_inset Formula $s(z)=e^{-x_I}$
+\end_inset
+。
+\end_layout
+
+\begin_layout Enumerate
+只要一个 domain 死亡，细胞就死亡。
+所以细胞核存活是所有 domain 存活概率的乘积。
+\end_layout
+
+\begin_layout Standard
+单次急性照射下的动力学可压缩成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\dot x_I=a x_{II}+b x_{II}^{2},\qquad
+\dot x_{II}=-(a+r)x_{II}-2b x_{II}^{2}\label{eq:rbe-mkm-kinetics}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+低剂量近似下二阶衰减项可忽略，最终得到 domain 层的平均致死损伤数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x_I(\infty)=\left(\lambda+\frac{a\kappa}{a+r}\right)z+\frac{b\kappa^2}{2(a+r)}z^2
+=Az+Bz^2\label{eq:rbe-domain-lethal-mean}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-domain-lethal-mean"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 给出 LQ 的二次多项式，泊松损伤数假设给出指数外壳。
+两者合起来才是 MKM 里的
+\begin_inset Formula $s(z)=\exp(-Az-Bz^2)$
+\end_inset
+。
+\end_layout
+
+\begin_layout Section
 MKM 的尺度与平均次序
 \end_layout
 
@@ -282,6 +666,55 @@ MKM 的尺度与平均次序
 \begin_inset Formula $\langle z_n\rangle_c=D$
 \end_inset
 。
+\end_layout
+
+\begin_layout Standard
+同一个复合泊松矩模板会在两层各用一次：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\langle z^2\rangle_d=z_n^2+z_Dz_n,\qquad
+\langle z_n^2\rangle_c=D^2+z_{n,D}D\label{eq:rbe-two-scale-moments}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+第一项是“条件在这个细胞核已经拿到
+\begin_inset Formula $z_n$
+\end_inset
+”后，核内 domain 间的平均；第二项是对细胞群体中不同细胞核的平均。
+\end_layout
+
+\begin_layout Standard
+从 domain 到细胞群体的逻辑链是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+s(z)=e^{-Az-Bz^2},\qquad
+S_n(z_n)=\prod_{d=1}^{N_d}s(z_d),\qquad
+S(D)=\langle S_n(z_n)\rangle_c\label{eq:rbe-survival-chain}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-survival-chain"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 中前一个箭头是乘积，取对数后自然变成求和；后一个箭头是算术平均，取对数不能穿过平均号。
 \end_layout
 
 \begin_layout Standard
@@ -304,6 +737,24 @@ MKM 的尺度与平均次序
 
 \begin_layout Standard
 这一步的差别就是“先平均再取对数”和“先取对数再平均”不对易。
+\end_layout
+
+\begin_layout Standard
+用累积量生成函数写，差异的符号和大小很清楚：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ln\langle e^{-x}\rangle_c
+=-\langle x\rangle_c+\frac{1}{2}\mathrm{Var}_c(x)-\frac{1}{6}\kappa_{3,c}(x)+\cdots\label{eq:rbe-cgf-survival}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+领头修正项为正，说明真实群体存活总是高于把平均损伤数直接放进指数的结果。
+这就是过杀效应的统计来源之一。
 \end_layout
 
 \begin_layout Standard
@@ -402,6 +853,44 @@ nolink "false"
  也使用这个饱和后的量。
 \end_layout
 
+\begin_layout Standard
+非泊松修正的低
+\begin_inset Formula $z_{n,D}$
+\end_inset
+ 极限必须回到泊松近似。
+对式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-alpha-np"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 展开可得
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\alpha_{NP}=\alpha_P-\frac{1}{2}\alpha_P^2z_{n,D}+O(z_{n,D}^2),\qquad
+\alpha_P=\alpha_0+\beta_0z_D^{*}\label{eq:rbe-alpha-np-limit}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+所以低 LET、核尺度涨落小或很多粒子反复击中时，用
+\begin_inset Formula $\alpha_P$
+\end_inset
+ 足够；高 LET、击中稀疏、少数细胞承受极高局部比能时，要用
+\begin_inset Formula $\alpha_{NP}$
+\end_inset
+ 抑制过杀带来的线性项高估。
+\end_layout
+
 \begin_layout Section
 剂量与 LET 的分离
 \end_layout
@@ -426,6 +915,60 @@ D=\frac{1}{\rho}\sum_i\Phi_i L_i,\qquad
 \end_inset
 。
 SOBP 平台区可以剂量高而 LET 低，Bragg 峰远端跌落区可以剂量低而 LET 高。
+\end_layout
+
+\begin_layout Section
+时间结构与 beta 修正
+\end_layout
+
+\begin_layout Standard
+原始 MKM 里辐射品质主要改
+\begin_inset Formula $\alpha$
+\end_inset
+，而分次、持续照射和剂量率主要改
+\begin_inset Formula $\beta$
+\end_inset
+。
+一类常见写法是把二次项乘上 Lea-Catcheside 时间因子
+\begin_inset Formula $G$
+\end_inset
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ln S=-\left(\alpha_0+\beta_0 z_D^{*}\right)D-\beta_0G\,D^2\label{eq:rbe-time-survival}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+如果照射时间结构写成归一化剂量率
+\begin_inset Formula $\dot d(t)$
+\end_inset
+，并令
+\begin_inset Formula $\mu=a+r$
+\end_inset
+，则一个连续形式是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+G=\frac{2}{D^2}\int_0^T\dot d(t)\int_0^t\dot d(t')e^{-\mu(t-t')}\,\mathrm{d}t'\,\mathrm{d}t\label{eq:rbe-lea-catcheside}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+急性照射时
+\begin_inset Formula $G\to1$
+\end_inset
+；照射拖得越长，亚致死损伤越有机会修复，
+\begin_inset Formula $G$
+\end_inset
+ 越小，二次项越弱。
 \end_layout
 
 \begin_layout Section
@@ -484,6 +1027,52 @@ z_D^{*}=\frac{\displaystyle\int_0^{b_{\max}} z_{\mathrm{sat}}(b)\,z_{KC}(b)\,b\,
 \end_layout
 
 \begin_layout Standard
+更细地看，式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-zdstar-mix"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 只是外层束权加权。
+内层还要把原初离子和核碎片按沉积能量加权：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(z_D^{*}\right)_{ij}
+=\frac{\sum_{k=1}^{N_{ij}}\epsilon_k\left(z_D^{*}\right)_k}
+{\sum_{k=1}^{N_{ij}}\epsilon_k}\label{eq:rbe-zdstar-inner-mix}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+这里
+\begin_inset Formula $i$
+\end_inset
+ 是空间体素，
+\begin_inset Formula $j$
+\end_inset
+ 是束或 spot，
+\begin_inset Formula $k$
+\end_inset
+ 是 Monte Carlo 能量沉积记录。
+核碎片全部在
+\begin_inset Formula $k$
+\end_inset
+ 层，和束数
+\begin_inset Formula $N_b$
+\end_inset
+ 不是同一件事。
+\end_layout
+
+\begin_layout Standard
 式
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -506,7 +1095,18 @@ nolink "false"
 
 \end_inset
 
- 负责多束、多碎片成分的剂量加权。
+ 负责外层束加权；式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-zdstar-inner-mix"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 负责内层碎片谱加权。
 \end_layout
 
 \begin_layout Section
@@ -515,6 +1115,46 @@ Yoon 的 matRad + mMKM
 
 \begin_layout Standard
 Yoon 的实现是把 mMKM 接进 matRad。物理剂量用双高斯笔形束：
+\end_layout
+
+\begin_layout Standard
+计算链可以按如下顺序读。
+\end_layout
+
+\begin_layout Enumerate
+TOPAS 生成单能碳束在水模中的 IDD 和横向剂量剖面。
+\end_layout
+
+\begin_layout Enumerate
+每个能量层拟合成双高斯笔形束，窄核负责主束，宽核负责 halo。
+\end_layout
+
+\begin_layout Enumerate
+Kiefer-Chatterjee 径迹模型和阻止本领表给出各粒子种类、各能量的
+\begin_inset Formula $z_{1D}^{*}$
+\end_inset
+ 查找表。
+\end_layout
+
+\begin_layout Enumerate
+Monte Carlo 碎片谱先按沉积能量做内层混合，得到 spot / depth 相关的
+\begin_inset Formula $z_{1D}^{*}$
+\end_inset
+。
+\end_layout
+
+\begin_layout Enumerate
+计划优化时按 spot 权重做外层加权，得到
+\begin_inset Formula $z_{1D\mathrm{mix}}^{*}$
+\end_inset
+。
+\end_layout
+
+\begin_layout Enumerate
+由
+\begin_inset Formula $\alpha=\alpha_0+\beta z_{1D}^{*}$
+\end_inset
+ 更新 LQ 参数，再由等效存活率反解 RBE。
 \end_layout
 
 \begin_layout Standard
@@ -572,6 +1212,44 @@ RBE 由 LQ 反解并乘临床因子：
 \end_layout
 
 \begin_layout Standard
+Yoon 的混合场量在优化中按 spot 权重写成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(z_{1D\mathrm{mix}}^{*}\right)_i
+=\frac{\sum_{j=1}^{N_{\mathrm{spot}}}w_jd_{ij}\left(z_{1D}^{*}\right)_{ij}}
+{\sum_{j=1}^{N_{\mathrm{spot}}}w_jd_{ij}}\label{eq:rbe-yoon-mix}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+所以只要优化器改变
+\begin_inset Formula $w_j$
+\end_inset
+，
+\begin_inset Formula $z_{1D\mathrm{mix}}^{*}$
+\end_inset
+ 和式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-yoon-rbe"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 里的
+\begin_inset Formula $\alpha$
+\end_inset
+ 就都要重算。
+\end_layout
+
+\begin_layout Standard
 式
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -601,6 +1279,158 @@ nolink "false"
 \begin_inset Formula $\alpha$
 \end_inset
 。
+\end_layout
+
+\begin_layout Section
+与 LEM 和常数 RBE 的对比
+\end_layout
+
+\begin_layout Standard
+临床 TPS 里常见的 RBE 处理可以分成四类：常数 RBE、经验 LET 模型、MKM/mMKM、LEM。
+它们的差别不只是公式复杂度，而是“生物效应由什么输入决定”。
+\end_layout
+
+\begin_layout Itemize
+常数 RBE：输入只有物理剂量
+\begin_inset Formula $D$
+\end_inset
+ 和一个全局常数。
+质子临床常用
+\begin_inset Formula $\mathrm{RBE}=1.1$
+\end_inset
+。
+优点是稳定、可审计；缺点是完全不表达远端
+\begin_inset Formula $\mathrm{LET}_d$
+\end_inset
+ 升高和组织
+\begin_inset Formula $\alpha/\beta$
+\end_inset
+ 依赖。
+\end_layout
+
+\begin_layout Itemize
+经验 LET 模型：输入通常是
+\begin_inset Formula $D$
+\end_inset
+、
+\begin_inset Formula $\mathrm{LET}_d$
+\end_inset
+ 和参考组织参数。
+它能表达远端 RBE 升高，但
+\begin_inset Formula $\mathrm{LET}_d$
+\end_inset
+ 只是代理量，不含完整单事件谱和饱和修正。
+\end_layout
+
+\begin_layout Itemize
+MKM / mMKM：输入是
+\begin_inset Formula $D$
+\end_inset
+、
+\begin_inset Formula $z_D^{*}$
+\end_inset
+、
+\begin_inset Formula $z_{n,D}$
+\end_inset
+ 以及细胞 LQ 参数。
+它把微剂量学涨落接到
+\begin_inset Formula $\alpha$
+\end_inset
+，再由 LQ 反解 RBE。
+优化时如果
+\begin_inset Formula $z_D^{*}$
+\end_inset
+ 随束权改变，就需要重复计算混合场。
+\end_layout
+
+\begin_layout Itemize
+LEM：输入是局部剂量分布和 X 射线存活曲线，思想是把细胞核切成更细的局部体积，在核内积分局部生物效应。
+它和 MKM 都以细胞核为靶，也都依赖 X 射线参考曲线；主要差别是 MKM 使用有限 domain 与微剂量学矩，LEM 使用更局部的径迹剂量分布。
+\end_layout
+
+\begin_layout Standard
+一个实用判断是：若只需要处方层面的保守近似，常数 RBE 最容易管理；若要研究远端 LET 风险，经验 LET 模型是快速入口；若要把混合场、过杀和组织参数放进同一条公式链，MKM/mMKM 更合适；若已有成熟的局部效应数据和核内径迹模型，则 LEM 是另一条等价层级的生物物理路线。
+\end_layout
+
+\begin_layout Standard
+从优化角度看，常数 RBE 最便宜，因为生物剂量只是
+\begin_inset Formula $D_{\mathrm{bio}}=\mathrm{RBE}\cdot D$
+\end_inset
+。
+经验 LET 模型需要额外 LET 场。
+MKM/mMKM 和 LEM 都会让目标函数显式依赖辐射品质；其中 mMKM 的关键开销来自式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-yoon-mix"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 的束权加权量需要随优化迭代更新。
+\end_layout
+
+\begin_layout Section
+常见坑
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_1$
+\end_inset
+ 与
+\begin_inset Formula $z$
+\end_inset
+ 不是同一个随机变量。
+前者是单事件比能，后者是多事件总比能。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_D$
+\end_inset
+ 的定义是单事件谱的原点二阶矩除以一阶矩；
+\begin_inset Formula $z_D=\mathrm{Var}(z)/\langle z\rangle$
+\end_inset
+ 是事件数泊松时对总比能的推论。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathrm{LET}_d$
+\end_inset
+ 里的小写
+\begin_inset Formula $d$
+\end_inset
+ 是文献惯例的 dose-averaged，不是本章
+\begin_inset Formula $\langle\cdot\rangle_d$
+\end_inset
+ 的 domain 平均。
+\end_layout
+
+\begin_layout Itemize
+Yoon 的
+\begin_inset Formula $z_{1D}^{*}$
+\end_inset
+ 里下标 1 表示单事件，不是第一个量。
+它与本章的
+\begin_inset Formula $z_D^{*}$
+\end_inset
+ 是同一个物理量。
+\end_layout
+
+\begin_layout Itemize
+混合场必须逐粒子种类和能量查
+\begin_inset Formula $z_D^{*}$
+\end_inset
+ 后再剂量加权，不能先平均
+\begin_inset Formula $\mathrm{LET}$
+\end_inset
+ 再查表。
+\end_layout
+
+\begin_layout Itemize
+加权应该用剂量或沉积能量，不应该用粒子数。
+低 LET 的轻碎片粒子数可能很多，但贡献剂量不一定大。
 \end_layout
 
 \begin_layout Section
