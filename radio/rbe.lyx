@@ -276,7 +276,7 @@ RBE 与 MKM
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 P(N=k)=\frac{\lambda^{k}e^{-\lambda}}{k!},\qquad
 N\sim\mathrm{Poisson}(\lambda)\label{eq:rbe-poisson}
@@ -285,15 +285,564 @@ N\sim\mathrm{Poisson}(\lambda)\label{eq:rbe-poisson}
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename insets/poisson_pmf.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+\end_layout
+
+\begin_layout Standard
+图：泊松 PMF 随
+\begin_inset Formula $\lambda$
+\end_inset
+ 增大从稀疏离散峰逐渐接近正态。
+均值和方差同为
+\begin_inset Formula $\lambda$
+\end_inset
+，所以绝对宽度按
+\begin_inset Formula $\sqrt{\lambda}$
+\end_inset
+ 增长，而相对涨落按
+\begin_inset Formula $1/\sqrt{\lambda}$
+\end_inset
+ 缩小。
+这正是后面
+\begin_inset Formula $\sigma(z)/\langle z\rangle=\sqrt{z_D/D}$
+\end_inset
+ 的概率论来源。
+\end_layout
+
+\begin_layout Subsection
+泊松分布的来源
+\end_layout
+
+\begin_layout Standard
+泊松分布可看成罕见事件的二项极限。
+设
+\begin_inset Formula $N_n\sim\mathrm{Binom}(n,\lambda/n)$
+\end_inset
+，固定
+\begin_inset Formula $k$
+\end_inset
+ 后令
+\begin_inset Formula $n\to\infty$
+\end_inset
+，有
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\begin{aligned}
+P(N_n=k)
+&=\binom{n}{k}\left(\frac{\lambda}{n}\right)^k
+\left(1-\frac{\lambda}{n}\right)^{n-k}  \\
+&=\frac{n(n-1)\cdots(n-k+1)}{n^k}\frac{\lambda^k}{k!}
+\left(1-\frac{\lambda}{n}\right)^n
+\left(1-\frac{\lambda}{n}\right)^{-k}  \\
+&\longrightarrow \frac{\lambda^k e^{-\lambda}}{k!}.
+\end{aligned}\label{eq:rbe-binomial-poisson-limit}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+Le Cam 定理还给出总变差距离上界
+\begin_inset Formula
+\[
+d_{\mathrm{TV}}\!\left(\mathrm{Binom}(n,p),\mathrm{Poisson}(np)\right)\le np^2.
+\]
+\end_inset
+当
+\begin_inset Formula $p=\lambda/n$
+\end_inset
+ 时，误差量级为
+\begin_inset Formula $\lambda^2/n$
+\end_inset
+。
+微剂量学里的物理图像就是：入射粒子数很大，每个粒子命中一个
+\begin_inset Formula $\mu\mathrm{m}$
+\end_inset
+ 尺度 domain 的概率很小，而平均命中数有限。
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename insets/poisson_binomial_limit.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+\end_layout
+
+\begin_layout Standard
+图：固定
+\begin_inset Formula $\lambda=3$
+\end_inset
+ 时，二项分布随
+\begin_inset Formula $n$
+\end_inset
+ 增大快速贴近泊松分布；右图显示总变差距离按
+\begin_inset Formula $O(1/n)$
+\end_inset
+ 衰减。
+\end_layout
+
+\begin_layout Standard
+另一条等价路线是泊松过程。
+若
+\begin_inset Formula $p_k(t)=P(N(t)=k)$
+\end_inset
+ 满足独立增量、单次事件概率
+\begin_inset Formula $\lambda\,dt+o(dt)$
+\end_inset
+、多次事件概率
+\begin_inset Formula $o(dt)$
+\end_inset
+，则
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+p_k'(t)=-\lambda p_k(t)+\lambda p_{k-1}(t),\qquad p_k(0)=\delta_{k0}.\label{eq:rbe-poisson-process-ode}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+引入概率母函数
+\begin_inset Formula $G(z,t)=\sum_{k\ge0}p_k(t)z^k$
+\end_inset
+，无穷多个耦合方程压成一个一阶 ODE：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\frac{\partial G}{\partial t}=\lambda(z-1)G,\qquad
+G(z,t)=e^{\lambda t(z-1)},\qquad
+p_k(t)=\frac{(\lambda t)^k e^{-\lambda t}}{k!}.\label{eq:rbe-poisson-process-pgf}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Subsection
+生成函数、阶乘矩和累积量
+\end_layout
+
+\begin_layout Standard
+生成函数的用处是把分布编码成函数，使独立和的卷积变成乘法，矩和累积量变成求导。
+对
+\begin_inset Formula $N\sim\mathrm{Poisson}(\lambda)$
+\end_inset
+，概率母函数、矩母函数、特征函数和累积量生成函数分别为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+G_N(s)=e^{\lambda(s-1)},\qquad
+M_N(t)=e^{\lambda(e^t-1)},\qquad
+\varphi_N(t)=e^{\lambda(e^{it}-1)},\qquad
+K_N(t)=\lambda(e^t-1).\label{eq:rbe-poisson-generators}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $K_N(t)=\log M_N(t)$
+\end_inset
+。
+展开式
+\begin_inset Formula $K_N(t)=\lambda\sum_{r\ge1}t^r/r!$
+\end_inset
+ 直接给出
+\begin_inset Formula $\kappa_r(N)=\lambda$
+\end_inset
+：
+泊松分布的所有阶累积量都等于
+\begin_inset Formula $\lambda$
+\end_inset
+。
+这比直接写原点矩更干净，因为
+\begin_inset Formula $\mathbb E[N^2]=\lambda^2+\lambda$
+\end_inset
+、
+\begin_inset Formula $\mathbb E[N^3]=\lambda^3+3\lambda^2+\lambda$
+\end_inset
+ 已经开始混入低阶项。
+\end_layout
+
+\begin_layout Standard
+阶乘矩则由概率母函数在
+\begin_inset Formula $s=1$
+\end_inset
+ 处求导得到：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\mathbb E[(N)_r]=G_N^{(r)}(1)=\lambda^r,\qquad
+(N)_r=N(N-1)\cdots(N-r+1).\label{eq:rbe-poisson-factorial-moment}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+特别地，
+\begin_inset Formula $\mathbb E[N(N-1)]=\lambda^2$
+\end_inset
+，于是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\mathrm{Var}(N)=\mathbb E[N(N-1)]+\mathbb E[N]-\mathbb E[N]^2
+=\lambda.\label{eq:rbe-poisson-variance}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+后面推
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-moments"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 时，交叉项里的
+\begin_inset Formula $k(k-1)$
+\end_inset
+ 正是式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-poisson-factorial-moment"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 的二阶情形。
+\end_layout
+
+\begin_layout Standard
+两个常用推论也最好记在这里。
+若
+\begin_inset Formula $N_1,N_2$
+\end_inset
+ 独立且分别服从
+\begin_inset Formula $\mathrm{Poisson}(\lambda_1)$
+\end_inset
+、
+\begin_inset Formula $\mathrm{Poisson}(\lambda_2)$
+\end_inset
+，则概率母函数相乘给出可加性：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+N_1+N_2\sim\mathrm{Poisson}(\lambda_1+\lambda_2).\label{eq:rbe-poisson-additivity}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+若
+\begin_inset Formula $N\sim\mathrm{Poisson}(\lambda)$
+\end_inset
+，每个事件以概率
+\begin_inset Formula $p$
+\end_inset
+ 独立保留，则保留数
+\begin_inset Formula $N_p\sim\mathrm{Poisson}(\lambda p)$
+\end_inset
+。
+这就是 thinning。
+在混合辐射场中，把事件按粒子种类、能量道或束元分类时，式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-poisson-additivity"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 和 thinning 是“各道贡献可以先分开算再合并”的概率基础。
+\end_layout
+
+\begin_layout Standard
+大
+\begin_inset Formula $\lambda$
+\end_inset
+ 时，标准化变量
+\begin_inset Formula $Z=(N-\lambda)/\sqrt{\lambda}$
+\end_inset
+ 的累积量生成函数为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+K_Z(t)=\lambda\left(e^{t/\sqrt{\lambda}}-1\right)-t\sqrt{\lambda}
+=\frac{t^2}{2}+\frac{t^3}{6\sqrt{\lambda}}+O(\lambda^{-1}),\label{eq:rbe-poisson-normal-limit}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+所以
+\begin_inset Formula $Z\Rightarrow\mathcal N(0,1)$
+\end_inset
+，偏度和超额峰度分别按
+\begin_inset Formula $\lambda^{-1/2}$
+\end_inset
+ 与
+\begin_inset Formula $\lambda^{-1}$
+\end_inset
+ 消失。
+\end_layout
+
+\begin_layout Standard
 总比能是单次事件比能的和：
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 z=\sum_{i=1}^{N}z_i,\qquad N\sim\mathrm{Poisson}(\bar N),\qquad z_i\overset{\text{i.i.d.}}{\sim} f_1\label{eq:rbe-compound-z}
 \end{equation}
 \end_inset
+\end_layout
+
+\begin_layout Subsection
+复合泊松分布
+\end_layout
+
+\begin_layout Standard
+抽样一个复合泊松量要分两步：先抽事件数
+\begin_inset Formula $N=k$
+\end_inset
+，再抽
+\begin_inset Formula $k$
+\end_inset
+ 个独立同分布的跳幅并求和。
+通用写法为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+S=\sum_{i=1}^{N}Y_i,\qquad
+N\sim\mathrm{Poisson}(\lambda),\qquad
+Y_i\overset{\text{i.i.d.}}{\sim}F_Y,\qquad
+S\sim\mathrm{CP}(\lambda,F_Y).\label{eq:rbe-compound-poisson-definition}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+若
+\begin_inset Formula $N=0$
+\end_inset
+，则约定
+\begin_inset Formula $S=0$
+\end_inset
+。
+因此当
+\begin_inset Formula $Y_i$
+\end_inset
+ 连续时，
+\begin_inset Formula $S$
+\end_inset
+ 通常是混合型分布：在
+\begin_inset Formula $0$
+\end_inset
+ 处有质量
+\begin_inset Formula $e^{-\lambda}$
+\end_inset
+ 的原子，其余部分为连续密度。
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename insets/compound_poisson.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+\end_layout
+
+\begin_layout Standard
+图：指数跳幅
+\begin_inset Formula $Y_i\sim\mathrm{Exp}(1)$
+\end_inset
+ 时的复合泊松分布。
+小
+\begin_inset Formula $\lambda$
+\end_inset
+ 下
+\begin_inset Formula $S=0$
+\end_inset
+ 的原子很大；大
+\begin_inset Formula $\lambda$
+\end_inset
+ 下连续部分逐渐接近高斯，均值和方差按下面的矩公式增长。
+\end_layout
+
+\begin_layout Standard
+先固定
+\begin_inset Formula $N=k$
+\end_inset
+，条件 MGF 为
+\begin_inset Formula $M_Y(t)^k$
+\end_inset
+。
+再对
+\begin_inset Formula $N$
+\end_inset
+ 做泊松平均，就得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+M_S(t)=\mathbb E\!\left[M_Y(t)^N\right]
+=G_N(M_Y(t))
+=\exp\{\lambda(M_Y(t)-1)\}.\label{eq:rbe-compound-mgf}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+取对数并展开
+\begin_inset Formula $M_Y(t)$
+\end_inset
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+K_S(t)=\lambda(M_Y(t)-1)
+=\lambda\sum_{r\ge1}\mathbb E[Y_1^r]\frac{t^r}{r!},\qquad
+\kappa_r(S)=\lambda\,\mathbb E[Y_1^r].\label{eq:rbe-compound-cumulants}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-compound-cumulants"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 是全节最省力的结果。
+前三阶直接给出
+\begin_inset Formula
+\[
+\mathbb E[S]=\lambda\mu_Y,\qquad
+\mathrm{Var}(S)=\lambda\mathbb E[Y_1^2],\qquad
+\mathbb E[(S-\mathbb E S)^3]=\lambda\mathbb E[Y_1^3].
+\]
+\end_inset
+注意方差里的
+\begin_inset Formula $\mathbb E[Y_1^2]$
+\end_inset
+ 是原点二阶矩，不是
+\begin_inset Formula $\mathrm{Var}(Y_1)$
+\end_inset
+。
+\end_layout
+
+\begin_layout Standard
+不用生成函数也可以从 Wald 等式和全方差公式看清两层涨落：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\mathrm{Var}(S)
+=\underbrace{\mathbb E[\mathrm{Var}(S\mid N)]}_{\lambda\sigma_Y^2}
++\underbrace{\mathrm{Var}(\mathbb E[S\mid N])}_{\lambda\mu_Y^2}
+=\lambda(\sigma_Y^2+\mu_Y^2)=\lambda\mathbb E[Y_1^2].\label{eq:rbe-compound-total-variance}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+两项分别来自“每次事件给多少”的涨落和“发生几次”的涨落。
+泊松的
+\begin_inset Formula $\mathrm{Var}(N)=\mathbb E[N]=\lambda$
+\end_inset
+ 使这两项塌缩成式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-compound-total-variance"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 的干净形式。
+\end_layout
+
+\begin_layout Subsection
+落到微剂量学符号
+\end_layout
+
+\begin_layout Standard
+把式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-compound-poisson-definition"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 翻译成微剂量学：
+\begin_inset Formula $Y_i\to z_i$
+\end_inset
+，
+\begin_inset Formula $\lambda\to\bar N=D/z_F$
+\end_inset
+，
+\begin_inset Formula $\mu_Y\to z_F=\mathbb E[z_1]$
+\end_inset
+，
+\begin_inset Formula $\mathbb E[Y_1^2]\to\mathbb E[z_1^2]=z_Fz_D$
+\end_inset
+。
+于是
 \end_layout
 
 \begin_layout Standard
@@ -301,7 +850,7 @@ z=\sum_{i=1}^{N}z_i,\qquad N\sim\mathrm{Poisson}(\bar N),\qquad z_i\overset{\tex
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \langle z\rangle=\bar N z_F=D,\qquad
 \langle z^2\rangle=D^2+z_D D\label{eq:rbe-moments}
@@ -343,6 +892,204 @@ nolink "false"
  控制单位剂量下的微观涨落。
 \end_layout
 
+\begin_layout Standard
+总比能的中心方差也可直接写成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\mathrm{Var}(z)=Dz_D,\qquad
+\frac{\sigma(z)}{\langle z\rangle}=\frac{\sqrt{Dz_D}}{D}
+=\sqrt{\frac{z_D}{D}}.\label{eq:rbe-microdose-relative-fluctuation}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename insets/compound_poisson_microdose.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+\end_layout
+
+\begin_layout Standard
+图：同一个单事件谱
+\begin_inset Formula $f_1$
+\end_inset
+ 下，宏观剂量越大，归一化后的
+\begin_inset Formula $z/D$
+\end_inset
+ 分布越窄；同一剂量下
+\begin_inset Formula $z_D$
+\end_inset
+ 越大，式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-microdose-relative-fluctuation"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 给出的相对涨落越强。
+这也是高 LET 末端更容易出现细胞间击中不均匀性的数学原因。
+\end_layout
+
+\begin_layout Subsection
+复合泊松与混合泊松
+\end_layout
+
+\begin_layout Standard
+复合泊松和混合泊松经常被混在一起，但随机化的是两件正交的事。
+复合泊松随机化的是项数和跳幅：
+\begin_inset Formula $S=\sum_{i=1}^{N}Y_i$
+\end_inset
+，参数
+\begin_inset Formula $\lambda$
+\end_inset
+ 本身固定。
+混合泊松随机化的是泊松参数：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+X\mid\Lambda=\ell\sim\mathrm{Poisson}(\ell),\qquad
+P(X=j)=\int e^{-\ell}\frac{\ell^j}{j!}\,dF_{\Lambda}(\ell).\label{eq:rbe-mixed-poisson-marginal}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+判别法很实用：混合泊松永远是非负整数计数；复合泊松的取值域跟着跳幅
+\begin_inset Formula $Y_i$
+\end_inset
+ 走，可以是连续的 Gy。
+均值和方差也不同：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula
+\begin{equation}
+\mathbb E[X]=\mathbb E[\Lambda],\qquad
+\mathrm{Var}(X)=\mathbb E[\Lambda]+\mathrm{Var}(\Lambda).\label{eq:rbe-mixed-poisson-variance}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+所以非退化的混合泊松总是 over-dispersed。
+MKM 里两者是叠着用的：
+\begin_inset Formula $z_n=\sum_i z_i$
+\end_inset
+ 是复合泊松的连续 Gy 量；给定
+\begin_inset Formula $z_n$
+\end_inset
+ 后损伤数
+\begin_inset Formula $X\mid z_n$
+\end_inset
+ 仍服从泊松；把细胞间的
+\begin_inset Formula $z_n$
+\end_inset
+ 涨落积掉后，群体损伤数的边缘分布才是混合泊松。
+\end_layout
+
+\begin_layout Standard
+这里“边缘分布”只有一个：随机抓一个细胞并数损伤数。
+每个给定
+\begin_inset Formula $\Lambda=\ell$
+\end_inset
+ 的条件分布都是泊松，但按细胞频率混合后的式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-mixed-poisson-marginal"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 一般不是泊松。
+实验存活率测到的是培养皿里活下来的比例，因此使用的是边缘量
+\begin_inset Formula $\langle e^{-\mu}\rangle_c$
+\end_inset
+，不是
+\begin_inset Formula $e^{-\langle\mu\rangle_c}$
+\end_inset
+；高 LET 非泊松修正正是修这一步。
+\end_layout
+
+\begin_layout Subsection
+径迹结构
+\end_layout
+
+\begin_layout Standard
+“径迹结构”说的不是一条几何直线，而是带电粒子穿过介质时，在纳米到微米尺度上留下的离散能量沉积图案。
+主粒子沿着平均轨迹前进，真正把能量打进介质的是一串碰撞、电离和激发，再加上被打出来的二次电子。
+\end_layout
+
+\begin_layout Itemize
+主粒子本身只给出一条粗略的中心线，真正重要的是它周围的沉积云团。
+高
+\begin_inset Formula $\mathrm{LET}$
+\end_inset
+ 粒子会形成更密的核心和更强的局部聚集；低
+\begin_inset Formula $\mathrm{LET}$
+\end_inset
+ 粒子则更稀疏。
+\end_layout
+
+\begin_layout Itemize
+同样的平均
+\begin_inset Formula $\mathrm{LET}$
+\end_inset
+ 并不保证相同的径迹结构。
+不同离子种类、能量和电荷态会给出不同的二次电子谱，所以“平均每毫米损失多少能量”与“能量在细胞核里怎么成团落下”是两件事。
+\end_layout
+
+\begin_layout Itemize
+从生物学上看，径迹结构关心的是 DNA 尺度上的空间相关性。
+能量如果集中在很小的体积里，就更容易形成簇状损伤和不可修复双链断裂；如果足够分散，就更接近孤立、可分散修复的损伤。
+\end_layout
+
+\begin_layout Itemize
+MKM 把这种三维微观图案压缩成微剂量学量，例如单事件比能谱
+\begin_inset Formula $f_1(z)$
+\end_inset
+、
+\begin_inset Formula $z_F$
+\end_inset
+、
+\begin_inset Formula $z_D$
+\end_inset
+ 和饱和修正后的
+\begin_inset Formula $z_D^*$
+\end_inset
+。
+所以在这份文档里，“径迹结构”可以直接理解成：决定
+\begin_inset Formula $f_1(z)$
+\end_inset
+ 形状的那套微观空间分布。
+\end_layout
+
+\begin_layout Standard
+最直观的一句话是：一条高
+\begin_inset Formula $\mathrm{LET}$
+\end_inset
+ 径迹像“密集的热主干加上晕圈”，一条低
+\begin_inset Formula $\mathrm{LET}$
+\end_inset
+ 径迹像“稀疏的点状撒布”。
+前者更容易让同一个 domain 同时吃到多个近邻事件，后者更像彼此分开的孤立事件。
+\end_layout
+
 \begin_layout Subsection
 二阶矩推导
 \end_layout
@@ -370,7 +1117,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \left\langle\left(\sum_{i=1}^{k}z_i\right)^2\right\rangle
 =k\,\langle z_1^2\rangle+k(k-1)\langle z_1\rangle^2
@@ -390,7 +1137,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \langle z^2\rangle
 =\langle N\rangle z_Fz_D+\langle N(N-1)\rangle z_F^2
@@ -405,7 +1152,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \mathrm{Var}(z)=D z_D,\qquad
 \frac{\sigma(z)}{\langle z\rangle}=\sqrt{\frac{z_D}{D}}\label{eq:rbe-relative-fluctuation}
@@ -429,7 +1176,7 @@ LQ 与 RBE
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end{equation}
@@ -441,7 +1188,7 @@ S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \mathrm{RBE}(S)=\frac{D_{\mathrm{ref}}(S)}{D_{\mathrm{ion}}(S)}\label{eq:rbe-definition}
 \end{equation}
@@ -453,7 +1200,7 @@ S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \alpha_P=\alpha_0+\beta_0 z_D,\qquad \beta=\beta_0\label{eq:rbe-alpha-p}
 \end{equation}
@@ -468,7 +1215,7 @@ S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \mathrm{RBE}_\alpha \simeq 1+\frac{z_D}{R},\qquad R=\frac{\alpha_X}{\beta_X}\label{eq:rbe-alpha}
 \end{equation}
@@ -493,7 +1240,7 @@ S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \mathrm{RBE}(D,z_D)=\frac{R}{2D}\left[-1+\sqrt{1+\frac{4}{R}\left(\mathrm{RBE}_{\alpha}(z_D)D+\frac{(\mathrm{RBE}_{\beta}D)^2}{R}\right)}\right]\label{eq:rbe-lq-explicit}
 \end{equation}
@@ -505,7 +1252,7 @@ S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \mathrm{RBE}_{\alpha}=\frac{\alpha}{\alpha_X},\qquad
 \mathrm{RBE}_{\beta}=\sqrt{\frac{\beta}{\beta_X}},\qquad
@@ -611,7 +1358,7 @@ domain 内的 II 型损伤按一阶速率
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \dot x_I=a x_{II}+b x_{II}^{2},\qquad
 \dot x_{II}=-(a+r)x_{II}-2b x_{II}^{2}\label{eq:rbe-mkm-kinetics}
@@ -624,7 +1371,7 @@ domain 内的 II 型损伤按一阶速率
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 x_I(\infty)=\left(\lambda+\frac{a\kappa}{a+r}\right)z+\frac{b\kappa^2}{2(a+r)}z^2
 =Az+Bz^2\label{eq:rbe-domain-lethal-mean}
@@ -673,7 +1420,7 @@ MKM 的尺度与平均次序
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \langle z^2\rangle_d=z_n^2+z_Dz_n,\qquad
 \langle z_n^2\rangle_c=D^2+z_{n,D}D\label{eq:rbe-two-scale-moments}
@@ -693,7 +1440,7 @@ MKM 的尺度与平均次序
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 s(z)=e^{-Az-Bz^2},\qquad
 S_n(z_n)=\prod_{d=1}^{N_d}s(z_d),\qquad
@@ -728,7 +1475,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \ln S(D)=\ln\langle e^{-x_{I,n}(z_n)}\rangle_c\neq-\langle x_{I,n}(z_n)\rangle_c\label{eq:rbe-average-log}
 \end{equation}
@@ -744,7 +1491,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \ln\langle e^{-x}\rangle_c
 =-\langle x\rangle_c+\frac{1}{2}\mathrm{Var}_c(x)-\frac{1}{6}\kappa_{3,c}(x)+\cdots\label{eq:rbe-cgf-survival}
@@ -762,7 +1509,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 x_I(z)=Az+Bz^2,\qquad
 S_n(z_n)=\exp\!\left(-(\alpha_0+\beta_0 z_D)z_n-\beta_0 z_n^2\right)\label{eq:rbe-domain-survival}
@@ -778,7 +1525,7 @@ S_n(z_n)=\exp\!\left(-(\alpha_0+\beta_0 z_D)z_n-\beta_0 z_n^2\right)\label{eq:rb
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \ln S(D)\simeq-\left(\alpha_0+\beta_0 z_D\right)D-\beta_0D^2\label{eq:rbe-mkm-survival}
 \end{equation}
@@ -806,7 +1553,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \alpha_{NP}=\frac{1-\exp\!\left[-(\alpha_0+\beta_0 z_D^{*})z_{n,D}\right]}{z_{n,D}}\label{eq:rbe-alpha-np}
 \end{equation}
@@ -825,7 +1572,7 @@ Kase 的饱和修正把单事件比能
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 z_{\mathrm{sat}}(z_1)=\frac{z_0^2}{z_1}\left[1-\exp\!\left(-\frac{z_1^2}{z_0^2}\right)\right]\label{eq:rbe-zsat}
 \end{equation}
@@ -873,7 +1620,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \alpha_{NP}=\alpha_P-\frac{1}{2}\alpha_P^2z_{n,D}+O(z_{n,D}^2),\qquad
 \alpha_P=\alpha_0+\beta_0z_D^{*}\label{eq:rbe-alpha-np-limit}
@@ -901,7 +1648,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 D=\frac{1}{\rho}\sum_i\Phi_i L_i,\qquad
 \mathrm{LET}_d=\frac{\sum_i\Phi_iL_i^2}{\sum_i\Phi_iL_i}\label{eq:rbe-dose-letd}
@@ -936,7 +1683,7 @@ SOBP 平台区可以剂量高而 LET 低，Bragg 峰远端跌落区可以剂量�
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \ln S=-\left(\alpha_0+\beta_0 z_D^{*}\right)D-\beta_0G\,D^2\label{eq:rbe-time-survival}
 \end{equation}
@@ -954,7 +1701,7 @@ SOBP 平台区可以剂量高而 LET 低，Bragg 峰远端跌落区可以剂量�
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 G=\frac{2}{D^2}\int_0^T\dot d(t)\int_0^t\dot d(t')e^{-\mu(t-t')}\,\mathrm{d}t'\,\mathrm{d}t\label{eq:rbe-lea-catcheside}
 \end{equation}
@@ -983,7 +1730,7 @@ G=\frac{2}{D^2}\int_0^T\dot d(t)\int_0^t\dot d(t')e^{-\mu(t-t')}\,\mathrm{d}t'\,
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 R_c=0.0116\,\beta_{\mathrm{ion}},\qquad
 z_{KC}(r)=
@@ -1000,7 +1747,7 @@ z_{KC}(r)=
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 z_D^{*}=\frac{\displaystyle\int_0^{b_{\max}} z_{\mathrm{sat}}(b)\,z_{KC}(b)\,b\,\mathrm{d}b}
 {\displaystyle\int_0^{b_{\max}} z_{KC}(b)\,b\,\mathrm{d}b}\label{eq:rbe-zdstar}
@@ -1013,7 +1760,7 @@ z_D^{*}=\frac{\displaystyle\int_0^{b_{\max}} z_{\mathrm{sat}}(b)\,z_{KC}(b)\,b\,
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \left(z_{D,\mathrm{mix}}^{*}\right)_i=
 \frac{\displaystyle\sum_{j=1}^{N_b}D_{ij}\left(z_D^{*}\right)_{ij}}
@@ -1043,7 +1790,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \left(z_D^{*}\right)_{ij}
 =\frac{\sum_{k=1}^{N_{ij}}\epsilon_k\left(z_D^{*}\right)_k}
@@ -1158,7 +1905,7 @@ Monte Carlo 碎片谱先按沉积能量做内层混合，得到 spot / depth 相
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 D(d,E,x)=a_1(d,E)\exp\!\left(-\frac{x^{2}}{2b_1^{2}(d,E)}\right)
 +a_2(d,E)\exp\!\left(-\frac{x^{2}}{2b_2^{2}(d,E)}\right)
@@ -1172,7 +1919,7 @@ D(d,E,x)=a_1(d,E)\exp\!\left(-\frac{x^{2}}{2b_1^{2}(d,E)}\right)
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 a_i=\frac{q_i(d,E)}{2\pi b_i^{2}(d,E)}\label{eq:rbe-yoon-ai}
 \end{equation}
@@ -1184,7 +1931,7 @@ RBE 由 LQ 反解并乘临床因子：
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \mathrm{RBE}=
 \frac{D_r(S)}{\dfrac{-\alpha+\sqrt{\alpha^{2}-4\ln(S)\beta}}{2\beta}}
@@ -1216,7 +1963,7 @@ Yoon 的混合场量在优化中按 spot 权重写成
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 \left(z_{1D\mathrm{mix}}^{*}\right)_i
 =\frac{\sum_{j=1}^{N_{\mathrm{spot}}}w_jd_{ij}\left(z_{1D}^{*}\right)_{ij}}
