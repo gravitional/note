@@ -1,0 +1,639 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ctex-book
+\begin_preamble
+\input{math-preamble}
+\end_preamble
+\options UTF8,dvipsnames,svgnames,x11names,hyperref,colorlinks=true
+\use_default_options true
+\begin_modules
+theorems-ams-chap-bytype
+graphicboxes
+\end_modules
+\maintain_unincluded_children no
+\language chinese-simplified
+\language_package none
+\inputencoding utf8-plain
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\float_alignment class
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+
+\begin_layout Chapter
+RBE 与 MKM
+\end_layout
+
+\begin_layout Standard
+这一章把 docs/dose-rbe 里的几篇笔记合并成一个主线：泊松与复合泊松、微剂量学矩、LQ/MKM、径迹结构，以及 Yoon 在 matRad 里的临床实现。
+这里保留最关键的定义和公式，供后续继续扩写。
+\end_layout
+
+\begin_layout Section
+泊松与复合泊松前置
+\end_layout
+
+\begin_layout Standard
+微剂量学里最先用到的是事件数的泊松模型：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P(N=k)=\frac{\lambda^{k}e^{-\lambda}}{k!},\qquad
+N\sim\mathrm{Poisson}(\lambda)\label{eq:rbe-poisson}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+总比能是单次事件比能的和：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+z=\sum_{i=1}^{N}z_i,\qquad N\sim\mathrm{Poisson}(\bar N),\qquad z_i\overset{\text{i.i.d.}}{\sim} f_1\label{eq:rbe-compound-z}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+于是复合泊松的两条核心矩关系写成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\langle z\rangle=\bar N z_F=D,\qquad
+\langle z^2\rangle=D^2+z_D D\label{eq:rbe-moments}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+其中
+\begin_inset Formula $z_F=\langle z_1\rangle$
+\end_inset
+，
+\begin_inset Formula $z_D=\langle z_1^2\rangle/\langle z_1\rangle$
+\end_inset
+。这就是 MKM 里“辐射品质只通过
+\begin_inset Formula $z_D$
+\end_inset
+ 进入模型”的代数根源。
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-moments"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 是本章的主轴：宏观剂量
+\begin_inset Formula $D$
+\end_inset
+ 控制一阶矩，辐射品质
+\begin_inset Formula $z_D$
+\end_inset
+ 控制单位剂量下的微观涨落。
+\end_layout
+
+\begin_layout Section
+LQ 与 RBE
+\end_layout
+
+\begin_layout Standard
+细胞存活的基本形式是 LQ：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+S(D)=\exp\!\left(-\alpha D-\beta D^{2}\right)\label{eq:rbe-lq}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+参考辐射与粒子束的 RBE 定义为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{RBE}(S)=\frac{D_{\mathrm{ref}}(S)}{D_{\mathrm{ion}}(S)}\label{eq:rbe-definition}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+在 MKM 里，LQ 系数随微剂量学量变化，最常用的近似是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\alpha_P=\alpha_0+\beta_0 z_D,\qquad \beta=\beta_0\label{eq:rbe-alpha-p}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+所以对给定存活水平，
+\begin_inset Formula $\mathrm{RBE}_\alpha$
+\end_inset
+ 可写成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{RBE}_\alpha \simeq 1+\frac{z_D}{R},\qquad R=\frac{\alpha_X}{\beta_X}\label{eq:rbe-alpha}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+这也是“LET / RBE 表”最终要消费的量。
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-alpha-p"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 和式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-alpha"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 把微剂量学量接到了临床上常见的 RBE-LET 表。
+\end_layout
+
+\begin_layout Section
+MKM 的尺度与平均次序
+\end_layout
+
+\begin_layout Standard
+同一个
+\begin_inset Formula $z$
+\end_inset
+ 会在 domain 和 nucleus 两层各出现一次。条件在一个核上时，
+\begin_inset Formula $\langle z\rangle_d=z_n$
+\end_inset
+；对细胞群体再平均时，
+\begin_inset Formula $\langle z_n\rangle_c=D$
+\end_inset
+。
+\end_layout
+
+\begin_layout Standard
+因此
+\begin_inset Formula $S(D)=\langle S_n(z_n)\rangle_c$
+\end_inset
+ 不是
+\begin_inset Formula $\exp(-\langle x_{I,n}\rangle_c)$
+\end_inset
+，而是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ln S(D)=\ln\langle e^{-x_{I,n}(z_n)}\rangle_c\neq-\langle x_{I,n}(z_n)\rangle_c\label{eq:rbe-average-log}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+这一步的差别就是“先平均再取对数”和“先取对数再平均”不对易。
+\end_layout
+
+\begin_layout Standard
+在 domain 层，LQ 形式可写成
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x_I(z)=Az+Bz^2,\qquad
+S_n(z_n)=\exp\!\left(-(\alpha_0+\beta_0 z_D)z_n-\beta_0 z_n^2\right)\label{eq:rbe-domain-survival}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+把 domain 层二阶矩
+\begin_inset Formula $\langle z^2\rangle_d=z_n^2+z_D z_n$
+\end_inset
+ 代回去，就得到 nucleus 层的闭式：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ln S(D)\simeq-\left(\alpha_0+\beta_0 z_D\right)D-\beta_0D^2\label{eq:rbe-mkm-survival}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Section
+非泊松与饱和修正
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-mkm-survival"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 是泊松近似下的结果。
+高 LET 下，核之间的击中涨落变强，群体损伤数成为混合泊松而不是单一泊松，需要 Hawkins 的非泊松修正。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\alpha_{NP}=\frac{1-\exp\!\left[-(\alpha_0+\beta_0 z_D^{*})z_{n,D}\right]}{z_{n,D}}\label{eq:rbe-alpha-np}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+过杀的另一种表现是局部能量沉积极高时，新增能量不再线性增加生物效应。
+Kase 的饱和修正把单事件比能
+\begin_inset Formula $z_1$
+\end_inset
+ 换成有效量
+\begin_inset Formula $z_{\mathrm{sat}}$
+\end_inset
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+z_{\mathrm{sat}}(z_1)=\frac{z_0^2}{z_1}\left[1-\exp\!\left(-\frac{z_1^2}{z_0^2}\right)\right]\label{eq:rbe-zsat}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+因此临床 TPS 实际上更常消费
+\begin_inset Formula $z_D^{*}$
+\end_inset
+ 而不是裸的
+\begin_inset Formula $z_D$
+\end_inset
+；式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-alpha-np"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 也使用这个饱和后的量。
+\end_layout
+
+\begin_layout Section
+剂量与 LET 的分离
+\end_layout
+
+\begin_layout Standard
+剂量是外延量，随注量线性增加；剂量平均 LET 是归一化二阶矩，是强度量。
+按成分写，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+D=\frac{1}{\rho}\sum_i\Phi_i L_i,\qquad
+\mathrm{LET}_d=\frac{\sum_i\Phi_iL_i^2}{\sum_i\Phi_iL_i}\label{eq:rbe-dose-letd}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+所以高剂量并不推出高
+\begin_inset Formula $\mathrm{LET}_d$
+\end_inset
+。
+SOBP 平台区可以剂量高而 LET 低，Bragg 峰远端跌落区可以剂量低而 LET 高。
+\end_layout
+
+\begin_layout Section
+径迹结构与混合场
+\end_layout
+
+\begin_layout Standard
+当
+\begin_inset Formula $z_D$
+\end_inset
+ 需要从束流物理直接算出时，就引入 Kiefer-Chatterjee 径迹结构模型。径迹常写成 core / penumbra 两段：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+R_c=0.0116\,\beta_{\mathrm{ion}},\qquad
+z_{KC}(r)=
+\begin{cases}
+\dfrac{1}{R_c^{2}}\left[\dfrac{\mathrm{LET}_{\infty}}{2\pi\rho}-K\ln\!\left(\dfrac{R_p}{R_c}\right)\right], & r\le R_c,\\[0.8em]
+\dfrac{K}{r^{2}}, & r>R_c.
+\end{cases}\label{eq:rbe-kc-track}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+饱和修正后的量定义为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+z_D^{*}=\frac{\displaystyle\int_0^{b_{\max}} z_{\mathrm{sat}}(b)\,z_{KC}(b)\,b\,\mathrm{d}b}
+{\displaystyle\int_0^{b_{\max}} z_{KC}(b)\,b\,\mathrm{d}b}\label{eq:rbe-zdstar}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+混合场里还要再做一次剂量加权：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(z_{D,\mathrm{mix}}^{*}\right)_i=
+\frac{\displaystyle\sum_{j=1}^{N_b}D_{ij}\left(z_D^{*}\right)_{ij}}
+{\displaystyle\sum_{j=1}^{N_b}D_{ij}}\label{eq:rbe-zdstar-mix}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+这说明为什么不能先把 LET 平均掉再查表，必须逐成分算完再加权。
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-zdstar"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 负责单能粒子的径迹积分，式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-zdstar-mix"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 负责多束、多碎片成分的剂量加权。
+\end_layout
+
+\begin_layout Section
+Yoon 的 matRad + mMKM
+\end_layout
+
+\begin_layout Standard
+Yoon 的实现是把 mMKM 接进 matRad。物理剂量用双高斯笔形束：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+D(d,E,x)=a_1(d,E)\exp\!\left(-\frac{x^{2}}{2b_1^{2}(d,E)}\right)
++a_2(d,E)\exp\!\left(-\frac{x^{2}}{2b_2^{2}(d,E)}\right)
+\label{eq:rbe-yoon-dose}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+对应的归一化因子是
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+a_i=\frac{q_i(d,E)}{2\pi b_i^{2}(d,E)}\label{eq:rbe-yoon-ai}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+RBE 由 LQ 反解并乘临床因子：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{RBE}=
+\frac{D_r(S)}{\dfrac{-\alpha+\sqrt{\alpha^{2}-4\ln(S)\beta}}{2\beta}}
+\times F_{\mathrm{clin}},
+\qquad \alpha=\alpha_0+\beta z_{1D}^{*}\label{eq:rbe-yoon-rbe}
+\end{equation}
+\end_inset
+\end_layout
+
+\begin_layout Standard
+这里
+\begin_inset Formula $z_{1D}^{*}$
+\end_inset
+ 就是主线里的
+\begin_inset Formula $z_D^{*}$
+\end_inset
+，只是下标 1 强调它是单事件量。
+\end_layout
+
+\begin_layout Standard
+临床上，最关键的误差来源是 IDS 抹掉了横向比能分布，所以束流中心的
+\begin_inset Formula $z^{*}$
+\end_inset
+ 会被低估。
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-yoon-rbe"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 与式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rbe-zdstar-mix"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ 连在一起，解释了为什么 MKM 优化比 LEM 慢：束权改变会改变混合场
+\begin_inset Formula $z_{1D}^{*}$
+\end_inset
+，从而改变
+\begin_inset Formula $\alpha$
+\end_inset
+。
+\end_layout
+
+\begin_layout Section
+速查
+\end_layout
+
+\begin_layout Itemize
+泊松管事件数，复合泊松管总比能。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_D$
+\end_inset
+ 是单事件比能的剂量平均，不是宏观剂量。
+\end_layout
+
+\begin_layout Itemize
+MKM 的辐射品质项主要通过
+\begin_inset Formula $z_D$
+\end_inset
+ 和
+\begin_inset Formula $z_D^{*}$
+\end_inset
+ 进入。
+\end_layout
+
+\begin_layout Itemize
+Yoon 的
+\begin_inset Formula $z_{1D}^{*}$
+\end_inset
+ 与本文记号等价。
+\end_layout
+
+
+\end_body
+\end_document
